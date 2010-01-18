@@ -31,6 +31,7 @@
 #include <kparts/factory.h>
 #include <kparts/event.h>
 #include <kparts/part.h>
+#include <akonadi/collection.h>
 
 #include <QWidget>
 #include <QPixmap>
@@ -40,17 +41,9 @@ class KMKernel;
 class KMMainWidget;
 namespace KPIM { class StatusbarProgressWidget; }
 using KPIM::StatusbarProgressWidget;
-class KMFolder;
 
 class ActionManager;
 
-namespace KMail
-{
-  class FolderViewItem;
-}
-
-using namespace KMail; // Needed because moc is unable to properly map namespaces
-                       // in signal/slot parameters. No one includes this file anyway.
 
 class KMailPart: public KParts::ReadOnlyPart
 {
@@ -67,10 +60,9 @@ class KMailPart: public KParts::ReadOnlyPart
     Q_SCRIPTABLE void save() { /*TODO*/ }
     Q_SCRIPTABLE void exit();
     void updateEditMenu() {}
-    void exportFolder( KMFolder* folder );
-    void slotIconChanged( FolderViewItem *fti );
-    void slotNameChanged( FolderViewItem *fti );
+    void slotCollectionChanged( const Akonadi::Collection &collection, const QSet<QByteArray> &attributeNames );
 
+  void slotFolderChanged( const Akonadi::Collection& );
   signals:
     void textChanged( const QString& );
     void iconChanged( const QPixmap& );

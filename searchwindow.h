@@ -24,11 +24,10 @@
 #include <QList>
 #include <QPointer>
 #include <QTimer>
-#include <QTreeWidget>
 
 #include <KDialog>
 #include <KXMLGUIClient>
-
+#include <akonadi/collection.h>
 class QCheckBox;
 class QCloseEvent;
 class QKeyEvent;
@@ -36,18 +35,25 @@ class QLabel;
 class QRadioButton;
 class KActionMenu;
 class KLineEdit;
-class KMFolder;
-class KMFolderSearch;
 class KMMainWidget;
-class KMMessage;
-class KMMsgBase;
 class KMSearchPattern;
 class KMSearchPatternEdit;
 class KStatusBar;
+class KJob;
 
 namespace KMail {
   class FolderRequester;
-  class MatchListView;
+}
+
+namespace KMime {
+  class Message;
+}
+
+namespace Akonadi {
+  class EntityTreeView;
+  class ItemModel;
+  class Item;
+  class SearchCreateJob;
 }
 
 namespace KMail {
@@ -71,26 +77,26 @@ public:
    * of search operations.
    * @param modal Whether the dialog is to be shown modal.
    */
-  explicit SearchWindow( KMMainWidget* parent, KMFolder *curFolder=0 );
+  explicit SearchWindow( KMMainWidget* parent, const Akonadi::Collection & col=Akonadi::Collection() );
   virtual ~SearchWindow();
 
   /**
    * Changes the base folder for search operations to a different folder.
    * @param curFolder The folder to use as the new base for searches.
    */
-  void activateFolder( KMFolder* curFolder );
+  void activateFolder( const Akonadi::Collection& curFolder );
 
   /**
    * Provides access to the list of currently selected message in the listview.
    * @return The list of currently selected search result messages.
    */
-  QList<KMMsgBase*> selectedMessages();
+  QList<Akonadi::Item> selectedMessages();
 
   /**
    * Provides access to the currently selected message.
    * @return the currently selected message.
    */
-  KMMessage* message();
+  Akonadi::Item message();
 
   void setSearchPattern( const KMSearchPattern &pattern );
 
@@ -104,15 +110,15 @@ protected slots:
   void scheduleRename(const QString &);
   void renameSearchFolder();
   void openSearchFolder();
-  void folderInvalidated(KMFolder *);
-  virtual bool slotShowMsg(QTreeWidgetItem *,int);
+  virtual bool slotShowMsg( const Akonadi::Item &item );
   void slotViewSelectedMsg();
-  virtual bool slotViewMsg( QTreeWidgetItem *, int );
-  void slotCurrentChanged(QTreeWidgetItem *);
+  virtual bool slotViewMsg( const Akonadi::Item &item );
+  void slotCurrentChanged(const Akonadi::Item&);
   virtual void updateContextMenuActions();
-  virtual void slotContextMenuRequested( QTreeWidgetItem* );
+#if 0
   void slotCopySelectedMessagesToFolder( QAction* );
   void slotMoveSelectedMessagesToFolder( QAction* );
+#endif
   virtual void slotFolderActivated();
   void slotClearSelection();
   void slotReplyToMsg();
@@ -127,9 +133,7 @@ protected slots:
   void slotCutMsgs();
 
   /** GUI cleanup after search */
-  virtual void searchDone();
-  virtual void slotAddMsg(int idx);
-  virtual void slotRemoveMsg(KMFolder *, quint32 serNum);
+  void searchDone(KJob* job);
   void enableGUI();
 
   void setEnabledSearchButton(bool);
@@ -145,10 +149,10 @@ protected:
 protected:
   bool mStopped;
   bool mCloseRequested;
-  int mFetchingInProgress;
   int mSortColumn;
   Qt::SortOrder mSortOrder;
-  QPointer<KMFolderSearch> mFolder;
+  Akonadi::Collection mFolder;
+  Akonadi::SearchCreateJob *mSearchJob;
   QTimer *mTimer;
 
   // GC'd by Qt
@@ -156,7 +160,8 @@ protected:
   QRadioButton *mChkbxSpecificFolders;
   KMail::FolderRequester *mCbxFolders;
   QCheckBox *mChkSubFolders;
-  MatchListView* mLbxMatches;
+  Akonadi::ItemModel *mResultModel;
+  Akonadi::EntityTreeView* mLbxMatches;
   QLabel *mSearchFolderLbl;
   KLineEdit *mSearchFolderEdt;
   KPushButton *mSearchFolderOpenBtn;
@@ -167,39 +172,14 @@ protected:
     *mForwardInlineAction, *mForwardAttachedAction, *mPrintAction, *mClearAction,
     *mSaveAtchAction, *mCopyAction, *mCutAction;
   KActionMenu *mForwardActionMenu;
-  QList<QPointer<KMFolder> > mFolders;
   QTimer mRenameTimer;
-
+  QByteArray mHeaderState;
   // not owned by us
   KMMainWidget* mKMMainWidget;
   KMSearchPatternEdit *mPatternEdit;
   KMSearchPattern *mSearchPattern;
 
   static const int MSGID_COLUMN;
-
-private:
-  KMMessage *indexToMessage( QTreeWidgetItem *item );
-
-};
-
-// QTreeWidget sub-class for dnd support
-// Internal, only used by SearchWindow.
-class MatchListView : public QTreeWidget
-{
-  Q_OBJECT
-
-  public:
-    MatchListView( QWidget *parent, SearchWindow* sw );
-
-  protected:
-
-    virtual void contextMenuEvent( QContextMenuEvent* event );
-    virtual void startDrag( Qt::DropActions supportedActions );
-
-  private:
-    SearchWindow* mSearchWindow;
-  signals:
-    void contextMenuRequested( QTreeWidgetItem* item );
 };
 
 } // namespace KMail

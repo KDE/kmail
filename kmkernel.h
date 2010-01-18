@@ -15,21 +15,22 @@
 #include <kurl.h>
 
 #include "kmail_export.h"
-#include "kmmsgbase.h"
-#include "kmmessagetag.h"
 #include "globalsettings.h"
 #include <kcomponentdata.h>
+#include <akonadi/kmime/specialmailcollections.h>
 
 #define kmkernel KMKernel::self()
 #define kmconfig KMKernel::config()
 
 Q_DECLARE_METATYPE(QVector<QStringList>)
 
+namespace Akonadi {
+  class Collection;
+  class ChangeRecorder;
+}
+
 namespace KIO {
   class Job;
-}
-namespace KWallet {
-  class Wallet;
 }
 
 class KJob;
@@ -39,25 +40,19 @@ class KJob;
 */
 namespace KMail {
   class MailServiceImpl;
-  class MailManagerImpl;
   class UndoStack;
   class JobScheduler;
   class MessageSender;
-  class AccountManager;
-  class FolderAdaptor;
 }
 namespace KPIM { class ProgressDialog; }
 using KMail::MailServiceImpl;
-using KMail::MailManagerImpl;
-using KMail::AccountManager;
 using KMail::UndoStack;
 using KMail::JobScheduler;
 using KPIM::ProgressDialog;
-class KMFolder;
-class KMFolderMgr;
 class KMFilterMgr;
 class KMFilterActionDict;
-class KMSender;
+class AkonadiSender;
+class FolderCollection;
 namespace KPIMIdentities {
   class Identity;
   class IdentityManager;
@@ -67,15 +62,11 @@ class KComponentData;
 class QTimer;
 class KMMainWin;
 class KMainWindow;
-class KMailICalIfaceImpl;
 class KSystemTrayIcon;
 class KMMainWidget;
 class ConfigureDialog;
-class KMMessageTagMgr;
-
-namespace QIndicate {
-  class Server;
-}
+class FolderCollectionMonitor;
+class KMAgentManager;
 
 /**
  * @short Central point of coordination in KMail
@@ -262,24 +253,21 @@ public:
 
   static KMKernel *self();
   static KSharedConfig::Ptr config();
-  static int storageDebug();
 
   void init();
   void setupDBus();
   void readConfig();
-  void cleanupImapFolders();
-  void testDir(const char *_name);
+
+
+  KMAgentManager *agentManager();
+  Akonadi::ChangeRecorder *monitor();
+
+//TODO port to akonadi   void cleanupImapFolders();
   void recoverDeadLetters();
-  void initFolders(KSharedConfig::Ptr cfg);
+  void initFolders();
   void closeAllKMailWindows();
   void cleanup(void);
   void quit();
-  /**
-   * Returns true if the transfer was successful, otherwise false. In any case
-   * destinationDir contains the path to the current mail storage when the
-   * method returns.
-   */
-  bool transferMail( QString & destinationDir );
   bool doSessionManagement();
   bool firstInstance() { return the_firstInstance; }
   void setFirstInstance(bool value) { the_firstInstance = value; }
@@ -289,40 +277,42 @@ public:
                const QStringList &customHeaders );
   void byteArrayToRemoteFile( const QByteArray&, const KUrl&,
                               bool overwrite = false );
-  bool folderIsDraftOrOutbox(const KMFolder *);
-  bool folderIsDrafts(const KMFolder *);
-  bool folderIsTemplates(const KMFolder *);
-  bool folderIsTrash(KMFolder *);
+  bool folderIsDraftOrOutbox(const Akonadi::Collection &);
+  bool folderIsDrafts(const Akonadi::Collection&);
+
+  bool folderIsTemplates(const Akonadi::Collection &);
+  bool folderIsTrash( const Akonadi::Collection & );
+
+  Akonadi::Collection trashCollectionFromResource( const Akonadi::Collection & col );
+
   /**
    * Returns true if the folder is one of the sent-mail folders.
    */
-  bool folderIsSentMailFolder( const KMFolder * );
-  /**
-   * Find a folder by ID string in all folder managers
-   */
-  KMFolder* findFolderById( const QString& idString );
+  bool folderIsSentMailFolder( const Akonadi::Collection& );
+
+  Akonadi::Collection findFolderCollectionById( const QString& id );
+
+  bool isImapFolder( const Akonadi::Collection& );
 
   const KComponentData &xmlGuiInstance() { return mXmlGuiInstance; }
   void setXmlGuiInstance( const KComponentData &instance ) { mXmlGuiInstance = instance; }
 
-  KMFolder *inboxFolder() { return the_inboxFolder; }
-  KMFolder *outboxFolder() { return the_outboxFolder; }
-  KMFolder *sentFolder() { return the_sentFolder; }
-  KMFolder *trashFolder() { return the_trashFolder; }
-  KMFolder *draftsFolder() { return the_draftsFolder; }
-  KMFolder *templatesFolder() { return the_templatesFolder; }
 
-  KMFolderMgr *folderMgr() { return the_folderMgr; }
-  KMFolderMgr *imapFolderMgr() { return the_imapFolderMgr; }
-  KMFolderMgr *dimapFolderMgr() { return the_dimapFolderMgr; }
-  KMFolderMgr *searchFolderMgr() { return the_searchFolderMgr; }
+  Akonadi::Collection inboxCollectionFolder();
+  Akonadi::Collection outboxCollectionFolder();
+  Akonadi::Collection sentCollectionFolder();
+  Akonadi::Collection trashCollectionFolder();
+  Akonadi::Collection draftsCollectionFolder();
+  Akonadi::Collection templatesCollectionFolder();
+
+  bool isSystemFolderCollection( const Akonadi::Collection &col);
+
+
   UndoStack *undoStack() { return the_undoStack; }
-  AccountManager *acctMgr() { return the_acctMgr; }
   KMFilterMgr *filterMgr() { return the_filterMgr; }
   KMFilterMgr *popFilterMgr() { return the_popFilterMgr; }
   KMFilterActionDict *filterActionDict() { return the_filterActionDict; }
   KMail::MessageSender *msgSender();
-  KMMessageTagMgr *msgTagMgr() { return the_msgTagMgr; }
 
   ThreadWeaver::Weaver *weaver() { return the_weaver; }
   /** return the pointer to the identity manager */
@@ -330,12 +320,16 @@ public:
 
   JobScheduler* jobScheduler() { return mJobScheduler; }
 
-  QIndicate::Server *indicateServer() { return the_indicateServer; }
-
   /** Expire all folders, used for the gui action */
   void expireAllFoldersNow();
 
+  bool smartQuote() const { return mSmartQuote; }
+  bool wordWrap() const { return mWordWrap;}
+  int wrapCol() const { return mWrapCol;}
+
+#if 0 //TODO port to akonadi
   KMailICalIfaceImpl& iCalIface();
+#endif
 
   bool firstStart() const { return the_firstStart; }
   /** Mark first start as done */
@@ -364,8 +358,6 @@ public:
   /// Reimplemented from KMailIface
   void emergencyExit( const QString& reason );
 
-  /** Returns a message serial number that hasn't been used yet. */
-  unsigned long getNextMsgSerNum();
   QTextCodec *networkCodec() { return netCodec; }
 
   /** returns a reference to the first Mainwin or a temporary Mainwin */
@@ -379,47 +371,25 @@ public:
   bool contextMenuShown() const { return mContextMenuShown; }
 
   /**
-   * Returns true IFF the user has requested that the current mail checks
-   * should be aborted. Needs to be periodically polled.
-   */
-  bool mailCheckAborted() const;
-  /**  Set the state of the abort requested variable to false,
-   * i.e. enable mail checking again
-   */
-  void enableMailCheck();
-  /**
-   * Set the state of the abort requested variable to true,
-   * (to let the current jobs run, but stop when possible).
-   * This is used to cancel mail checks when closing the last mainwindow
-   */
-  void abortMailCheck();
-
-  /**
    * Called by the folder tree if the count of unread/total messages changed.
    */
   void messageCountChanged();
 
-  /** Open KDE wallet and set it to kmail folder */
-  KWallet::Wallet *wallet();
 
   /** Get first mainwidget */
   KMMainWidget *getKMMainWidget();
 
   /** @return a list of all folders from all folder managers. */
-  QList< QPointer<KMFolder> > allFolders();
-
+  QList<Akonadi::Collection> allFoldersCollection();
   void raise();
 
   /** Custom templates have changed, so all windows using them need
       to regenerate their menus */
   void updatedTemplates();
 
-  void selectFolder( KMFolder *folder );
 
+  void findCreateDefaultCollection( Akonadi::SpecialMailCollections::Type );
 public slots:
-  void toggleMainWin();
-  void showMainWin();
-  void hideMainWin();
 
   /// Save contents of all open composer widnows to ~/dead.letter
   void dumpDeadLetters();
@@ -445,7 +415,6 @@ protected slots:
 
 signals:
   void configChanged();
-  void folderRemoved( KMFolder* aFolder );
   void onlineStatusChanged( GlobalSettings::EnumNetworkState::type );
   void customTemplatesChanged();
 
@@ -454,32 +423,27 @@ private slots:
   void transportRemoved( int id, const QString &name );
   /** Updates identities when a transport has been renamed. */
   void transportRenamed( int id, const QString &oldName, const QString &newName );
+  void createDefaultCollectionDone( KJob * job);
 
 private:
-  bool mainWindowIsOnCurrentDesktop();
   void openReader( bool onlyCheck );
-  KMFolder *currentFolder();
+  QSharedPointer<FolderCollection> currentFolderCollection();
 
-  KMFolder *the_inboxFolder;
-  KMFolder *the_outboxFolder;
-  KMFolder *the_sentFolder;
-  KMFolder *the_trashFolder;
-  KMFolder *the_draftsFolder;
-  KMFolder *the_templatesFolder;
 
-  KMFolderMgr *the_folderMgr;
-  KMFolderMgr *the_imapFolderMgr;
-  KMFolderMgr *the_dimapFolderMgr;
-  KMFolderMgr *the_searchFolderMgr;
+
+  Akonadi::Collection the_inboxCollectionFolder;
+  Akonadi::Collection the_outboxCollectionFolder;
+  Akonadi::Collection the_sentCollectionFolder;
+  Akonadi::Collection the_trashCollectionFolder;
+  Akonadi::Collection the_draftsCollectionFolder;
+  Akonadi::Collection the_templatesCollectionFolder;
+
   UndoStack *the_undoStack;
-  AccountManager *the_acctMgr;
   KMFilterMgr *the_filterMgr;
   KMFilterMgr *the_popFilterMgr;
   KMFilterActionDict *the_filterActionDict;
-  QIndicate::Server *the_indicateServer;
   mutable KPIMIdentities::IdentityManager *mIdentityManager;
-  KMSender *the_msgSender;
-  KMMessageTagMgr *the_msgTagMgr;
+  AkonadiSender *the_msgSender;
   struct putData
   {
     KUrl url;
@@ -501,7 +465,6 @@ private:
   /** true unles kmail is closed by session management */
   bool closed_by_user;
   bool the_firstInstance;
-  bool mMailCheckAborted;
 
   KSharedConfig::Ptr mConfig;
   QTextCodec *netCodec;
@@ -509,12 +472,10 @@ private:
   ConfigureDialog *mConfigureDialog;
 
   QTimer *mBackgroundTasksTimer;
-  KMailICalIfaceImpl* mICalIface;
   JobScheduler* mJobScheduler;
   // temporary mainwin
   KMMainWin *mWin;
   MailServiceImpl *mMailService;
-  MailManagerImpl *mMailManager;
 
   // the time of the last change of the unread or total count of a folder;
   // this can be queried via D-Bus in order to determine whether the counts
@@ -531,21 +492,18 @@ private:
   /* Weaver */
   ThreadWeaver::Weaver *the_weaver;
 
-  KWallet::Wallet *mWallet;
 
   // variables used by dbusAddMessage()
   QStringList           mAddMessageMsgIds;
   QString               mAddMessageLastFolder;
-  KMFolder             *mAddMsgCurrentFolder;
-  KMail::FolderAdaptor *folderAdaptor;
+
+  FolderCollectionMonitor *mFolderCollectionMonitor;
+  KMAgentManager *mAgentManager;
 
   // special debug area
   int mStorageDebug;
-
-  // main window management
-  bool mMainWinVisible;
-  QPoint mPosOfMainWin;
-  int mDesktopOfMainWin;
+  bool mSmartQuote : 1, mWordWrap : 1;
+  int mWrapCol;
 };
 
 #endif // _KMKERNEL_H

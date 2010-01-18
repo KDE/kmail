@@ -1,0 +1,6 @@
+select distinct ?r where { OPTIONAL 
+  { 
+    { ?v1 <http://www.semanticdesktop.org/ontologies/2007/03/22/nmo#messageSubject> ?v2 . ?v2 bif:contains "'Test*'" . } . 
+      FILTER(?v1=?r) .
+  } . FILTER(!BOUND(?v1)) . 
+}

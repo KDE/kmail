@@ -3,23 +3,24 @@
 #define EXPIRYPROPERTIESDIALOG_H
 
 #include <kdialog.h>
+#include <QSharedPointer>
 
 class QCheckBox;
 class QRadioButton;
 class KIntSpinBox;
-class KMFolder;
-
+class FolderCollection;
 namespace KMail {
 
   class FolderRequester;
-  class MainFolderView;
 
 class ExpiryPropertiesDialog : public KDialog
 {
     Q_OBJECT
 
 public:
-    ExpiryPropertiesDialog( MainFolderView* tree, KMFolder* folder );
+    ExpiryPropertiesDialog(
+      QWidget *tree,
+      const QSharedPointer<FolderCollection> &folder );
     ~ExpiryPropertiesDialog();
 
 protected slots:
@@ -27,7 +28,7 @@ protected slots:
     void slotUpdateControls();
 
 private:
-    KMFolder *mFolder;
+    QSharedPointer<FolderCollection> mFolder;
 
     QCheckBox *expireReadMailCB;
     KIntSpinBox *expireReadMailSB;

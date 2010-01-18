@@ -35,104 +35,19 @@
 **   your version.
 **
 *******************************************************************************/
+
+
 #include "util.h"
-
-#include "kmmessage.h"
-#include "iconnamecache.h"
-#include "stringutil.h"
-
-#include <kpimutils/email.h>
-
-#include <KDebug>
-#include <KMimeType>
+#include <QTextCodec>
+#include "messageviewer/stringutil.h"
 
 #include <stdlib.h>
-
-void KMail::Util::reconnectSignalSlotPair( QObject *src, const char *signal, QObject *dst, const char *slot )
-{
-  QObject::disconnect( src, signal, dst, slot );
-  QObject::connect( src, signal, dst, slot );
-}
-
-size_t KMail::Util::crlf2lf( char* str, const size_t strLen )
-{
-    if ( !str || strLen == 0 )
-        return 0;
-
-    const char* source = str;
-    const char* sourceEnd = source + strLen;
-
-    // search the first occurrence of "\r\n"
-    for ( ; source < sourceEnd - 1; ++source ) {
-        if ( *source == '\r' && *( source + 1 ) == '\n' )
-            break;
-    }
-
-    if ( source == sourceEnd - 1 ) {
-        // no "\r\n" found
-        return strLen;
-    }
-
-    // replace all occurrences of "\r\n" with "\n" (in place)
-    char* target = const_cast<char*>( source ); // target points to '\r'
-    ++source; // source points to '\n'
-    for ( ; source < sourceEnd; ++source ) {
-        if ( *source != '\r' || *( source + 1 ) != '\n' )
-            * target++ = *source;
-    }
-    *target = '\0'; // terminate result
-    return target - str;
-}
-
-QByteArray KMail::Util::lf2crlf( const QByteArray & src )
-{
-    QByteArray result;
-    result.resize( 2*src.size() );  // maximal possible length
-
-    QByteArray::ConstIterator s = src.begin();
-    QByteArray::Iterator d = result.begin();
-  // we use cPrev to make sure we insert '\r' only there where it is missing
-    char cPrev = '?';
-    const char* end = src.end();
-    while ( s != end ) {
-        if ( ('\n' == *s) && ('\r' != cPrev) )
-            *d++ = '\r';
-        cPrev = *s;
-        *d++ = *s++;
-    }
-    result.truncate( d - result.begin() );
-    return result;
-}
-
-QByteArray KMail::Util::ByteArray( const DwString& str )
-{
-  const int strLen = str.size();
-  QByteArray arr;
-  arr.resize( strLen );
-  memcpy( arr.data(), str.data(), strLen );
-  return arr;
-}
-
-DwString KMail::Util::dwString( const QByteArray& str )
-{
-  if ( !str.data() ) // DwString doesn't like char*=0
-    return DwString();
-  return DwString( str.data(), str.size() );
-}
-
-bool KMail::Util::checkOverwrite( const KUrl &url, QWidget *w )
-{
-  if ( KIO::NetAccess::exists( url, KIO::NetAccess::DestinationSide, w ) ) {
-    if ( KMessageBox::Cancel == KMessageBox::warningContinueCancel(
-         w,
-         i18n( "A file named \"%1\" already exists. "
-             "Are you sure you want to overwrite it?", url.prettyUrl() ),
-             i18n( "Overwrite File?" ),
-                   KStandardGuiItem::overwrite() ) )
-      return false;
-  }
-  return true;
-}
+#include <kpimutils/email.h>
+#include <kglobal.h>
+#include <kascii.h>
+#include <KCharsets>
+#include "imapsettings.h"
+#include <kimap/loginjob.h>
 
 #ifndef KMAIL_UNITTESTS
 bool KMail::Util::validateAddresses( QWidget *parent, const QString &addresses )
@@ -141,7 +56,7 @@ bool KMail::Util::validateAddresses( QWidget *parent, const QString &addresses )
 
   QStringList distributionListEmpty;
   KPIMUtils::EmailParseResult errorCode =
-    KPIMUtils::isValidAddressList( StringUtil::expandAliases( addresses,distributionListEmpty ),
+    KPIMUtils::isValidAddressList( MessageViewer::StringUtil::expandAliases( addresses,distributionListEmpty ),
                                    brokenAddress );
   if ( !distributionListEmpty.isEmpty() ) {
     QString errorMsg = i18n( "Distribution list \"%1\" is empty, it cannot be used.", distributionListEmpty.join( ", " ) );
@@ -159,46 +74,106 @@ bool KMail::Util::validateAddresses( QWidget *parent, const QString &addresses )
   }
   return true;
 }
-
-QString KMail::Util::fileNameForMimetype( const QString &mimeType, int iconSize,
-                                          const QString &fallbackFileName1,
-                                          const QString &fallbackFileName2 )
-{
-  QString fileName;
-  KMimeType::Ptr mime = KMimeType::mimeType( mimeType, KMimeType::ResolveAliases );
-  if ( mime ) {
-    fileName = mime->iconName();
-  } else {
-    kWarning() << "unknown mimetype" << mimeType;
-  }
-
-  if ( fileName.isEmpty() )
-  {
-    fileName = fallbackFileName1;
-    if ( fileName.isEmpty() )
-      fileName = fallbackFileName2;
-    if ( !fileName.isEmpty() ) {
-      fileName = KMimeType::findByPath( "/tmp/" + fileName, 0, true )->iconName();
-    }
-  }
-
-  return KMail::IconNameCache::instance()->iconPath( fileName, iconSize );
-}
 #endif
 
 #ifdef Q_WS_MACX
 #include <QDesktopServices>
 #endif
 
-bool KMail::Util::handleUrlOnMac( const KUrl& url )
+KMime::Message::Ptr KMail::Util::message( const Akonadi::Item & item )
 {
-#ifdef Q_WS_MACX
-  QDesktopServices::openUrl( url );
-  return true;
-#else
-  Q_UNUSED( url );
-  return false;
-#endif
+  if ( !item.hasPayload<KMime::Message::Ptr>() ) {
+    kWarning() << "Payload is not a MessagePtr!";
+    return KMime::Message::Ptr();
+  }
+  return item.payload<boost::shared_ptr<KMime::Message> >();
 }
 
+KUrl KMail::Util::findSieveUrlForAccount( OrgKdeAkonadiImapSettingsInterface *a, const QString& ident) {
+  assert( a );
+  if ( !a->sieveSupport() )
+    return KUrl();
+  if ( a->sieveReuseConfig() ) {
+    // assemble Sieve url from the settings of the account:
+    KUrl u;
+    u.setProtocol( "sieve" );
+    QString server;
+    QDBusReply<QString> reply = a->imapServer();
+    if ( reply.isValid() ) {
+      server = reply;
+      server = server.section( ':', 0, 0 );
+    } else {
+      return KUrl();
+    }
+    u.setHost( server );
+    u.setUser( a->userName() );
+
+    QDBusInterface resourceSettings( QString("org.freedesktop.Akonadi.Resource.")+ident,"/Settings", "org.kde.Akonadi.Imap.Wallet" );
+
+    QString pwd;
+    QDBusReply<QString> replyPass = resourceSettings.call( "password" );
+    if ( replyPass.isValid() ) {
+      pwd = replyPass;
+    }
+    u.setPass( pwd );
+    u.setPort( a->sievePort() );
+    QString authStr;
+    switch( a->authentication() ) {
+    case KIMAP::LoginJob::ClearText:
+      authStr = "PLAIN";
+      break;
+    case KIMAP::LoginJob::Login:
+      authStr = "LOGIN";
+      break;
+    case KIMAP::LoginJob::Plain:
+      authStr = "PLAIN";
+      break;
+    case KIMAP::LoginJob::CramMD5:
+      authStr = "CRAM-MD5";
+      break;
+    case KIMAP::LoginJob::DigestMD5:
+      authStr = "DIGEST-MD5";
+      break;
+    case KIMAP::LoginJob::GSSAPI:
+      authStr = "GSSAPI";
+      break;
+    case KIMAP::LoginJob::Anonymous:
+      authStr = "ANONYMOUS";
+      break;
+    default:
+      authStr = "PLAIN";
+      break;
+    }
+    u.addQueryItem( "x-mech", authStr );
+    if ( a->safety() == ( int )( KIMAP::LoginJob::Unencrypted ))
+      u.addQueryItem( "x-allow-unencrypted", "true" );
+    u.setFileName( a->sieveVacationFilename() );
+    return u;
+  } else {
+    KUrl u( a->sieveAlternateUrl() );
+    if ( u.protocol().toLower() == "sieve" && (  a->safety() == ( int )( KIMAP::LoginJob::Unencrypted ) ) && u.queryItem("x-allow-unencrypted").isEmpty() )
+      u.addQueryItem( "x-allow-unencrypted", "true" );
+    u.setFileName( a->sieveVacationFilename() );
+    return u;
+  }
+}
+
+OrgKdeAkonadiImapSettingsInterface *KMail::Util::createImapSettingsInterface( const QString &ident )
+{
+  return new OrgKdeAkonadiImapSettingsInterface("org.freedesktop.Akonadi.Resource." + ident, "/Settings", QDBusConnection::sessionBus() );
+}
+
+
+void KMail::Util::launchAccountWizard( QWidget *w )
+{
+  QStringList lst;
+  lst.append( "--type" );
+  lst.append( "message/rfc822" );
+
+  if( !QProcess::startDetached("accountwizard", lst ) )
+    KMessageBox::error( w, i18n( "Could not start the account wizard. "
+                                 "Please check your installation." ),
+                        i18n( "Unable to start account wizard" ) );
+
+}
 

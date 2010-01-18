@@ -24,7 +24,11 @@
 class QCheckBox;
 class KUrlRequester;
 class KComboBox;
-class KMFolder;
+
+namespace Akonadi
+{
+  class Collection;
+}
 
 namespace KMail
 {
@@ -37,13 +41,12 @@ class ArchiveFolderDialog : public KDialog
   public:
 
     ArchiveFolderDialog( QWidget *parent = 0 );
-    void setFolder( KMFolder *defaultFolder );
+    void setFolder( const Akonadi::Collection &defaultCollection );
 
   protected slots:
 
     void slotFixFileExtension();
-    void slotFolderChanged( KMFolder * );
-    void slotUrlChanged( const QString& );
+    void slotFolderChanged( const Akonadi::Collection& );
     /** reimp */
     virtual void slotButtonClicked( int button );
 

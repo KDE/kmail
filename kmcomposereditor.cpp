@@ -22,11 +22,12 @@
 #include "kmcomposereditor.h"
 #include "kmcomposewin.h"
 #include "kmcommands.h"
-#include "kmmsgdict.h"
-#include "kmfolder.h"
-#include "maillistdrag.h"
 
 #include <kmime/kmime_codecs.h>
+#include <akonadi/itemfetchjob.h>
+
+#include <kio/jobuidelegate.h>
+
 #include <KPIMTextEdit/EMailQuoteHighlighter>
 
 #include <KAction>
@@ -38,6 +39,9 @@
 #include <KPushButton>
 #include <KInputDialog>
 
+#include "kmkernel.h"
+#include "foldercollection.h"
+#include <QTextCodec>
 #include <QBuffer>
 #include <QClipboard>
 #include <QDropEvent>
@@ -126,7 +130,7 @@ QString KMComposerEditor::quotePrefixName() const
   else
     return ">";
 }
- 
+
 void KMComposerEditor::replaceUnknownChars( const QTextCodec *codec )
 {
   QTextCursor cursor( document() );
@@ -147,8 +151,6 @@ void KMComposerEditor::replaceUnknownChars( const QTextCodec *codec )
 bool KMComposerEditor::canInsertFromMimeData( const QMimeData *source ) const
 {
   if ( source->hasImage() && source->hasFormat( "image/png" ) )
-    return true;
-  if ( KPIM::MailList::canDecode( source ) )
     return true;
   if ( source->hasFormat( "text/x-kmail-textsnippet" ) )
     return true;
@@ -193,36 +195,6 @@ void KMComposerEditor::insertFromMimeData( const QMimeData *source )
     return;
   }
 
-    // If this is a list of mails, attach those mails as forwards.
-  if ( KPIM::MailList::canDecode( source ) ) {
-
-    // Decode the list of serial numbers stored as the drag data
-    QByteArray serNums = KPIM::MailList::serialsFromMimeData( source );
-    QBuffer serNumBuffer( &serNums );
-    serNumBuffer.open( QIODevice::ReadOnly );
-    QDataStream serNumStream( &serNumBuffer );
-    quint32 serNum;
-    KMFolder *folder = 0;
-    int idx;
-    QList<KMMsgBase*> messageList;
-    while ( !serNumStream.atEnd() ) {
-      KMMsgBase *msgBase = 0;
-      serNumStream >> serNum;
-      KMMsgDict::instance()->getLocation( serNum, &folder, &idx );
-      if ( folder ) {
-        msgBase = folder->getMsgBase( idx );
-      }
-      if ( msgBase ) {
-        messageList.append( msgBase );
-      }
-    }
-    serNumBuffer.close();
-    uint identity = folder ? folder->identity() : 0;
-    KMCommand *command = new KMForwardAttachedCommand( m_composerWin, messageList,
-                                                       identity, m_composerWin );
-    command->start();
-    return;
-  }
 
   if ( source->hasFormat( "text/x-kmail-textsnippet" ) ) {
     emit insertSnippet();
@@ -232,23 +204,60 @@ void KMComposerEditor::insertFromMimeData( const QMimeData *source )
   // If this is a URL list, add those files as attachments or text
   const KUrl::List urlList = KUrl::List::fromMimeData( source );
   if ( !urlList.isEmpty() ) {
-    KMenu p;
-    const QAction *addAsTextAction = p.addAction( i18n("Add as &Text") );
-    const QAction *addAsAttachmentAction = p.addAction( i18n("Add as &Attachment") );
-    const QAction *selectedAction = p.exec( QCursor::pos() );
-    if ( selectedAction == addAsTextAction ) {
-      foreach( const KUrl &url, urlList ) {
-        textCursor().insertText(url.url());
-      }
-    } else if ( selectedAction == addAsAttachmentAction ) {
-      foreach( const KUrl &url, urlList ) {
-        m_composerWin->addAttach( url );
+    //Search if it's message items.
+    Akonadi::Item::List items;
+    foreach ( const KUrl &url, urlList ) {
+      Akonadi::Item item = Akonadi::Item::fromUrl( url );
+      if ( item.isValid() ) {
+        items << item;
       }
     }
-    return;
+    if ( items.isEmpty() ) {
+
+      KMenu p;
+      const QAction *addAsTextAction = p.addAction( i18n("Add as &Text") );
+      const QAction *addAsAttachmentAction = p.addAction( i18n("Add as &Attachment") );
+      const QAction *selectedAction = p.exec( QCursor::pos() );
+      if ( selectedAction == addAsTextAction ) {
+        foreach( const KUrl &url, urlList ) {
+          textCursor().insertText(url.url());
+        }
+      } else if ( selectedAction == addAsAttachmentAction ) {
+        foreach( const KUrl &url, urlList ) {
+          m_composerWin->addAttachment( url,"" );
+        }
+      }
+      return;
+    } else {
+      Akonadi::ItemFetchJob *itemFetchJob = new Akonadi::ItemFetchJob( items, this );
+      itemFetchJob->fetchScope().fetchFullPayload( true );
+      itemFetchJob->fetchScope().setAncestorRetrieval( Akonadi::ItemFetchScope::Parent );
+      connect( itemFetchJob, SIGNAL( result( KJob* ) ), this, SLOT( slotFetchJob( KJob* ) ) );
+      return;
+    }
   }
 
   KPIMTextEdit::TextEdit::insertFromMimeData( source );
+}
+
+void KMComposerEditor::slotFetchJob( KJob * job )
+{
+  if ( job->error() ) {
+    static_cast<KIO::Job*>(job)->ui()->showErrorMessage();
+    return;
+  }
+  Akonadi::ItemFetchJob *fjob = dynamic_cast<Akonadi::ItemFetchJob*>( job );
+  if ( !fjob )
+    return;
+  Akonadi::Item::List items = fjob->items();
+
+  uint identity = 0;
+  if ( items.at( 0 ).isValid() && items.at( 0 ).parentCollection().isValid() ) {
+    QSharedPointer<FolderCollection> fd( FolderCollection::forCollection( items.at( 0 ).parentCollection() ) );
+    identity = fd->identity();
+  }
+  KMCommand *command = new KMForwardAttachedCommand( m_composerWin, items,identity, m_composerWin );
+  command->start();
 }
 
 #include "kmcomposereditor.moc"

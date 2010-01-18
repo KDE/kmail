@@ -19,7 +19,7 @@
 #define KMSYSTEMTRAY_H
 
 #include <ksystemtrayicon.h>
-
+#include <akonadi/collection.h>
 #include <QMap>
 #include <QPointer>
 #include <QVector>
@@ -29,7 +29,6 @@
 
 #include <time.h>
 
-class KMFolder;
 class QPoint;
 class QMenu;
 
@@ -49,25 +48,35 @@ public:
   void setMode(int mode);
   int mode() const;
 
+  void hideKMail();
   bool hasUnreadMail() const;
 
 public slots:
   void foldersChanged();
 
 private slots:
+#if 0
   void updateNewMessageNotification(KMFolder * folder);
+#endif
   void selectedAccount(int);
   void updateNewMessages();
   void slotActivated( QSystemTrayIcon::ActivationReason reason );
   void slotContextMenuAboutToShow();
 
 protected:
+  bool mainWindowIsOnCurrentDesktop();
+  void showKMail();
   void buildPopupMenu();
   void updateCount();
-
+#if 0
   QString prettyName(KMFolder *);
-
+#endif
 private:
+
+  bool mParentVisible;
+  QPoint mPosOfMainWin;
+  int mDesktopOfMainWin;
+
   int mMode;
   int mCount;
 
@@ -75,9 +84,11 @@ private:
   QAction *mSendQueued;
   QPixmap mDefaultIcon;
 
-  QVector<KMFolder*> mPopupFolders;
+  QVector<Akonadi::Collection> mPopupFolders;
+#if 0
   QMap<QPointer<KMFolder>, int> mFoldersWithUnread;
   QMap<QPointer<KMFolder>, bool> mPendingUpdates;
+#endif
   QTimer *mUpdateTimer;
   time_t mLastUpdate;
 };

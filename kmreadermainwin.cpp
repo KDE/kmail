@@ -41,25 +41,27 @@
 #include <KFontAction>
 #include <KFontSizeAction>
 #include <kstatusbar.h>
-#include <khtml_part.h>
+#include <kwebview.h>
 #include "kmcommands.h"
 #include "kmenubar.h"
 #include "kmenu.h"
-#include "kmfolder.h"
 #include "kmmainwidget.h"
-#include "csshelper.h"
+#include "messageviewer/csshelper.h"
 #include "customtemplatesmenu.h"
 #include "messageactions.h"
-#include "kmmsgdict.h"
-#include "mainfolderview.h"
+#include "util.h"
+#include "foldercollection.h"
 
 #include <akonadi/contact/contactsearchjob.h>
 #include <kpimutils/email.h>
+#include <kmime/kmime_message.h>
+
+#include <messageviewer/viewer.h>
+#include <akonadi/item.h>
 
 KMReaderMainWin::KMReaderMainWin( bool htmlOverride, bool htmlLoadExtOverride,
                                   char *name )
-  : KMail::SecondaryWindow( name ? name : "readerwindow#" ),
-    mMsg( 0 )
+  : KMail::SecondaryWindow( name ? name : "readerwindow#" )
 {
   mReaderWin = new KMReaderWin( this, this, actionCollection() );
   //mReaderWin->setShowCompleteMessage( true );
@@ -74,8 +76,7 @@ KMReaderMainWin::KMReaderMainWin( bool htmlOverride, bool htmlLoadExtOverride,
 
 //-----------------------------------------------------------------------------
 KMReaderMainWin::KMReaderMainWin( char *name )
-  : KMail::SecondaryWindow( name ? name : "readerwindow#" ),
-    mMsg( 0 )
+  : KMail::SecondaryWindow( name ? name : "readerwindow#" )
 {
   mReaderWin = new KMReaderWin( this, this, actionCollection() );
   mReaderWin->setAutoDelete( true );
@@ -84,18 +85,16 @@ KMReaderMainWin::KMReaderMainWin( char *name )
 
 
 //-----------------------------------------------------------------------------
-KMReaderMainWin::KMReaderMainWin(KMMessagePart* aMsgPart,
+KMReaderMainWin::KMReaderMainWin(KMime::Content* aMsgPart,
     bool aHTML, const QString& aFileName, const QString& pname,
     const QString & encoding, char *name )
-  : KMail::SecondaryWindow( name ? name : "readerwindow#" ),
-    mMsg( 0 )
+  : KMail::SecondaryWindow( name ? name : "readerwindow#" )
 {
   mReaderWin = new KMReaderWin( this, this, actionCollection() );
   mReaderWin->setOverrideEncoding( encoding );
   mReaderWin->setMsgPart( aMsgPart, aHTML, aFileName, pname );
   initKMReaderMainWin();
 }
-
 
 //-----------------------------------------------------------------------------
 void KMReaderMainWin::initKMReaderMainWin()
@@ -105,16 +104,15 @@ void KMReaderMainWin::initKMReaderMainWin()
   setupGUI( Keys | StatusBar | Create, "kmreadermainwin.rc" );
   mMsgActions->setupForwardingActionsList( this );
   applyMainWindowSettings( KMKernel::config()->group( "Separate Reader Window" ) );
-  if( ! mReaderWin->message() ) {
+  if( ! mReaderWin->message().isValid() ) {
     menuBar()->hide();
     toolBar( "mainToolBar" )->hide();
   }
 
   connect( kmkernel, SIGNAL( configChanged() ),
            this, SLOT( slotConfigChanged() ) );
-
-  connect( mReaderWin->htmlPart(), SIGNAL( onURL( const QString& ) ),
-           statusBar(), SLOT( showMessage(const QString& ) ) );
+  connect( mReaderWin->htmlPart()->page(), SIGNAL( linkHovered( const QString &, const QString &, const QString & ) ),
+           statusBar(), SLOT( slotshowMessage(const QString & )));
 }
 
 //-----------------------------------------------------------------------------
@@ -129,53 +127,28 @@ void KMReaderMainWin::setUseFixedFont( bool useFixedFont )
   mReaderWin->setUseFixedFont( useFixedFont );
 }
 
-//-----------------------------------------------------------------------------
-void KMReaderMainWin::showMsg( const QString & encoding, KMMessage *msg,
-                               unsigned long serNumOfOriginalMessage, int nodeIdOffset )
+void KMReaderMainWin::showMessage( const QString & encoding, const Akonadi::Item &msg )
 {
   mReaderWin->setOverrideEncoding( encoding );
-  mReaderWin->setMsg( msg, true );
-  if ( serNumOfOriginalMessage != 0 ) {
-    Q_ASSERT( nodeIdOffset != -1 );
-    mReaderWin->setOriginalMsg( serNumOfOriginalMessage, nodeIdOffset );
-  }
+  mReaderWin->setMessage( msg, MessageViewer::Viewer::Force );
+  KMime::Message::Ptr message = KMail::Util::message( msg );
+  if ( message )
+    setCaption( message->subject()->asUnicodeString() );
   mReaderWin->slotTouchMessage();
-  setCaption( msg->subject() );
   mMsg = msg;
   mMsgActions->setCurrentMessage( msg );
   menuBar()->show();
   toolBar( "mainToolBar" )->show();
-
-  connect ( msg->parent(), SIGNAL( destroyed( QObject* ) ), this, SLOT( slotFolderRemoved( QObject* ) ) );
-
-}
-
-void KMReaderMainWin::slotFolderRemoved( QObject* folderPtr )
-{
-  assert(mMsg);
-  assert(folderPtr == mMsg->parent());
-  if( mMsg && folderPtr == mMsg->parent() )
-    mMsg->setParent( 0 );
 }
 
 //-----------------------------------------------------------------------------
 void KMReaderMainWin::slotTrashMsg()
 {
-  if ( !mMsg )
+  if ( !mMsg.isValid() )
     return;
-  // find the real msg by its sernum
-  KMFolder* parent;
-  int index;
-  KMMsgDict::instance()->getLocation( mMsg->getMsgSerNum(), &parent, &index );
-  if (parent) {
-    KMMessage *msg = parent->getMsg( index );
-    if (msg) {
-      // now delete the msg and close this window
-      KMTrashMsgCommand *command = new KMTrashMsgCommand( parent, msg );
-      command->start();
-      close();
-    }
-  }
+  KMTrashMsgCommand *command = new KMTrashMsgCommand( mMsg.parentCollection(), mMsg, -1 );
+  command->start();
+  close();
 }
 
 //-----------------------------------------------------------------------------
@@ -193,9 +166,10 @@ void KMReaderMainWin::slotPrintMsg()
 void KMReaderMainWin::slotForwardInlineMsg()
 {
    KMCommand *command = 0;
-   if ( mReaderWin->message() && mReaderWin->message()->parent() ) {
-    command = new KMForwardCommand( this, mReaderWin->message(),
-        mReaderWin->message()->parent()->identity() );
+   if ( mReaderWin->message().isValid() && mReaderWin->message().parentCollection().isValid() ) {
+     QSharedPointer<FolderCollection> fd = FolderCollection::forCollection( mReaderWin->message().parentCollection() );
+     command = new KMForwardCommand( this, mReaderWin->message(),
+                                     fd->identity() );
    } else {
     command = new KMForwardCommand( this, mReaderWin->message() );
    }
@@ -206,9 +180,10 @@ void KMReaderMainWin::slotForwardInlineMsg()
 void KMReaderMainWin::slotForwardAttachedMsg()
 {
    KMCommand *command = 0;
-   if ( mReaderWin->message() && mReaderWin->message()->parent() ) {
+   if ( mReaderWin->message().isValid() && mReaderWin->message().parentCollection().isValid() ) {
+     QSharedPointer<FolderCollection> fd = FolderCollection::forCollection( mReaderWin->message().parentCollection() );
      command = new KMForwardAttachedCommand( this, mReaderWin->message(),
-        mReaderWin->message()->parent()->identity() );
+        fd->identity() );
    } else {
      command = new KMForwardAttachedCommand( this, mReaderWin->message() );
    }
@@ -225,7 +200,6 @@ void KMReaderMainWin::slotRedirectMsg()
 //-----------------------------------------------------------------------------
 void KMReaderMainWin::slotCustomReplyToMsg( const QString &tmpl )
 {
-  kDebug() << "Reply with template:" << tmpl;
   KMCommand *command = new KMCustomReplyToCommand( this,
                                                    mReaderWin->message(),
                                                    mReaderWin->copyText(),
@@ -236,7 +210,6 @@ void KMReaderMainWin::slotCustomReplyToMsg( const QString &tmpl )
 //-----------------------------------------------------------------------------
 void KMReaderMainWin::slotCustomReplyAllToMsg( const QString &tmpl )
 {
-  kDebug() << "Reply to All with template:" << tmpl;
   KMCommand *command = new KMCustomReplyAllToCommand( this,
                                                       mReaderWin->message(),
                                                       mReaderWin->copyText(),
@@ -247,21 +220,9 @@ void KMReaderMainWin::slotCustomReplyAllToMsg( const QString &tmpl )
 //-----------------------------------------------------------------------------
 void KMReaderMainWin::slotCustomForwardMsg( const QString &tmpl)
 {
-  kDebug() << "Forward with template:" << tmpl;
   KMCommand *command = new KMCustomForwardCommand( this,
                                                    mReaderWin->message(),
                                                    0, tmpl );
-  command->start();
-}
-
-//-----------------------------------------------------------------------------
-void KMReaderMainWin::slotShowMsgSrc()
-{
-  KMMessage *msg = mReaderWin->message();
-  if ( !msg )
-    return;
-  KMCommand *command = new KMShowMsgSrcCommand( this, msg,
-                                                mReaderWin->isFixedFont() );
   command->start();
 }
 
@@ -281,14 +242,14 @@ void KMReaderMainWin::setupAccel()
   mMsgActions = new KMail::MessageActions( actionCollection(), this );
   mMsgActions->setMessageView( mReaderWin );
   //----- File Menu
-  mSaveAsAction = KStandardAction::saveAs( mReaderWin, SLOT( slotSaveMsg() ),
+  mSaveAsAction = KStandardAction::saveAs( mReaderWin->viewer(), SLOT( slotSaveMessage() ),
                                            actionCollection() );
   mSaveAsAction->setShortcut( KStandardShortcut::shortcut( KStandardShortcut::Save ) );
 
   mPrintAction = KStandardAction::print( this, SLOT( slotPrintMsg() ), actionCollection() );
 
   mSaveAtmAction  = new KAction(KIcon("mail-attachment"), i18n("Save A&ttachments..."), actionCollection() );
-  connect( mSaveAtmAction, SIGNAL(triggered(bool)), mReaderWin, SLOT(slotSaveAttachments()) );
+  connect( mSaveAtmAction, SIGNAL(triggered(bool)), mReaderWin->viewer(), SLOT(slotAttachmentSaveAs()) );
 
   mTrashAction = new KAction( KIcon( "user-trash" ), i18n("&Move to Trash"), this );
   mTrashAction->setIconText( i18nc( "@action:intoolbar Move to Trash", "Trash" ) );
@@ -305,7 +266,7 @@ void KMReaderMainWin::setupAccel()
   //----- View Menu
   mViewSourceAction  = new KAction(i18n("&View Source"), this);
   actionCollection()->addAction("view_source", mViewSourceAction );
-  connect(mViewSourceAction, SIGNAL(triggered(bool) ), SLOT(slotShowMsgSrc()));
+  connect(mViewSourceAction, SIGNAL(triggered(bool) ), mReaderWin->viewer(), SLOT(slotShowMessageSource()));
   mViewSourceAction->setShortcut(QKeySequence(Qt::Key_V));
 
   //----- Message Menu
@@ -321,16 +282,12 @@ void KMReaderMainWin::setupAccel()
   connect( fontSizeAction, SIGNAL( fontSizeChanged( int ) ),
            SLOT( slotSizeAction( int ) ) );
 
-  mCopyActionMenu = new KActionMenu(i18n("&Copy To"), this);
-  actionCollection()->addAction("copy_to", mCopyActionMenu );
-
-  updateMessageMenu();
   updateCustomTemplateMenus();
 
-  connect( mReaderWin, SIGNAL(popupMenu(KMMessage&,const KUrl&,const QPoint&)),
-           this, SLOT(slotMsgPopup(KMMessage&,const KUrl&,const QPoint&)) );
-  connect( mReaderWin, SIGNAL(urlClicked(const KUrl&,int)),
-           mReaderWin, SLOT(slotUrlClicked()) );
+  connect( mReaderWin->viewer(), SIGNAL( popupMenu(const Akonadi::Item&,const KUrl&,const QPoint&) ),
+           this, SLOT( slotMessagePopup(const Akonadi::Item&,const KUrl&,const QPoint&) ) );
+  connect( mReaderWin->viewer(), SIGNAL(urlClicked(const KUrl&,int)),
+           mReaderWin->viewer(), SLOT(slotUrlClicked()) );
 
   setStandardToolBarMenuEnabled(true);
   KStandardAction::configureToolbars(this, SLOT(slotEditToolbars()), actionCollection());
@@ -360,28 +317,27 @@ void KMReaderMainWin::updateCustomTemplateMenus()
 
 
 //-----------------------------------------------------------------------------
-void KMReaderMainWin::updateMessageMenu()
+KAction *KMReaderMainWin::copyActionMenu()
 {
   KMMainWidget* mainwin = kmkernel->getKMMainWidget();
   if ( mainwin )
-    mainwin->mainFolderView()->folderToPopupMenu( KMail::MainFolderView::CopyMessage, this,
-                                                  mCopyActionMenu->menu() );
+    return mainwin->akonadiStandardAction(  Akonadi::StandardActionManager::CopyItemToMenu );
+  return 0;
 }
 
-
-//-----------------------------------------------------------------------------
-void KMReaderMainWin::slotMsgPopup( KMMessage &aMsg, const KUrl &aUrl, const QPoint &aPoint )
+void KMReaderMainWin::slotMessagePopup(const Akonadi::Item&aMsg ,const KUrl&aUrl,const QPoint& aPoint)
 {
   KMenu *menu = new KMenu;
   mUrl = aUrl;
-  mMsg = &aMsg;
+  mMsg = aMsg;
+
   bool urlMenuAdded = false;
   bool copyAdded = false;
   if ( !aUrl.isEmpty() ) {
     if ( aUrl.protocol() == "mailto" ) {
       // popup on a mailto URL
       menu->addAction( mReaderWin->mailToComposeAction() );
-      if ( mMsg ) {
+      if ( mMsg.isValid() ) {
         menu->addAction( mReaderWin->mailToReplyAction() );
         menu->addAction( mReaderWin->mailToForwardAction() );
         menu->addSeparator();
@@ -420,28 +376,27 @@ void KMReaderMainWin::slotMsgPopup( KMMessage &aMsg, const KUrl &aUrl, const QPo
     menu->addAction( mReaderWin->selectAllAction() );
   } else if ( !urlMenuAdded ) {
     // popup somewhere else (i.e., not a URL) on the message
-
-    if (!mMsg) {
+    if (!mMsg.isValid()) {
       // no message
       delete menu;
       return;
     }
-
-    if ( ! ( aMsg.parent() && ( aMsg.parent()->isSent() ||
-                                aMsg.parent()->isDrafts() ||
-                                aMsg.parent()->isTemplates() ) ) ) {
-      // add the reply and forward actions only if we are not in a sent-mail,
-      // templates or drafts folder
-      //
-      // FIXME: needs custom templates added to menu
-      // (see KMMainWidget::updateCustomTemplateMenus)
-      menu->addAction( mMsgActions->replyMenu() );
-      menu->addAction( mMsgActions->forwardMenu() );
-      menu->addSeparator();
+    if ( aMsg.parentCollection().isValid() ) {
+      Akonadi::Collection col = aMsg.parentCollection();
+      if ( ! ( KMKernel::self()->folderIsSentMailFolder( col ) ||
+               KMKernel::self()->folderIsDrafts( col ) ||
+               KMKernel::self()->folderIsTemplates( col ) ) ) {
+        // add the reply and forward actions only if we are not in a sent-mail,
+        // templates or drafts folder
+        //
+        // FIXME: needs custom templates added to menu
+        // (see KMMainWidget::updateCustomTemplateMenus)
+        menu->addAction( mMsgActions->replyMenu() );
+        menu->addAction( mMsgActions->forwardMenu() );
+        menu->addSeparator();
+      }
     }
-
-    updateMessageMenu();
-    menu->addAction( mCopyActionMenu );
+    menu->addAction( copyActionMenu() );
 
     menu->addSeparator();
     menu->addAction( mViewSourceAction );
@@ -455,16 +410,6 @@ void KMReaderMainWin::slotMsgPopup( KMMessage &aMsg, const KUrl &aUrl, const QPo
   }
   menu->exec( aPoint, 0 );
   delete menu;
-}
-
-void KMReaderMainWin::slotCopySelectedMessagesToFolder( QAction* act )
-{
-  KMFolder * f = static_cast<KMFolder *>( act->data().value<void *>() );
-  if ( !f )
-    return;
-
-  KMCommand *command = new KMCopyCommand( f, mMsg );
-  command->start();
 }
 
 void KMReaderMainWin::slotFontAction( const QString& font)
@@ -489,9 +434,9 @@ void KMReaderMainWin::slotSizeAction( int size )
 
 void KMReaderMainWin::slotCreateTodo()
 {
-  if ( !mMsg )
+  if ( !mReaderWin->message().isValid() )
     return;
-  KMCommand *command = new CreateTodoCommand( this, mMsg );
+  KMCommand *command = new CreateTodoCommand( this, mReaderWin->message() );
   command->start();
 }
 

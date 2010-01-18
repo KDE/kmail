@@ -31,8 +31,11 @@ class QWidget;
 class KAction;
 class KActionMenu;
 class KActionCollection;
-class KMMessage;
 class KXMLGUIClient;
+
+namespace Akonadi {
+class Item;
+}
 
 namespace KMail {
 
@@ -44,6 +47,7 @@ class MessageActions : public QObject
   Q_OBJECT
   public:
     MessageActions( KActionCollection* ac, QWidget *parent );
+    ~MessageActions();
     void setMessageView( KMReaderWin *msgView );
 
     /**
@@ -58,9 +62,9 @@ class MessageActions : public QObject
      */
     void setupForwardingActionsList( KXMLGUIClient *guiClient );
 
-    void setCurrentMessage( KMMessage *msg );
-    void setSelectedSernums( const QList<quint32> &sernums );
-    void setSelectedVisibleSernums( const QList<quint32> &sernums );
+    void setCurrentMessage( const Akonadi::Item &item );
+    void setSelectedItem( const Akonadi::Item::List& items );
+    void setSelectedVisibleItems( const Akonadi::Item::List& items );
 
     KActionMenu* replyMenu() const { return mReplyActionMenu; }
     KAction* replyListAction() const { return mReplyListAction; }
@@ -73,20 +77,22 @@ class MessageActions : public QObject
     KActionMenu *forwardMenu() const { return mForwardActionMenu; }
 
     KAction* editAction() const { return mEditAction; }
+    KAction* annotateAction() const { return mAnnotateAction; }
 
     KActionMenu* mailingListActionMenu() const { return mMailingListActionMenu; }
 
   public slots:
     void editCurrentMessage();
+    void annotateMessage();
 
   private:
     void updateActions();
     template<typename T> void replyCommand()
     {
-      if ( !mCurrentMessage )
+      if ( !mCurrentItem.isValid() )
         return;
       const QString text = mMessageView ? mMessageView->copyText() : "";
-      KMCommand *command = new T( mParent, mCurrentMessage, text );
+      KMCommand *command = new T( mParent, mCurrentItem, text );
       command->start();
     }
     void setMessageStatus( KPIM::MessageStatus status, bool toggle = false );
@@ -110,9 +116,9 @@ class MessageActions : public QObject
   private:
     QWidget *mParent;
     KActionCollection *mActionCollection;
-    KMMessage* mCurrentMessage;
-    QList<quint32> mSelectedSernums;
-    QList<quint32> mVisibleSernums;
+    Akonadi::Item mCurrentItem;
+    Akonadi::Item::List mSelectedItems;
+    Akonadi::Item::List mVisibleItems;
     KMReaderWin *mMessageView;
 
     KActionMenu *mReplyActionMenu;
@@ -124,7 +130,7 @@ class MessageActions : public QObject
     KActionMenu *mForwardActionMenu;
     KActionMenu *mMailingListActionMenu;
     KToggleAction *mToggleFlagAction, *mToggleToActAction;
-    KAction *mEditAction;
+    KAction *mEditAction, *mAnnotateAction;
     bool mKorganizerIsOnSystem;
 };
 

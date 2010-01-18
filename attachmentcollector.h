@@ -34,7 +34,9 @@
 
 #include <vector>
 
-class partNode;
+namespace KMime {
+  class Content;
+}
 
 namespace KMail {
 
@@ -43,12 +45,12 @@ namespace KMail {
     AttachmentCollector()
       {}
 
-    void collectAttachmentsFrom( partNode * node );
+    void collectAttachmentsFrom( KMime::Content * node );
 
-    const std::vector<partNode*> & attachments() const { return mAttachments; }
+    const std::vector<KMime::Content*> & attachments() const { return mAttachments; }
 
   private:
-    std::vector<partNode*> mAttachments;
+    std::vector<KMime::Content*> mAttachments;
 
   private: // disabled
     AttachmentCollector( const AttachmentCollector & );
@@ -57,4 +59,4 @@ namespace KMail {
 
 } // namespace KMail
 
-#endif // __KMAIL_BODYPARTFORMATTER_H__
+#endif // __KMAIL_ATTACHMENTCOLLECTOR_H__

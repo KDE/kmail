@@ -191,6 +191,36 @@ Key=TodoMessage,ToActMessage
 Group=Fonts
 Key=list-todo-font,list-toact-font
 
+########## W A R N I N G #### W A R N I N G #### W A R N I N G #######
+# collection of small adjustments. Since updates will be added to this
+# script during the pre-4.4 Akonadi, trunk users should regularly
+# remove the "4.4-{misc,moves}-xx" keys from their kmailrc and kconf_updaterc.
+# For this to work, the script MUST be idempotent, ie. be robust
+# against being run multiple times.
+######################################################################
+# Misc settings for KMail-akonadi
+Id=4.4-akonadi
+File=kmailrc
+Group=Reader
+Key=showColorbar,showColorBar
+Group=MessageListView
+Key=DisplayMessageToolTips,MessageToolTipEnabled
+Group=MessageListView
+Key=HideTabBarWithSingleTab,AutoHideTabBarWithSingleTab
+Key=list-todo-font,list-toact-font
+Group=Reader,MessageListView::Fonts
+Key=list-font,MessageListFont
+Key=list-important-font,ImportantMessageFont
+Key=list-new-font,NewMessageFont
+Key=list-unread-font,UnreadMessageFont
+Key=list-toact-font,TodoMessageFont
+Group=Reader,MessageListView::Colors
+Key=NewMessage,NewMessageColor
+Key=UnreadMessage,UnreadMessageColor
+Key=FlagMessage,ImportantMessageColor
+Key=ToActMessage,TodoMessageColor
+
+
 #
 # Important notice:
 # If you add updates here, keep this text below them.

@@ -19,14 +19,16 @@
 */
 
 #include "kmfilterdlg.h"
+#include "kmagentmanager.h"
 #include <klistwidgetsearchline.h>
+
+#include <akonadi/agentinstance.h>
+
 
 // other KMail headers:
 #include "kmsearchpatternedit.h"
 #include "kmfiltermgr.h"
 #include "kmmainwidget.h"
-#include "accountmanager.h"
-using KMail::AccountManager;
 #include "filterimporterexporter.h"
 using KMail::FilterImporterExporter;
 
@@ -515,7 +517,7 @@ void KMFilterDlg::slotApplicabilityChanged()
     // Advanced tab functionality - Update list of accounts this filter applies to
     QTreeWidgetItemIterator it( mAccountList );
     while( QTreeWidgetItem * item = *it ) {
-      int id = item->text( 2 ).toInt();
+      QString id = item->text( 2 );
       item->setCheckState( 0, mFilter->applyOnAccount( id ) ? Qt::Checked :
                                                               Qt::Unchecked );
       ++it;
@@ -537,7 +539,7 @@ void KMFilterDlg::slotApplicableAccountsChanged()
     QTreeWidgetItemIterator it( mAccountList );
 
     while( QTreeWidgetItem *item = *it ) {
-      int id = item->text( 2 ).toInt();
+      QString id = item->text( 2 );
       mFilter->setApplyOnAccount( id, item->checkState( 0 ) == Qt::Checked );
       ++it;
     }
@@ -586,21 +588,18 @@ void KMFilterDlg::slotUpdateAccountList()
   mAccountList->clear();
 
   QTreeWidgetItem *top = 0;
-
   // Block the signals here, otherwise we end up calling
   // slotApplicableAccountsChanged(), which will read the incomplete item
   // state and write that back to the filter
   mAccountList->blockSignals( true );
-  QList<KMAccount*>::iterator accountIt = kmkernel->acctMgr()->begin();
-  while ( accountIt != kmkernel->acctMgr()->end() ) {
-    KMAccount *account = *accountIt;
-    ++accountIt;
+  Akonadi::AgentInstance::List lst = kmkernel->agentManager()->instanceList();
+  for ( int i = 0; i <lst.count(); ++i ) {
     QTreeWidgetItem *listItem = new QTreeWidgetItem( mAccountList, top );
-    listItem->setText( 0, account->name() );
-    listItem->setText( 1, KAccount::displayNameForType( account->type() ) );
-    listItem->setText( 2, QString( "%1" ).arg( account->id() ) );
+    listItem->setText( 0, lst.at( i ).name() );
+    listItem->setText( 1, lst.at( i ).type().name() );
+    listItem->setText( 2, QString( "%1" ).arg( lst.at( i ).identifier() ) );
     if ( mFilter )
-      listItem->setCheckState( 0, mFilter->applyOnAccount( account->id() ) ?
+      listItem->setCheckState( 0, mFilter->applyOnAccount( lst.at( i ).identifier() ) ?
                                   Qt::Checked : Qt::Unchecked );
     top = listItem;
   }

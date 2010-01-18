@@ -20,7 +20,7 @@
 #include "kmstartup.h"
 
 #include "kmkernel.h" //control center
-#include "kcursorsaver.h"
+#include "messageviewer/kcursorsaver.h"
 
 #include <klocale.h>
 #include <kcomponentdata.h>
@@ -245,6 +245,8 @@ void insertLibraryCataloguesAndIcons() {
     "libkleopatra",
     "libkmime",
     "libmessagelist"
+    "libmessageviewer"
+    "libmessagecore"
   };
 
   KLocale * l = KGlobal::locale();

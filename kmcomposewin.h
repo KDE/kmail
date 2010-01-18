@@ -1,21 +1,24 @@
-/* -*- mode: C++; c-file-style: "gnu" -*-
-  This file is part of KMail, the KDE mail client.
-  Copyright (c) 1997 Markus Wuebben <markus.wuebben@kde.org>
-
-  This program is free software; you can redistribute it and/or modify
-  it under the terms of the GNU General Public License as published by
-  the Free Software Foundation; either version 2 of the License, or
-  (at your option) any later version.
-
-  This program is distributed in the hope that it will be useful,
-  but WITHOUT ANY WARRANTY; without even the implied warranty of
-  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
-  GNU General Public License for more details.
-
-  You should have received a copy of the GNU General Public License along
-  with this program; if not, write to the Free Software Foundation, Inc.,
-  51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
-*/
+/*
+ * This file is part of KMail.
+ * Copyright (c) 2009 Constantin Berzan <exit3219@gmail.com>
+ *
+ * Based on KMail code by:
+ * Copyright (c) 1997 Markus Wuebben <markus.wuebben@kde.org>
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License along
+ * with this program; if not, write to the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
+ */
 
 #ifndef __KMComposeWin
 #define __KMComposeWin
@@ -36,6 +39,9 @@
 // LIBKDEPIM includes
 #include <libkdepim/kmeditor.h>
 
+// KDEPIMLIBS includes
+#include <kmime/kmime_message.h>
+
 // Other includes
 #include "kleo/enum.h"
 
@@ -46,15 +52,11 @@ class QGridLayout;
 class QLabel;
 class QPushButton;
 class QSplitter;
-class QTreeWidgetItem;
 
+class CodecAction;
 class KLineEdit;
 class KMComposeWin;
 class KMComposerEditor;
-class KMFolderComboBox;
-class KMFolder;
-class KMMessage;
-class KMMessagePart;
 class KSelectAction;
 class KSelectAction;
 class KAction;
@@ -65,14 +67,12 @@ class KTempDir;
 class KToggleAction;
 class KUrl;
 class KRecentFilesAction;
-class MessageComposer;
 class RecipientsEditor;
 class KMLineEdit;
-class KMAtmListViewItem;
 class SnippetWidget;
-class partNode;
 
-namespace KPIM {
+namespace boost {
+  template <typename T> class shared_ptr;
 }
 
 namespace Sonnet {
@@ -84,21 +84,37 @@ namespace KPIMIdentities {
   class Identity;
 }
 
+namespace Akonadi {
+  class CollectionComboBox;
+}
+
 namespace MailTransport {
   class TransportComboBox;
 }
 
 namespace KMail {
-  class AttachmentListView;
-  class EditorWatcher;
+  class AttachmentController;
+  class AttachmentModel;
+  class AttachmentView;
 }
 
 namespace KIO {
   class Job;
 }
 
-namespace GpgME {
-  class Error;
+namespace Message {
+  class Composer;
+  class GlobalPart;
+  class InfoPart;
+  class TextPart;
+}
+
+namespace MailTransport{
+  class MessageQueueJob;
+}
+
+namespace Message {
+  class InfoPart;
 }
 
 //-----------------------------------------------------------------------------
@@ -109,16 +125,14 @@ class KMComposeWin : public KMail::Composer
 
   friend class ::KMComposerEditor;
 
-  friend class ::MessageComposer;
-
   private: // mailserviceimpl, kmkernel, kmcommands, callback, kmmainwidget
-    explicit KMComposeWin( KMMessage *msg = 0, TemplateContext context = NoTemplate,
+    explicit KMComposeWin( const KMime::Message::Ptr &msg = KMime::Message::Ptr(), TemplateContext context = NoTemplate,
                            uint identity = 0, const QString & textSelection = QString(),
                            const QString & customTemplate = QString() );
     ~KMComposeWin();
 
   public:
-    static Composer *create( KMMessage *msg = 0, TemplateContext context = NoTemplate,
+    static Composer *create( const KMime::Message::Ptr &msg = KMime::Message::Ptr(), TemplateContext context = NoTemplate,
                              uint identity = 0, const QString & textSelection = QString(),
                              const QString & customTemplate = QString() );
 
@@ -129,6 +143,7 @@ class KMComposeWin : public KMail::Composer
    * Start of D-Bus callable stuff. The D-Bus methods need to be public slots,
    * otherwise they can't be accessed.
    */
+  // TODO clean-up dbus stuff; make the adaptor a friend; etc.
   public slots:
 
     Q_SCRIPTABLE void send( int how );
@@ -153,6 +168,9 @@ class KMComposeWin : public KMail::Composer
    * End of D-Bus callable stuff
    */
 
+  signals:
+    void identityChanged( const KPIMIdentities::Identity &identity );
+
   private:
 
     /**
@@ -165,7 +183,7 @@ class KMComposeWin : public KMail::Composer
      * Set the message the composer shall work with. This discards
      * previous messages without calling applyChanges() on them before.
      */
-     void setMsg( KMMessage *newMsg, bool mayAutoSign=true,
+    void setMsg( const KMime::Message::Ptr &newMsg, bool mayAutoSign=true,
                  bool allowDecryption=false, bool isModified=false );
 
      /**
@@ -184,27 +202,10 @@ class KMComposeWin : public KMail::Composer
       */
      void forceDisableHtml();
 
-     /** Don't check if there are too many recipients for a mail, eg. when sending out invitations. */
-     void disableRecipientNumberCheck();
-
-    /** Don't check for forgotten attachments for a mail, eg. when sending out invitations. */
-    void disableForgottenAttachmentsCheck();
-
-    /**
-    * Ignore the "sticky" setting of the transport combo box and prefer the X-KMail-Transport
-    * header field of the message instead.
-    * Do the same for the identity combo box, don't obey the "sticky" setting but use the
-    * X-KMail-Identity header field instead.
-    *
-    * This is useful when sending out invitations, since you don't see the GUI and want the
-    * identity and transport to be set to the values stored in the messages.
-    */
-    void ignoreStickyFields();
-
      /**
       * Returns @c true while the message composing is in progress.
       */
-     bool isComposing() const { return mComposer != 0; }
+     bool isComposing() const { return !mComposers.isEmpty(); }
 
      /**
       * Set the text selection the message is a response to.
@@ -221,13 +222,7 @@ class KMComposeWin : public KMail::Composer
      * Returns message of the composer. To apply the user changes to the
      * message, call applyChanges() first.
      */
-     KMMessage *msg() const { return mMsg; }
-
-  public: // kmkernel
-    /**
-     * Set the filename which is used for autosaving.
-     */
-    void setAutoSaveFilename( const QString & filename );
+    KMime::Message::Ptr msg() const { return mMsg; }
 
   private:
     /**
@@ -240,26 +235,12 @@ class KMComposeWin : public KMail::Composer
      */
     void setModified( bool modified );
 
-  public: // kmkernel, callback
-    /**
-     * If this flag is set the message of the composer is deleted when
-     * the composer is closed and the message was not sent. Default: false
-     */
-     inline void setAutoDelete( bool f ) { mAutoDeleteMsg = f; }
-
   public: // kmcommand
     /**
      * If this folder is set, the original message is inserted back after
      * canceling
      */
-     void setFolder( KMFolder *aFolder ) { mFolder = aFolder; }
-
-  public: // kmkernel, kmcommand, mailserviceimpl
-
-    /**
-     * Reimplemented
-     */
-     virtual void setCharset( const QByteArray &aCharset, bool forceDefault = false );
+  void setFolder(const Akonadi::Collection &aFolder ) { mFolder = aFolder; }
 
   public: // kmcommand
     /**
@@ -312,9 +293,7 @@ class KMComposeWin : public KMail::Composer
      * Actions:
      */
     void slotPrint();
-    void slotAttachFile();
     void slotInsertRecentFile( const KUrl & );
-    void slotAttachedFile( const KUrl & );
     void slotRecentListFileClear();
 
   public slots: // kmkernel, callback
@@ -344,11 +323,12 @@ class KMComposeWin : public KMail::Composer
     void slotFormatReset();
     void slotMarkAll();
 
-    void slotFolderRemoved( KMFolder * );
-    void slotEditDone( KMail::EditorWatcher* watcher );
+  void slotFolderRemoved( const Akonadi::Collection& );
+    //void slotEditDone( KMail::EditorWatcher* watcher );
     void slotLanguageChanged( const QString &language );
 
     void slotEditorTextChanged();
+
   public slots: // kmkernel
     /**
        Tell the composer to always send the message, even if the user
@@ -374,7 +354,6 @@ class KMComposeWin : public KMail::Composer
      */
     void slotInsertFile();
 
-    void slotSetCharset();
     /**
      * Check spelling of text.
      */
@@ -436,38 +415,6 @@ class KMComposeWin : public KMail::Composer
     */
     void slotInsertSignatureAtCursor();
 
-    /**
-     * Attach sender's public key.
-     */
-    void slotInsertMyPublicKey();
-
-    /**
-     * Insert arbitrary public key from public keyring in the editor.
-     */
-    void slotInsertPublicKey();
-
-    /**
-     * Enable/disable some actions in the Attach menu
-     */
-    void slotUpdateAttachActions();
-    void slotAttachEdit();
-    void slotAttachEditWith();
-
-    /**
-     * Open a popup-menu in the attachments-listbox.
-     */
-    void slotAttachPopupMenu( QTreeWidgetItem* );
-
-    /**
-     * Attachment operations.
-     */
-    void slotAttachOpen();
-    void slotAttachView();
-    void slotAttachRemove();
-    void slotAttachSave();
-    void slotAttachProperties();
-    void slotAttachmentDragStarted();
-
     void slotCleanSpace();
     void slotToggleMarkup();
     void slotTextModeChanged( KRichTextEdit::Mode );
@@ -489,44 +436,53 @@ class KMComposeWin : public KMail::Composer
      */
     void slotIdentityChanged( uint uoid, bool initalChange = false );
 
-    /**
-     * KIO slots for attachment insertion
-     */
-    void slotAttachFileData( KIO::Job *, const QByteArray & );
-    void slotAttachFileResult( KJob * );
-
     void slotCursorPositionChanged();
 
     void slotSpellCheckingStatus( const QString & status );
 
-  public: // kmkernel, attachmentlistview
-    bool addAttach( const KUrl &url );
-
   public: // kmcommand
+    // FIXME we need to remove these, but they're pure virtual in Composer.
+    void addAttach( KMime::Content *msgPart );
+
+  public: // AttachmentController
+    const KPIMIdentities::Identity &identity() const;
+
+  public:
+    /** Don't check if there are too many recipients for a mail, eg. when sending out invitations. */
+    virtual void disableRecipientNumberCheck();
+
+    /** Don't check for forgotten attachments for a mail, eg. when sending out invitations. */
+    void disableForgottenAttachmentsCheck();
+
     /**
-     * Add an attachment to the list.
-     */
-    void addAttach( KMMessagePart *msgPart );
+    * Ignore the "sticky" setting of the transport combo box and prefer the X-KMail-Transport
+    * header field of the message instead.
+    * Do the same for the identity combo box, don't obey the "sticky" setting but use the
+    * X-KMail-Identity header field instead.
+    *
+    * This is useful when sending out invitations, since you don't see the GUI and want the
+    * identity and transport to be set to the values stored in the messages.
+    */
+    void ignoreStickyFields();
 
   private:
-    const KPIMIdentities::Identity & identity() const;
     uint identityUid() const;
     Kleo::CryptoMessageFormat cryptoMessageFormat() const;
     bool encryptToSelf() const;
 
-  signals:
-    void applyChangesDone( bool );
-    void attachmentAdded( const KUrl &, bool success );
-
   private:
     /**
      * Applies the user changes to the message object of the composer
-     * and signs/encrypts the message if activated. Returns false in
-     * case of an error (e.g. if PGP encryption fails).
-     * Disables the controls of the composer window unless @p dontDisable
-     * is true.
+     * and signs/encrypts the message if activated.
+     * Disables the controls of the composer window.
      */
-    void applyChanges( bool dontSignNorEncrypt, bool dontDisable=false );
+    void readyForSending( bool noCrypto = false );
+
+    QList< Message::Composer* > generateCryptoMessages( bool sign, bool encrypt );
+    void fillGlobalPart( Message::GlobalPart *globalPart );
+    void fillTextPart( Message::TextPart *part );
+    void fillInfoPart( Message::InfoPart *part );
+    void queueMessage( boost::shared_ptr<KMime::Message> message, Message::Composer* composer );
 
     /**
      * Install grid management and header fields. If fields exist that
@@ -592,6 +548,9 @@ class KMComposeWin : public KMail::Composer
      */
     void setFcc( const QString &idString );
 
+    void setCharset( const QByteArray &charset );
+    void setAutoCharset();
+
     /**
      * Ask for confirmation if the message was changed before close.
      */
@@ -602,34 +561,12 @@ class KMComposeWin : public KMail::Composer
      */
     virtual bool queryExit();
 
-    /**
-     * Open the attachment with the given index.
-     */
-    void openAttach( int index );
-
-    /**
-     * View the attachment with the given index.
-     */
-    void viewAttach( int index );
-
-    /**
-     * Remove an attachment from the list.
-     */
-    void removeAttach( const QString &url );
-    void removeAttach( int idx );
-
-    /**
-     * Updates an item in the QListView to represnet a given message part
-     */
-    void msgPartToItem( const KMMessagePart *msgPart, KMAtmListViewItem *lvi,
-                        bool loadDefaults = true );
-
 
     /**
      * Searches the mime tree, where root is the root node, for embedded images,
      * extracts them froom the body and adds them to the editor.
      */
-    void collectImages( partNode *root );
+    void collectImages( KMime::Content *root );
 
   private:
     /**
@@ -637,11 +574,6 @@ class KMComposeWin : public KMail::Composer
      * in case encryption isn't possible.
      */
     void setEncryption( bool encrypt, bool setByUser = false );
-
-    /**
-      Edit the attachment with the given index.
-    */
-    void editAttach( int index, bool openWith );
 
     /**
      * Turn signing on/off. If setByUser is true then a message box is shown
@@ -655,18 +587,6 @@ class KMComposeWin : public KMail::Composer
     bool userForgotAttachment();
 
     /**
-     * Retrieve encrypt flag of an attachment
-     * ( == state of it's check box in the attachments list view )
-     */
-    bool encryptFlagOfAttachment( int idx );
-
-    /**
-     * Retrieve sign flag of an attachment
-     * ( == state of it's check box in the attachments list view )
-     */
-    bool signFlagOfAttachment( int idx );
-
-    /**
      * Decrypt an OpenPGP block or strip off the OpenPGP envelope of a text
      * block with a clear text signature. This is only done if the given
      * string contains exactly one OpenPGP block.
@@ -678,7 +598,7 @@ class KMComposeWin : public KMail::Composer
     /**
      * Save the message into the Drafts or Templates folder.
      */
-    bool saveDraftOrTemplate( const QString &folderName, KMMessage *msg );
+    bool saveDraftOrTemplate( const QString &folderName, KMime::Message *msg );
 
     enum SaveIn {
       None,
@@ -691,6 +611,8 @@ class KMComposeWin : public KMail::Composer
      */
     void doSend( KMail::MessageSender::SendMethod method=KMail::MessageSender::SendDefault,
                  KMComposeWin::SaveIn saveIn = KMComposeWin::None );
+
+    void saveMessage( boost::shared_ptr<KMime::Message> message, KMComposeWin::SaveIn saveIn );
 
     /**
      * Returns the autosave interval in milliseconds (as needed for QTimer).
@@ -722,11 +644,6 @@ class KMComposeWin : public KMail::Composer
 
 
   private slots:
-    /**
-     * Compress an attachemnt with the given index
-     */
-    void compressAttach( KMAtmListViewItem *attachmentItem );
-    void uncompressAttach( KMAtmListViewItem *attachmentItem );
     void recipientEditorSizeHintChanged();
     void setMaximumHeaderSize();
 
@@ -734,8 +651,8 @@ class KMComposeWin : public KMail::Composer
     QWidget   *mMainWidget;
     MailTransport::TransportComboBox *mTransport;
     Sonnet::DictionaryComboBox *mDictionaryCombo;
-    KPIMIdentities::IdentityCombo    *mIdentity;
-    KMFolderComboBox *mFcc;
+    KPIMIdentities::IdentityCombo *mIdentity;
+    Akonadi::CollectionComboBox *mFcc;
     KMLineEdit *mEdtFrom, *mEdtReplyTo;
     KMLineEdit *mEdtSubject;
     QLabel    *mLblIdentity, *mLblTransport, *mLblFcc;
@@ -744,39 +661,30 @@ class KMComposeWin : public KMail::Composer
     QLabel    *mDictionaryLabel;
     QCheckBox *mBtnIdentity, *mBtnTransport, *mBtnFcc;
     bool mDone;
-    bool mAtmModified;
 
+    KMime::Message::Ptr mMsg;
     KMComposerEditor *mEditor;
     QGridLayout *mGrid;
-    KMMessage *mMsg;
     QString mTextSelection;
     QString mCustomTemplate;
-    QVector<KMMessage*> mComposedMessages;
-    KMail::AttachmentListView *mAtmListView;
-    QList<KMAtmListViewItem*> mAtmItemList;
-    QList<KMMessagePart*> mAtmList;
-    QMenu *mAttachMenu;
     QAction *mOpenId, *mViewId, *mRemoveId, *mSaveAsId, *mPropertiesId,
             *mEditAction, *mEditWithAction;
-    bool mAutoDeleteMsg;
     bool mSigningAndEncryptionExplicitlyDisabled;
     bool mLastSignActionState, mLastEncryptActionState;
     bool mLastIdentityHasSigningKey, mLastIdentityHasEncryptionKey;
-    KMFolder *mFolder;
+    Akonadi::Collection mFolder;
     long mShowHeaders;
     bool mConfirmSend;
-    bool mDisableBreaking;
+    //bool mDisableBreaking;
     bool mForceDisableHtml;     // Completely disable any HTML. Useful when sending invitations in the
                                 // mail body.
     int mNumHeaders;
     QFont mBodyFont, mFixedFont;
-    QList<KTemporaryFile*> mAtmTempList;
     QPalette mPalette;
     uint mId;
     TemplateContext mContext;
 
-    KAction *mAttachPK, *mAttachMPK, *mAttachRemoveAction, *mAttachSaveAction,
-            *mAttachPropertiesAction, *mCleanSpace;
+    KAction *mCleanSpace;
     KRecentFilesAction *mRecentAction;
 
     KToggleAction *mSignAction, *mEncryptAction, *mRequestMDNAction;
@@ -790,56 +698,66 @@ class KMComposeWin : public KMail::Composer
     KToggleAction *markupAction;
     KAction *actionFormatReset;
 
-    KSelectAction *mEncodingAction;
+    CodecAction *mCodecAction;
     KSelectAction *mCryptoModuleAction;
 
-    KAction * mFindText, *mFindNextText, *mReplaceText;
-
-    QByteArray mCharset;
-    QByteArray mDefCharset;
-    QStringList mCharsets;
-    bool mAutoCharset;
+    KAction *mFindText, *mFindNextText, *mReplaceText;
 
     bool mAlwaysSend;
 
     QStringList mFolderNames;
-    QList<QPointer<KMFolder> > mFolderList;
-    QMap<KJob*, KUrl> mAttachJobs;
-    KUrl::List mAttachFilesPending;
-    int mAttachFilesSend;
 
   private:
-  // helper method for slotInsert(My)PublicKey()
-    void startPublicKeyExport();
+
+    /**
+    * Writes out autosave data to the disk from the KMime::Message message.
+    * Also appends the msgNum to the filename as a message can have a number of
+    * KMime::Messages
+    */
+    void writeAutoSaveToDisk( KMime::Message::Ptr message, int msgNumber );
+
     bool canSignEncryptAttachments() const {
       return cryptoMessageFormat() != Kleo::InlineOpenPGPFormat;
     }
 
+    QString addQuotesToText( const QString &inputText ) const;
     // helper method for rethinkFields
     int calcColumnWidth( int which, long allShowing, int width ) const;
 
-    // Sends a key event with the control modifier and the specified key to
-    // the given widget. This function is protected against recursion.
-    void sendControlKeyEvent( QWidget *receiver, Qt::Key key );
+
+    /** Initialize header fields. Should be called on new messages
+      if they are not set manually. E.g. before composing. Calling
+      of setAutomaticFields(), see below, is still required. */
+    void initHeader( KMime::Message *message, uint identity=0 );
+
+    /**
+     * Fills in headers for message going into queue. Just sets from/to/bcc/cc
+    */
+    void fillQueueJobHeaders( MailTransport::MessageQueueJob* qjob, KMime::Message::Ptr message, const Message::InfoPart* infoPart );
+
+    /**
+     * Helper methods to read from config various encryption settings
+     */
+    inline bool encryptToSelf();
+    inline bool showKeyApprovalDialog();
+    inline int encryptKeyNearExpiryWarningThresholdInDays();
+    inline int signingKeyNearExpiryWarningThresholdInDays();
+    inline int encryptRootCertNearExpiryWarningThresholdInDays();
+    inline int signingRootCertNearExpiryWarningThresholdInDays();
+    inline int encryptChainCertNearExpiryWarningThresholdInDays();
+    inline int signingChainCertNearExpiryWarningThresholdInDays();
 
   private slots:
     void slotCompletionModeChanged( KGlobalSettings::Completion );
     void slotConfigChanged();
 
-    void slotComposerDone( bool );
-
-    void slotContinueDoSend( bool );
+    void slotAutoSaveComposeResult( KJob *job );
+    void slotSendComposeResult( KJob *job );
+    void slotQueueResult( KJob *job );
+    void slotCreateItemResult( KJob *job );
     void slotContinuePrint( bool );
-    void slotContinueAutoSave();
 
     void slotEncryptChiasmusToggled( bool );
-
-    /**
-     * Helper method (you could call is a bottom-half :) for
-     * startPublicKeyExport()
-     */
-    void slotPublicKeyExportResult( const GpgME::Error &err,
-                                    const QByteArray &keydata );
 
     /**
      *  toggle automatic spellchecking
@@ -857,14 +775,9 @@ class KMComposeWin : public KMail::Composer
     QWidget* mHeadersArea;
     QSplitter *mSplitter;
     QSplitter *mSnippetSplitter;
-    struct atmLoadData
-    {
-      KUrl url;
-      QByteArray data;
-      bool insert;
-      QByteArray encoding;
-    };
-    QMap<KIO::Job *, atmLoadData> mMapAtmLoadData;
+    KMail::AttachmentController *mAttachmentController;
+    KMail::AttachmentModel *mAttachmentModel;
+    KMail::AttachmentView *mAttachmentView;
 
     // These are for passing on methods over the applyChanges calls
     KMail::MessageSender::SendMethod mSendMethod;
@@ -873,21 +786,21 @@ class KMComposeWin : public KMail::Composer
     KToggleAction *mEncryptChiasmusAction;
     bool mEncryptWithChiasmus;
 
-    // The temporary object that constructs the message out of the window
-    MessageComposer *mComposer;
+    QList< Message::Composer* > mComposers;
+    Message::Composer *mDummyComposer;
+    int mPendingQueueJobs;
+    int mPendingCreateItemJobs;
 
     // Temp var for slotPrint:
     bool mMessageWasModified;
 
-    // Temp var for slotInsert(My)PublicKey():
-    QString mFingerprint;
 
     RecipientsEditor *mRecipientsEditor;
     int mLabelWidth;
 
     QTimer *mAutoSaveTimer;
-    QString mAutoSaveFilename;
-    int mLastAutoSaveErrno; // holds the errno of the last try to autosave
+    QString mAutoSaveUUID;
+    bool mAutoSaveErrorShown; // Stops an error message being shown every time autosave is executed.
 
     QMenu *mActNowMenu;
     QMenu *mActLaterMenu;
@@ -895,8 +808,10 @@ class KMComposeWin : public KMail::Composer
     QString mdbusObjectPath;
     static int s_composerNumber;
 
+#if 0
     QMap<KMail::EditorWatcher*, KMMessagePart*> mEditorMap;
     QMap<KMail::EditorWatcher*, KTemporaryFile*> mEditorTempFiles;
+#endif
 
     SnippetWidget *mSnippetWidget;
     QList<KTempDir*> mTempDirs;
@@ -905,7 +820,6 @@ class KMComposeWin : public KMail::Composer
     QLabel *mEncryptionStateIndicator;
 
     bool mPreventFccOverwrite;
-    bool mCheckForRecipients;
     bool mCheckForForgottenAttachments;
     bool mIgnoreStickyFields;
 };

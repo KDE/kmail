@@ -2,11 +2,11 @@
 #include "managesievescriptsdialog.h"
 #include "managesievescriptsdialog_p.h"
 
-#include "sieveconfig.h"
-#include "accountmanager.h"
-#include "imapaccountbase.h"
 #include "sievejob.h"
 #include "kmkernel.h"
+#include "util.h"
+#include "imapsettings.h"
+#include "kmagentmanager.h"
 
 #include <klocale.h>
 #include <kiconloader.h>
@@ -14,6 +14,9 @@
 #include <kinputdialog.h>
 #include <kglobalsettings.h>
 #include <kmessagebox.h>
+
+
+#include <akonadi/agentinstance.h>
 
 #include <QLayout>
 #include <QMenu>
@@ -73,69 +76,39 @@ void KMail::ManageSieveScriptsDialog::killAllJobs()
   mJobs.clear();
 }
 
-static KUrl findUrlForAccount( const KMail::ImapAccountBase * a )
-{
-  assert( a );
-  const KMail::SieveConfig sieve = a->sieveConfig();
-  if ( !sieve.managesieveSupported() )
-    return KUrl();
-  if ( sieve.reuseConfig() ) {
-    // assemble Sieve url from the settings of the account:
-    KUrl u;
-    u.setProtocol( "sieve" );
-    u.setHost( a->host() );
-    u.setUser( a->login() );
-    u.setPass( a->passwd() );
-    u.setPort( sieve.port() );
-    // Translate IMAP LOGIN to PLAIN:
-    u.addQueryItem( "x-mech", a->auth() == "*" ? "PLAIN" : a->auth() );
-    if ( !a->useSSL() && !a->useTLS() )
-      u.addQueryItem( "x-allow-unencrypted", "true" );
-    return u;
-  } else {
-    KUrl u = sieve.alternateURL();
-    if ( u.protocol().toLower() == "sieve" && !a->useSSL() && !a->useTLS() && u.queryItem("x-allow-unencrypted").isEmpty() )
-      u.addQueryItem( "x-allow-unencrypted", "true" );
-    return u;
-  }
-}
 
 void KMail::ManageSieveScriptsDialog::slotRefresh()
 {
   clear();
-
-  KMail::AccountManager * am = kmkernel->acctMgr();
-  assert( am );
   QTreeWidgetItem *last = 0;
-  QList<KMAccount*>::iterator accountIt = am->begin();
-  while ( accountIt != am->end() ) {
-    KMAccount *a = *accountIt;
-    ++accountIt;
+  Akonadi::AgentInstance::List lst = kmkernel->agentManager()->instanceList();
+  foreach ( const Akonadi::AgentInstance& type, lst )
+  {
+    //TODO verify it.
+    if ( type.identifier().contains( IMAP_RESOURCE_IDENTIFIER ) ) {
 
-    // Don't show POP3 accounts in the sieve list
-    if ( a->type() != KAccount::Imap &&
-         a->type() != KAccount::DImap )
-      continue;
+      OrgKdeAkonadiImapSettingsInterface *iface = KMail::Util::createImapSettingsInterface(type.identifier());
+      if ( iface->isValid() ) {
+        last = new QTreeWidgetItem( mListView, last );
+        last->setText( 0, type.name() );
+        last->setIcon( 0, SmallIcon( "network-server" ) );
 
-    last = new QTreeWidgetItem( mListView, last );
-    last->setText( 0, a->name() );
-    last->setIcon( 0, SmallIcon( "network-server" ) );
-    if ( ImapAccountBase * iab = dynamic_cast<ImapAccountBase*>( a ) ) {
-      const KUrl u = ::findUrlForAccount( iab );
-      if ( u.isEmpty() ) {
-         QTreeWidgetItem *item = new QTreeWidgetItem( last );
-        item->setText( 0, i18n( "No Sieve URL configured" ) );
-        item->setFlags( item->flags() & ~Qt::ItemIsEnabled );
-        mListView->expandItem( last );
-        continue;
+        const KUrl u = KMail::Util::findSieveUrlForAccount( iface,type.identifier() );
+        if ( u.isEmpty() ) {
+          QTreeWidgetItem *item = new QTreeWidgetItem( last );
+          item->setText( 0, i18n( "No Sieve URL configured" ) );
+          item->setFlags( item->flags() & ~Qt::ItemIsEnabled );
+          mListView->expandItem( last );
+        } else {
+          SieveJob * job = SieveJob::list( u );
+          connect( job, SIGNAL(item(KMail::SieveJob*,const QString&,bool)),
+                   this, SLOT(slotItem(KMail::SieveJob*,const QString&,bool)) );
+          connect( job, SIGNAL(result(KMail::SieveJob*,bool,const QString&,bool)),
+                   this, SLOT(slotResult(KMail::SieveJob*,bool,const QString&,bool)) );
+          mJobs.insert( job, last );
+          mUrls.insert( last, u );
+        }
       }
-      SieveJob * job = SieveJob::list( u );
-      connect( job, SIGNAL(item(KMail::SieveJob*,const QString&,bool)),
-               this, SLOT(slotItem(KMail::SieveJob*,const QString&,bool)) );
-      connect( job, SIGNAL(result(KMail::SieveJob*,bool,const QString&,bool)),
-               this, SLOT(slotResult(KMail::SieveJob*,bool,const QString&,bool)) );
-      mJobs.insert( job, last );
-      mUrls.insert( last, u );
     }
   }
 }

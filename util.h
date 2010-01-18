@@ -45,9 +45,14 @@
 #include <kio/netaccess.h>
 #include <kmessagebox.h>
 #include <klocale.h>
-
-class DwString;
+#include <akonadi/item.h>
+#include "kmkernel.h"
+#include <kmime/kmime_message.h>
 class KUrl;
+
+class OrgKdeAkonadiImapSettingsInterface;
+
+#define IMAP_RESOURCE_IDENTIFIER "akonadi_imap_resource"
 
 namespace KMail
 {
@@ -56,16 +61,6 @@ namespace KMail
      * various places.
      */
 namespace Util {
-
-    /**
-     * First disconnect then reconnect a sender/signal-receiver/slot pair.
-     * This improves readability of code a bit by reducing two (maybe long and complex) lines
-     * to one and often helps in avoiding a pair of brackets.
-     */
-    void reconnectSignalSlotPair( QObject *src, const char *signal, QObject *dst, const char *slot );
-
-    // return true if we should proceed, false if we should abort
-    bool checkOverwrite( const KUrl &url, QWidget *w );
 
     /** Test if all required settings are set.
       Reports problems to user via dialogs and returns false.
@@ -82,30 +77,6 @@ namespace Util {
      */
     size_t crlf2lf( char* str, const size_t strLen );
 
-
-    /**
-     * Delegates opening a URL to the Max OSX mechanisms for that.
-     * Returns false if it did nothing (such as on other platforms.
-     */
-    bool handleUrlOnMac( const KUrl& url );
-
-    /**
-     * Convert "\n" line endings to "\r\n".
-     * @param src The source string to convert.
-     * @return The result string.
-     */
-    QByteArray lf2crlf( const QByteArray & src );
-
-    /**
-     * Construct a QByteArray from a DwString
-     */
-    QByteArray ByteArray( const DwString& str );
-
-    /**
-     * Construct a DwString from a QByteArray
-     */
-    DwString dwString( const QByteArray& str );
-
     /**
      * Validates a list of email addresses.
      * @return true if all addresses are valid.
@@ -113,56 +84,12 @@ namespace Util {
      */
     bool validateAddresses( QWidget *parent, const QString &addresses );
 
-    /**
-     * Finds the filename of an icon based on the given mimetype or filenames.
-     *
-     * Always use this functions when looking up icon names for mime types, don't use
-     * KMimeType directly.
-     *
-     * Uses the IconNameCache internally to speed things up.
-     *
-     * @param mimeType The primary mime type used to find the icon, e.g. "application/zip". Alias
-     *                 mimetypes are resolved.
-     * @param size Size of the requested icon, e.g. KIconLoader::Desktop
-     * @param fallbackFileName(1|2) When the icon is not found by the given mime type, use the file
-     *                              name extensions of these file names to look the icon up.
-     *                              Example: "test.zip"
-     * @return the full file name of the icon file
-     */
-    QString fileNameForMimetype( const QString &mimeType, int iconSize,
-                                 const QString &fallbackFileName1 = QString(),
-                                 const QString &fallbackFileName2 = QString() );
+    KMime::Message::Ptr message( const Akonadi::Item & item );
 
-    /**
-     * A LaterDeleter is intended to be used with the RAII ( Resource
-     * Acquisiation is Initialization ) paradigm. When an instance of it
-     * goes out of scope it deletes the associated object  It can be
-     * disabled, in case the deletion needs to be avoided for some
-     * reason, since going out-of-scope cannot be avoided.
-     */
-    class LaterDeleter
-    {
-      public:
-      LaterDeleter( QObject *o)
-        :m_object( o ), m_disabled( false )
-      {
-      }
-      virtual ~LaterDeleter()
-      {
-        if ( !m_disabled ) {
-          m_object->deleteLater();
-        }
-      }
-      void setDisabled( bool v )
-      {
-        m_disabled = v;
-      }
-      protected:
-      QObject *m_object;
-      bool m_disabled;
-    };
+    KUrl findSieveUrlForAccount( OrgKdeAkonadiImapSettingsInterface *a,  const QString &ident);
+    OrgKdeAkonadiImapSettingsInterface *createImapSettingsInterface( const QString &ident );
 
-
+    void launchAccountWizard( QWidget * );
 }
 }
 

@@ -31,20 +31,20 @@
 */
 
 
-#include "interfaces/bodypartformatter.h"
+#include <messageviewer/interfaces/bodypartformatter.h>
 
 #include <kdemacros.h>
 
 namespace {
 
-  class Formatter : public KMail::Interface::BodyPartFormatter {
+  class Formatter : public MessageViewer::Interface::BodyPartFormatter {
   public:
-    Result format( KMail::Interface::BodyPart *, KMail::HtmlWriter * ) const { return AsIcon; }
+    Result format( MessageViewer::Interface::BodyPart *, MessageViewer::HtmlWriter * ) const { return AsIcon; }
   };
 
-  class Plugin : public KMail::Interface::BodyPartFormatterPlugin {
+  class Plugin : public MessageViewer::Interface::BodyPartFormatterPlugin {
   public:
-    const KMail::Interface::BodyPartFormatter * bodyPartFormatter( int idx ) const {
+    const MessageViewer::Interface::BodyPartFormatter * bodyPartFormatter( int idx ) const {
       return idx == 0 ? new Formatter() : 0 ;
     }
     const char * type( int idx ) const {
@@ -54,14 +54,14 @@ namespace {
       return idx == 0 ? "octet-stream" : 0 ;
     }
 
-    const KMail::Interface::BodyPartURLHandler * urlHandler( int ) const { return 0; }
+    const MessageViewer::Interface::BodyPartURLHandler * urlHandler( int ) const { return 0; }
   };
 
 }
 
 extern "C"
-KDE_EXPORT KMail::Interface::BodyPartFormatterPlugin *
-kmail_bodypartformatter_application_octetstream_create_bodypart_formatter_plugin() {
+KDE_EXPORT MessageViewer::Interface::BodyPartFormatterPlugin *
+messageviewer_bodypartformatter_application_octetstream_create_bodypart_formatter_plugin() {
   return new Plugin();
 }
 

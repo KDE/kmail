@@ -83,4 +83,4 @@ Comment[zh_TW]=Application/octet-stream 使用的部件格式化外掛程式
 
 [Plugin]
 Type=application/octet-stream
-X-KDE-Library=kmail_bodypartformatter_application_octetstream
+X-KDE-Library=messageviewer_bodypartformatter_application_octetstream

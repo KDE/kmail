@@ -123,11 +123,6 @@
         <whatsthis>If this option is enabled then for each folder the number of newly arrived messages is shown in the new mail notification; otherwise, you will only get a simple 'New mail arrived' message.</whatsthis>
         <default>true</default>
       </entry>
-      <entry name="UseMessageIndicator" type="Bool">
-        <label>Use message indicator</label>
-        <whatsthis>If this option is enabled and a message indicator is installed on the desktop, then indicators will be displayed for folders containing unread messages.</whatsthis>
-        <default>false</default>
-      </entry>
       <entry name="ExternalEditor" type="String" key="external-editor">
         <label>Specify e&amp;ditor:</label>
         <default>kwrite %f</default>
@@ -144,33 +139,10 @@
         <label>The threshold for when to warn the user that a folder is nearing its quota limit.</label>
          <default>85</default>
       </entry>
-      <entry name="QuotaUnit"  type="Enum">
-        <label></label>
-        <whatsthis></whatsthis>
-        <choices>
-          <choice name="KB"/>
-          <choice name="MB"/>
-          <choice name="GB"/>
-        </choices>
-        <default>MB</default>
-      </entry>
-      <entry name="MaildirFilenameSeparator" type="String">
-        <label>
-          The filename separator for maildir files "uniq:info" - see the original maildir specification at http://cr.yp.to/proto/maildir.html
-          The default depends on the current operating system. WIN='!', all others ':'.
-        </label>
-        <default>${MAILDIR_FILENAME_SEPARATOR}</default>
-      </entry>
     </group>
 <!-- General -->
 
     <group name="Groupware">
-      <entry name="GroupwareEnabled" type="Bool">
-        <label>Enable groupware functionality</label>
-        <whatsthis></whatsthis>
-        <default>true</default>
-      </entry>
-
       <entry name="LegacyMangleFromToHeaders" type="Bool">
         <label>Mangle From:/To: headers in replies to replies</label>
         <whatsthis>Microsoft Outlook has a number of shortcomings in its implementation of the iCalendar standard; this option works around one of them. If you have problems with Outlook users not being able to get your replies, try setting this option.</whatsthis>
@@ -218,61 +190,6 @@
         <default>AskForAllButAcceptance</default>
       </entry>
 
-    </group>
-
-    <group name="IMAP Resource">
-      <entry name="TheIMAPResourceEnabled" type="Bool">
-        <whatsthis>&lt;p&gt;Enabling this makes it possible to store the entries from the Kontact applications (KOrganizer, KAddressBook, and KNotes.)&lt;/p&gt;&lt;p&gt;If you want to set this option you must also set the applications to use the IMAP resource; this is done in the KDE System Settings.&lt;/p&gt;</whatsthis>
-        <default>false</default>
-      </entry>
-
-      <entry name="HideGroupwareFolders" type="Bool">
-        <whatsthis>&lt;p&gt;Usually you will not have any reason to see the folders that hold the IMAP resources. But if you need to see them, you can set that here.&lt;/p&gt;</whatsthis>
-        <default>true</default>
-      </entry>
-
-      <entry name="ShowOnlyGroupwareFoldersForGroupwareAccount" type="Bool">
-        <default>false</default>
-        <whatsthis>&lt;p&gt;If the account used for storing groupware information is not used to manage normal mail, set this option to make KMail only show groupware folders in it. This is useful if you are handling regular mail via an additional online IMAP account.&lt;/p&gt;</whatsthis>
-      </entry>
-
-      <entry name="TheIMAPResourceStorageFormat" type="Enum">
-        <whatsthis>&lt;p&gt;Choose the storage format of the groupware folders. &lt;ul&gt;&lt;li&gt;The default format is to use the ical (for calendar folders) and vcard (for address book folders) standards. This format makes all Kontact features available.&lt;/li&gt;&lt;li&gt;The Kolab XML format uses a custom model that matches more closely the one used in Outlook. This format gives better Outlook compatibility, when using a Kolab server or a compatible solution.&lt;/li&gt;&lt;/ul&gt;&lt;/p&gt;</whatsthis>
-        <choices>
-          <choice name="IcalVcard"/>
-          <choice name="XML"/>
-        </choices>
-        <default>IcalVcard</default>
-      </entry>
-
-      <entry name="TheIMAPResourceFolderParent" type="String">
-        <whatsthis>&lt;p&gt;This chooses the parent of the IMAP resource folders.&lt;/p&gt;&lt;p&gt;By default, the Kolab server sets the IMAP inbox to be the parent.&lt;/p&gt;</whatsthis>
-        <default>inbox</default>
-      </entry>
-
-      <entry name="TheIMAPResourceAccount" type="Int">
-        <whatsthis>&lt;p&gt;This is the ID of the account holding the IMAP resource folders.&lt;/p&gt;</whatsthis>
-        <default></default>
-      </entry>
-
-      <entry name="TheIMAPResourceFolderLanguage" type="Int">
-        <whatsthis>&lt;p&gt;If you want to set the folder names of the IMAP storage to your local language, you can choose between these available languages.&lt;/p&gt;&lt;p&gt; Please note, that the only reason to do so is for compatibility with Microsoft Outlook. It is considered a bad idea to set this, since it makes changing languages impossible. &lt;/p&gt;&lt;p&gt;So do not set this unless you have to.&lt;/p&gt;</whatsthis>
-        <default>0</default>
-      </entry>
-
-      <entry name="FilterOnlyDIMAPInbox" type="Bool">
-        <default>true</default>
-        <label>Only filter mails received in disconnected IMAP inbox.</label>
-      </entry>
-      <entry name="FilterGroupwareFolders" type="Bool">
-        <default>false</default>
-        <label>Also filter new mails received in groupware folders.</label>
-      </entry>
-
-      <entry name="ImmediatlySyncDIMAPOnGroupwareChanges" type="Bool">
-        <default>true</default>
-        <label>Synchronize groupware changes in DIMAP folders immediately when being online.</label>
-      </entry>
     </group>
 
     <group name="Internal">
@@ -492,6 +409,10 @@
           <default>false</default>
       </entry>
 
+      <entry name="PreferedCharsets" key="pref-charsets" type="StringList">
+          <default>us-ascii,iso-8859-1,locale,utf-8</default>
+      </entry>
+
     </group>
 <!-- Composer -->
 
@@ -669,7 +590,7 @@
       <default>Never</default>
      </entry>
 
-     <entry name="showColorbar" type="Bool">
+     <entry name="showColorBar" type="Bool">
        <label>Show HTML status bar</label>
        <default>false</default>
      </entry>
@@ -784,12 +705,12 @@
 
 
   <group name="MessageListView">
-    <entry name="DisplayMessageToolTips" type="Bool">
+    <entry name="MessageToolTipEnabled" type="Bool">
       <default>true</default>
       <label>Display tooltips for messages and group headers</label>
       <whatsthis>Enable this option to display tooltips when hovering over an item in the message list.</whatsthis>
     </entry>
-    <entry name="HideTabBarWithSingleTab" type="Bool">
+    <entry name="AutoHideTabBarWithSingleTab" type="Bool">
       <default>false</default>
       <label>Hide tab bar when only one tab is open</label>
       <whatsthis>With this option enabled the tab bar will be displayed only when there are two or more tabs. With this option disabled the tab bar will be always shown. When the tab bar is hidden you can always open a folder in a new tab by middle-clicking it.</whatsthis>

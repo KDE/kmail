@@ -19,24 +19,27 @@
 #ifndef BACKUPJOB_H
 #define BACKUPJOB_H
 
+#include <Akonadi/Collection>
+#include <Akonadi/Item>
 #include <kurl.h>
 #include <qlist.h>
 
 #include <qobject.h>
 
-class KMFolder;
-class KMMessage;
 class KArchive;
-class KProcess;
+class KJob;
 class QWidget;
 
 namespace KPIM {
   class ProgressItem;
 }
 
+namespace Akonadi {
+  class ItemFetchJob;
+}
+
 namespace KMail
 {
-  class FolderJob;
 
 /**
  * Writes an entire folder structure to an archive file.
@@ -56,7 +59,7 @@ class BackupJob : public QObject
 
     explicit BackupJob( QWidget *parent = 0 );
     ~BackupJob();
-    void setRootFolder( KMFolder *rootFolder );
+    void setRootFolder( const Akonadi::Collection &rootFolder );
     void setSaveLocation( const KUrl savePath );
     void setArchiveType( ArchiveType type );
     void setDeleteFoldersAfterCompletion( bool deleteThem );
@@ -64,44 +67,44 @@ class BackupJob : public QObject
 
   private slots:
 
-    void messageRetrieved( KMMessage *message );
-    void folderJobFinished( KMail::FolderJob *job );
-    void processCurrentMessage();
+    void itemFetchJobResult( KJob *job );
     void cancelJob();
+    void archiveNextFolder();
+    void archiveNextMessage();
 
   private:
 
-    void queueFolders( KMFolder *root );
-    void archiveNextFolder();
-    void archiveNextMessage();
-    QString stripRootPath( const QString &path ) const;
-    bool hasChildren( KMFolder *folder ) const;
+    bool queueFolders( const Akonadi::Collection &root );
+    void processMessage( const Akonadi::Item &item );
+    QString pathForCollection( const Akonadi::Collection &collection ) const;
+    QString subdirPathForCollection( const Akonadi::Collection &collection ) const;
+    bool hasChildren( const Akonadi::Collection &collection ) const;
     void finish();
     void abort( const QString &errorMessage );
-    bool writeDirHelper( const QString &directoryPath, const QString &permissionPath );
+    bool writeDirHelper( const QString &directoryPath );
+
+    // Helper function to return the name of the given collection.
+    // Some Collection's don't have the name fetched. However, in mAllFolders,
+    // we have a list of Collection's that have that information in them, so
+    // we can just look it up there.
+    QString collectionName( const Akonadi::Collection &collection ) const;
 
     KUrl mMailArchivePath;
     ArchiveType mArchiveType;
-    KMFolder *mRootFolder;
+    Akonadi::Collection mRootFolder;
     KArchive *mArchive;
     QWidget *mParentWidget;
-    bool mCurrentFolderOpen;
     int mArchivedMessages;
     uint mArchivedSize;
     KPIM::ProgressItem *mProgressItem;
     bool mAborted;
     bool mDeleteFoldersAfterCompletion;
 
-    // True if we obtained ownership of the kMMessage after calling getMsg(), since we need
-    // to call ungetMsg() then. For that, we also remember the original index.
-    bool mUnget;
-    int mMessageIndex;
-
-    QList<KMFolder*> mPendingFolders;
-    KMFolder *mCurrentFolder;
-    QList<unsigned long> mPendingMessages;
-    KMMessage *mCurrentMessage;
-    FolderJob *mCurrentJob;
+    Akonadi::Collection::List mPendingFolders;
+    Akonadi::Collection::List mAllFolders;
+    Akonadi::Collection mCurrentFolder;
+    Akonadi::Item::List mPendingMessages;
+    Akonadi::ItemFetchJob *mCurrentJob;
 };
 
 }

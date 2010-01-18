@@ -35,12 +35,11 @@
 #include <QTimer>
 
 #include "folderjob.h"
-
+#include <akonadi/collection.h>
 // If this define is set, JobScheduler will show debug output, and related kmkernel timers will be shortened
 // This is for debugging purposes only, don't commit with it.
 //#define DEBUG_SCHEDULER
 
-class KMFolder;
 namespace KMail {
 
 class FolderJob;
@@ -56,7 +55,7 @@ public:
   /// Create a scheduled task for a given folder
   /// If @p immediate is true, the scheduler will run this task as soon
   /// as possible (but won't interrupt a currently running job for it)
-  ScheduledTask( KMFolder* folder, bool immediate );
+  ScheduledTask( const Akonadi::Collection & folder, bool immediate );
   virtual ~ScheduledTask();
 
   /// Run this task, i.e. create a job for it.
@@ -75,12 +74,12 @@ public:
   virtual int taskTypeId() const = 0;
 
   /// The folder which this task is about, 0 if it was deleted meanwhile.
-  KMFolder* folder() const { return mCurrentFolder; }
+  Akonadi::Collection folder() const { return mCurrentFolder; }
 
   bool isImmediate() const { return mImmediate; }
 
 private:
-  QPointer<KMFolder> mCurrentFolder;
+  Akonadi::Collection mCurrentFolder;
   bool mImmediate;
 };
 
@@ -96,7 +95,7 @@ class JobScheduler : public QObject
 {
   Q_OBJECT
 public:
-  explicit JobScheduler( QObject* parent, const char* name = 0 );
+  explicit JobScheduler( QObject* parent );
   ~JobScheduler();
 
   /// Register a task to be done for a given folder
@@ -105,7 +104,7 @@ public:
 
   /// Called by [implementations of] FolderStorage::open()
   /// Interrupt any running job for this folder and re-schedule it for later
-  void notifyOpeningFolder( KMFolder* folder );
+  void notifyOpeningFolder( const Akonadi::Collection& folder );
 
   // D-Bus calls, called from KMKernel
   void pause();
@@ -141,7 +140,7 @@ private:
 class ScheduledJob : public FolderJob
 {
 public:
-  ScheduledJob( KMFolder* folder, bool immediate );
+  ScheduledJob( const Akonadi::Collection & folder, bool immediate );
   ~ScheduledJob();
 
   bool isOpeningFolder() const { return mOpeningFolder; }

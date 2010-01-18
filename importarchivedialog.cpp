@@ -18,10 +18,11 @@
 */
 #include "importarchivedialog.h"
 
-#include "kmfolder.h"
 #include "folderrequester.h"
 #include "kmmainwidget.h"
 #include "importjob.h"
+
+#include <Akonadi/Collection>
 
 #include <kurlrequester.h>
 #include <klocale.h>
@@ -55,7 +56,6 @@ ImportArchiveDialog::ImportArchiveDialog( QWidget *parent )
   QLabel *folderLabel = new QLabel( i18n( "&Folder:" ), mainWidget );
   mainLayout->addWidget( folderLabel, row, 0 );
   mFolderRequester = new FolderRequester( mainWidget );
-  mFolderRequester->setFolderTree( kmkernel->getKMMainWidget()->mainFolderView() );
   folderLabel->setBuddy( mFolderRequester );
   mainLayout->addWidget( mFolderRequester, row, 1 );
   row++;
@@ -77,9 +77,9 @@ ImportArchiveDialog::ImportArchiveDialog( QWidget *parent )
   resize( 500, minimumSize().height() );
 }
 
-void ImportArchiveDialog::setFolder( KMFolder *defaultFolder )
+void ImportArchiveDialog::setFolder( const Akonadi::Collection &defaultCollection )
 {
-  mFolderRequester->setFolder( defaultFolder );
+  mFolderRequester->setFolder( defaultCollection );
 }
 
 void ImportArchiveDialog::slotButtonClicked( int button )
@@ -96,7 +96,7 @@ void ImportArchiveDialog::slotButtonClicked( int button )
     return;
   }
 
-  if ( !mFolderRequester->folder() ) {
+  if ( !mFolderRequester->folderCollection().isValid() ) {
     KMessageBox::information( this, i18n( "Please select the folder where the archive should be imported to." ),
                               i18n( "No target folder selected" ) );
     return;
@@ -106,7 +106,7 @@ void ImportArchiveDialog::slotButtonClicked( int button )
 
   ImportJob *importJob = new KMail::ImportJob( mParentWidget );
   importJob->setFile( mUrlRequester->url() );
-  importJob->setRootFolder( mFolderRequester->folder() );
+  importJob->setRootFolder( mFolderRequester->folderCollection() );
   importJob->start();
   accept();
 }

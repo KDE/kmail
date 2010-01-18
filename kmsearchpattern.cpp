@@ -18,14 +18,23 @@
 */
 
 #include "kmsearchpattern.h"
-#include "kmaddrbook.h"
-#include "kmmsgdict.h"
+#include "messageviewer/kmaddrbook.h"
 #include "filterlog.h"
 using KMail::FilterLog;
 #include "kmkernel.h"
-#include "kmfolder.h"
-
 #include <kpimutils/email.h>
+
+#include <nie.h>
+#include <nmo.h>
+#include <nco.h>
+
+#include <Nepomuk/Tag>
+#include <Nepomuk/Query/Query>
+#include <Nepomuk/Query/AndTerm>
+#include <Nepomuk/Query/OrTerm>
+#include <Nepomuk/Query/LiteralTerm>
+#include <Nepomuk/Query/ResourceTerm>
+#include <Nepomuk/Query/NegationTerm>
 
 #include <kglobal.h>
 #include <klocale.h>
@@ -33,13 +42,16 @@ using KMail::FilterLog;
 #include <kconfig.h>
 #include <kconfiggroup.h>
 
+#include <kmime/kmime_message.h>
+#include <kmime/kmime_util.h>
+
 #include <akonadi/contact/contactsearchjob.h>
 
 #include <QRegExp>
 #include <QByteArray>
 
-#include <mimelib/string.h>
-#include <mimelib/boyermor.h>
+#include <Soprano/Vocabulary/NAO>
+#include <Soprano/Vocabulary/RDF>
 
 #include <assert.h>
 
@@ -75,7 +87,6 @@ static struct _statusNames statusNames[] = {
 };
 
 static const int numStatusNames = sizeof statusNames / sizeof ( struct _statusNames );
-
 
 //==================================================
 //
@@ -182,16 +193,6 @@ void KMSearchRule::writeConfig( KConfigGroup & config, int aIdx ) const {
   config.writeEntry( contents + cIdx, mContents );
 }
 
-bool KMSearchRule::matches( const DwString & aStr, KMMessage & msg,
-                       const DwBoyerMoore *, int ) const
-{
-  if ( !msg.isComplete() ) {
-    msg.fromDwString( aStr );
-    msg.setComplete( true );
-  }
-  return matches( &msg );
-}
-
 const QString KMSearchRule::asString() const
 {
   QString result  = "\"" + mField + "\" <";
@@ -200,6 +201,56 @@ const QString KMSearchRule::asString() const
 
   return result;
 }
+
+Nepomuk::Query::ComparisonTerm::Comparator KMSearchRule::nepomukComparator() const
+{
+  switch ( function() ) {
+    case KMSearchRule::FuncContains:
+    case KMSearchRule::FuncContainsNot:
+      return Nepomuk::Query::ComparisonTerm::Contains;
+    case KMSearchRule::FuncEquals:
+    case KMSearchRule::FuncNotEqual:
+      return Nepomuk::Query::ComparisonTerm::Equal;
+    case KMSearchRule::FuncIsGreater:
+      return Nepomuk::Query::ComparisonTerm::Greater;
+    case KMSearchRule::FuncIsGreaterOrEqual:
+      return Nepomuk::Query::ComparisonTerm::GreaterOrEqual;
+    case KMSearchRule::FuncIsLess:
+      return Nepomuk::Query::ComparisonTerm::Smaller;
+    case KMSearchRule::FuncIsLessOrEqual:
+      return Nepomuk::Query::ComparisonTerm::SmallerOrEqual;
+    case KMSearchRule::FuncRegExp:
+    case KMSearchRule::FuncNotRegExp:
+      return Nepomuk::Query::ComparisonTerm::Regexp;
+    default:
+      kDebug() << "Unhandled function type: " << function();
+  }
+  return Nepomuk::Query::ComparisonTerm::Equal;
+}
+
+void KMSearchRule::addAndNegateTerm(const Nepomuk::Query::Term& term, Nepomuk::Query::GroupTerm& termGroup) const
+{
+  bool negate = false;
+  switch ( function() ) {
+    case KMSearchRule::FuncContainsNot:
+    case KMSearchRule::FuncNotEqual:
+    case KMSearchRule::FuncNotRegExp:
+    case KMSearchRule::FuncHasNoAttachment:
+    case KMSearchRule::FuncIsNotInCategory:
+    case KMSearchRule::FuncIsNotInAddressbook:
+      negate = true;
+    default:
+      break;
+  }
+  if ( negate ) {
+    Nepomuk::Query::NegationTerm neg;
+    neg.setSubTerm( term );
+    termGroup.addSubTerm( neg );
+  } else {
+    termGroup.addSubTerm( term );
+  }
+}
+
 
 //==================================================
 //
@@ -211,18 +262,11 @@ KMSearchRuleString::KMSearchRuleString( const QByteArray & field,
                                         Function func, const QString & contents )
           : KMSearchRule(field, func, contents)
 {
-  if ( field.isEmpty() || field[0] == '<' )
-    mBmHeaderField = 0;
-  else // make sure you handle the unrealistic case of the message starting with mField
-    mBmHeaderField = new DwBoyerMoore(('\n' + field + ": ").data());
 }
 
 KMSearchRuleString::KMSearchRuleString( const KMSearchRuleString & other )
-  : KMSearchRule( other ),
-    mBmHeaderField( 0 )
+  : KMSearchRule( other )
 {
-  if ( other.mBmHeaderField )
-    mBmHeaderField = new DwBoyerMoore( *other.mBmHeaderField );
 }
 
 const KMSearchRuleString & KMSearchRuleString::operator=( const KMSearchRuleString & other )
@@ -233,17 +277,12 @@ const KMSearchRuleString & KMSearchRuleString::operator=( const KMSearchRuleStri
   setField( other.field() );
   setFunction( other.function() );
   setContents( other.contents() );
-  delete mBmHeaderField; mBmHeaderField = 0;
-  if ( other.mBmHeaderField )
-    mBmHeaderField = new DwBoyerMoore( *other.mBmHeaderField );
 
   return *this;
 }
 
 KMSearchRuleString::~KMSearchRuleString()
 {
-  delete mBmHeaderField;
-  mBmHeaderField = 0;
 }
 
 bool KMSearchRuleString::isEmpty() const
@@ -253,88 +292,15 @@ bool KMSearchRuleString::isEmpty() const
 
 bool KMSearchRuleString::requiresBody() const
 {
-  if (mBmHeaderField || (field() == "<recipients>" ))
+  if ( field().startsWith( '<' ) || field() == "<recipients>" )
     return false;
   return true;
 }
 
-bool KMSearchRuleString::matches( const DwString & aStr, KMMessage & msg,
-                       const DwBoyerMoore * aHeaderField, int aHeaderLen ) const
+bool KMSearchRuleString::matches( const Akonadi::Item &item ) const
 {
-  if ( isEmpty() )
-    return false;
-
-  bool rc = false;
-
-  const DwBoyerMoore * headerField = aHeaderField ? aHeaderField : mBmHeaderField ;
-
-  const int headerLen = ( aHeaderLen > -1 ? aHeaderLen : field().length() ) + 2 ; // +1 for ': '
-
-  if ( headerField ) {
-    static const DwBoyerMoore lflf( "\n\n" );
-    static const DwBoyerMoore lfcrlf( "\n\r\n" );
-
-    size_t endOfHeader = lflf.FindIn( aStr, 0 );
-    if ( endOfHeader == DwString::npos )
-      endOfHeader = lfcrlf.FindIn( aStr, 0 );
-    const DwString headers = ( endOfHeader == DwString::npos ) ? aStr : aStr.substr( 0, endOfHeader );
-    // In case the searched header is at the beginning, we have to prepend
-    // a newline - see the comment in KMSearchRuleString constructor
-    DwString fakedHeaders( "\n" );
-    size_t start = headerField->FindIn( fakedHeaders.append( headers ), 0, false );
-    // if the header field doesn't exist then return false for positive
-    // functions and true for negated functions (e.g. "does not
-    // contain"); note that all negated string functions correspond
-    // to an odd value
-    if ( start == DwString::npos )
-      rc = ( ( function() & 1 ) == 1 );
-    else {
-      start += headerLen;
-      size_t stop = aStr.find( '\n', start );
-      char ch = '\0';
-      while ( stop != DwString::npos && ( ( ch = aStr.at( stop + 1 ) ) == ' ' || ch == '\t' ) )
-        stop = aStr.find( '\n', stop + 1 );
-      const int len = stop == DwString::npos ? aStr.length() - start : stop - start ;
-      const QByteArray codedValue( aStr.data() + start, len + 1 );
-      const QString msgContents = KMMsgBase::decodeRFC2047String( codedValue ).trimmed(); // FIXME: This needs to be changed for IDN support.
-      rc = matchesInternal( msgContents );
-    }
-  } else if ( field() == "<recipients>" ) {
-    static const DwBoyerMoore to("\nTo: ");
-    static const DwBoyerMoore cc("\nCc: ");
-    static const DwBoyerMoore bcc("\nBcc: ");
-    // <recipients> "contains" "foo" is true if any of the fields contains
-    // "foo", while <recipients> "does not contain" "foo" is true if none
-    // of the fields contains "foo"
-    if ( ( function() & 1 ) == 0 ) {
-      // positive function, e.g. "contains"
-      rc = ( matches( aStr, msg, &to, 2 ) ||
-             matches( aStr, msg, &cc, 2 ) ||
-             matches( aStr, msg, &bcc, 3 ) );
-    }
-    else {
-      // negated function, e.g. "does not contain"
-      rc = ( matches( aStr, msg, &to, 2 ) &&
-             matches( aStr, msg, &cc, 2 ) &&
-             matches( aStr, msg, &bcc, 3 ) );
-    }
-  }
-  if ( FilterLog::instance()->isLogging() ) {
-    QString msg = ( rc ? "<font color=#00FF00>1 = </font>"
-                       : "<font color=#FF0000>0 = </font>" );
-    msg += FilterLog::recode( asString() );
-    // only log headers bcause messages and bodies can be pretty large
-// FIXME We have to separate the text which is used for filtering to be able to show it in the log
-//    if ( logContents )
-//      msg += " (<i>" + FilterLog::recode( msgContents ) + "</i>)";
-    FilterLog::instance()->add( msg, FilterLog::ruleResult );
-  }
-  return rc;
-}
-
-bool KMSearchRuleString::matches( const KMMessage * msg ) const
-{
-  assert( msg );
+  const KMime::Message::Ptr msg = item.payload<KMime::Message::Ptr>();
+  assert( msg.get() );
 
   if ( isEmpty() )
     return false;
@@ -345,13 +311,13 @@ bool KMSearchRuleString::matches( const KMMessage * msg ) const
   bool logContents = true;
 
   if( field() == "<message>" ) {
-    msgContents = msg->asString();
+    msgContents = msg->encodedContent();
     logContents = false;
   } else if ( field() == "<body>" ) {
-    msgContents = msg->bodyToUnicode();
+    msgContents = msg->body();
     logContents = false;
   } else if ( field() == "<any header>" ) {
-    msgContents = msg->headerAsString();
+    msgContents = msg->head();
     logContents = false;
   } else if ( field() == "<recipients>" ) {
     // (mmutz 2001-11-05) hack to fix "<recipients> !contains foo" to
@@ -360,46 +326,56 @@ bool KMSearchRuleString::matches( const KMMessage * msg ) const
     if ( function() == FuncEquals || function() == FuncNotEqual )
       // do we need to treat this case specially? Ie.: What shall
       // "equality" mean for recipients.
-      return matchesInternal( msg->headerField("To") )
-          || matchesInternal( msg->headerField("Cc") )
-          || matchesInternal( msg->headerField("Bcc") )
-          // sometimes messages have multiple Cc headers
-          || matchesInternal( msg->cc() );
+      return matchesInternal( msg->to()->asUnicodeString() )
+          || matchesInternal( msg->cc()->asUnicodeString() )
+          || matchesInternal( msg->bcc()->asUnicodeString() ) ;
+          // sometimes messages have multiple Cc headers //TODO: check if this can happen for KMime!
+      //    || matchesInternal( msg->cc() )
+          
 
-    msgContents = msg->headerField("To");
+    msgContents = msg->to()->asUnicodeString();
+#if 0  //TODO port to akonadi - check if this is needed for KMime. 
     if ( !msg->headerField("Cc").compare( msg->cc() ) )
       msgContents += ", " + msg->headerField("Cc");
     else
       msgContents += ", " + msg->cc();
-    msgContents += ", " + msg->headerField("Bcc");
+#else
+      kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
+#endif
+  msgContents += ", " + msg->bcc()->asUnicodeString();
   } else if ( field() == "<tag>" ) {
+#if 0  //TODO port to akonadi
     if ( msg->tagList() ) {
       foreach ( const QString &label, * msg->tagList() ) {
-        const KMMessageTagDescription * tagDesc = kmkernel->msgTagMgr()->find( label );
+        const KMime::MessageTagDescription * tagDesc = kmkernel->msgTagMgr()->find( label );
         if ( tagDesc )
           msgContents += tagDesc->name();
       }
       logContents = false;
     }
-  } else {
+#else
+  kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
+#endif
+  } else
+ {
     // make sure to treat messages with multiple header lines for
     // the same header correctly
-    msgContents = msg->headerFields( field() ).join( " " );
+    msgContents = msg->headerByType( field() ) ? msg->headerByType( field() )->asUnicodeString() : "";
   }
 
   if ( function() == FuncIsInAddressbook ||
        function() == FuncIsNotInAddressbook ) {
     // I think only the "from"-field makes sense.
-    msgContents = msg->headerField( field() );
+    msgContents = msg->headerByType( field() ) ? msg->headerByType( field() )->asUnicodeString() : "";
     if ( msgContents.isEmpty() )
       return ( function() == FuncIsInAddressbook ) ? false : true;
   }
 
   // these two functions need the kmmessage therefore they don't call matchesInternal
   if ( function() == FuncHasAttachment )
-    return ( msg->toMsgBase().attachmentState() == KMMsgHasAttachment );
+    return ( msg->attachments().size() > 0 );
   if ( function() == FuncHasNoAttachment )
-    return ( ((KMMsgAttachmentState) msg->toMsgBase().attachmentState()) == KMMsgHasNoAttachment );
+    return ( msg->attachments().size() == 0 );
 
   bool rc = matchesInternal( msgContents );
   if ( FilterLog::instance()->isLogging() ) {
@@ -413,6 +389,57 @@ bool KMSearchRuleString::matches( const KMMessage * msg ) const
   }
   return rc;
 }
+
+void KMSearchRuleString::addPersonTerm(Nepomuk::Query::GroupTerm& groupTerm, const QUrl& field) const
+{
+  // TODO split contents() into address/name and adapt the query accordingly
+  const Nepomuk::Query::ComparisonTerm valueTerm( Vocabulary::NCO::emailAddress(), Nepomuk::Query::LiteralTerm( contents() ), nepomukComparator() );
+  const Nepomuk::Query::ComparisonTerm addressTerm( Vocabulary::NCO::hasEmailAddress(), valueTerm, Nepomuk::Query::ComparisonTerm::Equal );
+  const Nepomuk::Query::ComparisonTerm personTerm( field, addressTerm, Nepomuk::Query::ComparisonTerm::Equal );
+  groupTerm.addSubTerm( personTerm );
+}
+
+void KMSearchRuleString::addQueryTerms(Nepomuk::Query::GroupTerm& groupTerm) const
+{
+  Nepomuk::Query::OrTerm termGroup;
+  if ( field().toLower() == "to" || field() == "<recipients>" || field() == "<any header>" || field() == "<message>" )
+    addPersonTerm( termGroup, Vocabulary::NMO::to() );
+  if ( field().toLower() == "cc" || field() == "<recipients>" || field() == "<any header>" || field() == "<message>" )
+    addPersonTerm( termGroup, Vocabulary::NMO::cc() );
+  if ( field().toLower() == "bcc" || field() == "<recipients>" || field() == "<any header>" || field() == "<message>" )
+    addPersonTerm( termGroup, Vocabulary::NMO::bcc() );
+
+  if ( field().toLower() == "from" || field() == "<any header>" || field() == "<message>" )
+    addPersonTerm( termGroup, Vocabulary::NMO::from() );
+
+  if ( field().toLower() == "subject" || field() == "<any header>" || field() == "<message>" ) {
+    const Nepomuk::Query::ComparisonTerm subjectTerm( Vocabulary::NMO::messageSubject(), Nepomuk::Query::LiteralTerm( contents() ), nepomukComparator() );
+    termGroup.addSubTerm( subjectTerm );
+  }
+
+  // TODO complete for other headers, generic headers
+
+  if ( field() == "<tag>" ) {
+    const Nepomuk::Tag tag( contents() );
+    addAndNegateTerm( Nepomuk::Query::ComparisonTerm( Soprano::Vocabulary::NAO::hasTag(),
+                                                      Nepomuk::Query::ResourceTerm( tag.resourceUri() ),
+                                                      Nepomuk::Query::ComparisonTerm::Equal ),
+                                                      groupTerm );
+  }
+
+  if ( field() == "<body>" || field() == "<message>" ) {
+    const Nepomuk::Query::ComparisonTerm bodyTerm( Vocabulary::NMO::plainTextMessageContent(), Nepomuk::Query::LiteralTerm( contents() ), nepomukComparator() );
+    termGroup.addSubTerm( bodyTerm );
+
+    const Nepomuk::Query::ComparisonTerm attachmentBodyTerm( Vocabulary::NMO::plainTextMessageContent(), Nepomuk::Query::LiteralTerm( contents() ), nepomukComparator() );
+    const Nepomuk::Query::ComparisonTerm attachmentTerm( Vocabulary::NIE::isPartOf(), attachmentBodyTerm, Nepomuk::Query::ComparisonTerm::Equal );
+    termGroup.addSubTerm( attachmentTerm );
+  }
+
+  if ( !termGroup.subTerms().isEmpty() )
+    addAndNegateTerm( termGroup, groupTerm );
+}
+
 
 // helper, does the actual comparing
 bool KMSearchRuleString::matchesInternal( const QString & msgContents ) const
@@ -547,20 +574,20 @@ bool KMSearchRuleNumerical::isEmpty() const
 }
 
 
-bool KMSearchRuleNumerical::matches( const KMMessage * msg ) const
+bool KMSearchRuleNumerical::matches( const Akonadi::Item &item ) const
 {
+  const KMime::Message::Ptr msg = item.payload<KMime::Message::Ptr>();
 
   QString msgContents;
-  int numericalMsgContents = 0;
-  int numericalValue = 0;
+  qint64 numericalMsgContents = 0;
+  qint64 numericalValue = 0;
 
   if ( field() == "<size>" ) {
-    numericalMsgContents = int( msg->msgLength() );
-    numericalValue = contents().toInt();
+    numericalMsgContents = item.size();
+    numericalValue = contents().toLongLong();
     msgContents.setNum( numericalMsgContents );
   } else if ( field() == "<age in days>" ) {
-    QDateTime msgDateTime;
-    msgDateTime.setTime_t( msg->date() );
+    QDateTime msgDateTime = msg->date()->dateTime().dateTime();
     numericalMsgContents = msgDateTime.daysTo( QDateTime::currentDateTime() );
     numericalValue = contents().toInt();
     msgContents.setNum( numericalMsgContents );
@@ -629,7 +656,17 @@ bool KMSearchRuleNumerical::matchesInternal( long numericalValue,
   return false;
 }
 
-
+void KMSearchRuleNumerical::addQueryTerms(Nepomuk::Query::GroupTerm& groupTerm) const
+{
+  if ( field() == "<size>" ) {
+    const Nepomuk::Query::ComparisonTerm sizeTerm( Vocabulary::NIE::byteSize(),
+                                                   Nepomuk::Query::LiteralTerm( contents().toInt() ),
+                                                   nepomukComparator() );
+    addAndNegateTerm( sizeTerm, groupTerm );
+  } else if ( field() == "<age in days>" ) {
+    // TODO
+  }
+}
 
 //==================================================
 //
@@ -677,20 +714,21 @@ bool KMSearchRuleStatus::isEmpty() const
   return field().trimmed().isEmpty() || contents().isEmpty();
 }
 
-bool KMSearchRuleStatus::matches( const KMMessage * msg ) const
+bool KMSearchRuleStatus::matches( const Akonadi::Item &item ) const
 {
-
+  const KMime::Message::Ptr msg = item.payload<KMime::Message::Ptr>();
+  KPIM::MessageStatus status;
+  status.setStatusFromFlags( item.flags() );
   bool rc = false;
-
   switch ( function() ) {
     case FuncEquals: // fallthrough. So that "<status> 'is' 'read'" works
     case FuncContains:
-      if (msg->messageStatus() & mStatus)
+      if (status & mStatus)
         rc = true;
       break;
     case FuncNotEqual: // fallthrough. So that "<status> 'is not' 'read'" works
     case FuncContainsNot:
-      if (! (msg->messageStatus() & mStatus) )
+      if (! (status & mStatus) )
         rc = true;
       break;
     // FIXME what about the remaining funcs, how can they make sense for
@@ -698,7 +736,6 @@ bool KMSearchRuleStatus::matches( const KMMessage * msg ) const
     default:
       break;
   }
-
   if ( FilterLog::instance()->isLogging() ) {
     QString msg = ( rc ? "<font color=#00FF00>1 = </font>"
                        : "<font color=#FF0000>0 = </font>" );
@@ -706,6 +743,37 @@ bool KMSearchRuleStatus::matches( const KMMessage * msg ) const
     FilterLog::instance()->add( msg, FilterLog::ruleResult );
   }
   return rc;
+}
+
+void KMSearchRuleStatus::addTagTerm( Nepomuk::Query::GroupTerm &groupTerm, const QString &tagId ) const
+{
+  // TODO handle function() == NOT
+  const Nepomuk::Tag tag( tagId );
+  addAndNegateTerm( Nepomuk::Query::ComparisonTerm( Soprano::Vocabulary::NAO::hasTag(),
+                                                    Nepomuk::Query::ResourceTerm( tag.resourceUri() ),
+                                                    Nepomuk::Query::ComparisonTerm::Equal ),
+                                                    groupTerm );
+}
+
+void KMSearchRuleStatus::addQueryTerms(Nepomuk::Query::GroupTerm& groupTerm) const
+{
+  if ( mStatus.isRead() || mStatus.isUnread() ) {
+    bool read = false;
+    if ( function() == FuncContains || function() == FuncEquals )
+      read = true;
+    if ( mStatus.isUnread() )
+      read = !read;
+    groupTerm.addSubTerm( Nepomuk::Query::ComparisonTerm( Vocabulary::NMO::isRead(), Nepomuk::Query::LiteralTerm( read ), Nepomuk::Query::ComparisonTerm::Equal ) );
+  }
+
+  if ( mStatus.isImportant() )
+    addTagTerm( groupTerm, "important" );
+  if ( mStatus.isToAct() )
+    addTagTerm( groupTerm, "todo" );
+  if ( mStatus.isWatched() )
+    addTagTerm( groupTerm, "watched" );
+
+  // TODO
 }
 
 // ----------------------------------------------------------------------------
@@ -733,88 +801,30 @@ KMSearchPattern::~KMSearchPattern()
   qDeleteAll( *this );
 }
 
-bool KMSearchPattern::matches( const KMMessage * msg, bool ignoreBody ) const
+bool KMSearchPattern::matches( const Akonadi::Item &item, bool ignoreBody ) const
 {
   if ( isEmpty() )
     return true;
+  if ( !item.hasPayload<KMime::Message::Ptr>() )
+    return false;
 
   QList<KMSearchRule*>::const_iterator it;
   switch ( mOperator ) {
   case OpAnd: // all rules must match
     for ( it = begin() ; it != end() ; ++it )
       if ( !((*it)->requiresBody() && ignoreBody) )
-        if ( !(*it)->matches( msg ) )
+        if ( !(*it)->matches( item ) )
           return false;
     return true;
   case OpOr:  // at least one rule must match
     for ( it = begin() ; it != end() ; ++it )
       if ( !((*it)->requiresBody() && ignoreBody) )
-        if ( (*it)->matches( msg ) )
+        if ( (*it)->matches( item ) )
           return true;
     // fall through
   default:
     return false;
   }
-}
-
-bool KMSearchPattern::matches( const DwString & aStr, bool ignoreBody ) const
-{
-  if ( isEmpty() )
-    return true;
-
-  KMMessage msg;
-  QList<KMSearchRule*>::const_iterator it;
-  switch ( mOperator ) {
-  case OpAnd: // all rules must match
-    for ( it = begin() ; it != end() ; ++it )
-      if ( !((*it)->requiresBody() && ignoreBody) )
-        if ( !(*it)->matches( aStr, msg ) )
-          return false;
-    return true;
-  case OpOr:  // at least one rule must match
-    for ( it = begin() ; it != end() ; ++it )
-      if ( !((*it)->requiresBody() && ignoreBody) )
-        if ( (*it)->matches( aStr, msg ) )
-          return true;
-    // fall through
-  default:
-    return false;
-  }
-}
-
-bool KMSearchPattern::matches( quint32 serNum, bool ignoreBody ) const
-{
-  if ( isEmpty() ) {
-    return true;
-  }
-
-  bool res = false;
-  int idx = -1;
-  KMFolder *folder = 0;
-  KMMsgDict::instance()->getLocation( serNum, &folder, &idx );
-  if ( !folder || ( idx == -1 ) || ( idx >= folder->count() ) ) {
-    return res;
-  }
-
-  KMFolderOpener openFolder( folder, "searptr" );
-  if ( openFolder.openResult() == 0 ) { // 0 means no error codes
-    KMFolder *f =  openFolder.folder();
-    KMMsgBase *msgBase = f->getMsgBase( idx );
-    if ( msgBase && requiresBody() && !ignoreBody ) {
-      bool unGet = !msgBase->isMessage();
-      KMMessage *msg = f->getMsg( idx );
-      res = false;
-      if ( msg ) {
-        res = matches( msg, ignoreBody );
-        if ( unGet ) {
-          folder->unGetMsg( idx );
-        }
-      }
-    } else {
-      res = matches( f->getDwString( idx ), ignoreBody );
-    }
-  }
-  return res;
 }
 
 bool KMSearchPattern::requiresBody() const {
@@ -938,6 +948,31 @@ QString KMSearchPattern::asString() const {
     result += "\n\t" + FilterLog::recode( (*it)->asString() );
 
   return result;
+}
+
+static Nepomuk::Query::GroupTerm makeGroupTerm( KMSearchPattern::Operator op )
+{
+  if ( op == KMSearchPattern::OpOr )
+    return Nepomuk::Query::OrTerm();
+  return Nepomuk::Query::AndTerm();
+}
+
+QString KMSearchPattern::asSparqlQuery() const
+{
+  Nepomuk::Query::Query query;
+
+  Nepomuk::Query::AndTerm outerGroup;
+  // TODO: add type restriction
+
+  Nepomuk::Query::GroupTerm innerGroup = makeGroupTerm( mOperator );
+  for ( const_iterator it = begin(); it != end(); ++it )
+    (*it)->addQueryTerms( innerGroup );
+
+  if ( innerGroup.subTerms().isEmpty() )
+    return QString();
+  outerGroup.addSubTerm( innerGroup );
+  query.setTerm( outerGroup );
+  return query.toSparqlQuery();
 }
 
 const KMSearchPattern & KMSearchPattern::operator=( const KMSearchPattern & other ) {

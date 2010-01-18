@@ -26,12 +26,15 @@
 #include <QMultiHash>
 #include <QPointer>
 #include <QStringList>
+#include <akonadi/collection.h>
 
-class KMMsgBase;
-class KMMessage;
-class KMFolder;
+#include  <kmime/kmime_message.h>
+
+namespace Akonadi {
+  class Item;
+}
+
 class KTemporaryFile;
-
 class QWidget;
 
 //=========================================================
@@ -90,16 +93,16 @@ public:
       is required, @p GoOn if the message shall be processed by
       further filters and @p Ok otherwise.
   */
-  virtual ReturnCode process(KMMessage* msg) const = 0;
+  virtual ReturnCode process( const Akonadi::Item &item) const = 0;
 
   /** Execute an action on given message asynchronously.
       Emits a result signal on completion.
   */
-  virtual void processAsync(KMMessage* msg) const;
+  virtual void processAsync( const Akonadi::Item &item ) const;
 
   /** Determines if the action depends on the body of the message
   */
-  virtual bool requiresBody(KMMsgBase* msgBase) const;
+  virtual bool requiresBody(KMime::Content* msgBase) const;
 
   /** Determines whether this action is valid. But this is just a
       quick test. Eg., actions that have a mail address as parameter
@@ -137,17 +140,13 @@ public:
   /** Called from the filter when a folder is removed.  Tests if the
       folder @p aFolder is used and changes to @p aNewFolder in this
       case. Returns true if a change was made.  */
-  virtual bool folderRemoved(KMFolder* aFolder, KMFolder* aNewFolder);
+  virtual bool folderRemoved(const Akonadi::Collection & aFolder, const Akonadi::Collection & aNewFolder);
 
   /** Static function that creates a filter action of this type. */
   static KMFilterAction* newAction();
 
-  /** Temporarily open folder. Will be closed by the next
-    KMFilterMgr::cleanup() call.  */
-  static int tempOpenFolder(KMFolder* aFolder);
-
   /** Automates the sending of MDNs from filter actions. */
-  static void sendMDN( KMMessage * msg, KMime::MDN::DispositionType d,
+  static void sendMDN( const KMime::Message::Ptr &msg, KMime::MDN::DispositionType d,
 		       const QList<KMime::MDN::DispositionModifier> & m
 		       = QList<KMime::MDN::DispositionModifier>() );
 
@@ -398,7 +397,7 @@ public:
       quick test. Eg., actions that have a mail address as parameter
       shouldn't try real address validation, but only check if the
       string representation is empty. */
-  virtual bool isEmpty() const { return (mFolder.isNull() && mFolderName.isEmpty()); }
+  virtual bool isEmpty() const { return (!mFolder.isValid() && mFolderName.isEmpty()); }
 
   /** Creates a widget for setting the filter action parameter. Also
       sets the value of the widget. */
@@ -430,10 +429,10 @@ public:
   /** Called from the filter when a folder is removed.  Tests if the
       folder @p aFolder is used and changes to @p aNewFolder in this
       case. Returns true if a change was made.  */
-  virtual bool folderRemoved(KMFolder* aFolder, KMFolder* aNewFolder);
+  virtual bool folderRemoved(const Akonadi::Collection& aFolder, const Akonadi::Collection& aNewFolder);
 
 protected:
-  QPointer<KMFolder> mFolder;
+  Akonadi::Collection mFolder;
   QString mFolderName;
 };
 
@@ -583,9 +582,9 @@ public:
       supported, where n in an integer >= 0. %n gets substituted for
       the name of a tempfile holding the n'th message part, with n=0
       meaning the body of the message. */
-  virtual QString substituteCommandLineArgsFor( KMMessage *aMsg, QList<KTemporaryFile*> & aTempFileList  ) const;
+  virtual QString substituteCommandLineArgsFor( const KMime::Message::Ptr &aMsg, QList<KTemporaryFile*> & aTempFileList  ) const;
 
-  virtual ReturnCode genericProcess( KMMessage * aMsg, bool filtering ) const;
+  virtual ReturnCode genericProcess( const Akonadi::Item &item, bool filtering ) const;
 };
 
 

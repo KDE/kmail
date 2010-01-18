@@ -27,36 +27,27 @@
 #include "configuredialog_p.h"
 #include "ui_accountspagereceivingtab.h"
 
-#include <config-kmail.h>
-
 #include "globalsettings.h"
 #include "templatesconfiguration_kfg.h"
+#include "configuredialoglistview.h"
 
 // other KMail headers:
 #include "kmkernel.h"
 #include "simplestringlisteditor.h"
-#include "accountdialog.h"
 #include <libkdepim/colorlistbox.h>
-#include "kmacctseldlg.h"
-using KMail::AccountDialog;
 #include "messagesender.h"
-#include "kmfoldermgr.h"
 #include <kpimidentities/identitymanager.h>
 #include "identitylistview.h"
 using KMail::IdentityListView;
 using KMail::IdentityListViewItem;
-#include "kcursorsaver.h"
-#include "accountmanager.h"
+#include "messageviewer/kcursorsaver.h"
 #include "folderrequester.h"
 using KMail::FolderRequester;
-#include "accountcombobox.h"
-#include "imapaccountbase.h"
-using KMail::ImapAccountBase;
-#include "folderstorage.h"
-#include "kmfolder.h"
 #include "kmmainwidget.h"
-#include "kmmessagetag.h"
-#include "mainfolderview.h"
+#include "tagging.h"
+
+#include "folderselectiontreeview.h"
+
 #include "recentaddresses.h"
 using KPIM::RecentAddresses;
 #include "completionordereditor.h"
@@ -68,7 +59,8 @@ using KPIM::RecentAddresses;
 
 #include "templatesconfiguration.h"
 #include "customtemplates.h"
-#include "autoqpointer.h"
+#include "messageviewer/autoqpointer.h"
+#include "messageviewer/nodehelper.h"
 
 using KMail::IdentityListView;
 using KMail::IdentityListViewItem;
@@ -87,7 +79,6 @@ using KMime::DateFormatter;
 
 #include <mailtransport/transportmanagementwidget.h>
 using MailTransport::TransportManagementWidget;
-
 // other KDE headers:
 #include <klineedit.h>
 #include <klocale.h>
@@ -140,6 +131,13 @@ using MailTransport::TransportManagementWidget;
 #include <stdlib.h>
 #include <kvbox.h>
 
+
+#include <akonadi/agentfilterproxymodel.h>
+#include <akonadi/agentinstancemodel.h>
+#include <akonadi/agenttype.h>
+#include <akonadi/agentmanager.h>
+#include <akonadi/agenttypedialog.h>
+#include <akonadi/agentinstancecreatejob.h>
 namespace {
 
   static const char * lockedDownWarning =
@@ -727,15 +725,15 @@ AccountsPageReceivingTab::AccountsPageReceivingTab( QWidget * parent )
   mAccountsReceiving.vlay->setSpacing( KDialog::spacingHint() );
   mAccountsReceiving.vlay->setMargin( KDialog::marginHint() );
 
-  mAccountsReceiving.mAccountList->setSortingEnabled( true );
-  mAccountsReceiving.mAccountList->sortByColumn( 0, Qt::AscendingOrder );
-  mAccountsReceiving.hlay->insertWidget(0, mAccountsReceiving.mAccountList);
+  mAccountsReceiving.mAccountList->agentFilterProxyModel()->addMimeTypeFilter( "message/rfc822" );
+  mAccountsReceiving.mAccountList->agentFilterProxyModel()->addCapabilityFilter( "Resource" ); // show only resources, no agents
 
-  connect( mAccountsReceiving.mAccountList->selectionModel(),
-           SIGNAL(selectionChanged(const QItemSelection &,const QItemSelection &)),
-           this, SLOT(slotAccountSelected()) );
-           connect( mAccountsReceiving.mAccountList, SIGNAL(itemDoubleClicked(QTreeWidgetItem *,int)),
+  connect( mAccountsReceiving.mAccountList, SIGNAL( currentChanged( const Akonadi::AgentInstance&, const Akonadi::AgentInstance& ) ),
+           SLOT( slotAccountSelected( const Akonadi::AgentInstance& ) ) );
+  connect( mAccountsReceiving.mAccountList, SIGNAL(doubleClicked(Akonadi::AgentInstance)),
            this, SLOT(slotModifySelectedAccount()) );
+
+  mAccountsReceiving.hlay->insertWidget(0, mAccountsReceiving.mAccountList);
 
   connect( mAccountsReceiving.mAddAccountButton, SIGNAL(clicked()),
            this, SLOT(slotAddAccount()) );
@@ -756,120 +754,51 @@ AccountsPageReceivingTab::AccountsPageReceivingTab( QWidget * parent )
            this, SLOT( slotEmitChanged( void ) ) );
 
   mAccountsReceiving.mVerboseNotificationCheck->setWhatsThis(
-    GlobalSettings::self()->verboseNewMailNotificationItem()->whatsThis() );
+  GlobalSettings::self()->verboseNewMailNotificationItem()->whatsThis() );
   connect( mAccountsReceiving.mVerboseNotificationCheck, SIGNAL( stateChanged( int ) ),
            this, SLOT( slotEmitChanged() ) );
 
-#ifdef INDICATEQT_FOUND
-  // "Use message indicator" check box
-  mAccountsReceiving.mUseMessageIndicatorCheck->setWhatsThis(
-    GlobalSettings::self()->useMessageIndicatorItem()->whatsThis() );
-  connect( mAccountsReceiving.mUseMessageIndicatorCheck, SIGNAL( stateChanged( int ) ),
-           this, SLOT( slotEmitChanged() ) );
-#else
-  delete mAccountsReceiving.mUseMessageIndicatorCheck;
-  mAccountsReceiving.mUseMessageIndicatorCheck = 0;
-#endif
-
   connect( mAccountsReceiving.mOtherNewMailActionsButton, SIGNAL(clicked()),
            this, SLOT(slotEditNotifications()) );
+  slotAccountSelected( mAccountsReceiving.mAccountList->currentAgentInstance() );
+
 }
 
 AccountsPageReceivingTab::~AccountsPageReceivingTab()
 {
-  // When hitting Cancel or closing the dialog with the window-manager-button,
-  // we have a number of things to clean up:
-
-  // The newly created accounts
-  QList< QPointer<KMAccount> >::Iterator it;
-  for (it = mNewAccounts.begin(); it != mNewAccounts.end(); ++it ) {
-    delete (*it);
-  }
-  mNewAccounts.clear();
-
-  // The modified accounts
-  QList<ModifiedAccountsType*>::Iterator j;
-  for ( j = mModifiedAccounts.begin() ; j != mModifiedAccounts.end() ; ++j ) {
-    delete (*j)->newAccount;
-    delete (*j);
-  }
-  mModifiedAccounts.clear();
-
 
 }
 
-void AccountsPage::ReceivingTab::slotAccountSelected()
+void AccountsPage::ReceivingTab::slotAccountSelected(const Akonadi::AgentInstance& current)
 {
-  QTreeWidgetItem *item = mAccountsReceiving.mAccountList->currentItem();
-  mAccountsReceiving.mModifyAccountButton->setEnabled( item );
-  mAccountsReceiving.mRemoveAccountButton->setEnabled( item );
-}
-
-QStringList AccountsPage::ReceivingTab::occupiedNames()
-{
-  QStringList accountNames = kmkernel->acctMgr()->getAccounts();
-
-  QList<ModifiedAccountsType*>::Iterator k;
-  for (k = mModifiedAccounts.begin(); k != mModifiedAccounts.end(); ++k )
-    if ((*k)->oldAccount)
-      accountNames.removeAll( (*k)->oldAccount->name() );
-
-  QList< QPointer<KMAccount> >::Iterator l;
-  for (l = mAccountsToDelete.begin(); l != mAccountsToDelete.end(); ++l )
-    if (*l)
-      accountNames.removeAll( (*l)->name() );
-
-  QList< QPointer<KMAccount> >::Iterator it;
-  for (it = mNewAccounts.begin(); it != mNewAccounts.end(); ++it )
-    if (*it)
-      accountNames += (*it)->name();
-
-  QList<ModifiedAccountsType*>::Iterator j;
-  for (j = mModifiedAccounts.begin(); j != mModifiedAccounts.end(); ++j )
-    accountNames += (*j)->newAccount->name();
-
-  return accountNames;
+  if ( !current.isValid() ) {
+    mAccountsReceiving.mModifyAccountButton->setEnabled( false );
+    mAccountsReceiving.mRemoveAccountButton->setEnabled( false );
+  } else {
+    mAccountsReceiving.mModifyAccountButton->setEnabled( !current.type().capabilities().contains( QLatin1String( "NoConfig" ) ) );
+    mAccountsReceiving.mRemoveAccountButton->setEnabled( true );
+  }
 }
 
 void AccountsPage::ReceivingTab::slotAddAccount()
 {
-  AutoQPointer<KMAcctSelDlg> accountSelectorDialog( new KMAcctSelDlg( this ) );
-  if ( accountSelectorDialog->exec() != QDialog::Accepted || !accountSelectorDialog ) {
-    return;
+  //TODO verify this dialog box. We can see note etc...
+  Akonadi::AgentTypeDialog dlg( this );
+  Akonadi::AgentFilterProxyModel* filter = dlg.agentFilterProxyModel();
+  filter->addMimeTypeFilter( "message/rfc822" );
+  filter->addCapabilityFilter( "Resource" );
+  if ( dlg.exec() ) {
+    const Akonadi::AgentType agentType = dlg.agentType();
+
+    if ( agentType.isValid() ) {
+
+      Akonadi::AgentInstanceCreateJob *job = new Akonadi::AgentInstanceCreateJob( agentType, this );
+      job->configure( this );
+      job->start();
+    }
   }
 
-  KAccount::Type accountType = accountSelectorDialog->selected();
-  KMAccount *account = kmkernel->acctMgr()->create( accountType );
-  if ( !account ) {
-    // ### FIXME: Give the user more information. Is this error
-    // recoverable?
-    KMessageBox::sorry( this, i18n("Unable to create account") );
-    return;
-  }
 
-  account->init(); // fill the account fields with good default values
-
-  AutoQPointer<AccountDialog> dialog( new AccountDialog( i18n("Add Account"), account, this ) );
-
-  if ( dialog->exec() != QDialog::Accepted ) {
-    delete account;
-    return;
-  }
-
-  account->deinstallTimer();
-  account->setName( kmkernel->acctMgr()->makeUnique( account->name() ) );
-
-  QTreeWidgetItem *after = mAccountsReceiving.mAccountList->topLevelItemCount() > 0 ?
-      mAccountsReceiving.mAccountList->topLevelItem( mAccountsReceiving.mAccountList->topLevelItemCount() - 1 ) :
-      0;
-
-  QTreeWidgetItem *listItem = new QTreeWidgetItem( mAccountsReceiving.mAccountList, after );
-  listItem->setText( 0, account->name() );
-  listItem->setText( 1, KAccount::displayNameForType( account->type() ) );
-  if( account->folder() )
-    listItem->setText( 2, account->folder()->label() );
-
-  mNewAccounts.append( account );
   emit changed( true );
 }
 
@@ -877,69 +806,11 @@ void AccountsPage::ReceivingTab::slotAddAccount()
 
 void AccountsPage::ReceivingTab::slotModifySelectedAccount()
 {
-  QTreeWidgetItem *listItem = mAccountsReceiving.mAccountList->currentItem();
-  if( !listItem ) return;
-
-  KMAccount *account = 0;
-  QList<ModifiedAccountsType*>::Iterator j;
-  for (j = mModifiedAccounts.begin(); j != mModifiedAccounts.end(); ++j )
-    if ( (*j)->newAccount->name() == listItem->text( 0 ) ) {
-      account = (*j)->newAccount;
-      break;
-    }
-
-  if ( !account ) {
-    QList< QPointer<KMAccount> >::Iterator it;
-    for ( it = mNewAccounts.begin() ; it != mNewAccounts.end() ; ++it )
-      if ( (*it)->name() == listItem->text( 0 ) ) {
-        account = *it;
-        break;
-      }
-
-    if ( !account ) {
-      account = kmkernel->acctMgr()->findByName( listItem->text( 0 ) );
-      if( !account ) {
-        // ### FIXME: How should this happen? See above.
-        KMessageBox::sorry( this, i18n("Unable to locate account") );
-        return;
-      }
-      if ( account->type() == KAccount::Imap ||
-           account->type() == KAccount::DImap )
-      {
-        ImapAccountBase* ai = static_cast<ImapAccountBase*>( account );
-        if ( ai->namespaces().isEmpty() || ai->namespaceToDelimiter().isEmpty() )
-        {
-          // connect to server - the namespaces are fetched automatically
-          kDebug() << "slotModifySelectedAccount - connect";
-          ai->makeConnection();
-        }
-      }
-
-      ModifiedAccountsType *mod = new ModifiedAccountsType;
-      mod->oldAccount = account;
-      mod->newAccount = kmkernel->acctMgr()->create( account->type(),
-                                                   account->name() );
-      mod->newAccount->pseudoAssign( account );
-      mModifiedAccounts.append( mod );
-      account = mod->newAccount;
-    }
+  Akonadi::AgentInstance instance = mAccountsReceiving.mAccountList->currentAgentInstance();
+  if ( instance.isValid() ) {
+    KWindowSystem::allowExternalProcessWindowActivation();
+    instance.configure( this );
   }
-
-  QStringList accountNames = occupiedNames();
-  accountNames.removeAll( account->name() );
-
-  AutoQPointer<AccountDialog> dialog( new AccountDialog( i18n("Modify Account"), account, this ) );
-
-  if ( dialog->exec() != QDialog::Accepted ) return;
-
-  if ( accountNames.contains( account->name() ) )
-    account->setName( kmkernel->acctMgr()->makeUnique( account->name() ) );
-
-  listItem->setText( 0, account->name() );
-  listItem->setText( 1, KAccount::displayNameForType( account->type() ) );
-  if( account->folder() )
-    listItem->setText( 2, account->folder()->label() );
-
   emit changed( true );
 }
 
@@ -947,48 +818,14 @@ void AccountsPage::ReceivingTab::slotModifySelectedAccount()
 
 void AccountsPage::ReceivingTab::slotRemoveSelectedAccount()
 {
-  QTreeWidgetItem *listItem = mAccountsReceiving.mAccountList->currentItem();
-  if( !listItem ) return;
+  const Akonadi::AgentInstance instance =  mAccountsReceiving.mAccountList->currentAgentInstance();
+  if ( instance.isValid() )
+    Akonadi::AgentManager::self()->removeInstance( instance );
 
-  KMAccount *acct = 0;
-  QList<ModifiedAccountsType*>::Iterator j;
-  for ( j = mModifiedAccounts.begin() ; j != mModifiedAccounts.end() ; ++j )
-    if ( (*j)->newAccount->name() == listItem->text(0) ) {
-      acct = (*j)->oldAccount;
-      mAccountsToDelete.append( acct );
-      mModifiedAccounts.erase( j );
-      break;
-    }
-  if ( !acct ) {
-    QList< QPointer<KMAccount> >::Iterator it;
-    for ( it = mNewAccounts.begin() ; it != mNewAccounts.end() ; ++it )
-      if ( (*it)->name() == listItem->text(0) ) {
-        acct = *it;
-        mNewAccounts.erase( it );
-        break;
-      }
-  }
-  if ( !acct ) {
-    acct = kmkernel->acctMgr()->findByName( listItem->text(0) );
-    if ( acct )
-      mAccountsToDelete.append( acct );
-  }
-  if ( !acct ) {
-    // ### FIXME: see above
-    KMessageBox::sorry( this, i18n("<qt>Unable to locate account <b>%1</b>.</qt>",
-                         listItem->text(0)) );
-    return;
-  }
-
-  QTreeWidgetItem *item = mAccountsReceiving.mAccountList->itemBelow( listItem );
-  if ( !item ) item = mAccountsReceiving.mAccountList->itemAbove( listItem );
-  delete listItem;
-
-  if ( item ) {
-    mAccountsReceiving.mAccountList->setCurrentItem( item );
-  }
+  slotAccountSelected( mAccountsReceiving.mAccountList->currentAgentInstance() );
 
   emit changed( true );
+
 }
 
 void AccountsPage::ReceivingTab::slotEditNotifications()
@@ -1002,35 +839,11 @@ void AccountsPage::ReceivingTab::slotEditNotifications()
 void AccountsPage::ReceivingTab::doLoadFromGlobalSettings()
 {
   mAccountsReceiving.mVerboseNotificationCheck->setChecked( GlobalSettings::self()->verboseNewMailNotification() );
-#ifdef INDICATEQT_FOUND
-  mAccountsReceiving.mUseMessageIndicatorCheck->setChecked( GlobalSettings::self()->useMessageIndicator() );
-#endif
 }
 
 void AccountsPage::ReceivingTab::doLoadOther()
 {
   KConfigGroup general( KMKernel::config(), "General" );
-
-  mAccountsReceiving.mAccountList->clear();
-  QTreeWidgetItem *top = 0;
-
-  QList<KMAccount*>::iterator accountIt = kmkernel->acctMgr()->begin();
-  while ( accountIt != kmkernel->acctMgr()->end() ) {
-    KMAccount *account = *accountIt;
-    ++accountIt;
-    QTreeWidgetItem *listItem = new QTreeWidgetItem( mAccountsReceiving.mAccountList, top );
-    listItem->setText( 0, account->name() );
-    listItem->setText( 1, KAccount::displayNameForType( account->type() ) );
-    if( account->folder() )
-      listItem->setText( 2, account->folder()->label() );
-    top = listItem;
-  }
-  QTreeWidgetItem *listItem = mAccountsReceiving.mAccountList->topLevelItemCount() == 0 ?
-      0 : mAccountsReceiving.mAccountList->topLevelItem( 0 );
-  if ( listItem ) {
-    mAccountsReceiving.mAccountList->setCurrentItem( listItem );
-  }
-
   mAccountsReceiving.mBeepNewMailCheck->setChecked( general.readEntry( "beep-on-mail", false ) );
   mAccountsReceiving.mCheckmailStartupCheck->setChecked(
       general.readEntry( "checkmail-startup", false ) );
@@ -1038,56 +851,18 @@ void AccountsPage::ReceivingTab::doLoadOther()
 
 void AccountsPage::ReceivingTab::save()
 {
-  // Add accounts marked as new
-  QList< QPointer<KMAccount> >::Iterator it;
-  for (it = mNewAccounts.begin(); it != mNewAccounts.end(); ++it ) {
-    kmkernel->acctMgr()->add( *it ); // calls installTimer too
-  }
-
-  // Update accounts that have been modified
-  QList<ModifiedAccountsType*>::Iterator j;
-  for ( j = mModifiedAccounts.begin() ; j != mModifiedAccounts.end() ; ++j ) {
-    (*j)->oldAccount->pseudoAssign( (*j)->newAccount );
-    delete (*j)->newAccount;
-    delete (*j);
-  }
-  mModifiedAccounts.clear();
-
-  // Delete accounts marked for deletion
-  for ( it = mAccountsToDelete.begin() ;
-        it != mAccountsToDelete.end() ; ++it ) {
-    kmkernel->acctMgr()->writeConfig( true );
-    if ( (*it) && !kmkernel->acctMgr()->remove(*it) )
-      KMessageBox::sorry( this, i18n("<qt>Unable to locate account <b>%1</b>.</qt>",
-                            (*it)->name() ) );
-  }
-  mAccountsToDelete.clear();
-
-  // Incoming mail
-  kmkernel->acctMgr()->writeConfig( false );
+#if 0 //TODO port to akonadi
   kmkernel->cleanupImapFolders();
-
+#else
+    kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
+#endif
   // Save Mail notification settings
   KConfigGroup general( KMKernel::config(), "General" );
   general.writeEntry( "beep-on-mail", mAccountsReceiving.mBeepNewMailCheck->isChecked() );
   GlobalSettings::self()->setVerboseNewMailNotification( mAccountsReceiving.mVerboseNotificationCheck->isChecked() );
 
-#ifdef INDICATEQT_FOUND
-  GlobalSettings::self()->setUseMessageIndicator( mAccountsReceiving.mUseMessageIndicatorCheck->isChecked() );
-#endif
-
   general.writeEntry( "checkmail-startup", mAccountsReceiving.mCheckmailStartupCheck->isChecked() );
 
-  // Sync new IMAP accounts ASAP:
-  for (it = mNewAccounts.begin(); it != mNewAccounts.end(); ++it ) {
-    KMAccount *macc = (*it);
-    ImapAccountBase *acc = dynamic_cast<ImapAccountBase*> (macc);
-    if ( acc ) {
-      AccountUpdater *au = new AccountUpdater( acc );
-      au->update();
-    }
-  }
-  mNewAccounts.clear();
 
 }
 
@@ -1160,11 +935,11 @@ static const struct {
   bool   onlyFixed;
 } fontNames[] = {
   { "body-font", I18N_NOOP("Message Body"), true, false },
-  { "list-font", I18N_NOOP("Message List"), true, false },
-  { "list-new-font", I18N_NOOP("Message List - New Messages"), true, false },
-  { "list-unread-font", I18N_NOOP("Message List - Unread Messages"), true, false },
-  { "list-important-font", I18N_NOOP("Message List - Important Messages"), true, false },
-  { "list-toact-font", I18N_NOOP("Message List - Action Item Messages"), true, false },
+  { "MessageListFont", I18N_NOOP("Message List"), true, false },
+  { "NewMessageFont", I18N_NOOP("Message List - New Messages"), true, false },
+  { "UnreadMessageFont", I18N_NOOP("Message List - Unread Messages"), true, false },
+  { "ImportantMessageFont", I18N_NOOP("Message List - Important Messages"), true, false },
+  { "TodoMessageFont", I18N_NOOP("Message List - Action Item Messages"), true, false },
   { "folder-font", I18N_NOOP("Folder List"), true, false },
   { "quote1-font", I18N_NOOP("Quoted Text - First Level"), false, false },
   { "quote2-font", I18N_NOOP("Quoted Text - Second Level"), false, false },
@@ -1276,13 +1051,25 @@ void AppearancePage::FontsTab::slotFontSelectorChanged( int index )
 void AppearancePage::FontsTab::doLoadOther()
 {
   KConfigGroup fonts( KMKernel::config(), "Fonts" );
+  KConfigGroup messagelistFont( KMKernel::config(), "MessageListView::Fonts" );
 
   mFont[0] = KGlobalSettings::generalFont();
   QFont fixedFont = KGlobalSettings::fixedFont();
-  for ( int i = 0 ; i < numFontNames ; i++ )
-    mFont[i] = fonts.readEntry( fontNames[i].configName,
-      (fontNames[i].onlyFixed) ? fixedFont : mFont[0] );
 
+  for ( int i = 0 ; i < numFontNames ; i++ ) {
+    QString configName = fontNames[i].configName;
+    if ( configName == "MessageListFont" ||
+         configName == "NewMessageFont" ||
+         configName == "UnreadMessageFont" ||
+         configName == "ImportantMessageFont" ||
+         configName == "TodoMessageFont" ) {
+      mFont[i] = messagelistFont.readEntry( configName,
+                                            (fontNames[i].onlyFixed) ? fixedFont : mFont[0] );
+    } else {
+      mFont[i] = fonts.readEntry( configName,
+                                  (fontNames[i].onlyFixed) ? fixedFont : mFont[0] );
+    }
+  }
   mCustomFontCheck->setChecked( !fonts.readEntry( "defaultFonts", true ) );
   mFontLocationCombo->setCurrentIndex( 0 );
   slotFontSelectorChanged( 0 );
@@ -1291,6 +1078,7 @@ void AppearancePage::FontsTab::doLoadOther()
 void AppearancePage::FontsTab::save()
 {
   KConfigGroup fonts( KMKernel::config(), "Fonts" );
+  KConfigGroup messagelistFont( KMKernel::config(), "MessageListView::Fonts" );
 
   // read the current font (might have been modified)
   if ( mActiveFontIndex >= 0 )
@@ -1298,11 +1086,27 @@ void AppearancePage::FontsTab::save()
 
   bool customFonts = mCustomFontCheck->isChecked();
   fonts.writeEntry( "defaultFonts", !customFonts );
-  for ( int i = 0 ; i < numFontNames ; i++ )
-    if ( customFonts || fonts.hasKey( fontNames[i].configName ) )
-      // Don't write font info when we use default fonts, but write
-      // if it's already there:
-      fonts.writeEntry( fontNames[i].configName, mFont[i] );
+  messagelistFont.writeEntry( "defaultFonts", !customFonts );
+
+  for ( int i = 0 ; i < numFontNames ; i++ ) {
+    QString configName = fontNames[i].configName;
+    if ( configName == "MessageListFont" ||
+         configName == "NewMessageFont" ||
+         configName == "UnreadMessageFont" ||
+         configName == "ImportantMessageFont" ||
+         configName == "TodoMessageFont" ) {
+      if ( customFonts || messagelistFont.hasKey( configName ) ) {
+        // Don't write font info when we use default fonts, but write
+        // if it's already there:
+        messagelistFont.writeEntry( configName, mFont[i] );
+      }
+    } else {
+      if ( customFonts || fonts.hasKey( configName ) )
+        // Don't write font info when we use default fonts, but write
+        // if it's already there:
+        fonts.writeEntry( configName, mFont[i] );
+    }
+  }
 }
 
 QString AppearancePage::ColorsTab::helpAnchor() const
@@ -1321,10 +1125,10 @@ static const struct {
   { "LinkColor", I18N_NOOP("Link") },
   { "FollowedColor", I18N_NOOP("Followed Link") },
   { "MisspelledColor", I18N_NOOP("Misspelled Words") },
-  { "NewMessage", I18N_NOOP("New Message") },
-  { "UnreadMessage", I18N_NOOP("Unread Message") },
-  { "FlagMessage", I18N_NOOP("Important Message") },
-  { "ToActMessage", I18N_NOOP("Action Item Message") },
+  { "NewMessageColor", I18N_NOOP("New Message") },
+  { "UnreadMessageColor", I18N_NOOP("Unread Message") },
+  { "ImportantMessageColor", I18N_NOOP("Important Message") },
+  { "TodoMessageColor", I18N_NOOP("Action Item Message") },
   { "PGPMessageEncr", I18N_NOOP("OpenPGP Message - Encrypted") },
   { "PGPMessageOkKeyOk", I18N_NOOP("OpenPGP Message - Valid Signature with Trusted Key") },
   { "PGPMessageOkKeyBad", I18N_NOOP("OpenPGP Message - Valid Signature with Untrusted Key") },
@@ -1403,6 +1207,7 @@ AppearancePageColorsTab::AppearancePageColorsTab( QWidget * parent )
 void AppearancePage::ColorsTab::doLoadOther()
 {
   KConfigGroup reader( KMKernel::config(), "Reader" );
+  KConfigGroup messageListView( KMKernel::config(), "MessageListView::Colors" );
 
   mCustomColorCheck->setChecked( !reader.readEntry( "defaultColors", true ) );
   mRecycleColorCheck->setChecked( reader.readEntry( "RecycleQuoteColors", false ) );
@@ -1434,8 +1239,15 @@ void AppearancePage::ColorsTab::doLoadOther()
   };
 
   for ( int i = 0 ; i < numColorNames ; i++ ) {
-    mColorList->setColor( i,
-      reader.readEntry( colorNames[i].configName, defaultColor[i] ));
+    QString configName = colorNames[i].configName;
+    if ( configName == "NewMessageColor" ||
+         configName == "UnreadMessageColor" ||
+         configName == "ImportantMessageColor" ||
+         configName == "TodoMessageColor" ) {
+      mColorList->setColor( i, messageListView.readEntry( configName, defaultColor[i] ));
+    }
+    else
+      mColorList->setColor( i,reader.readEntry( configName, defaultColor[i] ));
   }
   connect( mColorList, SIGNAL( changed( ) ),
            this, SLOT( slotEmitChanged( void ) ) );
@@ -1444,16 +1256,28 @@ void AppearancePage::ColorsTab::doLoadOther()
 void AppearancePage::ColorsTab::save()
 {
   KConfigGroup reader( KMKernel::config(), "Reader" );
-
+  KConfigGroup messageListView( KMKernel::config(), "MessageListView::Colors" );
   bool customColors = mCustomColorCheck->isChecked();
   GlobalSettings::self()->setUseDefaultColors( !customColors );
 
-  for ( int i = 0 ; i < numColorNames ; i++ )
+  messageListView.writeEntry( "defaultColors", !customColors );
+
+  for ( int i = 0 ; i < numColorNames ; i++ ) {
     // Don't write color info when we use default colors, but write
     // if it's already there:
-    if ( customColors || reader.hasKey( colorNames[i].configName ) )
-      reader.writeEntry( colorNames[i].configName, mColorList->color(i) );
+    QString configName = colorNames[i].configName;
+    if ( configName == "NewMessageColor" ||
+         configName == "UnreadMessageColor" ||
+         configName == "ImportantMessageColor" ||
+         configName == "TodoMessageColor" ) {
+      if ( customColors || messageListView.hasKey( configName ) )
+        messageListView.writeEntry( configName, mColorList->color(i) );
 
+    } else {
+      if ( customColors || reader.hasKey( configName ) )
+        reader.writeEntry( configName, mColorList->color(i) );
+    }
+  }
   reader.writeEntry( "RecycleQuoteColors", mRecycleColorCheck->isChecked() );
   GlobalSettings::self()->setCloseToQuotaThreshold( mCloseToQuotaThreshold->value() );
 }
@@ -1485,11 +1309,11 @@ AppearancePageLayoutTab::AppearancePageLayoutTab( QWidget * parent )
   mFavoriteFolderViewCB = new QCheckBox( i18n("Show favorite folder view"), this );
   connect( mFavoriteFolderViewCB, SIGNAL(toggled(bool)), SLOT(slotEmitChanged()) );
   folderCBHLayout->addWidget( mFavoriteFolderViewCB );
-
+#if 0
   mFolderQuickSearchCB = new QCheckBox( i18n("Show folder quick search field"), this );
   connect( mFolderQuickSearchCB, SIGNAL(toggled(bool)), SLOT(slotEmitChanged()) );
   folderCBHLayout->addWidget( mFolderQuickSearchCB );
-
+#endif
   vlay->addLayout( folderCBHLayout );
   vlay->addSpacing( KDialog::spacingHint() );   // space before next box
 
@@ -1503,15 +1327,16 @@ AppearancePageLayoutTab::AppearancePageLayoutTab( QWidget * parent )
            this, SLOT( slotEmitChanged() ) );
 
   QRadioButton* folderToolTipsAlwaysRadio = new QRadioButton( i18n( "Always" ), mFolderToolTipsGroupBox );
-  mFolderToolTipsGroup->addButton( folderToolTipsAlwaysRadio, static_cast< int >( KMail::FolderView::DisplayAlways ) );
+  mFolderToolTipsGroup->addButton( folderToolTipsAlwaysRadio, static_cast< int >( FolderSelectionTreeView::DisplayAlways ) );
   mFolderToolTipsGroupBox->layout()->addWidget( folderToolTipsAlwaysRadio );
 
   QRadioButton* folderToolTipsElidedRadio = new QRadioButton( i18n( "When Text Obscured" ), mFolderToolTipsGroupBox );
-  mFolderToolTipsGroup->addButton( folderToolTipsElidedRadio, static_cast< int >( KMail::FolderView::DisplayWhenTextElided ) );
+  mFolderToolTipsGroup->addButton( folderToolTipsElidedRadio, static_cast< int >( FolderSelectionTreeView::DisplayWhenTextElided ) );
+  folderToolTipsElidedRadio->setEnabled( false ); //Disable it until we reimplement it.
   mFolderToolTipsGroupBox->layout()->addWidget( folderToolTipsElidedRadio );
 
   QRadioButton* folderToolTipsNeverRadio = new QRadioButton( i18n( "Never" ), mFolderToolTipsGroupBox );
-  mFolderToolTipsGroup->addButton( folderToolTipsNeverRadio, static_cast< int >( KMail::FolderView::DisplayNever ) );
+  mFolderToolTipsGroup->addButton( folderToolTipsNeverRadio, static_cast< int >( FolderSelectionTreeView::DisplayNever ) );
   mFolderToolTipsGroupBox->layout()->addWidget( folderToolTipsNeverRadio );
 
   vlay->addWidget( mFolderToolTipsGroupBox );
@@ -1532,8 +1357,9 @@ void AppearancePage::LayoutTab::doLoadOther()
   loadWidget( mFolderListGroupBox, mFolderListGroup, GlobalSettings::self()->folderListItem() );
   loadWidget( mReaderWindowModeGroupBox, mReaderWindowModeGroup, GlobalSettings::self()->readerWindowModeItem() );
   mFavoriteFolderViewCB->setChecked( GlobalSettings::self()->enableFavoriteFolderView() );
+#if 0
   mFolderQuickSearchCB->setChecked( GlobalSettings::self()->enableFolderQuickSearch() );
-
+#endif
   const KConfigGroup mainFolderView( KMKernel::config(), "MainFolderView" );
   const int checkedFolderToolTipsPolicy = mainFolderView.readEntry( "ToolTipDisplayPolicy", 0 );
   if ( checkedFolderToolTipsPolicy < mFolderToolTipsGroup->buttons().size() && checkedFolderToolTipsPolicy >= 0 )
@@ -1545,7 +1371,9 @@ void AppearancePage::LayoutTab::save()
   saveButtonGroup( mFolderListGroup, GlobalSettings::self()->folderListItem() );
   saveButtonGroup( mReaderWindowModeGroup, GlobalSettings::self()->readerWindowModeItem() );
   GlobalSettings::self()->setEnableFavoriteFolderView( mFavoriteFolderViewCB->isChecked() );
+#if 0
   GlobalSettings::self()->setEnableFolderQuickSearch( mFolderQuickSearchCB->isChecked() );
+#endif
   KConfigGroup mainFolderView( KMKernel::config(), "MainFolderView" );
   mainFolderView.writeEntry( "ToolTipDisplayPolicy", mFolderToolTipsGroup->checkedId() );
 }
@@ -1589,13 +1417,13 @@ AppearancePageHeadersTab::AppearancePageHeadersTab( QWidget * parent )
   QVBoxLayout *gvlay = new QVBoxLayout( group );
   gvlay->setSpacing( KDialog::spacingHint() );
 
-  mDisplayMessageToolTips = new QCheckBox( GlobalSettings::self()->displayMessageToolTipsItem()->label(), group );
+  mDisplayMessageToolTips = new QCheckBox( GlobalSettings::self()->messageToolTipEnabledItem()->label(), group );
   gvlay->addWidget( mDisplayMessageToolTips );
 
   connect( mDisplayMessageToolTips, SIGNAL( stateChanged( int ) ),
            this, SLOT( slotEmitChanged( void ) ) );
 
-  mHideTabBarWithSingleTab = new QCheckBox( GlobalSettings::self()->hideTabBarWithSingleTabItem()->label(), group );
+  mHideTabBarWithSingleTab = new QCheckBox( GlobalSettings::self()->autoHideTabBarWithSingleTabItem()->label(), group );
   gvlay->addWidget( mHideTabBarWithSingleTab );
 
   connect( mHideTabBarWithSingleTab, SIGNAL( stateChanged( int ) ),
@@ -1749,8 +1577,8 @@ void AppearancePage::HeadersTab::doLoadOther()
   KConfigGroup geometry( KMKernel::config(), "Geometry" );
 
   // "General Options":
-  mDisplayMessageToolTips->setChecked( GlobalSettings::self()->displayMessageToolTips() );
-  mHideTabBarWithSingleTab->setChecked( GlobalSettings::self()->hideTabBarWithSingleTab() );
+  mDisplayMessageToolTips->setChecked( GlobalSettings::self()->messageToolTipEnabled() );
+  mHideTabBarWithSingleTab->setChecked( GlobalSettings::self()->autoHideTabBarWithSingleTab() );
 
   // "Aggregation":
   slotSelectDefaultAggregation();
@@ -1787,8 +1615,8 @@ void AppearancePage::HeadersTab::save()
   KConfigGroup general( KMKernel::config(), "General" );
   KConfigGroup geometry( KMKernel::config(), "Geometry" );
 
-  GlobalSettings::self()->setDisplayMessageToolTips( mDisplayMessageToolTips->isChecked() );
-  GlobalSettings::self()->setHideTabBarWithSingleTab( mHideTabBarWithSingleTab->isChecked() );
+  GlobalSettings::self()->setMessageToolTipEnabled( mDisplayMessageToolTips->isChecked() );
+  GlobalSettings::self()->setAutoHideTabBarWithSingleTab( mHideTabBarWithSingleTab->isChecked() );
 
   // "Aggregation"
   mAggregationComboBox->writeDefaultConfig();
@@ -1824,7 +1652,7 @@ AppearancePageReaderTab::AppearancePageReaderTab( QWidget * parent )
 
   // "show colorbar" check box:
   populateCheckBox( mShowColorbarCheck = new QCheckBox( this ),
-                    GlobalSettings::self()->showColorbarItem() );
+                    GlobalSettings::self()->showColorBarItem() );
   vlay->addWidget( mShowColorbarCheck );
   connect( mShowColorbarCheck, SIGNAL ( stateChanged( int ) ),
            this, SLOT( slotEmitChanged() ) );
@@ -1885,7 +1713,7 @@ AppearancePageReaderTab::AppearancePageReaderTab( QWidget * parent )
   hlay = new QHBoxLayout(); // inherits spacing
   vlay->addLayout( hlay );
   mCharsetCombo = new KComboBox( this );
-  mCharsetCombo->addItems( KMMsgBase::supportedEncodings( false ) );
+  mCharsetCombo->addItems(MessageViewer::NodeHelper::supportedEncodings( false ) );
 
   connect( mCharsetCombo, SIGNAL( activated( int ) ),
            this, SLOT( slotEmitChanged( void ) ) );
@@ -1904,7 +1732,7 @@ AppearancePageReaderTab::AppearancePageReaderTab( QWidget * parent )
   QHBoxLayout *hlay2 = new QHBoxLayout(); // inherits spacing
   vlay->addLayout( hlay2 );
   mOverrideCharsetCombo = new KComboBox( this );
-  QStringList encodings = KMMsgBase::supportedEncodings( false );
+  QStringList encodings =MessageViewer::NodeHelper::supportedEncodings( false );
   encodings.prepend( i18n( "Auto" ) );
   mOverrideCharsetCombo->addItems( encodings );
   mOverrideCharsetCombo->setCurrentIndex(0);
@@ -1928,7 +1756,7 @@ AppearancePageReaderTab::AppearancePageReaderTab( QWidget * parent )
 
 void AppearancePage::ReaderTab::readCurrentFallbackCodec()
 {
-  QStringList encodings = KMMsgBase::supportedEncodings( false );
+  QStringList encodings =MessageViewer::NodeHelper::supportedEncodings( false );
   QStringList::ConstIterator it( encodings.begin() );
   QStringList::ConstIterator end( encodings.end() );
   QString currentEncoding = GlobalSettings::self()->fallbackCharacterEncoding();
@@ -1937,7 +1765,7 @@ void AppearancePage::ReaderTab::readCurrentFallbackCodec()
   bool found = false;
   for( ; it != end; ++it)
   {
-    const QString encoding = KMMsgBase::encodingForName(*it);
+    const QString encoding = MessageViewer::NodeHelper::encodingForName(*it);
     if ( encoding == "ISO-8859-15" )
         indexOfLatin9 = i;
     if( encoding == currentEncoding )
@@ -1959,14 +1787,14 @@ void AppearancePage::ReaderTab::readCurrentOverrideCodec()
     mOverrideCharsetCombo->setCurrentIndex( 0 );
     return;
   }
-  QStringList encodings = KMMsgBase::supportedEncodings( false );
+  QStringList encodings =MessageViewer::NodeHelper::supportedEncodings( false );
   encodings.prepend( i18n( "Auto" ) );
   QStringList::ConstIterator it( encodings.constBegin() );
   QStringList::ConstIterator end( encodings.constEnd() );
   int i = 0;
   for( ; it != end; ++it)
   {
-    if( KMMsgBase::encodingForName(*it) == currentOverrideEncoding )
+    if( MessageViewer::NodeHelper::encodingForName(*it) == currentOverrideEncoding )
     {
       mOverrideCharsetCombo->setCurrentIndex( i );
       break;
@@ -1994,14 +1822,14 @@ void AppearancePage::ReaderTab::doLoadFromGlobalSettings()
 
 void AppearancePage::ReaderTab::doLoadOther()
 {
-  loadWidget( mShowColorbarCheck, GlobalSettings::self()->showColorbarItem() );
+  loadWidget( mShowColorbarCheck, GlobalSettings::self()->showColorBarItem() );
   loadWidget( mShowSpamStatusCheck, GlobalSettings::self()->showSpamStatusItem() );
 }
 
 
 void AppearancePage::ReaderTab::save()
 {
-  saveCheckBox( mShowColorbarCheck, GlobalSettings::self()->showColorbarItem() );
+  saveCheckBox( mShowColorbarCheck, GlobalSettings::self()->showColorBarItem() );
   saveCheckBox( mShowSpamStatusCheck, GlobalSettings::self()->showSpamStatusItem() );
   GlobalSettings::self()->setShowEmoticons( mShowEmoticonsCheck->isChecked() );
   GlobalSettings::self()->setShrinkQuotes( mShrinkQuotesCheck->isChecked() );
@@ -2009,11 +1837,11 @@ void AppearancePage::ReaderTab::save()
 
   GlobalSettings::self()->setCollapseQuoteLevelSpin( mCollapseQuoteLevelSpin->value() );
   GlobalSettings::self()->setFallbackCharacterEncoding(
-      KMMsgBase::encodingForName( mCharsetCombo->currentText() ) );
+      MessageViewer::NodeHelper::encodingForName( mCharsetCombo->currentText() ) );
   GlobalSettings::self()->setOverrideCharacterEncoding(
       mOverrideCharsetCombo->currentIndex() == 0 ?
         QString() :
-        KMMsgBase::encodingForName( mOverrideCharsetCombo->currentText() ) );
+        MessageViewer::NodeHelper::encodingForName( mOverrideCharsetCombo->currentText() ) );
 }
 
 QString AppearancePage::SystemTrayTab::helpAnchor() const
@@ -2075,8 +1903,6 @@ AppearancePageMessageTagTab::AppearancePageMessageTagTab( QWidget * parent )
 {
   mEmitChanges = true;
   mPreviousTag = -1;
-  mMsgTagDict = new QHash<QString,KMMessageTagDescription*>();
-  mMsgTagList = new QList<KMMessageTagDescription*>();
 
   QHBoxLayout *maingrid = new QHBoxLayout( this );
   maingrid->setMargin( KDialog::marginHint() );
@@ -2099,12 +1925,12 @@ AppearancePageMessageTagTab::AppearancePageMessageTagTab( QWidget * parent )
   mTagAddLineEdit = new KLineEdit( mTagsGroupBox );
   addremovegrid->addWidget( mTagAddLineEdit );
 
-  mTagAddButton = new QPushButton( mTagsGroupBox );
+  mTagAddButton = new KPushButton( mTagsGroupBox );
   mTagAddButton->setToolTip( i18n("Add new tag") );
   mTagAddButton->setIcon( KIcon( "list-add" ) );
   addremovegrid->addWidget( mTagAddButton );
 
-  mTagRemoveButton = new QPushButton( mTagsGroupBox );
+  mTagRemoveButton = new KPushButton( mTagsGroupBox );
   mTagRemoveButton->setToolTip( i18n("Remove selected tag") );
   mTagRemoveButton->setIcon( KIcon( "list-remove" ) );
   addremovegrid->addWidget( mTagRemoveButton );
@@ -2113,13 +1939,13 @@ AppearancePageMessageTagTab::AppearancePageMessageTagTab( QWidget * parent )
   QHBoxLayout *updowngrid = new QHBoxLayout();
   tageditgrid->addLayout( updowngrid );
 
-  mTagUpButton = new QPushButton( mTagsGroupBox );
+  mTagUpButton = new KPushButton( mTagsGroupBox );
   mTagUpButton->setToolTip( i18n("Increase tag priority") );
   mTagUpButton->setIcon( KIcon( "arrow-up" ) );
   mTagUpButton->setAutoRepeat( true );
   updowngrid->addWidget( mTagUpButton );
 
-  mTagDownButton = new QPushButton( mTagsGroupBox );
+  mTagDownButton = new KPushButton( mTagsGroupBox );
   mTagDownButton->setToolTip( i18n("Decrease tag priority") );
   mTagDownButton->setIcon( KIcon( "arrow-down" ) );
   mTagDownButton->setAutoRepeat( true );
@@ -2213,6 +2039,8 @@ AppearancePageMessageTagTab::AppearancePageMessageTagTab( QWidget * parent )
   mIconButton->setIconSize( 16 );
   mIconButton->setIconType( KIconLoader::NoGroup, KIconLoader::Action );
   settings->addWidget( mIconButton, 5, 1 );
+  connect( mIconButton, SIGNAL(iconChanged(QString)),
+           SLOT(slotIconNameChanged(QString)) );
 
   QLabel *iconlabel = new QLabel( i18n("Message tag &icon:"),
                                   mTagSettingGroupBox );
@@ -2238,10 +2066,10 @@ AppearancePageMessageTagTab::AppearancePageMessageTagTab( QWidget * parent )
 
   //Seventh for Toolbar checkbox
   mInToolbarCheck = new QCheckBox( i18n("Enable &toolbar button"),
-                                   mTagSettingGroupBox );
+                                    mTagSettingGroupBox );
   settings->addWidget( mInToolbarCheck, 7, 0 );
   connect( mInToolbarCheck, SIGNAL( stateChanged( int ) ),
-          this, SLOT( slotEmitChangeCheck( void ) ) );
+           this, SLOT( slotEmitChangeCheck( void ) ) );
 
   tagsettinggrid->addStretch( 10 );
 
@@ -2277,9 +2105,6 @@ AppearancePageMessageTagTab::AppearancePageMessageTagTab( QWidget * parent )
 
 AppearancePageMessageTagTab::~AppearancePageMessageTagTab()
 {
-  qDeleteAll(*mMsgTagDict);
-  delete mMsgTagDict;
-  delete mMsgTagList;
 }
 
 void AppearancePage::MessageTagTab::slotEmitChangeCheck()
@@ -2316,22 +2141,26 @@ void AppearancePage::MessageTagTab::slotMoveTagDown()
   if ( 0 == tmp_index )
     mTagUpButton->setEnabled( true );
 }
+
 void AppearancePage::MessageTagTab::swapTagsInListBox( const int first,
                                                        const int second )
 {
-  QString tmp_label = mTagListBox->item( first )->text();
-  KMMessageTagDescription *tmp_ptr = mMsgTagList->at( first );
+  const QString tmp_label = mTagListBox->item( first )->text();
+  const QIcon tmp_icon = mTagListBox->item( first )->icon();
+  KMail::Tag::Ptr tmp_ptr = mMsgTagList.at( first );
 
-  mMsgTagList->replace( first, mMsgTagList->at( second ) );
-  mMsgTagList->replace( second, tmp_ptr );
+  mMsgTagList.replace( first, mMsgTagList.at( second ) );
+  mMsgTagList.replace( second, tmp_ptr );
 
   disconnect( mTagListBox, SIGNAL( itemSelectionChanged() ),
-          this, SLOT( slotSelectionChanged() ) );
+              this, SLOT( slotSelectionChanged() ) );
   mTagListBox->item( first )->setText( mTagListBox->item( second )->text() );
+  mTagListBox->item( first )->setIcon( mTagListBox->item( second )->icon() );
   mTagListBox->item( second )->setText( tmp_label );
+  mTagListBox->item( second )->setIcon( tmp_icon );
   mTagListBox->setCurrentItem( mTagListBox->item( second ) );
   connect( mTagListBox, SIGNAL( itemSelectionChanged() ),
-          this, SLOT( slotSelectionChanged() ) );
+           this, SLOT( slotSelectionChanged() ) );
 
   mPreviousTag = second;
 
@@ -2343,25 +2172,25 @@ void AppearancePage::MessageTagTab::slotRecordTagSettings( int aIndex )
   if ( ( aIndex < 0 ) || ( aIndex >= int( mTagListBox->count() ) ) )
     return;
 
-  KMMessageTagDescription *tmp_desc = mMsgTagList->at( aIndex );
+  KMail::Tag::Ptr tmp_desc = mMsgTagList.at( aIndex );
 
-  tmp_desc->setName( mTagListBox->item( aIndex )->text() );
+  tmp_desc->tagName = mTagListBox->item( aIndex )->text();
 
-  tmp_desc->setTextColor( mTextColorCheck->isChecked() ?
-                          mTextColorCombo->color() : QColor() );
+  tmp_desc->textColor = mTextColorCheck->isChecked() ?
+                          mTextColorCombo->color() : QColor();
 
-  tmp_desc->setBackgroundColor( mBackgroundColorCheck->isChecked() ?
-                                mBackgroundColorCombo->color() : QColor() );
+  tmp_desc->backgroundColor = mBackgroundColorCheck->isChecked() ?
+                                mBackgroundColorCombo->color() : QColor();
 
-  tmp_desc->setTextFont( mTextFontCheck->isChecked() ?
-                          mFontRequester->font() : QFont() );
+  tmp_desc->textFont = mTextFontCheck->isChecked() ?
+                          mFontRequester->font() : QFont();
 
-  tmp_desc->setIconName( mIconButton->icon() );
+  tmp_desc->iconName = mIconButton->icon();
 
   mKeySequenceWidget->applyStealShortcut();
-  tmp_desc->setShortcut( KShortcut(mKeySequenceWidget->keySequence()) );
+  tmp_desc->shortcut = KShortcut( mKeySequenceWidget->keySequence() );
 
-  tmp_desc->setInToolbar( mInToolbarCheck->isChecked() );
+  tmp_desc->inToolbar = mInToolbarCheck->isChecked();
 }
 
 void AppearancePage::MessageTagTab::slotUpdateTagSettingWidgets( int aIndex )
@@ -2391,14 +2220,14 @@ void AppearancePage::MessageTagTab::slotUpdateTagSettingWidgets( int aIndex )
   mTagRemoveButton->setEnabled( true );
   mTagUpButton->setEnabled( ( 0 != aIndex ) );
   mTagDownButton->setEnabled(
-                          ( ( int( mMsgTagList->count() ) - 1 ) != aIndex ) );
+                          ( ( int( mMsgTagList.count() ) - 1 ) != aIndex ) );
 
-  KMMessageTagDescription *tmp_desc = mMsgTagList->at( mTagListBox->currentRow() );
+  KMail::Tag::Ptr tmp_desc = mMsgTagList.at( mTagListBox->currentRow() );
 
   mTagNameLineEdit->setEnabled( true );
-  mTagNameLineEdit->setText( tmp_desc->name() );
+  mTagNameLineEdit->setText( tmp_desc->tagName );
 
-  QColor tmp_color = tmp_desc->textColor();
+  QColor tmp_color = tmp_desc->textColor;
   mTextColorCheck->setEnabled( true );
   if ( tmp_color.isValid() ) {
     mTextColorCombo->setColor( tmp_color );
@@ -2407,7 +2236,7 @@ void AppearancePage::MessageTagTab::slotUpdateTagSettingWidgets( int aIndex )
     mTextColorCheck->setChecked( false );
   }
 
-  tmp_color = tmp_desc->backgroundColor();
+  tmp_color = tmp_desc->backgroundColor;
   mBackgroundColorCheck->setEnabled( true );
   if ( tmp_color.isValid() ) {
     mBackgroundColorCombo->setColor( tmp_color );
@@ -2416,29 +2245,26 @@ void AppearancePage::MessageTagTab::slotUpdateTagSettingWidgets( int aIndex )
     mBackgroundColorCheck->setChecked( false );
   }
 
-  QFont tmp_font = tmp_desc->textFont();
+  QFont tmp_font = tmp_desc->textFont;
   mTextFontCheck->setEnabled( true );
   mTextFontCheck->setChecked( ( tmp_font != QFont() ) );
   mFontRequester->setFont( tmp_font );
 
   mIconButton->setEnabled( true );
-  mIconButton->setIcon( tmp_desc->toolbarIconName() );
+  mIconButton->setIcon( tmp_desc->iconName );
 
   mKeySequenceWidget->setEnabled( true );
-  mKeySequenceWidget->setKeySequence( tmp_desc->shortcut().primary(),
+  mKeySequenceWidget->setKeySequence( tmp_desc->shortcut.primary(),
                                       KKeySequenceWidget::NoValidate );
 
   mInToolbarCheck->setEnabled( true );
-  mInToolbarCheck->setChecked( tmp_desc->inToolbar() );
+  mInToolbarCheck->setChecked( tmp_desc->inToolbar );
 
   mEmitChanges = true;
 }
 
 void AppearancePage::MessageTagTab::slotSelectionChanged()
 {
-  //monur: Shouldn't be calling in this case
-  //if (aIndex == mPreviousTag)
-  //return;
   slotRecordTagSettings( mPreviousTag );
   slotUpdateTagSettingWidgets( mTagListBox->currentRow() );
   mPreviousTag = mTagListBox->currentRow();
@@ -2448,9 +2274,10 @@ void AppearancePage::MessageTagTab::slotRemoveTag()
 {
   int tmp_index = mTagListBox->currentRow();
   if ( !( tmp_index < 0 ) ) {
-    KMMessageTagDescription *tmp_desc = mMsgTagList->takeAt( tmp_index );
-    mMsgTagDict->remove( tmp_desc->label() );
-    delete tmp_desc;
+    KMail::Tag::Ptr tmp_desc = mMsgTagList.takeAt( tmp_index );
+    mMsgTagDict.remove( tmp_desc->nepomukResourceUri.toString() );
+    Nepomuk::Tag nepomukTag( tmp_desc->nepomukResourceUri );
+    nepomukTag.remove();
     mPreviousTag = -1;
 
     //Before deleting the current item, make sure the selectionChanged signal
@@ -2484,63 +2311,60 @@ void AppearancePage::MessageTagTab::slotNameLineTextChanged( const QString
            this, SLOT( slotSelectionChanged() ) );
 }
 
-void AppearancePage::MessageTagTab::slotAddLineTextChanged( const QString
-                                                            &aText )
+void AppearancePage::MessageTagTab::slotIconNameChanged( const QString &iconName )
 {
-  mTagAddButton->setEnabled( ! aText.isEmpty() );
+  mTagListBox->currentItem()->setIcon( KIcon( iconName ) );
+}
+
+void AppearancePage::MessageTagTab::slotAddLineTextChanged( const QString &aText )
+{
+  mTagAddButton->setEnabled( !aText.isEmpty() );
 }
 
 void AppearancePage::MessageTagTab::slotAddNewTag()
 {
-  int tmp_priority = mMsgTagList->count();
-  QString tmp_label = KRandom::randomString( 10 );
-    //Very unlikely, but if the tag already exists, regenerate label
-  while ( kmkernel->msgTagMgr()->find( tmp_label ) )
-    tmp_label = KRandom::randomString( 10 );
+  const int tmp_priority = mMsgTagList.count();
 
-  KMMessageTagDescription *tmp_desc = new KMMessageTagDescription( tmp_label,
-                                             mTagAddLineEdit->text(),
-                                             tmp_priority );
-  mMsgTagDict->insert( tmp_desc->label() , tmp_desc );
-  mMsgTagList->append( tmp_desc );
+  Nepomuk::Tag nepomukTag( mTagAddLineEdit->text() );
+  nepomukTag.setLabel( mTagAddLineEdit->text() );
+
+  KMail::Tag::Ptr tag = KMail::Tag::fromNepomuk( nepomukTag );
+  tag->priority = tmp_priority;
+  mMsgTagDict.insert( tag->nepomukResourceUri.toString() , tag );
+  mMsgTagList.append( tag );
   slotEmitChangeCheck();
   mTagAddLineEdit->setText( QString() );
   QListWidgetItem *newItem = new QListWidgetItem( mTagListBox );
-  newItem->setText( tmp_desc->name() );
+  newItem->setText( tag->tagName );
+  newItem->setIcon( KIcon( tag->iconName ) );
   mTagListBox->addItem( newItem );
   mTagListBox->setCurrentItem( newItem );
 }
 
 void AppearancePage::MessageTagTab::doLoadFromGlobalSettings()
 {
-  mMsgTagDict->clear();
-  qDeleteAll(*mMsgTagList);
-  mMsgTagList->clear();
+  mMsgTagDict.clear();
+  mMsgTagList.clear();
   mTagListBox->clear();
 
-  //Used for sorting, go through this routine so that mMsgTagList is properly
-  //ordered
-  KMMessageTagList tmp_list;
-  QHashIterator<QString,KMMessageTagDescription*> it( *( kmkernel->msgTagMgr()->msgTagDict() ) );
-  while (it.hasNext()) {
-    it.next();
-    tmp_list.append( it.value()->label() );
+  foreach( const Nepomuk::Tag &nepomukTag, Nepomuk::Tag::allTags() ) {
+    KMail::Tag::Ptr tag = KMail::Tag::fromNepomuk( nepomukTag );
+    mMsgTagDict.insert( nepomukTag.resourceUri().toString(), tag );
+    mMsgTagList.append( tag );
   }
-  tmp_list.prioritySort();
+
+  qSort( mMsgTagList.begin(), mMsgTagList.end(), KMail::Tag::compare );
+
+  foreach( const KMail::Tag::Ptr tag, mMsgTagList ) {
+    new QListWidgetItem( KIcon( tag->iconName ), tag->tagName, mTagListBox );
+    if ( tag->priority == -1 )
+      tag->priority = mTagListBox->count() - 1;
+  }
 
   //Disconnect so that insertItem's do not trigger an update procedure
   disconnect( mTagListBox, SIGNAL( itemSelectionChanged() ),
               this, SLOT( slotSelectionChanged() ) );
-  for ( KMMessageTagList::Iterator itl = tmp_list.begin();
-        itl != tmp_list.end(); ++itl ) {
-    const KMMessageTagDescription *tmp_desc = kmkernel->msgTagMgr()->find( *itl );
-    if ( tmp_desc ) {
-      mTagListBox->addItem( tmp_desc->name() );
-      KMMessageTagDescription *insert_desc = new KMMessageTagDescription( *tmp_desc );
-      mMsgTagDict->insert( *itl , insert_desc );
-      mMsgTagList->append( insert_desc );
-    }
-  }
+
   connect( mTagListBox, SIGNAL( itemSelectionChanged() ),
            this, SLOT( slotSelectionChanged() ) );
   slotUpdateTagSettingWidgets( -1 );
@@ -2551,7 +2375,23 @@ void AppearancePage::MessageTagTab::doLoadFromGlobalSettings()
 void AppearancePage::MessageTagTab::save()
 {
   slotRecordTagSettings( mTagListBox->currentRow() );
-  kmkernel->msgTagMgr()->fillTagsFromList( mMsgTagList );
+
+  foreach( const KMail::Tag::Ptr &tag, mMsgTagList ) {
+
+    tag->priority = mMsgTagList.indexOf( tag );
+
+    KMail::Tag::SaveFlags saveFlags = 0;
+    if ( mTextColorCheck->isChecked() )
+      saveFlags |= KMail::Tag::TextColor;
+    if ( mBackgroundColorCheck->isChecked() )
+      saveFlags |= KMail::Tag::BackgroundColor;
+    if ( mTextFontCheck->isChecked() )
+      saveFlags |= KMail::Tag::Font;
+
+    tag->saveToNepomuk( saveFlags );
+  }
+
+  KMail::TagActionManager::triggerUpdate();
 }
 
 
@@ -3140,7 +2980,7 @@ void ComposerPage::CharsetTab::doLoadOther()
 {
   KConfigGroup composer( KMKernel::config(), "Composer" );
 
-  QStringList charsets = composer.readEntry( "pref-charsets" , QStringList() );
+  QStringList charsets = GlobalSettings::preferedCharsets();
   for ( QStringList::Iterator it = charsets.begin() ;
         it != charsets.end() ; ++it )
     if ( (*it) == QString::fromLatin1("locale") ) {
@@ -3150,8 +2990,7 @@ void ComposerPage::CharsetTab::doLoadOther()
     }
 
   mCharsetListEditor->setStringList( charsets );
-  mKeepReplyCharsetCheck->setChecked(
-      !composer.readEntry( "force-reply-charset", false ) );
+  mKeepReplyCharsetCheck->setChecked( GlobalSettings::forceReplyCharset() );
 }
 
 void ComposerPage::CharsetTab::save()
@@ -3163,9 +3002,8 @@ void ComposerPage::CharsetTab::save()
   for ( ; it != charsetList.end() ; ++it )
     if ( (*it).endsWith( QLatin1String("(locale)") ) )
       (*it) = "locale";
-  composer.writeEntry( "pref-charsets", charsetList );
-  composer.writeEntry( "force-reply-charset",
-                       !mKeepReplyCharsetCheck->isChecked() );
+  GlobalSettings::setPreferedCharsets( charsetList );
+  GlobalSettings::setForceReplyCharset( mKeepReplyCharsetCheck->isChecked() );
 }
 
 QString ComposerPage::HeadersTab::helpAnchor() const
@@ -3341,6 +3179,7 @@ void ComposerPage::HeadersTab::slotRemoveMimeHeader()
       mTagList->topLevelItem( mTagList->topLevelItemCount() - 1 )
     );
   }
+
   emit changed( true );
 }
 
@@ -3636,19 +3475,12 @@ void SecurityPage::GeneralTab::save()
     {
       GlobalSettings::self()->setHtmlMail( mSGTab.mHtmlMailCheck->isChecked() );
       QStringList names;
-      QList<QPointer<KMFolder> > folders;
-      kmkernel->folderMgr()->createFolderList(&names, &folders);
-      kmkernel->imapFolderMgr()->createFolderList(&names, &folders);
-      kmkernel->dimapFolderMgr()->createFolderList(&names, &folders);
-      kmkernel->searchFolderMgr()->createFolderList(&names, &folders);
-      for (QList<QPointer<KMFolder> >::iterator it = folders.begin();
-        it != folders.end(); ++it)
+      QList<Akonadi::Collection> collections = kmkernel->allFoldersCollection();
+      for (int i = 0; i < collections.size(); ++i)
       {
-        if (*it)
-        {
-          KConfigGroup config( KMKernel::config(), (*it)->configGroupName() );
-          config.writeEntry("htmlMailOverride", false);
-        }
+        QSharedPointer<FolderCollection> fd = FolderCollection::forCollection( collections.at( i ) );
+        KConfigGroup config( KMKernel::config(), fd->configGroupName() );
+        config.writeEntry("htmlMailOverride", false);
       }
     }
   }
@@ -4167,9 +3999,6 @@ MiscPage::MiscPage( const KComponentData &instance, QWidget *parent )
   mFolderTab = new FolderTab();
   addTab( mFolderTab, i18n("Folders") );
 
-  mGroupwareTab = new GroupwareTab();
-  addTab( mGroupwareTab, i18n("Groupware") );
-
   mInviteTab = new InviteTab();
   addTab( mInviteTab, i18n("Invitations" ) );
 }
@@ -4185,7 +4014,6 @@ MiscPageFolderTab::MiscPageFolderTab( QWidget * parent )
   mMMTab.setupUi( this );
   mMMTab.gridLayout->setSpacing( KDialog::spacingHint() );
   mMMTab.gridLayout->setMargin( KDialog::marginHint() );
-  mMMTab.mOnStartupOpenFolder->setFolderTree( kmkernel->getKMMainWidget()->mainFolderView() );
   mMMTab.mStartUpFolderLabel->setBuddy( mMMTab.mOnStartupOpenFolder );
   mMMTab.mExcludeImportantFromExpiry->setWhatsThis(
       i18n( GlobalSettings::self()->excludeImportantMailFromExpiryItem()->whatsThis().toUtf8() ) );
@@ -4206,15 +4034,9 @@ MiscPageFolderTab::MiscPageFolderTab( QWidget * parent )
            this , SLOT(slotEmitChanged( void )) );
   connect( mMMTab.mShowPopupAfterDnD, SIGNAL( stateChanged( int ) ),
            this, SLOT( slotEmitChanged( void ) ) );
-  connect( mMMTab.mMailboxPrefCombo, SIGNAL( activated( int ) ),
-           this, SLOT( slotEmitChanged( void ) ) );
-  connect( mMMTab.mOnStartupOpenFolder, SIGNAL( folderChanged( KMFolder* ) ),
+  connect( mMMTab.mOnStartupOpenFolder, SIGNAL( folderChanged( const Akonadi::Collection& ) ),
            this, SLOT( slotEmitChanged( void ) ) );
   connect( mMMTab.mEmptyTrashCheck, SIGNAL( stateChanged( int ) ),
-           this, SLOT( slotEmitChanged( void ) ) );
-
-  //TODO: 4.3 Change the strings in mQuotaCmbBox into something better.
-  connect( mMMTab.mQuotaCmbBox, SIGNAL( activated( int )  ),
            this, SLOT( slotEmitChanged( void ) ) );
 
 }
@@ -4228,7 +4050,6 @@ void MiscPage::FolderTab::doLoadFromGlobalSettings()
   mMMTab.mDelayedMarkAsRead->setChecked( GlobalSettings::self()->delayedMarkAsRead() );
   mMMTab.mDelayedMarkTime->setValue( GlobalSettings::self()->delayedMarkTime() );
   mMMTab.mShowPopupAfterDnD->setChecked( GlobalSettings::self()->showPopupAfterDnD() );
-  mMMTab.mQuotaCmbBox->setCurrentIndex( GlobalSettings::self()->quotaUnit() );
 }
 
 void MiscPage::FolderTab::doLoadOther()
@@ -4238,13 +4059,10 @@ void MiscPage::FolderTab::doLoadOther()
   mMMTab.mEmptyTrashCheck->setChecked(
       general.readEntry( "empty-trash-on-exit", false ) );
   mMMTab.mOnStartupOpenFolder->setFolder( general.readEntry( "startupFolder",
-      kmkernel->inboxFolder()->idString() ) );
+      QString::number(kmkernel->inboxCollectionFolder().id() )) );
   mMMTab.mEmptyFolderConfirmCheck->setChecked(
       general.readEntry( "confirm-before-empty", true ) );
 
-  int num = general.readEntry("default-mailbox-format", 1 );
-  if ( num < 0 || num > 1 ) num = 1;
-  mMMTab.mMailboxPrefCombo->setCurrentIndex( num );
 }
 
 void MiscPage::FolderTab::save()
@@ -4253,9 +4071,8 @@ void MiscPage::FolderTab::save()
 
   general.writeEntry( "empty-trash-on-exit", mMMTab.mEmptyTrashCheck->isChecked() );
   general.writeEntry( "confirm-before-empty", mMMTab.mEmptyFolderConfirmCheck->isChecked() );
-  general.writeEntry( "default-mailbox-format", mMMTab.mMailboxPrefCombo->currentIndex() );
-  general.writeEntry( "startupFolder", mMMTab.mOnStartupOpenFolder->folder() ?
-                                  mMMTab.mOnStartupOpenFolder->folder()->idString() : QString() );
+  general.writeEntry( "startupFolder", mMMTab.mOnStartupOpenFolder->folderCollection().isValid() ?
+                                  QString::number(mMMTab.mOnStartupOpenFolder->folderCollection().id()) : QString() );
 
   GlobalSettings::self()->setDelayedMarkAsRead( mMMTab.mDelayedMarkAsRead->isChecked() );
   GlobalSettings::self()->setDelayedMarkTime( mMMTab.mDelayedMarkTime->value() );
@@ -4264,198 +4081,6 @@ void MiscPage::FolderTab::save()
   GlobalSettings::self()->setShowPopupAfterDnD( mMMTab.mShowPopupAfterDnD->isChecked() );
   GlobalSettings::self()->setExcludeImportantMailFromExpiry(
         mMMTab.mExcludeImportantFromExpiry->isChecked() );
-  GlobalSettings::self()->setQuotaUnit( mMMTab.mQuotaCmbBox->currentIndex() );
-}
-
-QString MiscPage::GroupwareTab::helpAnchor() const
-{
-  return QString::fromLatin1("configure-misc-groupware");
-}
-
-MiscPageGroupwareTab::MiscPageGroupwareTab( QWidget* parent )
-  : ConfigModuleTab( parent )
-{
-  mMGTab.setupUi( this );
-
-  // IMAP resource setup
-  mMGTab.mEnableImapResCB->setWhatsThis(
-        i18n( GlobalSettings::self()->theIMAPResourceEnabledItem()->whatsThis().toUtf8() ) );
-  connect( mMGTab.mEnableImapResCB, SIGNAL( stateChanged( int ) ),
-           this, SLOT( slotEmitChanged( void ) ) );
-
-  mMGTab.grid->setSpacing( KDialog::spacingHint() );
-  connect( mMGTab.mEnableImapResCB, SIGNAL( toggled(bool) ),
-           mMGTab.mBox, SLOT( setEnabled(bool) ) );
-
-  QString whatsThis = i18n( GlobalSettings::self()->theIMAPResourceStorageFormatItem()->whatsThis().toUtf8() );
-  mMGTab.storageFormatLA->setWhatsThis( whatsThis );
-  mMGTab.mStorageFormatCombo->setWhatsThis( whatsThis );
-  connect( mMGTab.mStorageFormatCombo, SIGNAL( activated( int ) ),
-           this, SLOT( slotStorageFormatChanged( int ) ) );
-
-  whatsThis = i18n( GlobalSettings::self()
-        ->theIMAPResourceFolderLanguageItem()->whatsThis().toUtf8() );
-  mMGTab.mLanguageCombo->setWhatsThis( whatsThis );
-  connect( mMGTab.mLanguageCombo, SIGNAL( activated( int ) ),
-           this, SLOT( slotEmitChanged( void ) ) );
-
-  QString toolTip = i18n( "Set the parent of the resource folders" );
-  whatsThis = i18n( GlobalSettings::self()->theIMAPResourceFolderParentItem()->whatsThis().toUtf8() );
-  mMGTab.mFolderComboLabel->setWhatsThis( whatsThis );
-
-  mMGTab.mFolderCombo->setFolderTree( kmkernel->getKMMainWidget()->mainFolderView() );
-  mMGTab.mFolderCombo->setToolTip( toolTip );
-  mMGTab.mFolderCombo->setWhatsThis( whatsThis );
-  connect( mMGTab.mFolderCombo, SIGNAL( folderChanged( KMFolder* ) ),
-           this, SLOT( slotEmitChanged() ) );
-
-  mMGTab.mAccountCombo->setToolTip( toolTip );
-  mMGTab.mAccountCombo->setWhatsThis( whatsThis );
-  connect( mMGTab.mAccountCombo, SIGNAL( activated( int ) ),
-           this, SLOT( slotEmitChanged() ) );
-
-  mMGTab.mHideGroupwareFolders->setWhatsThis( i18n( GlobalSettings::self()
-           ->hideGroupwareFoldersItem()->whatsThis().toUtf8() ) );
-  connect( mMGTab.mHideGroupwareFolders, SIGNAL( toggled( bool ) ),
-           this, SLOT( slotEmitChanged() ) );
-
-  mMGTab.mOnlyShowGroupwareFolders->setWhatsThis( i18n( GlobalSettings::self()
-           ->showOnlyGroupwareFoldersForGroupwareAccountItem()->whatsThis().toUtf8() ) );
-  connect( mMGTab.mOnlyShowGroupwareFolders, SIGNAL( toggled( bool ) ),
-           this, SLOT( slotEmitChanged() ) );
-
-  connect( mMGTab.mSyncImmediately, SIGNAL(toggled(bool)), SLOT(slotEmitChanged()) );
-}
-
-void MiscPage::GroupwareTab::doLoadFromGlobalSettings()
-{
-  // Read the IMAP resource config
-  mMGTab.mEnableImapResCB->setChecked( GlobalSettings::self()->theIMAPResourceEnabled() );
-  mMGTab.mBox->setEnabled( mMGTab.mEnableImapResCB->isChecked() );
-
-  mMGTab.mHideGroupwareFolders->setChecked( GlobalSettings::self()->hideGroupwareFolders() );
-  int i = GlobalSettings::self()->theIMAPResourceFolderLanguage();
-  mMGTab.mLanguageCombo->setCurrentIndex(i);
-  i = GlobalSettings::self()->theIMAPResourceStorageFormat();
-  mMGTab.mStorageFormatCombo->setCurrentIndex(i);
-  slotStorageFormatChanged( i );
-  mMGTab.mOnlyShowGroupwareFolders->setChecked(
-    GlobalSettings::self()->showOnlyGroupwareFoldersForGroupwareAccount() );
-  mMGTab.mSyncImmediately->setChecked( GlobalSettings::self()->immediatlySyncDIMAPOnGroupwareChanges() );
-
-  QString folderId( GlobalSettings::self()->theIMAPResourceFolderParent() );
-  if( !folderId.isNull() && kmkernel->findFolderById( folderId ) ) {
-    mMGTab.mFolderCombo->setFolder( folderId );
-  } else {
-    // Folder was deleted, we have to choose a new one
-    mMGTab.mFolderCombo->setFolder( i18n( "<Choose a Folder>" ) );
-  }
-
-  KMAccount* selectedAccount = 0;
-  int accountId = GlobalSettings::self()->theIMAPResourceAccount();
-  if ( accountId )
-    selectedAccount = kmkernel->acctMgr()->find( accountId );
-  else {
-    // Fallback: iterate over accounts to select folderId if found (as an inbox folder)
-    QList<KMAccount*>::iterator accountIt = kmkernel->acctMgr()->begin();
-    while ( accountIt != kmkernel->acctMgr()->end() ) {
-      KMAccount *account = *accountIt;
-      ++accountIt;
-      if( account->folder() && account->folder()->child() ) {
-        // Look inside that folder for an INBOX
-        KMFolderNode *node = 0;
-        QList<KMFolderNode*>::const_iterator it;
-        for ( it = account->folder()->child()->constBegin();
-              it != account->folder()->child()->constEnd();
-              ++it ) {
-          node = *it;
-          if (!node->isDir() && node->name() == "INBOX")
-            break;
-        }
-
-        if ( node && static_cast<KMFolder*>(node)->idString() == folderId ) {
-          selectedAccount = account;
-          break;
-        }
-      }
-    }
-  }
-  if ( selectedAccount )
-    mMGTab.mAccountCombo->setCurrentAccount( selectedAccount );
-  else if ( GlobalSettings::self()->theIMAPResourceStorageFormat() == 1 ) {
-    kDebug() << "Folder" << folderId << "not found as an account's inbox";
-  }
-}
-
-void MiscPage::GroupwareTab::save()
-{
-  KConfigGroup groupware( KMKernel::config(), "Groupware" );
-
-  int format = mMGTab.mStorageFormatCombo->currentIndex();
-  GlobalSettings::self()->setTheIMAPResourceStorageFormat( format );
-
-  // Write the IMAP resource config
-  GlobalSettings::self()->setHideGroupwareFolders( mMGTab.mHideGroupwareFolders->isChecked() );
-  GlobalSettings::self()->setShowOnlyGroupwareFoldersForGroupwareAccount( mMGTab.mOnlyShowGroupwareFolders->isChecked() );
-  GlobalSettings::self()->setImmediatlySyncDIMAPOnGroupwareChanges( mMGTab.mSyncImmediately->isChecked() );
-
-  // If there is a leftover folder in the foldercombo, getFolder can
-  // return 0. In that case we really don't have it enabled
-  QString folderId;
-  if (  format == 0 ) {
-    KMFolder* folder = mMGTab.mFolderCombo->folder();
-    if ( folder )
-      folderId = folder->idString();
-
-    KMAccount* foundAccount = 0;
-    // Didn't find an easy way to find the account for a given folder...
-    // Fallback: iterate over accounts to select folderId if found (as an inbox folder)
-    QList<KMAccount*>::iterator accountIt = kmkernel->acctMgr()->begin();
-    while ( accountIt != kmkernel->acctMgr()->end() ) {
-      KMAccount *curAccount = *accountIt;
-      ++accountIt;
-      if( curAccount->folder() && curAccount->folder()->child() ) {
-        for ( QList<KMFolderNode*>::iterator it = curAccount->folder()->child()->begin();
-              it != curAccount->folder()->child()->end();
-              ++it ) {
-          if ( *it && static_cast<KMFolder*>( *it ) == folder ) {
-            foundAccount = curAccount;
-            break;
-          }
-        }
-      }
-      if ( foundAccount )
-        break;
-    }
-    GlobalSettings::self()->setTheIMAPResourceAccount( foundAccount ?
-                                                       foundAccount->id() : 0 );
-  } else {
-    // Inbox folder of the selected account
-    KMAccount* acct = mMGTab.mAccountCombo->currentAccount();
-    if (  acct ) {
-      folderId = QString( ".%1.directory/INBOX" ).arg( acct->id() );
-      GlobalSettings::self()->setTheIMAPResourceAccount( acct->id() );
-    }
-  }
-
-  bool enabled = mMGTab.mEnableImapResCB->isChecked() && !folderId.isEmpty();
-  GlobalSettings::self()->setTheIMAPResourceEnabled( enabled );
-  GlobalSettings::self()->setTheIMAPResourceFolderLanguage( mMGTab.mLanguageCombo->currentIndex() );
-  GlobalSettings::self()->setTheIMAPResourceFolderParent( folderId );
-}
-
-void MiscPage::GroupwareTab::slotStorageFormatChanged( int format )
-{
-  mMGTab.mLanguageCombo->setEnabled( format == 0 ); // only ical/vcard needs the language hack
-  mMGTab.mFolderComboStack->setCurrentIndex( format );
-  if ( format == 0 ) {
-    mMGTab.mFolderComboLabel->setText( i18n("&Resource folders are subfolders of:") );
-    mMGTab.mFolderComboLabel->setBuddy( mMGTab.mFolderCombo );
-  } else {
-    mMGTab.mFolderComboLabel->setText( i18n("&Resource folders are in account:") );
-    mMGTab.mFolderComboLabel->setBuddy( mMGTab.mAccountCombo );
-  }
-  slotEmitChanged();
 }
 
 QString MiscPage::InviteTab::helpAnchor() const
@@ -4552,30 +4177,6 @@ void MiscPage::InviteTab::save()
   GlobalSettings::self()->setDeleteInvitationEmailsAfterSendingReply( mMITab.mDeleteInvitations->isChecked() );
 }
 
-// *************************************************************
-// *                                                           *
-// *                     AccountUpdater                        *
-// *                                                           *
-// *************************************************************
-AccountUpdater::AccountUpdater(ImapAccountBase *account)
-    : QObject()
-{
-  mAccount = account;
-}
-
-void AccountUpdater::update()
-{
-  connect( mAccount, SIGNAL( connectionResult(int, const QString&) ),
-          this, SLOT( namespacesFetched() ) );
-  mAccount->makeConnection();
-}
-
-void AccountUpdater::namespacesFetched()
-{
-  mAccount->setCheckingMail( true );
-  mAccount->processNewMail( false );
-  deleteLater();
-}
 
 //----------------------------
 #include "configuredialog.moc"

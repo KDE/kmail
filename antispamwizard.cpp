@@ -29,16 +29,14 @@
 
 
 #include "antispamwizard.h"
-#include "kcursorsaver.h"
-#include "accountmanager.h"
+#include "messageviewer/kcursorsaver.h"
 #include "kmfilter.h"
 #include "kmfilteraction.h"
 #include "kmfiltermgr.h"
 #include "kmkernel.h"
-#include "folderselectiontreewidget.h"
 #include "kmmainwin.h"
-#include "networkaccount.h"
 #include "folderrequester.h"
+#include "folderselectiontreeview.h"
 
 #include <kaction.h>
 #include <kdebug.h>
@@ -64,7 +62,7 @@
 using namespace KMail;
 
 AntiSpamWizard::AntiSpamWizard( WizardMode mode,
-                                QWidget* parent, MainFolderView * mainFolderTree )
+                                QWidget* parent )
   : KAssistantDialog( parent ),
     mInfoPage( 0 ),
     mSpamRulesPage( 0 ),
@@ -115,13 +113,13 @@ AntiSpamWizard::AntiSpamWizard( WizardMode mode,
             this, SLOT( checkProgramsSelections( void ) ) );
 
   if ( mMode == AntiSpam ) {
-    mSpamRulesPage = new ASWizSpamRulesPage( 0, "", mainFolderTree );
+    mSpamRulesPage = new ASWizSpamRulesPage( 0, "" );
     addPage( mSpamRulesPage, i18n( "Options to fine-tune the handling of spam messages" ));
     connect( mSpamRulesPage, SIGNAL( selectionChanged( void ) ),
              this, SLOT( slotBuildSummary( void ) ) );
   }
   else {
-    mVirusRulesPage = new ASWizVirusRulesPage( 0, "", mainFolderTree );
+    mVirusRulesPage = new ASWizVirusRulesPage( 0, "" );
     addPage( mVirusRulesPage, i18n( "Options to fine-tune the handling of virus messages" ));
     connect( mVirusRulesPage, SIGNAL( selectionChanged( void ) ),
              this, SLOT( checkVirusRulesSelections( void ) ) );
@@ -511,7 +509,7 @@ void AntiSpamWizard::checkToolAvailability()
       // check the configured account for pattern in <server>
       QString pattern = (*it).getServerPattern();
       kDebug() << "Testing for server pattern:" << pattern;
-
+#if 0
       AccountManager* mgr = kmkernel->acctMgr();
       QList<KMAccount*>::iterator accountIt = mgr->begin();
       while ( accountIt != mgr->end() ) {
@@ -527,6 +525,9 @@ void AntiSpamWizard::checkToolAvailability()
           }
         }
       }
+#else
+      kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
+#endif
     }
     else {
       // check the availability of the application
@@ -972,8 +973,7 @@ void ASWizInfoPage::processSelectionChange()
 
 
 //---------------------------------------------------------------------------
-ASWizSpamRulesPage::ASWizSpamRulesPage( QWidget * parent, const char * name,
-                                        MainFolderView * mainFolderTree )
+ASWizSpamRulesPage::ASWizSpamRulesPage( QWidget * parent, const char * name)
   : ASWizPage( parent, name )
 {
   QVBoxLayout *layout = new QVBoxLayout();
@@ -991,8 +991,7 @@ ASWizSpamRulesPage::ASWizSpamRulesPage( QWidget * parent, const char * name,
   layout->addWidget( mMoveSpamRules );
 
   mFolderReqForSpamFolder = new FolderRequester( this );
-  mFolderReqForSpamFolder->setFolderTree( mainFolderTree );
-  mFolderReqForSpamFolder->setFolder( "trash" );
+  mFolderReqForSpamFolder->setFolder( KMKernel::self()->trashCollectionFolder() );
   mFolderReqForSpamFolder->setMustBeReadWrite( true );
   mFolderReqForSpamFolder->setShowOutbox( false );
   mFolderReqForSpamFolder->setShowImapFolders( false );
@@ -1011,7 +1010,6 @@ ASWizSpamRulesPage::ASWizSpamRulesPage( QWidget * parent, const char * name,
   layout->addWidget( mMoveUnsureRules );
 
   mFolderReqForUnsureFolder = new FolderRequester( this );
-  mFolderReqForUnsureFolder->setFolderTree( mainFolderTree );
   mFolderReqForUnsureFolder->setFolder( "inbox" );
   mFolderReqForUnsureFolder->setMustBeReadWrite( true );
   mFolderReqForUnsureFolder->setShowOutbox( false );
@@ -1030,10 +1028,10 @@ ASWizSpamRulesPage::ASWizSpamRulesPage( QWidget * parent, const char * name,
             this, SLOT(processSelectionChange(void)) );
   connect( mMoveUnsureRules, SIGNAL(clicked()),
             this, SLOT(processSelectionChange(void)) );
-  connect( mFolderReqForSpamFolder, SIGNAL(folderChanged(KMFolder*)),
-            this, SLOT(processSelectionChange(KMFolder*)) );
-  connect( mFolderReqForUnsureFolder, SIGNAL(folderChanged(KMFolder*)),
-            this, SLOT(processSelectionChange(KMFolder*)) );
+  connect( mFolderReqForSpamFolder, SIGNAL(folderChanged(const Akonadi::Collection &)),
+           this, SLOT(processSelectionChange(const Akonadi::Collection &)) );
+  connect( mFolderReqForUnsureFolder, SIGNAL(folderChanged(const Akonadi::Collection &)),
+           this, SLOT(processSelectionChange(const Akonadi::Collection&)) );
 
   mMarkRules->setChecked( true );
   mMoveSpamRules->setChecked( true );
@@ -1060,19 +1058,20 @@ bool ASWizSpamRulesPage::moveUnsureSelected() const
 
 QString ASWizSpamRulesPage::selectedSpamFolderName() const
 {
-  QString name = "trash";
-  if ( mFolderReqForSpamFolder->folder() )
-    name = mFolderReqForSpamFolder->folder()->idString();
-  return name;
+  if ( mFolderReqForSpamFolder->folderCollection().isValid() )
+    return QString::number( mFolderReqForSpamFolder->folderCollection().id() );
+  else
+    return QString::number( KMKernel::self()->trashCollectionFolder().id() );
 }
 
 
 QString ASWizSpamRulesPage::selectedUnsureFolderName() const
 {
   QString name = "inbox";
-  if ( mFolderReqForUnsureFolder->folder() )
-    name = mFolderReqForUnsureFolder->folder()->idString();
-  return name;
+  if ( mFolderReqForUnsureFolder->folderCollection().isValid() )
+    return QString::number( mFolderReqForUnsureFolder->folderCollection().id() );
+  else
+    return QString::number( KMKernel::self()->inboxCollectionFolder().id() );
 }
 
 
@@ -1084,7 +1083,7 @@ void ASWizSpamRulesPage::processSelectionChange()
 }
 
 
-void ASWizSpamRulesPage::processSelectionChange( KMFolder* )
+void ASWizSpamRulesPage::processSelectionChange( const Akonadi::Collection& )
 {
   processSelectionChange();
 }
@@ -1100,8 +1099,7 @@ void ASWizSpamRulesPage::allowUnsureFolderSelection( bool enabled )
 
 
 //---------------------------------------------------------------------------
-ASWizVirusRulesPage::ASWizVirusRulesPage( QWidget * parent, const char * name,
-                                  MainFolderView * mainFolderTree )
+ASWizVirusRulesPage::ASWizVirusRulesPage( QWidget * parent, const char * name )
   : ASWizPage( parent, name )
 {
   QGridLayout *grid = new QGridLayout();
@@ -1131,9 +1129,11 @@ ASWizVirusRulesPage::ASWizVirusRulesPage( QWidget * parent, const char * name,
             "virus-infected as read, as well as moving them "
             "to the selected folder.") );
   grid->addWidget( mMarkRules, 2, 0 );
-
-  mFolderTree = new FolderSelectionTreeWidget( this, mainFolderTree );
+  mFolderTree = new FolderSelectionTreeView( this );
+  mFolderTree->disableContextMenuAndExtraColumn();
+#if 0 //Port to akonadi
   mFolderTree->reload( true, true, true, QString( "trash" ) );
+#endif
   grid->addWidget( mFolderTree, 3, 0 );
 
   connect( mPipeRules, SIGNAL(clicked()),
@@ -1166,10 +1166,10 @@ bool ASWizVirusRulesPage::markReadRulesSelected() const
 
 QString ASWizVirusRulesPage::selectedFolderName() const
 {
-  QString name = "trash";
-  if ( mFolderTree->folder() )
-    name = mFolderTree->folder()->idString();
-  return name;
+  if ( mFolderTree->selectedCollection().isValid() )
+    return QString::number( mFolderTree->selectedCollection().id() );
+  else
+    return QString::number( KMKernel::self()->trashCollectionFolder().id() );
 }
 
 void ASWizVirusRulesPage::processSelectionChange()

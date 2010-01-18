@@ -36,10 +36,12 @@
 #include "kmfilter.h"
 #include "kmfiltermgr.h" // KMFilterMgr::FilterSet
 #include "kmcommands.h"
+#include "folderjob.h"
 
 #include <QList>
 #include <QTime>
 #include <QPointer>
+#include <akonadi/collection.h>
 
 class KMHeaders;
 
@@ -55,7 +57,7 @@ public:
 
   ActionScheduler(KMFilterMgr::FilterSet set,
 		  QList<KMFilter*> filters,
-		  KMFolder *srcFolder = 0);
+		  const Akonadi::Collection &srcFolder = Akonadi::Collection());
   ~ActionScheduler();
 
   /** The action scheduler will be deleted after the finish signal is emitted
@@ -75,11 +77,8 @@ public:
    */
   void setIgnoreFilterSet( bool ignore );
 
-  /** Set a default folder to move messages into */
-  void setDefaultDestinationFolder( KMFolder* );
-
   /** Set a folder to monitor for new messages to filter */
-  void setSourceFolder( KMFolder* );
+  void setSourceFolder( const Akonadi::Collection& );
 
   /** Set a list of filters to work with
    The current list will not be updated until the queue
@@ -93,10 +92,7 @@ public:
   void clearAccountId() { mAccountId = 0; mAccount = false; }
 
   /** Queue a message for filtering */
-  void execFilters(const QList<quint32> serNums);
-  void execFilters(const QList<KMMsgBase*> msgList);
-  void execFilters(KMMsgBase* msgBase);
-  void execFilters(quint32 serNum);
+  void execFilters( const Akonadi::Item & );
 
   static QString debug();
   static bool isEnabled();
@@ -104,12 +100,12 @@ public:
   /** Ignores the given message on the next msgAdded()
       This is needed when using pipe-through filters, because the
       changes made by the filter have to be written back. */
-  void addMsgToIgnored( quint32 serNum );
+  void addMsgToIgnored( const Akonadi::Item &item );
 
 signals:
   /** Emitted when filtering is completed */
   void result(ReturnCode);
-  void filtered(quint32);
+  void filtered( const Akonadi::Item &item );
 
 public slots:
   /** Called back by asynchronous actions when they have completed */
@@ -119,41 +115,36 @@ public slots:
   void copyMessageFinished( KMCommand *command );
 
 private slots:
-  KMMsgBase* messageBase(quint32 serNum);
-  KMMessage* message(quint32 serNum);
   void finish();
-
-  void folderClosedOrExpunged();
-
-  int tempOpenFolder(KMFolder* aFolder);
-  void tempCloseFolders();
 
   //Fetching slots
   void fetchMessage();
-  void messageFetched( KMMessage *msg );
-  void msgAdded( KMFolder*, quint32 );
-  void enqueue(quint32 serNum);
+  void messageFetched( const Akonadi::Item& item );
+  void msgAdded(const Akonadi::Collection &, const Akonadi::Item &item );
+  void enqueue(const Akonadi::Item &item);
 
   //Filtering slots
   void processMessage();
-  void messageRetrieved(KMMessage*);
   void filterMessage();
   void moveMessage();
   void moveMessageFinished( KMCommand *command );
   void timeOut();
-  void fetchTimeOut();
+
+  void messageFetchResult( KJob* job );
 
 private:
   static QList<ActionScheduler*> *schedulerList; // for debugging
+#if 0
   static KMFolderMgr *tempFolderMgr;
+#endif
   static int refCount, count;
   static bool sEnabled, sEnabledChecked;
 
-  // Iterates over the messages in mSerNums, describes which message is being
+  // Iterates over the messages in mItems, describes which message is being
   // filtered currently.
   // In processMessage(), this iterator is set to the next message which is available
   // for processing (thus processMessage() is called once for every message).
-  QList<quint32>::Iterator mMessageIt;
+  Akonadi::Item::List::Iterator mMessageIt;
 
   // Iterates over all available filters. Used in filterMessage(), which is
   // called once for every filter.
@@ -168,41 +159,40 @@ private:
   // Serial numbers are added as soon as new messages are added to the temp folder,
   // and removed as soon as the message is moved back to the original
   // source folder (or the target folder if specified in a filter action).
-  QList<quint32> mSerNums;
+  Akonadi::Item::List mItems;
 
   // List of serial numbers of messages that need to be fetched from the orginal
   // source folder.
   // Once they are fetched, the messages are copied into the temporary filter folder.
   // Serial numbers are added when execFilters() is called by the user, and
   // removed as soon as the message is fetched from the original source folder.
-  QList<quint32> mFetchSerNums;
+  Akonadi::Item::List mFetchItems;
 
   //List of serial numbers to be ignored in msgAdded()
-  QList<quint32> mIgnoredSerNums;
+  Akonadi::Item::List mIgnoredItems;
 
-  QList<QPointer<KMFolder> > mOpenFolders;
+  //QList<QPointer<KMFolder> > mOpenFolders;
   QList<KMFilter*> mFilters, mQueuedFilters;
   KMFilterAction* mFilterAction;
   KMFilterMgr::FilterSet mSet;
   KMHeaders *mHeaders;
-  QPointer<KMFolder> mSrcFolder, mDestFolder;
+  Akonadi::Collection mSrcFolder, mDestFolder;
   bool mExecuting, mExecutingLock, mFetchExecuting;
-  bool mUnget, mFetchUnget;
   bool mFiltersAreQueued;
   bool mIgnoreFilterSet;
   bool mAutoDestruct;
   bool mAlwaysMatch;
   bool mAccount;
   uint mAccountId;
-  quint32 mOriginalSerNum;
+  Akonadi::Item mOriginalItem;
   bool mDeleteSrcFolder;
   ReturnCode mResult;
-  QTimer *finishTimer, *fetchMessageTimer, *tempCloseFoldersTimer;
+  QTimer *finishTimer, *fetchMessageTimer;
   QTimer *processMessageTimer, *filterMessageTimer;
-  QTimer *timeOutTimer, *fetchTimeOutTimer;
-  QTime timeOutTime, fetchTimeOutTime;
+  QTimer *timeOutTimer;
+  QTime timeOutTime;
   KMCommand *lastCommand;
-  QPointer<FolderJob> lastJob;
+  QPointer<KJob> lastJob;
 };
 
 }

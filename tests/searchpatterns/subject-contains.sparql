@@ -1,0 +1,1 @@
+select distinct ?r where { ?r <http://www.semanticdesktop.org/ontologies/2007/03/22/nmo#messageSubject> ?v1 . ?v1 bif:contains "'Test*'" . }

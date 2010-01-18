@@ -35,11 +35,9 @@
 #include "xfaceconfigurator.h"
 #include "folderrequester.h"
 using KMail::FolderRequester;
-#include "kmfoldermgr.h"
-#include "mainfolderview.h"
+
 #include "kleo_util.h"
 #include "kmmainwidget.h"
-#include "kmfolder.h"
 #include "stringutil.h"
 #include "templatesconfiguration.h"
 #include "templatesconfiguration_kfg.h"
@@ -372,7 +370,6 @@ namespace KMail {
     // "Sent-mail Folder" combo box and label:
     ++row;
     mFccCombo = new FolderRequester( tab );
-    mFccCombo->setFolderTree( kmkernel->getKMMainWidget()->mainFolderView() );
     mFccCombo->setShowOutbox( false );
     glay->addWidget( mFccCombo, row, 1 );
     label = new QLabel( i18n("Sent-mail &folder:"), tab );
@@ -382,7 +379,6 @@ namespace KMail {
     // "Drafts Folder" combo box and label:
     ++row;
     mDraftsCombo = new FolderRequester( tab );
-    mDraftsCombo->setFolderTree( kmkernel->getKMMainWidget()->mainFolderView() );
     mDraftsCombo->setShowOutbox( false );
     glay->addWidget( mDraftsCombo, row, 1 );
     label = new QLabel( i18n("&Drafts folder:"), tab );
@@ -392,7 +388,6 @@ namespace KMail {
     // "Templates Folder" combo box and label:
     ++row;
     mTemplatesCombo = new FolderRequester( tab );
-    mTemplatesCombo->setFolderTree( kmkernel->getKMMainWidget()->mainFolderView() );
     mTemplatesCombo->setShowOutbox( false );
     glay->addWidget( mTemplatesCombo, row, 1 );
     label = new QLabel( i18n("&Templates folder:"), tab );
@@ -618,8 +613,8 @@ namespace KMail {
 
   bool IdentityDialog::checkFolderExists( const QString & folderID,
                                           const QString & msg ) {
-    KMFolder * folder = kmkernel->findFolderById( folderID );
-    if ( !folder ) {
+    Akonadi::Collection folder = kmkernel->findFolderCollectionById( folderID );
+    if ( !folder.isValid() ) {
       KMessageBox::sorry( this, msg );
       return false;
     }
@@ -662,19 +657,21 @@ namespace KMail {
                                   "\"%1\" does not exist (anymore); "
                                   "therefore, the default sent-mail folder "
                                   "will be used.",
-                               ident.identityName() ) ) )
-      mFccCombo->setFolder( kmkernel->sentFolder() );
-    else
+                                  ident.identityName() ) ) ) {
+      mFccCombo->setFolder( kmkernel->sentCollectionFolder() );
+    }
+    else {
       mFccCombo->setFolder( ident.fcc() );
-
+    }
     if ( ident.drafts().isEmpty() ||
          !checkFolderExists( ident.drafts(),
                              i18n("The custom drafts folder for identity "
                                   "\"%1\" does not exist (anymore); "
                                   "therefore, the default drafts folder "
                                   "will be used.",
-                               ident.identityName() ) ) )
-      mDraftsCombo->setFolder( kmkernel->draftsFolder() );
+                                  ident.identityName() ) ) ) {
+      mDraftsCombo->setFolder( kmkernel->draftsCollectionFolder() );
+    }
     else
       mDraftsCombo->setFolder( ident.drafts() );
 
@@ -683,8 +680,10 @@ namespace KMail {
                              i18n("The custom templates folder for identity "
                                   "\"%1\" does not exist (anymore); "
                                   "therefore, the default templates folder "
-                                  "will be used.", ident.identityName()) ) )
-      mTemplatesCombo->setFolder( kmkernel->templatesFolder() );
+                                  "will be used.", ident.identityName()) ) ) {
+      mTemplatesCombo->setFolder( kmkernel->templatesCollectionFolder() );
+
+    }
     else
       mTemplatesCombo->setFolder( ident.templates() );
 
@@ -721,12 +720,12 @@ namespace KMail {
     ident.setTransport( ( mTransportCheck->isChecked() ) ?
                           mTransportCombo->currentText() : QString() );
     ident.setDictionary( mDictionaryCombo->currentDictionaryName() );
-    ident.setFcc( mFccCombo->folder() ?
-                  mFccCombo->folder()->idString() : QString() );
-    ident.setDrafts( mDraftsCombo->folder() ?
-                     mDraftsCombo->folder()->idString() : QString() );
-    ident.setTemplates( mTemplatesCombo->folder() ?
-                     mTemplatesCombo->folder()->idString() : QString() );
+    ident.setFcc( mFccCombo->folderCollection().isValid() ?
+                  QString::number( mFccCombo->folderCollection().id() ) : QString() );
+    ident.setDrafts( mDraftsCombo->folderCollection().isValid() ?
+                     QString::number( mDraftsCombo->folderCollection().id() ) : QString() );
+    ident.setTemplates( mTemplatesCombo->folderCollection().isValid() ?
+                        QString::number( mTemplatesCombo->folderCollection().id() ) : QString() );
 
     // "Templates" tab:
     uint identity = ident.uoid();

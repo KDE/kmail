@@ -114,7 +114,7 @@ namespace KMail {
       "glaurent@telegraph-road.org", 0 },
     { "Sam Magnuson", 0,
       "sam@trolltech.com", 0 },
-    { "Laurent Montel", 0,
+    { "Laurent Montel", I18N_NOOP( "Akonadi porting" ),
       "montel@kde.org", 0 },
     { "Matt Newell", 0,
       "newellm@proaxis.com", 0 },
@@ -239,7 +239,7 @@ namespace KMail {
   AboutData::AboutData()
     : KAboutData( "kmail", 0, ki18n("KMail"),KMAIL_VERSION,
                   ki18n("KDE Email Client"), License_GPL,
-                  ki18n("(c) 1997-2009, The KMail developers"), KLocalizedString(),
+                  ki18n("(c) 1997-2010, The KMail developers"), KLocalizedString(),
                   "http://kontact.kde.org/kmail/" )
   {
     using KMail::authors;

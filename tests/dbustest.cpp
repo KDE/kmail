@@ -4,9 +4,7 @@
 #include <kapplication.h>
 #include <kcmdlineargs.h>
 
-#include "groupware_types.h"
 #include "kmailinterface.h"
-#include "mailcomposerinterface.h"
 #include "aboutdata.h"
 
 #include <QByteArray>
@@ -21,7 +19,7 @@ int main(int argc,char **argv)
   KCmdLineArgs::init(argc, argv, &aboutData);
   KApplication app;
 
-  OrgKdeKmailKmailInterface kmailInterface( KMAIL_DBUS_SERVICE, "/KMail", QDBusConnection::sessionBus());
+  OrgKdeKmailKmailInterface kmailInterface( "org.kde.kmail", "/KMail", QDBusConnection::sessionBus());
   kmailInterface.openComposer( "to 1","","","First test","simple openComp call",0);
 
   QDBusReply<QDBusObjectPath> composerDbusPath =  kmailInterface.openComposer("to 2","","","Second test",  "DBUS ref call",0);
@@ -31,15 +29,6 @@ int main(int argc,char **argv)
     kDebug()<<"We can't connect to kmail";
     exit( 1 );
   }
-
-  QDBusObjectPath composerPath = composerDbusPath;
-  kDebug()<<"composerPath :"<<composerPath.path();
-  OrgKdeKmailMailcomposerInterface kmailComposerInterface( KMAIL_DBUS_SERVICE, composerPath.path(),  QDBusConnection::sessionBus());
-
-  QByteArray data = "BEGIN:VCALENDAR\nEND:VCALENDAR";
-  kmailComposerInterface.addAttachment("test.ics","7bit",data,"text","calendar","method",
-                             "publish","attachement;");
-  kmailComposerInterface.send(2);
 
   kDebug() << "testDBus done.";
 

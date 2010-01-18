@@ -31,6 +31,9 @@
 #include "jobscheduler.h"
 #include <QStringList>
 
+// for large file support
+#include <sys/types.h>
+#include <akonadi/collection.h>
 namespace KMail {
 
 /**
@@ -41,7 +44,7 @@ class MboxCompactionJob : public ScheduledJob
   Q_OBJECT
 public:
   /// @p folder should be a folder with a KMFolderMbox storage.
-  MboxCompactionJob( KMFolder* folder, bool immediate );
+  MboxCompactionJob( const Akonadi::Collection& folder, bool immediate );
   virtual ~MboxCompactionJob();
 
   int executeNow( bool silent );
@@ -74,7 +77,7 @@ class MaildirCompactionJob : public ScheduledJob
   Q_OBJECT
 public:
   /// @p folder should be a folder with a KMFolderMaildir storage.
-  MaildirCompactionJob( KMFolder* folder, bool immediate );
+  MaildirCompactionJob( const Akonadi::Collection& folder, bool immediate );
   virtual ~MaildirCompactionJob();
 
   int executeNow( bool silent );
@@ -101,7 +104,7 @@ class ScheduledCompactionTask : public ScheduledTask
 public:
   /// If immediate is set, the job will execute synchronously. This is used when
   /// the user requests explicitly that the operation should happen immediately.
-  ScheduledCompactionTask( KMFolder* folder, bool immediate )
+  ScheduledCompactionTask( const Akonadi::Collection& folder, bool immediate )
     : ScheduledTask( folder, immediate ) {}
   virtual ~ScheduledCompactionTask() {}
   virtual ScheduledJob* run();

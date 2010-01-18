@@ -80,6 +80,8 @@
   <Action name="move_to_trash" />
   <Separator/>
   <Action name="create_todo"/>
+  <Action name="status_flag" />
+  <Action name="status_toact" />
   <Separator/>
   <Action name="text_font" />
   <Action name="text_size" />

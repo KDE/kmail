@@ -22,11 +22,16 @@
 #define __KMAIL_TEMPLATEPARSER_H__
 
 #include <qobject.h>
+#include <akonadi/collection.h>
 
-class partNode;
-class KMMessage;
+#include <kmime/kmime_message.h>
+#include <boost/shared_ptr.hpp>
+
+namespace MessageViewer {
+  class ObjectTreeParser;
+}
+
 class QString;
-class KMFolder;
 class QObject;
 
 namespace KMail {
@@ -44,15 +49,17 @@ class TemplateParser : public QObject
     };
 
   public:
-    TemplateParser( KMMessage *amsg, const Mode amode, const QString &aselection,
+    TemplateParser( const KMime::Message::Ptr &amsg, const Mode amode, const QString &aselection,
                     bool aSmartQuote, bool aallowDecryption,
                     bool aselectionIsBody );
     ~TemplateParser();
 
-    virtual void process( KMMessage *aorig_msg, KMFolder *afolder = 0, bool append = false );
-    virtual void process( const QString &tmplName, KMMessage *aorig_msg,
-                          KMFolder *afolder = 0, bool append = false );
-    virtual void processWithIdentity( uint uoid, KMMessage *aorig_msg, KMFolder *afolder = 0,
+    virtual void process( const KMime::Message::Ptr &aorig_msg,
+                          const Akonadi::Collection& afolder = Akonadi::Collection(),
+                          bool append = false );
+    virtual void process( const QString &tmplName, const KMime::Message::Ptr &aorig_msg,
+                         const Akonadi::Collection& afolder = Akonadi::Collection(), bool append = false );
+    virtual void processWithIdentity( uint uoid, const KMime::Message::Ptr &aorig_msg,const Akonadi::Collection& afolder = Akonadi::Collection(),
                           bool append = false );
     virtual void processWithTemplate( const QString &tmpl );
 
@@ -74,10 +81,10 @@ class TemplateParser : public QObject
 
   protected:
     Mode mMode;
-    KMFolder *mFolder;
+    Akonadi::Collection mFolder;
     uint mIdentity;
-    KMMessage *mMsg;
-    KMMessage *mOrigMsg;
+    KMime::Message::Ptr mMsg;
+    KMime::Message::Ptr mOrigMsg;
     QString mSelection;
     bool mSmartQuote;
     bool mAllowDecryption;
@@ -86,7 +93,7 @@ class TemplateParser : public QObject
     QString mQuoteString;
     bool mAppend;
     QString mTo, mCC;
-    partNode *mOrigRoot;
+    KMime::Content *mOrigRoot;
 
     /**
      * If there was a text selection set in the constructor, that will be returned.
@@ -102,7 +109,7 @@ class TemplateParser : public QObject
      * The result is cached in mOrigRoot, therefore calling this multiple times will only parse
      * the tree once.
      */
-    partNode* parsedObjectTree();
+    KMime::Content* parsedObjectTree();
 
     /**
      * Called by processWithTemplate(). This adds the completely processed body to
@@ -111,7 +118,7 @@ class TemplateParser : public QObject
      * In append mode, this will simply append the text to the body.
      *
      * Otherwise, the content of the old message is deleted and replaced with @p body.
-     * Attachments of the original message are also added back to the new message. 
+     * Attachments of the original message are also added back to the new message.
      */
     void addProcessedBodyToMessage( const QString &body );
 
@@ -123,6 +130,46 @@ class TemplateParser : public QObject
      * Return the text signature used the by current identity.
      */
     QString getSignature() const;
+
+  /** Returns a decoded body part string to be further processed
+    by function asQuotedString().
+    THIS FUNCTION WILL BE REPLACED ONCE KMime IS FULLY INTEGRATED
+    (khz, June 05 2002)*/ //TODO Review if we can get rid of it
+    void parseTextStringFromContent( KMime::Content * root,
+                                     QByteArray& parsedString,
+                                     const QTextCodec*& codec,
+                                     bool& isHTML ) const;
+
+    /**
+      * Returns message body indented by the
+      * given indentation string. This is suitable for including the message
+      * in another message of for replies, forwards.
+      *
+      * No attachments are handled if includeAttach is false.
+      * The signature is stripped if aStripSignature is true and
+      * smart quoting is turned on. Signed or encrypted texts
+      * get converted to plain text when allowDecryption is true.
+    */
+    QString asQuotedString( const KMime::Message::Ptr &msg,
+                            const QString &indentStr,
+                            const QString & election=QString(),
+                            bool aStripSignature=true,
+                            bool allowDecryption=true);
+
+    /** Return the textual content of the message as plain text,
+        converting HTML to plain text if necessary. */
+    QString asPlainText( const KMime::Message::Ptr &msg, bool stripSignature, bool allowDecryption );
+
+    /**
+    * Same as asPlainText(), only that this method expects an already parsed object tree as
+    * paramter.
+    * By passing an already parsed objecttree, this allows to share the objecttree and therefore
+    * reduce the amount of parsing (which can include decrypting, which can include a passphrase dialog)
+    */
+    QString asPlainTextFromObjectTree( const KMime::Message::Ptr &msg, KMime::Content *root,
+                                       MessageViewer::ObjectTreeParser *otp, bool stripSignature,
+                                       bool allowDecryption );
+
 };
 
 } // namespace KMail

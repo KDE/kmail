@@ -47,19 +47,19 @@
 #include <kvbox.h>
 
 #include "kmmainwidget.h"
-#include "kmfolder.h"
+#include "foldercollection.h"
 
 #include <QFrame>
 
 using namespace KMail;
 
-FolderShortcutDialog::FolderShortcutDialog( KMFolder *folder,
+FolderShortcutDialog::FolderShortcutDialog( const QSharedPointer<FolderCollection> &folder,
                                             KMMainWidget *mainwidget,
                                             QWidget *parent )
 :  KDialog( parent ),
    mFolder( folder ), mMainWidget( mainwidget )
 {
-  setCaption( i18n( "Shortcut for Folder %1", folder->label() ) );
+  setCaption( i18n( "Shortcut for Folder %1", folder->collection().name() ) );
   setButtons( Ok | Cancel );
   QFrame *box = new KVBox( this );
   setMainWidget( box );

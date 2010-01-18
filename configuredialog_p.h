@@ -19,6 +19,7 @@
 #include <QStackedWidget>
 #include <QTreeWidget>
 #include <QHash>
+#include <QSharedPointer>
 
 #include <klineedit.h>
 #include <kcombobox.h>
@@ -26,12 +27,13 @@
 #include <kcmodule.h>
 #include <klocale.h>
 
+#include <akonadi/agentinstance.h>
+
 #include "ui_composercryptoconfiguration.h"
 #include "ui_warningconfiguration.h"
 #include "ui_smimeconfiguration.h"
 #include "ui_customtemplates_base.h"
 #include "ui_miscpagemaintab.h"
-#include "ui_miscpagegroupwaretab.h"
 #include "ui_miscpageinvitetab.h"
 #include "ui_securitypagegeneraltab.h"
 #include "ui_identitypage.h"
@@ -52,7 +54,6 @@ class KButtonGroup;
 class KUrlRequester;
 class KFontChooser;
 class KTabWidget;
-class KMAccount;
 class ListView;
 class ConfigureDialog;
 class KIntSpinBox;
@@ -61,7 +62,6 @@ class KConfig;
 class SMimeConfiguration;
 class TemplatesConfiguration;
 class CustomTemplates;
-class KMMessageTagDescription;
 class KColorCombo;
 class KFontRequester;
 class KIconButton;
@@ -78,6 +78,9 @@ namespace KMail {
   class IdentityDialog;
   class IdentityListView;
   class IdentityListViewItem;
+  class Tag;
+  class Tag;
+  typedef QSharedPointer<Tag> TagPtr;
 }
 namespace Kleo {
   class BackendConfigWidget;
@@ -291,7 +294,7 @@ signals:
   void accountListChanged( const QStringList & );
 
 private slots:
-  void slotAccountSelected();
+  void slotAccountSelected(const Akonadi::AgentInstance&);
   void slotAddAccount();
   void slotModifySelectedAccount();
   void slotRemoveSelectedAccount();
@@ -301,18 +304,9 @@ private:
   virtual void doLoadFromGlobalSettings();
   virtual void doLoadOther();
   //FIXME virtual void doResetToDefaultsOther();
-  QStringList occupiedNames();
 
 private:
   Ui_AccountsPageReceivingTab mAccountsReceiving;
-  QList< QPointer<KMAccount> > mAccountsToDelete;
-  QList< QPointer<KMAccount> > mNewAccounts;
-  struct ModifiedAccountsType {
-    QPointer< KMAccount > oldAccount;
-    QPointer< KMAccount > newAccount;
-  };
-  // ### make this a qptrlist:
-  QList< ModifiedAccountsType* >  mModifiedAccounts;
 };
 
 class KMAIL_EXPORT AccountsPage : public ConfigModuleWithTabs {
@@ -404,7 +398,9 @@ private: // data
   QButtonGroup  *mReaderWindowModeGroup;
   QGroupBox     *mReaderWindowModeGroupBox;
   QCheckBox     *mFavoriteFolderViewCB;
+#if 0
   QCheckBox     *mFolderQuickSearchCB;
+#endif
   QButtonGroup  *mFolderToolTipsGroup;
   QGroupBox     *mFolderToolTipsGroupBox;
 };
@@ -533,12 +529,14 @@ private slots:
   /*Transfers changes in the tag name edit box to the list box for tags. Private
   since calling externally decouples the name in the list box from name edit box*/
   void slotNameLineTextChanged( const QString & );
+  void slotIconNameChanged( const QString &iconName );
 
 private:
   virtual void doLoadFromGlobalSettings();
   void swapTagsInListBox( const int first, const int second );
 
 private: // data
+
   KLineEdit *mTagNameLineEdit, *mTagAddLineEdit;
   QPushButton *mTagAddButton, *mTagRemoveButton,
               *mTagUpButton, *mTagDownButton;
@@ -558,8 +556,12 @@ private: // data
 
   KKeySequenceWidget *mKeySequenceWidget;
 
-  QHash<QString,KMMessageTagDescription*> *mMsgTagDict;
-  QList<KMMessageTagDescription*> *mMsgTagList;
+  // Maps Nepomuk::Tag resource URIs to Tags
+  QHash<QString,KMail::TagPtr> mMsgTagDict;
+
+  // List of all Tags currently in the list
+  QList<KMail::TagPtr> mMsgTagList;
+
   /*If true, changes to the widgets activate the Apply button*/
   bool mEmitChanges;
   /*Used to safely call slotRecordTagSettings when the selection in
@@ -938,23 +940,6 @@ private:
   Ui_MiscMainTab mMMTab;
 };
 
-class MiscPageGroupwareTab : public ConfigModuleTab  {
-  Q_OBJECT
-public:
-  MiscPageGroupwareTab( QWidget * parent=0 );
-  void save();
-  QString helpAnchor() const;
-
-private slots:
-  void slotStorageFormatChanged( int );
-
-private:
-  virtual void doLoadFromGlobalSettings();
-
-private:
-  Ui_MiscGroupTab mMGTab;
-};
-
 class MiscPageInviteTab : public ConfigModuleTab  {
   Q_OBJECT
 public:
@@ -979,12 +964,10 @@ public:
   QString helpAnchor() const;
 
   typedef MiscPageFolderTab FolderTab;
-  typedef MiscPageGroupwareTab GroupwareTab;
   typedef MiscPageInviteTab InviteTab;
 
 private:
   FolderTab * mFolderTab;
-  GroupwareTab * mGroupwareTab;
   InviteTab * mInviteTab;
 };
 

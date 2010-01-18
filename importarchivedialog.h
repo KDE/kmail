@@ -21,8 +21,12 @@
 
 #include <kdialog.h>
 
-class KMFolder;
 class KUrlRequester;
+
+namespace Akonadi
+{
+  class Collection;
+}
 
 namespace KMail
 {
@@ -36,7 +40,7 @@ class ImportArchiveDialog : public KDialog
   public:
 
     ImportArchiveDialog( QWidget *parent );
-    void setFolder( KMFolder *defaultFolder );
+    void setFolder( const Akonadi::Collection &defaultCollection );
 
   protected slots:
 

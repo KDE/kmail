@@ -14,7 +14,7 @@
 #include "snippetwidget.h"
 #include "snippetitem.h"
 #include "snippetdlg.h"
-#include "autoqpointer.h"
+#include "messageviewer/autoqpointer.h"
 
 #include <kdebug.h>
 #include <klocale.h>

@@ -30,7 +30,7 @@ class QString;
 class QStringList;
 template <typename T> class QList;
 
-class KMAccount;
+class OrgKdeAkonadiImapSettingsInterface;
 
 namespace KMime
 {
@@ -43,7 +43,6 @@ namespace KMime
 
 namespace KMail
 {
-class ImapAccountBase;
 class SieveJob;
 
 /**
@@ -80,13 +79,9 @@ protected:
 
     KTextEdit *mEdit;
 
-    // Copied from AccountManager, because we have to do an async iteration
-    // WARNING: When copy/pasting this code, be aware that accounts may
-    //          get removed inbetween! For debugging this is good enough
-    //          though. - Martijn
-    QList<KMAccount *> mAccountList;
+    QStringList mResourceIdentifier;
     QStringList mScriptList;
-    KMail::ImapAccountBase *mAccountBase;
+    OrgKdeAkonadiImapSettingsInterface *mImapSettingsInterface;
 };
 
 } // namespace KMail

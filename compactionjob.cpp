@@ -27,12 +27,8 @@
  */
 
 #include "compactionjob.h"
-#include "kmfolder.h"
 #include "broadcaststatus.h"
 using KPIM::BroadcastStatus;
-#include "kmfoldermbox.h"
-#include "kmfoldermaildir.h"
-
 #include <kdebug.h>
 #include <kde_file.h>
 #include <klocale.h>
@@ -53,7 +49,7 @@ using namespace KMail;
 // And wait this number of milliseconds before calling it again
 #define COMPACTIONJOB_TIMERINTERVAL 100
 
-MboxCompactionJob::MboxCompactionJob( KMFolder* folder, bool immediate )
+MboxCompactionJob::MboxCompactionJob( const Akonadi::Collection& folder, bool immediate )
  : ScheduledJob( folder, immediate ), mTimer( this ), mTmpFile( 0 ),
    mCurrentIndex( 0 ), mFolderOpen( false ), mSilent( false )
 {
@@ -65,6 +61,7 @@ MboxCompactionJob::~MboxCompactionJob()
 
 void MboxCompactionJob::kill()
 {
+#if 0
   Q_ASSERT( mCancellable );
   // We must close the folder if we opened it and got interrupted
   if ( mFolderOpen && mSrcFolder && mSrcFolder->storage() ) {
@@ -79,10 +76,12 @@ void MboxCompactionJob::kill()
     QFile::remove( mTempName );
   }
   FolderJob::kill();
+#endif
 }
 
 QString MboxCompactionJob::realLocation() const
 {
+#if 0
   QString location = mSrcFolder->location();
   QFileInfo inf( location );
   if (inf.isSymLink()) {
@@ -92,10 +91,13 @@ QString MboxCompactionJob::realLocation() const
     return KUrl( u, inf.readLink() ).toLocalFile();
   }
   return location;
+#endif
+  return "";
 }
 
 int MboxCompactionJob::executeNow( bool silent )
 {
+#if 0 //TODO port to akonadi
   mSilent = silent;
   FolderStorage *storage = mSrcFolder->storage();
   KMFolderMbox *mbox = static_cast<KMFolderMbox *>( storage );
@@ -144,10 +146,15 @@ int MboxCompactionJob::executeNow( bool silent )
   }
   slotDoWork();
   return mErrorCode;
+#else
+    kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
+	return 0;
+#endif
 }
 
 void MboxCompactionJob::slotDoWork()
 {
+#if 0 //TODO port to akonadi
   // No need to worry about mSrcFolder==0 here. The FolderStorage deletes the jobs on destruction.
   KMFolderMbox *mbox = static_cast<KMFolderMbox *>( mSrcFolder->storage() );
   bool bDone = false;
@@ -158,10 +165,14 @@ void MboxCompactionJob::slotDoWork()
     mCurrentIndex += COMPACTIONJOB_NRMESSAGES;
   if ( rc || bDone ) // error, or finished
     done( rc );
+#else
+    kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
+#endif
 }
 
 void MboxCompactionJob::done( int rc )
 {
+#if 0 //TODO port to akonadi
   mTimer.stop();
   mCancellable = false;
   KMFolderMbox *mbox = static_cast<KMFolderMbox *>( mSrcFolder->storage() );
@@ -201,11 +212,14 @@ void MboxCompactionJob::done( int rc )
 
   mFolderOpen = false;
   deleteLater(); // later, because of the "return mErrorCode"
+#else
+    kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
+#endif
 }
 
 ////
 
-MaildirCompactionJob::MaildirCompactionJob( KMFolder* folder, bool immediate )
+MaildirCompactionJob::MaildirCompactionJob( const Akonadi::Collection& folder, bool immediate )
  : ScheduledJob( folder, immediate ), mTimer( this ),
    mCurrentIndex( 0 ), mFolderOpen( false ), mSilent( false )
 {
@@ -217,6 +231,7 @@ MaildirCompactionJob::~MaildirCompactionJob()
 
 void MaildirCompactionJob::kill()
 {
+#if 0
   Q_ASSERT( mCancellable );
   // We must close the folder if we opened it and got interrupted
   if ( mFolderOpen && mSrcFolder && mSrcFolder->storage() ) {
@@ -224,10 +239,12 @@ void MaildirCompactionJob::kill()
   }
 
   FolderJob::kill();
+#endif
 }
 
 int MaildirCompactionJob::executeNow( bool silent )
 {
+#if 0 //TODO port to akonadi
   mSilent = silent;
   KMFolderMaildir *storage =
     static_cast<KMFolderMaildir *>( mSrcFolder->storage() );
@@ -250,10 +267,15 @@ int MaildirCompactionJob::executeNow( bool silent )
   }
   slotDoWork();
   return mErrorCode;
+#else
+    kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
+	return 0;
+#endif
 }
 
 void MaildirCompactionJob::slotDoWork()
 {
+#if 0 //TODO port to akonadi
   // No need to worry about mSrcFolder==0 here. The FolderStorage deletes the jobs on destruction.
   KMFolderMaildir *storage =
     static_cast<KMFolderMaildir *>( mSrcFolder->storage() );
@@ -264,10 +286,14 @@ void MaildirCompactionJob::slotDoWork()
     mCurrentIndex += COMPACTIONJOB_NRMESSAGES;
   if ( rc || bDone ) // error, or finished
     done( rc );
+#else
+    kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
+#endif
 }
 
 void MaildirCompactionJob::done( int rc )
 {
+#if 0 //TODO port to akonadi
   KMFolderMaildir *storage =
     static_cast<KMFolderMaildir *>( mSrcFolder->storage() );
   mTimer.stop();
@@ -289,11 +315,15 @@ void MaildirCompactionJob::done( int rc )
   }
 
   mFolderOpen = false;
+#else
+    kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
+#endif
   deleteLater(); // later, because of the "return mErrorCode"
 }
 
 ScheduledJob *ScheduledCompactionTask::run()
 {
+#if 0
   if ( !folder() || !folder()->needsCompacting() )
     return 0;
   switch( folder()->storage()->folderType() ) {
@@ -305,6 +335,8 @@ ScheduledJob *ScheduledCompactionTask::run()
   default: // imap, search, unknown...
     return 0;
   }
+#endif
+return 0;
 }
 
 #include "compactionjob.moc"

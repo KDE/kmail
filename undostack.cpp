@@ -22,8 +22,9 @@
 #include "undostack.h"
 
 #include "kmmainwin.h"
-#include "kmfolder.h"
-#include "kmmsgdict.h"
+#include "kmkernel.h"
+
+#include <akonadi/itemmovejob.h>
 
 #include <kmessagebox.h>
 #include <klocale.h>
@@ -51,7 +52,7 @@ void UndoStack::clear()
   mStack.clear();
 }
 
-int UndoStack::newUndoAction( KMFolder *srcFolder, KMFolder *destFolder )
+int UndoStack::newUndoAction( const Akonadi::Collection &srcFolder, const Akonadi::Collection &destFolder )
 {
   UndoInfo *info = new UndoInfo;
   info->id         = ++mLastId;
@@ -66,7 +67,7 @@ int UndoStack::newUndoAction( KMFolder *srcFolder, KMFolder *destFolder )
   return info->id;
 }
 
-void UndoStack::addMsgToAction( int undoId, ulong serNum )
+void UndoStack::addMsgToAction( int undoId, const Akonadi::Item &item )
 {
   if ( !mCachedInfo || mCachedInfo->id != undoId ) {
     QList<UndoInfo*>::const_iterator itr = mStack.constBegin();
@@ -80,34 +81,17 @@ void UndoStack::addMsgToAction( int undoId, ulong serNum )
   }
 
   Q_ASSERT( mCachedInfo );
-  mCachedInfo->serNums.append( serNum );
+  mCachedInfo->items.append( item );
 }
 
 void UndoStack::undo()
 {
-  KMMessage *msg;
-  ulong serNum;
-  int idx = -1;
-  KMFolder *curFolder;
   if ( mStack.count() > 0 )
   {
     UndoInfo *info = mStack.takeFirst();
     emit undoStackChanged();
-    QList<ulong>::iterator itr;
-    KMFolderOpener openDestFolder( info->destFolder, "undodest" );
-    for( itr = info->serNums.begin(); itr != info->serNums.end(); ++itr ) {
-      serNum = *itr;
-      KMMsgDict::instance()->getLocation(serNum, &curFolder, &idx);
-      if ( idx == -1 || curFolder != info->destFolder ) {
-        kDebug()<<"Serious undo error!";
-        delete info;
-        return;
-      }
-      msg = curFolder->getMsg( idx );
-      info->srcFolder->moveMsg( msg );
-      if ( info->srcFolder->count() > 1 )
-        info->srcFolder->unGetMsg( info->srcFolder->count() - 1 );
-    }
+    Akonadi::ItemMoveJob( info->items, info->srcFolder, this );
+    // TODO: handle job error?
     delete info;
   }
   else
@@ -118,14 +102,14 @@ void UndoStack::undo()
 }
 
 void
-UndoStack::pushSingleAction(ulong serNum, KMFolder *folder, KMFolder *destFolder)
+UndoStack::pushSingleAction(const Akonadi::Item &item, const Akonadi::Collection &folder, const Akonadi::Collection &destFolder)
 {
   int id = newUndoAction( folder, destFolder );
-  addMsgToAction( id, serNum );
+  addMsgToAction( id, item );
 }
 
 void
-UndoStack::msgDestroyed( KMMsgBase* /*msg*/)
+UndoStack::msgDestroyed( const Akonadi::Item & /*msg*/)
 {
   /*
    for(UndoInfo *info = mStack.first(); info; )
@@ -142,7 +126,7 @@ UndoStack::msgDestroyed( KMMsgBase* /*msg*/)
 }
 
 void
-UndoStack::folderDestroyed( KMFolder *folder)
+UndoStack::folderDestroyed( const Akonadi::Collection &folder)
 {
   QList<UndoInfo*>::iterator it = mStack.begin();
   while ( it != mStack.end() ) {

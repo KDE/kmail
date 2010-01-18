@@ -21,19 +21,23 @@
 #define kmfilter_h
 
 #include "kmsearchpattern.h"
-#include "kmpopheaders.h"
 
 #include <kshortcut.h>
+#include <akonadi/collection.h>
+
+#include <kmime/kmime_message.h>
 
 class QString;
 class KConfigGroup;
-class KMMessage;
 class KMFilterAction;
-class KMFolder;
-class KMMsgBase;
 
 // maximum number of filter actions per filter
 const int FILTER_MAX_ACTIONS = 8;
+
+//Keep these corresponding to the column numbers in the dialog for easier coding
+//or change mapToAction and mapToColumn in PopHeadersView
+enum KMPopFilterAction { Down=0, Later=1, Delete=2, NoAction=3 };
+
 
 class KMFilter
 {
@@ -87,16 +91,16 @@ public:
       @li 1 if the caller is still
       the owner of the message,
       @li 0 if processed successfully.
-      @param msg The message to which the actions should be applied.
+      @param item The message to which the actions should be applied.
       @param stopIt Contains
       true if the caller may apply other filters and false if he shall
       stop the filtering of this message.
   */
-  ReturnCode execActions( KMMessage* msg, bool& stopIt ) const ;
+  ReturnCode execActions( const Akonadi::Item &item, bool& stopIt ) const ;
 
   /** Determines if the filter depends on the body of the message
   */
-  bool requiresBody(KMMsgBase* msgBase);
+  bool requiresBody(KMime::Content* msgBase);
 
   /** No descriptions */
   KMPopFilterAction action();
@@ -205,13 +209,13 @@ public:
       set of accounts.
       @see setApplicability applyOnAccount
   */
-  void setApplyOnAccount( uint id, bool aApply=true );
+  void setApplyOnAccount( const QString& id, bool aApply=true );
 
   /** @return true if this filter should be applied on
       inbound messages from the account with id (@p id), false otherwise.
       @see setApplicability
   */
-  bool applyOnAccount( uint id ) const;
+  bool applyOnAccount( const QString& id ) const;
 
   void setStopProcessingHere( bool aStop ) { bStopProcessingHere = aStop; }
   bool stopProcessingHere() const { return bStopProcessingHere; }
@@ -250,7 +254,7 @@ public:
 
   /** This sets the toolbar name for this filter.
    *  The toolbar name is the text to be displayed underneath the toolbar icon
-   *  for this filter. This is usually the same as name(),  expect when 
+   *  for this filter. This is usually the same as name(),  expect when
    *  explicitly set by this function.
    *  This is useful if the normal filter mame is too long for the toolbar.
    *  @see toolbarName, name
@@ -288,7 +292,7 @@ public:
    * @return true if a change in some action occurred,
    * false if no action was affected.
    */
-  bool folderRemoved( KMFolder* aFolder, KMFolder* aNewFolder );
+  bool folderRemoved( const Akonadi::Collection& aFolder, const Akonadi::Collection& aNewFolder );
 
   /** Returns the filter in a human-readable form. useful for
       debugging but not much else. Don't use, as it may well go away
@@ -317,7 +321,7 @@ public:
 private:
   KMSearchPattern mPattern;
   QList<KMFilterAction*> mActions;
-  QList<int> mAccounts;
+  QStringList mAccounts;
   KMPopFilterAction mAction;
   QString mIcon;
   QString mToolbarName;

@@ -23,22 +23,7 @@
      <item>
       <layout class="QHBoxLayout" name="hlay">
        <item>
-        <widget class="ListView" name="mAccountList">
-         <column>
-          <property name="text">
-           <string notr="true">Name</string>
-          </property>
-         </column>
-         <column>
-          <property name="text">
-           <string>Type</string>
-          </property>
-         </column>
-         <column>
-          <property name="text">
-           <string>Folder</string>
-          </property>
-         </column>
+        <widget class="Akonadi::AgentInstanceWidget" name="mAccountList">
         </widget>
        </item>
        <item>
@@ -51,7 +36,7 @@
           </widget>
          </item>
          <item>
-          <widget class="QPushButton" name="mModifyAccountButton">
+          <widget class="KPushButton" name="mModifyAccountButton">
            <property name="enabled">
             <bool>false</bool>
            </property>
@@ -61,7 +46,7 @@
           </widget>
          </item>
          <item>
-          <widget class="QPushButton" name="mRemoveAccountButton">
+          <widget class="KPushButton" name="mRemoveAccountButton">
            <property name="enabled">
             <bool>false</bool>
            </property>
@@ -114,13 +99,6 @@
          </widget>
         </item>
         <item>
-         <widget class="QCheckBox" name="mUseMessageIndicatorCheck">
-          <property name="text">
-           <string>&amp;Use message indicator</string>
-          </property>
-         </widget>
-        </item>
-        <item>
          <widget class="QCheckBox" name="mVerboseNotificationCheck">
           <property name="sizePolicy">
            <sizepolicy hsizetype="MinimumExpanding" vsizetype="Fixed">
@@ -159,22 +137,11 @@
  <layoutdefault spacing="6" margin="0"/>
  <customwidgets>
   <customwidget>
-   <class>ListView</class>
-   <extends>QTreeWidget</extends>
-   <header>configuredialoglistview.h</header>
+   <class>Akonadi::AgentInstanceWidget</class>
+   <extends>QWidget</extends>
+   <header location="global">akonadi/agentinstancewidget.h</header>
   </customwidget>
  </customwidgets>
- <tabstops>
-  <tabstop>mAccountList</tabstop>
-  <tabstop>mAddAccountButton</tabstop>
-  <tabstop>mModifyAccountButton</tabstop>
-  <tabstop>mRemoveAccountButton</tabstop>
-  <tabstop>mCheckmailStartupCheck</tabstop>
-  <tabstop>mBeepNewMailCheck</tabstop>
-  <tabstop>mUseMessageIndicatorCheck</tabstop>
-  <tabstop>mVerboseNotificationCheck</tabstop>
-  <tabstop>mOtherNewMailActionsButton</tabstop>
- </tabstops>
  <resources/>
  <connections/>
 </ui>

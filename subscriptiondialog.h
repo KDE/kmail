@@ -37,7 +37,7 @@
 #include <ksubscription.h>
 
 #include <QMap>
-
+class KAccount;
 using KPIM::KSubscription;
 using KPIM::GroupItem;
 using KPIM::KGroupInfo;

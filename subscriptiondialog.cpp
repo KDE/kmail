@@ -30,10 +30,8 @@
 */
 
 #include "subscriptiondialog.h"
-#include "folderstorage.h"
 #include "listjob.h"
 #include "imapaccountbase.h"
-#include "accountmanager.h"
 
 #include <klocale.h>
 #include <kdebug.h>

@@ -3,24 +3,26 @@
 
 // my header
 #include "kmfiltermgr.h"
-
+#include "kmkernel.h"
 // other kmail headers
 #include "filterlog.h"
 using KMail::FilterLog;
 #include "kmfilterdlg.h"
-#include "kmfolderindex.h"
 #include "filterimporterexporter.h"
 using KMail::FilterImporterExporter;
-#include "kmfoldermgr.h"
-#include "kmmsgdict.h"
 #include "messageproperty.h"
 using KMail::MessageProperty;
+
+#include <akonadi/changerecorder.h>
+#include <akonadi/itemmovejob.h>
 
 // other KDE headers
 #include <kdebug.h>
 #include <klocale.h>
 #include <kconfig.h>
 #include <kconfiggroup.h>
+
+#include <kmime/kmime_message.h>
 
 // other Qt headers
 #include <QRegExp>
@@ -35,21 +37,19 @@ KMFilterMgr::KMFilterMgr( bool popFilter )
     bPopFilter( popFilter ),
     mShowLater( false ),
     mDirtyBufferedFolderTarget( true ),
-    mBufferedFolderTarget( true ),
-    mRefCount( 0 )
+    mBufferedFolderTarget( true )
 {
   if ( bPopFilter ) {
     kDebug() << "pPopFilter set";
   }
-  connect( kmkernel, SIGNAL( folderRemoved( KMFolder* ) ),
-           this, SLOT( slotFolderRemoved( KMFolder* ) ) );
+  connect( kmkernel->monitor(), SIGNAL( collectionRemoved( const Akonadi::Collection& ) ),
+           this, SLOT( slotFolderRemoved( const Akonadi::Collection & ) ) );
 }
 
 
 //-----------------------------------------------------------------------------
 KMFilterMgr::~KMFilterMgr()
 {
-  deref( true );
   writeConfig( false );
   clear();
 }
@@ -70,7 +70,7 @@ void KMFilterMgr::readConfig(void)
   if ( bPopFilter ) {
     KConfigGroup group = config->group( "General" );
     mShowLater = group.readEntry( "popshowDLmsgs", false );
-  } 
+  }
   mFilters = FilterImporterExporter::readFiltersFromConfig( config, bPopFilter );
 }
 
@@ -79,136 +79,62 @@ void KMFilterMgr::writeConfig(bool withSync)
 {
   KSharedConfig::Ptr config = KMKernel::config();
 
-  // Now, write out the new stuff:  
+  // Now, write out the new stuff:
   FilterImporterExporter::writeFiltersToConfig( mFilters, config, bPopFilter );
   KConfigGroup group = config->group( "General" );
   if ( bPopFilter )
       group.writeEntry("popshowDLmsgs", mShowLater);
 
-  if ( withSync ) group.sync();
+ if ( withSync ) group.sync();
 }
 
-int KMFilterMgr::processPop( KMMessage * msg ) const {
+int KMFilterMgr::processPop( const Akonadi::Item & item ) const {
   for ( QList<KMFilter*>::const_iterator it = mFilters.begin();
         it != mFilters.end() ; ++it )
-    if ( (*it)->pattern()->matches( msg ) )
+    if ( (*it)->pattern()->matches( item ) )
       return (*it)->action();
+
   return NoAction;
 }
 
-bool KMFilterMgr::beginFiltering(KMMsgBase *msgBase) const
+bool KMFilterMgr::beginFiltering( const Akonadi::Item &item ) const
 {
-  if (MessageProperty::filtering( msgBase ))
+  if (MessageProperty::filtering( item ))
     return false;
-  MessageProperty::setFiltering( msgBase, true );
-  MessageProperty::setFilterFolder( msgBase, 0 );
+  MessageProperty::setFiltering( item, true );
   if ( FilterLog::instance()->isLogging() ) {
     FilterLog::instance()->addSeparator();
   }
   return true;
 }
 
-int KMFilterMgr::moveMessage(KMMessage *msg) const
+void KMFilterMgr::endFiltering( const Akonadi::Item &item ) const
 {
-  if (MessageProperty::filterFolder(msg)->moveMsg( msg ) == 0) {
-    if ( kmkernel->folderIsTrash( MessageProperty::filterFolder( msg )))
-      KMFilterAction::sendMDN( msg, KMime::MDN::Deleted );
-  } else {
-    kDebug() << "KMfilterAction - couldn't move msg";
-    return 2;
-  }
-  return 0;
+  MessageProperty::setFiltering( item, false );
 }
 
-void KMFilterMgr::endFiltering(KMMsgBase *msgBase) const
+int KMFilterMgr::process( const Akonadi::Item &item, const KMFilter * filter )
 {
-  KMFolder *parent = msgBase->parent();
-  if ( parent ) {
-    if ( parent == MessageProperty::filterFolder( msgBase ) ) {
-      parent->take( parent->find( msgBase ) );
-    }
-    else if ( ! MessageProperty::filterFolder( msgBase ) ) {
-      int index = parent->find( msgBase );
-      KMMessage *msg = parent->getMsg( index );
-      parent->take( index );
-      parent->addMsgKeepUID( msg );
-    }
-  }
-  MessageProperty::setFiltering( msgBase, false );
-}
-
-int KMFilterMgr::process( KMMessage * msg, const KMFilter * filter ) {
   bool stopIt = false;
   int result = 1;
 
-  if ( !msg || !filter || !beginFiltering( msg ))
+  if ( !filter || !item.hasPayload<KMime::Message::Ptr>() )
     return 1;
 
-  if ( isMatching( msg, filter ) ) {
-    if (filter->execActions( msg, stopIt ) == KMFilter::CriticalError)
-      return 2;
-
-    KMFolder *folder = MessageProperty::filterFolder( msg );
-
-    endFiltering( msg );
-    if (folder) {
-      tempOpenFolder( folder );
-      result = folder->moveMsg( msg );
-    }
-  } else {
-    endFiltering( msg );
-    result = 1;
-  }
-  return result;
-}
-
-int KMFilterMgr::process( quint32 serNum, const KMFilter * filter ) {
-  bool stopIt = false;
-  int result = 1;
-
-  if ( !filter)
-    return 1;
-
-  if ( isMatching( serNum, filter ) ) {
-    KMFolder *folder = 0;
-    int idx = -1;
-    // get the message with the serNum
-    KMMsgDict::instance()->getLocation(serNum, &folder, &idx);
-    if ( !folder || ( idx == -1 ) || ( idx >= folder->count() ) ) {
-      return 1;
-    }
-    KMFolderOpener openFolder( folder, "filtermgr" );
-    KMMsgBase *msgBase = folder->getMsgBase( idx );
-    bool unGet = !msgBase->isMessage();
-    KMMessage *msg = folder->getMsg( idx );
+  if ( isMatching( item, filter ) ) {
     // do the actual filtering stuff
-    if ( !msg || !beginFiltering( msg ) ) {
-      if ( unGet) {
-        folder->unGetMsg( idx );
-        folder->close( "filtermgr" );
-      }
+    if ( !beginFiltering( item ) ) {
       return 1;
     }
-    if ( filter->execActions( msg, stopIt ) == KMFilter::CriticalError ) {
-      if ( unGet ) {
-        folder->unGetMsg( idx );
-        folder->close( "filtermgr" );
-      }
+    if ( filter->execActions( item, stopIt ) == KMFilter::CriticalError ) {
       return 2;
     }
 
-    KMFolder *targetFolder = MessageProperty::filterFolder( msg );
-
-    endFiltering( msg );
-    if ( targetFolder ) {
-      tempOpenFolder( targetFolder );
-      msg->setTransferInProgress( false );
-      result = targetFolder->moveMsg( msg );
-      msg->setTransferInProgress( true );
-    }
-    if ( unGet) {
-      folder->unGetMsg( idx );
-      folder->close( "filtermgr" );
+    const Akonadi::Collection targetFolder = MessageProperty::filterFolder( item );
+    endFiltering( item );
+    if ( targetFolder.isValid() ) {
+      new Akonadi::ItemMoveJob( item, targetFolder, this ); // TODO: check result
+      result = 0;
     }
   } else {
     result = 1;
@@ -216,20 +142,20 @@ int KMFilterMgr::process( quint32 serNum, const KMFilter * filter ) {
   return result;
 }
 
-int KMFilterMgr::process( KMMessage * msg, FilterSet set,
-                          bool account, uint accountId ) {
+int KMFilterMgr::process( const Akonadi::Item &item, FilterSet set,
+                          bool account, const QString& accountId ) {
+
   if ( bPopFilter )
-    return processPop( msg );
+    return processPop( item );
 
   if ( set == NoSet ) {
     kDebug() << "KMFilterMgr: process() called with not filter set selected";
     return 1;
   }
-
   bool stopIt = false;
   bool atLeastOneRuleMatched = false;
 
-  if (!beginFiltering( msg ))
+  if ( !beginFiltering( item ) )
     return 1;
   for ( QList<KMFilter*>::const_iterator it = mFilters.constBegin();
         !stopIt && it != mFilters.constEnd() ; ++it ) {
@@ -242,33 +168,32 @@ int KMFilterMgr::process( KMMessage * msg, FilterSet set,
          ( (set&Explicit) && (*it)->applyOnExplicit() ) ) {
         // filter is applicable
 
-      if ( isMatching( msg, (*it) ) ) {
+      if ( isMatching( item, (*it) ) ) {
         // filter matches
         atLeastOneRuleMatched = true;
         // execute actions:
-        if ( (*it)->execActions(msg, stopIt) == KMFilter::CriticalError )
+        if ( (*it)->execActions(item, stopIt) == KMFilter::CriticalError )
           return 2;
       }
     }
   }
 
-  KMFolder *folder = MessageProperty::filterFolder( msg );
+  Akonadi::Collection targetFolder = MessageProperty::filterFolder( item );
   /* endFilter does a take() and addButKeepUID() to ensure the changed
    * message is on disk. This is unnessecary if nothing matched, so just
    * reset state and don't update the listview at all. */
   if ( atLeastOneRuleMatched )
-    endFiltering( msg );
+    endFiltering( item );
   else
-    MessageProperty::setFiltering( msg, false );
-  if (folder) {
-    tempOpenFolder( folder );
-    folder->moveMsg(msg);
+    MessageProperty::setFiltering( item, false );
+  if ( targetFolder.isValid() ) {
+    new Akonadi::ItemMoveJob( item, targetFolder, this ); // TODO: check result
     return 0;
   }
   return 1;
 }
 
-bool KMFilterMgr::isMatching( KMMessage * msg, const KMFilter * filter )
+bool KMFilterMgr::isMatching( const Akonadi::Item& item, const KMFilter * filter )
 {
   bool result = false;
   if ( FilterLog::instance()->isLogging() ) {
@@ -276,7 +201,7 @@ bool KMFilterMgr::isMatching( KMMessage * msg, const KMFilter * filter )
     logText.append( filter->pattern()->asString() );
     FilterLog::instance()->add( logText, FilterLog::patternDesc );
   }
-  if ( filter->pattern()->matches( msg ) ) {
+  if ( filter->pattern()->matches( item ) ) {
     if ( FilterLog::instance()->isLogging() ) {
       FilterLog::instance()->add( i18n( "<b>Filter rules have matched.</b>" ),
                                   FilterLog::patternResult );
@@ -286,25 +211,7 @@ bool KMFilterMgr::isMatching( KMMessage * msg, const KMFilter * filter )
   return result;
 }
 
-bool KMFilterMgr::isMatching( quint32 serNum, const KMFilter * filter )
-{
-  bool result = false;
-  if ( FilterLog::instance()->isLogging() ) {
-    QString logText( i18n( "<b>Evaluating filter rules:</b> " ) );
-    logText.append( filter->pattern()->asString() );
-    FilterLog::instance()->add( logText, FilterLog::patternDesc );
-  }
-  if ( filter->pattern()->matches( serNum ) ) {
-    if ( FilterLog::instance()->isLogging() ) {
-      FilterLog::instance()->add( i18n( "<b>Filter rules have matched.</b>" ),
-                                  FilterLog::patternResult );
-    }
-    result = true;
-  }
-  return result;
-}
-
-bool KMFilterMgr::atLeastOneFilterAppliesTo( unsigned int accountID ) const
+bool KMFilterMgr::atLeastOneFilterAppliesTo( const QString& accountID ) const
 {
   QList<KMFilter*>::const_iterator it = mFilters.constBegin();
   for ( ; it != mFilters.constEnd() ; ++it ) {
@@ -315,7 +222,7 @@ bool KMFilterMgr::atLeastOneFilterAppliesTo( unsigned int accountID ) const
   return false;
 }
 
-bool KMFilterMgr::atLeastOneIncomingFilterAppliesTo( unsigned int accountID ) const
+bool KMFilterMgr::atLeastOneIncomingFilterAppliesTo( const QString& accountID ) const
 {
   QList<KMFilter*>::const_iterator it = mFilters.constBegin();
   for ( ; it != mFilters.constEnd() ; ++it ) {
@@ -343,57 +250,20 @@ bool KMFilterMgr::atLeastOneOnlineImapFolderTarget()
       if (!f)
         continue;
       QString name = f->argsAsString();
+#if 0 //TODO port to akonadi
       KMFolder *folder = kmkernel->imapFolderMgr()->findIdString( name );
       if (folder) {
         mBufferedFolderTarget = true;
         return true;
       }
+#else
+    kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
+#endif
     }
   }
   mBufferedFolderTarget = false;
   return false;
 }
-
-//-----------------------------------------------------------------------------
-void KMFilterMgr::ref( void )
-{
-  mRefCount++;
-}
-
-//-----------------------------------------------------------------------------
-void KMFilterMgr::deref( bool force )
-{
-  if ( !force ) {
-    mRefCount--;
-  }
-  if ( mRefCount < 0 ) {
-    mRefCount = 0;
-  }
-  if ( mRefCount && !force ) {
-    return;
-  }
-  QVector< KMFolder *>::const_iterator it;
-  for ( it = mOpenFolders.constBegin(); it != mOpenFolders.constEnd(); ++it ) {
-    (*it)->close( "filtermgr" );
-  }
-  mOpenFolders.clear();
-}
-
-
-//-----------------------------------------------------------------------------
-int KMFilterMgr::tempOpenFolder( KMFolder *aFolder )
-{
-  assert( aFolder );
-
-  int rc = aFolder->open( "filtermgr" );
-  if ( rc ) {
-    return rc;
-  }
-
-  mOpenFolders.append( aFolder );
-  return 0;
-}
-
 
 //-----------------------------------------------------------------------------
 void KMFilterMgr::openDialog( QWidget *, bool checkForEmptyFilterList )
@@ -476,13 +346,13 @@ void KMFilterMgr::setFilters( const QList<KMFilter*> &filters )
   endUpdate();
 }
 
-void KMFilterMgr::slotFolderRemoved( KMFolder * aFolder )
+void KMFilterMgr::slotFolderRemoved( const Akonadi::Collection & aFolder )
 {
-  folderRemoved( aFolder, 0 );
+  folderRemoved( aFolder, Akonadi::Collection() );
 }
 
 //-----------------------------------------------------------------------------
-bool KMFilterMgr::folderRemoved(KMFolder* aFolder, KMFolder* aNewFolder)
+bool KMFilterMgr::folderRemoved(const Akonadi::Collection & aFolder, const Akonadi::Collection & aNewFolder)
 {
   mDirtyBufferedFolderTarget = true;
   bool rem = false;

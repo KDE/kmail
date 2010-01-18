@@ -31,13 +31,12 @@
 
 #include "mailinglist-magic.h"
 #include <kdialog.h>
-
+#include "foldercollection.h"
 class QCheckBox;
 class QPushButton;
 class QLabel;
 class KComboBox;
 class KEditListBox;
-class KMFolder;
 
 namespace KMail
 {
@@ -46,7 +45,7 @@ class MailingListFolderPropertiesDialog : public KDialog
 {
   Q_OBJECT
 public:
-  MailingListFolderPropertiesDialog( QWidget *parent, KMFolder *folder );
+  MailingListFolderPropertiesDialog( QWidget *parent, const QSharedPointer<FolderCollection>& folder );
   ~MailingListFolderPropertiesDialog() {}
 protected:
   void load();
@@ -66,7 +65,7 @@ private slots:
   void slotAddressChanged( int addr );
 
 private:
-  KMFolder *mFolder;
+  QSharedPointer<FolderCollection> mFolder;
   void fillMLFromWidgets();
   void fillEditBox();
 

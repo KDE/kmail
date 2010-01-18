@@ -4,10 +4,14 @@
 #define KMCommands_h
 
 #include "kmail_export.h"
-#include "kmmsgbase.h"
-
-#include <mimelib/string.h>
+#include <kmime/kmime_message.h>
+#include "messageviewer/viewer.h"
+#include "messageviewer/editorwatcher.h"
+#include "messageviewer/headerstrategy.h"
+#include "messageviewer/headerstyle.h"
+using MessageViewer::EditorWatcher;
 #include <messagecore/messagestatus.h>
+#include <messagelist/core/view.h>
 using KPIM::MessageStatus;
 #include <kservice.h>
 #include <ktemporaryfile.h>
@@ -16,55 +20,41 @@ using KPIM::MessageStatus;
 #include <QPointer>
 #include <QList>
 #include <QMenu>
-
+#include <akonadi/item.h>
+#include <akonadi/itemfetchscope.h>
+#include <akonadi/collection.h>
 class KProgressDialog;
 class KMFilter;
-class KMFolder;
-class KMFolderImap;
 class KMMainWidget;
-class KMMessage;
-class KMMsgBase;
 class KMReaderWin;
-class partNode;
-class DwBodyPart;
-class DwEntity;
+class FolderCollection;
+template <typename T> class QSharedPointer;
 
 namespace KIO { class Job; }
 namespace KMail {
   class Composer;
-  class FolderJob;
-  class EditorWatcher;
-  class HeaderStyle;
-  class HeaderStrategy;
 }
 namespace GpgME { class Error; }
 namespace Kleo { class SpecialJob; }
 
-typedef QMap<partNode*, KMMessage*> PartNodeMessageMap;
+typedef QMap<KMime::Content*, Akonadi::Item> PartNodeMessageMap;
+  /// Small helper structure which encapsulates the KMMessage created when creating a reply, and
 
 class KMAIL_EXPORT KMCommand : public QObject
 {
   Q_OBJECT
-    friend class LaterDeleterWithCommandCompletion;
 
 public:
   enum Result { Undefined, OK, Canceled, Failed };
 
   // Trival constructor, don't retrieve any messages
   KMCommand( QWidget *parent = 0 );
+  KMCommand( QWidget *parent, const Akonadi::Item & );
   // Retrieve all messages in msgList when start is called.
-  KMCommand( QWidget *parent, const QList<KMMsgBase*> &msgList );
+  KMCommand( QWidget *parent, const QList<Akonadi::Item> &msgList );
   // Retrieve the single message msgBase when start is called.
-  KMCommand( QWidget *parent, KMMsgBase *msgBase );
-  // Retrieve the single message msgBase when start is called.
-  KMCommand( QWidget *parent, KMMessage *message );
   virtual ~KMCommand();
 
-  /** These folders will be closed by the dtor, handy, if you need to keep
-      a folder open during the lifetime of the command, but don't want to
-      care about closing it again.
-   */
-  void keepFolderOpen( KMFolder *folder );
 
   /** Returns the result of the command. Only call this method from the slot
       connected to completed().
@@ -90,10 +80,13 @@ signals:
   void completed( KMCommand *command );
 
 protected:
+  /** Allows to configure how much data should be retrieved of the messages. */
+  Akonadi::ItemFetchScope& fetchScope() { return mFetchScope; }
+
   // Returns list of messages retrieved
-  const QList<KMMessage*> retrievedMsgs() const;
+  const QList<Akonadi::Item> retrievedMsgs() const;
   // Returns the single message retrieved
-  KMMessage *retrievedMessage() const;
+  Akonadi::Item retrievedMessage() const;
   // Returns the parent widget
   QWidget *parentWidget() const;
 
@@ -136,7 +129,7 @@ private slots:
 
   void slotPostTransfer( KMCommand::Result result );
   /** the msg has been transferred */
-  void slotMsgTransfered(KMMessage* msg);
+  void slotMsgTransfered(const Akonadi::Item::List& msgs);
   /** the KMImapJob is finished */
   void slotJobFinished();
   /** the transfer was canceled */
@@ -153,9 +146,9 @@ private:
   bool mEmitsCompletedItself : 1;
 
   QWidget *mParent;
-  QList<KMMessage*> mRetrievedMsgs;
-  QList<KMMsgBase*> mMsgList;
-  QList<QPointer<KMFolder> > mFolders;
+  QList<Akonadi::Item> mRetrievedMsgs;
+  QList<Akonadi::Item> mMsgList;
+  Akonadi::ItemFetchScope mFetchScope;
 };
 
 class KMAIL_EXPORT KMMailtoComposeCommand : public KMCommand
@@ -163,13 +156,13 @@ class KMAIL_EXPORT KMMailtoComposeCommand : public KMCommand
   Q_OBJECT
 
 public:
-  explicit KMMailtoComposeCommand( const KUrl &url, KMMessage *msg=0 );
+  explicit KMMailtoComposeCommand( const KUrl &url, const Akonadi::Item &msg=Akonadi::Item() );
 
 private:
   virtual Result execute();
 
   KUrl mUrl;
-  KMMessage *mMessage;
+  Akonadi::Item mMessage;
 };
 
 class KMAIL_EXPORT KMMailtoReplyCommand : public KMCommand
@@ -178,7 +171,7 @@ class KMAIL_EXPORT KMMailtoReplyCommand : public KMCommand
 
 public:
   KMMailtoReplyCommand( QWidget *parent, const KUrl &url,
-                        KMMessage *msg, const QString &selection );
+                        const Akonadi::Item &msg, const QString &selection );
 
 private:
   virtual Result execute();
@@ -192,7 +185,7 @@ class KMAIL_EXPORT KMMailtoForwardCommand : public KMCommand
   Q_OBJECT
 
 public:
-  KMMailtoForwardCommand( QWidget *parent, const KUrl &url, KMMessage *msg );
+  KMMailtoForwardCommand( QWidget *parent, const KUrl &url,const Akonadi::Item& msg );
 
 private:
   virtual Result execute();
@@ -240,34 +233,6 @@ private:
   KUrl mUrl;
 };
 
-class KMAIL_EXPORT KMUrlCopyCommand : public KMCommand
-{
-  Q_OBJECT
-
-public:
-  explicit KMUrlCopyCommand( const KUrl &url, KMMainWidget *mainWidget = 0 );
-
-private:
-  virtual Result execute();
-
-  KUrl mUrl;
-  KMMainWidget *mMainWidget;
-};
-
-class KMAIL_EXPORT KMUrlOpenCommand : public KMCommand
-{
-  Q_OBJECT
-
-public:
-  KMUrlOpenCommand( const KUrl &url, KMReaderWin *readerWin );
-
-private:
-  virtual Result execute();
-
-  KUrl mUrl;
-  KMReaderWin *mReaderWin;
-};
-
 class KMAIL_EXPORT KMUrlSaveCommand : public KMCommand
 {
   Q_OBJECT
@@ -289,8 +254,9 @@ class KMAIL_EXPORT KMEditMsgCommand : public KMCommand
   Q_OBJECT
 
 public:
-  KMEditMsgCommand( QWidget *parent, KMMessage *msg );
-
+  KMEditMsgCommand( QWidget *parent, const Akonadi::Item &msg );
+private slots:
+  void slotDeleteItem( KJob *job );
 private:
   virtual Result execute();
 };
@@ -300,23 +266,10 @@ class KMAIL_EXPORT KMUseTemplateCommand : public KMCommand
   Q_OBJECT
 
 public:
-  KMUseTemplateCommand( QWidget *parent, KMMessage *msg );
+  KMUseTemplateCommand( QWidget *parent, const Akonadi::Item &msg );
 
 private:
   virtual Result execute();
-};
-
-class KMAIL_EXPORT KMShowMsgSrcCommand : public KMCommand
-{
-  Q_OBJECT
-
-public:
-  KMShowMsgSrcCommand( QWidget *parent, KMMessage *msg, bool fixedFont );
-  virtual Result execute();
-
-private:
-  bool mFixedFont;
-  bool mMsgWasComplete;
 };
 
 class KMAIL_EXPORT KMSaveMsgCommand : public KMCommand
@@ -324,8 +277,8 @@ class KMAIL_EXPORT KMSaveMsgCommand : public KMCommand
   Q_OBJECT
 
 public:
-  KMSaveMsgCommand( QWidget *parent, const QList<KMMsgBase*> &msgList );
-  KMSaveMsgCommand( QWidget *parent, KMMessage * msg );
+  KMSaveMsgCommand( QWidget *parent, const QList<Akonadi::Item> &msgList );
+  KMSaveMsgCommand( QWidget *parent, const Akonadi::Item & msg );
   KUrl url();
 
 private:
@@ -335,14 +288,14 @@ private slots:
   void slotSaveDataReq();
   void slotSaveResult(KJob *job);
   /** the message has been transferred for saving */
-  void slotMessageRetrievedForSaving(KMMessage *msg);
+  void slotMessageRetrievedForSaving(const Akonadi::Item &msg);
 
 private:
   static const int MAX_CHUNK_SIZE = 64*1024;
   KUrl mUrl;
   QList<unsigned long> mMsgList;
   unsigned int mMsgListIndex;
-  KMMessage *mStandAloneMessage;
+  KMime::Message *mStandAloneMessage;
   QByteArray mData;
   int mOffset;
   size_t mTotalSize;
@@ -367,7 +320,7 @@ private slots:
 private:
   static const int MAX_CHUNK_SIZE = 64*1024;
   KUrl mUrl;
-  DwString mMsgString;
+  QString mMsgString;
   KIO::TransferJob *mJob;
   const QString mEncoding;
 };
@@ -380,34 +333,22 @@ public:
       @param parent  The parent widget of the command used for message boxes.
       @param msg     The message of which the attachments should be saved.
    */
-  KMSaveAttachmentsCommand( QWidget *parent, KMMessage *msg  );
+  KMSaveAttachmentsCommand( QWidget *parent, const Akonadi::Item &msg  );
   /** Use this to save all attachments of the given messages.
       @param parent  The parent widget of the command used for message boxes.
       @param msgs    The messages of which the attachments should be saved.
    */
-  KMSaveAttachmentsCommand( QWidget *parent, const QList<KMMsgBase*>& msgs );
-  /** Use this to save the specified attachments of the given message.
-      @param parent       The parent widget of the command used for message
-                          boxes.
-      @param attachments  The attachments that should be saved.
-      @param msg          The message that the attachments belong to.
-      @param encoded      True if the transport encoding should not be removed
-                          when the attachment is saved.
-   */
-  KMSaveAttachmentsCommand( QWidget *parent, QList<partNode*> &attachments,
-                            KMMessage *msg, bool encoded = false  );
+  KMSaveAttachmentsCommand( QWidget *parent, const QList<Akonadi::Item>& msgs );
 
 private slots:
   void slotSaveAll();
 
 private:
   virtual Result execute();
-  Result saveItem( partNode *node, const KUrl& url );
+  Result saveItem( KMime::Content *node, const KUrl& url );
 
 private:
   PartNodeMessageMap mAttachmentMap;
-  bool mImplicitAttachments;
-  bool mEncoded;
 };
 
 class KMAIL_EXPORT KMReplyToCommand : public KMCommand
@@ -415,7 +356,7 @@ class KMAIL_EXPORT KMReplyToCommand : public KMCommand
   Q_OBJECT
 
 public:
-  KMReplyToCommand( QWidget *parent, KMMessage *msg,
+  KMReplyToCommand( QWidget *parent, const Akonadi::Item &msg,
                     const QString &selection = QString() );
 
 private:
@@ -430,7 +371,7 @@ class KMAIL_EXPORT KMNoQuoteReplyToCommand : public KMCommand
   Q_OBJECT
 
 public:
-  KMNoQuoteReplyToCommand( QWidget *parent, KMMessage *msg );
+  KMNoQuoteReplyToCommand( QWidget *parent, const Akonadi::Item &msg );
 
 private:
   virtual Result execute();
@@ -441,7 +382,7 @@ class KMReplyListCommand : public KMCommand
   Q_OBJECT
 
 public:
-  KMReplyListCommand( QWidget *parent, KMMessage *msg,
+  KMReplyListCommand( QWidget *parent, const Akonadi::Item &msg,
                       const QString &selection = QString() );
 
 private:
@@ -456,7 +397,7 @@ class KMAIL_EXPORT KMReplyToAllCommand : public KMCommand
   Q_OBJECT
 
 public:
-  KMReplyToAllCommand( QWidget *parent, KMMessage *msg,
+  KMReplyToAllCommand( QWidget *parent, const Akonadi::Item &msg,
                        const QString &selection = QString() );
 
 private:
@@ -471,7 +412,7 @@ class KMAIL_EXPORT KMReplyAuthorCommand : public KMCommand
   Q_OBJECT
 
 public:
-  KMReplyAuthorCommand( QWidget *parent, KMMessage *msg,
+  KMReplyAuthorCommand( QWidget *parent, const Akonadi::Item &msg,
                         const QString &selection = QString() );
 
 private:
@@ -486,9 +427,9 @@ class KMAIL_EXPORT KMForwardCommand : public KMCommand
   Q_OBJECT
 
 public:
-  KMForwardCommand( QWidget *parent, const QList<KMMsgBase*> &msgList,
+  KMForwardCommand( QWidget *parent, const QList<Akonadi::Item> &msgList,
                     uint identity = 0 );
-  KMForwardCommand( QWidget *parent, KMMessage * msg,
+  KMForwardCommand( QWidget *parent, const Akonadi::Item& msg,
                     uint identity = 0 );
 
 private:
@@ -503,9 +444,9 @@ class KMAIL_EXPORT KMForwardAttachedCommand : public KMCommand
   Q_OBJECT
 
 public:
-  KMForwardAttachedCommand( QWidget *parent, const QList<KMMsgBase*> &msgList,
+  KMForwardAttachedCommand( QWidget *parent, const QList<Akonadi::Item> &msgList,
                             uint identity = 0, KMail::Composer *win = 0 );
-  KMForwardAttachedCommand( QWidget *parent, KMMessage * msg,
+  KMForwardAttachedCommand( QWidget *parent, const Akonadi::Item & msg,
                             uint identity = 0, KMail::Composer *win = 0 );
 
 private:
@@ -520,7 +461,7 @@ class KMAIL_EXPORT KMRedirectCommand : public KMCommand
   Q_OBJECT
 
 public:
-  KMRedirectCommand( QWidget *parent, KMMessage *msg );
+  KMRedirectCommand( QWidget *parent, const Akonadi::Item &msg );
 
 private:
   virtual Result execute();
@@ -531,7 +472,7 @@ class KMAIL_EXPORT KMCustomReplyToCommand : public KMCommand
   Q_OBJECT
 
 public:
-  KMCustomReplyToCommand( QWidget *parent, KMMessage *msg,
+  KMCustomReplyToCommand( QWidget *parent, const Akonadi::Item &msg,
                           const QString &selection,
                           const QString &tmpl );
 
@@ -548,7 +489,7 @@ class KMAIL_EXPORT KMCustomReplyAllToCommand : public KMCommand
   Q_OBJECT
 
 public:
-  KMCustomReplyAllToCommand( QWidget *parent, KMMessage *msg,
+  KMCustomReplyAllToCommand( QWidget *parent, const Akonadi::Item &msg,
                           const QString &selection,
                           const QString &tmpl );
 
@@ -565,9 +506,9 @@ class KMAIL_EXPORT KMCustomForwardCommand : public KMCommand
   Q_OBJECT
 
 public:
-  KMCustomForwardCommand( QWidget *parent, const QList<KMMsgBase *> &msgList,
+  KMCustomForwardCommand( QWidget *parent, const QList<Akonadi::Item> &msgList,
                           uint identity, const QString &tmpl );
-  KMCustomForwardCommand( QWidget *parent, KMMessage * msg,
+  KMCustomForwardCommand( QWidget *parent, const Akonadi::Item& msg,
                           uint identity, const QString &tmpl );
 
 private:
@@ -582,9 +523,9 @@ class KMAIL_EXPORT KMPrintCommand : public KMCommand
   Q_OBJECT
 
 public:
-  KMPrintCommand( QWidget *parent, KMMessage *msg,
-                  const KMail::HeaderStyle *headerStyle = 0,
-                  const KMail::HeaderStrategy *headerStrategy = 0,
+  KMPrintCommand( QWidget *parent, const Akonadi::Item &msg,
+                  const MessageViewer::HeaderStyle *headerStyle = 0,
+                  const MessageViewer::HeaderStrategy *headerStrategy = 0,
                   bool htmlOverride = false,
                   bool htmlLoadExtOverride = false,
                   bool useFixedFont = false,
@@ -595,8 +536,8 @@ public:
 private:
   virtual Result execute();
 
-  const KMail::HeaderStyle *mHeaderStyle;
-  const KMail::HeaderStrategy *mHeaderStrategy;
+  const MessageViewer::HeaderStyle *mHeaderStyle;
+  const MessageViewer::HeaderStrategy *mHeaderStrategy;
   bool mHtmlOverride;
   bool mHtmlLoadExtOverride;
   bool mUseFixedFont;
@@ -610,15 +551,17 @@ class KMAIL_EXPORT KMSetStatusCommand : public KMCommand
 
 public:
   // Serial numbers
-  KMSetStatusCommand( const MessageStatus& status, const QList<quint32> &,
+  KMSetStatusCommand( const MessageStatus& status, const Akonadi::Item::List &items,
                       bool toggle=false );
+
+protected slots:
+  void slotModifyItemDone( KJob * job );
 
 private:
   virtual Result execute();
 
   MessageStatus mStatus;
-  QList<quint32> mSerNums;
-  QList<int> mIds;
+  int messageStatusChanged;
   bool mToggle;
 };
 
@@ -632,14 +575,14 @@ class KMAIL_EXPORT KMSetTagCommand : public KMCommand
 public:
   enum SetTagMode { AddIfNotExisting, Toggle };
 
-  KMSetTagCommand( const QString &tagLabel, const QList< unsigned long > &serNums,
+  KMSetTagCommand( const QString &tagLabel, const QList<Akonadi::Item> &item,
                    SetTagMode mode=AddIfNotExisting );
 
 private:
   virtual Result execute();
 
   QString mTagLabel;
-  QList< unsigned long > mSerNums;
+  QList<Akonadi::Item> mItem;
   SetTagMode mMode;
 };
 
@@ -668,11 +611,10 @@ class KMAIL_EXPORT KMFilterActionCommand : public KMCommand
 
 public:
   KMFilterActionCommand( QWidget *parent,
-                         const QList<KMMsgBase*> &msgList, KMFilter *filter );
+                         const QList<Akonadi::Item> &msgList, KMFilter *filter );
 
 private:
   virtual Result execute();
-  QList<quint32> serNumList;
   KMFilter *mFilter;
 };
 
@@ -697,7 +639,7 @@ class KMAIL_EXPORT FolderShortcutCommand : public QObject
   Q_OBJECT
 
 public:
-  FolderShortcutCommand( KMMainWidget* mainwidget, KMFolder *folder );
+  FolderShortcutCommand( KMMainWidget* mainwidget, const Akonadi::Collection & col );
   ~FolderShortcutCommand();
 
 public slots:
@@ -709,7 +651,7 @@ public slots:
 
 private:
   KMMainWidget *mMainWidget;
-  KMFolder *mFolder;
+  Akonadi::Collection mCollectionFolder;
   QAction *mAction;
 };
 
@@ -719,7 +661,7 @@ class KMAIL_EXPORT KMMailingListFilterCommand : public KMCommand
   Q_OBJECT
 
 public:
-  KMMailingListFilterCommand( QWidget *parent, KMMessage *msg );
+  KMMailingListFilterCommand( QWidget *parent, const Akonadi::Item &msg );
 
 private:
   virtual Result execute();
@@ -731,20 +673,16 @@ class KMAIL_EXPORT KMCopyCommand : public KMCommand
   Q_OBJECT
 
 public:
-  KMCopyCommand( KMFolder* destFolder, const QList<KMMsgBase*> &msgList );
-  KMCopyCommand( KMFolder* destFolder, KMMessage *msg );
+  KMCopyCommand( const Akonadi::Collection &destFolder, const QList<Akonadi::Item> &msgList );
+  KMCopyCommand( const Akonadi::Collection& destFolder, const Akonadi::Item &msg );
 
 protected slots:
-  void slotJobFinished( KMail::FolderJob *job );
-
-  void slotFolderComplete( KMFolderImap*, bool success );
-
+  void slotCopyResult( KJob * job );
 private:
   virtual Result execute();
 
-  KMFolder *mDestFolder;
-  QList<KMMsgBase*> mMsgList;
-  QList<KMail::FolderJob*> mPendingJobs;
+  Akonadi::Collection mDestFolder;
+  QList<Akonadi::Item> mMsgList;
 };
 
 namespace KPIM {
@@ -755,33 +693,28 @@ class KMAIL_EXPORT KMMoveCommand : public KMCommand
   Q_OBJECT
 
 public:
-  KMMoveCommand( KMFolder* destFolder, const QList<KMMsgBase*> &msgList );
-  KMMoveCommand( KMFolder* destFolder, KMMessage * msg );
-  KMMoveCommand( KMFolder* destFolder, KMMsgBase * msgBase );
-  KMFolder* destFolder() const { return mDestFolder; }
+  KMMoveCommand( const Akonadi::Collection& destFolder, const QList<Akonadi::Item> &msgList, MessageList::Core::MessageItemSetReference ref );
+  KMMoveCommand( const Akonadi::Collection& destFolder, const Akonadi::Item & msg, MessageList::Core::MessageItemSetReference ref = MessageList::Core::MessageItemSetReference() );
+  Akonadi::Collection destFolder() const { return mDestFolder; }
+
+  MessageList::Core::MessageItemSetReference refSet() const { return mRef; }
 
 public slots:
-  void slotImapFolderCompleted(KMFolderImap *folder, bool success);
-  void slotMsgAddedToDestFolder(KMFolder *folder, quint32 serNum);
   void slotMoveCanceled();
-
+  void slotMoveResult( KJob * job );
 protected:
-  // Needed for KMDeleteCommand for "move to trash"
-  KMMoveCommand( quint32 sernum );
-  void setDestFolder( KMFolder* folder ) { mDestFolder = folder; }
-  void addMsg( KMMsgBase *msg ) { mSerNumList.append( msg->getMsgSerNum() ); }
-  QVector<KMFolder*> mOpenedFolders;
+  void setDestFolder( const Akonadi::Collection& folder ) { mDestFolder = folder; }
+
+signals:
+  void moveDone( KMMoveCommand* );
 
 private:
   virtual Result execute();
   void completeMove( Result result );
 
-  KMFolder *mDestFolder;
-  QList<quint32> mSerNumList;
-  // List of serial numbers that have to be transferred to a host.
-  // Ticked off as they come in via msgAdded signals.
-  QList<quint32> mLostBoys;
+  Akonadi::Collection mDestFolder;
   KPIM::ProgressItem *mProgressItem;
+  MessageList::Core::MessageItemSetReference mRef;
   bool mCompleteWithAddedMsg;
 };
 
@@ -790,12 +723,11 @@ class KMAIL_EXPORT KMTrashMsgCommand : public KMMoveCommand
   Q_OBJECT
 
 public:
-  KMTrashMsgCommand( KMFolder* srcFolder, const QList<KMMsgBase*> &msgList );
-  KMTrashMsgCommand( KMFolder* srcFolder, KMMessage * msg );
-  KMTrashMsgCommand( quint32 sernum );
+  KMTrashMsgCommand( const Akonadi::Collection& srcFolder, const QList<Akonadi::Item> &msgList,MessageList::Core::MessageItemSetReference ref );
+  KMTrashMsgCommand( const Akonadi::Collection& srcFolder, const Akonadi::Item& msg,MessageList::Core::MessageItemSetReference ref );
 
 private:
-  static KMFolder * findTrashFolder( KMFolder * srcFolder );
+  static Akonadi::Collection findTrashFolder( const Akonadi::Collection& srcFolder );
 
 };
 
@@ -822,12 +754,10 @@ class KMAIL_EXPORT KMLoadPartsCommand : public KMCommand
   Q_OBJECT
 
 public:
-  KMLoadPartsCommand( QList<partNode*>& parts, KMMessage* msg );
-  KMLoadPartsCommand( partNode* node, KMMessage* msg );
   KMLoadPartsCommand( PartNodeMessageMap& partMap );
 
 public slots:
-  void slotPartRetrieved( KMMessage* msg, const QString &partSpecifier );
+  void slotPartRetrieved( KMime::Message* msg, const QString &partSpecifier );
 
 signals:
   void partsRetrieved();
@@ -847,7 +777,7 @@ class KMAIL_EXPORT KMResendMessageCommand : public KMCommand
   Q_OBJECT
 
 public:
-  explicit KMResendMessageCommand( QWidget *parent, KMMessage *msg=0 );
+  explicit KMResendMessageCommand( QWidget *parent, const Akonadi::Item & msg= Akonadi::Item() );
 
 private:
   virtual Result execute();
@@ -857,7 +787,7 @@ class KMAIL_EXPORT KMMailingListCommand : public KMCommand
 {
   Q_OBJECT
 public:
-  KMMailingListCommand( QWidget *parent, KMFolder *parentFolder );
+  KMMailingListCommand( QWidget *parent, const QSharedPointer<FolderCollection> &parentFolder );
 private:
   virtual Result execute();
 private slots:
@@ -865,14 +795,14 @@ private slots:
 protected:
   virtual KUrl::List urls() const =0;
 protected:
-  KMFolder *mFolder;
+  QSharedPointer<FolderCollection> mFolder;
 };
 
 class KMAIL_EXPORT KMMailingListPostCommand : public KMMailingListCommand
 {
   Q_OBJECT
 public:
-  KMMailingListPostCommand( QWidget *parent, KMFolder *parentFolder );
+  KMMailingListPostCommand( QWidget *parent, const QSharedPointer<FolderCollection> &parentFolder );
 protected:
   virtual KUrl::List urls() const;
 };
@@ -881,7 +811,7 @@ class KMAIL_EXPORT KMMailingListSubscribeCommand : public KMMailingListCommand
 {
   Q_OBJECT
 public:
-  KMMailingListSubscribeCommand( QWidget *parent, KMFolder *parentFolder );
+  KMMailingListSubscribeCommand( QWidget *parent, const QSharedPointer<FolderCollection> &parentFolder );
 protected:
   virtual KUrl::List urls() const;
 };
@@ -890,7 +820,7 @@ class KMAIL_EXPORT KMMailingListUnsubscribeCommand : public KMMailingListCommand
 {
   Q_OBJECT
 public:
-  KMMailingListUnsubscribeCommand( QWidget *parent, KMFolder *parentFolder );
+  KMMailingListUnsubscribeCommand( QWidget *parent, const QSharedPointer<FolderCollection> &parentFolder );
 protected:
   virtual KUrl::List urls() const;
 };
@@ -899,7 +829,7 @@ class KMAIL_EXPORT KMMailingListArchivesCommand : public KMMailingListCommand
 {
   Q_OBJECT
 public:
-  KMMailingListArchivesCommand( QWidget *parent, KMFolder *parentFolder );
+  KMMailingListArchivesCommand( QWidget *parent, const QSharedPointer<FolderCollection> &parentFolder );
 protected:
   virtual KUrl::List urls() const;
 };
@@ -908,164 +838,16 @@ class KMAIL_EXPORT KMMailingListHelpCommand : public KMMailingListCommand
 {
   Q_OBJECT
 public:
-  KMMailingListHelpCommand( QWidget *parent, KMFolder *parentFolder );
+  KMMailingListHelpCommand( QWidget *parent, const QSharedPointer<FolderCollection> &parentFolder );
 protected:
   virtual KUrl::List urls() const;
-};
-
-class KMAIL_EXPORT KMHandleAttachmentCommand : public KMCommand
-{
-  Q_OBJECT
-
-public:
-  /** Supported types of attachment handling */
-  enum AttachmentAction
-  {
-    Open = 1,
-    OpenWith = 2,
-    View = 3,
-    Save = 4,
-    Properties = 5,
-    ChiasmusEncrypt = 6,
-    Delete = 7,
-    Edit = 8,
-    Copy = 9,
-    ScrollTo = 10
-  };
-  /**
-   * Construct a new command
-   * @param node the partNode
-   * @param msg the KMMessage
-   * @param atmId the ID of the attachment, the partNode must know this
-   * @param atmName the name of the attachment
-   * @param action what to do with the attachment
-   * @param offer specify a KService that should handle the "open" action, 0 otherwise
-   */
-  KMHandleAttachmentCommand( partNode* node, KMMessage* msg, int atmId,
-      const QString& atmName, AttachmentAction action, KService::Ptr offer, QWidget* parent );
-
-
-signals:
-  void showAttachment( int id, const QString& name );
-
-private:
-  virtual Result execute();
-
-  QString createAtmFileLink() const;
-
-  /** Get a KService if it was not specified */
-  KService::Ptr getServiceOffer();
-
-  /** Open needs a valid KService */
-  void atmOpen();
-
-  /** Display an open-with dialog */
-  void atmOpenWith();
-
-  /**
-   * Viewing is not supported by this command
-   * so it just emits showAttachment
-   */
-  void atmView();
-
-  /** Save the attachment */
-  void atmSave();
-
-  /** Display the properties */
-  void atmProperties();
-
-  /** Encrypt using chiasmus */
-  void atmEncryptWithChiasmus();
-
-private slots:
-  /** Called from start() via a single shot timer. */
-  virtual void slotStart();
-
-  /**
-   * Called when the part was downloaded
-   * Calls execute
-   */
-  void slotPartComplete();
-
-  void slotAtmDecryptWithChiasmusResult( const GpgME::Error &, const QVariant & );
-  void slotAtmDecryptWithChiasmusUploadResult( KJob * );
-
-private:
-  partNode* mNode;
-  KMMessage* mMsg;
-  int mAtmId;
-  QString mAtmName;
-  AttachmentAction mAction;
-  KService::Ptr mOffer;
-  Kleo::SpecialJob *mJob;
-
-};
-
-
-/** Base class for commands modifying attachements of existing messages. */
-class KMAIL_EXPORT AttachmentModifyCommand : public KMCommand
-{
-  Q_OBJECT
-  public:
-    AttachmentModifyCommand( partNode *node, KMMessage *msg, QWidget *parent );
-    AttachmentModifyCommand( int nodeId, KMMessage *msg, QWidget *parent );
-    ~AttachmentModifyCommand();
-
-  protected:
-    void storeChangedMessage( KMMessage* msg );
-    virtual Result doAttachmentModify() = 0;
-
-  protected:
-    int mPartIndex;
-    quint32 mSernum;
-
-  private:
-    Result execute();
-
-  private slots:
-    void messageStoreResult( KMFolderImap* folder, bool success );
-    void messageTrashResult( KMCommand *cmd );
-
-  private:
-    QPointer<KMFolder> mFolder;
-};
-
-class KMAIL_EXPORT KMDeleteAttachmentCommand : public AttachmentModifyCommand
-{
-  Q_OBJECT
-  public:
-    KMDeleteAttachmentCommand( partNode *node, KMMessage *msg, QWidget *parent );
-    KMDeleteAttachmentCommand( int nodeId, KMMessage *msg, QWidget *parent );
-    ~KMDeleteAttachmentCommand();
-
-  protected:
-    Result doAttachmentModify();
-};
-
-
-class KMAIL_EXPORT KMEditAttachmentCommand : public AttachmentModifyCommand
-{
-  Q_OBJECT
-  public:
-    KMEditAttachmentCommand( partNode *node, KMMessage *msg, QWidget *parent );
-    KMEditAttachmentCommand( int nodeId, KMMessage *msg, QWidget *parent );
-    ~KMEditAttachmentCommand();
-
-  protected:
-    Result doAttachmentModify();
-
-  private slots:
-    void editDone( KMail::EditorWatcher *watcher );
-
-  private:
-    KTemporaryFile mTempFile;
 };
 
 class KMAIL_EXPORT CreateTodoCommand : public KMCommand
 {
   Q_OBJECT
   public:
-    CreateTodoCommand( QWidget *parent, KMMessage *msg );
+  CreateTodoCommand( QWidget *parent, const Akonadi::Item &msg );
 
   private:
     Result execute();

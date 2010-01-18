@@ -24,13 +24,21 @@
 #include <messagecore/messagestatus.h>
 using KPIM::MessageStatus;
 
+#include <Nepomuk/Query/GroupTerm>
+#include <Nepomuk/Query/ComparisonTerm>
+
 #include <QList>
 #include <QString>
 
-class KMMessage;
+namespace Akonadi {
+  class Item;
+}
+
+namespace KMime {
+  class Message;
+}
+
 class KConfigGroup;
-class DwBoyerMoore;
-class DwString;
 
 
 // maximum number of filter rules per filter
@@ -89,19 +97,11 @@ public:
 
   virtual ~KMSearchRule() {}
 
-  /** Tries to match the rule against the given KMMessage.
+  /** Tries to match the rule against the given KMime::Message.
       @return true if the rule matched, false otherwise. Must be
       implemented by subclasses.
   */
-  virtual bool matches( const KMMessage * msg ) const = 0;
-
-   /** Optimized version tries to match the rule against the given
-       @see DwString.
-       @return true if the rule matched, false otherwise.
-   */
-  virtual bool matches( const DwString & str, KMMessage & msg,
-                        const DwBoyerMoore * headerField=0,
-                        int headerLen=-1 ) const;
+  virtual bool matches( const Akonadi::Item &item ) const = 0;
 
   /** Determine whether the rule is worth considering. It isn't if
       either the field is not set or the contents is empty.
@@ -154,6 +154,16 @@ public:
   /** Returns the rule as string. For debugging.*/
   const QString asString() const;
 
+  /** Adds query terms to the given term group. */
+  virtual void addQueryTerms( Nepomuk::Query::GroupTerm &groupTerm ) const = 0;
+
+protected:
+  /** Converts function() into the corresponding Nepomuk query operator. */
+  Nepomuk::Query::ComparisonTerm::Comparator nepomukComparator() const;
+
+  /** Adds @p term to @p termGroup and adds a negation term inbetween if needed. */
+  void addAndNegateTerm( const Nepomuk::Query::Term &term, Nepomuk::Query::GroupTerm &termGroup ) const;
+
 private:
   static Function configValueToFunc( const char * str );
   static QString functionToString( Function function );
@@ -183,20 +193,14 @@ public:
   virtual bool isEmpty() const ;
   virtual bool requiresBody() const;
 
-  virtual bool matches( const KMMessage * msg ) const;
-
-  /** Optimized version tries to match the rule against the given  DwString.
-      @return true if the rule matched, false otherwise.
-  */
-  virtual bool matches( const DwString & str, KMMessage & msg,
-                        const DwBoyerMoore * headerField=0,
-                        int headerLen=-1 ) const;
+  virtual bool matches( const Akonadi::Item &item ) const;
+  virtual void addQueryTerms( Nepomuk::Query::GroupTerm &groupTerm ) const;
 
   /** Helper for the main matches() method. Does the actual comparing. */
   bool matchesInternal( const QString & msgContents ) const;
 
-private:
-  const DwBoyerMoore *mBmHeaderField;
+  private:
+    void addPersonTerm( Nepomuk::Query::GroupTerm &groupTerm, const QUrl &field ) const;
 };
 
 
@@ -212,7 +216,8 @@ public:
                          Function function=FuncContains, const QString & contents=QString() );
   virtual bool isEmpty() const ;
 
-  virtual bool matches( const KMMessage * msg ) const;
+  virtual bool matches( const Akonadi::Item &item ) const;
+  virtual void addQueryTerms( Nepomuk::Query::GroupTerm &groupTerm ) const;
 
   // Optimized matching not implemented, will use the unoptimized matching
   // from KMSearchRule
@@ -289,13 +294,17 @@ public:
    explicit KMSearchRuleStatus( MessageStatus status, Function function=FuncContains );
 
    virtual bool isEmpty() const ;
-   virtual bool matches( const KMMessage * msg ) const;
+   virtual bool matches( const Akonadi::Item &item ) const;
+   virtual void addQueryTerms( Nepomuk::Query::GroupTerm &groupTerm ) const;
 
    //Not possible to implement optimized form for status searching
    using KMSearchRule::matches;
 
 
    static MessageStatus statusFromEnglishName(const QString&);
+private:
+  void addTagTerm( Nepomuk::Query::GroupTerm &groupTerm, const QString &tagId ) const;
+
 private:
    MessageStatus mStatus;
 };
@@ -333,7 +342,7 @@ public:
 
   /** Constructor which provides a pattern with minimal, but
       sufficient initialization. Unmodified, such a pattern will fail
-      to match any KMMessage. You can query for such an empty
+      to match any KMime::Message. You can query for such an empty
       rule by using isEmpty, which is inherited from QPtrList.
   */
   KMSearchPattern();
@@ -348,7 +357,7 @@ public:
   ~KMSearchPattern();
 
   /** The central function of this class. Tries to match the set of
-      rules against a KMMessage. It's virtual to allow derived
+      rules against a KMime::Message. It's virtual to allow derived
       classes with added rules to reimplement it, yet reimplemented
       methods should and (&&) the result of this function with their
       own result or else most functionality is lacking, or has to be
@@ -356,9 +365,7 @@ public:
 
       @return true if the match was successful, false otherwise.
   */
-  bool matches( const KMMessage * msg, bool ignoreBody = false ) const;
-  bool matches( const DwString & str, bool ignoreBody = false ) const;
-  bool matches( quint32 sernum, bool ignoreBody = false ) const;
+  bool matches( const Akonadi::Item &item, bool ignoreBody = false ) const;
 
   /** Returns true if the pattern only depends the DwString that backs
       a message */
@@ -404,6 +411,9 @@ public:
 
   /** Returns the pattern as string. For debugging.*/
   QString asString() const;
+
+  /** Returns the pattern as a SPARQL query. */
+  QString asSparqlQuery() const;
 
   /** Overloaded assignment operator. Makes a deep copy. */
   const KMSearchPattern & operator=( const KMSearchPattern & aPattern );

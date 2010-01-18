@@ -18,21 +18,24 @@
 */
 #include "backupjob.h"
 
-#include "kmmsgdict.h"
-#include "kmfolder.h"
-#include "kmfoldercachedimap.h"
-#include "kmfolderdir.h"
-#include "folderutil.h"
-
 #include "progressmanager.h"
 
-#include "kzip.h"
-#include "ktar.h"
-#include "kmessagebox.h"
+#include <Akonadi/CollectionDeleteJob>
+#include <Akonadi/CollectionFetchJob>
+#include <Akonadi/CollectionFetchScope>
+#include <Akonadi/ItemFetchJob>
+#include <Akonadi/ItemFetchScope>
+#include <KMime/Message>
 
-#include "qfile.h"
-#include "qfileinfo.h"
-#include "qstringlist.h"
+#include <klocale.h>
+#include <kzip.h>
+#include <ktar.h>
+#include <kmessagebox.h>
+#include <kio/global.h>
+
+#include <QStringList>
+#include <QFileInfo>
+#include <QTimer>
 
 using namespace KMail;
 
@@ -42,14 +45,12 @@ BackupJob::BackupJob( QWidget *parent )
     mRootFolder( 0 ),
     mArchive( 0 ),
     mParentWidget( parent ),
-    mCurrentFolderOpen( false ),
     mArchivedMessages( 0 ),
     mArchivedSize( 0 ),
     mProgressItem( 0 ),
     mAborted( false ),
     mDeleteFoldersAfterCompletion( false ),
-    mCurrentFolder( 0 ),
-    mCurrentMessage( 0 ),
+    mCurrentFolder( Akonadi::Collection() ),
     mCurrentJob( 0 )
 {
 }
@@ -63,7 +64,7 @@ BackupJob::~BackupJob()
   }
 }
 
-void BackupJob::setRootFolder( KMFolder *rootFolder )
+void BackupJob::setRootFolder( const Akonadi::Collection &rootFolder )
 {
   mRootFolder = rootFolder;
 }
@@ -83,42 +84,40 @@ void BackupJob::setDeleteFoldersAfterCompletion( bool deleteThem )
   mDeleteFoldersAfterCompletion = deleteThem;
 }
 
-QString BackupJob::stripRootPath( const QString &path ) const
-{
-  QString ret = path;
-  ret = ret.remove( mRootFolder->path() );
-  if ( ret.startsWith( QLatin1String( "/" ) ) )
-    ret = ret.right( ret.length() - 1 );
-  return ret;
-}
-
-void BackupJob::queueFolders( KMFolder *root )
+bool BackupJob::queueFolders( const Akonadi::Collection &root )
 {
   mPendingFolders.append( root );
-  kDebug() << "Queueing folder " << root->name();
-  KMFolderDir *dir = root->child();
-  if ( dir ) {
-    QListIterator<KMFolderNode*> it( *dir );
-    while ( it.hasNext() ) {
-      KMFolderNode *node = it.next();
-      if ( node->isDir() )
-        continue;
-      KMFolder *folder = static_cast<KMFolder*>( node );
-      queueFolders( folder );
-    }
+  // FIXME: Get rid of the exec()
+  // We could do a recursive CollectionFetchJob, but we only fetch the first level
+  // and then recurse manually. This is needed because a recursive fetch doesn't
+  // sort the collections the way we want. We need all first level children to be
+  // in the mPendingFolders list before all second level children, so that the
+  // directories for the first level are written before the directories in the
+  // second level, in the archive file.
+  Akonadi::CollectionFetchJob *job = new Akonadi::CollectionFetchJob( root,
+      Akonadi::CollectionFetchJob::FirstLevel );
+  job->fetchScope().setAncestorRetrieval( Akonadi::CollectionFetchScope::All );
+  job->exec();
+  if ( job->error() ) {
+    kWarning() << job->errorString();
+    abort( i18n( "Unable to retrieve folder list." ) );
+    return false;
   }
+
+  foreach ( const Akonadi::Collection &collection, job->collections() ) {
+    if ( !queueFolders( collection ) )
+      return false;
+  }
+
+  mAllFolders = mPendingFolders;
+  return true;
 }
 
-bool BackupJob::hasChildren( KMFolder *folder ) const
+bool BackupJob::hasChildren( const Akonadi::Collection &collection ) const
 {
-  KMFolderDir *dir = folder->child();
-  if ( dir ) {
-    QListIterator<KMFolderNode*> it( *dir );
-    while ( it.hasNext() ) {
-      KMFolderNode *node = it.next();
-      if ( !node->isDir() )
-        return true;
-    }
+  foreach( const Akonadi::Collection &curCol, mAllFolders ) {
+    if ( collection == curCol.parentCollection() )
+      return true;
   }
   return false;
 }
@@ -136,9 +135,8 @@ void BackupJob::abort( const QString &errorMessage )
     return;
 
   mAborted = true;
-  if ( mCurrentFolderOpen && mCurrentFolder ) {
-    mCurrentFolder->close( "BackupJob" );
-    mCurrentFolder = 0;
+  if ( mCurrentFolder.isValid() ) {
+    mCurrentFolder = Akonadi::Collection();
   }
   if ( mArchive && mArchive->isOpen() ) {
     mArchive->close();
@@ -153,7 +151,7 @@ void BackupJob::abort( const QString &errorMessage )
     // The progressmanager will delete it
   }
 
-  QString text = i18n( "Failed to archive the folder '%1'.", mRootFolder->name() );
+  QString text = i18n( "Failed to archive the folder '%1'.", mRootFolder.name() );
   text += '\n' + errorMessage;
   KMessageBox::sorry( mParentWidget, text, i18n( "Archiving failed." ) );
   deleteLater();
@@ -176,7 +174,7 @@ void BackupJob::finish()
   QFileInfo archiveFileInfo( mMailArchivePath.path() );
   QString text = i18n( "Archiving folder '%1' successfully completed. "
                        "The archive was written to the file '%2'.",
-                       mRootFolder->name(), mMailArchivePath.path() );
+                       mRootFolder.name(), mMailArchivePath.path() );
   text += '\n' + i18np( "1 message of size %2 was archived.",
                         "%1 messages with the total size of %2 were archived.",
                         mArchivedMessages, KIO::convertSize( mArchivedSize ) );
@@ -188,7 +186,7 @@ void BackupJob::finish()
     // Some safety checks first...
     if ( archiveFileInfo.size() > 0 && ( mArchivedSize > 0 || mArchivedMessages == 0 ) ) {
       // Sorry for any data loss!
-      FolderUtil::deleteFolder( mRootFolder, mParentWidget );
+      new Akonadi::CollectionDeleteJob( mRootFolder );
     }
   }
 
@@ -200,183 +198,111 @@ void BackupJob::archiveNextMessage()
   if ( mAborted )
     return;
 
-  mCurrentMessage = 0;
   if ( mPendingMessages.isEmpty() ) {
-    kDebug() << "===> All messages done in folder " << mCurrentFolder->name();
-    mCurrentFolder->close( "BackupJob" );
-    mCurrentFolderOpen = false;
+    kDebug() << "===> All messages done in folder " << mCurrentFolder.name();
     archiveNextFolder();
     return;
   }
 
-  unsigned long serNum = mPendingMessages.front();
+  Akonadi::Item item = mPendingMessages.front();
   mPendingMessages.pop_front();
+  kDebug() << "Fetching item with ID" << item.id() << "for folder" << mCurrentFolder.name();
 
-  KMFolder *folder;
-  mMessageIndex = -1;
-  KMMsgDict::instance()->getLocation( serNum, &folder, &mMessageIndex );
-  if ( mMessageIndex == -1 ) {
-    kWarning() << "Failed to get message location for sernum " << serNum;
-    abort( i18n( "Unable to retrieve a message for folder '%1'.", mCurrentFolder->name() ) );
-    return;
-  }
-
-  Q_ASSERT( folder == mCurrentFolder );
-  const KMMsgBase *base = mCurrentFolder->getMsgBase( mMessageIndex );
-  mUnget = base && !base->isMessage();
-  KMMessage *message = mCurrentFolder->getMsg( mMessageIndex );
-  if ( !message ) {
-    kWarning() << "Failed to retrieve message with index " << mMessageIndex;
-    abort( i18n( "Unable to retrieve a message for folder '%1'.", mCurrentFolder->name() ) );
-    return;
-  }
-
-  kDebug() << "Going to get next message with subject " << message->subject() << ", "
-           << mPendingMessages.size() << " messages left in the folder.";
-
-  if ( message->isComplete() ) {
-    // Use a singleshot timer, or otherwise we risk ending up in a very big recursion
-    // for folders that have many messages
-    mCurrentMessage = message;
-    QTimer::singleShot( 0, this, SLOT( processCurrentMessage() ) );
-  }
-  else if ( message->parent() ) {
-    mCurrentJob = message->parent()->createJob( message );
-    mCurrentJob->setCancellable( false );
-    connect( mCurrentJob, SIGNAL( messageRetrieved( KMMessage* ) ),
-             this, SLOT( messageRetrieved( KMMessage* ) ) );
-    connect( mCurrentJob, SIGNAL( result( KMail::FolderJob* ) ),
-             this, SLOT( folderJobFinished( KMail::FolderJob* ) ) );
-    mCurrentJob->start();
-  }
-  else {
-    kWarning() << "Message with subject " << mCurrentMessage->subject()
-               << " is neither complete nor has a parent!";
-    abort( i18n( "Internal error while trying to retrieve a message from folder '%1'.",
-                 mCurrentFolder->name() ) );
-  }
+  mCurrentJob = new Akonadi::ItemFetchJob( item );
+  mCurrentJob->fetchScope().fetchFullPayload( true );
+  connect( mCurrentJob, SIGNAL(result(KJob*)),
+           this, SLOT(itemFetchJobResult(KJob*)) );
 }
 
-static int fileInfoToUnixPermissions( const QFileInfo &fileInfo )
-{
-  int perm = 0;
-  if ( fileInfo.permission( QFile::ExeOther ) ) perm += S_IXOTH;
-  if ( fileInfo.permission( QFile::WriteOther ) ) perm += S_IWOTH;
-  if ( fileInfo.permission( QFile::ReadOther ) ) perm += S_IROTH;
-  if ( fileInfo.permission( QFile::ExeGroup ) ) perm += S_IXGRP;
-  if ( fileInfo.permission( QFile::WriteGroup ) ) perm += S_IWGRP;
-  if ( fileInfo.permission( QFile::ReadGroup ) ) perm += S_IRGRP;
-  if ( fileInfo.permission( QFile::ExeOwner ) ) perm += S_IXUSR;
-  if ( fileInfo.permission( QFile::WriteOwner ) ) perm += S_IWUSR;
-  if ( fileInfo.permission( QFile::ReadOwner ) ) perm += S_IRUSR;
-  return perm;
-}
-
-void BackupJob::processCurrentMessage()
+void BackupJob::processMessage( const Akonadi::Item &item )
 {
   if ( mAborted )
     return;
 
-  if ( mCurrentMessage ) {
-    kDebug() << "Processing message with subject " << mCurrentMessage->subject();
-    const DwString &messageDWString = mCurrentMessage->asDwString();
-    const qint64 messageSize = messageDWString.size();
-    const char *messageString = mCurrentMessage->asDwString().c_str();
-    QString messageName;
-    QFileInfo fileInfo;
-    if ( messageName.isEmpty() ) {
-      messageName = QString::number( mCurrentMessage->getMsgSerNum() ); // IMAP doesn't have filenames
-      if ( mCurrentMessage->storage() ) {
-        fileInfo.setFile( mCurrentMessage->storage()->location() );
-        // TODO: what permissions etc to take when there is no storage file?
-      }
-    }
-    else {
-      // TODO: What if the message is not in the "cur" directory?
-      fileInfo.setFile( mCurrentFolder->location() + "/cur/" + mCurrentMessage->fileName() );
-      messageName = mCurrentMessage->fileName();
-    }
+  const KMime::Message::Ptr message = item.payload<KMime::Message::Ptr>();
+  kDebug() << "Processing message with subject " << message->subject( false );
+  const QByteArray messageData = message->encodedContent();
+  const qint64 messageSize = messageData.size();
+  const QString messageName = QString::number( item.id() );
+  const QString fileName = pathForCollection( mCurrentFolder ) + "/cur/" + messageName;
 
-    const QString fileName = stripRootPath( mCurrentFolder->location() ) +
-                             "/cur/" + messageName;
-
-    QString user;
-    QString group;
-    mode_t permissions = 0700;
-    time_t creationTime = time( 0 );
-    time_t modificationTime = time( 0 );
-    time_t accessTime = time( 0 );
-    if ( !fileInfo.fileName().isEmpty() ) {
-      user = fileInfo.owner();
-      group = fileInfo.group();
-      permissions = fileInfoToUnixPermissions( fileInfo );
-      creationTime = fileInfo.created().toTime_t();
-      modificationTime = fileInfo.lastModified().toTime_t();
-      accessTime = fileInfo.lastRead().toTime_t();
-    }
-    else {
-      kWarning() << "Unable to find file for message " << fileName;
-    }
-
-    if ( !mArchive->writeFile( fileName, user, group,
-                               messageString, messageSize, permissions,
-                               accessTime, modificationTime, creationTime ) ) {
-      abort( i18n( "Failed to write a message into the archive folder '%1'.", mCurrentFolder->name() ) );
-      return;
-    }
-
-    if ( mUnget ) {
-      Q_ASSERT( mMessageIndex >= 0 );
-      mCurrentFolder->unGetMsg( mMessageIndex );
-    }
-
-    mArchivedMessages++;
-    mArchivedSize += messageSize;
+  // PORT ME: user and group!
+  kDebug() << "AKONDI PORT: disabled code here!";
+  if ( !mArchive->writeFile( fileName, "user", "group", messageData, messageSize ) ) {
+    abort( i18n( "Failed to write a message into the archive folder '%1'.", mCurrentFolder.name() ) );
+    return;
   }
-  else {
-    // No message? According to ImapJob::slotGetMessageResult(), that means the message is no
-    // longer on the server. So ignore this one.
-    kWarning() << "Unable to download a message for folder " << mCurrentFolder->name();
-  }
-  archiveNextMessage();
+
+  mArchivedMessages++;
+  mArchivedSize += messageSize;
+
+  // Use a singleshot timer, otherwise the job started in archiveNextMessage()
+  // will hang
+  QTimer::singleShot( 0, this, SLOT(archiveNextMessage()) );
 }
 
-void BackupJob::messageRetrieved( KMMessage *message )
-{
-  mCurrentMessage = message;
-  processCurrentMessage();
-}
-
-void BackupJob::folderJobFinished( KMail::FolderJob *job )
+void BackupJob::itemFetchJobResult( KJob *job )
 {
   if ( mAborted )
     return;
 
-  // The job might finish after it has emitted messageRetrieved(), in which case we have already
-  // started a new job. Don't set the current job to 0 in that case.
-  if ( job == mCurrentJob ) {
-    mCurrentJob = 0;
-  }
+  Q_ASSERT( job == mCurrentJob );
+  mCurrentJob = 0;
 
   if ( job->error() ) {
-    if ( mCurrentFolder )
-      abort( i18n( "Downloading a message in folder '%1' failed.", mCurrentFolder->name() ) );
-    else
-      abort( i18n( "Downloading a message in the current folder failed." ) );
+    Q_ASSERT( mCurrentFolder.isValid() );
+    kWarning() << job->errorString();
+    abort( i18n( "Downloading a message in folder '%1' failed.", mCurrentFolder.name() ) );
+  }
+  else {
+    Akonadi::ItemFetchJob *fetchJob = dynamic_cast<Akonadi::ItemFetchJob*>( job );
+    Q_ASSERT( fetchJob );
+    Q_ASSERT( fetchJob->items().size() == 1 );
+    processMessage( fetchJob->items().first() );
   }
 }
 
-bool BackupJob::writeDirHelper( const QString &directoryPath, const QString &permissionPath )
+bool BackupJob::writeDirHelper( const QString &directoryPath )
 {
-  QFileInfo fileInfo( permissionPath );
-  QString user = fileInfo.owner();
-  QString group = fileInfo.group();
-  mode_t permissions = fileInfoToUnixPermissions( fileInfo );
-  time_t creationTime = fileInfo.created().toTime_t();
-  time_t modificationTime = fileInfo.lastModified().toTime_t();
-  time_t accessTime = fileInfo.lastRead().toTime_t();
-  return mArchive->writeDir( stripRootPath( directoryPath ), user, group, permissions, accessTime,
-                             modificationTime, creationTime );
+  // PORT ME: Correct user/group
+  kDebug() << "AKONDI PORT: Disabled code here!";
+  return mArchive->writeDir( directoryPath, "user", "group" );
+}
+
+QString BackupJob::collectionName( const Akonadi::Collection &collection ) const
+{
+  foreach ( const Akonadi::Collection &curCol, mAllFolders ) {
+    if ( curCol == collection )
+      return curCol.name();
+  }
+  Q_ASSERT( false );
+  return QString();
+}
+
+QString BackupJob::pathForCollection( const Akonadi::Collection &collection ) const
+{
+  QString fullPath = collectionName( collection );
+  Akonadi::Collection curCol = collection.parentCollection();
+  if ( collection != mRootFolder ) {
+    Q_ASSERT( curCol.isValid() );
+    while( curCol != mRootFolder ) {
+      fullPath.prepend( '.' + collectionName( curCol ) + ".directory" + '/' );
+      curCol = curCol.parentCollection();
+    }
+    Q_ASSERT( curCol == mRootFolder );
+    fullPath.prepend( '.' + collectionName( curCol ) + ".directory" + '/' );
+  }
+  return fullPath;
+}
+
+QString BackupJob::subdirPathForCollection( const Akonadi::Collection &collection ) const
+{
+  QString path = pathForCollection( collection );
+  const int parentDirEndIndex = path.lastIndexOf( collection.name() );
+  Q_ASSERT( parentDirEndIndex != -1 );
+  path = path.left( parentDirEndIndex );
+  path.append( '.' + collection.name() + ".directory" );
+  return path;
 }
 
 void BackupJob::archiveNextFolder()
@@ -390,75 +316,48 @@ void BackupJob::archiveNextFolder()
   }
 
   mCurrentFolder = mPendingFolders.takeAt( 0 );
-  kDebug() << "===> Archiving next folder: " << mCurrentFolder->name();
-  mProgressItem->setStatus( i18n( "Archiving folder %1", mCurrentFolder->name() ) );
-  if ( mCurrentFolder->open( "BackupJob" ) != 0 ) {
-    abort( i18n( "Unable to open folder '%1'.", mCurrentFolder->name() ) );
-    return;
-  }
-  mCurrentFolderOpen = true;
+  kDebug() << "===> Archiving next folder: " << mCurrentFolder.name();
+  mProgressItem->setStatus( i18n( "Archiving folder %1", mCurrentFolder.name() ) );
 
-  const QString folderName = mCurrentFolder->name();
+  const QString folderName = mCurrentFolder.name();
   bool success = true;
   if ( hasChildren( mCurrentFolder ) ) {
-    if ( !writeDirHelper( mCurrentFolder->subdirLocation(), mCurrentFolder->subdirLocation() ) )
+    if ( !writeDirHelper( subdirPathForCollection( mCurrentFolder ) ) )
       success = false;
   }
-  if ( !writeDirHelper( mCurrentFolder->location(), mCurrentFolder->location() ) )
+  if ( !writeDirHelper( pathForCollection( mCurrentFolder ) ) )
     success = false;
-  if ( !writeDirHelper( mCurrentFolder->location() + "/cur", mCurrentFolder->location() ) )
+  if ( !writeDirHelper( pathForCollection( mCurrentFolder ) + "/cur" ) )
     success = false;
-  if ( !writeDirHelper( mCurrentFolder->location() + "/new", mCurrentFolder->location() ) )
+  if ( !writeDirHelper( pathForCollection( mCurrentFolder ) + "/new" ) )
     success = false;
-  if ( !writeDirHelper( mCurrentFolder->location() + "/tmp", mCurrentFolder->location() ) )
+  if ( !writeDirHelper( pathForCollection( mCurrentFolder ) + "/tmp" ) )
     success = false;
   if ( !success ) {
     abort( i18n( "Unable to create folder structure for folder '%1' within archive file.",
-                 mCurrentFolder->name() ) );
+                 mCurrentFolder.name() ) );
     return;
   }
 
-  for ( int i = 0; i < mCurrentFolder->count( false /* no cache */ ); i++ ) {
-    unsigned long serNum = KMMsgDict::instance()->getMsgSerNum( mCurrentFolder, i );
-    if ( serNum == 0 ) {
-      // Uh oh
-      kWarning() << "Got serial number zero in " << mCurrentFolder->name()
-                 << " at index " << i << "!";
-      // TODO: handle error in a nicer way. this is _very_ bad
-      abort( i18n( "Unable to backup messages in folder '%1', the index file is corrupted.",
-                   mCurrentFolder->name() ) );
-      return;
-    }
-    else
-      mPendingMessages.append( serNum );
+  // FIXME: Get rid of the exec()
+  Akonadi::ItemFetchJob *job = new Akonadi::ItemFetchJob( mCurrentFolder );
+  job->exec();
+  if ( job->error() ) {
+    kWarning() << job->errorString();
+    abort( i18n( "Unable to get message list for folder %1.", folderName ) );
+    return;
   }
+  mPendingMessages += job->items();
   archiveNextMessage();
 }
 
-// TODO
-// - error handling
-// - import
-// - connect to progressmanager, especially abort
-// - messagebox when finished (?)
-// - ui dialog
-// - use correct permissions
-// - save index and serial number?
-// - guarded pointers for folders
-// - online IMAP: check mails first, so sernums are up-to-date?
-// - "ignore errors"-mode, with summary how many messages couldn't be archived?
-// - do something when the user quits KMail while the backup job is running
-// - run in a thread?
-// - delete source folder after completion. dangerous!!!
-//
-// BUGS
-// - Online IMAP: Test Mails -> Test%20Mails
-// - corrupted sernums indices stop backup job
 void BackupJob::start()
 {
   Q_ASSERT( !mMailArchivePath.isEmpty() );
-  Q_ASSERT( mRootFolder );
+  Q_ASSERT( mRootFolder.isValid() );
 
-  queueFolders( mRootFolder );
+  if ( !queueFolders( mRootFolder ) )
+    return;
 
   switch ( mArchiveType ) {
     case Zip: {

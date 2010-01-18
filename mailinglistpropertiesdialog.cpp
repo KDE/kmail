@@ -43,14 +43,13 @@
 #include <kmessagebox.h>
 #include <kmcommands.h>
 
-#include "kmfolder.h"
 #include "mailinglist-magic.h"
 
 using namespace KMail;
 
-MailingListFolderPropertiesDialog::MailingListFolderPropertiesDialog( QWidget* parent, KMFolder *folder )
+MailingListFolderPropertiesDialog::MailingListFolderPropertiesDialog( QWidget* parent, const QSharedPointer<FolderCollection> &col )
     : KDialog( parent ),
-      mFolder( folder )
+      mFolder( col )
 {
   setCaption( i18n( "Mailinglist Folder Properties" ) );
   setButtons( Ok | Cancel );
@@ -223,6 +222,8 @@ void MailingListFolderPropertiesDialog::slotDetectMailingList()
 
   // next try the 5 most recently added messages
   if ( !( mMailingList.features() & MailingList::Post ) ) {
+
+#if 0 //TODO port to akonadi
     const int maxchecks = 5;
     for( int i = --num; i > num-maxchecks; --i ) {
       KMMessage *mes = mFolder->getMsg( i );
@@ -232,6 +233,9 @@ void MailingListFolderPropertiesDialog::slotDetectMailingList()
       if ( mMailingList.features() & MailingList::Post )
         break;
     }
+#else
+  kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
+#endif
   }
   if ( !(mMailingList.features() & MailingList::Post) ) {
     KMessageBox::error( this,

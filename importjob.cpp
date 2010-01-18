@@ -18,11 +18,13 @@
 */
 #include "importjob.h"
 
-#include "kmfolder.h"
-#include "folderutil.h"
-#include "kmfolderdir.h"
-
 #include "progressmanager.h"
+
+#include <Akonadi/CollectionCreateJob>
+#include <Akonadi/CollectionFetchJob>
+#include <Akonadi/Item>
+#include <Akonadi/ItemCreateJob>
+#include <KMime/Message>
 
 #include <kdebug.h>
 #include <kzip.h>
@@ -31,11 +33,11 @@
 #include <kmessagebox.h>
 #include <kmimetype.h>
 
-#include <qwidget.h>
-#include <qtimer.h>
-#include <qfile.h>
+#include <QWidget>
+#include <QTimer>
 
 using namespace KMail;
+using namespace Akonadi;
 
 ImportJob::ImportJob( QWidget *parentWidget )
   : QObject( parentWidget ),
@@ -43,7 +45,6 @@ ImportJob::ImportJob( QWidget *parentWidget )
     mRootFolder( 0 ),
     mParentWidget( parentWidget ),
     mNumberOfImportedMessages( 0 ),
-    mCurrentFolder( 0 ),
     mProgressItem( 0 ),
     mAborted( false )
 {
@@ -63,7 +64,7 @@ void ImportJob::setFile( const KUrl &archiveFile )
   mArchiveFile = archiveFile;
 }
 
-void ImportJob::setRootFolder( KMFolder *rootFolder )
+void ImportJob::setRootFolder( const Collection &rootFolder )
 {
   mRootFolder = rootFolder;
 }
@@ -74,7 +75,7 @@ void ImportJob::finish()
   mProgressItem->setComplete();
   mProgressItem = 0;
   QString text = i18n( "Importing the archive file '%1' into the folder '%2' succeeded.",
-                       mArchiveFile.path(), mRootFolder->name() );
+                       mArchiveFile.path(), mRootFolder.name() );
   text += '\n' + i18np( "1 message was imported.", "%1 messages were imported.", mNumberOfImportedMessages );
   KMessageBox::information( mParentWidget, text, i18n( "Import finished." ) );
   deleteLater();
@@ -91,7 +92,7 @@ void ImportJob::abort( const QString &errorMessage )
     return;
 
   mAborted = true;
-  QString text = i18n( "Failed to import the archive into folder '%1'.", mRootFolder->name() );
+  QString text = i18n( "Failed to import the archive into folder '%1'.", mRootFolder.name() );
   text += '\n' + errorMessage;
   if ( mProgressItem ) {
     mProgressItem->setComplete();
@@ -102,27 +103,7 @@ void ImportJob::abort( const QString &errorMessage )
   deleteLater();
 }
 
-KMFolder * ImportJob::createSubFolder( KMFolder *parent, const QString &folderName, mode_t permissions )
-{
-  KMFolder *newFolder = FolderUtil::createSubFolder( parent, parent->child(), folderName, QString(),
-                                                     KMFolderTypeMaildir );
-  if ( !newFolder ) {
-    abort( i18n( "Unable to create subfolder for folder '%1'.", parent->name() ) );
-    return 0;
-  }
-  else {
-    newFolder->createChildFolder(); // TODO: Just creating a child folder here is wasteful, only do
-                                    //       that if really needed. We do it here so we can set the
-                                    //       permissions
-    chmod( newFolder->location().toLatin1(), permissions );
-    chmod( newFolder->subdirLocation().toLatin1(), permissions );
-    // TODO: chown?
-    // TODO: what about subdirectories like "cur"?
-    return newFolder;
-  }
-}
-
-void ImportJob::enqueueMessages( const KArchiveDirectory *dir, KMFolder *folder )
+void ImportJob::enqueueMessages( const KArchiveDirectory *dir, const Collection &folder )
 {
   const KArchiveDirectory *messageDir = dynamic_cast<const KArchiveDirectory*>( dir->entry( "cur" ) );
   if ( messageDir ) {
@@ -155,10 +136,7 @@ void ImportJob::importNextMessage()
 
   if ( mQueuedMessages.isEmpty() ) {
     kDebug() << "Processed all messages in the queue.";
-    if ( mCurrentFolder ) {
-      mCurrentFolder->close( "ImportJob" );
-    }
-    mCurrentFolder = 0;
+    mCurrentFolder = Collection();
     importNextDirectory();
     return;
   }
@@ -170,55 +148,41 @@ void ImportJob::importNextMessage()
     return;
   }
 
-  KMFolder *folder = messages.parent;
+  Collection folder = messages.parent;
   if ( folder != mCurrentFolder ) {
     kDebug() << "Processed all messages in the current folder of the queue.";
-    if ( mCurrentFolder ) {
-      mCurrentFolder->close( "ImportJob" );
-    }
     mCurrentFolder = folder;
-    if ( mCurrentFolder->open( "ImportJob" ) != 0 ) {
-      abort( i18n( "Unable to open folder '%1'.", mCurrentFolder->name() ) );
-      return;
-    }
-    kDebug() << "Current folder of queue is now: " << mCurrentFolder->name();
-    mProgressItem->setStatus( i18n( "Importing folder %1", mCurrentFolder->name() ) );
+    kDebug() << "Current folder of queue is now: " << mCurrentFolder.name();
+    mProgressItem->setStatus( i18n( "Importing folder '%1'", mCurrentFolder.name() ) );
   }
 
   const KArchiveFile *file = messages.files.first();
   Q_ASSERT( file );
   messages.files.removeFirst();
 
-  KMMessage *newMessage = new KMMessage();
-  newMessage->fromString( file->data(), true /* setStatus */ );
-  int retIndex;
-  if ( mCurrentFolder->addMsg( newMessage, &retIndex ) != 0 ) {
-    abort( i18n( "Failed to add a message to the folder '%1'.", mCurrentFolder->name() ) );
+  KMime::Message::Ptr newMessage( new KMime::Message() );
+  newMessage->setContent( file->data() );
+  newMessage->parse();
+
+  Akonadi::Item item;
+  item.setMimeType( "message/rfc822" );
+  item.setPayload<KMime::Message::Ptr>( newMessage );
+
+  // FIXME: Get rid of the exec()
+  ItemCreateJob *job = new ItemCreateJob( item, mCurrentFolder );
+  job->exec();
+  if ( job->error() ) {
+    abort( i18n( "Failed to add a message to the folder '%1'.", mCurrentFolder.name() ) );
     return;
   }
   else {
     mNumberOfImportedMessages++;
-    if ( mCurrentFolder->folderType() == KMFolderTypeMaildir ||
-         mCurrentFolder->folderType() == KMFolderTypeCachedImap ) {
-      const QString messageFile = mCurrentFolder->location() + "/cur/" + newMessage->fileName();
-      // TODO: what if the file is not in the "cur" subdirectory?
-      if ( QFile::exists( messageFile ) ) {
-        chmod( messageFile.toLatin1(), file->permissions() );
-        // TODO: changing user/group he requires a bit more work, requires converting the strings
-        //       to uid_t and gid_t
-        //getpwnam()
-        //chown( messageFile,
-      }
-      else {
-        kWarning() << "Unable to change permissions for newly created file: " << messageFile;
-      }
-    }
-    // TODO: Else?
-    kDebug() << "Added message with subject " /*<< newMessage->subject()*/ // < this causes a pure virtual method to be called...
-             << " to folder " << mCurrentFolder->name() << " at index " << retIndex;
+    kDebug() << "Added message with subject" << newMessage->subject()
+             << "to folder" << mCurrentFolder.name();
   }
   QTimer::singleShot( 0, this, SLOT( importNextMessage() ) );
 }
+
 
 // Input: .inbox.directory
 // Output: inbox
@@ -235,21 +199,37 @@ static QString folderNameForDirectoryName( const QString &dirName )
   return returnName;
 }
 
-KMFolder* ImportJob::getOrCreateSubFolder( KMFolder *parentFolder, const QString &subFolderName,
-                                           mode_t subFolderPermissions )
+Collection ImportJob::getOrCreateSubFolder( const Collection &parentFolder,
+                                            const QString &subFolderName )
 {
-  if ( !parentFolder->createChildFolder() ) {
-    abort( i18n( "Unable to create subfolder for folder '%1'.", parentFolder->name() ) );
-    return 0;
+  // First, get list of subcollections and see if it already has the requested
+  // folder
+  // FIXME: Get rid of the exec()
+  CollectionFetchJob *fetchJob = new CollectionFetchJob( parentFolder );
+  fetchJob->exec();
+  if ( fetchJob->error() ) {
+    abort( i18n( "Unable to retrieve list of subfolders for folder '%1'", parentFolder.name() ) );
+    return Collection();
   }
 
-  KMFolder *subFolder = 0;
-  subFolder = dynamic_cast<KMFolder*>( parentFolder->child()->hasNamedFolder( subFolderName ) );
-
-  if ( !subFolder ) {
-    subFolder = createSubFolder( parentFolder, subFolderName, subFolderPermissions );
+  foreach( const Collection &col, fetchJob->collections() ) {
+    if ( col.name() == subFolderName )
+      return col;
   }
-  return subFolder;
+
+  // No subcollection with this name yet, create it
+  // FIXME: This does not make the new collection inherit the parent's settings
+  // FIXME: Get rid of the exec()
+  Collection newCollection;
+  newCollection.setName( subFolderName );
+  newCollection.parentCollection().setId( parentFolder.id() );
+  CollectionCreateJob *job = new CollectionCreateJob( newCollection );
+  job->exec();
+  if ( job->error() ) {
+    abort( i18n( "Unable to create subfolder for folder '%1'", parentFolder.name() ) );
+    return Collection();
+  }
+  return job->collection();
 }
 
 void ImportJob::importNextDirectory()
@@ -263,7 +243,7 @@ void ImportJob::importNextDirectory()
   }
 
   Folder folder = mQueuedDirectories.first();
-  KMFolder *currentFolder = folder.parent;
+  Collection currentFolder = folder.parent;
   mQueuedDirectories.pop_front();
   kDebug() << "Working on directory " << folder.archiveDir->name();
 
@@ -277,8 +257,8 @@ void ImportJob::importNextDirectory()
       if ( !dir->name().startsWith( QLatin1String( "." ) ) ) {
 
         kDebug() << "Queueing messages in folder " << entry->name();
-        KMFolder *subFolder = getOrCreateSubFolder( currentFolder, entry->name(), entry->permissions() );
-        if ( !subFolder )
+        Collection subFolder = getOrCreateSubFolder( currentFolder, entry->name() );
+        if ( !subFolder.isValid() )
           return;
 
         enqueueMessages( dir, subFolder );
@@ -292,8 +272,8 @@ void ImportJob::importNextDirectory()
           abort( i18n( "Unexpected subdirectory named '%1'.", entry->name() ) );
           return;
         }
-        KMFolder *subFolder = getOrCreateSubFolder( currentFolder, folderName, entry->permissions() );
-        if ( !subFolder )
+        Collection subFolder = getOrCreateSubFolder( currentFolder, folderName );
+        if ( !subFolder.isValid() )
           return;
 
         Folder newFolder;
@@ -308,13 +288,9 @@ void ImportJob::importNextDirectory()
   importNextMessage();
 }
 
-// TODO:
-// BUGS:
-//    Online IMAP can fail spectacular, for example when cancelling upload
-//    Online IMAP: Inform that messages are still being uploaded on finish()!
 void ImportJob::start()
 {
-  Q_ASSERT( mRootFolder );
+  Q_ASSERT( mRootFolder.isValid() );
   Q_ASSERT( mArchiveFile.isValid() );
 
   KMimeType::Ptr mimeType = KMimeType::findByUrl( mArchiveFile, 0, true /* local file */ );
@@ -345,6 +321,7 @@ void ImportJob::start()
   nextFolder.archiveDir = mArchive->directory();
   nextFolder.parent = mRootFolder;
   mQueuedDirectories.push_back( nextFolder );
+
   importNextDirectory();
 }
 

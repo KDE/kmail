@@ -38,14 +38,11 @@
 #include <QList>
 #include <QListWidget>
 #include <QBoxLayout>
-
-class KMFolder;
+#include <akonadi/collection.h>
 class QLabel;
+class FolderSelectionTreeView;
 
 namespace KMail {
-
-  class FolderSelectionTreeWidget;
-  class MainFolderView;
   class FolderRequester;
 
   class ASWizInfoPage;
@@ -121,7 +118,7 @@ namespace KMail {
           within one of the wizard pages.
       */
       AntiSpamWizard( WizardMode mode,
-                      QWidget * parent, MainFolderView * mainFolderTree );
+                      QWidget * parent);
 
     protected:
       /**
@@ -332,7 +329,7 @@ namespace KMail {
     Q_OBJECT
 
     public:
-      ASWizSpamRulesPage( QWidget * parent, const char * name, MainFolderView * mainFolderTree );
+      ASWizSpamRulesPage( QWidget * parent, const char * name);
 
       bool markAsReadSelected() const;
       bool moveSpamSelected() const;
@@ -345,7 +342,7 @@ namespace KMail {
 
     private slots:
       void processSelectionChange();
-      void processSelectionChange( KMFolder* );
+    void processSelectionChange( const Akonadi::Collection & );
 
     signals:
       void selectionChanged();
@@ -364,7 +361,7 @@ namespace KMail {
     Q_OBJECT
 
     public:
-      ASWizVirusRulesPage( QWidget * parent, const char * name, MainFolderView * mainFolderTree );
+      ASWizVirusRulesPage( QWidget * parent, const char * name );
 
       bool pipeRulesSelected() const;
       bool moveRulesSelected() const;
@@ -380,7 +377,7 @@ namespace KMail {
     private:
       QCheckBox * mPipeRules;
       QCheckBox * mMoveRules;
-      FolderSelectionTreeWidget *mFolderTree;
+      FolderSelectionTreeView *mFolderTree;
       QCheckBox * mMarkRules;
   };
 

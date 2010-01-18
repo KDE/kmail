@@ -1,14 +1,33 @@
-
+/*
+ * kmail: KDE mail client
+ * Copyright (c) 1996-1998 Stefan Taferner <taferner@kde.org>
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
+ *
+ */
 
 #include "kmmainwin.h"
+#include <QProcess>
 #include "kmmainwidget.h"
 #include "kstatusbar.h"
 #include "messagesender.h"
 #include "progressdialog.h"
 #include "statusbarprogresswidget.h"
-#include "accountwizard.h"
 #include "broadcaststatus.h"
-#include "accountmanager.h"
+#include "util.h"
+#include "tagging.h"
 
 #include <kapplication.h>
 #include <klocale.h>
@@ -72,11 +91,15 @@ KMMainWin::KMMainWin(QWidget *)
            SLOT( setCaption(const QString&) ) );
 
   // Enable mail checks again (see destructor)
+#if 0
   kmkernel->enableMailCheck();
-
+#else
+  kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
+#endif
   if ( kmkernel->firstStart() )
-    AccountWizard::start( kmkernel, this );
-
+  {
+    KMail::Util::launchAccountWizard( this );
+  }
   if ( kmkernel->firstInstance() )
     QTimer::singleShot( 200, this, SLOT( slotShowTipOnStart() ) );
 }
@@ -99,8 +122,12 @@ KMMainWin::~KMMainWin()
       kDebug() << "Closing last KMMainWin: stopping mail check";
       // Running KIO jobs prevent kapp from exiting, so we need to kill them
       // if they are only about checking mail (not important stuff like moving messages)
+#if 0
       kmkernel->abortMailCheck();
-      kmkernel->acctMgr()->cancelMailCheck();
+      //kmkernel->acctMgr()->cancelMailCheck();
+#else
+      kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
+#endif
     }
   }
 }
@@ -151,14 +178,14 @@ void KMMainWin::slotUpdateToolbars()
 {
   // remove dynamically created actions before editing
   mKMMainWidget->clearFilterActions();
-  mKMMainWidget->clearMessageTagActions();//OnurAdd
+  mKMMainWidget->tagActionManager()->clearActions();
 
   createGUI("kmmainwin.rc");
   applyMainWindowSettings(KMKernel::config()->group( "Main Window") );
 
   // plug dynamically created actions again
   mKMMainWidget->initializeFilterActions();
-  mKMMainWidget->initializeMessageTagActions();
+  mKMMainWidget->tagActionManager()->createActions();
 }
 
 void KMMainWin::setupStatusBar()

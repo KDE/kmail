@@ -1,5 +1,6 @@
 /*
  * Copyright (c) 2004 Carsten Burghardt <burghardt@kde.org>
+ * Copyright (c) 2009 Montel Laurent <montel@kde.org>
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -28,16 +29,16 @@
 
 
 #include "folderrequester.h"
-#include "kmfolder.h"
-#include "mainfolderview.h"
-#include "folderselectiondialog.h"
-#include "autoqpointer.h"
+
+#include "messageviewer/autoqpointer.h"
 
 #include <kdebug.h>
 #include <klineedit.h>
 #include <kiconloader.h>
+#include <KLocale>
 #include <kdialog.h>
-
+#include "kmkernel.h"
+#include "folderselectiontreeviewdialog.h"
 #include <QLayout>
 #include <QToolButton>
 #include <QHBoxLayout>
@@ -46,7 +47,7 @@
 namespace KMail {
 
 FolderRequester::FolderRequester( QWidget *parent )
-  : QWidget( parent ), mFolder( 0 ), mFolderTree( 0 ),
+  : QWidget( parent ),
     mMustBeReadWrite( true ), mShowOutbox( true ), mShowImapFolders( true )
 {
   QHBoxLayout * hlay = new QHBoxLayout( this );
@@ -68,24 +69,16 @@ FolderRequester::FolderRequester( QWidget *parent )
   setFocusPolicy( Qt::StrongFocus );
 }
 
-void FolderRequester::setFolderTree( MainFolderView *tree )
-{
-  mFolderTree = tree;
-}
-
 //-----------------------------------------------------------------------------
 void FolderRequester::slotOpenDialog()
 {
-  Q_ASSERT( mFolderTree );
-
-  AutoQPointer<FolderSelectionDialog> dlg( new FolderSelectionDialog( this, mFolderTree,
-                                                                      i18n("Select Folder"),
-                                                                      mMustBeReadWrite, false ) );
-  dlg->setFlags( mMustBeReadWrite, mShowOutbox, mShowImapFolders );
-  dlg->setFolder( mFolder );
+  AutoQPointer<FolderSelectionTreeViewDialog> dlg( new FolderSelectionTreeViewDialog( this ) );
+  dlg->setCaption( i18n("Select Folder") );
+  dlg->setModal( false );
+  dlg->setSelectedCollection( mCollection );
 
   if ( dlg->exec() && dlg ) {
-    setFolder( dlg->folder() );
+    setFolder( dlg->selectedCollection() );
   }
 }
 
@@ -94,30 +87,29 @@ FolderRequester::~FolderRequester()
 {
 }
 
-//-----------------------------------------------------------------------------
-KMFolder * FolderRequester::folder( void ) const
+Akonadi::Collection FolderRequester::folderCollection() const
 {
-  return mFolder;
+  return mCollection;
 }
 
 //-----------------------------------------------------------------------------
-void FolderRequester::setFolder( KMFolder *folder )
+void FolderRequester::setFolder( const Akonadi::Collection&col )
 {
-  mFolder = folder;
-  if ( mFolder ) {
-    edit->setText( mFolder->prettyUrl() );
-    mFolderId = mFolder->idString();
+  mCollection = col;
+  if ( mCollection.isValid() ) {
+    edit->setText( col.name() );
+    mFolderId = QString::number( mCollection.id() );
   }
   else if ( !mMustBeReadWrite ) // the Local Folders root node was selected
     edit->setText( i18n("Local Folders") );
-  emit folderChanged( folder );
+  emit folderChanged( mCollection );
 }
 
 //-----------------------------------------------------------------------------
 void FolderRequester::setFolder( const QString &idString )
 {
-  KMFolder *folder = kmkernel->findFolderById( idString );
-  if ( folder ) {
+  Akonadi::Collection folder = kmkernel->findFolderCollectionById( idString );
+  if ( folder.isValid() ) {
     setFolder( folder );
   } else {
     if ( !idString.isEmpty() ) {
@@ -125,7 +117,6 @@ void FolderRequester::setFolder( const QString &idString )
     } else {
       edit->setText( i18n( "Please select a folder" ) );
     }
-    mFolder = 0;
   }
   mFolderId = idString;
 }

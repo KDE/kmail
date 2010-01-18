@@ -19,18 +19,17 @@
 #ifndef IMPORTJOB_H
 #define IMPORTJOB_H
 
+#include <Akonadi/Collection>
+
 #include <kurl.h>
 
-#include <qobject.h>
-#include <qlist.h>
-
-#include <sys/types.h>
+#include <QObject>
+#include <QList>
 
 class QWidget;
 class KArchive;
 class KArchiveDirectory;
 class KArchiveFile;
-class KMFolder;
 
 namespace KPIM
 {
@@ -56,7 +55,7 @@ class ImportJob : public QObject
     ~ImportJob();
     void start();
     void setFile( const KUrl &archiveFile );
-    void setRootFolder( KMFolder *rootFolder );
+    void setRootFolder( const Akonadi::Collection &rootFolder );
 
   private slots:
 
@@ -67,13 +66,13 @@ class ImportJob : public QObject
 
     struct Folder
     {
-      KMFolder *parent;
+      Akonadi::Collection parent;
       const KArchiveDirectory *archiveDir;
     };
 
     struct Messages
     {
-      KMFolder *parent;
+      Akonadi::Collection parent;
       QList<const KArchiveFile*> files;
     };
 
@@ -81,16 +80,16 @@ class ImportJob : public QObject
     void abort( const QString &errorMessage );
     void queueFolders();
     void importNextDirectory();
-    KMFolder* createSubFolder( KMFolder *parent, const QString &folderName, mode_t permissions );
-    KMFolder* getOrCreateSubFolder( KMFolder *parentFolder, const QString &subFolderName,
-                                    mode_t subFolderPermissions );
-    void enqueueMessages( const KArchiveDirectory *dir, KMFolder *folder );
+
+    Akonadi::Collection getOrCreateSubFolder( const Akonadi::Collection &parentFolder,
+                                              const QString &subFolderName );
+    void enqueueMessages( const KArchiveDirectory *dir, const Akonadi::Collection &folder );
 
     KArchive *mArchive;
 
     // The root folder which the user has selected as the folder to which everything should be
     // imported
-    KMFolder *mRootFolder;
+    Akonadi::Collection mRootFolder;
 
     QWidget *mParentWidget;
     KUrl mArchiveFile;
@@ -104,7 +103,7 @@ class ImportJob : public QObject
     QList<Messages> mQueuedMessages;
 
     // The folder to which we are currently importing messages
-    KMFolder *mCurrentFolder;
+    Akonadi::Collection mCurrentFolder;
 
     KPIM::ProgressItem *mProgressItem;
     bool mAborted;

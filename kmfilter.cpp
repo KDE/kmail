@@ -23,11 +23,10 @@
 
 // other kmail headers
 #include "kmkernel.h"
-#include "accountmanager.h"
-using KMail::AccountManager;
-#include "kmacctimap.h"
+#include "kmagentmanager.h"
 #include "kmfilteraction.h"
 #include "kmglobal.h"
+#include "util.h"
 #include "filterlog.h"
 using KMail::FilterLog;
 
@@ -103,7 +102,7 @@ KMFilter::KMFilter( const KMFilter & aFilter )
     }
 
     mAccounts.clear();
-    QList<int>::ConstIterator it2;
+    QStringList::ConstIterator it2;
     for ( it2 = aFilter.mAccounts.begin() ; it2 != aFilter.mAccounts.end() ; ++it2 )
       mAccounts.append( *it2 );
   }
@@ -117,7 +116,7 @@ KMFilter::~KMFilter()
 }
 
 // only for !bPopFilter
-KMFilter::ReturnCode KMFilter::execActions( KMMessage* msg, bool& stopIt ) const
+KMFilter::ReturnCode KMFilter::execActions( const Akonadi::Item &item, bool& stopIt ) const
 {
   ReturnCode status = NoResult;
 
@@ -130,7 +129,7 @@ KMFilter::ReturnCode KMFilter::execActions( KMMessage* msg, bool& stopIt ) const
       FilterLog::instance()->add( logText, FilterLog::appliedAction );
     }
 
-    KMFilterAction::ReturnCode result = (*it)->process( msg );
+    KMFilterAction::ReturnCode result = (*it)->process( item );
 
     switch ( result ) {
     case KMFilterAction::CriticalError:
@@ -160,7 +159,7 @@ KMFilter::ReturnCode KMFilter::execActions( KMMessage* msg, bool& stopIt ) const
   return status;
 }
 
-bool KMFilter::requiresBody( KMMsgBase* msg )
+bool KMFilter::requiresBody( KMime::Content* msg )
 {
   if (pattern() && pattern()->requiresBody())
     return true; // no pattern means always matches?
@@ -185,7 +184,7 @@ KMPopFilterAction KMFilter::action()
 }
 
 // only for !bPopFilter
-bool KMFilter::folderRemoved( KMFolder* aFolder, KMFolder* aNewFolder )
+bool KMFilter::folderRemoved( const Akonadi::Collection & aFolder, const Akonadi::Collection& aNewFolder )
 {
   bool rem = false;
 
@@ -197,7 +196,7 @@ bool KMFilter::folderRemoved( KMFolder* aFolder, KMFolder* aNewFolder )
   return rem;
 }
 
-void KMFilter::setApplyOnAccount( uint id, bool aApply )
+void KMFilter::setApplyOnAccount( const QString& id, bool aApply )
 {
   if (aApply && !mAccounts.contains( id )) {
     mAccounts.append( id );
@@ -206,14 +205,17 @@ void KMFilter::setApplyOnAccount( uint id, bool aApply )
   }
 }
 
-bool KMFilter::applyOnAccount( uint id ) const
+bool KMFilter::applyOnAccount( const QString& id ) const
 {
   if ( applicability() == All )
     return true;
   if ( applicability() == ButImap ) {
-    KMAccount *account = kmkernel->acctMgr()->find( id );
-    bool result =  account && !dynamic_cast<KMAcctImap*>(account);
-    return result;
+    Akonadi::AgentInstance instance = kmkernel->agentManager()->instance( id );
+    if ( instance.isValid() ) {
+      return ( instance.type().identifier()== IMAP_RESOURCE_IDENTIFIER );
+    } else {
+      return false;
+    }
   }
   if ( applicability() == Checked )
     return mAccounts.contains( id );
@@ -308,7 +310,7 @@ void KMFilter::readConfig(KConfigGroup & config)
               mPattern.name() ) );
     }
 
-    mAccounts = config.readEntry( "accounts-set",QList<int>() );
+    mAccounts = config.readEntry( "accounts-set",QStringList() );
   }
 }
 
@@ -380,11 +382,10 @@ void KMFilter::purify()
       if ( action->isEmpty() )
         mActions.removeAll ( action );
     }
-
     // Remove invalid accounts from mAccounts - just to be tidy
-    QList<int>::Iterator it2 = mAccounts.begin();
+    QStringList::Iterator it2 = mAccounts.begin();
     while ( it2 != mAccounts.end() ) {
-      if ( !kmkernel->acctMgr()->find( *it2 ) )
+      if ( !kmkernel->agentManager()->find( *it2 ) )
          it2 = mAccounts.erase( it2 );
       else
          ++it2;
@@ -446,14 +447,16 @@ const QString KMFilter::asString() const
     } else if ( bApplyOnInbound && mApplicability == ButImap ) {
       result += "This filter applies to all but online IMAP accounts.\n";
     } else if ( bApplyOnInbound ) {
-      QList<int>::ConstIterator it2;
+      QStringList::ConstIterator it2;
       result += "This filter applies to the following accounts:";
       if ( mAccounts.isEmpty() )
         result += " None";
-      else for ( it2 = mAccounts.begin() ; it2 != mAccounts.end() ; ++it2 ) {
-        KMAccount *acct = kmkernel->acctMgr()->find( *it2 );
-        if ( acct )
-          result += ' ' + acct->name();
+      else {
+        for ( it2 = mAccounts.begin() ; it2 != mAccounts.end() ; ++it2 ) {
+          if ( kmkernel->agentManager()->find( *it2 ) ) {
+            result += ' ' + kmkernel->agentManager()->name( *it2 );
+          }
+        }
       }
       result += '\n';
     }

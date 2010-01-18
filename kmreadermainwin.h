@@ -8,12 +8,9 @@
 #include <kurl.h>
 
 #include <boost/scoped_ptr.hpp>
-
+#include <akonadi/item.h>
 class KMReaderWin;
-class KMMessage;
-class KMMessagePart;
 class KAction;
-class KActionMenu;
 class KFontAction;
 class KFontSizeAction;
 class CustomTemplatesMenu;
@@ -23,6 +20,14 @@ namespace KMail {
 class MessageActions;
 }
 
+namespace KMime {
+  class Message;
+  class Content;
+}
+namespace Akonadi {
+  class Item;
+}
+
 class KMReaderMainWin : public KMail::SecondaryWindow
 {
   Q_OBJECT
@@ -30,7 +35,7 @@ class KMReaderMainWin : public KMail::SecondaryWindow
 public:
   KMReaderMainWin( bool htmlOverride, bool htmlLoadExtOverride, char *name = 0 );
   KMReaderMainWin( char *name = 0 );
-  KMReaderMainWin(KMMessagePart* aMsgPart,
+  KMReaderMainWin(KMime::Content* aMsgPart,
     bool aHTML, const QString& aFileName, const QString& pname,
     const QString & encoding, char *name = 0 );
   virtual ~KMReaderMainWin();
@@ -45,20 +50,14 @@ public:
    * Then, the reader needs to know about that original message, so those to parameters are passed
    * onto setOriginalMsg() of KMReaderWin.
    */
-  void showMsg( const QString & encoding, KMMessage *msg,
-                unsigned long serNumOfOriginalMessage = 0, int nodeIdOffset = -1 );
-
+  void showMessage( const QString & encoding, const Akonadi::Item &msg );
 private slots:
-  void slotMsgPopup(KMMessage &aMsg, const KUrl &aUrl, const QPoint& aPoint);
-
-  /** Copy selected messages to folder with corresponding to given QAction */
-  void slotCopySelectedMessagesToFolder( QAction* );
+  void slotMessagePopup(const Akonadi::Item& ,const KUrl&,const QPoint& );
   void slotTrashMsg();
   void slotPrintMsg();
   void slotForwardInlineMsg();
   void slotForwardAttachedMsg();
   void slotRedirectMsg();
-  void slotShowMsgSrc();
   void slotFontAction(const QString &);
   void slotSizeAction(int);
   void slotCreateTodo();
@@ -70,21 +69,18 @@ private slots:
   void slotConfigChanged();
   void slotUpdateToolbars();
 
-  void slotFolderRemoved( QObject* folderPtr );
-
 private:
   void initKMReaderMainWin();
   void setupAccel();
-  void updateMessageMenu();
+  KAction *copyActionMenu();
   void updateCustomTemplateMenus();
 
   KMReaderWin *mReaderWin;
-  KMMessage *mMsg;
+  Akonadi::Item mMsg;
   KUrl mUrl;
   // a few actions duplicated from kmmainwidget
   KAction *mTrashAction, *mPrintAction, *mSaveAsAction, *mSaveAtmAction,
           *mViewSourceAction;
-  KActionMenu *mCopyActionMenu;
   KFontAction *fontAction;
   KFontSizeAction *fontSizeAction;
   KMail::MessageActions *mMsgActions;

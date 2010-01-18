@@ -30,12 +30,9 @@
 #include "kmmainwidget.h"
 #include "kmstartup.h"
 #include "aboutdata.h"
-#include "kmfolder.h"
-#include "accountmanager.h"
-#include "mainfolderview.h"
+
 #include <QPixmap>
 #include <QVBoxLayout>
-using KMail::AccountManager;
 
 #include <kparts/mainwindow.h>
 #include <kpluginfactory.h>
@@ -45,6 +42,12 @@ using KMail::AccountManager;
 #include <ksettings/dispatcher.h>
 #include <kmailpartadaptor.h>
 #include <kicon.h>
+#include <akonadi/collection.h>
+#include <akonadi/entitydisplayattribute.h>
+#include <akonadi/changerecorder.h>
+#include "folderselectiontreeview.h"
+#include "foldertreeview.h"
+#include "tagging.h"
 
 #include <QLayout>
 #include <kglobal.h>
@@ -119,12 +122,8 @@ KMailPart::KMailPart(QWidget *parentWidget, QObject *parent, const QVariantList 
   mStatusBar->addStatusBarItem( mainWidget->vacationScriptIndicator(), 2, false );
 
   // Get to know when the user clicked on a folder in the KMail part and update the headerWidget of Kontact
-  connect( mainWidget->folderViewManager(), SIGNAL(folderActivated(KMFolder*)), this, SLOT(exportFolder(KMFolder*)) );
-  connect( mainWidget->mainFolderView(), SIGNAL(iconChanged(FolderViewItem*)),
-           this, SLOT(slotIconChanged(FolderViewItem*)) );
-  connect( mainWidget->mainFolderView(), SIGNAL(nameChanged(FolderViewItem*)),
-           this, SLOT(slotNameChanged(FolderViewItem*)) );
-
+  connect( mainWidget->folderTreeView(), SIGNAL( currentChanged( const Akonadi::Collection &) ), this, SLOT( slotFolderChanged( const Akonadi::Collection& ) ) );
+  connect( kmkernel->monitor(), SIGNAL(collectionChanged( const Akonadi::Collection &, const QSet<QByteArray> &)), this, SLOT(slotCollectionChanged( const Akonadi::Collection &, const QSet<QByteArray> &)));
   setXMLFile( "kmail_part.rc", true );
 #endif
 
@@ -136,9 +135,12 @@ KMailPart::~KMailPart()
   kDebug() << "Closing last KMMainWin: stopping mail check";
   // Running KIO jobs prevent kapp from exiting, so we need to kill them
   // if they are only about checking mail (not important stuff like moving messages)
+#if 0
   kmkernel->abortMailCheck();
   kmkernel->acctMgr()->cancelMailCheck();
-
+#else
+  kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
+#endif
   mainWidget->destruct();
   kmkernel->cleanup();
   delete kmkernel;
@@ -153,25 +155,21 @@ bool KMailPart::openFile()
   return true;
 }
 
-void KMailPart::exportFolder( KMFolder *folder )
+void KMailPart::slotFolderChanged( const Akonadi::Collection &col )
 {
-  FolderViewItem* fti = static_cast<FolderViewItem *>( mainWidget->mainFolderView()->currentItem() );
-
-  if ( folder != 0 )
-    emit textChanged( folder->label() );
-
-  if ( fti )
-    emit iconChanged( KIcon( fti->normalIcon() ).pixmap( 22, 22 ) );
+  if ( col.isValid() ) {
+    emit textChanged( col.name() );
+    if ( col.hasAttribute<Akonadi::EntityDisplayAttribute>() &&
+         !col.attribute<Akonadi::EntityDisplayAttribute>()->iconName().isEmpty() ) {
+      emit iconChanged( col.attribute<Akonadi::EntityDisplayAttribute>()->icon().pixmap( 22, 22 ) );
+    }
+  }
 }
-
-void KMailPart::slotIconChanged( FolderViewItem *fti )
+void KMailPart::slotCollectionChanged( const Akonadi::Collection &collection, const QSet<QByteArray> &attributeNames )
 {
-  emit iconChanged( KIcon( fti->normalIcon() ).pixmap( 22, 22 ) );
-}
-
-void KMailPart::slotNameChanged( FolderViewItem *fti )
-{
-  emit textChanged( fti->folder()->label() );
+  if( !attributeNames.contains("ENTITYDISPLAY"))
+     return;
+  slotFolderChanged(collection);
 }
 
 //-----------------------------------------------------------------------------
@@ -181,7 +179,7 @@ void KMailPart::guiActivateEvent(KParts::GUIActivateEvent *e)
   kDebug();
   KParts::ReadOnlyPart::guiActivateEvent(e);
   mainWidget->initializeFilterActions();
-  mainWidget->initializeMessageTagActions();
+  mainWidget->tagActionManager()->createActions();
   mainWidget->initializeFolderShortcutActions();
   mainWidget->updateVactionScriptStatus();
 }

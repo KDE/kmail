@@ -31,12 +31,10 @@
 #ifndef FOLDERJOB_H
 #define FOLDERJOB_H
 
-#include "kmmessage.h"
-
+#include <kmime/kmime_message.h>
 #include <QList>
 #include <QString>
-
-class KMFolder;
+#include <akonadi/collection.h>
 
 namespace KMail {
 
@@ -53,16 +51,17 @@ public:
    * Constructs a new job, operating on the message msg, of type
    * @p jt and with a parent folder @p folder.
    */
-  explicit FolderJob( KMMessage *msg, JobType jt = tGetMessage,
-        KMFolder *folder = 0, const QString &partSpecifier = QString() );
+  explicit FolderJob( KMime::Message *msg, JobType jt = tGetMessage,
+                      const Akonadi::Collection &folder = Akonadi::Collection(),
+                      const QString &partSpecifier = QString() );
 
   /**
    * Constructs a new job, operating on a message list @p msgList,
    * set @sets, JobType @p jt and with the parent folder @p folder.
    *
    */
-  FolderJob( const QList<KMMessage*>& msgList, const QString& sets,
-	     JobType jt = tGetMessage, KMFolder *folder = 0 );
+  FolderJob( const QList<KMime::Message*>& msgList, const QString& sets,
+	     JobType jt = tGetMessage, const Akonadi::Collection & = Akonadi::Collection() );
   /**
    * This one should ONLY be used in derived folders, when a job
    * does something internal and needs to construct an empty parent
@@ -71,7 +70,7 @@ public:
   FolderJob( JobType jt );
   virtual ~FolderJob();
 
-  QList<KMMessage*> msgList() const;
+  QList<KMime::Message*> msgList() const;
   /**
    * Start the job
    */
@@ -108,35 +107,35 @@ public:
 
 signals:
   /**
-   * Emitted whenever a KMMessage has been completely
+   * Emitted whenever a KMime::Message has been completely
    * retrieved from the server/folder.
    */
-  void messageRetrieved( KMMessage * );
+  void messageRetrieved( KMime::Message * );
 
   /**
-   * Emitted whenever a KMMessage was updated
+   * Emitted whenever a KMime::Message was updated
    */
-  void messageUpdated( KMMessage *, const QString& );
+  void messageUpdated( KMime::Message *, const QString& );
 
   /**
    * Emitted whenever a message has been stored in
    * the folder.
    */
-  void messageStored( KMMessage * );
+  void messageStored( KMime::Message * );
 
   /**
    * Emitted when a list of messages has been
    * copied to the specified location. QPtrList contains
    * the list of the copied messages.
    */
-  void messageCopied( QList<KMMessage*> );
+  void messageCopied( QList<KMime::Message*> );
 
   /**
    * Overloaded signal to the one above. A lot of copying
    * specifies only one message as the argument and this
    * signal is easier to use when this happens.
    */
-  void messageCopied( KMMessage * );
+  void messageCopied( KMime::Message * );
 
   /**
    * Emitted when the job finishes all processing.
@@ -168,11 +167,11 @@ protected:
    */
   virtual void execute()=0;
 
-  QList<KMMessage*>   mMsgList;
+  QList<KMime::Message*>   mMsgList;
   JobType             mType;
   QString             mSets;
-  KMFolder*           mSrcFolder;
-  KMFolder*           mDestFolder;
+  Akonadi::Collection mSrcFolder;
+  Akonadi::Collection mDestFolder;
   QString             mPartSpecifier;
   int                 mErrorCode;
 

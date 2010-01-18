@@ -153,41 +153,6 @@ p, li { white-space: pre-wrap; }
        </property>
       </widget>
      </item>
-     <item row="6" column="0">
-      <widget class="QLabel" name="mMailBoxLabel">
-       <property name="sizePolicy">
-        <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-         <horstretch>1</horstretch>
-         <verstretch>0</verstretch>
-        </sizepolicy>
-       </property>
-       <property name="text">
-        <string comment="to be continued with &quot;flat files&quot; and &quot;directories&quot;, resp.">By default, &amp;message folders on disk are:</string>
-       </property>
-       <property name="buddy">
-        <cstring>mMailboxPrefCombo</cstring>
-       </property>
-      </widget>
-     </item>
-     <item row="6" column="1">
-      <widget class="KComboBox" name="mMailboxPrefCombo">
-       <property name="whatsThis">
-        <string comment="what's this help">&lt;qt&gt;&lt;p&gt;This selects which mailbox format will be  the default for local folders:&lt;/p&gt;
-&lt;p&gt;&lt;b&gt;mbox:&lt;/b&gt; KMail's mail folders are represented by a single file each. Individual messages are separated from each other by a                      line starting with &quot;From &quot;. This saves space on disk, but may be less robust, e.g. when moving messages between folders.&lt;/p&gt;
-&lt;p&gt;&lt;b&gt;maildir:&lt;/b&gt; KMail's mail folders are represented by real folders on disk. Individual messages are separate files. This may waste a bit of space on disk, but should be more robust, e.g. when moving messages between folders.&lt;/p&gt;&lt;/qt&gt;</string>
-       </property>
-       <item>
-        <property name="text">
-         <string>Flat Files (&quot;mbox&quot; format)</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>Directories (&quot;maildir&quot; format)</string>
-        </property>
-       </item>
-      </widget>
-     </item>
      <item row="7" column="0">
       <widget class="QLabel" name="mStartUpFolderLabel">
        <property name="sizePolicy">
@@ -206,41 +171,6 @@ p, li { white-space: pre-wrap; }
        <property name="text">
         <string>Empty local &amp;trash folder on program exit</string>
        </property>
-      </widget>
-     </item>
-     <item row="9" column="0">
-      <widget class="QLabel" name="mQuotaLabel">
-       <property name="sizePolicy">
-        <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-         <horstretch>1</horstretch>
-         <verstretch>0</verstretch>
-        </sizepolicy>
-       </property>
-       <property name="text">
-        <string>&amp;Quota units:</string>
-       </property>
-       <property name="buddy">
-        <cstring>mQuotaCmbBox</cstring>
-       </property>
-      </widget>
-     </item>
-     <item row="9" column="1">
-      <widget class="KComboBox" name="mQuotaCmbBox">
-       <item>
-        <property name="text">
-         <string>KB</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>MB</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>GB</string>
-        </property>
-       </item>
       </widget>
      </item>
      <item row="7" column="1">

@@ -20,10 +20,11 @@
 
 #include "backupjob.h"
 #include "kmkernel.h"
-#include "kmfolder.h"
 #include "kmmainwidget.h"
 #include "folderrequester.h"
-#include "util.h"
+#include "messageviewer/util.h"
+
+#include <Akonadi/Collection>
 
 #include <klocale.h>
 #include <kcombobox.h>
@@ -66,8 +67,7 @@ ArchiveFolderDialog::ArchiveFolderDialog( QWidget *parent )
   mainLayout->addWidget( folderLabel, row, 0 );
   mFolderRequester = new FolderRequester( mainWidget );
   mFolderRequester->setMustBeReadWrite( false );
-  mFolderRequester->setFolderTree( kmkernel->getKMMainWidget()->mainFolderView() );
-  connect( mFolderRequester, SIGNAL( folderChanged( KMFolder* ) ), SLOT( slotFolderChanged( KMFolder* ) ) );
+  connect( mFolderRequester, SIGNAL( folderChanged( const Akonadi::Collection& ) ), SLOT( slotFolderChanged( const Akonadi::Collection& ) ) );
   folderLabel->setBuddy( mFolderRequester );
   mainLayout->addWidget( mFolderRequester, row, 1 );
   row++;
@@ -94,7 +94,6 @@ ArchiveFolderDialog::ArchiveFolderDialog( QWidget *parent )
   mUrlRequester->setMode( KFile::LocalOnly | KFile::File );
   mUrlRequester->setFilter( "*.tar *.zip *.tar.gz *.tar.bz2" );
   fileNameLabel->setBuddy( mUrlRequester );
-  connect( mUrlRequester->lineEdit(), SIGNAL(textChanged(const QString &)), SLOT( slotUrlChanged(const QString&)));
   connect( mUrlRequester, SIGNAL(urlSelected(const KUrl&)),
            this, SLOT(slotFixFileExtension()) );
   mainLayout->addWidget( mUrlRequester, row, 1 );
@@ -116,22 +115,17 @@ ArchiveFolderDialog::ArchiveFolderDialog( QWidget *parent )
   resize( 500, minimumSize().height() );
 }
 
-void ArchiveFolderDialog::slotUrlChanged( const QString & text)
+void ArchiveFolderDialog::slotFolderChanged( const Akonadi::Collection &folder )
 {
-  enableButtonOk( !text.isEmpty() );
+  mDeleteCheckBox->setEnabled( folder.rights() & Akonadi::Collection::CanDeleteItem );
 }
 
-void ArchiveFolderDialog::slotFolderChanged( KMFolder *folder )
+void ArchiveFolderDialog::setFolder( const Akonadi::Collection &defaultCollection )
 {
-  mDeleteCheckBox->setEnabled( folder->canDeleteMessages() );
-}
-
-void ArchiveFolderDialog::setFolder( KMFolder *defaultFolder )
-{
-  mFolderRequester->setFolder( defaultFolder );
+  mFolderRequester->setFolder( defaultCollection );
   // TODO: what if the file already exists?
-  mUrlRequester->setUrl( standardArchivePath( defaultFolder->name() ) );
-  mDeleteCheckBox->setEnabled( defaultFolder->canDeleteMessages() );
+  mUrlRequester->setUrl( standardArchivePath( defaultCollection.name() ) );
+  mDeleteCheckBox->setEnabled( defaultCollection.rights() & Akonadi::Collection::CanDeleteItem );
 }
 
 void ArchiveFolderDialog::slotButtonClicked( int button )
@@ -142,11 +136,11 @@ void ArchiveFolderDialog::slotButtonClicked( int button )
   }
   Q_ASSERT( button == KDialog::Ok );
 
-  if ( !Util::checkOverwrite( mUrlRequester->url(), this ) ) {
+  if ( !MessageViewer::Util::checkOverwrite( mUrlRequester->url(), this ) ) {
     return;
   }
 
-  if ( !mFolderRequester->folder() ) {
+  if ( !mFolderRequester->folderCollection().isValid() ) {
     KMessageBox::information( this, i18n( "Please select the folder that should be archived." ),
                               i18n( "No folder selected" ) );
     return;
@@ -154,10 +148,10 @@ void ArchiveFolderDialog::slotButtonClicked( int button )
 
   // TODO: check if url is empty. or better yet, disable ok button until file is chosen
   KMail::BackupJob *backupJob = new KMail::BackupJob( mParentWidget );
-  backupJob->setRootFolder( mFolderRequester->folder() );
+  backupJob->setRootFolder( mFolderRequester->folderCollection() );
   backupJob->setSaveLocation( mUrlRequester->url() );
   backupJob->setArchiveType( static_cast<BackupJob::ArchiveType>( mFormatComboBox->currentIndex() ) );
-  backupJob->setDeleteFoldersAfterCompletion( mDeleteCheckBox->isChecked() && mFolderRequester->folder()->canDeleteMessages());
+  backupJob->setDeleteFoldersAfterCompletion( mDeleteCheckBox->isChecked() && mFolderRequester->folderCollection().rights() & Akonadi::Collection::CanDeleteItem );
   backupJob->start();
   accept();
 }

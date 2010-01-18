@@ -32,14 +32,14 @@
 #include "kmcommands.h"
 
 #include <QList>
-
+#include <akonadi/collection.h>
 namespace KMail {
 
 class ExpireJob : public ScheduledJob
 {
   Q_OBJECT
 public:
-  ExpireJob( KMFolder* folder, bool immediate );
+  ExpireJob( const Akonadi::Collection& folder, bool immediate );
   virtual ~ExpireJob();
 
   virtual void execute();
@@ -54,12 +54,12 @@ private:
 
 private:
   QTimer mTimer;
-  QList<KMMsgBase*> mRemovedMsgs;
+  QList<KMime::Message*> mRemovedMsgs;
   int mCurrentIndex;
   int mMaxUnreadTime;
   int mMaxReadTime;
   bool mFolderOpen;
-  KMFolder *mMoveToFolder;
+  Akonadi::Collection mMoveToFolder;
 };
 
 /// A scheduled "expire mails in this folder" task.
@@ -68,11 +68,11 @@ class ScheduledExpireTask : public ScheduledTask
 public:
   /// If immediate is set, the job will execute synchronously. This is used when
   /// the user requests explicitly that the operation should happen immediately.
-  ScheduledExpireTask( KMFolder* folder, bool immediate )
+  ScheduledExpireTask( const Akonadi::Collection& folder, bool immediate )
     : ScheduledTask( folder, immediate ) {}
   virtual ~ScheduledExpireTask() {}
   virtual ScheduledJob* run() {
-    return folder() ? new ExpireJob( folder(), isImmediate() ) : 0;
+    return folder().isValid() ? new ExpireJob( folder(), isImmediate() ) : 0;
   }
   virtual int taskTypeId() const { return 1; }
 };

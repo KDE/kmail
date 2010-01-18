@@ -18,16 +18,11 @@
 
 
 #include "kmsystemtray.h"
-#include "kmfolder.h"
-#include "kmfoldermgr.h"
-#include "kmfolderimap.h"
 #include "kmmainwidget.h"
-#include "accountmanager.h"
 
-using KMail::AccountManager;
 #include "globalsettings.h"
 
-#include "mainfolderview.h"
+
 
 #include <kxmlguiwindow.h>
 #include <kglobalsettings.h>
@@ -59,6 +54,9 @@ using KMail::AccountManager;
  */
 KMSystemTray::KMSystemTray(QWidget *parent)
   : KSystemTrayIcon( parent),
+    mParentVisible( true ),
+    mPosOfMainWin( 0, 0 ),
+    mDesktopOfMainWin( 0 ),
     mMode( GlobalSettings::EnumSystemTrayPolicy::ShowOnUnread ),
     mCount( 0 ),
     mNewMessagesPopup( 0 ),
@@ -73,6 +71,17 @@ KMSystemTray::KMSystemTray(QWidget *parent)
 
   mDefaultIcon = KIcon( "kmail" ).pixmap( 22 );
   setIcon( mDefaultIcon );
+#ifdef Q_WS_X11
+  KMMainWidget * mainWidget = kmkernel->getKMMainWidget();
+  if ( mainWidget ) {
+    QWidget * mainWin = mainWidget->topLevelWidget();
+    if ( mainWin ) {
+      mDesktopOfMainWin = KWindowSystem::windowInfo( mainWin->winId(),
+                                            NET::WMDesktop ).desktop();
+      mPosOfMainWin = mainWin->pos();
+    }
+  }
+#endif
   // register the applet with the kernel
   kmkernel->registerSystemTrayApplet( this );
 
@@ -83,14 +92,19 @@ KMSystemTray::KMSystemTray(QWidget *parent)
            this, SLOT( slotActivated( QSystemTrayIcon::ActivationReason ) ) );
   connect( contextMenu(), SIGNAL( aboutToShow() ),
            this, SLOT( slotContextMenuAboutToShow() ) );
-
+#if 0
   connect( kmkernel->folderMgr(), SIGNAL(changed()), SLOT(foldersChanged()));
-  connect( kmkernel->imapFolderMgr(), SIGNAL(changed()), SLOT(foldersChanged()));
-  connect( kmkernel->dimapFolderMgr(), SIGNAL(changed()), SLOT(foldersChanged()));
   connect( kmkernel->searchFolderMgr(), SIGNAL(changed()), SLOT(foldersChanged()));
 
+#else
+    kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
+#endif
+#if 0
   connect( kmkernel->acctMgr(), SIGNAL( checkedMail( bool, bool, const QMap<QString, int> & ) ),
            SLOT( updateNewMessages() ) );
+#else
+  kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
+#endif
 }
 
 void KMSystemTray::buildPopupMenu()
@@ -227,24 +241,26 @@ void KMSystemTray::foldersChanged()
    * Hide and remove all unread mappings to cover the case where the only
    * unread message was in a folder that was just removed.
    */
+#if 0
   mFoldersWithUnread.clear();
   mPendingUpdates.clear();
+#endif
   mCount = 0;
 
   if ( mMode == GlobalSettings::EnumSystemTrayPolicy::ShowOnUnread ) {
     hide();
   }
-
+#if 0
   /** Disconnect all previous connections */
   disconnect(this, SLOT(updateNewMessageNotification(KMFolder *)));
 
   QStringList folderNames;
   QList<QPointer<KMFolder> > folderList;
   kmkernel->folderMgr()->createFolderList(&folderNames, &folderList);
-  kmkernel->imapFolderMgr()->createFolderList(&folderNames, &folderList);
-  kmkernel->dimapFolderMgr()->createFolderList(&folderNames, &folderList);
-  kmkernel->searchFolderMgr()->createFolderList(&folderNames, &folderList);
-
+#else
+    kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
+#endif
+#if 0
   QStringList::iterator strIt = folderNames.begin();
 
   for(QList<QPointer<KMFolder> >::iterator it = folderList.begin();
@@ -252,7 +268,7 @@ void KMSystemTray::foldersChanged()
   {
     KMFolder * currentFolder = *it;
     QString currentName = *strIt;
-
+#if 0
     if ( ((!currentFolder->isSystemFolder() || (currentFolder->name().toLower() == "inbox")) ||
          (currentFolder->folderType() == KMFolderTypeImap)) &&
          !currentFolder->ignoreNewMail() )
@@ -268,7 +284,9 @@ void KMSystemTray::foldersChanged()
       disconnect( currentFolder, SIGNAL( numUnreadMsgsChanged(KMFolder*) ),
                   this, SLOT( updateNewMessageNotification(KMFolder *) ) );
     }
+#endif
   }
+#endif
 }
 
 /**
@@ -282,11 +300,14 @@ void KMSystemTray::slotActivated( QSystemTrayIcon::ActivationReason reason )
   // switch to kmail on left mouse button
   if( reason == QSystemTrayIcon::Trigger )
   {
-    kmkernel->toggleMainWin();
+    if( mParentVisible && mainWindowIsOnCurrentDesktop() )
+      hideKMail();
+    else
+      showKMail();
   }
 }
 
-void KMSystemTray::slotContextMenuAboutToShow() 
+void KMSystemTray::slotContextMenuAboutToShow()
 {
   // Rebuild popup menu before show to minimize race condition if
   // the base KMainWidget is closed.
@@ -297,7 +318,7 @@ void KMSystemTray::slotContextMenuAboutToShow()
     delete mNewMessagesPopup;
     mNewMessagesPopup = 0;
   }
-
+#if 0
   if ( mFoldersWithUnread.count() > 0 )
   {
     mNewMessagesPopup = new KMenu();
@@ -309,7 +330,8 @@ void KMSystemTray::slotContextMenuAboutToShow()
 
     for(uint i=0; it != mFoldersWithUnread.end(); ++i)
     {
-      mPopupFolders.append( it.key() );
+      //TODO port it
+      //mPopupFolders.append( it.key() );
       QString folderText = prettyName(it.key()) + " (" + QString::number(it.value()) + ')';
       QAction *action = new QAction( folderText, this );
       connect( action, SIGNAL( triggered( bool ) ),
@@ -324,17 +346,22 @@ void KMSystemTray::slotContextMenuAboutToShow()
 
     kDebug() << "Folders added";
   }
+#endif
 }
 
 /**
  * Return the name of the folder in which the mail is deposited, prepended
  * with the account name if the folder is IMAP.
  */
+#if 0
 QString KMSystemTray::prettyName(KMFolder * fldr)
 {
+
   QString rvalue = fldr->label();
+#if 0
   if(fldr->folderType() == KMFolderTypeImap)
   {
+#if 0 //TODO port to akonadi
     KMFolderImap * imap = dynamic_cast<KMFolderImap*> (fldr->storage());
     assert(imap);
 
@@ -344,13 +371,90 @@ QString KMSystemTray::prettyName(KMFolder * fldr)
       kDebug() << "IMAP folder, prepend label with type";
       rvalue = imap->account()->name() + "->" + rvalue;
     }
+#else
+    kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
+#endif
   }
 
   kDebug() << "Got label" << rvalue;
-
+#endif
   return rvalue;
 }
+#endif
 
+bool KMSystemTray::mainWindowIsOnCurrentDesktop()
+{
+#ifdef Q_WS_X11
+  KMMainWidget * mainWidget = kmkernel->getKMMainWidget();
+  if ( !mainWidget )
+    return false;
+
+  QWidget *mainWin = kmkernel->getKMMainWidget()->topLevelWidget();
+  if ( !mainWin )
+    return false;
+
+  return KWindowSystem::windowInfo( mainWin->winId(),
+                           NET::WMDesktop ).isOnCurrentDesktop();
+#else
+  return true;
+#endif
+}
+
+/**
+ * Shows and raises the first KMMainWidget and
+ * switches to the appropriate virtual desktop.
+ */
+void KMSystemTray::showKMail()
+{
+  if (!kmkernel->getKMMainWidget())
+    return;
+  QWidget *mainWin = kmkernel->getKMMainWidget()->topLevelWidget();
+  assert(mainWin);
+#ifdef Q_WS_X11
+  if(mainWin)
+  {
+    KWindowInfo cur = KWindowSystem::windowInfo( mainWin->winId(), NET::WMDesktop );
+    if ( cur.valid() ) mDesktopOfMainWin = cur.desktop();
+    // switch to appropriate desktop
+    if ( mDesktopOfMainWin != NET::OnAllDesktops )
+      KWindowSystem::setCurrentDesktop( mDesktopOfMainWin );
+    if ( !mParentVisible ) {
+      if ( mDesktopOfMainWin == NET::OnAllDesktops )
+        KWindowSystem::setOnAllDesktops( mainWin->winId(), true );
+    }
+    KWindowSystem::activateWindow( mainWin->winId() );
+  }
+#endif
+  if ( !mParentVisible ) {
+    mainWin->move( mPosOfMainWin );
+    mainWin->show();
+    mParentVisible = true;
+  }
+  kmkernel->raise();
+
+  //Fake that the folders have changed so that the icon status is correct
+  foldersChanged();
+}
+
+void KMSystemTray::hideKMail()
+{
+  if (!kmkernel->getKMMainWidget())
+    return;
+  QWidget *mainWin = kmkernel->getKMMainWidget()->topLevelWidget();
+  assert(mainWin);
+  if(mainWin)
+  {
+    mPosOfMainWin = mainWin->pos();
+#ifdef Q_WS_X11
+    mDesktopOfMainWin = KWindowSystem::windowInfo( mainWin->winId(),
+                                          NET::WMDesktop ).desktop();
+    // iconifying is unnecessary, but it looks cooler
+    KWindowSystem::minimizeWindow( mainWin->winId() );
+#endif
+    mainWin->hide();
+    mParentVisible = false;
+  }
+}
 
 /**
  * Called on startup of the KMSystemTray and when the numUnreadMsgsChanged signal
@@ -358,8 +462,10 @@ QString KMSystemTray::prettyName(KMFolder * fldr)
  * are new messages and the icon was hidden, or hides the system tray icon if there
  * are no more new messages.
  */
+#if 0
 void KMSystemTray::updateNewMessageNotification(KMFolder * fldr)
 {
+#if 0
   //We don't want to count messages from search folders as they
   //  already counted as part of their original folders
   if( !fldr ||
@@ -377,10 +483,13 @@ void KMSystemTray::updateNewMessageNotification(KMFolder * fldr)
   else {
     mUpdateTimer->start(150);
   }
+#endif
 }
+#endif
 
 void KMSystemTray::updateNewMessages()
 {
+#if 0
   for ( QMap<QPointer<KMFolder>, bool>::Iterator it1 = mPendingUpdates.begin();
         it1 != mPendingUpdates.end(); ++it1)
   {
@@ -431,7 +540,7 @@ void KMSystemTray::updateNewMessages()
     }
     else {
       if ( unread == 0 ) {
-        kDebug() << "Removing folder from internal store" << fldr->name();
+        //kDebug() << "Removing folder from internal store" << fldr->name();
 
         // Remove the folder from the internal store
         mFoldersWithUnread.remove(fldr);
@@ -459,6 +568,7 @@ void KMSystemTray::updateNewMessages()
                                   mCount));
 
   mLastUpdate = time( 0 );
+#endif
 }
 
 /**
@@ -468,7 +578,7 @@ void KMSystemTray::updateNewMessages()
  */
 void KMSystemTray::selectedAccount(int id)
 {
-  kmkernel->showMainWin();
+  showKMail();
 
   KMMainWidget * mainWidget = kmkernel->getKMMainWidget();
   if (!mainWidget)
@@ -480,12 +590,9 @@ void KMSystemTray::selectedAccount(int id)
   assert(mainWidget);
 
   /** Select folder */
-  KMFolder * fldr = mPopupFolders.at(id);
-  if(!fldr) return;
-
-  KMail::MainFolderView * ftw = mainWidget->mainFolderView();
-  if ( !ftw ) return;
-  ftw->setCurrentFolder( fldr );
+  Akonadi::Collection fldr = mPopupFolders.at(id);
+  if(!fldr.isValid()) return;
+  mainWidget->selectCollectionFolder( fldr );
 }
 
 bool KMSystemTray::hasUnreadMail() const

@@ -28,9 +28,7 @@
 
 
 #include "expirejob.h"
-#include "kmfolder.h"
 #include "globalsettings.h"
-#include "folderstorage.h"
 #include "broadcaststatus.h"
 using KPIM::BroadcastStatus;
 #include "kmcommands.h"
@@ -38,7 +36,7 @@ using KPIM::BroadcastStatus;
 #include <kdebug.h>
 #include <klocale.h>
 #include <kconfiggroup.h>
-
+#include "foldercollection.h"
 using namespace KMail;
 
 // Look at this number of messages in each slotDoWork call
@@ -60,7 +58,7 @@ using namespace KMail;
 */
 
 
-ExpireJob::ExpireJob( KMFolder* folder, bool immediate )
+ExpireJob::ExpireJob( const Akonadi::Collection& folder, bool immediate )
  : ScheduledJob( folder, immediate ), mTimer( this ), mCurrentIndex( 0 ),
    mFolderOpen( false ), mMoveToFolder( 0 )
 {
@@ -72,11 +70,13 @@ ExpireJob::~ExpireJob()
 
 void ExpireJob::kill()
 {
+#if 0
   Q_ASSERT( mCancellable );
   // We must close the folder if we opened it and got interrupted
   if ( mFolderOpen && mSrcFolder && mSrcFolder->storage() )
     mSrcFolder->storage()->close( "expirejob" );
   FolderJob::kill();
+#endif
 }
 
 void ExpireJob::execute()
@@ -84,9 +84,9 @@ void ExpireJob::execute()
   mMaxUnreadTime = 0;
   mMaxReadTime = 0;
   mCurrentIndex = 0;
-
+  QSharedPointer<FolderCollection> fd( FolderCollection::forCollection( mSrcFolder ) );
   int unreadDays, readDays;
-  mSrcFolder->daysToExpire( unreadDays, readDays );
+  fd->daysToExpire( unreadDays, readDays );
   if (unreadDays > 0) {
     kDebug() << "ExpireJob: deleting unread older than"<< unreadDays << "days";
     mMaxUnreadTime = time(0) - unreadDays * 3600 * 24;
@@ -101,7 +101,7 @@ void ExpireJob::execute()
     delete this;
     return;
   }
-
+#if 0
   FolderStorage* storage = mSrcFolder->storage();
   mOpeningFolder = true; // Ignore open-notifications while opening the folder
   storage->open( "expirejob" );
@@ -112,19 +112,22 @@ void ExpireJob::execute()
   connect( &mTimer, SIGNAL( timeout() ), SLOT( slotDoWork() ) );
   mTimer.start( EXPIREJOB_TIMERINTERVAL );
   slotDoWork();
+#endif
   // do nothing here, we might be deleted!
 }
 
 void ExpireJob::slotDoWork()
 {
+#if 0
   // No need to worry about mSrcFolder==0 here. The FolderStorage deletes the jobs on destruction.
   FolderStorage* storage = mSrcFolder->storage();
   int stopIndex = mImmediate ? 0 : qMax( 0, mCurrentIndex - EXPIREJOB_NRMESSAGES );
 #ifdef DEBUG_SCHEDULER
   kDebug() << "ExpireJob: checking messages" << mCurrentIndex << "to" << stopIndex;
 #endif
+#if 0 //TODO port to akonadi
   for( ; mCurrentIndex >= stopIndex; --mCurrentIndex ) {
-    const KMMsgBase *mb = storage->getMsgBase( mCurrentIndex );
+    const KMime::Message *mb = storage->getMsgBase( mCurrentIndex );
     if (mb == 0)
       continue;
     if ( ( mb->messageStatus().isImportant() || mb->messageStatus().isToAct() || mb->messageStatus().isWatched() )
@@ -133,16 +136,21 @@ void ExpireJob::slotDoWork()
 
     time_t maxTime = mb->messageStatus().isUnread() ? mMaxUnreadTime : mMaxReadTime;
 
-    if (mb->date() < maxTime) {
+    if (mb->date()->dateTime().dateTime().toTime_t() < maxTime) {
       mRemovedMsgs.append( storage->getMsgBase( mCurrentIndex ) );
     }
   }
+#else
+    kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
+#endif
   if ( stopIndex == 0 )
     done();
+#endif
 }
 
 void ExpireJob::done()
 {
+#if 0
   mTimer.stop();
 
   QString str;
@@ -157,18 +165,24 @@ void ExpireJob::done()
       kDebug() << "ExpireJob: finished expiring in folder"
                     << mSrcFolder->location()
                     << count << "messages to remove.";
+#ifdef OLD_COMMAND
       KMMoveCommand* cmd = new KMMoveCommand( 0, mRemovedMsgs );
       connect( cmd, SIGNAL( completed( KMCommand * ) ),
                this, SLOT( slotMessagesMoved( KMCommand * ) ) );
       cmd->start();
+#endif
       moving = true;
       str = i18np( "Removing 1 old message from folder %2...",
                   "Removing %1 old messages from folder %2...", count,
               mSrcFolder->label() );
     } else {
+#if 0
       // Expire by moving
       mMoveToFolder =
         kmkernel->findFolderById( mSrcFolder->expireToFolderId() );
+#else
+    kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
+#endif
       if ( !mMoveToFolder ) {
         str = i18n( "Cannot expire messages from folder %1: destination "
                     "folder %2 not found",
@@ -179,10 +193,12 @@ void ExpireJob::done()
                       << mSrcFolder->location()
                       << mRemovedMsgs.count() << "messages to move to"
                       << mMoveToFolder->label();
+#ifdef OLD_COMMAND
         KMMoveCommand* cmd = new KMMoveCommand( mMoveToFolder, mRemovedMsgs );
         connect( cmd, SIGNAL( completed( KMCommand * ) ),
                  this, SLOT( slotMessagesMoved( KMCommand * ) ) );
         cmd->start();
+#endif
         moving = true;
         str = i18np( "Moving 1 old message from folder %2 to folder %3...",
                      "Moving %1 old messages from folder %2 to folder %3...",
@@ -197,14 +213,18 @@ void ExpireJob::done()
   group.writeEntry( "Current", -1 ); // i.e. make it invalid, the serial number will be used
 
   if ( !moving ) {
+#if 0
     mSrcFolder->storage()->close( "expirejob" );
     mFolderOpen = false;
+#endif
     delete this;
   }
+#endif
 }
 
 void ExpireJob::slotMessagesMoved( KMCommand *command )
 {
+#if 0
   mSrcFolder->storage()->close( "expirejob" );
   mFolderOpen = false;
   QString msg;
@@ -247,6 +267,7 @@ void ExpireJob::slotMessagesMoved( KMCommand *command )
   BroadcastStatus::instance()->setStatusMsg( msg );
 
   deleteLater();
+#endif
 }
 
 #include "expirejob.moc"

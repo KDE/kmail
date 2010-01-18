@@ -1,8 +1,8 @@
 
 #include "expirypropertiesdialog.h"
 #include "folderrequester.h"
-#include "kmfolder.h"
-#include "mainfolderview.h"
+#include "foldercollection.h"
+
 
 #include <QVariant>
 #include <QPushButton>
@@ -17,6 +17,8 @@
 #include <klocale.h>
 #include <kmessagebox.h>
 #include <KNumInput>
+#include <akonadi/collection.h>
+#include "kmkernel.h"
 
 using namespace KMail;
 
@@ -25,7 +27,9 @@ using namespace KMail;
  *  name 'name'.
  *
  */
-ExpiryPropertiesDialog::ExpiryPropertiesDialog( MainFolderView* tree, KMFolder* folder )
+ExpiryPropertiesDialog::ExpiryPropertiesDialog(
+  QWidget *tree,
+  const QSharedPointer<FolderCollection> &folder )
     : KDialog( tree ),
       mFolder( folder )
 {
@@ -94,7 +98,6 @@ ExpiryPropertiesDialog::ExpiryPropertiesDialog( MainFolderView* tree, KMFolder* 
   moveToHBox->addWidget( moveToRB );
 
   folderSelector = new KMail::FolderRequester( privateLayoutWidget );
-  folderSelector->setFolderTree( tree );
   folderSelector->setMustBeReadWrite( true );
   moveToHBox->addWidget( folderSelector );
   globalVBox->addLayout( moveToHBox );
@@ -132,15 +135,15 @@ ExpiryPropertiesDialog::ExpiryPropertiesDialog( MainFolderView* tree, KMFolder* 
     expireUnreadMailSB->setValue( daysToExpireUnread );
   }
 
-  if ( mFolder->expireAction() == KMFolder::ExpireDelete )
+  if ( mFolder->expireAction() == FolderCollection::ExpireDelete )
     deletePermanentlyRB->setChecked( true );
   else
     moveToRB->setChecked( true );
 
   QString destFolderID = mFolder->expireToFolderId();
   if ( !destFolderID.isEmpty() ) {
-    KMFolder* destFolder = kmkernel->findFolderById( destFolderID );
-    if ( destFolder )
+    Akonadi::Collection destFolder = KMKernel::self()->findFolderCollectionById( destFolderID );
+    if ( destFolder.isValid() )
       folderSelector->setFolder( destFolder );
   }
   slotUpdateControls();
@@ -158,7 +161,7 @@ ExpiryPropertiesDialog::~ExpiryPropertiesDialog()
 void ExpiryPropertiesDialog::accept()
 {
   bool enableGlobally = expireReadMailCB->isChecked() || expireUnreadMailCB->isChecked();
-  if ( enableGlobally && moveToRB->isChecked() && !folderSelector->folder() ) {
+  if ( enableGlobally && moveToRB->isChecked() && !folderSelector->folderCollection().isValid() ) {
     KMessageBox::error( this, i18n("Please select a folder to expire messages into."),
                         i18n( "No Folder Selected" ) );
     return;
@@ -172,17 +175,15 @@ void ExpiryPropertiesDialog::accept()
   mFolder->setUnreadExpireUnits( expireUnreadMailCB->isChecked()? expireDays : expireNever );
 
   if ( deletePermanentlyRB->isChecked() )
-    mFolder->setExpireAction( KMFolder::ExpireDelete );
+    mFolder->setExpireAction( FolderCollection::ExpireDelete );
   else
-    mFolder->setExpireAction( KMFolder::ExpireMove );
-  KMFolder* expireToFolder = folderSelector->folder();
-  if ( expireToFolder )
-    mFolder->setExpireToFolderId( expireToFolder->idString() );
-
+    mFolder->setExpireAction( FolderCollection::ExpireMove );
+  Akonadi::Collection expireToFolder = folderSelector->folderCollection();
+  if ( expireToFolder.isValid() )
+    mFolder->setExpireToFolderId( QString::number( expireToFolder.id() ) );
   // trigger immediate expiry if there is something to do
   if ( enableGlobally )
     mFolder->expireOldMessages( true /*immediate*/);
-
   KDialog::accept();
 }
 

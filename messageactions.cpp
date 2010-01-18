@@ -19,10 +19,14 @@
 #include "messageactions.h"
 
 #include "globalsettings.h"
-#include "kmfolder.h"
-#include "kmmessage.h"
 #include "kmreaderwin.h"
 #include "mailinglist-magic.h"
+#include "kmkernel.h"
+#include "util.h"
+
+#include "messagecore/annotationdialog.h"
+
+#include <Nepomuk/Resource>
 
 #include <KAction>
 #include <KActionMenu>
@@ -37,6 +41,7 @@
 
 #include <QVariant>
 #include <qwidget.h>
+#include <akonadi/collection.h>
 
 using namespace KMail;
 
@@ -44,7 +49,6 @@ MessageActions::MessageActions( KActionCollection *ac, QWidget* parent ) :
     QObject( parent ),
     mParent( parent ),
     mActionCollection( ac ),
-    mCurrentMessage( 0 ),
     mMessageView( 0 ),
     mRedirectAction( 0 )
 {
@@ -133,6 +137,7 @@ MessageActions::MessageActions( KActionCollection *ac, QWidget* parent ) :
   connect( mToggleFlagAction, SIGNAL(triggered(bool)),
            this, SLOT(slotSetMsgStatusFlag()) );
   mToggleFlagAction->setCheckedState( KGuiItem(i18n("Remove &Important Message Mark")) );
+  mToggleFlagAction->setIconText( i18n( "Important" ) );
   mActionCollection->addAction( "status_flag", mToggleFlagAction );
   mStatusMenu->addAction( mToggleFlagAction );
 
@@ -141,6 +146,7 @@ MessageActions::MessageActions( KActionCollection *ac, QWidget* parent ) :
   connect( mToggleToActAction, SIGNAL(triggered(bool)),
            this, SLOT(slotSetMsgStatusToAct()) );
   mToggleToActAction->setCheckedState( KGuiItem(i18n("Remove &Action Item Message Mark")) );
+  mToggleToActAction->setIconText( i18n( "Action Item" ) );
   mActionCollection->addAction( "status_toact", mToggleToActAction );
   mStatusMenu->addAction( mToggleToActAction );
 
@@ -149,6 +155,11 @@ MessageActions::MessageActions( KActionCollection *ac, QWidget* parent ) :
   connect( mEditAction, SIGNAL(triggered(bool)),
            this, SLOT(editCurrentMessage()) );
   mEditAction->setShortcut( Qt::Key_T );
+
+  mAnnotateAction = new KAction( KIcon( "view-pim-notes" ), i18n( "Add Note..."), this );
+  mActionCollection->addAction( "annotate", mAnnotateAction );
+  connect( mAnnotateAction, SIGNAL(triggered(bool)),
+           this, SLOT(annotateMessage()) );
 
   mForwardActionMenu  = new KActionMenu(KIcon("mail-forward"), i18nc("Message->","&Forward"), this);
   mActionCollection->addAction("message_forward", mForwardActionMenu );
@@ -188,38 +199,48 @@ MessageActions::MessageActions( KActionCollection *ac, QWidget* parent ) :
   updateActions();
 }
 
-void MessageActions::setCurrentMessage(KMMessage * msg)
+MessageActions::~MessageActions()
 {
-  mCurrentMessage = msg;
-  if ( !msg ) {
-    mSelectedSernums.clear();
-    mVisibleSernums.clear();
+}
+
+void MessageActions::setCurrentMessage( const Akonadi::Item &msg )
+{
+  mCurrentItem = msg;
+
+  if ( !msg.isValid() ) {
+    mSelectedItems.clear();
+    mVisibleItems.clear();
   }
   updateActions();
 }
 
-void MessageActions::setSelectedSernums(const QList< quint32 > & sernums)
+
+void MessageActions::setSelectedItem( const Akonadi::Item::List &items )
 {
-  mSelectedSernums = sernums;
+  mSelectedItems = items;
   updateActions();
 }
 
-void MessageActions::setSelectedVisibleSernums(const QList< quint32 > & sernums)
+void MessageActions::setSelectedVisibleItems( const Akonadi::Item::List &items )
 {
-  mVisibleSernums = sernums;
+  mVisibleItems = items;
   updateActions();
 }
 
 void MessageActions::updateActions()
 {
-  bool singleMsg = (mCurrentMessage != 0);
-  if ( mCurrentMessage && mCurrentMessage->parent() ) {
-    if ( mCurrentMessage->parent()->isTemplates() )
+  bool singleMsg = mCurrentItem.isValid();
+  Akonadi::Collection parent;
+  if ( singleMsg ) //=> valid
+    parent = mCurrentItem.parentCollection();
+  if ( parent.isValid() ) {
+    if ( KMKernel::self()->folderIsTemplates(parent) )
       singleMsg = false;
   }
-  const bool multiVisible = mVisibleSernums.count() > 0 || mCurrentMessage;
-  const bool flagsAvailable = GlobalSettings::self()->allowLocalFlags() ||
-      !((mCurrentMessage && mCurrentMessage->parent()) ? mCurrentMessage->parent()->isReadOnly() : true);
+
+  const bool multiVisible = mVisibleItems.count() > 0 || mCurrentItem.isValid();
+  const bool flagsAvailable = GlobalSettings::self()->allowLocalFlags()
+                              || !(parent.isValid() ? parent.rights() & Akonadi::Collection::ReadOnly : true);
 
   mCreateTodoAction->setEnabled( singleMsg && mKorganizerIsOnSystem);
   mReplyActionMenu->setEnabled( singleMsg );
@@ -230,16 +251,27 @@ void MessageActions::updateActions()
   mReplyListAction->setEnabled( singleMsg );
   mNoQuoteReplyAction->setEnabled( singleMsg );
 
+  mAnnotateAction->setEnabled( singleMsg );
+  if( mCurrentItem.isValid() ) {
+    Nepomuk::Resource resource( mCurrentItem.url() );
+    if ( resource.description().isEmpty() )
+      mAnnotateAction->setText( i18n( "Add Note..." ) );
+    else
+      mAnnotateAction->setText( i18n( "Edit Note...") );
+  }
+
   mStatusMenu->setEnabled( multiVisible );
   mToggleFlagAction->setEnabled( flagsAvailable );
   mToggleToActAction->setEnabled( flagsAvailable );
 
-  if ( mCurrentMessage ) {
-    mToggleToActAction->setChecked( mCurrentMessage->status().isToAct() );
-    mToggleFlagAction->setChecked( mCurrentMessage->status().isImportant() );
+  if ( mCurrentItem.isValid() ) {
+    KPIM::MessageStatus status;
+    status.setStatusFromFlags( mCurrentItem.flags() );
+    mToggleToActAction->setChecked( status.isToAct() );
+    mToggleFlagAction->setChecked( status.isImportant() );
 
     MailingList mailList;
-    mailList = MailingList::detect( mCurrentMessage );
+    mailList = MailingList::detect( KMail::Util::message( mCurrentItem ) );
 
     if ( mailList.features() & ~MailingList::Id ) {
       // A mailing list menu with only a title is pretty boring
@@ -291,9 +323,9 @@ void MessageActions::updateActions()
 
 void MessageActions::slotCreateTodo()
 {
-  if ( !mCurrentMessage )
+  if ( !mCurrentItem.isValid() )
     return;
-  KMCommand *command = new CreateTodoCommand( mParent, mCurrentMessage );
+  KMCommand *command = new CreateTodoCommand( mParent, mCurrentItem );
   command->start();
 }
 
@@ -365,9 +397,9 @@ void MessageActions::slotReplyAllToMsg()
 
 void MessageActions::slotNoQuoteReplyToMsg()
 {
-  if ( !mCurrentMessage )
+  if ( !mCurrentItem.isValid() )
     return;
-  KMCommand *command = new KMNoQuoteReplyToCommand( mParent, mCurrentMessage );
+  KMCommand *command = new KMNoQuoteReplyToCommand( mParent, mCurrentItem );
   command->start();
 }
 
@@ -406,12 +438,12 @@ void MessageActions::slotRunUrl( QAction *urlAction )
 
 void MessageActions::setMessageStatus( KPIM::MessageStatus status, bool toggle )
 {
-  QList<quint32> serNums = mVisibleSernums;
-  if ( serNums.isEmpty() && mCurrentMessage )
-    serNums.append( mCurrentMessage->getMsgSerNum() );
-  if ( serNums.empty() )
+  Akonadi::Item::List items = mVisibleItems;
+  if ( items.isEmpty() && mCurrentItem.isValid() )
+    items.append( mCurrentItem );
+  if ( items.empty() )
     return;
-  KMCommand *command = new KMSetStatusCommand( status, serNums, toggle );
+  KMCommand *command = new KMSetStatusCommand( status, items, toggle );
   command->start();
 }
 
@@ -454,18 +486,30 @@ void MessageActions::addMailingListAction( const QString &item, const KUrl &url 
 
 void MessageActions::editCurrentMessage()
 {
-  if ( !mCurrentMessage )
+  if ( !mCurrentItem.isValid() )
     return;
   KMCommand *command = 0;
-  KMFolder *folder = mCurrentMessage->parent();
+  Akonadi::Collection col = mCurrentItem.parentCollection();
   // edit, unlike send again, removes the message from the folder
   // we only want that for templates and drafts folders
-  if ( folder && ( kmkernel->folderIsDraftOrOutbox( folder ) ||
-       kmkernel->folderIsTemplates( folder ) ) )
-    command = new KMEditMsgCommand( mParent, mCurrentMessage );
+  if ( col.isValid()
+       && ( KMKernel::self()->folderIsDraftOrOutbox( col ) ||
+            KMKernel::self()->folderIsTemplates( col ) )
+    )
+    command = new KMEditMsgCommand( mParent, mCurrentItem );
   else
-    command = new KMResendMessageCommand( mParent, mCurrentMessage );
+    command = new KMResendMessageCommand( mParent, mCurrentItem );
   command->start();
+}
+
+void MessageActions::annotateMessage()
+{
+  if ( !mCurrentItem.isValid() )
+    return;
+
+  KPIM::AnnotationEditDialog *dialog = new KPIM::AnnotationEditDialog( mCurrentItem.url() );
+  dialog->setAttribute( Qt::WA_DeleteOnClose );
+  dialog->show();
 }
 
 #include "messageactions.moc"

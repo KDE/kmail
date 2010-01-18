@@ -23,6 +23,7 @@
 #include <limits.h>
 
 #include <QDateTime>
+#include <QTimer>
 
 #include <kdebug.h>
 #include <klocale.h>
@@ -36,11 +37,12 @@
 #include <kpimidentities/identity.h>
 #include <kpimidentities/identitymanager.h>
 
-#include "kmacctimap.h"
-#include "accountmanager.h"
-using KMail::AccountManager;
+#include "util.h"
+#include "kmagentmanager.h"
+#include <akonadi/agentinstance.h>
 #include "kmkernel.h"
 #include "sievejob.h"
+#include "imapsettings.h"
 
 using KMail::SieveJob;
 using KMime::Types::AddrSpecList;
@@ -190,13 +192,12 @@ SieveDebugDialog::SieveDebugDialog( QWidget *parent )
     setCaption( i18n( "Sieve Diagnostics" ) );
     setButtons( Ok );
     // Collect all accounts
-    AccountManager *am = kmkernel->acctMgr();
-    assert( am );
-    QList<KMAccount*>::iterator accountIt = am->begin();
-    while ( accountIt != am->end() ) {
-      KMAccount *account = *accountIt;
-      ++accountIt;
-      mAccountList.append( account );
+    Akonadi::AgentInstance::List lst = kmkernel->agentManager()->instanceList();
+    foreach ( const Akonadi::AgentInstance& type, lst )
+    {
+      if ( type.identifier().contains( IMAP_RESOURCE_IDENTIFIER ) ) {
+        mResourceIdentifier<<type.identifier();
+      }
     }
 
     mEdit = new KTextEdit( this );
@@ -207,7 +208,7 @@ SieveDebugDialog::SieveDebugDialog( QWidget *parent )
 
     setInitialSize( QSize( 640, 480 ) );
 
-    if ( !mAccountList.isEmpty() )
+    if ( !mResourceIdentifier.isEmpty() )
         QTimer::singleShot( 0, this, SLOT( slotDiagNextAccount() ) );
 }
 
@@ -221,47 +222,21 @@ SieveDebugDialog::~SieveDebugDialog()
     kDebug() ;
 }
 
-static KUrl urlFromAccount( const KMail::ImapAccountBase * a ) {
-    const SieveConfig sieve = a->sieveConfig();
-    if ( !sieve.managesieveSupported() )
-        return KUrl();
-
-    KUrl u;
-    if ( sieve.reuseConfig() ) {
-        // assemble Sieve url from the settings of the account:
-        u.setProtocol( "sieve" );
-        u.setHost( a->host() );
-        u.setUser( a->login() );
-        u.setPass( a->passwd() );
-        u.setPort( sieve.port() );
-
-        // Translate IMAP LOGIN to PLAIN:
-        u.addQueryItem( "x-mech", a->auth() == "*" ? "PLAIN" : a->auth() );
-        if ( !a->useSSL() && !a->useTLS() )
-            u.addQueryItem( "x-allow-unencrypted", "true" );
-    } else {
-        u = sieve.alternateURL();
-        if ( u.protocol().toLower() == "sieve" && !a->useSSL() && !a->useTLS() && u.queryItem("x-allow-unencrypted").isEmpty() )
-            u.addQueryItem( "x-allow-unencrypted", "true" );
-    }
-    return u;
-}
 
 void SieveDebugDialog::slotDiagNextAccount()
 {
-    if ( mAccountList.isEmpty() )
+    if ( mResourceIdentifier.isEmpty() )
         return;
+    QString ident = mResourceIdentifier.first();
+    mResourceIdentifier.pop_front();
 
-    KMAccount *acc = mAccountList.first();
-    mAccountList.pop_front();
-
-    mEdit->append( i18n( "Collecting data for account '%1'...\n", acc->name() ) );
+    mEdit->append( i18n( "Collecting data for account '%1'...\n", ident ) );
     mEdit->append( i18n( "------------------------------------------------------------\n" ) );
-    mAccountBase = dynamic_cast<KMail::ImapAccountBase *>( acc );
-    if ( mAccountBase )
+    mImapSettingsInterface = KMail::Util::createImapSettingsInterface( ident );
+    if ( mImapSettingsInterface->isValid() )
     {
         // Detect URL for this IMAP account
-        const KUrl url = urlFromAccount( mAccountBase );
+      const KUrl url = KMail::Util::findSieveUrlForAccount( mImapSettingsInterface, ident );
         if ( !url.isValid() )
         {
             mEdit->append( i18n( "(Account does not support Sieve)\n\n" ) );
@@ -276,7 +251,8 @@ void SieveDebugDialog::slotDiagNextAccount()
             // Bypass the singleShot timer -- it's fired when we get our data
             return;
         }
-    } else {
+    } else
+    {
         mEdit->append( i18n( "(Account is not an IMAP account)\n\n" ) );
     }
 
@@ -298,7 +274,9 @@ void SieveDebugDialog::slotDiagNextScript()
     mScriptList.pop_front();
 
     mEdit->append( i18n( "Contents of script '%1':\n", scriptFile ) );
-    mUrl = urlFromAccount( mAccountBase );
+
+    mUrl = KMail::Util::findSieveUrlForAccount( mImapSettingsInterface, mResourceIdentifier.first() );
+
     mUrl.setFileName( scriptFile );
 
     mSieveJob = SieveJob::get( mUrl );

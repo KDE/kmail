@@ -15,17 +15,15 @@
 #include "vacation.h"
 #include <limits.h>
 
+#include "imapsettings.h"
 #include "vacationdialog.h"
 #include "sievejob.h"
 using KMail::SieveJob;
 #include "kmkernel.h"
 #include "kmmainwidget.h"
-#include "accountmanager.h"
-using KMail::AccountManager;
-#include "kmacctimap.h"
+#include "kmagentmanager.h"
 #include <kpimidentities/identitymanager.h>
 #include <kpimidentities/identity.h>
-#include "kmmessage.h"
 #include "globalsettings.h"
 
 #include <kmime/kmime_header_parsing.h>
@@ -39,6 +37,12 @@ using KMime::Types::AddrSpecList;
 #include <klocale.h>
 #include <kmessagebox.h>
 #include <kdebug.h>
+#include "util.h"
+
+#include <akonadi/agentinstance.h>
+
+#include <kimap/loginjob.h>
+
 
 #include <QByteArray>
 #include <QDateTime>
@@ -488,44 +492,22 @@ namespace KMail {
     return script;
   }
 
-  static KUrl findUrlForAccount( const KMail::ImapAccountBase * a ) {
-    assert( a );
-    const SieveConfig sieve = a->sieveConfig();
-    if ( !sieve.managesieveSupported() )
-      return KUrl();
-    if ( sieve.reuseConfig() ) {
-      // assemble Sieve url from the settings of the account:
-      KUrl u;
-      u.setProtocol( "sieve" );
-      u.setHost( a->host() );
-      u.setUser( a->login() );
-      u.setPass( a->passwd() );
-      u.setPort( sieve.port() );
-      u.addQueryItem( "x-mech", a->auth() == "*" ? "PLAIN" : a->auth() ); //translate IMAP LOGIN to PLAIN
-      if ( !a->useSSL() && !a->useTLS() )
-        u.addQueryItem( "x-allow-unencrypted", "true" );
-      u.setFileName( sieve.vacationFileName() );
-      return u;
-    } else {
-      KUrl u = sieve.alternateURL();
-      if ( u.protocol().toLower() == "sieve" && !a->useSSL() && !a->useTLS() && u.queryItem("x-allow-unencrypted").isEmpty() )
-        u.addQueryItem( "x-allow-unencrypted", "true" );
-      u.setFileName( sieve.vacationFileName() );
-      return u;
-    }
-  }
 
   KUrl Vacation::findURL() const {
-    AccountManager * am = kmkernel->acctMgr();
-    assert( am );
-    QList<KMAccount*>::iterator accountIt = am->begin();
-    while ( accountIt != am->end() ) {
-      KMAccount *account = *accountIt;
-      ++accountIt;
-      if ( KMail::ImapAccountBase * iab = dynamic_cast<KMail::ImapAccountBase*>( account ) ) {
-        KUrl u = findUrlForAccount( iab );
-        if ( !u.isEmpty() )
-          return u;
+    Akonadi::AgentInstance::List lst = kmkernel->agentManager()->instanceList();
+    foreach ( const Akonadi::AgentInstance& type, lst )
+    {
+      //TODO verify it.
+      if ( type.identifier().contains( IMAP_RESOURCE_IDENTIFIER ) ) {
+        OrgKdeAkonadiImapSettingsInterface *iface = KMail::Util::createImapSettingsInterface(type.identifier());
+        if ( iface->isValid() ) {
+          KUrl u = KMail::Util::findSieveUrlForAccount( iface,type.identifier() );
+          if ( !u.isEmpty() ) {
+            delete iface;
+            return u;
+          }
+        }
+        delete iface;
       }
     }
     return KUrl();

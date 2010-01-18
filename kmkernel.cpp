@@ -2,39 +2,32 @@
 
 #include "kmkernel.h"
 
-#include <config-kmail.h>
-
 #include "globalsettings.h"
 #include "broadcaststatus.h"
 using KPIM::BroadcastStatus;
 #include "kmstartup.h"
 #include "kmmainwin.h"
 #include "composer.h"
-#include "kmmsgpart.h"
 #include "kmreadermainwin.h"
-#include "kmfoldermgr.h"
-#include "kmfoldercachedimap.h"
-#include "kmacctcachedimap.h"
 #include "kmfiltermgr.h"
 #include "kmfilteraction.h"
-#define REALLY_WANT_KMSENDER
-#include "kmsender.h"
-#undef REALLY_WANT_KMSENDER
+#define REALLY_WANT_AKONADISENDER
+#include "akonadisender.h"
+#undef REALLY_WANT_AKONADISENDER
 #include "undostack.h"
-#include "accountmanager.h"
-using KMail::AccountManager;
 #include <kpimutils/kfileio.h>
 #include "kmversion.h"
 #include "kmreaderwin.h"
 #include "kmmainwidget.h"
 #include "recentaddresses.h"
 using KPIM::RecentAddresses;
-#include "kmmsgdict.h"
 #include "configuredialog.h"
 #include "kmcommands.h"
 #include "kmsystemtray.h"
 #include "stringutil.h"
+#include "messagehelper.h"
 #include "importarchivedialog.h"
+#include "foldertreeview.h"
 
 // kdepimlibs includes
 #include <kpimidentities/identity.h>
@@ -44,16 +37,15 @@ using KPIM::RecentAddresses;
 
 #include <kde_file.h>
 #include <kwindowsystem.h>
-#include "kmailicalifaceimpl.h"
 #include "mailserviceimpl.h"
 using KMail::MailServiceImpl;
-#include "mailmanagerimpl.h"
-using KMail::MailManagerImpl;
 #include "jobscheduler.h"
 #include "templateparser.h"
 using KMail::TemplateParser;
-#include "mainfolderview.h"
+
 #include "messagelist/core/configprovider.h"
+
+#include "foldercollection.h"
 
 #include <kmessagebox.h>
 #include <knotification.h>
@@ -66,9 +58,19 @@ using KMail::TemplateParser;
 #include <kdebug.h>
 #include <kio/jobuidelegate.h>
 #include <kio/netaccess.h>
-#include <kwallet.h>
-using KWallet::Wallet;
+#include <kprocess.h>
+
+#include <kmime/kmime_message.h>
+#include <kmime/kmime_util.h>
+#include <akonadi/kmime/specialmailcollections.h>
+#include <akonadi/kmime/specialmailcollectionsrequestjob.h>
+#include <akonadi/collection.h>
+#include <akonadi/collectionfetchjob.h>
+#include <akonadi/changerecorder.h>
+#include <akonadi/itemfetchscope.h>
 #include "actionscheduler.h"
+
+#include <akonadi/itemfetchjob.h>
 
 #include <QByteArray>
 #include <QDir>
@@ -86,32 +88,85 @@ using KWallet::Wallet;
 #include <stdlib.h>
 #include <assert.h>
 
-#ifdef INDICATEQT_FOUND
-// libindicate
-#include <qindicateserver.h>
-#endif
-
 #include <kcmdlineargs.h>
 #include <kstartupinfo.h>
 #include <kmailadaptor.h>
 #include "kmailinterface.h"
+#include "foldercollectionmonitor.h"
+#include "kmagentmanager.h"
+#include "imapsettings.h"
+#include "util.h"
 
-#include "folderadaptor.h"
-#include "groupware_types.h"
-static bool s_askingToGoOnline = false;
+#ifdef KORGANIZER_MERGED
+#include "incidenceeditor/kogroupwareintegration.h"
+#endif
 
 static KMKernel * mySelf = 0;
+static bool s_askingToGoOnline = false;
 
 /********************************************************************/
 /*                     Constructor and destructor                   */
 /********************************************************************/
 KMKernel::KMKernel (QObject *parent, const char *name) :
   QObject(parent),
-  mIdentityManager(0), mConfigureDialog(0), mICalIface(0), mMailService(0),
-  mMailManager( 0 ), mContextMenuShown( false ), mWallet( 0 ),
-  mMainWinVisible( true ), mPosOfMainWin( 0, 0 ), mDesktopOfMainWin( 0 )
+  mIdentityManager(0), mConfigureDialog(0), mMailService(0),
+  mContextMenuShown( false )
 {
-  mStorageDebug = KDebug::registerArea( "Storage Debug", false /* disable by default */ );
+  // Akonadi migration
+  KConfig config( "kmail-migratorrc" );
+  KConfigGroup migrationCfg( &config, "Migration" );
+  const bool enabled = migrationCfg.readEntry( "Enabled", false );
+  const int currentVersion = migrationCfg.readEntry( "Version", 0 );
+  const int targetVersion = migrationCfg.readEntry( "TargetVersion", 1 );
+  if ( enabled && currentVersion < targetVersion ) {
+    kDebug() << "Performing Akonadi migration. Good luck!";
+    KProcess proc;
+    QStringList args = QStringList() << "--interactive-on-change";
+    proc.setProgram( "kmail-migrator", args );
+    proc.start();
+    bool result = proc.waitForStarted();
+    if ( result ) {
+      result = proc.waitForFinished();
+    }
+    if ( result && proc.exitCode() == 0 ) {
+      kDebug() << "Akonadi migration has been successful";
+      migrationCfg.writeEntry( "Version", targetVersion );
+      migrationCfg.sync();
+    } else {
+      // exit code 1 means it is already running, so we are probably called by a migrator instance
+      kError() << "Akonadi migration failed!";
+      kError() << "command was: " << proc.program();
+      kError() << "exit code: " << proc.exitCode();
+      kError() << "stdout: " << proc.readAllStandardOutput();
+      kError() << "stderr: " << proc.readAllStandardError();
+      exit( 42 );
+    }
+  }
+
+#ifdef __GNUC__
+#warning Remove before the 4.5 release
+#endif
+  if ( KMessageBox::questionYesNo(
+        0,
+        i18n( "You are attempting to start an <b>unstable development version</b> of KMail.<br>"
+              "KMail is currently being ported to Akonadi and is under heavy development. "
+              "Do not use this version for real mails, you will <b>lose data</b>. If you use this "
+              "version now, your mails will not be correctly migrated, and you will not be able to "
+              "migrate them afterwards.<br>"
+              "Because of the current development, there are many bugs and regressions as well as "
+              "missing features. Please do not report any bugs for this version yet.<br><br>"
+              "If you want to use KMail for real mails, please use the version from the KDE 4.4 branch instead." ),
+        i18n( "Unstable Development version of KMail" ),
+        KGuiItem( i18n( "Lose Data" ) ),
+        KStandardGuiItem::cancel(),
+        "UseAtYourOwnRiskWarning",
+        KMessageBox::Dangerous )
+      == KMessageBox::No ) {
+    kWarning() << "Exiting after development version warning.";
+    exit(42);
+  }
+  mFolderCollectionMonitor = new FolderCollectionMonitor( this );
+  mAgentManager = new KMAgentManager( this );
   kDebug();
   setObjectName( name );
   mySelf = this;
@@ -119,28 +174,16 @@ KMKernel::KMKernel (QObject *parent, const char *name) :
   closed_by_user = true;
   the_firstInstance = true;
 
-  the_inboxFolder = 0;
-  the_outboxFolder = 0;
-  the_sentFolder = 0;
-  the_trashFolder = 0;
-  the_draftsFolder = 0;
-  the_templatesFolder = 0;
 
-  the_folderMgr = 0;
-  the_imapFolderMgr = 0;
-  the_dimapFolderMgr = 0;
-  the_searchFolderMgr = 0;
   the_undoStack = 0;
-  the_acctMgr = 0;
   the_filterMgr = 0;
   the_popFilterMgr = 0;
   the_filterActionDict = 0;
   the_msgSender = 0;
-  the_msgTagMgr = 0;
-  the_indicateServer = 0;
   mWin = 0;
-  mMailCheckAborted = false;
-  folderAdaptor=0;
+  mSmartQuote = false;
+  mWordWrap = false;
+  mWrapCol = 80;
   // make sure that we check for config updates before doing anything else
   KMKernel::config();
   // this shares the kmailrc parsing too (via KSharedConfig), and reads values from it
@@ -149,11 +192,10 @@ KMKernel::KMKernel (QObject *parent, const char *name) :
   GlobalSettings::self();
 
   mJobScheduler = new JobScheduler( this );
-  mICalIface = new KMailICalIfaceImpl();
-
   mXmlGuiInstance = KComponentData();
 
 
+  // cberzan: this crap moved to CodecManager ======================
   netCodec = QTextCodec::codecForName( KGlobal::locale()->encoding() );
 
   // In the case of Japan. Japanese locale name is "eucjp" but
@@ -175,6 +217,7 @@ KMKernel::KMKernel (QObject *parent, const char *name) :
     // QTextCodec::setCodecForLocale(cdc);
     // KGlobal::locale()->setEncoding(cdc->mibEnum());
   }
+  // till here ================================================
 
   connect( MailTransport::TransportManager::self(),
            SIGNAL(transportRemoved(int,QString)),
@@ -194,28 +237,22 @@ KMKernel::~KMKernel ()
     job->kill();
     it = mPutJobs.begin();
   }
-
-  delete mICalIface;
-  mICalIface = 0;
   delete mMailService;
   mMailService = 0;
-  delete mMailManager;
-  mMailManager = 0;
 
   GlobalSettings::self()->writeConfig();
-  delete mWallet;
-  mWallet = 0;
   mySelf = 0;
   kDebug();
 }
 
-int KMKernel::storageDebug()
+KMAgentManager *KMKernel::agentManager()
 {
-  KMKernel *theKernel = self();
-  if ( theKernel )
-    return theKernel->mStorageDebug;
-  else
-    return 0;
+  return mAgentManager;
+}
+
+Akonadi::ChangeRecorder * KMKernel::monitor()
+{
+  return mFolderCollectionMonitor->monitor();
 }
 
 void KMKernel::setupDBus()
@@ -223,10 +260,7 @@ void KMKernel::setupDBus()
   (void) new KmailAdaptor( this );
   qDBusRegisterMetaType<QVector<QStringList> >();
   QDBusConnection::sessionBus().registerObject( "/KMail", this );
-  mICalIface->registerWithDBus();
-  mICalIface->readConfig();
-  mMailService =  new MailServiceImpl();
-  mMailManager =  new MailManagerImpl();
+  mMailService = new MailServiceImpl();
 }
 
 bool KMKernel::handleCommandLine( bool noArgsOpensReader )
@@ -370,18 +404,29 @@ bool KMKernel::handleCommandLine( bool noArgsOpensReader )
 }
 
 /********************************************************************/
-/*             DCOP-callable, and command line actions              */
+/*             D-Bus-callable, and command line actions              */
 /********************************************************************/
 void KMKernel::checkMail () //might create a new reader but won't show!!
 {
   if ( !kmkernel->askToGoOnline() )
     return;
-  kmkernel->acctMgr()->checkMail( false );
+  Akonadi::AgentInstance::List lst = agentManager()->instanceList();
+  foreach( Akonadi::AgentInstance type, lst ) {
+    type.synchronize();
+  }
 }
 
 QStringList KMKernel::accounts()
 {
-  return kmkernel->acctMgr()->getAccounts();
+  QStringList accountLst;
+  Akonadi::AgentInstance::List lst = agentManager()->instanceList();
+  foreach ( const Akonadi::AgentInstance& type, lst )
+  {
+    // Explicitly make a copy, as we're not changing values of the list but only
+    // the local copy which is passed to action.
+    accountLst<<type.identifier();
+  }
+  return accountLst;
 }
 
 void KMKernel::checkAccount( const QString &account ) //might create a new reader but won't show!!
@@ -390,9 +435,11 @@ void KMKernel::checkAccount( const QString &account ) //might create a new reade
   if ( account.isEmpty() )
     checkMail();
   else {
-    KMAccount* acct = kmkernel->acctMgr()->findByName( account );
-    if ( acct )
-      kmkernel->acctMgr()->singleCheckMail (acct, false );
+    Akonadi::AgentInstance agent = kmkernel->agentManager()->instance( account );
+    if ( agent.isValid() )
+      agent.synchronize();
+    else
+      kDebug() << "- account with name '" << account <<"' not found";
   }
 }
 
@@ -442,18 +489,18 @@ int KMKernel::openComposer( const QString &to, const QString &cc,
 {
   kDebug();
   KMail::Composer::TemplateContext context = KMail::Composer::New;
-  KMMessage *msg = new KMMessage;
-  msg->initHeader();
-  msg->setCharset("utf-8");
+  KMime::Message::Ptr msg( new KMime::Message );
+  KMail::MessageHelper::initHeader( msg );
+  msg->contentType()->setCharset("utf-8");
   // tentatively decode to, cc and bcc because invokeMailer calls us with
   // RFC 2047 encoded addresses in order to protect non-ASCII email addresses
   if (!to.isEmpty())
-    msg->setTo( KMMsgBase::decodeRFC2047String( to.toLocal8Bit() ) );
+    msg->to()->fromUnicodeString( KMime::decodeRFC2047String( to.toLocal8Bit() ), "utf-8" );
   if (!cc.isEmpty())
-    msg->setCc( KMMsgBase::decodeRFC2047String( cc.toLocal8Bit() ) );
+    msg->cc()->fromUnicodeString( KMime::decodeRFC2047String( cc.toLocal8Bit() ), "utf-8" );
   if (!bcc.isEmpty())
-    msg->setBcc( KMMsgBase::decodeRFC2047String( bcc.toLocal8Bit() ) );
-  if (!subject.isEmpty()) msg->setSubject(subject);
+    msg->bcc()->fromUnicodeString( KMime::decodeRFC2047String( bcc.toLocal8Bit() ), "utf-8"  );
+  if (!subject.isEmpty()) msg->subject()->fromUnicodeString(subject, "utf-8" );
 
   KUrl messageUrl = KUrl( messageFile );
   if ( !messageUrl.isEmpty() && messageUrl.isLocalFile() ) {
@@ -465,7 +512,7 @@ int KMKernel::openComposer( const QString &to, const QString &cc,
     else {
       TemplateParser parser( msg, TemplateParser::NewMessage,
                              QString(), false, false, false );
-      parser.process( NULL, NULL );
+      parser.process( KMime::Message::Ptr() );
     }
   }
   else if ( !body.isEmpty() ) {
@@ -475,7 +522,7 @@ int KMKernel::openComposer( const QString &to, const QString &cc,
   else {
     TemplateParser parser( msg, TemplateParser::NewMessage,
                            QString(), false, false, false );
-    parser.process( 0, 0 );
+    parser.process( KMime::Message::Ptr() );
   }
 
   if ( !customHeaders.isEmpty() )
@@ -488,19 +535,20 @@ int KMKernel::openComposer( const QString &to, const QString &cc,
         {
           QString header = (*it).left( pos ).trimmed();
           QString value = (*it).mid( pos+1 ).trimmed();
-          if ( !header.isEmpty() && !value.isEmpty() )
-            msg->setHeaderField( header.toUtf8(), value );
+          if ( !header.isEmpty() && !value.isEmpty() ) {
+            KMime::Headers::Generic *h = new KMime::Headers::Generic( header.toUtf8(), msg.get(), value.toUtf8() );
+            msg->setHeader( h );
+          }
         }
       }
   }
 
   KMail::Composer * cWin = KMail::makeComposer( msg, context );
-  cWin->setCharset( "", true );
   if (!to.isEmpty())
     cWin->setFocusToSubject();
   KUrl::List attachURLs = KUrl::List( attachmentPaths );
   for ( KUrl::List::ConstIterator it = attachURLs.constBegin() ; it != attachURLs.constEnd() ; ++it )
-    cWin->addAttach( (*it) );
+    cWin->addAttachment( (*it), "" );
   if ( !hidden ) {
     cWin->show();
     // Activate window - doing this instead of KWindowSystem::activateWindow(cWin->winId());
@@ -528,23 +576,25 @@ int KMKernel::openComposer (const QString &to, const QString &cc,
 {
   kDebug();
   KMail::Composer::TemplateContext context = KMail::Composer::New;
-
-  KMMessage *msg = new KMMessage;
-  KMMessagePart *msgPart = 0;
-  msg->initHeader();
-  msg->setCharset( "utf-8" );
-  if ( !cc.isEmpty() ) msg->setCc(cc);
-  if ( !bcc.isEmpty() ) msg->setBcc(bcc);
-  if ( !subject.isEmpty() ) msg->setSubject(subject);
-  if ( !to.isEmpty() ) msg->setTo(to);
-  if ( identity > 0 ) msg->setHeaderField( "X-KMail-Identity", QString::number( identity ) );
+  KMime::Message::Ptr msg( new KMime::Message );
+  KMime::Content *msgPart = 0;
+  KMail::MessageHelper::initHeader( msg );
+  msg->contentType()->setCharset( "utf-8" );
+  if ( !cc.isEmpty() )      msg->cc()->fromUnicodeString( cc, "utf-8" );
+  if ( !bcc.isEmpty() )     msg->bcc()->fromUnicodeString( bcc, "utf-8" );
+  if ( !subject.isEmpty() ) msg->subject()->fromUnicodeString( subject, "utf-8" );
+  if ( !to.isEmpty() )      msg->to()->fromUnicodeString( to, "utf-8" );
+  if ( identity > 0 ) {
+    KMime::Headers::Generic *h = new KMime::Headers::Generic("X-KMail-Identity", msg.get(), QByteArray::number( identity ) );
+    msg->setHeader( h );
+  }
   if ( !body.isEmpty() ) {
     msg->setBody(body.toUtf8());
     context = KMail::Composer::NoTemplate;
   } else {
     TemplateParser parser( msg, TemplateParser::NewMessage,
                            QString(), false, false, false );
-    parser.process( NULL, NULL );
+    parser.process( KMime::Message::Ptr() );
   }
 
   bool iCalAutoSend = false;
@@ -558,49 +608,45 @@ int KMKernel::openComposer (const QString &to, const QString &cc,
       attachParamAttr == "method";
     // Remove BCC from identity on ical invitations (https://intevation.de/roundup/kolab/issue474)
     if ( isICalInvitation && bcc.isEmpty() )
-      msg->setBcc( "" );
+      msg->bcc()->clear();
     if ( isICalInvitation &&
         GlobalSettings::self()->legacyBodyInvites() ) {
       // KOrganizer invitation caught and to be sent as body instead
       msg->setBody( attachData );
       context = KMail::Composer::NoTemplate;
-      msg->setHeaderField( "Content-Type",
+      msg->contentType()->from7BitString(
                            QString( "text/calendar; method=%1; "
                                     "charset=\"utf-8\"" ).
-                           arg( attachParamValue ) );
+                           arg( attachParamValue ).toLatin1() );
 
       iCalAutoSend = true; // no point in editing raw ICAL
       noWordWrap = true; // we shant word wrap inline invitations
     } else {
       // Just do what we're told to do
-      msgPart = new KMMessagePart;
-      msgPart->setName( attachName );
-      msgPart->setCteStr( attachCte );
-      msgPart->setBodyEncoded( attachData );
-      msgPart->setTypeStr( attachType );
-      msgPart->setSubtypeStr( attachSubType );
-      msgPart->setParameter( attachParamAttr, attachParamValue );
+      msgPart = new KMime::Content;
+      msgPart->contentType()->setName( attachName, "utf-8" );
+      msgPart->contentTransferEncoding()->fromUnicodeString(attachCte, "utf-8" );
+      msgPart->setBody( attachData ); //TODO: check if was setBodyEncoded
+      msgPart->contentType()->setMimeType( attachType + "/" +  attachSubType );
+      msgPart->contentDisposition()->setParameter( attachParamAttr, attachParamValue ); //TODO: Check if the content disposition parameter needs to be set!
        if( ! GlobalSettings::self()->exchangeCompatibleInvitations() ) {
-        msgPart->setContentDisposition( attachContDisp );
+        msgPart->contentDisposition()->fromUnicodeString(attachContDisp, "utf-8" );
       }
       if( !attachCharset.isEmpty() ) {
         // kDebug() << "Set attachCharset to" << attachCharset;
-        msgPart->setCharset( attachCharset );
+        msgPart->contentType()->setCharset( attachCharset );
       }
       // Don't show the composer window if the automatic sending is checked
       iCalAutoSend = GlobalSettings::self()->automaticSending();
     }
   }
 
-  KMail::Composer * cWin = KMail::makeComposer( 0, context );
+  KMail::Composer * cWin = KMail::makeComposer( KMime::Message::Ptr(), context );
   cWin->setMsg( msg, !isICalInvitation /* mayAutoSign */ );
   cWin->setSigningAndEncryptionDisabled( isICalInvitation
       && GlobalSettings::self()->legacyBodyInvites() );
-  cWin->setAutoDelete( true );
   if ( noWordWrap )
     cWin->disableWordWrap();
-  else
-    cWin->setCharset( "" /* default charset */, true /* force default charset */ );
   if ( msgPart )
     cWin->addAttach( msgPart );
   if ( isICalInvitation ) {
@@ -642,25 +688,24 @@ QDBusObjectPath KMKernel::openComposer( const QString &to, const QString &cc,
                                         const QString &subject,
                                         const QString &body, bool hidden )
 {
-  KMMessage *msg = new KMMessage;
-  msg->initHeader();
-  msg->setCharset("utf-8");
-  if (!cc.isEmpty()) msg->setCc(cc);
-  if (!bcc.isEmpty()) msg->setBcc(bcc);
-  if (!subject.isEmpty()) msg->setSubject(subject);
-  if (!to.isEmpty()) msg->setTo(to);
+  KMime::Message::Ptr msg( new KMime::Message );
+  KMail::MessageHelper::initHeader( msg );
+  msg->contentType()->setCharset("utf-8");
+  if ( !cc.isEmpty() )      msg->cc()->fromUnicodeString( cc, "utf-8" );
+  if ( !bcc.isEmpty() )     msg->bcc()->fromUnicodeString( bcc, "utf-8" );
+  if ( !subject.isEmpty() ) msg->subject()->fromUnicodeString( subject, "utf-8" );
+  if ( !to.isEmpty() )      msg->to()->fromUnicodeString( to, "utf-8" );
   if ( !body.isEmpty() ) {
     msg->setBody(body.toUtf8());
   } else {
     TemplateParser parser( msg, TemplateParser::NewMessage,
                            QString(), false, false, false );
-    parser.process( NULL, NULL );
+    parser.process( KMime::Message::Ptr() );
   }
 
   const KMail::Composer::TemplateContext context = body.isEmpty() ? KMail::Composer::New :
                                                    KMail::Composer::NoTemplate;
   KMail::Composer * cWin = KMail::makeComposer( msg, context );
-  cWin->setCharset("", true);
   if ( !hidden ) {
     cWin->show();
     // Activate window - doing this instead of KWindowSystem::activateWindow(cWin->winId());
@@ -687,37 +732,31 @@ QDBusObjectPath KMKernel::newMessage( const QString &to,
                                       const QString &_attachURL)
 {
   KUrl attachURL( _attachURL );
-  KMMessage *msg = new KMMessage;
-  KMFolder *folder = 0;
+  KMime::Message::Ptr msg( new KMime::Message );
+  QSharedPointer<FolderCollection> folder;
   uint id = 0;
 
   if ( useFolderId ) {
     //create message with required folder identity
-    folder = currentFolder();
+    folder = currentFolderCollection();
     id = folder ? folder->identity() : 0;
   }
-  msg->initHeader( id );
-  msg->setCharset( "utf-8" );
+  KMail::MessageHelper::initHeader( msg, id );
+  msg->contentType()->setCharset( "utf-8" );
   //set basic headers
-  if ( !to.isEmpty() ) {
-    msg->setTo( to );
-  }
-  if ( !cc.isEmpty() ) {
-    msg->setCc( cc );
-  }
-  if ( !bcc.isEmpty() ) {
-    msg->setBcc( bcc );
-  }
+  if ( !cc.isEmpty() )      msg->cc()->fromUnicodeString( cc, "utf-8" );
+  if ( !bcc.isEmpty() )     msg->bcc()->fromUnicodeString( bcc, "utf-8" );
+  if ( !to.isEmpty() )      msg->to()->fromUnicodeString( to, "utf-8" );
 
   TemplateParser parser( msg, TemplateParser::NewMessage,
                          QString(), false, false, false );
-  parser.process( NULL, folder );
+  parser.process( KMime::Message::Ptr(), folder ? folder->collection() : Akonadi::Collection() );
 
   KMail::Composer *win = makeComposer( msg, KMail::Composer::New, id );
 
   //Add the attachment if we have one
   if ( !attachURL.isEmpty() && attachURL.isValid() ) {
-    win->addAttach( attachURL );
+    win->addAttachment( attachURL, "" );
   }
 
   //only show window when required
@@ -732,31 +771,28 @@ int KMKernel::viewMessage( const KUrl & messageFile )
   KMOpenMsgCommand *openCommand = new KMOpenMsgCommand( 0, messageFile );
 
   openCommand->start();
-
   return 1;
 }
 
 int KMKernel::sendCertificate( const QString& to, const QByteArray& certData )
 {
-  KMMessage *msg = new KMMessage;
-  msg->initHeader();
-  msg->setCharset("utf-8");
-  msg->setSubject( i18n( "Certificate Signature Request" ) );
-  if (!to.isEmpty()) msg->setTo(to);
+  KMime::Message::Ptr msg( new KMime::Message );
+  KMail::MessageHelper::initHeader( msg );
+  msg->contentType()->setCharset("utf-8");
+  msg->subject()->fromUnicodeString(i18n( "Certificate Signature Request" ), "utf-8" );
+  if (!to.isEmpty()) msg->to()->fromUnicodeString(to, "utf-8");
   // ### Make this message customizable via KIOSK
   msg->setBody( i18n( "Please create a certificate from attachment and return to sender." ).toUtf8() );
 
   KMail::Composer * cWin = KMail::makeComposer( msg );
-  cWin->setCharset("", true);
   cWin->slotSetAlwaysSend( true );
   if (!certData.isEmpty()) {
-    KMMessagePart *msgPart = new KMMessagePart;
-    msgPart->setName("smime.p10");
-    msgPart->setCteStr("base64");
-    msgPart->setBodyEncodedBinary(certData);
-    msgPart->setTypeStr("application");
-    msgPart->setSubtypeStr("pkcs10");
-    msgPart->setContentDisposition("attachment; filename=smime.p10");
+    KMime::Content *msgPart = new KMime::Content;
+    msgPart->contentType()->setName("smime.p10", "utf-8");
+    msgPart->contentTransferEncoding()->from7BitString("base64");
+    msgPart->setBody(certData); // TODO Check: was setBodyEncodedBinary
+    msgPart->contentType()->setMimeType("application/pkcs10");
+    msgPart->contentDisposition()->from7BitString("attachment; filename=smime.p10");
     cWin->addAttach(msgPart);
   }
 
@@ -773,7 +809,6 @@ int KMKernel::dbusAddMessage( const QString & foldername,
 
   if ( foldername.isEmpty() || foldername.startsWith('.'))
     return -1;
-
   int retval;
   bool readFolderMsgIds = false;
   QString _foldername = foldername.trimmed();
@@ -783,7 +818,6 @@ int KMKernel::dbusAddMessage( const QString & foldername,
     mAddMessageMsgIds.clear();
     readFolderMsgIds = true;
   }
-
   KUrl msgUrl( messageFile );
   if ( !msgUrl.isEmpty() && msgUrl.isLocalFile() ) {
 
@@ -792,9 +826,9 @@ int KMKernel::dbusAddMessage( const QString & foldername,
     if ( messageText.isEmpty() )
       return -2;
 
-    KMMessage *msg = new KMMessage();
-    msg->fromString( messageText );
-
+    KMime::Message *msg = new KMime::Message();
+    msg->setContent( messageText );
+#if 0
     if (readFolderMsgIds) {
       if ( foldername.contains("/")) {
         QString tmp_fname = "";
@@ -837,7 +871,8 @@ int KMKernel::dbusAddMessage( const QString & foldername,
 
       mAddMessageLastFolder = foldername;
     }
-
+#endif
+#if 0
     if ( mAddMsgCurrentFolder ) {
       if (readFolderMsgIds) {
 
@@ -865,17 +900,19 @@ int KMKernel::dbusAddMessage( const QString & foldername,
         int i;
 
         mAddMsgCurrentFolder->open( "dbusadd" );
+#if 0 //TODO port to akonadi
         for( i=0; i<mAddMsgCurrentFolder->count(); i++) {
-          KMMsgBase *mb = mAddMsgCurrentFolder->getMsgBase(i);
+          KMime::Message *mb = mAddMsgCurrentFolder->getMsgBase(i);
+
           QString id = mb->msgIdMD5();
           if ( id.isEmpty() ) {
-            id = mb->subject();
+            id = mb->subject()->asUnicodeString();
             if ( id.isEmpty() )
-              id = mb->fromStrip();
+              id = KMail::MessageHelper::fromStrip( mb );
             if ( id.isEmpty() )
-              id = mb->toStrip();
+              id = KMail::MessageHelper::toStrip( mb );
 
-            id += mb->dateStr();
+            id += mb->date()->asUnicodeString();
           }
 
           //fprintf(stderr,"%s\n",(const char *) id);
@@ -883,18 +920,27 @@ int KMKernel::dbusAddMessage( const QString & foldername,
             mAddMessageMsgIds.append(id);
           }
         }
+#else
+    kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
+#endif
         mAddMsgCurrentFolder->close( "dbusadd" );
       }
 
-      QString msgId = msg->msgIdMD5();
-      if ( msgId.isEmpty()) {
-        msgId = msg->subject();
-        if ( msgId.isEmpty() )
-          msgId = msg->fromStrip();
-        if ( msgId.isEmpty() )
-          msgId = msg->toStrip();
 
-        msgId += msg->dateStr();
+      QString msgId;
+#if 0 //TODO port to akonadi
+      msgId = msg->msgIdMD5();
+#else
+    kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
+#endif
+      if ( msgId.isEmpty()) {
+        msgId = msg->subject()->asUnicodeString();
+        if ( msgId.isEmpty() )
+          msgId = KMail::MessageHelper::fromStrip( msg );
+        if ( msgId.isEmpty() )
+          msgId = KMail::MessageHelper::toStrip( msg );
+
+        msgId += msg->date()->asUnicodeString();
       }
 
       int k = mAddMessageMsgIds.indexOf( msgId );
@@ -904,11 +950,13 @@ int KMKernel::dbusAddMessage( const QString & foldername,
         if ( !msgId.isEmpty() ) {
           mAddMessageMsgIds.append( msgId );
         }
-
+#if 0 //TODO port to akonadi
         if ( !MsgStatusFlags.isEmpty() ) {
           msg->status().setStatusFromStr(MsgStatusFlags);
         }
-
+#else
+    kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
+#endif
         int index;
         if ( mAddMsgCurrentFolder->addMsg( msg, &index ) == 0 ) {
           mAddMsgCurrentFolder->unGetMsg( index );
@@ -927,6 +975,7 @@ int KMKernel::dbusAddMessage( const QString & foldername,
     }
   } else {
     retval = -2;
+#endif
   }
   return retval;
 }
@@ -960,9 +1009,9 @@ int KMKernel::dbusAddMessage_fastImport( const QString & foldername,
     if ( messageText.isEmpty() )
       return -2;
 
-    KMMessage *msg = new KMMessage();
-    msg->fromString( messageText );
-
+    KMime::Message *msg = new KMime::Message();
+    msg->setContent( messageText );
+#if 0
     if ( foldername != mAddMessageLastFolder ) {
       if ( foldername.contains( '/' ) ) {
         QString tmp_fname = "";
@@ -1009,11 +1058,13 @@ int KMKernel::dbusAddMessage_fastImport( const QString & foldername,
 
     if ( mAddMsgCurrentFolder ) {
       int index;
-
+#if 0 //TODO port to akonadi
       if( !MsgStatusFlags.isEmpty() ) {
         msg->status().setStatusFromStr(MsgStatusFlags);
       }
-
+#else
+    kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
+#endif
       if ( mAddMsgCurrentFolder->addMsg( msg, &index ) == 0 ) {
         mAddMsgCurrentFolder->unGetMsg( index );
         retval = 1;
@@ -1027,6 +1078,7 @@ int KMKernel::dbusAddMessage_fastImport( const QString & foldername,
     }
   } else {
     retval = -2;
+#endif
   }
 
   return retval;
@@ -1037,33 +1089,33 @@ void KMKernel::showImportArchiveDialog()
   KMMainWidget *mainWidget = getKMMainWidget();
   KMail::ImportArchiveDialog *importDialog = new KMail::ImportArchiveDialog( mainWidget );
   importDialog->setAttribute( Qt::WA_DeleteOnClose );
-  importDialog->setFolder( mainWidget->mainFolderView()->currentFolder() );
+  importDialog->setFolder( mainWidget->folderTreeView()->currentFolder() );
   importDialog->show();
 }
 
 QStringList KMKernel::folderList() const
 {
+#if 0
   QStringList folders;
   const QString localPrefix = "/Local";
   folders << localPrefix;
   the_folderMgr->getFolderURLS( folders, localPrefix );
-  the_imapFolderMgr->getFolderURLS( folders );
-  the_dimapFolderMgr->getFolderURLS( folders );
   return folders;
+#else
+    kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
+    return QStringList();
+#endif
 }
 
 QString KMKernel::getFolder( const QString& vpath )
 {
+#if 0
   QString adaptorName;
   const QString localPrefix = "/Local";
   if ( the_folderMgr->getFolderByURL( vpath ) )
     adaptorName=vpath;
   else if ( vpath.startsWith( localPrefix ) && the_folderMgr->getFolderByURL( vpath.mid( localPrefix.length() ) ) )
     adaptorName=vpath.mid( localPrefix.length() );
-  else if ( the_imapFolderMgr->getFolderByURL( vpath ) )
-   adaptorName=vpath;
-  else if (the_dimapFolderMgr->getFolderByURL( vpath ) )
-   adaptorName=vpath;
   if( !adaptorName.isEmpty())
   {
     if ( folderAdaptor )
@@ -1074,13 +1126,16 @@ QString KMKernel::getFolder( const QString& vpath )
     folderAdaptor = new KMail::FolderAdaptor(adaptorName);
     return vpath;
   }
+#else
+    kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
+#endif
   kWarning() << "Folder not found:" << vpath;
   return QString();
 }
 
 void KMKernel::raise()
 {
-  QDBusInterface iface( KMAIL_DBUS_SERVICE, "/MainApplication",
+  QDBusInterface iface( "org.kde.kmail", "/MainApplication",
                         "org.kde.KUniqueApplication",
                         QDBusConnection::sessionBus());
   QDBusReply<int> reply;
@@ -1107,53 +1162,38 @@ bool KMKernel::showMail( quint32 serialNumber, const QString& /* messageId */ )
         break;
     }
   }
-
   if ( mainWidget ) {
-    int idx = -1;
-    KMFolder *folder = 0;
-    KMMsgDict::instance()->getLocation(serialNumber, &folder, &idx);
-    if (!folder || (idx == -1))
-      return false;
-    KMFolderOpener openFolder(folder, "showmail");
-    KMMsgBase *msgBase = folder->getMsgBase(idx);
-    if (!msgBase)
-      return false;
-    bool unGet = !msgBase->isMessage();
-    KMMessage *msg = folder->getMsg(idx);
-
-    KMReaderMainWin *win = new KMReaderMainWin( false, false );
-    KMMessage *newMessage = new KMMessage( *msg );
-    newMessage->setParent( msg->parent() );
-    newMessage->setMsgSerNum( msg->getMsgSerNum() );
-    newMessage->setReadyToShow( true );
-    win->showMsg( GlobalSettings::self()->overrideCharacterEncoding(), newMessage );
-    win->show();
-
-    if (unGet)
-      folder->unGetMsg(idx);
-    return true;
+    Akonadi::ItemFetchJob *job = new Akonadi::ItemFetchJob( Akonadi::Item(serialNumber ),this );
+    job->fetchScope().fetchFullPayload();
+    if ( job->exec() ) {
+      if ( job->items().count() >= 1 ) {
+        KMReaderMainWin *win = new KMReaderMainWin( false, false );
+        win->showMessage( GlobalSettings::self()->overrideCharacterEncoding(), job->items().at( 0 ) );
+        win->show();
+        return true;
+      }
+    }
   }
-
   return false;
 }
 
 QString KMKernel::getFrom( quint32 serialNumber )
 {
-  int idx = -1;
-  KMFolder *folder = 0;
-  KMMsgDict::instance()->getLocation(serialNumber, &folder, &idx);
-  if (!folder || (idx == -1))
-    return QString();
-  KMFolderOpener openFolder(folder, "getFrom");
-  KMMsgBase *msgBase = folder->getMsgBase(idx);
-  if (!msgBase)
-    return QString();
-  bool unGet = !msgBase->isMessage();
-  KMMessage *msg = folder->getMsg(idx);
-  QString result = msg->from();
-  if (unGet)
-    folder->unGetMsg(idx);
-  return result;
+  Akonadi::ItemFetchJob *job = new Akonadi::ItemFetchJob( Akonadi::Item(serialNumber ),this );
+  job->fetchScope().fetchFullPayload();
+  if ( job->exec() ) {
+    if ( job->items().count() >= 1 ) {
+      Akonadi::Item item = job->items().at( 0 );
+
+      if ( !item.hasPayload<KMime::Message::Ptr>() ) {
+        kWarning() << "Payload is not a MessagePtr!";
+        return "";
+      }
+      KMime::Message::Ptr msg = item.payload<KMime::Message::Ptr>();
+      return msg->from()->asUnicodeString();
+    }
+  }
+  return "";
 }
 
 QString KMKernel::debugScheduler()
@@ -1164,31 +1204,29 @@ QString KMKernel::debugScheduler()
 
 QString KMKernel::debugSernum( quint32 serialNumber )
 {
+
   QString res;
   if (serialNumber != 0) {
-    int idx = -1;
-    KMFolder *folder = 0;
-    KMMsgBase *msg = 0;
-    KMMsgDict::instance()->getLocation( serialNumber, &folder, &idx );
-    // It's possible that the message has been deleted or moved into a
-    // different folder
-    if (folder && (idx != -1)) {
-      // everything is ok
-      KMFolderOpener openFolder( folder, "debugser" );
-      msg = folder->getMsgBase( idx );
-      if (msg) {
+    Akonadi::ItemFetchJob *job = new Akonadi::ItemFetchJob( Akonadi::Item(serialNumber ),this );
+    job->fetchScope().fetchFullPayload();
+    if ( job->exec() ) {
+      if ( job->items().count() >= 1 ) {
+        Akonadi::Item item = job->items().at( 0 );
+
+        if ( !item.hasPayload<KMime::Message::Ptr>() ) {
+          kWarning() << "Payload is not a MessagePtr!";
+          return res.append( QString( "Invalid serial number." ) );
+        }
+        KMime::Message::Ptr msg = item.payload<KMime::Message::Ptr>();
         res.append( QString( " subject %s,\n sender %s,\n date %s.\n" )
-                             .arg( msg->subject() )
-                             .arg( msg->fromStrip() )
-                             .arg( msg->dateStr() ) );
-      } else {
-        res.append( QString( "Invalid serial number." ) );
+                    .arg( msg->subject()->asUnicodeString() )
+                             .arg( KMail::MessageHelper::fromStrip(msg) )
+                             .arg( msg->date()->asUnicodeString() ) );
+        return res;
       }
-    } else {
-      res.append( QString( "Invalid serial number." ) );
     }
   }
-  return res;
+  return res.append( QString( "Invalid serial number." ) );
 }
 
 
@@ -1319,29 +1357,6 @@ void KMKernel::slotSenderFinished()
 /********************************************************************/
 /*            Init, Exit, and handler  methods                      */
 /********************************************************************/
-void KMKernel::testDir( const char *_name )
-{
-  QString foldersPath = QDir::homePath() + QString( _name );
-  QFileInfo info( foldersPath );
-  if ( !info.exists() ) {
-    if ( KDE_mkdir( QFile::encodeName( foldersPath ), S_IRWXU ) == -1 ) {
-      KMessageBox::sorry( 0, i18n( "KMail could not create folder '%1';\n"
-                                   "please make sure that you can view and "
-                                   "modify the content of the folder '%2'.",
-                                   foldersPath, QDir::homePath() ) );
-      ::exit(-1);
-    }
-  }
-  if ( !info.isDir() || !info.isReadable() || !info.isWritable() ) {
-    KMessageBox::sorry( 0, i18n( "The permissions of the folder '%1' are "
-                                 "incorrect;\n"
-                                 "please make sure that you can view and "
-                                 "modify the content of this folder.",
-                                 foldersPath ) );
-    ::exit(-1);
-  }
-}
-
 
 //-----------------------------------------------------------------------------
 // Open a composer for each message found in the dead.letter folder
@@ -1352,104 +1367,80 @@ void KMKernel::recoverDeadLetters()
   if ( !dir.exists( "autosave" ) )
     return;
 
-  KMFolder folder( 0, pathName + "autosave", KMFolderTypeMaildir, false /* no index */ );
-  KMFolderOpener openFolder( &folder, "recover" );
-  if ( !folder.isOpened() ) {
-    kError() << "Cannot open autosave folder!";
-    return;
-  }
+  dir.cd( localDataPath() + "autosave" );
+  const QStringList autoSaveFiles = dir.entryList();
+  foreach( const QString &file, autoSaveFiles ) {
+    // Disregard the '.' and '..' folders
+    if( file == "." || file == ".." )
+      continue;
+    kDebug() << "Opening autosave file:" << dir.absoluteFilePath( file );
+    QFile autoSaveFile( dir.absoluteFilePath( file ) );
+    if( autoSaveFile.open( QIODevice::ReadOnly ) ) {
+      const KMime::Message::Ptr autoSaveMessage( new KMime::Message() );
+      const QByteArray msgData = autoSaveFile.readAll();
+      autoSaveMessage->setContent( msgData );
+      autoSaveMessage->parse();
 
-  const int num = folder.count();
-  for ( int i = 0; i < num; i++ ) {
-    KMMessage *msg = folder.take( 0 );
-    if ( msg ) {
-      KMail::Composer * win = KMail::makeComposer();
-      win->setMsg( msg, false, false, true );
-      win->setAutoSaveFilename( msg->fileName() );
-      win->show();
+      // Show the a new composer dialog for the message
+      KMail::Composer * autoSaveWin = KMail::makeComposer();
+      autoSaveWin->setMsg( autoSaveMessage );
+      autoSaveWin->show();
+      autoSaveFile.close();
+
+      // Delete the recoverd message
+      if( !dir.remove( dir.absoluteFilePath( file ) ) ) {
+        KMessageBox::sorry( 0, i18n( "Failed to delete the autosave file at %1\n"
+                                     "You may want to manually remove this file to stop KMail"
+                                     " from recovering the same message on each startup.",
+                                     dir.absoluteFilePath( file ) ),
+                            i18n( "Deleting Autosave File Failed" ) );
+      }
+    } else {
+      KMessageBox::sorry( 0, i18n( "Failed to open autosave file at %1.\nReason: %2" ,
+                                   file, autoSaveFile.errorString() ),
+                          i18n( "Opening Autosave File Failed" ) );
     }
   }
 }
 
-//-----------------------------------------------------------------------------
-void KMKernel::initFolders(KSharedConfig::Ptr cfg)
+void KMKernel::findCreateDefaultCollection( Akonadi::SpecialMailCollections::Type type )
 {
-  QString name;
-  KConfigGroup group(cfg,"General");
+  if( Akonadi::SpecialMailCollections::self()->hasDefaultCollection( type ) ) {
+    const Akonadi::Collection col = Akonadi::SpecialMailCollections::self()->defaultCollection( type );
+    if ( !( col.rights() & Akonadi::Collection::AllRights ) )
+      emergencyExit( i18n("You do not have read/write permission to your inbox folder.") );
+  }
+  else {
+    Akonadi::SpecialMailCollectionsRequestJob *job = new Akonadi::SpecialMailCollectionsRequestJob( this );
+    connect( job, SIGNAL( result( KJob* ) ),
+             this, SLOT( createDefaultCollectionDone( KJob* ) ) );
+    job->requestDefaultCollection( type );
+  }
+}
 
-  name = group.readEntry("inboxFolder");
+void KMKernel::createDefaultCollectionDone( KJob * job)
+{
+  if ( job->error() ) {
+    emergencyExit( job->errorText() );
+    return;
+  }
 
-  // Currently the folder manager cannot manage folders which are not
-  // in the base folder directory.
-  //if (name.isEmpty()) name = getenv("MAIL");
-
-  if (name.isEmpty()) name = I18N_NOOP("inbox");
-
-  the_inboxFolder  = (KMFolder*)the_folderMgr->findOrCreate(name);
-
-  if ( !the_inboxFolder->canAccess() ) {
+  Akonadi::SpecialMailCollectionsRequestJob *requestJob = qobject_cast<Akonadi::SpecialMailCollectionsRequestJob*>( job );
+  const Akonadi::Collection col = requestJob->collection();
+  if ( !( col.rights() & Akonadi::Collection::AllRights ) )
     emergencyExit( i18n("You do not have read/write permission to your inbox folder.") );
-  }
+}
 
-  the_inboxFolder->setSystemFolder(true);
-  if ( the_inboxFolder->userWhoField().isEmpty() )
-    the_inboxFolder->setUserWhoField( QString() );
-  // inboxFolder->open();
+//-----------------------------------------------------------------------------
+void KMKernel::initFolders()
+{
 
-  the_outboxFolder = the_folderMgr->findOrCreate(group.readEntry("outboxFolder", I18N_NOOP("outbox")));
-  if ( !the_outboxFolder->canAccess() ) {
-    emergencyExit( i18n("You do not have read/write permission to your outbox folder.") );
-  }
-  the_outboxFolder->setNoChildren(true);
-
-  the_outboxFolder->setSystemFolder(true);
-  if ( the_outboxFolder->userWhoField().isEmpty() )
-    the_outboxFolder->setUserWhoField( QString() );
-  /* Nuke the oubox's index file, to make sure that no ghost messages are in
-   * it from a previous crash. Ghost messages happen in the outbox because it
-   * the only folder where messages enter and leave within 5 seconds, which is
-   * the leniency period for index invalidation. Since the number of mails in
-   * this folder is expected to be very small, we can live with regenerating
-   * the index on each start to be on the save side. */
-  //if ( the_outboxFolder->folderType() == KMFolderTypeMaildir )
-  //  unlink( QFile::encodeName( the_outboxFolder->indexLocation() ) );
-  the_outboxFolder->open( "kmkernel" );
-
-  the_sentFolder = the_folderMgr->findOrCreate(group.readEntry("sentFolder", I18N_NOOP("sent-mail")));
-  if ( !the_sentFolder->canAccess() ) {
-    emergencyExit( i18n("You do not have read/write permission to your sent-mail folder.") );
-  }
-  the_sentFolder->setSystemFolder(true);
-  if ( the_sentFolder->userWhoField().isEmpty() )
-    the_sentFolder->setUserWhoField( QString() );
-  // the_sentFolder->open();
-
-  the_trashFolder  = the_folderMgr->findOrCreate(group.readEntry("trashFolder", I18N_NOOP("trash")));
-  if ( !the_trashFolder->canAccess() ) {
-    emergencyExit( i18n("You do not have read/write permission to your trash folder.") );
-  }
-  the_trashFolder->setSystemFolder(true);
-  if ( the_trashFolder->userWhoField().isEmpty() )
-    the_trashFolder->setUserWhoField( QString() );
-  // the_trashFolder->open();
-
-  the_draftsFolder = the_folderMgr->findOrCreate(group.readEntry("draftsFolder", I18N_NOOP("drafts")));
-  if ( !the_draftsFolder->canAccess() ) {
-    emergencyExit( i18n("You do not have read/write permission to your drafts folder.") );
-  }
-  the_draftsFolder->setSystemFolder(true);
-  if ( the_draftsFolder->userWhoField().isEmpty() )
-    the_draftsFolder->setUserWhoField( QString() );
-  the_draftsFolder->open( "kmkernel" );
-
-  the_templatesFolder = the_folderMgr->findOrCreate(group.readEntry("templatesFolder", I18N_NOOP("templates")));
-  if ( !the_templatesFolder->canAccess() ) {
-    emergencyExit( i18n("You do not have read/write permission to your templates folder.") );
-  }
-  the_templatesFolder->setSystemFolder(true);
-  if ( the_templatesFolder->userWhoField().isEmpty() )
-    the_templatesFolder->setUserWhoField( QString() );
-  the_templatesFolder->open( "kmkernel" );
+  findCreateDefaultCollection( Akonadi::SpecialMailCollections::Inbox );
+  findCreateDefaultCollection( Akonadi::SpecialMailCollections::Outbox );
+  findCreateDefaultCollection( Akonadi::SpecialMailCollections::SentMail );
+  findCreateDefaultCollection( Akonadi::SpecialMailCollections::Drafts );
+  findCreateDefaultCollection( Akonadi::SpecialMailCollections::Trash );
+  findCreateDefaultCollection( Akonadi::SpecialMailCollections::Templates );
 }
 
 void KMKernel::init()
@@ -1467,100 +1458,27 @@ void KMKernel::init()
   the_previousVersion = group.readEntry("previous-version");
   group.writeEntry("previous-version", KMAIL_VERSION);
 
-  QString foldersPath = group.readPathEntry( "folders", QString() );
-  QString standardFolderPath = localDataPath() + "mail";
-  kDebug() << "foldersPath (from config):" << foldersPath;
-
-  if ( foldersPath.isEmpty() ) {
-    foldersPath = standardFolderPath;
-    if ( transferMail( foldersPath ) ) {
-      group.writePathEntry( "folders", foldersPath );
-    }
-    kDebug() << "foldersPath (after transferMail):" << foldersPath;
-  }
-  else {
-    // Check if the folder path from config really exists.
-    // When migrating from KDE3 to KDE4, some distros change the home directory
-    // from .kde to .kde4, and if the user has copied the config file + app data
-    // over to .kde4, the config file then contains the incorrect entry.
-    // Therefore, we fall back to KDEHOME/share/apps/kmail/mail if the folders
-    // can't be found.
-    QDir configFolderDir( foldersPath );
-    if ( foldersPath.contains( ".kde/share/apps/kmail/mail" ) &&
-         !configFolderDir.exists() ) {
-      QDir standardConfigDir( standardFolderPath );
-      if ( standardConfigDir.exists() ) {
-        foldersPath = standardFolderPath;
-        kDebug() << "foldersPath from config doesn't exist, using standard "
-                    "path instead";
-      }
-    }
-  }
-
-  //Here because folderMgr's need it when they read the index and sort tags
-  the_msgTagMgr = new KMMessageTagMgr();
-  the_msgTagMgr->readConfig();
-
-  // moved up here because KMMessage::stripOffPrefixes is used below
-  KMMessage::readConfig();
-
-#ifdef INDICATEQT_FOUND
-  the_indicateServer = QIndicate::Server::defaultInstance();
-  the_indicateServer->setType( "message.mail" );
-  const QString appName = KGlobal::mainComponent().componentName();
-  KService::Ptr service = KService::serviceByDesktopName( appName );
-  if ( service ) {
-    the_indicateServer->setDesktopFile( service->entryPath() );
-  } else {
-    kWarning() << "Could not find desktop file for application";
-  }
-  connect( the_indicateServer, SIGNAL( serverDisplay() ),
-           SLOT( showMainWin() ) );
-#endif
+  readConfig();
 
   the_undoStack     = new UndoStack(20);
-  the_folderMgr     = new KMFolderMgr(foldersPath);
-  the_imapFolderMgr = new KMFolderMgr( KMFolderImap::cacheLocation(), KMImapDir);
-  the_dimapFolderMgr = new KMFolderMgr( KMFolderCachedImap::cacheLocation(), KMDImapDir);
-
-  the_searchFolderMgr = new KMFolderMgr(KStandardDirs::locateLocal("data","kmail/search"), KMSearchDir);
-  KMFolder *lsf = the_searchFolderMgr->find( i18n("Last Search") );
-  if (lsf)
-    the_searchFolderMgr->remove( lsf );
-
-  the_acctMgr       = new AccountManager();
   the_filterMgr     = new KMFilterMgr();
   the_popFilterMgr     = new KMFilterMgr(true);
   the_filterActionDict = new KMFilterActionDict;
 
-  initFolders(cfg);
-  the_acctMgr->readConfig();
+  initFolders();
   the_filterMgr->readConfig();
   the_popFilterMgr->readConfig();
+#if 0 //TODO port to akonadi
   cleanupImapFolders();
-
-  the_msgSender = new KMSender;
+#else
+    kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
+#endif
+  the_msgSender = new AkonadiSender;
   the_server_is_ready = true;
-  { // area for config group "Composer"
-    KConfigGroup group(cfg, "Composer");
-    if (group.readEntry("pref-charsets", QStringList() ).isEmpty())
-    {
-      group.writeEntry("pref-charsets", "us-ascii,iso-8859-1,locale,utf-8");
-    }
-  }
   readConfig();
   // filterMgr->dump();
 
   the_weaver =  new ThreadWeaver::Weaver( this );
-
-  connect( the_folderMgr, SIGNAL( folderRemoved(KMFolder*) ),
-           this, SIGNAL( folderRemoved(KMFolder*) ) );
-  connect( the_dimapFolderMgr, SIGNAL( folderRemoved(KMFolder*) ),
-           this, SIGNAL( folderRemoved(KMFolder*) ) );
-  connect( the_imapFolderMgr, SIGNAL( folderRemoved(KMFolder*) ),
-           this, SIGNAL( folderRemoved(KMFolder*) ) );
-  connect( the_searchFolderMgr, SIGNAL( folderRemoved(KMFolder*) ),
-           this, SIGNAL( folderRemoved(KMFolder*) ) );
 
   mBackgroundTasksTimer = new QTimer( this );
   mBackgroundTasksTimer->setSingleShot( true );
@@ -1570,111 +1488,25 @@ void KMKernel::init()
 #else
   mBackgroundTasksTimer->start( 5 * 60000 ); // 5 minutes, singleshot
 #endif
+
+#ifdef KORGANIZER_MERGED
+  if ( !KOGroupwareIntegration::isActive() ) {
+    KOGroupwareIntegration::activate();
+  }
+#endif
 }
 
 void KMKernel::readConfig()
 {
-#ifdef INDICATEQT_FOUND
-  if ( GlobalSettings::useMessageIndicator() ) {
-    the_indicateServer->show();
-  } else {
-    the_indicateServer->hide();
-  }
-#endif
-  //Needed here, since this function is also called when the configuration
-  //changes, and the static variables should be updated then - IOF
-  KMMessage::readConfig();
+  mSmartQuote = GlobalSettings::self()->smartQuote();
+  mWordWrap = GlobalSettings::self()->wordWrap();
+  mWrapCol = GlobalSettings::self()->lineWrapWidth();
+  if ((mWrapCol == 0) || (mWrapCol > 78))
+    mWrapCol = 78;
+  if (mWrapCol < 30)
+    mWrapCol = 30;
 }
 
-void KMKernel::cleanupImapFolders()
-{
-  KMAccount *acct = 0;
-  QList<KMFolderNode*>::iterator it = the_imapFolderMgr->dir().begin();
-  while ( it != the_imapFolderMgr->dir().end() )
-  {
-    KMFolderNode *node = *it;
-    if (node->isDir() || ((acct = the_acctMgr->find(node->id()))
-                          && ( acct->type() == KAccount::Imap )))
-    {
-      ++it;
-    } else {
-      KMFolder* folder = static_cast<KMFolder*>(node);
-      // delete only local
-      static_cast<KMFolderImap*>( folder->storage() )->setAlreadyRemoved( true );
-      the_imapFolderMgr->remove(folder);
-      it = the_imapFolderMgr->dir().begin();
-    }
-  }
-
-  it = the_dimapFolderMgr->dir().begin();
-  while ( it != the_dimapFolderMgr->dir().end() )
-  {
-    KMFolderNode *node = *it;
-    if (node->isDir() || ((acct = the_acctMgr->find(node->id()))
-        && ( acct->type() == KAccount::DImap )) )
-    {
-      ++it;
-    } else {
-      the_dimapFolderMgr->remove(static_cast<KMFolder*>(node));
-      it = the_dimapFolderMgr->dir().begin();
-    }
-  }
-
-  the_imapFolderMgr->quiet(true);
-  QList<KMAccount*>::iterator accountIt = the_acctMgr->begin();
-  while ( accountIt != the_acctMgr->end() ) {
-    acct = *accountIt;
-    ++accountIt;
-    KMFolderImap *fld;
-    KMAcctImap *imapAcct;
-
-    if (acct->type() != KAccount::Imap)
-      continue;
-    fld = static_cast<KMFolderImap*>(the_imapFolderMgr
-      ->findOrCreate(QString::number(acct->id()), false, acct->id())->storage());
-    fld->setNoContent(true);
-    fld->folder()->setLabel(acct->name());
-    imapAcct = static_cast<KMAcctImap*>(acct);
-    fld->setAccount(imapAcct);
-    imapAcct->setImapFolder(fld);
-    fld->close( "kernel", true );
-  }
-  the_imapFolderMgr->quiet(false);
-
-  the_dimapFolderMgr->quiet( true );
-  accountIt = the_acctMgr->begin();
-  while ( accountIt != the_acctMgr->end() ) {
-    acct = *accountIt;
-    ++accountIt;
-
-    KMFolderCachedImap *cfld = 0;
-    KMAcctCachedImap *cachedImapAcct;
-
-    if (acct->type() != KAccount::DImap ) continue;
-
-    KMFolder* fld = the_dimapFolderMgr->find(QString::number(acct->id()));
-    if( fld )
-      cfld = static_cast<KMFolderCachedImap*>( fld->storage() );
-    if (cfld == 0) {
-      // Folder doesn't exist yet
-      cfld = static_cast<KMFolderCachedImap*>(the_dimapFolderMgr->createFolder(QString::number(acct->id()),
-            false, KMFolderTypeCachedImap)->storage());
-      if (!cfld) {
-        KMessageBox::error(0,(i18n("Cannot create file `%1' in %2.\nKMail cannot start without it.", acct->name(), the_dimapFolderMgr->basePath())));
-        exit(-1);
-      }
-      cfld->folder()->setId( acct->id() );
-    }
-
-    cfld->setNoContent(true);
-    cfld->folder()->setLabel(acct->name());
-    cachedImapAcct = static_cast<KMAcctCachedImap*>(acct);
-    cfld->setAccount(cachedImapAcct);
-    cachedImapAcct->setImapFolder(cfld);
-    cfld->close( "kmkernel" );
-  }
-  the_dimapFolderMgr->quiet( false );
-}
 
 bool KMKernel::doSessionManagement()
 {
@@ -1732,15 +1564,12 @@ void KMKernel::cleanup(void)
   closeAllKMailWindows();
 
   // Write the config while all other managers are alive
-  the_acctMgr->writeConfig(false);
   delete the_filterMgr;
   the_filterMgr = 0;
   delete the_msgSender;
   the_msgSender = 0;
   delete the_filterActionDict;
   the_filterActionDict = 0;
-  delete the_msgTagMgr;
-  the_msgTagMgr = 0;
   delete the_undoStack;
   the_undoStack = 0;
   delete the_popFilterMgr;
@@ -1751,56 +1580,13 @@ void KMKernel::cleanup(void)
 
   KSharedConfig::Ptr config =  KMKernel::config();
   KConfigGroup group(config, "General");
-
-  if ( the_trashFolder ) {
-
-    the_trashFolder->close( "kmkernel", true );
-
+  if ( the_trashCollectionFolder.isValid() ) {
     if ( group.readEntry( "empty-trash-on-exit", false ) ) {
-      if ( the_trashFolder->count( true ) > 0 ) {
-        the_trashFolder->expunge();
+      if ( the_trashCollectionFolder.statistics().count() > 0 ) {
+        mFolderCollectionMonitor->expunge( the_trashCollectionFolder );
       }
     }
   }
-
-  if ( mICalIface )
-    mICalIface->cleanup();
-
-  QList<QPointer<KMFolder> > folders;
-  QStringList strList;
-  KMFolder *folder;
-  the_folderMgr->createFolderList(&strList, &folders);
-
-  QList<QPointer<KMFolder> >::const_iterator it;
-  for ( it = folders.constBegin(); it != folders.constEnd(); ++it ) {
-    folder = *it;
-    if ( !folder || folder->isDir() ) {
-      continue;
-    }
-    folder->close( "kmkernel", true );
-  }
-  strList.clear();
-  folders.clear();
-  the_searchFolderMgr->createFolderList(&strList, &folders);
-  for ( it = folders.constBegin(); it != folders.constEnd(); ++it ) {
-    folder = *it;
-    if ( !folder || folder->isDir() ) {
-      continue;
-    }
-    folder->close( "kmkernel", true );
-  }
-
-  delete the_folderMgr;
-  the_folderMgr = 0;
-  delete the_imapFolderMgr;
-  the_imapFolderMgr = 0;
-  delete the_dimapFolderMgr;
-  the_dimapFolderMgr = 0;
-  // Delete the_acctMgr here since it is used in the other *Mgrs above.
-  delete the_acctMgr;
-  the_acctMgr = 0;
-  delete the_searchFolderMgr;
-  the_searchFolderMgr = 0;
   delete mConfigureDialog;
   mConfigureDialog = 0;
   // do not delete, because mWin may point to an existing window
@@ -1811,92 +1597,6 @@ void KMKernel::cleanup(void)
     RecentAddresses::self( config.data() )->save( config.data() );
   config->sync();
 }
-
-bool KMKernel::transferMail( QString & destinationDir )
-{
-  QString dir;
-
-  // check whether the user has a ~/KMail folder
-  QFileInfo fi( QDir::home(), "KMail" );
-  if ( fi.exists() && fi.isDir() ) {
-    dir = QDir::homePath() + "/KMail";
-    // the following two lines can be removed once moving mail is reactivated
-    destinationDir = dir;
-    return true;
-  }
-
-  if ( dir.isEmpty() ) {
-    // check whether the user has a ~/Mail folder
-    fi.setFile( QDir::home(), "Mail" );
-    if ( fi.exists() && fi.isDir() &&
-         QFile::exists( QDir::homePath() + "/Mail/.inbox.index" ) ) {
-      // there's a ~/Mail folder which seems to be used by KMail (because of the
-      // index file)
-      dir = QDir::homePath() + "/Mail";
-      // the following two lines can be removed once moving mail is reactivated
-      destinationDir = dir;
-      return true;
-    }
-  }
-
-  if ( dir.isEmpty() ) {
-    return true; // there's no old mail folder
-  }
-
-#if 0
-  // disabled for now since moving fails in certain cases (e.g. if symbolic links are involved)
-  const QString kmailName = KGlobal::mainComponent().aboutData()()->programName();
-  QString msg;
-  if ( KIO::NetAccess::exists( destinationDir, KIO::NetAccess::SourceSide, 0 ) ) {
-    // if destinationDir exists, we need to warn about possible
-    // overwriting of files. otherwise, we don't have to
-    msg = ki18nc( "%1-%3 is the application name, %4-%7 are folder path",
-                  "<qt>The <i>%4</i> folder exists. "
-                  "%1 now uses the <i>%5</i> folder for "
-                  "its messages.<p>"
-                  "%2 can move the contents of <i>%6</i> into this folder for "
-                  "you, though this may replace any existing files with "
-                  "the same name in <i>%7</i>.</p><p>"
-                  "<strong>Would you like %3 to move the mail "
-                  "files now?</strong></p></qt>" )
-          .subs( kmailName ).subs( kmailName ).subs( kmailName )
-          .subs( dir ).subs( destinationDir ).subs( dir ).subs( destinationDir )
-          .toString();
-  }
-  else {
-    msg = ki18nc( "%1-%3 is the application name, %4-%6 are folder path",
-                  "<qt>The <i>%4</i> folder exists. "
-                  "%1 now uses the <i>%5</i> folder for "
-                  "its messages. %2 can move the contents of <i>%6</i> into "
-                  "this folder for you.<p>"
-                  "<strong>Would you like %3 to move the mail "
-                  "files now?</strong></p></qt>" )
-          .subs( kmailName ).subs( kmailName ).subs( kmailName )
-          .subs( dir ).subs( destinationDir ).subs( dir )
-          .toString();
-  }
-  QString title = i18n( "Migrate Mail Files?" );
-  QString buttonText = i18n( "Move" );
-
-  if ( KMessageBox::questionYesNo( 0, msg, title, buttonText, i18n("Do Not Move") ) ==
-       KMessageBox::No ) {
-    destinationDir = dir;
-    return true;
-  }
-
-  if ( !KIO::NetAccess::move( dir, destinationDir ) ) {
-    kDebug() << "Moving" << dir << "to" << destinationDir << "failed:" << KIO::NetAccess::lastErrorString();
-    kDebug() << "Deleting" << destinationDir;
-    KIO::NetAccess::del( destinationDir, 0 );
-    destinationDir = dir;
-    return false;
-  }
-#endif
-
-  return true;
-}
-
-
 
 void KMKernel::dumpDeadLetters()
 {
@@ -2083,21 +1783,19 @@ void KMKernel::emergencyExit( const QString& reason )
 /**
  * Returns true if the folder is either the outbox or one of the drafts-folders
  */
-bool KMKernel::folderIsDraftOrOutbox(const KMFolder * folder)
+bool KMKernel::folderIsDraftOrOutbox(const Akonadi::Collection & col)
 {
-  assert( folder );
-  if ( folder == the_outboxFolder )
+  if ( col == Akonadi::SpecialMailCollections::self()->defaultCollection( Akonadi::SpecialMailCollections::Outbox ) )
     return true;
-  return folderIsDrafts( folder );
+  return folderIsDrafts( col );
 }
 
-bool KMKernel::folderIsDrafts(const KMFolder * folder)
+bool KMKernel::folderIsDrafts(const Akonadi::Collection & col)
 {
-  assert( folder );
-  if ( folder == the_draftsFolder )
+  if ( col ==  Akonadi::SpecialMailCollections::self()->defaultCollection( Akonadi::SpecialMailCollections::Drafts ) )
     return true;
 
-  QString idString = folder->idString();
+  QString idString = QString::number( col.id() );
   if ( idString.isEmpty() ) return false;
 
   // search the identities if the folder matches the drafts-folder
@@ -2107,13 +1805,12 @@ bool KMKernel::folderIsDrafts(const KMFolder * folder)
   return false;
 }
 
-bool KMKernel::folderIsTemplates(const KMFolder * folder)
+bool KMKernel::folderIsTemplates(const Akonadi::Collection &col)
 {
-  assert( folder );
-  if ( folder == the_templatesFolder )
+  if ( col ==  Akonadi::SpecialMailCollections::self()->defaultCollection( Akonadi::SpecialMailCollections::Templates ) )
     return true;
 
-  QString idString = folder->idString();
+  QString idString = QString::number( col.id() );
   if ( idString.isEmpty() ) return false;
 
   // search the identities if the folder matches the templates-folder
@@ -2123,28 +1820,51 @@ bool KMKernel::folderIsTemplates(const KMFolder * folder)
   return false;
 }
 
-bool KMKernel::folderIsTrash(KMFolder * folder)
+Akonadi::Collection KMKernel::trashCollectionFromResource( const Akonadi::Collection & col )
 {
-  assert(folder);
-  if (folder == the_trashFolder) return true;
-  if ( !acctMgr() ) return false;
-  QStringList actList = acctMgr()->getAccounts();
-  QStringList::Iterator it( actList.begin() );
-  for( ; it != actList.end() ; ++it ) {
-    KMAccount* act = acctMgr()->findByName( *it );
-    if ( act && ( act->trash() == folder->idString() ) )
-      return true;
+  Akonadi::Collection trashCol;
+  if ( col.isValid() ) {
+    if ( col.resource().contains( IMAP_RESOURCE_IDENTIFIER ) ) {
+      OrgKdeAkonadiImapSettingsInterface *iface = KMail::Util::createImapSettingsInterface( col.resource() );
+      if ( iface->isValid() ) {
+
+        trashCol =  Akonadi::Collection( iface->trashCollection() );
+        delete iface;
+        return trashCol;
+      }
+      delete iface;
+    }
+  }
+  return trashCol;
+}
+
+bool KMKernel::folderIsTrash( const Akonadi::Collection & col )
+{
+  if ( col == Akonadi::SpecialMailCollections::self()->defaultCollection( Akonadi::SpecialMailCollections::Trash ) )
+    return true;
+  Akonadi::AgentInstance::List lst = kmkernel->agentManager()->instanceList();
+  foreach ( const Akonadi::AgentInstance& type, lst ) {
+    //TODO verify it.
+    if ( type.identifier().contains( IMAP_RESOURCE_IDENTIFIER ) ) {
+      OrgKdeAkonadiImapSettingsInterface *iface = KMail::Util::createImapSettingsInterface( type.identifier() );
+      if ( iface->isValid() ) {
+        if ( iface->trashCollection() == col.id() ) {
+          delete iface;
+          return true;
+        }
+      }
+      delete iface;
+    }
   }
   return false;
 }
 
-bool KMKernel::folderIsSentMailFolder( const KMFolder * folder )
+bool KMKernel::folderIsSentMailFolder( const Akonadi::Collection &col )
 {
-  assert( folder );
-  if ( folder == the_sentFolder )
+  if ( col == Akonadi::SpecialMailCollections::self()->defaultCollection( Akonadi::SpecialMailCollections::SentMail ) )
     return true;
 
-  QString idString = folder->idString();
+  QString idString = QString::number( col.id() );
   if ( idString.isEmpty() ) return false;
 
   // search the identities if the folder matches the sent-folder
@@ -2186,97 +1906,6 @@ KMainWindow* KMKernel::mainWin()
   return mWin;
 }
 
-void KMKernel::toggleMainWin()
-{
-  if( mMainWinVisible && mainWindowIsOnCurrentDesktop() ) {
-    hideMainWin();
-  } else {
-    showMainWin();
-  }
-}
-
-void KMKernel::showMainWin()
-{
-  QDBusInterface kontact( "org.kde.kontact",
-      "/KontactInterface", "org.kde.kontact.KontactInterface",
-       QDBusConnection::sessionBus() );
-  if ( kontact.isValid() ) {
-    kontact.call( "selectPlugin", "kontact_kmailplugin" );
-  }
-
-  KMMainWidget *widget = getKMMainWidget();
-  if ( !widget ) {
-    return;
-  }
-  QWidget *mainWin = widget->topLevelWidget();
-  assert(mainWin);
-#ifdef Q_WS_X11
-  KWindowInfo cur = KWindowSystem::windowInfo( mainWin->winId(), NET::WMDesktop );
-  if ( cur.valid() ) {
-    mDesktopOfMainWin = cur.desktop();
-  }
-  // switch to appropriate desktop
-  if ( mDesktopOfMainWin != NET::OnAllDesktops ) {
-    KWindowSystem::setCurrentDesktop( mDesktopOfMainWin );
-  }
-  if ( !mMainWinVisible ) {
-    if ( mDesktopOfMainWin == NET::OnAllDesktops ) {
-      KWindowSystem::setOnAllDesktops( mainWin->winId(), true );
-    }
-  }
-  KWindowSystem::activateWindow( mainWin->winId() );
-#endif
-  if ( !mMainWinVisible ) {
-    mainWin->move( mPosOfMainWin );
-    mainWin->show();
-    mMainWinVisible = true;
-  }
-  raise();
-
-  KMSystemTray *systray = widget->systray();
-  if ( systray ) {
-    //Fake that the folders have changed so that the icon status is correct
-    systray->foldersChanged();
-  }
-}
-
-void KMKernel::hideMainWin()
-{
-  if ( !getKMMainWidget() ) {
-    return;
-  }
-  QWidget *mainWin = getKMMainWidget()->topLevelWidget();
-  assert(mainWin);
-  mPosOfMainWin = mainWin->pos();
-#ifdef Q_WS_X11
-  mDesktopOfMainWin = KWindowSystem::windowInfo( mainWin->winId(),
-                                        NET::WMDesktop ).desktop();
-  // iconifying is unnecessary, but it looks cooler
-  KWindowSystem::minimizeWindow( mainWin->winId() );
-#endif
-  mainWin->hide();
-  mMainWinVisible = false;
-}
-
-bool KMKernel::mainWindowIsOnCurrentDesktop()
-{
-#ifdef Q_WS_X11
-  KMMainWidget * mainWidget = getKMMainWidget();
-  if ( !mainWidget ) {
-    return false;
-  }
-
-  QWidget *mainWin = mainWidget->topLevelWidget();
-  if ( !mainWin ) {
-    return false;
-  }
-
-  return KWindowSystem::windowInfo( mainWin->winId(),
-                           NET::WMDesktop ).isOnCurrentDesktop();
-#else
-  return true;
-#endif
-}
 
 /**
  * Empties all trash folders
@@ -2292,15 +1921,21 @@ void KMKernel::slotEmptyTrash()
   {
     return;
   }
+  Akonadi::Collection trash = trashCollectionFolder();
+  mFolderCollectionMonitor->expunge( trash );
 
-  QList<KMAccount*>::iterator accountIt = acctMgr()->begin();
-  while ( accountIt != acctMgr()->end() ) {
-    KMAccount *acct = *accountIt;
-    ++accountIt;
-    KMFolder* trash = findFolderById(acct->trash());
-    if (trash)
-    {
-      trash->expunge();
+  Akonadi::AgentInstance::List lst = kmkernel->agentManager()->instanceList();
+  foreach ( const Akonadi::AgentInstance& type, lst ) {
+    //TODO verify it.
+    if ( type.identifier().contains( IMAP_RESOURCE_IDENTIFIER ) ) {
+      OrgKdeAkonadiImapSettingsInterface *iface = KMail::Util::createImapSettingsInterface( type.identifier() );
+      if ( iface->isValid() ) {
+        int trashImap = iface->trashCollection();
+        if ( trashImap != trash.id() ) {
+          mFolderCollectionMonitor->expunge( Akonadi::Collection( trashImap ) );
+        }
+      }
+      delete iface;
     }
   }
 }
@@ -2323,35 +1958,26 @@ KSharedConfig::Ptr KMKernel::config()
   return mySelf->mConfig;
 }
 
-KMailICalIfaceImpl& KMKernel::iCalIface()
-{
-  assert( mICalIface );
-  return *mICalIface;
-}
 
 void KMKernel::selectFolder( const QString &folderPath )
 {
   kDebug()<< "Selecting a folder" << folderPath;
   const QString localPrefix = "/Local";
+#if 0
   KMFolder *folder = kmkernel->folderMgr()->getFolderByURL( folderPath );
   if ( !folder && folderPath.startsWith( localPrefix ) )
     folder = the_folderMgr->getFolderByURL( folderPath.mid( localPrefix.length() ) );
-  if ( !folder )
-    folder = kmkernel->imapFolderMgr()->getFolderByURL( folderPath );
-  if ( !folder )
-    folder = kmkernel->dimapFolderMgr()->getFolderByURL( folderPath );
+#endif
 
-  selectFolder( folder );
-}
-
-void KMKernel::selectFolder( KMFolder *folder )
-{
+#if 0
   KMMainWidget *widget = getKMMainWidget();
   Q_ASSERT( widget );
   if ( !widget )
     return;
-
-  widget->mainFolderView()->setCurrentFolder( folder );
+  widget->selectCollectionFolder( folder );
+#else
+  kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
+#endif
 }
 
 KMMainWidget *KMKernel::getKMMainWidget()
@@ -2373,24 +1999,12 @@ void KMKernel::slotRunBackgroundTasks() // called regularly by timer
   // Hidden KConfig keys. Not meant to be used, but a nice fallback in case
   // a stable kmail release goes out with a nasty bug in CompactionJob...
   KConfigGroup generalGroup( config(), "General" );
-
   if ( generalGroup.readEntry( "auto-expiring", true ) ) {
-    if ( the_folderMgr )
-      the_folderMgr->expireAllFolders( false /*scheduled, not immediate*/ );
-    if ( the_imapFolderMgr )
-      the_imapFolderMgr->expireAllFolders( false /*scheduled, not immediate*/ );
-    if ( the_dimapFolderMgr )
-      the_dimapFolderMgr->expireAllFolders( false /*scheduled, not immediate*/ );
-    // the_searchFolderMgr: no expiry there
+      mFolderCollectionMonitor->expireAllFolders( false /*scheduled, not immediate*/ );
   }
 
   if ( generalGroup.readEntry( "auto-compaction", true ) ) {
-    if ( the_folderMgr )
-      the_folderMgr->compactAllFolders( false /*scheduled, not immediate*/ );
-    // the_imapFolderMgr: no compaction
-    if ( the_dimapFolderMgr )
-      the_dimapFolderMgr->compactAllFolders( false /*scheduled, not immediate*/ );
-    // the_searchFolderMgr: no compaction
+      mFolderCollectionMonitor->compactAllFolders( false /*scheduled, not immediate*/ );
   }
 
 #ifdef DEBUG_SCHEDULER // for debugging, see jobscheduler.h
@@ -2401,46 +2015,39 @@ void KMKernel::slotRunBackgroundTasks() // called regularly by timer
 
 }
 
+QList<Akonadi::Collection> KMKernel::allFoldersCollection()
+{
+  Akonadi::Collection::List collections;
+  Akonadi::CollectionFetchJob *job = new Akonadi::CollectionFetchJob( Akonadi::Collection::root(), Akonadi::CollectionFetchJob::Recursive );
+  if ( job->exec() ) {
+    collections = job->collections();
+  }
+  return collections;
+}
+
 void KMKernel::expireAllFoldersNow() // called by the GUI
 {
-  the_folderMgr->expireAllFolders( true /*immediate*/ );
-  the_imapFolderMgr->expireAllFolders( true /*immediate*/ );
-  the_dimapFolderMgr->expireAllFolders( true /*immediate*/ );
+  mFolderCollectionMonitor->expireAllFolders( true /*immediate*/ );
 }
 
 void KMKernel::compactAllFolders() // called by the GUI
 {
-  the_folderMgr->compactAllFolders( true /*immediate*/ );
-  //the_imapFolderMgr->compactAllFolders( true /*immediate*/ );
-  the_dimapFolderMgr->compactAllFolders( true /*immediate*/ );
+  mFolderCollectionMonitor->compactAllFolders( true /*immediate*/ );
 }
 
-KMFolder* KMKernel::findFolderById( const QString& idString )
+Akonadi::Collection KMKernel::findFolderCollectionById( const QString& idString )
 {
-  KMFolder * folder = the_folderMgr->findIdString( idString );
-  if ( !folder )
-    folder = the_imapFolderMgr->findIdString( idString );
-  if ( !folder )
-    folder = the_dimapFolderMgr->findIdString( idString );
-  if ( !folder )
-    folder = the_searchFolderMgr->findIdString( idString );
-  return folder;
+  int id = idString.toInt();
+  Akonadi::CollectionFetchJob *job = new Akonadi::CollectionFetchJob( Akonadi::Collection(id), Akonadi::CollectionFetchJob::Base, this );
+  if ( job->exec() ) {
+    Akonadi::Collection::List lst = job->collections();
+    if ( lst.count() == 1 )
+      return lst.at( 0 );
+  }
+  delete job;
+  return Akonadi::Collection();
 }
 
-void KMKernel::enableMailCheck()
-{
-  mMailCheckAborted = false;
-}
-
-bool KMKernel::mailCheckAborted() const
-{
-  return mMailCheckAborted;
-}
-
-void KMKernel::abortMailCheck()
-{
-  mMailCheckAborted = true;
-}
 
 bool KMKernel::canQueryClose()
 {
@@ -2454,11 +2061,11 @@ bool KMKernel::canQueryClose()
   if ( !systray || GlobalSettings::closeDespiteSystemTray() )
       return true;
   if ( systray->mode() == GlobalSettings::EnumSystemTrayPolicy::ShowAlways ) {
-    hideMainWin();
+    systray->hideKMail();
     return false;
   } else if ( ( systray->mode() == GlobalSettings::EnumSystemTrayPolicy::ShowOnUnread ) && ( systray->hasUnreadMail() )) {
     systray->show();
-    hideMainWin();
+    systray->hideKMail();
     return false;
   }
   return true;
@@ -2474,59 +2081,23 @@ int KMKernel::timeOfLastMessageCountChange() const
   return mTimeOfLastMessageCountChange;
 }
 
-Wallet *KMKernel::wallet() {
-  static bool walletOpenFailed = false;
-  if ( mWallet && mWallet->isOpen() )
-    return mWallet;
 
-  if ( !Wallet::isEnabled() || walletOpenFailed )
-    return 0;
-
-  // find an appropriate parent window for the wallet dialog
-  WId window = 0;
-  if ( qApp->activeWindow() )
-    window = qApp->activeWindow()->winId();
-  else if ( getKMMainWidget() )
-    window = getKMMainWidget()->topLevelWidget()->winId();
-
-  delete mWallet;
-  mWallet = Wallet::openWallet( Wallet::NetworkWallet(), window );
-
-  if ( !mWallet ) {
-    walletOpenFailed = true;
-    return 0;
-  }
-
-  if ( !mWallet->hasFolder( "kmail" ) )
-    mWallet->createFolder( "kmail" );
-  mWallet->setFolder( "kmail" );
-  return mWallet;
-}
-
-QList< QPointer<KMFolder> > KMKernel::allFolders()
+QSharedPointer<FolderCollection> KMKernel::currentFolderCollection()
 {
-  QStringList names;
-  QList<QPointer<KMFolder> > folders;
-  folderMgr()->createFolderList(&names, &folders);
-  imapFolderMgr()->createFolderList(&names, &folders);
-  dimapFolderMgr()->createFolderList(&names, &folders);
-  searchFolderMgr()->createFolderList(&names, &folders);
-
-  return folders;
-}
-
-KMFolder *KMKernel::currentFolder() {
   KMMainWidget *widget = getKMMainWidget();
-  KMFolder *folder = 0;
-  if ( widget && widget->mainFolderView() ) {
-    folder = widget->mainFolderView()->currentFolder();
+  QSharedPointer<FolderCollection> folder;
+  if ( widget  ) {
+    folder = widget->currentFolder();
   }
   return folder;
 }
 
 // can't be inline, since KMSender isn't known to implement
 // KMail::MessageSender outside this .cpp file
-KMail::MessageSender * KMKernel::msgSender() { return the_msgSender; }
+KMail::MessageSender * KMKernel::msgSender()
+{
+  return the_msgSender;
+}
 
 void KMKernel::transportRemoved(int id, const QString & name)
 {
@@ -2584,5 +2155,63 @@ void KMKernel::updatedTemplates()
   emit customTemplatesChanged();
 }
 
+
+Akonadi::Collection KMKernel::inboxCollectionFolder()
+{
+  if ( !the_inboxCollectionFolder.isValid() )
+    the_inboxCollectionFolder = Akonadi::SpecialMailCollections::self()->defaultCollection( Akonadi::SpecialMailCollections::Inbox );
+  return the_inboxCollectionFolder;
+}
+
+Akonadi::Collection KMKernel::outboxCollectionFolder()
+{
+  if ( !the_outboxCollectionFolder.isValid() )
+    the_outboxCollectionFolder = Akonadi::SpecialMailCollections::self()->defaultCollection( Akonadi::SpecialMailCollections::Outbox );
+  return the_outboxCollectionFolder;
+}
+
+Akonadi::Collection KMKernel::sentCollectionFolder()
+{
+  if ( !the_sentCollectionFolder.isValid() )
+    the_sentCollectionFolder = Akonadi::SpecialMailCollections::self()->defaultCollection( Akonadi::SpecialMailCollections::SentMail );
+  return the_sentCollectionFolder;
+}
+
+Akonadi::Collection KMKernel::trashCollectionFolder()
+{
+  if ( !the_trashCollectionFolder.isValid() )
+    the_trashCollectionFolder = Akonadi::SpecialMailCollections::self()->defaultCollection( Akonadi::SpecialMailCollections::Trash );
+  return the_trashCollectionFolder;
+}
+
+Akonadi::Collection KMKernel::draftsCollectionFolder()
+{
+  if ( !the_draftsCollectionFolder.isValid() )
+    the_draftsCollectionFolder = Akonadi::SpecialMailCollections::self()->defaultCollection( Akonadi::SpecialMailCollections::Drafts );
+  return the_draftsCollectionFolder;
+}
+
+Akonadi::Collection KMKernel::templatesCollectionFolder()
+{
+  if ( !the_templatesCollectionFolder.isValid() )
+    the_templatesCollectionFolder = Akonadi::SpecialMailCollections::self()->defaultCollection( Akonadi::SpecialMailCollections::Templates );
+  return the_templatesCollectionFolder;
+}
+
+bool KMKernel::isSystemFolderCollection( const Akonadi::Collection &col)
+{
+  return ( col == inboxCollectionFolder() ||
+           col == outboxCollectionFolder() ||
+           col == sentCollectionFolder() ||
+           col == trashCollectionFolder() ||
+           col == draftsCollectionFolder() ||
+           col == templatesCollectionFolder() );
+}
+
+bool KMKernel::isImapFolder( const Akonadi::Collection &col )
+{
+  Akonadi::AgentInstance agentInstance = agentManager()->instance( col.resource() );
+  return agentInstance.type().identifier() == IMAP_RESOURCE_IDENTIFIER;
+}
 
 #include "kmkernel.moc"

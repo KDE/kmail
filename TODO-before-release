@@ -1,0 +1,34 @@
+Migrate favorite folder view from kmail to akonadi
+
+
+Migrate some config to akonadi:
+
+  mUseCustomIcons = configGroup.readEntry( "UseCustomIcons", false );
+  mNormalIconPath = configGroup.readEntry( "NormalIconPath" );
+  mUnreadIconPath = configGroup.readEntry( "UnreadIconPath" );
+  mHideInSelectionDialog = configGroup.readEntry( "HideInSelectionDialog", false );
+We use now Collection::Id(); and not idString();
+Port shortcut
+
+
+Migrate color config
+=> from [Reader] to [MessageListView::Colors] (done in kmail-udp id=4.4-akonadi)
+        NewMessage  to NewMessageColor
+        UnreadMessage to UnreadMessageColor
+        FlagMessage to ImportantMessageColor
+        ToActMessage to TodoMessageColor
+
+=> from [Reader] to [MessageListView::Fonts] (done in kmail-udp id = 4.4-akonadi)
+        list-font to MessageListFont
+        list-important-font to ImportantMessageFont
+        list-new-font to NewMessageFont
+        list-unread-font to UnreadMessageFont
+        list-toact-font to TodoMessageFont
+
+=> from [MessageListView]
+        DisplayMessageToolTips to MessageToolTipEnabled (done in kmail-udp id=4.4-akonadi)
+        HideTabBarWithSingleTab to AutoHideTabBarWithSingleTab (done in kmail-udp id = 4.4-akonadi)
+
+from [Reader] to [Reader] (rename just item)
+        showColorbar  to showColorBar (done in kmail-udp id=4.4-akonadi)
+ 

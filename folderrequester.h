@@ -30,57 +30,51 @@
 #define folderrequester_h
 
 #include <klineedit.h>
+#include <akonadi/collection.h>
 
 #include <QtGui/QWidget>
 #include <QKeyEvent>
 
-class KMFolder;
+
 
 namespace KMail {
-
-  class MainFolderView;
 
   /**
    * A widget that contains a KLineEdit which shows the current folder
    * and a button that fires a FolderSelectionDialog
    * The dialog is set to disable readonly folders by default
    * Search folders are excluded
-   */ 
+   */
   class FolderRequester: public QWidget
   {
     Q_OBJECT
 
     public:
-      /** 
+      /**
        * Constructor
        * @param parent the parent widget
-       * @param tree the KMFolderTree to get the folders
        */
       FolderRequester( QWidget *parent );
       virtual ~FolderRequester();
 
-      /** Sets the root folder to tree */
-      void setFolderTree( MainFolderView *tree );
-
-      /** Returns selected folder */
-      KMFolder* folder( void ) const;
+      Akonadi::Collection folderCollection() const;
 
       /** Returns the folder id */
-      QString folderId() const { return mFolderId; } 
+      QString folderId() const { return mFolderId; }
 
       /** Returns current text */
-      QString text() const { return edit->originalText(); } 
+      QString text() const { return edit->originalText(); }
 
       /** Preset the folder */
-      void setFolder( KMFolder* );
+      void setFolder( const Akonadi::Collection & );
       void setFolder( const QString& idString );
 
-      /** 
+      /**
        * Set if readonly folders should be disabled
-       * Be aware that if you disable this the user can also select the 
+       * Be aware that if you disable this the user can also select the
        * 'Local Folders' folder which has no valid folder associated
        */
-      void setMustBeReadWrite( bool readwrite ) 
+      void setMustBeReadWrite( bool readwrite )
       { mMustBeReadWrite = readwrite; }
 
       /** Set if the outbox should be shown */
@@ -97,16 +91,15 @@ namespace KMail {
 
     signals:
       /** Emitted when the folder changed */
-      void folderChanged( KMFolder* );
+      void folderChanged( const Akonadi::Collection& );
 
     protected:
       /** Capture space key to open the dialog */
       virtual void keyPressEvent( QKeyEvent * e );
 
     protected:
+      Akonadi::Collection mCollection;
       KLineEdit* edit;
-      KMFolder* mFolder;
-      MainFolderView* mFolderTree;
       QString mFolderId;
       bool mMustBeReadWrite;
       bool mShowOutbox;

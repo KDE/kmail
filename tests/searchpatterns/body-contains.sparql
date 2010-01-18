@@ -1,0 +1,9 @@
+select distinct ?r where { 
+    { 
+      ?r <http://www.semanticdesktop.org/ontologies/2007/03/22/nmo#plainTextMessageContent> ?v1 . ?v1 bif:contains "'foo*'" .
+    } UNION { 
+      ?r <http://www.semanticdesktop.org/ontologies/2007/01/19/nie#isPartOf> ?v2 . 
+      ?v2 <http://www.semanticdesktop.org/ontologies/2007/03/22/nmo#plainTextMessageContent> ?v3 .
+      ?v3 bif:contains "'foo*'" .
+    } .
+}

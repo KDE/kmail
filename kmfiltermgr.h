@@ -21,7 +21,14 @@
 #define kmfiltermgr_h
 
 #include "kmfilteraction.h" // for KMFilterAction::ReturnCode
-#include "kmfolder.h"
+#include <akonadi/collection.h>
+
+namespace Akonadi {
+  class Item;
+}
+namespace KMime {
+  class Message;
+}
 
 class KMFilter;
 class KMFilterDlg;
@@ -55,23 +62,22 @@ public:
       rule with "field equals value" */
   void createFilter( const QByteArray & field, const QString & value );
 
-  bool beginFiltering(KMMsgBase *msgBase) const;
-  int moveMessage(KMMessage *msg) const;
-  void endFiltering(KMMsgBase *msgBase) const;
+  bool beginFiltering( const Akonadi::Item &item ) const;
+  void endFiltering( const Akonadi::Item &item ) const;
 
   /**
    * Returns whether at least one filter applies to this account,
    * which means that mail must be downloaded in order to be filtered,
    * for example;
    * */
-  bool atLeastOneFilterAppliesTo( unsigned int accountID ) const;
+  bool atLeastOneFilterAppliesTo( const QString& accountID ) const;
 
   /**
    * Returns whether at least one incoming filter applies to this account,
    * which means that mail must be downloaded in order to be filtered,
    * for example;
    * */
-  bool atLeastOneIncomingFilterAppliesTo( unsigned int accountID ) const;
+  bool atLeastOneIncomingFilterAppliesTo( const QString & accountID ) const;
 
   /** Returns whether at least one filter targets a folder on an
    * online IMAP account.
@@ -109,36 +115,14 @@ public:
       0 otherwise. If the caller does not any longer own the message
       he *must* not delete the message or do similar stupid things. ;-)
   */
-  int process( KMMessage * msg, FilterSet aSet = Inbound,
-	       bool account = false, uint accountId = 0 );
+  int process( const Akonadi::Item &item, FilterSet aSet = Inbound,
+	       bool account = false, const QString & accountId = QString() );
 
-  /** For ad-hoc filters. Applies @p filter to @p msg. Return codes
-      are as with the above method.
-      @deprecated Use int process( quint32, const KMFilter * )
-  */
-  int process( KMMessage * msg, const KMFilter * filter );
-
-  /** For ad-hoc filters. Applies @p filter to message with @p serNum .
+  /** For ad-hoc filters. Applies @p filter to message @p item.
       Return codes are as with the above method. */
-  int process( quint32 serNum, const KMFilter * filter );
+  int process( const Akonadi::Item &item, const KMFilter * filter );
 
   void cleanup();
-
-  /** Increment the reference count for the filter manager.
-      Call this method before processing messages with process() */
-  void ref();
-  /** Decrement the reference count for the filter manager.
-      Call this method after processing messages with process().
-      Shall be called after all messages are processed.
-      If the reference count is zero then this method closes all folders
-      that have been temporarily opened with tempOpenFolder(). */
-  void deref(bool force = false);
-
-  /** Open given folder and mark it as temporarily open. The folder
-    will be closed upon next call of cleanip(). This method is
-    usually only called from within filter actions during process().
-    Returns returncode from KMFolder::open() call. */
-  int tempOpenFolder(KMFolder* aFolder);
 
   /** Called at the beginning of an filter list update. Currently a
       no-op */
@@ -156,11 +140,7 @@ public:
     Tests if the folder aFolder is used in any action. Changes
     to aNewFolder folder in this case. Returns true if a change
     occurred. */
-  bool folderRemoved(KMFolder* aFolder, KMFolder* aNewFolder);
-
-  /** Called from the folder manager when a new folder has been
-      created. Forwards this to the filter dialog if that is open. */
-  void folderCreated(KMFolder*) {}
+  bool folderRemoved(const Akonadi::Collection& aFolder, const Akonadi::Collection& aNewFolder);
 
   /** Set the global option 'Show Download Later Messages' */
   void setShowLaterMsgs( bool show ) {
@@ -172,26 +152,22 @@ public:
     return mShowLater;
   }
 public slots:
-  void slotFolderRemoved( KMFolder *aFolder );
+  void slotFolderRemoved( const Akonadi::Collection &aFolder );
 
 signals:
   void filterListUpdated();
 
 private:
-  int processPop( KMMessage * msg ) const;
+  int processPop( const Akonadi::Item &item ) const;
   /** Find out if a message matches the filter criteria */
-  bool isMatching( KMMessage * msg, const KMFilter * filter );
-  bool isMatching( quint32 serNum, const KMFilter * filter );
+  bool isMatching( const Akonadi::Item &item, const KMFilter * filter );
 
   QPointer<KMFilterDlg> mEditDialog;
-  QVector<KMFolder *> mOpenFolders;
   QList<KMFilter *> mFilters;
   bool bPopFilter;
   bool mShowLater;
   bool mDirtyBufferedFolderTarget;
   bool mBufferedFolderTarget;
-
-  int mRefCount;
 };
 
 #endif /*kmfiltermgr_h*/

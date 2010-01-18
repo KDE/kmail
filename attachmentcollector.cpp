@@ -32,65 +32,67 @@
 
 #include "attachmentcollector.h"
 
-#include "partNode.h"
+#include <messageviewer/nodehelper.h>
 
-static bool isInSkipList( partNode * ) {
+#include <kdebug.h>
+#include <kmime/kmime_content.h>
+
+static bool isInSkipList( KMime::Content * ) {
   return false;
 }
 
-static bool isInExclusionList( const partNode * node ) {
+static bool isInExclusionList( KMime::Content * node ) {
   if ( !node )
     return true;
 
-  switch ( node->type() ) {
-  case DwMime::kTypeApplication:
-    switch ( node->subType() ) {
-    case DwMime::kSubtypePkcs7Mime:
-    case DwMime::kSubtypePkcs7Signature:
-    case DwMime::kSubtypePgpSignature:
-    case DwMime::kSubtypePgpEncrypted:
+  if ( node->contentType()->mediaType() == "application" ) {
+    QString subType = node->contentType()->subType();
+    if ( subType == "pkcs7-mime"  || subType == "pkcs7-signature" || subType == "pgp-signature" || subType == "pgp-encrypted" ) {
       return true;
     }
-    break;
-  case DwMime::kTypeMultipart:
+  }
+  if ( node->contentType()->isMultipart()) {
     return true;
   }
   return false;
 }
 
 
-void KMail::AttachmentCollector::collectAttachmentsFrom( partNode * node ) {
-  partNode *parent;
+void KMail::AttachmentCollector::collectAttachmentsFrom( KMime::Content * node )
+{
+  KMime::Content *parent;
 
   while ( node ) {
-    parent = node->parentNode();
+    parent = node->parent();
 
-    if ( node->isFirstTextPart() ) {
-      node = node->next();
+    if ( node->topLevel()->textContent() == node ) {
+      node = MessageViewer::NodeHelper::next( node );
       continue;
     }
+
     if ( isInSkipList( node ) ) {
-      node = node->next( false ); // skip even the children
+      node = MessageViewer::NodeHelper::next( node, false ); // skip even the children
       continue;
     }
+
     if ( isInExclusionList( node ) ) {
-      node = node->next();
+      node = MessageViewer::NodeHelper::next( node );
       continue;
     }
 
-    if ( parent && parent->hasType( DwMime::kTypeMultipart ) &&
-         parent->hasSubType( DwMime::kSubtypeRelated ) ) {
-      node = node->next(); // skip embedded images
+    if ( parent && parent->contentType()->isMultipart() &&
+         parent->contentType()->subType() == "related" ) {
+      node = MessageViewer::NodeHelper::next( node );  // skip embedded images
       continue;
     }
 
-    if ( node->isHeuristicalAttachment() ) {
+    if ( MessageViewer::NodeHelper::isHeuristicalAttachment( node ) ) {
       mAttachments.push_back( node );
-      node = node->next( false ); // just make double sure
+      node = MessageViewer::NodeHelper::next( node, false ); // just make double sure
       continue;
     }
 
-    node = node->next();
+    node = MessageViewer::NodeHelper::next( node );
   }
 }
 
