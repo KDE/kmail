@@ -97,9 +97,7 @@ using KMail::TemplateParser;
 #include "imapsettings.h"
 #include "util.h"
 
-#ifdef KORGANIZER_MERGED
 #include "incidenceeditor/kogroupwareintegration.h"
-#endif
 
 static KMKernel * mySelf = 0;
 static bool s_askingToGoOnline = false;
@@ -1489,11 +1487,9 @@ void KMKernel::init()
   mBackgroundTasksTimer->start( 5 * 60000 ); // 5 minutes, singleshot
 #endif
 
-#ifdef KORGANIZER_MERGED
   if ( !KOGroupwareIntegration::isActive() ) {
     KOGroupwareIntegration::activate();
   }
-#endif
 }
 
 void KMKernel::readConfig()

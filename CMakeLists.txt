@@ -276,6 +276,7 @@ target_link_libraries(kmailprivate
   ${QT_QTWEBKIT_LIBRARY}
   ${NEPOMUK_LIBRARIES}
   ${NEPOMUK_QUERY_LIBRARIES}
+  korg_incidenceeditor
 )
 
 add_dependencies(kmail_xml akonadi_imap_resource) # generate imapresource.kcfg first
