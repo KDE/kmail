@@ -436,11 +436,15 @@ QString KMMessagePart::fileName( void ) const
 
   // search the end of the filename
   int endOfFilename;
-  if ( '"' == mContentDisposition[startOfFilename] ) {
-    startOfFilename++; // the double quote isn't part of the filename
-    endOfFilename = mContentDisposition.indexOf( '"', startOfFilename ) - 1;
+  if ( mContentDisposition.length() > startOfFilename ) {
+    if ( '"' == mContentDisposition[startOfFilename] ) {
+      startOfFilename++; // the double quote isn't part of the filename
+      endOfFilename = mContentDisposition.indexOf( '"', startOfFilename ) - 1;
+    } else {
+      endOfFilename = mContentDisposition.indexOf( ';', startOfFilename ) - 1;
+    }
   } else {
-    endOfFilename = mContentDisposition.indexOf( ';', startOfFilename ) - 1;
+    endOfFilename = startOfFilename;
   }
   if ( endOfFilename < 0 ) {
     endOfFilename = 32767;
