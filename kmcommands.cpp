@@ -765,6 +765,8 @@ static KURL subjectToUrl( const QString & subject )
   // simply "_" looks better.
   // We also don't allow filenames starting with a dot, since then the file is hidden and the poor
   // user can't find it anymore.
+  // Don't allow filenames starting with a tilde either, since that will cause the file dialog to
+  // discard the filename entirely.
   // https://issues.kolab.org/issue3805
   const QString filter = i18n( "*.mbox|email messages (*.mbox)\n*|all files (*)" );
   QString cleanSubject = subject.stripWhiteSpace()
