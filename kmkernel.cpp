@@ -1368,13 +1368,13 @@ void KMKernel::recoverDeadLetters()
     return;
 
   dir.cd( localDataPath() + "autosave" );
-  const QStringList autoSaveFiles = dir.entryList();
-  foreach( const QString &file, autoSaveFiles ) {
+  const QFileInfoList autoSaveFiles = dir.entryInfoList();
+  foreach( const QFileInfo &file, autoSaveFiles ) {
     // Disregard the '.' and '..' folders
-    if( file == "." || file == ".." )
+    if( file.fileName() == "." || file.fileName() == ".." || file.isDir() )
       continue;
-    kDebug() << "Opening autosave file:" << dir.absoluteFilePath( file );
-    QFile autoSaveFile( dir.absoluteFilePath( file ) );
+    kDebug() << "Opening autosave file:" << file.absoluteFilePath();
+    QFile autoSaveFile( file.absoluteFilePath() );
     if( autoSaveFile.open( QIODevice::ReadOnly ) ) {
       const KMime::Message::Ptr autoSaveMessage( new KMime::Message() );
       const QByteArray msgData = autoSaveFile.readAll();
@@ -1388,16 +1388,16 @@ void KMKernel::recoverDeadLetters()
       autoSaveFile.close();
 
       // Delete the recoverd message
-      if( !dir.remove( dir.absoluteFilePath( file ) ) ) {
+      if( !dir.remove( file.absoluteFilePath() ) ) {
         KMessageBox::sorry( 0, i18n( "Failed to delete the autosave file at %1\n"
                                      "You may want to manually remove this file to stop KMail"
                                      " from recovering the same message on each startup.",
-                                     dir.absoluteFilePath( file ) ),
+                                     file.absoluteFilePath() ),
                             i18n( "Deleting Autosave File Failed" ) );
       }
     } else {
       KMessageBox::sorry( 0, i18n( "Failed to open autosave file at %1.\nReason: %2" ,
-                                   file, autoSaveFile.errorString() ),
+                                   file.absoluteFilePath(), autoSaveFile.errorString() ),
                           i18n( "Opening Autosave File Failed" ) );
     }
   }
