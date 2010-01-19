@@ -773,10 +773,8 @@ static KURL subjectToUrl( const QString & subject )
                                   .replace( QDir::separator(), '_' )
                                   .replace( ": ", "_" )
                                   .replace( ':', '_' )
-                                  .replace( '.', '_' );
-  if ( cleanSubject.startsWith( "~" ) ) {
-    cleanSubject[0] = '_';
-  }
+                                  .replace( '.', '_' )
+                                  .replace( '~', '_' );
   return KFileDialog::getSaveURL( cleanSubject, filter );
 }
 
