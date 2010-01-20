@@ -723,6 +723,14 @@ void KMFolderMaildir::readFileHeaderIntern( const QString& dir,
         if (lastStr)
           *lastStr += line + i;
     }
+    else if ( inHeader && line[0] == '=' &&
+        ( ( line[1] == '0' && line[2] == '9' ) ||
+          ( line[1] == '2' && line[2] == '0' ) ) )
+    {
+        // bug 86302 - workaround for malformed wrapped encoded-words
+        if (lastStr)
+          *lastStr += line + 3;
+    }
     else
       lastStr = 0;
 
