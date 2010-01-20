@@ -142,11 +142,6 @@ public Q_SLOTS:
 
   Q_SCRIPTABLE bool canQueryClose();
 
-  /**
-   * D-Bus call used to set the default transport.
-   */
-  Q_SCRIPTABLE void setDefaultTransport( const QString & transport );
-
   Q_SCRIPTABLE int timeOfLastMessageCountChange() const;
 
   Q_SCRIPTABLE int dbusAddMessage( const QString & foldername,
@@ -161,9 +156,6 @@ public Q_SLOTS:
                                               const QString & MsgStatusFlags = QString() );
 
   Q_SCRIPTABLE void dbusResetAddMessage();
-
-  Q_SCRIPTABLE int sendCertificate( const QString & to,
-                                    const QByteArray & certData );
 
   Q_SCRIPTABLE bool handleCommandLine( bool noArgsOpensReader );
 
@@ -218,10 +210,6 @@ public Q_SLOTS:
                                            const QString & attachURL );
 
   Q_SCRIPTABLE bool showMail( quint32 serialNumber, const QString & messageId );
-
-  Q_SCRIPTABLE QString getFrom( quint32 serialNumber );
-
-  Q_SCRIPTABLE QString debugSernum( quint32 serialNumber );
 
   Q_SCRIPTABLE int viewMessage( const KUrl & messageFile );
 

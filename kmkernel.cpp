@@ -671,16 +671,6 @@ int KMKernel::openComposer (const QString &to, const QString &cc,
   return 1;
 }
 
-void KMKernel::setDefaultTransport( const QString & transport )
-{
-  MailTransport::Transport *t = MailTransport::TransportManager::self()->transportByName( transport, false );
-  if ( !t ) {
-    kWarning() <<"The transport you entered is not available";
-    return;
-  }
-  MailTransport::TransportManager::self()->setDefaultTransport( t->id() );
-}
-
 QDBusObjectPath KMKernel::openComposer( const QString &to, const QString &cc,
                                         const QString &bcc,
                                         const QString &subject,
@@ -769,32 +759,6 @@ int KMKernel::viewMessage( const KUrl & messageFile )
   KMOpenMsgCommand *openCommand = new KMOpenMsgCommand( 0, messageFile );
 
   openCommand->start();
-  return 1;
-}
-
-int KMKernel::sendCertificate( const QString& to, const QByteArray& certData )
-{
-  KMime::Message::Ptr msg( new KMime::Message );
-  KMail::MessageHelper::initHeader( msg );
-  msg->contentType()->setCharset("utf-8");
-  msg->subject()->fromUnicodeString(i18n( "Certificate Signature Request" ), "utf-8" );
-  if (!to.isEmpty()) msg->to()->fromUnicodeString(to, "utf-8");
-  // ### Make this message customizable via KIOSK
-  msg->setBody( i18n( "Please create a certificate from attachment and return to sender." ).toUtf8() );
-
-  KMail::Composer * cWin = KMail::makeComposer( msg );
-  cWin->slotSetAlwaysSend( true );
-  if (!certData.isEmpty()) {
-    KMime::Content *msgPart = new KMime::Content;
-    msgPart->contentType()->setName("smime.p10", "utf-8");
-    msgPart->contentTransferEncoding()->from7BitString("base64");
-    msgPart->setBody(certData); // TODO Check: was setBodyEncodedBinary
-    msgPart->contentType()->setMimeType("application/pkcs10");
-    msgPart->contentDisposition()->from7BitString("attachment; filename=smime.p10");
-    cWin->addAttach(msgPart);
-  }
-
-  cWin->show();
   return 1;
 }
 
@@ -1175,58 +1139,11 @@ bool KMKernel::showMail( quint32 serialNumber, const QString& /* messageId */ )
   return false;
 }
 
-QString KMKernel::getFrom( quint32 serialNumber )
-{
-  Akonadi::ItemFetchJob *job = new Akonadi::ItemFetchJob( Akonadi::Item(serialNumber ),this );
-  job->fetchScope().fetchFullPayload();
-  if ( job->exec() ) {
-    if ( job->items().count() >= 1 ) {
-      Akonadi::Item item = job->items().at( 0 );
-
-      if ( !item.hasPayload<KMime::Message::Ptr>() ) {
-        kWarning() << "Payload is not a MessagePtr!";
-        return "";
-      }
-      KMime::Message::Ptr msg = item.payload<KMime::Message::Ptr>();
-      return msg->from()->asUnicodeString();
-    }
-  }
-  return "";
-}
-
 QString KMKernel::debugScheduler()
 {
   QString res = KMail::ActionScheduler::debug();
   return res;
 }
-
-QString KMKernel::debugSernum( quint32 serialNumber )
-{
-
-  QString res;
-  if (serialNumber != 0) {
-    Akonadi::ItemFetchJob *job = new Akonadi::ItemFetchJob( Akonadi::Item(serialNumber ),this );
-    job->fetchScope().fetchFullPayload();
-    if ( job->exec() ) {
-      if ( job->items().count() >= 1 ) {
-        Akonadi::Item item = job->items().at( 0 );
-
-        if ( !item.hasPayload<KMime::Message::Ptr>() ) {
-          kWarning() << "Payload is not a MessagePtr!";
-          return res.append( QString( "Invalid serial number." ) );
-        }
-        KMime::Message::Ptr msg = item.payload<KMime::Message::Ptr>();
-        res.append( QString( " subject %s,\n sender %s,\n date %s.\n" )
-                    .arg( msg->subject()->asUnicodeString() )
-                             .arg( KMail::MessageHelper::fromStrip(msg) )
-                             .arg( msg->date()->asUnicodeString() ) );
-        return res;
-      }
-    }
-  }
-  return res.append( QString( "Invalid serial number." ) );
-}
-
 
 void KMKernel::pauseBackgroundJobs()
 {
