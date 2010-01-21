@@ -294,6 +294,7 @@ KMPopFilterCnfrmDlg::KMPopFilterCnfrmDlg( const QList<KMPopHeaders *> & headers,
   setUpdatesEnabled( false );
   setCaption( i18nc("@title:window", "POP Filter") );
   setButtons( Ok | Help | Cancel );
+  setButtonFocus( Ok );
   setHelp( "popfilters" );
   unsigned int rulesetCount = 0;
   mShowLaterMsgs = showLaterMsgs;
