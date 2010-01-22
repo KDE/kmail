@@ -279,8 +279,6 @@ target_link_libraries(kmailprivate
   korg_incidenceeditor
 )
 
-add_dependencies(kmail_xml akonadi_imap_resource) # generate imapresource.kcfg first
-
 set_target_properties(kmailprivate
   PROPERTIES VERSION ${GENERIC_LIB_VERSION} SOVERSION ${GENERIC_LIB_SOVERSION}
 )
