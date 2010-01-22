@@ -153,7 +153,6 @@ void ArchiveFolderDialog::slotButtonClicked( int button )
     return;
   }
 
-  // TODO: check if url is empty. or better yet, disable ok button until file is chosen
   KMail::BackupJob *backupJob = new KMail::BackupJob( mParentWidget );
   backupJob->setRootFolder( mFolderRequester->folder() );
   backupJob->setSaveLocation( mUrlRequester->url() );
