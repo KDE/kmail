@@ -243,9 +243,9 @@ kde4_add_kcfg_files(kmailprivate_LIB_SRCS
 kde4_add_library(kmailprivate SHARED ${kmailprivate_LIB_SRCS})
 target_link_libraries(kmailprivate
   ${KDE4_THREADWEAVER_LIBRARY}
-  ${KDE4_KMIME_LIBRARY}
-  ${KDE4_AKONADI_LIBS}
-  ${KDE4_AKONADI_KMIME_LIBS}
+  ${KDEPIMLIBS_KMIME_LIBRARY}
+  ${KDEPIMLIBS_AKONADI_LIBS}
+  ${KDEPIMLIBS_AKONADI_KMIME_LIBS}
   messagecore
   messagecomposer
   messagelist
@@ -253,12 +253,12 @@ target_link_libraries(kmailprivate
   ${KDEPIMLIBS_KONTACTINTERFACE_LIBS}
   ${KDE4_PHONON_LIBRARY}
   ${KDE4_KNOTIFYCONFIG_LIBRARY}
-  ${KDE4_KTNEF_LIBRARY}
-  ${KDE4_KUTILS_LIBS}
-  ${KDE4_MAILTRANSPORT_LIBRARY}
-  ${KDE4_KIMAP_LIBRARY}
+  ${KDEPIMLIBS_KTNEF_LIBRARY}
+  ${KDEPIMLIBS_MAILTRANSPORT_LIBRARY}
+  ${KDEPIMLIBS_KIMAP_LIBRARY}
   ${KDE4_KPARTS_LIBRARY}
   ${KDE4_KRESOURCES_LIBRARY}
+  ${KDE4_KUTILS_LIBS}
   kleo
   ${QGPGME_LIBRARIES}
   ksieve
@@ -300,7 +300,7 @@ qt4_add_dbus_interfaces(kmailpart_PART_SRCS ${CMAKE_BINARY_DIR}/kmail/org.kde.km
 kde4_add_plugin(kmailpart ${kmailpart_PART_SRCS})
 target_link_libraries(kmailpart
   ${KDE4_KDECORE_LIBS}
-  ${KDE4_AKONADI_LIBS}
+  ${KDEPIMLIBS_AKONADI_LIBS}
   kmailprivate
   ${KDE4_KPARTS_LIBS}
   ${KDE4_KUTILS_LIBS}
@@ -324,7 +324,7 @@ kde4_add_executable(kmail ${kmail_SRCS})
 target_link_libraries(kmail
   ${KDE4_KDEUI_LIBS}
   ${KDE4_KDECORE_LIBS}
-  ${KDE4_AKONADI_KCAL_LIBS}
+  ${KDEPIMLIBS_AKONADI_KCAL_LIBS}
   ${KDEPIMLIBS_KONTACTINTERFACE_LIBS}
   kmailprivate
   kdepim
