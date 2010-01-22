@@ -324,6 +324,7 @@ kde4_add_executable(kmail ${kmail_SRCS})
 target_link_libraries(kmail
   ${KDE4_KDEUI_LIBS}
   ${KDE4_KDECORE_LIBS}
+  ${KDE4_AKONADI_KCAL_LIBS}
   ${KDEPIMLIBS_KONTACTINTERFACE_LIBS}
   kmailprivate
   kdepim

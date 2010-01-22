@@ -14,11 +14,12 @@ MACRO(KMAIL_ADD_UNITTEST _source )
     ${QT_QTTEST_LIBRARY}
     ${QT_QTCORE_LIBRARY}
     ${KDE4_KIO_LIBS}
-    ${KDEPIMLIBS_KPIMUTILS_LIBS}
-    ${KDEPIMLIBS_MAILTRANSPORT_LIBS}
-    ${KDEPIMLIBS_AKONADI_LIBS}
-    ${KDEPIMLIBS_AKONADI_CONTACT_LIBS}
-    ${KDEPIMLIBS_KMIME_LIBS}
+    ${KDE4_KPIMUTILS_LIBS}
+    ${KDE4_MAILTRANSPORT_LIBS}
+    ${KDE4_AKONADI_LIBS}
+    ${KDE4_AKONADI_KCAL_LIBS}
+    ${KDE4_AKONADI_CONTACT_LIBS}
+    ${KDE4_KMIME_LIBS}
     ${SOPRANO_LIBRARIES}
     ${NEPOMUK_LIBRARIES}
     ${NEPOMUK_QUERY_LIBRARIES}
@@ -44,7 +45,7 @@ set(recipienteditortest_SRCS recipientseditortest.cpp)
 
 kde4_add_executable(recipienteditortest TEST ${recipienteditortest_SRCS})
 
-target_link_libraries(recipienteditortest ${KDE4_KIO_LIBS} kmailprivate kdepim)
+target_link_libraries(recipienteditortest ${KDE4_KIO_LIBS} ${KDE4_AKONADI_KCAL_LIBS} kmailprivate kdepim)
 
 
 ###### TODO port storagelayer tests to QTestLib
