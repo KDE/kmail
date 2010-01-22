@@ -24,6 +24,7 @@ SnippetItem::SnippetItem( QTreeWidget *parent, const QString &name, const QStrin
   strName = name;
   strText = text;
   iParent = -1;
+  setExpanded( true );
 }
 
 SnippetItem::SnippetItem( QTreeWidgetItem *parent, const QString &name, const QString &text )
@@ -33,6 +34,7 @@ SnippetItem::SnippetItem( QTreeWidgetItem *parent, const QString &name, const QS
   strName = name;
   strText = text;
   iParent = ((SnippetGroup *)parent)->getId();
+  setExpanded( true );
 }
 
 SnippetItem::~SnippetItem()
