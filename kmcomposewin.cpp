@@ -1122,7 +1122,7 @@ void KMComposeWin::setupActions( void )
     actionCollection()->addAction( "send_alternative", action );
     connect( action, SIGNAL(triggered(bool)), SLOT(slotSendLater()) );
     actActionLaterMenu = new KActionMenu( KIcon( "mail-queue" ), i18n("Send &Later Via"), this );
-    actActionLaterMenu->setIconText( i18n( "Queue" ) );
+    actActionLaterMenu->setIconText( i18nc( "Queue the message for sending at a later date", "Queue" ) );
     actionCollection()->addAction( "send_alternative_via", actActionLaterMenu );
 
   } else {
