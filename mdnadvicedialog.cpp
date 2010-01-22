@@ -37,8 +37,6 @@ MDNAdviceDialog::MDNAdviceDialog( const QString &text, bool canDeny, QWidget *pa
   setEscapeButton( KDialog::Yes );
   KMessageBox::createKMessageBox( this, QMessageBox::Question, text,
                                   QStringList(), QString(), 0, KMessageBox::NoExec );
-  connect( this, SIGNAL( buttonClicked( KDialog::ButtonCode ) ),
-           this, SLOT( slotButtonClicked( KDialog::ButtonCode ) ) );
 }
 
 MDNAdviceDialog::~MDNAdviceDialog()

@@ -41,6 +41,8 @@ private:
   MDNAdvice m_result;
 
 protected:
+
+  // Reimplemented
   virtual void slotButtonClicked( int button );
 };
 
