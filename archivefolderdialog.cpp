@@ -125,7 +125,10 @@ void ArchiveFolderDialog::setFolder( const Akonadi::Collection &defaultCollectio
   mFolderRequester->setFolder( defaultCollection );
   // TODO: what if the file already exists?
   mUrlRequester->setUrl( standardArchivePath( defaultCollection.name() ) );
-  mDeleteCheckBox->setEnabled( defaultCollection.rights() & Akonadi::Collection::CanDeleteItem );
+  const QSharedPointer<FolderCollection> folder = FolderCollection::forCollection( defaultCollection );
+  mDeleteCheckBox->setEnabled( defaultCollection.rights() & Akonadi::Collection::CanDeleteItem &&
+                               !folder->noContent() && defaultCollection.isValid() );
+  enableButtonOk( defaultCollection.isValid() && !folder->noContent() );
 }
 
 void ArchiveFolderDialog::slotButtonClicked( int button )
