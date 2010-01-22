@@ -692,16 +692,6 @@ KUrl KMReaderWin::urlClicked() const
   return mViewer->urlClicked();
 }
 
-bool KMReaderWin::autoDelete(void) const
-{
-  return mViewer->autoDelete();
-}
-
-void KMReaderWin::setAutoDelete(bool f)
-{
-  mViewer->setAutoDelete( f );
-}
-
 void KMReaderWin::update( bool force )
 {
   mViewer->update( force ? Viewer::Force : Viewer::Delayed );

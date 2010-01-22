@@ -130,10 +130,6 @@ public:
   /** Return selected text */
   QString copyText() const;
 
-  /** Get/set auto-delete msg flag. */
-  bool autoDelete(void) const;
-  void setAutoDelete(bool f);
-
   /** Override default html mail setting */
   bool htmlOverride() const;
   void setHtmlOverride( bool override );

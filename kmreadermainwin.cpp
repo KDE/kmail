@@ -65,7 +65,6 @@ KMReaderMainWin::KMReaderMainWin( bool htmlOverride, bool htmlLoadExtOverride,
 {
   mReaderWin = new KMReaderWin( this, this, actionCollection() );
   //mReaderWin->setShowCompleteMessage( true );
-  mReaderWin->setAutoDelete( true );
   mReaderWin->setHtmlOverride( htmlOverride );
   mReaderWin->setHtmlLoadExtOverride( htmlLoadExtOverride );
   mReaderWin->setDecryptMessageOverwrite( true );
@@ -79,7 +78,6 @@ KMReaderMainWin::KMReaderMainWin( char *name )
   : KMail::SecondaryWindow( name ? name : "readerwindow#" )
 {
   mReaderWin = new KMReaderWin( this, this, actionCollection() );
-  mReaderWin->setAutoDelete( true );
   initKMReaderMainWin();
 }
 
