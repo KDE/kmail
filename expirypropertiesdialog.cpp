@@ -161,10 +161,20 @@ ExpiryPropertiesDialog::~ExpiryPropertiesDialog()
 void ExpiryPropertiesDialog::accept()
 {
   bool enableGlobally = expireReadMailCB->isChecked() || expireUnreadMailCB->isChecked();
-  if ( enableGlobally && moveToRB->isChecked() && !folderSelector->folderCollection().isValid() ) {
+  Akonadi::Collection expireToFolder = folderSelector->folderCollection();
+  if ( enableGlobally && moveToRB->isChecked() && !expireToFolder.isValid() ) {
     KMessageBox::error( this, i18n("Please select a folder to expire messages into."),
                         i18n( "No Folder Selected" ) );
     return;
+  }
+  if ( expireToFolder.isValid() ) {
+    if ( expireToFolder.id() == mFolder->collection().id() ) {
+      KMessageBox::error( this, i18n( "Please select an other folder to expire message into that current folder." ),  i18n( "Bad selected folder" ) );
+      return;
+    }
+    else
+      mFolder->setExpireToFolderId( QString::number( expireToFolder.id() ) );
+
   }
 
   mFolder->setAutoExpire( enableGlobally );
@@ -178,9 +188,6 @@ void ExpiryPropertiesDialog::accept()
     mFolder->setExpireAction( FolderCollection::ExpireDelete );
   else
     mFolder->setExpireAction( FolderCollection::ExpireMove );
-  Akonadi::Collection expireToFolder = folderSelector->folderCollection();
-  if ( expireToFolder.isValid() )
-    mFolder->setExpireToFolderId( QString::number( expireToFolder.id() ) );
   // trigger immediate expiry if there is something to do
   if ( enableGlobally )
     mFolder->expireOldMessages( true /*immediate*/);
