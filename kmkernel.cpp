@@ -120,7 +120,8 @@ KMKernel::KMKernel (QObject *parent, const char *name) :
     kDebug() << "Performing Akonadi migration. Good luck!";
     KProcess proc;
     QStringList args = QStringList() << "--interactive-on-change";
-    proc.setProgram( "kmail-migrator", args );
+    const QString path = KStandardDirs::findExe( QLatin1String("kmail-migrator" ) );
+    proc.setProgram( path, args );
     proc.start();
     bool result = proc.waitForStarted();
     if ( result ) {
