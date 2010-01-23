@@ -26,7 +26,7 @@
 #include <akonadi/control.h>
 
 #include <kdebug.h>
-
+#include <kmessagebox.h>
 #undef Status // stupid X headers
 
 #include "aboutdata.h"
@@ -145,8 +145,9 @@ int main(int argc, char *argv[])
   app.delayedInstanceCreation();
 
   if ( !Akonadi::Control::start( kmkernel->getKMMainWidget() ) ) {
-    //TODO: add message box after string freeze
     kWarning() << "Unable to start Akonadi server, exit application";
+    KMessageBox::sorry( 0, i18n( "Akonadi failed to start. Please check your configuration." ),
+                        i18n( "KMail" ) );
     return 1;
   }
   // Go!
