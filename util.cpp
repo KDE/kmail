@@ -43,7 +43,8 @@
 
 #include <stdlib.h>
 #include <kpimutils/email.h>
-#include <kglobal.h>
+#include <KGlobal>
+#include <KStandardDirs>
 #include <kascii.h>
 #include <KCharsets>
 #include "imapsettings.h"
@@ -170,7 +171,8 @@ void KMail::Util::launchAccountWizard( QWidget *w )
   lst.append( "--type" );
   lst.append( "message/rfc822" );
 
-  if( !QProcess::startDetached("accountwizard", lst ) )
+  const QString path = KStandardDirs::findExe( QLatin1String("accountwizard" ) );
+  if( !QProcess::startDetached( path, lst ) )
     KMessageBox::error( w, i18n( "Could not start the account wizard. "
                                  "Please check your installation." ),
                         i18n( "Unable to start account wizard" ) );
