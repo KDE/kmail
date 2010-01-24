@@ -301,10 +301,6 @@ public:
   bool wordWrap() const { return mWordWrap;}
   int wrapCol() const { return mWrapCol;}
 
-#if 0 //TODO port to akonadi
-  KMailICalIfaceImpl& iCalIface();
-#endif
-
   bool firstStart() const { return the_firstStart; }
   /** Mark first start as done */
   void firstStartDone() { the_firstStart = false; }
