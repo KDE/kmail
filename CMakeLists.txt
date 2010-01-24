@@ -157,9 +157,7 @@ set(kmailprivate_LIB_SRCS
    attachmentfrompublickeyjob.cpp
    mdnadvicedialog.cpp
    backupjob.cpp
-   importjob.cpp
    archivefolderdialog.cpp
-   importarchivedialog.cpp
    tagging.cpp
 
    #subscriptiondialog.cpp

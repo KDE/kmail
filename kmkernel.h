@@ -138,7 +138,6 @@ public Q_SLOTS:
   Q_SCRIPTABLE void selectFolder( const QString & folder );
 
   Q_SCRIPTABLE QString getFolder( const QString & vpath );
-  Q_SCRIPTABLE void showImportArchiveDialog();
 
   Q_SCRIPTABLE bool canQueryClose();
 

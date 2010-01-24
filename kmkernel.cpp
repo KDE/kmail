@@ -26,7 +26,6 @@ using KPIM::RecentAddresses;
 #include "kmsystemtray.h"
 #include "stringutil.h"
 #include "messagehelper.h"
-#include "importarchivedialog.h"
 #include "foldertreeview.h"
 
 // kdepimlibs includes
@@ -1045,15 +1044,6 @@ int KMKernel::dbusAddMessage_fastImport( const QString & foldername,
   }
 
   return retval;
-}
-
-void KMKernel::showImportArchiveDialog()
-{
-  KMMainWidget *mainWidget = getKMMainWidget();
-  KMail::ImportArchiveDialog *importDialog = new KMail::ImportArchiveDialog( mainWidget );
-  importDialog->setAttribute( Qt::WA_DeleteOnClose );
-  importDialog->setFolder( mainWidget->folderTreeView()->currentFolder() );
-  importDialog->show();
 }
 
 QStringList KMKernel::folderList() const
