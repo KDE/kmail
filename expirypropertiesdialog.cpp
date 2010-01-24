@@ -169,7 +169,8 @@ void ExpiryPropertiesDialog::accept()
   }
   if ( expireToFolder.isValid() ) {
     if ( expireToFolder.id() == mFolder->collection().id() ) {
-      KMessageBox::error( this, i18n( "Please select an other folder to expire message into that current folder." ),  i18n( "Bad selected folder" ) );
+      KMessageBox::error( this, i18n( "Please select a different folder than the current folder to expire message into." ),
+                          i18n( "Wrong Folder Selected" ) );
       return;
     }
     else
