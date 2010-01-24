@@ -143,19 +143,6 @@ public Q_SLOTS:
 
   Q_SCRIPTABLE int timeOfLastMessageCountChange() const;
 
-  Q_SCRIPTABLE int dbusAddMessage( const QString & foldername,
-                                   const QString & messageFile,
-                                   const QString & MsgStatusFlags = QString() );
-
-  /**
-   * Add messages without rejecting duplicates
-   */
-  Q_SCRIPTABLE int dbusAddMessage_fastImport( const QString & foldername,
-                                              const QString & messageFile,
-                                              const QString & MsgStatusFlags = QString() );
-
-  Q_SCRIPTABLE void dbusResetAddMessage();
-
   Q_SCRIPTABLE bool handleCommandLine( bool noArgsOpensReader );
 
   Q_SCRIPTABLE QString debugScheduler();
