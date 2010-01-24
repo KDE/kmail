@@ -250,7 +250,7 @@ namespace KMail {
     const Identity defaultIdentity = manager.defaultIdentity();
     const QString email = defaultIdentity.emailAddr();
 
-    Akonadi::ContactSearchJob *job = new Akonadi::ContactSearchJob;
+    Akonadi::ContactSearchJob *job = new Akonadi::ContactSearchJob(this);
     job->setQuery( Akonadi::ContactSearchJob::Email, email );
     job->exec();
 

@@ -144,7 +144,7 @@ void DistributionListDialog::setRecipients( const Recipient::List &recipients )
       if ( !email.isEmpty() ) {
         DistributionListItem *item = new DistributionListItem( mRecipientsList );
 
-        Akonadi::ContactSearchJob *job = new Akonadi::ContactSearchJob();
+        Akonadi::ContactSearchJob *job = new Akonadi::ContactSearchJob(this);
         job->setQuery( Akonadi::ContactSearchJob::Email, email );
         job->exec();
 
