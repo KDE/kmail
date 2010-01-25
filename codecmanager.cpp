@@ -83,8 +83,7 @@ QList<QByteArray> CodecManager::preferredCharsets() const
 
 void CodecManager::updatePreferredCharsets()
 {
-  const KConfigGroup config( KMKernel::config(), "Composer" );
-  const QStringList prefCharsets = config.readEntry( "pref-charsets", QStringList() ); // TODO KConfig XT
+  const QStringList prefCharsets = GlobalSettings::self()->preferedCharsets();
   d->preferredCharsets.clear();
   foreach( const QString &str, prefCharsets ) {
     QByteArray charset = str.toLatin1().toLower();
