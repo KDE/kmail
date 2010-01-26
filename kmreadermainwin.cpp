@@ -168,6 +168,11 @@ void KMReaderMainWin::slotFolderRemoved( QObject* folderPtr )
     mMsg->setParent( 0 );
 }
 
+void KMReaderMainWin::slotReplyOrForwardFinished()
+{
+  kdDebug(5006) << "Reply or forward done!" << endl;
+}
+
 //-----------------------------------------------------------------------------
 void KMReaderMainWin::slotTrashMsg()
 {
@@ -234,6 +239,8 @@ void KMReaderMainWin::slotForwardInlineMsg()
    } else {
     command = new KMForwardInlineCommand( this, mReaderWin->message() );
    }
+   connect( command, SIGNAL( completed( KMCommand * ) ),
+            this, SLOT( slotReplyOrForwardFinished() ) );
    command->start();
 }
 
@@ -247,6 +254,8 @@ void KMReaderMainWin::slotForwardAttachedMsg()
    } else {
      command = new KMForwardAttachedCommand( this, mReaderWin->message() );
    }
+   connect( command, SIGNAL( completed( KMCommand * ) ),
+            this, SLOT( slotReplyOrForwardFinished() ) );
    command->start();
 }
 
@@ -260,6 +269,8 @@ void KMReaderMainWin::slotForwardDigestMsg()
    } else {
      command = new KMForwardDigestCommand( this, mReaderWin->message() );
    }
+   connect( command, SIGNAL( completed( KMCommand * ) ),
+            this, SLOT( slotReplyOrForwardFinished() ) );
    command->start();
 }
 
@@ -267,6 +278,8 @@ void KMReaderMainWin::slotForwardDigestMsg()
 void KMReaderMainWin::slotRedirectMsg()
 {
   KMCommand *command = new KMRedirectCommand( this, mReaderWin->message() );
+  connect( command, SIGNAL( completed( KMCommand * ) ),
+           this, SLOT( slotReplyOrForwardFinished() ) );
   command->start();
 }
 
@@ -321,6 +334,9 @@ void KMReaderMainWin::setupAccel()
 
   mMsgActions = new KMail::MessageActions( actionCollection(), this );
   mMsgActions->setMessageView( mReaderWin );
+  connect( mMsgActions, SIGNAL( replyActionFinished() ),
+           this, SLOT( slotReplyOrForwardFinished() ) );
+
   //----- File Menu
   //mOpenAction = KStdAction::open( this, SLOT( slotOpenMsg() ),
   //                                actionCollection() );

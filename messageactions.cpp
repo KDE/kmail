@@ -174,6 +174,8 @@ template<typename T> void MessageActions::replyCommand()
     return;
   const QString text = mMessageView ? mMessageView->copyText() : "";
   KMCommand *command = new T( mParent, mCurrentMessage, text );
+  connect( command, SIGNAL( completed( KMCommand * ) ),
+           this, SIGNAL( replyActionFinished() ) );
   command->start();
 }
 

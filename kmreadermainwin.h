@@ -78,6 +78,10 @@ private slots:
 
   void slotFolderRemoved( QObject* folderPtr );
 
+  /// This closes the window if the setting to close the window after replying or
+  /// forwarding is set.
+  void slotReplyOrForwardFinished();
+
 private:
   void initKMReaderMainWin();
   void setupAccel();
