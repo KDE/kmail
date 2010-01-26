@@ -30,13 +30,10 @@ public:
 
   void load( const Akonadi::Collection & col );
   void save( Akonadi::Collection & col );
-private slots:
-  void slotCompactNow();
 protected:
   void init( const Akonadi::Collection&);
 private:
   QLabel *mFolderSizeLabel;
-  QLabel *mCompactStatusLabel;
   KLineEdit *mCollectionLocation;
   QLabel *mCollectionCount;
   QLabel *mCollectionUnread;

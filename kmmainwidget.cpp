@@ -2584,13 +2584,12 @@ void KMMainWidget::slotShowBusySplash()
 
 void KMMainWidget::showOfflinePage()
 {
-
   if ( !mReaderWindowActive ) return;
   mShowingOfflineScreen = true;
 
   mMsgView->displayOfflinePage();
-    if ( mMessagePane && mLongFolderList )
-      mMessagePane->hide();
+  if ( mMessagePane && mLongFolderList )
+    mMessagePane->hide();
 }
 
 

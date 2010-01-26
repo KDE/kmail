@@ -84,85 +84,10 @@ void CollectionMaintenancePage::init(const Akonadi::Collection & col)
   mCollectionUnread = new QLabel( messagesGroup );
   box->addRow( new QLabel( i18n("Unread messages:"), messagesGroup ), mCollectionUnread );
 
-  // Compaction is only sensible and currently supported for mbox folders.
-  //
-  // FIXME: should "compaction supported" be an attribute of the folder
-  // storage type (mFolder->storage()->isCompactionSupported() or something
-  // like that)?
-#if 0
-  if ( folderType == KMFolderTypeMbox )			// compaction only sensible for this
-  {
-    mCompactStatusLabel = new QLabel( i18nc( "compaction status", "Unknown" ), messagesGroup );
-    box->addRow( new QLabel( i18n("Compaction:"), messagesGroup ), mCompactStatusLabel );
-
-    mCompactNowButton = new KPushButton( i18n("Compact Now"), messagesGroup );
-    mCompactNowButton->setEnabled( false );
-    connect( mCompactNowButton, SIGNAL(clicked()), SLOT(slotCompactNow()) );
-
-    QHBoxLayout *hbl = new QHBoxLayout();
-    hbl->addStretch( 1 );
-    hbl->addWidget( mCompactNowButton );
-    box->addRow( QString(), hbl );
-  }
-#endif
   topLayout->addWidget( messagesGroup );
 
   topLayout->addStretch( 100 );
 }
-
-
-#if 0
-
-void FolderDialogMaintenanceTab::updateControls()
-{
-  if ( mCompactStatusLabel )
-  {
-    QString s;
-    if ( mFolder->needsCompacting() )
-    {
-      if ( mFolder->storage()->compactable() ) s = i18nc( "compaction status", "Possible");
-      else s = i18nc( "compaction status", "Possible, but unsafe");
-    }
-    else s = i18nc( "compaction status", "Not required");
-    mCompactStatusLabel->setText( s );
-  }
-
-  if ( mCompactNowButton )
-    mCompactNowButton->setEnabled( mFolder->needsCompacting() );
-}
-
-#endif
-
-void CollectionMaintenancePage::slotCompactNow()
-{
-#if 0
-  if ( !mFolder->needsCompacting() ) return;
-
-  if ( !mFolder->storage()->compactable() )
-  {
-    if ( KMessageBox::warningContinueCancel( this,
-                                             i18nc( "@info",
-      "Compacting folder <resource>%1</resource> may not be safe.<nl/>"
-      "<warning>This may result in index or mailbox corruption.</warning><nl/>"
-      "Ensure that you have a recent backup of the mailbox and messages.", mFolder->label() ),
-                                             i18nc( "@title", "Really compact folder?" ),
-                                             KGuiItem( i18nc( "@action:button", "Compact Folder" ) ),
-                                             KStandardGuiItem::cancel(), QString(),
-                                             KMessageBox::Notify | KMessageBox::Dangerous )
-                                             != KMessageBox::Continue ) return;
-    mFolder->storage()->enableCompaction();
-  }
-
-  // finding and activating the action, because
-  // KMMainWidget::slotCompactFolder() and similar actions are protected
-  QAction *act = kmkernel->getKMMainWidget()->action( "compact" );
-  if ( act ) act->activate( QAction::Trigger );
-
-  updateControls();
-  updateFolderIndexSizes();
-#endif
-}
-
 
 void CollectionMaintenancePage::load(const Collection & col)
 {
