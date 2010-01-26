@@ -1126,6 +1126,7 @@ void KMMainWidget::createWidgets()
 
 void KMMainWidget::slotItemAdded( const Akonadi::Item &, const Akonadi::Collection& col)
 {
+  qDebug()<<" slotItemAdded col :"<<col.name();
   if ( col.isValid() && ( col == kmkernel->outboxCollectionFolder() ) ) {
     startUpdateMessageActionsTimer();
   }
