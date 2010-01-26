@@ -139,6 +139,11 @@ void KMReaderMainWin::showMessage( const QString & encoding, const Akonadi::Item
   toolBar( "mainToolBar" )->show();
 }
 
+void KMReaderMainWin::slotReplyOrForwardFinished()
+{
+  kDebug() << "Reply or forward done!";
+}
+
 //-----------------------------------------------------------------------------
 void KMReaderMainWin::slotTrashMsg()
 {
@@ -171,6 +176,8 @@ void KMReaderMainWin::slotForwardInlineMsg()
    } else {
     command = new KMForwardCommand( this, mReaderWin->message() );
    }
+   connect( command, SIGNAL( completed( KMCommand * ) ),
+            this, SLOT( slotReplyOrForwardFinished() ) );
    command->start();
 }
 
@@ -185,6 +192,8 @@ void KMReaderMainWin::slotForwardAttachedMsg()
    } else {
      command = new KMForwardAttachedCommand( this, mReaderWin->message() );
    }
+   connect( command, SIGNAL( completed( KMCommand * ) ),
+            this, SLOT( slotReplyOrForwardFinished() ) );
    command->start();
 }
 
@@ -192,6 +201,8 @@ void KMReaderMainWin::slotForwardAttachedMsg()
 void KMReaderMainWin::slotRedirectMsg()
 {
   KMCommand *command = new KMRedirectCommand( this, mReaderWin->message() );
+  connect( command, SIGNAL( completed( KMCommand * ) ),
+         this, SLOT( slotReplyOrForwardFinished() ) );
   command->start();
 }
 
@@ -202,6 +213,8 @@ void KMReaderMainWin::slotCustomReplyToMsg( const QString &tmpl )
                                                    mReaderWin->message(),
                                                    mReaderWin->copyText(),
                                                    tmpl );
+  connect( command, SIGNAL( completed( KMCommand * ) ),
+           this, SLOT( slotReplyOrForwardFinished() ) );
   command->start();
 }
 
@@ -239,6 +252,9 @@ void KMReaderMainWin::setupAccel()
 
   mMsgActions = new KMail::MessageActions( actionCollection(), this );
   mMsgActions->setMessageView( mReaderWin );
+  connect( mMsgActions, SIGNAL( replyActionFinished() ),
+           this, SLOT( slotReplyOrForwardFinished() ) );
+
   //----- File Menu
   mSaveAsAction = KStandardAction::saveAs( mReaderWin->viewer(), SLOT( slotSaveMessage() ),
                                            actionCollection() );
