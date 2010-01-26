@@ -2217,6 +2217,10 @@ void AppearancePage::HeadersTab::save() {
 //
 
 
+static const BoolConfigEntry closeAfterReplyOrForward = {
+  "Reader", "CloseAfterReplyOrForward", I18N_NOOP("Close message window after replying or forwarding"), false
+};
+
 static const BoolConfigEntry showColorbarMode = {
   "Reader", "showColorbar", I18N_NOOP("Show HTML stat&us bar"), false
 };
@@ -2247,6 +2251,15 @@ AppearancePageReaderTab::AppearancePageReaderTab( QWidget * parent,
   : ConfigModuleTab( parent, name )
 {
   QVBoxLayout *vlay = new QVBoxLayout( this, KDialog::marginHint(), KDialog::spacingHint() );
+
+  // "close message window after replying or forwarding" checkbox
+  populateCheckBox( mCloseAfterReplyOrForwardCheck = new QCheckBox( this ),
+                    closeAfterReplyOrForward );
+  QToolTip::add( mCloseAfterReplyOrForwardCheck,
+                 i18n( "Close the standalone message window after replying or forwarding the message" ) );
+  vlay->addWidget( mCloseAfterReplyOrForwardCheck );
+  connect( mCloseAfterReplyOrForwardCheck, SIGNAL ( stateChanged( int ) ),
+           this, SLOT( slotEmitChanged() ) );
 
   // "show colorbar" check box:
   populateCheckBox( mShowColorbarCheck = new QCheckBox( this ), showColorbarMode );
@@ -2400,6 +2413,7 @@ void AppearancePage::ReaderTab::readCurrentOverrideCodec()
 
 void AppearancePage::ReaderTab::doLoadFromGlobalSettings()
 {
+  mCloseAfterReplyOrForwardCheck->setChecked( GlobalSettings::self()->closeAfterReplyOrForward() );
   mShowEmoticonsCheck->setChecked( GlobalSettings::self()->showEmoticons() );
   mShrinkQuotesCheck->setChecked( GlobalSettings::self()->shrinkQuotes() );
   mShowExpandQuotesMark->setChecked( GlobalSettings::self()->showExpandQuotesMark() );
@@ -2420,6 +2434,7 @@ void AppearancePage::ReaderTab::save() {
   KConfigGroup reader( KMKernel::config(), "Reader" );
   saveCheckBox( mShowColorbarCheck, reader, showColorbarMode );
   saveCheckBox( mShowSpamStatusCheck, reader, showSpamStatusMode );
+  GlobalSettings::self()->setCloseAfterReplyOrForward( mCloseAfterReplyOrForwardCheck->isChecked() );
   GlobalSettings::self()->setShowEmoticons( mShowEmoticonsCheck->isChecked() );
   GlobalSettings::self()->setShrinkQuotes( mShrinkQuotesCheck->isChecked() );
   GlobalSettings::self()->setShowExpandQuotesMark( mShowExpandQuotesMark->isChecked() );
@@ -2436,6 +2451,7 @@ void AppearancePage::ReaderTab::save() {
 
 void AppearancePage::ReaderTab::installProfile( KConfig * /* profile */ ) {
   const KConfigGroup reader( KMKernel::config(), "Reader" );
+  loadProfile( mCloseAfterReplyOrForwardCheck, reader, closeAfterReplyOrForward );
   loadProfile( mShowColorbarCheck, reader, showColorbarMode );
   loadProfile( mShowSpamStatusCheck, reader, showSpamStatusMode );
   loadProfile( mShowEmoticonsCheck, reader, showEmoticons );
