@@ -85,9 +85,11 @@ public slots:
   void slotProgress( unsigned long done, unsigned long total );
 
 signals:
+
+  /// @param result The status of the command.
   void messagesTransfered( KMCommand::Result result );
-  /** Emitted when the command has completed.
-   * @param result The status of the command. */
+
+  /// Emitted when the command has completed.
   void completed( KMCommand *command );
 
 protected:
