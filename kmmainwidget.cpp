@@ -4403,7 +4403,7 @@ void KMMainWidget::updateFolderMenu()
   mEmptyFolderAction->setEnabled( folderWithContent && ( mFolder->count() > 0 ) && mFolder->canDeleteMessages() && !multiFolder );
   mEmptyFolderAction->setText( (mFolder && kmkernel->folderIsTrash(mFolder))
     ? i18n("E&mpty Trash") : i18n("&Move All Messages to Trash") );
-  mRemoveFolderAction->setEnabled( mFolder && !mFolder->isSystemFolder() && mFolder->canDeleteMessages() && !multiFolder);
+  mRemoveFolderAction->setEnabled( mFolder && !mFolder->isSystemFolder() && mFolder->canDeleteMessages() && !multiFolder && !mFolder->noContent());
   mRemoveFolderAction->setText( mFolder && mFolder->folderType() == KMFolderTypeSearch ? i18n("&Delete Search") : i18n("&Delete Folder") );
   if ( mArchiveFolderAction )
     mArchiveFolderAction->setEnabled( mFolder && !multiFolder );
