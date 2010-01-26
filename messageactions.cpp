@@ -315,6 +315,15 @@ void MessageActions::updateActions()
   mEditAction->setEnabled( singleMsg );
 }
 
+template<typename T> void MessageActions::replyCommand()
+{
+  if ( !mCurrentItem.isValid() )
+    return;
+  const QString text = mMessageView ? mMessageView->copyText() : QString();
+  KMCommand *command = new T( mParent, mCurrentItem, text );
+  command->start();
+}
+
 void MessageActions::slotCreateTodo()
 {
   if ( !mCurrentItem.isValid() )

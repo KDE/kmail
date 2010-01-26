@@ -87,14 +87,7 @@ class MessageActions : public QObject
 
   private:
     void updateActions();
-    template<typename T> void replyCommand()
-    {
-      if ( !mCurrentItem.isValid() )
-        return;
-      const QString text = mMessageView ? mMessageView->copyText() : "";
-      KMCommand *command = new T( mParent, mCurrentItem, text );
-      command->start();
-    }
+    template<typename T> void replyCommand();
     void setMessageStatus( KPIM::MessageStatus status, bool toggle = false );
     void addMailingListAction( const QString &item, const KUrl &url );
     void addMailingListActions( const QString &item, const KUrl::List &list );
