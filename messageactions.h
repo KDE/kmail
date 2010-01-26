@@ -60,14 +60,7 @@ class MessageActions : public QObject
 
   private:
     void updateActions();
-    template<typename T> void replyCommand()
-    {
-      if ( !mCurrentMessage )
-        return;
-      const QString text = mMessageView ? mMessageView->copyText() : "";
-      KMCommand *command = new T( mParent, mCurrentMessage, text );
-      command->start();
-    }
+    template<typename T> void replyCommand();
     void setMessageStatus( KMMsgStatus status, bool toggle = false );
 
   private slots:

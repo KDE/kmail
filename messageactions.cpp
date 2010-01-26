@@ -168,6 +168,16 @@ void MessageActions::updateActions()
   mEditAction->setEnabled( singleMsg );
 }
 
+template<typename T> void MessageActions::replyCommand()
+{
+  if ( !mCurrentMessage )
+    return;
+  const QString text = mMessageView ? mMessageView->copyText() : "";
+  KMCommand *command = new T( mParent, mCurrentMessage, text );
+  command->start();
+}
+
+
 void MessageActions::slotCreateTodo()
 {
   if ( !mCurrentMessage )
