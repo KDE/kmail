@@ -486,20 +486,24 @@
     </group>
 
     <group name="Reader">
+     <entry name="CloseAfterReplyOrForward" type="Bool">
+       <label>Close message window after replying or forwarding the message.</label>
+       <default>false</default>
+     </entry>
      <entry name="MimePaneHeight" type="Int">
-      <default>100</default>
+       <default>100</default>
      </entry>
      <entry name="MessagePaneHeight" type="Int">
-      <default>180</default>
+       <default>180</default>
      </entry>
-      <entry name="headerStyle" type="String" key="header-style">
-        <label>What style of headers should be displayed</label>
-        <default>fancy</default>
-      </entry>
-      <entry name="headerSetDisplayed" type="String" key="header-set-displayed">
-        <label>How much of headers should be displayed</label>
-        <default>rich</default>
-      </entry>
+     <entry name="headerStyle" type="String" key="header-style">
+       <label>What style of headers should be displayed</label>
+       <default>fancy</default>
+     </entry>
+     <entry name="headerSetDisplayed" type="String" key="header-set-displayed">
+       <label>How much of headers should be displayed</label>
+       <default>rich</default>
+     </entry>
      <entry name="UseDefaultColors" type="Bool" key="defaultColors">
        <default>true</default>
      </entry>

@@ -141,7 +141,9 @@ void KMReaderMainWin::showMessage( const QString & encoding, const Akonadi::Item
 
 void KMReaderMainWin::slotReplyOrForwardFinished()
 {
-  kDebug() << "Reply or forward done!";
+  if ( GlobalSettings::self()->closeAfterReplyOrForward() ) {
+    close();
+  }
 }
 
 //-----------------------------------------------------------------------------
