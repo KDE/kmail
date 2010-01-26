@@ -3860,7 +3860,9 @@ void KMMainWidget::updateFolderMenu()
     ? i18n("E&mpty Trash") : i18n("&Move All Messages to Trash") );
   mRemoveFolderAction->setEnabled( mCurrentFolder
                                    && !multiFolder
-                                   && ( mCurrentFolder->collection().rights() & Collection::CanDeleteCollection ) && !mCurrentFolder->isSystemFolder() );
+                                   && ( mCurrentFolder->collection().rights() & Collection::CanDeleteCollection )
+                                   && !mCurrentFolder->isSystemFolder()
+                                   && !mCurrentFolder->noContent());
 
   mRemoveFolderAction->setText( mCurrentFolder && mCurrentFolder->collection().resource() == QLatin1String( "akonadi_search_resource" ) ? i18n("&Delete Search") : i18n("&Delete Folder") );
   if ( mArchiveFolderAction )
