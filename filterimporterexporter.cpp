@@ -77,6 +77,11 @@ FilterSelectionDialog::~FilterSelectionDialog()
 
 void FilterSelectionDialog::setFilters( const QList<KMFilter *> &filters )
 {
+    if ( filters.isEmpty() ) {
+      enableButtonOk( false );
+      return;
+    }
+
     originalFilters = filters;
     filtersListWidget->clear();
     foreach ( KMFilter *const filter, filters ) {
