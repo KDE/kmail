@@ -170,7 +170,9 @@ void KMReaderMainWin::slotFolderRemoved( QObject* folderPtr )
 
 void KMReaderMainWin::slotReplyOrForwardFinished()
 {
-  kdDebug(5006) << "Reply or forward done!" << endl;
+  if ( GlobalSettings::self()->closeAfterReplyOrForward() ) {
+    close();
+  }
 }
 
 //-----------------------------------------------------------------------------
