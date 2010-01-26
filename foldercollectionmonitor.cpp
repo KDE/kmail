@@ -68,11 +68,11 @@ void FolderCollectionMonitor::compactAllFolders( bool immediate )
 void FolderCollectionMonitor::expunge( const Akonadi::Collection & col )
 {
   Akonadi::ItemFetchJob *job = new Akonadi::ItemFetchJob( col,this );
-  connect( job, SIGNAL( result( KJob* ) ), this, SLOT( slotFetchJob( KJob* ) ) );
+  connect( job, SIGNAL( result( KJob* ) ), this, SLOT( slotExpungeJob( KJob* ) ) );
 
 }
 
-void FolderCollectionMonitor::slotFetchJob( KJob *job )
+void FolderCollectionMonitor::slotExpungeJob( KJob *job )
 {
   if ( job->error() ) {
     static_cast<KIO::Job*>(job)->ui()->showErrorMessage();

@@ -41,7 +41,7 @@ public:
   void compactAllFolders( bool immediate );
   void expunge( const Akonadi::Collection& );
 private slots:
-  void slotFetchJob( KJob *job );
+  void slotExpungeJob( KJob *job );
 private:
   Akonadi::ChangeRecorder *mMonitor;
 };
