@@ -701,7 +701,7 @@ class KMComposeWin : public KMail::Composer
     CodecAction *mCodecAction;
     KSelectAction *mCryptoModuleAction;
 
-    KAction *mFindText, *mFindNextText, *mReplaceText;
+    KAction *mFindText, *mFindNextText, *mReplaceText, *mSelectAll;
 
     bool mAlwaysSend;
 
