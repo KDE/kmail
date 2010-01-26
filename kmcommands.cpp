@@ -2266,6 +2266,10 @@ QString KMCommand::cleanFileName( const QString &name )
   // replace all '.' with '_', not just at the start of the filename
   fileName.replace( '.', '_' );
 
+  if ( fileName.startsWith( '~' ) ) {
+    fileName[0] = '_';
+  }
+
   return fileName;
 }
 
