@@ -487,7 +487,7 @@
 
     <group name="Reader">
      <entry name="CloseAfterReplyOrForward" type="Bool">
-       <label>Close message window after replying or forwarding the message.</label>
+       <label>Close message window after replying or forwarding</label>
        <default>false</default>
      </entry>
      <entry name="MimePaneHeight" type="Int">

@@ -1650,6 +1650,15 @@ AppearancePageReaderTab::AppearancePageReaderTab( QWidget * parent )
   vlay->setSpacing( KDialog::spacingHint() );
   vlay->setMargin( KDialog::marginHint() );
 
+  // "Close message window after replying or forwarding" check box:
+  populateCheckBox( mCloseAfterReplyOrForwardCheck = new QCheckBox( this ),
+                    GlobalSettings::self()->closeAfterReplyOrForwardItem() );
+  mCloseAfterReplyOrForwardCheck->setToolTip(
+      i18n( "Close the standalone message window after replying or forwarding the message" ) );
+  vlay->addWidget( mCloseAfterReplyOrForwardCheck );
+  connect( mCloseAfterReplyOrForwardCheck, SIGNAL ( stateChanged( int ) ),
+           this, SLOT( slotEmitChanged() ) );
+
   // "show colorbar" check box:
   populateCheckBox( mShowColorbarCheck = new QCheckBox( this ),
                     GlobalSettings::self()->showColorBarItem() );
@@ -1822,6 +1831,7 @@ void AppearancePage::ReaderTab::doLoadFromGlobalSettings()
 
 void AppearancePage::ReaderTab::doLoadOther()
 {
+  loadWidget( mCloseAfterReplyOrForwardCheck, GlobalSettings::self()->closeAfterReplyOrForwardItem() );
   loadWidget( mShowColorbarCheck, GlobalSettings::self()->showColorBarItem() );
   loadWidget( mShowSpamStatusCheck, GlobalSettings::self()->showSpamStatusItem() );
 }
@@ -1829,6 +1839,7 @@ void AppearancePage::ReaderTab::doLoadOther()
 
 void AppearancePage::ReaderTab::save()
 {
+  saveCheckBox( mCloseAfterReplyOrForwardCheck, GlobalSettings::self()->closeAfterReplyOrForwardItem() );
   saveCheckBox( mShowColorbarCheck, GlobalSettings::self()->showColorBarItem() );
   saveCheckBox( mShowSpamStatusCheck, GlobalSettings::self()->showSpamStatusItem() );
   GlobalSettings::self()->setShowEmoticons( mShowEmoticonsCheck->isChecked() );

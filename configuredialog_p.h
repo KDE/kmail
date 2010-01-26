@@ -452,6 +452,7 @@ private:
   void readCurrentOverrideCodec();
 
 private: // data
+  QCheckBox *mCloseAfterReplyOrForwardCheck;
   QCheckBox *mShowColorbarCheck;
   QCheckBox *mShowSpamStatusCheck;
   QCheckBox *mShowEmoticonsCheck;
