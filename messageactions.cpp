@@ -252,13 +252,7 @@ void MessageActions::updateActions()
   mNoQuoteReplyAction->setEnabled( singleMsg );
 
   mAnnotateAction->setEnabled( singleMsg );
-  if( mCurrentItem.isValid() ) {
-    Nepomuk::Resource resource( mCurrentItem.url() );
-    if ( resource.description().isEmpty() )
-      mAnnotateAction->setText( i18n( "Add Note..." ) );
-    else
-      mAnnotateAction->setText( i18n( "Edit Note...") );
-  }
+  updateAnnotateAction();
 
   mStatusMenu->setEnabled( multiVisible );
   mToggleFlagAction->setEnabled( flagsAvailable );
@@ -509,7 +503,19 @@ void MessageActions::annotateMessage()
 
   KPIM::AnnotationEditDialog *dialog = new KPIM::AnnotationEditDialog( mCurrentItem.url() );
   dialog->setAttribute( Qt::WA_DeleteOnClose );
-  dialog->show();
+  dialog->exec();
+  updateAnnotateAction();
+}
+
+void MessageActions::updateAnnotateAction()
+{
+  if( mCurrentItem.isValid() ) {
+    Nepomuk::Resource resource( mCurrentItem.url() );
+    if ( resource.description().isEmpty() )
+      mAnnotateAction->setText( i18n( "Add Note..." ) );
+    else
+      mAnnotateAction->setText( i18n( "Edit Note...") );
+  }
 }
 
 #include "messageactions.moc"
