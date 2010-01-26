@@ -17,7 +17,6 @@
 */
 
 #include "kmagentmanager.h"
-#include <QDebug>
 #include <QStringList>
 #include "kmagentinstance.h"
 

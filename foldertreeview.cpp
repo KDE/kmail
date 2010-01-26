@@ -18,7 +18,6 @@
 
 #include "foldertreeview.h"
 #include <kdebug.h>
-#include <QDebug>
 #include <KLocale>
 #include <akonadi/entitytreemodel.h>
 #include <akonadi/collectionstatistics.h>

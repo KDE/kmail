@@ -19,7 +19,6 @@
 #include "kmagentinstance.h"
 #include <akonadi/agentinstance.h>
 #include <agentprogressmonitor.h>
-#include <QDebug>
 #include <KLocale>
 #include <KDebug>
 #include "progressmanager.h"

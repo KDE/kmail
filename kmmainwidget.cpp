@@ -1126,7 +1126,7 @@ void KMMainWidget::createWidgets()
 
 void KMMainWidget::slotItemAdded( const Akonadi::Item &, const Akonadi::Collection& col)
 {
-  qDebug()<<" slotItemAdded col :"<<col.name();
+  kDebug() << "Collection:" << col.name();
   if ( col.isValid() && ( col == kmkernel->outboxCollectionFolder() ) ) {
     startUpdateMessageActionsTimer();
   }
@@ -3831,13 +3831,13 @@ void KMMainWidget::updateMessageActions()
   const qint64 nbMsgOutboxCollection = kmkernel->outboxCollectionFolder().statistics().count();
   //TODO : don't know when statistic is not correct here.
   //FIXME
-  //qDebug()<<" kmkernel->outboxCollectionFolder() :"<<kmkernel->outboxCollectionFolder();
-  //qDebug()<<" nbMsgOutboxCollection :"<<nbMsgOutboxCollection;
+  //kDebug()<<" kmkernel->outboxCollectionFolder() :"<<kmkernel->outboxCollectionFolder();
+  //kDebug()<<" nbMsgOutboxCollection :"<<nbMsgOutboxCollection;
 #if 0
   actionCollection()->action( "send_queued" )->setEnabled( nbMsgOutboxCollection > 0 );
   actionCollection()->action( "send_queued_via" )->setEnabled( nbMsgOutboxCollection > 0 );
 #else
-  qDebug()<<" Fix enable/disable send_queued action";
+  kWarning() << "Fix enable/disable send_queued action";
 #endif
 
   slotUpdateOnlineStatus( static_cast<GlobalSettingsBase::EnumNetworkState::type>( GlobalSettings::self()->networkState() ) );
