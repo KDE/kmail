@@ -392,6 +392,19 @@ void KMMainWidget::folderSelected( const Akonadi::Collection & col, bool forceJu
 
   mCurrentFolder = FolderCollection::forCollection( col );
 
+  if ( col.isValid() && kmkernel->isImapFolder( col )
+#if 0 //PORT TO AKONADI
+       && ( !mMessageListView->isFolderOpen( mFolder ) )
+#endif
+       ) {
+    if ( kmkernel->isOffline() )
+      {
+        //mMessageListView->setCurrentFolder( 0 ); <-- useless in the new view: just do nothing
+        // FIXME: Use an "offline tab" ?
+        showOfflinePage();
+        return;
+      }
+  }
 #ifdef OLD_FOLDERVIEW
   // FIXME: re-fetch the contents also if the folder is already open ?
   if ( aFolder && ( aFolder->folderType() == KMFolderTypeImap )  && ( !mMessageListView->isFolderOpen( mFolder ) ) )
