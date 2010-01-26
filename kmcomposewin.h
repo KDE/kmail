@@ -793,7 +793,7 @@ class KMComposeWin : public KMail::Composer
     KSelectAction *mEncodingAction;
     KSelectAction *mCryptoModuleAction;
 
-    KAction * mFindText, *mFindNextText, *mReplaceText;
+    KAction * mFindText, *mFindNextText, *mReplaceText, *mSelectAll;
 
     QByteArray mCharset;
     QByteArray mDefCharset;

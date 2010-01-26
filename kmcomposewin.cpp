@@ -443,6 +443,7 @@ void KMComposeWin::slotEditorTextChanged()
   mFindText->setEnabled( textIsNotEmpty );
   mFindNextText->setEnabled( textIsNotEmpty );
   mReplaceText->setEnabled( textIsNotEmpty );
+  mSelectAll->setEnabled( textIsNotEmpty );
 }
 
 //-----------------------------------------------------------------------------
@@ -1202,7 +1203,7 @@ void KMComposeWin::setupActions( void )
   KStandardAction::cut( this, SLOT(slotCut()), actionCollection() );
   KStandardAction::copy( this, SLOT(slotCopy()), actionCollection() );
   KStandardAction::pasteText( this, SLOT(slotPaste()), actionCollection() );
-  KStandardAction::selectAll( this, SLOT(slotMarkAll()), actionCollection() );
+  mSelectAll = KStandardAction::selectAll( this, SLOT(slotMarkAll()), actionCollection() );
 
   mFindText = KStandardAction::find( mEditor, SLOT(slotFind()), actionCollection() );
   mFindNextText = KStandardAction::findNext( mEditor, SLOT(slotFindNext()), actionCollection() );
