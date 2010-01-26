@@ -603,10 +603,10 @@ void AttachmentController::saveAttachmentAs( AttachmentPart::Ptr part )
 {
   QString pname = part->name();
   if( pname.isEmpty() ) {
-    pname = "unnamed";
+    pname = i18n( "unnamed" );
   }
 
-  KUrl url = KFileDialog::getSaveUrl( KUrl( /*startDir*/ ),
+  KUrl url = KFileDialog::getSaveUrl( pname,
       QString( /*filter*/ ), d->composer,
       i18n( "Save Attachment As" ) );
 
