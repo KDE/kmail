@@ -33,9 +33,12 @@
 #include <QList>
 
 #include <KSharedConfig>
+#include <KDialog>
 
 class KMFilter;
 class QWidget;
+class QListWidget;
+class KPushButton;
 
 namespace KMail
 {
@@ -66,6 +69,25 @@ public:
 private:
       QWidget *mParent;
       bool mPopFilter;
+};
+
+
+class FilterSelectionDialog : public KDialog
+{
+  Q_OBJECT
+  public:
+    FilterSelectionDialog( QWidget * parent = 0 );
+    virtual ~FilterSelectionDialog();
+    void setFilters( const QList<KMFilter *> &filters );
+    QList<KMFilter *> selectedFilters() const;
+  public slots:
+    void slotUnselectAllButton();
+    void slotSelectAllButton();
+  private:
+    QListWidget *filtersListWidget;
+    QList<KMFilter *> originalFilters;
+    KPushButton *selectAllButton;
+    KPushButton *unselectAllButton;
 };
 
 }

@@ -38,63 +38,80 @@
 #include <kconfig.h>
 #include <kdebug.h>
 #include <kfiledialog.h>
-#include <kdialog.h>
+#include <KPushButton>
+
 #include <QListWidget>
-
 #include <QRegExp>
-
 
 using namespace KMail;
 
-class FilterSelectionDialog : public KDialog
+FilterSelectionDialog::FilterSelectionDialog( QWidget * parent )
+    :KDialog( parent )
 {
-public:
-    FilterSelectionDialog( QWidget * parent = 0 )
-        :KDialog( parent )
-    {
-        setObjectName( "filterselection" );
-        setModal( true );
-        setCaption( i18n("Select Filters") );
-        setButtons( Ok|Cancel );
-        setDefaultButton( Ok );
-        showButtonSeparator( true );
-        filtersListWidget = new QListWidget( this );
-        filtersListWidget->setAlternatingRowColors( true );
-        setMainWidget( filtersListWidget );
-        filtersListWidget->setSortingEnabled( false );
-        filtersListWidget->setSelectionMode( QAbstractItemView::NoSelection );
-        resize( 300, 350 );
-    }
+    setObjectName( "filterselection" );
+    setModal( true );
+    setCaption( i18n("Select Filters") );
+    setButtons( Ok|Cancel );
+    setDefaultButton( Ok );
+    showButtonSeparator( true );
+    QVBoxLayout * const top = new QVBoxLayout( mainWidget() );
+    filtersListWidget = new QListWidget();
+    top->addWidget( filtersListWidget );
+    filtersListWidget->setAlternatingRowColors( true );
+    filtersListWidget->setSortingEnabled( false );
+    filtersListWidget->setSelectionMode( QAbstractItemView::NoSelection );
+    QHBoxLayout * const buttonLayout = new QHBoxLayout();
+    top->addLayout( buttonLayout );
+    selectAllButton = new KPushButton( i18n( "Select All" ) );
+    buttonLayout->addWidget( selectAllButton );
+    unselectAllButton = new KPushButton( i18n( "Unselect All" ) );
+    buttonLayout->addWidget( unselectAllButton );
+    connect( selectAllButton, SIGNAL( clicked() ), this, SLOT( slotSelectAllButton() ) );
+    connect( unselectAllButton, SIGNAL( clicked() ), this, SLOT( slotUnselectAllButton() ) );
+    resize( 300, 350 );
+}
 
-    virtual ~FilterSelectionDialog()
-    {
-    }
+FilterSelectionDialog::~FilterSelectionDialog()
+{
+}
 
-    void setFilters( const QList<KMFilter *> &filters )
-    {
-        originalFilters = filters;
-        filtersListWidget->clear();
-        foreach ( KMFilter *const filter, filters ) {
-            QListWidgetItem *item = new QListWidgetItem( filter->name(), filtersListWidget );
-            item->setFlags( Qt::ItemIsUserCheckable | Qt::ItemIsEnabled );
-            item->setCheckState( Qt::Checked );
-        }
+void FilterSelectionDialog::setFilters( const QList<KMFilter *> &filters )
+{
+    originalFilters = filters;
+    filtersListWidget->clear();
+    foreach ( KMFilter *const filter, filters ) {
+        QListWidgetItem *item = new QListWidgetItem( filter->name(), filtersListWidget );
+        item->setFlags( Qt::ItemIsUserCheckable | Qt::ItemIsEnabled );
+        item->setCheckState( Qt::Checked );
     }
+}
 
-    QList<KMFilter *> selectedFilters() const
-    {
-        QList<KMFilter *> filters;
-        for ( int i = 0; i < filtersListWidget->count(); i++ ) {
-            QListWidgetItem *item = filtersListWidget->item( i );
-            if ( item->checkState() == Qt::Checked )
-                filters << originalFilters[i];
-        }
-        return filters;
+QList<KMFilter *> FilterSelectionDialog::selectedFilters() const
+{
+    QList<KMFilter *> filters;
+    for ( int i = 0; i < filtersListWidget->count(); i++ ) {
+        QListWidgetItem *item = filtersListWidget->item( i );
+        if ( item->checkState() == Qt::Checked )
+            filters << originalFilters[i];
     }
-private:
-    QListWidget *filtersListWidget;
-    QList<KMFilter *> originalFilters;
-};
+    return filters;
+}
+
+void FilterSelectionDialog::slotUnselectAllButton()
+{
+  for ( int i = 0; i < filtersListWidget->count(); i++ ) {
+    QListWidgetItem * const item = filtersListWidget->item( i );
+    item->setCheckState( Qt::Unchecked );
+  }
+}
+
+void FilterSelectionDialog::slotSelectAllButton()
+{
+  for ( int i = 0; i < filtersListWidget->count(); i++ ) {
+    QListWidgetItem * const item = filtersListWidget->item( i );
+    item->setCheckState( Qt::Checked );
+  }
+}
 
 /* static */
 QList<KMFilter *> FilterImporterExporter::readFiltersFromConfig( KSharedConfig::Ptr config,
