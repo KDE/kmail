@@ -451,7 +451,7 @@ void CollectionGeneralPage::save(Collection & col)
     if ( col.hasAttribute<Akonadi::EntityDisplayAttribute>() &&
          !col.attribute<Akonadi::EntityDisplayAttribute>()->displayName().isEmpty() )
       col.attribute<Akonadi::EntityDisplayAttribute>()->setDisplayName( mNameEdit->text() );
-    else
+    else if( !mNameEdit->text().isEmpty() )
       col.setName( mNameEdit->text() );
   }
 
