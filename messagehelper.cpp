@@ -47,10 +47,6 @@ namespace KMail {
 
 namespace MessageHelper {
 
-//TODO init them somewhere, now the init code is in KMMsgBase::readConfig()
-static QStringList sReplySubjPrefixes, sForwardSubjPrefixes;
-static bool sReplaceSubjPrefix, sReplaceForwSubjPrefix;
-
 static const struct {
   const char * dontAskAgainID;
   bool         canDeny;
@@ -666,7 +662,7 @@ KMime::Types::AddrSpecList extractAddrSpecs( const KMime::Message::Ptr &msg, con
 
 QString cleanSubject( const KMime::Message::Ptr &msg )
 {
-  return cleanSubject( msg, sReplySubjPrefixes + sForwardSubjPrefixes,
+  return cleanSubject( msg, GlobalSettings::self()->replyPrefixes() + GlobalSettings::self()->forwardPrefixes(),
 		       true, QString() ).trimmed();
 }
 
@@ -679,12 +675,14 @@ QString cleanSubject( const KMime::Message::Ptr &msg, const QStringList & prefix
 
 QString forwardSubject( const KMime::Message::Ptr &msg )
 {
-  return cleanSubject( msg, sForwardSubjPrefixes, sReplaceForwSubjPrefix, "Fwd:" );
+  return cleanSubject( msg, GlobalSettings::self()->forwardPrefixes(),
+                       GlobalSettings::self()->replaceForwardPrefix(), "Fwd:" );
 }
 
 QString replySubject( const KMime::Message::Ptr &msg )
 {
-  return cleanSubject( msg, sReplySubjPrefixes, sReplaceSubjPrefix, "Re:" );
+  return cleanSubject( msg, GlobalSettings::self()->replyPrefixes(),
+                       GlobalSettings::self()->replaceReplyPrefix(), "Re:" );
 }
 
 QString replacePrefixes( const QString& str, const QStringList &prefixRegExps,
@@ -1101,7 +1099,7 @@ QString fromStrip( const KMime::Message::Ptr &msg )
 
 QString stripOffPrefixes( const QString& str )
 {
-  return replacePrefixes( str, sReplySubjPrefixes + sForwardSubjPrefixes,
+  return replacePrefixes( str, GlobalSettings::self()->replyPrefixes() + GlobalSettings::self()->forwardPrefixes(),
                           true, QString() ).trimmed();
 }
 
