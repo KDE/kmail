@@ -50,19 +50,19 @@ void CollectionMaintenancePage::init(const Akonadi::Collection & col)
   QFormLayout *box = new QFormLayout( filesGroup );
   box->setSpacing( KDialog::spacingHint() );
 
-  QString contentsDesc ;
-#if 0
-  = folderContentDesc( mFolder->storage()->contentsType() );
-#endif
+#if 0 //TODO remove it ?
+  QString contentsDesc = folderContentDesc( mFolder->storage()->contentsType() );
   QLabel *label = new QLabel( contentsDesc, filesGroup );
   // Passing a QLabel rather than QString to addRow(), so that it doesn't
   // get a buddy set (except in the cases where we do want one).
   box->addRow( new QLabel( i18nc( "@label:textbox Folder content type (eg. Mail)", "Contents:" ),
                            filesGroup ), label );
+#endif
+
   const AgentInstance instance = Akonadi::AgentManager::self()->instance( col.resource() );
   const QString folderDesc = instance.type().name();
 
-  label = new QLabel( folderDesc, filesGroup );
+  QLabel *label = new QLabel( folderDesc, filesGroup );
   box->addRow( new QLabel( i18n("Folder type:"), filesGroup ), label );
 
   mCollectionLocation = new KLineEdit( filesGroup );
