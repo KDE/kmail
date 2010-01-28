@@ -311,6 +311,7 @@ void KMMainWidget::destruct()
   deleteWidgets();
   delete mSystemTray;
   delete mCustomTemplateMenus;
+  mCurrentFolder.clear();
   mSystemTray = 0;
   mCustomTemplateMenus = 0;
   mDestructed = true;
