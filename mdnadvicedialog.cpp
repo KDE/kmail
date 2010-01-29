@@ -72,6 +72,7 @@ void MDNAdviceDialog::slotButtonClicked( int button )
     case KDialog::Yes:
     default:
       m_result = MDNIgnore;
+      accept();
       break;
 
   }
