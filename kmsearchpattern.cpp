@@ -458,6 +458,7 @@ bool KMSearchRuleString::matchesInternal( const QString & msgContents ) const
     const QStringList addressList = KPIMUtils::splitAddressList( msgContents.toLower() );
     for ( QStringList::ConstIterator it = addressList.constBegin(); ( it != addressList.constEnd() ); ++it ) {
       Akonadi::ContactSearchJob *job = new Akonadi::ContactSearchJob();
+      job->setLimit( 1 );
       job->setQuery( Akonadi::ContactSearchJob::Email, KPIMUtils::extractEmailAddress( *it ) );
       job->exec();
 
@@ -471,6 +472,7 @@ bool KMSearchRuleString::matchesInternal( const QString & msgContents ) const
     const QStringList addressList = KPIMUtils::splitAddressList( msgContents.toLower() );
     for ( QStringList::ConstIterator it = addressList.constBegin(); ( it != addressList.constEnd() ); ++it ) {
       Akonadi::ContactSearchJob *job = new Akonadi::ContactSearchJob();
+      job->setLimit( 1 );
       job->setQuery( Akonadi::ContactSearchJob::Email, KPIMUtils::extractEmailAddress( *it ) );
       job->exec();
 

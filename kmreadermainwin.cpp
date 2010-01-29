@@ -388,6 +388,7 @@ void KMReaderMainWin::slotMsgPopup( KMMessage &aMsg, const KUrl &aUrl, const QPo
       }
       QString email =  KPIMUtils::firstEmailAddress( aUrl.path() );
       Akonadi::ContactSearchJob *job = new Akonadi::ContactSearchJob( this );
+      job->setLimit( 1 );
       job->setQuery( Akonadi::ContactSearchJob::Email, email );
       job->exec();
 

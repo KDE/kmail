@@ -1737,6 +1737,7 @@ Kleo::KeyResolver::ContactPreferences Kleo::KeyResolver::lookupContactPreference
     return it->second;
 
   Akonadi::ContactSearchJob *job = new Akonadi::ContactSearchJob();
+  job->setLimit( 1 );
   job->setQuery( Akonadi::ContactSearchJob::Email, address );
   job->exec();
 
@@ -1772,6 +1773,7 @@ void Kleo::KeyResolver::saveContactPreference( const QString& email, const Conta
   d->mContactPreferencesMap.insert( std::make_pair( email, pref ) );
 
   Akonadi::ContactSearchJob *job = new Akonadi::ContactSearchJob();
+  job->setLimit( 1 );
   job->setQuery( Akonadi::ContactSearchJob::Email, email );
   job->exec();
 
