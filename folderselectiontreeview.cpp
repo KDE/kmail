@@ -91,10 +91,9 @@ FolderSelectionTreeView::FolderSelectionTreeView( QWidget *parent, KXMLGUIClient
   recurfilter->addContentMimeTypeInclusionFilter( KMime::Message::mimeType() );
   recurfilter->setSourceModel( collectionModel );
 
-  //   // ... with statistics...
+  // ... with statistics...
   d->filterModel = new Akonadi::StatisticsProxyModel( this );
   d->filterModel->setSourceModel( recurfilter );
-
 
   d->quotaModel = new Akonadi::QuotaColorProxyModel( this );
   d->quotaModel->setSourceModel( d->filterModel );
@@ -104,7 +103,6 @@ FolderSelectionTreeView::FolderSelectionTreeView( QWidget *parent, KXMLGUIClient
   d->readableproxy->setSourceModel( d->quotaModel );
 
   connect( d->collectionFolderView, SIGNAL(changeTooltipsPolicy( FolderSelectionTreeView::ToolTipDisplayPolicy ) ), this, SLOT( slotChangeTooltipsPolicy( FolderSelectionTreeView::ToolTipDisplayPolicy ) ) );
-
 
   d->collectionFolderView->setSelectionMode( QAbstractItemView::SingleSelection );
   // Use the model
