@@ -150,6 +150,7 @@ bool AkonadiSender::doSend( const KMime::Message::Ptr &aMsg, short sendNow  )
 
 bool AkonadiSender::doSendQueued( const QString &customTransport )
 {
+  //TODO: Fix sending using a different transport
   mCustomTransport = customTransport;
 
   // Watch progress of the MDA.
@@ -161,22 +162,9 @@ bool AkonadiSender::doSendQueued( const QString &customTransport )
       true );
   kDebug() << "Created ProgressItem" << mProgressItem;
 
-
-#if 0
-  // Traverse outbox.
-  KMFolder *outbox = kmkernel->outboxFolder();
-  outbox->open( "dosendoutbox" );
-  while( outbox->count() > 0 ) {
-    //outbox->take( 0 ); // does this do what I think it does? Why does it return zero?
-    outbox->unGetMsg( 0 );
-    KMMessage *msg = outbox->getMsg( 0 );
-    queueMessage( msg );
-    outbox->removeMsg( 0 );
-
-  }
-#else
-  kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
-#endif
+  DispatcherInterface *dispatcher = new DispatcherInterface();
+  dispatcher->dispatchManually();
+  delete dispatcher;
   return true;
 }
 

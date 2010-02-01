@@ -2374,7 +2374,9 @@ void KMComposeWin::queueMessage( KMime::Message::Ptr message, Message::Composer*
   MailTransport::MessageQueueJob *qjob = new MailTransport::MessageQueueJob( this );
   qjob->setMessage( message );
   qjob->transportAttribute().setTransportId( infoPart->transportId() );
-  // TODO dispatch mode.
+  if( mSendMethod == KMail::MessageSender::SendLater )
+    qjob->dispatchModeAttribute().setDispatchMode( MailTransport::DispatchModeAttribute::Manual );
+
   if ( !infoPart->fcc().isEmpty() ) {
     qjob->sentBehaviourAttribute().setSentBehaviour(
                       MailTransport::SentBehaviourAttribute::MoveToCollection );
