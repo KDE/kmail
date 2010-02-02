@@ -172,6 +172,10 @@ void ArchiveFolderDialog::slotFixFileExtension()
   const char *extensions[numExtensions] = { ".zip", ".tar", ".tar.bz2", ".tar.gz" };
 
   QString fileName = mUrlRequester->url();
+  if ( fileName.isEmpty() ) {
+    fileName = standardArchivePath( mFolderRequester->folder() ?
+                                    mFolderRequester->folder()->name() : "" );
+  }
 
   // First, try to find the extension of the file name and remove it
   for( int i = 0; i < numExtensions; i++ ) {
