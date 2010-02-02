@@ -27,6 +27,8 @@ using KMail::FilterLog;
 
 #include <mimelib/string.h>
 #include <mimelib/boyermor.h>
+#include <mimelib/field.h>
+#include <mimelib/headers.h>
 
 #include <assert.h>
 
@@ -333,7 +335,19 @@ bool KMSearchRuleString::matches( const KMMessage * msg ) const
   bool logContents = true;
 
   if( field() == "<message>" ) {
-    msgContents = msg->asString();
+
+    // When searching in the complete message, we can't simply use msg->asString() here,
+    // as that wouldn't decode the body. Therefore we use the decoded body and all decoded
+    // header fields and add all to the one big search string.
+    msgContents += msg->bodyToUnicode();
+    const DwHeaders& headers = msg->headers();
+    const DwField * dwField = headers.FirstField();
+    while( dwField != 0 ) {
+      const char * const fieldName = dwField->FieldNameStr().c_str();
+      const QString fieldValue = msg->headerFields( fieldName ).join( " " );
+      msgContents += " " + fieldValue;
+      dwField = dwField->Next();
+    }
     logContents = false;
   } else if ( field() == "<body>" ) {
     msgContents = msg->bodyToUnicode();
