@@ -3419,12 +3419,23 @@ void KMMainWidget::updateFolderMenu()
                                                            || ( cachedImap && knownImapPath ) ) && !multiFolder );
   if ( mTroubleshootFolderAction )
     mTroubleshootFolderAction->setEnabled( folderWithContent && ( cachedImap && knownImapPath ) && !multiFolder );
-  mEmptyFolderAction->setEnabled( folderWithContent && ( mFolder->count() > 0 ) && mFolder->canDeleteMessages() && !multiFolder );
-  mEmptyFolderAction->setText( (mFolder && kmkernel->folderIsTrash(mFolder))
-    ? i18n("E&mpty Trash") : i18n("&Move All Messages to Trash") );
-  mRemoveFolderAction->setEnabled( mFolder && !mFolder->isSystemFolder() && mFolder->canDeleteMessages() && !multiFolder);
-  mRemoveFolderAction->setText( mFolder && mFolder->folderType() == KMFolderTypeSearch
-        ? i18n("&Delete Search") : i18n("&Delete Folder") );
+
+  mEmptyFolderAction->setEnabled( folderWithContent &&
+                                  ( mFolder->count() > 0 ) && mFolder->canDeleteMessages() &&
+                                  !multiFolder );
+  mEmptyFolderAction->setText( ( mFolder && kmkernel->folderIsTrash( mFolder ) ) ?
+                               i18n( "E&mpty Trash" ) :
+                               i18n( "&Move All Messages to Trash" ) );
+
+  mRemoveFolderAction->setEnabled( mFolder &&
+                                   !mFolder->isSystemFolder() &&
+                                   mFolder->canDeleteMessages() &&
+                                   !multiFolder && !mFolder->noContent() );
+  mRemoveFolderAction->setText( mFolder &&
+                                mFolder->folderType() == KMFolderTypeSearch ?
+                                i18n( "&Delete Search" ) :
+                                i18n( "&Delete Folder" ) );
+
   if ( mArchiveFolderAction )
     mArchiveFolderAction->setEnabled( mFolder && !multiFolder );
   mExpireFolderAction->setEnabled( mFolder && mFolder->isAutoExpire() && !multiFolder && mFolder->canDeleteMessages() );
