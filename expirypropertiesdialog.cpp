@@ -28,8 +28,8 @@ using namespace KMail;
  *
  */
 ExpiryPropertiesDialog::ExpiryPropertiesDialog( KMFolderTree* tree, KMFolder* folder )
-    : KDialogBase( tree, "expiry_properties", false, i18n( "Mail Expiry Properties" ), 
-                   KDialogBase::Ok|KDialogBase::Cancel, 
+    : KDialogBase( tree, "expiry_properties", false, i18n( "Mail Expiry Properties" ),
+                   KDialogBase::Ok|KDialogBase::Cancel,
                    KDialogBase::Ok, true ),
       mFolder( folder )
 {
@@ -37,10 +37,10 @@ ExpiryPropertiesDialog::ExpiryPropertiesDialog( KMFolderTree* tree, KMFolder* fo
   QWidget* privateLayoutWidget = new QWidget( this, "globalVBox" );
   setMainWidget( privateLayoutWidget );
   privateLayoutWidget->setGeometry( QRect( 10, 20, 270, 138 ) );
-  globalVBox = new QVBoxLayout( privateLayoutWidget, 11, 6, "globalVBox"); 
+  globalVBox = new QVBoxLayout( privateLayoutWidget, 11, 6, "globalVBox");
   globalVBox->setSpacing( 20 );
 
-  readHBox = new QHBoxLayout( 0, 0, 6, "readHBox"); 
+  readHBox = new QHBoxLayout( 0, 0, 6, "readHBox");
 
   expireReadMailCB = new QCheckBox( privateLayoutWidget, "expireReadMailCB" );
   expireReadMailCB->setText( i18n( "Expire read mails after" ) );
@@ -58,7 +58,7 @@ ExpiryPropertiesDialog::ExpiryPropertiesDialog( KMFolderTree* tree, KMFolder* fo
   readHBox->addWidget( labelDays );
   globalVBox->addLayout( readHBox );
 
-  unreadHBox = new QHBoxLayout( 0, 0, 6, "unreadHBox"); 
+  unreadHBox = new QHBoxLayout( 0, 0, 6, "unreadHBox");
 
   expireUnreadMailCB = new QCheckBox( privateLayoutWidget, "expireUnreadMailCB" );
   expireUnreadMailCB->setText( i18n( "Expire unread mails after" ) );
@@ -77,18 +77,18 @@ ExpiryPropertiesDialog::ExpiryPropertiesDialog( KMFolderTree* tree, KMFolder* fo
   unreadHBox->addWidget( labelDays2 );
   globalVBox->addLayout( unreadHBox );
 
-  expiryActionHBox = new QHBoxLayout( 0, 0, 6, "expiryActionHBox"); 
+  expiryActionHBox = new QHBoxLayout( 0, 0, 6, "expiryActionHBox");
 
   expiryActionLabel = new QLabel( privateLayoutWidget, "expiryActionLabel" );
   expiryActionLabel->setText( i18n( "Expiry action:" ) );
   expiryActionLabel->setAlignment( int( QLabel::AlignVCenter ) );
   expiryActionHBox->addWidget( expiryActionLabel );
 
-  actionsHBox = new QVBoxLayout( 0, 0, 6, "actionsHBox"); 
+  actionsHBox = new QVBoxLayout( 0, 0, 6, "actionsHBox");
   actionsGroup = new QButtonGroup( this );
   actionsGroup->hide(); // for mutual exclusion of the radio buttons
 
-  moveToHBox = new QHBoxLayout( 0, 0, 6, "moveToHBox"); 
+  moveToHBox = new QHBoxLayout( 0, 0, 6, "moveToHBox");
 
   moveToRB = new QRadioButton( privateLayoutWidget, "moveToRB" );
   actionsGroup->insert( moveToRB );
@@ -119,14 +119,14 @@ ExpiryPropertiesDialog::ExpiryPropertiesDialog( KMFolderTree* tree, KMFolder* fo
   int daysToExpireRead, daysToExpireUnread;
   mFolder->daysToExpire( daysToExpireUnread, daysToExpireRead);
 
-  if ( expiryGloballyOn 
-      && mFolder->getReadExpireUnits() != expireNever 
+  if ( expiryGloballyOn
+      && mFolder->getReadExpireUnits() != expireNever
       && daysToExpireRead >= 0 ) {
     expireReadMailCB->setChecked( true );
     expireReadMailSB->setValue( daysToExpireRead );
   }
   if ( expiryGloballyOn
-      && mFolder->getUnreadExpireUnits() != expireNever 
+      && mFolder->getUnreadExpireUnits() != expireNever
       && daysToExpireUnread >= 0 ) {
     expireUnreadMailCB->setChecked( true );
     expireUnreadMailSB->setValue( daysToExpireUnread );
@@ -159,11 +159,29 @@ ExpiryPropertiesDialog::~ExpiryPropertiesDialog()
 void ExpiryPropertiesDialog::slotOk()
 {
   bool enableGlobally = expireReadMailCB->isChecked() || expireUnreadMailCB->isChecked();
-  if ( enableGlobally && moveToRB->isChecked() && !folderSelector->folder() ) {
-    KMessageBox::error( this, i18n("Please select a folder to expire messages into."),
-        i18n( "No Folder Selected" ) );
+
+  KMFolder *expireToFolder = folderSelector->folder();
+  if ( enableGlobally && moveToRB->isChecked() && !expireToFolder ) {
+    KMessageBox::error(
+      this,
+      i18n( "Please select a folder to expire messages into." ),
+      i18n( "No Folder Selected" ) );
     return;
-  } 
+  }
+
+  if ( expireToFolder ) {
+    if ( expireToFolder->idString() == mFolder->idString() ) {
+      KMessageBox::error(
+        this,
+        i18n( "Please select a different folder than the current folder "
+              "to expire message into." ),
+        i18n( "Wrong Folder Selected" ) );
+      return;
+    } else {
+      mFolder->setExpireToFolderId( expireToFolder->idString() );
+    }
+  }
+
   mFolder->setAutoExpire( enableGlobally );
   // we always write out days now
   mFolder->setReadExpireAge( expireReadMailSB->value() );
@@ -175,9 +193,6 @@ void ExpiryPropertiesDialog::slotOk()
     mFolder->setExpireAction( KMFolder::ExpireDelete );
   else
     mFolder->setExpireAction( KMFolder::ExpireMove );
-  KMFolder* expireToFolder = folderSelector->folder();
-  if ( expireToFolder )
-    mFolder->setExpireToFolderId( expireToFolder->idString() );
 
   // trigger immediate expiry if there is something to do
   if ( enableGlobally )
