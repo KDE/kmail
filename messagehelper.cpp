@@ -21,7 +21,7 @@
 #include "messagehelper.h"
 #include "stringutil.h"
 #include "messageviewer/stringutil.h"
-#include "version-kmail.h"
+#include "kdepim-version.h"
 #include "kmversion.h"
 #include "templateparser.h"
 #include "messageinfo.h"
@@ -149,11 +149,11 @@ void initHeader( const KMime::Message::Ptr &message, uint id )
 
   // user agent, e.g. KMail/1.9.50 (Windows/5.0; KDE/3.97.1; i686; svn-762186; 2008-01-15)
   QStringList extraInfo;
-# if defined KMAIL_SVN_REVISION_STRING && defined KMAIL_SVN_LAST_CHANGE
-  extraInfo << KMAIL_SVN_REVISION_STRING << KMAIL_SVN_LAST_CHANGE;
+#if defined KDEPIM_SVN_REVISION_STRING && defined KDEPIM_SVN_LAST_CHANGE
+  extraInfo << KDEPIM_SVN_REVISION_STRING << KDEPIM_SVN_LAST_CHANGE;
 #else
-#error forgot to include version-kmail.h
-# endif
+#error forgot to include kdepim-version.h
+#endif
 
   message->userAgent()->fromUnicodeString( KProtocolManager::userAgentForApplication( "KMail", KMAIL_VERSION, extraInfo ), "utf-8" );
 

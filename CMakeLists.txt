@@ -4,21 +4,6 @@ include(CheckIncludeFiles)
 
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} ${KDE4_DATA_DIR}/cmake/modules)
 
-# Support for the SVN revision number in version-kmail.h
-if (EXISTS "${CMAKE_CURRENT_SOURCE_DIR}/.svn")
-  if (NOT KdeSubversion_FOUND)
-    find_package(KdeSubversion)
-  endif (NOT KdeSubversion_FOUND)
-  if (KdeSubversion_FOUND)
-    KdeSubversion_WC_INFO(${PROJECT_SOURCE_DIR} KMail)
-    string(SUBSTRING "${KMail_WC_LAST_CHANGED_DATE}" 0 10 KMail_WC_LAST_CHANGED_DATE)
-    set(kmail_svn_revision "svn-${KMail_WC_REVISION}")
-    set(kmail_svn_last_change "${KMail_WC_LAST_CHANGED_DATE}")
-  endif (KdeSubversion_FOUND)
-endif (EXISTS "${CMAKE_CURRENT_SOURCE_DIR}/.svn")
-
-configure_file(version-kmail.h.cmake ${CMAKE_CURRENT_BINARY_DIR}/version-kmail.h)
-
 qt4_generate_dbus_interface(kmkernel.h org.kde.kmail.kmail.xml OPTIONS -a)
 
 add_custom_target(kmail_xml ALL
