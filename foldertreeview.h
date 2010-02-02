@@ -22,6 +22,12 @@
 #include <akonadi/entitytreeview.h>
 #include <akonadi/collection.h>
 #include "folderselectiontreeview.h"
+
+namespace Akonadi
+{
+class CollectionStatisticsDelegate;
+}
+
 class FolderTreeView : public Akonadi::EntityTreeView
 {
   Q_OBJECT
@@ -67,6 +73,7 @@ signals:
 private:
   bool mbDisableContextMenuAndExtraColumn;
   FolderSelectionTreeView::ToolTipDisplayPolicy mToolTipDisplayPolicy;
+  Akonadi::CollectionStatisticsDelegate *mCollectionStatisticsDelegate;
 };
 
 

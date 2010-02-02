@@ -21,6 +21,7 @@
 #include <KLocale>
 #include <akonadi/entitytreemodel.h>
 #include <akonadi/collectionstatistics.h>
+#include <akonadi/collectionstatisticsdelegate.h>
 #include "kmkernel.h"
 #include <KMessageBox>
 #include <KGuiItem>
@@ -68,6 +69,10 @@ void FolderTreeView::init()
   connect( header(), SIGNAL( customContextMenuRequested( const QPoint& ) ),
            SLOT( slotHeaderContextMenuRequested( const QPoint& ) ) );
   readConfig();
+
+  mCollectionStatisticsDelegate = new Akonadi::CollectionStatisticsDelegate(this);
+  setItemDelegate(mCollectionStatisticsDelegate);
+  mCollectionStatisticsDelegate->setUnreadCountShown( !header()->isSectionHidden( 1 ) );
 }
 
 void FolderTreeView::writeConfig()
@@ -191,6 +196,9 @@ void FolderTreeView::slotHeaderContextMenuChangeHeader( bool )
 
   if ( id > header()->count() )
     return;
+
+  if ( id == 1 )
+    mCollectionStatisticsDelegate->setUnreadCountShown(!act->isChecked());
 
   setColumnHidden( id, !act->isChecked() );
 }
