@@ -123,9 +123,18 @@ void ArchiveFolderDialog::slotUrlChanged( const QString &text )
   enableButton( Ok, !text.isEmpty() );
 }
 
+bool canRemoveFolder( KMFolder *folder )
+{
+  return
+    folder &&
+    folder->canDeleteMessages() &&
+    !folder->noContent() &&
+    !folder->isSystemFolder();
+}
+
 void ArchiveFolderDialog::slotFolderChanged( KMFolder *folder )
 {
-  mDeleteCheckBox->setEnabled( folder && folder->canDeleteMessages() && !folder->noContent());
+  mDeleteCheckBox->setEnabled( canRemoveFolder( folder ) );
   enableButton( Ok, folder && !folder->noContent());
 }
 
@@ -134,7 +143,7 @@ void ArchiveFolderDialog::setFolder( KMFolder *defaultFolder )
   mFolderRequester->setFolder( defaultFolder );
   // TODO: what if the file already exists?
   mUrlRequester->setURL( standardArchivePath( defaultFolder->name() ) );
-  mDeleteCheckBox->setEnabled( defaultFolder->canDeleteMessages() );
+  mDeleteCheckBox->setEnabled( canRemoveFolder( defaultFolder ) );
 }
 
 void ArchiveFolderDialog::slotOk()
@@ -154,8 +163,8 @@ void ArchiveFolderDialog::slotOk()
   backupJob->setRootFolder( mFolderRequester->folder() );
   backupJob->setSaveLocation( mUrlRequester->url() );
   backupJob->setArchiveType( static_cast<BackupJob::ArchiveType>( mFormatComboBox->currentItem() ) );
-  backupJob->setDeleteFoldersAfterCompletion( mDeleteCheckBox->isChecked() &&
-                                              mFolderRequester->folder()->canDeleteMessages() );
+  backupJob->setDeleteFoldersAfterCompletion( mDeleteCheckBox->isEnabled() &&
+                                              mDeleteCheckBox->isChecked() );
   backupJob->start();
   accept();
 }
