@@ -352,6 +352,12 @@ void KMMainWidget::folderSelected( const Akonadi::Collection & col, bool forceJu
       case GlobalSettings::EnumActionEnterFolder::SelectLastSelected:
         preSelectionMode = MessageList::Core::PreSelectLastSelected;
       break;
+      case GlobalSettings::EnumActionEnterFolder::SelectNewest:
+        preSelectionMode = MessageList::Core::PreSelectNewestCentered;
+      break;
+      case GlobalSettings::EnumActionEnterFolder::SelectOldest:
+        preSelectionMode = MessageList::Core::PreSelectOldestCentered;
+      break;
       default:
         preSelectionMode = MessageList::Core::PreSelectNone;
       break;
