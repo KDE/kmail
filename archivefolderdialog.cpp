@@ -125,7 +125,8 @@ void ArchiveFolderDialog::slotUrlChanged( const QString &text )
 
 void ArchiveFolderDialog::slotFolderChanged( KMFolder *folder )
 {
-  mDeleteCheckBox->setEnabled( folder->canDeleteMessages() );
+  mDeleteCheckBox->setEnabled( folder && folder->canDeleteMessages() && !folder->noContent());
+  enableButton( Ok, folder && !folder->noContent());
 }
 
 void ArchiveFolderDialog::setFolder( KMFolder *defaultFolder )
