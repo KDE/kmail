@@ -27,6 +27,8 @@
           <choice name="SelectFirstNew"/>
           <choice name="SelectFirstUnreadNew"/>
           <choice name="SelectLastSelected"/>
+          <choice name="SelectNewest"/>
+          <choice name="SelectOldest"/>
         </choices>
         <default>SelectLastSelected</default>
       </entry>
