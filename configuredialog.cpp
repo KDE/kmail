@@ -4566,7 +4566,11 @@ MiscPageFolderTab::MiscPageFolderTab( QWidget * parent, const char * name )
       << i18n("continuation of \"When entering a folder:\"",
               "Jump to First Unread or New Message")
       << i18n("continuation of \"When entering a folder:\"",
-              "Jump to Last Selected Message"));
+              "Jump to Last Selected Message")
+      << i18n("continuation of \"When entering a folder:\"",
+              "Jump to Newest Message")
+      << i18n("continuation of \"When entering a folder:\"",
+              "Jump to Oldest Message") );
   hlay->addWidget( label );
   hlay->addWidget( mActionEnterFolder, 1 );
   connect( mActionEnterFolder, SIGNAL( activated( int ) ),
