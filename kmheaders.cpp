@@ -3044,6 +3044,8 @@ bool KMHeaders::readSortOrder( bool set_selection, bool forceJumpToUnread )
     bool jumpToUnread = (GlobalSettings::self()->actionEnterFolder() ==
                          GlobalSettings::EnumActionEnterFolder::SelectFirstUnreadNew) ||
                         forceJumpToUnread;
+    HeaderItem *oldestItem = 0;
+    HeaderItem *newestItem = 0;
     QMemArray<SortCacheItem *> sortCache(mFolder->count());
     bool error = false;
 
@@ -3347,6 +3349,16 @@ bool KMHeaders::readSortOrder( bool set_selection, bool forceJumpToUnread )
             {
               unread_exists = true;
             }
+
+            if ( !oldestItem || mFolder->getMsgBase( oldestItem->msgId() )->date() >
+                  mFolder->getMsgBase( new_kci->id() )->date() ) {
+              oldestItem = khi;
+            }
+
+            if ( !newestItem || mFolder->getMsgBase( newestItem->msgId() )->date() <
+                  mFolder->getMsgBase( new_kci->id() )->date() ) {
+              newestItem = khi;
+            }
         }
         // If we are sorting by date and ascending the top level items are sorted
         // ascending and the threads themselves are sorted descending. One wants
@@ -3396,10 +3408,12 @@ bool KMHeaders::readSortOrder( bool set_selection, bool forceJumpToUnread )
         }
     }
 
-    //show a message
+    // Select a message, depending on the "When entering a folder:" setting
     CREATE_TIMER(selection);
     START_TIMER(selection);
     if(set_selection) {
+
+        // Search for the id of the first unread/new item, should there be any
         int first_unread = -1;
         if (unread_exists) {
             HeaderItem *item = static_cast<HeaderItem*>(firstChild());
@@ -3418,19 +3432,33 @@ bool KMHeaders::readSortOrder( bool set_selection, bool forceJumpToUnread )
             }
         }
 
+        // No unread message to select, so either select the newest, oldest or lastest selected
         if(first_unread == -1 ) {
-            setTopItemByIndex(mTopItem);
-            if ( mCurrentItem >= 0 )
+            setTopItemByIndex( mTopItem );
+
+            if ( GlobalSettings::self()->actionEnterFolder() ==
+                 GlobalSettings::EnumActionEnterFolder::SelectNewest && newestItem != 0 ) {
+              setCurrentItemByIndex( newestItem->msgId() );
+            }
+            else if ( GlobalSettings::self()->actionEnterFolder() ==
+                      GlobalSettings::EnumActionEnterFolder::SelectOldest && oldestItem != 0 ) {
+              setCurrentItemByIndex( oldestItem->msgId() );
+            }
+            else if ( mCurrentItem >= 0 )
               setCurrentItemByIndex( mCurrentItem );
             else if ( mCurrentItemSerNum > 0 )
               setCurrentItemBySerialNum( mCurrentItemSerNum );
             else
               setCurrentItemByIndex( 0 );
+
+        // There is an unread item to select, so select it
         } else {
             setCurrentItemByIndex(first_unread);
             makeHeaderVisible();
             center( contentsX(), itemPos(mItems[first_unread]), 0, 9.0 );
         }
+
+    // we are told to not change the selection
     } else {
         // only reset the selection if we have no current item
         if (mCurrentItem <= 0) {
