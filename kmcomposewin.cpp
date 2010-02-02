@@ -3187,7 +3187,6 @@ void KMComposeWin::slotAttachProperties()
   if (idx < 0) return;
 
   KMMessagePart* msgPart = mAtmList.at(idx);
-  msgPart->setCharset(mCharset);
 
   KMMsgPartDialogCompat dlg(mMainWidget);
   dlg.setMsgPart(msgPart);
