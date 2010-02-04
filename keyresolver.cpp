@@ -1439,7 +1439,7 @@ Kpgp::Result Kleo::KeyResolver::showKeyApprovalDialog() {
   std::copy( d->mSMIMEEncryptToSelfKeys.begin(), d->mSMIMEEncryptToSelfKeys.end(),
 	     std::back_inserter( senderKeys ) );
 
-  const KCursorSaver idle( KBusyPtr::idle() );
+  const MessageViewer::KCursorSaver idle( MessageViewer::KBusyPtr::idle() );
 
   Kleo::KeyApprovalDialog dlg( items, senderKeys );
 
@@ -1512,7 +1512,7 @@ Kpgp::Result Kleo::KeyResolver::showKeyApprovalDialog() {
                   : i18n("You did not select encryption keys for some of "
                          "the recipients: these persons will not be able to "
                          "decrypt the message if you encrypt it." );
-    KCursorSaver idle( KBusyPtr::idle() );
+    MessageViewer::KCursorSaver idle( MessageViewer::KBusyPtr::idle() );
     if ( KMessageBox::warningContinueCancel( 0, msg,
                                              i18n("Missing Key Warning"),
                                              KGuiItem(i18n("&Encrypt")) )

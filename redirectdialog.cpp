@@ -129,7 +129,7 @@ void RedirectDialog::accept()
 //-----------------------------------------------------------------------------
 void RedirectDialog::slotAddrBook()
 {
-  AutoQPointer<AddressesDialog> dlg( new AddressesDialog( this ) );
+  MessageViewer::AutoQPointer<AddressesDialog> dlg( new AddressesDialog( this ) );
 
   mResentTo = mEditTo->text();
   if ( !mResentTo.isEmpty() ) {

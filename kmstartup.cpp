@@ -221,7 +221,7 @@ void lockOrDie() {
                     oldProgramName, programName, oldHostName );
     }
 
-    KCursorSaver idle( KBusyPtr::idle() );
+    MessageViewer::KCursorSaver idle( MessageViewer::KBusyPtr::idle() );
     if ( KMessageBox::No ==
          KMessageBox::warningYesNo( 0, msg, QString(),
            KGuiItem(i18nc("Start kmail even when another instance is running.", "Start %1", programName )),

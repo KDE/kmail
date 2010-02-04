@@ -224,7 +224,7 @@ void FilterImporterExporter::exportFilters(const QList<KMFilter *> &filters )
         return;
 
     KSharedConfig::Ptr config = KSharedConfig::openConfig( saveUrl.toLocalFile() );
-    AutoQPointer<FilterSelectionDialog> dlg( new FilterSelectionDialog( mParent ) );
+    MessageViewer::AutoQPointer<FilterSelectionDialog> dlg( new FilterSelectionDialog( mParent ) );
     dlg->setFilters( filters );
     if ( dlg->exec() == QDialog::Accepted && dlg )
         writeFiltersToConfig( dlg->selectedFilters(), config, mPopFilter );

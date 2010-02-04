@@ -40,7 +40,6 @@
 #include "identitylistview.h"
 using KMail::IdentityListView;
 using KMail::IdentityListViewItem;
-#include "messageviewer/kcursorsaver.h"
 #include "folderrequester.h"
 using KMail::FolderRequester;
 #include "kmmainwidget.h"
@@ -339,7 +338,8 @@ void IdentityPage::slotNewIdentity()
   Q_ASSERT( !mIdentityDialog );
 
   KPIMIdentities::IdentityManager *im = kmkernel->identityManager();
-  AutoQPointer<NewIdentityDialog> dialog( new NewIdentityDialog( im->shadowIdentities(), this ) );
+  MessageViewer::AutoQPointer<NewIdentityDialog> dialog( new NewIdentityDialog(
+      im->shadowIdentities(), this ) );
   dialog->setObjectName( "new" );
 
   if ( dialog->exec() == QDialog::Accepted && dialog ) {
@@ -2741,7 +2741,7 @@ void ComposerPage::GeneralTab::save()
 
 void ComposerPage::GeneralTab::slotConfigureRecentAddresses()
 {
-  AutoQPointer<KPIM::RecentAddressDialog> dlg( new KPIM::RecentAddressDialog( this ) );
+  MessageViewer::AutoQPointer<KPIM::RecentAddressDialog> dlg( new KPIM::RecentAddressDialog( this ) );
   dlg->setAddresses( RecentAddresses::self( KMKernel::config().data() )->addresses() );
   if ( dlg->exec() && dlg ) {
     RecentAddresses::self( KMKernel::config().data() )->clear();

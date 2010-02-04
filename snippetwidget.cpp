@@ -99,7 +99,7 @@ SnippetWidget::~SnippetWidget()
 void SnippetWidget::slotAdd()
 {
   //kDebug() << "Ender slotAdd()";
-  AutoQPointer<SnippetDlg> dlg( new SnippetDlg( mActionCollection, this ) );
+  MessageViewer::AutoQPointer<SnippetDlg> dlg( new SnippetDlg( mActionCollection, this ) );
   dlg->setObjectName( "SnippetDlg" );
 
   /*check if the user clicked a SnippetGroup
@@ -163,7 +163,7 @@ SnippetItem* SnippetWidget::makeItem( SnippetItem *parent, const QString &name,
 void SnippetWidget::slotAddGroup()
 {
   //kDebug() << "Ender slotAddGroup()";
-  AutoQPointer<SnippetDlg> dlg( new SnippetDlg( mActionCollection, this ) );
+  MessageViewer::AutoQPointer<SnippetDlg> dlg( new SnippetDlg( mActionCollection, this ) );
   dlg->setObjectName( "SnippetDlg" );
   dlg->setGroupMode( true );
   dlg->setWindowTitle( i18n("Add Group") );
@@ -221,7 +221,7 @@ void SnippetWidget::slotEdit( QTreeWidgetItem* item )
     return;
 
   //init the dialog
-  AutoQPointer<SnippetDlg> dlg( new SnippetDlg( mActionCollection, this ) );
+  MessageViewer::AutoQPointer<SnippetDlg> dlg( new SnippetDlg( mActionCollection, this ) );
   dlg->setObjectName( "SnippetDlg" );
   dlg->snippetName->setText(pSnippet->getName());
   dlg->snippetText->setText(pSnippet->getText());
@@ -274,7 +274,7 @@ void SnippetWidget::slotEditGroup()
     return;
 
   //init the dialog
-  AutoQPointer<SnippetDlg> dlg( new SnippetDlg( mActionCollection, this ) );
+  MessageViewer::AutoQPointer<SnippetDlg> dlg( new SnippetDlg( mActionCollection, this ) );
   dlg->setObjectName( "SnippetDlg" );
   dlg->setGroupMode( true );
   dlg->snippetName->setText(pGroup->getName());
@@ -555,7 +555,7 @@ QString SnippetWidget::parseText( const QString &text )
 QString SnippetWidget::showSingleVarDialog( const QString &var, QMap<QString, QString> *mapSave )
 {
   // --BEGIN-- building a dynamic dialog
-  AutoQPointer<QDialog> dlg( new QDialog( this ) );  // don't fix this krazy issues without actually trying the code!
+  MessageViewer::AutoQPointer<QDialog> dlg( new QDialog( this ) );  // don't fix this krazy issues without actually trying the code!
   dlg->setWindowTitle(i18n("Enter Values for Variables"));
 
   QGridLayout * layout = new QGridLayout( dlg );
@@ -708,7 +708,7 @@ void SnippetWidget::dropEvent( QDropEvent * event )
   }
 
   // fill the dialog with the given data
-  AutoQPointer<SnippetDlg> dlg( new SnippetDlg( mActionCollection, this ) );
+  MessageViewer::AutoQPointer<SnippetDlg> dlg( new SnippetDlg( mActionCollection, this ) );
   dlg->setObjectName( "SnippetDlg" );
   dlg->snippetName->clear();
   dlg->snippetText->setText( event->mimeData()->text() );

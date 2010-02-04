@@ -39,7 +39,6 @@
 #include <QScrollBar>
 #include <QSignalMapper>
 #include "messagesender.h"
-#include "messageviewer/kcursorsaver.h"
 #include "messageviewer/headerstrategy.h"
 #include "messageviewer/headerstyle.h"
 #include "messageviewer/mailwebview.h"

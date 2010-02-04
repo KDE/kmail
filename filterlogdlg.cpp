@@ -250,7 +250,7 @@ void FilterLogDialog::slotUser2()
 {
   QString fileName;
   KUrl url;
-  AutoQPointer<KFileDialog> fdlg( new KFileDialog( url, QString(), this) );
+  MessageViewer::AutoQPointer<KFileDialog> fdlg( new KFileDialog( url, QString(), this) );
 
   fdlg->setMode( KFile::File );
   fdlg->setSelection( "kmail-filter.log" );

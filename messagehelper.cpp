@@ -92,7 +92,7 @@ static const int numMdnMessageBoxes
 static int requestAdviceOnMDN( const char * what ) {
   for ( int i = 0 ; i < numMdnMessageBoxes ; ++i )
     if ( !qstrcmp( what, mdnMessageBoxes[i].dontAskAgainID ) ) {
-      const KCursorSaver saver( Qt::ArrowCursor );
+      const MessageViewer::KCursorSaver saver( Qt::ArrowCursor );
       MDNAdviceDialog::MDNAdvice answer;
       answer = MDNAdviceDialog::questionIgnoreSend( mdnMessageBoxes[i].text,
                                                     mdnMessageBoxes[i].canDeny );

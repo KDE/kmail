@@ -178,7 +178,7 @@ void KMLineEdit::contextMenuEvent( QContextMenuEvent*e )
 
 void KMLineEdit::editRecentAddresses()
 {
-  AutoQPointer<KPIM::RecentAddressDialog> dlg( new KPIM::RecentAddressDialog( this ) );
+  MessageViewer::AutoQPointer<KPIM::RecentAddressDialog> dlg( new KPIM::RecentAddressDialog( this ) );
   dlg->setAddresses( KPIM::RecentAddresses::self( KMKernel::config().data() )->addresses() );
   if ( dlg->exec() && dlg ) {
     KPIM::RecentAddresses::self( KMKernel::config().data() )->clear();

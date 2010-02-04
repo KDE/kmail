@@ -993,7 +993,7 @@ KMReplyToCommand::KMReplyToCommand( QWidget *parent, const Akonadi::Item &msg,
 
 KMCommand::Result KMReplyToCommand::execute()
 {
-  KCursorSaver busy(KBusyPtr::busy());
+  MessageViewer::KCursorSaver busy( MessageViewer::KBusyPtr::busy() );
   Akonadi::Item item = retrievedMessage();
   if ( !item.isValid() ) {
     return Failed;
@@ -1019,7 +1019,7 @@ KMNoQuoteReplyToCommand::KMNoQuoteReplyToCommand( QWidget *parent,
 
 KMCommand::Result KMNoQuoteReplyToCommand::execute()
 {
-  KCursorSaver busy(KBusyPtr::busy());
+  MessageViewer::KCursorSaver busy( MessageViewer::KBusyPtr::busy() );
   Akonadi::Item item = retrievedMessage();
   if ( !item.isValid() ) {
     return Failed;
@@ -1046,7 +1046,7 @@ KMReplyListCommand::KMReplyListCommand( QWidget *parent,
 
 KMCommand::Result KMReplyListCommand::execute()
 {
-  KCursorSaver busy( KBusyPtr::busy() );
+  MessageViewer::KCursorSaver busy( MessageViewer::KBusyPtr::busy() );
   Akonadi::Item item = retrievedMessage();
   if ( !item.isValid() ) {
     return Failed;
@@ -1074,7 +1074,7 @@ KMReplyToAllCommand::KMReplyToAllCommand( QWidget *parent,
 
 KMCommand::Result KMReplyToAllCommand::execute()
 {
-  KCursorSaver busy( KBusyPtr::busy() );
+  MessageViewer::KCursorSaver busy( MessageViewer::KBusyPtr::busy() );
   Akonadi::Item item = retrievedMessage();
   if ( !item.isValid() ) {
     return Failed;
@@ -1103,7 +1103,7 @@ KMReplyAuthorCommand::KMReplyAuthorCommand( QWidget *parent, const Akonadi::Item
 
 KMCommand::Result KMReplyAuthorCommand::execute()
 {
-  KCursorSaver busy(KBusyPtr::busy());
+  MessageViewer::KCursorSaver busy( MessageViewer::KBusyPtr::busy() );
   Akonadi::Item item = retrievedMessage();
   if ( !item.isValid() ) {
     return Failed;
@@ -1215,7 +1215,7 @@ KMCommand::Result KMForwardCommand::execute()
       msgPart->setContentDescription(QString("Digest of %1 messages.").arg(msgCnt));
       // THIS HAS TO BE AFTER setCte()!!!!
       msgPart->setBodyEncoded(msgPartText.toAscii());
-      KCursorSaver busy(KBusyPtr::busy());
+      MessageViewer::KCursorSaver busy(MessageViewer::KBusyPtr::busy());
       KMail::Composer * win = KMail::makeComposer( fwdMsg, KMail::Composer::NoTemplate, id );
       win->addAttach(msgPart);
       win->show();
@@ -1252,7 +1252,7 @@ KMCommand::Result KMForwardCommand::execute()
         }
       }
 
-      KCursorSaver busy(KBusyPtr::busy());
+      MessageViewer::KCursorSaver busy( MessageViewer::KBusyPtr::busy() );
       KMail::Composer * win = KMail::makeComposer( fwdMsg, KMail::Composer::NoTemplate, id );
       win->show();
       return OK;
@@ -1270,7 +1270,7 @@ KMCommand::Result KMForwardCommand::execute()
   KMime::Message::Ptr msg = KMail::Util::message( item );
   if ( !msg )
     return Failed;
-  KCursorSaver busy(KBusyPtr::busy());
+  MessageViewer::KCursorSaver busy( MessageViewer::KBusyPtr::busy() );
   KMime::Message::Ptr fwdMsg( KMail::MessageHelper::createForward(item, msg) );
 
   uint id = msg->headerByType( "X-KMail-Identity" ) ?  msg->headerByType("X-KMail-Identity")->asUnicodeString().trimmed().toUInt() : 0;
@@ -1322,7 +1322,7 @@ KMCommand::Result KMForwardAttachedCommand::execute()
     fwdMsg->subject()->fromUnicodeString(  KMail::MessageHelper::forwardSubject(msg),"utf-8" );
   }
   KMail::MessageHelper::setAutomaticFields(fwdMsg, true);
-  KCursorSaver busy(KBusyPtr::busy());
+  MessageViewer::KCursorSaver busy( MessageViewer::KBusyPtr::busy() );
   if (!mWin)
     mWin = KMail::makeComposer(fwdMsg, KMail::Composer::Forward, mIdentity);
   // iterate through all the messages to be forwarded
@@ -1374,8 +1374,8 @@ KMCommand::Result KMRedirectCommand::execute()
   if ( !item.isValid() ) {
     return Failed;
   }
-  AutoQPointer<RedirectDialog> dlg( new RedirectDialog( parentWidget(),
-                                                        kmkernel->msgSender()->sendImmediate() ) );
+  MessageViewer::AutoQPointer<RedirectDialog> dlg(
+      new RedirectDialog( parentWidget(), kmkernel->msgSender()->sendImmediate() ) );
   dlg->setObjectName( "redirect" );
   if ( dlg->exec() == QDialog::Rejected || !dlg ) {
     return Failed;
@@ -1409,7 +1409,7 @@ KMCustomReplyToCommand::KMCustomReplyToCommand( QWidget *parent, const Akonadi::
 
 KMCommand::Result KMCustomReplyToCommand::execute()
 {
-  KCursorSaver busy( KBusyPtr::busy() );
+  MessageViewer::KCursorSaver busy( MessageViewer::KBusyPtr::busy() );
   Akonadi::Item item = retrievedMessage();
   if ( !item.isValid() ) {
     return Failed;
@@ -1440,7 +1440,7 @@ KMCustomReplyAllToCommand::KMCustomReplyAllToCommand( QWidget *parent, const Ako
 
 KMCommand::Result KMCustomReplyAllToCommand::execute()
 {
-  KCursorSaver busy(KBusyPtr::busy());
+  MessageViewer::KCursorSaver busy( MessageViewer::KBusyPtr::busy() );
   Akonadi::Item item = retrievedMessage();
   if ( !item.isValid() ) {
     return Failed;
@@ -1516,7 +1516,7 @@ KMCommand::Result KMCustomForwardCommand::execute()
       }
     }
 
-    KCursorSaver busy( KBusyPtr::busy() );
+    MessageViewer::KCursorSaver busy( MessageViewer::KBusyPtr::busy() );
     KMail::Composer * win = KMail::makeComposer( fwdMsg, KMail::Composer::Forward, id,
                                                  QString(), mTemplate );
     win->show();
@@ -1529,7 +1529,7 @@ KMCommand::Result KMCustomForwardCommand::execute()
     KMime::Message::Ptr msg = KMail::Util::message( item );
     if ( !msg )
       return Failed;
-    KCursorSaver busy( KBusyPtr::busy() );
+    MessageViewer::KCursorSaver busy( MessageViewer::KBusyPtr::busy() );
     KMime::Message::Ptr fwdMsg = KMail::MessageHelper::createForward( item, msg, mTemplate );
 
     uint id = 0;
@@ -1726,7 +1726,7 @@ KMFilterActionCommand::KMFilterActionCommand( QWidget *parent,
 
 KMCommand::Result KMFilterActionCommand::execute()
 {
-  KCursorSaver busy( KBusyPtr::busy() );
+  MessageViewer::KCursorSaver busy( MessageViewer::KBusyPtr::busy() );
 
   int msgCount = 0;
   int msgCountToFilter = retrievedMsgs().size();
@@ -1904,7 +1904,7 @@ void KMMoveCommand::slotMoveResult( KJob * job )
 
 KMCommand::Result KMMoveCommand::execute()
 {
-  KCursorSaver busy( KBusyPtr::busy() );
+  MessageViewer::KCursorSaver busy( MessageViewer::KBusyPtr::busy() );
 
   setEmitsCompletedItself( true );
   setDeletesItself( true );

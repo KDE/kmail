@@ -137,7 +137,7 @@ void ACLEntryDialog::slotChanged()
 
 void ACLEntryDialog::slotSelectAddresses()
 {
-  AutoQPointer<KPIM::AddressesDialog> dlg( new KPIM::AddressesDialog( this ) );
+  MessageViewer::AutoQPointer<KPIM::AddressesDialog> dlg( new KPIM::AddressesDialog( this ) );
   dlg->setShowCC( false );
   dlg->setShowBCC( false );
   dlg->setSelectedTo( userIds() );
@@ -429,8 +429,8 @@ void CollectionAclPage::slotEditACL(QTreeWidgetItem* item)
   if ( !canAdmin ) return;
 
   ListViewItem* ACLitem = static_cast<ListViewItem *>( mListView->currentItem() );
-  AutoQPointer<ACLEntryDialog> dlg( new ACLEntryDialog( i18n( "Modify Permissions" ),
-                                                        this ) );
+  MessageViewer::AutoQPointer<ACLEntryDialog> dlg( new ACLEntryDialog( i18n( "Modify Permissions" ),
+                                                                       this ) );
   dlg->setValues( ACLitem->userId(), ACLitem->permissions() );
   if ( dlg->exec() == QDialog::Accepted && dlg ) {
     QStringList userIds = dlg->userIds();
@@ -464,7 +464,8 @@ void CollectionAclPage::addACLs( const QStringList& userIds, KIMAP::Acl::Rights 
 
 void CollectionAclPage::slotAddACL()
 {
-  AutoQPointer<ACLEntryDialog> dlg( new ACLEntryDialog( i18n( "Add Permissions" ), this ) );
+  MessageViewer::AutoQPointer<ACLEntryDialog> dlg( new ACLEntryDialog( i18n( "Add Permissions" ),
+                                                                       this ) );
   if ( dlg->exec() == QDialog::Accepted && dlg ) {
     const QStringList userIds = dlg->userIds();
     addACLs( dlg->userIds(), dlg->permissions() );

@@ -3183,7 +3183,7 @@ void KMComposeWin::doSend( KMail::MessageSender::SendMethod method,
     }
   }
 
-  KCursorSaver busy( KBusyPtr::busy() );
+  MessageViewer::KCursorSaver busy( MessageViewer::KBusyPtr::busy() );
 
   mMsg->date()->setDateTime( KDateTime::currentLocalDateTime() );
   mMsg->setHeader( new KMime::Headers::Generic( "X-KMail-Transport", mMsg.get(), mTransport->currentText(), "utf-8" ) );

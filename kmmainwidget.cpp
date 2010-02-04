@@ -364,7 +364,7 @@ void KMMainWidget::folderSelected( const Akonadi::Collection & col, bool forceJu
     }
   }
 
-  KCursorSaver busy(KBusyPtr::busy());
+  MessageViewer::KCursorSaver busy( MessageViewer::KBusyPtr::busy() );
 
   if (mMsgView)
     mMsgView->clear(true);
@@ -1475,7 +1475,7 @@ void KMMainWidget::slotFolderShortcutCommand()
 
   if ( !mCollectionFolderView || !mCurrentFolder )
     return;
-  AutoQPointer<KMail::FolderShortcutDialog> shorty;
+  MessageViewer::AutoQPointer<KMail::FolderShortcutDialog> shorty;
   shorty = new KMail::FolderShortcutDialog( mCurrentFolder, kmkernel->getKMMainWidget(), mCollectionFolderView );
   shorty->exec();
   //slotModifyFolder( KMMainWidget::PropsShortcut );
@@ -1541,7 +1541,7 @@ void KMMainWidget::slotEmptyFolder()
     if (KMessageBox::warningContinueCancel(this, text, title, KGuiItem( title, "user-trash"))
       != KMessageBox::Continue) return;
   }
-  KCursorSaver busy(KBusyPtr::busy());
+  MessageViewer::KCursorSaver busy( MessageViewer::KBusyPtr::busy() );
   slotMarkAll();
   if (isTrash) {
     /* Don't ask for confirmation again when deleting, the user has already
@@ -1654,7 +1654,7 @@ void KMMainWidget::slotCompactFolder()
   if (!mCurrentFolder)
     return;
 
-  KCursorSaver busy(KBusyPtr::busy());
+  MessageViewer::KCursorSaver busy( MessageViewer::KBusyPtr::busy() );
   mCurrentFolder->compact( FolderCollection::CompactNow );
 }
 
@@ -1720,7 +1720,7 @@ void KMMainWidget::slotExpireAll()
 //-----------------------------------------------------------------------------
 void KMMainWidget::slotCompactAll()
 {
-  KCursorSaver busy(KBusyPtr::busy());
+  MessageViewer::KCursorSaver busy( MessageViewer::KBusyPtr::busy() );
   kmkernel->compactAllFolders();
 }
 
@@ -1926,7 +1926,7 @@ void KMMainWidget::slotDeleteThread( bool confirmDelete )
 
 void KMMainWidget::slotMoveSelectedMessageToFolder()
 {
-  AutoQPointer<FolderSelectionTreeViewDialog> dlg;
+  MessageViewer::AutoQPointer<FolderSelectionTreeViewDialog> dlg;
   dlg = new FolderSelectionTreeViewDialog( this );
   dlg->setModal( true );
   dlg->setCaption(  i18n( "Move Messages to Folder" ) );
@@ -1980,7 +1980,7 @@ void KMMainWidget::slotCopyMessagesCompleted( KMCommand *command )
 
 void KMMainWidget::slotCopySelectedMessagesToFolder()
 {
-  AutoQPointer<FolderSelectionTreeViewDialog> dlg;
+  MessageViewer::AutoQPointer<FolderSelectionTreeViewDialog> dlg;
   dlg = new FolderSelectionTreeViewDialog( this );
   dlg->setModal( true );
   dlg->setCaption( i18n( "Copy Messages to Folder" ) );
@@ -2302,7 +2302,7 @@ void KMMainWidget::slotUndo()
 void KMMainWidget::slotJumpToFolder()
 {
   // can jump to anywhere, need not be read/write
-  AutoQPointer<FolderSelectionTreeViewDialog> dlg;
+  MessageViewer::AutoQPointer<FolderSelectionTreeViewDialog> dlg;
   dlg = new FolderSelectionTreeViewDialog( this,false );
   dlg->setCaption( i18n( "Jump to Folder") );
   if ( dlg->exec() && dlg ) {
@@ -2343,7 +2343,7 @@ void KMMainWidget::slotApplyFilters()
     return;
   }
 
-  KCursorSaver busy( KBusyPtr::busy() );
+  MessageViewer::KCursorSaver busy( MessageViewer::KBusyPtr::busy() );
   const int msgCountToFilter = selectedMessages.size();
 
   mFilterProgressItem = KPIM::ProgressManager::createProgressItem (
@@ -3660,14 +3660,14 @@ void KMMainWidget::slotCollapseThread()
 void KMMainWidget::slotExpandAllThreads()
 {
   // TODO: Make this asynchronous ? (if there is enough demand)
-  KCursorSaver busy( KBusyPtr::busy() );
+  MessageViewer::KCursorSaver busy( MessageViewer::KBusyPtr::busy() );
   mMessagePane->setAllThreadsExpanded( true );
 }
 
 void KMMainWidget::slotCollapseAllThreads()
 {
   // TODO: Make this asynchronous ? (if there is enough demand)
-  KCursorSaver busy( KBusyPtr::busy() );
+  MessageViewer::KCursorSaver busy( MessageViewer::KBusyPtr::busy() );
   mMessagePane->setAllThreadsExpanded( false );
 }
 

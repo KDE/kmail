@@ -911,7 +911,7 @@ void RecipientsEditor::slotPickedRecipient( const Recipient &rec )
 
 void RecipientsEditor::saveDistributionList()
 {
-  AutoQPointer<DistributionListDialog> dlg( new DistributionListDialog( this ) );
+  MessageViewer::AutoQPointer<DistributionListDialog> dlg( new DistributionListDialog( this ) );
   dlg->setRecipients( mRecipientsView->recipients() );
   dlg->exec();
 }

@@ -498,7 +498,7 @@ void AntiSpamWizard::checkVirusRulesSelections()
 void AntiSpamWizard::checkToolAvailability()
 {
   // this can take some time to find the tools
-  KCursorSaver busy( KBusyPtr::busy() );
+  MessageViewer::KCursorSaver busy( MessageViewer::KBusyPtr::busy() );
 
   bool found = false;
   for ( QList<SpamToolConfig>::Iterator it = mToolList.begin();
