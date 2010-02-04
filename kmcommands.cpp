@@ -243,13 +243,16 @@ void KMCommand::slotStart()
     return;
   }
 
-  for (KMMsgBase *mb = mMsgList.first(); mb; mb = mMsgList.next())
-    if (!mb->parent()) {
-      emit messagesTransfered( Failed );
-      return;
-    } else {
-      keepFolderOpen( mb->parent() );
+  for ( KMMsgBase *mb = mMsgList.first(); mb; mb = mMsgList.next() ) {
+    if ( mb ) {
+      if ( !mb->parent() ) {
+        emit messagesTransfered( Failed );
+        return;
+      } else {
+        keepFolderOpen( mb->parent() );
+      }
     }
+  }
 
   // transfer the selected messages first
   transferSelectedMsgs();
@@ -446,7 +449,7 @@ void KMCommand::slotTransferCancelled()
 
 void KMCommand::keepFolderOpen( KMFolder *folder )
 {
-  folder->open("kmcommand");
+  folder->open( "kmcommand" );
   mFolders.append( folder );
 }
 
