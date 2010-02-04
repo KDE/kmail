@@ -762,46 +762,6 @@ int KMKernel::viewMessage( const KUrl & messageFile )
   return 1;
 }
 
-QStringList KMKernel::folderList() const
-{
-#if 0
-  QStringList folders;
-  const QString localPrefix = "/Local";
-  folders << localPrefix;
-  the_folderMgr->getFolderURLS( folders, localPrefix );
-  return folders;
-#else
-    kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
-    return QStringList();
-#endif
-}
-
-QString KMKernel::getFolder( const QString& vpath )
-{
-#if 0
-  QString adaptorName;
-  const QString localPrefix = "/Local";
-  if ( the_folderMgr->getFolderByURL( vpath ) )
-    adaptorName=vpath;
-  else if ( vpath.startsWith( localPrefix ) && the_folderMgr->getFolderByURL( vpath.mid( localPrefix.length() ) ) )
-    adaptorName=vpath.mid( localPrefix.length() );
-  if( !adaptorName.isEmpty())
-  {
-    if ( folderAdaptor )
-      {
-        folderAdaptor->unregisterobject();
-        delete folderAdaptor;
-      }
-    folderAdaptor = new KMail::FolderAdaptor(adaptorName);
-    return vpath;
-  }
-#else
-    kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
-#endif
-  kWarning() << "Folder not found:" << vpath;
-  return QString();
-}
-
 void KMKernel::raise()
 {
   QDBusInterface iface( "org.kde.kmail", "/MainApplication",

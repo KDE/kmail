@@ -124,8 +124,6 @@ public Q_SLOTS:
    */
   Q_SCRIPTABLE void resumeNetworkJobs();
 
-  Q_SCRIPTABLE QStringList folderList() const;
-
   Q_SCRIPTABLE QStringList accounts();
 
   /**
@@ -136,8 +134,6 @@ public Q_SLOTS:
   Q_SCRIPTABLE void checkAccount( const QString & account );
 
   Q_SCRIPTABLE void selectFolder( const QString & folder );
-
-  Q_SCRIPTABLE QString getFolder( const QString & vpath );
 
   Q_SCRIPTABLE bool canQueryClose();
 
