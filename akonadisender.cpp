@@ -166,9 +166,7 @@ bool AkonadiSender::doSendQueued( const QString &customTransport )
   if( mCustomTransport.isEmpty() ) {
     dispatcher->dispatchManually();
   } else {
-    TransportAttribute *transportAttribute = new TransportAttribute();
-    transportAttribute->setTransportId( TransportManager::self()->transportByName( mCustomTransport )->id() );
-    dispatcher->dispatchManualTransport( transportAttribute );
+    dispatcher->dispatchManualTransport( TransportManager::self()->transportByName( mCustomTransport )->id() );
   }
   delete dispatcher;
   return true;
