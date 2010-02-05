@@ -163,7 +163,13 @@ bool AkonadiSender::doSendQueued( const QString &customTransport )
   kDebug() << "Created ProgressItem" << mProgressItem;
 
   DispatcherInterface *dispatcher = new DispatcherInterface();
-  dispatcher->dispatchManually();
+  if( mCustomTransport.isEmpty() ) {
+    dispatcher->dispatchManually();
+  } else {
+    TransportAttribute *transportAttribute = new TransportAttribute();
+    transportAttribute->setTransportId( TransportManager::self()->transportByName( mCustomTransport )->id() );
+    dispatcher->dispatchManualTransport( transportAttribute );
+  }
   delete dispatcher;
   return true;
 }
