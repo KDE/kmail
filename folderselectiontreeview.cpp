@@ -126,10 +126,8 @@ void FolderSelectionTreeView::disableContextMenuAndExtraColumn()
 
 void FolderSelectionTreeView::selectCollectionFolder( const Akonadi::Collection & col )
 {
-  kDebug() << "AKONADI PORT: Bug in this code  " << Q_FUNC_INFO;
-
-  QModelIndexList rows = d->collectionFolderView->model()->match(QModelIndex(), Akonadi::EntityTreeModel::CollectionIdRole, col.id());
-
+  const QModelIndex idx = d->collectionFolderView->model()->index( 0, 0, QModelIndex() );
+  QModelIndexList rows = d->collectionFolderView->model()->match( idx, Akonadi::EntityTreeModel::CollectionIdRole, col.id(), -1, Qt::MatchRecursive | Qt::MatchExactly );
 
   if ( rows.size() < 1 )
     return;
