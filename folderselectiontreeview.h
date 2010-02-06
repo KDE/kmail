@@ -37,7 +37,7 @@ class KMAIL_EXPORT FolderSelectionTreeView : public QWidget
 {
   Q_OBJECT
 public:
-  FolderSelectionTreeView( QWidget *parent = 0, KXMLGUIClient *xmlGuiClient = 0 );
+  FolderSelectionTreeView( QWidget *parent = 0, KXMLGUIClient *xmlGuiClient = 0, bool showUnreadCount = true );
   ~FolderSelectionTreeView();
 
   /**

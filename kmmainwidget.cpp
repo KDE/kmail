@@ -1927,7 +1927,7 @@ void KMMainWidget::slotDeleteThread( bool confirmDelete )
 void KMMainWidget::slotMoveSelectedMessageToFolder()
 {
   MessageViewer::AutoQPointer<FolderSelectionTreeViewDialog> dlg;
-  dlg = new FolderSelectionTreeViewDialog( this );
+  dlg = new FolderSelectionTreeViewDialog( this, false , false );
   dlg->setModal( true );
   dlg->setCaption(  i18n( "Move Messages to Folder" ) );
   if ( dlg->exec() && dlg ) {
@@ -1981,7 +1981,7 @@ void KMMainWidget::slotCopyMessagesCompleted( KMCommand *command )
 void KMMainWidget::slotCopySelectedMessagesToFolder()
 {
   MessageViewer::AutoQPointer<FolderSelectionTreeViewDialog> dlg;
-  dlg = new FolderSelectionTreeViewDialog( this );
+  dlg = new FolderSelectionTreeViewDialog( this, false , false );
   dlg->setModal( true );
   dlg->setCaption( i18n( "Copy Messages to Folder" ) );
 
@@ -2303,7 +2303,7 @@ void KMMainWidget::slotJumpToFolder()
 {
   // can jump to anywhere, need not be read/write
   MessageViewer::AutoQPointer<FolderSelectionTreeViewDialog> dlg;
-  dlg = new FolderSelectionTreeViewDialog( this,false );
+  dlg = new FolderSelectionTreeViewDialog( this,false, false );
   dlg->setCaption( i18n( "Jump to Folder") );
   if ( dlg->exec() && dlg ) {
     Akonadi::Collection collection = dlg->selectedCollection();

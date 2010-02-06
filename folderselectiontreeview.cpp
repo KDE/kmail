@@ -63,11 +63,11 @@ public:
 
 
 
-FolderSelectionTreeView::FolderSelectionTreeView( QWidget *parent, KXMLGUIClient *xmlGuiClient )
+FolderSelectionTreeView::FolderSelectionTreeView( QWidget *parent, KXMLGUIClient *xmlGuiClient, bool showUnreadCount )
   : QWidget( parent ), d( new FolderSelectionTreeViewPrivate() )
 {
   Akonadi::AttributeFactory::registerAttribute<Akonadi::ImapAclAttribute>();
-  d->collectionFolderView = new FolderTreeView( xmlGuiClient, this );
+  d->collectionFolderView = new FolderTreeView( xmlGuiClient, this, showUnreadCount );
 
   QHBoxLayout *lay = new QHBoxLayout( this );
   lay->setMargin( 0 );

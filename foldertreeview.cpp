@@ -27,17 +27,17 @@
 #include <KGuiItem>
 #include <KMenu>
 
-FolderTreeView::FolderTreeView(QWidget *parent )
+FolderTreeView::FolderTreeView(QWidget *parent, bool showUnreadCount )
   : Akonadi::EntityTreeView( parent ), mbDisableContextMenuAndExtraColumn( false )
 {
-  init();
+  init(showUnreadCount);
 }
 
 
-FolderTreeView::FolderTreeView(KXMLGUIClient *xmlGuiClient, QWidget *parent )
+FolderTreeView::FolderTreeView(KXMLGUIClient *xmlGuiClient, QWidget *parent, bool showUnreadCount )
   :Akonadi::EntityTreeView( xmlGuiClient, parent ), mbDisableContextMenuAndExtraColumn( false )
 {
-  init();
+  init(showUnreadCount);
 }
 
 
@@ -61,7 +61,7 @@ void FolderTreeView::disableContextMenuAndExtraColumn()
   }
 }
 
-void FolderTreeView::init()
+void FolderTreeView::init( bool showUnreadCount )
 {
   setIconSize( QSize( 22, 22 ) );
 
@@ -72,7 +72,7 @@ void FolderTreeView::init()
 
   mCollectionStatisticsDelegate = new Akonadi::CollectionStatisticsDelegate(this);
   setItemDelegate(mCollectionStatisticsDelegate);
-  mCollectionStatisticsDelegate->setUnreadCountShown( !header()->isSectionHidden( 1 ) );
+  mCollectionStatisticsDelegate->setUnreadCountShown( showUnreadCount && !header()->isSectionHidden( 1 ) );
 }
 
 void FolderTreeView::writeConfig()

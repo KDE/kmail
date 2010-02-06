@@ -32,9 +32,9 @@ class FolderTreeView : public Akonadi::EntityTreeView
 {
   Q_OBJECT
 public:
-  explicit FolderTreeView( QWidget *parent = 0 );
+  explicit FolderTreeView( QWidget *parent = 0, bool showUnreadCount = true );
 
-  explicit FolderTreeView( KXMLGUIClient *xmlGuiClient, QWidget *parent = 0 );
+  explicit FolderTreeView( KXMLGUIClient *xmlGuiClient, QWidget *parent = 0, bool showUnreadCount = true );
 
   virtual ~FolderTreeView();
 
@@ -49,7 +49,7 @@ public:
   Akonadi::Collection currentFolder();
 protected:
   enum Move { Next = 0, Previous = 1};
-  void init();
+  void init( bool showUnreadCount );
   void selectModelIndex( const QModelIndex & );
   QModelIndex selectNextFolder( const QModelIndex & current );
   bool isUnreadFolder( const QModelIndex & current, QModelIndex &nextIndex,FolderTreeView::Move move, bool confirm);
