@@ -162,7 +162,7 @@ class TemplateParser : public QObject
 
     /**
     * Same as asPlainText(), only that this method expects an already parsed object tree as
-    * paramter.
+    * parameter.
     * By passing an already parsed objecttree, this allows to share the objecttree and therefore
     * reduce the amount of parsing (which can include decrypting, which can include a passphrase dialog)
     */
