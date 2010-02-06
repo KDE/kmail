@@ -29,7 +29,15 @@ class FolderSelectionTreeViewDialog : public KDialog
 {
   Q_OBJECT
 public:
-  FolderSelectionTreeViewDialog( QWidget *parent, bool enableCheck = true, bool showUnreadCount = false );
+  enum SelectionFolderOption
+  {
+    None = 0,
+    EnableCheck = 1,
+    ShowUnreadCount = 2
+  };
+  Q_DECLARE_FLAGS( SelectionFolderOptions, SelectionFolderOption )
+
+  FolderSelectionTreeViewDialog( QWidget *parent, SelectionFolderOption options );
   ~FolderSelectionTreeViewDialog();
 
   void setSelectionMode( QAbstractItemView::SelectionMode mode );

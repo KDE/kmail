@@ -72,8 +72,9 @@ FolderRequester::FolderRequester( QWidget *parent )
 //-----------------------------------------------------------------------------
 void FolderRequester::slotOpenDialog()
 {
+  FolderSelectionTreeViewDialog::SelectionFolderOption options = FolderSelectionTreeViewDialog::EnableCheck;
   MessageViewer::AutoQPointer<FolderSelectionTreeViewDialog> dlg(
-      new FolderSelectionTreeViewDialog( this, true, false ) );
+      new FolderSelectionTreeViewDialog( this, options ) );
   dlg->setCaption( i18n("Select Folder") );
   dlg->setModal( false );
   dlg->setSelectedCollection( mCollection );

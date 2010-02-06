@@ -31,7 +31,7 @@
 
 #include <KLocale>
 
-FolderSelectionTreeViewDialog::FolderSelectionTreeViewDialog( QWidget *parent, bool enableCheck, bool showUnreadCount )
+FolderSelectionTreeViewDialog::FolderSelectionTreeViewDialog( QWidget *parent, SelectionFolderOption options )
   :KDialog( parent )
 {
   setButtons( Ok | Cancel | User1 );
@@ -41,9 +41,9 @@ FolderSelectionTreeViewDialog::FolderSelectionTreeViewDialog( QWidget *parent, b
 
   QWidget *widget = mainWidget();
   QVBoxLayout *layout = new QVBoxLayout( widget );
-  treeview = new FolderSelectionTreeView( this, false, showUnreadCount );
+  treeview = new FolderSelectionTreeView( this, 0, ( options & ShowUnreadCount ));
   treeview->disableContextMenuAndExtraColumn();
-  treeview->readableCollectionProxyModel()->setEnabledCheck( enableCheck );
+  treeview->readableCollectionProxyModel()->setEnabledCheck( ( options & EnableCheck ) );
   treeview->readableCollectionProxyModel()->setAccessRights( Akonadi::Collection::CanCreateCollection );
   treeview->folderTreeView()->setTooltipsPolicy( FolderSelectionTreeView::DisplayNever );
 
