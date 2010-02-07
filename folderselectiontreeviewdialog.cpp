@@ -31,7 +31,7 @@
 
 #include <KLocale>
 
-FolderSelectionTreeViewDialog::FolderSelectionTreeViewDialog( QWidget *parent, SelectionFolderOption options )
+FolderSelectionTreeViewDialog::FolderSelectionTreeViewDialog( QWidget *parent, SelectionFolderOptions options )
   :KDialog( parent )
 {
   setButtons( Ok | Cancel | User1 );
