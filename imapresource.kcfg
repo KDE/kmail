@@ -48,7 +48,7 @@
        <default>-1</default>
     </entry>
     <entry name="UseDefaultIdentity" type="Bool">
-       <label>Define if account use default identity</label>
+       <label>Define whether the account uses the default identity</label>
        <default>true</default>
     </entry>
     <entry name="AccountIdentity" type="Int">
@@ -74,7 +74,7 @@
       <default>2000</default>
     </entry>
     <entry name="SieveAlternateUrl" type="String">
-      <label>Define alternate url</label>
+      <label>Define alternate URL</label>
     </entry>
     <entry name="SieveVacationFilename" type="String">
       <label>Define default sieve vacation filename</label>
