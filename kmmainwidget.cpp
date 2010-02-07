@@ -3272,7 +3272,7 @@ void KMMainWidget::setupActions()
   }
   {
     KAction *action = mAkonadiStandardActionManager->action( Akonadi::StandardActionManager::CopyItems);
-    mAkonadiStandardActionManager->setActionText(Akonadi::StandardActionManager::CopyItems, ki18nc("Copy Message", "Copy %1 Messages") );
+    mAkonadiStandardActionManager->setActionText(Akonadi::StandardActionManager::CopyItems, ki18np("Copy Message", "Copy %1 Messages") );
     action->setShortcut(QKeySequence(Qt::ALT+Qt::CTRL+Qt::Key_C));
   }
   {
