@@ -86,7 +86,6 @@ FolderSelectionTreeView::FolderSelectionTreeView( QWidget *parent, KXMLGUIClient
   collectionModel->setDynamicSortFilter( true );
   collectionModel->setSortCaseSensitivity( Qt::CaseInsensitive );
 
-  //WARNING Akonadi::RecursiveCollectionFilterProxyModel doesn't work now
   Akonadi::RecursiveCollectionFilterProxyModel *recurfilter = new Akonadi::RecursiveCollectionFilterProxyModel( this );
   recurfilter->addContentMimeTypeInclusionFilter( KMime::Message::mimeType() );
   recurfilter->setSourceModel( collectionModel );
@@ -98,7 +97,6 @@ FolderSelectionTreeView::FolderSelectionTreeView( QWidget *parent, KXMLGUIClient
   d->quotaModel = new Akonadi::QuotaColorProxyModel( this );
   d->quotaModel->setSourceModel( d->filterModel );
 
-  //WARNING: ReadableCollectionProxyModel doesn't work now
   d->readableproxy = new ReadableCollectionProxyModel( this );
   d->readableproxy->setSourceModel( d->quotaModel );
 
