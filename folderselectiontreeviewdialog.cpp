@@ -51,7 +51,7 @@ FolderSelectionTreeViewDialog::FolderSelectionTreeViewDialog( QWidget *parent, S
   enableButton( KDialog::Ok, false );
   enableButton( KDialog::User1, false );
   connect(treeview->selectionModel(), SIGNAL(selectionChanged(QItemSelection,QItemSelection)), this, SLOT(slotSelectionChanged()));
-
+  connect( treeview->folderTreeView(), SIGNAL( doubleClicked(const QModelIndex&) ), this, SLOT( accept() ) );
   connect(this, SIGNAL( user1Clicked() ), this, SLOT( slotAddChildFolder() ) );
   readConfig();
 }
