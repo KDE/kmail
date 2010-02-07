@@ -1125,7 +1125,7 @@ void KMMainWidget::createWidgets()
   connect( kmkernel->monitor(), SIGNAL( itemAdded( const Akonadi::Item &, const Akonadi::Collection &) ), SLOT(slotItemAdded( const Akonadi::Item &, const Akonadi::Collection&) ) );
   connect( kmkernel->monitor(), SIGNAL( itemRemoved( const Akonadi::Item & ) ), SLOT(slotItemRemoved( const Akonadi::Item & ) ) );
   Akonadi::EntityTreeViewStateSaver* saver = new Akonadi::EntityTreeViewStateSaver( mCollectionFolderView->folderTreeView() );
-//  saver->restoreState( cfg );
+  saver->restoreState( cfg );
 
 
 
