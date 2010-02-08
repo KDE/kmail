@@ -244,8 +244,8 @@ void insertLibraryCataloguesAndIcons() {
     "libksieve",
     "libkleopatra",
     "libkmime",
-    "libmessagelist"
-    "libmessageviewer"
+    "libmessagelist",
+    "libmessageviewer",
     "libmessagecore"
   };
 
