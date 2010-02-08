@@ -237,13 +237,15 @@ SearchWindow::SearchWindow(KMMainWidget* w, const char* name,
 
   mLbxMatches->setDragEnabled( true );
 
-  connect(mLbxMatches, SIGNAL(doubleClicked(QListViewItem *)),
-          this, SLOT(slotShowMsg(QListViewItem *)));
-  connect(mLbxMatches, SIGNAL(currentChanged(QListViewItem *)),
-          this, SLOT(slotCurrentChanged(QListViewItem *)));
-  connect( mLbxMatches, SIGNAL( contextMenuRequested( QListViewItem*, const QPoint &, int )),
-           this, SLOT( slotContextMenuRequested( QListViewItem*, const QPoint &, int )));
-  vbl->addWidget(mLbxMatches);
+  connect( mLbxMatches, SIGNAL(clicked(QListViewItem *)),
+           this, SLOT(slotShowMsg(QListViewItem *)) );
+  connect( mLbxMatches, SIGNAL(doubleClicked(QListViewItem *)),
+           this, SLOT(slotViewMsg(QListViewItem *)) );
+  connect( mLbxMatches, SIGNAL(currentChanged(QListViewItem *)),
+           this, SLOT(slotCurrentChanged(QListViewItem *)) );
+  connect( mLbxMatches, SIGNAL(contextMenuRequested(QListViewItem *,const QPoint &,int)),
+           this, SLOT(slotContextMenuRequested(QListViewItem *,const QPoint &,int)) );
+  vbl->addWidget( mLbxMatches );
 
   QHBoxLayout *hbl2 = new QHBoxLayout( vbl, spacingHint(), "kmfs_hbl2" );
   mSearchFolderLbl = new QLabel(i18n("Search folder &name:"), searchWidget);
@@ -269,7 +271,7 @@ SearchWindow::SearchWindow(KMMainWidget* w, const char* name,
   mSearchResultOpenBtn->setEnabled(false);
   hbl2->addWidget(mSearchResultOpenBtn);
   connect( mSearchResultOpenBtn, SIGNAL( clicked() ),
-           this, SLOT( slotShowSelectedMsg() ));
+           this, SLOT( slotViewSelectedMsg() ));
   mStatusBar = new KStatusBar(searchWidget);
   mStatusBar->insertFixedItem(i18n("AMiddleLengthText..."), 0, true);
   mStatusBar->changeItem(i18n("Ready."), 0);
@@ -472,9 +474,9 @@ void SearchWindow::slotSearch()
     mFetchingInProgress = 0;
 
     mSearchFolderOpenBtn->setEnabled(true);
-    if ( mSearchFolderEdt->text().isEmpty() ) {                     
-      mSearchFolderEdt->setText( i18n("Last Search") );             
-    }  
+    if ( mSearchFolderEdt->text().isEmpty() ) {
+      mSearchFolderEdt->setText( i18n("Last Search") );
+    }
     mBtnSearch->setEnabled(false);
     mBtnStop->setEnabled(true);
 
@@ -683,32 +685,51 @@ void SearchWindow::folderInvalidated(KMFolder *folder)
 }
 
 //-----------------------------------------------------------------------------
-bool SearchWindow::slotShowMsg(QListViewItem *item)
+KMMessage *SearchWindow::indexToMessage( QListViewItem *item )
 {
-    if(!item)
-        return false;
+  if( !item ) {
+    return 0;
+  }
 
-    KMFolder* folder;
-    int msgIndex;
-    KMMsgDict::instance()->getLocation(item->text(MSGID_COLUMN).toUInt(),
-                                   &folder, &msgIndex);
+  KMFolder *folder;
+  int msgIndex;
+  KMMsgDict::instance()->getLocation( item->text( MSGID_COLUMN ).toUInt(),
+                                      &folder, &msgIndex );
 
-    if (!folder || msgIndex < 0)
-        return false;
+  if ( !folder || msgIndex < 0 ) {
+    return 0;
+  }
 
-    mKMMainWidget->slotSelectFolder(folder);
-    KMMessage* message = folder->getMsg(msgIndex);
-    if (!message)
-        return false;
-
-    mKMMainWidget->slotSelectMessage(message);
-    return true;
+  mKMMainWidget->slotSelectFolder( folder );
+  return folder->getMsg( msgIndex );
 }
 
 //-----------------------------------------------------------------------------
-void SearchWindow::slotShowSelectedMsg()
+bool SearchWindow::slotShowMsg( QListViewItem *item )
 {
-    slotShowMsg(mLbxMatches->currentItem());
+  KMMessage *message = indexToMessage( item );
+  if ( message ) {
+    mKMMainWidget->slotSelectMessage( message );
+    return true;
+  }
+  return false;
+}
+
+//-----------------------------------------------------------------------------
+void SearchWindow::slotViewSelectedMsg()
+{
+  slotViewMsg( mLbxMatches->currentItem() );
+}
+
+//-----------------------------------------------------------------------------
+bool SearchWindow::slotViewMsg( QListViewItem *item )
+{
+  KMMessage *message = indexToMessage( item );
+  if ( message ) {
+    mKMMainWidget->slotMsgActivated( message );
+    return true;
+  }
+  return false;
 }
 
 //-----------------------------------------------------------------------------

@@ -201,7 +201,12 @@ public slots:
   /** Select the folder and jump to the next unread msg */
   void folderSelectedUnread( KMFolder* );
 
-  void slotMsgSelected(KMMessage*);
+  void slotMsgSelected( KMMessage * );
+  /**
+    Open a separate viewer window containing the specified message.
+  */
+  void slotMsgActivated( KMMessage * );
+
   void slotMsgChanged();
 
   /** Change the current folder, select a message in the current folder */
@@ -361,7 +366,6 @@ protected slots:
 
   /** etc. */
   void slotDisplayCurrentMessage();
-  void slotMsgActivated( KMMessage* );
 
   void slotShowNewFromTemplate();
   void slotNewFromTemplate( int );
