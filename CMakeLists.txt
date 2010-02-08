@@ -144,9 +144,6 @@ set(kmailprivate_LIB_SRCS
    backupjob.cpp
    archivefolderdialog.cpp
    tagging.cpp
-
-   #subscriptiondialog.cpp
-   #localsubscriptiondialog.cpp
 )
 
 soprano_add_ontology(kmailprivate_LIB_SRCS
