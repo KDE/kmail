@@ -139,7 +139,7 @@
       </entry>
       <entry name="CloseToQuotaThreshold" type="Int">
         <label>The threshold for when to warn the user that a folder is nearing its quota limit.</label>
-         <default>85</default>
+         <default>80</default>
       </entry>
     </group>
 <!-- General -->
