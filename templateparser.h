@@ -67,7 +67,7 @@ class TemplateParser : public QObject
 
   public:
     TemplateParser( KMMessage *amsg, const Mode amode,
-                    bool aSmartQuote, bool anoQuote, bool aallowDecryption );
+                    bool aSmartQuote, bool anoQuote );
     ~TemplateParser();
 
     /**
@@ -77,6 +77,16 @@ class TemplateParser : public QObject
      * Call this before calling process().
      */
     void setSelection( const QString &selection );
+
+    /**
+     * Sets whether the template parser is allowed to decrypt the original message when needing
+     * its message text, for example for the %QUOTE command.
+     * If true, it will tell the ObjectTreeParser it uses internally to decrypt the message,
+     * and that will possibly show a password request dialog to the user.
+     *
+     * The default is false.
+     */
+    void setAllowDecryption( const bool allowDecryption );
 
     virtual void process( KMMessage *aorig_msg, KMFolder *afolder = 0, bool append = false );
     virtual void process( const QString &tmplName, KMMessage *aorig_msg,

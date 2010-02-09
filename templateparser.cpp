@@ -54,11 +54,10 @@
 using namespace KMail;
 
 TemplateParser::TemplateParser( KMMessage *amsg, const Mode amode,
-                                bool asmartQuote, bool anoQuote,
-                                bool aallowDecryption ) :
+                                bool asmartQuote, bool anoQuote ) :
   mMode( amode ), mFolder( 0 ), mIdentity( 0 ),
   mSmartQuote( asmartQuote ), mNoQuote( anoQuote ),
-  mAllowDecryption( aallowDecryption ),
+  mAllowDecryption( false ),
   mDebug( false ), mQuoteString( "> " ), mAppend( false ), mOrigRoot( 0 )
 {
   mMsg = amsg;
@@ -67,6 +66,11 @@ TemplateParser::TemplateParser( KMMessage *amsg, const Mode amode,
 void TemplateParser::setSelection( const QString &selection )
 {
   mSelection = selection;
+}
+
+void TemplateParser::setAllowDecryption( const bool allowDecryption )
+{
+  mAllowDecryption = allowDecryption;
 }
 
 TemplateParser::~TemplateParser()
