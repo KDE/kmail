@@ -2626,6 +2626,12 @@ ComposerPageGeneralTab::ComposerPageGeneralTab( QWidget * parent, const char * n
   connect( mSmartQuoteCheck, SIGNAL( stateChanged(int) ),
            this, SLOT( slotEmitChanged( void ) ) );
 
+  mStripSignatureCheck = new QCheckBox( GlobalSettings::self()->stripSignatureItem()->label(),
+                                        this, "kcfg_StripSignature" );
+  vlay->addWidget( mStripSignatureCheck );
+  connect( mStripSignatureCheck, SIGNAL( stateChanged(int) ),
+           this, SLOT( slotEmitChanged( void ) ) );
+
   mAutoRequestMDNCheck = new QCheckBox(
            GlobalSettings::self()->requestMDNItem()->label(),
            this, "kcfg_RequestMDN" );
@@ -2787,6 +2793,7 @@ void ComposerPage::GeneralTab::doLoadFromGlobalSettings() {
            GlobalSettings::self()->autoTextSignature()=="auto" );
   mTopQuoteCheck->setChecked( GlobalSettings::self()->prependSignature() );
   mSmartQuoteCheck->setChecked( GlobalSettings::self()->smartQuote() );
+  mStripSignatureCheck->setChecked( GlobalSettings::self()->stripSignature() );
   mAutoRequestMDNCheck->setChecked( GlobalSettings::self()->requestMDN() );
   mWordWrapCheck->setChecked( GlobalSettings::self()->wordWrap() );
 
@@ -2816,6 +2823,8 @@ void ComposerPage::GeneralTab::installProfile( KConfig * profile ) {
     mTopQuoteCheck->setChecked( composer.readBoolEntry( "prepend-signature" ) );
   if ( composer.hasKey( "smart-quote" ) )
     mSmartQuoteCheck->setChecked( composer.readBoolEntry( "smart-quote" ) );
+  if ( composer.hasKey( "StripSignature" ) )
+    mStripSignatureCheck->setChecked( composer.readBoolEntry( "StripSignature" ) );
   if ( composer.hasKey( "request-mdn" ) )
     mAutoRequestMDNCheck->setChecked( composer.readBoolEntry( "request-mdn" ) );
   if ( composer.hasKey( "word-wrap" ) )
@@ -2841,6 +2850,7 @@ void ComposerPage::GeneralTab::save() {
          mAutoAppSignFileCheck->isChecked() ? "auto" : "manual" );
   GlobalSettings::self()->setPrependSignature( mTopQuoteCheck->isChecked());
   GlobalSettings::self()->setSmartQuote( mSmartQuoteCheck->isChecked() );
+  GlobalSettings::self()->setStripSignature( mStripSignatureCheck->isChecked() );
   GlobalSettings::self()->setRequestMDN( mAutoRequestMDNCheck->isChecked() );
   GlobalSettings::self()->setWordWrap( mWordWrapCheck->isChecked() );
 
