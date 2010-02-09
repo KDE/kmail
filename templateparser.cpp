@@ -53,10 +53,8 @@
 
 using namespace KMail;
 
-TemplateParser::TemplateParser( KMMessage *amsg, const Mode amode,
-                                bool asmartQuote ) :
+TemplateParser::TemplateParser( KMMessage *amsg, const Mode amode ) :
   mMode( amode ), mFolder( 0 ), mIdentity( 0 ),
-  mSmartQuote( asmartQuote ),
   mAllowDecryption( false ),
   mDebug( false ), mQuoteString( "> " ), mAppend( false ), mOrigRoot( 0 )
 {
@@ -71,6 +69,12 @@ void TemplateParser::setSelection( const QString &selection )
 void TemplateParser::setAllowDecryption( const bool allowDecryption )
 {
   mAllowDecryption = allowDecryption;
+}
+
+bool TemplateParser::shouldStripSignature() const
+{
+  // Only strip the signature when replying, it should be preserved when forwarding
+  return ( mMode == Reply || mMode == ReplyAll) && GlobalSettings::stripSignature();
 }
 
 TemplateParser::~TemplateParser()
@@ -303,7 +307,7 @@ void TemplateParser::processWithTemplate( const QString &tmpl )
         if ( mOrigMsg ) {
           QString str = pipe( pipe_cmd, messageText( false ) );
           QString quote = mOrigMsg->asQuotedString( "", mQuoteString, str,
-                                                    mSmartQuote, mAllowDecryption );
+                                                    shouldStripSignature(), mAllowDecryption );
           body.append( quote );
         }
 
@@ -312,7 +316,7 @@ void TemplateParser::processWithTemplate( const QString &tmpl )
         i += strlen( "QUOTE" );
         if ( mOrigMsg ) {
           QString quote = mOrigMsg->asQuotedString( "", mQuoteString, messageText( true ),
-                                                    mSmartQuote, mAllowDecryption );
+                                                    shouldStripSignature(), mAllowDecryption );
           body.append( quote );
         }
 
@@ -322,7 +326,7 @@ void TemplateParser::processWithTemplate( const QString &tmpl )
         if ( mOrigMsg ) {
           QString quote = mOrigMsg->asQuotedString( "", mQuoteString,
                                                     mOrigMsg->headerAsSendableString(),
-                                                    mSmartQuote, false );
+                                                    false, false );
           body.append( quote );
         }
 
@@ -872,7 +876,7 @@ QString TemplateParser::messageText( bool allowSelectionOnly )
 
   // No selection text, therefore we need to parse the object tree ourselves to get
   partNode *root = parsedObjectTree();
-  return mOrigMsg->asPlainTextFromObjectTree( root, mSmartQuote, mAllowDecryption );
+  return mOrigMsg->asPlainTextFromObjectTree( root, shouldStripSignature(), mAllowDecryption );
 }
 
 partNode* TemplateParser::parsedObjectTree()

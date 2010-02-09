@@ -66,7 +66,7 @@ class TemplateParser : public QObject
     static const int PipeTimeout = 15;
 
   public:
-    TemplateParser( KMMessage *amsg, const Mode amode, bool aSmartQuote );
+    TemplateParser( KMMessage *amsg, const Mode amode );
     ~TemplateParser();
 
     /**
@@ -115,7 +115,6 @@ class TemplateParser : public QObject
     KMMessage *mMsg;
     KMMessage *mOrigMsg;
     QString mSelection;
-    bool mSmartQuote;
     bool mAllowDecryption;
     int mPipeRc;
     QString mPipeOut;
@@ -152,6 +151,12 @@ class TemplateParser : public QObject
      * Attachments of the original message are also added back to the new message. 
      */
     void addProcessedBodyToMessage( const QString &body );
+
+    /**
+     * Determines whether the signature should be stripped when getting the text of the original
+     * message, e.g. for commands such as %QUOTE
+     */
+    bool shouldStripSignature() const;
 
     int parseQuotes( const QString &prefix, const QString &str,
                      QString &quote ) const;
