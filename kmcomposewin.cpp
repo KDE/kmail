@@ -1035,9 +1035,9 @@ void KMComposeWin::applyTemplate( uint uoid )
       return;
   }
 
-  TemplateParser parser( mMsg, mode, GlobalSettings::self()->smartQuote(),
-                         GlobalSettings::self()->automaticDecrypt() );
+  TemplateParser parser( mMsg, mode, GlobalSettings::self()->smartQuote() );
   parser.setSelection( mTextSelection );
+  parser.setAllowDecryption( GlobalSettings::self()->automaticDecrypt() );
   if ( mode == TemplateParser::NewMessage ) {
     if ( !mCustomTemplate.isEmpty() )
       parser.process( mCustomTemplate, KMime::Message::Ptr() );

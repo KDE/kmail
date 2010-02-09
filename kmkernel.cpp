@@ -508,7 +508,7 @@ int KMKernel::openComposer( const QString &to, const QString &cc,
       msg->setBody( QString::fromLocal8Bit( str.data(), str.size() ).toUtf8() );
     }
     else {
-      TemplateParser parser( msg, TemplateParser::NewMessage, false, false );
+      TemplateParser parser( msg, TemplateParser::NewMessage, false );
       parser.process( KMime::Message::Ptr() );
     }
   }
@@ -517,7 +517,7 @@ int KMKernel::openComposer( const QString &to, const QString &cc,
     msg->setBody( body.toUtf8() );
   }
   else {
-    TemplateParser parser( msg, TemplateParser::NewMessage, false, false );
+    TemplateParser parser( msg, TemplateParser::NewMessage, false );
     parser.process( KMime::Message::Ptr() );
   }
 
@@ -588,7 +588,7 @@ int KMKernel::openComposer (const QString &to, const QString &cc,
     msg->setBody(body.toUtf8());
     context = KMail::Composer::NoTemplate;
   } else {
-    TemplateParser parser( msg, TemplateParser::NewMessage, false, false );
+    TemplateParser parser( msg, TemplateParser::NewMessage, false );
     parser.process( KMime::Message::Ptr() );
   }
 
@@ -683,7 +683,7 @@ QDBusObjectPath KMKernel::openComposer( const QString &to, const QString &cc,
   if ( !body.isEmpty() ) {
     msg->setBody(body.toUtf8());
   } else {
-    TemplateParser parser( msg, TemplateParser::NewMessage, false, false );
+    TemplateParser parser( msg, TemplateParser::NewMessage, false );
     parser.process( KMime::Message::Ptr() );
   }
 
@@ -732,7 +732,7 @@ QDBusObjectPath KMKernel::newMessage( const QString &to,
   if ( !bcc.isEmpty() )     msg->bcc()->fromUnicodeString( bcc, "utf-8" );
   if ( !to.isEmpty() )      msg->to()->fromUnicodeString( to, "utf-8" );
 
-  TemplateParser parser( msg, TemplateParser::NewMessage, false, false );
+  TemplateParser parser( msg, TemplateParser::NewMessage, false );
   parser.process( KMime::Message::Ptr(), folder ? folder->collection() : Akonadi::Collection() );
 
   KMail::Composer *win = makeComposer( msg, KMail::Composer::New, id );
