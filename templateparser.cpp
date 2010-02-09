@@ -54,9 +54,9 @@
 using namespace KMail;
 
 TemplateParser::TemplateParser( KMMessage *amsg, const Mode amode,
-                                bool asmartQuote, bool anoQuote ) :
+                                bool asmartQuote ) :
   mMode( amode ), mFolder( 0 ), mIdentity( 0 ),
-  mSmartQuote( asmartQuote ), mNoQuote( anoQuote ),
+  mSmartQuote( asmartQuote ),
   mAllowDecryption( false ),
   mDebug( false ), mQuoteString( "> " ), mAppend( false ), mOrigRoot( 0 )
 {
@@ -300,7 +300,7 @@ void TemplateParser::processWithTemplate( const QString &tmpl )
         int len = parseQuotes( "QUOTEPIPE=", cmd, q );
         i += len;
         QString pipe_cmd = q;
-        if ( mOrigMsg && !mNoQuote ) {
+        if ( mOrigMsg ) {
           QString str = pipe( pipe_cmd, messageText( false ) );
           QString quote = mOrigMsg->asQuotedString( "", mQuoteString, str,
                                                     mSmartQuote, mAllowDecryption );
@@ -310,7 +310,7 @@ void TemplateParser::processWithTemplate( const QString &tmpl )
       } else if ( cmd.startsWith( "QUOTE" ) ) {
         kdDebug() << "Command: QUOTE" << endl;
         i += strlen( "QUOTE" );
-        if ( mOrigMsg && !mNoQuote ) {
+        if ( mOrigMsg ) {
           QString quote = mOrigMsg->asQuotedString( "", mQuoteString, messageText( true ),
                                                     mSmartQuote, mAllowDecryption );
           body.append( quote );
@@ -319,7 +319,7 @@ void TemplateParser::processWithTemplate( const QString &tmpl )
       } else if ( cmd.startsWith( "QHEADERS" ) ) {
         kdDebug() << "Command: QHEADERS" << endl;
         i += strlen( "QHEADERS" );
-        if ( mOrigMsg && !mNoQuote ) {
+        if ( mOrigMsg ) {
           QString quote = mOrigMsg->asQuotedString( "", mQuoteString,
                                                     mOrigMsg->headerAsSendableString(),
                                                     mSmartQuote, false );
@@ -329,7 +329,7 @@ void TemplateParser::processWithTemplate( const QString &tmpl )
       } else if ( cmd.startsWith( "HEADERS" ) ) {
         kdDebug() << "Command: HEADERS" << endl;
         i += strlen( "HEADERS" );
-        if ( mOrigMsg && !mNoQuote ) {
+        if ( mOrigMsg ) {
           QString str = mOrigMsg->headerAsSendableString();
           body.append( str );
         }

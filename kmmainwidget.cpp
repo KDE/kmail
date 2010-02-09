@@ -991,12 +991,12 @@ void KMMainWidget::slotCompose()
 
   if ( mFolder ) {
       msg->initHeader( mFolder->identity() );
-      TemplateParser parser( msg, TemplateParser::NewMessage, false, false );
+      TemplateParser parser( msg, TemplateParser::NewMessage, false );
       parser.process( NULL, mFolder );
       win = KMail::makeComposer( msg, mFolder->identity() );
   } else {
       msg->initHeader();
-      TemplateParser parser( msg, TemplateParser::NewMessage, false, false );
+      TemplateParser parser( msg, TemplateParser::NewMessage, false );
       parser.process( NULL, NULL );
       win = KMail::makeComposer( msg );
   }

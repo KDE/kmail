@@ -66,8 +66,7 @@ class TemplateParser : public QObject
     static const int PipeTimeout = 15;
 
   public:
-    TemplateParser( KMMessage *amsg, const Mode amode,
-                    bool aSmartQuote, bool anoQuote );
+    TemplateParser( KMMessage *amsg, const Mode amode, bool aSmartQuote );
     ~TemplateParser();
 
     /**
@@ -117,9 +116,7 @@ class TemplateParser : public QObject
     KMMessage *mOrigMsg;
     QString mSelection;
     bool mSmartQuote;
-    bool mNoQuote;
     bool mAllowDecryption;
-    bool mSelectionIsBody;
     int mPipeRc;
     QString mPipeOut;
     QString mPipeErr;

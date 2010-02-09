@@ -1069,7 +1069,7 @@ KMMessage* KMMessage::createReply( KMail::ReplyStrategy replyStrategy,
 		                         formatString( GlobalSettings::self()->quoteString() ) );
   if( !noQuote ) {
      TemplateParser parser( msg, ( replyAll ? TemplateParser::ReplyAll : TemplateParser::Reply ),
-                            sSmartQuote, noQuote );
+                            sSmartQuote );
      parser.setAllowDecryption( allowDecryption );
      parser.setSelection( selection );
      if ( !tmpl.isEmpty() ) {
@@ -1301,7 +1301,7 @@ KMMessage* KMMessage::createForward( const QString &tmpl /* = QString::null */ )
 
   msg->setSubject( forwardSubject() );
 
-  TemplateParser parser( msg, TemplateParser::Forward, false, false );
+  TemplateParser parser( msg, TemplateParser::Forward, false );
   if ( !tmpl.isEmpty() ) {
     parser.process( tmpl, this );
   } else {
