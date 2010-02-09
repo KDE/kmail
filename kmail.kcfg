@@ -451,7 +451,11 @@
         <default>true</default>
       </entry>
       <entry name="StripSignature" type="Bool">
-        <label>Remove the signature when replying to a message</label>
+        <label>Remove the signature when replying</label>
+        <default>true</default>
+      </entry>
+      <entry name="QuoteSelectionOnly" type="Bool">
+        <label>Only quote selected text when repyling</label>
         <default>true</default>
       </entry>
 

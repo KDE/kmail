@@ -1070,7 +1070,9 @@ KMMessage* KMMessage::createReply( KMail::ReplyStrategy replyStrategy,
   if( !noQuote ) {
      TemplateParser parser( msg, ( replyAll ? TemplateParser::ReplyAll : TemplateParser::Reply ) );
      parser.setAllowDecryption( allowDecryption );
-     parser.setSelection( selection );
+     if ( GlobalSettings::quoteSelectionOnly() ) {
+       parser.setSelection( selection );
+     }
      if ( !tmpl.isEmpty() ) {
        parser.process( tmpl, this );
      } else {
