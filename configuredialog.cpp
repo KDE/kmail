@@ -2512,6 +2512,10 @@ ComposerPageGeneralTab::ComposerPageGeneralTab( QWidget * parent )
   mSmartQuoteCheck = new QCheckBox(
            GlobalSettings::self()->smartQuoteItem()->label(), this);
   mSmartQuoteCheck->setObjectName( "kcfg_SmartQuote" );
+  mSmartQuoteCheck->setToolTip(
+                 i18n( "When replying, add quote signs in front of all lines of the quoted text,\n"
+                       "even when the line was created by adding an additional linebreak while\n"
+                       "word-wrapping the text." ) );
   vlay->addWidget( mSmartQuoteCheck );
   connect( mSmartQuoteCheck, SIGNAL( stateChanged(int) ),
            this, SLOT( slotEmitChanged( void ) ) );
