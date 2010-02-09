@@ -56,10 +56,10 @@ using namespace KMail;
 TemplateParser::TemplateParser( KMMessage *amsg, const Mode amode,
                                 const QString aselection,
                                 bool asmartQuote, bool anoQuote,
-                                bool aallowDecryption, bool aselectionIsBody ) :
+                                bool aallowDecryption ) :
   mMode( amode ), mFolder( 0 ), mIdentity( 0 ), mSelection( aselection ),
   mSmartQuote( asmartQuote ), mNoQuote( anoQuote ),
-  mAllowDecryption( aallowDecryption ), mSelectionIsBody( aselectionIsBody ),
+  mAllowDecryption( aallowDecryption ),
   mDebug( false ), mQuoteString( "> " ), mAppend( false ), mOrigRoot( 0 )
 {
   mMsg = amsg;

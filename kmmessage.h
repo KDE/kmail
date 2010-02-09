@@ -162,8 +162,8 @@ public:
       required header fields with the proper values. The returned message
       is not stored in any folder. Marks this message as replied. */
   KMMessage* createReply( KMail::ReplyStrategy replyStrategy = KMail::ReplySmart,
-                          QString selection=QString::null, bool noQuote=false,
-                          bool allowDecryption=true, bool selectionIsBody=false,
+                          QString selection=QString::null, bool noQuote = false,
+                          bool allowDecryption = true,
                           const QString &tmpl = QString::null );
 
   /** Create a new message that is a redirect to this message, filling all

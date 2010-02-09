@@ -29,7 +29,6 @@ using KPIM::CollectingProcess;
 #include "folderrequester.h"
 using KMail::FolderRequester;
 #include "kmmsgbase.h"
-#include "templateparser.h"
 #include "messageproperty.h"
 #include "actionscheduler.h"
 using KMail::MessageProperty;

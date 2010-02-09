@@ -865,7 +865,6 @@ KMMessage* KMMessage::createReply( KMail::ReplyStrategy replyStrategy,
                                    QString selection /* = QString::null */,
                                    bool noQuote /* = false */,
                                    bool allowDecryption /* = true */,
-                                   bool selectionIsBody /* = false */,
                                    const QString &tmpl /* = QString::null */ )
 {
   KMMessage* msg = new KMMessage;
@@ -1070,7 +1069,7 @@ KMMessage* KMMessage::createReply( KMail::ReplyStrategy replyStrategy,
 		                         formatString( GlobalSettings::self()->quoteString() ) );
   if( !noQuote ) {
      TemplateParser parser( msg, (replyAll ? TemplateParser::ReplyAll : TemplateParser::Reply),
-      selection, sSmartQuote, noQuote, allowDecryption, selectionIsBody );
+      selection, sSmartQuote, noQuote, allowDecryption );
      if ( !tmpl.isEmpty() ) {
        parser.process( tmpl, this );
      } else {
@@ -1302,7 +1301,7 @@ KMMessage* KMMessage::createForward( const QString &tmpl /* = QString::null */ )
 
   TemplateParser parser( msg, TemplateParser::Forward,
     QString(),
-    false, false, false, false);
+    false, false, false );
   if ( !tmpl.isEmpty() ) {
     parser.process( tmpl, this );
   } else {
