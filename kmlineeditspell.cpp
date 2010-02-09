@@ -25,14 +25,14 @@
 #include "globalsettings.h"
 #include "messageviewer/autoqpointer.h"
 #include "stringutil.h"
-#include "messageviewer/stringutil.h"
 
+#include <messagecore/stringutil.h>
 #include <libkdepim/kvcarddrag.h>
+
 #include <kpimutils/email.h>
-
 #include <kabc/vcardconverter.h>
-#include <kio/netaccess.h>
 
+#include <kio/netaccess.h>
 #include <kmenu.h>
 #include <kurl.h>
 #include <kmessagebox.h>
@@ -132,7 +132,7 @@ void KMLineEdit::dropEvent(QDropEvent *event)
       // email-address.
       if ( url.protocol() == "mailto" ) {
         KABC::Addressee addressee;
-        addressee.insertEmail( MessageViewer::StringUtil::decodeMailtoUrl( url.path() ), true /* preferred */ );
+        addressee.insertEmail( MessageCore::StringUtil::decodeMailtoUrl( url.path() ), true /* preferred */ );
         list += addressee;
       }
 

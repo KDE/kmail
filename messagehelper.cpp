@@ -20,7 +20,6 @@
 #include "kmkernel.h"
 #include "messagehelper.h"
 #include "stringutil.h"
-#include "messageviewer/stringutil.h"
 #include "kdepim-version.h"
 #include "kmversion.h"
 #include "templateparser.h"
@@ -32,6 +31,7 @@
 
 #include <messageviewer/objecttreeparser.h>
 #include <messageviewer/kcursorsaver.h>
+#include "messagecore/stringutil.h"
 
 #include <KDateTime>
 #include <KProtocolManager>
@@ -42,6 +42,8 @@
 #include <kpimidentities/identitymanager.h>
 #include <kpimidentities/identity.h>
 #include <KPIMUtils/Email>
+
+using namespace MessageCore;
 
 namespace KMail {
 
@@ -327,7 +329,7 @@ MessageReply createReply( const Akonadi::Item &item,
       for ( QStringList::const_iterator it = mailingListAddresses.constBegin();
             it != mailingListAddresses.constEnd();
             ++it ) {
-        recipients = MessageViewer::StringUtil::stripAddressFromAddressList( *it, recipients );
+        recipients = MessageCore::StringUtil::stripAddressFromAddressList( *it, recipients );
       }
     }
 
@@ -363,8 +365,8 @@ MessageReply createReply( const Akonadi::Item &item,
       if (!origMsg->cc()->asUnicodeString().isEmpty())
         list += KPIMUtils::splitAddressList(origMsg->cc()->asUnicodeString());
       for( QStringList::ConstIterator it = list.constBegin(); it != list.constEnd(); ++it ) {
-        if(    !MessageViewer::StringUtil::addressIsInAddressList( *it, recipients )
-            && !MessageViewer::StringUtil::addressIsInAddressList( *it, ccRecipients ) ) {
+        if(    !MessageCore::StringUtil::addressIsInAddressList( *it, recipients )
+            && !MessageCore::StringUtil::addressIsInAddressList( *it, ccRecipients ) ) {
           ccRecipients += *it;
           kDebug() << "Added" << *it <<"to the list of CC recipients";
         }
@@ -399,7 +401,7 @@ MessageReply createReply( const Akonadi::Item &item,
       for ( QStringList::const_iterator it = mailingListAddresses.constBegin();
             it != mailingListAddresses.constEnd();
             ++it ) {
-        recipients = MessageViewer::StringUtil::stripAddressFromAddressList( *it, recipients );
+        recipients = MessageCore::StringUtil::stripAddressFromAddressList( *it, recipients );
       }
       if ( !recipients.isEmpty() ) {
         toStr = recipients.join(", ");
@@ -610,7 +612,14 @@ KMime::Message::Ptr createRedirect( const Akonadi::Item & item, const QString &t
   QString newDate = msg->date()->asUnicodeString();
 
   // prepend Resent-*: headers (c.f. RFC2822 3.6.6)
-  KMime::Headers::Generic *header = new KMime::Headers::Generic( "Resent-Message-ID", msg.get(), MessageViewer::StringUtil::generateMessageId( msg->sender()->asUnicodeString() ), "utf-8" );
+  QString msgIdSuffix;
+  if ( GlobalSettings::useCustomMessageIdSuffix() ) {
+    msgIdSuffix = GlobalSettings::customMsgIDSuffix();
+  }
+  KMime::Headers::Generic *header =
+      new KMime::Headers::Generic( "Resent-Message-ID", msg.get(),
+                                   MessageCore::StringUtil::generateMessageId(
+                                       msg->sender()->asUnicodeString(), msgIdSuffix ), "utf-8" );
   msg->setHeader( header );
 
   header = new KMime::Headers::Generic( "Resent-Date", msg.get(), newDate, "utf-8" );
@@ -653,7 +662,8 @@ KMime::Types::AddrSpecList extractAddrSpecs( const KMime::Message::Ptr &msg, con
   if ( !msg->headerByType( header ) )
     return result;
 
-  KMime::Types::AddressList al =  MessageViewer::StringUtil::splitAddrField( msg->headerByType( header )->asUnicodeString().toUtf8() );
+  KMime::Types::AddressList al =
+      MessageCore::StringUtil::splitAddrField( msg->headerByType( header )->asUnicodeString().toUtf8() );
   for ( KMime::Types::AddressList::const_iterator ait = al.constBegin() ; ait != al.constEnd() ; ++ait )
     for ( KMime::Types::MailboxList::const_iterator mit = (*ait).mailboxList.constBegin() ; mit != (*ait).mailboxList.constEnd() ; ++mit )
       result.push_back( (*mit).addrSpec() );
@@ -1083,17 +1093,17 @@ QString msgId( const KMime::Message::Ptr &msg )
 
 QString ccStrip( const KMime::Message::Ptr &msg )
 {
-  return MessageViewer::StringUtil::stripEmailAddr( msg->cc()->asUnicodeString() );
+  return MessageCore::StringUtil::stripEmailAddr( msg->cc()->asUnicodeString() );
 }
 
 QString toStrip( const KMime::Message::Ptr &msg )
 {
-  return MessageViewer::StringUtil::stripEmailAddr( msg->to()->asUnicodeString() );
+  return MessageCore::StringUtil::stripEmailAddr( msg->to()->asUnicodeString() );
 }
 
 QString fromStrip( const KMime::Message::Ptr &msg )
 {
-  return MessageViewer::StringUtil::stripEmailAddr( msg->from()->asUnicodeString() );
+  return MessageCore::StringUtil::stripEmailAddr( msg->from()->asUnicodeString() );
 }
 
 

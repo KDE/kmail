@@ -76,7 +76,6 @@
 #include "actionscheduler.h"
 using KMail::ActionScheduler;
 #include "mailinglist-magic.h"
-#include "messageviewer/kmaddrbook.h"
 #include "messageviewer/nodehelper.h"
 #include <kaddrbookexternal.h>
 #include "composer.h"
@@ -116,7 +115,7 @@ using KMail::TemplateParser;
 #include <akonadi/itemdeletejob.h>
 
 #include <messagelist/pane.h>
-#include "messageviewer/stringutil.h"
+#include "messagecore/stringutil.h"
 #include "messageviewer/nodehelper.h"
 #include "messageviewer/objecttreeemptysource.h"
 
@@ -418,7 +417,7 @@ KMCommand::Result KMMailtoComposeCommand::execute()
 
   KMail::MessageHelper::initHeader( msg, id );
   msg->contentType()->setCharset("utf-8");
-  msg->to()->fromUnicodeString( MessageViewer::StringUtil::decodeMailtoUrl( mUrl.path() ), "utf-8" );
+  msg->to()->fromUnicodeString( MessageCore::StringUtil::decodeMailtoUrl( mUrl.path() ), "utf-8" );
 
   KMail::Composer * win = KMail::makeComposer( msg, KMail::Composer::New, id );
   win->setFocusToSubject();
@@ -446,7 +445,7 @@ KMCommand::Result KMMailtoReplyCommand::execute()
   if ( !msg )
     return Failed;
   KMime::Message::Ptr rmsg( KMail::MessageHelper::createReply( item, msg, KMail::ReplyNone, mSelection ).msg );
-  rmsg->to()->fromUnicodeString( MessageViewer::StringUtil::decodeMailtoUrl( mUrl.path() ), "utf-8" ); //TODO Check the UTF-8
+  rmsg->to()->fromUnicodeString( MessageCore::StringUtil::decodeMailtoUrl( mUrl.path() ), "utf-8" ); //TODO Check the UTF-8
 
   KMail::Composer * win = KMail::makeComposer( rmsg, KMail::Composer::Reply, 0, mSelection );
   win->setReplyFocus();
@@ -475,7 +474,7 @@ KMCommand::Result KMMailtoForwardCommand::execute()
   if ( !msg )
     return Failed;
   KMime::Message::Ptr fmsg( KMail::MessageHelper::createForward( item, msg ) );
-  fmsg->to()->fromUnicodeString( MessageViewer::StringUtil::decodeMailtoUrl( mUrl.path() ), "utf-8" ); //TODO check the utf-8
+  fmsg->to()->fromUnicodeString( MessageCore::StringUtil::decodeMailtoUrl( mUrl.path() ), "utf-8" ); //TODO check the utf-8
 
   KMail::Composer * win = KMail::makeComposer( fmsg, KMail::Composer::Forward );
   win->show();
@@ -510,7 +509,7 @@ KMMailtoAddAddrBookCommand::KMMailtoAddAddrBookCommand( const KUrl &url,
 
 KMCommand::Result KMMailtoAddAddrBookCommand::execute()
 {
-  KPIM::KAddrBookExternal::addEmail( MessageViewer::StringUtil::decodeMailtoUrl( mUrl.path() ),
+  KPIM::KAddrBookExternal::addEmail( MessageCore::StringUtil::decodeMailtoUrl( mUrl.path() ),
                                      parentWidget() );
 
   return OK;
@@ -525,7 +524,7 @@ KMMailtoOpenAddrBookCommand::KMMailtoOpenAddrBookCommand( const KUrl &url,
 
 KMCommand::Result KMMailtoOpenAddrBookCommand::execute()
 {
-  QString addr = MessageViewer::StringUtil::decodeMailtoUrl( mUrl.path() );
+  QString addr = MessageCore::StringUtil::decodeMailtoUrl( mUrl.path() );
   KPIM::KAddrBookExternal::openEmail( KPIMUtils::extractEmailAddress(addr),
                                       addr, parentWidget() );
 

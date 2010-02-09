@@ -689,7 +689,7 @@ void AccountsPage::SendingTab::doLoadOther()
 
   mConfirmSendCheck->setChecked(
       composer.readEntry( "confirm-before-send", false ) );
-  QString str = general.readEntry( "Default domain" );
+  QString str = GlobalSettings::defaultDomain();
   if( str.isEmpty() ) {
     str = QHostInfo::localHostName();
   }
@@ -698,18 +698,17 @@ void AccountsPage::SendingTab::doLoadOther()
 
 void AccountsPage::SendingTab::save()
 {
-  KConfigGroup general( KMKernel::config(), "General" );
   KConfigGroup composer( KMKernel::config(), "Composer" );
 
   // Save common options:
   GlobalSettings::self()->setSendOnCheck( mSendOnCheckCombo->currentIndex() );
+  GlobalSettings::self()->setDefaultDomain( mDefaultDomainEdit->text() );
   kmkernel->msgSender()->setSendImmediate(
                              mSendMethodCombo->currentIndex() == 0 );
   kmkernel->msgSender()->setSendQuotedPrintable(
                              mMessagePropertyCombo->currentIndex() == 1 );
   kmkernel->msgSender()->writeConfig( false ); // don't sync
   composer.writeEntry("confirm-before-send", mConfirmSendCheck->isChecked() );
-  general.writeEntry( "Default domain", mDefaultDomainEdit->text() );
 }
 
 QString AccountsPage::ReceivingTab::helpAnchor() const
@@ -3196,12 +3195,9 @@ void ComposerPage::HeadersTab::slotRemoveMimeHeader()
 
 void ComposerPage::HeadersTab::doLoadOther()
 {
-  KConfigGroup general( KMKernel::config(), "General" );
-
-  QString suffix = general.readEntry( "myMessageIdSuffix" );
-  mMessageIdSuffixEdit->setText( suffix );
-  bool state = ( !suffix.isEmpty() &&
-      general.readEntry( "useCustomMessageIdSuffix", false ) );
+  mMessageIdSuffixEdit->setText( GlobalSettings::customMsgIDSuffix() );
+  const bool state = ( !GlobalSettings::customMsgIDSuffix().isEmpty() &&
+                       GlobalSettings::useCustomMessageIdSuffix() );
   mCreateOwnMessageIdCheck->setChecked( state );
 
   mTagList->clear();
@@ -3210,6 +3206,7 @@ void ComposerPage::HeadersTab::doLoadOther()
 
   QTreeWidgetItem * item = 0;
 
+  const KConfigGroup general( KMKernel::config(), "General" );
   int count = general.readEntry( "mime-header-count", 0 );
   for( int i = 0 ; i < count ; i++ ) {
     KConfigGroup config( KMKernel::config(),
@@ -3233,12 +3230,8 @@ void ComposerPage::HeadersTab::doLoadOther()
 
 void ComposerPage::HeadersTab::save()
 {
-  KConfigGroup general( KMKernel::config(), "General" );
-
-  general.writeEntry( "useCustomMessageIdSuffix",
-                      mCreateOwnMessageIdCheck->isChecked() );
-  general.writeEntry( "myMessageIdSuffix",
-                      mMessageIdSuffixEdit->text() );
+  GlobalSettings::self()->setCustomMsgIDSuffix( mMessageIdSuffixEdit->text() );
+  GlobalSettings::self()->setUseCustomMessageIdSuffix( mCreateOwnMessageIdCheck->isChecked() );
 
   int numValidEntries = 0;
   QTreeWidgetItem *item = 0;
@@ -3252,6 +3245,7 @@ void ComposerPage::HeadersTab::save()
       numValidEntries++;
     }
   }
+  KConfigGroup general( KMKernel::config(), "General" );
   general.writeEntry( "mime-header-count", numValidEntries );
 }
 

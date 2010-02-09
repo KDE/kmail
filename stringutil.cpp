@@ -17,7 +17,7 @@
    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 #include "stringutil.h"
-#include "messageviewer/stringutil.h"
+#include "messagecore/stringutil.h"
 
 #ifndef KMAIL_UNITTESTS
 
@@ -73,7 +73,7 @@ QMap<QString, QString> parseMailtoUrl ( const KUrl& url )
 {
   kDebug() << url.pathOrUrl();
   QMap<QString, QString> values = url.queryItems( KUrl::CaseInsensitiveKeys );
-  QString to = MessageViewer::StringUtil::decodeMailtoUrl( url.path() );
+  QString to = MessageCore::StringUtil::decodeMailtoUrl( url.path() );
   to = to.isEmpty() ?  values.value( "to" ) : to + QString( ", " ) + values.value( "to" );
   values.insert( "to", to );
   return values;

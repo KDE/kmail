@@ -21,10 +21,11 @@ using KMail::ActionScheduler;
 #include "regexplineedit.h"
 using KMail::RegExpLineEdit;
 #include "stringutil.h"
-#include "messageviewer/stringutil.h"
-
 #include "messagehelper.h"
 #include "messageinfo.h"
+
+// KD PIM headers
+#include "messagecore/stringutil.h"
 
 // KDE PIM libs headers
 #include <kpimidentities/identity.h>
@@ -34,6 +35,7 @@ using KMail::RegExpLineEdit;
 #include <kpimutils/email.h>
 #include <akonadi/itemcopyjob.h>
 #include <akonadi/itemmodifyjob.h>
+#include <kmime/kmime_message.h>
 
 // KDE headers
 #include <kcombobox.h>
@@ -48,8 +50,6 @@ using KMail::RegExpLineEdit;
 #include <kabc/stdaddressbook.h>
 #include <kabc/resource.h>
 #include <nepomuk/tag.h>
-
-#include <kmime/kmime_message.h>
 
 // Qt headers:
 #include <QTextCodec>
@@ -1559,7 +1559,8 @@ KMFilterAction::ReturnCode KMFilterActionForward::process( const Akonadi::Item &
   const KMime::Message::Ptr msg = item.payload<KMime::Message::Ptr>();
   // avoid endless loops when this action is used in a filter
   // which applies to sent messages
-  if ( MessageViewer::StringUtil::addressIsInAddressList( mParameter, QStringList( msg->to()->asUnicodeString() ) ) ) {
+  if ( MessageCore::StringUtil::addressIsInAddressList( mParameter,
+                                                   QStringList( msg->to()->asUnicodeString() ) ) ) {
     kWarning() << "Attempt to forward to receipient of original message, ignoring.";
     return ErrorButGoOn;
   }

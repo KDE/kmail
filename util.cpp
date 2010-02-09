@@ -38,17 +38,21 @@
 
 
 #include "util.h"
-#include <QTextCodec>
-#include "messageviewer/stringutil.h"
+#include "imapsettings.h"
 
-#include <stdlib.h>
+#include "messagecore/stringutil.h"
+
 #include <kpimutils/email.h>
+#include <kimap/loginjob.h>
+
 #include <KGlobal>
 #include <KStandardDirs>
 #include <kascii.h>
 #include <KCharsets>
-#include "imapsettings.h"
-#include <kimap/loginjob.h>
+
+#include <QTextCodec>
+
+#include <stdlib.h>
 
 #ifndef KMAIL_UNITTESTS
 bool KMail::Util::validateAddresses( QWidget *parent, const QString &addresses )
@@ -57,7 +61,8 @@ bool KMail::Util::validateAddresses( QWidget *parent, const QString &addresses )
 
   QStringList distributionListEmpty;
   KPIMUtils::EmailParseResult errorCode =
-    KPIMUtils::isValidAddressList( MessageViewer::StringUtil::expandAliases( addresses,distributionListEmpty ),
+    KPIMUtils::isValidAddressList( MessageCore::StringUtil::expandAliases( addresses,
+                                          GlobalSettings::defaultDomain(), distributionListEmpty ),
                                    brokenAddress );
   if ( !distributionListEmpty.isEmpty() ) {
     QString errorMsg = i18n( "Distribution list \"%1\" is empty, it cannot be used.", distributionListEmpty.join( ", " ) );

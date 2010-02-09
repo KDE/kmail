@@ -28,7 +28,7 @@
 #include "stringutil.h"
 
 
-#include "messageviewer/stringutil.h"
+#include "messagecore/stringutil.h"
 #include "messageviewer/objecttreeparser.h"
 #include "messageviewer/objecttreeemptysource.h"
 #include "messageviewer/nodehelper.h"
@@ -1288,7 +1288,7 @@ QString TemplateParser::asPlainTextFromObjectTree( const KMime::Message::Ptr &ms
 
   // strip the signature (footer):
   if ( aStripSignature )
-    return MessageViewer::StringUtil::stripSignature( result, clearSigned );
+    return MessageCore::StringUtil::stripSignature( result, clearSigned );
   else
     return result;
 }
@@ -1329,9 +1329,11 @@ QString TemplateParser::asQuotedString( const KMime::Message::Ptr &msg, const QS
   if ( lineStart >= 0 )
     content.remove( 0, static_cast<unsigned int>( lineStart ) );
 
-  const QString indentStr = MessageViewer::StringUtil::formatString( aIndentStr, msg->from()->asUnicodeString() );
+  const QString indentStr = MessageCore::StringUtil::formatString( aIndentStr,
+                                                                   msg->from()->asUnicodeString() );
   if ( kmkernel->smartQuote() && kmkernel->wordWrap() )
-    content = MessageViewer::StringUtil::smartQuote( content, kmkernel->wrapCol() - indentStr.length() );
+    content = MessageCore::StringUtil::smartQuote( content,
+                                                   kmkernel->wrapCol() - indentStr.length() );
   content.replace( '\n', '\n' + indentStr );
   content.prepend( indentStr );
   content += '\n';

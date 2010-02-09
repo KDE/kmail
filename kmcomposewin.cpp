@@ -81,7 +81,7 @@ using MailTransport::Transport;
 #include "recipientseditor.h"
 #include "messageviewer/stl_util.h"
 #include "messageviewer/util.h"
-#include "messageviewer/stringutil.h"
+#include "messagecore/stringutil.h"
 #include "util.h"
 #include "templateparser.h"
 #include "messagehelper.h"
@@ -1080,7 +1080,8 @@ void KMComposeWin::setQuotePrefix( uint uoid )
       quotePrefix = quoteTemplate.quoteString();
     }
   }
-  mEditor->setQuotePrefixName( MessageViewer::StringUtil::formatString( quotePrefix, mMsg->from()->asUnicodeString() ) );
+  mEditor->setQuotePrefixName( MessageCore::StringUtil::formatString( quotePrefix,
+                                                                mMsg->from()->asUnicodeString() ) );
 }
 
 //-----------------------------------------------------------------------------
@@ -2767,7 +2768,7 @@ void KMComposeWin::slotUpdateFont()
 
 QString KMComposeWin::smartQuote( const QString & msg )
 {
-  return MessageViewer::StringUtil::smartQuote( msg, GlobalSettings::self()->lineWrapWidth() );
+  return MessageCore::StringUtil::smartQuote( msg, GlobalSettings::self()->lineWrapWidth() );
 }
 
 void KMComposeWin::slotPasteAsAttachment()
@@ -2804,7 +2805,7 @@ QString KMComposeWin::addQuotesToText( const QString &inputText ) const
   answer.replace( '\n', '\n' + indentStr );
   answer.prepend( indentStr );
   answer += '\n';
-  return MessageViewer::StringUtil::smartQuote( answer, GlobalSettings::self()->lineWrapWidth() );
+  return MessageCore::StringUtil::smartQuote( answer, GlobalSettings::self()->lineWrapWidth() );
 }
 
 //-----------------------------------------------------------------------------

@@ -92,7 +92,6 @@ using KPIM::BroadcastStatus;
 #include "composer.h"
 #include "kmfiltermgr.h"
 #include "messagesender.h"
-#include "messageviewer/kmaddrbook.h"
 #include "kmversion.h"
 #include "searchwindow.h"
 using KMail::SearchWindow;
