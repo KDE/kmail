@@ -2699,11 +2699,19 @@ void KMComposeWin::slotAttachFile()
   // We will not care about any permissions, existence or whatsoever in
   // this function.
 
-  KFileDialog fdlg(QString::null, QString::null, this, 0, true);
+  // Handle the case where the last savedir is gone. kolab/issue4057
+  QString recent;
+  KURL recentURL = KFileDialog::getStartURL( QString::null, recent );
+  if ( !recentURL.url().isEmpty() &&
+       !KIO::NetAccess::exists( recentURL, true, this ) ) {
+    recentURL = KURL( QDir::homeDirPath() );
+  }
+
+  KFileDialog fdlg( recentURL.url(), QString::null, this, 0, true );
   fdlg.setOperationMode( KFileDialog::Other );
-  fdlg.setCaption(i18n("Attach File"));
-  fdlg.okButton()->setGuiItem(KGuiItem(i18n("&Attach"),"fileopen"));
-  fdlg.setMode(KFile::Files);
+  fdlg.setCaption( i18n( "Attach File" ) );
+  fdlg.okButton()->setGuiItem( KGuiItem( i18n( "&Attach" ),"fileopen" ) );
+  fdlg.setMode( KFile::Files );
   fdlg.exec();
   KURL::List files = fdlg.selectedURLs();
 
