@@ -621,6 +621,54 @@ void KMEdit::contentsMouseReleaseEvent( QMouseEvent * e )
   mPasteMode = QClipboard::Clipboard;
 }
 
+void KMEdit::contentsMouseDoubleClickEvent( QMouseEvent *e )
+{
+  bool handled = false;
+  if ( e->button() == Qt::LeftButton ) {
+
+    // Get the cursor position for the place where the user clicked to
+    int paragraphPos;
+    int charPos = charAt ( e->pos(), &paragraphPos );
+    QString paraText = text( paragraphPos );
+
+    // Now select the word under the cursor
+    if ( charPos >= 0 && static_cast<unsigned int>( charPos ) <= paraText.length() ) {
+
+      // Start the selection where the user clicked
+      int start = charPos;
+      unsigned int end = charPos;
+
+      // Extend the selection to the left, until we reach a non-letter and non-digit char
+      for (;;) {
+        if ( ( start - 1 ) < 0 )
+          break;
+        QChar charToTheLeft = paraText.at( start - 1 );
+        if ( charToTheLeft.isLetter() || charToTheLeft.isDigit() )
+          start--;
+        else
+          break;
+      }
+
+      // Extend the selection to the left, until we reach a non-letter and non-digit char
+      for (;;) {
+        if ( ( end + 1 ) >= paraText.length() )
+          break;
+        QChar charToTheRight = paraText.at( end + 1 );
+        if ( charToTheRight.isLetter() || charToTheRight.isDigit() )
+          end++;
+        else
+          break;
+      }
+
+      setSelection( paragraphPos, start, paragraphPos, end + 1 );
+      handled = true;
+    }
+  }
+
+  if ( !handled )
+    return KEdit::contentsMouseDoubleClickEvent( e );
+}
+
 void KMEdit::slotMisspelling(const QString &text, const QStringList &lst, unsigned int pos)
 {
     kdDebug(5006)<<"void KMEdit::slotMisspelling(const QString &text, const QStringList &lst, unsigned int pos) : "<<text <<endl;

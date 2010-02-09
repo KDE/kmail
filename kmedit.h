@@ -101,8 +101,12 @@ protected:
    */
   bool eventFilter(QObject*, QEvent*);
   void keyPressEvent( QKeyEvent* );
-  
+
   void contentsMouseReleaseEvent( QMouseEvent * e );
+
+  /// Reimplemented to select words under the cursor on double-clicks in our way,
+  /// not the broken Qt way (https://issues.kolab.org/issue4089)
+  virtual void contentsMouseDoubleClickEvent( QMouseEvent *e );
 
 private slots:
   void slotExternalEditorTempFileChanged( const QString & fileName );
