@@ -232,7 +232,6 @@ MessageReply createReply( const Akonadi::Item &item,
                           const QString &selection /*.clear() */,
                           bool noQuote /* = false */,
                           bool allowDecryption /* = true */,
-                          bool selectionIsBody /* = false */,
                           const QString &tmpl /* = QString() */ )
 {
   KMime::Message::Ptr msg( new KMime::Message );
@@ -436,7 +435,7 @@ MessageReply createReply( const Akonadi::Item &item,
   // If the reply shouldn't be blank, apply the template to the message
   if ( !noQuote ) {
     TemplateParser parser( msg, (replyAll ? TemplateParser::ReplyAll : TemplateParser::Reply),
-                           selection,kmkernel->smartQuote(), allowDecryption, selectionIsBody );
+                           selection,kmkernel->smartQuote(), allowDecryption );
     if ( !tmpl.isEmpty() )
       parser.process( tmpl, origMsg );
     else
@@ -545,7 +544,7 @@ KMime::Message::Ptr createForward( const Akonadi::Item &item, const KMime::Messa
 
   TemplateParser parser( msg, TemplateParser::Forward,
                          QString(),
-                         false, false, false);
+                         false, false );
   if ( !tmpl.isEmpty() )
     parser.process( tmpl, origMsg );
   else

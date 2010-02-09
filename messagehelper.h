@@ -82,7 +82,7 @@ namespace MessageHelper {
   MessageReply createReply( const Akonadi::Item & item, const KMime::Message::Ptr &origMsg,
                             KMail::ReplyStrategy replyStrategy = KMail::ReplySmart,
                             const QString &selection=QString(), bool noQuote=false,
-                            bool allowDecryption=true, bool selectionIsBody=false,
+                            bool allowDecryption=true,
                             const QString &tmpl = QString() );
 
   /** Create a new message that is a forward of this message, filling all

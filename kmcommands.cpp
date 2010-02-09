@@ -1244,7 +1244,7 @@ KMCommand::Result KMForwardCommand::execute()
         if ( msg ) {
 
           TemplateParser parser( fwdMsg, TemplateParser::Forward,
-                                 msg->body(), false, false, false );
+                                 msg->body(), false, false );
           parser.process( msg, ( *it ).parentCollection(), true );
 
           KMail::MessageHelper::link( msg, *it, KPIM::MessageStatus::statusForwarded() );
@@ -1416,8 +1416,9 @@ KMCommand::Result KMCustomReplyToCommand::execute()
   KMime::Message::Ptr msg = KMail::Util::message( item );
   if ( !msg )
     return Failed;
-  KMail::MessageHelper::MessageReply reply = KMail::MessageHelper::createReply( item, msg, KMail::ReplySmart, mSelection,
-                                                    false, true, false, mTemplate );
+  KMail::MessageHelper::MessageReply reply =
+      KMail::MessageHelper::createReply( item, msg, KMail::ReplySmart, mSelection,
+                                         false, true, mTemplate );
   KMail::Composer * win = KMail::makeComposer( KMime::Message::Ptr( reply.msg ), replyContext( reply ), 0,
                                                mSelection, mTemplate );
   win->setReplyFocus();
@@ -1447,8 +1448,9 @@ KMCommand::Result KMCustomReplyAllToCommand::execute()
   KMime::Message::Ptr msg = KMail::Util::message( item );
   if ( !msg )
     return Failed;
-  KMail::MessageHelper::MessageReply reply = KMail::MessageHelper::createReply( item, msg, KMail::ReplyAll, mSelection,
-                                                    false, true, false, mTemplate );
+  KMail::MessageHelper::MessageReply reply =
+      KMail::MessageHelper::createReply( item, msg, KMail::ReplyAll, mSelection,
+                                         false, true, mTemplate );
   KMail::Composer * win = KMail::makeComposer( KMime::Message::Ptr( reply.msg ), replyContext( reply ), 0,
                                                mSelection, mTemplate );
   win->setReplyFocus();
@@ -1508,7 +1510,7 @@ KMCommand::Result KMCustomForwardCommand::execute()
       if ( msg ) {
 
         TemplateParser parser( fwdMsg, TemplateParser::Forward,
-                               msg->body(), false, false, false );
+                               msg->body(), false, false );
         parser.process( msg, ( *it ).parentCollection(), true );
 
         KMail::MessageHelper::link( msg, *it, MessageStatus::statusForwarded() );

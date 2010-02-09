@@ -50,8 +50,7 @@ class TemplateParser : public QObject
 
   public:
     TemplateParser( const KMime::Message::Ptr &amsg, const Mode amode, const QString &aselection,
-                    bool aSmartQuote, bool aallowDecryption,
-                    bool aselectionIsBody );
+                    bool aSmartQuote, bool aallowDecryption );
     ~TemplateParser();
 
     virtual void process( const KMime::Message::Ptr &aorig_msg,
@@ -88,7 +87,6 @@ class TemplateParser : public QObject
     QString mSelection;
     bool mSmartQuote;
     bool mAllowDecryption;
-    bool mSelectionIsBody;
     bool mDebug;
     QString mQuoteString;
     bool mAppend;

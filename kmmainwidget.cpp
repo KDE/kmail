@@ -1361,13 +1361,13 @@ void KMMainWidget::slotCompose()
         msg->setHeader( header );
       }
       TemplateParser parser( msg, TemplateParser::NewMessage,
-                             QString(), false, false, false );
+                             QString(), false, false );
       parser.process( KMime::Message::Ptr(), mCurrentFolder->collection() );
       win = KMail::makeComposer( msg, KMail::Composer::New, mCurrentFolder->identity() );
   } else {
       KMail::MessageHelper::initHeader( msg );
       TemplateParser parser( msg, TemplateParser::NewMessage,
-                             QString(), false, false, false );
+                             QString(), false, false );
       parser.process( KMime::Message::Ptr(), Akonadi::Collection() );
       win = KMail::makeComposer( msg, KMail::Composer::New );
   }
