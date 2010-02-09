@@ -32,6 +32,7 @@
 #include "messageviewer/autoqpointer.h"
 
 #include <kpimutils/email.h>
+#include <KMime/Headers>
 
 #include <KDebug>
 #include <KLocale>
@@ -921,24 +922,22 @@ Recipient::List RecipientsEditor::recipients() const
   return mRecipientsView->recipients();
 }
 
-void RecipientsEditor::setRecipientString( const QString &str,
-  Recipient::Type type )
+void RecipientsEditor::setRecipientString( const QList<KMime::Types::Mailbox> &mailboxes,
+                                           Recipient::Type type )
 {
   clear();
 
   int count = 1;
 
-  QStringList r = KPIMUtils::splitAddressList( str );
-  QStringList::ConstIterator it;
-  for( it = r.constBegin(); it != r.constEnd(); ++it ) {
+  foreach( const KMime::Types::Mailbox &mailbox, mailboxes ) {
     if ( count++ > GlobalSettings::self()->maximumRecipients() ) {
       KMessageBox::sorry( this,
         i18nc("@info:status", "Truncating recipients list to %1 of %2 entries.",
               GlobalSettings::self()->maximumRecipients(),
-              r.count() ) );
+              mailboxes.count() ) );
       break;
     }
-    addRecipient( *it, type );
+    addRecipient( mailbox.quotedPrettyAddress(), type );
   }
 }
 

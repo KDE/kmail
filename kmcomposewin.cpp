@@ -1574,9 +1574,9 @@ void KMComposeWin::setMsg( const KMime::Message::Ptr &newMsg, bool mayAutoSign,
 
   mEdtFrom->setText( mMsg->from()->asUnicodeString() );
   mEdtReplyTo->setText( mMsg->replyTo()->asUnicodeString() );
-  mRecipientsEditor->setRecipientString( mMsg->to()->asUnicodeString(), Recipient::To );
-  mRecipientsEditor->setRecipientString( mMsg->cc()->asUnicodeString(), Recipient::Cc );
-  mRecipientsEditor->setRecipientString( mMsg->bcc()->asUnicodeString(), Recipient::Bcc );
+  mRecipientsEditor->setRecipientString( mMsg->to()->mailboxes(), Recipient::To );
+  mRecipientsEditor->setRecipientString( mMsg->cc()->mailboxes(), Recipient::Cc );
+  mRecipientsEditor->setRecipientString( mMsg->bcc()->mailboxes(), Recipient::Bcc );
   mRecipientsEditor->setFocusBottom();
   mEdtSubject->setText( mMsg->subject()->asUnicodeString() );
 

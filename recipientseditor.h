@@ -40,6 +40,12 @@ class QLabel;
 class QPushButton;
 class SideWidget;
 
+namespace KMime {
+  namespace Types {
+    class Mailbox;
+  }
+}
+
 class Recipient
 {
   public:
@@ -301,7 +307,7 @@ class KMAIL_EXPORT RecipientsEditor : public QWidget
     Recipient::List recipients() const;
     RecipientsPicker* picker() const;
 
-    void setRecipientString( const QString &, Recipient::Type );
+    void setRecipientString( const QList<KMime::Types::Mailbox> &mailboxes, Recipient::Type );
     QString recipientString( Recipient::Type );
 
     /** Adds a recipient (or multiple recipients) to one line of the editor.
