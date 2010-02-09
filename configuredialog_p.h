@@ -612,6 +612,7 @@ private:
   QCheckBox     *mTopQuoteCheck;
   QCheckBox     *mSmartQuoteCheck;
   QCheckBox     *mStripSignatureCheck;
+  QCheckBox     *mQuoteSelectionOnlyCheck;
   QCheckBox     *mAutoRequestMDNCheck;
   QCheckBox	*mShowRecentAddressesInComposer;
   QCheckBox     *mWordWrapCheck;
