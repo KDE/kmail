@@ -3835,24 +3835,44 @@ QString KMMessage::emailAddrAsAnchor(const QString& aEmail, bool stripped, const
     return aEmail;
 
   QStringList addressList = KPIM::splitEmailAddrList( aEmail );
-
   QString result;
 
   for( QStringList::ConstIterator it = addressList.begin();
        ( it != addressList.end() );
        ++it ) {
     if( !(*it).isEmpty() ) {
-      QString address = *it;
-      if(aLink) {
-	result += "<a href=\"mailto:"
-              + KMMessage::encodeMailtoUrl( address )
-	  + "\" "+cssStyle+">";
+
+      // Extract the name, mail and some pretty versions out of the mail address
+      QString name, mail;
+      KPIM::getNameAndMail( *it, name, mail );
+      QString prettyAndQuoted;
+      QString pretty;
+      QString prettyStripped;
+      if ( name.stripWhiteSpace().isEmpty() ) {
+        prettyAndQuoted = mail;
+        pretty = mail;
+        prettyStripped = mail;
+      } else {
+        prettyAndQuoted = "\"" + name + "\" <" + mail + ">";
+        pretty = name + " <" + mail + ">";
+        prettyStripped = name;
       }
-      if( stripped )
-        address = KMMessage::stripEmailAddr( address );
-      result += KMMessage::quoteHtmlChars( address, true );
+
+      if(aLink) {
+        result += "<a href=\"mailto:"
+               + KMMessage::encodeMailtoUrl( prettyAndQuoted )
+               + "\" "+cssStyle+">";
+      }
+
+      if ( stripped ) {
+        result += KMMessage::quoteHtmlChars( prettyStripped, true );
+      }
+      else {
+        result += KMMessage::quoteHtmlChars( pretty, true );
+      }
+
       if(aLink)
-	result += "</a>, ";
+        result += "</a>, ";
     }
   }
   // cut of the trailing ", "
@@ -3863,7 +3883,6 @@ QString KMMessage::emailAddrAsAnchor(const QString& aEmail, bool stripped, const
   //              << "') returns:\n-->" << result << "<--" << endl;
   return result;
 }
-
 
 //-----------------------------------------------------------------------------
 //static
