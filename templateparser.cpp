@@ -1281,7 +1281,6 @@ QString TemplateParser::asPlainTextFromObjectTree( const KMime::Message::Ptr &ms
 
   // html -> plaintext conversion, if necessary:
   if ( isHTML /* TODO port it && mDecodeHTML*/ ) {
-    // TODO: WEBKIT check to make sure that this does not access external resources or executes any scripts
     QWebElement doc = QWebElement();
     doc.prependInside( result );
     result = doc.toPlainText();
