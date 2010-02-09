@@ -1360,14 +1360,12 @@ void KMMainWidget::slotCompose()
         KMime::Headers::Generic *header = new KMime::Headers::Generic( "X-KMail-Fcc", msg.get(), QString::number( mCurrentFolder->collection().id() ), "utf-8" );
         msg->setHeader( header );
       }
-      TemplateParser parser( msg, TemplateParser::NewMessage,
-                             QString(), false, false );
+      TemplateParser parser( msg, TemplateParser::NewMessage, false, false );
       parser.process( KMime::Message::Ptr(), mCurrentFolder->collection() );
       win = KMail::makeComposer( msg, KMail::Composer::New, mCurrentFolder->identity() );
   } else {
       KMail::MessageHelper::initHeader( msg );
-      TemplateParser parser( msg, TemplateParser::NewMessage,
-                             QString(), false, false );
+      TemplateParser parser( msg, TemplateParser::NewMessage, false, false );
       parser.process( KMime::Message::Ptr(), Akonadi::Collection() );
       win = KMail::makeComposer( msg, KMail::Composer::New );
   }

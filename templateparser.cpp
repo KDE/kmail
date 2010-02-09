@@ -64,14 +64,18 @@ namespace KMail {
 static const int PipeTimeout = 15 * 1000;
 
 TemplateParser::TemplateParser( const KMime::Message::Ptr &amsg, const Mode amode,
-                                const QString &aselection,
                                 bool asmartQuote, bool aallowDecryption ) :
-  mMode( amode ), mFolder( 0 ), mIdentity( 0 ), mSelection( aselection ),
+  mMode( amode ), mFolder( 0 ), mIdentity( 0 ),
   mSmartQuote( asmartQuote ),
   mAllowDecryption( aallowDecryption ),
   mDebug( false ), mQuoteString( "> " ), mAppend( false ), mOrigRoot( 0 )
 {
   mMsg = amsg;
+}
+
+void TemplateParser::setSelection( const QString &selection )
+{
+  mSelection = selection;
 }
 
 TemplateParser::~TemplateParser()
