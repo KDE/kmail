@@ -434,8 +434,7 @@ MessageReply createReply( const Akonadi::Item &item,
 
   // If the reply shouldn't be blank, apply the template to the message
   if ( !noQuote ) {
-    TemplateParser parser( msg, (replyAll ? TemplateParser::ReplyAll : TemplateParser::Reply),
-                           kmkernel->smartQuote() );
+    TemplateParser parser( msg, (replyAll ? TemplateParser::ReplyAll : TemplateParser::Reply ) );
     parser.setSelection( selection );
     parser.setAllowDecryption( allowDecryption );
     if ( !tmpl.isEmpty() )
@@ -544,7 +543,7 @@ KMime::Message::Ptr createForward( const Akonadi::Item &item, const KMime::Messa
 
   msg->subject()->fromUnicodeString( forwardSubject( origMsg ), "utf-8" );
 
-  TemplateParser parser( msg, TemplateParser::Forward, false );
+  TemplateParser parser( msg, TemplateParser::Forward );
   if ( !tmpl.isEmpty() )
     parser.process( tmpl, origMsg );
   else

@@ -71,7 +71,7 @@ class TemplateParser : public QObject
     };
 
   public:
-    TemplateParser( const KMime::Message::Ptr &amsg, const Mode amode, bool aSmartQuote );
+    TemplateParser( const KMime::Message::Ptr &amsg, const Mode amode );
     ~TemplateParser();
 
     /**
@@ -125,7 +125,6 @@ class TemplateParser : public QObject
     KMime::Message::Ptr mMsg;
     KMime::Message::Ptr mOrigMsg;
     QString mSelection;
-    bool mSmartQuote;
     bool mAllowDecryption;
     bool mDebug;
     QString mQuoteString;
@@ -159,6 +158,12 @@ class TemplateParser : public QObject
      * Attachments of the original message are also added back to the new message.
      */
     void addProcessedBodyToMessage( const QString &body );
+
+    /**
+     * Determines whether the signature should be stripped when getting the text of the original
+     * message, e.g. for commands such as %QUOTE
+     */
+    bool shouldStripSignature() const;
 
     int parseQuotes( const QString &prefix, const QString &str,
                      QString &quote ) const;

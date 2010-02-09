@@ -293,8 +293,6 @@ public:
   /** Expire all folders, used for the gui action */
   void expireAllFoldersNow();
 
-  bool smartQuote() const { return mSmartQuote; }
-  bool wordWrap() const { return mWordWrap;}
   int wrapCol() const { return mWrapCol;}
 
   bool firstStart() const { return the_firstStart; }
@@ -466,9 +464,6 @@ private:
   FolderCollectionMonitor *mFolderCollectionMonitor;
   KMAgentManager *mAgentManager;
 
-  // special debug area
-  int mStorageDebug;
-  bool mSmartQuote : 1, mWordWrap : 1;
   int mWrapCol;
 };
 

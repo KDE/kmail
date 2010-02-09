@@ -179,8 +179,6 @@ KMKernel::KMKernel (QObject *parent, const char *name) :
   the_filterActionDict = 0;
   the_msgSender = 0;
   mWin = 0;
-  mSmartQuote = false;
-  mWordWrap = false;
   mWrapCol = 80;
   // make sure that we check for config updates before doing anything else
   KMKernel::config();
@@ -508,7 +506,7 @@ int KMKernel::openComposer( const QString &to, const QString &cc,
       msg->setBody( QString::fromLocal8Bit( str.data(), str.size() ).toUtf8() );
     }
     else {
-      TemplateParser parser( msg, TemplateParser::NewMessage, false );
+      TemplateParser parser( msg, TemplateParser::NewMessage );
       parser.process( KMime::Message::Ptr() );
     }
   }
@@ -517,7 +515,7 @@ int KMKernel::openComposer( const QString &to, const QString &cc,
     msg->setBody( body.toUtf8() );
   }
   else {
-    TemplateParser parser( msg, TemplateParser::NewMessage, false );
+    TemplateParser parser( msg, TemplateParser::NewMessage );
     parser.process( KMime::Message::Ptr() );
   }
 
@@ -588,7 +586,7 @@ int KMKernel::openComposer (const QString &to, const QString &cc,
     msg->setBody(body.toUtf8());
     context = KMail::Composer::NoTemplate;
   } else {
-    TemplateParser parser( msg, TemplateParser::NewMessage, false );
+    TemplateParser parser( msg, TemplateParser::NewMessage );
     parser.process( KMime::Message::Ptr() );
   }
 
@@ -683,7 +681,7 @@ QDBusObjectPath KMKernel::openComposer( const QString &to, const QString &cc,
   if ( !body.isEmpty() ) {
     msg->setBody(body.toUtf8());
   } else {
-    TemplateParser parser( msg, TemplateParser::NewMessage, false );
+    TemplateParser parser( msg, TemplateParser::NewMessage );
     parser.process( KMime::Message::Ptr() );
   }
 
@@ -732,7 +730,7 @@ QDBusObjectPath KMKernel::newMessage( const QString &to,
   if ( !bcc.isEmpty() )     msg->bcc()->fromUnicodeString( bcc, "utf-8" );
   if ( !to.isEmpty() )      msg->to()->fromUnicodeString( to, "utf-8" );
 
-  TemplateParser parser( msg, TemplateParser::NewMessage, false );
+  TemplateParser parser( msg, TemplateParser::NewMessage );
   parser.process( KMime::Message::Ptr(), folder ? folder->collection() : Akonadi::Collection() );
 
   KMail::Composer *win = makeComposer( msg, KMail::Composer::New, id );
@@ -1073,8 +1071,6 @@ void KMKernel::init()
 
 void KMKernel::readConfig()
 {
-  mSmartQuote = GlobalSettings::self()->smartQuote();
-  mWordWrap = GlobalSettings::self()->wordWrap();
   mWrapCol = GlobalSettings::self()->lineWrapWidth();
   if ((mWrapCol == 0) || (mWrapCol > 78))
     mWrapCol = 78;

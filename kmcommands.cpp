@@ -1243,7 +1243,7 @@ KMCommand::Result KMForwardCommand::execute()
         KMime::Message::Ptr msg = KMail::Util::message( *it );
         if ( msg ) {
 
-          TemplateParser parser( fwdMsg, TemplateParser::Forward, false );
+          TemplateParser parser( fwdMsg, TemplateParser::Forward );
           parser.setSelection( msg->body() ); // FIXME: Why is this needed?
           parser.process( msg, ( *it ).parentCollection(), true );
 
@@ -1509,7 +1509,7 @@ KMCommand::Result KMCustomForwardCommand::execute()
       KMime::Message::Ptr msg = KMail::Util::message( *it );
       if ( msg ) {
 
-        TemplateParser parser( fwdMsg, TemplateParser::Forward, false );
+        TemplateParser parser( fwdMsg, TemplateParser::Forward );
         parser.setSelection( msg->body() ); // FIXME: Why is this needed?
         parser.process( msg, ( *it ).parentCollection(), true );
 

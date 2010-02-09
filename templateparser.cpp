@@ -63,10 +63,8 @@ namespace KMail {
 
 static const int PipeTimeout = 15 * 1000;
 
-TemplateParser::TemplateParser( const KMime::Message::Ptr &amsg, const Mode amode,
-                                bool asmartQuote ) :
+TemplateParser::TemplateParser( const KMime::Message::Ptr &amsg, const Mode amode ) :
   mMode( amode ), mFolder( 0 ), mIdentity( 0 ),
-  mSmartQuote( asmartQuote ),
   mAllowDecryption( false ),
   mDebug( false ), mQuoteString( "> " ), mAppend( false ), mOrigRoot( 0 )
 {
@@ -81,6 +79,12 @@ void TemplateParser::setSelection( const QString &selection )
 void TemplateParser::setAllowDecryption( const bool allowDecryption )
 {
   mAllowDecryption = allowDecryption;
+}
+
+bool TemplateParser::shouldStripSignature() const
+{
+  // Only strip the signature when replying, it should be preserved when forwarding
+  return ( mMode == Reply || mMode == ReplyAll ) && GlobalSettings::stripSignature();
 }
 
 TemplateParser::~TemplateParser()
@@ -332,7 +336,7 @@ void TemplateParser::processWithTemplate( const QString &tmpl )
           QString str =
               pipe( pipe_cmd, messageText( false ) );
           QString quote = asQuotedString( mOrigMsg, mQuoteString, str,
-                                          mSmartQuote, mAllowDecryption );
+                                          shouldStripSignature(), mAllowDecryption );
           if ( quote.endsWith( '\n' ) )
             quote.chop( 1 );
           body.append( quote );
@@ -343,7 +347,7 @@ void TemplateParser::processWithTemplate( const QString &tmpl )
         i += strlen( "QUOTE" );
         if ( mOrigMsg ) {
           QString quote = asQuotedString( mOrigMsg, mQuoteString, messageText( true ),
-                                                    mSmartQuote, mAllowDecryption );
+                                                    shouldStripSignature(), mAllowDecryption );
           if ( quote.endsWith( '\n' ) )
             quote.chop( 1 );
           body.append( quote );
@@ -355,7 +359,7 @@ void TemplateParser::processWithTemplate( const QString &tmpl )
         if ( mOrigMsg ) {
           QString quote = asQuotedString( mOrigMsg, mQuoteString,
                                                     MessageHelper::headerAsSendableString( mOrigMsg ),
-                                                    mSmartQuote, false );
+                                                    false, false );
           if ( quote.endsWith( '\n' ) )
                quote.chop( 1 );
           body.append( quote );
@@ -935,11 +939,11 @@ QString TemplateParser::messageText( bool allowSelectionOnly )
   mOrigRoot->parse();
 
   MessageViewer::EmptySource emptySource;
-  MessageViewer::ObjectTreeParser otp(&emptySource); // all defaults are ok
+  MessageViewer::ObjectTreeParser otp( &emptySource ); // all defaults are ok
   otp.setAllowAsync( false );
   otp.parseObjectTree( Akonadi::Item(), mOrigRoot );
 
-  return asPlainTextFromObjectTree( mOrigMsg, mOrigRoot, &otp, mSmartQuote, mAllowDecryption );
+  return asPlainTextFromObjectTree( mOrigMsg, mOrigRoot, &otp, shouldStripSignature(), mAllowDecryption );
 }
 
 KMime::Content* TemplateParser::parsedObjectTree()
@@ -1226,8 +1230,10 @@ void TemplateParser::parseTextStringFromContent( KMime::Content * root,
   }
 }
 
-QString TemplateParser::asPlainTextFromObjectTree( const KMime::Message::Ptr &msg, KMime::Content *root, MessageViewer::ObjectTreeParser *otp, bool aStripSignature,
-                                              bool allowDecryption )
+QString TemplateParser::asPlainTextFromObjectTree( const KMime::Message::Ptr &msg,
+                                                   KMime::Content *root,
+                                                   MessageViewer::ObjectTreeParser *otp,
+                                                   bool aStripSignature, bool allowDecryption )
 {
   Q_ASSERT( root );
   Q_ASSERT( otp->nodeHelper()->nodeProcessed( root ) );
@@ -1302,7 +1308,8 @@ QString TemplateParser::asPlainTextFromObjectTree( const KMime::Message::Ptr &ms
 }
 
 
-QString TemplateParser::asPlainText( const KMime::Message::Ptr &msg, bool aStripSignature, bool allowDecryption )
+QString TemplateParser::asPlainText( const KMime::Message::Ptr &msg,
+                                     bool aStripSignature, bool allowDecryption )
 {
   if ( !msg )
     return QString();
@@ -1339,7 +1346,7 @@ QString TemplateParser::asQuotedString( const KMime::Message::Ptr &msg, const QS
 
   const QString indentStr = MessageCore::StringUtil::formatString( aIndentStr,
                                                                    msg->from()->asUnicodeString() );
-  if ( kmkernel->smartQuote() && kmkernel->wordWrap() )
+  if ( GlobalSettings::self()->smartQuote() && GlobalSettings::self()->wordWrap() )
     content = MessageCore::StringUtil::smartQuote( content,
                                                    kmkernel->wrapCol() - indentStr.length() );
   content.replace( '\n', '\n' + indentStr );

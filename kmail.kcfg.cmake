@@ -386,6 +386,10 @@
         <label>Use smart &amp;quoting</label>
         <default>true</default>
       </entry>
+      <entry name="StripSignature" type="Bool">
+        <label>Remove the signature when replying to a message</label>
+        <default>true</default>
+      </entry>
 
       <entry name="SecondRecipientTypeDefault" type="Enum">
         <choices>
