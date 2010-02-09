@@ -156,6 +156,7 @@ using KMail::TemplateParser;
 #include <akonadi/favoritecollectionsmodel.h>
 #include <akonadi/itemfetchscope.h>
 #include <akonadi/entitytreeviewstatesaver.h>
+#include <akonadi/control.h>
 
 #include <messageviewer/viewer.h>
 
@@ -227,6 +228,8 @@ K_GLOBAL_STATIC( KMMainWidget::PtrList, theMainWidgetList )
   mOpenedImapFolder = false;
   mCustomTemplateMenus = 0;
   mCollectionFolderView = 0;
+
+  Akonadi::Control::widgetNeedsAkonadi( this );
 
   CollectionPropertiesDialog::useDefaultPage( false );
   CollectionPropertiesDialog::registerPage( new CollectionGeneralPageFactory() );
