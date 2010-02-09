@@ -406,8 +406,7 @@ int KMKernel::openComposer (const QString &to, const QString &cc,
     if( !str.isEmpty() ) {
       msg->setBody( QString::fromLocal8Bit( str ).utf8() );
     } else {
-      TemplateParser parser( msg, TemplateParser::NewMessage,
-	"", false, false, false );
+      TemplateParser parser( msg, TemplateParser::NewMessage, false, false, false );
       parser.process( NULL, NULL );
     }
   }
@@ -417,8 +416,7 @@ int KMKernel::openComposer (const QString &to, const QString &cc,
   }
   else
   {
-    TemplateParser parser( msg, TemplateParser::NewMessage,
-      "", false, false, false );
+    TemplateParser parser( msg, TemplateParser::NewMessage, false, false, false );
     parser.process( NULL, NULL );
   }
 
@@ -523,8 +521,7 @@ int KMKernel::openComposer (const QString &to, const QString &cc,
   if ( !body.isEmpty() ) {
     msg->setBody(body.utf8());
   } else {
-    TemplateParser parser( msg, TemplateParser::NewMessage,
-      "", false, false, false );
+    TemplateParser parser( msg, TemplateParser::NewMessage, false, false, false );
     parser.process( NULL, NULL );
   }
 
@@ -631,8 +628,7 @@ DCOPRef KMKernel::openComposer(const QString &to, const QString &cc,
   if (!body.isEmpty()) {
     msg->setBody(body.utf8());
   } else {
-    TemplateParser parser( msg, TemplateParser::NewMessage,
-      "", false, false, false );
+    TemplateParser parser( msg, TemplateParser::NewMessage, false, false, false );
     parser.process( NULL, NULL );
   }
 
@@ -678,13 +674,11 @@ DCOPRef KMKernel::newMessage(const QString &to,
   if (!bcc.isEmpty()) msg->setBcc(bcc);
 
   if ( useFolderId ) {
-    TemplateParser parser( msg, TemplateParser::NewMessage,
-      "", false, false, false );
+    TemplateParser parser( msg, TemplateParser::NewMessage, false, false, false );
     parser.process( NULL, folder );
     win = makeComposer( msg, id );
   } else {
-    TemplateParser parser( msg, TemplateParser::NewMessage,
-      "", false, false, false );
+    TemplateParser parser( msg, TemplateParser::NewMessage, false, false, false );
     parser.process( NULL, folder );
     win = makeComposer( msg );
   }

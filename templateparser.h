@@ -29,6 +29,28 @@ class KMFolder;
 class QObject;
 class KProcess;
 
+/**
+ * The TemplateParser transforms a message with a given template.
+ *
+ * A template contains text and commands, such as %QUOTE or %ODATE, which will be
+ * replaced with the real values in process().
+ *
+ * The message given in the constructor is the message that is being transformed.
+ * The message text will be replaced by the processed text of the template, but other
+ * properties, such as the attachments or the subject, are preserved.
+ *
+ * There are two different kind of commands: Those that work on the message that is
+ * to be transformed and those that work on an 'original message'.
+ * Those that work on the message that is to be transformed have no special prefix, e.g.
+ * '%DATE'. Those that work on the original message have an 'O' prefix, for example
+ * '%ODATE'.
+ * This means that the %DATE command will take the date of the message passed in the
+ * constructor, the message which is to be transformed, whereas the %ODATE command will
+ * take the date of the message that is being passed in process(), the original message.
+ *
+ * TODO: What is the usecase of the commands that work on the message to be transformed?
+ *       In general you only use the commands that work on the original message...
+ */
 class TemplateParser : public QObject
 {
   Q_OBJECT
@@ -44,9 +66,17 @@ class TemplateParser : public QObject
     static const int PipeTimeout = 15;
 
   public:
-    TemplateParser( KMMessage *amsg, const Mode amode, const QString aselection,
+    TemplateParser( KMMessage *amsg, const Mode amode,
                     bool aSmartQuote, bool anoQuote, bool aallowDecryption );
     ~TemplateParser();
+
+    /**
+     * Sets the selection. If this is set, only the selection will be added to commands such
+     * as %QUOTE. Otherwise, the whole message is quoted.
+     * If this is not called at all, the whole message is quoted as well.
+     * Call this before calling process().
+     */
+    void setSelection( const QString &selection );
 
     virtual void process( KMMessage *aorig_msg, KMFolder *afolder = 0, bool append = false );
     virtual void process( const QString &tmplName, KMMessage *aorig_msg,

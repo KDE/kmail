@@ -1247,9 +1247,9 @@ KMCommand::Result KMForwardInlineCommand::execute()
     // fwdMsg->setBody( msgText );
 
     for ( KMMessage *msg = linklist.first(); msg; msg = linklist.next() ) {
-      TemplateParser parser( fwdMsg, TemplateParser::Forward,
-        msg->body(), false, false, false );
-        parser.process( msg, 0, true );
+      TemplateParser parser( fwdMsg, TemplateParser::Forward, false, false, false );
+      parser.setSelection( msg->body() );
+      parser.process( msg, 0, true );
 
       fwdMsg->link( msg, KMMsgStatusForwarded );
     }
@@ -1550,9 +1550,9 @@ KMCommand::Result KMCustomForwardCommand::execute()
     // fwdMsg->setBody( msgText );
 
     for ( KMMessage *msg = linklist.first(); msg; msg = linklist.next() ) {
-      TemplateParser parser( fwdMsg, TemplateParser::Forward,
-        msg->body(), false, false, false );
-        parser.process( msg, 0, true );
+      TemplateParser parser( fwdMsg, TemplateParser::Forward, false, false, false );
+      parser.setSelection( msg->body() );
+      parser.process( msg, 0, true );
 
       fwdMsg->link( msg, KMMsgStatusForwarded );
     }

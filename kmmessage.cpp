@@ -1068,8 +1068,9 @@ KMMessage* KMMessage::createReply( KMail::ReplyStrategy replyStrategy,
   msg->setHeaderField( "X-KMail-QuotePrefix",
 		                         formatString( GlobalSettings::self()->quoteString() ) );
   if( !noQuote ) {
-     TemplateParser parser( msg, (replyAll ? TemplateParser::ReplyAll : TemplateParser::Reply),
-      selection, sSmartQuote, noQuote, allowDecryption );
+     TemplateParser parser( msg, ( replyAll ? TemplateParser::ReplyAll : TemplateParser::Reply ),
+                            sSmartQuote, noQuote, allowDecryption );
+     parser.setSelection( selection );
      if ( !tmpl.isEmpty() ) {
        parser.process( tmpl, this );
      } else {
@@ -1299,9 +1300,7 @@ KMMessage* KMMessage::createForward( const QString &tmpl /* = QString::null */ )
 
   msg->setSubject( forwardSubject() );
 
-  TemplateParser parser( msg, TemplateParser::Forward,
-    QString(),
-    false, false, false );
+  TemplateParser parser( msg, TemplateParser::Forward, false, false, false );
   if ( !tmpl.isEmpty() ) {
     parser.process( tmpl, this );
   } else {
