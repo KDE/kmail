@@ -144,12 +144,6 @@ int main(int argc, char *argv[])
   app.setEventLoopReached();
   app.delayedInstanceCreation();
 
-  if ( !Akonadi::Control::start( kmkernel->getKMMainWidget() ) ) {
-    kWarning() << "Unable to start Akonadi server, exit application";
-    KMessageBox::sorry( 0, i18n( "Akonadi failed to start. Please check your configuration." ),
-                        i18n( "KMail" ) );
-    return 1;
-  }
   // Go!
   int ret = qApp->exec();
   // clean up
