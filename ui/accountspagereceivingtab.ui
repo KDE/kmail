@@ -21,10 +21,12 @@
       </widget>
      </item>
      <item>
+      <widget class="KFilterProxySearchLine" name="mFilterAccount"/>
+     </item>
+     <item>
       <layout class="QHBoxLayout" name="hlay">
        <item>
-        <widget class="Akonadi::AgentInstanceWidget" name="mAccountList">
-        </widget>
+        <widget class="Akonadi::AgentInstanceWidget" name="mAccountList" native="true"/>
        </item>
        <item>
         <layout class="QVBoxLayout" name="btn_vlay">
@@ -136,6 +138,16 @@
  </widget>
  <layoutdefault spacing="6" margin="0"/>
  <customwidgets>
+  <customwidget>
+   <class>KFilterProxySearchLine</class>
+   <extends>QWidget</extends>
+   <header>kfilterproxysearchline.h</header>
+  </customwidget>
+  <customwidget>
+   <class>KPushButton</class>
+   <extends>QPushButton</extends>
+   <header>kpushbutton.h</header>
+  </customwidget>
   <customwidget>
    <class>Akonadi::AgentInstanceWidget</class>
    <extends>QWidget</extends>
