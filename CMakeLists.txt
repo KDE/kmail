@@ -2,6 +2,8 @@ project(kmail)
 
 include(CheckIncludeFiles)
 
+add_definitions(-DQT3_SUPPORT_WARNINGS)
+
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} ${KDE4_DATA_DIR}/cmake/modules)
 
 qt4_generate_dbus_interface(kmkernel.h org.kde.kmail.kmail.xml OPTIONS -a)
@@ -248,7 +250,6 @@ target_link_libraries(kmailprivate
   ${KDEPIMLIBS_KABC_LIBS}
   ${KDEPIMLIBS_KPIMUTILS_LIBS}
   ${KDEPIMLIBS_KPIMTEXTEDIT_LIBS}
-  ${QT_QT3SUPPORT_LIBRARY}
   messageviewer
   akonadi_next
   ${SOPRANO_LIBRARIES}
