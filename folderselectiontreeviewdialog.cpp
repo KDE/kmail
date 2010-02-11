@@ -46,11 +46,13 @@ FolderSelectionTreeViewDialog::FolderSelectionTreeViewDialog( QWidget *parent, S
   treeview->readableCollectionProxyModel()->setEnabledCheck( ( options & EnableCheck ) );
   treeview->readableCollectionProxyModel()->setAccessRights( Akonadi::Collection::CanCreateCollection );
   treeview->folderTreeView()->setTooltipsPolicy( FolderSelectionTreeView::DisplayNever );
-
   layout->addWidget( treeview );
   enableButton( KDialog::Ok, false );
   enableButton( KDialog::User1, false );
   connect(treeview->selectionModel(), SIGNAL(selectionChanged(QItemSelection,QItemSelection)), this, SLOT(slotSelectionChanged()));
+  connect(treeview->readableCollectionProxyModel(), SIGNAL( rowsInserted( const QModelIndex&, int, int ) ),
+		               this, SLOT( rowsInserted( const QModelIndex&, int, int ) ) );
+
   connect( treeview->folderTreeView(), SIGNAL( doubleClicked(const QModelIndex&) ), this, SLOT( accept() ) );
   connect(this, SIGNAL( user1Clicked() ), this, SLOT( slotAddChildFolder() ) );
   readConfig();
@@ -59,6 +61,11 @@ FolderSelectionTreeViewDialog::FolderSelectionTreeViewDialog( QWidget *parent, S
 FolderSelectionTreeViewDialog::~FolderSelectionTreeViewDialog()
 {
   writeConfig();
+}
+
+void FolderSelectionTreeViewDialog::rowsInserted( const QModelIndex&, int, int )
+{
+  treeview->folderTreeView()->expandAll();
 }
 
 bool FolderSelectionTreeViewDialog::canCreateCollection( Akonadi::Collection & parentCol )

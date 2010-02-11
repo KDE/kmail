@@ -54,7 +54,7 @@ private slots:
   void slotSelectionChanged();
   void slotAddChildFolder();
   void collectionCreationResult(KJob*);
-
+  void rowsInserted( const QModelIndex& col, int, int );
 protected:
   void readConfig();
   void writeConfig();
