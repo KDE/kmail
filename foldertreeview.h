@@ -46,7 +46,7 @@ public:
 
   void setTooltipsPolicy( FolderSelectionTreeView::ToolTipDisplayPolicy );
 
-  Akonadi::Collection currentFolder();
+  Akonadi::Collection currentFolder() const;
 protected:
   enum Move { Next = 0, Previous = 1};
   void init( bool showUnreadCount );

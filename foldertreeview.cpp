@@ -354,7 +354,7 @@ void FolderTreeView::selectPrevUnreadFolder( bool confirm )
   //TODO start at the end.
 }
 
-Akonadi::Collection FolderTreeView::currentFolder()
+Akonadi::Collection FolderTreeView::currentFolder() const
 {
   QModelIndex current = currentIndex();
   if ( current.isValid() ) {
