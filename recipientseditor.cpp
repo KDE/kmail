@@ -937,7 +937,7 @@ void RecipientsEditor::setRecipientString( const QList<KMime::Types::Mailbox> &m
               mailboxes.count() ) );
       break;
     }
-    addRecipient( mailbox.quotedPrettyAddress(), type );
+    addRecipient( mailbox.prettyAddress( KMime::Types::Mailbox::QuoteWhenNecessary ), type );
   }
 }
 
