@@ -72,7 +72,6 @@ using KMail::IdentityDialog;
 using KMime::DateFormatter;
 #include "kleo/cryptoconfig.h"
 #include "kleo/cryptobackendfactory.h"
-#include "libkleo/ui/backendconfigwidget.h"
 #include "libkleo/ui/keyrequester.h"
 #include "libkleo/ui/keyselectiondialog.h"
 
@@ -209,6 +208,7 @@ ConfigureDialog::ConfigureDialog( QWidget *parent, bool modal )
   addModule( "kmail_config_appearance" );
   addModule( "kmail_config_composer" );
   addModule( "kmail_config_security" );
+  addModule( "kleopatra_config_gnupgsystem" );
   addModule( "kmail_config_misc" );
 
   connect( this, SIGNAL(okClicked()), SLOT(slotOk()) );
@@ -3406,12 +3406,6 @@ SecurityPage::SecurityPage( const KComponentData &instance, QWidget *parent )
   //
   mSMimeTab = new SMimeTab();
   addTab( mSMimeTab, i18n("S/MIME Validation") );
-
-  //
-  // "Crypto Backends" tab:
-  //
-  mCryptPlugTab = new CryptPlugTab();
-  addTab( mCryptPlugTab, i18n("Crypto Backends") );
 }
 
 QString SecurityPage::GeneralTab::helpAnchor() const
@@ -3976,40 +3970,6 @@ Kleo::CryptoConfigEntry* SMIMECryptoConfigEntries::configEntry( const char* comp
         return 0;
     }
     return entry;
-}
-
-////
-
-QString SecurityPage::CryptPlugTab::helpAnchor() const
-{
-  return QString::fromLatin1("configure-security-crypto-backends");
-}
-
-SecurityPageCryptPlugTab::SecurityPageCryptPlugTab( QWidget * parent )
-  : ConfigModuleTab( parent )
-{
-  QVBoxLayout * vlay = new QVBoxLayout( this );
-  vlay->setSpacing( KDialog::spacingHint() );
-  vlay->setMargin( KDialog::marginHint() );
-
-  mBackendConfig = Kleo::CryptoBackendFactory::instance()->configWidget( this, "mBackendConfig" );
-  connect( mBackendConfig, SIGNAL( changed( bool ) ), this, SIGNAL( changed( bool ) ) );
-
-  vlay->addWidget( mBackendConfig );
-}
-
-SecurityPageCryptPlugTab::~SecurityPageCryptPlugTab()
-{
-}
-
-void SecurityPage::CryptPlugTab::doLoadOther()
-{
-  mBackendConfig->load();
-}
-
-void SecurityPage::CryptPlugTab::save()
-{
-  mBackendConfig->save();
 }
 
 // *************************************************************
