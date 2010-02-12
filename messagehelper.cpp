@@ -435,6 +435,9 @@ MessageReply createReply( const Akonadi::Item &item,
   // If the reply shouldn't be blank, apply the template to the message
   if ( !noQuote ) {
     TemplateParser parser( msg, (replyAll ? TemplateParser::ReplyAll : TemplateParser::Reply ) );
+    if ( GlobalSettings::quoteSelectionOnly() ) {
+      parser.setSelection( selection );
+    }
     parser.setSelection( selection );
     parser.setAllowDecryption( allowDecryption );
     if ( !tmpl.isEmpty() )
