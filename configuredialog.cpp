@@ -2520,6 +2520,16 @@ ComposerPageGeneralTab::ComposerPageGeneralTab( QWidget * parent )
   connect( mSmartQuoteCheck, SIGNAL( stateChanged(int) ),
            this, SLOT( slotEmitChanged( void ) ) );
 
+  mQuoteSelectionOnlyCheck = new QCheckBox( GlobalSettings::self()->quoteSelectionOnlyItem()->label(),
+                                            this );
+  mQuoteSelectionOnlyCheck->setObjectName( "kcfg_QuoteSelectionOnly" );
+  mQuoteSelectionOnlyCheck->setToolTip(
+                 i18n( "When replying, only quote the selected text instead of the complete message "
+                       "when there is text selected in the message window." ) );
+  vlay->addWidget( mQuoteSelectionOnlyCheck );
+  connect( mQuoteSelectionOnlyCheck, SIGNAL( stateChanged(int) ),
+           this, SLOT( slotEmitChanged(void) ) );
+
   mStripSignatureCheck = new QCheckBox( GlobalSettings::self()->stripSignatureItem()->label(),
                                         this );
   mStripSignatureCheck->setObjectName( "kcfg_StripSignature" );
@@ -2707,6 +2717,7 @@ void ComposerPage::GeneralTab::doLoadFromGlobalSettings()
   mTopQuoteCheck->setChecked( GlobalSettings::self()->prependSignature() );
   mDashDashCheck->setChecked( GlobalSettings::self()->dashDashSignature() );
   mSmartQuoteCheck->setChecked( GlobalSettings::self()->smartQuote() );
+  mQuoteSelectionOnlyCheck->setChecked( GlobalSettings::self()->quoteSelectionOnly() );
   mStripSignatureCheck->setChecked( GlobalSettings::self()->stripSignature() );
   mAutoRequestMDNCheck->setChecked( GlobalSettings::self()->requestMDN() );
   mWordWrapCheck->setChecked( GlobalSettings::self()->wordWrap() );
@@ -2733,6 +2744,7 @@ void ComposerPage::GeneralTab::save() {
   GlobalSettings::self()->setPrependSignature( mTopQuoteCheck->isChecked() );
   GlobalSettings::self()->setDashDashSignature( mDashDashCheck->isChecked() );
   GlobalSettings::self()->setSmartQuote( mSmartQuoteCheck->isChecked() );
+  GlobalSettings::self()->setQuoteSelectionOnly( mQuoteSelectionOnlyCheck->isChecked() );
   GlobalSettings::self()->setStripSignature( mStripSignatureCheck->isChecked() );
   GlobalSettings::self()->setRequestMDN( mAutoRequestMDNCheck->isChecked() );
   GlobalSettings::self()->setWordWrap( mWordWrapCheck->isChecked() );
