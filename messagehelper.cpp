@@ -438,7 +438,6 @@ MessageReply createReply( const Akonadi::Item &item,
     if ( GlobalSettings::quoteSelectionOnly() ) {
       parser.setSelection( selection );
     }
-    parser.setSelection( selection );
     parser.setAllowDecryption( allowDecryption );
     if ( !tmpl.isEmpty() )
       parser.process( tmpl, origMsg );
