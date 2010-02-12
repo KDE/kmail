@@ -2510,7 +2510,7 @@ ComposerPageGeneralTab::ComposerPageGeneralTab( QWidget * parent )
            mDashDashCheck, SLOT( setEnabled(bool)) );
 
   mSmartQuoteCheck = new QCheckBox(
-           GlobalSettings::self()->smartQuoteItem()->label(), this);
+           GlobalSettings::self()->smartQuoteItem()->label(), this );
   mSmartQuoteCheck->setObjectName( "kcfg_SmartQuote" );
   mSmartQuoteCheck->setToolTip(
                  i18n( "When replying, add quote signs in front of all lines of the quoted text,\n"
@@ -2518,6 +2518,13 @@ ComposerPageGeneralTab::ComposerPageGeneralTab( QWidget * parent )
                        "word-wrapping the text." ) );
   vlay->addWidget( mSmartQuoteCheck );
   connect( mSmartQuoteCheck, SIGNAL( stateChanged(int) ),
+           this, SLOT( slotEmitChanged( void ) ) );
+
+  mStripSignatureCheck = new QCheckBox( GlobalSettings::self()->stripSignatureItem()->label(),
+                                        this );
+  mStripSignatureCheck->setObjectName( "kcfg_StripSignature" );
+  vlay->addWidget( mStripSignatureCheck );
+  connect( mStripSignatureCheck, SIGNAL( stateChanged(int) ),
            this, SLOT( slotEmitChanged( void ) ) );
 
   mAutoRequestMDNCheck = new QCheckBox(
@@ -2700,6 +2707,7 @@ void ComposerPage::GeneralTab::doLoadFromGlobalSettings()
   mTopQuoteCheck->setChecked( GlobalSettings::self()->prependSignature() );
   mDashDashCheck->setChecked( GlobalSettings::self()->dashDashSignature() );
   mSmartQuoteCheck->setChecked( GlobalSettings::self()->smartQuote() );
+  mStripSignatureCheck->setChecked( GlobalSettings::self()->stripSignature() );
   mAutoRequestMDNCheck->setChecked( GlobalSettings::self()->requestMDN() );
   mWordWrapCheck->setChecked( GlobalSettings::self()->wordWrap() );
   mWrapColumnSpin->setValue( GlobalSettings::self()->lineWrapWidth() );
@@ -2719,13 +2727,13 @@ void ComposerPage::GeneralTab::doLoadFromGlobalSettings()
   mEditorRequester->setText( GlobalSettings::self()->externalEditor() );
 }
 
-void ComposerPage::GeneralTab::save()
-{
+void ComposerPage::GeneralTab::save() {
   GlobalSettings::self()->setAutoTextSignature(
          mAutoAppSignFileCheck->isChecked() ? "auto" : "manual" );
   GlobalSettings::self()->setPrependSignature( mTopQuoteCheck->isChecked() );
   GlobalSettings::self()->setDashDashSignature( mDashDashCheck->isChecked() );
   GlobalSettings::self()->setSmartQuote( mSmartQuoteCheck->isChecked() );
+  GlobalSettings::self()->setStripSignature( mStripSignatureCheck->isChecked() );
   GlobalSettings::self()->setRequestMDN( mAutoRequestMDNCheck->isChecked() );
   GlobalSettings::self()->setWordWrap( mWordWrapCheck->isChecked() );
   GlobalSettings::self()->setLineWrapWidth( mWrapColumnSpin->value() );
