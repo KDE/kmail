@@ -1660,7 +1660,7 @@ KMCommand::Result KMSetStatusCommand::execute()
 void KMSetStatusCommand::slotModifyItemDone( KJob * job )
 {
   if ( job->error() ) {
-    kDebug()<<" Error in void KMSetStatusCommand::slotModifyItemDone( KJob * job ) :"<<job->errorText();
+    kDebug()<<" Error trying to set item status:" << job->errorText();
   }
   --messageStatusChanged;
   if ( messageStatusChanged == 0 ) {
