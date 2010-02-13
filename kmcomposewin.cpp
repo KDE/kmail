@@ -222,6 +222,7 @@ KMComposeWin::KMComposeWin( const KMime::Message::Ptr &aMsg, Composer::TemplateC
   defaultSizes << 0;
   mHeadersToEditorSplitter->setSizes( defaultSizes );
   QVBoxLayout *v = new QVBoxLayout( mMainWidget );
+  v->setMargin(0);
   v->addWidget( mHeadersToEditorSplitter );
   mIdentity = new KPIMIdentities::IdentityCombo( kmkernel->identityManager(),
                                                  mHeadersArea );
