@@ -56,16 +56,16 @@ QSharedPointer<FolderCollection> FolderCollection::forCollection( const Akonadi:
 
 FolderCollection::FolderCollection( const Akonadi::Collection & col, bool writeconfig )
   : mCollection( col ),
-    mPutRepliesInSameFolder( false ),
-    mHideInSelectionDialog( false ),
-    mIgnoreNewMail( false ),
     mExpireMessages( false ),
-    mWriteConfig( writeconfig ),
     mUnreadExpireAge( 28 ),
     mReadExpireAge( 14 ),
     mUnreadExpireUnits( expireNever ),
     mReadExpireUnits( expireNever ),
-    mExpireAction( ExpireDelete )
+    mExpireAction( ExpireDelete ),
+    mIgnoreNewMail( false ),
+    mPutRepliesInSameFolder( false ),
+    mHideInSelectionDialog( false ),
+    mWriteConfig( writeconfig )
 {
   mIdentity = KMKernel::self()->identityManager()->defaultIdentity().uoid();
 
