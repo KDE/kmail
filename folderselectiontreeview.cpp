@@ -132,6 +132,7 @@ void FolderSelectionTreeView::selectCollectionFolder( const Akonadi::Collection 
   const QModelIndex colIndex = rows.first();
   d->collectionFolderView->selectionModel()->select(colIndex, QItemSelectionModel::SelectCurrent);
   d->collectionFolderView->setExpanded( colIndex, true );
+  d->collectionFolderView->scrollTo( colIndex );
 }
 
 void FolderSelectionTreeView::setSelectionMode( QAbstractItemView::SelectionMode mode )
