@@ -363,6 +363,8 @@ RecipientsPicker::RecipientsPicker( QWidget *parent )
   topLayout->addWidget( mRecipientList );
   topLayout->setStretchFactor( mRecipientList, 1 );
 
+  connect( mRecipientList, SIGNAL( itemSelectionChanged () ),
+           SLOT( slotSelectionChanged() ) );
   connect( mRecipientList, SIGNAL( itemDoubleClicked(QTreeWidgetItem*,int) ),
            SLOT( slotPicked() ) );
   connect( mRecipientList, SIGNAL( returnPressed() ),
@@ -425,6 +427,7 @@ RecipientsPicker::RecipientsPicker( QWidget *parent )
   setTabOrder( mCollectionCombo, mSearchLine );
   setTabOrder( mSearchLine, mRecipientList );
   setTabOrder( closeButton, mCollectionCombo );
+  slotSelectionChanged();
 }
 
 RecipientsPicker::~RecipientsPicker()
@@ -435,6 +438,14 @@ RecipientsPicker::~RecipientsPicker()
   for( it = mCollectionMap.constBegin(); it != mCollectionMap.constEnd(); ++it ) {
     delete *it;
   }
+}
+
+void RecipientsPicker::slotSelectionChanged()
+{
+  bool hasSelection = !mRecipientList->selectedItems ().isEmpty();
+  mToButton->setEnabled( hasSelection );
+  mBccButton->setEnabled( hasSelection );
+  mCcButton->setEnabled( hasSelection );
 }
 
 void RecipientsPicker::initCollections()
@@ -828,7 +839,7 @@ void RecipientsPicker::ldapSearchResult()
     KABC::Addressee ad;
     ad.setNameFromString( name );
     ad.insertEmail( email );
-    
+
     RecipientItem *item = new RecipientItem;
     item->setAddressee( ad, ad.preferredEmail() );
     emit pickedRecipient( Recipient( item->recipient(), Recipient::Undefined ) );

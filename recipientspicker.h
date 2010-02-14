@@ -219,6 +219,7 @@ class RecipientsPicker : public KDialog
     void insertAddressBook( AddressBook * );
     void slotSearchLDAP();
     void ldapSearchResult();
+    void slotSelectionChanged();
   private:
     KABC::StdAddressBook *mAddressBook;
 
