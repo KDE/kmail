@@ -268,13 +268,13 @@ RecipientItem::List RecipientsCollection::items() const
 
 bool RecipientsCollection::hasEquivalentItem( RecipientItem *item ) const
 {
-  return mKeyMap.find( item->key() ) != mKeyMap.constEnd();
+  return mKeyMap.constFind( item->key() ) != mKeyMap.constEnd();
 }
 
 RecipientItem * RecipientsCollection::getEquivalentItem( RecipientItem *item) const
 {
   QMap<QString, RecipientItem *>::ConstIterator it;
-  it = mKeyMap.find( item->key() );
+  it = mKeyMap.constFind( item->key() );
   if ( it == mKeyMap.constEnd() )
     return 0;
   return (*it);
