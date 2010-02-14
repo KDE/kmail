@@ -35,6 +35,7 @@ FolderCollectionMonitor::FolderCollectionMonitor(QObject *parent)
   mMonitor->setAllMonitored( true );
   mMonitor->setMimeTypeMonitored( FolderCollectionMonitor::mimetype() );
   mMonitor->setResourceMonitored( "akonadi_search_resource" ,  true );
+  mMonitor->setResourceMonitored( "akonadi_nepomuktag_resource" ,  true );
   // TODO: Only fetch the envelope etc if possible.
   mMonitor->itemFetchScope().fetchPayloadPart( Akonadi::MessagePart::Header );
 }
