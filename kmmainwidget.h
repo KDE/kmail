@@ -191,6 +191,9 @@ class KMAIL_EXPORT KMMainWidget : public QWidget
 
     KMail::TagActionManager *tagActionManager() const { return mTagActionManager; }
 
+    /** Add, remove or adjust the folder's shortcut. */
+    void shortcutChanged( const Akonadi::Collection & );
+
 
   public slots:
     // Moving messages around
@@ -265,9 +268,6 @@ class KMAIL_EXPORT KMMainWidget : public QWidget
 
     /** Create actions for the folder shortcuts. */
     void initializeFolderShortcutActions();
-
-    /** Add, remove or adjust the folder's shortcut. */
-    void slotShortcutChanged( const Akonadi::Collection & );
 
     /** Trigger the dialog for editing out-of-office scripts.  */
     void slotEditVacation();

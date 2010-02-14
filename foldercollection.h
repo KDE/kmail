@@ -29,6 +29,8 @@
 #include "kmglobal.h"
 using KMail::MailingList;
 
+class KMMainWidget;
+
 class FolderCollection : public QObject
 {
   Q_OBJECT
@@ -71,7 +73,8 @@ public:
 
 
   const KShortcut &shortcut() const { return mShortcut; }
-  void setShortcut( const KShortcut& );
+
+  void setShortcut( const KShortcut&, KMMainWidget * );
 
 
   /** Get / set the user-settings for the WhoField (From/To/Empty) */
@@ -216,9 +219,8 @@ protected slots:
   void slotDeletionCollectionResult( KJob *job );
 
 signals:
-  /** Emitted when the shortcut associated with this folder changes. */
-  void shortcutChanged( const Akonadi::Collection & );
   void viewConfigChanged();
+
 private:
 
   explicit FolderCollection( const Akonadi::Collection & col, bool writeConfig = true );

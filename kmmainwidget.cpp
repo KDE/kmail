@@ -4076,7 +4076,7 @@ void KMMainWidget::initializeFolderShortcutActions()
   QList<Akonadi::Collection> folders = kmkernel->allFoldersCollection();
   for ( int i = 0 ; i < folders.size(); ++i ) {
     Akonadi::Collection col = folders.at( i );
-    slotShortcutChanged( col );
+    shortcutChanged( col );
   }
 }
 
@@ -4182,7 +4182,7 @@ QList<QAction*> KMMainWidget::actionList()
   return actionCollection()->actions();
 }
 
-void KMMainWidget::slotShortcutChanged( const Akonadi::Collection & col )
+void KMMainWidget::shortcutChanged( const Akonadi::Collection & col )
 {
   // remove the old one, no autodelete in Qt4
   slotFolderRemoved( col );

@@ -90,7 +90,7 @@ FolderShortcutDialog::~FolderShortcutDialog()
 void FolderShortcutDialog::slotOk()
 {
   mKeySeqWidget->applyStealShortcut();
-  mFolder->setShortcut( KShortcut(mKeySeqWidget->keySequence(), QKeySequence()) );
+  mFolder->setShortcut( KShortcut(mKeySeqWidget->keySequence(), QKeySequence()) , mMainWidget);
 }
 
 #include "foldershortcutdialog.moc"

@@ -19,6 +19,7 @@
 #include "foldercollection.h"
 #include <kdebug.h>
 #include "kmkernel.h"
+#include "kmmainwidget.h"
 #include "util.h"
 #include "imapsettings.h"
 #include <kpimidentities/identitymanager.h>
@@ -181,7 +182,7 @@ void FolderCollection::readConfig()
   QString shortcut( configGroup.readEntry( "Shortcut" ) );
   if ( !shortcut.isEmpty() ) {
     KShortcut sc( shortcut );
-    setShortcut( sc );
+    setShortcut( sc, 0 );
   }
   configGroup.sync();
 }
@@ -244,11 +245,12 @@ void FolderCollection::writeConfig() const
     configGroup.deleteEntry( "Shortcut" );
 }
 
-void FolderCollection::setShortcut( const KShortcut &sc )
+void FolderCollection::setShortcut( const KShortcut &sc, KMMainWidget *main )
 {
   if ( mShortcut != sc ) {
     mShortcut = sc;
-    emit shortcutChanged( mCollection );
+    if( main)
+      main->shortcutChanged( mCollection );
   }
 }
 
