@@ -196,6 +196,13 @@ void KMReaderWin::createActions()
   mUrlSaveAsAction = new KAction( i18n( "Save Link As..." ), this );
   ac->addAction( "saveas_url", mUrlSaveAsAction );
   connect( mUrlSaveAsAction, SIGNAL(triggered(bool)), SLOT(slotUrlSave()) );
+
+  // find text
+  KAction *action = new KAction(KIcon("edit-find"), i18n("&Find in Message..."), this);
+  ac->addAction("find_in_messages", action );
+  connect(action, SIGNAL(triggered(bool)), SLOT(slotFind()));
+  action->setShortcut(KStandardShortcut::find());
+
 }
 
 void KMReaderWin::setUseFixedFont( bool useFixedFont )
