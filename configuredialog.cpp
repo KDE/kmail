@@ -2222,7 +2222,7 @@ void AppearancePage::MessageTagTab::slotUpdateTagSettingWidgets( int aIndex )
     mFontRequester->setEnabled( false );
     mIconButton->setEnabled( false );
     mKeySequenceWidget->setEnabled( false );
-
+    mBackgroundColorCombo->setEnabled( false );
     mEmitChanges = true;
     return;
   }
