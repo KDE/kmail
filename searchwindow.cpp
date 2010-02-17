@@ -181,7 +181,6 @@ SearchWindow::SearchWindow(KMMainWidget* w, const char* name,
       } else {
           mChkbxAllFolders->setChecked(true);
       }
-      mFolder = searchFolder;
   }
   mPatternEdit->setSearchPattern( mSearchPattern );
   QObjectList *list = mPatternEdit->queryList( 0, "mRuleField" );
