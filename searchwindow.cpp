@@ -151,7 +151,6 @@ SearchWindow::SearchWindow(KMMainWidget* w, const Akonadi::Collection& curFolder
       } else {
           mChkbxAllFolders->setChecked(true);
       }
-      mFolder = searchFolder;
   }
   else
       mSearchPattern->append( KMSearchRule::createInstance( "Subject" ) );
