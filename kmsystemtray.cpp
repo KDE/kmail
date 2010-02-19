@@ -555,9 +555,9 @@ void KMSystemTray::updateNewMessages()
   updateCount();
 
   // Update tooltip to reflect count of unread messages
-  setToolTipSubTitle( mCount == 0 ? i18n("KMail - There are no unread messages")
-                                  : i18np("KMail - 1 unread message",
-                                          "KMail - %1 unread messages",
+  setToolTipSubTitle( mCount == 0 ? i18n("There are no unread messages")
+                                  : i18np("1 unread message",
+                                          "%1 unread messages",
                                           mCount));
 
   mLastUpdate = time( 0 );
