@@ -46,6 +46,7 @@ FolderSelectionTreeViewDialog::FolderSelectionTreeViewDialog( QWidget *parent, S
   treeview->readableCollectionProxyModel()->setEnabledCheck( ( options & EnableCheck ) );
   treeview->readableCollectionProxyModel()->setAccessRights( Akonadi::Collection::CanCreateCollection );
   treeview->folderTreeView()->setTooltipsPolicy( FolderSelectionTreeView::DisplayNever );
+  treeview->folderTreeView()->setDragDropMode( QAbstractItemView::NoDragDrop );
   layout->addWidget( treeview );
   enableButton( KDialog::Ok, false );
   enableButton( KDialog::User1, false );
