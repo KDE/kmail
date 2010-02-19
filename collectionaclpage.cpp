@@ -354,7 +354,6 @@ void CollectionAclPage::init()
   mEditACL->setEnabled( false );
   mRemoveACL->setEnabled( false );
   mStack->setCurrentWidget( mACLWidget );
-  connect( this, SIGNAL( changed(bool) ), SLOT( slotChanged(bool) ) );
 }
 
 void CollectionAclPage::load(const Akonadi::Collection & col)
@@ -656,11 +655,6 @@ void CollectionAclPage::slotACLChanged( const QString& userId, int permissions )
   if ( !ok ) {
     kWarning() << "no item found for userId" << userId;
   }
-}
-
-void CollectionAclPage::slotChanged( bool b )
-{
-  mChanged = b;
 }
 
 #endif
