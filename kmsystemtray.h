@@ -18,8 +18,10 @@
 #ifndef KMSYSTEMTRAY_H
 #define KMSYSTEMTRAY_H
 
-#include <ksystemtrayicon.h>
 #include <akonadi/collection.h>
+#include <kstatusnotifieritem.h>
+
+#include <QAction>
 #include <QMap>
 #include <QPointer>
 #include <QVector>
@@ -33,15 +35,15 @@ class QPoint;
 class QMenu;
 
 /**
- * KMSystemTray extends KSystemTray and handles system
+ * KMSystemTray extends KStatusNotifierItem and handles system
  * tray notification for KMail
  */
-class KMSystemTray : public KSystemTrayIcon
+class KMSystemTray : public KStatusNotifierItem
 {
   Q_OBJECT
 public:
   /** construtor */
-  KMSystemTray(QWidget* parent=0);
+  KMSystemTray(QObject* parent=0);
   /** destructor */
   ~KMSystemTray();
 
@@ -60,7 +62,7 @@ private slots:
 #endif
   void selectedAccount(int);
   void updateNewMessages();
-  void slotActivated( QSystemTrayIcon::ActivationReason reason );
+  void slotActivated();
   void slotContextMenuAboutToShow();
 
 protected:

@@ -52,8 +52,8 @@
  * with its count of unread messages, allowing the user to jump
  * to the first unread message in each folder.
  */
-KMSystemTray::KMSystemTray(QWidget *parent)
-  : KSystemTrayIcon( parent),
+KMSystemTray::KMSystemTray(QObject *parent)
+  : KStatusNotifierItem( parent),
     mParentVisible( true ),
     mPosOfMainWin( 0, 0 ),
     mDesktopOfMainWin( 0 ),
@@ -63,6 +63,8 @@ KMSystemTray::KMSystemTray(QWidget *parent)
     mSendQueued( 0 )
 {
   kDebug() << "Initting systray";
+  setToolTipTitle( "KMail" );
+  setToolTipIconByName( "kmail" );
 
   mLastUpdate = time( 0 );
   mUpdateTimer = new QTimer( this );
@@ -70,7 +72,7 @@ KMSystemTray::KMSystemTray(QWidget *parent)
   connect( mUpdateTimer, SIGNAL( timeout() ), SLOT( updateNewMessages() ) );
 
   mDefaultIcon = KIcon( "kmail" ).pixmap( 22 );
-  setIcon( mDefaultIcon );
+  setIconByPixmap( mDefaultIcon );
 #ifdef Q_WS_X11
   KMMainWidget * mainWidget = kmkernel->getKMMainWidget();
   if ( mainWidget ) {
@@ -88,8 +90,8 @@ KMSystemTray::KMSystemTray(QWidget *parent)
   /** Initiate connections between folders and this object */
   foldersChanged();
 
-  connect( this, SIGNAL( activated( QSystemTrayIcon::ActivationReason ) ),
-           this, SLOT( slotActivated( QSystemTrayIcon::ActivationReason ) ) );
+  connect( this, SIGNAL( activateRequested( bool, const QPoint& ) ),
+           this, SLOT( slotActivated() ) );
   connect( contextMenu(), SIGNAL( aboutToShow() ),
            this, SLOT( slotContextMenuAboutToShow() ) );
 #if 0
@@ -119,7 +121,7 @@ void KMSystemTray::buildPopupMenu()
   if ( !mainWidget )
     return;
 
-  static_cast<KMenu*>( contextMenu() )->addTitle(this->icon(), "KMail");
+  contextMenu()->addTitle(qApp->windowIcon(), "KMail");
   QAction * action;
   if ( ( action = mainWidget->action("check_mail") ) )
     contextMenu()->addAction( action );
@@ -157,14 +159,10 @@ void KMSystemTray::setMode(int newMode)
 
   switch ( mMode ) {
   case GlobalSettings::EnumSystemTrayPolicy::ShowAlways:
-    if ( !isVisible() )
-      show();
+    setStatus( KStatusNotifierItem::Active );
     break;
   case GlobalSettings::EnumSystemTrayPolicy::ShowOnUnread:
-    if ( mCount == 0 && isVisible() )
-      hide();
-    else if ( mCount > 0 && !isVisible() )
-      show();
+    setStatus( mCount > 0 ? KStatusNotifierItem::Active : KStatusNotifierItem::Passive );
     break;
   default:
     kDebug() << "Unknown systray mode" << mMode;
@@ -224,10 +222,10 @@ void KMSystemTray::updateCount()
     p.setOpacity( 1.0 );
     p.drawText( iconWithNumberImage.rect(), Qt::AlignCenter, countString );
 
-    setIcon( iconWithNumberImage );
+    setIconByPixmap( iconWithNumberImage );
   } else
   {
-    setIcon( mDefaultIcon );
+    setIconByPixmap( mDefaultIcon );
   }
 }
 
@@ -248,7 +246,7 @@ void KMSystemTray::foldersChanged()
   mCount = 0;
 
   if ( mMode == GlobalSettings::EnumSystemTrayPolicy::ShowOnUnread ) {
-    hide();
+    setStatus( KStatusNotifierItem::Passive );
   }
 #if 0
   /** Disconnect all previous connections */
@@ -293,18 +291,12 @@ void KMSystemTray::foldersChanged()
  * On left mouse click, switch focus to the first KMMainWidget.  On right
  * click, bring up a list of all folders with a count of unread messages.
  */
-void KMSystemTray::slotActivated( QSystemTrayIcon::ActivationReason reason )
+void KMSystemTray::slotActivated()
 {
-  kDebug() << "trigger:" << reason;
-
-  // switch to kmail on left mouse button
-  if( reason == QSystemTrayIcon::Trigger )
-  {
-    if( mParentVisible && mainWindowIsOnCurrentDesktop() )
-      hideKMail();
-    else
-      showKMail();
-  }
+  if( mParentVisible && mainWindowIsOnCurrentDesktop() )
+    hideKMail();
+  else
+    showKMail();
 }
 
 void KMSystemTray::slotContextMenuAboutToShow()
@@ -533,9 +525,8 @@ void KMSystemTray::updateNewMessages()
         continue;
 
       // Make sure the icon will be displayed
-      if ( ( mMode == GlobalSettings::EnumSystemTrayPolicy::ShowOnUnread ) &&
-           !isVisible() ) {
-        show();
+      if ( mMode == GlobalSettings::EnumSystemTrayPolicy::ShowOnUnread ) {
+        setStatus( KStatusNotifierItem::Active );
       }
     }
     else {
@@ -552,7 +543,7 @@ void KMSystemTray::updateNewMessages()
           mCount = 0;
 
           if ( mMode == GlobalSettings::EnumSystemTrayPolicy::ShowOnUnread ) {
-            hide();
+            setStatus( KStatusNotifierItem::Passive );
           }
         }
       }
@@ -562,10 +553,10 @@ void KMSystemTray::updateNewMessages()
   updateCount();
 
   // Update tooltip to reflect count of unread messages
-  setToolTip( mCount == 0 ? i18n("KMail - There are no unread messages")
-                          : i18np("KMail - 1 unread message",
-                                  "KMail - %1 unread messages",
-                                  mCount));
+  setToolTipSubTitle( mCount == 0 ? i18n("KMail - There are no unread messages")
+                                  : i18np("KMail - 1 unread message",
+                                          "KMail - %1 unread messages",
+                                          mCount));
 
   mLastUpdate = time( 0 );
 #endif

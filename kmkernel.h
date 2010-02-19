@@ -33,6 +33,8 @@ namespace KIO {
   class Job;
 }
 
+class KStatusNotifierItem;
+
 class KJob;
 /** The KMail namespace contains classes used for KMail.
 * This is to keep them out of the way from all the other
@@ -316,8 +318,8 @@ public:
    */
   bool haveSystemTrayApplet();
 
-  bool registerSystemTrayApplet( const KSystemTrayIcon* );
-  bool unregisterSystemTrayApplet( const KSystemTrayIcon* );
+  bool registerSystemTrayApplet( const KStatusNotifierItem* );
+  bool unregisterSystemTrayApplet( const KStatusNotifierItem* );
 
   /// Reimplemented from KMailIface
   void emergencyExit( const QString& reason );
@@ -451,7 +453,7 @@ private:
   // context menus and the pinentry program
   bool mContextMenuShown;
 
-  QList<const KSystemTrayIcon*> systemTrayApplets;
+  QList<const KStatusNotifierItem*> systemTrayApplets;
 
   /* Weaver */
   ThreadWeaver::Weaver *the_weaver;

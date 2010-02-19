@@ -1320,7 +1320,7 @@ bool KMKernel::haveSystemTrayApplet()
   return !systemTrayApplets.isEmpty();
 }
 
-bool KMKernel::registerSystemTrayApplet( const KSystemTrayIcon* applet )
+bool KMKernel::registerSystemTrayApplet( const KStatusNotifierItem* applet )
 {
   if ( !systemTrayApplets.contains( applet ) ) {
     systemTrayApplets.append( applet );
@@ -1330,7 +1330,7 @@ bool KMKernel::registerSystemTrayApplet( const KSystemTrayIcon* applet )
     return false;
 }
 
-bool KMKernel::unregisterSystemTrayApplet( const KSystemTrayIcon* applet )
+bool KMKernel::unregisterSystemTrayApplet( const KStatusNotifierItem* applet )
 {
   return systemTrayApplets.removeAll( applet ) > 0;
 }
@@ -1636,7 +1636,7 @@ bool KMKernel::canQueryClose()
     systray->hideKMail();
     return false;
   } else if ( ( systray->mode() == GlobalSettings::EnumSystemTrayPolicy::ShowOnUnread ) && ( systray->hasUnreadMail() )) {
-    systray->show();
+    systray->setStatus( KStatusNotifierItem::Active );
     systray->hideKMail();
     return false;
   }
