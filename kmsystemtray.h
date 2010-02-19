@@ -84,7 +84,6 @@ private:
 
   QMenu *mNewMessagesPopup;
   QAction *mSendQueued;
-  QPixmap mDefaultIcon;
 
   QVector<Akonadi::Collection> mPopupFolders;
 #if 0

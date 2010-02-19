@@ -65,14 +65,13 @@ KMSystemTray::KMSystemTray(QObject *parent)
   kDebug() << "Initting systray";
   setToolTipTitle( "KMail" );
   setToolTipIconByName( "kmail" );
+  setIconByName( "kmail" );
 
   mLastUpdate = time( 0 );
   mUpdateTimer = new QTimer( this );
   mUpdateTimer->setSingleShot( true );
   connect( mUpdateTimer, SIGNAL( timeout() ), SLOT( updateNewMessages() ) );
 
-  mDefaultIcon = KIcon( "kmail" ).pixmap( 22 );
-  setIconByPixmap( mDefaultIcon );
 #ifdef Q_WS_X11
   KMMainWidget * mainWidget = kmkernel->getKMMainWidget();
   if ( mainWidget ) {
@@ -183,7 +182,7 @@ void KMSystemTray::updateCount()
 {
   if(mCount != 0)
   {
-    int oldPixmapWidth = mDefaultIcon.size().width();
+    int overlaySize = KIconLoader::SizeSmallMedium;
 
     QString countString = QString::number( mCount );
     QFont countFont = KGlobalSettings::generalFont();
@@ -194,24 +193,26 @@ void KMSystemTray::updateCount()
     float countFontSize = countFont.pointSizeF();
     QFontMetrics qfm( countFont );
     int width = qfm.width( countString );
-    if( width > (oldPixmapWidth - 2) )
+    if( width > (overlaySize - 2) )
     {
-      countFontSize *= float( oldPixmapWidth - 2 ) / float( width );
+      countFontSize *= float( overlaySize - 2 ) / float( width );
       countFont.setPointSizeF( countFontSize );
     }
 
-    // Overlay the light KMail icon with the number image
-    QPixmap iconWithNumberImage = mDefaultIcon;
-    QPainter p( &iconWithNumberImage );
+    // Paint the number in a pixmap
+    QPixmap overlayImage( overlaySize, overlaySize );
+    overlayImage.fill( Qt::transparent );
+
+    QPainter p( &overlayImage );
     p.setFont( countFont );
     KColorScheme scheme( QPalette::Active, KColorScheme::View );
 
     qfm = QFontMetrics( countFont );
     QRect boundingRect = qfm.tightBoundingRect( countString );
     boundingRect.adjust( 0, 0, 0, 2 );
-    boundingRect.setHeight( qMin( boundingRect.height(), oldPixmapWidth ) );
-    boundingRect.moveTo( (oldPixmapWidth - boundingRect.width()) / 2,
-                         ((oldPixmapWidth - boundingRect.height()) / 2) - 1 );
+    boundingRect.setHeight( qMin( boundingRect.height(), overlaySize ) );
+    boundingRect.moveTo( (overlaySize - boundingRect.width()) / 2,
+                         ((overlaySize - boundingRect.height()) / 2) - 1 );
     p.setOpacity( 0.7 );
     p.setBrush( scheme.background( KColorScheme::LinkBackground ) );
     p.setPen( scheme.background( KColorScheme::LinkBackground ).color() );
@@ -220,12 +221,13 @@ void KMSystemTray::updateCount()
     p.setBrush( Qt::NoBrush );
     p.setPen( scheme.foreground( KColorScheme::LinkText ).color() );
     p.setOpacity( 1.0 );
-    p.drawText( iconWithNumberImage.rect(), Qt::AlignCenter, countString );
+    p.drawText( overlayImage.rect(), Qt::AlignCenter, countString );
+    p.end();
 
-    setIconByPixmap( iconWithNumberImage );
+    setOverlayIconByPixmap( overlayImage );
   } else
   {
-    setIconByPixmap( mDefaultIcon );
+    setOverlayIconByPixmap( QPixmap() );
   }
 }
 
