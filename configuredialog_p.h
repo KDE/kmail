@@ -398,9 +398,7 @@ private: // data
   QButtonGroup  *mReaderWindowModeGroup;
   QGroupBox     *mReaderWindowModeGroupBox;
   QCheckBox     *mFavoriteFolderViewCB;
-#if 0
   QCheckBox     *mFolderQuickSearchCB;
-#endif
   QButtonGroup  *mFolderToolTipsGroup;
   QGroupBox     *mFolderToolTipsGroupBox;
 };

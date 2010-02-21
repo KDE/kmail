@@ -28,6 +28,7 @@ class KXMLGUIClient;
 class QItemSelectionModel;
 class FolderTreeView;
 class ReadableCollectionProxyModel;
+class KLineEdit;
 
 namespace Akonadi {
   class EntityTreeModel;
@@ -74,6 +75,8 @@ public:
 
   void quotaWarningParameters( const QColor &color, qreal threshold );
   void readQuotaConfig();
+
+  KLineEdit *filterFolderLineEdit();
 
   void disableContextMenuAndExtraColumn();
 

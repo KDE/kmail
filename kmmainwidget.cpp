@@ -977,10 +977,6 @@ void KMMainWidget::createWidgets()
   mSearchAndTree = new QWidget( bUseDockWidgets ? static_cast<QWidget *>( dw ) : static_cast<QWidget *>( this ) );
   QVBoxLayout *vboxlayout = new QVBoxLayout;
   vboxlayout->setMargin(0);
-  mFolderQuickSearch = new KTreeWidgetSearchLine( mSearchAndTree );
-  mFolderQuickSearch->setClickMessage( i18nc( "@info/plain Displayed grayed-out inside the "
-                                              "textbox, verb to search", "Search" ) );
-  vboxlayout->addWidget( mFolderQuickSearch );
   mSearchAndTree->setLayout( vboxlayout );
 
   if ( bUseDockWidgets )
@@ -1001,7 +997,7 @@ void KMMainWidget::createWidgets()
   }
 
   if ( !GlobalSettings::self()->enableFolderQuickSearch() ) {
-    mFolderQuickSearch->hide();
+    mCollectionFolderView->filterFolderLineEdit()->hide();
   }
   //
   // Create the favorite folder view

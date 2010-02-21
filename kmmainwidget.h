@@ -60,7 +60,6 @@ class QSignalMapper;
 
 class KActionMenu;
 class KToggleAction;
-class KTreeWidgetSearchLine;
 class FolderTreeView;
 class KMMetaFilterActionCommand;
 class FolderShortcutCommand;
@@ -576,7 +575,6 @@ private:
 
     Akonadi::EntityListView *mFavoriteCollectionsView;
     QWidget      *mSearchAndTree;
-    KTreeWidgetSearchLine *mFolderQuickSearch;
     KMReaderWin  *mMsgView;
     QSplitter    *mSplitter1, *mSplitter2, *mFolderViewSplitter;
     Akonadi::Collection mTemplateFolder;

@@ -59,17 +59,19 @@ public:
   Akonadi::EntityTreeModel *entityModel;
   Akonadi::QuotaColorProxyModel *quotaModel;
   ReadableCollectionProxyModel *readableproxy;
+  QSortFilterProxyModel *filterTreeViewModel;
+  KLineEdit *filterFolderLineEdit;
 };
-
 
 
 FolderSelectionTreeView::FolderSelectionTreeView( QWidget *parent, KXMLGUIClient *xmlGuiClient, bool showUnreadCount )
   : QWidget( parent ), d( new FolderSelectionTreeViewPrivate() )
 {
   Akonadi::AttributeFactory::registerAttribute<Akonadi::ImapAclAttribute>();
+
   d->collectionFolderView = new FolderTreeView( xmlGuiClient, this, showUnreadCount );
 
-  QHBoxLayout *lay = new QHBoxLayout( this );
+  QVBoxLayout *lay = new QVBoxLayout( this );
   lay->setMargin( 0 );
   Akonadi::Session *session = new Akonadi::Session( "KMail Session", this );
 
@@ -77,7 +79,11 @@ FolderSelectionTreeView::FolderSelectionTreeView( QWidget *parent, KXMLGUIClient
 
   d->entityModel = new Akonadi::EntityTreeModel( KMKernel::self()->monitor(), this );
   d->entityModel->setItemPopulationStrategy( Akonadi::EntityTreeModel::LazyPopulation );
-
+  d->filterFolderLineEdit = new KLineEdit( this );
+  d->filterFolderLineEdit->setClearButtonShown( true );
+  d->filterFolderLineEdit->setClickMessage( i18nc( "@info/plain Displayed grayed-out inside the "
+                                                   "textbox, verb to search", "Search" ) );
+  lay->addWidget( d->filterFolderLineEdit );
 
   Akonadi::EntityMimeTypeFilterModel *collectionModel = new Akonadi::EntityMimeTypeFilterModel( this );
   collectionModel->setSourceModel( d->entityModel );
@@ -104,8 +110,17 @@ FolderSelectionTreeView::FolderSelectionTreeView( QWidget *parent, KXMLGUIClient
 
   d->collectionFolderView->setSelectionMode( QAbstractItemView::SingleSelection );
   // Use the model
-  d->collectionFolderView->setModel( d->readableproxy );
+
+  //Filter tree view.
+  d->filterTreeViewModel = new QSortFilterProxyModel( this );
+  d->filterTreeViewModel->setDynamicSortFilter( true );
+  d->filterTreeViewModel->setSourceModel( d->readableproxy );
+  d->filterTreeViewModel->setFilterCaseSensitivity( Qt::CaseInsensitive );
+  d->collectionFolderView->setModel( d->filterTreeViewModel );
+
   lay->addWidget( d->collectionFolderView );
+
+  connect( d->filterFolderLineEdit, SIGNAL( textChanged(QString) ), d->filterTreeViewModel, SLOT( setFilterFixedString(QString) ) );
 
   readConfig();
 }
@@ -115,7 +130,6 @@ FolderSelectionTreeView::~FolderSelectionTreeView()
 {
   delete d;
 }
-
 
 void FolderSelectionTreeView::disableContextMenuAndExtraColumn()
 {
@@ -259,5 +273,9 @@ ReadableCollectionProxyModel *FolderSelectionTreeView::readableCollectionProxyMo
   return d->readableproxy;
 }
 
+KLineEdit *FolderSelectionTreeView::filterFolderLineEdit()
+{
+  return d->filterFolderLineEdit;
+}
 
 #include "folderselectiontreeview.moc"

@@ -1308,11 +1308,9 @@ AppearancePageLayoutTab::AppearancePageLayoutTab( QWidget * parent )
   mFavoriteFolderViewCB = new QCheckBox( i18n("Show favorite folder view"), this );
   connect( mFavoriteFolderViewCB, SIGNAL(toggled(bool)), SLOT(slotEmitChanged()) );
   folderCBHLayout->addWidget( mFavoriteFolderViewCB );
-#if 0
   mFolderQuickSearchCB = new QCheckBox( i18n("Show folder quick search field"), this );
   connect( mFolderQuickSearchCB, SIGNAL(toggled(bool)), SLOT(slotEmitChanged()) );
   folderCBHLayout->addWidget( mFolderQuickSearchCB );
-#endif
   vlay->addLayout( folderCBHLayout );
   vlay->addSpacing( KDialog::spacingHint() );   // space before next box
 
@@ -1356,9 +1354,7 @@ void AppearancePage::LayoutTab::doLoadOther()
   loadWidget( mFolderListGroupBox, mFolderListGroup, GlobalSettings::self()->folderListItem() );
   loadWidget( mReaderWindowModeGroupBox, mReaderWindowModeGroup, GlobalSettings::self()->readerWindowModeItem() );
   mFavoriteFolderViewCB->setChecked( GlobalSettings::self()->enableFavoriteFolderView() );
-#if 0
   mFolderQuickSearchCB->setChecked( GlobalSettings::self()->enableFolderQuickSearch() );
-#endif
   const KConfigGroup mainFolderView( KMKernel::config(), "MainFolderView" );
   const int checkedFolderToolTipsPolicy = mainFolderView.readEntry( "ToolTipDisplayPolicy", 0 );
   if ( checkedFolderToolTipsPolicy < mFolderToolTipsGroup->buttons().size() && checkedFolderToolTipsPolicy >= 0 )
@@ -1370,9 +1366,7 @@ void AppearancePage::LayoutTab::save()
   saveButtonGroup( mFolderListGroup, GlobalSettings::self()->folderListItem() );
   saveButtonGroup( mReaderWindowModeGroup, GlobalSettings::self()->readerWindowModeItem() );
   GlobalSettings::self()->setEnableFavoriteFolderView( mFavoriteFolderViewCB->isChecked() );
-#if 0
   GlobalSettings::self()->setEnableFolderQuickSearch( mFolderQuickSearchCB->isChecked() );
-#endif
   KConfigGroup mainFolderView( KMKernel::config(), "MainFolderView" );
   mainFolderView.writeEntry( "ToolTipDisplayPolicy", mFolderToolTipsGroup->checkedId() );
 }
