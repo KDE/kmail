@@ -960,17 +960,9 @@ void KMKernel::recoverDeadLetters()
       // Show the a new composer dialog for the message
       KMail::Composer * autoSaveWin = KMail::makeComposer();
       autoSaveWin->setMsg( autoSaveMessage );
+      autoSaveWin->setAutoSaveFileName( file.fileName() );
       autoSaveWin->show();
       autoSaveFile.close();
-
-      // Delete the recoverd message
-      if( !dir.remove( file.absoluteFilePath() ) ) {
-        KMessageBox::sorry( 0, i18n( "Failed to delete the autosave file at %1\n"
-                                     "You may want to manually remove this file to stop KMail"
-                                     " from recovering the same message on each startup.",
-                                     file.absoluteFilePath() ),
-                            i18n( "Deleting Autosave File Failed" ) );
-      }
     } else {
       KMessageBox::sorry( 0, i18n( "Failed to open autosave file at %1.\nReason: %2" ,
                                    file.absoluteFilePath(), autoSaveFile.errorString() ),

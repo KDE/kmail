@@ -676,10 +676,19 @@ void KMComposeWin::autoSaveMessage()
   composer->start();
 }
 
-void KMComposeWin::writeAutoSaveToDisk( KMime::Message::Ptr message, int msgNum )
+void KMComposeWin::setAutoSaveFileName( const QString &fileName )
+{
+  mAutoSaveUUID = fileName;
+
+  // Set it to modified, otherwise the user can close the window without being asked, he would
+  // loose the message he just recovered!
+  setModified( true );
+}
+
+void KMComposeWin::writeAutoSaveToDisk( KMime::Message::Ptr message )
 {
   const QString filename = KMKernel::localDataPath() + "autosave/" +
-    mAutoSaveUUID + "." + QString::number( msgNum );
+    mAutoSaveUUID;
   KSaveFile file( filename );
   QString errorMessage;
   kDebug() << "Writing message to disk as" << filename;
@@ -2311,10 +2320,11 @@ void KMComposeWin::slotAutoSaveComposeResult( KJob *job )
 
   if( composer->error() == Composer::NoError ) {
 
-    // The messages were composed successfully.
-    for( int i = 0; i < composer->resultMessages().size(); ++i ) {
-      writeAutoSaveToDisk( KMime::Message::Ptr( composer->resultMessages()[i] ), i );
-    }
+    // The messages were composed successfully. Only save the first message, there should
+    // only be one anyway, since crypto is disabled.
+    writeAutoSaveToDisk( KMime::Message::Ptr( composer->resultMessages().first() ) );
+    Q_ASSERT( composer->resultMessages().size() == 1 );
+
     if( autoSaveInterval() > 0 ) {
       updateAutoSave();
     }

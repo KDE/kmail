@@ -625,6 +625,13 @@ class KMComposeWin : public KMail::Composer
     void initAutoSave();
 
     /**
+      * Sets the filename to use when autosaving something. This is used when the KMKernel recovers
+      * the autosave files: It calls this method, so that the composer uses the same filename again.
+      * That way, the recovered autosave file is properly cleaned up in cleanupAutoSave():
+      */
+    void setAutoSaveFileName( const QString &fileName );
+
+    /**
      * Enables/disables autosaving depending on the value of the autosave
      * interval.
      */
@@ -714,7 +721,7 @@ class KMComposeWin : public KMail::Composer
     * Also appends the msgNum to the filename as a message can have a number of
     * KMime::Messages
     */
-    void writeAutoSaveToDisk( KMime::Message::Ptr message, int msgNumber );
+    void writeAutoSaveToDisk( KMime::Message::Ptr message );
 
     bool canSignEncryptAttachments() const {
       return cryptoMessageFormat() != Kleo::InlineOpenPGPFormat;
