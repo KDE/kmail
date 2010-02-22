@@ -34,6 +34,8 @@
 #include <akonadi_next/quotacolorproxymodel.h>
 #include <akonadi_next/recursivecollectionfilterproxymodel.h>
 
+#include <akonadi/krecursivefilterproxymodel.h>
+
 #include <KMime/Message>
 
 #include "imapaclattribute.h"
@@ -59,7 +61,7 @@ public:
   Akonadi::EntityTreeModel *entityModel;
   Akonadi::QuotaColorProxyModel *quotaModel;
   ReadableCollectionProxyModel *readableproxy;
-  QSortFilterProxyModel *filterTreeViewModel;
+  KRecursiveFilterProxyModel *filterTreeViewModel;
   KLineEdit *filterFolderLineEdit;
 };
 
@@ -112,7 +114,7 @@ FolderSelectionTreeView::FolderSelectionTreeView( QWidget *parent, KXMLGUIClient
   // Use the model
 
   //Filter tree view.
-  d->filterTreeViewModel = new QSortFilterProxyModel( this );
+  d->filterTreeViewModel = new KRecursiveFilterProxyModel( this );
   d->filterTreeViewModel->setDynamicSortFilter( true );
   d->filterTreeViewModel->setSourceModel( d->readableproxy );
   d->filterTreeViewModel->setFilterCaseSensitivity( Qt::CaseInsensitive );
