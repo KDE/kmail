@@ -2303,7 +2303,7 @@ void AppearancePage::MessageTagTab::slotNameLineTextChanged( const QString
 {
   //If deleted all, leave the first character for the sake of not having an
   //empty tag name
-  if ( aText.isEmpty() )
+  if ( aText.isEmpty() && !mTagListBox->currentItem())
     return;
 
   //Disconnect so the tag information is not saved and reloaded with every
@@ -2328,21 +2328,21 @@ void AppearancePage::MessageTagTab::slotAddLineTextChanged( const QString &aText
 void AppearancePage::MessageTagTab::slotAddNewTag()
 {
   const int tmp_priority = mMsgTagList.count();
-
-  Nepomuk::Tag nepomukTag( mTagAddLineEdit->text() );
-  nepomukTag.setLabel( mTagAddLineEdit->text() );
+  const QString newTagName = mTagAddLineEdit->text();
+  Nepomuk::Tag nepomukTag( newTagName );
+  nepomukTag.setLabel( newTagName );
 
   KMail::Tag::Ptr tag = KMail::Tag::fromNepomuk( nepomukTag );
   tag->priority = tmp_priority;
   mMsgTagDict.insert( tag->nepomukResourceUri.toString() , tag );
   mMsgTagList.append( tag );
   slotEmitChangeCheck();
-  mTagAddLineEdit->setText( QString() );
   QListWidgetItem *newItem = new QListWidgetItem( mTagListBox );
-  newItem->setText( tag->tagName );
+  newItem->setText( newTagName );
   newItem->setIcon( KIcon( tag->iconName ) );
   mTagListBox->addItem( newItem );
   mTagListBox->setCurrentItem( newItem );
+  mTagAddLineEdit->setText( QString() );
 }
 
 void AppearancePage::MessageTagTab::doLoadFromGlobalSettings()
