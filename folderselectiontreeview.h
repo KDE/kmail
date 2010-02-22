@@ -1,6 +1,6 @@
 /* -*- mode: C++; c-file-style: "gnu" -*-
   This file is part of KMail, the KDE mail client.
-  Copyright (c) 2009 Montel Laurent <montel@kde.org>
+  Copyright (c) 2009, 2010 Montel Laurent <montel@kde.org>
 
   KMail is free software; you can redistribute it and/or modify it
   under the terms of the GNU General Public License, version 2, as
@@ -38,7 +38,17 @@ class KMAIL_EXPORT FolderSelectionTreeView : public QWidget
 {
   Q_OBJECT
 public:
-  FolderSelectionTreeView( QWidget *parent = 0, KXMLGUIClient *xmlGuiClient = 0, bool showUnreadCount = true );
+  enum TreeViewOption
+  {
+    None = 0,
+    ShowUnreadCount = 1,
+    UseLineEditForFiltering = 2
+  };
+  Q_DECLARE_FLAGS( TreeViewOptions, TreeViewOption )
+
+
+
+  FolderSelectionTreeView( QWidget *parent = 0, KXMLGUIClient *xmlGuiClient = 0, TreeViewOptions option = ShowUnreadCount );
   ~FolderSelectionTreeView();
 
   /**
@@ -77,10 +87,14 @@ public:
   void readQuotaConfig();
 
   KLineEdit *filterFolderLineEdit();
+  void applyFilter( const QString& );
+
 
   void disableContextMenuAndExtraColumn();
 
   void readConfig();
+
+
 protected:
   void changeToolTipsPolicyConfig( ToolTipDisplayPolicy );
 

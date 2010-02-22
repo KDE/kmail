@@ -878,7 +878,9 @@ void KMMainWidget::createWidgets()
   //
   // Create header view and search bar
   //
-  mCollectionFolderView = new FolderSelectionTreeView( this, mGUIClient );
+  FolderSelectionTreeView::TreeViewOptions opt = FolderSelectionTreeView::ShowUnreadCount;
+  opt |= FolderSelectionTreeView::UseLineEditForFiltering;
+  mCollectionFolderView = new FolderSelectionTreeView( this, mGUIClient, opt );
 
   connect( mCollectionFolderView->folderTreeView(), SIGNAL( currentChanged( const Akonadi::Collection &) ), this, SLOT( slotFolderChanged( const Akonadi::Collection& ) ) );
   connect( KMKernel::self()->monitor(), SIGNAL( collectionRemoved( const Akonadi::Collection &) ), this, SLOT( slotCollectionRemoved( const Akonadi::Collection& ) ) );

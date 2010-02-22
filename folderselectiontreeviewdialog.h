@@ -55,13 +55,16 @@ private slots:
   void slotAddChildFolder();
   void collectionCreationResult(KJob*);
   void rowsInserted( const QModelIndex& col, int, int );
+
 protected:
+  virtual void keyPressEvent( QKeyEvent *e );
   void readConfig();
   void writeConfig();
   bool canCreateCollection( Akonadi::Collection & parentCol );
 
 private:
-  FolderSelectionTreeView *treeview;
+  class FolderSelectionTreeViewDialogPrivate;
+  FolderSelectionTreeViewDialogPrivate * const d;
 };
 
 

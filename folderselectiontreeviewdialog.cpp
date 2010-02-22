@@ -1,6 +1,6 @@
 /* -*- mode: C++; c-file-style: "gnu" -*-
   This file is part of KMail, the KDE mail client.
-  Copyright (c) 2009 Montel Laurent <montel@kde.org>
+  Copyright (c) 2009, 2010 Montel Laurent <montel@kde.org>
 
   KMail is free software; you can redistribute it and/or modify it
   under the terms of the GNU General Public License, version 2, as
@@ -17,6 +17,7 @@
 */
 
 #include "folderselectiontreeviewdialog.h"
+#include <QKeyEvent>
 #include <kinputdialog.h>
 #include <kmessagebox.h>
 
@@ -30,9 +31,20 @@
 #include <akonadi/collectioncreatejob.h>
 
 #include <KLocale>
+class FolderSelectionTreeViewDialog::FolderSelectionTreeViewDialogPrivate
+{
+public:
+  FolderSelectionTreeViewDialogPrivate()
+    :treeview( 0 )
+  {
+  }
+  QString mFilter;
+  FolderSelectionTreeView *treeview;
+
+};
 
 FolderSelectionTreeViewDialog::FolderSelectionTreeViewDialog( QWidget *parent, SelectionFolderOptions options )
-  :KDialog( parent )
+  :KDialog( parent ), d( new FolderSelectionTreeViewDialogPrivate() )
 {
   setButtons( Ok | Cancel | User1 );
   setObjectName( "folder dialog" );
@@ -41,20 +53,24 @@ FolderSelectionTreeViewDialog::FolderSelectionTreeViewDialog( QWidget *parent, S
 
   QWidget *widget = mainWidget();
   QVBoxLayout *layout = new QVBoxLayout( widget );
-  treeview = new FolderSelectionTreeView( this, 0, ( options & ShowUnreadCount ));
-  treeview->disableContextMenuAndExtraColumn();
-  treeview->readableCollectionProxyModel()->setEnabledCheck( ( options & EnableCheck ) );
-  treeview->readableCollectionProxyModel()->setAccessRights( Akonadi::Collection::CanCreateCollection );
-  treeview->folderTreeView()->setTooltipsPolicy( FolderSelectionTreeView::DisplayNever );
-  treeview->folderTreeView()->setDragDropMode( QAbstractItemView::NoDragDrop );
-  layout->addWidget( treeview );
+  FolderSelectionTreeView::TreeViewOptions opt= FolderSelectionTreeView::None;
+  if ( options & FolderSelectionTreeViewDialog::ShowUnreadCount )
+    opt |= FolderSelectionTreeView::ShowUnreadCount;
+
+  d->treeview = new FolderSelectionTreeView( this, 0, opt);
+  d->treeview->disableContextMenuAndExtraColumn();
+  d->treeview->readableCollectionProxyModel()->setEnabledCheck( ( options & EnableCheck ) );
+  d->treeview->readableCollectionProxyModel()->setAccessRights( Akonadi::Collection::CanCreateCollection );
+  d->treeview->folderTreeView()->setTooltipsPolicy( FolderSelectionTreeView::DisplayNever );
+  d->treeview->folderTreeView()->setDragDropMode( QAbstractItemView::NoDragDrop );
+  layout->addWidget( d->treeview );
   enableButton( KDialog::Ok, false );
   enableButton( KDialog::User1, false );
-  connect(treeview->selectionModel(), SIGNAL(selectionChanged(QItemSelection,QItemSelection)), this, SLOT(slotSelectionChanged()));
-  connect(treeview->readableCollectionProxyModel(), SIGNAL( rowsInserted( const QModelIndex&, int, int ) ),
+  connect(d->treeview->selectionModel(), SIGNAL(selectionChanged(QItemSelection,QItemSelection)), this, SLOT(slotSelectionChanged()));
+  connect(d->treeview->readableCollectionProxyModel(), SIGNAL( rowsInserted( const QModelIndex&, int, int ) ),
 		               this, SLOT( rowsInserted( const QModelIndex&, int, int ) ) );
 
-  connect( treeview->folderTreeView(), SIGNAL( doubleClicked(const QModelIndex&) ), this, SLOT( accept() ) );
+  connect( d->treeview->folderTreeView(), SIGNAL( doubleClicked(const QModelIndex&) ), this, SLOT( accept() ) );
   connect(this, SIGNAL( user1Clicked() ), this, SLOT( slotAddChildFolder() ) );
   readConfig();
 }
@@ -62,11 +78,12 @@ FolderSelectionTreeViewDialog::FolderSelectionTreeViewDialog( QWidget *parent, S
 FolderSelectionTreeViewDialog::~FolderSelectionTreeViewDialog()
 {
   writeConfig();
+  delete d;
 }
 
 void FolderSelectionTreeViewDialog::rowsInserted( const QModelIndex&, int, int )
 {
-  treeview->folderTreeView()->expandAll();
+  d->treeview->folderTreeView()->expandAll();
 }
 
 bool FolderSelectionTreeViewDialog::canCreateCollection( Akonadi::Collection & parentCol )
@@ -109,7 +126,7 @@ void FolderSelectionTreeViewDialog::collectionCreationResult(KJob* job)
 
 void FolderSelectionTreeViewDialog::slotSelectionChanged()
 {
-  const bool enablebuttons = ( treeview->selectionModel()->selectedIndexes().count() > 0 );
+  const bool enablebuttons = ( d->treeview->selectionModel()->selectedIndexes().count() > 0 );
   enableButton(KDialog::Ok, enablebuttons);
   Akonadi::Collection parent;
   enableButton(KDialog::User1, canCreateCollection( parent ) );
@@ -117,28 +134,28 @@ void FolderSelectionTreeViewDialog::slotSelectionChanged()
 
 void FolderSelectionTreeViewDialog::setSelectionMode( QAbstractItemView::SelectionMode mode )
 {
-  treeview->setSelectionMode( mode );
+  d->treeview->setSelectionMode( mode );
 }
 
 QAbstractItemView::SelectionMode FolderSelectionTreeViewDialog::selectionMode() const
 {
-  return treeview->selectionMode();
+  return d->treeview->selectionMode();
 }
 
 
 Akonadi::Collection FolderSelectionTreeViewDialog::selectedCollection() const
 {
-  return treeview->selectedCollection();
+  return d->treeview->selectedCollection();
 }
 
 void FolderSelectionTreeViewDialog::setSelectedCollection( const Akonadi::Collection &collection )
 {
-  treeview->selectCollectionFolder( collection );
+  d->treeview->selectCollectionFolder( collection );
 }
 
 Akonadi::Collection::List FolderSelectionTreeViewDialog::selectedCollections() const
 {
-  return treeview->selectedCollections();
+  return d->treeview->selectedCollections();
 }
 
 static const char * myConfigGroupName = "FolderSelectionDialog";
@@ -160,6 +177,36 @@ void FolderSelectionTreeViewDialog::writeConfig()
   KSharedConfig::Ptr config = KGlobal::config();
   KConfigGroup group( config, myConfigGroupName );
   group.writeEntry( "Size", size() );
+}
+
+void FolderSelectionTreeViewDialog::keyPressEvent( QKeyEvent *e )
+{
+
+  switch( e->key() )
+  {
+    case Qt::Key_Backspace:
+      if ( d->mFilter.length() > 0 )
+        d->mFilter.truncate( d->mFilter.length()-1 );
+      d->treeview->applyFilter( d->mFilter );
+      return;
+    break;
+    case Qt::Key_Delete:
+      d->mFilter = "";
+      d->treeview->applyFilter( d->mFilter);
+      return;
+    break;
+    default:
+    {
+      QString s = e->text();
+      if ( !s.isEmpty() && s.at( 0 ).isPrint() ) {
+         d->mFilter += s;
+        d->treeview->applyFilter( d->mFilter );
+        return;
+      }
+    }
+    break;
+  }
+  KDialog::keyPressEvent( e );
 }
 
 #include "folderselectiontreeviewdialog.moc"

@@ -63,15 +63,16 @@ public:
   ReadableCollectionProxyModel *readableproxy;
   KRecursiveFilterProxyModel *filterTreeViewModel;
   KLineEdit *filterFolderLineEdit;
+  QLabel *label;
 };
 
 
-FolderSelectionTreeView::FolderSelectionTreeView( QWidget *parent, KXMLGUIClient *xmlGuiClient, bool showUnreadCount )
+FolderSelectionTreeView::FolderSelectionTreeView( QWidget *parent, KXMLGUIClient *xmlGuiClient, TreeViewOptions options )
   : QWidget( parent ), d( new FolderSelectionTreeViewPrivate() )
 {
   Akonadi::AttributeFactory::registerAttribute<Akonadi::ImapAclAttribute>();
 
-  d->collectionFolderView = new FolderTreeView( xmlGuiClient, this, showUnreadCount );
+  d->collectionFolderView = new FolderTreeView( xmlGuiClient, this, options & ShowUnreadCount );
 
   QVBoxLayout *lay = new QVBoxLayout( this );
   lay->setMargin( 0 );
@@ -81,6 +82,10 @@ FolderSelectionTreeView::FolderSelectionTreeView( QWidget *parent, KXMLGUIClient
 
   d->entityModel = new Akonadi::EntityTreeModel( KMKernel::self()->monitor(), this );
   d->entityModel->setItemPopulationStrategy( Akonadi::EntityTreeModel::LazyPopulation );
+
+  d->label = new QLabel( i18n("You can start typing to filter the list of folders."), this);
+  lay->addWidget( d->label );
+
   d->filterFolderLineEdit = new KLineEdit( this );
   d->filterFolderLineEdit->setClearButtonShown( true );
   d->filterFolderLineEdit->setClickMessage( i18nc( "@info/plain Displayed grayed-out inside the "
@@ -121,8 +126,12 @@ FolderSelectionTreeView::FolderSelectionTreeView( QWidget *parent, KXMLGUIClient
   d->collectionFolderView->setModel( d->filterTreeViewModel );
 
   lay->addWidget( d->collectionFolderView );
-
-  connect( d->filterFolderLineEdit, SIGNAL( textChanged(QString) ), d->filterTreeViewModel, SLOT( setFilterFixedString(QString) ) );
+  if ( ( options & UseLineEditForFiltering ) ) {
+    connect( d->filterFolderLineEdit, SIGNAL( textChanged(QString) ), d->filterTreeViewModel, SLOT( setFilterFixedString(QString) ) );
+    d->label->hide();
+  } else {
+    d->filterFolderLineEdit->hide();
+  }
 
   readConfig();
 }
@@ -278,6 +287,14 @@ ReadableCollectionProxyModel *FolderSelectionTreeView::readableCollectionProxyMo
 KLineEdit *FolderSelectionTreeView::filterFolderLineEdit()
 {
   return d->filterFolderLineEdit;
+}
+
+void FolderSelectionTreeView::applyFilter( const QString &filter )
+{
+
+  d->label->setText( filter.isEmpty() ? i18n("You can start typing to filter the list of folders.") : i18n( "Path: (%1)", filter ) );
+  d->filterTreeViewModel->setFilterFixedString( filter );
+  d->collectionFolderView->expandAll();
 }
 
 #include "folderselectiontreeview.moc"
