@@ -186,7 +186,7 @@ private:
   bool      mUseExtEditor;
   QString   mExtEditor;
   bool      mWasModifiedBeforeSpellCheck;
-  KMSyntaxHighter *mSpellChecker;
+  KMSyntaxHighter *mHighlighter;
   bool mSpellLineEdit;
   QClipboard::Mode mPasteMode;
 };

@@ -222,7 +222,7 @@ KMEdit::KMEdit(QWidget *parent, KMComposeWin* composer,
     mExtEditorProcess( 0 ),
     mUseExtEditor( false ),
     mWasModifiedBeforeSpellCheck( false ),
-    mSpellChecker( 0 ),
+    mHighlighter( 0 ),
     mSpellLineEdit( false ),
     mPasteMode( QClipboard::Clipboard )
 {
@@ -238,7 +238,7 @@ KMEdit::KMEdit(QWidget *parent, KMComposeWin* composer,
 
 void KMEdit::initializeAutoSpellChecking()
 {
-  if ( mSpellChecker )
+  if ( mHighlighter )
     return; // already initialized
   QColor defaultColor1( 0x00, 0x80, 0x00 ); // defaults from kmreaderwin.cpp
   QColor defaultColor2( 0x00, 0x70, 0x00 );
@@ -256,14 +256,14 @@ void KMEdit::initializeAutoSpellChecking()
   QColor col3 = readerConfig.readColorEntry( "QuotedText2", &defaultColor2 );
   QColor col4 = readerConfig.readColorEntry( "QuotedText1", &defaultColor1 );
   QColor misspelled = readerConfig.readColorEntry( "MisspelledColor", &c );
-  mSpellChecker = new KMSyntaxHighter( this, /*active*/ true,
+  mHighlighter = new KMSyntaxHighter( this, /*active*/ true,
                                        /*autoEnabled*/ false,
                                        /*spellColor*/ misspelled,
                                        /*colorQuoting*/ true,
                                        col1, col2, col3, col4,
                                        mSpellConfig );
 
-  connect( mSpellChecker, SIGNAL(newSuggestions(const QString&, const QStringList&, unsigned int)),
+  connect( mHighlighter, SIGNAL(newSuggestions(const QString&, const QStringList&, unsigned int)),
            this, SLOT(addSuggestion(const QString&, const QStringList&, unsigned int)) );
 }
 
@@ -283,8 +283,8 @@ QPopupMenu *KMEdit::createPopupMenu( const QPoint& pos )
 
 void KMEdit::deleteAutoSpellChecking()
 { // because the highlighter doesn't support RichText, delete its instance.
-  delete mSpellChecker;
-  mSpellChecker =0;
+  delete mHighlighter;
+  mHighlighter =0;
 }
 
 void KMEdit::addSuggestion(const QString& text, const QStringList& lst, unsigned int )
@@ -294,8 +294,8 @@ void KMEdit::addSuggestion(const QString& text, const QStringList& lst, unsigned
 
 void KMEdit::setSpellCheckingActive(bool spellCheckingActive)
 {
-  if ( mSpellChecker ) {
-    mSpellChecker->setActive(spellCheckingActive);
+  if ( mHighlighter ) {
+    mHighlighter->setActive(spellCheckingActive);
   }
 }
 
@@ -312,8 +312,8 @@ KMEdit::~KMEdit()
   }
 
   delete mKSpellForDialog;
-  delete mSpellChecker;
-  mSpellChecker = 0;
+  delete mHighlighter;
+  mHighlighter = 0;
 }
 
 
@@ -526,16 +526,16 @@ bool KMEdit::eventFilter(QObject*o, QEvent* e)
         const int id = p.exec( mapToGlobal( event->pos() ) );
 
         if ( id == ignoreId ) {
-          mSpellChecker->ignoreWord( word );
-          mSpellChecker->rehighlight();
+          mHighlighter->ignoreWord( word );
+          mHighlighter->rehighlight();
         }
         if ( id == addToDictionaryId ) {
           mSpeller->addPersonal( word );
           mSpeller->writePersonalDictionary();
-          if ( mSpellChecker ) {
+          if ( mHighlighter ) {
             // Wait a bit until reloading the highlighter, the mSpeller first needs to finish saving
             // the personal word list.
-            QTimer::singleShot( 200, mSpellChecker, SLOT( slotLocalSpellConfigChanged() ) );
+            QTimer::singleShot( 200, mHighlighter, SLOT( slotLocalSpellConfigChanged() ) );
           }
         }
         else if( id > -1 )
@@ -573,10 +573,10 @@ int KMEdit::autoSpellChecking( bool on )
        KMessageBox::sorry(this, i18n("Automatic spellchecking is not possible on text with markup."));
      return -1;
   }
-  if ( mSpellChecker ) {
+  if ( mHighlighter ) {
     // don't autoEnable spell checking if the user turned spell checking off
-    mSpellChecker->setAutomatic( on );
-    mSpellChecker->setActive( on );
+    mHighlighter->setAutomatic( on );
+    mHighlighter->setActive( on );
   }
   return 1;
 }
@@ -662,22 +662,22 @@ void KMEdit::spellcheck()
 void KMEdit::cut()
 {
   KEdit::cut();
-  if ( textFormat() != Qt::RichText && mSpellChecker )
-    mSpellChecker->restartBackgroundSpellCheck();
+  if ( textFormat() != Qt::RichText && mHighlighter )
+    mHighlighter->restartBackgroundSpellCheck();
 }
 
 void KMEdit::clear()
 {
   KEdit::clear();
-  if ( textFormat() != Qt::RichText && mSpellChecker )
-    mSpellChecker->restartBackgroundSpellCheck();
+  if ( textFormat() != Qt::RichText && mHighlighter )
+    mHighlighter->restartBackgroundSpellCheck();
 }
 
 void KMEdit::del()
 {
   KEdit::del();
-  if ( textFormat() != Qt::RichText && mSpellChecker )
-    mSpellChecker->restartBackgroundSpellCheck();
+  if ( textFormat() != Qt::RichText && mHighlighter )
+    mHighlighter->restartBackgroundSpellCheck();
 }
 
 void KMEdit::paste()
@@ -788,9 +788,9 @@ void KMEdit::slotCorrected (const QString &oldWord, const QString &newWord, unsi
 void KMEdit::slotSpellcheck2(KSpell*)
 {
   // Make sure words ignored by the highlighter are ignored by KSpell as well
-  if ( mSpellChecker ) {
-    for ( int i = 0; i < mSpellChecker->ignoredWords().size(); i++ )
-      mKSpellForDialog->ignore( mSpellChecker->ignoredWords()[i] );
+  if ( mHighlighter ) {
+    for ( int i = 0; i < mHighlighter->ignoredWords().size(); i++ )
+      mKSpellForDialog->ignore( mHighlighter->ignoredWords()[i] );
   }
 
     if( !mSpellLineEdit)
