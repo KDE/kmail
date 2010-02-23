@@ -5002,9 +5002,6 @@ void KMComposeWin::updateAutoSave()
 
 void KMComposeWin::setAutoSaveFilename( const QString & filename )
 {
-  if ( !mAutoSaveFilename.isEmpty() )
-    KMFolderMaildir::removeFile( KMKernel::localDataPath() + "autosave",
-                                 mAutoSaveFilename );
   mAutoSaveFilename = filename;
 }
 

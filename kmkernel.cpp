@@ -1379,27 +1379,34 @@ void KMKernel::testDir(const char *_name)
 // Open a composer for each message found in the dead.letter folder
 void KMKernel::recoverDeadLetters()
 {
-  const QString pathName = localDataPath();
-  QDir dir( pathName );
-  if ( !dir.exists( "autosave" ) )
-    return;
-
-  KMFolder folder( 0, pathName + "autosave", KMFolderTypeMaildir, false /* no index */ );
-  KMFolderOpener openFolder( &folder, "recover" );
-  if ( !folder.isOpened() ) {
-    perror( "cannot open autosave folder" );
+  QDir dir( localDataPath() + "autosave/cur" );
+  if ( !dir.exists() ) {
+    kdWarning(5006) << "Autosave directory " << dir.path() << " not found!" << endl;
     return;
   }
 
-  const int num = folder.count();
-  for ( int i = 0; i < num; i++ ) {
-    KMMessage *msg = folder.take( 0 );
-    if ( msg ) {
-      KMail::Composer * win = KMail::makeComposer();
-      win->setMsg( msg, false, false, true );
-      win->setAutoSaveFilename( msg->fileName() );
-      win->show();
+  const QStringList entryList = dir.entryList( QDir::Files | QDir::NoSymLinks, QDir::Unsorted );
+  for ( unsigned int i = 0; i < entryList.size(); i++ ) {
+    const QString fileName = entryList[i];
+    QFile file( dir.path() + '/' + fileName );
+    if ( !file.open( IO_ReadOnly ) ) {
+      kdWarning(5006) << "Unable to open autosave file " << fileName << endl;
+      continue;
     }
+    const QByteArray msgData = file.readAll();
+    file.close();
+
+    if ( msgData.isEmpty() ) {
+      kdWarning(5006) << "autosave file " << fileName << " is empty!" << endl;
+      continue;
+    }
+
+    KMMessage *msg = new KMMessage(); // Composer will take ownership
+    msg->fromByteArray( msgData );
+    KMail::Composer * win = KMail::makeComposer();
+    win->setMsg( msg, false, false, true );
+    win->setAutoSaveFilename( fileName );
+    win->show();
   }
 }
 
