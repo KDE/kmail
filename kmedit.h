@@ -57,6 +57,8 @@ class KMSyntaxHighter : public KDictSpellingHighlighter
 
     void ignoreWord( const QString &word );
 
+    QStringList ignoredWords() const;
+
   private:
     QStringList mIgnoredWords;
 };

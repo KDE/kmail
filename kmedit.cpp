@@ -388,6 +388,11 @@ void KMSyntaxHighter::ignoreWord( const QString &word )
   mIgnoredWords << word;
 }
 
+QStringList KMSyntaxHighter::ignoredWords() const
+{
+  return mIgnoredWords;
+}
+
 void KMEdit::spellerDied()
 {
   mSpeller = 0;
@@ -782,6 +787,12 @@ void KMEdit::slotCorrected (const QString &oldWord, const QString &newWord, unsi
 
 void KMEdit::slotSpellcheck2(KSpell*)
 {
+  // Make sure words ignored by the highlighter are ignored by KSpell as well
+  if ( mSpellChecker ) {
+    for ( int i = 0; i < mSpellChecker->ignoredWords().size(); i++ )
+      mKSpellForDialog->ignore( mSpellChecker->ignoredWords()[i] );
+  }
+
     if( !mSpellLineEdit)
     {
         spellcheck_start();
