@@ -7,20 +7,59 @@
 
 #include <kdeversion.h>
 #include <keditcl.h>
+#include <kspell.h>
+#include <ksyntaxhighlighter.h>
 #include <qmap.h>
 #include <qstringlist.h>
 #include <qclipboard.h>
 
 class KMComposeWin;
 class KSpellConfig;
-class KSpell;
 class SpellingFilter;
 class KTempFile;
-class KDictSpellingHighlighter;
 class KDirWatch;
 class KProcess;
 class QPopupMenu;
 
+/**
+ * Reimplemented to make writePersonalDictionary() public, which we call everytime after
+ * adding a word to the dictionary (for safety's sake and because the highlighter needs to reload
+ * the personal word list, and for that, it needs to be written to disc)
+ */
+class KMSpell : public KSpell
+{
+  public:
+
+    KMSpell( QObject *receiver, const char *slot );
+    using KSpell::writePersonalDictionary;
+};
+
+/**
+ * Reimplemented to add support for ignored words
+ */
+class KMSyntaxHighter : public KDictSpellingHighlighter
+{
+  public:
+
+    KMSyntaxHighter( QTextEdit *textEdit,
+                     bool spellCheckingActive = true,
+                     bool autoEnable = true,
+                     const QColor& spellColor = red,
+                     bool colorQuoting = false,
+                     const QColor& QuoteColor0 = black,
+                     const QColor& QuoteColor1 = QColor( 0x00, 0x80, 0x00 ),
+                     const QColor& QuoteColor2 = QColor( 0x00, 0x70, 0x00 ),
+                     const QColor& QuoteColor3 = QColor( 0x00, 0x60, 0x00 ),
+                     KSpellConfig *spellConfig = 0 );
+
+    /** Reimplemented */
+    virtual bool isMisspelled( const QString &word );
+
+    void ignoreWord( const QString &word );
+
+  private:
+    QStringList mIgnoredWords;
+};
 
 class KMEdit : public KEdit {
   Q_OBJECT
@@ -115,13 +154,27 @@ private slots:
     emit selectionAvailable( !selectedText().isEmpty() );
   }
 
+  /// Called when mSpeller is ready to rumble. Does nothing, but KSpell requires a slot as otherwise
+  /// it will show a dialog itself, which we want to avoid.
+  void spellerReady( KSpell *speller );
+
+  /// Called when mSpeller died for some reason.
+  void spellerDied();
+
 private:
   void killExternalEditor();
 
 private:
   KMComposeWin* mComposer;
 
-  KSpell *mKSpell;
+  // This is the speller used for the spellcheck dialog. It is only active as long as the spellcheck
+  // dialog is shown
+  KSpell *mKSpellForDialog;
+
+  // This is the speller used when right-clicking a word and choosing "add to dictionary". It lives
+  // as long as the composer lives.
+  KMSpell *mSpeller;
+
   KSpellConfig *mSpellConfig;
   QMap<QString,QStringList> mReplacements;
   SpellingFilter* mSpellingFilter;
@@ -131,7 +184,7 @@ private:
   bool      mUseExtEditor;
   QString   mExtEditor;
   bool      mWasModifiedBeforeSpellCheck;
-  KDictSpellingHighlighter *mSpellChecker;
+  KMSyntaxHighter *mSpellChecker;
   bool mSpellLineEdit;
   QClipboard::Mode mPasteMode;
 };
