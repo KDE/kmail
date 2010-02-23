@@ -251,7 +251,8 @@ void KMReaderWin::clearCache()
 
 // enter items for the "Important changes" list here:
 static const char * const kmailChanges[] = {
-  ""
+  "KMail is now based on the Akonadi Personal Information Management framework, which brings many "
+  "changes all around."
 };
 static const int numKMailChanges =
   sizeof kmailChanges / sizeof *kmailChanges;
@@ -261,7 +262,11 @@ static const int numKMailChanges =
 // the translators). Note that the <li>...</li> tags are added
 // automatically below:
 static const char * const kmailNewFeatures[] = {
-  ""
+  "Push email (IMAP IDLE)",
+  "Improved virtual folders",
+  "Improved searches",
+  "Support for adding notes (annotations) to mails",
+  "Tag folders"
 };
 static const int numKMailNewFeatures =
   sizeof kmailNewFeatures / sizeof *kmailNewFeatures;
@@ -308,10 +313,10 @@ void KMReaderWin::displayOfflinePage()
 void KMReaderWin::displayAboutPage()
 {
   KLocalizedString info =
-    ki18nc("%1: KMail version; %2: help:// URL; %3: homepage URL; "
-         "%4: generated list of new features; "
-         "%5: First-time user text (only shown on first start); "
-         "%6: generated list of important changes; "
+    ki18nc("%1: KMail version; %2: help:// URL; "
+         "%3: generated list of new features; "
+         "%4: First-time user text (only shown on first start); "
+         "%5: generated list of important changes; "
          "--- end of comment ---",
          "<h2 style='margin-top: 0px;'>Welcome to KMail %1</h2><p>KMail is the email client for the K "
          "Desktop Environment. It is designed to be fully compatible with "
@@ -319,25 +324,22 @@ void KMReaderWin::displayAboutPage()
          "</p>\n"
          "<ul><li>KMail has many powerful features which are described in the "
          "<a href=\"%2\">documentation</a></li>\n"
-         "<li>The <a href=\"%3\">KMail homepage</A> offers information about "
-         "new versions of KMail</li></ul>\n"
-         "%6\n" // important changes
-         "%4\n" // new features
-         "%5\n" // first start info
+         "%5\n" // important changes
+         "%3\n" // new features
+         "%4\n" // first start info
          "<p>We hope that you will enjoy KMail.</p>\n"
          "<p>Thank you,</p>\n"
          "<p style='margin-bottom: 0px'>&nbsp; &nbsp; The KMail Team</p>")
-           .subs( KMAIL_VERSION ) // KMail version
-           .subs( "help:/kmail/index.html" ) // KMail help:// URL
-           .subs( "http://kontact.kde.org/kmail/" ); // KMail homepage URL
+           .subs( KMAIL_VERSION )
+           .subs( "help:/kmail/index.html" );
 
   if ( ( numKMailNewFeatures > 1 ) || ( numKMailNewFeatures == 1 && strlen(kmailNewFeatures[0]) > 0 ) ) {
     QString featuresText =
       i18n("<p>Some of the new features in this release of KMail include "
            "(compared to KMail %1, which is part of KDE %2):</p>\n",
-       QString("1.9"), QString("3.5")); // prior KMail and KDE version
+       QString("1.13"), QString("4.4")); // prior KMail and KDE version
     featuresText += "<ul>\n";
-    for ( int i = 0 ; i < numKMailChanges ; i++ )
+    for ( int i = 0 ; i < numKMailNewFeatures ; i++ )
       featuresText += "<li>" + i18n( kmailNewFeatures[i] ) + "</li>\n";
     featuresText += "</ul>\n";
     info = info.subs( featuresText );
@@ -360,7 +362,7 @@ void KMReaderWin::displayAboutPage()
     QString changesText =
       i18n("<p><span style='font-size:125%; font-weight:bold;'>"
            "Important changes</span> (compared to KMail %1):</p>\n",
-       QString("1.9"));
+       QString("1.13"));
     changesText += "<ul>\n";
     for ( int i = 0 ; i < numKMailChanges ; i++ )
       changesText += i18n("<li>%1</li>\n", i18n( kmailChanges[i] ) );
