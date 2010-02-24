@@ -1,4 +1,6 @@
-select distinct ?r where  { {
+select distinct ?r ?reqProp1
+where  {
+  {
     { 
       ?r <http://www.semanticdesktop.org/ontologies/2007/03/22/nmo#to> ?v1 . 
       ?v1 <http://www.semanticdesktop.org/ontologies/2007/03/22/nco#hasEmailAddress> ?v2 . 
@@ -14,5 +16,9 @@ select distinct ?r where  { {
       ?v7 <http://www.semanticdesktop.org/ontologies/2007/03/22/nco#hasEmailAddress> ?v8 .
       ?v8 <http://www.semanticdesktop.org/ontologies/2007/03/22/nco#emailAddress> ?v9 .
       FILTER(REGEX(STR(?v9), 'kdab', 'i')) . 
-    } . ?r a ?v10 . ?v10 <http://www.w3.org/2000/01/rdf-schema#subClassOf> <http://www.semanticdesktop.org/ontologies/2007/03/22/nmo#Email> . } .
+    } .
+    ?r a ?v10 .
+    ?v10 <http://www.w3.org/2000/01/rdf-schema#subClassOf> <http://www.semanticdesktop.org/ontologies/2007/03/22/nmo#Email> .
+  } .
+  ?r <http://akonadi-project.org/ontologies/aneo#akonadiItemId> ?reqProp1 .
 }
