@@ -135,7 +135,7 @@ public Q_SLOTS:
    */
   Q_SCRIPTABLE void checkAccount( const QString & account );
 
-  Q_SCRIPTABLE void selectFolder( const QString & folder );
+  Q_SCRIPTABLE void selectFolder( const Akonadi::Collection & folder );
 
   Q_SCRIPTABLE bool canQueryClose();
 

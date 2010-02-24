@@ -140,7 +140,6 @@ KMKernel::KMKernel (QObject *parent, const char *name) :
       exit( 42 );
     }
   }
-
 #ifdef __GNUC__
 #warning Remove before the 4.5 release
 #endif
@@ -1523,25 +1522,13 @@ KSharedConfig::Ptr KMKernel::config()
 }
 
 
-void KMKernel::selectFolder( const QString &folderPath )
+void KMKernel::selectFolder( const Akonadi::Collection &folder )
 {
-  kDebug()<< "Selecting a folder" << folderPath;
-  const QString localPrefix = "/Local";
-#if 0
-  KMFolder *folder = kmkernel->folderMgr()->getFolderByURL( folderPath );
-  if ( !folder && folderPath.startsWith( localPrefix ) )
-    folder = the_folderMgr->getFolderByURL( folderPath.mid( localPrefix.length() ) );
-#endif
-
-#if 0
   KMMainWidget *widget = getKMMainWidget();
   Q_ASSERT( widget );
   if ( !widget )
     return;
   widget->selectCollectionFolder( folder );
-#else
-  kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
-#endif
 }
 
 KMMainWidget *KMKernel::getKMMainWidget()
