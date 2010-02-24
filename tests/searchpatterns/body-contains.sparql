@@ -1,4 +1,4 @@
-select distinct ?r where { 
+select distinct ?r where  { {
     { 
       ?r <http://www.semanticdesktop.org/ontologies/2007/03/22/nmo#plainTextMessageContent> ?v1 . ?v1 bif:contains "'foo*'" .
     } UNION { 
@@ -6,4 +6,5 @@ select distinct ?r where {
       ?v2 <http://www.semanticdesktop.org/ontologies/2007/03/22/nmo#plainTextMessageContent> ?v3 .
       ?v3 bif:contains "'foo*'" .
     } .
-}
+    ?r a ?v4 . ?v4 <http://www.w3.org/2000/01/rdf-schema#subClassOf> <http://www.semanticdesktop.org/ontologies/2007/03/22/nmo#Email> .
+} . }

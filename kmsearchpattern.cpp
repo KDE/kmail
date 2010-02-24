@@ -34,6 +34,7 @@ using KMail::FilterLog;
 #include <Nepomuk/Query/LiteralTerm>
 #include <Nepomuk/Query/ResourceTerm>
 #include <Nepomuk/Query/NegationTerm>
+#include <Nepomuk/Query/ResourceTypeTerm>
 
 #include <kglobal.h>
 #include <klocale.h>
@@ -421,7 +422,7 @@ void KMSearchRuleString::addQueryTerms(Nepomuk::Query::GroupTerm& groupTerm) con
   if ( field() == "<tag>" ) {
     const Nepomuk::Tag tag( contents() );
     addAndNegateTerm( Nepomuk::Query::ComparisonTerm( Soprano::Vocabulary::NAO::hasTag(),
-                                                      Nepomuk::Query::ResourceTerm( tag.resourceUri() ),
+                                                      Nepomuk::Query::ResourceTerm( tag ),
                                                       Nepomuk::Query::ComparisonTerm::Equal ),
                                                       groupTerm );
   }
@@ -963,7 +964,7 @@ QString KMSearchPattern::asSparqlQuery() const
   Nepomuk::Query::Query query;
 
   Nepomuk::Query::AndTerm outerGroup;
-  // TODO: add type restriction
+  Nepomuk::Query::ResourceTypeTerm typeTerm( Nepomuk::Types::Class( Vocabulary::NMO::Email() ) );
 
   Nepomuk::Query::GroupTerm innerGroup = makeGroupTerm( mOperator );
   for ( const_iterator it = begin(); it != end(); ++it )
@@ -972,6 +973,7 @@ QString KMSearchPattern::asSparqlQuery() const
   if ( innerGroup.subTerms().isEmpty() )
     return QString();
   outerGroup.addSubTerm( innerGroup );
+  outerGroup.addSubTerm( typeTerm );
   query.setTerm( outerGroup );
   return query.toSparqlQuery();
 }
