@@ -257,7 +257,6 @@ target_link_libraries(kmailprivate
   ${QT_QTWEBKIT_LIBRARY}
   ${NEPOMUK_LIBRARIES}
   ${NEPOMUK_QUERY_LIBRARIES}
-  korg_incidenceeditor
 )
 
 set_target_properties(kmailprivate
