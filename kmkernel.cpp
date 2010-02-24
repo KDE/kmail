@@ -252,7 +252,6 @@ Akonadi::ChangeRecorder * KMKernel::monitor()
 void KMKernel::setupDBus()
 {
   (void) new KmailAdaptor( this );
-  qDBusRegisterMetaType<QVector<QStringList> >();
   QDBusConnection::sessionBus().registerObject( "/KMail", this );
   mMailService = new MailServiceImpl();
 }

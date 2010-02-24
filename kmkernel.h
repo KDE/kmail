@@ -22,8 +22,6 @@
 #define kmkernel KMKernel::self()
 #define kmconfig KMKernel::config()
 
-Q_DECLARE_METATYPE(QVector<QStringList>)
-
 namespace Akonadi {
   class Collection;
   class ChangeRecorder;
