@@ -525,6 +525,11 @@ bool KMEdit::eventFilter(QObject*o, QEvent* e)
         //Execute the popup inline
         const int id = p.exec( mapToGlobal( event->pos() ) );
 
+        if ( id != -1 ) {
+          // No longer misspelled: Either added to dictionary, ignored or replaced
+          mReplacements.remove( word );
+        }
+
         if ( id == ignoreId ) {
           mHighlighter->ignoreWord( word );
           mHighlighter->rehighlight();
