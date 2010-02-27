@@ -160,9 +160,11 @@ static KMail::Composer::TemplateContext replyContext( KMail::MessageHelper::Mess
 static void showJobError( KJob* job )
 {
     assert(job);
-    assert(dynamic_cast<KIO::Job*>(job));
-    if( dynamic_cast<KIO::Job*>(job)->ui() )
-      static_cast<KIO::Job*>(job)->ui()->showErrorMessage();
+    // we can be called from the KJob::kill, where we are no longer a KIO::Job
+    // so better safe than sorry
+    KIO::Job* kiojob = dynamic_cast<KIO::Job*>(job);
+    if( kiojob && kiojob->ui() )
+      kiojob->ui()->showErrorMessage();
     else
       kWarning() << "There is no GUI delegate set for a kjob, and it failed with error:" << job->errorString();
 }
