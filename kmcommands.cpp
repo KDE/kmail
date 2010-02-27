@@ -161,8 +161,10 @@ static void showJobError( KJob* job )
 {
     assert(job);
     assert(dynamic_cast<KIO::Job*>(job));
-    assert(dynamic_cast<KIO::Job*>(job)->ui());
-    static_cast<KIO::Job*>(job)->ui()->showErrorMessage();
+    if( dynamic_cast<KIO::Job*>(job)->ui() )
+      static_cast<KIO::Job*>(job)->ui()->showErrorMessage();
+    else
+      kWarning() << "There is no GUI delegate set for a kjob, and it failed with error:" << job->errorString();
 }
 
 KMCommand::KMCommand( QWidget *parent )
