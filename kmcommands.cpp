@@ -156,13 +156,20 @@ static KMail::Composer::TemplateContext replyContext( KMail::MessageHelper::Mess
     return KMail::Composer::Reply;
 }
 
+/// Helper to sanely show an error message for a job
+static void showJobError( KJob* job )
+{
+    assert(job);
+    assert(dynamic_cast<KIO::Job*>(job));
+    assert(dynamic_cast<KIO::Job*>(job)->ui());
+    static_cast<KIO::Job*>(job)->ui()->showErrorMessage();
+}
+
 KMCommand::KMCommand( QWidget *parent )
   : mProgressDialog( 0 ), mResult( Undefined ), mDeletesItself( false ),
     mEmitsCompletedItself( false ), mParent( parent )
 {
 }
-
-
 
 KMCommand::KMCommand( QWidget *parent, const Akonadi::Item &msg )
   : mProgressDialog( 0 ), mResult( Undefined ), mDeletesItself( false ),
@@ -562,7 +569,7 @@ KMCommand::Result KMUrlSaveCommand::execute()
 void KMUrlSaveCommand::slotUrlSaveResult( KJob *job )
 {
   if ( job->error() ) {
-    static_cast<KIO::Job*>(job)->ui()->showErrorMessage();
+    showJobError(job);
     setResult( Failed );
     emit completed( this );
   }
@@ -605,7 +612,7 @@ KMCommand::Result KMEditMsgCommand::execute()
 void KMEditMsgCommand::slotDeleteItem( KJob *job )
 {
   if ( job->error() ) {
-    static_cast<KIO::Job*>(job)->ui()->showErrorMessage();
+    showJobError(job);
     setResult( Failed );
     emit completed( this );
   }
@@ -859,7 +866,7 @@ void KMSaveMsgCommand::slotSaveResult(KJob *job)
     }
     else
     {
-      static_cast<KIO::Job*>(job)->ui()->showErrorMessage();
+      showJobError(job);
       setResult( Failed );
       emit completed( this );
       deleteLater();
@@ -914,7 +921,7 @@ void KMOpenMsgCommand::slotResult( KJob *job )
 {
   if ( job->error() ) {
     // handle errors
-    static_cast<KIO::Job*>(job)->ui()->showErrorMessage();
+    showJobError(job);
     setResult( Failed );
     emit completed( this );
   }
@@ -1868,7 +1875,7 @@ void KMCopyCommand::slotCopyResult( KJob * job )
 {
   if ( job->error() ) {
     // handle errors
-    static_cast<KIO::Job*>(job)->ui()->showErrorMessage();
+    showJobError(job);
     setResult( Failed );
   }
   deleteLater();
@@ -1894,7 +1901,7 @@ void KMMoveCommand::slotMoveResult( KJob * job )
 {
   if ( job->error() ) {
     // handle errors
-    static_cast<KIO::Job*>(job)->ui()->showErrorMessage();
+    showJobError(job);
     setResult( Failed );
   }
   else
