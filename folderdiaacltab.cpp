@@ -178,12 +178,7 @@ QString KMail::ACLEntryDialog::userId() const
 
 QStringList KMail::ACLEntryDialog::userIds() const
 {
-  QStringList lst = QStringList::split( ",", mUserIdLineEdit->text() );
-  for( QStringList::Iterator it = lst.begin(); it != lst.end(); ++it ) {
-    // Strip white space (in particular, due to ", ")
-    *it = (*it).stripWhiteSpace();
-  }
-  return lst;
+  return KPIM::splitEmailAddrList( mUserIdLineEdit->text() );
 }
 
 unsigned int KMail::ACLEntryDialog::permissions() const
