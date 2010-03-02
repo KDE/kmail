@@ -270,6 +270,7 @@ KMFilterDlg::KMFilterDlg(QWidget* parent, bool popFilter, bool createDummyFilter
       mKeySeqWidget->setObjectName( "FilterShortcutSelector" );
       gl->addWidget( mKeySeqWidget, 8, 3, 1, 1);
       mKeySeqWidget->setEnabled( false );
+      mKeySeqWidget->setModifierlessAllowed( true );
       mKeySeqWidget->setCheckActionCollections(
                              kmkernel->getKMMainWidget()->actionCollections() );
       mConfigureToolbar = new QCheckBox( i18n("Additionally add this filter to the toolbar"), mAdvOptsGroup );
