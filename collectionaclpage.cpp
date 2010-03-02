@@ -41,6 +41,7 @@
 #include <akonadi/collectionmodifyjob.h>
 
 #include <addressesdialog.h>
+#include <KPIMUtils/Email>
 #include <kabc/addresseelist.h>
 #include <kio/jobuidelegate.h>
 #include <kabc/distributionlist.h>
@@ -177,12 +178,7 @@ QString ACLEntryDialog::userId() const
 
 QStringList ACLEntryDialog::userIds() const
 {
-  QStringList lst = mUserIdLineEdit->text().split( ',', QString::SkipEmptyParts);
-  for( QStringList::Iterator it = lst.begin(); it != lst.end(); ++it ) {
-    // Strip white space (in particular, due to ", ")
-    *it = (*it).trimmed();
-  }
-  return lst;
+  return KPIMUtils::splitAddressList( mUserIdLineEdit->text() );
 }
 
 KIMAP::Acl::Rights ACLEntryDialog::permissions() const
