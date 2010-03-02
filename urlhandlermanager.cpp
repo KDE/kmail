@@ -45,6 +45,7 @@
 #include "callback.h"
 #include "stl_util.h"
 
+#include <kstandarddirs.h>
 #include <kurldrag.h>
 #include <kimproxy.h>
 #include <kurl.h>
@@ -142,6 +143,24 @@ namespace {
       bool handleClick( const KURL &, KMReaderWin * ) const;
       bool handleContextMenuRequest( const KURL &, const QPoint &, KMReaderWin * ) const;
       QString statusBarMessage( const KURL &, KMReaderWin * ) const;
+  };
+
+  // Handler that prevents dragging of internal images added by KMail, such as the envelope image
+  // in the enterprise header
+  class InternalImageURLHandler : public KMail::URLHandler {
+  public:
+      InternalImageURLHandler() : KMail::URLHandler()
+        {}
+      ~InternalImageURLHandler()
+        {}
+      bool handleDrag( const KURL &url, KMReaderWin *window ) const;
+      bool willHandleDrag( const KURL &url, KMReaderWin *window ) const;
+      bool handleClick( const KURL &, KMReaderWin * ) const
+        { return false; }
+      bool handleContextMenuRequest( const KURL &, const QPoint &, KMReaderWin * ) const
+        { return false; }
+      QString statusBarMessage( const KURL &, KMReaderWin * ) const
+        { return QString(); }
   };
 
   class FallBackURLHandler : public KMail::URLHandler {
@@ -281,6 +300,7 @@ KMail::URLHandlerManager::URLHandlerManager() {
   registerHandler( new AttachmentURLHandler() );
   registerHandler( mBodyPartURLHandlerManager = new BodyPartURLHandlerManager() );
   registerHandler( new ShowAuditLogURLHandler() );
+  registerHandler( new InternalImageURLHandler );
   registerHandler( new FallBackURLHandler() );
 }
 
@@ -688,6 +708,26 @@ namespace {
       return QString();
     else
       return i18n("Show GnuPG Audit Log for this operation");
+  }
+}
+
+namespace {
+  bool InternalImageURLHandler::handleDrag( const KURL &url, KMReaderWin *window ) const
+  {
+    Q_UNUSED( window );
+    const QString imagePath = locate( "data", "kmail/pics/" );
+    if ( url.path().contains( imagePath ) ) {
+      // Do nothing, don't start a drag
+      return true;
+    }
+    return false;
+  }
+
+  bool InternalImageURLHandler::willHandleDrag( const KURL &url, KMReaderWin *window ) const
+  {
+    Q_UNUSED( window );
+    const QString imagePath = locate( "data", "kmail/pics/" );
+    return url.path().contains( imagePath );
   }
 }
 

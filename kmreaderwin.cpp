@@ -2600,6 +2600,20 @@ bool KMReaderWin::eventFilter( QObject *, QEvent *e )
     }
 
     if ( me->button() == LeftButton ) {
+
+      // When the node under the mouse is an IMG node, set the hovered URL to the src of the
+      // image, so that special URL handlers can deal with it, for example the InternalImageURLHandler
+      const DOM::Node nodeUnderMouse = mViewer->nodeUnderMouse();
+      if ( !nodeUnderMouse.isNull() ) {
+        const DOM::NamedNodeMap attributes = nodeUnderMouse.attributes();
+        if ( !attributes.isNull() ) {
+          const DOM::Node src = attributes.getNamedItem( DOM::DOMString( "src" ) );
+          if ( !src.isNull() ) {
+            mHoveredUrl = src.nodeValue().string();
+          }
+        }
+      }
+
       mCanStartDrag = URLHandlerManager::instance()->willHandleDrag( mHoveredUrl, this );
       mLastClickPosition = me->pos();
     }
@@ -2613,11 +2627,12 @@ bool KMReaderWin::eventFilter( QObject *, QEvent *e )
     QMouseEvent* me = static_cast<QMouseEvent*>( e );
 
     if ( ( mLastClickPosition - me->pos() ).manhattanLength() > KGlobalSettings::dndEventDelay() ) {
-      if ( mCanStartDrag && !mHoveredUrl.isEmpty() && mHoveredUrl.protocol() == "attachment" ) {
-        mCanStartDrag = false;
-        URLHandlerManager::instance()->handleDrag( mHoveredUrl, this );
-        slotUrlOn( QString() );
-        return true;
+      if ( mCanStartDrag && !mHoveredUrl.isEmpty() ) {
+        if ( URLHandlerManager::instance()->handleDrag( mHoveredUrl, this ) ) {
+          mCanStartDrag = false;
+          slotUrlOn( QString() );
+          return true;
+        }
       }
     }
   }
