@@ -201,7 +201,7 @@ KMFolderCachedImap::KMFolderCachedImap( KMFolder* folder, const char* aName )
     mSharedSeenFlagsChanged( false ),
     mStatusChangedLocally( false ),
     mPersonalNamespacesCheckDone( true ),
-    mQuotaInfo(), mAlarmsBlocked( false ),
+    mQuotaInfo(), mCurrentSubFolderCloseToQuotaChanged( false ), mAlarmsBlocked( false ),
     mRescueCommandCount( 0 ),
     mPermanentFlags( 31 ) // assume standard flags by default (see imap4/imapinfo.h for bit fields values)
 {
@@ -1305,10 +1305,9 @@ void KMFolderCachedImap::serverSyncInternal()
     // Carry on
   case SYNC_STATE_SYNC_SUBFOLDERS:
     {
+      mCurrentSubFolderCloseToQuotaChanged = false;
       if( mCurrentSubfolder ) {
-        disconnect( mCurrentSubfolder, SIGNAL( folderComplete(KMFolderCachedImap*, bool) ),
-                    this, SLOT( slotSubFolderComplete(KMFolderCachedImap*, bool) ) );
-        mCurrentSubfolder = 0;
+        disconnectSubFolderSignals();
       }
 
       if( mSubfoldersForSync.isEmpty() ) {
@@ -1321,6 +1320,8 @@ void KMFolderCachedImap::serverSyncInternal()
         mSubfoldersForSync.pop_front();
         connect( mCurrentSubfolder, SIGNAL( folderComplete(KMFolderCachedImap*, bool) ),
                  this, SLOT( slotSubFolderComplete(KMFolderCachedImap*, bool) ) );
+        connect( mCurrentSubfolder, SIGNAL( closeToQuotaChanged() ),
+                 this, SLOT( slotSubFolderCloseToQuotaChanged() ) );
 
         //kdDebug(5006) << "Sync'ing subfolder " << mCurrentSubfolder->imapPath() << endl;
         assert( !mCurrentSubfolder->imapPath().isEmpty() );
@@ -1335,6 +1336,15 @@ void KMFolderCachedImap::serverSyncInternal()
     kdDebug(5006) << "KMFolderCachedImap::serverSyncInternal() WARNING: no such state "
               << mSyncState << endl;
   }
+}
+
+void KMFolderCachedImap::disconnectSubFolderSignals()
+{
+  disconnect( mCurrentSubfolder, SIGNAL( folderComplete(KMFolderCachedImap*, bool) ),
+              this, SLOT( slotSubFolderComplete(KMFolderCachedImap*, bool) ) );
+  disconnect( mCurrentSubfolder, SIGNAL( closeToQuotaChanged() ),
+              this, SLOT( slotSubFolderCloseToQuotaChanged() ) );
+  mCurrentSubfolder = 0;
 }
 
 /* Connected to the imap account's connectionResult signal.
@@ -2335,9 +2345,7 @@ void KMFolderCachedImap::slotSubFolderComplete(KMFolderCachedImap* sub, bool suc
     // success == false means the sync was aborted.
     if ( mCurrentSubfolder ) {
       Q_ASSERT( sub == mCurrentSubfolder );
-      disconnect( mCurrentSubfolder, SIGNAL( folderComplete(KMFolderCachedImap*, bool) ),
-                  this, SLOT( slotSubFolderComplete(KMFolderCachedImap*, bool) ) );
-      mCurrentSubfolder = 0;
+      disconnectSubFolderSignals();
     }
 
     mSubfoldersForSync.clear();
@@ -2345,6 +2353,11 @@ void KMFolderCachedImap::slotSubFolderComplete(KMFolderCachedImap* sub, bool suc
     close("cachedimap");
     emit folderComplete( this, false );
   }
+}
+
+void KMFolderCachedImap::slotSubFolderCloseToQuotaChanged()
+{
+  mCurrentSubFolderCloseToQuotaChanged = true;
 }
 
 void KMFolderCachedImap::slotSimpleData(KIO::Job * job, const QByteArray & data)
@@ -2430,8 +2443,12 @@ KMFolderCachedImap::slotStorageQuotaResult( const QuotaInfo& info )
 void KMFolderCachedImap::setQuotaInfo( const QuotaInfo & info )
 {
     if ( info != mQuotaInfo ) {
+      const bool wasCloseToQuota = isCloseToQuota();
       mQuotaInfo = info;
       writeConfigKeysWhichShouldNotGetOverwrittenByReadConfig();
+      if ( wasCloseToQuota != isCloseToQuota() ) {
+        emit closeToQuotaChanged();
+      }
       emit folderSizeChanged();
     }
 }
