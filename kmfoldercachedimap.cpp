@@ -201,7 +201,7 @@ KMFolderCachedImap::KMFolderCachedImap( KMFolder* folder, const char* aName )
     mSharedSeenFlagsChanged( false ),
     mStatusChangedLocally( false ),
     mPersonalNamespacesCheckDone( true ),
-    mQuotaInfo(), mCurrentSubFolderCloseToQuotaChanged( false ), mAlarmsBlocked( false ),
+    mQuotaInfo(), mAlarmsBlocked( false ),
     mRescueCommandCount( 0 ),
     mPermanentFlags( 31 ) // assume standard flags by default (see imap4/imapinfo.h for bit fields values)
 {
@@ -819,6 +819,7 @@ QString KMFolderCachedImap::state2String( int state ) const
   case SYNC_STATE_SYNC_SUBFOLDERS:   return "SYNC_STATE_SYNC_SUBFOLDERS";
   case SYNC_STATE_RENAME_FOLDER:     return "SYNC_STATE_RENAME_FOLDER";
   case SYNC_STATE_CHECK_UIDVALIDITY: return "SYNC_STATE_CHECK_UIDVALIDITY";
+  case SYNC_STATE_CLOSE:             return "SYNC_STATE_CLOSE";
   default:                           return "Unknown state";
   }
 }
@@ -1239,29 +1240,13 @@ void KMFolderCachedImap::serverSyncInternal()
     }
 
   case SYNC_STATE_GET_ACLS:
-    mSyncState = SYNC_STATE_GET_QUOTA;
+    mSyncState = SYNC_STATE_FIND_SUBFOLDERS;
 
     if( !noContent() && mAccount->hasACLSupport() ) {
       newState( mProgress, i18n( "Retrieving permissions" ) );
       mAccount->getACL( folder(), mImapPath );
       connect( mAccount, SIGNAL(receivedACL( KMFolder*, KIO::Job*, const KMail::ACLList& )),
                this, SLOT(slotReceivedACL( KMFolder*, KIO::Job*, const KMail::ACLList& )) );
-      break;
-    }
-  case SYNC_STATE_GET_QUOTA:
-    // Continue with the subfolders
-    mSyncState = SYNC_STATE_FIND_SUBFOLDERS;
-    if( !noContent() && mAccount->hasQuotaSupport() ) {
-      newState( mProgress, i18n("Getting quota information"));
-      KURL url = mAccount->getUrl();
-      url.setPath( imapPath() );
-      KIO::Job* job = KMail::QuotaJobs::getStorageQuota( mAccount->slave(), url );
-      ImapAccountBase::jobData jd( url.url(), folder() );
-      mAccount->insertJob(job, jd);
-      connect( job, SIGNAL( storageQuotaResult( const QuotaInfo& ) ),
-          SLOT( slotStorageQuotaResult( const QuotaInfo& ) ) );
-      connect( job, SIGNAL(result(KIO::Job *)),
-          SLOT(slotQuotaResult(KIO::Job *)) );
       break;
     }
   case SYNC_STATE_FIND_SUBFOLDERS:
@@ -1305,23 +1290,21 @@ void KMFolderCachedImap::serverSyncInternal()
     // Carry on
   case SYNC_STATE_SYNC_SUBFOLDERS:
     {
-      mCurrentSubFolderCloseToQuotaChanged = false;
       if( mCurrentSubfolder ) {
         disconnectSubFolderSignals();
       }
 
       if( mSubfoldersForSync.isEmpty() ) {
-        mSyncState = SYNC_STATE_INITIAL;
-        mAccount->addUnreadMsgCount( this, countUnread() ); // before closing
-        close("cachedimap");
-        emit folderComplete( this, true );
+        // Quota checking has to come after syncing subfolder, otherwise the quota information would
+        // be outdated, since the subfolders can change in size during the syncing.
+        // https://issues.kolab.org/issue4066
+        mSyncState = SYNC_STATE_GET_QUOTA;
+        serverSyncInternal();
       } else {
         mCurrentSubfolder = mSubfoldersForSync.front();
         mSubfoldersForSync.pop_front();
         connect( mCurrentSubfolder, SIGNAL( folderComplete(KMFolderCachedImap*, bool) ),
                  this, SLOT( slotSubFolderComplete(KMFolderCachedImap*, bool) ) );
-        connect( mCurrentSubfolder, SIGNAL( closeToQuotaChanged() ),
-                 this, SLOT( slotSubFolderCloseToQuotaChanged() ) );
 
         //kdDebug(5006) << "Sync'ing subfolder " << mCurrentSubfolder->imapPath() << endl;
         assert( !mCurrentSubfolder->imapPath().isEmpty() );
@@ -1329,6 +1312,29 @@ void KMFolderCachedImap::serverSyncInternal()
         bool recurse = mCurrentSubfolder->noChildren() ? false : true;
         mCurrentSubfolder->serverSync( recurse );
       }
+    }
+    break;
+  case SYNC_STATE_GET_QUOTA:
+    mSyncState = SYNC_STATE_CLOSE;
+    if( !noContent() && mAccount->hasQuotaSupport() ) {
+      newState( mProgress, i18n("Getting quota information"));
+      KURL url = mAccount->getUrl();
+      url.setPath( imapPath() );
+      KIO::Job* job = KMail::QuotaJobs::getStorageQuota( mAccount->slave(), url );
+      ImapAccountBase::jobData jd( url.url(), folder() );
+      mAccount->insertJob(job, jd);
+      connect( job, SIGNAL( storageQuotaResult( const QuotaInfo& ) ),
+          SLOT( slotStorageQuotaResult( const QuotaInfo& ) ) );
+      connect( job, SIGNAL(result(KIO::Job *)),
+          SLOT(slotQuotaResult(KIO::Job *)) );
+      break;
+    }
+  case SYNC_STATE_CLOSE:
+    {
+      mSyncState = SYNC_STATE_INITIAL;
+      mAccount->addUnreadMsgCount( this, countUnread() ); // before closing
+      close( "cachedimap" );
+      emit folderComplete( this, true );
     }
     break;
 
@@ -1342,8 +1348,6 @@ void KMFolderCachedImap::disconnectSubFolderSignals()
 {
   disconnect( mCurrentSubfolder, SIGNAL( folderComplete(KMFolderCachedImap*, bool) ),
               this, SLOT( slotSubFolderComplete(KMFolderCachedImap*, bool) ) );
-  disconnect( mCurrentSubfolder, SIGNAL( closeToQuotaChanged() ),
-              this, SLOT( slotSubFolderCloseToQuotaChanged() ) );
   mCurrentSubfolder = 0;
 }
 
@@ -2348,16 +2352,13 @@ void KMFolderCachedImap::slotSubFolderComplete(KMFolderCachedImap* sub, bool suc
       disconnectSubFolderSignals();
     }
 
+    // Next step would be to check quota limits and then to close the folder, but don't bother with
+    // both and close the folder right here, since we aborted.
     mSubfoldersForSync.clear();
     mSyncState = SYNC_STATE_INITIAL;
     close("cachedimap");
     emit folderComplete( this, false );
   }
-}
-
-void KMFolderCachedImap::slotSubFolderCloseToQuotaChanged()
-{
-  mCurrentSubFolderCloseToQuotaChanged = true;
 }
 
 void KMFolderCachedImap::slotSimpleData(KIO::Job * job, const QByteArray & data)
@@ -2443,12 +2444,8 @@ KMFolderCachedImap::slotStorageQuotaResult( const QuotaInfo& info )
 void KMFolderCachedImap::setQuotaInfo( const QuotaInfo & info )
 {
     if ( info != mQuotaInfo ) {
-      const bool wasCloseToQuota = isCloseToQuota();
       mQuotaInfo = info;
       writeConfigKeysWhichShouldNotGetOverwrittenByReadConfig();
-      if ( wasCloseToQuota != isCloseToQuota() ) {
-        emit closeToQuotaChanged();
-      }
       emit folderSizeChanged();
     }
 }

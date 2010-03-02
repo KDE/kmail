@@ -342,7 +342,6 @@ protected slots:
 
   //virtual void slotCheckValidityResult(KIO::Job * job);
   void slotSubFolderComplete(KMFolderCachedImap*, bool);
-  void slotSubFolderCloseToQuotaChanged();
 
   // Connected to the imap account
   void slotConnectionResult( int errorCode, const QString& errorMsg );
@@ -442,11 +441,6 @@ signals:
   void folderComplete(KMFolderCachedImap *folder, bool success);
   void listComplete( KMFolderCachedImap* );
 
-  /**
-   * Emitted when isCloseToQuota() changes during syncing
-   */
-  void closeToQuotaChanged();
-
   /** emitted when we enter the state "state" and
      have to process "number" items (for example messages
   */
@@ -495,7 +489,8 @@ private:
     SYNC_STATE_FIND_SUBFOLDERS,
     SYNC_STATE_SYNC_SUBFOLDERS,
     SYNC_STATE_CHECK_UIDVALIDITY,
-    SYNC_STATE_RENAME_FOLDER
+    SYNC_STATE_RENAME_FOLDER,
+    SYNC_STATE_CLOSE
   } mSyncState;
 
   int mProgress;
@@ -590,11 +585,6 @@ private:
   QString mImapPathCreation;
 
   QuotaInfo mQuotaInfo;
-
-  /// This is set during syncing of the current subfolder. If true, it means the closeToQuota info
-  /// for the current subfolder has changed during syncing
-  bool mCurrentSubFolderCloseToQuotaChanged;
-
   QMap<ulong,void*> mDeletedUIDsSinceLastSync;
   bool mAlarmsBlocked;
 
