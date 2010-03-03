@@ -159,6 +159,8 @@ RecipientLine::RecipientLine( QWidget *parent )
   QToolTip::add( mCombo, i18n("Select type of recipient") );
 
   mEdit = new RecipientLineEdit( this );
+  QToolTip::add( mEdit,
+                 i18n( "Set the list of email addresses to receive this message" ) );
   topLayout->addWidget( mEdit );
   connect( mEdit, SIGNAL( returnPressed() ), SLOT( slotReturnPressed() ) );
   connect( mEdit, SIGNAL( deleteMe() ), SLOT( slotPropagateDeletion() ) );

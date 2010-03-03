@@ -204,13 +204,29 @@ KMComposeWin::KMComposeWin( KMMessage *aMsg, uint id  )
   QVBoxLayout *v = new QVBoxLayout( mMainWidget );
   v->addWidget( mHeadersToEditorSplitter );
   mIdentity = new KPIM::IdentityCombo(kmkernel->identityManager(), mHeadersArea);
+  QToolTip::add( mIdentity,
+                 i18n( "Select an identity for this message" ) );
+
   mDictionaryCombo = new DictionaryComboBox( mHeadersArea );
+  QToolTip::add( mDictionaryCombo,
+                 i18n( "Select the dictionary to use when spell-checking this message" ) );
+
   mFcc = new KMFolderComboBox(mHeadersArea);
   mFcc->showOutboxFolder( false );
+  QToolTip::add( mFcc,
+                 i18n( "Select the sent-mail folder where a copy of this message will be saved" ) );
+
   mTransport = new QComboBox(true, mHeadersArea);
+  QToolTip::add( mTransport,
+                 i18n( "Select the outgoing account to use for sending this message" ) );
+
   mEdtFrom = new KMLineEdit(false,mHeadersArea, "fromLine");
+  QToolTip::add( mEdtFrom,
+                 i18n( "Set the \"From:\" email address for this message" ) );
 
   mEdtReplyTo = new KMLineEdit(true,mHeadersArea, "replyToLine");
+  QToolTip::add( mEdtReplyTo,
+                 i18n( "Set the \"Reply-To:\" email address for this message" ) );
   mLblReplyTo = new QLabel(mHeadersArea);
   connect(mEdtReplyTo,SIGNAL(completionModeChanged(KGlobalSettings::Completion)),
           SLOT(slotCompletionModeChanged(KGlobalSettings::Completion)));
@@ -277,6 +293,9 @@ KMComposeWin::KMComposeWin( KMMessage *aMsg, uint id  )
     mRecipientsEditor->setFocus();
   }
   mEdtSubject = new KMLineEditSpell(false,mHeadersArea, "subjectLine");
+  QToolTip::add( mEdtSubject,
+                 i18n( "Set a subject for this message" ) );
+
   mLblIdentity = new QLabel(mHeadersArea);
   mDictionaryLabel = new QLabel( mHeadersArea );
   mLblFcc = new QLabel(mHeadersArea);
@@ -285,8 +304,14 @@ KMComposeWin::KMComposeWin( KMMessage *aMsg, uint id  )
   mLblSubject = new QLabel(mHeadersArea);
   QString sticky = i18n("Sticky");
   mBtnIdentity = new QCheckBox(sticky,mHeadersArea);
+  QToolTip::add( mBtnIdentity,
+                 i18n( "Use the selected value as your identity for future messages" ) );
   mBtnFcc = new QCheckBox(sticky,mHeadersArea);
+  QToolTip::add( mBtnFcc,
+                 i18n( "Use the selected value as your sent-mail folder for future messages" ) );
   mBtnTransport = new QCheckBox(sticky,mHeadersArea);
+  QToolTip::add( mBtnTransport,
+                 i18n( "Use the selected value as your outgoing account for future messages" ) );
 
   //setWFlags( WType_TopLevel | WStyle_Dialog );
   mHtmlMarkup = GlobalSettings::self()->useHtmlMarkup();
@@ -1515,6 +1540,7 @@ void KMComposeWin::setupActions(void)
 					   actionCollection(), "options_select_crypto" );
   mCryptoModuleAction->setItems( l );
   mCryptoModuleAction->setCurrentItem( format2cb( ident.preferredCryptoMessageFormat() ) );
+  mCryptoModuleAction->setToolTip( i18n( "Select a cryptographic format for this message" ) );
   slotSelectCryptoModule( true /* initialize */ );
 
   QStringList styleItems;
@@ -1529,14 +1555,17 @@ void KMComposeWin::setupActions(void)
   listAction = new KSelectAction( i18n( "Select Style" ), 0, actionCollection(),
                                  "text_list" );
   listAction->setItems( styleItems );
+  listAction->setToolTip( i18n( "Select a list style" ) );
   connect( listAction, SIGNAL( activated( const QString& ) ),
            SLOT( slotListAction( const QString& ) ) );
   fontAction = new KFontAction( "Select Font", 0, actionCollection(),
                                "text_font" );
+  fontAction->setToolTip( i18n( "Select a font" ) );
   connect( fontAction, SIGNAL( activated( const QString& ) ),
            SLOT( slotFontAction( const QString& ) ) );
   fontSizeAction = new KFontSizeAction( "Select Size", 0, actionCollection(),
                                        "text_size" );
+  fontSizeAction->setToolTip( i18n( "Select a font size" ) );
   connect( fontSizeAction, SIGNAL( fontSizeChanged( int ) ),
            SLOT( slotSizeAction( int ) ) );
 
