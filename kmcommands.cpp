@@ -428,7 +428,7 @@ KMCommand::Result KMMailtoComposeCommand::execute()
 
   KMail::MessageHelper::initHeader( msg, id );
   msg->contentType()->setCharset("utf-8");
-  msg->to()->fromUnicodeString( MessageCore::StringUtil::decodeMailtoUrl( mUrl.path() ), "utf-8" );
+  msg->to()->fromUnicodeString( KPIMUtils::decodeMailtoUrl( mUrl ), "utf-8" );
 
   KMail::Composer * win = KMail::makeComposer( msg, KMail::Composer::New, id );
   win->setFocusToSubject();
@@ -456,7 +456,7 @@ KMCommand::Result KMMailtoReplyCommand::execute()
   if ( !msg )
     return Failed;
   KMime::Message::Ptr rmsg( KMail::MessageHelper::createReply( item, msg, KMail::ReplyNone, mSelection ).msg );
-  rmsg->to()->fromUnicodeString( MessageCore::StringUtil::decodeMailtoUrl( mUrl.path() ), "utf-8" ); //TODO Check the UTF-8
+  rmsg->to()->fromUnicodeString( KPIMUtils::decodeMailtoUrl( mUrl ), "utf-8" ); //TODO Check the UTF-8
 
   KMail::Composer * win = KMail::makeComposer( rmsg, KMail::Composer::Reply, 0, mSelection );
   win->setReplyFocus();
@@ -485,7 +485,7 @@ KMCommand::Result KMMailtoForwardCommand::execute()
   if ( !msg )
     return Failed;
   KMime::Message::Ptr fmsg( KMail::MessageHelper::createForward( item, msg ) );
-  fmsg->to()->fromUnicodeString( MessageCore::StringUtil::decodeMailtoUrl( mUrl.path() ), "utf-8" ); //TODO check the utf-8
+  fmsg->to()->fromUnicodeString( KPIMUtils::decodeMailtoUrl( mUrl ), "utf-8" ); //TODO check the utf-8
 
   KMail::Composer * win = KMail::makeComposer( fmsg, KMail::Composer::Forward );
   win->show();
@@ -520,7 +520,7 @@ KMMailtoAddAddrBookCommand::KMMailtoAddAddrBookCommand( const KUrl &url,
 
 KMCommand::Result KMMailtoAddAddrBookCommand::execute()
 {
-  KPIM::KAddrBookExternal::addEmail( MessageCore::StringUtil::decodeMailtoUrl( mUrl.path() ),
+  KPIM::KAddrBookExternal::addEmail( KPIMUtils::decodeMailtoUrl( mUrl ),
                                      parentWidget() );
 
   return OK;
@@ -535,7 +535,7 @@ KMMailtoOpenAddrBookCommand::KMMailtoOpenAddrBookCommand( const KUrl &url,
 
 KMCommand::Result KMMailtoOpenAddrBookCommand::execute()
 {
-  QString addr = MessageCore::StringUtil::decodeMailtoUrl( mUrl.path() );
+  const QString addr = KPIMUtils::decodeMailtoUrl( mUrl );
   KPIM::KAddrBookExternal::openEmail( KPIMUtils::extractEmailAddress(addr),
                                       addr, parentWidget() );
 

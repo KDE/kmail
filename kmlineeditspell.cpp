@@ -132,7 +132,7 @@ void KMLineEdit::dropEvent(QDropEvent *event)
       // email-address.
       if ( url.protocol() == "mailto" ) {
         KABC::Addressee addressee;
-        addressee.insertEmail( MessageCore::StringUtil::decodeMailtoUrl( url.path() ), true /* preferred */ );
+        addressee.insertEmail( KPIMUtils::decodeMailtoUrl( url ), true /* preferred */ );
         list += addressee;
       }
 

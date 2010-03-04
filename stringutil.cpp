@@ -73,7 +73,7 @@ QMap<QString, QString> parseMailtoUrl ( const KUrl& url )
 {
   kDebug() << url.pathOrUrl();
   QMap<QString, QString> values = url.queryItems( KUrl::CaseInsensitiveKeys );
-  QString to = MessageCore::StringUtil::decodeMailtoUrl( url.path() );
+  QString to = KPIMUtils::decodeMailtoUrl( url );
   to = to.isEmpty() ?  values.value( "to" ) : to + QString( ", " ) + values.value( "to" );
   values.insert( "to", to );
   return values;
