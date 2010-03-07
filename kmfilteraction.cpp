@@ -46,9 +46,13 @@ using KMail::RegExpLineEdit;
 #include <phonon/mediaobject.h>
 #include <kshell.h>
 #include <kprocess.h>
+#ifndef KDEPIM_NO_KRESOURCES
 #include <kabc/addressbook.h>
 #include <kabc/stdaddressbook.h>
 #include <kabc/resource.h>
+#else
+namespace KABC { class Resource; }
+#endif
 #include <nepomuk/tag.h>
 
 // Qt headers:
@@ -2148,6 +2152,7 @@ void KMFilterActionAddToAddressBook::updateResourceMaps( bool force ) const
   mResourceByID.clear();
   mResourceByName.clear();
 
+#ifndef KDEPIM_NO_KRESOURCES
   const QList<KABC::Resource*> list = KABC::StdAddressBook::self()->resources();
   foreach( KABC::Resource* const res, list ) {
     if ( !res->readOnly() && res->isOpen() ) {
@@ -2155,6 +2160,7 @@ void KMFilterActionAddToAddressBook::updateResourceMaps( bool force ) const
       mResourceByName.insert( res->resourceName(), res );
     }
   }
+#endif
 
   mResourceMapsInitalized = true;
 }
@@ -2174,6 +2180,7 @@ KMFilterAction::ReturnCode KMFilterActionAddToAddressBook::process( const Akonad
 
   const QStringList emails = KPIMUtils::splitAddressList( headerLine );
 
+#ifndef KDEPIM_NO_KRESOURCES
   KABC::AddressBook *ab = KABC::StdAddressBook::self();
   // force a reload of the address book file so that changes that were made
   // by other programs are loaded
@@ -2221,6 +2228,7 @@ KMFilterAction::ReturnCode KMFilterActionAddToAddressBook::process( const Akonad
     ab->error( i18n( "Cannot save to address book: address book is locked." ) );
     return ErrorButGoOn;
   }
+#endif
 
   return GoOn;
 }
@@ -2332,11 +2340,13 @@ const QString KMFilterActionAddToAddressBook::argsAsString() const
 
   result += '\t';
 
+#ifndef KDEPIM_NO_KRESOURCES
   QMap<QString, KABC::Resource*>::const_iterator it =  mResourceByName.constFind( mResourceName );
   if ( it != mResourceByName.constEnd() )
     result += it.value()->identifier();
   else
     result += mStdResourceStr;
+#endif
 
   result += '\t';
 
@@ -2352,6 +2362,7 @@ void KMFilterActionAddToAddressBook::argsFromString( const QString &argsStr )
   QStringList l = argsStr.split( '\t', QString::KeepEmptyParts );
   mParameter = l[0];
 
+#ifndef KDEPIM_NO_KRESOURCES
   if ( l.count() >= 2 ) {
     QMap<QString, KABC::Resource*>::iterator it  = mResourceByID.find( l[1] );
     if ( it != mResourceByID.end() )
@@ -2361,6 +2372,7 @@ void KMFilterActionAddToAddressBook::argsFromString( const QString &argsStr )
   } else {
     mResourceName = mStdResourceStr;
   }
+#endif
 
   if ( l.count() < 3 )
     mCategory.clear();

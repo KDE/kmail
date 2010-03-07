@@ -49,7 +49,9 @@
 #include <kdbusservicestarter.h>
 #include <kdebug.h>
 #include <kfiledialog.h>
+#ifndef KDEPIM_NO_KRESOURCES
 #include <kabc/stdaddressbook.h>
+#endif
 #include <kabc/addresseelist.h>
 #include <klocale.h>
 #include <kmessagebox.h>

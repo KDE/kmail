@@ -45,7 +45,11 @@
 #include <kabc/addresseelist.h>
 #include <kio/jobuidelegate.h>
 #include <kabc/distributionlist.h>
+#ifndef KDEPIM_NO_KRESOURCES
 #include <kabc/stdaddressbook.h>
+#else
+namespace KABC { class AddressBook; }
+#endif
 #include <kpushbutton.h>
 #include <kdebug.h>
 #include <klocale.h>

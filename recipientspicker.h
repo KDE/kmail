@@ -24,7 +24,11 @@
 #include "recipientseditor.h"
 
 #include <kabc/addressee.h>
+#ifndef KDEPIM_NO_KRESOURCES
 #include <kabc/stdaddressbook.h>
+#else
+namespace KABC { class AddressBook; }
+#endif
 #include <KDialog>
 #include <KTreeWidgetSearchLine>
 
@@ -221,7 +225,9 @@ class RecipientsPicker : public KDialog
     void ldapSearchResult();
     void slotSelectionChanged();
   private:
+#ifndef KDEPIM_NO_KRESOURCES
     KABC::StdAddressBook *mAddressBook;
+#endif
 
     KComboBox *mCollectionCombo;
     RecipientsTreeWidget *mRecipientList;

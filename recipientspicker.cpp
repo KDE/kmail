@@ -31,7 +31,9 @@
 #include <kabc/distributionlist.h>
 
 #include <klocale.h>
+#ifndef KDEPIM_NO_KRESOURCES
 #include <kabc/resource.h>
+#endif
 #include <kcombobox.h>
 #include <kiconloader.h>
 #include <khbox.h>
@@ -407,12 +409,14 @@ RecipientsPicker::RecipientsPicker( QWidget *parent )
   buttonLayout->addWidget( closeButton );
   connect( closeButton, SIGNAL( clicked() ), SLOT( close() ) );
 
+#ifndef KDEPIM_NO_KRESOURCES
   {
     using namespace KABC;
     mAddressBook = KABC::StdAddressBook::self( true );
     connect( mAddressBook, SIGNAL( addressBookChanged( AddressBook * ) ),
              this, SLOT( insertAddressBook( AddressBook * ) ) );
   }
+#endif
 
   initCollections();
 
@@ -456,7 +460,9 @@ void RecipientsPicker::initCollections()
   mSelectedRecipients = new RecipientsCollection( i18n("Selected Recipients") );
 
   insertCollection( mAllRecipients );
+#ifndef KDEPIM_NO_KRESOURCES
   insertAddressBook( mAddressBook );
+#endif
   insertCollection( mDistributionLists );
   insertRecentAddresses();
   insertCollection( mSelectedRecipients );
@@ -468,6 +474,7 @@ void RecipientsPicker::insertAddressBook( KABC::AddressBook *addressbook )
 {
   QMap<KABC::Resource *,RecipientsCollection *> collectionMap;
 
+#ifndef KDEPIM_NO_KRESOURCES
   QList<KABC::Resource*> resources = addressbook->resources();
   QList<KABC::Resource*>::const_iterator rit;
   for( rit = resources.constBegin(); rit != resources.constEnd() ; ++rit ) {
@@ -539,6 +546,7 @@ void RecipientsPicker::insertAddressBook( KABC::AddressBook *addressbook )
   for( it3 = categoryMap.constBegin(); it3 != categoryMap.constEnd(); ++it3 ) {
     insertCollection( *it3 );
   }
+#endif
 
   insertDistributionLists();
   rebuildAllRecipientsList();
@@ -549,12 +557,14 @@ void RecipientsPicker::insertDistributionLists()
 {
   mDistributionLists->deleteAll();
 
+#ifndef KDEPIM_NO_KRESOURCES
   QList<KABC::DistributionList*> lists = mAddressBook->allDistributionLists();
   foreach ( KABC::DistributionList *list, lists ) {
     RecipientItem *item = new RecipientItem;
     item->setDistributionList( list );
     mDistributionLists->addItem( item );
   }
+#endif
 }
 
 void RecipientsPicker::insertRecentAddresses()
