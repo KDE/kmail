@@ -118,8 +118,8 @@ KMFolder * ImportJob::createSubFolder( KMFolder *parent, const QString &folderNa
     newFolder->createChildFolder(); // TODO: Just creating a child folder here is wasteful, only do
                                     //       that if really needed. We do it here so we can set the
                                     //       permissions
-    chmod( newFolder->location().latin1(), permissions );
-    chmod( newFolder->subdirLocation().latin1(), permissions );
+    chmod( newFolder->location().latin1(), permissions | S_IXUSR );
+    chmod( newFolder->subdirLocation().latin1(), permissions | S_IXUSR );
     // TODO: chown?
     // TODO: what about subdirectories like "cur"?
     return newFolder;
