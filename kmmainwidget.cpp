@@ -21,23 +21,92 @@
 
 //#define TEST_DOCKWIDGETS 1
 
-#include <assert.h>
-#include <QByteArray>
-#include <QLabel>
-#include <QLayout>
-#include <QList>
-#include <QSignalMapper>
-#include <QSplitter>
-#include <QToolBar>
-#include <QTextDocument>
-#include <QVBoxLayout>
-#include <QDBusConnection>
-#include <QDBusMessage>
-#include <QShortcut>
-#include <QProcess>
-#include <QDockWidget> // TEST_DOCKWIDGETS
-#include <QMainWindow> // TEST_DOCKWIDGETS
+// KMail includes
+#include "kmfilter.h"
+#include "kmreadermainwin.h"
+#include "foldershortcutdialog.h"
+#include "composer.h"
+#include "kmfiltermgr.h"
+#include "messagesender.h"
+#include "kmversion.h"
+#include "searchwindow.h"
+#include "collectiontemplatespage.h"
+#include "collectionmaintenancepage.h"
+#include "collectiongeneralpage.h"
+#include "collectionviewpage.h"
+#include "collectionquotapage.h"
+#include "collectionaclpage.h"
+#include "mailinglist-magic.h"
+#include "antispamwizard.h"
+#include "filterlogdlg.h"
+#include "mailinglistpropertiesdialog.h"
+#include "templateparser.h"
+#include "statusbarlabel.h"
+#include "actionscheduler.h"
+#include "expirypropertiesdialog.h"
+#include "undostack.h"
+#include "kmcommands.h"
+#include "kmmainwin.h"
+#include "kmsystemtray.h"
+#include "vacation.h"
+#include "managesievescriptsdialog.h"
+#include "customtemplatesmenu.h"
+#include "messagehelper.h"
+#include "folderselectiontreeviewdialog.h"
+#include "folderselectiontreeview.h"
+#include "util.h"
+#include "archivefolderdialog.h"
+#include "tagging.h"
+#include "globalsettings.h"
+#include "foldertreeview.h"
+#include "kmagentmanager.h"
+#if !defined(NDEBUG)
+    #include "sievedebugdialog.h"
+    using KMail::SieveDebugDialog;
+#endif
 
+// Other PIM includes
+#include "messageviewer/autoqpointer.h"
+#include "messageviewer/viewer.h"
+#include "messageviewer/attachmentstrategy.h"
+#include "messageviewer/headerstrategy.h"
+#include "messageviewer/headerstyle.h"
+#include "messageviewer/kcursorsaver.h"
+#include "messagelist/pane.h"
+
+
+// LIBKDEPIM includes
+#include "progressmanager.h"
+#include "broadcaststatus.h"
+
+// KDEPIMLIBS includes
+#include <akonadi/itemfetchjob.h>
+#include <akonadi/collectionfetchjob.h>
+#include <akonadi/collectionfetchscope.h>
+#include <akonadi/contact/contactsearchjob.h>
+#include <akonadi/collectionpropertiesdialog.h>
+#include <akonadi/entitydisplayattribute.h>
+#include <akonadi/agentinstance.h>
+#include <akonadi/agenttype.h>
+#include <akonadi/changerecorder.h>
+#include <akonadi/session.h>
+#include <akonadi/entitytreemodel.h>
+#include <akonadi/favoritecollectionsmodel.h>
+#include <akonadi/itemfetchscope.h>
+#include <akonadi/entitytreeviewstatesaver.h>
+#include <akonadi/control.h>
+#include <akonadi/entitytreeview.h>
+#include <akonadi/collectiondialog.h>
+#include <akonadi/collectionstatistics.h>
+#include <kpimidentities/identity.h>
+#include <kpimidentities/identitymanager.h>
+#include <kpimutils/email.h>
+#include <mailtransport/transportmanager.h>
+#include <mailtransport/transport.h>
+#include <kmime/kmime_mdn.h>
+#include <kmime/kmime_header_parsing.h>
+
+// KDELIBS includes
 #include <kaboutdata.h>
 #include <kicon.h>
 #include <kwindowsystem.h>
@@ -70,117 +139,40 @@
 #include <kvbox.h>
 #include <ktreewidgetsearchline.h>
 
-#include <kpimidentities/identity.h>
-#include <kpimidentities/identitymanager.h>
-#include <mailtransport/transportmanager.h>
-#include <mailtransport/transport.h>
+// Qt includes
+#include <QByteArray>
+#include <QLabel>
+#include <QLayout>
+#include <QList>
+#include <QSignalMapper>
+#include <QSplitter>
+#include <QToolBar>
+#include <QTextDocument>
+#include <QVBoxLayout>
+#include <QDBusConnection>
+#include <QDBusMessage>
+#include <QShortcut>
+#include <QProcess>
+#include <QDockWidget> // TEST_DOCKWIDGETS
+#include <QMainWindow> // TEST_DOCKWIDGETS
 
-#include <kmime/kmime_mdn.h>
-#include <kmime/kmime_header_parsing.h>
-using namespace KMime;
-using KMime::Types::AddrSpecList;
-
-#include "progressmanager.h"
-using KPIM::ProgressManager;
-#include "globalsettings.h"
-#include "messageviewer/kcursorsaver.h"
-#include "broadcaststatus.h"
-using KPIM::BroadcastStatus;
-#include "kmfilter.h"
-#include "kmreadermainwin.h"
-#include "foldershortcutdialog.h"
-#include "composer.h"
-#include "kmfiltermgr.h"
-#include "messagesender.h"
-#include "kmversion.h"
-#include "searchwindow.h"
-using KMail::SearchWindow;
-#include "undostack.h"
-#include "kmcommands.h"
-#include "kmmainwin.h"
-#include "kmsystemtray.h"
-#include "vacation.h"
-using KMail::Vacation;
-//#include "subscriptiondialog.h"
-//using KMail::SubscriptionDialog;
-//#include "localsubscriptiondialog.h"
-//using KMail::LocalSubscriptionDialog;
-#include "messageviewer/attachmentstrategy.h"
-using MessageViewer::AttachmentStrategy;
-#include "messageviewer/headerstrategy.h"
-#include "messageviewer/headerstyle.h"
-#include "mailinglist-magic.h"
-#include "antispamwizard.h"
-using KMail::AntiSpamWizard;
-#include "filterlogdlg.h"
-using KMail::FilterLogDialog;
-#include "mailinglistpropertiesdialog.h"
-#include "templateparser.h"
-using KMail::TemplateParser;
-#include "statusbarlabel.h"
-#include "actionscheduler.h"
-#include "expirypropertiesdialog.h"
-#include <akonadi/itemfetchjob.h>
-#include <akonadi/collectionfetchjob.h>
-#include <akonadi/collectionfetchscope.h>
-#include "util.h"
-#include "archivefolderdialog.h"
-#include "tagging.h"
-
-#if !defined(NDEBUG)
-    #include "sievedebugdialog.h"
-    using KMail::SieveDebugDialog;
-#endif
-
-#include "managesievescriptsdialog.h"
-#include "customtemplatesmenu.h"
-
-#include "messagehelper.h"
-
-#include "messageviewer/autoqpointer.h"
-#include "messageviewer/csshelper.h"
-
-#include "folderselectiontreeviewdialog.h"
-#include "folderselectiontreeview.h"
-
-#include <akonadi/contact/contactsearchjob.h>
-#include <kpimutils/email.h>
-
+// System includes
+#include <assert.h>
 #include <errno.h> // ugh
 
-#include "foldertreeview.h"
-
-#include <akonadi/changerecorder.h>
-#include <akonadi/session.h>
-#include <akonadi/entitytreemodel.h>
-#include <akonadi/favoritecollectionsmodel.h>
-#include <akonadi/itemfetchscope.h>
-#include <akonadi/entitytreeviewstatesaver.h>
-#include <akonadi/control.h>
-
-#include <messageviewer/viewer.h>
-
-#include <messagelist/pane.h>
-#include <akonadi/entitytreeview.h>
-#include <akonadi/collectiondialog.h>
-#include <akonadi/collectionstatistics.h>
-
-#include "collectiontemplatespage.h"
-#include "collectionmaintenancepage.h"
-#include "collectiongeneralpage.h"
-#include "collectionviewpage.h"
-#include "collectionquotapage.h"
-#include "collectionaclpage.h"
-
-#include <akonadi/collectionpropertiesdialog.h>
-#include <akonadi/entitydisplayattribute.h>
-#include <akonadi/agentinstance.h>
-#include <akonadi/agenttype.h>
-
-
-#include "kmagentmanager.h"
 #include "kmmainwidget.moc"
+
+using namespace KMime;
 using namespace Akonadi;
+using KPIM::ProgressManager;
+using KPIM::BroadcastStatus;
+using KMail::SearchWindow;
+using KMail::Vacation;
+using KMail::AntiSpamWizard;
+using KMail::FilterLogDialog;
+using KMail::TemplateParser;
+using KMime::Types::AddrSpecList;
+using MessageViewer::AttachmentStrategy;
 
 AKONADI_COLLECTION_PROPERTIES_PAGE_FACTORY(CollectionTemplatesPageFactory, CollectionTemplatesPage )
 AKONADI_COLLECTION_PROPERTIES_PAGE_FACTORY(CollectionMaintenancePageFactory, CollectionMaintenancePage )
