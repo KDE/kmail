@@ -157,18 +157,6 @@ void KMReaderMainWin::slotTrashMsg()
 }
 
 //-----------------------------------------------------------------------------
-void KMReaderMainWin::slotPrintMsg()
-{
-  KMPrintCommand *command = new KMPrintCommand( this, mReaderWin->message(),
-      mReaderWin->headerStyle(), mReaderWin->headerStrategy(),
-      mReaderWin->htmlOverride(), mReaderWin->htmlLoadExtOverride(),
-      mReaderWin->isFixedFont(), mReaderWin->overrideEncoding() );
-  command->setOverrideFont( mReaderWin->cssHelper()->bodyFont( mReaderWin->isFixedFont(), true /*printing*/ ) );
-  command->setAttachmentStrategy( mReaderWin->attachmentStrategy() );
-  command->start();
-}
-
-//-----------------------------------------------------------------------------
 void KMReaderMainWin::slotForwardInlineMsg()
 {
    KMCommand *command = 0;
@@ -262,8 +250,6 @@ void KMReaderMainWin::setupAccel()
   mSaveAsAction = KStandardAction::saveAs( mReaderWin->viewer(), SLOT( slotSaveMessage() ),
                                            actionCollection() );
   mSaveAsAction->setShortcut( KStandardShortcut::shortcut( KStandardShortcut::Save ) );
-
-  mPrintAction = KStandardAction::print( this, SLOT( slotPrintMsg() ), actionCollection() );
 
   mSaveAtmAction  = new KAction(KIcon("mail-attachment"), i18n("Save A&ttachments..."), actionCollection() );
   connect( mSaveAtmAction, SIGNAL(triggered(bool)), mReaderWin->viewer(), SLOT(slotAttachmentSaveAs()) );
@@ -421,7 +407,7 @@ void KMReaderMainWin::slotMessagePopup(const Akonadi::Item&aMsg ,const KUrl&aUrl
     menu->addAction( mReaderWin->toggleFixFontAction() );
     menu->addAction( mReaderWin->toggleMimePartTreeAction() );
     menu->addSeparator();
-    menu->addAction( mPrintAction );
+    menu->addAction( mMsgActions->printAction() );
     menu->addAction( mSaveAsAction );
     menu->addAction( mSaveAtmAction );
     menu->addAction( mMsgActions->createTodoAction() );

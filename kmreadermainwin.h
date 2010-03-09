@@ -54,7 +54,6 @@ public:
 private slots:
   void slotMessagePopup(const Akonadi::Item& ,const KUrl&,const QPoint& );
   void slotTrashMsg();
-  void slotPrintMsg();
   void slotForwardInlineMsg();
   void slotForwardAttachedMsg();
   void slotRedirectMsg();

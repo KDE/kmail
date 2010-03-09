@@ -78,6 +78,7 @@ class MessageActions : public QObject
 
     KAction* editAction() const { return mEditAction; }
     KAction* annotateAction() const { return mAnnotateAction; }
+    KAction* printAction() const { return mPrintAction; }
 
     KActionMenu* mailingListActionMenu() const { return mMailingListActionMenu; }
 
@@ -113,6 +114,7 @@ class MessageActions : public QObject
     void slotSetMsgStatusToAct();
     void slotSetMsgStatusFlag();
     void slotRunUrl( QAction *urlAction );
+    void slotPrintMsg();
 
   private:
     QWidget *mParent;
@@ -131,7 +133,7 @@ class MessageActions : public QObject
     KActionMenu *mForwardActionMenu;
     KActionMenu *mMailingListActionMenu;
     KToggleAction *mToggleFlagAction, *mToggleToActAction;
-    KAction *mEditAction, *mAnnotateAction;
+    KAction *mEditAction, *mAnnotateAction, *mPrintAction;
     bool mKorganizerIsOnSystem;
 };
 

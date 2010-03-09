@@ -2469,31 +2469,6 @@ void KMMainWidget::slotStartWatchGnuPG()
                                     i18n( "KMail Error" ) );
 }
 
-
-//-----------------------------------------------------------------------------
-void KMMainWidget::slotPrintMsg()
-{
-  Akonadi::Item msg = mMessagePane->currentItem();
-  if ( !msg.isValid() )
-    return;
-
-  bool htmlOverride = mMsgView ? mMsgView->htmlOverride() : false;
-  bool htmlLoadExtOverride = mMsgView ? mMsgView->htmlLoadExtOverride() : false;
-  KConfigGroup reader( KMKernel::config(), "Reader" );
-  bool useFixedFont = mMsgView ? mMsgView->isFixedFont() : GlobalSettings::self()->useFixedFont();
-  // FIXME: Remove code duplication with KMReaderMainWin::slotPrintMsg. Maybe move to MessageActions?
-  KMPrintCommand *command =
-    new KMPrintCommand( this, msg,
-                        mMsgView ? mMsgView->headerStyle() : 0,
-                        mMsgView ? mMsgView->headerStrategy() : 0,
-                        htmlOverride, htmlLoadExtOverride,
-                        useFixedFont, overrideEncoding() );
-  command->setAttachmentStrategy( mMsgView ? mMsgView->attachmentStrategy() : 0 );
-  if ( mMsgView )
-    command->setOverrideFont( mMsgView->cssHelper()->bodyFont( mMsgView->isFixedFont(), true /*printing*/ ) );
-  command->start();
-}
-
 //-----------------------------------------------------------------------------
 void KMMainWidget::slotConfigChanged()
 {
@@ -2943,7 +2918,7 @@ void KMMainWidget::slotMessagePopup(const Akonadi::Item&msg ,const KUrl&aUrl,con
       menu->addAction( mMsgView->toggleMimePartTreeAction() );
     }
     menu->addSeparator();
-    menu->addAction( mPrintAction );
+    menu->addAction( mMsgActions->printAction() );
     menu->addAction( mSaveAsAction );
     menu->addAction( mSaveAttachmentsAction );
 
@@ -3342,8 +3317,6 @@ void KMMainWidget::setupActions()
   actionCollection()->addAction("mlist_filter", mListFilterAction );
   connect(mListFilterAction, SIGNAL(triggered(bool) ), SLOT(slotMailingListFilter()));
   mFilterMenu->addAction( mListFilterAction );
-
-  mPrintAction = KStandardAction::print (this, SLOT(slotPrintMsg()), actionCollection());
 
   mUseAction = new KAction( KIcon("document-new"), i18n("New Message From &Template"), this );
   actionCollection()->addAction("use_template", mUseAction);
@@ -3820,7 +3793,7 @@ void KMMainWidget::updateMessageActions()
   }
 
   // "Print" will act on the current message: it will ignore any hidden selection
-  printAction()->setEnabled( singleVisibleMessageSelected );
+  mMsgActions->printAction()->setEnabled( singleVisibleMessageSelected );
 
   // "View Source" will act on the current message: it will ignore any hidden selection
   viewSourceAction()->setEnabled( singleVisibleMessageSelected );

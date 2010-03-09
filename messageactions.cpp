@@ -25,6 +25,7 @@
 #include "util.h"
 
 #include "messagecore/annotationdialog.h"
+#include "messageviewer/csshelper.h"
 
 #include <Nepomuk/Resource>
 
@@ -160,6 +161,8 @@ MessageActions::MessageActions( KActionCollection *ac, QWidget* parent ) :
   mActionCollection->addAction( "annotate", mAnnotateAction );
   connect( mAnnotateAction, SIGNAL(triggered(bool)),
            this, SLOT(annotateMessage()) );
+
+  mPrintAction = KStandardAction::print( this, SLOT( slotPrintMsg() ), mActionCollection );
 
   mForwardActionMenu  = new KActionMenu(KIcon("mail-forward"), i18nc("Message->","&Forward"), this);
   mActionCollection->addAction("message_forward", mForwardActionMenu );
@@ -439,6 +442,32 @@ void MessageActions::slotRunUrl( QAction *urlAction )
   if ( q.type() == QVariant::String ) {
     new KRun( KUrl( q.toString() ) , mParent );
   }
+}
+
+void MessageActions::slotPrintMsg()
+{
+  const bool htmlOverride = mMessageView ? mMessageView->htmlOverride() : false;
+  const bool htmlLoadExtOverride = mMessageView ? mMessageView->htmlLoadExtOverride() : false;
+  const bool useFixedFont = mMessageView ? mMessageView->isFixedFont() :
+                                           GlobalSettings::self()->useFixedFont();
+  const QString overrideEncoding = mMessageView ? mMessageView->overrideEncoding() :
+                                                  GlobalSettings::self()->overrideCharacterEncoding();
+
+  // FIXME: This is broken when the Viewer shows an encapsulated message
+  const Akonadi::Item message = mMessageView ? mMessageView->message() : mCurrentItem;
+  KMPrintCommand *command =
+    new KMPrintCommand( mParent, message,
+                        mMessageView ? mMessageView->headerStyle() : 0,
+                        mMessageView ? mMessageView->headerStrategy() : 0,
+                        htmlOverride, htmlLoadExtOverride,
+                        useFixedFont, overrideEncoding );
+
+  if ( mMessageView ) {
+    command->setAttachmentStrategy( mMessageView->attachmentStrategy() );
+    command->setOverrideFont( mMessageView->cssHelper()->bodyFont(
+        mMessageView->isFixedFont(), true /*printing*/ ) );
+  }
+  command->start();
 }
 
 void MessageActions::setMessageStatus( KPIM::MessageStatus status, bool toggle )

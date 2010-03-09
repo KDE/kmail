@@ -135,7 +135,6 @@ class KMAIL_EXPORT KMMainWidget : public QWidget
     QAction *action( const char *name ) { return mActionCollection->action( name ); }
     KActionMenu *filterMenu() const { return mFilterMenu; }
     KActionMenu *mailingListActionMenu() const { return mMsgActions->mailingListActionMenu(); }
-    KAction *printAction() const { return mPrintAction; }
     KAction *trashAction() const { return mTrashAction; }
     KAction *deleteAction() const { return mDeleteAction; }
     KAction *trashThreadAction() const { return mTrashThreadAction; }
@@ -441,7 +440,6 @@ class KMAIL_EXPORT KMMainWidget : public QWidget
     void slotMailingListFilter();
     void slotFromFilter();
     void slotToFilter();
-    void slotPrintMsg();
     void slotCreateTodo();
 
     void slotConfigChanged();
@@ -547,8 +545,6 @@ private:
       *mSendAgainAction, *mApplyAllFiltersAction, *mFindInMessageAction,
       *mSaveAttachmentsAction, *mOpenAction, *mViewSourceAction,
       *mRefreshImapCacheAction, *mMoveMsgToFolderAction, *mCollectionProperties;
-    // Composition actions
-    KAction *mPrintAction;
     // Filter actions
     KActionMenu *mFilterMenu;
     KAction *mSubjectFilterAction, *mFromFilterAction, *mToFilterAction,
