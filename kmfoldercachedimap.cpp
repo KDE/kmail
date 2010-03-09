@@ -201,7 +201,7 @@ KMFolderCachedImap::KMFolderCachedImap( KMFolder* folder, const char* aName )
     mSharedSeenFlagsChanged( false ),
     mStatusChangedLocally( false ),
     mPersonalNamespacesCheckDone( true ),
-    mQuotaInfo(), mAlarmsBlocked( false ),
+    mQuotaInfo(), mSomeSubFolderCloseToQuotaChanged( false ), mAlarmsBlocked( false ),
     mRescueCommandCount( 0 ),
     mPermanentFlags( 31 ) // assume standard flags by default (see imap4/imapinfo.h for bit fields values)
 {
@@ -795,32 +795,33 @@ void KMFolderCachedImap::serverSync( bool recurse )
 QString KMFolderCachedImap::state2String( int state ) const
 {
   switch( state ) {
-  case SYNC_STATE_INITIAL:           return "SYNC_STATE_INITIAL";
-  case SYNC_STATE_GET_USERRIGHTS:    return "SYNC_STATE_GET_USERRIGHTS";
-  case SYNC_STATE_PUT_MESSAGES:      return "SYNC_STATE_PUT_MESSAGES";
-  case SYNC_STATE_UPLOAD_FLAGS:      return "SYNC_STATE_UPLOAD_FLAGS";
-  case SYNC_STATE_CREATE_SUBFOLDERS: return "SYNC_STATE_CREATE_SUBFOLDERS";
-  case SYNC_STATE_LIST_SUBFOLDERS:   return "SYNC_STATE_LIST_SUBFOLDERS";
-  case SYNC_STATE_LIST_NAMESPACES:   return "SYNC_STATE_LIST_NAMESPACES";
-  case SYNC_STATE_LIST_SUBFOLDERS2:  return "SYNC_STATE_LIST_SUBFOLDERS2";
-  case SYNC_STATE_DELETE_SUBFOLDERS: return "SYNC_STATE_DELETE_SUBFOLDERS";
-  case SYNC_STATE_LIST_MESSAGES:     return "SYNC_STATE_LIST_MESSAGES";
-  case SYNC_STATE_DELETE_MESSAGES:   return "SYNC_STATE_DELETE_MESSAGES";
-  case SYNC_STATE_GET_MESSAGES:      return "SYNC_STATE_GET_MESSAGES";
-  case SYNC_STATE_EXPUNGE_MESSAGES:  return "SYNC_STATE_EXPUNGE_MESSAGES";
-  case SYNC_STATE_HANDLE_INBOX:      return "SYNC_STATE_HANDLE_INBOX";
-  case SYNC_STATE_TEST_ANNOTATIONS:  return "SYNC_STATE_TEST_ANNOTATIONS";
-  case SYNC_STATE_GET_ANNOTATIONS:   return "SYNC_STATE_GET_ANNOTATIONS";
-  case SYNC_STATE_SET_ANNOTATIONS:   return "SYNC_STATE_SET_ANNOTATIONS";
-  case SYNC_STATE_GET_ACLS:          return "SYNC_STATE_GET_ACLS";
-  case SYNC_STATE_SET_ACLS:          return "SYNC_STATE_SET_ACLS";
-  case SYNC_STATE_GET_QUOTA:         return "SYNC_STATE_GET_QUOTA";
-  case SYNC_STATE_FIND_SUBFOLDERS:   return "SYNC_STATE_FIND_SUBFOLDERS";
-  case SYNC_STATE_SYNC_SUBFOLDERS:   return "SYNC_STATE_SYNC_SUBFOLDERS";
-  case SYNC_STATE_RENAME_FOLDER:     return "SYNC_STATE_RENAME_FOLDER";
-  case SYNC_STATE_CHECK_UIDVALIDITY: return "SYNC_STATE_CHECK_UIDVALIDITY";
-  case SYNC_STATE_CLOSE:             return "SYNC_STATE_CLOSE";
-  default:                           return "Unknown state";
+  case SYNC_STATE_INITIAL:             return "SYNC_STATE_INITIAL";
+  case SYNC_STATE_GET_USERRIGHTS:      return "SYNC_STATE_GET_USERRIGHTS";
+  case SYNC_STATE_PUT_MESSAGES:        return "SYNC_STATE_PUT_MESSAGES";
+  case SYNC_STATE_UPLOAD_FLAGS:        return "SYNC_STATE_UPLOAD_FLAGS";
+  case SYNC_STATE_CREATE_SUBFOLDERS:   return "SYNC_STATE_CREATE_SUBFOLDERS";
+  case SYNC_STATE_LIST_SUBFOLDERS:     return "SYNC_STATE_LIST_SUBFOLDERS";
+  case SYNC_STATE_LIST_NAMESPACES:     return "SYNC_STATE_LIST_NAMESPACES";
+  case SYNC_STATE_LIST_SUBFOLDERS2:    return "SYNC_STATE_LIST_SUBFOLDERS2";
+  case SYNC_STATE_DELETE_SUBFOLDERS:   return "SYNC_STATE_DELETE_SUBFOLDERS";
+  case SYNC_STATE_LIST_MESSAGES:       return "SYNC_STATE_LIST_MESSAGES";
+  case SYNC_STATE_DELETE_MESSAGES:     return "SYNC_STATE_DELETE_MESSAGES";
+  case SYNC_STATE_GET_MESSAGES:        return "SYNC_STATE_GET_MESSAGES";
+  case SYNC_STATE_EXPUNGE_MESSAGES:    return "SYNC_STATE_EXPUNGE_MESSAGES";
+  case SYNC_STATE_HANDLE_INBOX:        return "SYNC_STATE_HANDLE_INBOX";
+  case SYNC_STATE_TEST_ANNOTATIONS:    return "SYNC_STATE_TEST_ANNOTATIONS";
+  case SYNC_STATE_GET_ANNOTATIONS:     return "SYNC_STATE_GET_ANNOTATIONS";
+  case SYNC_STATE_SET_ANNOTATIONS:     return "SYNC_STATE_SET_ANNOTATIONS";
+  case SYNC_STATE_GET_ACLS:            return "SYNC_STATE_GET_ACLS";
+  case SYNC_STATE_SET_ACLS:            return "SYNC_STATE_SET_ACLS";
+  case SYNC_STATE_GET_QUOTA:           return "SYNC_STATE_GET_QUOTA";
+  case SYNC_STATE_FIND_SUBFOLDERS:     return "SYNC_STATE_FIND_SUBFOLDERS";
+  case SYNC_STATE_SYNC_SUBFOLDERS:     return "SYNC_STATE_SYNC_SUBFOLDERS";
+  case SYNC_STATE_RENAME_FOLDER:       return "SYNC_STATE_RENAME_FOLDER";
+  case SYNC_STATE_CHECK_UIDVALIDITY:   return "SYNC_STATE_CHECK_UIDVALIDITY";
+  case SYNC_STATE_CLOSE:               return "SYNC_STATE_CLOSE";
+  case SYNC_STATE_GET_SUBFOLDER_QUOTA: return "SYNC_STATE_GET_SUBFOLDER_QUOTA";
+  default:                             return "Unknown state";
   }
 }
 
@@ -1251,72 +1252,25 @@ void KMFolderCachedImap::serverSyncInternal()
     }
   case SYNC_STATE_FIND_SUBFOLDERS:
     {
-      mProgress = 98;
-      newState( mProgress, i18n("Updating cache file"));
-
       mSyncState = SYNC_STATE_SYNC_SUBFOLDERS;
-      mSubfoldersForSync.clear();
-      mCurrentSubfolder = 0;
-      if( folder() && folder()->child() ) {
-        KMFolderNode *node = folder()->child()->first();
-        while( node ) {
-          if( !node->isDir() ) {
-            KMFolderCachedImap* storage = static_cast<KMFolderCachedImap*>(static_cast<KMFolder*>(node)->storage());
-            // Only sync folders that have been accepted by the server
-            if ( !storage->imapPath().isEmpty()
-                 // and that were not just deleted from it
-                 && !foldersForDeletionOnServer.contains( storage->imapPath() ) ) {
-              mSubfoldersForSync << storage;
-            } else {
-              kdDebug(5006) << "Do not add " << storage->label()
-                << " to synclist" << endl;
-            }
-          }
-          node = folder()->child()->next();
-        }
-      }
-
-    // All done for this folder.
-    mProgress = 100; // all done
-    newState( mProgress, i18n("Synchronization done"));
-      KURL url = mAccount->getUrl();
-      url.setPath( imapPath() );
-      kmkernel->iCalIface().folderSynced( folder(), url );
+      mSomeSubFolderCloseToQuotaChanged = false;
+      buildSubFolderList();
     }
-
-    if ( !mRecurse ) // "check mail for this folder" only
-      mSubfoldersForSync.clear();
 
     // Carry on
   case SYNC_STATE_SYNC_SUBFOLDERS:
-    {
-      if( mCurrentSubfolder ) {
-        disconnectSubFolderSignals();
-      }
+    syncNextSubFolder( false );
+    break;
+  case SYNC_STATE_GET_SUBFOLDER_QUOTA:
 
-      if( mSubfoldersForSync.isEmpty() ) {
-        // Quota checking has to come after syncing subfolder, otherwise the quota information would
-        // be outdated, since the subfolders can change in size during the syncing.
-        // https://issues.kolab.org/issue4066
-        mSyncState = SYNC_STATE_GET_QUOTA;
-        serverSyncInternal();
-      } else {
-        mCurrentSubfolder = mSubfoldersForSync.front();
-        mSubfoldersForSync.pop_front();
-        connect( mCurrentSubfolder, SIGNAL( folderComplete(KMFolderCachedImap*, bool) ),
-                 this, SLOT( slotSubFolderComplete(KMFolderCachedImap*, bool) ) );
-
-        //kdDebug(5006) << "Sync'ing subfolder " << mCurrentSubfolder->imapPath() << endl;
-        assert( !mCurrentSubfolder->imapPath().isEmpty() );
-        mCurrentSubfolder->setAccount( account() );
-        bool recurse = mCurrentSubfolder->noChildren() ? false : true;
-        mCurrentSubfolder->serverSync( recurse );
-      }
-    }
+    // Sync the subfolders again, so that the quota information is updated for all. This state is
+    // only entered if the close to quota property of one subfolder changed in the previous state.
+    syncNextSubFolder( true );
     break;
   case SYNC_STATE_GET_QUOTA:
     mSyncState = SYNC_STATE_CLOSE;
     if( !noContent() && mAccount->hasQuotaSupport() ) {
+      mProgress = 98;
       newState( mProgress, i18n("Getting quota information"));
       KURL url = mAccount->getUrl();
       url.setPath( imapPath() );
@@ -1331,6 +1285,12 @@ void KMFolderCachedImap::serverSyncInternal()
     }
   case SYNC_STATE_CLOSE:
     {
+      mProgress = 100; // all done
+      newState( mProgress, i18n("Synchronization done"));
+      KURL url = mAccount->getUrl();
+      url.setPath( imapPath() );
+      kmkernel->iCalIface().folderSynced( folder(), url );
+
       mSyncState = SYNC_STATE_INITIAL;
       mAccount->addUnreadMsgCount( this, countUnread() ); // before closing
       close( "cachedimap" );
@@ -1340,14 +1300,83 @@ void KMFolderCachedImap::serverSyncInternal()
 
   default:
     kdDebug(5006) << "KMFolderCachedImap::serverSyncInternal() WARNING: no such state "
-              << mSyncState << endl;
+                  << mSyncState << endl;
   }
+}
+
+void KMFolderCachedImap::syncNextSubFolder( bool secondSync )
+{
+  if( mCurrentSubfolder ) {
+    disconnectSubFolderSignals();
+  }
+
+  if( mSubfoldersForSync.isEmpty() ) {
+
+    // Sync finished, and a close to quota property of an subfolder changed, therefore go into
+    // the SYNC_STATE_GET_SUBFOLDER_QUOTA state and sync again
+    if ( mSomeSubFolderCloseToQuotaChanged && mRecurse && !secondSync ) {
+      buildSubFolderList();
+      mSyncState = SYNC_STATE_GET_SUBFOLDER_QUOTA;
+      serverSyncInternal();
+    }
+
+    else {
+
+      // Quota checking has to come after syncing subfolder, otherwise the quota information would
+      // be outdated, since the subfolders can change in size during the syncing.
+      // https://issues.kolab.org/issue4066
+      mSyncState = SYNC_STATE_GET_QUOTA;
+      serverSyncInternal();
+    }
+  } else {
+    mCurrentSubfolder = mSubfoldersForSync.front();
+    mSubfoldersForSync.pop_front();
+    connect( mCurrentSubfolder, SIGNAL( folderComplete(KMFolderCachedImap*, bool) ),
+             this, SLOT( slotSubFolderComplete(KMFolderCachedImap*, bool) ) );
+    connect( mCurrentSubfolder, SIGNAL( closeToQuotaChanged() ),
+             this, SLOT( slotSubFolderCloseToQuotaChanged() ) );
+
+    //kdDebug(5006) << "Sync'ing subfolder " << mCurrentSubfolder->imapPath() << endl;
+    assert( !mCurrentSubfolder->imapPath().isEmpty() );
+    mCurrentSubfolder->setAccount( account() );
+    bool recurse = mCurrentSubfolder->noChildren() ? false : true;
+    mCurrentSubfolder->serverSync( recurse );
+  }
+}
+
+void KMFolderCachedImap::buildSubFolderList()
+{
+  mSubfoldersForSync.clear();
+  mCurrentSubfolder = 0;
+  if( folder() && folder()->child() ) {
+    KMFolderNode *node = folder()->child()->first();
+    while( node ) {
+      if( !node->isDir() ) {
+        KMFolderCachedImap* storage = static_cast<KMFolderCachedImap*>(static_cast<KMFolder*>(node)->storage());
+        // Only sync folders that have been accepted by the server
+        if ( !storage->imapPath().isEmpty()
+             // and that were not just deleted from it
+             && !foldersForDeletionOnServer.contains( storage->imapPath() ) ) {
+          mSubfoldersForSync << storage;
+        } else {
+          kdDebug(5006) << "Do not add " << storage->label()
+                        << " to synclist" << endl;
+        }
+      }
+      node = folder()->child()->next();
+    }
+  }
+
+  if ( !mRecurse ) // "check mail for this folder" only
+    mSubfoldersForSync.clear();
 }
 
 void KMFolderCachedImap::disconnectSubFolderSignals()
 {
   disconnect( mCurrentSubfolder, SIGNAL( folderComplete(KMFolderCachedImap*, bool) ),
               this, SLOT( slotSubFolderComplete(KMFolderCachedImap*, bool) ) );
+  disconnect( mCurrentSubfolder, SIGNAL( closeToQuotaChanged() ),
+              this, SLOT( slotSubFolderCloseToQuotaChanged() ) );
   mCurrentSubfolder = 0;
 }
 
@@ -2361,6 +2390,11 @@ void KMFolderCachedImap::slotSubFolderComplete(KMFolderCachedImap* sub, bool suc
   }
 }
 
+void KMFolderCachedImap::slotSubFolderCloseToQuotaChanged()
+{
+  mSomeSubFolderCloseToQuotaChanged = true;
+}
+
 void KMFolderCachedImap::slotSimpleData(KIO::Job * job, const QByteArray & data)
 {
   KMAcctCachedImap::JobIterator it = mAccount->findJob(job);
@@ -2444,8 +2478,12 @@ KMFolderCachedImap::slotStorageQuotaResult( const QuotaInfo& info )
 void KMFolderCachedImap::setQuotaInfo( const QuotaInfo & info )
 {
     if ( info != mQuotaInfo ) {
+      const bool wasCloseToQuota = isCloseToQuota();
       mQuotaInfo = info;
       writeConfigKeysWhichShouldNotGetOverwrittenByReadConfig();
+      if ( wasCloseToQuota != isCloseToQuota() ) {
+        emit closeToQuotaChanged();
+      }
       emit folderSizeChanged();
     }
 }
