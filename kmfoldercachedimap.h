@@ -125,7 +125,7 @@ public:
   virtual void remove();
 
   /** Synchronize this folder and it's subfolders with the server */
-  virtual void serverSync( bool recurse );
+  virtual void serverSync( bool recurse, bool quotaOnly = false );
 
   /**  Force the sync state to be done. */
   void resetSyncState( );
@@ -470,8 +470,16 @@ private:
    */
   void disconnectSubFolderSignals();
 
+  /**
+   * Sync the next subfolder in the list of subfolders (mSubfoldersForSync).
+   * When finished, this will switch either to the state SYNC_STATE_GET_SUBFOLDER_QUOTA or
+   * to SYNC_STATE_GET_QUOTA.
+   */
   void syncNextSubFolder( bool secondSync );
 
+  /**
+   * Creates the mSubfoldersForSync list
+   */
   void buildSubFolderList();
 
   /** State variable for the synchronization mechanism */
@@ -568,6 +576,7 @@ private:
   bool mFolderRemoved;
   //bool mHoldSyncs;
   bool mRecurse;
+  bool mQuotaOnly;
 
   /// Set to true when the foldertype annotation needs to be set on the next sync
   bool mAnnotationFolderTypeChanged;

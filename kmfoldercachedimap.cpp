@@ -196,6 +196,7 @@ KMFolderCachedImap::KMFolderCachedImap( KMFolder* folder, const char* aName )
     /*mHoldSyncs( false ),*/
     mFolderRemoved( false ),
     mRecurse( true ),
+    mQuotaOnly( false ),
     mAnnotationFolderTypeChanged( false ),
     mIncidencesForChanged( false ),
     mSharedSeenFlagsChanged( false ),
@@ -758,7 +759,7 @@ void KMFolderCachedImap::slotTroubleshoot()
   }
 }
 
-void KMFolderCachedImap::serverSync( bool recurse )
+void KMFolderCachedImap::serverSync( bool recurse, bool quotaOnly )
 {
   if( mSyncState != SYNC_STATE_INITIAL ) {
     if( KMessageBox::warningYesNo( 0, i18n("Folder %1 is not in initial sync state (state was %2). Do you want to reset it to initial sync state and sync anyway?" ).arg( imapPath() ).arg( mSyncState ), QString::null, i18n("Reset && Sync"), KStdGuiItem::cancel() ) == KMessageBox::Yes ) {
@@ -767,6 +768,7 @@ void KMFolderCachedImap::serverSync( bool recurse )
   }
 
   mRecurse = recurse;
+  mQuotaOnly = quotaOnly;
   assert( account() );
 
   ProgressItem *progressItem = mAccount->mailCheckProgressItem();
@@ -911,7 +913,7 @@ void KMFolderCachedImap::serverSyncInternal()
 
     mSyncState = SYNC_STATE_RENAME_FOLDER;
 
-    if( !noContent() && mAccount->hasACLSupport() ) {
+    if( !mQuotaOnly && !noContent() && mAccount->hasACLSupport() ) {
       // Check the user's own rights. We do this every time in case they changed.
       mOldUserRights = mUserRights;
       newState( mProgress, i18n("Checking permissions"));
@@ -939,7 +941,7 @@ void KMFolderCachedImap::serverSyncInternal()
 
   case SYNC_STATE_CHECK_UIDVALIDITY:
     mSyncState = SYNC_STATE_CREATE_SUBFOLDERS;
-    if( !noContent() ) {
+    if( !mQuotaOnly && !noContent() ) {
       checkUidValidity();
       break;
     }
@@ -947,19 +949,21 @@ void KMFolderCachedImap::serverSyncInternal()
 
   case SYNC_STATE_CREATE_SUBFOLDERS:
     mSyncState = SYNC_STATE_PUT_MESSAGES;
-    createNewFolders();
-    break;
+    if ( !mQuotaOnly ) {
+      createNewFolders();
+      break;
+    }
 
   case SYNC_STATE_PUT_MESSAGES:
     mSyncState = SYNC_STATE_UPLOAD_FLAGS;
-    if( !noContent() ) {
+    if( !mQuotaOnly && !noContent() ) {
       uploadNewMessages();
       break;
     }
     // Else carry on
   case SYNC_STATE_UPLOAD_FLAGS:
     mSyncState = SYNC_STATE_LIST_NAMESPACES;
-    if( !noContent() ) {
+    if( !mQuotaOnly && !noContent() ) {
        // We haven't downloaded messages yet, so we need to build the map.
        if( uidMapDirty )
          reloadUidMap();
@@ -982,7 +986,7 @@ void KMFolderCachedImap::serverSyncInternal()
     // Else carry on
 
   case SYNC_STATE_LIST_NAMESPACES:
-    if ( this == mAccount->rootFolder() ) {
+    if ( !mQuotaOnly && this == mAccount->rootFolder() ) {
       listNamespaces();
       break;
     }
@@ -992,22 +996,26 @@ void KMFolderCachedImap::serverSyncInternal()
   case SYNC_STATE_LIST_SUBFOLDERS:
     newState( mProgress, i18n("Retrieving folderlist"));
     mSyncState = SYNC_STATE_LIST_SUBFOLDERS2;
-    if( !listDirectory() ) {
-      mSyncState = SYNC_STATE_INITIAL;
-      KMessageBox::error(0, i18n("Error while retrieving the folderlist"));
+    if ( !mQuotaOnly ) {
+      if( !listDirectory() ) {
+        mSyncState = SYNC_STATE_INITIAL;
+        KMessageBox::error(0, i18n("Error while retrieving the folderlist"));
+      }
+      break;
     }
-    break;
 
   case SYNC_STATE_LIST_SUBFOLDERS2:
     mSyncState = SYNC_STATE_DELETE_SUBFOLDERS;
     mProgress += 10;
-    newState( mProgress, i18n("Retrieving subfolders"));
-    listDirectory2();
-    break;
+    if ( !mQuotaOnly ) {
+      newState( mProgress, i18n("Retrieving subfolders"));
+      listDirectory2();
+      break;
+    }
 
   case SYNC_STATE_DELETE_SUBFOLDERS:
     mSyncState = SYNC_STATE_LIST_MESSAGES;
-    if( !foldersForDeletionOnServer.isEmpty() ) {
+    if( !mQuotaOnly && !foldersForDeletionOnServer.isEmpty() ) {
       newState( mProgress, i18n("Deleting folders from server"));
       CachedImapJob* job = new CachedImapJob( foldersForDeletionOnServer,
                                                   CachedImapJob::tDeleteFolders, this );
@@ -1022,7 +1030,7 @@ void KMFolderCachedImap::serverSyncInternal()
 
   case SYNC_STATE_LIST_MESSAGES:
     mSyncState = SYNC_STATE_DELETE_MESSAGES;
-    if( !noContent() ) {
+    if( !mQuotaOnly && !noContent() ) {
       newState( mProgress, i18n("Retrieving message list"));
       listMessages();
       break;
@@ -1031,7 +1039,7 @@ void KMFolderCachedImap::serverSyncInternal()
 
   case SYNC_STATE_DELETE_MESSAGES:
     mSyncState = SYNC_STATE_EXPUNGE_MESSAGES;
-    if( !noContent() ) {
+    if( !mQuotaOnly && !noContent() ) {
       if( deleteMessages() ) {
         // Fine, we will continue with the next state
       } else {
@@ -1046,7 +1054,7 @@ void KMFolderCachedImap::serverSyncInternal()
 
   case SYNC_STATE_EXPUNGE_MESSAGES:
     mSyncState = SYNC_STATE_GET_MESSAGES;
-    if( !noContent() ) {
+    if( !mQuotaOnly && !noContent() ) {
       newState( mProgress, i18n("Expunging deleted messages"));
       CachedImapJob *job = new CachedImapJob( QString::null,
                                               CachedImapJob::tExpungeFolder, this );
@@ -1059,7 +1067,7 @@ void KMFolderCachedImap::serverSyncInternal()
 
   case SYNC_STATE_GET_MESSAGES:
     mSyncState = SYNC_STATE_HANDLE_INBOX;
-    if( !noContent() ) {
+    if( !mQuotaOnly && !noContent() ) {
       if( !mMsgsForDownload.isEmpty() ) {
         newState( mProgress, i18n("Retrieving new messages"));
         CachedImapJob *job = new CachedImapJob( mMsgsForDownload,
@@ -1102,7 +1110,7 @@ void KMFolderCachedImap::serverSyncInternal()
   case SYNC_STATE_TEST_ANNOTATIONS:
     mSyncState = SYNC_STATE_GET_ANNOTATIONS;
     // The first folder with user rights to write annotations
-    if( !mAccount->annotationCheckPassed() &&
+    if( !mQuotaOnly && !mAccount->annotationCheckPassed() &&
          ( mUserRights <= 0 || ( mUserRights & ACLJobs::Administer ) )
          && !imapPath().isEmpty() && imapPath() != "/" ) {
       kdDebug(5006) << "Setting test attribute on folder: "<< folder()->prettyURL() << endl;
@@ -1134,7 +1142,7 @@ void KMFolderCachedImap::serverSyncInternal()
     mSyncState = SYNC_STATE_SET_ANNOTATIONS;
 
     bool needToGetInitialAnnotations = false;
-    if ( !noContent() ) {
+    if ( !mQuotaOnly && !noContent() ) {
       // for a folder we didn't create ourselves: get annotation from server
       if ( mAnnotationFolderType == "FROMSERVER" ) {
         needToGetInitialAnnotations = true;
@@ -1146,7 +1154,7 @@ void KMFolderCachedImap::serverSyncInternal()
 
     // First retrieve the annotation, so that we know we have to set it if it's not set.
     // On the other hand, if the user changed the contentstype, there's no need to get first.
-    if ( !noContent() && mAccount->hasAnnotationSupport() &&
+    if ( !mQuotaOnly && !noContent() && mAccount->hasAnnotationSupport() &&
         ( kmkernel->iCalIface().isEnabled() || needToGetInitialAnnotations ) ) {
       QStringList annotations; // list of annotations to be fetched
       if ( !mAnnotationFolderTypeChanged || mAnnotationFolderType.isEmpty() )
@@ -1176,7 +1184,7 @@ void KMFolderCachedImap::serverSyncInternal()
   case SYNC_STATE_SET_ANNOTATIONS:
 
     mSyncState = SYNC_STATE_SET_ACLS;
-    if ( !noContent() && mAccount->hasAnnotationSupport() &&
+    if ( !mQuotaOnly && !noContent() && mAccount->hasAnnotationSupport() &&
          ( mUserRights <= 0 || ( mUserRights & ACLJobs::Administer ) ) ) {
       newState( mProgress, i18n("Setting annotations"));
       KURL url = mAccount->getUrl();
@@ -1217,7 +1225,7 @@ void KMFolderCachedImap::serverSyncInternal()
   case SYNC_STATE_SET_ACLS:
     mSyncState = SYNC_STATE_GET_ACLS;
 
-    if( !noContent() && mAccount->hasACLSupport() &&
+    if( !mQuotaOnly && !noContent() && mAccount->hasACLSupport() &&
       ( mUserRights <= 0 || ( mUserRights & ACLJobs::Administer ) ) ) {
       bool hasChangedACLs = false;
       ACLList::ConstIterator it = mACLList.begin();
@@ -1243,7 +1251,7 @@ void KMFolderCachedImap::serverSyncInternal()
   case SYNC_STATE_GET_ACLS:
     mSyncState = SYNC_STATE_FIND_SUBFOLDERS;
 
-    if( !noContent() && mAccount->hasACLSupport() ) {
+    if( !mQuotaOnly && !noContent() && mAccount->hasACLSupport() ) {
       newState( mProgress, i18n( "Retrieving permissions" ) );
       mAccount->getACL( folder(), mImapPath );
       connect( mAccount, SIGNAL(receivedACL( KMFolder*, KIO::Job*, const KMail::ACLList& )),
@@ -1339,8 +1347,9 @@ void KMFolderCachedImap::syncNextSubFolder( bool secondSync )
     //kdDebug(5006) << "Sync'ing subfolder " << mCurrentSubfolder->imapPath() << endl;
     assert( !mCurrentSubfolder->imapPath().isEmpty() );
     mCurrentSubfolder->setAccount( account() );
-    bool recurse = mCurrentSubfolder->noChildren() ? false : true;
-    mCurrentSubfolder->serverSync( recurse );
+    const bool recurse = mCurrentSubfolder->noChildren() ? false : true;
+    const bool quotaOnly = secondSync || mQuotaOnly;
+    mCurrentSubfolder->serverSync( recurse, quotaOnly );
   }
 }
 
@@ -2392,7 +2401,9 @@ void KMFolderCachedImap::slotSubFolderComplete(KMFolderCachedImap* sub, bool suc
 
 void KMFolderCachedImap::slotSubFolderCloseToQuotaChanged()
 {
-  mSomeSubFolderCloseToQuotaChanged = true;
+  if ( !mQuotaOnly ) {
+    mSomeSubFolderCloseToQuotaChanged = true;
+  }
 }
 
 void KMFolderCachedImap::slotSimpleData(KIO::Job * job, const QByteArray & data)
