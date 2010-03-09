@@ -226,17 +226,25 @@ KMComposeWin::KMComposeWin( const KMime::Message::Ptr &aMsg, Composer::TemplateC
   v->addWidget( mHeadersToEditorSplitter );
   mIdentity = new KPIMIdentities::IdentityCombo( kmkernel->identityManager(),
                                                  mHeadersArea );
+  mIdentity->setToolTip( i18n( "Select an identity for this message" ) );
+
   mDictionaryCombo = new DictionaryComboBox( mHeadersArea );
+  mDictionaryCombo->setToolTip( i18n( "Select the dictionary to use when spell-checking this message" ) );
+
   mFcc = new Akonadi::CollectionComboBox( mHeadersArea );
   mFcc->setMimeTypeFilter( QStringList()<<FolderCollectionMonitor::mimetype() );
+  mFcc->setToolTip( i18n( "Select the sent-mail folder where a copy of this message will be saved" ) );
 #if 0 //Port to akonadi
   mFcc->showOutboxFolder( false );
 #else
   kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
 #endif
   mTransport = new MailTransport::TransportComboBox( mHeadersArea );
+  mTransport->setToolTip( i18n( "Select the outgoing account to use for sending this message" ) );
   mEdtFrom = new KMLineEdit( false, mHeadersArea, "fromLine" );
+  mEdtFrom->setToolTip( i18n( "Set the \"From:\" email address for this message" ) );
   mEdtReplyTo = new KMLineEdit( true, mHeadersArea, "replyToLine" );
+  mEdtReplyTo->setToolTip( i18n( "Set the \"Reply-To:\" email address for this message" ) );
   connect( mEdtReplyTo, SIGNAL(completionModeChanged(KGlobalSettings::Completion)),
           SLOT(slotCompletionModeChanged(KGlobalSettings::Completion)) );
 
@@ -247,6 +255,7 @@ KMComposeWin::KMComposeWin( const KMime::Message::Ptr &aMsg, Composer::TemplateC
   connect( mRecipientsEditor, SIGNAL(sizeHintChanged()), SLOT(recipientEditorSizeHintChanged()) );
 
   mEdtSubject = new KMLineEdit( false, mHeadersArea, "subjectLine" );
+  mEdtSubject->setToolTip( i18n( "Set a subject for this message" ) );
   mLblIdentity = new QLabel( i18n("&Identity:"), mHeadersArea );
   mDictionaryLabel = new QLabel( i18n("&Dictionary:"), mHeadersArea );
   mLblFcc = new QLabel( i18n("&Sent-Mail folder:"), mHeadersArea );
@@ -256,8 +265,12 @@ KMComposeWin::KMComposeWin( const KMime::Message::Ptr &aMsg, Composer::TemplateC
   mLblSubject = new QLabel( i18nc("@label:textbox Subject of email.", "S&ubject:"), mHeadersArea );
   QString sticky = i18nc("@option:check Sticky identity.", "Sticky");
   mBtnIdentity = new QCheckBox( sticky, mHeadersArea );
+  mBtnIdentity->setToolTip( i18n( "Use the selected value as your identity for future messages" ) );
   mBtnFcc = new QCheckBox( sticky, mHeadersArea );
+  mBtnFcc->setToolTip( i18n( "Use the selected value as your sent-mail folder for future messages" ) );
   mBtnTransport = new QCheckBox( sticky, mHeadersArea );
+  mBtnTransport->setToolTip( i18n( "Use the selected value as your outgoing account for future messages" ) );
+
   mShowHeaders = GlobalSettings::self()->headers();
   mDone = false;
   mGrid = 0;
@@ -1408,6 +1421,7 @@ void KMComposeWin::setupActions( void )
   mCryptoModuleAction->setItems( l );
   mCryptoModuleAction->setCurrentItem( format2cb(
       Kleo::stringToCryptoMessageFormat( ident.preferredCryptoMessageFormat() ) ) );
+  mCryptoModuleAction->setToolTip( i18n( "Select a cryptographic format for this message" ) );
   slotSelectCryptoModule( true );
 
   actionFormatReset = new KAction( KIcon( "draw-eraser" ), i18n("Reset Font Settings"), this );
