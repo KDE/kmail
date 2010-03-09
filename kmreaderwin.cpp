@@ -1121,14 +1121,14 @@ void KMReaderWin::setOriginalMsg( unsigned long serNumOfOriginalMessage, int nod
 }
 
 //-----------------------------------------------------------------------------
-void KMReaderWin::setMsg( KMMessage* aMsg, bool force )
+void KMReaderWin::setMsg( KMMessage* aMsg, bool force, bool updateOnly )
 {
   if (aMsg)
       kdDebug(5006) << "(" << aMsg->getMsgSerNum() << ", last " << mLastSerNum << ") " << aMsg->subject() << " "
         << aMsg->fromStrip() << ", readyToShow " << (aMsg->readyToShow()) << endl;
 
   // Reset message-transient state
-  if (aMsg && aMsg->getMsgSerNum() != mLastSerNum ){
+  if ( aMsg && aMsg->getMsgSerNum() != mLastSerNum && !updateOnly ){
     mLevelQuote = GlobalSettings::self()->collapseQuoteLevelSpin()-1;
     mShowRawToltecMail = !GlobalSettings::self()->showToltecReplacementText();
     clearBodyPartMementos();
@@ -2416,7 +2416,7 @@ void KMReaderWin::update( bool force )
 {
   KMMessage* msg = message();
   if ( msg )
-    setMsg( msg, force );
+    setMsg( msg, force, true /* updateOnly */ );
 }
 
 

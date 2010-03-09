@@ -142,7 +142,7 @@ public:
 
   /** Set the message that shall be shown. If msg is 0, an empty page is
       displayed. */
-  virtual void setMsg( KMMessage* msg, bool force = false );
+  virtual void setMsg( KMMessage* msg, bool force = false, bool updateOnly = false );
 
   /**
    * This should be called when setting a message that was constructed from another message, which
