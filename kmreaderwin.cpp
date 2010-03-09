@@ -439,7 +439,8 @@ KMReaderWin::KMReaderWin(QWidget *aParent,
     mSavedRelativePosition( 0 ),
     mDecrytMessageOverwrite( false ),
     mShowSignatureDetails( false ),
-    mShowAttachmentQuicklist( true )
+    mShowAttachmentQuicklist( true ),
+    mShowRawToltecMail( false )
 {
   mExternalWindow  = (aParent == mainWindow );
   mSplitterSizes << 180 << 100;
@@ -1129,6 +1130,7 @@ void KMReaderWin::setMsg( KMMessage* aMsg, bool force )
   // Reset message-transient state
   if (aMsg && aMsg->getMsgSerNum() != mLastSerNum ){
     mLevelQuote = GlobalSettings::self()->collapseQuoteLevelSpin()-1;
+    mShowRawToltecMail = !GlobalSettings::self()->showToltecReplacementText();
     clearBodyPartMementos();
   }
   if ( mPrinting )
@@ -1527,13 +1529,14 @@ void KMReaderWin::parseMsg(KMMessage* aMsg)
     }
   }
 
-  if ( !mRootNode || !mRootNode->isToltecMessage() ) {
+  if ( !mRootNode || !mRootNode->isToltecMessage() || mShowRawToltecMail ) {
     htmlWriter()->queue( writeMsgHeader(aMsg, hasVCard ? vCardNode : 0, true ) );
   }
 
   // show message content
   ObjectTreeParser otp( this );
   otp.setAllowAsync( true );
+  otp.setShowRawToltecMail( mShowRawToltecMail );
   otp.parseObjectTree( mRootNode );
 
   // store encrypted/signed status information in the KMMessage

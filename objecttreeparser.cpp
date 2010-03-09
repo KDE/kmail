@@ -150,6 +150,7 @@ namespace KMail {
       mIncludeSignatures( includeSignatures ),
       mHasPendingAsyncJobs( false ),
       mAllowAsync( false ),
+      mShowRawToltecMail( false ),
       mAttachmentStrategy( strategy ),
       mHtmlWriter( htmlWriter ),
       mCSSHelper( cssHelper )
@@ -1215,10 +1216,11 @@ namespace KMail {
   bool ObjectTreeParser::processToltecMail( partNode *node )
   {
     if ( !node || !mHtmlWriter || !GlobalSettings::self()->showToltecReplacementText() ||
-         !node->isToltecMessage() )
+         !node->isToltecMessage() || mShowRawToltecMail )
       return false;
 
     htmlWriter()->queue( GlobalSettings::self()->toltecReplacementText() );
+    htmlWriter()->queue( "<br><br><a href=\"kmail:showRawToltecMail\">Show Raw Message</a>" );
     return true;
   }
 

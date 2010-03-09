@@ -151,6 +151,11 @@ namespace KMail {
       mIncludeSignatures = include;
     }
 
+    // Controls whether Toltec invitations are displayed in their raw form or as a replacement text,
+    // which is used in processToltecMail().
+    void setShowRawToltecMail( bool showRawToltecMail ) { mShowRawToltecMail = showRawToltecMail; }
+    bool showRawToltecMail() const { return mShowRawToltecMail; }
+
     const KMail::AttachmentStrategy * attachmentStrategy() const {
       return mAttachmentStrategy;
     }
@@ -329,6 +334,7 @@ namespace KMail {
     bool mIncludeSignatures;
     bool mHasPendingAsyncJobs;
     bool mAllowAsync;
+    bool mShowRawToltecMail;
     const KMail::AttachmentStrategy * mAttachmentStrategy;
     KMail::HtmlWriter * mHtmlWriter;
     KMail::CSSHelper * mCSSHelper;

@@ -456,6 +456,13 @@ namespace {
 	  return true;
       }
 
+      if ( url.path() == "showRawToltecMail" ) {
+        w->saveRelativePosition();
+        w->setShowRawToltecMail( true );
+        w->update( true );
+        return true;
+      }
+
 //       if ( url.path() == "startIMApp" )
 //       {
 //         kmkernel->imProxy()->startPreferredApp();
