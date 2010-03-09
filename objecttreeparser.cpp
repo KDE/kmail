@@ -1212,7 +1212,22 @@ namespace KMail {
       mTextualContentCharset = otp.textualContentCharset();
   }
 
+  bool ObjectTreeParser::processToltecMail( partNode *node )
+  {
+    if ( !node || !mHtmlWriter || !GlobalSettings::self()->showToltecReplacementText() ||
+         !node->isToltecMessage() )
+      return false;
+
+    htmlWriter()->queue( GlobalSettings::self()->toltecReplacementText() );
+    return true;
+  }
+
   bool ObjectTreeParser::processMultiPartMixedSubtype( partNode * node, ProcessResult & ) {
+
+    if ( processToltecMail( node ) ) {
+      return true;
+    }
+
     partNode * child = node->firstChild();
     if ( !child )
       return false;

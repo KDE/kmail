@@ -1526,7 +1526,10 @@ void KMReaderWin::parseMsg(KMMessage* aMsg)
       writeMessagePartToTempFile( &vCardNode->msgPart(), vCardNode->nodeId() );
     }
   }
-  htmlWriter()->queue( writeMsgHeader(aMsg, hasVCard ? vCardNode : 0, true ) );
+
+  if ( !mRootNode || !mRootNode->isToltecMessage() ) {
+    htmlWriter()->queue( writeMsgHeader(aMsg, hasVCard ? vCardNode : 0, true ) );
+  }
 
   // show message content
   ObjectTreeParser otp( this );

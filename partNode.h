@@ -226,6 +226,8 @@ public:
     */
     bool isFirstTextPart() const;
 
+    bool isToltecMessage() const;
+
     bool hasContentDispositionInline() const;
 
     QString contentTypeParameter( const char * name ) const;

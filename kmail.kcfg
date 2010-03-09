@@ -215,6 +215,16 @@
         <default>true</default>
       </entry>
 
+      <entry name="ShowToltecReplacementText" type="Bool">
+        <label>When encountering a Toltec scheduling message, display a custom replacement text for it.</label>
+        <default>true</default>
+      </entry>
+
+      <entry name="ToltecReplacementText" type="String">
+        <label>The text that will be displayed as a replacement when encountering Toltec scheduling messages.</label>
+        <default>This message is a &lt;i&gt;Toltec&lt;/i&gt; Groupware object, it can only be viewed with Microsoft Outlook in combination with the Toltec connector.</default>
+      </entry>
+
 
     </group>
 

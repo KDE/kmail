@@ -232,6 +232,17 @@ namespace KMail {
 
     bool processMailmanMessage( partNode * node );
 
+    /**
+     * This is called for all multipart/mixed nodes. It checks if that belongs to a Toltec mail,
+     * by checking various criteria.
+     * If it is a toltec mail, a special text, instead of the confusing toltec text, will be
+     * displayed.
+     *
+     * @return true if the mail was indeed a toltec mail, in which case the node should not be
+     *              processed further
+     */
+    bool processToltecMail( partNode * node );
+
     /** Checks whether @p str contains external references. To be precise,
         we only check whether @p str contains 'xxx="http[s]:' where xxx is
         not href. Obfuscated external references are ignored on purpose.

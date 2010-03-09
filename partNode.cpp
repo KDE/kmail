@@ -641,6 +641,33 @@ bool partNode::isFirstTextPart() const {
   return false; // make comiler happy
 }
 
+bool partNode::isToltecMessage() const
+{
+  if ( type() != DwMime::kTypeMultipart || subType() != DwMime::kSubtypeMixed )
+    return false;
+
+  if ( childCount() != 3 )
+    return false;
+
+  const DwField* library = dwPart()->Headers().FindField( "X-Library" );
+  if ( !library )
+    return false;
+
+  if ( !library->FieldBody() ||
+       QString( library->FieldBody()->AsString().c_str() ) != QString( "Toltec" ) )
+    return false;
+
+  const DwField* kolabType = dwPart()->Headers().FindField( "X-Kolab-Type" );
+  if ( !kolabType )
+    return false;
+
+  if ( !kolabType->FieldBody() ||
+       !QString( kolabType->FieldBody()->AsString().c_str() ).startsWith( "application/x-vnd.kolab" ) )
+    return false;
+
+  return true;
+}
+
 bool partNode::hasContentDispositionInline() const
 {
   if( !dwPart() )
