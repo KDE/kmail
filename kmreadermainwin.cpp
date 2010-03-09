@@ -164,6 +164,7 @@ void KMReaderMainWin::slotPrintMsg()
       mReaderWin->htmlOverride(), mReaderWin->htmlLoadExtOverride(),
       mReaderWin->isFixedFont(), mReaderWin->overrideEncoding() );
   command->setOverrideFont( mReaderWin->cssHelper()->bodyFont( mReaderWin->isFixedFont(), true /*printing*/ ) );
+  command->setAttachmentStrategy( mReaderWin->attachmentStrategy() );
   command->start();
 }
 

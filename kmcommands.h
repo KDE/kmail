@@ -534,12 +534,14 @@ public:
                   const QString & encoding = QString() );
 
   void setOverrideFont( const QFont& );
+  void setAttachmentStrategy( const MessageViewer::AttachmentStrategy *strategy );
 
 private:
   virtual Result execute();
 
   const MessageViewer::HeaderStyle *mHeaderStyle;
   const MessageViewer::HeaderStrategy *mHeaderStrategy;
+  const MessageViewer::AttachmentStrategy *mAttachmentStrategy;
   bool mHtmlOverride;
   bool mHtmlLoadExtOverride;
   bool mUseFixedFont;
