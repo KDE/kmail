@@ -2931,11 +2931,8 @@ void KMReaderWin::setBodyPartMemento( const partNode * node, const QCString & wh
     }
   }
 
-  if ( Observable * o = memento ? memento->asObservable() : 0 ) {
-    if ( o ) {
-      o->attach( this );
-    }
-  }
+  if ( Observable * o = memento ? memento->asObservable() : 0 )
+    o->attach( this );
 }
 
 BodyPartMemento * KMReaderWin::bodyPartMemento( const partNode * node, const QCString & which ) const
