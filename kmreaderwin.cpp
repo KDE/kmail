@@ -2950,24 +2950,21 @@ BodyPartMemento * KMReaderWin::bodyPartMemento( const partNode * node, const QCS
   }
 }
 
+static void detach_and_delete( BodyPartMemento * memento, KMReaderWin * obs ) {
+  if ( Observable * const o = memento ? memento->asObservable() : 0 )
+    o->detach( obs );
+  delete memento;
+}
+
 void KMReaderWin::clearBodyPartMementos()
 {
-  std::map<QCString,BodyPartMemento*>::const_iterator it = mBodyPartMementoMap.begin();
-  std::map<QCString,BodyPartMemento*>::const_iterator end = mBodyPartMementoMap.end();
-  for ( ; it != end ; ++it ) {
-
+  for ( std::map<QCString,BodyPartMemento*>::const_iterator it = mBodyPartMementoMap.begin(), end = mBodyPartMementoMap.end() ; it != end ; ++it )
     // Detach the memento from the reader. When cancelling it, it might trigger an update of the
     // reader, which we are not interested in, and which is dangerous, since half the mementos are
     // already deleted.
     // https://issues.kolab.org/issue4187
-    BodyPartMemento *memento = it->second;
-    if ( Observable * o = memento ? memento->asObservable() : 0 ) {
-      if ( o ) {
-        o->detach( this );
-      }
-    }
-    delete memento;
-  }
+    detach_and_delete( it->second, this );
+
   mBodyPartMementoMap.clear();
 }
 
