@@ -1220,7 +1220,8 @@ namespace KMail {
       return false;
 
     htmlWriter()->queue( GlobalSettings::self()->toltecReplacementText() );
-    htmlWriter()->queue( "<br><br><a href=\"kmail:showRawToltecMail\">Show Raw Message</a>" );
+    htmlWriter()->queue( "<br><br><a href=\"kmail:showRawToltecMail\">" +
+                         i18n( "Show Raw Message" ) + "</a>" );
     return true;
   }
 
