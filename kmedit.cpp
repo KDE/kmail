@@ -795,7 +795,7 @@ void KMEdit::slotSpellcheck2(KSpell*)
 {
   // Make sure words ignored by the highlighter are ignored by KSpell as well
   if ( mHighlighter ) {
-    for ( int i = 0; i < mHighlighter->ignoredWords().size(); i++ )
+    for ( uint i = 0; i < mHighlighter->ignoredWords().size(); i++ )
       mKSpellForDialog->ignore( mHighlighter->ignoredWords()[i] );
   }
 
