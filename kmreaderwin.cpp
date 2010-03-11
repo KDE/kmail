@@ -698,8 +698,6 @@ void KMReaderWin::slotAllHeaders() {
 
 void KMReaderWin::slotLevelQuote( int l )
 {
-  kdDebug( 5006 ) << "Old Level: " << mLevelQuote << " New Level: " << l << endl;
-
   mLevelQuote = l;
   saveRelativePosition();
   update(true);
@@ -781,7 +779,7 @@ void KMReaderWin::slotMessageArrived( KMMessage *msg )
     if ( msg->getMsgSerNum() == mWaitingForSerNum ) {
       setMsg( msg, true );
     } else {
-      kdDebug( 5006 ) <<  "KMReaderWin::slotMessageArrived - ignoring update" << endl;
+      //kdDebug( 5006 ) <<  "KMReaderWin::slotMessageArrived - ignoring update" << endl;
     }
   }
 }
@@ -791,7 +789,7 @@ void KMReaderWin::update( KMail::Interface::Observable * observable )
 {
   if ( !mAtmUpdate ) {
     // reparse the msg
-    kdDebug(5006) << "KMReaderWin::update - message" << endl;
+    //kdDebug(5006) << "KMReaderWin::update - message" << endl;
     updateReaderWin();
     return;
   }
@@ -1085,7 +1083,6 @@ void KMReaderWin::setPrintFont( const QFont& font )
 //-----------------------------------------------------------------------------
 const QTextCodec * KMReaderWin::overrideCodec() const
 {
-  kdDebug(5006) << k_funcinfo << " mOverrideEncoding == '" << mOverrideEncoding << "'" << endl;
   if ( mOverrideEncoding.isEmpty() || mOverrideEncoding == "Auto" ) // Auto
     return 0;
   else
@@ -1123,9 +1120,10 @@ void KMReaderWin::setOriginalMsg( unsigned long serNumOfOriginalMessage, int nod
 //-----------------------------------------------------------------------------
 void KMReaderWin::setMsg( KMMessage* aMsg, bool force, bool updateOnly )
 {
-  if (aMsg)
-      kdDebug(5006) << "(" << aMsg->getMsgSerNum() << ", last " << mLastSerNum << ") " << aMsg->subject() << " "
-        << aMsg->fromStrip() << ", readyToShow " << (aMsg->readyToShow()) << endl;
+  if ( aMsg ) {
+    kdDebug(5006) << "(" << aMsg->getMsgSerNum() << ", last " << mLastSerNum << ") " << aMsg->subject() << " "
+                  << aMsg->fromStrip() << ", readyToShow " << (aMsg->readyToShow()) << endl;
+  }
 
   // Reset message-transient state
   if ( aMsg && aMsg->getMsgSerNum() != mLastSerNum && !updateOnly ){
@@ -1466,20 +1464,13 @@ void KMReaderWin::displayMessage() {
 static bool message_was_saved_decrypted_before( const KMMessage * msg ) {
   if ( !msg )
     return false;
-  kdDebug(5006) << "msgId = " << msg->msgId() << endl;
+  //kdDebug(5006) << "msgId = " << msg->msgId() << endl;
   return msg->msgId().stripWhiteSpace().startsWith( "<DecryptedMsg." );
 }
 
 //-----------------------------------------------------------------------------
 void KMReaderWin::parseMsg(KMMessage* aMsg)
 {
-#ifndef NDEBUG
-  kdDebug( 5006 )
-    << "parseMsg(KMMessage* aMsg "
-    << ( aMsg == message() ? "==" : "!=" )
-    << " aMsg )" << endl;
-#endif
-
   KMMessagePart msgPart;
   QCString subtype, contDisp;
   QByteArray str;
@@ -1524,7 +1515,6 @@ void KMReaderWin::parseMsg(KMMessage* aMsg)
     KABC::VCardConverter t;
     if ( !t.parseVCards( vcard ).empty() ) {
       hasVCard = true;
-      kdDebug(5006) << "FOUND A VALID VCARD" << endl;
       writeMessagePartToTempFile( &vCardNode->msgPart(), vCardNode->nodeId() );
     }
   }
@@ -2928,14 +2918,17 @@ void KMReaderWin::setBodyPartMemento( const partNode * node, const QCString & wh
 
     delete it->second;
 
-    if ( memento )
+    if ( memento ) {
       it->second = memento;
-    else
+    }
+    else {
       mBodyPartMementoMap.erase( it );
+    }
 
   } else {
-    if ( memento )
+    if ( memento ) {
       mBodyPartMementoMap.insert( it, std::make_pair( index, memento ) );
+    }
   }
 
   if ( Observable * o = memento ? memento->asObservable() : 0 ) {
@@ -2949,10 +2942,12 @@ BodyPartMemento * KMReaderWin::bodyPartMemento( const partNode * node, const QCS
 {
   const QCString index = node->path() + ':' + which.lower();
   const std::map<QCString,BodyPartMemento*>::const_iterator it = mBodyPartMementoMap.find( index );
-  if ( it == mBodyPartMementoMap.end() )
+  if ( it == mBodyPartMementoMap.end() ) {
     return 0;
-  else
+  }
+  else {
     return it->second;
+  }
 }
 
 void KMReaderWin::clearBodyPartMementos()

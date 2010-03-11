@@ -129,8 +129,6 @@ void KMMimePartTree::itemRightClicked( QListViewItem* item,
         kdDebug(5006) << "Item was not a KMMimePartTreeItem!" << endl;
     }
     else {
-        kdDebug(5006) << "\n**\n** KMMimePartTree::itemRightClicked() **\n**" << endl;
-
         QPopupMenu* popup = new QPopupMenu;
         if ( mCurrentContextMenuItem->node()->nodeId() > 2 &&
              mCurrentContextMenuItem->node()->typeString() != "Multipart" ) {

@@ -223,16 +223,11 @@ namespace KMail {
       parentNode->setFirstChild( newNode );
 
     if ( startNode.mimePartTreeItem() ) {
-      kdDebug(5006) << "\n     ----->  Inserting items into MimePartTree\n" << endl;
       newNode->fillMimePartTree( startNode.mimePartTreeItem(), 0,
                                  QString::null, QString::null, QString::null, 0,
                                  append );
-      kdDebug(5006) << "\n     <-----  Finished inserting items into MimePartTree\n" << endl;
     } else {
-      kdDebug(5006) << "\n     ------  Sorry, node.mimePartTreeItem() returns ZERO so"
-                    << "\n                    we cannot insert new lines into MimePartTree. :-(\n" << endl;
     }
-    kdDebug(5006) << "\n     ----->  Now parsing the MimePartTree\n" << endl;
     ObjectTreeParser otp( mReader, cryptoProtocol() );
     otp.parseObjectTree( newNode );
     if ( addToTextualContent ) {
@@ -241,17 +236,16 @@ namespace KMail {
       if ( !otp.textualContentCharset().isEmpty() )
         mTextualContentCharset = otp.textualContentCharset();
     }
-    kdDebug(5006) << "\n     <-----  Finished parsing the MimePartTree in insertAndParseNewChildNode()\n" << endl;
   }
 
 
 //-----------------------------------------------------------------------------
 
   void ObjectTreeParser::parseObjectTree( partNode * node ) {
-    kdDebug(5006) << "ObjectTreeParser::parseObjectTree( "
-                  << (node ? "node OK, " : "no node, ")
-                  << "showOnlyOneMimePart: " << (showOnlyOneMimePart() ? "TRUE" : "FALSE")
-                  << " )" << endl;
+    //kdDebug(5006) << "ObjectTreeParser::parseObjectTree( "
+    //              << (node ? "node OK, " : "no node, ")
+    //              << "showOnlyOneMimePart: " << (showOnlyOneMimePart() ? "TRUE" : "FALSE")
+    //              << " )" << endl;
 
     if ( !node )
       return;
@@ -427,18 +421,22 @@ namespace KMail {
     }
 
 #ifndef NDEBUG
-    if ( !doCheck )
-      kdDebug(5006) << "ObjectTreeParser::writeOpaqueOrMultipartSignedData: showing OpenPGP (Encrypted+Signed) data" << endl;
-    else
-      if ( data )
-        kdDebug(5006) << "ObjectTreeParser::writeOpaqueOrMultipartSignedData: processing Multipart Signed data" << endl;
-      else
-        kdDebug(5006) << "ObjectTreeParser::writeOpaqueOrMultipartSignedData: processing Opaque Signed data" << endl;
+    if ( !doCheck ) {
+      //kdDebug(5006) << "ObjectTreeParser::writeOpaqueOrMultipartSignedData: showing OpenPGP (Encrypted+Signed) data" << endl;
+    }
+    else {
+      if ( data ) {
+        //kdDebug(5006) << "ObjectTreeParser::writeOpaqueOrMultipartSignedData: processing Multipart Signed data" << endl;
+      }
+      else {
+        //kdDebug(5006) << "ObjectTreeParser::writeOpaqueOrMultipartSignedData: processing Opaque Signed data" << endl;
+      }
+    }
 #endif
 
     if ( doCheck && cryptProto ) {
-      kdDebug(5006) << "ObjectTreeParser::writeOpaqueOrMultipartSignedData: going to call CRYPTPLUG "
-                    << cryptPlugLibName << endl;
+      //kdDebug(5006) << "ObjectTreeParser::writeOpaqueOrMultipartSignedData: going to call CRYPTPLUG "
+      //              << cryptPlugLibName << endl;
     }
 
     QCString cleartext;
@@ -453,9 +451,9 @@ namespace KMail {
 
         // replace simple LFs by CRLSs
         // according to RfC 2633, 3.1.1 Canonicalization
-        kdDebug(5006) << "Converting LF to CRLF (see RfC 2633, 3.1.1 Canonicalization)" << endl;
+        //kdDebug(5006) << "Converting LF to CRLF (see RfC 2633, 3.1.1 Canonicalization)" << endl;
         cleartext = Util::lf2crlf( cleartext );
-        kdDebug(5006) << "                                                       done." << endl;
+        //kdDebug(5006) << "                                                       done." << endl;
       }
 
       dumpToFile( "dat_02_reader_signedtext_after_canonicalization",
@@ -563,16 +561,17 @@ namespace KMail {
       }
       std::stringstream ss;
       ss << result;
-      kdDebug(5006) << ss.str().c_str() << endl;
+      //kdDebug(5006) << ss.str().c_str() << endl;
       signatures = result.signatures();
     }
 
-    if ( doCheck )
-      kdDebug(5006) << "\nObjectTreeParser::writeOpaqueOrMultipartSignedData: returned from CRYPTPLUG" << endl;
+    if ( doCheck ) {
+      //kdDebug(5006) << "\nObjectTreeParser::writeOpaqueOrMultipartSignedData: returned from CRYPTPLUG" << endl;
+    }
 
     // ### only one signature supported
     if ( signatures.size() > 0 ) {
-      kdDebug(5006) << "\nObjectTreeParser::writeOpaqueOrMultipartSignedData: found signature" << endl;
+      //kdDebug(5006) << "\nObjectTreeParser::writeOpaqueOrMultipartSignedData: found signature" << endl;
       GpgME::Signature signature = signatures[0];
 
       messagePart.status_code = signatureToStatus( signature );
@@ -626,9 +625,9 @@ namespace KMail {
         }
       }
 
-      kdDebug(5006) << "\n  key id: " << messagePart.keyId
-                    << "\n  key trust: " << messagePart.keyTrust
-                    << "\n  signer: " << messagePart.signer << endl;
+      //kdDebug(5006) << "\n  key id: " << messagePart.keyId
+      //              << "\n  key trust: " << messagePart.keyTrust
+      //              << "\n  signer: " << messagePart.signer << endl;
 
     } else {
       messagePart.creationTime = QDateTime();
@@ -714,13 +713,12 @@ namespace KMail {
         htmlWriter()->queue( writeSigstatFooter( messagePart ) );
     }
 
-    kdDebug(5006) << "\nObjectTreeParser::writeOpaqueOrMultipartSignedData: done, returning "
-                  << ( bIsOpaqueSigned ? "TRUE" : "FALSE" ) << endl;
+    //kdDebug(5006) << "\nObjectTreeParser::writeOpaqueOrMultipartSignedData: done, returning "
+    //              << ( bIsOpaqueSigned ? "TRUE" : "FALSE" ) << endl;
     return bIsOpaqueSigned;
   }
 
 void ObjectTreeParser::writeDecryptionInProgressBlock() {
-    kdDebug(5006) << k_funcinfo << endl;
     assert( mReader );
     // PENDING(marc) find an animated icon here:
     //const QString iconName = KGlobal::instance()->iconLoader()->iconPath( "decrypted", KIcon::Small );
@@ -738,7 +736,6 @@ void ObjectTreeParser::writeDecryptionInProgressBlock() {
 }
 
 void ObjectTreeParser::writeDeferredDecryptionBlock() {
-    kdDebug(5006) << k_funcinfo << endl;
     assert( mReader );
     const QString iconName = KGlobal::instance()->iconLoader()->iconPath( "decrypted", KIcon::Small );
     const QString decryptedData =
@@ -815,8 +812,8 @@ bool ObjectTreeParser::okDecryptMIME( partNode& data,
 #endif
 
 
-    kdDebug(5006) << "ObjectTreeParser::decryptMIME: going to call CRYPTPLUG "
-                  << cryptPlugLibName << endl;
+    //kdDebug(5006) << "ObjectTreeParser::decryptMIME: going to call CRYPTPLUG "
+    //              << cryptPlugLibName << endl;
     if ( mReader )
       emit mReader->noDrag(); // in case pineentry pops up, don't let kmheaders start a drag afterwards
 
@@ -856,7 +853,7 @@ bool ObjectTreeParser::okDecryptMIME( partNode& data,
       const GpgME::VerificationResult & verifyResult = m->verifyResult();
       std::stringstream ss;
       ss << decryptResult << '\n' << verifyResult;
-      kdDebug(5006) << ss.str().c_str() << endl;
+      //kdDebug(5006) << ss.str().c_str() << endl;
       signatureFound = verifyResult.signatures().size() > 0;
       signatures = verifyResult.signatures();
       bDecryptionOk = !decryptResult.error();
@@ -867,8 +864,8 @@ bool ObjectTreeParser::okDecryptMIME( partNode& data,
       auditLogError = m->auditLogError();
       auditLog = m->auditLogAsHtml();
 
-      kdDebug(5006) << "ObjectTreeParser::decryptMIME: returned from CRYPTPLUG"
-                    << endl;
+      //kdDebug(5006) << "ObjectTreeParser::decryptMIME: returned from CRYPTPLUG"
+      //              << endl;
       if ( bDecryptionOk )
         decryptedData = QCString( plainText.data(), plainText.size() + 1 );
       else if ( mReader && showWarning ) {
@@ -1056,7 +1053,7 @@ namespace KMail {
     if ( nextDelim < 0)
       return false;
 
-    kdDebug(5006) << "        processing old style Mailman digest" << endl;
+    //kdDebug(5006) << "        processing old style Mailman digest" << endl;
     //if ( curNode->mRoot )
     //  curNode = curNode->mRoot;
 
@@ -1099,7 +1096,7 @@ namespace KMail {
         if ( -1 < thisEoL )
           subject.truncate( thisEoL );
       }
-      kdDebug(5006) << "        embedded message found: \"" << subject << "\"" << endl;
+      //kdDebug(5006) << "        embedded message found: \"" << subject << "\"" << endl;
       insertAndParseNewChildNode( *curNode,
                                   &*partStr,
                                   subject, true );
@@ -1368,9 +1365,9 @@ namespace KMail {
     CryptoProtocolSaver cpws( this, useThisCryptProto );
 
     if ( partNode * dataChild = data->firstChild() ) {
-      kdDebug(5006) << "\n----->  Calling parseObjectTree( curNode->mChild )\n" << endl;
+      //kdDebug(5006) << "\n----->  Calling parseObjectTree( curNode->mChild )\n" << endl;
       stdChildHandling( dataChild );
-      kdDebug(5006) << "\n----->  Returning from parseObjectTree( curNode->mChild )\n" << endl;
+      //kdDebug(5006) << "\n----->  Returning from parseObjectTree( curNode->mChild )\n" << endl;
       return true;
     }
 
@@ -1382,7 +1379,7 @@ namespace KMail {
       return true;
     }
 
-    kdDebug(5006) << "\n----->  Initially processing encrypted data\n" << endl;
+    //kdDebug(5006) << "\n----->  Initially processing encrypted data\n" << endl;
     PartMetaData messagePart;
     QCString decryptedData;
     bool signatureFound;
@@ -1467,17 +1464,17 @@ namespace KMail {
       return false;
 
     if ( partNode * child = node->firstChild() ) {
-      kdDebug(5006) << "\n----->  Calling parseObjectTree( curNode->mChild )\n" << endl;
+      //kdDebug(5006) << "\n----->  Calling parseObjectTree( curNode->mChild )\n" << endl;
       ObjectTreeParser otp( mReader, cryptoProtocol() );
       otp.parseObjectTree( child );
       mRawReplyString += otp.rawReplyString();
       mTextualContent += otp.textualContent();
       if ( !otp.textualContentCharset().isEmpty() )
         mTextualContentCharset = otp.textualContentCharset();
-      kdDebug(5006) << "\n<-----  Returning from parseObjectTree( curNode->mChild )\n" << endl;
+      //kdDebug(5006) << "\n<-----  Returning from parseObjectTree( curNode->mChild )\n" << endl;
       return true;
     }
-    kdDebug(5006) << "\n----->  Initially processing data of embedded RfC 822 message\n" << endl;
+    //kdDebug(5006) << "\n----->  Initially processing data of embedded RfC 822 message\n" << endl;
     // paint the frame
     PartMetaData messagePart;
     if ( mReader ) {
@@ -1499,7 +1496,7 @@ namespace KMail {
     rfc822DwMessage->Parse();
     KMMessage rfc822message( rfc822DwMessage );
     node->setFromAddress( rfc822message.from() );
-    kdDebug(5006) << "\n----->  Store RfC 822 message header \"From: " << rfc822message.from() << "\"\n" << endl;
+    //kdDebug(5006) << "\n----->  Store RfC 822 message header \"From: " << rfc822message.from() << "\"\n" << endl;
     if ( mReader )
       htmlWriter()->queue( mReader->writeMsgHeader( &rfc822message ) );
       //mReader->parseMsgHeader( &rfc822message );
@@ -1517,14 +1514,14 @@ namespace KMail {
 
   bool ObjectTreeParser::processApplicationOctetStreamSubtype( partNode * node, ProcessResult & result ) {
     if ( partNode * child = node->firstChild() ) {
-      kdDebug(5006) << "\n----->  Calling parseObjectTree( curNode->mChild )\n" << endl;
+      //kdDebug(5006) << "\n----->  Calling parseObjectTree( curNode->mChild )\n" << endl;
       ObjectTreeParser otp( mReader, cryptoProtocol() );
       otp.parseObjectTree( child );
       mRawReplyString += otp.rawReplyString();
       mTextualContent += otp.textualContent();
       if ( !otp.textualContentCharset().isEmpty() )
         mTextualContentCharset = otp.textualContentCharset();
-      kdDebug(5006) << "\n<-----  Returning from parseObjectTree( curNode->mChild )\n" << endl;
+      //kdDebug(5006) << "\n<-----  Returning from parseObjectTree( curNode->mChild )\n" << endl;
       return true;
     }
 
@@ -1532,7 +1529,7 @@ namespace KMail {
     if (    node->parentNode()
             && DwMime::kTypeMultipart    == node->parentNode()->type()
             && DwMime::kSubtypeEncrypted == node->parentNode()->subType() ) {
-      kdDebug(5006) << "\n----->  Initially processing encrypted data\n" << endl;
+      //kdDebug(5006) << "\n----->  Initially processing encrypted data\n" << endl;
       node->setEncryptionState( KMMsgFullyEncrypted );
       if ( keepEncryptions() ) {
         const QCString cstr = node->msgPart().bodyDecoded();
@@ -1607,18 +1604,18 @@ namespace KMail {
 
   bool ObjectTreeParser::processApplicationPkcs7MimeSubtype( partNode * node, ProcessResult & result ) {
     if ( partNode * child = node->firstChild() ) {
-      kdDebug(5006) << "\n----->  Calling parseObjectTree( curNode->mChild )\n" << endl;
+      //kdDebug(5006) << "\n----->  Calling parseObjectTree( curNode->mChild )\n" << endl;
       ObjectTreeParser otp( mReader, cryptoProtocol() );
       otp.parseObjectTree( child );
       mRawReplyString += otp.rawReplyString();
       mTextualContent += otp.textualContent();
       if ( !otp.textualContentCharset().isEmpty() )
         mTextualContentCharset = otp.textualContentCharset();
-      kdDebug(5006) << "\n<-----  Returning from parseObjectTree( curNode->mChild )\n" << endl;
+      //kdDebug(5006) << "\n<-----  Returning from parseObjectTree( curNode->mChild )\n" << endl;
       return true;
     }
 
-    kdDebug(5006) << "\n----->  Initially processing signed and/or encrypted data\n" << endl;
+    //kdDebug(5006) << "\n----->  Initially processing signed and/or encrypted data\n" << endl;
     if ( !node->dwPart() || !node->dwPart()->hasHeaders() )
       return false;
 
@@ -1715,10 +1712,12 @@ namespace KMail {
     // if we either *know* that it is an encrypted message part
     // or there is neither signed nor encrypted parameter.
     if ( !isSigned ) {
-      if ( isEncrypted )
-        kdDebug(5006) << "pkcs7 mime     ==      S/MIME TYPE: enveloped (encrypted) data" << endl;
-      else
-        kdDebug(5006) << "pkcs7 mime  -  type unknown  -  enveloped (encrypted) data ?" << endl;
+      if ( isEncrypted ) {
+        //kdDebug(5006) << "pkcs7 mime     ==      S/MIME TYPE: enveloped (encrypted) data" << endl;
+      }
+      else {
+        //kdDebug(5006) << "pkcs7 mime  -  type unknown  -  enveloped (encrypted) data ?" << endl;
+      }
       QCString decryptedData;
       PartMetaData messagePart;
       messagePart.isEncrypted = true;
@@ -1750,7 +1749,7 @@ namespace KMail {
           return true;
         }
         if ( bOkDecrypt ) {
-          kdDebug(5006) << "pkcs7 mime  -  encryption found  -  enveloped (encrypted) data !" << endl;
+          //kdDebug(5006) << "pkcs7 mime  -  encryption found  -  enveloped (encrypted) data !" << endl;
           isEncrypted = true;
           node->setEncryptionState( KMMsgFullyEncrypted );
           signTestNode = 0;
@@ -1776,7 +1775,7 @@ namespace KMail {
           }
 
           if ( isEncrypted ) {
-            kdDebug(5006) << "pkcs7 mime  -  ERROR: COULD NOT DECRYPT enveloped data !" << endl;
+            //kdDebug(5006) << "pkcs7 mime  -  ERROR: COULD NOT DECRYPT enveloped data !" << endl;
             // paint the frame
             messagePart.isDecryptable = false;
             if ( mReader ) {
@@ -1788,7 +1787,7 @@ namespace KMail {
               htmlWriter()->queue( writeSigstatFooter( messagePart ) );
             }
           } else {
-            kdDebug(5006) << "pkcs7 mime  -  NO encryption found" << endl;
+            //kdDebug(5006) << "pkcs7 mime  -  NO encryption found" << endl;
           }
         }
       }
@@ -1798,10 +1797,12 @@ namespace KMail {
 
     // We now try signature verification if necessarry.
     if ( signTestNode ) {
-      if ( isSigned )
-        kdDebug(5006) << "pkcs7 mime     ==      S/MIME TYPE: opaque signed data" << endl;
-      else
-        kdDebug(5006) << "pkcs7 mime  -  type unknown  -  opaque signed data ?" << endl;
+      if ( isSigned ) {
+        //kdDebug(5006) << "pkcs7 mime     ==      S/MIME TYPE: opaque signed data" << endl;
+      }
+      else {
+        //kdDebug(5006) << "pkcs7 mime  -  type unknown  -  opaque signed data ?" << endl;
+      }
 
       bool sigFound = writeOpaqueOrMultipartSignedData( 0,
                                                         *signTestNode,
@@ -1812,14 +1813,14 @@ namespace KMail {
                                                         isEncrypted );
       if ( sigFound ) {
         if ( !isSigned ) {
-          kdDebug(5006) << "pkcs7 mime  -  signature found  -  opaque signed data !" << endl;
+          //kdDebug(5006) << "pkcs7 mime  -  signature found  -  opaque signed data !" << endl;
           isSigned = true;
         }
         signTestNode->setSignatureState( KMMsgFullySigned );
         if ( signTestNode != node )
           node->setSignatureState( KMMsgFullySigned );
       } else {
-        kdDebug(5006) << "pkcs7 mime  -  NO signature found   :-(" << endl;
+        //kdDebug(5006) << "pkcs7 mime  -  NO signature found   :-(" << endl;
       }
     }
 
@@ -2021,8 +2022,6 @@ bool ObjectTreeParser::processApplicationMsTnefSubtype( partNode *node, ProcessR
   void ObjectTreeParser::writePartIcon( KMMessagePart * msgPart, int partNum, bool inlineImage ) {
     if ( !mReader || !msgPart )
       return;
-
-    kdDebug(5006) << "writePartIcon: PartNum: " << partNum << endl;
 
     QString label = msgPart->fileName();
     if( label.isEmpty() )
@@ -2284,10 +2283,10 @@ static QString beginVerboseSigstatHeader()
 static QString makeShowAuditLogLink( const GpgME::Error & err, const QString & auditLog ) {
   if ( const unsigned int code = err.code() ) {
     if ( code == GPG_ERR_NOT_IMPLEMENTED ) {
-      kdDebug(5006) << "makeShowAuditLogLink: not showing link (not implemented)" << endl;
+      //kdDebug(5006) << "makeShowAuditLogLink: not showing link (not implemented)" << endl;
       return QString();
     } else if ( code == GPG_ERR_NO_DATA ) {
-      kdDebug(5006) << "makeShowAuditLogLink: not showing link (not available)" << endl;
+      //kdDebug(5006) << "makeShowAuditLogLink: not showing link (not available)" << endl;
       return i18n("No Audit Log available");
     } else {
       return i18n("Error Retrieving Audit Log: %1").arg( QString::fromLocal8Bit( err.asString() ) );
@@ -2809,8 +2808,8 @@ void ObjectTreeParser::writeBodyStr( const QCString& aStr, const QTextCodec *aCo
           QCString str( *npbit );
           if( !str.isEmpty() ) {
             htmlStr += quotedHTML( aCodec->toUnicode( str ), decorate );
-            kdDebug( 5006 ) << "Non-empty Non-OpenPGP block found: '" << str
-                            << "'" << endl;
+            //kdDebug( 5006 ) << "Non-empty Non-OpenPGP block found: '" << str
+            //                << "'" << endl;
             // treat messages with empty lines before the first clearsigned
             // block as fully signed/encrypted
             if( firstNonPgpBlock ) {
@@ -3083,10 +3082,6 @@ QString ObjectTreeParser::quotedHTML( const QString& s, bool decorate )
   else
      htmlStr.append( quoteEnd );
 
-  //kdDebug(5006) << "KMReaderWin::quotedHTML:\n"
-  //              << "========================================\n"
-  //              << htmlStr
-  //              << "\n======================================\n";
   return htmlStr;
 }
 
