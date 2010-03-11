@@ -525,11 +525,6 @@ bool KMEdit::eventFilter(QObject*o, QEvent* e)
         //Execute the popup inline
         const int id = p.exec( mapToGlobal( event->pos() ) );
 
-        if ( id != -1 ) {
-          // No longer misspelled: Either added to dictionary, ignored or replaced
-          mReplacements.remove( word );
-        }
-
         if ( id == ignoreId ) {
           mHighlighter->ignoreWord( word );
           mHighlighter->rehighlight();
@@ -556,6 +551,12 @@ bool KMEdit::eventFilter(QObject*o, QEvent* e)
             txtIdx += mReplacements[word][id].length() - word.length();
           setCursorPosition(parIdx, txtIdx);
         }
+
+        if ( id == addToDictionaryId || id == ignoreId ) {
+          // No longer misspelled: Either added to dictionary or ignored
+          mReplacements.remove( word );
+        }
+
         //Cancel original event
         return true;
       }
