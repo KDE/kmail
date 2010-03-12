@@ -452,18 +452,21 @@ void CachedImapJob::slotPutMessageDataReq(KIO::Job *job, QByteArray &data)
 }
 
 //----------------------------------------------------------------------------
-void CachedImapJob::slotPutMessageInfoData(KIO::Job *job, const QString &data)
+void CachedImapJob::slotPutMessageInfoData( KIO::Job *job, const QString &data )
 {
-  KMFolderCachedImap * imapFolder = static_cast<KMFolderCachedImap*>(mDestFolder->storage());
-  KMAcctCachedImap *account = imapFolder->account();
-  ImapAccountBase::JobIterator it = account->findJob( job );
-  if ( it == account->jobsEnd() ) return;
+  KMFolderCachedImap *imapFolder = static_cast<KMFolderCachedImap*>( mDestFolder->storage() );
+  if ( imapFolder ) {
+    KMAcctCachedImap *account = imapFolder->account();
+    ImapAccountBase::JobIterator it = account->findJob( job );
+    if ( it == account->jobsEnd() ) {
+      return;
+    }
 
-  if ( data.find("UID") != -1 && mMsg )
-  {
-    int uid = (data.right(data.length()-4)).toInt();
-    kdDebug( 5006 ) << k_funcinfo << "Server told us uid is: " << uid << endl;
-    mMsg->setUID( uid );
+    if ( data.find( "UID" ) != -1 && mMsg ) {
+      int uid = ( data.right( data.length() - 4 ) ).toInt();
+      kdDebug( 5006 ) << k_funcinfo << "Server told us uid is: " << uid << endl;
+      mMsg->setUID( uid );
+    }
   }
 }
 
