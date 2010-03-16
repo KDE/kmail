@@ -156,6 +156,10 @@ namespace KMail {
     void setShowRawToltecMail( bool showRawToltecMail ) { mShowRawToltecMail = showRawToltecMail; }
     bool showRawToltecMail() const { return mShowRawToltecMail; }
 
+    /// default text for processToltecMail(), which is used in kmail.kcfg, therefore it
+    /// needs to be static here.
+    static QString defaultToltecReplacementText();
+
     const KMail::AttachmentStrategy * attachmentStrategy() const {
       return mAttachmentStrategy;
     }

@@ -1210,6 +1210,12 @@ namespace KMail {
       mTextualContentCharset = otp.textualContentCharset();
   }
 
+  QString ObjectTreeParser::defaultToltecReplacementText()
+  {
+    return i18n( "This message is a <i>Toltec</i> Groupware object, it can only be viewed with "
+                 "Microsoft Outlook in combination with the Toltec connector." );
+  }
+
   bool ObjectTreeParser::processToltecMail( partNode *node )
   {
     if ( !node || !mHtmlWriter || !GlobalSettings::self()->showToltecReplacementText() ||

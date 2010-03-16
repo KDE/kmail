@@ -4,4 +4,4 @@ Mutators=true
 Singleton=true
 ItemAccessors=true
 SetUserTexts=true
-IncludeFiles=templatesconfiguration.h,kmglobal.h,templatesconfiguration_base.h
+IncludeFiles=templatesconfiguration.h,kmglobal.h,templatesconfiguration_base.h,objecttreeparser.h

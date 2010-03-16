@@ -222,7 +222,7 @@
 
       <entry name="ToltecReplacementText" type="String">
         <label>The text that will be displayed as a replacement when encountering Toltec scheduling messages.</label>
-        <default>This message is a &lt;i&gt;Toltec&lt;/i&gt; Groupware object, it can only be viewed with Microsoft Outlook in combination with the Toltec connector.</default>
+        <default code="true">KMail::ObjectTreeParser::defaultToltecReplacementText()</default>
       </entry>
 
 
