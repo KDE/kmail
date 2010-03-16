@@ -134,6 +134,7 @@ namespace KMail {
     mSpellConfig = new KSpellConfig( 0, 0, 0, false );
     mSpellConfig->fillDicts( this, &mDictionaries );
     mDefaultDictionary = currentItem();
+    mSpellConfig->setDictionary( currentDictionary() );
   }
 
   void DictionaryComboBox::slotDictionaryChanged( int idx )

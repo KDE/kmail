@@ -215,6 +215,7 @@ KMEdit::KMEdit(QWidget *parent, KMComposeWin* composer,
   : KEdit( parent, name ),
     mComposer( composer ),
     mKSpellForDialog( 0 ),
+    mSpeller( 0 ),
     mSpellConfig( autoSpellConfig ),
     mSpellingFilter( 0 ),
     mExtEditorTempFile( 0 ),
@@ -230,11 +231,18 @@ KMEdit::KMEdit(QWidget *parent, KMComposeWin* composer,
   installEventFilter(this);
   KCursor::setAutoHideCursor( this, true, true );
   setOverwriteEnabled( true );
-  mSpeller = new KMSpell( this, SLOT( spellerReady( KSpell * ) ) );
+  createSpellers();
+  connect( mSpellConfig, SIGNAL( configChanged() ),
+           this, SLOT( createSpellers() ) );
   connect( mSpeller, SIGNAL( death() ),
            this, SLOT( spellerDied() ) );
 }
 
+void KMEdit::createSpellers()
+{
+  delete mSpeller;
+  mSpeller = new KMSpell( this, SLOT( spellerReady( KSpell * ) ), mSpellConfig );
+}
 
 void KMEdit::initializeAutoSpellChecking()
 {
@@ -353,8 +361,8 @@ unsigned int KMEdit::lineBreakColumn() const
   return lineBreakColumn;
 }
 
-KMSpell::KMSpell( QObject *receiver, const char *slot )
-  : KSpell( 0, QString(), receiver, slot )
+KMSpell::KMSpell( QObject *receiver, const char *slot, KSpellConfig *spellConfig )
+  : KSpell( 0, QString(), receiver, slot, spellConfig )
 {
 }
 
@@ -647,8 +655,11 @@ void KMEdit::spellcheck()
 //                    SLOT(slotSpellcheck2(KSpell*)),0,true,false,KSpell::HTML);
 //  }
 //  else {
-    mKSpellForDialog = new KSpell(this, i18n("Spellcheck - KMail"), this,
-                      SLOT(slotSpellcheck2(KSpell*)));
+
+    // Don't use mSpellConfig here. Reason is that the spell dialog, KSpellDlg, uses its own
+    // spell config, and therefore the two wouldn't be in sync.
+    mKSpellForDialog = new KSpell( this, i18n("Spellcheck - KMail"), this,
+                                   SLOT(slotSpellcheck2(KSpell*))/*, mSpellConfig*/ );
 //  }
 
   QStringList l = KSpellingHighlighter::personalWords();

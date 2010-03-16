@@ -30,7 +30,7 @@ class KMSpell : public KSpell
 {
   public:
 
-    KMSpell( QObject *receiver, const char *slot );
+    KMSpell( QObject *receiver, const char *slot, KSpellConfig *spellConfig );
     using KSpell::writePersonalDictionary;
 };
 
@@ -162,6 +162,9 @@ private slots:
 
   /// Called when mSpeller died for some reason.
   void spellerDied();
+
+  /// Re-creates the spellers, called when the dictionary is changed
+  void createSpellers();
 
 private:
   void killExternalEditor();
