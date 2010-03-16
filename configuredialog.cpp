@@ -60,6 +60,7 @@ using KPIM::RecentAddresses;
 #include "customtemplates.h"
 #include "messageviewer/autoqpointer.h"
 #include "messageviewer/nodehelper.h"
+#include "messageviewer/globalsettings.h"
 
 using KMail::IdentityListView;
 using KMail::IdentityListViewItem;
@@ -3466,7 +3467,7 @@ void SecurityPage::GeneralTab::doLoadOther()
   mSGTab.mAutomaticallyImportAttachedKeysCheck->setChecked(
       reader.readEntry( "AutoImportKeys", false ) );
 
-  mSGTab.mAlwaysDecrypt->setChecked( GlobalSettings::self()->alwaysDecrypt() );
+  mSGTab.mAlwaysDecrypt->setChecked( MessageViewer::GlobalSettings::self()->alwaysDecrypt() );
 
   const KConfigGroup mdn( KMKernel::config(), "MDN" );
 
@@ -3506,7 +3507,7 @@ void SecurityPage::GeneralTab::save()
   mdn.writeEntry( "default-policy", mMDNGroup->checkedId() );
   mdn.writeEntry( "quote-message", mOrigQuoteGroup->checkedId() );
   GlobalSettings::self()->setNotSendWhenEncrypted( mSGTab.mNoMDNsWhenEncryptedCheck->isChecked() );
-  GlobalSettings::self()->setAlwaysDecrypt( mSGTab.mAlwaysDecrypt->isChecked() );
+  MessageViewer::GlobalSettings::self()->setAlwaysDecrypt( mSGTab.mAlwaysDecrypt->isChecked() );
 }
 
 

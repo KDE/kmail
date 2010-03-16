@@ -436,9 +436,6 @@
 <!-- Composer -->
 
     <group name="Fonts">
-      <entry name="UseDefaultFonts" type="Bool" key="defaultFonts">
-        <default>true</default>
-      </entry>
       <entry name="ComposerFont" type="Font" key="composer-font">
         <default code="true">KGlobalSettings::generalFont()</default>
       </entry>
@@ -580,11 +577,6 @@
      <entry name="AllowAttachmentEditing" type="Bool">
        <default>false</default>
        <label>Allow to edit attachments of existing mails.</label>
-     </entry>
-
-     <entry name="AlwaysDecrypt" type="Bool">
-      <default>false</default>
-      <label>Always decrypt messages when viewing or ask before decrypting</label>
      </entry>
 
      <entry name="MimeTreeLocation" type="Enum">

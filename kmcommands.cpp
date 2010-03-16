@@ -90,7 +90,6 @@ using KMail::ActionScheduler;
 #include "messageviewer/csshelper.h"
 //using KMail::FolderJob;
 #include "messageviewer/mailsourceviewer.h"
-using namespace MessageViewer;
 #include "kmreadermainwin.h"
 #include "secondarywindow.h"
 using KMail::SecondaryWindow;
@@ -105,6 +104,7 @@ using KMail::TemplateParser;
 #include "globalsettings.h"
 #include "stringutil.h"
 #include "messageviewer/autoqpointer.h"
+#include "messageviewer/globalsettings.h"
 
 #include "messagehelper.h"
 
@@ -1349,7 +1349,7 @@ KMCommand::Result KMForwardAttachedCommand::execute()
     // set the part
     KMime::Content *msgPart = new KMime::Content( msg.get() );
     msgPart->contentType()->setMimeType( "message/rfc822" );
-    msgPart->contentType()->setCharset( NodeHelper::charset( msg.get() ) );
+    msgPart->contentType()->setCharset( MessageViewer::NodeHelper::charset( msg.get() ) );
 
 
     msgPart->contentDisposition()->setFilename( "forwarded message" );
@@ -1563,8 +1563,8 @@ KMCommand::Result KMCustomForwardCommand::execute()
 
 
 KMPrintCommand::KMPrintCommand( QWidget *parent, const Akonadi::Item &msg,
-                                const HeaderStyle *headerStyle,
-                                const HeaderStrategy *headerStrategy,
+                                const MessageViewer::HeaderStyle *headerStyle,
+                                const MessageViewer::HeaderStrategy *headerStrategy,
                                 bool htmlOverride, bool htmlLoadExtOverride,
                                 bool useFixedFont, const QString & encoding )
   : KMCommand( parent, msg ),
@@ -1575,7 +1575,7 @@ KMPrintCommand::KMPrintCommand( QWidget *parent, const Akonadi::Item &msg,
     mUseFixedFont( useFixedFont ), mEncoding( encoding )
 {
   fetchScope().fetchFullPayload( true );
-  if ( GlobalSettings::useDefaultFonts() )
+  if ( MessageViewer::GlobalSettings::useDefaultFonts() )
     mOverrideFont = KGlobalSettings::generalFont();
   else {
     KConfigGroup fonts( KMKernel::config(), "Fonts" );
@@ -2299,7 +2299,7 @@ KMCommand::Result KMSaveAttachmentsCommand::saveItem( KMime::Content *content,
   KMime::Content *topContent  = content->topLevel();
   MessageViewer::NodeHelper *mNodeHelper = new MessageViewer::NodeHelper;
   bool bSaveEncrypted = false;
-  bool bEncryptedParts = mNodeHelper->encryptionState( content ) != KMMsgNotEncrypted;
+  bool bEncryptedParts = mNodeHelper->encryptionState( content ) != MessageViewer::KMMsgNotEncrypted;
   if( bEncryptedParts )
     if( KMessageBox::questionYesNo( parentWidget(),
                                     i18n( "The part %1 of the message is encrypted. Do you want to keep the encryption when saving?",
@@ -2309,7 +2309,7 @@ KMCommand::Result KMSaveAttachmentsCommand::saveItem( KMime::Content *content,
       bSaveEncrypted = true;
 
   bool bSaveWithSig = true;
-  if(mNodeHelper->signatureState( content ) != KMMsgNotSigned )
+  if(mNodeHelper->signatureState( content ) != MessageViewer::KMMsgNotSigned )
     if( KMessageBox::questionYesNo( parentWidget(),
                                     i18n( "The part %1 of the message is signed. Do you want to keep the signature when saving?",
                                           url.fileName() ),
@@ -2503,7 +2503,7 @@ KMCommand::Result KMResendMessageCommand::execute()
     return Failed;
 
   KMime::Message::Ptr newMsg = KMail::MessageHelper::createResend( item, msg );
-  newMsg->contentType()->setCharset( NodeHelper::charset( msg.get() ) );
+  newMsg->contentType()->setCharset( MessageViewer::NodeHelper::charset( msg.get() ) );
 
   KMail::Composer * win = KMail::makeComposer();
   win->setMsg( newMsg, false, true );

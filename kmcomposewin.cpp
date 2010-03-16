@@ -100,6 +100,7 @@ using KMail::TemplateParser;
 #include <messageviewer/kcursorsaver.h>
 #include <messageviewer/objecttreeparser.h>
 #include <messageviewer/nodehelper.h>
+#include <messageviewer/globalsettings.h>
 
 #include <kcharsets.h>
 #include <kdebug.h>
@@ -577,7 +578,7 @@ void KMComposeWin::readConfig( bool reload /* = false */ )
   mRecipientsEditor->setCompletionMode( (KGlobalSettings::Completion)GlobalSettings::self()->completionMode() );
   mEdtReplyTo->setCompletionMode( (KGlobalSettings::Completion)GlobalSettings::self()->completionMode() );
 
-  if ( GlobalSettings::self()->useDefaultFonts() ) {
+  if ( MessageViewer::GlobalSettings::self()->useDefaultFonts() ) {
     mBodyFont = KGlobalSettings::generalFont();
     mFixedFont = KGlobalSettings::fixedFont();
   } else {
