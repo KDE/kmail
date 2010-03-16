@@ -3463,8 +3463,8 @@ void SecurityPage::GeneralTab::doLoadOther()
 {
   const KConfigGroup reader( KMKernel::config(), "Reader" );
 
-  mSGTab.mHtmlMailCheck->setChecked( GlobalSettings::self()->htmlMail() );
-  mSGTab.mExternalReferences->setChecked( GlobalSettings::self()->htmlLoadExternal() );
+  mSGTab.mHtmlMailCheck->setChecked( MessageViewer::GlobalSettings::self()->htmlMail() );
+  mSGTab.mExternalReferences->setChecked( MessageViewer::GlobalSettings::self()->htmlLoadExternal() );
   mSGTab.mAutomaticallyImportAttachedKeysCheck->setChecked(
       reader.readEntry( "AutoImportKeys", false ) );
 
@@ -3478,7 +3478,7 @@ void SecurityPage::GeneralTab::doLoadOther()
   num = mdn.readEntry( "quote-message", 0 );
   if ( num < 0 || num >= mOrigQuoteGroup->buttons().count() ) num = 0;
   mOrigQuoteGroup->button(num)->setChecked(true);
-  mSGTab.mNoMDNsWhenEncryptedCheck->setChecked( GlobalSettings::self()->notSendWhenEncrypted() );
+  mSGTab.mNoMDNsWhenEncryptedCheck->setChecked( MessageViewer::GlobalSettings::self()->notSendWhenEncrypted() );
 }
 
 void SecurityPage::GeneralTab::save()
@@ -3486,14 +3486,13 @@ void SecurityPage::GeneralTab::save()
   KConfigGroup reader( KMKernel::config(), "Reader" );
   KConfigGroup mdn( KMKernel::config(), "MDN" );
 
-  if ( GlobalSettings::self()->htmlMail() != mSGTab.mHtmlMailCheck->isChecked())
+  if ( MessageViewer::GlobalSettings::self()->htmlMail() != mSGTab.mHtmlMailCheck->isChecked())
   {
     if (KMessageBox::warningContinueCancel(this, i18n("Changing the global "
       "HTML setting will override all folder specific values."), QString(),
       KStandardGuiItem::cont(), KStandardGuiItem::cancel(), "htmlMailOverride") == KMessageBox::Continue)
     {
-      GlobalSettings::self()->setHtmlMail( mSGTab.mHtmlMailCheck->isChecked() );
-      QStringList names;
+      MessageViewer::GlobalSettings::self()->setHtmlMail( mSGTab.mHtmlMailCheck->isChecked() );
       QList<Akonadi::Collection> collections = kmkernel->allFoldersCollection();
       for (int i = 0; i < collections.size(); ++i)
       {
@@ -3503,11 +3502,11 @@ void SecurityPage::GeneralTab::save()
       }
     }
   }
-  GlobalSettings::self()->setHtmlLoadExternal( mSGTab.mExternalReferences->isChecked() );
+  MessageViewer::GlobalSettings::self()->setHtmlLoadExternal( mSGTab.mExternalReferences->isChecked() );
   reader.writeEntry( "AutoImportKeys", mSGTab.mAutomaticallyImportAttachedKeysCheck->isChecked() );
   mdn.writeEntry( "default-policy", mMDNGroup->checkedId() );
   mdn.writeEntry( "quote-message", mOrigQuoteGroup->checkedId() );
-  GlobalSettings::self()->setNotSendWhenEncrypted( mSGTab.mNoMDNsWhenEncryptedCheck->isChecked() );
+  MessageViewer::GlobalSettings::self()->setNotSendWhenEncrypted( mSGTab.mNoMDNsWhenEncryptedCheck->isChecked() );
   MessageViewer::GlobalSettings::self()->setAlwaysDecrypt( mSGTab.mAlwaysDecrypt->isChecked() );
 }
 

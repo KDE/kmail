@@ -641,7 +641,7 @@ void KMComposeWin::writeConfig( void )
   GlobalSettings::self()->setPreviousFcc( QString::number(mFcc->currentCollection().id()) );
   GlobalSettings::self()->setAutoSpellChecking(
                                                mAutoSpellCheckingAction->isChecked() );
-  GlobalSettings::self()->setUseFixedFont( mFixedFontAction->isChecked() );
+  MessageViewer::GlobalSettings::self()->setUseFixedFont( mFixedFontAction->isChecked() );
   if ( !mForceDisableHtml )
     GlobalSettings::self()->setUseHtmlMarkup( mEditor->textMode() == KMeditor::Rich );
   GlobalSettings::self()->setComposerSize( size() );
@@ -1253,7 +1253,7 @@ void KMComposeWin::setupActions( void )
   mFixedFontAction = new KToggleAction( i18n("Use Fi&xed Font"), this );
   actionCollection()->addAction( "toggle_fixedfont", mFixedFontAction );
   connect( mFixedFontAction, SIGNAL(triggered(bool) ), SLOT(slotUpdateFont()) );
-  mFixedFontAction->setChecked( GlobalSettings::self()->useFixedFont() );
+  mFixedFontAction->setChecked( MessageViewer::GlobalSettings::self()->useFixedFont() );
 
   //these are checkable!!!
   mUrgentAction = new KToggleAction(

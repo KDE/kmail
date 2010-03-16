@@ -267,10 +267,6 @@
         <label>Word &amp;wrap at column:</label>
         <default>true</default>
       </entry>
-      <entry name="UseFixedFont" type="Bool" key="use-fixed-font">
-        <label>Use Fi&amp;xed Font</label>
-        <default>false</default>
-      </entry>
       <entry name="LineWrapWidth" type="Int" key="break-at">
         <label></label>
         <default>78</default>
@@ -502,40 +498,9 @@
        <label>Close message window after replying or forwarding</label>
        <default>false</default>
      </entry>
-     <entry name="MimePaneHeight" type="Int">
-       <default>100</default>
-     </entry>
-     <entry name="MessagePaneHeight" type="Int">
-       <default>180</default>
-     </entry>
-     <entry name="headerStyle" type="String" key="header-style">
-       <label>What style of headers should be displayed</label>
-       <default>fancy</default>
-     </entry>
-     <entry name="headerSetDisplayed" type="String" key="header-set-displayed">
-       <label>How much of headers should be displayed</label>
-       <default>rich</default>
-     </entry>
-      <entry name="htmlMail" type="Bool">
-        <label>Prefer HTML to plain text</label>
-        <default>false</default>
-      </entry>
-      <entry name="htmlLoadExternal" type="Bool">
-        <label>Allow messages to load external references from the Internet</label>
-        <default>false</default>
-      </entry>
-
-      <entry name="attachmentStrategy" type="String" key="attachment-strategy">
-        <label>How attachments are shown</label>
-        <default>Smart</default>
-      </entry>
     </group>
 
     <group name="MDN">
-      <entry name="notSendWhenEncrypted" type="Bool" key="not-send-when-encrypted">
-        <label>Do not send MDNs in response to encrypted messages</label>
-        <default>true</default>
-      </entry>
       <entry name="SendMDNsWithEmptySender" type="Bool">
         <default>false</default>
         <label>Send Message Disposition Notifications with an empty sender.</label>

@@ -450,7 +450,7 @@ void MessageActions::slotPrintMsg()
   const bool htmlOverride = mMessageView ? mMessageView->htmlOverride() : false;
   const bool htmlLoadExtOverride = mMessageView ? mMessageView->htmlLoadExtOverride() : false;
   const bool useFixedFont = mMessageView ? mMessageView->isFixedFont() :
-                                           GlobalSettings::self()->useFixedFont();
+                                           MessageViewer::GlobalSettings::self()->useFixedFont();
   const QString overrideEncoding = mMessageView ? mMessageView->overrideEncoding() :
                                  MessageViewer::GlobalSettings::self()->overrideCharacterEncoding();
 

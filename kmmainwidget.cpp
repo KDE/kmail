@@ -490,8 +490,8 @@ void KMMainWidget::readPreConfig()
   mReaderWindowActive = GlobalSettings::self()->readerWindowMode() != GlobalSettings::EnumReaderWindowMode::hide;
   mReaderWindowBelow = GlobalSettings::self()->readerWindowMode() == GlobalSettings::EnumReaderWindowMode::below;
 
-  mHtmlPref = GlobalSettings::self()->htmlMail();
-  mHtmlLoadExtPref = GlobalSettings::self()->htmlLoadExternal();
+  mHtmlPref = MessageViewer::GlobalSettings::self()->htmlMail();
+  mHtmlLoadExtPref = MessageViewer::GlobalSettings::self()->htmlLoadExternal();
   mEnableFavoriteFolderView = GlobalSettings::self()->enableFavoriteFolderView();
   mEnableFolderQuickSearch = GlobalSettings::self()->enableFolderQuickSearch();
 }
@@ -2778,8 +2778,8 @@ void KMMainWidget::slotItemsFetchedForActivation( const Akonadi::Item::List &lis
   Item msg = list.first();
 
   KMReaderMainWin *win = new KMReaderMainWin( mFolderHtmlPref, mFolderHtmlLoadExtPref );
-  KConfigGroup reader( KMKernel::config(), "Reader" );
-  bool useFixedFont = mMsgView ? mMsgView->isFixedFont() : GlobalSettings::self()->useFixedFont();
+  const bool useFixedFont = mMsgView ? mMsgView->isFixedFont() :
+                            MessageViewer::GlobalSettings::self()->useFixedFont();
   win->setUseFixedFont( useFixedFont );
   win->showMessage( overrideEncoding(), msg );
   win->show();
