@@ -18,8 +18,12 @@
 
 #include "folderselectiontreeview.h"
 #include "foldertreeview.h"
-#include <QSortFilterProxyModel>
-#include <QHBoxLayout>
+#include "imapaclattribute.h"
+#include "readablecollectionproxymodel.h"
+#include "globalsettings.h"
+#include "kmkernel.h"
+
+#include "messageviewer/globalsettings.h"
 
 #include <akonadi/attributefactory.h>
 #include <akonadi/entitytreeview.h>
@@ -33,17 +37,11 @@
 #include <akonadi/statisticsproxymodel.h>
 #include <akonadi_next/quotacolorproxymodel.h>
 #include <akonadi_next/recursivecollectionfilterproxymodel.h>
-
 #include <akonadi/krecursivefilterproxymodel.h>
-
 #include <KMime/Message>
 
-#include "imapaclattribute.h"
-
-#include "readablecollectionproxymodel.h"
-
-#include "globalsettings.h"
-#include "kmkernel.h"
+#include <QHBoxLayout>
+#include <QSortFilterProxyModel>
 
 class FolderSelectionTreeView::FolderSelectionTreeViewPrivate
 {
@@ -266,7 +264,7 @@ void FolderSelectionTreeView::readQuotaConfig()
 {
   QColor quotaColor;
   qreal threshold = 100;
-  if ( !GlobalSettings::self()->useDefaultColors() ) {
+  if ( !MessageViewer::GlobalSettings::self()->useDefaultColors() ) {
     KConfigGroup readerConfig( KMKernel::config(), "Reader" );
     quotaColor = readerConfig.readEntry( "CloseToQuotaColor", quotaColor  );
     threshold = GlobalSettings::closeToQuotaThreshold();

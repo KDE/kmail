@@ -43,6 +43,7 @@ using KMail::MailServiceImpl;
 using KMail::TemplateParser;
 
 #include "messagelist/core/configprovider.h"
+#include "messageviewer/globalsettings.h"
 
 #include "foldercollection.h"
 
@@ -787,7 +788,8 @@ bool KMKernel::showMail( quint32 serialNumber, const QString& /* messageId */ )
     if ( job->exec() ) {
       if ( job->items().count() >= 1 ) {
         KMReaderMainWin *win = new KMReaderMainWin( false, false );
-        win->showMessage( GlobalSettings::self()->overrideCharacterEncoding(), job->items().at( 0 ) );
+        win->showMessage( MessageViewer::GlobalSettings::self()->overrideCharacterEncoding(),
+                          job->items().at( 0 ) );
         win->show();
         return true;
       }

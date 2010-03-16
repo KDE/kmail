@@ -1258,7 +1258,7 @@ void AppearancePage::ColorsTab::save()
   KConfigGroup reader( KMKernel::config(), "Reader" );
   KConfigGroup messageListView( KMKernel::config(), "MessageListView::Colors" );
   bool customColors = mCustomColorCheck->isChecked();
-  GlobalSettings::self()->setUseDefaultColors( !customColors );
+  MessageViewer::GlobalSettings::self()->setUseDefaultColors( !customColors );
 
   messageListView.writeEntry( "defaultColors", !customColors );
 
@@ -1655,27 +1655,28 @@ AppearancePageReaderTab::AppearancePageReaderTab( QWidget * parent )
 
   // "show colorbar" check box:
   populateCheckBox( mShowColorbarCheck = new QCheckBox( this ),
-                    GlobalSettings::self()->showColorBarItem() );
+                    MessageViewer::GlobalSettings::self()->showColorBarItem() );
   vlay->addWidget( mShowColorbarCheck );
   connect( mShowColorbarCheck, SIGNAL ( stateChanged( int ) ),
            this, SLOT( slotEmitChanged() ) );
 
   // "show spam status" check box;
   populateCheckBox( mShowSpamStatusCheck = new QCheckBox( this ),
-                    GlobalSettings::self()->showSpamStatusItem() );
+                    MessageViewer::GlobalSettings::self()->showSpamStatusItem() );
   vlay->addWidget( mShowSpamStatusCheck );
   connect( mShowSpamStatusCheck, SIGNAL ( stateChanged( int ) ),
            this, SLOT( slotEmitChanged() ) );
 
   // "replace smileys by emoticons" check box;
   populateCheckBox( mShowEmoticonsCheck = new QCheckBox( this ),
-                    GlobalSettings::self()->showEmoticonsItem() );
+                    MessageViewer::GlobalSettings::self()->showEmoticonsItem() );
   vlay->addWidget( mShowEmoticonsCheck );
   connect( mShowEmoticonsCheck, SIGNAL ( stateChanged( int ) ),
            this, SLOT( slotEmitChanged() ) );
 
   // "Use smaller font for quoted text" check box
-  mShrinkQuotesCheck = new QCheckBox( GlobalSettings::self()->shrinkQuotesItem()->label(), this);
+  mShrinkQuotesCheck = new QCheckBox(
+      MessageViewer::GlobalSettings::self()->shrinkQuotesItem()->label(), this );
   mShrinkQuotesCheck->setObjectName( "kcfg_ShrinkQuotes" );
   vlay->addWidget( mShrinkQuotesCheck );
   connect( mShrinkQuotesCheck, SIGNAL( stateChanged( int ) ),
@@ -1683,7 +1684,7 @@ AppearancePageReaderTab::AppearancePageReaderTab( QWidget * parent )
 
   // "Show expand/collaps quote marks" check box;
   populateCheckBox( mShowExpandQuotesMark = new QCheckBox( this ),
-                    GlobalSettings::self()->showExpandQuotesMarkItem() );
+                    MessageViewer::GlobalSettings::self()->showExpandQuotesMarkItem() );
   vlay->addWidget( mShowExpandQuotesMark);
   connect( mShowExpandQuotesMark, SIGNAL ( stateChanged( int ) ),
            this, SLOT( slotEmitChanged() ) );
@@ -1697,7 +1698,7 @@ AppearancePageReaderTab::AppearancePageReaderTab( QWidget * parent )
       3/*init*/,this );
 
   QLabel *label = new QLabel(
-           GlobalSettings::self()->collapseQuoteLevelSpinItem()->label(), this );
+           MessageViewer::GlobalSettings::self()->collapseQuoteLevelSpinItem()->label(), this );
   label->setBuddy( mCollapseQuoteLevelSpin );
 
   hlay->addWidget( label );
@@ -1721,8 +1722,8 @@ AppearancePageReaderTab::AppearancePageReaderTab( QWidget * parent )
   connect( mCharsetCombo, SIGNAL( activated( int ) ),
            this, SLOT( slotEmitChanged( void ) ) );
 
-  QString fallbackCharsetWhatsThis =
-    i18n( GlobalSettings::self()->fallbackCharacterEncodingItem()->whatsThis().toUtf8() );
+  QString fallbackCharsetWhatsThis = i18n(
+     MessageViewer::GlobalSettings::self()->fallbackCharacterEncodingItem()->whatsThis().toUtf8() );
   mCharsetCombo->setWhatsThis( fallbackCharsetWhatsThis );
 
   label = new QLabel( i18n("Fallback ch&aracter encoding:"), this );
@@ -1743,8 +1744,8 @@ AppearancePageReaderTab::AppearancePageReaderTab( QWidget * parent )
   connect( mOverrideCharsetCombo, SIGNAL( activated( int ) ),
            this, SLOT( slotEmitChanged( void ) ) );
 
-  QString overrideCharsetWhatsThis =
-    i18n( GlobalSettings::self()->overrideCharacterEncodingItem()->whatsThis().toUtf8() );
+  QString overrideCharsetWhatsThis = i18n(
+     MessageViewer::GlobalSettings::self()->overrideCharacterEncodingItem()->whatsThis().toUtf8() );
   mOverrideCharsetCombo->setWhatsThis( overrideCharsetWhatsThis );
 
   label = new QLabel( i18n("&Override character encoding:"), this );
@@ -1762,7 +1763,7 @@ void AppearancePage::ReaderTab::readCurrentFallbackCodec()
   QStringList encodings =MessageViewer::NodeHelper::supportedEncodings( false );
   QStringList::ConstIterator it( encodings.begin() );
   QStringList::ConstIterator end( encodings.end() );
-  QString currentEncoding = GlobalSettings::self()->fallbackCharacterEncoding();
+  QString currentEncoding = MessageViewer::GlobalSettings::self()->fallbackCharacterEncoding();
   uint i = 0;
   int indexOfLatin9 = 0;
   bool found = false;
@@ -1785,7 +1786,7 @@ void AppearancePage::ReaderTab::readCurrentFallbackCodec()
 
 void AppearancePage::ReaderTab::readCurrentOverrideCodec()
 {
-  const QString &currentOverrideEncoding = GlobalSettings::self()->overrideCharacterEncoding();
+  const QString &currentOverrideEncoding = MessageViewer::GlobalSettings::self()->overrideCharacterEncoding();
   if ( currentOverrideEncoding.isEmpty() ) {
     mOverrideCharsetCombo->setCurrentIndex( 0 );
     return;
@@ -1809,16 +1810,16 @@ void AppearancePage::ReaderTab::readCurrentOverrideCodec()
     kWarning() <<"Unknown override character encoding \"" << currentOverrideEncoding
                    << "\". Resetting to Auto.";
     mOverrideCharsetCombo->setCurrentIndex( 0 );
-    GlobalSettings::self()->setOverrideCharacterEncoding( QString() );
+    MessageViewer::GlobalSettings::self()->setOverrideCharacterEncoding( QString() );
   }
 }
 
 void AppearancePage::ReaderTab::doLoadFromGlobalSettings()
 {
-  mShowEmoticonsCheck->setChecked( GlobalSettings::self()->showEmoticons() );
-  mShrinkQuotesCheck->setChecked( GlobalSettings::self()->shrinkQuotes() );
-  mShowExpandQuotesMark->setChecked( GlobalSettings::self()->showExpandQuotesMark() );
-  mCollapseQuoteLevelSpin->setValue( GlobalSettings::self()->collapseQuoteLevelSpin() );
+  mShowEmoticonsCheck->setChecked( MessageViewer::GlobalSettings::self()->showEmoticons() );
+  mShrinkQuotesCheck->setChecked( MessageViewer::GlobalSettings::self()->shrinkQuotes() );
+  mShowExpandQuotesMark->setChecked( MessageViewer::GlobalSettings::self()->showExpandQuotesMark() );
+  mCollapseQuoteLevelSpin->setValue( MessageViewer::GlobalSettings::self()->collapseQuoteLevelSpin() );
   readCurrentFallbackCodec();
   readCurrentOverrideCodec();
 }
@@ -1826,24 +1827,24 @@ void AppearancePage::ReaderTab::doLoadFromGlobalSettings()
 void AppearancePage::ReaderTab::doLoadOther()
 {
   loadWidget( mCloseAfterReplyOrForwardCheck, GlobalSettings::self()->closeAfterReplyOrForwardItem() );
-  loadWidget( mShowColorbarCheck, GlobalSettings::self()->showColorBarItem() );
-  loadWidget( mShowSpamStatusCheck, GlobalSettings::self()->showSpamStatusItem() );
+  loadWidget( mShowColorbarCheck, MessageViewer::GlobalSettings::self()->showColorBarItem() );
+  loadWidget( mShowSpamStatusCheck, MessageViewer::GlobalSettings::self()->showSpamStatusItem() );
 }
 
 
 void AppearancePage::ReaderTab::save()
 {
   saveCheckBox( mCloseAfterReplyOrForwardCheck, GlobalSettings::self()->closeAfterReplyOrForwardItem() );
-  saveCheckBox( mShowColorbarCheck, GlobalSettings::self()->showColorBarItem() );
-  saveCheckBox( mShowSpamStatusCheck, GlobalSettings::self()->showSpamStatusItem() );
-  GlobalSettings::self()->setShowEmoticons( mShowEmoticonsCheck->isChecked() );
-  GlobalSettings::self()->setShrinkQuotes( mShrinkQuotesCheck->isChecked() );
-  GlobalSettings::self()->setShowExpandQuotesMark( mShowExpandQuotesMark->isChecked() );
+  saveCheckBox( mShowColorbarCheck, MessageViewer::GlobalSettings::self()->showColorBarItem() );
+  saveCheckBox( mShowSpamStatusCheck, MessageViewer::GlobalSettings::self()->showSpamStatusItem() );
+  MessageViewer::GlobalSettings::self()->setShowEmoticons( mShowEmoticonsCheck->isChecked() );
+  MessageViewer::GlobalSettings::self()->setShrinkQuotes( mShrinkQuotesCheck->isChecked() );
+  MessageViewer::GlobalSettings::self()->setShowExpandQuotesMark( mShowExpandQuotesMark->isChecked() );
 
-  GlobalSettings::self()->setCollapseQuoteLevelSpin( mCollapseQuoteLevelSpin->value() );
-  GlobalSettings::self()->setFallbackCharacterEncoding(
+  MessageViewer::GlobalSettings::self()->setCollapseQuoteLevelSpin( mCollapseQuoteLevelSpin->value() );
+  MessageViewer::GlobalSettings::self()->setFallbackCharacterEncoding(
       MessageViewer::NodeHelper::encodingForName( mCharsetCombo->currentText() ) );
-  GlobalSettings::self()->setOverrideCharacterEncoding(
+  MessageViewer::GlobalSettings::self()->setOverrideCharacterEncoding(
       mOverrideCharsetCombo->currentIndex() == 0 ?
         QString() :
         MessageViewer::NodeHelper::encodingForName( mOverrideCharsetCombo->currentText() ) );

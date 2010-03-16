@@ -26,6 +26,7 @@
 
 #include "messagecore/annotationdialog.h"
 #include "messageviewer/csshelper.h"
+#include "messageviewer/globalsettings.h"
 
 #include <Nepomuk/Resource>
 
@@ -451,7 +452,7 @@ void MessageActions::slotPrintMsg()
   const bool useFixedFont = mMessageView ? mMessageView->isFixedFont() :
                                            GlobalSettings::self()->useFixedFont();
   const QString overrideEncoding = mMessageView ? mMessageView->overrideEncoding() :
-                                                  GlobalSettings::self()->overrideCharacterEncoding();
+                                 MessageViewer::GlobalSettings::self()->overrideCharacterEncoding();
 
   // FIXME: This is broken when the Viewer shows an encapsulated message
   const Akonadi::Item message = mMessageView ? mMessageView->message() : mCurrentItem;

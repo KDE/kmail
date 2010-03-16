@@ -67,6 +67,7 @@
 
 // Other PIM includes
 #include "messageviewer/autoqpointer.h"
+#include "messageviewer/globalsettings.h"
 #include "messageviewer/viewer.h"
 #include "messageviewer/attachmentstrategy.h"
 #include "messageviewer/headerstrategy.h"
@@ -757,14 +758,14 @@ void KMMainWidget::readConfig()
 
   { // Read the config of the folder views and the header
     if ( mMsgView ) {
-      mMsgView->viewer()->setShowColorBar( GlobalSettings::self()->showColorBar() );
-      mMsgView->viewer()->setShowEmoticons( GlobalSettings::self()->showEmoticons() );
-      mMsgView->viewer()->setShrinkQuotes( GlobalSettings::self()->shrinkQuotes() );
-      mMsgView->viewer()->setShowExpandQuotesMark( GlobalSettings::self()->showExpandQuotesMark() );
-      mMsgView->viewer()->setCollapseQuoteLevelSpin( GlobalSettings::self()->collapseQuoteLevelSpin() );
-      mMsgView->viewer()->setShowSpamStatus( GlobalSettings::self()->showSpamStatus() );
-      mMsgView->viewer()->setFallbackCharacterEncoding( GlobalSettings::self()->fallbackCharacterEncoding() );
-      mMsgView->viewer()->setOverrideCharacterEncoding( GlobalSettings::self()->overrideCharacterEncoding() );
+      mMsgView->viewer()->setShowColorBar( MessageViewer::GlobalSettings::self()->showColorBar() );
+      mMsgView->viewer()->setShowEmoticons( MessageViewer::GlobalSettings::self()->showEmoticons() );
+      mMsgView->viewer()->setShrinkQuotes( MessageViewer::GlobalSettings::self()->shrinkQuotes() );
+      mMsgView->viewer()->setShowExpandQuotesMark( MessageViewer::GlobalSettings::self()->showExpandQuotesMark() );
+      mMsgView->viewer()->setCollapseQuoteLevelSpin( MessageViewer::GlobalSettings::self()->collapseQuoteLevelSpin() );
+      mMsgView->viewer()->setShowSpamStatus( MessageViewer::GlobalSettings::self()->showSpamStatus() );
+      mMsgView->viewer()->setFallbackCharacterEncoding( MessageViewer::GlobalSettings::self()->fallbackCharacterEncoding() );
+      mMsgView->viewer()->setOverrideCharacterEncoding( MessageViewer::GlobalSettings::self()->overrideCharacterEncoding() );
       mMsgView->readConfig();
     }
     mMessagePane->setAutoHideTabBarWithSingleTab( GlobalSettings::self()->autoHideTabBarWithSingleTab() );
@@ -4349,7 +4350,7 @@ QString KMMainWidget::overrideEncoding() const
   if ( mMsgView )
     return mMsgView->overrideEncoding();
   else
-    return GlobalSettings::self()->overrideCharacterEncoding();
+    return MessageViewer::GlobalSettings::self()->overrideCharacterEncoding();
 }
 
 void KMMainWidget::slotCreateTodo()

@@ -439,10 +439,6 @@
       <entry name="ComposerFont" type="Font" key="composer-font">
         <default code="true">KGlobalSettings::generalFont()</default>
       </entry>
-      <entry name="FixedFont" type="Font" key="fixed-font">
-        <default code="true">KGlobalSettings::fixedFont()</default>
-      </entry>
-
     </group>
 
     <group name="Geometry">
@@ -520,107 +516,6 @@
        <label>How much of headers should be displayed</label>
        <default>rich</default>
      </entry>
-     <entry name="UseDefaultColors" type="Bool" key="defaultColors">
-       <default>true</default>
-     </entry>
-     <entry name="FallbackCharacterEncoding" type="String" key="FallbackCharacterEncoding">
-       <default code="true"> QString( QTextCodec::codecForLocale()->name() ).toLower() == "eucjp" ? QString("jis7") : QString( QTextCodec::codecForLocale()->name() ).toLower()</default>
-       <label></label>
-       <whatsthis>Some emails, especially those generated automatically, do not specify the character encoding which needs to be used to properly display them. In such cases a fallback character encoding will be used, which you can configure here. Set it to the character encoding most commonly used in your part of the world. As a default the encoding configured for the whole system is used.</whatsthis>
-     </entry>
-
-     <entry name="OverrideCharacterEncoding" type="String" key="encoding">
-       <default></default>
-       <label></label>
-       <whatsthis>Changing this from its default 'Auto' will force the use of the specified encoding for all emails, regardless of what they specify themselves.</whatsthis>
-     </entry>
-
-     <entry name="ShowEmoticons" type="Bool">
-       <default>true</default>
-       <label>Replace smileys by emoticons</label>
-       <whatsthis>Enable this if you want smileys like :-) appearing in the message text to be replaced by emoticons (small pictures).</whatsthis>
-     </entry>
-     <entry name="ShowExpandQuotesMark" type="Bool">
-       <default>false</default>
-       <label>Show expand/collapse quote marks</label>
-       <whatsthis>Enable this option to show different levels of quoted text. Disable to hide the levels of quoted text.</whatsthis>
-     </entry>
-      <entry name="CollapseQuoteLevelSpin" type="Int" >
-        <label>Automatic collapse level:</label>
-        <default>3</default>
-        <min>0</min>
-        <max>10</max>
-      </entry>
-
-      <entry name="ShrinkQuotes" type="Bool">
-        <default>false</default>
-        <label>Reduce font size for quoted text</label>
-        <whatsthis>Enable this option to show quoted text with a smaller font.</whatsthis>
-     </entry>
-
-     <entry name="ChiasmusDecryptionKey" type="String">
-     </entry>
-
-     <entry name="ChiasmusDecryptionOptions" type="String">
-     </entry>
-
-     <entry name="ShowUserAgent" type="Bool">
-       <default>false</default>
-       <label>Show user agent in fancy headers</label>
-       <whatsthis>Enable this option to get the User-Agent and X-Mailer header lines displayed when using fancy headers.</whatsthis>
-     </entry>
-
-     <entry name="AllowAttachmentDeletion" type="Bool">
-       <default>true</default>
-       <label>Allow to delete attachments of existing mails.</label>
-     </entry>
-     <entry name="AllowAttachmentEditing" type="Bool">
-       <default>false</default>
-       <label>Allow to edit attachments of existing mails.</label>
-     </entry>
-
-     <entry name="MimeTreeLocation" type="Enum">
-       <label>Message Structure Viewer Placement</label>
-       <choices>
-         <choice name="top">
-           <label>Above the message pane</label>
-         </choice>
-         <choice name="bottom">
-           <label>Below the message pane</label>
-         </choice>
-       </choices>
-       <default>bottom</default>
-     </entry>
-
-     <entry name="MimeTreeMode" type="Enum">
-      <label>Message Structure Viewer</label>
-      <choices>
-        <choice name="Never">
-          <label>Show never</label>
-        </choice>
-        <choice name="Always">
-          <label>Show always</label>
-        </choice>
-      </choices>
-      <default>Never</default>
-     </entry>
-
-     <entry name="showColorBar" type="Bool">
-       <label>Show HTML status bar</label>
-       <default>false</default>
-     </entry>
-
-     <entry name="showSpamStatus" type="Bool">
-       <label>Show spam status in fancy headers</label>
-       <default>true</default>
-     </entry>
-
-     <entry name="numberOfAddressesToShow" type="Int">
-       <label>Number of addresses to show before collapsing</label>
-       <default>4</default>
-       <min>1</min>
-     </entry>
-
       <entry name="htmlMail" type="Bool">
         <label>Prefer HTML to plain text</label>
         <default>false</default>
@@ -633,13 +528,6 @@
       <entry name="attachmentStrategy" type="String" key="attachment-strategy">
         <label>How attachments are shown</label>
         <default>Smart</default>
-      </entry>
-    </group>
-
-    <group name="TextIndex">
-      <entry name="automaticDecrypt" type="Bool" key="automaticDecrypt">
-        <default>true</default>
-	<label></label>
       </entry>
     </group>
 

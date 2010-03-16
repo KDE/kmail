@@ -299,7 +299,7 @@ KMComposeWin::KMComposeWin( const KMime::Message::Ptr &aMsg, Composer::TemplateC
     QColor defaultEncryptedColor( 0x00, 0x80, 0xFF ); // light blue // pgp encrypted
     QColor signedColor = defaultSignedColor;
     QColor encryptedColor = defaultEncryptedColor;
-    if ( !GlobalSettings::self()->useDefaultColors() ) {
+    if ( !MessageViewer::GlobalSettings::self()->useDefaultColors() ) {
       signedColor = reader.readEntry( "PGPMessageOkKeyOk", defaultSignedColor );
       encryptedColor = reader.readEntry( "PGPMessageEncr", defaultEncryptedColor );
     }
@@ -575,7 +575,7 @@ void KMComposeWin::readConfig( bool reload /* = false */ )
     mFixedFont = KGlobalSettings::fixedFont();
   } else {
     mBodyFont = GlobalSettings::self()->composerFont();
-    mFixedFont = GlobalSettings::self()->fixedFont();
+    mFixedFont = MessageViewer::GlobalSettings::self()->fixedFont();
   }
 
   slotUpdateFont();
@@ -1053,7 +1053,7 @@ void KMComposeWin::applyTemplate( uint uoid )
 
   TemplateParser parser( mMsg, mode );
   parser.setSelection( mTextSelection );
-  parser.setAllowDecryption( GlobalSettings::self()->automaticDecrypt() );
+  parser.setAllowDecryption( MessageViewer::GlobalSettings::self()->automaticDecrypt() );
   if ( mode == TemplateParser::NewMessage ) {
     if ( !mCustomTemplate.isEmpty() )
       parser.process( mCustomTemplate, KMime::Message::Ptr() );

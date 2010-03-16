@@ -28,6 +28,8 @@
 
 #include <kio/jobuidelegate.h>
 
+#include "messageviewer/globalsettings.h"
+
 #include <KPIMTextEdit/EMailQuoteHighlighter>
 
 #include <KAction>
@@ -81,7 +83,7 @@ void KMComposerEditor::setHighlighterColors(KPIMTextEdit::EMailQuoteHighlighter 
   QColor color3( 0x00, 0x60, 0x00 );
   QColor misspelled = Qt::red;
 
-  if ( !GlobalSettings::self()->useDefaultColors() ) {
+  if ( !MessageViewer::GlobalSettings::self()->useDefaultColors() ) {
     KConfigGroup readerConfig( KMKernel::config(), "Reader" );
     color3 = readerConfig.readEntry( "QuotedText3", color3  );
     color2 = readerConfig.readEntry( "QuotedText2", color2  );
