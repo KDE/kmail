@@ -19,54 +19,14 @@
  * with this program; if not, write to the Free Software Foundation, Inc.,
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  */
-
 #include "kmcomposewin.h"
 
-#include "messagehelper.h"
-
-// KDEPIM includes
-#include "kleo/cryptobackendfactory.h"
-#include "kleo/exportjob.h"
-#include "kleo/specialjob.h"
-#include <libkpgp/kpgpblock.h>
-#include <libkleo/ui/progressdialog.h>
-#include <libkleo/ui/keyselectiondialog.h>
-
-#include <kpimutils/email.h>
-
-#include <messagecomposer/composer.h>
-#include <messagecomposer/globalpart.h>
-#include <messagecomposer/infopart.h>
-#include <messagecomposer/textpart.h>
-
-// LIBKDEPIM includes
-#include <messagecore/attachmentpart.h>
-#include <libkdepim/kaddrbookexternal.h>
-#include <libkdepim/recentaddresses.h>
-
-using KPIM::RecentAddresses;
-
-// KDEPIMLIBS includes
-#include <kpimidentities/identitymanager.h>
-#include <kpimidentities/identitycombo.h>
-#include <kpimidentities/identity.h>
-#include <mailtransport/transportcombobox.h>
-#include <mailtransport/transportmanager.h>
-using MailTransport::TransportManager;
-#include <mailtransport/transport.h>
-using MailTransport::Transport;
-#include <mailtransport/messagequeuejob.h>
-#include <mailtransport/sentbehaviourattribute.h>
-#include <kmime/kmime_codecs.h>
-#include <kmime/kmime_message.h>
-#include <boost/shared_ptr.hpp>
-
 // KMail includes
+#include "messagehelper.h"
 #include "attachmentcollector.h"
 #include "attachmentcontroller.h"
 #include "attachmentmodel.h"
 #include "attachmentview.h"
-#include "messageviewer/chiasmuskeyselector.h"
 #include "codecaction.h"
 #include "kleo_util.h"
 #include "kmcommands.h"
@@ -85,23 +45,55 @@ using MailTransport::Transport;
 #include "util.h"
 #include "templateparser.h"
 #include "messagehelper.h"
+#include "snippetwidget.h"
 #include "keyresolver.h"
 #include "templatesconfiguration_kfg.h"
 #include "foldercollectionmonitor.h"
 
-using Sonnet::DictionaryComboBox;
-using KMail::TemplateParser;
+// KDEPIM includes
+#include <libkpgp/kpgpblock.h>
+#include <libkleo/ui/progressdialog.h>
+#include <libkleo/ui/keyselectiondialog.h>
+#include "kleo/cryptobackendfactory.h"
+#include "kleo/exportjob.h"
+#include "kleo/specialjob.h"
+#include <messageviewer/objecttreeemptysource.h>
+#include <messageviewer/kcursorsaver.h>
+#include <messageviewer/objecttreeparser.h>
+#include <messageviewer/nodehelper.h>
+#include "messageviewer/chiasmuskeyselector.h"
+#include <messageviewer/globalsettings.h>
+#include <messagecomposer/composer.h>
+#include <messagecomposer/globalpart.h>
+#include <messagecomposer/infopart.h>
+#include <messagecomposer/textpart.h>
+#include <messagecore/attachmentpart.h>
+
+// LIBKDEPIM includes
+#include <libkdepim/kaddrbookexternal.h>
+#include <libkdepim/recentaddresses.h>
+
+// KDEPIMLIBS includes
+#include <akonadi/collectioncombobox.h>
+#include <akonadi/changerecorder.h>
+#include <akonadi/itemcreatejob.h>
+#include <akonadi/itemfetchjob.h>
+#include <kpimutils/email.h>
+#include <kpimidentities/identitymanager.h>
+#include <kpimidentities/identitycombo.h>
+#include <kpimidentities/identity.h>
+#include <mailtransport/transportcombobox.h>
+#include <mailtransport/transportmanager.h>
+#include <mailtransport/transport.h>
+#include <mailtransport/messagequeuejob.h>
+#include <mailtransport/sentbehaviourattribute.h>
+#include <kmime/kmime_codecs.h>
+#include <kmime/kmime_message.h>
 
 // KDELIBS includes
 #include <kactioncollection.h>
 #include <kactionmenu.h>
 #include <kapplication.h>
-
-#include <messageviewer/kcursorsaver.h>
-#include <messageviewer/objecttreeparser.h>
-#include <messageviewer/nodehelper.h>
-#include <messageviewer/globalsettings.h>
-
 #include <kcharsets.h>
 #include <kdebug.h>
 #include <kedittoolbar.h>
@@ -144,17 +136,17 @@ using KMail::TemplateParser;
 #include <errno.h>
 #include <fcntl.h>
 #include <memory>
+#include <boost/shared_ptr.hpp>
 
-#include <akonadi/collectioncombobox.h>
-#include <akonadi/changerecorder.h>
-#include <akonadi/itemcreatejob.h>
-#include <akonadi/itemfetchjob.h>
-
-#include <messageviewer/objecttreeemptysource.h>
 // MOC
 #include "kmcomposewin.moc"
 
-#include "snippetwidget.h"
+
+using Sonnet::DictionaryComboBox;
+using KMail::TemplateParser;
+using MailTransport::TransportManager;
+using MailTransport::Transport;
+using KPIM::RecentAddresses;
 
 KMail::Composer *KMail::makeComposer( const KMime::Message::Ptr &msg, Composer::TemplateContext context,
                                       uint identity, const QString & textSelection,
