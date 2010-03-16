@@ -758,14 +758,6 @@ void KMMainWidget::readConfig()
 
   { // Read the config of the folder views and the header
     if ( mMsgView ) {
-      mMsgView->viewer()->setShowColorBar( MessageViewer::GlobalSettings::self()->showColorBar() );
-      mMsgView->viewer()->setShowEmoticons( MessageViewer::GlobalSettings::self()->showEmoticons() );
-      mMsgView->viewer()->setShrinkQuotes( MessageViewer::GlobalSettings::self()->shrinkQuotes() );
-      mMsgView->viewer()->setShowExpandQuotesMark( MessageViewer::GlobalSettings::self()->showExpandQuotesMark() );
-      mMsgView->viewer()->setCollapseQuoteLevelSpin( MessageViewer::GlobalSettings::self()->collapseQuoteLevelSpin() );
-      mMsgView->viewer()->setShowSpamStatus( MessageViewer::GlobalSettings::self()->showSpamStatus() );
-      mMsgView->viewer()->setFallbackCharacterEncoding( MessageViewer::GlobalSettings::self()->fallbackCharacterEncoding() );
-      mMsgView->viewer()->setOverrideCharacterEncoding( MessageViewer::GlobalSettings::self()->overrideCharacterEncoding() );
       mMsgView->readConfig();
     }
     mMessagePane->setAutoHideTabBarWithSingleTab( GlobalSettings::self()->autoHideTabBarWithSingleTab() );
