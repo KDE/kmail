@@ -964,8 +964,9 @@ QString KMSearchPattern::asSparqlQuery() const
   Nepomuk::Query::Query query;
 
   Nepomuk::Query::AndTerm outerGroup;
-  Nepomuk::Query::ResourceTypeTerm typeTerm( Nepomuk::Types::Class( Vocabulary::NMO::Email() ) );
-  Nepomuk::Query::Query::RequestProperty itemIdProperty( Akonadi::ItemSearchJob::akonadiItemIdUri(), false );
+  const Nepomuk::Types::Class cl( Vocabulary::NMO::Email() );
+  const Nepomuk::Query::ResourceTypeTerm typeTerm( cl );
+  const Nepomuk::Query::Query::RequestProperty itemIdProperty( Akonadi::ItemSearchJob::akonadiItemIdUri(), false );
 
   Nepomuk::Query::GroupTerm innerGroup = makeGroupTerm( mOperator );
   for ( const_iterator it = begin(); it != end(); ++it )
