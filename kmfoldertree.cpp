@@ -382,6 +382,7 @@ KMFolderTree::KMFolderTree( KMMainWidget *mainWidget, QWidget *parent,
   oldSelected = 0;
   oldCurrent = 0;
   mLastItem = 0;
+  dropItem = 0;
   mMainWidget = mainWidget;
   mReloading = false;
   mCutFolder = false;
