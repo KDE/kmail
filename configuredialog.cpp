@@ -34,7 +34,7 @@
 // other KMail headers:
 #include "kmkernel.h"
 #include "simplestringlisteditor.h"
-#include <libkdepim/colorlistbox.h>
+#include "colorlistbox.h"
 #include "messagesender.h"
 #include <kpimidentities/identitymanager.h>
 #include "identitylistview.h"
@@ -1159,7 +1159,7 @@ AppearancePageColorsTab::AppearancePageColorsTab( QWidget * parent )
            this, SLOT( slotEmitChanged( void ) ) );
 
   // color list box:
-  mColorList = new KPIM::ColorListBox( this );
+  mColorList = new ColorListBox( this );
   mColorList->setEnabled( false ); // since !mCustomColorCheck->isChecked()
   QStringList modeList;
   for ( int i = 0 ; i < numColorNames ; i++ )

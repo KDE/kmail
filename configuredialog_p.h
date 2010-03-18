@@ -67,6 +67,7 @@ class KFontRequester;
 class KIconButton;
 class KKeySequenceWidget;
 class KComboBox;
+class ColorListBox;
 
 namespace MessageList {
   namespace Utils {
@@ -85,10 +86,6 @@ namespace KMail {
 
 namespace Kleo {
   class CryptoConfig;
-}
-
-namespace KPIM {
-  class ColorListBox;
 }
 
 class WarningConfiguration : public QWidget, public Ui::WarningConfiguration
@@ -374,7 +371,7 @@ private:
 
 private:
   QCheckBox    *mCustomColorCheck;
-  KPIM::ColorListBox *mColorList;
+  ColorListBox *mColorList;
   QCheckBox    *mRecycleColorCheck;
   QSpinBox     *mCloseToQuotaThreshold;
 };
