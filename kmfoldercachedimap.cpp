@@ -596,17 +596,17 @@ bool KMFolderCachedImap::canRemoveFolder() const {
 int KMFolderCachedImap::rename( const QString& aName,
                                 KMFolderDir* /*aParent*/ )
 {
+  if ( account() == 0 || imapPath().isEmpty() ) { // I don't think any of this can happen anymore
+    QString err = i18n("You must synchronize with the server before renaming IMAP folders.");
+    KMessageBox::error( 0, err );
+    return -1;
+  }
+
   QString oldName = mAccount->renamedFolder( imapPath() );
   if ( oldName.isEmpty() ) oldName = name();
   if ( aName == oldName )
     // Stupid user trying to rename it to it's old name :)
     return 0;
-
-  if( account() == 0 || imapPath().isEmpty() ) { // I don't think any of this can happen anymore
-    QString err = i18n("You must synchronize with the server before renaming IMAP folders.");
-    KMessageBox::error( 0, err );
-    return -1;
-  }
 
   // Make the change appear to the user with setLabel, but we'll do the change
   // on the server during the next sync. The name() is the name at the time of
