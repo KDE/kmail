@@ -357,5 +357,5 @@ install(TARGETS
 install(FILES
   ${CMAKE_BINARY_DIR}/kmail/org.kde.kmail.kmailpart.xml
   ${CMAKE_BINARY_DIR}/kmail/org.kde.kmail.kmail.xml
-  DESTINATION ${KDE4_DBUS_INTERFACES_DIR}
+  DESTINATION ${DBUS_INTERFACES_INSTALL_DIR}
 )
