@@ -596,7 +596,9 @@ bool KMFolderCachedImap::canRemoveFolder() const {
 int KMFolderCachedImap::rename( const QString& aName,
                                 KMFolderDir* /*aParent*/ )
 {
-  if ( account() == 0 || imapPath().isEmpty() ) { // I don't think any of this can happen anymore
+  if ( account() == 0 || imapPath().isEmpty() ) {
+    // This can happen when creating a folder and then renaming it without syncing before,
+    // see https://issues.kolab.org/issue3658
     QString err = i18n("You must synchronize with the server before renaming IMAP folders.");
     KMessageBox::error( 0, err );
     return -1;
