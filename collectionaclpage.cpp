@@ -151,9 +151,9 @@ void ACLEntryDialog::slotSelectAddresses()
     return;
   }
 
-  const QStringList distrLists = dlg->toDistributionLists();
+  const QStringList distrLists = dlg->distributionLists( KPIM::AddressesDialog::ToReceiver );
   QString txt = distrLists.join( ", " );
-  const KABC::Addressee::List lst = dlg->toAddresses();
+  const KABC::Addressee::List lst = dlg->contacts( KPIM::AddressesDialog::ToReceiver );
   if ( !lst.isEmpty() ) {
     for( QList<KABC::Addressee>::ConstIterator it = lst.constBegin(); it != lst.constEnd(); ++it ) {
       if ( !txt.isEmpty() )

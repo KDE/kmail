@@ -145,7 +145,7 @@ void RedirectDialog::slotAddrBook()
   dlg->setShowBCC( false );
 
   if ( dlg->exec() != KDialog::Rejected && dlg ) {
-    mEditTo->setText( dlg->to().join(", ") );
+    mEditTo->setText( dlg->emailAddresses( AddressesDialog::ToReceiver ).join(", ") );
     mEditTo->setModified( true );
   }
 }
