@@ -22,14 +22,13 @@
 #ifndef KMCOMPOSEREDITOR_H
 #define KMCOMPOSEREDITOR_H
 
-#include <kmeditor.h>
+#include <messagecomposer/kmeditor.h>
 #include <KJob>
-using namespace KPIM;
 
 class KAction;
 class KMComposeWin;
 
-class KMComposerEditor : public KMeditor
+class KMComposerEditor : public Message::KMeditor
 {
   Q_OBJECT
 

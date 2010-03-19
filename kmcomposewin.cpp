@@ -2102,12 +2102,12 @@ QList< Message::Composer* > KMComposeWin::generateCryptoMessages( bool sign, boo
   QStringList signKeys;
 
   bool signSomething = sign;
-  foreach( AttachmentPart::Ptr attachment, mAttachmentModel->attachments() ) {
+  foreach( KPIM::AttachmentPart::Ptr attachment, mAttachmentModel->attachments() ) {
     if( attachment->isSigned() )
       signSomething = true;
   }
   bool encryptSomething = encrypt;
-  foreach( AttachmentPart::Ptr attachment, mAttachmentModel->attachments() ) {
+  foreach( KPIM::AttachmentPart::Ptr attachment, mAttachmentModel->attachments() ) {
     if( attachment->isEncrypted() )
       encryptSomething = true;
   }
@@ -2575,7 +2575,7 @@ bool KMComposeWin::queryExit ()
 //-----------------------------------------------------------------------------
 void KMComposeWin::addAttach( KMime::Content *msgPart )
 {
-  AttachmentPart::Ptr part( new AttachmentPart );
+  KPIM::AttachmentPart::Ptr part( new KPIM::AttachmentPart );
   part->setName( msgPart->contentDescription()->asUnicodeString() );
   part->setFileName( msgPart->contentDisposition()->filename() );
   part->setMimeType( msgPart->contentType()->mimeType() );
@@ -2807,7 +2807,7 @@ void KMComposeWin::slotPasteAsAttachment()
         i18n( "Name of the attachment:" ),
         QString(), &ok, this );
     if( ok ) {
-      AttachmentPart::Ptr part = AttachmentPart::Ptr( new AttachmentPart );
+      KPIM::AttachmentPart::Ptr part = KPIM::AttachmentPart::Ptr( new KPIM::AttachmentPart );
       part->setName( attName );
       part->setFileName( attName );
       part->setMimeType( "text/plain" );
@@ -3537,7 +3537,7 @@ void KMComposeWin::slotToggleMarkup()
 }
 
 //-----------------------------------------------------------------------------
-void KMComposeWin::slotTextModeChanged( KPIM::KMeditor::Mode mode )
+void KMComposeWin::slotTextModeChanged( Message::KMeditor::Mode mode )
 {
   if ( mode == KMeditor::Plain )
     disableHtml( NoConfirmationNeeded ); // ### Can this happen at all?

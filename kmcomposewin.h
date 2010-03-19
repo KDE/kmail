@@ -37,7 +37,7 @@
 #include <kglobalsettings.h>
 
 // LIBKDEPIM includes
-#include <libkdepim/kmeditor.h>
+#include <messagecomposer/kmeditor.h>
 
 // KDEPIMLIBS includes
 #include <kmime/kmime_message.h>

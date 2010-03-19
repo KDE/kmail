@@ -18,7 +18,7 @@
 #include <QTreeWidget>
 #include <qrect.h>
 
-#include <libkdepim/kmeditor.h>
+#include <messagecomposer/kmeditor.h>
 #include <ktexteditor/view.h>
 #include <KSharedConfig>
 
@@ -27,7 +27,7 @@ class QContextMenuEvent;
 class SnippetItem;
 class QWidget;
 class KActionCollection;
-using KPIM::KMeditor;
+using Message::KMeditor;
 
 /**
 @author Robert Gruber
