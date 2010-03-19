@@ -46,7 +46,7 @@
 #include <kpimidentities/identitymanager.h>
 #include <ktextedit.h>
 #include <kurl.h>
-#include <kxface.h>
+#include <messageviewer/kxface.h>
 
 #include <QCheckBox>
 #include <QHBoxLayout>
@@ -59,7 +59,7 @@
 using namespace KABC;
 using namespace KIO;
 using namespace KMail;
-using namespace KPIM;
+using namespace MessageViewer;
 
 namespace KMail {
 
