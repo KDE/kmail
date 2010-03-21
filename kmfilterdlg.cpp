@@ -763,7 +763,7 @@ void KMFilterListBox::slotUpdateFilterName()
 
   if ( mFilterList.at(mIdxSelItem)->isAutoNaming() ) {
     // auto-naming of patterns
-    if ( p->first() && !p->first()->field().trimmed().isEmpty() )
+    if ( !p->isEmpty() && p->first() && !p->first()->field().trimmed().isEmpty() )
       shouldBeName = QString( "<%1>: %2" ).arg( QString::fromLatin1( p->first()->field() ) ).arg( p->first()->contents() );
     else
       shouldBeName = '<' + i18n("unnamed") + '>';
