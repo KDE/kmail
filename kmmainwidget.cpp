@@ -3241,8 +3241,15 @@ void KMMainWidget::setupActions()
   }
   {
     KAction *action = mAkonadiStandardActionManager->action( Akonadi::StandardActionManager::CutItems );
-     mAkonadiStandardActionManager->setActionText(Akonadi::StandardActionManager::CutItems, ki18np("Cut Message", "Cut %1 Messages") );
+    mAkonadiStandardActionManager->setActionText(Akonadi::StandardActionManager::CutItems, ki18np("Cut Message", "Cut %1 Messages") );
     action->setShortcut(QKeySequence(Qt::ALT+Qt::CTRL+Qt::Key_X));
+  }
+
+  {
+    KAction *action = mAkonadiStandardActionManager->action( Akonadi::StandardActionManager::CopyItemToMenu );
+    action->setText(i18n("Copy Message To...") );
+    action = mAkonadiStandardActionManager->action( Akonadi::StandardActionManager::MoveItemToMenu );
+    action->setText(i18n("Move Message To...") );
   }
 
   //----- Message Menu
