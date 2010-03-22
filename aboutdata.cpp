@@ -239,7 +239,7 @@ namespace KMail {
   AboutData::AboutData()
     : KAboutData( "kmail", 0, ki18n("KMail"),KMAIL_VERSION,
                   ki18n("KDE Email Client"), License_GPL,
-                  ki18n("(c) 1997-2010, The KMail developers"), KLocalizedString(),
+                  ki18n("Copyright © 1997–2010, KMail authors"), KLocalizedString(),
                   "http://kontact.kde.org/kmail/" )
   {
     using KMail::authors;
