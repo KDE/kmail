@@ -100,7 +100,7 @@ KMail::ACLEntryDialog::ACLEntryDialog( IMAPUserIdFormat userIdFormat, const QStr
   label->setBuddy( mUserIdLineEdit );
   QWhatsThis::add( mUserIdLineEdit, i18n( "The User Identifier is the login of the user on the IMAP server. This can be a simple user name or the full email address of the user; the login for your own account on the server will tell you which one it is." ) );
 
-  QPushButton* kabBtn = new QPushButton( "Se&lect...", page );
+  QPushButton* kabBtn = new QPushButton( i18n( "Se&lect..." ), page );
   topLayout->addWidget( kabBtn, 0, 2 );
 
   mButtonGroup = new QVButtonGroup( i18n( "Permissions" ), page );
