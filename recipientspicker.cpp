@@ -772,7 +772,7 @@ void RecipientsPicker::pick( Recipient::Type type )
   kdDebug() << "RecipientsPicker::pick " << int( type ) << endl;
 
   int count = 0;
-  QListViewItemIterator it( mRecipientList , 
+  QListViewItemIterator it( mRecipientList ,
             QListViewItemIterator::Visible | QListViewItemIterator::Selected );
   for ( ; it.current(); ++it )
       ++count;
@@ -787,7 +787,7 @@ void RecipientsPicker::pick( Recipient::Type type )
     return;
   }
 
-  it = QListViewItemIterator( mRecipientList , 
+  it = QListViewItemIterator( mRecipientList ,
             QListViewItemIterator::Visible | QListViewItemIterator::Selected );
   for ( ; it.current(); ++it ) {
     RecipientViewItem *item = static_cast<RecipientViewItem *>( it.current() );
@@ -855,7 +855,7 @@ void RecipientsPicker::slotSearchLDAP()
 
 void RecipientsPicker::ldapSearchResult()
 {
-    QStringList emails = QStringList::split(',', mLdapSearchDialog->selectedEMails() );
+    QStringList emails = KPIM::splitEmailAddrList( mLdapSearchDialog->selectedEMails() );
     QStringList::iterator it( emails.begin() );
     QStringList::iterator end( emails.end() );
     for ( ; it != end; ++it ){
