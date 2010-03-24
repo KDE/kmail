@@ -758,6 +758,7 @@ private:
   bool mSpellCheckInProgress;
   bool mDone;
   bool mAtmModified;
+  QListViewItem *mAtmSelectNew;
 
   KMEdit* mEditor;
   QGridLayout* mGrid;

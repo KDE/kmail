@@ -159,6 +159,7 @@ KMComposeWin::KMComposeWin( KMMessage *aMsg, uint id  )
     mSpellCheckInProgress( false ),
     mDone( false ),
     mAtmModified( false ),
+    mAtmSelectNew( 0 ),
     mMsg( 0 ),
     mAttachMenu( 0 ),
     mSigningAndEncryptionExplicitlyDisabled( false ),
@@ -2518,6 +2519,13 @@ void KMComposeWin::removeAttach(const QString &aUrl)
 void KMComposeWin::removeAttach(int idx)
 {
   mAtmModified = true;
+
+  KMAtmListViewItem *item = static_cast<KMAtmListViewItem*>( mAtmItemList.at( idx ) );
+  if ( item->itemBelow() )
+    mAtmSelectNew = item->itemBelow();
+  else if ( item->itemAbove() )
+    mAtmSelectNew = item->itemAbove();
+
   mAtmList.remove(idx);
   delete mAtmItemList.take(idx);
 
@@ -3573,14 +3581,13 @@ void KMComposeWin::slotAttachSave()
 //-----------------------------------------------------------------------------
 void KMComposeWin::slotAttachRemove()
 {
+  mAtmSelectNew = 0;
   bool attachmentRemoved = false;
   int i = 0;
-  int idx = -1;
   for ( QPtrListIterator<QListViewItem> it(mAtmItemList); *it; ) {
     if ( (*it)->isSelected() ) {
       removeAttach( i );
       attachmentRemoved = true;
-      idx = i;
     }
     else {
       ++it;
@@ -3591,18 +3598,9 @@ void KMComposeWin::slotAttachRemove()
   if ( attachmentRemoved ) {
     setModified( true );
     slotUpdateAttachActions();
-    int count = mAtmItemList.count();
-    if ( count > 0 ) {
-      idx = QMAX( QMIN( idx, count - 1 ), 0 );
-      KMAtmListViewItem *sel;
-      KMAtmListViewItem *item = static_cast<KMAtmListViewItem*>( mAtmItemList.at( idx ) );
-      if ( item ) {
-        sel = item;
-      } else{
-        sel = static_cast<KMAtmListViewItem*>( mAtmListView->lastItem() );
-      }
-      mAtmListView->setSelected( sel, true );
-      mAtmListView->setCurrentItem( sel );
+    if ( mAtmSelectNew ) {
+      mAtmListView->setSelected( mAtmSelectNew, true );
+      mAtmListView->setCurrentItem( mAtmSelectNew );
     }
   }
 }
