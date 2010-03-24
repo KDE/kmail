@@ -3575,10 +3575,12 @@ void KMComposeWin::slotAttachRemove()
 {
   bool attachmentRemoved = false;
   int i = 0;
+  int idx = -1;
   for ( QPtrListIterator<QListViewItem> it(mAtmItemList); *it; ) {
     if ( (*it)->isSelected() ) {
       removeAttach( i );
       attachmentRemoved = true;
+      idx = i;
     }
     else {
       ++it;
@@ -3589,6 +3591,19 @@ void KMComposeWin::slotAttachRemove()
   if ( attachmentRemoved ) {
     setModified( true );
     slotUpdateAttachActions();
+    int count = mAtmItemList.count();
+    if ( count > 0 ) {
+      idx = QMAX( QMIN( idx, count - 1 ), 0 );
+      KMAtmListViewItem *sel;
+      KMAtmListViewItem *item = static_cast<KMAtmListViewItem*>( mAtmItemList.at( idx ) );
+      if ( item ) {
+        sel = item;
+      } else{
+        sel = static_cast<KMAtmListViewItem*>( mAtmListView->lastItem() );
+      }
+      mAtmListView->setSelected( sel, true );
+      mAtmListView->setCurrentItem( sel );
+    }
   }
 }
 
