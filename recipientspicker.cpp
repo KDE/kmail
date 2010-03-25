@@ -830,11 +830,10 @@ void RecipientsPicker::slotSearchLDAP()
 {
   if ( !mLdapSearchDialog ) {
     mLdapSearchDialog = new KLDAP::LdapSearchDialog( this );
-    connect( mLdapSearchDialog, SIGNAL( addresseesAdded() ),
+    connect( mLdapSearchDialog, SIGNAL( contactsAdded() ),
              SLOT(ldapSearchResult() ) );
   }
-  //TODO: tokoe fixme
-  //mLdapSearchDialog->setSearchText( mSearchLine->text() );
+  mLdapSearchDialog->setSearchText( mSearchLine->text() );
   mLdapSearchDialog->show();
 }
 
