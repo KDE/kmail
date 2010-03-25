@@ -71,7 +71,9 @@ namespace KMail {
 
     // "Resent only after" spinbox and label:
     ++row;
-    mIntervalSpin = new KIntSpinBox( 1, 356, 1, 7, 10, plainPage(), "mIntervalSpin" );
+    int defDayInterval = 7; //default day interval
+    mIntervalSpin = new KIntSpinBox( 1, 356, 1, defDayInterval, 10, plainPage(), "mIntervalSpin" );
+    mIntervalSpin->setSuffix( i18n(" day", " days", defDayInterval) );
     connect(mIntervalSpin, SIGNAL( valueChanged( int )), SLOT( slotIntervalSpinChanged( int ) ) );
     glay->addWidget( new QLabel( mIntervalSpin, i18n("&Resend notification only after:"), plainPage() ), row, 0 );
     glay->addWidget( mIntervalSpin, row, 1 );
