@@ -170,21 +170,17 @@ template <class T> class SimpleFolderTreeBase : public TreeBase
 
     inline void keyPressEvent( QKeyEvent *e )
     {
-      kdDebug(5006) << k_funcinfo << endl;
-      int ch = e->ascii();
-
-      if ( ch >= 32 && ch <= 126 )
-        applyFilter( mFilter + ch );
-
-      else if ( ch == 8 || ch == 127 ) {
+      const char ascii = e->ascii();
+      if ( ascii == 8 || ascii == 127 ) {
         if ( mFilter.length() > 0 ) {
           mFilter.truncate( mFilter.length()-1 );
           applyFilter( mFilter );
         }
+      } else if ( !e->text().isEmpty() && e->text().length() == 1 && e->text().at( 0 ).isPrint() ) {
+        applyFilter( mFilter + e->text() );
+      } else {
+        KListView::keyPressEvent( e );
       }
-
-     else
-      KListView::keyPressEvent( e );
     }
 
     void applyFilter( const QString& filter )
