@@ -1800,9 +1800,20 @@ void KMMainWidget::slotPrintMsg()
   KConfigGroup reader( KMKernel::config(), "Reader" );
   bool useFixedFont = mMsgView ? mMsgView->isFixedFont()
                                : reader.readBoolEntry( "useFixedFont", false );
+
+  const HeaderStyle *style;
+  const HeaderStrategy *strategy;
+  if ( mMsgView ) {
+    style = mMsgView->headerStyle();
+    strategy = mMsgView->headerStrategy();
+  } else {
+    style = HeaderStyle::create( reader.readEntry( "header-style", "fancy" ) );
+    strategy = HeaderStrategy::create( reader.readEntry( "header-set-displayed", "rich" ) );
+  }
+
   KMCommand *command =
     new KMPrintCommand( this, mHeaders->currentMsg(),
-                        mMsgView->headerStyle(), mMsgView->headerStrategy(),
+                        style, strategy,
                         htmlOverride, htmlLoadExtOverride,
                         useFixedFont, overrideEncoding() );
   command->start();
