@@ -41,7 +41,9 @@ static const struct {
   { "Subject",       I18N_NOOP( "Subject" )  },
   { "From",          I18N_NOOP( "From" )  },
   { "To",            I18N_NOOP( "To" )  },
-  { "CC",            I18N_NOOP( "CC" )  }
+  { "CC",            I18N_NOOP( "CC" )  },
+  { "Reply-To",      I18N_NOOP( "Reply To" )  },
+  { "Organization",  I18N_NOOP( "Organization" )  }
 };
 static const int SpecialRuleFieldsCount =
   sizeof( SpecialRuleFields ) / sizeof( *SpecialRuleFields );
@@ -255,12 +257,12 @@ void KMSearchRuleWidget::initFieldList( bool headersOnly, bool absoluteDates )
   mFilterFieldList.append( i18n( SpecialRuleFields[From].displayName ) );
   mFilterFieldList.append( i18n( SpecialRuleFields[To].displayName ) );
   mFilterFieldList.append( i18n( SpecialRuleFields[CC].displayName ) );
+  mFilterFieldList.append( i18n( SpecialRuleFields[ReplyTo].displayName ) );
+  mFilterFieldList.append( i18n( SpecialRuleFields[Organization].displayName ) );
 
   // these others only represent message headers and you can add to
   // them as you like
-  mFilterFieldList.append("Reply-To");
   mFilterFieldList.append("List-Id");
-  mFilterFieldList.append("Organization");
   mFilterFieldList.append("Resent-From");
   mFilterFieldList.append("X-Loop");
   mFilterFieldList.append("X-Mailing-List");
