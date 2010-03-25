@@ -752,7 +752,7 @@ private:
   QLabel    *mLblIdentity, *mLblTransport, *mLblFcc;
   QLabel    *mLblFrom, *mLblReplyTo, *mLblTo, *mLblCc, *mLblBcc, *mLblSubject;
   QLabel    *mDictionaryLabel;
-  QCheckBox *mBtnIdentity, *mBtnTransport, *mBtnFcc;
+  QCheckBox *mBtnIdentity, *mBtnDictionary, *mBtnTransport, *mBtnFcc;
   QPushButton *mBtnTo, *mBtnCc, *mBtnBcc, /* *mBtnFrom, */ *mBtnReplyTo;
   bool mSpellCheckInProgress;
   bool mDone;

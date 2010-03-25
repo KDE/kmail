@@ -314,6 +314,9 @@ KMComposeWin::KMComposeWin( KMMessage *aMsg, uint id  )
   mBtnTransport = new QCheckBox(sticky,mHeadersArea);
   QToolTip::add( mBtnTransport,
                  i18n( "Use the selected value as your outgoing account for future messages" ) );
+  mBtnDictionary = new QCheckBox( sticky, mHeadersArea );
+  QToolTip::add( mBtnDictionary,
+                 i18n( "Use the selected value as your dictionary for future messages" ) );
 
   //setWFlags( WType_TopLevel | WStyle_Dialog );
   mHtmlMarkup = GlobalSettings::self()->useHtmlMarkup();
@@ -377,6 +380,8 @@ KMComposeWin::KMComposeWin( KMMessage *aMsg, uint id  )
     GlobalSettings::self()->stickyFccItem()->whatsThis() );
   QWhatsThis::add( mBtnTransport,
     GlobalSettings::self()->stickyTransportItem()->whatsThis() );
+  QWhatsThis::add( mBtnTransport,
+    GlobalSettings::self()->stickyDictionaryItem()->whatsThis() );
 
   mSpellCheckInProgress=false;
 
@@ -386,6 +391,7 @@ KMComposeWin::KMComposeWin( KMMessage *aMsg, uint id  )
   mBtnIdentity->setFocusPolicy(QWidget::NoFocus);
   mBtnFcc->setFocusPolicy(QWidget::NoFocus);
   mBtnTransport->setFocusPolicy(QWidget::NoFocus);
+  mBtnDictionary->setFocusPolicy( QWidget::NoFocus );
 
   mAtmListView = new AttachmentListView( this, mSplitter,
                                          "attachment list view" );
@@ -684,6 +690,7 @@ void KMComposeWin::readConfig( bool reload /* = false */ )
   }
   mBtnFcc->setChecked( GlobalSettings::self()->stickyFcc() );
   mBtnTransport->setChecked( GlobalSettings::self()->stickyTransport() );
+  mBtnDictionary->setChecked( GlobalSettings::self()->stickyDictionary() );
   QStringList transportHistory = GlobalSettings::self()->transportHistory();
   QString currentTransport = GlobalSettings::self()->currentTransport();
 
@@ -738,8 +745,6 @@ void KMComposeWin::readConfig( bool reload /* = false */ )
   const KPIM::Identity & ident =
     kmkernel->identityManager()->identityForUoid( mIdentity->currentIdentity() );
 
-  mDictionaryCombo->setCurrentByDictionary( ident.dictionary() );
-
   mTransport->clear();
   mTransport->insertStringList( KMTransportInfo::availableTransports() );
   while ( transportHistory.count() > (uint)GlobalSettings::self()->maxTransportEntries() )
@@ -748,6 +753,12 @@ void KMComposeWin::readConfig( bool reload /* = false */ )
   mTransport->setCurrentText( GlobalSettings::self()->defaultTransport() );
   if ( mBtnTransport->isChecked() ) {
     setTransport( currentTransport );
+  }
+
+  if ( mBtnDictionary->isChecked() ) {
+    mDictionaryCombo->setCurrentByDictionaryName( GlobalSettings::self()->previousDictionary() );
+  } else {
+    mDictionaryCombo->setCurrentByDictionary( ident.dictionary() );
   }
 
   QString fccName = "";
@@ -768,10 +779,12 @@ void KMComposeWin::writeConfig(void)
   if ( !mIgnoreStickyFields ) {
     GlobalSettings::self()->setCurrentTransport( mTransport->currentText() );
     GlobalSettings::self()->setStickyTransport( mBtnTransport->isChecked() );
+    GlobalSettings::self()->setStickyDictionary( mBtnDictionary->isChecked() );
     GlobalSettings::self()->setStickyIdentity( mBtnIdentity->isChecked() );
     GlobalSettings::self()->setPreviousIdentity( mIdentity->currentIdentity() );
   }
   GlobalSettings::self()->setPreviousFcc( mFcc->getFolder()->idString() );
+  GlobalSettings::self()->setPreviousDictionary( mDictionaryCombo->currentDictionaryName() );
   GlobalSettings::self()->setAutoSpellChecking(
                         mAutoSpellCheckingAction->isChecked() );
   QStringList transportHistory = GlobalSettings::self()->transportHistory();
@@ -1001,7 +1014,7 @@ void KMComposeWin::rethinkFields(bool fromSlot)
 
   if (!fromSlot) mDictionaryAction->setChecked(abs(mShowHeaders)&HDR_DICTIONARY);
   rethinkHeaderLine(showHeaders,HDR_DICTIONARY, row,
-                    mDictionaryLabel, mDictionaryCombo, 0 );
+                    mDictionaryLabel, mDictionaryCombo, mBtnDictionary );
 
   if (!fromSlot) mFccAction->setChecked(abs(mShowHeaders)&HDR_FCC);
   rethinkHeaderLine(showHeaders,HDR_FCC, row,
@@ -1980,7 +1993,10 @@ void KMComposeWin::setMsg(KMMessage* newMsg, bool mayAutoSign,
       setFcc(ident.fcc());
   }
 
-  mDictionaryCombo->setCurrentByDictionary( ident.dictionary() );
+  const bool stickyDictionary = mBtnDictionary->isChecked() && !mIgnoreStickyFields;
+  if ( !stickyDictionary ) {
+    mDictionaryCombo->setCurrentByDictionary( ident.dictionary() );
+  }
 
   partNode * root = partNode::fromMessage( mMsg );
 
@@ -4043,8 +4059,10 @@ void KMComposeWin::ignoreStickyFields()
 {
   mIgnoreStickyFields = true;
   mBtnTransport->setChecked( false );
+  mBtnDictionary->setChecked( false );
   mBtnIdentity->setChecked( false );
   mBtnTransport->setEnabled( false );
+  mBtnDictionary->setEnabled( false );
   mBtnIdentity->setEnabled( false );
 }
 
@@ -4860,7 +4878,9 @@ void KMComposeWin::slotIdentityChanged( uint uoid )
     setTransport( transp );
   }
 
-  mDictionaryCombo->setCurrentByDictionary( ident.dictionary() );
+  if ( !mBtnDictionary->isChecked() && !mIgnoreStickyFields ) {
+    mDictionaryCombo->setCurrentByDictionary( ident.dictionary() );
+  }
 
   if ( !mBtnFcc->isChecked() && !mPreventFccOverwrite ) {
     setFcc( ident.fcc() );
