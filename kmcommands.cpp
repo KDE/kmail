@@ -670,7 +670,7 @@ static KUrl subjectToUrl( const QString &subject )
 
   // avoid stripping off the last part of the subject after a "."
   // by KFileDialog, which thinks it's an extension
-  if ( !fileName.endsWith( ".mbox" ) )
+  if ( !fileName.endsWith( QLatin1String( ".mbox" ) ) )
     fileName += ".mbox";
 
   const QString filter = i18n( "*.mbox|email messages (*.mbox)\n*|all files (*)" );
@@ -933,7 +933,7 @@ void KMOpenMsgCommand::slotResult( KJob *job )
   }
   else {
     int startOfMessage = 0;
-    if ( mMsgString.startsWith("From ") ) {
+    if ( mMsgString.startsWith( QLatin1String( "From " ) ) ) {
       startOfMessage = mMsgString.indexOf( '\n' );
       if ( startOfMessage == -1 ) {
         KMessageBox::sorry( parentWidget(),
