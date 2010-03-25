@@ -228,7 +228,6 @@ KMComposeWin::KMComposeWin( KMMessage *aMsg, uint id  )
   mEdtReplyTo = new KMLineEdit(true,mHeadersArea, "replyToLine");
   QToolTip::add( mEdtReplyTo,
                  i18n( "Set the \"Reply-To:\" email address for this message" ) );
-  mLblReplyTo = new QLabel(mHeadersArea);
   connect(mEdtReplyTo,SIGNAL(completionModeChanged(KGlobalSettings::Completion)),
           SLOT(slotCompletionModeChanged(KGlobalSettings::Completion)));
 
@@ -297,12 +296,14 @@ KMComposeWin::KMComposeWin( KMMessage *aMsg, uint id  )
   QToolTip::add( mEdtSubject,
                  i18n( "Set a subject for this message" ) );
 
-  mLblIdentity = new QLabel(mHeadersArea);
-  mDictionaryLabel = new QLabel( mHeadersArea );
-  mLblFcc = new QLabel(mHeadersArea);
-  mLblTransport = new QLabel(mHeadersArea);
-  mLblFrom = new QLabel(mHeadersArea);
-  mLblSubject = new QLabel(mHeadersArea);
+  mLblIdentity = new QLabel( i18n("&Identity:"), mHeadersArea );
+  mDictionaryLabel = new QLabel( i18n("&Dictionary:"), mHeadersArea );
+  mLblFcc = new QLabel( i18n("&Sent-Mail folder:"), mHeadersArea );
+  mLblTransport = new QLabel( i18n("&Mail transport:"), mHeadersArea );
+  mLblFrom = new QLabel( i18n("sender address field", "&From:"), mHeadersArea );
+  mLblReplyTo = new QLabel( i18n("&Reply to:"), mHeadersArea );
+  mLblSubject = new QLabel( i18n("S&ubject:"), mHeadersArea );
+
   QString sticky = i18n("Sticky");
   mBtnIdentity = new QCheckBox(sticky,mHeadersArea);
   QToolTip::add( mBtnIdentity,
@@ -978,7 +979,7 @@ void KMComposeWin::rethinkFields(bool fromSlot)
   mGrid->setColStretch(0, 1);
   mGrid->setColStretch(1, 100);
   mGrid->setColStretch(2, 1);
-  mGrid->setRowStretch(mNumHeaders, 100);
+  mGrid->setRowStretch( mNumHeaders + 1, 100 );
 
   row = 0;
   kdDebug(5006) << "KMComposeWin::rethinkFields" << endl;
@@ -995,29 +996,29 @@ void KMComposeWin::rethinkFields(bool fromSlot)
   if (!fromSlot) mAllFieldsAction->setChecked(showHeaders==HDR_ALL);
 
   if (!fromSlot) mIdentityAction->setChecked(abs(mShowHeaders)&HDR_IDENTITY);
-  rethinkHeaderLine(showHeaders,HDR_IDENTITY, row, i18n("&Identity:"),
+  rethinkHeaderLine(showHeaders,HDR_IDENTITY, row,
                     mLblIdentity, mIdentity, mBtnIdentity);
 
   if (!fromSlot) mDictionaryAction->setChecked(abs(mShowHeaders)&HDR_DICTIONARY);
-  rethinkHeaderLine(showHeaders,HDR_DICTIONARY, row, i18n("&Dictionary:"),
+  rethinkHeaderLine(showHeaders,HDR_DICTIONARY, row,
                     mDictionaryLabel, mDictionaryCombo, 0 );
 
   if (!fromSlot) mFccAction->setChecked(abs(mShowHeaders)&HDR_FCC);
-  rethinkHeaderLine(showHeaders,HDR_FCC, row, i18n("&Sent-Mail folder:"),
+  rethinkHeaderLine(showHeaders,HDR_FCC, row,
                     mLblFcc, mFcc, mBtnFcc);
 
   if (!fromSlot) mTransportAction->setChecked(abs(mShowHeaders)&HDR_TRANSPORT);
-  rethinkHeaderLine(showHeaders,HDR_TRANSPORT, row, i18n("&Mail transport:"),
+  rethinkHeaderLine(showHeaders,HDR_TRANSPORT, row,
                     mLblTransport, mTransport, mBtnTransport);
 
   if (!fromSlot) mFromAction->setChecked(abs(mShowHeaders)&HDR_FROM);
-  rethinkHeaderLine(showHeaders,HDR_FROM, row, i18n("sender address field", "&From:"),
+  rethinkHeaderLine(showHeaders,HDR_FROM, row,
                     mLblFrom, mEdtFrom /*, mBtnFrom */ );
 
   QWidget *prevFocus = mEdtFrom;
 
   if (!fromSlot) mReplyToAction->setChecked(abs(mShowHeaders)&HDR_REPLY_TO);
-  rethinkHeaderLine(showHeaders,HDR_REPLY_TO,row,i18n("&Reply to:"),
+  rethinkHeaderLine(showHeaders,HDR_REPLY_TO,row,
                   mLblReplyTo, mEdtReplyTo, 0);
   if ( showHeaders & HDR_REPLY_TO ) {
     prevFocus = connectFocusMoving( prevFocus, mEdtReplyTo );
@@ -1025,7 +1026,7 @@ void KMComposeWin::rethinkFields(bool fromSlot)
 
   if ( mClassicalRecipients ) {
     if (!fromSlot) mToAction->setChecked(abs(mShowHeaders)&HDR_TO);
-    rethinkHeaderLine(showHeaders, HDR_TO, row, i18n("recipient address field", "&To:"),
+    rethinkHeaderLine(showHeaders, HDR_TO, row,
                     mLblTo, mEdtTo, mBtnTo,
                     i18n("Primary Recipients"),
                     i18n("<qt>The email addresses you put "
@@ -1035,7 +1036,7 @@ void KMComposeWin::rethinkFields(bool fromSlot)
     }
 
     if (!fromSlot) mCcAction->setChecked(abs(mShowHeaders)&HDR_CC);
-    rethinkHeaderLine(showHeaders, HDR_CC, row, i18n("&Copy to (CC):"),
+    rethinkHeaderLine(showHeaders, HDR_CC, row,
                     mLblCc, mEdtCc, mBtnCc,
                     i18n("Additional Recipients"),
                     i18n("<qt>The email addresses you put "
@@ -1050,7 +1051,7 @@ void KMComposeWin::rethinkFields(bool fromSlot)
     }
 
     if (!fromSlot) mBccAction->setChecked(abs(mShowHeaders)&HDR_BCC);
-    rethinkHeaderLine(showHeaders,HDR_BCC, row, i18n("&Blind copy to (BCC):"),
+    rethinkHeaderLine(showHeaders,HDR_BCC, row,
                     mLblBcc, mEdtBcc, mBtnBcc,
                     i18n("Hidden Recipients"),
                     i18n("<qt>Essentially the same thing "
@@ -1085,7 +1086,7 @@ void KMComposeWin::rethinkFields(bool fromSlot)
     prevFocus = mRecipientsEditor;
   }
   if (!fromSlot) mSubjectAction->setChecked(abs(mShowHeaders)&HDR_SUBJECT);
-  rethinkHeaderLine(showHeaders,HDR_SUBJECT, row, i18n("S&ubject:"),
+  rethinkHeaderLine(showHeaders,HDR_SUBJECT, row,
                     mLblSubject, mEdtSubject);
   connectFocusMoving( mEdtSubject, mEditor );
 
@@ -1128,13 +1129,12 @@ QWidget *KMComposeWin::connectFocusMoving( QWidget *prev, QWidget *next )
 
 //-----------------------------------------------------------------------------
 void KMComposeWin::rethinkHeaderLine(int aValue, int aMask, int& aRow,
-                                     const QString &aLabelStr, QLabel* aLbl,
+                                     QLabel* aLbl,
                                      QLineEdit* aEdt, QPushButton* aBtn,
                                      const QString &toolTip, const QString &whatsThis )
 {
   if (aValue & aMask)
   {
-    aLbl->setText(aLabelStr);
     if ( !toolTip.isEmpty() )
       QToolTip::add( aLbl, toolTip );
     if ( !whatsThis.isEmpty() )
@@ -1165,12 +1165,11 @@ void KMComposeWin::rethinkHeaderLine(int aValue, int aMask, int& aRow,
 
 //-----------------------------------------------------------------------------
 void KMComposeWin::rethinkHeaderLine(int aValue, int aMask, int& aRow,
-                                     const QString &aLabelStr, QLabel* aLbl,
+                                     QLabel* aLbl,
                                      QComboBox* aCbx, QCheckBox* aChk)
 {
   if (aValue & aMask)
   {
-    aLbl->setText(aLabelStr);
     aLbl->adjustSize();
     aLbl->resize((int)aLbl->sizeHint().width(),aLbl->sizeHint().height() + 6);
     aLbl->setMinimumSize(aLbl->size());
