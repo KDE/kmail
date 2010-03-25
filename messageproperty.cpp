@@ -36,7 +36,6 @@
 using namespace KMail;
 
 QMap<Q_UINT32, QGuardedPtr<KMFolder> > MessageProperty::sFolders;
-QMap<Q_UINT32, bool> MessageProperty::sKeepSerialNumber;
 QMap<Q_UINT32, QGuardedPtr<ActionScheduler> > MessageProperty::sHandlers;
 QMap<Q_UINT32, int > MessageProperty::sTransfers;
 QMap<const KMMsgBase*, long > MessageProperty::sSerialCache;
@@ -158,24 +157,6 @@ void MessageProperty::setSerialCache( const KMMsgBase *msgBase, Q_UINT32 serNum 
     sSerialCache.remove( msgBase );
 }
 
-void MessageProperty::setKeepSerialNumber( Q_UINT32 serialNumber, bool keepForMoving )
-{
-  if ( serialNumber ) {
-    if ( sKeepSerialNumber.contains( serialNumber ) )
-      sKeepSerialNumber[ serialNumber ] = keepForMoving;
-    else
-      sKeepSerialNumber.insert( serialNumber, keepForMoving );
-  }
-}
-
-bool MessageProperty::keepSerialNumber( Q_UINT32 serialNumber )
-{
-  if ( sKeepSerialNumber.contains( serialNumber ) )
-    return sKeepSerialNumber[ serialNumber ];
-  else
-    return false;
-}
-
 void MessageProperty::forget( const KMMsgBase *msgBase )
 {
   Q_UINT32 serNum = serialCache( msgBase );
@@ -183,7 +164,6 @@ void MessageProperty::forget( const KMMsgBase *msgBase )
     Q_ASSERT( !transferInProgress( serNum ) );
     sTransfers.remove( serNum );
     sSerialCache.remove( msgBase );
-    sKeepSerialNumber.remove( serNum );
   }
 }
 

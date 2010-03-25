@@ -92,16 +92,6 @@ public:
   static void setTransferInProgress( Q_UINT32, bool, bool = false );
   static bool transferInProgress( Q_UINT32 );
 
-  /**
-   * Set this property to true if you want to keep the serial number when moving
-   * a message from a local folder to an online IMAP folder.
-   * Setting this to true will cause the ImapJob to save the meta data, like the
-   * serial number, of the message in a map, which is later read when the
-   * message arrives in the new location. Then the serial number is restored.
-   */
-  static void setKeepSerialNumber( Q_UINT32 serialNumber, bool keepForMoving );
-  static bool keepSerialNumber( Q_UINT32 serialNumber );
-
   /** Some properties, namely complete, transferInProgress, and
       serialCache must be forgotten when a message class instance is
       destructed or assigned a new value */
@@ -110,13 +100,6 @@ public:
 private:
   // The folder a message is to be moved into once filtering is finished if any
   static QMap<Q_UINT32, QGuardedPtr<KMFolder> > sFolders;
-
-  // Whether the serial number of a message should be kept when moving it from
-  // a local folder to an online IMAP folder. This is currently only used by
-  // the action scheduler (in ActionScheduler::moveMessage()), to make the IMAP
-  // job aware that it should try to preserve the serial number when moving, see
-  // ImapJob::init().
-  static QMap<Q_UINT32, bool> sKeepSerialNumber;
 
   // The action scheduler currently processing a message if any
   static QMap<Q_UINT32, QGuardedPtr<ActionScheduler> > sHandlers;
