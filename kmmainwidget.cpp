@@ -1193,7 +1193,13 @@ void KMMainWidget::slotRemoveFolder()
   if ( !mFolder ) return;
   if ( mFolder->isSystemFolder() ) return;
   if ( mFolder->isReadOnly() ) return;
-  if ( mFolder->mailCheckInProgress() ) return;
+  if ( mFolder->mailCheckInProgress() ) {
+    KMessageBox::sorry( this, i18n( "It is not possible to delete this folder right now because it "
+                                    "is being syncronized. Please wait until the syncronization of "
+                                    "this folder is complete and then try again." ),
+                              i18n( "Unable to delete folder" ) );
+    return;
+  }
 
   QString title;
   if ( mFolder->folderType() == KMFolderTypeSearch ) {
