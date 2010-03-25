@@ -993,6 +993,13 @@ void KMFolderImap::initializeFrom( KMFolderImap* parent, QString folderPath,
 }
 
 //-----------------------------------------------------------------------------
+bool KMFolderImap::mailCheckInProgress() const
+{
+  return getContentState() != imapNoInformation &&
+         getContentState() != imapFinished;
+}
+
+//-----------------------------------------------------------------------------
 void KMFolderImap::setChildrenState( QString attributes )
 {
   // update children state

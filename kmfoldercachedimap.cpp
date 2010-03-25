@@ -911,6 +911,9 @@ void KMFolderCachedImap::serverSyncInternal()
 
 
   case SYNC_STATE_GET_USERRIGHTS:
+
+    // Now we have started the sync, emit changed() so that the folder tree can update the status
+    emit changed();
     //kdDebug(5006) << "===== Syncing " << ( mImapPath.isEmpty() ? label() : mImapPath ) << endl;
 
     mSyncState = SYNC_STATE_RENAME_FOLDER;
@@ -1304,6 +1307,7 @@ void KMFolderCachedImap::serverSyncInternal()
       mSyncState = SYNC_STATE_INITIAL;
       mAccount->addUnreadMsgCount( this, countUnread() ); // before closing
       close( "cachedimap" );
+      emit changed();
       emit folderComplete( this, true );
     }
     break;
@@ -2404,6 +2408,7 @@ void KMFolderCachedImap::slotSubFolderComplete(KMFolderCachedImap* sub, bool suc
     mSubfoldersForSync.clear();
     mSyncState = SYNC_STATE_INITIAL;
     close("cachedimap");
+    emit changed();
     emit folderComplete( this, false );
   }
 }
@@ -3180,6 +3185,11 @@ bool KMFolderCachedImap::canDeleteMessages() const
   if ( userRights() > 0 && !(userRights() & ACLJobs::Delete) )
     return false;
   return true;
+}
+
+bool KMFolderCachedImap::mailCheckInProgress() const
+{
+  return mSyncState != SYNC_STATE_INITIAL;
 }
 
 #include "kmfoldercachedimap.moc"

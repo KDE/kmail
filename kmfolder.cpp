@@ -561,6 +561,11 @@ bool KMFolder::isReadOnly() const
   return mStorage->isReadOnly();
 }
 
+bool KMFolder::mailCheckInProgress() const
+{
+  return mStorage->mailCheckInProgress();
+}
+
 bool KMFolder::isWritable() const
 {
   return !mStorage->isReadOnly() && mStorage->canDeleteMessages();

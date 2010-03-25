@@ -419,6 +419,8 @@ public:
 
   virtual KMAccount* account() const;
 
+  virtual bool mailCheckInProgress() const;
+
 signals:
   /** Emitted when the status, name, or associated accounts of this
     folder changed. */

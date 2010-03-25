@@ -91,7 +91,7 @@ public:
     imapFinished = 3
   };
 
-  virtual imapState getContentState() { return mContentState; }
+  virtual imapState getContentState() const { return mContentState; }
   virtual void setContentState(imapState state) { mContentState = state; }
 
   virtual imapState getSubfolderState() { return mSubfolderState; }
@@ -321,6 +321,8 @@ public:
 
   /** Returns the IMAP flags that can be stored on the server. */
   int permanentFlags() const { return mPermanentFlags; }
+
+  virtual bool mailCheckInProgress() const;
 
 signals:
   void folderComplete(KMFolderImap *folder, bool success);

@@ -1173,6 +1173,11 @@ KMAccount* FolderStorage::account() const
     return 0;
 }
 
+bool FolderStorage::mailCheckInProgress() const
+{
+  return false;
+}
+
 bool FolderStorage::canDeleteMessages() const
 {
   return !isReadOnly();

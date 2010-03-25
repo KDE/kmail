@@ -141,7 +141,7 @@ public:
 
   enum imapState { imapNoInformation=0, imapInProgress=1, imapFinished=2 };
 
-  virtual imapState getContentState() { return mContentState; }
+  virtual imapState getContentState() const { return mContentState; }
   virtual void setContentState(imapState state) { mContentState = state; }
 
   virtual imapState getSubfolderState() { return mSubfolderState; }
@@ -333,6 +333,8 @@ public:
 
   QString folderAttributes() const { return mFolderAttributes; }
 
+  virtual bool mailCheckInProgress() const;
+
 protected slots:
   void slotGetMessagesData(KIO::Job * job, const QByteArray & data);
   void getMessagesResult(KMail::FolderJob *, bool lastSet);
@@ -446,11 +448,6 @@ signals:
    * Emitted when isCloseToQuota() changes during syncing
    */
   void closeToQuotaChanged();
-
-  /** emitted when we enter the state "state" and
-     have to process "number" items (for example messages
-  */
-  void syncState( int state, int number );
 
 private:
   void setReadOnly( bool readOnly );

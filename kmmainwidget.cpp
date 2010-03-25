@@ -1193,6 +1193,7 @@ void KMMainWidget::slotRemoveFolder()
   if ( !mFolder ) return;
   if ( mFolder->isSystemFolder() ) return;
   if ( mFolder->isReadOnly() ) return;
+  if ( mFolder->mailCheckInProgress() ) return;
 
   QString title;
   if ( mFolder->folderType() == KMFolderTypeSearch ) {
@@ -3428,7 +3429,8 @@ void KMMainWidget::updateFolderMenu()
   mRemoveFolderAction->setEnabled( mFolder &&
                                    !mFolder->isSystemFolder() &&
                                    mFolder->canDeleteMessages() &&
-                                   !multiFolder && !mFolder->noContent() );
+                                   !multiFolder && !mFolder->noContent() &&
+                                   !mFolder->mailCheckInProgress() );
   mRemoveFolderAction->setText( mFolder &&
                                 mFolder->folderType() == KMFolderTypeSearch ?
                                 i18n( "&Delete Search" ) :
