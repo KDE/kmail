@@ -1341,17 +1341,24 @@ void KMFolderCachedImap::syncNextSubFolder( bool secondSync )
   } else {
     mCurrentSubfolder = mSubfoldersForSync.front();
     mSubfoldersForSync.pop_front();
-    connect( mCurrentSubfolder, SIGNAL( folderComplete(KMFolderCachedImap*, bool) ),
-             this, SLOT( slotSubFolderComplete(KMFolderCachedImap*, bool) ) );
-    connect( mCurrentSubfolder, SIGNAL( closeToQuotaChanged() ),
-             this, SLOT( slotSubFolderCloseToQuotaChanged() ) );
+    if ( mCurrentSubfolder ) {
+      connect( mCurrentSubfolder, SIGNAL( folderComplete(KMFolderCachedImap*, bool) ),
+               this, SLOT( slotSubFolderComplete(KMFolderCachedImap*, bool) ) );
+      connect( mCurrentSubfolder, SIGNAL( closeToQuotaChanged() ),
+               this, SLOT( slotSubFolderCloseToQuotaChanged() ) );
 
-    //kdDebug(5006) << "Sync'ing subfolder " << mCurrentSubfolder->imapPath() << endl;
-    assert( !mCurrentSubfolder->imapPath().isEmpty() );
-    mCurrentSubfolder->setAccount( account() );
-    const bool recurse = mCurrentSubfolder->noChildren() ? false : true;
-    const bool quotaOnly = secondSync || mQuotaOnly;
-    mCurrentSubfolder->serverSync( recurse, quotaOnly );
+      //kdDebug(5006) << "Sync'ing subfolder " << mCurrentSubfolder->imapPath() << endl;
+      assert( !mCurrentSubfolder->imapPath().isEmpty() );
+      mCurrentSubfolder->setAccount( account() );
+      const bool recurse = mCurrentSubfolder->noChildren() ? false : true;
+      const bool quotaOnly = secondSync || mQuotaOnly;
+      mCurrentSubfolder->serverSync( recurse, quotaOnly );
+    }
+    else {
+      // mCurrentSubfolder is empty, probably because it was deleted while syncing. Go on with the
+      // next subfolder instead.
+      syncNextSubFolder( secondSync );
+    }
   }
 }
 

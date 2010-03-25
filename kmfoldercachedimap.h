@@ -537,7 +537,7 @@ private:
   QValueList<ulong> mUidsForDownload;
   QStringList       foldersForDeletionOnServer;
 
-  QValueList<KMFolderCachedImap*> mSubfoldersForSync;
+  QValueList< QGuardedPtr<KMFolderCachedImap> > mSubfoldersForSync;
   KMFolderCachedImap* mCurrentSubfolder;
 
   /** Mapping uid -> index
