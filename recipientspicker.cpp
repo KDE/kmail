@@ -840,19 +840,10 @@ void RecipientsPicker::slotSearchLDAP()
 
 void RecipientsPicker::ldapSearchResult()
 {
-  QStringList emails = mLdapSearchDialog->selectedEMails().split(',');
-  QStringList::iterator it( emails.begin() );
-  QStringList::iterator end( emails.end() );
-  for ( ; it != end; ++it ){
-    QString name;
-    QString email;
-    KPIMUtils::extractEmailAddressAndName( (*it), email, name );
-    KABC::Addressee ad;
-    ad.setNameFromString( name );
-    ad.insertEmail( email );
-
+  const KABC::Addressee::List contacts = mLdapSearchDialog->selectedContacts();
+  foreach ( const KABC::Addressee &contact, contacts ) {
     RecipientItem *item = new RecipientItem;
-    item->setAddressee( ad, ad.preferredEmail() );
+    item->setAddressee( contact, contact.preferredEmail() );
     emit pickedRecipient( Recipient( item->recipient(), Recipient::Undefined ) );
   }
 }
