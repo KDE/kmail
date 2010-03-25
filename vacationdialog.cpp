@@ -81,8 +81,10 @@ namespace KMail {
 
     // "Resent only after" spinbox and label:
     ++row;
-    mIntervalSpin = new KIntSpinBox( 1, 356, 1, 7, frame );
+    int defDayInterval = 7; //default day interval
+    mIntervalSpin = new KIntSpinBox( 1, 356, 1, defDayInterval, frame );
     mIntervalSpin->setObjectName( "mIntervalSpin" );
+    mIntervalSpin->setSuffix( i18np(" day", " days", defDayInterval) );
     connect(mIntervalSpin, SIGNAL( valueChanged( int )), SLOT( slotIntervalSpinChanged( int ) ) );
     QLabel *label = new QLabel( i18n("&Resend notification only after:"), frame );
     label->setBuddy( mIntervalSpin );
