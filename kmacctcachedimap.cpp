@@ -179,21 +179,6 @@ void KMAcctCachedImap::cancelMailCheck()
   }
 }
 
-//-----------------------------------------------------------------------------
-void KMAcctCachedImap::killJobsForItem(KMFolderTreeItem * fti)
-{
-  QMap<KIO::Job *, jobData>::Iterator it = mapJobData.begin();
-  while (it != mapJobData.end())
-  {
-    if (it.data().parent == fti->folder())
-    {
-      killAllJobs();
-      break;
-    }
-    else ++it;
-  }
-}
-
 // Reimplemented from ImapAccountBase because we only check one folder at a time
 void KMAcctCachedImap::slotCheckQueuedFolders()
 {
