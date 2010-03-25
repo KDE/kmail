@@ -50,7 +50,6 @@ using KMail::FolderRequester;
 #include "recentaddresses.h"
 using KPIM::RecentAddresses;
 #include "completionordereditor.h"
-#include "ldapclient.h"
 #include "messagelist/utils/aggregationcombobox.h"
 #include "messagelist/utils/aggregationconfigbutton.h"
 #include "messagelist/utils/themecombobox.h"
@@ -79,6 +78,7 @@ using KMime::DateFormatter;
 #include <mailtransport/transportmanagementwidget.h>
 using MailTransport::TransportManagementWidget;
 // other KDE headers:
+#include <kldap/ldapclient.h>
 #include <klineedit.h>
 #include <klocale.h>
 #include <kcharsets.h>
@@ -2773,7 +2773,7 @@ void ComposerPage::GeneralTab::slotConfigureRecentAddresses()
 
 void ComposerPage::GeneralTab::slotConfigureCompletionOrder()
 {
-  KPIM::LdapSearch search;
+  KLDAP::LdapClientSearch search;
   KPIM::CompletionOrderEditor editor( &search, this );
   editor.exec();
 }

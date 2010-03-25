@@ -24,12 +24,12 @@
 #include "globalsettings.h"
 
 #include <libkdepim/recentaddresses.h>
-#include <libkdepim/ldapsearchdialog.h>
 
 #include <kpimutils/email.h>
 
 #include <kabc/distributionlist.h>
 
+#include <kldap/ldapsearchdialog.h>
 #include <klocale.h>
 #ifndef KDEPIM_NO_KRESOURCES
 #include <kabc/resource.h>
@@ -829,11 +829,12 @@ void RecipientsPicker::setFocusList()
 void RecipientsPicker::slotSearchLDAP()
 {
   if ( !mLdapSearchDialog ) {
-    mLdapSearchDialog = new KPIM::LdapSearchDialog( this );
+    mLdapSearchDialog = new KLDAP::LdapSearchDialog( this );
     connect( mLdapSearchDialog, SIGNAL( addresseesAdded() ),
              SLOT(ldapSearchResult() ) );
   }
-  mLdapSearchDialog->setSearchText( mSearchLine->text() );
+  //TODO: tokoe fixme
+  //mLdapSearchDialog->setSearchText( mSearchLine->text() );
   mLdapSearchDialog->show();
 }
 

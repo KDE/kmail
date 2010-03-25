@@ -45,7 +45,7 @@ namespace KABC {
 class DistributionList;
 }
 
-namespace KPIM {
+namespace KLDAP {
 class  LdapSearchDialog;
 }
 
@@ -238,7 +238,7 @@ class RecipientsPicker : public KDialog
     QPushButton *mBccButton;
 
     QPushButton *mSearchLDAPButton;
-    KPIM::LdapSearchDialog *mLdapSearchDialog;
+    KLDAP::LdapSearchDialog *mLdapSearchDialog;
 
     QMap<int,RecipientsCollection *> mCollectionMap;
     RecipientsCollection *mAllRecipients;
