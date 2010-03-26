@@ -2283,6 +2283,12 @@ bool KMailICalIfaceImpl::addSubresource( const QString& resource,
   KMFolderDir *parentFolderDir = !parent.isEmpty() && folder ? folder->createChildFolder(): mFolderParentDir;
   if ( !parentFolderDir || parentFolderDir->hasNamedFolder( resource ) ) return false;
 
+  QString msg;
+  if ( parentFolderDir->owner() && !parentFolderDir->owner()->isValidName( resource, msg ) ) {
+    KMessageBox::error( 0, msg );
+    return false;
+  }
+
   KMFolderType type = mFolderType;
   if( type == KMFolderTypeUnknown ) type = KMFolderTypeMaildir;
 

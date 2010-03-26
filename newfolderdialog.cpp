@@ -195,39 +195,10 @@ void NewFolderDialog::slotOk()
      return;
   }
 
-  // names of local folders must not contain a '/'
-  if ( fldName.find( '/' ) != -1 &&
-       ( !mFolder ||
-         ( mFolder->folderType() != KMFolderTypeImap &&
-           mFolder->folderType() != KMFolderTypeCachedImap ) ) ) {
-    KMessageBox::error( this, i18n( "Folder names cannot contain the / (slash) character; please choose another folder name." ) );
+  QString msg;
+  if ( mFolder && !mFolder->isValidName( fldName, msg ) ) {
+    KMessageBox::error( this, msg );
     return;
-  }
-
-  // folder names must not start with a '.'
-  if ( fldName.startsWith( "." ) ) {
-    KMessageBox::error( this, i18n( "Folder names cannot start with a . (dot) character; please choose another folder name." ) );
-    return;
-  }
-
-  // names of IMAP folders must not contain the folder delimiter
-  if ( mFolder &&
-      ( mFolder->folderType() == KMFolderTypeImap ||
-        mFolder->folderType() == KMFolderTypeCachedImap ) ) {
-    QString delimiter;
-    if ( mFolder->folderType() == KMFolderTypeImap ) {
-      KMAcctImap* ai = static_cast<KMFolderImap*>( mFolder->storage() )->account();
-      if ( ai )
-        delimiter = ai->delimiterForFolder( mFolder->storage() );
-    } else {
-      KMAcctCachedImap* ai = static_cast<KMFolderCachedImap*>( mFolder->storage() )->account();
-      if ( ai )
-        delimiter = ai->delimiterForFolder( mFolder->storage() );
-    }
-    if ( !delimiter.isEmpty() && fldName.find( delimiter ) != -1 ) {
-      KMessageBox::error( this, i18n( "Your IMAP server does not allow the character '%1'; please choose another folder name." ).arg( delimiter ) );
-      return;
-    }
   }
 
   // default parent is Top Level local folders

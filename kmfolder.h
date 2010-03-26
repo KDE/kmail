@@ -539,6 +539,13 @@ public:
   /** Sets the move-in-progress flag. */
   void setMoveInProgress( bool b ) { mMoveInProgress = b; }
 
+  /**
+  * Returns true if the name is valid for a child of this folder.
+  * If the name contains invalid characters then false is returned and message will contain
+  * an explanation that can be presented to the user.
+  */
+  bool isValidName( const QString &folderName, QString &message );
+
 signals:
   /** Emitted when the status, name, or associated accounts of this
     folder changed. */
