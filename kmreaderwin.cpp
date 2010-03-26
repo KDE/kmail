@@ -489,8 +489,8 @@ void KMReaderWin::saveRelativePosition()
 //-----------------------------------------------------------------------------
 Akonadi::Item KMReaderWin::message() const
 {
-  if ( mMessage.isValid())
-    return mMessage;
+  if ( messageItem().isValid())
+    return messageItem();
 
   if ( mLastSerNum ) {
     Akonadi::Item item( mLastSerNum );
@@ -679,7 +679,6 @@ void KMReaderWin::clear(bool force )
 
 void KMReaderWin::setMessage( const Akonadi::Item &item, Viewer::UpdateMode updateMode)
 {
-  mMessage = item;
   mViewer->setMessageItem( item, updateMode );
 
   mDelayedMarkTimer.stop();
@@ -728,6 +727,11 @@ void KMReaderWin::slotShowReader( KMime::Content* msgPart, bool htmlMail, const 
 {
   KMReaderMainWin *win = new KMReaderMainWin(msgPart, htmlMail,filename, pname, encoding );
   win->show();
+}
+
+Akonadi::Item KMReaderWin::messageItem() const
+{
+  return mViewer->messageItem();
 }
 
 #include "kmreaderwin.moc"

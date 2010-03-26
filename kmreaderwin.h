@@ -257,7 +257,7 @@ protected:
 private:
   void createActions();
 private:
-  Akonadi::Item mMessage;
+  Akonadi::Item messageItem() const;
 
   // See setOriginalMsg() for an explaination for those two.
   QTimer mDelayedMarkTimer;
