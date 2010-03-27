@@ -193,7 +193,7 @@ void KMLineEdit::editRecentAddresses()
 //-----------------------------------------------------------------------------
 void KMLineEdit::loadContacts()
 {
-  AddresseeLineEdit::loadContacts();
+  //AddresseeLineEdit::loadContacts();
 
   if ( GlobalSettings::self()->showRecentAddressesInComposer() ){
     if ( KMKernel::self() ) {
