@@ -4407,6 +4407,7 @@ QLabel * KMMainWidget::vacationScriptIndicator() const
 
 void KMMainWidget::slotMessageSelected(const Akonadi::Item &item)
 {
+  slotShowBusySplash();
   // TODO: Port to partFetcher.
   ItemFetchJob *itemFetchJob = new ItemFetchJob(item, this);
   itemFetchJob->fetchScope().fetchFullPayload( true );
