@@ -492,6 +492,7 @@ Akonadi::Item KMReaderWin::message() const
   if ( messageItem().isValid())
     return messageItem();
 
+  // FIXME, the below can't work, the item won't have a payload, ever
   if ( mLastSerNum ) {
     Akonadi::Item item( mLastSerNum );
     if ( !item.hasPayload<KMime::Message::Ptr>() ) {
