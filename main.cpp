@@ -23,7 +23,6 @@
 #include "kmkernel.h" //control center
 #include "kmmainwidget.h"
 #include "kmail_options.h"
-#include <akonadi/control.h>
 
 #include <kdebug.h>
 #include <kmessagebox.h>
