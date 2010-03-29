@@ -629,12 +629,11 @@ void KMMainWidget::layoutSplitters()
 
   if ( mMsgView ) {
     messageViewerParent->addWidget( mMsgView );
-//     mMsgView->setParent( messageViewerParent );
+    mMsgView->setParent( messageViewerParent );
   }
 
   if ( !bUseDockWidgets )
   {
-    mSplitter2->insertWidget(0, mMessagePane);
     mSearchAndTree->setParent( folderTreeParent );
     mMessagePane->setParent( mSplitter2 );
   }
