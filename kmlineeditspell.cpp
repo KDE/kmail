@@ -51,7 +51,7 @@ KMLineEdit::KMLineEdit(bool useCompletion,
     : KPIM::AddresseeLineEdit(parent,useCompletion)
 {
   setObjectName( name );
-  allowSemiColonAsSeparator( GlobalSettings::allowSemicolonAsAddressSeparator() );
+  allowSemicolonAsSeparator( GlobalSettings::allowSemicolonAsAddressSeparator() );
 }
 
 
