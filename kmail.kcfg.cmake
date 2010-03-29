@@ -278,9 +278,6 @@
      <entry name="PreviousIdentity" type="UInt" key="previous-identity" />
       <entry name="PreviousFcc" type="String" key="previous-fcc" />
       <entry name="CurrentTransport" type="String" key="current-transport" />
-      <entry name="MaxTransportEntries" type="Int" key="max-transport-items">
-        <default>10</default>
-      </entry>
       <entry name="OutlookCompatibleAttachments" type="Bool" key="outlook-compatible-attachments">
         <label>Outlook-compatible attachment naming</label>
         <whatsthis>Turn this option on to make Outlook &#8482; understand attachment names containing non-English characters</whatsthis>
