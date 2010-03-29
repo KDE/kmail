@@ -681,6 +681,7 @@ void KMReaderWin::clear(bool force )
 
 void KMReaderWin::setMessage( const Akonadi::Item &item, Viewer::UpdateMode updateMode)
 {
+  kDebug() << Q_FUNC_INFO << parentWidget();
   mViewer->setMessageItem( item, updateMode );
 
   mDelayedMarkTimer.stop();

@@ -629,11 +629,12 @@ void KMMainWidget::layoutSplitters()
 
   if ( mMsgView ) {
     messageViewerParent->addWidget( mMsgView );
-    mMsgView->setParent( messageViewerParent );
+//     mMsgView->setParent( messageViewerParent );
   }
 
   if ( !bUseDockWidgets )
   {
+    mSplitter2->insertWidget(0, mMessagePane);
     mSearchAndTree->setParent( folderTreeParent );
     mMessagePane->setParent( mSplitter2 );
   }
@@ -4407,7 +4408,11 @@ QLabel * KMMainWidget::vacationScriptIndicator() const
 
 void KMMainWidget::slotMessageSelected(const Akonadi::Item &item)
 {
-  slotShowBusySplash();
+  delete mShowBusySplashTimer;
+  mShowBusySplashTimer = new QTimer( this );
+  mShowBusySplashTimer->setSingleShot( true );
+  connect( mShowBusySplashTimer, SIGNAL( timeout() ), this, SLOT( slotShowBusySplash() ) );
+  mShowBusySplashTimer->start( GlobalSettings::self()->folderLoadingTimeout() ); //TODO: check if we need a different timeout setting for this
   // TODO: Port to partFetcher.
   ItemFetchJob *itemFetchJob = new ItemFetchJob(item, this);
   itemFetchJob->fetchScope().fetchFullPayload( true );
@@ -4420,6 +4425,10 @@ void KMMainWidget::slotMessageSelected(const Akonadi::Item &item)
 void KMMainWidget::itemsReceived(const Akonadi::Item::List &list )
 {
   Q_ASSERT( list.size() == 1 );
+
+  if ( mMessagePane )
+    mMessagePane->show();
+
   Item item = list.first();
 
   mMsgView->setMessage( item );
@@ -4432,6 +4441,8 @@ void KMMainWidget::itemsReceived(const Akonadi::Item::List &list )
 
 void KMMainWidget::itemsFetchDone( KJob *job )
 {
+  delete mShowBusySplashTimer;
+  mShowBusySplashTimer = 0;
   if ( job->error() )
     kDebug() << job->errorString();
 }

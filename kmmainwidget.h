@@ -640,6 +640,7 @@ private:
     bool mVacationIndicatorActive;
     bool mGoToFirstUnreadMessageInSelectedFolder;
     KPIM::ProgressItem *mFilterProgressItem;
+    
 
 };
 
