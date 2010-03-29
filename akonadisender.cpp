@@ -40,8 +40,6 @@
 #include <mailtransport/transport.h>
 #include <mailtransport/transportmanager.h>
 
-static const QString SENDER_GROUP( "sending mail" );
-
 using namespace KMail;
 using namespace KMime;
 using namespace KMime::Types;
@@ -79,37 +77,8 @@ static void extractSenderToCCAndBcc( const KMime::Message::Ptr &aMsg, QString &s
 
 
 AkonadiSender::AkonadiSender()
+  : mProgressItem( 0 )
 {
-  readConfig();
-  mProgressItem = 0;
-}
-
-AkonadiSender::~AkonadiSender()
-{
-  writeConfig(false);
-}
-
-void AkonadiSender::readConfig()
-{
-  KConfigGroup config( KMKernel::config(), SENDER_GROUP );
-
-  mSendImmediate = config.readEntry( "Immediate", true );
-}
-
-void AkonadiSender::writeConfig( bool aWithSync )
-{
-  KConfigGroup config( KMKernel::config(), SENDER_GROUP );
-
-  config.writeEntry( "Immediate", mSendImmediate );
-
-  if ( aWithSync ) {
-    config.sync();
-  }
-}
-
-void AkonadiSender::setSendImmediate( bool aSendImmediate )
-{
-  mSendImmediate = aSendImmediate;
 }
 
 bool AkonadiSender::doSend( const KMime::Message::Ptr &aMsg, short sendNow  )
@@ -131,7 +100,7 @@ bool AkonadiSender::doSend( const KMime::Message::Ptr &aMsg, short sendNow  )
 #endif
 
   if( sendNow == -1 ) {
-    sendNow = mSendImmediate; // -1 == use default setting
+    sendNow = GlobalSettings::self()->sendImmediate(); // -1 == use default setting
   }
   if ( !sendNow ) {
     return true;

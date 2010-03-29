@@ -223,6 +223,12 @@
       </entry>
     </group>
 
+    <group name="sending mail">
+      <entry name="SendImmediate" type="Bool" key="Immediate">
+        <default>true</default>
+      </entry>
+    </group>
+
     <group name="Composer">
       <entry name="ForwardingInlineByDefault" type="Bool">
         <default>false</default>

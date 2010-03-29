@@ -836,7 +836,7 @@ void KMKernel::resumeNetworkJobs()
   BroadcastStatus::instance()->setStatusMsg( i18n("KMail is set to be online; all network jobs resumed"));
   emit onlineStatusChanged( (GlobalSettings::EnumNetworkState::type)GlobalSettings::networkState() );
 
-  if ( kmkernel->msgSender()->sendImmediate() ) {
+  if ( GlobalSettings::self()->sendImmediate() ) {
     kmkernel->msgSender()->sendQueued();
   }
 }

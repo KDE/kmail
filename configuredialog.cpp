@@ -665,9 +665,7 @@ void AccountsPage::SendingTab::doLoadFromGlobalSettings()
 
 void AccountsPage::SendingTab::doLoadOther()
 {
-  mSendMethodCombo->setCurrentIndex(
-                kmkernel->msgSender()->sendImmediate() ? 0 : 1 );
-
+  mSendMethodCombo->setCurrentIndex( GlobalSettings::self()->sendImmediate() ? 0 : 1 );
   mConfirmSendCheck->setChecked( GlobalSettings::self()->confirmBeforeSend() );
   QString str = GlobalSettings::defaultDomain();
   if( str.isEmpty() ) {
@@ -678,13 +676,10 @@ void AccountsPage::SendingTab::doLoadOther()
 
 void AccountsPage::SendingTab::save()
 {
-  // Save common options:
   GlobalSettings::self()->setSendOnCheck( mSendOnCheckCombo->currentIndex() );
   GlobalSettings::self()->setDefaultDomain( mDefaultDomainEdit->text() );
   GlobalSettings::self()->setConfirmBeforeSend( mConfirmSendCheck->isChecked() );
-  kmkernel->msgSender()->setSendImmediate(
-                             mSendMethodCombo->currentIndex() == 0 );
-  kmkernel->msgSender()->writeConfig( false ); // don't sync
+  GlobalSettings::self()->setSendImmediate( mSendMethodCombo->currentIndex() == 0 );
 }
 
 QString AccountsPage::ReceivingTab::helpAnchor() const

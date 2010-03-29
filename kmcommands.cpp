@@ -1387,7 +1387,7 @@ KMCommand::Result KMRedirectCommand::execute()
     return Failed;
   }
   MessageViewer::AutoQPointer<RedirectDialog> dlg(
-      new RedirectDialog( parentWidget(), kmkernel->msgSender()->sendImmediate() ) );
+      new RedirectDialog( parentWidget(), GlobalSettings::self()->sendImmediate() ) );
   dlg->setObjectName( "redirect" );
   if ( dlg->exec() == QDialog::Rejected || !dlg ) {
     return Failed;

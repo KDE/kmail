@@ -44,20 +44,6 @@ class AkonadiSender: public QObject, public KMail::MessageSender
 
 public:
   AkonadiSender();
-  ~AkonadiSender();
-
-  /** Read configuration from global config. */
-  virtual void readConfig();
-
-  /** Write configuration to global config with optional sync() */
-  virtual void writeConfig( bool withSync = true );
-
-  /**
-    Shall messages be sent immediately (true), or shall they be
-    queued and sent later upon call of sendQueued()?
-   */
-  virtual bool sendImmediate() const { return mSendImmediate; }
-  virtual void setSendImmediate( bool );
 
 protected:
   /**
@@ -90,7 +76,6 @@ private slots:
   void queueJobResult( KJob *job );
 
 private:
-  bool mSendImmediate;
   QString mCustomTransport;
   KPIM::ProgressItem *mProgressItem;
   QSet<KJob*> mPendingJobs;

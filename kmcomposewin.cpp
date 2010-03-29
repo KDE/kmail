@@ -1125,7 +1125,7 @@ void KMComposeWin::setupActions( void )
 {
   KActionMenu *actActionNowMenu, *actActionLaterMenu;
 
-  if ( kmkernel->msgSender()->sendImmediate() ) {
+  if ( GlobalSettings::self()->sendImmediate() ) {
     //default = send now, alternative = queue
     KAction *action = new KAction(KIcon("mail-send"), i18n("&Send Mail"), this);
     actionCollection()->addAction("send_default", action );
