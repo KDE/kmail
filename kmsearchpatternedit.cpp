@@ -364,7 +364,7 @@ void KMSearchRuleWidgetLister::setRuleList( QList<KMSearchRule*> *aList )
   for ( ; wIt != widgetList.constEnd() ; ++wIt )
     qobject_cast<KMSearchRuleWidget*>( *wIt )->reset();
 
-  assert( !mWidgetList.isEmpty() );
+  assert( !widgets().isEmpty() );
   widgets().first()->blockSignals(false);
 }
 
