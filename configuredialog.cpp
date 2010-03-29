@@ -628,21 +628,9 @@ AccountsPageSendingTab::AccountsPageSendingTab( QWidget * parent )
   connect( mSendMethodCombo, SIGNAL( activated( int ) ),
            this, SLOT( slotEmitChanged( void ) ) );
 
-
-  // "message property" combo:
-  // ### FIXME: remove completely?
-  mMessagePropertyCombo = new KComboBox( group );
-  mMessagePropertyCombo->setEditable( false );
-  mMessagePropertyCombo->addItems( QStringList()
-                     << i18n("Allow 8-bit")
-                     << i18n("MIME Compliant (Quoted Printable)") );
-  glay->addWidget( mMessagePropertyCombo, 3, 1 );
-  connect( mMessagePropertyCombo, SIGNAL( activated( int ) ),
-           this, SLOT( slotEmitChanged( void ) ) );
-
   // "default domain" input field:
   mDefaultDomainEdit = new KLineEdit( group );
-  glay->addWidget( mDefaultDomainEdit, 4, 1 );
+  glay->addWidget( mDefaultDomainEdit, 3, 1 );
   connect( mDefaultDomainEdit, SIGNAL( textChanged( const QString& ) ),
            this, SLOT( slotEmitChanged( void ) ) );
 
@@ -658,12 +646,9 @@ AccountsPageSendingTab::AccountsPageSendingTab( QWidget * parent )
   l = new QLabel( i18n("Defa&ult send method:"), group );
   l->setBuddy( mSendMethodCombo );
   glay->addWidget( l, 2, 0 );
-  l = new QLabel( i18n("Message &property:"), group );
-  l->setBuddy( mMessagePropertyCombo );
-  glay->addWidget( l, 3, 0 );
   l = new QLabel( i18n("Defaul&t domain:"), group );
   l->setBuddy( mDefaultDomainEdit );
-  glay->addWidget( l, 4, 0 );
+  glay->addWidget( l, 3, 0 );
 
   // and now: add QWhatsThis:
   msg = i18n( "<qt><p>The default domain is used to complete email "
@@ -680,13 +665,10 @@ void AccountsPage::SendingTab::doLoadFromGlobalSettings()
 
 void AccountsPage::SendingTab::doLoadOther()
 {
-  KConfigGroup general( KMKernel::config(), "General");
   KConfigGroup composer( KMKernel::config(), "Composer");
 
   mSendMethodCombo->setCurrentIndex(
                 kmkernel->msgSender()->sendImmediate() ? 0 : 1 );
-  mMessagePropertyCombo->setCurrentIndex(
-                kmkernel->msgSender()->sendQuotedPrintable() ? 1 : 0 );
 
   mConfirmSendCheck->setChecked(
       composer.readEntry( "confirm-before-send", false ) );
@@ -706,8 +688,6 @@ void AccountsPage::SendingTab::save()
   GlobalSettings::self()->setDefaultDomain( mDefaultDomainEdit->text() );
   kmkernel->msgSender()->setSendImmediate(
                              mSendMethodCombo->currentIndex() == 0 );
-  kmkernel->msgSender()->setSendQuotedPrintable(
-                             mMessagePropertyCombo->currentIndex() == 1 );
   kmkernel->msgSender()->writeConfig( false ); // don't sync
   composer.writeEntry("confirm-before-send", mConfirmSendCheck->isChecked() );
 }

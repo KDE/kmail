@@ -91,11 +91,9 @@ AkonadiSender::~AkonadiSender()
 
 void AkonadiSender::readConfig()
 {
-  QString str;
   KConfigGroup config( KMKernel::config(), SENDER_GROUP );
 
   mSendImmediate = config.readEntry( "Immediate", true );
-  mSendQuotedPrintable = config.readEntry( "Quoted-Printable", true );
 }
 
 void AkonadiSender::writeConfig( bool aWithSync )
@@ -103,7 +101,6 @@ void AkonadiSender::writeConfig( bool aWithSync )
   KConfigGroup config( KMKernel::config(), SENDER_GROUP );
 
   config.writeEntry( "Immediate", mSendImmediate );
-  config.writeEntry( "Quoted-Printable", mSendQuotedPrintable );
 
   if ( aWithSync ) {
     config.sync();
@@ -113,11 +110,6 @@ void AkonadiSender::writeConfig( bool aWithSync )
 void AkonadiSender::setSendImmediate( bool aSendImmediate )
 {
   mSendImmediate = aSendImmediate;
-}
-
-void AkonadiSender::setSendQuotedPrintable( bool aSendQuotedPrintable )
-{
-  mSendQuotedPrintable = aSendQuotedPrintable;
 }
 
 bool AkonadiSender::doSend( const KMime::Message::Ptr &aMsg, short sendNow  )

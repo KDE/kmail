@@ -59,15 +59,6 @@ public:
   virtual bool sendImmediate() const { return mSendImmediate; }
   virtual void setSendImmediate( bool );
 
-  /**
-    Shall messages be sent quoted-printable encoded. No encoding
-    happens otherwise.
-
-    TODO: can't figure out where this encoding happens
-   */
-  virtual bool sendQuotedPrintable() const { return mSendQuotedPrintable; }
-  virtual void setSendQuotedPrintable( bool );
-
 protected:
   /**
     Send given message. The message is either queued or sent
@@ -100,7 +91,6 @@ private slots:
 
 private:
   bool mSendImmediate;
-  bool mSendQuotedPrintable;
   QString mCustomTransport;
   KPIM::ProgressItem *mProgressItem;
   QSet<KJob*> mPendingJobs;

@@ -82,8 +82,6 @@ public:
   virtual bool sendImmediate() const = 0;
   virtual void setSendImmediate( bool immediate ) = 0;
 
-  virtual bool sendQuotedPrintable() const = 0;
-  virtual void setSendQuotedPrintable( bool qp ) = 0;
 protected:
   virtual bool doSend( const KMime::Message::Ptr &msg, short sendNow ) = 0;
   virtual bool doSendQueued( const QString& transport ) = 0;

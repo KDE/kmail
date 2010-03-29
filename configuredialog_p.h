@@ -274,7 +274,6 @@ private:
   QCheckBox   *mConfirmSendCheck;
   KComboBox   *mSendOnCheckCombo;
   KComboBox   *mSendMethodCombo;
-  KComboBox   *mMessagePropertyCombo;
   KLineEdit   *mDefaultDomainEdit;
 };
 
