@@ -9,17 +9,7 @@
   <include>kglobalsettings.h</include>
   <include>kcolorscheme.h</include>
   <kcfgfile name="kmailrc"/>
-    <group name="Behaviour">
-      <entry name="DelayedMarkAsRead"  type="Bool">
-        <label></label>
-        <whatsthis></whatsthis>
-        <default>true</default>
-      </entry>
-      <entry name="DelayedMarkTime"  type="UInt">
-        <label></label>
-        <whatsthis></whatsthis>
-        <default>0</default>
-      </entry>
+  <group name="Behaviour">
       <entry name="ActionEnterFolder"  type="Enum">
         <label></label>
         <whatsthis></whatsthis>

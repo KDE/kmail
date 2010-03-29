@@ -4031,8 +4031,8 @@ void MiscPage::FolderTab::doLoadFromGlobalSettings()
   // default = "Loop in current folder"
   mMMTab.mLoopOnGotoUnread->setCurrentIndex( GlobalSettings::self()->loopOnGotoUnread() );
   mMMTab.mActionEnterFolder->setCurrentIndex( GlobalSettings::self()->actionEnterFolder() );
-  mMMTab.mDelayedMarkAsRead->setChecked( GlobalSettings::self()->delayedMarkAsRead() );
-  mMMTab.mDelayedMarkTime->setValue( GlobalSettings::self()->delayedMarkTime() );
+  mMMTab.mDelayedMarkAsRead->setChecked( MessageViewer::GlobalSettings::self()->delayedMarkAsRead() );
+  mMMTab.mDelayedMarkTime->setValue( MessageViewer::GlobalSettings::self()->delayedMarkTime() );
   mMMTab.mShowPopupAfterDnD->setChecked( GlobalSettings::self()->showPopupAfterDnD() );
 }
 
@@ -4058,8 +4058,8 @@ void MiscPage::FolderTab::save()
   general.writeEntry( "startupFolder", mMMTab.mOnStartupOpenFolder->folderCollection().isValid() ?
                                   QString::number(mMMTab.mOnStartupOpenFolder->folderCollection().id()) : QString() );
 
-  GlobalSettings::self()->setDelayedMarkAsRead( mMMTab.mDelayedMarkAsRead->isChecked() );
-  GlobalSettings::self()->setDelayedMarkTime( mMMTab.mDelayedMarkTime->value() );
+  MessageViewer::GlobalSettings::self()->setDelayedMarkAsRead( mMMTab.mDelayedMarkAsRead->isChecked() );
+  MessageViewer::GlobalSettings::self()->setDelayedMarkTime( mMMTab.mDelayedMarkTime->value() );
   GlobalSettings::self()->setActionEnterFolder( mMMTab.mActionEnterFolder->currentIndex() );
   GlobalSettings::self()->setLoopOnGotoUnread( mMMTab.mLoopOnGotoUnread->currentIndex() );
   GlobalSettings::self()->setShowPopupAfterDnD( mMMTab.mShowPopupAfterDnD->isChecked() );

@@ -42,6 +42,7 @@
 #include "messageviewer/headerstrategy.h"
 #include "messageviewer/headerstyle.h"
 #include "messageviewer/mailwebview.h"
+#include "messageviewer/globalsettings.h"
 #include "messagehelper.h"
 
 #include "messageviewer/csshelper.h"
@@ -225,7 +226,7 @@ KMReaderWin::~KMReaderWin()
 void KMReaderWin::readConfig(void)
 {
   mViewer->readConfig();
-  mViewer->setDisregardUmask( GlobalSettings::self()->disregardUmask() );
+  mViewer->setDisregardUmask( ::GlobalSettings::self()->disregardUmask() );
 }
 
 void KMReaderWin::setAttachmentStrategy( const AttachmentStrategy * strategy ) {
@@ -686,9 +687,9 @@ void KMReaderWin::setMessage( const Akonadi::Item &item, Viewer::UpdateMode upda
   if ( item.isValid() ) {
     MessageStatus status;
     status.setStatusFromFlags( item.flags() );
-    if ( ( status.isUnread() || status.isNew() ) && GlobalSettings::self()->delayedMarkAsRead() ) {
-      if (GlobalSettings::self()->delayedMarkTime() != 0 )
-        mDelayedMarkTimer.start( GlobalSettings::self()->delayedMarkTime() * 1000 );
+    if ( ( status.isUnread() || status.isNew() ) && MessageViewer::GlobalSettings::self()->delayedMarkAsRead() ) {
+      if (MessageViewer::GlobalSettings::self()->delayedMarkTime() != 0 )
+        mDelayedMarkTimer.start( MessageViewer::GlobalSettings::self()->delayedMarkTime() * 1000 );
       else
         slotTouchMessage();
     }
