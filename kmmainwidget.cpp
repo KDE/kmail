@@ -2764,6 +2764,7 @@ void KMMainWidget::slotMessageActivated( const Akonadi::Item &msg )
   }
 
   // TODO: Port to partFetcher so that this is not necessary.
+  // FIXME: When loading attachments on demand is activated, don't fetch the full payload
   ItemFetchJob *itemFetchJob = new ItemFetchJob( msg, this );
   itemFetchJob->fetchScope().fetchFullPayload( true );
   itemFetchJob->fetchScope().fetchAllAttributes();
