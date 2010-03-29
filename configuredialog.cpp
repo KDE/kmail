@@ -667,11 +667,11 @@ void AccountsPage::SendingTab::doLoadOther()
 {
   mSendMethodCombo->setCurrentIndex( GlobalSettings::self()->sendImmediate() ? 0 : 1 );
   mConfirmSendCheck->setChecked( GlobalSettings::self()->confirmBeforeSend() );
-  QString str = GlobalSettings::defaultDomain();
-  if( str.isEmpty() ) {
-    str = QHostInfo::localHostName();
+  QString defaultDomain = GlobalSettings::defaultDomain();
+  if( defaultDomain.isEmpty() ) {
+    defaultDomain = QHostInfo::localHostName();
   }
-  mDefaultDomainEdit->setText( str );
+  mDefaultDomainEdit->setText( defaultDomain );
 }
 
 void AccountsPage::SendingTab::save()
