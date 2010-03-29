@@ -310,8 +310,8 @@ void KMSearchRuleWidget::slotRuleFieldChanged( const QString & field )
 //
 //=============================================================================
 
-KMSearchRuleWidgetLister::KMSearchRuleWidgetLister( QWidget *parent, const char* name, bool headersOnly, bool absoluteDates )
-  : KWidgetLister( 2, FILTER_MAX_RULES, parent, name )
+KMSearchRuleWidgetLister::KMSearchRuleWidgetLister( QWidget *parent, const char*, bool headersOnly, bool absoluteDates )
+  : KWidgetLister( 2, FILTER_MAX_RULES, parent )
 {
   mRuleList = 0;
   mHeadersOnly = headersOnly;
@@ -331,46 +331,47 @@ void KMSearchRuleWidgetLister::setRuleList( QList<KMSearchRule*> *aList )
 
   mRuleList = aList;
 
-  if ( !mWidgetList.isEmpty() ) // move this below next 'if'?
-    mWidgetList.first()->blockSignals(true);
+  if ( !widgets().isEmpty() ) // move this below next 'if'?
+    widgets().first()->blockSignals(true);
 
   if ( aList->count() == 0 ) {
     slotClear();
-    mWidgetList.first()->blockSignals(false);
+    widgets().first()->blockSignals(false);
     return;
   }
 
-  int superfluousItems = (int)mRuleList->count() - mMaxWidgets ;
+  int superfluousItems = (int)mRuleList->count() - widgetsMaximum();
   if ( superfluousItems > 0 ) {
-    kDebug() << "Clipping rule list to" << mMaxWidgets << "items!";
+    kDebug() << "Clipping rule list to" << widgetsMaximum() << "items!";
 
     for ( ; superfluousItems ; superfluousItems-- )
       mRuleList->removeLast();
   }
 
   // HACK to workaround regression in Qt 3.1.3 and Qt 3.2.0 (fixes bug #63537)
-  setNumberOfShownWidgetsTo( qMax((int)mRuleList->count(),mMinWidgets)+1 );
+  setNumberOfShownWidgetsTo( qMax((int)mRuleList->count(), widgetsMinimum())+1 );
   // set the right number of widgets
-  setNumberOfShownWidgetsTo( qMax((int)mRuleList->count(),mMinWidgets) );
+  setNumberOfShownWidgetsTo( qMax((int)mRuleList->count(), widgetsMinimum()) );
 
   // load the actions into the widgets
+  QList<QWidget*> widgetList = widgets();
   QList<KMSearchRule*>::const_iterator rIt;
-  QList<QWidget*>::const_iterator wIt = mWidgetList.constBegin();
+  QList<QWidget*>::const_iterator wIt = widgetList.constBegin();
   for ( rIt = mRuleList->constBegin();
-        rIt != mRuleList->constEnd() && wIt != mWidgetList.constEnd(); ++rIt, ++wIt ) {
-    static_cast<KMSearchRuleWidget*>( *wIt )->setRule( (*rIt) );
+        rIt != mRuleList->constEnd() && wIt != widgetList.constEnd(); ++rIt, ++wIt ) {
+    qobject_cast<KMSearchRuleWidget*>( *wIt )->setRule( (*rIt) );
   }
-  for ( ; wIt != mWidgetList.constEnd() ; ++wIt )
-    static_cast<KMSearchRuleWidget*>( *wIt )->reset();
+  for ( ; wIt != widgetList.constEnd() ; ++wIt )
+    qobject_cast<KMSearchRuleWidget*>( *wIt )->reset();
 
   assert( !mWidgetList.isEmpty() );
-  mWidgetList.first()->blockSignals(false);
+  widgets().first()->blockSignals(false);
 }
 
 void KMSearchRuleWidgetLister::setHeadersOnly( bool headersOnly )
 {
-  foreach ( QWidget *w, mWidgetList ) {
-    static_cast<KMSearchRuleWidget*>( w )->setHeadersOnly( headersOnly );
+  foreach ( QWidget *w, widgets() ) {
+    qobject_cast<KMSearchRuleWidget*>( w )->setHeadersOnly( headersOnly );
   }
 }
 
@@ -400,8 +401,8 @@ void KMSearchRuleWidgetLister::regenerateRuleListFromWidgets()
 
   mRuleList->clear();
 
-  foreach ( const QWidget *w, mWidgetList ) {
-    KMSearchRule *r = static_cast<const KMSearchRuleWidget*>( w )->rule();
+  foreach ( const QWidget *w, widgets() ) {
+    KMSearchRule *r = qobject_cast<const KMSearchRuleWidget*>( w )->rule();
     if ( r )
       mRuleList->append( r );
   }
@@ -465,8 +466,8 @@ void KMSearchPatternEdit::initLayout(bool headersOnly, bool absoluteDates)
   mRuleLister = new KMSearchRuleWidgetLister( this, "swl", headersOnly, absoluteDates );
   mRuleLister->slotClear();
 
-  if ( !mRuleLister->mWidgetList.isEmpty() ) {
-    KMSearchRuleWidget *srw = static_cast<KMSearchRuleWidget*>( mRuleLister->mWidgetList.first() );
+  if ( !mRuleLister->widgets().isEmpty() ) {
+    KMSearchRuleWidget *srw = static_cast<KMSearchRuleWidget*>( mRuleLister->widgets().first() );
     connect( srw, SIGNAL(fieldChanged(const QString &)),
              this, SLOT(slotAutoNameHack()) );
     connect( srw, SIGNAL(contentsChanged(const QString &)),

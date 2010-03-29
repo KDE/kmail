@@ -1266,8 +1266,8 @@ KMFilterAction * KMFilterActionWidget::action() const
 //
 //=============================================================================
 
-KMFilterActionWidgetLister::KMFilterActionWidgetLister( QWidget *parent, const char* name )
-  : KWidgetLister( 1, FILTER_MAX_ACTIONS, parent, name )
+KMFilterActionWidgetLister::KMFilterActionWidgetLister( QWidget *parent, const char* )
+  : KWidgetLister( 1, FILTER_MAX_ACTIONS, parent )
 {
   mActionList = 0;
 }
@@ -1292,10 +1292,10 @@ void KMFilterActionWidgetLister::setActionList( QList<KMFilterAction*> *aList )
     return;
   }
 
-  int superfluousItems = (int)mActionList->count() - mMaxWidgets ;
+  int superfluousItems = (int)mActionList->count() - widgetsMaximum();
   if ( superfluousItems > 0 ) {
     kDebug() << "KMFilterActionWidgetLister: Clipping action list to"
-	      << mMaxWidgets << "items!";
+	      << widgetsMaximum() << "items!";
 
     for ( ; superfluousItems ; superfluousItems-- )
       mActionList->removeLast();
@@ -1305,12 +1305,13 @@ void KMFilterActionWidgetLister::setActionList( QList<KMFilterAction*> *aList )
   setNumberOfShownWidgetsTo( mActionList->count() );
 
   // load the actions into the widgets
+  QList<QWidget*> widgetList = widgets();
   QList<KMFilterAction*>::const_iterator aIt;
-  QList<QWidget*>::ConstIterator wIt = mWidgetList.constBegin();
+  QList<QWidget*>::ConstIterator wIt = widgetList.constBegin();
   for ( aIt = mActionList->constBegin();
-        ( aIt != mActionList->constEnd() && wIt != mWidgetList.constEnd() );
+        ( aIt != mActionList->constEnd() && wIt != widgetList.constEnd() );
         ++aIt, ++wIt )
-    static_cast<KMFilterActionWidget*>( *wIt )->setAction( ( *aIt ) );
+    qobject_cast<KMFilterActionWidget*>( *wIt )->setAction( ( *aIt ) );
 }
 
 void KMFilterActionWidgetLister::reset()
@@ -1340,8 +1341,8 @@ void KMFilterActionWidgetLister::regenerateActionListFromWidgets()
 
   mActionList->clear();
 
-  foreach ( const QWidget* w, mWidgetList ) {
-    KMFilterAction *a = static_cast<const KMFilterActionWidget*>( w )->action();
+  foreach ( const QWidget* w, widgets() ) {
+    KMFilterAction *a = qobject_cast<const KMFilterActionWidget*>( w )->action();
     if ( a )
       mActionList->append( a );
   }
