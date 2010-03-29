@@ -665,13 +665,10 @@ void AccountsPage::SendingTab::doLoadFromGlobalSettings()
 
 void AccountsPage::SendingTab::doLoadOther()
 {
-  KConfigGroup composer( KMKernel::config(), "Composer");
-
   mSendMethodCombo->setCurrentIndex(
                 kmkernel->msgSender()->sendImmediate() ? 0 : 1 );
 
-  mConfirmSendCheck->setChecked(
-      composer.readEntry( "confirm-before-send", false ) );
+  mConfirmSendCheck->setChecked( GlobalSettings::self()->confirmBeforeSend() );
   QString str = GlobalSettings::defaultDomain();
   if( str.isEmpty() ) {
     str = QHostInfo::localHostName();
@@ -681,15 +678,13 @@ void AccountsPage::SendingTab::doLoadOther()
 
 void AccountsPage::SendingTab::save()
 {
-  KConfigGroup composer( KMKernel::config(), "Composer" );
-
   // Save common options:
   GlobalSettings::self()->setSendOnCheck( mSendOnCheckCombo->currentIndex() );
   GlobalSettings::self()->setDefaultDomain( mDefaultDomainEdit->text() );
+  GlobalSettings::self()->setConfirmBeforeSend( mConfirmSendCheck->isChecked() );
   kmkernel->msgSender()->setSendImmediate(
                              mSendMethodCombo->currentIndex() == 0 );
   kmkernel->msgSender()->writeConfig( false ); // don't sync
-  composer.writeEntry("confirm-before-send", mConfirmSendCheck->isChecked() );
 }
 
 QString AccountsPage::ReceivingTab::helpAnchor() const
