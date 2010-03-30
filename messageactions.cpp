@@ -44,6 +44,7 @@
 #include <QVariant>
 #include <qwidget.h>
 #include <akonadi/collection.h>
+#include <Akonadi/Monitor>
 
 using namespace KMail;
 
@@ -200,6 +201,10 @@ MessageActions::MessageActions( KActionCollection *ac, QWidget* parent ) :
          this, SLOT(slotRunUrl(QAction *)) );
   mActionCollection->addAction( "message_list", mMailingListActionMenu );
 
+  mMonitor = new Akonadi::Monitor( this );
+  mMonitor->itemFetchScope().fetchFullPayload();
+  connect( mMonitor, SIGNAL(itemChanged(Akonadi::Item,QSet<QByteArray>)), SLOT(slotItemModified(Akonadi::Item,QSet<QByteArray>)));
+
   updateActions();
 }
 
@@ -209,14 +214,30 @@ MessageActions::~MessageActions()
 
 void MessageActions::setCurrentMessage( const Akonadi::Item &msg )
 {
+  mMonitor->setItemMonitored(mCurrentItem, false);
   mCurrentItem = msg;
 
   if ( !msg.isValid() ) {
     mSelectedItems.clear();
     mVisibleItems.clear();
   }
+
+  mMonitor->setItemMonitored(mCurrentItem, true); 
+}
+
+void MessageActions::slotItemModified( const Akonadi::Item &  item, const QSet< QByteArray > &  partIdentifiers )
+{
+  if (item.id() == mCurrentItem.id() && item.remoteId() == mCurrentItem.remoteId())
+    mCurrentItem = item;
+  for(uint i = 0; i < mVisibleItems.count(); ++i) {
+    Akonadi::Item it = mVisibleItems[i];
+    if (item.id() == it.id() && item.remoteId() == it.remoteId()) {
+      mVisibleItems[i] = item;
+    }
+  }
   updateActions();
 }
+
 
 
 void MessageActions::setSelectedItem( const Akonadi::Item::List &items )
@@ -227,7 +248,13 @@ void MessageActions::setSelectedItem( const Akonadi::Item::List &items )
 
 void MessageActions::setSelectedVisibleItems( const Akonadi::Item::List &items )
 {
+  Q_FOREACH(Akonadi::Item item, mVisibleItems) {
+      mMonitor->setItemMonitored(item, true);
+  }
   mVisibleItems = items;
+  Q_FOREACH(Akonadi::Item item, items) {
+      mMonitor->setItemMonitored(item, true);
+  }
   updateActions();
 }
 
@@ -473,7 +500,7 @@ void MessageActions::slotPrintMsg()
 
 void MessageActions::setMessageStatus( KPIM::MessageStatus status, bool toggle )
 {
-  Akonadi::Item::List items = mVisibleItems;
+    Akonadi::Item::List items = mVisibleItems;
   if ( items.isEmpty() && mCurrentItem.isValid() )
     items.append( mCurrentItem );
   if ( items.empty() )
@@ -481,6 +508,7 @@ void MessageActions::setMessageStatus( KPIM::MessageStatus status, bool toggle )
   KMCommand *command = new KMSetStatusCommand( status, items, toggle );
   command->start();
 }
+
 
 /**
  * This adds a list of actions to mMailingListActionMenu mapping the identifier item to
