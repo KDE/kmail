@@ -202,8 +202,9 @@ MessageActions::MessageActions( KActionCollection *ac, QWidget* parent ) :
   mActionCollection->addAction( "message_list", mMailingListActionMenu );
 
   mMonitor = new Akonadi::Monitor( this );
+  //FIXME: Attachment fetching is not needed here, but on-demand loading is not supported ATM
   mMonitor->itemFetchScope().fetchFullPayload();
-  connect( mMonitor, SIGNAL(itemChanged(Akonadi::Item,QSet<QByteArray>)), SLOT(slotItemModified(Akonadi::Item,QSet<QByteArray>)));
+  connect( mMonitor, SIGNAL(itemChanged( Akonadi::Item, QSet<QByteArray> )), SLOT(slotItemModified( Akonadi::Item, QSet<QByteArray> )));
 
   updateActions();
 }
@@ -214,7 +215,7 @@ MessageActions::~MessageActions()
 
 void MessageActions::setCurrentMessage( const Akonadi::Item &msg )
 {
-  mMonitor->setItemMonitored(mCurrentItem, false);
+  mMonitor->setItemMonitored( mCurrentItem, false );
   mCurrentItem = msg;
 
   if ( !msg.isValid() ) {
@@ -222,16 +223,16 @@ void MessageActions::setCurrentMessage( const Akonadi::Item &msg )
     mVisibleItems.clear();
   }
 
-  mMonitor->setItemMonitored(mCurrentItem, true); 
+  mMonitor->setItemMonitored( mCurrentItem, true ); 
 }
 
 void MessageActions::slotItemModified( const Akonadi::Item &  item, const QSet< QByteArray > &  partIdentifiers )
 {
-  if (item.id() == mCurrentItem.id() && item.remoteId() == mCurrentItem.remoteId())
+  if ( item.id() == mCurrentItem.id() && item.remoteId() == mCurrentItem.remoteId() )
     mCurrentItem = item;
-  for(uint i = 0; i < mVisibleItems.count(); ++i) {
+  for( int i = 0; i < mVisibleItems.count(); ++i ) {
     Akonadi::Item it = mVisibleItems[i];
-    if (item.id() == it.id() && item.remoteId() == it.remoteId()) {
+    if ( item.id() == it.id() && item.remoteId() == it.remoteId() ) {
       mVisibleItems[i] = item;
     }
   }
@@ -248,12 +249,12 @@ void MessageActions::setSelectedItem( const Akonadi::Item::List &items )
 
 void MessageActions::setSelectedVisibleItems( const Akonadi::Item::List &items )
 {
-  Q_FOREACH(Akonadi::Item item, mVisibleItems) {
-      mMonitor->setItemMonitored(item, true);
+  Q_FOREACH( Akonadi::Item item, mVisibleItems ) {
+      mMonitor->setItemMonitored( item, false );
   }
   mVisibleItems = items;
-  Q_FOREACH(Akonadi::Item item, items) {
-      mMonitor->setItemMonitored(item, true);
+  Q_FOREACH( Akonadi::Item item, items ) {
+      mMonitor->setItemMonitored( item, true );
   }
   updateActions();
 }

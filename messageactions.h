@@ -103,7 +103,7 @@ class MessageActions : public QObject
     void addMailingListActions( const QString &item, const KUrl::List &list );
     void updateAnnotateAction();
   private slots:
-    void slotItemModified(  const Akonadi::Item &  item, const QSet< QByteArray > &  partIdentifiers  );
+    void slotItemModified( const Akonadi::Item &  item, const QSet< QByteArray > &  partIdentifiers );
     void slotReplyToMsg();
     void slotReplyAuthorToMsg();
     void slotReplyListToMsg();
