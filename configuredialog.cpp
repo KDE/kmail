@@ -244,6 +244,7 @@ void ConfigureDialog::slotApply()
 {
   slotApplyClicked();
   GlobalSettings::self()->writeConfig();
+  MessageViewer::GlobalSettings::self()->writeConfig();
   emit configChanged();
 }
 
