@@ -132,9 +132,11 @@ KMReaderWin::KMReaderWin(QWidget *aParent,
   QVBoxLayout * vlay = new QVBoxLayout( this );
   vlay->setMargin( 0 );
   mViewer = new Viewer( this,KMKernel::config(),mainWindow,mActionCollection );
-  connect( mViewer, SIGNAL(urlClicked( const Akonadi::Item &, const KUrl & ) ), this, SLOT( slotUrlClicked( const Akonadi::Item &, const KUrl& ) ) );
+  connect( mViewer, SIGNAL(urlClicked( const Akonadi::Item &, const KUrl & ) ),
+           this, SLOT( slotUrlClicked( const Akonadi::Item &, const KUrl& ) ) );
   connect( mViewer, SIGNAL( requestConfigSync() ), this, SLOT( slotRequestConfigSync() ) );
-  connect( mViewer, SIGNAL( showReader( KMime::Content* , bool, const QString&, const QString&, const QString &) ), this, SLOT( slotShowReader( KMime::Content* , bool, const QString&, const QString&, const QString &) ) );
+  connect( mViewer, SIGNAL( showReader( KMime::Content* , bool, const QString&, const QString&, const QString &) ),
+           this, SLOT( slotShowReader( KMime::Content* , bool, const QString&, const QString&, const QString &) ) );
   vlay->addWidget( mViewer );
   readConfig();
 
