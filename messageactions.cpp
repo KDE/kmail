@@ -250,11 +250,11 @@ void MessageActions::setSelectedItem( const Akonadi::Item::List &items )
 void MessageActions::setSelectedVisibleItems( const Akonadi::Item::List &items )
 {
   Q_FOREACH( Akonadi::Item item, mVisibleItems ) {
-      mMonitor->setItemMonitored( item, false );
+    mMonitor->setItemMonitored( item, false );
   }
   mVisibleItems = items;
   Q_FOREACH( Akonadi::Item item, items ) {
-      mMonitor->setItemMonitored( item, true );
+    mMonitor->setItemMonitored( item, true );
   }
   updateActions();
 }
