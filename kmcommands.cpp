@@ -666,7 +666,7 @@ KMCommand::Result KMUseTemplateCommand::execute()
 
 static KUrl subjectToUrl( const QString &subject )
 {
-  QString fileName = KMCommand::cleanFileName( subject.trimmed() );
+  QString fileName = MessageCore::StringUtil::cleanFileName( subject.trimmed() );
 
   // avoid stripping off the last part of the subject after a "."
   // by KFileDialog, which thinks it's an extension
@@ -2158,15 +2158,12 @@ void KMSaveAttachmentsCommand::slotSaveAll()
   else {
     // only one item, get the desired filename
     KMime::Content *content = mAttachmentMap.begin().key();
-    QString s = content->contentDisposition()->filename().trimmed();
-    if ( s.isEmpty() )
-      s = content->contentType()->name().trimmed();
-    if ( s.isEmpty() )
-      s = i18nc("filename for an unnamed attachment", "attachment.1");
-    else
-      s = cleanFileName( s );
-
-    url = KFileDialog::getSaveUrl( KUrl( "kfiledialog:///saveAttachment/" + s ),
+    QString fileName = MessageViewer::NodeHelper::fileName( content );
+    fileName = MessageCore::StringUtil::cleanFileName( fileName );
+    if ( fileName.isEmpty() ) {
+      fileName = i18nc( "filename for an unnamed attachment", "attachment.1" );
+    }
+    url = KFileDialog::getSaveUrl( KUrl( "kfiledialog:///saveAttachment/" + fileName ),
                                    QString(),
                                    parentWidget(),
                                    i18n( "Save Attachment" ) );
@@ -2190,19 +2187,14 @@ void KMSaveAttachmentsCommand::slotSaveAll()
     KMime::Content *content = it.key();
     if ( !dirUrl.isEmpty() ) {
       curUrl = dirUrl;
-      QString s = content->contentDisposition()->filename().trimmed();
-      if ( s.isEmpty() )
-        s = content->contentType()->name().trimmed();
-      if ( s.isEmpty() ) {
+      QString fileName = MessageViewer::NodeHelper::fileName( content );
+      fileName = MessageCore::StringUtil::cleanFileName( fileName );
+      if ( fileName.isEmpty() ) {
         ++unnamedAtmCount;
-        s = i18nc("filename for the %1-th unnamed attachment",
-                 "attachment.%1",
-              unnamedAtmCount );
+        fileName = i18nc( "filename for the %1-th unnamed attachment",
+                          "attachment.%1", unnamedAtmCount );
       }
-      else
-        s = cleanFileName( s );
-
-      curUrl.setFileName( s );
+      curUrl.setFileName( fileName );
     } else {
       curUrl = url;
     }
@@ -2267,31 +2259,6 @@ void KMSaveAttachmentsCommand::slotSaveAll()
   setResult( globalResult );
   emit completed( this );
   deleteLater();
-}
-
-QString KMCommand::cleanFileName( const QString &name )
-{
-  QString fileName = name.trimmed();
-
-  // We need to replace colons with underscores since those cause problems with
-  // KFileDialog (bug in KFileDialog though) and also on Windows filesystems.
-  // We also look at the special case of ": ", since converting that to "_ "
-  // would look strange, simply "_" looks better.
-  // https://issues.kolab.org/issue3805
-  fileName.replace( ": ", "_" );
-  // replace all ':' with '_' because ':' isn't allowed on FAT volumes
-  fileName.replace( ':', '_' );
-  // better not use a dir-delimiter in a filename
-  fileName.replace( '/', '_' );
-  fileName.replace( '\\', '_' );
-
-  // replace all '.' with '_', not just at the start of the filename
-  fileName.replace( '.', '_' );
-
-  // replace all '~' with '_', not just leading '~' either.
-  fileName.replace( '~', '_' );
-
-  return fileName;
 }
 
 KMCommand::Result KMSaveAttachmentsCommand::saveItem( KMime::Content *content,
