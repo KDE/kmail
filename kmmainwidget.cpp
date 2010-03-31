@@ -19,8 +19,6 @@
   51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
 */
 
-//#define TEST_DOCKWIDGETS 1
-
 // KMail includes
 #include "kmfilter.h"
 #include "kmreadermainwin.h"
@@ -154,8 +152,6 @@
 #include <QDBusMessage>
 #include <QShortcut>
 #include <QProcess>
-#include <QDockWidget> // TEST_DOCKWIDGETS
-#include <QMainWindow> // TEST_DOCKWIDGETS
 
 // System includes
 #include <assert.h>
@@ -598,45 +594,31 @@ void KMMainWidget::layoutSplitters()
   // Add the widgets to the splitters and set the parents calculated above
   //
 
-#ifdef TEST_DOCKWIDGETS
-  bool bUseDockWidgets = parent()->inherits( "QMainWindow" );
-#else
-  bool bUseDockWidgets = false;
-#endif
-
   int folderTreePosition = 0;
 
-  if ( !bUseDockWidgets )
-  {
-    if ( mFavoriteCollectionsView ) {
-      mFolderViewSplitter = new QSplitter( Qt::Vertical, folderViewParent );
-      mFolderViewSplitter->setOpaqueResize( opaqueResize );
-      mFolderViewSplitter->setChildrenCollapsible( false );
-      folderTreeParent = mFolderViewSplitter;
-      mFolderViewSplitter->addWidget( mFavoriteCollectionsView );
-      mFavoriteCollectionsView->setParent( mFolderViewSplitter );
-      folderViewParent->insertWidget( 0, mFolderViewSplitter );
+  if ( mFavoriteCollectionsView ) {
+    mFolderViewSplitter = new QSplitter( Qt::Vertical, folderViewParent );
+    mFolderViewSplitter->setOpaqueResize( opaqueResize );
+    mFolderViewSplitter->setChildrenCollapsible( false );
+    folderTreeParent = mFolderViewSplitter;
+    mFolderViewSplitter->addWidget( mFavoriteCollectionsView );
+    mFavoriteCollectionsView->setParent( mFolderViewSplitter );
+    folderViewParent->insertWidget( 0, mFolderViewSplitter );
 
-      folderTreePosition = 1;
-    } else
-      folderTreeParent = folderViewParent;
+    folderTreePosition = 1;
+  } else
+    folderTreeParent = folderViewParent;
 
-    folderTreeParent->insertWidget( folderTreePosition, mSearchAndTree );
-    mSplitter2->addWidget( mMessagePane );
-  }
-  if ( bUseDockWidgets )
-    mMessagePane->setParent( mSplitter2 );
+  folderTreeParent->insertWidget( folderTreePosition, mSearchAndTree );
+  mSplitter2->addWidget( mMessagePane );
 
   if ( mMsgView ) {
     messageViewerParent->addWidget( mMsgView );
     mMsgView->setParent( messageViewerParent );
   }
 
-  if ( !bUseDockWidgets )
-  {
-    mSearchAndTree->setParent( folderTreeParent );
-    mMessagePane->setParent( mSplitter2 );
-  }
+  mSearchAndTree->setParent( folderTreeParent );
+  mMessagePane->setParent( mSplitter2 );
 
   //
   // Set the stretch factors
@@ -646,12 +628,9 @@ void KMMainWidget::layoutSplitters()
   mSplitter1->setStretchFactor( 1, 1 );
   mSplitter2->setStretchFactor( 1, 1 );
 
-  if ( !bUseDockWidgets )
-  {
-    if ( mFavoriteCollectionsView ) {
-      mFolderViewSplitter->setStretchFactor( 0, 0 );
-      mFolderViewSplitter->setStretchFactor( 1, 1 );
-    }
+  if ( mFavoriteCollectionsView ) {
+    mFolderViewSplitter->setStretchFactor( 0, 0 );
+    mFolderViewSplitter->setStretchFactor( 1, 1 );
   }
 
   // Because the reader windows's width increases a tiny bit after each
@@ -944,45 +923,12 @@ void KMMainWidget::createWidgets()
   // the "folder tree" consists of a quicksearch input field and the tree itself
   //
 
-  // If we have a QMainWindow as parent then we can use QDockWidget, which is very cool :)
-#ifdef TEST_DOCKWIDGETS
-  bool bUseDockWidgets = parent()->inherits( "QMainWindow" );
-#else
-  bool bUseDockWidgets = false;
-#endif
-
-  QDockWidget *dw = 0;
-  QMainWindow *mw = 0;
-  if ( bUseDockWidgets )
-  {
-    mw = static_cast<QMainWindow *>( parent() );
-    dw = new QDockWidget( i18n( "Old Folders" ), mw );
-    dw->setObjectName( i18n( "Old Folders" ) );
-    dw->setFeatures( QDockWidget::DockWidgetMovable | QDockWidget::DockWidgetFloatable );
-//    dw->setAllowedAreas( Qt::LeftDockWidgetArea | Qt::RightDockWidgetArea );
-  }
-
-  mSearchAndTree = new QWidget( bUseDockWidgets ? static_cast<QWidget *>( dw ) : static_cast<QWidget *>( this ) );
+  mSearchAndTree = new QWidget( this );
   QVBoxLayout *vboxlayout = new QVBoxLayout;
   vboxlayout->setMargin(0);
   mSearchAndTree->setLayout( vboxlayout );
 
-  if ( bUseDockWidgets )
-  {
-    dw->setWidget( mSearchAndTree );
-    mw->addDockWidget( Qt::LeftDockWidgetArea, dw );
-    dw = new QDockWidget( i18n( "Folders" ), mw );
-    dw->setObjectName( i18n( "Folders" ) ); //It's really not a good idea to use i18n here
-    dw->setFeatures( QDockWidget::DockWidgetMovable | QDockWidget::DockWidgetFloatable );
-//    dw->setAllowedAreas( Qt::LeftDockWidgetArea | Qt::RightDockWidgetArea );
-  }
-  if ( bUseDockWidgets )
-  {
-    dw->setWidget( mCollectionFolderView );
-    mw->addDockWidget( Qt::LeftDockWidgetArea, dw );
-  } else {
-    vboxlayout->addWidget( mCollectionFolderView );
-  }
+  vboxlayout->addWidget( mCollectionFolderView );
 
   if ( !GlobalSettings::self()->enableFolderQuickSearch() ) {
     mCollectionFolderView->filterFolderLineEdit()->hide();
@@ -996,15 +942,7 @@ void KMMainWidget::createWidgets()
 
   if ( mEnableFavoriteFolderView ) {
 
-    if ( bUseDockWidgets )
-    {
-      dw = new QDockWidget( i18n( "Favorite Folders" ), mw );
-      dw->setObjectName( i18n( "Favorite Folders" ) );
-      dw->setFeatures( QDockWidget::DockWidgetMovable | QDockWidget::DockWidgetFloatable );
-//      dw->setAllowedAreas( Qt::LeftDockWidgetArea | Qt::RightDockWidgetArea );
-    }
-
-    mFavoriteCollectionsView = new Akonadi::EntityListView( mGUIClient, bUseDockWidgets ? static_cast<QWidget *>( dw ) : static_cast<QWidget *>( this ));
+    mFavoriteCollectionsView = new Akonadi::EntityListView( mGUIClient, this );
     mFavoriteCollectionsView->setViewMode( QListView::IconMode );
 
     Akonadi::FavoriteCollectionsModel *favoritesModel = new Akonadi::FavoriteCollectionsModel( mCollectionFolderView->entityModel(), KMKernel::config()->group( "FavoriteCollections" ), this );
@@ -1012,15 +950,9 @@ void KMMainWidget::createWidgets()
 
     mAkonadiStandardActionManager->setFavoriteCollectionsModel( favoritesModel );
     mAkonadiStandardActionManager->setFavoriteSelectionModel( mFavoriteCollectionsView->selectionModel() );
-
-    if ( bUseDockWidgets )
-    {
-      dw->setWidget( mFavoriteCollectionsView );
-      mw->addDockWidget( Qt::LeftDockWidgetArea, dw );
-    }
-
   }
   mAkonadiStandardActionManager->createAllActions();
+
   //
   // Create all kinds of actions
   //
