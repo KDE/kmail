@@ -70,7 +70,6 @@
 #include <messagecore/attachmentpart.h>
 
 // LIBKDEPIM includes
-#include <libkdepim/kaddrbookexternal.h>
 #include <libkdepim/recentaddresses.h>
 
 // KDEPIMLIBS includes
@@ -2644,7 +2643,7 @@ void KMComposeWin::setCharset( const QByteArray &charset )
 //-----------------------------------------------------------------------------
 void KMComposeWin::slotAddrBook()
 {
-  KPIM::KAddrBookExternal::openAddressBook( this );
+  KToolInvocation::startServiceByDesktopName( "kaddressbook" );
 }
 
 #if 0

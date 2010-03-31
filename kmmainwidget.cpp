@@ -124,8 +124,8 @@
 #include <ktip.h>
 #include <kstandarddirs.h>
 #include <kstandardaction.h>
-#include <kaddrbookexternal.h>
 #include <ktoggleaction.h>
+#include <ktoolinvocation.h>
 #include <knotification.h>
 #include <knotifyconfigwidget.h>
 #include <kstringhandler.h>
@@ -1138,7 +1138,7 @@ void KMMainWidget::slotManageSieveScripts()
 //-----------------------------------------------------------------------------
 void KMMainWidget::slotAddrBook()
 {
-  KPIM::KAddrBookExternal::openAddressBook(this);
+  KToolInvocation::startServiceByDesktopName( "kaddressbook" );
 }
 
 
