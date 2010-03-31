@@ -875,16 +875,23 @@ void KMSaveMsgCommand::slotSaveDataReq()
     assert( p );
     assert( idx >= 0 );
     //kdDebug() << "SERNUM: " << mMsgList[mMsgListIndex] << " idx: " << idx << " folder: " << p->prettyURL() << endl;
+
+    const bool alreadyGot = p->isMessage( idx );
+
     msg = p->getMsg(idx);
 
     if ( msg ) {
+      // Only unGet the message if it isn't already got.
+      if ( !alreadyGot ) {
+        mUngetMsgs.append( msg );
+      }
       if ( msg->transferInProgress() ) {
         QByteArray data = QByteArray();
         mJob->sendAsyncData( data );
       }
       msg->setTransferInProgress( true );
-      if (msg->isComplete() ) {
-      slotMessageRetrievedForSaving( msg );
+      if ( msg->isComplete() ) {
+        slotMessageRetrievedForSaving( msg );
       } else {
         // retrieve Message first
         if ( msg->parent()  && !msg->isComplete() ) {
@@ -936,7 +943,8 @@ void KMSaveMsgCommand::slotMessageRetrievedForSaving(KMMessage *msg)
   }
   ++mMsgListIndex;
   // Get rid of the message.
-  if ( msg && msg->parent() && msg->getMsgSerNum() ) {
+  if ( msg && msg->parent() && msg->getMsgSerNum() &&
+       mUngetMsgs.contains( msg ) ) {
     int idx = -1;
     KMFolder * p = 0;
     KMMsgDict::instance()->getLocation( msg, &p, &idx );
