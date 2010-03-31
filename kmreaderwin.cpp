@@ -269,7 +269,8 @@ static const char * const kmailNewFeatures[] = {
   "Improved virtual folders",
   "Improved searches",
   "Support for adding notes (annotations) to mails",
-  "Tag folders"
+  "Tag folders",
+  "Less GUI freezes, mail checks happen in the background"
 };
 static const int numKMailNewFeatures =
   sizeof kmailNewFeatures / sizeof *kmailNewFeatures;
