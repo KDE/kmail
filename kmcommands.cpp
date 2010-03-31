@@ -1684,9 +1684,6 @@ void KMSetStatusCommand::slotModifyItemDone( KJob * job )
   }
   --messageStatusChanged;
   if ( messageStatusChanged == 0 ) {
-    QDBusMessage message =
-      QDBusMessage::createSignal( "/KMail", "org.kde.kmail.kmail", "unreadCountChanged" );
-    QDBusConnection::sessionBus().send( message );
     deleteLater();
   }
 }

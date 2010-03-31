@@ -1200,10 +1200,6 @@ void KMMainWidget::slotMailChecked( bool newMail, bool sendOnCheck,
     return;
   }
 
-  QDBusMessage message =
-    QDBusMessage::createSignal( "/KMail", "org.kde.kmail.kmail", "unreadCountChanged" );
-  QDBusConnection::sessionBus().send( message );
-
   // build summary for new mail message
   bool showNotification = false;
   QString summary;

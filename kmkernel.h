@@ -195,10 +195,6 @@ public Q_SLOTS:
 
   Q_SCRIPTABLE int viewMessage( const KUrl & messageFile );
 
-Q_SIGNALS:
-
-  Q_SCRIPTABLE void unreadCountChanged();
-
 /**
  * End of D-Bus callable stuff
  */
