@@ -2107,7 +2107,7 @@ KMCommand::Result KMSaveAttachmentsCommand::execute()
   return OK;
 }
 
-// FIXME: This is blatant code duplication with KMSaveAttachmentsCommand::slotSaveAll!!
+// FIXME: This is blatant code duplication with ViewerPrivate::saveAttachments!!
 void KMSaveAttachmentsCommand::slotSaveAll()
 {
   // now that all message parts have been retrieved, remove all parts which
