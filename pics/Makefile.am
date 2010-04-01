@@ -9,7 +9,7 @@ pics_DATA = kmmsgdel.png kmmsgnew.png kmmsgunseen.png kmmsgread.png \
 	kmmsgpartiallysigned.png kmmsgfullyencrypted.png \
 	kmmsgfullysigned.png kmmsgundefinedencrypted.png \
 	kmmsgundefinedsigned.png \
-	kmmsgspam.png kmmsgham.png kmmsgattachment.png \
+	kmmsgspam.png kmmsgham.png kmmsgattachment.png kmmsginvitation.png \
 	kmwizard.png \
 	quotecollapse.png quoteexpand.png \
 	enterprise_bottom_left.png \
