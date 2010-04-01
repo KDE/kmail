@@ -913,7 +913,7 @@ void KMFolderCachedImap::serverSyncInternal()
   case SYNC_STATE_GET_USERRIGHTS:
 
     // Now we have started the sync, emit changed() so that the folder tree can update the status
-    emit changed();
+    emit syncStateChanged();
     //kdDebug(5006) << "===== Syncing " << ( mImapPath.isEmpty() ? label() : mImapPath ) << endl;
 
     mSyncState = SYNC_STATE_RENAME_FOLDER;
@@ -1307,7 +1307,7 @@ void KMFolderCachedImap::serverSyncInternal()
       mSyncState = SYNC_STATE_INITIAL;
       mAccount->addUnreadMsgCount( this, countUnread() ); // before closing
       close( "cachedimap" );
-      emit changed();
+      emit syncStateChanged();
       emit folderComplete( this, true );
     }
     break;
@@ -2408,7 +2408,7 @@ void KMFolderCachedImap::slotSubFolderComplete(KMFolderCachedImap* sub, bool suc
     mSubfoldersForSync.clear();
     mSyncState = SYNC_STATE_INITIAL;
     close("cachedimap");
-    emit changed();
+    emit syncStateChanged();
     emit folderComplete( this, false );
   }
 }
@@ -2566,6 +2566,7 @@ void KMFolderCachedImap::resetSyncState()
   if (progressItem)
      progressItem->setStatus( str );
   emit statusMsg( str );
+  emit syncStateChanged();
 }
 
 void KMFolderCachedImap::slotIncreaseProgress()

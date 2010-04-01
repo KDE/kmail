@@ -621,6 +621,11 @@ void KMFolderTree::reload(bool openFolders)
     connect( fti->folder(), SIGNAL(noContentChanged()),
              fti, SLOT(slotNoContentChanged()) );
 
+    disconnect( fti->folder(), SIGNAL(syncStateChanged()),
+                this, SLOT(slotSyncStateChanged()) );
+    connect( fti->folder(), SIGNAL(syncStateChanged()),
+             this, SLOT(slotSyncStateChanged()) );
+
     // we want to be noticed of changes to update the unread/total columns
     disconnect(fti->folder(), SIGNAL(msgAdded(KMFolder*,Q_UINT32)),
         this,SLOT(slotUpdateCountsDelayed(KMFolder*)));
@@ -1013,7 +1018,6 @@ void KMFolderTree::doFolderSelected( QListViewItem* qlvi, bool keepSelection )
   KMFolderTreeItem* fti = static_cast< KMFolderTreeItem* >(qlvi);
   KMFolder* folder = 0;
   if (fti) folder = fti->folder();
-
 
   if (mLastItem && mLastItem != fti && mLastItem->folder()
      && (mLastItem->folder()->folderType() == KMFolderTypeImap))
@@ -2140,6 +2144,23 @@ void KMFolderTree::updateCopyActions()
     paste->setEnabled( false );
   else
     paste->setEnabled( true );
+}
+
+void KMFolderTree::slotSyncStateChanged()
+{
+  // Only emit the signal when a selected folder changes, otherwise the folder menu is updated
+  // too often
+  QValueList< QGuardedPtr<KMFolder> > folders = selectedFolders();
+  QValueList< QGuardedPtr<KMFolder> >::const_iterator it = folders.constBegin();
+  QValueList< QGuardedPtr<KMFolder> >::const_iterator end = folders.constEnd();
+  while ( it != end ) {
+    QGuardedPtr<KMFolder> folder = *it;
+    if ( folder == sender() ) {
+      emit syncStateChanged();
+      break;
+    }
+    ++it;
+  }
 }
 
 void KMFolderTree::slotAddToFavorites()

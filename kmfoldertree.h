@@ -176,6 +176,9 @@ signals:
   /** The selected folder has changed to go to an unread message */
   void folderSelectedUnread( KMFolder * );
 
+  /** The sync state of the _selected_ folder has changed */
+  void syncStateChanged();
+
   /** unread/total/size column has changed */
   void columnsChanged();
 
@@ -285,6 +288,8 @@ protected slots:
 
   /** Updates copy/cut/paste actions */
   void updateCopyActions();
+
+  void slotSyncStateChanged();
 
 protected:
   virtual void contentsMousePressEvent( QMouseEvent *e );

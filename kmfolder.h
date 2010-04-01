@@ -607,6 +607,12 @@ signals:
   /** Emitted when the no content state changed. */
   void noContentChanged();
 
+  /**
+   *  Emiitted when the sync state, i.e. mailCheckInProgress(), changes.
+   *  Currently only supported for disconnected IMAP.
+   */
+  void syncStateChanged();
+
 public slots:
   /** Incrementally update the index if possible else call writeIndex */
   int updateIndex();

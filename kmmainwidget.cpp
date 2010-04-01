@@ -221,6 +221,8 @@ KMMainWidget::KMMainWidget(QWidget *parent, const char *name,
       this, SLOT(slotChangeCaption(QListViewItem*)));
   connect(mFolderTree, SIGNAL(selectionChanged()),
           SLOT(updateFolderMenu()) );
+  connect( mFolderTree, SIGNAL(syncStateChanged()),
+           SLOT(updateFolderMenu()) );
 
   connect(kmkernel->folderMgr(), SIGNAL(folderRemoved(KMFolder*)),
           this, SLOT(slotFolderRemoved(KMFolder*)));
