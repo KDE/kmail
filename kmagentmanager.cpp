@@ -60,11 +60,6 @@ Akonadi::AgentInstance::List KMAgentManager::instanceList() const
   return mListInstance;
 }
 
-Akonadi::AgentInstance KMAgentManager::instance( const QString &name)
-{
-  return mAgentManager->instance( name );
-}
-
 bool KMAgentManager::isEmpty() const
 {
   return mListInstance.isEmpty();

@@ -210,7 +210,7 @@ bool KMFilter::applyOnAccount( const QString& id ) const
   if ( applicability() == All )
     return true;
   if ( applicability() == ButImap ) {
-    Akonadi::AgentInstance instance = kmkernel->agentManager()->instance( id );
+    Akonadi::AgentInstance instance = Akonadi::AgentManager::self()->instance( id );
     if ( instance.isValid() ) {
       return ( instance.type().identifier()== IMAP_RESOURCE_IDENTIFIER );
     } else {

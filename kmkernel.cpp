@@ -429,7 +429,7 @@ void KMKernel::checkAccount( const QString &account ) //might create a new reade
   if ( account.isEmpty() )
     checkMail();
   else {
-    Akonadi::AgentInstance agent = kmkernel->agentManager()->instance( account );
+    Akonadi::AgentInstance agent = Akonadi::AgentManager::self()->instance( account );
     if ( agent.isValid() )
       agent.synchronize();
     else
@@ -1757,7 +1757,7 @@ bool KMKernel::isSystemFolderCollection( const Akonadi::Collection &col)
 
 bool KMKernel::isImapFolder( const Akonadi::Collection &col )
 {
-  Akonadi::AgentInstance agentInstance = agentManager()->instance( col.resource() );
+  Akonadi::AgentInstance agentInstance = Akonadi::AgentManager::self()->instance( col.resource() );
   return agentInstance.type().identifier() == IMAP_RESOURCE_IDENTIFIER;
 }
 

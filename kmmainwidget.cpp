@@ -1173,7 +1173,7 @@ void KMMainWidget::slotCheckOneAccount( QAction* item )
     return;
   }
 
-  Akonadi::AgentInstance agent = kmkernel->agentManager()->instance( item->data().toString() );
+  Akonadi::AgentInstance agent = Akonadi::AgentManager::self()->instance( item->data().toString() );
   if ( agent.isValid() ) {
     if ( !agent.isOnline() ) {
       agent.setIsOnline( true );

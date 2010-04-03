@@ -35,7 +35,6 @@ public:
 
   bool isEmpty() const;
   Akonadi::AgentInstance::List instanceList() const;
-  Akonadi::AgentInstance instance( const QString & );
 
 protected slots:
   void slotInstanceAdded( const Akonadi::AgentInstance &);
