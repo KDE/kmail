@@ -81,7 +81,7 @@ void KMail::ManageSieveScriptsDialog::slotRefresh()
 {
   clear();
   QTreeWidgetItem *last = 0;
-  Akonadi::AgentInstance::List lst = kmkernel->agentManager()->instanceList();
+  Akonadi::AgentInstance::List lst = KMail::Util::agentInstances();
   foreach ( const Akonadi::AgentInstance& type, lst )
   {
     //TODO verify it.

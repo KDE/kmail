@@ -404,7 +404,7 @@ void KMKernel::checkMail () //might create a new reader but won't show!!
 {
   if ( !kmkernel->askToGoOnline() )
     return;
-  Akonadi::AgentInstance::List lst = agentManager()->instanceList();
+  Akonadi::AgentInstance::List lst = KMail::Util::agentInstances();
   foreach( Akonadi::AgentInstance type, lst ) {
     type.synchronize();
   }
@@ -413,7 +413,7 @@ void KMKernel::checkMail () //might create a new reader but won't show!!
 QStringList KMKernel::accounts()
 {
   QStringList accountLst;
-  Akonadi::AgentInstance::List lst = agentManager()->instanceList();
+  Akonadi::AgentInstance::List lst = KMail::Util::agentInstances();
   foreach ( const Akonadi::AgentInstance& type, lst )
   {
     // Explicitly make a copy, as we're not changing values of the list but only
@@ -1401,7 +1401,7 @@ bool KMKernel::folderIsTrash( const Akonadi::Collection & col )
 {
   if ( col == Akonadi::SpecialMailCollections::self()->defaultCollection( Akonadi::SpecialMailCollections::Trash ) )
     return true;
-  Akonadi::AgentInstance::List lst = kmkernel->agentManager()->instanceList();
+  Akonadi::AgentInstance::List lst = KMail::Util::agentInstances();
   foreach ( const Akonadi::AgentInstance& type, lst ) {
     //TODO verify it.
     if ( type.identifier().contains( IMAP_RESOURCE_IDENTIFIER ) ) {
@@ -1483,7 +1483,7 @@ void KMKernel::slotEmptyTrash()
   Akonadi::Collection trash = trashCollectionFolder();
   mFolderCollectionMonitor->expunge( trash );
 
-  Akonadi::AgentInstance::List lst = kmkernel->agentManager()->instanceList();
+  Akonadi::AgentInstance::List lst = KMail::Util::agentInstances();
   foreach ( const Akonadi::AgentInstance& type, lst ) {
     //TODO verify it.
     if ( type.identifier().contains( IMAP_RESOURCE_IDENTIFIER ) ) {

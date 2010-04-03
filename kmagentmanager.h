@@ -33,9 +33,6 @@ public:
   explicit KMAgentManager( QObject *parent );
   ~KMAgentManager();
 
-  bool isEmpty() const;
-  Akonadi::AgentInstance::List instanceList() const;
-
 protected slots:
   void slotInstanceAdded( const Akonadi::AgentInstance &);
   void slotInstanceRemoved( const Akonadi::AgentInstance &);

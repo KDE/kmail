@@ -30,6 +30,7 @@
 #include "kmfiltermgr.h"
 #include "kmmainwidget.h"
 #include "filterimporterexporter.h"
+#include "util.h"
 using KMail::FilterImporterExporter;
 
 // other KDE headers:
@@ -593,7 +594,7 @@ void KMFilterDlg::slotUpdateAccountList()
   // slotApplicableAccountsChanged(), which will read the incomplete item
   // state and write that back to the filter
   mAccountList->blockSignals( true );
-  Akonadi::AgentInstance::List lst = kmkernel->agentManager()->instanceList();
+  Akonadi::AgentInstance::List lst = KMail::Util::agentInstances();
   for ( int i = 0; i <lst.count(); ++i ) {
     QTreeWidgetItem *listItem = new QTreeWidgetItem( mAccountList, top );
     listItem->setText( 0, lst.at( i ).name() );

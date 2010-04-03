@@ -44,6 +44,7 @@
 
 #include <kpimutils/email.h>
 #include <kimap/loginjob.h>
+#include <Akonadi/AgentManager>
 
 #include <KGlobal>
 #include <KStandardDirs>
@@ -184,3 +185,14 @@ void KMail::Util::launchAccountWizard( QWidget *w )
 
 }
 
+Akonadi::AgentInstance::List KMail::Util::agentInstances()
+{
+  Akonadi::AgentInstance::List relevantInstances;
+  foreach ( const Akonadi::AgentInstance &instance, Akonadi::AgentManager::self()->instances() ) {
+    if ( instance.type().mimeTypes().contains( "message/rfc822" ) &&
+         instance.type().capabilities().contains( "Resource" ) ) {
+      relevantInstances << instance;
+    }
+  }
+  return relevantInstances;
+}

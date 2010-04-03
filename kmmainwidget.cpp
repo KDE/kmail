@@ -1154,7 +1154,7 @@ void KMMainWidget::slotCheckMail()
   if ( !kmkernel->askToGoOnline() ) {
     return;
   }
-  Akonadi::AgentInstance::List lst = kmkernel->agentManager()->instanceList();
+  Akonadi::AgentInstance::List lst = KMail::Util::agentInstances();
   foreach( Akonadi::AgentInstance type, lst ) {
     if ( !type.isOnline() )
       type.setIsOnline( true );
@@ -2855,7 +2855,7 @@ void KMMainWidget::slotMessagePopup(const Akonadi::Item&msg ,const KUrl&aUrl,con
 void KMMainWidget::getAccountMenu()
 {
   mActMenu->clear();
-  Akonadi::AgentInstance::List lst = kmkernel->agentManager()->instanceList();
+  Akonadi::AgentInstance::List lst = KMail::Util::agentInstances();
   foreach ( const Akonadi::AgentInstance& type, lst )
   {
     // Explicitly make a copy, as we're not changing values of the list but only
@@ -4245,7 +4245,7 @@ void KMMainWidget::slotFilterLogViewer()
 //-----------------------------------------------------------------------------
 void KMMainWidget::updateFileMenu()
 {
-  bool isEmpty = kmkernel->agentManager()->isEmpty();
+  const bool isEmpty = KMail::Util::agentInstances().isEmpty();
   actionCollection()->action("check_mail")->setEnabled( !isEmpty );
   actionCollection()->action("check_mail_in")->setEnabled( !isEmpty );
 }

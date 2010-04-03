@@ -494,7 +494,7 @@ namespace KMail {
 
 
   KUrl Vacation::findURL() const {
-    Akonadi::AgentInstance::List lst = kmkernel->agentManager()->instanceList();
+    Akonadi::AgentInstance::List lst = KMail::Util::agentInstances();
     foreach ( const Akonadi::AgentInstance& type, lst )
     {
       //TODO verify it.

@@ -48,6 +48,7 @@
 #include <akonadi/item.h>
 #include "kmkernel.h"
 #include <kmime/kmime_message.h>
+#include <Akonadi/AgentInstance>
 class KUrl;
 
 class OrgKdeAkonadiImapSettingsInterface;
@@ -90,6 +91,12 @@ namespace Util {
     OrgKdeAkonadiImapSettingsInterface *createImapSettingsInterface( const QString &ident );
 
     void launchAccountWizard( QWidget * );
+
+    /**
+     * Returns a list of agents instances that are relevant to KMail, i.e. agents that deal
+     * with rfc822 and that are resources.
+     */
+    Akonadi::AgentInstance::List agentInstances();
 }
 }
 

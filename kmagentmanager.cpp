@@ -55,16 +55,6 @@ void KMAgentManager::init()
 
 }
 
-Akonadi::AgentInstance::List KMAgentManager::instanceList() const
-{
-  return mListInstance;
-}
-
-bool KMAgentManager::isEmpty() const
-{
-  return mListInstance.isEmpty();
-}
-
 void KMAgentManager::slotInstanceAdded( const Akonadi::AgentInstance & instance)
 {
   //kDebug()<<" KMAgentManager::slotInstanceAdded :"<<instance.name();
