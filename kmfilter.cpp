@@ -385,7 +385,7 @@ void KMFilter::purify()
     // Remove invalid accounts from mAccounts - just to be tidy
     QStringList::Iterator it2 = mAccounts.begin();
     while ( it2 != mAccounts.end() ) {
-      if ( !kmkernel->agentManager()->find( *it2 ) )
+      if ( !Akonadi::AgentManager::self()->instance( *it2 ).isValid() )
          it2 = mAccounts.erase( it2 );
       else
          ++it2;
@@ -453,7 +453,7 @@ const QString KMFilter::asString() const
         result += " None";
       else {
         for ( it2 = mAccounts.begin() ; it2 != mAccounts.end() ; ++it2 ) {
-          if ( kmkernel->agentManager()->find( *it2 ) ) {
+          if ( Akonadi::AgentManager::self()->instance( *it2 ).isValid() ) {
             result += ' ' + kmkernel->agentManager()->name( *it2 );
           }
         }

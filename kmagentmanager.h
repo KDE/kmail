@@ -37,8 +37,6 @@ public:
   Akonadi::AgentInstance::List instanceList() const;
   Akonadi::AgentInstance instance( const QString & );
 
-  bool find( const QString & ) const;
-
   QString name ( const QString & ) const;
 
 protected slots:
