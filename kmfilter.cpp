@@ -454,7 +454,7 @@ const QString KMFilter::asString() const
       else {
         for ( it2 = mAccounts.begin() ; it2 != mAccounts.end() ; ++it2 ) {
           if ( Akonadi::AgentManager::self()->instance( *it2 ).isValid() ) {
-            result += ' ' + kmkernel->agentManager()->name( *it2 );
+            result += ' ' + Akonadi::AgentManager::self()->instance( *it2 ).name();
           }
         }
       }
