@@ -68,6 +68,7 @@ using KMail::TemplateParser;
 #include <akonadi/collectionfetchjob.h>
 #include <akonadi/changerecorder.h>
 #include <akonadi/itemfetchscope.h>
+#include <Akonadi/AgentManager>
 #include "actionscheduler.h"
 
 #include <akonadi/itemfetchjob.h>
@@ -93,7 +94,6 @@ using KMail::TemplateParser;
 #include <kmailadaptor.h>
 #include "kmailinterface.h"
 #include "foldercollectionmonitor.h"
-#include "kmagentmanager.h"
 #include "imapsettings.h"
 #include "util.h"
 
@@ -163,7 +163,6 @@ KMKernel::KMKernel (QObject *parent, const char *name) :
     exit(42);
   }
   mFolderCollectionMonitor = new FolderCollectionMonitor( this );
-  mAgentManager = new KMAgentManager( this );
   kDebug();
   setObjectName( name );
   mySelf = this;
@@ -238,11 +237,6 @@ KMKernel::~KMKernel ()
   GlobalSettings::self()->writeConfig();
   mySelf = 0;
   kDebug();
-}
-
-KMAgentManager *KMKernel::agentManager()
-{
-  return mAgentManager;
 }
 
 Akonadi::ChangeRecorder * KMKernel::monitor()

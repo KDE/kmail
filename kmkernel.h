@@ -66,7 +66,6 @@ class KSystemTrayIcon;
 class KMMainWidget;
 class ConfigureDialog;
 class FolderCollectionMonitor;
-class KMAgentManager;
 
 /**
  * @short Central point of coordination in KMail
@@ -224,8 +223,6 @@ public:
   void setupDBus();
   void readConfig();
 
-
-  KMAgentManager *agentManager();
   Akonadi::ChangeRecorder *monitor();
 
 //TODO port to akonadi   void cleanupImapFolders();
@@ -458,7 +455,6 @@ private:
   QString               mAddMessageLastFolder;
 
   FolderCollectionMonitor *mFolderCollectionMonitor;
-  KMAgentManager *mAgentManager;
 
   int mWrapCol;
 };

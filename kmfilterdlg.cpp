@@ -19,11 +19,6 @@
 */
 
 #include "kmfilterdlg.h"
-#include "kmagentmanager.h"
-#include <klistwidgetsearchline.h>
-
-#include <akonadi/agentinstance.h>
-
 
 // other KMail headers:
 #include "kmsearchpatternedit.h"
@@ -32,6 +27,10 @@
 #include "filterimporterexporter.h"
 #include "util.h"
 using KMail::FilterImporterExporter;
+
+// KDEPIMLIBS headers
+#include <Akonadi/AgentType>
+#include <Akonadi/AgentInstance>
 
 // other KDE headers:
 #include <kcombobox.h>
@@ -48,6 +47,7 @@ using KMail::FilterImporterExporter;
 #include <kconfiggroup.h>
 #include <ktabwidget.h>
 #include <kvbox.h>
+#include <klistwidgetsearchline.h>
 
 // Qt headers:
 #include <QCheckBox>

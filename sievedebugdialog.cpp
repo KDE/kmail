@@ -38,7 +38,6 @@
 #include <kpimidentities/identitymanager.h>
 
 #include "util.h"
-#include "kmagentmanager.h"
 #include <akonadi/agentinstance.h>
 #include "kmkernel.h"
 #include "sievejob.h"

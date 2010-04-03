@@ -6,7 +6,6 @@
 #include "kmkernel.h"
 #include "util.h"
 #include "imapsettings.h"
-#include "kmagentmanager.h"
 
 #include <klocale.h>
 #include <kiconloader.h>

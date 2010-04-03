@@ -23,12 +23,14 @@
 
 // other kmail headers
 #include "kmkernel.h"
-#include "kmagentmanager.h"
 #include "kmfilteraction.h"
 #include "kmglobal.h"
 #include "util.h"
 #include "filterlog.h"
 using KMail::FilterLog;
+
+// KDEPIMLIBS headers
+#include <Akonadi/AgentManager>
 
 // other KDE headers
 #include <klocale.h>

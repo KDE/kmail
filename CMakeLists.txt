@@ -42,8 +42,6 @@ add_subdirectory(kconf_update)
 ########### kmailprivate ###############
 
 set(kmailprivate_LIB_SRCS
-   kmagentmanager.cpp
-   kmagentinstance.cpp
    foldercollectionmonitor.cpp
    readablecollectionproxymodel.cpp
    folderselectiontreeview.cpp

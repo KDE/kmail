@@ -21,7 +21,6 @@
 using KMail::SieveJob;
 #include "kmkernel.h"
 #include "kmmainwidget.h"
-#include "kmagentmanager.h"
 #include <kpimidentities/identitymanager.h>
 #include <kpimidentities/identity.h>
 #include "globalsettings.h"

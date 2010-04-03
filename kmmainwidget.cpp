@@ -57,7 +57,6 @@
 #include "tagging.h"
 #include "globalsettings.h"
 #include "foldertreeview.h"
-#include "kmagentmanager.h"
 #if !defined(NDEBUG)
     #include "sievedebugdialog.h"
     using KMail::SieveDebugDialog;
@@ -79,6 +78,7 @@
 #include "broadcaststatus.h"
 
 // KDEPIMLIBS includes
+#include <Akonadi/AgentManager>
 #include <akonadi/itemfetchjob.h>
 #include <akonadi/collectionfetchjob.h>
 #include <akonadi/collectionfetchscope.h>
