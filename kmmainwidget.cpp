@@ -1165,7 +1165,7 @@ void KMMainWidget::slotCheckMail()
 //-----------------------------------------------------------------------------
 void KMMainWidget::slotCheckOneAccount( QAction* item )
 {
-  if ( ! item ) {
+  if ( !item ) {
     return;
   }
 
@@ -1180,7 +1180,7 @@ void KMMainWidget::slotCheckOneAccount( QAction* item )
     }
     agent.synchronize();
   } else {
-    kDebug() << "- account with name '" << item->data().toString() <<"' not found";
+    kDebug() << "account with identifier" << item->data().toString() << "not found";
   }
 }
 
