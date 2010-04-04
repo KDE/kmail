@@ -447,7 +447,6 @@ class KMAIL_EXPORT KMMainWidget : public QWidget
     /**
       Remove the shortcut actions associated with a folder.
     */
-    void slotFolderRemoved( const Akonadi::Collection& );
     void slotCollectionRemoved( const Akonadi::Collection& );
 
     /** Show a splash screen for the longer-lasting operation */

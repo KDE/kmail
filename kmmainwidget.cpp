@@ -4036,11 +4036,6 @@ void KMMainWidget::slotCollectionRemoved( const Akonadi::Collection& col)
   delete mFolderShortcutCommands.take( col.id() );
 }
 
-void KMMainWidget::slotFolderRemoved( const Akonadi::Collection &col )
-{
-  delete mFolderShortcutCommands.take( col.id() );
-}
-
 //-----------------------------------------------------------------------------
 void KMMainWidget::initializeIMAPActions( bool setState /* false the first time, true later on */ )
 {
@@ -4078,7 +4073,7 @@ QList<QAction*> KMMainWidget::actionList()
 void KMMainWidget::shortcutChanged( const Akonadi::Collection & col )
 {
   // remove the old one, no autodelete in Qt4
-  slotFolderRemoved( col );
+  slotCollectionRemoved( col );
   QSharedPointer<FolderCollection> fd( FolderCollection::forCollection( col ) );
   if ( fd->shortcut().isEmpty() )
     return;
