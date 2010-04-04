@@ -94,8 +94,6 @@ public:
 
   static KMSearchRule::Ptr createInstance( QDataStream& s );
 
-  static KMSearchRule * createInstance( QDataStream& s );
-
   /** Initialize the object from a given config group.
       @p aIdx is an identifier that is used to distinguish
       rules within a single config group. This function does no
