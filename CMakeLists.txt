@@ -3,6 +3,7 @@ project(kmail)
 include(CheckIncludeFiles)
 
 add_definitions(-DQT3_SUPPORT_WARNINGS)
+add_definitions(-DDISABLE_NEPOMUK_LEGACY)
 
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} ${KDE4_DATA_DIR}/cmake/modules)
 
