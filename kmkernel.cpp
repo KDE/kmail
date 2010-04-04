@@ -71,6 +71,8 @@ using KMail::TemplateParser;
 #include <Akonadi/AgentManager>
 #include <Akonadi/ItemFetchJob>
 #include <Akonadi/AttributeFactory>
+#include <Akonadi/Session>
+#include <Akonadi/EntityTreeModel>
 
 #include <QByteArray>
 #include <QDir>
@@ -165,14 +167,14 @@ KMKernel::KMKernel (QObject *parent, const char *name) :
     kWarning() << "Exiting after development version warning.";
     exit(42);
   }
-  mFolderCollectionMonitor = new FolderCollectionMonitor( this );
+
   kDebug();
+
   setObjectName( name );
   mySelf = this;
   the_startingUp = true;
   closed_by_user = true;
   the_firstInstance = true;
-
 
   the_undoStack = 0;
   the_filterMgr = 0;
@@ -216,6 +218,12 @@ KMKernel::KMKernel (QObject *parent, const char *name) :
   }
   // till here ================================================
 
+  mFolderCollectionMonitor = new FolderCollectionMonitor( this );
+  Akonadi::Session *session = new Akonadi::Session( "Kernel Session", this );
+  monitor()->setSession( session );
+  mEntityTreeModel = new Akonadi::EntityTreeModel( monitor(), this );
+  mEntityTreeModel->setItemPopulationStrategy( Akonadi::EntityTreeModel::LazyPopulation );
+
   connect( MailTransport::TransportManager::self(),
            SIGNAL(transportRemoved(int,QString)),
            SLOT(transportRemoved(int,QString)) );
@@ -245,6 +253,11 @@ KMKernel::~KMKernel ()
 Akonadi::ChangeRecorder * KMKernel::monitor()
 {
   return mFolderCollectionMonitor->monitor();
+}
+
+Akonadi::EntityTreeModel *KMKernel::entityTreeModel()
+{
+  return mEntityTreeModel;
 }
 
 void KMKernel::setupDBus()

@@ -32,7 +32,6 @@ class ReadableCollectionProxyModel;
 class KLineEdit;
 
 namespace Akonadi {
-  class EntityTreeModel;
   class StatisticsProxyModel;
 }
 
@@ -83,7 +82,6 @@ public:
   Akonadi::Collection::List selectedCollections() const;
 
   FolderTreeView *folderTreeView();
-  Akonadi::EntityTreeModel *entityModel();
 
   Akonadi::StatisticsProxyModel * statisticsProxyModel();
 

@@ -25,6 +25,7 @@
 namespace Akonadi {
   class Collection;
   class ChangeRecorder;
+  class EntityTreeModel;
 }
 
 namespace KIO {
@@ -222,6 +223,7 @@ public:
   void readConfig();
 
   Akonadi::ChangeRecorder *monitor();
+  Akonadi::EntityTreeModel *entityTreeModel();
 
 //TODO port to akonadi   void cleanupImapFolders();
   void recoverDeadLetters();
@@ -422,6 +424,7 @@ private:
   ThreadWeaver::Weaver *the_weaver;
 
   FolderCollectionMonitor *mFolderCollectionMonitor;
+  Akonadi::EntityTreeModel *mEntityTreeModel;
 
   int mWrapCol;
 };

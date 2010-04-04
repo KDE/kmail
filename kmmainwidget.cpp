@@ -856,7 +856,7 @@ void KMMainWidget::createWidgets()
   const KConfigGroup cfg( KMKernel::config(), "CollectionFolderView" );
   mFolderTreeWidget->folderTreeView()->header()->restoreState( cfg.readEntry( "HeaderState", QByteArray() ) );
 
-  mMessagePane = new MessageList::Pane( mFolderTreeWidget->entityModel(),
+  mMessagePane = new MessageList::Pane( KMKernel::self()->entityTreeModel(),
                                         mFolderTreeWidget->folderTreeView()->selectionModel(),
                                         this );
 
@@ -950,7 +950,8 @@ void KMMainWidget::createWidgets()
     mFavoriteCollectionsView->setViewMode( QListView::IconMode );
 
     Akonadi::FavoriteCollectionsModel *favoritesModel = new Akonadi::FavoriteCollectionsModel(
-        mFolderTreeWidget->entityModel(), KMKernel::config()->group( "FavoriteCollections" ), this );
+                                KMKernel::self()->entityTreeModel(),
+                                KMKernel::config()->group( "FavoriteCollections" ), this );
     mFavoriteCollectionsView->setModel( favoritesModel );
 
     mAkonadiStandardActionManager->setFavoriteCollectionsModel( favoritesModel );

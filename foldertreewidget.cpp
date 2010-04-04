@@ -48,14 +48,12 @@ public:
   FolderTreeWidgetPrivate()
     :filterModel( 0 ),
      collectionFolderView( 0 ),
-     entityModel( 0 ),
      quotaModel( 0 ),
      readableproxy( 0 )
   {
   }
   Akonadi::StatisticsProxyModel *filterModel;
   FolderTreeView *collectionFolderView;
-  Akonadi::EntityTreeModel *entityModel;
   Akonadi::QuotaColorProxyModel *quotaModel;
   ReadableCollectionProxyModel *readableproxy;
   KRecursiveFilterProxyModel *filterTreeViewModel;
@@ -73,12 +71,6 @@ FolderTreeWidget::FolderTreeWidget( QWidget *parent, KXMLGUIClient *xmlGuiClient
 
   QVBoxLayout *lay = new QVBoxLayout( this );
   lay->setMargin( 0 );
-  Akonadi::Session *session = new Akonadi::Session( "KMail Session", this );
-
-  KMKernel::self()->monitor()->setSession( session );
-
-  d->entityModel = new Akonadi::EntityTreeModel( KMKernel::self()->monitor(), this );
-  d->entityModel->setItemPopulationStrategy( Akonadi::EntityTreeModel::LazyPopulation );
 
   d->label = new QLabel( i18n("You can start typing to filter the list of folders."), this);
   lay->addWidget( d->label );
@@ -90,7 +82,7 @@ FolderTreeWidget::FolderTreeWidget( QWidget *parent, KXMLGUIClient *xmlGuiClient
   lay->addWidget( d->filterFolderLineEdit );
 
   Akonadi::EntityMimeTypeFilterModel *collectionModel = new Akonadi::EntityMimeTypeFilterModel( this );
-  collectionModel->setSourceModel( d->entityModel );
+  collectionModel->setSourceModel( KMKernel::self()->entityTreeModel() );
   collectionModel->addMimeTypeInclusionFilter( Akonadi::Collection::mimeType() );
   collectionModel->setHeaderGroup( Akonadi::EntityTreeModel::CollectionTreeHeaders );
   collectionModel->setDynamicSortFilter( true );
@@ -214,11 +206,6 @@ Akonadi::Collection::List FolderTreeWidget::selectedCollections() const
 FolderTreeView* FolderTreeWidget::folderTreeView()
 {
   return d->collectionFolderView;
-}
-
-Akonadi::EntityTreeModel *FolderTreeWidget::entityModel()
-{
-  return d->entityModel;
 }
 
 void FolderTreeWidget::readConfig()
