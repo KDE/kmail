@@ -227,9 +227,9 @@ private:
 };
 
 // internalRightsList is only used if permissions doesn't match the standard set
-static QString permissionsToUserString( unsigned int permissions, const QString& internalRightsList )
+static QString permissionsToUserString( int permissions, const QString& internalRightsList )
 {
-  for ( unsigned int i = 0;
+  for ( int i = 0;
         i < sizeof( standardPermissions ) / sizeof( *standardPermissions );
         ++i ) {
     if ( permissions == standardPermissions[i].permissions )
