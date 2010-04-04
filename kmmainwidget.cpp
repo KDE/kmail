@@ -955,7 +955,7 @@ void KMMainWidget::createWidgets()
     mFavoriteCollectionsView->setModel( favoritesModel );
 
     mAkonadiStandardActionManager->setFavoriteCollectionsModel( favoritesModel );
-    mAkonadiStandardActionManager->setFavoriteSelectionModel( mFolderTreeWidget->selectionModel() );
+    mAkonadiStandardActionManager->setFavoriteSelectionModel( mFavoriteCollectionsView->selectionModel() );
   }
   mAkonadiStandardActionManager->createAllActions();
 
