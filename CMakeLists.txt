@@ -145,8 +145,9 @@ set(kmailprivate_LIB_SRCS
    mdnadvicedialog.cpp
    backupjob.cpp
    archivefolderdialog.cpp
-   tagging.cpp
    searchdescriptionattribute.cpp
+   tag.cpp
+   tagactionmanager.cpp
 )
 
 soprano_add_ontology(kmailprivate_LIB_SRCS

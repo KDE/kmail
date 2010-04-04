@@ -16,103 +16,25 @@
    You should have received a copy of the GNU General Public License
    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
-#include "tagging.h"
+#include "tagactionmanager.h"
 
-#include "messagetag.h"
 #include "messageactions.h"
+#include "tag.h"
 
-#include <Akonadi/Item>
-#include <Nepomuk/Variant>
-#include <Nepomuk/ResourceManager>
-
+#include <KAction>
 #include <KActionCollection>
 #include <KActionMenu>
 #include <KMenu>
-#include <KIcon>
 #include <KToggleAction>
 #include <KXMLGUIClient>
+#include <Nepomuk/Resource>
+#include <Nepomuk/ResourceManager>
+#include <Nepomuk/Tag>
+#include <Soprano/Util/SignalCacheModel>
 
 #include <QSignalMapper>
 
 using namespace KMail;
-
-Tag::Ptr Tag::fromNepomuk( const Nepomuk::Tag& nepomukTag )
-{
-  Tag::Ptr tag( new Tag() );
-  tag->tagName = nepomukTag.label();
-
-  if ( nepomukTag.symbols().isEmpty() )
-    tag->iconName = "mail-tagged";
-  else
-    tag->iconName = nepomukTag.symbols().first();
-
-  tag->nepomukResourceUri = nepomukTag.resourceUri();
-
-  if ( nepomukTag.hasProperty( Vocabulary::MessageTag::textColor() ) ) {
-    const QString name = nepomukTag.property( Vocabulary::MessageTag::textColor() ).toString();
-    tag->textColor = QColor( name );
-  }
-
-  if ( nepomukTag.hasProperty( Vocabulary::MessageTag::backgroundColor() ) ) {
-    const QString name = nepomukTag.property( Vocabulary::MessageTag::backgroundColor() ).toString();
-    tag->backgroundColor = QColor( name );
-  }
-
-  if ( nepomukTag.hasProperty( Vocabulary::MessageTag::font() ) ) {
-    const QString fontString = nepomukTag.property( Vocabulary::MessageTag::font() ).toString();
-    QFont font;
-    font.fromString( fontString );
-    tag->textFont = font;
-  }
-
-  if ( nepomukTag.hasProperty( Vocabulary::MessageTag::priority() ) ) {
-    tag->priority = nepomukTag.property( Vocabulary::MessageTag::priority() ).toInt();
-  }
-  else
-    tag->priority = -1;
-
-  if ( nepomukTag.hasProperty( Vocabulary::MessageTag::shortcut() ) ) {
-    tag->shortcut = KShortcut( nepomukTag.property( Vocabulary::MessageTag::shortcut() ).toString() );
-  }
-
-  if ( nepomukTag.hasProperty( Vocabulary::MessageTag::inToolbar() ) ) {
-    tag->inToolbar = nepomukTag.property( Vocabulary::MessageTag::inToolbar() ).toBool();
-  }
-  else
-    tag->inToolbar = true;
-
-  return tag;
-}
-
-void Tag::saveToNepomuk( SaveFlags saveFlags ) const
-{
-  Nepomuk::Tag nepomukTag( nepomukResourceUri );
-  nepomukTag.setLabel( tagName );
-  nepomukTag.setSymbols( QStringList( iconName ) );
-  nepomukTag.setProperty( Vocabulary::MessageTag::priority(), priority );
-  nepomukTag.setProperty( Vocabulary::MessageTag::inToolbar(), inToolbar );
-  nepomukTag.setProperty( Vocabulary::MessageTag::shortcut(), shortcut.toString() );
-
-  if ( textColor.isValid() && saveFlags & TextColor )
-    nepomukTag.setProperty( Vocabulary::MessageTag::textColor(), textColor.name() );
-  else
-    nepomukTag.removeProperty( Vocabulary::MessageTag::textColor() );
-
-  if ( backgroundColor.isValid() && saveFlags & BackgroundColor )
-    nepomukTag.setProperty( Vocabulary::MessageTag::backgroundColor(), backgroundColor.name() );
-  else
-    nepomukTag.removeProperty( Vocabulary::MessageTag::backgroundColor() );
-
-  if ( saveFlags & Font )
-    nepomukTag.setProperty( Vocabulary::MessageTag::font(), textFont.toString() );
-  else
-    nepomukTag.removeProperty( Vocabulary::MessageTag::font() );
-}
-
-bool Tag::compare( Tag::Ptr &tag1, Tag::Ptr &tag2 )
-{
-  return tag1->priority < tag2->priority;
-}
 
 QList<TagActionManager*> TagActionManager::mInstances;
 
@@ -255,3 +177,4 @@ void TagActionManager::triggerUpdate()
     instance->createActions();
   }
 }
+

@@ -16,81 +16,32 @@
    You should have received a copy of the GNU General Public License
    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
-#ifndef TAGGING_H
-#define TAGGING_H
+#ifndef TAGACTIONMANAGER_H
+#define TAGACTIONMANAGER_H
 
 #include "kmail_export.h"
 
-#include <Nepomuk/Tag>
 #include <Soprano/Statement>
-#include <Soprano/Util/SignalCacheModel>
 
-#include <KShortcut>
-
-#include <QString>
-#include <QColor>
-#include <QFont>
-#include <QUrl>
-#include <QSharedPointer>
-#include <QScopedPointer>
-#include <QFlags>
-#include <QMap>
-
-class KAction;
 class KActionCollection;
-class KToggleAction;
 class KXMLGUIClient;
-class QSignalMapper;
+class KToggleAction;
 class QAction;
+class QSignalMapper;
 
 namespace Akonadi {
   class Item;
 }
 
+namespace Soprano {
+  namespace Util {
+    class SignalCacheModel;
+  }
+}
+
 namespace KMail {
 
   class MessageActions;
-
-  // Our own copy of the tag data normally attached to a Nepomuk::Tag.
-  // Useful in the config dialog, because the user might cancel his changes,
-  // in which case we don't write them back to the Nepomuk::Tag.
-  // Also used as a convenience class in the TagActionManager.
-  class Tag
-  {
-    Q_GADGET
-    public:
-
-      typedef QSharedPointer<Tag> Ptr;
-      enum SaveFlag {
-        TextColor = 1,
-        BackgroundColor = 1 << 1,
-        Font = 1 << 2
-      };
-      typedef QFlags<SaveFlag> SaveFlags;
-
-      // Load a tag from a Nepomuk tag
-      static Ptr fromNepomuk( const Nepomuk::Tag& nepomukTag );
-
-      // Save this tag to Nepomuk the corresponding Nepomuk tag
-      void saveToNepomuk( SaveFlags saveFlags ) const;
-
-      // Compare, based on priority
-      static bool compare( Ptr &tag1, Ptr &tag2 );
-
-      QString tagName;
-      QColor textColor;
-      QColor backgroundColor;
-      QFont textFont;
-      QString iconName;
-      QUrl nepomukResourceUri;
-      KShortcut shortcut;
-      bool inToolbar;
-
-      // Priority, i.e. sort order of the tag. Only used when loading the tag, when saving
-      // the priority is set to the position in the list widget
-      int priority;
-  };
-  Q_DECLARE_OPERATORS_FOR_FLAGS(Tag::SaveFlags)
 
   /**
     * Creates actions related to the existing Nepomuk tags and plugs them into the GUI.
@@ -177,6 +128,6 @@ namespace KMail {
 
       static QList<TagActionManager*> mInstances;
   };
-
 }
+
 #endif

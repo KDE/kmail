@@ -47,7 +47,7 @@
 #include <akonadi/changerecorder.h>
 #include "folderselectiontreeview.h"
 #include "foldertreeview.h"
-#include "tagging.h"
+#include "tagactionmanager.h"
 
 #include <QLayout>
 #include <kglobal.h>

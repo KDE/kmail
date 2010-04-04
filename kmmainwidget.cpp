@@ -54,9 +54,9 @@
 #include "folderselectiontreeview.h"
 #include "util.h"
 #include "archivefolderdialog.h"
-#include "tagging.h"
 #include "globalsettings.h"
 #include "foldertreeview.h"
+#include "tagactionmanager.h"
 #if !defined(NDEBUG)
     #include "sievedebugdialog.h"
     using KMail::SieveDebugDialog;

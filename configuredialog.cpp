@@ -43,8 +43,9 @@ using KMail::IdentityListViewItem;
 #include "folderrequester.h"
 using KMail::FolderRequester;
 #include "kmmainwidget.h"
-#include "tagging.h"
 #include "composer.h"
+#include "tag.h"
+#include "tagactionmanager.h"
 
 #include "folderselectiontreeview.h"
 
@@ -104,6 +105,7 @@ using MailTransport::TransportManagementWidget;
 #include <KRandom>
 #include <KColorScheme>
 #include <KComboBox>
+#include <Nepomuk/Tag>
 
 // Qt headers:
 #include <QBoxLayout>

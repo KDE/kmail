@@ -27,7 +27,7 @@
 #include "statusbarprogresswidget.h"
 #include "broadcaststatus.h"
 #include "util.h"
-#include "tagging.h"
+#include "tagactionmanager.h"
 
 #include <kapplication.h>
 #include <klocale.h>
