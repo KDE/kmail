@@ -148,6 +148,7 @@ set(kmailprivate_LIB_SRCS
    searchdescriptionattribute.cpp
    tag.cpp
    tagactionmanager.cpp
+   foldershortcutactionmanager.cpp
 )
 
 soprano_add_ontology(kmailprivate_LIB_SRCS

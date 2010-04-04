@@ -57,6 +57,7 @@
 #include "globalsettings.h"
 #include "foldertreeview.h"
 #include "tagactionmanager.h"
+#include "foldershortcutactionmanager.h"
 #if !defined(NDEBUG)
     #include "sievedebugdialog.h"
     using KMail::SieveDebugDialog;
@@ -848,8 +849,8 @@ void KMMainWidget::createWidgets()
   opt |= FolderSelectionTreeView::UseLineEditForFiltering;
   mCollectionFolderView = new FolderSelectionTreeView( this, mGUIClient, opt );
 
-  connect( mCollectionFolderView->folderTreeView(), SIGNAL( currentChanged( const Akonadi::Collection &) ), this, SLOT( slotFolderChanged( const Akonadi::Collection& ) ) );
-  connect( KMKernel::self()->monitor(), SIGNAL( collectionRemoved( const Akonadi::Collection &) ), this, SLOT( slotCollectionRemoved( const Akonadi::Collection& ) ) );
+  connect( mCollectionFolderView->folderTreeView(), SIGNAL( currentChanged( const Akonadi::Collection & ) ),
+           this, SLOT( slotFolderChanged( const Akonadi::Collection& ) ) );
 
   mCollectionFolderView->setSelectionMode( QAbstractItemView::ExtendedSelection );
   const KConfigGroup cfg( KMKernel::config(), "CollectionFolderView" );
@@ -3488,6 +3489,7 @@ void KMMainWidget::setupActions()
   updateFolderMenu();
   mTagActionManager = new KMail::TagActionManager( this, actionCollection(), mMsgActions,
                                                    mGUIClient );
+  mFolderShortcutActionManager = new KMail::FolderShortcutActionManager( this, actionCollection() );
 }
 
 //-----------------------------------------------------------------------------
@@ -3834,7 +3836,7 @@ void KMMainWidget::slotShowStartupFolder()
   // the main window or Kontact calls createGUI().
   // This function however is called with a single shot timer.
   initializeFilterActions();
-  initializeFolderShortcutActions();
+  mFolderShortcutActionManager->createActions();
   mTagActionManager->createActions();
   messageActions()->setupForwardingActionsList( mGUIClient );
 
@@ -3965,16 +3967,6 @@ void KMMainWidget::clearFilterActions()
 }
 
 //-----------------------------------------------------------------------------
-void KMMainWidget::initializeFolderShortcutActions()
-{
-  QList<Akonadi::Collection> folders = kmkernel->allFoldersCollection();
-  for ( int i = 0 ; i < folders.size(); ++i ) {
-    Akonadi::Collection col = folders.at( i );
-    shortcutChanged( col );
-  }
-}
-
-//-----------------------------------------------------------------------------
 void KMMainWidget::initializeFilterActions()
 {
   clearFilterActions();
@@ -4032,11 +4024,6 @@ void KMMainWidget::initializeFilterActions()
   updateMessageActions();
 }
 
-void KMMainWidget::slotCollectionRemoved( const Akonadi::Collection& col)
-{
-  delete mFolderShortcutCommands.take( col.id() );
-}
-
 //-----------------------------------------------------------------------------
 void KMMainWidget::initializeIMAPActions( bool setState /* false the first time, true later on */ )
 {
@@ -4069,41 +4056,6 @@ void KMMainWidget::initializeIMAPActions( bool setState /* false the first time,
 QList<QAction*> KMMainWidget::actionList()
 {
   return actionCollection()->actions();
-}
-
-void KMMainWidget::shortcutChanged( const Akonadi::Collection & col )
-{
-  // remove the old one, no autodelete in Qt4
-  slotCollectionRemoved( col );
-  QSharedPointer<FolderCollection> fd( FolderCollection::forCollection( col ) );
-  if ( fd->shortcut().isEmpty() )
-    return;
-
-  FolderShortcutCommand *c = new FolderShortcutCommand( this, col );
-  mFolderShortcutCommands.insert( col.id(), c );
-
-  QString actionlabel = i18n( "Folder Shortcut %1", col.name() );
-  QString actionname = i18n( "Folder Shortcut %1", fd->idString() );
-  QString normalizedName = actionname.replace(' ', '_');
-  KAction *action = actionCollection()->addAction( normalizedName );
-  // The folder shortcut is set in the folder shortcut dialog.
-  // The shortcut set in the shortcut dialog would not be saved back to
-  // the folder settings correctly.
-  action->setShortcutConfigurable( false );
-#ifdef OLD_FOLDERVIEW
-  mMainFolderView->addAction( action ); // <-- FIXME: why this is added to the folder view ?
-#endif
-  action->setText( actionlabel );
-  connect( action, SIGNAL( triggered(bool) ), c, SLOT( start() ) );
-  action->setShortcuts( fd->shortcut() );
-
-  KIcon icon( "folder" );
-  if ( col.hasAttribute<Akonadi::EntityDisplayAttribute>() &&
-       !col.attribute<Akonadi::EntityDisplayAttribute>()->iconName().isEmpty() ) {
-    icon = KIcon( col.attribute<Akonadi::EntityDisplayAttribute>()->iconName() );
-  }
-  action->setIcon( icon );
-  c->setAction( action ); // will be deleted along with the command
 }
 
 //-----------------------------------------------------------------------------

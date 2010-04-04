@@ -31,6 +31,7 @@
 #include "kmcommands.h"
 #include "expirejob.h"
 #include "compactionjob.h"
+#include "foldershortcutactionmanager.h"
 
 #include <QMutex>
 #include <QMutexLocker>
@@ -249,8 +250,9 @@ void FolderCollection::setShortcut( const KShortcut &sc, KMMainWidget *main )
 {
   if ( mShortcut != sc ) {
     mShortcut = sc;
-    if( main)
-      main->shortcutChanged( mCollection );
+    if ( main) {
+      main->folderShortcutActionManager()->shortcutChanged( mCollection );
+    }
   }
 }
 

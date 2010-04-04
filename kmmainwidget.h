@@ -61,7 +61,6 @@ class KActionMenu;
 class KToggleAction;
 class FolderTreeView;
 class KMMetaFilterActionCommand;
-class FolderShortcutCommand;
 class KMSystemTray;
 class CustomTemplatesMenu;
 
@@ -80,6 +79,7 @@ namespace KMail {
   class FavoriteFolderView;
   class StatusBarLabel;
   class TagActionManager;
+  class FolderShortcutActionManager;
 }
 
 class FolderSelectionTreeView;
@@ -184,11 +184,13 @@ class KMAIL_EXPORT KMMainWidget : public QWidget
     /** Returns the XML GUI client. */
     KXMLGUIClient* guiClient() const { return mGUIClient; }
 
-    KMail::TagActionManager *tagActionManager() const { return mTagActionManager; }
+    KMail::TagActionManager *tagActionManager() const {
+      return mTagActionManager;
+    }
 
-    /** Add, remove or adjust the folder's shortcut. */
-    void shortcutChanged( const Akonadi::Collection & );
-
+    KMail::FolderShortcutActionManager *folderShortcutActionManager() const {
+      return mFolderShortcutActionManager;
+    }
 
   public slots:
     // Moving messages around
@@ -260,9 +262,6 @@ class KMAIL_EXPORT KMMainWidget : public QWidget
 
     /** Create IMAP-account-related actions if applicable */
     void initializeIMAPActions() { initializeIMAPActions( true ); }
-
-    /** Create actions for the folder shortcuts. */
-    void initializeFolderShortcutActions();
 
     /** Trigger the dialog for editing out-of-office scripts.  */
     void slotEditVacation();
@@ -441,11 +440,6 @@ class KMAIL_EXPORT KMMainWidget : public QWidget
 
     void slotConfigChanged();
 
-    /**
-      Remove the shortcut actions associated with a folder.
-    */
-    void slotCollectionRemoved( const Akonadi::Collection& );
-
     /** Show a splash screen for the longer-lasting operation */
     void slotShowBusySplash();
 
@@ -617,9 +611,9 @@ private:
     QList<QAction*> mFilterMenuActions;
     QList<QAction*> mFilterTBarActions;
     QList<KMMetaFilterActionCommand*> mFilterCommands;
-    QHash<Akonadi::Entity::Id,FolderShortcutCommand*> mFolderShortcutCommands;
 
     KMail::TagActionManager *mTagActionManager;
+    KMail::FolderShortcutActionManager *mFolderShortcutActionManager;
     KMSystemTray *mSystemTray;
     KSharedConfig::Ptr mConfig;
     KXMLGUIClient *mGUIClient;

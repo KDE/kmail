@@ -48,6 +48,7 @@
 #include "folderselectiontreeview.h"
 #include "foldertreeview.h"
 #include "tagactionmanager.h"
+#include "foldershortcutactionmanager.h"
 
 #include <QLayout>
 #include <kglobal.h>
@@ -180,7 +181,7 @@ void KMailPart::guiActivateEvent(KParts::GUIActivateEvent *e)
   KParts::ReadOnlyPart::guiActivateEvent(e);
   mainWidget->initializeFilterActions();
   mainWidget->tagActionManager()->createActions();
-  mainWidget->initializeFolderShortcutActions();
+  mainWidget->folderShortcutActionManager()->createActions();
   mainWidget->updateVactionScriptStatus();
 }
 
