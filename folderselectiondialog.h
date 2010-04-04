@@ -23,7 +23,6 @@
 #include <KDialog>
 #include <akonadi/collection.h>
 class KJob;
-class FolderSelectionTreeView;
 
 /**
  * A dialog that lets the user select a folder.

@@ -30,6 +30,9 @@
 
 #include "folderrequester.h"
 
+#include "folderselectiondialog.h"
+#include "kmkernel.h"
+
 #include "messageviewer/autoqpointer.h"
 
 #include <kdebug.h>
@@ -37,8 +40,6 @@
 #include <kiconloader.h>
 #include <KLocale>
 #include <kdialog.h>
-#include "kmkernel.h"
-#include "folderselectiontreeviewdialog.h"
 #include <QLayout>
 #include <QToolButton>
 #include <QHBoxLayout>

@@ -70,7 +70,7 @@ using KMail::TemplateParser;
 #include <Akonadi/ItemFetchScope>
 #include <Akonadi/AgentManager>
 #include <Akonadi/ItemFetchJob>
-#include <Akonadi/Attributefactory>
+#include <Akonadi/AttributeFactory>
 
 #include <QByteArray>
 #include <QDir>

@@ -36,7 +36,7 @@
 #include "kmkernel.h"
 #include "kmmainwin.h"
 #include "folderrequester.h"
-#include "folderselectiontreeview.h"
+#include "foldertreewidget.h"
 
 #include <kaction.h>
 #include <kdebug.h>

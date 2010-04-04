@@ -55,8 +55,8 @@
 
 using namespace KPIM;
 
-#include <Akonadi/Attributefactory>
-#include <Akonadi/Entitytreeview>
+#include <Akonadi/AttributeFactory>
+#include <Akonadi/EntityTreeView>
 #include <Akonadi/CollectionModifyJob>
 #include <Akonadi/SearchCreateJob>
 #include <Akonadi/KMime/MessageModel>
