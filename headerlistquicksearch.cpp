@@ -69,6 +69,7 @@ HeaderListQuickSearch::HeaderListQuickSearch( QWidget *parent,
   QLabel *label = new QLabel( i18n("Stat&us:"), parent, "kde toolbar widget" );
 
   mStatusCombo = new QComboBox( parent, "quick search status combo box" );
+  mStatusCombo->setSizeLimit( 12 );
   mStatusCombo->insertItem( SmallIcon( "run" ), i18n("Any Status") );
 
   insertStatus( StatusUnread );
@@ -78,6 +79,7 @@ HeaderListQuickSearch::HeaderListQuickSearch( QWidget *parent,
   insertStatus( StatusForwarded );
   insertStatus( StatusToDo );
   insertStatus( StatusHasAttachment );
+  insertStatus( StatusInvitation );
   insertStatus( StatusWatched );
   insertStatus( StatusIgnored );
   mStatusCombo->setCurrentItem( 0 );
@@ -91,7 +93,7 @@ HeaderListQuickSearch::HeaderListQuickSearch( QWidget *parent,
                                             0, i18n( "Open Full Search" ) );
   connect( btn, SIGNAL( clicked() ), SIGNAL( requestFullSearch() ) );
 
-  /* Disable the signal connected by KListViewSearchLine since it will call 
+  /* Disable the signal connected by KListViewSearchLine since it will call
    * itemAdded during KMHeaders::readSortOrder() which will in turn result
    * in getMsgBaseForItem( item ) wanting to access items which are no longer
    * there. Rather rely on KMHeaders::msgAdded and its signal. */

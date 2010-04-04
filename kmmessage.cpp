@@ -415,7 +415,9 @@ void KMMessage::fromDwString(const DwString& str, bool aSetStatus)
     setSignatureStateChar(  headerField("X-KMail-SignatureState").at(0) );
     setMDNSentState( static_cast<KMMsgMDNSentState>( headerField("X-KMail-MDN-Sent").at(0).latin1() ) );
   }
-  if (attachmentState() == KMMsgAttachmentUnknown && readyToShow())
+  if ( invitationState() == KMMsgInvitationUnknown && readyToShow() )
+    updateInvitationState();
+  if ( attachmentState() == KMMsgAttachmentUnknown && readyToShow() )
     updateAttachmentState();
 
   mNeedsAssembly = false;
@@ -4170,7 +4172,8 @@ void KMMessage::setSignatureState(KMMsgSignatureState s, int idx)
     KMMsgBase::setSignatureState(s, idx);
 }
 
-void KMMessage::setMDNSentState( KMMsgMDNSentState status, int idx ) {
+void KMMessage::setMDNSentState( KMMsgMDNSentState status, int idx )
+{
   if ( mMDNSentState == status )
     return;
   if ( status == 0 )
@@ -4337,6 +4340,21 @@ void KMMessage::updateBodyPart(const QString partSpecifier, const QByteArray & d
     // notify observers
     notify();
   }
+}
+
+void KMMessage::updateInvitationState()
+{
+  if ( mMsg && mMsg->Headers().HasContentType() ) {
+    QString cntType = mMsg->Headers().ContentType().TypeStr().c_str();
+    cntType += '/';
+    cntType += mMsg->Headers().ContentType().SubtypeStr().c_str();
+    if ( cntType.lower() == "text/calendar" ) {
+      setStatus( KMMsgStatusHasInvitation );
+      return;
+    }
+  }
+  setStatus( KMMsgStatusHasNoInvitation );
+  return;
 }
 
 //-----------------------------------------------------------------------------

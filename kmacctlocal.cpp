@@ -220,6 +220,7 @@ bool KMAcctLocal::fetchMsg()
     msg->setSignatureStateChar( msg->headerField( "X-KMail-SignatureState" ).at(0));
     msg->setComplete(true);
     msg->updateAttachmentState();
+    msg->updateInvitationState();
 
     mAddedOk = processNewMsg(msg);
 

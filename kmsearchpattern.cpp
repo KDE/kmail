@@ -60,7 +60,8 @@ static struct _statusNames statusNames[] = {
   { "To Do", KMMsgStatusTodo },
   { "Spam", KMMsgStatusSpam },
   { "Ham", KMMsgStatusHam },
-  { "Has Attachment", KMMsgStatusHasAttach }
+  { "Has Attachment", KMMsgStatusHasAttach },
+  { "Invitation", KMMsgStatusHasInvitation }
 };
 
 static const int numStatusNames = sizeof statusNames / sizeof ( struct _statusNames );

@@ -85,6 +85,7 @@ QPixmap* KMHeaders::pixUndefinedEncrypted = 0;
 QPixmap* KMHeaders::pixEncryptionProblematic = 0;
 QPixmap* KMHeaders::pixSignatureProblematic = 0;
 QPixmap* KMHeaders::pixAttachment = 0;
+QPixmap* KMHeaders::pixInvitation = 0;
 QPixmap* KMHeaders::pixReadFwd = 0;
 QPixmap* KMHeaders::pixReadReplied = 0;
 QPixmap* KMHeaders::pixReadFwdReplied = 0;
@@ -132,6 +133,7 @@ KMHeaders::KMHeaders(KMMainWidget *aOwner, QWidget *parent,
   mPopup->insertItem(i18n("Important"),       KPaintInfo::COL_IMPORTANT);
   mPopup->insertItem(i18n("Action Item"),     KPaintInfo::COL_TODO);
   mPopup->insertItem(i18n("Attachment"),      KPaintInfo::COL_ATTACHMENT);
+  mPopup->insertItem(i18n("Invitation"),      KPaintInfo::COL_INVITATION);
   mPopup->insertItem(i18n("Spam/Ham"),        KPaintInfo::COL_SPAM_HAM);
   mPopup->insertItem(i18n("Watched/Ignored"), KPaintInfo::COL_WATCHED_IGNORED);
   mPopup->insertItem(i18n("Signature"),       KPaintInfo::COL_SIGNED);
@@ -170,6 +172,7 @@ KMHeaders::KMHeaders(KMMainWidget *aOwner, QWidget *parent,
     pixEncryptionProblematic = new QPixmap( UserIcon( "kmmsgencryptionproblematic" ) );
     pixSignatureProblematic  = new QPixmap( UserIcon( "kmmsgsignatureproblematic"  ) );
     pixAttachment            = new QPixmap( UserIcon( "kmmsgattachment"            ) );
+    pixInvitation            = new QPixmap( UserIcon( "kmmsginvitation"            ) );
     pixReadFwd               = new QPixmap( UserIcon( "kmmsgread_fwd"              ) );
     pixReadReplied           = new QPixmap( UserIcon( "kmmsgread_replied"          ) );
     pixReadFwdReplied        = new QPixmap( UserIcon( "kmmsgread_fwd_replied"      ) );
@@ -188,6 +191,7 @@ KMHeaders::KMHeaders(KMMainWidget *aOwner, QWidget *parent,
   mPaintInfo.importantCol      = addColumn( *pixFlag          , "", 0 );
   mPaintInfo.todoCol           = addColumn( *pixTodo          , "", 0 );
   mPaintInfo.attachmentCol     = addColumn( *pixAttachment    , "", 0 );
+  mPaintInfo.invitationCol     = addColumn( *pixInvitation    , "", 0 );
   mPaintInfo.spamHamCol        = addColumn( *pixSpam          , "", 0 );
   mPaintInfo.watchedIgnoredCol = addColumn( *pixWatched       , "", 0 );
   mPaintInfo.signedCol         = addColumn( *pixFullySigned   , "", 0 );
@@ -273,6 +277,15 @@ void KMHeaders::slotToggleColumn(int id, int mode)
     {
       show  = &mPaintInfo.showAttachment;
       col   = &mPaintInfo.attachmentCol;
+      width = pixAttachment->width() + 8;
+      if ( *col == header()->mapToIndex( *col ) )
+        moveToCol = 0;
+      break;
+    }
+    case KPaintInfo::COL_INVITATION:
+    {
+      show  = &mPaintInfo.showInvitation;
+      col   = &mPaintInfo.invitationCol;
       width = pixAttachment->width() + 8;
       if ( *col == header()->mapToIndex( *col ) )
         moveToCol = 0;
@@ -476,6 +489,9 @@ void KMHeaders::readConfig (void)
     show = config->readBoolEntry("showAttachmentColumn");
     slotToggleColumn(KPaintInfo::COL_ATTACHMENT, show);
 
+    show = config->readBoolEntry("showInvitationColumn");
+    slotToggleColumn(KPaintInfo::COL_INVITATION, show);
+
     show = config->readBoolEntry("showImportantColumn");
     slotToggleColumn(KPaintInfo::COL_IMPORTANT, show);
 
@@ -502,6 +518,7 @@ void KMHeaders::readConfig (void)
 
     mPaintInfo.showCryptoIcons = config->readBoolEntry( "showCryptoIcons", false );
     mPaintInfo.showAttachmentIcon = config->readBoolEntry( "showAttachmentIcon", true );
+    mPaintInfo.showInvitationIcon = config->readBoolEntry( "showInvitationIcon", false );
 
     KMime::DateFormatter::FormatType t =
       (KMime::DateFormatter::FormatType) config->readNumEntry("dateFormat", KMime::DateFormatter::Fancy ) ;
@@ -647,6 +664,7 @@ void KMHeaders::writeConfig (void)
   KConfigGroupSaver saver(config, "General");
   config->writeEntry("showMessageSize"         , mPaintInfo.showSize);
   config->writeEntry("showAttachmentColumn"    , mPaintInfo.showAttachment);
+  config->writeEntry("showInvitationColumn"    , mPaintInfo.showInvitation);
   config->writeEntry("showImportantColumn"     , mPaintInfo.showImportant);
   config->writeEntry("showTodoColumn"          , mPaintInfo.showTodo);
   config->writeEntry("showSpamHamColumn"       , mPaintInfo.showSpamHam);

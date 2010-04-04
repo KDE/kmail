@@ -295,8 +295,13 @@ const QPixmap *HeaderItem::pixmap(int col) const
     // Only merge the attachment icon in if that is configured.
     if ( headers->paintInfo()->showAttachmentIcon &&
         !headers->paintInfo()->showAttachment &&
-        msgBase->attachmentState() == KMMsgHasAttachment )
+         msgBase->attachmentState() == KMMsgHasAttachment )
       pixmaps << *KMHeaders::pixAttachment;
+
+    // Only merge the invitation icon in if that is configured.
+    if ( headers->paintInfo()->showInvitationIcon &&
+         msgBase->invitationState() == KMMsgHasInvitation )
+      pixmaps << *KMHeaders::pixInvitation;
 
     // Only merge the crypto icons in if that is configured.
     if ( headers->paintInfo()->showCryptoIcons ) {
@@ -325,6 +330,10 @@ const QPixmap *HeaderItem::pixmap(int col) const
   else if ( col == headers->paintInfo()->attachmentCol ) {
     if ( msgBase->attachmentState() == KMMsgHasAttachment )
       return KMHeaders::pixAttachment;
+  }
+  else if ( col == headers->paintInfo()->invitationCol ) {
+    if ( msgBase->invitationState() == KMMsgHasInvitation )
+      return KMHeaders::pixInvitation;
   }
   else if ( col == headers->paintInfo()->importantCol ) {
     if ( msgBase->isImportant() )
@@ -485,6 +494,10 @@ QString HeaderItem::generate_key( KMHeaders *headers,
     QString s(msg->attachmentState() == KMMsgHasAttachment ? "1" : "0");
     return ret + s + sortArrival;
   }
+  else if (column == paintInfo->invitationCol) {
+    QString s(msg->invitationState() == KMMsgHasInvitation ? "1" : "0");
+    return ret + s + sortArrival;
+  }
   else if (column == paintInfo->importantCol) {
     QString s(msg->isImportant() ? "1" : "0");
     return ret + s + sortArrival;
@@ -558,6 +571,7 @@ int HeaderItem::compare( QListViewItem *i, int col, bool ascending ) const
   if ( ( col == headers->paintInfo()->statusCol         ) ||
       ( col == headers->paintInfo()->sizeCol           ) ||
       ( col == headers->paintInfo()->attachmentCol     ) ||
+      ( col == headers->paintInfo()->invitationCol     ) ||
       ( col == headers->paintInfo()->importantCol      ) ||
       ( col == headers->paintInfo()->todoCol           ) ||
       ( col == headers->paintInfo()->spamHamCol        ) ||

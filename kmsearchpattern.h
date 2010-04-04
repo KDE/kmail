@@ -230,7 +230,8 @@ namespace KMail {
     { I18N_NOOP( "Spam" ),             "kmmsgspam"   },
     { I18N_NOOP( "Ham" ),              "kmmsgham"   },
     { I18N_NOOP( "To Do" ),            "kmmsgtodo"   },
-    { I18N_NOOP( "Has Attachment"),    "kmmsgattachment"   }
+    { I18N_NOOP( "Invitation" ),       "kmmsginvitation"   },
+    { I18N_NOOP( "Has Attachment"),    "kmmsgattachment"   }  //must be last
   };
   // If you change the ordering here; also do it in the array above
   enum StatusValueTypes {
@@ -249,7 +250,8 @@ namespace KMail {
     StatusSpam = 12,
     StatusHam = 13,
     StatusToDo = 14,
-    StatusHasAttachment = 15
+    StatusInvitation = 15,
+    StatusHasAttachment = 16  //must be last
   };
 
   static const int StatusValueCount =
@@ -291,7 +293,7 @@ public:
     KConfig group and there is a constructor, mainly used by KMFilter
     to initialize from a preset KConfig-Group.
 
-    From a class hierarchy point of view, it is a QPtrList of 
+    From a class hierarchy point of view, it is a QPtrList of
     KMSearchRule's that adds the boolean operators (see Operator)
     'and' and 'or' that connect the rules logically, and has a name
     under which it could be stored in the config file.

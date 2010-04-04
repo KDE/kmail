@@ -420,6 +420,8 @@ void ImapJob::slotGetMessageResult( KIO::Job * job )
         // do not know if the message has no attachment or we simply did not load the header
         if (msg->attachmentState() != KMMsgHasAttachment)
           msg->updateAttachmentState();
+        if (msg->invitationState() != KMMsgHasInvitation)
+          msg->updateInvitationState();
       }
     } else {
       kdDebug(5006) << "ImapJob::slotGetMessageResult - got no data for " << mPartSpecifier << endl;

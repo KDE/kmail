@@ -600,7 +600,7 @@ public:
   void setBodyAndGuessCte( const QCString& aBuf,
                            QValueList<int>& allowedCte,
                            bool allow8Bit = false,
-                           bool willBeSigned = false, 
+                           bool willBeSigned = false,
                            DwEntity *entity = 0 );
 
   /** Returns a decoded version of the body from the current content transfer
@@ -869,7 +869,8 @@ public:
   /** Set if the message is ready to be shown */
   void setReadyToShow( bool v ) { mReadyToShow = v; }
 
-  void updateAttachmentState(DwBodyPart * part = 0);
+  void updateAttachmentState( DwBodyPart *part = 0 );
+  void updateInvitationState();
 
   /** Return, if the message should not be deleted */
   bool transferInProgress() const;

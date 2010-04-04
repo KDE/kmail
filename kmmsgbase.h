@@ -57,7 +57,9 @@ enum MsgStatus
     KMMsgStatusSpam =              0x00002000,
     KMMsgStatusHam =               0x00004000,
     KMMsgStatusHasAttach =         0x00008000,
-    KMMsgStatusHasNoAttach =       0x00010000
+    KMMsgStatusHasNoAttach =       0x00010000,
+    KMMsgStatusHasInvitation =     0x00020000,
+    KMMsgStatusHasNoInvitation =   0x00040000
 };
 
 typedef uint KMMsgStatus;
@@ -132,6 +134,13 @@ typedef enum
   KMMsgAttachmentUnknown
 } KMMsgAttachmentState;
 
+/** Flags for invitation state */
+typedef enum
+{
+  KMMsgHasInvitation,
+  KMMsgHasNoInvitation,
+  KMMsgInvitationUnknown
+} KMMsgInvitationState;
 
 class KMMsgBase
 {
@@ -364,7 +373,7 @@ public:
   static QString decodeRFC2231String(const QCString& aStr);
   /** Extract a given param from the RFC2231-encoded header field, in particular
       concatenate possibly multiple entries, which are given as paramname*0=..;
-      paramname*1=..; ... or paramname*0*=..; paramname*1*=..; ... and return 
+      paramname*1=..; ... or paramname*0*=..; paramname*1*=..; ... and return
       their value as one string. That string will still be encoded */
   static QCString extractRFC2231HeaderField( const QCString &aStr, const QCString &field );
 
@@ -391,6 +400,9 @@ public:
 
   /** Return if the message has at least one attachment */
   virtual KMMsgAttachmentState attachmentState() const;
+
+  /** Return if the message contains an invitation */
+  virtual KMMsgInvitationState invitationState() const;
 
   /** Check for prefixes @p prefixRegExps in @p str. If none
       is found, @p newPrefix + ' ' is prepended to @p str and the

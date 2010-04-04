@@ -306,8 +306,8 @@ protected:
     *pixFullySigned, *pixPartiallySigned, *pixUndefinedSigned,
     *pixFullyEncrypted, *pixPartiallyEncrypted, *pixUndefinedEncrypted,
     *pixFiller, *pixEncryptionProblematic,
-    *pixSignatureProblematic, *pixAttachment,
-    *pixReadFwd, *pixReadReplied, *pixReadFwdReplied,*pixTodo;
+    *pixSignatureProblematic, *pixAttachment, *pixInvitation,
+    *pixReadFwd, *pixReadReplied, *pixReadFwdReplied, *pixTodo;
 
   /** Look for color changes */
   virtual bool event(QEvent *e);

@@ -243,6 +243,14 @@ void KMMsgBase::setStatus(const KMMsgStatus aStatus, int idx)
       mStatus &= ~KMMsgStatusHasAttach;
       mStatus |= KMMsgStatusHasNoAttach;
       break;
+    case KMMsgStatusHasInvitation:
+      mStatus &= ~KMMsgStatusHasNoInvitation;
+      mStatus |= KMMsgStatusHasInvitation;
+      break;
+    case KMMsgStatusHasNoInvitation:
+      mStatus &= ~KMMsgStatusHasInvitation;
+      mStatus |= KMMsgStatusHasNoInvitation;
+      break;
     default:
       mStatus = aStatus;
       break;
@@ -1085,6 +1093,18 @@ KMMsgAttachmentState KMMsgBase::attachmentState() const
     return KMMsgHasNoAttachment;
   else
     return KMMsgAttachmentUnknown;
+}
+
+
+KMMsgInvitationState KMMsgBase::invitationState() const
+{
+  KMMsgStatus st = status();
+  if (st & KMMsgStatusHasInvitation)
+    return KMMsgHasInvitation;
+  else if (st & KMMsgStatusHasNoInvitation)
+    return KMMsgHasNoInvitation;
+  else
+    return KMMsgInvitationUnknown;
 }
 
 //-----------------------------------------------------------------------------
