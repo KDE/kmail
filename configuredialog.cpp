@@ -320,18 +320,16 @@ void IdentityPage::save()
   if( mOldNumberOfIdentities < 2 && mIPage.mIdentityList->topLevelItemCount() > 1 ) {
     // have more than one identity, so better show the combo in the
     // composer now:
-    KConfigGroup composer( KMKernel::config(), "Composer" );
-    int showHeaders = composer.readEntry( "headers", HDR_STANDARD );
+    int showHeaders = GlobalSettings::self()->headers();
     showHeaders |= HDR_IDENTITY;
-    composer.writeEntry( "headers", showHeaders );
+    GlobalSettings::self()->setHeaders( showHeaders );
   }
   // and now the reverse
   if( mOldNumberOfIdentities > 1 && mIPage.mIdentityList->topLevelItemCount() < 2 ) {
     // have only one identity, so remove the combo in the composer:
-    KConfigGroup composer( KMKernel::config(), "Composer" );
-    int showHeaders = composer.readEntry( "headers", HDR_STANDARD );
+    int showHeaders = GlobalSettings::self()->headers();
     showHeaders &= ~HDR_IDENTITY;
-    composer.writeEntry( "headers", showHeaders );
+    GlobalSettings::self()->setHeaders( showHeaders );
   }
 }
 
