@@ -1413,8 +1413,8 @@ void KMMainWidget::slotExpireFolder()
 
   if (!mCurrentFolder->isAutoExpire()) {
     canBeExpired = false;
-  } else if (mCurrentFolder->getUnreadExpireUnits()==expireNever &&
-             mCurrentFolder->getReadExpireUnits()==expireNever) {
+  } else if ( mCurrentFolder->getUnreadExpireUnits() == FolderCollection::ExpireNever &&
+              mCurrentFolder->getReadExpireUnits() == FolderCollection::ExpireNever ) {
     canBeExpired = false;
   }
 

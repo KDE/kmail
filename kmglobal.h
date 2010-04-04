@@ -23,19 +23,6 @@
 #ifndef kmglobal_h
 #define kmglobal_h
 
-/*
- * Define the possible units to use for measuring message expiry.
- * expireNever is used to switch off message expiry, and expireMaxUnits
- * must always be the last in the list (for bounds checking).
- */
-typedef enum {
-  expireNever,
-  expireDays,
-  expireWeeks,
-  expireMonths,
-  expireMaxUnits
-} ExpireUnits;
-
 #define HDR_FROM     0x01
 #define HDR_REPLY_TO 0x02
 #define HDR_SUBJECT  0x20

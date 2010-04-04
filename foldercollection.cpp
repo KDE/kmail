@@ -59,8 +59,8 @@ FolderCollection::FolderCollection( const Akonadi::Collection & col, bool writec
     mExpireMessages( false ),
     mUnreadExpireAge( 28 ),
     mReadExpireAge( 14 ),
-    mUnreadExpireUnits( expireNever ),
-    mReadExpireUnits( expireNever ),
+    mUnreadExpireUnits( ExpireNever ),
+    mReadExpireUnits( ExpireNever ),
     mExpireAction( ExpireDelete ),
     mIgnoreNewMail( false ),
     mPutRepliesInSameFolder( false ),
@@ -152,10 +152,10 @@ void FolderCollection::readConfig()
   KConfigGroup configGroup( KMKernel::config(), configGroupName() );
   mExpireMessages = configGroup.readEntry( "ExpireMessages", false );
   mReadExpireAge = configGroup.readEntry( "ReadExpireAge", 3 );
-  mReadExpireUnits = (ExpireUnits)configGroup.readEntry( "ReadExpireUnits", (int)expireMonths );
+  mReadExpireUnits = (ExpireUnits)configGroup.readEntry( "ReadExpireUnits", (int)ExpireMonths );
   mUnreadExpireAge = configGroup.readEntry( "UnreadExpireAge", 12 );
   mUnreadExpireUnits = (ExpireUnits)
-      configGroup.readEntry( "UnreadExpireUnits", (int)expireNever );
+      configGroup.readEntry( "UnreadExpireUnits", (int)ExpireNever );
   mExpireAction = configGroup.readEntry( "ExpireAction", "Delete") == "Move" ? ExpireMove : ExpireDelete;
   mExpireToFolderId = configGroup.readEntry( "ExpireToFolder" );
 
@@ -350,7 +350,7 @@ void FolderCollection::setUnreadExpireAge( int age )
 
 void FolderCollection::setUnreadExpireUnits( ExpireUnits units )
 {
-  if (units >= expireNever && units < expireMaxUnits) {
+  if (units >= ExpireNever && units < ExpireMaxUnits) {
     mUnreadExpireUnits = units;
     writeConfig();
   }
@@ -366,7 +366,7 @@ void FolderCollection::setReadExpireAge( int age )
 
 void FolderCollection::setReadExpireUnits( ExpireUnits units )
 {
-  if (units >= expireNever && units <= expireMaxUnits) {
+  if (units >= ExpireNever && units <= ExpireMaxUnits) {
     mReadExpireUnits = units;
     writeConfig();
   }
@@ -415,14 +415,14 @@ void FolderCollection::setMailingList( const MailingList& mlist )
   writeConfig();
 }
 
-static int daysToExpire( int number, ExpireUnits units )
+static int daysToExpire( int number, FolderCollection::ExpireUnits units )
 {
   switch (units) {
-  case expireDays: // Days
+  case FolderCollection::ExpireDays: // Days
     return number;
-  case expireWeeks: // Weeks
+  case FolderCollection::ExpireWeeks: // Weeks
     return number * 7;
-  case expireMonths: // Months - this could be better rather than assuming 31day months.
+  case FolderCollection::ExpireMonths: // Months - this could be better rather than assuming 31day months.
     return number * 31;
   default: // this avoids a compiler warning (not handled enumeration values)
     ;

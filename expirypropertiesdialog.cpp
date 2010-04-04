@@ -123,13 +123,13 @@ ExpiryPropertiesDialog::ExpiryPropertiesDialog(
   mFolder->daysToExpire( daysToExpireUnread, daysToExpireRead);
 
   if ( expiryGloballyOn
-      && mFolder->getReadExpireUnits() != expireNever
-      && daysToExpireRead >= 0 ) {
+       && mFolder->getReadExpireUnits() != FolderCollection::ExpireNever
+       && daysToExpireRead >= 0 ) {
     expireReadMailCB->setChecked( true );
     expireReadMailSB->setValue( daysToExpireRead );
   }
   if ( expiryGloballyOn
-      && mFolder->getUnreadExpireUnits() != expireNever
+      && mFolder->getUnreadExpireUnits() != FolderCollection::ExpireNever
       && daysToExpireUnread >= 0 ) {
     expireUnreadMailCB->setChecked( true );
     expireUnreadMailSB->setValue( daysToExpireUnread );
@@ -182,8 +182,10 @@ void ExpiryPropertiesDialog::accept()
   // we always write out days now
   mFolder->setReadExpireAge( expireReadMailSB->value() );
   mFolder->setUnreadExpireAge( expireUnreadMailSB->value() );
-  mFolder->setReadExpireUnits( expireReadMailCB->isChecked()? expireDays : expireNever );
-  mFolder->setUnreadExpireUnits( expireUnreadMailCB->isChecked()? expireDays : expireNever );
+  mFolder->setReadExpireUnits( expireReadMailCB->isChecked() ? FolderCollection::ExpireDays :
+                                                              FolderCollection::ExpireNever );
+  mFolder->setUnreadExpireUnits( expireUnreadMailCB->isChecked() ? FolderCollection::ExpireDays :
+                                                                   FolderCollection::ExpireNever );
 
   if ( deletePermanentlyRB->isChecked() )
     mFolder->setExpireAction( FolderCollection::ExpireDelete );

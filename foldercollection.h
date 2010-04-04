@@ -41,6 +41,13 @@ public:
 
   enum CompactOptions { CompactLater, CompactNow, CompactSilentlyNow };
 
+  /*
+   * Define the possible units to use for measuring message expiry.
+   * expireNever is used to switch off message expiry, and expireMaxUnits
+   * must always be the last in the list (for bounds checking).
+   */
+  enum ExpireUnits { ExpireNever, ExpireDays, ExpireWeeks, ExpireMonths, ExpireMaxUnits };
+
   Akonadi::Collection collection();
 
 
