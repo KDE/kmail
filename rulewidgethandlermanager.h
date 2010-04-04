@@ -84,7 +84,7 @@ namespace KMail {
                 QStackedWidget *valueStack ) const;
     void setRule( QStackedWidget *functionStack,
                   QStackedWidget *valueStack,
-                  const KMSearchRule *rule ) const;
+                  const KMSearchRule::Ptr rule ) const;
     void update( const QByteArray & field,
                  QStackedWidget *functionStack,
                  QStackedWidget *valueStack ) const;

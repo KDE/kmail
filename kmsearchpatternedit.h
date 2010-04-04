@@ -22,11 +22,12 @@
 
 #include "kwidgetlister.h"
 
+#include "kmsearchpattern.h"
+
 #include <QGroupBox>
 #include <QByteArray>
 
 class KComboBox;
-class KMSearchRule;
 class KMSearchPattern;
 class KMSearchPatternEdit;
 
@@ -54,7 +55,7 @@ class KMSearchRuleWidget : public QWidget
 public:
   /** Constructor. You can give a KMSearchRule as parameter, which will
       be used to initialize the widget. */
-  explicit KMSearchRuleWidget( QWidget* parent=0, KMSearchRule* aRule=0, bool headersOnly = false, bool absoluteDates = false );
+  explicit KMSearchRuleWidget( QWidget* parent=0, KMSearchRule::Ptr aRule = KMSearchRule::Ptr(), bool headersOnly = false, bool absoluteDates = false );
 
   enum { Message, Body, AnyHeader, Recipients, Size, AgeInDays, Status,
          Tag, Subject, From, To, CC };
@@ -63,14 +64,17 @@ public:
       header fields can be searched otherwise \<message\> and \<body\> searches
       are available also. */
   void setHeadersOnly( bool headersOnly );
+
   /** Set the rule. The rule is accepted regardless of the return
       value of KMSearchRule::isEmpty. This widget makes a shallow
       copy of @p aRule and operates directly on it. If @p aRule is
       0, resets itself, taks user input, but does essentially
       nothing. If you pass 0, you should probably disable it. */
-  void setRule( KMSearchRule* aRule );
+  void setRule( KMSearchRule::Ptr aRule );
+
   /** Return a reference to the currently-worked-on KMSearchRule. */
-  KMSearchRule* rule() const;
+  KMSearchRule::Ptr rule() const;
+
   /** Resets the rule currently worked on and updates the widget
       accordingly. */
   void reset();
@@ -124,7 +128,7 @@ public:
 
   virtual ~KMSearchRuleWidgetLister();
 
-  void setRuleList( QList<KMSearchRule*> * aList );
+  void setRuleList( QList<KMSearchRule::Ptr> * aList );
   void setHeadersOnly( bool headersOnly );
 
 public slots:
@@ -136,7 +140,7 @@ protected:
 
 private:
   void regenerateRuleListFromWidgets();
-  QList<KMSearchRule*> *mRuleList;
+  QList<KMSearchRule::Ptr> *mRuleList;
   bool mHeadersOnly;
   bool mAbsoluteDates;
 };

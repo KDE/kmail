@@ -70,7 +70,7 @@ namespace KMail {
                         QStackedWidget *valueStack ) const = 0;
     virtual bool setRule( QStackedWidget *functionStack,
                           QStackedWidget *valueStack,
-                          const KMSearchRule *rule ) const = 0;
+                          const KMSearchRule::Ptr rule ) const = 0;
     virtual bool update( const QByteArray & field,
                          QStackedWidget *functionStack,
                          QStackedWidget *valueStack ) const = 0;

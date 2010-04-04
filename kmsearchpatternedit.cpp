@@ -77,7 +77,7 @@ static const int SpecialRuleFieldsCount =
 //
 //=============================================================================
 
-KMSearchRuleWidget::KMSearchRuleWidget( QWidget *parent, KMSearchRule *aRule,
+KMSearchRuleWidget::KMSearchRuleWidget( QWidget *parent, KMSearchRule::Ptr aRule,
                                         bool headersOnly,
                                         bool absoluteDates )
   : QWidget( parent ),
@@ -97,9 +97,9 @@ KMSearchRuleWidget::KMSearchRuleWidget( QWidget *parent, KMSearchRule *aRule,
 
 void KMSearchRuleWidget::setHeadersOnly( bool headersOnly )
 {
-  KMSearchRule* srule = rule();
+  KMSearchRule::Ptr srule = rule();
   QByteArray currentText = srule->field();
-  delete srule;
+
   initFieldList( headersOnly, mAbsoluteDates );
 
   mRuleField->clear();
@@ -157,11 +157,11 @@ void KMSearchRuleWidget::initWidget()
            this, SIGNAL( fieldChanged( const QString & ) ) );
 }
 
-void KMSearchRuleWidget::setRule( KMSearchRule *aRule )
+void KMSearchRuleWidget::setRule( KMSearchRule::Ptr aRule )
 {
   assert ( aRule );
 
-//  kDebug() << "(" << aRule->asString() << ")";
+  kDebug() << "(" << aRule->asString() << ")";
 
   //--------------set the field
   int i = indexOfRuleField( aRule->field() );
@@ -182,7 +182,7 @@ void KMSearchRuleWidget::setRule( KMSearchRule *aRule )
                                                  aRule );
 }
 
-KMSearchRule* KMSearchRuleWidget::rule() const {
+KMSearchRule::Ptr KMSearchRuleWidget::rule() const {
   const QByteArray ruleField = ruleFieldToEnglish( mRuleField->currentText() );
   const KMSearchRule::Function function =
     RuleWidgetHandlerManager::instance()->function( ruleField,
@@ -322,7 +322,7 @@ KMSearchRuleWidgetLister::~KMSearchRuleWidgetLister()
 {
 }
 
-void KMSearchRuleWidgetLister::setRuleList( QList<KMSearchRule*> *aList )
+void KMSearchRuleWidgetLister::setRuleList( QList<KMSearchRule::Ptr> *aList )
 {
   assert ( aList );
 
@@ -355,7 +355,7 @@ void KMSearchRuleWidgetLister::setRuleList( QList<KMSearchRule*> *aList )
 
   // load the actions into the widgets
   QList<QWidget*> widgetList = widgets();
-  QList<KMSearchRule*>::const_iterator rIt;
+  QList<KMSearchRule::Ptr>::const_iterator rIt;
   QList<QWidget*>::const_iterator wIt = widgetList.constBegin();
   for ( rIt = mRuleList->constBegin();
         rIt != mRuleList->constEnd() && wIt != widgetList.constEnd(); ++rIt, ++wIt ) {
@@ -386,7 +386,7 @@ void KMSearchRuleWidgetLister::reset()
 
 QWidget* KMSearchRuleWidgetLister::createWidget( QWidget *parent )
 {
-  return new KMSearchRuleWidget(parent, 0,  mHeadersOnly, mAbsoluteDates);
+  return new KMSearchRuleWidget(parent, KMSearchRule::Ptr(),  mHeadersOnly, mAbsoluteDates);
 }
 
 void KMSearchRuleWidgetLister::clearWidget( QWidget *aWidget )
@@ -402,7 +402,7 @@ void KMSearchRuleWidgetLister::regenerateRuleListFromWidgets()
   mRuleList->clear();
 
   foreach ( const QWidget *w, widgets() ) {
-    KMSearchRule *r = qobject_cast<const KMSearchRuleWidget*>( w )->rule();
+    KMSearchRule::Ptr r = qobject_cast<const KMSearchRuleWidget*>( w )->rule();
     if ( r )
       mRuleList->append( r );
   }

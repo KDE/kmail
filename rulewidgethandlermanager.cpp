@@ -78,7 +78,7 @@ namespace {
                 QStackedWidget *valueStack ) const;
     bool setRule( QStackedWidget *functionStack,
                   QStackedWidget *valueStack,
-                  const KMSearchRule *rule ) const;
+                  const KMSearchRule::Ptr rule ) const;
     bool update( const QByteArray & field,
                  QStackedWidget *functionStack,
                  QStackedWidget *valueStack ) const;
@@ -113,7 +113,7 @@ namespace {
                 QStackedWidget *valueStack ) const;
     bool setRule( QStackedWidget *functionStack,
                   QStackedWidget *valueStack,
-                  const KMSearchRule *rule ) const;
+                  const KMSearchRule::Ptr rule ) const;
     bool update( const QByteArray & field,
                  QStackedWidget *functionStack,
                  QStackedWidget *valueStack ) const;
@@ -149,7 +149,7 @@ namespace {
                 QStackedWidget *valueStack ) const;
     bool setRule( QStackedWidget *functionStack,
                   QStackedWidget *valueStack,
-                  const KMSearchRule *rule ) const;
+                  const KMSearchRule::Ptr rule ) const;
     bool update( const QByteArray & field,
                  QStackedWidget *functionStack,
                  QStackedWidget *valueStack ) const;
@@ -183,7 +183,7 @@ namespace {
                 QStackedWidget *valueStack ) const;
     bool setRule( QStackedWidget *functionStack,
                   QStackedWidget *valueStack,
-                  const KMSearchRule *rule ) const;
+                  const KMSearchRule::Ptr rule ) const;
     bool update( const QByteArray & field,
                  QStackedWidget *functionStack,
                  QStackedWidget *valueStack ) const;
@@ -213,7 +213,7 @@ namespace {
                 QStackedWidget *valueStack ) const;
     bool setRule( QStackedWidget *functionStack,
                   QStackedWidget *valueStack,
-                  const KMSearchRule *rule ) const;
+                  const KMSearchRule::Ptr rule ) const;
     bool update( const QByteArray & field,
                  QStackedWidget *functionStack,
                  QStackedWidget *valueStack ) const;
@@ -352,7 +352,7 @@ void KMail::RuleWidgetHandlerManager::reset( QStackedWidget *functionStack,
 
 void KMail::RuleWidgetHandlerManager::setRule( QStackedWidget *functionStack,
                                                QStackedWidget *valueStack,
-                                               const KMSearchRule *rule ) const
+                                               const KMSearchRule::Ptr rule ) const
 {
   assert( rule );
   reset( functionStack, valueStack );
@@ -603,7 +603,7 @@ namespace {
 
   bool TextRuleWidgetHandler::setRule( QStackedWidget *functionStack,
                                        QStackedWidget *valueStack,
-                                       const KMSearchRule *rule ) const
+                                       const KMSearchRule::Ptr rule ) const
   {
 
     if ( !rule ) {
@@ -891,7 +891,7 @@ namespace {
 
   bool MessageRuleWidgetHandler::setRule( QStackedWidget *functionStack,
                                           QStackedWidget *valueStack,
-                                          const KMSearchRule *rule ) const
+                                          const KMSearchRule::Ptr rule ) const
   {
     if ( !rule || !handlesField( rule->field() ) ) {
       reset( functionStack, valueStack );
@@ -1144,7 +1144,7 @@ namespace {
 
   bool StatusRuleWidgetHandler::setRule( QStackedWidget *functionStack,
                                          QStackedWidget *valueStack,
-                                         const KMSearchRule *rule ) const
+                                         const KMSearchRule::Ptr rule ) const
   {
     if ( !rule || !handlesField( rule->field() ) ) {
       reset( functionStack, valueStack );
@@ -1389,7 +1389,7 @@ namespace {
 
   bool TagRuleWidgetHandler::setRule( QStackedWidget *functionStack,
                                       QStackedWidget *valueStack,
-                                      const KMSearchRule *rule ) const
+                                      const KMSearchRule::Ptr rule ) const
   {
     if ( !rule || !handlesField( rule->field() ) ) {
       reset( functionStack, valueStack );
@@ -1659,7 +1659,7 @@ namespace {
 
   bool NumericRuleWidgetHandler::setRule( QStackedWidget *functionStack,
                                           QStackedWidget *valueStack,
-                                          const KMSearchRule *rule ) const
+                                          const KMSearchRule::Ptr rule ) const
   {
     if ( !rule || !handlesField( rule->field() ) ) {
       reset( functionStack, valueStack );

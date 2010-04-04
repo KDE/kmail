@@ -28,6 +28,9 @@
 #include <KDialog>
 #include <KXMLGUIClient>
 #include <akonadi/collection.h>
+
+#include "kmsearchpattern.h"
+
 class QCheckBox;
 class QCloseEvent;
 class QKeyEvent;
@@ -36,7 +39,7 @@ class QRadioButton;
 class KActionMenu;
 class KLineEdit;
 class KMMainWidget;
-class KMSearchPattern;
+
 class KMSearchPatternEdit;
 class KStatusBar;
 class KJob;
@@ -98,7 +101,15 @@ public:
    */
   Akonadi::Item message();
 
+  /**
+   * Loads a search pattern into the search window, replacing the current one.
+   */
   void setSearchPattern( const KMSearchPattern &pattern );
+
+  /**
+   * Loads a search pattern into the search window, appending its rules to the current one.
+   */
+  void addRulesToSearchPattern( const KMSearchPattern &pattern );
 
 protected slots:
   /** Update status line widget. */
@@ -177,7 +188,7 @@ protected:
   // not owned by us
   KMMainWidget* mKMMainWidget;
   KMSearchPatternEdit *mPatternEdit;
-  KMSearchPattern *mSearchPattern;
+  KMSearchPattern mSearchPattern;
 
   static const int MSGID_COLUMN;
 };

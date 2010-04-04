@@ -97,6 +97,9 @@ using KMail::TemplateParser;
 #include "imapsettings.h"
 #include "util.h"
 
+#include <akonadi/attributefactory.h>
+#include "searchdescriptionattribute.h"
+
 static KMKernel * mySelf = 0;
 static bool s_askingToGoOnline = false;
 
@@ -107,6 +110,8 @@ KMKernel::KMKernel (QObject *parent, const char *name) :
   QObject(parent),
   mIdentityManager(0), mConfigureDialog(0), mMailService(0)
 {
+  Akonadi::AttributeFactory::registerAttribute<Akonadi::SearchDescriptionAttribute>();
+
   // Akonadi migration
   KConfig config( "kmail-migratorrc" );
   KConfigGroup migrationCfg( &config, "Migration" );

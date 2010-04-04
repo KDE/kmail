@@ -49,6 +49,7 @@ using KMail::FilterLog;
 
 #include <QRegExp>
 #include <QByteArray>
+#include <QDataStream>
 
 #include <Soprano/Vocabulary/NAO>
 #include <Soprano/Vocabulary/RDF>
@@ -119,34 +120,34 @@ const KMSearchRule & KMSearchRule::operator=( const KMSearchRule & other ) {
   return *this;
 }
 
-KMSearchRule * KMSearchRule::createInstance( const QByteArray & field,
-                                             Function func,
-                                             const QString & contents )
+KMSearchRule::Ptr KMSearchRule::createInstance( const QByteArray & field,
+                                                Function func,
+                                                const QString & contents )
 {
-  KMSearchRule *ret = 0;
+  KMSearchRule::Ptr ret;
   if (field == "<status>")
-    ret = new KMSearchRuleStatus( field, func, contents );
+    ret = KMSearchRule::Ptr( new KMSearchRuleStatus( field, func, contents ) );
   else if ( field == "<age in days>" || field == "<size>" )
-    ret = new KMSearchRuleNumerical( field, func, contents );
+    ret = KMSearchRule::Ptr( new KMSearchRuleNumerical( field, func, contents ) );
   else
-    ret = new KMSearchRuleString( field, func, contents );
+    ret = KMSearchRule::Ptr( new KMSearchRuleString( field, func, contents ) );
 
   return ret;
 }
 
-KMSearchRule * KMSearchRule::createInstance( const QByteArray & field,
-                                     const char *func,
-                                     const QString & contents )
+KMSearchRule::Ptr KMSearchRule::createInstance( const QByteArray & field,
+                                                const char *func,
+                                                const QString & contents )
 {
   return ( createInstance( field, configValueToFunc( func ), contents ) );
 }
 
-KMSearchRule * KMSearchRule::createInstance( const KMSearchRule & other )
+KMSearchRule::Ptr KMSearchRule::createInstance( const KMSearchRule & other )
 {
   return ( createInstance( other.field(), other.function(), other.contents() ) );
 }
 
-KMSearchRule * KMSearchRule::createInstanceFromConfig( const KConfigGroup & config, int aIdx )
+KMSearchRule::Ptr KMSearchRule::createInstanceFromConfig( const KConfigGroup & config, int aIdx )
 {
   const char cIdx = char( int('A') + aIdx );
 
@@ -162,6 +163,18 @@ KMSearchRule * KMSearchRule::createInstanceFromConfig( const KConfigGroup & conf
     return KMSearchRule::createInstance( "<recipients>", func2, contents2 );
   else
     return KMSearchRule::createInstance( field2, func2, contents2 );
+}
+
+KMSearchRule::Ptr KMSearchRule::createInstance( QDataStream &s )
+{
+  QByteArray field;
+  s >> field;
+  QString function;
+  s >> function;
+  Function func = configValueToFunc( function.toUtf8() );
+  QString contents;
+  s >> contents;
+  return createInstance( field, func, contents );
 }
 
 KMSearchRule::Function KMSearchRule::configValueToFunc( const char * str ) {
@@ -249,6 +262,12 @@ void KMSearchRule::addAndNegateTerm(const Nepomuk::Query::Term& term, Nepomuk::Q
   } else {
     termGroup.addSubTerm( term );
   }
+}
+
+QDataStream& KMSearchRule::operator >>( QDataStream& s ) const
+{
+  s << mField << functionToString( mFunction ) << mContents;
+  return s;
 }
 
 
@@ -787,20 +806,19 @@ void KMSearchRuleStatus::addQueryTerms(Nepomuk::Query::GroupTerm& groupTerm) con
 //==================================================
 
 KMSearchPattern::KMSearchPattern()
-  : QList<KMSearchRule*>()
+  : QList<KMSearchRule::Ptr>()
 {
   init();
 }
 
 KMSearchPattern::KMSearchPattern( const KConfigGroup & config )
-  : QList<KMSearchRule*>()
+  : QList<KMSearchRule::Ptr>()
 {
   readConfig( config );
 }
 
 KMSearchPattern::~KMSearchPattern()
 {
-  qDeleteAll( *this );
 }
 
 bool KMSearchPattern::matches( const Akonadi::Item &item, bool ignoreBody ) const
@@ -810,7 +828,7 @@ bool KMSearchPattern::matches( const Akonadi::Item &item, bool ignoreBody ) cons
   if ( !item.hasPayload<KMime::Message::Ptr>() )
     return false;
 
-  QList<KMSearchRule*>::const_iterator it;
+  QList<KMSearchRule::Ptr>::const_iterator it;
   switch ( mOperator ) {
   case OpAnd: // all rules must match
     for ( it = begin() ; it != end() ; ++it )
@@ -830,7 +848,7 @@ bool KMSearchPattern::matches( const Akonadi::Item &item, bool ignoreBody ) cons
 }
 
 bool KMSearchPattern::requiresBody() const {
-  QList<KMSearchRule*>::const_iterator it;
+  QList<KMSearchRule::Ptr>::const_iterator it;
     for ( it = begin() ; it != end() ; ++it )
       if ( (*it)->requiresBody() )
 	return true;
@@ -838,7 +856,7 @@ bool KMSearchPattern::requiresBody() const {
 }
 
 void KMSearchPattern::purify() {
-  QList<KMSearchRule*>::iterator it = end();
+  QList<KMSearchRule::Ptr>::iterator it = end();
   while ( it != begin() ) {
     --it;
     if ( (*it)->isEmpty() ) {
@@ -866,22 +884,19 @@ void KMSearchPattern::readConfig( const KConfigGroup & config ) {
   const int nRules = config.readEntry( "rules", 0 );
 
   for ( int i = 0 ; i < nRules ; i++ ) {
-    KMSearchRule * r = KMSearchRule::createInstanceFromConfig( config, i );
-    if ( r->isEmpty() )
-      delete r;
-    else
+    KMSearchRule::Ptr r = KMSearchRule::createInstanceFromConfig( config, i );
+    if ( !r->isEmpty() )
       append( r );
   }
 }
 
 void KMSearchPattern::importLegacyConfig( const KConfigGroup & config ) {
-  KMSearchRule * rule = KMSearchRule::createInstance( config.readEntry("fieldA").toLatin1(),
+  KMSearchRule::Ptr rule = KMSearchRule::createInstance( config.readEntry("fieldA").toLatin1(),
 					  config.readEntry("funcA").toLatin1(),
 					  config.readEntry("contentsA") );
   if ( rule->isEmpty() ) {
     // if the first rule is invalid,
     // we really can't do much heuristics...
-    delete rule;
     return;
   }
   append( rule );
@@ -893,7 +908,6 @@ void KMSearchPattern::importLegacyConfig( const KConfigGroup & config ) {
 			   config.readEntry("funcB").toLatin1(),
 			   config.readEntry("contentsB") );
   if ( rule->isEmpty() ) {
-    delete rule;
     return;
   }
   append( rule );
@@ -922,7 +936,7 @@ void KMSearchPattern::writeConfig( KConfigGroup & config ) const {
   config.writeEntry("operator", (mOperator == KMSearchPattern::OpOr) ? "or" : "and" );
 
   int i = 0;
-  QList<KMSearchRule*>::const_iterator it;
+  QList<KMSearchRule::Ptr>::const_iterator it;
   for ( it = begin() ; it != end() && i < FILTER_MAX_RULES ; ++i, ++it )
     // we could do this ourselves, but we want the rules to be extensible,
     // so we give the rule it's number and let it do the rest.
@@ -945,7 +959,7 @@ QString KMSearchPattern::asString() const {
   else
     result = i18n("(match all of the following)");
 
-  QList<KMSearchRule*>::const_iterator it;
+  QList<KMSearchRule::Ptr>::const_iterator it;
   for ( it = begin() ; it != end() ; ++it )
     result += "\n\t" + FilterLog::recode( (*it)->asString() );
 
@@ -989,9 +1003,50 @@ const KMSearchPattern & KMSearchPattern::operator=( const KMSearchPattern & othe
   setName( other.name() );
 
   clear(); // ###
-  QList<KMSearchRule*>::const_iterator it;
+  QList<KMSearchRule::Ptr>::const_iterator it;
   for ( it = other.begin() ; it != other.end() ; ++it )
     append( KMSearchRule::createInstance( **it ) ); // deep copy
 
   return *this;
 }
+
+QByteArray KMSearchPattern::serialize() const
+{
+  QByteArray out;
+  QDataStream stream( &out, QIODevice::WriteOnly );
+  *this >> stream;
+  return out;
+}
+
+void KMSearchPattern::deserialize( const QByteArray &str )
+{
+  QDataStream stream( str );
+  *this << stream;
+}
+
+QDataStream & KMSearchPattern::operator>>( QDataStream &s ) const
+{
+  if ( op() == KMSearchPattern::OpAnd ) {
+    s << QString::fromLatin1( "and" );
+  } else {
+    s << QString::fromLatin1( "or" );
+  }
+  Q_FOREACH( const KMSearchRule::Ptr rule, *this ) {
+    *rule >> s;
+  }
+  return s;
+}
+
+QDataStream & KMSearchPattern::operator <<( QDataStream &s )
+{
+  QString op;
+  s >> op;
+  setOp( op == QLatin1String( "and" ) ? OpAnd : OpOr );
+
+  while ( !s.atEnd() ) {
+    KMSearchRule::Ptr rule = KMSearchRule::createInstance( s );
+    append( rule );
+  }
+  return s;
+}
+

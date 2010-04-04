@@ -30,6 +30,8 @@ using KPIM::MessageStatus;
 #include <QList>
 #include <QString>
 
+#include <boost/shared_ptr.hpp>
+
 namespace Akonadi {
   class Item;
 }
@@ -54,6 +56,8 @@ const int FILTER_MAX_RULES=8;
 class KMSearchRule
 {
 public:
+    typedef  boost::shared_ptr<KMSearchRule> Ptr;
+
   /** Operators for comparison of field and contents.
       If you change the order or contents of the enum: do not forget
       to change funcConfigNames[], sFilterFuncList and matches()
@@ -78,22 +82,26 @@ public:
 
   /** Create a search rule of a certain type by instantiating the appro-
       priate subclass depending on the @p field. */
-  static KMSearchRule* createInstance( const QByteArray & field=0,
+  static KMSearchRule::Ptr createInstance( const QByteArray & field=0,
                                       Function function=FuncContains,
                                       const QString & contents=QString() );
 
-  static KMSearchRule* createInstance( const QByteArray & field,
+  static KMSearchRule::Ptr createInstance( const QByteArray & field,
                                        const char * function,
                                        const QString & contents );
 
-  static KMSearchRule * createInstance( const KMSearchRule & other );
+  static KMSearchRule::Ptr createInstance( const KMSearchRule & other );
+
+  static KMSearchRule::Ptr createInstance( QDataStream& s );
+
+  static KMSearchRule * createInstance( QDataStream& s );
 
   /** Initialize the object from a given config group.
       @p aIdx is an identifier that is used to distinguish
       rules within a single config group. This function does no
       validation of the data obtained from the config file. You should
       call isEmpty yourself if you need valid rules. */
-  static KMSearchRule* createInstanceFromConfig( const KConfigGroup & config, int aIdx );
+  static KMSearchRule::Ptr createInstanceFromConfig( const KConfigGroup & config, int aIdx );
 
   virtual ~KMSearchRule() {}
 
@@ -156,6 +164,8 @@ public:
 
   /** Adds query terms to the given term group. */
   virtual void addQueryTerms( Nepomuk::Query::GroupTerm &groupTerm ) const = 0;
+
+  QDataStream & operator>>( QDataStream& ) const;
 
 protected:
   /** Converts function() into the corresponding Nepomuk query operator. */
@@ -329,7 +339,7 @@ private:
     @short An abstraction of a search over messages.
     @author Marc Mutz <Marc@Mutz.com>
 */
-class KMSearchPattern : public QList<KMSearchRule*>
+class KMSearchPattern : public QList<KMSearchRule::Ptr>
 {
 
 public:
@@ -417,6 +427,15 @@ public:
 
   /** Overloaded assignment operator. Makes a deep copy. */
   const KMSearchPattern & operator=( const KMSearchPattern & aPattern );
+
+  /** Writes the pattern into a byte array for persistance purposes. */
+  QByteArray serialize() const;
+
+  /** Constructs the pattern from a byte array serialization. */
+  void deserialize( const QByteArray& );
+
+  QDataStream & operator>>( QDataStream & s ) const;
+  QDataStream & operator<<( QDataStream & s );
 
 private:
   /** Tries to import a legacy search pattern, ie. one that still has

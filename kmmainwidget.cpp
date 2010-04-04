@@ -4289,11 +4289,19 @@ void KMMainWidget::showEvent( QShowEvent *event )
 
 void KMMainWidget::slotRequestFullSearchFromQuickSearch()
 {
+  // First, open the search window. If we are currently on a search folder,
+  // the search associated with that will be loaded.
   slotSearch();
 
   assert( mSearchWin );
+
+  // Now we look at the current state of the quick search, and if there's
+  // something in there, we add the criteria to the existing search for
+  // the search folder, if applicable, or make a new one from it.
   KMSearchPattern pattern;
-  pattern.append( KMSearchRule::createInstance( "<message>", KMSearchRule::FuncContains, mMessagePane->currentFilterSearchString() ) );
+  const QString searchString = mMessagePane->currentFilterSearchString();
+  if ( !searchString.isEmpty() )
+    pattern.append( KMSearchRule::createInstance( "<message>", KMSearchRule::FuncContains, searchString ) );
   MessageStatus status = mMessagePane->currentFilterStatus();
   if ( status.hasAttachment() )
   {
@@ -4302,9 +4310,11 @@ void KMMainWidget::slotRequestFullSearchFromQuickSearch()
   }
 
   if ( !status.isOfUnknownStatus() ) {
-    pattern.append( new KMSearchRuleStatus( status ) );
+    pattern.append( KMSearchRule::Ptr( new KMSearchRuleStatus( status ) ) );
   }
-  mSearchWin->setSearchPattern( pattern );
+
+  if ( pattern.size() > 0 )
+    mSearchWin->addRulesToSearchPattern( pattern );
 }
 
 void KMMainWidget::updateVactionScriptStatus( bool active )

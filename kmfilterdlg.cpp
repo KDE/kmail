@@ -726,7 +726,7 @@ KMFilterListBox::~KMFilterListBox()
 void KMFilterListBox::createFilter( const QByteArray & field,
                                     const QString & value )
 {
-  KMSearchRule *newRule = KMSearchRule::createInstance( field, KMSearchRule::FuncContains, value );
+  KMSearchRule::Ptr newRule = KMSearchRule::createInstance( field, KMSearchRule::FuncContains, value );
 
   KMFilter *newFilter = new KMFilter( bPopFilter );
   newFilter->pattern()->append( newRule );

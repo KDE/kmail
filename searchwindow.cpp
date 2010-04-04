@@ -49,14 +49,18 @@
 #include "kmmainwidget.h"
 #include "kmsearchpatternedit.h"
 #include "kmsearchpattern.h"
+#include "searchdescriptionattribute.h"
 
 #include "regexplineedit.h"
 
 using namespace KPIM;
 
+#include <akonadi/attributefactory.h>
 #include <akonadi/entitytreeview.h>
+#include <akonadi/collectionmodifyjob.h>
 #include <akonadi/searchcreatejob.h>
 #include <akonadi/kmime/messagemodel.h>
+
 
 #include <kmime/kmime_message.h>
 
@@ -134,8 +138,8 @@ SearchWindow::SearchWindow(KMMainWidget* w, const Akonadi::Collection& curFolder
 
   mPatternEdit = new KMSearchPatternEdit( QString(), searchWidget, false, true );
   mPatternEdit->setFlat( true );
-  mSearchPattern = new KMSearchPattern();
-#if 0 //TODO port to akonadi
+
+#if 0 //TODO re-enable for legacy importing?
   KMFolderSearch *searchFolder = 0;
   if (curFolder)
       searchFolder = dynamic_cast<KMFolderSearch*>(curFolder->storage());
@@ -152,13 +156,27 @@ SearchWindow::SearchWindow(KMMainWidget* w, const Akonadi::Collection& curFolder
           mChkbxAllFolders->setChecked(true);
       }
   }
-  else
-      mSearchPattern->append( KMSearchRule::createInstance( "Subject" ) );
-#else
-    kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
-#endif
-  mPatternEdit->setSearchPattern( mSearchPattern );
 
+#endif
+
+  bool currentFolderIsSearchFolder = false;
+    
+  if ( curFolder.hasAttribute<Akonadi::SearchDescriptionAttribute>() ) {
+    currentFolderIsSearchFolder = true; // FIXME is there a better way to tell?
+    const Akonadi::SearchDescriptionAttribute* searchDescription = curFolder.attribute<Akonadi::SearchDescriptionAttribute>();
+    mSearchPattern.deserialize( searchDescription->description() );
+    const Akonadi::Collection col = searchDescription->baseCollection();
+    if ( col.isValid() ) {
+      mChkbxSpecificFolders->setChecked( true );
+      mCbxFolders->setFolder( col );
+      mChkSubFolders->setChecked( searchDescription->recursive() );
+    } else {
+      mChkbxAllFolders->setChecked( true );
+    }
+  } else {
+    mSearchPattern.append( KMSearchRule::createInstance( "Subject" ) );
+  }
+  mPatternEdit->setSearchPattern( &mSearchPattern );
 
   // enable/disable widgets depending on radio buttons:
   connect( mChkbxSpecificFolders, SIGNAL(toggled(bool)),
@@ -213,12 +231,12 @@ SearchWindow::SearchWindow(KMMainWidget* w, const Akonadi::Collection& curFolder
   mSearchFolderLbl = new QLabel( i18n("Search folder &name:"), searchWidget );
   mSearchFolderEdt = new KLineEdit( searchWidget );
   mSearchFolderEdt->setClearButtonShown( true );
-#if 0 //TODO port to akonadi
-  if ( searchFolder )
-    mSearchFolderEdt->setText( searchFolder->folder()->name() );
+
+  if ( currentFolderIsSearchFolder )
+    mSearchFolderEdt->setText( curFolder.name() );
   else
     mSearchFolderEdt->setText( i18n("Last Search") );
-#endif
+
   mSearchFolderLbl->setBuddy(mSearchFolderEdt);
   mSearchFolderOpenBtn = new KPushButton(i18n("Op&en Search Folder"), searchWidget);
   mSearchFolderOpenBtn->setEnabled(false);
@@ -331,6 +349,8 @@ SearchWindow::SearchWindow(KMMainWidget* w, const Akonadi::Collection& curFolder
   ac->addAssociatedWidget( this );
   foreach (QAction* action, ac->actions())
     action->setShortcutContext(Qt::WidgetWithChildrenShortcut);
+
+
 }
 
 //-----------------------------------------------------------------------------
@@ -490,15 +510,14 @@ void SearchWindow::slotSearch()
 #endif
 
   mPatternEdit->updateSearchPattern();
-  KMSearchPattern *searchPattern = new KMSearchPattern();
-  *searchPattern = *mSearchPattern; //deep copy
-  searchPattern->purify();
+  KMSearchPattern searchPattern( mSearchPattern );
+  searchPattern.purify();
   enableGUI();
 
   mTimer->start( 200 );
 
-  kDebug() << searchPattern->asSparqlQuery();
-  mSearchJob = new Akonadi::SearchCreateJob( mSearchFolderEdt->text(), searchPattern->asSparqlQuery(), this );
+  kDebug() << searchPattern.asSparqlQuery();
+  mSearchJob = new Akonadi::SearchCreateJob( mSearchFolderEdt->text(), searchPattern.asSparqlQuery(), this );
   connect( mSearchJob, SIGNAL(result(KJob*)), SLOT(searchDone(KJob*)) );
 }
 
@@ -510,6 +529,17 @@ void SearchWindow::searchDone( KJob* job )
       kWarning() << job->errorText(); // TODO
 
     mFolder = mSearchJob->createdCollection();
+    // store the kmail specific serialization of the search in an attribute on
+    // the server, for easy retrieval when editing it again
+    const QByteArray search = mSearchPattern.serialize();
+    Q_ASSERT( !search.isEmpty() );
+    Akonadi::SearchDescriptionAttribute *searchDescription  = mFolder.attribute<Akonadi::SearchDescriptionAttribute>( Akonadi::Entity::AddIfMissing );
+    searchDescription->setDescription( search );
+    const Akonadi::Collection col = mCbxFolders->folderCollection();
+    searchDescription->setBaseCollection( col );
+    searchDescription->setRecursive( mChkSubFolders->isChecked() );
+    new Akonadi::CollectionModifyJob( mFolder, this );
+
     mSearchJob = 0;
 
     if ( !mResultModel ) {
@@ -878,11 +908,22 @@ void SearchWindow::slotCutMsgs()
 #endif
 }
 
+void SearchWindow::addRulesToSearchPattern( const KMSearchPattern &pattern )
+{
+  KMSearchPattern p( mSearchPattern );
+  p.purify();
+  QList<KMSearchRule::Ptr>::const_iterator it;
+  for ( it = pattern.begin() ; it != pattern.end() ; ++it ) {
+     p.append( KMSearchRule::createInstance( **it ) );
+  }
+  mSearchPattern = p;
+  mPatternEdit->setSearchPattern( &mSearchPattern );
+}
 
 void SearchWindow::setSearchPattern( const KMSearchPattern &pattern )
 {
-  *mSearchPattern = pattern;
-  mPatternEdit->setSearchPattern( mSearchPattern );
+  mSearchPattern = pattern;
+  mPatternEdit->setSearchPattern( &mSearchPattern );
 }
 
 } // namespace KMail
