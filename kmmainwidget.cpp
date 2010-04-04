@@ -1406,33 +1406,34 @@ void KMMainWidget::slotModifyFolder( KMMainWidget::PropsPage whichPage )
 //-----------------------------------------------------------------------------
 void KMMainWidget::slotExpireFolder()
 {
-  QString     str;
-  bool        canBeExpired = true;
+  if ( !mCurrentFolder )
+    return;
 
-  if (!mCurrentFolder) return;
-
-  if (!mCurrentFolder->isAutoExpire()) {
+  bool canBeExpired = true;
+  if ( !mCurrentFolder->isAutoExpire() ) {
     canBeExpired = false;
   } else if ( mCurrentFolder->getUnreadExpireUnits() == FolderCollection::ExpireNever &&
               mCurrentFolder->getReadExpireUnits() == FolderCollection::ExpireNever ) {
     canBeExpired = false;
   }
 
-  if (!canBeExpired) {
-    str = i18n("This folder does not have any expiry options set");
-    KMessageBox::information(this, str);
+  if ( !canBeExpired ) {
+    const QString message = i18n( "This folder does not have any expiry options set" );
+    KMessageBox::information( this, message );
     return;
   }
-  KSharedConfig::Ptr config = KMKernel::config();
-  KConfigGroup group(config, "General");
 
-  if (group.readEntry("warn-before-expire", true ) ) {
-    str = i18n("<qt>Are you sure you want to expire the folder <b>%1</b>?</qt>", Qt::escape( mCurrentFolder->name() ));
-    if (KMessageBox::warningContinueCancel(this, str, i18n("Expire Folder"),
-                                           KGuiItem(i18n("&Expire")))
-        != KMessageBox::Continue) return;
+  KSharedConfig::Ptr config = KMKernel::config();
+  KConfigGroup group( config, "General" );
+  if ( group.readEntry( "warn-before-expire", true ) ) {
+    const QString message = i18n( "<qt>Are you sure you want to expire the folder <b>%1</b>?</qt>",
+                                  Qt::escape( mCurrentFolder->name() ) );
+    if ( KMessageBox::warningContinueCancel( this, message, i18n( "Expire Folder" ),
+                                             KGuiItem( i18n( "&Expire" ) ) )
+        != KMessageBox::Continue )
+      return;
   }
-  mCurrentFolder->expireOldMessages( true /*immediate*/);
+  mCurrentFolder->expireOldMessages( true /*immediate*/ );
 }
 
 //-----------------------------------------------------------------------------
