@@ -32,7 +32,6 @@
 #include <messagecore/messagestatus.h>
 #include <kvbox.h>
 using KPIM::MessageStatus;
-#include "interfaces/observer.h"
 #include <map>
 #include <messageviewer/viewer.h>
 #include <messageviewer/interfaces/bodypart.h>
