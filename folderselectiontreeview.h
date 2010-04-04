@@ -35,6 +35,13 @@ namespace Akonadi {
   class EntityTreeModel;
   class StatisticsProxyModel;
 }
+
+/**
+ * This is the widget that shows the main folder tree in KMail.
+ *
+ * It consists of the view (FolderTreeView) and a search line.
+ * Internally, several proxy models are used on top of a entity tree model.
+ */
 class KMAIL_EXPORT FolderSelectionTreeView : public QWidget
 {
   Q_OBJECT

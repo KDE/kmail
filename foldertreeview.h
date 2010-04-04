@@ -28,6 +28,10 @@ namespace Akonadi
 class CollectionStatisticsDelegate;
 }
 
+/**
+ * This is an enhanced EntityTreeView specially suited for the folders in KMail's
+ * main folder widget.
+ */
 class FolderTreeView : public Akonadi::EntityTreeView
 {
   Q_OBJECT
