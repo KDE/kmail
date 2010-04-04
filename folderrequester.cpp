@@ -44,6 +44,8 @@
 #include <QHBoxLayout>
 #include <QKeyEvent>
 
+#include <Akonadi/CollectionFetchJob>
+
 namespace KMail {
 
 FolderRequester::FolderRequester( QWidget *parent )
@@ -103,10 +105,24 @@ void FolderRequester::setFolder( const Akonadi::Collection&col )
   if ( mCollection.isValid() ) {
     edit->setText( col.name() );
     mFolderId = QString::number( mCollection.id() );
+    Akonadi::CollectionFetchJob *job = new Akonadi::CollectionFetchJob( mCollection, Akonadi::CollectionFetchJob::Base, this );
+    connect( job, SIGNAL( collectionsReceived( Akonadi::Collection::List ) ),
+             this, SLOT( slotCollectionsReceived( Akonadi::Collection::List ) ) );
   }
   else if ( !mMustBeReadWrite ) // the Local Folders root node was selected
     edit->setText( i18n("Local Folders") );
   emit folderChanged( mCollection );
+}
+
+void FolderRequester::slotCollectionsReceived( Akonadi::Collection::List list )
+{
+  Q_ASSERT( list.size() == 1 ); // we only start jobs on a single collection
+  const Akonadi::Collection col = list.first();
+  // in case this is still the collection we are interested in, update
+  if ( col.id() == mCollection.id() ) {
+    mCollection = col;
+    edit->setText( col.name() );
+  }
 }
 
 //-----------------------------------------------------------------------------

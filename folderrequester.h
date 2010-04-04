@@ -89,6 +89,9 @@ namespace KMail {
       /** Open the folder dialog */
       void slotOpenDialog();
 
+      /** Update the information we have about the current folder. */
+      void slotCollectionsReceived( Akonadi::Collection::List );
+
     signals:
       /** Emitted when the folder changed */
       void folderChanged( const Akonadi::Collection& );
