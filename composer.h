@@ -46,6 +46,19 @@ class Composer : public KMail::SecondaryWindow
 
   public:
     enum TemplateContext { New, Reply, ReplyToAll, Forward, NoTemplate };
+    enum VisibleHeaderFlag {
+      HDR_FROM        = 0x01,
+      HDR_REPLY_TO    = 0x02,
+      HDR_SUBJECT     = 0x20,
+      HDR_NEWSGROUPS  = 0x40,
+      HDR_FOLLOWUP_TO = 0x80,
+      HDR_IDENTITY    = 0x100,
+      HDR_TRANSPORT   = 0x200,
+      HDR_FCC         = 0x400,
+      HDR_DICTIONARY  = 0x800,
+      HDR_ALL         = 0xfff
+    };
+    typedef QFlags<VisibleHeaderFlag> VisibleHeaderFlags;
 
   public: // mailserviceimpl
     /**

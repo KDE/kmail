@@ -24,7 +24,6 @@
 // other kmail headers
 #include "kmkernel.h"
 #include "kmfilteraction.h"
-#include "kmglobal.h"
 #include "util.h"
 #include "filterlog.h"
 using KMail::FilterLog;

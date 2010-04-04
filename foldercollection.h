@@ -26,7 +26,6 @@
 #include <KIO/Job>
 
 #include "mailinglist-magic.h"
-#include "kmglobal.h"
 using KMail::MailingList;
 
 class KMMainWidget;

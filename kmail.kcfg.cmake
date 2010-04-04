@@ -3,11 +3,11 @@
       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
       xsi:schemaLocation="http://www.kde.org/standards/kcfg/1.0
       http://www.kde.org/standards/kcfg/1.0/kcfg.xsd" >
-  <include>kmglobal.h</include>
   <include>qtextcodec.h</include>
   <include>templatesconfiguration.h</include>
   <include>kglobalsettings.h</include>
   <include>kcolorscheme.h</include>
+  <include>composer.h</include>
   <kcfgfile name="kmailrc"/>
   <group name="Behaviour">
       <entry name="ActionEnterFolder"  type="Enum">
@@ -325,7 +325,7 @@
         <default>true</default>
       </entry>
       <entry name="Headers" type="Int" key="headers">
-			  <default>HDR_STANDARD</default>
+        <default>KMail::Composer::HDR_SUBJECT</default>
       </entry>
       <entry name="CompletionMode" type="Int" key="Completion Mode">
         <default code="true">KGlobalSettings::completionMode()</default>
