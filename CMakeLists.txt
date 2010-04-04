@@ -286,16 +286,6 @@ target_link_libraries(kmailpart
   ${KDE4_KUTILS_LIBS}
 )
 
-
-########### bodypartformatter_application_octetstream ###############
-
-set(kmail_bodypartformatter_application_octetstream_PART_SRCS app_octetstream.cpp )
-kde4_add_plugin(kmail_bodypartformatter_application_octetstream
-  ${kmail_bodypartformatter_application_octetstream_PART_SRCS}
-)
-target_link_libraries(kmail_bodypartformatter_application_octetstream ${KDE4_KDECORE_LIBS})
-
-
 ########### KMail executable ###############
 
 set(kmail_SRCS main.cpp)
@@ -342,13 +332,8 @@ install(FILES
   DESTINATION ${DATA_INSTALL_DIR}/kmail
 )
 install(FILES dbusmail.desktop DESTINATION ${SERVICETYPES_INSTALL_DIR})
-install(FILES
-  application_octetstream.desktop
-  DESTINATION ${DATA_INSTALL_DIR}/kmail/plugins/bodypartformatter
-)
 install(TARGETS
   kmailpart
-  kmail_bodypartformatter_application_octetstream
   kcm_kmail
   DESTINATION ${PLUGIN_INSTALL_DIR}
 )
