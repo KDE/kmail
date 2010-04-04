@@ -73,9 +73,20 @@ class FolderCollectionMonitor;
  *
  * The KMKernel class represents the core of KMail, where the different parts
  * come together and are coordinated. It is currently also the class which exports
- * KMail's main D-BUS interfaces. The kernel is responsible for creating various
- * (singleton) objects such as the UndoStack, the folder managers and filter
- * manager, etc.
+ * KMail's main D-BUS interfaces.
+ *
+ * The kernel is responsible for creating various
+ * (singleton) objects such as the identity manager and the message sender.
+ *
+ * The kernel also creates an Akonadi Session, Monitor and EntityTreeModel. These
+ * are shared so that other objects in KMail have access to it. Having only one EntityTreeModel
+ * instead of many reduces the overall communication with the Akonadi server.
+ *
+ * The kernel also manages some stuff that should be factored out:
+ * - default collection handling, like inboxCollectionFolder()
+ * - job handling, like jobScheduler() and mPutJobs
+ * - handling of some config settings, like wrapCol()
+ * - various other stuff
  */
 class KMAIL_EXPORT KMKernel : public QObject
 {
