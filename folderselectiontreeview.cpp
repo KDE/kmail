@@ -30,7 +30,6 @@
 #include <akonadi/changerecorder.h>
 #include <akonadi/session.h>
 #include <akonadi/entitytreemodel.h>
-#include <akonadi/favoritecollectionsmodel.h>
 #include <akonadi/itemfetchscope.h>
 #include <akonadi/entitymimetypefiltermodel.h>
 #include <akonadi/collection.h>
@@ -111,7 +110,8 @@ FolderSelectionTreeView::FolderSelectionTreeView( QWidget *parent, KXMLGUIClient
   d->readableproxy = new ReadableCollectionProxyModel( this );
   d->readableproxy->setSourceModel( d->quotaModel );
 
-  connect( d->collectionFolderView, SIGNAL(changeTooltipsPolicy( FolderSelectionTreeView::ToolTipDisplayPolicy ) ), this, SLOT( slotChangeTooltipsPolicy( FolderSelectionTreeView::ToolTipDisplayPolicy ) ) );
+  connect( d->collectionFolderView, SIGNAL(changeTooltipsPolicy( FolderSelectionTreeView::ToolTipDisplayPolicy ) ),
+           this, SLOT( slotChangeTooltipsPolicy( FolderSelectionTreeView::ToolTipDisplayPolicy ) ) );
 
   d->collectionFolderView->setSelectionMode( QAbstractItemView::SingleSelection );
   // Use the model
@@ -125,7 +125,8 @@ FolderSelectionTreeView::FolderSelectionTreeView( QWidget *parent, KXMLGUIClient
 
   lay->addWidget( d->collectionFolderView );
   if ( ( options & UseLineEditForFiltering ) ) {
-    connect( d->filterFolderLineEdit, SIGNAL( textChanged(QString) ), d->filterTreeViewModel, SLOT( setFilterFixedString(QString) ) );
+    connect( d->filterFolderLineEdit, SIGNAL( textChanged(QString) ),
+             d->filterTreeViewModel, SLOT( setFilterFixedString(QString) ) );
     d->label->hide();
   } else {
     d->filterFolderLineEdit->hide();
@@ -148,7 +149,9 @@ void FolderSelectionTreeView::disableContextMenuAndExtraColumn()
 void FolderSelectionTreeView::selectCollectionFolder( const Akonadi::Collection & col )
 {
   const QModelIndex idx = d->collectionFolderView->model()->index( 0, 0, QModelIndex() );
-  const QModelIndexList rows = d->collectionFolderView->model()->match( idx, Akonadi::EntityTreeModel::CollectionIdRole, col.id(), -1, Qt::MatchRecursive | Qt::MatchExactly );
+  const QModelIndexList rows = d->collectionFolderView->model()->match( idx,
+                    Akonadi::EntityTreeModel::CollectionIdRole, col.id(), -1,
+                    Qt::MatchRecursive | Qt::MatchExactly );
 
   if ( rows.size() < 1 )
     return;
@@ -239,7 +242,6 @@ void FolderSelectionTreeView::slotChangeTooltipsPolicy( FolderSelectionTreeView:
 {
   changeToolTipsPolicyConfig( policy );
 }
-
 
 void FolderSelectionTreeView::changeToolTipsPolicyConfig( ToolTipDisplayPolicy policy )
 {

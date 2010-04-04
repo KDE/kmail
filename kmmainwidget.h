@@ -38,16 +38,15 @@
 #include <QMenu>
 #include <QHash>
 #include <QPointer>
-#include <akonadi/entitylistview.h>
-#include <akonadi/entitytreemodel.h>
 #include <akonadi/standardactionmanager.h>
-#include <akonadi/entity.h>
 #include <messagelist/core/view.h>
 #include "folderselectiontreeview.h"
+
 namespace MessageList {
   class Pane;
 }
 namespace Akonadi {
+  class EntityListView;
 }
 
 namespace KMime {
@@ -67,9 +66,7 @@ class KMSystemTray;
 class CustomTemplatesMenu;
 
 
-template <typename T> class QList;
 template <typename T, typename S> class QMap;
-template <typename T> class QPointer;
 
 namespace KIO {
   class Job;
@@ -326,7 +323,7 @@ class KMAIL_EXPORT KMMainWidget : public QWidget
     void slotCompose();
     void slotPostToML();
     void slotFolderMailingListProperties();
-    void slotFolderShortcutCommand();
+    void slotShowFolderShortcutDialog();
     void slotExpireFolder();
     void slotExpireAll();
     void slotInvalidateIMAPFolders();
@@ -600,7 +597,7 @@ private:
     KAction *mRemoveFolderAction,
       *mExpireFolderAction, *mCompactFolderAction,
       *mEmptyFolderAction, *mMarkAllAsReadAction, *mFolderMailingListPropertiesAction,
-      *mFolderShortCutCommandAction,
+      *mShowFolderShortcutDialogAction,
       *mRemoveDuplicatesAction, *mArchiveFolderAction,
       *mPostToMailinglistAction;
     KToggleAction *mPreferHtmlAction, *mPreferHtmlLoadExtAction;
@@ -639,8 +636,6 @@ private:
     bool mVacationIndicatorActive;
     bool mGoToFirstUnreadMessageInSelectedFolder;
     KPIM::ProgressItem *mFilterProgressItem;
-    
-
 };
 
 #endif

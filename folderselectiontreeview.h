@@ -24,6 +24,7 @@
 
 #include <QAbstractItemView>
 #include <akonadi/collection.h>
+
 class KXMLGUIClient;
 class QItemSelectionModel;
 class FolderTreeView;
@@ -46,9 +47,8 @@ public:
   };
   Q_DECLARE_FLAGS( TreeViewOptions, TreeViewOption )
 
-
-
-  FolderSelectionTreeView( QWidget *parent = 0, KXMLGUIClient *xmlGuiClient = 0, TreeViewOptions option = ShowUnreadCount );
+  FolderSelectionTreeView( QWidget *parent = 0, KXMLGUIClient *xmlGuiClient = 0,
+                           TreeViewOptions option = ShowUnreadCount );
   ~FolderSelectionTreeView();
 
   /**
@@ -62,7 +62,6 @@ public:
   };
 
   void selectCollectionFolder( const Akonadi::Collection & col );
-
 
   void setSelectionMode( QAbstractItemView::SelectionMode mode );
 
@@ -89,18 +88,15 @@ public:
   KLineEdit *filterFolderLineEdit();
   void applyFilter( const QString& );
 
-
   void disableContextMenuAndExtraColumn();
 
   void readConfig();
-
 
 protected:
   void changeToolTipsPolicyConfig( ToolTipDisplayPolicy );
 
 protected slots:
   void slotChangeTooltipsPolicy( FolderSelectionTreeView::ToolTipDisplayPolicy );
-
 
 private:
   class FolderSelectionTreeViewPrivate;

@@ -85,6 +85,7 @@
 #include <akonadi/contact/contactsearchjob.h>
 #include <akonadi/collectionpropertiesdialog.h>
 #include <akonadi/entitydisplayattribute.h>
+#include <akonadi/entitylistview.h>
 #include <akonadi/agentinstance.h>
 #include <akonadi/agenttype.h>
 #include <akonadi/changerecorder.h>
@@ -854,7 +855,9 @@ void KMMainWidget::createWidgets()
   const KConfigGroup cfg( KMKernel::config(), "CollectionFolderView" );
   mCollectionFolderView->folderTreeView()->header()->restoreState( cfg.readEntry( "HeaderState", QByteArray() ) );
 
-  mMessagePane = new MessageList::Pane( mCollectionFolderView->entityModel(), mCollectionFolderView->folderTreeView()->selectionModel(), this );
+  mMessagePane = new MessageList::Pane( mCollectionFolderView->entityModel(),
+                                        mCollectionFolderView->folderTreeView()->selectionModel(),
+                                        this );
 
   mMessagePane->setXmlGuiClient( mGUIClient );
   connect( mMessagePane, SIGNAL(messageSelected(Akonadi::Item)),
@@ -1044,9 +1047,6 @@ void KMMainWidget::createWidgets()
   connect( kmkernel->monitor(), SIGNAL( itemRemoved( const Akonadi::Item & ) ), SLOT(slotItemRemoved( const Akonadi::Item & ) ) );
   Akonadi::EntityTreeViewStateSaver* saver = new Akonadi::EntityTreeViewStateSaver( mCollectionFolderView->folderTreeView() );
   saver->restoreState( cfg );
-
-
-
 }
 
 void KMMainWidget::slotItemAdded( const Akonadi::Item &, const Akonadi::Collection& col)
@@ -1382,15 +1382,15 @@ void KMMainWidget::slotFolderMailingListProperties()
 }
 
 //-----------------------------------------------------------------------------
-void KMMainWidget::slotFolderShortcutCommand()
+void KMMainWidget::slotShowFolderShortcutDialog()
 {
-
   if ( !mCollectionFolderView || !mCurrentFolder )
     return;
+
   MessageViewer::AutoQPointer<KMail::FolderShortcutDialog> shorty;
-  shorty = new KMail::FolderShortcutDialog( mCurrentFolder, kmkernel->getKMMainWidget(), mCollectionFolderView );
+  shorty = new KMail::FolderShortcutDialog( mCurrentFolder, kmkernel->getKMMainWidget(),
+                                            mCollectionFolderView );
   shorty->exec();
-  //slotModifyFolder( KMMainWidget::PropsShortcut );
 }
 
 #if 0
@@ -3095,9 +3095,10 @@ void KMMainWidget::setupActions()
   connect(mFolderMailingListPropertiesAction, SIGNAL(triggered(bool)), SLOT( slotFolderMailingListProperties()));
   // mFolderMailingListPropertiesAction->setIcon(KIcon("document-properties-mailing-list"));
 
-  mFolderShortCutCommandAction = new KAction(KIcon("configure-shortcuts"), i18n("&Assign Shortcut..."), this);
-  actionCollection()->addAction("folder_shortcut_command", mFolderShortCutCommandAction );
-  connect(mFolderShortCutCommandAction, SIGNAL(triggered(bool) ), SLOT( slotFolderShortcutCommand() ));
+  mShowFolderShortcutDialogAction = new KAction(KIcon("configure-shortcuts"), i18n("&Assign Shortcut..."), this);
+  actionCollection()->addAction("folder_shortcut_command", mShowFolderShortcutDialogAction );
+  connect( mShowFolderShortcutDialogAction, SIGNAL( triggered( bool ) ),
+           SLOT( slotShowFolderShortcutDialog() ) );
 
   mMarkAllAsReadAction = new KAction(KIcon("mail-mark-read"), i18n("Mark All Messages as &Read"), this);
   actionCollection()->addAction("mark_all_as_read", mMarkAllAsReadAction );
@@ -3511,9 +3512,9 @@ void KMMainWidget::slotShowExpiryProperties()
 
 void KMMainWidget::slotEditKeys()
 {
-  KShortcutsDialog::configure( actionCollection(),
-                               KShortcutsEditor::LetterShortcutsAllowed );
+  KShortcutsDialog::configure( actionCollection(), KShortcutsEditor::LetterShortcutsAllowed );
 }
+
 //-----------------------------------------------------------------------------
 void KMMainWidget::slotReadOn()
 {
@@ -3794,7 +3795,7 @@ void KMMainWidget::updateFolderMenu()
   mPreferHtmlAction->setChecked( mHtmlPref ? !mFolderHtmlPref : mFolderHtmlPref );
   mPreferHtmlLoadExtAction->setChecked( mHtmlLoadExtPref ? !mFolderHtmlLoadExtPref : mFolderHtmlLoadExtPref );
   mRemoveDuplicatesAction->setEnabled( !multiFolder && mCurrentFolder && mCurrentFolder->canDeleteMessages() );
-  mFolderShortCutCommandAction->setEnabled( !multiFolder &&mCurrentFolder);
+  mShowFolderShortcutDialogAction->setEnabled( !multiFolder && mCurrentFolder );
 }
 
 //-----------------------------------------------------------------------------
