@@ -349,8 +349,6 @@ SearchWindow::SearchWindow(KMMainWidget* w, const Akonadi::Collection& curFolder
   ac->addAssociatedWidget( this );
   foreach (QAction* action, ac->actions())
     action->setShortcutContext(Qt::WidgetWithChildrenShortcut);
-
-
 }
 
 //-----------------------------------------------------------------------------
@@ -595,7 +593,6 @@ void SearchWindow::slotClose()
   accept();
 }
 
-
 //-----------------------------------------------------------------------------
 void SearchWindow::closeEvent(QCloseEvent *e)
 {
@@ -701,7 +698,6 @@ void SearchWindow::enableGUI()
     enableButton(User1, !searching);
     enableButton(User2, searching);
 }
-
 
 //-----------------------------------------------------------------------------
 QList<Akonadi::Item> SearchWindow::selectedMessages()
