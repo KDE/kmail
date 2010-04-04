@@ -1423,9 +1423,7 @@ void KMMainWidget::slotExpireFolder()
     return;
   }
 
-  KSharedConfig::Ptr config = KMKernel::config();
-  KConfigGroup group( config, "General" );
-  if ( group.readEntry( "warn-before-expire", true ) ) {
+  if ( GlobalSettings::self()->warnBeforeExpire() ) {
     const QString message = i18n( "<qt>Are you sure you want to expire the folder <b>%1</b>?</qt>",
                                   Qt::escape( mCurrentFolder->name() ) );
     if ( KMessageBox::warningContinueCancel( this, message, i18n( "Expire Folder" ),
@@ -1615,10 +1613,7 @@ void KMMainWidget::slotExpireAll()
 {
   int ret = 0;
 
-  KSharedConfig::Ptr config = KMKernel::config();
-  KConfigGroup group(config, "General");
-
-  if (group.readEntry("warn-before-expire", true ) ) {
+  if ( GlobalSettings::self()->warnBeforeExpire() ) {
     ret = KMessageBox::warningContinueCancel(KMainWindow::memberList().first(),
                          i18n("Are you sure you want to expire all old messages?"),
                          i18n("Expire Old Messages?"), KGuiItem(i18n("Expire")));

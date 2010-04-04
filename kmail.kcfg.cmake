@@ -90,6 +90,9 @@
     </group>
 
     <group name="General">
+      <entry name="WarnBeforeExpire" type="bool" key="warn-before-expire">
+        <default>true</default>
+      </entry>
       <entry name="CustomMsgIDSuffix" type="String" key="myMessageIdSuffix">
         <default></default>
       </entry>
