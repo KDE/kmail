@@ -36,6 +36,4 @@
 
 #define HDR_STANDARD (HDR_SUBJECT)
 
-/** The "about KMail" text. */
-extern const char* aboutText;
 #endif
