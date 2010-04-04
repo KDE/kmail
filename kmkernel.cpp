@@ -62,16 +62,15 @@ using KMail::TemplateParser;
 
 #include <kmime/kmime_message.h>
 #include <kmime/kmime_util.h>
-#include <akonadi/kmime/specialmailcollections.h>
-#include <akonadi/kmime/specialmailcollectionsrequestjob.h>
-#include <akonadi/collection.h>
-#include <akonadi/collectionfetchjob.h>
-#include <akonadi/changerecorder.h>
-#include <akonadi/itemfetchscope.h>
+#include <Akonadi/KMime/SpecialMailCollections>
+#include <Akonadi/KMime/SpecialMailCollectionsRequestJob>
+#include <Akonadi/Collection>
+#include <Akonadi/CollectionFetchJob>
+#include <Akonadi/ChangeRecorder>
+#include <Akonadi/ItemFetchScope>
 #include <Akonadi/AgentManager>
-#include "actionscheduler.h"
-
-#include <akonadi/itemfetchjob.h>
+#include <Akonadi/ItemFetchJob>
+#include <Akonadi/Attributefactory>
 
 #include <QByteArray>
 #include <QDir>
@@ -96,8 +95,8 @@ using KMail::TemplateParser;
 #include "foldercollectionmonitor.h"
 #include "imapsettings.h"
 #include "util.h"
+#include "actionscheduler.h"
 
-#include <akonadi/attributefactory.h>
 #include "searchdescriptionattribute.h"
 
 static KMKernel * mySelf = 0;

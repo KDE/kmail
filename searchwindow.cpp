@@ -55,12 +55,11 @@
 
 using namespace KPIM;
 
-#include <akonadi/attributefactory.h>
-#include <akonadi/entitytreeview.h>
-#include <akonadi/collectionmodifyjob.h>
-#include <akonadi/searchcreatejob.h>
-#include <akonadi/kmime/messagemodel.h>
-
+#include <Akonadi/Attributefactory>
+#include <Akonadi/Entitytreeview>
+#include <Akonadi/CollectionModifyJob>
+#include <Akonadi/SearchCreateJob>
+#include <Akonadi/KMime/MessageModel>
 
 #include <kmime/kmime_message.h>
 
