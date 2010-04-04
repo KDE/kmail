@@ -50,8 +50,8 @@
 #include "managesievescriptsdialog.h"
 #include "customtemplatesmenu.h"
 #include "messagehelper.h"
-#include "folderselectiontreeviewdialog.h"
-#include "folderselectiontreeview.h"
+#include "folderselectiondialog.h"
+#include "foldertreewidget.h"
 #include "util.h"
 #include "archivefolderdialog.h"
 #include "globalsettings.h"
@@ -218,7 +218,7 @@ K_GLOBAL_STATIC( KMMainWidget::PtrList, theMainWidgetList )
   mGUIClient = aGUIClient;
   mOpenedImapFolder = false;
   mCustomTemplateMenus = 0;
-  mCollectionFolderView = 0;
+  mFolderTreeWidget = 0;
 
   Akonadi::Control::widgetNeedsAkonadi( this );
 
@@ -743,7 +743,7 @@ void KMMainWidget::readConfig()
     }
     mMessagePane->setAutoHideTabBarWithSingleTab( GlobalSettings::self()->autoHideTabBarWithSingleTab() );
     mMessagePane->reloadGlobalConfiguration();
-    mCollectionFolderView->readConfig();
+    mFolderTreeWidget->readConfig();
   }
 
   { // area for config group "General"
@@ -794,22 +794,22 @@ void KMMainWidget::writeConfig()
     GlobalSettings::self()->setSearchAndHeaderWidth( mMessagePane->width() );
     if ( mFavoriteCollectionsView ) {
       GlobalSettings::self()->setFavoriteFolderViewHeight( mFavoriteCollectionsView->height() );
-      GlobalSettings::self()->setFolderTreeHeight( mCollectionFolderView->height() );
+      GlobalSettings::self()->setFolderTreeHeight( mFolderTreeWidget->height() );
       if ( !mLongFolderList )
         GlobalSettings::self()->setFolderViewHeight( mFolderViewSplitter->height() );
     }
-    else if ( !mLongFolderList && mCollectionFolderView )
+    else if ( !mLongFolderList && mFolderTreeWidget )
       {
-        GlobalSettings::self()->setFolderTreeHeight( mCollectionFolderView->height() );
+        GlobalSettings::self()->setFolderTreeHeight( mFolderTreeWidget->height() );
       }
-    if ( mCollectionFolderView )
+    if ( mFolderTreeWidget )
     {
-      GlobalSettings::self()->setFolderViewWidth( mCollectionFolderView->width() );
+      GlobalSettings::self()->setFolderViewWidth( mFolderTreeWidget->width() );
       KSharedConfig::Ptr config = KMKernel::config();
       KConfigGroup group(config, "CollectionFolderView");
-      Akonadi::EntityTreeViewStateSaver saver( mCollectionFolderView->folderTreeView() );
+      Akonadi::EntityTreeViewStateSaver saver( mFolderTreeWidget->folderTreeView() );
       saver.saveState( group );
-      group.writeEntry( "HeaderState", mCollectionFolderView->folderTreeView()->header()->saveState() );
+      group.writeEntry( "HeaderState", mFolderTreeWidget->folderTreeView()->header()->saveState() );
       group.sync();
     }
 
@@ -845,19 +845,19 @@ void KMMainWidget::createWidgets()
   //
   // Create header view and search bar
   //
-  FolderSelectionTreeView::TreeViewOptions opt = FolderSelectionTreeView::ShowUnreadCount;
-  opt |= FolderSelectionTreeView::UseLineEditForFiltering;
-  mCollectionFolderView = new FolderSelectionTreeView( this, mGUIClient, opt );
+  FolderTreeWidget::TreeViewOptions opt = FolderTreeWidget::ShowUnreadCount;
+  opt |= FolderTreeWidget::UseLineEditForFiltering;
+  mFolderTreeWidget = new FolderTreeWidget( this, mGUIClient, opt );
 
-  connect( mCollectionFolderView->folderTreeView(), SIGNAL( currentChanged( const Akonadi::Collection & ) ),
+  connect( mFolderTreeWidget->folderTreeView(), SIGNAL( currentChanged( const Akonadi::Collection & ) ),
            this, SLOT( slotFolderChanged( const Akonadi::Collection& ) ) );
 
-  mCollectionFolderView->setSelectionMode( QAbstractItemView::ExtendedSelection );
+  mFolderTreeWidget->setSelectionMode( QAbstractItemView::ExtendedSelection );
   const KConfigGroup cfg( KMKernel::config(), "CollectionFolderView" );
-  mCollectionFolderView->folderTreeView()->header()->restoreState( cfg.readEntry( "HeaderState", QByteArray() ) );
+  mFolderTreeWidget->folderTreeView()->header()->restoreState( cfg.readEntry( "HeaderState", QByteArray() ) );
 
-  mMessagePane = new MessageList::Pane( mCollectionFolderView->entityModel(),
-                                        mCollectionFolderView->folderTreeView()->selectionModel(),
+  mMessagePane = new MessageList::Pane( mFolderTreeWidget->entityModel(),
+                                        mFolderTreeWidget->folderTreeView()->selectionModel(),
                                         this );
 
   mMessagePane->setXmlGuiClient( mGUIClient );
@@ -932,28 +932,29 @@ void KMMainWidget::createWidgets()
   vboxlayout->setMargin(0);
   mSearchAndTree->setLayout( vboxlayout );
 
-  vboxlayout->addWidget( mCollectionFolderView );
+  vboxlayout->addWidget( mFolderTreeWidget );
 
   if ( !GlobalSettings::self()->enableFolderQuickSearch() ) {
-    mCollectionFolderView->filterFolderLineEdit()->hide();
+    mFolderTreeWidget->filterFolderLineEdit()->hide();
   }
   //
   // Create the favorite folder view
   //
   mAkonadiStandardActionManager = new Akonadi::StandardActionManager( mGUIClient->actionCollection(), this );
-  mAkonadiStandardActionManager->setCollectionSelectionModel( mCollectionFolderView->folderTreeView()->selectionModel() );
-  mAkonadiStandardActionManager->setItemSelectionModel(mCollectionFolderView->folderTreeView()->selectionModel() );
+  mAkonadiStandardActionManager->setCollectionSelectionModel( mFolderTreeWidget->folderTreeView()->selectionModel() );
+  mAkonadiStandardActionManager->setItemSelectionModel( mFolderTreeWidget->folderTreeView()->selectionModel() );
 
   if ( mEnableFavoriteFolderView ) {
 
     mFavoriteCollectionsView = new Akonadi::EntityListView( mGUIClient, this );
     mFavoriteCollectionsView->setViewMode( QListView::IconMode );
 
-    Akonadi::FavoriteCollectionsModel *favoritesModel = new Akonadi::FavoriteCollectionsModel( mCollectionFolderView->entityModel(), KMKernel::config()->group( "FavoriteCollections" ), this );
+    Akonadi::FavoriteCollectionsModel *favoritesModel = new Akonadi::FavoriteCollectionsModel(
+        mFolderTreeWidget->entityModel(), KMKernel::config()->group( "FavoriteCollections" ), this );
     mFavoriteCollectionsView->setModel( favoritesModel );
 
     mAkonadiStandardActionManager->setFavoriteCollectionsModel( favoritesModel );
-    mAkonadiStandardActionManager->setFavoriteSelectionModel( mFavoriteCollectionsView->selectionModel() );
+    mAkonadiStandardActionManager->setFavoriteSelectionModel( mFolderTreeWidget->selectionModel() );
   }
   mAkonadiStandardActionManager->createAllActions();
 
@@ -1002,14 +1003,14 @@ void KMMainWidget::createWidgets()
     KAction *action = new KAction(i18n("Focus on Next Folder"), this);
     actionCollection()->addAction("inc_current_folder", action );
     connect( action, SIGNAL( triggered( bool ) ),
-             mCollectionFolderView->folderTreeView(), SLOT( slotFocusNextFolder() ) );
+             mFolderTreeWidget->folderTreeView(), SLOT( slotFocusNextFolder() ) );
     action->setShortcut( QKeySequence( Qt::CTRL+Qt::Key_Right ) );
   }
   {
     KAction *action = new KAction(i18n("Focus on Previous Folder"), this);
     actionCollection()->addAction("dec_current_folder", action );
     connect( action, SIGNAL( triggered( bool ) ),
-             mCollectionFolderView->folderTreeView(), SLOT( slotFocusPrevFolder() ) );
+             mFolderTreeWidget->folderTreeView(), SLOT( slotFocusPrevFolder() ) );
     action->setShortcut( QKeySequence( Qt::CTRL+Qt::Key_Left ) );
   }
   {
@@ -1044,9 +1045,12 @@ void KMMainWidget::createWidgets()
              this, SLOT( slotSelectFocusedMessage() ) );
     action->setShortcut( QKeySequence( Qt::ALT+Qt::Key_Space ) );
   }
-  connect( kmkernel->monitor(), SIGNAL( itemAdded( const Akonadi::Item &, const Akonadi::Collection &) ), SLOT(slotItemAdded( const Akonadi::Item &, const Akonadi::Collection&) ) );
-  connect( kmkernel->monitor(), SIGNAL( itemRemoved( const Akonadi::Item & ) ), SLOT(slotItemRemoved( const Akonadi::Item & ) ) );
-  Akonadi::EntityTreeViewStateSaver* saver = new Akonadi::EntityTreeViewStateSaver( mCollectionFolderView->folderTreeView() );
+  connect( kmkernel->monitor(), SIGNAL( itemAdded( const Akonadi::Item &, const Akonadi::Collection &) ),
+           SLOT(slotItemAdded( const Akonadi::Item &, const Akonadi::Collection&) ) );
+  connect( kmkernel->monitor(), SIGNAL( itemRemoved( const Akonadi::Item & ) ),
+           SLOT(slotItemRemoved( const Akonadi::Item & ) ) );
+  Akonadi::EntityTreeViewStateSaver* saver = new Akonadi::EntityTreeViewStateSaver(
+      mFolderTreeWidget->folderTreeView() );
   saver->restoreState( cfg );
 }
 
@@ -1371,10 +1375,10 @@ void KMMainWidget::slotPostToML()
 //-----------------------------------------------------------------------------
 void KMMainWidget::slotFolderMailingListProperties()
 {
-  if ( !mCollectionFolderView )
+  if ( !mFolderTreeWidget )
     return;
 
-  Akonadi::Collection folder = mCollectionFolderView->folderTreeView()->currentFolder();
+  Akonadi::Collection folder = mFolderTreeWidget->folderTreeView()->currentFolder();
   if ( !folder.isValid() )
     return;
 
@@ -1385,12 +1389,12 @@ void KMMainWidget::slotFolderMailingListProperties()
 //-----------------------------------------------------------------------------
 void KMMainWidget::slotShowFolderShortcutDialog()
 {
-  if ( !mCollectionFolderView || !mCurrentFolder )
+  if ( !mFolderTreeWidget || !mCurrentFolder )
     return;
 
   MessageViewer::AutoQPointer<KMail::FolderShortcutDialog> shorty;
   shorty = new KMail::FolderShortcutDialog( mCurrentFolder, kmkernel->getKMMainWidget(),
-                                            mCollectionFolderView );
+                                            mFolderTreeWidget );
   shorty->exec();
 }
 
@@ -1835,9 +1839,9 @@ void KMMainWidget::slotDeleteThread( bool confirmDelete )
 
 void KMMainWidget::slotMoveSelectedMessageToFolder()
 {
-  FolderSelectionTreeViewDialog::SelectionFolderOption options = FolderSelectionTreeViewDialog::None;
-  MessageViewer::AutoQPointer<FolderSelectionTreeViewDialog> dlg;
-  dlg = new FolderSelectionTreeViewDialog( this, options);
+  FolderSelectionDialog::SelectionFolderOption options = FolderSelectionDialog::None;
+  MessageViewer::AutoQPointer<FolderSelectionDialog> dlg;
+  dlg = new FolderSelectionDialog( this, options);
   dlg->setModal( true );
   dlg->setCaption(  i18n( "Move Messages to Folder" ) );
   if ( dlg->exec() && dlg ) {
@@ -1890,9 +1894,9 @@ void KMMainWidget::slotCopyMessagesCompleted( KMCommand *command )
 
 void KMMainWidget::slotCopySelectedMessagesToFolder()
 {
-  FolderSelectionTreeViewDialog::SelectionFolderOption options = FolderSelectionTreeViewDialog::None;
-  MessageViewer::AutoQPointer<FolderSelectionTreeViewDialog> dlg;
-  dlg = new FolderSelectionTreeViewDialog( this, options );
+  FolderSelectionDialog::SelectionFolderOption options = FolderSelectionDialog::None;
+  MessageViewer::AutoQPointer<FolderSelectionDialog> dlg;
+  dlg = new FolderSelectionDialog( this, options );
   dlg->setModal( true );
   dlg->setCaption( i18n( "Copy Messages to Folder" ) );
 
@@ -2212,10 +2216,10 @@ void KMMainWidget::slotUndo()
 //-----------------------------------------------------------------------------
 void KMMainWidget::slotJumpToFolder()
 {
-  FolderSelectionTreeViewDialog::SelectionFolderOption options = FolderSelectionTreeViewDialog::None;
+  FolderSelectionDialog::SelectionFolderOption options = FolderSelectionDialog::None;
   // can jump to anywhere, need not be read/write
-  MessageViewer::AutoQPointer<FolderSelectionTreeViewDialog> dlg;
-  dlg = new FolderSelectionTreeViewDialog( this, options );
+  MessageViewer::AutoQPointer<FolderSelectionDialog> dlg;
+  dlg = new FolderSelectionDialog( this, options );
   dlg->setCaption( i18n( "Jump to Folder") );
   if ( dlg->exec() && dlg ) {
     Akonadi::Collection collection = dlg->selectedCollection();
@@ -2227,8 +2231,8 @@ void KMMainWidget::slotJumpToFolder()
 
 void KMMainWidget::selectCollectionFolder( const Akonadi::Collection & col )
 {
-  if ( mCollectionFolderView ) {
-    mCollectionFolderView->selectCollectionFolder( col );
+  if ( mFolderTreeWidget ) {
+    mFolderTreeWidget->selectCollectionFolder( col );
   }
 }
 
@@ -2619,7 +2623,7 @@ void KMMainWidget::slotSelectNextUnreadMessage()
            GlobalSettings::EnumLoopOnGotoUnread::LoopInAllMarkedFolders ) )
     {
       mGoToFirstUnreadMessageInSelectedFolder = true;
-      mCollectionFolderView->folderTreeView()->selectNextUnreadFolder( true );
+      mFolderTreeWidget->folderTreeView()->selectNextUnreadFolder( true );
       mGoToFirstUnreadMessageInSelectedFolder = false;
     }
   }
@@ -2658,7 +2662,7 @@ void KMMainWidget::slotSelectPreviousUnreadMessage()
            GlobalSettings::EnumLoopOnGotoUnread::LoopInAllMarkedFolders ) )
     {
       mGoToFirstUnreadMessageInSelectedFolder = true;
-      mCollectionFolderView->folderTreeView()->selectPrevUnreadFolder();
+      mFolderTreeWidget->folderTreeView()->selectPrevUnreadFolder();
       mGoToFirstUnreadMessageInSelectedFolder = false;
     }
   }
@@ -3531,19 +3535,19 @@ void KMMainWidget::slotReadOn()
 
 void KMMainWidget::slotNextUnreadFolder()
 {
-  if ( !mCollectionFolderView )
+  if ( !mFolderTreeWidget )
     return;
   mGoToFirstUnreadMessageInSelectedFolder = true;
-  mCollectionFolderView->folderTreeView()->selectNextUnreadFolder();
+  mFolderTreeWidget->folderTreeView()->selectNextUnreadFolder();
   mGoToFirstUnreadMessageInSelectedFolder = false;
 }
 
 void KMMainWidget::slotPrevUnreadFolder()
 {
-  if ( !mCollectionFolderView )
+  if ( !mFolderTreeWidget )
     return;
   mGoToFirstUnreadMessageInSelectedFolder = true;
-  mCollectionFolderView->folderTreeView()->selectPrevUnreadFolder();
+  mFolderTreeWidget->folderTreeView()->selectPrevUnreadFolder();
   mGoToFirstUnreadMessageInSelectedFolder = false;
 }
 
@@ -3771,7 +3775,7 @@ void KMMainWidget::updateMarkAsReadAction()
 void KMMainWidget::updateFolderMenu()
 {
   bool folderWithContent = mCurrentFolder && !mCurrentFolder->noContent();
-  bool multiFolder = mCollectionFolderView->selectedCollections().count()>1;
+  bool multiFolder = mFolderTreeWidget->selectedCollections().count() > 1;
   mFolderMailingListPropertiesAction->setEnabled( folderWithContent && !multiFolder &&
                                                   !mCurrentFolder->isSystemFolder() );
   mCompactFolderAction->setEnabled( folderWithContent && !multiFolder );
@@ -3791,9 +3795,9 @@ void KMMainWidget::updateFolderMenu()
   mExpireFolderAction->setEnabled( mCurrentFolder && mCurrentFolder->isAutoExpire() && !multiFolder && mCurrentFolder->canDeleteMessages() );
   updateMarkAsReadAction();
   // the visual ones only make sense if we are showing a message list
-  mPreferHtmlAction->setEnabled( mCollectionFolderView->folderTreeView()->currentFolder().isValid() ? true : false );
+  mPreferHtmlAction->setEnabled( mFolderTreeWidget->folderTreeView()->currentFolder().isValid() );
 
-  mPreferHtmlLoadExtAction->setEnabled( mCollectionFolderView->folderTreeView()->currentFolder().isValid() && (mHtmlPref ? !mFolderHtmlPref : mFolderHtmlPref) ? true : false );
+  mPreferHtmlLoadExtAction->setEnabled( mFolderTreeWidget->folderTreeView()->currentFolder().isValid() && (mHtmlPref ? !mFolderHtmlPref : mFolderHtmlPref) ? true : false );
   mPreferHtmlAction->setChecked( mHtmlPref ? !mFolderHtmlPref : mFolderHtmlPref );
   mPreferHtmlLoadExtAction->setChecked( mHtmlLoadExtPref ? !mFolderHtmlLoadExtPref : mFolderHtmlLoadExtPref );
   mRemoveDuplicatesAction->setEnabled( !multiFolder && mCurrentFolder && mCurrentFolder->canDeleteMessages() );

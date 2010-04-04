@@ -21,7 +21,7 @@
 
 #include <akonadi/entitytreeview.h>
 #include <akonadi/collection.h>
-#include "folderselectiontreeview.h"
+#include "foldertreewidget.h"
 
 namespace Akonadi
 {
@@ -48,9 +48,10 @@ public:
 
   void disableContextMenuAndExtraColumn();
 
-  void setTooltipsPolicy( FolderSelectionTreeView::ToolTipDisplayPolicy );
+  void setTooltipsPolicy( FolderTreeWidget::ToolTipDisplayPolicy );
 
   Akonadi::Collection currentFolder() const;
+
 protected:
   enum Move { Next = 0, Previous = 1};
   void init( bool showUnreadCount );
@@ -72,11 +73,11 @@ protected slots:
 
 
 signals:
-  void changeTooltipsPolicy( FolderSelectionTreeView::ToolTipDisplayPolicy );
+  void changeTooltipsPolicy( FolderTreeWidget::ToolTipDisplayPolicy );
 
 private:
   bool mbDisableContextMenuAndExtraColumn;
-  FolderSelectionTreeView::ToolTipDisplayPolicy mToolTipDisplayPolicy;
+  FolderTreeWidget::ToolTipDisplayPolicy mToolTipDisplayPolicy;
   Akonadi::CollectionStatisticsDelegate *mCollectionStatisticsDelegate;
 };
 

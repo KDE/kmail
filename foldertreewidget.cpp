@@ -16,7 +16,7 @@
   51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
 */
 
-#include "folderselectiontreeview.h"
+#include "foldertreewidget.h"
 #include "foldertreeview.h"
 #include "imapaclattribute.h"
 #include "readablecollectionproxymodel.h"
@@ -42,10 +42,10 @@
 #include <QHBoxLayout>
 #include <QSortFilterProxyModel>
 
-class FolderSelectionTreeView::FolderSelectionTreeViewPrivate
+class FolderTreeWidget::FolderTreeWidgetPrivate
 {
 public:
-  FolderSelectionTreeViewPrivate()
+  FolderTreeWidgetPrivate()
     :filterModel( 0 ),
      collectionFolderView( 0 ),
      entityModel( 0 ),
@@ -64,8 +64,8 @@ public:
 };
 
 
-FolderSelectionTreeView::FolderSelectionTreeView( QWidget *parent, KXMLGUIClient *xmlGuiClient, TreeViewOptions options )
-  : QWidget( parent ), d( new FolderSelectionTreeViewPrivate() )
+FolderTreeWidget::FolderTreeWidget( QWidget *parent, KXMLGUIClient *xmlGuiClient, TreeViewOptions options )
+  : QWidget( parent ), d( new FolderTreeWidgetPrivate() )
 {
   Akonadi::AttributeFactory::registerAttribute<Akonadi::ImapAclAttribute>();
 
@@ -110,8 +110,8 @@ FolderSelectionTreeView::FolderSelectionTreeView( QWidget *parent, KXMLGUIClient
   d->readableproxy = new ReadableCollectionProxyModel( this );
   d->readableproxy->setSourceModel( d->quotaModel );
 
-  connect( d->collectionFolderView, SIGNAL(changeTooltipsPolicy( FolderSelectionTreeView::ToolTipDisplayPolicy ) ),
-           this, SLOT( slotChangeTooltipsPolicy( FolderSelectionTreeView::ToolTipDisplayPolicy ) ) );
+  connect( d->collectionFolderView, SIGNAL(changeTooltipsPolicy( FolderTreeWidget::ToolTipDisplayPolicy ) ),
+           this, SLOT( slotChangeTooltipsPolicy( FolderTreeWidget::ToolTipDisplayPolicy ) ) );
 
   d->collectionFolderView->setSelectionMode( QAbstractItemView::SingleSelection );
   // Use the model
@@ -136,17 +136,17 @@ FolderSelectionTreeView::FolderSelectionTreeView( QWidget *parent, KXMLGUIClient
 }
 
 
-FolderSelectionTreeView::~FolderSelectionTreeView()
+FolderTreeWidget::~FolderTreeWidget()
 {
   delete d;
 }
 
-void FolderSelectionTreeView::disableContextMenuAndExtraColumn()
+void FolderTreeWidget::disableContextMenuAndExtraColumn()
 {
   d->collectionFolderView->disableContextMenuAndExtraColumn();
 }
 
-void FolderSelectionTreeView::selectCollectionFolder( const Akonadi::Collection & col )
+void FolderTreeWidget::selectCollectionFolder( const Akonadi::Collection & col )
 {
   const QModelIndex idx = d->collectionFolderView->model()->index( 0, 0, QModelIndex() );
   const QModelIndexList rows = d->collectionFolderView->model()->match( idx,
@@ -161,29 +161,29 @@ void FolderSelectionTreeView::selectCollectionFolder( const Akonadi::Collection 
   d->collectionFolderView->scrollTo( colIndex );
 }
 
-void FolderSelectionTreeView::setSelectionMode( QAbstractItemView::SelectionMode mode )
+void FolderTreeWidget::setSelectionMode( QAbstractItemView::SelectionMode mode )
 {
   d->collectionFolderView->setSelectionMode( mode );
 }
 
-QAbstractItemView::SelectionMode FolderSelectionTreeView::selectionMode() const
+QAbstractItemView::SelectionMode FolderTreeWidget::selectionMode() const
 {
   return d->collectionFolderView->selectionMode();
 }
 
 
-QItemSelectionModel * FolderSelectionTreeView::selectionModel () const
+QItemSelectionModel * FolderTreeWidget::selectionModel () const
 {
   return d->collectionFolderView->selectionModel();
 }
 
-QModelIndex FolderSelectionTreeView::currentIndex() const
+QModelIndex FolderTreeWidget::currentIndex() const
 {
   return d->collectionFolderView->currentIndex();
 }
 
 
-Akonadi::Collection FolderSelectionTreeView::selectedCollection() const
+Akonadi::Collection FolderTreeWidget::selectedCollection() const
 {
   if ( d->collectionFolderView->selectionMode() == QAbstractItemView::SingleSelection ) {
     const QModelIndex selectedIndex = d->collectionFolderView->currentIndex();
@@ -195,7 +195,7 @@ Akonadi::Collection FolderSelectionTreeView::selectedCollection() const
   return Akonadi::Collection();
 }
 
-Akonadi::Collection::List FolderSelectionTreeView::selectedCollections() const
+Akonadi::Collection::List FolderTreeWidget::selectedCollections() const
 {
   Akonadi::Collection::List collections;
   const QItemSelectionModel *selectionModel = d->collectionFolderView->selectionModel();
@@ -211,17 +211,17 @@ Akonadi::Collection::List FolderSelectionTreeView::selectedCollections() const
   return collections;
 }
 
-FolderTreeView* FolderSelectionTreeView::folderTreeView()
+FolderTreeView* FolderTreeWidget::folderTreeView()
 {
   return d->collectionFolderView;
 }
 
-Akonadi::EntityTreeModel *FolderSelectionTreeView::entityModel()
+Akonadi::EntityTreeModel *FolderTreeWidget::entityModel()
 {
   return d->entityModel;
 }
 
-void FolderSelectionTreeView::readConfig()
+void FolderTreeWidget::readConfig()
 {
   // Custom/System font support
   KConfigGroup fontConfig( KMKernel::config(), "Fonts" );
@@ -238,12 +238,12 @@ void FolderSelectionTreeView::readConfig()
   readQuotaConfig();
 }
 
-void FolderSelectionTreeView::slotChangeTooltipsPolicy( FolderSelectionTreeView::ToolTipDisplayPolicy policy)
+void FolderTreeWidget::slotChangeTooltipsPolicy( FolderTreeWidget::ToolTipDisplayPolicy policy)
 {
   changeToolTipsPolicyConfig( policy );
 }
 
-void FolderSelectionTreeView::changeToolTipsPolicyConfig( ToolTipDisplayPolicy policy )
+void FolderTreeWidget::changeToolTipsPolicyConfig( ToolTipDisplayPolicy policy )
 {
   switch( policy ){
   case DisplayAlways:
@@ -256,13 +256,13 @@ void FolderSelectionTreeView::changeToolTipsPolicyConfig( ToolTipDisplayPolicy p
   d->collectionFolderView->setTooltipsPolicy( policy );
 }
 
-void FolderSelectionTreeView::quotaWarningParameters( const QColor &color, qreal threshold )
+void FolderTreeWidget::quotaWarningParameters( const QColor &color, qreal threshold )
 {
   d->quotaModel->setWarningThreshold( threshold );
   d->quotaModel->setWarningColor( color );
 }
 
-void FolderSelectionTreeView::readQuotaConfig()
+void FolderTreeWidget::readQuotaConfig()
 {
   QColor quotaColor;
   qreal threshold = 100;
@@ -274,22 +274,22 @@ void FolderSelectionTreeView::readQuotaConfig()
   quotaWarningParameters( quotaColor, threshold );
 }
 
-Akonadi::StatisticsProxyModel * FolderSelectionTreeView::statisticsProxyModel()
+Akonadi::StatisticsProxyModel * FolderTreeWidget::statisticsProxyModel()
 {
   return d->filterModel;
 }
 
-ReadableCollectionProxyModel *FolderSelectionTreeView::readableCollectionProxyModel()
+ReadableCollectionProxyModel *FolderTreeWidget::readableCollectionProxyModel()
 {
   return d->readableproxy;
 }
 
-KLineEdit *FolderSelectionTreeView::filterFolderLineEdit()
+KLineEdit *FolderTreeWidget::filterFolderLineEdit()
 {
   return d->filterFolderLineEdit;
 }
 
-void FolderSelectionTreeView::applyFilter( const QString &filter )
+void FolderTreeWidget::applyFilter( const QString &filter )
 {
 
   d->label->setText( filter.isEmpty() ? i18n("You can start typing to filter the list of folders.") : i18n( "Path: (%1)", filter ) );
@@ -297,4 +297,4 @@ void FolderSelectionTreeView::applyFilter( const QString &filter )
   d->collectionFolderView->expandAll();
 }
 
-#include "folderselectiontreeview.moc"
+#include "foldertreewidget.moc"

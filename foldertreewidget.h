@@ -16,8 +16,8 @@
   51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
 */
 
-#ifndef FOLDERSELECTIONTREEVIEW_H
-#define FOLDERSELECTIONTREEVIEW_H
+#ifndef FOLDERTREEWIDGET_H
+#define FOLDERTREEWIDGET_H
 
 #include "kmail_export.h"
 #include <QWidget>
@@ -42,7 +42,7 @@ namespace Akonadi {
  * It consists of the view (FolderTreeView) and a search line.
  * Internally, several proxy models are used on top of a entity tree model.
  */
-class KMAIL_EXPORT FolderSelectionTreeView : public QWidget
+class KMAIL_EXPORT FolderTreeWidget : public QWidget
 {
   Q_OBJECT
 public:
@@ -54,9 +54,9 @@ public:
   };
   Q_DECLARE_FLAGS( TreeViewOptions, TreeViewOption )
 
-  FolderSelectionTreeView( QWidget *parent = 0, KXMLGUIClient *xmlGuiClient = 0,
-                           TreeViewOptions option = ShowUnreadCount );
-  ~FolderSelectionTreeView();
+  FolderTreeWidget( QWidget *parent = 0, KXMLGUIClient *xmlGuiClient = 0,
+                    TreeViewOptions option = ShowUnreadCount );
+  ~FolderTreeWidget();
 
   /**
    * The possible tooltip display policies.
@@ -103,12 +103,12 @@ protected:
   void changeToolTipsPolicyConfig( ToolTipDisplayPolicy );
 
 protected slots:
-  void slotChangeTooltipsPolicy( FolderSelectionTreeView::ToolTipDisplayPolicy );
+  void slotChangeTooltipsPolicy( FolderTreeWidget::ToolTipDisplayPolicy );
 
 private:
-  class FolderSelectionTreeViewPrivate;
-  FolderSelectionTreeViewPrivate * const d;
+  class FolderTreeWidgetPrivate;
+  FolderTreeWidgetPrivate * const d;
 };
 
-#endif /* FOLDERSELECTIONTREEVIEW_H */
+#endif
 

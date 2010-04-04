@@ -40,7 +40,7 @@
 #include <QPointer>
 #include <akonadi/standardactionmanager.h>
 #include <messagelist/core/view.h>
-#include "folderselectiontreeview.h"
+#include "foldertreewidget.h"
 
 namespace MessageList {
   class Pane;
@@ -82,7 +82,7 @@ namespace KMail {
   class FolderShortcutActionManager;
 }
 
-class FolderSelectionTreeView;
+class FolderTreeWidget;
 
 class KMAIL_EXPORT KMMainWidget : public QWidget
 {
@@ -178,7 +178,7 @@ class KMAIL_EXPORT KMMainWidget : public QWidget
     void selectCollectionFolder( const Akonadi::Collection & col );
 
     FolderTreeView *folderTreeView() const {
-      return mCollectionFolderView->folderTreeView();
+      return mFolderTreeWidget->folderTreeView();
     }
 
     /** Returns the XML GUI client. */
@@ -623,7 +623,7 @@ private:
     MessageList::Pane *mMessagePane;
     QSharedPointer<FolderCollection> mCurrentFolder;
 
-    FolderSelectionTreeView *mCollectionFolderView;
+    FolderTreeWidget *mFolderTreeWidget;
     bool mOpenedImapFolder;
 
     KMail::StatusBarLabel *mVacationScriptIndicator;

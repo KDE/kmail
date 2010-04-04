@@ -74,11 +74,11 @@ FolderRequester::FolderRequester( QWidget *parent )
 //-----------------------------------------------------------------------------
 void FolderRequester::slotOpenDialog()
 {
-  FolderSelectionTreeViewDialog::SelectionFolderOptions options = FolderSelectionTreeViewDialog::EnableCheck ;
-  options |= FolderSelectionTreeViewDialog::HideSearchFolder;
+  FolderSelectionDialog::SelectionFolderOptions options = FolderSelectionDialog::EnableCheck ;
+  options |= FolderSelectionDialog::HideSearchFolder;
 
-  MessageViewer::AutoQPointer<FolderSelectionTreeViewDialog> dlg(
-      new FolderSelectionTreeViewDialog( this, options ) );
+  MessageViewer::AutoQPointer<FolderSelectionDialog> dlg(
+      new FolderSelectionDialog( this, options ) );
   dlg->setCaption( i18n("Select Folder") );
   dlg->setModal( false );
   dlg->setSelectedCollection( mCollection );

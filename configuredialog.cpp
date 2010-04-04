@@ -47,7 +47,7 @@ using KMail::FolderRequester;
 #include "tag.h"
 #include "tagactionmanager.h"
 
-#include "folderselectiontreeview.h"
+#include "foldertreewidget.h"
 
 #include "recentaddresses.h"
 using KPIM::RecentAddresses;
@@ -1297,16 +1297,16 @@ AppearancePageLayoutTab::AppearancePageLayoutTab( QWidget * parent )
            this, SLOT( slotEmitChanged() ) );
 
   QRadioButton* folderToolTipsAlwaysRadio = new QRadioButton( i18n( "Always" ), mFolderToolTipsGroupBox );
-  mFolderToolTipsGroup->addButton( folderToolTipsAlwaysRadio, static_cast< int >( FolderSelectionTreeView::DisplayAlways ) );
+  mFolderToolTipsGroup->addButton( folderToolTipsAlwaysRadio, static_cast< int >( FolderTreeWidget::DisplayAlways ) );
   mFolderToolTipsGroupBox->layout()->addWidget( folderToolTipsAlwaysRadio );
 
   QRadioButton* folderToolTipsElidedRadio = new QRadioButton( i18n( "When Text Obscured" ), mFolderToolTipsGroupBox );
-  mFolderToolTipsGroup->addButton( folderToolTipsElidedRadio, static_cast< int >( FolderSelectionTreeView::DisplayWhenTextElided ) );
+  mFolderToolTipsGroup->addButton( folderToolTipsElidedRadio, static_cast< int >( FolderTreeWidget::DisplayWhenTextElided ) );
   folderToolTipsElidedRadio->setEnabled( false ); //Disable it until we reimplement it.
   mFolderToolTipsGroupBox->layout()->addWidget( folderToolTipsElidedRadio );
 
   QRadioButton* folderToolTipsNeverRadio = new QRadioButton( i18n( "Never" ), mFolderToolTipsGroupBox );
-  mFolderToolTipsGroup->addButton( folderToolTipsNeverRadio, static_cast< int >( FolderSelectionTreeView::DisplayNever ) );
+  mFolderToolTipsGroup->addButton( folderToolTipsNeverRadio, static_cast< int >( FolderTreeWidget::DisplayNever ) );
   mFolderToolTipsGroupBox->layout()->addWidget( folderToolTipsNeverRadio );
 
   vlay->addWidget( mFolderToolTipsGroupBox );

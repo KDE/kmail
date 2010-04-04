@@ -45,8 +45,8 @@ add_subdirectory(kconf_update)
 set(kmailprivate_LIB_SRCS
    foldercollectionmonitor.cpp
    readablecollectionproxymodel.cpp
-   folderselectiontreeview.cpp
-   folderselectiontreeviewdialog.cpp
+   foldertreewidget.cpp
+   folderselectiondialog.cpp
    foldertreeview.cpp
    collectionannotationsattribute.cpp
    collectiontemplatespage.cpp

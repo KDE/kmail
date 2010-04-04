@@ -45,7 +45,7 @@
 #include <akonadi/collection.h>
 #include <akonadi/entitydisplayattribute.h>
 #include <akonadi/changerecorder.h>
-#include "folderselectiontreeview.h"
+#include "foldertreewidget.h"
 #include "foldertreeview.h"
 #include "tagactionmanager.h"
 #include "foldershortcutactionmanager.h"

@@ -1129,7 +1129,7 @@ ASWizVirusRulesPage::ASWizVirusRulesPage( QWidget * parent, const char * name )
             "virus-infected as read, as well as moving them "
             "to the selected folder.") );
   grid->addWidget( mMarkRules, 2, 0 );
-  mFolderTree = new FolderSelectionTreeView( this );
+  mFolderTree = new FolderTreeWidget( this );
   mFolderTree->disableContextMenuAndExtraColumn();
 #if 0 //Port to akonadi
   mFolderTree->reload( true, true, true, QString( "trash" ) );

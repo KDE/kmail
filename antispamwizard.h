@@ -40,7 +40,7 @@
 #include <QBoxLayout>
 #include <akonadi/collection.h>
 class QLabel;
-class FolderSelectionTreeView;
+class FolderTreeWidget;
 
 namespace KMail {
   class FolderRequester;
@@ -377,7 +377,7 @@ namespace KMail {
     private:
       QCheckBox * mPipeRules;
       QCheckBox * mMoveRules;
-      FolderSelectionTreeView *mFolderTree;
+      FolderTreeWidget *mFolderTree;
       QCheckBox * mMarkRules;
   };
 

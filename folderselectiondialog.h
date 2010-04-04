@@ -16,8 +16,8 @@
   51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
 */
 
-#ifndef FOLDERSELECTIONTREEVIEWDIALOG_H
-#define FOLDERSELECTIONTREEVIEWDIALOG_H
+#ifndef FOLDERSELECTIONDIALOG_H
+#define FOLDERSELECTIONDIALOG_H
 
 #include <QAbstractItemView>
 #include <KDialog>
@@ -25,7 +25,11 @@
 class KJob;
 class FolderSelectionTreeView;
 
-class FolderSelectionTreeViewDialog : public KDialog
+/**
+ * A dialog that lets the user select a folder.
+ * TODO: Move most of this to Akonadi::CollectionDialog
+ */
+class FolderSelectionDialog : public KDialog
 {
   Q_OBJECT
 public:
@@ -38,8 +42,8 @@ public:
   };
   Q_DECLARE_FLAGS( SelectionFolderOptions, SelectionFolderOption )
 
-  FolderSelectionTreeViewDialog( QWidget *parent, SelectionFolderOptions options );
-  ~FolderSelectionTreeViewDialog();
+  FolderSelectionDialog( QWidget *parent, SelectionFolderOptions options );
+  ~FolderSelectionDialog();
 
   void setSelectionMode( QAbstractItemView::SelectionMode mode );
   QAbstractItemView::SelectionMode selectionMode() const;
@@ -63,10 +67,10 @@ protected:
   bool canCreateCollection( Akonadi::Collection & parentCol );
 
 private:
-  class FolderSelectionTreeViewDialogPrivate;
-  FolderSelectionTreeViewDialogPrivate * const d;
+  class FolderSelectionDialogPrivate;
+  FolderSelectionDialogPrivate * const d;
 };
 
 
-#endif /* FOLDERSELECTIONTREEVIEWDIALOG_H */
+#endif
 

@@ -46,7 +46,7 @@ FolderTreeView::~FolderTreeView()
 }
 
 
-void FolderTreeView::setTooltipsPolicy( FolderSelectionTreeView::ToolTipDisplayPolicy policy )
+void FolderTreeView::setTooltipsPolicy( FolderTreeWidget::ToolTipDisplayPolicy policy )
 {
   mToolTipDisplayPolicy = policy;
   writeConfig();
@@ -139,8 +139,8 @@ void FolderTreeView::slotHeaderContextMenuRequested( const QPoint&pnt )
   act = menu.addAction( i18nc("@action:inmenu Always display tooltips", "Always") );
   act->setCheckable( true );
   grp->addAction( act );
-  act->setChecked( mToolTipDisplayPolicy == FolderSelectionTreeView::DisplayAlways );
-  act->setData( QVariant( (int)FolderSelectionTreeView::DisplayAlways ) );
+  act->setChecked( mToolTipDisplayPolicy == FolderTreeWidget::DisplayAlways );
+  act->setData( QVariant( (int)FolderTreeWidget::DisplayAlways ) );
   connect( act, SIGNAL( triggered( bool ) ),
            SLOT( slotHeaderContextMenuChangeToolTipDisplayPolicy( bool ) ) );
   act = menu.addAction( i18nc("@action:inmenu", "When Text Obscured") );
@@ -149,16 +149,16 @@ void FolderTreeView::slotHeaderContextMenuRequested( const QPoint&pnt )
   //Port it !!!!
   act->setEnabled( false );
   grp->addAction( act );
-  act->setChecked( mToolTipDisplayPolicy == FolderSelectionTreeView::DisplayWhenTextElided );
-  act->setData( QVariant( (int)FolderSelectionTreeView::DisplayWhenTextElided ) );
+  act->setChecked( mToolTipDisplayPolicy == FolderTreeWidget::DisplayWhenTextElided );
+  act->setData( QVariant( (int)FolderTreeWidget::DisplayWhenTextElided ) );
   connect( act, SIGNAL( triggered( bool ) ),
            SLOT( slotHeaderContextMenuChangeToolTipDisplayPolicy( bool ) ) );
 
   act = menu.addAction( i18nc("@action:inmenu Never display tooltips.", "Never") );
   act->setCheckable( true );
   grp->addAction( act );
-  act->setChecked( mToolTipDisplayPolicy == FolderSelectionTreeView::DisplayNever );
-  act->setData( QVariant( (int)FolderSelectionTreeView::DisplayNever ) );
+  act->setChecked( mToolTipDisplayPolicy == FolderTreeWidget::DisplayNever );
+  act->setData( QVariant( (int)FolderTreeWidget::DisplayNever ) );
   connect( act, SIGNAL( triggered( bool ) ),
            SLOT( slotHeaderContextMenuChangeToolTipDisplayPolicy( bool ) ) );
 
@@ -178,7 +178,7 @@ void FolderTreeView::slotHeaderContextMenuChangeToolTipDisplayPolicy( bool )
   int id = data.toInt( &ok );
   if ( !ok )
     return;
-  emit changeTooltipsPolicy( ( FolderSelectionTreeView::ToolTipDisplayPolicy )id );
+  emit changeTooltipsPolicy( ( FolderTreeWidget::ToolTipDisplayPolicy )id );
 }
 
 void FolderTreeView::slotHeaderContextMenuChangeHeader( bool )
