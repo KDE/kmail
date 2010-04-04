@@ -136,8 +136,6 @@ public Q_SLOTS:
 
   Q_SCRIPTABLE bool canQueryClose();
 
-  Q_SCRIPTABLE int timeOfLastMessageCountChange() const;
-
   Q_SCRIPTABLE bool handleCommandLine( bool noArgsOpensReader );
 
   Q_SCRIPTABLE QString debugScheduler();
@@ -296,7 +294,6 @@ public:
   void setStartingUp (bool flag) { the_startingUp = flag; }
   bool shuttingDown() const { return the_shuttingDown; }
   void setShuttingDown(bool flag) { the_shuttingDown = flag; }
-  void serverReady (bool flag) { the_server_is_ready = flag; }
 
   /** Returns the full path of the user's local data directory for KMail.
       The path ends with '/'.
@@ -319,19 +316,6 @@ public:
 
   /** returns a reference to the first Mainwin or a temporary Mainwin */
   KMainWindow* mainWin();
-
-  // ### The mContextMenuShown flag is necessary to work around bug# 56693
-  // ### (kmail freeze with the complete desktop while pinentry-qt appears)
-  // ### FIXME: Once the encryption support is asynchron this can be removed
-  // ### again.
-  void setContextMenuShown( bool flag ) { mContextMenuShown = flag; }
-  bool contextMenuShown() const { return mContextMenuShown; }
-
-  /**
-   * Called by the folder tree if the count of unread/total messages changed.
-   */
-  void messageCountChanged();
-
 
   /** Get first mainwidget */
   KMMainWidget *getKMMainWidget();
@@ -417,8 +401,6 @@ private:
   bool the_startingUp;
   /** are we going down? set from here */
   bool the_shuttingDown;
-  /** are we in the middle of network operations (needed?) */
-  bool the_server_is_ready;
   /** true unles kmail is closed by session management */
   bool closed_by_user;
   bool the_firstInstance;
@@ -434,25 +416,10 @@ private:
   KMMainWin *mWin;
   MailServiceImpl *mMailService;
 
-  // the time of the last change of the unread or total count of a folder;
-  // this can be queried via D-Bus in order to determine whether the counts
-  // need to be updated (e.g. in the Summary in Kontact)
-  int mTimeOfLastMessageCountChange;
-
-  // true if the context menu of KMFolderTree or KMHeaders is shown
-  // this is necessary to know in order to prevent a dead lock between the
-  // context menus and the pinentry program
-  bool mContextMenuShown;
-
   QList<const KStatusNotifierItem*> systemTrayApplets;
 
   /* Weaver */
   ThreadWeaver::Weaver *the_weaver;
-
-
-  // variables used by dbusAddMessage()
-  QStringList           mAddMessageMsgIds;
-  QString               mAddMessageLastFolder;
 
   FolderCollectionMonitor *mFolderCollectionMonitor;
 

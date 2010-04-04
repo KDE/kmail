@@ -105,8 +105,7 @@ static bool s_askingToGoOnline = false;
 /********************************************************************/
 KMKernel::KMKernel (QObject *parent, const char *name) :
   QObject(parent),
-  mIdentityManager(0), mConfigureDialog(0), mMailService(0),
-  mContextMenuShown( false )
+  mIdentityManager(0), mConfigureDialog(0), mMailService(0)
 {
   // Akonadi migration
   KConfig config( "kmail-migratorrc" );
@@ -1006,11 +1005,8 @@ void KMKernel::initFolders()
 void KMKernel::init()
 {
   the_shuttingDown = false;
-  the_server_is_ready = false;
 
   KSharedConfig::Ptr cfg = KMKernel::config();
-
-  QDir dir;
 
   KConfigGroup group(cfg, "General");
   the_firstStart = group.readEntry("first-start", true );
@@ -1034,7 +1030,6 @@ void KMKernel::init()
     kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
 #endif
   the_msgSender = new AkonadiSender;
-  the_server_is_ready = true;
   readConfig();
   // filterMgr->dump();
 
@@ -1611,17 +1606,6 @@ bool KMKernel::canQueryClose()
   }
   return true;
 }
-
-void KMKernel::messageCountChanged()
-{
-  mTimeOfLastMessageCountChange = ::time( 0 );
-}
-
-int KMKernel::timeOfLastMessageCountChange() const
-{
-  return mTimeOfLastMessageCountChange;
-}
-
 
 QSharedPointer<FolderCollection> KMKernel::currentFolderCollection()
 {
