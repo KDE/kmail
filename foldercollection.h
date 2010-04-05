@@ -61,7 +61,7 @@ public:
 
   bool isReadOnly() const;
 
-  bool noContent() const;
+  bool isStructural() const;
 
   bool isSystemFolder() const;
 

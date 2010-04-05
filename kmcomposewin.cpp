@@ -3285,7 +3285,7 @@ bool KMComposeWin::saveDraftOrTemplate( const QString &folderName,
                                      id.identityName() ) );
     }
   }
-  if ( imapTheFolder && imapTheFolder->noContent() ) {
+  if ( imapTheFolder && imapTheFolder->isStructural() ) {
     imapTheFolder = 0;
   }
 

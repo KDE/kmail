@@ -423,7 +423,7 @@ void KMMainWidget::folderSelected( const Akonadi::Collection & col, bool forceJu
 
     KMFolderImap *imap = static_cast<KMFolderImap*>( aFolder->storage() );
 
-    if ( newFolder && ( !mFolder->noContent() ) )
+    if ( newFolder && ( !mFolder->isStructural() ) )
     {
       // Folder is not offline, but the contents might need to be fetched
       connect( imap, SIGNAL( folderComplete( KMFolderImap*, bool ) ),
@@ -3774,7 +3774,7 @@ void KMMainWidget::updateMarkAsReadAction()
 //-----------------------------------------------------------------------------
 void KMMainWidget::updateFolderMenu()
 {
-  bool folderWithContent = mCurrentFolder && !mCurrentFolder->noContent();
+  bool folderWithContent = mCurrentFolder && !mCurrentFolder->isStructural();
   bool multiFolder = mFolderTreeWidget->selectedCollections().count() > 1;
   mFolderMailingListPropertiesAction->setEnabled( folderWithContent && !multiFolder &&
                                                   !mCurrentFolder->isSystemFolder() );
@@ -3787,7 +3787,7 @@ void KMMainWidget::updateFolderMenu()
                                    && !multiFolder
                                    && ( mCurrentFolder->collection().rights() & Collection::CanDeleteCollection )
                                    && !mCurrentFolder->isSystemFolder()
-                                   && !mCurrentFolder->noContent());
+                                   && !mCurrentFolder->isStructural());
 
   mRemoveFolderAction->setText( mCurrentFolder && mCurrentFolder->collection().resource() == QLatin1String( "akonadi_search_resource" ) ? i18n("&Delete Search") : i18n("&Delete Folder") );
   if ( mArchiveFolderAction )

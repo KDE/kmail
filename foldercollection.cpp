@@ -92,7 +92,7 @@ bool FolderCollection::isSystemFolder() const
   return KMKernel::self()->isSystemFolderCollection( mCollection );
 }
 
-bool FolderCollection::noContent() const
+bool FolderCollection::isStructural() const
 {
   return mCollection.contentMimeTypes().isEmpty();
 }
