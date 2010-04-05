@@ -94,8 +94,7 @@ bool FolderCollection::isSystemFolder() const
 
 bool FolderCollection::noContent() const
 {
-  // FIXME: This is wrong, no content means something else, it is a special IMAP property
-  return ( count() <= 0 );
+  return mCollection.contentMimeTypes().isEmpty();
 }
 
 bool FolderCollection::isReadOnly() const
