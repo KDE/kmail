@@ -1579,7 +1579,6 @@ void AppearancePage::HeadersTab::setDateDisplay( int num, const QString & format
 void AppearancePage::HeadersTab::save()
 {
   KConfigGroup general( KMKernel::config(), "General" );
-  KConfigGroup geometry( KMKernel::config(), "Geometry" );
 
   GlobalSettings::self()->setMessageToolTipEnabled( mDisplayMessageToolTips->isChecked() );
   GlobalSettings::self()->setAutoHideTabBarWithSingleTab( mHideTabBarWithSingleTab->isChecked() );
@@ -3433,12 +3432,10 @@ void SecurityPageGeneralTab::slotLinkClicked( const QString & link )
 
 void SecurityPage::GeneralTab::doLoadOther()
 {
-  const KConfigGroup reader( KMKernel::config(), "Reader" );
-
   mSGTab.mHtmlMailCheck->setChecked( MessageViewer::GlobalSettings::self()->htmlMail() );
   mSGTab.mExternalReferences->setChecked( MessageViewer::GlobalSettings::self()->htmlLoadExternal() );
   mSGTab.mAutomaticallyImportAttachedKeysCheck->setChecked(
-      reader.readEntry( "AutoImportKeys", false ) );
+      MessageViewer::GlobalSettings::self()->autoImportKeys() );
 
   mSGTab.mAlwaysDecrypt->setChecked( MessageViewer::GlobalSettings::self()->alwaysDecrypt() );
 
@@ -3473,7 +3470,8 @@ void SecurityPage::GeneralTab::save()
     }
   }
   MessageViewer::GlobalSettings::self()->setHtmlLoadExternal( mSGTab.mExternalReferences->isChecked() );
-  reader.writeEntry( "AutoImportKeys", mSGTab.mAutomaticallyImportAttachedKeysCheck->isChecked() );
+  MessageViewer::GlobalSettings::self()->setAutoImportKeys(
+      mSGTab.mAutomaticallyImportAttachedKeysCheck->isChecked() );
   mdn.writeEntry( "default-policy", mMDNGroup->checkedId() );
   mdn.writeEntry( "quote-message", mOrigQuoteGroup->checkedId() );
   MessageViewer::GlobalSettings::self()->setNotSendWhenEncrypted( mSGTab.mNoMDNsWhenEncryptedCheck->isChecked() );
