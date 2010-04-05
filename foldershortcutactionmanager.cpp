@@ -25,6 +25,8 @@
 
 #include <Akonadi/ChangeRecorder>
 #include <Akonadi/EntityDisplayAttribute>
+#include <akonadi/entitymimetypefiltermodel.h>
+#include <Akonadi/EntityTreeModel>
 
 #include <KAction>
 #include <KActionCollection>
@@ -37,16 +39,41 @@ FolderShortcutActionManager::FolderShortcutActionManager( KMMainWidget *parent,
     mActionCollection( actionCollection ),
     mParent( parent )
 {
-  connect( KMKernel::self()->monitor(), SIGNAL( collectionRemoved( const Akonadi::Collection & ) ),
-           this, SLOT( slotCollectionRemoved( const Akonadi::Collection& ) ) );
 }
 
 void FolderShortcutActionManager::createActions()
 {
-  QList<Akonadi::Collection> folders = kmkernel->allFoldersCollection();
-  for ( int i = 0 ; i < folders.size(); ++i ) {
-    Akonadi::Collection col = folders.at( i );
-    shortcutChanged( col );
+  // When this function is called, the ETM has not finished loading yet. Therefore, when new
+  // rows are inserted in the ETM, see if we have new collections that we can assign shortcuts
+  // to.
+  const QAbstractItemModel *model = KMKernel::self()->collectionModel();
+  connect( model, SIGNAL( rowsInserted( const QModelIndex &, int, int ) ),
+           this, SLOT( slotRowsInserted( const QModelIndex &, int, int ) ), Qt::UniqueConnection );
+  connect( KMKernel::self()->monitor(), SIGNAL( collectionRemoved( const Akonadi::Collection & ) ),
+           this, SLOT( slotCollectionRemoved( const Akonadi::Collection& ) ), Qt::UniqueConnection );
+
+  if ( model->rowCount() > 0 )
+    updateShortcutsForIndex( QModelIndex(), 0, model->rowCount() - 1 );
+}
+
+void FolderShortcutActionManager::slotRowsInserted( const QModelIndex &parent, int start, int end )
+{
+  updateShortcutsForIndex( parent, start, end );
+}
+
+void FolderShortcutActionManager::updateShortcutsForIndex( const QModelIndex &parent, int start, int end )
+{
+  QAbstractItemModel *model = KMKernel::self()->collectionModel();
+  for ( int i = start; i <= end; i++ ) {
+    const QModelIndex child = model->index( i, 0, parent );
+    Akonadi::Collection collection =
+        model->data( child, Akonadi::EntityTreeModel::CollectionRole ).value<Akonadi::Collection>();
+    if ( collection.isValid() ) {
+      shortcutChanged( collection );
+    }
+    if ( model->rowCount( child ) > 0 ) {
+      updateShortcutsForIndex( child, 0, model->rowCount( child ) - 1 );
+    }
   }
 }
 

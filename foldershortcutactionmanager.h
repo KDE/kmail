@@ -24,6 +24,7 @@
 #include <Akonadi/Entity>
 
 #include <QMap>
+#include <QModelIndex>
 #include <QObject>
 
 namespace Akonadi {
@@ -60,8 +61,11 @@ namespace KMail {
        */
       void slotCollectionRemoved( const Akonadi::Collection &collection );
 
+      void slotRowsInserted( const QModelIndex &parent, int start, int end );
+
     private:
 
+      void updateShortcutsForIndex( const QModelIndex &parent, int start, int end );
       QMap< Akonadi::Entity::Id, FolderShortcutCommand* > mFolderShortcutCommands;
       KActionCollection *mActionCollection;
       KMMainWidget *mParent;
