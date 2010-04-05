@@ -344,8 +344,12 @@ public:
   /** Get first mainwidget */
   KMMainWidget *getKMMainWidget();
 
-  /** @return a list of all folders from all folder managers. */
-  QList<Akonadi::Collection> allFoldersCollection();
+  /**
+   * Returns a list of all currently loaded folders. Since folders are loaded async, this
+   * is empty at startup.
+   */
+  Akonadi::Collection::List allFolders() const;
+
   void raise();
 
   /** Custom templates have changed, so all windows using them need

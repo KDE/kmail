@@ -1580,14 +1580,25 @@ void KMKernel::slotRunBackgroundTasks() // called regularly by timer
 
 }
 
-QList<Akonadi::Collection> KMKernel::allFoldersCollection()
+static Akonadi::Collection::List collect_collections( const QAbstractItemModel *model,
+                                                      const QModelIndex &parent )
 {
   Akonadi::Collection::List collections;
-  Akonadi::CollectionFetchJob *job = new Akonadi::CollectionFetchJob( Akonadi::Collection::root(), Akonadi::CollectionFetchJob::Recursive );
-  if ( job->exec() ) {
-    collections = job->collections();
+  for ( int i = 0; i < model->rowCount( parent ); i++ ) {
+    const QModelIndex child = model->index( i, 0, parent );
+    Akonadi::Collection collection =
+        model->data( child, Akonadi::EntityTreeModel::CollectionRole ).value<Akonadi::Collection>();
+    if ( collection.isValid() ) {
+      collections << collection;
+    }
+    collections += collect_collections( model, child );
   }
   return collections;
+}
+
+Akonadi::Collection::List KMKernel::allFolders() const
+{
+  return collect_collections( collectionModel(), QModelIndex() );
 }
 
 void KMKernel::expireAllFoldersNow() // called by the GUI

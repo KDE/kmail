@@ -3465,10 +3465,8 @@ void SecurityPage::GeneralTab::save()
       KStandardGuiItem::cont(), KStandardGuiItem::cancel(), "htmlMailOverride") == KMessageBox::Continue)
     {
       MessageViewer::GlobalSettings::self()->setHtmlMail( mSGTab.mHtmlMailCheck->isChecked() );
-      QList<Akonadi::Collection> collections = kmkernel->allFoldersCollection();
-      for (int i = 0; i < collections.size(); ++i)
-      {
-        QSharedPointer<FolderCollection> fd = FolderCollection::forCollection( collections.at( i ) );
+      foreach( const Akonadi::Collection &collection, kmkernel->allFolders() ) {
+        QSharedPointer<FolderCollection> fd = FolderCollection::forCollection( collection );
         KConfigGroup config( KMKernel::config(), fd->configGroupName() );
         config.writeEntry("htmlMailOverride", false);
       }
