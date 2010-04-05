@@ -569,7 +569,6 @@ private:
     bool          mIntegrated;
     bool          mBeepOnNew;
     bool          mConfirmEmpty;
-    QString       mStartupFolder;
     int           mMessageStatusId;
     KUrl          mUrlCurrent;
     QMenu        *mActMenu;

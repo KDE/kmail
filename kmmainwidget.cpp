@@ -750,8 +750,6 @@ void KMMainWidget::readConfig()
     KConfigGroup group( config, "General" );
     mBeepOnNew = group.readEntry( "beep-on-mail", false );
     mConfirmEmpty = group.readEntry( "confirm-before-empty", true );
-    // startup-Folder, defaults to system-inbox
-    mStartupFolder = group.readEntry( "startupFolder", QString::number( kmkernel->inboxCollectionFolder().id() ) );
     if ( !mStartupDone )
     {
       // check mail on startup
@@ -3852,15 +3850,6 @@ void KMMainWidget::slotShowStartupFolder()
     slotIntro();
     return;
   }
-
-  Akonadi::Collection startup;
-  if ( !mStartupFolder.isEmpty() ) {
-    // find the startup-folder
-    startup = kmkernel->findFolderCollectionById( mStartupFolder );
-  }
-  if ( !startup.isValid() )
-    startup = kmkernel->inboxCollectionFolder();
-  selectCollectionFolder( startup );
 }
 
 void KMMainWidget::slotShowTip()
