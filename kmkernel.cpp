@@ -1531,6 +1531,7 @@ KSharedConfig::Ptr KMKernel::config()
     // Check that all updates have been run on the config file:
     KMail::checkConfigUpdates();
     MessageList::Core::ConfigProvider::self()->setConfig( mySelf->mConfig );
+    MessageViewer::GlobalSettings::self()->setSharedConfig( mySelf->mConfig );
   }
   return mySelf->mConfig;
 }
