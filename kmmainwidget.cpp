@@ -319,7 +319,8 @@ void KMMainWidget::slotFolderChanged( const Akonadi::Collection& col)
   emit captionChangeRequest( col.name() );
 }
 
-void KMMainWidget::folderSelected( const Akonadi::Collection & col, bool forceJumpToUnread, bool preferNewTabForOpening )
+void KMMainWidget::folderSelected( const Akonadi::Collection & col, bool forceJumpToUnread,
+                                   bool preferNewTabForOpening )
 {
   // This is connected to the MainFolderView signal triggering when a folder is selected
 

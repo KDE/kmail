@@ -123,8 +123,10 @@ KMailPart::KMailPart(QWidget *parentWidget, QObject *parent, const QVariantList 
   mStatusBar->addStatusBarItem( mainWidget->vacationScriptIndicator(), 2, false );
 
   // Get to know when the user clicked on a folder in the KMail part and update the headerWidget of Kontact
-  connect( mainWidget->folderTreeView(), SIGNAL( currentChanged( const Akonadi::Collection &) ), this, SLOT( slotFolderChanged( const Akonadi::Collection& ) ) );
-  connect( kmkernel->monitor(), SIGNAL(collectionChanged( const Akonadi::Collection &, const QSet<QByteArray> &)), this, SLOT(slotCollectionChanged( const Akonadi::Collection &, const QSet<QByteArray> &)));
+  connect( mainWidget->folderTreeView(), SIGNAL( currentChanged( const Akonadi::Collection & ) ),
+           this, SLOT( slotFolderChanged( const Akonadi::Collection& ) ) );
+  connect( kmkernel->monitor(), SIGNAL(collectionChanged( const Akonadi::Collection &, const QSet<QByteArray> &)),
+           this, SLOT(slotCollectionChanged( const Akonadi::Collection &, const QSet<QByteArray> &)));
   setXMLFile( "kmail_part.rc", true );
 #endif
 

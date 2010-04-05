@@ -47,13 +47,13 @@ class FolderTreeWidget::FolderTreeWidgetPrivate
 public:
   FolderTreeWidgetPrivate()
     :filterModel( 0 ),
-     collectionFolderView( 0 ),
+     folderTreeView( 0 ),
      quotaModel( 0 ),
      readableproxy( 0 )
   {
   }
   Akonadi::StatisticsProxyModel *filterModel;
-  FolderTreeView *collectionFolderView;
+  FolderTreeView *folderTreeView;
   Akonadi::QuotaColorProxyModel *quotaModel;
   ReadableCollectionProxyModel *readableproxy;
   KRecursiveFilterProxyModel *filterTreeViewModel;
@@ -67,7 +67,7 @@ FolderTreeWidget::FolderTreeWidget( QWidget *parent, KXMLGUIClient *xmlGuiClient
 {
   Akonadi::AttributeFactory::registerAttribute<Akonadi::ImapAclAttribute>();
 
-  d->collectionFolderView = new FolderTreeView( xmlGuiClient, this, options & ShowUnreadCount );
+  d->folderTreeView = new FolderTreeView( xmlGuiClient, this, options & ShowUnreadCount );
 
   QVBoxLayout *lay = new QVBoxLayout( this );
   lay->setMargin( 0 );
@@ -95,10 +95,10 @@ FolderTreeWidget::FolderTreeWidget( QWidget *parent, KXMLGUIClient *xmlGuiClient
   d->readableproxy = new ReadableCollectionProxyModel( this );
   d->readableproxy->setSourceModel( d->quotaModel );
 
-  connect( d->collectionFolderView, SIGNAL(changeTooltipsPolicy( FolderTreeWidget::ToolTipDisplayPolicy ) ),
+  connect( d->folderTreeView, SIGNAL(changeTooltipsPolicy( FolderTreeWidget::ToolTipDisplayPolicy ) ),
            this, SLOT( slotChangeTooltipsPolicy( FolderTreeWidget::ToolTipDisplayPolicy ) ) );
 
-  d->collectionFolderView->setSelectionMode( QAbstractItemView::SingleSelection );
+  d->folderTreeView->setSelectionMode( QAbstractItemView::SingleSelection );
   // Use the model
 
   //Filter tree view.
@@ -106,9 +106,9 @@ FolderTreeWidget::FolderTreeWidget( QWidget *parent, KXMLGUIClient *xmlGuiClient
   d->filterTreeViewModel->setDynamicSortFilter( true );
   d->filterTreeViewModel->setSourceModel( d->readableproxy );
   d->filterTreeViewModel->setFilterCaseSensitivity( Qt::CaseInsensitive );
-  d->collectionFolderView->setModel( d->filterTreeViewModel );
+  d->folderTreeView->setModel( d->filterTreeViewModel );
 
-  lay->addWidget( d->collectionFolderView );
+  lay->addWidget( d->folderTreeView );
   if ( ( options & UseLineEditForFiltering ) ) {
     connect( d->filterFolderLineEdit, SIGNAL( textChanged(QString) ),
              d->filterTreeViewModel, SLOT( setFilterFixedString(QString) ) );
@@ -120,7 +120,6 @@ FolderTreeWidget::FolderTreeWidget( QWidget *parent, KXMLGUIClient *xmlGuiClient
   readConfig();
 }
 
-
 FolderTreeWidget::~FolderTreeWidget()
 {
   delete d;
@@ -128,50 +127,50 @@ FolderTreeWidget::~FolderTreeWidget()
 
 void FolderTreeWidget::disableContextMenuAndExtraColumn()
 {
-  d->collectionFolderView->disableContextMenuAndExtraColumn();
+  d->folderTreeView->disableContextMenuAndExtraColumn();
 }
 
 void FolderTreeWidget::selectCollectionFolder( const Akonadi::Collection & col )
 {
-  const QModelIndex idx = d->collectionFolderView->model()->index( 0, 0, QModelIndex() );
-  const QModelIndexList rows = d->collectionFolderView->model()->match( idx,
+  const QModelIndex idx = d->folderTreeView->model()->index( 0, 0, QModelIndex() );
+  const QModelIndexList rows = d->folderTreeView->model()->match( idx,
                     Akonadi::EntityTreeModel::CollectionIdRole, col.id(), -1,
                     Qt::MatchRecursive | Qt::MatchExactly );
 
   if ( rows.size() < 1 )
     return;
   const QModelIndex colIndex = rows.first();
-  d->collectionFolderView->selectionModel()->select(colIndex, QItemSelectionModel::SelectCurrent);
-  d->collectionFolderView->setExpanded( colIndex, true );
-  d->collectionFolderView->scrollTo( colIndex );
+  d->folderTreeView->selectionModel()->select(colIndex, QItemSelectionModel::SelectCurrent);
+  d->folderTreeView->setExpanded( colIndex, true );
+  d->folderTreeView->scrollTo( colIndex );
 }
 
 void FolderTreeWidget::setSelectionMode( QAbstractItemView::SelectionMode mode )
 {
-  d->collectionFolderView->setSelectionMode( mode );
+  d->folderTreeView->setSelectionMode( mode );
 }
 
 QAbstractItemView::SelectionMode FolderTreeWidget::selectionMode() const
 {
-  return d->collectionFolderView->selectionMode();
+  return d->folderTreeView->selectionMode();
 }
 
 
 QItemSelectionModel * FolderTreeWidget::selectionModel () const
 {
-  return d->collectionFolderView->selectionModel();
+  return d->folderTreeView->selectionModel();
 }
 
 QModelIndex FolderTreeWidget::currentIndex() const
 {
-  return d->collectionFolderView->currentIndex();
+  return d->folderTreeView->currentIndex();
 }
 
 
 Akonadi::Collection FolderTreeWidget::selectedCollection() const
 {
-  if ( d->collectionFolderView->selectionMode() == QAbstractItemView::SingleSelection ) {
-    const QModelIndex selectedIndex = d->collectionFolderView->currentIndex();
+  if ( d->folderTreeView->selectionMode() == QAbstractItemView::SingleSelection ) {
+    const QModelIndex selectedIndex = d->folderTreeView->currentIndex();
     QModelIndex index = selectedIndex.sibling( selectedIndex.row(), 0 );
     if ( index.isValid() )
       return index.model()->data( index, Akonadi::EntityTreeModel::CollectionRole ).value<Akonadi::Collection>();
@@ -183,11 +182,12 @@ Akonadi::Collection FolderTreeWidget::selectedCollection() const
 Akonadi::Collection::List FolderTreeWidget::selectedCollections() const
 {
   Akonadi::Collection::List collections;
-  const QItemSelectionModel *selectionModel = d->collectionFolderView->selectionModel();
+  const QItemSelectionModel *selectionModel = d->folderTreeView->selectionModel();
   const QModelIndexList selectedIndexes = selectionModel->selectedIndexes();
   foreach ( const QModelIndex &index, selectedIndexes ) {
     if ( index.isValid() ) {
-      const Akonadi::Collection collection = index.model()->data( index, Akonadi::EntityTreeModel::CollectionRole ).value<Akonadi::Collection>();
+      const Akonadi::Collection collection =
+          index.model()->data( index, Akonadi::EntityTreeModel::CollectionRole ).value<Akonadi::Collection>();
       if ( collection.isValid() )
         collections.append( collection );
     }
@@ -198,7 +198,7 @@ Akonadi::Collection::List FolderTreeWidget::selectedCollections() const
 
 FolderTreeView* FolderTreeWidget::folderTreeView()
 {
-  return d->collectionFolderView;
+  return d->folderTreeView;
 }
 
 void FolderTreeWidget::readConfig()
@@ -214,7 +214,7 @@ void FolderTreeWidget::readConfig()
   const int checkedFolderToolTipsPolicy = mainFolderView.readEntry( "ToolTipDisplayPolicy", 0 );
   changeToolTipsPolicyConfig( ( ToolTipDisplayPolicy )checkedFolderToolTipsPolicy );
 
-  d->collectionFolderView->setShowDropActionMenu( GlobalSettings::self()->showPopupAfterDnD() );
+  d->folderTreeView->setShowDropActionMenu( GlobalSettings::self()->showPopupAfterDnD() );
   readQuotaConfig();
 }
 
@@ -233,7 +233,7 @@ void FolderTreeWidget::changeToolTipsPolicyConfig( ToolTipDisplayPolicy policy )
   case DisplayNever:
     d->filterModel->setToolTipEnabled( false );
   }
-  d->collectionFolderView->setTooltipsPolicy( policy );
+  d->folderTreeView->setTooltipsPolicy( policy );
 }
 
 void FolderTreeWidget::quotaWarningParameters( const QColor &color, qreal threshold )
@@ -271,10 +271,10 @@ KLineEdit *FolderTreeWidget::filterFolderLineEdit()
 
 void FolderTreeWidget::applyFilter( const QString &filter )
 {
-
-  d->label->setText( filter.isEmpty() ? i18n("You can start typing to filter the list of folders.") : i18n( "Path: (%1)", filter ) );
+  d->label->setText( filter.isEmpty() ? i18n( "You can start typing to filter the list of folders." )
+                                      : i18n( "Path: (%1)", filter ) );
   d->filterTreeViewModel->setFilterFixedString( filter );
-  d->collectionFolderView->expandAll();
+  d->folderTreeView->expandAll();
 }
 
 #include "foldertreewidget.moc"
