@@ -26,6 +26,7 @@ namespace Akonadi {
   class Collection;
   class ChangeRecorder;
   class EntityTreeModel;
+  class EntityMimeTypeFilterModel;
 }
 
 namespace KIO {
@@ -233,8 +234,18 @@ public:
   void setupDBus();
   void readConfig();
 
-  Akonadi::ChangeRecorder *monitor();
-  Akonadi::EntityTreeModel *entityTreeModel();
+  Akonadi::ChangeRecorder *monitor() const;
+
+  /**
+   * Returns the main model, which contains all folders and the items of recently opened folders.
+   */
+  Akonadi::EntityTreeModel *entityTreeModel() const;
+
+  /**
+   * Returns a model of all folders in KMail. This is basically the same as entityTreeModel(),
+   * but with items filtered out, the model contains only collections.
+   */
+  Akonadi::EntityMimeTypeFilterModel *collectionModel() const;
 
 //TODO port to akonadi   void cleanupImapFolders();
   void recoverDeadLetters();
@@ -436,6 +447,7 @@ private:
 
   FolderCollectionMonitor *mFolderCollectionMonitor;
   Akonadi::EntityTreeModel *mEntityTreeModel;
+  Akonadi::EntityMimeTypeFilterModel *mCollectionModel;
 
   int mWrapCol;
 };

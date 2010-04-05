@@ -73,6 +73,7 @@ using KMail::TemplateParser;
 #include <Akonadi/AttributeFactory>
 #include <Akonadi/Session>
 #include <Akonadi/EntityTreeModel>
+#include <akonadi/entitymimetypefiltermodel.h>
 
 #include <QByteArray>
 #include <QDir>
@@ -223,6 +224,12 @@ KMKernel::KMKernel (QObject *parent, const char *name) :
   monitor()->setSession( session );
   mEntityTreeModel = new Akonadi::EntityTreeModel( monitor(), this );
   mEntityTreeModel->setItemPopulationStrategy( Akonadi::EntityTreeModel::LazyPopulation );
+  mCollectionModel = new Akonadi::EntityMimeTypeFilterModel( this );
+  mCollectionModel->setSourceModel( entityTreeModel() );
+  mCollectionModel->addMimeTypeInclusionFilter( Akonadi::Collection::mimeType() );
+  mCollectionModel->setHeaderGroup( Akonadi::EntityTreeModel::CollectionTreeHeaders );
+  mCollectionModel->setDynamicSortFilter( true );
+  mCollectionModel->setSortCaseSensitivity( Qt::CaseInsensitive );
 
   connect( MailTransport::TransportManager::self(),
            SIGNAL(transportRemoved(int,QString)),
@@ -250,14 +257,19 @@ KMKernel::~KMKernel ()
   kDebug();
 }
 
-Akonadi::ChangeRecorder * KMKernel::monitor()
+Akonadi::ChangeRecorder * KMKernel::monitor() const
 {
   return mFolderCollectionMonitor->monitor();
 }
 
-Akonadi::EntityTreeModel *KMKernel::entityTreeModel()
+Akonadi::EntityTreeModel * KMKernel::entityTreeModel() const
 {
   return mEntityTreeModel;
+}
+
+Akonadi::EntityMimeTypeFilterModel * KMKernel::collectionModel() const
+{
+  return mCollectionModel;
 }
 
 void KMKernel::setupDBus()

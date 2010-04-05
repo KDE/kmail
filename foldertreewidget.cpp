@@ -30,8 +30,8 @@
 #include <akonadi/changerecorder.h>
 #include <akonadi/session.h>
 #include <akonadi/entitytreemodel.h>
-#include <akonadi/itemfetchscope.h>
 #include <akonadi/entitymimetypefiltermodel.h>
+#include <akonadi/itemfetchscope.h>
 #include <akonadi/collection.h>
 #include <akonadi/statisticsproxymodel.h>
 #include <akonadi_next/quotacolorproxymodel.h>
@@ -81,16 +81,9 @@ FolderTreeWidget::FolderTreeWidget( QWidget *parent, KXMLGUIClient *xmlGuiClient
                                                    "textbox, verb to search", "Search" ) );
   lay->addWidget( d->filterFolderLineEdit );
 
-  Akonadi::EntityMimeTypeFilterModel *collectionModel = new Akonadi::EntityMimeTypeFilterModel( this );
-  collectionModel->setSourceModel( KMKernel::self()->entityTreeModel() );
-  collectionModel->addMimeTypeInclusionFilter( Akonadi::Collection::mimeType() );
-  collectionModel->setHeaderGroup( Akonadi::EntityTreeModel::CollectionTreeHeaders );
-  collectionModel->setDynamicSortFilter( true );
-  collectionModel->setSortCaseSensitivity( Qt::CaseInsensitive );
-
   Akonadi::RecursiveCollectionFilterProxyModel *recurfilter = new Akonadi::RecursiveCollectionFilterProxyModel( this );
   recurfilter->addContentMimeTypeInclusionFilter( KMime::Message::mimeType() );
-  recurfilter->setSourceModel( collectionModel );
+  recurfilter->setSourceModel( KMKernel::self()->collectionModel() );
 
   // ... with statistics...
   d->filterModel = new Akonadi::StatisticsProxyModel( this );
