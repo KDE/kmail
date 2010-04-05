@@ -275,8 +275,6 @@ public:
    */
   bool folderIsSentMailFolder( const Akonadi::Collection& );
 
-  Akonadi::Collection findFolderCollectionById( const QString& id );
-
   bool isImapFolder( const Akonadi::Collection& );
 
   const KComponentData &xmlGuiInstance() { return mXmlGuiInstance; }
@@ -349,6 +347,20 @@ public:
    * is empty at startup.
    */
   Akonadi::Collection::List allFolders() const;
+
+  /**
+   * Returns the collection associated with the given id, or an invalid collection if not found.
+   * The EntityTreeModel of the kernel is searched for the collection. Since the ETM is loaded
+   * async, this method will not find the collection right after startup, when the ETM is not yet
+   * fully loaded.
+   */
+  Akonadi::Collection collectionFromId( const QString &idString ) const;
+
+  /**
+   * @deprecated this uses exec(), don't use. Use collectionFromId() but be aware of the
+   *             restrictions.
+   */
+  Akonadi::Collection KDE_DEPRECATED findFolderCollectionById( const QString& id );
 
   void raise();
 
