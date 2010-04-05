@@ -220,7 +220,7 @@ KMKernel::KMKernel (QObject *parent, const char *name) :
   // till here ================================================
 
   mFolderCollectionMonitor = new FolderCollectionMonitor( this );
-  Akonadi::Session *session = new Akonadi::Session( "Kernel Session", this );
+  Akonadi::Session *session = new Akonadi::Session( "KMail Kernel ETM", this );
   monitor()->setSession( session );
   mEntityTreeModel = new Akonadi::EntityTreeModel( monitor(), this );
   mEntityTreeModel->setItemPopulationStrategy( Akonadi::EntityTreeModel::LazyPopulation );
