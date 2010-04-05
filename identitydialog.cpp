@@ -613,7 +613,7 @@ namespace KMail {
 
   bool IdentityDialog::checkFolderExists( const QString & folderID,
                                           const QString & msg ) {
-    Akonadi::Collection folder = kmkernel->findFolderCollectionById( folderID );
+    Akonadi::Collection folder = kmkernel->collectionFromId( folderID );
     if ( !folder.isValid() ) {
       KMessageBox::sorry( this, msg );
       return false;

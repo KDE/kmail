@@ -129,7 +129,7 @@ void FolderRequester::slotCollectionsReceived( Akonadi::Collection::List list )
 //-----------------------------------------------------------------------------
 void FolderRequester::setFolder( const QString &idString )
 {
-  Akonadi::Collection folder = kmkernel->findFolderCollectionById( idString );
+  Akonadi::Collection folder = kmkernel->collectionFromId( idString );
   if ( folder.isValid() ) {
     setFolder( folder );
   } else {

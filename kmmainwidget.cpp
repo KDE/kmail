@@ -1211,7 +1211,7 @@ void KMMainWidget::slotMailChecked( bool newMail, bool sendOnCheck,
   keys.sort();
   for ( QStringList::const_iterator it=keys.constBegin(); it!=keys.constEnd(); ++it ) {
 //    kDebug() << newInFolder.find( *it ).value() << "new message(s) in" << *it;
-    Akonadi::Collection col = kmkernel->findFolderCollectionById( *it );
+    Akonadi::Collection col = kmkernel->collectionFromId( *it );
 
     if ( col.isValid() ) {
       QSharedPointer<FolderCollection> fd( FolderCollection::forCollection( col ) );
@@ -1298,7 +1298,7 @@ void KMMainWidget::slotShowNewFromTemplate()
     {
       const KPIMIdentities::Identity & ident =
         kmkernel->identityManager()->identityForUoidOrDefault( mCurrentFolder->identity() );
-      mTemplateFolder = kmkernel->findFolderCollectionById( ident.templates() );
+      mTemplateFolder = kmkernel->collectionFromId( ident.templates() );
     }
 
   if ( !mTemplateFolder.isValid() ) {

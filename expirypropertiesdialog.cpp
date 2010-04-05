@@ -142,7 +142,7 @@ ExpiryPropertiesDialog::ExpiryPropertiesDialog(
 
   QString destFolderID = mFolder->expireToFolderId();
   if ( !destFolderID.isEmpty() ) {
-    Akonadi::Collection destFolder = KMKernel::self()->findFolderCollectionById( destFolderID );
+    Akonadi::Collection destFolder = KMKernel::self()->collectionFromId( destFolderID );
     if ( destFolder.isValid() )
       folderSelector->setFolder( destFolder );
   }
