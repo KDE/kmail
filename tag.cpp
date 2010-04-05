@@ -68,7 +68,7 @@ Tag::Ptr Tag::fromNepomuk( const Nepomuk::Tag& nepomukTag )
     tag->inToolbar = nepomukTag.property( Vocabulary::MessageTag::inToolbar() ).toBool();
   }
   else
-    tag->inToolbar = true;
+    tag->inToolbar = false;
 
   return tag;
 }
