@@ -58,7 +58,7 @@ public:
   explicit KMSearchRuleWidget( QWidget* parent=0, KMSearchRule::Ptr aRule = KMSearchRule::Ptr(), bool headersOnly = false, bool absoluteDates = false );
 
   enum { Message, Body, AnyHeader, Recipients, Size, AgeInDays, Status,
-         Tag, Subject, From, To, CC };
+         Tag, Subject, From, To, CC, ReplyTo, Organization };
 
   /** Set whether only header fields can be searched. If @p is true only
       header fields can be searched otherwise \<message\> and \<body\> searches
