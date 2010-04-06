@@ -55,7 +55,6 @@ namespace KMime {
 
 class QVBoxLayout;
 class QSplitter;
-class QSignalMapper;
 
 class KActionMenu;
 class KToggleAction;

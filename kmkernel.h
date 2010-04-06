@@ -64,7 +64,6 @@ class KComponentData;
 class QTimer;
 class KMMainWin;
 class KMainWindow;
-class KSystemTrayIcon;
 class KMMainWidget;
 class ConfigureDialog;
 class FolderCollectionMonitor;

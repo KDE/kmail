@@ -35,7 +35,6 @@
 #include <akonadi/collectionpropertiespage.h>
 #include <kimap/acl.h>
 #include <KDialog>
-class KJob;
 class KPushButton;
 class QStackedWidget;
 class KHBox;

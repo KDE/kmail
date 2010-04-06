@@ -45,9 +45,6 @@ class KToggleAction;
 class KWebView;
 class KUrl;
 namespace MessageViewer {
-  namespace Interface {
-    class BodyPartMemento;
-  }
   class HeaderStrategy;
   class HeaderStyle;
   class Viewer;
