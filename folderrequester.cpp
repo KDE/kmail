@@ -115,7 +115,7 @@ void FolderRequester::setFolder( const Akonadi::Collection&col )
   emit folderChanged( mCollection );
 }
 
-void FolderRequester::slotCollectionsReceived( Akonadi::Collection::List list )
+void FolderRequester::slotCollectionsReceived( const Akonadi::Collection::List& list )
 {
   Q_ASSERT( list.size() == 1 ); // we only start jobs on a single collection
   const Akonadi::Collection col = list.first();
