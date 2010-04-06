@@ -273,9 +273,6 @@ private:
 
   MessageViewer::Viewer *mViewer;
 
-  /** Used only to be able to connect and disconnect finished() signal
-      in printMsg() and slotPrintMsg() since mHtmlWriter points only to abstract non-QObject class. */
-  std::map<QByteArray, MessageViewer::Interface::BodyPartMemento*> mBodyPartMementoMap;
   // an attachment should be updated
   bool mAtmUpdate;
   int mChoice;
