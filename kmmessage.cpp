@@ -4344,7 +4344,7 @@ void KMMessage::updateBodyPart(const QString partSpecifier, const QByteArray & d
 
 void KMMessage::updateInvitationState()
 {
-  if ( mMsg && mMsg->Headers().HasContentType() ) {
+  if ( mMsg && mMsg->hasHeaders() && mMsg->Headers().HasContentType() ) {
     QString cntType = mMsg->Headers().ContentType().TypeStr().c_str();
     cntType += '/';
     cntType += mMsg->Headers().ContentType().SubtypeStr().c_str();
