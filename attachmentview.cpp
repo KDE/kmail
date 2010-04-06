@@ -58,6 +58,7 @@ AttachmentView::AttachmentView( AttachmentModel *model, QWidget *parent )
   setModel( sortModel );
   connect( sortModel, SIGNAL(rowsInserted(QModelIndex,int,int)), this, SLOT(hideIfEmpty()) );
   connect( sortModel, SIGNAL(rowsRemoved(QModelIndex,int,int)), this, SLOT(hideIfEmpty()) );
+  connect( sortModel, SIGNAL(rowsRemoved(QModelIndex,int,int)), this, SLOT(selectNewAttachment()) );
 
   setRootIsDecorated( false );
   setUniformRowHeights( true );
@@ -123,6 +124,14 @@ void AttachmentView::setSignEnabled( bool enabled )
 void AttachmentView::hideIfEmpty()
 {
   setVisible( model()->rowCount() > 0 );
+}
+
+void AttachmentView::selectNewAttachment()
+{
+  if ( selectionModel()->selectedRows().isEmpty() ) {
+    selectionModel()->select( selectionModel()->currentIndex(),
+                              QItemSelectionModel::Select | QItemSelectionModel::Rows );
+  }
 }
 
 void AttachmentView::startDrag( Qt::DropActions supportedActions )

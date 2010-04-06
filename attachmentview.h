@@ -53,6 +53,7 @@ class AttachmentView : public QTreeView
     void setEncryptEnabled( bool enabled );
     void setSignEnabled( bool enabled );
     void hideIfEmpty();
+    void selectNewAttachment();
 
   protected:
     /** reimpl to avoid default drag cursor */
