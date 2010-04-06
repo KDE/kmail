@@ -131,7 +131,7 @@ KMReaderWin::KMReaderWin(QWidget *aParent,
   createActions();
   QVBoxLayout * vlay = new QVBoxLayout( this );
   vlay->setMargin( 0 );
-  mViewer = new Viewer( this,KMKernel::config(),mainWindow,mActionCollection );
+  mViewer = new Viewer( this, mainWindow, mActionCollection );
   connect( mViewer, SIGNAL(urlClicked( const Akonadi::Item &, const KUrl & ) ),
            this, SLOT( slotUrlClicked( const Akonadi::Item &, const KUrl& ) ) );
   connect( mViewer, SIGNAL( requestConfigSync() ), this, SLOT( slotRequestConfigSync() ) );
