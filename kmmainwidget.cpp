@@ -4303,6 +4303,9 @@ void KMMainWidget::itemsReceived(const Akonadi::Item::List &list )
 {
   Q_ASSERT( list.size() == 1 );
 
+  if ( !mMsgView )
+    return;
+
   if ( mMessagePane )
     mMessagePane->show();
 
