@@ -103,7 +103,7 @@ ACLEntryDialog::ACLEntryDialog( const QString& caption, QWidget* parent )
   label->setBuddy( mUserIdLineEdit );
   mUserIdLineEdit->setWhatsThis( i18n( "The User Identifier is the login of the user on the IMAP server. This can be a simple user name or the full email address of the user; the login for your own account on the server will tell you which one it is." ) );
 
-  QPushButton* kabBtn = new QPushButton( "...", page );
+  QPushButton* kabBtn = new QPushButton( i18n( "Se&lect..." ), page );
   topLayout->addWidget( kabBtn, 0, 2 );
 
   QGroupBox* groupBox = new QGroupBox( i18n( "Permissions" ), page );
