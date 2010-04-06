@@ -4286,17 +4286,21 @@ QLabel * KMMainWidget::vacationScriptIndicator() const
 void KMMainWidget::slotMessageSelected(const Akonadi::Item &item)
 {
   delete mShowBusySplashTimer;
-  mShowBusySplashTimer = new QTimer( this );
-  mShowBusySplashTimer->setSingleShot( true );
-  connect( mShowBusySplashTimer, SIGNAL( timeout() ), this, SLOT( slotShowBusySplash() ) );
-  mShowBusySplashTimer->start( GlobalSettings::self()->folderLoadingTimeout() ); //TODO: check if we need a different timeout setting for this
-  // TODO: Port to partFetcher.
-  ItemFetchJob *itemFetchJob = new ItemFetchJob(item, this);
-  itemFetchJob->fetchScope().fetchFullPayload( true );
-  itemFetchJob->fetchScope().fetchAllAttributes();
-  itemFetchJob->fetchScope().setAncestorRetrieval( ItemFetchScope::Parent );
-  connect( itemFetchJob, SIGNAL(itemsReceived(Akonadi::Item::List)), SLOT(itemsReceived(Akonadi::Item::List)) );
-  connect( itemFetchJob, SIGNAL(result(KJob *)), SLOT(itemsFetchDone(KJob *)) );
+  mShowBusySplashTimer = 0;
+  if ( mMsgView ) {
+    mShowBusySplashTimer = new QTimer( this );
+    mShowBusySplashTimer->setSingleShot( true );
+    connect( mShowBusySplashTimer, SIGNAL( timeout() ), this, SLOT( slotShowBusySplash() ) );
+    mShowBusySplashTimer->start( GlobalSettings::self()->folderLoadingTimeout() ); //TODO: check if we need a different timeout setting for this
+    // TODO: Port to partFetcher.
+    ItemFetchJob *itemFetchJob = new ItemFetchJob(item, this);
+    itemFetchJob->fetchScope().fetchFullPayload( true );
+    itemFetchJob->fetchScope().fetchAllAttributes();
+    itemFetchJob->fetchScope().setAncestorRetrieval( ItemFetchScope::Parent );
+    connect( itemFetchJob, SIGNAL(itemsReceived(Akonadi::Item::List)),
+             SLOT(itemsReceived(Akonadi::Item::List)) );
+    connect( itemFetchJob, SIGNAL(result(KJob *)), SLOT(itemsFetchDone(KJob *)) );
+  }
 }
 
 void KMMainWidget::itemsReceived(const Akonadi::Item::List &list )
