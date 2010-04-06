@@ -143,7 +143,6 @@ KMReaderWin::KMReaderWin(QWidget *aParent,
   mDelayedMarkTimer.setSingleShot( true );
   connect( &mDelayedMarkTimer, SIGNAL(timeout()),
            this, SLOT(slotTouchMessage()) );
-  setMessage( Akonadi::Item(), MessageViewer::Viewer::Delayed );
 }
 
 void KMReaderWin::createActions()
