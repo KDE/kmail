@@ -666,7 +666,7 @@ class KMComposeWin : public KMail::Composer
     QLabel    *mLblFrom, *mLblReplyTo;
     QLabel    *mLblSubject;
     QLabel    *mDictionaryLabel;
-    QCheckBox *mBtnIdentity, *mBtnTransport, *mBtnFcc;
+    QCheckBox *mBtnIdentity, *mBtnDictionary, *mBtnTransport, *mBtnFcc;
     bool mDone;
 
     KMime::Message::Ptr mMsg;

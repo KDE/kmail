@@ -262,6 +262,8 @@ KMComposeWin::KMComposeWin( const KMime::Message::Ptr &aMsg, Composer::TemplateC
   mBtnFcc->setToolTip( i18n( "Use the selected value as your sent-mail folder for future messages" ) );
   mBtnTransport = new QCheckBox( sticky, mHeadersArea );
   mBtnTransport->setToolTip( i18n( "Use the selected value as your outgoing account for future messages" ) );
+  mBtnDictionary = new QCheckBox( sticky, mHeadersArea );
+  mBtnDictionary->setToolTip( i18n( "Use the selected value as your dictionary for future messages" ) );
 
   mShowHeaders = GlobalSettings::self()->headers();
   mDone = false;
@@ -342,6 +344,7 @@ KMComposeWin::KMComposeWin( const KMime::Message::Ptr &aMsg, Composer::TemplateC
   mBtnIdentity->setWhatsThis( GlobalSettings::self()->stickyIdentityItem()->whatsThis() );
   mBtnFcc->setWhatsThis( GlobalSettings::self()->stickyFccItem()->whatsThis() );
   mBtnTransport->setWhatsThis( GlobalSettings::self()->stickyTransportItem()->whatsThis() );
+  mBtnDictionary->setWhatsThis( GlobalSettings::self()->stickyDictionaryItem()->whatsThis() );
 
   setCaption( i18n("Composer") );
   setMinimumSize( 200, 200 );
@@ -349,6 +352,7 @@ KMComposeWin::KMComposeWin( const KMime::Message::Ptr &aMsg, Composer::TemplateC
   mBtnIdentity->setFocusPolicy( Qt::NoFocus );
   mBtnFcc->setFocusPolicy( Qt::NoFocus );
   mBtnTransport->setFocusPolicy( Qt::NoFocus );
+  mBtnDictionary->setFocusPolicy( Qt::NoFocus );
 
   mAttachmentModel = new KMail::AttachmentModel( this );
   mAttachmentView = new KMail::AttachmentView( mAttachmentModel, mSplitter );
@@ -564,6 +568,7 @@ void KMComposeWin::readConfig( bool reload /* = false */ )
   mBtnFcc->setChecked( GlobalSettings::self()->stickyFcc() );
   mBtnTransport->setChecked( GlobalSettings::self()->stickyTransport() );
   QString currentTransport = GlobalSettings::self()->currentTransport();
+  mBtnDictionary->setChecked( GlobalSettings::self()->stickyDictionary() );
 
   mEdtFrom->setCompletionMode( (KGlobalSettings::Completion)GlobalSettings::self()->completionMode() );
   mRecipientsEditor->setCompletionMode( (KGlobalSettings::Completion)GlobalSettings::self()->completionMode() );
@@ -608,13 +613,17 @@ void KMComposeWin::readConfig( bool reload /* = false */ )
   const KPIMIdentities::Identity & ident =
     kmkernel->identityManager()->identityForUoid( mIdentity->currentIdentity() );
 
-  mDictionaryCombo->setCurrentByDictionaryName( ident.dictionary() );
-
   if ( mBtnTransport->isChecked() && !currentTransport.isEmpty() ) {
     Transport *transport =
         TransportManager::self()->transportByName( currentTransport );
     if ( transport )
       mTransport->setCurrentTransport( transport->id() );
+  }
+
+  if ( mBtnDictionary->isChecked() ) {
+    mDictionaryCombo->setCurrentByDictionaryName( GlobalSettings::self()->previousDictionary() );
+  } else {
+    mDictionaryCombo->setCurrentByDictionaryName( ident.dictionary() );
   }
 
   QString fccName = "";
@@ -634,10 +643,12 @@ void KMComposeWin::writeConfig( void )
   if ( !mIgnoreStickyFields ) {
     GlobalSettings::self()->setCurrentTransport( mTransport->currentText() );
     GlobalSettings::self()->setStickyTransport( mBtnTransport->isChecked() );
+    GlobalSettings::self()->setStickyDictionary( mBtnDictionary->isChecked() );
     GlobalSettings::self()->setStickyIdentity( mBtnIdentity->isChecked() );
     GlobalSettings::self()->setPreviousIdentity( mIdentity->currentIdentity() );
   }
   GlobalSettings::self()->setPreviousFcc( QString::number(mFcc->currentCollection().id()) );
+  GlobalSettings::self()->setPreviousDictionary( mDictionaryCombo->currentDictionaryName() );
   GlobalSettings::self()->setAutoSpellChecking(
                                                mAutoSpellCheckingAction->isChecked() );
   MessageViewer::GlobalSettings::self()->setUseFixedFont( mFixedFontAction->isChecked() );
@@ -882,7 +893,7 @@ void KMComposeWin::rethinkFields( bool fromSlot )
     mDictionaryAction->setChecked( abs( mShowHeaders )&HDR_DICTIONARY );
   }
   rethinkHeaderLine( showHeaders,HDR_DICTIONARY, row, mDictionaryLabel,
-                     mDictionaryCombo, 0 );
+                     mDictionaryCombo, mBtnDictionary );
 
   if ( !fromSlot ) {
     mFccAction->setChecked( abs( mShowHeaders )&HDR_FCC );
@@ -1742,8 +1753,11 @@ void KMComposeWin::setMsg( const KMime::Message::Ptr &newMsg, bool mayAutoSign,
     else
       setFcc( kmailFcc );
   }
-  mDictionaryCombo->setCurrentByDictionaryName( ident.dictionary() );
 
+  const bool stickyDictionary = mBtnDictionary->isChecked() && !mIgnoreStickyFields;
+  if ( !stickyDictionary ) {
+    mDictionaryCombo->setCurrentByDictionaryName( ident.dictionary() );
+  }
 
   // Restore the quote prefix. We can't just use the global quote prefix here,
   // since the prefix is different for each message, it might for example depend
@@ -3071,8 +3085,10 @@ void KMComposeWin::ignoreStickyFields()
 {
   mIgnoreStickyFields = true;
   mBtnTransport->setChecked( false );
+  mBtnDictionary->setChecked( false );
   mBtnIdentity->setChecked( false );
   mBtnTransport->setEnabled( false );
+  mBtnDictionary->setEnabled( false );
   mBtnIdentity->setEnabled( false );
 }
 
@@ -3643,7 +3659,9 @@ void KMComposeWin::slotIdentityChanged( uint uoid, bool initalChange )
     }
   }
 
-  mDictionaryCombo->setCurrentByDictionaryName( ident.dictionary() );
+  if ( !mBtnDictionary->isChecked() && !mIgnoreStickyFields ) {
+    mDictionaryCombo->setCurrentByDictionaryName( ident.dictionary() );
+  }
   mEditor->setSpellCheckingLanguage( mDictionaryCombo->currentDictionary() );
 
   if ( !mBtnFcc->isChecked() && !mPreventFccOverwrite ) {

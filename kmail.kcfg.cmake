@@ -262,6 +262,11 @@
         <whatsthis>Remember this mail transport, so that it will be used in future composer windows as well.</whatsthis>
         <default>false</default>
       </entry>
+      <entry name="StickyDictionary" type="Bool">
+        <whatsthis>Remember this dictionary, so that it will be used in future composer windows as well.
+        </whatsthis>
+        <default>false</default>
+      </entry>
       <entry name="WordWrap" type="Bool" key="word-wrap">
         <label>Word &amp;wrap at column:</label>
         <default>true</default>
@@ -286,6 +291,7 @@
      </entry>
      <entry name="PreviousIdentity" type="UInt" key="previous-identity" />
       <entry name="PreviousFcc" type="String" key="previous-fcc" />
+      <entry name="PreviousDictionary" type="String" />
       <entry name="CurrentTransport" type="String" key="current-transport" />
       <entry name="OutlookCompatibleAttachments" type="Bool" key="outlook-compatible-attachments">
         <label>Outlook-compatible attachment naming</label>
