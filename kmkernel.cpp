@@ -1544,8 +1544,8 @@ void KMKernel::selectFolder( const QString &folder )
   Q_ASSERT( widget );
   if ( !widget )
     return;
-  KUrl collectionURL = folder;
-  Akonadi::Collection colFolder = Akonadi::Collection::fromUrl( collectionURL );
+
+  Akonadi::Collection colFolder = collectionFromId( folder );
   
   if( colFolder.isValid() )
     widget->selectCollectionFolder( colFolder );
