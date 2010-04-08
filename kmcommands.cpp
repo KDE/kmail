@@ -2039,33 +2039,9 @@ KMCommand::Result KMUrlClickedCommand::execute()
     win->setFocusToSubject();
     win->show();
   }
-  else if ((mUrl.protocol() == "http") || (mUrl.protocol() == "https") ||
-           (mUrl.protocol() == "ftp")  || (mUrl.protocol() == "file")  ||
-           (mUrl.protocol() == "ftps") || (mUrl.protocol() == "sftp" ) ||
-           (mUrl.protocol() == "help") || (mUrl.protocol() == "vnc")   ||
-           (mUrl.protocol() == "smb")  || (mUrl.protocol() == "fish")  ||
-           (mUrl.protocol() == "news"))
-  {
-    KPIM::BroadcastStatus::instance()->setTransientStatusMsg( i18n("Opening URL..."));
-    QTimer::singleShot( 2000, KPIM::BroadcastStatus::instance(), SLOT( reset() ) );
-
-    KMimeType::Ptr mime = KMimeType::findByUrl( mUrl );
-    if (mime->name() == "application/x-desktop" ||
-        mime->name() == "application/x-executable" ||
-        mime->name() == "application/x-ms-dos-executable" ||
-        mime->name() == "application/x-shellscript" )
-    {
-      if (KMessageBox::warningYesNo( 0, i18nc( "@info", "Do you really want to execute <filename>%1</filename>?",
-          mUrl.pathOrUrl() ), QString(), KGuiItem(i18n("Execute")), KStandardGuiItem::cancel() ) != KMessageBox::Yes)
-        return Canceled;
-    }
-    if ( !MessageViewer::Util::handleUrlOnMac( mUrl.pathOrUrl() ) ) {
-      KRun *runner = new KRun( mUrl, mMainWidget ); // will delete itself
-      runner->setRunExecutables( false );
-    }
-  }
   else
     return Failed;
+
   return OK;
 }
 
