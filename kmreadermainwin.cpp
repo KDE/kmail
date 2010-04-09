@@ -330,14 +330,30 @@ KAction *KMReaderMainWin::copyActionMenu()
 
 void KMReaderMainWin::slotMessagePopup(const Akonadi::Item&aMsg ,const KUrl&aUrl,const QPoint& aPoint)
 {
-  KMenu *menu = new KMenu;
   mUrl = aUrl;
   mMsg = aMsg;
 
+  const QString email =  KPIMUtils::firstEmailAddress( aUrl.path() );
+  Akonadi::ContactSearchJob *job = new Akonadi::ContactSearchJob( this );
+  job->setLimit( 1 );
+  job->setQuery( Akonadi::ContactSearchJob::Email, email, Akonadi::ContactSearchJob::ExactMatch );
+  job->setProperty( "point", aPoint );
+  connect( job, SIGNAL( result( KJob* ) ), SLOT( slotDelayedMessagePopup( KJob* ) ) );
+}
+
+void KMReaderMainWin::slotDelayedMessagePopup( KJob *job )
+{
+  const Akonadi::ContactSearchJob *searchJob = qobject_cast<Akonadi::ContactSearchJob*>( job );
+  const bool contactAlreadyExists = !searchJob->contacts().isEmpty();
+
+  const QPoint aPoint = job->property( "point" ).toPoint();
+
+  KMenu *menu = new KMenu;
+
   bool urlMenuAdded = false;
   bool copyAdded = false;
-  if ( !aUrl.isEmpty() ) {
-    if ( aUrl.protocol() == "mailto" ) {
+  if ( !mUrl.isEmpty() ) {
+    if ( mUrl.protocol() == "mailto" ) {
       // popup on a mailto URL
       menu->addAction( mReaderWin->mailToComposeAction() );
       if ( mMsg.isValid() ) {
@@ -345,19 +361,13 @@ void KMReaderMainWin::slotMessagePopup(const Akonadi::Item&aMsg ,const KUrl&aUrl
         menu->addAction( mReaderWin->mailToForwardAction() );
         menu->addSeparator();
       }
-      QString email =  KPIMUtils::firstEmailAddress( aUrl.path() );
-      Akonadi::ContactSearchJob *job = new Akonadi::ContactSearchJob( this );
-      job->setLimit( 1 );
-      job->setQuery( Akonadi::ContactSearchJob::Email, email );
-      job->exec();
 
-      KABC::Addressee::List addresseeList = job->contacts();
-
-      if ( addresseeList.count() == 0 ) {
-        menu->addAction( mReaderWin->addAddrBookAction() );
-      } else {
+      if ( contactAlreadyExists ) {
         menu->addAction( mReaderWin->openAddrBookAction() );
+      } else {
+        menu->addAction( mReaderWin->addAddrBookAction() );
       }
+
       menu->addAction( mReaderWin->copyURLAction() );
       copyAdded = true;
     } else {
@@ -385,8 +395,8 @@ void KMReaderMainWin::slotMessagePopup(const Akonadi::Item&aMsg ,const KUrl&aUrl
       delete menu;
       return;
     }
-    if ( aMsg.parentCollection().isValid() ) {
-      Akonadi::Collection col = aMsg.parentCollection();
+    if ( mMsg.parentCollection().isValid() ) {
+      Akonadi::Collection col = mMsg.parentCollection();
       if ( ! ( KMKernel::self()->folderIsSentMailFolder( col ) ||
                KMKernel::self()->folderIsDrafts( col ) ||
                KMKernel::self()->folderIsTemplates( col ) ) ) {

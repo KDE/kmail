@@ -13,6 +13,7 @@ class KMReaderWin;
 class KAction;
 class KFontAction;
 class KFontSizeAction;
+class KJob;
 class CustomTemplatesMenu;
 template <typename T, typename S> class QMap;
 
@@ -53,6 +54,7 @@ public:
   void showMessage( const QString & encoding, const Akonadi::Item &msg );
 private slots:
   void slotMessagePopup(const Akonadi::Item& ,const KUrl&,const QPoint& );
+  void slotDelayedMessagePopup( KJob* );
   void slotTrashMsg();
   void slotForwardInlineMsg();
   void slotForwardAttachedMsg();
