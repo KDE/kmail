@@ -79,7 +79,8 @@
 using KMail::ActionScheduler;
 #include "mailinglist-magic.h"
 #include "messageviewer/nodehelper.h"
-#include <kaddrbookexternal.h>
+#include <libkdepim/addemailaddressjob.h>
+#include <libkdepim/openemailaddressjob.h>
 #include "composer.h"
 #include "kmfiltermgr.h"
 #include "kmmainwidget.h"
@@ -522,12 +523,21 @@ KMMailtoAddAddrBookCommand::KMMailtoAddAddrBookCommand( const KUrl &url,
 
 KMCommand::Result KMMailtoAddAddrBookCommand::execute()
 {
-  KPIM::KAddrBookExternal::addEmail( KPIMUtils::decodeMailtoUrl( mUrl ),
-                                     parentWidget() );
+  const QString emailString = KPIMUtils::decodeMailtoUrl( mUrl );
 
+  KPIM::AddEmailAddressJob *job = new KPIM::AddEmailAddressJob( emailString, parentWidget(), this );
+  connect( job, SIGNAL( result( KJob* ) ), SLOT( slotAddEmailAddressDone( KJob* ) ) );
+  job->start();
+
+  setEmitsCompletedItself( true );
   return OK;
 }
 
+void KMMailtoAddAddrBookCommand::slotAddEmailAddressDone( KJob *job )
+{
+  setResult( job->error() ? Failed : OK );
+  emit completed( this );
+}
 
 KMMailtoOpenAddrBookCommand::KMMailtoOpenAddrBookCommand( const KUrl &url,
    QWidget *parent )
@@ -537,13 +547,21 @@ KMMailtoOpenAddrBookCommand::KMMailtoOpenAddrBookCommand( const KUrl &url,
 
 KMCommand::Result KMMailtoOpenAddrBookCommand::execute()
 {
-  const QString addr = KPIMUtils::decodeMailtoUrl( mUrl );
-  KPIM::KAddrBookExternal::openEmail( KPIMUtils::extractEmailAddress(addr),
-                                      addr, parentWidget() );
+  const QString emailString = KPIMUtils::decodeMailtoUrl( mUrl );
 
+  KPIM::OpenEmailAddressJob *job = new KPIM::OpenEmailAddressJob( emailString, parentWidget(), this );
+  connect( job, SIGNAL( result( KJob* ) ), SLOT( slotOpenEmailAddressDone( KJob* ) ) );
+  job->start();
+
+  setEmitsCompletedItself( true );
   return OK;
 }
 
+void KMMailtoOpenAddrBookCommand::slotOpenEmailAddressDone( KJob *job )
+{
+  setResult( job->error() ? Failed : OK );
+  emit completed( this );
+}
 
 KMUrlSaveCommand::KMUrlSaveCommand( const KUrl &url, QWidget *parent )
   : KMCommand( parent ), mUrl( url )

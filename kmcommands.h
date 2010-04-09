@@ -197,6 +197,9 @@ class KMAIL_EXPORT KMMailtoAddAddrBookCommand : public KMCommand
 public:
   KMMailtoAddAddrBookCommand( const KUrl &url, QWidget *parent );
 
+private Q_SLOTS:
+  void slotAddEmailAddressDone( KJob* );
+
 private:
   virtual Result execute();
 
@@ -223,6 +226,9 @@ class KMAIL_EXPORT KMMailtoOpenAddrBookCommand : public KMCommand
 
 public:
   KMMailtoOpenAddrBookCommand( const KUrl &url, QWidget *parent );
+
+private Q_SLOTS:
+  void slotOpenEmailAddressDone( KJob* );
 
 private:
   virtual Result execute();
