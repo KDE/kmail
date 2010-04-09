@@ -276,6 +276,12 @@ K_GLOBAL_STATIC( KMMainWidget::PtrList, theMainWidgetList )
   if ( GlobalSettings::self()->checkOutOfOfficeOnStartup() )
     QTimer::singleShot( 0, this, SLOT(slotCheckVacation()) );
 
+  const KConfigGroup cfg( KMKernel::config(), "CollectionFolderView" );
+  mFolderTreeWidget->folderTreeView()->header()->restoreState( cfg.readEntry( "HeaderState", QByteArray() ) );
+  Akonadi::EntityTreeViewStateSaver* saver = new Akonadi::EntityTreeViewStateSaver(
+      mFolderTreeWidget->folderTreeView() );
+  saver->restoreState( cfg );
+
   // must be the last line of the constructor:
   mStartupDone = true;
 }
@@ -852,9 +858,6 @@ void KMMainWidget::createWidgets()
            this, SLOT( slotFolderChanged( const Akonadi::Collection& ) ) );
 
   mFolderTreeWidget->setSelectionMode( QAbstractItemView::ExtendedSelection );
-  const KConfigGroup cfg( KMKernel::config(), "CollectionFolderView" );
-  mFolderTreeWidget->folderTreeView()->header()->restoreState( cfg.readEntry( "HeaderState", QByteArray() ) );
-
   mMessagePane = new MessageList::Pane( KMKernel::self()->entityTreeModel(),
                                         mFolderTreeWidget->folderTreeView()->selectionModel(),
                                         this );
@@ -1049,9 +1052,6 @@ void KMMainWidget::createWidgets()
            SLOT(slotItemAdded( const Akonadi::Item &, const Akonadi::Collection&) ) );
   connect( kmkernel->monitor(), SIGNAL( itemRemoved( const Akonadi::Item & ) ),
            SLOT(slotItemRemoved( const Akonadi::Item & ) ) );
-  Akonadi::EntityTreeViewStateSaver* saver = new Akonadi::EntityTreeViewStateSaver(
-      mFolderTreeWidget->folderTreeView() );
-  saver->restoreState( cfg );
 }
 
 void KMMainWidget::slotItemAdded( const Akonadi::Item &, const Akonadi::Collection& col)
