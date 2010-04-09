@@ -179,9 +179,6 @@ public:
   KWebView * htmlPart() const;
 
   Akonadi::Item message() const;
-  /** Set the serial number of the message this reader window is currently
-   *  waiting for. Used to discard updates for already deselected messages. */
-  void setWaitingForSerNum( unsigned long serNum ) { mWaitingForSerNum = serNum; }
 
   QWidget* mainWindow() { return mMainWindow; }
 
@@ -269,7 +266,6 @@ private:
   // an attachment should be updated
   bool mAtmUpdate;
   int mChoice;
-  unsigned long mWaitingForSerNum;
 
   bool mShowFullToAddressList;
   bool mShowFullCcAddressList;
