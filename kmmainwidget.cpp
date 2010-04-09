@@ -2755,12 +2755,14 @@ void KMMainWidget::slotMarkAll()
 
 void KMMainWidget::slotMessagePopup(const Akonadi::Item&msg ,const KUrl&aUrl,const QPoint& aPoint)
 {
+  updateMessageMenu();
+  mUrlCurrent = aUrl;
+
   const QString email =  KPIMUtils::firstEmailAddress( aUrl.path() );
   Akonadi::ContactSearchJob *job = new Akonadi::ContactSearchJob( this );
   job->setLimit( 1 );
   job->setQuery( Akonadi::ContactSearchJob::Email, email, Akonadi::ContactSearchJob::ExactMatch );
   job->setProperty( "msg", QVariant::fromValue( msg ) );
-  job->setProperty( "url", aUrl );
   job->setProperty( "point", aPoint );
 
   connect( job, SIGNAL( result( KJob* ) ), SLOT( slotDelayedMessagePopup( KJob* ) ) );
@@ -2782,17 +2784,14 @@ void KMMainWidget::slotDelayedMessagePopup( KJob *job )
 #endif
 
   const Akonadi::Item msg = job->property( "msg" ).value<Akonadi::Item>();
-  const KUrl aUrl = job->property( "url" ).toUrl();
   const QPoint aPoint = job->property( "point" ).toPoint();
 
-  updateMessageMenu();
   KMenu *menu = new KMenu;
-  mUrlCurrent = aUrl;
 
   bool urlMenuAdded = false;
 
-  if ( !aUrl.isEmpty() ) {
-    if ( aUrl.protocol() == "mailto" ) {
+  if ( !mUrlCurrent.isEmpty() ) {
+    if ( mUrlCurrent.protocol() == "mailto" ) {
       // popup on a mailto URL
       menu->addAction( mMsgView->mailToComposeAction() );
       menu->addAction( mMsgView->mailToReplyAction() );
@@ -2815,7 +2814,7 @@ void KMMainWidget::slotDelayedMessagePopup( KJob *job )
     }
 
     urlMenuAdded = true;
-    kDebug() << "URL is:" << aUrl;
+    kDebug() << "URL is:" << mUrlCurrent;
   }
 
   if ( mMsgView && !mMsgView->copyText().isEmpty() ) {
@@ -2876,7 +2875,6 @@ void KMMainWidget::slotDelayedMessagePopup( KJob *job )
   KAcceleratorManager::manage(menu);
   menu->exec( aPoint, 0 );
   delete menu;
-
 }
 //-----------------------------------------------------------------------------
 void KMMainWidget::getAccountMenu()
