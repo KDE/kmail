@@ -328,6 +328,7 @@ class KMAIL_EXPORT KMMainWidget : public QWidget
     void slotMarkAllAsRead();
     void slotArchiveFolder();
     void slotRemoveFolder();
+    void slotDelayedRemoveFolder( KJob* );
     void slotEmptyFolder();
     void slotCompactFolder();
 #if 0

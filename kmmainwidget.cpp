@@ -1497,14 +1497,25 @@ void KMMainWidget::slotArchiveFolder()
 //-----------------------------------------------------------------------------
 void KMMainWidget::slotRemoveFolder()
 {
-  QString str;
-  QDir dir;
-
   if ( !mCurrentFolder ) return;
   if ( mCurrentFolder->isSystemFolder() ) return;
   if ( mCurrentFolder->isReadOnly() ) return;
+
+  Akonadi::CollectionFetchJob *job = new Akonadi::CollectionFetchJob( mCurrentFolder->collection(), CollectionFetchJob::FirstLevel, this );
+  job->fetchScope().setContentMimeTypes( QStringList() << "message/rfc822" );
+  connect( job, SIGNAL( result( KJob* ) ), SLOT( slotDelayedRemoveFolder( KJob* ) ) );
+}
+
+void KMMainWidget::slotDelayedRemoveFolder( KJob *job )
+{
+  const Akonadi::CollectionFetchJob *fetchJob = qobject_cast<Akonadi::CollectionFetchJob*>( job );
+  const bool hasNotSubDirectory = fetchJob->collections().isEmpty();
+
+  QDir dir;
+  QString str;
   QString title;
   QString buttonLabel;
+
   if ( mCurrentFolder->collection().resource() == QLatin1String( "akonadi_search_resource" ) ) {
     title = i18n("Delete Search");
     str = i18n("<qt>Are you sure you want to delete the search <b>%1</b>?<br />"
@@ -1514,10 +1525,6 @@ void KMMainWidget::slotRemoveFolder()
   } else {
     title = i18n("Delete Folder");
 
-    Akonadi::CollectionFetchJob *job = new Akonadi::CollectionFetchJob( mCurrentFolder->collection(), CollectionFetchJob::FirstLevel, this );
-    job->fetchScope().setContentMimeTypes( QStringList() << "message/rfc822" );
-    job->exec();
-    bool hasNotSubDirectory = job->collections().isEmpty();
 
     if ( mCurrentFolder->count() == 0 ) {
       if ( hasNotSubDirectory ) {
