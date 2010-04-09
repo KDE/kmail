@@ -38,6 +38,10 @@ class DistributionListDialog : public KDialog
   public slots:
     void slotUser1();
 
+  private Q_SLOTS:
+    void slotDelayedSetRecipients( KJob* );
+    void slotDelayedUser1( KJob* );
+
   private:
     KLineEdit *mTitleEdit;
     QTreeWidget *mRecipientsList;

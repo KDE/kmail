@@ -142,29 +142,39 @@ void DistributionListDialog::setRecipients( const Recipient::List &recipients )
       QString email;
       KABC::Addressee::parseEmailAddress( *it2, name, email );
       if ( !email.isEmpty() ) {
-        DistributionListItem *item = new DistributionListItem( mRecipientsList );
-
         Akonadi::ContactSearchJob *job = new Akonadi::ContactSearchJob(this);
-        job->setQuery( Akonadi::ContactSearchJob::Email, email );
-        job->exec();
+        job->setQuery( Akonadi::ContactSearchJob::Email, email, Akonadi::ContactSearchJob::ExactMatch );
+        job->setProperty( "name", name );
+        job->setProperty( "email", email );
+        connect( job, SIGNAL( result( KJob* ) ), SLOT( slotDelayedSetRecipients( KJob* ) ) );
+      }
+    }
+  }
+}
 
-        const KABC::Addressee::List contacts = job->contacts();
-        if ( contacts.isEmpty() ) {
-          KABC::Addressee contact;
-          contact.setNameFromString( name );
-          contact.insertEmail( email );
-          item->setTransientAddressee( contact, email );
-          item->setCheckState( 0, Qt::Checked );
-        } else {
-          bool isFirst = true;
-          foreach ( const KABC::Addressee &contact, contacts ) {
-            item->setAddressee( contact, email );
-            if ( isFirst ) {
-              item->setCheckState( 0, Qt::Checked );
-              isFirst = false;
-            }
-          }
-        }
+void DistributionListDialog::slotDelayedSetRecipients( KJob *job )
+{
+  const Akonadi::ContactSearchJob *searchJob = qobject_cast<Akonadi::ContactSearchJob*>( job );
+  const KABC::Addressee::List contacts = searchJob->contacts();
+
+  const QString name = searchJob->property( "name" ).toString();
+  const QString email = searchJob->property( "email" ).toString();
+
+  DistributionListItem *item = new DistributionListItem( mRecipientsList );
+
+  if ( contacts.isEmpty() ) {
+    KABC::Addressee contact;
+    contact.setNameFromString( name );
+    contact.insertEmail( email );
+    item->setTransientAddressee( contact, email );
+    item->setCheckState( 0, Qt::Checked );
+  } else {
+    bool isFirst = true;
+    foreach ( const KABC::Addressee &contact, contacts ) {
+      item->setAddressee( contact, email );
+      if ( isFirst ) {
+        item->setCheckState( 0, Qt::Checked );
+        isFirst = false;
       }
     }
   }
@@ -203,9 +213,16 @@ void DistributionListDialog::slotUser1()
 
   Akonadi::ContactGroupSearchJob *job = new Akonadi::ContactGroupSearchJob();
   job->setQuery( Akonadi::ContactGroupSearchJob::Name, name );
-  job->exec();
+  job->setProperty( "name", name );
+  connect( job, SIGNAL( result( KJob* ) ), SLOT( slotDelayedUser1( KJob* ) ) );
+}
 
-  if ( !job->contactGroups().isEmpty() ) {
+void DistributionListDialog::slotDelayedUser1( KJob *job )
+{
+  const Akonadi::ContactGroupSearchJob *searchJob = qobject_cast<Akonadi::ContactGroupSearchJob*>( job );
+  const QString name = searchJob->property( "name" ).toString();
+
+  if ( !searchJob->contactGroups().isEmpty() ) {
     KMessageBox::information( this,
       i18nc( "@info", "<para>Distribution list with the given name <resource>%1</resource> "
         "already exists. Please select a different name.</para>", name ) );
