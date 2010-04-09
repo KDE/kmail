@@ -20,6 +20,7 @@
 #include <QWidget>
 
 class KComboBox;
+class KJob;
 class KTextEdit;
 class KUrl;
 
@@ -55,6 +56,7 @@ namespace KMail {
   private slots:
     void slotSelectFile();
     void slotSelectFromAddressbook();
+    void slotDelayedSelectFromAddressbook( KJob* );
     void slotUpdateXFace();
   };
 } // namespace KMail

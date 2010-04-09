@@ -252,15 +252,20 @@ namespace KMail {
 
     Akonadi::ContactSearchJob *job = new Akonadi::ContactSearchJob( this );
     job->setLimit( 1 );
-    job->setQuery( Akonadi::ContactSearchJob::Email, email );
-    job->exec();
+    job->setQuery( Akonadi::ContactSearchJob::Email, email, Akonadi::ContactSearchJob::ExactMatch );
+    connect( job, SIGNAL( result( KJob* ) ), SLOT( slotDelayedSelectFromAddressbook( KJob* ) ) );
+  }
 
-    if ( job->contacts().isEmpty() ) {
+  void XFaceConfigurator::slotDelayedSelectFromAddressbook( KJob *job )
+  {
+    const Akonadi::ContactSearchJob *searchJob = qobject_cast<Akonadi::ContactSearchJob*>( job );
+
+    if ( searchJob->contacts().isEmpty() ) {
       KMessageBox::information( this, i18n("You do not have your own contact defined in the address book."), i18n("No Picture") );
       return;
     }
 
-    const Addressee contact = job->contacts().first();
+    const Addressee contact = searchJob->contacts().first();
     if ( contact.photo().isIntern() )
     {
       const QImage photo = contact.photo().data();
