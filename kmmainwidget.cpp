@@ -2742,6 +2742,22 @@ void KMMainWidget::slotMarkAll()
 
 void KMMainWidget::slotMessagePopup(const Akonadi::Item&msg ,const KUrl&aUrl,const QPoint& aPoint)
 {
+  const QString email =  KPIMUtils::firstEmailAddress( aUrl.path() );
+  Akonadi::ContactSearchJob *job = new Akonadi::ContactSearchJob( this );
+  job->setLimit( 1 );
+  job->setQuery( Akonadi::ContactSearchJob::Email, email, Akonadi::ContactSearchJob::ExactMatch );
+  job->setProperty( "msg", QVariant::fromValue( msg ) );
+  job->setProperty( "url", aUrl );
+  job->setProperty( "point", aPoint );
+
+  connect( job, SIGNAL( result( KJob* ) ), SLOT( slotDelayedMessagePopup( KJob* ) ) );
+}
+
+void KMMainWidget::slotDelayedMessagePopup( KJob *job )
+{
+  const Akonadi::ContactSearchJob *searchJob = qobject_cast<Akonadi::ContactSearchJob*>( job );
+  const bool contactAlreadyExists = !searchJob->contacts().isEmpty();
+
 #if 0 //TODO port it
   mMessageListView->activateMessage( &msg ); // make sure that this message is the active one
 
@@ -2751,6 +2767,11 @@ void KMMainWidget::slotMessagePopup(const Akonadi::Item&msg ,const KUrl&aUrl,con
   Q_ASSERT( &msg == mMessageListView->currentMessage() );
 
 #endif
+
+  const Akonadi::Item msg = job->property( "msg" ).value<Akonadi::Item>();
+  const KUrl aUrl = job->property( "url" ).toUrl();
+  const QPoint aPoint = job->property( "point" ).toPoint();
+
   updateMessageMenu();
   KMenu *menu = new KMenu;
   mUrlCurrent = aUrl;
@@ -2766,18 +2787,10 @@ void KMMainWidget::slotMessagePopup(const Akonadi::Item&msg ,const KUrl&aUrl,con
 
       menu->addSeparator();
 
-      QString email =  KPIMUtils::firstEmailAddress( aUrl.path() );
-      Akonadi::ContactSearchJob *job = new Akonadi::ContactSearchJob( this );
-      job->setLimit( 1 );
-      job->setQuery( Akonadi::ContactSearchJob::Email, email );
-      job->exec();
-
-      const KABC::Addressee::List addresseeList = job->contacts();
-
-      if ( addresseeList.count() == 0 ) {
-        menu->addAction( mMsgView->addAddrBookAction() );
-      } else {
+      if ( contactAlreadyExists ) {
         menu->addAction( mMsgView->openAddrBookAction() );
+      } else {
+        menu->addAction( mMsgView->addAddrBookAction() );
       }
       menu->addAction( mMsgView->copyURLAction() );
     } else {
