@@ -70,6 +70,7 @@ class BackupJob : public QObject
     void itemFetchJobResult( KJob *job );
     void cancelJob();
     void archiveNextFolder();
+    void onArchiveNextFolderDone( KJob *job );
     void archiveNextMessage();
 
   private:

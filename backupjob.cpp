@@ -339,15 +339,21 @@ void BackupJob::archiveNextFolder()
     return;
   }
 
-  // FIXME: Get rid of the exec()
   Akonadi::ItemFetchJob *job = new Akonadi::ItemFetchJob( mCurrentFolder );
-  job->exec();
+  job->setProperty( "folderName", folderName );
+  connect( job, SIGNAL( result( KJob* ) ), SLOT( onArchiveNextFolderDone( KJob* ) ) );
+}
+
+void BackupJob::onArchiveNextFolderDone( KJob *job )
+{
   if ( job->error() ) {
     kWarning() << job->errorString();
-    abort( i18n( "Unable to get message list for folder %1.", folderName ) );
+    abort( i18n( "Unable to get message list for folder %1.", job->property( "folderName" ).toString() ) );
     return;
   }
-  mPendingMessages += job->items();
+
+  Akonadi::ItemFetchJob *fetchJob = qobject_cast<Akonadi::ItemFetchJob*>( job );
+  mPendingMessages += fetchJob->items();
   archiveNextMessage();
 }
 
