@@ -403,6 +403,7 @@ class KMAIL_EXPORT KMMainWidget : public QWidget
     void slotDisplayCurrentMessage();
 
     void slotShowNewFromTemplate();
+    void slotDelayedShowNewFromTemplate( KJob* );
     void slotNewFromTemplate( QAction* );
 
     /** Update the undo action */

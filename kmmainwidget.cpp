@@ -1309,13 +1309,19 @@ void KMMainWidget::slotShowNewFromTemplate()
     return;
 
   mTemplateMenu->menu()->clear();
+
   Akonadi::ItemFetchJob *job = new Akonadi::ItemFetchJob( mTemplateFolder );
   job->fetchScope().setAncestorRetrieval( ItemFetchScope::Parent );
   job->fetchScope().fetchFullPayload();
-  Akonadi::Item::List items;
-  if ( job->exec() ) {
-    items = job->items();
-  }
+  connect( job, SIGNAL( result( KJob* ) ), SLOT( slotDelayedShowNewFromTemplate( KJob* ) ) );
+}
+
+void KMMainWidget::slotDelayedShowNewFromTemplate( KJob *job )
+{
+  Akonadi::ItemFetchJob *fetchJob = qobject_cast<Akonadi::ItemFetchJob*>( job );
+
+  const Akonadi::Item::List items = fetchJob->items();
+
   for ( int idx = 0; idx < items.count(); ++idx ) {
     KMime::Message::Ptr msg = KMail::Util::message( items.at( idx ) );
     if ( msg ) {
