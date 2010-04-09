@@ -3605,7 +3605,6 @@ void KMMainWidget::slotCollapseAllThreads()
 void KMMainWidget::slotShowMsgSrc()
 {
   if ( mMsgView ) {
-    mMsgView->setUpdateAttachment( false );
     mMsgView->viewer()->slotShowMessageSource();
   }
 }

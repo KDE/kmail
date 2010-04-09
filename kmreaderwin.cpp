@@ -554,31 +554,6 @@ CSSHelper* KMReaderWin::cssHelper() const
   return mViewer->cssHelper();
 }
 
-bool KMReaderWin::decryptMessage() const
-{
-  return mViewer->decryptMessage();
-}
-
-bool KMReaderWin::showFullToAddressList() const
-{
-  return mShowFullToAddressList;
-}
-
-void KMReaderWin::setShowFullToAddressList( bool showFullToAddressList )
-{
-  mShowFullToAddressList = showFullToAddressList;
-}
-
-bool KMReaderWin::showFullCcAddressList() const
-{
-  return mShowFullCcAddressList;
-}
-
-void KMReaderWin::setShowFullCcAddressList( bool showFullCcAddressList )
-{
-  mShowFullCcAddressList = showFullCcAddressList;
-}
-
 bool KMReaderWin::showSignatureDetails() const
 {
   return mViewer->showSignatureDetails();
@@ -587,15 +562,6 @@ bool KMReaderWin::showSignatureDetails() const
 void KMReaderWin::setShowSignatureDetails( bool showDetails )
 {
   mViewer->setShowSignatureDetails( showDetails );
-}
-bool KMReaderWin::showAttachmentQuicklist() const
-{
-  return mViewer->showAttachmentQuicklist();
-}
-
-void KMReaderWin::setShowAttachmentQuicklist( bool showAttachmentQuicklist )
-{
-  mViewer->setShowAttachmentQuicklist( showAttachmentQuicklist );
 }
 
 bool KMReaderWin::htmlLoadExtOverride() const

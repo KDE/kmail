@@ -106,14 +106,6 @@ public:
   void setMsgPart( KMime::Content* aMsgPart, bool aHTML,
                    const QString& aFileName, const QString& pname );
 
-
-  /** Store message id of last viewed message,
-      normally no need to call this function directly,
-      since correct value is set automatically in
-      parseMsg(KMMessage* aMsg, bool onlyProcessHeaders). */
-  void setIdOfLastViewedMessage( const QString & msgId )
-    { mIdOfLastViewedMessage = msgId; }
-
   /** Clear the reader and discard the current message. */
   void clear(bool force = false);
 
@@ -157,8 +149,6 @@ public:
   bool isFixedFont() const;
   void setUseFixedFont( bool useFixedFont );
   MessageViewer::Viewer *viewer() { return mViewer; }
-  // Action to reply to a message
-  // but action( "some_name" ) some name could be used instead.
   KToggleAction *toggleFixFontAction();
   KAction *mailToComposeAction() { return mMailToComposeAction; }
   KAction *mailToReplyAction() { return mMailToReplyAction; }
@@ -173,7 +163,6 @@ public:
   KAction *addBookmarksAction() { return mAddBookmarksAction;}
   KAction *toggleMimePartTreeAction();
 
-  void setUpdateAttachment( bool update = true ) { mAtmUpdate = update; }
   /** Access to the KWebKitView used for the viewer. Use with
       care! */
   KWebView * htmlPart() const;
@@ -181,9 +170,6 @@ public:
   Akonadi::Item message() const;
 
   QWidget* mainWindow() { return mMainWindow; }
-
-  /** Returns whether the message should be decryted. */
-  bool decryptMessage() const;
 
   /** Enforce message decryption. */
   void setDecryptMessageOverwrite( bool overwrite = true );
@@ -195,23 +181,6 @@ public:
   void setShowSignatureDetails( bool showDetails = true );
 
   MessageViewer::CSSHelper* cssHelper() const;
-
-  /* show or hide the list that points to the attachments */
-  bool showAttachmentQuicklist() const;
-
-  /* show or hide the list that points to the attachments */
-  void setShowAttachmentQuicklist( bool showAttachmentQuicklist = true );
-  /** Return weather to show or hide the full list of "To" addresses */
-  bool showFullToAddressList() const;
-
-  /** Show or hide the full list of "To" addresses */
-  void setShowFullToAddressList( bool showFullToAddressList = true );
-
-  /** Return weather to show or hide the full list of "To" addresses */
-  bool showFullCcAddressList() const;
-
-  /** Show or hide the full list of "To" addresses */
-  void setShowFullCcAddressList( bool showFullCcAddressList = true );
 
 private:
 
@@ -252,9 +221,6 @@ private:
 private:
   QTimer mDelayedMarkTimer;
   bool mNoMDNsWhenEncrypted;
-  QStringList mTempFiles;
-  QStringList mTempDirs;
-  QString mIdOfLastViewedMessage;
   QWidget *mMainWindow;
   KActionCollection *mActionCollection;
 
@@ -262,13 +228,6 @@ private:
     *mAddAddrBookAction, *mOpenAddrBookAction, *mUrlSaveAsAction, *mAddBookmarksAction, *mSelectAllAction;
 
   MessageViewer::Viewer *mViewer;
-
-  // an attachment should be updated
-  bool mAtmUpdate;
-  int mChoice;
-
-  bool mShowFullToAddressList;
-  bool mShowFullCcAddressList;
 };
 
 
