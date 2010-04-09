@@ -519,6 +519,8 @@ KMMailtoAddAddrBookCommand::KMMailtoAddAddrBookCommand( const KUrl &url,
    QWidget *parent )
   : KMCommand( parent ), mUrl( url )
 {
+  setDeletesItself( true );
+  setEmitsCompletedItself( true );
 }
 
 KMCommand::Result KMMailtoAddAddrBookCommand::execute()
@@ -529,7 +531,6 @@ KMCommand::Result KMMailtoAddAddrBookCommand::execute()
   connect( job, SIGNAL( result( KJob* ) ), SLOT( slotAddEmailAddressDone( KJob* ) ) );
   job->start();
 
-  setEmitsCompletedItself( true );
   return OK;
 }
 
@@ -537,12 +538,16 @@ void KMMailtoAddAddrBookCommand::slotAddEmailAddressDone( KJob *job )
 {
   setResult( job->error() ? Failed : OK );
   emit completed( this );
+
+  deleteLater();
 }
 
 KMMailtoOpenAddrBookCommand::KMMailtoOpenAddrBookCommand( const KUrl &url,
    QWidget *parent )
   : KMCommand( parent ), mUrl( url )
 {
+  setDeletesItself( true );
+  setEmitsCompletedItself( true );
 }
 
 KMCommand::Result KMMailtoOpenAddrBookCommand::execute()
@@ -553,7 +558,6 @@ KMCommand::Result KMMailtoOpenAddrBookCommand::execute()
   connect( job, SIGNAL( result( KJob* ) ), SLOT( slotOpenEmailAddressDone( KJob* ) ) );
   job->start();
 
-  setEmitsCompletedItself( true );
   return OK;
 }
 
@@ -561,6 +565,8 @@ void KMMailtoOpenAddrBookCommand::slotOpenEmailAddressDone( KJob *job )
 {
   setResult( job->error() ? Failed : OK );
   emit completed( this );
+
+  deleteLater();
 }
 
 KMUrlSaveCommand::KMUrlSaveCommand( const KUrl &url, QWidget *parent )
