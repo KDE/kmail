@@ -253,9 +253,6 @@ protected:
 private:
   void createActions();
 private:
-  Akonadi::Item messageItem() const;
-
-  // See setOriginalMsg() for an explaination for those two.
   QTimer mDelayedMarkTimer;
   bool mNoMDNsWhenEncrypted;
   QStringList mTempFiles;
