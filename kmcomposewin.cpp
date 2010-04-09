@@ -1921,11 +1921,22 @@ void KMComposeWin::collectImages( KMime::Content *root )
 void KMComposeWin::setFcc( const QString &idString )
 {
   // check if the sent-mail folder still exists
+#if 0 // TODO: findFolderCollectionById deadlocks here, since it uses synchronous job execution, and we are
+      // very indirectly called from a result slot of a previous job here (message retrieval in KMCommand)
+      // which then deadlocks the Akonadi job scheduler as we never returned from the result slot yet.
+      // possible solution is to either use async jobs or retrieve the  collection from the ETM, which can be done
+      // synchronously as ETM has local caches.
   if ( ! idString.isEmpty() && KMKernel::self()->findFolderCollectionById( idString ).isValid() ) {
     mFcc->setDefaultCollection( KMKernel::self()->findFolderCollectionById( idString ) );
   } else {
     mFcc->setDefaultCollection( KMKernel::self()->sentCollectionFolder() );
   }
+#else
+  if ( idString.isEmpty() )
+    mFcc->setDefaultCollection( KMKernel::self()->sentCollectionFolder() );
+  else
+    mFcc->setDefaultCollection( Akonadi::Collection( idString.toInt() ) );
+#endif
 }
 
 //-----------------------------------------------------------------------------
