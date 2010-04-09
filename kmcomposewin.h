@@ -440,6 +440,8 @@ class KMComposeWin : public KMail::Composer
 
     void slotSpellCheckingStatus( const QString & status );
 
+    void slotDelayedApplyTemplate( KJob* );
+
   public: // kmcommand
     // FIXME we need to remove these, but they're pure virtual in Composer.
     void addAttach( KMime::Content *msgPart );

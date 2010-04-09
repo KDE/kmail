@@ -1061,33 +1061,56 @@ void KMComposeWin::applyTemplate( uint uoid )
       return;
   }
 
-  TemplateParser parser( mMsg, mode );
-  parser.setSelection( mTextSelection );
-  parser.setAllowDecryption( MessageViewer::GlobalSettings::self()->automaticDecrypt() );
   if ( mode == TemplateParser::NewMessage ) {
+    TemplateParser parser( mMsg, mode );
+    parser.setSelection( mTextSelection );
+    parser.setAllowDecryption( MessageViewer::GlobalSettings::self()->automaticDecrypt() );
+
     if ( !mCustomTemplate.isEmpty() )
       parser.process( mCustomTemplate, KMime::Message::Ptr() );
     else
       parser.processWithIdentity( uoid, KMime::Message::Ptr() );
-  } else {
-    if ( mMsg->headerByType( "X-KMail-Link-Message" ) ) {
-      foreach( const QString& serNumStr, mMsg->headerByType( "X-KMail-Link-Message" )->asUnicodeString().split( ',' ) ) {
-        const ulong serNum = serNumStr.toULong();
-        Akonadi::Item item( serNum );
-        Akonadi::ItemFetchJob *itemFetchJob = new Akonadi::ItemFetchJob( item, this );
-        itemFetchJob->fetchScope().fetchFullPayload( true );
-        itemFetchJob->fetchScope().setAncestorRetrieval( Akonadi::ItemFetchScope::Parent );
-        //TODO convert to async
-        if ( itemFetchJob->exec() ) {
-          Akonadi::Item it = itemFetchJob->items().at( 0 );
-          if ( !mCustomTemplate.isEmpty() )
-            parser.process( mCustomTemplate, KMail::Util::message( it ) );
-          else
-            parser.processWithIdentity( uoid, KMail::Util::message( it ) );
-        }
-      }
-    }
+
+#if 0
+    mEditor->setText( mMsg->bodyToUnicode() );
+#endif
+    return;
   }
+
+  if ( mMsg->headerByType( "X-KMail-Link-Message" ) ) {
+    Akonadi::Item::List items;
+    foreach( const QString& serNumStr, mMsg->headerByType( "X-KMail-Link-Message" )->asUnicodeString().split( ',' ) )
+      items << Akonadi::Item( serNumStr.toLongLong() );
+
+
+    Akonadi::ItemFetchJob *job = new Akonadi::ItemFetchJob( items, this );
+    job->fetchScope().fetchFullPayload( true );
+    job->fetchScope().setAncestorRetrieval( Akonadi::ItemFetchScope::Parent );
+    job->setProperty( "mode", (int)mode );
+    job->setProperty( "uoid", uoid );
+    connect( job, SIGNAL( result( KJob* ) ), SLOT( slotDelayedApplyTemplate( KJob* ) ) );
+  }
+}
+
+void KMComposeWin::slotDelayedApplyTemplate( KJob *job )
+{
+  const Akonadi::ItemFetchJob *fetchJob = qobject_cast<Akonadi::ItemFetchJob*>( job );
+  const Akonadi::Item::List items = fetchJob->items();
+
+  const TemplateParser::Mode mode = static_cast<TemplateParser::Mode>( fetchJob->property( "mode" ).toInt() );
+  const uint uoid = fetchJob->property( "uoid" ).toUInt();
+
+  TemplateParser parser( mMsg, mode );
+  parser.setSelection( mTextSelection );
+  parser.setAllowDecryption( MessageViewer::GlobalSettings::self()->automaticDecrypt() );
+
+  foreach ( const Akonadi::Item &item, items ) {
+    if ( !mCustomTemplate.isEmpty() )
+      parser.process( mCustomTemplate, KMail::Util::message( item ) );
+    else
+      parser.processWithIdentity( uoid, KMail::Util::message( item ) );
+  }
+
 #if 0
   mEditor->setText( mMsg->bodyToUnicode() );
 #endif
