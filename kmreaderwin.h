@@ -258,7 +258,6 @@ private:
   // See setOriginalMsg() for an explaination for those two.
   QTimer mDelayedMarkTimer;
   bool mNoMDNsWhenEncrypted;
-  unsigned long mLastSerNum;
   QStringList mTempFiles;
   QStringList mTempDirs;
   QString mIdOfLastViewedMessage;
