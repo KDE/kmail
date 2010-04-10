@@ -610,10 +610,12 @@ class KMComposeWin : public KMail::Composer
     };
 
     /**
-     * Send the message. Returns true if the message was sent successfully.
+     * Send the message.
      */
     void doSend( MessageSender::SendMethod method=MessageSender::SendDefault,
                  KMComposeWin::SaveIn saveIn = KMComposeWin::None );
+
+    void doDelayedSend( MessageSender::SendMethod method, KMComposeWin::SaveIn saveIn );
 
     void saveMessage( boost::shared_ptr<KMime::Message> message, KMComposeWin::SaveIn saveIn );
 
@@ -656,6 +658,7 @@ class KMComposeWin : public KMail::Composer
   private slots:
     void recipientEditorSizeHintChanged();
     void setMaximumHeaderSize();
+    void slotDoDelayedSend( KJob* );
 
   private:
     QWidget   *mMainWidget;

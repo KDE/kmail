@@ -22,6 +22,7 @@
 #include "kmcomposewin.h"
 
 // KMail includes
+#include "addressvalidationjob.h"
 #include "attachmentcontroller.h"
 #include "attachmentmodel.h"
 #include "attachmentview.h"
@@ -3139,19 +3140,6 @@ void KMComposeWin::doSend( MessageSender::SendMethod method,
       }
     }
 
-    // Validate the To:, CC: and BCC fields
-    if ( !KMail::Util::validateAddresses( this, to().trimmed() ) ) {
-      return;
-    }
-
-    if ( !KMail::Util::validateAddresses( this, cc().trimmed() ) ) {
-      return;
-    }
-
-    if ( !KMail::Util::validateAddresses( this, bcc().trimmed() ) ) {
-      return;
-    }
-
     if ( subject().isEmpty() ) {
       mEdtSubject->setFocus();
       int rc =
@@ -3170,8 +3158,43 @@ void KMComposeWin::doSend( MessageSender::SendMethod method,
     if ( userForgotAttachment() ) {
       return;
     }
+
+    // Validate the To:, CC: and BCC fields
+    const QStringList recipients = QStringList() << to().trimmed() << cc().trimmed() << bcc().trimmed();
+
+    AddressValidationJob *job = new AddressValidationJob( recipients.join( QLatin1String( ", ") ), this, this );
+    job->setProperty( "method", static_cast<int>( method ) );
+    job->setProperty( "saveIn", static_cast<int>( saveIn ) );
+    connect( job, SIGNAL( result( KJob* ) ), SLOT( slotDoDelayedSend( KJob* ) ) );
+    job->start();
+
+    // we'll call doDelaySend from within slotDoDelaySend
+  } else
+    doDelayedSend( method, saveIn );
+}
+
+void KMComposeWin::slotDoDelayedSend( KJob *job )
+{
+  if ( job->error() ) {
+    KMessageBox::error( this, job->errorText() );
+    return;
   }
 
+  const AddressValidationJob *validateJob = qobject_cast<AddressValidationJob*>( job );
+
+  // Abort sending if one of the recipient addresses is invalid ...
+  if ( !validateJob->isValid() )
+    return;
+
+  // ... otherwise continue as usual
+  const MessageSender::SendMethod method = static_cast<MessageSender::SendMethod>( job->property( "method" ).toInt() );
+  const KMComposeWin::SaveIn saveIn = static_cast<KMComposeWin::SaveIn>( job->property( "saveIn" ).toInt() );
+
+  doDelayedSend( method, saveIn );
+}
+
+void KMComposeWin::doDelayedSend( MessageSender::SendMethod method, KMComposeWin::SaveIn saveIn )
+{
   MessageViewer::KCursorSaver busy( MessageViewer::KBusyPtr::busy() );
 
   mMsg->date()->setDateTime( KDateTime::currentLocalDateTime() );

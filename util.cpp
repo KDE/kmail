@@ -55,34 +55,6 @@
 
 #include <stdlib.h>
 
-#ifndef KMAIL_UNITTESTS
-bool KMail::Util::validateAddresses( QWidget *parent, const QString &addresses )
-{
-  QString brokenAddress;
-
-  QStringList distributionListEmpty;
-  KPIMUtils::EmailParseResult errorCode =
-    KPIMUtils::isValidAddressList( MessageCore::StringUtil::expandAliases( addresses,
-                                          GlobalSettings::defaultDomain(), distributionListEmpty ),
-                                   brokenAddress );
-  if ( !distributionListEmpty.isEmpty() ) {
-    QString errorMsg = i18n( "Distribution list \"%1\" is empty, it cannot be used.", distributionListEmpty.join( ", " ) );
-    KMessageBox::sorry( parent , errorMsg, i18n("Invalid Email Address") );
-    return false;
-  }
-  if ( !( errorCode == KPIMUtils::AddressOk ||
-          errorCode == KPIMUtils::AddressEmpty ) ) {
-    QString errorMsg( "<qt><p><b>" + brokenAddress +
-                      "</b></p><p>" +
-                      KPIMUtils::emailParseResultToString( errorCode ) +
-                      "</p></qt>" );
-    KMessageBox::sorry( parent , errorMsg, i18n("Invalid Email Address") );
-    return false;
-  }
-  return true;
-}
-#endif
-
 #ifdef Q_WS_MACX
 #include <QDesktopServices>
 #endif

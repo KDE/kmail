@@ -39,6 +39,7 @@ class QString;
 class TemplatesConfiguration;
 
 class KComboBox;
+class KJob;
 class KLineEdit;
 class KPushButton;
 
@@ -82,6 +83,9 @@ namespace KMail {
 
     // copy default templates to identity templates
     void slotCopyGlobal();
+
+  private slots:
+    void slotDelayedButtonClicked( KJob* );
 
   private:
     bool checkFolderExists( const QString & folder, const QString & msg );

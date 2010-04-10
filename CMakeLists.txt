@@ -143,6 +143,7 @@ set(kmailprivate_LIB_SRCS
    foldershortcutactionmanager.cpp
    mdnadvicedialog.cpp
    kmsoundtestwidget.cpp
+   addressvalidationjob.cpp
 )
 
 soprano_add_ontology(kmailprivate_LIB_SRCS

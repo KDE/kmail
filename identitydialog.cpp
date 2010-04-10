@@ -36,12 +36,12 @@
 #include "folderrequester.h"
 using KMail::FolderRequester;
 
+#include "addressvalidationjob.h"
 #include "kleo_util.h"
 #include "kmmainwidget.h"
 #include "stringutil.h"
 #include "templatesconfiguration.h"
 #include "templatesconfiguration_kfg.h"
-#include "util.h"
 // other kdepim headers:
 #include <kpimidentities/identity.h>
 #include <kpimidentities/signatureconfigurator.h>
@@ -537,13 +537,23 @@ namespace KMail {
       return;
     }
 
-    if ( !Util::validateAddresses( this, mReplyToEdit->text().trimmed() ) ) {
-      return;
-    }
+    // Check if the 'Reply to' and 'BCC' recipients are valid
+    const QString recipients = mReplyToEdit->text().trimmed() + QLatin1String( ", " ) + mBccEdit->text().trimmed();
+    AddressValidationJob *job = new AddressValidationJob( recipients, this, this );
+    job->setProperty( "email", email );
+    connect( job, SIGNAL( result( KJob* ) ), SLOT( slotDelayedButtonClicked( KJob* ) ) );
+    job->start();
+  }
 
-    if ( !Util::validateAddresses( this, mBccEdit->text().trimmed() ) ) {
+  void IdentityDialog::slotDelayedButtonClicked( KJob *job )
+  {
+    const AddressValidationJob *validationJob = qobject_cast<AddressValidationJob*>( job );
+
+    // Abort if one of the recipient addresses is invalid
+    if ( !validationJob->isValid() )
       return;
-    }
+
+    const QString email = validationJob->property( "email" ).toString();
 
     const std::vector<GpgME::Key> &pgpSigningKeys =
       mPGPSigningKeyRequester->keys();

@@ -78,13 +78,6 @@ namespace Util {
      */
     size_t crlf2lf( char* str, const size_t strLen );
 
-    /**
-     * Validates a list of email addresses.
-     * @return true if all addresses are valid.
-     * @return false if one or several addresses are invalid.
-     */
-    bool validateAddresses( QWidget *parent, const QString &addresses );
-
     KMime::Message::Ptr message( const Akonadi::Item & item );
 
     KUrl findSieveUrlForAccount( OrgKdeAkonadiImapSettingsInterface *a,  const QString &ident);
