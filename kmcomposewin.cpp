@@ -22,8 +22,6 @@
 #include "kmcomposewin.h"
 
 // KMail includes
-#include "messagehelper.h"
-#include "attachmentcollector.h"
 #include "attachmentcontroller.h"
 #include "attachmentmodel.h"
 #include "attachmentview.h"
@@ -42,9 +40,8 @@
 #include "messageviewer/stl_util.h"
 #include "messageviewer/util.h"
 #include "messagecore/stringutil.h"
+#include "messagecore/attachmentcollector.h"
 #include "util.h"
-#include "templateparser.h"
-#include "messagehelper.h"
 #include "snippetwidget.h"
 #include "keyresolver.h"
 #include "templatesconfiguration_kfg.h"
@@ -67,7 +64,13 @@
 #include <messagecomposer/globalpart.h>
 #include <messagecomposer/infopart.h>
 #include <messagecomposer/textpart.h>
+#include <messagecomposer/messagehelper.h>
+#include <messagecomposer/messagehelper.h>
 #include <messagecore/attachmentpart.h>
+#include <templateparser/templateparser.h>
+
+#include <templatesconfiguration.h>
+#include "messagecore/nodehelper.h"
 
 // LIBKDEPIM includes
 #include <libkdepim/recentaddresses.h>
@@ -140,9 +143,7 @@
 // MOC
 #include "kmcomposewin.moc"
 
-
 using Sonnet::DictionaryComboBox;
-using KMail::TemplateParser;
 using MailTransport::TransportManager;
 using MailTransport::Transport;
 using KPIM::RecentAddresses;
@@ -484,26 +485,6 @@ void KMComposeWin::addAttachmentsAndSend( const KUrl::List &urls, const QString 
   }
 
   send( how );
-#if 0
-  Q_UNUSED( comment );
-  if ( urls.isEmpty() ) {
-    send( how );
-    return;
-  }
-  mAttachFilesSend = how;
-  mAttachFilesPending = urls;
-  connect( this, SIGNAL(attachmentAdded(const KUrl &, bool)), SLOT(slotAttachedFile(const KUrl &)) );
-  for ( int i = 0, count = urls.count(); i < count; ++i ) {
-    if ( !addAttach( urls[i] ) ) {
-      mAttachFilesPending.removeAt( mAttachFilesPending.indexOf( urls[i] ) ); // only remove one copy of the url
-    }
-  }
-
-  if ( mAttachFilesPending.isEmpty() && mAttachFilesSend == how ) {
-    send( mAttachFilesSend );
-    mAttachFilesSend = -1;
-  }
-#endif
 }
 
 //-----------------------------------------------------------------------------
@@ -516,45 +497,24 @@ void KMComposeWin::addAttachment( const KUrl &url, const QString &comment )
 
 //-----------------------------------------------------------------------------
 void KMComposeWin::addAttachment( const QString &name,
-                                  const QByteArray &cte,
+                                  KMime::Headers::contentEncoding cte,
                                   const QByteArray &data,
-                                  const QByteArray &type,
-                                  const QByteArray &subType,
+                                  const QByteArray& mimeType,
                                   const QByteArray &paramAttr,
                                   const QString &paramValue,
                                   const QByteArray &contDisp )
 {
-  kDebug() << "implement me";
 
   KPIM::AttachmentPart::Ptr attachment = KPIM::AttachmentPart::Ptr( new KPIM::AttachmentPart() );
   if( !data.isEmpty() ) {
     attachment->setName( name );
     attachment->setData( data );
-    attachment->setMimeType( type );
+    attachment->setEncoding(cte);
+    attachment->setMimeType( mimeType );
     // TODO what about the other fields?
 
     mAttachmentController->addAttachment( attachment);
   }
-#if 0
-  Q_UNUSED( cte );
-
-  if ( !data.isEmpty() ) {
-    KMMessagePart *msgPart = new KMMessagePart;
-    msgPart->setName( name );
-    if ( type == "message" && subType == "rfc822" ) {
-      msgPart->setMessageBody( data );
-    } else {
-      QList<int> dummy;
-      msgPart->setBodyAndGuessCte( data, dummy,
-                                   kmkernel->msgSender()->sendQuotedPrintable() );
-    }
-    msgPart->setTypeStr( type );
-    msgPart->setSubtypeStr( subType );
-    msgPart->setParameter( paramAttr, paramValue );
-    msgPart->setContentDisposition( contDisp );
-    mAttachmentController->addAttachment( msgPart );
-  }
-#endif
 }
 
 //-----------------------------------------------------------------------------
@@ -1043,26 +1003,26 @@ void KMComposeWin::applyTemplate( uint uoid )
   KMime::Headers::Generic *header = new KMime::Headers::Generic( "X-KMail-Templates", mMsg.get(), ident.templates(), "utf-8" );
   mMsg->setHeader( header );
 
-  TemplateParser::Mode mode;
+  TemplateParser::TemplateParser::Mode mode;
   switch ( mContext ) {
     case New:
-      mode = TemplateParser::NewMessage;
+      mode = TemplateParser::TemplateParser::NewMessage;
       break;
     case Reply:
-      mode = TemplateParser::Reply;
+      mode = TemplateParser::TemplateParser::Reply;
       break;
     case ReplyToAll:
-      mode = TemplateParser::ReplyAll;
+      mode = TemplateParser::TemplateParser::ReplyAll;
       break;
     case Forward:
-      mode = TemplateParser::Forward;
+      mode = TemplateParser::TemplateParser::Forward;
       break;
     default:
       return;
   }
 
-  if ( mode == TemplateParser::NewMessage ) {
-    TemplateParser parser( mMsg, mode );
+  if ( mode == TemplateParser::TemplateParser::NewMessage ) {
+    TemplateParser::TemplateParser parser( mMsg, mode );
     parser.setSelection( mTextSelection );
     parser.setAllowDecryption( MessageViewer::GlobalSettings::self()->automaticDecrypt() );
 
@@ -1097,10 +1057,10 @@ void KMComposeWin::slotDelayedApplyTemplate( KJob *job )
   const Akonadi::ItemFetchJob *fetchJob = qobject_cast<Akonadi::ItemFetchJob*>( job );
   const Akonadi::Item::List items = fetchJob->items();
 
-  const TemplateParser::Mode mode = static_cast<TemplateParser::Mode>( fetchJob->property( "mode" ).toInt() );
+  const TemplateParser::TemplateParser::Mode mode = static_cast<TemplateParser::TemplateParser::Mode>( fetchJob->property( "mode" ).toInt() );
   const uint uoid = fetchJob->property( "uoid" ).toUInt();
 
-  TemplateParser parser( mMsg, mode );
+  TemplateParser::TemplateParser parser( mMsg, mode );
   parser.setSelection( mTextSelection );
   parser.setAllowDecryption( MessageViewer::GlobalSettings::self()->automaticDecrypt() );
 
@@ -1693,35 +1653,6 @@ void KMComposeWin::setMsg( const KMime::Message::Ptr &newMsg, bool mayAutoSign,
     }
   }
 
-#if 0 //TODO port to kmime
-
-  // enable/disable encryption if the message was/wasn't encrypted
-  switch ( mMsg->encryptionState() ) {
-  case KMMsgFullyEncrypted: // fall through
-  case KMMsgPartiallyEncrypted:
-    mLastEncryptActionState = true;
-    break;
-  case KMMsgNotEncrypted:
-    mLastEncryptActionState = false;
-    break;
-  default: // nothing
-    break;
-  }
-
-  // enable/disable signing if the message was/wasn't signed
-  switch ( mMsg->signatureState() ) {
-  case KMMsgFullySigned: // fall through
-  case KMMsgPartiallySigned:
-    mLastSignActionState = true;
-    break;
-  case KMMsgNotSigned:
-    mLastSignActionState = false;
-    break;
-  default: // nothing
-    break;
-  }
-#endif
-
   // if these headers are present, the state of the message should be overruled
   if ( mMsg->headerByType( "X-KMail-SignatureActionEnabled" ) )
     mLastSignActionState = (mMsg->headerByType( "X-KMail-SignatureActionEnabled" )->as7BitString().contains( "true" ));
@@ -1799,7 +1730,7 @@ void KMComposeWin::setMsg( const KMime::Message::Ptr &newMsg, bool mayAutoSign,
   otp.parseObjectTree( Akonadi::Item(), msgContent );
 
   // Load the attachments
-  KMail::AttachmentCollector ac;
+  MessageCore::AttachmentCollector ac;
   ac.collectAttachmentsFrom( msgContent );
   for ( std::vector<KMime::Content*>::const_iterator it = ac.attachments().begin();
         it != ac.attachments().end() ; ++it ) {
@@ -1902,7 +1833,7 @@ void KMComposeWin::collectImages( KMime::Content *root )
     if ( parentnode &&
          parentnode->contentType()->isMultipart() &&
          parentnode->contentType()->subType() == "related" ) {
-      KMime::Content *node = MessageViewer::NodeHelper::nextSibling( n );
+      KMime::Content *node = MessageCore::NodeHelper::nextSibling( n );
       while ( node ) {
         if ( node->contentType()->isImage() ) {
           kDebug() << "found image in multipart/related : " << node->contentType()->name();
@@ -1911,7 +1842,7 @@ void KMComposeWin::collectImages( KMime::Content *root )
           mEditor->loadImage( img, "cid:" + node->contentID()->identifier(),
                               node->contentType()->name() );
         }
-        node = MessageViewer::NodeHelper::nextSibling( node );
+        node = MessageCore::NodeHelper::nextSibling( node );
       }
     }
   }
@@ -2033,7 +1964,7 @@ bool KMComposeWin::userForgotAttachment()
   // check whether the subject contains one of the attachment key words
   // unless the message is a reply or a forwarded message
   QString subj = subject();
-  gotMatch = ( KMail::MessageHelper::stripOffPrefixes( subj ) == subj ) && ( rx.indexIn( subj ) >= 0 );
+  gotMatch = ( MessageHelper::stripOffPrefixes( subj ) == subj ) && ( rx.indexIn( subj ) >= 0 );
 
   if ( !gotMatch ) {
     // check whether the non-quoted text contains one of the attachment key
@@ -2430,7 +2361,7 @@ void KMComposeWin::queueMessage( KMime::Message::Ptr message, Message::Composer*
   MailTransport::MessageQueueJob *qjob = new MailTransport::MessageQueueJob( this );
   qjob->setMessage( message );
   qjob->transportAttribute().setTransportId( infoPart->transportId() );
-  if( mSendMethod == KMail::MessageSender::SendLater )
+  if( mSendMethod == MessageSender::SendLater )
     qjob->dispatchModeAttribute().setDispatchMode( MailTransport::DispatchModeAttribute::Manual );
 
   if ( !infoPart->fcc().isEmpty() ) {
@@ -2961,7 +2892,7 @@ void KMComposeWin::slotNewComposer()
   KMComposeWin *win;
   KMime::Message::Ptr msg( new KMime::Message );
 
-  KMail::MessageHelper::initHeader( msg );
+  MessageHelper::initHeader( msg, KMKernel::self()->identityManager() );
   win = new KMComposeWin( msg );
   win->show();
 }
@@ -3158,16 +3089,16 @@ void KMComposeWin::slotContinuePrint( bool rc )
 }
 
 //----------------------------------------------------------------------------
-void KMComposeWin::doSend( KMail::MessageSender::SendMethod method,
+void KMComposeWin::doSend( MessageSender::SendMethod method,
                            KMComposeWin::SaveIn saveIn )
 {
   // TODO integrate with MDA online status
-  if ( method != KMail::MessageSender::SendLater && KMKernel::self()->isOffline() ) {
+  if ( method != MessageSender::SendLater && KMKernel::self()->isOffline() ) {
     KMessageBox::information( this,
                               i18n("KMail is currently in offline mode. "
                                    "Your messages will be kept in the outbox until you go online."),
                               i18n("Online/Offline"), "kmailIsOffline" );
-    mSendMethod = KMail::MessageSender::SendLater;
+    mSendMethod = MessageSender::SendLater;
   } else {
     mSendMethod = method;
   }
@@ -3378,7 +3309,7 @@ void KMComposeWin::slotSendLater()
   if ( !checkRecipientNumber() )
       return;
   if ( mEditor->checkExternalEditorFinished() ) {
-    doSend( KMail::MessageSender::SendLater );
+    doSend( MessageSender::SendLater );
   }
 }
 
@@ -3386,7 +3317,7 @@ void KMComposeWin::slotSendLater()
 void KMComposeWin::slotSaveDraft()
 {
   if ( mEditor->checkExternalEditorFinished() ) {
-    doSend( KMail::MessageSender::SendLater, KMComposeWin::Drafts );
+    doSend( MessageSender::SendLater, KMComposeWin::Drafts );
   }
 }
 
@@ -3394,7 +3325,7 @@ void KMComposeWin::slotSaveDraft()
 void KMComposeWin::slotSaveTemplate()
 {
   if ( mEditor->checkExternalEditorFinished() ) {
-    doSend( KMail::MessageSender::SendLater, KMComposeWin::Templates );
+    doSend( MessageSender::SendLater, KMComposeWin::Templates );
   }
 }
 
@@ -3439,12 +3370,12 @@ void KMComposeWin::slotSendNow()
                                               KGuiItem( i18n("Send &Later") ) );
 
     if ( rc == KMessageBox::Yes ) {
-      doSend( KMail::MessageSender::SendImmediate );
+      doSend( MessageSender::SendImmediate );
     } else if ( rc == KMessageBox::No ) {
-      doSend( KMail::MessageSender::SendLater );
+      doSend( MessageSender::SendLater );
     }
   } else {
-    doSend( KMail::MessageSender::SendImmediate );
+    doSend( MessageSender::SendImmediate );
   }
 }
 

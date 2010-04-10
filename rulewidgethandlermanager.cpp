@@ -40,9 +40,11 @@
 
 #include <kdebug.h>
 #include <kiconloader.h>
+#include <kicon.h>
 
 #include <QStackedWidget>
 #include <QString>
+#include <QLineEdit>
 #include <QObject>
 
 #include <assert.h>

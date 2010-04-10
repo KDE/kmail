@@ -4,5 +4,5 @@ Mutators=true
 Singleton=true
 ItemAccessors=true
 SetUserTexts=true
-IncludeFiles=qapplication.h
+IncludeFiles=qapplication.h,templatesconfiguration.h
 

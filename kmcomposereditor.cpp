@@ -192,7 +192,7 @@ void KMComposerEditor::insertFromMimeData( const QMimeData *source )
       return;
     }
 
-    m_composerWin->addAttachment( attName, "base64", imageData, "image", "png", QByteArray(),
+    m_composerWin->addAttachment( attName, KMime::Headers::CEbase64, imageData, "image/png", QByteArray(),
                                   QString(), QByteArray() );
     return;
   }

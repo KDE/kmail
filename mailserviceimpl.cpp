@@ -32,7 +32,10 @@
 #include "mailserviceimpl.moc"
 #include <serviceadaptor.h>
 #include "composer.h"
-#include "messagehelper.h"
+#include "kmkernel.h"
+
+// kdepim includes
+#include "messagecomposer/messagehelper.h"
 
 #include <kurl.h>
 #include <kdebug.h>
@@ -59,7 +62,7 @@ bool MailServiceImpl::sendMessage( const QString& from, const QString& to,
     return false;
 
   KMime::Message::Ptr msg( new KMime::Message );
-  MessageHelper::initHeader( msg );
+  MessageHelper::initHeader( msg, KMKernel::self()->identityManager() );
 
   msg->contentType()->setCharset( "utf-8" );
 
@@ -91,7 +94,7 @@ bool MailServiceImpl::sendMessage( const QString& from, const QString& to,
     return false;
 
   KMime::Message::Ptr msg( new KMime::Message );
-  MessageHelper::initHeader( msg );
+  MessageHelper::initHeader( msg, KMKernel::self()->identityManager() );
 
   msg->contentType()->setCharset( "utf-8" );
 

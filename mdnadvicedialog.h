@@ -21,24 +21,31 @@
 
 #include <QtCore/QString>
 #include <KDialog>
+#include <kmime/kmime_message.h>
+#include <messagecomposer/messagefactory.h>
 
 class MDNAdviceDialog : public KDialog
 {
   Q_OBJECT
 
-public:
-  enum MDNAdvice {
-    MDNIgnore,
-    MDNSendDenied,
-    MDNSend
-  };
-
   ~MDNAdviceDialog();
-  static MDNAdvice questionIgnoreSend( const QString &text, bool canDeny );
+
+public:
+  /**
+   * Checks the MDN headers to see if the user needs to be asked for any
+   *  confirmations. Will ask the user if action is required.
+   *
+   * Returns the sending mode for the MDN to be created.
+   */
+  static KMime::MDN::SendingMode checkMDNHeaders( KMime::Message::Ptr msg );
 
 private:
   MDNAdviceDialog( const QString &text, bool canDeny, QWidget *parent = 0 );
-  MDNAdvice m_result;
+  
+  static int requestAdviceOnMDN( const char * what );
+  static MessageComposer::MDNAdvice questionIgnoreSend( const QString &text, bool canDeny );
+  
+  MessageComposer::MDNAdvice m_result;
 
 protected:
 

@@ -22,7 +22,6 @@
 #include <QProcess>
 #include "kmmainwidget.h"
 #include "kstatusbar.h"
-#include "messagesender.h"
 #include "progressdialog.h"
 #include "statusbarprogresswidget.h"
 #include "broadcaststatus.h"
@@ -40,7 +39,11 @@
 #include <ktip.h>
 #include <kicon.h>
 
+#include "messagecomposer/messagesender.h"
+
+
 #include "kmmainwin.moc"
+
 
 KMMainWin::KMMainWin(QWidget *)
     : KXmlGuiWindow( 0 ),

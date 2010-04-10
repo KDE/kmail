@@ -20,6 +20,7 @@
 #include <QLayout>
 #include <QMenu>
 #include <QTreeWidget>
+#include <QButtonGroup>
 #include <QVBoxLayout>
 
 #include <cassert>

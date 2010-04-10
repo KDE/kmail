@@ -20,11 +20,11 @@
 
 #include "globalsettings.h"
 #include "kmreaderwin.h"
-#include "mailinglist-magic.h"
 #include "kmkernel.h"
 #include "util.h"
 
 #include "messagecore/annotationdialog.h"
+#include "messagecore/mailinglist-magic.h"
 #include "messageviewer/csshelper.h"
 #include "messageviewer/globalsettings.h"
 
@@ -296,14 +296,14 @@ void MessageActions::updateActions()
     mToggleToActAction->setChecked( status.isToAct() );
     mToggleFlagAction->setChecked( status.isImportant() );
 
-    MailingList mailList;
-    mailList = MailingList::detect( KMail::Util::message( mCurrentItem ) );
+    MessageCore::MailingList mailList;
+    mailList = MessageCore::MailingList::detect( KMail::Util::message( mCurrentItem ) );
 
-    if ( mailList.features() & ~MailingList::Id ) {
+    if ( mailList.features() & ~MessageCore::MailingList::Id ) {
       // A mailing list menu with only a title is pretty boring
       // so make sure theres at least some content
       QString listId;
-      if ( mailList.features() & MailingList::Id ) {
+      if ( mailList.features() & MessageCore::MailingList::Id ) {
         // From a list-id in the form, "Birds of France <bof.yahoo.com>",
         // take "Birds of France" if it exists otherwise "bof.yahoo.com".
         listId = mailList.id();
@@ -323,20 +323,20 @@ void MessageActions::updateActions()
       if ( !listId.isEmpty() )
         mMailingListActionMenu->menu()->addTitle( listId );
 
-      if ( mailList.features() & MailingList::ArchivedAt )
+      if ( mailList.features() & MessageCore::MailingList::ArchivedAt )
         // IDEA: this may be something you want to copy - "Copy in submenu"?
         addMailingListAction( i18n( "Open Message in List Archive" ), KUrl( mailList.archivedAt() ) );
-      if ( mailList.features() & MailingList::Post )
+      if ( mailList.features() & MessageCore::MailingList::Post )
         addMailingListActions( i18n( "Post New Message" ), mailList.postURLS() );
-      if ( mailList.features() & MailingList::Archive )
+      if ( mailList.features() & MessageCore::MailingList::Archive )
         addMailingListActions( i18n( "Go to Archive" ), mailList.archiveURLS() );
-      if ( mailList.features() & MailingList::Help )
+      if ( mailList.features() & MessageCore::MailingList::Help )
         addMailingListActions( i18n( "Request Help" ), mailList.helpURLS() );
-      if ( mailList.features() & MailingList::Owner )
+      if ( mailList.features() & MessageCore::MailingList::Owner )
         addMailingListActions( i18n( "Contact Owner" ), mailList.ownerURLS() );
-      if ( mailList.features() & MailingList::Subscribe )
+      if ( mailList.features() & MessageCore::MailingList::Subscribe )
         addMailingListActions( i18n( "Subscribe to List" ), mailList.subscribeURLS() );
-      if ( mailList.features() & MailingList::Unsubscribe )
+      if ( mailList.features() & MessageCore::MailingList::Unsubscribe )
         addMailingListActions( i18n( "Unsubscribe from List" ), mailList.unsubscribeURLS() );
       mMailingListActionMenu->setEnabled( true );
     } else {

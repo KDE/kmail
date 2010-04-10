@@ -69,10 +69,9 @@ class Composer : public KMail::SecondaryWindow
                                         const QString &comment, int how) = 0;
     virtual void addAttachment( const KUrl &url, const QString &comment ) = 0;
     virtual void addAttachment( const QString &name,
-                                const QByteArray &cte,
+                                KMime::Headers::contentEncoding cte,
                                 const QByteArray &data,
-                                const QByteArray &type,
-                                const QByteArray &subType,
+                                const QByteArray &mimeType,
                                 const QByteArray &paramAttr,
                                 const QString &paramValue,
                                 const QByteArray &contDisp ) = 0;

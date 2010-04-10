@@ -25,7 +25,6 @@
 #include "foldershortcutdialog.h"
 #include "composer.h"
 #include "kmfiltermgr.h"
-#include "messagesender.h"
 #include "kmversion.h"
 #include "searchwindow.h"
 #include "collectiontemplatespage.h"
@@ -49,7 +48,6 @@
 #include "vacation.h"
 #include "managesievescriptsdialog.h"
 #include "customtemplatesmenu.h"
-#include "messagehelper.h"
 #include "folderselectiondialog.h"
 #include "foldertreewidget.h"
 #include "util.h"
@@ -73,6 +71,11 @@
 #include "messageviewer/kcursorsaver.h"
 #include "messagelist/pane.h"
 
+
+#include "messagecomposer/messagesender.h"
+#include "messagecomposer/messagehelper.h"
+
+#include "templateparser/templateparser.h"
 
 // LIBKDEPIM includes
 #include "progressmanager.h"
@@ -152,6 +155,7 @@
 #include <QVBoxLayout>
 #include <QDBusConnection>
 #include <QDBusMessage>
+#include <QHeaderView>
 #include <QShortcut>
 #include <QProcess>
 
@@ -169,7 +173,6 @@ using KMail::SearchWindow;
 using KMail::Vacation;
 using KMail::AntiSpamWizard;
 using KMail::FilterLogDialog;
-using KMail::TemplateParser;
 using KMime::Types::AddrSpecList;
 using MessageViewer::AttachmentStrategy;
 
@@ -1272,17 +1275,17 @@ void KMMainWidget::slotCompose()
   KMime::Message::Ptr msg( new KMime::Message() );
 
   if ( mCurrentFolder ) {
-      KMail::MessageHelper::initHeader( msg, mCurrentFolder->identity() );
+      MessageHelper::initHeader( msg, KMKernel::self()->identityManager(), mCurrentFolder->identity() );
       if ( mCurrentFolder->collection().isValid() && mCurrentFolder->putRepliesInSameFolder() ) {
         KMime::Headers::Generic *header = new KMime::Headers::Generic( "X-KMail-Fcc", msg.get(), QString::number( mCurrentFolder->collection().id() ), "utf-8" );
         msg->setHeader( header );
       }
-      TemplateParser parser( msg, TemplateParser::NewMessage );
+      TemplateParser::TemplateParser parser( msg, TemplateParser::TemplateParser::NewMessage );
       parser.process( KMime::Message::Ptr(), mCurrentFolder->collection() );
       win = KMail::makeComposer( msg, KMail::Composer::New, mCurrentFolder->identity() );
   } else {
-      KMail::MessageHelper::initHeader( msg );
-      TemplateParser parser( msg, TemplateParser::NewMessage );
+      MessageHelper::initHeader( msg, KMKernel::self()->identityManager() );
+      TemplateParser::TemplateParser parser( msg, TemplateParser::TemplateParser::NewMessage );
       parser.process( KMime::Message::Ptr(), Akonadi::Collection() );
       win = KMail::makeComposer( msg, KMail::Composer::New );
   }
@@ -2174,7 +2177,7 @@ void KMMainWidget::slotFromFilter()
   if ( !msg )
     return;
 
-  AddrSpecList al = KMail::MessageHelper::extractAddrSpecs( msg, "From" );
+  AddrSpecList al = MessageHelper::extractAddrSpecs( msg, "From" );
   KMCommand *command;
   if ( al.empty() )
     command = new KMFilterCommand( "From",  msg->from()->asUnicodeString() );

@@ -11,9 +11,6 @@ using KPIM::BroadcastStatus;
 #include "kmreadermainwin.h"
 #include "kmfiltermgr.h"
 #include "kmfilteraction.h"
-#define REALLY_WANT_AKONADISENDER
-#include "akonadisender.h"
-#undef REALLY_WANT_AKONADISENDER
 #include "undostack.h"
 #include <kpimutils/kfileio.h>
 #include "kmversion.h"
@@ -25,7 +22,6 @@ using KPIM::RecentAddresses;
 #include "kmcommands.h"
 #include "kmsystemtray.h"
 #include "stringutil.h"
-#include "messagehelper.h"
 #include "foldertreeview.h"
 
 // kdepimlibs includes
@@ -39,11 +35,15 @@ using KPIM::RecentAddresses;
 #include "mailserviceimpl.h"
 using KMail::MailServiceImpl;
 #include "jobscheduler.h"
-#include "templateparser.h"
-using KMail::TemplateParser;
 
 #include "messagelist/core/configprovider.h"
 #include "messageviewer/globalsettings.h"
+#include "messagecomposer/akonadisender.h"
+#include "messagecomposer/messagehelper.h"
+
+
+#include "templateparser/templateparser.h"
+#include "templateparser/globalsettings_base.h"
 
 #include "foldercollection.h"
 
@@ -377,7 +377,7 @@ bool KMKernel::handleCommandLine( bool noArgsOpensReader )
     for(int i= 0; i < args->count(); i++)
     {
       if ( args->arg(i).startsWith( QLatin1String( "mailto:" ), Qt::CaseInsensitive ) ) {
-        QMap<QString, QString> values = KMail::StringUtil::parseMailtoUrl( args->url( i ) );
+        QMap<QString, QString> values = MessageCore::StringUtil::parseMailtoUrl( args->url( i ) );
         if ( !values.value( "to" ).isEmpty() )
           to += values.value( "to" ) + ", ";
         if ( !values.value( "cc" ).isEmpty() )
@@ -506,7 +506,7 @@ int KMKernel::openComposer( const QString &to, const QString &cc,
   kDebug();
   KMail::Composer::TemplateContext context = KMail::Composer::New;
   KMime::Message::Ptr msg( new KMime::Message );
-  KMail::MessageHelper::initHeader( msg );
+  MessageHelper::initHeader( msg, identityManager() );
   msg->contentType()->setCharset("utf-8");
   // tentatively decode to, cc and bcc because invokeMailer calls us with
   // RFC 2047 encoded addresses in order to protect non-ASCII email addresses
@@ -526,7 +526,7 @@ int KMKernel::openComposer( const QString &to, const QString &cc,
       msg->setBody( QString::fromLocal8Bit( str.data(), str.size() ).toUtf8() );
     }
     else {
-      TemplateParser parser( msg, TemplateParser::NewMessage );
+      TemplateParser::TemplateParser parser( msg, TemplateParser::TemplateParser::NewMessage );
       parser.process( KMime::Message::Ptr() );
     }
   }
@@ -535,7 +535,7 @@ int KMKernel::openComposer( const QString &to, const QString &cc,
     msg->setBody( body.toUtf8() );
   }
   else {
-    TemplateParser parser( msg, TemplateParser::NewMessage );
+    TemplateParser::TemplateParser parser( msg, TemplateParser::TemplateParser::NewMessage );
     parser.process( KMime::Message::Ptr() );
   }
 
@@ -592,7 +592,7 @@ int KMKernel::openComposer (const QString &to, const QString &cc,
   KMail::Composer::TemplateContext context = KMail::Composer::New;
   KMime::Message::Ptr msg( new KMime::Message );
   KMime::Content *msgPart = 0;
-  KMail::MessageHelper::initHeader( msg );
+  MessageHelper::initHeader( msg, identityManager() );
   msg->contentType()->setCharset( "utf-8" );
   if ( !cc.isEmpty() )      msg->cc()->fromUnicodeString( cc, "utf-8" );
   if ( !bcc.isEmpty() )     msg->bcc()->fromUnicodeString( bcc, "utf-8" );
@@ -606,7 +606,7 @@ int KMKernel::openComposer (const QString &to, const QString &cc,
     msg->setBody(body.toUtf8());
     context = KMail::Composer::NoTemplate;
   } else {
-    TemplateParser parser( msg, TemplateParser::NewMessage );
+    TemplateParser::TemplateParser parser( msg, TemplateParser::TemplateParser::NewMessage );
     parser.process( KMime::Message::Ptr() );
   }
 
@@ -692,7 +692,7 @@ QDBusObjectPath KMKernel::openComposer( const QString &to, const QString &cc,
                                         const QString &body, bool hidden )
 {
   KMime::Message::Ptr msg( new KMime::Message );
-  KMail::MessageHelper::initHeader( msg );
+  MessageHelper::initHeader( msg, identityManager() );
   msg->contentType()->setCharset("utf-8");
   if ( !cc.isEmpty() )      msg->cc()->fromUnicodeString( cc, "utf-8" );
   if ( !bcc.isEmpty() )     msg->bcc()->fromUnicodeString( bcc, "utf-8" );
@@ -701,7 +701,7 @@ QDBusObjectPath KMKernel::openComposer( const QString &to, const QString &cc,
   if ( !body.isEmpty() ) {
     msg->setBody(body.toUtf8());
   } else {
-    TemplateParser parser( msg, TemplateParser::NewMessage );
+    TemplateParser::TemplateParser parser( msg, TemplateParser::TemplateParser::NewMessage );
     parser.process( KMime::Message::Ptr() );
   }
 
@@ -743,14 +743,14 @@ QDBusObjectPath KMKernel::newMessage( const QString &to,
     folder = currentFolderCollection();
     id = folder ? folder->identity() : 0;
   }
-  KMail::MessageHelper::initHeader( msg, id );
+  MessageHelper::initHeader( msg, identityManager(), id );
   msg->contentType()->setCharset( "utf-8" );
   //set basic headers
   if ( !cc.isEmpty() )      msg->cc()->fromUnicodeString( cc, "utf-8" );
   if ( !bcc.isEmpty() )     msg->bcc()->fromUnicodeString( bcc, "utf-8" );
   if ( !to.isEmpty() )      msg->to()->fromUnicodeString( to, "utf-8" );
 
-  TemplateParser parser( msg, TemplateParser::NewMessage );
+  TemplateParser::TemplateParser parser( msg, TemplateParser::TemplateParser::NewMessage );
   parser.process( KMime::Message::Ptr(), folder ? folder->collection() : Akonadi::Collection() );
 
   KMail::Composer *win = makeComposer( msg, KMail::Composer::New, id );
@@ -1533,6 +1533,8 @@ KSharedConfig::Ptr KMKernel::config()
     MessageList::Core::ConfigProvider::self()->setConfig( mySelf->mConfig );
     MessageViewer::GlobalSettings::self()->setSharedConfig( mySelf->mConfig );
     MessageViewer::GlobalSettings::self()->readConfig();
+    TemplateParser::GlobalSettings::self()->setSharedConfig(mySelf->mConfig);
+    TemplateParser::GlobalSettings::self()->readConfig();
   }
   return mySelf->mConfig;
 }
@@ -1678,7 +1680,7 @@ QSharedPointer<FolderCollection> KMKernel::currentFolderCollection()
 
 // can't be inline, since KMSender isn't known to implement
 // KMail::MessageSender outside this .cpp file
-KMail::MessageSender * KMKernel::msgSender()
+MessageSender * KMKernel::msgSender()
 {
   return the_msgSender;
 }

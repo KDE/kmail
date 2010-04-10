@@ -25,7 +25,6 @@
 
 // KMail includes
 #include "composer.h"
-#include "messagesender.h"
 
 // Qt includes
 #include <QFont>
@@ -39,8 +38,11 @@
 // LIBKDEPIM includes
 #include <messagecomposer/kmeditor.h>
 
+#include "messagecomposer/messagesender.h"
+
 // KDEPIMLIBS includes
 #include <kmime/kmime_message.h>
+#include <kmime/kmime_headers.h>
 
 // Other includes
 #include "kleo/enum.h"
@@ -156,10 +158,9 @@ class KMComposeWin : public KMail::Composer
                                      const QString & comment );
 
     Q_SCRIPTABLE void addAttachment( const QString & name,
-                                     const QByteArray & cte,
+                                     KMime::Headers::contentEncoding cte,
                                      const QByteArray & data,
-                                     const QByteArray & type,
-                                     const QByteArray & subType,
+                                     const QByteArray & mimeType,
                                      const QByteArray & paramAttr,
                                      const QString & paramValue,
                                      const QByteArray & contDisp );
@@ -611,7 +612,7 @@ class KMComposeWin : public KMail::Composer
     /**
      * Send the message. Returns true if the message was sent successfully.
      */
-    void doSend( KMail::MessageSender::SendMethod method=KMail::MessageSender::SendDefault,
+    void doSend( MessageSender::SendMethod method=MessageSender::SendDefault,
                  KMComposeWin::SaveIn saveIn = KMComposeWin::None );
 
     void saveMessage( boost::shared_ptr<KMime::Message> message, KMComposeWin::SaveIn saveIn );
@@ -789,7 +790,7 @@ class KMComposeWin : public KMail::Composer
     KMail::AttachmentView *mAttachmentView;
 
     // These are for passing on methods over the applyChanges calls
-    KMail::MessageSender::SendMethod mSendMethod;
+    MessageSender::SendMethod mSendMethod;
     KMComposeWin::SaveIn mSaveIn;
 
     KToggleAction *mEncryptChiasmusAction;

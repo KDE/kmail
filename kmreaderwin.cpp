@@ -28,6 +28,7 @@
 #include "kmreadermainwin.h"
 #include <kpimutils/kfileio.h>
 #include "kmcommands.h"
+#include "mdnadvicedialog.h"
 #include <QByteArray>
 #include <QImageReader>
 #include <QCloseEvent>
@@ -38,12 +39,10 @@
 #include <QScrollArea>
 #include <QScrollBar>
 #include <QSignalMapper>
-#include "messagesender.h"
 #include "messageviewer/headerstrategy.h"
 #include "messageviewer/headerstyle.h"
 #include "messageviewer/mailwebview.h"
 #include "messageviewer/globalsettings.h"
-#include "messagehelper.h"
 
 #include "messageviewer/csshelper.h"
 using MessageViewer::CSSHelper;
@@ -59,6 +58,8 @@ using namespace KMime;
 #include "messageviewer/viewer.h"
 using namespace MessageViewer;
 #include "messageviewer/attachmentstrategy.h"
+#include "messagecomposer/messagesender.h"
+#include "messagecomposer/messagefactory.h"
 
 
 // KABC includes
@@ -298,6 +299,7 @@ void KMReaderWin::displayBusyPage()
 {
   QString info =
     i18n( "<h2 style='margin-top: 0px;'>Retrieving Folder Contents</h2><p>Please wait . . .</p>&nbsp;" );
+#include "mdnadvicedialog.h"
 
   displaySplashPage( info );
 }
@@ -416,9 +418,14 @@ void KMReaderWin::slotTouchMessage()
   if ( !msg )
     return;
 
-  if ( KMime::Message::Ptr receipt = KMail::MessageHelper::createMDN( message(), msg, MDN::ManualAction,
-                                                        MDN::Displayed,
-                                                        true /* allow GUI */ ) ) {
+  KMime::MDN::SendingMode s = MDNAdviceDialog::checkMDNHeaders( msg );
+  KConfigGroup mdnConfig( KMKernel::config(), "MDN" );
+  int quote = mdnConfig.readEntry<int>( "quote-message", 0 );
+  
+  MessageFactory factory( msg, mViewer->messageItem().id() );
+  factory.setIdentityManager( KMKernel::self()->identityManager() );
+  KMime::Message::Ptr receipt = factory.createMDN( KMime::MDN::ManualAction, MDN::Displayed, s, quote );
+  if (receipt ) {
     if ( !kmkernel->msgSender()->send( receipt ) ) // send or queue
       KMessageBox::error( this, i18n("Could not send MDN.") );
   }

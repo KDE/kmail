@@ -21,6 +21,11 @@ include_directories(
   ${CMAKE_SOURCE_DIR}/libkleo
   ${CMAKE_SOURCE_DIR}/messagelist
   ${CMAKE_SOURCE_DIR}/messageviewer
+  ${CMAKE_SOURCE_DIR}/templateparser
+  ${CMAKE_BINARY_DIR}/templateparser
+  ${CMAKE_SOURCE_DIR}/messagecomposer
+  ${CMAKE_BINARY_DIR}/messagecomposer
+  ${CMAKE_SOURCE_DIR}/messagecore
   ${CMAKE_SOURCE_DIR}/korganizer
   ${GPGME_INCLUDES}
   ${Boost_INCLUDE_DIR}
@@ -47,6 +52,7 @@ set(kmailprivate_LIB_SRCS
    readablecollectionproxymodel.cpp
    foldertreewidget.cpp
    folderselectiondialog.cpp
+   foldercollection.cpp
    foldertreeview.cpp
    collectionannotationsattribute.cpp
    collectiontemplatespage.cpp
@@ -58,9 +64,6 @@ set(kmailprivate_LIB_SRCS
    collectionaclpage.cpp
    colorlistbox.cpp
    imapaclattribute.cpp
-   messagehelper.cpp
-   messageinfo.cpp
-   foldercollection.cpp
    kmmainwin.cpp
    configuredialoglistview.cpp
    configuredialog.cpp
@@ -76,7 +79,6 @@ set(kmailprivate_LIB_SRCS
    actionscheduler.cpp
    messageproperty.cpp
    kmsystemtray.cpp
-   akonadisender.cpp
    kmfiltermgr.cpp
    filterimporterexporter.cpp
    kmsearchpatternedit.cpp
@@ -85,7 +87,6 @@ set(kmailprivate_LIB_SRCS
    kmfilter.cpp
    kmfilterdlg.cpp
    xfaceconfigurator.cpp
-   kmfawidgets.cpp
    undostack.cpp
    kmkernel.cpp
    searchwindow.cpp
@@ -93,8 +94,6 @@ set(kmailprivate_LIB_SRCS
    vacation.cpp
    sievedebugdialog.cpp
    sievejob.cpp
-   mailinglist-magic.cpp
-   attachmentcollector.cpp
    kmcommands.cpp
    kmreadermainwin.cpp
    kmstartup.cpp
@@ -128,27 +127,22 @@ set(kmailprivate_LIB_SRCS
    mailinglistpropertiesdialog.cpp
    managesievescriptsdialog.cpp
    util.cpp
-   templateparser.cpp
-   templatesconfiguration.cpp
-   templatesinsertcommand.cpp
-   customtemplates.cpp
-   customtemplatesmenu.cpp
    korghelper.cpp
    messageactions.cpp
    statusbarlabel.cpp
-   stringutil.cpp
    kmcomposewin.cpp
    attachmentcontroller.cpp
    attachmentmodel.cpp
    attachmentview.cpp
    attachmentfrompublickeyjob.cpp
-   mdnadvicedialog.cpp
    backupjob.cpp
    archivefolderdialog.cpp
    searchdescriptionattribute.cpp
    tag.cpp
    tagactionmanager.cpp
    foldershortcutactionmanager.cpp
+   mdnadvicedialog.cpp
+   kmsoundtestwidget.cpp
 )
 
 soprano_add_ontology(kmailprivate_LIB_SRCS
@@ -192,8 +186,6 @@ kde4_add_ui_files(kmailprivate_LIB_SRCS
   ui/composercryptoconfiguration.ui
   ui/warningconfiguration.ui
   ui/smimeconfiguration.ui
-  ui/templatesconfiguration_base.ui
-  ui/customtemplates_base.ui
   ui/snippetdlgbase.ui
   ui/miscpagemaintab.ui
   ui/miscpageinvitetab.ui
@@ -220,8 +212,6 @@ configure_file(kmail.kcfg.cmake ${CMAKE_CURRENT_BINARY_DIR}/kmail.kcfg)
 kde4_add_kcfg_files(kmailprivate_LIB_SRCS
   globalsettings_base.kcfgc
   custommimeheader.kcfgc
-  templatesconfiguration_kfg.kcfgc
-  customtemplates_kfg.kcfgc
 )
 
 
@@ -234,6 +224,7 @@ target_link_libraries(kmailprivate
   messagecore
   messagecomposer
   messagelist
+  templateparser
   ${KDEPIMLIBS_KPIMIDENTITIES_LIBRARY}
   ${KDEPIMLIBS_KONTACTINTERFACE_LIBS}
   ${KDE4_PHONON_LIBRARY}
@@ -311,8 +302,6 @@ install(FILES KMail.desktop kmail_view.desktop DESTINATION ${XDG_APPS_INSTALL_DI
 install(FILES
   ${CMAKE_CURRENT_BINARY_DIR}/kmail.kcfg  
   custommimeheader.kcfg
-  customtemplates_kfg.kcfg
-  templatesconfiguration_kfg.kcfg
   DESTINATION ${KCFG_INSTALL_DIR}
 )
 install(FILES kmail.antispamrc kmail.antivirusrc  DESTINATION ${CONFIG_INSTALL_DIR})

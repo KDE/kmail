@@ -40,6 +40,7 @@
 #include <KIconLoader> // SmallIcon
 
 #include <QDropEvent>
+#include <QLineEdit>
 #include <QHeaderView>
 
 namespace KMail {

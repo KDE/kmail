@@ -40,7 +40,11 @@
 #include <KMime/Message>
 
 #include <QHBoxLayout>
+#include <QLabel>
 #include <QSortFilterProxyModel>
+
+#include <klineedit.h>
+#include <klocalizedstring.h>
 
 class FolderTreeWidget::FolderTreeWidgetPrivate
 {

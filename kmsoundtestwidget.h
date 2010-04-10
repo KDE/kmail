@@ -17,41 +17,15 @@
   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
 */
 
-#ifndef _kmfawidgets_h_
-#define _kmfawidgets_h_
+#ifndef _KMSOUND_TEST_WIDGET_H
+#define _KMSOUND_TEST_WIDGET_H
 
 #include <KLineEdit>
 
 #include <QString>
 
-/** The param widget for KMFilterActionWithAddress..
-    @author Marc Mutz <mutz@kde.org>
-*/
-
 class QPushButton;
 class KUrlRequester;
-
-class KMFilterActionWithAddressWidget : public QWidget
-{
-  Q_OBJECT
-public:
-  explicit KMFilterActionWithAddressWidget( QWidget* parent=0, const char* name=0 );
-
-  void clear() { mLineEdit->clear(); }
-  QString text() const { return mLineEdit->text(); }
-  void setText( const QString & aString ) { mLineEdit->setText( aString ); }
-
-signals:
-  // Forwarded from the internal text edit
-  void textChanged();
-
-protected slots:
-  void slotAddrBook();
-
-private:
-  QPushButton* mBtn;
-  KLineEdit*   mLineEdit;
-};
 
 class KMSoundTestWidget : public QWidget
 {
@@ -74,4 +48,4 @@ private:
   QPushButton *m_playButton;
 };
 
-#endif /*_kmfawidget_h_*/
+#endif

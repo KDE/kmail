@@ -35,6 +35,8 @@ namespace KIO {
 
 class KStatusNotifierItem;
 
+class MessageSender;
+  
 class KJob;
 /** The KMail namespace contains classes used for KMail.
 * This is to keep them out of the way from all the other
@@ -44,7 +46,6 @@ namespace KMail {
   class MailServiceImpl;
   class UndoStack;
   class JobScheduler;
-  class MessageSender;
 }
 namespace KPIM { class ProgressDialog; }
 using KMail::MailServiceImpl;
@@ -294,7 +295,7 @@ public:
   KMFilterMgr *filterMgr() { return the_filterMgr; }
   KMFilterMgr *popFilterMgr() { return the_popFilterMgr; }
   KMFilterActionDict *filterActionDict() { return the_filterActionDict; }
-  KMail::MessageSender *msgSender();
+  MessageSender *msgSender();
 
   ThreadWeaver::Weaver *weaver() { return the_weaver; }
   /** return the pointer to the identity manager */

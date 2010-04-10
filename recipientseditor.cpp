@@ -46,6 +46,7 @@
 #include <QResizeEvent>
 #include <QScrollBar>
 #include <QTimer>
+#include <QtGui/QTextDocument>
 
 Recipient::Recipient( const QString &email, Recipient::Type type )
   : mEmail( email ), mType( type )

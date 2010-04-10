@@ -54,6 +54,7 @@ using KMail::FilterImporterExporter;
 #include <QGridLayout>
 #include <QLabel>
 #include <QListWidget>
+#include <QButtonGroup>
 #include <QVBoxLayout>
 #include <QTreeWidget>
 

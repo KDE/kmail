@@ -84,7 +84,6 @@ using KMail::ActionScheduler;
 #include "composer.h"
 #include "kmfiltermgr.h"
 #include "kmmainwidget.h"
-#include "messagesender.h"
 #include "undostack.h"
 #include "messageviewer/kcursorsaver.h"
 #include "messageviewer/objecttreeparser.h"
@@ -97,8 +96,6 @@ using KMail::SecondaryWindow;
 #include "redirectdialog.h"
 using KMail::RedirectDialog;
 #include "util.h"
-#include "templateparser.h"
-using KMail::TemplateParser;
 #include "messageviewer/editorwatcher.h"
 #include "korghelper.h"
 #include "broadcaststatus.h"
@@ -107,7 +104,8 @@ using KMail::TemplateParser;
 #include "messageviewer/autoqpointer.h"
 #include "messageviewer/globalsettings.h"
 
-#include "messagehelper.h"
+
+#include "templateparser/templateparser.h"
 
 #include <kpimutils/kfileio.h>
 #include "calendarinterface.h"
@@ -121,6 +119,10 @@ using KMail::TemplateParser;
 #include "messagecore/stringutil.h"
 #include "messageviewer/nodehelper.h"
 #include "messageviewer/objecttreeemptysource.h"
+
+#include "messagecomposer/messagesender.h"
+#include "messagecomposer/messagehelper.h"
+#include "messagecomposer/messagefactory.h"
 
 #include "progressmanager.h"
 using KPIM::ProgressManager;
@@ -151,7 +153,7 @@ using namespace KMime;
 #include <memory>
 
 /// Small helper function to get the composer context from a reply
-static KMail::Composer::TemplateContext replyContext( KMail::MessageHelper::MessageReply reply )
+static KMail::Composer::TemplateContext replyContext( MessageFactory::MessageReply reply )
 {
   if ( reply.replyAll )
     return KMail::Composer::ReplyToAll;
@@ -429,7 +431,7 @@ KMCommand::Result KMMailtoComposeCommand::execute()
     id = fd->identity();
   }
 
-  KMail::MessageHelper::initHeader( msg, id );
+  MessageHelper::initHeader( msg, KMKernel::self()->identityManager(),id );
   msg->contentType()->setCharset("utf-8");
   msg->to()->fromUnicodeString( KPIMUtils::decodeMailtoUrl( mUrl ), "utf-8" );
 
@@ -458,7 +460,11 @@ KMCommand::Result KMMailtoReplyCommand::execute()
   KMime::Message::Ptr msg = KMail::Util::message( item );
   if ( !msg )
     return Failed;
-  KMime::Message::Ptr rmsg( KMail::MessageHelper::createReply( item, msg, KMail::ReplyNone, mSelection ).msg );
+  MessageFactory factory( msg, item.id() );
+  factory.setIdentityManager( KMKernel::self()->identityManager() );
+  factory.setReplyStrategy( MessageComposer::ReplyNone );
+  factory.setSelection( mSelection );
+  KMime::Message::Ptr rmsg = factory.createReply().msg;
   rmsg->to()->fromUnicodeString( KPIMUtils::decodeMailtoUrl( mUrl ), "utf-8" ); //TODO Check the UTF-8
 
   KMail::Composer * win = KMail::makeComposer( rmsg, KMail::Composer::Reply, 0, mSelection );
@@ -487,7 +493,9 @@ KMCommand::Result KMMailtoForwardCommand::execute()
   KMime::Message::Ptr msg = KMail::Util::message( item );
   if ( !msg )
     return Failed;
-  KMime::Message::Ptr fmsg( KMail::MessageHelper::createForward( item, msg ) );
+  MessageFactory factory( msg, item.id() );
+  factory.setIdentityManager( KMKernel::self()->identityManager() );
+  KMime::Message::Ptr fmsg = factory.createForward();
   fmsg->to()->fromUnicodeString( KPIMUtils::decodeMailtoUrl( mUrl ), "utf-8" ); //TODO check the utf-8
 
   KMail::Composer * win = KMail::makeComposer( fmsg, KMail::Composer::Forward );
@@ -1037,7 +1045,11 @@ KMCommand::Result KMReplyToCommand::execute()
   KMime::Message::Ptr msg = KMail::Util::message( item );
   if ( !msg )
     return Failed;
-  KMail::MessageHelper::MessageReply reply = KMail::MessageHelper::createReply( item, msg, KMail::ReplySmart, mSelection );
+  MessageFactory factory( msg, item.id() );
+  factory.setIdentityManager( KMKernel::self()->identityManager() );
+  factory.setReplyStrategy( MessageComposer::ReplySmart );
+  factory.setSelection( mSelection );
+  MessageFactory::MessageReply reply = factory.createReply();
   KMail::Composer * win = KMail::makeComposer( KMime::Message::Ptr( reply.msg ), replyContext( reply ), 0, mSelection );
   win->setReplyFocus();
   win->show();
@@ -1063,7 +1075,10 @@ KMCommand::Result KMNoQuoteReplyToCommand::execute()
   KMime::Message::Ptr msg = KMail::Util::message( item );
   if ( !msg )
     return Failed;
-  KMail::MessageHelper::MessageReply reply = KMail::MessageHelper::createReply( item, msg, KMail::ReplySmart, "", true);
+  MessageFactory factory( msg, item.id() );
+  factory.setIdentityManager( KMKernel::self()->identityManager() );
+  factory.setReplyStrategy( MessageComposer::ReplySmart );
+  MessageFactory::MessageReply reply = factory.createReply();
   KMail::Composer *win = KMail::makeComposer( KMime::Message::Ptr( reply.msg ), replyContext( reply ) );
   win->setReplyFocus( false );
   win->show();
@@ -1090,7 +1105,11 @@ KMCommand::Result KMReplyListCommand::execute()
   KMime::Message::Ptr msg = KMail::Util::message( item );
   if ( !msg )
     return Failed;
-  KMail::MessageHelper::MessageReply reply = KMail::MessageHelper::createReply( item, msg, KMail::ReplyList, mSelection );
+  MessageFactory factory( msg, item.id() );
+  factory.setIdentityManager( KMKernel::self()->identityManager() );
+  factory.setReplyStrategy( MessageComposer::ReplyList );
+  factory.setSelection( mSelection );
+  MessageFactory::MessageReply reply = factory.createReply();
   KMail::Composer * win = KMail::makeComposer( KMime::Message::Ptr( reply.msg ), replyContext( reply ),
                                                0, mSelection );
   win->setReplyFocus( false );
@@ -1119,7 +1138,11 @@ KMCommand::Result KMReplyToAllCommand::execute()
   KMime::Message::Ptr msg = KMail::Util::message( item );
   if ( !msg )
     return Failed;
-  KMail::MessageHelper::MessageReply reply = KMail::MessageHelper::createReply( item, msg, KMail::ReplyAll, mSelection );
+  MessageFactory factory( msg, item.id() );
+  factory.setIdentityManager( KMKernel::self()->identityManager() );
+  factory.setReplyStrategy( MessageComposer::ReplyAll );
+  factory.setSelection( mSelection );
+  MessageFactory::MessageReply reply = factory.createReply();
   KMail::Composer * win = KMail::makeComposer( KMime::Message::Ptr( reply.msg ), replyContext( reply ), 0,
                                                mSelection );
   win->setReplyFocus();
@@ -1147,7 +1170,11 @@ KMCommand::Result KMReplyAuthorCommand::execute()
   KMime::Message::Ptr msg = KMail::Util::message( item );
   if ( !msg )
     return Failed;
-  KMail::MessageHelper::MessageReply reply = KMail::MessageHelper::createReply( item, msg, KMail::ReplyAuthor, mSelection );
+  MessageFactory factory( msg, item.id() );
+  factory.setIdentityManager( KMKernel::self()->identityManager() );
+  factory.setReplyStrategy( MessageComposer::ReplyAuthor );
+  factory.setSelection( mSelection );
+  MessageFactory::MessageReply reply = factory.createReply();
   KMail::Composer * win = KMail::makeComposer( KMime::Message::Ptr( reply.msg ), replyContext( reply ), 0,
                                                mSelection );
   win->setReplyFocus();
@@ -1272,19 +1299,20 @@ KMCommand::Result KMForwardCommand::execute()
       if ( id == 0 )
         id = mIdentity; // use folder identity if no message had an id set
       KMime::Message::Ptr fwdMsg( new KMime::Message );
-      KMail::MessageHelper::initHeader( fwdMsg, id );
-      KMail::MessageHelper::setAutomaticFields( fwdMsg, true );
+      MessageHelper::initHeader( fwdMsg, KMKernel::self()->identityManager(), id );
+      MessageHelper::setAutomaticFields( fwdMsg, true );
       fwdMsg->contentType()->setCharset("utf-8");
 
       for ( it = msgList.constBegin(); it != msgList.constEnd(); ++it ) {
         KMime::Message::Ptr msg = KMail::Util::message( *it );
         if ( msg ) {
 
-          TemplateParser parser( fwdMsg, TemplateParser::Forward );
+          TemplateParser::TemplateParser parser( fwdMsg, TemplateParser::TemplateParser::Forward );
+          parser.setIdentityManager( KMKernel::self()->identityManager() );
           parser.setSelection( msg->body() ); // FIXME: Why is this needed?
           parser.process( msg, ( *it ).parentCollection(), true );
 
-          KMail::MessageHelper::link( msg, *it, KPIM::MessageStatus::statusForwarded() );
+          MessageFactory::link( msg, it->id(), KPIM::MessageStatus::statusForwarded() );
         }
       }
 
@@ -1307,7 +1335,9 @@ KMCommand::Result KMForwardCommand::execute()
   if ( !msg )
     return Failed;
   MessageViewer::KCursorSaver busy( MessageViewer::KBusyPtr::busy() );
-  KMime::Message::Ptr fwdMsg( KMail::MessageHelper::createForward(item, msg) );
+  MessageFactory factory( msg, item.id() );
+  factory.setIdentityManager( KMKernel::self()->identityManager() );
+  KMime::Message::Ptr fwdMsg = factory.createForward();
 
   uint id = msg->headerByType( "X-KMail-Identity" ) ?  msg->headerByType("X-KMail-Identity")->asUnicodeString().trimmed().toUInt() : 0;
   if ( id == 0 )
@@ -1347,17 +1377,17 @@ KMCommand::Result KMForwardAttachedCommand::execute()
   if (msgList.count() >= 2) {
     // don't respect X-KMail-Identity headers because they might differ for
     // the selected mails
-    KMail::MessageHelper::initHeader(fwdMsg, mIdentity);
+    MessageHelper::initHeader(fwdMsg, KMKernel::self()->identityManager(), mIdentity);
   }
   else if (msgList.count() == 1) {
     Akonadi::Item item = msgList.first();
     KMime::Message::Ptr msg = KMail::Util::message( item );
     if ( !msg )
       return Failed;
-    KMail::MessageHelper::initFromMessage(item, fwdMsg, msg);
-    fwdMsg->subject()->fromUnicodeString(  KMail::MessageHelper::forwardSubject(msg),"utf-8" );
+    MessageHelper::initFromMessage(fwdMsg, msg, KMKernel::self()->identityManager());
+    fwdMsg->subject()->fromUnicodeString(  MessageHelper::forwardSubject(msg),"utf-8" );
   }
-  KMail::MessageHelper::setAutomaticFields(fwdMsg, true);
+  MessageHelper::setAutomaticFields(fwdMsg, true);
   MessageViewer::KCursorSaver busy( MessageViewer::KBusyPtr::busy() );
   if (!mWin)
     mWin = KMail::makeComposer(fwdMsg, KMail::Composer::Forward, mIdentity);
@@ -1368,7 +1398,7 @@ KMCommand::Result KMForwardAttachedCommand::execute()
     if ( !msg )
       return Failed;
     // remove headers that shouldn't be forwarded
-    KMail::MessageHelper::removePrivateHeaderFields(msg);
+    MessageCore::StringUtil::removePrivateHeaderFields(msg);
     msg->removeHeader("BCC");
     // set the part
     KMime::Content *msgPart = new KMime::Content( msg.get() );
@@ -1387,7 +1417,8 @@ KMCommand::Result KMForwardAttachedCommand::execute()
 #else
     kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
 #endif
-    KMail::MessageHelper::link( msg, itemMsg, KPIM::MessageStatus::statusForwarded() );
+// TODO(leo) PORT PORT PORT!
+    MessageFactory::link( msg, itemMsg.id(), KPIM::MessageStatus::statusForwarded() );
     mWin->addAttach( msgPart );
   }
 
@@ -1417,15 +1448,17 @@ KMCommand::Result KMRedirectCommand::execute()
     return Failed;
   }
 
-  KMime::Message::Ptr newMsg = KMail::MessageHelper::createRedirect( item, dlg->to() );
+  MessageFactory factory( item.payload<KMime::Message::Ptr>(),  item.id() );
+  factory.setIdentityManager( KMKernel::self()->identityManager() );
+  KMime::Message::Ptr newMsg = factory.createRedirect( dlg->to() );
   if ( !newMsg )
     return Failed;
 
   KMFilterAction::sendMDN( KMail::Util::message( item ), KMime::MDN::Dispatched );
 
-  const KMail::MessageSender::SendMethod method = dlg->sendImmediate()
-    ? KMail::MessageSender::SendImmediate
-    : KMail::MessageSender::SendLater;
+  const MessageSender::SendMethod method = dlg->sendImmediate()
+    ? MessageSender::SendImmediate
+    : MessageSender::SendLater;
   if ( !kmkernel->msgSender()->send( newMsg, method ) ) {
     kDebug() << "KMRedirectCommand: could not redirect message (sending failed)";
     return Failed; // error: couldn't send
@@ -1453,9 +1486,12 @@ KMCommand::Result KMCustomReplyToCommand::execute()
   KMime::Message::Ptr msg = KMail::Util::message( item );
   if ( !msg )
     return Failed;
-  KMail::MessageHelper::MessageReply reply =
-      KMail::MessageHelper::createReply( item, msg, KMail::ReplySmart, mSelection,
-                                         false, true, mTemplate );
+  MessageFactory factory( msg, item.id() );
+  factory.setIdentityManager( KMKernel::self()->identityManager() );
+  factory.setReplyStrategy( MessageComposer::ReplySmart );
+  factory.setSelection( mSelection );
+  factory.setTemplate( mTemplate );
+  MessageFactory::MessageReply reply = factory.createReply();
   KMail::Composer * win = KMail::makeComposer( KMime::Message::Ptr( reply.msg ), replyContext( reply ), 0,
                                                mSelection, mTemplate );
   win->setReplyFocus();
@@ -1485,9 +1521,12 @@ KMCommand::Result KMCustomReplyAllToCommand::execute()
   KMime::Message::Ptr msg = KMail::Util::message( item );
   if ( !msg )
     return Failed;
-  KMail::MessageHelper::MessageReply reply =
-      KMail::MessageHelper::createReply( item, msg, KMail::ReplyAll, mSelection,
-                                         false, true, mTemplate );
+  MessageFactory factory( msg, item.id() );
+  factory.setIdentityManager( KMKernel::self()->identityManager() );
+  factory.setReplyStrategy( MessageComposer::ReplyAll );
+  factory.setSelection( mSelection );
+  factory.setTemplate( mTemplate );
+  MessageFactory::MessageReply reply = factory.createReply();
   KMail::Composer * win = KMail::makeComposer( KMime::Message::Ptr( reply.msg ), replyContext( reply ), 0,
                                                mSelection, mTemplate );
   win->setReplyFocus();
@@ -1536,8 +1575,8 @@ KMCommand::Result KMCustomForwardCommand::execute()
     if ( id == 0 )
       id = mIdentity; // use folder identity if no message had an id set
     KMime::Message::Ptr fwdMsg( new KMime::Message );
-    KMail::MessageHelper::initHeader( fwdMsg, id );
-    KMail::MessageHelper::setAutomaticFields( fwdMsg, true );
+    MessageHelper::initHeader( fwdMsg, KMKernel::self()->identityManager(), id );
+    MessageHelper::setAutomaticFields( fwdMsg, true );
 
     fwdMsg->contentType()->setCharset("utf-8");
     // fwdMsg->setBody( msgText );
@@ -1546,11 +1585,12 @@ KMCommand::Result KMCustomForwardCommand::execute()
       KMime::Message::Ptr msg = KMail::Util::message( *it );
       if ( msg ) {
 
-        TemplateParser parser( fwdMsg, TemplateParser::Forward );
+        TemplateParser::TemplateParser parser( fwdMsg, TemplateParser::TemplateParser::Forward );
+        parser.setIdentityManager( KMKernel::self()->identityManager() );
         parser.setSelection( msg->body() ); // FIXME: Why is this needed?
         parser.process( msg, ( *it ).parentCollection(), true );
 
-        KMail::MessageHelper::link( msg, *it, MessageStatus::statusForwarded() );
+        MessageFactory::link( msg, it->id(), MessageStatus::statusForwarded() );
       }
     }
 
@@ -1568,7 +1608,10 @@ KMCommand::Result KMCustomForwardCommand::execute()
     if ( !msg )
       return Failed;
     MessageViewer::KCursorSaver busy( MessageViewer::KBusyPtr::busy() );
-    KMime::Message::Ptr fwdMsg = KMail::MessageHelper::createForward( item, msg, mTemplate );
+    MessageFactory factory( msg, item.id() );
+    factory.setIdentityManager( KMKernel::self()->identityManager() );
+    factory.setTemplate( mTemplate );
+    KMime::Message::Ptr fwdMsg = factory.createForward();
 
     uint id = 0;
     QString strId = msg->headerByType( "X-KMail-Identity" ) ? msg->headerByType( "X-KMail-Identity" )->asUnicodeString().trimmed() : "";
@@ -2046,10 +2089,10 @@ KMCommand::Result KMUrlClickedCommand::execute()
   if (mUrl.protocol() == "mailto")
   {
     msg = KMime::Message::Ptr( new KMime::Message );
-    KMail::MessageHelper::initHeader( msg, mIdentity );
+    MessageHelper::initHeader( msg, KMKernel::self()->identityManager(), mIdentity );
     msg->contentType()->setCharset("utf-8");
 
-    QMap<QString, QString> fields =  KMail::StringUtil::parseMailtoUrl( mUrl );
+    QMap<QString, QString> fields =  MessageCore::StringUtil::parseMailtoUrl( mUrl );
 
     msg->to()->fromUnicodeString( fields.value( "to" ),"utf-8" );
     if ( !fields.value( "subject" ).isEmpty() )
@@ -2467,7 +2510,9 @@ KMCommand::Result KMResendMessageCommand::execute()
   if ( !msg )
     return Failed;
 
-  KMime::Message::Ptr newMsg = KMail::MessageHelper::createResend( item, msg );
+  MessageFactory factory( msg, item.id() );
+  factory.setIdentityManager( KMKernel::self()->identityManager() );
+  KMime::Message::Ptr newMsg = factory.createResend();
   newMsg->contentType()->setCharset( MessageViewer::NodeHelper::charset( msg.get() ) );
 
   KMail::Composer * win = KMail::makeComposer();
@@ -2586,7 +2631,7 @@ KMCommand::Result CreateTodoCommand::execute()
     kWarning() << "CreateTodoCommand: Unable to open temp file.";
     return Failed;
   }
-  QString uri = "kmail:" + QString::number( item.id() ) + '/' + KMail::MessageHelper::msgId(msg);
+  QString uri = "kmail:" + QString::number( item.id() ) + '/' + MessageHelper::msgId(msg);
   tf.write( msg->encodedContent() );
   OrgKdeKorganizerCalendarInterface *iface =
       new OrgKdeKorganizerCalendarInterface( "org.kde.korganizer", "/Calendar",

@@ -1,5 +1,5 @@
 /*
-  kmfawidgets.cpp - KMFilterAction parameter widgets
+  kmfawidgets.h - KMFilterAction parameter widgets
   Copyright (c) 2001 Marc Mutz <mutz@kde.org>
 
   This program is free software; you can redistribute it and/or modify
@@ -17,69 +17,16 @@
   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
 */
 
-#include "kmfawidgets.h"
-
-#include <kabc/addresseedialog.h> // for the button in KMFilterActionWithAddress
-#include <kiconloader.h>
-#include <klocale.h>
-#include <kurlrequester.h>
-#include <kfiledialog.h>
-#include <kstandarddirs.h>
-#include <phonon/mediaobject.h>
+#include "kmsoundtestwidget.h"
 
 #include <QHBoxLayout>
-
-//=============================================================================
-//
-// class KMFilterActionWithAddressWidget
-//
-//=============================================================================
-
-KMFilterActionWithAddressWidget::KMFilterActionWithAddressWidget( QWidget* parent, const char* name )
-  : QWidget( parent )
-{
-  setObjectName( name );
-  QHBoxLayout *hbl = new QHBoxLayout(this);
-  hbl->setSpacing(4);
-  hbl->setMargin( 0 );
-  mLineEdit = new KLineEdit(this);
-  mLineEdit->setObjectName( "addressEdit" );
-  hbl->addWidget( mLineEdit, 1 /*stretch*/ );
-  mBtn = new QPushButton( QString(),this );
-  mBtn->setIcon( KIcon( "help-contents" ) );
-  mBtn->setIconSize( QSize( KIconLoader::SizeSmall, KIconLoader::SizeSmall ) );
-  mBtn->setFixedHeight( mLineEdit->sizeHint().height() );
-  mBtn->setToolTip( i18n( "Open Address Book" ) );
-  hbl->addWidget( mBtn );
-
-  connect( mBtn, SIGNAL(clicked()), this, SLOT(slotAddrBook()) );
-  connect( mLineEdit, SIGNAL( textChanged(const QString &) ),
-           this, SIGNAL( textChanged() ) );
-}
-
-void KMFilterActionWithAddressWidget::slotAddrBook()
-{
-  KABC::Addressee::List lst = KABC::AddresseeDialog::getAddressees( this );
-
-  if ( lst.empty() )
-    return;
-
-  QStringList addrList;
-
-  for( KABC::Addressee::List::const_iterator it = lst.constBegin(); it != lst.constEnd(); ++it )
-    addrList << (*it).fullEmail();
-
-  QString txt = mLineEdit->text().trimmed();
-
-  if ( !txt.isEmpty() ) {
-    if ( !txt.endsWith( ',' ) )
-      txt += ", ";
-    else
-      txt += ' ';
-  }
-
-  mLineEdit->setText( txt + addrList.join(",") );
-}
+#include <kiconloader.h>
+#include <kstandarddirs.h>
+#include <KUrlRequester>
+#include <kfiledialog.h>
+#include <QPushButton>
+#include <klocalizedstring.h>
+#include <phonon/mediaobject.h>
 
 KMSoundTestWidget::KMSoundTestWidget(QWidget *parent, const char *name)
     : QWidget( parent )
@@ -175,6 +122,3 @@ void KMSoundTestWidget::clear()
 {
     m_urlRequester->lineEdit()->clear();
 }
-
-//--------------------------------------------
-#include "kmfawidgets.moc"

@@ -36,6 +36,7 @@
 #include <QList>
 #include <QVBoxLayout>
 #include <QMenu>
+#include <QLabel>
 #include <QHash>
 #include <QPointer>
 #include <akonadi/standardactionmanager.h>

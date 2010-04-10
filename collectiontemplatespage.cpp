@@ -24,8 +24,8 @@
 #include "kmkernel.h"
 #include <QCheckBox>
 #include "foldercollection.h"
-#include "templatesconfiguration.h"
-#include "templatesconfiguration_kfg.h"
+#include "templateparser/templatesconfiguration.h"
+#include "templateparser/templatesconfiguration_kfg.h"
 
 using namespace Akonadi;
 

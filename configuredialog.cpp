@@ -35,7 +35,6 @@
 #include "kmkernel.h"
 #include "simplestringlisteditor.h"
 #include "colorlistbox.h"
-#include "messagesender.h"
 #include <kpimidentities/identitymanager.h>
 #include "identitylistview.h"
 using KMail::IdentityListView;
@@ -57,11 +56,17 @@ using KPIM::RecentAddresses;
 #include "messagelist/utils/themecombobox.h"
 #include "messagelist/utils/themeconfigbutton.h"
 
-#include "templatesconfiguration.h"
-#include "customtemplates.h"
 #include "messageviewer/autoqpointer.h"
 #include "messageviewer/nodehelper.h"
 #include "messageviewer/globalsettings.h"
+
+#include "templateparser/templatesconfiguration_kfg.h"
+#include "templateparser/templatesconfiguration.h"
+#include "templateparser/customtemplates.h"
+#include "templateparser/globalsettings_base.h"
+
+
+#include "messagecomposer/messagecomposersettings.h"
 
 using KMail::IdentityListView;
 using KMail::IdentityListViewItem;
@@ -2477,8 +2482,7 @@ ComposerPageGeneralTab::ComposerPageGeneralTab( QWidget * parent )
            mDashDashCheck, SLOT( setEnabled(bool)) );
 
   mSmartQuoteCheck = new QCheckBox(
-           GlobalSettings::self()->smartQuoteItem()->label(), this );
-  mSmartQuoteCheck->setObjectName( "kcfg_SmartQuote" );
+           TemplateParser::GlobalSettings::self()->smartQuoteItem()->label(), this );
   mSmartQuoteCheck->setToolTip(
                  i18n( "When replying, add quote signs in front of all lines of the quoted text,\n"
                        "even when the line was created by adding an additional linebreak while\n"
@@ -2487,9 +2491,8 @@ ComposerPageGeneralTab::ComposerPageGeneralTab( QWidget * parent )
   connect( mSmartQuoteCheck, SIGNAL( stateChanged(int) ),
            this, SLOT( slotEmitChanged( void ) ) );
 
-  mQuoteSelectionOnlyCheck = new QCheckBox( GlobalSettings::self()->quoteSelectionOnlyItem()->label(),
+  mQuoteSelectionOnlyCheck = new QCheckBox( MessageComposer::MessageComposerSettings::self()->quoteSelectionOnlyItem()->label(),
                                             this );
-  mQuoteSelectionOnlyCheck->setObjectName( "kcfg_QuoteSelectionOnly" );
   mQuoteSelectionOnlyCheck->setToolTip(
                  i18n( "When replying, only quote the selected text instead of the complete message "
                        "when there is text selected in the message window." ) );
@@ -2497,9 +2500,8 @@ ComposerPageGeneralTab::ComposerPageGeneralTab( QWidget * parent )
   connect( mQuoteSelectionOnlyCheck, SIGNAL( stateChanged(int) ),
            this, SLOT( slotEmitChanged(void) ) );
 
-  mStripSignatureCheck = new QCheckBox( GlobalSettings::self()->stripSignatureItem()->label(),
+  mStripSignatureCheck = new QCheckBox( TemplateParser::GlobalSettings::self()->stripSignatureItem()->label(),
                                         this );
-  mStripSignatureCheck->setObjectName( "kcfg_StripSignature" );
   vlay->addWidget( mStripSignatureCheck );
   connect( mStripSignatureCheck, SIGNAL( stateChanged(int) ),
            this, SLOT( slotEmitChanged( void ) ) );
@@ -2683,9 +2685,9 @@ void ComposerPage::GeneralTab::doLoadFromGlobalSettings()
            GlobalSettings::self()->autoTextSignature()=="auto" );
   mTopQuoteCheck->setChecked( GlobalSettings::self()->prependSignature() );
   mDashDashCheck->setChecked( GlobalSettings::self()->dashDashSignature() );
-  mSmartQuoteCheck->setChecked( GlobalSettings::self()->smartQuote() );
-  mQuoteSelectionOnlyCheck->setChecked( GlobalSettings::self()->quoteSelectionOnly() );
-  mStripSignatureCheck->setChecked( GlobalSettings::self()->stripSignature() );
+  mSmartQuoteCheck->setChecked( TemplateParser::GlobalSettings::self()->smartQuote() );
+  mQuoteSelectionOnlyCheck->setChecked( MessageComposer::MessageComposerSettings::self()->quoteSelectionOnly() );
+  mStripSignatureCheck->setChecked( TemplateParser::GlobalSettings::self()->stripSignature() );
   mAutoRequestMDNCheck->setChecked( GlobalSettings::self()->requestMDN() );
   mWordWrapCheck->setChecked( GlobalSettings::self()->wordWrap() );
   mWrapColumnSpin->setValue( GlobalSettings::self()->lineWrapWidth() );
@@ -2710,9 +2712,9 @@ void ComposerPage::GeneralTab::save() {
          mAutoAppSignFileCheck->isChecked() ? "auto" : "manual" );
   GlobalSettings::self()->setPrependSignature( mTopQuoteCheck->isChecked() );
   GlobalSettings::self()->setDashDashSignature( mDashDashCheck->isChecked() );
-  GlobalSettings::self()->setSmartQuote( mSmartQuoteCheck->isChecked() );
-  GlobalSettings::self()->setQuoteSelectionOnly( mQuoteSelectionOnlyCheck->isChecked() );
-  GlobalSettings::self()->setStripSignature( mStripSignatureCheck->isChecked() );
+  TemplateParser::GlobalSettings::self()->setSmartQuote( mSmartQuoteCheck->isChecked() );
+  MessageComposer::MessageComposerSettings::self()->setQuoteSelectionOnly( mQuoteSelectionOnlyCheck->isChecked() );
+  TemplateParser::GlobalSettings::self()->setStripSignature( mStripSignatureCheck->isChecked() );
   GlobalSettings::self()->setRequestMDN( mAutoRequestMDNCheck->isChecked() );
   GlobalSettings::self()->setWordWrap( mWordWrapCheck->isChecked() );
   GlobalSettings::self()->setLineWrapWidth( mWrapColumnSpin->value() );
@@ -2848,9 +2850,8 @@ ComposerPageSubjectTab::ComposerPageSubjectTab( QWidget * parent )
 
   // row 2: "replace [...]" check box:
   mReplaceReplyPrefixCheck = new QCheckBox(
-     GlobalSettings::self()->replaceReplyPrefixItem()->label(),
+     MessageComposer::MessageComposerSettings::self()->replaceReplyPrefixItem()->label(),
      group);
-  mReplaceReplyPrefixCheck->setObjectName( "kcfg_ReplaceReplyPrefix" );
   connect( mReplaceReplyPrefixCheck, SIGNAL( stateChanged( int ) ),
            this, SLOT( slotEmitChanged( void ) ) );
   layout->addWidget( label );
@@ -2882,9 +2883,8 @@ ComposerPageSubjectTab::ComposerPageSubjectTab( QWidget * parent )
 
   // row 3: "replace [...]" check box:
   mReplaceForwardPrefixCheck = new QCheckBox(
-       GlobalSettings::self()->replaceForwardPrefixItem()->label(),
+       MessageComposer::MessageComposerSettings::self()->replaceForwardPrefixItem()->label(),
        group);
-  mReplaceForwardPrefixCheck->setObjectName( "kcfg_ReplaceForwardPrefix" );
   connect( mReplaceForwardPrefixCheck, SIGNAL( stateChanged( int ) ),
            this, SLOT( slotEmitChanged( void ) ) );
   layout->addWidget( label );
@@ -2895,16 +2895,16 @@ ComposerPageSubjectTab::ComposerPageSubjectTab( QWidget * parent )
 
 void ComposerPage::SubjectTab::doLoadFromGlobalSettings()
 {
-  mReplyListEditor->setStringList( GlobalSettings::self()->replyPrefixes() );
-  mReplaceReplyPrefixCheck->setChecked( GlobalSettings::self()->replaceReplyPrefix() );
-  mForwardListEditor->setStringList( GlobalSettings::self()->forwardPrefixes() );
-  mReplaceForwardPrefixCheck->setChecked( GlobalSettings::self()->replaceForwardPrefix() );
+  mReplyListEditor->setStringList( MessageComposer::MessageComposerSettings::self()->replyPrefixes() );
+  mReplaceReplyPrefixCheck->setChecked( MessageComposer::MessageComposerSettings::self()->replaceReplyPrefix() );
+  mForwardListEditor->setStringList( MessageComposer::MessageComposerSettings::self()->forwardPrefixes() );
+  mReplaceForwardPrefixCheck->setChecked( MessageComposer::MessageComposerSettings::self()->replaceForwardPrefix() );
 }
 
 void ComposerPage::SubjectTab::save()
 {
-  GlobalSettings::self()->setReplyPrefixes( mReplyListEditor->stringList() );
-  GlobalSettings::self()->setForwardPrefixes( mForwardListEditor->stringList() );
+  MessageComposer::MessageComposerSettings::self()->setReplyPrefixes( mReplyListEditor->stringList() );
+  MessageComposer::MessageComposerSettings::self()->setForwardPrefixes( mForwardListEditor->stringList() );
 }
 
 QString ComposerPage::CharsetTab::helpAnchor() const
@@ -3186,9 +3186,9 @@ void ComposerPage::HeadersTab::slotRemoveMimeHeader()
 
 void ComposerPage::HeadersTab::doLoadOther()
 {
-  mMessageIdSuffixEdit->setText( GlobalSettings::customMsgIDSuffix() );
-  const bool state = ( !GlobalSettings::customMsgIDSuffix().isEmpty() &&
-                       GlobalSettings::useCustomMessageIdSuffix() );
+  mMessageIdSuffixEdit->setText( MessageComposer::MessageComposerSettings::customMsgIDSuffix() );
+  const bool state = ( !MessageComposer::MessageComposerSettings::customMsgIDSuffix().isEmpty() &&
+                       MessageComposer::MessageComposerSettings::useCustomMessageIdSuffix() );
   mCreateOwnMessageIdCheck->setChecked( state );
 
   mTagList->clear();
@@ -3221,8 +3221,8 @@ void ComposerPage::HeadersTab::doLoadOther()
 
 void ComposerPage::HeadersTab::save()
 {
-  GlobalSettings::self()->setCustomMsgIDSuffix( mMessageIdSuffixEdit->text() );
-  GlobalSettings::self()->setUseCustomMessageIdSuffix( mCreateOwnMessageIdCheck->isChecked() );
+  MessageComposer::MessageComposerSettings::self()->setCustomMsgIDSuffix( mMessageIdSuffixEdit->text() );
+  MessageComposer::MessageComposerSettings::self()->setUseCustomMessageIdSuffix( mCreateOwnMessageIdCheck->isChecked() );
 
   int numValidEntries = 0;
   QTreeWidgetItem *item = 0;

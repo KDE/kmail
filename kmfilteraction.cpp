@@ -3,14 +3,11 @@
 #include "kmfilteraction.h"
 
 // other KMail headers:
-#include "customtemplates.h"
-#include "customtemplates_kfg.h"
 #include "kmcommands.h"
 #include "kmfiltermgr.h"
-#include "messagesender.h"
 #include "kmmainwidget.h"
-#include "kmfawidgets.h"
 #include "folderrequester.h"
+#include "kmsoundtestwidget.h"
 #include "util.h"
 
 using KMail::FolderRequester;
@@ -21,11 +18,18 @@ using KMail::ActionScheduler;
 #include "regexplineedit.h"
 using KMail::RegExpLineEdit;
 #include "stringutil.h"
-#include "messagehelper.h"
-#include "messageinfo.h"
 
 // KD PIM headers
 #include "messagecore/stringutil.h"
+
+#include "messagecore/kmfawidgets.h"
+
+#include "messagecomposer/messagesender.h"
+#include "messagecomposer/messagefactory.h"
+#include "messagecomposer/messageinfo.h"
+
+#include "templateparser/customtemplates.h"
+#include "templateparser/customtemplates_kfg.h"
 
 // KDE PIM libs headers
 #include <kpimidentities/identity.h>
@@ -62,6 +66,8 @@ namespace KABC { class Resource; }
 // other headers:
 #include <assert.h>
 #include <string.h>
+#include "mdnadvicedialog.h"
+#include "mdnadvicedialog.h"
 
 //=============================================================================
 //
@@ -139,8 +145,13 @@ void KMFilterAction::sendMDN( const KMime::Message::Ptr &msg, KMime::MDN::Dispos
   }
 
   kDebug() << "AKONADI PORT: verify Akonadi::Item() here  " << Q_FUNC_INFO;
-  KMime::Message::Ptr mdn = KMail::MessageHelper::createMDN( Akonadi::Item(), msg, KMime::MDN::AutomaticAction, d, false, m );
-  if ( mdn && !kmkernel->msgSender()->send( mdn, KMail::MessageSender::SendLater ) ) {
+  KMime::MDN::SendingMode s = MDNAdviceDialog::checkMDNHeaders( msg );
+  KConfigGroup mdnConfig( KMKernel::config(), "MDN" );
+  int quote = mdnConfig.readEntry<int>( "quote-message", 0 );
+  MessageFactory factory( msg, Akonadi::Item().id() );
+  factory.setIdentityManager( KMKernel::self()->identityManager() );
+  KMime::Message::Ptr mdn = factory.createMDN( KMime::MDN::AutomaticAction, d, s, quote, m );
+  if ( mdn && !kmkernel->msgSender()->send( mdn, MessageSender::SendLater ) ) {
     kDebug() << "Sending failed.";
     //delete mdn;
   }
@@ -620,12 +631,14 @@ KMFilterActionSendReceipt::KMFilterActionSendReceipt()
 KMFilterAction::ReturnCode KMFilterActionSendReceipt::process( const Akonadi::Item &item ) const
 {
   const KMime::Message::Ptr msg = item.payload<KMime::Message::Ptr>();
-  const KMime::Message::Ptr receipt = KMail::MessageHelper::createDeliveryReceipt( item, msg );
+  MessageFactory factory( msg, item.id() );
+  factory.setIdentityManager( KMKernel::self()->identityManager() );
+  const KMime::Message::Ptr receipt = factory.createDeliveryReceipt();
   if ( !receipt ) return ErrorButGoOn;
 
   // Queue message. This is a) so that the user can check
   // the receipt before sending and b) for speed reasons.
-  kmkernel->msgSender()->send( receipt, KMail::MessageSender::SendLater );
+  kmkernel->msgSender()->send( receipt, MessageSender::SendLater );
 
   return GoOn;
 }
@@ -1012,7 +1025,7 @@ KMFilterAction::ReturnCode KMFilterActionFakeDisposition::process( const Akonadi
 
   const KMime::Message::Ptr msg = item.payload<KMime::Message::Ptr>();
   if ( idx == 1 ) // ignore
-    KMail::MessageInfo::instance()->setMDNSentState( msg.get(), KMMsgMDNIgnore );
+    MessageInfo::instance()->setMDNSentState( msg.get(), KMMsgMDNIgnore );
   else // send
     sendMDN( msg, mdns[idx-2] ); // skip first two entries: "" and "ignore"
   return GoOn;
@@ -1568,10 +1581,12 @@ KMFilterAction::ReturnCode KMFilterActionForward::process( const Akonadi::Item &
     kWarning() << "Attempt to forward to receipient of original message, ignoring.";
     return ErrorButGoOn;
   }
-
-  KMime::Message::Ptr fwdMsg = KMail::MessageHelper::createForward( item, msg, mTemplate );
+  MessageFactory factory( msg, item.id() );
+  factory.setIdentityManager( KMKernel::self()->identityManager() );
+  factory.setTemplate( mTemplate );
+  KMime::Message::Ptr fwdMsg = factory.createForward();
   fwdMsg->to()->fromUnicodeString( fwdMsg->to()->asUnicodeString() + ',' + mParameter, "utf-8" );
-  if ( !kmkernel->msgSender()->send( fwdMsg, KMail::MessageSender::SendDefault ) ) {
+  if ( !kmkernel->msgSender()->send( fwdMsg, MessageSender::SendDefault ) ) {
     kWarning() << "KMFilterAction: could not forward message (sending failed)";
     return ErrorButGoOn; // error: couldn't send
   }
@@ -1727,13 +1742,16 @@ KMFilterAction::ReturnCode KMFilterActionRedirect::process( const Akonadi::Item 
   if ( mParameter.isEmpty() )
     return ErrorButGoOn;
 
-  KMime::Message::Ptr msg = KMail::MessageHelper::createRedirect( item, mParameter );
-  if ( !msg )
+  KMime::Message::Ptr msg = item.payload<KMime::Message::Ptr>();
+  MessageFactory factory( msg, item.id() );
+  factory.setIdentityManager( KMKernel::self()->identityManager() );
+  KMime::Message::Ptr rmsg = factory.createRedirect( mParameter );
+  if ( !rmsg )
     return ErrorButGoOn;
 
   sendMDN( KMail::Util::message( item ), KMime::MDN::Dispatched );
 
-  if ( !kmkernel->msgSender()->send( msg, KMail::MessageSender::SendLater ) ) {
+  if ( !kmkernel->msgSender()->send( rmsg, MessageSender::SendLater ) ) {
     kDebug() << "KMFilterAction: could not redirect message (sending failed)";
     return ErrorButGoOn; // error: couldn't send
   }

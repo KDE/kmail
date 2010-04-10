@@ -41,6 +41,7 @@
 #include <KPushButton>
 
 #include <QListWidget>
+#include <QVBoxLayout>
 #include <QRegExp>
 
 using namespace KMail;

@@ -25,8 +25,8 @@
 #include <KConfigGroup>
 #include <KIO/Job>
 
-#include "mailinglist-magic.h"
-using KMail::MailingList;
+#include "messagecore/mailinglist-magic.h"
+using MessageCore::MailingList;
 
 class KMMainWidget;
 

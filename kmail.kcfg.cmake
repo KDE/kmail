@@ -4,7 +4,6 @@
       xsi:schemaLocation="http://www.kde.org/standards/kcfg/1.0
       http://www.kde.org/standards/kcfg/1.0/kcfg.xsd" >
   <include>qtextcodec.h</include>
-  <include>templatesconfiguration.h</include>
   <include>kglobalsettings.h</include>
   <include>kcolorscheme.h</include>
   <include>composer.h</include>
@@ -92,12 +91,6 @@
     <group name="General">
       <entry name="WarnBeforeExpire" type="bool" key="warn-before-expire">
         <default>true</default>
-      </entry>
-      <entry name="CustomMsgIDSuffix" type="String" key="myMessageIdSuffix">
-        <default></default>
-      </entry>
-      <entry name="UseCustomMessageIdSuffix" type="bool" key="useCustomMessageIdSuffix">
-        <default>false</default>
       </entry>
       <entry  name="DefaultDomain" type="String" key="Default domain">
         <default></default>
@@ -364,28 +357,6 @@
       </entry>
       <entry name="DashDashSignature" type="Bool" key="dash-dash-signature">
         <label>Prepend separator to signature</label>
-        <default>true</default>
-      </entry>
-      <entry name="ReplyPrefixes" type="StringList" key="reply-prefixes">
-        <default>Re\\s*:,Re\\[\\d+\\]:,Re\\d+:</default>
-      </entry>
-      <entry name="ReplaceReplyPrefix" type="Bool" key="replace-reply-prefix">
-        <label>Replace recognized prefi&amp;x with "Re:"</label>
-	<default>true</default>
-      </entry>
-      <entry name="ForwardPrefixes" type="StringList" key="forward-prefixes">
-        <default>Fwd:,FW:</default>
-      </entry>
-      <entry name="ReplaceForwardPrefix" type="Bool" key="replace-forward-prefix">
-        <label>Replace recognized prefix with "&amp;Fwd:"</label>
-        <default>true</default>
-      </entry>
-      <entry name="SmartQuote" type="Bool" key="smart-quote">
-        <label>Use smart &amp;quoting</label>
-        <default>true</default>
-      </entry>
-      <entry name="StripSignature" type="Bool">
-        <label>Remove the signature when replying</label>
         <default>true</default>
       </entry>
       <entry name="QuoteSelectionOnly" type="Bool">
