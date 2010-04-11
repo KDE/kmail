@@ -1138,7 +1138,6 @@ AppearancePageColorsTab::AppearancePageColorsTab( QWidget * parent )
   // color list box:
   mColorList = new ColorListBox( this );
   mColorList->setEnabled( false ); // since !mCustomColorCheck->isChecked()
-  QStringList modeList;
   for ( int i = 0 ; i < numColorNames ; i++ )
     mColorList->addColor( i18n(colorNames[i].displayName) );
   vlay->addWidget( mColorList, 1 );
@@ -1175,7 +1174,7 @@ AppearancePageColorsTab::AppearancePageColorsTab( QWidget * parent )
   connect( mCustomColorCheck, SIGNAL(toggled(bool)),
            l, SLOT(setEnabled(bool)) );
   connect( mCustomColorCheck, SIGNAL(toggled(bool)),
-     mCloseToQuotaThreshold, SLOT(setEnabled(bool)) );
+           mCloseToQuotaThreshold, SLOT(setEnabled(bool)) );
 
   connect( mCustomColorCheck, SIGNAL( stateChanged( int ) ),
            this, SLOT( slotEmitChanged( void ) ) );

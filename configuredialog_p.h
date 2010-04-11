@@ -80,7 +80,6 @@ namespace KMail {
   class IdentityListView;
   class IdentityListViewItem;
   class Tag;
-  class Tag;
   typedef QSharedPointer<Tag> TagPtr;
 }
 
