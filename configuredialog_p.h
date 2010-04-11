@@ -75,6 +75,11 @@ namespace MessageList {
     class ThemeComboBox;
   }
 }
+
+namespace MessageViewer {
+  class ConfigureWidget;
+}
+
 namespace KMail {
   class IdentityDialog;
   class IdentityListView;
@@ -438,22 +443,12 @@ public:
   void save();
 
 private:
-  virtual void doLoadFromGlobalSettings();
   virtual void doLoadOther();
   //FIXME virtual void doResetToDefaultsOther();
-  void readCurrentFallbackCodec();
-  void readCurrentOverrideCodec();
 
 private: // data
   QCheckBox *mCloseAfterReplyOrForwardCheck;
-  QCheckBox *mShowColorbarCheck;
-  QCheckBox *mShowSpamStatusCheck;
-  QCheckBox *mShowEmoticonsCheck;
-  QCheckBox *mShowExpandQuotesMark;
-  KIntSpinBox  *mCollapseQuoteLevelSpin;
-  QCheckBox *mShrinkQuotesCheck;
-  KComboBox *mCharsetCombo;
-  KComboBox *mOverrideCharsetCombo;
+  MessageViewer::ConfigureWidget *mViewerSettings;
 };
 
 

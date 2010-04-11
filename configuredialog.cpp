@@ -58,6 +58,7 @@ using KPIM::RecentAddresses;
 
 #include "messageviewer/autoqpointer.h"
 #include "messageviewer/nodehelper.h"
+#include "messageviewer/configurewidget.h"
 #include "messageviewer/globalsettings.h"
 
 #include "templateparser/templatesconfiguration_kfg.h"
@@ -885,6 +886,7 @@ AppearancePage::AppearancePage( const KComponentData &instance, QWidget *parent 
   //
   mReaderTab = new ReaderTab();
   addTab( mReaderTab, i18n("Message Window") );
+  addConfig( MessageViewer::GlobalSettings::self(), mReaderTab );
 
   //
   // "System Tray" tab:
@@ -1628,201 +1630,25 @@ AppearancePageReaderTab::AppearancePageReaderTab( QWidget * parent )
   connect( mCloseAfterReplyOrForwardCheck, SIGNAL ( stateChanged( int ) ),
            this, SLOT( slotEmitChanged() ) );
 
-  // "show colorbar" check box:
-  populateCheckBox( mShowColorbarCheck = new QCheckBox( this ),
-                    MessageViewer::GlobalSettings::self()->showColorBarItem() );
-  vlay->addWidget( mShowColorbarCheck );
-  connect( mShowColorbarCheck, SIGNAL ( stateChanged( int ) ),
+  mViewerSettings = new MessageViewer::ConfigureWidget( this );
+  connect( mViewerSettings, SIGNAL( settingsChanged() ),
            this, SLOT( slotEmitChanged() ) );
-
-  // "show spam status" check box;
-  populateCheckBox( mShowSpamStatusCheck = new QCheckBox( this ),
-                    MessageViewer::GlobalSettings::self()->showSpamStatusItem() );
-  vlay->addWidget( mShowSpamStatusCheck );
-  connect( mShowSpamStatusCheck, SIGNAL ( stateChanged( int ) ),
-           this, SLOT( slotEmitChanged() ) );
-
-  // "replace smileys by emoticons" check box;
-  populateCheckBox( mShowEmoticonsCheck = new QCheckBox( this ),
-                    MessageViewer::GlobalSettings::self()->showEmoticonsItem() );
-  vlay->addWidget( mShowEmoticonsCheck );
-  connect( mShowEmoticonsCheck, SIGNAL ( stateChanged( int ) ),
-           this, SLOT( slotEmitChanged() ) );
-
-  // "Use smaller font for quoted text" check box
-  mShrinkQuotesCheck = new QCheckBox(
-      MessageViewer::GlobalSettings::self()->shrinkQuotesItem()->label(), this );
-  mShrinkQuotesCheck->setObjectName( "kcfg_ShrinkQuotes" );
-  vlay->addWidget( mShrinkQuotesCheck );
-  connect( mShrinkQuotesCheck, SIGNAL( stateChanged( int ) ),
-           this, SLOT( slotEmitChanged() ) );
-
-  // "Show expand/collaps quote marks" check box;
-  populateCheckBox( mShowExpandQuotesMark = new QCheckBox( this ),
-                    MessageViewer::GlobalSettings::self()->showExpandQuotesMarkItem() );
-  vlay->addWidget( mShowExpandQuotesMark);
-  connect( mShowExpandQuotesMark, SIGNAL ( stateChanged( int ) ),
-           this, SLOT( slotEmitChanged() ) );
-
-  //New HBoxLayout to show the collapseQuoteLevel spin+label one line down
-  QHBoxLayout * hlay = new QHBoxLayout();
-  vlay->addLayout( hlay );
-  hlay->addSpacing( 40 );
-
-  mCollapseQuoteLevelSpin = new KIntSpinBox( 0/*min*/,10/*max*/,1/*step*/,
-      3/*init*/,this );
-
-  QLabel *label = new QLabel(
-           MessageViewer::GlobalSettings::self()->collapseQuoteLevelSpinItem()->label(), this );
-  label->setBuddy( mCollapseQuoteLevelSpin );
-
-  hlay->addWidget( label );
-
-  mCollapseQuoteLevelSpin->setEnabled( false ); //since !mShowExpandQuotesMark->isCheckec()
-  connect(  mCollapseQuoteLevelSpin, SIGNAL( valueChanged( int ) ),
-      this, SLOT( slotEmitChanged( void ) ) );
-  hlay->addWidget( mCollapseQuoteLevelSpin);
-
-  connect( mShowExpandQuotesMark, SIGNAL( toggled( bool ) ),
-      mCollapseQuoteLevelSpin, SLOT( setEnabled( bool ) ) );
-
-  hlay->addStretch();
-
-  // Fallback Character Encoding
-  hlay = new QHBoxLayout(); // inherits spacing
-  vlay->addLayout( hlay );
-  mCharsetCombo = new KComboBox( this );
-  mCharsetCombo->addItems(MessageViewer::NodeHelper::supportedEncodings( false ) );
-
-  connect( mCharsetCombo, SIGNAL( activated( int ) ),
-           this, SLOT( slotEmitChanged( void ) ) );
-
-  QString fallbackCharsetWhatsThis = i18n(
-     MessageViewer::GlobalSettings::self()->fallbackCharacterEncodingItem()->whatsThis().toUtf8() );
-  mCharsetCombo->setWhatsThis( fallbackCharsetWhatsThis );
-
-  label = new QLabel( i18n("Fallback ch&aracter encoding:"), this );
-  label->setBuddy( mCharsetCombo );
-
-  hlay->addWidget( label );
-  hlay->addWidget( mCharsetCombo );
-
-  // Override Character Encoding
-  QHBoxLayout *hlay2 = new QHBoxLayout(); // inherits spacing
-  vlay->addLayout( hlay2 );
-  mOverrideCharsetCombo = new KComboBox( this );
-  QStringList encodings =MessageViewer::NodeHelper::supportedEncodings( false );
-  encodings.prepend( i18n( "Auto" ) );
-  mOverrideCharsetCombo->addItems( encodings );
-  mOverrideCharsetCombo->setCurrentIndex(0);
-
-  connect( mOverrideCharsetCombo, SIGNAL( activated( int ) ),
-           this, SLOT( slotEmitChanged( void ) ) );
-
-  QString overrideCharsetWhatsThis = i18n(
-     MessageViewer::GlobalSettings::self()->overrideCharacterEncodingItem()->whatsThis().toUtf8() );
-  mOverrideCharsetCombo->setWhatsThis( overrideCharsetWhatsThis );
-
-  label = new QLabel( i18n("&Override character encoding:"), this );
-  label->setBuddy( mOverrideCharsetCombo );
-
-  hlay2->addWidget( label );
-  hlay2->addWidget( mOverrideCharsetCombo );
+  vlay->addWidget( mViewerSettings );
 
   vlay->addStretch( 100 ); // spacer
-}
-
-
-void AppearancePage::ReaderTab::readCurrentFallbackCodec()
-{
-  QStringList encodings =MessageViewer::NodeHelper::supportedEncodings( false );
-  QStringList::ConstIterator it( encodings.begin() );
-  QStringList::ConstIterator end( encodings.end() );
-  QString currentEncoding = MessageViewer::GlobalSettings::self()->fallbackCharacterEncoding();
-  uint i = 0;
-  int indexOfLatin9 = 0;
-  bool found = false;
-  for( ; it != end; ++it)
-  {
-    const QString encoding = MessageViewer::NodeHelper::encodingForName(*it);
-    if ( encoding == "ISO-8859-15" )
-        indexOfLatin9 = i;
-    if( encoding == currentEncoding )
-    {
-      mCharsetCombo->setCurrentIndex( i );
-      found = true;
-      break;
-    }
-    i++;
-  }
-  if ( !found ) // nothing matched, use latin9
-    mCharsetCombo->setCurrentIndex( indexOfLatin9 );
-}
-
-void AppearancePage::ReaderTab::readCurrentOverrideCodec()
-{
-  const QString &currentOverrideEncoding = MessageViewer::GlobalSettings::self()->overrideCharacterEncoding();
-  if ( currentOverrideEncoding.isEmpty() ) {
-    mOverrideCharsetCombo->setCurrentIndex( 0 );
-    return;
-  }
-  QStringList encodings =MessageViewer::NodeHelper::supportedEncodings( false );
-  encodings.prepend( i18n( "Auto" ) );
-  QStringList::ConstIterator it( encodings.constBegin() );
-  QStringList::ConstIterator end( encodings.constEnd() );
-  int i = 0;
-  for( ; it != end; ++it)
-  {
-    if( MessageViewer::NodeHelper::encodingForName(*it) == currentOverrideEncoding )
-    {
-      mOverrideCharsetCombo->setCurrentIndex( i );
-      break;
-    }
-    i++;
-  }
-  if ( i == encodings.size() ) {
-    // the current value of overrideCharacterEncoding is an unknown encoding => reset to Auto
-    kWarning() <<"Unknown override character encoding \"" << currentOverrideEncoding
-                   << "\". Resetting to Auto.";
-    mOverrideCharsetCombo->setCurrentIndex( 0 );
-    MessageViewer::GlobalSettings::self()->setOverrideCharacterEncoding( QString() );
-  }
-}
-
-void AppearancePage::ReaderTab::doLoadFromGlobalSettings()
-{
-  mShowEmoticonsCheck->setChecked( MessageViewer::GlobalSettings::self()->showEmoticons() );
-  mShrinkQuotesCheck->setChecked( MessageViewer::GlobalSettings::self()->shrinkQuotes() );
-  mShowExpandQuotesMark->setChecked( MessageViewer::GlobalSettings::self()->showExpandQuotesMark() );
-  mCollapseQuoteLevelSpin->setValue( MessageViewer::GlobalSettings::self()->collapseQuoteLevelSpin() );
-  readCurrentFallbackCodec();
-  readCurrentOverrideCodec();
 }
 
 void AppearancePage::ReaderTab::doLoadOther()
 {
   loadWidget( mCloseAfterReplyOrForwardCheck, GlobalSettings::self()->closeAfterReplyOrForwardItem() );
-  loadWidget( mShowColorbarCheck, MessageViewer::GlobalSettings::self()->showColorBarItem() );
-  loadWidget( mShowSpamStatusCheck, MessageViewer::GlobalSettings::self()->showSpamStatusItem() );
+  mViewerSettings->readConfig();
 }
 
 
 void AppearancePage::ReaderTab::save()
 {
   saveCheckBox( mCloseAfterReplyOrForwardCheck, GlobalSettings::self()->closeAfterReplyOrForwardItem() );
-  saveCheckBox( mShowColorbarCheck, MessageViewer::GlobalSettings::self()->showColorBarItem() );
-  saveCheckBox( mShowSpamStatusCheck, MessageViewer::GlobalSettings::self()->showSpamStatusItem() );
-  MessageViewer::GlobalSettings::self()->setShowEmoticons( mShowEmoticonsCheck->isChecked() );
-  MessageViewer::GlobalSettings::self()->setShrinkQuotes( mShrinkQuotesCheck->isChecked() );
-  MessageViewer::GlobalSettings::self()->setShowExpandQuotesMark( mShowExpandQuotesMark->isChecked() );
-
-  MessageViewer::GlobalSettings::self()->setCollapseQuoteLevelSpin( mCollapseQuoteLevelSpin->value() );
-  MessageViewer::GlobalSettings::self()->setFallbackCharacterEncoding(
-      MessageViewer::NodeHelper::encodingForName( mCharsetCombo->currentText() ) );
-  MessageViewer::GlobalSettings::self()->setOverrideCharacterEncoding(
-      mOverrideCharsetCombo->currentIndex() == 0 ?
-        QString() :
-        MessageViewer::NodeHelper::encodingForName( mOverrideCharsetCombo->currentText() ) );
+  mViewerSettings->writeConfig();
 }
 
 QString AppearancePage::SystemTrayTab::helpAnchor() const
