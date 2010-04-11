@@ -2507,7 +2507,7 @@ ComposerPageGeneralTab::ComposerPageGeneralTab( QWidget * parent )
 
   mAutoRequestMDNCheck = new QCheckBox(
            GlobalSettings::self()->requestMDNItem()->label(), this);
-  mAutoRequestMDNCheck->setObjectName( "kcfg_RequestMDN" );
+  mAutoRequestMDNCheck->setObjectName( "requestMDN" );
   vlay->addWidget( mAutoRequestMDNCheck );
   connect( mAutoRequestMDNCheck, SIGNAL( stateChanged(int) ),
            this, SLOT( slotEmitChanged( void ) ) );
@@ -2526,7 +2526,7 @@ ComposerPageGeneralTab::ComposerPageGeneralTab( QWidget * parent )
   vlay->addLayout( hlay );
   mWordWrapCheck = new QCheckBox(
            GlobalSettings::self()->wordWrapItem()->label(), this);
-  mWordWrapCheck->setObjectName( "kcfg_WordWrap" );
+  mWordWrapCheck->setObjectName( "wordWrap" );
   hlay->addWidget( mWordWrapCheck );
   connect( mWordWrapCheck, SIGNAL( stateChanged(int) ),
            this, SLOT( slotEmitChanged( void ) ) );
