@@ -561,16 +561,6 @@ CSSHelper* KMReaderWin::cssHelper() const
   return mViewer->cssHelper();
 }
 
-bool KMReaderWin::showSignatureDetails() const
-{
-  return mViewer->showSignatureDetails();
-}
-
-void KMReaderWin::setShowSignatureDetails( bool showDetails )
-{
-  mViewer->setShowSignatureDetails( showDetails );
-}
-
 bool KMReaderWin::htmlLoadExtOverride() const
 {
   return mViewer->htmlLoadExtOverride();

@@ -174,12 +174,6 @@ public:
   /** Enforce message decryption. */
   void setDecryptMessageOverwrite( bool overwrite = true );
 
-  /** Show signature details. */
-  bool showSignatureDetails() const;
-
-  /** Show signature details. */
-  void setShowSignatureDetails( bool showDetails = true );
-
   MessageViewer::CSSHelper* cssHelper() const;
 
 private:
