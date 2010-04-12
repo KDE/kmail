@@ -76,11 +76,11 @@ public:
   /** Read settings from app's config file. */
   void readConfig();
 
-  const MessageViewer::HeaderStyle * headerStyle() const;
+  MessageViewer::HeaderStyle * headerStyle() const;
 
   /** Set the header style and strategy. We only want them to be set
       together. */
-  void setHeaderStyleAndStrategy( const MessageViewer::HeaderStyle * style,
+  void setHeaderStyleAndStrategy( MessageViewer::HeaderStyle * style,
                                   const MessageViewer::HeaderStrategy * strategy );
   /** Getthe message header strategy. */
   const MessageViewer::HeaderStrategy * headerStrategy() const;

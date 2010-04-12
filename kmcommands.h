@@ -527,7 +527,7 @@ class KMAIL_EXPORT KMPrintCommand : public KMCommand
 
 public:
   KMPrintCommand( QWidget *parent, const Akonadi::Item &msg,
-                  const MessageViewer::HeaderStyle *headerStyle = 0,
+                  MessageViewer::HeaderStyle *headerStyle = 0,
                   const MessageViewer::HeaderStrategy *headerStrategy = 0,
                   bool htmlOverride = false,
                   bool htmlLoadExtOverride = false,
@@ -540,7 +540,7 @@ public:
 private:
   virtual Result execute();
 
-  const MessageViewer::HeaderStyle *mHeaderStyle;
+  MessageViewer::HeaderStyle *mHeaderStyle;
   const MessageViewer::HeaderStrategy *mHeaderStrategy;
   const MessageViewer::AttachmentStrategy *mAttachmentStrategy;
   bool mHtmlOverride;

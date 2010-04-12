@@ -235,7 +235,7 @@ void KMReaderWin::setAttachmentStrategy( const AttachmentStrategy * strategy ) {
   mViewer->setAttachmentStrategy( strategy );
 }
 
-void KMReaderWin::setHeaderStyleAndStrategy( const HeaderStyle * style,
+void KMReaderWin::setHeaderStyleAndStrategy( HeaderStyle * style,
                                              const HeaderStrategy * strategy ) {
   mViewer->setHeaderStyleAndStrategy( style, strategy );
 }
@@ -599,7 +599,7 @@ const HeaderStrategy * KMReaderWin::headerStrategy() const
   return mViewer->headerStrategy();
 }
 
-const HeaderStyle * KMReaderWin::headerStyle() const
+HeaderStyle * KMReaderWin::headerStyle() const
 {
   return mViewer->headerStyle();
 }

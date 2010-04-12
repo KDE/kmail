@@ -1630,7 +1630,7 @@ KMCommand::Result KMCustomForwardCommand::execute()
 
 
 KMPrintCommand::KMPrintCommand( QWidget *parent, const Akonadi::Item &msg,
-                                const MessageViewer::HeaderStyle *headerStyle,
+                                MessageViewer::HeaderStyle *headerStyle,
                                 const MessageViewer::HeaderStrategy *headerStrategy,
                                 bool htmlOverride, bool htmlLoadExtOverride,
                                 bool useFixedFont, const QString & encoding )
