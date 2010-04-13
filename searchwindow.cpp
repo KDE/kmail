@@ -2,6 +2,7 @@
  * kmail: KDE mail client
  * Copyright (c) 1996-1998 Stefan Taferner <taferner@kde.org>
  * Copyright (c) 2001 Aaron J. Seigo <aseigo@kde.org>
+ * Copyright (c) 2010 Till Adam <adam@kde.org>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -43,6 +44,7 @@
 #include <KStandardGuiItem>
 #include <KStatusBar>
 #include <KWindowSystem>
+#include <KMessageBox>
 
 #include "folderrequester.h"
 #include "kmcommands.h"
@@ -613,25 +615,25 @@ void SearchWindow::scheduleRename( const QString &s )
 void SearchWindow::renameSearchFolder()
 {
   if ( mFolder.isValid() && ( mFolder.name() != mSearchFolderEdt->text() ) ) {
-#if 0 //TODO port to akonadi
-    int i = 1;
-    QString name =  mSearchFolderEdt->text();
-    while ( i < 100 ) {
-      if ( !kmkernel->searchFolderMgr()->find( name ) ) {
-        mFolder->rename( name );
-        kmkernel->searchFolderMgr()->contentsChanged();
-        break;
-      }
-      name.setNum( i );
-      name = mSearchFolderEdt->text() + ' ' + name;
-      ++i;
-    }
-#else
-    kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
-#endif
+    mFolder.setName( mSearchFolderEdt->text() );
+    Akonadi::CollectionModifyJob *job = new Akonadi::CollectionModifyJob( mFolder, this );
+    connect( job, SIGNAL( result( KJob* ) ),
+             this, SLOT( slotSearchFolderRenameDone( KJob* ) ) );
   }
   if ( mFolder.isValid() )
     mSearchFolderOpenBtn->setEnabled( true );
+}
+
+void SearchWindow::slotSearchFolderRenameDone( KJob *job )
+{
+  Q_ASSERT( job );
+  if ( job->error() ) {
+    KMessageBox::information( this, i18n("There was a problem renaming your search folder. "
+                               "A common reason for this is that another search folder "
+                               "with the same name already exists.") );
+  } else {
+    qDebug() << "Search Collection succesfully renamed.";
+  }
 }
 
 void SearchWindow::openSearchFolder()

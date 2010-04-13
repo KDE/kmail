@@ -147,6 +147,7 @@ protected slots:
   void enableGUI();
 
   void setEnabledSearchButton(bool);
+  void slotSearchFolderRenameDone( KJob* job );
 
 protected:
 
