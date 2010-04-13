@@ -108,8 +108,8 @@ void KMReaderMainWin::initKMReaderMainWin()
 
   connect( kmkernel, SIGNAL( configChanged() ),
            this, SLOT( slotConfigChanged() ) );
-  connect( mReaderWin->htmlPart()->page(), SIGNAL( linkHovered( const QString &, const QString &, const QString & ) ),
-           statusBar(), SLOT( showMessage(const QString & )));
+  connect( mReaderWin, SIGNAL( showStatusBarMessage( const QString & ) ),
+           statusBar(), SLOT( showMessage( const QString & ) ) );
 }
 
 //-----------------------------------------------------------------------------

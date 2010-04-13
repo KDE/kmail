@@ -42,7 +42,6 @@ class KActionCollection;
 class KAction;
 class KToggleAction;
 class KToggleAction;
-class KWebView;
 class KUrl;
 namespace MessageViewer {
   class HeaderStrategy;
@@ -159,10 +158,6 @@ public:
   KAction *addBookmarksAction() { return mAddBookmarksAction;}
   KAction *toggleMimePartTreeAction();
 
-  /** Access to the KWebKitView used for the viewer. Use with
-      care! */
-  KWebView * htmlPart() const;
-
   Akonadi::Item message() const;
 
   QWidget* mainWindow() { return mMainWindow; }
@@ -181,6 +176,8 @@ signals:
 
   /** Pgp displays a password dialog */
   void noDrag(void);
+
+  void showStatusBarMessage( const QString &message );
 
 public slots:
   /** Force update even if message is the same */

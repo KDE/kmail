@@ -48,7 +48,6 @@
 using MessageViewer::CSSHelper;
 #include "util.h"
 #include <kicon.h>
-#include "broadcaststatus.h"
 #include "messageviewer/attachmentdialog.h"
 #include "stringutil.h"
 
@@ -138,6 +137,8 @@ KMReaderWin::KMReaderWin(QWidget *aParent,
   connect( mViewer, SIGNAL( requestConfigSync() ), this, SLOT( slotRequestConfigSync() ) );
   connect( mViewer, SIGNAL( showReader( KMime::Content* , bool, const QString&, const QString&, const QString &) ),
            this, SLOT( slotShowReader( KMime::Content* , bool, const QString&, const QString&, const QString &) ) );
+  connect( mViewer, SIGNAL( showStatusBarMessage( const QString & ) ),
+           this, SIGNAL( showStatusBarMessage( const QString & ) ) );
   vlay->addWidget( mViewer );
   readConfig();
 
@@ -595,11 +596,6 @@ const HeaderStrategy * KMReaderWin::headerStrategy() const
 HeaderStyle * KMReaderWin::headerStyle() const
 {
   return mViewer->headerStyle();
-}
-
-KWebView * KMReaderWin::htmlPart() const
-{
-  return mViewer->htmlPart();
 }
 
 KAction *KMReaderWin::copyURLAction()
