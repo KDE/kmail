@@ -174,9 +174,6 @@ signals:
       in unencrypted state in it's folder. */
   void replaceMsgByUnencryptedVersion();
 
-  /** Pgp displays a password dialog */
-  void noDrag(void);
-
   void showStatusBarMessage( const QString &message );
 
 public slots:

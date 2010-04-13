@@ -919,12 +919,6 @@ void KMMainWidget::createWidgets()
              this, SLOT( slotMessagePopup(const Akonadi::Item&,const KUrl&,const QPoint&) ) );
     connect( mMsgView->viewer(), SIGNAL( urlClicked(const KUrl&,int) ),
              mMsgView->viewer(), SLOT( slotUrlClicked() ) );
-
-#if 0    // FIXME (Pragma)
-    connect( mMsgView, SIGNAL( noDrag() ),
-             mHeaders, SLOT( slotNoDrag() ) );
-#endif
-
   }
 
   //
