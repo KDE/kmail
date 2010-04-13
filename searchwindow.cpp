@@ -628,11 +628,12 @@ void SearchWindow::slotSearchFolderRenameDone( KJob *job )
 {
   Q_ASSERT( job );
   if ( job->error() ) {
+    kWarning() << "Job failed:" << job->errorText();
     KMessageBox::information( this, i18n("There was a problem renaming your search folder. "
                                "A common reason for this is that another search folder "
                                "with the same name already exists.") );
   } else {
-    qDebug() << "Search Collection succesfully renamed.";
+    kDebug() << "Search Collection succesfully renamed.";
   }
 }
 
