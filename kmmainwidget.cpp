@@ -2701,14 +2701,11 @@ void KMMainWidget::slotMessageActivated( const Akonadi::Item &msg )
     return;
   }
 
-  // TODO: Port to partFetcher so that this is not necessary.
-  // FIXME: When loading attachments on demand is activated, don't fetch the full payload
-  ItemFetchJob *itemFetchJob = new ItemFetchJob( msg, this );
-  itemFetchJob->fetchScope().fetchFullPayload( true );
-  itemFetchJob->fetchScope().fetchAllAttributes();
-  itemFetchJob->fetchScope().setAncestorRetrieval( ItemFetchScope::Parent );
-  connect( itemFetchJob, SIGNAL(itemsReceived(Akonadi::Item::List)), SLOT(slotItemsFetchedForActivation(Akonadi::Item::List)) );
-  connect( itemFetchJob, SIGNAL(result(KJob *)), SLOT(itemsFetchDone(KJob*)) );
+  ItemFetchJob *itemFetchJob = MessageViewer::Viewer::createFetchJob( msg );
+  connect( itemFetchJob, SIGNAL(itemsReceived(Akonadi::Item::List)),
+           SLOT(slotItemsFetchedForActivation(Akonadi::Item::List)) );
+  connect( itemFetchJob, SIGNAL(result(KJob *)),
+           SLOT(itemsFetchDone(KJob*)) );
 }
 
 void KMMainWidget::slotItemsFetchedForActivation( const Akonadi::Item::List &list )
@@ -4312,11 +4309,8 @@ void KMMainWidget::slotMessageSelected(const Akonadi::Item &item)
     mShowBusySplashTimer->setSingleShot( true );
     connect( mShowBusySplashTimer, SIGNAL( timeout() ), this, SLOT( slotShowBusySplash() ) );
     mShowBusySplashTimer->start( GlobalSettings::self()->folderLoadingTimeout() ); //TODO: check if we need a different timeout setting for this
-    // TODO: Port to partFetcher.
-    ItemFetchJob *itemFetchJob = new ItemFetchJob(item, this);
-    itemFetchJob->fetchScope().fetchFullPayload( true );
-    itemFetchJob->fetchScope().fetchAllAttributes();
-    itemFetchJob->fetchScope().setAncestorRetrieval( ItemFetchScope::Parent );
+
+    Akonadi::ItemFetchJob *itemFetchJob = MessageViewer::Viewer::createFetchJob( item );
     connect( itemFetchJob, SIGNAL(itemsReceived(Akonadi::Item::List)),
              SLOT(itemsReceived(Akonadi::Item::List)) );
     connect( itemFetchJob, SIGNAL(result(KJob *)), SLOT(itemsFetchDone(KJob *)) );
