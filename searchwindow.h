@@ -56,7 +56,6 @@ namespace Akonadi {
   class EntityTreeView;
   class ItemModel;
   class Item;
-  class SearchCreateJob;
 }
 
 namespace KMail {
@@ -163,7 +162,7 @@ protected:
   int mSortColumn;
   Qt::SortOrder mSortOrder;
   Akonadi::Collection mFolder;
-  Akonadi::SearchCreateJob *mSearchJob;
+  KJob *mSearchJob;
   QTimer *mTimer;
 
   // GC'd by Qt

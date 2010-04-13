@@ -59,6 +59,7 @@ using namespace KPIM;
 #include <Akonadi/EntityTreeView>
 #include <Akonadi/CollectionModifyJob>
 #include <Akonadi/SearchCreateJob>
+#include <Akonadi/SearchModifyJob>
 #include <Akonadi/KMime/MessageModel>
 
 #include <kmime/kmime_message.h>
@@ -231,11 +232,13 @@ SearchWindow::SearchWindow(KMMainWidget* w, const Akonadi::Collection& curFolder
   mSearchFolderEdt = new KLineEdit( searchWidget );
   mSearchFolderEdt->setClearButtonShown( true );
 
-  if ( currentFolderIsSearchFolder )
+  if ( currentFolderIsSearchFolder ) {
+    mFolder = curFolder;
     mSearchFolderEdt->setText( curFolder.name() );
-  else
+  } else {
     mSearchFolderEdt->setText( i18n("Last Search") );
-
+    // TODO find last search and set mFolder to it
+  }
   mSearchFolderLbl->setBuddy(mSearchFolderEdt);
   mSearchFolderOpenBtn = new KPushButton(i18n("Op&en Search Folder"), searchWidget);
   mSearchFolderOpenBtn->setEnabled(false);
@@ -463,30 +466,6 @@ void SearchWindow::slotSearch()
   mSortColumn = mLbxMatches->header()->sortIndicatorSection();
   mSortOrder = mLbxMatches->header()->sortIndicatorOrder();
   mLbxMatches->setSortingEnabled( false );
-#if 0 //TODO port to akonadi
-  // If we haven't openend an existing search folder, find or create one.
-  if ( !mFolder ) {
-    KMFolderMgr *mgr = kmkernel->searchFolderMgr();
-    QString baseName = mSearchFolderEdt->text();
-    QString fullName = baseName;
-    int count = 0;
-    KMFolder *folder;
-    while ( ( folder = mgr->find( fullName ) ) ) {
-      if ( folder->storage()->inherits( "KMFolderSearch" ) ) {
-        break;
-      }
-      fullName = QString( "%1 %2" ).arg( baseName ).arg( ++count );
-    }
-
-    if ( !folder ) {
-      folder =
-        mgr->createFolder( fullName, false, KMFolderTypeSearch, &mgr->dir() );
-    }
-    mFolder = dynamic_cast<KMFolderSearch*>( folder->storage() );
-  }
-#else
-    kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
-#endif
 
   if ( mSearchJob ) {
     mSearchJob->kill( KJob::Quietly );
@@ -514,7 +493,12 @@ void SearchWindow::slotSearch()
   mTimer->start( 200 );
 
   kDebug() << searchPattern.asSparqlQuery();
-  mSearchJob = new Akonadi::SearchCreateJob( mSearchFolderEdt->text(), searchPattern.asSparqlQuery(), this );
+
+  if ( !mFolder.isValid() ) {
+    mSearchJob = new Akonadi::SearchCreateJob( mSearchFolderEdt->text(), searchPattern.asSparqlQuery(), this );
+  } else {
+    mSearchJob = new Akonadi::SearchModifyJob( mFolder, searchPattern.asSparqlQuery(), this );
+  }
   connect( mSearchJob, SIGNAL(result(KJob*)), SLOT(searchDone(KJob*)) );
 }
 
@@ -525,7 +509,12 @@ void SearchWindow::searchDone( KJob* job )
     if ( job->error() )
       kWarning() << job->errorText(); // TODO
 
-    mFolder = mSearchJob->createdCollection();
+    if ( Akonadi::SearchCreateJob *scj = qobject_cast<Akonadi::SearchCreateJob*>( mSearchJob ) ) {
+      mFolder = scj->createdCollection();
+    } else if ( Akonadi::SearchModifyJob *smj = qobject_cast<Akonadi::SearchModifyJob*>( mSearchJob ) ) {
+      mFolder = smj->modifiedCollection();
+    }
+
     // store the kmail specific serialization of the search in an attribute on
     // the server, for easy retrieval when editing it again
     const QByteArray search = mSearchPattern.serialize();
