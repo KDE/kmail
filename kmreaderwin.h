@@ -111,10 +111,6 @@ public:
 
   void update(bool force = false);
 
-  /** Saves the relative position of the scroll view. Call this before calling update()
-      if you want to preserve the current view. */
-  void saveRelativePosition();
-
   /** Return selected text */
   QString copyText() const;
 

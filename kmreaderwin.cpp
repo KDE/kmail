@@ -490,13 +490,6 @@ bool KMReaderWin::htmlLoadExternal()
 }
 
 //-----------------------------------------------------------------------------
-void KMReaderWin::saveRelativePosition()
-{
-  mViewer->saveRelativePosition();
-}
-
-
-//-----------------------------------------------------------------------------
 Akonadi::Item KMReaderWin::message() const
 {
   return mViewer->messageItem();
