@@ -43,9 +43,8 @@ CollectionMaintenancePage::CollectionMaintenancePage(QWidget * parent) :
 void CollectionMaintenancePage::init(const Akonadi::Collection & col)
 {
   QVBoxLayout *topLayout = new QVBoxLayout( this );
-  topLayout->setMargin( 0 );
   topLayout->setSpacing( KDialog::spacingHint() );
-
+  topLayout->setMargin( KDialog::marginHint() );
   QGroupBox *filesGroup = new QGroupBox( i18n("Files"), this );
   QFormLayout *box = new QFormLayout( filesGroup );
   box->setSpacing( KDialog::spacingHint() );

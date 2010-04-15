@@ -135,7 +135,7 @@ void CollectionGeneralPage::init(const Akonadi::Collection &col)
     QHBoxLayout *hl = new QHBoxLayout();
     topLayout->addItem( hl );
     hl->setSpacing( KDialog::spacingHint() );
-
+    hl->setMargin( KDialog::marginHint() );
     label = new QLabel( i18nc("@label:textbox Name of the folder.","&Name:"), this );
     hl->addWidget( label );
 
@@ -169,6 +169,7 @@ void CollectionGeneralPage::init(const Akonadi::Collection &col)
   QHBoxLayout *hbl = new QHBoxLayout();
   topLayout->addItem( hbl );
   hbl->setSpacing( KDialog::spacingHint() );
+  hbl->setMargin( KDialog::marginHint() );
   mNotifyOnNewMailCheckBox =
     new QCheckBox( i18n("Act on new/unread mail in this folder" ), this );
   mNotifyOnNewMailCheckBox->setWhatsThis(
@@ -203,6 +204,7 @@ void CollectionGeneralPage::init(const Akonadi::Collection &col)
   hbl = new QHBoxLayout();
   topLayout->addItem( hbl );
   hbl->setSpacing( KDialog::spacingHint() );
+  hbl->setMargin( KDialog::marginHint() );
   mKeepRepliesInSameFolderCheckBox =
     new QCheckBox( i18n("Keep replies in this folder" ), this );
   mKeepRepliesInSameFolderCheckBox->setWhatsThis(
@@ -216,6 +218,7 @@ void CollectionGeneralPage::init(const Akonadi::Collection &col)
   hbl = new QHBoxLayout();
   topLayout->addItem( hbl );
   hbl->setSpacing( KDialog::spacingHint() );
+  hbl->setMargin( KDialog::marginHint() );
   mHideInSelectionDialogCheckBox =
       new QCheckBox( i18n( "Hide this folder in the folder selection dialog" ), this );
   mHideInSelectionDialogCheckBox->setWhatsThis(
@@ -228,6 +231,7 @@ void CollectionGeneralPage::init(const Akonadi::Collection &col)
   addLine( this, topLayout );
   // use grid layout for the following combobox settings
   QGridLayout *gl = new QGridLayout();
+  gl->setMargin( KDialog::marginHint() );
   topLayout->addItem( gl );
   gl->setSpacing( KDialog::spacingHint() );
   gl->setColumnStretch( 1, 100 ); // make the second column use all available space

@@ -54,7 +54,7 @@ void CollectionViewPage::init(const Akonadi::Collection & col)
 
   QVBoxLayout * topLayout = new QVBoxLayout( this );
   topLayout->setSpacing( KDialog::spacingHint() );
-  topLayout->setMargin( 0 );
+  topLayout->setMargin( KDialog::marginHint() );
   // Musn't be able to edit details for non-resource, system folder.
   if ( !mIsLocalSystemFolder /*|| mIsResourceFolder*/ )
   {
@@ -131,6 +131,7 @@ void CollectionViewPage::init(const Akonadi::Collection & col)
   QGroupBox * messageListGroup = new QGroupBox( i18n( "Message List" ), this );
   QVBoxLayout * messageListGroupLayout = new QVBoxLayout( messageListGroup );
   messageListGroupLayout->setSpacing( KDialog::spacingHint() );
+  messageListGroupLayout->setMargin( KDialog::marginHint() );
   topLayout->addWidget( messageListGroup );
 
   // message list aggregation
