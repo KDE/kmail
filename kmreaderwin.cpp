@@ -323,9 +323,9 @@ void KMReaderWin::displayAboutPage()
          "%4: First-time user text (only shown on first start); "
          "%5: generated list of important changes; "
          "--- end of comment ---",
-         "<h2 style='margin-top: 0px;'>Welcome to KMail %1</h2><p>KMail is the email client for the K "
-         "Desktop Environment. It is designed to be fully compatible with "
-         "Internet mailing standards including MIME, SMTP, POP3 and IMAP."
+         "<h2 style='margin-top: 0px;'>Welcome to KMail %1</h2><p>KMail is the email client by KDE.
+         "It is designed to be fully compatible with "
+         "Internet mailing standards including MIME, SMTP, POP3, and IMAP."
          "</p>\n"
          "<ul><li>KMail has many powerful features which are described in the "
          "<a href=\"%2\">documentation</a></li>\n"
@@ -341,7 +341,7 @@ void KMReaderWin::displayAboutPage()
   if ( ( numKMailNewFeatures > 1 ) || ( numKMailNewFeatures == 1 && strlen(kmailNewFeatures[0]) > 0 ) ) {
     QString featuresText =
       i18n("<p>Some of the new features in this release of KMail include "
-           "(compared to KMail %1, which is part of KDE %2):</p>\n",
+           "(compared to KMail %1, which is part of KDE Software Compilation %2):</p>\n",
        QString("1.13"), QString("4.4")); // prior KMail and KDE version
     featuresText += "<ul>\n";
     for ( int i = 0 ; i < numKMailNewFeatures ; i++ )
@@ -421,7 +421,7 @@ void KMReaderWin::slotTouchMessage()
   KMime::MDN::SendingMode s = MDNAdviceDialog::checkMDNHeaders( msg );
   KConfigGroup mdnConfig( KMKernel::config(), "MDN" );
   int quote = mdnConfig.readEntry<int>( "quote-message", 0 );
-  
+
   MessageFactory factory( msg, mViewer->messageItem().id() );
   factory.setIdentityManager( KMKernel::self()->identityManager() );
   factory.setFolderIdentity( KMail::Util::folderIdentity( message() ) );

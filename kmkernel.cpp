@@ -163,7 +163,7 @@ KMKernel::KMKernel (QObject *parent, const char *name) :
               "Because of the current development, there are many bugs and regressions as well as "
               "missing features. <b>Essentially KMail 2 does not work at the moment, do not try to use it.</b><br>"
               "Please do not report any bugs for this version yet.<br><br>"
-              "If you want to use KMail for real mails, please use the version from the KDE 4.4 branch instead." ),
+              "If you want to use KMail for real mails, please use the version from the KDE SC 4.4 branch instead." ),
         i18n( "Unstable Development version of KMail" ),
         KGuiItem( i18n( "Lose Data" ) ),
         KStandardGuiItem::cancel(),
@@ -1569,7 +1569,7 @@ void KMKernel::selectFolder( const QString &folder )
     return;
 
   Akonadi::Collection colFolder = collectionFromId( folder );
-  
+
   if( colFolder.isValid() )
     widget->selectCollectionFolder( colFolder );
 }
