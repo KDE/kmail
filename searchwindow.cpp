@@ -61,8 +61,8 @@ using namespace KPIM;
 #include <Akonadi/EntityTreeView>
 #include <Akonadi/CollectionModifyJob>
 #include <Akonadi/SearchCreateJob>
-#include <Akonadi/SearchModifyJob>
 #include <Akonadi/KMime/MessageModel>
+#include <akonadi/persistentsearchattribute.h>
 
 #include <kmime/kmime_message.h>
 
@@ -346,7 +346,7 @@ SearchWindow::SearchWindow(KMMainWidget* w, const Akonadi::Collection& curFolder
   mCopyAction = ac->addAction( KStandardAction::Copy, "search_copy_messages", this, SLOT(slotCopyMsgs()) );
   mCutAction = ac->addAction( KStandardAction::Cut, "search_cut_messages", this, SLOT(slotCutMsgs()) );
 
-  connect(mTimer, SIGNAL(timeout()), this, SLOT(updStatus()));
+  connect(mTimer, SIGNAL(timeout()), this, SLOT(updateStatusLine()));
   connect(mCbxFolders, SIGNAL(folderChanged(const Akonadi::Collection&)),
           this, SLOT(slotFolderActivated()));
 
@@ -485,7 +485,10 @@ void SearchWindow::slotSearch()
   if ( !mFolder.isValid() ) {
     mSearchJob = new Akonadi::SearchCreateJob( mSearchFolderEdt->text(), searchPattern.asSparqlQuery(), this );
   } else {
-    mSearchJob = new Akonadi::SearchModifyJob( mFolder, searchPattern.asSparqlQuery(), this );
+    Akonadi::PersistentSearchAttribute *psa = mFolder.attribute<Akonadi::PersistentSearchAttribute>();
+    psa->setQueryString( searchPattern.asSparqlQuery() );
+    mFolder.addAttribute( psa );
+    mSearchJob = new Akonadi::CollectionModifyJob( mFolder, this );
   }
   connect( mSearchJob, SIGNAL(result(KJob*)), SLOT(searchDone(KJob*)) );
 }
@@ -499,8 +502,8 @@ void SearchWindow::searchDone( KJob* job )
 
     if ( Akonadi::SearchCreateJob *scj = qobject_cast<Akonadi::SearchCreateJob*>( mSearchJob ) ) {
       mFolder = scj->createdCollection();
-    } else if ( Akonadi::SearchModifyJob *smj = qobject_cast<Akonadi::SearchModifyJob*>( mSearchJob ) ) {
-      mFolder = smj->modifiedCollection();
+    } else if ( Akonadi::CollectionModifyJob *mj = qobject_cast<Akonadi::CollectionModifyJob*>( mSearchJob ) ) {
+      mFolder = mj->collection();
     }
 
     // store the kmail specific serialization of the search in an attribute on

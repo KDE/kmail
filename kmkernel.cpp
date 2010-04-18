@@ -74,6 +74,7 @@ using KMail::MailServiceImpl;
 #include <Akonadi/Session>
 #include <Akonadi/EntityTreeModel>
 #include <akonadi/entitymimetypefiltermodel.h>
+#include <akonadi/persistentsearchattribute.h>
 
 #include <QByteArray>
 #include <QDir>
@@ -113,6 +114,7 @@ KMKernel::KMKernel (QObject *parent, const char *name) :
   mIdentityManager(0), mConfigureDialog(0), mMailService(0)
 {
   Akonadi::AttributeFactory::registerAttribute<Akonadi::SearchDescriptionAttribute>();
+  Akonadi::AttributeFactory::registerAttribute<Akonadi::PersistentSearchAttribute>();
 
   // Akonadi migration
   KConfig config( "kmail-migratorrc" );
