@@ -195,7 +195,6 @@ public slots:
   void slotAddBookmarks();
   void slotTouchMessage();
   void slotUrlClicked( const Akonadi::Item &,  const KUrl& );
-  void slotRequestConfigSync();
   void slotShowReader( KMime::Content* , bool, const QString&, const QString&, const QString &);
 protected:
 
