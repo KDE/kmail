@@ -400,7 +400,7 @@ void KMReaderWin::slotTouchMessage()
   command->start();
 #if 0
   // should we send an MDN?
-  if ( mNoMDNsWhenEncrypted &&
+  if ( MessageViewer::GlobalSettings::notSendWhenEncrypted() &&
        message()->encryptionState() != KMMsgNotEncrypted &&
        message()->encryptionState() != KMMsgEncryptionStateUnknown )
     return;

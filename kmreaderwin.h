@@ -204,7 +204,6 @@ private:
   void createActions();
 private:
   QTimer mDelayedMarkTimer;
-  bool mNoMDNsWhenEncrypted;
   QWidget *mMainWindow;
   KActionCollection *mActionCollection;
 
