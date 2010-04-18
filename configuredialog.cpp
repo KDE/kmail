@@ -1050,7 +1050,7 @@ void AppearancePage::FontsTab::doLoadOther()
                                   (fontNames[i].onlyFixed) ? fixedFont : mFont[0] );
     }
   }
-  mCustomFontCheck->setChecked( !fonts.readEntry( "defaultFonts", true ) );
+  mCustomFontCheck->setChecked( !MessageCore::GlobalSettings::self()->useDefaultFonts() );
   mFontLocationCombo->setCurrentIndex( 0 );
   slotFontSelectorChanged( 0 );
 }
@@ -1064,9 +1064,8 @@ void AppearancePage::FontsTab::save()
   if ( mActiveFontIndex >= 0 )
     mFont[ mActiveFontIndex ] = mFontChooser->font();
 
-  bool customFonts = mCustomFontCheck->isChecked();
-  fonts.writeEntry( "defaultFonts", !customFonts );
-  messagelistFont.writeEntry( "defaultFonts", !customFonts );
+  const bool customFonts = mCustomFontCheck->isChecked();
+  MessageCore::GlobalSettings::self()->setUseDefaultFonts( !customFonts );
 
   for ( int i = 0 ; i < numFontNames ; i++ ) {
     QString configName = fontNames[i].configName;

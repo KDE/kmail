@@ -24,6 +24,7 @@
 #include "kmkernel.h"
 
 #include "messageviewer/globalsettings.h"
+#include "messagecore/globalsettings.h"
 
 #include <akonadi/attributefactory.h>
 #include <akonadi/entitytreeview.h>
@@ -208,11 +209,12 @@ FolderTreeView* FolderTreeWidget::folderTreeView()
 void FolderTreeWidget::readConfig()
 {
   // Custom/System font support
-  KConfigGroup fontConfig( KMKernel::config(), "Fonts" );
-  if (!fontConfig.readEntry( "defaultFonts", true ) )
+  if (!MessageCore::GlobalSettings::self()->useDefaultFonts() ) {
+    KConfigGroup fontConfig( KMKernel::config(), "Fonts" );
     setFont( fontConfig.readEntry("folder-font", KGlobalSettings::generalFont() ) );
-  else
+  } else {
     setFont( KGlobalSettings::generalFont() );
+  }
 
   KConfigGroup mainFolderView( KMKernel::config(), "MainFolderView" );
   const int checkedFolderToolTipsPolicy = mainFolderView.readEntry( "ToolTipDisplayPolicy", 0 );

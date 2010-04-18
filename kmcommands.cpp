@@ -1654,7 +1654,7 @@ KMPrintCommand::KMPrintCommand( QWidget *parent, const Akonadi::Item &msg,
     mUseFixedFont( useFixedFont ), mEncoding( encoding )
 {
   fetchScope().fetchFullPayload( true );
-  if ( MessageViewer::GlobalSettings::useDefaultFonts() )
+  if ( MessageCore::GlobalSettings::useDefaultFonts() )
     mOverrideFont = KGlobalSettings::generalFont();
   else {
     KConfigGroup fonts( KMKernel::config(), "Fonts" );

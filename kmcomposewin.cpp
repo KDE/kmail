@@ -69,8 +69,8 @@
 #include <messagecomposersettings.h>
 #include <messagecomposer/messagehelper.h>
 #include <messagecore/attachmentpart.h>
+#include "messagecore/globalsettings.h"
 #include <templateparser/templateparser.h>
-
 #include <templatesconfiguration.h>
 #include "messagecore/nodehelper.h"
 
@@ -536,7 +536,7 @@ void KMComposeWin::readConfig( bool reload /* = false */ )
   mRecipientsEditor->setCompletionMode( (KGlobalSettings::Completion)GlobalSettings::self()->completionMode() );
   mEdtReplyTo->setCompletionMode( (KGlobalSettings::Completion)GlobalSettings::self()->completionMode() );
 
-  if ( MessageViewer::GlobalSettings::self()->useDefaultFonts() ) {
+  if ( MessageCore::GlobalSettings::self()->useDefaultFonts() ) {
     mBodyFont = KGlobalSettings::generalFont();
     mFixedFont = KGlobalSettings::fixedFont();
   } else {
