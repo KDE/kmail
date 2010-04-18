@@ -58,6 +58,7 @@
 #ifdef Q_WS_MACX
 #include <QDesktopServices>
 #endif
+#include "foldercollection.h"
 
 KMime::Message::Ptr KMail::Util::message( const Akonadi::Item & item )
 {
@@ -67,6 +68,17 @@ KMime::Message::Ptr KMail::Util::message( const Akonadi::Item & item )
   }
   return item.payload<boost::shared_ptr<KMime::Message> >();
 }
+
+uint KMail::Util::folderIdentity(const Akonadi::Item& item)
+{
+  uint id = 0;
+  if( item.isValid() && item.parentCollection().isValid() ) {
+        QSharedPointer<FolderCollection> fd = FolderCollection::forCollection( item.parentCollection() );
+        id = fd->identity();
+  }
+  return id;
+}
+
 
 KUrl KMail::Util::findSieveUrlForAccount( OrgKdeAkonadiImapSettingsInterface *a, const QString& ident) {
   assert( a );

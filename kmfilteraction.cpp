@@ -632,6 +632,7 @@ KMFilterAction::ReturnCode KMFilterActionSendReceipt::process( const Akonadi::It
 {
   const KMime::Message::Ptr msg = item.payload<KMime::Message::Ptr>();
   MessageFactory factory( msg, item.id() );
+  factory.setFolderIdentity( KMail::Util::folderIdentity( item ) );
   factory.setIdentityManager( KMKernel::self()->identityManager() );
   const KMime::Message::Ptr receipt = factory.createDeliveryReceipt();
   if ( !receipt ) return ErrorButGoOn;
@@ -1583,6 +1584,7 @@ KMFilterAction::ReturnCode KMFilterActionForward::process( const Akonadi::Item &
   }
   MessageFactory factory( msg, item.id() );
   factory.setIdentityManager( KMKernel::self()->identityManager() );
+  factory.setFolderIdentity( KMail::Util::folderIdentity( item ) );
   factory.setTemplate( mTemplate );
   KMime::Message::Ptr fwdMsg = factory.createForward();
   fwdMsg->to()->fromUnicodeString( fwdMsg->to()->asUnicodeString() + ',' + mParameter, "utf-8" );
@@ -1744,6 +1746,7 @@ KMFilterAction::ReturnCode KMFilterActionRedirect::process( const Akonadi::Item 
 
   KMime::Message::Ptr msg = item.payload<KMime::Message::Ptr>();
   MessageFactory factory( msg, item.id() );
+  factory.setFolderIdentity( KMail::Util::folderIdentity( item ) );
   factory.setIdentityManager( KMKernel::self()->identityManager() );
   KMime::Message::Ptr rmsg = factory.createRedirect( mParameter );
   if ( !rmsg )

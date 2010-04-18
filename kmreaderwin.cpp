@@ -425,6 +425,7 @@ void KMReaderWin::slotTouchMessage()
   
   MessageFactory factory( msg, mViewer->messageItem().id() );
   factory.setIdentityManager( KMKernel::self()->identityManager() );
+  factory.setFolderIdentity( KMail::Util::folderIdentity( message() ) );
   KMime::Message::Ptr receipt = factory.createMDN( KMime::MDN::ManualAction, MDN::Displayed, s, quote );
   if (receipt ) {
     if ( !kmkernel->msgSender()->send( receipt ) ) // send or queue

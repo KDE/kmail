@@ -122,6 +122,7 @@ using KMail::RedirectDialog;
 
 #include "messagecomposer/messagesender.h"
 #include "messagecomposer/messagehelper.h"
+#include "messagecomposer/messagecomposersettings.h"
 #include "messagecomposer/messagefactory.h"
 
 #include "progressmanager.h"
@@ -462,6 +463,7 @@ KMCommand::Result KMMailtoReplyCommand::execute()
     return Failed;
   MessageFactory factory( msg, item.id() );
   factory.setIdentityManager( KMKernel::self()->identityManager() );
+  factory.setFolderIdentity( KMail::Util::folderIdentity( item ) );
   factory.setReplyStrategy( MessageComposer::ReplyNone );
   factory.setSelection( mSelection );
   KMime::Message::Ptr rmsg = factory.createReply().msg;
@@ -495,6 +497,7 @@ KMCommand::Result KMMailtoForwardCommand::execute()
     return Failed;
   MessageFactory factory( msg, item.id() );
   factory.setIdentityManager( KMKernel::self()->identityManager() );
+  factory.setFolderIdentity( KMail::Util::folderIdentity( item ) );
   KMime::Message::Ptr fmsg = factory.createForward();
   fmsg->to()->fromUnicodeString( KPIMUtils::decodeMailtoUrl( mUrl ), "utf-8" ); //TODO check the utf-8
 
@@ -1047,6 +1050,7 @@ KMCommand::Result KMReplyToCommand::execute()
     return Failed;
   MessageFactory factory( msg, item.id() );
   factory.setIdentityManager( KMKernel::self()->identityManager() );
+  factory.setFolderIdentity( KMail::Util::folderIdentity( item ) );
   factory.setReplyStrategy( MessageComposer::ReplySmart );
   factory.setSelection( mSelection );
   MessageFactory::MessageReply reply = factory.createReply();
@@ -1077,6 +1081,7 @@ KMCommand::Result KMNoQuoteReplyToCommand::execute()
     return Failed;
   MessageFactory factory( msg, item.id() );
   factory.setIdentityManager( KMKernel::self()->identityManager() );
+  factory.setFolderIdentity( KMail::Util::folderIdentity( item ) );
   factory.setReplyStrategy( MessageComposer::ReplySmart );
   MessageFactory::MessageReply reply = factory.createReply();
   KMail::Composer *win = KMail::makeComposer( KMime::Message::Ptr( reply.msg ), replyContext( reply ) );
@@ -1107,6 +1112,7 @@ KMCommand::Result KMReplyListCommand::execute()
     return Failed;
   MessageFactory factory( msg, item.id() );
   factory.setIdentityManager( KMKernel::self()->identityManager() );
+  factory.setFolderIdentity( KMail::Util::folderIdentity( item ) );
   factory.setReplyStrategy( MessageComposer::ReplyList );
   factory.setSelection( mSelection );
   MessageFactory::MessageReply reply = factory.createReply();
@@ -1140,6 +1146,7 @@ KMCommand::Result KMReplyToAllCommand::execute()
     return Failed;
   MessageFactory factory( msg, item.id() );
   factory.setIdentityManager( KMKernel::self()->identityManager() );
+  factory.setFolderIdentity( KMail::Util::folderIdentity( item ) );
   factory.setReplyStrategy( MessageComposer::ReplyAll );
   factory.setSelection( mSelection );
   MessageFactory::MessageReply reply = factory.createReply();
@@ -1172,6 +1179,7 @@ KMCommand::Result KMReplyAuthorCommand::execute()
     return Failed;
   MessageFactory factory( msg, item.id() );
   factory.setIdentityManager( KMKernel::self()->identityManager() );
+  factory.setFolderIdentity( KMail::Util::folderIdentity( item ) );
   factory.setReplyStrategy( MessageComposer::ReplyAuthor );
   factory.setSelection( mSelection );
   MessageFactory::MessageReply reply = factory.createReply();
@@ -1337,6 +1345,7 @@ KMCommand::Result KMForwardCommand::execute()
   MessageViewer::KCursorSaver busy( MessageViewer::KBusyPtr::busy() );
   MessageFactory factory( msg, item.id() );
   factory.setIdentityManager( KMKernel::self()->identityManager() );
+  factory.setFolderIdentity( KMail::Util::folderIdentity( item ) );
   KMime::Message::Ptr fwdMsg = factory.createForward();
 
   uint id = msg->headerByType( "X-KMail-Identity" ) ?  msg->headerByType("X-KMail-Identity")->asUnicodeString().trimmed().toUInt() : 0;
@@ -1442,7 +1451,7 @@ KMCommand::Result KMRedirectCommand::execute()
     return Failed;
   }
   MessageViewer::AutoQPointer<RedirectDialog> dlg(
-      new RedirectDialog( parentWidget(), GlobalSettings::self()->sendImmediate() ) );
+      new RedirectDialog( parentWidget(), MessageComposer::MessageComposerSettings::self()->sendImmediate() ) );
   dlg->setObjectName( "redirect" );
   if ( dlg->exec() == QDialog::Rejected || !dlg ) {
     return Failed;
@@ -1450,6 +1459,7 @@ KMCommand::Result KMRedirectCommand::execute()
 
   MessageFactory factory( item.payload<KMime::Message::Ptr>(),  item.id() );
   factory.setIdentityManager( KMKernel::self()->identityManager() );
+  factory.setFolderIdentity( KMail::Util::folderIdentity( item ) );
   KMime::Message::Ptr newMsg = factory.createRedirect( dlg->to() );
   if ( !newMsg )
     return Failed;
@@ -1488,6 +1498,7 @@ KMCommand::Result KMCustomReplyToCommand::execute()
     return Failed;
   MessageFactory factory( msg, item.id() );
   factory.setIdentityManager( KMKernel::self()->identityManager() );
+  factory.setFolderIdentity( KMail::Util::folderIdentity( item ) );
   factory.setReplyStrategy( MessageComposer::ReplySmart );
   factory.setSelection( mSelection );
   factory.setTemplate( mTemplate );
@@ -1523,6 +1534,7 @@ KMCommand::Result KMCustomReplyAllToCommand::execute()
     return Failed;
   MessageFactory factory( msg, item.id() );
   factory.setIdentityManager( KMKernel::self()->identityManager() );
+  factory.setFolderIdentity( KMail::Util::folderIdentity( item ) );
   factory.setReplyStrategy( MessageComposer::ReplyAll );
   factory.setSelection( mSelection );
   factory.setTemplate( mTemplate );
@@ -1610,6 +1622,7 @@ KMCommand::Result KMCustomForwardCommand::execute()
     MessageViewer::KCursorSaver busy( MessageViewer::KBusyPtr::busy() );
     MessageFactory factory( msg, item.id() );
     factory.setIdentityManager( KMKernel::self()->identityManager() );
+    factory.setFolderIdentity( KMail::Util::folderIdentity( item ) );
     factory.setTemplate( mTemplate );
     KMime::Message::Ptr fwdMsg = factory.createForward();
 
@@ -2512,6 +2525,7 @@ KMCommand::Result KMResendMessageCommand::execute()
 
   MessageFactory factory( msg, item.id() );
   factory.setIdentityManager( KMKernel::self()->identityManager() );
+  factory.setFolderIdentity( KMail::Util::folderIdentity( item ) );
   KMime::Message::Ptr newMsg = factory.createResend();
   newMsg->contentType()->setCharset( MessageViewer::NodeHelper::charset( msg.get() ) );
 

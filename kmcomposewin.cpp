@@ -66,6 +66,7 @@
 #include <messagecomposer/infopart.h>
 #include <messagecomposer/textpart.h>
 #include <messagecomposer/messagehelper.h>
+#include <messagecomposersettings.h>
 #include <messagecomposer/messagehelper.h>
 #include <messagecore/attachmentpart.h>
 #include <templateparser/templateparser.h>
@@ -1119,7 +1120,7 @@ void KMComposeWin::setupActions( void )
 {
   KActionMenu *actActionNowMenu, *actActionLaterMenu;
 
-  if ( GlobalSettings::self()->sendImmediate() ) {
+  if ( MessageComposer::MessageComposerSettings::self()->sendImmediate() ) {
     //default = send now, alternative = queue
     KAction *action = new KAction(KIcon("mail-send"), i18n("&Send Mail"), this);
     actionCollection()->addAction("send_default", action );
@@ -2192,6 +2193,7 @@ QList< Message::Composer* > KMComposeWin::generateCryptoMessages( bool sign, boo
 
 void KMComposeWin::fillGlobalPart( Message::GlobalPart *globalPart )
 {
+  kDebug() << "FILLING IN CHARSETS:" << mCodecAction->mimeCharsets();
   globalPart->setParentWidgetForGui( this );
   globalPart->setCharsets( mCodecAction->mimeCharsets() );
 }

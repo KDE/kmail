@@ -80,6 +80,12 @@ namespace Util {
 
     KMime::Message::Ptr message( const Akonadi::Item & item );
 
+    /**
+     * Returns the identity of the folder that contains the given
+     *  Akonadi::Item.
+     */
+    uint folderIdentity( const Akonadi::Item& item );
+
     KUrl findSieveUrlForAccount( OrgKdeAkonadiImapSettingsInterface *a,  const QString &ident);
     OrgKdeAkonadiImapSettingsInterface *createImapSettingsInterface( const QString &ident );
 
