@@ -30,6 +30,8 @@
 
 #include "filterlog.h"
 
+#include "messageviewer/util.h"
+
 #include <kdebug.h>
 
 #include <QDateTime>
@@ -146,7 +148,7 @@ bool FilterLog::saveToFile( const QString &fileName )
 {
     QFile file( fileName );
     if( file.open( QIODevice::WriteOnly ) ) {
-      fchmod( file.handle(), S_IRUSR | S_IWUSR );
+      fchmod( file.handle(), MessageViewer::Util::getWritePermissions() );
       {
         QDataStream ds( &file );
         for ( QStringList::Iterator it = mLogEntries.begin();

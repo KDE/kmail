@@ -782,7 +782,7 @@ KUrl KMSaveMsgCommand::url()
 
 KMCommand::Result KMSaveMsgCommand::execute()
 {
-  mJob = KIO::put( mUrl, S_IRUSR|S_IWUSR );
+  mJob = KIO::put( mUrl, MessageViewer::Util::getWritePermissions() );
   mJob->setTotalSize( mTotalSize );
   mJob->setAsyncDataEnabled( true );
   connect(mJob, SIGNAL(dataReq(KIO::Job*, QByteArray &)),
@@ -895,7 +895,7 @@ void KMSaveMsgCommand::slotSaveResult(KJob *job)
         == KMessageBox::Continue) {
         mOffset = 0;
 
-        mJob = KIO::put( mUrl, S_IRUSR|S_IWUSR, KIO::Overwrite );
+        mJob = KIO::put( mUrl, MessageViewer::Util::getWritePermissions(), KIO::Overwrite );
         mJob->setTotalSize( mTotalSize );
         mJob->setAsyncDataEnabled( true );
         connect(mJob, SIGNAL(dataReq(KIO::Job*, QByteArray &)),
@@ -2387,9 +2387,9 @@ KMCommand::Result KMSaveAttachmentsCommand::saveItem( KMime::Content *content,
           return Failed;
         }
 
-      // #79685 by default use the umask the user defined, but let it be configurable
-      if ( MessageCore::GlobalSettings::self()->disregardUmask() )
-        fchmod( file.handle(), S_IRUSR | S_IWUSR );
+      const int permissions = MessageViewer::Util::getWritePermissions();
+      if ( permissions >= 0 )
+        fchmod( file.handle(), permissions );
 
       ds.setDevice( &file );
     } else
