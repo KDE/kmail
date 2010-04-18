@@ -815,7 +815,7 @@ bool KMKernel::showMail( quint32 serialNumber, const QString& /* messageId */ )
     if ( job->exec() ) {
       if ( job->items().count() >= 1 ) {
         KMReaderMainWin *win = new KMReaderMainWin( false, false );
-        win->showMessage( MessageViewer::GlobalSettings::self()->overrideCharacterEncoding(),
+        win->showMessage( MessageCore::GlobalSettings::self()->overrideCharacterEncoding(),
                           job->items().at( 0 ) );
         win->show();
         return true;

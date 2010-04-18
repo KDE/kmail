@@ -77,6 +77,8 @@
 
 #include "templateparser/templateparser.h"
 
+#include "messagecore/globalsettings.h"
+
 // LIBKDEPIM includes
 #include "progressmanager.h"
 #include "broadcaststatus.h"
@@ -4233,7 +4235,7 @@ QString KMMainWidget::overrideEncoding() const
   if ( mMsgView )
     return mMsgView->overrideEncoding();
   else
-    return MessageViewer::GlobalSettings::self()->overrideCharacterEncoding();
+    return MessageCore::GlobalSettings::self()->overrideCharacterEncoding();
 }
 
 void KMMainWidget::slotCreateTodo()

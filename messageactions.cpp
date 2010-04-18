@@ -25,6 +25,7 @@
 
 #include "messagecore/annotationdialog.h"
 #include "messagecore/mailinglist-magic.h"
+#include "messagecore/globalsettings.h"
 #include "messageviewer/csshelper.h"
 #include "messageviewer/globalsettings.h"
 
@@ -480,7 +481,7 @@ void MessageActions::slotPrintMsg()
   const bool useFixedFont = mMessageView ? mMessageView->isFixedFont() :
                                            MessageViewer::GlobalSettings::self()->useFixedFont();
   const QString overrideEncoding = mMessageView ? mMessageView->overrideEncoding() :
-                                 MessageViewer::GlobalSettings::self()->overrideCharacterEncoding();
+                                 MessageCore::GlobalSettings::self()->overrideCharacterEncoding();
 
   // FIXME: This is broken when the Viewer shows an encapsulated message
   const Akonadi::Item message = mMessageView ? mMessageView->message() : mCurrentItem;
