@@ -61,6 +61,8 @@ using KPIM::RecentAddresses;
 #include "messageviewer/configurewidget.h"
 #include "messageviewer/globalsettings.h"
 
+#include "messagecore/globalsettings.h"
+
 #include "templateparser/templatesconfiguration_kfg.h"
 #include "templateparser/templatesconfiguration.h"
 #include "templateparser/customtemplates.h"
@@ -1545,9 +1547,6 @@ void AppearancePage::HeadersTab::slotSelectDefaultTheme()
 
 void AppearancePage::HeadersTab::doLoadOther()
 {
-  KConfigGroup general( KMKernel::config(), "General" );
-  KConfigGroup geometry( KMKernel::config(), "Geometry" );
-
   // "General Options":
   mDisplayMessageToolTips->setChecked( GlobalSettings::self()->messageToolTipEnabled() );
   mHideTabBarWithSingleTab->setChecked( GlobalSettings::self()->autoHideTabBarWithSingleTab() );
@@ -1559,9 +1558,8 @@ void AppearancePage::HeadersTab::doLoadOther()
   slotSelectDefaultTheme();
 
   // "Date Display":
-  setDateDisplay( general.readEntry( "dateFormat",
-                                     (int) DateFormatter::Fancy ),
-                  general.readEntry( "customDateFormat" ) );
+  setDateDisplay( MessageCore::GlobalSettings::self()->dateFormat(),
+                  MessageCore::GlobalSettings::self()->customDateFormat() );
 }
 
 void AppearancePage::HeadersTab::setDateDisplay( int num, const QString & format )
@@ -1584,8 +1582,6 @@ void AppearancePage::HeadersTab::setDateDisplay( int num, const QString & format
 
 void AppearancePage::HeadersTab::save()
 {
-  KConfigGroup general( KMKernel::config(), "General" );
-
   GlobalSettings::self()->setMessageToolTipEnabled( mDisplayMessageToolTips->isChecked() );
   GlobalSettings::self()->setAutoHideTabBarWithSingleTab( mHideTabBarWithSingleTab->isChecked() );
 
@@ -1595,13 +1591,13 @@ void AppearancePage::HeadersTab::save()
   // "Theme"
   mThemeComboBox->writeDefaultConfig();
 
-  int dateDisplayID = mDateDisplay->selected();
+  const int dateDisplayID = mDateDisplay->selected();
   // check bounds:
   if ( ( dateDisplayID >= 0 ) && ( dateDisplayID < numDateDisplayConfig ) ) {
-    general.writeEntry( "dateFormat",
-                        (int)dateDisplayConfig[ dateDisplayID ].dateDisplay );
+    MessageCore::GlobalSettings::self()->setDateFormat(
+                             static_cast<int>( dateDisplayConfig[ dateDisplayID ].dateDisplay ) );
   }
-  general.writeEntry( "customDateFormat", mCustomDateFormatEdit->text() );
+  MessageCore::GlobalSettings::self()->setCustomDateFormat( mCustomDateFormatEdit->text() );
 }
 
 
