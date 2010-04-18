@@ -36,11 +36,13 @@ using KPIM::RecentAddresses;
 using KMail::MailServiceImpl;
 #include "jobscheduler.h"
 
+#include "messagecore/globalsettings.h"
 #include "messagelist/core/configprovider.h"
 #include "messageviewer/globalsettings.h"
 #include "messagecomposer/akonadisender.h"
 #include "messagecomposersettings.h"
 #include "messagecomposer/messagehelper.h"
+#include "messagecomposer/messagecomposersettings.h"
 
 
 #include "templateparser/templateparser.h"
@@ -1536,8 +1538,12 @@ KSharedConfig::Ptr KMKernel::config()
     MessageList::Core::ConfigProvider::self()->setConfig( mySelf->mConfig );
     MessageViewer::GlobalSettings::self()->setSharedConfig( mySelf->mConfig );
     MessageViewer::GlobalSettings::self()->readConfig();
-    TemplateParser::GlobalSettings::self()->setSharedConfig(mySelf->mConfig);
+    TemplateParser::GlobalSettings::self()->setSharedConfig( mySelf->mConfig );
     TemplateParser::GlobalSettings::self()->readConfig();
+    MessageComposer::MessageComposerSettings::self()->setSharedConfig( mySelf->mConfig );
+    MessageComposer::MessageComposerSettings::self()->readConfig();
+    MessageCore::GlobalSettings::self()->setSharedConfig( mySelf->mConfig );
+    MessageCore::GlobalSettings::self()->readConfig();
   }
   return mySelf->mConfig;
 }
