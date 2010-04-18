@@ -381,44 +381,30 @@ void SearchWindow::setEnabledSearchButton( bool )
 }
 
 //-----------------------------------------------------------------------------
-void SearchWindow::updStatus(void)
+void SearchWindow::updateStatusLine()
 {
-#if 0 //TODO port to akonadi
     QString genMsg, detailMsg;
-    int numMatches = 0, count = 0;
-    KMSearch const *search = (mFolder) ? (mFolder->search()) : 0;
-    QString folderName;
-    if (search) {
-        numMatches = search->foundCount();
-        count = search->searchCount();
-        folderName = search->currentFolder();
+    int numMatches = 0;
+    if ( mFolder.isValid() ) {
+        numMatches = mFolder.statistics().count();
     }
 
-    if (search && !search->running()) {
+    if ( mFolder.isValid() && mSearchJob ) {
         if(!mStopped) {
-            genMsg = i18nc("Search finished.", "Done");
-            detailMsg = i18np("%1 match (%2)", "%1 matches (%2)", numMatches,
-                         i18np("%1 message processed",
-                                  "%1 messages processed", count));
+            genMsg = i18nc( "Search finished.", "Done" );
+            detailMsg = i18np( "%1 match", "%1 matches", numMatches );
         } else {
-            genMsg = i18n("Search canceled");
-            detailMsg = i18np("%1 match so far (%2)",
-                             "%1 matches so far (%2)", numMatches,
-                         i18np("%1 message processed",
-                                  "%1 messages processed", count));
+            genMsg = i18n( "Search canceled" );
+            detailMsg = i18np( "%1 match so far",
+                               "%1 matches so far", numMatches );
         }
     } else {
-        genMsg = i18np("%1 match", "%1 matches", numMatches);
-        detailMsg = i18n("Searching in %1 (message %2)",
-                     folderName,
-                     count);
+        genMsg = i18np( "%1 match", "%1 matches", numMatches );
+        detailMsg = i18n( "Searching in %1", mFolder.name() );
     }
 
     mStatusBar->changeItem(genMsg, 0);
     mStatusBar->changeItem(detailMsg, 1);
-#else
-    kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
-#endif
 }
 
 
@@ -550,7 +536,7 @@ void SearchWindow::searchDone( KJob* job )
     }
 
     mTimer->stop();
-    updStatus();
+    updateStatusLine();
 
     QTimer::singleShot(0, this, SLOT(enableGUI()));
     if(mLastFocus)

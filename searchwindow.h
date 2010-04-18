@@ -112,7 +112,7 @@ public:
 
 protected slots:
   /** Update status line widget. */
-  virtual void updStatus(void);
+  virtual void updateStatusLine(void);
 
   virtual void slotClose();
   virtual void slotSearch();
