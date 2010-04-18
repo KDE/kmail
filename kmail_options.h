@@ -22,9 +22,9 @@ static KCmdLineOptions kmail_options ()
   options.add("check",			ki18n("Only check for new mail"));
   options.add("composer",		ki18n("Only open composer window"));
   options.add("view <url>",		ki18n("View the given message file" ));
-  options.add("+[address|URL]",		ki18n("Send message to 'address' resp. "
-                                          "attach the file the 'URL' points "
-                                          "to"));
+  options.add("+[address|URL]",		ki18n( "Send message to 'address' or "
+                                         "attach the file the 'URL' points "
+                                         "to" ) );
   //options.add("+[file]",                  ki18n("Show message from 'file'"));
   return options;
 }
