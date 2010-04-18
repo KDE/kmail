@@ -257,7 +257,7 @@ KMKernel::~KMKernel ()
   delete mMailService;
   mMailService = 0;
 
-  GlobalSettings::self()->writeConfig();
+  slotSyncConfig();
   mySelf = 0;
   kDebug();
 }
@@ -1177,7 +1177,7 @@ void KMKernel::cleanup(void)
 
   if ( RecentAddresses::exists() )
     RecentAddresses::self( config.data() )->save( config.data() );
-  config->sync();
+  slotSyncConfig();
 }
 
 void KMKernel::dumpDeadLetters()
@@ -1280,8 +1280,19 @@ void KMKernel::slotResult(KJob *job)
   mPutJobs.erase(it);
 }
 
-void KMKernel::slotRequestConfigSync() {
+void KMKernel::slotRequestConfigSync()
+{
   // ### FIXME: delay as promised in the kdoc of this function ;-)
+  slotSyncConfig();
+}
+
+void KMKernel::slotSyncConfig()
+{
+  MessageCore::GlobalSettings::self()->writeConfig();
+  MessageViewer::GlobalSettings::self()->writeConfig();
+  MessageComposer::MessageComposerSettings::self()->writeConfig();
+  TemplateParser::GlobalSettings::self()->writeConfig();
+  MessageList::Core::Settings::self()->writeConfig();
   KMKernel::config()->sync();
 }
 

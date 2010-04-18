@@ -382,6 +382,11 @@ public slots:
       sync, which is more efficient. */
   void slotRequestConfigSync();
 
+  /**
+   * Sync the config immediatley
+   */
+  void slotSyncConfig();
+
   /** empty all the trash bins */
   void slotEmptyTrash();
 

@@ -254,15 +254,14 @@ ConfigureDialog::~ConfigureDialog()
 void ConfigureDialog::slotApply()
 {
   slotApplyClicked();
-  GlobalSettings::self()->writeConfig();
-  MessageViewer::GlobalSettings::self()->writeConfig();
+  KMKernel::self()->slotRequestConfigSync();
   emit configChanged();
 }
 
 void ConfigureDialog::slotOk()
 {
   slotOkClicked();
-  GlobalSettings::self()->writeConfig();
+  KMKernel::self()->slotRequestConfigSync();
   emit configChanged();
 }
 

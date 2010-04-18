@@ -624,7 +624,7 @@ void KMComposeWin::writeConfig( void )
     GlobalSettings::setSnippetSplitterPosition( mSnippetSplitter->sizes() );
 
   // make sure config changes are written to disk, cf. bug 127538
-  GlobalSettings::self()->writeConfig();
+  KMKernel::self()->slotSyncConfig();
 }
 
 //-----------------------------------------------------------------------------
