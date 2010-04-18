@@ -751,7 +751,6 @@ void KMMainWidget::readConfig()
     if ( mMsgView ) {
       mMsgView->readConfig();
     }
-    mMessagePane->setAutoHideTabBarWithSingleTab( GlobalSettings::self()->autoHideTabBarWithSingleTab() );
     mMessagePane->reloadGlobalConfiguration();
     mFolderTreeWidget->readConfig();
   }

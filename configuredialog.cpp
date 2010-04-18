@@ -60,7 +60,7 @@ using KPIM::RecentAddresses;
 #include "messageviewer/nodehelper.h"
 #include "messageviewer/configurewidget.h"
 #include "messageviewer/globalsettings.h"
-
+#include "messagelist/core/settings.h"
 #include "messagecore/globalsettings.h"
 
 #include "templateparser/templatesconfiguration_kfg.h"
@@ -1387,13 +1387,15 @@ AppearancePageHeadersTab::AppearancePageHeadersTab( QWidget * parent )
   QVBoxLayout *gvlay = new QVBoxLayout( group );
   gvlay->setSpacing( KDialog::spacingHint() );
 
-  mDisplayMessageToolTips = new QCheckBox( GlobalSettings::self()->messageToolTipEnabledItem()->label(), group );
+  mDisplayMessageToolTips = new QCheckBox(
+                 MessageList::Core::Settings::self()->messageToolTipEnabledItem()->label(), group );
   gvlay->addWidget( mDisplayMessageToolTips );
 
   connect( mDisplayMessageToolTips, SIGNAL( stateChanged( int ) ),
            this, SLOT( slotEmitChanged( void ) ) );
 
-  mHideTabBarWithSingleTab = new QCheckBox( GlobalSettings::self()->autoHideTabBarWithSingleTabItem()->label(), group );
+  mHideTabBarWithSingleTab = new QCheckBox(
+                 MessageList::Core::Settings::self()->autoHideTabBarWithSingleTabItem()->label(), group );
   gvlay->addWidget( mHideTabBarWithSingleTab );
 
   connect( mHideTabBarWithSingleTab, SIGNAL( stateChanged( int ) ),
@@ -1544,8 +1546,8 @@ void AppearancePage::HeadersTab::slotSelectDefaultTheme()
 void AppearancePage::HeadersTab::doLoadOther()
 {
   // "General Options":
-  mDisplayMessageToolTips->setChecked( GlobalSettings::self()->messageToolTipEnabled() );
-  mHideTabBarWithSingleTab->setChecked( GlobalSettings::self()->autoHideTabBarWithSingleTab() );
+  mDisplayMessageToolTips->setChecked( MessageList::Core::Settings::self()->messageToolTipEnabled() );
+  mHideTabBarWithSingleTab->setChecked( MessageList::Core::Settings::self()->autoHideTabBarWithSingleTab() );
 
   // "Aggregation":
   slotSelectDefaultAggregation();
@@ -1578,8 +1580,8 @@ void AppearancePage::HeadersTab::setDateDisplay( int num, const QString & format
 
 void AppearancePage::HeadersTab::save()
 {
-  GlobalSettings::self()->setMessageToolTipEnabled( mDisplayMessageToolTips->isChecked() );
-  GlobalSettings::self()->setAutoHideTabBarWithSingleTab( mHideTabBarWithSingleTab->isChecked() );
+  MessageList::Core::Settings::self()->setMessageToolTipEnabled( mDisplayMessageToolTips->isChecked() );
+  MessageList::Core::Settings::self()->setAutoHideTabBarWithSingleTab( mHideTabBarWithSingleTab->isChecked() );
 
   // "Aggregation"
   mAggregationComboBox->writeDefaultConfig();
