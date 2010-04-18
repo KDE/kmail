@@ -103,8 +103,7 @@ using KMail::RedirectDialog;
 #include "stringutil.h"
 #include "messageviewer/autoqpointer.h"
 #include "messageviewer/globalsettings.h"
-
-
+#include "messagecore/globalsettings.h"
 #include "templateparser/templateparser.h"
 
 #include <kpimutils/kfileio.h>
@@ -2389,7 +2388,7 @@ KMCommand::Result KMSaveAttachmentsCommand::saveItem( KMime::Content *content,
         }
 
       // #79685 by default use the umask the user defined, but let it be configurable
-      if ( GlobalSettings::self()->disregardUmask() )
+      if ( MessageCore::GlobalSettings::self()->disregardUmask() )
         fchmod( file.handle(), S_IRUSR | S_IWUSR );
 
       ds.setDevice( &file );

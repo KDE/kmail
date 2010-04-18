@@ -95,10 +95,6 @@
       <entry  name="DefaultDomain" type="String" key="Default domain">
         <default></default>
       </entry>
-      <entry name="disregardUmask" type="Bool">
-        <label>Disregard the users umask setting and use "read-write for the user only" instead</label>
-        <default>false</default>
-      </entry>
       <entry name="SystemTrayEnabled" type="Bool">
         <label>Enable system tray icon</label>
         <default>false</default>

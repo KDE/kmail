@@ -229,7 +229,6 @@ KMReaderWin::~KMReaderWin()
 void KMReaderWin::readConfig(void)
 {
   mViewer->readConfig();
-  mViewer->setDisregardUmask( ::GlobalSettings::self()->disregardUmask() );
 }
 
 void KMReaderWin::setAttachmentStrategy( const AttachmentStrategy * strategy ) {
