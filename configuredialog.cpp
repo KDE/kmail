@@ -1187,7 +1187,7 @@ void AppearancePage::ColorsTab::doLoadOther()
   KConfigGroup reader( KMKernel::config(), "Reader" );
   KConfigGroup messageListView( KMKernel::config(), "MessageListView::Colors" );
 
-  mCustomColorCheck->setChecked( !reader.readEntry( "defaultColors", true ) );
+  mCustomColorCheck->setChecked( !MessageCore::GlobalSettings::self()->useDefaultColors() );
   mRecycleColorCheck->setChecked( reader.readEntry( "RecycleQuoteColors", false ) );
   mCloseToQuotaThreshold->setValue( GlobalSettings::self()->closeToQuotaThreshold() );
   KColorScheme scheme( QPalette::Active, KColorScheme::View );
@@ -1236,9 +1236,7 @@ void AppearancePage::ColorsTab::save()
   KConfigGroup reader( KMKernel::config(), "Reader" );
   KConfigGroup messageListView( KMKernel::config(), "MessageListView::Colors" );
   bool customColors = mCustomColorCheck->isChecked();
-  MessageViewer::GlobalSettings::self()->setUseDefaultColors( !customColors );
-
-  messageListView.writeEntry( "defaultColors", !customColors );
+  MessageCore::GlobalSettings::self()->setUseDefaultColors( !customColors );
 
   for ( int i = 0 ; i < numColorNames ; i++ ) {
     // Don't write color info when we use default colors, but write

@@ -303,7 +303,7 @@ KMComposeWin::KMComposeWin( const KMime::Message::Ptr &aMsg, Composer::TemplateC
     QColor defaultEncryptedColor( 0x00, 0x80, 0xFF ); // light blue // pgp encrypted
     QColor signedColor = defaultSignedColor;
     QColor encryptedColor = defaultEncryptedColor;
-    if ( !MessageViewer::GlobalSettings::self()->useDefaultColors() ) {
+    if ( !MessageCore::GlobalSettings::self()->useDefaultColors() ) {
       signedColor = reader.readEntry( "PGPMessageOkKeyOk", defaultSignedColor );
       encryptedColor = reader.readEntry( "PGPMessageEncr", defaultEncryptedColor );
     }

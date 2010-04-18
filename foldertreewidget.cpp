@@ -252,7 +252,7 @@ void FolderTreeWidget::readQuotaConfig()
 {
   QColor quotaColor;
   qreal threshold = 100;
-  if ( !MessageViewer::GlobalSettings::self()->useDefaultColors() ) {
+  if ( !MessageCore::GlobalSettings::self()->useDefaultColors() ) {
     KConfigGroup readerConfig( KMKernel::config(), "Reader" );
     quotaColor = readerConfig.readEntry( "CloseToQuotaColor", quotaColor  );
     threshold = GlobalSettings::closeToQuotaThreshold();
