@@ -37,7 +37,7 @@ using KMail::MailServiceImpl;
 #include "jobscheduler.h"
 
 #include "messagecore/globalsettings.h"
-#include "messagelist/core/configprovider.h"
+#include "messagelist/core/settings.h"
 #include "messageviewer/globalsettings.h"
 #include "messagecomposer/akonadisender.h"
 #include "messagecomposersettings.h"
@@ -1546,7 +1546,8 @@ KSharedConfig::Ptr KMKernel::config()
     mySelf->mConfig = KSharedConfig::openConfig( "kmailrc" );
     // Check that all updates have been run on the config file:
     KMail::checkConfigUpdates();
-    MessageList::Core::ConfigProvider::self()->setConfig( mySelf->mConfig );
+    MessageList::Core::Settings::self()->setSharedConfig( mySelf->mConfig );
+    MessageList::Core::Settings::self()->readConfig();
     MessageViewer::GlobalSettings::self()->setSharedConfig( mySelf->mConfig );
     MessageViewer::GlobalSettings::self()->readConfig();
     TemplateParser::GlobalSettings::self()->setSharedConfig( mySelf->mConfig );
