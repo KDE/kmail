@@ -49,7 +49,7 @@ bool CollectionTemplatesPage::canHandle( const Collection &collection ) const
 void CollectionTemplatesPage::init()
 {
   QVBoxLayout *topLayout = new QVBoxLayout( this );
-  topLayout->setMargin( 0 );
+  topLayout->setMargin( KDialog::marginHint() );
   topLayout->setSpacing( KDialog::spacingHint() );
 
   QHBoxLayout *topItems = new QHBoxLayout;
