@@ -356,6 +356,11 @@ void CollectionAclPage::init()
   mStack->setCurrentWidget( mACLWidget );
 }
 
+bool CollectionAclPage::canHandle( const Akonadi::Collection &collection ) const
+{
+  return collection.hasAttribute<Akonadi::ImapAclAttribute>();
+}
+
 void CollectionAclPage::load(const Akonadi::Collection & col)
 {
   if ( !col.hasAttribute<Akonadi::ImapAclAttribute>() ) {
@@ -383,7 +388,6 @@ void CollectionAclPage::load(const Akonadi::Collection & col)
   delete imapSettingsInterface;
 
   mUserRights = rights[mImapUserName.toUtf8()];
-
   mStack->setCurrentWidget( mACLWidget );
   slotSelectionChanged();
 }
