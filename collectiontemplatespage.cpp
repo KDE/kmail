@@ -43,7 +43,7 @@ CollectionTemplatesPage::~CollectionTemplatesPage()
 bool CollectionTemplatesPage::canHandle( const Collection &collection ) const
 {
 
-  return !KMKernel::self()->isSystemFolderCollection( collection );
+  return ( !KMKernel::self()->isSystemFolderCollection( collection ) || KMKernel::self()->isMainFolderCollection( collection ) );
 }
 
 void CollectionTemplatesPage::init()

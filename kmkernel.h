@@ -36,7 +36,7 @@ namespace KIO {
 class KStatusNotifierItem;
 
 class MessageSender;
-  
+
 class KJob;
 /** The KMail namespace contains classes used for KMail.
 * This is to keep them out of the way from all the other
@@ -290,6 +290,8 @@ public:
 
   bool isSystemFolderCollection( const Akonadi::Collection &col);
 
+  /** Returns true if this folder is the inbox on the local disk */
+  bool isMainFolderCollection( const Akonadi::Collection &col );
 
   UndoStack *undoStack() { return the_undoStack; }
   KMFilterMgr *filterMgr() { return the_filterMgr; }

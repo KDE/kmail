@@ -1815,6 +1815,11 @@ bool KMKernel::isSystemFolderCollection( const Akonadi::Collection &col)
            col == templatesCollectionFolder() );
 }
 
+bool KMKernel::isMainFolderCollection( const Akonadi::Collection &col )
+{
+  return col == inboxCollectionFolder();
+}
+
 bool KMKernel::isImapFolder( const Akonadi::Collection &col )
 {
   Akonadi::AgentInstance agentInstance = Akonadi::AgentManager::self()->instance( col.resource() );
