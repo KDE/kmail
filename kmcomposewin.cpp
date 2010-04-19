@@ -2194,7 +2194,6 @@ QList< Message::Composer* > KMComposeWin::generateCryptoMessages( bool sign, boo
 
 void KMComposeWin::fillGlobalPart( Message::GlobalPart *globalPart )
 {
-  kDebug() << "FILLING IN CHARSETS:" << mCodecAction->mimeCharsets();
   globalPart->setParentWidgetForGui( this );
   globalPart->setCharsets( mCodecAction->mimeCharsets() );
 }
@@ -3217,7 +3216,6 @@ void KMComposeWin::doDelayedSend( MessageSender::SendMethod method, KMComposeWin
 {
   MessageViewer::KCursorSaver busy( MessageViewer::KBusyPtr::busy() );
 
-  mMsg->date()->setDateTime( KDateTime::currentLocalDateTime() );
   mMsg->setHeader( new KMime::Headers::Generic( "X-KMail-Transport", mMsg.get(), mTransport->currentText(), "utf-8" ) );
 
   const bool neverEncrypt = ( saveIn != KMComposeWin::None && GlobalSettings::self()->neverEncryptDrafts() ) ||
