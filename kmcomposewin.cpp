@@ -27,6 +27,7 @@
 #include "attachmentmodel.h"
 #include "attachmentview.h"
 #include "codecaction.h"
+#include "emailaddressresolvejob.h"
 #include "kleo_util.h"
 #include "kmcommands.h"
 #include "kmcomposereditor.h"
@@ -2377,7 +2378,24 @@ void KMComposeWin::queueMessage( KMime::Message::Ptr message, Message::Composer*
            MailTransport::SentBehaviourAttribute::MoveToDefaultSentCollection );
   }
 
-  fillQueueJobHeaders( qjob, message, infoPart );
+  EmailAddressResolveJob *job = new EmailAddressResolveJob( qjob, message, infoPart, this );
+  job->setEncrypted( mEncryptAction->isChecked() );
+  connect( job, SIGNAL( result( KJob* ) ), SLOT( slotEmailAddressResolved( KJob* ) ) );
+  job->start();
+}
+
+void KMComposeWin::slotEmailAddressResolved( KJob *job )
+{
+  if ( job->error() ) {
+    KMessageBox::sorry( this, i18n( "Adding message to sender queue failed.\n"
+                                    "%1\n",
+                                    job->errorString() ),
+                        i18n( "Sending Message Failed" ) );
+    return;
+  }
+
+  const EmailAddressResolveJob *resolveJob = qobject_cast<EmailAddressResolveJob*>( job );
+  MailTransport::MessageQueueJob *qjob = resolveJob->queueJob();
 
   connect( qjob, SIGNAL(result(KJob*)), this, SLOT(slotQueueResult(KJob*)) );
   mPendingQueueJobs++;

@@ -20,10 +20,9 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  */
 
-#ifndef ADDRESSVALIDATIONJOB_P_H
-#define ADDRESSVALIDATIONJOB_P_H
+#ifndef ALIASESEXPANDJOB_P_H
+#define ALIASESEXPANDJOB_P_H
 
-#include <kabc/addressee.h>
 #include <kjob.h>
 
 /**
@@ -70,71 +69,6 @@ class DistributionListExpandJob : public KJob
     QString mListName;
     QStringList mEmailAddresses;
     bool mIsEmpty;
-};
-
-/**
- * @short A job to expand aliases to email addresses.
- *
- * Expands aliases (distribution lists and nick names) and appends a
- * domain part to all email addresses which are missing the domain part.
- */
-class AliasesExpandJob : public KJob
-{
-  Q_OBJECT
-
-  public:
-    /**
-     * Creates a new aliases expand job.
-     *
-     * @param recipients The comma separated list of recipient.
-     * @param defaultDomain The default domain that shall be used when expanding aliases.
-     * @param parent The parent object.
-     */
-    AliasesExpandJob( const QString &recipients, const QString &defaultDomain, QObject *parent = 0 );
-
-    /**
-     * Destroys the aliases expand job.
-     */
-    ~AliasesExpandJob();
-
-    /**
-     * Starts the job.
-     */
-    virtual void start();
-
-    /**
-     * Returns the expanded email addresses.
-     */
-    QString addresses() const;
-
-    /**
-     * Returns the list of distribution lists that resolved to an empty member list.
-     */
-    QStringList emptyDistributionLists() const;
-
-  private Q_SLOTS:
-    void slotDistributionListExpansionDone( KJob* );
-    void slotNicknameExpansionDone( KJob* );
-
-  private:
-    void finishExpansion();
-
-    QStringList mRecipients;
-    QString mDefaultDomain;
-
-    QString mEmailAddresses;
-    QStringList mEmptyDistributionLists;
-
-    uint mDistributionListExpansionJobs;
-    uint mNicknameExpansionJobs;
-
-    struct DistributionListExpansionResult
-    {
-      QString addresses;
-      bool isEmpty;
-    };
-    QMap<QString, DistributionListExpansionResult> mDistListExpansionResults;
-    QMap<QString, QString> mNicknameExpansionResults;
 };
 
 #endif

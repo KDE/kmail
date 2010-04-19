@@ -443,6 +443,8 @@ class KMComposeWin : public KMail::Composer
 
     void slotDelayedApplyTemplate( KJob* );
 
+    void slotEmailAddressResolved( KJob* );
+
   public: // kmcommand
     // FIXME we need to remove these, but they're pure virtual in Composer.
     void addAttach( KMime::Content *msgPart );
