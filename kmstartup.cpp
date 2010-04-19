@@ -246,7 +246,8 @@ void insertLibraryCataloguesAndIcons() {
     "libkmime",
     "libmessagelist",
     "libmessageviewer",
-    "libmessagecore"
+    "libmessagecore",
+    "libmessagecomposer"
   };
 
   KLocale * l = KGlobal::locale();
