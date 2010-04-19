@@ -452,7 +452,6 @@ KMMailtoReplyCommand::KMMailtoReplyCommand( QWidget *parent,
 
 KMCommand::Result KMMailtoReplyCommand::execute()
 {
-  //TODO : consider factoring createReply into this method.
   Akonadi::Item item = retrievedMessage();
   if ( !item.isValid() ) {
     return Failed;
@@ -463,6 +462,8 @@ KMCommand::Result KMMailtoReplyCommand::execute()
   MessageFactory factory( msg, item.id() );
   factory.setIdentityManager( KMKernel::self()->identityManager() );
   factory.setFolderIdentity( KMail::Util::folderIdentity( item ) );
+  factory.setMailingListAddresses( KMail::Util::mailingListsFromMessage( item ) );
+  factory.putRepliesInSameFolder( KMail::Util::putRepliesInSameFolder( item ) );
   factory.setReplyStrategy( MessageComposer::ReplyNone );
   factory.setSelection( mSelection );
   KMime::Message::Ptr rmsg = factory.createReply().msg;
@@ -1051,6 +1052,8 @@ KMCommand::Result KMReplyToCommand::execute()
   factory.setIdentityManager( KMKernel::self()->identityManager() );
   factory.setFolderIdentity( KMail::Util::folderIdentity( item ) );
   factory.setReplyStrategy( MessageComposer::ReplySmart );
+  factory.setMailingListAddresses( KMail::Util::mailingListsFromMessage( item ) );
+  factory.putRepliesInSameFolder( KMail::Util::putRepliesInSameFolder( item ) );
   factory.setSelection( mSelection );
   MessageFactory::MessageReply reply = factory.createReply();
   KMail::Composer * win = KMail::makeComposer( KMime::Message::Ptr( reply.msg ), replyContext( reply ), 0, mSelection );
@@ -1081,6 +1084,8 @@ KMCommand::Result KMNoQuoteReplyToCommand::execute()
   MessageFactory factory( msg, item.id() );
   factory.setIdentityManager( KMKernel::self()->identityManager() );
   factory.setFolderIdentity( KMail::Util::folderIdentity( item ) );
+  factory.setMailingListAddresses( KMail::Util::mailingListsFromMessage( item ) );
+  factory.putRepliesInSameFolder( KMail::Util::putRepliesInSameFolder( item ) );
   factory.setReplyStrategy( MessageComposer::ReplySmart );
   MessageFactory::MessageReply reply = factory.createReply();
   KMail::Composer *win = KMail::makeComposer( KMime::Message::Ptr( reply.msg ), replyContext( reply ) );
@@ -1112,6 +1117,8 @@ KMCommand::Result KMReplyListCommand::execute()
   MessageFactory factory( msg, item.id() );
   factory.setIdentityManager( KMKernel::self()->identityManager() );
   factory.setFolderIdentity( KMail::Util::folderIdentity( item ) );
+  factory.setMailingListAddresses( KMail::Util::mailingListsFromMessage( item ) );
+  factory.putRepliesInSameFolder( KMail::Util::putRepliesInSameFolder( item ) );
   factory.setReplyStrategy( MessageComposer::ReplyList );
   factory.setSelection( mSelection );
   MessageFactory::MessageReply reply = factory.createReply();
@@ -1146,6 +1153,8 @@ KMCommand::Result KMReplyToAllCommand::execute()
   MessageFactory factory( msg, item.id() );
   factory.setIdentityManager( KMKernel::self()->identityManager() );
   factory.setFolderIdentity( KMail::Util::folderIdentity( item ) );
+  factory.setMailingListAddresses( KMail::Util::mailingListsFromMessage( item ) );
+  factory.putRepliesInSameFolder( KMail::Util::putRepliesInSameFolder( item ) );
   factory.setReplyStrategy( MessageComposer::ReplyAll );
   factory.setSelection( mSelection );
   MessageFactory::MessageReply reply = factory.createReply();
@@ -1179,6 +1188,8 @@ KMCommand::Result KMReplyAuthorCommand::execute()
   MessageFactory factory( msg, item.id() );
   factory.setIdentityManager( KMKernel::self()->identityManager() );
   factory.setFolderIdentity( KMail::Util::folderIdentity( item ) );
+  factory.setMailingListAddresses( KMail::Util::mailingListsFromMessage( item ) );
+  factory.putRepliesInSameFolder( KMail::Util::putRepliesInSameFolder( item ) );
   factory.setReplyStrategy( MessageComposer::ReplyAuthor );
   factory.setSelection( mSelection );
   MessageFactory::MessageReply reply = factory.createReply();
@@ -1498,6 +1509,8 @@ KMCommand::Result KMCustomReplyToCommand::execute()
   MessageFactory factory( msg, item.id() );
   factory.setIdentityManager( KMKernel::self()->identityManager() );
   factory.setFolderIdentity( KMail::Util::folderIdentity( item ) );
+  factory.setMailingListAddresses( KMail::Util::mailingListsFromMessage( item ) );
+  factory.putRepliesInSameFolder( KMail::Util::putRepliesInSameFolder( item ) );
   factory.setReplyStrategy( MessageComposer::ReplySmart );
   factory.setSelection( mSelection );
   factory.setTemplate( mTemplate );
@@ -1534,6 +1547,8 @@ KMCommand::Result KMCustomReplyAllToCommand::execute()
   MessageFactory factory( msg, item.id() );
   factory.setIdentityManager( KMKernel::self()->identityManager() );
   factory.setFolderIdentity( KMail::Util::folderIdentity( item ) );
+  factory.setMailingListAddresses( KMail::Util::mailingListsFromMessage( item ) );
+  factory.putRepliesInSameFolder( KMail::Util::putRepliesInSameFolder( item ) );
   factory.setReplyStrategy( MessageComposer::ReplyAll );
   factory.setSelection( mSelection );
   factory.setTemplate( mTemplate );

@@ -39,6 +39,11 @@ public:
    */
   static KMime::MDN::SendingMode checkMDNHeaders( KMime::Message::Ptr msg );
 
+  /**
+   * Checks whether or not KMail can handle the disposition options set in the
+   *  message header. If not, */
+  static KMime::MDN::DispositionType checkOptions( KMime::Message::Ptr msg );
+
 private:
   MDNAdviceDialog( const QString &text, bool canDeny, QWidget *parent = 0 );
   

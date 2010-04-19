@@ -86,6 +86,18 @@ namespace Util {
      */
     uint folderIdentity( const Akonadi::Item& item );
 
+    /**
+     * Returns any mailing list post addresses set on the
+     *  parent collection (the mail folder) of the item.
+     */
+    QStringList mailingListsFromMessage( const Akonadi::Item& item );
+
+    /**
+     * Whether or not the mail item has the keep-reply-in-folder
+     *  attribute set.
+     */
+    Akonadi::Item::Id putRepliesInSameFolder( const Akonadi::Item& item );
+    
     KUrl findSieveUrlForAccount( OrgKdeAkonadiImapSettingsInterface *a,  const QString &ident);
     OrgKdeAkonadiImapSettingsInterface *createImapSettingsInterface( const QString &ident );
 

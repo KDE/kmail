@@ -79,6 +79,35 @@ uint KMail::Util::folderIdentity(const Akonadi::Item& item)
   return id;
 }
 
+QStringList KMail::Util::mailingListsFromMessage( const Akonadi::Item& item )
+{
+  QStringList addresses;
+  // determine the mailing list posting address
+  Akonadi::Collection parentCollection = item.parentCollection();
+  QSharedPointer<FolderCollection> fd;
+  if ( parentCollection.isValid() ) {
+    fd = FolderCollection::forCollection( parentCollection );
+    if ( fd->isMailingListEnabled() && !fd->mailingListPostAddress().isEmpty() ) {
+      addresses << fd->mailingListPostAddress();
+    }
+  }
+  return addresses;
+}
+
+Akonadi::Item::Id KMail::Util::putRepliesInSameFolder( const Akonadi::Item& item )
+{
+ Akonadi::Collection parentCollection = item.parentCollection();
+  QSharedPointer<FolderCollection> fd;
+  if ( parentCollection.isValid() ) {
+    fd = FolderCollection::forCollection( parentCollection );
+    if( fd->putRepliesInSameFolder() ) {
+      return parentCollection.id();
+    }
+  }
+  return -1;
+}
+
+
 
 KUrl KMail::Util::findSieveUrlForAccount( OrgKdeAkonadiImapSettingsInterface *a, const QString& ident) {
   assert( a );

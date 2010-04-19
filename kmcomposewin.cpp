@@ -2250,7 +2250,7 @@ void KMComposeWin::slotSendComposeResult( KJob *job )
 
   kDebug() << "error" << job->error() << "errorString" << job->errorString();
   Q_ASSERT( dynamic_cast< Composer* >( job ) );
-  Composer* composer = dynamic_cast< Composer* >( job );
+  Composer* composer = static_cast< Composer* >( job );
 
   Q_ASSERT( mComposers.contains( composer ) );
 

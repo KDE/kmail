@@ -120,6 +120,8 @@ KMime::MDN::SendingMode MDNAdviceDialog::checkMDNHeaders(KMime::Message::Ptr msg
   if( MessageFactory::MDNMDNUnknownOption( msg ) ) {
     mode = requestAdviceOnMDN( "mdnUnknownOption" );
     s = KMime::MDN::SentManually;
+    // TODO set type to Failed as well
+    //      and clear modifiers
   }
   
   if( MessageFactory::MDNConfirmMultipleRecipients( msg ) ) {
@@ -142,6 +144,7 @@ KMime::MDN::SendingMode MDNAdviceDialog::checkMDNHeaders(KMime::Message::Ptr msg
     mode = requestAdviceOnMDN( "mdnNormalAsk" );
     s = KMime::MDN::SentManually; // asked user
   }
+  //TODO: Andras: somebody should check if this is correct. :)
 
   if( mode == 0 ) // ignore
       MessageInfo::instance()->setMDNSentState( msg.get(), KMMsgMDNIgnore );
