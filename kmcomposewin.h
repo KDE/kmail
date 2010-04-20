@@ -481,7 +481,7 @@ class KMComposeWin : public KMail::Composer
      * and signs/encrypts the message if activated.
      * Disables the controls of the composer window.
      */
-    void readyForSending( bool noCrypto = false );
+    void readyForSending();
 
     QList< Message::Composer* > generateCryptoMessages( bool sign, bool encrypt );
     void fillGlobalPart( Message::GlobalPart *globalPart );
@@ -701,6 +701,10 @@ class KMComposeWin : public KMail::Composer
 
     KAction *mCleanSpace;
     KRecentFilesAction *mRecentAction;
+
+    bool mNeverEncrypt;
+    QString mExpandedFrom;
+    QStringList mExpandedTo, mExpandedCc, mExpandedBcc;
 
     KToggleAction *mSignAction, *mEncryptAction, *mRequestMDNAction;
     KToggleAction *mUrgentAction, *mAllFieldsAction, *mFromAction;

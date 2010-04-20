@@ -1,9 +1,11 @@
-/*
+
+class Composer;/*
  * This file is part of KMail.
  *
  * Copyright (c) 2010 KDAB
  *
- * Author: Tobias Koenig <tokoe@kde.org>
+ * Authors: Tobias Koenig <tokoe@kde.org>
+ *          Leo Franchi   <lfranchi@kde.org>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -27,9 +29,12 @@
 
 #include <kmime/kmime_message.h>
 #include <mailtransport/messagequeuejob.h>
-#include <messagecomposer/infopart.h>
 
 #include <QtCore/QVariant>
+
+namespace Message {
+  class Composer;
+}
 
 /**
  * @short A job to resolve nicknames, distribution lists and email addresses for queued emails.
@@ -42,12 +47,9 @@ class EmailAddressResolveJob : public KJob
     /**
      * Creates a new email address resolve job.
      *
-     * @param job The queue job that will put the message in the send queue.
-     * @param message The message to send.
-     * @param infoPart The information about sender and receiver addresses.
      * @param parent The parent object.
      */
-    EmailAddressResolveJob( MailTransport::MessageQueueJob *job, KMime::Message::Ptr message, const Message::InfoPart *infoPart, QObject *parent = 0 );
+    EmailAddressResolveJob( QObject *parent = 0 );
 
     /**
      * Destroys the email address resolve job.
@@ -60,27 +62,53 @@ class EmailAddressResolveJob : public KJob
     virtual void start();
 
     /**
-     * Sets whether the message shall be @p encrypted.
+     * Sets the from address to expand.
      */
-    void setEncrypted( bool encrypted );
+    virtual void setFrom( const QString& from );
+    
+    /**
+     * Sets the from address to expand.
+     */
+    virtual void setTo( const QStringList& from );
 
     /**
-     * Returns the message queue job this job is working on.
+     * Sets the from address to expand.
      */
-    MailTransport::MessageQueueJob *queueJob() const;
+    virtual void setCc( const QStringList& from );
+
+    /**
+     * Sets the from address to expand.
+     */
+    virtual void setBcc( const QStringList& from );
+
+    /**
+     * Returns the expanded From field
+     */
+    virtual QString expandedFrom() const;
+
+    /**
+     * Returns the expanded To field
+     */
+    virtual QStringList expandedTo() const;
+
+    /**
+     * Returns the expanded CC field
+     */
+    virtual QStringList expandedCc() const;
+
+    /**
+     * Returns the expanded Bcc field
+     */
+    virtual QStringList expandedBcc() const;
 
   private Q_SLOTS:
     void slotAliasExpansionDone( KJob* );
 
   private:
-    void finishExpansion();
-
-    MailTransport::MessageQueueJob *mQueueJob;
-    KMime::Message::Ptr mMessage;
-    const Message::InfoPart *mInfoPart;
-    bool mEncrypted;
     int mJobCount;
     QVariantMap mResultMap;
+    QString mFrom;
+    QStringList mTo, mCc, mBcc;
 };
 
 #endif

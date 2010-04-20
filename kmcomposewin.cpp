@@ -178,6 +178,7 @@ KMComposeWin::KMComposeWin( const KMime::Message::Ptr &aMsg, Composer::TemplateC
     mForceDisableHtml( false ),
     mId( id ),
     mContext( context ),
+    mNeverEncrypt( false ),
     mSignAction( 0 ), mEncryptAction( 0 ), mRequestMDNAction( 0 ),
     mUrgentAction( 0 ), mAllFieldsAction( 0 ), mFromAction( 0 ),
     mReplyToAction( 0 ), mSubjectAction( 0 ),
@@ -2006,9 +2007,9 @@ bool KMComposeWin::userForgotAttachment()
 }
 
 //-----------------------------------------------------------------------------
-void KMComposeWin::readyForSending( bool noCrypto )
+void KMComposeWin::readyForSending()
 {
-  kDebug() << "Entering, noCrypto:" << noCrypto;
+  kDebug() << "Entering, noCrypto:" << mNeverEncrypt;
 
   if(!mMsg) {
     kDebug() << "mMsg == 0!";
@@ -2023,10 +2024,51 @@ void KMComposeWin::readyForSending( bool noCrypto )
 
   setEnabled( false );
 
+  if( mSaveIn != KMComposeWin::None ) // TODO not being sent! what to do!
+    return;
+  
+ QStringList to, cc, bcc;
+  foreach( const Recipient &r, mRecipientsEditor->recipients() ) {
+    switch( r.type() ) {
+      case Recipient::To: to << r.email(); break;
+      case Recipient::Cc: cc << r.email(); break;
+      case Recipient::Bcc: bcc << r.email(); break;
+      default: Q_ASSERT( false ); break;
+    }
+  }
+  
+  // first, expand all addresses
+  EmailAddressResolveJob *job = new EmailAddressResolveJob( this );
+  job->setFrom( from() );
+  job->setTo( to );
+  job->setCc( cc );
+  job->setBcc( bcc );
+  connect( job, SIGNAL( result( KJob* ) ), SLOT( slotEmailAddressResolved( KJob* ) ) );
+  job->start();
+
+}
+
+void KMComposeWin::slotEmailAddressResolved( KJob *job )
+{
+  if ( job->error() ) {
+    KMessageBox::sorry( this, i18n( "Expanding email addresses in message failed.\n"
+                                    "%1\n",
+                                    job->errorString() ),
+                        i18n( "Sending Message Failed" ) );
+    setEnabled( true );
+    return;
+  }
+
+  const EmailAddressResolveJob *resolveJob = qobject_cast<EmailAddressResolveJob*>( job );
+  mExpandedFrom = resolveJob->expandedFrom();
+  mExpandedTo = resolveJob->expandedTo();
+  mExpandedCc = resolveJob->expandedCc();
+  mExpandedBcc = resolveJob->expandedBcc();
+  
   // we first figure out if we need to create multiple messages with different crypto formats
   // if so, we create a composer per format
   // if we aren't signing or encrypting, this just returns a single empty message
-  if( noCrypto ) {
+  if( mNeverEncrypt ) {
     mComposers.append( new Message::Composer );
   } else {
     mComposers = generateCryptoMessages( mSignAction->isChecked(), mEncryptAction->isChecked() );
@@ -2048,8 +2090,8 @@ void KMComposeWin::readyForSending( bool noCrypto )
     connect( composer, SIGNAL(result(KJob*)), this, SLOT(slotSendComposeResult(KJob*)) );
     composer->start();
     kDebug() << "Started a composer for sending!";
-  }
 
+   }
 }
 
 QList< Message::Composer* > KMComposeWin::generateCryptoMessages( bool sign, bool encrypt )
@@ -2109,15 +2151,8 @@ QList< Message::Composer* > KMComposeWin::generateCryptoMessages( bool sign, boo
     }
   }
 
-  QStringList recipients, bcc;
-  foreach( const Recipient &r, mRecipientsEditor->recipients() ) {
-    switch( r.type() ) {
-      case Recipient::To: recipients << r.email(); break;
-      case Recipient::Cc: recipients << r.email(); break;
-      case Recipient::Bcc: bcc << r.email(); break;
-      default: Q_ASSERT( false ); break;
-    }
-  }
+  QStringList recipients( mExpandedTo ), bcc( mExpandedBcc );
+  recipients.append( mExpandedCc );
 
   keyResolver->setPrimaryRecipients( recipients );
   keyResolver->setSecondaryRecipients( bcc );
@@ -2210,26 +2245,15 @@ void KMComposeWin::fillTextPart( Message::TextPart *textPart )
 
 void KMComposeWin::fillInfoPart( Message::InfoPart *infoPart )
 {
-  QStringList to, cc, bcc;
-  foreach( const Recipient &r, mRecipientsEditor->recipients() ) {
-    switch( r.type() ) {
-      case Recipient::To: to << r.email(); break;
-      case Recipient::Cc: cc << r.email(); break;
-      case Recipient::Bcc: bcc << r.email(); break;
-      default: Q_ASSERT( false ); break;
-    }
-  }
-  // TODO what about address groups and all that voodoo?
-
   // TODO splitAddressList and expandAliases ugliness should be handled by a
   // special AddressListEdit widget... (later: see RecipientsEditor)
 
   infoPart->setFcc( QString::number( mFcc->currentCollection().id() ) );
   infoPart->setTransportId( mTransport->currentTransportId() );
-  infoPart->setFrom( from() );
-  infoPart->setTo( to );
-  infoPart->setCc( cc );
-  infoPart->setBcc( bcc );
+  infoPart->setFrom( mExpandedFrom );
+  infoPart->setTo( mExpandedTo );
+  infoPart->setCc( mExpandedCc );
+  infoPart->setBcc( mExpandedBcc );
   infoPart->setSubject( subject() );
 
   KMime::Headers::Base::List extras;
@@ -2377,25 +2401,7 @@ void KMComposeWin::queueMessage( KMime::Message::Ptr message, Message::Composer*
            MailTransport::SentBehaviourAttribute::MoveToDefaultSentCollection );
   }
 
-  EmailAddressResolveJob *job = new EmailAddressResolveJob( qjob, message, infoPart, this );
-  job->setEncrypted( mEncryptAction->isChecked() );
-  connect( job, SIGNAL( result( KJob* ) ), SLOT( slotEmailAddressResolved( KJob* ) ) );
-  job->start();
-}
-
-void KMComposeWin::slotEmailAddressResolved( KJob *job )
-{
-  if ( job->error() ) {
-    KMessageBox::sorry( this, i18n( "Adding message to sender queue failed.\n"
-                                    "%1\n",
-                                    job->errorString() ),
-                        i18n( "Sending Message Failed" ) );
-    return;
-  }
-
-  const EmailAddressResolveJob *resolveJob = qobject_cast<EmailAddressResolveJob*>( job );
-  MailTransport::MessageQueueJob *qjob = resolveJob->queueJob();
-
+  fillQueueJobHeaders( qjob, message, infoPart );
   connect( qjob, SIGNAL(result(KJob*)), this, SLOT(slotQueueResult(KJob*)) );
   mPendingQueueJobs++;
   qjob->start();
@@ -2520,7 +2526,13 @@ void KMComposeWin::slotQueueResult( KJob *job )
     // There is not much we can do now, since all the MessageQueueJobs have been
     // started.  So just wait for them to finish.
     // TODO show a message box or something
-    return;
+    KMessageBox::sorry( this,
+                        QString( "<qt><p>%1</p><br />%2</qt>" ).arg( i18n("There was an error trying to queue the"
+                                                                            "message for sending. The error was:" ) )
+                                                               .arg( job->errorString() ),
+                       i18n("Error Queueing Message") );
+    if( mPendingQueueJobs == 0 )
+      setModified( false );
   }
 
   if( mPendingQueueJobs == 0 ) {
@@ -3124,7 +3136,7 @@ void KMComposeWin::doSend( MessageSender::SendMethod method,
   }
   mSaveIn = saveIn;
 
-  if ( saveIn == KMComposeWin::None ) {
+  if ( saveIn == KMComposeWin::None ) { // don't save as draft or template, send immediately
     if ( KPIMUtils::firstEmailAddress( from() ).isEmpty() ) {
       if ( !( mShowHeaders & HDR_FROM ) ) {
         mShowHeaders |= HDR_FROM;
@@ -3218,7 +3230,7 @@ void KMComposeWin::doDelayedSend( MessageSender::SendMethod method, KMComposeWin
 
   mMsg->setHeader( new KMime::Headers::Generic( "X-KMail-Transport", mMsg.get(), mTransport->currentText(), "utf-8" ) );
 
-  const bool neverEncrypt = ( saveIn != KMComposeWin::None && GlobalSettings::self()->neverEncryptDrafts() ) ||
+  const bool mNeverEncrypt = ( saveIn != KMComposeWin::None && GlobalSettings::self()->neverEncryptDrafts() ) ||
     mSigningAndEncryptionExplicitlyDisabled;
 
   // Save the quote prefix which is used for this message. Each message can have
@@ -3265,7 +3277,7 @@ void KMComposeWin::doDelayedSend( MessageSender::SendMethod method, KMComposeWin
   if ( mForceDisableHtml )
     disableHtml( NoConfirmationNeeded );
 
-  if ( neverEncrypt && saveIn != KMComposeWin::None ) {
+  if ( mNeverEncrypt && saveIn != KMComposeWin::None ) {
       // we can't use the state of the mail itself, to remember the
       // signing and encryption state, so let's add a header instead
     mMsg->setHeader( new KMime::Headers::Generic( "X-KMail-SignatureActionEnabled", mMsg.get(), mSignAction->isChecked()? "true":"false", "utf-8" ) );
@@ -3277,8 +3289,7 @@ void KMComposeWin::doDelayedSend( MessageSender::SendMethod method, KMComposeWin
     mMsg->removeHeader( "X-KMail-CryptoMessageFormat" );
   }
 
-  kDebug() << "Calling applyChanges()";
-  readyForSending( neverEncrypt );
+  readyForSending();
 }
 
 bool KMComposeWin::saveDraftOrTemplate( const QString &folderName,

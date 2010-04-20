@@ -3,7 +3,8 @@
  *
  * Copyright (c) 2010 KDAB
  *
- * Author: Tobias Koenig <tokoe@kde.org>
+ * Authors: Tobias Koenig <tokoe@kde.org>
+ *         Leo Franchi    <lfranchi@kde.org>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -25,10 +26,13 @@
 #include "aliasesexpandjob.h"
 #include "globalsettings.h"
 
+#include "messagecomposer/composer.h"
+#include "messagecomposer/infopart.h"
+
 #include <KPIMUtils/Email>
 
-EmailAddressResolveJob::EmailAddressResolveJob( MailTransport::MessageQueueJob *job, KMime::Message::Ptr message, const Message::InfoPart *infoPart, QObject *parent )
-  : KJob( parent ), mQueueJob( job ), mMessage( message ), mInfoPart( infoPart ), mEncrypted( false ), mJobCount( 0 )
+EmailAddressResolveJob::EmailAddressResolveJob( QObject *parent )
+  : KJob( parent ), mJobCount( 0 )
 {
 }
 
@@ -39,14 +43,14 @@ EmailAddressResolveJob::~EmailAddressResolveJob()
 void EmailAddressResolveJob::start()
 {
   {
-    AliasesExpandJob *job = new AliasesExpandJob( mInfoPart->from(), GlobalSettings::defaultDomain(), this );
+    AliasesExpandJob *job = new AliasesExpandJob( mFrom, GlobalSettings::defaultDomain(), this );
     job->setProperty( "id", "infoPartFrom" );
     connect( job, SIGNAL( result( KJob* ) ), SLOT( slotAliasExpansionDone( KJob* ) ) );
     job->start();
 
     mJobCount++;
   }
-  {
+/*  {
     if ( !mMessage->bcc()->addresses().isEmpty() ) {
       QStringList bcc;
       foreach( const QByteArray &address, mMessage->bcc()->addresses() )
@@ -59,9 +63,9 @@ void EmailAddressResolveJob::start()
 
       mJobCount++;
     }
-  }
+  } */
   {
-    AliasesExpandJob *job = new AliasesExpandJob( mInfoPart->to().join( QLatin1String( ", " ) ), GlobalSettings::defaultDomain(), this );
+    AliasesExpandJob *job = new AliasesExpandJob( mTo.join( QLatin1String( ", " ) ), GlobalSettings::defaultDomain(), this );
     job->setProperty( "id", "infoPartTo" );
     connect( job, SIGNAL( result( KJob* ) ), SLOT( slotAliasExpansionDone( KJob* ) ) );
     job->start();
@@ -69,7 +73,7 @@ void EmailAddressResolveJob::start()
     mJobCount++;
   }
   {
-    AliasesExpandJob *job = new AliasesExpandJob( mInfoPart->cc().join( QLatin1String( ", " ) ), GlobalSettings::defaultDomain(), this );
+    AliasesExpandJob *job = new AliasesExpandJob( mCc.join( QLatin1String( ", " ) ), GlobalSettings::defaultDomain(), this );
     job->setProperty( "id", "infoPartCc" );
     connect( job, SIGNAL( result( KJob* ) ), SLOT( slotAliasExpansionDone( KJob* ) ) );
     job->start();
@@ -77,18 +81,13 @@ void EmailAddressResolveJob::start()
     mJobCount++;
   }
   {
-    AliasesExpandJob *job = new AliasesExpandJob( mInfoPart->bcc().join( QLatin1String( ", " ) ), GlobalSettings::defaultDomain(), this );
+    AliasesExpandJob *job = new AliasesExpandJob( mBcc.join( QLatin1String( ", " ) ), GlobalSettings::defaultDomain(), this );
     job->setProperty( "id", "infoPartBcc" );
     connect( job, SIGNAL( result( KJob* ) ), SLOT( slotAliasExpansionDone( KJob* ) ) );
     job->start();
 
     mJobCount++;
   }
-}
-
-void EmailAddressResolveJob::setEncrypted( bool encrypted )
-{
-  mEncrypted = encrypted;
 }
 
 void EmailAddressResolveJob::slotAliasExpansionDone( KJob *job )
@@ -104,36 +103,52 @@ void EmailAddressResolveJob::slotAliasExpansionDone( KJob *job )
   mResultMap.insert( expandJob->property( "id" ).toString(), expandJob->addresses() );
 
   mJobCount--;
-  if ( mJobCount == 0 )
-    finishExpansion();
-}
-
-void EmailAddressResolveJob::finishExpansion()
-{
-  mQueueJob->addressAttribute().setFrom( mResultMap.value( "infoPartFrom" ).toString() );
-
-  if ( mEncrypted && !mInfoPart->bcc().isEmpty() ) { // have to deal with multiple message contents
-    // if the bcc isn't empty, then we send it to the bcc because this is the bcc-only encrypted body
-    if ( !mMessage->bcc()->addresses().isEmpty() ) {
-      mQueueJob->addressAttribute().setTo( KPIMUtils::splitAddressList( mResultMap.value( "messageBcc" ).toString() ) );
-    } else {
-      // the main mail in the encrypted set, just don't set the bccs here
-      mQueueJob->addressAttribute().setTo( KPIMUtils::splitAddressList( mResultMap.value( "infoPartTo" ).toString() ) );
-      mQueueJob->addressAttribute().setCc( KPIMUtils::splitAddressList( mResultMap.value( "infoPartCc" ).toString() ) );
-    }
-  } else {
-    // continue as normal
-    mQueueJob->addressAttribute().setTo( KPIMUtils::splitAddressList( mResultMap.value( "infoPartTo" ).toString() ) );
-    mQueueJob->addressAttribute().setCc( KPIMUtils::splitAddressList( mResultMap.value( "infoPartCc" ).toString() ) );
-    mQueueJob->addressAttribute().setBcc( KPIMUtils::splitAddressList( mResultMap.value( "infoPartBcc" ).toString() ) );
+  if ( mJobCount == 0 ) {
+    emitResult();
   }
-
-  emitResult();
 }
 
-MailTransport::MessageQueueJob* EmailAddressResolveJob::queueJob() const
+void EmailAddressResolveJob::setFrom(const QString& from)
 {
-  return mQueueJob;
+  mFrom = from;
+}
+
+void EmailAddressResolveJob::setTo(const QStringList& to)
+{
+  mTo = to;
+}
+
+void EmailAddressResolveJob::setCc(const QStringList& cc)
+{
+  mCc = cc;
+}
+
+void EmailAddressResolveJob::setBcc(const QStringList& bcc)
+{
+  mBcc = bcc;
+}
+
+
+QString EmailAddressResolveJob::expandedFrom() const
+{
+  return mResultMap.value( "infoPartFrom" ).toString();
+}
+
+QStringList EmailAddressResolveJob::expandedTo() const
+{
+  return KPIMUtils::splitAddressList( mResultMap.value( "infoPartTo" ).toString() );
+}
+
+QStringList EmailAddressResolveJob::expandedCc() const
+{
+  return KPIMUtils::splitAddressList( mResultMap.value( "infoPartCc" ).toString() );
+
+}
+
+QStringList EmailAddressResolveJob::expandedBcc() const
+{
+  return KPIMUtils::splitAddressList( mResultMap.value( "infoPartBcc" ).toString() );
+
 }
 
 #include "emailaddressresolvejob.moc"
