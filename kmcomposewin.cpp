@@ -2086,8 +2086,7 @@ void KMComposeWin::slotEmailAddressResolved( KJob *job )
     setEnabled( true );
     return;
   }
-  // Compose each message and queue it for sending.
-  // TODO handle drafts, autosave, etc.
+  // Compose each message and prepare it for queueing, sending, or storing 
   foreach( Message::Composer* composer, mComposers ) {
     fillGlobalPart( composer->globalPart() );
     fillTextPart( composer->textPart() );
