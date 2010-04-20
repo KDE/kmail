@@ -2024,9 +2024,6 @@ void KMComposeWin::readyForSending()
 
   setEnabled( false );
 
-  if( mSaveIn != KMComposeWin::None ) // TODO not being sent! what to do!
-    return;
-  
  QStringList to, cc, bcc;
   foreach( const Recipient &r, mRecipientsEditor->recipients() ) {
     switch( r.type() ) {
@@ -2060,11 +2057,21 @@ void KMComposeWin::slotEmailAddressResolved( KJob *job )
   }
 
   const EmailAddressResolveJob *resolveJob = qobject_cast<EmailAddressResolveJob*>( job );
-  mExpandedFrom = resolveJob->expandedFrom();
-  mExpandedTo = resolveJob->expandedTo();
-  mExpandedCc = resolveJob->expandedCc();
-  mExpandedBcc = resolveJob->expandedBcc();
-  
+  if( mSaveIn == KMComposeWin::None ) { // don't expand when saved to drafts or templates
+    mExpandedFrom = resolveJob->expandedFrom();
+    mExpandedTo = resolveJob->expandedTo();
+    mExpandedCc = resolveJob->expandedCc();
+    mExpandedBcc = resolveJob->expandedBcc();
+  } else { // saved to draft, so keep the old values, not very nice.
+    mExpandedFrom = from();
+    foreach( const Recipient &r, mRecipientsEditor->recipients() ) {
+      switch( r.type() ) {
+        case Recipient::To: mExpandedTo << r.email(); break;
+        case Recipient::Cc: mExpandedCc << r.email(); break;
+        case Recipient::Bcc: mExpandedBcc << r.email(); break;
+      }
+    }
+  }
   // we first figure out if we need to create multiple messages with different crypto formats
   // if so, we create a composer per format
   // if we aren't signing or encrypting, this just returns a single empty message
