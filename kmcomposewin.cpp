@@ -2057,12 +2057,13 @@ void KMComposeWin::slotEmailAddressResolved( KJob *job )
   }
 
   const EmailAddressResolveJob *resolveJob = qobject_cast<EmailAddressResolveJob*>( job );
-  if( mSaveIn == KMComposeWin::None ) { // don't expand when saved to drafts or templates
+  // TODO can't save non-proper addresses im KMime::Message, so for now, always expand. 
+//   if( mSaveIn == KMComposeWin::None ) { // don't expand when saved to drafts or templates
     mExpandedFrom = resolveJob->expandedFrom();
     mExpandedTo = resolveJob->expandedTo();
     mExpandedCc = resolveJob->expandedCc();
     mExpandedBcc = resolveJob->expandedBcc();
-  } else { // saved to draft, so keep the old values, not very nice.
+ /* } else { // saved to draft, so keep the old values, not very nice.
     mExpandedFrom = from();
     foreach( const Recipient &r, mRecipientsEditor->recipients() ) {
       switch( r.type() ) {
@@ -2071,7 +2072,7 @@ void KMComposeWin::slotEmailAddressResolved( KJob *job )
         case Recipient::Bcc: mExpandedBcc << r.email(); break;
       }
     }
-  }
+  } */
   // we first figure out if we need to create multiple messages with different crypto formats
   // if so, we create a composer per format
   // if we aren't signing or encrypting, this just returns a single empty message
@@ -2356,6 +2357,10 @@ void KMComposeWin::saveMessage( KMime::Message::Ptr message, KMComposeWin::SaveI
     kWarning() << "No default collection for" << saveIn;
     return;
   }
+
+  // TODO Composer will have deleted any addresses not in address format, such as nicknames or groups
+  //  reset the values to the user-entered ones to make sure nothing is lost.
+  //  however, we can only put properly formatted addresses in a KMime::Message..
 
   // Store when the draft or template got saved.
   message->date()->setDateTime( KDateTime::currentLocalDateTime() );
