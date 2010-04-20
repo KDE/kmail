@@ -3304,67 +3304,6 @@ void KMComposeWin::doDelayedSend( MessageSender::SendMethod method, KMComposeWin
   readyForSending();
 }
 
-bool KMComposeWin::saveDraftOrTemplate( const QString &folderName,
-                                        KMime::Message *msg )
-{
-#if 0
-  KMFolder *theFolder = 0, *imapTheFolder = 0;
-  // get the draftsFolder
-  if ( !folderName.isEmpty() ) {
-    theFolder = kmkernel->folderMgr()->findIdString( folderName );
-    if ( theFolder == 0 ) {
-      // This is *NOT* supposed to be "imapDraftsFolder", because a
-      // dIMAP folder works like a normal folder
-      theFolder = kmkernel->dimapFolderMgr()->findIdString( folderName );
-    }
-    if ( theFolder == 0 ) {
-      imapTheFolder = kmkernel->imapFolderMgr()->findIdString( folderName );
-    }
-    if ( !theFolder && !imapTheFolder ) {
-      const KPIMIdentities::Identity &id = kmkernel->identityManager()->identityForUoidOrDefault( msg->headerByType( "X-KMail-Identity" ) ? msg->headerByType( "X-KMail-Identity" )->asUnicodeString().trimmed().toUInt() : 0 );
-      KMessageBox::information( 0,
-                                i18n("The custom drafts or templates folder for "
-                                     "identify \"%1\" does not exist (anymore); "
-                                     "therefore, the default drafts or templates "
-                                     "folder will be used.",
-                                     id.identityName() ) );
-    }
-  }
-  if ( imapTheFolder && imapTheFolder->isStructural() ) {
-    imapTheFolder = 0;
-  }
-
-  if ( theFolder == 0 ) {
-    theFolder = ( mSaveIn == KMComposeWin::Drafts ?
-                  kmkernel->draftsFolder() : kmkernel->templatesFolder() );
-  }
-
-  theFolder->open( "composer" );
-  kDebug() << "theFolder=" << theFolder->name();
-  if ( imapTheFolder ) {
-    kDebug() << "imapTheFolder=" << imapTheFolder->name();
-  }
-
-  bool sentOk = !( theFolder->addMsg( msg ) );
-
-  // Ensure the message is correctly and fully parsed
-  theFolder->unGetMsg( theFolder->count() - 1 );
-  msg = theFolder->getMsg( theFolder->count() - 1 );
-  // Does that assignment needs to be propagated out to the caller?
-  // Assuming the send is OK, the iterator is set to 0 immediately afterwards.
-  if ( imapTheFolder ) {
-    // move the message to the imap-folder and highlight it
-    imapTheFolder->moveMsg( msg );
-    (static_cast<KMFolderImap*>( imapTheFolder->storage() ))->getFolder();
-  }
-  theFolder->close( "composer" );
-  return sentOk;
-#else
-  kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
-  return true;
-#endif
-}
-
 //----------------------------------------------------------------------------
 void KMComposeWin::slotSendLater()
 {

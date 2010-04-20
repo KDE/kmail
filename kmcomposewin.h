@@ -600,11 +600,6 @@ class KMComposeWin : public KMail::Composer
      */
     static void decryptOrStripOffCleartextSignature( QByteArray & );
 
-    /**
-     * Save the message into the Drafts or Templates folder.
-     */
-    bool saveDraftOrTemplate( const QString &folderName, KMime::Message *msg );
-
     enum SaveIn {
       None,
       Drafts,
