@@ -205,6 +205,8 @@ void AliasesExpandJob::slotNicknameExpansionDone( KJob *job )
 void AliasesExpandJob::finishExpansion()
 {
   foreach ( const QString &recipient, mRecipients ) {
+    if( recipient.isEmpty() )
+      continue;
     if ( !mEmailAddresses.isEmpty() )
       mEmailAddresses += QLatin1String( ", " );
 
