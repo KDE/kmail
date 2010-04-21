@@ -2238,6 +2238,7 @@ void KMComposeWin::fillGlobalPart( Message::GlobalPart *globalPart )
 {
   globalPart->setParentWidgetForGui( this );
   globalPart->setCharsets( mCodecAction->mimeCharsets() );
+  globalPart->setMDNRequested( mRequestMDNAction->isChecked() );
 }
 
 void KMComposeWin::fillTextPart( Message::TextPart *textPart )
@@ -2258,6 +2259,7 @@ void KMComposeWin::fillInfoPart( Message::InfoPart *infoPart )
   infoPart->setFcc( QString::number( mFcc->currentCollection().id() ) );
   infoPart->setTransportId( mTransport->currentTransportId() );
   infoPart->setFrom( mExpandedFrom );
+  infoPart->setReplyTo( replyTo() );
   infoPart->setTo( mExpandedTo );
   infoPart->setCc( mExpandedCc );
   infoPart->setBcc( mExpandedBcc );
