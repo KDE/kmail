@@ -132,6 +132,9 @@ private slots:
   /** the transfer was canceled */
   void slotTransferCancelled();
 
+protected:  
+  QList<Akonadi::Item> mRetrievedMsgs;
+
 private:
   // ProgressDialog for transferring messages
   KProgressDialog* mProgressDialog;
@@ -143,7 +146,6 @@ private:
   bool mEmitsCompletedItself : 1;
 
   QWidget *mParent;
-  QList<Akonadi::Item> mRetrievedMsgs;
   QList<Akonadi::Item> mMsgList;
   Akonadi::ItemFetchScope mFetchScope;
 };
@@ -298,7 +300,6 @@ private:
   KUrl mUrl;
   QList<unsigned long> mMsgList;
   unsigned int mMsgListIndex;
-  KMime::Message *mStandAloneMessage;
   QByteArray mData;
   int mOffset;
   size_t mTotalSize;

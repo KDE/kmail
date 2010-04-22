@@ -715,7 +715,6 @@ static KUrl subjectToUrl( const QString &subject )
 KMSaveMsgCommand::KMSaveMsgCommand( QWidget *parent, const Akonadi::Item& msg )
   : KMCommand( parent ),
     mMsgListIndex( 0 ),
-    mStandAloneMessage( 0 ),
     mOffset( 0 ),
     mTotalSize( msg.size() )
 {
@@ -723,29 +722,14 @@ KMSaveMsgCommand::KMSaveMsgCommand( QWidget *parent, const Akonadi::Item& msg )
     return;
   }
   setDeletesItself( true );
-  // If the mail has a serial number, operate on sernums, if it does not
-  // we need to work with the pointer, but can be reasonably sure it won't
-  // go away, since it'll be an encapsulated message or one that was opened
-  // from an .eml file.
-#if 0 //TODO port to akonadi
-  if ( msg->getMsgSerNum() != 0 ) {
-    mMsgList.append( msg->getMsgSerNum() );
-  } else {
-    mStandAloneMessage = msg;
-  }
-
-  mUrl = subjectToUrl( NodeHelper::cleanSubject( msg ) );
-#else
-    kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
-#endif
+  mUrl = subjectToUrl( MessageViewer::NodeHelper::cleanSubject( msg.payload<KMime::Message::Ptr>() ) );
   fetchScope().fetchFullPayload( true ); // ### unless we call the corresponding KMCommand ctor, this has no effect
 }
 
 KMSaveMsgCommand::KMSaveMsgCommand( QWidget *parent,
                                     const QList<Akonadi::Item> &msgList )
-  : KMCommand( parent ),
+  : KMCommand( parent, msgList ),
     mMsgListIndex( 0 ),
-    mStandAloneMessage( 0 ),
     mOffset( 0 ),
     mTotalSize( 0 )
 {
@@ -753,26 +737,10 @@ KMSaveMsgCommand::KMSaveMsgCommand( QWidget *parent,
     return;
   }
   setDeletesItself( true );
-  // We operate on serNums and not the KMime::Message pointers, as those can
-  // change, or become invalid when changing the current message, switching
-  // folders, etc.
-#if 0 //TODO port to akonadi
-  QList<KMime::Message*>::const_iterator it;
-  for ( it = msgList.constBegin(); it != msgList.constEnd(); ++it ) {
-    mMsgList.append( (*it)->getMsgSerNum() );
-    mTotalSize += (*it)->msgSize();
-    if ( (*it)->parent() != 0 ) {
-      (*it)->parent()->open( "kmcommand" );
-    }
-  }
-#else
-    kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
-#endif
   mMsgListIndex = 0;
-#if 0
-  KMime::Message *msgBase = *(msgList.begin());
-  mUrl = subjectToUrl( MessageViewer::NodeHelper::cleanSubject( msgBase ) );
-#endif
+  Akonadi::Item msgBase = msgList.at(0);
+  mUrl = subjectToUrl( MessageViewer::NodeHelper::cleanSubject( msgBase.payload<KMime::Message::Ptr>() ) );
+  kDebug() << mUrl;
   fetchScope().fetchFullPayload( true ); // ### unless we call the corresponding KMCommand ctor, this has no effect
 }
 
@@ -782,7 +750,7 @@ KUrl KMSaveMsgCommand::url()
 }
 
 KMCommand::Result KMSaveMsgCommand::execute()
-{
+{ 
   mJob = KIO::put( mUrl, MessageViewer::Util::getWritePermissions() );
   mJob->setTotalSize( mTotalSize );
   mJob->setAsyncDataEnabled( true );
@@ -790,13 +758,13 @@ KMCommand::Result KMSaveMsgCommand::execute()
     SLOT(slotSaveDataReq()));
   connect(mJob, SIGNAL(result(KJob*)),
     SLOT(slotSaveResult(KJob*)));
+  
   setEmitsCompletedItself( true );
   return OK;
 }
 
 void KMSaveMsgCommand::slotSaveDataReq()
 {
-#if 0 //TODO port to akonadi
   int remainingBytes = mData.size() - mOffset;
   if ( remainingBytes > 0 ) {
     // eat leftovers first
@@ -810,63 +778,89 @@ void KMSaveMsgCommand::slotSaveDataReq()
     return;
   }
   // No leftovers, process next message.
-  if ( mMsgListIndex < static_cast<unsigned int>( mMsgList.size() ) ) {
-    KMime::Message *msg = 0;
-    int idx = -1;
-    KMFolder * p = 0;
-    KMMsgDict::instance()->getLocation( mMsgList[mMsgListIndex], &p, &idx );
-    assert( p );
-    assert( idx >= 0 );
-    msg = p->getMsg(idx);
-
-    if ( msg ) {
-      if ( msg->transferInProgress() ) {
-        QByteArray data = QByteArray();
-        mJob->sendAsyncData( data );
-      }
-      msg->setTransferInProgress( true );
-      if ( msg->isComplete() ) {
-        slotMessageRetrievedForSaving( msg );
-      } else {
-        // retrieve Message first
-        if ( msg->parent()  && !msg->isComplete() ) {
-          FolderJob *job = msg->parent()->createJob( msg );
-          job->setCancellable( false );
-          connect(job, SIGNAL( messageRetrieved( KMime::Message* ) ),
-                  this, SLOT( slotMessageRetrievedForSaving( KMime::Message* ) ) );
-          job->start();
-        }
-      }
-    } else {
-      mJob->slotError( KIO::ERR_ABORTED,
-                       i18n("The message was removed while saving it. "
-                            "It has not been saved.") );
-    }
+  if ( mMsgListIndex < static_cast<unsigned int>( mRetrievedMsgs.size() ) ) {
+    slotMessageRetrievedForSaving( mRetrievedMsgs[mMsgListIndex] );
   } else {
-    if ( mStandAloneMessage ) {
-      // do the special case of a standalone message
-      slotMessageRetrievedForSaving( mStandAloneMessage );
-      mStandAloneMessage = 0;
-    } else {
-      // No more messages. Tell the putjob we are done.
-      QByteArray data = QByteArray();
-      mJob->sendAsyncData( data );
-    }
+    // No more messages. Tell the putjob we are done.
+    QByteArray data = QByteArray();
+    mJob->sendAsyncData( data );
   }
-#else
-    kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
-#endif
+}
+
+#define STRDIM(x) (sizeof(x)/sizeof(*x)-1)
+//TODO: copied from runtime/resources/mbox/libmbox/mbox_p.cpp . Check if we can share it.
+QByteArray escapeFrom( const QByteArray &str )
+{
+  const unsigned int strLen = str.length();
+  if ( strLen <= STRDIM( "From " ) )
+    return str;
+
+  // worst case: \nFrom_\nFrom_\nFrom_... => grows to 7/6
+  QByteArray result( int( strLen + 5 ) / 6 * 7 + 1, '\0');
+
+  const char * s = str.data();
+  const char * const e = s + strLen - STRDIM( "From ");
+  char * d = result.data();
+
+  bool onlyAnglesAfterLF = false; // dont' match ^From_
+  while ( s < e ) {
+    switch ( *s ) {
+    case '\n':
+      onlyAnglesAfterLF = true;
+      break;
+    case '>':
+      break;
+    case 'F':
+      if ( onlyAnglesAfterLF && qstrncmp( s+1, "rom ", STRDIM("rom ") ) == 0 )
+        *d++ = '>';
+      // fall through
+    default:
+      onlyAnglesAfterLF = false;
+      break;
+    }
+    *d++ = *s++;
+  }
+  while ( s < str.data() + strLen )
+    *d++ = *s++;
+
+  result.truncate( d - result.data() );
+  return result;
+}
+#undef STRDIM
+
+QByteArray mboxMessageSeparator( const QByteArray &msg )
+{
+  KMime::Message mail;
+  mail.setHead( KMime::CRLFtoLF( msg ) );
+  mail.parse();
+
+  QByteArray separator = "From ";
+
+  KMime::Headers::From *from = mail.from( false );
+  if ( !from || from->addresses().isEmpty() )
+    separator += "unknown@unknown.invalid";
+  else
+    separator += from->addresses().first() + ' ';
+
+  KMime::Headers::Date *date = mail.date(false);
+  if (!date || date->isEmpty())
+    separator += QDateTime::currentDateTime().toString( Qt::TextDate ).toUtf8() + '\n';
+  else
+    separator += date->as7BitString(false) + '\n';
+
+  return separator;
 }
 
 void KMSaveMsgCommand::slotMessageRetrievedForSaving(const Akonadi::Item &msg)
 {
-#if 0 //TODO port to akonadi
-  if ( msg ) {
-    QByteArray str( msg->mboxMessageSeparator() );
-    str += KMFolderMbox::escapeFrom( msg->asDwString() );
+  //if ( msg )
+  {
+    QByteArray msgData = msg.payloadData();
+    QByteArray str( mboxMessageSeparator( msgData ) );
+    str += escapeFrom( msgData );
     str += '\n';
     mData = str;
-    mData.resize(mData.size() - 1);
+    mData.resize( mData.size() - 1 );
     mOffset = 0;
     QByteArray data;
     int size;
@@ -881,7 +875,6 @@ void KMSaveMsgCommand::slotMessageRetrievedForSaving(const Akonadi::Item &msg)
     mOffset += size;
   }
   ++mMsgListIndex;
-#endif
 }
 
 void KMSaveMsgCommand::slotSaveResult(KJob *job)
