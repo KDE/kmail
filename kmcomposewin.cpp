@@ -2540,7 +2540,7 @@ void KMComposeWin::slotQueueResult( KJob *job )
     // started.  So just wait for them to finish.
     // TODO show a message box or something
     KMessageBox::sorry( this,
-                        QString( "<qt><p>%1</p><br />%2</qt>" ).arg( i18n("There was an error trying to queue the"
+                        QString( "<qt><p>%1</p><br />%2</qt>" ).arg( i18n("There was an error trying to queue the "
                                                                             "message for sending. The error was:" ) )
                                                                .arg( job->errorString() ),
                        i18n("Error Queueing Message") );
