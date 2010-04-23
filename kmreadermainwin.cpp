@@ -424,7 +424,7 @@ void KMReaderMainWin::slotDelayedMessagePopup( KJob *job )
     menu->addAction( mMsgActions->printAction() );
     menu->addAction( mSaveAsAction );
     menu->addAction( mSaveAtmAction );
-    menu->addseparator();
+    menu->addSeparator();
     menu->addAction( mMsgActions->createTodoAction() );
   }
   menu->exec( aPoint, 0 );
