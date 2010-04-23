@@ -1,5 +1,5 @@
 /* -*- mode: C++; c-file-style: "gnu" -*-
-  This file is part of KMail, the KDE mail client.
+ This file is part of KMail, the KDE mail client.
   Copyright (c) 2009 Montel Laurent <montel@kde.org>
 
   KMail is free software; you can redistribute it and/or modify it
@@ -37,7 +37,8 @@ public:
     None = 0,
     EnableCheck = 1,
     ShowUnreadCount = 2,
-    HideSearchFolder = 4
+    HideSearchFolder = 4,
+    NotAllowToCreateNewFolder = 8
   };
   Q_DECLARE_FLAGS( SelectionFolderOptions, SelectionFolderOption )
 

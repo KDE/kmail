@@ -85,6 +85,8 @@ namespace KMail {
       void setShowImapFolders( bool show )
       { mShowImapFolders = show; }
 
+      void setNotAllowToCreateNewFolder( bool notCreateNewFolder )
+      { mNotCreateNewFolder = notCreateNewFolder; }
     protected slots:
       /** Open the folder dialog */
       void slotOpenDialog();
@@ -107,6 +109,7 @@ namespace KMail {
       bool mMustBeReadWrite;
       bool mShowOutbox;
       bool mShowImapFolders;
+      bool mNotCreateNewFolder;
   };
 
 } // namespace KMail

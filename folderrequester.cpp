@@ -51,7 +51,7 @@ namespace KMail {
 
 FolderRequester::FolderRequester( QWidget *parent )
   : QWidget( parent ),
-    mMustBeReadWrite( true ), mShowOutbox( true ), mShowImapFolders( true )
+    mMustBeReadWrite( true ), mShowOutbox( true ), mShowImapFolders( true ), mNotCreateNewFolder( false )
 {
   QHBoxLayout * hlay = new QHBoxLayout( this );
   hlay->setSpacing( KDialog::spacingHint() );
@@ -77,6 +77,8 @@ void FolderRequester::slotOpenDialog()
 {
   FolderSelectionDialog::SelectionFolderOptions options = FolderSelectionDialog::EnableCheck ;
   options |= FolderSelectionDialog::HideSearchFolder;
+  if ( mNotCreateNewFolder )
+    options |= FolderSelectionDialog::NotAllowToCreateNewFolder;
 
   MessageViewer::AutoQPointer<FolderSelectionDialog> dlg(
       new FolderSelectionDialog( this, options ) );

@@ -125,6 +125,7 @@ SearchWindow::SearchWindow(KMMainWidget* w, const Akonadi::Collection& curFolder
 
   mCbxFolders = new FolderRequester( searchWidget );
   mCbxFolders->setMustBeReadWrite( false );
+  mCbxFolders->setNotAllowToCreateNewFolder( true );
 
   mCbxFolders->setFolder(curFolder);
 
@@ -162,7 +163,7 @@ SearchWindow::SearchWindow(KMMainWidget* w, const Akonadi::Collection& curFolder
 #endif
 
   bool currentFolderIsSearchFolder = false;
-    
+
   if ( curFolder.hasAttribute<Akonadi::SearchDescriptionAttribute>() ) {
     currentFolderIsSearchFolder = true; // FIXME is there a better way to tell?
     const Akonadi::SearchDescriptionAttribute* searchDescription = curFolder.attribute<Akonadi::SearchDescriptionAttribute>();

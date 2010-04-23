@@ -35,21 +35,27 @@ class FolderSelectionDialog::FolderSelectionDialogPrivate
 {
 public:
   FolderSelectionDialogPrivate()
-    : folderTreeWidget( 0 )
+    : folderTreeWidget( 0 ), mNotAllowToCreateNewFolder( false )
   {
   }
   QString mFilter;
   FolderTreeWidget *folderTreeWidget;
-
+  bool mNotAllowToCreateNewFolder;
 };
 
 FolderSelectionDialog::FolderSelectionDialog( QWidget *parent, SelectionFolderOptions options )
   :KDialog( parent ), d( new FolderSelectionDialogPrivate() )
 {
-  setButtons( Ok | Cancel | User1 );
   setObjectName( "folder dialog" );
-  setButtonGuiItem( User1, KGuiItem( i18n("&New Subfolder..."), "folder-new",
-                                     i18n("Create a new subfolder under the currently selected folder") ) );
+
+  d->mNotAllowToCreateNewFolder = ( options & FolderSelectionDialog::NotAllowToCreateNewFolder );
+  if ( d->mNotAllowToCreateNewFolder )
+    setButtons( Ok | Cancel );
+  else {
+    setButtons( Ok | Cancel | User1 );
+    setButtonGuiItem( User1, KGuiItem( i18n("&New Subfolder..."), "folder-new",
+                                       i18n("Create a new subfolder under the currently selected folder") ) );
+  }
 
   QWidget *widget = mainWidget();
   QVBoxLayout *layout = new QVBoxLayout( widget );
@@ -65,7 +71,11 @@ FolderSelectionDialog::FolderSelectionDialog( QWidget *parent, SelectionFolderOp
   d->folderTreeWidget->folderTreeView()->setDragDropMode( QAbstractItemView::NoDragDrop );
   layout->addWidget( d->folderTreeWidget );
   enableButton( KDialog::Ok, false );
-  enableButton( KDialog::User1, false );
+  if ( !d->mNotAllowToCreateNewFolder ) {
+    enableButton( KDialog::User1, false );
+    connect( this, SIGNAL( user1Clicked() ), this, SLOT( slotAddChildFolder() ) );
+  }
+
   connect( d->folderTreeWidget->selectionModel(), SIGNAL(selectionChanged(QItemSelection,QItemSelection)),
            this, SLOT(slotSelectionChanged()) );
   connect( d->folderTreeWidget->readableCollectionProxyModel(), SIGNAL( rowsInserted( const QModelIndex&, int, int ) ),
@@ -73,7 +83,6 @@ FolderSelectionDialog::FolderSelectionDialog( QWidget *parent, SelectionFolderOp
 
   connect( d->folderTreeWidget->folderTreeView(), SIGNAL( doubleClicked(const QModelIndex&) ),
            this, SLOT( accept() ) );
-  connect( this, SIGNAL( user1Clicked() ), this, SLOT( slotAddChildFolder() ) );
   readConfig();
 }
 
@@ -130,8 +139,11 @@ void FolderSelectionDialog::slotSelectionChanged()
 {
   const bool enablebuttons = ( d->folderTreeWidget->selectionModel()->selectedIndexes().count() > 0 );
   enableButton(KDialog::Ok, enablebuttons);
-  Akonadi::Collection parent;
-  enableButton(KDialog::User1, canCreateCollection( parent ) );
+
+  if ( !d->mNotAllowToCreateNewFolder ) {
+    Akonadi::Collection parent;
+    enableButton(KDialog::User1, canCreateCollection( parent ) );
+  }
 }
 
 void FolderSelectionDialog::setSelectionMode( QAbstractItemView::SelectionMode mode )
