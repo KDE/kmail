@@ -163,21 +163,30 @@ SearchWindow::SearchWindow(KMMainWidget* w, const Akonadi::Collection& curFolder
 #endif
 
   bool currentFolderIsSearchFolder = false;
-
-  if ( curFolder.hasAttribute<Akonadi::SearchDescriptionAttribute>() ) {
-    currentFolderIsSearchFolder = true; // FIXME is there a better way to tell?
-    const Akonadi::SearchDescriptionAttribute* searchDescription = curFolder.attribute<Akonadi::SearchDescriptionAttribute>();
-    mSearchPattern.deserialize( searchDescription->description() );
-    const Akonadi::Collection col = searchDescription->baseCollection();
-    if ( col.isValid() ) {
-      mChkbxSpecificFolders->setChecked( true );
-      mCbxFolders->setFolder( col );
-      mChkSubFolders->setChecked( searchDescription->recursive() );
-    } else {
-      mChkbxAllFolders->setChecked( true );
-    }
-  } else {
+    
+  if ( !curFolder.hasAttribute<Akonadi::PersistentSearchAttribute>() ) {
+    // it's not a search folder, make a new search
     mSearchPattern.append( KMSearchRule::createInstance( "Subject" ) );
+  } else {
+    // it's a search folder
+    if ( curFolder.hasAttribute<Akonadi::SearchDescriptionAttribute>() ) {
+      currentFolderIsSearchFolder = true; // FIXME is there a better way to tell?
+      const Akonadi::SearchDescriptionAttribute* searchDescription = curFolder.attribute<Akonadi::SearchDescriptionAttribute>();
+      mSearchPattern.deserialize( searchDescription->description() );
+      const Akonadi::Collection col = searchDescription->baseCollection();
+      if ( col.isValid() ) {
+        mChkbxSpecificFolders->setChecked( true );
+        mCbxFolders->setFolder( col );
+        mChkSubFolders->setChecked( searchDescription->recursive() );
+      } else {
+        mChkbxAllFolders->setChecked( true );
+      }
+    } else {
+      // it's a search folder, but not one of ours, warn the user that we can't edit it
+      // FIXME show results, but disable edit GUI
+      kWarning() << "This search was not created with KMail. It can not be edited within it.";
+      mSearchPattern.clear();
+    } 
   }
   mPatternEdit->setSearchPattern( &mSearchPattern );
 
@@ -488,7 +497,6 @@ void SearchWindow::slotSearch()
   } else {
     Akonadi::PersistentSearchAttribute *psa = mFolder.attribute<Akonadi::PersistentSearchAttribute>();
     psa->setQueryString( searchPattern.asSparqlQuery() );
-    mFolder.addAttribute( psa );
     mSearchJob = new Akonadi::CollectionModifyJob( mFolder, this );
   }
   connect( mSearchJob, SIGNAL(result(KJob*)), SLOT(searchDone(KJob*)) );
@@ -506,6 +514,7 @@ void SearchWindow::searchDone( KJob* job )
     } else if ( Akonadi::CollectionModifyJob *mj = qobject_cast<Akonadi::CollectionModifyJob*>( mSearchJob ) ) {
       mFolder = mj->collection();
     }
+    Q_ASSERT( mFolder.hasAttribute<Akonadi::PersistentSearchAttribute>() );
 
     // store the kmail specific serialization of the search in an attribute on
     // the server, for easy retrieval when editing it again
