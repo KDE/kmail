@@ -247,9 +247,15 @@ SearchWindow::SearchWindow(KMMainWidget* w, const Akonadi::Collection& curFolder
   if ( currentFolderIsSearchFolder ) {
     mFolder = curFolder;
     mSearchFolderEdt->setText( curFolder.name() );
+    Q_ASSERT ( !mResultModel );
+    mResultModel = new Akonadi::MessageModel( this );
+    mResultModel->setCollection( mFolder );
+    mLbxMatches->setModel( mResultModel );
   } else {
     mSearchFolderEdt->setText( i18n("Last Search") );
-    // TODO find last search and set mFolder to it
+    // TODO find last search and set mFolder to it?
+    // Might not be what the user expects and is not what
+    // kmail1 did.
   }
   mSearchFolderLbl->setBuddy(mSearchFolderEdt);
   mSearchFolderOpenBtn = new KPushButton(i18n("Op&en Search Folder"), searchWidget);
