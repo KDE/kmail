@@ -208,25 +208,37 @@ void KMComposerEditor::insertFromMimeData( const QMimeData *source )
   if ( !urlList.isEmpty() ) {
     //Search if it's message items.
     Akonadi::Item::List items;
+    bool allLocalURLs = true;
+
     foreach ( const KUrl &url, urlList ) {
+      if ( !url.isLocalFile() ) {
+        allLocalURLs = false;
+      }
       Akonadi::Item item = Akonadi::Item::fromUrl( url );
       if ( item.isValid() ) {
         items << item;
       }
     }
-    if ( items.isEmpty() ) {
 
-      KMenu p;
-      const QAction *addAsTextAction = p.addAction( i18n("Add as &Text") );
-      const QAction *addAsAttachmentAction = p.addAction( i18n("Add as &Attachment") );
-      const QAction *selectedAction = p.exec( QCursor::pos() );
-      if ( selectedAction == addAsTextAction ) {
+    if ( items.isEmpty() ) {
+      if ( allLocalURLs ) {
         foreach( const KUrl &url, urlList ) {
-          textCursor().insertText(url.url());
+          m_composerWin->addAttachment( url, "" );
         }
-      } else if ( selectedAction == addAsAttachmentAction ) {
-        foreach( const KUrl &url, urlList ) {
-          m_composerWin->addAttachment( url,"" );
+      } else {
+        KMenu p;
+        const QAction *addAsTextAction = p.addAction( i18np("Add URL into Message &Text", "Add URLs into Message &Text", urlList.size() ) );
+        const QAction *addAsAttachmentAction = p.addAction( i18np("Add File as &Attachment", "Add Files as &Attachment", urlList.size() ) );
+        const QAction *selectedAction = p.exec( QCursor::pos() );
+
+        if ( selectedAction == addAsTextAction ) {
+          foreach( const KUrl &url, urlList ) {
+            textCursor().insertText(url.url() + '\n');
+          }
+        } else if ( selectedAction == addAsAttachmentAction ) {
+          foreach( const KUrl &url, urlList ) {
+            m_composerWin->addAttachment( url, "" );
+          }
         }
       }
       return;
