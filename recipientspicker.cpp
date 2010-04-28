@@ -23,23 +23,14 @@
 #include "recipientspicker.h"
 #include "globalsettings.h"
 
-#include <libkdepim/recentaddresses.h>
-
-#include <kpimutils/email.h>
-
-#include <kabc/distributionlist.h>
-
+#include <akonadi/contact/emailaddressselectionview.h>
+#include <kabc/contactgroup.h>
+#include <kconfiggroup.h>
+#include <khbox.h>
 #include <kldap/ldapsearchdialog.h>
 #include <klocale.h>
-#ifndef KDEPIM_NO_KRESOURCES
-#include <kabc/resource.h>
-#endif
-#include <kcombobox.h>
-#include <kiconloader.h>
-#include <khbox.h>
-#include <kwindowsystem.h>
 #include <kmessagebox.h>
-#include <kconfiggroup.h>
+#include <kpimutils/email.h>
 
 #include <QBoxLayout>
 #include <QFormLayout>
@@ -47,350 +38,50 @@
 #include <QKeyEvent>
 #include <QLabel>
 #include <QLayout>
-#include <QPixmap>
 #include <QPushButton>
+#include <QtGui/QTreeView>
 #include <QToolButton>
-#include <QTreeWidget>
 #include <QVBoxLayout>
-
-RecipientItem::RecipientItem()
-  : mDistributionList( 0 )
-{
-}
-
-RecipientItem::RecipientItem( RecipientItem *preferredEmailItem )
-  : mDistributionList( 0 )
-{
-  preferredEmailItem->addAlternativeEmailItem( this );
-}
-
-bool RecipientItem::isDistributionList() const
-{
-  return mDistributionList != 0;
-}
-
-bool RecipientItem::operator==( const Recipient &recipient ) const
-{
-  QString name, email;
-  KABC::Addressee::parseEmailAddress( recipient.email(), name, email );
-
-  if ( isDistributionList() )
-    return mDistributionList->name() == email;
-  else
-    return mEmail == email;
-}
-
-void RecipientItem::setDistributionList( KABC::DistributionList *list )
-{
-  mDistributionList = list;
-
-  mIcon = KIconLoader::global()->loadIcon( "x-mail-distribution-list", KIconLoader::Small );
-
-  mName = list->name();
-  mKey = list->name();
-
-  int count = list->entries().count();
-  mEmail = i18np( "1 email address", "%1 email addresses", count );
-
-  mRecipient = mName;
-
-  mTooltip = createTooltip( list );
-
-  KABC::DistributionList::Entry::List entries = mDistributionList->entries();
-  foreach ( const KABC::DistributionList::Entry &entry, entries ) {
-    RecipientItem *item = new RecipientItem( this );
-    if ( entry.email().isEmpty() )
-      item->setAddressee( entry.addressee(), entry.addressee().preferredEmail() );
-    else
-      item->setAddressee( entry.addressee(), entry.email() );
-  }
-}
-
-void RecipientItem::setAddressee( const KABC::Addressee &a,
-  const QString &email )
-{
-  mAddressee = a;
-  mEmail = email;
-  mRecipient = mAddressee.fullEmail( mEmail );
-
-  QImage img = a.photo().data();
-  if ( !img.isNull() )
-    mIcon = QPixmap::fromImage( img.scaled( 20, 20, Qt::KeepAspectRatio, Qt::SmoothTransformation ) );
-  else
-    mIcon = KIconLoader::global()->loadIcon( "x-office-contact", KIconLoader::Small );
-
-  mName = mAddressee.realName();
-  mKey = mAddressee.realName() + '|' + mEmail;
-
-  mTooltip = "<qt>";
-  if ( !mAddressee.realName().isEmpty() ) {
-    mTooltip += mAddressee.realName() + "<br/>";
-  }
-  mTooltip += "<b>" + mEmail + "</b>";
-}
-
-QPixmap RecipientItem::icon() const
-{
-  return mIcon;
-}
-
-QString RecipientItem::name() const
-{
-  return mName;
-}
-
-QString RecipientItem::email() const
-{
-  return mEmail;
-}
-
-QString RecipientItem::recipient() const
-{
-  return mRecipient;
-}
-
-QString RecipientItem::tooltip() const
-{
-  return mTooltip;
-}
-
-KABC::DistributionList * RecipientItem::distributionList() const {
-  return mDistributionList;
-}
-
-QString RecipientItem::createTooltip( KABC::DistributionList *distributionList ) const
-{
-  QString txt = "<qt>";
-
-  txt += "<b>" + i18n("Distribution List %1", distributionList->name() ) + "</b>";
-  txt += "<ul>";
-  KABC::DistributionList::Entry::List entries = distributionList->entries();
-  KABC::DistributionList::Entry::List::ConstIterator it;
-  for( it = entries.constBegin(); it != entries.constEnd(); ++it ) {
-    txt += "<li>";
-    txt += (*it).addressee().realName() + ' ';
-    txt += "<em>";
-    if ( (*it).email().isEmpty() ) txt += (*it).addressee().preferredEmail();
-    else txt += (*it).email();
-    txt += "</em>";
-    txt += "</li>";
-  }
-  txt += "</ul>";
-  txt += "</qt>";
-
-  return txt;
-}
-
-void RecipientItem::setRecipientType( const QString &type )
-{
-  mType = type;
-}
-
-QString RecipientItem::recipientType() const
-{
-  return mType;
-}
-
-void RecipientItem::addAlternativeEmailItem( RecipientItem *altRecipientItem )
-{
-  mAlternativeEmailList.append( altRecipientItem );
-}
-
-const RecipientItem::List RecipientItem::alternativeEmailList() const
-{
-  return mAlternativeEmailList;
-}
-
-RecipientViewItem::RecipientViewItem( RecipientItem *item, QTreeWidget *listView )
-  : QTreeWidgetItem( listView ), mRecipientItem( item )
-{
-  init( item );
-}
-
-RecipientViewItem::RecipientViewItem( RecipientItem *item, RecipientViewItem *viewItem )
-  : QTreeWidgetItem( viewItem ), mRecipientItem( item )
-{
-  init( item );
-}
-
-void RecipientViewItem::init( RecipientItem *item )
-{
-  setText( 0, item->name() );
-  setText( 1, item->email() );
-  setText( 2, item->recipientType() );
-  setIcon( 0, item->icon() );
-}
-
-RecipientItem *RecipientViewItem::recipientItem() const
-{
-  return mRecipientItem;
-}
-
-RecipientsCollection::RecipientsCollection( const QString &id )
-{
-  mId = id;
-  mTitle = id;
-  mIsReferenceContainer = false;
-}
-
-RecipientsCollection::~RecipientsCollection()
-{
-  deleteAll();
-}
-
-void RecipientsCollection::setReferenceContainer( bool isReferenceContainer )
-{
-  mIsReferenceContainer = isReferenceContainer;
-}
-
-bool RecipientsCollection::isReferenceContainer() const
-{
-  return mIsReferenceContainer;
-}
-
-void RecipientsCollection::setTitle( const QString &title )
-{
-  mTitle = title;
-}
-
-QString RecipientsCollection::title() const
-{
-  return mTitle;
-}
-
-void RecipientsCollection::addItem( RecipientItem *item )
-{
-  mKeyMap.insert( item->key(), item );
-}
-
-RecipientItem::List RecipientsCollection::items() const
-{
-  return mKeyMap.values();
-}
-
-bool RecipientsCollection::hasEquivalentItem( RecipientItem *item ) const
-{
-  return mKeyMap.constFind( item->key() ) != mKeyMap.constEnd();
-}
-
-RecipientItem * RecipientsCollection::getEquivalentItem( RecipientItem *item) const
-{
-  QMap<QString, RecipientItem *>::ConstIterator it;
-  it = mKeyMap.constFind( item->key() );
-  if ( it == mKeyMap.constEnd() )
-    return 0;
-  return (*it);
-}
-
-void RecipientsCollection::clear()
-{
-  mKeyMap.clear();
-}
-
-void RecipientsCollection::deleteAll()
-{
-  if ( !isReferenceContainer() ) {
-    QMap<QString, RecipientItem *>::ConstIterator it;
-    for( it = mKeyMap.constBegin(); it != mKeyMap.constEnd(); ++it ) {
-      RecipientItem::List altList = (*it)->alternativeEmailList();
-      qDeleteAll( altList );
-      altList.clear();
-
-      delete *it;
-    }
-  }
-  clear();
-}
-
-QString RecipientsCollection::id() const
-{
-  return mId;
-}
-
-SearchLine::SearchLine( QWidget *parent, QTreeWidget *listView )
-  : KTreeWidgetSearchLine( parent, listView )
-{
-}
-
-void SearchLine::keyPressEvent( QKeyEvent *ev )
-{
-  if ( ev->key() == Qt::Key_Down ) emit downPressed();
-
-  KTreeWidgetSearchLine::keyPressEvent( ev );
-}
-
-RecipientsTreeWidget::RecipientsTreeWidget( QWidget *parent )
-  : QTreeWidget( parent )
-{}
-
-void RecipientsTreeWidget::keyPressEvent ( QKeyEvent *event ) {
-  if ( event->key() == Qt::Key_Return )
-    emit returnPressed();
-  QTreeWidget::keyPressEvent( event );
-}
-
-const QString RecipientsPicker::mSeparatorString = " ---- ";
 
 RecipientsPicker::RecipientsPicker( QWidget *parent )
   : KDialog( parent ),
     mLdapSearchDialog( 0 )
 {
-  setObjectName("RecipientsPicker");
-  setWindowTitle( i18n("Select Recipient") );
+  setObjectName( "RecipientsPicker" );
+  setWindowTitle( i18n( "Select Recipient" ) );
   setButtons( None );
 
   QVBoxLayout *topLayout = new QVBoxLayout( mainWidget() );
   topLayout->setSpacing( KDialog::spacingHint() );
   topLayout->setMargin( 0 );
 
-  QFormLayout *resLayout = new QFormLayout();
-  topLayout->addLayout( resLayout );
+  mView = new Akonadi::EmailAddressSelectionView( mainWidget() );
+  mView->view()->setSelectionMode( QAbstractItemView::ExtendedSelection );
+  mView->view()->setAlternatingRowColors( true );
+  mView->view()->setSortingEnabled( true );
+  mView->view()->sortByColumn( 0, Qt::AscendingOrder );
+  topLayout->addWidget( mView );
+  topLayout->setStretchFactor( mView, 1 );
 
-  mCollectionCombo = new KComboBox( mainWidget() );
-  connect( mCollectionCombo, SIGNAL( activated( int ) ), SLOT( updateList() ) );
-  resLayout->addRow( i18n("Address book:"), mCollectionCombo );
-
-  mRecipientList = new RecipientsTreeWidget( mainWidget() );
-  mRecipientList->setSelectionMode( QAbstractItemView::ExtendedSelection );
-  mRecipientList->setAllColumnsShowFocus( true );
-  mRecipientList->setAlternatingRowColors( true );
-  mRecipientList->setSortingEnabled( true );
-  mRecipientList->sortItems( 1, Qt::AscendingOrder );
-  mRecipientList->setHeaderLabels( QStringList() << i18nc("@title:column Name of the recipient.", "Name")
-                                                 << i18nc("@title:column Email of the recipient.", "Email")
-                                                 << i18nc("@title:column", "->") );
-  mRecipientList->setColumnWidth( 0, 200 );
-  mRecipientList->setColumnWidth( 1, 200 );
-  mRecipientList->setColumnWidth( 2, 80 );
-  topLayout->addWidget( mRecipientList );
-  topLayout->setStretchFactor( mRecipientList, 1 );
-
-  connect( mRecipientList, SIGNAL( itemSelectionChanged () ),
+  connect( mView->view()->selectionModel(), SIGNAL( selectionChanged( const QItemSelection&, const QItemSelection& ) ),
            SLOT( slotSelectionChanged() ) );
-  connect( mRecipientList, SIGNAL( itemDoubleClicked(QTreeWidgetItem*,int) ),
-           SLOT( slotPicked() ) );
-  connect( mRecipientList, SIGNAL( returnPressed() ),
+  connect( mView->view(), SIGNAL( doubleClicked( const QModelIndex& ) ),
            SLOT( slotPicked() ) );
 
-  KHBox *searchLineAndLDAP = new KHBox();
-  mSearchLine = new SearchLine( searchLineAndLDAP, mRecipientList );
-  connect( mSearchLine, SIGNAL( downPressed() ), SLOT( setFocusList() ) );
-
-  mSearchLDAPButton = new QPushButton( i18n("Search &Directory Service"), searchLineAndLDAP );
+  mSearchLDAPButton = new QPushButton( i18n("Search &Directory Service"), mainWidget() );
   connect( mSearchLDAPButton, SIGNAL( clicked() ), SLOT( slotSearchLDAP() ) );
-  resLayout->addRow( i18nc("Search for recipient.", "Search:"), searchLineAndLDAP );
+  topLayout->addWidget( mSearchLDAPButton );
 
   KConfig config( "kabldaprc" );
   KConfigGroup group = config.group( "LDAP" );
   int numHosts = group.readEntry( "NumSelectedHosts", 0 );
-  if ( !numHosts ) {
+  if ( !numHosts )
      mSearchLDAPButton->setVisible( false );
-  }
 
   QBoxLayout *buttonLayout = new QHBoxLayout();
   topLayout->addItem( buttonLayout );
 
-  buttonLayout->addStretch( 1 );			// right align buttons
+  buttonLayout->addStretch( 1 );  // right align buttons
   buttonLayout->setSpacing( KDialog::spacingHint() );
 
   mToButton = new QPushButton( i18n("Add as &To"), mainWidget() );
@@ -409,254 +100,29 @@ RecipientsPicker::RecipientsPicker( QWidget *parent )
   buttonLayout->addWidget( closeButton );
   connect( closeButton, SIGNAL( clicked() ), SLOT( close() ) );
 
-#ifndef KDEPIM_NO_KRESOURCES
-  {
-    using namespace KABC;
-    mAddressBook = KABC::StdAddressBook::self( true );
-    connect( mAddressBook, SIGNAL( addressBookChanged( AddressBook * ) ),
-             this, SLOT( insertAddressBook( AddressBook * ) ) );
-  }
-#endif
-
-  initCollections();
-
-  mCollectionCombo->setCurrentIndex( 0 );
-
-  updateList();
-
-  mSearchLine->setFocus();
+  mView->searchLineEdit()->setFocus();
 
   readConfig();
 
-  setTabOrder( mCollectionCombo, mSearchLine );
-  setTabOrder( mSearchLine, mRecipientList );
-  setTabOrder( closeButton, mCollectionCombo );
   slotSelectionChanged();
 }
 
 RecipientsPicker::~RecipientsPicker()
 {
   writeConfig();
-
-  QMap<int,RecipientsCollection *>::ConstIterator it;
-  for( it = mCollectionMap.constBegin(); it != mCollectionMap.constEnd(); ++it ) {
-    delete *it;
-  }
 }
 
 void RecipientsPicker::slotSelectionChanged()
 {
-  bool hasSelection = !mRecipientList->selectedItems ().isEmpty();
+  const bool hasSelection = !mView->selectedAddresses().isEmpty();
   mToButton->setEnabled( hasSelection );
   mBccButton->setEnabled( hasSelection );
   mCcButton->setEnabled( hasSelection );
 }
 
-void RecipientsPicker::initCollections()
+void RecipientsPicker::setRecipients( const Recipient::List& )
 {
-  mAllRecipients = new RecipientsCollection( i18nc("All collections containing recipients.", "All") );
-  mAllRecipients->setReferenceContainer( true );
-  mDistributionLists = new RecipientsCollection( i18n("Distribution Lists") );
-  mSelectedRecipients = new RecipientsCollection( i18n("Selected Recipients") );
-
-  insertCollection( mAllRecipients );
-#ifndef KDEPIM_NO_KRESOURCES
-  insertAddressBook( mAddressBook );
-#endif
-  insertCollection( mDistributionLists );
-  insertRecentAddresses();
-  insertCollection( mSelectedRecipients );
-
-  rebuildAllRecipientsList();
-}
-
-void RecipientsPicker::insertAddressBook( KABC::AddressBook *addressbook )
-{
-  QMap<KABC::Resource *,RecipientsCollection *> collectionMap;
-
-#ifndef KDEPIM_NO_KRESOURCES
-  QList<KABC::Resource*> resources = addressbook->resources();
-  QList<KABC::Resource*>::const_iterator rit;
-  for( rit = resources.constBegin(); rit != resources.constEnd() ; ++rit ) {
-    RecipientsCollection *collection = new RecipientsCollection( (*rit)->identifier() );
-    collectionMap.insert( *rit, collection );
-    collection->setTitle( (*rit)->resourceName() );
-  }
-
-  QMap<QString,RecipientsCollection *> categoryMap;
-
-  KABC::AddressBook::Iterator it;
-  for( it = addressbook->begin(); it != addressbook->end(); ++it ) {
-    QStringList emails = (*it).emails();
-
-    // preferredEmail is first in list
-    RecipientItem *preferredEmailItem = new RecipientItem;
-    preferredEmailItem->setAddressee( *it, emails.count() > 0 ? emails.takeFirst() : QString() );
-
-    foreach ( const QString &email, emails) {
-      RecipientItem *item = new RecipientItem( preferredEmailItem );
-      item->setAddressee( *it, email );
-    }
-
-    QMap<KABC::Resource *,RecipientsCollection *>::ConstIterator collIt;
-    collIt = collectionMap.constFind( (*it).resource() );
-    if ( collIt != collectionMap.constEnd() ) {
-      (*collIt)->addItem( preferredEmailItem );
-    } else {
-      kDebug() << "Collection for resource not found. shouldn't happen";
-    }
-
-    QStringList categories = (*it).categories();
-    QStringList::ConstIterator catIt;
-    for( catIt = categories.constBegin(); catIt != categories.constEnd(); ++catIt ) {
-      QMap<QString, RecipientsCollection *>::ConstIterator catMapIt;
-      catMapIt = categoryMap.constFind( *catIt );
-      RecipientsCollection *collection;
-      if ( catMapIt == categoryMap.constEnd() ) {
-        collection = new RecipientsCollection( *catIt );
-        collection->setReferenceContainer( true );
-        categoryMap.insert( *catIt, collection );
-      } else {
-        collection = *catMapIt;
-      }
-      collection->addItem( preferredEmailItem );
-    }
-  }
-
-  /* add separator if there are address books.
-    * this helps organizing long list in the comboBox.
-    */
-  if ( collectionMap.size() >= 1 ) {
-    RecipientsCollection* separator = new RecipientsCollection( mSeparatorString + i18n( "Address Books" ) + mSeparatorString );
-    insertCollection( separator );
-  }
-
-  QMap<KABC::Resource *,RecipientsCollection *>::ConstIterator it2;
-  for( it2 = collectionMap.constBegin(); it2 != collectionMap.constEnd(); ++it2 ) {
-    insertCollection( *it2 );
-  }
-
-  // add separator if there are categories.
-  if ( categoryMap.size() >= 1 ) {
-    RecipientsCollection* separator = new RecipientsCollection( mSeparatorString + i18n( "Categories" ) + mSeparatorString );
-    insertCollection( separator );
-  }
-
-  QMap<QString, RecipientsCollection *>::ConstIterator it3;
-  for( it3 = categoryMap.constBegin(); it3 != categoryMap.constEnd(); ++it3 ) {
-    insertCollection( *it3 );
-  }
-#endif
-
-  insertDistributionLists();
-  rebuildAllRecipientsList();
-  updateList();
-}
-
-void RecipientsPicker::insertDistributionLists()
-{
-  mDistributionLists->deleteAll();
-
-#ifndef KDEPIM_NO_KRESOURCES
-  QList<KABC::DistributionList*> lists = mAddressBook->allDistributionLists();
-  foreach ( KABC::DistributionList *list, lists ) {
-    RecipientItem *item = new RecipientItem;
-    item->setDistributionList( list );
-    mDistributionLists->addItem( item );
-  }
-#endif
-}
-
-void RecipientsPicker::insertRecentAddresses()
-{
-  RecipientsCollection *collection = new RecipientsCollection( i18n("Recent Addresses") );
-
-  KConfig config( "kmailrc" );
-  KABC::Addressee::List recents =
-    KPIM::RecentAddresses::self( &config )->kabcAddresses();
-
-  KABC::Addressee::List::ConstIterator it;
-  for( it = recents.constBegin(); it != recents.constEnd(); ++it ) {
-    RecipientItem *item = new RecipientItem;
-    item->setAddressee( *it, (*it).preferredEmail() );
-    collection->addItem( item );
-  }
-
-  insertCollection( collection );
-}
-
-void RecipientsPicker::insertCollection( RecipientsCollection *coll )
-{
-  int index = 0;
-  QMap<int,RecipientsCollection *>::ConstIterator it;
-  for ( it = mCollectionMap.constBegin(); it != mCollectionMap.constEnd(); ++it ) {
-    if ( (*it)->id() == coll->id() ) {
-      delete *it;
-      mCollectionMap.remove( index );
-      mCollectionMap.insert( index, coll );
-      return;
-    }
-    index++;
-  }
-
-  mCollectionCombo->insertItem( index, coll->title() );
-  mCollectionMap.insert( index, coll );
-}
-
-void RecipientsPicker::updateRecipient( const Recipient &recipient )
-{
-  RecipientItem::List allRecipients = mAllRecipients->items();
-  RecipientItem::List::ConstIterator itAll;
-  for( itAll = allRecipients.constBegin(); itAll != allRecipients.constEnd(); ++itAll ) {
-    if ( (*itAll)->recipient() == recipient.email() ) {
-      (*itAll)->setRecipientType( recipient.typeLabel() );
-    }
-  }
-  updateList();
-}
-
-void RecipientsPicker::setRecipients( const Recipient::List &recipients )
-{
-  mSelectedRecipients->deleteAll();
-
-  Recipient::List::ConstIterator it;
-  for( it = recipients.constBegin(); it != recipients.constEnd(); ++it ) {
-    RecipientItem *item = 0;
-
-    // if recipient is a distribution list, create
-    // a detached copy.
-    RecipientItem::List items = mDistributionLists->items();
-    RecipientItem::List::ConstIterator distIt;
-    for ( distIt = items.constBegin(); distIt != items.constEnd(); ++distIt ) {
-      if ( (*it).email() == (*distIt)->name() ) {
-        item = new RecipientItem();
-        item->setDistributionList( (*distIt)->distributionList() );
-      }
-    }
-
-    if ( !item ) {
-      KABC::Addressee a;
-      QString name;
-      QString email;
-
-      KABC::Addressee::parseEmailAddress( (*it).email(), name, email );
-      a.setNameFromString( name );
-      a.insertEmail( email );
-
-      item = new RecipientItem;
-      item->setAddressee( a, a.preferredEmail() );
-    }
-
-    item->setRecipientType( (*it).typeLabel() );
-    mSelectedRecipients->addItem( item );
-  }
-
-  updateList();
-}
-
-void RecipientsPicker::setDefaultButton( QPushButton *button )
-{
-  button->setDefault( true );
+  mView->view()->selectionModel()->clear();
 }
 
 void RecipientsPicker::setDefaultType( Recipient::Type type )
@@ -665,68 +131,6 @@ void RecipientsPicker::setDefaultType( Recipient::Type type )
   mToButton->setDefault( type == Recipient::To );
   mCcButton->setDefault( type == Recipient::Cc );
   mBccButton->setDefault( type == Recipient::Bcc );
-}
-
-void RecipientsPicker::rebuildAllRecipientsList()
-{
-  mAllRecipients->clear();
-
-  QMap<int,RecipientsCollection *>::ConstIterator it;
-  for( it = mCollectionMap.constBegin(); it != mCollectionMap.constEnd(); ++it ) {
-    // skip self
-    if ( (*it) == mAllRecipients )
-      continue;
-
-    kDebug() << "processing collection" << (*it)->id() << (*it)->title();
-
-    RecipientItem::List coll = (*it)->items();
-
-    RecipientItem::List::ConstIterator rcptIt;
-    for ( rcptIt = coll.constBegin(); rcptIt != coll.constEnd(); ++rcptIt ) {
-      mAllRecipients->addItem( *rcptIt );
-    }
-  }
-}
-
-void RecipientsPicker::updateList()
-{
-  mRecipientList->clear();
-
-  //skip separator, pick first item below
-  const QString currentText = mCollectionCombo->currentText();
-  if ( currentText.startsWith( mSeparatorString ) ) {
-    mCollectionCombo->blockSignals( true );
-    mCollectionCombo->setCurrentIndex( mCollectionCombo->currentIndex() + 1 );
-    mCollectionCombo->blockSignals( false );
-  }
-
-  RecipientsCollection *coll = mCollectionMap[ mCollectionCombo->currentIndex() ];
-
-  RecipientItem::List items = coll->items();
-  RecipientItem::List::ConstIterator it;
-  for( it = items.constBegin(); it != items.constEnd(); ++it ) {
-    if ( coll != mSelectedRecipients ) {
-      RecipientItem *selItem = mSelectedRecipients->getEquivalentItem( *it );
-      if ( selItem ) {
-        (*it)->setRecipientType( selItem->recipientType() );
-      } else {
-        (*it)->setRecipientType( QString() );
-      }
-    }
-    RecipientViewItem *stdItem = new RecipientViewItem( *it, mRecipientList );
-    RecipientItem::List altList = (*it)->alternativeEmailList();
-    RecipientItem::List::ConstIterator altIt;
-
-    for ( int i = 0; i < mRecipientList->columnCount(); i++ )
-      stdItem->setToolTip( i, stdItem->recipientItem()->tooltip() );
-
-    for( altIt = altList.constBegin(); altIt != altList.constEnd(); ++altIt ) {
-      RecipientViewItem *newItem = new RecipientViewItem( *altIt, stdItem );
-      newItem->setToolTip( 0, newItem->recipientItem()->tooltip() );
-    }
-  }
-
-  mSearchLine->updateSearch();
 }
 
 void RecipientsPicker::slotToClicked()
@@ -744,16 +148,6 @@ void RecipientsPicker::slotBccClicked()
   pick( Recipient::Bcc );
 }
 
-void RecipientsPicker::slotPicked( QTreeWidgetItem *viewItem )
-{
-  RecipientViewItem *item = static_cast<RecipientViewItem *>( viewItem );
-  if ( item ) {
-    RecipientItem *i = item->recipientItem();
-    emit pickedRecipient( Recipient( i->recipient(), Recipient::Undefined ) );
-  }
-  close();
-}
-
 void RecipientsPicker::slotPicked()
 {
   pick( mDefaultType );
@@ -763,38 +157,45 @@ void RecipientsPicker::pick( Recipient::Type type )
 {
   kDebug() << int( type );
 
-  int count = mRecipientList->selectedItems().count();
+  const Akonadi::EmailAddressSelectionView::Selection::List selections = mView->selectedAddresses();
+
+  const int count = selections.count();
 
   if ( count > GlobalSettings::self()->maximumRecipients() ) {
     KMessageBox::sorry( this,
-        i18np("You selected 1 recipient. The maximum supported number of "
-             "recipients is %2. Please adapt the selection.",
-             "You selected %1 recipients. The maximum supported number of "
-             "recipients is %2. Please adapt the selection.", count,
-        GlobalSettings::self()->maximumRecipients() ) );
+        i18np( "You selected 1 recipient. The maximum supported number of "
+               "recipients is %2. Please adapt the selection.",
+               "You selected %1 recipients. The maximum supported number of "
+               "recipients is %2. Please adapt the selection.", count,
+               GlobalSettings::self()->maximumRecipients() ) );
     return;
   }
 
-  QList<QTreeWidgetItem*> selectedItems = mRecipientList->selectedItems();
-  QList<QTreeWidgetItem*>::iterator it = selectedItems.begin();
-  for ( ; it != selectedItems.end(); ++it ) {
-    RecipientViewItem *item = static_cast<RecipientViewItem *>( *it );
-    if ( item ) {
-      RecipientItem *i = item->recipientItem();
-      Recipient r = i->recipient();
-      r.setType( type );
-      emit pickedRecipient( r );
+  foreach ( const Akonadi::EmailAddressSelectionView::Selection &selection, selections ) {
+    Recipient recipient;
+    recipient.setType( type );
+
+    if ( selection.item().hasPayload<KABC::ContactGroup>() )
+      recipient.setEmail( selection.email() );
+    else {
+      KABC::Addressee contact;
+      contact.setName( selection.name() );
+      contact.insertEmail( selection.email() );
+      recipient.setEmail( contact.fullEmail() );
     }
+
+    emit pickedRecipient( recipient );
   }
+
   close();
 }
 
-void RecipientsPicker::keyPressEvent( QKeyEvent *ev )
+void RecipientsPicker::keyPressEvent( QKeyEvent *event )
 {
-  if ( ev->key() == Qt::Key_Escape )
+  if ( event->key() == Qt::Key_Escape )
     close();
 
-  KDialog::keyPressEvent( ev );
+  KDialog::keyPressEvent( event );
 }
 
 void RecipientsPicker::readConfig()
@@ -805,11 +206,6 @@ void RecipientsPicker::readConfig()
   if ( !size.isEmpty() ) {
     resize( size );
   }
-  int currentCollection = group.readEntry( "CurrentCollection", -1 );
-  if ( currentCollection >= 0 &&
-       currentCollection < mCollectionCombo->count() ) {
-    mCollectionCombo->setCurrentIndex( currentCollection );
-  }
 }
 
 void RecipientsPicker::writeConfig()
@@ -817,14 +213,7 @@ void RecipientsPicker::writeConfig()
   KSharedConfig::Ptr cfg = KGlobal::config();
   KConfigGroup group( cfg, "RecipientsPicker" );
   group.writeEntry( "Size", size() );
-  group.writeEntry( "CurrentCollection", mCollectionCombo->currentIndex() );
 }
-
-void RecipientsPicker::setFocusList()
-{
-  mRecipientList->setFocus();
-}
-
 
 void RecipientsPicker::slotSearchLDAP()
 {
@@ -833,7 +222,8 @@ void RecipientsPicker::slotSearchLDAP()
     connect( mLdapSearchDialog, SIGNAL( contactsAdded() ),
              SLOT(ldapSearchResult() ) );
   }
-  mLdapSearchDialog->setSearchText( mSearchLine->text() );
+
+  mLdapSearchDialog->setSearchText( mView->searchLineEdit()->text() );
   mLdapSearchDialog->show();
 }
 
@@ -841,9 +231,7 @@ void RecipientsPicker::ldapSearchResult()
 {
   const KABC::Addressee::List contacts = mLdapSearchDialog->selectedContacts();
   foreach ( const KABC::Addressee &contact, contacts ) {
-    RecipientItem *item = new RecipientItem;
-    item->setAddressee( contact, contact.preferredEmail() );
-    emit pickedRecipient( Recipient( item->recipient(), Recipient::Undefined ) );
+    emit pickedRecipient( Recipient( contact.fullEmail(), Recipient::Undefined ) );
   }
 }
 

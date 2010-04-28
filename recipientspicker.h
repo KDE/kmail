@@ -24,214 +24,50 @@
 #include "recipientseditor.h"
 
 #include <kabc/addressee.h>
-#ifndef KDEPIM_NO_KRESOURCES
-#include <kabc/stdaddressbook.h>
-#else
-namespace KABC { class AddressBook; }
-#endif
-#include <KDialog>
-#include <KTreeWidgetSearchLine>
+#include <kdialog.h>
 
-#include <QPixmap>
-#include <QTreeWidgetItem>
-
-class KComboBox;
-
-class QKeyEvent;
-class QTreeWidget;
-class QWidget;
-
-namespace KABC {
-class DistributionList;
+namespace Akonadi {
+class EmailAddressSelectionView;
 }
 
 namespace KLDAP {
-class  LdapSearchDialog;
+class LdapSearchDialog;
 }
-
-class RecipientItem
-{
-  public:
-    typedef QList<RecipientItem *> List;
-
-    RecipientItem();
-    RecipientItem( RecipientItem *);
-    void setDistributionList( KABC::DistributionList * );
-    KABC::DistributionList * distributionList() const;
-    const KABC::Addressee * adressee() const;
-
-    void setAddressee( const KABC::Addressee &, const QString &email );
-
-    void setRecipientType( const QString &type );
-    QString recipientType() const;
-
-    QString recipient() const;
-
-    QPixmap icon() const;
-    QString name() const;
-    QString email() const;
-
-    QString key() const { return mKey; }
-
-    QString tooltip() const;
-
-    void addAlternativeEmailItem( RecipientItem *altRecipientItem );
-    const List alternativeEmailList() const;
-    bool isDistributionList() const;
-    bool operator==( const Recipient& ) const;
-
-  private:
-    QString createTooltip( KABC::DistributionList * ) const;
-
-    KABC::Addressee mAddressee;
-    QString mName;
-    QString mEmail;
-    QString mRecipient;
-    KABC::DistributionList *mDistributionList;
-    QString mType;
-    QString mTooltip;
-
-    QPixmap mIcon;
-
-    QString mKey;
-
-    List mAlternativeEmailList;
-};
-
-class RecipientViewItem : public QTreeWidgetItem
-{
-  public:
-    RecipientViewItem( RecipientItem *, QTreeWidget * );
-    RecipientViewItem( RecipientItem *, RecipientViewItem * );
-    void init( RecipientItem *item );
-
-    RecipientItem *recipientItem() const;
-
-  private:
-    RecipientItem *mRecipientItem;
-};
-
-class RecipientsCollection
-{
-  public:
-    RecipientsCollection( const QString & );
-    ~RecipientsCollection();
-
-    void setReferenceContainer( bool );
-    bool isReferenceContainer() const;
-
-    void setTitle( const QString & );
-    QString title() const;
-
-    void addItem( RecipientItem * );
-
-    RecipientItem::List items() const;
-
-    bool hasEquivalentItem( RecipientItem * ) const;
-    RecipientItem * getEquivalentItem( RecipientItem *) const;
-
-    void clear();
-
-    void deleteAll();
-
-    QString id() const;
-
-  private:
-    // flag to indicate if this collection contains just references
-    // or should manage memory (de)allocation as well.
-    bool mIsReferenceContainer;
-    QString mId;
-    QString mTitle;
-    QMap<QString, RecipientItem *> mKeyMap;
-};
-
-class SearchLine : public KTreeWidgetSearchLine
-{
-    Q_OBJECT
-  public:
-    SearchLine( QWidget *parent, QTreeWidget *listView );
-
-  signals:
-    void downPressed();
-
-  protected:
-    void keyPressEvent( QKeyEvent * );
-};
-
-//This is a TreeWidget which has an additional signal, returnPressed().
-class RecipientsTreeWidget : public QTreeWidget
-{
-  Q_OBJECT
-  public:
-    RecipientsTreeWidget( QWidget *parent );
-
-  signals:
-
-    //This signal is emitted whenever the user presses the return key and this
-    //widget has focus.
-    void returnPressed();
-
-  protected:
-
-    //This function is reimplemented so that the returnPressed() signal can
-    //be emitted.
-    virtual void keyPressEvent ( QKeyEvent *event );
-};
-
-using namespace KABC;
 
 class RecipientsPicker : public KDialog
 {
   Q_OBJECT
+
   public:
     RecipientsPicker( QWidget *parent );
     ~RecipientsPicker();
 
     void setRecipients( const Recipient::List & );
-    void updateRecipient( const Recipient & );
 
     void setDefaultType( Recipient::Type );
 
-  signals:
+  Q_SIGNALS:
     void pickedRecipient( const Recipient & );
 
   protected:
-    void initCollections();
-    void insertDistributionLists();
-    void insertRecentAddresses();
-    void insertCollection( RecipientsCollection *coll );
-
-    void keyPressEvent( QKeyEvent *ev );
-
     void readConfig();
     void writeConfig();
 
     void pick( Recipient::Type );
 
-    void setDefaultButton( QPushButton *button );
+    void keyPressEvent( QKeyEvent* );
 
-    void rebuildAllRecipientsList();
-
-  protected slots:
-    void updateList();
+  protected Q_SLOTS:
     void slotToClicked();
     void slotCcClicked();
     void slotBccClicked();
-    void slotPicked( QTreeWidgetItem * );
     void slotPicked();
-    void setFocusList();
-    void insertAddressBook( AddressBook * );
     void slotSearchLDAP();
     void ldapSearchResult();
     void slotSelectionChanged();
-  private:
-#ifndef KDEPIM_NO_KRESOURCES
-    KABC::StdAddressBook *mAddressBook;
-#endif
 
-    KComboBox *mCollectionCombo;
-    RecipientsTreeWidget *mRecipientList;
-    KTreeWidgetSearchLine *mSearchLine;
+  private:
+    Akonadi::EmailAddressSelectionView *mView;
 
     QPushButton *mToButton;
     QPushButton *mCcButton;
@@ -240,14 +76,7 @@ class RecipientsPicker : public KDialog
     QPushButton *mSearchLDAPButton;
     KLDAP::LdapSearchDialog *mLdapSearchDialog;
 
-    QMap<int,RecipientsCollection *> mCollectionMap;
-    RecipientsCollection *mAllRecipients;
-    RecipientsCollection *mDistributionLists;
-    RecipientsCollection *mSelectedRecipients;
-
     Recipient::Type mDefaultType;
-
-    static const QString mSeparatorString;
 };
 
 #endif
