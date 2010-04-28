@@ -1584,6 +1584,8 @@ void KMComposeWin::setMsg( const KMime::Message::Ptr &newMsg, bool mayAutoSign,
     return;
   }
 
+  kDebug() << "setMsg:" << newMsg->encodedContent();
+
   mMsg = newMsg;
   KPIMIdentities::IdentityManager * im = KMKernel::self()->identityManager();
 
@@ -2588,10 +2590,17 @@ bool KMComposeWin::queryExit ()
 void KMComposeWin::addAttach( KMime::Content *msgPart )
 {
   KPIM::AttachmentPart::Ptr part( new KPIM::AttachmentPart );
-  part->setName( msgPart->contentDescription()->asUnicodeString() );
-  part->setFileName( msgPart->contentDisposition()->filename() );
-  part->setMimeType( msgPart->contentType()->mimeType() );
-  part->setData( msgPart->decodedContent() );
+  if( msgPart->contentType()->mimeType() == "multipart/digest" ) {
+    // if it is a digest, use the encodedContent() of the attachment,
+    // which already has the proper headers
+    part->setData( msgPart->encodedContent() );
+    part->setMimeType( msgPart->contentType()->mimeType() );
+  } else {
+    part->setName( msgPart->contentDescription()->asUnicodeString() );
+    part->setFileName( msgPart->contentDisposition()->filename() );
+    part->setMimeType( msgPart->contentType()->mimeType() );
+    part->setData( msgPart->decodedContent() );
+  }
   mAttachmentController->addAttachment( part );
 }
 //-----------------------------------------------------------------------------
