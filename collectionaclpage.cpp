@@ -40,7 +40,7 @@
 #include <akonadi/collection.h>
 #include <akonadi/collectionmodifyjob.h>
 
-#include <addressesdialog.h>
+#include <akonadi/contact/emailaddressselectiondialog.h>
 #include <KPIMUtils/Email>
 #include <kabc/addresseelist.h>
 #include <kio/jobuidelegate.h>
@@ -142,26 +142,21 @@ void ACLEntryDialog::slotChanged()
 
 void ACLEntryDialog::slotSelectAddresses()
 {
-  MessageViewer::AutoQPointer<KPIM::AddressesDialog> dlg( new KPIM::AddressesDialog( this ) );
-  dlg->setShowCC( false );
-  dlg->setShowBCC( false );
-  dlg->setSelectedTo( userIds() );
+  MessageViewer::AutoQPointer<Akonadi::EmailAddressSelectionDialog> dlg( new Akonadi::EmailAddressSelectionDialog( this ) );
+  dlg->view()->view()->setSelectionMode( QAbstractItemView::MultiSelection );
 
-  if ( dlg->exec() != QDialog::Accepted || !dlg ) {
+  if ( dlg->exec() != QDialog::Accepted || !dlg )
     return;
-  }
 
-  const QStringList distrLists = dlg->distributionLists( KPIM::AddressesDialog::ToReceiver );
-  QString txt = distrLists.join( ", " );
-  const KABC::Addressee::List lst = dlg->contacts( KPIM::AddressesDialog::ToReceiver );
-  if ( !lst.isEmpty() ) {
-    for( QList<KABC::Addressee>::ConstIterator it = lst.constBegin(); it != lst.constEnd(); ++it ) {
-      if ( !txt.isEmpty() )
-        txt += ", ";
-      txt += it->preferredEmail();
-    }
-  }
-  mUserIdLineEdit->setText( txt );
+  QStringList addresses;
+
+  foreach ( const Akonadi::EmailAddressSelectionView::Selection &selection, dlg->selectedAddresses() )
+    addresses << selection.quotedEmail();
+
+  if ( !mUserIdLineEdit->text().isEmpty() )
+    addresses.prepend( mUserIdLineEdit->text() );
+
+  mUserIdLineEdit->setText( addresses.join( ", " ) );
 }
 
 void ACLEntryDialog::setValues( const QString& userId, KIMAP::Acl::Rights permissions )

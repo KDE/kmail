@@ -33,11 +33,8 @@
 #include "kmkernel.h"
 #include "kmlineeditspell.h"
 
+#include <akonadi/contact/emailaddressselectiondialog.h>
 #include <kpimutils/email.h>
-#include <addressesdialog.h>
-using KPIM::AddressesDialog;
-#include "recentaddresses.h"
-using KPIM::RecentAddresses;
 #include "messageviewer/autoqpointer.h"
 
 #include <kiconloader.h>
@@ -49,6 +46,7 @@ using KPIM::RecentAddresses;
 #include <QPushButton>
 #include <QStringList>
 #include <QFrame>
+#include <QTreeView>
 
 using namespace KMail;
 
@@ -129,23 +127,20 @@ void RedirectDialog::accept()
 //-----------------------------------------------------------------------------
 void RedirectDialog::slotAddrBook()
 {
-  MessageViewer::AutoQPointer<AddressesDialog> dlg( new AddressesDialog( this ) );
+  MessageViewer::AutoQPointer<Akonadi::EmailAddressSelectionDialog> dlg( new Akonadi::EmailAddressSelectionDialog( this ) );
+  dlg->view()->view()->setSelectionMode( QAbstractItemView::MultiSelection );
 
   mResentTo = mEditTo->text();
-  if ( !mResentTo.isEmpty() ) {
-      QStringList lst = KPIMUtils::splitAddressList( mResentTo );
-      dlg->setSelectedTo( lst );
-  }
-
-  dlg->setRecentAddresses( RecentAddresses::self( KMKernel::config().data() )->kabcAddresses() );
-
-  // Make it impossible to specify Cc or Bcc addresses as we support
-  // only the Redirect-To header!
-  dlg->setShowCC( false );
-  dlg->setShowBCC( false );
 
   if ( dlg->exec() != KDialog::Rejected && dlg ) {
-    mEditTo->setText( dlg->emailAddresses( AddressesDialog::ToReceiver ).join(", ") );
+    QStringList addresses;
+    foreach ( const Akonadi::EmailAddressSelectionView::Selection &selection, dlg->selectedAddresses() )
+      addresses << selection.quotedEmail();
+
+    if ( !mResentTo.isEmpty() )
+      addresses.prepend( mResentTo );
+
+    mEditTo->setText( addresses.join( ", " ) );
     mEditTo->setModified( true );
   }
 }
