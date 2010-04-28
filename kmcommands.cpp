@@ -1234,7 +1234,7 @@ KMCommand::Result KMForwardCommand::execute()
         factory.setFolderIdentity( KMail::Util::folderIdentity( msgList.first() ) );
         // get a list of messages
         QList< KMime::Message::Ptr > msgs;
-        foreach( Akonadi::Item item, msgList )
+        foreach( const Akonadi::Item& item, msgList )
           msgs << KMail::Util::message( item );
         QPair< KMime::Message::Ptr, KMime::Content* > fwdMsg = factory.createForwardDigestMIME( msgs );
         
@@ -1343,8 +1343,7 @@ KMCommand::Result KMForwardAttachedCommand::execute()
   if (!mWin)
     mWin = KMail::makeComposer(fwdMsg, KMail::Composer::Forward, mIdentity);
   // iterate through all the messages to be forwarded
-  Akonadi::Item itemMsg;
-  foreach ( itemMsg, msgList ) {
+  foreach ( const Akonadi::Item& itemMsg, msgList ) {
     KMime::Message::Ptr msg = KMail::Util::message( itemMsg );
     if ( !msg )
       return Failed;
