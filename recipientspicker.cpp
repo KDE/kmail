@@ -174,15 +174,7 @@ void RecipientsPicker::pick( Recipient::Type type )
   foreach ( const Akonadi::EmailAddressSelectionView::Selection &selection, selections ) {
     Recipient recipient;
     recipient.setType( type );
-
-    if ( selection.item().hasPayload<KABC::ContactGroup>() )
-      recipient.setEmail( selection.email() );
-    else {
-      KABC::Addressee contact;
-      contact.setName( selection.name() );
-      contact.insertEmail( selection.email() );
-      recipient.setEmail( contact.fullEmail() );
-    }
+    recipient.setEmail( selection.quotedEmail() );
 
     emit pickedRecipient( recipient );
   }
