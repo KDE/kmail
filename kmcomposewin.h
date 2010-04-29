@@ -792,6 +792,7 @@ class KMComposeWin : public KMail::Composer
     KMail::AttachmentController *mAttachmentController;
     KMail::AttachmentModel *mAttachmentModel;
     KMail::AttachmentView *mAttachmentView;
+    QByteArray mOriginalPreferredCharset;
 
     // These are for passing on methods over the applyChanges calls
     MessageSender::SendMethod mSendMethod;

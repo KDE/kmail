@@ -1584,8 +1584,6 @@ void KMComposeWin::setMsg( const KMime::Message::Ptr &newMsg, bool mayAutoSign,
     return;
   }
 
-  kDebug() << "setMsg:" << newMsg->encodedContent();
-
   mMsg = newMsg;
   KPIMIdentities::IdentityManager * im = KMKernel::self()->identityManager();
 
@@ -1749,9 +1747,9 @@ void KMComposeWin::setMsg( const KMime::Message::Ptr &newMsg, bool mayAutoSign,
   if ( !( mContext == Reply || mContext == ReplyToAll || mContext == Forward ) && MessageComposer::MessageComposerSettings::forceReplyCharset() )
     shouldSetCharset = false;
   if ( shouldSetCharset && !otp.textualContentCharset().isEmpty() )
-    setCharset( otp.textualContentCharset() );
-  else
-    setAutoCharset();
+    mOriginalPreferredCharset = otp.textualContentCharset();
+  // always set auto charset, but prefer original when composing if force reply is set.
+  setAutoCharset();
 
   // Set the HTML text and collect HTML images
   if ( isHTMLMail( mMsg.get() ) ) {
@@ -2239,7 +2237,11 @@ QList< Message::Composer* > KMComposeWin::generateCryptoMessages( bool sign, boo
 void KMComposeWin::fillGlobalPart( Message::GlobalPart *globalPart )
 {
   globalPart->setParentWidgetForGui( this );
-  globalPart->setCharsets( mCodecAction->mimeCharsets() );
+  QList< QByteArray > charsets = mCodecAction->mimeCharsets();
+  if( !mOriginalPreferredCharset.isEmpty() ) {
+    charsets.insert( 0, mOriginalPreferredCharset );
+  }
+  globalPart->setCharsets( charsets );
   globalPart->setMDNRequested( mRequestMDNAction->isChecked() );
 }
 
