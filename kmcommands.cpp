@@ -1367,7 +1367,6 @@ KMCommand::Result KMForwardAttachedCommand::execute()
 #else
     kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
 #endif
-// TODO(leo) PORT PORT PORT!
     MessageFactory::link( msg, itemMsg.id(), KPIM::MessageStatus::statusForwarded() );
     mWin->addAttach( msgPart );
   }
