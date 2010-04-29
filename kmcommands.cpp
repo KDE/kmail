@@ -1483,44 +1483,31 @@ KMCommand::Result KMCustomForwardCommand::execute()
   QList<Akonadi::Item> msgList = retrievedMsgs();
 
   if (msgList.count() >= 2) { // Multiple forward
+     QList<Akonadi::Item>::const_iterator it;
+      for ( it = msgList.constBegin(); it != msgList.constEnd(); ++it ) {
+        if ( !it->isValid() )
+          return Failed;
 
-    uint id = 0;
-    // QCString msgText = "";
-    for ( QList<Akonadi::Item>::const_iterator it = msgList.constBegin(); it != msgList.constEnd(); ++it )
-    {
-      KMime::Message::Ptr msg = KMail::Util::message( *it );
-      if ( msg ) {
-        // set the identity
-        if (id == 0)
-          id = msg->headerByType( "X-KMail-Identity" ) ?  msg->headerByType( "X-KMail-Identity" )->asUnicodeString().trimmed().toUInt() : 0;
+        KMime::Message::Ptr msg = KMail::Util::message( *it );
+
+        if ( !msg )
+          return Failed;
+        MessageViewer::KCursorSaver busy( MessageViewer::KBusyPtr::busy() );
+        MessageFactory factory( msg, it->id() );
+        factory.setIdentityManager( KMKernel::self()->identityManager() );
+        factory.setFolderIdentity( KMail::Util::folderIdentity( *it ) );
+        factory.setTemplate( mTemplate );
+        KMime::Message::Ptr fwdMsg = factory.createForward();
+
+        uint id = msg->headerByType( "X-KMail-Identity" ) ?  msg->headerByType("X-KMail-Identity")->asUnicodeString().trimmed().toUInt() : 0;
+        if ( id == 0 )
+          id = mIdentity;
+        {
+          KMail::Composer * win = KMail::makeComposer( fwdMsg, KMail::Composer::Forward, id );
+          win->show();
+        }
+
       }
-    }
-    if ( id == 0 )
-      id = mIdentity; // use folder identity if no message had an id set
-    KMime::Message::Ptr fwdMsg( new KMime::Message );
-    MessageHelper::initHeader( fwdMsg, KMKernel::self()->identityManager(), id );
-    MessageHelper::setAutomaticFields( fwdMsg, true );
-
-    fwdMsg->contentType()->setCharset("utf-8");
-    // fwdMsg->setBody( msgText );
-    for ( QList<Akonadi::Item>::const_iterator it = msgList.constBegin(); it != msgList.constEnd(); ++it )
-    {
-      KMime::Message::Ptr msg = KMail::Util::message( *it );
-      if ( msg ) {
-
-        TemplateParser::TemplateParser parser( fwdMsg, TemplateParser::TemplateParser::Forward );
-        parser.setIdentityManager( KMKernel::self()->identityManager() );
-        parser.setSelection( msg->body() ); // FIXME: Why is this needed?
-        parser.process( msg, ( *it ).parentCollection(), true );
-
-        MessageFactory::link( msg, it->id(), MessageStatus::statusForwarded() );
-      }
-    }
-
-    MessageViewer::KCursorSaver busy( MessageViewer::KBusyPtr::busy() );
-    KMail::Composer * win = KMail::makeComposer( fwdMsg, KMail::Composer::Forward, id,
-                                                 QString(), mTemplate );
-    win->show();
   } else { // forward a single message at most
 
     Akonadi::Item item = msgList.first();
