@@ -37,6 +37,7 @@
 #include <KDebug>
 #include <KGlobal>
 #include <KLocale>
+#include <messagecomposersettings.h>
 
 class CodecManagerPrivate
 {
@@ -83,7 +84,7 @@ QList<QByteArray> CodecManager::preferredCharsets() const
 
 void CodecManager::updatePreferredCharsets()
 {
-  const QStringList prefCharsets = GlobalSettings::self()->preferedCharsets();
+  const QStringList prefCharsets = MessageComposer::MessageComposerSettings::self()->preferredCharsets();
   d->preferredCharsets.clear();
   foreach( const QString &str, prefCharsets ) {
     QByteArray charset = str.toLatin1().toLower();

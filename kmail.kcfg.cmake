@@ -383,10 +383,6 @@
           <default>false</default>
       </entry>
 
-      <entry name="PreferedCharsets" key="pref-charsets" type="StringList">
-          <default>us-ascii,iso-8859-1,locale,utf-8</default>
-      </entry>
-
     </group>
 <!-- Composer -->
 

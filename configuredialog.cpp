@@ -2800,7 +2800,7 @@ void ComposerPage::CharsetTab::doLoadOther()
 {
   KConfigGroup composer( KMKernel::config(), "Composer" );
 
-  QStringList charsets = GlobalSettings::preferedCharsets();
+  QStringList charsets = MessageComposer::MessageComposerSettings::preferredCharsets();
   for ( QStringList::Iterator it = charsets.begin() ;
         it != charsets.end() ; ++it )
     if ( (*it) == QString::fromLatin1("locale") ) {
@@ -2822,7 +2822,7 @@ void ComposerPage::CharsetTab::save()
   for ( ; it != charsetList.end() ; ++it )
     if ( (*it).endsWith( QLatin1String("(locale)") ) )
       (*it) = "locale";
-  GlobalSettings::setPreferedCharsets( charsetList );
+  MessageComposer::MessageComposerSettings::setPreferredCharsets( charsetList );
   MessageComposer::MessageComposerSettings::setForceReplyCharset( mKeepReplyCharsetCheck->isChecked() );
 }
 
