@@ -21,7 +21,44 @@
 
 // KMail includes
 #include "kmfilter.h"
-#include "kmreadermainwin.h"
+#include "kmreadermainwin.h"/*
+    uint id = 0;
+    // QCString msgText = "";
+    for ( QList<Akonadi::Item>::const_iterator it = msgList.constBegin(); it != msgList.constEnd(); ++it )
+    {
+      KMime::Message::Ptr msg = KMail::Util::message( *it );
+      if ( msg ) {
+        // set the identity
+        if (id == 0)
+          id = msg->headerByType( "X-KMail-Identity" ) ?  msg->headerByType( "X-KMail-Identity" )->asUnicodeString().trimmed().toUInt() : 0;
+      }
+    }
+    if ( id == 0 )
+      id = mIdentity; // use folder identity if no message had an id set
+    KMime::Message::Ptr fwdMsg( new KMime::Message );
+    MessageHelper::initHeader( fwdMsg, KMKernel::self()->identityManager(), id );
+    MessageHelper::setAutomaticFields( fwdMsg, true );
+
+    fwdMsg->contentType()->setCharset("utf-8");
+    // fwdMsg->setBody( msgText );
+    for ( QList<Akonadi::Item>::const_iterator it = msgList.constBegin(); it != msgList.constEnd(); ++it )
+    {
+      KMime::Message::Ptr msg = KMail::Util::message( *it );
+      if ( msg ) {
+
+        TemplateParser::TemplateParser parser( fwdMsg, TemplateParser::TemplateParser::Forward );
+        parser.setIdentityManager( KMKernel::self()->identityManager() );
+        parser.setSelection( msg->body() ); // FIXME: Why is this needed?
+        parser.process( msg, ( *it ).parentCollection(), true );
+
+        MessageFactory::link( msg, it->id(), MessageStatus::statusForwarded() );
+      }
+    }
+
+    MessageViewer::KCursorSaver busy( MessageViewer::KBusyPtr::busy() );
+    KMail::Composer * win = KMail::makeComposer( fwdMsg, KMail::Composer::Forward, id,
+                                                 QString(), mTemplate );
+    win->show(); */
 #include "foldershortcutdialog.h"
 #include "composer.h"
 #include "kmfiltermgr.h"
@@ -2910,6 +2947,7 @@ void KMMainWidget::updateCustomTemplateMenus()
              this, SLOT(slotCustomReplyAllToMsg( const QString& )) );
     connect( mCustomTemplateMenus, SIGNAL(forwardTemplateSelected( const QString& )),
              this, SLOT(slotCustomForwardMsg( const QString& )) );
+    connect( KMKernel::self(), SIGNAL(customTemplatesChanged()), mCustomTemplateMenus, SLOT(update()) );
   }
 
   mMsgActions->forwardMenu()->addSeparator();

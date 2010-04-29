@@ -312,6 +312,7 @@ void KMReaderMainWin::updateCustomTemplateMenus()
              this, SLOT(slotCustomReplyAllToMsg( const QString& )) );
     connect( mCustomTemplateMenus.get(), SIGNAL(forwardTemplateSelected( const QString& )),
              this, SLOT(slotCustomForwardMsg( const QString& )) );
+    connect( KMKernel::self(), SIGNAL(customTemplatesChanged()), mCustomTemplateMenus.get(), SLOT(update()) );
   }
 
   mMsgActions->forwardMenu()->addSeparator();

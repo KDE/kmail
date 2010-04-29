@@ -366,14 +366,14 @@ public:
 
   void raise();
 
-  /** Custom templates have changed, so all windows using them need
-      to regenerate their menus */
-  void updatedTemplates();
-
 
   void findCreateDefaultCollection( Akonadi::SpecialMailCollections::Type );
 public slots:
 
+  /** Custom templates have changed, so all windows using them need
+      to regenerate their menus */
+  void updatedTemplates();
+  
   /// Save contents of all open composer widnows to ~/dead.letter
   void dumpDeadLetters();
 

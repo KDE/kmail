@@ -2616,6 +2616,7 @@ ComposerPageCustomTemplatesTab::ComposerPageCustomTemplatesTab( QWidget * parent
 
   connect( mWidget, SIGNAL( changed() ),
            this, SLOT( slotEmitChanged( void ) ) );
+  connect( mWidget, SIGNAL( templatesUpdated() ), KMKernel::self(), SLOT( updatedTemplates() ) );
 }
 
 void ComposerPage::CustomTemplatesTab::doLoadFromGlobalSettings()
