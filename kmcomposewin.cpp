@@ -2592,8 +2592,9 @@ bool KMComposeWin::queryExit ()
 void KMComposeWin::addAttach( KMime::Content *msgPart )
 {
   KPIM::AttachmentPart::Ptr part( new KPIM::AttachmentPart );
-  if( msgPart->contentType()->mimeType() == "multipart/digest" ) {
-    // if it is a digest, use the encodedContent() of the attachment,
+  if( msgPart->contentType()->mimeType() == "multipart/digest" ||
+      msgPart->contentType()->mimeType() == "message/rfc822" ) {
+    // if it is a digest or a full message, use the encodedContent() of the attachment,
     // which already has the proper headers
     part->setData( msgPart->encodedContent() );
     part->setMimeType( msgPart->contentType()->mimeType() );

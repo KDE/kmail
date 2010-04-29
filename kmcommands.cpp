@@ -1323,52 +1323,19 @@ KMForwardAttachedCommand::KMForwardAttachedCommand( QWidget *parent,
 KMCommand::Result KMForwardAttachedCommand::execute()
 {
   QList<Akonadi::Item> msgList = retrievedMsgs();
-  KMime::Message::Ptr fwdMsg( new KMime::Message );
-
-  if (msgList.count() >= 2) {
-    // don't respect X-KMail-Identity headers because they might differ for
-    // the selected mails
-    MessageHelper::initHeader(fwdMsg, KMKernel::self()->identityManager(), mIdentity);
-  }
-  else if (msgList.count() == 1) {
-    Akonadi::Item item = msgList.first();
-    KMime::Message::Ptr msg = KMail::Util::message( item );
-    if ( !msg )
-      return Failed;
-    MessageHelper::initFromMessage(fwdMsg, msg, KMKernel::self()->identityManager());
-    fwdMsg->subject()->fromUnicodeString(  MessageHelper::forwardSubject(msg),"utf-8" );
-  }
-  MessageHelper::setAutomaticFields(fwdMsg, true);
-  MessageViewer::KCursorSaver busy( MessageViewer::KBusyPtr::busy() );
-  if (!mWin)
-    mWin = KMail::makeComposer(fwdMsg, KMail::Composer::Forward, mIdentity);
-  // iterate through all the messages to be forwarded
-  foreach ( const Akonadi::Item& itemMsg, msgList ) {
-    KMime::Message::Ptr msg = KMail::Util::message( itemMsg );
-    if ( !msg )
-      return Failed;
-    // remove headers that shouldn't be forwarded
-    MessageCore::StringUtil::removePrivateHeaderFields(msg);
-    msg->removeHeader("BCC");
-    // set the part
-    KMime::Content *msgPart = new KMime::Content( msg.get() );
-    msgPart->contentType()->setMimeType( "message/rfc822" );
-    msgPart->contentType()->setCharset( MessageViewer::NodeHelper::charset( msg.get() ) );
-
-
-    msgPart->contentDisposition()->setFilename( "forwarded message" );
-    msgPart->contentDisposition()->setDisposition( KMime::Headers::CDinline );
-    msgPart->contentDescription()->fromUnicodeString( msg->from()->asUnicodeString() + ": " + msg->subject()->asUnicodeString(), "utf-8" );
-    msgPart->fromUnicodeString( msg->encodedContent() );
-    msgPart->assemble();
-#if 0
-    // THIS HAS TO BE AFTER setCte()!!!!
-    msgPart->setCharset( "" );
-#else
-    kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
-#endif
-    MessageFactory::link( msg, itemMsg.id(), KPIM::MessageStatus::statusForwarded() );
-    mWin->addAttach( msgPart );
+  MessageFactory factory( KMime::Message::Ptr( new KMime::Message ), mIdentity );
+  factory.setIdentityManager( KMKernel::self()->identityManager() );
+  factory.setFolderIdentity( KMail::Util::folderIdentity( msgList.first() ) );
+  // get a list of messages
+  QList< KMime::Message::Ptr > msgs;
+  foreach( const Akonadi::Item& item, msgList )
+    msgs << KMail::Util::message( item );
+  QPair< KMime::Message::Ptr, QList< KMime::Content* > > fwdMsg = factory.createAttachedForward( msgs );
+  {
+    mWin = KMail::makeComposer( fwdMsg.first, KMail::Composer::Forward, mIdentity );
+    foreach( KMime::Content* attach, fwdMsg.second )
+      mWin->addAttach( attach );
+    mWin->show();
   }
 
   mWin->show();
