@@ -21,7 +21,7 @@
 #define READABLECOLLECTIONPROXYMODEL_H
 
 
-#include <akonadi/entityrightsfiltermodel.h>
+#include "akonadi_next/entityrightsfiltermodel.h"
 #include <akonadi/collection.h>
 class ReadableCollectionProxyModel : public Akonadi::EntityRightsFilterModel
 {
