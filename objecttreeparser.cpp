@@ -53,6 +53,7 @@
 #include "interfaces/bodypartformatter.h"
 #include "globalsettings.h"
 #include "util.h"
+#include "callback.h"
 
 // other module headers
 #include <mimelib/enum.h>
@@ -281,7 +282,8 @@ namespace KMail {
 
         writeAttachmentMarkHeader( node );
         node->setDisplayedEmbedded( true );
-        const Interface::BodyPartFormatter::Result result = formatter->format( &part, htmlWriter() );
+        Callback callback( mReader->message(), mReader );
+        const Interface::BodyPartFormatter::Result result = formatter->format( &part, htmlWriter(), callback );
         writeAttachmentMarkFooter();
 #if 0
         // done in KMReaderWin::setBodyPartMemento() now

@@ -39,6 +39,7 @@
 
 #include "objecttreeparser.h"
 #include "partNode.h"
+#include "callback.h"
 
 #include <mimelib/enum.h>
 #include <mimelib/string.h>
@@ -53,7 +54,7 @@ namespace {
       public KMail::Interface::BodyPartFormatter {
     static const AnyTypeBodyPartFormatter * self;
   public:
-    Result format( KMail::Interface::BodyPart *, KMail::HtmlWriter * ) const {
+    Result format( KMail::Interface::BodyPart *, KMail::HtmlWriter *, KMail::Callback & ) const {
       kdDebug(5006) << "AnyTypeBodyPartFormatter::format() acting as a KMail::Interface::BodyPartFormatter!" << endl;
       return AsIcon;
     }

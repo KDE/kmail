@@ -35,7 +35,7 @@
 #define __KMAIL_INTERFACE_BODYPARTFORMATTER_H__
 
 namespace KMail {
-
+  class Callback;
   class HtmlWriter;
 
   namespace Interface {
@@ -47,7 +47,7 @@ namespace KMail {
     public:
       virtual ~BodyPartFormatter() {}
 
-      /** 
+      /**
 	  @li Ok returned when format() generated some HTML
 	  @li NeedContent returned when format() needs the body of the part
 	  @li AsIcon returned when the part should be shown iconified
@@ -61,7 +61,7 @@ namespace KMail {
 
 	 @return the result code (see above)
       */
-      virtual Result format( BodyPart * part, KMail::HtmlWriter * writer ) const = 0;
+      virtual Result format( BodyPart * part, KMail::HtmlWriter * writer,  Callback &c ) const = 0;
     };
 
     /**
