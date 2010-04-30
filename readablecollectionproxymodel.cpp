@@ -23,7 +23,7 @@
 #include <akonadi/entitytreemodel.h>
 #include <kdebug.h>
 
-#include <akonadi/krecursivefilterproxymodel.h>
+#include <akonadi_next/krecursivefilterproxymodel.h>
 
 #include <QtGui/QApplication>
 #include <QtGui/QPalette>
