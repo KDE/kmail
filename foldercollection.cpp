@@ -472,6 +472,7 @@ void FolderCollection::markUnreadAsRead()
 {
   if ( mCollection.isValid() ) {
     Akonadi::ItemFetchJob *job = new Akonadi::ItemFetchJob( mCollection,this );
+    job->fetchScope().setAncestorRetrieval( Akonadi::ItemFetchScope::Parent );
     connect( job, SIGNAL( result( KJob* ) ), this, SLOT( slotMarkNewAsReadfetchDone( KJob* ) ) );
   }
 }
