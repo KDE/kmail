@@ -168,7 +168,7 @@ KMime::MDN::SendingMode MDNAdviceDialog::checkMDNHeaders(KMime::Message::Ptr msg
 
 
 
-int MDNAdviceDialog::MDNAdviceDialog::requestAdviceOnMDN(const char* what)
+int MDNAdviceDialog::requestAdviceOnMDN(const char* what)
 {
  for ( int i = 0 ; i < numMdnMessageBoxes ; ++i )
     if ( !qstrcmp( what, mdnMessageBoxes[i].dontAskAgainID ) ) {
