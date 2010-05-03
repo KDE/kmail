@@ -27,9 +27,9 @@
 #include "stringutil.h"
 
 #include <messagecore/stringutil.h>
-#include <libkdepim/kvcarddrag.h>
 
 #include <kpimutils/email.h>
+#include <kabc/vcarddrag.h>
 #include <kabc/vcardconverter.h>
 
 #include <kio/netaccess.h>
@@ -109,9 +109,9 @@ void KMLineEdit::dropEvent(QDropEvent *event)
 
   // Case one: The user dropped a text/directory (i.e. vcard), so decode its
   //           contents
-  if ( KPIM::KVCardDrag::canDecode( md ) ) {
+  if ( KABC::VCardDrag::canDecode( md ) ) {
     KABC::Addressee::List list;
-    KPIM::KVCardDrag::fromMimeData( md, list );
+    KABC::VCardDrag::fromMimeData( md, list );
 
     KABC::Addressee::List::Iterator ait;
     for ( ait = list.begin(); ait != list.end(); ++ait ){
