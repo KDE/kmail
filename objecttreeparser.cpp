@@ -271,50 +271,45 @@ namespace KMail {
 
       ProcessResult processResult;
 
-      if ( mReader )
+      if ( mReader ) {
         htmlWriter()->queue( QString::fromLatin1("<a name=\"att%1\"/>").arg( node->nodeId() ) );
-      if ( const Interface::BodyPartFormatter * formatter
-           = BodyPartFormatterFactory::instance()->createFor( node->typeString(), node->subTypeString() ) ) {
-        PartNodeBodyPart part( *node, codecFor( node ) );
-        // Set the default display strategy for this body part relying on the
-        // identity of KMail::Interface::BodyPart::Display and AttachmentStrategy::Display
-        part.setDefaultDisplay( (KMail::Interface::BodyPart::Display) attachmentStrategy()->defaultDisplay( node ) );
+        if ( const Interface::BodyPartFormatter * formatter
+             = BodyPartFormatterFactory::instance()->createFor( node->typeString(), node->subTypeString() ) ) {
+          PartNodeBodyPart part( *node, codecFor( node ) );
+          // Set the default display strategy for this body part relying on the
+          // identity of KMail::Interface::BodyPart::Display and AttachmentStrategy::Display
+          part.setDefaultDisplay( (KMail::Interface::BodyPart::Display) attachmentStrategy()->defaultDisplay( node ) );
 
-        writeAttachmentMarkHeader( node );
-        node->setDisplayedEmbedded( true );
-        Callback callback( mReader->message(), mReader );
-        const Interface::BodyPartFormatter::Result result = formatter->format( &part, htmlWriter(), callback );
-        writeAttachmentMarkFooter();
-#if 0
-        // done in KMReaderWin::setBodyPartMemento() now
-        if ( mReader && node->bodyPartMemento() )
-          if ( Interface::Observable * obs = node->bodyPartMemento()->asObservable() )
-            obs->attach( mReader );
-#endif
-        switch ( result ) {
-        case Interface::BodyPartFormatter::AsIcon:
-          processResult.setNeverDisplayInline( true );
-          // fall through:
-        case Interface::BodyPartFormatter::Failed:
-          defaultHandling( node, processResult );
-          break;
-        case Interface::BodyPartFormatter::Ok:
-        case Interface::BodyPartFormatter::NeedContent:
-          // FIXME: incomplete content handling
-          ;
-        }
-      } else {
-        const BodyPartFormatter * bpf
-          = BodyPartFormatter::createFor( node->type(), node->subType() );
-        kdFatal( !bpf, 5006 ) << "THIS SHOULD NO LONGER HAPPEN ("
-                              << node->typeString() << '/' << node->subTypeString()
-                              << ')' << endl;
+          writeAttachmentMarkHeader( node );
+          node->setDisplayedEmbedded( true );
+          Callback callback( mReader->message(), mReader );
+          const Interface::BodyPartFormatter::Result result = formatter->format( &part, htmlWriter(), callback );
+          writeAttachmentMarkFooter();
+          switch ( result ) {
+          case Interface::BodyPartFormatter::AsIcon:
+            processResult.setNeverDisplayInline( true );
+            // fall through:
+          case Interface::BodyPartFormatter::Failed:
+            defaultHandling( node, processResult );
+            break;
+          case Interface::BodyPartFormatter::Ok:
+          case Interface::BodyPartFormatter::NeedContent:
+            // FIXME: incomplete content handling
+            ;
+          }
+        } else {
+          const BodyPartFormatter * bpf
+            = BodyPartFormatter::createFor( node->type(), node->subType() );
+          kdFatal( !bpf, 5006 ) << "THIS SHOULD NO LONGER HAPPEN ("
+                                << node->typeString() << '/' << node->subTypeString()
+                                << ')' << endl;
 
-        writeAttachmentMarkHeader( node );
-        if ( bpf && !bpf->process( this, node, processResult ) ) {
-          defaultHandling( node, processResult );
+          writeAttachmentMarkHeader( node );
+          if ( bpf && !bpf->process( this, node, processResult ) ) {
+            defaultHandling( node, processResult );
+          }
+          writeAttachmentMarkFooter();
         }
-        writeAttachmentMarkFooter();
       }
       node->setProcessed( true, false );
 
