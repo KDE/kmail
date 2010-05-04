@@ -243,6 +243,7 @@ void insertLibraryCataloguesAndIcons() {
     "libkdepim",
     "libksieve",
     "libkleopatra",
+    "libkpgp",
     "libkmime",
     "libmessagelist",
     "libmessageviewer",
