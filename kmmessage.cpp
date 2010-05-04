@@ -3847,22 +3847,19 @@ QString KMMessage::emailAddrAsAnchor(const QString& aEmail, bool stripped, const
       // Extract the name, mail and some pretty versions out of the mail address
       QString name, mail;
       KPIM::getNameAndMail( *it, name, mail );
-      QString prettyAndQuoted;
       QString pretty;
       QString prettyStripped;
       if ( name.stripWhiteSpace().isEmpty() ) {
-        prettyAndQuoted = mail;
         pretty = mail;
         prettyStripped = mail;
       } else {
-        prettyAndQuoted = "\"" + name + "\" <" + mail + ">";
-        pretty = name + " <" + mail + ">";
+        pretty = KPIM::quoteNameIfNecessary( name ) + " <" + mail + ">";
         prettyStripped = name;
       }
 
       if(aLink) {
         result += "<a href=\"mailto:"
-               + KMMessage::encodeMailtoUrl( prettyAndQuoted )
+               + KMMessage::encodeMailtoUrl( pretty )
                + "\" "+cssStyle+">";
       }
 
