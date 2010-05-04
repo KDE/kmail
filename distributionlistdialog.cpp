@@ -263,5 +263,5 @@ void DistributionListDialog::slotDelayedUser1( KJob *job )
 
   new Akonadi::ItemCreateJob( groupItem, targetCollection );
 
-  close();
+  accept();
 }
