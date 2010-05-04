@@ -273,8 +273,14 @@ namespace KMail {
 
       if ( mReader ) {
         htmlWriter()->queue( QString::fromLatin1("<a name=\"att%1\"/>").arg( node->nodeId() ) );
-        if ( const Interface::BodyPartFormatter * formatter
-             = BodyPartFormatterFactory::instance()->createFor( node->typeString(), node->subTypeString() ) ) {
+      }
+
+      if ( const Interface::BodyPartFormatter * formatter
+           = BodyPartFormatterFactory::instance()->createFor( node->typeString(), node->subTypeString() ) ) {
+
+        // Only use the external plugin if we have a reader. Otherwise, just do nothing for this
+        // node.
+        if ( mReader ) {
           PartNodeBodyPart part( *node, codecFor( node ) );
           // Set the default display strategy for this body part relying on the
           // identity of KMail::Interface::BodyPart::Display and AttachmentStrategy::Display
@@ -297,20 +303,21 @@ namespace KMail {
             // FIXME: incomplete content handling
             ;
           }
-        } else {
-          const BodyPartFormatter * bpf
-            = BodyPartFormatter::createFor( node->type(), node->subType() );
-          kdFatal( !bpf, 5006 ) << "THIS SHOULD NO LONGER HAPPEN ("
-                                << node->typeString() << '/' << node->subTypeString()
-                                << ')' << endl;
-
-          writeAttachmentMarkHeader( node );
-          if ( bpf && !bpf->process( this, node, processResult ) ) {
-            defaultHandling( node, processResult );
-          }
-          writeAttachmentMarkFooter();
         }
+      } else {
+        const BodyPartFormatter * bpf
+          = BodyPartFormatter::createFor( node->type(), node->subType() );
+        kdFatal( !bpf, 5006 ) << "THIS SHOULD NO LONGER HAPPEN ("
+                              << node->typeString() << '/' << node->subTypeString()
+                              << ')' << endl;
+
+        writeAttachmentMarkHeader( node );
+        if ( bpf && !bpf->process( this, node, processResult ) ) {
+          defaultHandling( node, processResult );
+        }
+        writeAttachmentMarkFooter();
       }
+
       node->setProcessed( true, false );
 
       // adjust signed/encrypted flags if inline PGP was found
