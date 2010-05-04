@@ -1100,13 +1100,13 @@ if( fileD1.open( IO_WriteOnly ) ) {
     revert = ftell(mIndexStream);
 
     KMMsgBase * mb = &aMsg->toMsgBase();
-        int len;
-        const uchar *buffer = mb->asIndexString(len);
-        fwrite(&len,sizeof(len), 1, mIndexStream);
-        mb->setIndexOffset( ftell(mIndexStream) );
-        mb->setIndexLength( len );
-        if(fwrite(buffer, len, 1, mIndexStream) != 1)
-            kdDebug(5006) << "Whoa! " << __FILE__ << ":" << __LINE__ << endl;
+    int len;
+    const uchar *buffer = mb->asIndexString(len);
+    fwrite(&len,sizeof(len), 1, mIndexStream);
+    mb->setIndexOffset( ftell(mIndexStream) );
+    mb->setIndexLength( len );
+    if(fwrite(buffer, len, 1, mIndexStream) != 1)
+      kdDebug(5006) << "Whoa! " << __FILE__ << ":" << __LINE__ << endl;
 
     fflush(mIndexStream);
     error = ferror(mIndexStream);
