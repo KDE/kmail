@@ -260,5 +260,5 @@ void DistributionListDialog::slotUser1()
   manager.save();
 #endif
 
-  close();
+  accept();
 }
