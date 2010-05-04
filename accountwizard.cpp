@@ -146,7 +146,7 @@ void AccountWizard::showPage( QWidget *page )
       const KPIM::Identity &identity = manager->defaultIdentity();
 
       mRealName->setText( identity.fullName() );
-      mEMailAddress->setText( identity.emailAddr() );
+      mEMailAddress->setText( identity.primaryEmailAddress() );
       mOrganization->setText( identity.organization() );
     }
   } else if ( page == mLoginInformationPage ) {
@@ -356,7 +356,7 @@ void AccountWizard::accept()
   KPIM::Identity &identity = manager->modifyIdentityForUoid( manager->defaultIdentity().uoid() );
 
   identity.setFullName( mRealName->text() );
-  identity.setEmailAddr( mEMailAddress->text() );
+  identity.setPrimaryEmailAddress( mEMailAddress->text() );
   identity.setOrganization( mOrganization->text() );
 
   manager->commit();

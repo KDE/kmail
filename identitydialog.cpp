@@ -76,6 +76,8 @@ using KMail::FolderRequester;
 #include <qpushbutton.h>
 #include <qcheckbox.h>
 #include <qcombobox.h>
+#include <qgroupbox.h>
+#include <qtextedit.h>
 
 // other headers:
 #include <gpgmepp/key.h>
@@ -107,7 +109,7 @@ namespace KMail {
 
     tab = new QWidget( tabWidget );
     tabWidget->addTab( tab, i18n("&General") );
-    glay = new QGridLayout( tab, 4, 2, marginHint(), spacingHint() );
+    glay = new QGridLayout( tab, 5, 2, marginHint(), spacingHint() );
     glay->setRowStretch( 3, 1 );
     glay->setColStretch( 1, 1 );
 
@@ -140,18 +142,47 @@ namespace KMail {
     QWhatsThis::add( mOrganizationEdit, msg );
 
     // "Email Address" line edit and label:
-    // (row 3: spacer)
     ++row;
     mEmailEdit = new KLineEdit( tab );
     glay->addWidget( mEmailEdit, row, 1 );
     label = new QLabel( mEmailEdit, i18n("&Email address:"), tab );
     glay->addWidget( label, row, 0 );
     msg = i18n("<qt><h3>Email address</h3>"
-               "<p>This field should have your full email address.</p>"
+               "<p>This field should have your full email address</p>"
+               "<p>This address is the primary one, used for all outgoing mail. "
+               "If you have more than one address, either create a new identiy, "
+               "or add additional alias addresses in the field below.</p>"
                "<p>If you leave this blank, or get it wrong, people "
                "will have trouble replying to you.</p></qt>");
     QWhatsThis::add( label, msg );
     QWhatsThis::add( mEmailEdit, msg );
+
+    // "Email Aliases" text edit and label:
+    ++row;
+    mAliasEdit = new QTextEdit( tab );
+    mAliasEdit->setWordWrap( QTextEdit::NoWrap );
+    mAliasEdit->setTextFormat( Qt::PlainText );
+    glay->addWidget( mAliasEdit, row, 1 );
+    label = new QLabel( mAliasEdit, i18n("Email a&liases:"), tab );
+    glay->addWidget( label, row, 0, Qt::AlignTop );
+    msg = i18n("<qt><h3>Email aliases</h3>"
+               "<p>This field contains alias addresses that should also "
+               "be considered as belonging to this identity (as opposed "
+               "to representing a different identity).</p>"
+               "<p>Example:</p>"
+               "<table>"
+               "<tr><th>Primary address:</th><td>first.last@example.org</td></tr>"
+               "<tr><th>Aliases:</th><td>first@example.org<br>last@example.org</td></tr>"
+               "</table>"
+               "<p>Type one alias address per line.</p></qt>");
+    QWhatsThis::add( label, msg );
+    QWhatsThis::add( mAliasEdit, msg );
+
+    // "(one address per line)":
+    ++row;
+    label = new QLabel( i18n("(enter one alias per line)"), tab );
+    glay->addWidget( label, row, 1 );
+    QWhatsThis::add( label, msg );
 
     //
     // Tab Widget: Cryptography
@@ -499,6 +530,15 @@ void IdentityDialog::slotOk() {
       return;
     }
 
+    const QStringList aliases = QStringList::split( '\n', mAliasEdit->text() );
+    for ( QStringList::const_iterator it = aliases.begin(), end = aliases.end() ; it != end ; ++it ) {
+      if ( !isValidSimpleEmailAddress( *it ) ) {
+        QString errorMsg( simpleEmailAddressErrorMsg());
+        KMessageBox::sorry( this, errorMsg, i18n("Invalid Email Alias \"%1\"").arg( *it ) );
+        return;
+      }
+    }
+
     if ( !validateAddresses( mReplyToEdit->text().stripWhiteSpace() ) ) {
       return;
     }
@@ -584,7 +624,8 @@ void IdentityDialog::slotOk() {
     // "General" tab:
     mNameEdit->setText( ident.fullName() );
     mOrganizationEdit->setText( ident.organization() );
-    mEmailEdit->setText( ident.emailAddr() );
+    mEmailEdit->setText( ident.primaryEmailAddress() );
+    mAliasEdit->setText( ident.emailAliases().join("\n") );
 
     // "Cryptography" tab:
     mPGPSigningKeyRequester->setFingerprint( ident.pgpSigningKey() );
@@ -652,7 +693,9 @@ void IdentityDialog::slotOk() {
     ident.setFullName( mNameEdit->text() );
     ident.setOrganization( mOrganizationEdit->text() );
     QString email = mEmailEdit->text();
-    ident.setEmailAddr( email );
+    ident.setPrimaryEmailAddress( email );
+    const QStringList aliases = QStringList::split( '\n', mAliasEdit->text() );
+    ident.setEmailAliases( aliases );
     // "Cryptography" tab:
     ident.setPGPSigningKey( mPGPSigningKeyRequester->fingerprint().latin1() );
     ident.setPGPEncryptionKey( mPGPEncryptionKeyRequester->fingerprint().latin1() );

@@ -1143,12 +1143,12 @@ KMMessage* KMMessage::createRedirect( const QString &toStr )
   QString strByWayOf = QString("%1 (by way of %2 <%3>)")
     .arg( from() )
     .arg( ident.fullName() )
-    .arg( ident.emailAddr() );
+    .arg( ident.primaryEmailAddress() );
 
   // Resent-From: content
   QString strFrom = QString("%1 <%2>")
     .arg( ident.fullName() )
-    .arg( ident.emailAddr() );
+    .arg( ident.primaryEmailAddress() );
 
   // format the current date to be used in Resent-Date:
   QString origDate = msg->headerField( "Date" );

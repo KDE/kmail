@@ -422,10 +422,10 @@ void KMSender::doSendMsg()
     // empty
     const KPIM::Identity & id = kmkernel->identityManager()
       ->identityForUoidOrDefault( mCurrentMsg->headerField( "X-KMail-Identity" ).stripWhiteSpace().toUInt() );
-    if ( !id.emailAddr().isEmpty() ) {
+    if ( !id.primaryEmailAddress().isEmpty() ) {
       mCurrentMsg->setFrom( id.fullEmailAddr() );
     }
-    else if ( !kmkernel->identityManager()->defaultIdentity().emailAddr().isEmpty() ) {
+    else if ( !kmkernel->identityManager()->defaultIdentity().primaryEmailAddress().isEmpty() ) {
       mCurrentMsg->setFrom( kmkernel->identityManager()->defaultIdentity().fullEmailAddr() );
     }
     else {

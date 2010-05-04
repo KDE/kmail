@@ -226,7 +226,7 @@ QString Callback::receiver() const
     }
 
     // select default identity by default
-    const QString defaultAddr = kmkernel->identityManager()->defaultIdentity().emailAddr();
+    const QString defaultAddr = kmkernel->identityManager()->defaultIdentity().primaryEmailAddress();
     const int defaultIndex = QMAX( 0, addrs.findIndex( defaultAddr ) );
 
     mReceiver =

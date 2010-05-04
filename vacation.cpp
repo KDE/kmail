@@ -583,9 +583,11 @@ namespace KMail {
   QStringList Vacation::defaultMailAliases() {
     QStringList sl;
     for ( KPIM::IdentityManager::ConstIterator it = kmkernel->identityManager()->begin() ;
-	  it != kmkernel->identityManager()->end() ; ++it )
-      if ( !(*it).emailAddr().isEmpty() )
-	sl.push_back( (*it).emailAddr() );
+	  it != kmkernel->identityManager()->end() ; ++it ) {
+      if ( !(*it).primaryEmailAddress().isEmpty() )
+	sl.push_back( (*it).primaryEmailAddress() );
+      sl += (*it).emailAliases();
+    }
     return sl;
   }
 
