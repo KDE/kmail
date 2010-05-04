@@ -224,7 +224,7 @@ void FolderCollection::writeConfig() const
       }
     }
     delete imapSettingsInterface;
-    if ( identityId != -1 && mIdentity != identityId )
+    if ( identityId > -1 && mIdentity != static_cast<uint>( identityId ) )
       configGroup.writeEntry("Identity", mIdentity);
     else
       configGroup.deleteEntry( "Identity" );
