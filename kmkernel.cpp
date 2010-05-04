@@ -29,6 +29,7 @@ using KPIM::RecentAddresses;
 #include <kpimidentities/identitymanager.h>
 #include <mailtransport/transport.h>
 #include <mailtransport/transportmanager.h>
+#include <mailtransport/dispatcherinterface.h>
 
 #include <kde_file.h>
 #include <kwindowsystem.h>
@@ -52,6 +53,7 @@ using KMail::MailServiceImpl;
 
 #include <kmessagebox.h>
 #include <knotification.h>
+#include <progressmanager.h>
 #include <kstandarddirs.h>
 #include <kconfig.h>
 #include <kpassivepopup.h>
@@ -242,6 +244,8 @@ KMKernel::KMKernel (QObject *parent, const char *name) :
   connect( MailTransport::TransportManager::self(),
            SIGNAL(transportRenamed(int,QString,QString)),
            SLOT(transportRenamed(int,QString,QString)) );
+
+  QDBusConnection::sessionBus().connect(QString(), QLatin1String( "/MailDispatcherAgent" ), "org.freedesktop.Akonadi.MailDispatcherAgent", "itemDispatchStarted",this, SLOT(itemDispatchStarted()) );
 }
 
 KMKernel::~KMKernel ()
@@ -1756,6 +1760,19 @@ void KMKernel::transportRenamed(int id, const QString & oldName, const QString &
     im->commit();
   }
 }
+
+void KMKernel::itemDispatchStarted()
+{
+  // Watch progress of the MDA.
+  KPIM::ProgressManager::createProgressItem( 0,
+      MailTransport::DispatcherInterface().dispatcherInstance(),
+      QString::fromAscii( "Sender" ),
+      i18n( "Sending messages" ),
+      i18n( "Initiating sending process..." ),
+      true );
+  kDebug() << "Created ProgressItem";
+}
+
 
 void KMKernel::updatedTemplates()
 {

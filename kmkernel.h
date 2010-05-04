@@ -411,6 +411,7 @@ private slots:
   void transportRemoved( int id, const QString &name );
   /** Updates identities when a transport has been renamed. */
   void transportRenamed( int id, const QString &oldName, const QString &newName );
+  void itemDispatchStarted();
   void createDefaultCollectionDone( KJob * job);
 
 private:
