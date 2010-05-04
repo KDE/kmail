@@ -40,7 +40,7 @@ class QCheckBox;
 class QComboBox;
 class QString;
 class QStringList;
-class QTextEdit;
+class SimpleStringListEditor;
 class TemplatesConfiguration;
 class KPushButton;
 namespace Kleo {
@@ -88,7 +88,7 @@ namespace KMail {
     QLineEdit                    *mNameEdit;
     QLineEdit                    *mOrganizationEdit;
     QLineEdit                    *mEmailEdit;
-    QTextEdit                    *mAliasEdit;
+    SimpleStringListEditor       *mAliasEdit;
     // "cryptography" tab:
     QWidget                      *mCryptographyTab;
     Kleo::SigningKeyRequester    *mPGPSigningKeyRequester;

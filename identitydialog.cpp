@@ -48,6 +48,7 @@ using KMail::FolderRequester;
 #include "kmfolder.h"
 #include "templatesconfiguration.h"
 #include "templatesconfiguration_kfg.h"
+#include "simplestringlisteditor.h"
 
 // other kdepim headers:
 // libkdepim
@@ -157,12 +158,10 @@ namespace KMail {
     QWhatsThis::add( label, msg );
     QWhatsThis::add( mEmailEdit, msg );
 
-    // "Email Aliases" text edit and label:
+    // "Email Aliases" string list edit and label:
     ++row;
-    mAliasEdit = new QTextEdit( tab );
-    mAliasEdit->setWordWrap( QTextEdit::NoWrap );
-    mAliasEdit->setTextFormat( Qt::PlainText );
-    glay->addWidget( mAliasEdit, row, 1 );
+    mAliasEdit = new SimpleStringListEditor( tab );
+    glay->addMultiCellWidget( mAliasEdit, row, row+1, 1, 1 );
     label = new QLabel( mAliasEdit, i18n("Email a&liases:"), tab );
     glay->addWidget( label, row, 0, Qt::AlignTop );
     msg = i18n("<qt><h3>Email aliases</h3>"
@@ -177,12 +176,6 @@ namespace KMail {
                "<p>Type one alias address per line.</p></qt>");
     QWhatsThis::add( label, msg );
     QWhatsThis::add( mAliasEdit, msg );
-
-    // "(one address per line)":
-    ++row;
-    label = new QLabel( i18n("(enter one alias per line)"), tab );
-    glay->addWidget( label, row, 1 );
-    QWhatsThis::add( label, msg );
 
     //
     // Tab Widget: Cryptography
@@ -530,7 +523,7 @@ void IdentityDialog::slotOk() {
       return;
     }
 
-    const QStringList aliases = QStringList::split( '\n', mAliasEdit->text() );
+    const QStringList aliases = mAliasEdit->stringList();
     for ( QStringList::const_iterator it = aliases.begin(), end = aliases.end() ; it != end ; ++it ) {
       if ( !isValidSimpleEmailAddress( *it ) ) {
         QString errorMsg( simpleEmailAddressErrorMsg());
@@ -625,7 +618,7 @@ void IdentityDialog::slotOk() {
     mNameEdit->setText( ident.fullName() );
     mOrganizationEdit->setText( ident.organization() );
     mEmailEdit->setText( ident.primaryEmailAddress() );
-    mAliasEdit->setText( ident.emailAliases().join("\n") );
+    mAliasEdit->setStringList( ident.emailAliases() );
 
     // "Cryptography" tab:
     mPGPSigningKeyRequester->setFingerprint( ident.pgpSigningKey() );
@@ -694,7 +687,7 @@ void IdentityDialog::slotOk() {
     ident.setOrganization( mOrganizationEdit->text() );
     QString email = mEmailEdit->text();
     ident.setPrimaryEmailAddress( email );
-    const QStringList aliases = QStringList::split( '\n', mAliasEdit->text() );
+    const QStringList aliases = mAliasEdit->stringList();
     ident.setEmailAliases( aliases );
     // "Cryptography" tab:
     ident.setPGPSigningKey( mPGPSigningKeyRequester->fingerprint().latin1() );
