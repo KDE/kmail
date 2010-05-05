@@ -792,19 +792,6 @@ namespace KMail {
 	    linkColor = "class =\"black\"";
         }
 
-	QStringList headerParts;
-	if( strategy->showHeader( "to" ) )
-	    headerParts << KMMessage::emailAddrAsAnchor( message->to(), false, linkColor );
-
-	if ( strategy->showHeader( "cc" ) && !message->cc().isEmpty() )
-	    headerParts << KMMessage::emailAddrAsAnchor( message->cc(), true, linkColor );
-
-	if ( strategy->showHeader( "bcc" ) && !message->bcc().isEmpty() )
-	    headerParts << KMMessage::emailAddrAsAnchor( message->bcc(), true, linkColor );
-
-	// remove all empty (modulo whitespace) entries and joins them via ", \n"
-	QString headerPart = " " + headerParts.grep( QRegExp( "\\S" ) ).join( ", " );
-
 	// Prepare the date string (when printing always use the localized date)
 	QString dateString;
 	if( printing ) {
@@ -870,14 +857,35 @@ namespace KMail {
 		"     </tr> ";
 	}
 
-	// to, cc, bcc
-	headerStr +=
+	// to line
+	if( strategy->showHeader( "to" ) )
+          headerStr +=
 	    "     <tr> "
-	    "      <td style=\"font-size: 6px; text-align: right; padding-left: 5px; padding-right: 24px; "+borderSettings+"\">"+i18n("To: ")+"</td> "
-	    "      <td style=\""+borderSettings+"\">"
-	    +headerPart+
+	    "      <td style=\"font-size: 6px; text-align: right; padding-left: 5px; padding-right: 24px; " + borderSettings + "\">" + i18n("To: ") + "</td> "
+	    "      <td style=\"" + borderSettings + "\">" +
+	    KMMessage::emailAddrAsAnchor( message->to(), false, linkColor ) +
 	    "      </td> "
-	    "     </tr> ";
+	    "     </tr>\n";
+
+        // cc line, if any
+	if ( strategy->showHeader( "cc" ) && !message->cc().isEmpty() )
+          headerStr +=
+	    "     <tr> "
+	    "      <td style=\"font-size: 6px; text-align: right; padding-left: 5px; padding-right: 24px; " + borderSettings + "\">" + i18n("CC: ") + "</td> "
+	    "      <td style=\"" + borderSettings + "\">" +
+	    KMMessage::emailAddrAsAnchor( message->cc(), true, linkColor ) +
+	    "      </td> "
+	    "     </tr>\n";
+
+        // bcc line, if any
+	if ( strategy->showHeader( "bcc" ) && !message->bcc().isEmpty() )
+          headerStr +=
+	    "     <tr> "
+	    "      <td style=\"font-size: 6px; text-align: right; padding-left: 5px; padding-right: 24px; " + borderSettings + "\">" + i18n("BCC: ") + "</td> "
+	    "      <td style=\"" + borderSettings + "\">" +
+	    KMMessage::emailAddrAsAnchor( message->bcc(), true, linkColor ) +
+	    "      </td> "
+	    "     </tr>\n";
 
 	// header-bottom
 	headerStr +=
