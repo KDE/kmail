@@ -99,6 +99,7 @@ public:
 
   void setMessage( const Akonadi::Item& item, MessageViewer::Viewer::UpdateMode updateMode = MessageViewer::Viewer::Delayed);
 
+  void setMessage( KMime::Message::Ptr message );
 
   /** Instead of settings a message to be shown sets a message part
       to be shown */
@@ -196,6 +197,7 @@ public slots:
   void slotTouchMessage();
   void slotUrlClicked( const Akonadi::Item &,  const KUrl& );
   void slotShowReader( KMime::Content* , bool, const QString&, const QString&, const QString &);
+  void slotShowMessage( KMime::Message::Ptr message, const QString& encoding );
 protected:
 
   KUrl urlClicked() const;

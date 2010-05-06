@@ -143,6 +143,21 @@ void KMReaderMainWin::showMessage( const QString & encoding, const Akonadi::Item
   toolBar( "mainToolBar" )->show();
 }
 
+void KMReaderMainWin::showMessage( const QString& encoding, KMime::Message::Ptr message )
+{
+  mReaderWin->setOverrideEncoding( encoding );
+  mReaderWin->setMessage( message );
+  if ( message )
+    setCaption( message->subject()->asUnicodeString() );
+  mReaderWin->slotTouchMessage();
+
+  mTrashAction->setEnabled( false );
+
+  menuBar()->show();
+  toolBar( "mainToolBar" )->show();
+}
+
+
 void KMReaderMainWin::slotReplyOrForwardFinished()
 {
   if ( GlobalSettings::self()->closeAfterReplyOrForward() ) {

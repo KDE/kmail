@@ -6,6 +6,7 @@
 #include "secondarywindow.h"
 
 #include <kurl.h>
+#include <KMime/Message>
 
 #include <boost/scoped_ptr.hpp>
 #include <akonadi/item.h>
@@ -52,6 +53,7 @@ public:
    * onto setOriginalMsg() of KMReaderWin.
    */
   void showMessage( const QString & encoding, const Akonadi::Item &msg );
+  void showMessage( const QString & encoding, KMime::Message::Ptr message);
 private slots:
   void slotMessagePopup(const Akonadi::Item& ,const KUrl&,const QPoint& );
   void slotDelayedMessagePopup( KJob* );

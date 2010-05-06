@@ -137,6 +137,8 @@ KMReaderWin::KMReaderWin(QWidget *aParent,
   connect( mViewer, SIGNAL( requestConfigSync() ), kmkernel, SLOT( slotRequestConfigSync() ) );
   connect( mViewer, SIGNAL( showReader( KMime::Content* , bool, const QString&, const QString&, const QString &) ),
            this, SLOT( slotShowReader( KMime::Content* , bool, const QString&, const QString&, const QString &) ) );
+  connect( mViewer, SIGNAL( showMessage(KMime::Message::Ptr, const QString&) ),
+           this, SLOT( slotShowMessage(KMime::Message::Ptr, const QString& ) ) );
   connect( mViewer, SIGNAL( showStatusBarMessage( const QString & ) ),
            this, SIGNAL( showStatusBarMessage( const QString & ) ) );
   vlay->addWidget( mViewer );
@@ -639,6 +641,12 @@ void KMReaderWin::setMessage( const Akonadi::Item &item, Viewer::UpdateMode upda
   }
 }
 
+void KMReaderWin::setMessage(Message::Ptr message)
+{
+  mViewer->setMessage( message );
+}
+
+
 KUrl KMReaderWin::urlClicked() const
 {
   return mViewer->urlClicked();
@@ -666,6 +674,13 @@ void KMReaderWin::slotUrlClicked( const Akonadi::Item & item, const KUrl & url )
 void KMReaderWin::slotShowReader( KMime::Content* msgPart, bool htmlMail, const QString&filename, const QString&pname, const QString &encoding)
 {
   KMReaderMainWin *win = new KMReaderMainWin(msgPart, htmlMail,filename, pname, encoding );
+  win->show();
+}
+
+void KMReaderWin::slotShowMessage( KMime::Message::Ptr message, const QString& encoding )
+{
+  KMReaderMainWin *win = new KMReaderMainWin();
+  win->showMessage( encoding, message );
   win->show();
 }
 
