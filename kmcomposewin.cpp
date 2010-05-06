@@ -2399,11 +2399,7 @@ void KMComposeWin::saveMessage( KMime::Message::Ptr message, KMComposeWin::SaveI
     kWarning() << "No default collection for" << saveIn;
     return;
   }
-
-  // TODO Composer will have deleted any addresses not in address format, such as nicknames or groups
-  //  reset the values to the user-entered ones to make sure nothing is lost.
-  //  however, we can only put properly formatted addresses in a KMime::Message..
-
+  
   // Store when the draft or template got saved.
   message->date()->setDateTime( KDateTime::currentLocalDateTime() );
   message->assemble();
