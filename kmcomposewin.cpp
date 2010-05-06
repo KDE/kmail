@@ -1594,7 +1594,23 @@ void KMComposeWin::setMsg( const KMime::Message::Ptr &newMsg, bool mayAutoSign,
   mRecipientsEditor->setRecipientString( mMsg->bcc()->mailboxes(), Recipient::Bcc );
   mRecipientsEditor->setFocusBottom();
   mEdtSubject->setText( mMsg->subject()->asUnicodeString() );
-
+  
+  if( mMsg->hasHeader( "X-KMail-UnExpanded-To" ) ) {
+      QStringList spl = mMsg->headerByType( "X-KMail-UnExpanded-To" )->asUnicodeString().split( "," );
+      foreach( QString addr, spl )
+        mRecipientsEditor->addRecipient( addr, Recipient::To );
+  }
+  if( mMsg->hasHeader( "X-KMail-UnExpanded-CC" ) ) {
+      QStringList spl = mMsg->headerByType( "X-KMail-UnExpanded-CC" )->asUnicodeString().split( "," );
+      foreach( QString addr, spl )
+        mRecipientsEditor->addRecipient( addr, Recipient::Cc );
+  }
+  if( mMsg->hasHeader( "X-KMail-UnExpanded-BCC" ) ) {
+      QStringList spl = mMsg->headerByType( "X-KMail-UnExpanded-BCC" )->asUnicodeString().split( "," );
+      foreach( QString addr, spl )
+        mRecipientsEditor->addRecipient( addr, Recipient::Bcc );
+  }
+    
   const bool stickyIdentity = mBtnIdentity->isChecked() && !mIgnoreStickyFields;
   bool messageHasIdentity = false;
   if( newMsg->headerByType("X-KMail-Identity") &&
@@ -2057,13 +2073,12 @@ void KMComposeWin::slotEmailAddressResolved( KJob *job )
   }
 
   const EmailAddressResolveJob *resolveJob = qobject_cast<EmailAddressResolveJob*>( job );
-  // TODO can't save non-proper addresses im KMime::Message, so for now, always expand. 
-//   if( mSaveIn == KMComposeWin::None ) { // don't expand when saved to drafts or templates
+  if( mSaveIn == KMComposeWin::None ) { 
     mExpandedFrom = resolveJob->expandedFrom();
     mExpandedTo = resolveJob->expandedTo();
     mExpandedCc = resolveJob->expandedCc();
     mExpandedBcc = resolveJob->expandedBcc();
- /* } else { // saved to draft, so keep the old values, not very nice.
+ } else { // saved to draft, so keep the old values, not very nice.
     mExpandedFrom = from();
     foreach( const Recipient &r, mRecipientsEditor->recipients() ) {
       switch( r.type() ) {
@@ -2072,7 +2087,23 @@ void KMComposeWin::slotEmailAddressResolved( KJob *job )
         case Recipient::Bcc: mExpandedBcc << r.email(); break;
       }
     }
-  } */
+    QStringList unExpandedTo, unExpandedCc, unExpandedBcc;
+    foreach( QString exp, resolveJob->expandedTo() ) {
+      if( !mExpandedTo.contains( exp ) ) // this address was expanded, so save it explicitly
+        unExpandedTo << exp;
+    }
+    foreach( QString exp, resolveJob->expandedCc() ) {
+        if( !mExpandedCc.contains( exp ) )
+        unExpandedCc << exp;
+    }
+    foreach( QString exp, resolveJob->expandedBcc() ) {
+      if( !mExpandedBcc.contains( exp ) ) // this address was expanded, so save it explicitly
+        unExpandedBcc << exp;
+    }
+    mMsg->setHeader( new KMime::Headers::Generic( "X-KMail-UnExpanded-To", mMsg.get(), unExpandedTo.join( ", " ).toLatin1() ) );
+    mMsg->setHeader( new KMime::Headers::Generic( "X-KMail-UnExpanded-CC", mMsg.get(), unExpandedCc.join( ", " ).toLatin1() ) );
+    mMsg->setHeader( new KMime::Headers::Generic( "X-KMail-UnExpanded-BCC", mMsg.get(), unExpandedBcc.join( ", " ).toLatin1() ) );
+  } 
   // we first figure out if we need to create multiple messages with different crypto formats
   // if so, we create a composer per format
   // if we aren't signing or encrypting, this just returns a single empty message
@@ -2276,6 +2307,12 @@ void KMComposeWin::fillInfoPart( Message::InfoPart *infoPart )
     extras << mMsg->headerByType( "X-KMail-EncryptActionEnabled" );
   if( mMsg->headerByType( "X-KMail-CryptoMessageFormat" ) )
     extras << mMsg->headerByType( "X-KMail-CryptoMessageFormat" );
+  if( mMsg->headerByType( "X-KMail-UnExpanded-To" ) )
+    extras << mMsg->headerByType( "X-KMail-UnExpanded-To" );
+  if( mMsg->headerByType( "X-KMail-UnExpanded-CC" ) )
+    extras << mMsg->headerByType( "X-KMail-UnExpanded-CC" );
+  if( mMsg->headerByType( "X-KMail-UnExpanded-BCC" ) )
+    extras << mMsg->headerByType( "X-KMail-UnExpanded-BCC" );
 
   infoPart->setExtraHeaders( extras );
 }
