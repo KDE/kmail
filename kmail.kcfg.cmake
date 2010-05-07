@@ -135,55 +135,6 @@
     </group>
 <!-- General -->
 
-    <group name="Groupware">
-      <entry name="LegacyMangleFromToHeaders" type="Bool">
-        <label>Mangle From:/To: headers in replies to replies</label>
-        <whatsthis>Microsoft Outlook has a number of shortcomings in its implementation of the iCalendar standard; this option works around one of them. If you have problems with Outlook users not being able to get your replies, try setting this option.</whatsthis>
-        <default>false</default>
-      </entry>
-
-      <entry name="LegacyBodyInvites" type="Bool">
-        <label>Send groupware invitations in the mail body</label>
-        <whatsthis>Microsoft Outlook has a number of shortcomings in its implementation of the iCalendar standard; this option works around one of them. If you have problems with Outlook users not being able to get your invitations, try setting this option.</whatsthis>
-        <default>false</default>
-      </entry>
-
-     <entry name="ExchangeCompatibleInvitations" type="Bool">
-        <label>Exchange-compatible invitation naming</label>
-        <whatsthis>Microsoft Outlook, when used in combination with a Microsoft Exchange server, has a problem understanding standards-compliant groupware email. Turn this option on to send groupware invitations in a way that Microsoft Exchange understands.</whatsthis>
-        <default>false</default>
-      </entry>
-
-      <entry name="OutlookCompatibleInvitationReplyComments" type="Bool">
-        <label>Outlook compatible invitation reply comments</label>
-        <whatsthis>When replying to invitations, send the reply comment in way that Microsoft Outlook understands.</whatsthis>
-        <default>false</default>
-      </entry>
-
-      <entry name="AutomaticSending" type="Bool">
-        <label>Automatic invitation sending</label>
-        <whatsthis>When this is checked, you will not see the mail composer window. Instead, all invitation mails are sent automatically. If you want to see the mail before sending it, you can uncheck this option. However, be aware that the text in the composer window is in iCalendar syntax, and you should not try modifying it by hand.</whatsthis>
-        <default>true</default>
-      </entry>
-
-      <entry name="DeleteInvitationEmailsAfterSendingReply" type="Bool">
-        <label>Delete invitation emails after the reply to them has been sent</label>
-        <whatsthis>When this is checked, received invitation emails that have been replied to will be moved to the Trash folder, once the reply has been successfully sent.</whatsthis>
-        <default>${DELETE_INVITATIONS_AFTER_REPLY_DEFAULT}</default>
-      </entry>
-
-      <entry name="AskForCommentWhenReactingToInvitation"  type="Enum">
-        <label></label>
-        <whatsthis></whatsthis>
-        <choices>
-          <choice name="NeverAsk"/>
-          <choice name="AskForAllButAcceptance"/>
-          <choice name="AlwaysAsk"/>
-        </choices>
-        <default>AskForAllButAcceptance</default>
-      </entry>
-
-    </group>
 
     <group name="Internal">
       <entry name="MsgDictSizeHint" type="Int" hidden="true">

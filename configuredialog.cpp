@@ -60,6 +60,7 @@ using KPIM::RecentAddresses;
 #include "messageviewer/nodehelper.h"
 #include "messageviewer/configurewidget.h"
 #include "messageviewer/globalsettings.h"
+#include "messageviewer/invitationsettings.h"
 #include "messagelist/core/settings.h"
 #include "messagecore/globalsettings.h"
 
@@ -3855,98 +3856,25 @@ void MiscPage::FolderTab::save()
         mMMTab.mExcludeImportantFromExpiry->isChecked() );
 }
 
-QString MiscPage::InviteTab::helpAnchor() const
-{
-  return QString::fromLatin1("configure-misc-invites");
-}
 
 MiscPageInviteTab::MiscPageInviteTab( QWidget* parent )
   : ConfigModuleTab( parent )
 {
-  mMITab.setupUi( this );
-
-  mMITab.mDeleteInvitations->setText(
-             i18n( GlobalSettings::self()->deleteInvitationEmailsAfterSendingReplyItem()->label().toUtf8() ) );
-  mMITab.mDeleteInvitations->setWhatsThis( i18n( GlobalSettings::self()
-             ->deleteInvitationEmailsAfterSendingReplyItem()->whatsThis().toUtf8() ) );
-  connect( mMITab.mDeleteInvitations, SIGNAL( toggled(bool) ),
-           SLOT( slotEmitChanged() ) );
-
-  mMITab.mLegacyMangleFromTo->setWhatsThis( i18n( GlobalSettings::self()->
-           legacyMangleFromToHeadersItem()->whatsThis().toUtf8() ) );
-  connect( mMITab.mLegacyMangleFromTo, SIGNAL( stateChanged( int ) ),
-           this, SLOT( slotEmitChanged( void ) ) );
-  mMITab.mLegacyMangleFromTo->setWhatsThis( i18n( GlobalSettings::self()->
-           legacyBodyInvitesItem()->whatsThis().toUtf8() ) );
-  connect( mMITab.mLegacyBodyInvites, SIGNAL( toggled( bool ) ),
-           this, SLOT( slotLegacyBodyInvitesToggled( bool ) ) );
-  connect( mMITab.mLegacyBodyInvites, SIGNAL( stateChanged( int ) ),
-           this, SLOT( slotEmitChanged( void ) ) );
-
-  mMITab.mExchangeCompatibleInvitations->setWhatsThis( i18n( GlobalSettings::self()->
-           exchangeCompatibleInvitationsItem()->whatsThis().toUtf8() ) );
-  connect( mMITab.mExchangeCompatibleInvitations, SIGNAL( stateChanged( int ) ),
-           this, SLOT( slotEmitChanged( void ) ) );
-
-  mMITab.mOutlookCompatibleInvitationComments->setWhatsThis( i18n( GlobalSettings::self()->
-           outlookCompatibleInvitationReplyCommentsItem()->whatsThis().toUtf8() ) );
-  connect( mMITab.mOutlookCompatibleInvitationComments, SIGNAL( stateChanged( int ) ),
-           this, SLOT( slotEmitChanged( void ) ) );
-
-  mMITab.mAutomaticSending->setWhatsThis( i18n( GlobalSettings::self()->
-           automaticSendingItem()->whatsThis().toUtf8() ) );
-  connect( mMITab.mAutomaticSending, SIGNAL( stateChanged( int ) ),
-           this, SLOT( slotEmitChanged( void ) ) );
-}
-
-void MiscPageInviteTab::slotLegacyBodyInvitesToggled( bool on )
-{
-  if ( on ) {
-    QString txt = i18n( "<qt>Invitations are normally sent as attachments to "
-                        "a mail. This switch changes the invitation mails to "
-                        "be sent in the text of the mail instead; this is "
-                        "necessary to send invitations and replies to "
-                        "Microsoft Outlook.<br />But, when you do this, you no "
-                        "longer get descriptive text that mail programs "
-                        "can read; so, to people who have email programs "
-                        "that do not understand the invitations, the "
-                        "resulting messages look very odd.<br />People that have email "
-                        "programs that do understand invitations will still "
-                        "be able to work with this.</qt>" );
-    KMessageBox::information( this, txt, QString(), "LegacyBodyInvitesWarning" );
-  }
-  // Invitations in the body are autosent in any case (no point in editing raw ICAL)
-  // So the autosend option is only available if invitations are sent as attachment.
-  mMITab.mAutomaticSending->setEnabled( !mMITab.mLegacyBodyInvites->isChecked() );
+  mInvitationUi = new MessageViewer::InvitationSettings( this );
+  QHBoxLayout *l = new QHBoxLayout( this );
+  l->setContentsMargins( 0 , 0, 0, 0 );
+  l->addWidget( mInvitationUi );
+  connect( mInvitationUi, SIGNAL( changed() ), this, SLOT( slotEmitChanged() ) );
 }
 
 void MiscPage::InviteTab::doLoadFromGlobalSettings()
 {
-  mMITab.mLegacyMangleFromTo->setChecked( GlobalSettings::self()->legacyMangleFromToHeaders() );
-  mMITab.mExchangeCompatibleInvitations->setChecked( GlobalSettings::self()->exchangeCompatibleInvitations() );
-
-  mMITab.mLegacyBodyInvites->blockSignals( true );
-  mMITab.mLegacyBodyInvites->setChecked( GlobalSettings::self()->legacyBodyInvites() );
-  mMITab.mLegacyBodyInvites->blockSignals( false );
-
-  mMITab.mOutlookCompatibleInvitationComments->setChecked( GlobalSettings::self()->outlookCompatibleInvitationReplyComments() );
-
-  mMITab.mAutomaticSending->setChecked( GlobalSettings::self()->automaticSending() );
-  mMITab.mAutomaticSending->setEnabled( !mMITab.mLegacyBodyInvites->isChecked() );
-  mMITab.mDeleteInvitations->setChecked(  GlobalSettings::self()->deleteInvitationEmailsAfterSendingReply() );
+  mInvitationUi->doLoadFromGlobalSettings();
 }
 
 void MiscPage::InviteTab::save()
 {
-  KConfigGroup groupware( KMKernel::config(), "Groupware" );
-
-  // Write the groupware config
-  GlobalSettings::self()->setLegacyMangleFromToHeaders( mMITab.mLegacyMangleFromTo->isChecked() );
-  GlobalSettings::self()->setLegacyBodyInvites( mMITab.mLegacyBodyInvites->isChecked() );
-  GlobalSettings::self()->setExchangeCompatibleInvitations( mMITab.mExchangeCompatibleInvitations->isChecked() );
-  GlobalSettings::self()->setOutlookCompatibleInvitationReplyComments( mMITab.mOutlookCompatibleInvitationComments->isChecked() );
-  GlobalSettings::self()->setAutomaticSending( mMITab.mAutomaticSending->isChecked() );
-  GlobalSettings::self()->setDeleteInvitationEmailsAfterSendingReply( mMITab.mDeleteInvitations->isChecked() );
+  mInvitationUi->save();
 }
 
 

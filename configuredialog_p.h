@@ -78,6 +78,7 @@ namespace MessageList {
 
 namespace MessageViewer {
   class ConfigureWidget;
+class InvitationSettings;
 }
 
 namespace KMail {
@@ -915,16 +916,12 @@ class MiscPageInviteTab : public ConfigModuleTab  {
 public:
   MiscPageInviteTab( QWidget * parent=0 );
   void save();
-  QString helpAnchor() const;
-
-private slots:
-  void slotLegacyBodyInvitesToggled( bool on );
 
 private:
   virtual void doLoadFromGlobalSettings();
 
 private:
-  Ui_MiscInviteTab mMITab;
+  MessageViewer::InvitationSettings *mInvitationUi;
 };
 
 class KMAIL_EXPORT MiscPage : public ConfigModuleWithTabs {

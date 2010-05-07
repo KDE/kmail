@@ -632,7 +632,7 @@ int KMKernel::openComposer (const QString &to, const QString &cc,
     if ( isICalInvitation && bcc.isEmpty() )
       msg->bcc()->clear();
     if ( isICalInvitation &&
-        GlobalSettings::self()->legacyBodyInvites() ) {
+        MessageViewer::GlobalSettings::self()->legacyBodyInvites() ) {
       // KOrganizer invitation caught and to be sent as body instead
       msg->setBody( attachData );
       context = KMail::Composer::NoTemplate;
@@ -651,7 +651,7 @@ int KMKernel::openComposer (const QString &to, const QString &cc,
       msgPart->setBody( attachData ); //TODO: check if was setBodyEncoded
       msgPart->contentType()->setMimeType( attachType + "/" +  attachSubType );
       msgPart->contentDisposition()->setParameter( attachParamAttr, attachParamValue ); //TODO: Check if the content disposition parameter needs to be set!
-       if( ! GlobalSettings::self()->exchangeCompatibleInvitations() ) {
+       if( ! MessageViewer::GlobalSettings::self()->exchangeCompatibleInvitations() ) {
         msgPart->contentDisposition()->fromUnicodeString(attachContDisp, "utf-8" );
       }
       if( !attachCharset.isEmpty() ) {
@@ -659,14 +659,14 @@ int KMKernel::openComposer (const QString &to, const QString &cc,
         msgPart->contentType()->setCharset( attachCharset );
       }
       // Don't show the composer window if the automatic sending is checked
-      iCalAutoSend = GlobalSettings::self()->automaticSending();
+      iCalAutoSend = MessageViewer::GlobalSettings::self()->automaticSending();
     }
   }
 
   KMail::Composer * cWin = KMail::makeComposer( KMime::Message::Ptr(), context );
   cWin->setMsg( msg, !isICalInvitation /* mayAutoSign */ );
   cWin->setSigningAndEncryptionDisabled( isICalInvitation
-      && GlobalSettings::self()->legacyBodyInvites() );
+      && MessageViewer::GlobalSettings::self()->legacyBodyInvites() );
   if ( noWordWrap )
     cWin->disableWordWrap();
   if ( msgPart )

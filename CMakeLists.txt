@@ -191,7 +191,6 @@ kde4_add_ui_files(kmailprivate_LIB_SRCS
   ui/smimeconfiguration.ui
   ui/snippetdlgbase.ui
   ui/miscpagemaintab.ui
-  ui/miscpageinvitetab.ui
   ui/securitypagegeneraltab.ui
   ui/identitypage.ui
   ui/accountspagereceivingtab.ui
