@@ -62,6 +62,7 @@ class DistributionListExpandJob : public KJob
     bool isEmpty() const;
 
   private Q_SLOTS:
+    void slotSearchDone( KJob* );
     void slotExpansionDone( KJob* );
 
   private:

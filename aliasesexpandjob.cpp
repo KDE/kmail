@@ -47,9 +47,9 @@ void DistributionListExpandJob::start()
     return;
   }
 
-  Akonadi::ContactGroupExpandJob *expandJob = new Akonadi::ContactGroupExpandJob( mListName, this );
-  connect( expandJob, SIGNAL( result( KJob* ) ), SLOT( slotExpansionDone( KJob* ) ) );
-  expandJob->start();
+  Akonadi::ContactGroupSearchJob *job = new Akonadi::ContactGroupSearchJob( this );
+  job->setQuery( Akonadi::ContactGroupSearchJob::Name, mListName );
+  connect( job, SIGNAL( result( KJob* ) ), SLOT( slotSearchDone( KJob* ) ) );
 }
 
 QString DistributionListExpandJob::addresses() const
@@ -60,6 +60,28 @@ QString DistributionListExpandJob::addresses() const
 bool DistributionListExpandJob::isEmpty() const
 {
   return mIsEmpty;
+}
+
+void DistributionListExpandJob::slotSearchDone( KJob *job )
+{
+  if ( job->error() ) {
+    setError( job->error() );
+    setErrorText( job->errorText() );
+    emitResult();
+    return;
+  }
+
+  const Akonadi::ContactGroupSearchJob *searchJob = qobject_cast<Akonadi::ContactGroupSearchJob*>( job );
+
+  const KABC::ContactGroup::List groups = searchJob->contactGroups();
+  if ( groups.isEmpty() ) {
+    emitResult();
+    return;
+  }
+
+  Akonadi::ContactGroupExpandJob *expandJob = new Akonadi::ContactGroupExpandJob( groups.first() );
+  connect( expandJob, SIGNAL( result( KJob* ) ), SLOT( slotExpansionDone( KJob* ) ) );
+  expandJob->start();
 }
 
 void DistributionListExpandJob::slotExpansionDone( KJob *job )
