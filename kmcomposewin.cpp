@@ -82,6 +82,7 @@
 #include <akonadi/collectioncombobox.h>
 #include <akonadi/changerecorder.h>
 #include <akonadi/itemcreatejob.h>
+#include <akonadi/entitymimetypefiltermodel.h>
 #include <akonadi/itemfetchjob.h>
 #include <kpimutils/email.h>
 #include <kpimidentities/identitymanager.h>
@@ -228,7 +229,7 @@ KMComposeWin::KMComposeWin( const KMime::Message::Ptr &aMsg, Composer::TemplateC
   mDictionaryCombo = new DictionaryComboBox( mHeadersArea );
   mDictionaryCombo->setToolTip( i18n( "Select the dictionary to use when spell-checking this message" ) );
 
-  mFcc = new Akonadi::CollectionComboBox( mHeadersArea );
+  mFcc = new Akonadi::CollectionComboBox( kmkernel->collectionModel(), mHeadersArea );
   mFcc->setMimeTypeFilter( QStringList()<<FolderCollectionMonitor::mimetype() );
   mFcc->setToolTip( i18n( "Select the sent-mail folder where a copy of this message will be saved" ) );
 #if 0 //Port to akonadi
