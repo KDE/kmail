@@ -141,6 +141,8 @@ KMReaderWin::KMReaderWin(QWidget *aParent,
            this, SLOT( slotShowMessage(KMime::Message::Ptr, const QString& ) ) );
   connect( mViewer, SIGNAL( showStatusBarMessage( const QString & ) ),
            this, SIGNAL( showStatusBarMessage( const QString & ) ) );
+  connect( mViewer, SIGNAL( deleteMessage( Akonadi::Item ) ),
+           this, SLOT( slotDeleteMessage( Akonadi::Item ) ) );
   vlay->addWidget( mViewer );
   readConfig();
 
@@ -683,6 +685,15 @@ void KMReaderWin::slotShowMessage( KMime::Message::Ptr message, const QString& e
   win->showMessage( encoding, message );
   win->show();
 }
+
+void KMReaderWin::slotDeleteMessage(const Akonadi::Item& item)
+{
+  if ( !item.isValid() )
+    return;
+  KMTrashMsgCommand *command = new KMTrashMsgCommand( item.parentCollection(), item, -1 );
+  command->start();
+}
+
 
 #include "kmreaderwin.moc"
 
