@@ -42,13 +42,15 @@ EmailAddressResolveJob::~EmailAddressResolveJob()
 
 void EmailAddressResolveJob::start()
 {
+  // Increment this immediatley, as an AliasesExpandJob might finish immediatley,
+  // for empty addresses
+  mJobCount = 4;
+
   {
     AliasesExpandJob *job = new AliasesExpandJob( mFrom, GlobalSettings::defaultDomain(), this );
     job->setProperty( "id", "infoPartFrom" );
     connect( job, SIGNAL( result( KJob* ) ), SLOT( slotAliasExpansionDone( KJob* ) ) );
     job->start();
-
-    mJobCount++;
   }
 /*  {
     if ( !mMessage->bcc()->addresses().isEmpty() ) {
@@ -69,24 +71,18 @@ void EmailAddressResolveJob::start()
     job->setProperty( "id", "infoPartTo" );
     connect( job, SIGNAL( result( KJob* ) ), SLOT( slotAliasExpansionDone( KJob* ) ) );
     job->start();
-
-    mJobCount++;
   }
   {
     AliasesExpandJob *job = new AliasesExpandJob( mCc.join( QLatin1String( ", " ) ), GlobalSettings::defaultDomain(), this );
     job->setProperty( "id", "infoPartCc" );
     connect( job, SIGNAL( result( KJob* ) ), SLOT( slotAliasExpansionDone( KJob* ) ) );
     job->start();
-
-    mJobCount++;
   }
   {
     AliasesExpandJob *job = new AliasesExpandJob( mBcc.join( QLatin1String( ", " ) ), GlobalSettings::defaultDomain(), this );
     job->setProperty( "id", "infoPartBcc" );
     connect( job, SIGNAL( result( KJob* ) ), SLOT( slotAliasExpansionDone( KJob* ) ) );
     job->start();
-
-    mJobCount++;
   }
 }
 
