@@ -34,7 +34,6 @@
 #include "ui_smimeconfiguration.h"
 #include "ui_customtemplates_base.h"
 #include "ui_miscpagemaintab.h"
-#include "ui_miscpageinvitetab.h"
 #include "ui_securitypagegeneraltab.h"
 #include "ui_identitypage.h"
 #include "ui_accountspagereceivingtab.h"
