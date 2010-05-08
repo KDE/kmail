@@ -834,6 +834,7 @@ public:
 
 private slots:
   void slotReenableAllWarningsClicked();
+  void slotConfigureGnupg();
 
 private:
   //virtual void doLoadFromGlobalSettings();

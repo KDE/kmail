@@ -221,7 +221,6 @@ ConfigureDialog::ConfigureDialog( QWidget *parent, bool modal )
   addModule( "kmail_config_appearance" );
   addModule( "kmail_config_composer" );
   addModule( "kmail_config_security" );
-  addModule( "kleopatra_config_gnupgsystem" );
   addModule( "kmail_config_misc" );
 
   connect( this, SIGNAL(okClicked()), SLOT(slotOk()) );
@@ -3187,7 +3186,7 @@ SecurityPage::SecurityPage( const KComponentData &instance, QWidget *parent )
   // "Warnings" tab:
   //
   mWarningTab = new WarningTab();
-  addTab( mWarningTab, i18n("Warnings") );
+  addTab( mWarningTab, i18n("Miscellaneous") );
 
   //
   // "S/MIME Validation" tab:
@@ -3386,6 +3385,7 @@ SecurityPageWarningTab::SecurityPageWarningTab( QWidget * parent )
   connect( mWidget->warnUnencryptedCB, SIGNAL(toggled(bool)), SLOT(slotEmitChanged()) );
   connect( mWidget->warnReceiverNotInCertificateCB, SIGNAL(toggled(bool)), SLOT(slotEmitChanged()) );
 
+  connect( mWidget->gnupgButton, SIGNAL(clicked()), SLOT(slotConfigureGnupg()) );
   connect( mWidget->enableAllWarningsPB, SIGNAL(clicked()), SLOT(slotReenableAllWarningsClicked()) );
 }
 
@@ -3456,6 +3456,13 @@ void SecurityPage::WarningTab::slotReenableAllWarningsClicked()
 {
   KMessageBox::enableAllMessages();
   mWidget->enableAllWarningsPB->setEnabled( false );
+}
+
+void SecurityPage::WarningTab::slotConfigureGnupg()
+{
+  KCMultiDialog dlg;
+  dlg.addModule( "kleopatra_config_gnupgsystem" );
+  dlg.exec();
 }
 
 ////
