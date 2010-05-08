@@ -250,12 +250,6 @@ class KMAIL_EXPORT KMMainWidget : public QWidget
     /** Update message actions */
     void updateMessageActions();
 
-    /** Launch subscription-dialog (server side) */
-    void slotSubscriptionDialog();
-
-    /** Launch dialog for local (client side) subscription configuration */
-    void slotLocalSubscriptionDialog();
-
     /** Clear and create actions for marked filters */
     void clearFilterActions();
     void initializeFilterActions();

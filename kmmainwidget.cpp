@@ -4107,55 +4107,6 @@ ImapAccountBase *KMMainWidget::findCurrentImapAccountBase()
   return account;
 }
 #endif
-//-----------------------------------------------------------------------------
-void KMMainWidget::slotSubscriptionDialog()
-{
-#if 0 //TODO port to akonadi
-  if ( !kmkernel->askToGoOnline() ) {
-    return;
-  }
-
-  ImapAccountBase *account = findCurrentImapAccountBase();
-  if ( !account ) {
-    return;
-  }
-
-  const QString startPath = findCurrentImapPath();
-  // KSubscription sets "DestructiveClose"
-  SubscriptionDialog * dialog =
-      new SubscriptionDialog(this, i18n("Subscription"), account, startPath);
-  if ( dialog->exec() ) {
-    // start a new listing
-    if (mFolder->folderType() == KMFolderTypeImap)
-      static_cast<KMFolderImap*>(mFolder->storage())->account()->listDirectory();
-  }
-#else
-    kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
-#endif
-}
-
-//-----------------------------------------------------------------------------
-void KMMainWidget::slotLocalSubscriptionDialog()
-{
-#if 0 //TODO port to akonadi
-  ImapAccountBase *account = findCurrentImapAccountBase();
-  if ( !account ) {
-    return;
-  }
-
-  const QString startPath = findCurrentImapPath();
-  // KSubscription sets "DestructiveClose"
-  LocalSubscriptionDialog *dialog =
-      new LocalSubscriptionDialog(this, i18n("Local Subscription"), account, startPath);
-  if ( dialog->exec() ) {
-    // start a new listing
-    if (mFolder->folderType() == KMFolderTypeImap)
-      static_cast<KMFolderImap*>(mFolder->storage())->account()->listDirectory();
-  }
-#else
-    kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
-#endif
-}
 
 void KMMainWidget::toggleSystemTray()
 {
