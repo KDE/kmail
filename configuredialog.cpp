@@ -1692,6 +1692,7 @@ void AppearancePage::SystemTrayTab::save()
 {
   GlobalSettings::self()->setSystemTrayEnabled( mSystemTrayCheck->isChecked() );
   GlobalSettings::self()->setSystemTrayPolicy( mSystemTrayGroup->selected() );
+  GlobalSettings::self()->writeConfig();
 }
 
 QString AppearancePage::MessageTagTab::helpAnchor() const
