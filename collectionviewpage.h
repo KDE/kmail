@@ -55,7 +55,6 @@ public slots:
 private:
 
   bool mIsLocalSystemFolder;
-  bool mIsResourceFolder;
   QCheckBox   *mIconsCheckBox;
   QLabel      *mNormalIconLabel;
   KIconButton *mNormalIconButton;

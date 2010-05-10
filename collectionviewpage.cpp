@@ -50,13 +50,14 @@ CollectionViewPage::~CollectionViewPage()
 void CollectionViewPage::init(const Akonadi::Collection & col)
 {
   mCurrentCollection = col;
-  mIsLocalSystemFolder = KMKernel::self()->isSystemFolderCollection( col );
+  mFolderCollection = FolderCollection::forCollection( col );
+  mIsLocalSystemFolder = KMKernel::self()->isSystemFolderCollection( col ) || mFolderCollection->isStructural();
 
   QVBoxLayout * topLayout = new QVBoxLayout( this );
   topLayout->setSpacing( KDialog::spacingHint() );
   topLayout->setMargin( KDialog::marginHint() );
   // Musn't be able to edit details for non-resource, system folder.
-  if ( !mIsLocalSystemFolder /*|| mIsResourceFolder*/ )
+  if ( !mIsLocalSystemFolder )
   {
     // icons
     mIconsCheckBox = new QCheckBox( i18n( "Use custom &icons"), this );
@@ -217,7 +218,6 @@ void CollectionViewPage::slotSelectFolderTheme()
 void CollectionViewPage::load( const Akonadi::Collection & col )
 {
   init( col );
-  mFolderCollection = FolderCollection::forCollection( col );
   if ( !mIsLocalSystemFolder ) {
     QString iconName;
     QString unreadIconName;

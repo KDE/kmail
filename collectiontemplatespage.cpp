@@ -105,7 +105,7 @@ void CollectionTemplatesPage::save(Collection &)
     QString fid = mFolderCollection->idString();
     Templates t(fid);
 
-    kDebug() << "use custom templates for folder" << fid <<":" << mCustom->isChecked();
+    //kDebug() << "use custom templates for folder" << fid <<":" << mCustom->isChecked();
     t.setUseCustomTemplates(mCustom->isChecked());
     t.writeConfig();
 
