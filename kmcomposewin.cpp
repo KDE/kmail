@@ -75,6 +75,7 @@
 #include <templateparser/templateparser.h>
 #include <templatesconfiguration.h>
 #include "messagecore/nodehelper.h"
+#include "messagecore/messagestatus.h"
 
 // LIBKDEPIM includes
 #include <libkdepim/recentaddresses.h>
@@ -433,6 +434,9 @@ KMComposeWin::~KMComposeWin()
     Akonadi::Item item;
     item.setPayload( mMsg );
     item.setMimeType( "message/rfc822" );
+    MessageStatus status;
+    status.setRead();
+    item.setFlags( status.getStatusFlags() );
     new Akonadi::ItemCreateJob( item, mFolder );
     // FIXME: listen to the result signal. The whole thing needs to be moved
     //        out of the destructor for this
