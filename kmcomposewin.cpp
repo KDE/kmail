@@ -70,6 +70,7 @@
 #include <messagecomposersettings.h>
 #include <messagecomposer/messagehelper.h>
 #include <messagecomposer/signaturecontroller.h>
+#include <messagecomposer/inserttextfilejob.h>
 #include <messagecore/attachmentpart.h>
 #include "messagecore/globalsettings.h"
 #include <templateparser/templateparser.h>
@@ -442,18 +443,6 @@ KMComposeWin::~KMComposeWin()
     //        out of the destructor for this
   }
 
-#if 0
-  QMap<KIO::Job*, atmLoadData>::Iterator it = mMapAtmLoadData.begin();
-  while ( it != mMapAtmLoadData.end() ) {
-    KIO::Job *job = it.key();
-    mMapAtmLoadData.erase( it );
-    job->kill();
-    it = mMapAtmLoadData.begin();
-  }
-
-  qDeleteAll( mAtmList );
-  qDeleteAll( mAtmTempList );
-#endif
   //deleteAll( mComposedMessages );
 
   foreach ( KTempDir *const dir, mTempDirs ) {
@@ -2709,36 +2698,6 @@ void KMComposeWin::slotAddrBook()
   KToolInvocation::startServiceByDesktopName( "kaddressbook" );
 }
 
-#if 0
-// TODO port me (outlook names)
-
-void KMComposeWin::slotAttachFileResult( KJob *job )
-{
-  // ...
-
-  // For the encoding of the name, prefer the current charset of the composer first,
-  // then try every other available encoding.
-  QByteArray nameEncoding =
-      KMail::Util::autoDetectCharset( mCharset, KMMessage::preferredCharsets(), name );
-  if ( nameEncoding.isEmpty() )
-    nameEncoding = "utf-8";
-
-  QByteArray encodedName;
-  if ( GlobalSettings::self()->outlookCompatibleAttachments() ) {
-    encodedName = KMMsgBase::encodeRFC2047String( name, nameEncoding );
-  } else {
-    encodedName = KMMsgBase::encodeRFC2231String( name, nameEncoding );
-  }
-
-  bool RFC2231encoded = false;
-  if ( !GlobalSettings::self()->outlookCompatibleAttachments() ) {
-    RFC2231encoded = name != QString( encodedName );
-  }
-
-  // ...
-}
-#endif
-
 //-----------------------------------------------------------------------------
 void KMComposeWin::slotInsertFile()
 {
@@ -2787,34 +2746,25 @@ void KMComposeWin::slotRecentListFileClear()
 //-----------------------------------------------------------------------------
 void KMComposeWin::slotInsertRecentFile( const KUrl &u )
 {
-  kDebug() << "implement me...";
   if ( u.fileName().isEmpty() ) {
     return;
   }
-#if 0
-  KIO::Job *job = KIO::get( u );
-  atmLoadData ld;
-  ld.url = u;
-  ld.data = QByteArray();
-  ld.insert = true;
+
   // Get the encoding previously used when inserting this file
-  {
-    KConfig *config = KMKernel::config();
-    KConfigGroup group( config, "Composer" );
-    QStringList urls = group.readEntry( "recent-urls", QStringList() );
-    QStringList encodings = group.readEntry( "recent-encodings", QStringList() );
-    int index = urls.indexOf( u.prettyUrl() );
-    if (index != -1) {
-      QString encoding = encodings[ index ];
-      ld.encoding = encoding.toLatin1();
-    }
+  QString encoding;
+  KConfigGroup group( KMKernel::config(), "Composer" );
+  const QStringList urls = group.readEntry( "recent-urls", QStringList() );
+  const QStringList encodings = group.readEntry( "recent-encodings", QStringList() );
+  const int index = urls.indexOf( u.prettyUrl() );
+  if ( index != -1 ) {
+    encoding = encodings[ index ];
   }
-  mMapAtmLoadData.insert(job, ld);
-  connect(job, SIGNAL(result(KJob *)),
-          this, SLOT(slotAttachFileResult(KJob *)));
-  connect(job, SIGNAL(data(KIO::Job *, const QByteArray &)),
-          this, SLOT(slotAttachFileData(KIO::Job *, const QByteArray &)));
-#endif
+
+  Message::InsertTextFileJob *job = new Message::InsertTextFileJob( mEditor, u );
+  job->setEncoding( encoding );
+  job->start();
+  // Don't care about the result for now
+  // TODO: we should probably show an error message if it fails...
 }
 
 //-----------------------------------------------------------------------------
