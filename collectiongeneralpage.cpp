@@ -49,6 +49,8 @@ using namespace Akonadi;
 CollectionGeneralPage::CollectionGeneralPage(QWidget * parent) :
     CollectionPropertiesPage( parent ), mFolderCollection( 0 )
 {
+  Akonadi::AttributeFactory::registerAttribute<Akonadi::CollectionAnnotationsAttribute>();
+
   setPageTitle(  i18nc("@title:tab General settings for a folder.", "General"));
 
 }
