@@ -2358,9 +2358,8 @@ void KMComposeWin::slotAutoSaveComposeResult( KJob *job )
 
   Q_ASSERT( dynamic_cast< Composer* >( job ) );
   Composer* composer = dynamic_cast< Composer* >( job );
-
   Q_ASSERT( mComposers.contains( composer ) );
-
+  mComposers.removeAll( composer );
 
   if( composer->error() == Composer::NoError ) {
 
@@ -2372,9 +2371,8 @@ void KMComposeWin::slotAutoSaveComposeResult( KJob *job )
     if( autoSaveInterval() > 0 ) {
       updateAutoSave();
     }
-    mComposers.removeAll( composer );
   } else {
-    kWarning() << "Composer failed:" << composer->errorString();
+    kWarning() << "Composer for autosaving failed:" << composer->errorString();
   }
 }
 
