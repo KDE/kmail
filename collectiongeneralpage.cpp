@@ -188,6 +188,7 @@ void CollectionGeneralPage::init(const Akonadi::Collection &col)
 
     QHBoxLayout *nml = new QHBoxLayout();
     topLayout->addItem( nml );
+    nml->setMargin( KDialog::marginHint() );
     nml->setSpacing( KDialog::spacingHint() );
     mNewMailCheckBox = new QCheckBox( i18n("Include this folder in mail checks"), this );
     mNewMailCheckBox->setWhatsThis(
