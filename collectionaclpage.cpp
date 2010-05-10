@@ -297,7 +297,6 @@ CollectionAclPage::CollectionAclPage( QWidget* parent )
     mChanged( false )
 #if 0
     mAccepting( false ),
-    mSaving( false )
 #endif
 {
   setPageTitle( i18n("Access Control") );

@@ -133,8 +133,9 @@ private:
   QStackedWidget* mStack;
 
   bool mChanged;
+#if 0
   bool mAccepting; // i.e. close when done
-  bool mSaving;
+#endif
 };
 
 #endif /* COLLECTIONACLPAGE_H */
