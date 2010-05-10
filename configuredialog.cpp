@@ -2278,14 +2278,14 @@ ComposerPageGeneralTab::ComposerPageGeneralTab( QWidget * parent )
 
   // some check buttons...
   mAutoAppSignFileCheck = new QCheckBox(
-           GlobalSettings::self()->autoTextSignatureItem()->label(),
+           MessageComposer::MessageComposerSettings::self()->autoTextSignatureItem()->label(),
            this );
   vlay->addWidget( mAutoAppSignFileCheck );
   connect( mAutoAppSignFileCheck, SIGNAL( stateChanged(int) ),
            this, SLOT( slotEmitChanged( void ) ) );
 
   mTopQuoteCheck = new QCheckBox(
-                GlobalSettings::self()->prependSignatureItem()->label(), this );
+                MessageComposer::MessageComposerSettings::self()->prependSignatureItem()->label(), this );
   mTopQuoteCheck->setEnabled( false );
   vlay->addWidget( mTopQuoteCheck);
   connect( mTopQuoteCheck, SIGNAL( stateChanged(int) ),
@@ -2293,7 +2293,7 @@ ComposerPageGeneralTab::ComposerPageGeneralTab( QWidget * parent )
   connect( mAutoAppSignFileCheck, SIGNAL( toggled(bool) ),
            mTopQuoteCheck, SLOT( setEnabled(bool) ) );
   mDashDashCheck = new QCheckBox(
-               GlobalSettings::self()->dashDashSignatureItem()->label(), this );
+               MessageComposer::MessageComposerSettings::self()->dashDashSignatureItem()->label(), this );
   mDashDashCheck->setEnabled( false );
   vlay->addWidget( mDashDashCheck);
   connect( mDashDashCheck, SIGNAL( stateChanged(int) ),
@@ -2502,9 +2502,9 @@ void ComposerPage::GeneralTab::doLoadFromGlobalSettings()
   // various check boxes:
 
   mAutoAppSignFileCheck->setChecked(
-           GlobalSettings::self()->autoTextSignature()=="auto" );
-  mTopQuoteCheck->setChecked( GlobalSettings::self()->prependSignature() );
-  mDashDashCheck->setChecked( GlobalSettings::self()->dashDashSignature() );
+           MessageComposer::MessageComposerSettings::self()->autoTextSignature()=="auto" );
+  mTopQuoteCheck->setChecked( MessageComposer::MessageComposerSettings::self()->prependSignature() );
+  mDashDashCheck->setChecked( MessageComposer::MessageComposerSettings::self()->dashDashSignature() );
   mSmartQuoteCheck->setChecked( TemplateParser::GlobalSettings::self()->smartQuote() );
   mQuoteSelectionOnlyCheck->setChecked( MessageComposer::MessageComposerSettings::self()->quoteSelectionOnly() );
   mStripSignatureCheck->setChecked( TemplateParser::GlobalSettings::self()->stripSignature() );
@@ -2528,10 +2528,10 @@ void ComposerPage::GeneralTab::doLoadFromGlobalSettings()
 }
 
 void ComposerPage::GeneralTab::save() {
-  GlobalSettings::self()->setAutoTextSignature(
+  MessageComposer::MessageComposerSettings::self()->setAutoTextSignature(
          mAutoAppSignFileCheck->isChecked() ? "auto" : "manual" );
-  GlobalSettings::self()->setPrependSignature( mTopQuoteCheck->isChecked() );
-  GlobalSettings::self()->setDashDashSignature( mDashDashCheck->isChecked() );
+  MessageComposer::MessageComposerSettings::self()->setPrependSignature( mTopQuoteCheck->isChecked() );
+  MessageComposer::MessageComposerSettings::self()->setDashDashSignature( mDashDashCheck->isChecked() );
   TemplateParser::GlobalSettings::self()->setSmartQuote( mSmartQuoteCheck->isChecked() );
   MessageComposer::MessageComposerSettings::self()->setQuoteSelectionOnly( mQuoteSelectionOnlyCheck->isChecked() );
   TemplateParser::GlobalSettings::self()->setStripSignature( mStripSignatureCheck->isChecked() );
@@ -2549,6 +2549,8 @@ void ComposerPage::GeneralTab::save() {
   // editor group:
   GlobalSettings::self()->setUseExternalEditor( mExternalEditorCheck->isChecked() );
   GlobalSettings::self()->setExternalEditor( mEditorRequester->text() );
+
+  MessageComposer::MessageComposerSettings::self()->requestSync();
 }
 
 void ComposerPage::GeneralTab::slotConfigureRecentAddresses()

@@ -175,10 +175,6 @@
         <default>${ALLOW_SEMICOLON_AS_ADDRESS_SEPARATOR_DEFAULT}</default>
         <label>Allow the semicolon character (';') to be used as separator in the message composer.</label>
       </entry>
-      <entry name="AutoTextSignature" type="String" key="signature">
-        <label>A&amp;utomatically insert signature</label>
-        <default>auto</default>
-      </entry>
       <entry name="StickyIdentity" type="Bool" key="sticky-identity">
         <whatsthis>Remember this identity, so that it will be used in future composer windows as well.
         </whatsthis>
@@ -287,14 +283,6 @@
         <label>Autosave interval:</label>
         <whatsthis>A backup copy of the text in the composer window can be created regularly. The interval used to create the backups is set here. You can disable autosaving by setting it to the value 0.</whatsthis>
         <default>2</default>
-      </entry>
-      <entry name="PrependSignature" type="Bool" key="prepend-signature">
-        <label>Insert signature above quoted text</label>
-        <default>false</default>
-      </entry>
-      <entry name="DashDashSignature" type="Bool" key="dash-dash-signature">
-        <label>Prepend separator to signature</label>
-        <default>true</default>
       </entry>
       <entry name="QuoteSelectionOnly" type="Bool">
         <label>Only quote selected text when replying</label>

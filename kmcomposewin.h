@@ -109,6 +109,7 @@ namespace Message {
   class GlobalPart;
   class InfoPart;
   class TextPart;
+class SignatureController;
 }
 
 namespace MailTransport{
@@ -262,12 +263,6 @@ class KMComposeWin : public KMail::Composer
      bool inlineSigningEncryptionSelected();
 
      /**
-      * Enables HTML mode, by showing the HTML toolbar and checking the
-      * "Formatting" action
-      */
-     void enableHtml();
-
-     /**
       * Disables the HTML mode, by hiding the HTML toolbar and unchecking the
       * "Formatting" action. Also, removes all rich-text formatting.
       */
@@ -289,6 +284,11 @@ class KMComposeWin : public KMail::Composer
     }
 
   private slots:
+    /**
+     * Enables HTML mode, by showing the HTML toolbar and checking the
+     * "Formatting" action
+     */
+    void enableHtml();
 
     /**
      * Actions:
@@ -401,22 +401,6 @@ class KMComposeWin : public KMail::Composer
     void slotWordWrapToggled( bool );
 
   private slots:
-    /**
-     * Append signature to the end of the text in the editor.
-     */
-    void slotAppendSignature();
-
-    /**
-    * Prepend signature at the beginning of the text in the editor.
-    */
-    void slotPrependSignature();
-
-    /**
-    * Insert signature at the cursor position of the text in the editor.
-    */
-    void slotInsertSignatureAtCursor();
-
-    void slotCleanSpace();
     void slotToggleMarkup();
     void slotTextModeChanged( KRichTextEdit::Mode );
     void htmlToolBarVisibilityChanged( bool visible );
@@ -644,14 +628,6 @@ class KMComposeWin : public KMail::Composer
      */
     void cleanupAutoSave();
 
-    /**
-     * Helper to insert the signature of the current identity arbitrarily
-     * in the editor, connecting slot functions to KMeditor::insertSignature().
-     * @param placement the position of the signature
-     */
-    void insertSignatureHelper( KPIMIdentities::Signature::Placement = KPIMIdentities::Signature::End );
-
-
   private slots:
     void recipientEditorSizeHintChanged();
     void setMaximumHeaderSize();
@@ -674,6 +650,7 @@ class KMComposeWin : public KMail::Composer
 
     KMime::Message::Ptr mMsg;
     KMComposerEditor *mEditor;
+    Message::SignatureController *mSignatureController;
     QGridLayout *mGrid;
     QString mTextSelection;
     QString mCustomTemplate;

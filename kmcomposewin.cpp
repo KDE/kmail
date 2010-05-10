@@ -69,6 +69,7 @@
 #include <messagecomposer/messagehelper.h>
 #include <messagecomposersettings.h>
 #include <messagecomposer/messagehelper.h>
+#include <messagecomposer/signaturecontroller.h>
 #include <messagecore/attachmentpart.h>
 #include "messagecore/globalsettings.h"
 #include <templateparser/templateparser.h>
@@ -171,6 +172,7 @@ KMComposeWin::KMComposeWin( const KMime::Message::Ptr &aMsg, Composer::TemplateC
                             const QString & textSelection, const QString & customTemplate )
   : KMail::Composer( "kmail-composer#" ),
     mDone( false ),
+    mSignatureController( new Message::SignatureController( this ) ),
     //mAtmModified( false ),
     mTextSelection( textSelection ),
     mCustomTemplate( customTemplate ),
@@ -204,6 +206,8 @@ KMComposeWin::KMComposeWin( const KMime::Message::Ptr &aMsg, Composer::TemplateC
   mdbusObjectPath = "/Composer_" + QString::number( ++s_composerNumber );
   //QDBusConnection::sessionBus().registerObject( mdbusObjectPath, this );
 
+  connect( mSignatureController, SIGNAL(enableHtml()), SLOT(enableHtml()) );
+
   if ( kmkernel->xmlGuiInstance().isValid() ) {
     setComponentData( kmkernel->xmlGuiInstance() );
   }
@@ -225,6 +229,8 @@ KMComposeWin::KMComposeWin( const KMime::Message::Ptr &aMsg, Composer::TemplateC
   mIdentity = new KPIMIdentities::IdentityCombo( kmkernel->identityManager(),
                                                  mHeadersArea );
   mIdentity->setToolTip( i18n( "Select an identity for this message" ) );
+  mSignatureController->setIdentityCombo( mIdentity );
+  mSignatureController->suspend(); // we have to do identity change tracking ourselves due to the template code
 
   mDictionaryCombo = new DictionaryComboBox( mHeadersArea );
   mDictionaryCombo->setToolTip( i18n( "Select the dictionary to use when spell-checking this message" ) );
@@ -330,6 +336,7 @@ KMComposeWin::KMComposeWin( const KMime::Message::Ptr &aMsg, Composer::TemplateC
   vbox->addWidget( mEditor );
   mSnippetSplitter->insertWidget( 0, editorAndCryptoStateIndicators );
   mSnippetSplitter->setOpaqueResize( true );
+  mSignatureController->setEditor( mEditor );
 
   mHeadersToEditorSplitter->addWidget( mSplitter );
   mEditor->setAcceptDrops( true );
@@ -1246,7 +1253,7 @@ void KMComposeWin::setupActions( void )
 
   mCleanSpace = new KAction( i18n("Cl&ean Spaces"), this );
   actionCollection()->addAction( "clean_spaces", mCleanSpace );
-  connect( mCleanSpace, SIGNAL(triggered(bool) ), SLOT(slotCleanSpace()) );
+  connect( mCleanSpace, SIGNAL(triggered(bool) ), mSignatureController, SLOT(cleanSpace()) );
 
   mFixedFontAction = new KToggleAction( i18n("Use Fi&xed Font"), this );
   actionCollection()->addAction( "toggle_fixedfont", mFixedFontAction );
@@ -1326,13 +1333,13 @@ void KMComposeWin::setupActions( void )
 
   action = new KAction( i18n("Append S&ignature"), this );
   actionCollection()->addAction( "append_signature", action );
-  connect( action, SIGNAL(triggered(bool) ), SLOT(slotAppendSignature()));
+  connect( action, SIGNAL(triggered(bool) ), mSignatureController, SLOT(appendSignature()));
   action = new KAction( i18n("Pr&epend Signature"), this );
   actionCollection()->addAction( "prepend_signature", action );
-  connect( action, SIGNAL( triggered(bool) ), SLOT( slotPrependSignature() ) );
+  connect( action, SIGNAL( triggered(bool) ), mSignatureController, SLOT(prependSignature()) );
   action = new KAction( i18n("Insert Signature At C&ursor Position"), this );
   actionCollection()->addAction( "insert_signature_at_cursor_position", action );
-  connect( action, SIGNAL( triggered(bool) ), SLOT( slotInsertSignatureAtCursor() ) );
+  connect( action, SIGNAL( triggered(bool) ), mSignatureController, SLOT(insertSignatureAtCursor()) );
 
 
 
@@ -1812,17 +1819,17 @@ void KMComposeWin::setMsg( const KMime::Message::Ptr &newMsg, bool mayAutoSign,
   }
 #endif
 
-  if( (GlobalSettings::self()->autoTextSignature()=="auto") && mayAutoSign ) {
+  if( (MessageComposer::MessageComposerSettings::self()->autoTextSignature()=="auto") && mayAutoSign ) {
     //
     // Espen 2000-05-16
     // Delay the signature appending. It may start a fileseletor.
     // Not user friendy if this modal fileseletor opens before the
     // composer.
     //
-    if ( GlobalSettings::self()->prependSignature() ) {
-      QTimer::singleShot( 0, this, SLOT( slotPrependSignature() ) );
+    if ( MessageComposer::MessageComposerSettings::self()->prependSignature() ) {
+      QTimer::singleShot( 0, mSignatureController, SLOT(prependSignature()) );
     } else {
-      QTimer::singleShot( 0, this, SLOT( slotAppendSignature() ) );
+      QTimer::singleShot( 0, mSignatureController, SLOT(appendSignature()) );
     }
   }
   if ( mMsg->headerByType( "X-KMail-CursorPos" ) ) {
@@ -3445,58 +3452,10 @@ bool KMComposeWin::checkRecipientNumber() const
   return true;
 }
 
-//----------------------------------------------------------------------------
-void KMComposeWin::slotAppendSignature()
-{
-  insertSignatureHelper( KPIMIdentities::Signature::End );
-}
-
-//----------------------------------------------------------------------------
-void KMComposeWin::slotPrependSignature()
-{
-  insertSignatureHelper( KPIMIdentities::Signature::Start );
-}
-
-//----------------------------------------------------------------------------
-void KMComposeWin::slotInsertSignatureAtCursor()
-{
-  insertSignatureHelper( KPIMIdentities::Signature::AtCursor );
-}
-
-//----------------------------------------------------------------------------
-void KMComposeWin::insertSignatureHelper( KPIMIdentities::Signature::Placement placement )
-{
-  // Identity::signature() is not const, although it should be, therefore the
-  // const_cast.
-  KPIMIdentities::Identity &ident = const_cast<KPIMIdentities::Identity&>(
-      kmkernel->identityManager()->identityForUoidOrDefault(
-                                mIdentity->currentIdentity() ) );
-  const KPIMIdentities::Signature signature = ident.signature();
-
-  if ( signature.isInlinedHtml() &&
-       signature.type() == KPIMIdentities::Signature::Inlined ) {
-    enableHtml();
-  }
-  KPIMIdentities::Signature::AddedText addedText = KPIMIdentities::Signature::AddNewLines;
-    if ( GlobalSettings::self()->dashDashSignature() )
-      addedText |= KPIMIdentities::Signature::AddSeparator;
-  signature.insertIntoTextEdit( placement, addedText, mEditor );
-}
-
 //-----------------------------------------------------------------------------
 void KMComposeWin::slotHelp()
 {
   KToolInvocation::invokeHelp();
-}
-
-//-----------------------------------------------------------------------------
-void KMComposeWin::slotCleanSpace()
-{
-  KPIMIdentities::Identity &ident = const_cast<KPIMIdentities::Identity&>(
-      kmkernel->identityManager()->identityForUoidOrDefault(
-                                mIdentity->currentIdentity() ) );
-  KPIMIdentities::Signature signature = ident.signature();
-  mEditor->cleanWhitespace( signature );
 }
 
 //-----------------------------------------------------------------------------
@@ -3700,17 +3659,7 @@ void KMComposeWin::slotIdentityChanged( uint uoid, bool initalChange )
 
   // Just append the signature if there was no old signature
   if ( !replaced && ( msgCleared || oldSig.rawText().isEmpty() ) ) {
-    if ( GlobalSettings::self()->autoTextSignature() == "auto" ) {
-      KPIMIdentities::Signature::AddedText addedText = KPIMIdentities::Signature::AddNewLines;
-      if ( GlobalSettings::self()->dashDashSignature() )
-        addedText |= KPIMIdentities::Signature::AddSeparator;
-      if ( GlobalSettings::self()->prependSignature() )
-        newSig.insertIntoTextEdit( KPIMIdentities::Signature::Start,
-                                   addedText, mEditor );
-      else
-        newSig.insertIntoTextEdit( KPIMIdentities::Signature::End,
-                                   addedText, mEditor );
-    }
+    mSignatureController->applySignature( newSig );
   }
 
   // disable certain actions if there is no PGP user identity set
