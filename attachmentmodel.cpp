@@ -250,7 +250,7 @@ QVariant AttachmentModel::data( const QModelIndex &index, int role ) const
   if( role == Qt::DisplayRole ) {
     switch( index.column() ) {
       case NameColumn:
-        return QVariant::fromValue( part->fileName() );
+        return QVariant::fromValue( part->fileName().isEmpty() ? part->name() : part->fileName() );
       case SizeColumn:
         return QVariant::fromValue( KGlobal::locale()->formatByteSize( part->size() ) );
       case EncodingColumn:

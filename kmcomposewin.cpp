@@ -2629,6 +2629,7 @@ void KMComposeWin::addAttach( KMime::Content *msgPart )
     // which already has the proper headers
     part->setData( msgPart->encodedContent() );
     part->setMimeType( msgPart->contentType()->mimeType() );
+    part->setName( msgPart->contentDisposition()->parameter( QLatin1String("name") ) );
   } else {
     part->setName( msgPart->contentDescription()->asUnicodeString() );
     part->setFileName( msgPart->contentDisposition()->filename() );
