@@ -1602,7 +1602,7 @@ void KMComposeWin::setMsg( const KMime::Message::Ptr &newMsg, bool mayAutoSign,
   mRecipientsEditor->setRecipientString( mMsg->bcc()->mailboxes(), Recipient::Bcc );
   mRecipientsEditor->setFocusBottom();
   mEdtSubject->setText( mMsg->subject()->asUnicodeString() );
-  
+
   if( mMsg->hasHeader( "X-KMail-UnExpanded-To" ) ) {
       QStringList spl = mMsg->headerByType( "X-KMail-UnExpanded-To" )->asUnicodeString().split( "," );
       foreach( QString addr, spl )
@@ -1618,7 +1618,7 @@ void KMComposeWin::setMsg( const KMime::Message::Ptr &newMsg, bool mayAutoSign,
       foreach( QString addr, spl )
         mRecipientsEditor->addRecipient( addr, Recipient::Bcc );
   }
-    
+
   const bool stickyIdentity = mBtnIdentity->isChecked() && !mIgnoreStickyFields;
   bool messageHasIdentity = false;
   if( newMsg->headerByType("X-KMail-Identity") &&
@@ -1932,11 +1932,6 @@ bool KMComposeWin::queryClose ()
     return true;
   }
 
-  if( !mComposers.isEmpty() ) {
-    kWarning() << "Tried to close while composer was active";
-    return false;
-  }
-
   if ( isModified() ) {
     bool istemplate = ( mFolder.isValid() && kmkernel->folderIsTemplates( mFolder ) );
     const QString savebut = ( istemplate ?
@@ -1965,6 +1960,11 @@ bool KMComposeWin::queryClose ()
     //else fall through: return true
   }
   cleanupAutoSave();
+
+  if( !mComposers.isEmpty() ) {
+    kWarning() << "Tried to close while composer was active";
+    return false;
+  }
   return true;
 }
 
@@ -2057,7 +2057,7 @@ void KMComposeWin::readyForSending()
       default: Q_ASSERT( false ); break;
     }
   }
-  
+
   // first, expand all addresses
   EmailAddressResolveJob *job = new EmailAddressResolveJob( this );
   job->setFrom( from() );
@@ -2081,7 +2081,7 @@ void KMComposeWin::slotEmailAddressResolved( KJob *job )
   }
 
   const EmailAddressResolveJob *resolveJob = qobject_cast<EmailAddressResolveJob*>( job );
-  if( mSaveIn == KMComposeWin::None ) { 
+  if( mSaveIn == KMComposeWin::None ) {
     mExpandedFrom = resolveJob->expandedFrom();
     mExpandedTo = resolveJob->expandedTo();
     mExpandedCc = resolveJob->expandedCc();
@@ -2111,7 +2111,7 @@ void KMComposeWin::slotEmailAddressResolved( KJob *job )
     mMsg->setHeader( new KMime::Headers::Generic( "X-KMail-UnExpanded-To", mMsg.get(), unExpandedTo.join( ", " ).toLatin1() ) );
     mMsg->setHeader( new KMime::Headers::Generic( "X-KMail-UnExpanded-CC", mMsg.get(), unExpandedCc.join( ", " ).toLatin1() ) );
     mMsg->setHeader( new KMime::Headers::Generic( "X-KMail-UnExpanded-BCC", mMsg.get(), unExpandedBcc.join( ", " ).toLatin1() ) );
-  } 
+  }
   // we first figure out if we need to create multiple messages with different crypto formats
   // if so, we create a composer per format
   // if we aren't signing or encrypting, this just returns a single empty message
@@ -2125,7 +2125,7 @@ void KMComposeWin::slotEmailAddressResolved( KJob *job )
     setEnabled( true );
     return;
   }
-  // Compose each message and prepare it for queueing, sending, or storing 
+  // Compose each message and prepare it for queueing, sending, or storing
   foreach( Message::Composer* composer, mComposers ) {
     fillGlobalPart( composer->globalPart() );
     fillTextPart( composer->textPart() );
@@ -2407,7 +2407,7 @@ void KMComposeWin::saveMessage( KMime::Message::Ptr message, KMComposeWin::SaveI
     kWarning() << "No default collection for" << saveIn;
     return;
   }
-  
+
   // Store when the draft or template got saved.
   message->date()->setDateTime( KDateTime::currentLocalDateTime() );
   message->assemble();
