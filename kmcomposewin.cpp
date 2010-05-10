@@ -1202,11 +1202,12 @@ void KMComposeWin::setupActions( void )
   actionCollection()->addAction( "save_in_templates", action );
   connect( action, SIGNAL(triggered(bool) ), SLOT(slotSaveTemplate()) );
 
-  action = new KAction(KIcon("document-open"), i18n("&Insert File..."), this);
+  action = new KAction(KIcon("document-open"), i18n("&Insert Text File..."), this);
   actionCollection()->addAction("insert_file", action );
   connect(action, SIGNAL(triggered(bool) ), SLOT(slotInsertFile()));
 
-  mRecentAction = new KRecentFilesAction(KIcon("document-open"), i18n("&Insert File Recent"), this);
+  mRecentAction = new KRecentFilesAction( KIcon( "document-open" ),
+                                          i18n( "&Insert Recent Text File" ), this );
   actionCollection()->addAction("insert_file_recent", mRecentAction );
   connect(mRecentAction, SIGNAL(urlSelected (const KUrl&)),
           SLOT(slotInsertRecentFile(const KUrl&)));
