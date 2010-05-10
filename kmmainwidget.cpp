@@ -3806,7 +3806,7 @@ void KMMainWidget::updateFolderMenu()
 
   mRemoveFolderAction->setText( mCurrentFolder && mCurrentFolder->collection().resource() == QLatin1String( "akonadi_search_resource" ) ? i18n("&Delete Search") : i18n("&Delete Folder") );
   if ( mArchiveFolderAction )
-    mArchiveFolderAction->setEnabled( mCurrentFolder && !multiFolder );
+    mArchiveFolderAction->setEnabled( mCurrentFolder && !multiFolder && !mCurrentFolder->isStructural());
   mExpireFolderAction->setEnabled( mCurrentFolder && mCurrentFolder->isAutoExpire() && !multiFolder && mCurrentFolder->canDeleteMessages() );
   updateMarkAsReadAction();
   // the visual ones only make sense if we are showing a message list
