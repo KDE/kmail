@@ -255,10 +255,6 @@ K_GLOBAL_STATIC( KMMainWidget::PtrList, theMainWidgetList )
            this, SLOT( slotMailChecked( bool, bool, const QMap<QString, int> & ) ) );
 
 
-  connect( kmkernel->acctMgr(), SIGNAL( accountAdded( KMAccount* ) ),
-           this, SLOT( initializeIMAPActions() ) );
-  connect( kmkernel->acctMgr(), SIGNAL( accountRemoved( KMAccount* ) ),
-           this, SLOT( initializeIMAPActions() ) );
 #else
   kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
 #endif
@@ -3506,7 +3502,6 @@ void KMMainWidget::setupActions()
   connect( kmkernel->undoStack(),
            SIGNAL( undoStackChanged() ), this, SLOT( slotUpdateUndo() ));
 
-  initializeIMAPActions( false ); // don't set state, config not read yet
   updateMessageActions();
   updateCustomTemplateMenus();
   updateFolderMenu();
@@ -4040,33 +4035,6 @@ void KMMainWidget::initializeFilterActions()
 }
 
 //-----------------------------------------------------------------------------
-void KMMainWidget::initializeIMAPActions( bool setState /* false the first time, true later on */ )
-{
-#if 0
-  bool hasImapAccount = false;
-  QList<KMAccount*>::iterator accountIt = kmkernel->acctMgr()->begin();
-  while ( accountIt != kmkernel->acctMgr()->end() ) {
-    KMAccount *a = *accountIt;
-    ++accountIt;
-    if ( a->type() == KAccount::DImap ) {
-      hasImapAccount = true;
-      break;
-    }
-  }
-
-  // Enable the "Refresh Local IMAP Cache" action if there's at least one "Disconnected IMAP" account
-  mRefreshImapCacheAction->setEnabled( hasImapAccount );
-
-  KXMLGUIFactory* factory = mGUIClient->factory();
-  if ( factory )
-    factory->removeClient( mGUIClient );
-
-  if ( factory )
-    factory->addClient( mGUIClient );
-#else
-  kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
-#endif
-}
 
 QList<QAction*> KMMainWidget::actionList()
 {

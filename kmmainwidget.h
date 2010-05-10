@@ -254,8 +254,6 @@ class KMAIL_EXPORT KMMainWidget : public QWidget
     void clearFilterActions();
     void initializeFilterActions();
 
-    /** Create IMAP-account-related actions if applicable */
-    void initializeIMAPActions() { initializeIMAPActions( true ); }
 
     /** Trigger the dialog for editing out-of-office scripts.  */
     void slotEditVacation();
@@ -455,8 +453,6 @@ class KMAIL_EXPORT KMMainWidget : public QWidget
   private:
     /** Get override character encoding. */
     QString overrideEncoding() const;
-
-    void initializeIMAPActions( bool setState );
 
     /**
       Helper which finds the associated account if there is a current
