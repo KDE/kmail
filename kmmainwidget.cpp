@@ -3794,7 +3794,7 @@ void KMMainWidget::updateFolderMenu()
   mFolderMailingListPropertiesAction->setEnabled( folderWithContent && !multiFolder &&
                                                   !mCurrentFolder->isSystemFolder() );
   mCompactFolderAction->setEnabled( folderWithContent && !multiFolder );
-
+  mCollectionProperties->setEnabled( folderWithContent );
   mEmptyFolderAction->setEnabled( folderWithContent && ( mCurrentFolder->count() > 0 ) && mCurrentFolder->canDeleteMessages() && !multiFolder );
   mEmptyFolderAction->setText( (mCurrentFolder && kmkernel->folderIsTrash(mCurrentFolder->collection()))
     ? i18n("E&mpty Trash") : i18n("&Move All Messages to Trash") );
