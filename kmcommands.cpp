@@ -240,16 +240,16 @@ void KMCommand::slotStart()
   connect( this, SIGNAL( messagesTransfered( KMCommand::Result ) ),
            this, SLOT( slotPostTransfer( KMCommand::Result ) ) );
 
-  if ( mMsgList.contains(Akonadi::Item() ) || mMsgList.isEmpty() ) {
+  if ( mMsgList.isEmpty() ) {
       emit messagesTransfered( Failed );
       return;
   }
 
   const Akonadi::Item mb = mMsgList.first();
-  Q_ASSERT( mb.isValid() || mb.hasPayload<KMime::Message::Ptr>() );
-
   if ( ( mMsgList.count() == 1 ) && !mb.parentCollection().isValid() ) {
     // Special case of operating on message that isn't in a folder
+    Q_ASSERT( mb.isValid() || mb.hasPayload<KMime::Message::Ptr>() );
+
     mRetrievedMsgs.append(mMsgList.takeFirst());
     emit messagesTransfered( OK );
     return;
