@@ -469,7 +469,6 @@ class KMComposeWin : public KMail::Composer
 
     QList< Message::Composer* > generateCryptoMessages( bool sign, bool encrypt );
     void fillGlobalPart( Message::GlobalPart *globalPart );
-    void fillTextPart( Message::TextPart *part );
     void fillInfoPart( Message::InfoPart *part );
     void queueMessage( boost::shared_ptr<KMime::Message> message, Message::Composer* composer );
 

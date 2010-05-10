@@ -655,7 +655,7 @@ void KMComposeWin::autoSaveMessage()
   // Construct a KMime::Message to be autosaved:
   Message::Composer* composer = new Message::Composer;
   fillGlobalPart( composer->globalPart() );
-  fillTextPart( composer->textPart() );
+  mEditor->fillComposerTextPart( composer->textPart() );
   fillInfoPart( composer->infoPart() );
   composer->addAttachmentParts( mAttachmentModel->attachments() );
 
@@ -2128,7 +2128,7 @@ void KMComposeWin::slotEmailAddressResolved( KJob *job )
   // Compose each message and prepare it for queueing, sending, or storing
   foreach( Message::Composer* composer, mComposers ) {
     fillGlobalPart( composer->globalPart() );
-    fillTextPart( composer->textPart() );
+    mEditor->fillComposerTextPart( composer->textPart() );
     fillInfoPart( composer->infoPart() );
 
     composer->addAttachmentParts( mAttachmentModel->attachments() );
@@ -2282,16 +2282,6 @@ void KMComposeWin::fillGlobalPart( Message::GlobalPart *globalPart )
   }
   globalPart->setCharsets( charsets );
   globalPart->setMDNRequested( mRequestMDNAction->isChecked() );
-}
-
-void KMComposeWin::fillTextPart( Message::TextPart *textPart )
-{
-  textPart->setCleanPlainText( mEditor->toCleanPlainText() );
-  textPart->setWrappedPlainText( mEditor->toWrappedPlainText() );
-  if( mEditor->isFormattingUsed() ) {
-    textPart->setCleanHtml( mEditor->toCleanHtml() );
-    textPart->setEmbeddedImages( mEditor->embeddedImages() );
-  }
 }
 
 void KMComposeWin::fillInfoPart( Message::InfoPart *infoPart )
