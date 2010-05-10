@@ -2341,9 +2341,9 @@ void KMComposeWin::slotSendComposeResult( KJob *job )
     kDebug() << "NoError.";
     for( int i = 0; i < composer->resultMessages().size(); ++i ) {
       if ( mSaveIn==None ) {
-        queueMessage( KMime::Message::Ptr( composer->resultMessages()[i] ), composer );
+        queueMessage( composer->resultMessages().at( i ), composer );
       } else {
-        saveMessage( KMime::Message::Ptr( composer->resultMessages()[i] ), mSaveIn );
+        saveMessage( composer->resultMessages().at( i ), mSaveIn );
       }
     }
   } else if( composer->error() == Composer::UserCancelledError ) {
@@ -2381,7 +2381,7 @@ void KMComposeWin::slotAutoSaveComposeResult( KJob *job )
 
     // The messages were composed successfully. Only save the first message, there should
     // only be one anyway, since crypto is disabled.
-    writeAutoSaveToDisk( KMime::Message::Ptr( composer->resultMessages().first() ) );
+    writeAutoSaveToDisk( composer->resultMessages().first() );
     Q_ASSERT( composer->resultMessages().size() == 1 );
 
     if( autoSaveInterval() > 0 ) {
