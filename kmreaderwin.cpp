@@ -303,7 +303,6 @@ void KMReaderWin::displayBusyPage()
 {
   QString info =
     i18n( "<h2 style='margin-top: 0px;'>Retrieving Folder Contents</h2><p>Please wait . . .</p>&nbsp;" );
-#include "mdnadvicedialog.h"
 
   displaySplashPage( info );
 }
