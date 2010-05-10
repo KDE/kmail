@@ -3489,7 +3489,6 @@ void KMMainWidget::setupActions()
   }
 
   {
-    //TODO enable/disable it
     mExpireConfigAction = new KAction( i18n( "Expire..." ), this );
     actionCollection()->addAction( "expire_settings",mExpireConfigAction );
     connect( mExpireConfigAction, SIGNAL( triggered( bool ) ), this, SLOT( slotShowExpiryProperties() ) );
@@ -3718,6 +3717,8 @@ void KMMainWidget::updateMessageActions()
   //mCopyActionMenu->setEnabled( mass_actions );
   mTrashAction->setEnabled( mass_actions && !readOnly );
   mDeleteAction->setEnabled( mass_actions && !readOnly );
+  mExpireConfigAction->setEnabled( canDeleteMessages );
+
   mFindInMessageAction->setEnabled( mass_actions && !kmkernel->folderIsTemplates( mCurrentFolder->collection() ) );
   mMsgActions->forwardInlineAction()->setEnabled( mass_actions && !kmkernel->folderIsTemplates( mCurrentFolder->collection() ) );
   mMsgActions->forwardAttachedAction()->setEnabled( mass_actions && !kmkernel->folderIsTemplates( mCurrentFolder->collection() ) );
