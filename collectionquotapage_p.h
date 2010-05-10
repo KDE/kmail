@@ -35,10 +35,8 @@
 
 
 #include <qlabel.h>
-#include <qprogressbar.h>
-#include <qwhatsthis.h>
 
-
+class QProgressBar;
 class QuotaWidget : public QWidget {
 
   Q_OBJECT

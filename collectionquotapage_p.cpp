@@ -72,18 +72,5 @@ void QuotaWidget::setQuotaInfo( qint64 current, qint64 maxValue )
   mProgressBar->setMaximum( maxValue );
   mProgressBar->setValue( current );
 }
-#if 0
-void QuotaWidget::setQuotaInfo( const QuotaInfo& info )
-{
-      // we are assuming only to get STORAGE type info here, thus
-      // casting to int is safe
-      int current = info.current().toInt();
-      int max = info.max().toInt();
-      mProgressBar->setMaximum( max );
-      mProgressBar->setValue( current );
-      mInfoLabel->setText( info.toString() );
-      mRootLabel->setText( info.root() );
-}
-#endif
 
 #include "collectionquotapage_p.moc"
