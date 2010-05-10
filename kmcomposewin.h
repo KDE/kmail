@@ -777,7 +777,11 @@ class KMComposeWin : public KMail::Composer
     KToggleAction *mEncryptChiasmusAction;
     bool mEncryptWithChiasmus;
 
+    // List of active composer jobs. For example, saving as draft, autosaving and printing
+    // all create a composer, which is added to this list as long as it is active.
+    // Used mainly to prevent closing the window if a composer is active
     QList< Message::Composer* > mComposers;
+
     Message::Composer *mDummyComposer;
     int mPendingQueueJobs;
     int mPendingCreateItemJobs;
