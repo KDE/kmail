@@ -184,7 +184,7 @@ KMCommand::KMCommand( QWidget *parent, const Akonadi::Item &msg )
   : mProgressDialog( 0 ), mResult( Undefined ), mDeletesItself( false ),
     mEmitsCompletedItself( false ), mParent( parent )
 {
-  if ( msg.isValid() ) {
+  if ( msg.isValid() || msg.hasPayload<KMime::Message::Ptr>() ) {
     mMsgList.append( msg );
   }
 }
@@ -240,30 +240,27 @@ void KMCommand::slotStart()
   connect( this, SIGNAL( messagesTransfered( KMCommand::Result ) ),
            this, SLOT( slotPostTransfer( KMCommand::Result ) ) );
 
-  if ( mMsgList.contains(Akonadi::Item()) ) {
+  if ( mMsgList.contains(Akonadi::Item() ) || mMsgList.isEmpty() ) {
       emit messagesTransfered( Failed );
       return;
   }
 
-  Akonadi::Item mb;
-  if ( !mMsgList.isEmpty() )
-    mb = *(mMsgList.begin());
-  if ( ( mb.isValid() ) && ( mMsgList.count() == 1 ) &&
-       ( !mb.parentCollection().isValid() ) )
-  {
+  const Akonadi::Item mb = mMsgList.first();
+  Q_ASSERT( mb.isValid() || mb.hasPayload<KMime::Message::Ptr>() );
+
+  if ( ( mMsgList.count() == 1 ) && !mb.parentCollection().isValid() ) {
     // Special case of operating on message that isn't in a folder
     mRetrievedMsgs.append(mMsgList.takeFirst());
     emit messagesTransfered( OK );
     return;
   }
   QList<Akonadi::Item>::const_iterator it;
-  for ( it = mMsgList.constBegin(); it != mMsgList.constEnd(); ++it )
+  for ( it = mMsgList.constBegin(); it != mMsgList.constEnd(); ++it ) {
     if ( !(*it).parentCollection().isValid()  ) {
       emit messagesTransfered( Failed );
       return;
-    } else {
-      //keepFolderOpen( (*it)->parent() );
     }
+  }
 
   // transfer the selected messages first
   transferSelectedMsgs();
@@ -330,10 +327,11 @@ void KMCommand::transferSelectedMsgs()
     connect( fetch, SIGNAL(result(KJob*)), SLOT(slotJobFinished()) );
   } else {
     // no need to fetch anything
-    mRetrievedMsgs = mMsgList;
+    if ( !mMsgList.isEmpty() )
+      mRetrievedMsgs = mMsgList;
   }
-  if (complete)
-  {
+
+  if ( complete ) {
     delete mProgressDialog;
     mProgressDialog = 0;
     emit messagesTransfered( OK );
