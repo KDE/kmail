@@ -72,7 +72,9 @@ private:
   QCheckBox   *mNewMailCheckBox;
   QCheckBox   *mNotifyOnNewMailCheckBox;
   QCheckBox   *mKeepRepliesInSameFolderCheckBox;
+#if 0
   QCheckBox   *mHideInSelectionDialogCheckBox;
+#endif
   QCheckBox   *mUseDefaultIdentityCheckBox;
   KLineEdit   *mNameEdit;
   KPIMIdentities::IdentityCombo *mIdentityComboBox;
