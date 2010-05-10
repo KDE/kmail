@@ -2297,6 +2297,7 @@ void KMComposeWin::fillInfoPart( Message::InfoPart *infoPart )
   infoPart->setCc( mExpandedCc );
   infoPart->setBcc( mExpandedBcc );
   infoPart->setSubject( subject() );
+  infoPart->setUserAgent( "KMail" );
 
   KMime::Headers::Base::List extras;
   if( mMsg->headerByType( "X-KMail-SignatureActionEnabled" ) )
