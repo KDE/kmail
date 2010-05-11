@@ -33,8 +33,6 @@
 #include <messagecomposer/composerlineedit.h>
 #include <messagecomposer/recipient.h>
 
-class RecipientsPicker;
-
 class KWindowPositioner;
 
 class QLabel;
@@ -45,6 +43,10 @@ namespace KMime {
   namespace Types {
     class Mailbox;
   }
+}
+
+namespace MessageComposer {
+  class RecipientsPicker;
 }
 
 class RecipientComboBox : public KComboBox
@@ -242,7 +244,7 @@ class SideWidget : public QWidget
     SideWidget( RecipientsView *view, QWidget *parent );
     ~SideWidget();
 
-    RecipientsPicker* picker() const;
+    MessageComposer::RecipientsPicker* picker() const;
 
   public slots:
     void setTotal( int recipients, int lines );
@@ -261,7 +263,7 @@ class SideWidget : public QWidget
     QPushButton *mSelectButton;
     /** The RecipientsPicker is lazy loaded, never access it directly,
       only through picker() */
-    mutable RecipientsPicker *mRecipientPicker;
+    mutable MessageComposer::RecipientsPicker *mRecipientPicker;
     /** lazy loaded, don't access directly, unless you've called picker() */
     mutable KWindowPositioner *mPickerPositioner;
 };
@@ -276,7 +278,7 @@ class KMAIL_EXPORT RecipientsEditor : public QWidget
     void clear();
 
     Recipient::List recipients() const;
-    RecipientsPicker* picker() const;
+    MessageComposer::RecipientsPicker* picker() const;
 
     void setRecipientString( const QList<KMime::Types::Mailbox> &mailboxes, Recipient::Type );
     QString recipientString( Recipient::Type );

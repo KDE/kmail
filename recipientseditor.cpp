@@ -29,6 +29,7 @@
 #include "recipientspicker.h"
 #include "kwindowpositioner.h"
 #include <messagecomposer/distributionlistdialog.h>
+#include <messagecomposer/messagecomposersettings.h>
 #include "globalsettings.h"
 #include "messageviewer/autoqpointer.h"
 
@@ -707,12 +708,12 @@ SideWidget::~SideWidget()
 {
 }
 
-RecipientsPicker* SideWidget::picker() const
+MessageComposer::RecipientsPicker* SideWidget::picker() const
 {
   if ( !mRecipientPicker ) {
     // hacks to allow picker() to be const in the presence of lazy loading
     SideWidget *non_const_this = const_cast<SideWidget*>( this );
-    mRecipientPicker = new RecipientsPicker( non_const_this );
+    mRecipientPicker = new MessageComposer::RecipientsPicker( non_const_this );
     connect( mRecipientPicker, SIGNAL( pickedRecipient( const Recipient & ) ),
              non_const_this, SIGNAL( pickedRecipient( const Recipient & ) ) );
     mPickerPositioner = new KWindowPositioner( mSelectButton, mRecipientPicker );
@@ -784,7 +785,7 @@ void SideWidget::updateTotalToolTip()
 
 void SideWidget::pickRecipient()
 {
-  RecipientsPicker *p = picker();
+  MessageComposer::RecipientsPicker *p = picker();
   p->setDefaultType( mView->activeLine()->recipientType() );
   p->setRecipients( mView->recipients() );
   mPickerPositioner->reposition();
@@ -827,7 +828,7 @@ RecipientsEditor::~RecipientsEditor()
 {
 }
 
-RecipientsPicker* RecipientsEditor::picker() const
+MessageComposer::RecipientsPicker* RecipientsEditor::picker() const
 {
   return mSideWidget->picker();
 }
@@ -866,10 +867,10 @@ void RecipientsEditor::setRecipientString( const QList<KMime::Types::Mailbox> &m
   int count = 1;
 
   foreach( const KMime::Types::Mailbox &mailbox, mailboxes ) {
-    if ( count++ > GlobalSettings::self()->maximumRecipients() ) {
+    if ( count++ > MessageComposer::MessageComposerSettings::self()->maximumRecipients() ) {
       KMessageBox::sorry( this,
         i18nc("@info:status", "Truncating recipients list to %1 of %2 entries.",
-              GlobalSettings::self()->maximumRecipients(),
+              MessageComposer::MessageComposerSettings::self()->maximumRecipients(),
               mailboxes.count() ) );
       break;
     }

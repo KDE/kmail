@@ -287,10 +287,6 @@
         </choices>
         <default>To</default>
       </entry>
-      <entry name="MaximumRecipients" type="Int">
-        <label>Maximum number of recipient editor lines.</label>
-        <default>200</default>
-      </entry>
       <entry name="CustomTemplates" type="StringList" key="CustomTemplates" />
 
       <entry name="MimetypesToStripWhenInlineForwarding" type="StringList">
