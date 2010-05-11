@@ -357,10 +357,6 @@ bool CollectionAclPage::canHandle( const Akonadi::Collection &collection ) const
 
 void CollectionAclPage::load(const Akonadi::Collection & col)
 {
-  if ( !col.hasAttribute<Akonadi::ImapAclAttribute>() ) {
-    return;
-  }
-
   Akonadi::ImapAclAttribute *acls = col.attribute<Akonadi::ImapAclAttribute>();
   QMap<QByteArray, KIMAP::Acl::Rights> rights = acls->rights();
 
@@ -388,10 +384,6 @@ void CollectionAclPage::load(const Akonadi::Collection & col)
 
 void CollectionAclPage::save(Akonadi::Collection & col)
 {
-  if ( !col.hasAttribute<Akonadi::ImapAclAttribute>() ) {
-    return;
-  }
-
   if ( !mChanged ) {
     return;
   }
