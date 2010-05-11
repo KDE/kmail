@@ -38,7 +38,6 @@
 #include "kmreadermainwin.h"
 //#include "mailcomposeradaptor.h" // TODO port all D-Bus stuff...
 #include "objecttreeparser.h"
-#include "recipientseditor.h"
 #include "messageviewer/stl_util.h"
 #include "messageviewer/util.h"
 #include "messagecore/stringutil.h"
@@ -72,6 +71,7 @@
 #include <messagecomposer/signaturecontroller.h>
 #include <messagecomposer/inserttextfilejob.h>
 #include <messagecomposer/composerlineedit.h>
+#include <messagecomposer/recipientseditor.h>
 #include <messagecore/attachmentpart.h>
 #include "messagecore/globalsettings.h"
 #include <templateparser/templateparser.h>
@@ -259,7 +259,7 @@ KMComposeWin::KMComposeWin( const KMime::Message::Ptr &aMsg, Composer::TemplateC
   connect( mEdtReplyTo, SIGNAL(completionModeChanged(KGlobalSettings::Completion)),
           SLOT(slotCompletionModeChanged(KGlobalSettings::Completion)) );
 
-  mRecipientsEditor = new RecipientsEditor( mHeadersArea );
+  mRecipientsEditor = new MessageComposer::RecipientsEditor( mHeadersArea );
   mRecipientsEditor->setRecentAddressConfig( KMKernel::config().data() );
   connect( mRecipientsEditor,
            SIGNAL( completionModeChanged( KGlobalSettings::Completion ) ),

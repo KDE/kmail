@@ -69,7 +69,6 @@ class KTempDir;
 class KToggleAction;
 class KUrl;
 class KRecentFilesAction;
-class RecipientsEditor;
 class SnippetWidget;
 
 namespace boost {
@@ -114,6 +113,7 @@ namespace Message {
 namespace MessageComposer
 {
   class ComposerLineEdit;
+  class RecipientsEditor;
 }
 
 namespace MailTransport{
@@ -795,7 +795,7 @@ class KMComposeWin : public KMail::Composer
     int mPendingQueueJobs;
     int mPendingCreateItemJobs;
 
-    RecipientsEditor *mRecipientsEditor;
+    MessageComposer::RecipientsEditor *mRecipientsEditor;
     int mLabelWidth;
 
     QTimer *mAutoSaveTimer;

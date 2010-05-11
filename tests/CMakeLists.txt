@@ -38,16 +38,6 @@ kde4_add_executable(dbustest TEST ${dbustest_SRCS})
 add_dependencies(dbustest kmail_xml)
 target_link_libraries(dbustest ${KDE4_KIO_LIBS})
 
-########### recipientseditor test ###############
-
-set(recipienteditortest_SRCS recipientseditortest.cpp)
-
-
-kde4_add_executable(recipienteditortest TEST ${recipienteditortest_SRCS})
-
-target_link_libraries(recipienteditortest ${KDE4_KIO_LIBS} ${KDEPIMLIBS_AKONADI_KCAL_LIBS} kmailprivate kdepim)
-
-
 ###### TODO port storagelayer tests to QTestLib
 
 #kunittest_storagelayermodule_la_SOURCES = storagelayermodule.cpp messagedicttests.cpp ../kmdict.cpp

@@ -118,8 +118,6 @@ set(kmailprivate_LIB_SRCS
    redirectdialog.cpp
    foldershortcutdialog.cpp
    folderrequester.cpp
-   recipientseditor.cpp
-   kwindowpositioner.cpp
    expirypropertiesdialog.cpp
    mailinglistpropertiesdialog.cpp
    managesievescriptsdialog.cpp
