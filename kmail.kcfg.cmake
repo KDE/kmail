@@ -280,13 +280,6 @@
         <default>true</default>
       </entry>
 
-      <entry name="SecondRecipientTypeDefault" type="Enum">
-        <choices>
-          <choice name="To"/>
-          <choice name="Cc"/>
-        </choices>
-        <default>To</default>
-      </entry>
       <entry name="CustomTemplates" type="StringList" key="CustomTemplates" />
 
       <entry name="MimetypesToStripWhenInlineForwarding" type="StringList">

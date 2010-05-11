@@ -26,11 +26,10 @@
 #include "recipientseditor.h"
 
 #include "kmkernel.h"
-#include "recipientspicker.h"
 #include "kwindowpositioner.h"
+#include <messagecomposer/recipientspicker.h>
 #include <messagecomposer/distributionlistdialog.h>
 #include <messagecomposer/messagecomposersettings.h>
-#include "globalsettings.h"
 #include "messageviewer/autoqpointer.h"
 
 #include <kpimutils/email.h>
@@ -328,8 +327,8 @@ RecipientLine *RecipientsView::addLine()
 
   if ( !mLines.isEmpty() ) {
     if ( mLines.count() == 1 ) {
-      if ( GlobalSettings::self()->secondRecipientTypeDefault() ==
-         GlobalSettings::EnumSecondRecipientTypeDefault::To ) {
+      if ( MessageComposer::MessageComposerSettings::self()->secondRecipientTypeDefault() ==
+         MessageComposer::MessageComposerSettings::EnumSecondRecipientTypeDefault::To ) {
         line->setRecipientType( Recipient::To );
       } else {
         if ( mLines.last()->recipientType() == Recipient::Bcc ) {
@@ -375,11 +374,11 @@ void RecipientsView::slotTypeModified( RecipientLine *line )
        ( mLines.count() == 3 && mLines.at( 2 )->isEmpty() ) ) {
     if ( mLines.at( 1 ) == line ) {
       if ( line->recipientType() == Recipient::To ) {
-        GlobalSettings::self()->setSecondRecipientTypeDefault(
-          GlobalSettings::EnumSecondRecipientTypeDefault::To );
+        MessageComposer::MessageComposerSettings::self()->setSecondRecipientTypeDefault(
+          MessageComposer::MessageComposerSettings::EnumSecondRecipientTypeDefault::To );
       } else if ( line->recipientType() == Recipient::Cc ) {
-        GlobalSettings::self()->setSecondRecipientTypeDefault(
-          GlobalSettings::EnumSecondRecipientTypeDefault::Cc );
+        MessageComposer::MessageComposerSettings::self()->setSecondRecipientTypeDefault(
+          MessageComposer::MessageComposerSettings::EnumSecondRecipientTypeDefault::Cc );
       }
     }
   }
