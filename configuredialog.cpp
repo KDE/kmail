@@ -2336,7 +2336,6 @@ ComposerPageGeneralTab::ComposerPageGeneralTab( QWidget * parent )
   mShowRecentAddressesInComposer = new QCheckBox(
            MessageComposer::MessageComposerSettings::self()->showRecentAddressesInComposerItem()->label(),
            this);
-  mShowRecentAddressesInComposer->setObjectName( "kcfg_ShowRecentAddressesInComposer" );
   vlay->addWidget( mShowRecentAddressesInComposer );
   connect( mShowRecentAddressesInComposer, SIGNAL( stateChanged(int) ),
            this, SLOT( slotEmitChanged( void ) ) );
@@ -2512,6 +2511,7 @@ void ComposerPage::GeneralTab::doLoadFromGlobalSettings()
   mWordWrapCheck->setChecked( GlobalSettings::self()->wordWrap() );
   mWrapColumnSpin->setValue( GlobalSettings::self()->lineWrapWidth() );
   mAutoSave->setValue( GlobalSettings::self()->autosaveInterval() );
+  mShowRecentAddressesInComposer->setChecked( MessageComposer::MessageComposerSettings::self()->showRecentAddressesInComposer() );
 
 #ifdef KDEPIM_ENTERPRISE_BUILD
   mRecipientCheck->setChecked( GlobalSettings::self()->tooManyRecipients() );
@@ -2539,6 +2539,7 @@ void ComposerPage::GeneralTab::save() {
   GlobalSettings::self()->setWordWrap( mWordWrapCheck->isChecked() );
   GlobalSettings::self()->setLineWrapWidth( mWrapColumnSpin->value() );
   GlobalSettings::self()->setAutosaveInterval( mAutoSave->value() );
+  MessageComposer::MessageComposerSettings::self()->setShowRecentAddressesInComposer( mShowRecentAddressesInComposer->isChecked() );
 
 #ifdef KDEPIM_ENTERPRISE_BUILD
   GlobalSettings::self()->setTooManyRecipients( mRecipientCheck->isChecked() );
