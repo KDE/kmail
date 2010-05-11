@@ -31,6 +31,7 @@
 #include <QList>
 #include <QScrollArea>
 #include <messagecomposer/composerlineedit.h>
+#include <messagecomposer/recipient.h>
 
 class RecipientsPicker;
 
@@ -45,35 +46,6 @@ namespace KMime {
     class Mailbox;
   }
 }
-
-class Recipient
-{
-  public:
-    typedef QList<Recipient> List;
-
-    enum Type { To, Cc, Bcc, Undefined };
-
-    Recipient( const QString &email = QString(), Type type = To ); //krazy:exclude=explicit
-
-    void setType( Type );
-    Type type() const;
-
-    void setEmail( const QString & );
-    QString email() const;
-
-    bool isEmpty() const;
-
-    static int typeToId( Type );
-    static Type idToType( int );
-
-    QString typeLabel() const;
-    static QString typeLabel( Type );
-    static QStringList allTypeLabels();
-
-  private:
-    QString mEmail;
-    Type mType;
-};
 
 class RecipientComboBox : public KComboBox
 {
