@@ -706,6 +706,15 @@ class KMComposeWin : public KMail::Composer
     */
     void writeAutoSaveToDisk( KMime::Message::Ptr message );
 
+    /**
+     * Creates a simple composer that creates a KMime::Message out of the composer content.
+     * Crypto handling is not done, therefore the name "simple".
+     * This is used when autosaving or printing a message.
+     *
+     * The caller takes ownership of the composer.
+     */
+    Message::Composer* createSimpleComposer();
+
     bool canSignEncryptAttachments() const {
       return cryptoMessageFormat() != Kleo::InlineOpenPGPFormat;
     }

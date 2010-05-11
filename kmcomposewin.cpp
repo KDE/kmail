@@ -630,6 +630,16 @@ void KMComposeWin::writeConfig( void )
   KMKernel::self()->slotSyncConfig();
 }
 
+Message::Composer* KMComposeWin::createSimpleComposer()
+{
+  Message::Composer* composer = new Message::Composer;
+  fillGlobalPart( composer->globalPart() );
+  mEditor->fillComposerTextPart( composer->textPart() );
+  fillInfoPart( composer->infoPart() );
+  composer->addAttachmentParts( mAttachmentModel->attachments() );
+  return composer;
+}
+
 //-----------------------------------------------------------------------------
 void KMComposeWin::autoSaveMessage()
 {
@@ -645,13 +655,7 @@ void KMComposeWin::autoSaveMessage()
     return;
   }
 
-  // Construct a KMime::Message to be autosaved:
-  Message::Composer* composer = new Message::Composer;
-  fillGlobalPart( composer->globalPart() );
-  mEditor->fillComposerTextPart( composer->textPart() );
-  fillInfoPart( composer->infoPart() );
-  composer->addAttachmentParts( mAttachmentModel->attachments() );
-
+  Message::Composer * const composer = createSimpleComposer();
   mComposers.append( composer );
   connect( composer, SIGNAL(result(KJob*)), this, SLOT(slotAutoSaveComposeResult(KJob*)) );
   composer->start();
