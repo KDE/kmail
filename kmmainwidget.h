@@ -76,7 +76,6 @@ namespace KMail {
   class SieveDebugDialog;
   class SearchWindow;
   class ImapAccountBase;
-  class FavoriteFolderView;
   class StatusBarLabel;
   class TagActionManager;
   class FolderShortcutActionManager;
@@ -324,6 +323,7 @@ class KMAIL_EXPORT KMMainWidget : public QWidget
     void slotDelayedRemoveFolder( KJob* );
     void slotEmptyFolder();
     void slotCompactFolder();
+    void slotAddFavoriteFolder();
 #if 0
   void slotRefreshFolder();
 #endif
@@ -535,6 +535,7 @@ private:
 
     KAction *mNextMessageAction, *mPreviousMessageAction;
     KAction *mExpireConfigAction;
+    KAction *mAddFavoriteFolder;
     // Custom template actions menu
     KActionMenu *mTemplateMenu;
     CustomTemplatesMenu *mCustomTemplateMenus;
@@ -553,6 +554,7 @@ private:
     KToggleAction *mWatchThreadAction, *mIgnoreThreadAction;
 
     Akonadi::EntityListView *mFavoriteCollectionsView;
+    Akonadi::FavoriteCollectionsModel *mFavoritesModel;
     QWidget      *mSearchAndTree;
     KMReaderWin  *mMsgView;
     QSplitter    *mSplitter1, *mSplitter2, *mFolderViewSplitter;

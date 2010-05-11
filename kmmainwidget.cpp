@@ -104,6 +104,7 @@
 #include <akonadi/entitytreeview.h>
 #include <akonadi/collectiondialog.h>
 #include <akonadi/collectionstatistics.h>
+#include <akonadi/favoritecollectionsmodel.h>
 #include <kpimidentities/identity.h>
 #include <kpimidentities/identitymanager.h>
 #include <kpimutils/email.h>
@@ -945,12 +946,12 @@ void KMMainWidget::createWidgets()
     mFavoriteCollectionsView = new Akonadi::EntityListView( mGUIClient, this );
     mFavoriteCollectionsView->setViewMode( QListView::IconMode );
 
-    Akonadi::FavoriteCollectionsModel *favoritesModel = new Akonadi::FavoriteCollectionsModel(
+    mFavoritesModel = new Akonadi::FavoriteCollectionsModel(
                                 KMKernel::self()->entityTreeModel(),
                                 KMKernel::config()->group( "FavoriteCollections" ), this );
-    mFavoriteCollectionsView->setModel( favoritesModel );
+    mFavoriteCollectionsView->setModel( mFavoritesModel );
 
-    mAkonadiStandardActionManager->setFavoriteCollectionsModel( favoritesModel );
+    mAkonadiStandardActionManager->setFavoriteCollectionsModel( mFavoritesModel );
     mAkonadiStandardActionManager->setFavoriteSelectionModel( mFavoriteCollectionsView->selectionModel() );
   }
   mAkonadiStandardActionManager->createAllActions();
@@ -3477,7 +3478,6 @@ void KMMainWidget::setupActions()
     connect(action, SIGNAL(triggered(bool) ), SLOT(slotEditNotifications()));
   }
 
-//  KStandardAction::preferences(this, SLOT(slotSettings()), actionCollection());
   {
     KAction *action = new KAction(KIcon("configure"), i18n("&Configure KMail..."), this);
     actionCollection()->addAction("kmail_configure_kmail", action );
@@ -3489,6 +3489,13 @@ void KMMainWidget::setupActions()
     actionCollection()->addAction( "expire_settings",mExpireConfigAction );
     connect( mExpireConfigAction, SIGNAL( triggered( bool ) ), this, SLOT( slotShowExpiryProperties() ) );
   }
+
+  {
+    mAddFavoriteFolder = new KAction( KIcon( "bookmark-new" ), i18n( "Add Favorite Folder..." ), this );
+    actionCollection()->addAction( "add_favorite_folder", mAddFavoriteFolder );
+    connect( mAddFavoriteFolder, SIGNAL( triggered( bool ) ), this, SLOT( slotAddFavoriteFolder() ) );
+  }
+
 
 
   actionCollection()->addAction(KStandardAction::Undo,  "kmail_undo", this, SLOT(slotUndo()));
@@ -3508,6 +3515,23 @@ void KMMainWidget::setupActions()
   mTagActionManager = new KMail::TagActionManager( this, actionCollection(), mMsgActions,
                                                    mGUIClient );
   mFolderShortcutActionManager = new KMail::FolderShortcutActionManager( this, actionCollection() );
+
+}
+
+void KMMainWidget::slotAddFavoriteFolder()
+{
+  FolderSelectionDialog::SelectionFolderOption options = FolderSelectionDialog::None;
+  // can jump to anywhere, need not be read/write
+  MessageViewer::AutoQPointer<FolderSelectionDialog> dlg;
+  dlg = new FolderSelectionDialog( this, options );
+  dlg->setCaption( i18n("Add Favorite Folder") );
+  if ( dlg->exec() && dlg ) {
+    Akonadi::Collection collection = dlg->selectedCollection();
+    if ( collection.isValid() ) {
+      mFavoritesModel->addCollection( collection );
+    }
+  }
+
 }
 
 //-----------------------------------------------------------------------------
