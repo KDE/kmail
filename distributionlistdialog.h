@@ -21,9 +21,10 @@
 #ifndef DISTRIBUTIONLISTDIALOG_H
 #define DISTRIBUTIONLISTDIALOG_H
 
-#include "recipientseditor.h"
+#include <messagecomposer/recipient.h>
 #include <kdialog.h>
 
+class KJob;
 class KLineEdit;
 class QTreeWidget;
 

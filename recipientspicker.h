@@ -21,7 +21,7 @@
 #ifndef RECIPIENTSPICKER_H
 #define RECIPIENTSPICKER_H
 
-#include "recipientseditor.h"
+#include <messagecomposer/recipient.h>
 
 #include <kabc/addressee.h>
 #include <kdialog.h>
