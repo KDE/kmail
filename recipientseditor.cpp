@@ -28,7 +28,7 @@
 #include "kmkernel.h"
 #include "recipientspicker.h"
 #include "kwindowpositioner.h"
-#include "distributionlistdialog.h"
+#include <messagecomposer/distributionlistdialog.h>
 #include "globalsettings.h"
 #include "messageviewer/autoqpointer.h"
 
@@ -48,7 +48,6 @@
 #include <QScrollBar>
 #include <QTimer>
 #include <QtGui/QTextDocument>
-
 
 RecipientComboBox::RecipientComboBox( QWidget *parent )
   : KComboBox( parent )
@@ -849,7 +848,7 @@ void RecipientsEditor::slotPickedRecipient( const Recipient &rec )
 
 void RecipientsEditor::saveDistributionList()
 {
-  MessageViewer::AutoQPointer<DistributionListDialog> dlg( new DistributionListDialog( this ) );
+  MessageViewer::AutoQPointer<MessageComposer::DistributionListDialog> dlg( new MessageComposer::DistributionListDialog( this ) );
   dlg->setRecipients( mRecipientsView->recipients() );
   dlg->exec();
 }

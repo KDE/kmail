@@ -121,7 +121,6 @@ set(kmailprivate_LIB_SRCS
    recipientseditor.cpp
    recipientspicker.cpp
    kwindowpositioner.cpp
-   distributionlistdialog.cpp
    expirypropertiesdialog.cpp
    mailinglistpropertiesdialog.cpp
    managesievescriptsdialog.cpp
