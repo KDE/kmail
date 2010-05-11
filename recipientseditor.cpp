@@ -25,7 +25,6 @@
 
 #include "recipientseditor.h"
 
-#include "kmkernel.h"
 #include "kwindowpositioner.h"
 #include <messagecomposer/recipientspicker.h>
 #include <messagecomposer/distributionlistdialog.h>
@@ -49,6 +48,9 @@
 #include <QTimer>
 #include <QtGui/QTextDocument>
 
+#include <boost/bind.hpp>
+#include <algorithm>
+
 RecipientComboBox::RecipientComboBox( QWidget *parent )
   : KComboBox( parent )
 {
@@ -62,7 +64,6 @@ void RecipientComboBox::keyPressEvent( QKeyEvent *ev )
 
 RecipientLineEdit::RecipientLineEdit ( QWidget* parent ) : ComposerLineEdit ( parent )
 {
-  setRecentAddressConfig( KMKernel::config().data() );
 }
 
 void RecipientLineEdit::keyPressEvent( QKeyEvent *ev )
@@ -258,12 +259,18 @@ void RecipientLine::setEditFont( const QFont& font )
   mEdit->setFont( font );
 }
 
+void RecipientLine::setRecentAddressConfig(KConfig* config)
+{
+  mEdit->setRecentAddressConfig( config );
+}
+
+
 // ------------ RecipientsView ---------------------
 
 RecipientsView::RecipientsView( QWidget *parent )
   : QScrollArea( parent ), mCurDelLine( 0 ),
     mLineHeight( 0 ), mFirstColumnWidth( 0 ),
-    mModified( false )
+    mModified( false ), mRecentAddressConfig( 0 )
 {
   mCompletionMode = KGlobalSettings::completionMode();
 
@@ -303,6 +310,8 @@ RecipientLine *RecipientsView::emptyLine() const
 RecipientLine *RecipientsView::addLine()
 {
   RecipientLine *line = new RecipientLine( widget() );
+  if ( mRecentAddressConfig )
+    line->setRecentAddressConfig( mRecentAddressConfig );
   line->setEditFont( mEditFont );
   //addChild( line, 0, mLines.count() * mLineHeight );
   mTopLayout->addWidget( line );
@@ -670,6 +679,14 @@ void RecipientsView::moveCompletionPopup()
 
 }
 
+void RecipientsView::setRecentAddressConfig(KConfig* config)
+{
+  mRecentAddressConfig = config;
+  if ( config )
+    std::for_each( mLines.begin(), mLines.end(), boost::bind( &RecipientLine::setRecentAddressConfig, _1, config ) );
+}
+
+
 SideWidget::SideWidget( RecipientsView *view, QWidget *parent )
   : QWidget( parent ), mView( view ), mRecipientPicker( 0 )
 {
@@ -957,5 +974,11 @@ void RecipientsEditor::setEditFont( const QFont& font )
 {
   mRecipientsView->setEditFont( font );
 }
+
+void RecipientsEditor::setRecentAddressConfig(KConfig* config)
+{
+  mRecipientsView->setRecentAddressConfig( config );
+}
+
 
 #include "recipientseditor.moc"

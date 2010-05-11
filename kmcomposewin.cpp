@@ -260,6 +260,7 @@ KMComposeWin::KMComposeWin( const KMime::Message::Ptr &aMsg, Composer::TemplateC
           SLOT(slotCompletionModeChanged(KGlobalSettings::Completion)) );
 
   mRecipientsEditor = new RecipientsEditor( mHeadersArea );
+  mRecipientsEditor->setRecentAddressConfig( KMKernel::config().data() );
   connect( mRecipientsEditor,
            SIGNAL( completionModeChanged( KGlobalSettings::Completion ) ),
            SLOT( slotCompletionModeChanged( KGlobalSettings::Completion ) ) );

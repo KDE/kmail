@@ -119,6 +119,11 @@ class RecipientLine : public QWidget
      */
     void setEditFont( const QFont& font );
 
+    /**
+     * Sets the config file used for storing recent addresses.
+     */
+    void setRecentAddressConfig( KConfig *config );
+
   signals:
     void returnPressed( RecipientLine * );
     void downPressed( RecipientLine * );
@@ -194,6 +199,11 @@ class RecipientsView : public QScrollArea
      */
     void setEditFont( const QFont& font );
 
+    /**
+     * Sets the config file used for storing recent addresses.
+     */
+    void setRecentAddressConfig( KConfig *config );
+
   public slots:
     void setCompletionMode( KGlobalSettings::Completion );
     RecipientLine *addLine();
@@ -235,6 +245,7 @@ class RecipientsView : public QScrollArea
     KGlobalSettings::Completion mCompletionMode;
     QWidget *mPage;
     QLayout *mTopLayout;
+    KConfig *mRecentAddressConfig;
 };
 
 class SideWidget : public QWidget
@@ -321,6 +332,11 @@ class KMAIL_EXPORT RecipientsEditor : public QWidget
      * Sets the font which will be used for the lineedits.
      */
     void setEditFont( const QFont& font );
+
+    /**
+     * Sets the config file used for storing recent addresses.
+     */
+    void setRecentAddressConfig( KConfig *config );
 
   public slots:
     void setFocus();
