@@ -751,10 +751,10 @@ class KMComposeWin : public KMail::Composer
     void slotConfigChanged();
 
     void slotAutoSaveComposeResult( KJob *job );
+    void slotPrintComposeResult( KJob *job );
     void slotSendComposeResult( KJob *job );
     void slotQueueResult( KJob *job );
     void slotCreateItemResult( KJob *job );
-    void slotContinuePrint( bool );
 
     void slotEncryptChiasmusToggled( bool );
 
@@ -794,10 +794,6 @@ class KMComposeWin : public KMail::Composer
     Message::Composer *mDummyComposer;
     int mPendingQueueJobs;
     int mPendingCreateItemJobs;
-
-    // Temp var for slotPrint:
-    bool mMessageWasModified;
-
 
     RecipientsEditor *mRecipientsEditor;
     int mLabelWidth;

@@ -3107,32 +3107,31 @@ void KMComposeWin::ignoreStickyFields()
 //-----------------------------------------------------------------------------
 void KMComposeWin::slotPrint()
 {
-  kDebug() << "Implement me.";
-#if 0
-  mMessageWasModified = isModified();
-  connect( this, SIGNAL( applyChangesDone( bool ) ),
-           this, SLOT( slotContinuePrint( bool ) ) );
-  applyChanges( true );
-#endif
+  Message::Composer* composer = createSimpleComposer();
+  mComposers.append( composer );
+  connect( composer, SIGNAL( result( KJob* ) ),
+           this, SLOT( slotPrintComposeResult( KJob* ) ) );
+  composer->start();
 }
 
-void KMComposeWin::slotContinuePrint( bool rc )
+void KMComposeWin::slotPrintComposeResult( KJob *job )
 {
-  Q_ASSERT( false );
-#if 0
-  disconnect( this, SIGNAL( applyChangesDone( bool ) ),
-              this, SLOT( slotContinuePrint( bool ) ) );
+  Q_ASSERT( dynamic_cast< Message::Composer* >( job ) );
+  Message::Composer* composer = dynamic_cast< Message::Composer* >( job );
+  Q_ASSERT( mComposers.contains( composer ) );
+  mComposers.removeAll( composer );
 
-  if ( rc ) {
-    if ( mComposedMessages.isEmpty() ) {
-      kDebug() << "Composing the message failed.";
-      return;
-    }
-    KMCommand *command = new KMPrintCommand( this, mComposedMessages.first() );
+  if( composer->error() == Message::Composer::NoError ) {
+
+    Q_ASSERT( composer->resultMessages().size() == 1 );
+    Akonadi::Item printItem;
+    printItem.setPayload<KMime::Message::Ptr>( composer->resultMessages().first() );
+    KMCommand *command = new KMPrintCommand( this, printItem );
     command->start();
-    setModified( mMessageWasModified );
+  } else {
+    // TODO: error reporting to the user
+    kWarning() << "Composer for printing failed:" << composer->errorString();
   }
-#endif
 }
 
 //----------------------------------------------------------------------------
