@@ -71,6 +71,7 @@
 #include <messagecomposer/messagehelper.h>
 #include <messagecomposer/signaturecontroller.h>
 #include <messagecomposer/inserttextfilejob.h>
+#include <messagecomposer/composerlineedit.h>
 #include <messagecore/attachmentpart.h>
 #include "messagecore/globalsettings.h"
 #include <templateparser/templateparser.h>
@@ -247,9 +248,13 @@ KMComposeWin::KMComposeWin( const KMime::Message::Ptr &aMsg, Composer::TemplateC
 #endif
   mTransport = new MailTransport::TransportComboBox( mHeadersArea );
   mTransport->setToolTip( i18n( "Select the outgoing account to use for sending this message" ) );
-  mEdtFrom = new KMLineEdit( false, mHeadersArea, "fromLine" );
+  mEdtFrom = new MessageComposer::ComposerLineEdit( false, mHeadersArea );
+  mEdtFrom->setObjectName( "fromLine" );
+  mEdtFrom->setRecentAddressConfig( KMKernel::config().data() );
   mEdtFrom->setToolTip( i18n( "Set the \"From:\" email address for this message" ) );
-  mEdtReplyTo = new KMLineEdit( true, mHeadersArea, "replyToLine" );
+  mEdtReplyTo = new MessageComposer::ComposerLineEdit( true, mHeadersArea );
+  mEdtReplyTo->setObjectName( "replyToLine" );
+  mEdtReplyTo->setRecentAddressConfig( KMKernel::config().data() );
   mEdtReplyTo->setToolTip( i18n( "Set the \"Reply-To:\" email address for this message" ) );
   connect( mEdtReplyTo, SIGNAL(completionModeChanged(KGlobalSettings::Completion)),
           SLOT(slotCompletionModeChanged(KGlobalSettings::Completion)) );
@@ -260,7 +265,9 @@ KMComposeWin::KMComposeWin( const KMime::Message::Ptr &aMsg, Composer::TemplateC
            SLOT( slotCompletionModeChanged( KGlobalSettings::Completion ) ) );
   connect( mRecipientsEditor, SIGNAL(sizeHintChanged()), SLOT(recipientEditorSizeHintChanged()) );
 
-  mEdtSubject = new KMLineEdit( false, mHeadersArea, "subjectLine" );
+  mEdtSubject = new MessageComposer::ComposerLineEdit( false, mHeadersArea );
+  mEdtSubject->setObjectName( "subjectLine" );
+  mEdtSubject->setRecentAddressConfig( KMKernel::config().data() );
   mEdtSubject->setToolTip( i18n( "Set a subject for this message" ) );
   mLblIdentity = new QLabel( i18n("&Identity:"), mHeadersArea );
   mDictionaryLabel = new QLabel( i18n("&Dictionary:"), mHeadersArea );

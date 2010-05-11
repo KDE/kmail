@@ -25,12 +25,12 @@
 #define RECIPIENTSEDITOR_H
 
 #include "kmail_export.h"
-#include "kmlineeditspell.h"
 
 #include <kcombobox.h>
 
 #include <QList>
 #include <QScrollArea>
+#include <messagecomposer/composerlineedit.h>
 
 class RecipientsPicker;
 
@@ -88,12 +88,11 @@ class RecipientComboBox : public KComboBox
     void keyPressEvent( QKeyEvent *ev );
 };
 
-class RecipientLineEdit : public KMLineEdit
+class RecipientLineEdit : public MessageComposer::ComposerLineEdit
 {
     Q_OBJECT
   public:
-    RecipientLineEdit( QWidget * parent ) :
-      KMLineEdit( true, parent ) {}
+    RecipientLineEdit( QWidget * parent );
 
   signals:
     void deleteMe();

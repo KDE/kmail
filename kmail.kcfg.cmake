@@ -171,10 +171,6 @@
         <default>false</default>
         <label>Forward Inline As Default.</label>
       </entry>
-      <entry name="AllowSemicolonAsAddressSeparator" type="Bool">
-        <default>${ALLOW_SEMICOLON_AS_ADDRESS_SEPARATOR_DEFAULT}</default>
-        <label>Allow the semicolon character (';') to be used as separator in the message composer.</label>
-      </entry>
       <entry name="StickyIdentity" type="Bool" key="sticky-identity">
         <whatsthis>Remember this identity, so that it will be used in future composer windows as well.
         </whatsthis>
@@ -250,11 +246,6 @@
         <label>Automatically request &amp;message disposition notifications</label>
         <whatsthis>&lt;qt&gt;&lt;p&gt;Enable this option if you want KMail to request Message Disposition Notifications (MDNs) for each of your outgoing messages.&lt;/p&gt;&lt;p&gt;This option only affects the default; you can still enable or disable MDN requesting on a per-message basis in the composer, menu item &lt;em&gt;Options&lt;/em&gt;-&gt;&lt;em&gt;Request Disposition Notification&lt;/em&gt;.&lt;/p&gt;&lt;/qt&gt;</whatsthis>
         <default>false</default>
-      </entry>
-      <entry name="ShowRecentAddressesInComposer" type="Bool" key="showRecentAddressesInComposer">
-        <label>Use recent addresses for autocompletion</label>
-        <whatsthis>Disable this option if you do not want recently used addresses to appear in the autocompletion list in the composer's address fields.</whatsthis>
-        <default>true</default>
       </entry>
       <entry name="Headers" type="Int" key="headers">
         <default>KMail::Composer::HDR_SUBJECT</default>

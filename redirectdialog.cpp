@@ -31,11 +31,11 @@
 #include "redirectdialog.h"
 
 #include "kmkernel.h"
-#include "kmlineeditspell.h"
 
 #include <akonadi/contact/emailaddressselectiondialog.h>
 #include <kpimutils/email.h>
 #include "messageviewer/autoqpointer.h"
+#include <messagecomposer/composerlineedit.h>
 
 #include <kiconloader.h>
 #include <klocale.h>
@@ -63,7 +63,9 @@ RedirectDialog::RedirectDialog( QWidget *parent, bool immediate )
 
   KHBox *hbox = new KHBox( vbox );
   hbox->setSpacing(4);
-  mEditTo = new KMLineEdit( true, hbox, "toLine" );
+  mEditTo = new MessageComposer::ComposerLineEdit( true, hbox );
+  mEditTo->setObjectName( "toLine" );
+  mEditTo->setRecentAddressConfig( KMKernel::config().data() );
   mEditTo->setMinimumWidth( 300 );
 
   mBtnTo = new QPushButton( QString(), hbox );

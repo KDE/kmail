@@ -70,7 +70,6 @@ class KToggleAction;
 class KUrl;
 class KRecentFilesAction;
 class RecipientsEditor;
-class KMLineEdit;
 class SnippetWidget;
 
 namespace boost {
@@ -109,15 +108,16 @@ namespace Message {
   class GlobalPart;
   class InfoPart;
   class TextPart;
-class SignatureController;
+  class SignatureController;
+}
+
+namespace MessageComposer
+{
+  class ComposerLineEdit;
 }
 
 namespace MailTransport{
   class MessageQueueJob;
-}
-
-namespace Message {
-  class InfoPart;
 }
 
 //-----------------------------------------------------------------------------
@@ -638,8 +638,8 @@ class KMComposeWin : public KMail::Composer
     Sonnet::DictionaryComboBox *mDictionaryCombo;
     KPIMIdentities::IdentityCombo *mIdentity;
     Akonadi::CollectionComboBox *mFcc;
-    KMLineEdit *mEdtFrom, *mEdtReplyTo;
-    KMLineEdit *mEdtSubject;
+    MessageComposer::ComposerLineEdit *mEdtFrom, *mEdtReplyTo;
+    MessageComposer::ComposerLineEdit *mEdtSubject;
     QLabel    *mLblIdentity, *mLblTransport, *mLblFcc;
     QLabel    *mLblFrom, *mLblReplyTo;
     QLabel    *mLblSubject;

@@ -25,6 +25,7 @@
 
 #include "recipientseditor.h"
 
+#include "kmkernel.h"
 #include "recipientspicker.h"
 #include "kwindowpositioner.h"
 #include "distributionlistdialog.h"
@@ -130,6 +131,10 @@ void RecipientComboBox::keyPressEvent( QKeyEvent *ev )
   else KComboBox::keyPressEvent( ev );
 }
 
+RecipientLineEdit::RecipientLineEdit ( QWidget* parent ) : ComposerLineEdit ( parent )
+{
+  setRecentAddressConfig( KMKernel::config().data() );
+}
 
 void RecipientLineEdit::keyPressEvent( QKeyEvent *ev )
 {
@@ -143,7 +148,7 @@ void RecipientLineEdit::keyPressEvent( QKeyEvent *ev )
               !ev->modifiers().testFlag( Qt::ShiftModifier ) ) {  // Shift would be pressed during selection
     emit rightPressed();
   } else {
-    KMLineEdit::keyPressEvent( ev );
+    MessageComposer::ComposerLineEdit::keyPressEvent( ev );
   }
 }
 

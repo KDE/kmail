@@ -31,7 +31,11 @@
 
 #include <kdialog.h>
 
-class KMLineEdit;
+namespace MessageComposer
+{
+class ComposerLineEdit;
+}
+
 class QPushButton;
 class QLabel;
 
@@ -78,7 +82,7 @@ namespace KMail {
       void slotEmailChanged( const QString & );
     private:
       QLabel      *mLabelTo;
-      KMLineEdit  *mEditTo;
+      MessageComposer::ComposerLineEdit *mEditTo;
       QPushButton *mBtnTo;
       QString     mResentTo;
       bool        mImmediate;

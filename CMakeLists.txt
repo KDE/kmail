@@ -102,7 +102,6 @@ set(kmailprivate_LIB_SRCS
    aboutdata.cpp
    mailserviceimpl.cpp
    kmcomposereditor.cpp
-   kmlineeditspell.cpp
    composer.cpp
    antispamwizard.cpp
    secondarywindow.cpp

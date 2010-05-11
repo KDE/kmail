@@ -2334,7 +2334,7 @@ ComposerPageGeneralTab::ComposerPageGeneralTab( QWidget * parent )
            this, SLOT( slotEmitChanged( void ) ) );
 
   mShowRecentAddressesInComposer = new QCheckBox(
-           GlobalSettings::self()->showRecentAddressesInComposerItem()->label(),
+           MessageComposer::MessageComposerSettings::self()->showRecentAddressesInComposerItem()->label(),
            this);
   mShowRecentAddressesInComposer->setObjectName( "kcfg_ShowRecentAddressesInComposer" );
   vlay->addWidget( mShowRecentAddressesInComposer );
