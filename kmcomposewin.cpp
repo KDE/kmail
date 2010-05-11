@@ -2121,7 +2121,9 @@ void KMComposeWin::slotEmailAddressResolved( KJob *job )
   // if so, we create a composer per format
   // if we aren't signing or encrypting, this just returns a single empty message
   if( mNeverEncrypt ) {
-    mComposers.append( new Message::Composer );
+    Message::Composer* composer = new Message::Composer;
+    composer->setNoCrypto( true );
+    mComposers.append( composer );
   } else {
     mComposers = generateCryptoMessages( mSignAction->isChecked(), mEncryptAction->isChecked() );
   }
@@ -3251,7 +3253,7 @@ void KMComposeWin::doDelayedSend( MessageSender::SendMethod method, KMComposeWin
 
   mMsg->setHeader( new KMime::Headers::Generic( "X-KMail-Transport", mMsg.get(), mTransport->currentText(), "utf-8" ) );
 
-  const bool mNeverEncrypt = ( saveIn != KMComposeWin::None && GlobalSettings::self()->neverEncryptDrafts() ) ||
+  mNeverEncrypt = ( saveIn != KMComposeWin::None && GlobalSettings::self()->neverEncryptDrafts() ) ||
     mSigningAndEncryptionExplicitlyDisabled;
 
   // Save the quote prefix which is used for this message. Each message can have
