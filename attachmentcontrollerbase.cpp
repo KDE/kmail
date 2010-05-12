@@ -44,7 +44,6 @@
 #include <KRun>
 #include <KTemporaryFile>
 
-#include "kmreadermainwin.h"
 #include <kpimutils/kfileio.h>
 
 #include <libkleo/kleo/cryptobackendfactory.h>
@@ -514,9 +513,7 @@ void AttachmentControllerBase::viewAttachment( AttachmentPart::Ptr part )
                                false, false, false );
   KMime::Content *content = new KMime::Content;
   content->setContent( part->data() );
-  KMReaderMainWin *win =
-    new KMReaderMainWin( content, false, atmTempFile->fileName(), pname, part->charset() );
-  win->show();
+  showAttachment( content, atmTempFile->fileName(), pname, part->charset() );
 }
 
 void AttachmentControllerBase::editAttachment( AttachmentPart::Ptr part, bool openWith )

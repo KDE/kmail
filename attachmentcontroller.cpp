@@ -79,7 +79,9 @@ AttachmentController::AttachmentController( Message::AttachmentModel *model, Att
   connect( view, SIGNAL(doubleClicked(QModelIndex)),
       this, SLOT(editSelectedAttachment()) );
 
-  connect(this, SIGNAL(refreshSelection()), SLOT(selectionChanged()));
+  connect( this, SIGNAL(refreshSelection()), SLOT(selectionChanged()));
+
+  connect( this, SIGNAL(showAttachment(KMime::Content*,QString,QString,QByteArray)), SLOT(onShowAttachment(KMime::Content*,QString,QString,QByteArray)));
 
 }
 
@@ -154,6 +156,13 @@ void AttachmentController::selectionChanged()
     selectedParts.append( part );
   }
   setSelectedParts( selectedParts );
+}
+
+void AttachmentController::onShowAttachment( KMime::Content *content, const QString &fileName, const QString &partname, const QByteArray &charset )
+{
+  KMReaderMainWin *win =
+    new KMReaderMainWin( content, false, fileName, partname, charset );
+  win->show();
 }
 
 #include "attachmentcontroller.moc"

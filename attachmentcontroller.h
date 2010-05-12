@@ -52,6 +52,7 @@ class AttachmentController : public AttachmentControllerBase
     void addAttachmentItems( const Akonadi::Item::List &items );
     void slotFetchJob( KJob * job );
     void selectionChanged();
+    void onShowAttachment( KMime::Content *content, const QString &fileName, const QString &partname, const QByteArray &charset );
 
   private:
     KMComposeWin *mComposer;
