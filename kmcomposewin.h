@@ -25,6 +25,7 @@
 
 // KMail includes
 #include "composer.h"
+#include "recipientseditor.h"
 
 // Qt includes
 #include <QFont>
@@ -467,9 +468,10 @@ class KMComposeWin : public KMail::Composer
      */
     void readyForSending();
 
+    enum RecipientExpansion { UseExpandedRecipients, UseUnExpandedRecipients };
     QList< Message::Composer* > generateCryptoMessages( bool sign, bool encrypt );
     void fillGlobalPart( Message::GlobalPart *globalPart );
-    void fillInfoPart( Message::InfoPart *part );
+    void fillInfoPart( Message::InfoPart *part, RecipientExpansion expansion );
     void queueMessage( boost::shared_ptr<KMime::Message> message, Message::Composer* composer );
 
     /**
@@ -528,6 +530,7 @@ class KMComposeWin : public KMail::Composer
     QString bcc() const;
     QString from() const;
     QString replyTo() const;
+    QStringList recipientList( Recipient::Type type ) const;
 
     /**
      * Use the given folder as sent-mail folder if the given folder exists.

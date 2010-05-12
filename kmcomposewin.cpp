@@ -644,7 +644,7 @@ Message::Composer* KMComposeWin::createSimpleComposer()
   Message::Composer* composer = new Message::Composer;
   fillGlobalPart( composer->globalPart() );
   mEditor->fillComposerTextPart( composer->textPart() );
-  fillInfoPart( composer->infoPart() );
+  fillInfoPart( composer->infoPart(), UseUnExpandedRecipients );
   composer->addAttachmentParts( mAttachmentModel->attachments() );
   return composer;
 }
@@ -1503,6 +1503,18 @@ QString KMComposeWin::subject() const
 }
 
 //-----------------------------------------------------------------------------
+QStringList KMComposeWin::recipientList( Recipient::Type type ) const
+{
+  QStringList selectedRecipients;
+  foreach( const Recipient &r, mRecipientsEditor->recipients() ) {
+    if ( r.type() == type ) {
+      selectedRecipients << r.email();
+    }
+  }
+  return selectedRecipients;
+}
+
+//-----------------------------------------------------------------------------
 QString KMComposeWin::to() const
 {
   return mRecipientsEditor->recipientString( Recipient::To );
@@ -2055,22 +2067,12 @@ void KMComposeWin::readyForSending()
 
   setEnabled( false );
 
- QStringList to, cc, bcc;
-  foreach( const Recipient &r, mRecipientsEditor->recipients() ) {
-    switch( r.type() ) {
-      case Recipient::To: to << r.email(); break;
-      case Recipient::Cc: cc << r.email(); break;
-      case Recipient::Bcc: bcc << r.email(); break;
-      default: Q_ASSERT( false ); break;
-    }
-  }
-
   // first, expand all addresses
   EmailAddressResolveJob *job = new EmailAddressResolveJob( this );
   job->setFrom( from() );
-  job->setTo( to );
-  job->setCc( cc );
-  job->setBcc( bcc );
+  job->setTo( recipientList( Recipient::To ) );
+  job->setCc( recipientList( Recipient::Cc ) );
+  job->setBcc( recipientList( Recipient::Bcc ) );
   connect( job, SIGNAL( result( KJob* ) ), SLOT( slotEmailAddressResolved( KJob* ) ) );
   job->start();
 
@@ -2138,7 +2140,7 @@ void KMComposeWin::slotEmailAddressResolved( KJob *job )
   foreach( Message::Composer* composer, mComposers ) {
     fillGlobalPart( composer->globalPart() );
     mEditor->fillComposerTextPart( composer->textPart() );
-    fillInfoPart( composer->infoPart() );
+    fillInfoPart( composer->infoPart(), UseExpandedRecipients );
 
     composer->addAttachmentParts( mAttachmentModel->attachments() );
 
@@ -2293,7 +2295,7 @@ void KMComposeWin::fillGlobalPart( Message::GlobalPart *globalPart )
   globalPart->setMDNRequested( mRequestMDNAction->isChecked() );
 }
 
-void KMComposeWin::fillInfoPart( Message::InfoPart *infoPart )
+void KMComposeWin::fillInfoPart( Message::InfoPart *infoPart, RecipientExpansion expansion  )
 {
   // TODO splitAddressList and expandAliases ugliness should be handled by a
   // special AddressListEdit widget... (later: see RecipientsEditor)
@@ -2303,11 +2305,18 @@ void KMComposeWin::fillInfoPart( Message::InfoPart *infoPart )
   }
 
   infoPart->setTransportId( mTransport->currentTransportId() );
-  infoPart->setFrom( mExpandedFrom );
   infoPart->setReplyTo( replyTo() );
-  infoPart->setTo( mExpandedTo );
-  infoPart->setCc( mExpandedCc );
-  infoPart->setBcc( mExpandedBcc );
+  if ( expansion == UseExpandedRecipients ) {
+    infoPart->setFrom( mExpandedFrom );
+    infoPart->setTo( mExpandedTo );
+    infoPart->setCc( mExpandedCc );
+    infoPart->setBcc( mExpandedBcc );
+  } else {
+    infoPart->setFrom( from() );
+    infoPart->setTo( recipientList( Recipient::To ) );
+    infoPart->setCc( recipientList( Recipient::Cc ) );
+    infoPart->setBcc( recipientList( Recipient::Bcc ) );
+  }
   infoPart->setSubject( subject() );
   infoPart->setUserAgent( "KMail" );
 
