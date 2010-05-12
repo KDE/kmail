@@ -47,6 +47,12 @@ class AttachmentController : public AttachmentControllerBase
 
     void attachMyPublicKey();
 
+  private slots:
+    void identityChanged();
+    void actionsCreated();
+    void addAttachmentItems( const Akonadi::Item::List &items );
+    void slotFetchJob( KJob * job );
+
   private:
     KMComposeWin *mComposer;
 };

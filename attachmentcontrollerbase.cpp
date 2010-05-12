@@ -60,6 +60,7 @@
 #include <messagecore/attachmentfrommimecontentjob.h>
 #include <messagecore/attachmentfromurljob.h>
 #include <messagecore/attachmentpropertiesdialog.h>
+#include <messagecomposersettings.h>
 
 using namespace KMail;
 using namespace KPIM;
@@ -70,7 +71,6 @@ class KMail::AttachmentControllerBase::Private
     Private( AttachmentControllerBase *qq );
     ~Private();
 
-    void identityChanged(); // slot
     void selectionChanged(); // slot
     void attachmentRemoved( AttachmentPart::Ptr part ); // slot
     void compressJobResult( KJob *job ); // slot
@@ -91,13 +91,14 @@ class KMail::AttachmentControllerBase::Private
     bool signEnabled;
     Message::AttachmentModel *model;
     AttachmentView *view;
-    KMComposeWin *composer;
+    QWidget *wParent;
     QHash<MessageViewer::EditorWatcher*,AttachmentPart::Ptr> editorPart;
     QHash<MessageViewer::EditorWatcher*,KTemporaryFile*> editorTempFile;
     QList<KTemporaryFile*> mAttachmentTempList;
 
     QMenu *contextMenu;
     AttachmentPart::List selectedParts;
+    KActionCollection *mActionCollection;
     QAction *attachPublicKeyAction;
     QAction *attachMyPublicKeyAction;
     QAction *openContextAction;
@@ -123,7 +124,7 @@ AttachmentControllerBase::Private::Private( AttachmentControllerBase *qq )
   , signEnabled( false )
   , model( 0 )
   , view( 0 )
-  , composer( 0 )
+  , wParent( 0 )
   , contextMenu( 0 )
   , attachPublicKeyAction( 0 )
   , attachMyPublicKeyAction( 0 )
@@ -145,20 +146,6 @@ AttachmentControllerBase::Private::Private( AttachmentControllerBase *qq )
 AttachmentControllerBase::Private::~Private()
 {
   qDeleteAll( mAttachmentTempList );
-}
-
-void AttachmentControllerBase::Private::identityChanged()
-{
-  const KPIMIdentities::Identity &identity = composer->identity();
-
-  // "Attach public key" is only possible if OpenPGP support is available:
-  attachPublicKeyAction->setEnabled(
-      Kleo::CryptoBackendFactory::instance()->openpgp() );
-
-  // "Attach my public key" is only possible if OpenPGP support is
-  // available and the user specified his key for the current identity:
-  attachMyPublicKeyAction->setEnabled(
-      Kleo::CryptoBackendFactory::instance()->openpgp() && !identity.pgpEncryptionKey().isEmpty() );
 }
 
 void AttachmentControllerBase::Private::selectionChanged()
@@ -194,7 +181,7 @@ void AttachmentControllerBase::Private::attachmentRemoved( AttachmentPart::Ptr p
 void AttachmentControllerBase::Private::compressJobResult( KJob *job )
 {
   if( job->error() ) {
-    KMessageBox::sorry( composer, job->errorString(), i18n( "Failed to compress attachment" ) );
+    KMessageBox::sorry( wParent, job->errorString(), i18n( "Failed to compress attachment" ) );
     return;
   }
 
@@ -205,7 +192,7 @@ void AttachmentControllerBase::Private::compressJobResult( KJob *job )
   AttachmentPart::Ptr compressedPart = ajob->compressedPart();
 
   if( ajob->isCompressedPartLarger() ) {
-    const int result = KMessageBox::questionYesNo( composer,
+    const int result = KMessageBox::questionYesNo( wParent,
           i18n( "The compressed attachment is larger than the original. "
                 "Do you want to keep the original one?" ),
           QString( /*caption*/ ),
@@ -229,7 +216,7 @@ void AttachmentControllerBase::Private::compressJobResult( KJob *job )
 void AttachmentControllerBase::Private::loadJobResult( KJob *job )
 {
   if( job->error() ) {
-    KMessageBox::sorry( composer, job->errorString(), i18n( "Failed to attach file" ) );
+    KMessageBox::sorry( wParent, job->errorString(), i18n( "Failed to attach file" ) );
     return;
   }
 
@@ -328,7 +315,7 @@ void AttachmentControllerBase::Private::attachPublicKeyJobResult( KJob *job )
   // is that we want to show the proper caption ("public key" instead of "file")...
 
   if( job->error() ) {
-    KMessageBox::sorry( composer, job->errorString(), i18n( "Failed to attach public key" ) );
+    KMessageBox::sorry( wParent, job->errorString(), i18n( "Failed to attach public key" ) );
     return;
   }
 
@@ -359,7 +346,7 @@ static KTemporaryFile *dumpAttachmentToTempFile( const AttachmentPart::Ptr part 
 
 
 
-AttachmentControllerBase::AttachmentControllerBase( Message::AttachmentModel *model, AttachmentView *view, KMComposeWin *composer )
+AttachmentControllerBase::AttachmentControllerBase( Message::AttachmentModel *model, AttachmentView *view, QWidget *wParent, KActionCollection *actionCollection )
   : QObject( view )
   , d( new Private( this ) )
 {
@@ -380,9 +367,8 @@ AttachmentControllerBase::AttachmentControllerBase( Message::AttachmentModel *mo
   connect( model, SIGNAL(encryptEnabled(bool)), this, SLOT(setEncryptEnabled(bool)) );
   connect( model, SIGNAL(signEnabled(bool)), this, SLOT(setSignEnabled(bool)) );
 
-  d->composer = composer;
-  connect( composer, SIGNAL(identityChanged(KPIMIdentities::Identity)),
-      this, SLOT(identityChanged()) );
+  d->wParent = wParent;
+  d->mActionCollection = actionCollection;
 }
 
 AttachmentControllerBase::~AttachmentControllerBase()
@@ -442,7 +428,7 @@ void AttachmentControllerBase::createActions()
 
   // Create a context menu for the attachment view.
   Q_ASSERT( d->contextMenu == 0 ); // Not called twice.
-  d->contextMenu = new QMenu( d->composer );
+  d->contextMenu = new QMenu( d->wParent );
   d->contextMenu->addAction( d->openContextAction );
   d->contextMenu->addAction( d->viewContextAction );
   d->contextMenu->addAction( d->editContextAction );
@@ -454,7 +440,7 @@ void AttachmentControllerBase::createActions()
   d->contextMenu->addAction( d->addContextAction );
 
   // Insert the actions into the composer window's menu.
-  KActionCollection *collection = d->composer->actionCollection();
+  KActionCollection *collection = d->mActionCollection;
   collection->addAction( "attach_public_key", d->attachPublicKeyAction );
   collection->addAction( "attach_my_public_key", d->attachMyPublicKeyAction );
   collection->addAction( "attach", d->addAction );
@@ -462,8 +448,7 @@ void AttachmentControllerBase::createActions()
   collection->addAction( "attach_save", d->saveAsAction );
   collection->addAction( "attach_properties", d->propertiesAction );
 
-  // Disable public key actions if appropriate.
-  d->identityChanged();
+  emit actionsCreated();
 
   // Disable actions like 'Remove', since nothing is currently selected.
   d->selectionChanged();
@@ -509,7 +494,7 @@ void AttachmentControllerBase::openAttachment( AttachmentPart::Ptr part )
 {
   KTemporaryFile *tempFile = dumpAttachmentToTempFile( part );
   if( !tempFile ) {
-    KMessageBox::sorry( d->composer,
+    KMessageBox::sorry( d->wParent,
          i18n( "KMail was unable to write the attachment to a temporary file." ),
          i18n( "Unable to open attachment" ) );
     return;
@@ -517,7 +502,7 @@ void AttachmentControllerBase::openAttachment( AttachmentPart::Ptr part )
 
   bool success = KRun::runUrl( KUrl::fromPath( tempFile->fileName() ),
                                part->mimeType(),
-                               d->composer,
+                               d->wParent,
                                true /*tempFile*/,
                                false /*runExecutables*/ );
   if( !success ) {
@@ -525,7 +510,7 @@ void AttachmentControllerBase::openAttachment( AttachmentPart::Ptr part )
       // KRun showed an Open-With dialog, and it was canceled.
     } else {
       // KRun failed.
-      KMessageBox::sorry( d->composer,
+      KMessageBox::sorry( d->wParent,
            i18n( "KMail was unable to open the attachment." ),
            i18n( "Unable to open attachment" ) );
     }
@@ -565,7 +550,7 @@ void AttachmentControllerBase::editAttachment( AttachmentPart::Ptr part, bool op
 {
   KTemporaryFile *tempFile = dumpAttachmentToTempFile( part );
   if( !tempFile ) {
-    KMessageBox::sorry( d->composer,
+    KMessageBox::sorry( d->wParent,
          i18n( "KMail was unable to write the attachment to a temporary file." ),
          i18n( "Unable to edit attachment" ) );
     return;
@@ -574,7 +559,7 @@ void AttachmentControllerBase::editAttachment( AttachmentPart::Ptr part, bool op
   MessageViewer::EditorWatcher *watcher = new MessageViewer::EditorWatcher(
       KUrl::fromPath( tempFile->fileName() ),
       part->mimeType(), openWith,
-      this, d->composer );
+      this, d->wParent );
   connect( watcher, SIGNAL(editDone(MessageViewer::EditorWatcher*)),
            this, SLOT(editDone(MessageViewer::EditorWatcher*)) );
 
@@ -606,7 +591,7 @@ void AttachmentControllerBase::saveAttachmentAs( AttachmentPart::Ptr part )
   }
 
   KUrl url = KFileDialog::getSaveUrl( pname,
-      QString( /*filter*/ ), d->composer,
+      QString( /*filter*/ ), d->wParent,
       i18n( "Save Attachment As" ) );
 
   if( url.isEmpty() ) {
@@ -620,7 +605,7 @@ void AttachmentControllerBase::saveAttachmentAs( AttachmentPart::Ptr part )
 void AttachmentControllerBase::attachmentProperties( AttachmentPart::Ptr part )
 {
   QPointer<AttachmentPropertiesDialog> dialog = new AttachmentPropertiesDialog(
-      part, d->composer );
+      part, d->wParent );
 
   dialog->setEncryptEnabled( d->encryptEnabled );
   dialog->setSignEnabled( d->signEnabled );
@@ -635,7 +620,7 @@ void AttachmentControllerBase::showAddAttachmentDialog()
 {
   QPointer<KEncodingFileDialog> dialog = new KEncodingFileDialog(
       QString( /*startDir*/ ), QString( /*encoding*/ ), QString( /*filter*/ ),
-      i18n( "Attach File" ), KFileDialog::Other, d->composer );
+      i18n( "Attach File" ), KFileDialog::Other, d->wParent );
 
   dialog->okButton()->setGuiItem( KGuiItem( i18n("&Attach"), "document-open") );
   dialog->setMode( KFile::Files );
@@ -657,7 +642,7 @@ void AttachmentControllerBase::addAttachment( AttachmentPart::Ptr part )
   d->model->addAttachment( part );
 
   // TODO I can't find this setting in the config dialog. Has it been removed?
-  if( GlobalSettings::self()->showMessagePartDialogOnAttach() ) {
+  if( MessageComposer::MessageComposerSettings::self()->showMessagePartDialogOnAttach() ) {
     attachmentProperties( part );
   }
 }
@@ -679,34 +664,6 @@ void AttachmentControllerBase::addAttachments( const KUrl::List &urls )
   }
 }
 
-void AttachmentControllerBase::addAttachmentItems( const Akonadi::Item::List &items )
-{
-  Akonadi::ItemFetchJob *itemFetchJob = new Akonadi::ItemFetchJob( items, this );
-  itemFetchJob->fetchScope().fetchFullPayload( true );
-  itemFetchJob->fetchScope().setAncestorRetrieval( Akonadi::ItemFetchScope::Parent );
-  connect( itemFetchJob, SIGNAL( result( KJob* ) ), this, SLOT( slotFetchJob( KJob* ) ) );
-}
-
-void AttachmentControllerBase::slotFetchJob( KJob *job )
-{
-  if ( job->error() ) {
-    static_cast<KIO::Job*>(job)->ui()->showErrorMessage();
-    return;
-  }
-  Akonadi::ItemFetchJob *fjob = dynamic_cast<Akonadi::ItemFetchJob*>( job );
-  if ( !fjob )
-    return;
-  Akonadi::Item::List items = fjob->items();
-
-  uint identity = 0;
-  if ( items.at( 0 ).isValid() && items.at( 0 ).parentCollection().isValid() ) {
-    QSharedPointer<FolderCollection> fd( FolderCollection::forCollection( items.at( 0 ).parentCollection() ) );
-    identity = fd->identity();
-  }
-  KMCommand *command = new KMForwardAttachedCommand( d->composer, items,identity, d->composer );
-  command->start();
-}
-
 void AttachmentControllerBase::showAttachPublicKeyDialog()
 {
   using Kleo::KeySelectionDialog;
@@ -717,12 +674,22 @@ void AttachmentControllerBase::showAttachPublicKeyDialog()
 			KeySelectionDialog::PublicKeys|KeySelectionDialog::OpenPGPKeys,
 			false /* no multi selection */,
       false /* no remember choice box */,
-      d->composer, "attach public key selection dialog" );
+      d->wParent, "attach public key selection dialog" );
 
   if( dialog->exec() == KDialog::Accepted ) {
     exportPublicKey( dialog->fingerprint() );
   }
   delete dialog;
+}
+
+void AttachmentControllerBase::enableAttachPublicKey( bool enable )
+{
+  d->attachPublicKeyAction->setEnabled( enable );
+}
+
+void AttachmentControllerBase::enableAttachMyPublicKey( bool enable )
+{
+  d->attachMyPublicKeyAction->setEnabled( enable );
 }
 
 #include "attachmentcontrollerbase.moc"

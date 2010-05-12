@@ -33,7 +33,7 @@
 #include <akonadi/item.h>
 #include <KJob>
 
-class KMComposeWin;
+class KActionCollection;
 
 namespace Message {
 class AttachmentModel;
@@ -48,7 +48,7 @@ class AttachmentControllerBase : public QObject
   Q_OBJECT
 
   public:
-    AttachmentControllerBase( Message::AttachmentModel *model, AttachmentView *view, KMComposeWin *composer );
+    AttachmentControllerBase( Message::AttachmentModel *model, AttachmentView *view, QWidget *wParent, KActionCollection *actionCollection );
     ~AttachmentControllerBase();
 
     void createActions();
@@ -73,20 +73,20 @@ class AttachmentControllerBase : public QObject
     void addAttachment( KPIM::AttachmentPart::Ptr part );
     void addAttachment( const KUrl &url );
     void addAttachments( const KUrl::List &urls );
-    void addAttachmentItems( const Akonadi::Item::List &items );
     void showAttachPublicKeyDialog();
+
+  signals:
+    void actionsCreated();
 
   protected:
     void exportPublicKey( const QString &fingerprint );
-
-  private slots:
-    void slotFetchJob( KJob * job );
+    void enableAttachPublicKey( bool enable );
+    void enableAttachMyPublicKey( bool enable );
 
   private:
     class Private;
     Private *const d;
 
-    Q_PRIVATE_SLOT( d, void identityChanged() )
     Q_PRIVATE_SLOT( d, void selectionChanged() )
     Q_PRIVATE_SLOT( d, void attachmentRemoved( KPIM::AttachmentPart::Ptr ) )
     Q_PRIVATE_SLOT( d, void compressJobResult( KJob* ) )

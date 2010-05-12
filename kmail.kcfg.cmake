@@ -267,9 +267,6 @@
                 "attachment,attached" ).split( ',' )
         </default>
       </entry>
-      <entry name="ShowMessagePartDialogOnAttach" type="Bool" key="showMessagePartDialogOnAttach">
-        <default>false</default>
-      </entry>
       <entry name="AutosaveInterval" type="Int" key="autosave">
         <label>Autosave interval:</label>
         <whatsthis>A backup copy of the text in the composer window can be created regularly. The interval used to create the backups is set here. You can disable autosaving by setting it to the value 0.</whatsthis>
