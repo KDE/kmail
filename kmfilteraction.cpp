@@ -435,6 +435,18 @@ void KMFilterActionWithCommand::clearParamWidget( QWidget* paramWidget ) const
   KMFilterActionWithUrl::clearParamWidget( paramWidget );
 }
 
+static KMime::Content* findMimeNodeForIndex( KMime::Content* node, int &index )
+{
+  if ( index <= 0 )
+    return node;
+  foreach ( KMime::Content* child, node->contents() ) {
+    KMime::Content *result = findMimeNodeForIndex( child, --index );
+    if ( result )
+      return result;
+  }
+  return 0;
+}
+
 QString KMFilterActionWithCommand::substituteCommandLineArgsFor( const KMime::Message::Ptr &aMsg, QList<KTemporaryFile*> & aTempFileList ) const
 {
   QString result = mParameter;
@@ -476,14 +488,12 @@ QString KMFilterActionWithCommand::substituteCommandLineArgsFor( const KMime::Me
         KPIMUtils::kByteArrayToFile( aMsg->decodedContent(), tempFileName,
                           false, false, false );
       else {
-        KMime::Content content;
-#if 0 //TODO port to akonadi
-        aMsg->bodyPart( (*it), &msgPart );
-        KPIMUtils::kByteArrayToFile( msgPart.bodyDecodedBinary(), tempFileName,
-                          false, false, false );
-#else
-        kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
-#endif
+        int index = *it; // we pass by reference below, so this is not const
+        KMime::Content *content = findMimeNodeForIndex( aMsg.get(), index );
+        if ( content ) {
+          KPIMUtils::kByteArrayToFile( content->decodedContent(), tempFileName,
+                            false, false, false );
+        }
       }
       tf->close();
     }
