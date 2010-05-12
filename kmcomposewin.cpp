@@ -2298,7 +2298,10 @@ void KMComposeWin::fillInfoPart( Message::InfoPart *infoPart )
   // TODO splitAddressList and expandAliases ugliness should be handled by a
   // special AddressListEdit widget... (later: see RecipientsEditor)
 
-  infoPart->setFcc( QString::number( mFcc->currentCollection().id() ) );
+  if ( mFccAction->isEnabled() ) {
+    infoPart->setFcc( QString::number( mFcc->currentCollection().id() ) );
+  }
+
   infoPart->setTransportId( mTransport->currentTransportId() );
   infoPart->setFrom( mExpandedFrom );
   infoPart->setReplyTo( replyTo() );
