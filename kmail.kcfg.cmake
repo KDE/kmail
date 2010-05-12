@@ -289,11 +289,6 @@
       </entry>
       <entry name="SnippetSplitterPosition" type="IntList"/>
 
-      <entry name="MaximumAttachmentSize" type="Int">
-          <label>The maximum size in MB that email attachments are allowed to have (-1 for no limit).</label>
-          <default>-1</default>
-      </entry>
-
       <entry name="ShowGnuPGAuditLogAfterSuccessfulSignEncrypt" type="Bool">
           <label>Show the GnuPG Audit Log even after crypto operations that completed successfully.</label>
           <default>false</default>

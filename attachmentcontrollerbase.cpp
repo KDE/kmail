@@ -26,7 +26,6 @@
 #include "attachmentview.h"
 #include "attachmentfrompublickeyjob.h"
 #include "messageviewer/editorwatcher.h"
-#include "globalsettings.h"
 #include "kmkernel.h"
 #include "kmcomposewin.h"
 #include "kmcommands.h"
@@ -650,8 +649,8 @@ void AttachmentControllerBase::addAttachment( AttachmentPart::Ptr part )
 void AttachmentControllerBase::addAttachment( const KUrl &url )
 {
   AttachmentFromUrlJob *ajob = new AttachmentFromUrlJob( url, this );
-  if( GlobalSettings::maximumAttachmentSize() > 0 ) {
-    ajob->setMaximumAllowedSize( GlobalSettings::maximumAttachmentSize() * 1024 * 1024 );
+  if( MessageComposer::MessageComposerSettings::maximumAttachmentSize() > 0 ) {
+    ajob->setMaximumAllowedSize( MessageComposer::MessageComposerSettings::maximumAttachmentSize() * 1024 * 1024 );
   }
   connect( ajob, SIGNAL(result(KJob*)), this, SLOT(loadJobResult(KJob*)) );
   ajob->start();
