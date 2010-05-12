@@ -2102,6 +2102,7 @@ void KMComposeWin::slotEmailAddressResolved( KJob *job )
         case Recipient::To: mExpandedTo << r.email(); break;
         case Recipient::Cc: mExpandedCc << r.email(); break;
         case Recipient::Bcc: mExpandedBcc << r.email(); break;
+        case Recipient::Undefined: Q_ASSERT( !"Unknown recpient type!" ); break;
       }
     }
     QStringList unExpandedTo, unExpandedCc, unExpandedBcc;
