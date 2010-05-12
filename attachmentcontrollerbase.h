@@ -82,6 +82,10 @@ class AttachmentControllerBase : public QObject
     void exportPublicKey( const QString &fingerprint );
     void enableAttachPublicKey( bool enable );
     void enableAttachMyPublicKey( bool enable );
+    void byteArrayToRemoteFile(const QByteArray &aData, const KUrl &aURL, bool overwrite = false);
+
+  private slots:
+    void slotPutResult(KJob *job);
 
   private:
     class Private;

@@ -60,6 +60,7 @@
 #include <messagecore/attachmentfromurljob.h>
 #include <messagecore/attachmentpropertiesdialog.h>
 #include <messagecomposersettings.h>
+#include <KIO/Job>
 
 using namespace KMail;
 using namespace KPIM;
@@ -598,7 +599,34 @@ void AttachmentControllerBase::saveAttachmentAs( AttachmentPart::Ptr part )
     return;
   }
 
-  KMKernel::self()->byteArrayToRemoteFile( part->data(), url );
+  byteArrayToRemoteFile(part->data(), url);
+}
+
+void AttachmentControllerBase::byteArrayToRemoteFile(const QByteArray &aData, const KUrl &aURL, bool overwrite)
+{
+  KIO::StoredTransferJob *job = KIO::storedPut( aData, aURL, -1, overwrite ? KIO::Overwrite : KIO::DefaultFlags );
+  connect( job, SIGNAL(result(KJob *)), SLOT(slotPutResult(KJob *)) );
+}
+
+void AttachmentControllerBase::slotPutResult(KJob *job)
+{
+  KIO::StoredTransferJob *_job = qobject_cast<KIO::StoredTransferJob *>( job );
+
+  if (job->error())
+  {
+    if (job->error() == KIO::ERR_FILE_ALREADY_EXIST)
+    {
+      if (KMessageBox::warningContinueCancel(0,
+        i18n("File %1 exists.\nDo you want to replace it?",
+         _job->url()), i18n("Save to File"), KGuiItem(i18n("&Replace")))
+        == KMessageBox::Continue)
+        byteArrayToRemoteFile(_job->data(), _job->url(), true);
+    }
+    else {
+      KIO::JobUiDelegate *ui = static_cast<KIO::Job*>( job )->ui();
+      ui->showErrorMessage();
+    }
+  }
 }
 
 void AttachmentControllerBase::attachmentProperties( AttachmentPart::Ptr part )
