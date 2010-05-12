@@ -47,8 +47,6 @@ namespace KMime {
 
 namespace KMail {
 
-class ActionScheduler;
-
 /* A place to store properties that some but not necessarily all messages
    have.
 
@@ -72,9 +70,6 @@ public:
       scheduled to be moved */
   static Akonadi::Collection filterFolder( const Akonadi::Item &item );
   static void setFilterFolder( const Akonadi::Item &item, const Akonadi::Collection &folder );
-  /* Set the filterHandler for a message */
-  static ActionScheduler* filterHandler( const Akonadi::Item &item );
-  static void setFilterHandler( const Akonadi::Item &item, ActionScheduler* filterHandler );
 
   /** Some properties, namely complete and
       serialCache must be forgotten when a message class instance is
@@ -85,9 +80,6 @@ private:
 
   // The folder a message is to be moved into once filtering is finished if any
   static QMap<Akonadi::Item::Id, Akonadi::Collection> sFolders;
-
-  // The action scheduler currently processing a message if any
-  static QMap<Akonadi::Item::Id, QPointer<ActionScheduler> > sHandlers;
 };
 
 }

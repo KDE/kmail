@@ -39,7 +39,6 @@
 #include "mailinglistpropertiesdialog.h"
 #include "templateparser.h"
 #include "statusbarlabel.h"
-#include "actionscheduler.h"
 #include "expirypropertiesdialog.h"
 #include "undostack.h"
 #include "kmcommands.h"
@@ -2249,23 +2248,6 @@ void KMMainWidget::slotApplyFilters()
   const QList<Akonadi::Item> selectedMessages = mMessagePane->selectionAsMessageItemList();
   if ( selectedMessages.isEmpty() )
     return;
-
-  if (KMail::ActionScheduler::isEnabled() || kmkernel->filterMgr()->atLeastOneOnlineImapFolderTarget())
-  {
-    // uses action scheduler
-    KMFilterMgr::FilterSet set = KMFilterMgr::Explicit;
-    const QList<KMFilter*> filters = kmkernel->filterMgr()->filters();
-    KMail::ActionScheduler *scheduler = new KMail::ActionScheduler( set, filters );
-    scheduler->setAutoDestruct( true );
-
-    foreach ( const Akonadi::Item &item, selectedMessages ) {
-      if ( item.isValid() ) {
-        scheduler->execFilters( item );
-      }
-    }
-
-    return;
-  }
 
   MessageViewer::KCursorSaver busy( MessageViewer::KBusyPtr::busy() );
   const int msgCountToFilter = selectedMessages.size();

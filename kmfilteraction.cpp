@@ -12,9 +12,7 @@
 
 using KMail::FolderRequester;
 #include "messageproperty.h"
-#include "actionscheduler.h"
 using KMail::MessageProperty;
-using KMail::ActionScheduler;
 #include "regexplineedit.h"
 using KMail::RegExpLineEdit;
 #include "stringutil.h"
@@ -83,14 +81,6 @@ KMFilterAction::KMFilterAction( const char* aName, const QString &aLabel )
 
 KMFilterAction::~KMFilterAction()
 {
-}
-
-void KMFilterAction::processAsync( const Akonadi::Item &item ) const
-{
-  ActionScheduler *handler = MessageProperty::filterHandler( item );
-  ReturnCode result = process( item );
-  if (handler)
-    handler->actionMessage( result );
 }
 
 bool KMFilterAction::requiresBody(KMime::Content *) const
@@ -1498,7 +1488,6 @@ class KMFilterActionCopy: public KMFilterActionWithFolder
 public:
   KMFilterActionCopy();
   virtual ReturnCode process( const Akonadi::Item &item ) const;
-  virtual void processAsync( const Akonadi::Item  &item ) const;
   virtual bool requiresBody( KMime::Content *) const;
   static KMFilterAction* newAction(void);
 };
@@ -1518,16 +1507,6 @@ KMFilterAction::ReturnCode KMFilterActionCopy::process( const Akonadi::Item &ite
   // copy the message 1:1
   new Akonadi::ItemCopyJob( item, mFolder, kmkernel->filterMgr() ); // TODO handle error
   return GoOn;
-}
-
-void KMFilterActionCopy::processAsync( const Akonadi::Item &item ) const
-{
-  ActionScheduler *handler = MessageProperty::filterHandler( item );
-
-  KMCommand *cmd = new KMCopyCommand( mFolder, item );
-  QObject::connect( cmd, SIGNAL( completed( KMCommand * ) ),
-                    handler, SLOT( copyMessageFinished( KMCommand * ) ) );
-  cmd->start();
 }
 
 bool KMFilterActionCopy::requiresBody( KMime::Content *msg ) const
@@ -1890,7 +1869,6 @@ class KMFilterActionExtFilter: public KMFilterActionWithCommand
 public:
   KMFilterActionExtFilter();
   virtual ReturnCode process( const Akonadi::Item &item2 ) const;
-  virtual void processAsync( const Akonadi::Item &item ) const;
   static KMFilterAction* newAction(void);
 };
 
@@ -1908,6 +1886,7 @@ KMFilterAction::ReturnCode KMFilterActionExtFilter::process( const Akonadi::Item
   return KMFilterActionWithCommand::genericProcess( item, true ); // use output
 }
 
+#if 0 //TODO port to akonadi, probably no longer needed, make sure the above does the same
 void KMFilterActionExtFilter::processAsync( const Akonadi::Item &item ) const
 {
   ActionScheduler *handler = MessageProperty::filterHandler( item );
@@ -1922,7 +1901,6 @@ void KMFilterActionExtFilter::processAsync( const Akonadi::Item &item ) const
   QList<KTemporaryFile*> atmList;
   atmList.append( inFile );
 
-#if 0 //TODO port to akonadi
   QString commandLine = substituteCommandLineArgsFor( aMsg, atmList );
   if ( commandLine.isEmpty() ) {
     handler->actionMessage( ErrorButGoOn );
@@ -1958,10 +1936,8 @@ void KMFilterActionExtFilter::processAsync( const Akonadi::Item &item ) const
   QObject::connect ( job, SIGNAL( done( ThreadWeaver::Job* ) ),
                      handler, SLOT( actionMessage() ) );
   kmkernel->weaver()->enqueue(job);
-#else
-  kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
-#endif
 }
+#endif
 
 //=============================================================================
 // KMFilterActionExecSound - execute command

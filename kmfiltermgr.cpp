@@ -35,9 +35,7 @@ using KMail::MessageProperty;
 KMFilterMgr::KMFilterMgr( bool popFilter )
   : mEditDialog( 0 ),
     bPopFilter( popFilter ),
-    mShowLater( false ),
-    mDirtyBufferedFolderTarget( true ),
-    mBufferedFolderTarget( true )
+    mShowLater( false )
 {
   if ( bPopFilter ) {
     kDebug() << "pPopFilter set";
@@ -56,7 +54,6 @@ KMFilterMgr::~KMFilterMgr()
 
 void KMFilterMgr::clear()
 {
-  mDirtyBufferedFolderTarget = true;
   qDeleteAll( mFilters );
   mFilters.clear();
 }
@@ -233,38 +230,6 @@ bool KMFilterMgr::atLeastOneIncomingFilterAppliesTo( const QString& accountID ) 
   return false;
 }
 
-bool KMFilterMgr::atLeastOneOnlineImapFolderTarget()
-{
-  if (!mDirtyBufferedFolderTarget)
-    return mBufferedFolderTarget;
-
-  mDirtyBufferedFolderTarget = false;
-
-  QList<KMFilter*>::const_iterator it = mFilters.constBegin();
-  for ( ; it != mFilters.constEnd() ; ++it ) {
-    KMFilter *filter = *it;
-    QList<KMFilterAction*>::const_iterator jt = filter->actions()->constBegin();
-    const QList<KMFilterAction*>::const_iterator jtend = filter->actions()->constEnd();
-    for ( ; jt != jtend ; ++jt ) {
-      KMFilterActionWithFolder *f = dynamic_cast<KMFilterActionWithFolder*>(*jt);
-      if (!f)
-        continue;
-      QString name = f->argsAsString();
-#if 0 //TODO port to akonadi
-      KMFolder *folder = kmkernel->imapFolderMgr()->findIdString( name );
-      if (folder) {
-        mBufferedFolderTarget = true;
-        return true;
-      }
-#else
-    kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
-#endif
-    }
-  }
-  mBufferedFolderTarget = false;
-  return false;
-}
-
 //-----------------------------------------------------------------------------
 void KMFilterMgr::openDialog( QWidget *, bool checkForEmptyFilterList )
 {
@@ -318,7 +283,6 @@ const QString KMFilterMgr::createUniqueName( const QString & name )
 void KMFilterMgr::appendFilters( const QList<KMFilter*> &filters,
                                  bool replaceIfNameExists )
 {
-  mDirtyBufferedFolderTarget = true;
   beginUpdate();
   if ( replaceIfNameExists ) {
     QList<KMFilter*>::const_iterator it1 = filters.constBegin();
@@ -354,7 +318,6 @@ void KMFilterMgr::slotFolderRemoved( const Akonadi::Collection & aFolder )
 //-----------------------------------------------------------------------------
 bool KMFilterMgr::folderRemoved(const Akonadi::Collection & aFolder, const Akonadi::Collection & aNewFolder)
 {
-  mDirtyBufferedFolderTarget = true;
   bool rem = false;
   QList<KMFilter*>::const_iterator it = mFilters.constBegin();
   for ( ; it != mFilters.constEnd() ; ++it )

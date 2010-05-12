@@ -29,13 +29,11 @@
 */
 
 #include "messageproperty.h"
-#include "actionscheduler.h"
 
 #include <kmime/kmime_content.h>
 using namespace KMail;
 
 QMap<Akonadi::Item::Id, Akonadi::Collection> MessageProperty::sFolders;
-QMap<Akonadi::Item::Id, QPointer<ActionScheduler> > MessageProperty::sHandlers;
 
 bool MessageProperty::filtering( const Akonadi::Item &item )
 {
@@ -59,20 +57,6 @@ void MessageProperty::setFilterFolder( const Akonadi::Item &item, const Akonadi:
 Akonadi::Collection MessageProperty::filterFolder( const Akonadi::Item &item )
 {
   return sFolders.value( item.id() );
-}
-
-ActionScheduler* MessageProperty::filterHandler( const Akonadi::Item &item )
-{
-  QMap<Akonadi::Item::Id, QPointer<ActionScheduler> >::ConstIterator it = sHandlers.constFind( item.id() );
-  return it == sHandlers.constEnd() ? 0 : (*it).operator->();
-}
-
-void MessageProperty::setFilterHandler( const Akonadi::Item &item, ActionScheduler* handler )
-{
-  if (handler)
-    sHandlers.insert( item.id(), QPointer<ActionScheduler>(handler) );
-  else
-    sHandlers.remove( item.id() );
 }
 
 void MessageProperty::forget( KMime::Content *msgBase )

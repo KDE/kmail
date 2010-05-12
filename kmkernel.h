@@ -151,8 +151,6 @@ public Q_SLOTS:
 
   Q_SCRIPTABLE bool handleCommandLine( bool noArgsOpensReader );
 
-  Q_SCRIPTABLE QString debugScheduler();
-
   /**
    * returns id of composer if more are opened
    */

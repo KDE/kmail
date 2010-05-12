@@ -75,8 +75,6 @@
 
 #include "foldercollection.h"
 
-#include "actionscheduler.h"
-using KMail::ActionScheduler;
 #include "mailinglist-magic.h"
 #include "messageviewer/nodehelper.h"
 #include <libkdepim/addemailaddressjob.h>
@@ -1764,26 +1762,9 @@ KMMetaFilterActionCommand::KMMetaFilterActionCommand( KMFilter *filter,
 
 void KMMetaFilterActionCommand::start()
 {
-  if ( ActionScheduler::isEnabled() ||
-       kmkernel->filterMgr()->atLeastOneOnlineImapFolderTarget() )
-  {
-    // use action scheduler
-    KMFilterMgr::FilterSet set = KMFilterMgr::All;
-    QList<KMFilter*> filters;
-    filters.append( mFilter );
-    ActionScheduler *scheduler = new ActionScheduler( set, filters );
-    scheduler->setAlwaysMatch( true );
-    scheduler->setAutoDestruct( true );
-    scheduler->setIgnoreFilterSet( true );
-    QList<Akonadi::Item> msgList = mMainWidget->messageListPane()->selectionAsMessageItemList();
-
-    foreach( const Akonadi::Item &item, msgList )
-      scheduler->execFilters( item );
-  } else {
-    KMCommand *filterCommand = new KMFilterActionCommand(
-        mMainWidget, mMainWidget->messageListPane()->selectionAsMessageItemList() , mFilter );
-    filterCommand->start();
-  }
+  KMCommand *filterCommand = new KMFilterActionCommand(
+      mMainWidget, mMainWidget->messageListPane()->selectionAsMessageItemList() , mFilter );
+  filterCommand->start();
 }
 
 FolderShortcutCommand::FolderShortcutCommand( KMMainWidget *mainwidget,

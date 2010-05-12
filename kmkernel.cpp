@@ -103,7 +103,6 @@ using KMail::MailServiceImpl;
 #include "foldercollectionmonitor.h"
 #include "imapsettings.h"
 #include "util.h"
-#include "actionscheduler.h"
 
 #include "searchdescriptionattribute.h"
 
@@ -825,12 +824,6 @@ bool KMKernel::showMail( quint32 serialNumber, const QString& /* messageId */ )
     }
   }
   return false;
-}
-
-QString KMKernel::debugScheduler()
-{
-  QString res = KMail::ActionScheduler::debug();
-  return res;
 }
 
 void KMKernel::pauseBackgroundJobs()

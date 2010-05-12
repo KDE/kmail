@@ -95,11 +95,6 @@ public:
   */
   virtual ReturnCode process( const Akonadi::Item &item) const = 0;
 
-  /** Execute an action on given message asynchronously.
-      Emits a result signal on completion.
-  */
-  virtual void processAsync( const Akonadi::Item &item ) const;
-
   /** Determines if the action depends on the body of the message
   */
   virtual bool requiresBody(KMime::Content* msgBase) const;

@@ -814,13 +814,6 @@ void KMFilterListBox::slotApplyFilterChanges( KDialog::ButtonCode button )
     fm->setShowLaterMsgs( mShowLater );
 
   fm->setFilters( newFilters );
-  if ( fm->atLeastOneOnlineImapFolderTarget() ) {
-    QString str = i18n("At least one filter targets a folder on an online "
-                       "IMAP account. Such filters will only be applied "
-                       "when manually filtering and when filtering "
-                       "incoming online IMAP mail.");
-    KMessageBox::information( this, str, QString(), "filterDlgOnlineImapCheck" );
-  }
 }
 
 QList<KMFilter *> KMFilterListBox::filtersForSaving( bool closeAfterSaving ) const
