@@ -321,7 +321,7 @@ uint FolderCollection::identity() const
     OrgKdeAkonadiImapSettingsInterface *imapSettingsInterface = KMail::Util::createImapSettingsInterface( mCollection.resource() );
     if ( imapSettingsInterface->isValid() ) {
       QDBusReply<int> reply = imapSettingsInterface->accountIdentity();
-      if ( reply.isValid() ) {
+      if ( reply.isValid() && reply.value() > 0 ) {
         identityId = reply;
       }
     }
