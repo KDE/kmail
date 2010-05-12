@@ -94,7 +94,6 @@ namespace MailTransport {
 
 namespace KMail {
   class AttachmentController;
-  class AttachmentModel;
   class AttachmentView;
 }
 
@@ -104,6 +103,7 @@ namespace KIO {
 
 namespace Message {
   class Composer;
+  class AttachmentModel;
   class GlobalPart;
   class InfoPart;
   class TextPart;
@@ -775,7 +775,7 @@ class KMComposeWin : public KMail::Composer
     QSplitter *mSplitter;
     QSplitter *mSnippetSplitter;
     KMail::AttachmentController *mAttachmentController;
-    KMail::AttachmentModel *mAttachmentModel;
+    Message::AttachmentModel *mAttachmentModel;
     KMail::AttachmentView *mAttachmentView;
     QByteArray mOriginalPreferredCharset;
 

@@ -35,9 +35,12 @@
 
 class KMComposeWin;
 
+namespace Message {
+class AttachmentModel;
+}
+
 namespace KMail {
 
-class AttachmentModel;
 class AttachmentView;
 
 class AttachmentController : public QObject
@@ -45,7 +48,7 @@ class AttachmentController : public QObject
   Q_OBJECT
 
   public:
-    AttachmentController( AttachmentModel *model, AttachmentView *view, KMComposeWin *composer );
+    AttachmentController( Message::AttachmentModel *model, AttachmentView *view, KMComposeWin *composer );
     ~AttachmentController();
 
     void createActions();

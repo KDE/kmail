@@ -24,7 +24,7 @@
 // KMail includes
 #include "addressvalidationjob.h"
 #include "attachmentcontroller.h"
-#include "attachmentmodel.h"
+#include "messagecomposer/attachmentmodel.h"
 #include "attachmentview.h"
 #include "codecaction.h"
 #include "emailaddressresolvejob.h"
@@ -378,7 +378,7 @@ KMComposeWin::KMComposeWin( const KMime::Message::Ptr &aMsg, Composer::TemplateC
   mBtnTransport->setFocusPolicy( Qt::NoFocus );
   mBtnDictionary->setFocusPolicy( Qt::NoFocus );
 
-  mAttachmentModel = new KMail::AttachmentModel( this );
+  mAttachmentModel = new Message::AttachmentModel( this );
   mAttachmentView = new KMail::AttachmentView( mAttachmentModel, mSplitter );
   mAttachmentView->hideIfEmpty();
   mAttachmentController = new KMail::AttachmentController( mAttachmentModel, mAttachmentView, this );

@@ -28,9 +28,11 @@
 
 class QContextMenuEvent;
 
-namespace KMail {
-
+namespace Message {
 class AttachmentModel;
+}
+
+namespace KMail {
 
 class AttachmentView : public QTreeView
 {
@@ -38,7 +40,7 @@ class AttachmentView : public QTreeView
 
   public:
     /// can't change model afterwards.
-    AttachmentView( AttachmentModel *model, QWidget *parent = 0 );
+    AttachmentView( Message::AttachmentModel *model, QWidget *parent = 0 );
     ~AttachmentView();
 
     /* reimpl */

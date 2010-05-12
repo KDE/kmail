@@ -23,7 +23,7 @@
 
 #include "attachmentview.h"
 
-#include "attachmentmodel.h"
+#include "messagecomposer/attachmentmodel.h"
 
 #include <QContextMenuEvent>
 #include <QHeaderView>
@@ -41,10 +41,10 @@ using namespace KMail;
 class KMail::AttachmentView::Private
 {
   public:
-    AttachmentModel *model;
+    Message::AttachmentModel *model;
 };
 
-AttachmentView::AttachmentView( AttachmentModel *model, QWidget *parent )
+AttachmentView::AttachmentView( Message::AttachmentModel *model, QWidget *parent )
   : QTreeView( parent )
   , d( new Private )
 {
@@ -68,7 +68,7 @@ AttachmentView::AttachmentView( AttachmentModel *model, QWidget *parent )
   setSortingEnabled( true );
 
   header()->setResizeMode( QHeaderView::Interactive );
-  header()->setResizeMode( AttachmentModel::MimeTypeColumn, QHeaderView::Stretch );
+  header()->setResizeMode( Message::AttachmentModel::MimeTypeColumn, QHeaderView::Stretch );
   header()->setStretchLastSection( false );
   setColumnWidth( 0, 200 );
 }
@@ -92,7 +92,7 @@ void AttachmentView::keyPressEvent( QKeyEvent *event )
     AttachmentPart::List toRemove;
     foreach( const QModelIndex &index, selectionModel()->selectedRows() ) {
       AttachmentPart::Ptr part = model()->data(
-          index, AttachmentModel::AttachmentPartRole ).value<AttachmentPart::Ptr>();
+          index, Message::AttachmentModel::AttachmentPartRole ).value<AttachmentPart::Ptr>();
       toRemove.append( part );
     }
     foreach( const AttachmentPart::Ptr &part, toRemove ) {
@@ -113,12 +113,12 @@ void AttachmentView::dragEnterEvent( QDragEnterEvent *event )
 
 void AttachmentView::setEncryptEnabled( bool enabled )
 {
-  setColumnHidden( AttachmentModel::EncryptColumn, !enabled );
+  setColumnHidden( Message::AttachmentModel::EncryptColumn, !enabled );
 }
 
 void AttachmentView::setSignEnabled( bool enabled )
 {
-  setColumnHidden( AttachmentModel::SignColumn, !enabled );
+  setColumnHidden( Message::AttachmentModel::SignColumn, !enabled );
 }
 
 void AttachmentView::hideIfEmpty()

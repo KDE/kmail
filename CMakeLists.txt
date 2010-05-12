@@ -126,7 +126,6 @@ set(kmailprivate_LIB_SRCS
    statusbarlabel.cpp
    kmcomposewin.cpp
    attachmentcontroller.cpp
-   attachmentmodel.cpp
    attachmentview.cpp
    attachmentfrompublickeyjob.cpp
    backupjob.cpp

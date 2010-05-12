@@ -22,7 +22,7 @@
 
 #include "attachmentcontroller.h"
 
-#include "attachmentmodel.h"
+#include "messagecomposer/attachmentmodel.h"
 #include "attachmentview.h"
 #include "attachmentfrompublickeyjob.h"
 #include "messageviewer/editorwatcher.h"
@@ -90,7 +90,7 @@ class KMail::AttachmentController::Private
     AttachmentController *const q;
     bool encryptEnabled;
     bool signEnabled;
-    AttachmentModel *model;
+    Message::AttachmentModel *model;
     AttachmentView *view;
     KMComposeWin *composer;
     QHash<MessageViewer::EditorWatcher*,AttachmentPart::Ptr> editorPart;
@@ -168,7 +168,7 @@ void AttachmentController::Private::selectionChanged()
   selectedParts.clear();
   foreach( const QModelIndex &index, selectedRows ) {
     AttachmentPart::Ptr part = view->model()->data(
-        index, AttachmentModel::AttachmentPartRole ).value<AttachmentPart::Ptr>();
+        index, Message::AttachmentModel::AttachmentPartRole ).value<AttachmentPart::Ptr>();
     selectedParts.append( part );
   }
   const int selectedCount = selectedParts.count();
@@ -360,7 +360,7 @@ static KTemporaryFile *dumpAttachmentToTempFile( const AttachmentPart::Ptr part 
 
 
 
-AttachmentController::AttachmentController( AttachmentModel *model, AttachmentView *view, KMComposeWin *composer )
+AttachmentController::AttachmentController( Message::AttachmentModel *model, AttachmentView *view, KMComposeWin *composer )
   : QObject( view )
   , d( new Private( this ) )
 {
