@@ -23,7 +23,7 @@
 #include "attachmentcontrollerbase.h"
 
 #include "messagecomposer/attachmentmodel.h"
-#include "attachmentfrompublickeyjob.h"
+#include "messagecomposer/attachmentfrompublickeyjob.h"
 #include "messageviewer/editorwatcher.h"
 
 #include <akonadi/itemfetchjob.h>
@@ -289,7 +289,7 @@ void AttachmentControllerBase::exportPublicKey( const QString &fingerprint )
     return;
   }
 
-  AttachmentFromPublicKeyJob *ajob = new AttachmentFromPublicKeyJob( fingerprint, this );
+  Message::AttachmentFromPublicKeyJob *ajob = new Message::AttachmentFromPublicKeyJob( fingerprint, this );
   connect( ajob, SIGNAL(result(KJob*)), this, SLOT(attachPublicKeyJobResult(KJob*)) );
   ajob->start();
 }
@@ -304,13 +304,11 @@ void AttachmentControllerBase::Private::attachPublicKeyJobResult( KJob *job )
     return;
   }
 
-  Q_ASSERT( dynamic_cast<AttachmentFromPublicKeyJob*>( job ) );
-  AttachmentFromPublicKeyJob *ajob = static_cast<AttachmentFromPublicKeyJob*>( job );
+  Q_ASSERT( dynamic_cast<Message::AttachmentFromPublicKeyJob*>( job ) );
+  Message::AttachmentFromPublicKeyJob *ajob = static_cast<Message::AttachmentFromPublicKeyJob*>( job );
   AttachmentPart::Ptr part = ajob->attachmentPart();
   q->addAttachment( part );
 }
-
-
 
 static KTemporaryFile *dumpAttachmentToTempFile( const AttachmentPart::Ptr part ) // local
 {

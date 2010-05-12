@@ -128,7 +128,6 @@ set(kmailprivate_LIB_SRCS
    attachmentcontrollerbase.cpp
    attachmentcontroller.cpp
    attachmentview.cpp
-   attachmentfrompublickeyjob.cpp
    backupjob.cpp
    archivefolderdialog.cpp
    searchdescriptionattribute.cpp
