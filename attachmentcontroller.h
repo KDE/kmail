@@ -23,15 +23,9 @@
 #ifndef KMAIL_ATTACHMENTCONTROLLER_H
 #define KMAIL_ATTACHMENTCONTROLLER_H
 
-#include <QtCore/QObject>
-
-#include <KDE/KUrl>
+#include "attachmentcontrollerbase.h"
 
 #include <KPIMIdentities/Identity>
-
-#include <messagecore/attachmentpart.h>
-#include <akonadi/item.h>
-#include <KJob>
 
 class KMComposeWin;
 
@@ -43,7 +37,7 @@ namespace KMail {
 
 class AttachmentView;
 
-class AttachmentController : public QObject
+class AttachmentController : public AttachmentControllerBase
 {
   Q_OBJECT
 
@@ -51,53 +45,10 @@ class AttachmentController : public QObject
     AttachmentController( Message::AttachmentModel *model, AttachmentView *view, KMComposeWin *composer );
     ~AttachmentController();
 
-    void createActions();
-
-    // TODO dnd stuff...
-
-  public slots:
-    /// model sets these
-    void setEncryptEnabled( bool enabled );
-    void setSignEnabled( bool enabled );
-    /// compression is async...
-    void compressAttachment( KPIM::AttachmentPart::Ptr part, bool compress );
-    void showContextMenu();
-    void openAttachment( KPIM::AttachmentPart::Ptr part );
-    void viewAttachment( KPIM::AttachmentPart::Ptr part );
-    void editAttachment( KPIM::AttachmentPart::Ptr part, bool openWith = false );
-    void editAttachmentWith( KPIM::AttachmentPart::Ptr part );
-    void saveAttachmentAs( KPIM::AttachmentPart::Ptr part );
-    void attachmentProperties( KPIM::AttachmentPart::Ptr part );
-    void showAddAttachmentDialog();
-    /// sets sign, encrypt, shows properties dialog if so configured
-    void addAttachment( KPIM::AttachmentPart::Ptr part );
-    void addAttachment( const KUrl &url );
-    void addAttachments( const KUrl::List &urls );
-    void addAttachmentItems( const Akonadi::Item::List &items );
-    void showAttachPublicKeyDialog();
     void attachMyPublicKey();
 
-  private slots:
-    void slotFetchJob( KJob * job );
-
   private:
-    class Private;
-    Private *const d;
-
-    Q_PRIVATE_SLOT( d, void identityChanged() )
-    Q_PRIVATE_SLOT( d, void selectionChanged() )
-    Q_PRIVATE_SLOT( d, void attachmentRemoved( KPIM::AttachmentPart::Ptr ) )
-    Q_PRIVATE_SLOT( d, void compressJobResult( KJob* ) )
-    Q_PRIVATE_SLOT( d, void loadJobResult( KJob* ) )
-    Q_PRIVATE_SLOT( d, void openSelectedAttachments() )
-    Q_PRIVATE_SLOT( d, void viewSelectedAttachments() )
-    Q_PRIVATE_SLOT( d, void editSelectedAttachment() )
-    Q_PRIVATE_SLOT( d, void editSelectedAttachmentWith() )
-    Q_PRIVATE_SLOT( d, void removeSelectedAttachments() )
-    Q_PRIVATE_SLOT( d, void saveSelectedAttachmentAs() )
-    Q_PRIVATE_SLOT( d, void selectedAttachmentProperties() )
-    Q_PRIVATE_SLOT( d, void editDone( MessageViewer::EditorWatcher* ) )
-    Q_PRIVATE_SLOT( d, void attachPublicKeyJobResult( KJob* ) )
+    KMComposeWin *mComposer;
 };
 
 } // namespace KMail
