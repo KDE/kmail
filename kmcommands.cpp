@@ -682,6 +682,7 @@ KMCommand::Result KMUseTemplateCommand::execute()
 
   KMime::Message::Ptr newMsg(new KMime::Message);
   newMsg->setContent( msg->encodedContent() );
+  newMsg->parse();
   // these fields need to be regenerated for the new message
   newMsg->removeHeader("Date");
   newMsg->removeHeader("Message-ID");
