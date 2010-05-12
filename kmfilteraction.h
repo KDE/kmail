@@ -97,7 +97,7 @@ public:
 
   /** Determines if the action depends on the body of the message
   */
-  virtual bool requiresBody(KMime::Content* msgBase) const;
+  virtual bool requiresBody() const;
 
   /** Determines whether this action is valid. But this is just a
       quick test. Eg., actions that have a mail address as parameter

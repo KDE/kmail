@@ -160,13 +160,13 @@ KMFilter::ReturnCode KMFilter::execActions( const Akonadi::Item &item, bool& sto
   return status;
 }
 
-bool KMFilter::requiresBody( KMime::Content* msg )
+bool KMFilter::requiresBody()
 {
   if (pattern() && pattern()->requiresBody())
     return true; // no pattern means always matches?
   QListIterator<KMFilterAction*> it( *actions() );
   while ( it.hasNext() )
-    if ( it.next()->requiresBody( msg ))
+    if ( it.next()->requiresBody() )
       return true;
   return false;
 }

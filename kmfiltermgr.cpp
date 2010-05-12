@@ -15,6 +15,7 @@ using KMail::MessageProperty;
 
 #include <akonadi/changerecorder.h>
 #include <akonadi/itemmovejob.h>
+#include <akonadi/itemfetchscope.h>
 
 // other KDE headers
 #include <kdebug.h>
@@ -28,6 +29,8 @@ using KMail::MessageProperty;
 #include <QRegExp>
 
 // other headers
+#include <boost/bind.hpp>
+#include <algorithm>
 #include <assert.h>
 
 
@@ -42,6 +45,13 @@ KMFilterMgr::KMFilterMgr( bool popFilter )
   }
   connect( kmkernel->monitor(), SIGNAL( collectionRemoved( const Akonadi::Collection& ) ),
            this, SLOT( slotFolderRemoved( const Akonadi::Collection & ) ) );
+
+  mChangeRecorder = new Akonadi::ChangeRecorder( this );
+  mChangeRecorder->setMimeTypeMonitored( KMime::Message::mimeType() );
+  mChangeRecorder->setChangeRecordingEnabled( false );
+  mChangeRecorder->fetchCollection( true );
+  connect( mChangeRecorder, SIGNAL(itemAdded(Akonadi::Item,Akonadi::Collection)),
+           SLOT(itemAdded(Akonadi::Item,Akonadi::Collection)) );
 }
 
 
@@ -61,6 +71,7 @@ void KMFilterMgr::clear()
 //-----------------------------------------------------------------------------
 void KMFilterMgr::readConfig(void)
 {
+  beginUpdate();
   KSharedConfig::Ptr config = KMKernel::config();
   clear();
 
@@ -69,6 +80,7 @@ void KMFilterMgr::readConfig(void)
     mShowLater = group.readEntry( "popshowDLmsgs", false );
   }
   mFilters = FilterImporterExporter::readFiltersFromConfig( config, bPopFilter );
+  endUpdate();
 }
 
 //-----------------------------------------------------------------------------
@@ -342,7 +354,16 @@ void KMFilterMgr::dump(void) const
 //-----------------------------------------------------------------------------
 void KMFilterMgr::endUpdate(void)
 {
+  const bool requiresBody = std::find_if( mFilters.constBegin(), mFilters.constEnd(),
+      boost::bind( &KMFilter::requiresBody, _1 ) ) != mFilters.constEnd();
+  mChangeRecorder->itemFetchScope().fetchFullPayload( requiresBody );
+
   emit filterListUpdated();
+}
+
+void KMFilterMgr::itemAdded(const Akonadi::Item& item, const Akonadi::Collection &collection)
+{
+  process( item, Inbound, true, collection.resource() );
 }
 
 #include "kmfiltermgr.moc"

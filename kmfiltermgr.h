@@ -25,6 +25,7 @@
 
 namespace Akonadi {
   class Item;
+class ChangeRecorder;
 }
 namespace KMime {
   class Message;
@@ -152,6 +153,9 @@ public slots:
 signals:
   void filterListUpdated();
 
+private slots:
+  void itemAdded(const Akonadi::Item& item, const Akonadi::Collection& collection);
+
 private:
   int processPop( const Akonadi::Item &item ) const;
   /** Find out if a message matches the filter criteria */
@@ -159,6 +163,7 @@ private:
 
   QPointer<KMFilterDlg> mEditDialog;
   QList<KMFilter *> mFilters;
+  Akonadi::ChangeRecorder *mChangeRecorder;
   bool bPopFilter;
   bool mShowLater;
 };

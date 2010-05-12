@@ -100,7 +100,7 @@ public:
 
   /** Determines if the filter depends on the body of the message
   */
-  bool requiresBody(KMime::Content* msgBase);
+  bool requiresBody();
 
   /** No descriptions */
   KMPopFilterAction action();

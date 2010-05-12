@@ -83,7 +83,7 @@ KMFilterAction::~KMFilterAction()
 {
 }
 
-bool KMFilterAction::requiresBody(KMime::Content *) const
+bool KMFilterAction::requiresBody() const
 {
   return true;
 }
@@ -777,7 +777,7 @@ class KMFilterActionSetStatus: public KMFilterActionWithStringList
 public:
   KMFilterActionSetStatus();
   virtual ReturnCode process( const Akonadi::Item &item ) const;
-  virtual bool requiresBody(KMime::Content*) const;
+  virtual bool requiresBody() const;
 
   static KMFilterAction* newAction();
 
@@ -846,7 +846,7 @@ KMFilterAction::ReturnCode KMFilterActionSetStatus::process( const Akonadi::Item
   return GoOn;
 }
 
-bool KMFilterActionSetStatus::requiresBody(KMime::Content*) const
+bool KMFilterActionSetStatus::requiresBody() const
 {
   return false;
 }
@@ -890,7 +890,7 @@ class KMFilterActionAddTag: public KMFilterActionWithStringList
 public:
   KMFilterActionAddTag();
   virtual ReturnCode process( const Akonadi::Item &item ) const;
-  virtual bool requiresBody( KMime::Content* ) const;
+  virtual bool requiresBody() const;
 
   static KMFilterAction* newAction();
 
@@ -928,7 +928,7 @@ KMFilterAction::ReturnCode KMFilterActionAddTag::process( const Akonadi::Item &i
   return GoOn;
 }
 
-bool KMFilterActionAddTag::requiresBody( KMime::Content* ) const
+bool KMFilterActionAddTag::requiresBody() const
 {
   return false;
 }
@@ -1451,7 +1451,7 @@ class KMFilterActionMove: public KMFilterActionWithFolder
 public:
   KMFilterActionMove();
   virtual ReturnCode process( const Akonadi::Item &item ) const;
-  virtual bool requiresBody(KMime::Content*) const;
+  virtual bool requiresBody() const;
   static KMFilterAction* newAction(void);
 };
 
@@ -1473,9 +1473,9 @@ KMFilterAction::ReturnCode KMFilterActionMove::process( const Akonadi::Item &ite
   return GoOn;
 }
 
-bool KMFilterActionMove::requiresBody(KMime::Content*) const
+bool KMFilterActionMove::requiresBody() const
 {
-    return false; //iff mFolder->folderMgr == msgBase->parent()->folderMgr;
+    return false;
 }
 
 
@@ -1488,7 +1488,7 @@ class KMFilterActionCopy: public KMFilterActionWithFolder
 public:
   KMFilterActionCopy();
   virtual ReturnCode process( const Akonadi::Item &item ) const;
-  virtual bool requiresBody( KMime::Content *) const;
+  virtual bool requiresBody() const;
   static KMFilterAction* newAction(void);
 };
 
@@ -1509,10 +1509,9 @@ KMFilterAction::ReturnCode KMFilterActionCopy::process( const Akonadi::Item &ite
   return GoOn;
 }
 
-bool KMFilterActionCopy::requiresBody( KMime::Content *msg ) const
+bool KMFilterActionCopy::requiresBody() const
 {
-  Q_UNUSED( msg );
-  return true;
+  return false;
 }
 
 //=============================================================================
@@ -1949,7 +1948,7 @@ public:
   KMFilterActionExecSound();
   ~KMFilterActionExecSound();
   virtual ReturnCode process( const Akonadi::Item &item ) const;
-  virtual bool requiresBody(KMime::Content*) const;
+  virtual bool requiresBody() const;
   static KMFilterAction* newAction(void);
 private:
   mutable Phonon::MediaObject* mPlayer;
@@ -2032,7 +2031,7 @@ KMFilterAction::ReturnCode KMFilterActionExecSound::process( const Akonadi::Item
   return GoOn;
 }
 
-bool KMFilterActionExecSound::requiresBody(KMime::Content*) const
+bool KMFilterActionExecSound::requiresBody() const
 {
   return false;
 }
