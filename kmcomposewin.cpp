@@ -240,6 +240,7 @@ KMComposeWin::KMComposeWin( const KMime::Message::Ptr &aMsg, Composer::TemplateC
 
   mFcc = new Akonadi::CollectionComboBox( kmkernel->collectionModel(), mHeadersArea );
   mFcc->setMimeTypeFilter( QStringList()<<FolderCollectionMonitor::mimetype() );
+  mFcc->setAccessRightsFilter( Akonadi::Collection::CanCreateItem );
   mFcc->setToolTip( i18n( "Select the sent-mail folder where a copy of this message will be saved" ) );
 #if 0 //Port to akonadi
   mFcc->showOutboxFolder( false );
