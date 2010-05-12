@@ -228,7 +228,7 @@ target_link_libraries(kmailprivate
   ${KDEPIMLIBS_KIMAP_LIBRARY}
   ${KDE4_KPARTS_LIBRARY}
   ${KDE4_KRESOURCES_LIBRARY}
-  ${KDE4_KUTILS_LIBS}
+  ${KDE4_KCMUTILS_LIBS}
   kleo
   ${QGPGME_LIBRARIES}
   ksieve
@@ -271,7 +271,7 @@ target_link_libraries(kmailpart
   ${KDEPIMLIBS_AKONADI_LIBS}
   kmailprivate
   ${KDE4_KPARTS_LIBS}
-  ${KDE4_KUTILS_LIBS}
+  ${KDE4_KCMUTILS_LIBS}
 )
 
 ########### KMail executable ###############
