@@ -83,6 +83,8 @@ AttachmentController::AttachmentController( Message::AttachmentModel *model, Att
 
   connect( this, SIGNAL(showAttachment(KMime::Content*,QString,QString,QByteArray)), SLOT(onShowAttachment(KMime::Content*,QString,QString,QByteArray)));
 
+  connect( model, SIGNAL(attachItemsRequester(Akonadi::Item::List ) ), this, SLOT( addAttachmentItems( Akonadi::Item::List ) ) );
+
 }
 
 AttachmentController::~AttachmentController()
