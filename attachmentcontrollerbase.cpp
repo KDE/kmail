@@ -23,13 +23,8 @@
 #include "attachmentcontrollerbase.h"
 
 #include "messagecomposer/attachmentmodel.h"
-#include "attachmentview.h"
 #include "attachmentfrompublickeyjob.h"
 #include "messageviewer/editorwatcher.h"
-#include "kmkernel.h"
-#include "kmcomposewin.h"
-#include "kmcommands.h"
-#include "foldercollection.h"
 
 #include <akonadi/itemfetchjob.h>
 #include <kio/jobuidelegate.h>
@@ -71,7 +66,6 @@ class KMail::AttachmentControllerBase::Private
     Private( AttachmentControllerBase *qq );
     ~Private();
 
-    void selectionChanged(); // slot
     void attachmentRemoved( AttachmentPart::Ptr part ); // slot
     void compressJobResult( KJob *job ); // slot
     void loadJobResult( KJob *job ); // slot
@@ -90,7 +84,6 @@ class KMail::AttachmentControllerBase::Private
     bool encryptEnabled;
     bool signEnabled;
     Message::AttachmentModel *model;
-    AttachmentView *view;
     QWidget *wParent;
     QHash<MessageViewer::EditorWatcher*,AttachmentPart::Ptr> editorPart;
     QHash<MessageViewer::EditorWatcher*,KTemporaryFile*> editorTempFile;
@@ -123,7 +116,6 @@ AttachmentControllerBase::Private::Private( AttachmentControllerBase *qq )
   , encryptEnabled( false )
   , signEnabled( false )
   , model( 0 )
-  , view( 0 )
   , wParent( 0 )
   , contextMenu( 0 )
   , attachPublicKeyAction( 0 )
@@ -148,27 +140,20 @@ AttachmentControllerBase::Private::~Private()
   qDeleteAll( mAttachmentTempList );
 }
 
-void AttachmentControllerBase::Private::selectionChanged()
+void AttachmentControllerBase::setSelectedParts( const AttachmentPart::List &selectedParts)
 {
-  const QModelIndexList selectedRows = view->selectionModel()->selectedRows();
-  selectedParts.clear();
-  foreach( const QModelIndex &index, selectedRows ) {
-    AttachmentPart::Ptr part = view->model()->data(
-        index, Message::AttachmentModel::AttachmentPartRole ).value<AttachmentPart::Ptr>();
-    selectedParts.append( part );
-  }
   const int selectedCount = selectedParts.count();
 
-  openContextAction->setEnabled( selectedCount > 0 );
-  viewContextAction->setEnabled( selectedCount > 0 );
-  editContextAction->setEnabled( selectedCount == 1 );
-  editWithContextAction->setEnabled( selectedCount == 1 );
-  removeAction->setEnabled( selectedCount > 0 );
-  removeContextAction->setEnabled( selectedCount > 0 );
-  saveAsAction->setEnabled( selectedCount == 1 );
-  saveAsContextAction->setEnabled( selectedCount == 1 );
-  propertiesAction->setEnabled( selectedCount == 1 );
-  propertiesContextAction->setEnabled( selectedCount == 1 );
+  d->openContextAction->setEnabled( selectedCount > 0 );
+  d->viewContextAction->setEnabled( selectedCount > 0 );
+  d->editContextAction->setEnabled( selectedCount == 1 );
+  d->editWithContextAction->setEnabled( selectedCount == 1 );
+  d->removeAction->setEnabled( selectedCount > 0 );
+  d->removeContextAction->setEnabled( selectedCount > 0 );
+  d->saveAsAction->setEnabled( selectedCount == 1 );
+  d->saveAsContextAction->setEnabled( selectedCount == 1 );
+  d->propertiesAction->setEnabled( selectedCount == 1 );
+  d->propertiesContextAction->setEnabled( selectedCount == 1 );
 }
 
 void AttachmentControllerBase::Private::attachmentRemoved( AttachmentPart::Ptr part )
@@ -346,17 +331,10 @@ static KTemporaryFile *dumpAttachmentToTempFile( const AttachmentPart::Ptr part 
 
 
 
-AttachmentControllerBase::AttachmentControllerBase( Message::AttachmentModel *model, AttachmentView *view, QWidget *wParent, KActionCollection *actionCollection )
-  : QObject( view )
+AttachmentControllerBase::AttachmentControllerBase( Message::AttachmentModel *model, QWidget *wParent, KActionCollection *actionCollection )
+  : QObject( wParent )
   , d( new Private( this ) )
 {
-  d->view = view;
-  connect( view, SIGNAL(contextMenuRequested()), this, SLOT(showContextMenu()) );
-  connect( view->selectionModel(), SIGNAL(selectionChanged(QItemSelection,QItemSelection)),
-      this, SLOT(selectionChanged()) );
-  connect( view, SIGNAL(doubleClicked(QModelIndex)),
-      this, SLOT(editSelectedAttachment()) );
-
   d->model = model;
   connect( model, SIGNAL(attachUrlsRequested(KUrl::List)), this, SLOT(addAttachments(KUrl::List)) );
   connect( model, SIGNAL(attachItemsRequester(Akonadi::Item::List ) ), this, SLOT( addAttachmentItems( Akonadi::Item::List ) ) );
@@ -449,9 +427,6 @@ void AttachmentControllerBase::createActions()
   collection->addAction( "attach_properties", d->propertiesAction );
 
   emit actionsCreated();
-
-  // Disable actions like 'Remove', since nothing is currently selected.
-  d->selectionChanged();
 }
 
 void AttachmentControllerBase::setEncryptEnabled( bool enabled )
@@ -486,7 +461,7 @@ void AttachmentControllerBase::compressAttachment( AttachmentPart::Ptr part, boo
 
 void AttachmentControllerBase::showContextMenu()
 {
-  d->selectionChanged();
+  emit refreshSelection();
   d->contextMenu->popup( QCursor::pos() );
 }
 
@@ -617,8 +592,7 @@ void AttachmentControllerBase::slotPutResult(KJob *job)
     if (job->error() == KIO::ERR_FILE_ALREADY_EXIST)
     {
       if (KMessageBox::warningContinueCancel(0,
-        i18n("File %1 exists.\nDo you want to replace it?",
-         _job->url()), i18n("Save to File"), KGuiItem(i18n("&Replace")))
+        i18n("File %1 exists.\nDo you want to replace it?", _job->url().toLocalFile()), i18n("Save to File"), KGuiItem(i18n("&Replace")))
         == KMessageBox::Continue)
         byteArrayToRemoteFile(_job->data(), _job->url(), true);
     }

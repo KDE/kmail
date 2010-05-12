@@ -24,6 +24,7 @@
 #define KMAIL_ATTACHMENTCONTROLLER_H
 
 #include "attachmentcontrollerbase.h"
+#include "attachmentview.h"
 
 #include <KPIMIdentities/Identity>
 
@@ -34,8 +35,6 @@ class AttachmentModel;
 }
 
 namespace KMail {
-
-class AttachmentView;
 
 class AttachmentController : public AttachmentControllerBase
 {
@@ -52,9 +51,11 @@ class AttachmentController : public AttachmentControllerBase
     void actionsCreated();
     void addAttachmentItems( const Akonadi::Item::List &items );
     void slotFetchJob( KJob * job );
+    void selectionChanged();
 
   private:
     KMComposeWin *mComposer;
+    AttachmentView *mView;
 };
 
 } // namespace KMail

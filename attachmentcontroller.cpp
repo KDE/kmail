@@ -65,12 +65,22 @@ using namespace KMail;
 using namespace KPIM;
 
 AttachmentController::AttachmentController( Message::AttachmentModel *model, AttachmentView *view, KMComposeWin *composer )
-  : AttachmentControllerBase( model, view, composer, composer->actionCollection() )
+  : AttachmentControllerBase( model, composer, composer->actionCollection() )
 {
   mComposer = composer;
 
   connect( composer, SIGNAL(identityChanged(KPIMIdentities::Identity)),
       this, SLOT(identityChanged()) );
+
+  mView = view;
+  connect( view, SIGNAL(contextMenuRequested()), this, SLOT(showContextMenu()) );
+  connect( view->selectionModel(), SIGNAL(selectionChanged(QItemSelection,QItemSelection)),
+      this, SLOT(selectionChanged()) );
+  connect( view, SIGNAL(doubleClicked(QModelIndex)),
+      this, SLOT(editSelectedAttachment()) );
+
+  connect(this, SIGNAL(refreshSelection()), SLOT(selectionChanged()));
+
 }
 
 AttachmentController::~AttachmentController()
@@ -101,6 +111,9 @@ void AttachmentController::actionsCreated()
 {
   // Disable public key actions if appropriate.
   identityChanged();
+
+  // Disable actions like 'Remove', since nothing is currently selected.
+  selectionChanged();
 }
 
 void AttachmentController::addAttachmentItems( const Akonadi::Item::List &items )
@@ -131,5 +144,16 @@ void AttachmentController::slotFetchJob( KJob *job )
   command->start();
 }
 
+void AttachmentController::selectionChanged()
+{
+  const QModelIndexList selectedRows = mView->selectionModel()->selectedRows();
+  AttachmentPart::List selectedParts;
+  foreach( const QModelIndex &index, selectedRows ) {
+    AttachmentPart::Ptr part = mView->model()->data(
+        index, Message::AttachmentModel::AttachmentPartRole ).value<AttachmentPart::Ptr>();
+    selectedParts.append( part );
+  }
+  setSelectedParts( selectedParts );
+}
 
 #include "attachmentcontroller.moc"

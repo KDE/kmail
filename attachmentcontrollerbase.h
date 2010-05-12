@@ -41,14 +41,12 @@ class AttachmentModel;
 
 namespace KMail {
 
-class AttachmentView;
-
 class AttachmentControllerBase : public QObject
 {
   Q_OBJECT
 
   public:
-    AttachmentControllerBase( Message::AttachmentModel *model, AttachmentView *view, QWidget *wParent, KActionCollection *actionCollection );
+    AttachmentControllerBase( Message::AttachmentModel *model, QWidget *wParent, KActionCollection *actionCollection );
     ~AttachmentControllerBase();
 
     void createActions();
@@ -77,12 +75,14 @@ class AttachmentControllerBase : public QObject
 
   signals:
     void actionsCreated();
+    void refreshSelection();
 
   protected:
     void exportPublicKey( const QString &fingerprint );
     void enableAttachPublicKey( bool enable );
     void enableAttachMyPublicKey( bool enable );
     void byteArrayToRemoteFile(const QByteArray &aData, const KUrl &aURL, bool overwrite = false);
+    void setSelectedParts( const KPIM::AttachmentPart::List &selectedParts );
 
   private slots:
     void slotPutResult(KJob *job);
@@ -91,7 +91,6 @@ class AttachmentControllerBase : public QObject
     class Private;
     Private *const d;
 
-    Q_PRIVATE_SLOT( d, void selectionChanged() )
     Q_PRIVATE_SLOT( d, void attachmentRemoved( KPIM::AttachmentPart::Ptr ) )
     Q_PRIVATE_SLOT( d, void compressJobResult( KJob* ) )
     Q_PRIVATE_SLOT( d, void loadJobResult( KJob* ) )
