@@ -32,7 +32,7 @@ include_directories(
   ${CMAKE_SOURCE_DIR}/akonadi/
   ${CMAKE_CURRENT_BINARY_DIR}/../ontologies
   ${NEPOMUK_INCLUDES}
-  ${SOPRANO_INCLUDE_DIR} 
+  ${SOPRANO_INCLUDE_DIR}
  )
 
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${KDE4_ENABLE_EXCEPTIONS}")
@@ -296,7 +296,7 @@ install(TARGETS kmailprivate ${INSTALL_TARGETS_DEFAULT_ARGS} LIBRARY NAMELINK_SK
 install(TARGETS kmail ${INSTALL_TARGETS_DEFAULT_ARGS})
 install(FILES KMail.desktop kmail_view.desktop DESTINATION ${XDG_APPS_INSTALL_DIR})
 install(FILES
-  ${CMAKE_CURRENT_BINARY_DIR}/kmail.kcfg  
+  ${CMAKE_CURRENT_BINARY_DIR}/kmail.kcfg
   custommimeheader.kcfg
   DESTINATION ${KCFG_INSTALL_DIR}
 )
