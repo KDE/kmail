@@ -89,7 +89,7 @@ using KMime::DateFormatter;
 #include <mailtransport/transportmanagementwidget.h>
 using MailTransport::TransportManagementWidget;
 // other KDE headers:
-#include <kldap/ldapclient.h>
+#include <libkdepim/ldap/ldapclient.h>
 #include <klineedit.h>
 #include <klocale.h>
 #include <kcharsets.h>
