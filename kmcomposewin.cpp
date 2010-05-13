@@ -239,10 +239,7 @@ KMComposeWin::KMComposeWin( const KMime::Message::Ptr &aMsg, Composer::TemplateC
   mDictionaryCombo = new DictionaryComboBox( mHeadersArea );
   mDictionaryCombo->setToolTip( i18n( "Select the dictionary to use when spell-checking this message" ) );
 
-  KDescendantsProxyModel *proxyModel = new KDescendantsProxyModel( this );
-  proxyModel->setDisplayAncestorData( true );
-  proxyModel->setSourceModel( kmkernel->entityTreeModel() );
-  mFcc = new Akonadi::CollectionComboBox( proxyModel, mHeadersArea );
+  mFcc = new Akonadi::CollectionComboBox( mHeadersArea );
   mFcc->setMimeTypeFilter( QStringList()<<FolderCollectionMonitor::mimetype() );
   mFcc->setAccessRightsFilter( Akonadi::Collection::CanCreateItem );
   mFcc->setToolTip( i18n( "Select the sent-mail folder where a copy of this message will be saved" ) );
