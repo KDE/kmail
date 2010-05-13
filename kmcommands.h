@@ -192,45 +192,12 @@ private:
   KUrl mUrl;
 };
 
-class KMAIL_EXPORT KMMailtoAddAddrBookCommand : public KMCommand
-{
-  Q_OBJECT
-
-public:
-  KMMailtoAddAddrBookCommand( const KUrl &url, QWidget *parent );
-
-private Q_SLOTS:
-  void slotAddEmailAddressDone( KJob* );
-
-private:
-  virtual Result execute();
-
-  KUrl mUrl;
-};
-
 class KMAIL_EXPORT KMAddBookmarksCommand : public KMCommand
 {
   Q_OBJECT
 
 public:
   KMAddBookmarksCommand( const KUrl &url, QWidget *parent );
-
-private:
-  virtual Result execute();
-
-  KUrl mUrl;
-};
-
-
-class KMAIL_EXPORT KMMailtoOpenAddrBookCommand : public KMCommand
-{
-  Q_OBJECT
-
-public:
-  KMMailtoOpenAddrBookCommand( const KUrl &url, QWidget *parent );
-
-private Q_SLOTS:
-  void slotOpenEmailAddressDone( KJob* );
 
 private:
   virtual Result execute();

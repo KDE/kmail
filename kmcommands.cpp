@@ -77,8 +77,6 @@
 
 #include "mailinglist-magic.h"
 #include "messageviewer/nodehelper.h"
-#include <libkdepim/addemailaddressjob.h>
-#include <libkdepim/openemailaddressjob.h>
 #include "composer.h"
 #include "kmfiltermgr.h"
 #include "kmmainwidget.h"
@@ -520,60 +518,6 @@ KMCommand::Result KMAddBookmarksCommand::execute()
   }
 
   return OK;
-}
-
-KMMailtoAddAddrBookCommand::KMMailtoAddAddrBookCommand( const KUrl &url,
-   QWidget *parent )
-  : KMCommand( parent ), mUrl( url )
-{
-  setDeletesItself( true );
-  setEmitsCompletedItself( true );
-}
-
-KMCommand::Result KMMailtoAddAddrBookCommand::execute()
-{
-  const QString emailString = KPIMUtils::decodeMailtoUrl( mUrl );
-
-  KPIM::AddEmailAddressJob *job = new KPIM::AddEmailAddressJob( emailString, parentWidget(), this );
-  connect( job, SIGNAL( result( KJob* ) ), SLOT( slotAddEmailAddressDone( KJob* ) ) );
-  job->start();
-
-  return OK;
-}
-
-void KMMailtoAddAddrBookCommand::slotAddEmailAddressDone( KJob *job )
-{
-  setResult( job->error() ? Failed : OK );
-  emit completed( this );
-
-  deleteLater();
-}
-
-KMMailtoOpenAddrBookCommand::KMMailtoOpenAddrBookCommand( const KUrl &url,
-   QWidget *parent )
-  : KMCommand( parent ), mUrl( url )
-{
-  setDeletesItself( true );
-  setEmitsCompletedItself( true );
-}
-
-KMCommand::Result KMMailtoOpenAddrBookCommand::execute()
-{
-  const QString emailString = KPIMUtils::decodeMailtoUrl( mUrl );
-
-  KPIM::OpenEmailAddressJob *job = new KPIM::OpenEmailAddressJob( emailString, parentWidget(), this );
-  connect( job, SIGNAL( result( KJob* ) ), SLOT( slotOpenEmailAddressDone( KJob* ) ) );
-  job->start();
-
-  return OK;
-}
-
-void KMMailtoOpenAddrBookCommand::slotOpenEmailAddressDone( KJob *job )
-{
-  setResult( job->error() ? Failed : OK );
-  emit completed( this );
-
-  deleteLater();
 }
 
 KMUrlSaveCommand::KMUrlSaveCommand( const KUrl &url, QWidget *parent )

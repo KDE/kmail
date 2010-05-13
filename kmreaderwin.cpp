@@ -26,7 +26,10 @@
 #include "kmversion.h"
 #include "kmmainwidget.h"
 #include "kmreadermainwin.h"
+#include <kpimutils/email.h>
 #include <kpimutils/kfileio.h>
+#include <libkdepim/addemailaddressjob.h>
+#include <libkdepim/openemailaddressjob.h>
 #include "kmcommands.h"
 #include "mdnadvicedialog.h"
 #include <QByteArray>
@@ -517,17 +520,19 @@ void KMReaderWin::slotMailtoForward()
 //-----------------------------------------------------------------------------
 void KMReaderWin::slotMailtoAddAddrBook()
 {
-  KMCommand *command = new KMMailtoAddAddrBookCommand( urlClicked(),
-                                                       mMainWindow );
-  command->start();
+  const QString emailString = KPIMUtils::decodeMailtoUrl( urlClicked() );
+
+  KPIM::AddEmailAddressJob *job = new KPIM::AddEmailAddressJob( emailString, mMainWindow, this );
+  job->start();
 }
 
 //-----------------------------------------------------------------------------
 void KMReaderWin::slotMailtoOpenAddrBook()
 {
-  KMCommand *command = new KMMailtoOpenAddrBookCommand( urlClicked(),
-                                                        mMainWindow );
-  command->start();
+  const QString emailString = KPIMUtils::decodeMailtoUrl( urlClicked() );
+
+  KPIM::OpenEmailAddressJob *job = new KPIM::OpenEmailAddressJob( emailString, mMainWindow, this );
+  job->start();
 }
 
 //-----------------------------------------------------------------------------
