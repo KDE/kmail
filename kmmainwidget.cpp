@@ -3045,6 +3045,10 @@ void KMMainWidget::setupActions()
     connect( action, SIGNAL(triggered(bool)), SLOT(slotEditVacation()) );
   }
 
+  // Disable the standard action delete key sortcut.
+  KAction* const standardDelAction = akonadiStandardAction(  Akonadi::StandardActionManager::DeleteItems );
+  standardDelAction->setShortcut( QKeySequence() );
+
   //----- Edit Menu
   mTrashAction = new KAction(i18n("&Move to Trash"), this);
   actionCollection()->addAction("move_to_trash", mTrashAction );
