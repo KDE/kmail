@@ -326,45 +326,40 @@ void KMMainWidget::slotFolderChanged( const Akonadi::Collection& col)
   emit captionChangeRequest( col.name() );
 }
 
-void KMMainWidget::folderSelected( const Akonadi::Collection & col, bool forceJumpToUnread,
-                                   bool preferNewTabForOpening )
+void KMMainWidget::folderSelected( const Akonadi::Collection & col )
 {
   // This is connected to the MainFolderView signal triggering when a folder is selected
 
-  if ( !forceJumpToUnread )
-    forceJumpToUnread = mGoToFirstUnreadMessageInSelectedFolder;
-
-  mGoToFirstUnreadMessageInSelectedFolder = false;
-
-  MessageList::Core::PreSelectionMode preSelectionMode;
-  if ( forceJumpToUnread )
+  if ( mGoToFirstUnreadMessageInSelectedFolder )
   {
     // the default action has been overridden from outside
-    preSelectionMode = MessageList::Core::PreSelectFirstNewOrUnreadCentered;
+    mPreSelectionMode = MessageList::Core::PreSelectFirstNewOrUnreadCentered;
   } else {
     // use the default action
     switch ( GlobalSettings::self()->actionEnterFolder() )
     {
       case GlobalSettings::EnumActionEnterFolder::SelectFirstNew:
-        preSelectionMode = MessageList::Core::PreSelectFirstNewCentered;
+        mPreSelectionMode = MessageList::Core::PreSelectFirstNewCentered;
       break;
       case GlobalSettings::EnumActionEnterFolder::SelectFirstUnreadNew:
-        preSelectionMode = MessageList::Core::PreSelectFirstNewOrUnreadCentered;
+        mPreSelectionMode = MessageList::Core::PreSelectFirstNewOrUnreadCentered;
       break;
       case GlobalSettings::EnumActionEnterFolder::SelectLastSelected:
-        preSelectionMode = MessageList::Core::PreSelectLastSelected;
+        mPreSelectionMode = MessageList::Core::PreSelectLastSelected;
       break;
       case GlobalSettings::EnumActionEnterFolder::SelectNewest:
-        preSelectionMode = MessageList::Core::PreSelectNewestCentered;
+        mPreSelectionMode = MessageList::Core::PreSelectNewestCentered;
       break;
       case GlobalSettings::EnumActionEnterFolder::SelectOldest:
-        preSelectionMode = MessageList::Core::PreSelectOldestCentered;
+        mPreSelectionMode = MessageList::Core::PreSelectOldestCentered;
       break;
       default:
-        preSelectionMode = MessageList::Core::PreSelectNone;
+        mPreSelectionMode = MessageList::Core::PreSelectNone;
       break;
     }
   }
+  
+  mGoToFirstUnreadMessageInSelectedFolder = false;
 
   MessageViewer::KCursorSaver busy( MessageViewer::KBusyPtr::busy() );
 
@@ -477,17 +472,24 @@ void KMMainWidget::folderSelected( const Akonadi::Collection & col, bool forceJu
     mMsgView->setHtmlOverride(mFolderHtmlPref);
     mMsgView->setHtmlLoadExtOverride(mFolderHtmlLoadExtPref);
   }
-  mMessagePane->setCurrentFolder(
-      mCurrentFolder->collection(),
-      preferNewTabForOpening,
-      preSelectionMode
-    );
+  
   if ( !mCurrentFolder->isValid() && ( mMessagePane->count() < 2 ) )
     slotIntro();
 
   updateMessageActions();
   updateFolderMenu();
+
+  /// The message pane uses the selection model of the folder view to load the correct aggregation model and theme
+  ///  settings. At this point the selection model hasn't been updated yet to the user's new choice, so it would load
+  ///  the old folder settings instead. 
+  QTimer::singleShot( 0, this, SLOT( slotShowSelectedForderInPane() ) );
 }
+
+void KMMainWidget::slotShowSelectedForderInPane()
+{
+  mMessagePane->setCurrentFolder( mCurrentFolder->collection(), false, mPreSelectionMode );
+}
+
 
 //-----------------------------------------------------------------------------
 void KMMainWidget::readPreConfig()

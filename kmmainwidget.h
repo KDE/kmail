@@ -218,7 +218,7 @@ class KMAIL_EXPORT KMMainWidget : public QWidget
       Select the given folder
       If the folder is 0 the intro is shown
     */
-    void folderSelected( const Akonadi::Collection & col, bool forceJumpToUnread = false, bool preferNewTabForOpening = false );
+    void folderSelected( const Akonadi::Collection & col );
 
     /**
       Open a separate viewer window containing the specified message.
@@ -324,6 +324,7 @@ class KMAIL_EXPORT KMMainWidget : public QWidget
     void slotEmptyFolder();
     void slotCompactFolder();
     void slotAddFavoriteFolder();
+    void slotShowSelectedForderInPane();
 #if 0
   void slotRefreshFolder();
 #endif
@@ -623,6 +624,8 @@ private:
     KMail::StatusBarLabel *mVacationScriptIndicator;
     bool mVacationIndicatorActive;
     bool mGoToFirstUnreadMessageInSelectedFolder;
+    MessageList::Core::PreSelectionMode mPreSelectionMode;
+
     KPIM::ProgressItem *mFilterProgressItem;
 };
 
