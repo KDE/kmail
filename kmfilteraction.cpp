@@ -29,6 +29,8 @@ using KMail::RegExpLineEdit;
 #include "templateparser/customtemplates.h"
 #include "templateparser/customtemplates_kfg.h"
 
+#include "libkdepim/addcontactjob.h"
+
 // KDE PIM libs headers
 #include <kpimidentities/identity.h>
 #include <kpimidentities/identitymanager.h>
@@ -40,6 +42,8 @@ using KMail::RegExpLineEdit;
 #include <kmime/kmime_message.h>
 
 // KDE headers
+#include <akonadi/collectioncombobox.h>
+#include <kabc/addressee.h>
 #include <kcombobox.h>
 #include <ktemporaryfile.h>
 #include <kdebug.h>
@@ -2116,11 +2120,18 @@ public:
   virtual void argsFromString( const QString &argsStr );
 
 private:
-  void updateResourceMaps( bool force = true ) const;
-  QString mCategory, mResourceName;
-  mutable QMap<QString, KABC::Resource*> mResourceByName, mResourceByID;
-  const QString mStdResourceStr, mFromStr, mToStr, mCCStr, mBCCStr;
-  mutable bool mResourceMapsInitalized;
+  enum HeaderType
+  {
+    FromHeader,
+    ToHeader,
+    CcHeader,
+    BccHeader
+  };
+
+  const QString mFromStr, mToStr, mCCStr, mBCCStr;
+  HeaderType mHeaderType;
+  Akonadi::Collection::Id mCollectionId;
+  QString mCategory;
 };
 
 KMFilterAction* KMFilterActionAddToAddressBook::newAction()
@@ -2130,232 +2141,143 @@ KMFilterAction* KMFilterActionAddToAddressBook::newAction()
 
 KMFilterActionAddToAddressBook::KMFilterActionAddToAddressBook()
   : KMFilterActionWithStringList( "add to address book", i18n( "Add to Address Book" ) ),
-    mStdResourceStr( i18n( "<placeholder>Default</placeholder>" ) ), mFromStr( i18nc( "Email sender", "From" ) ),
-    mToStr( i18nc( "Email recipient", "To" ) ), mCCStr( i18n( "CC" ) ), mBCCStr( i18n( "BCC" ) ),
-    mResourceMapsInitalized( false )
+    mFromStr( i18nc( "Email sender", "From" ) ),
+    mToStr( i18nc( "Email recipient", "To" ) ),
+    mCCStr( i18n( "CC" ) ),
+    mBCCStr( i18n( "BCC" ) ),
+    mHeaderType( FromHeader ),
+    mCollectionId( -1 ),
+    mCategory( i18n( "KMail Filter" ) )
 {
-  mParameterList.append( mFromStr );
-  mParameterList.append( mToStr );
-  mParameterList.append( mCCStr );
-  mParameterList.append( mBCCStr );
-
-  mParameter = mParameterList.at( 0 );
-
-  mResourceName = mStdResourceStr;
-  mCategory = i18n( "KMail Filter" );
-}
-
-void KMFilterActionAddToAddressBook::updateResourceMaps( bool force ) const
-{
-  if ( force )
-    mResourceMapsInitalized = false;
-
-  if ( mResourceMapsInitalized )
-    return;
-
-  //find resources in standard addressbook
-  //and prepare lookups
-  mResourceByID.clear();
-  mResourceByName.clear();
-
-#ifndef KDEPIM_NO_KRESOURCES
-  const QList<KABC::Resource*> list = KABC::StdAddressBook::self()->resources();
-  foreach( KABC::Resource* const res, list ) {
-    if ( !res->readOnly() && res->isOpen() ) {
-      mResourceByID.insert( res->identifier(), res );
-      mResourceByName.insert( res->resourceName(), res );
-    }
-  }
-#endif
-
-  mResourceMapsInitalized = true;
 }
 
 KMFilterAction::ReturnCode KMFilterActionAddToAddressBook::process( const Akonadi::Item &item ) const
 {
   const KMime::Message::Ptr msg = item.payload<KMime::Message::Ptr>();
+
   QString headerLine;
-  if ( mParameter == mFromStr )
-    headerLine = msg->from()->asUnicodeString();
-  else if ( mParameter == mToStr )
-    headerLine = msg->to()->asUnicodeString();
-  else if ( mParameter == mCCStr )
-    headerLine = msg->cc()->asUnicodeString();
-  else if ( mParameter == mBCCStr )
-    headerLine = msg->bcc()->asUnicodeString();
+  switch ( mHeaderType ) {
+    case FromHeader: headerLine = msg->from()->asUnicodeString(); break;
+    case ToHeader: headerLine = msg->to()->asUnicodeString(); break;
+    case CcHeader: headerLine = msg->cc()->asUnicodeString(); break;
+    case BccHeader: headerLine = msg->bcc()->asUnicodeString(); break;
+  }
 
   const QStringList emails = KPIMUtils::splitAddressList( headerLine );
 
-#ifndef KDEPIM_NO_KRESOURCES
-  KABC::AddressBook *ab = KABC::StdAddressBook::self();
-  // force a reload of the address book file so that changes that were made
-  // by other programs are loaded
-  ab->load();
+  foreach ( const QString singleEmail, emails ) {
+    QString name, email;
+    KABC::Addressee::parseEmailAddress( singleEmail, name, email );
 
-  // We update the resource maps here, and not in the constructor, since that could create D-Bus
-  // lockups when using IMAP addressbooks
-  updateResourceMaps( false /* don't force reload */ );
+    KABC::Addressee contact;
+    contact.setNameFromString( name );
+    contact.insertEmail( email, true );
+    if ( !mCategory.isEmpty() )
+      contact.insertCategory( mCategory );
 
-  QString email;
-  QString name;
-
-  QMap<QString, KABC::Resource*>::const_iterator it = mResourceByName.constFind( mResourceName );
-  KABC::Resource* res = 0;
-  //if it==end(), then the resouce has been removed from addressbook
-  //or default has been selected, in either case store in default resource
-  if ( it != mResourceByName.constEnd() )
-    res = it.value();
-
-  KABC::Ticket *ticket = ab->requestSaveTicket( res );
-
-  if ( ticket ) {
-    foreach ( const QString singleEmail, emails ) {
-      KABC::Addressee::parseEmailAddress( singleEmail, name, email );
-      KABC::Addressee::List addressees = ab->findByEmail( email );
-
-      if ( addressees.isEmpty() ) {
-        KABC::Addressee a;
-        a.setNameFromString( name );
-        a.insertEmail( email, true );
-        if ( !mCategory.isEmpty() )
-          a.insertCategory( mCategory );
-        if ( res )
-          a.setResource( res );
-
-        ab->insertAddressee( a );
-      }
-    }
-
-    if ( !ab->save( ticket ) ) {
-      ab->error( i18n( "Cannot save new addresses to address book." ) );
-      return ErrorButGoOn;
-    }
-  } else {
-    ab->error( i18n( "Cannot save to address book: address book is locked." ) );
-    return ErrorButGoOn;
+    KPIM::AddContactJob *job = new KPIM::AddContactJob( contact, Akonadi::Collection( mCollectionId ) );
+    job->start();
   }
-#endif
 
   return GoOn;
 }
 
 QWidget* KMFilterActionAddToAddressBook::createParamWidget( QWidget* parent ) const
 {
-  QWidget *w = new QWidget( parent );
-  QGridLayout *gridlayout = new QGridLayout ( w );
+  QWidget *widget = new QWidget( parent );
+  QGridLayout *layout = new QGridLayout ( widget );
 
-  KComboBox *cb = new KComboBox( w );
-  cb->setObjectName( "FilterTargetCombo" );
-  cb->setInsertPolicy( QComboBox::InsertAtBottom );
-  gridlayout->addWidget( cb, 0, 0, 2, 1, Qt::AlignVCenter );
+  KComboBox *headerCombo = new KComboBox( widget );
+  headerCombo->setObjectName( "HeaderComboBox" );
+  layout->addWidget( headerCombo, 0, 0, 2, 1, Qt::AlignVCenter );
 
-  QLabel *l = new QLabel( i18n( "with category" ), w );
-  gridlayout->addWidget( l, 0, 1 );
+  QLabel *label = new QLabel( i18n( "with category" ), widget );
+  layout->addWidget( label, 0, 1 );
 
-  KLineEdit *le = new KLineEdit( w );
-  le->setObjectName( "ledit" );
-  gridlayout->addWidget( le, 0, 2 );
+  KLineEdit *categoryEdit = new KLineEdit( widget );
+  categoryEdit->setObjectName( "CategoryEdit" );
+  layout->addWidget( categoryEdit, 0, 2 );
 
-  l = new QLabel( i18n( "in address book" ), w );
-  gridlayout->addWidget( l, 1, 1 );
+  label = new QLabel( i18n( "in address book" ), widget );
+  layout->addWidget( label, 1, 1 );
 
-  KComboBox *cbAdressBook = new KComboBox( w );
-  cbAdressBook->setObjectName( "AddressBookCombo" );
-  cbAdressBook->setToolTip( i18n( "<p>This defines the preferred address book.<br />"
+  Akonadi::CollectionComboBox *collectionComboBox = new Akonadi::CollectionComboBox( widget );
+  collectionComboBox->setMimeTypeFilter( QStringList() << KABC::Addressee::mimeType() );
+  collectionComboBox->setAccessRightsFilter( Akonadi::Collection::CanCreateItem );
+
+  collectionComboBox->setObjectName( "AddressBookComboBox" );
+  collectionComboBox->setToolTip( i18n( "<p>This defines the preferred address book.<br />"
         "If it is not accessible, the filter will fallback to the default address book.</p>" ) );
-  cbAdressBook->setInsertPolicy( QComboBox::InsertAtBottom );
-  gridlayout->addWidget( cbAdressBook, 1, 2 );
+  layout->addWidget( collectionComboBox, 1, 2 );
 
-  setParamWidgetValue( w );
-  return w;
+  setParamWidgetValue( widget );
+
+  return widget;
 }
 
 void KMFilterActionAddToAddressBook::setParamWidgetValue( QWidget* paramWidget ) const
 {
-  KComboBox *cb = paramWidget->findChild<KComboBox*>( "FilterTargetCombo" );
-  Q_ASSERT( cb );
-  cb->clear();
-  cb->addItems( mParameterList );
-  int idx = mParameterList.indexOf( mParameter );
-  if ( idx < 0 ) {
-    kDebug() << "unknown mParameter. strange???";
-    cb->addItem( mParameter );
-    cb->setCurrentIndex( cb->count() - 1 );
-  } else {
-    cb->setCurrentIndex( idx );
-  }
+  KComboBox *headerCombo = paramWidget->findChild<KComboBox*>( "HeaderComboBox" );
+  Q_ASSERT( headerCombo );
+  headerCombo->clear();
+  headerCombo->addItem( mFromStr, FromHeader );
+  headerCombo->addItem( mToStr, ToHeader );
+  headerCombo->addItem( mCCStr, CcHeader );
+  headerCombo->addItem( mBCCStr, BccHeader );
 
-  KLineEdit *le = paramWidget->findChild<KLineEdit*>( "ledit" );
-  Q_ASSERT( le );
-  le->setText( mCategory );
+  headerCombo->setCurrentIndex( headerCombo->findData( mHeaderType ) );
 
-  QStringList list = mResourceByName.keys();
-  idx = list.indexOf( mResourceName );
-  KComboBox *cbAdressBook = paramWidget->findChild<KComboBox*>( "AddressBookCombo" );
-  Q_ASSERT( cbAdressBook );
-  cbAdressBook->clear();
-  cbAdressBook->addItem( mStdResourceStr );
-  cbAdressBook->addItems( mResourceByName.keys() );
-  if ( idx < 0 ) {
-    cbAdressBook->setCurrentIndex( 0 );
-  } else {
-    cbAdressBook->setCurrentIndex( idx + 1 /*mStdResourceStr is not in keys() */ );
-  }
+  KLineEdit *categoryEdit = paramWidget->findChild<KLineEdit*>( "CategoryEdit" );
+  Q_ASSERT( categoryEdit );
+  categoryEdit->setText( mCategory );
+
+  Akonadi::CollectionComboBox *collectionComboBox = paramWidget->findChild<Akonadi::CollectionComboBox*>( "AddressBookComboBox" );
+  Q_ASSERT( collectionComboBox );
+  collectionComboBox->setDefaultCollection( Akonadi::Collection( mCollectionId ) );
 }
 
 void KMFilterActionAddToAddressBook::applyParamWidgetValue( QWidget* paramWidget )
 {
-  KComboBox *cb = paramWidget->findChild<KComboBox*>( "FilterTargetCombo" );
-  Q_ASSERT( cb );
-  mParameter = cb->currentText();
+  KComboBox *headerCombo = paramWidget->findChild<KComboBox*>( "HeaderComboBox" );
+  Q_ASSERT( headerCombo );
+  mHeaderType = static_cast<HeaderType>( headerCombo->itemData( headerCombo->currentIndex() ).toInt() );
 
-  KLineEdit *le = paramWidget->findChild<KLineEdit*>( "ledit" );
-  Q_ASSERT( le );
-  mCategory = le->text();
+  KLineEdit *categoryEdit = paramWidget->findChild<KLineEdit*>( "CategoryEdit" );
+  Q_ASSERT( categoryEdit );
+  mCategory = categoryEdit->text();
 
-  KComboBox *cbAdressBook = paramWidget->findChild<KComboBox*>( "AddressBookCombo" );
-  Q_ASSERT( cbAdressBook );
-  mResourceName = cbAdressBook->currentText();
+  Akonadi::CollectionComboBox *collectionComboBox = paramWidget->findChild<Akonadi::CollectionComboBox*>( "AddressBookComboBox" );
+  Q_ASSERT( collectionComboBox );
+  const Akonadi::Collection collection = collectionComboBox->currentCollection();
+  if ( collection.isValid() )
+    mCollectionId = collection.id();
 }
 
 void KMFilterActionAddToAddressBook::clearParamWidget( QWidget* paramWidget ) const
 {
-  KComboBox *cb = paramWidget->findChild<KComboBox*>( "FilterTargetCombo" );
-  Q_ASSERT( cb );
-  cb->setCurrentItem( 0 );
-  KLineEdit *le = paramWidget->findChild<KLineEdit*>( "ledit" );
-  Q_ASSERT( le );
-  le->setText( mCategory );
-  KComboBox *cbAdressBook = paramWidget->findChild<KComboBox*>( "AddressBookCombo" );
-  Q_ASSERT( cbAdressBook );
-  cbAdressBook->setCurrentItem( 0 );
+  KComboBox *headerCombo = paramWidget->findChild<KComboBox*>( "HeaderComboBox" );
+  Q_ASSERT( headerCombo );
+  headerCombo->setCurrentItem( 0 );
+
+  KLineEdit *categoryEdit = paramWidget->findChild<KLineEdit*>( "CategoryEdit" );
+  Q_ASSERT( categoryEdit );
+  categoryEdit->setText( mCategory );
 }
 
 const QString KMFilterActionAddToAddressBook::argsAsString() const
 {
   QString result;
 
-  if ( mParameter == mFromStr )
-    result = "From";
-  else if ( mParameter == mToStr )
-    result = "To";
-  else if ( mParameter == mCCStr )
-    result = "CC";
-  else if ( mParameter == mBCCStr )
-    result = "BCC";
+  switch ( mHeaderType ) {
+    case FromHeader: result = QLatin1String( "From" ); break;
+    case ToHeader: result = QLatin1String( "To" ); break;
+    case CcHeader: result = QLatin1String( "CC" ); break;
+    case BccHeader: result = QLatin1String( "BCC" ); break;
+  }
 
-  result += '\t';
-
-#ifndef KDEPIM_NO_KRESOURCES
-  QMap<QString, KABC::Resource*>::const_iterator it =  mResourceByName.constFind( mResourceName );
-  if ( it != mResourceByName.constEnd() )
-    result += it.value()->identifier();
-  else
-    result += mStdResourceStr;
-#endif
-
-  result += '\t';
-
+  result += QLatin1Char( '\t' );
+  result += QString::number( mCollectionId );
+  result += QLatin1Char( '\t' );
   result += mCategory;
 
   return result;
@@ -2363,27 +2285,23 @@ const QString KMFilterActionAddToAddressBook::argsAsString() const
 
 void KMFilterActionAddToAddressBook::argsFromString( const QString &argsStr )
 {
-  updateResourceMaps();
+  const QStringList parts = argsStr.split( QLatin1Char( '\t' ), QString::KeepEmptyParts );
+  if ( parts[ 0 ] == QLatin1String( "From" ) )
+    mHeaderType = FromHeader;
+  else if ( parts[ 0 ] == QLatin1String( "To" ) )
+    mHeaderType = ToHeader;
+  else if ( parts[ 0 ] == QLatin1String( "CC" ) )
+    mHeaderType = CcHeader;
+  else if ( parts[ 0 ] == QLatin1String( "BCC" ) )
+    mHeaderType = BccHeader;
 
-  QStringList l = argsStr.split( '\t', QString::KeepEmptyParts );
-  mParameter = l[0];
+  if ( parts.count() >= 2 )
+    mCollectionId = parts[ 1 ].toLongLong();
 
-#ifndef KDEPIM_NO_KRESOURCES
-  if ( l.count() >= 2 ) {
-    QMap<QString, KABC::Resource*>::iterator it  = mResourceByID.find( l[1] );
-    if ( it != mResourceByID.end() )
-      mResourceName = it.value()->resourceName();
-    else
-      mResourceName = mStdResourceStr;
-  } else {
-    mResourceName = mStdResourceStr;
-  }
-#endif
-
-  if ( l.count() < 3 )
+  if ( parts.count() < 3 )
     mCategory.clear();
   else
-    mCategory = l[2];
+    mCategory = parts[ 2 ];
 }
 
 //=============================================================================
