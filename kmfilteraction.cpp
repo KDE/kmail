@@ -2234,6 +2234,7 @@ void KMFilterActionAddToAddressBook::setParamWidgetValue( QWidget* paramWidget )
   Akonadi::CollectionComboBox *collectionComboBox = paramWidget->findChild<Akonadi::CollectionComboBox*>( "AddressBookComboBox" );
   Q_ASSERT( collectionComboBox );
   collectionComboBox->setDefaultCollection( Akonadi::Collection( mCollectionId ) );
+  collectionComboBox->setProperty( "collectionId", mCollectionId );
 }
 
 void KMFilterActionAddToAddressBook::applyParamWidgetValue( QWidget* paramWidget )
@@ -2249,8 +2250,16 @@ void KMFilterActionAddToAddressBook::applyParamWidgetValue( QWidget* paramWidget
   Akonadi::CollectionComboBox *collectionComboBox = paramWidget->findChild<Akonadi::CollectionComboBox*>( "AddressBookComboBox" );
   Q_ASSERT( collectionComboBox );
   const Akonadi::Collection collection = collectionComboBox->currentCollection();
+
+  // it might be that the model of collectionComboBox has not finished loading yet, so
+  // we use the previously 'stored' value from the 'collectionId' property
   if ( collection.isValid() )
     mCollectionId = collection.id();
+  else {
+    const QVariant value = collectionComboBox->property( "collectionId" );
+    if ( value.isValid() )
+      mCollectionId = value.toLongLong();
+  }
 }
 
 void KMFilterActionAddToAddressBook::clearParamWidget( QWidget* paramWidget ) const
