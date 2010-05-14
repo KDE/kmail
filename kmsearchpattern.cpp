@@ -348,20 +348,10 @@ bool KMSearchRuleString::matches( const Akonadi::Item &item ) const
       return matchesInternal( msg->to()->asUnicodeString() )
           || matchesInternal( msg->cc()->asUnicodeString() )
           || matchesInternal( msg->bcc()->asUnicodeString() ) ;
-          // sometimes messages have multiple Cc headers //TODO: check if this can happen for KMime!
-      //    || matchesInternal( msg->cc() )
-          
 
     msgContents = msg->to()->asUnicodeString();
-#if 0  //TODO port to akonadi - check if this is needed for KMime. 
-    if ( !msg->headerField("Cc").compare( msg->cc() ) )
-      msgContents += ", " + msg->headerField("Cc");
-    else
-      msgContents += ", " + msg->cc();
-#else
-      kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
-#endif
-  msgContents += ", " + msg->bcc()->asUnicodeString();
+    msgContents += ", " + msg->cc()->asUnicodeString();
+    msgContents += ", " + msg->bcc()->asUnicodeString();
   } else if ( field() == "<tag>" ) {
 #if 0  //TODO port to akonadi
     if ( msg->tagList() ) {
