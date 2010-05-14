@@ -659,7 +659,7 @@ KMSaveMsgCommand::KMSaveMsgCommand( QWidget *parent, const Akonadi::Item& msg )
     return;
   }
   setDeletesItself( true );
-  mUrl = subjectToUrl( MessageViewer::NodeHelper::cleanSubject( msg.payload<KMime::Message::Ptr>() ) );
+  mUrl = subjectToUrl( MessageViewer::NodeHelper::cleanSubject( msg.payload<KMime::Message::Ptr>().get() ) );
   fetchScope().fetchFullPayload( true ); // ### unless we call the corresponding KMCommand ctor, this has no effect
 }
 
@@ -676,7 +676,7 @@ KMSaveMsgCommand::KMSaveMsgCommand( QWidget *parent,
   setDeletesItself( true );
   mMsgListIndex = 0;
   Akonadi::Item msgBase = msgList.at(0);
-  mUrl = subjectToUrl( MessageViewer::NodeHelper::cleanSubject( msgBase.payload<KMime::Message::Ptr>() ) );
+  mUrl = subjectToUrl( MessageViewer::NodeHelper::cleanSubject( msgBase.payload<KMime::Message::Ptr>().get() ) );
   kDebug() << mUrl;
   fetchScope().fetchFullPayload( true ); // ### unless we call the corresponding KMCommand ctor, this has no effect
 }

@@ -103,8 +103,7 @@ public:
 
   /** Instead of settings a message to be shown sets a message part
       to be shown */
-  void setMsgPart( KMime::Content* aMsgPart, bool aHTML,
-                   const QString& aFileName, const QString& pname );
+  void setMsgPart( KMime::Content* aMsgPart );
 
   /** Clear the reader and discard the current message. */
   void clear(bool force = false);
@@ -196,7 +195,7 @@ public slots:
   void slotAddBookmarks();
   void slotTouchMessage();
   void slotUrlClicked( const Akonadi::Item &,  const KUrl& );
-  void slotShowReader( KMime::Content* , bool, const QString&, const QString&, const QString &);
+  void slotShowReader( KMime::Content* , bool, const QString& );
   void slotShowMessage( KMime::Message::Ptr message, const QString& encoding );
   void slotDeleteMessage( const Akonadi::Item& );
 protected:

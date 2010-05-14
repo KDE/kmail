@@ -81,7 +81,8 @@ AttachmentController::AttachmentController( Message::AttachmentModel *model, Att
 
   connect( this, SIGNAL(refreshSelection()), SLOT(selectionChanged()));
 
-  connect( this, SIGNAL(showAttachment(KMime::Content*,QString,QString,QByteArray)), SLOT(onShowAttachment(KMime::Content*,QString,QString,QByteArray)));
+  connect( this, SIGNAL(showAttachment(KMime::Content*,QByteArray)),
+           SLOT(onShowAttachment(KMime::Content*,QByteArray)));
 
   connect( model, SIGNAL(attachItemsRequester(Akonadi::Item::List ) ), this, SLOT( addAttachmentItems( Akonadi::Item::List ) ) );
 
@@ -160,10 +161,10 @@ void AttachmentController::selectionChanged()
   setSelectedParts( selectedParts );
 }
 
-void AttachmentController::onShowAttachment( KMime::Content *content, const QString &fileName, const QString &partname, const QByteArray &charset )
+void AttachmentController::onShowAttachment( KMime::Content *content, const QByteArray &charset )
 {
   KMReaderMainWin *win =
-    new KMReaderMainWin( content, false, fileName, partname, charset );
+    new KMReaderMainWin( content, false, charset );
   win->show();
 }
 

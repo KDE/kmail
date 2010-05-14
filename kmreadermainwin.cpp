@@ -82,14 +82,13 @@ KMReaderMainWin::KMReaderMainWin( char *name )
 
 
 //-----------------------------------------------------------------------------
-KMReaderMainWin::KMReaderMainWin(KMime::Content* aMsgPart,
-    bool aHTML, const QString& aFileName, const QString& pname,
-    const QString & encoding, char *name )
+KMReaderMainWin::KMReaderMainWin(KMime::Content* aMsgPart, bool aHTML, const QString & encoding, char *name )
   : KMail::SecondaryWindow( name ? name : "readerwindow#" )
 {
   mReaderWin = new KMReaderWin( this, this, actionCollection() );
   mReaderWin->setOverrideEncoding( encoding );
-  mReaderWin->setMsgPart( aMsgPart, aHTML, aFileName, pname );
+  mReaderWin->setHtmlOverride( aHTML );
+  mReaderWin->setMsgPart( aMsgPart );
   initKMReaderMainWin();
 }
 

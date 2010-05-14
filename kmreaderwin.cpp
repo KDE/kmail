@@ -138,8 +138,8 @@ KMReaderWin::KMReaderWin(QWidget *aParent,
   connect( mViewer, SIGNAL(urlClicked( const Akonadi::Item &, const KUrl & ) ),
            this, SLOT( slotUrlClicked( const Akonadi::Item &, const KUrl& ) ) );
   connect( mViewer, SIGNAL( requestConfigSync() ), kmkernel, SLOT( slotRequestConfigSync() ) );
-  connect( mViewer, SIGNAL( showReader( KMime::Content* , bool, const QString&, const QString&, const QString &) ),
-           this, SLOT( slotShowReader( KMime::Content* , bool, const QString&, const QString&, const QString &) ) );
+  connect( mViewer, SIGNAL( showReader( KMime::Content* , bool, const QString& ) ),
+           this, SLOT( slotShowReader( KMime::Content* , bool, const QString& ) ) );
   connect( mViewer, SIGNAL( showMessage(KMime::Message::Ptr, const QString&) ),
            this, SLOT( slotShowMessage(KMime::Message::Ptr, const QString& ) ) );
   connect( mViewer, SIGNAL( showStatusBarMessage( const QString & ) ),
@@ -454,10 +454,9 @@ void KMReaderWin::slotCopySelectedText()
 }
 
 //-----------------------------------------------------------------------------
-void KMReaderWin::setMsgPart( KMime::Content* aMsgPart, bool aHTML,
-                              const QString& aFileName, const QString& pname )
+void KMReaderWin::setMsgPart( KMime::Content* aMsgPart )
 {
-  mViewer->setMessagePart( aMsgPart, aHTML, aFileName, pname );
+  mViewer->setMessagePart( aMsgPart );
 }
 
 //-----------------------------------------------------------------------------
@@ -677,9 +676,9 @@ void KMReaderWin::slotUrlClicked( const Akonadi::Item & item, const KUrl & url )
   command->start();
 }
 
-void KMReaderWin::slotShowReader( KMime::Content* msgPart, bool htmlMail, const QString&filename, const QString&pname, const QString &encoding)
+void KMReaderWin::slotShowReader( KMime::Content* msgPart, bool htmlMail, const QString &encoding )
 {
-  KMReaderMainWin *win = new KMReaderMainWin(msgPart, htmlMail,filename, pname, encoding );
+  KMReaderMainWin *win = new KMReaderMainWin( msgPart, htmlMail, encoding );
   win->show();
 }
 
