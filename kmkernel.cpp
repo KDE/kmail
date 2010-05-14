@@ -1309,6 +1309,10 @@ void KMKernel::slotShowConfigurationDialog()
 
   }
 
+  // Save all current settings.
+  if( getKMMainWidget() )
+    getKMMainWidget()->writeConfig();
+
   if( mConfigureDialog->isHidden() ) {
     mConfigureDialog->show();
   } else {
