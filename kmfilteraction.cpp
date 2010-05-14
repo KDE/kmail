@@ -673,6 +673,7 @@ KMFilterAction::ReturnCode KMFilterActionTransport::process( const Akonadi::Item
   const KMime::Message::Ptr msg = item.payload<KMime::Message::Ptr>();
   KMime::Headers::Generic *header = new KMime::Headers::Generic( "X-KMail-Transport", msg.get(), mParameter, "utf-8");
   msg->setHeader( header );
+  new Akonadi::ItemModifyJob( item, kmkernel->filterMgr() );
   return GoOn;
 }
 
@@ -705,6 +706,7 @@ KMFilterAction::ReturnCode KMFilterActionReplyTo::process( const Akonadi::Item &
   const KMime::Message::Ptr msg = item.payload<KMime::Message::Ptr>();
   KMime::Headers::Generic *header = new KMime::Headers::Generic( "Reply-To", msg.get(), mParameter, "utf-8");
   msg->setHeader( header );
+  new Akonadi::ItemModifyJob( item, kmkernel->filterMgr() );
   return GoOn;
 }
 
@@ -743,6 +745,7 @@ KMFilterAction::ReturnCode KMFilterActionIdentity::process( const Akonadi::Item 
   const KMime::Message::Ptr msg = item.payload<KMime::Message::Ptr>();
   KMime::Headers::Generic *header = new KMime::Headers::Generic( "X-KMail-Identity", msg.get(), QString::number(mParameter), "utf-8");
   msg->setHeader( header );
+  new Akonadi::ItemModifyJob( item, kmkernel->filterMgr() );
   return GoOn;
 }
 
@@ -948,7 +951,8 @@ void KMFilterActionAddTag::argsFromString( const QString &argsStr )
       return;
     }
   }
-  mParameter = mParameterList.at( 0 );
+  if ( mParameterList.size() > 0 )
+    mParameter = mParameterList.at( 0 );
 }
 
 const QString KMFilterActionAddTag::argsAsString() const
@@ -1106,6 +1110,7 @@ KMFilterAction::ReturnCode KMFilterActionRemoveHeader::process( const Akonadi::I
   KMime::Message::Ptr msg = item.payload<KMime::Message::Ptr>();
   while ( msg->headerByType( mParameter.toLatin1() ) )
     msg->removeHeader( mParameter.toLatin1() );
+  new Akonadi::ItemModifyJob( item, kmkernel->filterMgr() );
   return GoOn;
 }
 
@@ -1172,6 +1177,7 @@ KMFilterAction::ReturnCode KMFilterActionAddHeader::process( const Akonadi::Item
   KMime::Message::Ptr msg = item.payload<KMime::Message::Ptr>();
   KMime::Headers::Generic *header = new KMime::Headers::Generic( mParameter.toLatin1(), msg.get(), mValue, "utf-8" );
   msg->setHeader( header );
+  new Akonadi::ItemModifyJob( item, kmkernel->filterMgr() );
   return GoOn;
 }
 
@@ -1324,6 +1330,7 @@ KMFilterAction::ReturnCode KMFilterActionRewriteHeader::process( const Akonadi::
   KMime::Headers::Generic *header = new KMime::Headers::Generic( mParameter.toLatin1(), msg.get(), value.replace( mRegExp, mReplacementString ), "utf-8" );
   msg->setHeader( header );
 
+  new Akonadi::ItemModifyJob( item, kmkernel->filterMgr() );
   return GoOn;
 }
 
