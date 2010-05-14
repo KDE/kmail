@@ -149,7 +149,7 @@ QString FolderCollection::configGroupName() const
 
 void FolderCollection::readConfig()
 {
-  KConfigGroup configGroup( KMKernel::config(), configGroupName() );
+  const KConfigGroup configGroup( KMKernel::config(), configGroupName() );
   mExpireMessages = configGroup.readEntry( "ExpireMessages", false );
   mReadExpireAge = configGroup.readEntry( "ReadExpireAge", 3 );
   mReadExpireUnits = (ExpireUnits)configGroup.readEntry( "ReadExpireUnits", (int)ExpireMonths );
@@ -184,7 +184,6 @@ void FolderCollection::readConfig()
     KShortcut sc( shortcut );
     setShortcut( sc, 0 );
   }
-  configGroup.sync();
 }
 
 bool FolderCollection::isValid() const
