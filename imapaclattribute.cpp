@@ -27,19 +27,26 @@ ImapAclAttribute::ImapAclAttribute()
 {
 }
 
-ImapAclAttribute::ImapAclAttribute( const QMap<QByteArray, KIMAP::Acl::Rights> &rights )
-  : mRights( rights )
+ImapAclAttribute::ImapAclAttribute( const QMap<QByteArray, KIMAP::Acl::Rights> &rights,
+                                    const QMap<QByteArray, KIMAP::Acl::Rights> &oldRights )
+  : mRights( rights ), mOldRights( oldRights )
 {
 }
 
 void ImapAclAttribute::setRights( const QMap<QByteArray, KIMAP::Acl::Rights> &rights )
 {
+  mOldRights = mRights;
   mRights = rights;
 }
 
 QMap<QByteArray, KIMAP::Acl::Rights> ImapAclAttribute::rights() const
 {
   return mRights;
+}
+
+QMap<QByteArray, KIMAP::Acl::Rights> ImapAclAttribute::oldRights() const
+{
+  return mOldRights;
 }
 
 QByteArray ImapAclAttribute::type() const
@@ -49,35 +56,68 @@ QByteArray ImapAclAttribute::type() const
 
 Akonadi::Attribute* ImapAclAttribute::clone() const
 {
-  return new ImapAclAttribute( mRights );
+  return new ImapAclAttribute( mRights, mOldRights );
 }
 
 QByteArray ImapAclAttribute::serialized() const
 {
   QByteArray result = "";
 
+  bool added = false;
   foreach ( const QByteArray &id, mRights.keys() ) {
     result+= id;
     result+= ' ';
     result+= KIMAP::Acl::rightsToString( mRights[id] );
     result+= " % "; // We use this separator as '%' is not allowed in keys or values
+    added = true;
   }
-  result.chop( 3 );
+
+  if ( added )
+    result.chop( 3 );
+
+  result+= " %% ";
+
+  added = false;
+  foreach ( const QByteArray &id, mOldRights.keys() ) {
+    result+= id;
+    result+= ' ';
+    result+= KIMAP::Acl::rightsToString( mOldRights[id] );
+    result+= " % "; // We use this separator as '%' is not allowed in keys or values
+    added = true;
+  }
+
+  if ( added )
+    result.chop( 3 );
 
   return result;
-
 }
 
 void ImapAclAttribute::deserialize( const QByteArray &data )
 {
   mRights.clear();
-  QList<QByteArray> lines = data.split( '%' );
+  mOldRights.clear();
+  const int pos = data.indexOf( " %% " );
+  if ( pos == -1 )
+    return;
 
-  foreach ( const QByteArray &line, lines ) {
-    QByteArray trimmed = line.trimmed();
-    int wsIndex = trimmed.indexOf( ' ' );
+  const QByteArray leftPart = data.left( pos );
+  const QByteArray rightPart = data.mid( pos + 4 );
+  QList<QByteArray> rights = leftPart.split( '%' );
+  QList<QByteArray> oldRights = rightPart.split( '%' );
+
+  foreach ( const QByteArray &right, rights ) {
+    const QByteArray trimmed = right.trimmed();
+    const int wsIndex = trimmed.indexOf( ' ' );
     const QByteArray id = trimmed.mid( 0, wsIndex ).trimmed();
-    const QByteArray value = trimmed.mid( wsIndex+1, line.length()-wsIndex ).trimmed();
+    const QByteArray value = trimmed.mid( wsIndex + 1, right.length() - wsIndex ).trimmed();
     mRights[id] = KIMAP::Acl::rightsFromString( value );
+  }
+
+  foreach ( const QByteArray &right, oldRights ) {
+    const QByteArray trimmed = right.trimmed();
+    const int wsIndex = trimmed.indexOf( ' ' );
+    const QByteArray id = trimmed.mid( 0, wsIndex ).trimmed();
+    const QByteArray value = trimmed.mid( wsIndex + 1, right.length() - wsIndex ).trimmed();
+    mOldRights[id] = KIMAP::Acl::rightsFromString( value );
   }
 }

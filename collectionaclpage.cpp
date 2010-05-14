@@ -40,21 +40,18 @@
 #include <akonadi/collection.h>
 #include <akonadi/collectionmodifyjob.h>
 
+#include <akonadi/contact/contactgroupexpandjob.h>
+#include <akonadi/contact/contactgroupsearchjob.h>
 #include <akonadi/contact/emailaddressselectiondialog.h>
 #include <KPIMUtils/Email>
 #include <kabc/addresseelist.h>
 #include <kio/jobuidelegate.h>
-#include <kabc/distributionlist.h>
-#ifndef KDEPIM_NO_KRESOURCES
-#include <kabc/stdaddressbook.h>
-#else
-namespace KABC { class AddressBook; }
-#endif
 #include <kpushbutton.h>
 #include <kdebug.h>
 #include <klocale.h>
 #include <kconfiggroup.h>
 #include <KLineEdit>
+#include <kpimutils/email.h>
 
 #include <QDBusInterface>
 #include <QDBusReply>
@@ -196,9 +193,6 @@ public:
       mModified( false ), mNew( false ) {}
 
   void load( const QByteArray &id, KIMAP::Acl::Rights rights );
-  void save( ACLList& list,
-             KABC::AddressBook* abook,
-             IMAPUserIdFormat userIdFormat );
 
   QString userId() const { return text( 0 ); }
   void setUserId( const QString& userId ) { setText( 0, userId ); }
@@ -257,36 +251,6 @@ void CollectionAclPage::ListViewItem::load( const QByteArray &id, KIMAP::Acl::Ri
   mInternalRightsList = KIMAP::Acl::rightsToString( rights );
   setText( 1, permissionsToUserString( mPermissions, mInternalRightsList ) );
   mModified = true; // for dimap, so that earlier changes are still marked as changes
-}
-
-void CollectionAclPage::ListViewItem::save( ACLList& aclList,
-                                                 KABC::AddressBook* addressBook,
-                                                 IMAPUserIdFormat userIdFormat )
-{
-  #if 0
-  // expand distribution lists
-  KABC::DistributionList* list = addressBook->findDistributionListByName( userId(),  Qt::CaseInsensitive );
-  if ( list ) {
-    Q_ASSERT( mModified ); // it has to be new, it couldn't be stored as a distr list name....
-    KABC::DistributionList::Entry::List entryList = list->entries();
-    KABC::DistributionList::Entry::List::ConstIterator it; // nice number of "::"!
-    for( it = entryList.constBegin(); it != entryList.constEnd(); ++it ) {
-      QString email = (*it).email();
-      if ( email.isEmpty() )
-        email = addresseeToUserId( (*it).addressee(), userIdFormat );
-      ACLListEntry entry( email, QString(), mPermissions );
-      entry.changed = true;
-      aclList.append( entry );
-    }
-  } else { // it wasn't a distribution list
-    ACLListEntry entry( userId(), mInternalRightsList, mPermissions );
-    if ( mModified ) {
-      entry.internalRightsList.clear();
-      entry.changed = true;
-    }
-    aclList.append( entry );
-  }
-  #endif
 }
 
 ////
@@ -394,7 +358,31 @@ void CollectionAclPage::save(Akonadi::Collection & col)
   QTreeWidgetItemIterator it( mListView );
   while ( QTreeWidgetItem* item = *it ) {
     ListViewItem* ACLitem = static_cast<ListViewItem *>( item );
-    rights[ ACLitem->userId().toUtf8() ] = ACLitem->permissions();
+
+    // we can use job->exec() here, it is not a hot path
+    Akonadi::ContactGroupSearchJob *searchJob = new Akonadi::ContactGroupSearchJob( this );
+    searchJob->setQuery( Akonadi::ContactGroupSearchJob::Name, ACLitem->userId() );
+    searchJob->setLimit( 1 );
+    if ( !searchJob->exec() ) {
+      ++it;
+      continue;
+    }
+
+    if ( !searchJob->contactGroups().isEmpty() ) { // it has been a distribution list
+      Akonadi::ContactGroupExpandJob *expandJob = new Akonadi::ContactGroupExpandJob( searchJob->contactGroups().first(), this );
+      if ( expandJob->exec() ) {
+        foreach ( const KABC::Addressee &contact, expandJob->contacts() ) {
+          const QByteArray rawEmail = KPIMUtils::extractEmailAddress( contact.preferredEmail().toUtf8() );
+          if ( !rawEmail.isEmpty() )
+            rights[ rawEmail ] = ACLitem->permissions();
+        }
+      }
+    } else { // it has been a normal contact
+      const QByteArray rawEmail = KPIMUtils::extractEmailAddress( ACLitem->userId().toUtf8() );
+      if ( !rawEmail.isEmpty() )
+        rights[ rawEmail ] = ACLitem->permissions();
+    }
+
     ++it;
   }
 
@@ -499,82 +487,6 @@ void CollectionAclPage::slotRemoveACL()
 }
 
 #if 0
-bool CollectionAclPage::save()
-{
-  if ( !mChanged || !mImapAccount ) // no changes
-    return true;
-  assert( mDlg->folder() ); // should have been created already
-
-  // Expand distribution lists. This is necessary because after Apply
-  // we would otherwise be able to "modify" the permissions for a distr list,
-  // which wouldn't work since the ACLList and the server only know about the
-  // individual addresses.
-  // slotACLChanged would have trouble matching the item too.
-  // After reloading we'd see the list expanded anyway,
-  // so this is more consistent.
-  // But we do it now and not when inserting it, because this allows to
-  // immediately remove a wrongly inserted distr list without having to
-  // remove 100 items.
-  // Now, how to expand them? Playing with listviewitem iterators and inserting
-  // listviewitems at the same time sounds dangerous, so let's just save into
-  // ACLList and reload that.
-  KABC::AddressBook *addressBook = KABC::StdAddressBook::self( true );
-  ACLList aclList;
-
-  QTreeWidgetItemIterator it( mListView );
-  while ( QTreeWidgetItem* item = *it ) {
-    ListViewItem* ACLitem = static_cast<ListViewItem *>( item );
-    ACLitem->save( aclList,
-                   addressBook,
-                   mUserIdFormat );
-    ++it;
-  }
-  loadListView( aclList );
-
-  // Now compare with the initial ACLList, because if the user renamed a userid
-  // we have to add the old userid to the "to be deleted" list.
-  for ( ACLList::ConstIterator init = mInitialACLList.constBegin(); init != mInitialACLList.constEnd(); ++init ) {
-    bool isInNewList = false;
-    QString uid = (*init).userId;
-    for ( ACLList::ConstIterator it = aclList.constBegin(); it != aclList.constEnd() && !isInNewList; ++it )
-      isInNewList = uid == (*it).userId;
-    if ( !isInNewList && !mRemovedACLs.contains(uid) )
-      mRemovedACLs.append( uid );
-  }
-
-  for ( QStringList::ConstIterator rit = mRemovedACLs.constBegin(); rit != mRemovedACLs.constEnd(); ++rit ) {
-    // We use permissions == -1 to signify deleting. At least on cyrus, setacl(0) or deleteacl are the same,
-    // but I'm not sure if that's true for all servers.
-    ACLListEntry entry( *rit, QString(), -1 );
-    entry.changed = true;
-    aclList.append( entry );
-  }
-
-  // aclList is finally ready. We can save it (dimap) or apply it (imap).
-
-  if ( mFolderType == KMFolderTypeCachedImap ) {
-    // Apply the changes to the aclList stored in the folder.
-    // We have to do this now and not before, so that cancel really cancels.
-    KMFolderCachedImap* folderImap = static_cast<KMFolderCachedImap*>( mDlg->folder()->storage() );
-    folderImap->setACLList( aclList );
-    return true;
-  }
-
-  mACLList = aclList;
-
-  KMFolderImap* parentImap = mDlg->parentFolder() ? static_cast<KMFolderImap*>( mDlg->parentFolder()->storage() ) : 0;
-
-  if ( mDlg->isNewFolder() ) {
-    // The folder isn't created yet, wait for it
-    // It's a two-step process (mkdir+listDir) so we wait for the dir listing to be complete
-    connect( parentImap, SIGNAL( directoryListingFinished(KMFolderImap*) ),
-             this, SLOT( slotDirectoryListingFinished(KMFolderImap*) ) );
-  } else {
-      slotDirectoryListingFinished( parentImap );
-  }
-  return true;
-}
-
 void CollectionAclPage::slotDirectoryListingFinished(KMFolderImap* f)
 {
   if ( !f ||
