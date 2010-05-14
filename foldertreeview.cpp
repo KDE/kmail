@@ -226,10 +226,15 @@ void FolderTreeView::selectModelIndex( const QModelIndex & index )
   if ( index.isValid() ) {
     clearSelection();
     scrollTo( index );
-    setCurrentIndex(index);
+    selectionModel()->setCurrentIndex( index, QItemSelectionModel::NoUpdate );
   }
 }
 
+void FolderTreeView::slotSelectFocusFolder()
+{
+  if( currentIndex().isValid() )
+    setCurrentIndex( currentIndex() );
+}
 
 void FolderTreeView::slotFocusNextFolder()
 {

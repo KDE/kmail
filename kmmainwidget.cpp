@@ -1015,12 +1015,9 @@ void KMMainWidget::createWidgets()
   {
     KAction *action = new KAction(i18n("Select Folder with Focus"), this);
     actionCollection()->addAction("select_current_folder", action );
-#if 0
+
     connect( action, SIGNAL( triggered( bool ) ),
-             mMainFolderView, SLOT( slotSelectFocusedFolder() ) );
-#else
-    kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
-#endif
+             mFolderTreeWidget->folderTreeView(), SLOT( slotSelectFocusFolder() ) );
     action->setShortcut( QKeySequence( Qt::CTRL+Qt::Key_Space ) );
   }
   {
