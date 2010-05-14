@@ -52,13 +52,6 @@ using KMail::RegExpLineEdit;
 #include <phonon/mediaobject.h>
 #include <kshell.h>
 #include <kprocess.h>
-#ifndef KDEPIM_NO_KRESOURCES
-#include <kabc/addressbook.h>
-#include <kabc/stdaddressbook.h>
-#include <kabc/resource.h>
-#else
-namespace KABC { class Resource; }
-#endif
 #include <nepomuk/tag.h>
 
 // Qt headers:
