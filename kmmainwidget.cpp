@@ -2810,13 +2810,17 @@ void KMMainWidget::slotDelayedMessagePopup( KJob *job )
       return;
     }
     Akonadi::Collection parentCol = msg.parentCollection();
-    if ( parentCol.isValid() && KMKernel::self()->folderIsTemplates(parentCol)) {
+    if ( parentCol.isValid() && KMKernel::self()->folderIsTemplates( parentCol) ) {
       menu->addAction( mUseAction );
     } else {
       menu->addAction( mMsgActions->replyMenu() );
       menu->addAction( mMsgActions->forwardMenu() );
     }
-    menu->addAction(editAction());
+    if( parentCol.isValid() && KMKernel::self()->folderIsSentMailFolder( parentCol ) ) {
+      menu->addAction( sendAgainAction() );
+    } else {
+      menu->addAction( editAction() );
+    }
     menu->addAction( mailingListActionMenu() );
     menu->addSeparator();
 
