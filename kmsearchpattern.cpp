@@ -353,20 +353,11 @@ bool KMSearchRuleString::matches( const Akonadi::Item &item ) const
     msgContents += ", " + msg->cc()->asUnicodeString();
     msgContents += ", " + msg->bcc()->asUnicodeString();
   } else if ( field() == "<tag>" ) {
-#if 0  //TODO port to akonadi
-    if ( msg->tagList() ) {
-      foreach ( const QString &label, * msg->tagList() ) {
-        const KMime::MessageTagDescription * tagDesc = kmkernel->msgTagMgr()->find( label );
-        if ( tagDesc )
-          msgContents += tagDesc->name();
-      }
-      logContents = false;
-    }
-#else
-  kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
-#endif
-  } else
- {
+    const Nepomuk::Resource res( item.url() );
+    foreach ( const Nepomuk::Tag &tag, res.tags() )
+      msgContents += tag.label();
+    logContents = false;
+  } else {
     // make sure to treat messages with multiple header lines for
     // the same header correctly
     msgContents = msg->headerByType( field() ) ? msg->headerByType( field() )->asUnicodeString() : "";
