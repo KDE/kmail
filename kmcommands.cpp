@@ -2177,7 +2177,7 @@ KMCommand::Result KMSaveAttachmentsCommand::saveItem( KMime::Content *content,
 
         // process this node and all it's siblings and descendants
         mNodeHelper->setNodeUnprocessed( dataNode, true );
-        otp.parseObjectTree( Akonadi::Item(), dataNode );
+        otp.parseObjectTree( dataNode );
 
         rawReplyString = otp.rawReplyString();
         gotRawReplyString = true;

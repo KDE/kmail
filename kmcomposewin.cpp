@@ -1775,9 +1775,7 @@ void KMComposeWin::setMsg( const KMime::Message::Ptr &newMsg, bool mayAutoSign,
   msgContent->parse();
   MessageViewer::EmptySource emptySource;
   MessageViewer::ObjectTreeParser otp( &emptySource );//All default are ok
-  Akonadi::Item item;
-  item.setPayload< KMime::Message::Ptr >( mMsg );
-  otp.parseObjectTree( item, msgContent );
+  otp.parseObjectTree( msgContent );
 
   // Load the attachments
   MessageCore::AttachmentCollector ac;
