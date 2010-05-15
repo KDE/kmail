@@ -220,7 +220,7 @@ void FolderTreeWidget::readConfig()
   const int checkedFolderToolTipsPolicy = mainFolderView.readEntry( "ToolTipDisplayPolicy", 0 );
   changeToolTipsPolicyConfig( ( ToolTipDisplayPolicy )checkedFolderToolTipsPolicy );
 
-  d->folderTreeView->setShowDropActionMenu( GlobalSettings::self()->showPopupAfterDnD() );
+  d->folderTreeView->setDropActionMenuEnabled( GlobalSettings::self()->showPopupAfterDnD() );
   readQuotaConfig();
 }
 
