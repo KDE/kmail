@@ -4027,41 +4027,6 @@ QList<QAction*> KMMainWidget::actionList()
 }
 
 //-----------------------------------------------------------------------------
-QString KMMainWidget::findCurrentImapPath()
-{
-  QString startPath;
-#if 0 //TODO port to akonadi
-  if ( !mFolder ) {
-    return startPath;
-  }
-  if ( mFolder->folderType() == KMFolderTypeImap ) {
-    startPath = static_cast<KMFolderImap*>( mFolder->storage() )->imapPath();
-  } else if ( mFolder->folderType() == KMFolderTypeCachedImap ) {
-    startPath = static_cast<KMFolderCachedImap*>( mFolder->storage() )->imapPath();
-  }
-#else
-    kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
-#endif
-  return startPath;
-}
-
-//-----------------------------------------------------------------------------
-#if 0 //TODO port to akonadi
-ImapAccountBase *KMMainWidget::findCurrentImapAccountBase()
-{
-  ImapAccountBase *account = 0;
-  if ( !mFolder ) {
-    return account;
-  }
-  if ( mFolder->folderType() == KMFolderTypeImap ) {
-    account = static_cast<KMFolderImap*>( mFolder->storage() )->account();
-  } else if ( mFolder->folderType() == KMFolderTypeCachedImap ) {
-    account = static_cast<KMFolderCachedImap*>( mFolder->storage() )->account();
-  }
-  return account;
-}
-#endif
-
 void KMMainWidget::toggleSystemTray()
 {
   if ( !mSystemTray && GlobalSettings::self()->systemTrayEnabled() ) {

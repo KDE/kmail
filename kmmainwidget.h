@@ -75,7 +75,6 @@ namespace KMail {
   class Vacation;
   class SieveDebugDialog;
   class SearchWindow;
-  class ImapAccountBase;
   class StatusBarLabel;
   class TagActionManager;
   class FolderShortcutActionManager;
@@ -452,18 +451,6 @@ class KMAIL_EXPORT KMMainWidget : public QWidget
   private:
     /** Get override character encoding. */
     QString overrideEncoding() const;
-
-    /**
-      Helper which finds the associated account if there is a current
-      folder and it is an imap or disconnected imap one.
-    */
-    KMail::ImapAccountBase* findCurrentImapAccountBase();
-
-    /**
-      Helper which finds the associated IMAP path if there is a current
-      folder and it is an imap or disconnected imap one.
-    */
-    QString findCurrentImapPath();
 
     /** Update the custom template menus. */
     void updateCustomTemplateMenus();
