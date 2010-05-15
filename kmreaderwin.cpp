@@ -135,6 +135,7 @@ KMReaderWin::KMReaderWin(QWidget *aParent,
   QVBoxLayout * vlay = new QVBoxLayout( this );
   vlay->setMargin( 0 );
   mViewer = new Viewer( this, mainWindow, mActionCollection );
+  mViewer->setAppName( "KMail" );
   connect( mViewer, SIGNAL(urlClicked( const Akonadi::Item &, const KUrl & ) ),
            this, SLOT( slotUrlClicked( const Akonadi::Item &, const KUrl& ) ) );
   connect( mViewer, SIGNAL( requestConfigSync() ), kmkernel, SLOT( slotRequestConfigSync() ) );
