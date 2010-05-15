@@ -1269,7 +1269,9 @@ KMCommand::Result KMForwardAttachedCommand::execute()
     msgs << KMail::Util::message( item );
   QPair< KMime::Message::Ptr, QList< KMime::Content* > > fwdMsg = factory.createAttachedForward( msgs );
   {
-    mWin = KMail::makeComposer( fwdMsg.first, KMail::Composer::Forward, mIdentity );
+    if ( !mWin ) {
+      mWin = KMail::makeComposer( fwdMsg.first, KMail::Composer::Forward, mIdentity );
+    }
     foreach( KMime::Content* attach, fwdMsg.second )
       mWin->addAttach( attach );
     mWin->show();
