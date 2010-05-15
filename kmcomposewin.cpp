@@ -3572,8 +3572,9 @@ void KMComposeWin::slotIdentityChanged( uint uoid, bool initalChange )
   if ( ident.organization().isEmpty() ) {
     mMsg->organization()->clear();
   } else {
-    KMime::Headers::Generic *header = new KMime::Headers::Generic( "Organization", mMsg.get(), ident.organization(), "utf-8" );
-    mMsg->setHeader( header );
+    KMime::Headers::Organization * const organization
+           = new KMime::Headers::Organization( mMsg.get(), ident.organization(), "utf-8" );
+    mMsg->setHeader( organization );
   }
   if ( !ident.isXFaceEnabled() || ident.xface().isEmpty() ) {
     mMsg->removeHeader( "X-Face" );
