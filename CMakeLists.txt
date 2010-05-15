@@ -112,7 +112,6 @@ set(kmailprivate_LIB_SRCS
    regexplineedit.cpp
    rulewidgethandlermanager.cpp
    expirejob.cpp
-   compactionjob.cpp
    jobscheduler.cpp
    redirectdialog.cpp
    foldershortcutdialog.cpp

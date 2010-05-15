@@ -108,11 +108,6 @@ public Q_SLOTS:
   Q_SCRIPTABLE void openReader() { openReader( false ); }
 
   /**
-   * Compact all folders, used for the GUI action (and from D-Bus)
-   */
-  Q_SCRIPTABLE void compactAllFolders();
-
-  /**
    * Pauses all background jobs and does not
    * allow new background jobs to be started.
    */

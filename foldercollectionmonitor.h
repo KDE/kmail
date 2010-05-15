@@ -38,7 +38,6 @@ public:
 
   Akonadi::ChangeRecorder * monitor();
   void expireAllFolders(bool immediate );
-  void compactAllFolders( bool immediate );
   void expunge( const Akonadi::Collection& );
 private slots:
   void slotExpungeJob( KJob *job );

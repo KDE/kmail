@@ -1591,10 +1591,6 @@ void KMKernel::slotRunBackgroundTasks() // called regularly by timer
       mFolderCollectionMonitor->expireAllFolders( false /*scheduled, not immediate*/ );
   }
 
-  if ( generalGroup.readEntry( "auto-compaction", true ) ) {
-      mFolderCollectionMonitor->compactAllFolders( false /*scheduled, not immediate*/ );
-  }
-
 #ifdef DEBUG_SCHEDULER // for debugging, see jobscheduler.h
   mBackgroundTasksTimer->start( 60 * 1000 ); // check again in 1 minute
 #else
@@ -1627,11 +1623,6 @@ Akonadi::Collection::List KMKernel::allFolders() const
 void KMKernel::expireAllFoldersNow() // called by the GUI
 {
   mFolderCollectionMonitor->expireAllFolders( true /*immediate*/ );
-}
-
-void KMKernel::compactAllFolders() // called by the GUI
-{
-  mFolderCollectionMonitor->compactAllFolders( true /*immediate*/ );
 }
 
 Akonadi::Collection KMKernel::findFolderCollectionById( const QString& idString )

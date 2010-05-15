@@ -38,8 +38,6 @@ public:
 
   ~FolderCollection();
 
-  enum CompactOptions { CompactLater, CompactNow, CompactSilentlyNow };
-
   /*
    * Define the possible units to use for measuring message expiry.
    * expireNever is used to switch off message expiry, and expireMaxUnits
@@ -209,14 +207,6 @@ public:
 
   void removeCollection();
   void expireOldMessages( bool immediate );
-
-  /**
-   * Compact this folder. Options:
-   * CompactLater: schedule it as a background task
-   * CompactNow: do it now, and inform the user of the result (manual compaction)
-   * CompactSilentlyNow: do it now, and keep silent about it (e.g. for outbox)
-   */
-  void compact( CompactOptions options );
 
 protected slots:
   void slotIdentitiesChanged();

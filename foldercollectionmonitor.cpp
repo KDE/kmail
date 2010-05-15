@@ -60,12 +60,6 @@ void FolderCollectionMonitor::expireAllFolders(bool immediate )
     kDebug() << "AKONADI PORT: Need to implement it  " << Q_FUNC_INFO;
 }
 
-void FolderCollectionMonitor::compactAllFolders( bool immediate )
-{
-    kDebug() << "AKONADI PORT: Need to implement it  " << Q_FUNC_INFO;
-
-}
-
 void FolderCollectionMonitor::expunge( const Akonadi::Collection & col )
 {
   Akonadi::ItemFetchJob *job = new Akonadi::ItemFetchJob( col,this );

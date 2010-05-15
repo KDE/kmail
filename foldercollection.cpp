@@ -30,7 +30,6 @@
 #include <kio/jobuidelegate.h>
 #include "kmcommands.h"
 #include "expirejob.h"
-#include "compactionjob.h"
 #include "foldershortcutactionmanager.h"
 
 #include <QMutex>
@@ -525,18 +524,4 @@ void FolderCollection::expireOldMessages( bool immediate )
 #endif
 }
 
-void FolderCollection::compact( FolderCollection::CompactOptions options )
-{
-  kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
-  if ( options == CompactLater ) {
-    KMail::ScheduledCompactionTask* task = new KMail::ScheduledCompactionTask(mCollection, false);
-#if 0
-    kmkernel->jobScheduler()->registerTask( task );
-#endif
-  } else {
-#if 0
-    mStorage->compact( options == CompactSilentlyNow );
-#endif
-  }
-}
 

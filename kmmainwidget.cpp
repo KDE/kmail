@@ -1570,16 +1570,6 @@ void KMMainWidget::slotMarkAllAsRead()
   updateMessageActions();
 }
 
-//-----------------------------------------------------------------------------
-void KMMainWidget::slotCompactFolder()
-{
-  if (!mCurrentFolder)
-    return;
-
-  MessageViewer::KCursorSaver busy( MessageViewer::KBusyPtr::busy() );
-  mCurrentFolder->compact( FolderCollection::CompactNow );
-}
-
 #if 0
 //-----------------------------------------------------------------------------
 void KMMainWidget::slotRefreshFolder()
@@ -1634,13 +1624,6 @@ void KMMainWidget::slotExpireAll()
   }
 
   kmkernel->expireAllFoldersNow();
-}
-
-//-----------------------------------------------------------------------------
-void KMMainWidget::slotCompactAll()
-{
-  MessageViewer::KCursorSaver busy( MessageViewer::KBusyPtr::busy() );
-  kmkernel->compactAllFolders();
 }
 
 
@@ -2920,11 +2903,6 @@ void KMMainWidget::setupActions()
                                   actionCollection() );
 
   {
-    KAction *action = new KAction(i18n("&Compact All Folders"), this);
-    actionCollection()->addAction("compact_all_folders", action );
-    connect(action, SIGNAL(triggered(bool) ), SLOT(slotCompactAll()));
-  }
-  {
     KAction *action = new KAction(i18n("&Expire All Folders"), this);
     actionCollection()->addAction("expire_all_folders", action );
     connect(action, SIGNAL(triggered(bool) ), SLOT(slotExpireAll()));
@@ -3130,10 +3108,6 @@ void KMMainWidget::setupActions()
   mExpireFolderAction = new KAction(i18n("&Expiration Settings"), this);
   actionCollection()->addAction("expire", mExpireFolderAction );
   connect(mExpireFolderAction, SIGNAL(triggered(bool) ), SLOT(slotExpireFolder()));
-
-  mCompactFolderAction = new KAction(i18n("&Compact Folder"), this);
-  actionCollection()->addAction("compact", mCompactFolderAction );
-  connect(mCompactFolderAction, SIGNAL(triggered(bool) ), SLOT(slotCompactFolder()));
 
 
 
@@ -3806,7 +3780,6 @@ void KMMainWidget::updateFolderMenu()
   bool multiFolder = mFolderTreeWidget->selectedCollections().count() > 1;
   mFolderMailingListPropertiesAction->setEnabled( folderWithContent && !multiFolder &&
                                                   !mCurrentFolder->isSystemFolder() );
-  mCompactFolderAction->setEnabled( folderWithContent && !multiFolder );
   mCollectionProperties->setEnabled( folderWithContent );
   mEmptyFolderAction->setEnabled( folderWithContent && ( mCurrentFolder->count() > 0 ) && mCurrentFolder->canDeleteMessages() && !multiFolder );
   mEmptyFolderAction->setText( (mCurrentFolder && kmkernel->folderIsTrash(mCurrentFolder->collection()))

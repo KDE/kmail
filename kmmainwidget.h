@@ -322,13 +322,11 @@ class KMAIL_EXPORT KMMainWidget : public QWidget
     void slotRemoveFolder();
     void slotDelayedRemoveFolder( KJob* );
     void slotEmptyFolder();
-    void slotCompactFolder();
     void slotAddFavoriteFolder();
     void slotShowSelectedForderInPane();
 #if 0
   void slotRefreshFolder();
 #endif
-    void slotCompactAll();
     void slotOverrideHtml();
     void slotOverrideHtmlLoadExt();
     void slotMessageQueuedOrDrafted();
@@ -584,7 +582,7 @@ private:
     KMail::SearchWindow *mSearchWin;
 
     KAction *mRemoveFolderAction,
-      *mExpireFolderAction, *mCompactFolderAction,
+      *mExpireFolderAction,
       *mEmptyFolderAction, *mMarkAllAsReadAction, *mFolderMailingListPropertiesAction,
       *mShowFolderShortcutDialogAction,
       *mRemoveDuplicatesAction, *mArchiveFolderAction,
