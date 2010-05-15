@@ -142,24 +142,7 @@ void CollectionGeneralPage::init(const Akonadi::Collection &col)
     hl->addWidget( label );
 
     mNameEdit = new KLineEdit( this );
-#if 0
-    if( !mDlg->folder() )
-      mNameEdit->setFocus();
-    mNameEdit->setText( mDlg->folder() ? mDlg->folder()->label() : i18n("unnamed") );
-    if (!aName.isEmpty())
-            mNameEdit->setText(aName);
-    mNameEdit->setMinimumSize(mNameEdit->sizeHint());
-    // prevent renaming of IMAP inbox
-    if ( mDlg->folder() && mDlg->folder()->isSystemFolder() ) {
-      QString imapPath;
-      if ( mDlg->folder()->folderType() == KMFolderTypeImap )
-        imapPath = static_cast<KMFolderImap*>( mDlg->folder()->storage() )->imapPath();
-      if ( mDlg->folder()->folderType() == KMFolderTypeCachedImap )
-        imapPath = static_cast<KMFolderCachedImap*>( mDlg->folder()->storage() )->imapPath();
-      if ( imapPath == "/INBOX/" )
-        mNameEdit->setEnabled( false );
-    }
-#endif
+    mNameEdit->setEnabled( col.rights() & Collection::CanChangeCollection );
     label->setBuddy( mNameEdit );
     hl->addWidget( mNameEdit );
     connect( mNameEdit, SIGNAL( textChanged( const QString & ) ),
