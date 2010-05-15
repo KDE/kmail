@@ -9,7 +9,6 @@
 #include <QString>
 #include <QPointer>
 #include <QDBusObjectPath>
-#include <threadweaver/ThreadWeaver.h>
 
 #include <kconfig.h>
 #include <kurl.h>
@@ -289,7 +288,6 @@ public:
   KMFilterActionDict *filterActionDict() { return the_filterActionDict; }
   MessageSender *msgSender();
 
-  ThreadWeaver::Weaver *weaver() { return the_weaver; }
   /** return the pointer to the identity manager */
   KPIMIdentities::IdentityManager *identityManager();
 
@@ -444,9 +442,6 @@ private:
   MailServiceImpl *mMailService;
 
   QList<const KStatusNotifierItem*> systemTrayApplets;
-
-  /* Weaver */
-  ThreadWeaver::Weaver *the_weaver;
 
   FolderCollectionMonitor *mFolderCollectionMonitor;
   Akonadi::EntityTreeModel *mEntityTreeModel;

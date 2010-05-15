@@ -210,7 +210,6 @@ kde4_add_kcfg_files(kmailprivate_LIB_SRCS
 
 kde4_add_library(kmailprivate SHARED ${kmailprivate_LIB_SRCS})
 target_link_libraries(kmailprivate
-  ${KDE4_THREADWEAVER_LIBRARY}
   ${KDEPIMLIBS_KMIME_LIBRARY}
   ${KDEPIMLIBS_AKONADI_LIBS}
   ${KDEPIMLIBS_AKONADI_KMIME_LIBS}

@@ -1049,8 +1049,6 @@ void KMKernel::init()
   readConfig();
   // filterMgr->dump();
 
-  the_weaver =  new ThreadWeaver::Weaver( this );
-
   mBackgroundTasksTimer = new QTimer( this );
   mBackgroundTasksTimer->setSingleShot( true );
   connect( mBackgroundTasksTimer, SIGNAL( timeout() ), this, SLOT( slotRunBackgroundTasks() ) );
@@ -1138,9 +1136,6 @@ void KMKernel::cleanup(void)
   the_undoStack = 0;
   delete the_popFilterMgr;
   the_popFilterMgr = 0;
-
-  delete the_weaver;
-  the_weaver = 0;
 
   KSharedConfig::Ptr config =  KMKernel::config();
   KConfigGroup group(config, "General");
