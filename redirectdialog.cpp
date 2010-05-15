@@ -136,7 +136,7 @@ void RedirectDialog::slotAddrBook()
 
   if ( dlg->exec() != KDialog::Rejected && dlg ) {
     QStringList addresses;
-    foreach ( const Akonadi::EmailAddressSelectionView::Selection &selection, dlg->selectedAddresses() )
+    foreach ( const Akonadi::EmailAddressSelection &selection, dlg->selectedAddresses() )
       addresses << selection.quotedEmail();
 
     if ( !mResentTo.isEmpty() )

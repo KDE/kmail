@@ -147,7 +147,7 @@ void ACLEntryDialog::slotSelectAddresses()
 
   QStringList addresses;
 
-  foreach ( const Akonadi::EmailAddressSelectionView::Selection &selection, dlg->selectedAddresses() )
+  foreach ( const Akonadi::EmailAddressSelection &selection, dlg->selectedAddresses() )
     addresses << selection.quotedEmail();
 
   if ( !mUserIdLineEdit->text().isEmpty() )
