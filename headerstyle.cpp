@@ -848,7 +848,7 @@ namespace KMail {
 	    QString fromPart = KMMessage::emailAddrAsAnchor( fromStr, true, linkColor );
 	    if ( !vCardName.isEmpty() )
 		fromPart += "&nbsp;&nbsp;<a href=\"" + vCardName + "\" "+linkColor+">" + i18n("[vCard]") + "</a>";
-	    //TDDO strategy date
+	    //TODO strategy date
 	    //if ( strategy->showHeader( "date" ) )
 	    headerStr +=
 		"     <tr> \n"
@@ -873,7 +873,7 @@ namespace KMail {
 	    "     <tr> "
 	    "      <td style=\"font-size: 6px; text-align: right; padding-left: 5px; padding-right: 24px; " + borderSettings + "\">" + i18n("CC: ") + "</td> "
 	    "      <td style=\"" + borderSettings + "\">" +
-	    KMMessage::emailAddrAsAnchor( message->cc(), true, linkColor ) +
+	    KMMessage::emailAddrAsAnchor( message->cc(), false, linkColor ) +
 	    "      </td> "
 	    "     </tr>\n";
 
@@ -883,7 +883,7 @@ namespace KMail {
 	    "     <tr> "
 	    "      <td style=\"font-size: 6px; text-align: right; padding-left: 5px; padding-right: 24px; " + borderSettings + "\">" + i18n("BCC: ") + "</td> "
 	    "      <td style=\"" + borderSettings + "\">" +
-	    KMMessage::emailAddrAsAnchor( message->bcc(), true, linkColor ) +
+	    KMMessage::emailAddrAsAnchor( message->bcc(), false, linkColor ) +
 	    "      </td> "
 	    "     </tr>\n";
 
