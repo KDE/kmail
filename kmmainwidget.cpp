@@ -710,6 +710,15 @@ void KMMainWidget::layoutSplitters()
   // This would normally be done in the message list itself, but apparently something resets the focus
   // again, probably all the reparenting we do here.
   mMessagePane->focusView();
+  
+  // By default hide th unread and size columns on first run.
+  if( kmkernel->firstStart() )
+  {
+    mFolderTreeWidget->folderTreeView()->hideColumn( 1 );
+    mFolderTreeWidget->folderTreeView()->hideColumn( 3 );
+    mFolderTreeWidget->folderTreeView()->header()->resizeSection( 0, folderViewWidth * 0.8 );
+  }
+
   // Make the copy action work, see disconnect comment above
   if ( mMsgView )
     connect( mMsgView->copyAction(), SIGNAL( triggered(bool) ),
