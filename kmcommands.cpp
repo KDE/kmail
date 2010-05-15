@@ -233,7 +233,7 @@ void KMCommand::slotStart()
            this, SLOT( slotPostTransfer( KMCommand::Result ) ) );
 
   if ( mMsgList.isEmpty() ) {
-      emit messagesTransfered( Failed );
+      emit messagesTransfered( OK );
       return;
   }
 
