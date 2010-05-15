@@ -85,7 +85,7 @@ class FolderCollectionMonitor;
  *
  * The kernel also manages some stuff that should be factored out:
  * - default collection handling, like inboxCollectionFolder()
- * - job handling, like jobScheduler() and mPutJobs
+ * - job handling, like jobScheduler()
  * - handling of some config settings, like wrapCol()
  * - various other stuff
  */
@@ -252,8 +252,6 @@ public:
                const QString &bcc, const QString &subj, const QString &body,
                const KUrl &messageFile, const KUrl::List &attach,
                const QStringList &customHeaders );
-  void byteArrayToRemoteFile( const QByteArray&, const KUrl&,
-                              bool overwrite = false );
   bool folderIsDraftOrOutbox(const Akonadi::Collection &);
   bool folderIsDrafts(const Akonadi::Collection&);
 
@@ -389,10 +387,6 @@ public slots:
 
   void slotConfigChanged();
 
-protected slots:
-  void slotDataReq(KIO::Job*,QByteArray&);
-  void slotResult(KJob*);
-
 signals:
   void configChanged();
   void onlineStatusChanged( GlobalSettings::EnumNetworkState::type );
@@ -425,13 +419,6 @@ private:
   KMFilterActionDict *the_filterActionDict;
   mutable KPIMIdentities::IdentityManager *mIdentityManager;
   AkonadiSender *the_msgSender;
-  struct putData
-  {
-    KUrl url;
-    QByteArray data;
-    int offset;
-  };
-  QMap<KIO::Job *, putData> mPutJobs;
   /** previous KMail version. If different from current,
       the user has just updated. read from config */
   QString the_previousVersion;

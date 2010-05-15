@@ -247,14 +247,6 @@ KMKernel::KMKernel (QObject *parent, const char *name) :
 
 KMKernel::~KMKernel ()
 {
-  QMap<KIO::Job*, putData>::Iterator it = mPutJobs.begin();
-  while ( it != mPutJobs.end() )
-  {
-    KIO::Job *job = it.key();
-    mPutJobs.erase( it );
-    job->kill();
-    it = mPutJobs.begin();
-  }
   delete mMailService;
   mMailService = 0;
 
@@ -1208,66 +1200,6 @@ void KMKernel::action( bool mailto, bool check, const QString &to,
   if ( check )
     checkMail();
   //Anything else?
-}
-
-void KMKernel::byteArrayToRemoteFile(const QByteArray &aData, const KUrl &aURL,
-  bool overwrite)
-{
-  // ## when KDE 3.3 is out: use KIO::storedPut to remove slotDataReq altogether
-  KIO::Job *job = KIO::put(aURL, -1, overwrite ? KIO::Overwrite : KIO::DefaultFlags);
-  putData pd; pd.url = aURL; pd.data = aData; pd.offset = 0;
-  mPutJobs.insert(job, pd);
-  connect(job, SIGNAL(dataReq(KIO::Job*,QByteArray&)),
-    SLOT(slotDataReq(KIO::Job*,QByteArray&)));
-  connect(job, SIGNAL(result(KJob*)),
-    SLOT(slotResult(KJob*)));
-}
-
-void KMKernel::slotDataReq(KIO::Job *job, QByteArray &data)
-{
-  // send the data in 64 KB chunks
-  const int MAX_CHUNK_SIZE = 64*1024;
-  QMap<KIO::Job*, putData>::Iterator it = mPutJobs.find(job);
-  assert(it != mPutJobs.end());
-  int remainingBytes = (*it).data.size() - (*it).offset;
-  if( remainingBytes > MAX_CHUNK_SIZE )
-  {
-    // send MAX_CHUNK_SIZE bytes to the receiver (deep copy)
-    data = QByteArray( (*it).data.data() + (*it).offset, MAX_CHUNK_SIZE );
-    (*it).offset += MAX_CHUNK_SIZE;
-    //kDebug() << "Sending" << MAX_CHUNK_SIZE << "bytes ("
-    //                << remainingBytes - MAX_CHUNK_SIZE << " bytes remain)\n";
-  }
-  else
-  {
-    // send the remaining bytes to the receiver (deep copy)
-    data = QByteArray( (*it).data.data() + (*it).offset, remainingBytes );
-    (*it).data = QByteArray();
-    (*it).offset = 0;
-    //kDebug() << "Sending" << remainingBytes << "bytes";
-  }
-}
-
-void KMKernel::slotResult(KJob *job)
-{
-  QMap<KIO::Job*, putData>::Iterator it = mPutJobs.find(static_cast<KIO::Job*>(job));
-  assert(it != mPutJobs.end());
-  if (job->error())
-  {
-    if (job->error() == KIO::ERR_FILE_ALREADY_EXIST)
-    {
-      if (KMessageBox::warningContinueCancel(0,
-        i18n("File %1 exists.\nDo you want to replace it?",
-         (*it).url.prettyUrl()), i18n("Save to File"), KGuiItem(i18n("&Replace")))
-        == KMessageBox::Continue)
-        byteArrayToRemoteFile((*it).data, (*it).url, true);
-    }
-    else {
-      KIO::JobUiDelegate *ui = static_cast<KIO::Job*>( job )->ui();
-      ui->showErrorMessage();
-    }
-  }
-  mPutJobs.erase(it);
 }
 
 void KMKernel::slotRequestConfigSync()
