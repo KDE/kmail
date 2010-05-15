@@ -44,10 +44,6 @@
 #include "kmkernel.h"
 #include "foldercollection.h"
 #include <QTextCodec>
-#include <QBuffer>
-#include <QClipboard>
-#include <QDropEvent>
-#include <QFileInfo>
 
 KMComposerEditor::KMComposerEditor( KMComposeWin *win,QWidget *parent)
  : Message::KMeditor(parent),m_composerWin(win)
