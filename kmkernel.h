@@ -245,7 +245,6 @@ public:
    */
   Akonadi::EntityMimeTypeFilterModel *collectionModel() const;
 
-//TODO port to akonadi   void cleanupImapFolders();
   void recoverDeadLetters();
   void initFolders();
   void closeAllKMailWindows();

@@ -1053,11 +1053,6 @@ void KMKernel::init()
   initFolders();
   the_filterMgr->readConfig();
   the_popFilterMgr->readConfig();
-#if 0 //TODO port to akonadi
-  cleanupImapFolders();
-#else
-    kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
-#endif
   the_msgSender = new AkonadiSender;
   readConfig();
   // filterMgr->dump();
