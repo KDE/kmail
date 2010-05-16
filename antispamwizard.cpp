@@ -39,6 +39,10 @@
 #include "foldertreewidget.h"
 #include "foldertreeview.h"
 #include "readablecollectionproxymodel.h"
+#include "util.h"
+#include "imapsettings.h"
+
+#include <Akonadi/AgentInstance>
 
 #include <kaction.h>
 #include <kdebug.h>
@@ -511,25 +515,24 @@ void AntiSpamWizard::checkToolAvailability()
       // check the configured account for pattern in <server>
       QString pattern = (*it).getServerPattern();
       kDebug() << "Testing for server pattern:" << pattern;
-#if 0
-      AccountManager* mgr = kmkernel->acctMgr();
-      QList<KMAccount*>::iterator accountIt = mgr->begin();
-      while ( accountIt != mgr->end() ) {
-        KMAccount *account = *accountIt;
-        ++accountIt;
-        if ( account->type() == KAccount::Pop ||
-             account->type() == KAccount::Imap ||
-             account->type() == KAccount::DImap ) {
-          const NetworkAccount * n = dynamic_cast<const NetworkAccount*>( account );
-          if ( n && n->host().toLower().contains( pattern.toLower() ) ) {
+      Akonadi::AgentInstance::List lst = KMail::Util::agentInstances();
+      foreach( Akonadi::AgentInstance type, lst ) {
+        if ( type.identifier().contains( IMAP_RESOURCE_IDENTIFIER ) ) {
+          OrgKdeAkonadiImapSettingsInterface *iface = KMail::Util::createImapSettingsInterface( type.identifier() );
+          if ( iface->isValid() ) {
+            QString host = iface->imapServer();
             mInfoPage->addAvailableTool( (*it).getVisibleName() );
             found = true;
           }
+          delete iface;
         }
-      }
-#else
-      kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
+#if 0
+        else if ( type.identifier().contains( POP3_RESOURCE_IDENTIFIER ) ) {
+          //TODO look at pop3 resources.
+        }
 #endif
+
+      }
     }
     else {
       // check the availability of the application
