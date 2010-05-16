@@ -87,7 +87,7 @@ QStringList KMail::Util::mailingListsFromMessage( const Akonadi::Item& item )
 
 Akonadi::Item::Id KMail::Util::putRepliesInSameFolder( const Akonadi::Item& item )
 {
- Akonadi::Collection parentCollection = item.parentCollection();
+  Akonadi::Collection parentCollection = item.parentCollection();
   QSharedPointer<FolderCollection> fd;
   if ( parentCollection.isValid() ) {
     fd = FolderCollection::forCollection( parentCollection );
