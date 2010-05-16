@@ -43,7 +43,6 @@
 #include "kmcommands.h"
 
 #include <unistd.h> // link()
-#include <errno.h>
 #include <kprogressdialog.h>
 #include <kpimutils/email.h>
 #include <kdbusservicestarter.h>
@@ -80,6 +79,7 @@
 #include "messageviewer/kcursorsaver.h"
 #include "messageviewer/objecttreeparser.h"
 #include "messageviewer/csshelper.h"
+#include "messageviewer/util.h"
 //using KMail::FolderJob;
 #include "messageviewer/mailsourceviewer.h"
 #include "kmreadermainwin.h"
@@ -1915,371 +1915,25 @@ KMSaveAttachmentsCommand::KMSaveAttachmentsCommand( QWidget *parent, const QList
 
 KMCommand::Result KMSaveAttachmentsCommand::execute()
 {
-  setEmitsCompletedItself( true );
-  QList<Akonadi::Item> msgList = retrievedMsgs();
-  QList<Akonadi::Item>::const_iterator it;
-  for ( it = msgList.constBegin(); it != msgList.constEnd(); ++it ) {
-#if 0 //TODO port to akonadi
-    partNode *rootNode = partNode::fromMessage( msg );
-    for ( partNode *child = rootNode; child;
-          child = child->firstChild() ) {
-      for ( partNode *node = child; node; node = node->nextSibling() ) {
-        if ( node->type() != DwMime::kTypeMultipart )
-          mAttachmentMap.insert( node, msg );
-      }
-    }
-#else
-    kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
-#endif
-  }
-  setDeletesItself( true );
-  // load all parts
-  KMLoadPartsCommand *command = new KMLoadPartsCommand( mAttachmentMap );
-  connect( command, SIGNAL( partsRetrieved() ),
-           this, SLOT( slotSaveAll() ) );
-  command->start();
-  return OK;
-}
-
-// FIXME: This is blatant code duplication with ViewerPrivate::saveAttachments!!
-void KMSaveAttachmentsCommand::slotSaveAll()
-{
-  // now that all message parts have been retrieved, remove all parts which
-  // don't represent an attachment if they were not explicitly passed in the
-  // c'tor
-    for ( PartNodeMessageMap::iterator it = mAttachmentMap.begin();
-          it != mAttachmentMap.end(); ) {
-      // only body parts which have a filename or a name parameter (except for
-      // the root node for which name is set to the message's subject) are
-      // considered attachments
-      if ( it.key()->contentDisposition()->filename().trimmed().isEmpty() &&
-           ( it.key()->contentType()->name().trimmed().isEmpty() ||
-             !it.key()->topLevel() ) ) {
-        PartNodeMessageMap::iterator delIt = it;
-        ++it;
-        mAttachmentMap.erase( delIt );
-      }
-      else
-        ++it;
-    if ( mAttachmentMap.isEmpty() ) {
-      KMessageBox::information( 0, i18n("Found no attachments to save.") );
-      setResult( OK ); // The user has already been informed.
-      emit completed( this );
-      deleteLater();
-      return;
-    }
-  }
-
-  KUrl url, dirUrl;
-  if ( mAttachmentMap.count() > 1 ) {
-    // get the dir
-    dirUrl = KFileDialog::getExistingDirectoryUrl( KUrl( "kfiledialog:///saveAttachment" ),
-                                                   parentWidget(),
-                                                   i18n( "Save Attachments To" ) );
-    if ( !dirUrl.isValid() ) {
-      setResult( Canceled );
-      emit completed( this );
-      deleteLater();
-      return;
-    }
-
-    // we may not get a slash-terminated url out of KFileDialog
-    dirUrl.adjustPath( KUrl::AddTrailingSlash );
-  }
-  else {
-    // only one item, get the desired filename
-    KMime::Content *content = mAttachmentMap.begin().key();
-    QString fileName = MessageViewer::NodeHelper::fileName( content );
-    fileName = MessageCore::StringUtil::cleanFileName( fileName );
-    if ( fileName.isEmpty() ) {
-      fileName = i18nc( "filename for an unnamed attachment", "attachment.1" );
-    }
-    url = KFileDialog::getSaveUrl( KUrl( "kfiledialog:///saveAttachment/" + fileName ),
-                                   QString(),
-                                   parentWidget(),
-                                   i18n( "Save Attachment" ) );
-    if ( url.isEmpty() ) {
-      setResult( Canceled );
-      emit completed( this );
-      deleteLater();
-      return;
-    }
-  }
-
-  QMap< QString, int > renameNumbering;
-
-  Result globalResult = OK;
-  int unnamedAtmCount = 0;
-  bool overwriteAll = false;
-  for ( PartNodeMessageMap::const_iterator it = mAttachmentMap.constBegin();
-        it != mAttachmentMap.constEnd();
-        ++it ) {
-    KUrl curUrl;
-    KMime::Content *content = it.key();
-    if ( !dirUrl.isEmpty() ) {
-      curUrl = dirUrl;
-      QString fileName = MessageViewer::NodeHelper::fileName( content );
-      fileName = MessageCore::StringUtil::cleanFileName( fileName );
-      if ( fileName.isEmpty() ) {
-        ++unnamedAtmCount;
-        fileName = i18nc( "filename for the %1-th unnamed attachment",
-                          "attachment.%1", unnamedAtmCount );
-      }
-      curUrl.setFileName( fileName );
+  QList<KMime::Content*> contentsToSave;
+  foreach( const Akonadi::Item &item, retrievedMsgs() ) {
+    if ( item.hasPayload<KMime::Message::Ptr>() ) {
+      contentsToSave += MessageViewer::Util::extractAttachments( item.payload<KMime::Message::Ptr>().get() );
     } else {
-      curUrl = url;
-    }
-
-    if ( !curUrl.isEmpty() ) {
-
-     // Rename the file if we have already saved one with the same name:
-     // try appending a number before extension (e.g. "pic.jpg" => "pic_2.jpg")
-     QString origFile = curUrl.fileName();
-     QString file = origFile;
-
-     while ( renameNumbering.contains(file) ) {
-       file = origFile;
-       int num = renameNumbering[file] + 1;
-       int dotIdx = file.lastIndexOf('.');
-       file = file.insert( (dotIdx>=0) ? dotIdx : file.length(), QString("_") + QString::number(num) );
-     }
-     curUrl.setFileName(file);
-
-     // Increment the counter for both the old and the new filename
-     if ( !renameNumbering.contains(origFile))
-         renameNumbering[origFile] = 1;
-     else
-         renameNumbering[origFile]++;
-
-     if ( file != origFile ) {
-        if ( !renameNumbering.contains(file))
-            renameNumbering[file] = 1;
-        else
-            renameNumbering[file]++;
-     }
-
-
-      if ( !overwriteAll && KIO::NetAccess::exists( curUrl, KIO::NetAccess::DestinationSide, parentWidget() ) ) {
-        if ( mAttachmentMap.count() == 1 ) {
-          if ( KMessageBox::warningContinueCancel( parentWidget(),
-                i18n( "A file named <br><filename>%1</filename><br>already exists.<br><br>Do you want to overwrite it?",
-                  curUrl.fileName() ),
-                i18n( "File Already Exists" ), KGuiItem(i18n("&Overwrite")) ) == KMessageBox::Cancel) {
-            continue;
-          }
-        }
-        else {
-          int button = KMessageBox::warningYesNoCancel(
-                parentWidget(),
-                i18n( "A file named <br><filename>%1</filename><br>already exists.<br><br>Do you want to overwrite it?",
-                  curUrl.fileName() ),
-                i18n( "File Already Exists" ), KGuiItem(i18n("&Overwrite")),
-                KGuiItem(i18n("Overwrite &All")) );
-          if ( button == KMessageBox::Cancel )
-            continue;
-          else if ( button == KMessageBox::No )
-            overwriteAll = true;
-        }
-      }
-      // save
-      const Result result = saveItem( it.key(), curUrl );
-      if ( result != OK )
-        globalResult = result;
+      kWarning() << "Retrieved item has no payload? Ignoring for saving the attachments";
     }
   }
-  setResult( globalResult );
-  emit completed( this );
-  deleteLater();
-}
 
-KMCommand::Result KMSaveAttachmentsCommand::saveItem( KMime::Content *content,
-                                                      const KUrl& url )
-{
-  KMime::Content *topContent  = content->topLevel();
-  MessageViewer::NodeHelper *mNodeHelper = new MessageViewer::NodeHelper;
-  bool bSaveEncrypted = false;
-  bool bEncryptedParts = mNodeHelper->encryptionState( content ) != MessageViewer::KMMsgNotEncrypted;
-  if( bEncryptedParts )
-    if( KMessageBox::questionYesNo( parentWidget(),
-                                    i18n( "The part %1 of the message is encrypted. Do you want to keep the encryption when saving?",
-                                          url.fileName() ),
-                                    i18n( "KMail Question" ), KGuiItem(i18n("Keep Encryption")), KGuiItem(i18n("Do Not Keep")) ) ==
-        KMessageBox::Yes )
-      bSaveEncrypted = true;
-
-  bool bSaveWithSig = true;
-  if(mNodeHelper->signatureState( content ) != MessageViewer::KMMsgNotSigned )
-    if( KMessageBox::questionYesNo( parentWidget(),
-                                    i18n( "The part %1 of the message is signed. Do you want to keep the signature when saving?",
-                                          url.fileName() ),
-                                    i18n( "KMail Question" ), KGuiItem(i18n("Keep Signature")), KGuiItem(i18n("Do Not Keep")) ) !=
-        KMessageBox::Yes )
-      bSaveWithSig = false;
-
-  QByteArray data;
-  if( bSaveEncrypted || !bEncryptedParts) {
-    KMime::Content *dataNode = content;
-    QByteArray rawReplyString;
-    bool gotRawReplyString = false;
-    if ( !bSaveWithSig ) {
-      if ( topContent->contentType()->mimeType() == "multipart/signed" )  {
-        // carefully look for the part that is *not* the signature part:
-        if ( MessageViewer::ObjectTreeParser::findType( topContent, "application/pgp-signature", true, false ) ) {
-          dataNode = MessageViewer::ObjectTreeParser::findTypeNot( topContent, "application", "pgp-signature", true, false );
-        } else if ( MessageViewer::ObjectTreeParser::findType( topContent, "application/pkcs7-mime" , true, false ) ) {
-          dataNode = MessageViewer::ObjectTreeParser::findTypeNot( topContent, "application", "pkcs7-mime", true, false );
-        } else {
-          dataNode = MessageViewer::ObjectTreeParser::findTypeNot( topContent, "multipart", "", true, false );
-        }
-      } else {
-        MessageViewer::EmptySource emptySource;
-        MessageViewer::ObjectTreeParser otp( &emptySource, 0, 0,false, false, false );
-
-        // process this node and all it's siblings and descendants
-        mNodeHelper->setNodeUnprocessed( dataNode, true );
-        otp.parseObjectTree( dataNode );
-
-        rawReplyString = otp.rawReplyString();
-        gotRawReplyString = true;
-      }
-    }
-    QByteArray cstr = gotRawReplyString
-      ? rawReplyString
-      : dataNode->decodedContent();
-    data = KMime::CRLFtoLF( cstr );
+  if ( contentsToSave.isEmpty() ) {
+    KMessageBox::information( 0, i18n( "Found no attachments to save." ) );
+    return Failed;
   }
-  QDataStream ds;
-  QFile file;
-  KTemporaryFile tf;
-  if ( url.isLocalFile() )
-    {
-      // save directly
-      file.setFileName( url.toLocalFile() );
-      if ( !file.open( QIODevice::WriteOnly ) )
-        {
-          KMessageBox::error( parentWidget(),
-                              i18nc( "1 = file name, 2 = error string",
-                                     "<qt>Could not write to the file<br><filename>%1</filename><br><br>%2",
-                                     file.fileName(),
-                                     QString::fromLocal8Bit( strerror( errno ) ) ),
-                              i18n( "Error saving attachment" ) );
-          return Failed;
-        }
 
-      const int permissions = MessageViewer::Util::getWritePermissions();
-      if ( permissions >= 0 )
-        fchmod( file.handle(), permissions );
-
-      ds.setDevice( &file );
-    } else
-    {
-      // tmp file for upload
-      tf.open();
-      ds.setDevice( &tf );
-    }
-
-  if ( ds.writeRawData( data.data(), data.size() ) == -1)
-    {
-      QFile *f = static_cast<QFile *>( ds.device() );
-      KMessageBox::error( parentWidget(),
-                          i18nc( "1 = file name, 2 = error string",
-                                 "<qt>Could not write to the file<br><filename>%1</filename><br><br>%2",
-                                 f->fileName(),
-                                 f->errorString() ),
-                          i18n( "Error saving attachment" ) );
-      return Failed;
-    }
-
-  if ( !url.isLocalFile() )
-    {
-      // QTemporaryFile::fileName() is only defined while the file is open
-      QString tfName = tf.fileName();
-      tf.close();
-      if ( !KIO::NetAccess::upload( tfName, url, parentWidget() ) )
-        {
-          KMessageBox::error( parentWidget(),
-                              i18nc( "1 = file name, 2 = error string",
-                                     "<qt>Could not write to the file<br><filename>%1</filename><br><br>%2",
-                                     url.prettyUrl(),
-                                     KIO::NetAccess::lastErrorString() ),
-                              i18n( "Error saving attachment" ) );
-          return Failed;
-        }
-    }
-  else
-    file.close();
-  mNodeHelper->removeTempFiles();
-  delete mNodeHelper;
-  return OK;
-}
-
-
-KMLoadPartsCommand::KMLoadPartsCommand( PartNodeMessageMap& partMap )
-  : mNeedsRetrieval( 0 ), mPartMap( partMap )
-{
-}
-
-void KMLoadPartsCommand::slotStart()
-{
-#if 0 //TODO port to akonadi
-  for ( PartNodeMessageMap::const_iterator it = mPartMap.constBegin();
-        it != mPartMap.constEnd();
-        ++it ) {
-    if ( !it.key()->msgPart().isComplete() &&
-         !it.key()->msgPart().partSpecifier().isEmpty() ) {
-      // incomplete part, so retrieve it first
-      ++mNeedsRetrieval;
-      KMFolder* curFolder = it.value()->parent();
-      if ( curFolder ) {
-        FolderJob *job =
-          curFolder->createJob( it.value(), FolderJob::tGetMessage,
-                                0, it.key()->msgPart().partSpecifier() );
-        job->setCancellable( false );
-        connect( job, SIGNAL(messageUpdated(KMime::Message*, const QString&)),
-                 this, SLOT(slotPartRetrieved(KMime::Message*, const QString&)) );
-        job->start();
-      } else
-        kWarning() <<"KMLoadPartsCommand - msg has no parent";
-    }
+  if ( MessageViewer::Util::saveContents( parentWidget(), contentsToSave ) ) {
+    return OK;
+  } else {
+    return Failed;
   }
-  if ( mNeedsRetrieval == 0 )
-    execute();
-#else
-  kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
-#endif
-}
-
-void KMLoadPartsCommand::slotPartRetrieved( KMime::Message *msg,
-                                            const QString &partSpecifier )
-{
-#if 0 //TODO port to akonadi
-  DwBodyPart *part =
-    msg->findDwBodyPart( msg->getFirstDwBodyPart(), partSpecifier );
-  if ( part ) {
-    // update the DwBodyPart in the partNode
-    for ( PartNodeMessageMap::const_iterator it = mPartMap.constBegin();
-          it != mPartMap.constEnd();
-          ++it ) {
-      if ( it.key()->dwPart()->partId() == part->partId() )
-        it.key()->setDwPart( part );
-    }
-  } else
-    kWarning() << "Could not find bodypart!";
-  --mNeedsRetrieval;
-  if ( mNeedsRetrieval == 0 )
-    execute();
-#else
-  kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
-#endif
-}
-
-KMCommand::Result KMLoadPartsCommand::execute()
-{
-  emit partsRetrieved();
-  setResult( OK );
-  emit completed( this );
-  deleteLater();
-  return OK;
 }
 
 KMResendMessageCommand::KMResendMessageCommand( QWidget *parent,
