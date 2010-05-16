@@ -145,7 +145,6 @@
 // System includes
 #include <stdlib.h>
 #include <unistd.h>
-#include <errno.h>
 #include <fcntl.h>
 #include <memory>
 #include <boost/shared_ptr.hpp>

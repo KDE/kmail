@@ -110,7 +110,6 @@ using namespace MessageViewer;
 #include <unistd.h>
 #include <stdlib.h>
 #include <sys/stat.h>
-#include <errno.h>
 #include <stdio.h>
 #include <ctype.h>
 #include <string.h>
