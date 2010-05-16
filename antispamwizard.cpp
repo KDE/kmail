@@ -1130,10 +1130,8 @@ ASWizVirusRulesPage::ASWizVirusRulesPage( QWidget * parent, const char * name )
             "to the selected folder.") );
   grid->addWidget( mMarkRules, 2, 0 );
   mFolderTree = new FolderTreeWidget( this );
+  mFolderTree->selectCollectionFolder( KMKernel::self()->trashCollectionFolder() );
   mFolderTree->disableContextMenuAndExtraColumn();
-#if 0 //Port to akonadi
-  mFolderTree->reload( true, true, true, QString( "trash" ) );
-#endif
   grid->addWidget( mFolderTree, 3, 0 );
 
   connect( mPipeRules, SIGNAL(clicked()),
