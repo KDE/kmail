@@ -149,6 +149,8 @@ protected slots:
   void setEnabledSearchButton(bool);
   void slotSearchFolderRenameDone( KJob* job );
 
+  void slotContextMenuRequested( const QPoint &pos );
+
 protected:
 
   /** Reimplemented to react to Escape. */

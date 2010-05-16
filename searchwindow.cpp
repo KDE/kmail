@@ -73,13 +73,6 @@ namespace KMail {
 
 const int SearchWindow::MSGID_COLUMN = 4;
 
-#if 0 //TODO port to akonadi
-void MatchListView::contextMenuEvent( QContextMenuEvent* event )
-{
-  emit contextMenuRequested( itemAt( event->pos() ) );
-}
-#endif
-
 //-----------------------------------------------------------------------------
 SearchWindow::SearchWindow(KMMainWidget* w, const Akonadi::Collection& curFolder):
   KDialog(0),
@@ -223,16 +216,17 @@ SearchWindow::SearchWindow(KMMainWidget* w, const Akonadi::Collection& curFolder
 #endif
   mLbxMatches->setAllColumnsShowFocus( true );
   mLbxMatches->setSelectionMode( QAbstractItemView::ExtendedSelection );
+  mLbxMatches->setContextMenuPolicy( Qt::CustomContextMenu );
 
 #if 0 // port me!
   mLbxMatches->header()->setStretchLastSection( false );
   mLbxMatches->header()->setResizeMode( 3, QHeaderView::Stretch );
-
-  connect( mLbxMatches, SIGNAL( contextMenuRequested( QTreeWidgetItem*) ),
-           this, SLOT( slotContextMenuRequested( QTreeWidgetItem* ) ) );
 #else
     kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
 #endif
+
+  connect( mLbxMatches, SIGNAL(customContextMenuRequested(QPoint)),
+           this, SLOT(slotContextMenuRequested(QPoint)) );
   connect( mLbxMatches, SIGNAL(clicked(Akonadi::Item)), SLOT(slotShowMsg(Akonadi::Item)) );
   connect( mLbxMatches, SIGNAL(doubleClicked(Akonadi::Item)), SLOT(slotViewMsg(Akonadi::Item)) );
   connect( mLbxMatches, SIGNAL(currentChanged(Akonadi::Item)), SLOT(slotCurrentChanged(Akonadi::Item)) );
@@ -699,20 +693,12 @@ void SearchWindow::enableGUI()
 QList<Akonadi::Item> SearchWindow::selectedMessages()
 {
   QList<Akonadi::Item> msgList;
-#if 0 // TODO port me!
-    KMFolder* folder = 0;
-    int msgIndex = -1;
-    for (QTreeWidgetItemIterator it(mLbxMatches); (*it); ++it)
-        if ((*it)->isSelected()) {
-            KMMsgDict::instance()->getLocation((*it)->text(MSGID_COLUMN).toUInt(),
-                                           &folder, &msgIndex);
-            if (folder && msgIndex >= 0)
-                msgList.append(folder->getMsgBase(msgIndex));
-        }
-#else
-    kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
-#endif
-    return msgList;
+  foreach ( const QModelIndex &index, mLbxMatches->selectionModel()->selectedRows() ) {
+    const Akonadi::Item item = index.data( Akonadi::MessageModel::ItemRole ).value<Akonadi::Item>();
+    if ( item.isValid() )
+      msgList.append( item );
+  }
+  return msgList;
 }
 
 //-----------------------------------------------------------------------------
@@ -764,20 +750,9 @@ void SearchWindow::updateContextMenuActions()
     mCutAction->setEnabled( count > 0 );
 }
 
-#if 0
 //-----------------------------------------------------------------------------
-void SearchWindow::slotContextMenuRequested( QTreeWidgetItem *lvi )
+void SearchWindow::slotContextMenuRequested( const QPoint &pos )
 {
-    if (!lvi)
-        return;
-    if ( !lvi->isSelected() ) {
-      lvi->setSelected( lvi );
-#if 0 // TODO port me!
-      mLbxMatches->setCurrentItem( lvi );
-#endif
-    }
-
-    // FIXME is this ever unGetMsg()'d?
     if (!message().isValid())
         return;
     QMenu *menu = new QMenu(this);
@@ -816,7 +791,6 @@ void SearchWindow::slotContextMenuRequested( QTreeWidgetItem *lvi )
     menu->exec( QCursor::pos(), 0 );
     delete menu;
 }
-#endif
 //-----------------------------------------------------------------------------
 void SearchWindow::slotClearSelection()
 {
