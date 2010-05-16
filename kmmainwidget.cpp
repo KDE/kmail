@@ -2401,7 +2401,20 @@ void KMMainWidget::slotSaveAttachments()
   QList<Akonadi::Item> selectedMessages = mMessagePane->selectionAsMessageItemList();
   if ( selectedMessages.isEmpty() )
     return;
-  KMSaveAttachmentsCommand *saveCommand = new KMSaveAttachmentsCommand( this, selectedMessages );
+
+  // Avoid re-downloading in the common case that only one message is selected, and the message
+  // is also displayed in the viewer. For this, create a dummy item without a parent collection / item id,
+  // so that KMCommand doesn't download it.
+  KMSaveAttachmentsCommand *saveCommand = 0;
+  if ( mMsgView && selectedMessages.size() == 1 &&
+       mMsgView->message().hasPayload<KMime::Message::Ptr>() &&
+       selectedMessages.first().id() == mMsgView->message().id() ) {
+    Akonadi::Item dummyItem;
+    dummyItem.setPayload<KMime::Message::Ptr>( mMsgView->message().payload<KMime::Message::Ptr>() );
+    saveCommand = new KMSaveAttachmentsCommand( this, dummyItem );
+  } else {
+    saveCommand = new KMSaveAttachmentsCommand( this, selectedMessages );
+  }
 
   saveCommand->start();
 }
