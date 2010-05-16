@@ -359,7 +359,7 @@ void KMMainWidget::folderSelected( const Akonadi::Collection & col )
       break;
     }
   }
-  
+
   mGoToFirstUnreadMessageInSelectedFolder = false;
 
   MessageViewer::KCursorSaver busy( MessageViewer::KBusyPtr::busy() );
@@ -473,7 +473,7 @@ void KMMainWidget::folderSelected( const Akonadi::Collection & col )
     mMsgView->setHtmlOverride(mFolderHtmlPref);
     mMsgView->setHtmlLoadExtOverride(mFolderHtmlLoadExtPref);
   }
-  
+
   if ( !mCurrentFolder->isValid() && ( mMessagePane->count() < 2 ) )
     slotIntro();
 
@@ -482,7 +482,7 @@ void KMMainWidget::folderSelected( const Akonadi::Collection & col )
 
   /// The message pane uses the selection model of the folder view to load the correct aggregation model and theme
   ///  settings. At this point the selection model hasn't been updated yet to the user's new choice, so it would load
-  ///  the old folder settings instead. 
+  ///  the old folder settings instead.
   QTimer::singleShot( 0, this, SLOT( slotShowSelectedForderInPane() ) );
 }
 
@@ -711,7 +711,7 @@ void KMMainWidget::layoutSplitters()
   // This would normally be done in the message list itself, but apparently something resets the focus
   // again, probably all the reparenting we do here.
   mMessagePane->focusView();
-  
+
   // By default hide th unread and size columns on first run.
   if( kmkernel->firstStart() )
   {
@@ -2299,7 +2299,7 @@ int KMMainWidget::slotFilterMsg( const Akonadi::Item &msg )
 //-----------------------------------------------------------------------------
 void KMMainWidget::slotCheckVacation()
 {
-  updateVactionScriptStatus( false );
+  updateVacationScriptStatus( false );
   if ( !kmkernel->askToGoOnline() )
     return;
 
@@ -2317,7 +2317,7 @@ void KMMainWidget::slotEditVacation()
     return;
 
   mVacation = new Vacation( this );
-  connect( mVacation, SIGNAL(scriptActive(bool)), SLOT(updateVactionScriptStatus(bool)) );
+  connect( mVacation, SIGNAL(scriptActive(bool)), SLOT(updateVacationScriptStatus(bool)) );
   if ( mVacation->isUsable() ) {
     connect( mVacation, SIGNAL(result(bool)), mVacation, SLOT(deleteLater()) );
   } else {
@@ -4164,7 +4164,7 @@ void KMMainWidget::slotRequestFullSearchFromQuickSearch()
     mSearchWin->addRulesToSearchPattern( pattern );
 }
 
-void KMMainWidget::updateVactionScriptStatus( bool active )
+void KMMainWidget::updateVacationScriptStatus( bool active )
 {
   mVacationIndicatorActive = active;
   if ( active ) {

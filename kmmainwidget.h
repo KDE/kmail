@@ -172,7 +172,7 @@ class KMAIL_EXPORT KMMainWidget : public QWidget
     QList<QAction*> actionList();
 
     QLabel* vacationScriptIndicator() const;
-    void updateVactionScriptStatus() { updateVactionScriptStatus( mVacationIndicatorActive ); }
+    void updateVacationScriptStatus() { updateVacationScriptStatus( mVacationIndicatorActive ); }
     void selectCollectionFolder( const Akonadi::Collection & col );
 
     FolderTreeView *folderTreeView() const {
@@ -442,7 +442,7 @@ class KMAIL_EXPORT KMMainWidget : public QWidget
     */
     void showOfflinePage();
 
-    void updateVactionScriptStatus( bool active );
+    void updateVacationScriptStatus( bool active );
 
 
     void slotShowExpiryProperties();
