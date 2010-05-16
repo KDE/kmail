@@ -60,15 +60,6 @@
 #endif
 #include "foldercollection.h"
 
-KMime::Message::Ptr KMail::Util::message( const Akonadi::Item & item )
-{
-  if ( !item.hasPayload<KMime::Message::Ptr>() ) {
-    kWarning() << "Payload is not a MessagePtr!";
-    return KMime::Message::Ptr();
-  }
-  return item.payload<boost::shared_ptr<KMime::Message> >();
-}
-
 uint KMail::Util::folderIdentity(const Akonadi::Item& item)
 {
   uint id = 0;

@@ -26,6 +26,7 @@
 #include "messagecore/annotationdialog.h"
 #include "messagecore/mailinglist-magic.h"
 #include "messagecore/globalsettings.h"
+#include "messagecore/messagehelpers.h"
 #include "messageviewer/csshelper.h"
 #include "messageviewer/globalsettings.h"
 
@@ -298,7 +299,7 @@ void MessageActions::updateActions()
     mToggleFlagAction->setChecked( status.isImportant() );
 
     MessageCore::MailingList mailList;
-    mailList = MessageCore::MailingList::detect( KMail::Util::message( mCurrentItem ) );
+    mailList = MessageCore::MailingList::detect( MessageCore::Util::message( mCurrentItem ) );
 
     if ( mailList.features() & ~MessageCore::MailingList::Id ) {
       // A mailing list menu with only a title is pretty boring

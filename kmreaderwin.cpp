@@ -63,6 +63,8 @@ using namespace MessageViewer;
 #include "messagecomposer/messagesender.h"
 #include "messagecomposer/messagefactory.h"
 
+#include "messagecore/messagehelpers.h"
+
 
 // KABC includes
 #include <kabc/addressee.h>
@@ -421,7 +423,7 @@ void KMReaderWin::slotTouchMessage()
          KMKernel::self()->folderIsTemplates( col ) ) )
     return;
 
-  KMime::Message::Ptr msg = KMail::Util::message( message() );
+  KMime::Message::Ptr msg = MessageCore::Util::message( message() );
   if ( !msg )
     return;
 

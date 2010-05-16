@@ -59,6 +59,8 @@
 #include <messageviewer/viewer.h>
 #include <akonadi/item.h>
 
+#include "messagecore/messagehelpers.h"
+
 KMReaderMainWin::KMReaderMainWin( bool htmlOverride, bool htmlLoadExtOverride,
                                   char *name )
   : KMail::SecondaryWindow( name ? name : "readerwindow#" )
@@ -127,7 +129,7 @@ void KMReaderMainWin::showMessage( const QString & encoding, const Akonadi::Item
 {
   mReaderWin->setOverrideEncoding( encoding );
   mReaderWin->setMessage( msg, MessageViewer::Viewer::Force );
-  KMime::Message::Ptr message = KMail::Util::message( msg );
+  KMime::Message::Ptr message = MessageCore::Util::message( msg );
   if ( message )
     setCaption( message->subject()->asUnicodeString() );
   mReaderWin->slotTouchMessage();

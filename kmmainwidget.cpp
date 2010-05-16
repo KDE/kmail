@@ -77,6 +77,7 @@
 #include "templateparser/templateparser.h"
 
 #include "messagecore/globalsettings.h"
+#include "messagecore/messagehelpers.h"
 
 // LIBKDEPIM includes
 #include "progressmanager.h"
@@ -1325,7 +1326,7 @@ void KMMainWidget::slotDelayedShowNewFromTemplate( KJob *job )
   const Akonadi::Item::List items = fetchJob->items();
 
   for ( int idx = 0; idx < items.count(); ++idx ) {
-    KMime::Message::Ptr msg = KMail::Util::message( items.at( idx ) );
+    KMime::Message::Ptr msg = MessageCore::Util::message( items.at( idx ) );
     if ( msg ) {
       QString subj = msg->subject()->asUnicodeString();
       if ( subj.isEmpty() )

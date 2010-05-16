@@ -78,6 +78,7 @@
 #include <templatesconfiguration.h>
 #include "messagecore/nodehelper.h"
 #include "messagecore/messagestatus.h"
+#include "messagecore/messagehelpers.h"
 
 // LIBKDEPIM includes
 #include <libkdepim/recentaddresses.h>
@@ -1085,9 +1086,9 @@ void KMComposeWin::slotDelayedApplyTemplate( KJob *job )
 
   foreach ( const Akonadi::Item &item, items ) {
     if ( !mCustomTemplate.isEmpty() )
-      parser.process( mCustomTemplate, KMail::Util::message( item ) );
+      parser.process( mCustomTemplate, MessageCore::Util::message( item ) );
     else
-      parser.processWithIdentity( uoid, KMail::Util::message( item ) );
+      parser.processWithIdentity( uoid, MessageCore::Util::message( item ) );
   }
 
 #if 0

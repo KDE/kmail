@@ -107,9 +107,12 @@ using KMail::RedirectDialog;
 #include <akonadi/itemdeletejob.h>
 
 #include <messagelist/pane.h>
-#include "messagecore/stringutil.h"
+
 #include "messageviewer/nodehelper.h"
 #include "messageviewer/objecttreeemptysource.h"
+
+#include "messagecore/stringutil.h"
+#include "messagecore/messagehelpers.h"
 
 #include "messagecomposer/messagesender.h"
 #include "messagecomposer/messagehelper.h"
@@ -444,10 +447,7 @@ KMMailtoReplyCommand::KMMailtoReplyCommand( QWidget *parent,
 KMCommand::Result KMMailtoReplyCommand::execute()
 {
   Akonadi::Item item = retrievedMessage();
-  if ( !item.isValid() ) {
-    return Failed;
-  }
-  KMime::Message::Ptr msg = KMail::Util::message( item );
+  KMime::Message::Ptr msg = MessageCore::Util::message( item );
   if ( !msg )
     return Failed;
   MessageFactory factory( msg, item.id() );
@@ -480,10 +480,7 @@ KMCommand::Result KMMailtoForwardCommand::execute()
 {
   //TODO : consider factoring createForward into this method.
   Akonadi::Item item = retrievedMessage();
-  if ( !item.isValid() ) {
-    return Failed;
-  }
-  KMime::Message::Ptr msg = KMail::Util::message( item );
+  KMime::Message::Ptr msg = MessageCore::Util::message( item );
   if ( !msg )
     return Failed;
   MessageFactory factory( msg, item.id() );
@@ -574,7 +571,7 @@ KMCommand::Result KMEditMsgCommand::execute()
         !kmkernel->folderIsTemplates( item.parentCollection() ) ) ) {
     return Failed;
   }
-  KMime::Message::Ptr msg = KMail::Util::message( item );
+  KMime::Message::Ptr msg = MessageCore::Util::message( item );
   if ( !msg )
     return Failed;
   Akonadi::ItemDeleteJob *job = new Akonadi::ItemDeleteJob( item );
@@ -617,7 +614,7 @@ KMCommand::Result KMUseTemplateCommand::execute()
        ) {
     return Failed;
   }
-  KMime::Message::Ptr msg = KMail::Util::message( item );
+  KMime::Message::Ptr msg = MessageCore::Util::message( item );
   if ( !msg )
     return Failed;
 
@@ -973,10 +970,7 @@ KMCommand::Result KMReplyToCommand::execute()
 {
   MessageViewer::KCursorSaver busy( MessageViewer::KBusyPtr::busy() );
   Akonadi::Item item = retrievedMessage();
-  if ( !item.isValid() ) {
-    return Failed;
-  }
-  KMime::Message::Ptr msg = KMail::Util::message( item );
+  KMime::Message::Ptr msg = MessageCore::Util::message( item );
   if ( !msg )
     return Failed;
   MessageFactory factory( msg, item.id() );
@@ -1006,10 +1000,7 @@ KMCommand::Result KMNoQuoteReplyToCommand::execute()
 {
   MessageViewer::KCursorSaver busy( MessageViewer::KBusyPtr::busy() );
   Akonadi::Item item = retrievedMessage();
-  if ( !item.isValid() ) {
-    return Failed;
-  }
-  KMime::Message::Ptr msg = KMail::Util::message( item );
+  KMime::Message::Ptr msg = MessageCore::Util::message( item );
   if ( !msg )
     return Failed;
   MessageFactory factory( msg, item.id() );
@@ -1039,10 +1030,7 @@ KMCommand::Result KMReplyListCommand::execute()
 {
   MessageViewer::KCursorSaver busy( MessageViewer::KBusyPtr::busy() );
   Akonadi::Item item = retrievedMessage();
-  if ( !item.isValid() ) {
-    return Failed;
-  }
-  KMime::Message::Ptr msg = KMail::Util::message( item );
+  KMime::Message::Ptr msg = MessageCore::Util::message( item );
   if ( !msg )
     return Failed;
   MessageFactory factory( msg, item.id() );
@@ -1074,11 +1062,8 @@ KMCommand::Result KMReplyToAllCommand::execute()
 {
   MessageViewer::KCursorSaver busy( MessageViewer::KBusyPtr::busy() );
   Akonadi::Item item = retrievedMessage();
-  if ( !item.isValid() ) {
-    return Failed;
-  }
 
-  KMime::Message::Ptr msg = KMail::Util::message( item );
+  KMime::Message::Ptr msg = MessageCore::Util::message( item );
   if ( !msg )
     return Failed;
   MessageFactory factory( msg, item.id() );
@@ -1110,10 +1095,7 @@ KMCommand::Result KMReplyAuthorCommand::execute()
 {
   MessageViewer::KCursorSaver busy( MessageViewer::KBusyPtr::busy() );
   Akonadi::Item item = retrievedMessage();
-  if ( !item.isValid() ) {
-    return Failed;
-  }
-  KMime::Message::Ptr msg = KMail::Util::message( item );
+  KMime::Message::Ptr msg = MessageCore::Util::message( item );
   if ( !msg )
     return Failed;
   MessageFactory factory( msg, item.id() );
@@ -1173,9 +1155,8 @@ KMCommand::Result KMForwardCommand::execute()
         // get a list of messages
         QList< KMime::Message::Ptr > msgs;
         foreach( const Akonadi::Item& item, msgList )
-          msgs << KMail::Util::message( item );
+          msgs << MessageCore::Util::message( item );
         QPair< KMime::Message::Ptr, KMime::Content* > fwdMsg = factory.createForwardDigestMIME( msgs );
-        
         {
           KMail::Composer * win = KMail::makeComposer( fwdMsg.first, KMail::Composer::Forward, mIdentity );
           win->addAttach( fwdMsg.second );
@@ -1185,11 +1166,7 @@ KMCommand::Result KMForwardCommand::execute()
     } else if ( answer == KMessageBox::No ) {// NO MIME DIGEST, Multiple forward
       QList<Akonadi::Item>::const_iterator it;
       for ( it = msgList.constBegin(); it != msgList.constEnd(); ++it ) {
-        if ( !it->isValid() )
-          return Failed;
-
-        KMime::Message::Ptr msg = KMail::Util::message( *it );
-        
+        KMime::Message::Ptr msg = MessageCore::Util::message( *it );
         if ( !msg )
           return Failed;
         MessageViewer::KCursorSaver busy( MessageViewer::KBusyPtr::busy() );
@@ -1217,10 +1194,7 @@ KMCommand::Result KMForwardCommand::execute()
 
   // forward a single message at most.
   Akonadi::Item item = msgList.first();
-  if ( !item.isValid() )
-    return Failed;
-
-  KMime::Message::Ptr msg = KMail::Util::message( item );
+  KMime::Message::Ptr msg = MessageCore::Util::message( item );
   if ( !msg )
     return Failed;
   MessageViewer::KCursorSaver busy( MessageViewer::KBusyPtr::busy() );
@@ -1267,7 +1241,7 @@ KMCommand::Result KMForwardAttachedCommand::execute()
   // get a list of messages
   QList< KMime::Message::Ptr > msgs;
   foreach( const Akonadi::Item& item, msgList )
-    msgs << KMail::Util::message( item );
+    msgs << MessageCore::Util::message( item );
   QPair< KMime::Message::Ptr, QList< KMime::Content* > > fwdMsg = factory.createAttachedForward( msgs );
   {
     if ( !mWin ) {
@@ -1294,24 +1268,23 @@ KMRedirectCommand::KMRedirectCommand( QWidget *parent,
 KMCommand::Result KMRedirectCommand::execute()
 {
   Akonadi::Item item = retrievedMessage();
-  if ( !item.isValid() ) {
-    return Failed;
-  }
   MessageViewer::AutoQPointer<RedirectDialog> dlg(
       new RedirectDialog( parentWidget(), MessageComposer::MessageComposerSettings::self()->sendImmediate() ) );
   dlg->setObjectName( "redirect" );
   if ( dlg->exec() == QDialog::Rejected || !dlg ) {
     return Failed;
   }
-
-  MessageFactory factory( item.payload<KMime::Message::Ptr>(),  item.id() );
+  KMime::Message::Ptr msg = MessageCore::Util::message( item );
+  if ( !msg )
+    return Failed;
+  MessageFactory factory( msg,  item.id() );
   factory.setIdentityManager( KMKernel::self()->identityManager() );
   factory.setFolderIdentity( KMail::Util::folderIdentity( item ) );
   KMime::Message::Ptr newMsg = factory.createRedirect( dlg->to() );
   if ( !newMsg )
     return Failed;
 
-  KMFilterAction::sendMDN( KMail::Util::message( item ), KMime::MDN::Dispatched );
+  KMFilterAction::sendMDN( msg, KMime::MDN::Dispatched );
 
   const MessageSender::SendMethod method = dlg->sendImmediate()
     ? MessageSender::SendImmediate
@@ -1337,10 +1310,7 @@ KMCommand::Result KMCustomReplyToCommand::execute()
 {
   MessageViewer::KCursorSaver busy( MessageViewer::KBusyPtr::busy() );
   Akonadi::Item item = retrievedMessage();
-  if ( !item.isValid() ) {
-    return Failed;
-  }
-  KMime::Message::Ptr msg = KMail::Util::message( item );
+  KMime::Message::Ptr msg = MessageCore::Util::message( item );
   if ( !msg )
     return Failed;
   MessageFactory factory( msg, item.id() );
@@ -1375,10 +1345,7 @@ KMCommand::Result KMCustomReplyAllToCommand::execute()
 {
   MessageViewer::KCursorSaver busy( MessageViewer::KBusyPtr::busy() );
   Akonadi::Item item = retrievedMessage();
-  if ( !item.isValid() ) {
-    return Failed;
-  }
-  KMime::Message::Ptr msg = KMail::Util::message( item );
+  KMime::Message::Ptr msg = MessageCore::Util::message( item );
   if ( !msg )
     return Failed;
   MessageFactory factory( msg, item.id() );
@@ -1425,11 +1392,8 @@ KMCommand::Result KMCustomForwardCommand::execute()
   if (msgList.count() >= 2) { // Multiple forward
      QList<Akonadi::Item>::const_iterator it;
       for ( it = msgList.constBegin(); it != msgList.constEnd(); ++it ) {
-        if ( !it->isValid() )
-          return Failed;
 
-        KMime::Message::Ptr msg = KMail::Util::message( *it );
-
+        KMime::Message::Ptr msg = MessageCore::Util::message( *it );
         if ( !msg )
           return Failed;
         MessageViewer::KCursorSaver busy( MessageViewer::KBusyPtr::busy() );
@@ -1451,10 +1415,7 @@ KMCommand::Result KMCustomForwardCommand::execute()
   } else { // forward a single message at most
 
     Akonadi::Item item = msgList.first();
-    if ( !item.isValid() ) {
-      return Failed;
-    }
-    KMime::Message::Ptr msg = KMail::Util::message( item );
+    KMime::Message::Ptr msg = MessageCore::Util::message( item );
     if ( !msg )
       return Failed;
     MessageViewer::KCursorSaver busy( MessageViewer::KBusyPtr::busy() );
@@ -1746,10 +1707,7 @@ KMCommand::Result KMMailingListFilterCommand::execute()
   QByteArray name;
   QString value;
   Akonadi::Item item = retrievedMessage();
-  if ( !item.isValid() ) {
-    return Failed;
-  }
-  KMime::Message::Ptr msg = KMail::Util::message( item );
+  KMime::Message::Ptr msg = MessageCore::Util::message( item );
   if ( !msg )
     return Failed;
   if ( !MailingList::name( msg, name, value ).isEmpty() ) {
@@ -2336,10 +2294,7 @@ KMCommand::Result KMResendMessageCommand::execute()
 {
 
   Akonadi::Item item = retrievedMessage();
-  if ( !item.isValid() ) {
-    return Failed;
-  }
-  KMime::Message::Ptr msg = KMail::Util::message( item );
+  KMime::Message::Ptr msg = MessageCore::Util::message( item );
   if ( !msg )
     return Failed;
 
@@ -2449,10 +2404,7 @@ CreateTodoCommand::CreateTodoCommand(QWidget * parent, const Akonadi::Item &msg)
 KMCommand::Result CreateTodoCommand::execute()
 {
   Akonadi::Item item = retrievedMessage();
-  if ( !item.isValid() ) {
-    return Failed;
-  }
-  KMime::Message::Ptr msg = KMail::Util::message( item );
+  KMime::Message::Ptr msg = MessageCore::Util::message( item );
   if ( !msg )
     return Failed;
 

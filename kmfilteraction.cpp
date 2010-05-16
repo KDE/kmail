@@ -19,6 +19,7 @@ using KMail::RegExpLineEdit;
 
 // KD PIM headers
 #include "messagecore/stringutil.h"
+#include "messagecore/messagehelpers.h"
 
 #include "messagecore/kmfawidgets.h"
 
@@ -1745,7 +1746,7 @@ KMFilterAction::ReturnCode KMFilterActionRedirect::process( const Akonadi::Item 
   if ( mParameter.isEmpty() )
     return ErrorButGoOn;
 
-  KMime::Message::Ptr msg = item.payload<KMime::Message::Ptr>();
+  KMime::Message::Ptr msg = MessageCore::Util::message( item );
   MessageFactory factory( msg, item.id() );
   factory.setFolderIdentity( KMail::Util::folderIdentity( item ) );
   factory.setIdentityManager( KMKernel::self()->identityManager() );
@@ -1753,7 +1754,7 @@ KMFilterAction::ReturnCode KMFilterActionRedirect::process( const Akonadi::Item 
   if ( !rmsg )
     return ErrorButGoOn;
 
-  sendMDN( KMail::Util::message( item ), KMime::MDN::Dispatched );
+  sendMDN( msg, KMime::MDN::Dispatched );
 
   if ( !kmkernel->msgSender()->send( rmsg, MessageSender::SendLater ) ) {
     kDebug() << "KMFilterAction: could not redirect message (sending failed)";

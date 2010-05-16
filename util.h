@@ -78,8 +78,6 @@ namespace Util {
      */
     size_t crlf2lf( char* str, const size_t strLen );
 
-    KMime::Message::Ptr message( const Akonadi::Item & item );
-
     /**
      * Returns the identity of the folder that contains the given
      *  Akonadi::Item.
