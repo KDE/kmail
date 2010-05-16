@@ -246,9 +246,10 @@ void KMCommand::slotStart()
     emit messagesTransfered( OK );
     return;
   }
-  QList<Akonadi::Item>::const_iterator it;
-  for ( it = mMsgList.constBegin(); it != mMsgList.constEnd(); ++it ) {
-    if ( !(*it).parentCollection().isValid()  ) {
+
+  // we can only retrieve items with a valid id
+  foreach ( const Akonadi::Item &item, mMsgList ) {
+    if ( !item.isValid()  ) {
       emit messagesTransfered( Failed );
       return;
     }
@@ -1812,12 +1813,10 @@ void KMMoveCommand::slotMoveResult( KJob * job )
   if ( job->error() ) {
     // handle errors
     showJobError(job);
-    setResult( Failed );
+    completeMove( Failed );
   }
   else
-    setResult( OK );
-  deleteLater();
-  emit moveDone(this);
+    completeMove( OK );
 }
 
 KMCommand::Result KMMoveCommand::execute()
@@ -1874,6 +1873,7 @@ void KMMoveCommand::completeMove( Result result )
     mProgressItem = 0;
   }
   setResult( result );
+  emit moveDone(this);
   emit completed( this );
   deleteLater();
 }

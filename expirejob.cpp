@@ -207,7 +207,7 @@ void ExpireJob::done()
 
 void ExpireJob::slotMessagesMoved( KMCommand *command )
 {
-  kDebug() << command;
+  kDebug() << command << command->result();
   QString msg;
   QSharedPointer<FolderCollection> fd( FolderCollection::forCollection( mSrcFolder ) );
   switch ( command->result() ) {
