@@ -37,6 +37,8 @@
 #include "kmmainwin.h"
 #include "folderrequester.h"
 #include "foldertreewidget.h"
+#include "foldertreeview.h"
+#include "readablecollectionproxymodel.h"
 
 #include <kaction.h>
 #include <kdebug.h>
@@ -1130,7 +1132,10 @@ ASWizVirusRulesPage::ASWizVirusRulesPage( QWidget * parent, const char * name )
             "to the selected folder.") );
   grid->addWidget( mMarkRules, 2, 0 );
   mFolderTree = new FolderTreeWidget( this );
+  mFolderTree->readableCollectionProxyModel()->setAccessRights( Akonadi::Collection::CanCreateCollection );
   mFolderTree->selectCollectionFolder( KMKernel::self()->trashCollectionFolder() );
+  mFolderTree->folderTreeView()->setDragDropMode( QAbstractItemView::NoDragDrop );
+
   mFolderTree->disableContextMenuAndExtraColumn();
   grid->addWidget( mFolderTree, 3, 0 );
 
