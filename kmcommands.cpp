@@ -240,11 +240,9 @@ void KMCommand::slotStart()
       return;
   }
 
+  // Special case of operating on message that isn't in a folder
   const Akonadi::Item mb = mMsgList.first();
-  if ( ( mMsgList.count() == 1 ) && !mb.parentCollection().isValid() ) {
-    // Special case of operating on message that isn't in a folder
-    Q_ASSERT( mb.isValid() || mb.hasPayload<KMime::Message::Ptr>() );
-
+  if ( ( mMsgList.count() == 1 ) && MessageCore::Util::isStandaloneMessage( mb ) ) {
     mRetrievedMsgs.append(mMsgList.takeFirst());
     emit messagesTransfered( OK );
     return;
