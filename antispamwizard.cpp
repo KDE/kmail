@@ -946,8 +946,7 @@ void ASWizInfoPage::setScanProgressText( const QString &toolName )
 
 void ASWizInfoPage::addAvailableTool( const QString &visibleName )
 {
-  QString listName = visibleName;
-  mToolsList->addItem( listName );
+  mToolsList->addItem( visibleName );
   if ( !mToolsList->isVisible() )
   {
     mToolsList->show();
