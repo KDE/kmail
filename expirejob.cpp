@@ -32,12 +32,18 @@
 #include "broadcaststatus.h"
 using KPIM::BroadcastStatus;
 #include "kmcommands.h"
+#include "kmkernel.h"
 
 #include <kdebug.h>
 #include <klocale.h>
 #include <kconfiggroup.h>
 #include "foldercollection.h"
 using namespace KMail;
+
+#include <messagecore/messagestatus.h>
+
+#include <Akonadi/ItemFetchJob>
+#include <akonadi/kmime/messageparts.h>
 
 // Look at this number of messages in each slotDoWork call
 #define EXPIREJOB_NRMESSAGES 100
@@ -59,24 +65,19 @@ using namespace KMail;
 
 
 ExpireJob::ExpireJob( const Akonadi::Collection& folder, bool immediate )
- : ScheduledJob( folder, immediate ), mTimer( this ), mCurrentIndex( 0 ),
+ : ScheduledJob( folder, immediate ), mCurrentIndex( 0 ),
    mFolderOpen( false ), mMoveToFolder( 0 )
 {
 }
 
 ExpireJob::~ExpireJob()
 {
+  kDebug();
 }
 
 void ExpireJob::kill()
 {
-#if 0
-  Q_ASSERT( mCancellable );
-  // We must close the folder if we opened it and got interrupted
-  if ( mFolderOpen && mSrcFolder && mSrcFolder->storage() )
-    mSrcFolder->storage()->close( "expirejob" );
-  FolderJob::kill();
-#endif
+  ScheduledJob::kill();
 }
 
 void ExpireJob::execute()
@@ -98,176 +99,156 @@ void ExpireJob::execute()
 
   if ((mMaxUnreadTime == 0) && (mMaxReadTime == 0)) {
     kDebug() << "ExpireJob: nothing to do";
-    delete this;
+    deleteLater();
     return;
   }
-#if 0
-  FolderStorage* storage = mSrcFolder->storage();
-  mOpeningFolder = true; // Ignore open-notifications while opening the folder
-  storage->open( "expirejob" );
-  mOpeningFolder = false;
-  mFolderOpen = true;
-  mCurrentIndex = storage->count()-1;
-  kDebug() << "ExpireJob: starting to expire in folder" << mSrcFolder->location();
-  connect( &mTimer, SIGNAL( timeout() ), SLOT( slotDoWork() ) );
-  mTimer.start( EXPIREJOB_TIMERINTERVAL );
+  kDebug() << "ExpireJob: starting to expire in folder" << mSrcFolder.name();
   slotDoWork();
-#endif
   // do nothing here, we might be deleted!
 }
 
 void ExpireJob::slotDoWork()
 {
-#if 0
-  // No need to worry about mSrcFolder==0 here. The FolderStorage deletes the jobs on destruction.
-  FolderStorage* storage = mSrcFolder->storage();
-  int stopIndex = mImmediate ? 0 : qMax( 0, mCurrentIndex - EXPIREJOB_NRMESSAGES );
 #ifdef DEBUG_SCHEDULER
   kDebug() << "ExpireJob: checking messages" << mCurrentIndex << "to" << stopIndex;
 #endif
-#if 0 //TODO port to akonadi
-  for( ; mCurrentIndex >= stopIndex; --mCurrentIndex ) {
-    const KMime::Message *mb = storage->getMsgBase( mCurrentIndex );
-    if (mb == 0)
+  Akonadi::ItemFetchJob *job = new Akonadi::ItemFetchJob( mSrcFolder, this );
+  job->fetchScope().fetchPayloadPart( Akonadi::MessagePart::Header );
+  connect( job, SIGNAL(result(KJob*)), SLOT(itemFetchResult(KJob*)) );
+}
+
+void ExpireJob::itemFetchResult( KJob *job )
+{
+  if ( job->error() ) {
+    kWarning() << job->errorString();
+    deleteLater();
+    return;
+  }
+  foreach ( const Akonadi::Item &item, qobject_cast<Akonadi::ItemFetchJob*>( job )->items() ) {
+    if ( !item.hasPayload<KMime::Message::Ptr>() )
       continue;
-    if ( ( mb->messageStatus().isImportant() || mb->messageStatus().isToAct() || mb->messageStatus().isWatched() )
+    const KMime::Message::Ptr mb = item.payload<KMime::Message::Ptr>();
+    KPIM::MessageStatus status;
+    status.setStatusFromFlags( item.flags() );
+    if ( ( status.isImportant() || status.isToAct() || status.isWatched() )
       && GlobalSettings::self()->excludeImportantMailFromExpiry() )
        continue;
 
-    time_t maxTime = mb->messageStatus().isUnread() ? mMaxUnreadTime : mMaxReadTime;
+    time_t maxTime = status.isUnread() ? mMaxUnreadTime : mMaxReadTime;
 
-    if (mb->date()->dateTime().dateTime().toTime_t() < maxTime) {
-      mRemovedMsgs.append( storage->getMsgBase( mCurrentIndex ) );
+    if ( !mb->date( false ) )
+      continue;
+
+    if ( mb->date()->dateTime().dateTime().toTime_t() < maxTime ) {
+      mRemovedMsgs.append( item );
     }
   }
-#else
-    kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
-#endif
-  if ( stopIndex == 0 )
-    done();
-#endif
+
+  done();
 }
 
 void ExpireJob::done()
 {
-#if 0
-  mTimer.stop();
-
   QString str;
   bool moving = false;
+  QSharedPointer<FolderCollection> fd( FolderCollection::forCollection( mSrcFolder ) );
 
   if ( !mRemovedMsgs.isEmpty() ) {
     int count = mRemovedMsgs.count();
     // The command shouldn't kill us because it opens the folder
     mCancellable = false;
-    if ( mSrcFolder->expireAction() == KMFolder::ExpireDelete ) {
+    if ( fd->expireAction() ==  FolderCollection::ExpireDelete ) {
       // Expire by deletion, i.e. move to null target folder
       kDebug() << "ExpireJob: finished expiring in folder"
-                    << mSrcFolder->location()
+                    << mSrcFolder.name()
                     << count << "messages to remove.";
-#ifdef OLD_COMMAND
-      KMMoveCommand* cmd = new KMMoveCommand( 0, mRemovedMsgs );
+      KMMoveCommand* cmd = new KMMoveCommand( kmkernel->trashCollectionFolder(), mRemovedMsgs, MessageList::Core::MessageItemSetReference() );
       connect( cmd, SIGNAL( completed( KMCommand * ) ),
                this, SLOT( slotMessagesMoved( KMCommand * ) ) );
       cmd->start();
-#endif
       moving = true;
       str = i18np( "Removing 1 old message from folder %2...",
                   "Removing %1 old messages from folder %2...", count,
-              mSrcFolder->label() );
+              mSrcFolder.name() );
     } else {
-#if 0
       // Expire by moving
       mMoveToFolder =
-        kmkernel->findFolderById( mSrcFolder->expireToFolderId() );
-#else
-    kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
-#endif
-      if ( !mMoveToFolder ) {
+        KMKernel::self()->findFolderCollectionById( fd->expireToFolderId() );
+      if ( !mMoveToFolder.isValid() ) {
         str = i18n( "Cannot expire messages from folder %1: destination "
                     "folder %2 not found",
-                    mSrcFolder->label(), mSrcFolder->expireToFolderId() );
+                    mSrcFolder.name(), fd->expireToFolderId() );
         kWarning() << str;
       } else {
         kDebug() << "ExpireJob: finished expiring in folder"
-                      << mSrcFolder->location()
+                      << mSrcFolder.name()
                       << mRemovedMsgs.count() << "messages to move to"
-                      << mMoveToFolder->label();
-#ifdef OLD_COMMAND
-        KMMoveCommand* cmd = new KMMoveCommand( mMoveToFolder, mRemovedMsgs );
+                      << mMoveToFolder.name();
+        KMMoveCommand* cmd = new KMMoveCommand( mMoveToFolder, mRemovedMsgs, MessageList::Core::MessageItemSetReference() );
         connect( cmd, SIGNAL( completed( KMCommand * ) ),
                  this, SLOT( slotMessagesMoved( KMCommand * ) ) );
         cmd->start();
-#endif
         moving = true;
         str = i18np( "Moving 1 old message from folder %2 to folder %3...",
                      "Moving %1 old messages from folder %2 to folder %3...",
-                     count, mSrcFolder->label(), mMoveToFolder->label() );
+                     count, mSrcFolder.name(), mMoveToFolder.name() );
       }
     }
   }
   if ( !str.isEmpty() )
     BroadcastStatus::instance()->setStatusMsg( str );
 
-  KConfigGroup group( KMKernel::config(), mSrcFolder->configGroupName() );
+  KConfigGroup group( KMKernel::config(), fd->configGroupName() );
   group.writeEntry( "Current", -1 ); // i.e. make it invalid, the serial number will be used
 
-  if ( !moving ) {
-#if 0
-    mSrcFolder->storage()->close( "expirejob" );
-    mFolderOpen = false;
-#endif
-    delete this;
-  }
-#endif
+  if ( !moving )
+    deleteLater();
 }
 
 void ExpireJob::slotMessagesMoved( KMCommand *command )
 {
-#if 0
-  mSrcFolder->storage()->close( "expirejob" );
-  mFolderOpen = false;
+  kDebug() << command;
   QString msg;
+  QSharedPointer<FolderCollection> fd( FolderCollection::forCollection( mSrcFolder ) );
   switch ( command->result() ) {
   case KMCommand::OK:
-    if ( mSrcFolder->expireAction() == KMFolder::ExpireDelete ) {
+    if ( fd->expireAction() == FolderCollection::ExpireDelete ) {
       msg = i18np( "Removed 1 old message from folder %2.",
                   "Removed %1 old messages from folder %2.",
                   mRemovedMsgs.count(),
-              mSrcFolder->label() );
+              mSrcFolder.name() );
     }
     else {
       msg = i18np( "Moved 1 old message from folder %2 to folder %3.",
                    "Moved %1 old messages from folder %2 to folder %3.",
-                   mRemovedMsgs.count(), mSrcFolder->label(), mMoveToFolder->label() );
+                   mRemovedMsgs.count(), mSrcFolder.name(), mMoveToFolder.name() );
     }
     break;
   case KMCommand::Failed:
-    if ( mSrcFolder->expireAction() == KMFolder::ExpireDelete ) {
+    if ( fd->expireAction() == FolderCollection::ExpireDelete ) {
       msg = i18n( "Removing old messages from folder %1 failed.",
-              mSrcFolder->label() );
+              mSrcFolder.name() );
     }
     else {
       msg = i18n( "Moving old messages from folder %1 to folder %2 failed.",
-                  mSrcFolder->label(), mMoveToFolder->label() );
+                  mSrcFolder.name(), mMoveToFolder.name() );
     }
     break;
   case KMCommand::Canceled:
-    if ( mSrcFolder->expireAction() == KMFolder::ExpireDelete ) {
+    if ( fd->expireAction() == FolderCollection::ExpireDelete ) {
       msg = i18n( "Removing old messages from folder %1 was canceled.",
-              mSrcFolder->label() );
+              mSrcFolder.name() );
     }
     else {
       msg = i18n( "Moving old messages from folder %1 to folder %2 was "
                   "canceled.",
-                  mSrcFolder->label(), mMoveToFolder->label() );
+                  mSrcFolder.name(), mMoveToFolder.name() );
     }
   default: ;
   }
   BroadcastStatus::instance()->setStatusMsg( msg );
 
   deleteLater();
-#endif
 }
 
 #include "expirejob.moc"

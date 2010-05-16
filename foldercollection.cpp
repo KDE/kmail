@@ -513,15 +513,8 @@ void FolderCollection::slotDeletionCollectionResult( KJob * job )
 
 void FolderCollection::expireOldMessages( bool immediate )
 {
-  kDebug() << "AKONADI PORT: port it  " << Q_FUNC_INFO;
   KMail::ScheduledExpireTask* task = new KMail::ScheduledExpireTask(mCollection, immediate);
-#if 0
   kmkernel->jobScheduler()->registerTask( task );
-  if ( immediate ) {
-    // #82259: compact after expiring.
-    compact( CompactLater );
-  }
-#endif
 }
 
 

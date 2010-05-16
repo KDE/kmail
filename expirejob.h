@@ -48,13 +48,13 @@ public:
 private slots:
   void slotDoWork();
   void slotMessagesMoved( KMCommand *command );
+  void itemFetchResult( KJob* job );
 
 private:
   void done();
 
 private:
-  QTimer mTimer;
-  QList<KMime::Message*> mRemovedMsgs;
+  QList<Akonadi::Item> mRemovedMsgs;
   int mCurrentIndex;
   int mMaxUnreadTime;
   int mMaxReadTime;
