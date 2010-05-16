@@ -1904,11 +1904,13 @@ KMCommand::Result KMUrlClickedCommand::execute()
 KMSaveAttachmentsCommand::KMSaveAttachmentsCommand( QWidget *parent, const Akonadi::Item& msg )
   : KMCommand( parent, msg )
 {
+  fetchScope().fetchFullPayload( true );
 }
 
 KMSaveAttachmentsCommand::KMSaveAttachmentsCommand( QWidget *parent, const QList<Akonadi::Item>& msgs )
   : KMCommand( parent, msgs )
 {
+  fetchScope().fetchFullPayload( true );
 }
 
 KMCommand::Result KMSaveAttachmentsCommand::execute()
