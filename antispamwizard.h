@@ -335,10 +335,17 @@ namespace KMail {
       bool moveSpamSelected() const;
       bool moveUnsureSelected() const;
 
-      QString selectedSpamFolderName() const;
-      QString selectedUnsureFolderName() const;
+      QString selectedUnsureCollectionName() const;
+      QString selectedUnsureCollectionId() const;
 
       void allowUnsureFolderSelection( bool enabled );
+
+      QString selectedSpamCollectionId() const;
+      QString selectedSpamCollectionName() const;
+
+    protected:
+      Akonadi::Collection selectedSpamCollection() const;
+      Akonadi::Collection selectedUnsureCollection() const;
 
     private slots:
       void processSelectionChange();

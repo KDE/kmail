@@ -143,9 +143,9 @@ void AntiSpamWizard::accept()
 {
   if ( mSpamRulesPage ) {
     kDebug() << "Folder name for messages classified as spam is"
-                    << mSpamRulesPage->selectedSpamFolderName();
+                    << mSpamRulesPage->selectedSpamCollectionId();
     kDebug() << "Folder name for messages classified as unsure is"
-                    << mSpamRulesPage->selectedUnsureFolderName();
+                    << mSpamRulesPage->selectedUnsureCollectionId();
   }
   if ( mVirusRulesPage ) {
     kDebug() << "Folder name for viruses is"
@@ -271,7 +271,7 @@ void AntiSpamWizard::accept()
     if ( mSpamRulesPage->moveSpamSelected() )
     {
       KMFilterAction* spamFilterAction1 = dict.value( "transfer" )->create();
-      spamFilterAction1->argsFromString( mSpamRulesPage->selectedSpamFolderName() );
+      spamFilterAction1->argsFromString( mSpamRulesPage->selectedSpamCollectionId() );
       spamFilterActions->append( spamFilterAction1 );
     }
     KMFilterAction* spamFilterAction2 = dict.value( "set status" )->create();
@@ -321,7 +321,7 @@ void AntiSpamWizard::accept()
       KMFilter* unsureFilter = new KMFilter();
       QList<KMFilterAction*> *unsureFilterActions = unsureFilter->actions();
       KMFilterAction* unsureFilterAction1 = dict.value( "transfer" )->create();
-      unsureFilterAction1->argsFromString( mSpamRulesPage->selectedUnsureFolderName() );
+      unsureFilterAction1->argsFromString( mSpamRulesPage->selectedUnsureCollectionId() );
       unsureFilterActions->append( unsureFilterAction1 );
       KMSearchPattern* unsureFilterPattern = unsureFilter->pattern();
       if ( replaceExistingFilters )
@@ -381,7 +381,7 @@ void AntiSpamWizard::accept()
     if ( mSpamRulesPage->moveSpamSelected() )
     {
       KMFilterAction* classSpamFilterActionLast = dict.value( "transfer" )->create();
-      classSpamFilterActionLast->argsFromString( mSpamRulesPage->selectedSpamFolderName() );
+      classSpamFilterActionLast->argsFromString( mSpamRulesPage->selectedSpamCollectionId() );
       classSpamFilterActions->append( classSpamFilterActionLast );
     }
 
@@ -576,7 +576,7 @@ void AntiSpamWizard::slotBuildSummary()
       if ( mSpamRulesPage->moveSpamSelected() )
         text = i18n( "<p>Messages classified as spam are marked as read."
                      "<br />Spam messages are moved into the folder named <i>%1</i>.</p>"
-                     , mSpamRulesPage->selectedSpamFolderName() );
+                     , mSpamRulesPage->selectedSpamCollectionName() );
       else
         text = i18n( "<p>Messages classified as spam are marked as read."
                      "<br />Spam messages are not moved into a certain folder.</p>" );
@@ -585,7 +585,7 @@ void AntiSpamWizard::slotBuildSummary()
       if ( mSpamRulesPage->moveSpamSelected() )
         text = i18n( "<p>Messages classified as spam are not marked as read."
                      "<br />Spam messages are moved into the folder named <i>%1</i>.</p>"
-                     , mSpamRulesPage->selectedSpamFolderName() );
+                     , mSpamRulesPage->selectedSpamCollectionName() );
       else
         text = i18n( "<p>Messages classified as spam are not marked as read."
                      "<br />Spam messages are not moved into a certain folder.</p>" );
@@ -614,7 +614,7 @@ void AntiSpamWizard::slotBuildSummary()
         sortFilterOnExistance( i18n( "Semi spam (unsure) handling" ),
                                newFilters, replaceFilters );
         text += i18n( "<p>The folder for messages classified as unsure (probably spam) is <i>%1</i>.</p>"
-          , mSpamRulesPage->selectedUnsureFolderName() );
+          , mSpamRulesPage->selectedUnsureCollectionName() );
       }
     }
 
@@ -1057,23 +1057,41 @@ bool ASWizSpamRulesPage::moveUnsureSelected() const
   return mMoveUnsureRules->isChecked();
 }
 
+QString ASWizSpamRulesPage::selectedSpamCollectionId() const
+{
+  return QString::number( selectedSpamCollection().id() );
+}
 
-QString ASWizSpamRulesPage::selectedSpamFolderName() const
+QString ASWizSpamRulesPage::selectedSpamCollectionName() const
+{
+  return selectedSpamCollection().name();
+}
+
+Akonadi::Collection ASWizSpamRulesPage::selectedSpamCollection() const
 {
   if ( mFolderReqForSpamFolder->folderCollection().isValid() )
-    return QString::number( mFolderReqForSpamFolder->folderCollection().id() );
+    return mFolderReqForSpamFolder->folderCollection();
   else
-    return QString::number( KMKernel::self()->trashCollectionFolder().id() );
+    return KMKernel::self()->trashCollectionFolder();
 }
 
 
-QString ASWizSpamRulesPage::selectedUnsureFolderName() const
+Akonadi::Collection ASWizSpamRulesPage::selectedUnsureCollection() const
 {
-  QString name = "inbox";
   if ( mFolderReqForUnsureFolder->folderCollection().isValid() )
-    return QString::number( mFolderReqForUnsureFolder->folderCollection().id() );
+    return mFolderReqForUnsureFolder->folderCollection();
   else
-    return QString::number( KMKernel::self()->inboxCollectionFolder().id() );
+    return KMKernel::self()->inboxCollectionFolder();
+}
+
+QString ASWizSpamRulesPage::selectedUnsureCollectionName() const
+{
+  return selectedUnsureCollection().name();
+}
+
+QString ASWizSpamRulesPage::selectedUnsureCollectionId() const
+{
+  return QString::number( selectedUnsureCollection().id() );
 }
 
 
