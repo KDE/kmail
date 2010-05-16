@@ -92,9 +92,9 @@ void CollectionMaintenancePage::load(const Collection & col)
 {
   init( col );
   if ( col.isValid() ) {
-    mCollectionCount->setText( QString::number( col.statistics().count() ) );
-    mCollectionUnread->setText( QString::number( col.statistics().unreadCount() ));
-    mFolderSizeLabel->setText( KGlobal::locale()->formatByteSize( col.statistics().size() ) );
+    mCollectionCount->setText( QString::number( qMax( 0LL, col.statistics().count() ) ) );
+    mCollectionUnread->setText( QString::number( qMax( 0LL, col.statistics().unreadCount() ) ) );
+    mFolderSizeLabel->setText( KGlobal::locale()->formatByteSize( qMax( 0LL, col.statistics().size() ) ) );
 
     mCollectionLocation->setText( col.remoteId() );
 
