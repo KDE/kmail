@@ -259,9 +259,6 @@ CollectionAclPage::CollectionAclPage( QWidget* parent )
   : CollectionPropertiesPage( parent ),
     mUserRights( KIMAP::Acl::None ),
     mChanged( false )
-#if 0
-    mAccepting( false ),
-#endif
 {
   setPageTitle( i18n("Access Control") );
   init();
@@ -486,78 +483,4 @@ void CollectionAclPage::slotRemoveACL()
   mChanged = true;
 }
 
-#if 0
-void CollectionAclPage::slotDirectoryListingFinished(KMFolderImap* f)
-{
-  if ( !f ||
-       f != static_cast<KMFolderImap*>( mDlg->parentFolder()->storage() ) ||
-       !mDlg->folder() ||
-       !mDlg->folder()->storage() ) {
-    emit readyForAccept();
-    return;
-  }
-
-  // When creating a new folder with online imap, update mImapPath
-  KMFolderImap* folderImap = static_cast<KMFolderImap*>( mDlg->folder()->storage() );
-  if ( !folderImap || folderImap->imapPath().isEmpty() )
-    return;
-  mImapPath = folderImap->imapPath();
-
-  KIO::Job* job = ACLJobs::multiSetACL( mImapAccount->slave(), imapURL(), mACLList );
-  ImapAccountBase::jobData jd;
-  jd.total = 1; jd.done = 0; jd.parent = 0;
-  mImapAccount->insertJob(job, jd);
-
-  connect(job, SIGNAL(result(KJob *)),
-          SLOT(slotMultiSetACLResult(KJob *)));
-  connect(job, SIGNAL(aclChanged( const QString&, int )),
-          SLOT(slotACLChanged( const QString&, int )) );
-}
-
-void CollectionAclPage::slotMultiSetACLResult(KJob* job)
-{
-  ImapAccountBase::JobIterator it = mImapAccount->findJob( static_cast<KIO::Job*>(job) );
-  if ( it == mImapAccount->jobsEnd() ) return;
-  mImapAccount->removeJob( it );
-
-  if ( job->error() ) {
-    static_cast<KIO::Job*>(job)->ui()->setWindow( this );
-    static_cast<KIO::Job*>(job)->ui()->showErrorMessage();
-    if ( mAccepting ) {
-      emit cancelAccept();
-      mAccepting = false; // don't emit readyForAccept anymore
-    }
-  } else {
-    if ( mAccepting )
-      emit readyForAccept();
-  }
-}
-
-void CollectionAclPage::slotACLChanged( const QString& userId, int permissions )
-{
-  // The job indicates success in changing the permissions for this user
-  // -> we note that it's been done.
-  bool ok = false;
-  if ( permissions > -1 ) {
-    QTreeWidgetItemIterator it( mListView );
-    while ( QTreeWidgetItem* item = *it ) {
-      ListViewItem* ACLitem = static_cast<ListViewItem *>( item );
-      if ( ACLitem->userId() == userId ) {
-        ACLitem->setModified( false );
-        ACLitem->setNew( false );
-        ok = true;
-        break;
-      }
-      ++it;
-    }
-  } else {
-    uint nr = mRemovedACLs.removeAll( userId );
-    ok = ( nr > 0 );
-  }
-  if ( !ok ) {
-    kWarning() << "no item found for userId" << userId;
-  }
-}
-
-#endif
 #include "collectionaclpage.moc"
