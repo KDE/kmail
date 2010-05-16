@@ -101,6 +101,7 @@ using KMail::ActionScheduler;
 #include "kcursorsaver.h"
 #include "partNode.h"
 #include "objecttreeparser.h"
+#include "csshelper.h"
 using KMail::ObjectTreeParser;
 using KMail::FolderJob;
 #include "chiasmuskeyselector.h"
@@ -1603,7 +1604,13 @@ KMPrintCommand::KMPrintCommand( QWidget *parent, KMMessage *msg,
     mHtmlLoadExtOverride( htmlLoadExtOverride ),
     mUseFixedFont( useFixedFont ), mEncoding( encoding )
 {
-  mOverrideFont = KGlobalSettings::generalFont();
+  if ( GlobalSettings::useDefaultFonts() )
+    mOverrideFont = KGlobalSettings::generalFont();
+  else {
+    KConfigGroup fonts( KMKernel::config(), "Fonts" );
+    QString tmp = fonts.readEntry( "print-font", KGlobalSettings::generalFont().toString() );
+    mOverrideFont.fromString( tmp );
+  }
 }
 
 
@@ -1623,7 +1630,7 @@ KMCommand::Result KMPrintCommand::execute()
   printWin.setHtmlLoadExtOverride( mHtmlLoadExtOverride );
   printWin.setUseFixedFont( mUseFixedFont );
   printWin.setOverrideEncoding( mEncoding );
-  printWin.setPrintFont( mOverrideFont );
+  printWin.cssHelper()->setPrintFont( mOverrideFont );
   printWin.setDecryptMessageOverwrite( true );
   printWin.setMsg( retrievedMessage(), true );
   printWin.printMsg();

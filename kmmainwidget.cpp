@@ -101,6 +101,7 @@ using KMail::HeaderListQuickSearch;
 #include "templateparser.h"
 #include "archivefolderdialog.h"
 #include "folderutil.h"
+#include "csshelper.h"
 
 #if !defined(NDEBUG)
     #include "sievedebugdialog.h"
@@ -1803,6 +1804,11 @@ void KMMainWidget::slotCopyMsg()
 //-----------------------------------------------------------------------------
 void KMMainWidget::slotPrintMsg()
 {
+  KMMessage *msg = mHeaders->currentMsg();
+  if ( !msg ) {
+    return;
+  }
+
   bool htmlOverride = mMsgView ? mMsgView->htmlOverride() : false;
   bool htmlLoadExtOverride = mMsgView ? mMsgView->htmlLoadExtOverride() : false;
   KConfigGroup reader( KMKernel::config(), "Reader" );
@@ -1819,11 +1825,14 @@ void KMMainWidget::slotPrintMsg()
     strategy = HeaderStrategy::create( reader.readEntry( "header-set-displayed", "rich" ) );
   }
 
-  KMCommand *command =
-    new KMPrintCommand( this, mHeaders->currentMsg(),
+  KMPrintCommand *command =
+    new KMPrintCommand( this, msg,
                         style, strategy,
                         htmlOverride, htmlLoadExtOverride,
                         useFixedFont, overrideEncoding() );
+  if ( mMsgView )
+    command->setOverrideFont( mMsgView->cssHelper()->bodyFont( mMsgView->isFixedFont(), true /*printing*/ ) );
+
   command->start();
 }
 
