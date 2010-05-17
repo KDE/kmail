@@ -3720,7 +3720,8 @@ void KMMainWidget::updateMessageActions()
   mMoveActionMenu->setEnabled( mass_actions && canDeleteMessages );
   mMoveMsgToFolderAction->setEnabled( mass_actions && canDeleteMessages );
   //mCopyActionMenu->setEnabled( mass_actions );
-  mTrashAction->setEnabled( mass_actions && !readOnly );
+  mTrashAction->setEnabled( mass_actions && !readOnly && !mCurrentFolder->isSystemFolder() && !mCurrentFolder->isStructural());
+
   mDeleteAction->setEnabled( mass_actions && !readOnly );
   mExpireConfigAction->setEnabled( canDeleteMessages );
 
@@ -3824,7 +3825,7 @@ void KMMainWidget::updateFolderMenu()
   mPreferHtmlAction->setChecked( mHtmlPref ? !mFolderHtmlPref : mFolderHtmlPref );
   mPreferHtmlLoadExtAction->setChecked( mHtmlLoadExtPref ? !mFolderHtmlLoadExtPref : mFolderHtmlLoadExtPref );
   mRemoveDuplicatesAction->setEnabled( !multiFolder && mCurrentFolder && mCurrentFolder->canDeleteMessages() );
-  mShowFolderShortcutDialogAction->setEnabled( !multiFolder && mCurrentFolder );
+  mShowFolderShortcutDialogAction->setEnabled( !multiFolder && mCurrentFolder && !mCurrentFolder->isSystemFolder() && !mCurrentFolder->isStructural() );
 }
 
 //-----------------------------------------------------------------------------
