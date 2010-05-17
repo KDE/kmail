@@ -156,7 +156,7 @@ SearchWindow::SearchWindow(KMMainWidget* w, const Akonadi::Collection& curFolder
 #endif
 
   bool currentFolderIsSearchFolder = false;
-    
+
   if ( !curFolder.hasAttribute<Akonadi::PersistentSearchAttribute>() ) {
     // it's not a search folder, make a new search
     mSearchPattern.append( KMSearchRule::createInstance( "Subject" ) );
@@ -179,7 +179,7 @@ SearchWindow::SearchWindow(KMMainWidget* w, const Akonadi::Collection& curFolder
       // FIXME show results, but disable edit GUI
       kWarning() << "This search was not created with KMail. It can not be edited within it.";
       mSearchPattern.clear();
-    } 
+    }
   }
   mPatternEdit->setSearchPattern( &mSearchPattern );
 
@@ -212,18 +212,13 @@ SearchWindow::SearchWindow(KMMainWidget* w, const Akonadi::Collection& curFolder
   mLbxMatches->setSortingEnabled( true );
 #if 0 // port me!
   mLbxMatches->sortItems( 2, Qt::DescendingOrder );
-  mLbxMatches->header()->setSortIndicator( 2, Qt::DescendingOrder );
+#else
+  kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
 #endif
+
   mLbxMatches->setAllColumnsShowFocus( true );
   mLbxMatches->setSelectionMode( QAbstractItemView::ExtendedSelection );
   mLbxMatches->setContextMenuPolicy( Qt::CustomContextMenu );
-
-#if 0 // port me!
-  mLbxMatches->header()->setStretchLastSection( false );
-  mLbxMatches->header()->setResizeMode( 3, QHeaderView::Stretch );
-#else
-    kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
-#endif
 
   connect( mLbxMatches, SIGNAL(customContextMenuRequested(QPoint)),
            this, SLOT(slotContextMenuRequested(QPoint)) );
