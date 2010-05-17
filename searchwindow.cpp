@@ -735,8 +735,13 @@ void SearchWindow::slotContextMenuRequested( const QPoint &pos )
     menu->addAction( mReplyListAction );
     menu->addAction( mForwardActionMenu );
     menu->addSeparator();
-    menu->addAction( mAkonadiStandardAction->createAction( Akonadi::StandardActionManager::CopyItems ) );
-    menu->addAction( mAkonadiStandardAction->createAction( Akonadi::StandardActionManager::CutItems ) );
+    KAction *act = mAkonadiStandardAction->createAction( Akonadi::StandardActionManager::CopyItems );
+    mAkonadiStandardAction->setActionText( Akonadi::StandardActionManager::CopyItems, ki18np( "Copy Message", "Copy %1 Messages" ) );
+    menu->addAction( act );
+    act = mAkonadiStandardAction->createAction( Akonadi::StandardActionManager::CutItems );
+    mAkonadiStandardAction->setActionText( Akonadi::StandardActionManager::CutItems, ki18np( "Cut Message", "Cut %1 Messages" ) );
+    menu->addAction( act );
+
     menu->addAction( mAkonadiStandardAction->createAction( Akonadi::StandardActionManager::CopyItemToMenu ) );
     menu->addAction( mAkonadiStandardAction->createAction( Akonadi::StandardActionManager::MoveItemToMenu ) );
     menu->addSeparator();
