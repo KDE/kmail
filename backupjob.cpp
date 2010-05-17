@@ -58,10 +58,8 @@ BackupJob::BackupJob( QWidget *parent )
 BackupJob::~BackupJob()
 {
   mPendingFolders.clear();
-  if ( mArchive ) {
-    delete mArchive;
-    mArchive = 0;
-  }
+  delete mArchive;
+  mArchive = 0;
 }
 
 void BackupJob::setRootFolder( const Akonadi::Collection &rootFolder )
