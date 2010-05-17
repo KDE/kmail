@@ -352,8 +352,6 @@ SearchWindow::SearchWindow(KMMainWidget* w, const Akonadi::Collection& curFolder
   actionCollection()->addAction("search_clear_selection", mClearAction );
   connect(mClearAction, SIGNAL(triggered(bool)), SLOT(slotClearSelection()));
 
-  mCopyAction = ac->addAction( KStandardAction::Copy, "search_copy_messages", this, SLOT(slotCopyMsgs()) );
-  mCutAction = ac->addAction( KStandardAction::Cut, "search_cut_messages", this, SLOT(slotCutMsgs()) );
 
   connect(mTimer, SIGNAL(timeout()), this, SLOT(updateStatusLine()));
   connect(mCbxFolders, SIGNAL(folderChanged(const Akonadi::Collection&)),
@@ -721,8 +719,6 @@ void SearchWindow::updateContextMenuActions()
     mReplyAllAction->setEnabled( single_actions );
     mReplyListAction->setEnabled( single_actions );
     mPrintAction->setEnabled( single_actions );
-    mCopyAction->setEnabled( count > 0 );
-    mCutAction->setEnabled( count > 0 );
 }
 
 //-----------------------------------------------------------------------------
@@ -739,8 +735,8 @@ void SearchWindow::slotContextMenuRequested( const QPoint &pos )
     menu->addAction( mReplyListAction );
     menu->addAction( mForwardActionMenu );
     menu->addSeparator();
-    menu->addAction( mCopyAction );
-    menu->addAction( mCutAction );
+    menu->addAction( mAkonadiStandardAction->createAction( Akonadi::StandardActionManager::CopyItems ) );
+    menu->addAction( mAkonadiStandardAction->createAction( Akonadi::StandardActionManager::CutItems ) );
     menu->addAction( mAkonadiStandardAction->createAction( Akonadi::StandardActionManager::CopyItemToMenu ) );
     menu->addAction( mAkonadiStandardAction->createAction( Akonadi::StandardActionManager::MoveItemToMenu ) );
     menu->addSeparator();
@@ -817,22 +813,6 @@ void SearchWindow::slotPrintMsg()
 {
     KMCommand *command = new KMPrintCommand(this, message());
     command->start();
-}
-
-void SearchWindow::slotCopyMsgs()
-{
-#if 0 //Port to akonadi
-  QList<quint32> list = MessageCopyHelper::serNumListFromMsgList( selectedMessages() );
-  mKMMainWidget->setMessageClipboardContents( list, false );
-#endif
-}
-
-void SearchWindow::slotCutMsgs()
-{
-#if 0  //Port to akonadi
-  QList<quint32> list = MessageCopyHelper::serNumListFromMsgList( selectedMessages() );
-  mKMMainWidget->setMessageClipboardContents( list, true );
-#endif
 }
 
 void SearchWindow::addRulesToSearchPattern( const KMSearchPattern &pattern )

@@ -136,8 +136,6 @@ protected slots:
   void slotSaveMsg();
   void slotSaveAttachments();
   void slotPrintMsg();
-  void slotCopyMsgs();
-  void slotCutMsgs();
 
   /** GUI cleanup after search */
   void searchDone(KJob* job);
@@ -180,7 +178,7 @@ protected:
   QWidget* mLastFocus; // to remember the position of the focus
   QAction *mReplyAction, *mReplyAllAction, *mReplyListAction, *mSaveAsAction,
     *mForwardInlineAction, *mForwardAttachedAction, *mPrintAction, *mClearAction,
-    *mSaveAtchAction, *mCopyAction, *mCutAction;
+    *mSaveAtchAction;
   KActionMenu *mForwardActionMenu;
   QTimer mRenameTimer;
   QByteArray mHeaderState;
