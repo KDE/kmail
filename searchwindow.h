@@ -56,6 +56,7 @@ namespace Akonadi {
   class EntityTreeView;
   class ItemModel;
   class Item;
+  class StandardActionManager;
 }
 
 namespace KMail {
@@ -125,10 +126,6 @@ protected slots:
   virtual bool slotViewMsg( const Akonadi::Item &item );
   void slotCurrentChanged(const Akonadi::Item&);
   virtual void updateContextMenuActions();
-#if 0
-  void slotCopySelectedMessagesToFolder( QAction* );
-  void slotMoveSelectedMessagesToFolder( QAction* );
-#endif
   virtual void slotFolderActivated();
   void slotClearSelection();
   void slotReplyToMsg();
@@ -191,6 +188,8 @@ protected:
   KMMainWidget* mKMMainWidget;
   KMSearchPatternEdit *mPatternEdit;
   KMSearchPattern mSearchPattern;
+
+  Akonadi::StandardActionManager *mAkonadiStandardAction;
 
   static const int MSGID_COLUMN;
 };

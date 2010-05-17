@@ -46,6 +46,8 @@
 #include <KWindowSystem>
 #include <KMessageBox>
 
+#include <akonadi/standardactionmanager.h>
+
 #include "folderrequester.h"
 #include "kmcommands.h"
 #include "kmmainwidget.h"
@@ -240,6 +242,8 @@ SearchWindow::SearchWindow(KMMainWidget* w, const Akonadi::Collection& curFolder
     mResultModel = new Akonadi::MessageModel( this );
     mResultModel->setCollection( mFolder );
     mLbxMatches->setModel( mResultModel );
+    mAkonadiStandardAction = new Akonadi::StandardActionManager( actionCollection(), this );
+    mAkonadiStandardAction->setItemSelectionModel( mLbxMatches->selectionModel() );
   } else {
     mSearchFolderEdt->setText( i18n("Last Search") );
     // TODO find last search and set mFolder to it?
@@ -540,6 +544,9 @@ void SearchWindow::searchDone( KJob* job )
       mLbxMatches->header()->setSortIndicator( 2, Qt::DescendingOrder );
       mLbxMatches->header()->setStretchLastSection( false );
       mLbxMatches->header()->setResizeMode( 3, QHeaderView::Stretch );
+      mAkonadiStandardAction = new Akonadi::StandardActionManager( actionCollection(), this );
+      mAkonadiStandardAction->setItemSelectionModel( mLbxMatches->selectionModel() );
+
     } else {
       mResultModel->setCollection( mFolder );
       mLbxMatches->setModel( mResultModel );
@@ -704,36 +711,6 @@ Akonadi::Item SearchWindow::message()
 {
   return mLbxMatches->currentIndex().data( Akonadi::ItemModel::ItemRole ).value<Akonadi::Item>();
 }
-#if 0
-//-----------------------------------------------------------------------------
-void SearchWindow::slotMoveSelectedMessagesToFolder( QAction* act )
-{
-  KMFolder *dest = static_cast<KMFolder *>( act->data().value<void *>() );
-  if ( !dest )
-    return;
-#if 0
-  // Fixme: isn't this already handled by KMHeaders ?
-  QList<Akonadi::Item> msgList = selectedMessages();
-  KMCommand *command = new KMMoveCommand( dest, msgList );
-  command->start();
-#endif
-}
-
-//-----------------------------------------------------------------------------
-void SearchWindow::slotCopySelectedMessagesToFolder( QAction* act )
-{
-#ifdef OLD_COMMAND
-  KMFolder *dest = static_cast<KMFolder *>( act->data().value<void *>() );
-  if ( !dest )
-    return;
-
-  // Fixme: isn't this already handled by KMHeaders ?
-  QList<Akonadi::Item> msgList = selectedMessages();
-  KMCommand *command = new KMCopyCommand( dest, msgList );
-  command->start();
-#endif
-}
-#endif
 
 //-----------------------------------------------------------------------------
 void SearchWindow::updateContextMenuActions()
@@ -752,17 +729,10 @@ void SearchWindow::updateContextMenuActions()
 void SearchWindow::slotContextMenuRequested( const QPoint &pos )
 {
     if (!message().isValid())
-        return;
+      return;
     QMenu *menu = new QMenu(this);
     updateContextMenuActions();
-#ifdef OLD_FOLDERVIEW
-    QMenu *msgMoveMenu = new QMenu(menu);
-    mKMMainWidget->mainFolderView()->folderToPopupMenu( MainFolderView::MoveMessage,
-        this, msgMoveMenu );
-    QMenu *msgCopyMenu = new QMenu(menu);
-    mKMMainWidget->mainFolderView()->folderToPopupMenu( MainFolderView::CopyMessage,
-        this, msgCopyMenu );
-#endif
+
     // show most used actions
     menu->addAction( mReplyAction );
     menu->addAction( mReplyAllAction );
@@ -771,15 +741,8 @@ void SearchWindow::slotContextMenuRequested( const QPoint &pos )
     menu->addSeparator();
     menu->addAction( mCopyAction );
     menu->addAction( mCutAction );
-#ifdef OLD_FOLDERVIEW
-    msgCopyMenu->setTitle( i18n( "&Copy To" ) );
-    msgCopyMenu->setIcon( KIcon( "edit-copy" ) );
-    menu->addMenu( msgCopyMenu );
-
-    msgMoveMenu->setTitle( i18n( "&Move To" ) );
-    msgMoveMenu->setIcon( KIcon( "go-jump" ) );
-    menu->addMenu( msgMoveMenu );
-#endif
+    menu->addAction( mAkonadiStandardAction->createAction( Akonadi::StandardActionManager::CopyItemToMenu ) );
+    menu->addAction( mAkonadiStandardAction->createAction( Akonadi::StandardActionManager::MoveItemToMenu ) );
     menu->addSeparator();
     menu->addAction( mSaveAsAction );
     menu->addAction( mSaveAtchAction );
