@@ -666,6 +666,7 @@ void KMSearchRuleNumerical::addQueryTerms(Nepomuk::Query::GroupTerm& groupTerm) 
                                                    nepomukComparator() );
     addAndNegateTerm( sizeTerm, groupTerm );
   } else if ( field() == "<age in days>" ) {
+    kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
     // TODO
   }
 }
