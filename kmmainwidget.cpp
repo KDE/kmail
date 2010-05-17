@@ -2304,7 +2304,7 @@ void KMMainWidget::slotCheckVacation()
     return;
 
   Vacation *vac = new Vacation( this, true /* check only */ );
-  connect( vac, SIGNAL(scriptActive(bool)), SLOT(updateVactionScriptStatus(bool)) );
+  connect( vac, SIGNAL(scriptActive(bool)), SLOT(updateVacationScriptStatus(bool)) );
 }
 
 void KMMainWidget::slotEditVacation()
