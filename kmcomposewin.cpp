@@ -2659,6 +2659,7 @@ void KMComposeWin::addAttach( KMime::Content *msgPart )
     part->setData( msgPart->decodedContent() );
   }
   mAttachmentController->addAttachment( part );
+  setModified( true );
 }
 //-----------------------------------------------------------------------------
 
