@@ -537,6 +537,9 @@ void SearchWindow::searchDone( KJob* job )
       mLbxMatches->setColumnWidth( 2, group.readEntry( "DateWidth", 120 ) );
       mLbxMatches->setColumnWidth( 3, group.readEntry( "FolderWidth", 100 ) );
       mLbxMatches->setColumnWidth( 4, 0 );
+      mLbxMatches->header()->setSortIndicator( 2, Qt::DescendingOrder );
+      mLbxMatches->header()->setStretchLastSection( false );
+      mLbxMatches->header()->setResizeMode( 3, QHeaderView::Stretch );
     } else {
       mResultModel->setCollection( mFolder );
       mLbxMatches->setModel( mResultModel );
