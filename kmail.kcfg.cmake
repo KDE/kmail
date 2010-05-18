@@ -92,9 +92,6 @@
       <entry name="WarnBeforeExpire" type="bool" key="warn-before-expire">
         <default>true</default>
       </entry>
-      <entry  name="DefaultDomain" type="String" key="Default domain">
-        <default></default>
-      </entry>
       <entry name="SystemTrayEnabled" type="Bool">
         <label>Enable system tray icon</label>
         <default>false</default>

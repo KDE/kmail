@@ -21,9 +21,10 @@
  */
 
 #include "addressvalidationjob.h"
-#include "aliasesexpandjob.h"
+#include <messagecomposer/aliasesexpandjob.h>
+using MessageComposer::AliasesExpandJob;
 
-#include "globalsettings.h"
+#include "messagecomposersettings.h"
 
 #include <klocale.h>
 #include <kmessagebox.h>
@@ -98,7 +99,7 @@ AddressValidationJob::~AddressValidationJob()
 
 void AddressValidationJob::start()
 {
-  AliasesExpandJob *job = new AliasesExpandJob( d->mEmailAddresses, GlobalSettings::defaultDomain(), this );
+  AliasesExpandJob *job = new AliasesExpandJob( d->mEmailAddresses, MessageComposer::MessageComposerSettings::defaultDomain(), this );
   connect( job, SIGNAL( result( KJob* ) ), SLOT( slotAliasExpansionDone( KJob* ) ) );
   job->start();
 }

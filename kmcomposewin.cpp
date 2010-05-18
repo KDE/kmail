@@ -27,7 +27,7 @@
 #include "messagecomposer/attachmentmodel.h"
 #include "attachmentview.h"
 #include "codecaction.h"
-#include "emailaddressresolvejob.h"
+#include <messagecomposer/emailaddressresolvejob.h>
 #include "kleo_util.h"
 #include "kmcommands.h"
 #include "kmcomposereditor.h"
@@ -2069,7 +2069,7 @@ void KMComposeWin::readyForSending()
   setEnabled( false );
 
   // first, expand all addresses
-  EmailAddressResolveJob *job = new EmailAddressResolveJob( this );
+  MessageComposer::EmailAddressResolveJob *job = new MessageComposer::EmailAddressResolveJob( this );
   job->setFrom( from() );
   job->setTo( recipientList( Recipient::To ) );
   job->setCc( recipientList( Recipient::Cc ) );
@@ -2090,7 +2090,7 @@ void KMComposeWin::slotEmailAddressResolved( KJob *job )
     return;
   }
 
-  const EmailAddressResolveJob *resolveJob = qobject_cast<EmailAddressResolveJob*>( job );
+  const MessageComposer::EmailAddressResolveJob *resolveJob = qobject_cast<MessageComposer::EmailAddressResolveJob*>( job );
   if( mSaveIn == KMComposeWin::None ) {
     mExpandedFrom = resolveJob->expandedFrom();
     mExpandedTo = resolveJob->expandedTo();

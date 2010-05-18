@@ -676,7 +676,7 @@ void AccountsPage::SendingTab::doLoadOther()
 {
   mSendMethodCombo->setCurrentIndex( MessageComposer::MessageComposerSettings::self()->sendImmediate() ? 0 : 1 );
   mConfirmSendCheck->setChecked( GlobalSettings::self()->confirmBeforeSend() );
-  QString defaultDomain = GlobalSettings::defaultDomain();
+  QString defaultDomain = MessageComposer::MessageComposerSettings::defaultDomain();
   if( defaultDomain.isEmpty() ) {
     defaultDomain = QHostInfo::localHostName();
   }
@@ -686,7 +686,7 @@ void AccountsPage::SendingTab::doLoadOther()
 void AccountsPage::SendingTab::save()
 {
   GlobalSettings::self()->setSendOnCheck( mSendOnCheckCombo->currentIndex() );
-  GlobalSettings::self()->setDefaultDomain( mDefaultDomainEdit->text() );
+  MessageComposer::MessageComposerSettings::self()->setDefaultDomain( mDefaultDomainEdit->text() );
   GlobalSettings::self()->setConfirmBeforeSend( mConfirmSendCheck->isChecked() );
   MessageComposer::MessageComposerSettings::self()->setSendImmediate( mSendMethodCombo->currentIndex() == 0 );
 }

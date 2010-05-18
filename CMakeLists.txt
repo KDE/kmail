@@ -135,8 +135,6 @@ set(kmailprivate_LIB_SRCS
    mdnadvicedialog.cpp
    kmsoundtestwidget.cpp
    addressvalidationjob.cpp
-   aliasesexpandjob.cpp
-   emailaddressresolvejob.cpp
 )
 
 soprano_add_ontology(kmailprivate_LIB_SRCS
