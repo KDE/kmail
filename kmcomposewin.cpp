@@ -1504,18 +1504,6 @@ QString KMComposeWin::subject() const
 }
 
 //-----------------------------------------------------------------------------
-QStringList KMComposeWin::recipientList( Recipient::Type type ) const
-{
-  QStringList selectedRecipients;
-  foreach( const Recipient &r, mRecipientsEditor->recipients() ) {
-    if ( r.type() == type ) {
-      selectedRecipients << r.email();
-    }
-  }
-  return selectedRecipients;
-}
-
-//-----------------------------------------------------------------------------
 QString KMComposeWin::to() const
 {
   return mRecipientsEditor->recipientString( Recipient::To );
@@ -2071,9 +2059,9 @@ void KMComposeWin::readyForSending()
   // first, expand all addresses
   MessageComposer::EmailAddressResolveJob *job = new MessageComposer::EmailAddressResolveJob( this );
   job->setFrom( from() );
-  job->setTo( recipientList( Recipient::To ) );
-  job->setCc( recipientList( Recipient::Cc ) );
-  job->setBcc( recipientList( Recipient::Bcc ) );
+  job->setTo( mRecipientsEditor->recipientStringList( Recipient::To ) );
+  job->setCc( mRecipientsEditor->recipientStringList( Recipient::Cc ) );
+  job->setBcc( mRecipientsEditor->recipientStringList( Recipient::Bcc ) );
   connect( job, SIGNAL( result( KJob* ) ), SLOT( slotEmailAddressResolved( KJob* ) ) );
   job->start();
 
@@ -2315,9 +2303,9 @@ void KMComposeWin::fillInfoPart( Message::InfoPart *infoPart, RecipientExpansion
     infoPart->setBcc( mExpandedBcc );
   } else {
     infoPart->setFrom( from() );
-    infoPart->setTo( recipientList( Recipient::To ) );
-    infoPart->setCc( recipientList( Recipient::Cc ) );
-    infoPart->setBcc( recipientList( Recipient::Bcc ) );
+    infoPart->setTo( mRecipientsEditor->recipientStringList( Recipient::To ) );
+    infoPart->setCc( mRecipientsEditor->recipientStringList( Recipient::Cc ) );
+    infoPart->setBcc( mRecipientsEditor->recipientStringList( Recipient::Bcc ) );
   }
   infoPart->setSubject( subject() );
   infoPart->setUserAgent( "KMail" );

@@ -530,7 +530,6 @@ class KMComposeWin : public KMail::Composer
     QString bcc() const;
     QString from() const;
     QString replyTo() const;
-    QStringList recipientList( Recipient::Type type ) const;
 
     /**
      * Use the given folder as sent-mail folder if the given folder exists.
