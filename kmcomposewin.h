@@ -107,7 +107,6 @@ namespace Message {
   class AttachmentModel;
   class GlobalPart;
   class InfoPart;
-  class TextPart;
   class SignatureController;
 }
 
