@@ -2233,4 +2233,3 @@ void KMFilterActionDict::insert( KMFilterActionNewFunc aNewFunc )
   delete action;
 }
 
-#include "kmfilteraction.moc"
