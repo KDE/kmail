@@ -3797,21 +3797,28 @@ void KMMainWidget::updateFolderMenu()
 {
   bool folderWithContent = mCurrentFolder && !mCurrentFolder->isStructural();
   bool multiFolder = mFolderTreeWidget->selectedCollections().count() > 1;
-  mFolderMailingListPropertiesAction->setEnabled( folderWithContent && !multiFolder &&
+  mFolderMailingListPropertiesAction->setEnabled( folderWithContent &&
+                                                  !multiFolder &&
                                                   !mCurrentFolder->isSystemFolder() );
   mCollectionProperties->setEnabled( folderWithContent );
-  mEmptyFolderAction->setEnabled( folderWithContent && ( mCurrentFolder->count() > 0 ) && mCurrentFolder->canDeleteMessages() && !multiFolder );
+
+  mEmptyFolderAction->setEnabled( folderWithContent
+                                  && ( mCurrentFolder->count() > 0 )
+                                  && mCurrentFolder->canDeleteMessages()
+                                  && !multiFolder );
   mEmptyFolderAction->setText( (mCurrentFolder && kmkernel->folderIsTrash(mCurrentFolder->collection()))
     ? i18n("E&mpty Trash") : i18n("&Move All Messages to Trash") );
   mRemoveFolderAction->setEnabled( mCurrentFolder
                                    && !multiFolder
                                    && ( mCurrentFolder->collection().rights() & Collection::CanDeleteCollection )
                                    && !mCurrentFolder->isSystemFolder()
-                                   && !mCurrentFolder->isStructural());
+                                   && folderWithContent);
 
   mRemoveFolderAction->setText( mCurrentFolder && mCurrentFolder->collection().resource() == QLatin1String( "akonadi_search_resource" ) ? i18n("&Delete Search") : i18n("&Delete Folder") );
-  mArchiveFolderAction->setEnabled( mCurrentFolder && !multiFolder && !mCurrentFolder->isStructural() );
-  mExpireFolderAction->setEnabled( mCurrentFolder && mCurrentFolder->isAutoExpire() && !multiFolder && mCurrentFolder->canDeleteMessages() && !mCurrentFolder->isStructural() );
+
+  mArchiveFolderAction->setEnabled( mCurrentFolder && !multiFolder && folderWithContent );
+
+  mExpireFolderAction->setEnabled( mCurrentFolder && mCurrentFolder->isAutoExpire() && !multiFolder && mCurrentFolder->canDeleteMessages() && folderWithContent );
   updateMarkAsReadAction();
   // the visual ones only make sense if we are showing a message list
   mPreferHtmlAction->setEnabled( mFolderTreeWidget->folderTreeView()->currentFolder().isValid() );
@@ -3820,7 +3827,7 @@ void KMMainWidget::updateFolderMenu()
   mPreferHtmlAction->setChecked( mHtmlPref ? !mFolderHtmlPref : mFolderHtmlPref );
   mPreferHtmlLoadExtAction->setChecked( mHtmlLoadExtPref ? !mFolderHtmlLoadExtPref : mFolderHtmlLoadExtPref );
   mRemoveDuplicatesAction->setEnabled( !multiFolder && mCurrentFolder && mCurrentFolder->canDeleteMessages() );
-  mShowFolderShortcutDialogAction->setEnabled( !multiFolder && mCurrentFolder && !mCurrentFolder->isStructural() );
+  mShowFolderShortcutDialogAction->setEnabled( !multiFolder && folderWithContent );
 }
 
 //-----------------------------------------------------------------------------
