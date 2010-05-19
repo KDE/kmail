@@ -322,9 +322,6 @@ class KMAIL_EXPORT KMMainWidget : public QWidget
     void slotEmptyFolder();
     void slotAddFavoriteFolder();
     void slotShowSelectedForderInPane();
-#if 0
-  void slotRefreshFolder();
-#endif
     void slotOverrideHtml();
     void slotOverrideHtmlLoadExt();
     void slotMessageQueuedOrDrafted();

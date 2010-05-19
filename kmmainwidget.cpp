@@ -1580,32 +1580,6 @@ void KMMainWidget::slotMarkAllAsRead()
   updateMessageActions();
 }
 
-#if 0
-//-----------------------------------------------------------------------------
-void KMMainWidget::slotRefreshFolder()
-{
-  if (mFolder)
-  {
-    if ( mFolder->folderType() == KMFolderTypeImap || mFolder->folderType() == KMFolderTypeCachedImap ) {
-      if ( !kmkernel->askToGoOnline() ) {
-        return;
-      }
-    }
-
-    if (mFolder->folderType() == KMFolderTypeImap)
-    {
-      KMFolderImap *imap = static_cast<KMFolderImap*>(mFolder->storage());
-      imap->getAndCheckFolder();
-    } else if ( mFolder->folderType() == KMFolderTypeCachedImap ) {
-      KMFolderCachedImap* f = static_cast<KMFolderCachedImap*>( mFolder->storage() );
-      f->account()->processNewMailInFolder( mFolder );
-    }
-  }
-}
-#endif
-
-
-
 //-----------------------------------------------------------------------------
 void KMMainWidget::slotExpireAll()
 {
