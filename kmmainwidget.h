@@ -315,7 +315,6 @@ class KMAIL_EXPORT KMMainWidget : public QWidget
     void slotShowFolderShortcutDialog();
     void slotExpireFolder();
     void slotExpireAll();
-    void slotInvalidateIMAPFolders();
     void slotMarkAllAsRead();
     void slotArchiveFolder();
     void slotRemoveFolder();
@@ -513,7 +512,7 @@ private:
       *mDeleteThreadAction, *mSaveAsAction, *mUseAction,
       *mSendAgainAction, *mApplyAllFiltersAction, *mFindInMessageAction,
       *mSaveAttachmentsAction, *mOpenAction, *mViewSourceAction,
-      *mRefreshImapCacheAction, *mMoveMsgToFolderAction, *mCollectionProperties;
+      *mMoveMsgToFolderAction, *mCollectionProperties;
     // Filter actions
     KActionMenu *mFilterMenu;
     KAction *mSubjectFilterAction, *mFromFilterAction, *mToFilterAction,

@@ -1605,19 +1605,6 @@ void KMMainWidget::slotRefreshFolder()
 #endif
 
 
-void KMMainWidget::slotInvalidateIMAPFolders() {
-  if ( KMessageBox::warningContinueCancel( this,
-          i18n("Are you sure you want to refresh the IMAP cache?\n"
-               "This will remove all changes that you have done "
-               "locally to your IMAP folders."),
-                                           i18n("Refresh IMAP Cache"), KGuiItem(i18n("&Refresh")) ) == KMessageBox::Continue ) {
-#if 0
-    //kmkernel->acctMgr()->invalidateIMAPFolders();
-#else
-    kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
-#endif
-  }
-}
 
 //-----------------------------------------------------------------------------
 void KMMainWidget::slotExpireAll()
@@ -2929,11 +2916,6 @@ void KMMainWidget::setupActions()
     KAction *action = new KAction(i18n("&Expire All Folders"), this);
     actionCollection()->addAction("expire_all_folders", action );
     connect(action, SIGNAL(triggered(bool) ), SLOT(slotExpireAll()));
-  }
-  {
-    mRefreshImapCacheAction = new KAction(KIcon("view-refresh"), i18n("&Refresh Local IMAP Cache"), this);
-    actionCollection()->addAction("file_invalidate_imap_cache", mRefreshImapCacheAction );
-    connect(mRefreshImapCacheAction, SIGNAL(triggered(bool) ), SLOT(slotInvalidateIMAPFolders()));
   }
   {
     KAction *action = new KAction(i18n("Empty All &Trash Folders"), this);
