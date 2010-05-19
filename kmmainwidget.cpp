@@ -3846,17 +3846,6 @@ void KMMainWidget::slotIntro()
 
 void KMMainWidget::slotShowStartupFolder()
 {
-#if 0
-  if ( mMainFolderView )
-  {
-    mMainFolderView->readConfig();
-    mMainFolderView->reload();
-    // get rid of old-folders
-    mMainFolderView->cleanupConfigFile();
-  }
-#else
-  kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
-#endif
   connect( kmkernel->filterMgr(), SIGNAL( filterListUpdated() ),
            this, SLOT( initializeFilterActions() ) );
 
