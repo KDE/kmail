@@ -115,6 +115,8 @@ protected slots:
   /** Update status line widget. */
   virtual void updateStatusLine(void);
 
+  void updateCollectionStatisticsFinished( KJob * job);
+
   virtual void slotClose();
   virtual void slotSearch();
   virtual void slotStop();

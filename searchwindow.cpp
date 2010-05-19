@@ -65,6 +65,7 @@ using namespace KPIM;
 #include <Akonadi/SearchCreateJob>
 #include <Akonadi/KMime/MessageModel>
 #include <akonadi/persistentsearchattribute.h>
+#include <Akonadi/CollectionStatisticsJob>
 
 #include <kmime/kmime_message.h>
 
@@ -390,12 +391,26 @@ void SearchWindow::setEnabledSearchButton( bool )
 //-----------------------------------------------------------------------------
 void SearchWindow::updateStatusLine()
 {
+  if ( mFolder.isValid() ) {
+    Akonadi::CollectionStatisticsJob *job = new Akonadi::CollectionStatisticsJob( mFolder );
+    connect( job, SIGNAL( result( KJob* ) ), SLOT( updateCollectionStatisticsFinished( KJob* ) ) );
+  }
+}
+
+void SearchWindow::updateCollectionStatisticsFinished( KJob * job)
+{
+    if ( job->error() )
+      kWarning() << job->errorText(); // TODO
+    else {
+      
     QString genMsg, detailMsg;
     int numMatches = 0;
-    if ( mFolder.isValid() ) {
-        numMatches = mFolder.statistics().count();
-    }
 
+    Akonadi::CollectionStatisticsJob *statisticsJob = qobject_cast<Akonadi::CollectionStatisticsJob*>( job );
+    const Akonadi::CollectionStatistics statistics = statisticsJob->statistics();
+    
+    numMatches = statistics.count();
+    
     if ( mFolder.isValid() && mSearchJob ) {
         if(!mStopped) {
             genMsg = i18nc( "Search finished.", "Done" );
@@ -412,8 +427,9 @@ void SearchWindow::updateStatusLine()
 
     mStatusBar->changeItem(genMsg, 0);
     mStatusBar->changeItem(detailMsg, 1);
-}
 
+    }
+}
 
 //-----------------------------------------------------------------------------
 void SearchWindow::keyPressEvent(QKeyEvent *evt)
