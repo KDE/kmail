@@ -3796,11 +3796,18 @@ void KMMainWidget::updateFolderMenu()
                                    && !mCurrentFolder->isSystemFolder()
                                    && folderWithContent);
 
-  mRemoveFolderAction->setText( mCurrentFolder && mCurrentFolder->collection().resource() == QLatin1String( "akonadi_search_resource" ) ? i18n("&Delete Search") : i18n("&Delete Folder") );
+  const bool isASearchFolder = mCurrentFolder && mCurrentFolder->collection().resource() == QLatin1String( "akonadi_search_resource" );
+  mRemoveFolderAction->setText( isASearchFolder ? i18n("&Delete Search") : i18n("&Delete Folder") );
 
   mArchiveFolderAction->setEnabled( mCurrentFolder && !multiFolder && folderWithContent );
 
-  mExpireFolderAction->setEnabled( mCurrentFolder && mCurrentFolder->isAutoExpire() && !multiFolder && mCurrentFolder->canDeleteMessages() && folderWithContent );
+  mExpireFolderAction->setEnabled( mCurrentFolder &&
+                                   mCurrentFolder->isAutoExpire() &&
+                                   !multiFolder &&
+                                   mCurrentFolder->canDeleteMessages() &&
+                                   folderWithContent &&
+                                   !isASearchFolder);
+
   updateMarkAsReadAction();
   // the visual ones only make sense if we are showing a message list
   mPreferHtmlAction->setEnabled( mFolderTreeWidget->folderTreeView()->currentFolder().isValid() );
