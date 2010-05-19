@@ -3767,16 +3767,11 @@ void KMMainWidget::updateMessageActions()
   actionCollection()->action( "go_prev_message" )->setEnabled( mails );
   actionCollection()->action( "go_prev_unread_message" )->setEnabled( enable_goto_unread );
   const qint64 nbMsgOutboxCollection = kmkernel->outboxCollectionFolder().statistics().count();
-  //TODO : don't know when statistic is not correct here.
-  //FIXME
-  //kDebug()<<" kmkernel->outboxCollectionFolder() :"<<kmkernel->outboxCollectionFolder();
-  //kDebug()<<" nbMsgOutboxCollection :"<<nbMsgOutboxCollection;
-#if 0
+
+  kDebug()<<" kmkernel->outboxCollectionFolder() :"<<kmkernel->outboxCollectionFolder();
+  kDebug()<<" nbMsgOutboxCollection :"<<nbMsgOutboxCollection;
   actionCollection()->action( "send_queued" )->setEnabled( nbMsgOutboxCollection > 0 );
   actionCollection()->action( "send_queued_via" )->setEnabled( nbMsgOutboxCollection > 0 );
-#else
-  kWarning() << "Fix enable/disable send_queued action";
-#endif
 
   slotUpdateOnlineStatus( static_cast<GlobalSettingsBase::EnumNetworkState::type>( GlobalSettings::self()->networkState() ) );
   if (action( "kmail_undo" ))
