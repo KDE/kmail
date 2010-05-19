@@ -57,11 +57,8 @@ public slots:
   void foldersChanged();
 
 private slots:
-#if 0
-  void updateNewMessageNotification(KMFolder * folder);
-#endif
   void selectedAccount(int);
-  void updateNewMessages();
+  void slotCollectionChanged( const Akonadi::Collection& );
   void slotActivated();
   void slotContextMenuAboutToShow();
 
@@ -70,9 +67,6 @@ protected:
   void showKMail();
   void buildPopupMenu();
   void updateCount();
-#if 0
-  QString prettyName(KMFolder *);
-#endif
 private:
 
   bool mParentVisible;

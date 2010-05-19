@@ -38,6 +38,8 @@
 #include <QObject>
 #include <QSignalMapper>
 
+#include <Akonadi/ChangeRecorder>
+
 #include <math.h>
 #include <assert.h>
 
@@ -93,19 +95,10 @@ KMSystemTray::KMSystemTray(QObject *parent)
            this, SLOT( slotActivated() ) );
   connect( contextMenu(), SIGNAL( aboutToShow() ),
            this, SLOT( slotContextMenuAboutToShow() ) );
-#if 0
-  connect( kmkernel->folderMgr(), SIGNAL(changed()), SLOT(foldersChanged()));
-  connect( kmkernel->searchFolderMgr(), SIGNAL(changed()), SLOT(foldersChanged()));
 
-#else
-    kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
-#endif
-#if 0
-  connect( kmkernel->acctMgr(), SIGNAL( checkedMail( bool, bool, const QMap<QString, int> & ) ),
-           SLOT( updateNewMessages() ) );
-#else
-  kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
-#endif
+  connect( kmkernel->monitor(), SIGNAL( collectionChanged( const Akonadi::Collection & ) ),
+           SLOT( slotCollectionChanged( const Akonadi::Collection& ) ) );
+
 }
 
 void KMSystemTray::buildPopupMenu()
@@ -343,38 +336,6 @@ void KMSystemTray::slotContextMenuAboutToShow()
 #endif
 }
 
-/**
- * Return the name of the folder in which the mail is deposited, prepended
- * with the account name if the folder is IMAP.
- */
-#if 0
-QString KMSystemTray::prettyName(KMFolder * fldr)
-{
-
-  QString rvalue = fldr->label();
-#if 0
-  if(fldr->folderType() == KMFolderTypeImap)
-  {
-#if 0 //TODO port to akonadi
-    KMFolderImap * imap = dynamic_cast<KMFolderImap*> (fldr->storage());
-    assert(imap);
-
-    if((imap->account() != 0) &&
-       (imap->account()->name() != 0) )
-    {
-      kDebug() << "IMAP folder, prepend label with type";
-      rvalue = imap->account()->name() + "->" + rvalue;
-    }
-#else
-    kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
-#endif
-  }
-
-  kDebug() << "Got label" << rvalue;
-#endif
-  return rvalue;
-}
-#endif
 
 bool KMSystemTray::mainWindowIsOnCurrentDesktop()
 {
@@ -481,7 +442,7 @@ void KMSystemTray::updateNewMessageNotification(KMFolder * fldr)
 }
 #endif
 
-void KMSystemTray::updateNewMessages()
+void KMSystemTray::slotCollectionChanged( const Akonadi::Collection& col)
 {
 #if 0
   for ( QMap<QPointer<KMFolder>, bool>::Iterator it1 = mPendingUpdates.begin();
