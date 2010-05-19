@@ -35,7 +35,6 @@
 #include "ui_customtemplates_base.h"
 #include "ui_miscpagemaintab.h"
 #include "ui_securitypagegeneraltab.h"
-#include "ui_identitypage.h"
 #include "ui_accountspagereceivingtab.h"
 
 class QPushButton;
@@ -117,29 +116,6 @@ public:
   }
 };
 
-
-class NewIdentityDialog : public KDialog
-{
-  Q_OBJECT
-
-public:
-  enum DuplicateMode { Empty, ControlCenter, ExistingEntry };
-
-  explicit NewIdentityDialog( const QStringList & identities,
-                     QWidget *parent=0 );
-
-  QString identityName() const { return mLineEdit->text(); }
-  QString duplicateIdentity() const { return mComboBox->currentText(); }
-  DuplicateMode duplicateMode() const;
-
-protected slots:
-  virtual void slotEnableOK( const QString & );
-
-private:
-  KLineEdit  *mLineEdit;
-  KComboBox  *mComboBox;
-  QButtonGroup *mButtonGroup;
-};
 
 #include <kvbox.h>
 class ConfigModule : public KCModule {

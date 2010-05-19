@@ -136,6 +136,7 @@ set(kmailprivate_LIB_SRCS
    kmsoundtestwidget.cpp
    addressvalidationjob.cpp
    identitypage.cpp
+   newidentitydialog.cpp
 )
 
 soprano_add_ontology(kmailprivate_LIB_SRCS

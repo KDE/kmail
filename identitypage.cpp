@@ -25,6 +25,7 @@
 #include "identitypage.h"
 
 #include "identitydialog.h"
+#include "newidentitydialog.h"
 #include "kmkernel.h"
 #include "globalsettings.h"
 
