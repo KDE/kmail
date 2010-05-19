@@ -116,7 +116,7 @@ void IdentityPage::slotNewIdentity()
   Q_ASSERT( !mIdentityDialog );
 
   MessageViewer::AutoQPointer<NewIdentityDialog> dialog( new NewIdentityDialog(
-      mIdentityManager->shadowIdentities(), this ) );
+      mIdentityManager, this ) );
   dialog->setObjectName( "new" );
 
   if ( dialog->exec() == QDialog::Accepted && dialog ) {

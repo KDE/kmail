@@ -23,13 +23,13 @@
 
 #include "newidentitydialog.h"
 
-#include "kmkernel.h"
-
 #include <kpimidentities/identitymanager.h>
 
 #include <KComboBox>
 #include <KLineEdit>
+#include <KLocalizedString>
 
+#include <QButtonGroup>
 #include <QHBoxLayout>
 #include <QLabel>
 #include <QRadioButton>
@@ -39,9 +39,9 @@
 
 using namespace KMail;
 
-NewIdentityDialog::NewIdentityDialog( const QStringList & identities,
-                                      QWidget *parent )
-  : KDialog( parent )
+NewIdentityDialog::NewIdentityDialog( KPIMIdentities::IdentityManager* manager, QWidget *parent )
+  : KDialog( parent ),
+  mIdentityManager( manager )
 {
   setCaption( i18n("New Identity") );
   setButtons( Ok|Cancel|Help );
@@ -88,7 +88,7 @@ NewIdentityDialog::NewIdentityDialog( const QStringList & identities,
   vlay->addLayout( hlay );
   mComboBox = new KComboBox( page );
   mComboBox->setEditable( false );
-  mComboBox->addItems( identities );
+  mComboBox->addItems( manager->shadowIdentities() );
   mComboBox->setEnabled( false );
   QLabel *label = new QLabel( i18n("&Existing identities:"), page );
   label->setBuddy( mComboBox );
@@ -127,7 +127,7 @@ void NewIdentityDialog::slotEnableOK( const QString & proposedIdentityName )
     return;
   }
   // or name doesn't yet exist.
-  if ( ! kmkernel->identityManager()->isUnique( name ) ) {
+  if ( !mIdentityManager->isUnique( name ) ) {
     enableButtonOk( false );
     return;
   }
