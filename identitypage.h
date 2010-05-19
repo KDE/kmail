@@ -30,6 +30,10 @@
 #include "configuredialog_p.h"
 #include "ui_identitypage.h"
 
+namespace KPIMIdentities {
+class IdentityManager;
+}
+
 namespace KMail {
   class IdentityDialog;
   class IdentityListView;
@@ -66,6 +70,7 @@ private: // methods
 private: // data members
   KMail::IdentityDialog   *mIdentityDialog;
   int                      mOldNumberOfIdentities;
+  KPIMIdentities::IdentityManager *mIdentityManager;
 
   Ui_IdentityPage mIPage;
 };

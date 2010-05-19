@@ -44,7 +44,8 @@ QString IdentityPage::helpAnchor() const
 
 IdentityPage::IdentityPage( const KComponentData &instance, QWidget *parent )
   : ConfigModule( instance, parent ),
-    mIdentityDialog( 0 )
+    mIdentityDialog( 0 ),
+    mIdentityManager( KMKernel::self()->identityManager() )
 {
   mIPage.setupUi( this );
 
@@ -74,12 +75,11 @@ IdentityPage::IdentityPage( const KComponentData &instance, QWidget *parent )
 
 void IdentityPage::load()
 {
-  KPIMIdentities::IdentityManager *im = kmkernel->identityManager();
-  mOldNumberOfIdentities = im->shadowIdentities().count();
+  mOldNumberOfIdentities = mIdentityManager->shadowIdentities().count();
   // Fill the list:
   mIPage.mIdentityList->clear();
   QTreeWidgetItem *item = 0;
-  for ( KPIMIdentities::IdentityManager::Iterator it = im->modifyBegin(); it != im->modifyEnd(); ++it ) {
+  for ( KPIMIdentities::IdentityManager::Iterator it = mIdentityManager->modifyBegin(); it != mIdentityManager->modifyEnd(); ++it ) {
     item = new IdentityListViewItem( mIPage.mIdentityList, item, *it );
   }
   if ( mIPage.mIdentityList->currentItem() ) {
@@ -91,8 +91,8 @@ void IdentityPage::save()
 {
   Q_ASSERT( !mIdentityDialog );
 
-  kmkernel->identityManager()->sort();
-  kmkernel->identityManager()->commit();
+  mIdentityManager->sort();
+  mIdentityManager->commit();
 
   if( mOldNumberOfIdentities < 2 && mIPage.mIdentityList->topLevelItemCount() > 1 ) {
     // have more than one identity, so better show the combo in the
@@ -114,9 +114,8 @@ void IdentityPage::slotNewIdentity()
 {
   Q_ASSERT( !mIdentityDialog );
 
-  KPIMIdentities::IdentityManager *im = kmkernel->identityManager();
   MessageViewer::AutoQPointer<NewIdentityDialog> dialog( new NewIdentityDialog(
-      im->shadowIdentities(), this ) );
+      mIdentityManager->shadowIdentities(), this ) );
   dialog->setObjectName( "new" );
 
   if ( dialog->exec() == QDialog::Accepted && dialog ) {
@@ -129,22 +128,22 @@ void IdentityPage::slotNewIdentity()
     switch ( dialog->duplicateMode() ) {
     case NewIdentityDialog::ExistingEntry:
       {
-        KPIMIdentities::Identity &dupThis = im->modifyIdentityForName( dialog->duplicateIdentity() );
-        im->newFromExisting( dupThis, identityName );
+        KPIMIdentities::Identity &dupThis = mIdentityManager->modifyIdentityForName( dialog->duplicateIdentity() );
+        mIdentityManager->newFromExisting( dupThis, identityName );
         break;
       }
     case NewIdentityDialog::ControlCenter:
-      im->newFromControlCenter( identityName );
+      mIdentityManager->newFromControlCenter( identityName );
       break;
     case NewIdentityDialog::Empty:
-      im->newFromScratch( identityName );
+      mIdentityManager->newFromScratch( identityName );
     default: ;
     }
 
     //
     // Insert into listview:
     //
-    KPIMIdentities::Identity &newIdent = im->modifyIdentityForName( identityName );
+    KPIMIdentities::Identity &newIdent = mIdentityManager->modifyIdentityForName( identityName );
     QTreeWidgetItem *item = 0;
     if ( mIPage.mIdentityList->selectedItems().size() > 0 ) {
       item = mIPage.mIdentityList->selectedItems()[0];
@@ -196,8 +195,7 @@ void IdentityPage::slotRemoveIdentity()
 {
   Q_ASSERT( !mIdentityDialog );
 
-  KPIMIdentities::IdentityManager *im = kmkernel->identityManager();
-  if ( im->shadowIdentities().count() < 2 ) {
+  if ( mIdentityManager->shadowIdentities().count() < 2 ) {
     kFatal() << "Attempted to remove the last identity!";
   }
 
@@ -215,7 +213,7 @@ void IdentityPage::slotRemoveIdentity()
                                           KGuiItem(i18n("&Remove"),
                                           "edit-delete") )
       == KMessageBox::Continue ) {
-    if ( im->removeIdentity( item->identity().identityName() ) ) {
+    if ( mIdentityManager->removeIdentity( item->identity().identityName() ) ) {
       delete item;
       if ( mIPage.mIdentityList->currentItem() ) {
         mIPage.mIdentityList->currentItem()->setSelected( true );
@@ -245,7 +243,7 @@ void IdentityPage::slotRenameIdentity( KMail::IdentityListViewItem *item , const
 
   QString newName = text.trimmed();
   if ( !newName.isEmpty() &&
-       !kmkernel->identityManager()->shadowIdentities().contains( newName ) ) {
+       !mIdentityManager->shadowIdentities().contains( newName ) ) {
     KPIMIdentities::Identity &ident = item->identity();
     ident.setIdentityName( newName );
     emit changed( true );
@@ -283,8 +281,7 @@ void IdentityPage::slotSetAsDefault()
     return;
   }
 
-  KPIMIdentities::IdentityManager *im = kmkernel->identityManager();
-  im->setAsDefault( item->identity().uoid() );
+  mIdentityManager->setAsDefault( item->identity().uoid() );
   refreshList();
 }
 
