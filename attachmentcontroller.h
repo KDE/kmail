@@ -36,7 +36,7 @@ class AttachmentModel;
 
 namespace KMail {
 
-class AttachmentController : public AttachmentControllerBase
+class AttachmentController : public Message::AttachmentControllerBase
 {
   Q_OBJECT
 
