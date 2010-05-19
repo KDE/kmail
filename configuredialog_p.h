@@ -214,48 +214,6 @@ private:
 
 //
 //
-// IdentityPage
-//
-//
-
-class KMAIL_EXPORT IdentityPage : public ConfigModule {
-  Q_OBJECT
-public:
-  explicit IdentityPage( const KComponentData &instance, QWidget *parent = 0 );
-  ~IdentityPage() {}
-
-  QString helpAnchor() const;
-
-  void load();
-  void save();
-
-private slots:
-  void slotNewIdentity();
-  void slotModifyIdentity();
-  void slotRemoveIdentity();
-  /** Connected to @p mRenameButton's clicked() signal. Just does a
-      QTreeWidget::editItem on the selected item */
-  void slotRenameIdentity();
-  /** connected to @p mIdentityList's renamed() signal. Validates the
-      new name and sets it in the KPIMIdentities::IdentityManager */
-  void slotRenameIdentity( KMail::IdentityListViewItem *, const QString & );
-  void slotContextMenu( KMail::IdentityListViewItem *, const QPoint & );
-  void slotSetAsDefault();
-  void slotIdentitySelectionChanged();
-
-private: // methods
-  void refreshList();
-
-private: // data members
-  KMail::IdentityDialog   *mIdentityDialog;
-  int                      mOldNumberOfIdentities;
-
-  Ui_IdentityPage mIPage;
-};
-
-
-//
-//
 // AccountsPage
 //
 //

@@ -23,6 +23,7 @@
 // This must be first
 #include "configuredialog.h"
 #include "configuredialog_p.h"
+#include "identitypage.h"
 #include <kcmodule.h>
 #include <kcomponentdata.h>
 
@@ -68,7 +69,7 @@ extern "C"
   KDE_EXPORT KCModule *create_kmail_config_identity( QWidget *parent, const char* )
   {
     KComponentData instance( "kcmkmail_config_identity" );
-    IdentityPage *page = new IdentityPage( instance, parent );
+    KMail::IdentityPage *page = new KMail::IdentityPage( instance, parent );
     page->setObjectName( "kcmkmail_config_identity" );
     return page;
   }
