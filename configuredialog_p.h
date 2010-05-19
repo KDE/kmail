@@ -8,6 +8,7 @@
 #include <config-enterprise.h>
 
 #include "kmail_export.h"
+#include "configmodule.h"
 
 #include <QPointer>
 #include <QString>
@@ -114,24 +115,6 @@ public:
   ComposerCryptoConfiguration( QWidget *parent ) : QWidget( parent ) {
     setupUi( this );
   }
-};
-
-
-#include <kvbox.h>
-class ConfigModule : public KCModule {
-  Q_OBJECT
-public:
-  explicit ConfigModule( const KComponentData &instance, QWidget *parent=0 )
-     : KCModule ( instance, parent )
-     {}
-  ~ConfigModule() {}
-
-  virtual void load() = 0;
-  virtual void save() = 0;
-  virtual void defaults() {}
-
-  /** Should return the help anchor for this page or tab */
-  virtual QString helpAnchor() const = 0;
 };
 
 
