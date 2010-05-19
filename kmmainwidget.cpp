@@ -1831,7 +1831,7 @@ void KMMainWidget::slotMoveSelectedMessageToFolder()
   dlg->setModal( true );
   dlg->setCaption(  i18n( "Move Messages to Folder" ) );
   if ( dlg->exec() && dlg ) {
-    Akonadi::Collection dest = dlg->selectedCollection();
+    const Akonadi::Collection dest = dlg->selectedCollection();
     if ( dest.isValid() ) {
       moveSelectedMessagesToFolder( dest );
     }
@@ -1887,7 +1887,7 @@ void KMMainWidget::slotCopySelectedMessagesToFolder()
   dlg->setCaption( i18n( "Copy Messages to Folder" ) );
 
   if ( dlg->exec() && dlg ) {
-    Akonadi::Collection dest = dlg->selectedCollection();
+    const Akonadi::Collection dest = dlg->selectedCollection();
     if ( dest.isValid() ) {
       copySelectedMessagesToFolder( dest );
     }
@@ -3494,7 +3494,7 @@ void KMMainWidget::slotAddFavoriteFolder()
   dlg = new FolderSelectionDialog( this, options );
   dlg->setCaption( i18n("Add Favorite Folder") );
   if ( dlg->exec() && dlg ) {
-    Akonadi::Collection collection = dlg->selectedCollection();
+    const Akonadi::Collection collection = dlg->selectedCollection();
     if ( collection.isValid() ) {
       mFavoritesModel->addCollection( collection );
     }
