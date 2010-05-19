@@ -3820,7 +3820,7 @@ void KMMainWidget::updateFolderMenu()
   mPreferHtmlAction->setChecked( mHtmlPref ? !mFolderHtmlPref : mFolderHtmlPref );
   mPreferHtmlLoadExtAction->setChecked( mHtmlLoadExtPref ? !mFolderHtmlLoadExtPref : mFolderHtmlLoadExtPref );
   mRemoveDuplicatesAction->setEnabled( !multiFolder && mCurrentFolder && mCurrentFolder->canDeleteMessages() );
-  mShowFolderShortcutDialogAction->setEnabled( !multiFolder && mCurrentFolder && !mCurrentFolder->isSystemFolder() && !mCurrentFolder->isStructural() );
+  mShowFolderShortcutDialogAction->setEnabled( !multiFolder && mCurrentFolder && !mCurrentFolder->isStructural() );
 }
 
 //-----------------------------------------------------------------------------
