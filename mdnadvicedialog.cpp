@@ -28,6 +28,8 @@
 #include <messageviewer/kcursorsaver.h>
 #include <boost/shared_ptr.hpp>
 
+using MessageComposer::MessageFactory;
+
 static const struct {
   const char * dontAskAgainID;
   bool         canDeny;

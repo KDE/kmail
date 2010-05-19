@@ -80,7 +80,6 @@
 #include "messageviewer/objecttreeparser.h"
 #include "messageviewer/csshelper.h"
 #include "messageviewer/util.h"
-//using KMail::FolderJob;
 #include "messageviewer/mailsourceviewer.h"
 #include "kmreadermainwin.h"
 #include "secondarywindow.h"
@@ -118,6 +117,7 @@ using KMail::RedirectDialog;
 #include "messagecomposer/messagehelper.h"
 #include "messagecomposer/messagecomposersettings.h"
 #include "messagecomposer/messagefactory.h"
+using MessageComposer::MessageFactory;
 
 #include "progressmanager.h"
 using KPIM::ProgressManager;

@@ -25,6 +25,7 @@ using KMail::RegExpLineEdit;
 
 #include "messagecomposer/messagesender.h"
 #include "messagecomposer/messagefactory.h"
+using MessageComposer::MessageFactory;
 #include "messagecomposer/messageinfo.h"
 
 #include "templateparser/customtemplates.h"

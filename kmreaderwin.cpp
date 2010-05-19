@@ -62,6 +62,7 @@ using namespace MessageViewer;
 #include "messageviewer/attachmentstrategy.h"
 #include "messagecomposer/messagesender.h"
 #include "messagecomposer/messagefactory.h"
+using MessageComposer::MessageFactory;
 
 #include "messagecore/messagehelpers.h"
 
