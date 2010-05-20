@@ -247,10 +247,14 @@ SearchWindow::SearchWindow(KMMainWidget* w, const Akonadi::Collection& curFolder
     mAkonadiStandardAction->setItemSelectionModel( mLbxMatches->selectionModel() );
   } else {
     mSearchFolderEdt->setText( i18n("Last Search") );
-    // TODO find last search and set mFolder to it?
-    // Might not be what the user expects and is not what
-    // kmail1 did.
+    // find last search and reuse it if possible
+    mFolder = KMKernel::self()->collectionFromId( GlobalSettings::lastSearchCollectionId() );
+    // when the last folder got renamed, create a new one
+    if ( mFolder.isValid() && mFolder.name() != mSearchFolderEdt->text() ) {
+      mFolder = Akonadi::Collection();
+    }
   }
+
   mSearchFolderLbl->setBuddy(mSearchFolderEdt);
   mSearchFolderOpenBtn = new KPushButton(i18n("Op&en Search Folder"), searchWidget);
   mSearchFolderOpenBtn->setEnabled(false);
@@ -506,6 +510,8 @@ void SearchWindow::slotSearch()
   kDebug() << searchPattern.asSparqlQuery();
 
   if ( !mFolder.isValid() ) {
+    // FIXME if another app created a virtual 'Last Search' folder without
+    // out custom attributes it will result in problems
     mSearchJob = new Akonadi::SearchCreateJob( mSearchFolderEdt->text(), searchPattern.asSparqlQuery(), this );
   } else {
     Akonadi::PersistentSearchAttribute *psa = mFolder.attribute<Akonadi::PersistentSearchAttribute>();
@@ -527,7 +533,13 @@ void SearchWindow::searchDone( KJob* job )
     } else if ( Akonadi::CollectionModifyJob *mj = qobject_cast<Akonadi::CollectionModifyJob*>( mSearchJob ) ) {
       mFolder = mj->collection();
     }
+    /// TODO: cope better with cases where this fails
+    Q_ASSERT( mFolder.isValid() );
     Q_ASSERT( mFolder.hasAttribute<Akonadi::PersistentSearchAttribute>() );
+
+    GlobalSettings::setLastSearchCollectionId( mFolder.id() );
+    GlobalSettings::self()->writeConfig();
+    GlobalSettings::self()->requestSync();
 
     // store the kmail specific serialization of the search in an attribute on
     // the server, for easy retrieval when editing it again

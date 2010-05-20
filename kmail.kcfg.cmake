@@ -434,4 +434,9 @@
     <entry name="FavoriteFolderViewSeenInboxes" type="IntList"/>
   </group>
 
+ <group name="Search">
+   <entry name="LastSearchCollectionId" type="LongLong">
+     <default>-1</default>
+   </entry>
+ </group>
 </kcfg>
