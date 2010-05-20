@@ -34,8 +34,12 @@
 
 #include <kpimidentities/identitymanager.h>
 #include <kpimidentities/identity.h>
-#include "kmkernel.h"
 
+#ifndef KCM_KPIMIDENTITIES_STANDALONE
+#include "kmkernel.h"
+#endif
+
+#include <KDebug>
 #include <KLocale> // i18n
 #include <KIconLoader> // SmallIcon
 
@@ -68,7 +72,7 @@ namespace KMail {
 
   KPIMIdentities::Identity & IdentityListViewItem::identity() const 
   {
-    KPIMIdentities::IdentityManager *im = kmkernel->identityManager();
+    KPIMIdentities::IdentityManager *im = qobject_cast<IdentityListView*>( treeWidget() )->identityManager();
     Q_ASSERT( im );
     return im->modifyIdentityForUoid( mUOID );
   }
@@ -105,7 +109,8 @@ namespace KMail {
   //
 
   IdentityListView::IdentityListView( QWidget *parent )
-    : QTreeWidget( parent )
+    : QTreeWidget( parent ),
+      mIdentityManager( 0 )
   {
     setDragEnabled( true );
     setAcceptDrops( true );
@@ -183,6 +188,17 @@ namespace KMail {
     item->identity().populateMimeData( md );
     drag->setPixmap( SmallIcon("user-identity") );
     drag->start();
+  }
+
+  KPIMIdentities::IdentityManager* IdentityListView::identityManager() const
+  {
+    Q_ASSERT( mIdentityManager );
+    return mIdentityManager;
+  }
+
+  void IdentityListView::setIdentityManager(KPIMIdentities::IdentityManager* im)
+  {
+    mIdentityManager = im;
   }
 
 } // namespace KMail

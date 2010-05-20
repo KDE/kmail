@@ -44,6 +44,7 @@ add_subdirectory(icons)
 add_subdirectory(avscripts)
 add_subdirectory(tests)
 add_subdirectory(kconf_update)
+add_subdirectory(kcm_kpimidentities)
 
 ########### kmailprivate ###############
 

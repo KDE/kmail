@@ -36,7 +36,8 @@
 #include <QTreeWidget>
 #include <QTreeWidgetItem>
 
-namespace KPIMIdentities { class Identity; }
+namespace KPIMIdentities { class Identity; class IdentityManager;
+}
 
 namespace KMail {
 
@@ -69,11 +70,13 @@ namespace KMail {
   class IdentityListView : public QTreeWidget {
     Q_OBJECT
   public:
-    IdentityListView( QWidget *parent = 0 );
+    explicit IdentityListView( QWidget *parent = 0 );
     virtual ~IdentityListView() {}
 
   public:
     void editItem( QTreeWidgetItem *item, int column = 0 );
+    KPIMIdentities::IdentityManager *identityManager() const;
+    void setIdentityManager( KPIMIdentities::IdentityManager* im );
 
   protected slots:
     void commitData( QWidget *editor );
@@ -87,6 +90,9 @@ namespace KMail {
 
   protected:
     virtual void startDrag ( Qt::DropActions supportedActions );
+
+  private:
+    KPIMIdentities::IdentityManager* mIdentityManager;
   };
 
 

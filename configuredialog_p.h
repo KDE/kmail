@@ -81,9 +81,6 @@ class InvitationSettings;
 }
 
 namespace KMail {
-  class IdentityDialog;
-  class IdentityListView;
-  class IdentityListViewItem;
   class Tag;
   typedef QSharedPointer<Tag> TagPtr;
 }

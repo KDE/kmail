@@ -35,10 +35,12 @@
 #include "xfaceconfigurator.h"
 #include "folderrequester.h"
 using KMail::FolderRequester;
+#ifndef KCM_KPIMIDENTITIES_STANDALONE
+#include "kmkernel.h"
+#endif
 
 #include "addressvalidationjob.h"
 #include "kleo_util.h"
-#include "kmmainwidget.h"
 #include "stringutil.h"
 #include "templatesconfiguration.h"
 #include "templatesconfiguration_kfg.h"
@@ -367,6 +369,7 @@ namespace KMail {
     label->setBuddy( mDictionaryCombo );
     glay->addWidget( label, row, 0 );
 
+#ifndef KCM_KPIMIDENTITIES_STANDALONE // ### folder requester is too integrated into KMail atm
     // "Sent-mail Folder" combo box and label:
     ++row;
     mFccCombo = new FolderRequester( tab );
@@ -393,6 +396,7 @@ namespace KMail {
     label = new QLabel( i18n("&Templates folder:"), tab );
     label->setBuddy( mTemplatesCombo );
     glay->addWidget( label, row, 0 );
+#endif
 
     // "Special transport" combobox and label:
     ++row;
@@ -455,9 +459,11 @@ namespace KMail {
     mXFaceConfigurator->layout()->setMargin( KDialog::marginHint() );
     tabWidget->addTab( mXFaceConfigurator, i18n("Picture") );
 
+#ifndef KCM_KPIMIDENTITIES_STANDALONE
     KConfigGroup geometry( KMKernel::config(), "Geometry" );
     if ( geometry.hasKey( "Identity Dialog size" ) )
       resize( geometry.readEntry( "Identity Dialog size", QSize() ));
+#endif
     mNameEdit->setFocus();
 
     connect( tabWidget, SIGNAL(currentChanged(QWidget*)),
@@ -466,8 +472,10 @@ namespace KMail {
   }
 
   IdentityDialog::~IdentityDialog() {
+#ifndef KCM_KPIMIDENTITIES_STANDALONE
     KConfigGroup geometry( KMKernel::config(), "Geometry" );
     geometry.writeEntry( "Identity Dialog size", size() );
+#endif
   }
 
   void IdentityDialog::slotAboutToShow( QWidget * w ) {
@@ -622,12 +630,15 @@ namespace KMail {
   }
 
   bool IdentityDialog::checkFolderExists( const QString & folderID,
-                                          const QString & msg ) {
+                                          const QString & msg )
+  {
+#ifndef KCM_KPIMIDENTITIES_STANDALONE
     Akonadi::Collection folder = kmkernel->collectionFromId( folderID );
     if ( !folder.isValid() ) {
       KMessageBox::sorry( this, msg );
       return false;
     }
+#endif
     return true;
   }
 
@@ -661,6 +672,7 @@ namespace KMail {
       mTransportCombo->setCurrentTransport( transport->id() );
     mDictionaryCombo->setCurrentByDictionaryName( ident.dictionary() );
 
+#ifndef KCM_KPIMIDENTITIES_STANDALONE
     if ( ident.fcc().isEmpty() ||
          !checkFolderExists( ident.fcc(),
                              i18n("The custom sent-mail folder for identity "
@@ -696,6 +708,7 @@ namespace KMail {
     }
     else
       mTemplatesCombo->setFolder( ident.templates() );
+#endif
 
     // "Templates" tab:
     uint identity = ident.uoid();
@@ -730,12 +743,14 @@ namespace KMail {
     ident.setTransport( ( mTransportCheck->isChecked() ) ?
                           mTransportCombo->currentText() : QString() );
     ident.setDictionary( mDictionaryCombo->currentDictionaryName() );
+#ifndef KCM_KPIMIDENTITIES_STANDALONE
     ident.setFcc( mFccCombo->folderCollection().isValid() ?
                   QString::number( mFccCombo->folderCollection().id() ) : QString() );
     ident.setDrafts( mDraftsCombo->folderCollection().isValid() ?
                      QString::number( mDraftsCombo->folderCollection().id() ) : QString() );
     ident.setTemplates( mTemplatesCombo->folderCollection().isValid() ?
                         QString::number( mTemplatesCombo->folderCollection().id() ) : QString() );
+#endif
 
     // "Templates" tab:
     uint identity = ident.uoid();

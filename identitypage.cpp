@@ -26,13 +26,16 @@
 
 #include "identitydialog.h"
 #include "newidentitydialog.h"
+#ifndef KCM_KPIMIDENTITIES_STANDALONE
 #include "kmkernel.h"
 #include "globalsettings.h"
+#endif
 
 #include <messageviewer/autoqpointer.h>
 #include <kpimidentities/identity.h>
 #include <kpimidentities/identitymanager.h>
 
+#include <KDebug>
 #include <KMessageBox>
 #include <QMenu>
 
@@ -46,9 +49,14 @@ QString IdentityPage::helpAnchor() const
 IdentityPage::IdentityPage( const KComponentData &instance, QWidget *parent )
   : ConfigModule( instance, parent ),
     mIdentityDialog( 0 ),
+#ifndef KCM_KPIMIDENTITIES_STANDALONE
     mIdentityManager( KMKernel::self()->identityManager() )
+#else
+    mIdentityManager( new KPIMIdentities::IdentityManager )
+#endif
 {
   mIPage.setupUi( this );
+  mIPage.mIdentityList->setIdentityManager( mIdentityManager );
 
   connect( mIPage.mIdentityList, SIGNAL( itemSelectionChanged() ),
            SLOT( slotIdentitySelectionChanged() ) );
@@ -74,6 +82,13 @@ IdentityPage::IdentityPage( const KComponentData &instance, QWidget *parent )
            this, SLOT( slotSetAsDefault() ) );
 }
 
+IdentityPage::~IdentityPage()
+{
+#ifndef KCM_KPIMIDENTITIES_STANDALONE
+  delete mIdentityManager;
+#endif
+}
+
 void IdentityPage::load()
 {
   mOldNumberOfIdentities = mIdentityManager->shadowIdentities().count();
@@ -95,6 +110,7 @@ void IdentityPage::save()
   mIdentityManager->sort();
   mIdentityManager->commit();
 
+#ifndef KCM_KPIMIDENTITIES_STANDALONE
   if( mOldNumberOfIdentities < 2 && mIPage.mIdentityList->topLevelItemCount() > 1 ) {
     // have more than one identity, so better show the combo in the
     // composer now:
@@ -109,6 +125,7 @@ void IdentityPage::save()
     showHeaders &= ~KMail::Composer::HDR_IDENTITY;
     GlobalSettings::self()->setHeaders( showHeaders );
   }
+#endif
 }
 
 void IdentityPage::slotNewIdentity()
