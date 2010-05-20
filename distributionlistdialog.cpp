@@ -199,6 +199,15 @@ void DistributionListDialog::slotUser1()
     return;
   }
 
+  // FIXME: Ask the user which resource to save to instead of the default
+  // Ask for a save ticket here, we use it for inserting the recipients into the addressbook and
+  // also for saving the addressbook, see https://issues.kolab.org/issue4281
+  KABC::Ticket *ticket = ab->requestSaveTicket( 0 /*default resource */ );
+  if ( !ticket ) {
+    kdWarning(5006) << "Unable to get save ticket!" << endl;
+    return;
+  }
+
 #ifdef KDEPIM_NEW_DISTRLISTS
   KPIM::DistributionList dlist;
   dlist.setName( name );
@@ -241,24 +250,14 @@ void DistributionListDialog::slotUser1()
   }
 #endif
 
-  // FIXME: Ask the user which resource to save to instead of the default
-  bool saveError = true;
-  KABC::Ticket *ticket = ab->requestSaveTicket( 0 /*default resource */ );
-  if ( ticket ) {
-    if ( ab->save( ticket ) ) {
-      saveError = false;
-    }
-    else {
-      ab->releaseSaveTicket( ticket );
-    }
-  }
-
-  if ( saveError )
+  if ( !ab->save( ticket ) ) {
     kdWarning(5006) << k_funcinfo << " Couldn't save new addresses in the distribution list just created to the address book" << endl;
+    ab->releaseSaveTicket( ticket );
+    return;
+  }
 
 #ifndef KDEPIM_NEW_DISTRLISTS
   manager.save();
 #endif
-
   accept();
 }
