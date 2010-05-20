@@ -2839,7 +2839,8 @@ void KMComposeWin::slotPasteAsAttachment()
       part->setName( attName );
       part->setFileName( attName );
       part->setMimeType( "text/plain" );
-      part->setData( QApplication::clipboard()->text().toLatin1() );
+      part->setCharset( "utf-8" );
+      part->setData( QApplication::clipboard()->text().toUtf8() );
       mAttachmentController->addAttachment( part );
     }
   }
