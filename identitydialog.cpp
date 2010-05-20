@@ -183,6 +183,7 @@ namespace KMail {
     glay->setColumnStretch( 1, 1 );
 
     // "OpenPGP Signature Key" requester and label:
+#ifndef KCM_KPIMIDENTITIES_STANDALONE
     ++row;
     mPGPSigningKeyRequester = new Kleo::SigningKeyRequester( false, Kleo::SigningKeyRequester::OpenPGP, tab );
     mPGPSigningKeyRequester->dialogButton()->setText( i18n("Chang&e...") );
@@ -286,6 +287,7 @@ namespace KMail {
 
     label->setEnabled( smimeProtocol );
     mSMIMEEncryptionKeyRequester->setEnabled( smimeProtocol );
+#endif
 
     // "Preferred Crypto Message Format" combobox and label:
     ++row;
@@ -483,10 +485,12 @@ namespace KMail {
       // set the configured email address as initial query of the key
       // requesters:
       const QString email = mEmailEdit->text().trimmed();
+#ifndef KCM_KPIMIDENTITIES_STANDALONE
       mPGPEncryptionKeyRequester->setInitialQuery( email );
       mPGPSigningKeyRequester->setInitialQuery( email );
       mSMIMEEncryptionKeyRequester->setInitialQuery( email );
       mSMIMESigningKeyRequester->setInitialQuery( email );
+#endif
     }
   }
 
@@ -563,6 +567,7 @@ namespace KMail {
 
     const QString email = validationJob->property( "email" ).toString();
 
+#ifndef KCM_KPIMIDENTITIES_STANDALONE
     const std::vector<GpgME::Key> &pgpSigningKeys =
       mPGPSigningKeyRequester->keys();
     const std::vector<GpgME::Key> &pgpEncryptionKeys =
@@ -614,6 +619,7 @@ namespace KMail {
         return;
       }
     }
+#endif
 
 
     if ( mSignatureConfigurator->isSignatureEnabled() &&
@@ -652,10 +658,12 @@ namespace KMail {
     mEmailEdit->setText( ident.emailAddr() );
 
     // "Cryptography" tab:
+#ifndef KCM_KPIMIDENTITIES_STANDALONE
     mPGPSigningKeyRequester->setFingerprint( ident.pgpSigningKey() );
     mPGPEncryptionKeyRequester->setFingerprint( ident.pgpEncryptionKey() );
     mSMIMESigningKeyRequester->setFingerprint( ident.smimeSigningKey() );
     mSMIMEEncryptionKeyRequester->setFingerprint( ident.smimeEncryptionKey() );
+#endif
 
     mPreferredCryptoMessageFormat->setCurrentIndex( format2cb(
        Kleo::stringToCryptoMessageFormat( ident.preferredCryptoMessageFormat() ) ) );
@@ -730,6 +738,7 @@ namespace KMail {
     ident.setOrganization( mOrganizationEdit->text() );
     QString email = mEmailEdit->text();
     ident.setEmailAddr( email );
+#ifndef KCM_KPIMIDENTITIES_STANDALONE
     // "Cryptography" tab:
     ident.setPGPSigningKey( mPGPSigningKeyRequester->fingerprint().toLatin1() );
     ident.setPGPEncryptionKey( mPGPEncryptionKeyRequester->fingerprint().toLatin1() );
@@ -737,6 +746,7 @@ namespace KMail {
     ident.setSMIMEEncryptionKey( mSMIMEEncryptionKeyRequester->fingerprint().toLatin1() );
     ident.setPreferredCryptoMessageFormat(
        Kleo::cryptoMessageFormatToString(cb2format( mPreferredCryptoMessageFormat->currentIndex() ) ) );
+#endif
     // "Advanced" tab:
     ident.setReplyToAddr( mReplyToEdit->text() );
     ident.setBcc( mBccEdit->text() );
