@@ -1210,6 +1210,7 @@ void KMKernel::slotSyncConfig()
   MessageComposer::MessageComposerSettings::self()->writeConfig();
   TemplateParser::GlobalSettings::self()->writeConfig();
   MessageList::Core::Settings::self()->writeConfig();
+  GlobalSettings::self()->writeConfig();
   KMKernel::config()->sync();
 }
 
