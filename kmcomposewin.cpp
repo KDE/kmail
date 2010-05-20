@@ -44,7 +44,7 @@
 #include "messagecore/attachmentcollector.h"
 #include "util.h"
 #include "snippetwidget.h"
-#include "keyresolver.h"
+#include <messagecomposer/keyresolver.h>
 #include "templatesconfiguration_kfg.h"
 #include "foldercollectionmonitor.h"
 

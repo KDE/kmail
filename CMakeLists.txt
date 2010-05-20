@@ -112,7 +112,6 @@ set(kmailprivate_LIB_SRCS
    filterlogdlg.cpp
    codecaction.cpp
    codecmanager.cpp
-   keyresolver.cpp
    regexplineedit.cpp
    rulewidgethandlermanager.cpp
    expirejob.cpp
