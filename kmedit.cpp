@@ -913,4 +913,23 @@ void KMEdit::setCursorPositionFromStart( unsigned int pos ) {
   ensureCursorVisible();
 }
 
+int KMEdit::indexOfCurrentLineStart( int paragraph, int index )
+{
+  Q_ASSERT( paragraph >= 0 && paragraph < paragraphs() );
+  Q_ASSERT( index >= 0 && index < paragraphLength( paragraph ) );
+
+  kdDebug(5006) << "indexOfCurrentLineStart(): para=" << paragraph << " index=" << index << endl;
+  const int startLine = lineOfChar( paragraph, index );
+  Q_ASSERT( startLine >= 0 && startLine < linesOfParagraph( paragraph ) );
+  kdDebug(5006) << "indexOfCurrentLineStart(): startLine=" << startLine << endl;
+  for ( int curIndex = index; curIndex >= 0; curIndex-- ) {
+    const int line = lineOfChar( paragraph, curIndex );
+    if ( line != startLine ) {
+      kdDebug(5006) << "At index " << curIndex << ", the current line changed to " << line << endl;
+      return curIndex + 1;
+    }
+  }
+  return 0;
+}
+
 #include "kmedit.moc"

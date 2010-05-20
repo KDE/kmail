@@ -115,6 +115,8 @@ public:
   /** set cursor to absolute position pos */
   void setCursorPositionFromStart(unsigned int pos);
 
+  int indexOfCurrentLineStart( int paragraph, int index );
+
 signals:
   void spellcheck_done(int result);
   void attachPNGImageData(const QByteArray &image);

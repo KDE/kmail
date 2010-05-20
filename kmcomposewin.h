@@ -730,7 +730,7 @@ private:
    * Helper to insert the signature of the current identy at the
    * beginning or end of the editor.
    */
-  void insertSignature( SignaturePlacement placement = Append, int pos = 0 );
+  void insertSignature( SignaturePlacement placement = Append );
 private slots:
    /**
     * Compress an attachemnt with the given index

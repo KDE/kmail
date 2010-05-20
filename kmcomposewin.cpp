@@ -4488,11 +4488,11 @@ void KMComposeWin::slotPrependSignature()
 //----------------------------------------------------------------------------
 void KMComposeWin::slotInsertSignatureAtCursor()
 {
-    insertSignature( AtCursor, mEditor->currentLine() );
+    insertSignature( AtCursor );
 }
 
 //----------------------------------------------------------------------------
-void KMComposeWin::insertSignature( SignaturePlacement placement, int pos )
+void KMComposeWin::insertSignature( SignaturePlacement placement )
 {
    bool mod = mEditor->isModified();
 
@@ -4505,27 +4505,34 @@ void KMComposeWin::insertSignature( SignaturePlacement placement, int pos )
    if( !mOldSigText.isEmpty() )
    {
     mEditor->sync();
+    int paragraph, index;
+    mEditor->getCursorPosition( &paragraph, &index );
+    index = mEditor->indexOfCurrentLineStart( paragraph, index );
+
     switch( placement ) {
       case Append:
         mEditor->setText( mEditor->text() + mOldSigText );
         break;
       case Prepend:
         mOldSigText = "\n\n" + mOldSigText + "\n";
-        mEditor->insertAt( mOldSigText, pos, 0 );
+        mEditor->insertAt( mOldSigText, paragraph, index );
         break;
       case AtCursor:
 
         // If there is text in the same line, add a newline so that the stuff in
         // the current line moves after the signature. Also remove a leading newline, it is not
         // needed here.
-        int index, paragraph;
-        mEditor->getCursorPosition( &paragraph, &index );
         if ( mEditor->paragraphLength( paragraph ) > 0 )
           mOldSigText = mOldSigText + "\n";
         if ( mOldSigText.startsWith( "\n" ) )
           mOldSigText = mOldSigText.remove( 0, 1 );
 
-        mEditor->insertAt( mOldSigText, pos, 0 );
+        // If we are inserting into a wordwrapped line, add a newline at the start to make
+        // the text edit hard-wrap the line here
+        if ( index != 0 )
+          mOldSigText = "\n" + mOldSigText;
+
+        mEditor->insertAt( mOldSigText, paragraph, index );
         break;
     }
     mEditor->update();
@@ -4541,7 +4548,12 @@ void KMComposeWin::insertSignature( SignaturePlacement placement, int pos )
     } else {
       // for append and prepend, move the cursor to 0,0, for insertAt,
       // keep it in the same row, but move to first column
-      mEditor->setCursorPosition( pos, 0 );
+      if ( index == 0 ) {
+        mEditor->setCursorPosition( paragraph, 0 );
+      } else {
+        // For word-wrapped lines, we have created a new paragraph, so change to that one
+        mEditor->setCursorPosition( paragraph + 1, 0 );
+      }
       if ( placement == Prepend || placement == Append )
         mEditor->setContentsPos( 0, 0 );
     }
