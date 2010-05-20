@@ -5,6 +5,7 @@ if (KDEPIM_MOBILE_UI)
 include_directories( ${CMAKE_CURRENT_SOURCE_DIR}/.. )
 add_definitions( -DKCM_KPIMIDENTITIES_STANDALONE )
 set(kcm_identities_srcs
+  kcm_kpimidentities.cpp
   ../addressvalidationjob.cpp
   ../identitypage.cpp
   ../identitydialog.cpp
@@ -29,5 +30,8 @@ target_link_libraries(kcm_kpimidentities
   kleo
   kdepim
 )
+
+install(FILES kcm_kpimidentities.desktop DESTINATION ${SERVICES_INSTALL_DIR})
+install(TARGETS kcm_kpimidentities DESTINATION ${PLUGIN_INSTALL_DIR})
 
 endif (KDEPIM_MOBILE_UI)

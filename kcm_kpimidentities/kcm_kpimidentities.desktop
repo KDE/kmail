@@ -1,0 +1,14 @@
+[Desktop Entry]
+Icon=user-identity
+Type=Service
+X-KDE-ServiceTypes=KCModule
+
+X-KDE-ModuleType=Library
+X-KDE-Library=kcm_kpimidentities
+X-KDE-FactoryName=kcm_kpimidentities
+X-KDE-HasReadOnlyMode=false
+X-DocPath=kmail/index.html#configure-identity
+
+Name=Identities
+Comment=Manage Identities
+X-KDE-Keywords=kmail,identity
