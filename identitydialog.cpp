@@ -416,7 +416,6 @@ namespace KMail {
     // Tab Widget: Templates
     //
     tab = new QWidget( tabWidget );
-    tabWidget->addTab( tab, i18n("Templates") );
     vlay = new QVBoxLayout( tab );
     vlay->setMargin( marginHint() );
     vlay->setSpacing( spacingHint() );
@@ -449,6 +448,11 @@ namespace KMail {
              mCopyGlobal, SLOT(setEnabled( bool )) );
     connect( mCopyGlobal, SIGNAL(clicked()),
              this, SLOT(slotCopyGlobal()) );
+#ifdef KDEPIM_MOBILE_UI
+    tab->hide(); // not yet mobile ready
+#else
+    tabWidget->addTab( tab, i18n("Templates") );
+#endif
 
     //
     // Tab Widget: Signature
@@ -457,9 +461,16 @@ namespace KMail {
     mSignatureConfigurator->layout()->setMargin( KDialog::marginHint() );
     tabWidget->addTab( mSignatureConfigurator, i18n("Signature") );
 
+    //
+    // Tab Widget: Picture
+    //
     mXFaceConfigurator = new XFaceConfigurator( tabWidget );
     mXFaceConfigurator->layout()->setMargin( KDialog::marginHint() );
+#ifdef KDEPIM_MOBILE_UI
+    mXFaceConfigurator->hide(); // not yet mobile ready
+#else
     tabWidget->addTab( mXFaceConfigurator, i18n("Picture") );
+#endif
 
 #ifndef KCM_KPIMIDENTITIES_STANDALONE
     KConfigGroup geometry( KMKernel::config(), "Geometry" );
