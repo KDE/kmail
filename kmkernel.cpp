@@ -1569,15 +1569,18 @@ Akonadi::Collection KMKernel::findFolderCollectionById( const QString& idString 
 Akonadi::Collection KMKernel::collectionFromId( const QString &idString ) const
 {
   bool ok;
-  Akonadi::Entity::Id id = idString.toLongLong( &ok );
+  Akonadi::Collection::Id id = idString.toLongLong( &ok );
   if ( !ok )
     return Akonadi::Collection();
-  const QModelIndexList list =
-      collectionModel()->match( QModelIndex(), Akonadi::EntityTreeModel::CollectionIdRole, id );
-  if ( list.isEmpty() )
-    return Akonadi::Collection();
-  Q_ASSERT( list.size() == 1 );
-  return list.at( 0 ).data( Akonadi::EntityTreeModel::CollectionRole ).value<Akonadi::Collection>();
+  return collectionFromId( id );
+}
+
+Akonadi::Collection KMKernel::collectionFromId(const Akonadi::Collection::Id& id) const
+{
+  const QModelIndex idx = Akonadi::EntityTreeModel::modelIndexForCollection(
+    collectionModel(), Akonadi::Collection(id)
+  );
+  return idx.data(Akonadi::EntityTreeModel::CollectionRole).value<Akonadi::Collection>();
 }
 
 bool KMKernel::canQueryClose()
