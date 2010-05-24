@@ -1,6 +1,6 @@
 /* -*- mode: C++; c-file-style: "gnu" -*-
   This file is part of KMail, the KDE mail client.
-  Copyright (c) 2009 Montel Laurent <montel@kde.org>
+  Copyright (c) 2009-2010 Montel Laurent <montel@kde.org>
 
   KMail is free software; you can redistribute it and/or modify it
   under the terms of the GNU General Public License, version 2, as
@@ -34,7 +34,7 @@ using namespace Akonadi;
 
 
 CollectionMaintenancePage::CollectionMaintenancePage(QWidget * parent) :
-  CollectionPropertiesPage( parent ), mIsNotASearchCollection( true )
+  CollectionPropertiesPage( parent ), mIsNotAVirtualCollection( true )
 {
   setPageTitle(  i18n("Maintenance") );
 }
@@ -47,7 +47,7 @@ void CollectionMaintenancePage::init(const Akonadi::Collection & col)
   QGroupBox *filesGroup = new QGroupBox( i18n("Files"), this );
   QFormLayout *box = new QFormLayout( filesGroup );
   box->setSpacing( KDialog::spacingHint() );
-  mIsNotASearchCollection = ( col.resource() != QLatin1String( "akonadi_search_resource" ) );
+  mIsNotAVirtualCollection = ( col.resource() != QLatin1String( "akonadi_search_resource" ) ) && ( col.resource() != QLatin1String( "akonadi_nepomuktag_resource" ) );
 
 
 #if 0 //TODO remove it ?
@@ -62,7 +62,7 @@ void CollectionMaintenancePage::init(const Akonadi::Collection & col)
   const AgentInstance instance = Akonadi::AgentManager::self()->instance( col.resource() );
   const QString folderDesc = instance.type().name();
 
-  if ( mIsNotASearchCollection ) {
+  if ( mIsNotAVirtualCollection ) {
     QLabel *label = new QLabel( folderDesc, filesGroup );
     box->addRow( new QLabel( i18n("Folder type:"), filesGroup ), label );
 
@@ -98,7 +98,7 @@ void CollectionMaintenancePage::load(const Collection & col)
     mCollectionCount->setText( QString::number( qMax( 0LL, col.statistics().count() ) ) );
     mCollectionUnread->setText( QString::number( qMax( 0LL, col.statistics().unreadCount() ) ) );
     mFolderSizeLabel->setText( KGlobal::locale()->formatByteSize( qMax( 0LL, col.statistics().size() ) ) );
-    if ( mIsNotASearchCollection )
+    if ( mIsNotAVirtualCollection )
       mCollectionLocation->setText( col.remoteId() );
   }
 }
