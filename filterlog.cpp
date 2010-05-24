@@ -34,9 +34,9 @@
 
 #include <kdebug.h>
 
-#include <QDateTime>
 #include <QFile>
 #include <QByteArray>
+#include <QTime>
 
 #include <sys/stat.h>
 

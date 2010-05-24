@@ -33,15 +33,7 @@
 #include "kmcommands.h"
 #include "mdnadvicedialog.h"
 #include <QByteArray>
-#include <QImageReader>
-#include <QCloseEvent>
-#include <QEvent>
 #include <QVBoxLayout>
-#include <QResizeEvent>
-#include <QMouseEvent>
-#include <QScrollArea>
-#include <QScrollBar>
-#include <QSignalMapper>
 #include "messageviewer/headerstrategy.h"
 #include "messageviewer/headerstyle.h"
 #include "messageviewer/mailwebview.h"
@@ -97,12 +89,6 @@ using MessageComposer::MessageFactory;
 #include <kconfiggroup.h>
 
 #include <QClipboard>
-#include <QCursor>
-#include <QTextCodec>
-#include <QLayout>
-#include <QLabel>
-#include <QSplitter>
-#include <QStyle>
 
 // X headers...
 #undef Never

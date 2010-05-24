@@ -33,7 +33,6 @@
 #include <kmessagebox.h>
 #include <kio/global.h>
 
-#include <QStringList>
 #include <QFileInfo>
 #include <QTimer>
 

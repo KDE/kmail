@@ -23,7 +23,6 @@
 #include <akonadi/collectionstatistics.h>
 #include <akonadi/collectionstatisticsdelegate.h>
 #include "kmkernel.h"
-#include <QHeaderView>
 #include <KMessageBox>
 #include <KGuiItem>
 #include <KMenu>

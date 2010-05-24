@@ -19,7 +19,6 @@
  */
 
 #include "kmmainwin.h"
-#include <QProcess>
 #include "kmmainwidget.h"
 #include "kstatusbar.h"
 #include "progressdialog.h"

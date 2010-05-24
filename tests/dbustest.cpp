@@ -7,7 +7,6 @@
 #include "kmailinterface.h"
 #include "aboutdata.h"
 
-#include <QByteArray>
 
 
 int main(int argc,char **argv)

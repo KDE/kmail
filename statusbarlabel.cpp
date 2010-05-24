@@ -21,7 +21,6 @@
 
 #include <kdebug.h>
 
-#include <QEvent>
 
 using namespace KMail;
 

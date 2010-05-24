@@ -26,7 +26,6 @@ using KMail::MessageProperty;
 #include <kmime/kmime_message.h>
 
 // other Qt headers
-#include <QRegExp>
 
 // other headers
 #include <boost/bind.hpp>

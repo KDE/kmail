@@ -22,7 +22,6 @@
 #include <kshortcut.h>
 #include <akonadi/collection.h>
 #include <akonadi/collectionstatistics.h>
-#include <KConfigGroup>
 #include <KIO/Job>
 
 #include "messagecore/mailinglist-magic.h"

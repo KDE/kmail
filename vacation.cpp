@@ -44,7 +44,6 @@ using KMime::Types::AddrSpecList;
 
 
 #include <QByteArray>
-#include <QDateTime>
 
 #include <cassert>
 #include <vector>

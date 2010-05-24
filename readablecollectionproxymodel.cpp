@@ -27,7 +27,6 @@
 
 #include <QtGui/QApplication>
 #include <QtGui/QPalette>
-#include <KIcon>
 
 class ReadableCollectionProxyModel::Private
 {

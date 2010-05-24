@@ -39,7 +39,6 @@
 #include <kregexpeditorinterface.h>
 #include <kdialog.h>
 
-#include <QLayout>
 #include <QString>
 #include <QPushButton>
 #include <QHBoxLayout>

@@ -39,7 +39,6 @@
 
 #include <kurl.h>
 #include <kdebug.h>
-#include <KMime/Message>
 
 #include <QString>
 #include <QDBusConnection>

@@ -22,7 +22,6 @@
 
 #include <QByteArray>
 #include <QObject>
-#include <QString>
 
 
 class CodecManagerPrivate;

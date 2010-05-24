@@ -26,7 +26,6 @@
 #include "attachmentcontrollerbase.h"
 #include "attachmentview.h"
 
-#include <KPIMIdentities/Identity>
 
 class KMComposeWin;
 

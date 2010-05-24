@@ -104,13 +104,11 @@ using MailTransport::TransportManagementWidget;
 #include <kicondialog.h>
 #include <kkeysequencewidget.h>
 #include <KIconButton>
-#include <KRandom>
 #include <KColorScheme>
 #include <KComboBox>
 #include <Nepomuk/Tag>
 
 // Qt headers:
-#include <QBoxLayout>
 #include <QCheckBox>
 #include <QGridLayout>
 #include <QHBoxLayout>
@@ -120,15 +118,12 @@ using MailTransport::TransportManagementWidget;
 #include <QList>
 #include <QRadioButton>
 #include <QGroupBox>
-#include <QToolTip>
 #include <QListWidget>
-#include <QValidator>
 #include <QVBoxLayout>
 #include <QWhatsThis>
 #include <QDBusConnection>
 #include <QHostInfo>
 #include <QTextCodec>
-#include <QMenu>
 
 // other headers:
 #include <assert.h>

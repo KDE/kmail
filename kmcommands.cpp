@@ -133,15 +133,10 @@ using namespace KMime;
 
 #include <gpgme++/error.h>
 
-#include <QClipboard>
-#include <QDBusMessage>
 #include <QDBusConnection>
-#include <QMenu>
 #include <QByteArray>
 #include <QApplication>
-#include <QDesktopWidget>
 #include <QList>
-#include <QProgressBar>
 
 #include <boost/bind.hpp>
 #include <algorithm>

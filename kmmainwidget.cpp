@@ -149,16 +149,9 @@
 // Qt includes
 #include <QByteArray>
 #include <QLabel>
-#include <QLayout>
 #include <QList>
-#include <QSignalMapper>
 #include <QSplitter>
-#include <QToolBar>
-#include <QTextDocument>
 #include <QVBoxLayout>
-#include <QDBusConnection>
-#include <QDBusMessage>
-#include <QHeaderView>
 #include <QShortcut>
 #include <QProcess>
 

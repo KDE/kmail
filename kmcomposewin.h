@@ -31,7 +31,6 @@
 #include <QFont>
 #include <QList>
 #include <QPalette>
-#include <QPointer>
 
 // KDE includes
 #include <kglobalsettings.h>

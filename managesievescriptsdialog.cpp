@@ -17,7 +17,6 @@
 
 #include <akonadi/agentinstance.h>
 
-#include <QLayout>
 #include <QMenu>
 #include <QTreeWidget>
 #include <QButtonGroup>

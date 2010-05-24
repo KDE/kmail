@@ -23,7 +23,6 @@
 #include <Akonadi/AgentManager>
 #include <klineedit.h>
 #include <QLabel>
-#include <QHBoxLayout>
 #include <KDialog>
 #include <QGroupBox>
 #include <KLocale>

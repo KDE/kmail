@@ -38,7 +38,6 @@
 
 #include "foldershortcutdialog.h"
 
-#include <QLabel>
 #include <QGroupBox>
 
 #include <kkeysequencewidget.h>

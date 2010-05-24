@@ -134,11 +134,9 @@
 #include <kio/scheduler.h>
 
 // Qt includes
-#include <QBuffer>
 #include <QClipboard>
 #include <QEvent>
 #include <QSplitter>
-#include <QTextList>
 #include <QUuid>
 #include <QDir>
 

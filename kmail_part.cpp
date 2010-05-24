@@ -31,7 +31,6 @@
 #include "kmstartup.h"
 #include "aboutdata.h"
 
-#include <QPixmap>
 #include <QVBoxLayout>
 
 #include <kparts/mainwindow.h>
@@ -50,7 +49,6 @@
 #include "tagactionmanager.h"
 #include "foldershortcutactionmanager.h"
 
-#include <QLayout>
 #include <kglobal.h>
 
 K_PLUGIN_FACTORY( KMailFactory, registerPlugin<KMailPart>(); )

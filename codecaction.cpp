@@ -24,7 +24,6 @@
 #include "codecmanager.h"
 
 // Qt
-#include <QTextCodec>
 
 // KDE libs
 #include <KDebug>

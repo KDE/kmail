@@ -38,11 +38,8 @@
 #include <akonadi_next/quotacolorproxymodel.h>
 #include <akonadi_next/recursivecollectionfilterproxymodel.h>
 #include <akonadi_next/krecursivefilterproxymodel.h>
-#include <KMime/Message>
 
-#include <QHBoxLayout>
 #include <QLabel>
-#include <QSortFilterProxyModel>
 
 #include <klineedit.h>
 #include <klocalizedstring.h>
