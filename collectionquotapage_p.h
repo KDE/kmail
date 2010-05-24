@@ -47,11 +47,7 @@ public:
   void setQuotaInfo( qint64 currentValue, qint64 maxValue );
 
 private:
-  QLabel* mInfoLabel;
-  QLabel* mRootLabel;
   QProgressBar* mProgressBar;
-  QString mUnits;
-  int mFactor;
 };
 
 #endif /* COLLECTIONQUOTAPAGE_P_H */
