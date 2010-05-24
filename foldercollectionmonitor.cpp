@@ -50,7 +50,7 @@ QString FolderCollectionMonitor::mimetype()
 }
 
 
-Akonadi::ChangeRecorder *FolderCollectionMonitor::monitor()
+Akonadi::ChangeRecorder *FolderCollectionMonitor::monitor() const
 {
   return mMonitor;
 }
@@ -78,6 +78,15 @@ void FolderCollectionMonitor::slotExpungeJob( KJob *job )
     return;
   Akonadi::Item::List lstItem = fjob->items();
   Akonadi::ItemDeleteJob *jobDelete = new Akonadi::ItemDeleteJob(lstItem,this );
+  connect( jobDelete, SIGNAL( result( KJob* ) ), this, SLOT( slotDeleteJob( KJob* ) ) );
 
+}
+
+void FolderCollectionMonitor::slotDeleteJob( KJob *job )
+{
+  if ( job->error() ) {
+    static_cast<KIO::Job*>(job)->ui()->showErrorMessage();
+    return;
+  }
 }
 
