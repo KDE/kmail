@@ -35,7 +35,7 @@ using namespace Akonadi;
 
 
 CollectionMaintenancePage::CollectionMaintenancePage(QWidget * parent) :
-    CollectionPropertiesPage( parent )
+  CollectionPropertiesPage( parent ), mIsNotASearchCollection( true )
 {
   setPageTitle(  i18n("Maintenance") );
 }
@@ -48,6 +48,8 @@ void CollectionMaintenancePage::init(const Akonadi::Collection & col)
   QGroupBox *filesGroup = new QGroupBox( i18n("Files"), this );
   QFormLayout *box = new QFormLayout( filesGroup );
   box->setSpacing( KDialog::spacingHint() );
+  mIsNotASearchCollection = ( col.resource() != QLatin1String( "akonadi_search_resource" ) );
+
 
 #if 0 //TODO remove it ?
   QString contentsDesc = folderContentDesc( mFolder->storage()->contentsType() );
@@ -61,12 +63,14 @@ void CollectionMaintenancePage::init(const Akonadi::Collection & col)
   const AgentInstance instance = Akonadi::AgentManager::self()->instance( col.resource() );
   const QString folderDesc = instance.type().name();
 
-  QLabel *label = new QLabel( folderDesc, filesGroup );
-  box->addRow( new QLabel( i18n("Folder type:"), filesGroup ), label );
+  if ( mIsNotASearchCollection ) {
+    QLabel *label = new QLabel( folderDesc, filesGroup );
+    box->addRow( new QLabel( i18n("Folder type:"), filesGroup ), label );
 
-  mCollectionLocation = new KLineEdit( filesGroup );
-  mCollectionLocation->setReadOnly( true );
-  box->addRow( i18n("Location:"), mCollectionLocation );
+    mCollectionLocation = new KLineEdit( filesGroup );
+    mCollectionLocation->setReadOnly( true );
+    box->addRow( i18n("Location:"), mCollectionLocation );
+  }
 
   mFolderSizeLabel = new QLabel( i18nc( "folder size", "Not available" ), filesGroup );
   box->addRow( new QLabel( i18n("Size:"), filesGroup ), mFolderSizeLabel );
@@ -95,9 +99,8 @@ void CollectionMaintenancePage::load(const Collection & col)
     mCollectionCount->setText( QString::number( qMax( 0LL, col.statistics().count() ) ) );
     mCollectionUnread->setText( QString::number( qMax( 0LL, col.statistics().unreadCount() ) ) );
     mFolderSizeLabel->setText( KGlobal::locale()->formatByteSize( qMax( 0LL, col.statistics().size() ) ) );
-
-    mCollectionLocation->setText( col.remoteId() );
-
+    if ( mIsNotASearchCollection )
+      mCollectionLocation->setText( col.remoteId() );
   }
 }
 
