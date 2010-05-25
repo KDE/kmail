@@ -22,11 +22,6 @@
 
 #include <QWidget>
 #include <QTimer>
-#include <QStringList>
-#include <QCloseEvent>
-#include <QEvent>
-#include <QList>
-#include <QResizeEvent>
 #include <kurl.h>
 #include <kservice.h>
 #include <messagecore/messagestatus.h>

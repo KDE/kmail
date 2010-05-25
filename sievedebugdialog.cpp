@@ -22,7 +22,6 @@
 #include <cassert>
 #include <limits.h>
 
-#include <QDateTime>
 #include <QTimer>
 
 #include <kdebug.h>

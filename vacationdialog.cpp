@@ -33,10 +33,8 @@ using KMime::HeaderParsing::parseAddressList;
 #include <QGridLayout>
 #include <QApplication>
 #include <QByteArray>
-#include <QLayout>
 #include <QLabel>
 #include <QCheckBox>
-#include <QValidator>
 
 namespace KMail {
 

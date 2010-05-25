@@ -34,10 +34,8 @@
 
 #include <KAction>
 #include <KActionCollection>
-#include <KFileDialog>
 #include <KLocale>
 #include <KMenu>
-#include <KMessageBox>
 #include <KPushButton>
 #include <KInputDialog>
 

@@ -46,17 +46,14 @@
 #include <kimap/loginjob.h>
 #include <Akonadi/AgentManager>
 
-#include <KGlobal>
 #include <KStandardDirs>
 #include <kascii.h>
 #include <KCharsets>
 
-#include <QTextCodec>
 
 #include <stdlib.h>
 
 #ifdef Q_WS_MACX
-#include <QDesktopServices>
 #endif
 #include "foldercollection.h"
 

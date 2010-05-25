@@ -22,6 +22,7 @@
 
 #include "kmfilteraction.h" // for KMFilterAction::ReturnCode
 #include <akonadi/collection.h>
+#include <QPointer>
 
 namespace Akonadi {
   class Item;

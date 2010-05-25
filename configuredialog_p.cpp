@@ -28,12 +28,8 @@
 #include <kpimidentities/identitymanager.h>
 
 // Qt headers:
-#include <QRadioButton>
-#include <QLabel>
-#include <QHBoxLayout>
 #include <QShowEvent>
 #include <QVBoxLayout>
-#include <QResizeEvent>
 
 // Other headers:
 #include <assert.h>

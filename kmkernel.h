@@ -7,7 +7,6 @@
 #include <QList>
 #include <QObject>
 #include <QString>
-#include <QPointer>
 #include <QDBusObjectPath>
 
 #include <kconfig.h>

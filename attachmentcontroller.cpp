@@ -35,20 +35,11 @@
 #include <akonadi/itemfetchjob.h>
 #include <kio/jobuidelegate.h>
 
-#include <QMenu>
-#include <QPointer>
 
 #include <KAction>
 #include <KActionCollection>
 #include <KDebug>
-#include <KEncodingFileDialog>
-#include <KFileDialog>
-#include <KLocalizedString>
-#include <KMessageBox>
-#include <KMimeTypeTrader>
 #include <KPushButton>
-#include <KRun>
-#include <KTemporaryFile>
 
 #include "kmreadermainwin.h"
 #include <kpimutils/kfileio.h>

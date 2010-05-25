@@ -22,7 +22,6 @@
 #define searchwindow_h
 
 #include <QList>
-#include <QPointer>
 #include <QTimer>
 
 #include <KDialog>

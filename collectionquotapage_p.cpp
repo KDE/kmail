@@ -54,14 +54,7 @@ QuotaWidget::QuotaWidget( QWidget* parent )
       QGridLayout* layout = new QGridLayout( stuff );
       layout->setMargin( KDialog::marginHint() );
       layout->setSpacing( KDialog::spacingHint() );
-      mInfoLabel = new QLabel("", stuff );
-      mRootLabel = new QLabel("", stuff );
       mProgressBar = new QProgressBar( stuff );
-      layout->addWidget( new QLabel( i18n("Root:" ), stuff ), 0, 0 );
-      layout->addWidget( mRootLabel, 0, 1 );
-      layout->addWidget( new QLabel( i18n("Usage:"), stuff ), 1, 0 );
-      //layout->addWidget( new QLabel( i18n("Status:"), stuff ), 2, 0 );
-      layout->addWidget( mInfoLabel, 1, 1 );
       layout->addWidget( mProgressBar, 2, 1 );
       box->addWidget( stuff );
       box->addStretch( 2 );

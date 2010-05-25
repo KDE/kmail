@@ -57,8 +57,6 @@ using MessageComposer::MessageFactory;
 #include <nepomuk/tag.h>
 
 // Qt headers:
-#include <QTextCodec>
-#include <QTextDocument>
 
 // other headers:
 #include <assert.h>

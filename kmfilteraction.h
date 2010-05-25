@@ -24,7 +24,6 @@
 
 #include <QList>
 #include <QMultiHash>
-#include <QPointer>
 #include <QStringList>
 #include <akonadi/collection.h>
 

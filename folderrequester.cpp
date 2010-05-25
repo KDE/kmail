@@ -40,7 +40,6 @@
 #include <kiconloader.h>
 #include <KLocale>
 #include <kdialog.h>
-#include <QLayout>
 #include <QToolButton>
 #include <QHBoxLayout>
 #include <QKeyEvent>

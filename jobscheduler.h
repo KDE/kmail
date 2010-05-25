@@ -31,7 +31,6 @@
 
 #include <QObject>
 
-#include <QPointer>
 #include <QTimer>
 
 #include "folderjob.h"

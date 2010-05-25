@@ -26,8 +26,6 @@
 #include <QPointer>
 #include <QVector>
 
-#include <QPixmap>
-#include <QImage>
 
 #include <time.h>
 

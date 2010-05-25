@@ -19,7 +19,6 @@
 #include "mdnadvicedialog.h"
 
 #include <KMessageBox>
-#include <KLocalizedString>
 #include <QtCore/QPointer>
 #include <KDebug>
 #include <messagecomposer/messagefactory.h>

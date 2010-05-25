@@ -33,8 +33,6 @@
 #include <KSharedConfig>
 
 #include <QCheckBox>
-#include <QLayout>
-#include <QPixmap>
 #include <QList>
 #include <QListWidget>
 #include <QBoxLayout>

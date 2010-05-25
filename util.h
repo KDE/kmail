@@ -39,8 +39,6 @@
 #define KMAILUTIL_H
 
 #include <stdlib.h>
-#include <QObject>
-#include <QByteArray>
 #include <QWidget>
 #include <kio/netaccess.h>
 #include <kmessagebox.h>

@@ -350,59 +350,6 @@ void CollectionGeneralPage::init(const Akonadi::Collection &col)
   topLayout->addStretch( 100 ); // eat all superfluous space
 }
 
-#if 0
-void FolderDialogGeneralTab::initializeWithValuesFromFolder( KMFolder* folder ) {
-
-  if (folder->folderType() == KMFolderTypeImap)
-  {
-    KMFolderImap* imapFolder = static_cast<KMFolderImap*>(folder->storage());
-    bool checked = imapFolder->includeInMailCheck();
-    mNewMailCheckBox->setChecked(checked);
-  }
-
-  if ( mIncidencesForComboBox ) {
-    KMFolderCachedImap* dimap = static_cast<KMFolderCachedImap *>( folder->storage() );
-    mIncidencesForComboBox->setCurrentIndex( dimap->incidencesFor() );
-    mIncidencesForComboBox->setDisabled( mDlg->folder()->isReadOnly() );
-  }
-  if ( mAlarmsBlockedCheckBox ) {
-    KMFolderCachedImap* dimap = static_cast<KMFolderCachedImap *>( folder->storage() );
-    mAlarmsBlockedCheckBox->setChecked( dimap->alarmsBlocked() );
-  }
-  if ( mSharedSeenFlagsCheckBox ) {
-    KMFolderCachedImap *dimap = static_cast<KMFolderCachedImap*>( folder->storage() );
-    ImapAccountBase *account = dynamic_cast<ImapAccountBase*>( dimap->account() );
-    mSharedSeenFlagsCheckBox->setChecked( dimap->sharedSeenFlags() );
-    mSharedSeenFlagsCheckBox->setDisabled( folder->isReadOnly() );
-    if ( account && account->hasCapability( "x-kmail-sharedseen" ) )
-      mSharedSeenFlagsCheckBox->show();
-    else
-      mSharedSeenFlagsCheckBox->hide();
-  }
-}
-
-//-----------------------------------------------------------------------------
-void FolderDialogGeneralTab::slotFolderContentsSelectionChanged( int )
-{
-  KMail::FolderContentsType type =
-    static_cast<KMail::FolderContentsType>( mContentsComboBox->currentIndex() );
-  if( type != KMail::ContentsTypeMail && GlobalSettings::self()->hideGroupwareFolders() ) {
-    QString message = i18n("You have configured this folder to contain groupware information "
-        "and the general configuration option to hide groupware folders is "
-        "set. That means that this folder will disappear once the configuration "
-        "dialog is closed. If you want to remove the folder again, you will need "
-        "to temporarily disable hiding of groupware folders to be able to see it.");
-    KMessageBox::information( this, message );
-  }
-
-  const bool enable = type == KMail::ContentsTypeCalendar || type == KMail::ContentsTypeTask;
-  if ( mIncidencesForComboBox )
-      mIncidencesForComboBox->setEnabled( enable );
-  if ( mAlarmsBlockedCheckBox )
-      mAlarmsBlockedCheckBox->setEnabled( enable );
-}
-#endif
-
 
 void CollectionGeneralPage::load(const Akonadi::Collection & col)
 {

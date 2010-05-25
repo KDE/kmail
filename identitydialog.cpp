@@ -71,11 +71,9 @@ using MailTransport::TransportManager;
 #include <kcombobox.h>
 #include <ktabwidget.h>
 #include <sonnet/dictionarycombobox.h>
-#include <KStandardDirs>
 
 // Qt headers:
 #include <QLabel>
-#include <QLayout>
 #include <QPushButton>
 #include <QCheckBox>
 #include <QVBoxLayout>

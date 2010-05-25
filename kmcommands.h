@@ -19,7 +19,6 @@ using KPIM::MessageStatus;
 
 #include <QPointer>
 #include <QList>
-#include <QMenu>
 #include <akonadi/item.h>
 #include <akonadi/itemfetchscope.h>
 #include <akonadi/collection.h>

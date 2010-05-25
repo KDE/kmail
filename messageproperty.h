@@ -35,9 +35,7 @@
 #include <akonadi/collection.h>
 #include <akonadi/item.h>
 
-#include <QPointer>
 #include <QObject>
-#include <QSet>
 
 class KMFilter;
 

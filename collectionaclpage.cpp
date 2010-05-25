@@ -43,7 +43,6 @@
 #include <akonadi/contact/contactgroupexpandjob.h>
 #include <akonadi/contact/contactgroupsearchjob.h>
 #include <akonadi/contact/emailaddressselectiondialog.h>
-#include <KPIMUtils/Email>
 #include <kabc/addresseelist.h>
 #include <kio/jobuidelegate.h>
 #include <kpushbutton.h>
@@ -53,13 +52,10 @@
 #include <KLineEdit>
 #include <kpimutils/email.h>
 
-#include <QDBusInterface>
 #include <QDBusReply>
-#include <QLayout>
 #include <QLabel>
 #include <QRadioButton>
 #include <QGridLayout>
-#include <QList>
 #include <QVBoxLayout>
 #include <QButtonGroup>
 #include <QGroupBox>

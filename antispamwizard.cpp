@@ -57,9 +57,7 @@
 #include <QApplication>
 #include <qdom.h>
 #include <QLabel>
-#include <QLayout>
 #include <QTimer>
-#include <QPixmap>
 #include <QGridLayout>
 #include <QHBoxLayout>
 #include <QBoxLayout>

@@ -84,7 +84,7 @@ IdentityPage::IdentityPage( const KComponentData &instance, QWidget *parent )
 
 IdentityPage::~IdentityPage()
 {
-#ifndef KCM_KPIMIDENTITIES_STANDALONE
+#ifdef KCM_KPIMIDENTITIES_STANDALONE
   delete mIdentityManager;
 #endif
 }

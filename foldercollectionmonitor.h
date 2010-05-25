@@ -36,11 +36,13 @@ public:
 
   static QString mimetype();
 
-  Akonadi::ChangeRecorder * monitor();
+  Akonadi::ChangeRecorder * monitor() const;
   void expireAllFolders(bool immediate );
   void expunge( const Akonadi::Collection& );
 private slots:
   void slotExpungeJob( KJob *job );
+  void slotDeleteJob( KJob *job );
+
 private:
   Akonadi::ChangeRecorder *mMonitor;
 };

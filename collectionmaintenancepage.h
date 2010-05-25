@@ -37,6 +37,7 @@ private:
   KLineEdit *mCollectionLocation;
   QLabel *mCollectionCount;
   QLabel *mCollectionUnread;
+  bool mIsNotAVirtualCollection;
 };
 
 

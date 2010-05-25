@@ -23,7 +23,6 @@
 
 #include <QColor>
 #include <QFont>
-#include <QObject>
 #include <QSharedPointer>
 #include <QUrl>
 

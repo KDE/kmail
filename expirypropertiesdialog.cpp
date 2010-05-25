@@ -4,19 +4,17 @@
 #include "foldercollection.h"
 
 
-#include <QVariant>
 #include <QPushButton>
 #include <QCheckBox>
 #include <QLabel>
 #include <QRadioButton>
-#include <QLayout>
 #include <QGroupBox>
 #include <QVBoxLayout>
 #include <QHBoxLayout>
 
+#include <KIntSpinBox>
 #include <klocale.h>
 #include <kmessagebox.h>
-#include <KNumInput>
 #include <akonadi/collection.h>
 #include "kmkernel.h"
 

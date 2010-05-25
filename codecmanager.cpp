@@ -27,13 +27,10 @@
 #include "kmkernel.h"
 
 // Qt
-#include <QMenu>
-#include <QTextCodec>
 
 // KDE libs
 #include <kcodecaction.h>
 #include <KConfig>
-#include <KConfigGroup>
 #include <KDebug>
 #include <KGlobal>
 #include <KLocale>

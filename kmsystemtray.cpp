@@ -33,7 +33,6 @@
 #include <KMenu>
 
 #include <QPainter>
-#include <QBitmap>
 #include <QWidget>
 #include <QObject>
 #include <QSignalMapper>

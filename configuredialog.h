@@ -24,7 +24,6 @@
 
 #include <kcmultidialog.h>
 
-#include <QPointer>
 #include <QHideEvent>
 
 class ConfigureDialog : public KCMultiDialog
