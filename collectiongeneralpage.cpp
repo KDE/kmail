@@ -146,8 +146,6 @@ void CollectionGeneralPage::init(const Akonadi::Collection &col)
     mNameEdit->setEnabled( col.rights() & Collection::CanChangeCollection );
     label->setBuddy( mNameEdit );
     hl->addWidget( mNameEdit );
-    connect( mNameEdit, SIGNAL( textChanged( const QString & ) ),
-                    this, SLOT( slotFolderNameChanged( const QString & ) ) );
   }
 
 
@@ -419,12 +417,6 @@ void CollectionGeneralPage::save(Collection & col)
 #endif
 
   }
-}
-
-void CollectionGeneralPage::slotFolderNameChanged( const QString& str )
-{
-  //TODO .????
-  //enableButtonOk( !str.isEmpty() );
 }
 
 void CollectionGeneralPage::slotIdentityCheckboxChanged()
