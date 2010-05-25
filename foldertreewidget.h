@@ -67,6 +67,17 @@ public:
     DisplayNever             ///< Nevery display tooltips
   };
 
+  /**
+   * The available sorting policies.
+   */
+  enum SortingPolicy
+  {
+    SortByCurrentColumn,      ///< Columns are clickable, sorting is by the current column
+    SortByDragAndDropKey      ///< Columns are NOT clickable, sorting is done by drag and drop
+  };
+
+
+
   void selectCollectionFolder( const Akonadi::Collection & col );
 
   void setSelectionMode( QAbstractItemView::SelectionMode mode );

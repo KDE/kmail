@@ -61,6 +61,8 @@ protected:
   void readConfig();
   void writeConfig();
 
+  void setSortingPolicy( FolderTreeWidget::SortingPolicy policy );
+
 public slots:
   void slotFocusNextFolder();
   void slotFocusPrevFolder();
@@ -71,7 +73,7 @@ protected slots:
   void slotHeaderContextMenuChangeIconSize( bool );
   void slotHeaderContextMenuChangeHeader( bool );
   void slotHeaderContextMenuChangeToolTipDisplayPolicy( bool );
-
+  void slotHeaderContextMenuChangeSortingPolicy( bool );
 
 signals:
   void changeTooltipsPolicy( FolderTreeWidget::ToolTipDisplayPolicy );
@@ -79,6 +81,7 @@ signals:
 private:
   bool mbDisableContextMenuAndExtraColumn;
   FolderTreeWidget::ToolTipDisplayPolicy mToolTipDisplayPolicy;
+  FolderTreeWidget::SortingPolicy mSortingPolicy;
   Akonadi::CollectionStatisticsDelegate *mCollectionStatisticsDelegate;
 };
 
