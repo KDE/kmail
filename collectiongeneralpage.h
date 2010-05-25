@@ -62,7 +62,6 @@ protected:
   void init(const Akonadi::Collection&);
 
 private slots:
-  void slotFolderNameChanged(const QString & );
   void slotIdentityCheckboxChanged();
 private:
   KComboBox *mContentsComboBox;

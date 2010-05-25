@@ -132,7 +132,8 @@ void CollectionGeneralPage::init(const Akonadi::Collection &col)
   topLayout->setMargin( 0 );
 
   // Musn't be able to edit details for a non-resource, system folder.
-  if ( ( !mIsLocalSystemFolder || mIsResourceFolder ) && !( col.rights() & Akonadi::Collection::ReadOnly ) ) {
+  if ( ( !mIsLocalSystemFolder || mIsResourceFolder )
+       && !mFolderCollection->isReadOnly() ) {
 
     QHBoxLayout *hl = new QHBoxLayout();
     topLayout->addItem( hl );
@@ -145,8 +146,6 @@ void CollectionGeneralPage::init(const Akonadi::Collection &col)
     mNameEdit->setEnabled( col.rights() & Collection::CanChangeCollection );
     label->setBuddy( mNameEdit );
     hl->addWidget( mNameEdit );
-    connect( mNameEdit, SIGNAL( textChanged( const QString & ) ),
-                    this, SLOT( slotFolderNameChanged( const QString & ) ) );
   }
 
 
@@ -374,9 +373,9 @@ void CollectionGeneralPage::load(const Akonadi::Collection & col)
   // ignore new mail
   mNotifyOnNewMailCheckBox->setChecked( !mFolderCollection->ignoreNewMail() );
 
-  const bool keepInFolder = !mFolderCollection->isReadOnly() && mFolderCollection->putRepliesInSameFolder();
+  const bool keepInFolder = mFolderCollection->canCreateMessages() && mFolderCollection->putRepliesInSameFolder();
   mKeepRepliesInSameFolderCheckBox->setChecked( keepInFolder );
-  mKeepRepliesInSameFolderCheckBox->setDisabled( mFolderCollection->isReadOnly() );
+  mKeepRepliesInSameFolderCheckBox->setEnabled( mFolderCollection->canCreateMessages() );
 #if 0
   mHideInSelectionDialogCheckBox->setChecked( mFolderCollection->hideInSelectionDialog() );
 #endif
@@ -418,12 +417,6 @@ void CollectionGeneralPage::save(Collection & col)
 #endif
 
   }
-}
-
-void CollectionGeneralPage::slotFolderNameChanged( const QString& str )
-{
-  //TODO .????
-  //enableButtonOk( !str.isEmpty() );
 }
 
 void CollectionGeneralPage::slotIdentityCheckboxChanged()

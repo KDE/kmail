@@ -66,6 +66,8 @@ public:
 
   bool canDeleteMessages() const;
 
+  bool canCreateMessages() const;
+
   bool isValid() const;
 
   Akonadi::Collection::Rights rights() const;

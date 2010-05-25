@@ -106,6 +106,11 @@ bool FolderCollection::canDeleteMessages() const
   return mCollection.rights() & Akonadi::Collection::CanDeleteItem;
 }
 
+bool FolderCollection::canCreateMessages() const
+{
+  return mCollection.rights() & Akonadi::Collection::CanCreateItem;
+}
+
 qint64 FolderCollection::count() const
 {
   return mCollection.statistics().count();

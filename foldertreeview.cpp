@@ -64,6 +64,7 @@ void FolderTreeView::disableContextMenuAndExtraColumn()
 void FolderTreeView::init( bool showUnreadCount )
 {
   setIconSize( QSize( 22, 22 ) );
+  mSortingPolicy = FolderTreeWidget::SortByCurrentColumn;
 
   header()->setContextMenuPolicy( Qt::CustomContextMenu );
   connect( header(), SIGNAL( customContextMenuRequested( const QPoint& ) ),
@@ -80,6 +81,7 @@ void FolderTreeView::writeConfig()
   KConfigGroup myGroup( KMKernel::config(), "MainFolderView");
   myGroup.writeEntry( "IconSize", iconSize().width() );
   myGroup.writeEntry( "ToolTipDisplayPolicy", ( int ) mToolTipDisplayPolicy );
+  myGroup.writeEntry( "SortingPolicy", ( int ) mSortingPolicy );
 }
 
 void FolderTreeView::readConfig()
@@ -89,6 +91,8 @@ void FolderTreeView::readConfig()
   if ( iIconSize < 16 || iIconSize > 32 )
     iIconSize = 22;
   setIconSize( QSize( iIconSize, iIconSize ) );
+  setSortingPolicy( ( FolderTreeWidget::SortingPolicy )myGroup.readEntry( "SortingPolicy", ( int ) mSortingPolicy ) );
+
 
 }
 
@@ -162,8 +166,81 @@ void FolderTreeView::slotHeaderContextMenuRequested( const QPoint&pnt )
   connect( act, SIGNAL( triggered( bool ) ),
            SLOT( slotHeaderContextMenuChangeToolTipDisplayPolicy( bool ) ) );
 
+#if 0 //Port it
+  menu.addTitle( i18nc("@action:inmenu", "Sort Items" ) );
+
+  grp = new QActionGroup( &menu );
+
+  act = menu.addAction( i18nc("@action:inmenu", "Automatically, by Current Column") );
+  act->setCheckable( true );
+  grp->addAction( act );
+  act->setChecked( mSortingPolicy == FolderTreeWidget::SortByCurrentColumn );
+  act->setData( QVariant( (int)FolderTreeWidget::SortByCurrentColumn ) );
+  connect( act, SIGNAL( triggered( bool ) ),
+           SLOT( slotHeaderContextMenuChangeSortingPolicy( bool ) ) );
+
+  act = menu.addAction( i18nc("@action:inmenu", "Manually, by Drag And Drop") );
+  act->setCheckable( true );
+  grp->addAction( act );
+  act->setChecked( mSortingPolicy == FolderTreeWidget::SortByDragAndDropKey );
+  act->setData( QVariant( (int)FolderTreeWidget::SortByDragAndDropKey ) );
+  connect( act, SIGNAL( triggered( bool ) ),
+           SLOT( slotHeaderContextMenuChangeSortingPolicy( bool ) ) );
+#endif
 
   menu.exec( header()->mapToGlobal( pnt ) );
+}
+
+void FolderTreeView::slotHeaderContextMenuChangeSortingPolicy( bool )
+{
+  QAction *act = dynamic_cast< QAction * >( sender() );
+  if ( !act )
+    return;
+
+  QVariant data = act->data();
+
+  bool ok;
+  int policy = data.toInt( &ok );
+  if ( !ok )
+    return;
+
+  setSortingPolicy( ( FolderTreeWidget::SortingPolicy )policy );
+}
+
+
+void FolderTreeView::setSortingPolicy( FolderTreeWidget::SortingPolicy policy )
+{
+  mSortingPolicy = policy;
+  switch ( mSortingPolicy )
+  {
+  case FolderTreeWidget::SortByCurrentColumn:
+      header()->setClickable( true );
+      header()->setSortIndicatorShown( true );
+      setSortingEnabled( true );
+    break;
+  case FolderTreeWidget::SortByDragAndDropKey:
+      header()->setClickable( false );
+      header()->setSortIndicatorShown( false );
+
+#if 0 //TODO port
+      //
+      // Qt 4.5 introduced a nasty bug here:
+      // Sorting must be enabled in order to sortByColumn() to work.
+      // If sorting is disabled it disconnects some internal signal/slot pairs
+      // and calling sortByColumn() silently has no effect.
+      // This is a bug as we actually DON'T want automatic sorting to be
+      // performed by the view whenever it wants. We want to control sorting.
+      //
+      setSortingEnabled( true ); // hack for qutie bug: the param here should be false
+      sortByColumn( LabelColumn, Qt::AscendingOrder );
+      setSortingEnabled( false ); // hack for qutie bug: this call shouldn't be here at all
+      fixSortingKeysForChildren( invisibleRootItem() );
+#endif
+    break;
+    default:
+      // should never happen
+    break;
+  }
 }
 
 void FolderTreeView::slotHeaderContextMenuChangeToolTipDisplayPolicy( bool )
