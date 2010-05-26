@@ -835,6 +835,11 @@ void KMKernel::stopNetworkJobs()
   if ( GlobalSettings::self()->networkState() == GlobalSettings::EnumNetworkState::Offline )
     return;
 
+  const Akonadi::AgentInstance::List lst = KMail::Util::agentInstances();
+  foreach ( Akonadi::AgentInstance type, lst ) {
+    type.setIsOnline( false );
+  }
+
   GlobalSettings::setNetworkState( GlobalSettings::EnumNetworkState::Offline );
   BroadcastStatus::instance()->setStatusMsg( i18n("KMail is set to be offline; all network jobs are suspended"));
   emit onlineStatusChanged( (GlobalSettings::EnumNetworkState::type)GlobalSettings::networkState() );
@@ -845,6 +850,11 @@ void KMKernel::resumeNetworkJobs()
 {
   if ( GlobalSettings::self()->networkState() == GlobalSettings::EnumNetworkState::Online )
     return;
+
+  const Akonadi::AgentInstance::List lst = KMail::Util::agentInstances();
+  foreach ( Akonadi::AgentInstance type, lst ) {
+    type.setIsOnline( true );
+  }
 
   GlobalSettings::setNetworkState( GlobalSettings::EnumNetworkState::Online );
   BroadcastStatus::instance()->setStatusMsg( i18n("KMail is set to be online; all network jobs resumed"));
