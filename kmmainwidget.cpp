@@ -2169,7 +2169,9 @@ void KMMainWidget::slotUndo()
 //-----------------------------------------------------------------------------
 void KMMainWidget::slotJumpToFolder()
 {
-  FolderSelectionDialog::SelectionFolderOption options = FolderSelectionDialog::None;
+  FolderSelectionDialog::SelectionFolderOptions options = FolderSelectionDialog::None;
+  options |= FolderSelectionDialog::NotAllowToCreateNewFolder;
+
   // can jump to anywhere, need not be read/write
   MessageViewer::AutoQPointer<FolderSelectionDialog> dlg;
   dlg = new FolderSelectionDialog( this, options );
