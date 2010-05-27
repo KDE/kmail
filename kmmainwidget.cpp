@@ -1179,7 +1179,7 @@ void KMMainWidget::slotCheckOneAccount( QAction* item )
     kDebug() << "account with identifier" << item->data().toString() << "not found";
   }
 }
-
+#if 0
 //-----------------------------------------------------------------------------
 void KMMainWidget::slotMailChecked( bool newMail, bool sendOnCheck,
                                     const QMap<QString, int> & newInFolder )
@@ -1254,7 +1254,7 @@ void KMMainWidget::slotMailChecked( bool newMail, bool sendOnCheck,
     KNotification::beep();
   }
 }
-
+#endif
 
 //-----------------------------------------------------------------------------
 void KMMainWidget::slotCompose()

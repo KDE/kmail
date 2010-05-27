@@ -299,8 +299,10 @@ class KMAIL_EXPORT KMMainWidget : public QWidget
 
   protected slots:
     void slotCheckOneAccount( QAction* );
+#if 0
     void slotMailChecked( bool newMail, bool sendOnCheck,
                           const QMap<QString, int> & newInFolder );
+#endif
     void getAccountMenu();
     void getTransportMenu();
     void slotHelp();
