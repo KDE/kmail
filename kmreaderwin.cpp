@@ -1893,6 +1893,12 @@ void KMReaderWin::slotUrlPopup(const QString &aUrl, const QPoint& aPos)
   const KURL url( aUrl );
   mClickedUrl = url;
 
+  if ( url.protocol() == "mailto" ) {
+    mCopyURLAction->setText( i18n( "Copy Email Address" ) );
+  } else {
+    mCopyURLAction->setText( i18n( "Copy Link Address" ) );
+  }
+
   if ( URLHandlerManager::instance()->handleContextMenuRequest( url, aPos, this ) )
     return;
 
