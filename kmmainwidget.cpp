@@ -195,6 +195,7 @@ K_GLOBAL_STATIC( KMMainWidget::PtrList, theMainWidgetList )
     mShowingOfflineScreen( false ),
     mMsgActions( 0 ),
     mCurrentFolder( 0 ),
+    mCollectionProperties( 0 ),
     mVacationIndicatorActive( false ),
     mGoToFirstUnreadMessageInSelectedFolder( false ),
     mFilterProgressItem( 0 )
@@ -942,6 +943,8 @@ void KMMainWidget::createWidgets()
   // Create the favorite folder view
   //
   mAkonadiStandardActionManager = new Akonadi::StandardActionManager( mGUIClient->actionCollection(), this );
+  connect( mAkonadiStandardActionManager, SIGNAL( actionStateUpdated() ), this, SLOT( slotAkonadiStandardActionUpdated() ) );
+
   mAkonadiStandardActionManager->setCollectionSelectionModel( mFolderTreeWidget->folderTreeView()->selectionModel() );
   mAkonadiStandardActionManager->setItemSelectionModel( mFolderTreeWidget->folderTreeView()->selectionModel() );
 
@@ -3743,6 +3746,16 @@ void KMMainWidget::updateMarkAsReadAction()
   mMarkAllAsReadAction->setEnabled( mCurrentFolder && mCurrentFolder->isValid() && (mCurrentFolder->statistics().unreadCount() > 0) );
 }
 
+void KMMainWidget::slotAkonadiStandardActionUpdated()
+{
+  if ( mCollectionProperties ) {
+    mCollectionProperties->setEnabled( mCurrentFolder &&
+                                       !mCurrentFolder->isStructural() &&
+                                       ( mCurrentFolder->collection().resource() != QLatin1String( "akonadi_search_resource" ) ) &&
+                                       ( mCurrentFolder->collection().resource() != QLatin1String( "akonadi_nepomuktag_resource" ) ) );
+  }
+}
+
 //-----------------------------------------------------------------------------
 void KMMainWidget::updateFolderMenu()
 {
@@ -3751,7 +3764,6 @@ void KMMainWidget::updateFolderMenu()
   mFolderMailingListPropertiesAction->setEnabled( folderWithContent &&
                                                   !multiFolder &&
                                                   !mCurrentFolder->isSystemFolder() );
-  mCollectionProperties->setEnabled( folderWithContent );
 
   mEmptyFolderAction->setEnabled( folderWithContent
                                   && ( mCurrentFolder->count() > 0 )
