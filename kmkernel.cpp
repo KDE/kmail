@@ -250,6 +250,7 @@ KMKernel::~KMKernel ()
   delete mMailService;
   mMailService = 0;
 
+  stopAgentInstance();
   slotSyncConfig();
   mySelf = 0;
   kDebug();
@@ -1766,5 +1767,15 @@ bool KMKernel::isImapFolder( const Akonadi::Collection &col )
   Akonadi::AgentInstance agentInstance = Akonadi::AgentManager::self()->instance( col.resource() );
   return agentInstance.type().identifier() == IMAP_RESOURCE_IDENTIFIER;
 }
+
+
+void KMKernel::stopAgentInstance()
+{
+  Akonadi::AgentInstance::List lst = KMail::Util::agentInstances();
+  foreach( Akonadi::AgentInstance type, lst ) {
+    type.setIsOnline( false );
+  }
+}
+
 
 #include "kmkernel.moc"
