@@ -1898,7 +1898,7 @@ void KMReaderWin::slotUrlPopup(const QString &aUrl, const QPoint& aPos)
 
   if ( message() ) {
     kdWarning( 5006 ) << "KMReaderWin::slotUrlPopup(): Unhandled URL right-click!" << endl;
-    emit popupMenu( *message(), url, aPos );
+    emitPopupMenu( url, aPos );
   }
 }
 
