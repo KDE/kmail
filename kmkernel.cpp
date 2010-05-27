@@ -426,6 +426,8 @@ void KMKernel::checkMail () //might create a new reader but won't show!!
     return;
   Akonadi::AgentInstance::List lst = KMail::Util::agentInstances();
   foreach( Akonadi::AgentInstance type, lst ) {
+    if ( !type.isOnline() )
+      type.setIsOnline( true );
     type.synchronize();
   }
 }

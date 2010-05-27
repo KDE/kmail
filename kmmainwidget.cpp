@@ -1155,15 +1155,7 @@ void KMMainWidget::slotImport()
 //-----------------------------------------------------------------------------
 void KMMainWidget::slotCheckMail()
 {
-  if ( !kmkernel->askToGoOnline() ) {
-    return;
-  }
-  Akonadi::AgentInstance::List lst = KMail::Util::agentInstances();
-  foreach( Akonadi::AgentInstance type, lst ) {
-    if ( !type.isOnline() )
-      type.setIsOnline( true );
-    type.synchronize();
-  }
+  kmkernel->checkMail();
 }
 
 //-----------------------------------------------------------------------------
