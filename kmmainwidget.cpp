@@ -920,8 +920,6 @@ void KMMainWidget::createWidgets()
              this, SLOT( slotReplaceMsgByUnencryptedVersion() ) );
     connect( mMsgView->viewer(), SIGNAL( popupMenu(const Akonadi::Item&,const KUrl&,const QPoint&) ),
              this, SLOT( slotMessagePopup(const Akonadi::Item&,const KUrl&,const QPoint&) ) );
-    connect( mMsgView->viewer(), SIGNAL( urlClicked(const KUrl&,int) ),
-             mMsgView->viewer(), SLOT( slotUrlClicked() ) );
   }
 
   //
