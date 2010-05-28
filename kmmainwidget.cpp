@@ -195,6 +195,7 @@ K_GLOBAL_STATIC( KMMainWidget::PtrList, theMainWidgetList )
     mShowingOfflineScreen( false ),
     mMsgActions( 0 ),
     mCurrentFolder( 0 ),
+    mCollectionProperties( 0 ),
     mVacationIndicatorActive( false ),
     mGoToFirstUnreadMessageInSelectedFolder( false ),
     mFilterProgressItem( 0 )
@@ -919,8 +920,6 @@ void KMMainWidget::createWidgets()
              this, SLOT( slotReplaceMsgByUnencryptedVersion() ) );
     connect( mMsgView->viewer(), SIGNAL( popupMenu(const Akonadi::Item&,const KUrl&,const QPoint&) ),
              this, SLOT( slotMessagePopup(const Akonadi::Item&,const KUrl&,const QPoint&) ) );
-    connect( mMsgView->viewer(), SIGNAL( urlClicked(const KUrl&,int) ),
-             mMsgView->viewer(), SLOT( slotUrlClicked() ) );
   }
 
   //
@@ -942,6 +941,8 @@ void KMMainWidget::createWidgets()
   // Create the favorite folder view
   //
   mAkonadiStandardActionManager = new Akonadi::StandardActionManager( mGUIClient->actionCollection(), this );
+  connect( mAkonadiStandardActionManager, SIGNAL( actionStateUpdated() ), this, SLOT( slotAkonadiStandardActionUpdated() ) );
+
   mAkonadiStandardActionManager->setCollectionSelectionModel( mFolderTreeWidget->folderTreeView()->selectionModel() );
   mAkonadiStandardActionManager->setItemSelectionModel( mFolderTreeWidget->folderTreeView()->selectionModel() );
 
@@ -1152,15 +1153,7 @@ void KMMainWidget::slotImport()
 //-----------------------------------------------------------------------------
 void KMMainWidget::slotCheckMail()
 {
-  if ( !kmkernel->askToGoOnline() ) {
-    return;
-  }
-  Akonadi::AgentInstance::List lst = KMail::Util::agentInstances();
-  foreach( Akonadi::AgentInstance type, lst ) {
-    if ( !type.isOnline() )
-      type.setIsOnline( true );
-    type.synchronize();
-  }
+  kmkernel->checkMail();
 }
 
 //-----------------------------------------------------------------------------
@@ -1184,7 +1177,7 @@ void KMMainWidget::slotCheckOneAccount( QAction* item )
     kDebug() << "account with identifier" << item->data().toString() << "not found";
   }
 }
-
+#if 0
 //-----------------------------------------------------------------------------
 void KMMainWidget::slotMailChecked( bool newMail, bool sendOnCheck,
                                     const QMap<QString, int> & newInFolder )
@@ -1259,7 +1252,7 @@ void KMMainWidget::slotMailChecked( bool newMail, bool sendOnCheck,
     KNotification::beep();
   }
 }
-
+#endif
 
 //-----------------------------------------------------------------------------
 void KMMainWidget::slotCompose()
@@ -2169,7 +2162,9 @@ void KMMainWidget::slotUndo()
 //-----------------------------------------------------------------------------
 void KMMainWidget::slotJumpToFolder()
 {
-  FolderSelectionDialog::SelectionFolderOption options = FolderSelectionDialog::None;
+  FolderSelectionDialog::SelectionFolderOptions options = FolderSelectionDialog::None;
+  options |= FolderSelectionDialog::NotAllowToCreateNewFolder;
+
   // can jump to anywhere, need not be read/write
   MessageViewer::AutoQPointer<FolderSelectionDialog> dlg;
   dlg = new FolderSelectionDialog( this, options );
@@ -3741,6 +3736,16 @@ void KMMainWidget::updateMarkAsReadAction()
   mMarkAllAsReadAction->setEnabled( mCurrentFolder && mCurrentFolder->isValid() && (mCurrentFolder->statistics().unreadCount() > 0) );
 }
 
+void KMMainWidget::slotAkonadiStandardActionUpdated()
+{
+  if ( mCollectionProperties ) {
+    mCollectionProperties->setEnabled( mCurrentFolder &&
+                                       !mCurrentFolder->isStructural() &&
+                                       ( mCurrentFolder->collection().resource() != QLatin1String( "akonadi_search_resource" ) ) &&
+                                       ( mCurrentFolder->collection().resource() != QLatin1String( "akonadi_nepomuktag_resource" ) ) );
+  }
+}
+
 //-----------------------------------------------------------------------------
 void KMMainWidget::updateFolderMenu()
 {
@@ -3749,7 +3754,6 @@ void KMMainWidget::updateFolderMenu()
   mFolderMailingListPropertiesAction->setEnabled( folderWithContent &&
                                                   !multiFolder &&
                                                   !mCurrentFolder->isSystemFolder() );
-  mCollectionProperties->setEnabled( folderWithContent );
 
   mEmptyFolderAction->setEnabled( folderWithContent
                                   && ( mCurrentFolder->count() > 0 )

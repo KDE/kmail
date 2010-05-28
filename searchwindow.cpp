@@ -138,25 +138,6 @@ SearchWindow::SearchWindow(KMMainWidget* w, const Akonadi::Collection& curFolder
   mPatternEdit = new KMSearchPatternEdit( QString(), searchWidget, false, true );
   mPatternEdit->setFlat( true );
 
-#if 0 //TODO re-enable for legacy importing?
-  KMFolderSearch *searchFolder = 0;
-  if (curFolder)
-      searchFolder = dynamic_cast<KMFolderSearch*>(curFolder->storage());
-  if (searchFolder) {
-      KConfig config(curFolder->location());
-      KMFolder *root = searchFolder->search()->root();
-      KConfigGroup group( &config, "Search Folder" );
-      mSearchPattern->readConfig( group );
-      if (root) {
-          mChkbxSpecificFolders->setChecked(true);
-          mCbxFolders->setFolder(root);
-          mChkSubFolders->setChecked(searchFolder->search()->recursive());
-      } else {
-          mChkbxAllFolders->setChecked(true);
-      }
-  }
-
-#endif
 
   bool currentFolderIsSearchFolder = false;
 
@@ -210,7 +191,7 @@ SearchWindow::SearchWindow(KMMainWidget* w, const Akonadi::Collection& curFolder
      up considerably. - till
 
      TODO: subclass QTreeWidgetItem and do proper (and performant)
-     comapare functions
+     compare functions
   */
   mLbxMatches->setSortingEnabled( true );
 #if 0 // port me!
@@ -406,15 +387,15 @@ void SearchWindow::updateCollectionStatisticsFinished( KJob * job)
     if ( job->error() )
       kWarning() << job->errorText(); // TODO
     else {
-      
+
     QString genMsg, detailMsg;
     int numMatches = 0;
 
     Akonadi::CollectionStatisticsJob *statisticsJob = qobject_cast<Akonadi::CollectionStatisticsJob*>( job );
     const Akonadi::CollectionStatistics statistics = statisticsJob->statistics();
-    
+
     numMatches = statistics.count();
-    
+
     if ( mFolder.isValid() && mSearchJob ) {
         if(!mStopped) {
             genMsg = i18nc( "Search finished.", "Done" );

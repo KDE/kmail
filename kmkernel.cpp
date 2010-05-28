@@ -250,6 +250,7 @@ KMKernel::~KMKernel ()
   delete mMailService;
   mMailService = 0;
 
+  //stopAgentInstance();
   slotSyncConfig();
   mySelf = 0;
   kDebug();
@@ -426,6 +427,8 @@ void KMKernel::checkMail () //might create a new reader but won't show!!
     return;
   Akonadi::AgentInstance::List lst = KMail::Util::agentInstances();
   foreach( Akonadi::AgentInstance type, lst ) {
+    if ( !type.isOnline() )
+      type.setIsOnline( true );
     type.synchronize();
   }
 }
@@ -835,6 +838,11 @@ void KMKernel::stopNetworkJobs()
   if ( GlobalSettings::self()->networkState() == GlobalSettings::EnumNetworkState::Offline )
     return;
 
+  const Akonadi::AgentInstance::List lst = KMail::Util::agentInstances();
+  foreach ( Akonadi::AgentInstance type, lst ) {
+    type.setIsOnline( false );
+  }
+
   GlobalSettings::setNetworkState( GlobalSettings::EnumNetworkState::Offline );
   BroadcastStatus::instance()->setStatusMsg( i18n("KMail is set to be offline; all network jobs are suspended"));
   emit onlineStatusChanged( (GlobalSettings::EnumNetworkState::type)GlobalSettings::networkState() );
@@ -845,6 +853,11 @@ void KMKernel::resumeNetworkJobs()
 {
   if ( GlobalSettings::self()->networkState() == GlobalSettings::EnumNetworkState::Online )
     return;
+
+  const Akonadi::AgentInstance::List lst = KMail::Util::agentInstances();
+  foreach ( Akonadi::AgentInstance type, lst ) {
+    type.setIsOnline( true );
+  }
 
   GlobalSettings::setNetworkState( GlobalSettings::EnumNetworkState::Online );
   BroadcastStatus::instance()->setStatusMsg( i18n("KMail is set to be online; all network jobs resumed"));
@@ -1754,5 +1767,15 @@ bool KMKernel::isImapFolder( const Akonadi::Collection &col )
   Akonadi::AgentInstance agentInstance = Akonadi::AgentManager::self()->instance( col.resource() );
   return agentInstance.type().identifier() == IMAP_RESOURCE_IDENTIFIER;
 }
+
+
+void KMKernel::stopAgentInstance()
+{
+  Akonadi::AgentInstance::List lst = KMail::Util::agentInstances();
+  foreach( Akonadi::AgentInstance type, lst ) {
+    type.setIsOnline( false );
+  }
+}
+
 
 #include "kmkernel.moc"
