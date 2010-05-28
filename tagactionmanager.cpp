@@ -21,6 +21,8 @@
 #include "messageactions.h"
 #include "tag.h"
 
+#include "messagecore/taglistmonitor.h"
+
 #include <KAction>
 #include <KActionCollection>
 #include <KActionMenu>
@@ -36,8 +38,6 @@
 
 using namespace KMail;
 
-QList<TagActionManager*> TagActionManager::mInstances;
-
 TagActionManager::TagActionManager( QObject *parent, KActionCollection *actionCollection,
                                     MessageActions *messageActions, KXMLGUIClient *guiClient )
   : QObject( parent ),
@@ -45,10 +45,10 @@ TagActionManager::TagActionManager( QObject *parent, KActionCollection *actionCo
     mMessageActions( messageActions ),
     mMessageTagToggleMapper( 0 ),
     mGUIClient( guiClient ),
+    mTagListMonitor( new MessageCore::TagListMonitor( this ) ),
     mSopranoModel( new Soprano::Util::SignalCacheModel( Nepomuk::ResourceManager::instance()->mainModel() ) )
 {
-  mInstances.append( this );
-
+  connect( mTagListMonitor, SIGNAL( tagsChanged() ), this, SLOT( tagsChanged() ) ); 
   // Listen to Nepomuk tag updates
   // ### This is way too slow for now, we use triggerUpdate() instead
   /*connect( mSopranoModel.data(), SIGNAL(statementAdded(Soprano::Statement)),
@@ -59,7 +59,6 @@ TagActionManager::TagActionManager( QObject *parent, KActionCollection *actionCo
 
 TagActionManager::~TagActionManager()
 {
-  mInstances.removeAll( this );
 }
 
 void TagActionManager::statementChanged( Soprano::Statement statement )
@@ -171,10 +170,8 @@ void TagActionManager::updateActionStates( int numberOfSelectedMessages,
   }
 }
 
-void TagActionManager::triggerUpdate()
+void TagActionManager::tagsChanged()
 {
-  foreach( TagActionManager *instance, mInstances )   {
-    instance->createActions();
-  }
+  createActions();
 }
 

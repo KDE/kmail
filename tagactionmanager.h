@@ -39,6 +39,10 @@ namespace Soprano {
   }
 }
 
+namespace MessageCore {
+  class TagListMonitor;
+}
+
 namespace KMail {
 
   class MessageActions;
@@ -91,11 +95,6 @@ namespace KMail {
       void updateActionStates( int numberOfSelectedMessages,
                                const Akonadi::Item &selectedItem );
 
-      /**
-        * Triggers an update of all instances of TagActionManager.
-        */
-      static void triggerUpdate();
-
 
     Q_SIGNALS:
 
@@ -107,6 +106,7 @@ namespace KMail {
 
     private Q_SLOTS:
 
+      void tagsChanged();
       void statementChanged( Soprano::Statement statement );
 
     private:
@@ -115,6 +115,7 @@ namespace KMail {
       MessageActions *mMessageActions;
       QSignalMapper *mMessageTagToggleMapper;
       KXMLGUIClient *mGUIClient;
+      MessageCore::TagListMonitor *mTagListMonitor;
 
       // Maps the resource URI or a tag to the action of a tag.
       // Contains all existing tags
@@ -125,8 +126,6 @@ namespace KMail {
 
       // Needed so we can listen to Nepomuk Tag changes
       QScopedPointer<Soprano::Util::SignalCacheModel> mSopranoModel;
-
-      static QList<TagActionManager*> mInstances;
   };
 }
 
