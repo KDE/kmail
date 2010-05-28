@@ -259,5 +259,14 @@ void DistributionListDialog::slotUser1()
 #ifndef KDEPIM_NEW_DISTRLISTS
   manager.save();
 #endif
-  accept();
+
+  // Only accept when the dist list is really in the addressbook, since we can't detect if the 
+  // user aborted saving in another way, since insertAddressee() lacks a return code.
+#ifdef KDEPIM_NEW_DISTRLISTS
+  if ( !KPIM::DistributionList::findByName( ab, name ).isEmpty() ) {
+#else
+  if ( manager.list( name ) ) {
+#endif
+    accept();
+  }
 }
