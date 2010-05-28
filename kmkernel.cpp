@@ -250,7 +250,7 @@ KMKernel::~KMKernel ()
   delete mMailService;
   mMailService = 0;
 
-  stopAgentInstance();
+  //stopAgentInstance();
   slotSyncConfig();
   mySelf = 0;
   kDebug();
