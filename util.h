@@ -104,6 +104,13 @@ namespace Util {
      * with rfc822 and that are resources.
      */
     Akonadi::AgentInstance::List agentInstances();
+
+    /**
+     * Handles a clicked URL, but only in case the viewer didn't handle it.
+     * Currently only support mailto.
+     */
+    void handleClickedURL( const KUrl &url, uint identity );
+
 }
 }
 

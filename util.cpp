@@ -41,6 +41,7 @@
 #include "imapsettings.h"
 
 #include "messagecore/stringutil.h"
+#include "messagecomposer/messagehelper.h"
 
 #include <kpimutils/email.h>
 #include <kimap/loginjob.h>
@@ -197,3 +198,30 @@ Akonadi::AgentInstance::List KMail::Util::agentInstances()
   }
   return relevantInstances;
 }
+
+void KMail::Util::handleClickedURL( const KUrl &url, uint identity )
+{
+  if ( url.protocol() == "mailto" )
+  {
+    KMime::Message::Ptr msg ( new KMime::Message );
+    MessageHelper::initHeader( msg, KMKernel::self()->identityManager(), identity );
+    msg->contentType()->setCharset("utf-8");
+
+    QMap<QString, QString> fields =  MessageCore::StringUtil::parseMailtoUrl( url );
+
+    msg->to()->fromUnicodeString( fields.value( "to" ),"utf-8" );
+    if ( !fields.value( "subject" ).isEmpty() )
+      msg->subject()->fromUnicodeString( fields.value( "subject" ),"utf-8" );
+    if ( !fields.value( "body" ).isEmpty() )
+      msg->setBody( fields.value( "body" ).toUtf8() );
+    if ( !fields.value( "cc" ).isEmpty() )
+      msg->cc()->fromUnicodeString( fields.value( "cc" ),"utf-8" );
+
+    KMail::Composer * win = KMail::makeComposer( msg, KMail::Composer::New, identity );
+    win->setFocusToSubject();
+    win->show();
+  } else {
+    kWarning() << "Can't handle URL:" << url;
+  }
+}
+

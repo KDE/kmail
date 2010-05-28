@@ -653,16 +653,13 @@ void KMReaderWin::update( bool force )
 
 void KMReaderWin::slotUrlClicked( const Akonadi::Item & item, const KUrl & url )
 {
-  KMMainWidget *mainWidget = dynamic_cast<KMMainWidget*>(mMainWindow);
+  KMMainWidget *mainWidget = dynamic_cast<KMMainWidget*>( mMainWindow );
   uint identity = 0;
   if ( item.isValid() && item.parentCollection().isValid() ) {
     QSharedPointer<FolderCollection> fd = FolderCollection::forCollection( item.parentCollection() );
     identity = fd->identity();
   }
-
-  KMCommand *command = new KMUrlClickedCommand( url, identity, this,
-                                                false, mainWidget );
-  command->start();
+  KMail::Util::handleClickedURL( url, identity );
 }
 
 void KMReaderWin::slotShowReader( KMime::Content* msgPart, bool htmlMail, const QString &encoding )
