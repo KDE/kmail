@@ -119,7 +119,6 @@ public:
       : QWidget( parent )
       {}
   ~ConfigModuleTab() {}
-  void load();
   virtual void save() = 0;
   void defaults();
 signals:
@@ -127,6 +126,7 @@ signals:
   void changed(bool);
 public slots:
   void slotEmitChanged();
+  void load();
 private:
   // reimplement this for loading values of settings which are available
   // via GlobalSettings
