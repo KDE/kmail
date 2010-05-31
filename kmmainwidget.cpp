@@ -874,7 +874,7 @@ void KMMainWidget::createWidgets()
   connect( mMessagePane, SIGNAL( fullSearchRequest() ), this,SLOT( slotRequestFullSearchFromQuickSearch() ) );
   connect( mMessagePane, SIGNAL( selectionChanged() ),
            SLOT( startUpdateMessageActionsTimer() ) );
-
+  connect( mMessagePane, SIGNAL( currentTabChanged() ), this, SLOT( refreshMessageListSelection() ) );
   connect( mMessagePane, SIGNAL( messageActivated(  const Akonadi::Item & ) ),
            this, SLOT( slotMessageActivated( const Akonadi::Item & ) ) );
   connect( mMessagePane, SIGNAL(messageStatusChangeRequest( const Akonadi::Item &, const KPIM::MessageStatus &, const KPIM::MessageStatus &) ),
@@ -944,8 +944,8 @@ void KMMainWidget::createWidgets()
   connect( mAkonadiStandardActionManager, SIGNAL( actionStateUpdated() ), this, SLOT( slotAkonadiStandardActionUpdated() ) );
 
   mAkonadiStandardActionManager->setCollectionSelectionModel( mFolderTreeWidget->folderTreeView()->selectionModel() );
-  mAkonadiStandardActionManager->setItemSelectionModel( mFolderTreeWidget->folderTreeView()->selectionModel() );
-
+  mAkonadiStandardActionManager->setItemSelectionModel( mMessagePane->currentItemSelectionModel() );
+  
   if ( mEnableFavoriteFolderView ) {
 
     mFavoriteCollectionsView = new Akonadi::EntityListView( mGUIClient, this );
@@ -1939,6 +1939,10 @@ void KMMainWidget::slotUpdateMessageTagList( const QString &taglabel )
   toggleMessageSetTag( selectedMessages, taglabel );
 }
 
+void KMMainWidget::refreshMessageListSelection()
+{
+  mAkonadiStandardActionManager->setItemSelectionModel( mMessagePane->currentItemSelectionModel() );
+}
 
 //-----------------------------------------------------------------------------
 // Status setting for threads

@@ -271,6 +271,8 @@ class KMAIL_EXPORT KMMainWidget : public QWidget
 
 
     KAction *akonadiStandardAction( Akonadi::StandardActionManager::Type type );
+    
+    void refreshMessageListSelection();
   signals:
     void messagesTransfered( bool );
     void captionChangeRequest( const QString &caption );
