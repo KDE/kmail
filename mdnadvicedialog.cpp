@@ -140,12 +140,14 @@ KMime::MDN::SendingMode MDNAdviceDialog::checkMDNHeaders(KMime::Message::Ptr msg
     s = KMime::MDN::SentManually;
   }
 
-  // if mode is still 1, we don't have to ask but the loaded default says to always ask.
-  if( mode == 1 ) {
-    mode = requestAdviceOnMDN( "mdnNormalAsk" );
-    s = KMime::MDN::SentManually; // asked user
+  if( MessageFactory::MDNRequested( msg ) ) {
+    if( mode == 3 ) // always send, without asking
+      s = KMime::MDN::SentAutomatically;
+    else {
+      mode = requestAdviceOnMDN( "mdnNormalAsk" );
+      s = KMime::MDN::SentManually; // asked user
+    }
   }
-  //TODO: Andras: somebody should check if this is correct. :)
 
   if( mode == 0 ) // ignore
       MessageInfo::instance()->setMDNSentState( msg.get(), KMMsgMDNIgnore );
