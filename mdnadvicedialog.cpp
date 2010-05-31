@@ -147,6 +147,8 @@ KMime::MDN::SendingMode MDNAdviceDialog::checkMDNHeaders(KMime::Message::Ptr msg
       mode = requestAdviceOnMDN( "mdnNormalAsk" );
       s = KMime::MDN::SentManually; // asked user
     }
+  } else { // if message doesn't have a disposition header, never send anything.
+    mode = 0;
   }
 
   if( mode == 0 ) // ignore
