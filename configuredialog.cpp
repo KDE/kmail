@@ -42,7 +42,6 @@ using KMail::FolderRequester;
 #include "kmmainwidget.h"
 #include "composer.h"
 #include "tag.h"
-#include "tagactionmanager.h"
 
 #include "foldertreewidget.h"
 
@@ -61,6 +60,7 @@ using KPIM::RecentAddresses;
 #include "messageviewer/invitationsettings.h"
 #include "messagelist/core/settings.h"
 #include "messagecore/globalsettings.h"
+#include "messagecore/taglistmonitor.h"
 
 #include "templateparser/templatesconfiguration_kfg.h"
 #include "templateparser/templatesconfiguration.h"
@@ -1901,7 +1901,7 @@ void AppearancePage::MessageTagTab::save()
     tag->saveToNepomuk( saveFlags );
   }
 
-  KMail::TagActionManager::triggerUpdate();
+  MessageCore::TagListMonitor::triggerUpdate();
 }
 
 
