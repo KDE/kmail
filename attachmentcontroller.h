@@ -43,8 +43,13 @@ class AttachmentController : public Message::AttachmentControllerBase
     AttachmentController( Message::AttachmentModel *model, AttachmentView *view, KMComposeWin *composer );
     ~AttachmentController();
 
+  public slots:
+
+     /// @reimp
+    virtual void attachMyPublicKey();
+
   private slots:
-    void attachMyPublicKey();
+
     void identityChanged();
     void actionsCreated();
     void addAttachmentItems( const Akonadi::Item::List &items );
