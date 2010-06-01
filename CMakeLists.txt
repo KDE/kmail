@@ -2,7 +2,6 @@ project(kmail)
 
 include(CheckIncludeFiles)
 
-add_definitions(-DQT3_SUPPORT_WARNINGS)
 add_definitions(-DDISABLE_NEPOMUK_LEGACY)
 
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} ${KDE4_DATA_DIR}/cmake/modules)
@@ -38,19 +37,16 @@ include_directories(
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${KDE4_ENABLE_EXCEPTIONS}")
 
 
-if (QT_QT3SUPPORT_FOUND)
 add_subdirectory(about)
 add_subdirectory(pics)
 add_subdirectory(icons)
 add_subdirectory(avscripts)
 add_subdirectory(tests)
 add_subdirectory(kconf_update)
-endif (QT_QT3SUPPORT_FOUND)
 add_subdirectory(kcm_kpimidentities)
 
 ########### kmailprivate ###############
 
-if (QT_QT3SUPPORT_FOUND)
 set(kmailprivate_LIB_SRCS
    foldercollectionmonitor.cpp
    readablecollectionproxymodel.cpp
@@ -330,5 +326,4 @@ install(FILES
   DESTINATION ${DBUS_INTERFACES_INSTALL_DIR}
 )
 
-endif (QT_QT3SUPPORT_FOUND)
 
