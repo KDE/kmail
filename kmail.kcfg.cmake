@@ -429,8 +429,6 @@
     <entry name="FavoriteFolderViewHeight" type="Int">
       <default>100</default>
     </entry>
-    <entry name="FavoriteFolderIds" type="IntList"/>
-    <entry name="FavoriteFolderNames" type="StringList"/>
     <entry name="FavoriteFolderViewSeenInboxes" type="IntList"/>
   </group>
 
