@@ -45,7 +45,7 @@
 
 #include <cassert>
 
-SnippetWidget::SnippetWidget(KMeditor* editor, KActionCollection* actionCollection, QWidget* parent)
+SnippetWidget::SnippetWidget(KMComposerEditor* editor, KActionCollection* actionCollection, QWidget* parent)
  : QTreeWidget( parent ),
    mEditor( editor ),
    mActionCollection( actionCollection )

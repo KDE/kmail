@@ -14,11 +14,12 @@
 #ifndef __SNIPPETWIDGET_H__
 #define __SNIPPETWIDGET_H__
 
+#include "kmcomposereditor.h"
+
 #include <qstring.h>
 #include <QTreeWidget>
 #include <qrect.h>
 
-#include <messagecomposer/kmeditor.h>
 #include <ktexteditor/view.h>
 #include <KSharedConfig>
 
@@ -37,7 +38,7 @@ class SnippetWidget : public QTreeWidget
   Q_OBJECT
 
 public:
-    SnippetWidget(KMeditor *editor, KActionCollection *actionCollection, QWidget *parent = 0);
+    SnippetWidget(KMComposerEditor *editor, KActionCollection *actionCollection, QWidget *parent = 0);
     ~SnippetWidget();
     QList<SnippetItem * > * getList() { return (&_list); }
     void writeConfig();
@@ -62,7 +63,7 @@ private:
 
     QList<SnippetItem * > _list;
     QMap<QString, QString> _mapSaved;
-    KMeditor *mEditor;
+    KMComposerEditor *mEditor;
     KActionCollection* mActionCollection;
     KSharedConfig::Ptr _cfg;
 
