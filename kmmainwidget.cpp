@@ -1049,6 +1049,8 @@ void KMMainWidget::createWidgets()
            SLOT(slotItemAdded( const Akonadi::Item &, const Akonadi::Collection&) ) );
   connect( kmkernel->monitor(), SIGNAL( itemRemoved( const Akonadi::Item & ) ),
            SLOT(slotItemRemoved( const Akonadi::Item & ) ) );
+  connect( kmkernel->monitor(), SIGNAL( itemMoved( Akonadi::Item,Akonadi::Collection, Akonadi::Collection ) ),
+           SLOT( slotItemMoved( Akonadi::Item, Akonadi::Collection, Akonadi::Collection ) ) );
 }
 
 void KMMainWidget::slotItemAdded( const Akonadi::Item &, const Akonadi::Collection& col)
@@ -1062,6 +1064,15 @@ void KMMainWidget::slotItemAdded( const Akonadi::Item &, const Akonadi::Collecti
 void KMMainWidget::slotItemRemoved( const Akonadi::Item & item)
 {
   if ( item.isValid() && item.parentCollection().isValid() && ( item.parentCollection() == kmkernel->outboxCollectionFolder() ) ) {
+    startUpdateMessageActionsTimer();
+  }
+}
+
+void KMMainWidget::slotItemMoved( Akonadi::Item item, Akonadi::Collection from, Akonadi::Collection to )
+{
+  if( item.isValid() && ( ( from.id() == kmkernel->outboxCollectionFolder().id() )
+                          || to.id() == kmkernel->outboxCollectionFolder().id() ) )
+  {
     startUpdateMessageActionsTimer();
   }
 }
