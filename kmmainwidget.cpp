@@ -3578,7 +3578,7 @@ void KMMainWidget::startUpdateMessageActionsTimer()
   // FIXME: This delay effectively CAN make the actions to be in an incoherent state
   //        Maybe we should mark actions as "dirty" here and check it in every action handler...
   menutimer->stop();
-  menutimer->start( 20 );
+  menutimer->start( 500 );
 }
 
 void KMMainWidget::updateMessageActions()
