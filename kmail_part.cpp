@@ -81,7 +81,6 @@ KMailPart::KMailPart(QWidget *parentWidget, QObject *parent, const QVariantList 
   // any dead letters?
   mKMailKernel->recoverDeadLetters();
 
-  kmsetSignalHandler(kmsignalHandler);
   kmkernel->setupDBus(); // Ok. We are ready for D-Bus requests.
   (void) new KmailpartAdaptor( this );
   QDBusConnection::sessionBus().registerObject( "/KMailPart", this );

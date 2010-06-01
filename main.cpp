@@ -134,8 +134,6 @@ int main(int argc, char *argv[])
   // any dead letters?
   kmailKernel.recoverDeadLetters();
 
-  kmsetSignalHandler(kmsignalHandler);
-
   kmkernel->setupDBus(); // Ok. We are ready for D-Bus requests.
   kmkernel->setStartingUp( false ); // Starting up is finished
 

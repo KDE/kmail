@@ -64,6 +64,7 @@ using KMail::MailServiceImpl;
 #include <kio/jobuidelegate.h>
 #include <kio/netaccess.h>
 #include <kprocess.h>
+#include <KCrash>
 
 #include <kmime/kmime_message.h>
 #include <kmime/kmime_util.h>
@@ -1036,6 +1037,16 @@ void KMKernel::initFolders()
   findCreateDefaultCollection( Akonadi::SpecialMailCollections::Templates );
 }
 
+static void kmCrashHandler( int sigId )
+{
+  fprintf( stderr, "*** KMail got signal %d (Exiting)\n", sigId );
+  // try to cleanup all windows
+  if ( kmkernel ) {
+    kmkernel->dumpDeadLetters();
+    fprintf( stderr, "*** Dead letters dumped.\n" );
+  }
+}
+
 void KMKernel::init()
 {
   the_shuttingDown = false;
@@ -1071,6 +1082,7 @@ void KMKernel::init()
   mBackgroundTasksTimer->start( 5 * 60000 ); // 5 minutes, singleshot
 #endif
 
+  KCrash::setEmergencySaveFunction( kmCrashHandler );
 }
 
 void KMKernel::readConfig()
