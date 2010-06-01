@@ -2402,7 +2402,9 @@ void KMComposeWin::saveMessage( KMime::Message::Ptr message, KMComposeWin::SaveI
   }
 
   if ( !target.isValid() ) {
+    // TODO: Show an error message to the user
     kWarning() << "No default collection for" << saveIn;
+    setEnabled( true );
     return;
   }
 
@@ -2425,7 +2427,9 @@ void KMComposeWin::slotCreateItemResult( KJob *job )
   Q_ASSERT( mPendingCreateItemJobs >= 0 );
 
   if( job->error() ) {
-    kDebug() << "Failed to save a message:" << job->errorString();
+    // TODO: Show an error message to the user
+    kWarning() << "Failed to save a message:" << job->errorString();
+    setEnabled( true );
     return;
   }
 
