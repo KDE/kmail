@@ -821,9 +821,19 @@ void KMHeaders::msgChanged()
     clear();
     return;
   }
-  int i = topItemIndex();
-  int cur = currentItemIndex();
   if (!isUpdatesEnabled()) return;
+
+  // Remember selected messages, current message and some scrollbar data, as we have to restore it
+  const QValueList<int> oldSelectedItems = selectedItems();
+  const int oldCurrentItemIndex = currentItemIndex();
+  const bool scrollbarAtTop = verticalScrollBar() &&
+                              verticalScrollBar()->value() == verticalScrollBar()->minValue();
+  const bool scrollbarAtBottom = verticalScrollBar() &&
+                                 verticalScrollBar()->value() == verticalScrollBar()->maxValue();
+  const HeaderItem * const oldFirstVisibleItem = dynamic_cast<HeaderItem*>( itemAt( QPoint( 0, 0 ) ) );
+  const int oldOffsetOfFirstVisibleItem = itemRect( oldFirstVisibleItem ).y();
+  const uint oldSerNumOfFirstVisibleItem = oldFirstVisibleItem ? oldFirstVisibleItem->msgSerNum() : 0;
+
   QString msgIdMD5;
   QListViewItem *item = currentItem();
   HeaderItem *hi = dynamic_cast<HeaderItem*>(item);
@@ -837,27 +847,26 @@ void KMHeaders::msgChanged()
   // prevent IMAP messages from scrolling to top
   disconnect(this,SIGNAL(currentChanged(QListViewItem*)),
              this,SLOT(highlightMessage(QListViewItem*)));
-  // remember all selected messages
-  QValueList<int> curItems = selectedItems();
+
   updateMessageList(); // do not change the selection
-  // restore the old state, but move up when there are unread message just out of view
-  HeaderItem *topOfList = mItems[i];
-  item = firstChild();
-  QListViewItem *unreadItem = 0;
-  while(item && item != topOfList) {
-    KMMsgBase *msg = mFolder->getMsgBase( static_cast<HeaderItem*>(item)->msgId() );
-    if ( msg->isUnread() || msg->isNew() ) {
-      if ( !unreadItem )
-        unreadItem = item;
-    } else
-      unreadItem = 0;
-    item = item->itemBelow();
+
+  // Restore scrollbar state and selected and current messages
+  setCurrentMsg( oldCurrentItemIndex );
+  setSelectedByIndex( oldSelectedItems, true );
+  if ( scrollbarAtTop ) {
+    setContentsPos( 0, 0 );
+  } else if ( scrollbarAtBottom ) {
+    setContentsPos( 0, contentsHeight() );
+  } else if ( oldSerNumOfFirstVisibleItem > 0 ) {
+    for ( uint i = 0; i < mItems.size(); ++i ) {
+      const KMMsgBase * const mMsgBase = mFolder->getMsgBase( i );
+      if ( mMsgBase->getMsgSerNum() == oldSerNumOfFirstVisibleItem ) {
+        setContentsPos( 0, itemPos( mItems[i] ) - oldOffsetOfFirstVisibleItem );
+        break;
+      }
+    }
   }
-  if(unreadItem == 0)
-      unreadItem = topOfList;
-  setContentsPos( 0, itemPos( unreadItem ));
-  setCurrentMsg( cur );
-  setSelectedByIndex( curItems, true );
+
   connect(this,SIGNAL(currentChanged(QListViewItem*)),
           this,SLOT(highlightMessage(QListViewItem*)));
 
