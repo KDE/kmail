@@ -495,7 +495,7 @@ void KMMainWidget::readPreConfig()
 
   mHtmlPref = MessageViewer::GlobalSettings::self()->htmlMail();
   mHtmlLoadExtPref = MessageViewer::GlobalSettings::self()->htmlLoadExternal();
-  mEnableFavoriteFolderView = GlobalSettings::self()->enableFavoriteFolderView();
+  mEnableFavoriteFolderView = GlobalSettings::self()->enableFavoriteCollectionView();
   mEnableFolderQuickSearch = GlobalSettings::self()->enableFolderQuickSearch();
 }
 
@@ -689,7 +689,7 @@ void KMMainWidget::layoutSplitters()
 
   if ( mFolderViewSplitter ) {
     QList<int> splitterSizes;
-    int ffvHeight = GlobalSettings::self()->favoriteFolderViewHeight();
+    int ffvHeight = GlobalSettings::self()->favoriteCollectionViewHeight();
     int ftHeight = GlobalSettings::self()->folderTreeHeight();
     splitterSizes << ffvHeight << ftHeight;
     mFolderViewSplitter->setSizes( splitterSizes );
@@ -804,7 +804,7 @@ void KMMainWidget::writeConfig()
     GlobalSettings::self()->setSearchAndHeaderHeight( headersHeight );
     GlobalSettings::self()->setSearchAndHeaderWidth( mMessagePane->width() );
     if ( mFavoriteCollectionsView ) {
-      GlobalSettings::self()->setFavoriteFolderViewHeight( mFavoriteCollectionsView->height() );
+      GlobalSettings::self()->setFavoriteCollectionViewHeight( mFavoriteCollectionsView->height() );
       GlobalSettings::self()->setFolderTreeHeight( mFolderTreeWidget->height() );
       if ( !mLongFolderList )
         GlobalSettings::self()->setFolderViewHeight( mFolderViewSplitter->height() );
