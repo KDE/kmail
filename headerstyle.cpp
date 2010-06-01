@@ -826,8 +826,15 @@ namespace KMail {
 	    "   <td style=\"min-width: 6px; background: url("+imgpath+"top_right.png); \"></td> </tr> \n"
 	    "   <tr> \n"
 	    "   <td style=\"min-width: 6px; max-width: 6px; background: url("+imgpath+"left.png); \"></td> \n"
-	    "   <td style=\"\"> \n"
-	    "    <table style=\"color: "+fontColor.name()+" ! important; margin: 1px; border-spacing: 0px;\" cellpadding=0> \n";
+	    "   <td style=\"\"> \n";
+
+  headerStr +=
+    "     <div class=\"noprint\" style=\"z-index: 1; float:right; position: relative; top: -35px; right: 20px ;\">\n"
+    "       <img src=\""+imgpath+"icon.png\">\n"
+    "     </div>\n";
+
+  headerStr +=
+    "     <table style=\"color: "+fontColor.name()+" ! important; margin: 1px; border-spacing: 0px;\" cellpadding=0> \n";
 
 	// subject
 	//strToHtml( message->subject() )
@@ -904,10 +911,6 @@ namespace KMail {
 
     // kmail icon
     if(topLevel) {
-        headerStr +=
-        "<div class=\"noprint\" style=\"position: absolute; top: -14px; right: 30px; width: 91px; height: 91px;\">\n"
-        "<img style=\"float: right;\" src=\""+imgpath+"icon.png\">\n"
-        "</div>\n";
 
         // attachments
         headerStr +=
