@@ -31,6 +31,7 @@
 #ifdef KDEPIM_NEW_DISTRLISTS
 #include <libkdepim/distributionlist.h>
 #endif
+#include <libkdepim/kaddrbook.h>
 
 #include <klistview.h>
 #include <klocale.h>
@@ -153,8 +154,6 @@ void DistributionListDialog::slotUser1()
 {
   bool isEmpty = true;
 
-  KABC::AddressBook *ab = KABC::StdAddressBook::self( true );
-
   QListViewItem *i = mRecipientsList->firstChild();
   while( i ) {
     DistributionListItem *item = static_cast<DistributionListItem *>( i );
@@ -188,6 +187,8 @@ void DistributionListDialog::slotUser1()
       return;
   }
 
+  KABC::AddressBook *ab = KABC::StdAddressBook::self( true );
+
 #ifdef KDEPIM_NEW_DISTRLISTS
   if ( !KPIM::DistributionList::findByName( ab, name ).isEmpty() ) {
 #else
@@ -199,10 +200,13 @@ void DistributionListDialog::slotUser1()
     return;
   }
 
-  // FIXME: Ask the user which resource to save to instead of the default
+  KABC::Resource* const resource = KAddrBookExternal::selectResourceForSaving( ab );
+  if ( !resource )
+    return;
+
   // Ask for a save ticket here, we use it for inserting the recipients into the addressbook and
   // also for saving the addressbook, see https://issues.kolab.org/issue4281
-  KABC::Ticket *ticket = ab->requestSaveTicket( 0 /*default resource */ );
+  KABC::Ticket *ticket = ab->requestSaveTicket( resource );
   if ( !ticket ) {
     kdWarning(5006) << "Unable to get save ticket!" << endl;
     return;
@@ -218,7 +222,7 @@ void DistributionListDialog::slotUser1()
     if ( item->isOn() ) {
       kdDebug() << "  " << item->addressee().fullEmail() << endl;
       if ( item->isTransient() ) {
-        ab->insertAddressee( item->addressee() );
+        resource->insertAddressee( item->addressee() );
       }
       if ( item->email() == item->addressee().preferredEmail() ) {
         dlist.insertEntry( item->addressee() );
@@ -229,7 +233,7 @@ void DistributionListDialog::slotUser1()
     i = i->nextSibling();
   }
 
-  ab->insertAddressee( dlist );
+  resource->insertAddressee( dlist );
 #else
   KABC::DistributionList *dlist = new KABC::DistributionList( &manager, name );
   i = mRecipientsList->firstChild();
@@ -238,7 +242,7 @@ void DistributionListDialog::slotUser1()
     if ( item->isOn() ) {
       kdDebug() << "  " << item->addressee().fullEmail() << endl;
       if ( item->isTransient() ) {
-        ab->insertAddressee( item->addressee() );
+        resource->insertAddressee( item->addressee() );
       }
       if ( item->email() == item->addressee().preferredEmail() ) {
         dlist->insertEntry( item->addressee() );
