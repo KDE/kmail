@@ -1497,7 +1497,7 @@ KSharedConfig::Ptr KMKernel::config()
   assert( mySelf );
   if ( !mySelf->mConfig )
   {
-    mySelf->mConfig = KSharedConfig::openConfig( "kmailrc" );
+    mySelf->mConfig = KSharedConfig::openConfig( "kmail2rc" );
     // Check that all updates have been run on the config file:
     KMail::checkConfigUpdates();
     MessageList::Core::Settings::self()->setSharedConfig( mySelf->mConfig );

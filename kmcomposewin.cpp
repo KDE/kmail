@@ -3661,7 +3661,7 @@ void KMComposeWin::slotIdentityChanged( uint uoid, bool initalChange )
 //-----------------------------------------------------------------------------
 void KMComposeWin::slotSpellcheckConfig()
 {
-  mEditor->showSpellConfigDialog( "kmailrc" );
+  mEditor->showSpellConfigDialog( "kmail2rc" );
 }
 
 //-----------------------------------------------------------------------------
