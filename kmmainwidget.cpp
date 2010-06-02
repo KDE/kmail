@@ -3796,6 +3796,9 @@ void KMMainWidget::updateFolderMenu()
     kDebug() << "Enablign send queued";
     actionlist << mSendQueued;
   }
+  if( mCurrentFolder && mCurrentFolder->collection().id() != kmkernel->trashCollectionFolder().id() ) {
+    actionlist << mTrashAction;
+  }
   mGUIClient->unplugActionList( QLatin1String( "outbox_folder_actionlist" ) );
   mGUIClient->plugActionList( QLatin1String( "outbox_folder_actionlist" ), actionlist );
   actionlist.clear();

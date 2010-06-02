@@ -213,9 +213,8 @@
   <Separator/>
   <Action name="mark_all_as_read" />
   <Action name="search_messages" />
-  <Action name="move_to_trash" />
-  <Action name="empty"/>
   <ActionList name="outbox_folder_actionlist" />
+  <Action name="empty"/>
   <Separator/>
   <Action name="akonadi_collection_create" />
   <Action name="akonadi_collection_copy_to_menu"/>
