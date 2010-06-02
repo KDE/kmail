@@ -1043,7 +1043,16 @@ void KMKernel::createDefaultCollectionDone( KJob * job)
   const Akonadi::Collection col = requestJob->collection();
   if ( !( col.rights() & Akonadi::Collection::AllRights ) )
     emergencyExit( i18n("You do not have read/write permission to your inbox folder.") );
+
+  connect( Akonadi::SpecialMailCollections::self(), SIGNAL( defaultCollectionsChanged() ),
+           this, SLOT( slotDefaultCollectionsChanged () ) );
 }
+
+void KMKernel::slotDefaultCollectionsChanged()
+{
+  initFolders();
+}
+
 
 //-----------------------------------------------------------------------------
 void KMKernel::initFolders()
