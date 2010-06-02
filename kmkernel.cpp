@@ -1057,7 +1057,8 @@ void KMKernel::slotDefaultCollectionsChanged()
 //-----------------------------------------------------------------------------
 void KMKernel::initFolders()
 {
-
+  the_draftsCollectionFolder = the_inboxCollectionFolder = the_outboxCollectionFolder = the_sentCollectionFolder
+    = the_templatesCollectionFolder = the_trashCollectionFolder = -1;
   findCreateDefaultCollection( Akonadi::SpecialMailCollections::Inbox );
   findCreateDefaultCollection( Akonadi::SpecialMailCollections::Outbox );
   findCreateDefaultCollection( Akonadi::SpecialMailCollections::SentMail );
