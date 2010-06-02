@@ -146,7 +146,7 @@ KMKernel::KMKernel (QObject *parent, const char *name) :
       proc.start();
       bool result = proc.waitForStarted();
       if ( result ) {
-        result = proc.waitForFinished();
+        result = proc.waitForFinished( -1 );
       }
       if ( result && proc.exitCode() == 0 ) {
         kDebug() << "Akonadi migration has been successful";
