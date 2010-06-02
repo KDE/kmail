@@ -412,12 +412,12 @@ private:
 
 
 
-  Akonadi::Collection the_inboxCollectionFolder;
-  Akonadi::Collection the_outboxCollectionFolder;
-  Akonadi::Collection the_sentCollectionFolder;
-  Akonadi::Collection the_trashCollectionFolder;
-  Akonadi::Collection the_draftsCollectionFolder;
-  Akonadi::Collection the_templatesCollectionFolder;
+  Akonadi::Collection::Id the_inboxCollectionFolder;
+  Akonadi::Collection::Id the_outboxCollectionFolder;
+  Akonadi::Collection::Id the_sentCollectionFolder;
+  Akonadi::Collection::Id the_trashCollectionFolder;
+  Akonadi::Collection::Id the_draftsCollectionFolder;
+  Akonadi::Collection::Id the_templatesCollectionFolder;
 
   UndoStack *the_undoStack;
   KMFilterMgr *the_filterMgr;

@@ -1,14 +1,16 @@
-Migrate favorite folder view from kmail to akonadi
+Migrate favorite folder view from kmail to akonadi [DONE]
 
 
 Migrate some config to akonadi:
 
-  mUseCustomIcons = configGroup.readEntry( "UseCustomIcons", false );
-  mNormalIconPath = configGroup.readEntry( "NormalIconPath" );
-  mUnreadIconPath = configGroup.readEntry( "UnreadIconPath" );
+  mUseCustomIcons = configGroup.readEntry( "UseCustomIcons", false ); [DONE]
+  mNormalIconPath = configGroup.readEntry( "NormalIconPath" ); [DONE]
+  mUnreadIconPath = configGroup.readEntry( "UnreadIconPath" ); [DONE]
+
   mHideInSelectionDialog = configGroup.readEntry( "HideInSelectionDialog", false );
 We use now Collection::Id(); and not idString();
-Port shortcut
+
+Port shortcut [DONE]
 
 
 Migrate color config

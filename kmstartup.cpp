@@ -27,7 +27,6 @@
 #include <kconfig.h>
 #include <kstandarddirs.h>
 #include <kmessagebox.h>
-#include <kcrash.h>
 #include <kglobal.h>
 #include <kaboutdata.h>
 #include <kiconloader.h>
@@ -46,40 +45,6 @@
 #include <qfile.h>
 
 #undef Status // stupid X headers
-
-extern "C" {
-
-// Crash recovery signal handler
-void kmsignalHandler(int sigId)
-{
-  kmsetSignalHandler(SIG_DFL);
-  fprintf(stderr, "*** KMail got signal %d (Exiting)\n", sigId);
-  // try to cleanup all windows
-  if (kmkernel) kmkernel->dumpDeadLetters();
-  ::exit(-1); //
-}
-
-// Crash recovery signal handler
-void kmcrashHandler(int sigId)
-{
-  kmsetSignalHandler(SIG_DFL);
-  fprintf(stderr, "*** KMail got signal %d (Crashing)\n", sigId);
-  // try to cleanup all windows
-  if (kmkernel) kmkernel->dumpDeadLetters();
-  // Return to DrKonqi.
-}
-//-----------------------------------------------------------------------------
-
-
-void kmsetSignalHandler(void (*handler)(int))
-{
-  KDE_signal(SIGTERM, handler);
-  KDE_signal(SIGHUP,  handler);
-  KCrash::setEmergencySaveFunction(kmcrashHandler);
-}
-
-}
-//-----------------------------------------------------------------------------
 
 namespace KMail {
 

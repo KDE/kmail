@@ -292,7 +292,7 @@ void MessageActions::updateActions()
   mToggleFlagAction->setEnabled( flagsAvailable );
   mToggleToActAction->setEnabled( flagsAvailable );
 
-  if ( mCurrentItem.isValid() ) {
+  if ( mCurrentItem.hasPayload<KMime::Message::Ptr>() ) {
     KPIM::MessageStatus status;
     status.setStatusFromFlags( mCurrentItem.flags() );
     mToggleToActAction->setChecked( status.isToAct() );

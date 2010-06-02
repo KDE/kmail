@@ -64,6 +64,7 @@ using KMail::MailServiceImpl;
 #include <kio/jobuidelegate.h>
 #include <kio/netaccess.h>
 #include <kprocess.h>
+#include <KCrash>
 
 #include <kmime/kmime_message.h>
 #include <kmime/kmime_util.h>
@@ -223,6 +224,13 @@ KMKernel::KMKernel (QObject *parent, const char *name) :
   }
   // till here ================================================
 
+  the_draftsCollectionFolder = -1;
+  the_inboxCollectionFolder = -1;
+  the_outboxCollectionFolder = -1;
+  the_sentCollectionFolder = -1;
+  the_templatesCollectionFolder = -1;
+  the_trashCollectionFolder = -1;
+  
   mFolderCollectionMonitor = new FolderCollectionMonitor( this );
   Akonadi::Session *session = new Akonadi::Session( "KMail Kernel ETM", this );
   monitor()->setSession( session );
@@ -1036,6 +1044,16 @@ void KMKernel::initFolders()
   findCreateDefaultCollection( Akonadi::SpecialMailCollections::Templates );
 }
 
+static void kmCrashHandler( int sigId )
+{
+  fprintf( stderr, "*** KMail got signal %d (Exiting)\n", sigId );
+  // try to cleanup all windows
+  if ( kmkernel ) {
+    kmkernel->dumpDeadLetters();
+    fprintf( stderr, "*** Dead letters dumped.\n" );
+  }
+}
+
 void KMKernel::init()
 {
   the_shuttingDown = false;
@@ -1071,6 +1089,7 @@ void KMKernel::init()
   mBackgroundTasksTimer->start( 5 * 60000 ); // 5 minutes, singleshot
 #endif
 
+  KCrash::setEmergencySaveFunction( kmCrashHandler );
 }
 
 void KMKernel::readConfig()
@@ -1152,10 +1171,10 @@ void KMKernel::cleanup(void)
 
   KSharedConfig::Ptr config =  KMKernel::config();
   KConfigGroup group(config, "General");
-  if ( the_trashCollectionFolder.isValid() ) {
+  if ( the_trashCollectionFolder > 0 ) {
     if ( group.readEntry( "empty-trash-on-exit", false ) ) {
-      if ( the_trashCollectionFolder.statistics().count() > 0 ) {
-        mFolderCollectionMonitor->expunge( the_trashCollectionFolder );
+      if ( collectionFromId( the_trashCollectionFolder ).statistics().count() > 0 ) {
+        mFolderCollectionMonitor->expunge( collectionFromId( the_trashCollectionFolder ) );
       }
     }
   }
@@ -1707,44 +1726,44 @@ void KMKernel::updatedTemplates()
 
 Akonadi::Collection KMKernel::inboxCollectionFolder()
 {
-  if ( !the_inboxCollectionFolder.isValid() )
-    the_inboxCollectionFolder = Akonadi::SpecialMailCollections::self()->defaultCollection( Akonadi::SpecialMailCollections::Inbox );
-  return the_inboxCollectionFolder;
+  if ( the_inboxCollectionFolder < 0 )
+    the_inboxCollectionFolder = Akonadi::SpecialMailCollections::self()->defaultCollection( Akonadi::SpecialMailCollections::Inbox ).id();
+  return collectionFromId( the_inboxCollectionFolder );
 }
 
 Akonadi::Collection KMKernel::outboxCollectionFolder()
 {
-  if ( !the_outboxCollectionFolder.isValid() )
-    the_outboxCollectionFolder = Akonadi::SpecialMailCollections::self()->defaultCollection( Akonadi::SpecialMailCollections::Outbox );
-  return the_outboxCollectionFolder;
+  if ( the_outboxCollectionFolder < 0 )
+    the_outboxCollectionFolder = Akonadi::SpecialMailCollections::self()->defaultCollection( Akonadi::SpecialMailCollections::Outbox ).id();
+  return collectionFromId( the_outboxCollectionFolder );
 }
 
 Akonadi::Collection KMKernel::sentCollectionFolder()
 {
-  if ( !the_sentCollectionFolder.isValid() )
-    the_sentCollectionFolder = Akonadi::SpecialMailCollections::self()->defaultCollection( Akonadi::SpecialMailCollections::SentMail );
-  return the_sentCollectionFolder;
+  if ( the_sentCollectionFolder < 0 )
+    the_sentCollectionFolder = Akonadi::SpecialMailCollections::self()->defaultCollection( Akonadi::SpecialMailCollections::SentMail ).id();
+  return collectionFromId( the_sentCollectionFolder );
 }
 
 Akonadi::Collection KMKernel::trashCollectionFolder()
 {
-  if ( !the_trashCollectionFolder.isValid() )
-    the_trashCollectionFolder = Akonadi::SpecialMailCollections::self()->defaultCollection( Akonadi::SpecialMailCollections::Trash );
-  return the_trashCollectionFolder;
+  if ( the_trashCollectionFolder < 0 )
+    the_trashCollectionFolder = Akonadi::SpecialMailCollections::self()->defaultCollection( Akonadi::SpecialMailCollections::Trash ).id();
+  return collectionFromId( the_trashCollectionFolder );
 }
 
 Akonadi::Collection KMKernel::draftsCollectionFolder()
 {
-  if ( !the_draftsCollectionFolder.isValid() )
-    the_draftsCollectionFolder = Akonadi::SpecialMailCollections::self()->defaultCollection( Akonadi::SpecialMailCollections::Drafts );
-  return the_draftsCollectionFolder;
+  if ( the_draftsCollectionFolder < 0 )
+    the_draftsCollectionFolder = Akonadi::SpecialMailCollections::self()->defaultCollection( Akonadi::SpecialMailCollections::Drafts ).id();
+  return collectionFromId( the_draftsCollectionFolder );
 }
 
 Akonadi::Collection KMKernel::templatesCollectionFolder()
 {
-  if ( !the_templatesCollectionFolder.isValid() )
-    the_templatesCollectionFolder = Akonadi::SpecialMailCollections::self()->defaultCollection( Akonadi::SpecialMailCollections::Templates );
-  return the_templatesCollectionFolder;
+  if ( the_templatesCollectionFolder < 0 )
+    the_templatesCollectionFolder = Akonadi::SpecialMailCollections::self()->defaultCollection( Akonadi::SpecialMailCollections::Templates ).id();
+  return collectionFromId( the_templatesCollectionFolder );
 }
 
 bool KMKernel::isSystemFolderCollection( const Akonadi::Collection &col)

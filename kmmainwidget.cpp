@@ -495,7 +495,7 @@ void KMMainWidget::readPreConfig()
 
   mHtmlPref = MessageViewer::GlobalSettings::self()->htmlMail();
   mHtmlLoadExtPref = MessageViewer::GlobalSettings::self()->htmlLoadExternal();
-  mEnableFavoriteFolderView = GlobalSettings::self()->enableFavoriteFolderView();
+  mEnableFavoriteFolderView = GlobalSettings::self()->enableFavoriteCollectionView();
   mEnableFolderQuickSearch = GlobalSettings::self()->enableFolderQuickSearch();
 }
 
@@ -689,7 +689,7 @@ void KMMainWidget::layoutSplitters()
 
   if ( mFolderViewSplitter ) {
     QList<int> splitterSizes;
-    int ffvHeight = GlobalSettings::self()->favoriteFolderViewHeight();
+    int ffvHeight = GlobalSettings::self()->favoriteCollectionViewHeight();
     int ftHeight = GlobalSettings::self()->folderTreeHeight();
     splitterSizes << ffvHeight << ftHeight;
     mFolderViewSplitter->setSizes( splitterSizes );
@@ -804,7 +804,7 @@ void KMMainWidget::writeConfig()
     GlobalSettings::self()->setSearchAndHeaderHeight( headersHeight );
     GlobalSettings::self()->setSearchAndHeaderWidth( mMessagePane->width() );
     if ( mFavoriteCollectionsView ) {
-      GlobalSettings::self()->setFavoriteFolderViewHeight( mFavoriteCollectionsView->height() );
+      GlobalSettings::self()->setFavoriteCollectionViewHeight( mFavoriteCollectionsView->height() );
       GlobalSettings::self()->setFolderTreeHeight( mFolderTreeWidget->height() );
       if ( !mLongFolderList )
         GlobalSettings::self()->setFolderViewHeight( mFolderViewSplitter->height() );
@@ -1049,6 +1049,8 @@ void KMMainWidget::createWidgets()
            SLOT(slotItemAdded( const Akonadi::Item &, const Akonadi::Collection&) ) );
   connect( kmkernel->monitor(), SIGNAL( itemRemoved( const Akonadi::Item & ) ),
            SLOT(slotItemRemoved( const Akonadi::Item & ) ) );
+  connect( kmkernel->monitor(), SIGNAL( itemMoved( Akonadi::Item,Akonadi::Collection, Akonadi::Collection ) ),
+           SLOT( slotItemMoved( Akonadi::Item, Akonadi::Collection, Akonadi::Collection ) ) );
 }
 
 void KMMainWidget::slotItemAdded( const Akonadi::Item &, const Akonadi::Collection& col)
@@ -1062,6 +1064,15 @@ void KMMainWidget::slotItemAdded( const Akonadi::Item &, const Akonadi::Collecti
 void KMMainWidget::slotItemRemoved( const Akonadi::Item & item)
 {
   if ( item.isValid() && item.parentCollection().isValid() && ( item.parentCollection() == kmkernel->outboxCollectionFolder() ) ) {
+    startUpdateMessageActionsTimer();
+  }
+}
+
+void KMMainWidget::slotItemMoved( Akonadi::Item item, Akonadi::Collection from, Akonadi::Collection to )
+{
+  if( item.isValid() && ( ( from.id() == kmkernel->outboxCollectionFolder().id() )
+                          || to.id() == kmkernel->outboxCollectionFolder().id() ) )
+  {
     startUpdateMessageActionsTimer();
   }
 }
@@ -3567,7 +3578,7 @@ void KMMainWidget::startUpdateMessageActionsTimer()
   // FIXME: This delay effectively CAN make the actions to be in an incoherent state
   //        Maybe we should mark actions as "dirty" here and check it in every action handler...
   menutimer->stop();
-  menutimer->start( 20 );
+  menutimer->start( 500 );
 }
 
 void KMMainWidget::updateMessageActions()
