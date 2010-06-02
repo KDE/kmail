@@ -120,34 +120,47 @@ KMKernel::KMKernel (QObject *parent, const char *name) :
   Akonadi::AttributeFactory::registerAttribute<Akonadi::SearchDescriptionAttribute>();
 
   // Akonadi migration
-  KConfig config( "kmail-migratorrc" );
-  KConfigGroup migrationCfg( &config, "Migration" );
-  const bool enabled = migrationCfg.readEntry( "Enabled", false );
-  const int currentVersion = migrationCfg.readEntry( "Version", 0 );
-  const int targetVersion = migrationCfg.readEntry( "TargetVersion", 1 );
-  if ( enabled && currentVersion < targetVersion ) {
-    kDebug() << "Performing Akonadi migration. Good luck!";
-    KProcess proc;
-    QStringList args = QStringList() << "--interactive-on-change";
-    const QString path = KStandardDirs::findExe( QLatin1String("kmail-migrator" ) );
-    proc.setProgram( path, args );
-    proc.start();
-    bool result = proc.waitForStarted();
-    if ( result ) {
-      result = proc.waitForFinished();
+  // check if there is something to migrate at all
+  bool needMigration = true;
+  const QFileInfo oldConfigFileInfo( KStandardDirs::locateLocal( "config", "kmailrc" ) );
+  if ( !oldConfigFileInfo.exists() || !oldConfigFileInfo.isFile() ) {
+    const QFileInfo oldDataDirFileInfo( KStandardDirs::locateLocal( "data", "kmail" ) );
+    if ( !oldDataDirFileInfo.exists() || !oldDataDirFileInfo.isDir() ) {
+      // neither config or data, the migrator cannot do anything useful anyways
+      needMigration = false;
     }
-    if ( result && proc.exitCode() == 0 ) {
-      kDebug() << "Akonadi migration has been successful";
-      migrationCfg.writeEntry( "Version", targetVersion );
-      migrationCfg.sync();
-    } else {
-      // exit code 1 means it is already running, so we are probably called by a migrator instance
-      kError() << "Akonadi migration failed!";
-      kError() << "command was: " << proc.program();
-      kError() << "exit code: " << proc.exitCode();
-      kError() << "stdout: " << proc.readAllStandardOutput();
-      kError() << "stderr: " << proc.readAllStandardError();
-      exit( 42 );
+  }
+
+  if ( needMigration ) {
+    KConfig config( "kmail-migratorrc" );
+    KConfigGroup migrationCfg( &config, "Migration" );
+    const bool enabled = migrationCfg.readEntry( "Enabled", false );
+    const int currentVersion = migrationCfg.readEntry( "Version", 0 );
+    const int targetVersion = migrationCfg.readEntry( "TargetVersion", 1 );
+    if ( enabled && currentVersion < targetVersion ) {
+      kDebug() << "Performing Akonadi migration. Good luck!";
+      KProcess proc;
+      QStringList args = QStringList() << "--interactive-on-change";
+      const QString path = KStandardDirs::findExe( QLatin1String("kmail-migrator" ) );
+      proc.setProgram( path, args );
+      proc.start();
+      bool result = proc.waitForStarted();
+      if ( result ) {
+        result = proc.waitForFinished();
+      }
+      if ( result && proc.exitCode() == 0 ) {
+        kDebug() << "Akonadi migration has been successful";
+        migrationCfg.writeEntry( "Version", targetVersion );
+        migrationCfg.sync();
+      } else {
+        // exit code 1 means it is already running, so we are probably called by a migrator instance
+        kError() << "Akonadi migration failed!";
+        kError() << "command was: " << proc.program();
+        kError() << "exit code: " << proc.exitCode();
+        kError() << "stdout: " << proc.readAllStandardOutput();
+        kError() << "stderr: " << proc.readAllStandardError();
+        exit( 42 );
+      }
     }
   }
 #ifdef __GNUC__
@@ -230,7 +243,7 @@ KMKernel::KMKernel (QObject *parent, const char *name) :
   the_sentCollectionFolder = -1;
   the_templatesCollectionFolder = -1;
   the_trashCollectionFolder = -1;
-  
+
   mFolderCollectionMonitor = new FolderCollectionMonitor( this );
   Akonadi::Session *session = new Akonadi::Session( "KMail Kernel ETM", this );
   monitor()->setSession( session );
