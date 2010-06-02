@@ -1298,7 +1298,7 @@ void KMKernel::slotConfigChanged()
 //static
 QString KMKernel::localDataPath()
 {
-  return KStandardDirs::locateLocal( "data", "kmail/" );
+  return KStandardDirs::locateLocal( "data", "kmail2/" );
 }
 
 //-------------------------------------------------------------------------------
