@@ -94,7 +94,7 @@ void lockOrDie() {
 // Check and create a lock file to prevent concurrent access to kmail files
   QString appName = KGlobal::mainComponent().componentName();
   if ( appName.isEmpty() )
-    appName = "kmail";
+    appName = "kmail2";
 
   QString programName;
   const KAboutData *about = KGlobal::mainComponent().aboutData();
@@ -103,7 +103,7 @@ void lockOrDie() {
   if ( programName.isEmpty() )
     programName = i18n("KMail");
 
-  QString lockLocation = KStandardDirs::locateLocal("data", "kmail/lock");
+  QString lockLocation = KStandardDirs::locateLocal("data", "kmail2/lock");
   KConfig config(lockLocation, KConfig::SimpleConfig);
   KConfigGroup group(&config, "");
   int oldPid = group.readEntry("pid", -1 );
@@ -228,7 +228,7 @@ void insertLibraryCataloguesAndIcons() {
 
 void cleanup()
 {
-  const QString lockLocation = KStandardDirs::locateLocal("data", "kmail/lock");
+  const QString lockLocation = KStandardDirs::locateLocal("data", "kmail2/lock");
   KConfig config(lockLocation, KConfig::SimpleConfig);
   KConfigGroup group(&config, "");
   group.writeEntry("pid", -1);

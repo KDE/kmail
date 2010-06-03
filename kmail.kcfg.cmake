@@ -7,7 +7,7 @@
   <include>kglobalsettings.h</include>
   <include>kcolorscheme.h</include>
   <include>composer.h</include>
-  <kcfgfile name="kmailrc"/>
+  <kcfgfile name="kmail2rc"/>
   <group name="Behaviour">
       <entry name="ActionEnterFolder"  type="Enum">
         <label></label>

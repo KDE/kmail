@@ -296,7 +296,7 @@ install(FILES
   DESTINATION ${KCFG_INSTALL_DIR}
 )
 install(FILES kmail.antispamrc kmail.antivirusrc  DESTINATION ${CONFIG_INSTALL_DIR})
-install(FILES tips  DESTINATION ${DATA_INSTALL_DIR}/kmail)
+install(FILES tips  DESTINATION ${DATA_INSTALL_DIR}/kmail2)
 install(FILES
   kmail_config_misc.desktop
   kmail_config_appearance.desktop
@@ -312,7 +312,7 @@ install(FILES
   kmreadermainwin.rc
   kmail.notifyrc
   kmail_part.rc
-  DESTINATION ${DATA_INSTALL_DIR}/kmail
+  DESTINATION ${DATA_INSTALL_DIR}/kmail2
 )
 install(FILES dbusmail.desktop DESTINATION ${SERVICETYPES_INSTALL_DIR})
 install(TARGETS

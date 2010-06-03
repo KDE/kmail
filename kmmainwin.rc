@@ -213,7 +213,7 @@
   <Separator/>
   <Action name="mark_all_as_read" />
   <Action name="search_messages" />
-  <Action name="move_to_trash" />
+  <ActionList name="outbox_folder_actionlist" />
   <Action name="empty"/>
   <Separator/>
   <Action name="akonadi_collection_create" />
@@ -228,13 +228,13 @@
   <Action name="folder_shortcut_command"/>
   <Action name="akonadi_collection_properties"/>
   <Separator/>
-  <Action name="akonadi_manage_local_subscriptions"/>
+  <ActionList name="collectionview_actionlist" />
  </Menu>
 
  <Menu name="akonadi_messagelist_contextmenu">
   <Action name="message_reply_menu"/>
   <Action name="message_forward"/>
-  <Action name="send_again"/>
+  <ActionList name="messagelist_actionlist" />
   <Separator/>
   <action name="set_status"/>
   <action name="thread_status"/>

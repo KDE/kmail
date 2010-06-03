@@ -2918,9 +2918,9 @@ void KMMainWidget::setupActions()
   connect(mActMenu, SIGNAL(aboutToShow()), SLOT(getAccountMenu()));
 
   {
-    KAction *action = new KAction(KIcon("mail-send"), i18n("&Send Queued Messages"), this);
-    actionCollection()->addAction("send_queued", action );
-    connect(action, SIGNAL(triggered(bool)), SLOT(slotSendQueued()));
+    mSendQueued = new KAction(KIcon("mail-send"), i18n("&Send Queued Messages"), this);
+    actionCollection()->addAction("send_queued", mSendQueued );
+    connect(mSendQueued, SIGNAL(triggered(bool)), SLOT(slotSendQueued()));
   }
   {
     KAction *action = new KAction( i18n("Online status (unknown)"), this );
@@ -3710,11 +3710,20 @@ void KMMainWidget::updateMessageActions()
   MessageStatus status;
   status.setStatusFromFlags( currentMessage.flags() );
 
-  mSendAgainAction->setEnabled(
-      single_actions &&
-      ( ( currentMessage.isValid() && status.isSent() ) ||
-        ( currentMessage.isValid() && kmkernel->folderIsSentMailFolder( mCurrentFolder->collection() ) ) )
-    );
+  QList< QAction *> actionList;
+  if( single_actions && ( ( currentMessage.isValid() && status.isSent() ) ||
+        ( currentMessage.isValid() && kmkernel->folderIsSentMailFolder( mCurrentFolder->collection() ) ) ) ) {
+    actionList << mSendAgainAction;
+  } else if( single_actions ) {
+    actionList << messageActions()->editAction();
+  }
+  mGUIClient->unplugActionList( QLatin1String( "messagelist_actionlist" ) );
+  mGUIClient->plugActionList( QLatin1String( "messagelist_actionlist" ), actionList );
+//         mSendAgainAction->setEnabled(
+//       single_actions &&
+//       ( ( currentMessage.isValid() && status.isSent() ) ||
+//         ( currentMessage.isValid() && kmkernel->folderIsSentMailFolder( mCurrentFolder->collection() ) ) )
+//     );
   mSaveAsAction->setEnabled( mass_actions );
 
   bool mails = mCurrentFolder&& mCurrentFolder->isValid() && mCurrentFolder->statistics().count() > 0;
@@ -3781,7 +3790,19 @@ void KMMainWidget::updateFolderMenu()
                                    && ( mCurrentFolder->collection().rights() & Collection::CanDeleteCollection )
                                    && !mCurrentFolder->isSystemFolder()
                                    && folderWithContent);
-
+  QList< QAction* > actionlist;
+  if ( mCurrentFolder && mCurrentFolder->collection().id() == kmkernel->outboxCollectionFolder().id() &&
+      kmkernel->outboxCollectionFolder().statistics().count() > 0 ) {
+    kDebug() << "Enablign send queued";
+    actionlist << mSendQueued;
+  }
+  if( mCurrentFolder && mCurrentFolder->collection().id() != kmkernel->trashCollectionFolder().id() ) {
+    actionlist << mTrashAction;
+  }
+  mGUIClient->unplugActionList( QLatin1String( "outbox_folder_actionlist" ) );
+  mGUIClient->plugActionList( QLatin1String( "outbox_folder_actionlist" ), actionlist );
+  actionlist.clear();
+  
   const bool isASearchFolder = mCurrentFolder && mCurrentFolder->collection().resource() == QLatin1String( "akonadi_search_resource" );
   mRemoveFolderAction->setText( isASearchFolder ? i18n("&Delete Search") : i18n("&Delete Folder") );
 
@@ -3803,6 +3824,13 @@ void KMMainWidget::updateFolderMenu()
   mPreferHtmlLoadExtAction->setChecked( mHtmlLoadExtPref ? !mFolderHtmlLoadExtPref : mFolderHtmlLoadExtPref );
   mRemoveDuplicatesAction->setEnabled( !multiFolder && mCurrentFolder && mCurrentFolder->canDeleteMessages() );
   mShowFolderShortcutDialogAction->setEnabled( !multiFolder && folderWithContent );
+
+  if( mCurrentFolder && !kmkernel->isSystemFolderCollection( mCurrentFolder->collection() ) ) {
+    actionlist << akonadiStandardAction( Akonadi::StandardActionManager::ManageLocalSubscriptions );
+  }
+  mGUIClient->unplugActionList( QLatin1String( "collectionview_actionlist" ) );
+  mGUIClient->plugActionList( QLatin1String( "collectionview_actionlist" ), actionlist );
+  
 }
 
 //-----------------------------------------------------------------------------

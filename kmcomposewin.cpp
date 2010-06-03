@@ -2307,6 +2307,7 @@ void KMComposeWin::fillInfoPart( Message::InfoPart *infoPart, RecipientExpansion
   }
   infoPart->setSubject( subject() );
   infoPart->setUserAgent( "KMail" );
+  infoPart->setUrgent( mUrgentAction->isEnabled() );
 
   KMime::Headers::Base::List extras;
   if( mMsg->headerByType( "X-KMail-SignatureActionEnabled" ) )
@@ -3661,7 +3662,7 @@ void KMComposeWin::slotIdentityChanged( uint uoid, bool initalChange )
 //-----------------------------------------------------------------------------
 void KMComposeWin::slotSpellcheckConfig()
 {
-  mEditor->showSpellConfigDialog( "kmailrc" );
+  mEditor->showSpellConfigDialog( "kmail2rc" );
 }
 
 //-----------------------------------------------------------------------------
