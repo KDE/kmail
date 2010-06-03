@@ -2307,7 +2307,7 @@ void KMComposeWin::fillInfoPart( Message::InfoPart *infoPart, RecipientExpansion
   }
   infoPart->setSubject( subject() );
   infoPart->setUserAgent( "KMail" );
-  infoPart->setUrgent( mUrgentAction->isEnabled() );
+  infoPart->setUrgent( mUrgentAction->isChecked());
 
   KMime::Headers::Base::List extras;
   if( mMsg->headerByType( "X-KMail-SignatureActionEnabled" ) )
