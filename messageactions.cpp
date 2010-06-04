@@ -562,9 +562,9 @@ void MessageActions::editCurrentMessage()
        && ( KMKernel::self()->folderIsDraftOrOutbox( col ) ||
             KMKernel::self()->folderIsTemplates( col ) )
     )
-    command = new KMEditMsgCommand( mParent, mCurrentItem );
+    command = new KMEditMsgCommand( mParent, mCurrentItem, true );
   else
-    command = new KMResendMessageCommand( mParent, mCurrentItem );
+    command = new KMEditMsgCommand( mParent, mCurrentItem, false );
   command->start();
 }
 

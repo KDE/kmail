@@ -548,8 +548,9 @@ void KMUrlSaveCommand::slotUrlSaveResult( KJob *job )
 }
 
 
-KMEditMsgCommand::KMEditMsgCommand( QWidget *parent, const Akonadi::Item&msg )
+KMEditMsgCommand::KMEditMsgCommand( QWidget *parent, const Akonadi::Item&msg, bool deleteFromSource )
   :KMCommand( parent, msg )
+  , mDeleteFromSource( deleteFromSource )
 {
   fetchScope().fetchFullPayload( true );
   fetchScope().setAncestorRetrieval( Akonadi::ItemFetchScope::Parent );
@@ -559,16 +560,16 @@ KMEditMsgCommand::KMEditMsgCommand( QWidget *parent, const Akonadi::Item&msg )
 KMCommand::Result KMEditMsgCommand::execute()
 {
   Akonadi::Item item = retrievedMessage();
-  if (!item.isValid() || !item.parentCollection().isValid() ||
-      ( !kmkernel->folderIsDraftOrOutbox( item.parentCollection() ) &&
-        !kmkernel->folderIsTemplates( item.parentCollection() ) ) ) {
+  if (!item.isValid() || !item.parentCollection().isValid() ) {
     return Failed;
   }
   KMime::Message::Ptr msg = MessageCore::Util::message( item );
   if ( !msg )
     return Failed;
-  Akonadi::ItemDeleteJob *job = new Akonadi::ItemDeleteJob( item );
-  connect( job, SIGNAL( result( KJob* ) ), this, SLOT( slotDeleteItem( KJob* ) ) );
+  if ( mDeleteFromSource ) {
+    Akonadi::ItemDeleteJob *job = new Akonadi::ItemDeleteJob( item );
+    connect( job, SIGNAL( result( KJob* ) ), this, SLOT( slotDeleteItem( KJob* ) ) );
+  }
   KMail::Composer *win = KMail::makeComposer();
   win->setMsg( msg, false, true );
   win->setFolder( item.parentCollection() );
