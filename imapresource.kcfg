@@ -4,16 +4,21 @@
       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
       xsi:schemaLocation="http://www.kde.org/standards/kcfg/1.0
       http://www.kde.org/standards/kcfg/1.0/kcfg.xsd" >
+  <kcfgfile/>
   <group name="network">
     <entry name="ImapServer" type="String">
       <label>IMAP server</label>
     </entry>
+    <entry name="ImapPort"  type="Int">
+      <label>Defines the port the IMAP service is running on</label>
+      <default>993</default>
+    </entry>
     <entry name="UserName" type="String">
       <label>Username</label>
     </entry>
-    <entry name="Safety" type="Int">
+    <entry name="Safety" type="String">
       <label>Defines the encryption type to use</label>
-      <default>1</default>
+      <default>SSL</default>
     </entry>
     <entry name="Authentication" type="Int">
       <label>Defines the authentication type to use</label>
@@ -29,9 +34,17 @@
       <label>Defines if all the IMAP data should be cached locally all the time</label>
       <default>false</default>
     </entry>
+    <entry name="IntervalCheckEnabled" type="Bool">
+       <label>Defines if interval checking is enabled.</label>
+       <default>true</default>
+     </entry>
     <entry name="IntervalCheckTime" type="Int">
       <label>Check interval in minutes</label>
       <default>5</default>
+    </entry>
+    <entry name="IncludeInManualCheck" type="Bool">
+      <label>Whether to include the account in the manual mail check operation.</label>
+      <default>true</default>
     </entry>
     <entry name="RetrieveMetadataOnFolderListing" type="Bool">
       <label>Defines if the annotations, ACLs and quota information of mailboxes should
@@ -48,7 +61,7 @@
        <default>-1</default>
     </entry>
     <entry name="UseDefaultIdentity" type="Bool">
-       <label>Define whether the account uses the default identity</label>
+       <label>Define if account uses the default identity</label>
        <default>true</default>
     </entry>
     <entry name="AccountIdentity" type="Int">
