@@ -1511,9 +1511,14 @@ void KMReaderWin::parseMsg(KMMessage* aMsg)
   if( vCardNode ) {
     // ### FIXME: We should only do this if the vCard belongs to the sender,
     // ### i.e. if the sender's email address is contained in the vCard.
-    const QString vcard = vCardNode->msgPart().bodyToUnicode( overrideCodec() );
     KABC::VCardConverter t;
+#if defined(KABC_VCARD_ENCODING_FIX)
+    const QByteArray vcard = vCardNode->msgPart().bodyDecodedBinary();
+    if ( !t.parseVCardsRaw( vcard.data() ).empty() ) {
+#else
+    const QString vcard = vCardNode->msgPart().bodyToUnicode( overrideCodec() );
     if ( !t.parseVCards( vcard ).empty() ) {
+#endif
       hasVCard = true;
       writeMessagePartToTempFile( &vCardNode->msgPart(), vCardNode->nodeId() );
     }
@@ -1711,10 +1716,14 @@ QString KMReaderWin::createTempDir( const QString &param )
 }
 
 //-----------------------------------------------------------------------------
-void KMReaderWin::showVCard( KMMessagePart * msgPart ) {
+void KMReaderWin::showVCard( KMMessagePart *msgPart )
+{
+#if defined(KABC_VCARD_ENCODING_FIX)
+  const QByteArray vCard = msgPart->bodyDecodedBinary();
+#else
   const QString vCard = msgPart->bodyToUnicode( overrideCodec() );
-
-  VCardViewer *vcv = new VCardViewer(this, vCard, "vCardDialog");
+#endif
+  VCardViewer *vcv = new VCardViewer( this, vCard, "vCardDialog" );
   vcv->show();
 }
 

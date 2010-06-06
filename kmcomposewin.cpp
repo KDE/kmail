@@ -69,8 +69,6 @@ using KRecentAddress::RecentAddresses;
 #include <gpgmepp/context.h>
 #include <gpgmepp/key.h>
 
-#include <kabc/vcardconverter.h>
-#include <libkdepim/kvcarddrag.h>
 #include <kio/netaccess.h>
 
 #include "klistboxdialog.h"

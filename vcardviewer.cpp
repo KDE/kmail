@@ -37,7 +37,11 @@ using KABC::Addressee;
 
 #include <qstring.h>
 
-KMail::VCardViewer::VCardViewer(QWidget *parent, const QString& vCard, const char* name)
+#if defined(KABC_VCARD_ENCODING_FIX)
+KMail::VCardViewer::VCardViewer( QWidget *parent, const QByteArray &vCard, const char *name )
+#else
+KMail::VCardViewer::VCardViewer( QWidget *parent, const QString &vCard, const char *name )
+#endif
   : KDialogBase( parent, name, false, i18n("VCard Viewer"), User1|User2|User3|Close, Close,
 		 true, i18n("&Import"), i18n("&Next Card"), i18n("&Previous Card") )
 {
@@ -47,7 +51,11 @@ KMail::VCardViewer::VCardViewer(QWidget *parent, const QString& vCard, const cha
   setMainWidget(mAddresseeView);
 
   VCardConverter vcc;
+#if defined(KABC_VCARD_ENCODING_FIX)
+  mAddresseeList = vcc.parseVCardsRaw( vCard.data() );
+#else
   mAddresseeList = vcc.parseVCards( vCard );
+#endif
   if ( !mAddresseeList.empty() ) {
     itAddresseeList = mAddresseeList.begin();
     mAddresseeView->setAddressee( *itAddresseeList );

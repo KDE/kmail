@@ -153,6 +153,7 @@ libkmailprivate_la_SOURCES = kmmessage.cpp kmmainwin.cpp configuredialog.cpp \
                 messageactions.cpp \
                 korghelper.cpp \
                 foldersetselector.cpp \
+                stringutil.cpp \
                 treebase.cpp \
                 backupjob.cpp \
                 importjob.cpp \

@@ -29,7 +29,6 @@
 #include <kmessagebox.h>
 #include <kabc/stdaddressbook.h>
 #include <kabc/distributionlist.h>
-#include <kabc/vcardconverter.h>
 #include <dcopref.h>
 
 #include <qregexp.h>

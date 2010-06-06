@@ -22,6 +22,7 @@
 
 #include <kdialogbase.h>
 #include <kabc/addressee.h>
+#include <kabc/vcardparser.h> // for KABC_VCARD_ENCODING_FIX define
 
 #include <qvaluelist.h>
 
@@ -33,24 +34,28 @@ namespace KPIM {
 
 namespace KMail {
 
-  class VCardViewer : public KDialogBase
-  {
-     Q_OBJECT
-     public:
-       VCardViewer(QWidget *parent, const QString& vCard, const char* name);
-       virtual ~VCardViewer();
+class VCardViewer : public KDialogBase
+{
+  Q_OBJECT
+  public:
+#if defined(KABC_VCARD_ENCODING_FIX)
+    VCardViewer( QWidget *parent, const QByteArray &vCard, const char *name );
+#else
+    VCardViewer( QWidget *parent, const QString &vCard, const char *name );
+#endif
+    virtual ~VCardViewer();
 
-     protected:
-       virtual void slotUser1();
-       virtual void slotUser2();
-       virtual void slotUser3();
+  protected:
+    virtual void slotUser1();
+    virtual void slotUser2();
+    virtual void slotUser3();
 
-     private:
-       KPIM::AddresseeView *  mAddresseeView;
-       KABC::Addressee::List  mAddresseeList;
+  private:
+    KPIM::AddresseeView *mAddresseeView;
+    KABC::Addressee::List mAddresseeList;
 
-       QValueListIterator<KABC::Addressee> itAddresseeList;
-  };
+    QValueListIterator<KABC::Addressee> itAddresseeList;
+};
 
 }
 

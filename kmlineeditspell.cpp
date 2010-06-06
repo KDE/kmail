@@ -8,6 +8,7 @@
 #include "recentaddresses.h"
 #include "kmkernel.h"
 #include "globalsettings.h"
+#include "stringutil.h"
 
 #include <libkdepim/kvcarddrag.h>
 #include <libemailfunctions/email.h>
@@ -78,51 +79,73 @@ void KMLineEdit::insertEmails( const QStringList & emails )
   for ( QStringList::const_iterator it = emails.begin(), end = emails.end() ; it != end; ++it )
     menu.insertItem( *it );
   const int result = menu.exec( QCursor::pos() );
-  if ( result < 0 )
+  if ( result == -1 )
     return;
   setText( contents + menu.text( result ) );
 }
 
-void KMLineEdit::dropEvent(QDropEvent *event)
+void KMLineEdit::dropEvent( QDropEvent *event )
 {
-  QString vcards;
-  KVCardDrag::decode( event, vcards );
-  if ( !vcards.isEmpty() ) {
-    KABC::VCardConverter converter;
-    KABC::Addressee::List list = converter.parseVCards( vcards );
+  KURL::List urls;
+
+  // Case one: The user dropped a text/directory (i.e. vcard), so decode its
+  //           contents
+  if ( KVCardDrag::canDecode( event ) ) {
+   KABC::Addressee::List list;
+    KVCardDrag::decode( event, list );
+
     KABC::Addressee::List::Iterator ait;
     for ( ait = list.begin(); ait != list.end(); ++ait ){
       insertEmails( (*ait).emails() );
     }
-  } else {
-    KURL::List urls;
-    if ( KURLDrag::decode( event, urls) ) {
-      //kdDebug(5006) << "urlList" << endl;
-      KURL::List::Iterator it = urls.begin();
-      KABC::VCardConverter converter;
-      KABC::Addressee::List list;
-      QString fileName;
-      QString caption( i18n( "vCard Import Failed" ) );
-      for ( it = urls.begin(); it != urls.end(); ++it ) {
-        if ( KIO::NetAccess::download( *it, fileName, parentWidget() ) ) {
+  }
+
+  // Case two: The user dropped a list or Urls.
+  // Iterate over that list. For mailto: Urls, just add the addressee to the list,
+  // and for other Urls, download the Url and assume it points to a vCard
+  else if ( KURLDrag::decode( event, urls ) ) {
+    KURL::List::Iterator it = urls.begin();
+    KABC::Addressee::List list;
+    for ( it = urls.begin(); it != urls.end(); ++it ) {
+
+      // First, let's deal with mailto Urls. The path() part contains the
+      // email-address.
+      if ( (*it).protocol() == "mailto" ) {
+        KABC::Addressee addressee;
+        addressee.insertEmail( KMail::StringUtil::decodeMailtoUrl( (*it).path() ), true /* preferred */ );
+        list += addressee;
+      }
+      // Otherwise, download the vCard to which the Url points
+      else {
+        KABC::VCardConverter converter;
+        QString fileName;
+        if ( KIO::NetAccess::download( (*it), fileName, parentWidget() ) ) {
           QFile file( fileName );
           file.open( IO_ReadOnly );
-          QByteArray rawData = file.readAll();
+          const QByteArray data = file.readAll();
           file.close();
-          QString data = QString::fromUtf8( rawData.data(), rawData.size() + 1 );
+#if defined(KABC_VCARD_ENCODING_FIX)
+          list += converter.parseVCardsRaw( data.data() );
+#else
           list += converter.parseVCards( data );
+#endif
           KIO::NetAccess::removeTempFile( fileName );
         } else {
-          QString text = i18n( "<qt>Unable to access <b>%1</b>.</qt>" );
-          KMessageBox::error( parentWidget(), text.arg( (*it).url() ), caption );
+          QString caption( i18n( "vCard Import Failed" ) );
+          QString text = i18n( "<qt>Unable to access <b>%1</b>.</qt>" ).arg( (*it).url() );
+          KMessageBox::error( parentWidget(), text, caption );
         }
-        KABC::Addressee::List::Iterator ait;
-        for ( ait = list.begin(); ait != list.end(); ++ait )
-          insertEmails((*ait).emails());
       }
-    } else {
-      KPIM::AddresseeLineEdit::dropEvent( event );
+      // Now, let the user choose which addressee to add.
+      KABC::Addressee::List::Iterator ait;
+      for ( ait = list.begin(); ait != list.end(); ++ait )
+        insertEmails( (*ait).emails() );
     }
+  }
+
+  // Case three: Let AddresseeLineEdit deal with the rest
+  else {
+    KPIM::AddresseeLineEdit::dropEvent( event );
   }
 }
 
