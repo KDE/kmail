@@ -225,11 +225,12 @@ class KMAIL_EXPORT KMEditMsgCommand : public KMCommand
   Q_OBJECT
 
 public:
-  KMEditMsgCommand( QWidget *parent, const Akonadi::Item &msg );
+  KMEditMsgCommand( QWidget *parent, const Akonadi::Item &msg, bool deleteFromSource = true );
 private slots:
   void slotDeleteItem( KJob *job );
 private:
   virtual Result execute();
+  bool mDeleteFromSource;
 };
 
 class KMAIL_EXPORT KMUseTemplateCommand : public KMCommand
