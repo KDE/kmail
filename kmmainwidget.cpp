@@ -185,6 +185,7 @@ K_GLOBAL_STATIC( KMMainWidget::PtrList, theMainWidgetList )
   KMMainWidget::KMMainWidget( QWidget *parent, KXMLGUIClient *aGUIClient,
                               KActionCollection *actionCollection, KSharedConfig::Ptr config ) :
     QWidget( parent ),
+    mCollectionProperties( 0 ),
     mFavoriteCollectionsView( 0 ),
     mMsgView( 0 ),
     mSplitter1( 0 ),
@@ -195,7 +196,6 @@ K_GLOBAL_STATIC( KMMainWidget::PtrList, theMainWidgetList )
     mShowingOfflineScreen( false ),
     mMsgActions( 0 ),
     mCurrentFolder( 0 ),
-    mCollectionProperties( 0 ),
     mVacationIndicatorActive( false ),
     mGoToFirstUnreadMessageInSelectedFolder( false ),
     mFilterProgressItem( 0 )
