@@ -16,6 +16,7 @@
 #include "globalsettings.h"
 #include <kcomponentdata.h>
 #include <akonadi/kmime/specialmailcollections.h>
+#include <akonadi/servermanager.h>
 
 #define kmkernel KMKernel::self()
 #define kmconfig KMKernel::config()
@@ -239,7 +240,6 @@ public:
   Akonadi::EntityMimeTypeFilterModel *collectionModel() const;
 
   void recoverDeadLetters();
-  void initFolders();
   void closeAllKMailWindows();
   void cleanup(void);
   void quit();
@@ -407,6 +407,8 @@ private slots:
   void itemDispatchStarted();
   void createDefaultCollectionDone( KJob * job);
 
+  void initFolders();
+  void akonadiStateChanged( Akonadi::ServerManager::State );
 private:
   void openReader( bool onlyCheck );
   QSharedPointer<FolderCollection> currentFolderCollection();
