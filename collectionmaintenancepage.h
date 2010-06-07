@@ -19,8 +19,12 @@
 #ifndef COLLECTIONMAINTENANCEPAGE_H
 #define COLLECTIONMAINTENANCEPAGE_H
 #include <akonadi/collectionpropertiespage.h>
+#include <akonadi/collection.h>
 class QLabel;
 class KLineEdit;
+namespace Akonadi {
+  class CollectionStatistics;
+};
 
 class CollectionMaintenancePage : public Akonadi::CollectionPropertiesPage
 {
@@ -32,12 +36,20 @@ public:
   void save( Akonadi::Collection & col );
 protected:
   void init( const Akonadi::Collection&);
+
+protected slots:
+  void updateCollectionStatistic(Akonadi::Collection::Id, const Akonadi::CollectionStatistics& );
+
 private:
+  void updateLabel( qint64 nbMail, qint64 nbUnreadMail, qint64 size );
+
+private:
+  Akonadi::Collection mCurrentCollection;
+  bool mIsNotAVirtualCollection;
   QLabel *mFolderSizeLabel;
   KLineEdit *mCollectionLocation;
   QLabel *mCollectionCount;
   QLabel *mCollectionUnread;
-  bool mIsNotAVirtualCollection;
 };
 
 
