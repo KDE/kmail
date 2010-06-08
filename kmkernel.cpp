@@ -123,8 +123,10 @@ KMKernel::KMKernel (QObject *parent, const char *name) :
   // Akonadi migration
   // check if there is something to migrate at all
   bool needMigration = true;
-  const QFileInfo oldConfigFileInfo( KStandardDirs::locateLocal( "config", "kmailrc" ) );
-  if ( !oldConfigFileInfo.exists() || !oldConfigFileInfo.isFile() ) {
+  KConfig oldKMailConfig( "kmailrc", KConfig::NoGlobals );
+  if ( oldKMailConfig.groupList().isEmpty() ||
+       ( oldKMailConfig.groupList().count() == 1 &&
+         oldKMailConfig.groupList().first() == "$Version" ) ) {
     const QFileInfo oldDataDirFileInfo( KStandardDirs::locateLocal( "data", "kmail" ) );
     if ( !oldDataDirFileInfo.exists() || !oldDataDirFileInfo.isDir() ) {
       // neither config or data, the migrator cannot do anything useful anyways
@@ -1128,7 +1130,7 @@ void KMKernel::init()
   if( Akonadi::ServerManager::state() == Akonadi::ServerManager::Running ) {
     initFolders();
   }
-  
+
   connect( Akonadi::ServerManager::self(), SIGNAL( stateChanged( Akonadi::ServerManager::State ) ), this, SLOT( akonadiStateChanged( Akonadi::ServerManager::State ) ) );
 
 }
