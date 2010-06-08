@@ -2784,6 +2784,24 @@ void ComposerPage::HeadersTab::save()
   general.writeEntry( "mime-header-count", numValidEntries );
 }
 
+void ComposerPage::HeadersTab::doResetToDefaultsOther()
+{
+  const bool bUseDefaults = MessageComposer::MessageComposerSettings::self()->useDefaults( true );
+  const QString messageIdSuffix = MessageComposer::MessageComposerSettings::customMsgIDSuffix();
+  const bool useCustomMessageIdSuffix = MessageComposer::MessageComposerSettings::useCustomMessageIdSuffix();
+  MessageComposer::MessageComposerSettings::self()->useDefaults( bUseDefaults );
+
+  mMessageIdSuffixEdit->setText( messageIdSuffix );
+  const bool state = ( !messageIdSuffix.isEmpty() && useCustomMessageIdSuffix );
+  mCreateOwnMessageIdCheck->setChecked( state );
+
+  mTagList->clear();
+  mTagNameEdit->clear();
+  mTagValueEdit->clear();
+  // disable the "Remove" button
+  mRemoveHeaderButton->setEnabled( false );
+}
+
 QString ComposerPage::AttachmentsTab::helpAnchor() const
 {
   return QString::fromLatin1("configure-composer-attachments");
