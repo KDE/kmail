@@ -2311,6 +2311,11 @@ void ComposerPage::TemplatesTab::save()
     mWidget->saveToGlobal();
 }
 
+void ComposerPage::TemplatesTab::doResetToDefaultsOther()
+{
+  mWidget->resetToDefault();
+}
+
 QString ComposerPage::CustomTemplatesTab::helpAnchor() const
 {
   return QString::fromLatin1("configure-composer-custom-templates");

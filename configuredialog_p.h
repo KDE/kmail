@@ -546,7 +546,7 @@ private slots:
 
 private:
   virtual void doLoadFromGlobalSettings();
-
+  virtual void doResetToDefaultsOther();
 private:
     TemplatesConfiguration* mWidget;
 };
