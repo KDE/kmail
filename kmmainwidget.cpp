@@ -3450,7 +3450,7 @@ void KMMainWidget::setupActions()
   menutimer = new QTimer( this );
   menutimer->setObjectName( "menutimer" );
   menutimer->setSingleShot( true );
-  connect( menutimer, SIGNAL( timeout() ), SLOT( updateMessageActions() ) );
+  connect( menutimer, SIGNAL( timeout() ), SLOT( updateMessageActionsDelayed() ) );
   connect( kmkernel->undoStack(),
            SIGNAL( undoStackChanged() ), this, SLOT( slotUpdateUndo() ));
 
@@ -3577,11 +3577,36 @@ void KMMainWidget::startUpdateMessageActionsTimer()
 {
   // FIXME: This delay effectively CAN make the actions to be in an incoherent state
   //        Maybe we should mark actions as "dirty" here and check it in every action handler...
+  updateMessageActions( true );
   menutimer->stop();
   menutimer->start( 500 );
 }
 
-void KMMainWidget::updateMessageActions()
+void KMMainWidget::updateMessageActions( bool fast )
+{
+  Akonadi::Item::List selectedItems;
+  Akonadi::Item::List selectedVisibleItems;
+  bool allSelectedBelongToSameThread = false;
+  Akonadi::Item currentMessage;
+  if (mCurrentFolder && mCurrentFolder->isValid() &&
+       mMessagePane->getSelectionStats( selectedItems, selectedVisibleItems, &allSelectedBelongToSameThread )
+     )
+  {
+    mMsgActions->setCurrentMessage( mMessagePane->currentItem() );
+    mMsgActions->setSelectedItem( selectedItems );
+    mMsgActions->setSelectedVisibleItems( selectedVisibleItems );
+
+  } else {
+    mMsgActions->setCurrentMessage( Akonadi::Item() );
+  }
+
+  if( !fast )
+    updateMessageActionsDelayed();
+
+}
+
+
+void KMMainWidget::updateMessageActionsDelayed()
 {
   int count;
   Akonadi::Item::List selectedItems;
@@ -3596,14 +3621,9 @@ void KMMainWidget::updateMessageActions()
 
     currentMessage = mMessagePane->currentItem();
 
-    mMsgActions->setCurrentMessage( currentMessage );
-    mMsgActions->setSelectedItem( selectedItems );
-    mMsgActions->setSelectedVisibleItems( selectedVisibleItems );
-
   } else {
     count = 0;
     currentMessage = Akonadi::Item();
-    mMsgActions->setCurrentMessage( Akonadi::Item() );
   }
 
   //
