@@ -600,7 +600,7 @@ private slots:
 private:
   //virtual void doLoadFromGlobalSettings();
   virtual void doLoadOther();
-  //FIXME virtual void doResetToDefaultsOther();
+  virtual void doResetToDefaultsOther();
 
 private:
   SimpleStringListEditor *mCharsetListEditor;

@@ -2526,6 +2526,18 @@ void ComposerPage::CharsetTab::doLoadOther()
   mKeepReplyCharsetCheck->setChecked( MessageComposer::MessageComposerSettings::forceReplyCharset() );
 }
 
+
+void ComposerPage::CharsetTab::doResetToDefaultsOther()
+{
+  const bool bUseDefaults = MessageComposer::MessageComposerSettings::self()->useDefaults( true );
+  const QStringList charsets = MessageComposer::MessageComposerSettings::preferredCharsets();
+  const bool keepReplyCharsetCheck = MessageComposer::MessageComposerSettings::forceReplyCharset();
+  MessageComposer::MessageComposerSettings::self()->useDefaults( bUseDefaults );
+  mCharsetListEditor->setStringList( charsets );
+  mKeepReplyCharsetCheck->setChecked( keepReplyCharsetCheck );
+  slotEmitChanged();
+}
+
 void ComposerPage::CharsetTab::save()
 {
   KConfigGroup composer( KMKernel::config(), "Composer" );
