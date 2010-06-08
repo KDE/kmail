@@ -21,6 +21,7 @@
 #include <akonadi/collection.h>
 #include <Akonadi/AgentType>
 #include <Akonadi/AgentManager>
+#include <Akonadi/ChangeRecorder>
 #include <klineedit.h>
 #include <QLabel>
 #include <KDialog>
@@ -41,6 +42,8 @@ CollectionMaintenancePage::CollectionMaintenancePage(QWidget * parent) :
 
 void CollectionMaintenancePage::init(const Akonadi::Collection & col)
 {
+  mCurrentCollection = col;
+
   QVBoxLayout *topLayout = new QVBoxLayout( this );
   topLayout->setSpacing( KDialog::spacingHint() );
   topLayout->setMargin( KDialog::marginHint() );
@@ -48,6 +51,8 @@ void CollectionMaintenancePage::init(const Akonadi::Collection & col)
   QFormLayout *box = new QFormLayout( filesGroup );
   box->setSpacing( KDialog::spacingHint() );
   mIsNotAVirtualCollection = ( col.resource() != QLatin1String( "akonadi_search_resource" ) ) && ( col.resource() != QLatin1String( "akonadi_nepomuktag_resource" ) );
+  connect( KMKernel::self()->monitor(), SIGNAL( collectionStatisticsChanged( Akonadi::Collection::Id , const Akonadi::CollectionStatistics & ) ), this, SLOT( updateCollectionStatistic( Akonadi::Collection::Id, const Akonadi::CollectionStatistics& ) ) );
+
 
 
 #if 0 //TODO remove it ?
@@ -95,16 +100,29 @@ void CollectionMaintenancePage::load(const Collection & col)
 {
   init( col );
   if ( col.isValid() ) {
-    mCollectionCount->setText( QString::number( qMax( 0LL, col.statistics().count() ) ) );
-    mCollectionUnread->setText( QString::number( qMax( 0LL, col.statistics().unreadCount() ) ) );
-    mFolderSizeLabel->setText( KGlobal::locale()->formatByteSize( qMax( 0LL, col.statistics().size() ) ) );
+    updateLabel( col.statistics().count(), col.statistics().unreadCount(), col.statistics().size() );
     if ( mIsNotAVirtualCollection )
       mCollectionLocation->setText( col.remoteId() );
   }
 }
 
+void CollectionMaintenancePage::updateLabel( qint64 nbMail, qint64 nbUnreadMail, qint64 size )
+{
+  mCollectionCount->setText( QString::number( qMax( 0LL, nbMail ) ) );
+  mCollectionUnread->setText( QString::number( qMax( 0LL, nbUnreadMail ) ) );
+  mFolderSizeLabel->setText( KGlobal::locale()->formatByteSize( qMax( 0LL, size ) ) );
+
+}
+
 void CollectionMaintenancePage::save(Collection & )
 {
   //Nothing (read only)
+}
+
+void CollectionMaintenancePage::updateCollectionStatistic(Akonadi::Collection::Id id, const Akonadi::CollectionStatistics& statistic)
+{
+  if ( id == mCurrentCollection.id() ) {
+    updateLabel( statistic.count(), statistic.unreadCount(), statistic.size() );
+  }
 }
 

@@ -30,6 +30,7 @@ using KPIM::RecentAddresses;
 #include <mailtransport/transport.h>
 #include <mailtransport/transportmanager.h>
 #include <mailtransport/dispatcherinterface.h>
+#include <akonadi/servermanager.h>
 
 #include <kde_file.h>
 #include <kwindowsystem.h>
@@ -212,6 +213,7 @@ KMKernel::KMKernel (QObject *parent, const char *name) :
   mJobScheduler = new JobScheduler( this );
   mXmlGuiInstance = KComponentData();
 
+  KMime::setFallbackCharEncoding( MessageCore::GlobalSettings::self()->fallbackCharacterEncoding() );
 
   // cberzan: this crap moved to CodecManager ======================
   netCodec = QTextCodec::codecForName( KGlobal::locale()->encoding() );
@@ -1057,6 +1059,7 @@ void KMKernel::slotDefaultCollectionsChanged()
 //-----------------------------------------------------------------------------
 void KMKernel::initFolders()
 {
+  kDebug() << "KMail is initialize and looking for default specialcollection folders.";
   the_draftsCollectionFolder = the_inboxCollectionFolder = the_outboxCollectionFolder = the_sentCollectionFolder
     = the_templatesCollectionFolder = the_trashCollectionFolder = -1;
   findCreateDefaultCollection( Akonadi::SpecialMailCollections::Inbox );
@@ -1067,6 +1070,14 @@ void KMKernel::initFolders()
   findCreateDefaultCollection( Akonadi::SpecialMailCollections::Templates );
 }
 
+void  KMKernel::akonadiStateChanged( Akonadi::ServerManager::State state )
+{
+  kDebug() << "KMKernel has akonadi state changed to:" << state;
+
+  if( state == Akonadi::ServerManager::Running ) {
+    initFolders();
+  }
+}
 static void kmCrashHandler( int sigId )
 {
   fprintf( stderr, "*** KMail got signal %d (Exiting)\n", sigId );
@@ -1096,7 +1107,6 @@ void KMKernel::init()
   the_popFilterMgr     = new KMFilterMgr(true);
   the_filterActionDict = new KMFilterActionDict;
 
-  initFolders();
   the_filterMgr->readConfig();
   the_popFilterMgr->readConfig();
   the_msgSender = new AkonadiSender;
@@ -1113,6 +1123,14 @@ void KMKernel::init()
 #endif
 
   KCrash::setEmergencySaveFunction( kmCrashHandler );
+
+  kDebug() << "KMail init with akonadi server state:" << Akonadi::ServerManager::state();
+  if( Akonadi::ServerManager::state() == Akonadi::ServerManager::Running ) {
+    initFolders();
+  }
+  
+  connect( Akonadi::ServerManager::self(), SIGNAL( stateChanged( Akonadi::ServerManager::State ) ), this, SLOT( akonadiStateChanged( Akonadi::ServerManager::State ) ) );
+
 }
 
 void KMKernel::readConfig()

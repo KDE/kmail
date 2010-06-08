@@ -185,6 +185,7 @@ K_GLOBAL_STATIC( KMMainWidget::PtrList, theMainWidgetList )
   KMMainWidget::KMMainWidget( QWidget *parent, KXMLGUIClient *aGUIClient,
                               KActionCollection *actionCollection, KSharedConfig::Ptr config ) :
     QWidget( parent ),
+    mCollectionProperties( 0 ),
     mFavoriteCollectionsView( 0 ),
     mMsgView( 0 ),
     mSplitter1( 0 ),
@@ -195,7 +196,6 @@ K_GLOBAL_STATIC( KMMainWidget::PtrList, theMainWidgetList )
     mShowingOfflineScreen( false ),
     mMsgActions( 0 ),
     mCurrentFolder( 0 ),
-    mCollectionProperties( 0 ),
     mVacationIndicatorActive( false ),
     mGoToFirstUnreadMessageInSelectedFolder( false ),
     mFilterProgressItem( 0 )
@@ -3736,8 +3736,6 @@ void KMMainWidget::updateMessageActions()
   actionCollection()->action( "go_prev_unread_message" )->setEnabled( enable_goto_unread );
   const qint64 nbMsgOutboxCollection = kmkernel->outboxCollectionFolder().statistics().count();
 
-  kDebug()<<" kmkernel->outboxCollectionFolder() :"<<kmkernel->outboxCollectionFolder();
-  kDebug()<<" nbMsgOutboxCollection :"<<nbMsgOutboxCollection;
   actionCollection()->action( "send_queued" )->setEnabled( nbMsgOutboxCollection > 0 );
   actionCollection()->action( "send_queued_via" )->setEnabled( nbMsgOutboxCollection > 0 );
 
