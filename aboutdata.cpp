@@ -242,6 +242,7 @@ namespace KMail {
                   ki18n("Copyright © 1997–2010, KMail authors"), KLocalizedString(),
                   "http://kontact.kde.org/kmail/" )
   {
+    setProgramIconName("kmail");
     using KMail::authors;
     using KMail::credits;
     for ( unsigned int i = 0 ; i < sizeof authors / sizeof *authors ; ++i )
