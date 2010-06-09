@@ -2311,6 +2311,11 @@ void ComposerPage::TemplatesTab::save()
     mWidget->saveToGlobal();
 }
 
+void ComposerPage::TemplatesTab::doResetToDefaultsOther()
+{
+  mWidget->resetToDefault();
+}
+
 QString ComposerPage::CustomTemplatesTab::helpAnchor() const
 {
   return QString::fromLatin1("configure-composer-custom-templates");
@@ -2524,6 +2529,18 @@ void ComposerPage::CharsetTab::doLoadOther()
 
   mCharsetListEditor->setStringList( charsets );
   mKeepReplyCharsetCheck->setChecked( MessageComposer::MessageComposerSettings::forceReplyCharset() );
+}
+
+
+void ComposerPage::CharsetTab::doResetToDefaultsOther()
+{
+  const bool bUseDefaults = MessageComposer::MessageComposerSettings::self()->useDefaults( true );
+  const QStringList charsets = MessageComposer::MessageComposerSettings::preferredCharsets();
+  const bool keepReplyCharsetCheck = MessageComposer::MessageComposerSettings::forceReplyCharset();
+  MessageComposer::MessageComposerSettings::self()->useDefaults( bUseDefaults );
+  mCharsetListEditor->setStringList( charsets );
+  mKeepReplyCharsetCheck->setChecked( keepReplyCharsetCheck );
+  slotEmitChanged();
 }
 
 void ComposerPage::CharsetTab::save()
@@ -2770,6 +2787,24 @@ void ComposerPage::HeadersTab::save()
   }
   KConfigGroup general( KMKernel::config(), "General" );
   general.writeEntry( "mime-header-count", numValidEntries );
+}
+
+void ComposerPage::HeadersTab::doResetToDefaultsOther()
+{
+  const bool bUseDefaults = MessageComposer::MessageComposerSettings::self()->useDefaults( true );
+  const QString messageIdSuffix = MessageComposer::MessageComposerSettings::customMsgIDSuffix();
+  const bool useCustomMessageIdSuffix = MessageComposer::MessageComposerSettings::useCustomMessageIdSuffix();
+  MessageComposer::MessageComposerSettings::self()->useDefaults( bUseDefaults );
+
+  mMessageIdSuffixEdit->setText( messageIdSuffix );
+  const bool state = ( !messageIdSuffix.isEmpty() && useCustomMessageIdSuffix );
+  mCreateOwnMessageIdCheck->setChecked( state );
+
+  mTagList->clear();
+  mTagNameEdit->clear();
+  mTagValueEdit->clear();
+  // disable the "Remove" button
+  mRemoveHeaderButton->setEnabled( false );
 }
 
 QString ComposerPage::AttachmentsTab::helpAnchor() const

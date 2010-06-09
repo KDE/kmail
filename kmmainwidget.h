@@ -246,7 +246,8 @@ class KMAIL_EXPORT KMMainWidget : public QWidget
     void startUpdateMessageActionsTimer();
 
     /** Update message actions */
-    void updateMessageActions();
+    void updateMessageActions( bool fast = false );
+    void updateMessageActionsDelayed();
 
     /** Clear and create actions for marked filters */
     void clearFilterActions();

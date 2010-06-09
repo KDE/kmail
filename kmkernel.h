@@ -244,7 +244,7 @@ public:
   void cleanup(void);
   void quit();
   bool doSessionManagement();
-  bool firstInstance() { return the_firstInstance; }
+  bool firstInstance() const { return the_firstInstance; }
   void setFirstInstance(bool value) { the_firstInstance = value; }
   void action( bool mailto, bool check, const QString &to, const QString &cc,
                const QString &bcc, const QString &subj, const QString &body,
