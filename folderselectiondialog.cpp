@@ -62,6 +62,7 @@ FolderSelectionDialog::FolderSelectionDialog( QWidget *parent, SelectionFolderOp
   FolderTreeWidget::TreeViewOptions opt= FolderTreeWidget::None;
   if ( options & FolderSelectionDialog::ShowUnreadCount )
     opt |= FolderTreeWidget::ShowUnreadCount;
+  opt |= FolderTreeWidget::UseDistinctSelectionModel;
 
   d->folderTreeWidget = new FolderTreeWidget( this, 0, opt);
   d->folderTreeWidget->disableContextMenuAndExtraColumn();
