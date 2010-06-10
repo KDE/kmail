@@ -275,7 +275,7 @@ KMKernel::~KMKernel ()
   delete mMailService;
   mMailService = 0;
 
-  //stopAgentInstance();
+  stopAgentInstance();
   slotSyncConfig();
   mySelf = 0;
   kDebug();
@@ -921,6 +921,11 @@ void KMKernel::checkMailOnStartup()
       if ( !type.isOnline() )
         type.setIsOnline( true );
       type.synchronize();
+    }
+
+    if ( group.readEntry( "OfflineOnShutdown", false ) ) {
+      if ( !type.isOnline() )
+        type.setIsOnline( true );
     }
   }
 }
@@ -1857,9 +1862,13 @@ bool KMKernel::isImapFolder( const Akonadi::Collection &col )
 
 void KMKernel::stopAgentInstance()
 {
+  const QString resourceGroupPattern( "Resource %1" );
+
   Akonadi::AgentInstance::List lst = KMail::Util::agentInstances();
   foreach( Akonadi::AgentInstance type, lst ) {
-    type.setIsOnline( false );
+    KConfigGroup group( KMKernel::config(), resourceGroupPattern.arg( type.identifier() ) );
+    if ( group.readEntry( "OfflineOnShutdown", false ) )
+      type.setIsOnline( false );
   }
 }
 
