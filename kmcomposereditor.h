@@ -51,22 +51,6 @@ class KMComposerEditor : public Message::KMeditor
      */
     virtual void createActions( KActionCollection *actionCollection );
 
-    virtual int quoteLength( const QString& line ) const;
-    virtual const QString defaultQuoteSign() const;
-
-    /**
-     * Sets a quote prefix. Lines starting with the passed quote prefix will
-     * be highlighted as quotes (in addition to lines that are starting with
-     * '>' and '|').
-     */
-    void setQuotePrefixName( const QString &quotePrefix );
-
-    /**
-     * @return the quote prefix set before with setQuotePrefixName(), or an empty
-     *         string if that was never called.
-     */
-    virtual QString quotePrefixName() const;
-
     /**
      * This replaces all characters not known to the specified codec with
      * questionmarks. HTML formatting is preserved.
@@ -86,7 +70,6 @@ class KMComposerEditor : public Message::KMeditor
   private:
 
      KMComposeWin *m_composerWin;
-     QString m_quotePrefix;
      KAction *mPasteQuotation, *mAddQuoteChars, *mRemQuoteChars;
 
 protected:

@@ -46,6 +46,7 @@
 
 // Other includes
 #include "kleo/enum.h"
+#include <composerviewbase.h>
 
 class QByteArray;
 class QCheckBox;
@@ -159,11 +160,9 @@ class KMComposeWin : public KMail::Composer
 
     Q_SCRIPTABLE void addAttachment( const QString & name,
                                      KMime::Headers::contentEncoding cte,
+                                     const QString& charset,
                                      const QByteArray & data,
-                                     const QByteArray & mimeType,
-                                     const QByteArray & paramAttr,
-                                     const QString & paramValue,
-                                     const QByteArray & contDisp );
+                                     const QByteArray & mimeType );
 
   /**
    * End of D-Bus callable stuff
@@ -206,7 +205,7 @@ class KMComposeWin : public KMail::Composer
      /**
       * Returns @c true while the message composing is in progress.
       */
-     bool isComposing() const { return !mComposers.isEmpty(); }
+     bool isComposing() const { return mComposerBase && mComposerBase->isComposing(); }
 
      /**
       * Set the text selection the message is a response to.
@@ -261,12 +260,6 @@ class KMComposeWin : public KMail::Composer
      */
      bool inlineSigningEncryptionSelected();
 
-     /**
-      * Disables the HTML mode, by hiding the HTML toolbar and unchecking the
-      * "Formatting" action. Also, removes all rich-text formatting.
-      */
-     enum Confirmation { LetUserConfirm, NoConfirmationNeeded };
-     void disableHtml( Confirmation confirmation );
 
      /**
       * Tries to find the given mimetype @p type in the KDE Mimetype registry.
@@ -283,6 +276,11 @@ class KMComposeWin : public KMail::Composer
     }
 
   private slots:
+     /**
+      * Disables the HTML mode, by hiding the HTML toolbar and unchecking the
+      * "Formatting" action. Also, removes all rich-text formatting.
+      */
+     void disableHtml( Message::ComposerViewBase::Confirmation confirmation );
     /**
      * Enables HTML mode, by showing the HTML toolbar and checking the
      * "Formatting" action
@@ -407,7 +405,6 @@ class KMComposeWin : public KMail::Composer
 
   public slots: // kmkernel
     void autoSaveMessage();
-
   private slots:
 
     void slotView();
@@ -425,8 +422,6 @@ class KMComposeWin : public KMail::Composer
     void slotSpellCheckingStatus( const QString & status );
 
     void slotDelayedApplyTemplate( KJob* );
-
-    void slotEmailAddressResolved( KJob* );
 
   public: // kmcommand
     // FIXME we need to remove these, but they're pure virtual in Composer.
@@ -454,24 +449,10 @@ class KMComposeWin : public KMail::Composer
     void ignoreStickyFields();
 
   private:
-    uint identityUid() const;
     Kleo::CryptoMessageFormat cryptoMessageFormat() const;
     bool encryptToSelf() const;
 
   private:
-    /**
-     * Applies the user changes to the message object of the composer
-     * and signs/encrypts the message if activated.
-     * Disables the controls of the composer window.
-     */
-    void readyForSending();
-
-    enum RecipientExpansion { UseExpandedRecipients, UseUnExpandedRecipients };
-    QList< Message::Composer* > generateCryptoMessages( bool sign, bool encrypt );
-    void fillGlobalPart( Message::GlobalPart *globalPart );
-    void fillInfoPart( Message::InfoPart *part, RecipientExpansion expansion );
-    void queueMessage( boost::shared_ptr<KMime::Message> message, Message::Composer* composer );
-
     /**
      * Install grid management and header fields. If fields exist that
      * should not be there they are removed. Those that are needed are
@@ -523,9 +504,6 @@ class KMComposeWin : public KMail::Composer
      * Header fields.
      */
     QString subject() const;
-    QString to() const;
-    QString cc() const;
-    QString bcc() const;
     QString from() const;
     QString replyTo() const;
 
@@ -548,13 +526,6 @@ class KMComposeWin : public KMail::Composer
      * prevent kmail from exiting when last window is deleted (kernel rules)
      */
     virtual bool queryExit();
-
-
-    /**
-     * Searches the mime tree, where root is the root node, for embedded images,
-     * extracts them froom the body and adds them to the editor.
-     */
-    void collectImages( KMime::Content *root );
 
   private:
     /**
@@ -583,21 +554,14 @@ class KMComposeWin : public KMail::Composer
      */
     static void decryptOrStripOffCleartextSignature( QByteArray & );
 
-    enum SaveIn {
-      None,
-      Drafts,
-      Templates
-    };
-
     /**
      * Send the message.
      */
     void doSend( MessageSender::SendMethod method=MessageSender::SendDefault,
-                 KMComposeWin::SaveIn saveIn = KMComposeWin::None );
+                 MessageSender::SaveIn saveIn = MessageSender::SaveInNone );
 
-    void doDelayedSend( MessageSender::SendMethod method, KMComposeWin::SaveIn saveIn );
+    void doDelayedSend( MessageSender::SendMethod method, MessageSender::SaveIn saveIn );
 
-    void saveMessage( boost::shared_ptr<KMime::Message> message, KMComposeWin::SaveIn saveIn );
 
     /**
      * Returns the autosave interval in milliseconds (as needed for QTimer).
@@ -634,9 +598,7 @@ class KMComposeWin : public KMail::Composer
 
   private:
     QWidget   *mMainWidget;
-    MailTransport::TransportComboBox *mTransport;
     Sonnet::DictionaryComboBox *mDictionaryCombo;
-    KPIMIdentities::IdentityCombo *mIdentity;
     Akonadi::CollectionComboBox *mFcc;
     MessageComposer::ComposerLineEdit *mEdtFrom, *mEdtReplyTo;
     MessageComposer::ComposerLineEdit *mEdtSubject;
@@ -648,15 +610,12 @@ class KMComposeWin : public KMail::Composer
     bool mDone;
 
     KMime::Message::Ptr mMsg;
-    KMComposerEditor *mEditor;
-    Message::SignatureController *mSignatureController;
     QGridLayout *mGrid;
     QString mTextSelection;
     QString mCustomTemplate;
     QAction *mOpenId, *mViewId, *mRemoveId, *mSaveAsId, *mPropertiesId,
             *mEditAction, *mEditWithAction;
-    bool mSigningAndEncryptionExplicitlyDisabled;
-    bool mLastSignActionState, mLastEncryptActionState;
+    bool mLastSignActionState, mLastEncryptActionState, mSigningAndEncryptionExplicitlyDisabled;
     bool mLastIdentityHasSigningKey, mLastIdentityHasEncryptionKey;
     Akonadi::Collection mFolder;
     long mShowHeaders;
@@ -672,10 +631,6 @@ class KMComposeWin : public KMail::Composer
 
     KAction *mCleanSpace;
     KRecentFilesAction *mRecentAction;
-
-    bool mNeverEncrypt;
-    QString mExpandedFrom;
-    QStringList mExpandedTo, mExpandedCc, mExpandedBcc;
 
     KToggleAction *mSignAction, *mEncryptAction, *mRequestMDNAction;
     KToggleAction *mUrgentAction, *mAllFieldsAction, *mFromAction;
@@ -730,11 +685,6 @@ class KMComposeWin : public KMail::Composer
     void initHeader( KMime::Message *message, uint identity=0 );
 
     /**
-     * Fills in headers for message going into queue. Just sets from/to/bcc/cc
-    */
-    void fillQueueJobHeaders( MailTransport::MessageQueueJob* qjob, KMime::Message::Ptr message, const Message::InfoPart* infoPart );
-
-    /**
      * Helper methods to read from config various encryption settings
      */
     inline bool encryptToSelf();
@@ -752,11 +702,11 @@ class KMComposeWin : public KMail::Composer
 
     void slotAutoSaveComposeResult( KJob *job );
     void slotPrintComposeResult( KJob *job );
-    void slotSendComposeResult( KJob *job );
-    void slotQueueResult( KJob *job );
-    void slotCreateItemResult( KJob *job );
 
     void slotEncryptChiasmusToggled( bool );
+
+    void slotSendFailed( const QString& msg );
+    void slotSendSuccessful();
 
     /**
      *  toggle automatic spellchecking
@@ -774,28 +724,22 @@ class KMComposeWin : public KMail::Composer
     QWidget* mHeadersArea;
     QSplitter *mSplitter;
     QSplitter *mSnippetSplitter;
-    KMail::AttachmentController *mAttachmentController;
-    Message::AttachmentModel *mAttachmentModel;
     KMail::AttachmentView *mAttachmentView;
     QByteArray mOriginalPreferredCharset;
 
     // These are for passing on methods over the applyChanges calls
     MessageSender::SendMethod mSendMethod;
-    KMComposeWin::SaveIn mSaveIn;
+    MessageSender::SaveIn mSaveIn;
 
     KToggleAction *mEncryptChiasmusAction;
     bool mEncryptWithChiasmus;
 
-    // List of active composer jobs. For example, saving as draft, autosaving and printing
-    // all create a composer, which is added to this list as long as it is active.
-    // Used mainly to prevent closing the window if a composer is active
-    QList< Message::Composer* > mComposers;
-
     Message::Composer *mDummyComposer;
     int mPendingQueueJobs;
     int mPendingCreateItemJobs;
+    // used for auto saving, printing, etc. Not for sending, which happens in ComposerViewBase
+    QList< Message::Composer* > mMiscComposers;
 
-    MessageComposer::RecipientsEditor *mRecipientsEditor;
     int mLabelWidth;
 
     QTimer *mAutoSaveTimer;
@@ -808,6 +752,8 @@ class KMComposeWin : public KMail::Composer
     QString mdbusObjectPath;
     static int s_composerNumber;
 
+    Message::ComposerViewBase* mComposerBase;
+    
 #if 0
     QMap<KMail::EditorWatcher*, KMMessagePart*> mEditorMap;
     QMap<KMail::EditorWatcher*, KTemporaryFile*> mEditorTempFiles;

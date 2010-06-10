@@ -94,39 +94,6 @@ QString KMComposerEditor::smartQuote( const QString & msg )
   return m_composerWin->smartQuote( msg );
 }
 
-const QString KMComposerEditor::defaultQuoteSign() const
-{
-  if ( !m_quotePrefix.simplified().isEmpty() )
-    return m_quotePrefix;
-  else
-    return KPIMTextEdit::TextEdit::defaultQuoteSign();
-}
-
-int KMComposerEditor::quoteLength( const QString& line ) const
-{
-  if ( !m_quotePrefix.simplified().isEmpty() ) {
-    if ( line.startsWith( m_quotePrefix ) )
-      return m_quotePrefix.length();
-    else
-      return 0;
-  }
-  else
-    return KPIMTextEdit::TextEdit::quoteLength( line );
-}
-
-void KMComposerEditor::setQuotePrefixName( const QString &quotePrefix )
-{
-  m_quotePrefix = quotePrefix;
-}
-
-QString KMComposerEditor::quotePrefixName() const
-{
-  if ( !m_quotePrefix.simplified().isEmpty() )
-    return m_quotePrefix;
-  else
-    return ">";
-}
-
 void KMComposerEditor::replaceUnknownChars( const QTextCodec *codec )
 {
   QTextCursor cursor( document() );
@@ -186,8 +153,7 @@ void KMComposerEditor::insertFromMimeData( const QMimeData *source )
       return;
     }
 
-    m_composerWin->addAttachment( attName, KMime::Headers::CEbase64, imageData, "image/png", QByteArray(),
-                                  QString(), QByteArray() );
+    m_composerWin->addAttachment( attName, KMime::Headers::CEbase64, QString(), imageData, "image/png" );
     return;
   }
 
