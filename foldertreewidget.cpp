@@ -110,6 +110,9 @@ FolderTreeWidget::FolderTreeWidget( QWidget *parent, KXMLGUIClient *xmlGuiClient
   d->filterTreeViewModel->setFilterCaseSensitivity( Qt::CaseInsensitive );
   d->folderTreeView->setModel( d->filterTreeViewModel );
 
+  if ( options & UseDistinctSelectionModel )
+    d->folderTreeView->setSelectionModel( new QItemSelectionModel( d->filterTreeViewModel, this ) );
+
   lay->addWidget( d->folderTreeView );
   if ( ( options & UseLineEditForFiltering ) ) {
     connect( d->filterFolderLineEdit, SIGNAL( textChanged(QString) ),

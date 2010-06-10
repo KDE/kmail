@@ -49,7 +49,8 @@ public:
   {
     None = 0,
     ShowUnreadCount = 1,
-    UseLineEditForFiltering = 2
+    UseLineEditForFiltering = 2,
+    UseDistinctSelectionModel = 4
   };
   Q_DECLARE_FLAGS( TreeViewOptions, TreeViewOption )
 
