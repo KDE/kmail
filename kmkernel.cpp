@@ -907,6 +907,24 @@ bool KMKernel::isOffline()
     return false;
 }
 
+void KMKernel::checkMailOnStartup()
+{
+  if ( !kmkernel->askToGoOnline() )
+    return;
+
+  const QString resourceGroupPattern( "Resource %1" );
+
+  Akonadi::AgentInstance::List lst = KMail::Util::agentInstances();
+  foreach( Akonadi::AgentInstance type, lst ) {
+    KConfigGroup group( KMKernel::config(), resourceGroupPattern.arg( type.identifier() ) );
+    if ( group.readEntry( "CheckOnStartup", false ) ) {
+      if ( !type.isOnline() )
+        type.setIsOnline( true );
+      type.synchronize();
+    }
+  }
+}
+
 bool KMKernel::askToGoOnline()
 {
   // already asking means we are offline and need to wait anyhow
