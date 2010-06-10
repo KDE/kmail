@@ -27,6 +27,7 @@
 #include <KDebug>
 #include <KIcon>
 #include <KGlobal>
+#include <KLocale>
 
 #include <QUrl>
 #include <QAbstractTextDocumentLayout>
@@ -238,7 +239,7 @@ QStyleOptionButton ConfigAgentDelegate::buttonOption ( const QStyleOptionViewIte
 
     buttonOpt.rect = buttonRect;
     buttonOpt.state = option.state;
-    buttonOpt.text = "Retrieval Options";
+    buttonOpt.text = i18n( "Retrieval Options" );
     buttonOpt.palette = option.palette;
     buttonOpt.features = QStyleOptionButton::HasMenu;
     buttonOpt.icon = s_icons->checkMailIcon;

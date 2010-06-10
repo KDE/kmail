@@ -473,19 +473,19 @@ void AccountsPageReceivingTab::slotShowMailCheckMenu( const QString &ident, cons
   bool CheckOnStartup = group.readEntry( "CheckOnStartup", false );
   bool OfflineOnShutdown = group.readEntry( "OfflineOnShutdown", false );
 
-  QAction *manualMailCheck = new QAction( "Include in Manual Mail Check", menu );
+  QAction *manualMailCheck = new QAction( i18nc( "Label to a checkbox, so is either checked/unchecked", "Include in Manual Mail Check" ), menu );
   manualMailCheck->setCheckable( true );
   manualMailCheck->setChecked( IncludeInManualChecks );
   manualMailCheck->setData( ident );
   menu->addAction( manualMailCheck );
 
-  QAction *checkOnStartup = new QAction( "Include in Startup Mail Check", menu );
+  QAction *checkOnStartup = new QAction( i18nc( "Label to a checkbox, so is either checked/unchecked", "Include in Startup Mail Check" ), menu );
   checkOnStartup->setCheckable( true );
   checkOnStartup->setChecked( CheckOnStartup );
   checkOnStartup->setData( ident );
   menu->addAction( checkOnStartup );
 
-  QAction *switchOffline = new QAction( "Switch offline on KMail Shutdown", menu );
+  QAction *switchOffline = new QAction( i18nc( "Label to a checkbox, so is either checked/unchecked", "Switch offline on KMail Shutdown" ), menu );
   switchOffline->setCheckable( true );
   switchOffline->setChecked( OfflineOnShutdown );
   switchOffline->setData( ident );
