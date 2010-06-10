@@ -450,11 +450,17 @@ void KMKernel::checkMail () //might create a new reader but won't show!!
 {
   if ( !kmkernel->askToGoOnline() )
     return;
+
+  const QString resourceGroupPattern( "Resource %1" );
+
   Akonadi::AgentInstance::List lst = KMail::Util::agentInstances();
   foreach( Akonadi::AgentInstance type, lst ) {
-    if ( !type.isOnline() )
-      type.setIsOnline( true );
-    type.synchronize();
+    KConfigGroup group( KMKernel::config(), resourceGroupPattern.arg( type.identifier() ) );
+    if ( group.readEntry( "IncludeInManualChecks", true ) ) {
+      if ( !type.isOnline() )
+        type.setIsOnline( true );
+      type.synchronize();
+    }
   }
 }
 
