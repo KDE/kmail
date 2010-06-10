@@ -31,6 +31,7 @@
 #include "globalsettings.h"
 #include "templatesconfiguration_kfg.h"
 #include "configuredialoglistview.h"
+#include "configagentdelegate.h"
 
 // other KMail headers:
 #include "kmkernel.h"
@@ -415,6 +416,11 @@ AccountsPageReceivingTab::AccountsPageReceivingTab( QWidget * parent )
   mAccountsReceiving.mAccountList->agentFilterProxyModel()->addMimeTypeFilter( "message/rfc822" );
   mAccountsReceiving.mAccountList->agentFilterProxyModel()->addCapabilityFilter( "Resource" ); // show only resources, no agents
   mAccountsReceiving.mFilterAccount->setProxy( mAccountsReceiving.mAccountList->agentFilterProxyModel() );
+
+  ConfigAgentDelegate *configDelegate = new ConfigAgentDelegate( mAccountsReceiving.mAccountList->view() );
+  mAccountsReceiving.mAccountList->view()->setItemDelegate( configDelegate );
+  connect( configDelegate, SIGNAL( optionsClicked( const QString &, const QPoint & ) ), this, SLOT( slotShowMailCheckMenu( const QString &, const QPoint & ) ) );
+  
   connect( mAccountsReceiving.mAccountList, SIGNAL( currentChanged( const Akonadi::AgentInstance&, const Akonadi::AgentInstance& ) ),
            SLOT( slotAccountSelected( const Akonadi::AgentInstance& ) ) );
   connect( mAccountsReceiving.mAccountList, SIGNAL(doubleClicked(Akonadi::AgentInstance)),
@@ -454,6 +460,75 @@ AccountsPageReceivingTab::AccountsPageReceivingTab( QWidget * parent )
 AccountsPageReceivingTab::~AccountsPageReceivingTab()
 {
 
+}
+
+void AccountsPageReceivingTab::slotShowMailCheckMenu( const QString &ident, const QPoint & pos )
+{
+  QMenu *menu = new QMenu( this );
+
+  const QString resourceGroupPattern( "Resource %1" );
+  KConfigGroup group( KMKernel::config(), resourceGroupPattern.arg( ident ) );
+
+  bool IncludeInManualChecks = group.readEntry( "IncludeInManualChecks", true );
+  bool CheckOnStartup = group.readEntry( "CheckOnStartup", false );
+  bool OfflineOnShutdown = group.readEntry( "OfflineOnShutdown", false );
+
+  QAction *manualMailCheck = new QAction( "Include in Manual Mail Check", menu );
+  manualMailCheck->setCheckable( true );
+  manualMailCheck->setChecked( IncludeInManualChecks );
+  manualMailCheck->setData( ident );
+  menu->addAction( manualMailCheck );
+
+  QAction *checkOnStartup = new QAction( "Include in Startup Mail Check", menu );
+  checkOnStartup->setCheckable( true );
+  checkOnStartup->setChecked( CheckOnStartup );
+  checkOnStartup->setData( ident );
+  menu->addAction( checkOnStartup );
+
+  QAction *switchOffline = new QAction( "Switch offline on KMail Shutdown", menu );
+  switchOffline->setCheckable( true );
+  switchOffline->setChecked( OfflineOnShutdown );
+  switchOffline->setData( ident );
+  menu->addAction( switchOffline );
+
+  connect( manualMailCheck, SIGNAL( toggled( bool ) ), this, SLOT( slotIncludeInCheckChanged( bool ) ) );
+  connect( checkOnStartup, SIGNAL( toggled( bool ) ), this, SLOT( slotCheckOnStartupChanged( bool ) ) );
+  connect( switchOffline, SIGNAL( toggled( bool ) ), this, SLOT( slotOfflineOnShutdownChanged( bool ) ) );
+
+  menu->popup(  mAccountsReceiving.mAccountList->view()->mapToGlobal( pos ) );
+}
+
+void AccountsPageReceivingTab::slotIncludeInCheckChanged( bool checked )
+{
+  QAction* action = qobject_cast< QAction* >( sender() );
+  QString ident = action->data().toString();
+
+  const QString resourceGroupPattern( "Resource %1" );
+  KConfigGroup group( KMKernel::config(), resourceGroupPattern.arg( ident ) );
+
+  group.writeEntry( "IncludeInManualChecks", checked );
+}
+
+void AccountsPageReceivingTab::slotCheckOnStartupChanged( bool checked )
+{
+  QAction* action = qobject_cast< QAction* >( sender() );
+  QString ident = action->data().toString();
+
+  const QString resourceGroupPattern( "Resource %1" );
+  KConfigGroup group( KMKernel::config(), resourceGroupPattern.arg( ident ) );
+
+  group.writeEntry( "CheckOnStartup", checked );
+}
+
+void AccountsPageReceivingTab::slotOfflineOnShutdownChanged( bool checked )
+{
+  QAction* action = qobject_cast< QAction* >( sender() );
+  QString ident = action->data().toString();
+
+  const QString resourceGroupPattern( "Resource %1" );
+  KConfigGroup group( KMKernel::config(), resourceGroupPattern.arg( ident ) );
+  
+  group.writeEntry( "OfflineOnShutdown", checked );
 }
 
 void AccountsPage::ReceivingTab::slotAccountSelected(const Akonadi::AgentInstance& current)
