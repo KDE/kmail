@@ -32,6 +32,8 @@
 #ifndef __KDEPIM__KMAIL__STL_UTIL_H__
 #define __KDEPIM__KMAIL__STL_UTIL_H__
 
+#include <algorithm>
+
 template <typename T>
 struct DeleteAndSetToZero {
   void operator()( const T * & t ) { delete t; t = 0; }
@@ -43,5 +45,20 @@ static inline void deleteAll( T & c ) {
     delete *it ; *it = 0;
   }
 }
+
+namespace kdtools {
+
+    template <typename Iterator, typename UnaryPredicate>
+    bool any( Iterator first, Iterator last, UnaryPredicate p )
+    {
+        while ( first != last )
+            if ( p( *first ) )
+                return true;
+            else
+                ++first;
+        return false;
+    }
+
+} // namespace kdtools
 
 #endif // __KDEPIM__KMAIL__STL_UTIL_H__

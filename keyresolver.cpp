@@ -42,6 +42,7 @@
 
 #include "kcursorsaver.h"
 #include "kleo_util.h"
+#include "stl_util.h"
 
 #include <libemailfunctions/email.h>
 #include <ui/keyselectiondialog.h>
@@ -344,6 +345,20 @@ namespace {
 
     const Kleo::CryptoMessageFormat format;
   };
+
+  struct IsForFormat : std::unary_function<GpgME::Key,bool> {
+    explicit IsForFormat( Kleo::CryptoMessageFormat f )
+      : protocol( isOpenPGP( f ) ? GpgME::Context::OpenPGP :
+                  isSMIME( f )   ? GpgME::Context::CMS     :
+                  /* else */       GpgME::Context::Unknown ) {}
+
+    bool operator()( const GpgME::Key & key ) const {
+      return key.protocol() == protocol ;
+    }
+
+    const GpgME::Context::Protocol protocol;
+  };
+
 }
 
 
@@ -1719,8 +1734,11 @@ void Kleo::KeyResolver::addKeys( const std::vector<Item> & items ) {
     SplitInfo si( it->address );
     CryptoMessageFormat f = AutoFormat;
     for ( unsigned int i = 0 ; i < numConcreteCryptoMessageFormats ; ++i ) {
-      if ( concreteCryptoMessageFormats[i] & it->format ) {
-        f = concreteCryptoMessageFormats[i];
+      const CryptoMessageFormat fmt = concreteCryptoMessageFormats[i];
+      if ( ( fmt & it->format ) &&
+           kdtools::any( it->keys.begin(), it->keys.end(), IsForFormat( fmt ) ) )
+      {
+        f = fmt;
         break;
       }
     }
