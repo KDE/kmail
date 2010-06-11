@@ -275,7 +275,7 @@ KMKernel::~KMKernel ()
   delete mMailService;
   mMailService = 0;
 
-  //stopAgentInstance();
+  stopAgentInstance();
   slotSyncConfig();
   mySelf = 0;
   kDebug();
@@ -450,11 +450,17 @@ void KMKernel::checkMail () //might create a new reader but won't show!!
 {
   if ( !kmkernel->askToGoOnline() )
     return;
+
+  const QString resourceGroupPattern( "Resource %1" );
+
   Akonadi::AgentInstance::List lst = KMail::Util::agentInstances();
   foreach( Akonadi::AgentInstance type, lst ) {
-    if ( !type.isOnline() )
-      type.setIsOnline( true );
-    type.synchronize();
+    KConfigGroup group( KMKernel::config(), resourceGroupPattern.arg( type.identifier() ) );
+    if ( group.readEntry( "IncludeInManualChecks", true ) ) {
+      if ( !type.isOnline() )
+        type.setIsOnline( true );
+      type.synchronize();
+    }
   }
 }
 
@@ -899,6 +905,29 @@ bool KMKernel::isOffline()
     return true;
   else
     return false;
+}
+
+void KMKernel::checkMailOnStartup()
+{
+  if ( !kmkernel->askToGoOnline() )
+    return;
+
+  const QString resourceGroupPattern( "Resource %1" );
+
+  Akonadi::AgentInstance::List lst = KMail::Util::agentInstances();
+  foreach( Akonadi::AgentInstance type, lst ) {
+    KConfigGroup group( KMKernel::config(), resourceGroupPattern.arg( type.identifier() ) );
+    if ( group.readEntry( "CheckOnStartup", false ) ) {
+      if ( !type.isOnline() )
+        type.setIsOnline( true );
+      type.synchronize();
+    }
+
+    if ( group.readEntry( "OfflineOnShutdown", false ) ) {
+      if ( !type.isOnline() )
+        type.setIsOnline( true );
+    }
+  }
 }
 
 bool KMKernel::askToGoOnline()
@@ -1833,9 +1862,13 @@ bool KMKernel::isImapFolder( const Akonadi::Collection &col )
 
 void KMKernel::stopAgentInstance()
 {
+  const QString resourceGroupPattern( "Resource %1" );
+
   Akonadi::AgentInstance::List lst = KMail::Util::agentInstances();
   foreach( Akonadi::AgentInstance type, lst ) {
-    type.setIsOnline( false );
+    KConfigGroup group( KMKernel::config(), resourceGroupPattern.arg( type.identifier() ) );
+    if ( group.readEntry( "OfflineOnShutdown", false ) )
+      type.setIsOnline( false );
   }
 }
 

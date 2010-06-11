@@ -213,6 +213,8 @@ class KMAIL_EXPORT KMMainWidget : public QWidget
 
     void slotCheckMail();
 
+    void slotCheckMailOnStartup();
+
     /**
       Select the given folder
       If the folder is 0 the intro is shown
@@ -272,7 +274,7 @@ class KMAIL_EXPORT KMMainWidget : public QWidget
 
 
     KAction *akonadiStandardAction( Akonadi::StandardActionManager::Type type );
-    
+
     void refreshMessageListSelection();
   signals:
     void messagesTransfered( bool );

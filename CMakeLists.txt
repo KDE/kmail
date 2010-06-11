@@ -65,6 +65,7 @@ set(kmailprivate_LIB_SRCS
    colorlistbox.cpp
    imapaclattribute.cpp
    kmmainwin.cpp
+   configagentdelegate.cpp
    configuredialoglistview.cpp
    configuredialog.cpp
    configuredialog_p.cpp

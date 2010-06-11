@@ -209,10 +209,26 @@ private slots:
   void slotModifySelectedAccount();
   void slotRemoveSelectedAccount();
   void slotEditNotifications();
+  void slotShowMailCheckMenu( const QString &, const QPoint & );
+  void slotIncludeInCheckChanged( bool checked );
+  void slotCheckOnStartupChanged( bool checked );
+  void slotOfflineOnShutdownChanged( bool checked );
 
 private:
   virtual void doLoadFromGlobalSettings();
   virtual void doLoadOther();
+
+  struct RetrievalOptions {
+    RetrievalOptions( bool manualCheck, bool checkstartup, bool offline )
+    : IncludeInManualChecks( manualCheck )
+    , CheckOnStartup( checkstartup )
+    , OfflineOnShutdown( offline ) {}
+    bool IncludeInManualChecks;
+    bool CheckOnStartup;
+    bool OfflineOnShutdown;
+  };
+
+  QHash<QString, RetrievalOptions*> mRetrievalHash;
   //FIXME virtual void doResetToDefaultsOther();
 
 private:

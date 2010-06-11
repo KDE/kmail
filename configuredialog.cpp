@@ -31,6 +31,7 @@
 #include "globalsettings.h"
 #include "templatesconfiguration_kfg.h"
 #include "configuredialoglistview.h"
+#include "configagentdelegate.h"
 
 // other KMail headers:
 #include "kmkernel.h"
@@ -415,6 +416,11 @@ AccountsPageReceivingTab::AccountsPageReceivingTab( QWidget * parent )
   mAccountsReceiving.mAccountList->agentFilterProxyModel()->addMimeTypeFilter( "message/rfc822" );
   mAccountsReceiving.mAccountList->agentFilterProxyModel()->addCapabilityFilter( "Resource" ); // show only resources, no agents
   mAccountsReceiving.mFilterAccount->setProxy( mAccountsReceiving.mAccountList->agentFilterProxyModel() );
+
+  ConfigAgentDelegate *configDelegate = new ConfigAgentDelegate( mAccountsReceiving.mAccountList->view() );
+  mAccountsReceiving.mAccountList->view()->setItemDelegate( configDelegate );
+  connect( configDelegate, SIGNAL( optionsClicked( const QString &, const QPoint & ) ), this, SLOT( slotShowMailCheckMenu( const QString &, const QPoint & ) ) );
+  
   connect( mAccountsReceiving.mAccountList, SIGNAL( currentChanged( const Akonadi::AgentInstance&, const Akonadi::AgentInstance& ) ),
            SLOT( slotAccountSelected( const Akonadi::AgentInstance& ) ) );
   connect( mAccountsReceiving.mAccountList, SIGNAL(doubleClicked(Akonadi::AgentInstance)),
@@ -453,7 +459,91 @@ AccountsPageReceivingTab::AccountsPageReceivingTab( QWidget * parent )
 
 AccountsPageReceivingTab::~AccountsPageReceivingTab()
 {
+  QHashIterator<QString, RetrievalOptions*> it( mRetrievalHash );
+  while( it.hasNext() ) {
+    it.next();
+    delete it.value();
+  }
+}
 
+void AccountsPageReceivingTab::slotShowMailCheckMenu( const QString &ident, const QPoint & pos )
+{
+  QMenu *menu = new QMenu( this );
+
+  bool IncludeInManualChecks;
+  bool CheckOnStartup;
+  bool OfflineOnShutdown;
+  if( !mRetrievalHash.contains( ident ) ) {
+
+    const QString resourceGroupPattern( "Resource %1" );
+    KConfigGroup group( KMKernel::config(), resourceGroupPattern.arg( ident ) );
+
+    IncludeInManualChecks = group.readEntry( "IncludeInManualChecks", true );
+    CheckOnStartup = group.readEntry( "CheckOnStartup", false );
+    OfflineOnShutdown = group.readEntry( "OfflineOnShutdown", false );
+
+    RetrievalOptions *opts = new RetrievalOptions( IncludeInManualChecks, CheckOnStartup, OfflineOnShutdown );
+    mRetrievalHash.insert( ident, opts );
+  } else {
+    RetrievalOptions *opts = mRetrievalHash.value( ident );
+    IncludeInManualChecks = opts->IncludeInManualChecks;
+    CheckOnStartup = opts->CheckOnStartup;
+    OfflineOnShutdown = opts->OfflineOnShutdown;
+  }
+
+  QAction *manualMailCheck = new QAction( i18nc( "Label to a checkbox, so is either checked/unchecked", "Include in Manual Mail Check" ), menu );
+  manualMailCheck->setCheckable( true );
+  manualMailCheck->setChecked( IncludeInManualChecks );
+  manualMailCheck->setData( ident );
+  menu->addAction( manualMailCheck );
+
+  QAction *checkOnStartup = new QAction( i18nc( "Label to a checkbox, so is either checked/unchecked", "Include in Startup Mail Check" ), menu );
+  checkOnStartup->setCheckable( true );
+  checkOnStartup->setChecked( CheckOnStartup );
+  checkOnStartup->setData( ident );
+  menu->addAction( checkOnStartup );
+
+  QAction *switchOffline = new QAction( i18nc( "Label to a checkbox, so is either checked/unchecked", "Switch offline on KMail Shutdown" ), menu );
+  switchOffline->setCheckable( true );
+  switchOffline->setChecked( OfflineOnShutdown );
+  switchOffline->setData( ident );
+  menu->addAction( switchOffline );
+
+  connect( manualMailCheck, SIGNAL( toggled( bool ) ), this, SLOT( slotIncludeInCheckChanged( bool ) ) );
+  connect( checkOnStartup, SIGNAL( toggled( bool ) ), this, SLOT( slotCheckOnStartupChanged( bool ) ) );
+  connect( switchOffline, SIGNAL( toggled( bool ) ), this, SLOT( slotOfflineOnShutdownChanged( bool ) ) );
+
+  menu->popup(  mAccountsReceiving.mAccountList->view()->mapToGlobal( pos ) );
+}
+
+void AccountsPageReceivingTab::slotIncludeInCheckChanged( bool checked )
+{
+  QAction* action = qobject_cast< QAction* >( sender() );
+  QString ident = action->data().toString();
+
+  RetrievalOptions *opts = mRetrievalHash.value( ident );
+  opts->IncludeInManualChecks = checked;
+  slotEmitChanged();
+}
+
+void AccountsPageReceivingTab::slotCheckOnStartupChanged( bool checked )
+{
+  QAction* action = qobject_cast< QAction* >( sender() );
+  QString ident = action->data().toString();
+
+  RetrievalOptions *opts = mRetrievalHash.value( ident );
+  opts->CheckOnStartup = checked;
+  slotEmitChanged();
+}
+
+void AccountsPageReceivingTab::slotOfflineOnShutdownChanged( bool checked )
+{
+  QAction* action = qobject_cast< QAction* >( sender() );
+  QString ident = action->data().toString();
+
+  RetrievalOptions *opts = mRetrievalHash.value( ident );
+  opts->OfflineOnShutdown = checked;
+  slotEmitChanged();
 }
 
 void AccountsPage::ReceivingTab::slotAccountSelected(const Akonadi::AgentInstance& current)
@@ -488,8 +578,6 @@ void AccountsPage::ReceivingTab::slotAddAccount()
 
   emit changed( true );
 }
-
-
 
 void AccountsPage::ReceivingTab::slotModifySelectedAccount()
 {
@@ -550,6 +638,19 @@ void AccountsPage::ReceivingTab::save()
 
   general.writeEntry( "checkmail-startup", mAccountsReceiving.mCheckmailStartupCheck->isChecked() );
 
+
+  const QString resourceGroupPattern( "Resource %1" );
+  QHashIterator<QString, RetrievalOptions*> it( mRetrievalHash );
+  while( it.hasNext() ) {
+    it.next();
+    KConfigGroup group( KMKernel::config(), resourceGroupPattern.arg( it.key() ) );
+    RetrievalOptions *opts = it.value();
+    group.writeEntry( "IncludeInManualChecks", opts->IncludeInManualChecks);
+    group.writeEntry( "OfflineOnShutdown", opts->OfflineOnShutdown);
+    group.writeEntry( "CheckOnStartup", opts->CheckOnStartup);
+  }
+  
+  
 
 }
 

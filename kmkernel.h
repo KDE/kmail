@@ -203,6 +203,7 @@ public Q_SLOTS:
 
 
 public:
+  void checkMailOnStartup();
 
   /** A static helper function that asks the user
    * if they want to go online.

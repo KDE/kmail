@@ -766,9 +766,8 @@ void KMMainWidget::readConfig()
     if ( !mStartupDone )
     {
       // check mail on startup
-      if ( group.readEntry( "checkmail-startup", false ) )
-        // do it after building the kmmainwin, so that the progressdialog is available
-        QTimer::singleShot( 0, this, SLOT( slotCheckMail() ) );
+      // do it after building the kmmainwin, so that the progressdialog is available
+      QTimer::singleShot( 0, this, SLOT( slotCheckMailOnStartup() ) );
     }
   }
 
@@ -945,7 +944,7 @@ void KMMainWidget::createWidgets()
 
   mAkonadiStandardActionManager->setCollectionSelectionModel( mFolderTreeWidget->folderTreeView()->selectionModel() );
   mAkonadiStandardActionManager->setItemSelectionModel( mMessagePane->currentItemSelectionModel() );
-  
+
   if ( mEnableFavoriteFolderView ) {
 
     mFavoriteCollectionsView = new Akonadi::EntityListView( mGUIClient, this );
@@ -1165,6 +1164,12 @@ void KMMainWidget::slotImport()
 void KMMainWidget::slotCheckMail()
 {
   kmkernel->checkMail();
+}
+
+//-----------------------------------------------------------------------------
+void KMMainWidget::slotCheckMailOnStartup()
+{
+  kmkernel->checkMailOnStartup();
 }
 
 //-----------------------------------------------------------------------------
@@ -3820,7 +3825,7 @@ void KMMainWidget::updateFolderMenu()
   mGUIClient->unplugActionList( QLatin1String( "outbox_folder_actionlist" ) );
   mGUIClient->plugActionList( QLatin1String( "outbox_folder_actionlist" ), actionlist );
   actionlist.clear();
-  
+
   const bool isASearchFolder = mCurrentFolder && mCurrentFolder->collection().resource() == QLatin1String( "akonadi_search_resource" );
   mRemoveFolderAction->setText( isASearchFolder ? i18n("&Delete Search") : i18n("&Delete Folder") );
 
@@ -3848,7 +3853,7 @@ void KMMainWidget::updateFolderMenu()
   }
   mGUIClient->unplugActionList( QLatin1String( "collectionview_actionlist" ) );
   mGUIClient->plugActionList( QLatin1String( "collectionview_actionlist" ), actionlist );
-  
+
 }
 
 //-----------------------------------------------------------------------------
