@@ -177,11 +177,7 @@ bool ConfigAgentDelegate::editorEvent ( QEvent* event, QAbstractItemModel* model
              || ( event->type() == QEvent::MouseMove ) ) )
         return false;
 
-    QTextDocument *doc = document ( option
-
-
-
-                                    , index );
+    QTextDocument *doc = document ( option , index );
     if ( !doc )
         return false;
 
