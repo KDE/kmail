@@ -217,6 +217,18 @@ private slots:
 private:
   virtual void doLoadFromGlobalSettings();
   virtual void doLoadOther();
+
+  struct RetrievalOptions {
+    RetrievalOptions( bool manualCheck, bool checkstartup, bool offline )
+    : IncludeInManualChecks( manualCheck )
+    , CheckOnStartup( checkstartup )
+    , OfflineOnShutdown( offline ) {}
+    bool IncludeInManualChecks;
+    bool CheckOnStartup;
+    bool OfflineOnShutdown;
+  };
+
+  QHash<QString, RetrievalOptions*> mRetrievalHash;
   //FIXME virtual void doResetToDefaultsOther();
 
 private:

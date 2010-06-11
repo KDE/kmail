@@ -459,19 +459,37 @@ AccountsPageReceivingTab::AccountsPageReceivingTab( QWidget * parent )
 
 AccountsPageReceivingTab::~AccountsPageReceivingTab()
 {
-
+  QHashIterator<QString, RetrievalOptions*> it( mRetrievalHash );
+  while( it.hasNext() ) {
+    it.next();
+    delete it.value();
+  }
 }
 
 void AccountsPageReceivingTab::slotShowMailCheckMenu( const QString &ident, const QPoint & pos )
 {
   QMenu *menu = new QMenu( this );
 
-  const QString resourceGroupPattern( "Resource %1" );
-  KConfigGroup group( KMKernel::config(), resourceGroupPattern.arg( ident ) );
+  bool IncludeInManualChecks;
+  bool CheckOnStartup;
+  bool OfflineOnShutdown;
+  if( !mRetrievalHash.contains( ident ) ) {
 
-  bool IncludeInManualChecks = group.readEntry( "IncludeInManualChecks", true );
-  bool CheckOnStartup = group.readEntry( "CheckOnStartup", false );
-  bool OfflineOnShutdown = group.readEntry( "OfflineOnShutdown", false );
+    const QString resourceGroupPattern( "Resource %1" );
+    KConfigGroup group( KMKernel::config(), resourceGroupPattern.arg( ident ) );
+
+    IncludeInManualChecks = group.readEntry( "IncludeInManualChecks", true );
+    CheckOnStartup = group.readEntry( "CheckOnStartup", false );
+    OfflineOnShutdown = group.readEntry( "OfflineOnShutdown", false );
+
+    RetrievalOptions *opts = new RetrievalOptions( IncludeInManualChecks, CheckOnStartup, OfflineOnShutdown );
+    mRetrievalHash.insert( ident, opts );
+  } else {
+    RetrievalOptions *opts = mRetrievalHash.value( ident );
+    IncludeInManualChecks = opts->IncludeInManualChecks;
+    CheckOnStartup = opts->CheckOnStartup;
+    OfflineOnShutdown = opts->OfflineOnShutdown;
+  }
 
   QAction *manualMailCheck = new QAction( i18nc( "Label to a checkbox, so is either checked/unchecked", "Include in Manual Mail Check" ), menu );
   manualMailCheck->setCheckable( true );
@@ -503,10 +521,9 @@ void AccountsPageReceivingTab::slotIncludeInCheckChanged( bool checked )
   QAction* action = qobject_cast< QAction* >( sender() );
   QString ident = action->data().toString();
 
-  const QString resourceGroupPattern( "Resource %1" );
-  KConfigGroup group( KMKernel::config(), resourceGroupPattern.arg( ident ) );
-
-  group.writeEntry( "IncludeInManualChecks", checked );
+  RetrievalOptions *opts = mRetrievalHash.value( ident );
+  opts->IncludeInManualChecks = checked;
+  slotEmitChanged();
 }
 
 void AccountsPageReceivingTab::slotCheckOnStartupChanged( bool checked )
@@ -514,10 +531,9 @@ void AccountsPageReceivingTab::slotCheckOnStartupChanged( bool checked )
   QAction* action = qobject_cast< QAction* >( sender() );
   QString ident = action->data().toString();
 
-  const QString resourceGroupPattern( "Resource %1" );
-  KConfigGroup group( KMKernel::config(), resourceGroupPattern.arg( ident ) );
-
-  group.writeEntry( "CheckOnStartup", checked );
+  RetrievalOptions *opts = mRetrievalHash.value( ident );
+  opts->CheckOnStartup = checked;
+  slotEmitChanged();
 }
 
 void AccountsPageReceivingTab::slotOfflineOnShutdownChanged( bool checked )
@@ -525,10 +541,9 @@ void AccountsPageReceivingTab::slotOfflineOnShutdownChanged( bool checked )
   QAction* action = qobject_cast< QAction* >( sender() );
   QString ident = action->data().toString();
 
-  const QString resourceGroupPattern( "Resource %1" );
-  KConfigGroup group( KMKernel::config(), resourceGroupPattern.arg( ident ) );
-  
-  group.writeEntry( "OfflineOnShutdown", checked );
+  RetrievalOptions *opts = mRetrievalHash.value( ident );
+  opts->OfflineOnShutdown = checked;
+  slotEmitChanged();
 }
 
 void AccountsPage::ReceivingTab::slotAccountSelected(const Akonadi::AgentInstance& current)
@@ -563,8 +578,6 @@ void AccountsPage::ReceivingTab::slotAddAccount()
 
   emit changed( true );
 }
-
-
 
 void AccountsPage::ReceivingTab::slotModifySelectedAccount()
 {
@@ -625,6 +638,19 @@ void AccountsPage::ReceivingTab::save()
 
   general.writeEntry( "checkmail-startup", mAccountsReceiving.mCheckmailStartupCheck->isChecked() );
 
+
+  const QString resourceGroupPattern( "Resource %1" );
+  QHashIterator<QString, RetrievalOptions*> it( mRetrievalHash );
+  while( it.hasNext() ) {
+    it.next();
+    KConfigGroup group( KMKernel::config(), resourceGroupPattern.arg( it.key() ) );
+    RetrievalOptions *opts = it.value();
+    group.writeEntry( "IncludeInManualChecks", opts->IncludeInManualChecks);
+    group.writeEntry( "OfflineOnShutdown", opts->OfflineOnShutdown);
+    group.writeEntry( "CheckOnStartup", opts->CheckOnStartup);
+  }
+  
+  
 
 }
 
