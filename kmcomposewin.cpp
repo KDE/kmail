@@ -197,7 +197,6 @@ KMComposeWin::KMComposeWin( const KMime::Message::Ptr &aMsg, Composer::TemplateC
     mPendingQueueJobs( 0 ),
     mPendingCreateItemJobs( 0 ),
     mLabelWidth( 0 ),
-    mAutoSaveTimer( 0 ), mAutoSaveErrorShown( false ),
     mComposerBase( 0 ),
     mSignatureStateIndicator( 0 ), mEncryptionStateIndicator( 0 ),
     mPreventFccOverwrite( false ),
@@ -207,7 +206,7 @@ KMComposeWin::KMComposeWin( const KMime::Message::Ptr &aMsg, Composer::TemplateC
   mComposerBase = new Message::ComposerViewBase( this );
   mComposerBase->setIdentityManager( kmkernel->identityManager() );
   mComposerBase->setParentWidgetForGui( this );
-
+  
   connect( mComposerBase, SIGNAL( disableHtml( Message::ComposerViewBase::Confirmation ) ),
            this, SLOT( disableHtml( Message::ComposerViewBase::Confirmation ) ) );
 
@@ -588,7 +587,6 @@ void KMComposeWin::readConfig( bool reload /* = false */ )
   }
 
   mComposerBase->identityCombo()->setCurrentIdentity( mId );
-
   kDebug() << mComposerBase->identityCombo()->currentIdentityName();
   const KPIMIdentities::Identity & ident =
     kmkernel->identityManager()->identityForUoid( mId );
@@ -599,6 +597,9 @@ void KMComposeWin::readConfig( bool reload /* = false */ )
     if ( transport )
       mComposerBase->transportComboBox()->setCurrentTransport( transport->id() );
   }
+
+  mComposerBase->setAutoSaveInterval( GlobalSettings::self()->autosaveInterval() * 1000 * 60 );
+  
 
   if ( mBtnDictionary->isChecked() ) {
     mDictionaryCombo->setCurrentByDictionaryName( GlobalSettings::self()->previousDictionary() );
@@ -649,83 +650,6 @@ Message::Composer* KMComposeWin::createSimpleComposer()
 {
   return mComposerBase->createSimpleComposer();
 }
-
-//-----------------------------------------------------------------------------
-void KMComposeWin::autoSaveMessage()
-{
-  kDebug() << "Autosaving message";
-
-  if ( mAutoSaveTimer ) {
-    mAutoSaveTimer->stop();
-  }
-
-  if( !mMiscComposers.isEmpty() ) {
-    // This may happen if e.g. the autosave timer calls applyChanges.
-    kDebug() << "Called while composer active; ignoring.";
-    return;
-  }
-
-  Message::Composer * const composer = createSimpleComposer();
-  mMiscComposers.append( composer );
-  connect( composer, SIGNAL(result(KJob*)), this, SLOT(slotAutoSaveComposeResult(KJob*)) );
-  composer->start();
-}
-
-void KMComposeWin::setAutoSaveFileName( const QString &fileName )
-{
-  mAutoSaveUUID = fileName;
-
-  // Set it to modified, otherwise the user can close the window without being asked, he would
-  // loose the message he just recovered!
-  setModified( true );
-}
-
-void KMComposeWin::writeAutoSaveToDisk( KMime::Message::Ptr message )
-{
-  const QString filename = KMKernel::localDataPath() + "autosave/" +
-    mAutoSaveUUID;
-  KSaveFile file( filename );
-  QString errorMessage;
-  kDebug() << "Writing message to disk as" << filename;
-
-  if( file.open() ) {
-    file.setPermissions( QFile::ReadUser | QFile::WriteUser );
-
-    if( file.write( message->encodedContent() ) !=
-        static_cast<qint64>( message->encodedContent().size() ) ) {
-      errorMessage = i18n( "Could not write all data to file." );
-    }
-    else {
-      if( !file.finalize() ) {
-        errorMessage = i18n( "Could not finalize the file." );
-      }
-    }
-  }
-  else {
-    errorMessage = i18n( "Could not open file." );
-  }
-
-  if ( !errorMessage.isEmpty() ) {
-    kWarning() << "Auto saving failed:" << errorMessage << file.errorString();
-    if ( !mAutoSaveErrorShown ) {
-      KMessageBox::sorry( this, i18n( "Autosaving the message as %1 failed.\n"
-                                      "%2\n"
-                                      "Reason: %3",
-                                      filename,
-                                      errorMessage,
-                                      file.errorString() ),
-                          i18n( "Autosaving Message Failed" ) );
-
-      // Error dialog shown, hide the errors the next time
-      mAutoSaveErrorShown = true;
-    }
-  }
-  else {
-    // No error occurred, the next error should be shown again
-    mAutoSaveErrorShown = false;
-  }
-}
-
 
 //-----------------------------------------------------------------------------
 void KMComposeWin::slotView( void )
@@ -1815,7 +1739,7 @@ bool KMComposeWin::queryClose ()
     }
     //else fall through: return true
   }
-  cleanupAutoSave();
+  mComposerBase->cleanupAutoSave();
 
   if( !mMiscComposers.isEmpty() ) {
     kWarning() << "Tried to close while composer was active";
@@ -1886,30 +1810,11 @@ bool KMComposeWin::userForgotAttachment()
   return false;
 }
 
-
-void KMComposeWin::slotAutoSaveComposeResult( KJob *job )
+void KMComposeWin::autoSaveMessage()
 {
-  using Message::Composer;
-
-  Q_ASSERT( dynamic_cast< Composer* >( job ) );
-  Composer* composer = dynamic_cast< Composer* >( job );
-  Q_ASSERT( mMiscComposers.contains( composer ) );
-  mMiscComposers.removeAll( composer );
-
-  if( composer->error() == Composer::NoError ) {
-
-    // The messages were composed successfully. Only save the first message, there should
-    // only be one anyway, since crypto is disabled.
-    writeAutoSaveToDisk( composer->resultMessages().first() );
-    Q_ASSERT( composer->resultMessages().size() == 1 );
-
-    if( autoSaveInterval() > 0 ) {
-      updateAutoSave();
-    }
-  } else {
-    kWarning() << "Composer for autosaving failed:" << composer->errorString();
-  }
+  mComposerBase->autoSaveMessage();
 }
+
 
 bool KMComposeWin::encryptToSelf()
 {
@@ -2639,7 +2544,6 @@ void KMComposeWin::doDelayedSend( MessageSender::SendMethod method, MessageSende
   mComposerBase->setCharsets( charsets );
   mComposerBase->setUrgent( mUrgentAction->isChecked() );
   mComposerBase->setMDNRequested( mRequestMDNAction->isChecked() );
-
   mComposerBase->setCryptoOptions( sign, encrypt, cryptoMessageFormat(),
                                    ( ( saveIn != MessageSender::SaveInNone && GlobalSettings::self()->neverEncryptDrafts() )
                                     || mSigningAndEncryptionExplicitlyDisabled ) );
@@ -3026,71 +2930,6 @@ void KMComposeWin::setFocusToSubject()
   mEdtSubject->setFocus();
 }
 
-int KMComposeWin::autoSaveInterval() const
-{
-  return GlobalSettings::self()->autosaveInterval() * 1000 * 60;
-}
-
-void KMComposeWin::initAutoSave()
-{
-  kDebug() << "initalising autosave";
-
-  // Ensure that the autosave directory exsits.
-  QDir dataDirectory( KMKernel::localDataPath() );
-  if( !dataDirectory.exists( "autosave" ) ) {
-    kDebug() << "Creating autosave directory.";
-    dataDirectory.mkdir( "autosave" );
-  }
-
-  // Construct a file name
-  if ( mAutoSaveUUID.isEmpty() ) {
-    mAutoSaveUUID = QUuid::createUuid().toString();
-  }
-
-  updateAutoSave();
-}
-
-void KMComposeWin::updateAutoSave()
-{
-  if ( autoSaveInterval() == 0 ) {
-    delete mAutoSaveTimer; mAutoSaveTimer = 0;
-  } else {
-    if ( !mAutoSaveTimer ) {
-      mAutoSaveTimer = new QTimer( this );
-      connect( mAutoSaveTimer, SIGNAL( timeout() ),
-               this, SLOT( autoSaveMessage() ) );
-    }
-    mAutoSaveTimer->start( autoSaveInterval() );
-  }
-}
-
-void KMComposeWin::cleanupAutoSave()
-{
-  delete mAutoSaveTimer; mAutoSaveTimer = 0;
-  if ( !mAutoSaveUUID.isEmpty() ) {
-
-    kDebug() << "deleting autosave files" << mAutoSaveUUID;
-
-    // Delete the autosave files
-    QDir autoSaveDir( KMKernel::localDataPath() + "autosave" );
-
-    // Filter out only this composer window's autosave files
-    QStringList autoSaveFilter;
-    autoSaveFilter << mAutoSaveUUID + "*";
-    autoSaveDir.setNameFilters( autoSaveFilter );
-
-    // Return the files to be removed
-    QStringList autoSaveFiles = autoSaveDir.entryList();
-    kDebug() << "There are" << autoSaveFiles.count() << "to be deleted.";
-
-    // Delete each file
-    foreach( const QString &file, autoSaveFiles ) {
-      autoSaveDir.remove( file );
-    }
-    mAutoSaveUUID.clear();
-  }
-}
-
 void KMComposeWin::slotCompletionModeChanged( KGlobalSettings::Completion mode )
 {
   GlobalSettings::self()->setCompletionMode( (int) mode );
@@ -3104,7 +2943,7 @@ void KMComposeWin::slotCompletionModeChanged( KGlobalSettings::Completion mode )
 void KMComposeWin::slotConfigChanged()
 {
   readConfig( true /*reload*/);
-  updateAutoSave();
+  mComposerBase->updateAutoSave();
   rethinkFields();
   slotWordWrapToggled( mWordWrapAction->isChecked() );
 }

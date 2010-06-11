@@ -230,11 +230,6 @@ class KMComposeWin : public KMail::Composer
      */
     bool isModified() const;
 
-    /**
-     * Set whether the message should be treated as modified or not.
-     */
-    void setModified( bool modified );
-
   public: // kmcommand
     /**
      * If this folder is set, the original message is inserted back after
@@ -405,6 +400,12 @@ class KMComposeWin : public KMail::Composer
 
   public slots: // kmkernel
     void autoSaveMessage();
+
+    /**
+     * Set whether the message should be treated as modified or not.
+     */
+    void setModified( bool modified );
+    
   private slots:
 
     void slotView();
@@ -563,33 +564,6 @@ class KMComposeWin : public KMail::Composer
     void doDelayedSend( MessageSender::SendMethod method, MessageSender::SaveIn saveIn );
 
 
-    /**
-     * Returns the autosave interval in milliseconds (as needed for QTimer).
-     */
-    int autoSaveInterval() const;
-
-    /**
-     * Initialize autosaving (timer and filename).
-     */
-    void initAutoSave();
-
-    /**
-      * Sets the filename to use when autosaving something. This is used when the KMKernel recovers
-      * the autosave files: It calls this method, so that the composer uses the same filename again.
-      * That way, the recovered autosave file is properly cleaned up in cleanupAutoSave():
-      */
-    void setAutoSaveFileName( const QString &fileName );
-
-    /**
-     * Enables/disables autosaving depending on the value of the autosave
-     * interval.
-     */
-    void updateAutoSave();
-
-    /**
-     * Stop autosaving and delete the autosaved message.
-     */
-    void cleanupAutoSave();
 
   private slots:
     void recipientEditorSizeHintChanged();
@@ -655,13 +629,6 @@ class KMComposeWin : public KMail::Composer
   private:
 
     /**
-    * Writes out autosave data to the disk from the KMime::Message message.
-    * Also appends the msgNum to the filename as a message can have a number of
-    * KMime::Messages
-    */
-    void writeAutoSaveToDisk( KMime::Message::Ptr message );
-
-    /**
      * Creates a simple composer that creates a KMime::Message out of the composer content.
      * Crypto handling is not done, therefore the name "simple".
      * This is used when autosaving or printing a message.
@@ -700,7 +667,6 @@ class KMComposeWin : public KMail::Composer
     void slotCompletionModeChanged( KGlobalSettings::Completion );
     void slotConfigChanged();
 
-    void slotAutoSaveComposeResult( KJob *job );
     void slotPrintComposeResult( KJob *job );
 
     void slotEncryptChiasmusToggled( bool );
@@ -722,9 +688,9 @@ class KMComposeWin : public KMail::Composer
     QFont mSaveFont;
     QSplitter *mHeadersToEditorSplitter;
     QWidget* mHeadersArea;
-    QSplitter *mSplitter;
+    QSplitter *mSplitter;/*
     QSplitter *mSnippetSplitter;
-    KMail::AttachmentView *mAttachmentView;
+    KMail::AttachmentView *mAttach*/mentView;
     QByteArray mOriginalPreferredCharset;
 
     // These are for passing on methods over the applyChanges calls
@@ -741,10 +707,6 @@ class KMComposeWin : public KMail::Composer
     QList< Message::Composer* > mMiscComposers;
 
     int mLabelWidth;
-
-    QTimer *mAutoSaveTimer;
-    QString mAutoSaveUUID;
-    bool mAutoSaveErrorShown; // Stops an error message being shown every time autosave is executed.
 
     QMenu *mActNowMenu;
     QMenu *mActLaterMenu;
