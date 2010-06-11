@@ -39,9 +39,14 @@ using namespace KMail;
 
 static QString standardArchivePath( const QString &folderName )
 {
-  return KGlobalSettings::documentPath() +
-          i18n( "Start of the filename for a mail archive file" , "Archive" ) + "_" + folderName +
-           "_" + QDate::currentDate().toString( Qt::ISODate ) + ".tar.bz2";
+  QString currentPath = KGlobalSettings::documentPath();
+  QDir dir( currentPath );
+  if( !dir.exists() ) {
+    currentPath = QDir::homeDirPath() + '/';
+  }
+  return currentPath +
+    i18n( "Start of the filename for a mail archive file" , "Archive" ) + "_" + folderName +
+    "_" + QDate::currentDate().toString( Qt::ISODate ) + ".tar.bz2";
 }
 
 ArchiveFolderDialog::ArchiveFolderDialog( QWidget *parent )
