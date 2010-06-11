@@ -1038,7 +1038,7 @@ void KMKernel::recoverDeadLetters()
 
       // Show the a new composer dialog for the message
       KMail::Composer * autoSaveWin = KMail::makeComposer();
-      autoSaveWin->setMsg( autoSaveMessage );
+      autoSaveWin->setMsg( autoSaveMessage, false );
       autoSaveWin->setAutoSaveFileName( file.fileName() );
       autoSaveWin->show();
       autoSaveFile.close();
