@@ -186,6 +186,7 @@ bool ConfigAgentDelegate::editorEvent ( QEvent* event, QAbstractItemModel* model
 
     QSizeF docSize = doc->documentLayout()->documentSize();
     QStyleOptionButton buttonOpt = buttonOption ( option, docSize.width() );
+    delete doc;
 
     if ( buttonOpt.rect.contains ( mousePos ) ) {
 
