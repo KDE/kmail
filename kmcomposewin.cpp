@@ -435,8 +435,6 @@ KMComposeWin::KMComposeWin( const KMime::Message::Ptr &aMsg, Composer::TemplateC
     editor->setExternalEditorPath( GlobalSettings::self()->externalEditor() );
   }
 
-  initAutoSave();
-
   if ( aMsg ) {
     setMsg( aMsg );
   }
@@ -475,6 +473,7 @@ KMComposeWin::~KMComposeWin()
   foreach ( KTempDir *const dir, mTempDirs ) {
     delete dir;
   }
+  delete mComposerBase;
 }
 
 
@@ -1656,6 +1655,11 @@ void KMComposeWin::setMsg( const KMime::Message::Ptr &newMsg, bool mayAutoSign,
   mPreventFccOverwrite = ( !kmailFcc.isEmpty() && ident.fcc() != kmailFcc );
 }
 
+void KMComposeWin::setAutoSaveFileName(const QString& fileName)
+{
+  mComposerBase->setAutoSaveFileName( fileName );
+}
+
 //-----------------------------------------------------------------------------
 void KMComposeWin::setTextSelection( const QString& selection )
 {
@@ -1899,7 +1903,7 @@ void KMComposeWin::slotSendFailed( const QString& msg )
 void KMComposeWin::slotSendSuccessful()
 {
   setModified( false );
-  cleanupAutoSave();
+  mComposerBase->cleanupAutoSave();
   close();
 }
 

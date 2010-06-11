@@ -683,14 +683,15 @@ class KMComposeWin : public KMail::Composer
      * Updates the visibility and text of the signature and encryption state indicators.
      */
     void slotUpdateSignatureAndEncrypionStateIndicators();
-
+    
+    virtual void setAutoSaveFileName( const QString& fileName );
   private:
     QFont mSaveFont;
     QSplitter *mHeadersToEditorSplitter;
     QWidget* mHeadersArea;
-    QSplitter *mSplitter;/*
+    QSplitter *mSplitter;
     QSplitter *mSnippetSplitter;
-    KMail::AttachmentView *mAttach*/mentView;
+    KMail::AttachmentView *mAttachmentView;
     QByteArray mOriginalPreferredCharset;
 
     // These are for passing on methods over the applyChanges calls
