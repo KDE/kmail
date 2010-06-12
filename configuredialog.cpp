@@ -437,9 +437,6 @@ AccountsPageReceivingTab::AccountsPageReceivingTab( QWidget * parent )
   connect( mAccountsReceiving.mRemoveAccountButton, SIGNAL(clicked()),
            this, SLOT(slotRemoveSelectedAccount()) );
 
-  connect( mAccountsReceiving.mCheckmailStartupCheck, SIGNAL( stateChanged( int ) ),
-           this, SLOT( slotEmitChanged( void ) ) );
-
   mAccountsReceiving.group->layout()->setMargin( KDialog::marginHint() );
   mAccountsReceiving.group->layout()->setSpacing( KDialog::spacingHint() );
 
@@ -600,8 +597,6 @@ void AccountsPage::ReceivingTab::doLoadOther()
 {
   KConfigGroup general( KMKernel::config(), "General" );
   mAccountsReceiving.mBeepNewMailCheck->setChecked( general.readEntry( "beep-on-mail", false ) );
-  mAccountsReceiving.mCheckmailStartupCheck->setChecked(
-      general.readEntry( "checkmail-startup", false ) );
 }
 
 void AccountsPage::ReceivingTab::save()
@@ -615,9 +610,6 @@ void AccountsPage::ReceivingTab::save()
   KConfigGroup general( KMKernel::config(), "General" );
   general.writeEntry( "beep-on-mail", mAccountsReceiving.mBeepNewMailCheck->isChecked() );
   GlobalSettings::self()->setVerboseNewMailNotification( mAccountsReceiving.mVerboseNotificationCheck->isChecked() );
-
-  general.writeEntry( "checkmail-startup", mAccountsReceiving.mCheckmailStartupCheck->isChecked() );
-
 
   const QString resourceGroupPattern( "Resource %1" );
   QHashIterator<QString, RetrievalOptions*> it( mRetrievalHash );
