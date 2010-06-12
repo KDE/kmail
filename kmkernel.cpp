@@ -268,6 +268,7 @@ KMKernel::KMKernel (QObject *parent, const char *name) :
            SLOT(transportRenamed(int,QString,QString)) );
 
   QDBusConnection::sessionBus().connect(QString(), QLatin1String( "/MailDispatcherAgent" ), "org.freedesktop.Akonadi.MailDispatcherAgent", "itemDispatchStarted",this, SLOT(itemDispatchStarted()) );
+  connect( Akonadi::AgentManager::self(), SIGNAL( instanceProgressChanged( Akonadi::AgentInstance ) ), this, SLOT( instanceProgressChanged( Akonadi::AgentInstance ) ) ) ;
 }
 
 KMKernel::~KMKernel ()
@@ -1789,6 +1790,16 @@ void KMKernel::itemDispatchStarted()
   kDebug() << "Created ProgressItem";
 }
 
+void KMKernel::instanceProgressChanged( Akonadi::AgentInstance agent )
+{
+  kDebug() << "Created ProgressItem";
+  KPIM::ProgressManager::createProgressItem( 0,
+      agent,
+      agent.identifier(),
+      agent.name(),
+      agent.statusMessage(),
+      true );
+}
 
 void KMKernel::updatedTemplates()
 {

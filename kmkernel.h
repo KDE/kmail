@@ -406,6 +406,7 @@ private slots:
   /** Updates identities when a transport has been renamed. */
   void transportRenamed( int id, const QString &oldName, const QString &newName );
   void itemDispatchStarted();
+  void instanceProgressChanged( Akonadi::AgentInstance );
   void createDefaultCollectionDone( KJob * job);
 
   void initFolders();
