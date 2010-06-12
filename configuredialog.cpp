@@ -471,7 +471,6 @@ void AccountsPageReceivingTab::slotShowMailCheckMenu( const QString &ident, cons
   QMenu *menu = new QMenu( this );
 
   bool IncludeInManualChecks;
-  bool CheckOnStartup;
   bool OfflineOnShutdown;
   if( !mRetrievalHash.contains( ident ) ) {
 
@@ -479,15 +478,13 @@ void AccountsPageReceivingTab::slotShowMailCheckMenu( const QString &ident, cons
     KConfigGroup group( KMKernel::config(), resourceGroupPattern.arg( ident ) );
 
     IncludeInManualChecks = group.readEntry( "IncludeInManualChecks", true );
-    CheckOnStartup = group.readEntry( "CheckOnStartup", false );
     OfflineOnShutdown = group.readEntry( "OfflineOnShutdown", false );
 
-    RetrievalOptions *opts = new RetrievalOptions( IncludeInManualChecks, CheckOnStartup, OfflineOnShutdown );
+    RetrievalOptions *opts = new RetrievalOptions( IncludeInManualChecks, OfflineOnShutdown );
     mRetrievalHash.insert( ident, opts );
   } else {
     RetrievalOptions *opts = mRetrievalHash.value( ident );
     IncludeInManualChecks = opts->IncludeInManualChecks;
-    CheckOnStartup = opts->CheckOnStartup;
     OfflineOnShutdown = opts->OfflineOnShutdown;
   }
 
@@ -497,12 +494,6 @@ void AccountsPageReceivingTab::slotShowMailCheckMenu( const QString &ident, cons
   manualMailCheck->setData( ident );
   menu->addAction( manualMailCheck );
 
-  QAction *checkOnStartup = new QAction( i18nc( "Label to a checkbox, so is either checked/unchecked", "Include in Startup Mail Check" ), menu );
-  checkOnStartup->setCheckable( true );
-  checkOnStartup->setChecked( CheckOnStartup );
-  checkOnStartup->setData( ident );
-  menu->addAction( checkOnStartup );
-
   QAction *switchOffline = new QAction( i18nc( "Label to a checkbox, so is either checked/unchecked", "Switch offline on KMail Shutdown" ), menu );
   switchOffline->setCheckable( true );
   switchOffline->setChecked( OfflineOnShutdown );
@@ -510,7 +501,6 @@ void AccountsPageReceivingTab::slotShowMailCheckMenu( const QString &ident, cons
   menu->addAction( switchOffline );
 
   connect( manualMailCheck, SIGNAL( toggled( bool ) ), this, SLOT( slotIncludeInCheckChanged( bool ) ) );
-  connect( checkOnStartup, SIGNAL( toggled( bool ) ), this, SLOT( slotCheckOnStartupChanged( bool ) ) );
   connect( switchOffline, SIGNAL( toggled( bool ) ), this, SLOT( slotOfflineOnShutdownChanged( bool ) ) );
 
   menu->popup(  mAccountsReceiving.mAccountList->view()->mapToGlobal( pos ) );
@@ -523,16 +513,6 @@ void AccountsPageReceivingTab::slotIncludeInCheckChanged( bool checked )
 
   RetrievalOptions *opts = mRetrievalHash.value( ident );
   opts->IncludeInManualChecks = checked;
-  slotEmitChanged();
-}
-
-void AccountsPageReceivingTab::slotCheckOnStartupChanged( bool checked )
-{
-  QAction* action = qobject_cast< QAction* >( sender() );
-  QString ident = action->data().toString();
-
-  RetrievalOptions *opts = mRetrievalHash.value( ident );
-  opts->CheckOnStartup = checked;
   slotEmitChanged();
 }
 
@@ -647,7 +627,6 @@ void AccountsPage::ReceivingTab::save()
     RetrievalOptions *opts = it.value();
     group.writeEntry( "IncludeInManualChecks", opts->IncludeInManualChecks);
     group.writeEntry( "OfflineOnShutdown", opts->OfflineOnShutdown);
-    group.writeEntry( "CheckOnStartup", opts->CheckOnStartup);
   }
   
   

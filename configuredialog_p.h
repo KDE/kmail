@@ -211,7 +211,6 @@ private slots:
   void slotEditNotifications();
   void slotShowMailCheckMenu( const QString &, const QPoint & );
   void slotIncludeInCheckChanged( bool checked );
-  void slotCheckOnStartupChanged( bool checked );
   void slotOfflineOnShutdownChanged( bool checked );
 
 private:
@@ -219,12 +218,10 @@ private:
   virtual void doLoadOther();
 
   struct RetrievalOptions {
-    RetrievalOptions( bool manualCheck, bool checkstartup, bool offline )
+    RetrievalOptions( bool manualCheck, bool offline )
     : IncludeInManualChecks( manualCheck )
-    , CheckOnStartup( checkstartup )
     , OfflineOnShutdown( offline ) {}
     bool IncludeInManualChecks;
-    bool CheckOnStartup;
     bool OfflineOnShutdown;
   };
 
