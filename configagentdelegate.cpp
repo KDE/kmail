@@ -195,20 +195,21 @@ bool ConfigAgentDelegate::editorEvent ( QEvent* event, QAbstractItemModel* model
 
         switch ( event->type() ) {
         case QEvent::MouseButtonPress:
-            return true;
+            return false;
             break;
         case QEvent::MouseButtonRelease: {
             QPoint pos = buttonOpt.rect.bottomLeft();
             pos.setY ( pos.y() + index.row() * docSize.height() ); // offset for the correct item
             QString ident = index.data ( Akonadi::AgentInstanceModel::InstanceIdentifierRole ).toString();
             emit optionsClicked ( ident, pos );
+            return true;
             break;
         }
         default:
             return false;
         }
     }
-    return true;
+    return false;
 }
 
 void ConfigAgentDelegate::drawFocus ( QPainter *painter, const QStyleOptionViewItem &option, const QRect &rect ) const
