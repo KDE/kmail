@@ -1793,7 +1793,7 @@ void KMKernel::itemDispatchStarted()
 void KMKernel::instanceProgressChanged( Akonadi::AgentInstance agent )
 {
   // we're only interested in rfc822 resources
-  if ( !agent.type().mimeTypes().contains("message/rfc822") )
+  if ( !agent.type().mimeTypes().contains( KMime::Message::mimeType() ) )
     return;
 
   KPIM::ProgressManager::createProgressItem( 0,
