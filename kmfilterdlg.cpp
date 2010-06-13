@@ -599,6 +599,8 @@ void KMFilterDlg::slotUpdateAccountList()
   const int nbAccount = lst.count();
   for ( int i = 0; i <nbAccount; ++i ) {
     QTreeWidgetItem *listItem = new QTreeWidgetItem( mAccountList, top );
+    if( lst.at( i ).type().identifier() == "akonadi_nepomuktag_resource" )
+      continue;
     listItem->setText( 0, lst.at( i ).name() );
     listItem->setText( 1, lst.at( i ).type().name() );
     listItem->setText( 2, QString( "%1" ).arg( lst.at( i ).identifier() ) );
