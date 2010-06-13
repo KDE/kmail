@@ -3809,7 +3809,8 @@ void KMMainWidget::updateFolderMenu()
                                    && !multiFolder
                                    && ( mCurrentFolder->collection().rights() & Collection::CanDeleteCollection )
                                    && !mCurrentFolder->isSystemFolder()
-                                   && folderWithContent);
+                                   && folderWithContent
+                                   && mCurrentFolder->collection().resource() != "akonadi_nepomuktag_resource" );
   QList< QAction* > actionlist;
   if ( mCurrentFolder && mCurrentFolder->collection().id() == kmkernel->outboxCollectionFolder().id() &&
       kmkernel->outboxCollectionFolder().statistics().count() > 0 ) {
