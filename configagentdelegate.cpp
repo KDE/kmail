@@ -172,6 +172,11 @@ QSize ConfigAgentDelegate::sizeHint ( const QStyleOptionViewItem &option, const 
     return size;
 }
 
+QWidget  * ConfigAgentDelegate::createEditor ( QWidget * parent, const QStyleOptionViewItem  & option, const QModelIndex & index ) const
+{
+  return 0;
+}
+
 bool ConfigAgentDelegate::editorEvent ( QEvent* event, QAbstractItemModel* model, const QStyleOptionViewItem& option, const QModelIndex& index )
 {
     Q_UNUSED ( model );
@@ -200,7 +205,7 @@ bool ConfigAgentDelegate::editorEvent ( QEvent* event, QAbstractItemModel* model
         case QEvent::MouseButtonRelease: {
             QPoint pos = buttonOpt.rect.bottomLeft();
             pos.setY ( pos.y() + index.row() * docSize.height() ); // offset for the correct item
-            QString ident = index.data ( Akonadi::AgentInstanceModel::InstanceIdentifierRole ).toString();
+            const QString ident = index.data ( Akonadi::AgentInstanceModel::InstanceIdentifierRole ).toString();
             emit optionsClicked ( ident, pos );
             return true;
             break;

@@ -41,6 +41,7 @@ public:
     virtual void paint ( QPainter *painter, const QStyleOptionViewItem &option, const QModelIndex &index ) const;
     virtual QSize sizeHint ( const QStyleOptionViewItem &option, const QModelIndex &index ) const;
     virtual bool editorEvent ( QEvent* event, QAbstractItemModel* model, const QStyleOptionViewItem& option, const QModelIndex& index );
+    virtual QWidget  *createEditor ( QWidget * parent, const QStyleOptionViewItem  & option, const QModelIndex & index ) const;
 
 signals:
     void optionsClicked ( const QString &, const QPoint & );
