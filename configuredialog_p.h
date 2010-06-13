@@ -225,7 +225,7 @@ private:
     bool OfflineOnShutdown;
   };
 
-  QHash<QString, RetrievalOptions*> mRetrievalHash;
+  QHash<QString, QSharedPointer<RetrievalOptions> > mRetrievalHash;
   //FIXME virtual void doResetToDefaultsOther();
 
 private:

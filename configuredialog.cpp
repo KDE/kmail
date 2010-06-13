@@ -456,11 +456,7 @@ AccountsPageReceivingTab::AccountsPageReceivingTab( QWidget * parent )
 
 AccountsPageReceivingTab::~AccountsPageReceivingTab()
 {
-  QHashIterator<QString, RetrievalOptions*> it( mRetrievalHash );
-  while( it.hasNext() ) {
-    it.next();
-    delete it.value();
-  }
+  mRetrievalHash.clear();
 }
 
 void AccountsPageReceivingTab::slotShowMailCheckMenu( const QString &ident, const QPoint & pos )
@@ -477,10 +473,10 @@ void AccountsPageReceivingTab::slotShowMailCheckMenu( const QString &ident, cons
     IncludeInManualChecks = group.readEntry( "IncludeInManualChecks", true );
     OfflineOnShutdown = group.readEntry( "OfflineOnShutdown", false );
 
-    RetrievalOptions *opts = new RetrievalOptions( IncludeInManualChecks, OfflineOnShutdown );
+    QSharedPointer<RetrievalOptions> opts( new RetrievalOptions( IncludeInManualChecks, OfflineOnShutdown ) );
     mRetrievalHash.insert( ident, opts );
   } else {
-    RetrievalOptions *opts = mRetrievalHash.value( ident );
+    QSharedPointer<RetrievalOptions> opts = mRetrievalHash.value( ident );
     IncludeInManualChecks = opts->IncludeInManualChecks;
     OfflineOnShutdown = opts->OfflineOnShutdown;
   }
@@ -508,7 +504,7 @@ void AccountsPageReceivingTab::slotIncludeInCheckChanged( bool checked )
   QAction* action = qobject_cast< QAction* >( sender() );
   QString ident = action->data().toString();
 
-  RetrievalOptions *opts = mRetrievalHash.value( ident );
+  QSharedPointer<RetrievalOptions> opts = mRetrievalHash.value( ident );
   opts->IncludeInManualChecks = checked;
   slotEmitChanged();
 }
@@ -518,7 +514,7 @@ void AccountsPageReceivingTab::slotOfflineOnShutdownChanged( bool checked )
   QAction* action = qobject_cast< QAction* >( sender() );
   QString ident = action->data().toString();
 
-  RetrievalOptions *opts = mRetrievalHash.value( ident );
+  QSharedPointer<RetrievalOptions> opts = mRetrievalHash.value( ident );
   opts->OfflineOnShutdown = checked;
   slotEmitChanged();
 }
@@ -612,11 +608,11 @@ void AccountsPage::ReceivingTab::save()
   GlobalSettings::self()->setVerboseNewMailNotification( mAccountsReceiving.mVerboseNotificationCheck->isChecked() );
 
   const QString resourceGroupPattern( "Resource %1" );
-  QHashIterator<QString, RetrievalOptions*> it( mRetrievalHash );
+  QHashIterator<QString, QSharedPointer<RetrievalOptions> > it( mRetrievalHash );
   while( it.hasNext() ) {
     it.next();
     KConfigGroup group( KMKernel::config(), resourceGroupPattern.arg( it.key() ) );
-    RetrievalOptions *opts = it.value();
+    QSharedPointer<RetrievalOptions> opts = it.value();
     group.writeEntry( "IncludeInManualChecks", opts->IncludeInManualChecks);
     group.writeEntry( "OfflineOnShutdown", opts->OfflineOnShutdown);
   }
