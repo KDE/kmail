@@ -3736,19 +3736,16 @@ void KMMainWidget::updateMessageActionsDelayed()
   status.setStatusFromFlags( currentMessage.flags() );
 
   QList< QAction *> actionList;
-  if( single_actions && ( ( currentMessage.isValid() && status.isSent() ) ||
-        ( currentMessage.isValid() && kmkernel->folderIsSentMailFolder( mCurrentFolder->collection() ) ) ) ) {
+  bool statusSendAgain = single_actions && ( ( currentMessage.isValid() && status.isSent() ) || ( currentMessage.isValid() && kmkernel->folderIsSentMailFolder( mCurrentFolder->collection() ) ) );
+  if ( statusSendAgain ) {
     actionList << mSendAgainAction;
   } else if( single_actions ) {
     actionList << messageActions()->editAction();
   }
   mGUIClient->unplugActionList( QLatin1String( "messagelist_actionlist" ) );
   mGUIClient->plugActionList( QLatin1String( "messagelist_actionlist" ), actionList );
-//         mSendAgainAction->setEnabled(
-//       single_actions &&
-//       ( ( currentMessage.isValid() && status.isSent() ) ||
-//         ( currentMessage.isValid() && kmkernel->folderIsSentMailFolder( mCurrentFolder->collection() ) ) )
-//     );
+  mSendAgainAction->setEnabled( statusSendAgain );
+
   mSaveAsAction->setEnabled( mass_actions );
 
   bool mails = mCurrentFolder&& mCurrentFolder->isValid() && mCurrentFolder->statistics().count() > 0;
