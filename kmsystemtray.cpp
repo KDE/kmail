@@ -360,6 +360,7 @@ void KMSystemTray::hideKMail()
 
 void KMSystemTray::initListOfCollection()
 {
+  mCount = 0;
   unreadMail( KMKernel::self()->entityTreeModel() );
 }
 
@@ -387,12 +388,13 @@ void KMSystemTray::unreadMail( const QAbstractItemModel *model, const QModelInde
   if ( mMode == GlobalSettings::EnumSystemTrayPolicy::ShowOnUnread ) {
     setStatus( KStatusNotifierItem::Active );
   }
-  qDebug()<<" mCount :"<<mCount;
+  kDebug()<<" mCount :"<<mCount;
   updateCount();
 }
 
 void KMSystemTray::slotCollectionChanged( const Akonadi::Collection::Id, const Akonadi::CollectionStatistics& )
 {
+  mCount = 0;
   initListOfCollection();
 }
 
