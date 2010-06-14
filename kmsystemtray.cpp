@@ -256,7 +256,9 @@ void KMSystemTray::fillFoldersMenu( QMenu *menu, const QAbstractItemModel *model
   for ( int row = 0; row < rowCount; ++row ) {
     const QModelIndex index = model->index( row, 0, parentIndex );
     const Akonadi::Collection collection = model->data( index, Akonadi::CollectionModel::CollectionRole ).value<Akonadi::Collection>();
-
+    if ( collection.resource() == QLatin1String( "akonadi_nepomuktag_resource" )
+         || collection.resource() == QLatin1String( "akonadi_search_resource" ) )
+      continue;
     Akonadi::CollectionStatistics statistics = collection.statistics();
     qint64 count = qMax( 0LL, statistics.unreadCount() );
 
