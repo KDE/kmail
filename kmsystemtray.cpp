@@ -83,8 +83,6 @@ KMSystemTray::KMSystemTray(QObject *parent)
   // register the applet with the kernel
   kmkernel->registerSystemTrayApplet( this );
 
-  /** Initiate connections between folders and this object */
-  foldersChanged();
 
   connect( this, SIGNAL( activateRequested( bool, const QPoint& ) ),
            this, SLOT( slotActivated() ) );
@@ -218,63 +216,6 @@ void KMSystemTray::updateCount()
   }
 }
 
-/**
- * Refreshes the list of folders we are monitoring.  This is called on
- * startup and is also connected to the 'changed' signal on the KMFolderMgr.
- */
-void KMSystemTray::foldersChanged()
-{
-  /**
-   * Hide and remove all unread mappings to cover the case where the only
-   * unread message was in a folder that was just removed.
-   */
-#if 0
-  mFoldersWithUnread.clear();
-  mPendingUpdates.clear();
-#endif
-  mCount = 0;
-
-  if ( mMode == GlobalSettings::EnumSystemTrayPolicy::ShowOnUnread ) {
-    setStatus( KStatusNotifierItem::Passive );
-  }
-#if 0
-  /** Disconnect all previous connections */
-  disconnect(this, SLOT(updateNewMessageNotification(KMFolder *)));
-
-  QStringList folderNames;
-  QList<QPointer<KMFolder> > folderList;
-  kmkernel->folderMgr()->createFolderList(&folderNames, &folderList);
-#else
-    kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
-#endif
-#if 0
-  QStringList::iterator strIt = folderNames.begin();
-
-  for(QList<QPointer<KMFolder> >::iterator it = folderList.begin();
-     it != folderList.end() && strIt != folderNames.end(); ++it, ++strIt)
-  {
-    KMFolder * currentFolder = *it;
-    QString currentName = *strIt;
-#if 0
-    if ( ((!currentFolder->isSystemFolder() || (currentFolder->name().toLower() == "inbox")) ||
-         (currentFolder->folderType() == KMFolderTypeImap)) &&
-         !currentFolder->ignoreNewMail() )
-    {
-      /** If this is a new folder, start listening for messages */
-      connect(currentFolder, SIGNAL(numUnreadMsgsChanged(KMFolder *)),
-              this, SLOT(updateNewMessageNotification(KMFolder *)));
-
-      /** Check all new folders to see if we started with any new messages */
-      updateNewMessageNotification(currentFolder);
-    }
-    else {
-      disconnect( currentFolder, SIGNAL( numUnreadMsgsChanged(KMFolder*) ),
-                  this, SLOT( updateNewMessageNotification(KMFolder *) ) );
-    }
-#endif
-  }
-#endif
-}
 
 /**
  * On left mouse click, switch focus to the first KMMainWidget.  On right
@@ -395,8 +336,6 @@ void KMSystemTray::showKMail()
   }
   kmkernel->raise();
 
-  //Fake that the folders have changed so that the icon status is correct
-  foldersChanged();
 }
 
 void KMSystemTray::hideKMail()

@@ -51,9 +51,6 @@ public:
   void hideKMail();
   bool hasUnreadMail() const;
 
-public slots:
-  void foldersChanged();
-
 private slots:
   void slotCollectionChanged( const Akonadi::Collection::Id, const Akonadi::CollectionStatistics& );
   void slotActivated();
