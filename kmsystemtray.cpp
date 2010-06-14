@@ -420,7 +420,6 @@ void KMSystemTray::unreadMail( const QAbstractItemModel *model, const QModelInde
 
 void KMSystemTray::slotCollectionChanged( const Akonadi::Collection::Id, const Akonadi::CollectionStatistics& )
 {
-  mCount = 0;
   initListOfCollection();
 }
 
@@ -437,7 +436,6 @@ void KMSystemTray::slotSelectCollection(QAction*act)
 
 void KMSystemTray::updateSystemTray()
 {
-  mCount = 0;
   initListOfCollection();
 }
 
