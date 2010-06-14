@@ -21,7 +21,7 @@
 
 #include "kmsystemtray.h"
 #include "kmmainwidget.h"
-
+#include "foldercollection.h"
 #include "globalsettings.h"
 
 
@@ -265,7 +265,11 @@ void KMSystemTray::fillFoldersMenu( QMenu *menu, const QAbstractItemModel *model
       continue;
     Akonadi::CollectionStatistics statistics = collection.statistics();
     qint64 count = qMax( 0LL, statistics.unreadCount() );
-
+    if ( count >= 0 ) {
+      QSharedPointer<FolderCollection> col = FolderCollection::forCollection( collection );
+      if ( col && col->ignoreNewMail() )
+        continue;
+    }
     mCount += count;
 
     QString label = parentName.isEmpty() ? "" : parentName + "->";
@@ -387,6 +391,12 @@ void KMSystemTray::unreadMail( const QAbstractItemModel *model, const QModelInde
 
     Akonadi::CollectionStatistics statistics = collection.statistics();
     qint64 count = qMax( 0LL, statistics.unreadCount() );
+
+    if ( count >= 0 ) {
+      QSharedPointer<FolderCollection> col = FolderCollection::forCollection( collection );
+      if ( col && col->ignoreNewMail() )
+        continue;
+    }
 
     mCount += count;
     if ( model->rowCount( index ) > 0 ) {
