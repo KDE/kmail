@@ -38,7 +38,8 @@
 #include <QSignalMapper>
 
 #include <Akonadi/ChangeRecorder>
-
+#include <Akonadi/EntityTreeModel>
+#include <Akonadi/CollectionModel>
 #include <math.h>
 #include <assert.h>
 
@@ -95,8 +96,7 @@ KMSystemTray::KMSystemTray(QObject *parent)
   connect( contextMenu(), SIGNAL( aboutToShow() ),
            this, SLOT( slotContextMenuAboutToShow() ) );
 
-  connect( kmkernel->monitor(), SIGNAL( collectionChanged( const Akonadi::Collection & ) ),
-           SLOT( slotCollectionChanged( const Akonadi::Collection& ) ) );
+  connect( kmkernel->monitor(), SIGNAL( collectionStatisticsChanged( Akonadi::Collection::Id, const Akonadi::CollectionStatistics &) ), SLOT( slotCollectionChanged( const Akonadi::Collection::Id, const Akonadi::CollectionStatistics& ) ) );
 
 }
 
@@ -304,6 +304,13 @@ void KMSystemTray::slotContextMenuAboutToShow()
     delete mNewMessagesPopup;
     mNewMessagesPopup = 0;
   }
+  mNewMessagesPopup = new KMenu();
+  fillFoldersMenu( mNewMessagesPopup, KMKernel::self()->entityTreeModel() );
+
+
+  mNewMessagesPopup->setTitle( i18n("New Messages In") );
+  contextMenu()->insertAction( mSendQueued, mNewMessagesPopup->menuAction() );
+
 #if 0
   if ( mFoldersWithUnread.count() > 0 )
   {
@@ -334,6 +341,41 @@ void KMSystemTray::slotContextMenuAboutToShow()
   }
 #endif
 }
+
+void KMSystemTray::fillFoldersMenu( QMenu *menu, const QAbstractItemModel *model, const QString& parentName, const QModelIndex& parentIndex )
+{
+  const int rowCount = model->rowCount( parentIndex );
+  for ( int row = 0; row < rowCount; ++row ) {
+    const QModelIndex index = model->index( row, 0, parentIndex );
+    const Akonadi::Collection collection = model->data( index, Akonadi::CollectionModel::CollectionRole ).value<Akonadi::Collection>();
+
+    Akonadi::CollectionStatistics statistics = collection.statistics();
+    qint64 count = qMax( 0LL, statistics.unreadCount() );
+
+    mCount += count;
+
+    QString label = parentName.isEmpty() ? "" : parentName + "->";
+    label += model->data( index ).toString();
+    label.replace( QLatin1String( "&" ), QLatin1String( "&&" ) );
+
+    if ( model->rowCount( index ) > 0 ) {
+      // new level
+      if ( count > 0 ) {
+        QAction * action = menu->addAction( label );
+        //action->setData( QVariant::fromValue<QModelIndex>( index ) );
+      }
+      fillFoldersMenu( menu, model, label, index );
+
+    } else {
+      if ( count > 0 ) {
+        // insert an item
+        QAction* action = menu->addAction( label );
+        //action->setData( QVariant::fromValue<QModelIndex>( index ) );
+      }
+    }
+  }
+}
+
 
 
 bool KMSystemTray::mainWindowIsOnCurrentDesktop()
@@ -410,38 +452,7 @@ void KMSystemTray::hideKMail()
   }
 }
 
-/**
- * Called on startup of the KMSystemTray and when the numUnreadMsgsChanged signal
- * is emitted for one of the watched folders.  Shows the system tray icon if there
- * are new messages and the icon was hidden, or hides the system tray icon if there
- * are no more new messages.
- */
-#if 0
-void KMSystemTray::updateNewMessageNotification(KMFolder * fldr)
-{
-#if 0
-  //We don't want to count messages from search folders as they
-  //  already counted as part of their original folders
-  if( !fldr ||
-      fldr->folderType() == KMFolderTypeSearch )
-  {
-    // kDebug() << "Null or a search folder, can't mess with that";
-    return;
-  }
-
-  mPendingUpdates[ fldr ] = true;
-  if ( time( 0 ) - mLastUpdate > 2 ) {
-    mUpdateTimer->stop();
-    updateNewMessages();
-  }
-  else {
-    mUpdateTimer->start(150);
-  }
-#endif
-}
-#endif
-
-void KMSystemTray::slotCollectionChanged( const Akonadi::Collection& col)
+void KMSystemTray::slotCollectionChanged( const Akonadi::Collection::Id, const Akonadi::CollectionStatistics& )
 {
 #if 0
   for ( QMap<QPointer<KMFolder>, bool>::Iterator it1 = mPendingUpdates.begin();
@@ -528,7 +539,7 @@ void KMSystemTray::slotCollectionChanged( const Akonadi::Collection& col)
  * Called when user selects a folder name from the popup menu.  Shows
  * the first KMMainWin in the memberlist and jumps to the first unread
  * message in the selected folder.
- */
+*/
 void KMSystemTray::selectedAccount(int id)
 {
   showKMail();

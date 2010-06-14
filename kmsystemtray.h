@@ -25,7 +25,7 @@
 #include <QMap>
 #include <QPointer>
 #include <QVector>
-
+#include <QAbstractItemModel>
 
 #include <time.h>
 
@@ -56,7 +56,7 @@ public slots:
 
 private slots:
   void selectedAccount(int);
-  void slotCollectionChanged( const Akonadi::Collection& );
+  void slotCollectionChanged( const Akonadi::Collection::Id, const Akonadi::CollectionStatistics& );
   void slotActivated();
   void slotContextMenuAboutToShow();
 
@@ -65,6 +65,8 @@ protected:
   void showKMail();
   void buildPopupMenu();
   void updateCount();
+  void fillFoldersMenu( QMenu *menu, const QAbstractItemModel *model, const QString& parentName = QString(), const QModelIndex& parentIndex = QModelIndex() );
+
 private:
 
   bool mParentVisible;
@@ -78,10 +80,7 @@ private:
   QAction *mSendQueued;
 
   QVector<Akonadi::Collection> mPopupFolders;
-#if 0
-  QMap<QPointer<KMFolder>, int> mFoldersWithUnread;
-  QMap<QPointer<KMFolder>, bool> mPendingUpdates;
-#endif
+
   QTimer *mUpdateTimer;
   time_t mLastUpdate;
 };
