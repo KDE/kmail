@@ -2792,6 +2792,7 @@ void KMComposeWin::slotIdentityChanged( uint uoid, bool initalChange )
   // remove BCC of old identity and add BCC of new identity (if they differ)
   const KPIMIdentities::Identity &oldIdentity =
       KMKernel::self()->identityManager()->identityForUoidOrDefault( mId );
+      
   mComposerBase->identityChanged( ident, oldIdentity );
 
   if ( ident.organization().isEmpty() ) {
@@ -2840,11 +2841,7 @@ void KMComposeWin::slotIdentityChanged( uint uoid, bool initalChange )
   if ( !mBtnFcc->isChecked() && !mPreventFccOverwrite ) {
     setFcc( ident.fcc() );
   }
-
-  KPIMIdentities::Signature oldSig = const_cast<KPIMIdentities::Identity&>
-                                               ( oldIdentity ).signature();
-  KPIMIdentities::Signature newSig = const_cast<KPIMIdentities::Identity&>
-                                               ( ident ).signature();
+  
   // if unmodified, apply new template, if one is set
   bool msgCleared = false;
   if ( !isModified() && !( ident.templates().isEmpty() && mCustomTemplate.isEmpty() ) &&
@@ -2853,13 +2850,6 @@ void KMComposeWin::slotIdentityChanged( uint uoid, bool initalChange )
     msgCleared = true;
   }
 
-  //replace existing signatures
-  const bool replaced = mComposerBase->editor()->replaceSignature( oldSig, newSig );
-
-  // Just append the signature if there was no old signature
-  if ( !replaced && ( msgCleared || oldSig.rawText().isEmpty() ) ) {
-    mComposerBase->signatureController()->applySignature( newSig );
-  }
 
   // disable certain actions if there is no PGP user identity set
   // for this profile
