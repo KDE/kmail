@@ -338,6 +338,9 @@ public:
    */
   Akonadi::Collection::List allFolders() const;
 
+  void selectCollectionFromId( const Akonadi::Collection::Id id);
+
+
   /**
    * Returns the collection associated with the given @p id, or an invalid collection if not found.
    * The EntityTreeModel of the kernel is searched for the collection. Since the ETM is loaded

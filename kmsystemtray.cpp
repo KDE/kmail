@@ -306,40 +306,12 @@ void KMSystemTray::slotContextMenuAboutToShow()
   }
   mNewMessagesPopup = new KMenu();
   fillFoldersMenu( mNewMessagesPopup, KMKernel::self()->entityTreeModel() );
+  connect( mNewMessagesPopup, SIGNAL( triggered(QAction*) ), this,
+           SLOT( slotSelectCollection(QAction*) ) );
 
 
   mNewMessagesPopup->setTitle( i18n("New Messages In") );
   contextMenu()->insertAction( mSendQueued, mNewMessagesPopup->menuAction() );
-
-#if 0
-  if ( mFoldersWithUnread.count() > 0 )
-  {
-    mNewMessagesPopup = new KMenu();
-
-    QMap<QPointer<KMFolder>, int>::Iterator it = mFoldersWithUnread.begin();
-    QSignalMapper *folderMapper = new QSignalMapper( this );
-    connect( folderMapper, SIGNAL( mapped( int ) ),
-             this, SLOT( selectedAccount( int ) ) );
-
-    for(uint i=0; it != mFoldersWithUnread.end(); ++i)
-    {
-      //TODO port it
-      //mPopupFolders.append( it.key() );
-      QString folderText = prettyName(it.key()) + " (" + QString::number(it.value()) + ')';
-      QAction *action = new QAction( folderText, this );
-      connect( action, SIGNAL( triggered( bool ) ),
-               folderMapper, SLOT( map() ) );
-      folderMapper->setMapping( action, i );
-      mNewMessagesPopup->addAction( action );
-      ++it;
-    }
-
-    mNewMessagesPopup->setTitle( i18n("New Messages In") );
-    contextMenu()->insertAction( mSendQueued, mNewMessagesPopup->menuAction() );
-
-    kDebug() << "Folders added";
-  }
-#endif
 }
 
 void KMSystemTray::fillFoldersMenu( QMenu *menu, const QAbstractItemModel *model, const QString& parentName, const QModelIndex& parentIndex )
@@ -362,7 +334,7 @@ void KMSystemTray::fillFoldersMenu( QMenu *menu, const QAbstractItemModel *model
       // new level
       if ( count > 0 ) {
         QAction * action = menu->addAction( label );
-        //action->setData( QVariant::fromValue<QModelIndex>( index ) );
+        action->setData( collection.id() );
       }
       fillFoldersMenu( menu, model, label, index );
 
@@ -370,7 +342,7 @@ void KMSystemTray::fillFoldersMenu( QMenu *menu, const QAbstractItemModel *model
       if ( count > 0 ) {
         // insert an item
         QAction* action = menu->addAction( label );
-        //action->setData( QVariant::fromValue<QModelIndex>( index ) );
+        action->setData( collection.id() );
       }
     }
   }
@@ -563,5 +535,12 @@ bool KMSystemTray::hasUnreadMail() const
 {
   return ( mCount != 0 );
 }
+
+void KMSystemTray::slotSelectCollection(QAction*act)
+{
+  Akonadi::Collection::Id id = act->data().value<Akonadi::Collection::Id>();
+  KMKernel::self()->selectCollectionFromId( id );
+}
+
 
 #include "kmsystemtray.moc"

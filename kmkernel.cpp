@@ -1587,6 +1587,18 @@ KSharedConfig::Ptr KMKernel::config()
   return mySelf->mConfig;
 }
 
+void KMKernel::selectCollectionFromId( const Akonadi::Collection::Id id)
+{
+  KMMainWidget *widget = getKMMainWidget();
+  Q_ASSERT( widget );
+  if ( !widget )
+    return;
+
+  Akonadi::Collection colFolder = collectionFromId( id );
+
+  if( colFolder.isValid() )
+    widget->selectCollectionFolder( colFolder );
+}
 
 void KMKernel::selectFolder( const QString &folder )
 {
