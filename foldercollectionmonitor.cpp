@@ -24,6 +24,7 @@
 #include <akonadi/itemfetchjob.h>
 #include <akonadi/item.h>
 #include <akonadi/kmime/messageparts.h>
+#include <kmime/kmime_message.h>
 
 FolderCollectionMonitor::FolderCollectionMonitor(QObject *parent)
   :QObject( parent )
@@ -33,7 +34,7 @@ FolderCollectionMonitor::FolderCollectionMonitor(QObject *parent)
   mMonitor->setCollectionMonitored( Akonadi::Collection::root() );
   mMonitor->fetchCollection( true );
   mMonitor->setAllMonitored( true );
-  mMonitor->setMimeTypeMonitored( FolderCollectionMonitor::mimetype() );
+  mMonitor->setMimeTypeMonitored( KMime::Message::mimeType() );
   mMonitor->setResourceMonitored( "akonadi_search_resource" ,  true );
   mMonitor->setResourceMonitored( "akonadi_nepomuktag_resource" ,  true );
   // TODO: Only fetch the envelope etc if possible.
@@ -43,12 +44,6 @@ FolderCollectionMonitor::FolderCollectionMonitor(QObject *parent)
 FolderCollectionMonitor::~FolderCollectionMonitor()
 {
 }
-
-QString FolderCollectionMonitor::mimetype()
-{
-  return "message/rfc822";
-}
-
 
 Akonadi::ChangeRecorder *FolderCollectionMonitor::monitor() const
 {

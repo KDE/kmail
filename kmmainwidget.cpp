@@ -112,6 +112,7 @@
 #include <mailtransport/transport.h>
 #include <kmime/kmime_mdn.h>
 #include <kmime/kmime_header_parsing.h>
+#include <kmime/kmime_message.h>
 
 // KDELIBS includes
 #include <kaboutdata.h>
@@ -1507,7 +1508,7 @@ void KMMainWidget::slotRemoveFolder()
   if ( mCurrentFolder->isReadOnly() ) return;
 
   Akonadi::CollectionFetchJob *job = new Akonadi::CollectionFetchJob( mCurrentFolder->collection(), CollectionFetchJob::FirstLevel, this );
-  job->fetchScope().setContentMimeTypes( QStringList() << "message/rfc822" );
+  job->fetchScope().setContentMimeTypes( QStringList() << KMime::Message::mimeType() );
   connect( job, SIGNAL( result( KJob* ) ), SLOT( slotDelayedRemoveFolder( KJob* ) ) );
 }
 

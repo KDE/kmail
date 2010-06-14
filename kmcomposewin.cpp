@@ -206,7 +206,7 @@ KMComposeWin::KMComposeWin( const KMime::Message::Ptr &aMsg, Composer::TemplateC
   mComposerBase = new Message::ComposerViewBase( this );
   mComposerBase->setIdentityManager( kmkernel->identityManager() );
   mComposerBase->setParentWidgetForGui( this );
-  
+
   connect( mComposerBase, SIGNAL( disableHtml( Message::ComposerViewBase::Confirmation ) ),
            this, SLOT( disableHtml( Message::ComposerViewBase::Confirmation ) ) );
 
@@ -215,7 +215,7 @@ KMComposeWin::KMComposeWin( const KMime::Message::Ptr &aMsg, Composer::TemplateC
   connect( mComposerBase, SIGNAL( failed( QString) ), this, SLOT( slotSendFailed( QString ) ) );
   connect( mComposerBase, SIGNAL( sentSuccessfully() ), this, SLOT( slotSendSuccessful() ) );
   connect( mComposerBase, SIGNAL( modified( bool ) ), this, SLOT( setModified( bool ) ) );
-  
+
   //(void) new MailcomposerAdaptor( this );
   mdbusObjectPath = "/Composer_" + QString::number( ++s_composerNumber );
   //QDBusConnection::sessionBus().registerObject( mdbusObjectPath, this );
@@ -223,7 +223,7 @@ KMComposeWin::KMComposeWin( const KMime::Message::Ptr &aMsg, Composer::TemplateC
   Message::SignatureController* sigController = new Message::SignatureController( this );
   connect( sigController, SIGNAL(enableHtml()), SLOT(enableHtml()) );
   mComposerBase->setSignatureController( sigController );
-  
+
   if ( kmkernel->xmlGuiInstance().isValid() ) {
     setComponentData( kmkernel->xmlGuiInstance() );
   }
@@ -246,7 +246,7 @@ KMComposeWin::KMComposeWin( const KMime::Message::Ptr &aMsg, Composer::TemplateC
                                                  mHeadersArea );
   identity->setToolTip( i18n( "Select an identity for this message" ) );
   mComposerBase->setIdentityCombo( identity );
-  
+
   sigController->setIdentityCombo( identity );
   sigController->suspend(); // we have to do identity change tracking ourselves due to the template code
 
@@ -254,14 +254,14 @@ KMComposeWin::KMComposeWin( const KMime::Message::Ptr &aMsg, Composer::TemplateC
   mDictionaryCombo->setToolTip( i18n( "Select the dictionary to use when spell-checking this message" ) );
 
   Akonadi::CollectionComboBox* fcc = new Akonadi::CollectionComboBox( mHeadersArea );
-  fcc->setMimeTypeFilter( QStringList()<<FolderCollectionMonitor::mimetype() );
+  fcc->setMimeTypeFilter( QStringList()<<KMime::Message::mimeType() );
   fcc->setAccessRightsFilter( Akonadi::Collection::CanCreateItem );
   fcc->setToolTip( i18n( "Select the sent-mail folder where a copy of this message will be saved" ) );
   mComposerBase->setFccCombo( fcc );
   MailTransport::TransportComboBox* transport = new MailTransport::TransportComboBox( mHeadersArea );
   transport->setToolTip( i18n( "Select the outgoing account to use for sending this message" ) );
   mComposerBase->setTransportCombo( transport );
-  
+
   mEdtFrom = new MessageComposer::ComposerLineEdit( false, mHeadersArea );
   mEdtFrom->setObjectName( "fromLine" );
   mEdtFrom->setRecentAddressConfig( KMKernel::config().data() );
@@ -360,7 +360,7 @@ KMComposeWin::KMComposeWin( const KMime::Message::Ptr &aMsg, Composer::TemplateC
   mComposerBase->setEditor( editor );
   vbox->addLayout( hbox );
   vbox->addWidget( editor );
-  
+
   mSnippetSplitter->insertWidget( 0, editorAndCryptoStateIndicators );
   mSnippetSplitter->setOpaqueResize( true );
   sigController->setEditor( editor );
@@ -401,7 +401,7 @@ KMComposeWin::KMComposeWin( const KMime::Message::Ptr &aMsg, Composer::TemplateC
 
   mComposerBase->setAttachmentModel( attachmentModel );
   mComposerBase->setAttachmentController( attachmentController );
-  
+
   readConfig();
   setupStatusBar();
   setupActions();
@@ -599,7 +599,7 @@ void KMComposeWin::readConfig( bool reload /* = false */ )
   }
 
   mComposerBase->setAutoSaveInterval( GlobalSettings::self()->autosaveInterval() * 1000 * 60 );
-  
+
 
   if ( mBtnDictionary->isChecked() ) {
     mDictionaryCombo->setCurrentByDictionaryName( GlobalSettings::self()->previousDictionary() );
@@ -1019,14 +1019,14 @@ void KMComposeWin::setQuotePrefix( uint uoid )
   if ( quotePrefix.isEmpty() ) {
     // no quote prefix header, set quote prefix according in identity
     // TODO port templates to ComposerViewBase
-    
+
     if ( mCustomTemplate.isEmpty() ) {
       const KPIMIdentities::Identity &identity = kmkernel->identityManager()->identityForUoidOrDefault( uoid );
       // Get quote prefix from template
       // ( custom templates don't specify custom quotes prefixes )
       ::Templates quoteTemplate( TemplatesConfiguration::configIdString( identity.uoid() ) );
       quotePrefix = quoteTemplate.quoteString();
-    } 
+    }
   }
   mComposerBase->editor()->setQuotePrefixName( MessageCore::StringUtil::formatString( quotePrefix,
                                                                 mMsg->from()->asUnicodeString() ) );
@@ -1490,7 +1490,7 @@ void KMComposeWin::setMsg( const KMime::Message::Ptr &newMsg, bool mayAutoSign,
     disconnect( mComposerBase->identityCombo(),SIGNAL( identityChanged(uint) ),
                 this, SLOT( slotIdentityChanged(uint) ) ) ;
   }
-  
+
   // load the mId into the gui, sticky or not, without emitting
   mComposerBase->identityCombo()->setCurrentIdentity( mId );
   const uint idToApply = mId;
@@ -1507,7 +1507,7 @@ void KMComposeWin::setMsg( const KMime::Message::Ptr &newMsg, bool mayAutoSign,
       mId = im->defaultIdentity().uoid();
     }
   }
-  
+
   // manually load the identity's value into the fields; either the one from the
   // messge, where appropriate, or the one from the sticky identity. What's in
   // mId might have changed meanwhile, thus the save value
@@ -1519,10 +1519,10 @@ void KMComposeWin::setMsg( const KMime::Message::Ptr &newMsg, bool mayAutoSign,
   if( stickyTransport ) {
     mComposerBase->transportComboBox()->setCurrentTransport( ident.transport().toInt() );
   }
-    
+
   // TODO move the following to ComposerViewBase
   // however, requires the actions to be there as well in order to share with mobile client
-  
+
   // check for the presence of a DNT header, indicating that MDN's were requested
   if( newMsg->headerByType( "Disposition-Notification-To" ) ) {
     QString mdnAddr = newMsg->headerByType( "Disposition-Notification-To" )->asUnicodeString();
@@ -1547,7 +1547,7 @@ void KMComposeWin::setMsg( const KMime::Message::Ptr &newMsg, bool mayAutoSign,
       mMsg->setHeader( new KMime::Headers::Generic( "X-Face", mMsg.get(), xface.toUtf8(), "utf-8" ) );
     }
   }
-  
+
   // if these headers are present, the state of the message should be overruled
   if ( mMsg->headerByType( "X-KMail-SignatureActionEnabled" ) )
     mLastSignActionState = (mMsg->headerByType( "X-KMail-SignatureActionEnabled" )->as7BitString().contains( "true" ));
@@ -1596,7 +1596,7 @@ void KMComposeWin::setMsg( const KMime::Message::Ptr &newMsg, bool mayAutoSign,
   if ( !stickyDictionary ) {
     mDictionaryCombo->setCurrentByDictionaryName( ident.dictionary() );
   }
-  
+
   KMime::Content *msgContent = new KMime::Content;
   msgContent->setContent( mMsg->encodedContent() );
   msgContent->parse();
@@ -2793,7 +2793,7 @@ void KMComposeWin::slotIdentityChanged( uint uoid, bool initalChange )
   const KPIMIdentities::Identity &oldIdentity =
       KMKernel::self()->identityManager()->identityForUoidOrDefault( mId );
   mComposerBase->identityChanged( ident, oldIdentity );
-  
+
   if ( ident.organization().isEmpty() ) {
     mMsg->organization()->clear();
   } else {
