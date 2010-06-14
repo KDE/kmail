@@ -69,11 +69,6 @@ KMSystemTray::KMSystemTray(QObject *parent)
   setToolTipIconByName( "kmail" );
   setIconByName( "kmail" );
 
-  mLastUpdate = time( 0 );
-  mUpdateTimer = new QTimer( this );
-  mUpdateTimer->setSingleShot( true );
-  connect( mUpdateTimer, SIGNAL( timeout() ), SLOT( updateNewMessages() ) );
-
 #ifdef Q_WS_X11
   KMMainWidget * mainWidget = kmkernel->getKMMainWidget();
   if ( mainWidget ) {
@@ -503,32 +498,7 @@ void KMSystemTray::slotCollectionChanged( const Akonadi::Collection::Id, const A
                                           "%1 unread messages",
                                           mCount));
 
-  mLastUpdate = time( 0 );
 #endif
-}
-
-/**
- * Called when user selects a folder name from the popup menu.  Shows
- * the first KMMainWin in the memberlist and jumps to the first unread
- * message in the selected folder.
-*/
-void KMSystemTray::selectedAccount(int id)
-{
-  showKMail();
-
-  KMMainWidget * mainWidget = kmkernel->getKMMainWidget();
-  if (!mainWidget)
-  {
-    kmkernel->openReader();
-    mainWidget = kmkernel->getKMMainWidget();
-  }
-
-  assert(mainWidget);
-
-  /** Select folder */
-  Akonadi::Collection fldr = mPopupFolders.at(id);
-  if(!fldr.isValid()) return;
-  mainWidget->selectCollectionFolder( fldr );
 }
 
 bool KMSystemTray::hasUnreadMail() const

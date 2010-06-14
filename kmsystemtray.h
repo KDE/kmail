@@ -55,7 +55,6 @@ public slots:
   void foldersChanged();
 
 private slots:
-  void selectedAccount(int);
   void slotCollectionChanged( const Akonadi::Collection::Id, const Akonadi::CollectionStatistics& );
   void slotActivated();
   void slotContextMenuAboutToShow();
@@ -79,11 +78,6 @@ private:
 
   QMenu *mNewMessagesPopup;
   QAction *mSendQueued;
-
-  QVector<Akonadi::Collection> mPopupFolders;
-
-  QTimer *mUpdateTimer;
-  time_t mLastUpdate;
 };
 
 #endif
