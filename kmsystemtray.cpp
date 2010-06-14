@@ -5,6 +5,8 @@
     begin                : Fri Aug 31 22:38:44 EDT 2001
     copyright            : (C) 2001 by Ryan Breen
     email                : ryan@porivo.com
+
+    Copyright (c) 2010 Montel Laurent <montel@kde.org>
  ***************************************************************************/
 
 /***************************************************************************
@@ -246,8 +248,10 @@ void KMSystemTray::slotContextMenuAboutToShow()
            SLOT( slotSelectCollection(QAction*) ) );
 
 
-  mNewMessagesPopup->setTitle( i18n("New Messages In") );
-  contextMenu()->insertAction( mSendQueued, mNewMessagesPopup->menuAction() );
+  if ( mCount > 0 ) {
+    mNewMessagesPopup->setTitle( i18n("New Messages In") );
+    contextMenu()->insertAction( mSendQueued, mNewMessagesPopup->menuAction() );
+  }
 }
 
 void KMSystemTray::fillFoldersMenu( QMenu *menu, const QAbstractItemModel *model, const QString& parentName, const QModelIndex& parentIndex )
@@ -417,7 +421,7 @@ bool KMSystemTray::hasUnreadMail() const
 
 void KMSystemTray::slotSelectCollection(QAction*act)
 {
-  Akonadi::Collection::Id id = act->data().value<Akonadi::Collection::Id>();
+  const Akonadi::Collection::Id id = act->data().value<Akonadi::Collection::Id>();
   KMKernel::self()->selectCollectionFromId( id );
 }
 
