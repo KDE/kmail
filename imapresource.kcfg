@@ -42,10 +42,6 @@
       <label>Check interval in minutes</label>
       <default>5</default>
     </entry>
-    <entry name="IncludeInManualCheck" type="Bool">
-      <label>Whether to include the account in the manual mail check operation.</label>
-      <default>true</default>
-    </entry>
     <entry name="RetrieveMetadataOnFolderListing" type="Bool">
       <label>Defines if the annotations, ACLs and quota information of mailboxes should
              also be retrieved when the mailboxes get listed.</label>
