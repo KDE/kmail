@@ -41,6 +41,7 @@
 #include "readablecollectionproxymodel.h"
 #include "util.h"
 #include "imapsettings.h"
+#include "pop3settings.h"
 
 #include <Akonadi/AgentInstance>
 
@@ -519,17 +520,24 @@ void AntiSpamWizard::checkToolAvailability()
           OrgKdeAkonadiImapSettingsInterface *iface = KMail::Util::createImapSettingsInterface( type.identifier() );
           if ( iface->isValid() ) {
             QString host = iface->imapServer();
-            mInfoPage->addAvailableTool( (*it).getVisibleName() );
-            found = true;
+            if ( host.toLower().contains( pattern.toLower() ) ) {
+              mInfoPage->addAvailableTool( (*it).getVisibleName() );
+              found = true;
+            }
           }
           delete iface;
         }
-#if 0
         else if ( type.identifier().contains( POP3_RESOURCE_IDENTIFIER ) ) {
-          //TODO look at pop3 resources.
+          OrgKdeAkonadiPOP3SettingsInterface *iface = new OrgKdeAkonadiPOP3SettingsInterface("org.freedesktop.Akonadi.Resource." + type.identifier(), "/Settings", QDBusConnection::sessionBus() );
+          if ( iface->isValid() ) {
+            QString host = iface->host();
+            if ( host.toLower().contains( pattern.toLower() ) ) {
+              mInfoPage->addAvailableTool( (*it).getVisibleName() );
+              found = true;
+            }
+          }
+          delete iface;
         }
-#endif
-
       }
     }
     else {
