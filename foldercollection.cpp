@@ -172,12 +172,6 @@ void FolderCollection::readConfig()
   slotIdentitiesChanged();
 
   setUserWhoField( configGroup.readEntry( "WhoField" ), false );
-  uint savedId = configGroup.readEntry( "Id", 0 );
-#if 0 //TODO ???
-  // make sure that we don't overwrite a valid id
-  if ( savedId != 0 && mId == 0 )
-    mId = savedId;
-#endif
   mPutRepliesInSameFolder = configGroup.readEntry( "PutRepliesInSameFolder", false );
   mHideInSelectionDialog = configGroup.readEntry( "HideInSelectionDialog", false );
   mIgnoreNewMail = configGroup.readEntry( "IgnoreNewMail", false );
@@ -236,9 +230,6 @@ void FolderCollection::writeConfig() const
       configGroup.deleteEntry("Identity");
 
   configGroup.writeEntry("WhoField", mUserWhoField);
-#if 0 //TODO ????
-  configGroup.writeEntry("Id", mId);
-#endif
   configGroup.writeEntry( "PutRepliesInSameFolder", mPutRepliesInSameFolder );
   configGroup.writeEntry( "HideInSelectionDialog", mHideInSelectionDialog );
   configGroup.writeEntry( "IgnoreNewMail", mIgnoreNewMail );
