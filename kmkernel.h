@@ -318,8 +318,8 @@ public:
    */
   bool haveSystemTrayApplet();
 
-  bool registerSystemTrayApplet( const KStatusNotifierItem* );
-  bool unregisterSystemTrayApplet( const KStatusNotifierItem* );
+  bool registerSystemTrayApplet( KStatusNotifierItem* );
+  bool unregisterSystemTrayApplet( KStatusNotifierItem* );
 
   /// Reimplemented from KMailIface
   void emergencyExit( const QString& reason );
@@ -367,6 +367,8 @@ public:
   void findCreateDefaultCollection( Akonadi::SpecialMailCollections::Type );
 
   void stopAgentInstance();
+
+  void updateSystemTray();
 
 public slots:
 
@@ -457,7 +459,7 @@ private:
   KMMainWin *mWin;
   MailServiceImpl *mMailService;
 
-  QList<const KStatusNotifierItem*> systemTrayApplets;
+  QList<KStatusNotifierItem*> systemTrayApplets;
 
   FolderCollectionMonitor *mFolderCollectionMonitor;
   Akonadi::EntityTreeModel *mEntityTreeModel;

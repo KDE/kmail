@@ -1368,7 +1368,17 @@ bool KMKernel::haveSystemTrayApplet()
   return !systemTrayApplets.isEmpty();
 }
 
-bool KMKernel::registerSystemTrayApplet( const KStatusNotifierItem* applet )
+void KMKernel::updateSystemTray()
+{
+  if ( haveSystemTrayApplet() ) {
+    const int nbSystemTray = systemTrayApplets.count();
+    for (int i = 0; i < nbSystemTray; ++i) {
+      static_cast<KMSystemTray*>( systemTrayApplets.at( i ) )->updateSystemTray();
+    }
+  }
+}
+
+bool KMKernel::registerSystemTrayApplet( KStatusNotifierItem* applet )
 {
   if ( !systemTrayApplets.contains( applet ) ) {
     systemTrayApplets.append( applet );
@@ -1378,7 +1388,7 @@ bool KMKernel::registerSystemTrayApplet( const KStatusNotifierItem* applet )
     return false;
 }
 
-bool KMKernel::unregisterSystemTrayApplet( const KStatusNotifierItem* applet )
+bool KMKernel::unregisterSystemTrayApplet( KStatusNotifierItem* applet )
 {
   return systemTrayApplets.removeAll( applet ) > 0;
 }

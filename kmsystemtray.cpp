@@ -435,5 +435,10 @@ void KMSystemTray::slotSelectCollection(QAction*act)
   KMKernel::self()->selectCollectionFromId( id );
 }
 
+void KMSystemTray::updateSystemTray()
+{
+  mCount = 0;
+  initListOfCollection();
+}
 
 #include "kmsystemtray.moc"

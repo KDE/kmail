@@ -65,7 +65,8 @@ FolderCollection::FolderCollection( const Akonadi::Collection & col, bool writec
     mIgnoreNewMail( false ),
     mPutRepliesInSameFolder( false ),
     mHideInSelectionDialog( false ),
-    mWriteConfig( writeconfig )
+    mWriteConfig( writeconfig ),
+    mOldIgnoreNewMail( false )
 {
   mIdentity = KMKernel::self()->identityManager()->defaultIdentity().uoid();
 
@@ -175,6 +176,7 @@ void FolderCollection::readConfig()
   mPutRepliesInSameFolder = configGroup.readEntry( "PutRepliesInSameFolder", false );
   mHideInSelectionDialog = configGroup.readEntry( "HideInSelectionDialog", false );
   mIgnoreNewMail = configGroup.readEntry( "IgnoreNewMail", false );
+  mOldIgnoreNewMail = mIgnoreNewMail;
 
 
   QString shortcut( configGroup.readEntry( "Shortcut" ) );
@@ -237,6 +239,9 @@ void FolderCollection::writeConfig() const
     configGroup.writeEntry( "Shortcut", mShortcut.toString() );
   else
     configGroup.deleteEntry( "Shortcut" );
+  if ( mIgnoreNewMail != mOldIgnoreNewMail ) {
+    KMKernel::self()->updateSystemTray();
+  }
 }
 
 void FolderCollection::setShortcut( const KShortcut &sc, KMMainWidget *main )
