@@ -358,86 +358,42 @@ void KMSystemTray::hideKMail()
   }
 }
 
-void KMSystemTray::slotCollectionChanged( const Akonadi::Collection::Id, const Akonadi::CollectionStatistics& )
+void KMSystemTray::initListOfCollection()
 {
-#if 0
-  for ( QMap<QPointer<KMFolder>, bool>::Iterator it1 = mPendingUpdates.begin();
-        it1 != mPendingUpdates.end(); ++it1)
-  {
-    KMFolder *fldr = it1.key();
-    if ( !fldr ) // deleted folder
-      continue;
+  unreadMail( KMKernel::self()->entityTreeModel() );
+}
 
-    // The number of unread messages in that folder
-    int unread = fldr->countUnread();
+void KMSystemTray::unreadMail( const QAbstractItemModel *model, const QModelIndex& parentIndex  )
+{
+  const int rowCount = model->rowCount( parentIndex );
+  for ( int row = 0; row < rowCount; ++row ) {
+    const QModelIndex index = model->index( row, 0, parentIndex );
+    const Akonadi::Collection collection = model->data( index, Akonadi::CollectionModel::CollectionRole ).value<Akonadi::Collection>();
 
-    QMap<QPointer<KMFolder>, int>::Iterator it = mFoldersWithUnread.find( fldr );
-    bool unmapped = ( it == mFoldersWithUnread.end() );
+    Akonadi::CollectionStatistics statistics = collection.statistics();
+    qint64 count = qMax( 0LL, statistics.unreadCount() );
 
-    // If the folder is not mapped yet, increment count by numUnread
-    // in folder
-    if ( unmapped )
-      mCount += unread;
-
-    //Otherwise, get the difference between the numUnread in the folder and
-    // our last known version, and adjust mCount with that difference
-    else {
-      int diff = unread - it.value();
-      mCount += diff;
-    }
-
-    if ( unread > 0 ) {
-      // Add folder to our internal store, or update unread count if already mapped
-      mFoldersWithUnread.insert( fldr, unread );
-      //kDebug() << "There are now" << mFoldersWithUnread.count() << "folders with unread";
-    }
-
-    /*
-     * Look for folder in the list of folders already represented.  If there are
-     * unread messages and the system tray icon is hidden, show it.  If there are
-     * no unread messages, remove the folder from the mapping.
-     */
-    if ( unmapped ) {
-
-      // Spurious notification, ignore
-      if ( unread == 0 )
-        continue;
-
-      // Make sure the icon will be displayed
-      if ( mMode == GlobalSettings::EnumSystemTrayPolicy::ShowOnUnread ) {
-        setStatus( KStatusNotifierItem::Active );
-      }
-    }
-    else {
-      if ( unread == 0 ) {
-        //kDebug() << "Removing folder from internal store" << fldr->name();
-
-        // Remove the folder from the internal store
-        mFoldersWithUnread.remove(fldr);
-
-        // if this was the last folder in the dictionary, hide the systemtray icon
-        if ( mFoldersWithUnread.count() == 0 ) {
-          mPopupFolders.clear();
-          disconnect ( this, SLOT( selectedAccount( int ) ) );
-          mCount = 0;
-
-          if ( mMode == GlobalSettings::EnumSystemTrayPolicy::ShowOnUnread ) {
-            setStatus( KStatusNotifierItem::Passive );
-          }
-        }
-      }
+    mCount += count;
+    if ( model->rowCount( index ) > 0 ) {
+      unreadMail( model, index );
     }
   }
-  mPendingUpdates.clear();
-  updateCount();
-
   // Update tooltip to reflect count of unread messages
   setToolTipSubTitle( mCount == 0 ? i18n("There are no unread messages")
                                   : i18np("1 unread message",
                                           "%1 unread messages",
                                           mCount));
 
-#endif
+  if ( mMode == GlobalSettings::EnumSystemTrayPolicy::ShowOnUnread ) {
+    setStatus( KStatusNotifierItem::Active );
+  }
+  qDebug()<<" mCount :"<<mCount;
+  updateCount();
+}
+
+void KMSystemTray::slotCollectionChanged( const Akonadi::Collection::Id, const Akonadi::CollectionStatistics& )
+{
+  initListOfCollection();
 }
 
 bool KMSystemTray::hasUnreadMail() const

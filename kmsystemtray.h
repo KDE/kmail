@@ -63,6 +63,8 @@ protected:
   void buildPopupMenu();
   void updateCount();
   void fillFoldersMenu( QMenu *menu, const QAbstractItemModel *model, const QString& parentName = QString(), const QModelIndex& parentIndex = QModelIndex() );
+  void unreadMail( const QAbstractItemModel *model, const QModelIndex& parentIndex = QModelIndex() );
+  void initListOfCollection();
 
 private:
 
