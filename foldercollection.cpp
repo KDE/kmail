@@ -507,8 +507,10 @@ void FolderCollection::removeCollection()
 void FolderCollection::slotDeletionCollectionResult( KJob * job )
 {
   if ( job->error() ) {
-    // handle errors
-    static_cast<KIO::Job*>(job)->ui()->showErrorMessage();
+    if ( static_cast<KIO::Job*>( job )->ui() ) {
+      // handle errors
+      static_cast<KIO::Job*>(job)->ui()->showErrorMessage();
+    }
   }
 }
 
