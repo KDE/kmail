@@ -2956,6 +2956,9 @@ void ComposerPage::AttachmentsTab::save()
     mMissingAttachmentDetectionCheck->isChecked() );
   GlobalSettings::self()->setAttachmentKeywords(
     mAttachWordsListEditor->stringList() );
+
+  KMime::setUseOutlookAttachmentEncoding( mOutlookCompatibleCheck->isChecked() );
+
 }
 
 void ComposerPageAttachmentsTab::slotOutlookCompatibleClicked()

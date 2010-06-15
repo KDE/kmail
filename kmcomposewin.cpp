@@ -607,8 +607,6 @@ void KMComposeWin::readConfig( bool reload /* = false */ )
     mDictionaryCombo->setCurrentByDictionaryName( ident.dictionary() );
   }
 
-  KMime::setUseOutlookAttachmentEncoding( MessageComposer::MessageComposerSettings::self()->outlookCompatibleAttachments() );
-
   QString fccName = "";
   if ( mBtnFcc->isChecked() ) {
     fccName = GlobalSettings::self()->previousFcc();

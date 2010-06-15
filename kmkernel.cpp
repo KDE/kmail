@@ -216,6 +216,7 @@ KMKernel::KMKernel (QObject *parent, const char *name) :
   mXmlGuiInstance = KComponentData();
 
   KMime::setFallbackCharEncoding( MessageCore::GlobalSettings::self()->fallbackCharacterEncoding() );
+  KMime::setUseOutlookAttachmentEncoding( MessageComposer::MessageComposerSettings::self()->outlookCompatibleAttachments() );
 
   // cberzan: this crap moved to CodecManager ======================
   netCodec = QTextCodec::codecForName( KGlobal::locale()->encoding() );
