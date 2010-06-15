@@ -1,6 +1,6 @@
 /*
   This file is part of KMail, the KDE mail client.
-  Copyright (c) 2009 Montel Laurent <montel@kde.org>
+  Copyright (c) 2009, 2010 Montel Laurent <montel@kde.org>
 
   KMail is free software; you can redistribute it and/or modify it
   under the terms of the GNU General Public License, version 2, as
@@ -22,6 +22,10 @@
 #include <QObject>
 #include <kio/job.h>
 #include <kio/jobuidelegate.h>
+#include <QModelIndex>
+
+class QAbstractItemModel;
+
 namespace Akonadi {
   class ChangeRecorder;
   class Collection;
@@ -40,6 +44,9 @@ public:
 private slots:
   void slotExpungeJob( KJob *job );
   void slotDeleteJob( KJob *job );
+
+protected:
+  void expireAllCollection( const QAbstractItemModel *model, bool immediate, const QModelIndex& parentIndex = QModelIndex() );
 
 private:
   Akonadi::ChangeRecorder *mMonitor;

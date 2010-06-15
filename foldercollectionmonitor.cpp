@@ -1,6 +1,6 @@
 /*
   This file is part of KMail, the KDE mail client.
-  Copyright (c) 2009 Montel Laurent <montel@kde.org>
+  Copyright (c) 2009, 2010 Montel Laurent <montel@kde.org>
 
   KMail is free software; you can redistribute it and/or modify it
   under the terms of the GNU General Public License, version 2, as
@@ -17,14 +17,20 @@
 */
 
 #include "foldercollectionmonitor.h"
+#include "kmkernel.h"
+#include "foldercollection.h"
+
 #include <akonadi/changerecorder.h>
 #include <akonadi/collection.h>
 #include <akonadi/itemfetchscope.h>
 #include <akonadi/itemdeletejob.h>
 #include <akonadi/itemfetchjob.h>
+#include <Akonadi/EntityTreeModel>
+#include <Akonadi/CollectionModel>
 #include <akonadi/item.h>
 #include <akonadi/kmime/messageparts.h>
 #include <kmime/kmime_message.h>
+
 
 FolderCollectionMonitor::FolderCollectionMonitor(QObject *parent)
   :QObject( parent )
@@ -52,7 +58,29 @@ Akonadi::ChangeRecorder *FolderCollectionMonitor::monitor() const
 
 void FolderCollectionMonitor::expireAllFolders(bool immediate )
 {
-    kDebug() << "AKONADI PORT: Need to implement it  " << Q_FUNC_INFO;
+  expireAllCollection( KMKernel::self()->entityTreeModel(), immediate );
+}
+
+void FolderCollectionMonitor::expireAllCollection( const QAbstractItemModel *model, bool immediate, const QModelIndex& parentIndex )
+{
+  const int rowCount = model->rowCount( parentIndex );
+  for ( int row = 0; row < rowCount; ++row ) {
+    const QModelIndex index = model->index( row, 0, parentIndex );
+    const Akonadi::Collection collection = model->data( index, Akonadi::CollectionModel::CollectionRole ).value<Akonadi::Collection>();
+
+    if ( collection.resource() == QLatin1String( "akonadi_nepomuktag_resource" )
+         || collection.resource() == QLatin1String( "akonadi_search_resource" ) )
+      continue;
+
+    QSharedPointer<FolderCollection> col = FolderCollection::forCollection( collection );
+    if ( col && col->isAutoExpire() ) {
+      col->expireOldMessages( immediate );
+    }
+
+    if ( model->rowCount( index ) > 0 ) {
+      expireAllCollection( model, immediate, index );
+    }
+  }
 }
 
 void FolderCollectionMonitor::expunge( const Akonadi::Collection & col )
@@ -65,7 +93,9 @@ void FolderCollectionMonitor::expunge( const Akonadi::Collection & col )
 void FolderCollectionMonitor::slotExpungeJob( KJob *job )
 {
   if ( job->error() ) {
-    static_cast<KIO::Job*>(job)->ui()->showErrorMessage();
+    if ( static_cast<KIO::Job*>( job )->ui() )
+      static_cast<KIO::Job*>(job)->ui()->showErrorMessage();
+    kDebug()<<" job->errorString() :"<<job->errorString();
     return;
   }
   Akonadi::ItemFetchJob *fjob = dynamic_cast<Akonadi::ItemFetchJob*>( job );
@@ -80,7 +110,9 @@ void FolderCollectionMonitor::slotExpungeJob( KJob *job )
 void FolderCollectionMonitor::slotDeleteJob( KJob *job )
 {
   if ( job->error() ) {
-    static_cast<KIO::Job*>(job)->ui()->showErrorMessage();
+    if ( static_cast<KIO::Job*>( job )->ui() )
+      static_cast<KIO::Job*>(job)->ui()->showErrorMessage();
+    kDebug()<<" job->errorString() :"<<job->errorString();
     return;
   }
 }

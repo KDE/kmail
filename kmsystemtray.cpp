@@ -394,11 +394,11 @@ void KMSystemTray::unreadMail( const QAbstractItemModel *model, const QModelInde
 
     if ( count >= 0 ) {
       QSharedPointer<FolderCollection> col = FolderCollection::forCollection( collection );
-      if ( col && col->ignoreNewMail() )
-        continue;
+      if ( col && !col->ignoreNewMail() ) {
+        mCount += count;
+      }
     }
 
-    mCount += count;
     if ( model->rowCount( index ) > 0 ) {
       unreadMail( model, index );
     }
