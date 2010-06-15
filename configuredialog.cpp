@@ -2940,7 +2940,7 @@ ComposerPageAttachmentsTab::ComposerPageAttachmentsTab( QWidget * parent )
 void ComposerPage::AttachmentsTab::doLoadFromGlobalSettings()
 {
   mOutlookCompatibleCheck->setChecked(
-    GlobalSettings::self()->outlookCompatibleAttachments() );
+    MessageComposer::MessageComposerSettings::self()->outlookCompatibleAttachments() );
   mMissingAttachmentDetectionCheck->setChecked(
     GlobalSettings::self()->showForgottenAttachmentWarning() );
 
@@ -2950,7 +2950,7 @@ void ComposerPage::AttachmentsTab::doLoadFromGlobalSettings()
 
 void ComposerPage::AttachmentsTab::save()
 {
-  GlobalSettings::self()->setOutlookCompatibleAttachments(
+  MessageComposer::MessageComposerSettings::self()->setOutlookCompatibleAttachments(
     mOutlookCompatibleCheck->isChecked() );
   GlobalSettings::self()->setShowForgottenAttachmentWarning(
     mMissingAttachmentDetectionCheck->isChecked() );

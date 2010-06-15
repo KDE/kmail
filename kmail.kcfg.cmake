@@ -212,11 +212,6 @@
       <entry name="PreviousFcc" type="String" key="previous-fcc" />
       <entry name="PreviousDictionary" type="String" />
       <entry name="CurrentTransport" type="String" key="current-transport" />
-      <entry name="OutlookCompatibleAttachments" type="Bool" key="outlook-compatible-attachments">
-        <label>Outlook-compatible attachment naming</label>
-        <whatsthis>Turn this option on to make Outlook &#8482; understand attachment names containing non-English characters</whatsthis>
-        <default>false</default>
-      </entry>
       <entry name="UseHtmlMarkup" type="Bool" key="html-markup">
         <default>false</default>
       </entry>
