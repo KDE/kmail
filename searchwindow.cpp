@@ -134,6 +134,10 @@ SearchWindow::SearchWindow(KMMainWidget* w, const Akonadi::Collection& curFolder
   hbl->addWidget(mChkSubFolders);
   radioLayout->addLayout( hbl );
 
+  mChkbxSpecificFolders->hide();
+  mChkSubFolders->hide();
+  mCbxFolders->hide();
+  mChkbxAllFolders->hide();
 
   mPatternEdit = new KMSearchPatternEdit( QString(), searchWidget, false, true );
   mPatternEdit->setFlat( true );
