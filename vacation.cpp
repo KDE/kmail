@@ -495,8 +495,9 @@ namespace KMail {
     Akonadi::AgentInstance::List lst = KMail::Util::agentInstances();
     foreach ( const Akonadi::AgentInstance& type, lst )
     {
-      //TODO verify it.
       if ( type.identifier().contains( IMAP_RESOURCE_IDENTIFIER ) ) {
+        if ( type.status() == Akonadi::AgentInstance::Broken )
+          continue;
         OrgKdeAkonadiImapSettingsInterface *iface = KMail::Util::createImapSettingsInterface(type.identifier());
         if ( iface->isValid() ) {
           KUrl u = KMail::Util::findSieveUrlForAccount( iface,type.identifier() );

@@ -516,6 +516,8 @@ void AntiSpamWizard::checkToolAvailability()
       kDebug() << "Testing for server pattern:" << pattern;
       Akonadi::AgentInstance::List lst = KMail::Util::agentInstances();
       foreach( Akonadi::AgentInstance type, lst ) {
+        if ( type.status() == Akonadi::AgentInstance::Broken )
+          continue;
         if ( type.identifier().contains( IMAP_RESOURCE_IDENTIFIER ) ) {
           OrgKdeAkonadiImapSettingsInterface *iface = KMail::Util::createImapSettingsInterface( type.identifier() );
           if ( iface->isValid() ) {

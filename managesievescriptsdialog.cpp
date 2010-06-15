@@ -83,9 +83,9 @@ void KMail::ManageSieveScriptsDialog::slotRefresh()
   Akonadi::AgentInstance::List lst = KMail::Util::agentInstances();
   foreach ( const Akonadi::AgentInstance& type, lst )
   {
-    //TODO verify it.
     if ( type.identifier().contains( IMAP_RESOURCE_IDENTIFIER ) ) {
-
+      if ( type.status() == Akonadi::AgentInstance::Broken )
+        continue;
       OrgKdeAkonadiImapSettingsInterface *iface = KMail::Util::createImapSettingsInterface(type.identifier());
       if ( iface->isValid() ) {
         last = new QTreeWidgetItem( mListView, last );
