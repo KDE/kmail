@@ -32,6 +32,9 @@ namespace KIO {
   class Job;
 }
 
+namespace KPIM {
+  class ProgressItem;
+}
 class KStatusNotifierItem;
 
 class MessageSender;
@@ -406,6 +409,10 @@ signals:
   void onlineStatusChanged( GlobalSettings::EnumNetworkState::type );
   void customTemplatesChanged();
 
+  void startCheckMail();
+  void endCheckMail();
+
+
 private slots:
   /** Updates identities when a transport has been deleted. */
   void transportRemoved( int id, const QString &name );
@@ -417,6 +424,8 @@ private slots:
 
   void initFolders();
   void akonadiStateChanged( Akonadi::ServerManager::State );
+  void slotProgressItemCompleted( KPIM::ProgressItem * item);
+  void slotProgressItemCanceled( KPIM::ProgressItem * );
 private:
   void openReader( bool onlyCheck );
   QSharedPointer<FolderCollection> currentFolderCollection();
@@ -465,6 +474,8 @@ private:
   FolderCollectionMonitor *mFolderCollectionMonitor;
   Akonadi::EntityTreeModel *mEntityTreeModel;
   Akonadi::EntityMimeTypeFilterModel *mCollectionModel;
+
+  QList<KPIM::ProgressItem *>mListProgressItem;
 
   int mWrapCol;
 };

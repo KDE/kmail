@@ -270,6 +270,8 @@ KMKernel::KMKernel (QObject *parent, const char *name) :
 
   QDBusConnection::sessionBus().connect(QString(), QLatin1String( "/MailDispatcherAgent" ), "org.freedesktop.Akonadi.MailDispatcherAgent", "itemDispatchStarted",this, SLOT(itemDispatchStarted()) );
   connect( Akonadi::AgentManager::self(), SIGNAL( instanceProgressChanged( Akonadi::AgentInstance ) ), this, SLOT( instanceProgressChanged( Akonadi::AgentInstance ) ) ) ;
+  connect( KPIM::ProgressManager::instance(), SIGNAL( progressItemCompleted( KPIM::ProgressItem * ) ), this, SLOT( slotProgressItemCompleted( KPIM::ProgressItem* ) ) );
+  connect( KPIM::ProgressManager::instance(), SIGNAL( progressItemCanceled( KPIM::ProgressItem * ) ), this, SLOT( slotProgressItemCanceled( KPIM::ProgressItem* ) ) );
 }
 
 KMKernel::~KMKernel ()
@@ -1819,14 +1821,35 @@ void KMKernel::instanceProgressChanged( Akonadi::AgentInstance agent )
   // we're only interested in rfc822 resources
   if ( !agent.type().mimeTypes().contains( KMime::Message::mimeType() ) )
     return;
-
-  KPIM::ProgressManager::createProgressItem( 0,
+  KPIM::ProgressItem *progress =  KPIM::ProgressManager::createProgressItem( 0,
       agent,
       agent.identifier(),
       agent.name(),
       agent.statusMessage(),
       true );
+  if ( mListProgressItem.isEmpty() )
+    emit startCheckMail();
+
+  if ( !mListProgressItem.contains( progress ) )
+    mListProgressItem.append( progress );
 }
+
+void KMKernel::slotProgressItemCompleted( KPIM::ProgressItem * item)
+{
+  if ( mListProgressItem.contains( item ) )
+    mListProgressItem.removeAll( item );
+  if ( mListProgressItem.isEmpty() )
+    emit endCheckMail();
+}
+
+void KMKernel::slotProgressItemCanceled( KPIM::ProgressItem * item)
+{
+  if ( mListProgressItem.contains( item ) )
+    mListProgressItem.removeAll( item );
+  if ( mListProgressItem.isEmpty() )
+    emit endCheckMail();
+}
+
 
 void KMKernel::updatedTemplates()
 {

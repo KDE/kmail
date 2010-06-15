@@ -276,6 +276,10 @@ class KMAIL_EXPORT KMMainWidget : public QWidget
     KAction *akonadiStandardAction( Akonadi::StandardActionManager::Type type );
 
     void refreshMessageListSelection();
+
+    void slotStartCheckMail();
+    void slotEndCheckMail();
+
   signals:
     void messagesTransfered( bool );
     void captionChangeRequest( const QString &caption );
@@ -618,6 +622,8 @@ private:
     MessageList::Core::PreSelectionMode mPreSelectionMode;
 
     KPIM::ProgressItem *mFilterProgressItem;
+    QMap<QString, int> mCheckMail;
+    bool mCheckMailInProgress;
 };
 
 #endif
