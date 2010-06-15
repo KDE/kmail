@@ -41,6 +41,7 @@ public:
     virtual void paint ( QPainter *painter, const QStyleOptionViewItem &option, const QModelIndex &index ) const;
     virtual QSize sizeHint ( const QStyleOptionViewItem &option, const QModelIndex &index ) const;
     virtual bool editorEvent ( QEvent* event, QAbstractItemModel* model, const QStyleOptionViewItem& option, const QModelIndex& index );
+    virtual QWidget  *createEditor ( QWidget * parent, const QStyleOptionViewItem  & option, const QModelIndex & index ) const;
 
 signals:
     void optionsClicked ( const QString &, const QPoint & );
@@ -49,7 +50,7 @@ private:
     void drawFocus ( QPainter*, const QStyleOptionViewItem&, const QRect& ) const;
     QTextDocument* document ( const QStyleOptionViewItem &option, const QModelIndex &index ) const;
 
-    QStyleOptionButton buttonOption ( const QStyleOptionViewItem &option, qreal docWidth ) const;
+    QStyleOptionButton buttonOption ( const QStyleOptionViewItem &option ) const;
 };
 
 #endif // CONFIGAGENTDELEGATE_H

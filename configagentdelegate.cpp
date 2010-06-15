@@ -129,6 +129,9 @@ void ConfigAgentDelegate::paint ( QPainter *painter, const QStyleOptionViewItem 
     if ( !doc )
         return;
 
+    QStyleOptionButton buttonOpt = buttonOption ( option );
+
+    doc->setTextWidth( option.rect.width() - buttonOpt.rect.width() );
     painter->setRenderHint ( QPainter::Antialiasing );
 
     QPen pen = painter->pen();
@@ -142,9 +145,9 @@ void ConfigAgentDelegate::paint ( QPainter *painter, const QStyleOptionViewItem 
     QApplication::style()->drawPrimitive ( QStyle::PE_PanelItemViewItem, &opt, painter );
     painter->save();
     painter->translate ( option.rect.topLeft() );
+
     doc->drawContents ( painter );
 
-    QStyleOptionButton buttonOpt = buttonOption ( option, doc->documentLayout()->documentSize().width() );
     QApplication::style()->drawControl ( QStyle::CE_PushButton, &buttonOpt, painter );
 
     painter->restore();
@@ -169,6 +172,11 @@ QSize ConfigAgentDelegate::sizeHint ( const QStyleOptionViewItem &option, const 
     return size;
 }
 
+QWidget  * ConfigAgentDelegate::createEditor ( QWidget * parent, const QStyleOptionViewItem  & option, const QModelIndex & index ) const
+{
+  return 0;
+}
+
 bool ConfigAgentDelegate::editorEvent ( QEvent* event, QAbstractItemModel* model, const QStyleOptionViewItem& option, const QModelIndex& index )
 {
     Q_UNUSED ( model );
@@ -185,26 +193,28 @@ bool ConfigAgentDelegate::editorEvent ( QEvent* event, QAbstractItemModel* model
     QPoint mousePos = me->pos() - option.rect.topLeft();
 
     QSizeF docSize = doc->documentLayout()->documentSize();
-    QStyleOptionButton buttonOpt = buttonOption ( option, docSize.width() );
+    delete doc;
+    QStyleOptionButton buttonOpt = buttonOption ( option );
 
     if ( buttonOpt.rect.contains ( mousePos ) ) {
 
         switch ( event->type() ) {
         case QEvent::MouseButtonPress:
-            return true;
+            return false;
             break;
         case QEvent::MouseButtonRelease: {
             QPoint pos = buttonOpt.rect.bottomLeft();
             pos.setY ( pos.y() + index.row() * docSize.height() ); // offset for the correct item
-            QString ident = index.data ( Akonadi::AgentInstanceModel::InstanceIdentifierRole ).toString();
+            const QString ident = index.data ( Akonadi::AgentInstanceModel::InstanceIdentifierRole ).toString();
             emit optionsClicked ( ident, pos );
+            return true;
             break;
         }
         default:
             return false;
         }
     }
-    return true;
+    return false;
 }
 
 void ConfigAgentDelegate::drawFocus ( QPainter *painter, const QStyleOptionViewItem &option, const QRect &rect ) const
@@ -221,21 +231,21 @@ void ConfigAgentDelegate::drawFocus ( QPainter *painter, const QStyleOptionViewI
     }
 }
 
-QStyleOptionButton ConfigAgentDelegate::buttonOption ( const QStyleOptionViewItem& option, qreal docWidth ) const
+QStyleOptionButton ConfigAgentDelegate::buttonOption ( const QStyleOptionViewItem& option ) const
 {
+    QString label = i18n( "Retrieval Options" );
     QStyleOptionButton buttonOpt;
     QRect buttonRect = option.rect;
     int height = option.rect.height() / 2;
-    int width = ( option.rect.width() - docWidth ) / 2; // we'll fill half the space leftover, offering a reasonbly sized hit target
-    int spacing = width - 10; // this spaces the button to the right side with 10px rightpadding
+    int width = 22 + option.fontMetrics.width( label ) + 40; // icon size + label size + arrow and padding
     buttonRect.setTop ( ( option.rect.height() / 2 ) - height / 2 ); // center the button vertically
     buttonRect.setHeight ( height );
-    buttonRect.setLeft ( docWidth + spacing );
+    buttonRect.setLeft ( option.rect.right() - width );
     buttonRect.setWidth ( width );
 
     buttonOpt.rect = buttonRect;
     buttonOpt.state = option.state;
-    buttonOpt.text = i18n( "Retrieval Options" );
+    buttonOpt.text = label;
     buttonOpt.palette = option.palette;
     buttonOpt.features = QStyleOptionButton::HasMenu;
     buttonOpt.icon = s_icons->checkMailIcon;

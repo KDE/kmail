@@ -112,6 +112,7 @@
 #include <mailtransport/transport.h>
 #include <kmime/kmime_mdn.h>
 #include <kmime/kmime_header_parsing.h>
+#include <kmime/kmime_message.h>
 
 // KDELIBS includes
 #include <kaboutdata.h>
@@ -1507,7 +1508,7 @@ void KMMainWidget::slotRemoveFolder()
   if ( mCurrentFolder->isReadOnly() ) return;
 
   Akonadi::CollectionFetchJob *job = new Akonadi::CollectionFetchJob( mCurrentFolder->collection(), CollectionFetchJob::FirstLevel, this );
-  job->fetchScope().setContentMimeTypes( QStringList() << "message/rfc822" );
+  job->fetchScope().setContentMimeTypes( QStringList() << KMime::Message::mimeType() );
   connect( job, SIGNAL( result( KJob* ) ), SLOT( slotDelayedRemoveFolder( KJob* ) ) );
 }
 
@@ -3736,19 +3737,16 @@ void KMMainWidget::updateMessageActionsDelayed()
   status.setStatusFromFlags( currentMessage.flags() );
 
   QList< QAction *> actionList;
-  if( single_actions && ( ( currentMessage.isValid() && status.isSent() ) ||
-        ( currentMessage.isValid() && kmkernel->folderIsSentMailFolder( mCurrentFolder->collection() ) ) ) ) {
+  bool statusSendAgain = single_actions && ( ( currentMessage.isValid() && status.isSent() ) || ( currentMessage.isValid() && kmkernel->folderIsSentMailFolder( mCurrentFolder->collection() ) ) );
+  if ( statusSendAgain ) {
     actionList << mSendAgainAction;
   } else if( single_actions ) {
     actionList << messageActions()->editAction();
   }
   mGUIClient->unplugActionList( QLatin1String( "messagelist_actionlist" ) );
   mGUIClient->plugActionList( QLatin1String( "messagelist_actionlist" ), actionList );
-//         mSendAgainAction->setEnabled(
-//       single_actions &&
-//       ( ( currentMessage.isValid() && status.isSent() ) ||
-//         ( currentMessage.isValid() && kmkernel->folderIsSentMailFolder( mCurrentFolder->collection() ) ) )
-//     );
+  mSendAgainAction->setEnabled( statusSendAgain );
+
   mSaveAsAction->setEnabled( mass_actions );
 
   bool mails = mCurrentFolder&& mCurrentFolder->isValid() && mCurrentFolder->statistics().count() > 0;
@@ -3812,7 +3810,8 @@ void KMMainWidget::updateFolderMenu()
                                    && !multiFolder
                                    && ( mCurrentFolder->collection().rights() & Collection::CanDeleteCollection )
                                    && !mCurrentFolder->isSystemFolder()
-                                   && folderWithContent);
+                                   && folderWithContent
+                                   && mCurrentFolder->collection().resource() != "akonadi_nepomuktag_resource" );
   QList< QAction* > actionlist;
   if ( mCurrentFolder && mCurrentFolder->collection().id() == kmkernel->outboxCollectionFolder().id() &&
       kmkernel->outboxCollectionFolder().statistics().count() > 0 ) {

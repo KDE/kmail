@@ -85,6 +85,7 @@ FolderSelectionDialog::FolderSelectionDialog( QWidget *parent, SelectionFolderOp
   connect( d->folderTreeWidget->folderTreeView(), SIGNAL( doubleClicked(const QModelIndex&) ),
            this, SLOT( accept() ) );
   readConfig();
+  d->folderTreeWidget->folderTreeView()->expandAll();
 }
 
 FolderSelectionDialog::~FolderSelectionDialog()

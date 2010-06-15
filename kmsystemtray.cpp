@@ -5,6 +5,8 @@
     begin                : Fri Aug 31 22:38:44 EDT 2001
     copyright            : (C) 2001 by Ryan Breen
     email                : ryan@porivo.com
+
+    Copyright (c) 2010 Montel Laurent <montel@kde.org>
  ***************************************************************************/
 
 /***************************************************************************
@@ -19,7 +21,7 @@
 
 #include "kmsystemtray.h"
 #include "kmmainwidget.h"
-
+#include "foldercollection.h"
 #include "globalsettings.h"
 
 
@@ -38,7 +40,8 @@
 #include <QSignalMapper>
 
 #include <Akonadi/ChangeRecorder>
-
+#include <Akonadi/EntityTreeModel>
+#include <Akonadi/CollectionModel>
 #include <math.h>
 #include <assert.h>
 
@@ -68,11 +71,6 @@ KMSystemTray::KMSystemTray(QObject *parent)
   setToolTipIconByName( "kmail" );
   setIconByName( "kmail" );
 
-  mLastUpdate = time( 0 );
-  mUpdateTimer = new QTimer( this );
-  mUpdateTimer->setSingleShot( true );
-  connect( mUpdateTimer, SIGNAL( timeout() ), SLOT( updateNewMessages() ) );
-
 #ifdef Q_WS_X11
   KMMainWidget * mainWidget = kmkernel->getKMMainWidget();
   if ( mainWidget ) {
@@ -87,16 +85,13 @@ KMSystemTray::KMSystemTray(QObject *parent)
   // register the applet with the kernel
   kmkernel->registerSystemTrayApplet( this );
 
-  /** Initiate connections between folders and this object */
-  foldersChanged();
 
   connect( this, SIGNAL( activateRequested( bool, const QPoint& ) ),
            this, SLOT( slotActivated() ) );
   connect( contextMenu(), SIGNAL( aboutToShow() ),
            this, SLOT( slotContextMenuAboutToShow() ) );
 
-  connect( kmkernel->monitor(), SIGNAL( collectionChanged( const Akonadi::Collection & ) ),
-           SLOT( slotCollectionChanged( const Akonadi::Collection& ) ) );
+  connect( kmkernel->monitor(), SIGNAL( collectionStatisticsChanged( Akonadi::Collection::Id, const Akonadi::CollectionStatistics &) ), SLOT( slotCollectionChanged( const Akonadi::Collection::Id, const Akonadi::CollectionStatistics& ) ) );
 
 }
 
@@ -223,63 +218,6 @@ void KMSystemTray::updateCount()
   }
 }
 
-/**
- * Refreshes the list of folders we are monitoring.  This is called on
- * startup and is also connected to the 'changed' signal on the KMFolderMgr.
- */
-void KMSystemTray::foldersChanged()
-{
-  /**
-   * Hide and remove all unread mappings to cover the case where the only
-   * unread message was in a folder that was just removed.
-   */
-#if 0
-  mFoldersWithUnread.clear();
-  mPendingUpdates.clear();
-#endif
-  mCount = 0;
-
-  if ( mMode == GlobalSettings::EnumSystemTrayPolicy::ShowOnUnread ) {
-    setStatus( KStatusNotifierItem::Passive );
-  }
-#if 0
-  /** Disconnect all previous connections */
-  disconnect(this, SLOT(updateNewMessageNotification(KMFolder *)));
-
-  QStringList folderNames;
-  QList<QPointer<KMFolder> > folderList;
-  kmkernel->folderMgr()->createFolderList(&folderNames, &folderList);
-#else
-    kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
-#endif
-#if 0
-  QStringList::iterator strIt = folderNames.begin();
-
-  for(QList<QPointer<KMFolder> >::iterator it = folderList.begin();
-     it != folderList.end() && strIt != folderNames.end(); ++it, ++strIt)
-  {
-    KMFolder * currentFolder = *it;
-    QString currentName = *strIt;
-#if 0
-    if ( ((!currentFolder->isSystemFolder() || (currentFolder->name().toLower() == "inbox")) ||
-         (currentFolder->folderType() == KMFolderTypeImap)) &&
-         !currentFolder->ignoreNewMail() )
-    {
-      /** If this is a new folder, start listening for messages */
-      connect(currentFolder, SIGNAL(numUnreadMsgsChanged(KMFolder *)),
-              this, SLOT(updateNewMessageNotification(KMFolder *)));
-
-      /** Check all new folders to see if we started with any new messages */
-      updateNewMessageNotification(currentFolder);
-    }
-    else {
-      disconnect( currentFolder, SIGNAL( numUnreadMsgsChanged(KMFolder*) ),
-                  this, SLOT( updateNewMessageNotification(KMFolder *) ) );
-    }
-#endif
-  }
-#endif
-}
 
 /**
  * On left mouse click, switch focus to the first KMMainWidget.  On right
@@ -304,36 +242,58 @@ void KMSystemTray::slotContextMenuAboutToShow()
     delete mNewMessagesPopup;
     mNewMessagesPopup = 0;
   }
-#if 0
-  if ( mFoldersWithUnread.count() > 0 )
-  {
-    mNewMessagesPopup = new KMenu();
+  mNewMessagesPopup = new KMenu();
+  fillFoldersMenu( mNewMessagesPopup, KMKernel::self()->entityTreeModel() );
+  connect( mNewMessagesPopup, SIGNAL( triggered(QAction*) ), this,
+           SLOT( slotSelectCollection(QAction*) ) );
 
-    QMap<QPointer<KMFolder>, int>::Iterator it = mFoldersWithUnread.begin();
-    QSignalMapper *folderMapper = new QSignalMapper( this );
-    connect( folderMapper, SIGNAL( mapped( int ) ),
-             this, SLOT( selectedAccount( int ) ) );
 
-    for(uint i=0; it != mFoldersWithUnread.end(); ++i)
-    {
-      //TODO port it
-      //mPopupFolders.append( it.key() );
-      QString folderText = prettyName(it.key()) + " (" + QString::number(it.value()) + ')';
-      QAction *action = new QAction( folderText, this );
-      connect( action, SIGNAL( triggered( bool ) ),
-               folderMapper, SLOT( map() ) );
-      folderMapper->setMapping( action, i );
-      mNewMessagesPopup->addAction( action );
-      ++it;
-    }
-
+  if ( mCount > 0 ) {
     mNewMessagesPopup->setTitle( i18n("New Messages In") );
     contextMenu()->insertAction( mSendQueued, mNewMessagesPopup->menuAction() );
-
-    kDebug() << "Folders added";
   }
-#endif
 }
+
+void KMSystemTray::fillFoldersMenu( QMenu *menu, const QAbstractItemModel *model, const QString& parentName, const QModelIndex& parentIndex )
+{
+  const int rowCount = model->rowCount( parentIndex );
+  for ( int row = 0; row < rowCount; ++row ) {
+    const QModelIndex index = model->index( row, 0, parentIndex );
+    const Akonadi::Collection collection = model->data( index, Akonadi::CollectionModel::CollectionRole ).value<Akonadi::Collection>();
+    if ( collection.resource() == QLatin1String( "akonadi_nepomuktag_resource" )
+         || collection.resource() == QLatin1String( "akonadi_search_resource" ) )
+      continue;
+    Akonadi::CollectionStatistics statistics = collection.statistics();
+    qint64 count = qMax( 0LL, statistics.unreadCount() );
+    if ( count >= 0 ) {
+      QSharedPointer<FolderCollection> col = FolderCollection::forCollection( collection );
+      if ( col && col->ignoreNewMail() )
+        continue;
+    }
+    mCount += count;
+
+    QString label = parentName.isEmpty() ? "" : parentName + "->";
+    label += model->data( index ).toString();
+    label.replace( QLatin1String( "&" ), QLatin1String( "&&" ) );
+
+    if ( model->rowCount( index ) > 0 ) {
+      // new level
+      if ( count > 0 ) {
+        QAction * action = menu->addAction( label );
+        action->setData( collection.id() );
+      }
+      fillFoldersMenu( menu, model, label, index );
+
+    } else {
+      if ( count > 0 ) {
+        // insert an item
+        QAction* action = menu->addAction( label );
+        action->setData( collection.id() );
+      }
+    }
+  }
+}
+
 
 
 bool KMSystemTray::mainWindowIsOnCurrentDesktop()
@@ -386,8 +346,6 @@ void KMSystemTray::showKMail()
   }
   kmkernel->raise();
 
-  //Fake that the folders have changed so that the icon status is correct
-  foldersChanged();
 }
 
 void KMSystemTray::hideKMail()
@@ -410,147 +368,75 @@ void KMSystemTray::hideKMail()
   }
 }
 
-/**
- * Called on startup of the KMSystemTray and when the numUnreadMsgsChanged signal
- * is emitted for one of the watched folders.  Shows the system tray icon if there
- * are new messages and the icon was hidden, or hides the system tray icon if there
- * are no more new messages.
- */
-#if 0
-void KMSystemTray::updateNewMessageNotification(KMFolder * fldr)
+void KMSystemTray::initListOfCollection()
 {
-#if 0
-  //We don't want to count messages from search folders as they
-  //  already counted as part of their original folders
-  if( !fldr ||
-      fldr->folderType() == KMFolderTypeSearch )
-  {
-    // kDebug() << "Null or a search folder, can't mess with that";
-    return;
+  mCount = 0;
+  if ( mMode == GlobalSettings::EnumSystemTrayPolicy::ShowOnUnread ) {
+    setStatus( KStatusNotifierItem::Passive );
   }
 
-  mPendingUpdates[ fldr ] = true;
-  if ( time( 0 ) - mLastUpdate > 2 ) {
-    mUpdateTimer->stop();
-    updateNewMessages();
-  }
-  else {
-    mUpdateTimer->start(150);
-  }
-#endif
+  unreadMail( KMKernel::self()->entityTreeModel() );
 }
-#endif
 
-void KMSystemTray::slotCollectionChanged( const Akonadi::Collection& col)
+void KMSystemTray::unreadMail( const QAbstractItemModel *model, const QModelIndex& parentIndex  )
 {
-#if 0
-  for ( QMap<QPointer<KMFolder>, bool>::Iterator it1 = mPendingUpdates.begin();
-        it1 != mPendingUpdates.end(); ++it1)
-  {
-    KMFolder *fldr = it1.key();
-    if ( !fldr ) // deleted folder
+  const int rowCount = model->rowCount( parentIndex );
+  for ( int row = 0; row < rowCount; ++row ) {
+    const QModelIndex index = model->index( row, 0, parentIndex );
+    const Akonadi::Collection collection = model->data( index, Akonadi::CollectionModel::CollectionRole ).value<Akonadi::Collection>();
+
+    if ( collection.resource() == QLatin1String( "akonadi_nepomuktag_resource" )
+         || collection.resource() == QLatin1String( "akonadi_search_resource" ) )
       continue;
 
-    // The number of unread messages in that folder
-    int unread = fldr->countUnread();
+    Akonadi::CollectionStatistics statistics = collection.statistics();
+    qint64 count = qMax( 0LL, statistics.unreadCount() );
 
-    QMap<QPointer<KMFolder>, int>::Iterator it = mFoldersWithUnread.find( fldr );
-    bool unmapped = ( it == mFoldersWithUnread.end() );
-
-    // If the folder is not mapped yet, increment count by numUnread
-    // in folder
-    if ( unmapped )
-      mCount += unread;
-
-    //Otherwise, get the difference between the numUnread in the folder and
-    // our last known version, and adjust mCount with that difference
-    else {
-      int diff = unread - it.value();
-      mCount += diff;
-    }
-
-    if ( unread > 0 ) {
-      // Add folder to our internal store, or update unread count if already mapped
-      mFoldersWithUnread.insert( fldr, unread );
-      //kDebug() << "There are now" << mFoldersWithUnread.count() << "folders with unread";
-    }
-
-    /*
-     * Look for folder in the list of folders already represented.  If there are
-     * unread messages and the system tray icon is hidden, show it.  If there are
-     * no unread messages, remove the folder from the mapping.
-     */
-    if ( unmapped ) {
-
-      // Spurious notification, ignore
-      if ( unread == 0 )
-        continue;
-
-      // Make sure the icon will be displayed
-      if ( mMode == GlobalSettings::EnumSystemTrayPolicy::ShowOnUnread ) {
-        setStatus( KStatusNotifierItem::Active );
+    if ( count >= 0 ) {
+      QSharedPointer<FolderCollection> col = FolderCollection::forCollection( collection );
+      if ( col && !col->ignoreNewMail() ) {
+        mCount += count;
       }
     }
-    else {
-      if ( unread == 0 ) {
-        //kDebug() << "Removing folder from internal store" << fldr->name();
 
-        // Remove the folder from the internal store
-        mFoldersWithUnread.remove(fldr);
-
-        // if this was the last folder in the dictionary, hide the systemtray icon
-        if ( mFoldersWithUnread.count() == 0 ) {
-          mPopupFolders.clear();
-          disconnect ( this, SLOT( selectedAccount( int ) ) );
-          mCount = 0;
-
-          if ( mMode == GlobalSettings::EnumSystemTrayPolicy::ShowOnUnread ) {
-            setStatus( KStatusNotifierItem::Passive );
-          }
-        }
-      }
+    if ( model->rowCount( index ) > 0 ) {
+      unreadMail( model, index );
     }
   }
-  mPendingUpdates.clear();
-  updateCount();
-
   // Update tooltip to reflect count of unread messages
   setToolTipSubTitle( mCount == 0 ? i18n("There are no unread messages")
                                   : i18np("1 unread message",
                                           "%1 unread messages",
                                           mCount));
-
-  mLastUpdate = time( 0 );
-#endif
-}
-
-/**
- * Called when user selects a folder name from the popup menu.  Shows
- * the first KMMainWin in the memberlist and jumps to the first unread
- * message in the selected folder.
- */
-void KMSystemTray::selectedAccount(int id)
-{
-  showKMail();
-
-  KMMainWidget * mainWidget = kmkernel->getKMMainWidget();
-  if (!mainWidget)
-  {
-    kmkernel->openReader();
-    mainWidget = kmkernel->getKMMainWidget();
+  // Make sure the icon will be displayed
+  if ( ( mMode == GlobalSettings::EnumSystemTrayPolicy::ShowOnUnread ) &&
+       status() == KStatusNotifierItem::Passive && mCount > 0) {
+    setStatus( KStatusNotifierItem::Active );
   }
 
-  assert(mainWidget);
+  kDebug()<<" mCount :"<<mCount;
+  updateCount();
+}
 
-  /** Select folder */
-  Akonadi::Collection fldr = mPopupFolders.at(id);
-  if(!fldr.isValid()) return;
-  mainWidget->selectCollectionFolder( fldr );
+void KMSystemTray::slotCollectionChanged( const Akonadi::Collection::Id, const Akonadi::CollectionStatistics& )
+{
+  initListOfCollection();
 }
 
 bool KMSystemTray::hasUnreadMail() const
 {
   return ( mCount != 0 );
+}
+
+void KMSystemTray::slotSelectCollection(QAction*act)
+{
+  const Akonadi::Collection::Id id = act->data().value<Akonadi::Collection::Id>();
+  KMKernel::self()->selectCollectionFromId( id );
+}
+
+void KMSystemTray::updateSystemTray()
+{
+  initListOfCollection();
 }
 
 #include "kmsystemtray.moc"

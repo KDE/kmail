@@ -252,6 +252,8 @@ private:
   /** shortcut associated with this folder or null, if none is configured. */
   KShortcut mShortcut;
   bool mWriteConfig;
+
+  bool mOldIgnoreNewMail;
 };
 
 

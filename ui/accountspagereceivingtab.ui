@@ -75,13 +75,6 @@
       </layout>
      </item>
      <item>
-      <widget class="QCheckBox" name="mCheckmailStartupCheck">
-       <property name="text">
-        <string>Chec&amp;k mail on startup</string>
-       </property>
-      </widget>
-     </item>
-     <item>
       <widget class="QGroupBox" name="group">
        <property name="title">
         <string>New Mail Notification</string>

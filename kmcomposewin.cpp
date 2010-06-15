@@ -197,7 +197,6 @@ KMComposeWin::KMComposeWin( const KMime::Message::Ptr &aMsg, Composer::TemplateC
     mPendingQueueJobs( 0 ),
     mPendingCreateItemJobs( 0 ),
     mLabelWidth( 0 ),
-    mAutoSaveTimer( 0 ), mAutoSaveErrorShown( false ),
     mComposerBase( 0 ),
     mSignatureStateIndicator( 0 ), mEncryptionStateIndicator( 0 ),
     mPreventFccOverwrite( false ),
@@ -206,6 +205,7 @@ KMComposeWin::KMComposeWin( const KMime::Message::Ptr &aMsg, Composer::TemplateC
 
   mComposerBase = new Message::ComposerViewBase( this );
   mComposerBase->setIdentityManager( kmkernel->identityManager() );
+  mComposerBase->setParentWidgetForGui( this );
 
   connect( mComposerBase, SIGNAL( disableHtml( Message::ComposerViewBase::Confirmation ) ),
            this, SLOT( disableHtml( Message::ComposerViewBase::Confirmation ) ) );
@@ -214,7 +214,8 @@ KMComposeWin::KMComposeWin( const KMime::Message::Ptr &aMsg, Composer::TemplateC
            this, SLOT( enableHtml() ) );
   connect( mComposerBase, SIGNAL( failed( QString) ), this, SLOT( slotSendFailed( QString ) ) );
   connect( mComposerBase, SIGNAL( sentSuccessfully() ), this, SLOT( slotSendSuccessful() ) );
-  
+  connect( mComposerBase, SIGNAL( modified( bool ) ), this, SLOT( setModified( bool ) ) );
+
   //(void) new MailcomposerAdaptor( this );
   mdbusObjectPath = "/Composer_" + QString::number( ++s_composerNumber );
   //QDBusConnection::sessionBus().registerObject( mdbusObjectPath, this );
@@ -222,7 +223,7 @@ KMComposeWin::KMComposeWin( const KMime::Message::Ptr &aMsg, Composer::TemplateC
   Message::SignatureController* sigController = new Message::SignatureController( this );
   connect( sigController, SIGNAL(enableHtml()), SLOT(enableHtml()) );
   mComposerBase->setSignatureController( sigController );
-  
+
   if ( kmkernel->xmlGuiInstance().isValid() ) {
     setComponentData( kmkernel->xmlGuiInstance() );
   }
@@ -245,7 +246,7 @@ KMComposeWin::KMComposeWin( const KMime::Message::Ptr &aMsg, Composer::TemplateC
                                                  mHeadersArea );
   identity->setToolTip( i18n( "Select an identity for this message" ) );
   mComposerBase->setIdentityCombo( identity );
-  
+
   sigController->setIdentityCombo( identity );
   sigController->suspend(); // we have to do identity change tracking ourselves due to the template code
 
@@ -253,14 +254,14 @@ KMComposeWin::KMComposeWin( const KMime::Message::Ptr &aMsg, Composer::TemplateC
   mDictionaryCombo->setToolTip( i18n( "Select the dictionary to use when spell-checking this message" ) );
 
   Akonadi::CollectionComboBox* fcc = new Akonadi::CollectionComboBox( mHeadersArea );
-  fcc->setMimeTypeFilter( QStringList()<<FolderCollectionMonitor::mimetype() );
+  fcc->setMimeTypeFilter( QStringList()<<KMime::Message::mimeType() );
   fcc->setAccessRightsFilter( Akonadi::Collection::CanCreateItem );
   fcc->setToolTip( i18n( "Select the sent-mail folder where a copy of this message will be saved" ) );
   mComposerBase->setFccCombo( fcc );
   MailTransport::TransportComboBox* transport = new MailTransport::TransportComboBox( mHeadersArea );
   transport->setToolTip( i18n( "Select the outgoing account to use for sending this message" ) );
   mComposerBase->setTransportCombo( transport );
-  
+
   mEdtFrom = new MessageComposer::ComposerLineEdit( false, mHeadersArea );
   mEdtFrom->setObjectName( "fromLine" );
   mEdtFrom->setRecentAddressConfig( KMKernel::config().data() );
@@ -359,7 +360,7 @@ KMComposeWin::KMComposeWin( const KMime::Message::Ptr &aMsg, Composer::TemplateC
   mComposerBase->setEditor( editor );
   vbox->addLayout( hbox );
   vbox->addWidget( editor );
-  
+
   mSnippetSplitter->insertWidget( 0, editorAndCryptoStateIndicators );
   mSnippetSplitter->setOpaqueResize( true );
   sigController->setEditor( editor );
@@ -400,7 +401,7 @@ KMComposeWin::KMComposeWin( const KMime::Message::Ptr &aMsg, Composer::TemplateC
 
   mComposerBase->setAttachmentModel( attachmentModel );
   mComposerBase->setAttachmentController( attachmentController );
-  
+
   readConfig();
   setupStatusBar();
   setupActions();
@@ -434,8 +435,6 @@ KMComposeWin::KMComposeWin( const KMime::Message::Ptr &aMsg, Composer::TemplateC
     editor->setUseExternalEditor( true );
     editor->setExternalEditorPath( GlobalSettings::self()->externalEditor() );
   }
-
-  initAutoSave();
 
   if ( aMsg ) {
     setMsg( aMsg );
@@ -475,6 +474,7 @@ KMComposeWin::~KMComposeWin()
   foreach ( KTempDir *const dir, mTempDirs ) {
     delete dir;
   }
+  delete mComposerBase;
 }
 
 
@@ -587,7 +587,6 @@ void KMComposeWin::readConfig( bool reload /* = false */ )
   }
 
   mComposerBase->identityCombo()->setCurrentIdentity( mId );
-
   kDebug() << mComposerBase->identityCombo()->currentIdentityName();
   const KPIMIdentities::Identity & ident =
     kmkernel->identityManager()->identityForUoid( mId );
@@ -598,6 +597,9 @@ void KMComposeWin::readConfig( bool reload /* = false */ )
     if ( transport )
       mComposerBase->transportComboBox()->setCurrentTransport( transport->id() );
   }
+
+  mComposerBase->setAutoSaveInterval( GlobalSettings::self()->autosaveInterval() * 1000 * 60 );
+
 
   if ( mBtnDictionary->isChecked() ) {
     mDictionaryCombo->setCurrentByDictionaryName( GlobalSettings::self()->previousDictionary() );
@@ -648,83 +650,6 @@ Message::Composer* KMComposeWin::createSimpleComposer()
 {
   return mComposerBase->createSimpleComposer();
 }
-
-//-----------------------------------------------------------------------------
-void KMComposeWin::autoSaveMessage()
-{
-  kDebug() << "Autosaving message";
-
-  if ( mAutoSaveTimer ) {
-    mAutoSaveTimer->stop();
-  }
-
-  if( !mMiscComposers.isEmpty() ) {
-    // This may happen if e.g. the autosave timer calls applyChanges.
-    kDebug() << "Called while composer active; ignoring.";
-    return;
-  }
-
-  Message::Composer * const composer = createSimpleComposer();
-  mMiscComposers.append( composer );
-  connect( composer, SIGNAL(result(KJob*)), this, SLOT(slotAutoSaveComposeResult(KJob*)) );
-  composer->start();
-}
-
-void KMComposeWin::setAutoSaveFileName( const QString &fileName )
-{
-  mAutoSaveUUID = fileName;
-
-  // Set it to modified, otherwise the user can close the window without being asked, he would
-  // loose the message he just recovered!
-  setModified( true );
-}
-
-void KMComposeWin::writeAutoSaveToDisk( KMime::Message::Ptr message )
-{
-  const QString filename = KMKernel::localDataPath() + "autosave/" +
-    mAutoSaveUUID;
-  KSaveFile file( filename );
-  QString errorMessage;
-  kDebug() << "Writing message to disk as" << filename;
-
-  if( file.open() ) {
-    file.setPermissions( QFile::ReadUser | QFile::WriteUser );
-
-    if( file.write( message->encodedContent() ) !=
-        static_cast<qint64>( message->encodedContent().size() ) ) {
-      errorMessage = i18n( "Could not write all data to file." );
-    }
-    else {
-      if( !file.finalize() ) {
-        errorMessage = i18n( "Could not finalize the file." );
-      }
-    }
-  }
-  else {
-    errorMessage = i18n( "Could not open file." );
-  }
-
-  if ( !errorMessage.isEmpty() ) {
-    kWarning() << "Auto saving failed:" << errorMessage << file.errorString();
-    if ( !mAutoSaveErrorShown ) {
-      KMessageBox::sorry( this, i18n( "Autosaving the message as %1 failed.\n"
-                                      "%2\n"
-                                      "Reason: %3",
-                                      filename,
-                                      errorMessage,
-                                      file.errorString() ),
-                          i18n( "Autosaving Message Failed" ) );
-
-      // Error dialog shown, hide the errors the next time
-      mAutoSaveErrorShown = true;
-    }
-  }
-  else {
-    // No error occurred, the next error should be shown again
-    mAutoSaveErrorShown = false;
-  }
-}
-
 
 //-----------------------------------------------------------------------------
 void KMComposeWin::slotView( void )
@@ -1094,14 +1019,14 @@ void KMComposeWin::setQuotePrefix( uint uoid )
   if ( quotePrefix.isEmpty() ) {
     // no quote prefix header, set quote prefix according in identity
     // TODO port templates to ComposerViewBase
-    
+
     if ( mCustomTemplate.isEmpty() ) {
       const KPIMIdentities::Identity &identity = kmkernel->identityManager()->identityForUoidOrDefault( uoid );
       // Get quote prefix from template
       // ( custom templates don't specify custom quotes prefixes )
       ::Templates quoteTemplate( TemplatesConfiguration::configIdString( identity.uoid() ) );
       quotePrefix = quoteTemplate.quoteString();
-    } 
+    }
   }
   mComposerBase->editor()->setQuotePrefixName( MessageCore::StringUtil::formatString( quotePrefix,
                                                                 mMsg->from()->asUnicodeString() ) );
@@ -1565,7 +1490,7 @@ void KMComposeWin::setMsg( const KMime::Message::Ptr &newMsg, bool mayAutoSign,
     disconnect( mComposerBase->identityCombo(),SIGNAL( identityChanged(uint) ),
                 this, SLOT( slotIdentityChanged(uint) ) ) ;
   }
-  
+
   // load the mId into the gui, sticky or not, without emitting
   mComposerBase->identityCombo()->setCurrentIdentity( mId );
   const uint idToApply = mId;
@@ -1582,7 +1507,7 @@ void KMComposeWin::setMsg( const KMime::Message::Ptr &newMsg, bool mayAutoSign,
       mId = im->defaultIdentity().uoid();
     }
   }
-  
+
   // manually load the identity's value into the fields; either the one from the
   // messge, where appropriate, or the one from the sticky identity. What's in
   // mId might have changed meanwhile, thus the save value
@@ -1594,10 +1519,10 @@ void KMComposeWin::setMsg( const KMime::Message::Ptr &newMsg, bool mayAutoSign,
   if( stickyTransport ) {
     mComposerBase->transportComboBox()->setCurrentTransport( ident.transport().toInt() );
   }
-    
+
   // TODO move the following to ComposerViewBase
   // however, requires the actions to be there as well in order to share with mobile client
-  
+
   // check for the presence of a DNT header, indicating that MDN's were requested
   if( newMsg->headerByType( "Disposition-Notification-To" ) ) {
     QString mdnAddr = newMsg->headerByType( "Disposition-Notification-To" )->asUnicodeString();
@@ -1622,7 +1547,7 @@ void KMComposeWin::setMsg( const KMime::Message::Ptr &newMsg, bool mayAutoSign,
       mMsg->setHeader( new KMime::Headers::Generic( "X-Face", mMsg.get(), xface.toUtf8(), "utf-8" ) );
     }
   }
-  
+
   // if these headers are present, the state of the message should be overruled
   if ( mMsg->headerByType( "X-KMail-SignatureActionEnabled" ) )
     mLastSignActionState = (mMsg->headerByType( "X-KMail-SignatureActionEnabled" )->as7BitString().contains( "true" ));
@@ -1671,7 +1596,7 @@ void KMComposeWin::setMsg( const KMime::Message::Ptr &newMsg, bool mayAutoSign,
   if ( !stickyDictionary ) {
     mDictionaryCombo->setCurrentByDictionaryName( ident.dictionary() );
   }
-  
+
   KMime::Content *msgContent = new KMime::Content;
   msgContent->setContent( mMsg->encodedContent() );
   msgContent->parse();
@@ -1729,6 +1654,11 @@ void KMComposeWin::setMsg( const KMime::Message::Ptr &newMsg, bool mayAutoSign,
 
   // honor "keep reply in this folder" setting even when the identity is changed later on
   mPreventFccOverwrite = ( !kmailFcc.isEmpty() && ident.fcc() != kmailFcc );
+}
+
+void KMComposeWin::setAutoSaveFileName(const QString& fileName)
+{
+  mComposerBase->setAutoSaveFileName( fileName );
 }
 
 //-----------------------------------------------------------------------------
@@ -1814,7 +1744,7 @@ bool KMComposeWin::queryClose ()
     }
     //else fall through: return true
   }
-  cleanupAutoSave();
+  mComposerBase->cleanupAutoSave();
 
   if( !mMiscComposers.isEmpty() ) {
     kWarning() << "Tried to close while composer was active";
@@ -1885,30 +1815,11 @@ bool KMComposeWin::userForgotAttachment()
   return false;
 }
 
-
-void KMComposeWin::slotAutoSaveComposeResult( KJob *job )
+void KMComposeWin::autoSaveMessage()
 {
-  using Message::Composer;
-
-  Q_ASSERT( dynamic_cast< Composer* >( job ) );
-  Composer* composer = dynamic_cast< Composer* >( job );
-  Q_ASSERT( mMiscComposers.contains( composer ) );
-  mMiscComposers.removeAll( composer );
-
-  if( composer->error() == Composer::NoError ) {
-
-    // The messages were composed successfully. Only save the first message, there should
-    // only be one anyway, since crypto is disabled.
-    writeAutoSaveToDisk( composer->resultMessages().first() );
-    Q_ASSERT( composer->resultMessages().size() == 1 );
-
-    if( autoSaveInterval() > 0 ) {
-      updateAutoSave();
-    }
-  } else {
-    kWarning() << "Composer for autosaving failed:" << composer->errorString();
-  }
+  mComposerBase->autoSaveMessage();
 }
+
 
 bool KMComposeWin::encryptToSelf()
 {
@@ -1993,7 +1904,7 @@ void KMComposeWin::slotSendFailed( const QString& msg )
 void KMComposeWin::slotSendSuccessful()
 {
   setModified( false );
-  cleanupAutoSave();
+  mComposerBase->cleanupAutoSave();
   close();
 }
 
@@ -2638,7 +2549,6 @@ void KMComposeWin::doDelayedSend( MessageSender::SendMethod method, MessageSende
   mComposerBase->setCharsets( charsets );
   mComposerBase->setUrgent( mUrgentAction->isChecked() );
   mComposerBase->setMDNRequested( mRequestMDNAction->isChecked() );
-
   mComposerBase->setCryptoOptions( sign, encrypt, cryptoMessageFormat(),
                                    ( ( saveIn != MessageSender::SaveInNone && GlobalSettings::self()->neverEncryptDrafts() )
                                     || mSigningAndEncryptionExplicitlyDisabled ) );
@@ -2882,8 +2792,9 @@ void KMComposeWin::slotIdentityChanged( uint uoid, bool initalChange )
   // remove BCC of old identity and add BCC of new identity (if they differ)
   const KPIMIdentities::Identity &oldIdentity =
       KMKernel::self()->identityManager()->identityForUoidOrDefault( mId );
+      
   mComposerBase->identityChanged( ident, oldIdentity );
-  
+
   if ( ident.organization().isEmpty() ) {
     mMsg->organization()->clear();
   } else {
@@ -2930,11 +2841,7 @@ void KMComposeWin::slotIdentityChanged( uint uoid, bool initalChange )
   if ( !mBtnFcc->isChecked() && !mPreventFccOverwrite ) {
     setFcc( ident.fcc() );
   }
-
-  KPIMIdentities::Signature oldSig = const_cast<KPIMIdentities::Identity&>
-                                               ( oldIdentity ).signature();
-  KPIMIdentities::Signature newSig = const_cast<KPIMIdentities::Identity&>
-                                               ( ident ).signature();
+  
   // if unmodified, apply new template, if one is set
   bool msgCleared = false;
   if ( !isModified() && !( ident.templates().isEmpty() && mCustomTemplate.isEmpty() ) &&
@@ -2943,13 +2850,6 @@ void KMComposeWin::slotIdentityChanged( uint uoid, bool initalChange )
     msgCleared = true;
   }
 
-  //replace existing signatures
-  const bool replaced = mComposerBase->editor()->replaceSignature( oldSig, newSig );
-
-  // Just append the signature if there was no old signature
-  if ( !replaced && ( msgCleared || oldSig.rawText().isEmpty() ) ) {
-    mComposerBase->signatureController()->applySignature( newSig );
-  }
 
   // disable certain actions if there is no PGP user identity set
   // for this profile
@@ -3025,71 +2925,6 @@ void KMComposeWin::setFocusToSubject()
   mEdtSubject->setFocus();
 }
 
-int KMComposeWin::autoSaveInterval() const
-{
-  return GlobalSettings::self()->autosaveInterval() * 1000 * 60;
-}
-
-void KMComposeWin::initAutoSave()
-{
-  kDebug() << "initalising autosave";
-
-  // Ensure that the autosave directory exsits.
-  QDir dataDirectory( KMKernel::localDataPath() );
-  if( !dataDirectory.exists( "autosave" ) ) {
-    kDebug() << "Creating autosave directory.";
-    dataDirectory.mkdir( "autosave" );
-  }
-
-  // Construct a file name
-  if ( mAutoSaveUUID.isEmpty() ) {
-    mAutoSaveUUID = QUuid::createUuid().toString();
-  }
-
-  updateAutoSave();
-}
-
-void KMComposeWin::updateAutoSave()
-{
-  if ( autoSaveInterval() == 0 ) {
-    delete mAutoSaveTimer; mAutoSaveTimer = 0;
-  } else {
-    if ( !mAutoSaveTimer ) {
-      mAutoSaveTimer = new QTimer( this );
-      connect( mAutoSaveTimer, SIGNAL( timeout() ),
-               this, SLOT( autoSaveMessage() ) );
-    }
-    mAutoSaveTimer->start( autoSaveInterval() );
-  }
-}
-
-void KMComposeWin::cleanupAutoSave()
-{
-  delete mAutoSaveTimer; mAutoSaveTimer = 0;
-  if ( !mAutoSaveUUID.isEmpty() ) {
-
-    kDebug() << "deleting autosave files" << mAutoSaveUUID;
-
-    // Delete the autosave files
-    QDir autoSaveDir( KMKernel::localDataPath() + "autosave" );
-
-    // Filter out only this composer window's autosave files
-    QStringList autoSaveFilter;
-    autoSaveFilter << mAutoSaveUUID + "*";
-    autoSaveDir.setNameFilters( autoSaveFilter );
-
-    // Return the files to be removed
-    QStringList autoSaveFiles = autoSaveDir.entryList();
-    kDebug() << "There are" << autoSaveFiles.count() << "to be deleted.";
-
-    // Delete each file
-    foreach( const QString &file, autoSaveFiles ) {
-      autoSaveDir.remove( file );
-    }
-    mAutoSaveUUID.clear();
-  }
-}
-
 void KMComposeWin::slotCompletionModeChanged( KGlobalSettings::Completion mode )
 {
   GlobalSettings::self()->setCompletionMode( (int) mode );
@@ -3103,7 +2938,7 @@ void KMComposeWin::slotCompletionModeChanged( KGlobalSettings::Completion mode )
 void KMComposeWin::slotConfigChanged()
 {
   readConfig( true /*reload*/);
-  updateAutoSave();
+  mComposerBase->updateAutoSave();
   rethinkFields();
   slotWordWrapToggled( mWordWrapAction->isChecked() );
 }

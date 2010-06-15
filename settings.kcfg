@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<kcfg xmlns="http://www.kde.org/standards/kcfg/1.0"
+      xmlns:kcfg="http://www.kde.org/standards/kcfg/1.0"
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:schemaLocation="http://www.kde.org/standards/kcfg/1.0
+      http://www.kde.org/standards/kcfg/1.0/kcfg.xsd" >
+  <kcfgfile/>
+  <group name="General">
+    <entry name="unitTestPassword" type="String">
+      <label></label>
+      <default></default>
+    </entry>
+    <entry name="storePassword" type="Bool">
+      <label></label>
+      <default>false</default>
+    </entry>
+    <entry name="login" type="String">
+      <label></label>
+      <default></default>
+    </entry>
+    <entry name="host" type="String">
+      <label></label>
+      <default></default>
+    </entry>
+    <entry name="port" type="UInt">
+      <label></label>
+      <default>110</default>
+    </entry>
+    <entry name="authenticationMethod" type="Int">
+      <label>Defines the authentication type to use</label>
+      <default>7</default>
+    </entry>
+    <entry name="useSSL" type="Bool">
+      <label></label>
+      <default>false</default>
+    </entry>
+    <entry name="useTLS" type="Bool">
+      <label></label>
+      <default>false</default>
+    </entry>
+    <entry name="pipelining" type="Bool">
+      <label></label>
+      <default>false</default>
+    </entry>
+    <entry name="leaveOnServer" type="Bool">
+      <label></label>
+      <default>false</default>
+    </entry>
+    <entry name="leaveOnServerDays" type="Int">
+      <label></label>
+      <default>-1</default>
+    </entry>
+    <entry name="leaveOnServerCount" type="Int">
+      <label></label>
+      <default>-1</default>
+    </entry>
+    <entry name="leaveOnServerSize" type="Int">
+      <label></label>
+      <default>-1</default>
+    </entry>
+    <entry name="filterOnServer" type="Bool">
+      <label></label>
+      <default>false</default>
+    </entry>
+        <entry name="filterCheckSize" type="UInt">
+      <label></label>
+      <default>50000</default>
+    </entry>
+    <entry name="targetCollection" type="LongLong">
+      <label></label>
+      <default>-1</default>
+    </entry>
+    <entry name="precommand" type="String">
+       <default></default>
+     </entry>
+     <entry name="intervalCheckEnabled" type="Bool">
+       <default>false</default>
+     </entry>
+     <entry name="intervalCheckInterval" type="Int">
+        <default>5</default>
+     </entry>
+  </group>
+  <group name="LeaveOnServer">
+    <entry name="seenUidList" type="StringList">
+      <label></label>
+      <default></default>
+    </entry>
+    <entry name="seenUidTimeList" type="IntList">
+      <label></label>
+      <default></default>
+    </entry>
+    <entry name="downloadLater" type="StringList">
+      <label></label>
+      <default></default>
+    </entry>      
+  </group>
+</kcfg>

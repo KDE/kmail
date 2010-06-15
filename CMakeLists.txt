@@ -156,6 +156,9 @@ macro(add_resource_iface _kcfgFile _ifaceName _className)
 endmacro(add_resource_iface)
 
 add_resource_iface( imapresource.kcfg org.kde.Akonadi.Imap.Settings ImapSettings )
+# Pop3
+add_resource_iface( settings.kcfg org.kde.Akonadi.POP3.Settings Pop3Settings )
+
 
 # TODO PORT
 # qt4_generate_dbus_interface(kmcomposewin.h org.kde.kmail.mailcomposer.xml OPTIONS -a)

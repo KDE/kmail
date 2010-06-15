@@ -413,7 +413,7 @@ AccountsPageReceivingTab::AccountsPageReceivingTab( QWidget * parent )
   mAccountsReceiving.vlay->setSpacing( KDialog::spacingHint() );
   mAccountsReceiving.vlay->setMargin( KDialog::marginHint() );
 
-  mAccountsReceiving.mAccountList->agentFilterProxyModel()->addMimeTypeFilter( "message/rfc822" );
+  mAccountsReceiving.mAccountList->agentFilterProxyModel()->addMimeTypeFilter( KMime::Message::mimeType() );
   mAccountsReceiving.mAccountList->agentFilterProxyModel()->addCapabilityFilter( "Resource" ); // show only resources, no agents
   mAccountsReceiving.mFilterAccount->setProxy( mAccountsReceiving.mAccountList->agentFilterProxyModel() );
 
@@ -437,9 +437,6 @@ AccountsPageReceivingTab::AccountsPageReceivingTab( QWidget * parent )
   connect( mAccountsReceiving.mRemoveAccountButton, SIGNAL(clicked()),
            this, SLOT(slotRemoveSelectedAccount()) );
 
-  connect( mAccountsReceiving.mCheckmailStartupCheck, SIGNAL( stateChanged( int ) ),
-           this, SLOT( slotEmitChanged( void ) ) );
-
   mAccountsReceiving.group->layout()->setMargin( KDialog::marginHint() );
   mAccountsReceiving.group->layout()->setSpacing( KDialog::spacingHint() );
 
@@ -459,11 +456,7 @@ AccountsPageReceivingTab::AccountsPageReceivingTab( QWidget * parent )
 
 AccountsPageReceivingTab::~AccountsPageReceivingTab()
 {
-  QHashIterator<QString, RetrievalOptions*> it( mRetrievalHash );
-  while( it.hasNext() ) {
-    it.next();
-    delete it.value();
-  }
+  mRetrievalHash.clear();
 }
 
 void AccountsPageReceivingTab::slotShowMailCheckMenu( const QString &ident, const QPoint & pos )
@@ -471,7 +464,6 @@ void AccountsPageReceivingTab::slotShowMailCheckMenu( const QString &ident, cons
   QMenu *menu = new QMenu( this );
 
   bool IncludeInManualChecks;
-  bool CheckOnStartup;
   bool OfflineOnShutdown;
   if( !mRetrievalHash.contains( ident ) ) {
 
@@ -479,15 +471,13 @@ void AccountsPageReceivingTab::slotShowMailCheckMenu( const QString &ident, cons
     KConfigGroup group( KMKernel::config(), resourceGroupPattern.arg( ident ) );
 
     IncludeInManualChecks = group.readEntry( "IncludeInManualChecks", true );
-    CheckOnStartup = group.readEntry( "CheckOnStartup", false );
     OfflineOnShutdown = group.readEntry( "OfflineOnShutdown", false );
 
-    RetrievalOptions *opts = new RetrievalOptions( IncludeInManualChecks, CheckOnStartup, OfflineOnShutdown );
+    QSharedPointer<RetrievalOptions> opts( new RetrievalOptions( IncludeInManualChecks, OfflineOnShutdown ) );
     mRetrievalHash.insert( ident, opts );
   } else {
-    RetrievalOptions *opts = mRetrievalHash.value( ident );
+    QSharedPointer<RetrievalOptions> opts = mRetrievalHash.value( ident );
     IncludeInManualChecks = opts->IncludeInManualChecks;
-    CheckOnStartup = opts->CheckOnStartup;
     OfflineOnShutdown = opts->OfflineOnShutdown;
   }
 
@@ -497,12 +487,6 @@ void AccountsPageReceivingTab::slotShowMailCheckMenu( const QString &ident, cons
   manualMailCheck->setData( ident );
   menu->addAction( manualMailCheck );
 
-  QAction *checkOnStartup = new QAction( i18nc( "Label to a checkbox, so is either checked/unchecked", "Include in Startup Mail Check" ), menu );
-  checkOnStartup->setCheckable( true );
-  checkOnStartup->setChecked( CheckOnStartup );
-  checkOnStartup->setData( ident );
-  menu->addAction( checkOnStartup );
-
   QAction *switchOffline = new QAction( i18nc( "Label to a checkbox, so is either checked/unchecked", "Switch offline on KMail Shutdown" ), menu );
   switchOffline->setCheckable( true );
   switchOffline->setChecked( OfflineOnShutdown );
@@ -510,7 +494,6 @@ void AccountsPageReceivingTab::slotShowMailCheckMenu( const QString &ident, cons
   menu->addAction( switchOffline );
 
   connect( manualMailCheck, SIGNAL( toggled( bool ) ), this, SLOT( slotIncludeInCheckChanged( bool ) ) );
-  connect( checkOnStartup, SIGNAL( toggled( bool ) ), this, SLOT( slotCheckOnStartupChanged( bool ) ) );
   connect( switchOffline, SIGNAL( toggled( bool ) ), this, SLOT( slotOfflineOnShutdownChanged( bool ) ) );
 
   menu->popup(  mAccountsReceiving.mAccountList->view()->mapToGlobal( pos ) );
@@ -521,18 +504,8 @@ void AccountsPageReceivingTab::slotIncludeInCheckChanged( bool checked )
   QAction* action = qobject_cast< QAction* >( sender() );
   QString ident = action->data().toString();
 
-  RetrievalOptions *opts = mRetrievalHash.value( ident );
+  QSharedPointer<RetrievalOptions> opts = mRetrievalHash.value( ident );
   opts->IncludeInManualChecks = checked;
-  slotEmitChanged();
-}
-
-void AccountsPageReceivingTab::slotCheckOnStartupChanged( bool checked )
-{
-  QAction* action = qobject_cast< QAction* >( sender() );
-  QString ident = action->data().toString();
-
-  RetrievalOptions *opts = mRetrievalHash.value( ident );
-  opts->CheckOnStartup = checked;
   slotEmitChanged();
 }
 
@@ -541,7 +514,7 @@ void AccountsPageReceivingTab::slotOfflineOnShutdownChanged( bool checked )
   QAction* action = qobject_cast< QAction* >( sender() );
   QString ident = action->data().toString();
 
-  RetrievalOptions *opts = mRetrievalHash.value( ident );
+  QSharedPointer<RetrievalOptions> opts = mRetrievalHash.value( ident );
   opts->OfflineOnShutdown = checked;
   slotEmitChanged();
 }
@@ -620,8 +593,6 @@ void AccountsPage::ReceivingTab::doLoadOther()
 {
   KConfigGroup general( KMKernel::config(), "General" );
   mAccountsReceiving.mBeepNewMailCheck->setChecked( general.readEntry( "beep-on-mail", false ) );
-  mAccountsReceiving.mCheckmailStartupCheck->setChecked(
-      general.readEntry( "checkmail-startup", false ) );
 }
 
 void AccountsPage::ReceivingTab::save()
@@ -636,18 +607,14 @@ void AccountsPage::ReceivingTab::save()
   general.writeEntry( "beep-on-mail", mAccountsReceiving.mBeepNewMailCheck->isChecked() );
   GlobalSettings::self()->setVerboseNewMailNotification( mAccountsReceiving.mVerboseNotificationCheck->isChecked() );
 
-  general.writeEntry( "checkmail-startup", mAccountsReceiving.mCheckmailStartupCheck->isChecked() );
-
-
   const QString resourceGroupPattern( "Resource %1" );
-  QHashIterator<QString, RetrievalOptions*> it( mRetrievalHash );
+  QHashIterator<QString, QSharedPointer<RetrievalOptions> > it( mRetrievalHash );
   while( it.hasNext() ) {
     it.next();
     KConfigGroup group( KMKernel::config(), resourceGroupPattern.arg( it.key() ) );
-    RetrievalOptions *opts = it.value();
+    QSharedPointer<RetrievalOptions> opts = it.value();
     group.writeEntry( "IncludeInManualChecks", opts->IncludeInManualChecks);
     group.writeEntry( "OfflineOnShutdown", opts->OfflineOnShutdown);
-    group.writeEntry( "CheckOnStartup", opts->CheckOnStartup);
   }
   
   
@@ -2973,7 +2940,7 @@ ComposerPageAttachmentsTab::ComposerPageAttachmentsTab( QWidget * parent )
 void ComposerPage::AttachmentsTab::doLoadFromGlobalSettings()
 {
   mOutlookCompatibleCheck->setChecked(
-    GlobalSettings::self()->outlookCompatibleAttachments() );
+    MessageComposer::MessageComposerSettings::self()->outlookCompatibleAttachments() );
   mMissingAttachmentDetectionCheck->setChecked(
     GlobalSettings::self()->showForgottenAttachmentWarning() );
 
@@ -2983,12 +2950,15 @@ void ComposerPage::AttachmentsTab::doLoadFromGlobalSettings()
 
 void ComposerPage::AttachmentsTab::save()
 {
-  GlobalSettings::self()->setOutlookCompatibleAttachments(
+  MessageComposer::MessageComposerSettings::self()->setOutlookCompatibleAttachments(
     mOutlookCompatibleCheck->isChecked() );
   GlobalSettings::self()->setShowForgottenAttachmentWarning(
     mMissingAttachmentDetectionCheck->isChecked() );
   GlobalSettings::self()->setAttachmentKeywords(
     mAttachWordsListEditor->stringList() );
+
+  KMime::setUseOutlookAttachmentEncoding( mOutlookCompatibleCheck->isChecked() );
+
 }
 
 void ComposerPageAttachmentsTab::slotOutlookCompatibleClicked()

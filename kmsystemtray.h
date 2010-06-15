@@ -25,7 +25,7 @@
 #include <QMap>
 #include <QPointer>
 #include <QVector>
-
+#include <QAbstractItemModel>
 
 #include <time.h>
 
@@ -51,20 +51,23 @@ public:
   void hideKMail();
   bool hasUnreadMail() const;
 
-public slots:
-  void foldersChanged();
+  void updateSystemTray();
 
 private slots:
-  void selectedAccount(int);
-  void slotCollectionChanged( const Akonadi::Collection& );
+  void slotCollectionChanged( const Akonadi::Collection::Id, const Akonadi::CollectionStatistics& );
   void slotActivated();
   void slotContextMenuAboutToShow();
+  void slotSelectCollection(QAction*act);
 
 protected:
   bool mainWindowIsOnCurrentDesktop();
   void showKMail();
   void buildPopupMenu();
   void updateCount();
+  void fillFoldersMenu( QMenu *menu, const QAbstractItemModel *model, const QString& parentName = QString(), const QModelIndex& parentIndex = QModelIndex() );
+  void unreadMail( const QAbstractItemModel *model, const QModelIndex& parentIndex = QModelIndex() );
+  void initListOfCollection();
+
 private:
 
   bool mParentVisible;
@@ -76,14 +79,6 @@ private:
 
   QMenu *mNewMessagesPopup;
   QAction *mSendQueued;
-
-  QVector<Akonadi::Collection> mPopupFolders;
-#if 0
-  QMap<QPointer<KMFolder>, int> mFoldersWithUnread;
-  QMap<QPointer<KMFolder>, bool> mPendingUpdates;
-#endif
-  QTimer *mUpdateTimer;
-  time_t mLastUpdate;
 };
 
 #endif

@@ -41,6 +41,7 @@
 #include "readablecollectionproxymodel.h"
 #include "util.h"
 #include "imapsettings.h"
+#include "pop3settings.h"
 
 #include <Akonadi/AgentInstance>
 
@@ -515,21 +516,30 @@ void AntiSpamWizard::checkToolAvailability()
       kDebug() << "Testing for server pattern:" << pattern;
       Akonadi::AgentInstance::List lst = KMail::Util::agentInstances();
       foreach( Akonadi::AgentInstance type, lst ) {
+        if ( type.status() == Akonadi::AgentInstance::Broken )
+          continue;
         if ( type.identifier().contains( IMAP_RESOURCE_IDENTIFIER ) ) {
           OrgKdeAkonadiImapSettingsInterface *iface = KMail::Util::createImapSettingsInterface( type.identifier() );
           if ( iface->isValid() ) {
             QString host = iface->imapServer();
-            mInfoPage->addAvailableTool( (*it).getVisibleName() );
-            found = true;
+            if ( host.toLower().contains( pattern.toLower() ) ) {
+              mInfoPage->addAvailableTool( (*it).getVisibleName() );
+              found = true;
+            }
           }
           delete iface;
         }
-#if 0
         else if ( type.identifier().contains( POP3_RESOURCE_IDENTIFIER ) ) {
-          //TODO look at pop3 resources.
+          OrgKdeAkonadiPOP3SettingsInterface *iface = new OrgKdeAkonadiPOP3SettingsInterface("org.freedesktop.Akonadi.Resource." + type.identifier(), "/Settings", QDBusConnection::sessionBus() );
+          if ( iface->isValid() ) {
+            QString host = iface->host();
+            if ( host.toLower().contains( pattern.toLower() ) ) {
+              mInfoPage->addAvailableTool( (*it).getVisibleName() );
+              found = true;
+            }
+          }
+          delete iface;
         }
-#endif
-
       }
     }
     else {
@@ -1149,7 +1159,10 @@ ASWizVirusRulesPage::ASWizVirusRulesPage( QWidget * parent, const char * name )
             "virus-infected as read, as well as moving them "
             "to the selected folder.") );
   grid->addWidget( mMarkRules, 2, 0 );
-  mFolderTree = new FolderTreeWidget( this, 0, FolderTreeWidget::None );
+  FolderTreeWidget::TreeViewOptions opt = FolderTreeWidget::None;
+  opt |= FolderTreeWidget::UseDistinctSelectionModel;
+  mFolderTree = new FolderTreeWidget( this, 0, opt );
+  mFolderTree->folderTreeView()->expandAll();
   mFolderTree->readableCollectionProxyModel()->setAccessRights( Akonadi::Collection::CanCreateCollection );
   mFolderTree->selectCollectionFolder( KMKernel::self()->trashCollectionFolder() );
   mFolderTree->folderTreeView()->setDragDropMode( QAbstractItemView::NoDragDrop );

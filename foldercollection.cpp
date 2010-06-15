@@ -65,7 +65,8 @@ FolderCollection::FolderCollection( const Akonadi::Collection & col, bool writec
     mIgnoreNewMail( false ),
     mPutRepliesInSameFolder( false ),
     mHideInSelectionDialog( false ),
-    mWriteConfig( writeconfig )
+    mWriteConfig( writeconfig ),
+    mOldIgnoreNewMail( false )
 {
   mIdentity = KMKernel::self()->identityManager()->defaultIdentity().uoid();
 
@@ -172,15 +173,10 @@ void FolderCollection::readConfig()
   slotIdentitiesChanged();
 
   setUserWhoField( configGroup.readEntry( "WhoField" ), false );
-  uint savedId = configGroup.readEntry( "Id", 0 );
-#if 0 //TODO ???
-  // make sure that we don't overwrite a valid id
-  if ( savedId != 0 && mId == 0 )
-    mId = savedId;
-#endif
   mPutRepliesInSameFolder = configGroup.readEntry( "PutRepliesInSameFolder", false );
   mHideInSelectionDialog = configGroup.readEntry( "HideInSelectionDialog", false );
   mIgnoreNewMail = configGroup.readEntry( "IgnoreNewMail", false );
+  mOldIgnoreNewMail = mIgnoreNewMail;
 
 
   QString shortcut( configGroup.readEntry( "Shortcut" ) );
@@ -236,9 +232,6 @@ void FolderCollection::writeConfig() const
       configGroup.deleteEntry("Identity");
 
   configGroup.writeEntry("WhoField", mUserWhoField);
-#if 0 //TODO ????
-  configGroup.writeEntry("Id", mId);
-#endif
   configGroup.writeEntry( "PutRepliesInSameFolder", mPutRepliesInSameFolder );
   configGroup.writeEntry( "HideInSelectionDialog", mHideInSelectionDialog );
   configGroup.writeEntry( "IgnoreNewMail", mIgnoreNewMail );
@@ -246,6 +239,9 @@ void FolderCollection::writeConfig() const
     configGroup.writeEntry( "Shortcut", mShortcut.toString() );
   else
     configGroup.deleteEntry( "Shortcut" );
+  if ( mIgnoreNewMail != mOldIgnoreNewMail ) {
+    KMKernel::self()->updateSystemTray();
+  }
 }
 
 void FolderCollection::setShortcut( const KShortcut &sc, KMMainWidget *main )

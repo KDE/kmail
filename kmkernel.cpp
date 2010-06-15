@@ -216,6 +216,7 @@ KMKernel::KMKernel (QObject *parent, const char *name) :
   mXmlGuiInstance = KComponentData();
 
   KMime::setFallbackCharEncoding( MessageCore::GlobalSettings::self()->fallbackCharacterEncoding() );
+  KMime::setUseOutlookAttachmentEncoding( MessageComposer::MessageComposerSettings::self()->outlookCompatibleAttachments() );
 
   // cberzan: this crap moved to CodecManager ======================
   netCodec = QTextCodec::codecForName( KGlobal::locale()->encoding() );
@@ -268,6 +269,7 @@ KMKernel::KMKernel (QObject *parent, const char *name) :
            SLOT(transportRenamed(int,QString,QString)) );
 
   QDBusConnection::sessionBus().connect(QString(), QLatin1String( "/MailDispatcherAgent" ), "org.freedesktop.Akonadi.MailDispatcherAgent", "itemDispatchStarted",this, SLOT(itemDispatchStarted()) );
+  connect( Akonadi::AgentManager::self(), SIGNAL( instanceProgressChanged( Akonadi::AgentInstance ) ), this, SLOT( instanceProgressChanged( Akonadi::AgentInstance ) ) ) ;
 }
 
 KMKernel::~KMKernel ()
@@ -1038,7 +1040,7 @@ void KMKernel::recoverDeadLetters()
 
       // Show the a new composer dialog for the message
       KMail::Composer * autoSaveWin = KMail::makeComposer();
-      autoSaveWin->setMsg( autoSaveMessage );
+      autoSaveWin->setMsg( autoSaveMessage, false );
       autoSaveWin->setAutoSaveFileName( file.fileName() );
       autoSaveWin->show();
       autoSaveFile.close();
@@ -1367,7 +1369,17 @@ bool KMKernel::haveSystemTrayApplet()
   return !systemTrayApplets.isEmpty();
 }
 
-bool KMKernel::registerSystemTrayApplet( const KStatusNotifierItem* applet )
+void KMKernel::updateSystemTray()
+{
+  if ( haveSystemTrayApplet() ) {
+    const int nbSystemTray = systemTrayApplets.count();
+    for (int i = 0; i < nbSystemTray; ++i) {
+      systemTrayApplets.at( i )->updateSystemTray();
+    }
+  }
+}
+
+bool KMKernel::registerSystemTrayApplet( KMSystemTray* applet )
 {
   if ( !systemTrayApplets.contains( applet ) ) {
     systemTrayApplets.append( applet );
@@ -1377,7 +1389,7 @@ bool KMKernel::registerSystemTrayApplet( const KStatusNotifierItem* applet )
     return false;
 }
 
-bool KMKernel::unregisterSystemTrayApplet( const KStatusNotifierItem* applet )
+bool KMKernel::unregisterSystemTrayApplet( KMSystemTray* applet )
 {
   return systemTrayApplets.removeAll( applet ) > 0;
 }
@@ -1545,8 +1557,9 @@ void KMKernel::slotEmptyTrash()
 
   Akonadi::AgentInstance::List lst = KMail::Util::agentInstances();
   foreach ( const Akonadi::AgentInstance& type, lst ) {
-    //TODO verify it.
     if ( type.identifier().contains( IMAP_RESOURCE_IDENTIFIER ) ) {
+      if ( type.status() == Akonadi::AgentInstance::Broken )
+        continue;
       OrgKdeAkonadiImapSettingsInterface *iface = KMail::Util::createImapSettingsInterface( type.identifier() );
       if ( iface->isValid() ) {
         int trashImap = iface->trashCollection();
@@ -1586,6 +1599,18 @@ KSharedConfig::Ptr KMKernel::config()
   return mySelf->mConfig;
 }
 
+void KMKernel::selectCollectionFromId( const Akonadi::Collection::Id id)
+{
+  KMMainWidget *widget = getKMMainWidget();
+  Q_ASSERT( widget );
+  if ( !widget )
+    return;
+
+  Akonadi::Collection colFolder = collectionFromId( id );
+
+  if( colFolder.isValid() )
+    widget->selectCollectionFolder( colFolder );
+}
 
 void KMKernel::selectFolder( const QString &folder )
 {
@@ -1789,6 +1814,19 @@ void KMKernel::itemDispatchStarted()
   kDebug() << "Created ProgressItem";
 }
 
+void KMKernel::instanceProgressChanged( Akonadi::AgentInstance agent )
+{
+  // we're only interested in rfc822 resources
+  if ( !agent.type().mimeTypes().contains( KMime::Message::mimeType() ) )
+    return;
+
+  KPIM::ProgressManager::createProgressItem( 0,
+      agent,
+      agent.identifier(),
+      agent.name(),
+      agent.statusMessage(),
+      true );
+}
 
 void KMKernel::updatedTemplates()
 {
