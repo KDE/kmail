@@ -85,9 +85,12 @@ void FolderCollectionMonitor::expireAllCollection( const QAbstractItemModel *mod
 
 void FolderCollectionMonitor::expunge( const Akonadi::Collection & col )
 {
-  Akonadi::ItemFetchJob *job = new Akonadi::ItemFetchJob( col,this );
-  connect( job, SIGNAL( result( KJob* ) ), this, SLOT( slotExpungeJob( KJob* ) ) );
-
+  if ( col.isValid() ) {
+    Akonadi::ItemFetchJob *job = new Akonadi::ItemFetchJob( col,this );
+    connect( job, SIGNAL( result( KJob* ) ), this, SLOT( slotExpungeJob( KJob* ) ) );
+  } else {
+    kDebug()<<" Try to expunge an invalid collection :"<<col;
+  }
 }
 
 void FolderCollectionMonitor::slotExpungeJob( KJob *job )
@@ -102,6 +105,8 @@ void FolderCollectionMonitor::slotExpungeJob( KJob *job )
   if ( !fjob )
     return;
   Akonadi::Item::List lstItem = fjob->items();
+  if ( lstItem.isEmpty() )
+    return;
   Akonadi::ItemDeleteJob *jobDelete = new Akonadi::ItemDeleteJob(lstItem,this );
   connect( jobDelete, SIGNAL( result( KJob* ) ), this, SLOT( slotDeleteJob( KJob* ) ) );
 
