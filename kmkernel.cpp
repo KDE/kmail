@@ -1374,12 +1374,12 @@ void KMKernel::updateSystemTray()
   if ( haveSystemTrayApplet() ) {
     const int nbSystemTray = systemTrayApplets.count();
     for (int i = 0; i < nbSystemTray; ++i) {
-      static_cast<KMSystemTray*>( systemTrayApplets.at( i ) )->updateSystemTray();
+      systemTrayApplets.at( i )->updateSystemTray();
     }
   }
 }
 
-bool KMKernel::registerSystemTrayApplet( KStatusNotifierItem* applet )
+bool KMKernel::registerSystemTrayApplet( KMSystemTray* applet )
 {
   if ( !systemTrayApplets.contains( applet ) ) {
     systemTrayApplets.append( applet );
@@ -1389,7 +1389,7 @@ bool KMKernel::registerSystemTrayApplet( KStatusNotifierItem* applet )
     return false;
 }
 
-bool KMKernel::unregisterSystemTrayApplet( KStatusNotifierItem* applet )
+bool KMKernel::unregisterSystemTrayApplet( KMSystemTray* applet )
 {
   return systemTrayApplets.removeAll( applet ) > 0;
 }

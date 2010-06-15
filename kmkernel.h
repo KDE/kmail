@@ -67,6 +67,7 @@ class KMainWindow;
 class KMMainWidget;
 class ConfigureDialog;
 class FolderCollectionMonitor;
+class KMSystemTray;
 
 /**
  * @short Central point of coordination in KMail
@@ -318,8 +319,8 @@ public:
    */
   bool haveSystemTrayApplet();
 
-  bool registerSystemTrayApplet( KStatusNotifierItem* );
-  bool unregisterSystemTrayApplet( KStatusNotifierItem* );
+  bool registerSystemTrayApplet( KMSystemTray* );
+  bool unregisterSystemTrayApplet( KMSystemTray* );
 
   /// Reimplemented from KMailIface
   void emergencyExit( const QString& reason );
@@ -459,7 +460,7 @@ private:
   KMMainWin *mWin;
   MailServiceImpl *mMailService;
 
-  QList<KStatusNotifierItem*> systemTrayApplets;
+  QList<KMSystemTray*> systemTrayApplets;
 
   FolderCollectionMonitor *mFolderCollectionMonitor;
   Akonadi::EntityTreeModel *mEntityTreeModel;
