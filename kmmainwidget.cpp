@@ -319,7 +319,10 @@ void KMMainWidget::destruct()
 
 void KMMainWidget::slotStartCheckMail()
 {
-  mCheckMailInProgress = true;
+  if ( !mCheckMailInProgress ) {
+    mCheckMail.clear();
+    mCheckMailInProgress = true;
+  }
 }
 
 void KMMainWidget::slotEndCheckMail()
