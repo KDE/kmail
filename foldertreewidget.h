@@ -33,6 +33,7 @@ class KLineEdit;
 
 namespace Akonadi {
   class StatisticsProxyModel;
+  class EntityOrderProxyModel;
 }
 
 /**
@@ -99,6 +100,8 @@ public:
 
   ReadableCollectionProxyModel *readableCollectionProxyModel();
 
+  Akonadi::EntityOrderProxyModel *entityOrderProxy();
+
   void quotaWarningParameters( const QColor &color, qreal threshold );
   void readQuotaConfig();
 
@@ -114,6 +117,7 @@ protected:
 
 protected slots:
   void slotChangeTooltipsPolicy( FolderTreeWidget::ToolTipDisplayPolicy );
+  void slotManualSortingChanged( bool );
 
 private:
   class FolderTreeWidgetPrivate;

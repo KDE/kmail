@@ -92,8 +92,6 @@ void FolderTreeView::readConfig()
     iIconSize = 22;
   setIconSize( QSize( iIconSize, iIconSize ) );
   setSortingPolicy( ( FolderTreeWidget::SortingPolicy )myGroup.readEntry( "SortingPolicy", ( int ) mSortingPolicy ) );
-
-
 }
 
 void FolderTreeView::slotHeaderContextMenuRequested( const QPoint&pnt )
@@ -166,7 +164,6 @@ void FolderTreeView::slotHeaderContextMenuRequested( const QPoint&pnt )
   connect( act, SIGNAL( triggered( bool ) ),
            SLOT( slotHeaderContextMenuChangeToolTipDisplayPolicy( bool ) ) );
 
-#if 0 //Port it
   menu.addTitle( i18nc("@action:inmenu", "Sort Items" ) );
 
   grp = new QActionGroup( &menu );
@@ -186,7 +183,6 @@ void FolderTreeView::slotHeaderContextMenuRequested( const QPoint&pnt )
   act->setData( QVariant( (int)FolderTreeWidget::SortByDragAndDropKey ) );
   connect( act, SIGNAL( triggered( bool ) ),
            SLOT( slotHeaderContextMenuChangeSortingPolicy( bool ) ) );
-#endif
 
   menu.exec( header()->mapToGlobal( pnt ) );
 }
@@ -217,12 +213,12 @@ void FolderTreeView::setSortingPolicy( FolderTreeWidget::SortingPolicy policy )
       header()->setClickable( true );
       header()->setSortIndicatorShown( true );
       setSortingEnabled( true );
+      emit manualSortingChanged( false );
     break;
   case FolderTreeWidget::SortByDragAndDropKey:
       header()->setClickable( false );
       header()->setSortIndicatorShown( false );
-
-#if 0 //TODO port
+#if 0
       //
       // Qt 4.5 introduced a nasty bug here:
       // Sorting must be enabled in order to sortByColumn() to work.
@@ -232,10 +228,11 @@ void FolderTreeView::setSortingPolicy( FolderTreeWidget::SortingPolicy policy )
       // performed by the view whenever it wants. We want to control sorting.
       //
       setSortingEnabled( true ); // hack for qutie bug: the param here should be false
-      sortByColumn( LabelColumn, Qt::AscendingOrder );
-      setSortingEnabled( false ); // hack for qutie bug: this call shouldn't be here at all
-      fixSortingKeysForChildren( invisibleRootItem() );
+      sortByColumn( 0, Qt::AscendingOrder );
 #endif
+      setSortingEnabled( false ); // hack for qutie bug: this call shouldn't be here at all
+      emit manualSortingChanged( true );
+
     break;
     default:
       // should never happen
