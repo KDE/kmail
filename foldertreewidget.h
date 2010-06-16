@@ -30,10 +30,10 @@ class QItemSelectionModel;
 class FolderTreeView;
 class ReadableCollectionProxyModel;
 class KLineEdit;
+class EntityCollectionOrderProxyModel;
 
 namespace Akonadi {
   class StatisticsProxyModel;
-  class EntityOrderProxyModel;
 }
 
 /**
@@ -100,7 +100,7 @@ public:
 
   ReadableCollectionProxyModel *readableCollectionProxyModel();
 
-  Akonadi::EntityOrderProxyModel *entityOrderProxy();
+  EntityCollectionOrderProxyModel *entityOrderProxy();
 
   void quotaWarningParameters( const QColor &color, qreal threshold );
   void readQuotaConfig();

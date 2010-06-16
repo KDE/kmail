@@ -22,6 +22,7 @@
 #include "readablecollectionproxymodel.h"
 #include "globalsettings.h"
 #include "kmkernel.h"
+#include "entitycollectionorderproxymodel.h"
 
 #include "messageviewer/globalsettings.h"
 #include "messagecore/globalsettings.h"
@@ -38,7 +39,6 @@
 #include <akonadi_next/quotacolorproxymodel.h>
 #include <akonadi_next/recursivecollectionfilterproxymodel.h>
 #include <akonadi_next/krecursivefilterproxymodel.h>
-#include <akonadi_next/entityorderproxymodel.h>
 
 #include <QLabel>
 
@@ -52,8 +52,7 @@ public:
     :filterModel( 0 ),
      folderTreeView( 0 ),
      quotaModel( 0 ),
-     readableproxy( 0 ),
-     manualSortingActive( false )
+     readableproxy( 0 )
   {
   }
   Akonadi::StatisticsProxyModel *filterModel;
@@ -61,10 +60,9 @@ public:
   Akonadi::QuotaColorProxyModel *quotaModel;
   ReadableCollectionProxyModel *readableproxy;
   Future::KRecursiveFilterProxyModel *filterTreeViewModel;
-  Akonadi::EntityOrderProxyModel *entityOrderProxy;
+  EntityCollectionOrderProxyModel *entityOrderProxy;
   KLineEdit *filterFolderLineEdit;
   QLabel *label;
-  bool manualSortingActive;
 };
 
 
@@ -115,7 +113,7 @@ FolderTreeWidget::FolderTreeWidget( QWidget *parent, KXMLGUIClient *xmlGuiClient
   d->filterTreeViewModel->setSourceModel( d->readableproxy );
   d->filterTreeViewModel->setFilterCaseSensitivity( Qt::CaseInsensitive );
 
-  d->entityOrderProxy = new Akonadi::EntityOrderProxyModel( this );
+  d->entityOrderProxy = new EntityCollectionOrderProxyModel( this );
   d->entityOrderProxy->setSourceModel( d->filterTreeViewModel );
   KConfigGroup grp( KMKernel::config(), "FolderTreeOrder" );
   d->entityOrderProxy->setOrderConfig( grp );
@@ -139,8 +137,6 @@ FolderTreeWidget::FolderTreeWidget( QWidget *parent, KXMLGUIClient *xmlGuiClient
 
 FolderTreeWidget::~FolderTreeWidget()
 {
-  if ( d->manualSortingActive )
-    d->entityOrderProxy->saveOrder();
   delete d;
 }
 
@@ -284,7 +280,7 @@ ReadableCollectionProxyModel *FolderTreeWidget::readableCollectionProxyModel()
   return d->readableproxy;
 }
 
-Akonadi::EntityOrderProxyModel *FolderTreeWidget::entityOrderProxy()
+EntityCollectionOrderProxyModel *FolderTreeWidget::entityOrderProxy()
 {
   return d->entityOrderProxy;
 }
@@ -304,10 +300,7 @@ void FolderTreeWidget::applyFilter( const QString &filter )
 
 void FolderTreeWidget::slotManualSortingChanged( bool active )
 {
-  d->manualSortingActive = active;
-  if ( !active ) {
-    d->entityOrderProxy->clearTreeOrder();
-  }
+  d->entityOrderProxy->setManualSortingActive( active );
 }
 
 #include "foldertreewidget.moc"
