@@ -254,8 +254,9 @@ KMKernel::KMKernel (QObject *parent, const char *name) :
   monitor()->setSession( session );
   mEntityTreeModel = new Akonadi::EntityTreeModel( monitor(), this );
   mEntityTreeModel->setItemPopulationStrategy( Akonadi::EntityTreeModel::LazyPopulation );
+
   mCollectionModel = new Akonadi::EntityMimeTypeFilterModel( this );
-  mCollectionModel->setSourceModel( entityTreeModel() );
+  mCollectionModel->setSourceModel( mEntityTreeModel );
   mCollectionModel->addMimeTypeInclusionFilter( Akonadi::Collection::mimeType() );
   mCollectionModel->setHeaderGroup( Akonadi::EntityTreeModel::CollectionTreeHeaders );
   mCollectionModel->setDynamicSortFilter( true );
