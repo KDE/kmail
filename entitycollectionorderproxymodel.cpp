@@ -17,6 +17,10 @@
 */
 
 #include "entitycollectionorderproxymodel.h"
+#include "kmkernel.h"
+#include <akonadi/collection.h>
+#include <akonadi/entitytreemodel.h>
+#include <kdebug.h>
 
 class EntityCollectionOrderProxyModel::EntityCollectionOrderProxyModelPrivate
 {
@@ -25,7 +29,26 @@ public:
     : manualSortingActive( false )
   {
   }
+  void createOrderSpecialCollection()
+  {
+    if ( KMKernel::self()->inboxCollectionFolder().id()>0 &&
+         KMKernel::self()->outboxCollectionFolder().id()>0&&
+         KMKernel::self()->trashCollectionFolder().id()>0&&
+         KMKernel::self()->draftsCollectionFolder().id()>0&&
+         KMKernel::self()->templatesCollectionFolder().id()>0 &&
+         KMKernel::self()->sentCollectionFolder().id()>0)
+      {
+        orderSpecialCollection<<
+          KMKernel::self()->inboxCollectionFolder().id()<<
+          KMKernel::self()->outboxCollectionFolder().id()<<
+          KMKernel::self()->sentCollectionFolder().id()<<
+          KMKernel::self()->trashCollectionFolder().id()<<
+          KMKernel::self()->draftsCollectionFolder().id()<<
+          KMKernel::self()->templatesCollectionFolder().id();
+      }
+  }
   bool manualSortingActive;
+  QList<qlonglong> orderSpecialCollection;
 };
 
 
@@ -46,6 +69,28 @@ EntityCollectionOrderProxyModel::~EntityCollectionOrderProxyModel()
 
 bool EntityCollectionOrderProxyModel::lessThan( const QModelIndex&left, const QModelIndex & right ) const
 {
+  if ( !d->manualSortingActive ) {
+    if ( d->orderSpecialCollection.isEmpty() ) {
+      d->createOrderSpecialCollection();
+    }
+
+    if ( !d->orderSpecialCollection.isEmpty() ) {
+      Akonadi::Collection::Id leftData = left.data( Akonadi::EntityTreeModel::CollectionIdRole ).toLongLong();
+      Akonadi::Collection::Id rightData = right.data( Akonadi::EntityTreeModel::CollectionIdRole ).toLongLong();
+
+      int leftPos = d->orderSpecialCollection.indexOf( leftData );
+      int rightPos = d->orderSpecialCollection.indexOf( rightData );
+      if ( leftPos < 0 && rightPos < 0 )
+        return QSortFilterProxyModel::lessThan( left, right );
+      else if ( leftPos >= 0 && rightPos < 0)
+        return true;
+      else if ( leftPos >= 0 && rightPos >=0 )
+        return ( leftPos < rightPos );
+      else if ( leftPos < 0 && rightPos >= 0 )
+        return false;
+    }
+    return QSortFilterProxyModel::lessThan( left, right );
+  }
   return EntityOrderProxyModel::lessThan( left, right );
 }
 
@@ -54,6 +99,8 @@ void EntityCollectionOrderProxyModel::setManualSortingActive( bool active )
   d->manualSortingActive = active;
   if ( !active ) {
     clearTreeOrder();
+  } else {
+    invalidate();
   }
 }
 
