@@ -41,6 +41,7 @@ ReadableCollectionProxyModel::ReadableCollectionProxyModel( QObject *parent )
   : Akonadi::EntityRightsFilterModel( parent ),
     d( new Private )
 {
+  setDynamicSortFilter( true );
 }
 
 ReadableCollectionProxyModel::~ReadableCollectionProxyModel()
