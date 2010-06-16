@@ -327,7 +327,6 @@ void KMMainWidget::slotStartCheckMail()
 
 void KMMainWidget::slotEndCheckMail()
 {
-  mCheckMailInProgress = false;
   const bool sendOnAll =
     GlobalSettings::self()->sendOnCheck() == GlobalSettings::EnumSendOnCheck::SendOnAllChecks;
   const bool sendOnManual =
@@ -337,6 +336,7 @@ void KMMainWidget::slotEndCheckMail()
   }
 
   if ( mCheckMail.isEmpty() ) {
+    mCheckMailInProgress = false;
     return;
   }
 
@@ -360,7 +360,7 @@ void KMMainWidget::slotEndCheckMail()
         summary += "<br>" + i18np( "1 new message in %2",
                                    "%1 new messages in %2",
                                    mCheckMail.find( *it ).value(),
-                                   /*folder->prettyUrl()*/*it );
+                                   /*folder->prettyUrl()*/( *it ) );
       }
     }
   }
@@ -369,7 +369,9 @@ void KMMainWidget::slotEndCheckMail()
   // and we can enable "empty trash/move all to trash" action etc.
   updateFolderMenu();
 
+
   if ( !showNotification ) {
+    mCheckMailInProgress = false;
     return;
   }
 
@@ -399,6 +401,7 @@ void KMMainWidget::slotEndCheckMail()
   if ( mBeepOnNew ) {
     KNotification::beep();
   }
+  mCheckMailInProgress = false;
 }
 
 void KMMainWidget::slotFolderChanged( const Akonadi::Collection& col)
