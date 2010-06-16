@@ -64,7 +64,7 @@ Qt::ItemFlags ReadableCollectionProxyModel::flags( const QModelIndex & index ) c
     const QModelIndex sourceIndex = mapToSource( index.sibling( index.row(), 0 ) );
     const Akonadi::Collection collection = sourceModel()->data( sourceIndex, Akonadi::EntityTreeModel::CollectionRole ).value<Akonadi::Collection>();
 
-    if ( ! ( collection.rights() & Akonadi::Collection::CanCreateItem ) ) {
+    if ( ( !( collection.rights() & Akonadi::Collection::CanCreateItem ) ) || collection.contentMimeTypes().isEmpty()) {
       return Future::KRecursiveFilterProxyModel::flags( index ) & ~(Qt::ItemIsSelectable | Qt::ItemIsEnabled);
     }
     return Akonadi::EntityRightsFilterModel::flags( index );
