@@ -238,6 +238,7 @@ void FolderTreeView::setSortingPolicy( FolderTreeWidget::SortingPolicy policy )
       // should never happen
     break;
   }
+  writeConfig();
 }
 
 void FolderTreeView::slotHeaderContextMenuChangeToolTipDisplayPolicy( bool )
