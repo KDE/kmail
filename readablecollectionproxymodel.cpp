@@ -32,9 +32,11 @@ class ReadableCollectionProxyModel::Private
 {
 public:
   Private()
-    : enableCheck( false ) {
-  }
+    : enableCheck( false ), hideVirtualFolder( false )
+    {
+    }
   bool enableCheck;
+  bool hideVirtualFolder;
 };
 
 ReadableCollectionProxyModel::ReadableCollectionProxyModel( QObject *parent )
@@ -76,6 +78,28 @@ bool ReadableCollectionProxyModel::enabledCheck() const
   return d->enableCheck;
 }
 
+void ReadableCollectionProxyModel::setHideVirtualFolder( bool exclude )
+{
+  d->hideVirtualFolder = exclude;
+}
+
+bool ReadableCollectionProxyModel::hideVirtualFolder() const
+{
+  return d->hideVirtualFolder;
+}
+
+bool ReadableCollectionProxyModel::acceptRow( int sourceRow, const QModelIndex &sourceParent) const
+{
+  const QModelIndex modelIndex = sourceModel()->index( sourceRow, 0, sourceParent );
+
+  if ( d->hideVirtualFolder ) {
+    Akonadi::Collection collection = sourceModel()->data( modelIndex, Akonadi::EntityTreeModel::CollectionRole ).value<Akonadi::Collection>();
+    if ( collection.resource() == QLatin1String( "akonadi_nepomuktag_resource" ) || collection.resource() == QLatin1String( "akonadi_search_resource" ) )
+      return false;
+  }
+
+  return Akonadi::EntityRightsFilterModel::acceptRow( sourceRow, sourceParent );
+}
 
 
 #include "readablecollectionproxymodel.moc"

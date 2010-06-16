@@ -37,7 +37,14 @@ public:
   void setEnabledCheck( bool enable );
   bool enabledCheck() const;
 
+  void setHideVirtualFolder( bool exclude );
+  bool hideVirtualFolder() const;
+
+
   void setNecessaryRight( Akonadi::Collection::Rights right );
+
+protected:
+  virtual bool acceptRow( int sourceRow, const QModelIndex &sourceParent ) const;
 
 private:
   class Private;

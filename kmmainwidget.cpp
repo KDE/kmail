@@ -1819,7 +1819,7 @@ void KMMainWidget::slotDeleteThread( bool confirmDelete )
 
 void KMMainWidget::slotMoveSelectedMessageToFolder()
 {
-  FolderSelectionDialog::SelectionFolderOption options = FolderSelectionDialog::None;
+  FolderSelectionDialog::SelectionFolderOption options = FolderSelectionDialog::HideVirtualFolder;
   MessageViewer::AutoQPointer<FolderSelectionDialog> dlg;
   dlg = new FolderSelectionDialog( this, options);
   dlg->setModal( true );
@@ -1874,7 +1874,7 @@ void KMMainWidget::slotCopyMessagesCompleted( KMCommand *command )
 
 void KMMainWidget::slotCopySelectedMessagesToFolder()
 {
-  FolderSelectionDialog::SelectionFolderOption options = FolderSelectionDialog::None;
+  FolderSelectionDialog::SelectionFolderOption options = FolderSelectionDialog::HideVirtualFolder;
   MessageViewer::AutoQPointer<FolderSelectionDialog> dlg;
   dlg = new FolderSelectionDialog( this, options );
   dlg->setModal( true );
