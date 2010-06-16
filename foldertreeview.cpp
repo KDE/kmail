@@ -55,7 +55,8 @@ void FolderTreeView::setTooltipsPolicy( FolderTreeWidget::ToolTipDisplayPolicy p
 void FolderTreeView::disableContextMenuAndExtraColumn()
 {
   mbDisableContextMenuAndExtraColumn = true;
-  for ( int i = 1; i <header()->count(); ++i )
+  const int nbColumn = header()->count();
+  for ( int i = 1; i <nbColumn; ++i )
   {
     setColumnHidden( i, true );
   }
@@ -96,8 +97,10 @@ void FolderTreeView::readConfig()
 
 void FolderTreeView::slotHeaderContextMenuRequested( const QPoint&pnt )
 {
-  if ( mbDisableContextMenuAndExtraColumn )
+  if ( mbDisableContextMenuAndExtraColumn ) {
+    readConfig();
     return;
+  }
 
   // the menu for the columns
   KMenu menu;
