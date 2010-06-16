@@ -54,6 +54,7 @@ if (QT_QT3SUPPORT_FOUND)
 set(kmailprivate_LIB_SRCS
    foldercollectionmonitor.cpp
    readablecollectionproxymodel.cpp
+   entitycollectionorderproxymodel.cpp
    foldertreewidget.cpp
    folderselectiondialog.cpp
    foldercollection.cpp
