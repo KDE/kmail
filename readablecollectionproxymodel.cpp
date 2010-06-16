@@ -1,5 +1,5 @@
 /*
-    Copyright (c) 2009 Laurent Montel <montel@kde.org>
+    Copyright (c) 2009, 2010 Laurent Montel <montel@kde.org>
 
 
     This library is free software; you can redistribute it and/or modify it
@@ -34,7 +34,9 @@ class ReadableCollectionProxyModel::Private
 {
 public:
   Private()
-    : enableCheck( false ), hideVirtualFolder( false ), hideSpecificFolder( false )
+    : enableCheck( false ),
+      hideVirtualFolder( false ),
+      hideSpecificFolder( false )
     {
     }
   bool enableCheck;
@@ -60,7 +62,7 @@ Qt::ItemFlags ReadableCollectionProxyModel::flags( const QModelIndex & index ) c
   if ( d->enableCheck )
   {
     const QModelIndex sourceIndex = mapToSource( index.sibling( index.row(), 0 ) );
-    Akonadi::Collection collection = sourceModel()->data( sourceIndex, Akonadi::EntityTreeModel::CollectionRole ).value<Akonadi::Collection>();
+    const Akonadi::Collection collection = sourceModel()->data( sourceIndex, Akonadi::EntityTreeModel::CollectionRole ).value<Akonadi::Collection>();
 
     if ( ! ( collection.rights() & Akonadi::Collection::CanCreateItem ) ) {
       return Future::KRecursiveFilterProxyModel::flags( index ) & ~(Qt::ItemIsSelectable | Qt::ItemIsEnabled);

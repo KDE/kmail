@@ -3832,7 +3832,7 @@ void KMMainWidget::updateFolderMenu()
   QList< QAction* > actionlist;
   if ( mCurrentFolder && mCurrentFolder->collection().id() == kmkernel->outboxCollectionFolder().id() &&
       kmkernel->outboxCollectionFolder().statistics().count() > 0 ) {
-    kDebug() << "Enablign send queued";
+    kDebug() << "Enabling send queued";
     actionlist << mSendQueued;
   }
   if( mCurrentFolder && mCurrentFolder->collection().id() != kmkernel->trashCollectionFolder().id() ) {
