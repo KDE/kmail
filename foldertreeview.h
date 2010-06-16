@@ -77,6 +77,7 @@ protected slots:
 
 signals:
   void changeTooltipsPolicy( FolderTreeWidget::ToolTipDisplayPolicy );
+  void manualSortingChanged( bool actif );
 
 private:
   bool mbDisableContextMenuAndExtraColumn;

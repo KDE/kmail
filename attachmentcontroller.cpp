@@ -123,7 +123,9 @@ void AttachmentController::addAttachmentItems( const Akonadi::Item::List &items 
 void AttachmentController::slotFetchJob( KJob *job )
 {
   if ( job->error() ) {
-    static_cast<KIO::Job*>(job)->ui()->showErrorMessage();
+    if ( static_cast<KIO::Job*>( job )->ui() ) {
+      static_cast<KIO::Job*>(job)->ui()->showErrorMessage();
+    }
     return;
   }
   Akonadi::ItemFetchJob *fjob = dynamic_cast<Akonadi::ItemFetchJob*>( job );

@@ -38,6 +38,7 @@
 #include <akonadi_next/quotacolorproxymodel.h>
 #include <akonadi_next/recursivecollectionfilterproxymodel.h>
 #include <akonadi_next/krecursivefilterproxymodel.h>
+#include <akonadi_next/entityorderproxymodel.h>
 
 #include <QLabel>
 
@@ -51,7 +52,8 @@ public:
     :filterModel( 0 ),
      folderTreeView( 0 ),
      quotaModel( 0 ),
-     readableproxy( 0 )
+     readableproxy( 0 ),
+     manualSortingActive( false )
   {
   }
   Akonadi::StatisticsProxyModel *filterModel;
@@ -59,8 +61,10 @@ public:
   Akonadi::QuotaColorProxyModel *quotaModel;
   ReadableCollectionProxyModel *readableproxy;
   Future::KRecursiveFilterProxyModel *filterTreeViewModel;
+  Akonadi::EntityOrderProxyModel *entityOrderProxy;
   KLineEdit *filterFolderLineEdit;
   QLabel *label;
+  bool manualSortingActive;
 };
 
 
@@ -70,6 +74,7 @@ FolderTreeWidget::FolderTreeWidget( QWidget *parent, KXMLGUIClient *xmlGuiClient
   Akonadi::AttributeFactory::registerAttribute<Akonadi::ImapAclAttribute>();
 
   d->folderTreeView = new FolderTreeView( xmlGuiClient, this, options & ShowUnreadCount );
+  connect( d->folderTreeView, SIGNAL( manualSortingChanged( bool ) ), this, SLOT( slotManualSortingChanged( bool ) ) );
 
   QVBoxLayout *lay = new QVBoxLayout( this );
   lay->setMargin( 0 );
@@ -97,6 +102,7 @@ FolderTreeWidget::FolderTreeWidget( QWidget *parent, KXMLGUIClient *xmlGuiClient
   d->readableproxy = new ReadableCollectionProxyModel( this );
   d->readableproxy->setSourceModel( d->quotaModel );
 
+
   connect( d->folderTreeView, SIGNAL(changeTooltipsPolicy( FolderTreeWidget::ToolTipDisplayPolicy ) ),
            this, SLOT( slotChangeTooltipsPolicy( FolderTreeWidget::ToolTipDisplayPolicy ) ) );
 
@@ -108,7 +114,13 @@ FolderTreeWidget::FolderTreeWidget( QWidget *parent, KXMLGUIClient *xmlGuiClient
   d->filterTreeViewModel->setDynamicSortFilter( true );
   d->filterTreeViewModel->setSourceModel( d->readableproxy );
   d->filterTreeViewModel->setFilterCaseSensitivity( Qt::CaseInsensitive );
-  d->folderTreeView->setModel( d->filterTreeViewModel );
+
+  d->entityOrderProxy = new Akonadi::EntityOrderProxyModel( this );
+  d->entityOrderProxy->setSourceModel( d->filterTreeViewModel );
+  KConfigGroup grp( KMKernel::config(), "FolderTreeOrder" );
+  d->entityOrderProxy->setOrderConfig( grp );
+
+  d->folderTreeView->setModel( d->entityOrderProxy );
 
   if ( options & UseDistinctSelectionModel )
     d->folderTreeView->setSelectionModel( new QItemSelectionModel( d->filterTreeViewModel, this ) );
@@ -127,6 +139,8 @@ FolderTreeWidget::FolderTreeWidget( QWidget *parent, KXMLGUIClient *xmlGuiClient
 
 FolderTreeWidget::~FolderTreeWidget()
 {
+  if ( d->manualSortingActive )
+    d->entityOrderProxy->saveOrder();
   delete d;
 }
 
@@ -270,6 +284,11 @@ ReadableCollectionProxyModel *FolderTreeWidget::readableCollectionProxyModel()
   return d->readableproxy;
 }
 
+Akonadi::EntityOrderProxyModel *FolderTreeWidget::entityOrderProxy()
+{
+  return d->entityOrderProxy;
+}
+
 KLineEdit *FolderTreeWidget::filterFolderLineEdit()
 {
   return d->filterFolderLineEdit;
@@ -281,6 +300,14 @@ void FolderTreeWidget::applyFilter( const QString &filter )
                                       : i18n( "Path: (%1)", filter ) );
   d->filterTreeViewModel->setFilterFixedString( filter );
   d->folderTreeView->expandAll();
+}
+
+void FolderTreeWidget::slotManualSortingChanged( bool active )
+{
+  d->manualSortingActive = active;
+  if ( !active ) {
+    d->entityOrderProxy->clearTreeOrder();
+  }
 }
 
 #include "foldertreewidget.moc"

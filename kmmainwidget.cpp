@@ -155,6 +155,8 @@
 #include <QVBoxLayout>
 #include <QShortcut>
 #include <QProcess>
+#include <QDBusMessage>
+#include <QDBusConnection>
 
 // System includes
 #include <assert.h>
@@ -199,7 +201,8 @@ K_GLOBAL_STATIC( KMMainWidget::PtrList, theMainWidgetList )
     mCurrentFolder( 0 ),
     mVacationIndicatorActive( false ),
     mGoToFirstUnreadMessageInSelectedFolder( false ),
-    mFilterProgressItem( 0 )
+    mFilterProgressItem( 0 ),
+    mCheckMailInProgress( false )
 {
   // must be the first line of the constructor:
   mStartupDone = false;
@@ -246,14 +249,13 @@ K_GLOBAL_STATIC( KMMainWidget::PtrList, theMainWidgetList )
   readConfig();
 
   QTimer::singleShot( 0, this, SLOT( slotShowStartupFolder() ));
-#if 0
-  connect( kmkernel->acctMgr(), SIGNAL( checkedMail( bool, bool, const QMap<QString, int> & ) ),
-           this, SLOT( slotMailChecked( bool, bool, const QMap<QString, int> & ) ) );
 
+  connect( kmkernel, SIGNAL( startCheckMail() ),
+           this, SLOT( slotStartCheckMail() ) );
 
-#else
-  kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
-#endif
+  connect( kmkernel, SIGNAL( endCheckMail() ),
+           this, SLOT( slotEndCheckMail() ) );
+
   connect( kmkernel, SIGNAL( configChanged() ),
            this, SLOT( slotConfigChanged() ) );
 
@@ -314,6 +316,93 @@ void KMMainWidget::destruct()
   mDestructed = true;
 }
 
+
+void KMMainWidget::slotStartCheckMail()
+{
+  if ( !mCheckMailInProgress ) {
+    mCheckMail.clear();
+    mCheckMailInProgress = true;
+  }
+}
+
+void KMMainWidget::slotEndCheckMail()
+{
+  const bool sendOnAll =
+    GlobalSettings::self()->sendOnCheck() == GlobalSettings::EnumSendOnCheck::SendOnAllChecks;
+  const bool sendOnManual =
+    GlobalSettings::self()->sendOnCheck() == GlobalSettings::EnumSendOnCheck::SendOnManualChecks;
+  if ( !kmkernel->isOffline() && ( sendOnAll || (sendOnManual /*&& sendOnCheck*/ ) ) ) {
+    slotSendQueued();
+  }
+
+  if ( mCheckMail.isEmpty() ) {
+    mCheckMailInProgress = false;
+    return;
+  }
+
+  QDBusMessage message =
+    QDBusMessage::createSignal( "/KMail", "org.kde.kmail.kmail", "unreadCountChanged" );
+  QDBusConnection::sessionBus().send( message );
+
+  // build summary for new mail message
+  bool showNotification = false;
+  QString summary;
+  QStringList keys( mCheckMail.keys() );
+  keys.sort();
+  for ( QStringList::const_iterator it=keys.constBegin(); it!=keys.constEnd(); ++it ) {
+    kDebug() << mCheckMail.find( *it ).value() << "new message(s) in" << *it;
+
+    //KMFolder *folder = kmkernel->findFolderById( *it );
+
+    if ( /*folder && !folder->ignoreNewMail() */ 1) {
+      showNotification = true;
+      if ( GlobalSettings::self()->verboseNewMailNotification() ) {
+        summary += "<br>" + i18np( "1 new message in %2",
+                                   "%1 new messages in %2",
+                                   mCheckMail.find( *it ).value(),
+                                   /*folder->prettyUrl()*/( *it ) );
+      }
+    }
+  }
+
+  // update folder menus in case some mail got filtered to trash/current folder
+  // and we can enable "empty trash/move all to trash" action etc.
+  updateFolderMenu();
+
+
+  if ( !showNotification ) {
+    mCheckMailInProgress = false;
+    return;
+  }
+
+  if ( GlobalSettings::self()->verboseNewMailNotification() ) {
+    summary = i18nc( "%1 is a list of the number of new messages per folder",
+                     "<b>New mail arrived</b><br />%1",
+                     summary );
+  } else {
+    summary = i18n( "New mail arrived" );
+  }
+
+  if( kmkernel->xmlGuiInstance().isValid() ) {
+    KNotification::event( "new-mail-arrived",
+                          summary,
+                          QPixmap(),
+                          topLevelWidget(),
+                          KNotification::CloseOnTimeout,
+                          kmkernel->xmlGuiInstance() );
+  } else {
+    KNotification::event( "new-mail-arrived",
+                          summary,
+                          QPixmap(),
+                          topLevelWidget(),
+                          KNotification::CloseOnTimeout );
+  }
+
+  if ( mBeepOnNew ) {
+    KNotification::beep();
+  }
+  mCheckMailInProgress = false;
+}
 
 void KMMainWidget::slotFolderChanged( const Akonadi::Collection& col)
 {
@@ -1055,9 +1144,13 @@ void KMMainWidget::createWidgets()
 
 void KMMainWidget::slotItemAdded( const Akonadi::Item &, const Akonadi::Collection& col)
 {
-  kDebug() << "Collection:" << col.name();
   if ( col.isValid() && ( col == kmkernel->outboxCollectionFolder() ) ) {
     startUpdateMessageActionsTimer();
+  }
+  if ( mCheckMail.contains( col.name() ) ) {
+    mCheckMail[col.name()] = mCheckMail.value( col.name() ) + 1;
+  } else {
+    mCheckMail.insert( col.name(), 1 );
   }
 }
 
@@ -1194,82 +1287,6 @@ void KMMainWidget::slotCheckOneAccount( QAction* item )
     kDebug() << "account with identifier" << item->data().toString() << "not found";
   }
 }
-#if 0
-//-----------------------------------------------------------------------------
-void KMMainWidget::slotMailChecked( bool newMail, bool sendOnCheck,
-                                    const QMap<QString, int> & newInFolder )
-{
-  const bool sendOnAll =
-    GlobalSettings::self()->sendOnCheck() == GlobalSettings::EnumSendOnCheck::SendOnAllChecks;
-  const bool sendOnManual =
-    GlobalSettings::self()->sendOnCheck() == GlobalSettings::EnumSendOnCheck::SendOnManualChecks;
-  if ( !kmkernel->isOffline() && ( sendOnAll || (sendOnManual && sendOnCheck ) ) ) {
-    slotSendQueued();
-  }
-
-  if ( !newMail || newInFolder.isEmpty() ) {
-    return;
-  }
-
-  // build summary for new mail message
-  bool showNotification = false;
-  QString summary;
-  QStringList keys( newInFolder.keys() );
-  keys.sort();
-  for ( QStringList::const_iterator it=keys.constBegin(); it!=keys.constEnd(); ++it ) {
-//    kDebug() << newInFolder.find( *it ).value() << "new message(s) in" << *it;
-    Akonadi::Collection col = kmkernel->collectionFromId( *it );
-
-    if ( col.isValid() ) {
-      QSharedPointer<FolderCollection> fd( FolderCollection::forCollection( col ) );
-      if (  !fd->ignoreNewMail() ) {
-        showNotification = true;
-        if ( GlobalSettings::self()->verboseNewMailNotification() ) {
-          summary += "<br>" + i18np( "1 new message in %2",
-                                     "%1 new messages in %2",
-                                     newInFolder.find( *it ).value(),
-                                     col.name() );
-        }
-      }
-    }
-  }
-
-  // update folder menus in case some mail got filtered to trash/current folder
-  // and we can enable "empty trash/move all to trash" action etc.
-  updateFolderMenu();
-
-  if ( !showNotification ) {
-    return;
-  }
-
-  if ( GlobalSettings::self()->verboseNewMailNotification() ) {
-    summary = i18nc( "%1 is a list of the number of new messages per folder",
-                     "<b>New mail arrived</b><br />%1",
-                     summary );
-  } else {
-    summary = i18n( "New mail arrived" );
-  }
-
-  if( kmkernel->xmlGuiInstance().isValid() ) {
-    KNotification::event( "new-mail-arrived",
-                          summary,
-                          QPixmap(),
-                          topLevelWidget(),
-                          KNotification::CloseOnTimeout,
-                          kmkernel->xmlGuiInstance() );
-  } else {
-    KNotification::event( "new-mail-arrived",
-                          summary,
-                          QPixmap(),
-                          topLevelWidget(),
-                          KNotification::CloseOnTimeout );
-  }
-
-  if ( mBeepOnNew ) {
-    KNotification::beep();
-  }
-}
-#endif
 
 //-----------------------------------------------------------------------------
 void KMMainWidget::slotCompose()
