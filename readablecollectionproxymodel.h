@@ -41,6 +41,10 @@ public:
   bool hideVirtualFolder() const;
 
 
+  void setHideSpecificFolder( bool hide );
+  bool hideSpecificFolder() const;
+
+
   void setNecessaryRight( Akonadi::Collection::Rights right );
 
 protected:

@@ -198,7 +198,6 @@ void CollectionGeneralPage::init(const Akonadi::Collection &col)
                          "after sending, instead of in the configured sent-mail folder." ) );
   hbl->addWidget( mKeepRepliesInSameFolderCheckBox );
   hbl->addStretch( 1 );
-#if 0
   // should this folder be shown in the folder selection dialog?
   hbl = new QHBoxLayout();
   topLayout->addItem( hbl );
@@ -212,7 +211,7 @@ void CollectionGeneralPage::init(const Akonadi::Collection &col)
                           "Jump to Folder</interface> dialog." ) );
   hbl->addWidget( mHideInSelectionDialogCheckBox );
   hbl->addStretch( 1 );
-#endif
+
   addLine( this, topLayout );
   // use grid layout for the following combobox settings
   QGridLayout *gl = new QGridLayout();
@@ -376,9 +375,8 @@ void CollectionGeneralPage::load(const Akonadi::Collection & col)
   const bool keepInFolder = mFolderCollection->canCreateMessages() && mFolderCollection->putRepliesInSameFolder();
   mKeepRepliesInSameFolderCheckBox->setChecked( keepInFolder );
   mKeepRepliesInSameFolderCheckBox->setEnabled( mFolderCollection->canCreateMessages() );
-#if 0
   mHideInSelectionDialogCheckBox->setChecked( mFolderCollection->hideInSelectionDialog() );
-#endif
+
 }
 
 void CollectionGeneralPage::save(Collection & col)
@@ -412,9 +410,7 @@ void CollectionGeneralPage::save(Collection & col)
 
     mFolderCollection->setIgnoreNewMail( !mNotifyOnNewMailCheckBox->isChecked() );
     mFolderCollection->setPutRepliesInSameFolder( mKeepRepliesInSameFolderCheckBox->isChecked() );
-#if 0
     mFolderCollection->setHideInSelectionDialog( mHideInSelectionDialogCheckBox->isChecked() );
-#endif
 
   }
 }

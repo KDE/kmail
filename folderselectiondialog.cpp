@@ -70,6 +70,7 @@ FolderSelectionDialog::FolderSelectionDialog( QWidget *parent, SelectionFolderOp
   d->folderTreeWidget->readableCollectionProxyModel()->setAccessRights( Akonadi::Collection::CanCreateCollection );
   if ( options & FolderSelectionDialog::HideVirtualFolder )
     d->folderTreeWidget->readableCollectionProxyModel()->setHideVirtualFolder( true );
+  d->folderTreeWidget->readableCollectionProxyModel()->setHideSpecificFolder( true );
 
   d->folderTreeWidget->folderTreeView()->setTooltipsPolicy( FolderTreeWidget::DisplayNever );
   d->folderTreeWidget->folderTreeView()->setDragDropMode( QAbstractItemView::NoDragDrop );

@@ -19,6 +19,8 @@
 */
 
 #include "readablecollectionproxymodel.h"
+#include "foldercollection.h"
+
 #include <akonadi/collection.h>
 #include <akonadi/entitytreemodel.h>
 #include <kdebug.h>
@@ -32,11 +34,12 @@ class ReadableCollectionProxyModel::Private
 {
 public:
   Private()
-    : enableCheck( false ), hideVirtualFolder( false )
+    : enableCheck( false ), hideVirtualFolder( false ), hideSpecificFolder( false )
     {
     }
   bool enableCheck;
   bool hideVirtualFolder;
+  bool hideSpecificFolder;
 };
 
 ReadableCollectionProxyModel::ReadableCollectionProxyModel( QObject *parent )
@@ -88,13 +91,28 @@ bool ReadableCollectionProxyModel::hideVirtualFolder() const
   return d->hideVirtualFolder;
 }
 
+void ReadableCollectionProxyModel::setHideSpecificFolder( bool hide )
+{
+  d->hideSpecificFolder = hide;
+}
+
+bool ReadableCollectionProxyModel::hideSpecificFolder() const
+{
+  return d->hideSpecificFolder;
+}
+
 bool ReadableCollectionProxyModel::acceptRow( int sourceRow, const QModelIndex &sourceParent) const
 {
   const QModelIndex modelIndex = sourceModel()->index( sourceRow, 0, sourceParent );
 
+  const Akonadi::Collection collection = sourceModel()->data( modelIndex, Akonadi::EntityTreeModel::CollectionRole ).value<Akonadi::Collection>();
   if ( d->hideVirtualFolder ) {
-    Akonadi::Collection collection = sourceModel()->data( modelIndex, Akonadi::EntityTreeModel::CollectionRole ).value<Akonadi::Collection>();
     if ( collection.resource() == QLatin1String( "akonadi_nepomuktag_resource" ) || collection.resource() == QLatin1String( "akonadi_search_resource" ) )
+      return false;
+  }
+  if ( d->hideSpecificFolder ) {
+    QSharedPointer<FolderCollection> col = FolderCollection::forCollection( collection );
+    if ( col && col->hideInSelectionDialog() )
       return false;
   }
 
