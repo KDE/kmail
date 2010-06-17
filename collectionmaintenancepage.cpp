@@ -17,11 +17,15 @@
 */
 
 #include "collectionmaintenancepage.h"
+#include "util.h"
+#include "kmkernel.h"
+
 #include <akonadi/collectionstatistics.h>
 #include <akonadi/collection.h>
 #include <Akonadi/AgentType>
 #include <Akonadi/AgentManager>
 #include <Akonadi/ChangeRecorder>
+
 #include <klineedit.h>
 #include <QLabel>
 #include <KDialog>
@@ -29,7 +33,6 @@
 #include <KLocale>
 #include <QFormLayout>
 #include <kio/global.h>
-#include "kmkernel.h"
 
 using namespace Akonadi;
 
@@ -50,7 +53,7 @@ void CollectionMaintenancePage::init(const Akonadi::Collection & col)
   QGroupBox *filesGroup = new QGroupBox( i18n("Files"), this );
   QFormLayout *box = new QFormLayout( filesGroup );
   box->setSpacing( KDialog::spacingHint() );
-  mIsNotAVirtualCollection = ( col.resource() != QLatin1String( "akonadi_search_resource" ) ) && ( col.resource() != QLatin1String( "akonadi_nepomuktag_resource" ) );
+  mIsNotAVirtualCollection = !KMail::Util::isVirtualCollection( col );
   connect( KMKernel::self()->monitor(), SIGNAL( collectionStatisticsChanged( Akonadi::Collection::Id , const Akonadi::CollectionStatistics & ) ), this, SLOT( updateCollectionStatistic( Akonadi::Collection::Id, const Akonadi::CollectionStatistics& ) ) );
 
 

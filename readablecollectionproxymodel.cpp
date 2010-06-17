@@ -20,6 +20,7 @@
 
 #include "readablecollectionproxymodel.h"
 #include "foldercollection.h"
+#include "util.h"
 
 #include <akonadi/collection.h>
 #include <akonadi/entitytreemodel.h>
@@ -109,7 +110,7 @@ bool ReadableCollectionProxyModel::acceptRow( int sourceRow, const QModelIndex &
 
   const Akonadi::Collection collection = sourceModel()->data( modelIndex, Akonadi::EntityTreeModel::CollectionRole ).value<Akonadi::Collection>();
   if ( d->hideVirtualFolder ) {
-    if ( collection.resource() == QLatin1String( "akonadi_nepomuktag_resource" ) || collection.resource() == QLatin1String( "akonadi_search_resource" ) )
+    if ( KMail::Util::isVirtualCollection( collection ) )
       return false;
   }
   if ( d->hideSpecificFolder ) {

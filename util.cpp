@@ -226,3 +226,9 @@ void KMail::Util::handleClickedURL( const KUrl &url, uint identity )
   }
 }
 
+bool KMail::Util::isVirtualCollection(const Akonadi::Collection & collection)
+{
+  return ( collection.resource() == QLatin1String( "akonadi_nepomuktag_resource" ) || collection.resource() == QLatin1String( "akonadi_search_resource" ) );
+
+}
+

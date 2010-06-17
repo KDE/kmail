@@ -18,6 +18,7 @@
 
 #include "foldercollectionmonitor.h"
 #include "kmkernel.h"
+#include "util.h"
 #include "foldercollection.h"
 
 #include <akonadi/changerecorder.h>
@@ -68,8 +69,7 @@ void FolderCollectionMonitor::expireAllCollection( const QAbstractItemModel *mod
     const QModelIndex index = model->index( row, 0, parentIndex );
     const Akonadi::Collection collection = model->data( index, Akonadi::CollectionModel::CollectionRole ).value<Akonadi::Collection>();
 
-    if ( collection.resource() == QLatin1String( "akonadi_nepomuktag_resource" )
-         || collection.resource() == QLatin1String( "akonadi_search_resource" ) )
+    if ( KMail::Util::isVirtualCollection( collection ) )
       continue;
 
     QSharedPointer<FolderCollection> col = FolderCollection::forCollection( collection );
