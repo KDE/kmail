@@ -264,17 +264,17 @@ KMComposeWin::KMComposeWin( const KMime::Message::Ptr &aMsg, Composer::TemplateC
 
   mEdtFrom = new MessageComposer::ComposerLineEdit( false, mHeadersArea );
   mEdtFrom->setObjectName( "fromLine" );
-  mEdtFrom->setRecentAddressConfig( KMKernel::config().data() );
+  mEdtFrom->setRecentAddressConfig( MessageComposer::MessageComposerSettings::self()->config() );
   mEdtFrom->setToolTip( i18n( "Set the \"From:\" email address for this message" ) );
   mEdtReplyTo = new MessageComposer::ComposerLineEdit( true, mHeadersArea );
   mEdtReplyTo->setObjectName( "replyToLine" );
-  mEdtReplyTo->setRecentAddressConfig( KMKernel::config().data() );
+  mEdtReplyTo->setRecentAddressConfig( MessageComposer::MessageComposerSettings::self()->config() );
   mEdtReplyTo->setToolTip( i18n( "Set the \"Reply-To:\" email address for this message" ) );
   connect( mEdtReplyTo, SIGNAL(completionModeChanged(KGlobalSettings::Completion)),
           SLOT(slotCompletionModeChanged(KGlobalSettings::Completion)) );
 
   MessageComposer::RecipientsEditor* recipientsEditor = new MessageComposer::RecipientsEditor( mHeadersArea );
-  recipientsEditor->setRecentAddressConfig( KMKernel::config().data() );
+  recipientsEditor->setRecentAddressConfig( MessageComposer::MessageComposerSettings::self()->config() );
   connect( recipientsEditor,
            SIGNAL( completionModeChanged( KGlobalSettings::Completion ) ),
            SLOT( slotCompletionModeChanged( KGlobalSettings::Completion ) ) );
@@ -283,7 +283,7 @@ KMComposeWin::KMComposeWin( const KMime::Message::Ptr &aMsg, Composer::TemplateC
 
   mEdtSubject = new MessageComposer::ComposerLineEdit( false, mHeadersArea );
   mEdtSubject->setObjectName( "subjectLine" );
-  mEdtSubject->setRecentAddressConfig( KMKernel::config().data() );
+  mEdtSubject->setRecentAddressConfig(  MessageComposer::MessageComposerSettings::self()->config() );
   mEdtSubject->setToolTip( i18n( "Set a subject for this message" ) );
   mLblIdentity = new QLabel( i18n("&Identity:"), mHeadersArea );
   mDictionaryLabel = new QLabel( i18n("&Dictionary:"), mHeadersArea );

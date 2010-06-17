@@ -47,6 +47,8 @@
 #include <kpimutils/email.h>
 #include <kimap/loginjob.h>
 #include <Akonadi/AgentManager>
+#include <Akonadi/EntityTreeModel>
+#include <akonadi/entitymimetypefiltermodel.h>
 
 #include <KStandardDirs>
 #include <kascii.h>
@@ -226,3 +228,23 @@ void KMail::Util::handleClickedURL( const KUrl &url, uint identity )
   }
 }
 
+bool KMail::Util::isVirtualCollection(const Akonadi::Collection & collection)
+{
+  return ( collection.resource() == QLatin1String( "akonadi_nepomuktag_resource" ) || collection.resource() == QLatin1String( "akonadi_search_resource" ) );
+
+}
+
+QString KMail::Util::fullCollectionPath( const Akonadi::Collection& collection )
+{
+  QString fullPath;
+  QModelIndex idx = Akonadi::EntityTreeModel::modelIndexForCollection( KMKernel::self()->collectionModel(), collection );
+  if ( !idx.isValid() )
+    return fullPath;
+  fullPath = idx.data().toString();
+  idx = idx.parent();
+  while ( idx != QModelIndex() ) {
+    fullPath = idx.data().toString() + '/' + fullPath;
+    idx = idx.parent();
+  }
+  return fullPath;
+}

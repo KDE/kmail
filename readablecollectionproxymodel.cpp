@@ -1,5 +1,5 @@
 /*
-    Copyright (c) 2009 Laurent Montel <montel@kde.org>
+    Copyright (c) 2009, 2010 Laurent Montel <montel@kde.org>
 
 
     This library is free software; you can redistribute it and/or modify it
@@ -19,6 +19,9 @@
 */
 
 #include "readablecollectionproxymodel.h"
+#include "foldercollection.h"
+#include "util.h"
+
 #include <akonadi/collection.h>
 #include <akonadi/entitytreemodel.h>
 #include <kdebug.h>
@@ -32,9 +35,14 @@ class ReadableCollectionProxyModel::Private
 {
 public:
   Private()
-    : enableCheck( false ) {
-  }
+    : enableCheck( false ),
+      hideVirtualFolder( false ),
+      hideSpecificFolder( false )
+    {
+    }
   bool enableCheck;
+  bool hideVirtualFolder;
+  bool hideSpecificFolder;
 };
 
 ReadableCollectionProxyModel::ReadableCollectionProxyModel( QObject *parent )
@@ -55,9 +63,9 @@ Qt::ItemFlags ReadableCollectionProxyModel::flags( const QModelIndex & index ) c
   if ( d->enableCheck )
   {
     const QModelIndex sourceIndex = mapToSource( index.sibling( index.row(), 0 ) );
-    Akonadi::Collection collection = sourceModel()->data( sourceIndex, Akonadi::EntityTreeModel::CollectionRole ).value<Akonadi::Collection>();
+    const Akonadi::Collection collection = sourceModel()->data( sourceIndex, Akonadi::EntityTreeModel::CollectionRole ).value<Akonadi::Collection>();
 
-    if ( ! ( collection.rights() & Akonadi::Collection::CanCreateItem ) ) {
+    if ( ( !( collection.rights() & Akonadi::Collection::CanCreateItem ) ) || collection.contentMimeTypes().isEmpty()) {
       return Future::KRecursiveFilterProxyModel::flags( index ) & ~(Qt::ItemIsSelectable | Qt::ItemIsEnabled);
     }
     return Akonadi::EntityRightsFilterModel::flags( index );
@@ -76,6 +84,43 @@ bool ReadableCollectionProxyModel::enabledCheck() const
   return d->enableCheck;
 }
 
+void ReadableCollectionProxyModel::setHideVirtualFolder( bool exclude )
+{
+  d->hideVirtualFolder = exclude;
+}
+
+bool ReadableCollectionProxyModel::hideVirtualFolder() const
+{
+  return d->hideVirtualFolder;
+}
+
+void ReadableCollectionProxyModel::setHideSpecificFolder( bool hide )
+{
+  d->hideSpecificFolder = hide;
+}
+
+bool ReadableCollectionProxyModel::hideSpecificFolder() const
+{
+  return d->hideSpecificFolder;
+}
+
+bool ReadableCollectionProxyModel::acceptRow( int sourceRow, const QModelIndex &sourceParent) const
+{
+  const QModelIndex modelIndex = sourceModel()->index( sourceRow, 0, sourceParent );
+
+  const Akonadi::Collection collection = sourceModel()->data( modelIndex, Akonadi::EntityTreeModel::CollectionRole ).value<Akonadi::Collection>();
+  if ( d->hideVirtualFolder ) {
+    if ( KMail::Util::isVirtualCollection( collection ) )
+      return false;
+  }
+  if ( d->hideSpecificFolder ) {
+    QSharedPointer<FolderCollection> col = FolderCollection::forCollection( collection );
+    if ( col && col->hideInSelectionDialog() )
+      return false;
+  }
+
+  return Akonadi::EntityRightsFilterModel::acceptRow( sourceRow, sourceParent );
+}
 
 
 #include "readablecollectionproxymodel.moc"

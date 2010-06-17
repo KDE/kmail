@@ -408,7 +408,7 @@ void KMMainWidget::slotFolderChanged( const Akonadi::Collection& col)
 {
   updateFolderMenu();
   folderSelected( col );
-  emit captionChangeRequest( col.name() );
+  emit captionChangeRequest( KMail::Util::fullCollectionPath( col ) );
 }
 
 void KMMainWidget::folderSelected( const Akonadi::Collection & col )
@@ -1512,9 +1512,11 @@ void KMMainWidget::slotEmptyFolder()
 //-----------------------------------------------------------------------------
 void KMMainWidget::slotArchiveFolder()
 {
-  KMail::ArchiveFolderDialog archiveDialog;
-  archiveDialog.setFolder( mCurrentFolder->collection() );
-  archiveDialog.exec();
+  if ( mCurrentFolder ) {
+    KMail::ArchiveFolderDialog archiveDialog;
+    archiveDialog.setFolder( mCurrentFolder->collection() );
+    archiveDialog.exec();
+  }
 }
 
 //-----------------------------------------------------------------------------
@@ -1819,7 +1821,7 @@ void KMMainWidget::slotDeleteThread( bool confirmDelete )
 
 void KMMainWidget::slotMoveSelectedMessageToFolder()
 {
-  FolderSelectionDialog::SelectionFolderOption options = FolderSelectionDialog::None;
+  FolderSelectionDialog::SelectionFolderOption options = FolderSelectionDialog::HideVirtualFolder;
   MessageViewer::AutoQPointer<FolderSelectionDialog> dlg;
   dlg = new FolderSelectionDialog( this, options);
   dlg->setModal( true );
@@ -1874,7 +1876,7 @@ void KMMainWidget::slotCopyMessagesCompleted( KMCommand *command )
 
 void KMMainWidget::slotCopySelectedMessagesToFolder()
 {
-  FolderSelectionDialog::SelectionFolderOption options = FolderSelectionDialog::None;
+  FolderSelectionDialog::SelectionFolderOption options = FolderSelectionDialog::HideVirtualFolder;
   MessageViewer::AutoQPointer<FolderSelectionDialog> dlg;
   dlg = new FolderSelectionDialog( this, options );
   dlg->setModal( true );
@@ -3832,7 +3834,7 @@ void KMMainWidget::updateFolderMenu()
   QList< QAction* > actionlist;
   if ( mCurrentFolder && mCurrentFolder->collection().id() == kmkernel->outboxCollectionFolder().id() &&
       kmkernel->outboxCollectionFolder().statistics().count() > 0 ) {
-    kDebug() << "Enablign send queued";
+    kDebug() << "Enabling send queued";
     actionlist << mSendQueued;
   }
   if( mCurrentFolder && mCurrentFolder->collection().id() != kmkernel->trashCollectionFolder().id() ) {

@@ -113,9 +113,10 @@ FolderTreeWidget::FolderTreeWidget( QWidget *parent, KXMLGUIClient *xmlGuiClient
   d->filterTreeViewModel->setSourceModel( d->readableproxy );
   d->filterTreeViewModel->setFilterCaseSensitivity( Qt::CaseInsensitive );
 
+  //Order proxy
   d->entityOrderProxy = new EntityCollectionOrderProxyModel( this );
   d->entityOrderProxy->setSourceModel( d->filterTreeViewModel );
-  KConfigGroup grp( KMKernel::config(), "FolderTreeOrder" );
+  KConfigGroup grp( KMKernel::config(), "CollectionTreeOrder" );
   d->entityOrderProxy->setOrderConfig( grp );
 
   d->folderTreeView->setModel( d->entityOrderProxy );

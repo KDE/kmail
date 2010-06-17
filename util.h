@@ -111,6 +111,11 @@ namespace Util {
      */
     void handleClickedURL( const KUrl &url, uint identity );
 
+
+    bool isVirtualCollection(const Akonadi::Collection & col);
+
+    QString fullCollectionPath( const Akonadi::Collection& collection );
+
 }
 }
 

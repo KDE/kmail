@@ -37,7 +37,7 @@ public:
     None = 0,
     EnableCheck = 1,
     ShowUnreadCount = 2,
-    HideSearchFolder = 4,
+    HideVirtualFolder = 4,
     NotAllowToCreateNewFolder = 8
   };
   Q_DECLARE_FLAGS( SelectionFolderOptions, SelectionFolderOption )

@@ -55,7 +55,8 @@ void FolderTreeView::setTooltipsPolicy( FolderTreeWidget::ToolTipDisplayPolicy p
 void FolderTreeView::disableContextMenuAndExtraColumn()
 {
   mbDisableContextMenuAndExtraColumn = true;
-  for ( int i = 1; i <header()->count(); ++i )
+  const int nbColumn = header()->count();
+  for ( int i = 1; i <nbColumn; ++i )
   {
     setColumnHidden( i, true );
   }
@@ -96,14 +97,17 @@ void FolderTreeView::readConfig()
 
 void FolderTreeView::slotHeaderContextMenuRequested( const QPoint&pnt )
 {
-  if ( mbDisableContextMenuAndExtraColumn )
+  if ( mbDisableContextMenuAndExtraColumn ) {
+    readConfig();
     return;
+  }
 
   // the menu for the columns
   KMenu menu;
   QAction *act;
   menu.addTitle( i18n("View Columns") );
-  for ( int i = 1; i <header()->count(); ++i )
+  const int nbColumn = header()->count();
+  for ( int i = 1; i <nbColumn; ++i )
   {
     act = menu.addAction( model()->headerData( i, Qt::Horizontal ).toString() );
     act->setCheckable( true );
@@ -238,6 +242,7 @@ void FolderTreeView::setSortingPolicy( FolderTreeWidget::SortingPolicy policy )
       // should never happen
     break;
   }
+  writeConfig();
 }
 
 void FolderTreeView::slotHeaderContextMenuChangeToolTipDisplayPolicy( bool )
@@ -249,7 +254,7 @@ void FolderTreeView::slotHeaderContextMenuChangeToolTipDisplayPolicy( bool )
   QVariant data = act->data();
 
   bool ok;
-  int id = data.toInt( &ok );
+  const int id = data.toInt( &ok );
   if ( !ok )
     return;
   emit changeTooltipsPolicy( ( FolderTreeWidget::ToolTipDisplayPolicy )id );
@@ -264,7 +269,7 @@ void FolderTreeView::slotHeaderContextMenuChangeHeader( bool )
   QVariant data = act->data();
 
   bool ok;
-  int id = data.toInt( &ok );
+  const int id = data.toInt( &ok );
   if ( !ok )
     return;
 
@@ -286,7 +291,7 @@ void FolderTreeView::slotHeaderContextMenuChangeIconSize( bool )
   QVariant data = act->data();
 
   bool ok;
-  int size = data.toInt( &ok );
+  const int size = data.toInt( &ok );
   if ( !ok )
     return;
 
@@ -305,13 +310,14 @@ void FolderTreeView::selectModelIndex( const QModelIndex & index )
 
 void FolderTreeView::slotSelectFocusFolder()
 {
-  if( currentIndex().isValid() )
-    setCurrentIndex( currentIndex() );
+  const QModelIndex index = currentIndex();
+  if( index.isValid() )
+    setCurrentIndex( index );
 }
 
 void FolderTreeView::slotFocusNextFolder()
 {
-  QModelIndex nextFolder = selectNextFolder( currentIndex() );
+  const QModelIndex nextFolder = selectNextFolder( currentIndex() );
 
   if ( nextFolder.isValid() ) {
     expand( nextFolder );
@@ -338,7 +344,7 @@ QModelIndex FolderTreeView::selectNextFolder( const QModelIndex & current )
 
 void FolderTreeView::slotFocusPrevFolder()
 {
-  QModelIndex current = currentIndex();
+  const QModelIndex current = currentIndex();
   if ( current.isValid() ) {
     QModelIndex above = indexAbove( current );
     selectModelIndex( above );
@@ -435,9 +441,9 @@ void FolderTreeView::selectPrevUnreadFolder( bool confirm )
 
 Akonadi::Collection FolderTreeView::currentFolder() const
 {
-  QModelIndex current = currentIndex();
+  const QModelIndex current = currentIndex();
   if ( current.isValid() ) {
-    Akonadi::Collection collection = current.model()->data( current, Akonadi::EntityTreeModel::CollectionRole ).value<Akonadi::Collection>();
+    const Akonadi::Collection collection = current.model()->data( current, Akonadi::EntityTreeModel::CollectionRole ).value<Akonadi::Collection>();
     return collection;
   }
   return Akonadi::Collection();

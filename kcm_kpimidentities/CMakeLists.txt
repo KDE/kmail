@@ -11,7 +11,6 @@ set(kcm_identities_srcs
   ../identitydialog.cpp
   ../identitylistview.cpp
   ../newidentitydialog.cpp
-  ../readablecollectionproxymodel.cpp
   ../xfaceconfigurator.cpp
 )
 kde4_add_ui_files(kcm_identities_srcs ../ui/identitypage.ui)

@@ -101,6 +101,7 @@ namespace KMail {
     protected:
       /** Capture space key to open the dialog */
       virtual void keyPressEvent( QKeyEvent * e );
+      void setCollectionFullPath( const Akonadi::Collection&col );
 
     protected:
       Akonadi::Collection mCollection;
