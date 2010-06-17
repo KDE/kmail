@@ -1512,9 +1512,11 @@ void KMMainWidget::slotEmptyFolder()
 //-----------------------------------------------------------------------------
 void KMMainWidget::slotArchiveFolder()
 {
-  KMail::ArchiveFolderDialog archiveDialog;
-  archiveDialog.setFolder( mCurrentFolder->collection() );
-  archiveDialog.exec();
+  if ( mCurrentFolder ) {
+    KMail::ArchiveFolderDialog archiveDialog;
+    archiveDialog.setFolder( mCurrentFolder->collection() );
+    archiveDialog.exec();
+  }
 }
 
 //-----------------------------------------------------------------------------
