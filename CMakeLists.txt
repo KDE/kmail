@@ -319,7 +319,7 @@ install(FILES
   kmcomposerui.rc
   kmmainwin.rc
   kmreadermainwin.rc
-  kmail.notifyrc
+  kmail2.notifyrc
   kmail_part.rc
   DESTINATION ${DATA_INSTALL_DIR}/kmail2
 )
