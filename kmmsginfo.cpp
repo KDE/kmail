@@ -54,7 +54,7 @@ public:
         }
         if (other.modifiers & FILE_SET) {
             modifiers |= FILE_SET;
-            file = other.from;
+            file = other.file;
         }
         if (other.modifiers & TO_SET) {
             modifiers |= TO_SET;
