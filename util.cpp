@@ -240,11 +240,10 @@ QString KMail::Util::fullCollectionPath( const Akonadi::Collection& collection )
   QModelIndex idx = Akonadi::EntityTreeModel::modelIndexForCollection( KMKernel::self()->collectionModel(), collection );
   if ( !idx.isValid() )
     return fullPath;
-  fullPath = collection.name();
+  fullPath = idx.data().toString();
   idx = idx.parent();
   while ( idx != QModelIndex() ) {
-    Akonadi::Collection collection = idx.data( Akonadi::EntityTreeModel::CollectionRole ).value<Akonadi::Collection>();
-    fullPath = collection.name() + '/' + fullPath;
+    fullPath = idx.data().toString() + '/' + fullPath;
     idx = idx.parent();
   }
   return fullPath;
