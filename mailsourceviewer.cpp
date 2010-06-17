@@ -71,14 +71,21 @@ MailSourceViewer::~MailSourceViewer()
 
 void MailSourceViewer::setText( const QString& text )
 {
+  QString escapedText( text );
   delete mSourceHighLighter; mSourceHighLighter = 0;
   if ( text.length() > 500000 ) {
     setTextFormat( Qt::LogText );
+
+    // LogText format interprets HTML tags, so make sure it doesn't find any, as otherwise, it
+    // would interpret things like the message ID header as a HTML tag.
+    // https://issues.kolab.org/issue4418
+    escapedText.replace( '<', "&lt;" );
+    escapedText.replace( '>', "&gt;" );
   } else {
     setTextFormat( Qt::PlainText );
     mSourceHighLighter = new MailSourceHighlighter( this );
   }
-  KTextBrowser::setText( text );
+  KTextBrowser::setText( escapedText );
 }
 
 }
