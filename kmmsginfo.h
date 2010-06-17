@@ -103,6 +103,8 @@ public:
   virtual void setSignatureState( const KMMsgSignatureState, int idx = -1 );
   virtual void setMDNSentState( const KMMsgMDNSentState, int idx = -1 );
   virtual void setUID(ulong);
+  virtual void setFrom( const QString &from );
+  virtual void setTo( const QString &to );
 
   /** Grr.. c++! */
   virtual void setStatus(const char* s1, const char* s2=0) { KMMsgBase::setStatus(s1, s2); }

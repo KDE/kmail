@@ -686,6 +686,24 @@ void KMMsgInfo::setDate(time_t aUnixTime)
     mDirty = true;
 }
 
+void KMMsgInfo::setFrom( const QString &from )
+{
+  if ( !kd )
+    kd = new KMMsgInfoPrivate;
+  kd->modifiers |= KMMsgInfoPrivate::FROM_SET;
+  kd->from = from;
+  mDirty = true;
+}
+
+void KMMsgInfo::setTo( const QString &to )
+{
+  if ( !kd )
+    kd = new KMMsgInfoPrivate;
+  kd->modifiers |= KMMsgInfoPrivate::TO_SET;
+  kd->to = to;
+  mDirty = true;
+}
+
 //--- For compatability with old index files
 void KMMsgInfo::compat_fromOldIndexString(const QCString& str, bool toUtf8)
 {

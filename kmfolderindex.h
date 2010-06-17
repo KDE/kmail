@@ -125,6 +125,10 @@ protected:
   int mIndexStreamPtrLength, mIndexId;
   bool mIndexSwapByteOrder; // Index file was written with swapped byte order
   int mIndexSizeOfLong; // Index file was written with longs of this size
+
+private:
+  void updateInvitationAndAddressFieldsFromContents();
+
 };
 
 #endif /*kmfolderindex_h*/

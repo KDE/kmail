@@ -31,7 +31,7 @@
 #endif
 
 // Current version of the table of contents (index) files
-#define INDEX_VERSION 1506
+#define INDEX_VERSION 1507
 
 #ifndef MAX_LINE
 #define MAX_LINE 4096
@@ -228,6 +228,7 @@ bool KMFolderIndex::readIndex()
   setDirty( false );
 
   if (!readIndexHeader(&version)) return false;
+  //kdDebug(5006) << "Index version for " << label() << " is " << version << endl;
 
   mUnreadMsgs = 0;
   mTotalMsgs = 0;
@@ -294,6 +295,13 @@ bool KMFolderIndex::readIndex()
     setDirty( true );
     writeIndex();
   }
+
+  if ( version < 1507 ) {
+    updateInvitationAndAddressFieldsFromContents();
+    setDirty( true );
+    writeIndex();
+  }
+
   mTotalMsgs = mMsgList.count();
   return true;
 }
@@ -327,7 +335,7 @@ bool KMFolderIndex::readIndexHeader(int *gv)
       }
       return true;
   } else if (indexVersion == 1505) {
-  } else if (indexVersion < INDEX_VERSION) {
+  } else if (indexVersion < INDEX_VERSION && indexVersion != 1506) {
       kdDebug(5006) << "Index file " << indexLocation() << " is out of date. Re-creating it." << endl;
       createIndexFromContents();
       return false;
@@ -499,5 +507,26 @@ void KMFolderIndex::recreateIndex()
   readIndex();
 }
 
+void KMFolderIndex::updateInvitationAndAddressFieldsFromContents()
+{
+  kdDebug(5006) << "Updating index for " << label() << ", this might take a while." << endl;
+  for ( uint i = 0; i < mMsgList.size(); i++ ) {
+    KMMsgInfo * const msgInfo = dynamic_cast<KMMsgInfo*>( mMsgList[i] );
+    if ( msgInfo ) {
+      KMMessage *msg = readMsg( i );
+      if ( msg ) {
+        msg->updateInvitationState();
+        if ( msg->status() & KMMsgStatusHasInvitation ) {
+          msgInfo->setStatus( msgInfo->status() | KMMsgStatusHasInvitation );
+        }
+        if ( msg->status() & KMMsgStatusHasNoInvitation ) {
+          msgInfo->setStatus( msgInfo->status() | KMMsgStatusHasNoInvitation );
+        }
+        msgInfo->setFrom( msg->from() );
+        msgInfo->setTo( msg->to() );
+      }
+    }
+  }
+}
 
 #include "kmfolderindex.moc"
