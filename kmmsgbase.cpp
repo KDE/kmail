@@ -1370,11 +1370,11 @@ const uchar *KMMsgBase::asIndexString(int &length) const
 
   //these are completely arbitrary order
   tmp_str = fromStrip().stripWhiteSpace();
-  STORE_DATA_LEN(MsgFromPart, tmp_str.unicode(), tmp_str.length() * 2, true);
+  STORE_DATA_LEN(MsgFromStripPart, tmp_str.unicode(), tmp_str.length() * 2, true);
   tmp_str = subject().stripWhiteSpace();
   STORE_DATA_LEN(MsgSubjectPart, tmp_str.unicode(), tmp_str.length() * 2, true);
   tmp_str = toStrip().stripWhiteSpace();
-  STORE_DATA_LEN(MsgToPart, tmp_str.unicode(), tmp_str.length() * 2, true);
+  STORE_DATA_LEN(MsgToStripPart, tmp_str.unicode(), tmp_str.length() * 2, true);
   tmp_str = replyToIdMD5().stripWhiteSpace();
   STORE_DATA_LEN(MsgReplyToIdMD5Part, tmp_str.unicode(), tmp_str.length() * 2, true);
   tmp_str = xmark().stripWhiteSpace();

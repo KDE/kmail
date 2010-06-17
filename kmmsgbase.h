@@ -458,9 +458,9 @@ public:
   {
     MsgNoPart = 0,
     //unicode strings
-    MsgFromPart = 1,
+    MsgFromStripPart = 1,
     MsgSubjectPart = 2,
-    MsgToPart = 3,
+    MsgToStripPart = 3,
     MsgReplyToIdMD5Part = 4,
     MsgIdMD5Part = 5,
     MsgXMarkPart = 6,
