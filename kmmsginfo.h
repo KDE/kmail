@@ -68,7 +68,9 @@ public:
   /** Inherited methods (see KMMsgBase for description): */
   virtual QString subject(void) const;
   virtual QString fromStrip(void) const;
+  virtual QString from() const;
   virtual QString toStrip(void) const;
+  virtual QString to() const;
   virtual QString xmark(void) const;
   virtual QString replyToIdMD5(void) const;
   virtual QString replyToAuxIdMD5() const;

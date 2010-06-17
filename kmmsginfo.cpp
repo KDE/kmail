@@ -23,6 +23,7 @@ public:
         XMARK_SET=0x100, FROMSTRIP_SET=0x200, FILE_SET=0x400, ENCRYPTION_SET=0x800,
         SIGNATURE_SET=0x1000, MDN_SET=0x2000, REPLYTOAUX_SET = 0x4000,
         STRIPPEDSUBJECT_SET = 0x8000,  UID_SET = 0x10000,
+        TO_SET = 0x20000, FROM_SET = 0x40000,
 
         ALL_SET = 0xFFFFFF, NONE_SET = 0x000000
     };
@@ -36,6 +37,7 @@ public:
     KMMsgSignatureState signatureState;
     KMMsgMDNSentState mdnSentState;
     ulong UID;
+    QString to, from;
 
     KMMsgInfoPrivate() : modifiers(NONE_SET) { }
     KMMsgInfoPrivate& operator=(const KMMsgInfoPrivate& other) {
@@ -109,6 +111,14 @@ public:
             modifiers |= UID_SET;
             UID = other.UID;
         }
+        if (other.modifiers & TO_SET) {
+            modifiers |= TO_SET;
+            to = other.to;
+        }
+        if (other.modifiers & FROM_SET) {
+            modifiers |= FROM_SET;
+            from = other.from;
+        }
         return *this;
     }
 };
@@ -174,6 +184,8 @@ KMMsgInfo& KMMsgInfo::operator=(const KMMessage& msg)
     kd->mdnSentState = msg.mdnSentState();
     kd->msgSizeServer = msg.msgSizeServer();
     kd->UID = msg.UID();
+    kd->to = msg.to();
+    kd->from = msg.from();
     return *this;
 }
 
@@ -187,8 +199,8 @@ void KMMsgInfo::init(const QCString& aSubject, const QCString& aFrom,
                      KMMsgSignatureState signatureState,
                      KMMsgMDNSentState mdnSentState,
                      const QCString& prefCharset,
-             off_t aFolderOffset, size_t aMsgSize,
-             size_t aMsgSizeServer, ulong aUID)
+                     off_t aFolderOffset, size_t aMsgSize,
+                     size_t aMsgSizeServer, ulong aUID)
 {
     mIndexOffset = 0;
     mIndexLength = 0;
@@ -213,7 +225,9 @@ void KMMsgInfo::init(const QCString& aSubject, const QCString& aFrom,
     kd->mdnSentState = mdnSentState;
     kd->msgSizeServer = aMsgSizeServer;
     kd->UID = aUID;
-    mDirty     = false;
+    kd->to = aTo;
+    kd->from = aFrom;
+    mDirty = false;
 }
 
 void KMMsgInfo::init(const QCString& aSubject, const QCString& aFrom,
@@ -254,6 +268,15 @@ QString KMMsgInfo::fromStrip(void) const
 }
 
 //-----------------------------------------------------------------------------
+QString KMMsgInfo::from() const
+{
+    if (kd && kd->modifiers & KMMsgInfoPrivate::FROM_SET)
+        return kd->from;
+    return getStringPart( MsgFromPart );
+}
+
+
+//-----------------------------------------------------------------------------
 QString KMMsgInfo::fileName(void) const
 {
     if (kd && kd->modifiers & KMMsgInfoPrivate::FILE_SET)
@@ -268,6 +291,14 @@ QString KMMsgInfo::toStrip(void) const
     if (kd && kd->modifiers & KMMsgInfoPrivate::TOSTRIP_SET)
         return kd->toStrip;
     return getStringPart(MsgToStripPart);
+}
+
+//-----------------------------------------------------------------------------
+QString KMMsgInfo::to() const
+{
+    if (kd && kd->modifiers & KMMsgInfoPrivate::TO_SET)
+        return kd->to;
+    return getStringPart( MsgToPart );
 }
 
 //-----------------------------------------------------------------------------

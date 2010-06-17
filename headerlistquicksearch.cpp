@@ -151,6 +151,17 @@ bool HeaderListQuickSearch::itemMatches(const QListViewItem *item, const QString
     if ( !msg || ! ( msg->status() & mStatus ) )
       return false;
   }
+
+  // The full email address is not visible, but we still want it to be searchable.
+  // KListViewSearchLine::itemMatches() only searches in visible columns.
+  const HeaderItem *headerItem = static_cast<const HeaderItem*>( item );
+  if ( headerItem->from().lower().contains( s.lower() ) ) {
+    return true;
+  }
+  if ( headerItem->to().lower().contains( s.lower() ) ) {
+    return true;
+  }
+
   return KListViewSearchLine::itemMatches(item, s);
 }
 

@@ -1406,6 +1406,12 @@ const uchar *KMMsgBase::asIndexString(int &length) const
   tmp = UID();
   STORE_DATA(MsgUIDPart, tmp);
 
+  tmp_str = from();
+  STORE_DATA_LEN( MsgFromPart, tmp_str.unicode(), tmp_str.length() * 2, true );
+
+  tmp_str = to();
+  STORE_DATA_LEN( MsgToPart, tmp_str.unicode(), tmp_str.length() * 2, true );
+
   return ret;
 }
 #undef STORE_DATA_LEN

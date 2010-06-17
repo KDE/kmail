@@ -115,6 +115,28 @@ int HeaderItem::msgId() const
   return mMsgId;
 }
 
+QString HeaderItem::to() const
+{
+  KMHeaders * const headers = static_cast<KMHeaders*>( listView() );
+  KMMsgBase * const msgBase = headers->folder()->getMsgBase( mMsgId );
+  if ( msgBase ) {
+    return msgBase->to();
+  } else {
+    return QString();
+  }
+}
+
+QString HeaderItem::from() const
+{
+  KMHeaders * const headers = static_cast<KMHeaders*>( listView() );
+  KMMsgBase * const msgBase = headers->folder()->getMsgBase( mMsgId );
+  if ( msgBase ) {
+    return msgBase->from();
+  } else {
+    return QString();
+  }
+}
+
 // Return the serial number
 Q_UINT32 HeaderItem::msgSerNum() const
 {

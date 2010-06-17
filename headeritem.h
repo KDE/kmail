@@ -179,6 +179,9 @@ public:
   /** Return the msgId of the message associated with this item. */
   int msgId() const;
 
+  QString to() const;
+  QString from() const;
+
   // Return the serial number of the message associated with this item;
   Q_UINT32 msgSerNum() const;
 

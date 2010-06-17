@@ -259,7 +259,9 @@ public:
   /** Important header fields of the message that are also kept in the index. */
   virtual QString subject(void) const = 0;
   virtual QString fromStrip(void) const = 0;
+  virtual QString from() const = 0;
   virtual QString toStrip(void) const = 0;
+  virtual QString to() const = 0;
   virtual QString replyToIdMD5(void) const = 0;
   virtual QString msgIdMD5(void) const = 0;
   virtual QString replyToAuxIdMD5() const = 0;
@@ -478,7 +480,9 @@ public:
     // and another unsigned long
     MsgStatusPart = 16,
     MsgSizeServerPart = 17,
-    MsgUIDPart = 18
+    MsgUIDPart = 18,
+    MsgToPart = 19,
+    MsgFromPart = 20
   };
   /** access to long msgparts */
   off_t getLongPart(MsgPartType) const;
