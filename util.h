@@ -113,6 +113,9 @@ namespace Util {
 
 
     bool isVirtualCollection(const Akonadi::Collection & col);
+
+    QString fullCollectionPath( const Akonadi::Collection& collection );
+
 }
 }
 

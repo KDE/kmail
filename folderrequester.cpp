@@ -32,6 +32,7 @@
 
 #include "folderselectiondialog.h"
 #include "kmkernel.h"
+#include "util.h"
 
 #include "messageviewer/autoqpointer.h"
 
@@ -100,12 +101,17 @@ Akonadi::Collection FolderRequester::folderCollection() const
   return mCollection;
 }
 
+void FolderRequester::setCollectionFullPath( const Akonadi::Collection&col )
+{
+  edit->setText( KMail::Util::fullCollectionPath( col ) );
+}
+
 //-----------------------------------------------------------------------------
 void FolderRequester::setFolder( const Akonadi::Collection&col )
 {
   mCollection = col;
   if ( mCollection.isValid() ) {
-    edit->setText( col.name() );
+    setCollectionFullPath( mCollection );
     mFolderId = QString::number( mCollection.id() );
     Akonadi::CollectionFetchJob *job = new Akonadi::CollectionFetchJob( mCollection, Akonadi::CollectionFetchJob::Base, this );
     connect( job, SIGNAL( collectionsReceived( Akonadi::Collection::List ) ),
@@ -123,7 +129,7 @@ void FolderRequester::slotCollectionsReceived( const Akonadi::Collection::List& 
   // in case this is still the collection we are interested in, update
   if ( col.id() == mCollection.id() ) {
     mCollection = col;
-    edit->setText( col.name() );
+    setCollectionFullPath( col );
   }
 }
 

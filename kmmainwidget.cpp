@@ -408,7 +408,7 @@ void KMMainWidget::slotFolderChanged( const Akonadi::Collection& col)
 {
   updateFolderMenu();
   folderSelected( col );
-  emit captionChangeRequest( col.name() );
+  emit captionChangeRequest( KMail::Util::fullCollectionPath( col ) );
 }
 
 void KMMainWidget::folderSelected( const Akonadi::Collection & col )
