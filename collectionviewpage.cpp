@@ -256,6 +256,7 @@ void CollectionViewPage::load( const Akonadi::Collection & col )
   } else {
     mShowSenderReceiverComboBox->setCurrentIndex( 0 );
   }
+  mShowSenderReceiverValue = mShowSenderReceiverComboBox->currentIndex();
 
   // message list aggregation
   slotSelectFolderAggregation();
@@ -277,17 +278,20 @@ void CollectionViewPage::save( Akonadi::Collection & col )
     }
   }
 
-  if ( mShowSenderReceiverComboBox->currentIndex() == 1 ) {
-    Akonadi::MessageFolderAttribute *messageFolder  = col.attribute<Akonadi::MessageFolderAttribute>( Akonadi::Entity::AddIfMissing );
-    messageFolder->setOutboundFolder( false );
-  } else if ( mShowSenderReceiverComboBox->currentIndex() == 2 ) {
-    Akonadi::MessageFolderAttribute *messageFolder  = col.attribute<Akonadi::MessageFolderAttribute>( Akonadi::Entity::AddIfMissing );
-    messageFolder->setOutboundFolder( true );
-  } else {
-    col.removeAttribute<Akonadi::MessageFolderAttribute>();
+  const int currentIndex = mShowSenderReceiverComboBox->currentIndex();
+  if ( mShowSenderReceiverValue != currentIndex ) {
+    if ( currentIndex == 1 ) {
+      Akonadi::MessageFolderAttribute *messageFolder  = col.attribute<Akonadi::MessageFolderAttribute>( Akonadi::Entity::AddIfMissing );
+      messageFolder->setOutboundFolder( false );
+    } else if ( currentIndex == 2 ) {
+      Akonadi::MessageFolderAttribute *messageFolder  = col.attribute<Akonadi::MessageFolderAttribute>( Akonadi::Entity::AddIfMissing );
+      messageFolder->setOutboundFolder( true );
+    } else {
+      col.removeAttribute<Akonadi::MessageFolderAttribute>();
+    }
+    //TODO refresh messagelistview
   }
-
-    // message list theme
+  // message list theme
   const bool usePrivateTheme = !mUseDefaultThemeCheckBox->isChecked();
   mThemeComboBox->writeStorageModelConfig( mCurrentCollection, usePrivateTheme );
   // message list aggregation
