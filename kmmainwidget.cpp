@@ -1,7 +1,7 @@
 /* -*- mode: C++; c-file-style: "gnu" -*-
   This file is part of KMail, the KDE mail client.
   Copyright (c) 2002 Don Sanders <sanders@kde.org>
-  Copyright (c) 2009 Montel Laurent <montel@kde.org>
+  Copyright (c) 2009, 2010 Montel Laurent <montel@kde.org>
 
   Based on the work of Stefan Taferner <taferner@kde.org>
 
@@ -1147,10 +1147,11 @@ void KMMainWidget::slotItemAdded( const Akonadi::Item &, const Akonadi::Collecti
   if ( col.isValid() && ( col == kmkernel->outboxCollectionFolder() ) ) {
     startUpdateMessageActionsTimer();
   }
-  if ( mCheckMail.contains( col.name() ) ) {
-    mCheckMail[col.name()] = mCheckMail.value( col.name() ) + 1;
+  const QString fullCollectionPath( KMail::Util::fullCollectionPath( col ) );
+  if ( mCheckMail.contains( fullCollectionPath ) ) {
+    mCheckMail[fullCollectionPath] = mCheckMail.value( fullCollectionPath ) + 1;
   } else {
-    mCheckMail.insert( col.name(), 1 );
+    mCheckMail.insert( fullCollectionPath, 1 );
   }
 }
 
