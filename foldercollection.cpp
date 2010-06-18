@@ -172,7 +172,6 @@ void FolderCollection::readConfig()
   mIdentity = configGroup.readEntry("Identity", defaultIdentity );
   slotIdentitiesChanged();
 
-  setUserWhoField( configGroup.readEntry( "WhoField" ), false );
   mPutRepliesInSameFolder = configGroup.readEntry( "PutRepliesInSameFolder", false );
   mHideInSelectionDialog = configGroup.readEntry( "HideInSelectionDialog", false );
   mIgnoreNewMail = configGroup.readEntry( "IgnoreNewMail", false );
@@ -231,7 +230,6 @@ void FolderCollection::writeConfig() const
   else
       configGroup.deleteEntry("Identity");
 
-  configGroup.writeEntry("WhoField", mUserWhoField);
   configGroup.writeEntry( "PutRepliesInSameFolder", mPutRepliesInSameFolder );
   configGroup.writeEntry( "HideInSelectionDialog", mHideInSelectionDialog );
   configGroup.writeEntry( "IgnoreNewMail", mIgnoreNewMail );
@@ -254,7 +252,7 @@ void FolderCollection::setShortcut( const KShortcut &sc, KMMainWidget *main )
   }
 }
 
-
+#if 0
 void FolderCollection::setUserWhoField( const QString& whoField, bool _writeConfig )
 {
   if ( mUserWhoField == whoField && !whoField.isEmpty() )
@@ -298,6 +296,7 @@ void FolderCollection::setUserWhoField( const QString& whoField, bool _writeConf
   //TODO fixme !!!
   emit viewConfigChanged();
 }
+#endif
 
 void FolderCollection::setUseDefaultIdentity( bool useDefaultIdentity )
 {
