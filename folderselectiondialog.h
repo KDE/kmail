@@ -38,7 +38,9 @@ public:
     EnableCheck = 1,
     ShowUnreadCount = 2,
     HideVirtualFolder = 4,
-    NotAllowToCreateNewFolder = 8
+    NotAllowToCreateNewFolder = 8,
+    HideOutboxFolder = 16,
+    HideImapFolder = 32
   };
   Q_DECLARE_FLAGS( SelectionFolderOptions, SelectionFolderOption )
 

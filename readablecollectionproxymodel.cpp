@@ -21,6 +21,7 @@
 #include "readablecollectionproxymodel.h"
 #include "foldercollection.h"
 #include "util.h"
+#include "kmkernel.h"
 
 #include <akonadi/collection.h>
 #include <akonadi/entitytreemodel.h>
@@ -37,12 +38,16 @@ public:
   Private()
     : enableCheck( false ),
       hideVirtualFolder( false ),
-      hideSpecificFolder( false )
+      hideSpecificFolder( false ),
+      hideOutboxFolder( false ),
+      hideImapFolder( false )
     {
     }
   bool enableCheck;
   bool hideVirtualFolder;
   bool hideSpecificFolder;
+  bool hideOutboxFolder;
+  bool hideImapFolder;
 };
 
 ReadableCollectionProxyModel::ReadableCollectionProxyModel( QObject *parent )
@@ -97,11 +102,34 @@ bool ReadableCollectionProxyModel::hideVirtualFolder() const
 void ReadableCollectionProxyModel::setHideSpecificFolder( bool hide )
 {
   d->hideSpecificFolder = hide;
+  invalidate();
 }
 
 bool ReadableCollectionProxyModel::hideSpecificFolder() const
 {
   return d->hideSpecificFolder;
+}
+
+void ReadableCollectionProxyModel::setHideOutboxFolder( bool hide )
+{
+  d->hideOutboxFolder = hide;
+  invalidate();
+}
+
+bool ReadableCollectionProxyModel::hideOutboxFolder() const
+{
+  return d->hideOutboxFolder;
+}
+
+void ReadableCollectionProxyModel::setHideImapFolder( bool hide )
+{
+  d->hideImapFolder = hide;
+  invalidate();
+}
+
+bool ReadableCollectionProxyModel::hideImapFolder() const
+{
+  return d->hideImapFolder;
 }
 
 bool ReadableCollectionProxyModel::acceptRow( int sourceRow, const QModelIndex &sourceParent) const
@@ -116,6 +144,15 @@ bool ReadableCollectionProxyModel::acceptRow( int sourceRow, const QModelIndex &
   if ( d->hideSpecificFolder ) {
     QSharedPointer<FolderCollection> col = FolderCollection::forCollection( collection );
     if ( col && col->hideInSelectionDialog() )
+      return false;
+  }
+
+  if ( d->hideOutboxFolder ) {
+    if ( collection == KMKernel::self()->outboxCollectionFolder() )
+      return false;
+  }
+  if ( d->hideImapFolder ) {
+    if ( collection.resource().startsWith( IMAP_RESOURCE_IDENTIFIER ) )
       return false;
   }
 

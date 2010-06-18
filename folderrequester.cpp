@@ -79,6 +79,10 @@ void FolderRequester::slotOpenDialog()
   options |= FolderSelectionDialog::HideVirtualFolder;
   if ( mNotCreateNewFolder )
     options |= FolderSelectionDialog::NotAllowToCreateNewFolder;
+  if ( !mShowImapFolders )
+    options |= FolderSelectionDialog::HideImapFolder;
+  if ( !mShowOutbox )
+    options |= FolderSelectionDialog::HideOutboxFolder;
 
   MessageViewer::AutoQPointer<FolderSelectionDialog> dlg(
       new FolderSelectionDialog( this, options ) );
