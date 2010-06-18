@@ -55,6 +55,7 @@ set(kmailprivate_LIB_SRCS
    foldercollectionmonitor.cpp
    readablecollectionproxymodel.cpp
    entitycollectionorderproxymodel.cpp
+   collectionpane.cpp
    foldertreewidget.cpp
    folderselectiondialog.cpp
    foldercollection.cpp

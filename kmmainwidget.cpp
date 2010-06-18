@@ -55,6 +55,7 @@
 #include "foldertreeview.h"
 #include "tagactionmanager.h"
 #include "foldershortcutactionmanager.h"
+#include "collectionpane.h"
 #if !defined(NDEBUG)
     #include "sievedebugdialog.h"
     using KMail::SieveDebugDialog;
@@ -68,7 +69,6 @@
 #include "messageviewer/headerstrategy.h"
 #include "messageviewer/headerstyle.h"
 #include "messageviewer/kcursorsaver.h"
-#include "messagelist/pane.h"
 
 
 #include "messagecomposer/messagesender.h"
@@ -953,7 +953,7 @@ void KMMainWidget::createWidgets()
            this, SLOT( slotFolderChanged( const Akonadi::Collection& ) ) );
 
   mFolderTreeWidget->setSelectionMode( QAbstractItemView::ExtendedSelection );
-  mMessagePane = new MessageList::Pane( KMKernel::self()->entityTreeModel(),
+  mMessagePane = new CollectionPane( KMKernel::self()->entityTreeModel(),
                                         mFolderTreeWidget->folderTreeView()->selectionModel(),
                                         this );
 

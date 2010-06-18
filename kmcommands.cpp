@@ -41,6 +41,7 @@
 // of messages from an IMAP server.
 
 #include "kmcommands.h"
+#include "collectionpane.h"
 
 #include <unistd.h> // link()
 #include <kprogressdialog.h>
@@ -679,7 +680,7 @@ KUrl KMSaveMsgCommand::url()
 }
 
 KMCommand::Result KMSaveMsgCommand::execute()
-{ 
+{
   mJob = KIO::put( mUrl, MessageViewer::Util::getWritePermissions() );
   mJob->setTotalSize( mTotalSize );
   mJob->setAsyncDataEnabled( true );
@@ -687,7 +688,7 @@ KMCommand::Result KMSaveMsgCommand::execute()
     SLOT(slotSaveDataReq()));
   connect(mJob, SIGNAL(result(KJob*)),
     SLOT(slotSaveResult(KJob*)));
-  
+
   setEmitsCompletedItself( true );
   return OK;
 }

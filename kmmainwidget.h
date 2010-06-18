@@ -43,9 +43,6 @@
 #include <messagelist/core/view.h>
 #include "foldertreewidget.h"
 
-namespace MessageList {
-  class Pane;
-}
 namespace Akonadi {
   class EntityListView;
 }
@@ -63,7 +60,7 @@ class FolderTreeView;
 class KMMetaFilterActionCommand;
 class KMSystemTray;
 class CustomTemplatesMenu;
-
+class CollectionPane;
 
 template <typename T, typename S> class QMap;
 
@@ -121,7 +118,7 @@ class KMAIL_EXPORT KMMainWidget : public QWidget
     /** Easy access to main components of the window. */
     KMReaderWin* messageView() const { return mMsgView; }
     /** Access to the header list pane. */
-    MessageList::Pane* messageListPane() const { return mMessagePane; }
+    CollectionPane* messageListPane() const { return mMessagePane; }
 
     QSharedPointer<FolderCollection> currentFolder() const;
 
@@ -610,7 +607,7 @@ private:
 
     KMail::MessageActions *mMsgActions;
     Akonadi::StandardActionManager *mAkonadiStandardActionManager;
-    MessageList::Pane *mMessagePane;
+    CollectionPane *mMessagePane;
     QSharedPointer<FolderCollection> mCurrentFolder;
 
     FolderTreeWidget *mFolderTreeWidget;
