@@ -350,17 +350,17 @@ void KMMainWidget::slotEndCheckMail()
   QStringList keys( mCheckMail.keys() );
   keys.sort();
   for ( QStringList::const_iterator it=keys.constBegin(); it!=keys.constEnd(); ++it ) {
-    kDebug() << mCheckMail.find( *it ).value() << "new message(s) in" << *it;
+    collectionInfo info = mCheckMail.find( *it ).value();
+    //kDebug() << info.nbMail << "new message(s) in" << *it;
+    QSharedPointer<FolderCollection> fd = FolderCollection::forCollection( info.col );
 
-    //KMFolder *folder = kmkernel->findFolderById( *it );
-
-    if ( /*folder && !folder->ignoreNewMail() */ 1) {
+    if ( fd && !fd->ignoreNewMail() ) {
       showNotification = true;
       if ( GlobalSettings::self()->verboseNewMailNotification() ) {
         summary += "<br>" + i18np( "1 new message in %2",
                                    "%1 new messages in %2",
-                                   mCheckMail.find( *it ).value(),
-                                   /*folder->prettyUrl()*/( *it ) );
+                                   info.nbMail,
+                                   ( *it ) );
       }
     }
   }
@@ -1149,9 +1149,12 @@ void KMMainWidget::slotItemAdded( const Akonadi::Item &, const Akonadi::Collecti
   }
   const QString fullCollectionPath( KMail::Util::fullCollectionPath( col ) );
   if ( mCheckMail.contains( fullCollectionPath ) ) {
-    mCheckMail[fullCollectionPath] = mCheckMail.value( fullCollectionPath ) + 1;
+    collectionInfo info( mCheckMail[fullCollectionPath] );
+    info.nbMail++;
+    mCheckMail[fullCollectionPath] = info;
   } else {
-    mCheckMail.insert( fullCollectionPath, 1 );
+    collectionInfo info( col, 1 );
+    mCheckMail.insert( fullCollectionPath, info );
   }
 }
 
