@@ -21,6 +21,8 @@
 
 #include <akonadi/collection.h>
 #include <akonadi/entitydisplayattribute.h>
+#include <akonadi/kmime/messagefolderattribute.h>
+
 #include <kmkernel.h>
 #include <QGroupBox>
 #include <QHBoxLayout>
@@ -30,6 +32,8 @@
 #include <QVBoxLayout>
 #include <KLocale>
 #include <KDialog>
+
+
 #include "messagelist/utils/aggregationcombobox.h"
 #include "messagelist/utils/aggregationconfigbutton.h"
 #include "messagelist/utils/themecombobox.h"
@@ -242,14 +246,16 @@ void CollectionViewPage::load( const Akonadi::Collection & col )
 
     mIconsCheckBox->setChecked( !iconWasEmpty );
   }
-  // sender or receiver column
-  const QString whoField = mFolderCollection->userWhoField();
-  if ( whoField.isEmpty() )
+
+  if ( col.hasAttribute<Akonadi::MessageFolderAttribute>() ) {
+    const bool outboundFolder = col.attribute<Akonadi::MessageFolderAttribute>()->isOutboundFolder();
+    if ( outboundFolder )
+      mShowSenderReceiverComboBox->setCurrentIndex( 2 );
+    else
+      mShowSenderReceiverComboBox->setCurrentIndex( 1 );
+  } else {
     mShowSenderReceiverComboBox->setCurrentIndex( 0 );
-  else if ( whoField == "From" )
-    mShowSenderReceiverComboBox->setCurrentIndex( 1 );
-  else if ( whoField == "To" )
-    mShowSenderReceiverComboBox->setCurrentIndex( 2 );
+  }
 
   // message list aggregation
   slotSelectFolderAggregation();
@@ -271,13 +277,14 @@ void CollectionViewPage::save( Akonadi::Collection & col )
     }
   }
 
-  if ( mFolderCollection ) {
-    if ( mShowSenderReceiverComboBox->currentIndex() == 1 )
-      mFolderCollection->setUserWhoField( "From" );
-    else if ( mShowSenderReceiverComboBox->currentIndex() == 2 )
-      mFolderCollection->setUserWhoField( "To" );
-    else
-      mFolderCollection->setUserWhoField( "" );
+  if ( mShowSenderReceiverComboBox->currentIndex() == 1 ) {
+    Akonadi::MessageFolderAttribute *messageFolder  = col.attribute<Akonadi::MessageFolderAttribute>( Akonadi::Entity::AddIfMissing );
+    messageFolder->setOutboundFolder( false );
+  } else if ( mShowSenderReceiverComboBox->currentIndex() == 2 ) {
+    Akonadi::MessageFolderAttribute *messageFolder  = col.attribute<Akonadi::MessageFolderAttribute>( Akonadi::Entity::AddIfMissing );
+    messageFolder->setOutboundFolder( true );
+  } else {
+    col.removeAttribute<Akonadi::MessageFolderAttribute>();
   }
 
     // message list theme
