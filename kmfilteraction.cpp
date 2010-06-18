@@ -330,7 +330,7 @@ void KMFilterActionWithFolder::clearParamWidget( QWidget* paramWidget ) const
 
 void KMFilterActionWithFolder::argsFromString( const QString &argsStr )
 {
-  mFolder = kmkernel->findFolderCollectionById( argsStr );
+  mFolder = kmkernel->collectionFromId( argsStr );
   if ( mFolder.isValid() )
     mFolderName= QString::number(mFolder.id());
   else

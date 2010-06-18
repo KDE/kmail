@@ -173,7 +173,7 @@ void ExpireJob::done()
     } else {
       // Expire by moving
       mMoveToFolder =
-        KMKernel::self()->findFolderCollectionById( fd->expireToFolderId() );
+        KMKernel::self()->collectionFromId( fd->expireToFolderId() );
       if ( !mMoveToFolder.isValid() ) {
         str = i18n( "Cannot expire messages from folder %1: destination "
                     "folder %2 not found",
