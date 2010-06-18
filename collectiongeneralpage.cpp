@@ -167,7 +167,7 @@ void CollectionGeneralPage::init(const Akonadi::Collection &col)
             "messages. This is useful for ignoring any new/unread mail in "
             "your trash and spam folder.</p></qt>" ) );
   hbl->addWidget( mNotifyOnNewMailCheckBox );
-#if 0  
+#if 0
   if ( KMKernel::self()->isImapFolder( col ) ) {
     // should this folder be included in new-mail-checks?
 
@@ -186,7 +186,7 @@ void CollectionGeneralPage::init(const Akonadi::Collection &col)
     nml->addWidget( mNewMailCheckBox );
     nml->addStretch( 1 );
   }
-#endif  
+#endif
   // should replies to mails in this folder be kept in this same folder?
   hbl = new QHBoxLayout();
   topLayout->addItem( hbl );
@@ -285,8 +285,9 @@ void CollectionGeneralPage::init(const Akonadi::Collection &col)
   }
 #endif
   mIncidencesForComboBox = 0;
+#if 0
   mAlarmsBlockedCheckBox = 0;
-
+#endif
   // Kolab incidences-for annotation.
   // Show incidences-for combobox if the contents type can be changed (new folder),
   // or if it's set to calendar or task (existing folder)
