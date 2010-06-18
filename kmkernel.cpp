@@ -272,8 +272,8 @@ KMKernel::KMKernel (QObject *parent, const char *name) :
   QDBusConnection::sessionBus().connect(QString(), QLatin1String( "/MailDispatcherAgent" ), "org.freedesktop.Akonadi.MailDispatcherAgent", "itemDispatchStarted",this, SLOT(itemDispatchStarted()) );
   connect( Akonadi::AgentManager::self(), SIGNAL( instanceProgressChanged( Akonadi::AgentInstance ) ), this, SLOT( instanceProgressChanged( Akonadi::AgentInstance ) ) ) ;
 
-  connect( KPIM::ProgressManager::instance(), SIGNAL( progressItemCompleted( KPIM::ProgressItem * ) ), this, SLOT( slotProgressItemCompleted( KPIM::ProgressItem* ) ) );
-  connect( KPIM::ProgressManager::instance(), SIGNAL( progressItemCanceled( KPIM::ProgressItem * ) ), this, SLOT( slotProgressItemCanceled( KPIM::ProgressItem* ) ) );
+  connect( KPIM::ProgressManager::instance(), SIGNAL( progressItemCompleted( KPIM::ProgressItem * ) ), this, SLOT( slotProgressItemCompletedOrCanceled( KPIM::ProgressItem* ) ) );
+  connect( KPIM::ProgressManager::instance(), SIGNAL( progressItemCanceled( KPIM::ProgressItem * ) ), this, SLOT( slotProgressItemCompletedOrCanceled( KPIM::ProgressItem* ) ) );
 }
 
 KMKernel::~KMKernel ()
@@ -1829,15 +1829,15 @@ void KMKernel::instanceProgressChanged( Akonadi::AgentInstance agent )
       agent.statusMessage(),
       true );
   if( progress->progress() == 0) {
-  if ( mListProgressItem.isEmpty() )
-    emit startCheckMail();
+    if ( mListProgressItem.isEmpty() )
+      emit startCheckMail();
 
-  if ( !mListProgressItem.contains( progress ) )
-    mListProgressItem.append( progress );
+    if ( !mListProgressItem.contains( progress ) )
+      mListProgressItem.append( progress );
   }
 }
 
-void KMKernel::slotProgressItemCompleted( KPIM::ProgressItem * item)
+void KMKernel::slotProgressItemCompletedOrCanceled( KPIM::ProgressItem * item)
 {
   if ( mListProgressItem.contains( item ) ) {
     mListProgressItem.removeAll( item );
@@ -1846,16 +1846,6 @@ void KMKernel::slotProgressItemCompleted( KPIM::ProgressItem * item)
     }
   }
 }
-
-void KMKernel::slotProgressItemCanceled( KPIM::ProgressItem * item)
-{
-  if ( mListProgressItem.contains( item ) ) {
-    mListProgressItem.removeAll( item );
-    if ( mListProgressItem.isEmpty() )
-      emit endCheckMail();
-  }
-}
-
 
 void KMKernel::updatedTemplates()
 {

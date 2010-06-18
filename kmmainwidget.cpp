@@ -1,7 +1,7 @@
 /* -*- mode: C++; c-file-style: "gnu" -*-
   This file is part of KMail, the KDE mail client.
   Copyright (c) 2002 Don Sanders <sanders@kde.org>
-  Copyright (c) 2009 Montel Laurent <montel@kde.org>
+  Copyright (c) 2009, 2010 Montel Laurent <montel@kde.org>
 
   Based on the work of Stefan Taferner <taferner@kde.org>
 
@@ -350,17 +350,17 @@ void KMMainWidget::slotEndCheckMail()
   QStringList keys( mCheckMail.keys() );
   keys.sort();
   for ( QStringList::const_iterator it=keys.constBegin(); it!=keys.constEnd(); ++it ) {
-    kDebug() << mCheckMail.find( *it ).value() << "new message(s) in" << *it;
+    collectionInfo info = mCheckMail.find( *it ).value();
+    //kDebug() << info.nbMail << "new message(s) in" << *it;
+    QSharedPointer<FolderCollection> fd = FolderCollection::forCollection( info.col );
 
-    //KMFolder *folder = kmkernel->findFolderById( *it );
-
-    if ( /*folder && !folder->ignoreNewMail() */ 1) {
+    if ( fd && !fd->ignoreNewMail() ) {
       showNotification = true;
       if ( GlobalSettings::self()->verboseNewMailNotification() ) {
         summary += "<br>" + i18np( "1 new message in %2",
                                    "%1 new messages in %2",
-                                   mCheckMail.find( *it ).value(),
-                                   /*folder->prettyUrl()*/( *it ) );
+                                   info.nbMail,
+                                   ( *it ) );
       }
     }
   }
@@ -1147,10 +1147,14 @@ void KMMainWidget::slotItemAdded( const Akonadi::Item &, const Akonadi::Collecti
   if ( col.isValid() && ( col == kmkernel->outboxCollectionFolder() ) ) {
     startUpdateMessageActionsTimer();
   }
-  if ( mCheckMail.contains( col.name() ) ) {
-    mCheckMail[col.name()] = mCheckMail.value( col.name() ) + 1;
+  const QString fullCollectionPath( KMail::Util::fullCollectionPath( col ) );
+  if ( mCheckMail.contains( fullCollectionPath ) ) {
+    collectionInfo info( mCheckMail[fullCollectionPath] );
+    info.nbMail++;
+    mCheckMail[fullCollectionPath] = info;
   } else {
-    mCheckMail.insert( col.name(), 1 );
+    collectionInfo info( col, 1 );
+    mCheckMail.insert( fullCollectionPath, info );
   }
 }
 

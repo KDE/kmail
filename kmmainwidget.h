@@ -622,7 +622,24 @@ private:
     MessageList::Core::PreSelectionMode mPreSelectionMode;
 
     KPIM::ProgressItem *mFilterProgressItem;
-    QMap<QString, int> mCheckMail;
+
+    struct collectionInfo {
+      collectionInfo( const Akonadi::Collection& collection = Akonadi::Collection(), int nb = 0 ) {
+        col = collection;
+        nbMail = nb;
+      }
+      collectionInfo & operator=( const collectionInfo & other) {
+        if ( this == &other )
+          return *this;
+        col = other.col;
+        nbMail = other.nbMail;
+        return *this;
+      }
+      Akonadi::Collection col;
+      int nbMail;
+    };
+
+    QMap<QString, collectionInfo> mCheckMail;
     bool mCheckMailInProgress;
 };
 
