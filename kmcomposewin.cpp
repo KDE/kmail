@@ -1338,10 +1338,7 @@ void KMComposeWin::setupActions( void )
   actionCollection()->addAction("options_select_crypto", mCryptoModuleAction );
   connect(mCryptoModuleAction, SIGNAL(triggered(int)), SLOT(slotSelectCryptoModule()));
   mCryptoModuleAction->setItems( l );
-  mCryptoModuleAction->setCurrentItem( format2cb(
-      Kleo::stringToCryptoMessageFormat( ident.preferredCryptoMessageFormat() ) ) );
   mCryptoModuleAction->setToolTip( i18n( "Select a cryptographic format for this message" ) );
-  slotSelectCryptoModule( true );
 
   actionFormatReset = new KAction( KIcon( "draw-eraser" ), i18n("Reset Font Settings"), this );
   actionFormatReset->setIconText( i18n("Reset Font") );
@@ -2871,6 +2868,10 @@ void KMComposeWin::slotIdentityChanged( uint uoid, bool initalChange )
   if ( bNewIdentityHasSigningKey && !mLastIdentityHasSigningKey ) {
     setSigning( mLastSignActionState );
   }
+
+  mCryptoModuleAction->setCurrentItem( format2cb(
+      Kleo::stringToCryptoMessageFormat( ident.preferredCryptoMessageFormat() ) ) );
+  slotSelectCryptoModule( true );
 
   mLastIdentityHasSigningKey = bNewIdentityHasSigningKey;
   mLastIdentityHasEncryptionKey = bNewIdentityHasEncryptionKey;
