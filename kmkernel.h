@@ -424,8 +424,7 @@ private slots:
 
   void initFolders();
   void akonadiStateChanged( Akonadi::ServerManager::State );
-  void slotProgressItemCompleted( KPIM::ProgressItem * item);
-  void slotProgressItemCanceled( KPIM::ProgressItem * );
+  void slotProgressItemCompletedOrCanceled( KPIM::ProgressItem * item);
 private:
   void openReader( bool onlyCheck );
   QSharedPointer<FolderCollection> currentFolderCollection();
