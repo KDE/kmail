@@ -252,52 +252,6 @@ void FolderCollection::setShortcut( const KShortcut &sc, KMMainWidget *main )
   }
 }
 
-#if 0
-void FolderCollection::setUserWhoField( const QString& whoField, bool _writeConfig )
-{
-  if ( mUserWhoField == whoField && !whoField.isEmpty() )
-    return;
-
-  if ( whoField.isEmpty() )
-  {
-    // default setting
-    const KPIMIdentities::Identity & identity =
-      kmkernel->identityManager()->identityForUoidOrDefault( mIdentity );
-
-    if ( kmkernel->isSystemFolderCollection(mCollection) && !kmkernel->isImapFolder( mCollection ) ) {
-      // local system folders
-      if ( mCollection == kmkernel->inboxCollectionFolder() ||
-           mCollection == kmkernel->trashCollectionFolder() )
-        mWhoField = "From";
-      if ( mCollection == kmkernel->outboxCollectionFolder() ||
-           mCollection == kmkernel->sentCollectionFolder() ||
-           mCollection == kmkernel->templatesCollectionFolder() ||
-           mCollection == kmkernel->draftsCollectionFolder() )
-        mWhoField = "To";
-    } else if ( identity.drafts() == idString() ||
-                identity.templates() == idString() ||
-                identity.fcc() == idString() )
-      // drafts, templates or sent of the identity
-      mWhoField = "To";
-    else
-      mWhoField = "From";
-  } else if ( whoField == "From" || whoField == "To" )
-    // set the whoField according to the user-setting
-    mWhoField = whoField;
-  else {
-    // this should not happen...
-    kDebug() << "Illegal setting" << whoField << "for userWhoField!";
-    return; // don't use the value
-  }
-  mUserWhoField = whoField;
-
-  if (_writeConfig)
-    writeConfig();
-  //TODO fixme !!!
-  emit viewConfigChanged();
-}
-#endif
-
 void FolderCollection::setUseDefaultIdentity( bool useDefaultIdentity )
 {
   mUseDefaultIdentity = useDefaultIdentity;
