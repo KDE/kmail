@@ -513,17 +513,19 @@ void KMFolderIndex::updateInvitationAndAddressFieldsFromContents()
   for ( uint i = 0; i < mMsgList.size(); i++ ) {
     KMMsgInfo * const msgInfo = dynamic_cast<KMMsgInfo*>( mMsgList[i] );
     if ( msgInfo ) {
-      KMMessage *msg = readMsg( i );
-      if ( msg ) {
-        msg->updateInvitationState();
-        if ( msg->status() & KMMsgStatusHasInvitation ) {
+      DwString msgString( getDwString( i ) );
+      if ( msgString.size() > 0 ) {
+        KMMessage msg;
+        msg.fromDwString( msgString, false );
+        msg.updateInvitationState();
+        if ( msg.status() & KMMsgStatusHasInvitation ) {
           msgInfo->setStatus( msgInfo->status() | KMMsgStatusHasInvitation );
         }
-        if ( msg->status() & KMMsgStatusHasNoInvitation ) {
+        if ( msg.status() & KMMsgStatusHasNoInvitation ) {
           msgInfo->setStatus( msgInfo->status() | KMMsgStatusHasNoInvitation );
         }
-        msgInfo->setFrom( msg->from() );
-        msgInfo->setTo( msg->to() );
+        msgInfo->setFrom( msg.from() );
+        msgInfo->setTo( msg.to() );
       }
     }
   }
