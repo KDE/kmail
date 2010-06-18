@@ -109,15 +109,19 @@ void ImapAclAttribute::deserialize( const QByteArray &data )
     const QByteArray trimmed = right.trimmed();
     const int wsIndex = trimmed.indexOf( ' ' );
     const QByteArray id = trimmed.mid( 0, wsIndex ).trimmed();
-    const QByteArray value = trimmed.mid( wsIndex + 1, right.length() - wsIndex ).trimmed();
-    mRights[id] = KIMAP::Acl::rightsFromString( value );
+    if ( !id.isEmpty() ) {
+      const QByteArray value = trimmed.mid( wsIndex + 1, right.length() - wsIndex ).trimmed();
+      mRights[id] = KIMAP::Acl::rightsFromString( value );
+    }
   }
 
   foreach ( const QByteArray &right, oldRights ) {
     const QByteArray trimmed = right.trimmed();
     const int wsIndex = trimmed.indexOf( ' ' );
     const QByteArray id = trimmed.mid( 0, wsIndex ).trimmed();
-    const QByteArray value = trimmed.mid( wsIndex + 1, right.length() - wsIndex ).trimmed();
-    mOldRights[id] = KIMAP::Acl::rightsFromString( value );
+    if ( !id.isEmpty() ) {
+      const QByteArray value = trimmed.mid( wsIndex + 1, right.length() - wsIndex ).trimmed();
+      mOldRights[id] = KIMAP::Acl::rightsFromString( value );
+    }
   }
 }
