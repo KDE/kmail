@@ -1161,12 +1161,15 @@ ASWizVirusRulesPage::ASWizVirusRulesPage( QWidget * parent, const char * name )
   grid->addWidget( mMarkRules, 2, 0 );
   FolderTreeWidget::TreeViewOptions opt = FolderTreeWidget::None;
   opt |= FolderTreeWidget::UseDistinctSelectionModel;
-  mFolderTree = new FolderTreeWidget( this, 0, opt );
+
+  ReadableCollectionProxyModel::ReadableCollectionOptions optReadableProxy = ReadableCollectionProxyModel::None;
+  optReadableProxy |= ReadableCollectionProxyModel::HideVirtualFolder;
+  optReadableProxy |= ReadableCollectionProxyModel::HideOutboxFolder;
+  optReadableProxy |= ReadableCollectionProxyModel::HideImapFolder;
+
+  mFolderTree = new FolderTreeWidget( this, 0, opt, optReadableProxy );
   mFolderTree->folderTreeView()->expandAll();
   mFolderTree->readableCollectionProxyModel()->setAccessRights( Akonadi::Collection::CanCreateCollection );
-  mFolderTree->readableCollectionProxyModel()->setHideVirtualFolder( true );
-  mFolderTree->readableCollectionProxyModel()->setHideOutboxFolder( true );
-  mFolderTree->readableCollectionProxyModel()->setHideImapFolder( true );
 
   mFolderTree->selectCollectionFolder( KMKernel::self()->trashCollectionFolder() );
   mFolderTree->folderTreeView()->setDragDropMode( QAbstractItemView::NoDragDrop );

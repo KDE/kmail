@@ -66,7 +66,7 @@ public:
 };
 
 
-FolderTreeWidget::FolderTreeWidget( QWidget *parent, KXMLGUIClient *xmlGuiClient, TreeViewOptions options )
+FolderTreeWidget::FolderTreeWidget( QWidget *parent, KXMLGUIClient *xmlGuiClient, TreeViewOptions options, ReadableCollectionProxyModel::ReadableCollectionOptions optReadableProxy )
   : QWidget( parent ), d( new FolderTreeWidgetPrivate() )
 {
   Akonadi::AttributeFactory::registerAttribute<Akonadi::ImapAclAttribute>();
@@ -97,7 +97,7 @@ FolderTreeWidget::FolderTreeWidget( QWidget *parent, KXMLGUIClient *xmlGuiClient
   d->quotaModel = new Akonadi::QuotaColorProxyModel( this );
   d->quotaModel->setSourceModel( d->filterModel );
 
-  d->readableproxy = new ReadableCollectionProxyModel( this );
+  d->readableproxy = new ReadableCollectionProxyModel( this, optReadableProxy );
   d->readableproxy->setSourceModel( d->quotaModel );
 
 
