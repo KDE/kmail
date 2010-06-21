@@ -3870,9 +3870,7 @@ void KMMainWidget::updateFolderMenu()
   mRemoveDuplicatesAction->setEnabled( !multiFolder && mCurrentFolder && mCurrentFolder->canDeleteMessages() );
   mShowFolderShortcutDialogAction->setEnabled( !multiFolder && folderWithContent );
 
-  if( mCurrentFolder && !kmkernel->isSystemFolderCollection( mCurrentFolder->collection() ) ) {
-    actionlist << akonadiStandardAction( Akonadi::StandardActionManager::ManageLocalSubscriptions );
-  }
+  actionlist << akonadiStandardAction( Akonadi::StandardActionManager::ManageLocalSubscriptions );
   mGUIClient->unplugActionList( QLatin1String( "collectionview_actionlist" ) );
   mGUIClient->plugActionList( QLatin1String( "collectionview_actionlist" ), actionlist );
 
