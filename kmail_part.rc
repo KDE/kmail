@@ -1,18 +1,21 @@
-<!-- This file should be synchronized with kmmainwin.rc to provide
+<!-- This file should be synchronized with kmail_part.rc to provide
      the same menu entries at the same place in KMail and Kontact  -->
 
 <!DOCTYPE kpartgui>
-<kpartgui version="452" name="kmail_part" >
+<kpartgui version="452" name="kmmainwin" >
  <MenuBar>
   <Menu noMerge="1" name="file" >
    <text>&amp;File</text>
    <Menu name="file_new" >
-     <text context="@title:menu for new-message and new-from-template">New</text>
+     <text context="@title:menu New message, folder or new window.">New</text>
      <Action name="new_message" />
      <Action name="new_from_template" />
      <Separator/>
      <Action name="akonadi_collection_create" />
+     <Separator/>
+     <Action name="new_mail_client" />
    </Menu>
+   <Separator/>
    <Action name="file_open" />
    <Action name="file_save_as" />
    <Action name="import"/>
@@ -154,6 +157,9 @@
   </Menu>
   <Menu noMerge="1" name="tools">
    <text>&amp;Tools</text>
+   <Action name="search_messages" />
+   <Separator/>
+   <Action name="addressbook"/>
    <Action name="tools_start_certman"/>
    <Action name="tools_start_kwatchgnupg"/>
    <Separator/>
@@ -184,7 +190,6 @@
    <Action name="help_kmail_welcomepage"/>
   </Menu>
  </MenuBar>
-
  <Menu name="akonadi_favoriteview_contextmenu">
   <Action name="akonadi_collection_sync"/>
   <Action name="mark_all_as_read" />
@@ -200,7 +205,7 @@
  </Menu>
 
  <Menu name="akonadi_favoriteview_emptyselection_contextmenu">
-  <Action name="add_favorite_folder"/>
+  <Action name="add_favorite_folder" />
  </Menu>
 
  <Menu name="akonadi_collectionview_contextmenu">
@@ -208,11 +213,12 @@
   <Separator/>
   <Action name="mark_all_as_read" />
   <Action name="search_messages" />
-  <Action name="move_to_trash" />
+  <ActionList name="outbox_folder_actionlist" />
   <Action name="empty"/>
   <Separator/>
   <Action name="akonadi_collection_create" />
   <Action name="akonadi_collection_copy_to_menu"/>
+  <Action name="akonadi_collection_move_to_menu"/>
   <Action name="delete_folder"/>
   <Separator/>
   <Action name="akonadi_collection_add_to_favorites"/>
@@ -222,13 +228,13 @@
   <Action name="folder_shortcut_command"/>
   <Action name="akonadi_collection_properties"/>
   <Separator/>
-  <Action name="akonadi_manage_local_subscriptions"/>
+  <ActionList name="collectionview_actionlist" />
  </Menu>
 
  <Menu name="akonadi_messagelist_contextmenu">
   <Action name="message_reply_menu"/>
   <Action name="message_forward"/>
-  <Action name="send_again"/>
+  <ActionList name="messagelist_actionlist" />
   <Separator/>
   <action name="set_status"/>
   <action name="thread_status"/>
