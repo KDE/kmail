@@ -45,6 +45,12 @@ public:
   bool hideSpecificFolder() const;
 
 
+  void setHideOutboxFolder( bool hide );
+  bool hideOutboxFolder() const;
+
+  void setHideImapFolder( bool hide );
+  bool hideImapFolder() const;
+
   void setNecessaryRight( Akonadi::Collection::Rights right );
 
 protected:

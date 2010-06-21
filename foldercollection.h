@@ -81,11 +81,6 @@ public:
 
   void setShortcut( const KShortcut&, KMMainWidget * );
 
-
-  /** Get / set the user-settings for the WhoField (From/To/Empty) */
-  QString userWhoField(void) { return mUserWhoField; }
-  void setUserWhoField(const QString &whoField,bool writeConfig=true);
-
   /** Get / set whether the default identity should be used instead of the
    *  identity specified by setIdentity(). */
   void setUseDefaultIdentity( bool useDefaultIdentity );
@@ -240,8 +235,6 @@ private:
 
   /** Should new mail in this folder be ignored? */
   bool mIgnoreNewMail;
-  /** name of the field that is used for "From" in listbox */
-  QString mWhoField, mUserWhoField;
 
   /** Should replies to messages in this folder be put in here? */
   bool mPutRepliesInSameFolder;

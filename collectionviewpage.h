@@ -67,6 +67,7 @@ private:
   MessageList::Utils::ThemeComboBox *mThemeComboBox;
   QSharedPointer<FolderCollection> mFolderCollection;
   Akonadi::Collection mCurrentCollection;
+  int mShowSenderReceiverValue;
 };
 
 

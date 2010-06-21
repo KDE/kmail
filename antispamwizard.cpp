@@ -1165,6 +1165,8 @@ ASWizVirusRulesPage::ASWizVirusRulesPage( QWidget * parent, const char * name )
   mFolderTree->folderTreeView()->expandAll();
   mFolderTree->readableCollectionProxyModel()->setAccessRights( Akonadi::Collection::CanCreateCollection );
   mFolderTree->readableCollectionProxyModel()->setHideVirtualFolder( true );
+  mFolderTree->readableCollectionProxyModel()->setHideOutboxFolder( true );
+  mFolderTree->readableCollectionProxyModel()->setHideImapFolder( true );
 
   mFolderTree->selectCollectionFolder( KMKernel::self()->trashCollectionFolder() );
   mFolderTree->folderTreeView()->setDragDropMode( QAbstractItemView::NoDragDrop );
