@@ -460,7 +460,7 @@ void KMKernel::checkMail () //might create a new reader but won't show!!
 
   const QString resourceGroupPattern( "Resource %1" );
 
-  Akonadi::AgentInstance::List lst = KMail::Util::agentInstances();
+  const Akonadi::AgentInstance::List lst = KMail::Util::agentInstances();
   foreach( Akonadi::AgentInstance type, lst ) {
     KConfigGroup group( KMKernel::config(), resourceGroupPattern.arg( type.identifier() ) );
     if ( group.readEntry( "IncludeInManualChecks", true ) ) {
@@ -474,7 +474,7 @@ void KMKernel::checkMail () //might create a new reader but won't show!!
 QStringList KMKernel::accounts()
 {
   QStringList accountLst;
-  Akonadi::AgentInstance::List lst = KMail::Util::agentInstances();
+  const Akonadi::AgentInstance::List lst = KMail::Util::agentInstances();
   foreach ( const Akonadi::AgentInstance& type, lst )
   {
     // Explicitly make a copy, as we're not changing values of the list but only
@@ -921,7 +921,7 @@ void KMKernel::checkMailOnStartup()
 
   const QString resourceGroupPattern( "Resource %1" );
 
-  Akonadi::AgentInstance::List lst = KMail::Util::agentInstances();
+  const Akonadi::AgentInstance::List lst = KMail::Util::agentInstances();
   foreach( Akonadi::AgentInstance type, lst ) {
     KConfigGroup group( KMKernel::config(), resourceGroupPattern.arg( type.identifier() ) );
     if ( group.readEntry( "CheckOnStartup", false ) ) {
@@ -1478,7 +1478,7 @@ bool KMKernel::folderIsTrash( const Akonadi::Collection & col )
 {
   if ( col == Akonadi::SpecialMailCollections::self()->defaultCollection( Akonadi::SpecialMailCollections::Trash ) )
     return true;
-  Akonadi::AgentInstance::List lst = KMail::Util::agentInstances();
+  const Akonadi::AgentInstance::List lst = KMail::Util::agentInstances();
   foreach ( const Akonadi::AgentInstance& type, lst ) {
     //TODO verify it.
     if ( type.identifier().contains( IMAP_RESOURCE_IDENTIFIER ) ) {
@@ -1560,7 +1560,7 @@ void KMKernel::slotEmptyTrash()
   Akonadi::Collection trash = trashCollectionFolder();
   mFolderCollectionMonitor->expunge( trash );
 
-  Akonadi::AgentInstance::List lst = KMail::Util::agentInstances();
+  const Akonadi::AgentInstance::List lst = KMail::Util::agentInstances();
   foreach ( const Akonadi::AgentInstance& type, lst ) {
     if ( type.identifier().contains( IMAP_RESOURCE_IDENTIFIER ) ) {
       if ( type.status() == Akonadi::AgentInstance::Broken )
@@ -1913,8 +1913,8 @@ bool KMKernel::isMainFolderCollection( const Akonadi::Collection &col )
 
 bool KMKernel::isImapFolder( const Akonadi::Collection &col )
 {
-  Akonadi::AgentInstance agentInstance = Akonadi::AgentManager::self()->instance( col.resource() );
-  return agentInstance.type().identifier() == IMAP_RESOURCE_IDENTIFIER;
+  const Akonadi::AgentInstance agentInstance = Akonadi::AgentManager::self()->instance( col.resource() );
+  return (agentInstance.type().identifier() == IMAP_RESOURCE_IDENTIFIER);
 }
 
 

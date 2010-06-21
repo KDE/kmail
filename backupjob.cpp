@@ -66,7 +66,7 @@ void BackupJob::setRootFolder( const Akonadi::Collection &rootFolder )
   mRootFolder = rootFolder;
 }
 
-void BackupJob::setSaveLocation( const KUrl savePath )
+void BackupJob::setSaveLocation( const KUrl& savePath )
 {
   mMailArchivePath = savePath;
 }

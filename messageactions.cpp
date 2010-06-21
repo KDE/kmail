@@ -523,7 +523,7 @@ void MessageActions::setMessageStatus( KPIM::MessageStatus status, bool toggle )
  */
 void MessageActions::addMailingListActions( const QString &item, const KUrl::List &list )
 {
-  foreach ( KUrl url, list ) {
+  foreach ( const KUrl& url, list ) {
     addMailingListAction( item, url );
   }
 }

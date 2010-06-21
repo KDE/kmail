@@ -60,7 +60,7 @@ class BackupJob : public QObject
     explicit BackupJob( QWidget *parent = 0 );
     ~BackupJob();
     void setRootFolder( const Akonadi::Collection &rootFolder );
-    void setSaveLocation( const KUrl savePath );
+    void setSaveLocation( const KUrl& savePath );
     void setArchiveType( ArchiveType type );
     void setDeleteFoldersAfterCompletion( bool deleteThem );
     void start();

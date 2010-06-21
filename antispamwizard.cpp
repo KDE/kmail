@@ -514,8 +514,8 @@ void AntiSpamWizard::checkToolAvailability()
       // check the configured account for pattern in <server>
       QString pattern = (*it).getServerPattern();
       kDebug() << "Testing for server pattern:" << pattern;
-      Akonadi::AgentInstance::List lst = KMail::Util::agentInstances();
-      foreach( Akonadi::AgentInstance type, lst ) {
+      const Akonadi::AgentInstance::List lst = KMail::Util::agentInstances();
+      foreach( const Akonadi::AgentInstance& type, lst ) {
         if ( type.status() == Akonadi::AgentInstance::Broken )
           continue;
         if ( type.identifier().contains( IMAP_RESOURCE_IDENTIFIER ) ) {
