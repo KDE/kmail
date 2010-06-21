@@ -64,20 +64,22 @@ FolderSelectionDialog::FolderSelectionDialog( QWidget *parent, SelectionFolderOp
     opt |= FolderTreeWidget::ShowUnreadCount;
   opt |= FolderTreeWidget::UseDistinctSelectionModel;
 
-  d->folderTreeWidget = new FolderTreeWidget( this, 0, opt);
+  ReadableCollectionProxyModel::ReadableCollectionOptions optReadableProxy = ReadableCollectionProxyModel::None;
+
+  if ( options & FolderSelectionDialog::HideVirtualFolder )
+    optReadableProxy |= ReadableCollectionProxyModel::HideVirtualFolder;
+  optReadableProxy |= ReadableCollectionProxyModel::HideSpecificFolder;
+  if ( options & FolderSelectionDialog::HideOutboxFolder )
+    optReadableProxy |= ReadableCollectionProxyModel::HideOutboxFolder;
+  if ( options & FolderSelectionDialog::HideImapFolder )
+    optReadableProxy |= ReadableCollectionProxyModel::HideImapFolder;
+
+  d->folderTreeWidget = new FolderTreeWidget( this, 0, opt, optReadableProxy);
+
   d->folderTreeWidget->disableContextMenuAndExtraColumn();
+
   d->folderTreeWidget->readableCollectionProxyModel()->setEnabledCheck( ( options & EnableCheck ) );
   d->folderTreeWidget->readableCollectionProxyModel()->setAccessRights( Akonadi::Collection::CanCreateCollection );
-  if ( options & FolderSelectionDialog::HideVirtualFolder )
-    d->folderTreeWidget->readableCollectionProxyModel()->setHideVirtualFolder( true );
-
-  d->folderTreeWidget->readableCollectionProxyModel()->setHideSpecificFolder( true );
-
-  if ( options & FolderSelectionDialog::HideOutboxFolder )
-    d->folderTreeWidget->readableCollectionProxyModel()->setHideOutboxFolder( true );
-
-  if ( options & FolderSelectionDialog::HideImapFolder )
-    d->folderTreeWidget->readableCollectionProxyModel()->setHideImapFolder( true );
 
   d->folderTreeWidget->folderTreeView()->setTooltipsPolicy( FolderTreeWidget::DisplayNever );
   d->folderTreeWidget->folderTreeView()->setDragDropMode( QAbstractItemView::NoDragDrop );

@@ -20,6 +20,7 @@
 #define FOLDERTREEWIDGET_H
 
 #include "kmail_export.h"
+#include "readablecollectionproxymodel.h"
 #include <QWidget>
 
 #include <QAbstractItemView>
@@ -28,7 +29,6 @@
 class KXMLGUIClient;
 class QItemSelectionModel;
 class FolderTreeView;
-class ReadableCollectionProxyModel;
 class KLineEdit;
 class EntityCollectionOrderProxyModel;
 
@@ -56,7 +56,8 @@ public:
   Q_DECLARE_FLAGS( TreeViewOptions, TreeViewOption )
 
   FolderTreeWidget( QWidget *parent = 0, KXMLGUIClient *xmlGuiClient = 0,
-                    TreeViewOptions option = ShowUnreadCount );
+                    TreeViewOptions option = ShowUnreadCount,
+                    ReadableCollectionProxyModel::ReadableCollectionOptions optReadableProxy = ReadableCollectionProxyModel::None );
   ~FolderTreeWidget();
 
   /**

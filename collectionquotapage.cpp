@@ -2,7 +2,7 @@
 /**
  *
  * Copyright (c) 2006 Till Adam <adam@kde.org>
- * Copyright (c) 2009 Laurent Montel <montel@kde.org>
+ * Copyright (c) 2009, 2010 Laurent Montel <montel@kde.org>
  *
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -54,7 +54,12 @@ CollectionQuotaPage::CollectionQuotaPage( QWidget* parent )
 
 bool CollectionQuotaPage::canHandle( const Akonadi::Collection &collection ) const
 {
-  return collection.hasAttribute<Akonadi::CollectionQuotaAttribute>();
+  const bool hasQuotaAttribute = collection.hasAttribute<Akonadi::CollectionQuotaAttribute>();
+  if ( hasQuotaAttribute ) {
+    if ( collection.attribute<Akonadi::CollectionQuotaAttribute>()->maximumValue() == 0 )
+      return false;
+  }
+  return hasQuotaAttribute;
 }
 
 void CollectionQuotaPage::init()

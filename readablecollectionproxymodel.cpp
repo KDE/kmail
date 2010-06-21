@@ -50,11 +50,23 @@ public:
   bool hideImapFolder;
 };
 
-ReadableCollectionProxyModel::ReadableCollectionProxyModel( QObject *parent )
+ReadableCollectionProxyModel::ReadableCollectionProxyModel( QObject *parent, ReadableCollectionOptions option )
   : Akonadi::EntityRightsFilterModel( parent ),
     d( new Private )
 {
   setDynamicSortFilter( true );
+  if ( option & HideVirtualFolder ) {
+    d->hideVirtualFolder = true;
+  }
+  if ( option & HideSpecificFolder ) {
+    d->hideSpecificFolder = true;
+  }
+  if ( option & HideOutboxFolder ) {
+    d->hideOutboxFolder = true;
+  }
+  if ( option & HideImapFolder ) {
+    d->hideImapFolder = true;
+  }
 }
 
 ReadableCollectionProxyModel::~ReadableCollectionProxyModel()
@@ -92,6 +104,7 @@ bool ReadableCollectionProxyModel::enabledCheck() const
 void ReadableCollectionProxyModel::setHideVirtualFolder( bool exclude )
 {
   d->hideVirtualFolder = exclude;
+  invalidate();
 }
 
 bool ReadableCollectionProxyModel::hideVirtualFolder() const
