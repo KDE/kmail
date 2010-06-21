@@ -97,6 +97,7 @@ ExpiryPropertiesDialog::ExpiryPropertiesDialog(
 
   folderSelector = new KMail::FolderRequester( privateLayoutWidget );
   folderSelector->setMustBeReadWrite( true );
+  folderSelector->setShowOutbox( false );
   moveToHBox->addWidget( folderSelector );
   globalVBox->addLayout( moveToHBox );
 
