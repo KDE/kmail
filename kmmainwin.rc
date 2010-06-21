@@ -221,7 +221,7 @@
   <Action name="akonadi_collection_move_to_menu"/>
   <Action name="delete_folder"/>
   <Separator/>
-  <Action name="akonadi_collection_add_to_favorites"/>
+  <ActionList name="akonadi_collection_add_to_favorites_actionlist"/>
   <Separator/>
   <Action name="expire_settings"/>
   <Action name="archive_folder" />

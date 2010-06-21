@@ -3867,6 +3867,12 @@ void KMMainWidget::updateFolderMenu()
   // the visual ones only make sense if we are showing a message list
   mPreferHtmlAction->setEnabled( mFolderTreeWidget->folderTreeView()->currentFolder().isValid() );
 
+  QList< QAction* > addToFavorite;
+  if( mEnableFavoriteFolderView )
+    addToFavorite << akonadiStandardAction( Akonadi::StandardActionManager::AddToFavoriteCollections );
+  mGUIClient->unplugActionList( "akonadi_collection_add_to_favorites_actionlist" );
+  mGUIClient->plugActionList( "akonadi_collection_add_to_favorites_actionlist", addToFavorite );
+  
   mPreferHtmlLoadExtAction->setEnabled( mFolderTreeWidget->folderTreeView()->currentFolder().isValid() && (mHtmlPref ? !mFolderHtmlPref : mFolderHtmlPref) ? true : false );
   mPreferHtmlAction->setChecked( mHtmlPref ? !mFolderHtmlPref : mFolderHtmlPref );
   mPreferHtmlLoadExtAction->setChecked( mHtmlLoadExtPref ? !mFolderHtmlLoadExtPref : mFolderHtmlLoadExtPref );
