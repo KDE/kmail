@@ -56,40 +56,40 @@ namespace KMail {
   //
   //
 
-  IdentityListViewItem::IdentityListViewItem( IdentityListView *parent, 
+  IdentityListViewItem::IdentityListViewItem( IdentityListView *parent,
                                               const KPIMIdentities::Identity &ident )
-    : QTreeWidgetItem( parent ), mUOID( ident.uoid() ) 
+    : QTreeWidgetItem( parent ), mUOID( ident.uoid() )
   {
     init( ident );
   }
 
-  IdentityListViewItem::IdentityListViewItem( IdentityListView *parent, 
+  IdentityListViewItem::IdentityListViewItem( IdentityListView *parent,
                                               QTreeWidgetItem *after,
                                               const KPIMIdentities::Identity &ident )
-    : QTreeWidgetItem( parent, after ), mUOID( ident.uoid() ) 
+    : QTreeWidgetItem( parent, after ), mUOID( ident.uoid() )
   {
     init( ident );
   }
 
-  KPIMIdentities::Identity & IdentityListViewItem::identity() const 
+  KPIMIdentities::Identity & IdentityListViewItem::identity() const
   {
     KPIMIdentities::IdentityManager *im = qobject_cast<IdentityListView*>( treeWidget() )->identityManager();
     Q_ASSERT( im );
     return im->modifyIdentityForUoid( mUOID );
   }
 
-  void IdentityListViewItem::setIdentity( const KPIMIdentities::Identity &ident ) 
+  void IdentityListViewItem::setIdentity( const KPIMIdentities::Identity &ident )
   {
     mUOID = ident.uoid();
     init( ident );
   }
 
-  void IdentityListViewItem::redisplay() 
+  void IdentityListViewItem::redisplay()
   {
     init( identity() );
   }
 
-  void IdentityListViewItem::init( const KPIMIdentities::Identity &ident ) 
+  void IdentityListViewItem::init( const KPIMIdentities::Identity &ident )
   {
     if ( ident.isDefault() ) {
       // Add "(Default)" to the end of the default identity's name:
@@ -157,7 +157,7 @@ namespace KMail {
 
       QLineEdit *edit = dynamic_cast<QLineEdit*>( editor ); // krazy:exclude=qclasses
       if ( edit ) {
-        QString text = edit->text();
+        const QString text = edit->text();
         emit rename( item, text );
       }
     }

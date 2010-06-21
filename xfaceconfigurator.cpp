@@ -236,8 +236,8 @@ namespace KMail {
   void XFaceConfigurator::slotSelectFile()
   {
     QStringList mimeTypes = KImageIO::mimeTypes (KImageIO::Reading);
-    QString filter = mimeTypes.join (" ");
-    KUrl url = KFileDialog::getOpenUrl( QString(), filter, this, QString() );
+    const QString filter = mimeTypes.join (" ");
+    const KUrl url = KFileDialog::getOpenUrl( QString(), filter, this, QString() );
     if ( !url.isEmpty() )
       setXfaceFromFile( url );
   }
@@ -300,7 +300,7 @@ namespace KMail {
         mTextEdit->setText(str);
       }
       KXFace xf;
-      QPixmap p = QPixmap::fromImage( xf.toImage(str) );
+      const QPixmap p = QPixmap::fromImage( xf.toImage(str) );
       mXFaceLabel->setPixmap( p );
     }
     else

@@ -95,7 +95,8 @@ void FilterSelectionDialog::setFilters( const QList<KMFilter *> &filters )
 QList<KMFilter *> FilterSelectionDialog::selectedFilters() const
 {
     QList<KMFilter *> filters;
-    for ( int i = 0; i < filtersListWidget->count(); i++ ) {
+    const int nbFilter = filtersListWidget->count();
+    for ( int i = 0; i < nbFilter; ++i ) {
         QListWidgetItem *item = filtersListWidget->item( i );
         if ( item->checkState() == Qt::Checked )
             filters << originalFilters[i];
@@ -105,7 +106,8 @@ QList<KMFilter *> FilterSelectionDialog::selectedFilters() const
 
 void FilterSelectionDialog::slotUnselectAllButton()
 {
-  for ( int i = 0; i < filtersListWidget->count(); i++ ) {
+  const int nbFilter = filtersListWidget->count();
+  for ( int i = 0; i < nbFilter; ++i ) {
     QListWidgetItem * const item = filtersListWidget->item( i );
     item->setCheckState( Qt::Unchecked );
   }
@@ -113,7 +115,8 @@ void FilterSelectionDialog::slotUnselectAllButton()
 
 void FilterSelectionDialog::slotSelectAllButton()
 {
-  for ( int i = 0; i < filtersListWidget->count(); i++ ) {
+  const int nbFilter = filtersListWidget->count();
+  for ( int i = 0; i < nbFilter; ++i ) {
     QListWidgetItem * const item = filtersListWidget->item( i );
     item->setCheckState( Qt::Checked );
   }
@@ -153,7 +156,7 @@ void FilterImporterExporter::writeFiltersToConfig( const QList<KMFilter *> &filt
                                                    KSharedConfig::Ptr config, bool bPopFilter )
 {
     // first, delete all filter groups:
-    QStringList filterGroups =
+    const QStringList filterGroups =
       config->groupList().filter( QRegExp( bPopFilter ? "PopFilter #\\d+" : "Filter #\\d+" ) );
     foreach ( const QString &s, filterGroups )
       config->deleteGroup( s );
@@ -194,7 +197,7 @@ FilterImporterExporter::~FilterImporterExporter()
 
 QList<KMFilter *> FilterImporterExporter::importFilters()
 {
-    QString fileName = KFileDialog::getOpenFileName( QDir::homePath(), QString(),
+    const QString fileName = KFileDialog::getOpenFileName( QDir::homePath(), QString(),
                                                      mParent, i18n("Import Filters") );
     if ( fileName.isEmpty() )
         return QList<KMFilter *>(); // cancel
@@ -218,7 +221,7 @@ QList<KMFilter *> FilterImporterExporter::importFilters()
 
 void FilterImporterExporter::exportFilters(const QList<KMFilter *> &filters )
 {
-    KUrl saveUrl = KFileDialog::getSaveUrl( QDir::homePath(), QString(),
+    const KUrl saveUrl = KFileDialog::getSaveUrl( QDir::homePath(), QString(),
                                             mParent, i18n("Export Filters") );
 
     if ( saveUrl.isEmpty() || !MessageViewer::Util::checkOverwrite( saveUrl, mParent ) )
