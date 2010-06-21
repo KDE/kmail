@@ -927,6 +927,9 @@ void KMMainWidget::deleteWidgets()
 {
   // Simply delete the top splitter, which always is mSplitter1, regardless
   // of the layout. This deletes all children.
+  // akonadi action manager is created in createWidgets(), parented to this
+  //  so not autocleaned up.
+  delete mAkonadiStandardActionManager;
   delete mSplitter1;
   mMsgView = 0;
   mSearchAndTree = 0;
