@@ -25,7 +25,6 @@ using KPIM::MessageStatus;
 class KProgressDialog;
 class KMFilter;
 class KMMainWidget;
-class KMReaderWin;
 class FolderCollection;
 template <typename T> class QSharedPointer;
 

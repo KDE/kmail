@@ -81,7 +81,6 @@ namespace Sonnet {
 }
 
 namespace KPIMIdentities {
-  class IdentityCombo;
   class Identity;
 }
 
@@ -90,7 +89,6 @@ namespace Akonadi {
 }
 
 namespace MailTransport {
-  class TransportComboBox;
 }
 
 namespace KMail {
@@ -104,20 +102,14 @@ namespace KIO {
 
 namespace Message {
   class Composer;
-  class AttachmentModel;
-  class GlobalPart;
-  class InfoPart;
-  class SignatureController;
 }
 
 namespace MessageComposer
 {
   class ComposerLineEdit;
-  class RecipientsEditor;
 }
 
 namespace MailTransport{
-  class MessageQueueJob;
 }
 
 //-----------------------------------------------------------------------------
