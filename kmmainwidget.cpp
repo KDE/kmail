@@ -2372,7 +2372,7 @@ void KMMainWidget::slotConfigChanged()
 //-----------------------------------------------------------------------------
 void KMMainWidget::slotSaveMsg()
 {
-  QList<Akonadi::Item> selectedMessages = mMessagePane->selectionAsMessageItemList();
+  const QList<Akonadi::Item> selectedMessages = mMessagePane->selectionAsMessageItemList();
   if ( selectedMessages.isEmpty() )
     return;
   KMSaveMsgCommand *saveCommand = new KMSaveMsgCommand( this, selectedMessages );
@@ -2394,7 +2394,7 @@ void KMMainWidget::slotOpenMsg()
 //-----------------------------------------------------------------------------
 void KMMainWidget::slotSaveAttachments()
 {
-  QList<Akonadi::Item> selectedMessages = mMessagePane->selectionAsMessageItemList();
+  const QList<Akonadi::Item> selectedMessages = mMessagePane->selectionAsMessageItemList();
   if ( selectedMessages.isEmpty() )
     return;
 
@@ -2459,7 +2459,7 @@ void KMMainWidget::slotSendQueuedVia( QAction* item )
     return;
   }
 
-  QStringList availTransports= MailTransport::TransportManager::self()->transportNames();
+  const QStringList availTransports= MailTransport::TransportManager::self()->transportNames();
   if (availTransports.contains(item->text()))
     kmkernel->msgSender()->sendQueued( item->text() );
 }
@@ -2859,7 +2859,7 @@ void KMMainWidget::slotDelayedMessagePopup( KJob *job )
 void KMMainWidget::getAccountMenu()
 {
   mActMenu->clear();
-  Akonadi::AgentInstance::List lst = KMail::Util::agentInstances();
+  const Akonadi::AgentInstance::List lst = KMail::Util::agentInstances();
   foreach ( const Akonadi::AgentInstance& type, lst )
   {
     // Explicitly make a copy, as we're not changing values of the list but only
@@ -2872,10 +2872,9 @@ void KMMainWidget::getAccountMenu()
 //-----------------------------------------------------------------------------
 void KMMainWidget::getTransportMenu()
 {
-  QStringList availTransports;
 
   mSendMenu->clear();
-  availTransports = MailTransport::TransportManager::self()->transportNames();
+  QStringList availTransports = MailTransport::TransportManager::self()->transportNames();
   QStringList::Iterator it;
   for(it = availTransports.begin(); it != availTransports.end() ; ++it)
     mSendMenu->addAction((*it).replace('&', "&&"));
@@ -3872,7 +3871,7 @@ void KMMainWidget::updateFolderMenu()
     addToFavorite << akonadiStandardAction( Akonadi::StandardActionManager::AddToFavoriteCollections );
   mGUIClient->unplugActionList( "akonadi_collection_add_to_favorites_actionlist" );
   mGUIClient->plugActionList( "akonadi_collection_add_to_favorites_actionlist", addToFavorite );
-  
+
   mPreferHtmlLoadExtAction->setEnabled( mFolderTreeWidget->folderTreeView()->currentFolder().isValid() && (mHtmlPref ? !mFolderHtmlPref : mFolderHtmlPref) ? true : false );
   mPreferHtmlAction->setChecked( mHtmlPref ? !mFolderHtmlPref : mFolderHtmlPref );
   mPreferHtmlLoadExtAction->setChecked( mHtmlLoadExtPref ? !mFolderHtmlLoadExtPref : mFolderHtmlLoadExtPref );
