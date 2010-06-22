@@ -72,7 +72,8 @@ void FolderTreeView::init( bool showUnreadCount )
            SLOT( slotHeaderContextMenuRequested( const QPoint& ) ) );
   readConfig();
 
-  mCollectionStatisticsDelegate = new Akonadi::CollectionStatisticsDelegate(this);
+  mCollectionStatisticsDelegate = new Akonadi::CollectionStatisticsDelegate( this );
+  mCollectionStatisticsDelegate->setProgressAnimationEnabled( true );
   setItemDelegate(mCollectionStatisticsDelegate);
   mCollectionStatisticsDelegate->setUnreadCountShown( showUnreadCount && !header()->isSectionHidden( 1 ) );
 }
