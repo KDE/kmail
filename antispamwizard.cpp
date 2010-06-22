@@ -162,8 +162,8 @@ void AntiSpamWizard::accept()
   // Let's start with virus detection and handling,
   // so we can avoid spam checks for viral messages
   if ( mMode == AntiVirus ) {
-    for ( QList<SpamToolConfig>::Iterator it = mToolList.begin();
-          it != mToolList.end(); ++it ) {
+    for ( QList<SpamToolConfig>::const_iterator it = mToolList.constBegin();
+          it != mToolList.constEnd(); ++it ) {
       if ( mInfoPage->isProgramSelected( (*it).getVisibleName() ) &&
          ( mVirusRulesPage->pipeRulesSelected() && (*it).isVirusTool() ) )
       {
@@ -514,8 +514,8 @@ void AntiSpamWizard::checkToolAvailability()
       // check the configured account for pattern in <server>
       QString pattern = (*it).getServerPattern();
       kDebug() << "Testing for server pattern:" << pattern;
-      Akonadi::AgentInstance::List lst = KMail::Util::agentInstances();
-      foreach( Akonadi::AgentInstance type, lst ) {
+      const Akonadi::AgentInstance::List lst = KMail::Util::agentInstances();
+      foreach( const Akonadi::AgentInstance& type, lst ) {
         if ( type.status() == Akonadi::AgentInstance::Broken )
           continue;
         if ( type.identifier().contains( IMAP_RESOURCE_IDENTIFIER ) ) {

@@ -927,6 +927,9 @@ void KMMainWidget::deleteWidgets()
 {
   // Simply delete the top splitter, which always is mSplitter1, regardless
   // of the layout. This deletes all children.
+  // akonadi action manager is created in createWidgets(), parented to this
+  //  so not autocleaned up.
+  delete mAkonadiStandardActionManager;
   delete mSplitter1;
   mMsgView = 0;
   mSearchAndTree = 0;
@@ -3772,8 +3775,8 @@ void KMMainWidget::updateMessageActionsDelayed()
 
   mSaveAsAction->setEnabled( mass_actions );
 
-  bool mails = mCurrentFolder&& mCurrentFolder->isValid() && mCurrentFolder->statistics().count() > 0;
-  bool enable_goto_unread = mails
+  const bool mails = mCurrentFolder&& mCurrentFolder->isValid() && mCurrentFolder->statistics().count() > 0;
+  const bool enable_goto_unread = mails
        || (GlobalSettings::self()->loopOnGotoUnread() == GlobalSettings::EnumLoopOnGotoUnread::LoopInAllFolders)
        || (GlobalSettings::self()->loopOnGotoUnread() == GlobalSettings::EnumLoopOnGotoUnread::LoopInAllMarkedFolders);
   actionCollection()->action( "go_next_message" )->setEnabled( mails );
@@ -3864,15 +3867,19 @@ void KMMainWidget::updateFolderMenu()
   // the visual ones only make sense if we are showing a message list
   mPreferHtmlAction->setEnabled( mFolderTreeWidget->folderTreeView()->currentFolder().isValid() );
 
+  QList< QAction* > addToFavorite;
+  if( mEnableFavoriteFolderView )
+    addToFavorite << akonadiStandardAction( Akonadi::StandardActionManager::AddToFavoriteCollections );
+  mGUIClient->unplugActionList( "akonadi_collection_add_to_favorites_actionlist" );
+  mGUIClient->plugActionList( "akonadi_collection_add_to_favorites_actionlist", addToFavorite );
+  
   mPreferHtmlLoadExtAction->setEnabled( mFolderTreeWidget->folderTreeView()->currentFolder().isValid() && (mHtmlPref ? !mFolderHtmlPref : mFolderHtmlPref) ? true : false );
   mPreferHtmlAction->setChecked( mHtmlPref ? !mFolderHtmlPref : mFolderHtmlPref );
   mPreferHtmlLoadExtAction->setChecked( mHtmlLoadExtPref ? !mFolderHtmlLoadExtPref : mFolderHtmlLoadExtPref );
   mRemoveDuplicatesAction->setEnabled( !multiFolder && mCurrentFolder && mCurrentFolder->canDeleteMessages() );
   mShowFolderShortcutDialogAction->setEnabled( !multiFolder && folderWithContent );
 
-  if( mCurrentFolder && !kmkernel->isSystemFolderCollection( mCurrentFolder->collection() ) ) {
-    actionlist << akonadiStandardAction( Akonadi::StandardActionManager::ManageLocalSubscriptions );
-  }
+  actionlist << akonadiStandardAction( Akonadi::StandardActionManager::ManageLocalSubscriptions );
   mGUIClient->unplugActionList( QLatin1String( "collectionview_actionlist" ) );
   mGUIClient->plugActionList( QLatin1String( "collectionview_actionlist" ), actionlist );
 

@@ -97,6 +97,7 @@ ExpiryPropertiesDialog::ExpiryPropertiesDialog(
 
   folderSelector = new KMail::FolderRequester( privateLayoutWidget );
   folderSelector->setMustBeReadWrite( true );
+  folderSelector->setShowOutbox( false );
   moveToHBox->addWidget( folderSelector );
   globalVBox->addLayout( moveToHBox );
 
@@ -198,7 +199,7 @@ void ExpiryPropertiesDialog::accept()
 
 void ExpiryPropertiesDialog::slotUpdateControls()
 {
-  bool showExpiryActions = expireReadMailCB->isChecked() || expireUnreadMailCB->isChecked();
+  const bool showExpiryActions = expireReadMailCB->isChecked() || expireUnreadMailCB->isChecked();
   moveToRB->setEnabled( showExpiryActions );
   folderSelector->setEnabled( showExpiryActions && moveToRB->isChecked() );
   deletePermanentlyRB->setEnabled( showExpiryActions );

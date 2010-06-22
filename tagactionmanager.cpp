@@ -149,14 +149,14 @@ void TagActionManager::updateActionStates( int numberOfSelectedMessages,
   {
     Q_ASSERT( selectedItem.isValid() );
     Nepomuk::Resource itemResource( selectedItem.url() );
-    for ( ; it != mTagActions.constEnd(); it++ ) {
+    for ( ; it != mTagActions.constEnd(); ++it ) {
       const bool hasTag = itemResource.tags().contains( Nepomuk::Tag( it.key() ) );
       it.value()->setChecked( hasTag );
       it.value()->setEnabled( true );
     }
   }
   else if ( numberOfSelectedMessages > 1 ) {
-    for ( ; it != mTagActions.constEnd(); it++ ) {
+    for ( ; it != mTagActions.constEnd(); ++it ) {
       Nepomuk::Tag tag( it.key() );
       it.value()->setChecked( false );
       it.value()->setEnabled( true );
@@ -164,7 +164,7 @@ void TagActionManager::updateActionStates( int numberOfSelectedMessages,
     }
   }
   else {
-    for ( ; it != mTagActions.constEnd(); it++ ) {
+    for ( ; it != mTagActions.constEnd(); ++it ) {
       it.value()->setEnabled( false );
     }
   }

@@ -492,7 +492,7 @@ namespace KMail {
 
 
   KUrl Vacation::findURL() const {
-    Akonadi::AgentInstance::List lst = KMail::Util::agentInstances();
+    const Akonadi::AgentInstance::List lst = KMail::Util::agentInstances();
     foreach ( const Akonadi::AgentInstance& type, lst )
     {
       if ( type.identifier().contains( IMAP_RESOURCE_IDENTIFIER ) ) {
@@ -500,7 +500,7 @@ namespace KMail {
           continue;
         OrgKdeAkonadiImapSettingsInterface *iface = KMail::Util::createImapSettingsInterface(type.identifier());
         if ( iface->isValid() ) {
-          KUrl u = KMail::Util::findSieveUrlForAccount( iface,type.identifier() );
+          const KUrl u = KMail::Util::findSieveUrlForAccount( iface,type.identifier() );
           if ( !u.isEmpty() ) {
             delete iface;
             return u;

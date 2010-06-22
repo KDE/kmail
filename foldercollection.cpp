@@ -272,13 +272,17 @@ uint FolderCollection::identity() const
     int identityId = -1;
     OrgKdeAkonadiImapSettingsInterface *imapSettingsInterface = KMail::Util::createImapSettingsInterface( mCollection.resource() );
     if ( imapSettingsInterface->isValid() ) {
-      QDBusReply<int> reply = imapSettingsInterface->accountIdentity();
-      if ( reply.isValid() && reply.value() > 0 ) {
-        identityId = reply;
+      QDBusReply<bool> useDefault = imapSettingsInterface->useDefaultIdentity();
+      if( useDefault.isValid() && useDefault.value() )
+        return mIdentity;
+      
+       QDBusReply<int> remoteAccountIdent = imapSettingsInterface->accountIdentity();
+      if ( remoteAccountIdent.isValid() && remoteAccountIdent.value() > 0 ) {
+        identityId = remoteAccountIdent;
       }
     }
     delete imapSettingsInterface;
-    if ( identityId != -1 )
+    if ( identityId != -1 && !KMKernel::self()->identityManager()->identityForUoid( identityId ).isNull() )
       return identityId;
   }
   return mIdentity;

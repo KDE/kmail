@@ -35,7 +35,6 @@ namespace KIO {
 namespace KPIM {
   class ProgressItem;
 }
-class KStatusNotifierItem;
 
 class MessageSender;
 

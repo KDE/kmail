@@ -512,7 +512,8 @@ void KMComposeWin::send( int how )
 void KMComposeWin::addAttachmentsAndSend( const KUrl::List &urls, const QString &comment, int how )
 {
   kDebug() << "addAttachment and sending!";
-  for( int i =0; i < urls.count(); ++i ) {
+  const int nbUrl = urls.count();
+  for( int i =0; i < nbUrl; ++i ) {
     addAttachment( urls[i], comment );
   }
 
@@ -2789,7 +2790,7 @@ void KMComposeWin::slotIdentityChanged( uint uoid, bool initalChange )
   // remove BCC of old identity and add BCC of new identity (if they differ)
   const KPIMIdentities::Identity &oldIdentity =
       KMKernel::self()->identityManager()->identityForUoidOrDefault( mId );
-      
+
   mComposerBase->identityChanged( ident, oldIdentity );
 
   if ( ident.organization().isEmpty() ) {
@@ -2838,7 +2839,7 @@ void KMComposeWin::slotIdentityChanged( uint uoid, bool initalChange )
   if ( !mBtnFcc->isChecked() && !mPreventFccOverwrite ) {
     setFcc( ident.fcc() );
   }
-  
+
   // if unmodified, apply new template, if one is set
   bool msgCleared = false;
   if ( !isModified() && !( ident.templates().isEmpty() && mCustomTemplate.isEmpty() ) &&

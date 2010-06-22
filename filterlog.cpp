@@ -151,10 +151,10 @@ bool FilterLog::saveToFile( const QString &fileName )
       fchmod( file.handle(), MessageViewer::Util::getWritePermissions() );
       {
         QDataStream ds( &file );
-        for ( QStringList::Iterator it = mLogEntries.begin();
-              it != mLogEntries.end(); ++it )
+        for ( QStringList::const_iterator it = mLogEntries.constBegin();
+              it != mLogEntries.constEnd(); ++it )
         {
-          QString tmpString = *it + '\n';
+          const QString tmpString = *it + '\n';
           QByteArray cstr( tmpString.toLocal8Bit() );
           ds.writeRawData( cstr.data(), cstr.size() );
         }
