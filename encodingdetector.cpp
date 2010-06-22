@@ -824,6 +824,7 @@ EncodingDetector::EncodingChoiceSource EncodingDetector::encodingChoiceSource() 
 const char* EncodingDetector::encoding() const
 {
     d->m_storeDecoderName = d->m_codec->name();
+    d->m_storeDecoderName = d->m_storeDecoderName.lower().replace( "iso ", "iso-" );
     return d->m_storeDecoderName.data();
 }
 
