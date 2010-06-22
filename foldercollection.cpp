@@ -68,6 +68,7 @@ FolderCollection::FolderCollection( const Akonadi::Collection & col, bool writec
     mWriteConfig( writeconfig ),
     mOldIgnoreNewMail( false )
 {
+  assert( col.isValid() );
   mIdentity = KMKernel::self()->identityManager()->defaultIdentity().uoid();
 
   readConfig();
