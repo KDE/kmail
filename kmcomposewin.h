@@ -25,7 +25,7 @@
 
 // KMail includes
 #include "composer.h"
-#include "recipientseditor-ng.h"
+#include "recipientseditor.h"
 
 // Qt includes
 #include <QFont>

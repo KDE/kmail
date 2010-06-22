@@ -71,7 +71,7 @@
 #include <messagecomposer/signaturecontroller.h>
 #include <messagecomposer/inserttextfilejob.h>
 #include <messagecomposer/composerlineedit.h>
-#include <messagecomposer/recipientseditor-ng.h>
+#include <messagecomposer/recipientseditor.h>
 #include <messagecore/attachmentpart.h>
 #include "messagecore/globalsettings.h"
 #include <templateparser/templateparser.h>
