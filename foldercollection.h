@@ -44,7 +44,7 @@ public:
    */
   enum ExpireUnits { ExpireNever, ExpireDays, ExpireWeeks, ExpireMonths, ExpireMaxUnits };
 
-  Akonadi::Collection collection();
+  Akonadi::Collection collection() const;
 
 
   QString configGroupName() const;

@@ -128,7 +128,7 @@ Akonadi::CollectionStatistics FolderCollection::statistics() const
   return mCollection.statistics();
 }
 
-Akonadi::Collection FolderCollection::collection()
+Akonadi::Collection FolderCollection::collection() const
 {
   return mCollection;
 }
@@ -276,7 +276,7 @@ uint FolderCollection::identity() const
       QDBusReply<bool> useDefault = imapSettingsInterface->useDefaultIdentity();
       if( useDefault.isValid() && useDefault.value() )
         return mIdentity;
-      
+
        QDBusReply<int> remoteAccountIdent = imapSettingsInterface->accountIdentity();
       if ( remoteAccountIdent.isValid() && remoteAccountIdent.value() > 0 ) {
         identityId = remoteAccountIdent;
