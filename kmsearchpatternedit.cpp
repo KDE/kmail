@@ -258,9 +258,9 @@ int KMSearchRuleWidget::indexOfRuleField( const QByteArray & aName ) const
   if ( aName.isEmpty() )
     return -1;
 
-  QString i18n_aName = displayNameFromInternalName( aName );
-
-  for ( int i = 1; i < mRuleField->count(); ++i ) {
+  const QString i18n_aName = displayNameFromInternalName( aName );
+  const int nbRuleField = mRuleField->count();
+  for ( int i = 1; i < nbRuleField; ++i ) {
     if ( mRuleField->itemText( i ) == i18n_aName )
       return i;
   }

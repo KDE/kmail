@@ -502,7 +502,7 @@ void AccountsPageReceivingTab::slotShowMailCheckMenu( const QString &ident, cons
 void AccountsPageReceivingTab::slotIncludeInCheckChanged( bool checked )
 {
   QAction* action = qobject_cast< QAction* >( sender() );
-  QString ident = action->data().toString();
+  const QString ident = action->data().toString();
 
   QSharedPointer<RetrievalOptions> opts = mRetrievalHash.value( ident );
   opts->IncludeInManualChecks = checked;
@@ -597,11 +597,6 @@ void AccountsPage::ReceivingTab::doLoadOther()
 
 void AccountsPage::ReceivingTab::save()
 {
-#if 0 //TODO port to akonadi
-  kmkernel->cleanupImapFolders();
-#else
-    kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
-#endif
   // Save Mail notification settings
   KConfigGroup general( KMKernel::config(), "General" );
   general.writeEntry( "beep-on-mail", mAccountsReceiving.mBeepNewMailCheck->isChecked() );
@@ -1693,7 +1688,7 @@ void AppearancePage::MessageTagTab::slotEmitChangeCheck()
 
 void AppearancePage::MessageTagTab::slotMoveTagUp()
 {
-  int tmp_index = mTagListBox->currentRow();
+  const int tmp_index = mTagListBox->currentRow();
   if ( tmp_index <= 0 )
     return;
   swapTagsInListBox( tmp_index, tmp_index - 1 );
@@ -1707,7 +1702,7 @@ void AppearancePage::MessageTagTab::slotMoveTagUp()
 
 void AppearancePage::MessageTagTab::slotMoveTagDown()
 {
-  int tmp_index = mTagListBox->currentRow();
+  const int tmp_index = mTagListBox->currentRow();
   if ( ( tmp_index < 0 )
         || ( tmp_index >= int( mTagListBox->count() ) - 1 ) )
     return;

@@ -78,8 +78,8 @@ bool EntityCollectionOrderProxyModel::lessThan( const QModelIndex&left, const QM
       Akonadi::Collection::Id leftData = left.data( Akonadi::EntityTreeModel::CollectionIdRole ).toLongLong();
       Akonadi::Collection::Id rightData = right.data( Akonadi::EntityTreeModel::CollectionIdRole ).toLongLong();
 
-      int leftPos = d->orderSpecialCollection.indexOf( leftData );
-      int rightPos = d->orderSpecialCollection.indexOf( rightData );
+      const int leftPos = d->orderSpecialCollection.indexOf( leftData );
+      const int rightPos = d->orderSpecialCollection.indexOf( rightData );
       if ( leftPos < 0 && rightPos < 0 )
         return QSortFilterProxyModel::lessThan( left, right );
       else if ( leftPos >= 0 && rightPos < 0)
