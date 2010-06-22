@@ -77,6 +77,14 @@ class partNode
 	      bool deleteDwBodyPart = false );
 
 public:
+
+    struct AttachmentDisplayInfo
+    {
+      QString label;
+      QString icon;
+      bool displayInHeader;
+    };
+
     static partNode * fromMessage( const KMMessage * msg, KMReaderWin * win=0 );
 
     partNode( bool deleteDwBodyPart,
@@ -228,6 +236,11 @@ public:
 
     bool isToltecMessage() const;
 
+    /**
+     * @return true if this node is a child or an encapsulated message
+     */
+    bool isInEncapsulatedMessage() const;
+
     bool hasContentDispositionInline() const;
 
     QString contentTypeParameter( const char * name ) const;
@@ -251,9 +264,15 @@ public:
     bool isDisplayedEmbedded() const;
     void setDisplayedEmbedded( bool displayedEmbedded );
 
+    // Same as above, but this time determines if the node was hidden or not
+    bool isDisplayedHidden() const;
+    void setDisplayedHidden( bool displayedHidden );
+
     // Get a href in the form attachment:<nodeId>?place=<place>, used by ObjectTreeParser and
     // UrlHandlerManager.
     QString asHREF( const QString &place ) const;
+
+    AttachmentDisplayInfo attachmentDisplayInfo() const;
 
 private:
     KMReaderWin * reader() const {
@@ -283,6 +302,7 @@ private:
     std::map<QCString,KMail::Interface::BodyPartMemento*> mBodyPartMementoMap;
     KMReaderWin * mReader;
     bool mDisplayedEmbedded;
+    bool mDisplayedHidden;
 };
 
 #endif

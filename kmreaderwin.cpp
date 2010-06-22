@@ -432,6 +432,7 @@ KMReaderWin::KMReaderWin(QWidget *aParent,
     mAddBookmarksAction( 0 ),
     mStartIMChatAction( 0 ),
     mSelectAllAction( 0 ),
+    mHeaderOnlyAttachmentsAction( 0 ),
     mSelectEncodingAction( 0 ),
     mToggleFixFontAction( 0 ),
     mCanStartDrag( false ),
@@ -565,6 +566,13 @@ void KMReaderWin::createActions( KActionCollection * ac ) {
   raction->setExclusiveGroup( "view_attachments_group" );
   attachmentMenu->insert( raction );
 
+  mHeaderOnlyAttachmentsAction = new KRadioAction( i18n( "View->attachments->", "In Header &Only" ), 0,
+                              this, SLOT( slotHeaderOnlyAttachments() ),
+                              ac, "view_attachments_headeronly" );
+  mHeaderOnlyAttachmentsAction->setToolTip( i18n( "Show Attachments only in the header of the mail" ) );
+  mHeaderOnlyAttachmentsAction->setExclusiveGroup( "view_attachments_group" );
+  attachmentMenu->insert( mHeaderOnlyAttachmentsAction );
+
   // Set Encoding submenu
   mSelectEncodingAction = new KSelectAction( i18n( "&Set Encoding" ), "charset", 0,
                                  this, SLOT( slotSetEncoding() ),
@@ -648,6 +656,8 @@ KRadioAction *KMReaderWin::actionForAttachmentStrategy( const AttachmentStrategy
     actionName = "view_attachments_inline";
   else if ( as == AttachmentStrategy::hidden() )
     actionName = "view_attachments_hide";
+  else if ( as == AttachmentStrategy::headerOnly() )
+    actionName = "view_attachments_headeronly";
 
   if ( actionName )
     return static_cast<KRadioAction*>(mActionCollection->action(actionName));
@@ -750,6 +760,10 @@ void KMReaderWin::slotInlineAttachments() {
 
 void KMReaderWin::slotHideAttachments() {
   setAttachmentStrategy( AttachmentStrategy::hidden() );
+}
+
+void KMReaderWin::slotHeaderOnlyAttachments() {
+  setAttachmentStrategy( AttachmentStrategy::headerOnly() );
 }
 
 void KMReaderWin::slotCycleAttachmentStrategy() {
@@ -1038,6 +1052,16 @@ void KMReaderWin::setHeaderStyleAndStrategy( const HeaderStyle * style,
 					     const HeaderStrategy * strategy ) {
   mHeaderStyle = style ? style : HeaderStyle::fancy();
   mHeaderStrategy = strategy ? strategy : HeaderStrategy::rich();
+  if ( mHeaderOnlyAttachmentsAction ) {
+    const bool styleHasAttachmentQuickList = mHeaderStyle == HeaderStyle::fancy() ||
+                                             mHeaderStyle == HeaderStyle::enterprise();
+    mHeaderOnlyAttachmentsAction->setEnabled( styleHasAttachmentQuickList );
+    if ( !styleHasAttachmentQuickList && mAttachmentStrategy == AttachmentStrategy::headerOnly() ) {
+      // Style changed to something without an attachment quick list, need to change attachment
+      // strategy
+      setAttachmentStrategy( AttachmentStrategy::smart() );
+    }
+  }
   update( true );
 }
 
@@ -2779,6 +2803,10 @@ void KMReaderWin::scrollToAttachment( const partNode *node )
       attachmentDiv.removeAttribute( "style" );
   }
 
+  // Don't mark hidden nodes, that would just produce a strange yellow line
+  if ( node->isDisplayedHidden() )
+    return;
+
   // Now, color the div of the attachment in yellow, so that the user sees what happened.
   // We created a special marked div for this in writeAttachmentMarkHeader() in ObjectTreeParser,
   // find and modify that now.
@@ -2787,6 +2815,7 @@ void KMReaderWin::scrollToAttachment( const partNode *node )
     kdWarning( 5006 ) << "Could not find attachment div for attachment " << node->nodeId() << endl;
     return;
   }
+
   attachmentDiv.setAttribute( "style", QString( "border:2px solid %1" )
       .arg( cssHelper()->pgpWarnColor().name() ) );
 
@@ -2872,44 +2901,25 @@ QString KMReaderWin::renderAttachments(partNode * node, const QColor &bgColor )
         html += "</div>";
     }
   } else {
-    QString label, icon;
-    icon = node->msgPart().iconName( KIcon::Small );
-    label = node->msgPart().contentDescription();
-    if( label.isEmpty() )
-      label = node->msgPart().name().stripWhiteSpace();
-    if( label.isEmpty() )
-      label = node->msgPart().fileName();
-    bool typeBlacklisted = node->msgPart().typeStr().lower() == "multipart";
-    if ( !typeBlacklisted && node->msgPart().typeStr().lower() == "application" ) {
-      typeBlacklisted = node->msgPart().subtypeStr() == "pgp-encrypted"
-          || node->msgPart().subtypeStr().lower() == "pgp-signature"
-          || node->msgPart().subtypeStr().lower() == "pkcs7-mime"
-          || node->msgPart().subtypeStr().lower() == "pkcs7-signature";
-    }
-    typeBlacklisted = typeBlacklisted || node == mRootNode;
-    bool firstTextChildOfEncapsulatedMsg = node->msgPart().typeStr().lower() == "text" &&
-                                           node->msgPart().subtypeStr().lower() == "plain" &&
-                                           node->parentNode() &&
-                                           node->parentNode()->msgPart().typeStr().lower() == "message";
-    typeBlacklisted = typeBlacklisted || firstTextChildOfEncapsulatedMsg;
-    if ( !label.isEmpty() && !icon.isEmpty() && !typeBlacklisted ) {
+    partNode::AttachmentDisplayInfo info = node->attachmentDisplayInfo();
+    if ( info.displayInHeader ) {
       html += "<div style=\"float:left;\">";
       html += QString::fromLatin1( "<span style=\"white-space:nowrap; border-width: 0px; border-left-width: 5px; border-color: %1; 2px; border-left-style: solid;\">" ).arg( bgColor.name() );
       QString fileName = writeMessagePartToTempFile( &node->msgPart(), node->nodeId() );
       QString href = node->asHREF( "header" );
       html += QString::fromLatin1( "<a href=\"" ) + href +
               QString::fromLatin1( "\">" );
-      html += "<img style=\"vertical-align:middle;\" src=\"" + icon + "\"/>&nbsp;";
+      html += "<img style=\"vertical-align:middle;\" src=\"" + info.icon + "\"/>&nbsp;";
       if ( headerStyle() == HeaderStyle::enterprise() ) {
         QFont bodyFont = mCSSHelper->bodyFont( isFixedFont() );
         QFontMetrics fm( bodyFont );
-        html += KStringHandler::rPixelSqueeze( label, fm, 140 );
+        html += KStringHandler::rPixelSqueeze( info.label, fm, 140 );
       } else if ( headerStyle() == HeaderStyle::fancy() ) {
         QFont bodyFont = mCSSHelper->bodyFont( isFixedFont() );
         QFontMetrics fm( bodyFont );
-        html += KStringHandler::rPixelSqueeze( label, fm, 1000 );
+        html += KStringHandler::rPixelSqueeze( info.label, fm, 1000 );
       } else {
-        html += label;
+        html += info.label;
       }
       html += "</a></span></div> ";
     }

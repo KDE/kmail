@@ -45,6 +45,21 @@
 
 namespace KMail {
 
+static AttachmentStrategy::Display smartDisplay( const partNode *node )
+{
+  if ( node->hasContentDispositionInline() )
+    // explict "inline" disposition:
+    return AttachmentStrategy::Inline;
+  if ( node->isAttachment() )
+    // explicit "attachment" disposition:
+    return AttachmentStrategy::AsIcon;
+  if ( node->type() == DwMime::kTypeText &&
+       node->msgPart().fileName().stripWhiteSpace().isEmpty() &&
+       node->msgPart().name().stripWhiteSpace().isEmpty() )
+    // text/* w/o filename parameter:
+    return AttachmentStrategy::Inline;
+  return AttachmentStrategy::AsIcon;
+}
 
   //
   // IconicAttachmentStrategy:
@@ -60,7 +75,7 @@ namespace KMail {
   public:
     const char * name() const { return "iconic"; }
     const AttachmentStrategy * next() const { return smart(); }
-    const AttachmentStrategy * prev() const { return hidden(); }
+    const AttachmentStrategy * prev() const { return headerOnly(); }
 
     bool inlineNestedMessages() const { return false; }
     Display defaultDisplay( const partNode * ) const { return AsIcon; }
@@ -86,18 +101,7 @@ namespace KMail {
 
     bool inlineNestedMessages() const { return true; }
     Display defaultDisplay( const partNode * node ) const {
-      if ( node->hasContentDispositionInline() )
-	// explict "inline" disposition:
-	return Inline;
-      if ( node->isAttachment() )
-	// explicit "attachment" disposition:
-	return AsIcon;
-      if ( node->type() == DwMime::kTypeText &&
-	   node->msgPart().fileName().stripWhiteSpace().isEmpty() &&
-	   node->msgPart().name().stripWhiteSpace().isEmpty() )
-	// text/* w/o filename parameter:
-	return Inline;
-      return AsIcon;
+      return smartDisplay( node );
     }
   };
 
@@ -134,12 +138,44 @@ namespace KMail {
     
   public:
     const char * name() const { return "hidden"; }
-    const AttachmentStrategy * next() const { return iconic(); }
+    const AttachmentStrategy * next() const { return headerOnly(); }
     const AttachmentStrategy * prev() const { return inlined(); }
 
     bool inlineNestedMessages() const { return false; }
     Display defaultDisplay( const partNode * ) const { return None; }
   };
+
+  class HeaderOnlyAttachmentStrategy : public AttachmentStrategy {
+    friend class ::KMail::AttachmentStrategy;
+  protected:
+    HeaderOnlyAttachmentStrategy() : AttachmentStrategy() {}
+    virtual ~HeaderOnlyAttachmentStrategy() {}
+
+  public:
+    const char * name() const { return "headerOnly"; }
+    const AttachmentStrategy * next() const { return iconic(); }
+    const AttachmentStrategy * prev() const { return hidden(); }
+
+    bool inlineNestedMessages() const {
+      return true;
+    }
+
+    Display defaultDisplay( const partNode *node ) const {
+      if ( node->isInEncapsulatedMessage() ) {
+        return smartDisplay( node );
+      }
+
+      partNode::AttachmentDisplayInfo info = node->attachmentDisplayInfo();
+      if ( info.displayInHeader ) {
+        // The entire point about this attachment strategy: Hide attachments in the body that are
+        // already displayed in the attachment quick list
+        return None;
+      } else {
+        return smartDisplay( node );
+      }
+    }
+  };
+
 
 
   //
@@ -156,10 +192,11 @@ namespace KMail {
 
   const AttachmentStrategy * AttachmentStrategy::create( Type type ) {
     switch ( type ) {
-    case Iconic:  return iconic();
-    case Smart:   return smart();
-    case Inlined: return inlined();
-    case Hidden:  return hidden();
+    case Iconic:     return iconic();
+    case Smart:      return smart();
+    case Inlined:    return inlined();
+    case Hidden:     return hidden();
+    case HeaderOnly: return headerOnly();
     }
     kdFatal( 5006 ) << "AttachmentStrategy::create(): Unknown attachment startegy ( type == "
 		    << (int)type << " ) requested!" << endl;
@@ -168,10 +205,11 @@ namespace KMail {
 
   const AttachmentStrategy * AttachmentStrategy::create( const QString & type ) {
     QString lowerType = type.lower();
-    if ( lowerType == "iconic" )  return iconic();
+    if ( lowerType == "iconic" )     return iconic();
     //if ( lowerType == "smart" )   return smart(); // not needed, see below
-    if ( lowerType == "inlined" ) return inlined();
-    if ( lowerType == "hidden" )  return hidden();
+    if ( lowerType == "inlined" )    return inlined();
+    if ( lowerType == "hidden" )     return hidden();
+    if ( lowerType == "headeronly" ) return headerOnly();
     // don't kdFatal here, b/c the strings are user-provided
     // (KConfig), so fail gracefully to the default:
     return smart();
@@ -181,6 +219,7 @@ namespace KMail {
   static const AttachmentStrategy * smartStrategy = 0;
   static const AttachmentStrategy * inlinedStrategy = 0;
   static const AttachmentStrategy * hiddenStrategy = 0;
+  static const AttachmentStrategy * headerOnlyStrategy = 0;
 
   const AttachmentStrategy * AttachmentStrategy::iconic() {
     if ( !iconicStrategy )
@@ -204,6 +243,12 @@ namespace KMail {
     if ( !hiddenStrategy )
       hiddenStrategy = new HiddenAttachmentStrategy();
     return hiddenStrategy;
+  }
+
+  const AttachmentStrategy * AttachmentStrategy::headerOnly() {
+    if ( !headerOnlyStrategy )
+      headerOnlyStrategy = new HeaderOnlyAttachmentStrategy();
+    return headerOnlyStrategy;
   }
 
 } // namespace KMail

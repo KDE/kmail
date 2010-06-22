@@ -453,6 +453,7 @@ protected slots:
   void slotSmartAttachments();
   void slotInlineAttachments();
   void slotHideAttachments();
+  void slotHeaderOnlyAttachments();
 
   /** Some attachment operations. */
   void slotAtmView( int id, const QString& name );
@@ -587,6 +588,7 @@ private:
   KAction *mMailToComposeAction, *mMailToReplyAction, *mMailToForwardAction,
       *mAddAddrBookAction, *mOpenAddrBookAction, *mCopyAction, *mCopyURLAction,
       *mUrlOpenAction, *mUrlSaveAsAction, *mAddBookmarksAction, *mStartIMChatAction, *mSelectAllAction;
+  KToggleAction *mHeaderOnlyAttachmentsAction;
   KSelectAction *mSelectEncodingAction;
   KToggleAction *mToggleFixFontAction;
 

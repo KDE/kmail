@@ -87,7 +87,8 @@ partNode::partNode( KMReaderWin * win, DwBodyPart* dwPart, int explicitType, int
     mMimePartTreeItem( 0 ),
     mBodyPartMementoMap(),
     mReader( win ),
-    mDisplayedEmbedded( false )
+    mDisplayedEmbedded( false ),
+    mDisplayedHidden( false )
 {
   if ( explicitType != DwMime::kTypeUnknown ) {
     mType    = explicitType;     // this happens e.g. for the Root Node
@@ -646,6 +647,20 @@ bool partNode::isToltecMessage() const
   return true;
 }
 
+bool partNode::isInEncapsulatedMessage() const
+{
+  const partNode * const topLevel = topLevelParent();
+  const partNode *cur = this;
+  while ( cur && cur != topLevel ) {
+    const bool parentIsMessage = cur->parentNode() &&
+                                 cur->parentNode()->msgPart().typeStr().lower() == "message";
+    if ( parentIsMessage && cur->parentNode() != topLevel )
+      return true;
+    cur = cur->parentNode();
+  }
+  return false;
+}
+
 bool partNode::hasContentDispositionInline() const
 {
   if( !dwPart() )
@@ -718,7 +733,44 @@ void partNode::setDisplayedEmbedded( bool displayedEmbedded )
   mDisplayedEmbedded = displayedEmbedded;
 }
 
+bool partNode::isDisplayedHidden() const
+{
+  return mDisplayedHidden;
+}
+
+void partNode::setDisplayedHidden( bool displayedHidden )
+{
+  mDisplayedHidden = displayedHidden;
+}
+
+
 QString partNode::asHREF( const QString &place ) const
 {
   return QString( "attachment:%1?place=%2" ).arg( nodeId() ).arg( place );
+}
+
+partNode::AttachmentDisplayInfo partNode::attachmentDisplayInfo() const
+{
+  AttachmentDisplayInfo info;
+  info.icon = msgPart().iconName( KIcon::Small );
+  info.label = msgPart().contentDescription();
+  if( info.label.isEmpty() )
+    info.label = msgPart().name().stripWhiteSpace();
+  if( info.label.isEmpty() )
+    info.label = msgPart().fileName();
+  bool typeBlacklisted = msgPart().typeStr().lower() == "multipart";
+  if ( !typeBlacklisted && msgPart().typeStr().lower() == "application" ) {
+    typeBlacklisted = msgPart().subtypeStr() == "pgp-encrypted"
+        || msgPart().subtypeStr().lower() == "pgp-signature"
+        || msgPart().subtypeStr().lower() == "pkcs7-mime"
+        || msgPart().subtypeStr().lower() == "pkcs7-signature";
+  }
+  typeBlacklisted = typeBlacklisted || this == topLevelParent();
+  bool firstTextChildOfEncapsulatedMsg = msgPart().typeStr().lower() == "text" &&
+                                         msgPart().subtypeStr().lower() == "plain" &&
+                                         parentNode() &&
+                                         parentNode()->msgPart().typeStr().lower() == "message";
+  typeBlacklisted = typeBlacklisted || firstTextChildOfEncapsulatedMsg;
+  info.displayInHeader = !info.label.isEmpty() && !info.icon.isEmpty() && !typeBlacklisted;
+  return info;
 }

@@ -333,10 +333,15 @@ namespace KMail {
     // ### bodypartformatters.
     if ( !mReader )
       return;
-    if ( attachmentStrategy() == AttachmentStrategy::hidden() &&
+
+
+    const AttachmentStrategy * as = attachmentStrategy();
+    if ( as && as->defaultDisplay( node ) == AttachmentStrategy::None &&
          !showOnlyOneMimePart() &&
-         node->parentNode() /* message is not an attachment */ )
+         node->parentNode() /* message is not an attachment */ ) {
+      node->setDisplayedHidden( true );
       return;
+    }
 
     bool asIcon = true;
     if ( showOnlyOneMimePart() )
@@ -345,19 +350,22 @@ namespace KMail {
       // window!
       asIcon = !node->hasContentDispositionInline();
     else if ( !result.neverDisplayInline() )
-      if ( const AttachmentStrategy * as = attachmentStrategy() )
+      if ( as )
         asIcon = as->defaultDisplay( node ) == AttachmentStrategy::AsIcon;
     // neither image nor text -> show as icon
-    if ( !result.isImage()
-         && node->type() != DwMime::kTypeText )
+    if ( !result.isImage() && node->type() != DwMime::kTypeText )
       asIcon = true;
     // if the image is not complete do not try to show it inline
     if ( result.isImage() && !node->msgPart().isComplete() )
       asIcon = true;
     if ( asIcon ) {
-      if ( attachmentStrategy() != AttachmentStrategy::hidden()
-           || showOnlyOneMimePart() )
+      if ( !( as && as->defaultDisplay( node ) == AttachmentStrategy::None ) ||
+           showOnlyOneMimePart() ) {
         writePartIcon( &node->msgPart(), node->nodeId() );
+      }
+      else {
+        node->setDisplayedHidden( true );
+      }
     } else if ( result.isImage() ) {
       node->setDisplayedEmbedded( true );
       writePartIcon( &node->msgPart(), node->nodeId(), true );
