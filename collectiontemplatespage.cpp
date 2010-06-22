@@ -88,7 +88,7 @@ void CollectionTemplatesPage::init()
 void CollectionTemplatesPage::load(const Collection & col)
 {
   mFolderCollection = FolderCollection::forCollection( col );
-  QString fid = mFolderCollection->idString();
+  const QString fid = mFolderCollection->idString();
 
   Templates t( fid );
 
@@ -102,7 +102,7 @@ void CollectionTemplatesPage::load(const Collection & col)
 void CollectionTemplatesPage::save(Collection &)
 {
   if ( mFolderCollection ) {
-    QString fid = mFolderCollection->idString();
+    const QString fid = mFolderCollection->idString();
     Templates t(fid);
 
     //kDebug() << "use custom templates for folder" << fid <<":" << mCustom->isChecked();
