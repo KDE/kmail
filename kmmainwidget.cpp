@@ -2467,12 +2467,8 @@ void KMMainWidget::slotSendQueuedVia( QAction* item )
 //-----------------------------------------------------------------------------
 void KMMainWidget::slotShowBusySplash()
 {
-  if ( mReaderWindowActive )
-  {
+  if ( mReaderWindowActive ) {
     mMsgView->displayBusyPage();
-    // hide widgets that are in the way:
-    if ( mMessagePane && mLongFolderList )
-      mMessagePane->hide();
   }
 }
 
