@@ -110,7 +110,6 @@ class MessageActions : public QObject
     void slotReplyAllToMsg();
     void slotNoQuoteReplyToMsg();
     void slotCreateTodo();
-    void slotSetMsgStatusNew();
     void slotSetMsgStatusUnread();
     void slotSetMsgStatusRead();
     void slotSetMsgStatusToAct();

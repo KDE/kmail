@@ -70,10 +70,8 @@ struct _statusNames {
 
 static struct _statusNames statusNames[] = {
   { "Important", MessageStatus::statusImportant() },
-  { "New", MessageStatus::statusNew() },
-  { "Unread", MessageStatus::statusNewAndUnread() },
+  { "Unread", MessageStatus::statusUnread() },
   { "Read", MessageStatus::statusRead() },
-  { "Old", MessageStatus::statusOld() },
   { "Deleted", MessageStatus::statusDeleted() },
   { "Replied", MessageStatus::statusReplied() },
   { "Forwarded", MessageStatus::statusForwarded() },

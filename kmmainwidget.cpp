@@ -418,16 +418,13 @@ void KMMainWidget::folderSelected( const Akonadi::Collection & col )
   if ( mGoToFirstUnreadMessageInSelectedFolder )
   {
     // the default action has been overridden from outside
-    mPreSelectionMode = MessageList::Core::PreSelectFirstNewOrUnreadCentered;
+    mPreSelectionMode = MessageList::Core::PreSelectFirstUnreadCentered;
   } else {
     // use the default action
     switch ( GlobalSettings::self()->actionEnterFolder() )
     {
-      case GlobalSettings::EnumActionEnterFolder::SelectFirstNew:
-        mPreSelectionMode = MessageList::Core::PreSelectFirstNewCentered;
-      break;
-      case GlobalSettings::EnumActionEnterFolder::SelectFirstUnreadNew:
-        mPreSelectionMode = MessageList::Core::PreSelectFirstNewOrUnreadCentered;
+      case GlobalSettings::EnumActionEnterFolder::SelectFirstUnread:
+        mPreSelectionMode = MessageList::Core::PreSelectFirstUnreadCentered;
       break;
       case GlobalSettings::EnumActionEnterFolder::SelectLastSelected:
         mPreSelectionMode = MessageList::Core::PreSelectLastSelected;
@@ -2010,11 +2007,6 @@ void KMMainWidget::setCurrentThreadStatus( const KPIM::MessageStatus &status, bo
   setMessageSetStatus( select, status, toggle );
 }
 
-void KMMainWidget::slotSetThreadStatusNew()
-{
-  setCurrentThreadStatus( MessageStatus::statusNew(), false );
-}
-
 void KMMainWidget::slotSetThreadStatusUnread()
 {
   setCurrentThreadStatus( MessageStatus::statusUnread(), false );
@@ -2595,7 +2587,7 @@ void KMMainWidget::slotSelectNextUnreadMessage()
   // If nobody complains, it stays like it is: if you complain enough maybe the masters will
   // decide to reconsider :)
   if ( !mMessagePane->selectNextMessageItem(
-      MessageList::Core::MessageTypeNewOrUnreadOnly,
+      MessageList::Core::MessageTypeUnreadOnly,
       MessageList::Core::ClearExistingSelection,
       true,  // center item
       /*GlobalSettings::self()->loopOnGotoUnread() == GlobalSettings::EnumLoopOnGotoUnread::LoopInCurrentFolder*/
@@ -2635,7 +2627,7 @@ void KMMainWidget::slotExtendSelectionToPreviousMessage()
 void KMMainWidget::slotSelectPreviousUnreadMessage()
 {
   if ( !mMessagePane->selectPreviousMessageItem(
-      MessageList::Core::MessageTypeNewOrUnreadOnly,
+      MessageList::Core::MessageTypeUnreadOnly,
       MessageList::Core::ClearExistingSelection,
       true,  // center item
       GlobalSettings::self()->loopOnGotoUnread() == GlobalSettings::EnumLoopOnGotoUnread::LoopInCurrentFolder
@@ -3244,12 +3236,6 @@ void KMMainWidget::setupActions()
   mMarkThreadAsReadAction->setHelpText(i18n("Mark all messages in the selected thread as read"));
   mThreadStatusMenu->addAction( mMarkThreadAsReadAction );
 
-  mMarkThreadAsNewAction = new KAction(KIcon("mail-mark-unread-new"), i18n("Mark Thread as &New"), this);
-  actionCollection()->addAction("thread_new", mMarkThreadAsNewAction );
-  connect(mMarkThreadAsNewAction, SIGNAL(triggered(bool) ), SLOT(slotSetThreadStatusNew()));
-  mMarkThreadAsNewAction->setHelpText( i18n("Mark all messages in the selected thread as new"));
-  mThreadStatusMenu->addAction( mMarkThreadAsNewAction );
-
   mMarkThreadAsUnreadAction = new KAction(KIcon("mail-mark-unread"), i18n("Mark Thread as &Unread"), this);
   actionCollection()->addAction("thread_unread", mMarkThreadAsUnreadAction );
   connect(mMarkThreadAsUnreadAction, SIGNAL(triggered(bool) ), SLOT(slotSetThreadStatusUnread()));
@@ -3698,7 +3684,6 @@ void KMMainWidget::updateMessageActionsDelayed()
   // in the toolbar
   mWatchThreadAction->setEnabled( thread_actions && flags_available );
   mIgnoreThreadAction->setEnabled( thread_actions && flags_available );
-  mMarkThreadAsNewAction->setEnabled( thread_actions );
   mMarkThreadAsReadAction->setEnabled( thread_actions );
   mMarkThreadAsUnreadAction->setEnabled( thread_actions );
   mToggleThreadToActAction->setEnabled( thread_actions && flags_available );

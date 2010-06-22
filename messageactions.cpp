@@ -119,13 +119,6 @@ MessageActions::MessageActions( KActionCollection *ac, QWidget* parent ) :
   mActionCollection->addAction( "status_read", action );
   mStatusMenu->addAction( action );
 
-  action = new KAction( KIcon("mail-mark-unread-new"), i18n("Mark Message as &New"), this );
-  action->setHelpText( i18n("Mark selected messages as new") );
-  connect( action, SIGNAL(triggered(bool)),
-           this, SLOT(slotSetMsgStatusNew()) );
-  mActionCollection->addAction( "status_new", action );
-  mStatusMenu->addAction( action );
-
   action = new KAction( KIcon("mail-mark-unread"), i18n("Mark Message as &Unread"), this );
   action->setHelpText( i18n("Mark selected messages as unread") );
   connect( action, SIGNAL(triggered(bool)),
@@ -440,11 +433,6 @@ void MessageActions::slotNoQuoteReplyToMsg()
     return;
   KMCommand *command = new KMNoQuoteReplyToCommand( mParent, mCurrentItem );
   command->start();
-}
-
-void MessageActions::slotSetMsgStatusNew()
-{
-  setMessageStatus( KPIM::MessageStatus::statusNew() );
 }
 
 void MessageActions::slotSetMsgStatusUnread()

@@ -304,7 +304,7 @@ void FolderTreeView::selectModelIndex( const QModelIndex & index )
   if ( index.isValid() ) {
     clearSelection();
     scrollTo( index );
-    selectionModel()->setCurrentIndex( index, QItemSelectionModel::NoUpdate );
+    selectionModel()->setCurrentIndex( index, QItemSelectionModel::Rows );
   }
 }
 

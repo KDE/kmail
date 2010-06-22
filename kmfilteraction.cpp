@@ -813,8 +813,6 @@ static const MessageStatus stati[] =
   MessageStatus::statusUnread(),
   MessageStatus::statusReplied(),
   MessageStatus::statusForwarded(),
-  MessageStatus::statusOld(),
-  MessageStatus::statusNew(),
   MessageStatus::statusWatched(),
   MessageStatus::statusIgnored(),
   MessageStatus::statusSpam(),
@@ -839,8 +837,6 @@ KMFilterActionSetStatus::KMFilterActionSetStatus()
   mParameterList.append( i18nc("msg status","Unread") );
   mParameterList.append( i18nc("msg status","Replied") );
   mParameterList.append( i18nc("msg status","Forwarded") );
-  mParameterList.append( i18nc("msg status","Old") );
-  mParameterList.append( i18nc("msg status","New") );
   mParameterList.append( i18nc("msg status","Watched") );
   mParameterList.append( i18nc("msg status","Ignored") );
   mParameterList.append( i18nc("msg status","Spam") );
