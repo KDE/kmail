@@ -69,7 +69,7 @@ void FolderCollectionMonitor::expireAllCollection( const QAbstractItemModel *mod
     const QModelIndex index = model->index( row, 0, parentIndex );
     const Akonadi::Collection collection = model->data( index, Akonadi::CollectionModel::CollectionRole ).value<Akonadi::Collection>();
 
-    if ( KMail::Util::isVirtualCollection( collection ) )
+    if ( !collection.isValid() || KMail::Util::isVirtualCollection( collection ) )
       continue;
 
     QSharedPointer<FolderCollection> col = FolderCollection::forCollection( collection );
