@@ -273,7 +273,7 @@ KMComposeWin::KMComposeWin( const KMime::Message::Ptr &aMsg, Composer::TemplateC
   connect( mEdtReplyTo, SIGNAL(completionModeChanged(KGlobalSettings::Completion)),
           SLOT(slotCompletionModeChanged(KGlobalSettings::Completion)) );
 
-  MessageComposer::RecipientsEditorNG* recipientsEditor = new MessageComposer::RecipientsEditorNG( mHeadersArea );
+  MessageComposer::RecipientsEditor* recipientsEditor = new MessageComposer::RecipientsEditor( mHeadersArea );
   recipientsEditor->setRecentAddressConfig( MessageComposer::MessageComposerSettings::self()->config() );
   connect( recipientsEditor,
            SIGNAL( completionModeChanged( KGlobalSettings::Completion ) ),
