@@ -120,11 +120,10 @@ FolderTreeWidget::FolderTreeWidget( QWidget *parent, KXMLGUIClient *xmlGuiClient
   d->entityOrderProxy->setSourceModel( d->filterTreeViewModel );
   KConfigGroup grp( KMKernel::config(), "CollectionTreeOrder" );
   d->entityOrderProxy->setOrderConfig( grp );
-
   d->folderTreeView->setModel( d->entityOrderProxy );
 
   if ( options & UseDistinctSelectionModel )
-    d->folderTreeView->setSelectionModel( new QItemSelectionModel( d->filterTreeViewModel, this ) );
+    d->folderTreeView->setSelectionModel( new QItemSelectionModel( d->entityOrderProxy, this ) );
 
   lay->addWidget( d->folderTreeView );
   if ( ( options & UseLineEditForFiltering ) ) {
