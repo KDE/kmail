@@ -37,7 +37,9 @@ class FolderSelectionDialog::FolderSelectionDialogPrivate
 {
 public:
   FolderSelectionDialogPrivate()
-    : folderTreeWidget( 0 ), mNotAllowToCreateNewFolder( false ), mUseGlobalSettings( true )
+    : folderTreeWidget( 0 ),
+      mNotAllowToCreateNewFolder( false ),
+      mUseGlobalSettings( true )
   {
   }
   QString mFilter;
@@ -205,7 +207,7 @@ void FolderSelectionDialog::readConfig()
   else
     resize( 500, 300 );
   if ( d->mUseGlobalSettings ) {
-    Akonadi::Collection::Id id = GlobalSettings::self()->lastSelectedFolder();
+    const Akonadi::Collection::Id id = GlobalSettings::self()->lastSelectedFolder();
     if ( id > -1 ) {
       const Akonadi::Collection col = KMKernel::self()->collectionFromId( id );
       d->folderTreeWidget->selectCollectionFolder( col );
@@ -245,7 +247,7 @@ void FolderSelectionDialog::keyPressEvent( QKeyEvent *e )
     break;
     default:
     {
-      QString s = e->text();
+      const QString s = e->text();
       if ( !s.isEmpty() && s.at( 0 ).isPrint() ) {
          d->mFilter += s;
         d->folderTreeWidget->applyFilter( d->mFilter );

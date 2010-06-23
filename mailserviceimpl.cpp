@@ -75,7 +75,8 @@ bool MailServiceImpl::sendMessage( const QString& from, const QString& to,
   KMail::Composer * cWin = KMail::makeComposer( msg );
 
   KUrl::List attachUrls;
-  for ( int i = 0, count = attachments.count(); i < count; ++i ) {
+  const int nbAttachments = attachments.count();
+  for ( int i = 0; i < nbAttachments; ++i ) {
     attachUrls += KUrl( attachments[i] );
   }
 
