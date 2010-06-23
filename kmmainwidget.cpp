@@ -275,14 +275,19 @@ K_GLOBAL_STATIC( KMMainWidget::PtrList, theMainWidgetList )
   if ( GlobalSettings::self()->checkOutOfOfficeOnStartup() )
     QTimer::singleShot( 0, this, SLOT(slotCheckVacation()) );
 
-  const KConfigGroup cfg( KMKernel::config(), "CollectionFolderView" );
-  mFolderTreeWidget->folderTreeView()->header()->restoreState( cfg.readEntry( "HeaderState", QByteArray() ) );
-  Akonadi::EntityTreeViewStateSaver* saver = new Akonadi::EntityTreeViewStateSaver(
-      mFolderTreeWidget->folderTreeView() );
-  saver->restoreState( cfg );
+  restoreCollectionFolderViewConfig();
 
   // must be the last line of the constructor:
   mStartupDone = true;
+}
+
+void KMMainWidget::restoreCollectionFolderViewConfig()
+{
+  const KConfigGroup cfg( KMKernel::config(), "CollectionFolderView" );
+  mFolderTreeWidget->folderTreeView()->header()->restoreState( cfg.readEntry( "HeaderState", QByteArray() ) );
+  Akonadi::EntityTreeViewStateSaver* saver = new Akonadi::EntityTreeViewStateSaver(mFolderTreeWidget->folderTreeView() );
+  saver->restoreState( cfg );
+
 }
 
 
@@ -834,6 +839,7 @@ void KMMainWidget::readConfig()
     if( layoutChanged ) {
       deleteWidgets();
       createWidgets();
+      restoreCollectionFolderViewConfig();
     }
   }
 

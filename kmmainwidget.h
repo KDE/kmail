@@ -282,6 +282,7 @@ class KMAIL_EXPORT KMMainWidget : public QWidget
     void captionChangeRequest( const QString &caption );
 
   protected:
+    void restoreCollectionFolderViewConfig();
     void setupActions();
     void createWidgets();
     void deleteWidgets();
