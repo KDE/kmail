@@ -72,7 +72,8 @@ void FolderTreeView::init( bool showUnreadCount )
            SLOT( slotHeaderContextMenuRequested( const QPoint& ) ) );
   readConfig();
 
-  mCollectionStatisticsDelegate = new Akonadi::CollectionStatisticsDelegate(this);
+  mCollectionStatisticsDelegate = new Akonadi::CollectionStatisticsDelegate( this );
+  mCollectionStatisticsDelegate->setProgressAnimationEnabled( true );
   setItemDelegate(mCollectionStatisticsDelegate);
   mCollectionStatisticsDelegate->setUnreadCountShown( showUnreadCount && !header()->isSectionHidden( 1 ) );
 }
@@ -304,7 +305,7 @@ void FolderTreeView::selectModelIndex( const QModelIndex & index )
   if ( index.isValid() ) {
     clearSelection();
     scrollTo( index );
-    selectionModel()->setCurrentIndex( index, QItemSelectionModel::NoUpdate );
+    selectionModel()->setCurrentIndex( index, QItemSelectionModel::Rows );
   }
 }
 

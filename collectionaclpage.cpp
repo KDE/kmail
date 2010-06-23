@@ -324,8 +324,8 @@ void CollectionAclPage::load(const Akonadi::Collection & col)
     if ( !col.isValid() ) // new collection? everything is new then
       item->setModified( true );
   }
-
   OrgKdeAkonadiImapSettingsInterface *imapSettingsInterface = KMail::Util::createImapSettingsInterface( col.resource() );
+  
   if ( imapSettingsInterface->isValid() ) {
     QDBusReply<QString> reply = imapSettingsInterface->userName();
     if ( reply.isValid() ) {

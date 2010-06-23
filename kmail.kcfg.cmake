@@ -13,8 +13,7 @@
         <label></label>
         <whatsthis></whatsthis>
         <choices>
-          <choice name="SelectFirstNew"/>
-          <choice name="SelectFirstUnreadNew"/>
+          <choice name="SelectFirstUnread"/>
           <choice name="SelectLastSelected"/>
           <choice name="SelectNewest"/>
           <choice name="SelectOldest"/>

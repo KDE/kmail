@@ -418,16 +418,13 @@ void KMMainWidget::folderSelected( const Akonadi::Collection & col )
   if ( mGoToFirstUnreadMessageInSelectedFolder )
   {
     // the default action has been overridden from outside
-    mPreSelectionMode = MessageList::Core::PreSelectFirstNewOrUnreadCentered;
+    mPreSelectionMode = MessageList::Core::PreSelectFirstUnreadCentered;
   } else {
     // use the default action
     switch ( GlobalSettings::self()->actionEnterFolder() )
     {
-      case GlobalSettings::EnumActionEnterFolder::SelectFirstNew:
-        mPreSelectionMode = MessageList::Core::PreSelectFirstNewCentered;
-      break;
-      case GlobalSettings::EnumActionEnterFolder::SelectFirstUnreadNew:
-        mPreSelectionMode = MessageList::Core::PreSelectFirstNewOrUnreadCentered;
+      case GlobalSettings::EnumActionEnterFolder::SelectFirstUnread:
+        mPreSelectionMode = MessageList::Core::PreSelectFirstUnreadCentered;
       break;
       case GlobalSettings::EnumActionEnterFolder::SelectLastSelected:
         mPreSelectionMode = MessageList::Core::PreSelectLastSelected;
@@ -450,7 +447,7 @@ void KMMainWidget::folderSelected( const Akonadi::Collection & col )
 
   if (mMsgView)
     mMsgView->clear(true);
-  bool newFolder = mCurrentFolder && ( mCurrentFolder->collection() != col );
+  const bool newFolder = mCurrentFolder && ( mCurrentFolder->collection() != col );
   // Re-enable the msg list and quicksearch if we're showing a splash
   // screen. This is true either if there's no active folder, or if we
   // have a timer that is no longer active (i.e. it has already fired)
@@ -458,7 +455,7 @@ void KMMainWidget::folderSelected( const Akonadi::Collection & col )
   // when the new folder is also an IMAP folder, because that's an
   // async operation and we don't want flicker if it results in just
   // a new splash.
-  bool isNewImapFolder = col.isValid() && KMKernel::self()->isImapFolder( col ) && newFolder;
+  const bool isNewImapFolder = col.isValid() && KMKernel::self()->isImapFolder( col ) && newFolder;
   if( ( !mCurrentFolder  )
       || ( !isNewImapFolder && mShowBusySplashTimer )
       || ( newFolder && mShowingOfflineScreen && !( isNewImapFolder && kmkernel->isOffline() ) ) ) {
@@ -1382,7 +1379,7 @@ void KMMainWidget::slotNewFromTemplate( QAction *action )
 
   if ( !mTemplateFolder.isValid() )
     return;
-  Akonadi::Item item = action->data().value<Akonadi::Item>();
+  const Akonadi::Item item = action->data().value<Akonadi::Item>();
   newFromTemplate( item );
 }
 
@@ -1690,7 +1687,7 @@ void KMMainWidget::slotMessageQueuedOrDrafted()
 //-----------------------------------------------------------------------------
 void KMMainWidget::slotForwardInlineMsg()
 {
-  QList<Akonadi::Item> selectedMessages = mMessagePane->selectionAsMessageItemList();
+  const QList<Akonadi::Item> selectedMessages = mMessagePane->selectionAsMessageItemList();
   if ( selectedMessages.isEmpty() )
     return;
   KMForwardCommand * command = new KMForwardCommand(
@@ -1704,7 +1701,7 @@ void KMMainWidget::slotForwardInlineMsg()
 //-----------------------------------------------------------------------------
 void KMMainWidget::slotForwardAttachedMsg()
 {
-  QList<Akonadi::Item> selectedMessages = mMessagePane->selectionAsMessageItemList();
+  const QList<Akonadi::Item> selectedMessages = mMessagePane->selectionAsMessageItemList();
   if ( selectedMessages.isEmpty() )
     return;
   KMForwardAttachedCommand * command = new KMForwardAttachedCommand(
@@ -1725,7 +1722,7 @@ void KMMainWidget::slotUseTemplate()
 //-----------------------------------------------------------------------------
 void KMMainWidget::slotResendMsg()
 {
-  Akonadi::Item msg = mMessagePane->currentItem();
+  const Akonadi::Item msg = mMessagePane->currentItem();
   if ( !msg.isValid() )
     return;
   KMCommand *command = new KMResendMessageCommand( this, msg );
@@ -1899,7 +1896,7 @@ void KMMainWidget::slotCopySelectedMessagesToFolder()
 
 void KMMainWidget::copySelectedMessagesToFolder( const Akonadi::Collection& dest )
 {
-  QList<Akonadi::Item > lstMsg = mMessagePane->selectionAsMessageItemList();
+  const QList<Akonadi::Item > lstMsg = mMessagePane->selectionAsMessageItemList();
   if ( !lstMsg.isEmpty() ) {
     copyMessageSelected( lstMsg, dest );
   }
@@ -1921,7 +1918,6 @@ void KMMainWidget::trashMessageSelected( MessageList::Core::MessageItemSetRefere
       command, SIGNAL( moveDone( KMMoveCommand * ) ),
       this, SLOT( slotTrashMessagesCompleted( KMMoveCommand * ) )
     );
-
   command->start();
   BroadcastStatus::instance()->setStatusMsg( i18n( "Moving messages to trash..." ) );
 }
@@ -1976,7 +1972,7 @@ void KMMainWidget::toggleMessageSetTag( const QList<Akonadi::Item> &select, cons
 void KMMainWidget::slotUpdateMessageTagList( const QString &taglabel )
 {
   // Create a persistent set from the current thread.
-  QList<Akonadi::Item> selectedMessages = mMessagePane->selectionAsMessageItemList();
+  const QList<Akonadi::Item> selectedMessages = mMessagePane->selectionAsMessageItemList();
   if ( selectedMessages.isEmpty() )
     return;
   toggleMessageSetTag( selectedMessages, taglabel );
@@ -2009,11 +2005,6 @@ void KMMainWidget::setCurrentThreadStatus( const KPIM::MessageStatus &status, bo
   if ( select.isEmpty() )
     return;
   setMessageSetStatus( select, status, toggle );
-}
-
-void KMMainWidget::slotSetThreadStatusNew()
-{
-  setCurrentThreadStatus( MessageStatus::statusNew(), false );
 }
 
 void KMMainWidget::slotSetThreadStatusUnread()
@@ -2053,7 +2044,7 @@ void KMMainWidget::slotSetThreadStatusIgnored()
 //-----------------------------------------------------------------------------
 void KMMainWidget::slotRedirectMsg()
 {
-  Akonadi::Item msg = mMessagePane->currentItem();
+  const Akonadi::Item msg = mMessagePane->currentItem();
   if ( !msg.isValid() )
     return;
   KMCommand *command = new KMRedirectCommand( this, msg );
@@ -2064,7 +2055,7 @@ void KMMainWidget::slotRedirectMsg()
 //-----------------------------------------------------------------------------
 void KMMainWidget::slotCustomReplyToMsg( const QString &tmpl )
 {
-  Akonadi::Item msg = mMessagePane->currentItem();
+  const Akonadi::Item msg = mMessagePane->currentItem();
   if ( !msg.isValid() )
     return;
 
@@ -2082,11 +2073,11 @@ void KMMainWidget::slotCustomReplyToMsg( const QString &tmpl )
 //-----------------------------------------------------------------------------
 void KMMainWidget::slotCustomReplyAllToMsg( const QString &tmpl )
 {
-  Akonadi::Item msg = mMessagePane->currentItem();
+  const Akonadi::Item msg = mMessagePane->currentItem();
   if ( !msg.isValid() )
     return;
 
-  QString text = mMsgView? mMsgView->copyText() : "";
+  const QString text = mMsgView? mMsgView->copyText() : "";
 
   kDebug() << "Reply to All with template:" << tmpl;
 
@@ -2117,7 +2108,7 @@ void KMMainWidget::slotCustomForwardMsg( const QString &tmpl )
 //-----------------------------------------------------------------------------
 void KMMainWidget::slotNoQuoteReplyToMsg()
 {
-  Akonadi::Item msg = mMessagePane->currentItem();
+  const Akonadi::Item msg = mMessagePane->currentItem();
   if ( !msg.isValid() )
     return;
 
@@ -2128,7 +2119,7 @@ void KMMainWidget::slotNoQuoteReplyToMsg()
 //-----------------------------------------------------------------------------
 void KMMainWidget::slotSubjectFilter()
 {
-  KMime::Message::Ptr msg = mMessagePane->currentMessage();
+  const KMime::Message::Ptr msg = mMessagePane->currentMessage();
   if ( !msg )
     return;
 
@@ -2139,7 +2130,7 @@ void KMMainWidget::slotSubjectFilter()
 //-----------------------------------------------------------------------------
 void KMMainWidget::slotMailingListFilter()
 {
-  Akonadi::Item msg = mMessagePane->currentItem();
+  const Akonadi::Item msg = mMessagePane->currentItem();
   if ( !msg.isValid() )
     return;
 
@@ -2372,7 +2363,7 @@ void KMMainWidget::slotConfigChanged()
 //-----------------------------------------------------------------------------
 void KMMainWidget::slotSaveMsg()
 {
-  QList<Akonadi::Item> selectedMessages = mMessagePane->selectionAsMessageItemList();
+  const QList<Akonadi::Item> selectedMessages = mMessagePane->selectionAsMessageItemList();
   if ( selectedMessages.isEmpty() )
     return;
   KMSaveMsgCommand *saveCommand = new KMSaveMsgCommand( this, selectedMessages );
@@ -2394,7 +2385,7 @@ void KMMainWidget::slotOpenMsg()
 //-----------------------------------------------------------------------------
 void KMMainWidget::slotSaveAttachments()
 {
-  QList<Akonadi::Item> selectedMessages = mMessagePane->selectionAsMessageItemList();
+  const QList<Akonadi::Item> selectedMessages = mMessagePane->selectionAsMessageItemList();
   if ( selectedMessages.isEmpty() )
     return;
 
@@ -2459,7 +2450,7 @@ void KMMainWidget::slotSendQueuedVia( QAction* item )
     return;
   }
 
-  QStringList availTransports= MailTransport::TransportManager::self()->transportNames();
+  const QStringList availTransports= MailTransport::TransportManager::self()->transportNames();
   if (availTransports.contains(item->text()))
     kmkernel->msgSender()->sendQueued( item->text() );
 }
@@ -2467,12 +2458,8 @@ void KMMainWidget::slotSendQueuedVia( QAction* item )
 //-----------------------------------------------------------------------------
 void KMMainWidget::slotShowBusySplash()
 {
-  if ( mReaderWindowActive )
-  {
+  if ( mReaderWindowActive ) {
     mMsgView->displayBusyPage();
-    // hide widgets that are in the way:
-    if ( mMessagePane && mLongFolderList )
-      mMessagePane->hide();
   }
 }
 
@@ -2600,7 +2587,7 @@ void KMMainWidget::slotSelectNextUnreadMessage()
   // If nobody complains, it stays like it is: if you complain enough maybe the masters will
   // decide to reconsider :)
   if ( !mMessagePane->selectNextMessageItem(
-      MessageList::Core::MessageTypeNewOrUnreadOnly,
+      MessageList::Core::MessageTypeUnreadOnly,
       MessageList::Core::ClearExistingSelection,
       true,  // center item
       /*GlobalSettings::self()->loopOnGotoUnread() == GlobalSettings::EnumLoopOnGotoUnread::LoopInCurrentFolder*/
@@ -2640,7 +2627,7 @@ void KMMainWidget::slotExtendSelectionToPreviousMessage()
 void KMMainWidget::slotSelectPreviousUnreadMessage()
 {
   if ( !mMessagePane->selectPreviousMessageItem(
-      MessageList::Core::MessageTypeNewOrUnreadOnly,
+      MessageList::Core::MessageTypeUnreadOnly,
       MessageList::Core::ClearExistingSelection,
       true,  // center item
       GlobalSettings::self()->loopOnGotoUnread() == GlobalSettings::EnumLoopOnGotoUnread::LoopInCurrentFolder
@@ -2859,7 +2846,7 @@ void KMMainWidget::slotDelayedMessagePopup( KJob *job )
 void KMMainWidget::getAccountMenu()
 {
   mActMenu->clear();
-  Akonadi::AgentInstance::List lst = KMail::Util::agentInstances();
+  const Akonadi::AgentInstance::List lst = KMail::Util::agentInstances();
   foreach ( const Akonadi::AgentInstance& type, lst )
   {
     // Explicitly make a copy, as we're not changing values of the list but only
@@ -2872,10 +2859,9 @@ void KMMainWidget::getAccountMenu()
 //-----------------------------------------------------------------------------
 void KMMainWidget::getTransportMenu()
 {
-  QStringList availTransports;
 
   mSendMenu->clear();
-  availTransports = MailTransport::TransportManager::self()->transportNames();
+  QStringList availTransports = MailTransport::TransportManager::self()->transportNames();
   QStringList::Iterator it;
   for(it = availTransports.begin(); it != availTransports.end() ; ++it)
     mSendMenu->addAction((*it).replace('&', "&&"));
@@ -3249,12 +3235,6 @@ void KMMainWidget::setupActions()
   connect(mMarkThreadAsReadAction, SIGNAL(triggered(bool) ), SLOT(slotSetThreadStatusRead()));
   mMarkThreadAsReadAction->setHelpText(i18n("Mark all messages in the selected thread as read"));
   mThreadStatusMenu->addAction( mMarkThreadAsReadAction );
-
-  mMarkThreadAsNewAction = new KAction(KIcon("mail-mark-unread-new"), i18n("Mark Thread as &New"), this);
-  actionCollection()->addAction("thread_new", mMarkThreadAsNewAction );
-  connect(mMarkThreadAsNewAction, SIGNAL(triggered(bool) ), SLOT(slotSetThreadStatusNew()));
-  mMarkThreadAsNewAction->setHelpText( i18n("Mark all messages in the selected thread as new"));
-  mThreadStatusMenu->addAction( mMarkThreadAsNewAction );
 
   mMarkThreadAsUnreadAction = new KAction(KIcon("mail-mark-unread"), i18n("Mark Thread as &Unread"), this);
   actionCollection()->addAction("thread_unread", mMarkThreadAsUnreadAction );
@@ -3704,7 +3684,6 @@ void KMMainWidget::updateMessageActionsDelayed()
   // in the toolbar
   mWatchThreadAction->setEnabled( thread_actions && flags_available );
   mIgnoreThreadAction->setEnabled( thread_actions && flags_available );
-  mMarkThreadAsNewAction->setEnabled( thread_actions );
   mMarkThreadAsReadAction->setEnabled( thread_actions );
   mMarkThreadAsUnreadAction->setEnabled( thread_actions );
   mToggleThreadToActAction->setEnabled( thread_actions && flags_available );
@@ -3872,7 +3851,7 @@ void KMMainWidget::updateFolderMenu()
     addToFavorite << akonadiStandardAction( Akonadi::StandardActionManager::AddToFavoriteCollections );
   mGUIClient->unplugActionList( "akonadi_collection_add_to_favorites_actionlist" );
   mGUIClient->plugActionList( "akonadi_collection_add_to_favorites_actionlist", addToFavorite );
-  
+
   mPreferHtmlLoadExtAction->setEnabled( mFolderTreeWidget->folderTreeView()->currentFolder().isValid() && (mHtmlPref ? !mFolderHtmlPref : mFolderHtmlPref) ? true : false );
   mPreferHtmlAction->setChecked( mHtmlPref ? !mFolderHtmlPref : mFolderHtmlPref );
   mPreferHtmlLoadExtAction->setChecked( mHtmlLoadExtPref ? !mFolderHtmlLoadExtPref : mFolderHtmlLoadExtPref );

@@ -385,7 +385,7 @@ void KMReaderWin::slotTouchMessage()
   MessageStatus status;
   status.setStatusFromFlags( message().flags() );
 
-  if ( !status.isNew() && !status.isUnread() )
+  if ( !status.isUnread() )
     return;
 
   Akonadi::Item::List items;
@@ -626,7 +626,7 @@ void KMReaderWin::setMessage( const Akonadi::Item &item, Viewer::UpdateMode upda
   if ( item.isValid() ) {
     MessageStatus status;
     status.setStatusFromFlags( item.flags() );
-    if ( ( status.isUnread() || status.isNew() ) && MessageViewer::GlobalSettings::self()->delayedMarkAsRead() ) {
+    if ( status.isUnread() && MessageViewer::GlobalSettings::self()->delayedMarkAsRead() ) {
       if (MessageViewer::GlobalSettings::self()->delayedMarkTime() != 0 )
         mDelayedMarkTimer.start( MessageViewer::GlobalSettings::self()->delayedMarkTime() * 1000 );
       else

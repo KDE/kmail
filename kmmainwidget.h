@@ -355,7 +355,6 @@ class KMAIL_EXPORT KMMainWidget : public QWidget
     void slotCollapseThread();
     void slotCollapseAllThreads();
     void slotShowMsgSrc();
-    void slotSetThreadStatusNew();
     void slotSetThreadStatusUnread();
     void slotSetThreadStatusRead();
     void slotSetThreadStatusImportant();
@@ -536,7 +535,6 @@ private:
     KActionMenu *mThreadStatusMenu, *mApplyFilterActionsMenu;
     KAction *mCopyActionMenu;
     KAction *mMoveActionMenu;
-    KAction *mMarkThreadAsNewAction;
     KAction *mMarkThreadAsReadAction;
     KAction *mMarkThreadAsUnreadAction;
     KToggleAction *mToggleThreadImportantAction;
