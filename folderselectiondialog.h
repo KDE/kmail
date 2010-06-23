@@ -65,7 +65,7 @@ private slots:
 
 protected:
   virtual void keyPressEvent( QKeyEvent *e );
-  void readConfig( bool notUseGlobalSettings );
+  void readConfig();
   void writeConfig();
   bool canCreateCollection( Akonadi::Collection & parentCol );
 

@@ -37,12 +37,13 @@ class FolderSelectionDialog::FolderSelectionDialogPrivate
 {
 public:
   FolderSelectionDialogPrivate()
-    : folderTreeWidget( 0 ), mNotAllowToCreateNewFolder( false )
+    : folderTreeWidget( 0 ), mNotAllowToCreateNewFolder( false ), mUseGlobalSettings( true )
   {
   }
   QString mFilter;
   FolderTreeWidget *folderTreeWidget;
   bool mNotAllowToCreateNewFolder;
+  bool mUseGlobalSettings;
 };
 
 FolderSelectionDialog::FolderSelectionDialog( QWidget *parent, SelectionFolderOptions options )
@@ -99,8 +100,8 @@ FolderSelectionDialog::FolderSelectionDialog( QWidget *parent, SelectionFolderOp
 
   connect( d->folderTreeWidget->folderTreeView(), SIGNAL( doubleClicked(const QModelIndex&) ),
            this, SLOT( accept() ) );
-
-  readConfig( options & NotUseGlobalSettings );
+  d->mUseGlobalSettings = !( options & NotUseGlobalSettings );
+  readConfig();
 
   d->folderTreeWidget->folderTreeView()->expandAll();
 }
@@ -193,7 +194,7 @@ Akonadi::Collection::List FolderSelectionDialog::selectedCollections() const
 
 static const char * myConfigGroupName = "FolderSelectionDialog";
 
-void FolderSelectionDialog::readConfig( bool noUseGlobalSetting )
+void FolderSelectionDialog::readConfig()
 {
   KSharedConfigPtr config = KGlobal::config();
   KConfigGroup group( config, myConfigGroupName );
@@ -203,7 +204,7 @@ void FolderSelectionDialog::readConfig( bool noUseGlobalSetting )
     resize( size );
   else
     resize( 500, 300 );
-  if ( !noUseGlobalSetting ) {
+  if ( d->mUseGlobalSettings ) {
     Akonadi::Collection::Id id = GlobalSettings::self()->lastSelectedFolder();
     if ( id > -1 ) {
       const Akonadi::Collection col = KMKernel::self()->collectionFromId( id );
@@ -219,10 +220,11 @@ void FolderSelectionDialog::writeConfig()
   KConfigGroup group( config, myConfigGroupName );
   group.writeEntry( "Size", size() );
 
-  Akonadi::Collection col = selectedCollection();
-  if ( col.isValid() )
-    GlobalSettings::self()->setLastSelectedFolder( col.id() );
-
+  if ( d->mUseGlobalSettings ) {
+    Akonadi::Collection col = selectedCollection();
+    if ( col.isValid() )
+      GlobalSettings::self()->setLastSelectedFolder( col.id() );
+  }
 }
 
 void FolderSelectionDialog::keyPressEvent( QKeyEvent *e )
