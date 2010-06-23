@@ -80,9 +80,9 @@
     </group>
 
     <group name="FolderSelectionDialog">
-      <entry name="LastSelectedFolder" type="String">
+      <entry name="LastSelectedFolder" type="LongLong">
         <whatsthis>The most recently selected folder in the folder selection dialog.</whatsthis>
-        <default>inbox</default>
+        <default>-1</default>
       </entry>
 
     </group>

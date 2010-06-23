@@ -77,6 +77,7 @@ void FolderRequester::slotOpenDialog()
 {
   FolderSelectionDialog::SelectionFolderOptions options = FolderSelectionDialog::EnableCheck ;
   options |= FolderSelectionDialog::HideVirtualFolder;
+  options |= FolderSelectionDialog::NotUseGlobalSettings;
   if ( mNotCreateNewFolder )
     options |= FolderSelectionDialog::NotAllowToCreateNewFolder;
   if ( !mShowImapFolders )

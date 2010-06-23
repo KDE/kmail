@@ -17,6 +17,8 @@
 */
 
 #include "folderselectiondialog.h"
+#include "globalsettings.h"
+#include "kmkernel.h"
 #include <QKeyEvent>
 #include <kinputdialog.h>
 #include <kmessagebox.h>
@@ -97,7 +99,9 @@ FolderSelectionDialog::FolderSelectionDialog( QWidget *parent, SelectionFolderOp
 
   connect( d->folderTreeWidget->folderTreeView(), SIGNAL( doubleClicked(const QModelIndex&) ),
            this, SLOT( accept() ) );
-  readConfig();
+
+  readConfig( options & NotUseGlobalSettings );
+
   d->folderTreeWidget->folderTreeView()->expandAll();
 }
 
@@ -189,7 +193,7 @@ Akonadi::Collection::List FolderSelectionDialog::selectedCollections() const
 
 static const char * myConfigGroupName = "FolderSelectionDialog";
 
-void FolderSelectionDialog::readConfig()
+void FolderSelectionDialog::readConfig( bool noUseGlobalSetting )
 {
   KSharedConfigPtr config = KGlobal::config();
   KConfigGroup group( config, myConfigGroupName );
@@ -199,6 +203,14 @@ void FolderSelectionDialog::readConfig()
     resize( size );
   else
     resize( 500, 300 );
+  if ( !noUseGlobalSetting ) {
+    Akonadi::Collection::Id id = GlobalSettings::self()->lastSelectedFolder();
+    if ( id > -1 ) {
+      const Akonadi::Collection col = KMKernel::self()->collectionFromId( id );
+      d->folderTreeWidget->selectCollectionFolder( col );
+    }
+  }
+
 }
 
 void FolderSelectionDialog::writeConfig()
@@ -206,6 +218,11 @@ void FolderSelectionDialog::writeConfig()
   KSharedConfig::Ptr config = KGlobal::config();
   KConfigGroup group( config, myConfigGroupName );
   group.writeEntry( "Size", size() );
+
+  Akonadi::Collection col = selectedCollection();
+  if ( col.isValid() )
+    GlobalSettings::self()->setLastSelectedFolder( col.id() );
+
 }
 
 void FolderSelectionDialog::keyPressEvent( QKeyEvent *e )

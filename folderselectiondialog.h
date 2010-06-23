@@ -40,7 +40,8 @@ public:
     HideVirtualFolder = 4,
     NotAllowToCreateNewFolder = 8,
     HideOutboxFolder = 16,
-    HideImapFolder = 32
+    HideImapFolder = 32,
+    NotUseGlobalSettings = 64
   };
   Q_DECLARE_FLAGS( SelectionFolderOptions, SelectionFolderOption )
 
@@ -64,7 +65,7 @@ private slots:
 
 protected:
   virtual void keyPressEvent( QKeyEvent *e );
-  void readConfig();
+  void readConfig( bool notUseGlobalSettings );
   void writeConfig();
   bool canCreateCollection( Akonadi::Collection & parentCol );
 
