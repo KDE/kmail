@@ -1485,11 +1485,11 @@ void KMMainWidget::slotEmptyFolder()
   QString str;
 
   if (!mCurrentFolder) return;
-  bool isTrash = kmkernel->folderIsTrash( mCurrentFolder->collection() );
+  const bool isTrash = kmkernel->folderIsTrash( mCurrentFolder->collection() );
   if (mConfirmEmpty)
   {
-    QString title = (isTrash) ? i18n("Empty Trash") : i18n("Move to Trash");
-    QString text = (isTrash) ?
+    const QString title = (isTrash) ? i18n("Empty Trash") : i18n("Move to Trash");
+    const QString text = (isTrash) ?
       i18n("Are you sure you want to empty the trash folder?") :
       i18n("<qt>Are you sure you want to move all messages from "
            "folder <b>%1</b> to the trash?</qt>", Qt::escape( mCurrentFolder->name() ) );
