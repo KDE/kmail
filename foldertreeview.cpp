@@ -78,6 +78,11 @@ void FolderTreeView::init( bool showUnreadCount )
   mCollectionStatisticsDelegate->setUnreadCountShown( showUnreadCount && !header()->isSectionHidden( 1 ) );
 }
 
+void FolderTreeView::showStatisticAnimation( bool anim )
+{
+  mCollectionStatisticsDelegate->setProgressAnimationEnabled( anim );
+}
+
 void FolderTreeView::writeConfig()
 {
   KConfigGroup myGroup( KMKernel::config(), "MainFolderView");

@@ -726,7 +726,7 @@ Akonadi::Item SearchWindow::message()
 //-----------------------------------------------------------------------------
 void SearchWindow::updateContextMenuActions()
 {
-    int count = selectedMessages().count();
+    const int count = selectedMessages().count();
     bool single_actions = count == 1;
     mReplyAction->setEnabled( single_actions );
     mReplyAllAction->setEnabled( single_actions );

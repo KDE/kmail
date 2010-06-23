@@ -45,6 +45,7 @@ public:
   void selectNextUnreadFolder( bool confirm = false);
   void selectPrevUnreadFolder( bool confirm = false);
 
+  void showStatisticAnimation( bool anim );
 
   void disableContextMenuAndExtraColumn();
 

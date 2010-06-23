@@ -947,6 +947,7 @@ void KMMainWidget::createWidgets()
   //
   FolderTreeWidget::TreeViewOptions opt = FolderTreeWidget::ShowUnreadCount;
   opt |= FolderTreeWidget::UseLineEditForFiltering;
+  opt |= FolderTreeWidget::ShowCollectionStatisticAnimation;
   mFolderTreeWidget = new FolderTreeWidget( this, mGUIClient, opt );
 
   connect( mFolderTreeWidget->folderTreeView(), SIGNAL( currentChanged( const Akonadi::Collection & ) ),

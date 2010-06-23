@@ -72,6 +72,8 @@ FolderTreeWidget::FolderTreeWidget( QWidget *parent, KXMLGUIClient *xmlGuiClient
   Akonadi::AttributeFactory::registerAttribute<Akonadi::ImapAclAttribute>();
 
   d->folderTreeView = new FolderTreeView( xmlGuiClient, this, options & ShowUnreadCount );
+  d->folderTreeView->showStatisticAnimation( options & ShowCollectionStatisticAnimation );
+
   connect( d->folderTreeView, SIGNAL( manualSortingChanged( bool ) ), this, SLOT( slotManualSortingChanged( bool ) ) );
 
   QVBoxLayout *lay = new QVBoxLayout( this );
