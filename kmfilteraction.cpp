@@ -1487,8 +1487,13 @@ KMFilterActionMove::KMFilterActionMove()
 
 KMFilterAction::ReturnCode KMFilterActionMove::process( const Akonadi::Item &item ) const
 {
-  if ( !mFolder.isValid() )
-    return ErrorButGoOn;
+  if ( !mFolder.isValid() ) {
+    Akonadi::Collection targetFolder = kmkernel->collectionFromId( mFolderName );
+    if( !targetFolder.isValid() )
+      return ErrorButGoOn;
+    MessageProperty::setFilterFolder( item, targetFolder );
+    return GoOn;
+  }
   MessageProperty::setFilterFolder( item, mFolder );
   return GoOn;
 }
