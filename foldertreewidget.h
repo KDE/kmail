@@ -51,12 +51,13 @@ public:
     None = 0,
     ShowUnreadCount = 1,
     UseLineEditForFiltering = 2,
-    UseDistinctSelectionModel = 4
+    UseDistinctSelectionModel = 4,
+    ShowCollectionStatisticAnimation = 8
   };
   Q_DECLARE_FLAGS( TreeViewOptions, TreeViewOption )
 
   FolderTreeWidget( QWidget *parent = 0, KXMLGUIClient *xmlGuiClient = 0,
-                    TreeViewOptions option = ShowUnreadCount,
+                    TreeViewOptions option = (TreeViewOptions) (ShowUnreadCount|ShowCollectionStatisticAnimation),
                     ReadableCollectionProxyModel::ReadableCollectionOptions optReadableProxy = ReadableCollectionProxyModel::None );
   ~FolderTreeWidget();
 

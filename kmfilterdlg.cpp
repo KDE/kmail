@@ -542,7 +542,7 @@ void KMFilterDlg::slotApplicableAccountsChanged()
     QTreeWidgetItemIterator it( mAccountList );
 
     while( QTreeWidgetItem *item = *it ) {
-      QString id = item->text( 2 );
+      const QString id = item->text( 2 );
       mFilter->setApplyOnAccount( id, item->checkState( 0 ) == Qt::Checked );
       ++it;
     }

@@ -136,7 +136,7 @@ void KMReaderMainWin::showMessage( const QString & encoding, const Akonadi::Item
   mMsg = msg;
   mMsgActions->setCurrentMessage( msg );
 
-  Akonadi::Collection parent = msg.parentCollection();
+  const Akonadi::Collection parent = msg.parentCollection();
   const bool canChange = parent.isValid() ? !( parent.rights() & Akonadi::Collection::ReadOnly ) : false;
   mTrashAction->setEnabled( canChange );
 

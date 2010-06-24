@@ -275,14 +275,19 @@ K_GLOBAL_STATIC( KMMainWidget::PtrList, theMainWidgetList )
   if ( GlobalSettings::self()->checkOutOfOfficeOnStartup() )
     QTimer::singleShot( 0, this, SLOT(slotCheckVacation()) );
 
-  const KConfigGroup cfg( KMKernel::config(), "CollectionFolderView" );
-  mFolderTreeWidget->folderTreeView()->header()->restoreState( cfg.readEntry( "HeaderState", QByteArray() ) );
-  Akonadi::EntityTreeViewStateSaver* saver = new Akonadi::EntityTreeViewStateSaver(
-      mFolderTreeWidget->folderTreeView() );
-  saver->restoreState( cfg );
+  restoreCollectionFolderViewConfig();
 
   // must be the last line of the constructor:
   mStartupDone = true;
+}
+
+void KMMainWidget::restoreCollectionFolderViewConfig()
+{
+  const KConfigGroup cfg( KMKernel::config(), "CollectionFolderView" );
+  mFolderTreeWidget->folderTreeView()->header()->restoreState( cfg.readEntry( "HeaderState", QByteArray() ) );
+  Akonadi::EntityTreeViewStateSaver* saver = new Akonadi::EntityTreeViewStateSaver(mFolderTreeWidget->folderTreeView() );
+  saver->restoreState( cfg );
+
 }
 
 
@@ -834,6 +839,7 @@ void KMMainWidget::readConfig()
     if( layoutChanged ) {
       deleteWidgets();
       createWidgets();
+      restoreCollectionFolderViewConfig();
     }
   }
 
@@ -947,6 +953,7 @@ void KMMainWidget::createWidgets()
   //
   FolderTreeWidget::TreeViewOptions opt = FolderTreeWidget::ShowUnreadCount;
   opt |= FolderTreeWidget::UseLineEditForFiltering;
+  opt |= FolderTreeWidget::ShowCollectionStatisticAnimation;
   mFolderTreeWidget = new FolderTreeWidget( this, mGUIClient, opt );
 
   connect( mFolderTreeWidget->folderTreeView(), SIGNAL( currentChanged( const Akonadi::Collection & ) ),
@@ -1478,11 +1485,11 @@ void KMMainWidget::slotEmptyFolder()
   QString str;
 
   if (!mCurrentFolder) return;
-  bool isTrash = kmkernel->folderIsTrash( mCurrentFolder->collection() );
+  const bool isTrash = kmkernel->folderIsTrash( mCurrentFolder->collection() );
   if (mConfirmEmpty)
   {
-    QString title = (isTrash) ? i18n("Empty Trash") : i18n("Move to Trash");
-    QString text = (isTrash) ?
+    const QString title = (isTrash) ? i18n("Empty Trash") : i18n("Move to Trash");
+    const QString text = (isTrash) ?
       i18n("Are you sure you want to empty the trash folder?") :
       i18n("<qt>Are you sure you want to move all messages from "
            "folder <b>%1</b> to the trash?</qt>", Qt::escape( mCurrentFolder->name() ) );

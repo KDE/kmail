@@ -17,6 +17,8 @@
 */
 
 #include "folderselectiondialog.h"
+#include "globalsettings.h"
+#include "kmkernel.h"
 #include <QKeyEvent>
 #include <kinputdialog.h>
 #include <kmessagebox.h>
@@ -35,12 +37,15 @@ class FolderSelectionDialog::FolderSelectionDialogPrivate
 {
 public:
   FolderSelectionDialogPrivate()
-    : folderTreeWidget( 0 ), mNotAllowToCreateNewFolder( false )
+    : folderTreeWidget( 0 ),
+      mNotAllowToCreateNewFolder( false ),
+      mUseGlobalSettings( true )
   {
   }
   QString mFilter;
   FolderTreeWidget *folderTreeWidget;
   bool mNotAllowToCreateNewFolder;
+  bool mUseGlobalSettings;
 };
 
 FolderSelectionDialog::FolderSelectionDialog( QWidget *parent, SelectionFolderOptions options )
@@ -97,7 +102,9 @@ FolderSelectionDialog::FolderSelectionDialog( QWidget *parent, SelectionFolderOp
 
   connect( d->folderTreeWidget->folderTreeView(), SIGNAL( doubleClicked(const QModelIndex&) ),
            this, SLOT( accept() ) );
+  d->mUseGlobalSettings = !( options & NotUseGlobalSettings );
   readConfig();
+
   d->folderTreeWidget->folderTreeView()->expandAll();
 }
 
@@ -199,6 +206,14 @@ void FolderSelectionDialog::readConfig()
     resize( size );
   else
     resize( 500, 300 );
+  if ( d->mUseGlobalSettings ) {
+    const Akonadi::Collection::Id id = GlobalSettings::self()->lastSelectedFolder();
+    if ( id > -1 ) {
+      const Akonadi::Collection col = KMKernel::self()->collectionFromId( id );
+      d->folderTreeWidget->selectCollectionFolder( col );
+    }
+  }
+
 }
 
 void FolderSelectionDialog::writeConfig()
@@ -206,6 +221,12 @@ void FolderSelectionDialog::writeConfig()
   KSharedConfig::Ptr config = KGlobal::config();
   KConfigGroup group( config, myConfigGroupName );
   group.writeEntry( "Size", size() );
+
+  if ( d->mUseGlobalSettings ) {
+    Akonadi::Collection col = selectedCollection();
+    if ( col.isValid() )
+      GlobalSettings::self()->setLastSelectedFolder( col.id() );
+  }
 }
 
 void FolderSelectionDialog::keyPressEvent( QKeyEvent *e )
@@ -226,7 +247,7 @@ void FolderSelectionDialog::keyPressEvent( QKeyEvent *e )
     break;
     default:
     {
-      QString s = e->text();
+      const QString s = e->text();
       if ( !s.isEmpty() && s.at( 0 ).isPrint() ) {
          d->mFilter += s;
         d->folderTreeWidget->applyFilter( d->mFilter );

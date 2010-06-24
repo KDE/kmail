@@ -72,6 +72,8 @@ FolderTreeWidget::FolderTreeWidget( QWidget *parent, KXMLGUIClient *xmlGuiClient
   Akonadi::AttributeFactory::registerAttribute<Akonadi::ImapAclAttribute>();
 
   d->folderTreeView = new FolderTreeView( xmlGuiClient, this, options & ShowUnreadCount );
+  d->folderTreeView->showStatisticAnimation( options & ShowCollectionStatisticAnimation );
+
   connect( d->folderTreeView, SIGNAL( manualSortingChanged( bool ) ), this, SLOT( slotManualSortingChanged( bool ) ) );
 
   QVBoxLayout *lay = new QVBoxLayout( this );
@@ -118,11 +120,10 @@ FolderTreeWidget::FolderTreeWidget( QWidget *parent, KXMLGUIClient *xmlGuiClient
   d->entityOrderProxy->setSourceModel( d->filterTreeViewModel );
   KConfigGroup grp( KMKernel::config(), "CollectionTreeOrder" );
   d->entityOrderProxy->setOrderConfig( grp );
-
   d->folderTreeView->setModel( d->entityOrderProxy );
 
   if ( options & UseDistinctSelectionModel )
-    d->folderTreeView->setSelectionModel( new QItemSelectionModel( d->filterTreeViewModel, this ) );
+    d->folderTreeView->setSelectionModel( new QItemSelectionModel( d->entityOrderProxy, this ) );
 
   lay->addWidget( d->folderTreeView );
   if ( ( options & UseLineEditForFiltering ) ) {
