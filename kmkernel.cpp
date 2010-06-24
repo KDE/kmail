@@ -253,6 +253,7 @@ KMKernel::KMKernel (QObject *parent, const char *name) :
   Akonadi::Session *session = new Akonadi::Session( "KMail Kernel ETM", this );
   monitor()->setSession( session );
   mEntityTreeModel = new Akonadi::EntityTreeModel( monitor(), this );
+  mEntityTreeModel->setIncludeUnsubscribed( false );
   mEntityTreeModel->setItemPopulationStrategy( Akonadi::EntityTreeModel::LazyPopulation );
 
   mCollectionModel = new Akonadi::EntityMimeTypeFilterModel( this );
