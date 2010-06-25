@@ -166,29 +166,6 @@ KMKernel::KMKernel (QObject *parent, const char *name) :
       }
     }
   }
-#ifdef __GNUC__
-#warning Remove before the 4.5 release
-#endif
-  if ( KMessageBox::questionYesNo(
-        0,
-        i18n( "You are attempting to start an <b>unstable development version</b> of KMail.<br />"
-              "KMail 2 is currently being ported to Akonadi and is under heavy development. "
-              "Do not use this version for real mails, you will <b>lose data</b>. If you use this "
-              "version now, your mails will not be correctly migrated, and you will not be able to "
-              "migrate them afterwards.<br />"
-              "Because of the current development, there are many bugs and regressions as well as "
-              "missing features. <b>Essentially KMail 2 does not work at the moment, do not try to use it.</b><br />"
-              "Please do not report any bugs for this version yet.<br /><br />"
-              "If you want to use KMail for real mails, please use the version from the KDE SC 4.4 branch instead." ),
-        i18n( "Unstable Development version of KMail" ),
-        KGuiItem( i18n( "Lose Data" ) ),
-        KStandardGuiItem::cancel(),
-        "UseAtYourOwnRiskWarning",
-        KMessageBox::Dangerous )
-      == KMessageBox::No ) {
-    kWarning() << "Exiting after development version warning.";
-    exit(42);
-  }
 
   kDebug();
 
