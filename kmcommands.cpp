@@ -497,7 +497,7 @@ KMAddBookmarksCommand::KMAddBookmarksCommand( const KUrl &url, QWidget *parent )
 
 KMCommand::Result KMAddBookmarksCommand::execute()
 {
-  QString filename = KStandardDirs::locateLocal( "data", QString::fromLatin1("konqueror/bookmarks.xml") );
+  const QString filename = KStandardDirs::locateLocal( "data", QString::fromLatin1("konqueror/bookmarks.xml") );
   KBookmarkManager *bookManager = KBookmarkManager::managerForFile( filename, "konqueror" );
   KBookmarkGroup group = bookManager->root();
   group.addBookmark( mUrl.path(), KUrl( mUrl ) );
@@ -1531,7 +1531,7 @@ KMCommand::Result KMSetStatusCommand::execute()
     //  just the Id, revision, and new flags, because otherwise
     //  non-symmetric assemble/parser in KMime might make the payload
     //  different than the original mail, and cause extra copies to be
-    //  created on the server. 
+    //  created on the server.
     Akonadi::Item item( it.id() );
     item.setRevision( it.revision() );
     // Set a custom flag
@@ -2019,7 +2019,7 @@ KMCommand::Result CreateTodoCommand::execute()
     return Failed;
 
   KMail::KorgHelper::ensureRunning();
-  QString txt = i18n("From: %1\nTo: %2\nSubject: %3", msg->from()->asUnicodeString(),
+  const QString txt = i18n("From: %1\nTo: %2\nSubject: %3", msg->from()->asUnicodeString(),
                      msg->to()->asUnicodeString(), msg->subject()->asUnicodeString() );
   KTemporaryFile tf;
   tf.setAutoRemove( true );
@@ -2027,7 +2027,7 @@ KMCommand::Result CreateTodoCommand::execute()
     kWarning() << "CreateTodoCommand: Unable to open temp file.";
     return Failed;
   }
-  QString uri = "kmail:" + QString::number( item.id() ) + '/' + MessageHelper::msgId(msg);
+  const QString uri = "kmail:" + QString::number( item.id() ) + '/' + MessageHelper::msgId(msg);
   tf.write( msg->encodedContent() );
   OrgKdeKorganizerCalendarInterface *iface =
       new OrgKdeKorganizerCalendarInterface( "org.kde.korganizer", "/Calendar",
