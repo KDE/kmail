@@ -2188,7 +2188,7 @@ void KMComposeWin::slotCopy()
 //-----------------------------------------------------------------------------
 void KMComposeWin::slotPaste()
 {
-  QWidget *fw = focusWidget();
+  QWidget * const fw = focusWidget();
   if ( !fw ) {
     return;
   }
@@ -2196,8 +2196,10 @@ void KMComposeWin::slotPaste()
     mComposerBase->editor()->paste();
   }
   else {
-    QKeyEvent k( QEvent::KeyPress, Qt::Key_V, Qt::ControlModifier );
-    qApp->notify( fw, &k );
+    QLineEdit * const lineEdit = ::qobject_cast<QLineEdit*>( fw );
+    if ( lineEdit ) {
+      lineEdit->paste();
+    }
   }
 }
 
