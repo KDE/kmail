@@ -213,7 +213,7 @@ Akonadi::Collection::List FolderTreeWidget::selectedCollections() const
   return collections;
 }
 
-FolderTreeView* FolderTreeWidget::folderTreeView()
+FolderTreeView* FolderTreeWidget::folderTreeView() const
 {
   return d->folderTreeView;
 }
@@ -272,22 +272,22 @@ void FolderTreeWidget::readQuotaConfig()
   quotaWarningParameters( quotaColor, threshold );
 }
 
-Akonadi::StatisticsProxyModel * FolderTreeWidget::statisticsProxyModel()
+Akonadi::StatisticsProxyModel * FolderTreeWidget::statisticsProxyModel() const
 {
   return d->filterModel;
 }
 
-ReadableCollectionProxyModel *FolderTreeWidget::readableCollectionProxyModel()
+ReadableCollectionProxyModel *FolderTreeWidget::readableCollectionProxyModel() const
 {
   return d->readableproxy;
 }
 
-EntityCollectionOrderProxyModel *FolderTreeWidget::entityOrderProxy()
+EntityCollectionOrderProxyModel *FolderTreeWidget::entityOrderProxy() const
 {
   return d->entityOrderProxy;
 }
 
-KLineEdit *FolderTreeWidget::filterFolderLineEdit()
+KLineEdit *FolderTreeWidget::filterFolderLineEdit() const
 {
   return d->filterFolderLineEdit;
 }
