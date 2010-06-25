@@ -135,12 +135,6 @@ KMailPart::~KMailPart()
   kDebug() << "Closing last KMMainWin: stopping mail check";
   // Running KIO jobs prevent kapp from exiting, so we need to kill them
   // if they are only about checking mail (not important stuff like moving messages)
-#if 0
-  kmkernel->abortMailCheck();
-  kmkernel->acctMgr()->cancelMailCheck();
-#else
-  kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
-#endif
   mainWidget->destruct();
   kmkernel->cleanup();
   delete kmkernel;

@@ -39,9 +39,7 @@ SnippetItem::SnippetItem( QTreeWidgetItem *parent, const QString &name, const QS
 
 SnippetItem::~SnippetItem()
 {
-  if ( action ) {
-    delete action;
-  }
+  delete action;
 }
 
 QString SnippetItem::getName() const

@@ -1527,10 +1527,16 @@ KMCommand::Result KMSetStatusCommand::execute()
       }
     }
 
-    Akonadi::Item item( it );
+    // HACK here we create a new item with an empty payload---
+    //  just the Id, revision, and new flags, because otherwise
+    //  non-symmetric assemble/parser in KMime might make the payload
+    //  different than the original mail, and cause extra copies to be
+    //  created on the server. 
+    Akonadi::Item item( it.id() );
+    item.setRevision( it.revision() );
     // Set a custom flag
     MessageStatus itemStatus;
-    itemStatus.setStatusFromFlags( item.flags() );
+    itemStatus.setStatusFromFlags( it.flags() );
 
 //     MessageStatus oldStatus = itemStatus;
     if ( mToggle ) {

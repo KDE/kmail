@@ -1438,16 +1438,6 @@ void KMMainWidget::slotShowFolderShortcutDialog()
   shorty->exec();
 }
 
-#if 0
-//-----------------------------------------------------------------------------
-void KMMainWidget::slotModifyFolder( KMMainWidget::PropsPage whichPage )
-{
-  //TODO port to akonadi.
-  if ( mSystemTray )
-    mSystemTray->foldersChanged();
-}
-#endif
-
 //-----------------------------------------------------------------------------
 void KMMainWidget::slotExpireFolder()
 {
@@ -3798,8 +3788,7 @@ void KMMainWidget::slotAkonadiStandardActionUpdated()
   if ( mCollectionProperties ) {
     mCollectionProperties->setEnabled( mCurrentFolder &&
                                        !mCurrentFolder->isStructural() &&
-                                       ( mCurrentFolder->collection().resource() != QLatin1String( "akonadi_search_resource" ) ) &&
-                                       ( mCurrentFolder->collection().resource() != QLatin1String( "akonadi_nepomuktag_resource" ) ) );
+                                       !KMail::Util::isVirtualCollection( mCurrentFolder->collection() ) );
   }
 }
 
@@ -3842,12 +3831,13 @@ void KMMainWidget::updateFolderMenu()
 
   mArchiveFolderAction->setEnabled( mCurrentFolder && !multiFolder && folderWithContent );
 
-  mExpireFolderAction->setEnabled( mCurrentFolder &&
-                                   mCurrentFolder->isAutoExpire() &&
+
+  mExpireConfigAction->setEnabled( mCurrentFolder &&
+                                   !mCurrentFolder->isStructural() &&
                                    !multiFolder &&
                                    mCurrentFolder->canDeleteMessages() &&
                                    folderWithContent &&
-                                   !isASearchFolder);
+                                   !KMail::Util::isVirtualCollection( mCurrentFolder->collection() ) );
 
   updateMarkAsReadAction();
   // the visual ones only make sense if we are showing a message list
