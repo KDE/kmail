@@ -96,18 +96,18 @@ public:
 
   Akonadi::Collection::List selectedCollections() const;
 
-  FolderTreeView *folderTreeView();
+  FolderTreeView *folderTreeView() const;
 
-  Akonadi::StatisticsProxyModel * statisticsProxyModel();
+  Akonadi::StatisticsProxyModel * statisticsProxyModel() const;
 
-  ReadableCollectionProxyModel *readableCollectionProxyModel();
+  ReadableCollectionProxyModel *readableCollectionProxyModel() const;
 
-  EntityCollectionOrderProxyModel *entityOrderProxy();
+  EntityCollectionOrderProxyModel *entityOrderProxy() const;
 
   void quotaWarningParameters( const QColor &color, qreal threshold );
   void readQuotaConfig();
 
-  KLineEdit *filterFolderLineEdit();
+  KLineEdit *filterFolderLineEdit() const;
   void applyFilter( const QString& );
 
   void disableContextMenuAndExtraColumn();

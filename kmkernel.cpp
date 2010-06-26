@@ -1458,7 +1458,8 @@ bool KMKernel::folderIsTrash( const Akonadi::Collection & col )
     return true;
   const Akonadi::AgentInstance::List lst = KMail::Util::agentInstances();
   foreach ( const Akonadi::AgentInstance& type, lst ) {
-    //TODO verify it.
+    if ( type.status() == Akonadi::AgentInstance::Broken )
+      continue;
     if ( type.identifier().contains( IMAP_RESOURCE_IDENTIFIER ) ) {
       OrgKdeAkonadiImapSettingsInterface *iface = KMail::Util::createImapSettingsInterface( type.identifier() );
       if ( iface->isValid() ) {
