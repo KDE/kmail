@@ -3182,7 +3182,7 @@ void KMMainWidget::setupActions()
   connect( mTemplateMenu->menu(), SIGNAL( triggered(QAction*) ), this,
            SLOT( slotNewFromTemplate(QAction*) ) );
 
-  mPostToMailinglistAction = new KAction( KIcon( "mail-list-message-new" ),
+  mPostToMailinglistAction = new KAction( KIcon( "mail-message-new-list" ),
                                           i18n( "New Message t&o Mailing-List..." ),
                                           this );
   actionCollection()->addAction("post_message", mPostToMailinglistAction );
