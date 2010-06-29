@@ -95,7 +95,7 @@ namespace GpgME {
 }
 
 //-----------------------------------------------------------------------------
-class KMComposeWin : public KMail::Composer, virtual public MailComposerIface
+class KMComposeWin : public KMail::Composer, public MailComposerIface
 {
   Q_OBJECT
   friend class ::KMEdit;
