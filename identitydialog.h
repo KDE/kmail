@@ -37,6 +37,7 @@
 class QCheckBox;
 class QString;
 class TemplatesConfiguration;
+class SimpleStringListEditor;
 
 class KComboBox;
 class KJob;
@@ -96,6 +97,7 @@ namespace KMail {
     KLineEdit                    *mNameEdit;
     KLineEdit                    *mOrganizationEdit;
     KLineEdit                    *mEmailEdit;
+    SimpleStringListEditor       *mAliasEdit;
     // "cryptography" tab:
     QWidget                      *mCryptographyTab;
     Kleo::SigningKeyRequester    *mPGPSigningKeyRequester;
