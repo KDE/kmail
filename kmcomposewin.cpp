@@ -2507,11 +2507,11 @@ void KMComposeWin::doSend( MessageSender::SendMethod method,
     // we'll call send from within slotDoDelaySend
   } else {
     if( saveIn == MessageSender::SaveInDrafts && mEncryptAction->isChecked() &&
-        GlobalSettings::self()->neverEncryptDrafts() &&
+        !GlobalSettings::self()->neverEncryptDrafts() &&
         mComposerBase->to().isEmpty() && mComposerBase->cc().isEmpty() ) {
 
-      KMessageBox::information( this, i18n("You must specify at least one receiver,"
-                                            "either in the To: field or as CC or as BCC.")
+      KMessageBox::information( this, i18n("You must specify at least one receiver"
+                                            "in order to be able to encrypt a draft.")
                               );
       return;
     }
