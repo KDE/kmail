@@ -12,6 +12,7 @@ set(kcm_identities_srcs
   ../identitylistview.cpp
   ../newidentitydialog.cpp
   ../xfaceconfigurator.cpp
+  ../simplestringlisteditor.cpp
 )
 kde4_add_ui_files(kcm_identities_srcs ../ui/identitypage.ui)
 kde4_add_plugin(kcm_kpimidentities ${kcm_identities_srcs})
