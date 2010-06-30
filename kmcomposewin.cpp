@@ -2495,6 +2495,8 @@ void KMComposeWin::doSend( MessageSender::SendMethod method,
       return;
     }
 
+
+    setEnabled( false );
     // Validate the To:, CC: and BCC fields
     const QStringList recipients = QStringList() << mComposerBase->to().trimmed() << mComposerBase->cc().trimmed() << mComposerBase->bcc().trimmed();
 
@@ -2564,7 +2566,6 @@ void KMComposeWin::doDelayedSend( MessageSender::SendMethod method, MessageSende
                                     || mSigningAndEncryptionExplicitlyDisabled ) );
 
 
-  setEnabled( false );
   mComposerBase->send( method, saveIn );
 }
 
