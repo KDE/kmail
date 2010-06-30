@@ -2505,8 +2505,18 @@ void KMComposeWin::doSend( MessageSender::SendMethod method,
     job->start();
 
     // we'll call send from within slotDoDelaySend
-  } else
+  } else {
+    if( saveIn == MessageSender::SaveInDrafts && mEncryptAction->isChecked() &&
+        GlobalSettings::self()->neverEncryptDrafts() &&
+        mComposerBase->to().isEmpty() && mComposerBase->cc().isEmpty() ) {
+
+      KMessageBox::information( this, i18n("You must specify at least one receiver,"
+                                            "either in the To: field or as CC or as BCC.")
+                              );
+      return;
+    }
     doDelayedSend( method, saveIn );
+  }
 }
 
 void KMComposeWin::slotDoDelayedSend( KJob *job )
