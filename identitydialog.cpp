@@ -151,7 +151,7 @@ namespace KMail {
     msg = i18n("<qt><h3>Email address</h3>"
                "<p>This field should have your full email address</p>"
                "<p>This address is the primary one, used for all outgoing mail. "
-               "If you have more than one address, either create a new identiy, "
+               "If you have more than one address, either create a new identity, "
                "or add additional alias addresses in the field below.</p>"
                "<p>If you leave this blank, or get it wrong, people "
                "will have trouble replying to you.</p></qt>");
