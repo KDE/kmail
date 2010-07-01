@@ -3273,9 +3273,10 @@ void SecurityPage::WarningTab::slotReenableAllWarningsClicked()
 
 void SecurityPage::WarningTab::slotConfigureGnupg()
 {
-  KCMultiDialog dlg;
-  dlg.addModule( "kleopatra_config_gnupgsystem" );
-  dlg.exec();
+  QPointer<KCMultiDialog> dlg( new KCMultiDialog( this ) );
+  dlg->addModule( "kleopatra_config_gnupgsystem" );
+  dlg->exec();
+  delete dlg;
 }
 
 ////
