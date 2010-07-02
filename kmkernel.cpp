@@ -1389,9 +1389,14 @@ void KMKernel::emergencyExit( const QString& reason )
   }
 
   kWarning() << mesg;
-  KMessageBox::error( 0, mesg );
 
-  ::exit(1);
+  // Show error box for the first error that caused emergencyExit.
+  static bool s_showingErrorBox = false;
+  if ( !s_showingErrorBox ) {
+      s_showingErrorBox = true;
+      KMessageBox::error( 0, mesg );
+      ::exit(1);
+  }
 }
 
 /**
