@@ -119,9 +119,4 @@
   <Action name="manage_link" />
   <Action name="add_image" />
  </ToolBar>
- <ToolBar noMerge="1" newline="true" hidden="true" enable="0" name="directionToolBar" iconText="icononly" >
-  <text>Text Direction Toolbar</text>
-  <Action name="direction_ltr" />
-  <Action name="direction_rtl" />
- </ToolBar>
 </kpartgui>
