@@ -491,6 +491,9 @@ class KMAIL_EXPORT KMMainWidget : public QWidget
      * This applies setMessageSetStatus() on the current thread.
      */
     void setCurrentThreadStatus( const KPIM::MessageStatus &status, bool toggle );
+
+    void applyFilters( const QList<Akonadi::Item>& selectedMessages );
+
   private slots:
     /**
      * Called when a "move to trash" operation is completed

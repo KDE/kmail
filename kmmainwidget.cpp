@@ -1094,11 +1094,17 @@ void KMMainWidget::createWidgets()
            SLOT( slotItemMoved( Akonadi::Item, Akonadi::Collection, Akonadi::Collection ) ) );
 }
 
-void KMMainWidget::slotItemAdded( const Akonadi::Item &, const Akonadi::Collection& col)
+void KMMainWidget::slotItemAdded( const Akonadi::Item &item, const Akonadi::Collection& col)
 {
   if ( col.isValid() && ( col == kmkernel->outboxCollectionFolder() ) ) {
     startUpdateMessageActionsTimer();
   }
+#if 0
+  QList<Akonadi::Item> lst;
+  lst<<item;
+  applyFilters( lst );
+#endif
+
   const QString fullCollectionPath( KMail::Util::fullCollectionPath( col ) );
   if ( mCheckMail.contains( fullCollectionPath ) ) {
     collectionInfo info( mCheckMail[fullCollectionPath] );
@@ -2170,7 +2176,11 @@ void KMMainWidget::slotApplyFilters()
   const QList<Akonadi::Item> selectedMessages = mMessagePane->selectionAsMessageItemList();
   if ( selectedMessages.isEmpty() )
     return;
+  applyFilters( selectedMessages );
+}
 
+void KMMainWidget::applyFilters( const QList<Akonadi::Item>& selectedMessages )
+{
   MessageViewer::KCursorSaver busy( MessageViewer::KBusyPtr::busy() );
   const int msgCountToFilter = selectedMessages.size();
 
