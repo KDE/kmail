@@ -53,10 +53,10 @@ JobScheduler::JobScheduler( QObject* parent )
 
 JobScheduler::~JobScheduler()
 {
-  // delete tasks in tasklist (no autodelete for QValueList)
   qDeleteAll( mTaskList );
   mTaskList.clear();
   delete mCurrentTask;
+  mCurrentTask = 0;
   delete mCurrentJob;
 }
 

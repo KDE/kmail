@@ -80,8 +80,6 @@ KMMainWin::KMMainWin(QWidget *)
   connect( qApp, SIGNAL(lastWindowClosed()), qApp, SLOT(quit()));
 #endif
   createGUI( "kmmainwin.rc" );
-  // Don't use conserveMemory() because this renders dynamic plugging
-  // of actions unusable!
 
   //must be after createGUI, otherwise e.g toolbar settings are not loaded
   applyMainWindowSettings( KMKernel::config()->group( "Main Window") );
@@ -92,12 +90,6 @@ KMMainWin::KMMainWin(QWidget *)
   connect( mKMMainWidget, SIGNAL( captionChangeRequest(const QString&) ),
            SLOT( setCaption(const QString&) ) );
 
-  // Enable mail checks again (see destructor)
-#if 0
-  kmkernel->enableMailCheck();
-#else
-  kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
-#endif
   if ( kmkernel->firstStart() )
   {
     KMail::Util::launchAccountWizard( this );
@@ -111,6 +103,7 @@ KMMainWin::~KMMainWin()
   saveMainWindowSettings( KMKernel::config()->group( "Main Window") );
   KMKernel::config()->sync();
 
+#if 0
   if ( mReallyClose ) {
     // Check if this was the last KMMainWin
     uint not_withdrawn = 0;
@@ -121,17 +114,11 @@ KMMainWin::~KMMainWin()
     }
 
     if ( not_withdrawn == 0 ) {
-      kDebug() << "Closing last KMMainWin: stopping mail check";
-      // Running KIO jobs prevent kapp from exiting, so we need to kill them
-      // if they are only about checking mail (not important stuff like moving messages)
-#if 0
-      kmkernel->abortMailCheck();
-      //kmkernel->acctMgr()->cancelMailCheck();
-#else
-      kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
-#endif
+      kDebug() << "Closing last KMMainWin";
+      // In KDE <= 4.4 would would abort mail checks here, but we don't need to do that anymore.
     }
   }
+#endif
 }
 
 void KMMainWin::displayStatusMsg( const QString& aText )

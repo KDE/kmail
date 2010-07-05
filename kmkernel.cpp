@@ -1255,12 +1255,11 @@ void KMKernel::dumpDeadLetters()
   foreach ( KMainWindow* window, KMainWindow::memberList() ) {
     if ( KMail::Composer * win = ::qobject_cast<KMail::Composer*>( window ) ) {
       win->autoSaveMessage();
-      // saving the message has to be finished right here, we are called from a dtor,
-      // therefore we have no chance to finish this later
-      // yes, this is ugly and potentially dangerous, but the alternative is losing
-      // currently composed messages...
-      while ( win->isComposing() )
+
+      while ( win->isComposing() ) {
+        kWarning() << "Danger, using an event loop, this should no longer be happening!";
         qApp->processEvents();
+      }
     }
   }
 }
@@ -1389,9 +1388,14 @@ void KMKernel::emergencyExit( const QString& reason )
   }
 
   kWarning() << mesg;
-  KMessageBox::error( 0, mesg );
 
-  ::exit(1);
+  // Show error box for the first error that caused emergencyExit.
+  static bool s_showingErrorBox = false;
+  if ( !s_showingErrorBox ) {
+      s_showingErrorBox = true;
+      KMessageBox::error( 0, mesg );
+      ::exit(1);
+  }
 }
 
 /**
