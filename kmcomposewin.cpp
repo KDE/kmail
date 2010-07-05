@@ -2457,7 +2457,7 @@ void KMComposeWin::doSend( MessageSender::SendMethod method,
     if ( mComposerBase->to().isEmpty() ) {
       if ( mComposerBase->cc().isEmpty() && mComposerBase->bcc().isEmpty() ) {
         KMessageBox::information( this,
-                                  i18n("You must specify at least one receiver,"
+                                  i18n("You must specify at least one receiver, "
                                        "either in the To: field or as CC or as BCC.") );
 
         return;
@@ -2494,6 +2494,8 @@ void KMComposeWin::doSend( MessageSender::SendMethod method,
       return;
     }
 
+
+    setEnabled( false );
     // Validate the To:, CC: and BCC fields
     const QStringList recipients = QStringList() << mComposerBase->to().trimmed() << mComposerBase->cc().trimmed() << mComposerBase->bcc().trimmed();
 
@@ -2504,8 +2506,18 @@ void KMComposeWin::doSend( MessageSender::SendMethod method,
     job->start();
 
     // we'll call send from within slotDoDelaySend
-  } else
+  } else {
+    if( saveIn == MessageSender::SaveInDrafts && mEncryptAction->isChecked() &&
+        !GlobalSettings::self()->neverEncryptDrafts() &&
+        mComposerBase->to().isEmpty() && mComposerBase->cc().isEmpty() ) {
+
+      KMessageBox::information( this, i18n("You must specify at least one receiver "
+                                            "in order to be able to encrypt a draft.")
+                              );
+      return;
+    }
     doDelayedSend( method, saveIn );
+  }
 }
 
 void KMComposeWin::slotDoDelayedSend( KJob *job )
@@ -2553,7 +2565,6 @@ void KMComposeWin::doDelayedSend( MessageSender::SendMethod method, MessageSende
                                     || mSigningAndEncryptionExplicitlyDisabled ) );
 
 
-  setEnabled( false );
   mComposerBase->send( method, saveIn );
 }
 

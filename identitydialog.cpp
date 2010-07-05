@@ -34,6 +34,7 @@
 // other KMail headers:
 #include "xfaceconfigurator.h"
 #include "folderrequester.h"
+#include "simplestringlisteditor.h"
 using KMail::FolderRequester;
 #ifndef KCM_KPIMIDENTITIES_STANDALONE
 #include "kmkernel.h"
@@ -164,10 +165,33 @@ namespace KMail {
     glay->addWidget( label, row, 0 );
     msg = i18n("<qt><h3>Email address</h3>"
                "<p>This field should have your full email address.</p>"
+               "<p>This address is the primary one, used for all outgoing mail. "
+               "If you have more than one address, either create a new identity, "
+               "or add additional alias addresses in the field below.</p>"
                "<p>If you leave this blank, or get it wrong, people "
                "will have trouble replying to you.</p></qt>");
     label->setWhatsThis( msg );
     mEmailEdit->setWhatsThis( msg );
+
+    // "Email Aliases" stsring text edit and label:
+    ++row;
+    mAliasEdit = new SimpleStringListEditor( tab );
+    glay->addWidget( mAliasEdit, row, 1 );
+    label = new QLabel( i18n("Email a&liases:"), tab );
+    label->setBuddy( mAliasEdit );
+    glay->addWidget( label, row, 0, Qt::AlignTop );
+    msg = i18n("<qt><h3>Email aliases</h3>"
+               "<p>This field contains alias addresses that should also "
+               "be considered as belonging to this identity (as opposed "
+               "to representing a different identity).</p>"
+               "<p>Example:</p>"
+               "<table>"
+               "<tr><th>Primary address:</th><td>first.last@example.org</td></tr>"
+               "<tr><th>Aliases:</th><td>first@example.org<br>last@example.org</td></tr>"
+               "</table>"
+               "<p>Type one alias address per line.</p></qt>");
+    label->setToolTip( msg );
+    mAliasEdit->setWhatsThis( msg );
 
     //
     // Tab Widget: Cryptography
@@ -545,9 +569,17 @@ namespace KMail {
       return;
     }
 
-    const QString email = mEmailEdit->text().trimmed();
+    const QStringList aliases = mAliasEdit->stringList();
+    foreach ( const QString &alias, aliases ) {
+      if ( !KPIMUtils::isValidSimpleAddress( alias ) ) {
+        const QString errorMsg( KPIMUtils::simpleEmailAddressErrorMsg() );
+        KMessageBox::sorry( this, errorMsg, i18n( "Invalid Email Alias \"%1\"", alias ) );
+        return;
+      }
+    }
 
     // Validate email addresses
+    const QString email = mEmailEdit->text().trimmed();
     if ( !KPIMUtils::isValidSimpleAddress( email ) ) {
       QString errorMsg( KPIMUtils::simpleEmailAddressErrorMsg() );
       KMessageBox::sorry( this, errorMsg, i18n("Invalid Email Address") );
@@ -658,7 +690,8 @@ namespace KMail {
     // "General" tab:
     mNameEdit->setText( ident.fullName() );
     mOrganizationEdit->setText( ident.organization() );
-    mEmailEdit->setText( ident.emailAddr() );
+    mEmailEdit->setText( ident.primaryEmailAddress() );
+    mAliasEdit->setStringList( ident.emailAliases() );
 
     // "Cryptography" tab:
     mPGPSigningKeyRequester->setFingerprint( ident.pgpSigningKey() );
@@ -738,7 +771,8 @@ namespace KMail {
     ident.setFullName( mNameEdit->text() );
     ident.setOrganization( mOrganizationEdit->text() );
     QString email = mEmailEdit->text();
-    ident.setEmailAddr( email );
+    ident.setPrimaryEmailAddress( email );
+    ident.setEmailAliases( mAliasEdit->stringList() );
     // "Cryptography" tab:
     ident.setPGPSigningKey( mPGPSigningKeyRequester->fingerprint().toLatin1() );
     ident.setPGPEncryptionKey( mPGPEncryptionKeyRequester->fingerprint().toLatin1() );
