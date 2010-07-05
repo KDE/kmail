@@ -2261,7 +2261,6 @@ void KMMainWidget::slotItemsFetchedForFilter( const Akonadi::Item::List &items )
       const QString statusMsg = i18n( "Filtering message %1 of %2", mFilterProgressItem->completedItems(),
                                       mFilterProgressItem->totalItems() );
       KPIM::BroadcastStatus::instance()->setStatusMsg( statusMsg );
-      qApp->processEvents( QEventLoop::ExcludeUserInputEvents, 50 );
     }
     mFilterProgressItem->incCompletedItems();
     slotFilterMsg( item );
