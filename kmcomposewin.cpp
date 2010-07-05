@@ -566,7 +566,6 @@ void KMComposeWin::readConfig( bool reload /* = false */ )
   mEdtFrom->setFont( mBodyFont );
   mEdtReplyTo->setFont( mBodyFont );
   mEdtSubject->setFont( mBodyFont );
-  mComposerBase->recipientsEditor()->setEditFont( mBodyFont );
 
   if ( !reload ) {
     QSize siz = GlobalSettings::self()->composerSize();
