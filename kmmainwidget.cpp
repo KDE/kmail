@@ -2161,6 +2161,7 @@ void KMMainWidget::selectCollectionFolder( const Akonadi::Collection & col )
 {
   if ( mFolderTreeWidget ) {
     mFolderTreeWidget->selectCollectionFolder( col );
+    slotFolderChanged( col );
   }
 }
 
