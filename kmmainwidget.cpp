@@ -496,62 +496,6 @@ void KMMainWidget::folderSelected( const Akonadi::Collection & col )
         return;
       }
   }
-#ifdef OLD_FOLDERVIEW
-  // FIXME: re-fetch the contents also if the folder is already open ?
-  if ( aFolder && ( aFolder->folderType() == KMFolderTypeImap )  && ( !mMessageListView->isFolderOpen( mFolder ) ) )
-  {
-    // IMAP folders require extra care.
-
-    if ( kmkernel->isOffline() )
-    {
-      //mMessageListView->setCurrentFolder( 0 ); <-- useless in the new view: just do nothing
-      // FIXME: Use an "offline tab" ?
-      showOfflinePage();
-      return;
-    }
-
-    KMFolderImap *imap = static_cast<KMFolderImap*>( aFolder->storage() );
-
-    if ( newFolder && ( !mFolder->isStructural() ) )
-    {
-      // Folder is not offline, but the contents might need to be fetched
-      connect( imap, SIGNAL( folderComplete( KMFolderImap*, bool ) ),
-               this, SLOT( folderSelected() ) );
-
-      imap->getAndCheckFolder();
-
-      mFolder = 0;          // will make us ignore the "folderChanged" signal from KMail::MessageListView (prevent circular loops)
-      mMessageListView->setCurrentFolder(
-          0,
-          preferNewTabForOpening,
-          MessageList::Core::PreSelectNone,
-          i18nc( "tab title when loading an IMAP folder", "Loading..." )
-        );
-
-      mFolder = aFolder;    // re-enable the signals from KMail::MessageListView
-
-      updateFolderMenu();
-      mForceJumpToUnread = forceJumpToUnread;
-
-      // Set a timer to show a splash screen if fetching folder contents
-      // takes more than the amount of seconds configured in the kmailrc (default 1000 msec)
-
-      // FIXME: Use a "loading" tab instead ?
-      mShowBusySplashTimer = new QTimer( this );
-      mShowBusySplashTimer->setSingleShot( true );
-      connect( mShowBusySplashTimer, SIGNAL( timeout() ), this, SLOT( slotShowBusySplash() ) );
-      mShowBusySplashTimer->start( GlobalSettings::self()->folderLoadingTimeout() );
-      return;
-
-    }
-
-    // the folder is complete now - so go ahead
-    disconnect( imap, SIGNAL( folderComplete( KMFolderImap*, bool ) ),
-                this, SLOT( folderSelected() ) );
-
-    forceJumpToUnread = mForceJumpToUnread;
-  }
-#endif
 
   readFolderConfig();
   if (mMsgView)
