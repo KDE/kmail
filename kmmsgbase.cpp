@@ -666,7 +666,8 @@ QString KMMsgBase::decodeRFC2047String(const QCString& aStr, QCString prefCharse
     return QString::null;
 
   if ( str.find( "=?" ) < 0 ) {
-    if ( !prefCharset.isEmpty() ) {
+    if ( !prefCharset.isEmpty() &&
+         kmkernel->isCodecAsciiCompatible( KMMsgBase::codecForName( prefCharset ) ) ) {
       if ( prefCharset == "us-ascii" ) {
         // isn`t this foolproof?
         return KMMsgBase::codecForName( "utf-8" )->toUnicode( str );
@@ -674,9 +675,15 @@ QString KMMsgBase::decodeRFC2047String(const QCString& aStr, QCString prefCharse
         return KMMsgBase::codecForName( prefCharset )->toUnicode( str );
       }
     } else {
-      return KMMsgBase::codecForName( GlobalSettings::self()->
+      if ( kmkernel->isCodecAsciiCompatible( KMMsgBase::codecForName(
+               GlobalSettings::self()->fallbackCharacterEncoding().latin1() ) ) ) {
+        return KMMsgBase::codecForName( GlobalSettings::self()->
                                       fallbackCharacterEncoding().latin1() )->toUnicode( str );
+      }
     }
+
+    // Not RFC2047 encoded, and codec not ascii-compatible -> interpret as ascii
+    return QString::fromAscii( str );
   }
 
   QString result;

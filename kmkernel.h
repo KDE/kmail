@@ -407,6 +407,8 @@ public:
   void loadProfile( const QString& path );
 
   void saveToProfile( const QString& path ) const;
+
+  bool isCodecAsciiCompatible( const QTextCodec *codec );
 public slots:
 
   /// Save contents of all open composer widnows to ~/dead.letter
@@ -506,6 +508,7 @@ private:
   bool mContextMenuShown;
 
   QValueList<const KSystemTray*> systemTrayApplets;
+  QValueList<const QTextCodec*> mNonAsciiCompatibleCodecs;
 
   /* Weaver */
   KPIM::ThreadWeaver::Weaver *the_weaver;

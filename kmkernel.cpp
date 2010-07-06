@@ -1583,6 +1583,20 @@ void KMKernel::init()
 #else
   mBackgroundTasksTimer->start( 5 * 60000, true ); // 5 minutes, singleshot
 #endif
+
+  QTextCodec *codec;
+  for ( int i = 0; ( codec = QTextCodec::codecForIndex ( i ) ); i++ ) {
+    const QString asciiString( "azAZ19,.-#+!?=()&" );
+    const QCString encodedString = codec->fromUnicode( asciiString );
+    if ( QString::fromAscii( encodedString ) != asciiString ) {
+      mNonAsciiCompatibleCodecs.append( codec );
+    }
+  }
+}
+
+bool KMKernel::isCodecAsciiCompatible( const QTextCodec *codec )
+{
+  return !mNonAsciiCompatibleCodecs.contains( codec );
 }
 
 void KMKernel::readConfig()
