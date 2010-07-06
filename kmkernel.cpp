@@ -124,7 +124,7 @@ KMKernel::KMKernel (QObject *parent, const char *name) :
   // check if there is something to migrate at all
   bool needMigration = true;
   KConfig oldKMailConfig( "kmailrc", KConfig::NoGlobals );
-  if ( oldKMailConfig.groupList().isEmpty() ||
+  if ( oldKMailConfig.hasGroup("General") ||
        ( oldKMailConfig.groupList().count() == 1 &&
          oldKMailConfig.groupList().first() == "$Version" ) ) {
     const QFileInfo oldDataDirFileInfo( KStandardDirs::locateLocal( "data", "kmail" ) );
@@ -132,11 +132,13 @@ KMKernel::KMKernel (QObject *parent, const char *name) :
       // neither config or data, the migrator cannot do anything useful anyways
       needMigration = false;
     }
+  } else {
+    needMigration = false;
   }
 
+  KConfig config( "kmail-migratorrc" );
+  KConfigGroup migrationCfg( &config, "Migration" );
   if ( needMigration ) {
-    KConfig config( "kmail-migratorrc" );
-    KConfigGroup migrationCfg( &config, "Migration" );
     const bool enabled = migrationCfg.readEntry( "Enabled", false );
     const int currentVersion = migrationCfg.readEntry( "Version", 0 );
     const int targetVersion = migrationCfg.readEntry( "TargetVersion", 1 );
@@ -165,6 +167,9 @@ KMKernel::KMKernel (QObject *parent, const char *name) :
         exit( 42 );
       }
     }
+  } else {
+    migrationCfg.writeEntry( "Enabled", false );
+    migrationCfg.sync();
   }
 
   kDebug();
