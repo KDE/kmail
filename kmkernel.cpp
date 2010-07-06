@@ -12,6 +12,7 @@ using KPIM::BroadcastStatus;
 #include "kmfiltermgr.h"
 #include "kmfilteraction.h"
 #include "undostack.h"
+#include <kpimutils/email.h>
 #include <kpimutils/kfileio.h>
 #include "kmversion.h"
 #include "kmreaderwin.h"
@@ -530,14 +531,25 @@ int KMKernel::openComposer( const QString &to, const QString &cc,
   KMime::Message::Ptr msg( new KMime::Message );
   MessageHelper::initHeader( msg, identityManager() );
   msg->contentType()->setCharset("utf-8");
-  // tentatively decode to, cc and bcc because invokeMailer calls us with
-  // RFC 2047 encoded addresses in order to protect non-ASCII email addresses
-  if (!to.isEmpty())
-    msg->to()->fromUnicodeString( to, "utf-8" );
-  if (!cc.isEmpty())
-    msg->cc()->fromUnicodeString( cc, "utf-8" );
-  if (!bcc.isEmpty())
-    msg->bcc()->fromUnicodeString( bcc, "utf-8"  );
+
+  QByteArray displayName;
+  QByteArray addressSpec;
+  QByteArray comment;
+  if (!to.isEmpty()) {
+    KPIMUtils::splitAddress( to.toUtf8(), displayName, addressSpec, comment );
+    KMime::removeQuots( displayName );
+    msg->to()->addAddress( addressSpec, QString::fromUtf8( displayName ) );
+  }
+  if (!cc.isEmpty()) {
+    KPIMUtils::splitAddress( cc.toUtf8(), displayName, addressSpec, comment );
+    KMime::removeQuots( displayName );
+    msg->cc()->addAddress( addressSpec, QString::fromUtf8( displayName ) );
+  }
+  if (!bcc.isEmpty()) {
+    KPIMUtils::splitAddress( bcc.toUtf8(), displayName, addressSpec, comment );
+    KMime::removeQuots( displayName );
+    msg->bcc()->addAddress( addressSpec, QString::fromUtf8( displayName ) );
+  }
   if (!subject.isEmpty()) msg->subject()->fromUnicodeString(subject, "utf-8" );
 
   KUrl messageUrl = KUrl( messageFile );
