@@ -869,7 +869,7 @@ void KMFilterActionSetStatus::argsFromString( const QString &argsStr )
   if ( argsStr.length() == 1 ) {
     MessageStatus status;
     int i;
-    for ( i = 0 ; i < StatiCount ; i++ )
+    for ( i = 0 ; i < StatiCount ; ++i )
     {
       status = stati[i];
       if ( status.getStatusStr()[0] == argsStr[0].toLatin1() ) {
@@ -1488,7 +1488,7 @@ KMFilterActionMove::KMFilterActionMove()
 KMFilterAction::ReturnCode KMFilterActionMove::process( const Akonadi::Item &item ) const
 {
   if ( !mFolder.isValid() ) {
-    Akonadi::Collection targetFolder = kmkernel->collectionFromId( mFolderName );
+    const Akonadi::Collection targetFolder = kmkernel->collectionFromId( mFolderName );
     if( !targetFolder.isValid() )
       return ErrorButGoOn;
     MessageProperty::setFilterFolder( item, targetFolder );
@@ -1701,7 +1701,7 @@ void KMFilterActionForward::argsFromString( const QString &argsStr )
     KMFilterActionWithAddress::argsFromString( argsStr );
   }
   else {
-    QString addressee = argsStr.left( seperatorPos );
+    const QString addressee = argsStr.left( seperatorPos );
     mTemplate = argsStr.mid( seperatorPos + forwardFilterArgsSeperator.length() );
     KMFilterActionWithAddress::argsFromString( addressee );
   }
