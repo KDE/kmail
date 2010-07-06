@@ -496,7 +496,8 @@ void AccountsPageReceivingTab::slotShowMailCheckMenu( const QString &ident, cons
   connect( manualMailCheck, SIGNAL( toggled( bool ) ), this, SLOT( slotIncludeInCheckChanged( bool ) ) );
   connect( switchOffline, SIGNAL( toggled( bool ) ), this, SLOT( slotOfflineOnShutdownChanged( bool ) ) );
 
-  menu->popup(  mAccountsReceiving.mAccountList->view()->mapToGlobal( pos ) );
+  menu->exec(  mAccountsReceiving.mAccountList->view()->mapToGlobal( pos ) );
+  delete menu;
 }
 
 void AccountsPageReceivingTab::slotIncludeInCheckChanged( bool checked )
