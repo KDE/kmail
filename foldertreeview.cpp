@@ -66,6 +66,7 @@ void FolderTreeView::init( bool showUnreadCount )
 {
   setIconSize( QSize( 22, 22 ) );
   mSortingPolicy = FolderTreeWidget::SortByCurrentColumn;
+  mToolTipDisplayPolicy = FolderTreeWidget::DisplayAlways;
 
   header()->setContextMenuPolicy( Qt::CustomContextMenu );
   connect( header(), SIGNAL( customContextMenuRequested( const QPoint& ) ),
