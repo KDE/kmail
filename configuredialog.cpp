@@ -79,6 +79,7 @@ using KMime::DateFormatter;
 #include "kleo/cryptobackendfactory.h"
 #include "libkleo/ui/keyrequester.h"
 #include "libkleo/ui/keyselectiondialog.h"
+#include "libkleo/ui/cryptoconfigdialog.h"
 
 #include <mailtransport/transportmanagementwidget.h>
 using MailTransport::TransportManagementWidget;
@@ -3221,6 +3222,7 @@ SecurityPageWarningTab::SecurityPageWarningTab( QWidget * parent )
   connect( mWidget->warnReceiverNotInCertificateCB, SIGNAL(toggled(bool)), SLOT(slotEmitChanged()) );
 
   connect( mWidget->gnupgButton, SIGNAL(clicked()), SLOT(slotConfigureGnupg()) );
+  connect( mWidget->chiasmusButton, SIGNAL(clicked()), SLOT(slotConfigureChiasmus()) );
   connect( mWidget->enableAllWarningsPB, SIGNAL(clicked()), SLOT(slotReenableAllWarningsClicked()) );
 }
 
@@ -3299,6 +3301,27 @@ void SecurityPage::WarningTab::slotConfigureGnupg()
   dlg->addModule( "kleopatra_config_gnupgsystem" );
   dlg->exec();
   delete dlg;
+}
+
+void SecurityPage::WarningTab::slotConfigureChiasmus()
+{
+  using namespace Kleo;
+  // Find Chiasmus backend:
+  if ( const CryptoBackendFactory * const bf = Kleo::CryptoBackendFactory::instance() )
+    for ( unsigned int i = 0 ; const CryptoBackend * const b = bf->backend( i ) ; ++i )
+      if ( b->name() == QLatin1String( "Chiasmus" ) )
+        if ( CryptoConfig * const c = b->config() ) {
+          QPointer<CryptoConfigDialog> dlg( new CryptoConfigDialog( c, this ) );
+          dlg->exec();
+          delete dlg;
+          break;
+        } else {
+          kWarning() << "Found Chiasmus backend, but there doesn't seem to be a config object available from it.";
+        }
+      else
+        kDebug() << "Skipping" << b->name() << "backend (not \"Chiasmus\")";
+  else
+    kDebug() << "Kleo::CryptoBackendFactory::instance() returned NULL!";
 }
 
 ////

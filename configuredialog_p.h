@@ -758,9 +758,10 @@ public:
 
   void save();
 
-private slots:
+private Q_SLOTS:
   void slotReenableAllWarningsClicked();
   void slotConfigureGnupg();
+  void slotConfigureChiasmus();
 
 private:
   //virtual void doLoadFromGlobalSettings();
