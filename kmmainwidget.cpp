@@ -4076,7 +4076,7 @@ QList<QAction*> KMMainWidget::actionList()
 void KMMainWidget::toggleSystemTray()
 {
   if ( !mSystemTray && GlobalSettings::self()->systemTrayEnabled() ) {
-    mSystemTray = new KMSystemTray();
+    mSystemTray = new KMSystemTray(this);
   }
   else if ( mSystemTray && !GlobalSettings::self()->systemTrayEnabled() ) {
     // Get rid of system tray on user's request
