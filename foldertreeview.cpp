@@ -317,9 +317,9 @@ void FolderTreeView::setCurrentModelIndex( const QModelIndex & index )
 void FolderTreeView::selectModelIndex( const QModelIndex & index )
 {
   if ( index.isValid() ) {
-    clearSelection();
     scrollTo( index );
-    selectionModel()->select( index, QItemSelectionModel::Rows | QItemSelectionModel::SelectCurrent );
+    selectionModel()->select( index, QItemSelectionModel::Rows | QItemSelectionModel::Select |
+                                     QItemSelectionModel::Current | QItemSelectionModel::Clear );
   }
 }
 
