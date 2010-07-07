@@ -107,6 +107,9 @@ int KMFilterMgr::processPop( const Akonadi::Item & item ) const {
 
 bool KMFilterMgr::beginFiltering( const Akonadi::Item &item ) const
 {
+  //KMime::Message::Ptr msg = item.payload<KMime::Message::Ptr>();
+  //kDebug() << "filtering" << msg->subject()->asUnicodeString();
+
   if (MessageProperty::filtering( item ))
     return false;
   MessageProperty::setFiltering( item, true );
@@ -180,8 +183,9 @@ int KMFilterMgr::process( const Akonadi::Item &item, FilterSet set,
         // filter matches
         atLeastOneRuleMatched = true;
         // execute actions:
-        if ( (*it)->execActions(item, stopIt) == KMFilter::CriticalError )
+        if ( (*it)->execActions(item, stopIt) == KMFilter::CriticalError ) {
           return 2;
+        }
       }
     }
   }
@@ -190,10 +194,11 @@ int KMFilterMgr::process( const Akonadi::Item &item, FilterSet set,
   /* endFilter does a take() and addButKeepUID() to ensure the changed
    * message is on disk. This is unnessecary if nothing matched, so just
    * reset state and don't update the listview at all. */
-  if ( atLeastOneRuleMatched )
+  if ( atLeastOneRuleMatched ) {
     endFiltering( item );
-  else
+  } else {
     MessageProperty::setFiltering( item, false );
+  }
   if ( targetFolder.isValid() ) {
     new Akonadi::ItemMoveJob( item, targetFolder, this ); // TODO: check result
     return 0;
@@ -362,7 +367,9 @@ void KMFilterMgr::endUpdate(void)
 
 void KMFilterMgr::itemAdded(const Akonadi::Item& item, const Akonadi::Collection &collection)
 {
-  process( item, Inbound, true, collection.resource() );
+  // We only filter the inboxes, not mail that arrives into other folders
+  if (collection.name().toLower() == "inbox")
+    process( item, Inbound, true, collection.resource() );
 }
 
 #include "kmfiltermgr.moc"
