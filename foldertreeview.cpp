@@ -305,12 +305,21 @@ void FolderTreeView::slotHeaderContextMenuChangeIconSize( bool )
   writeConfig();
 }
 
-void FolderTreeView::selectModelIndex( const QModelIndex & index )
+void FolderTreeView::setCurrentModelIndex( const QModelIndex & index )
 {
   if ( index.isValid() ) {
     clearSelection();
     scrollTo( index );
     selectionModel()->setCurrentIndex( index, QItemSelectionModel::Rows );
+  }
+}
+
+void FolderTreeView::selectModelIndex( const QModelIndex & index )
+{
+  if ( index.isValid() ) {
+    clearSelection();
+    scrollTo( index );
+    selectionModel()->select( index, QItemSelectionModel::Rows | QItemSelectionModel::SelectCurrent );
   }
 }
 
@@ -327,7 +336,7 @@ void FolderTreeView::slotFocusNextFolder()
 
   if ( nextFolder.isValid() ) {
     expand( nextFolder );
-    selectModelIndex( nextFolder );
+    setCurrentModelIndex( nextFolder );
   }
 }
 
@@ -353,7 +362,7 @@ void FolderTreeView::slotFocusPrevFolder()
   const QModelIndex current = currentIndex();
   if ( current.isValid() ) {
     QModelIndex above = indexAbove( current );
-    selectModelIndex( above );
+    setCurrentModelIndex( above );
   }
 }
 
@@ -388,9 +397,9 @@ bool FolderTreeView::isUnreadFolder( const QModelIndex & current, QModelIndex &i
       index = indexAbove( current );
 
     if ( index.isValid() ) {
-      Akonadi::Collection collection = index.model()->data( current, Akonadi::EntityTreeModel::CollectionRole ).value<Akonadi::Collection>();
+      const Akonadi::Collection collection = index.model()->data( current, Akonadi::EntityTreeModel::CollectionRole ).value<Akonadi::Collection>();
       if ( collection.isValid() ) {
-        if ( collection.statistics().unreadCount()>0 ) {
+        if ( collection.statistics().unreadCount() > 0 ) {
           if ( !confirm ) {
             selectModelIndex( current );
             return true;

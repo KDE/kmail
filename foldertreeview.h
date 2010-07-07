@@ -57,6 +57,7 @@ protected:
   enum Move { Next = 0, Previous = 1};
   void init( bool showUnreadCount );
   void selectModelIndex( const QModelIndex & );
+  void setCurrentModelIndex( const QModelIndex & );
   QModelIndex selectNextFolder( const QModelIndex & current );
   bool isUnreadFolder( const QModelIndex & current, QModelIndex &nextIndex,FolderTreeView::Move move, bool confirm);
   void readConfig();
