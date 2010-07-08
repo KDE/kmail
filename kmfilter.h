@@ -59,7 +59,7 @@ public:
 
       @param All Apply to all accounts
 
-      @param ButImap Apply to all but online-IMAP accounts
+      @param ButImap Apply to all but IMAP accounts
 
       @param Checked apply to all accounts specified by setApplyOnAccount
 
@@ -188,7 +188,7 @@ public:
 
   /** Set whether this filter should be applied on
       inbound messages for all accounts (@p aApply == All) or
-      inbound messages for all but nline IMAP accounts (@p aApply == ButImap) or
+      inbound messages for all but IMAP accounts (@p aApply == ButImap) or
       for a specified set of accounts only.
       Only applicable to filters that are applied on inbound messages.
       @see setApplyOnInbound setApplyOnAccount
