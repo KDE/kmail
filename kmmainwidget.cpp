@@ -2201,6 +2201,7 @@ void KMMainWidget::itemsFetchJobForFilterDone( KJob *job )
 {
   if ( job->error() )
     kDebug() << job->errorString();
+  KPIM::BroadcastStatus::instance()->setStatusMsg( QString() );
 
   KPIM::ProgressItem *progressItem = qobject_cast<KPIM::ProgressItem*>( job->property( "progressItem" ).value<QObject*>() );
   progressItem->setComplete();
@@ -2211,6 +2212,7 @@ void KMMainWidget::slotItemsFetchedForFilter( const Akonadi::Item::List &items )
   KPIM::ProgressItem *progressItem = qobject_cast<KPIM::ProgressItem*>( sender()->property( "progressItem" ).value<QObject*>() );
 
   foreach ( const Akonadi::Item &item, items ) {
+    progressItem->incCompletedItems();
     if ( progressItem->totalItems() - progressItem->completedItems() < 10 ||
       !( progressItem->completedItems() % 10 ) ||
          progressItem->completedItems() <= 10 )
@@ -2220,14 +2222,14 @@ void KMMainWidget::slotItemsFetchedForFilter( const Akonadi::Item::List &items )
                                       progressItem->totalItems() );
       KPIM::BroadcastStatus::instance()->setStatusMsg( statusMsg );
     }
-    progressItem->incCompletedItems();
     slotFilterMsg( item );
   }
 }
 
 int KMMainWidget::slotFilterMsg( const Akonadi::Item &msg )
 {
-  if ( !msg.isValid() ) return 2; // messageRetrieve(0) is always possible
+  if ( !msg.isValid() )
+    return 2; // messageRetrieve(0) is always possible
   int filterResult = kmkernel->filterMgr()->process(msg, KMFilterMgr::Explicit);
   if (filterResult == 2)
   {
