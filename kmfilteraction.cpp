@@ -852,7 +852,8 @@ KMFilterAction::ReturnCode KMFilterActionSetStatus::process( const Akonadi::Item
   if ( idx < 1 ) return ErrorButGoOn;
 
   KPIM::MessageStatus status;
-  status.set( stati[ idx ] );
+  status.setStatusFromFlags( item.flags() );
+  status.set( stati[ idx - 1 ] );
   Akonadi::Item i( item );
   i.setFlags( status.getStatusFlags() );
   new Akonadi::ItemModifyJob( i, kmkernel->filterMgr() ); // TODO handle error
