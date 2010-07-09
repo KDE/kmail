@@ -617,8 +617,6 @@ private:
     bool mGoToFirstUnreadMessageInSelectedFolder;
     MessageList::Core::PreSelectionMode mPreSelectionMode;
 
-    KPIM::ProgressItem *mFilterProgressItem;
-
     struct collectionInfo {
       collectionInfo( const Akonadi::Collection& collection = Akonadi::Collection(), int nb = 0 ) {
         col = collection;
