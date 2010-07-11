@@ -46,6 +46,7 @@
 #include <kmime/kmime_message.h>
 #include <kpimutils/email.h>
 #include <kimap/loginjob.h>
+#include <mailtransport/transport.h>
 #include <Akonadi/AgentManager>
 #include <Akonadi/EntityTreeModel>
 #include <akonadi/entitymimetypefiltermodel.h>
@@ -131,25 +132,23 @@ KUrl KMail::Util::findSieveUrlForAccount( OrgKdeAkonadiImapSettingsInterface *a,
     u.setPort( a->sievePort() );
     QString authStr;
     switch( a->authentication() ) {
-    case KIMAP::LoginJob::ClearText:
+    case MailTransport::Transport::EnumAuthenticationType::CLEAR:
+    case MailTransport::Transport::EnumAuthenticationType::PLAIN:
       authStr = "PLAIN";
       break;
-    case KIMAP::LoginJob::Login:
+    case MailTransport::Transport::EnumAuthenticationType::LOGIN:
       authStr = "LOGIN";
       break;
-    case KIMAP::LoginJob::Plain:
-      authStr = "PLAIN";
-      break;
-    case KIMAP::LoginJob::CramMD5:
+    case MailTransport::Transport::EnumAuthenticationType::CRAM_MD5:
       authStr = "CRAM-MD5";
       break;
-    case KIMAP::LoginJob::DigestMD5:
+    case MailTransport::Transport::EnumAuthenticationType::DIGEST_MD5:
       authStr = "DIGEST-MD5";
       break;
-    case KIMAP::LoginJob::GSSAPI:
+    case MailTransport::Transport::EnumAuthenticationType::GSSAPI:
       authStr = "GSSAPI";
       break;
-    case KIMAP::LoginJob::Anonymous:
+    case MailTransport::Transport::EnumAuthenticationType::ANONYMOUS:
       authStr = "ANONYMOUS";
       break;
     default:
