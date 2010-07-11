@@ -401,7 +401,7 @@ public slots:
   void slotRunBackgroundTasks();
 
   void slotConfigChanged();
-    void slotDefaultCollectionsChanged();
+  void slotDefaultCollectionsChanged();
 
 signals:
   void configChanged();
