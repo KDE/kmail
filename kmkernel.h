@@ -425,6 +425,7 @@ private slots:
   void akonadiStateChanged( Akonadi::ServerManager::State );
   void slotProgressItemCompletedOrCanceled( KPIM::ProgressItem * item);
 private:
+  void migrateFromKMail1();
   void openReader( bool onlyCheck );
   QSharedPointer<FolderCollection> currentFolderCollection();
 
