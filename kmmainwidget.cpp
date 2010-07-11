@@ -341,6 +341,8 @@ void KMMainWidget::slotEndCheckMail()
 
   mCheckMailInProgress = false;
 
+  // FIXME: This is wrong! Items can arrive _after_ the mail check, in which case mCheckMail can be empty
+  //        here
   if ( mCheckMail.isEmpty() ) {
     return;
   }

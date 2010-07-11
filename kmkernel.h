@@ -418,7 +418,7 @@ private slots:
   /** Updates identities when a transport has been renamed. */
   void transportRenamed( int id, const QString &oldName, const QString &newName );
   void itemDispatchStarted();
-  void instanceProgressChanged( Akonadi::AgentInstance );
+  void instanceStatusChanged( Akonadi::AgentInstance );
   void createDefaultCollectionDone( KJob * job);
 
   void initFolders();
@@ -474,7 +474,8 @@ private:
   Akonadi::EntityTreeModel *mEntityTreeModel;
   Akonadi::EntityMimeTypeFilterModel *mCollectionModel;
 
-  QList<KPIM::ProgressItem *>mListProgressItem;
+  /// List of Akonadi resources that are currently being checked.
+  QList<QString> mResoucesBeingChecked;
 
   int mWrapCol;
 };
