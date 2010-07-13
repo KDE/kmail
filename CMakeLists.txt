@@ -246,6 +246,7 @@ target_link_libraries(kmailprivate
   ${SOPRANO_LIBRARIES}
   niefast_apps
   ${QT_QTWEBKIT_LIBRARY}
+  ${QT_QTSCRIPT_LIBRARY}
   ${NEPOMUK_LIBRARIES}
   ${NEPOMUK_QUERY_LIBRARIES}
 )
@@ -289,6 +290,7 @@ target_link_libraries(kmail
   ${KDEPIMLIBS_KONTACTINTERFACE_LIBS}
   kmailprivate
   kdepim
+  ${QT_QTSCRIPT_LIBRARY}
 )
 
 ########### install files ###############
