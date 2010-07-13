@@ -930,11 +930,6 @@ void KMMainWidget::createWidgets()
              SLOT( slotFocusQuickSearch() ) );
   }
 
-#if 0
-  // FIXME!
-  if ( !GlobalSettings::self()->quickSearchActive() )
-    mSearchToolBar->hide();
-#endif
   mPreviousMessageAction = new KAction( i18n( "Extend Selection to Previous Message" ), this );
   mPreviousMessageAction->setShortcut( QKeySequence( Qt::SHIFT + Qt::Key_Left ) );
   actionCollection()->addAction( "previous_message", mPreviousMessageAction );
