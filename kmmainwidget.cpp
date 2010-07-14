@@ -868,6 +868,11 @@ void KMMainWidget::readConfig()
   updateMessageMenu();
   updateFileMenu();
   toggleSystemTray();
+
+  connect( Akonadi::AgentManager::self(), SIGNAL( instanceAdded( const Akonadi::AgentInstance& ) ),
+           this, SLOT( updateFileMenu() ) );
+  connect( Akonadi::AgentManager::self(), SIGNAL( instanceRemoved( const Akonadi::AgentInstance& ) ),
+           this, SLOT( updateFileMenu() ) );
 }
 
 //-----------------------------------------------------------------------------

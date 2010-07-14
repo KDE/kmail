@@ -287,7 +287,6 @@ class KMAIL_EXPORT KMMainWidget : public QWidget
     void createWidgets();
     void deleteWidgets();
     void layoutSplitters();
-    void updateFileMenu();
     void newFromTemplate( const Akonadi::Item& );
     void moveSelectedMessagesToFolder( const Akonadi::Collection & dest );
     void copySelectedMessagesToFolder( const Akonadi::Collection& dest );
@@ -305,6 +304,7 @@ class KMAIL_EXPORT KMMainWidget : public QWidget
     KSharedConfig::Ptr config();
 
   protected slots:
+    void updateFileMenu();
     void slotCheckOneAccount( QAction* );
 #if 0
     void slotMailChecked( bool newMail, bool sendOnCheck,
