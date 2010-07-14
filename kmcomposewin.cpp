@@ -1894,8 +1894,10 @@ int KMComposeWin::signingChainCertNearExpiryWarningThresholdInDays()
 
 void KMComposeWin::slotSendFailed( const QString& msg )
 {
-//   setModified( false );
+  //   setModified( false );
   setEnabled( true );
+  KMessageBox::sorry( mMainWidget, msg,
+                      i18n( "Sending Message Failed" ) );
 }
 
 void KMComposeWin::slotSendSuccessful()
