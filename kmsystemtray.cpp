@@ -387,7 +387,7 @@ void KMSystemTray::unreadMail( const QAbstractItemModel *model, const QModelInde
     if ( KMail::Util::isVirtualCollection( collection ) )
       continue;
 
-    Akonadi::CollectionStatistics statistics = collection.statistics();
+    const Akonadi::CollectionStatistics statistics = collection.statistics();
     const qint64 count = qMax( 0LL, statistics.unreadCount() );
 
     if ( count > 0 ) {
