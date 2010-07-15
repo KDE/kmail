@@ -174,7 +174,7 @@ void KMComposerEditor::insertFromMimeData( const QMimeData *source )
       if ( !url.isLocalFile() ) {
         allLocalURLs = false;
       }
-      Akonadi::Item item = Akonadi::Item::fromUrl( url );
+      const Akonadi::Item item = Akonadi::Item::fromUrl( url );
       if ( item.isValid() ) {
         items << item;
       }

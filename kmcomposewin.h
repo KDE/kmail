@@ -304,7 +304,6 @@ class KMComposeWin : public KMail::Composer
     void slotMarkAll();
 
   void slotFolderRemoved( const Akonadi::Collection& );
-    //void slotEditDone( KMail::EditorWatcher* watcher );
     void slotLanguageChanged( const QString &language );
 
     void slotEditorTextChanged();
@@ -704,10 +703,6 @@ class KMComposeWin : public KMail::Composer
 
     Message::ComposerViewBase* mComposerBase;
 
-#if 0
-    QMap<KMail::EditorWatcher*, KMMessagePart*> mEditorMap;
-    QMap<KMail::EditorWatcher*, KTemporaryFile*> mEditorTempFiles;
-#endif
 
     SnippetWidget *mSnippetWidget;
     QList<KTempDir*> mTempDirs;
