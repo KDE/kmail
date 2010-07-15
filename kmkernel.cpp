@@ -1430,7 +1430,7 @@ bool KMKernel::folderIsDrafts(const Akonadi::Collection & col)
   if ( col ==  Akonadi::SpecialMailCollections::self()->defaultCollection( Akonadi::SpecialMailCollections::Drafts ) )
     return true;
 
-  QString idString = QString::number( col.id() );
+  const QString idString = QString::number( col.id() );
   if ( idString.isEmpty() ) return false;
 
   // search the identities if the folder matches the drafts-folder
@@ -1445,7 +1445,7 @@ bool KMKernel::folderIsTemplates(const Akonadi::Collection &col)
   if ( col ==  Akonadi::SpecialMailCollections::self()->defaultCollection( Akonadi::SpecialMailCollections::Templates ) )
     return true;
 
-  QString idString = QString::number( col.id() );
+  const QString idString = QString::number( col.id() );
   if ( idString.isEmpty() ) return false;
 
   // search the identities if the folder matches the templates-folder
@@ -1500,7 +1500,7 @@ bool KMKernel::folderIsSentMailFolder( const Akonadi::Collection &col )
   if ( col == Akonadi::SpecialMailCollections::self()->defaultCollection( Akonadi::SpecialMailCollections::SentMail ) )
     return true;
 
-  QString idString = QString::number( col.id() );
+  const QString idString = QString::number( col.id() );
   if ( idString.isEmpty() ) return false;
 
   // search the identities if the folder matches the sent-folder
@@ -1911,7 +1911,7 @@ bool KMKernel::isMainFolderCollection( const Akonadi::Collection &col )
   return col == inboxCollectionFolder();
 }
 
-bool KMKernel::isImapFolder( const Akonadi::Collection &col )
+bool KMKernel::isImapFolder( const Akonadi::Collection &col ) const
 {
   const Akonadi::AgentInstance agentInstance = Akonadi::AgentManager::self()->instance( col.resource() );
   return (agentInstance.type().identifier() == IMAP_RESOURCE_IDENTIFIER);
@@ -1922,7 +1922,7 @@ void KMKernel::stopAgentInstance()
 {
   const QString resourceGroupPattern( "Resource %1" );
 
-  Akonadi::AgentInstance::List lst = KMail::Util::agentInstances();
+  const Akonadi::AgentInstance::List lst = KMail::Util::agentInstances();
   foreach( Akonadi::AgentInstance type, lst ) {
     KConfigGroup group( KMKernel::config(), resourceGroupPattern.arg( type.identifier() ) );
     if ( group.readEntry( "OfflineOnShutdown", false ) )

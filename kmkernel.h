@@ -267,7 +267,7 @@ public:
    */
   bool folderIsSentMailFolder( const Akonadi::Collection& );
 
-  bool isImapFolder( const Akonadi::Collection& );
+  bool isImapFolder( const Akonadi::Collection& ) const;
 
   const KComponentData &xmlGuiInstance() { return mXmlGuiInstance; }
   void setXmlGuiInstance( const KComponentData &instance ) { mXmlGuiInstance = instance; }
