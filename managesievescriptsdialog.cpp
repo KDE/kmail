@@ -108,6 +108,7 @@ void KMail::ManageSieveScriptsDialog::slotRefresh()
           mUrls.insert( last, u );
         }
       }
+      delete iface;
     }
   }
 }
