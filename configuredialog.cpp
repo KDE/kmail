@@ -484,11 +484,15 @@ void AccountsPageReceivingTab::slotShowMailCheckMenu( const QString &ident, cons
     CheckOnStartup = opts->CheckOnStartup;
   }
 
-  QAction *manualMailCheck = new QAction( i18nc( "Label to a checkbox, so is either checked/unchecked", "Include in Manual Mail Check" ), menu );
-  manualMailCheck->setCheckable( true );
-  manualMailCheck->setChecked( IncludeInManualChecks );
-  manualMailCheck->setData( ident );
-  menu->addAction( manualMailCheck );
+  if ( ( ident != QLatin1String( "akonadi_nepomuktag_resource" ) ) &&
+       ( ident != QLatin1String( "akonadi_search_resource" ) ) ) {
+    QAction *manualMailCheck = new QAction( i18nc( "Label to a checkbox, so is either checked/unchecked", "Include in Manual Mail Check" ), menu );
+    manualMailCheck->setCheckable( true );
+    manualMailCheck->setChecked( IncludeInManualChecks );
+    manualMailCheck->setData( ident );
+    menu->addAction( manualMailCheck );
+    connect( manualMailCheck, SIGNAL( toggled( bool ) ), this, SLOT( slotIncludeInCheckChanged( bool ) ) );
+  }
 
   QAction *switchOffline = new QAction( i18nc( "Label to a checkbox, so is either checked/unchecked", "Switch offline on KMail Shutdown" ), menu );
   switchOffline->setCheckable( true );
@@ -502,7 +506,6 @@ void AccountsPageReceivingTab::slotShowMailCheckMenu( const QString &ident, cons
   checkOnStartup->setData( ident );
   menu->addAction( checkOnStartup );
 
-  connect( manualMailCheck, SIGNAL( toggled( bool ) ), this, SLOT( slotIncludeInCheckChanged( bool ) ) );
   connect( switchOffline, SIGNAL( toggled( bool ) ), this, SLOT( slotOfflineOnShutdownChanged( bool ) ) );
   connect( checkOnStartup, SIGNAL( toggled( bool ) ), this, SLOT( slotCheckOnStatupChanged( bool ) ) );
 
