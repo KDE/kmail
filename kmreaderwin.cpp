@@ -2837,31 +2837,33 @@ void KMReaderWin::injectAttachments()
   QString visibility;
   QString urlHandle;
   QString imgSrc;
-  if( !showAttachmentQuicklist() )
-    {
-      urlHandle.append( "kmail:showAttachmentQuicklist" );
-      imgSrc.append( "attachmentQuicklistClosed.png" );
-    } else {
-      urlHandle.append( "kmail:hideAttachmentQuicklist" );
-      imgSrc.append( "attachmentQuicklistOpened.png" );
-    }
+  if( !showAttachmentQuicklist() ) {
+    urlHandle.append( "kmail:showAttachmentQuicklist" );
+    imgSrc.append( "attachmentQuicklistClosed.png" );
+  } else {
+    urlHandle.append( "kmail:hideAttachmentQuicklist" );
+    imgSrc.append( "attachmentQuicklistOpened.png" );
+  }
 
   QString html = renderAttachments( mRootNode, QApplication::palette().active().background() );
   if ( html.isEmpty() )
     return;
 
-    QString link("");
-    if ( headerStyle() == HeaderStyle::fancy() ) {
-      link += "<div style=\"text-align: left;\"><a href=\""+urlHandle+"\"><img src=\""+imgpath+imgSrc+"\"/></a></div>";
-      html.prepend( link );
-      html.prepend( QString::fromLatin1("<div style=\"float:left;\">%1&nbsp;</div>" ).arg(i18n("Attachments:")) );
-    } else {
-      link += "<div style=\"text-align: right;\"><a href=\""+urlHandle+"\"><img src=\""+imgpath+imgSrc+"\"/></a></div>";
-      html.prepend( link );
-    }
+  QString link("");
+  if ( headerStyle() == HeaderStyle::fancy() ) {
+    link += "<div style=\"text-align: left;\"><a href=\"" + urlHandle + "\"><img src=\"" +
+            imgpath + imgSrc + "\"/></a></div>";
+    html.prepend( link );
+    html.prepend( QString::fromLatin1( "<div style=\"float:left;\">%1&nbsp;</div>" ).
+                  arg( i18n( "Attachments:" ) ) );
+  } else {
+    link += "<div style=\"text-align: right;\"><a href=\"" + urlHandle + "\"><img src=\"" +
+            imgpath + imgSrc + "\"/></a></div>";
+    html.prepend( link );
+  }
 
-    assert( injectionPoint.tagName() == "div" );
-    static_cast<DOM::HTMLElement>( injectionPoint ).setInnerHTML( html );
+  assert( injectionPoint.tagName() == "div" );
+  static_cast<DOM::HTMLElement>( injectionPoint ).setInnerHTML( html );
 }
 
 static QColor nextColor( const QColor & c )
@@ -2917,7 +2919,7 @@ QString KMReaderWin::renderAttachments(partNode * node, const QColor &bgColor )
       } else if ( headerStyle() == HeaderStyle::fancy() ) {
         QFont bodyFont = mCSSHelper->bodyFont( isFixedFont() );
         QFontMetrics fm( bodyFont );
-        html += KStringHandler::rPixelSqueeze( info.label, fm, 1000 );
+        html += KStringHandler::rPixelSqueeze( info.label, fm, 640 );
       } else {
         html += info.label;
       }
