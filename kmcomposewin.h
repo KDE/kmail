@@ -88,8 +88,6 @@ namespace Akonadi {
   class CollectionComboBox;
 }
 
-namespace MailTransport {
-}
 
 namespace KMail {
   class AttachmentController;
@@ -107,9 +105,6 @@ namespace Message {
 namespace MessageComposer
 {
   class ComposerLineEdit;
-}
-
-namespace MailTransport{
 }
 
 //-----------------------------------------------------------------------------
@@ -397,7 +392,7 @@ class KMComposeWin : public KMail::Composer
      * Set whether the message should be treated as modified or not.
      */
     void setModified( bool modified );
-    
+
   private slots:
 
     void slotView();
@@ -675,7 +670,7 @@ class KMComposeWin : public KMail::Composer
      * Updates the visibility and text of the signature and encryption state indicators.
      */
     void slotUpdateSignatureAndEncrypionStateIndicators();
-    
+
     virtual void setAutoSaveFileName( const QString& fileName );
   private:
     QFont mSaveFont;
@@ -708,7 +703,7 @@ class KMComposeWin : public KMail::Composer
     static int s_composerNumber;
 
     Message::ComposerViewBase* mComposerBase;
-    
+
 #if 0
     QMap<KMail::EditorWatcher*, KMMessagePart*> mEditorMap;
     QMap<KMail::EditorWatcher*, KTemporaryFile*> mEditorTempFiles;
