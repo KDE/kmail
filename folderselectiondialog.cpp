@@ -63,6 +63,7 @@ FolderSelectionDialog::FolderSelectionDialog( QWidget *parent, SelectionFolderOp
 
   QWidget *widget = mainWidget();
   QVBoxLayout *layout = new QVBoxLayout( widget );
+  layout->setMargin( 0 );
   FolderTreeWidget::TreeViewOptions opt= FolderTreeWidget::None;
   if ( options & FolderSelectionDialog::ShowUnreadCount )
     opt |= FolderTreeWidget::ShowUnreadCount;
