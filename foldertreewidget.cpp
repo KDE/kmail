@@ -108,6 +108,7 @@ FolderTreeWidget::FolderTreeWidget( QWidget *parent, KXMLGUIClient *xmlGuiClient
            this, SLOT( slotChangeTooltipsPolicy( FolderTreeWidget::ToolTipDisplayPolicy ) ) );
 
   d->folderTreeView->setSelectionMode( QAbstractItemView::SingleSelection );
+  d->folderTreeView->setEditTriggers( QAbstractItemView::NoEditTriggers );
   d->folderTreeView->installEventFilter( this );
 
   // Use the model
