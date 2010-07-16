@@ -1312,11 +1312,13 @@ void KMMainWidget::slotCompose()
         msg->setHeader( header );
       }
       TemplateParser::TemplateParser parser( msg, TemplateParser::TemplateParser::NewMessage );
+      parser.setIdentityManager( KMKernel::self()->identityManager() );
       parser.process( msg, mCurrentFolder->collection() );
       win = KMail::makeComposer( msg, KMail::Composer::New, mCurrentFolder->identity() );
   } else {
       MessageHelper::initHeader( msg, KMKernel::self()->identityManager() );
       TemplateParser::TemplateParser parser( msg, TemplateParser::TemplateParser::NewMessage );
+      parser.setIdentityManager( KMKernel::self()->identityManager() );
       parser.process( KMime::Message::Ptr(), Akonadi::Collection() );
       win = KMail::makeComposer( msg, KMail::Composer::New );
   }
