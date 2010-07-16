@@ -37,7 +37,6 @@
 #include "antispamwizard.h"
 #include "filterlogdlg.h"
 #include "mailinglistpropertiesdialog.h"
-#include "templateparser.h"
 #include "statusbarlabel.h"
 #include "expirypropertiesdialog.h"
 #include "undostack.h"
@@ -1253,7 +1252,7 @@ void KMMainWidget::slotCompose()
         msg->setHeader( header );
       }
       TemplateParser::TemplateParser parser( msg, TemplateParser::TemplateParser::NewMessage );
-      parser.process( KMime::Message::Ptr(), mCurrentFolder->collection() );
+      parser.process( msg, mCurrentFolder->collection() );
       win = KMail::makeComposer( msg, KMail::Composer::New, mCurrentFolder->identity() );
   } else {
       MessageHelper::initHeader( msg, KMKernel::self()->identityManager() );
