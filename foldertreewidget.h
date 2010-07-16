@@ -122,8 +122,10 @@ protected slots:
   void slotManualSortingChanged( bool );
 
 private:
+  virtual bool eventFilter( QObject*o, QEvent *e );
   class FolderTreeWidgetPrivate;
   FolderTreeWidgetPrivate * const d;
+
 };
 
 #endif

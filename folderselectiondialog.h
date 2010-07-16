@@ -64,7 +64,6 @@ private slots:
   void rowsInserted( const QModelIndex& col, int, int );
 
 protected:
-  virtual void keyPressEvent( QKeyEvent *e );
   void readConfig();
   void writeConfig();
   bool canCreateCollection( Akonadi::Collection & parentCol );

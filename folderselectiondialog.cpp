@@ -42,7 +42,6 @@ public:
       mUseGlobalSettings( true )
   {
   }
-  QString mFilter;
   FolderTreeWidget *folderTreeWidget;
   bool mNotAllowToCreateNewFolder;
   bool mUseGlobalSettings;
@@ -227,36 +226,6 @@ void FolderSelectionDialog::writeConfig()
     if ( col.isValid() )
       GlobalSettings::self()->setLastSelectedFolder( col.id() );
   }
-}
-
-void FolderSelectionDialog::keyPressEvent( QKeyEvent *e )
-{
-
-  switch( e->key() )
-  {
-    case Qt::Key_Backspace:
-      if ( d->mFilter.length() > 0 )
-        d->mFilter.truncate( d->mFilter.length()-1 );
-      d->folderTreeWidget->applyFilter( d->mFilter );
-      return;
-    break;
-    case Qt::Key_Delete:
-      d->mFilter = "";
-      d->folderTreeWidget->applyFilter( d->mFilter);
-      return;
-    break;
-    default:
-    {
-      const QString s = e->text();
-      if ( !s.isEmpty() && s.at( 0 ).isPrint() ) {
-         d->mFilter += s;
-        d->folderTreeWidget->applyFilter( d->mFilter );
-        return;
-      }
-    }
-    break;
-  }
-  KDialog::keyPressEvent( e );
 }
 
 #include "folderselectiondialog.moc"
