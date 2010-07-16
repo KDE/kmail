@@ -37,7 +37,6 @@
 #include "kmmainwidget.h"
 #include "kmreadermainwin.h"
 //#include "mailcomposeradaptor.h" // TODO port all D-Bus stuff...
-#include "objecttreeparser.h"
 #include "messageviewer/stl_util.h"
 #include "messageviewer/util.h"
 #include "messagecore/stringutil.h"
