@@ -226,4 +226,9 @@ void FolderSelectionDialog::writeConfig()
   }
 }
 
+void FolderSelectionDialog::clearFilter()
+{
+  d->folderTreeWidget->clearFilter();
+}
+
 #include "folderselectiondialog.moc"

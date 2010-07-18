@@ -78,6 +78,7 @@ namespace KMail {
 }
 
 class FolderTreeWidget;
+class FolderSelectionDialog;
 
 class KMAIL_EXPORT KMMainWidget : public QWidget
 {
@@ -491,6 +492,13 @@ class KMAIL_EXPORT KMMainWidget : public QWidget
      * This applies setMessageSetStatus() on the current thread.
      */
     void setCurrentThreadStatus( const KPIM::MessageStatus &status, bool toggle );
+
+    /**
+     * Internal helper that creates the folder selection dialog used for the
+     * move and copy to folder actions on demand.
+     */
+    FolderSelectionDialog* moveOrCopyToDialog();
+
   private slots:
     /**
      * Called when a "move to trash" operation is completed
@@ -573,6 +581,8 @@ private:
 
     //  QPopupMenu *mMessageMenu;
     KMail::SearchWindow *mSearchWin;
+
+    FolderSelectionDialog* mMoveOrCopyToDialog;
 
     KAction *mRemoveFolderAction,
       *mExpireFolderAction,

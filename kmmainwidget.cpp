@@ -200,7 +200,8 @@ K_GLOBAL_STATIC( KMMainWidget::PtrList, theMainWidgetList )
     mCurrentFolder( 0 ),
     mVacationIndicatorActive( false ),
     mGoToFirstUnreadMessageInSelectedFolder( false ),
-    mCheckMailInProgress( false )
+    mCheckMailInProgress( false ),
+    mMoveOrCopyToDialog( 0 )
 {
   // must be the first line of the constructor:
   mStartupDone = false;
@@ -1821,20 +1822,26 @@ void KMMainWidget::slotDeleteThread( bool confirmDelete )
     moveMessageSelected( ref, Akonadi::Collection(), confirmDelete );
 }
 
+FolderSelectionDialog* KMMainWidget::moveOrCopyToDialog()
+{
+  if ( mMoveOrCopyToDialog == 0 ) {
+    FolderSelectionDialog::SelectionFolderOption options = FolderSelectionDialog::HideVirtualFolder;
+    mMoveOrCopyToDialog = new FolderSelectionDialog( this, options);
+    mMoveOrCopyToDialog->setModal( true );
+  }
+  return mMoveOrCopyToDialog;
+}
 
 void KMMainWidget::slotMoveSelectedMessageToFolder()
 {
-  FolderSelectionDialog::SelectionFolderOption options = FolderSelectionDialog::HideVirtualFolder;
-  MessageViewer::AutoQPointer<FolderSelectionDialog> dlg;
-  dlg = new FolderSelectionDialog( this, options);
-  dlg->setModal( true );
-  dlg->setCaption(  i18n( "Move Messages to Folder" ) );
-  if ( dlg->exec() && dlg ) {
-    const Akonadi::Collection dest = dlg->selectedCollection();
+  moveOrCopyToDialog()->setCaption(  i18n( "Move Messages to Folder" ) );
+  if ( moveOrCopyToDialog()->exec() && moveOrCopyToDialog() ) {
+    const Akonadi::Collection dest = moveOrCopyToDialog()->selectedCollection();
     if ( dest.isValid() ) {
       moveSelectedMessagesToFolder( dest );
     }
   }
+  moveOrCopyToDialog()->clearFilter();
 }
 
 void KMMainWidget::moveSelectedMessagesToFolder( const Akonadi::Collection & dest )
@@ -1879,18 +1886,15 @@ void KMMainWidget::slotCopyMessagesCompleted( KMCommand *command )
 
 void KMMainWidget::slotCopySelectedMessagesToFolder()
 {
-  FolderSelectionDialog::SelectionFolderOption options = FolderSelectionDialog::HideVirtualFolder;
-  MessageViewer::AutoQPointer<FolderSelectionDialog> dlg;
-  dlg = new FolderSelectionDialog( this, options );
-  dlg->setModal( true );
-  dlg->setCaption( i18n( "Copy Messages to Folder" ) );
+  moveOrCopyToDialog()->setCaption( i18n( "Copy Messages to Folder" ) );
 
-  if ( dlg->exec() && dlg ) {
-    const Akonadi::Collection dest = dlg->selectedCollection();
+  if ( moveOrCopyToDialog()->exec() && moveOrCopyToDialog() ) {
+    const Akonadi::Collection dest = moveOrCopyToDialog()->selectedCollection();
     if ( dest.isValid() ) {
       copySelectedMessagesToFolder( dest );
     }
   }
+  moveOrCopyToDialog()->clearFilter();
 }
 
 void KMMainWidget::copySelectedMessagesToFolder( const Akonadi::Collection& dest )

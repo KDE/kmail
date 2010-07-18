@@ -109,6 +109,7 @@ public:
 
   KLineEdit *filterFolderLineEdit() const;
   void applyFilter( const QString& );
+  void clearFilter();
 
   void disableContextMenuAndExtraColumn();
 
