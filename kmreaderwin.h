@@ -595,6 +595,7 @@ private:
   KURL mHoveredUrl;
   KURL mClickedUrl;
   QPoint mLastClickPosition;
+  QString mLastClickImagePath;
   bool mCanStartDrag;
 
   KMail::HtmlWriter * mHtmlWriter;

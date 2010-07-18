@@ -74,8 +74,8 @@ namespace KMail {
     bool handleClick( const KURL & url, KMReaderWin * w=0 ) const;
     bool handleShiftClick( const KURL &url, KMReaderWin *window = 0 ) const;
     bool handleContextMenuRequest( const KURL & url, const QPoint & p, KMReaderWin * w=0 ) const;
-    bool willHandleDrag( const KURL &url, KMReaderWin *window = 0 ) const;
-    bool handleDrag( const KURL &url, KMReaderWin *window = 0 ) const;
+    bool willHandleDrag( const KURL &url, const QString& imagePath, KMReaderWin *window = 0 ) const;
+    bool handleDrag( const KURL &url, const QString& imagePath, KMReaderWin *window = 0 ) const;
     QString statusBarMessage( const KURL & url, KMReaderWin * w=0 ) const;
 
   private:

@@ -1896,6 +1896,7 @@ void KMReaderWin::slotUrlOn(const QString &aUrl)
   if ( aUrl.stripWhiteSpace().isEmpty() ) {
     KPIM::BroadcastStatus::instance()->reset();
     mHoveredUrl = KURL();
+    mLastClickImagePath = QString();
     return;
   }
 
@@ -2636,21 +2637,21 @@ bool KMReaderWin::eventFilter( QObject *, QEvent *e )
 
     if ( me->button() == LeftButton ) {
 
-      // When the node under the mouse is an IMG node, set the hovered URL to the src of the
-      // image, so that special URL handlers can deal with it, for example the InternalImageURLHandler
+      QString imagePath;
       const DOM::Node nodeUnderMouse = mViewer->nodeUnderMouse();
       if ( !nodeUnderMouse.isNull() ) {
         const DOM::NamedNodeMap attributes = nodeUnderMouse.attributes();
         if ( !attributes.isNull() ) {
           const DOM::Node src = attributes.getNamedItem( DOM::DOMString( "src" ) );
           if ( !src.isNull() ) {
-            mHoveredUrl = src.nodeValue().string();
+            imagePath = src.nodeValue().string();
           }
         }
       }
 
-      mCanStartDrag = URLHandlerManager::instance()->willHandleDrag( mHoveredUrl, this );
+      mCanStartDrag = URLHandlerManager::instance()->willHandleDrag( mHoveredUrl, imagePath, this );
       mLastClickPosition = me->pos();
+      mLastClickImagePath = imagePath;
     }
   }
 
@@ -2662,8 +2663,8 @@ bool KMReaderWin::eventFilter( QObject *, QEvent *e )
     QMouseEvent* me = static_cast<QMouseEvent*>( e );
 
     if ( ( mLastClickPosition - me->pos() ).manhattanLength() > KGlobalSettings::dndEventDelay() ) {
-      if ( mCanStartDrag && !mHoveredUrl.isEmpty() ) {
-        if ( URLHandlerManager::instance()->handleDrag( mHoveredUrl, this ) ) {
+      if ( mCanStartDrag && ( !( mHoveredUrl.isEmpty() && mLastClickImagePath.isEmpty() ) ) ) {
+        if ( URLHandlerManager::instance()->handleDrag( mHoveredUrl, mLastClickImagePath, this ) ) {
           mCanStartDrag = false;
           slotUrlOn( QString() );
           return true;

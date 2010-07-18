@@ -126,8 +126,8 @@ namespace {
 
     bool handleClick( const KURL &, KMReaderWin * ) const;
     bool handleShiftClick( const KURL &url, KMReaderWin *window ) const;
-    bool handleDrag( const KURL &url, KMReaderWin *window ) const;
-    bool willHandleDrag( const KURL &url, KMReaderWin *window ) const;
+    bool handleDrag( const KURL &url, const QString& imagePath, KMReaderWin *window ) const;
+    bool willHandleDrag( const KURL &url, const QString& imagePath, KMReaderWin *window ) const;
     bool handleContextMenuRequest( const KURL &, const QPoint &, KMReaderWin * ) const;
     QString statusBarMessage( const KURL &, KMReaderWin * ) const;
   private:
@@ -153,8 +153,8 @@ namespace {
         {}
       ~InternalImageURLHandler()
         {}
-      bool handleDrag( const KURL &url, KMReaderWin *window ) const;
-      bool willHandleDrag( const KURL &url, KMReaderWin *window ) const;
+      bool handleDrag( const KURL &url, const QString& imagePath, KMReaderWin *window ) const;
+      bool willHandleDrag( const KURL &url, const QString& imagePath, KMReaderWin *window ) const;
       bool handleClick( const KURL &, KMReaderWin * ) const
         { return false; }
       bool handleContextMenuRequest( const KURL &, const QPoint &, KMReaderWin * ) const
@@ -346,18 +346,20 @@ bool KMail::URLHandlerManager::handleShiftClick( const KURL &url, KMReaderWin *w
   return false;
 }
 
-bool KMail::URLHandlerManager::willHandleDrag( const KURL &url, KMReaderWin *window ) const
+bool KMail::URLHandlerManager::willHandleDrag( const KURL &url, const QString& imagePath,
+                                               KMReaderWin *window ) const
 {
   for ( HandlerList::const_iterator it = mHandlers.begin() ; it != mHandlers.end() ; ++it )
-    if ( (*it)->willHandleDrag( url, window ) )
+    if ( (*it)->willHandleDrag( url, imagePath, window ) )
       return true;
   return false;
 }
 
-bool KMail::URLHandlerManager::handleDrag( const KURL &url, KMReaderWin *window ) const
+bool KMail::URLHandlerManager::handleDrag( const KURL &url, const QString& imagePath,
+                                           KMReaderWin *window ) const
 {
   for ( HandlerList::const_iterator it = mHandlers.begin() ; it != mHandlers.end() ; ++it )
-    if ( (*it)->handleDrag( url, window ) )
+    if ( (*it)->handleDrag( url, imagePath, window ) )
       return true;
   return false;
 }
@@ -635,14 +637,18 @@ namespace {
     return true;
   }
 
-  bool AttachmentURLHandler::willHandleDrag( const KURL &url, KMReaderWin *window ) const
+  bool AttachmentURLHandler::willHandleDrag( const KURL &url, const QString& imagePath,
+                                             KMReaderWin *window ) const
   {
+    Q_UNUSED( imagePath );
     return partNodeForUrl( url, window ) != 0;
   }
 
-  bool AttachmentURLHandler::handleDrag( const KURL &url, KMReaderWin *window ) const
+  bool AttachmentURLHandler::handleDrag( const KURL &url, const QString& imagePath,
+                                         KMReaderWin *window ) const
   {
-    partNode * node = partNodeForUrl( url, window );
+    Q_UNUSED( imagePath );
+    const partNode * node = partNodeForUrl( url, window );
     if ( !node )
       return false;
 
@@ -657,8 +663,9 @@ namespace {
       urlDrag->drag();
       return true;
     }
-    else
+    else {
       return false;
+    }
   }
 
   bool AttachmentURLHandler::handleContextMenuRequest( const KURL & url, const QPoint & p, KMReaderWin * w ) const
@@ -719,22 +726,26 @@ namespace {
 }
 
 namespace {
-  bool InternalImageURLHandler::handleDrag( const KURL &url, KMReaderWin *window ) const
+  bool InternalImageURLHandler::handleDrag( const KURL &url, const QString& imagePath,
+                                            KMReaderWin *window ) const
   {
     Q_UNUSED( window );
-    const QString imagePath = locate( "data", "kmail/pics/" );
-    if ( url.path().contains( imagePath ) ) {
+    Q_UNUSED( url );
+    const QString kmailImagePath = locate( "data", "kmail/pics/" );
+    if ( imagePath.contains( kmailImagePath ) ) {
       // Do nothing, don't start a drag
       return true;
     }
     return false;
   }
 
-  bool InternalImageURLHandler::willHandleDrag( const KURL &url, KMReaderWin *window ) const
+  bool InternalImageURLHandler::willHandleDrag( const KURL &url, const QString& imagePath,
+                                                KMReaderWin *window ) const
   {
     Q_UNUSED( window );
-    const QString imagePath = locate( "data", "kmail/pics/" );
-    return url.path().contains( imagePath );
+    Q_UNUSED( url );
+    const QString kmailImagePath = locate( "data", "kmail/pics/" );
+    return imagePath.contains( kmailImagePath );
   }
 }
 

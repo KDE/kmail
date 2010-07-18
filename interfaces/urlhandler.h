@@ -71,9 +71,11 @@ namespace KMail {
     /**
      * @return should return true if this URLHandler will handle the drag
      */
-    virtual bool willHandleDrag( const KURL &url, KMReaderWin *window ) const {
+    virtual bool willHandleDrag( const KURL &url, const QString &imagePath,
+                                 KMReaderWin *window ) const {
       Q_UNUSED( url );
       Q_UNUSED( window );
+      Q_UNUSED( imagePath );
       return false;
     }
 
@@ -82,9 +84,11 @@ namespace KMail {
      * If the drag is handled, you should create a drag object.
      * @return true if the click was handled by this URLHandler, false otherwise
      */
-    virtual bool handleDrag( const KURL &url, KMReaderWin *window ) const {
+    virtual bool handleDrag( const KURL &url, const QString &imagePath,
+                             KMReaderWin *window ) const {
       Q_UNUSED( url );
       Q_UNUSED( window );
+      Q_UNUSED( imagePath );
       return false;
     }
 
