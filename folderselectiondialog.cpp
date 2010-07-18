@@ -230,7 +230,7 @@ void FolderSelectionDialog::writeConfig()
   }
 }
 
-void FolderSelectionDialog::clearFilter()
+void FolderSelectionDialog::hideEvent( QHideEvent * )
 {
   d->folderTreeWidget->clearFilter();
 }

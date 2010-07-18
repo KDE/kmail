@@ -1841,7 +1841,6 @@ void KMMainWidget::slotMoveSelectedMessageToFolder()
       moveSelectedMessagesToFolder( dest );
     }
   }
-  moveOrCopyToDialog()->clearFilter();
 }
 
 void KMMainWidget::moveSelectedMessagesToFolder( const Akonadi::Collection & dest )
@@ -1894,7 +1893,6 @@ void KMMainWidget::slotCopySelectedMessagesToFolder()
       copySelectedMessagesToFolder( dest );
     }
   }
-  moveOrCopyToDialog()->clearFilter();
 }
 
 void KMMainWidget::copySelectedMessagesToFolder( const Akonadi::Collection& dest )
