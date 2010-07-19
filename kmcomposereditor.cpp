@@ -44,7 +44,7 @@
 #include <QTextCodec>
 
 KMComposerEditor::KMComposerEditor( KMComposeWin *win,QWidget *parent)
- : Message::KMeditor(parent),m_composerWin(win)
+ : Message::KMeditor(parent, "kmail2rc" ),m_composerWin(win)
 {
 }
 
