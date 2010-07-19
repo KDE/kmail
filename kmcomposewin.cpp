@@ -2689,6 +2689,7 @@ void KMComposeWin::enableHtml()
 
   mSaveFont = mComposerBase->editor()->currentFont();
   mComposerBase->editor()->updateActionStates();
+  mComposerBase->editor()->setActionsEnabled( false );
 }
 
 
@@ -2708,6 +2709,7 @@ void KMComposeWin::disableHtml( Message::ComposerViewBase::Confirmation confirma
   }
 
   mComposerBase->editor()->switchToPlainText();
+  mComposerBase->editor()->setActionsEnabled( false );
   slotUpdateFont();
   if ( toolBar( "htmlToolBar" )->isVisible() ) {
     // See the comment in enableHtml() why we use a singleshot timer, similar situation here.
