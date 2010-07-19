@@ -172,7 +172,7 @@ namespace KMail {
     { "Davide Bettio", 0, "davide.bettio@kdemail.net", 0 },
     { "Pradeepto Bhattacharya", 0, "pradeepto@kde.org", 0 },
     { "Bruno Bigras", 0, "bigras.bruno@gmail.com", 0 },
-    { "Bertjan Broeksema", 0 , "b.broeksema@home.nl", 0 },
+    { "Bertjan Broeksema", 0 , "broeksema@kde.org", 0 },
     { "Albert Astals Cid", 0, 0, 0 }, // fix for bug:95441 (folder tree context menu doesn't show shortcuts assigned to the actions)
     { "Cornelius Schumacher", 0, "schumacher@kde.org", 0 }, // implemented the new recipients editor and picker
     { "Frederick Emmott", I18N_NOOP("Anti-virus support"),
