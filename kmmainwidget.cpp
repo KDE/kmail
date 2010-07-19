@@ -2201,18 +2201,27 @@ void KMMainWidget::itemsFetchJobForFilterDone( KJob *job )
 
 void KMMainWidget::slotItemsFetchedForFilter( const Akonadi::Item::List &items )
 {
-  KPIM::ProgressItem *progressItem = qobject_cast<KPIM::ProgressItem*>( sender()->property( "progressItem" ).value<QObject*>() );
+
+  KPIM::ProgressItem* progressItem;
+  if( !sender()->property( "progressItem" ).value< QObject*>() ) {
+    progressItem = qobject_cast<KPIM::ProgressItem*>( sender()->property( "progressItem" ).value<QObject*>() );
+  } else {
+    progressItem = 0;
+    kWarning() << "Got invalid progress item for slotItemsFetchedFromFilter! Something went wrong...";
+  }
 
   foreach ( const Akonadi::Item &item, items ) {
-    progressItem->incCompletedItems();
-    if ( progressItem->totalItems() - progressItem->completedItems() < 10 ||
-      !( progressItem->completedItems() % 10 ) ||
-         progressItem->completedItems() <= 10 )
-    {
-      progressItem->updateProgress();
-      const QString statusMsg = i18n( "Filtering message %1 of %2", progressItem->completedItems(),
-                                      progressItem->totalItems() );
-      KPIM::BroadcastStatus::instance()->setStatusMsg( statusMsg );
+    if( progressItem ) {
+      progressItem->incCompletedItems();
+      if ( progressItem->totalItems() - progressItem->completedItems() < 10 ||
+        !( progressItem->completedItems() % 10 ) ||
+          progressItem->completedItems() <= 10 )
+      {
+        progressItem->updateProgress();
+        const QString statusMsg = i18n( "Filtering message %1 of %2", progressItem->completedItems(),
+                                        progressItem->totalItems() );
+        KPIM::BroadcastStatus::instance()->setStatusMsg( statusMsg );
+      }
     }
     slotFilterMsg( item );
   }
