@@ -1074,7 +1074,7 @@ void KMFolderCachedImap::serverSyncInternal()
     mSyncState = SYNC_STATE_HANDLE_INBOX;
     if( !mQuotaOnly && !noContent() ) {
       if( !mMsgsForDownload.isEmpty() ) {
-        newState( mProgress, i18n("Retrieving new messages"));
+        newState( mProgress, i18n("Retrieving one new message","Retrieving %n new messages",mMsgsForDownload.size()));
         CachedImapJob *job = new CachedImapJob( mMsgsForDownload,
                                                 CachedImapJob::tGetMessage,
                                                 this );
