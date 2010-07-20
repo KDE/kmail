@@ -451,8 +451,7 @@ void KMReaderWin::setMsgPart( KMime::Content* aMsgPart )
 //-----------------------------------------------------------------------------
 QString KMReaderWin::copyText() const
 {
-  QString temp = mViewer->selectedText();
-  return temp;
+  return mViewer->selectedText();
 }
 
 //-----------------------------------------------------------------------------
