@@ -636,7 +636,10 @@ private:
       int nbMail;
     };
 
+    /// Map from folder paths to collection information.
+    /// Used during mail check to remember how many mails there are in the folders
     QMap<QString, collectionInfo> mCheckMail;
+
     bool mCheckMailInProgress;
 };
 
