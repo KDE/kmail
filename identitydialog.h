@@ -43,6 +43,7 @@ class KComboBox;
 class KJob;
 class KLineEdit;
 class KPushButton;
+class KTabWidget;
 
 namespace Kleo {
   class EncryptionKeyRequester;
@@ -77,7 +78,7 @@ namespace KMail {
     void updateIdentity( KPIMIdentities::Identity & ident );
 
   protected slots:
-    void slotAboutToShow( QWidget * w );
+    void slotAboutToShow( int );
 
     /*! \reimp */
     virtual void slotButtonClicked( int button );
@@ -122,6 +123,7 @@ namespace KMail {
     KPIMIdentities::SignatureConfigurator *mSignatureConfigurator;
     // "X-Face" tab:
     KMail::XFaceConfigurator *mXFaceConfigurator;
+    KTabWidget *mTabWidget;
   };
 
 } // namespace KMail

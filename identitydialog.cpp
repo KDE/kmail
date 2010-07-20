@@ -113,12 +113,12 @@ namespace KMail {
     QVBoxLayout * vlay = new QVBoxLayout( page );
     vlay->setSpacing( spacingHint() );
     vlay->setMargin( 0 );
-    KTabWidget *tabWidget = new KTabWidget( page );
-    tabWidget->setObjectName( "config-identity-tab" );
-    vlay->addWidget( tabWidget );
+    mTabWidget = new KTabWidget( page );
+    mTabWidget->setObjectName( "config-identity-tab" );
+    vlay->addWidget( mTabWidget );
 
-    tab = new QWidget( tabWidget );
-    tabWidget->addTab( tab, i18nc("@title:tab General identity settings.","General") );
+    tab = new QWidget( mTabWidget );
+    mTabWidget->addTab( tab, i18nc("@title:tab General identity settings.","General") );
     glay = new QGridLayout( tab );
     glay->setSpacing( spacingHint() );
     glay->setMargin( marginHint() );
@@ -197,8 +197,8 @@ namespace KMail {
     // Tab Widget: Cryptography
     //
     row = -1;
-    mCryptographyTab = tab = new QWidget( tabWidget );
-    tabWidget->addTab( tab, i18n("Cryptography") );
+    mCryptographyTab = tab = new QWidget( mTabWidget );
+    mTabWidget->addTab( tab, i18n("Cryptography") );
     glay = new QGridLayout( tab );
     glay->setSpacing( spacingHint() );
     glay->setMargin( marginHint() );
@@ -333,8 +333,8 @@ namespace KMail {
     // Tab Widget: Advanced
     //
     row = -1;
-    tab = new QWidget( tabWidget );
-    tabWidget->addTab( tab, i18nc("@title:tab Advanced identity settings.","Advanced") );
+    tab = new QWidget( mTabWidget );
+    mTabWidget->addTab( tab, i18nc("@title:tab Advanced identity settings.","Advanced") );
     glay = new QGridLayout( tab );
     glay->setSpacing( spacingHint() );
     glay->setMargin( marginHint() );
@@ -435,7 +435,7 @@ namespace KMail {
     //
     // Tab Widget: Templates
     //
-    tab = new QWidget( tabWidget );
+    tab = new QWidget( mTabWidget );
     vlay = new QVBoxLayout( tab );
     vlay->setMargin( marginHint() );
     vlay->setSpacing( spacingHint() );
@@ -471,25 +471,25 @@ namespace KMail {
 #ifdef KDEPIM_MOBILE_UI
     tab->hide(); // not yet mobile ready
 #else
-    tabWidget->addTab( tab, i18n("Templates") );
+    mTabWidget->addTab( tab, i18n("Templates") );
 #endif
 
     //
     // Tab Widget: Signature
     //
-    mSignatureConfigurator = new KPIMIdentities::SignatureConfigurator( tabWidget );
+    mSignatureConfigurator = new KPIMIdentities::SignatureConfigurator( mTabWidget );
     mSignatureConfigurator->layout()->setMargin( KDialog::marginHint() );
-    tabWidget->addTab( mSignatureConfigurator, i18n("Signature") );
+    mTabWidget->addTab( mSignatureConfigurator, i18n("Signature") );
 
     //
     // Tab Widget: Picture
     //
-    mXFaceConfigurator = new XFaceConfigurator( tabWidget );
+    mXFaceConfigurator = new XFaceConfigurator( mTabWidget );
     mXFaceConfigurator->layout()->setMargin( KDialog::marginHint() );
 #ifdef KDEPIM_MOBILE_UI
     mXFaceConfigurator->hide(); // not yet mobile ready
 #else
-    tabWidget->addTab( mXFaceConfigurator, i18n("Picture") );
+    mTabWidget->addTab( mXFaceConfigurator, i18n("Picture") );
 #endif
 
 #ifndef KCM_KPIMIDENTITIES_STANDALONE
@@ -499,8 +499,8 @@ namespace KMail {
 #endif
     mNameEdit->setFocus();
 
-    connect( tabWidget, SIGNAL(currentChanged(QWidget*)),
-             SLOT(slotAboutToShow(QWidget*)) );
+    connect( mTabWidget, SIGNAL(currentChanged(int)),
+             SLOT(slotAboutToShow(int)) );
     setHelp( QString(), "kmail" );
   }
 
@@ -511,7 +511,8 @@ namespace KMail {
 #endif
   }
 
-  void IdentityDialog::slotAboutToShow( QWidget * w ) {
+  void IdentityDialog::slotAboutToShow( int index ) {
+    QWidget *w = mTabWidget->widget( index );
     if ( w == mCryptographyTab ) {
       // set the configured email address as initial query of the key
       // requesters:
