@@ -1278,8 +1278,11 @@ KMCommand::Result KMRedirectCommand::execute()
   KMime::Message::Ptr newMsg = factory.createRedirect( dlg->to() );
   if ( !newMsg )
     return Failed;
-
-  KMFilterAction::sendMDN( msg, KMime::MDN::Dispatched );
+  
+  MessageStatus status;
+  status.setStatusFromFlags( item.flags() );
+  if( status.isUnread() )
+    KMFilterAction::sendMDN( msg, KMime::MDN::Dispatched );
 
   const MessageSender::SendMethod method = dlg->sendImmediate()
     ? MessageSender::SendImmediate

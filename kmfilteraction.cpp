@@ -116,22 +116,6 @@ void KMFilterAction::sendMDN( const KMime::Message::Ptr &msg, KMime::MDN::Dispos
                               const QList<KMime::MDN::DispositionModifier> & m ) {
   if ( !msg ) return;
 
-  /* createMDN requires Return-Path and Disposition-Notification-To
-   * if it is not set in the message we assume that the notification should go to the
-   * sender
-   */
-  const QString returnPath = msg->headerByType( "Return-Path" ) ? msg->headerByType( "Return-Path" )->asUnicodeString() : "";
-  const QString dispNoteTo = msg->headerByType( "Disposition-Notification-To" )? msg->headerByType( "Disposition-Notification-To ")->asUnicodeString() : "";
-  if ( returnPath.isEmpty() ) {
-    KMime::Headers::Generic *header = new KMime::Headers::Generic( "Return-Path", msg.get(), msg->from()->asUnicodeString(), "utf-8" );
-    msg->setHeader( header );
-  }
-  if ( dispNoteTo.isEmpty() ) {
-    KMime::Headers::Generic *header = new KMime::Headers::Generic( "Disposition-Notification-To", msg.get(), msg->from()->asUnicodeString(), "utf-8" );
-    msg->setHeader( header );
-  }
-
-  kDebug() << "AKONADI PORT: verify Akonadi::Item() here  " << Q_FUNC_INFO;
   KMime::MDN::SendingMode s = MDNAdviceDialog::checkMDNHeaders( msg );
   KConfigGroup mdnConfig( KMKernel::config(), "MDN" );
   int quote = mdnConfig.readEntry<int>( "quote-message", 0 );
@@ -142,12 +126,6 @@ void KMFilterAction::sendMDN( const KMime::Message::Ptr &msg, KMime::MDN::Dispos
     kDebug() << "Sending failed.";
     //delete mdn;
   }
-
-  //restore orignial header
-  if ( returnPath.isEmpty() )
-    msg->removeHeader( "Return-Path" );
-  if ( dispNoteTo.isEmpty() )
-    msg->removeHeader( "Disposition-Notification-To" );
 }
 
 

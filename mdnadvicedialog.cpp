@@ -108,6 +108,10 @@ KMime::MDN::SendingMode MDNAdviceDialog::checkMDNHeaders(KMime::Message::Ptr msg
 {
   KConfigGroup mdnConfig( KMKernel::config(), "MDN" );
 
+  if( MessageInfo::instance()->mdnSentState( msg.get() ) != KMMsgMDNStateUnknown &&
+      MessageInfo::instance()->mdnSentState( msg.get() ) != KMMsgMDNNone )  // if already dealt with, don't do it again.
+    return KMime::MDN::SentAutomatically;
+
   // default:
   int mode = mdnConfig.readEntry( "default-policy", 0 );
   if ( !mode || mode < 0 || mode > 3 ) {
@@ -143,7 +147,7 @@ KMime::MDN::SendingMode MDNAdviceDialog::checkMDNHeaders(KMime::Message::Ptr msg
   if( MessageFactory::MDNRequested( msg ) ) {
     if( mode == 3 ) // always send, without asking
       s = KMime::MDN::SentAutomatically;
-    else {
+    else if( s != KMime::MDN::SentManually ) { // don't ask again if user has already been asked. use the users' decision
       mode = requestAdviceOnMDN( "mdnNormalAsk" );
       s = KMime::MDN::SentManually; // asked user
     }
