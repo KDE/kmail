@@ -24,32 +24,54 @@
 #include <kmime/kmime_message.h>
 #include <messagecomposer/messagefactory.h>
 
+class MDNAdviceHelper : public QObject
+{
+  Q_OBJECT
+public:
+    static MDNAdviceHelper* instance() {
+      if( !s_instance )
+        s_instance = new MDNAdviceHelper;
+
+      return s_instance;
+    }
+
+  /**
+  * Checks the MDN headers to see if the user needs to be asked for any
+  *  confirmations. Will ask the user if action is required.
+  *
+  * Returns whether to send an MDN or not, and the sending mode for the MDN to be created.
+  *
+  * Will also set the Akonadi::MDNStateAttribute on the given item
+  *  to what the user has selected.
+  */
+  QPair< bool, KMime::MDN::SendingMode > checkAndSetMDNInfo( Akonadi::Item item, KMime::MDN::DispositionType d );
+
+  Akonadi::MDNStateAttribute::MDNSentState dispositionToSentState( KMime::MDN::DispositionType d );
+
+
+private:
+    MDNAdviceHelper(QObject* parent = 0) {}
+    virtual ~MDNAdviceHelper() {}
+    
+    int requestAdviceOnMDN( const char * what );
+    MessageComposer::MDNAdvice questionIgnoreSend( const QString &text, bool canDeny );
+    
+    static MDNAdviceHelper* s_instance;
+private slots:
+    void itemsReceived(Akonadi::Item::List);
+};
+
 class MDNAdviceDialog : public KDialog
 {
   Q_OBJECT
-
+  
+public:  
+  MDNAdviceDialog( const QString &text, bool canDeny, QWidget *parent = 0 );
   ~MDNAdviceDialog();
 
-public:
-  /**
-   * Checks the MDN headers to see if the user needs to be asked for any
-   *  confirmations. Will ask the user if action is required.
-   *
-   * Returns the sending mode for the MDN to be created.
-   */
-  static KMime::MDN::SendingMode checkMDNHeaders( KMime::Message::Ptr msg );
-
-  /**
-   * Checks whether or not KMail can handle the disposition options set in the
-   *  message header. If not, */
-  static KMime::MDN::DispositionType checkOptions( KMime::Message::Ptr msg );
-
+  MessageComposer::MDNAdvice result();
+  
 private:
-  MDNAdviceDialog( const QString &text, bool canDeny, QWidget *parent = 0 );
-  
-  static int requestAdviceOnMDN( const char * what );
-  static MessageComposer::MDNAdvice questionIgnoreSend( const QString &text, bool canDeny );
-  
   MessageComposer::MDNAdvice m_result;
 
 protected:
