@@ -2896,7 +2896,9 @@ void KMComposeWin::slotAttachFileResult(KIO::Job *job)
 
   mMapAtmLoadData.remove(it);
 
-  msgPart->setCharset(partCharset);
+  if ( msgPart->typeStr().lower() == "text" ) {
+    msgPart->setCharset(partCharset);
+  }
 
   // show message part dialog, if not configured away (default):
   KConfigGroup composer(KMKernel::config(), "Composer");
@@ -2924,7 +2926,6 @@ void KMComposeWin::slotAttachFileResult(KIO::Job *job)
     }
   }
   mAtmModified = true;
-  if (msgPart->typeStr().lower() != "text") msgPart->setCharset(QCString());
 
   // add the new attachment to the list
   addAttach(msgPart);
