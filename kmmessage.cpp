@@ -3087,7 +3087,8 @@ void applyHeadersToMessagePart( DwHeaders& headers, KMMessagePart* aPart )
 
   // Content-description
   if (headers.HasContentDescription())
-    aPart->setContentDescription(headers.ContentDescription().AsString().c_str());
+    aPart->setContentDescription( KMMsgBase::decodeRFC2047String(
+                                    headers.ContentDescription().AsString().c_str() ) );
   else
     aPart->setContentDescription("");
 
