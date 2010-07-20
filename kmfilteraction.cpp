@@ -120,7 +120,7 @@ void KMFilterAction::sendMDN( const KMime::Message::Ptr &msg, KMime::MDN::Dispos
    * if it is not set in the message we assume that the notification should go to the
    * sender
    */
-  const QString returnPath = msg->headerByType( "Return-Path" ) ? msg->headerByType( "Return-Path ")->asUnicodeString() : "";
+  const QString returnPath = msg->headerByType( "Return-Path" ) ? msg->headerByType( "Return-Path" )->asUnicodeString() : "";
   const QString dispNoteTo = msg->headerByType( "Disposition-Notification-To" )? msg->headerByType( "Disposition-Notification-To ")->asUnicodeString() : "";
   if ( returnPath.isEmpty() ) {
     KMime::Headers::Generic *header = new KMime::Headers::Generic( "Return-Path", msg.get(), msg->from()->asUnicodeString(), "utf-8" );
