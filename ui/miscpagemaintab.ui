@@ -105,12 +105,7 @@ p, li { white-space: pre-wrap; }
       <widget class="KComboBox" name="mActionEnterFolder">
        <item>
         <property name="text">
-         <string>Jump to First New Message</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>Jump to First Unread or New Message</string>
+         <string>Jump to First Unread Message</string>
         </property>
        </item>
        <item>
