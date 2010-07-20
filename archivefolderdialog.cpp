@@ -123,7 +123,7 @@ ArchiveFolderDialog::ArchiveFolderDialog( QWidget *parent )
 bool canRemoveFolder( const Akonadi::Collection& col )
 {
   const QSharedPointer<FolderCollection> folder = FolderCollection::forCollection( col );
-  return col.isValid() && col.rights() & Akonadi::Collection::CanDeleteCollection && !folder->isStructural() && !folder->isSystemFolder();
+  return folder && col.isValid() && col.rights() & Akonadi::Collection::CanDeleteCollection && !folder->isStructural() && !folder->isSystemFolder();
 }
 
 void ArchiveFolderDialog::slotFolderChanged( const Akonadi::Collection &folder )
@@ -138,7 +138,7 @@ void ArchiveFolderDialog::setFolder( const Akonadi::Collection &defaultCollectio
   mUrlRequester->setUrl( standardArchivePath( defaultCollection.name() ) );
   const QSharedPointer<FolderCollection> folder = FolderCollection::forCollection( defaultCollection );
   mDeleteCheckBox->setEnabled( canRemoveFolder( defaultCollection ) );
-  enableButtonOk( defaultCollection.isValid() && !folder->isStructural() );
+  enableButtonOk( defaultCollection.isValid() && folder && !folder->isStructural() );
 }
 
 void ArchiveFolderDialog::slotButtonClicked( int button )

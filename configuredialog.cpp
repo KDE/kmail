@@ -3131,8 +3131,10 @@ void SecurityPage::GeneralTab::save()
       MessageViewer::GlobalSettings::self()->setHtmlMail( mSGTab.mHtmlMailCheck->isChecked() );
       foreach( const Akonadi::Collection &collection, kmkernel->allFolders() ) {
         QSharedPointer<FolderCollection> fd = FolderCollection::forCollection( collection );
-        KConfigGroup config( KMKernel::config(), fd->configGroupName() );
-        config.writeEntry("htmlMailOverride", false);
+        if ( fd ) {
+          KConfigGroup config( KMKernel::config(), fd->configGroupName() );
+          config.writeEntry("htmlMailOverride", false);
+        }
       }
     }
   }
