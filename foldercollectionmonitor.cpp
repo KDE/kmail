@@ -104,7 +104,7 @@ void FolderCollectionMonitor::slotExpungeJob( KJob *job )
   Akonadi::ItemFetchJob *fjob = dynamic_cast<Akonadi::ItemFetchJob*>( job );
   if ( !fjob )
     return;
-  Akonadi::Item::List lstItem = fjob->items();
+  const Akonadi::Item::List lstItem = fjob->items();
   if ( lstItem.isEmpty() )
     return;
   Akonadi::ItemDeleteJob *jobDelete = new Akonadi::ItemDeleteJob(lstItem,this );

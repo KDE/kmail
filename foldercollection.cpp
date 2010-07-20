@@ -179,7 +179,7 @@ void FolderCollection::readConfig()
   mOldIgnoreNewMail = mIgnoreNewMail;
 
 
-  QString shortcut( configGroup.readEntry( "Shortcut" ) );
+  const QString shortcut( configGroup.readEntry( "Shortcut" ) );
   if ( !shortcut.isEmpty() ) {
     KShortcut sc( shortcut );
     setShortcut( sc, 0 );
