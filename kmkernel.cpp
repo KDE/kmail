@@ -202,10 +202,13 @@ KMKernel::KMKernel (QObject *parent, const char *name) :
            SLOT(transportRenamed(int,QString,QString)) );
 
   QDBusConnection::sessionBus().connect(QString(), QLatin1String( "/MailDispatcherAgent" ), "org.freedesktop.Akonadi.MailDispatcherAgent", "itemDispatchStarted",this, SLOT(itemDispatchStarted()) );
-  connect( Akonadi::AgentManager::self(), SIGNAL( instanceProgressChanged( Akonadi::AgentInstance ) ), this, SLOT( instanceProgressChanged( Akonadi::AgentInstance ) ) ) ;
+  connect( Akonadi::AgentManager::self(), SIGNAL( instanceStatusChanged( Akonadi::AgentInstance ) ),
+           this, SLOT( instanceStatusChanged( Akonadi::AgentInstance ) ) );
 
-  connect( KPIM::ProgressManager::instance(), SIGNAL( progressItemCompleted( KPIM::ProgressItem * ) ), this, SLOT( slotProgressItemCompletedOrCanceled( KPIM::ProgressItem* ) ) );
-  connect( KPIM::ProgressManager::instance(), SIGNAL( progressItemCanceled( KPIM::ProgressItem * ) ), this, SLOT( slotProgressItemCompletedOrCanceled( KPIM::ProgressItem* ) ) );
+  connect( KPIM::ProgressManager::instance(), SIGNAL( progressItemCompleted( KPIM::ProgressItem * ) ),
+           this, SLOT( slotProgressItemCompletedOrCanceled( KPIM::ProgressItem* ) ) );
+  connect( KPIM::ProgressManager::instance(), SIGNAL( progressItemCanceled( KPIM::ProgressItem * ) ),
+           this, SLOT( slotProgressItemCompletedOrCanceled( KPIM::ProgressItem* ) ) );
 }
 
 KMKernel::~KMKernel ()
@@ -453,6 +456,12 @@ void KMKernel::checkMail () //might create a new reader but won't show!!
     if ( group.readEntry( "IncludeInManualChecks", true ) ) {
       if ( !type.isOnline() )
         type.setIsOnline( true );
+      if ( mResoucesBeingChecked.isEmpty() ) {
+        kDebug() << "Starting manual mail check";
+        emit startCheckMail();
+      }
+
+      mResoucesBeingChecked.append( type.identifier() );
       type.synchronize();
     }
   }
@@ -1821,31 +1830,38 @@ void KMKernel::itemDispatchStarted()
       true );
 }
 
-void KMKernel::instanceProgressChanged( Akonadi::AgentInstance agent )
+void KMKernel::instanceStatusChanged( Akonadi::AgentInstance instance )
 {
-  // we're only interested in rfc822 resources
-  if ( !agent.type().mimeTypes().contains( KMime::Message::mimeType() ) )
-    return;
-  KPIM::ProgressItem *progress =  KPIM::ProgressManager::createProgressItem( 0,
-      agent,
-      agent.identifier(),
-      agent.name(),
-      agent.statusMessage(),
-      true );
-  if( progress->progress() == 0) {
-    if ( mListProgressItem.isEmpty() )
-      emit startCheckMail();
+  if ( KMail::Util::agentInstances().contains( instance ) ) {
+    if ( instance.status() == Akonadi::AgentInstance::Running ) {
 
-    if ( !mListProgressItem.contains( progress ) )
-      mListProgressItem.append( progress );
+      if ( mResoucesBeingChecked.isEmpty() ) {
+        kDebug() << "A Resource started to syncronize, starting a mail check.";
+        emit startCheckMail();
+      }
+
+      if ( !mResoucesBeingChecked.contains( instance.identifier() ) ) {
+        mResoucesBeingChecked.append( instance.identifier() );
+      }
+
+      // Creating a progress item twice is ok, it will simply return the already existing
+      // item
+      KPIM::ProgressItem *progress =  KPIM::ProgressManager::createProgressItem( 0, instance,
+                                        instance.identifier(), instance.name(), instance.statusMessage(),
+                                        true );
+      progress->setProperty( "AgentIdentifier", instance.identifier() );
+    }
   }
 }
 
-void KMKernel::slotProgressItemCompletedOrCanceled( KPIM::ProgressItem * item)
+void KMKernel::slotProgressItemCompletedOrCanceled( KPIM::ProgressItem * item )
 {
-  if ( mListProgressItem.contains( item ) ) {
-    mListProgressItem.removeAll( item );
-    if ( mListProgressItem.isEmpty() ) {
+  const QString identifier = item->property( "AgentIdentifier" ).toString();
+  const Akonadi::AgentInstance agent = Akonadi::AgentManager::self()->instance( identifier );
+  if ( agent.isValid() ) {
+    mResoucesBeingChecked.removeAll( identifier );
+    if ( mResoucesBeingChecked.isEmpty() ) {
+      kDebug() << "Last resource finished syncing, mail check done";
       emit endCheckMail();
     }
   }
