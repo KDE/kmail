@@ -1100,9 +1100,7 @@ void KMMainWidget::slotItemAdded( const Akonadi::Item &item, const Akonadi::Coll
 
   const QString fullCollectionPath( KMail::Util::fullCollectionPath( col ) );
   if ( mCheckMail.contains( fullCollectionPath ) ) {
-    collectionInfo info( mCheckMail[fullCollectionPath] );
-    info.nbMail++;
-    mCheckMail[fullCollectionPath] = info;
+    mCheckMail[fullCollectionPath].nbMail++;
   } else {
     collectionInfo info( col, 1 );
     mCheckMail.insert( fullCollectionPath, info );
