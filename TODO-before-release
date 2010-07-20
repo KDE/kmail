@@ -7,7 +7,7 @@ Migrate some config to akonadi:
   mNormalIconPath = configGroup.readEntry( "NormalIconPath" ); [DONE]
   mUnreadIconPath = configGroup.readEntry( "UnreadIconPath" ); [DONE]
 
-  mHideInSelectionDialog = configGroup.readEntry( "HideInSelectionDialog", false );
+  mHideInSelectionDialog = configGroup.readEntry( "HideInSelectionDialog", false ); [DONE]
 We use now Collection::Id(); and not idString();
 
 Port shortcut [DONE]
