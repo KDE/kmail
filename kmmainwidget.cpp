@@ -1357,11 +1357,7 @@ void KMMainWidget::slotPostToML()
 //-----------------------------------------------------------------------------
 void KMMainWidget::slotFolderMailingListProperties()
 {
-  if ( !mFolderTreeWidget )
-    return;
-
-  Akonadi::Collection folder = mFolderTreeWidget->folderTreeView()->currentFolder();
-  if ( !folder.isValid() )
+  if ( !mFolderTreeWidget || !mCurrentFolder )
     return;
 
   ( new KMail::MailingListFolderPropertiesDialog( this, mCurrentFolder ) )->show();
