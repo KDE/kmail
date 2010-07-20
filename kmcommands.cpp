@@ -298,6 +298,7 @@ void KMCommand::transferSelectedMsgs()
   }
 
   // TODO once the message list is based on ETM and we get the more advanced caching we need to make that check a bit more clever
+#include <mdnstateattribute.h>
   if ( !mFetchScope.isEmpty() ) {
 #if 0 //TODO port to akonadi
     if ( thisMsg->parent() && !thisMsg->isComplete() &&
@@ -312,6 +313,7 @@ void KMCommand::transferSelectedMsgs()
     complete = false;
     KMCommand::mCountJobs++;
     Akonadi::ItemFetchJob *fetch = new Akonadi::ItemFetchJob( mMsgList, this );
+    mFetchScope.fetchAttribute< Akonadi::MDNStateAttribute >();
     fetch->setFetchScope( mFetchScope );
     connect( fetch, SIGNAL(itemsReceived(Akonadi::Item::List)), SLOT(slotMsgTransfered(Akonadi::Item::List)) );
     connect( fetch, SIGNAL(result(KJob*)), SLOT(slotJobFinished()) );
@@ -1278,8 +1280,11 @@ KMCommand::Result KMRedirectCommand::execute()
   KMime::Message::Ptr newMsg = factory.createRedirect( dlg->to() );
   if ( !newMsg )
     return Failed;
-
-  KMFilterAction::sendMDN( msg, KMime::MDN::Dispatched );
+  
+  MessageStatus status;
+  status.setStatusFromFlags( item.flags() );
+  if( status.isUnread() )
+  KMFilterAction::sendMDN( item, KMime::MDN::Dispatched );
 
   const MessageSender::SendMethod method = dlg->sendImmediate()
     ? MessageSender::SendImmediate

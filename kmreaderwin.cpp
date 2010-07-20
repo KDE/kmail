@@ -298,6 +298,7 @@ void KMReaderWin::displayBusyPage()
 
   displaySplashPage( info );
 }
+#include <Akonadi/ItemModifyJob>
 
 void KMReaderWin::displayOfflinePage()
 {
@@ -413,17 +414,19 @@ void KMReaderWin::slotTouchMessage()
   if ( !msg )
     return;
 
-  KMime::MDN::SendingMode s = MDNAdviceDialog::checkMDNHeaders( msg );
-  KConfigGroup mdnConfig( KMKernel::config(), "MDN" );
-  int quote = mdnConfig.readEntry<int>( "quote-message", 0 );
-
-  MessageFactory factory( msg, mViewer->messageItem().id() );
-  factory.setIdentityManager( KMKernel::self()->identityManager() );
-  factory.setFolderIdentity( KMail::Util::folderIdentity( message() ) );
-  KMime::Message::Ptr receipt = factory.createMDN( KMime::MDN::ManualAction, MDN::Displayed, s, quote );
-  if (receipt ) {
-    if ( !kmkernel->msgSender()->send( receipt ) ) // send or queue
-      KMessageBox::error( this, i18n("Could not send MDN.") );
+  QPair< bool, KMime::MDN::SendingMode > mdnSend = MDNAdviceHelper::instance()->checkAndSetMDNInfo( message(), KMime::MDN::Displayed );
+  if( mdnSend.first ) {
+    KConfigGroup mdnConfig( KMKernel::config(), "MDN" );
+    int quote = mdnConfig.readEntry<int>( "quote-message", 0 );
+    MessageFactory factory( msg, Akonadi::Item().id() );
+    factory.setIdentityManager( KMKernel::self()->identityManager() );
+    factory.setFolderIdentity( KMail::Util::folderIdentity( message() ) );
+    KMime::Message::Ptr mdn = factory.createMDN( KMime::MDN::ManualAction, KMime::MDN::Displayed, mdnSend.second, quote );
+    if ( mdn ) {
+      if( !kmkernel->msgSender()->send( mdn, MessageSender::SendLater ) ) {
+        kDebug() << "Sending failed.";
+      }
+    }
   }
 }
 
