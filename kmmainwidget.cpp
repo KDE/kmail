@@ -338,8 +338,9 @@ void KMMainWidget::slotEndCheckMail()
     slotSendQueued();
   }
 
+  mCheckMailInProgress = false;
+
   if ( mCheckMail.isEmpty() ) {
-    mCheckMailInProgress = false;
     return;
   }
 
@@ -370,7 +371,6 @@ void KMMainWidget::slotEndCheckMail()
 
 
   if ( !showNotification ) {
-    mCheckMailInProgress = false;
     return;
   }
 
@@ -400,7 +400,6 @@ void KMMainWidget::slotEndCheckMail()
   if ( mBeepOnNew ) {
     KNotification::beep();
   }
-  mCheckMailInProgress = false;
 }
 
 void KMMainWidget::slotFolderChanged( const Akonadi::Collection& col)
