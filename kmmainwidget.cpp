@@ -3760,6 +3760,21 @@ void KMMainWidget::slotAkonadiStandardActionUpdated()
     mGUIClient->plugActionList( "akonadi_collection_add_to_favorites_actionlist", addToFavorite );
   }
 
+  QList< QAction* > actionList;
+
+  KAction *action =  mAkonadiStandardActionManager->action( Akonadi::StandardActionManager::MoveCollectionToMenu );
+  if ( action && action->isEnabled() ) {
+    actionList <<action;
+  }
+
+  action =  mAkonadiStandardActionManager->action( Akonadi::StandardActionManager::CopyCollectionToMenu);
+  if ( action && action->isEnabled() ) {
+    actionList <<action;
+  }
+  mGUIClient->unplugActionList( "akonadi_collection_move_copy_menu_actionlist" );
+  mGUIClient->plugActionList( "akonadi_collection_move_copy_menu_actionlist", actionList );
+
+
 }
 
 //-----------------------------------------------------------------------------
