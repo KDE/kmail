@@ -198,10 +198,10 @@ K_GLOBAL_STATIC( KMMainWidget::PtrList, theMainWidgetList )
     mShowingOfflineScreen( false ),
     mMsgActions( 0 ),
     mCurrentFolder( 0 ),
+    mMoveOrCopyToDialog( 0 ),
     mVacationIndicatorActive( false ),
     mGoToFirstUnreadMessageInSelectedFolder( false ),
     mCheckMailInProgress( false ),
-    mMoveOrCopyToDialog( 0 ),
     mSelectFromAllFoldersDialog( 0 )
 {
   // must be the first line of the constructor:
