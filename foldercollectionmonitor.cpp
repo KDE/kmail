@@ -31,6 +31,7 @@
 #include <akonadi/item.h>
 #include <akonadi/kmime/messageparts.h>
 #include <kmime/kmime_message.h>
+#include <Akonadi/CollectionFetchScope>
 
 
 FolderCollectionMonitor::FolderCollectionMonitor(QObject *parent)
@@ -39,6 +40,8 @@ FolderCollectionMonitor::FolderCollectionMonitor(QObject *parent)
   // monitor collection changes
   mMonitor = new Akonadi::ChangeRecorder( this );
   mMonitor->setCollectionMonitored( Akonadi::Collection::root() );
+  mMonitor->fetchCollectionStatistics( true );
+  mMonitor->collectionFetchScope().setIncludeStatistics( true );
   mMonitor->fetchCollection( true );
   mMonitor->setAllMonitored( true );
   mMonitor->setMimeTypeMonitored( KMime::Message::mimeType() );
