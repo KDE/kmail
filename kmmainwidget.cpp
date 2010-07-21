@@ -3751,6 +3751,15 @@ void KMMainWidget::slotAkonadiStandardActionUpdated()
                                        !mCurrentFolder->isStructural() &&
                                        !KMail::Util::isVirtualCollection( mCurrentFolder->collection() ) );
   }
+  QList< QAction* > addToFavorite;
+  QAction *actionAddToFavoriteCollections = akonadiStandardAction( Akonadi::StandardActionManager::AddToFavoriteCollections );
+  if ( actionAddToFavoriteCollections ) {
+    if( mEnableFavoriteFolderView && actionAddToFavoriteCollections->isEnabled() )
+      addToFavorite << actionAddToFavoriteCollections;
+    mGUIClient->unplugActionList( "akonadi_collection_add_to_favorites_actionlist" );
+    mGUIClient->plugActionList( "akonadi_collection_add_to_favorites_actionlist", addToFavorite );
+  }
+
 }
 
 //-----------------------------------------------------------------------------
@@ -3803,12 +3812,6 @@ void KMMainWidget::updateFolderMenu()
   updateMarkAsReadAction();
   // the visual ones only make sense if we are showing a message list
   mPreferHtmlAction->setEnabled( mFolderTreeWidget->folderTreeView()->currentFolder().isValid() );
-
-  QList< QAction* > addToFavorite;
-  if( mEnableFavoriteFolderView )
-    addToFavorite << akonadiStandardAction( Akonadi::StandardActionManager::AddToFavoriteCollections );
-  mGUIClient->unplugActionList( "akonadi_collection_add_to_favorites_actionlist" );
-  mGUIClient->plugActionList( "akonadi_collection_add_to_favorites_actionlist", addToFavorite );
 
   mPreferHtmlLoadExtAction->setEnabled( mFolderTreeWidget->folderTreeView()->currentFolder().isValid() && (mHtmlPref ? !mFolderHtmlPref : mFolderHtmlPref) ? true : false );
   mPreferHtmlAction->setChecked( mHtmlPref ? !mFolderHtmlPref : mFolderHtmlPref );
