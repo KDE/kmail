@@ -1094,11 +1094,6 @@ void KMMainWidget::slotItemAdded( const Akonadi::Item &item, const Akonadi::Coll
   if ( col.isValid() && ( col == kmkernel->outboxCollectionFolder() ) ) {
     startUpdateMessageActionsTimer();
   }
-#if 0
-  QList<Akonadi::Item> lst;
-  lst<<item;
-  applyFilters( lst );
-#endif
 
   const QString fullCollectionPath( KMail::Util::fullCollectionPath( col ) );
   if ( mCheckMail.contains( fullCollectionPath ) ) {
