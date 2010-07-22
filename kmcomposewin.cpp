@@ -1200,7 +1200,7 @@ void KMComposeWin::setupActions( void )
   actionCollection()->addAction( "charsets", mCodecAction );
   mWordWrapAction = new KToggleAction( i18n( "&Wordwrap" ), this );
   actionCollection()->addAction( "wordwrap", mWordWrapAction );
-  mWordWrapAction->setChecked( GlobalSettings::self()->wordWrap() );
+  mWordWrapAction->setChecked( MessageComposer::MessageComposerSettings::self()->wordWrap() );
   connect( mWordWrapAction, SIGNAL(toggled(bool)), SLOT(slotWordWrapToggled(bool)) );
 
   mSnippetAction = new KToggleAction( i18n("&Snippets"), this );
@@ -1380,7 +1380,7 @@ void KMComposeWin::setupEditor( void )
   QFontMetrics fm( mBodyFont );
   mComposerBase->editor()->setTabStopWidth( fm.width( QChar(' ') ) * 8 );
 
-  slotWordWrapToggled( GlobalSettings::self()->wordWrap() );
+  slotWordWrapToggled( MessageComposer::MessageComposerSettings::self()->wordWrap() );
 
   // Font setup
   slotUpdateFont();
@@ -2095,7 +2095,7 @@ void KMComposeWin::slotUpdateFont()
 
 QString KMComposeWin::smartQuote( const QString & msg )
 {
-  return MessageCore::StringUtil::smartQuote( msg, GlobalSettings::self()->lineWrapWidth() );
+  return MessageCore::StringUtil::smartQuote( msg, MessageComposer::MessageComposerSettings::self()->lineWrapWidth() );
 }
 
 void KMComposeWin::slotPasteAsAttachment()
@@ -2127,7 +2127,7 @@ QString KMComposeWin::addQuotesToText( const QString &inputText ) const
   answer.replace( '\n', '\n' + indentStr );
   answer.prepend( indentStr );
   answer += '\n';
-  return MessageCore::StringUtil::smartQuote( answer, GlobalSettings::self()->lineWrapWidth() );
+  return MessageCore::StringUtil::smartQuote( answer, MessageComposer::MessageComposerSettings::self()->lineWrapWidth() );
 }
 
 //-----------------------------------------------------------------------------
@@ -2354,7 +2354,7 @@ void KMComposeWin::setSigning( bool sign, bool setByUser )
 void KMComposeWin::slotWordWrapToggled( bool on )
 {
   if ( on )
-    mComposerBase->editor()->enableWordWrap( GlobalSettings::self()->lineWrapWidth() );
+    mComposerBase->editor()->enableWordWrap( MessageComposer::MessageComposerSettings::self()->lineWrapWidth() );
   else
     mComposerBase->editor()->disableWordWrap();
 }
