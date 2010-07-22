@@ -128,6 +128,11 @@ k_dcop:
   virtual bool removeSubresource( const QString& resource ) = 0;
 
   /**
+   * Returns the number of dimap folders in the account manager.
+   */
+  virtual int dimapAccounts() = 0;
+
+  /**
    * Causes all resource folders of the given type to be synced with the server.
    */
   virtual bool triggerSync( const QString & ) = 0;

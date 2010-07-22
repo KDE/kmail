@@ -655,6 +655,11 @@ static int dimapAccountCount()
   return count;
 }
 
+int KMailICalIfaceImpl::dimapAccounts()
+{
+  return dimapAccountCount();
+}
+
 static QString subresourceLabelForPresentation( const KMFolder * folder )
 {
     if( KMailICalIfaceImpl::getResourceMap()->contains( folder->location() ) ) {

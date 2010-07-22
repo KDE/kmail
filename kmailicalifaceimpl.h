@@ -113,6 +113,7 @@ public:
                                            const QString& resource,
                                            int startIndex,
                                            int nbMessages );
+  int dimapAccounts();
 
   QValueList<SubResource> subresourcesKolab( const QString& contentsType );
 
