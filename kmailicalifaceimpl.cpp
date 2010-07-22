@@ -762,7 +762,9 @@ bool KMailICalIfaceImpl::triggerSync( const QString& contentsType )
       imap->getAndCheckFolder();
     } else if ( f->folderType() == KMFolderTypeCachedImap ) {
       KMFolderCachedImap* cached = static_cast<KMFolderCachedImap*>( f->storage() );
-      cached->account()->processNewMailInFolder( f );
+      if ( cached->account() ) {
+        cached->account()->processNewMailInFolder( f );
+      }
     }
   }
   return true;
