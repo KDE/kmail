@@ -135,7 +135,7 @@ KMFilter::ReturnCode KMFilter::execActions( const Akonadi::Item &item, bool& sto
     switch ( result ) {
     case KMFilterAction::CriticalError:
       if ( FilterLog::instance()->isLogging() ) {
-        QString logText = QString( "<font color=#FF0000>%1</font>" )
+        const QString logText = QString( "<font color=#FF0000>%1</font>" )
           .arg( i18n( "A critical error occurred. Processing stops here." ) );
         FilterLog::instance()->add( logText, FilterLog::appliedAction );
       }
@@ -143,7 +143,7 @@ KMFilter::ReturnCode KMFilter::execActions( const Akonadi::Item &item, bool& sto
       return CriticalError;
     case KMFilterAction::ErrorButGoOn:
       if ( FilterLog::instance()->isLogging() ) {
-        QString logText = QString( "<font color=#FF0000>%1</font>" )
+        const QString logText = QString( "<font color=#FF0000>%1</font>" )
           .arg( i18n( "A problem was found while applying this action." ) );
         FilterLog::instance()->add( logText, FilterLog::appliedAction );
       }

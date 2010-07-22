@@ -625,9 +625,6 @@ KMCommand::Result KMUseTemplateCommand::execute()
   KMail::Composer *win = KMail::makeComposer();
   win->setMsg( newMsg, false, true );
   win->show();
-#if 0
-  newMsg->setComplete( msg->isComplete() );
-#endif
   return OK;
 }
 
@@ -1280,7 +1277,7 @@ KMCommand::Result KMRedirectCommand::execute()
   KMime::Message::Ptr newMsg = factory.createRedirect( dlg->to() );
   if ( !newMsg )
     return Failed;
-  
+
   MessageStatus status;
   status.setStatusFromFlags( item.flags() );
   if( status.isUnread() )
