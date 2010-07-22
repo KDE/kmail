@@ -3762,7 +3762,12 @@ void KMMainWidget::slotAkonadiStandardActionUpdated()
 
   QList< QAction* > actionList;
 
-  KAction *action =  mAkonadiStandardActionManager->action( Akonadi::StandardActionManager::MoveCollectionToMenu );
+  KAction *action = mAkonadiStandardActionManager->action( Akonadi::StandardActionManager::CreateCollection );
+  if ( action && action->isEnabled() ) {
+    actionList << action;
+  }
+
+  action =  mAkonadiStandardActionManager->action( Akonadi::StandardActionManager::MoveCollectionToMenu );
   if ( action && action->isEnabled() ) {
     actionList <<action;
   }
