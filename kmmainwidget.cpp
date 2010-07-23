@@ -538,7 +538,7 @@ void KMMainWidget::readFolderConfig()
     return;
 
   KSharedConfig::Ptr config = KMKernel::config();
-  KConfigGroup group( config, "Folder-" + mCurrentFolder->idString() );
+  KConfigGroup group( config, mCurrentFolder->configGroupName() );
   mFolderHtmlPref =
       group.readEntry( "htmlMailOverride", false );
   mFolderHtmlLoadExtPref =
@@ -553,7 +553,7 @@ void KMMainWidget::writeFolderConfig()
     return;
 
   KSharedConfig::Ptr config = KMKernel::config();
-  KConfigGroup group( config, "Folder-" + mCurrentFolder->idString() );
+  KConfigGroup group( config, mCurrentFolder->configGroupName() );
   group.writeEntry( "htmlMailOverride", mFolderHtmlPref );
   group.writeEntry( "htmlLoadExternalOverride", mFolderHtmlLoadExtPref );
 }
