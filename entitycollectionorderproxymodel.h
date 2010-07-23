@@ -33,6 +33,8 @@ public:
 
   void setManualSortingActive( bool active );
   bool isManualSortingActive() const;
+public slots:
+  void slotDefaultCollectionsChanged();
 
 private:
   class EntityCollectionOrderProxyModelPrivate;

@@ -20,6 +20,7 @@
 #include "kmkernel.h"
 #include <akonadi/collection.h>
 #include <akonadi/entitytreemodel.h>
+#include <akonadi/kmime/specialmailcollections.h>
 #include <kdebug.h>
 
 class EntityCollectionOrderProxyModel::EntityCollectionOrderProxyModelPrivate
@@ -57,6 +58,9 @@ EntityCollectionOrderProxyModel::EntityCollectionOrderProxyModel( QObject *paren
   : EntityOrderProxyModel( parent ), d( new EntityCollectionOrderProxyModelPrivate() )
 {
   setDynamicSortFilter(true);
+  connect( Akonadi::SpecialMailCollections::self(), SIGNAL( defaultCollectionsChanged() ),
+           this, SLOT( slotDefaultCollectionsChanged () ) );
+
 }
 
 EntityCollectionOrderProxyModel::~EntityCollectionOrderProxyModel()
@@ -66,6 +70,11 @@ EntityCollectionOrderProxyModel::~EntityCollectionOrderProxyModel()
   delete d;
 }
 
+
+void EntityCollectionOrderProxyModel::slotDefaultCollectionsChanged()
+{
+  invalidate();
+}
 
 bool EntityCollectionOrderProxyModel::lessThan( const QModelIndex&left, const QModelIndex & right ) const
 {
