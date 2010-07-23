@@ -191,6 +191,7 @@
       </entry>
       <entry name="LineWrapWidth" type="Int" key="break-at">
         <label></label>
+	<whatsthis>Some electronic mail transport systems require that the line length does not exceed a fixed value, usually 80 because that is the width of a default VT100 terminal screen.  If you clear this setting, your messages may be trimmed or rejected by such systems, or cause them to malfunction.   If you keep this setting, structured text in your messages, such as patches or long URL, will be broken and unusable.</whatsthis>
         <default>78</default>
         <min>30</min>
         <max>998</max>
