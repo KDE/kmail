@@ -3761,9 +3761,19 @@ void KMMainWidget::slotAkonadiStandardActionUpdated()
     mGUIClient->plugActionList( "akonadi_collection_add_to_favorites_actionlist", addToFavorite );
   }
 
+  QList< QAction* > syncActionList;
+  QAction *actionSync = akonadiStandardAction( Akonadi::StandardActionManager::SynchronizeCollections );
+  if ( actionSync && actionSync->isEnabled() ) {
+    syncActionList << actionSync;
+  }
+  mGUIClient->unplugActionList( "akonadi_collection_sync_actionlist" );
+  mGUIClient->plugActionList( "akonadi_collection_sync_actionlist", syncActionList );
+
+
+
   QList< QAction* > actionList;
 
-  KAction *action = mAkonadiStandardActionManager->action( Akonadi::StandardActionManager::CreateCollection );
+  QAction *action = mAkonadiStandardActionManager->action( Akonadi::StandardActionManager::CreateCollection );
   if ( action && action->isEnabled() ) {
     actionList << action;
   }
