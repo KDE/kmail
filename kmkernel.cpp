@@ -1092,7 +1092,7 @@ void KMKernel::createDefaultCollectionDone( KJob * job)
     emergencyExit( i18n("You do not have read/write permission to your inbox folder.") );
 
   connect( Akonadi::SpecialMailCollections::self(), SIGNAL( defaultCollectionsChanged() ),
-           this, SLOT( slotDefaultCollectionsChanged () ) );
+           this, SLOT( slotDefaultCollectionsChanged () ), Qt::UniqueConnection  );
 }
 
 void KMKernel::slotDefaultCollectionsChanged()
