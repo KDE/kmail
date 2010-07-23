@@ -3745,6 +3745,12 @@ void KMMainWidget::slotAkonadiStandardActionUpdated()
     mCollectionProperties->setEnabled( mCurrentFolder &&
                                        !mCurrentFolder->isStructural() &&
                                        !KMail::Util::isVirtualCollection( mCurrentFolder->collection() ) );
+    QList< QAction* > collectionProperties;
+    if ( mCollectionProperties->isEnabled() )
+      collectionProperties << mCollectionProperties;
+    mGUIClient->unplugActionList( "akonadi_collection_collectionproperties_actionlist" );
+    mGUIClient->plugActionList( "akonadi_collection_collectionproperties_actionlist", collectionProperties );
+
   }
   QList< QAction* > addToFavorite;
   QAction *actionAddToFavoriteCollections = akonadiStandardAction( Akonadi::StandardActionManager::AddToFavoriteCollections );
