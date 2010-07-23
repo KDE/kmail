@@ -500,10 +500,9 @@ KMail::FolderDiaGeneralTab::FolderDiaGeneralTab( KMFolderDialog* dlg,
     mIncidencesForComboBox->insertItem( i18n( "All Readers of This Folder" ) );
     ++row;
     const QString whatsThisForReadOnlyFolders =
-      i18n( "This setting allows you to disable alarms for folders shared by "
-          "others. ");
+      i18n( "This setting allows you to disable alarms for folders shared by others. ");
     mAlarmsBlockedCheckBox = new QCheckBox( this );
-    mAlarmsBlockedCheckBox->setText( i18n( "Block free/&busy and alarms locally" ) );
+    mAlarmsBlockedCheckBox->setText( i18n( "Block alarms locally" ) );
     gl->addMultiCellWidget( mAlarmsBlockedCheckBox, row, row, 0, 1);
     QWhatsThis::add( mAlarmsBlockedCheckBox, whatsThisForReadOnlyFolders );
 
