@@ -2689,7 +2689,7 @@ void KMComposeWin::enableHtml()
 
   mSaveFont = mComposerBase->editor()->currentFont();
   mComposerBase->editor()->updateActionStates();
-  mComposerBase->editor()->setActionsEnabled( false );
+  mComposerBase->editor()->setActionsEnabled( true );
 }
 
 
