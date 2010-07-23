@@ -1180,7 +1180,7 @@ void KMKernel::init()
 
 void KMKernel::readConfig()
 {
-  mWrapCol = GlobalSettings::self()->lineWrapWidth();
+  mWrapCol = MessageComposer::MessageComposerSettings::self()->lineWrapWidth();
   if ((mWrapCol == 0) || (mWrapCol > 78))
     mWrapCol = 78;
   if (mWrapCol < 30)

@@ -2150,7 +2150,7 @@ ComposerPageGeneralTab::ComposerPageGeneralTab( QWidget * parent )
   hlay = new QHBoxLayout(); // inherits spacing
   vlay->addLayout( hlay );
   mWordWrapCheck = new QCheckBox(
-           GlobalSettings::self()->wordWrapItem()->label(), this);
+           MessageComposer::MessageComposerSettings::self()->wordWrapItem()->label(), this);
   mWordWrapCheck->setObjectName( "wordWrap" );
   hlay->addWidget( mWordWrapCheck );
   connect( mWordWrapCheck, SIGNAL( stateChanged(int) ),
@@ -2158,7 +2158,6 @@ ComposerPageGeneralTab::ComposerPageGeneralTab( QWidget * parent )
 
   mWrapColumnSpin = new KIntSpinBox( 30/*min*/, 78/*max*/, 1/*step*/,
            78/*init*/, this );
-  mWrapColumnSpin->setObjectName( "kcfg_LineWrapWidth" );
   mWrapColumnSpin->setEnabled( false ); // since !mWordWrapCheck->isChecked()
   connect( mWrapColumnSpin, SIGNAL( valueChanged(int) ),
            this, SLOT( slotEmitChanged( void ) ) );
@@ -2313,8 +2312,8 @@ void ComposerPage::GeneralTab::doLoadFromGlobalSettings()
   mQuoteSelectionOnlyCheck->setChecked( MessageComposer::MessageComposerSettings::self()->quoteSelectionOnly() );
   mStripSignatureCheck->setChecked( TemplateParser::GlobalSettings::self()->stripSignature() );
   mAutoRequestMDNCheck->setChecked( GlobalSettings::self()->requestMDN() );
-  mWordWrapCheck->setChecked( GlobalSettings::self()->wordWrap() );
-  mWrapColumnSpin->setValue( GlobalSettings::self()->lineWrapWidth() );
+  mWordWrapCheck->setChecked( MessageComposer::MessageComposerSettings::self()->wordWrap() );
+  mWrapColumnSpin->setValue( MessageComposer::MessageComposerSettings::self()->lineWrapWidth() );
   mAutoSave->setValue( GlobalSettings::self()->autosaveInterval() );
   mShowRecentAddressesInComposer->setChecked( MessageComposer::MessageComposerSettings::self()->showRecentAddressesInComposer() );
 
@@ -2341,8 +2340,8 @@ void ComposerPage::GeneralTab::save() {
   MessageComposer::MessageComposerSettings::self()->setQuoteSelectionOnly( mQuoteSelectionOnlyCheck->isChecked() );
   TemplateParser::GlobalSettings::self()->setStripSignature( mStripSignatureCheck->isChecked() );
   GlobalSettings::self()->setRequestMDN( mAutoRequestMDNCheck->isChecked() );
-  GlobalSettings::self()->setWordWrap( mWordWrapCheck->isChecked() );
-  GlobalSettings::self()->setLineWrapWidth( mWrapColumnSpin->value() );
+  MessageComposer::MessageComposerSettings::self()->setWordWrap( mWordWrapCheck->isChecked() );
+  MessageComposer::MessageComposerSettings::self()->setLineWrapWidth( mWrapColumnSpin->value() );
   GlobalSettings::self()->setAutosaveInterval( mAutoSave->value() );
   MessageComposer::MessageComposerSettings::self()->setShowRecentAddressesInComposer( mShowRecentAddressesInComposer->isChecked() );
 
