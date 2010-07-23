@@ -52,7 +52,9 @@ public:
     :filterModel( 0 ),
      folderTreeView( 0 ),
      quotaModel( 0 ),
-     readableproxy( 0 )
+     readableproxy( 0 ),
+     filterTreeViewModel( 0 ),
+     entityOrderProxy( 0 )
   {
   }
   Akonadi::StatisticsProxyModel *filterModel;
