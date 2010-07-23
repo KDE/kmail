@@ -324,10 +324,9 @@ void CollectionGeneralPage::init(const Akonadi::Collection &col)
 #if 0
     ++row;
     const QString whatsThisForReadOnlyFolders =
-      i18n( "This setting allows you to disable alarms for folders shared by "
-          "others. ");
+      i18n( "This setting allows you to disable alarms for folders shared by others." );
     mAlarmsBlockedCheckBox = new QCheckBox( this );
-    mAlarmsBlockedCheckBox->setText( i18n( "Block free/&busy and alarms locally" ) );
+    mAlarmsBlockedCheckBox->setText( i18n( "Block alarms locally" ) );
     gl->addWidget( mAlarmsBlockedCheckBox, row, 0, 1, 1 );
     mAlarmsBlockedCheckBox->setWhatsThis( whatsThisForReadOnlyFolders );
 #endif
