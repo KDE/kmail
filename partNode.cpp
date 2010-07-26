@@ -753,11 +753,11 @@ partNode::AttachmentDisplayInfo partNode::attachmentDisplayInfo() const
 {
   AttachmentDisplayInfo info;
   info.icon = msgPart().iconName( KIcon::Small );
-  // per kolab/issue, don't show the attachment description in headers
-  // only show either the name or the filename
   info.label = msgPart().name().stripWhiteSpace();
-  if( info.label.isEmpty() )
+  if ( info.label.isEmpty() )
     info.label = msgPart().fileName();
+  if ( info.label.isEmpty() )
+    info.label = msgPart().contentDescription();
   bool typeBlacklisted = msgPart().typeStr().lower() == "multipart";
   if ( !typeBlacklisted && msgPart().typeStr().lower() == "application" ) {
     typeBlacklisted = msgPart().subtypeStr() == "pgp-encrypted"
