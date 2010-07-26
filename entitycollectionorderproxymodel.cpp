@@ -73,7 +73,8 @@ EntityCollectionOrderProxyModel::~EntityCollectionOrderProxyModel()
 
 void EntityCollectionOrderProxyModel::slotDefaultCollectionsChanged()
 {
-  invalidate();
+  if ( !d->manualSortingActive )
+    invalidate();
 }
 
 bool EntityCollectionOrderProxyModel::lessThan( const QModelIndex&left, const QModelIndex & right ) const
