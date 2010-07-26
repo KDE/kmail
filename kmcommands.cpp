@@ -2033,6 +2033,7 @@ KMCommand::Result CreateTodoCommand::execute()
   }
   const QString uri = "kmail:" + QString::number( item.id() ) + '/' + MessageHelper::msgId(msg);
   tf.write( msg->encodedContent() );
+  tf.flush();
   OrgKdeKorganizerCalendarInterface *iface =
       new OrgKdeKorganizerCalendarInterface( "org.kde.korganizer", "/Calendar",
                                              QDBusConnection::sessionBus(), this );
