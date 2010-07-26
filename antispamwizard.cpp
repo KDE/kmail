@@ -85,10 +85,9 @@ AntiSpamWizard::AntiSpamWizard( WizardMode mode,
     kDebug() << endl <<"Considered anti-spam tools:";
   else
     kDebug() << endl <<"Considered anti-virus tools:";
-#endif
+
   for ( QList<SpamToolConfig>::Iterator it = mToolList.begin();
         it != mToolList.end(); ++it ) {
-#ifndef NDEBUG
     kDebug() << "Predefined tool:" << (*it).getId();
     kDebug() << "Config version:" << (*it).getVersion();
     kDebug() << "Selection priority:" << (*it).getPrio();
@@ -104,8 +103,8 @@ AntiSpamWizard::AntiSpamWizard( WizardMode mode,
     kDebug() << "Use as RegExp:" << (*it).isUseRegExp();
     kDebug() << "Supports Bayes Filter:" << (*it).useBayesFilter();
     kDebug() << "Type:" << (*it).getType();
-#endif
   }
+#endif
 
   setWindowTitle( ( mMode == AntiSpam ) ? i18n( "Anti-Spam Wizard" )
                                     : i18n( "Anti-Virus Wizard" ) );
