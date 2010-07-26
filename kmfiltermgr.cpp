@@ -14,8 +14,9 @@ using KMail::FilterImporterExporter;
 using KMail::MessageProperty;
 
 #include <akonadi/changerecorder.h>
-#include <akonadi/itemmovejob.h>
+#include <akonadi/itemfetchjob.h>
 #include <akonadi/itemfetchscope.h>
+#include <akonadi/itemmovejob.h>
 
 // other KDE headers
 #include <kdebug.h>
@@ -37,7 +38,8 @@ using KMail::MessageProperty;
 KMFilterMgr::KMFilterMgr( bool popFilter )
   : mEditDialog( 0 ),
     bPopFilter( popFilter ),
-    mShowLater( false )
+    mShowLater( false ),
+    mRequiresBody( false )
 {
   if ( bPopFilter ) {
     kDebug() << "pPopFilter set";
@@ -358,9 +360,8 @@ void KMFilterMgr::dump(void) const
 //-----------------------------------------------------------------------------
 void KMFilterMgr::endUpdate(void)
 {
-  const bool requiresBody = std::find_if( mFilters.constBegin(), mFilters.constEnd(),
+  mRequiresBody = std::find_if( mFilters.constBegin(), mFilters.constEnd(),
       boost::bind( &KMFilter::requiresBody, _1 ) ) != mFilters.constEnd();
-  mChangeRecorder->itemFetchScope().fetchFullPayload( requiresBody );
 
   emit filterListUpdated();
 }
@@ -368,8 +369,34 @@ void KMFilterMgr::endUpdate(void)
 void KMFilterMgr::itemAdded(const Akonadi::Item& item, const Akonadi::Collection &collection)
 {
   // We only filter the inboxes, not mail that arrives into other folders
-  if (collection.name().toLower() == "inbox")
-    process( item, Inbound, true, collection.resource() );
+  // TODO should probably also check SpecialMailCollections once there
+  // is a method in there which directly checks for the attribute
+  if (collection.name().toLower() == "inbox") {
+    if ( mRequiresBody ) {
+      Akonadi::ItemFetchJob *job = new Akonadi::ItemFetchJob( item );
+      job->fetchScope().fetchFullPayload( true );
+      job->setProperty( "resource", collection.resource() );
+      connect( job, SIGNAL( result( KJob* ) ), SLOT( itemAddedFetchResult( KJob* ) ) );
+    } else {
+      process( item, Inbound, true, collection.resource() );
+    }
+  }
+}
+
+void KMFilterMgr::itemAddedFetchResult( KJob *job )
+{
+  if ( job->error() ) {
+    kError() << job->error() << job->errorString();
+    return;
+  }
+
+  Akonadi::ItemFetchJob *fetchJob = qobject_cast<Akonadi::ItemFetchJob*>( job );
+  Q_ASSERT( fetchJob );
+
+  if ( fetchJob->items().count() == 1 ) {
+    const Akonadi::Item item = fetchJob->items().first();
+    process( item, Inbound, true, fetchJob->property( "resource" ).toString() );
+  }
 }
 
 #include "kmfiltermgr.moc"

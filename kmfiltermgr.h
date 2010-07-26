@@ -32,6 +32,7 @@ namespace KMime {
   class Message;
 }
 
+class KJob;
 class KMFilter;
 class KMFilterDlg;
 
@@ -157,6 +158,8 @@ signals:
 private slots:
   void itemAdded(const Akonadi::Item& item, const Akonadi::Collection& collection);
 
+  void itemAddedFetchResult( KJob *job );
+
 private:
   int processPop( const Akonadi::Item &item ) const;
   /** Find out if a message matches the filter criteria */
@@ -167,6 +170,7 @@ private:
   Akonadi::ChangeRecorder *mChangeRecorder;
   bool bPopFilter;
   bool mShowLater;
+  bool mRequiresBody;
 };
 
 #endif /*kmfiltermgr_h*/
