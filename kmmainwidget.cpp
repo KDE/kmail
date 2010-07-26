@@ -104,6 +104,7 @@
 #include <akonadi/collectiondialog.h>
 #include <akonadi/collectionstatistics.h>
 #include <akonadi/favoritecollectionsmodel.h>
+#include <akonadi/statisticsproxymodel.h>
 #include <kpimidentities/identity.h>
 #include <kpimidentities/identitymanager.h>
 #include <kpimutils/email.h>
@@ -990,7 +991,13 @@ void KMMainWidget::createWidgets()
     mFavoritesModel = new Akonadi::FavoriteCollectionsModel(
                                 KMKernel::self()->entityTreeModel(),
                                 KMKernel::config()->group( "FavoriteCollections" ), this );
-    mFavoriteCollectionsView->setModel( mFavoritesModel );
+
+    // ... with statistics...
+    Akonadi::StatisticsProxyModel* statisticsFilterModel = new Akonadi::StatisticsProxyModel( this );
+    statisticsFilterModel->setSourceModel( mFavoritesModel );
+
+    statisticsFilterModel->setToolTipEnabled( true );
+    mFavoriteCollectionsView->setModel( statisticsFilterModel );
 
     mAkonadiStandardActionManager->setFavoriteCollectionsModel( mFavoritesModel );
     mAkonadiStandardActionManager->setFavoriteSelectionModel( mFavoriteCollectionsView->selectionModel() );
