@@ -2545,7 +2545,6 @@ void KMMainWidget::slotExtendSelectionToNextMessage()
 
 void KMMainWidget::slotSelectNextUnreadMessage()
 {
-  //Laurent port it
   // The looping logic is: "Don't loop" just never loops, "Loop in current folder"
   // loops just in current folder, "Loop in all folders" loops in the current folder
   // first and then after confirmation jumps to the next folder.
