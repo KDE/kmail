@@ -27,6 +27,7 @@
 
 #include "foldertreewidget.h"
 #include "foldertreeview.h"
+#include "foldercollection.h"
 #include "readablecollectionproxymodel.h"
 #include <akonadi/collection.h>
 #include <akonadi/entitytreemodel.h>
@@ -162,6 +163,9 @@ void FolderSelectionDialog::slotSelectionChanged()
   if ( !d->mNotAllowToCreateNewFolder ) {
     Akonadi::Collection parent;
     enableButton(KDialog::User1, canCreateCollection( parent ) );
+    if ( parent.isValid() ) {
+      enableButton( KDialog::Ok, FolderCollection::forCollection( parent )->canCreateMessages() );
+    }
   }
 }
 
@@ -226,7 +230,7 @@ void FolderSelectionDialog::writeConfig()
   }
 }
 
-void FolderSelectionDialog::clearFilter()
+void FolderSelectionDialog::hideEvent( QHideEvent * )
 {
   d->folderTreeWidget->clearFilter();
 }

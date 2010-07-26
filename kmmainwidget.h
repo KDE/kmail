@@ -497,9 +497,16 @@ class KMAIL_EXPORT KMMainWidget : public QWidget
 
     /**
      * Internal helper that creates the folder selection dialog used for the
-     * move and copy to folder actions on demand.
+     * move and copy to folder actions on demand. Only folders where items can
+     * be added are listed.
      */
     FolderSelectionDialog* moveOrCopyToDialog();
+
+    /**
+     * Internal helper that creates the folder selection dialog used for
+     * jumping to folders, or adding them as favourites. All folders are listed.
+     */
+    FolderSelectionDialog* selectFromAllFoldersDialog();
 
   private slots:
     /**
@@ -585,6 +592,7 @@ private:
     KMail::SearchWindow *mSearchWin;
 
     FolderSelectionDialog* mMoveOrCopyToDialog;
+    FolderSelectionDialog* mSelectFromAllFoldersDialog;
 
     KAction *mRemoveFolderAction,
       *mExpireFolderAction,

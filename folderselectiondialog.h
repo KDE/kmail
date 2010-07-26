@@ -56,9 +56,6 @@ public:
 
   Akonadi::Collection::List selectedCollections() const;
 
-  void clearFilter();
-
-
 private slots:
   void slotSelectionChanged();
   void slotAddChildFolder();
@@ -69,6 +66,7 @@ protected:
   void readConfig();
   void writeConfig();
   bool canCreateCollection( Akonadi::Collection & parentCol );
+  /*reimp*/ void hideEvent( QHideEvent* );
 
 private:
   class FolderSelectionDialogPrivate;

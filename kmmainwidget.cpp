@@ -202,7 +202,8 @@ K_GLOBAL_STATIC( KMMainWidget::PtrList, theMainWidgetList )
     mVacationIndicatorActive( false ),
     mGoToFirstUnreadMessageInSelectedFolder( false ),
     mCheckMailInProgress( false ),
-    mMoveOrCopyToDialog( 0 )
+    mMoveOrCopyToDialog( 0 ),
+    mSelectFromAllFoldersDialog( 0 )
 {
   // must be the first line of the constructor:
   mStartupDone = false;
@@ -1774,6 +1775,18 @@ FolderSelectionDialog* KMMainWidget::moveOrCopyToDialog()
   return mMoveOrCopyToDialog;
 }
 
+FolderSelectionDialog* KMMainWidget::selectFromAllFoldersDialog()
+{
+  if ( mSelectFromAllFoldersDialog == 0 ) {
+    FolderSelectionDialog::SelectionFolderOptions options = FolderSelectionDialog::None;
+    options |= FolderSelectionDialog::NotAllowToCreateNewFolder;
+
+    mSelectFromAllFoldersDialog = new FolderSelectionDialog( this, options);
+    mSelectFromAllFoldersDialog->setModal( true );
+  }
+  return mSelectFromAllFoldersDialog;
+}
+
 void KMMainWidget::slotMoveSelectedMessageToFolder()
 {
   moveOrCopyToDialog()->setCaption(  i18n( "Move Messages to Folder" ) );
@@ -1783,7 +1796,6 @@ void KMMainWidget::slotMoveSelectedMessageToFolder()
       moveSelectedMessagesToFolder( dest );
     }
   }
-  moveOrCopyToDialog()->clearFilter();
 }
 
 void KMMainWidget::moveSelectedMessagesToFolder( const Akonadi::Collection & dest )
@@ -1836,7 +1848,6 @@ void KMMainWidget::slotCopySelectedMessagesToFolder()
       copySelectedMessagesToFolder( dest );
     }
   }
-  moveOrCopyToDialog()->clearFilter();
 }
 
 void KMMainWidget::copySelectedMessagesToFolder( const Akonadi::Collection& dest )
@@ -2145,15 +2156,9 @@ void KMMainWidget::slotUndo()
 //-----------------------------------------------------------------------------
 void KMMainWidget::slotJumpToFolder()
 {
-  FolderSelectionDialog::SelectionFolderOptions options = FolderSelectionDialog::None;
-  options |= FolderSelectionDialog::NotAllowToCreateNewFolder;
-
-  // can jump to anywhere, need not be read/write
-  MessageViewer::AutoQPointer<FolderSelectionDialog> dlg;
-  dlg = new FolderSelectionDialog( this, options );
-  dlg->setCaption( i18n( "Jump to Folder") );
-  if ( dlg->exec() && dlg ) {
-    Akonadi::Collection collection = dlg->selectedCollection();
+  selectFromAllFoldersDialog()->setCaption( i18n( "Jump to Folder") );
+  if ( selectFromAllFoldersDialog()->exec() && selectFromAllFoldersDialog() ) {
+    Akonadi::Collection collection = selectFromAllFoldersDialog()->selectedCollection();
     if ( collection.isValid() ) {
       selectCollectionFolder( collection );
     }
@@ -3441,18 +3446,13 @@ void KMMainWidget::setupActions()
 
 void KMMainWidget::slotAddFavoriteFolder()
 {
-  FolderSelectionDialog::SelectionFolderOption options = FolderSelectionDialog::None;
-  // can jump to anywhere, need not be read/write
-  MessageViewer::AutoQPointer<FolderSelectionDialog> dlg;
-  dlg = new FolderSelectionDialog( this, options );
-  dlg->setCaption( i18n("Add Favorite Folder") );
-  if ( dlg->exec() && dlg ) {
-    const Akonadi::Collection collection = dlg->selectedCollection();
+  selectFromAllFoldersDialog()->setCaption( i18n("Add Favorite Folder") );
+  if ( selectFromAllFoldersDialog()->exec() && selectFromAllFoldersDialog() ) {
+    const Akonadi::Collection collection = selectFromAllFoldersDialog()->selectedCollection();
     if ( collection.isValid() ) {
       mFavoritesModel->addCollection( collection );
     }
   }
-
 }
 
 //-----------------------------------------------------------------------------
