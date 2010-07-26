@@ -753,9 +753,9 @@ partNode::AttachmentDisplayInfo partNode::attachmentDisplayInfo() const
 {
   AttachmentDisplayInfo info;
   info.icon = msgPart().iconName( KIcon::Small );
-  info.label = msgPart().contentDescription();
-  if( info.label.isEmpty() )
-    info.label = msgPart().name().stripWhiteSpace();
+  // per kolab/issue, don't show the attachment description in headers
+  // only show either the name or the filename
+  info.label = msgPart().name().stripWhiteSpace();
   if( info.label.isEmpty() )
     info.label = msgPart().fileName();
   bool typeBlacklisted = msgPart().typeStr().lower() == "multipart";
