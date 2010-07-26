@@ -40,6 +40,7 @@
 #include <akonadi_next/recursivecollectionfilterproxymodel.h>
 #include <akonadi_next/krecursivefilterproxymodel.h>
 
+#include <QKeyEvent>
 #include <QLabel>
 
 #include <klineedit.h>
@@ -65,6 +66,7 @@ public:
   EntityCollectionOrderProxyModel *entityOrderProxy;
   KLineEdit *filterFolderLineEdit;
   QLabel *label;
+  QString filter;
 };
 
 
@@ -109,6 +111,9 @@ FolderTreeWidget::FolderTreeWidget( QWidget *parent, KXMLGUIClient *xmlGuiClient
            this, SLOT( slotChangeTooltipsPolicy( FolderTreeWidget::ToolTipDisplayPolicy ) ) );
 
   d->folderTreeView->setSelectionMode( QAbstractItemView::SingleSelection );
+  d->folderTreeView->setEditTriggers( QAbstractItemView::NoEditTriggers );
+  d->folderTreeView->installEventFilter( this );
+
   // Use the model
 
   //Filter tree view.
@@ -306,5 +311,38 @@ void FolderTreeWidget::slotManualSortingChanged( bool active )
 {
   d->entityOrderProxy->setManualSortingActive( active );
 }
+
+bool FolderTreeWidget::eventFilter( QObject* o, QEvent *e )
+{
+  if ( e->type() == QEvent::KeyPress ) {
+    const QKeyEvent* const ke = dynamic_cast<QKeyEvent*>( e );
+    switch( ke->key() )
+    {
+      case Qt::Key_Backspace:
+        if ( d->filter.length() > 0 )
+          d->filter.truncate( d->filter.length()-1 );
+        applyFilter( d->filter );
+        return false;
+        break;
+      case Qt::Key_Delete:
+        d->filter.clear();
+        applyFilter( d->filter);
+        return false;
+        break;
+      default:
+      {
+        const QString s = ke->text();
+        if ( !s.isEmpty() && s.at( 0 ).isPrint() ) {
+          d->filter += s;
+          applyFilter( d->filter );
+          return false;
+        }
+      }
+      break;
+    }
+  }
+  return false;
+}
+
 
 #include "foldertreewidget.moc"
