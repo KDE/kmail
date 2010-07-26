@@ -80,15 +80,12 @@ FolderSelectionDialog::FolderSelectionDialog( QWidget *parent, SelectionFolderOp
     optReadableProxy |= ReadableCollectionProxyModel::HideImapFolder;
 
   d->folderTreeWidget = new FolderTreeWidget( this, 0, opt, optReadableProxy);
-
   d->folderTreeWidget->disableContextMenuAndExtraColumn();
-
   d->folderTreeWidget->readableCollectionProxyModel()->setEnabledCheck( ( options & EnableCheck ) );
-  d->folderTreeWidget->readableCollectionProxyModel()->setAccessRights( Akonadi::Collection::CanCreateCollection );
-
   d->folderTreeWidget->folderTreeView()->setTooltipsPolicy( FolderTreeWidget::DisplayNever );
   d->folderTreeWidget->folderTreeView()->setDragDropMode( QAbstractItemView::NoDragDrop );
   layout->addWidget( d->folderTreeWidget );
+
   enableButton( KDialog::Ok, false );
   if ( !d->mNotAllowToCreateNewFolder ) {
     enableButton( KDialog::User1, false );
@@ -227,6 +224,11 @@ void FolderSelectionDialog::writeConfig()
     if ( col.isValid() )
       GlobalSettings::self()->setLastSelectedFolder( col.id() );
   }
+}
+
+void FolderSelectionDialog::clearFilter()
+{
+  d->folderTreeWidget->clearFilter();
 }
 
 #include "folderselectiondialog.moc"

@@ -56,6 +56,8 @@ public:
 
   Akonadi::Collection::List selectedCollections() const;
 
+  void clearFilter();
+
 
 private slots:
   void slotSelectionChanged();

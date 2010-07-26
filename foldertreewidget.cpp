@@ -307,6 +307,14 @@ void FolderTreeWidget::applyFilter( const QString &filter )
   d->folderTreeView->expandAll();
 }
 
+void FolderTreeWidget::clearFilter()
+{
+  d->filter.clear();
+  applyFilter( d->filter );
+  if ( !d->folderTreeView->selectionModel()->selectedIndexes().isEmpty() )
+    d->folderTreeView->scrollTo( d->folderTreeView->selectionModel()->selectedIndexes().first() );
+}
+
 void FolderTreeWidget::slotManualSortingChanged( bool active )
 {
   d->entityOrderProxy->setManualSortingActive( active );
