@@ -38,7 +38,7 @@
 #include <akonadi/statisticsproxymodel.h>
 #include <akonadi_next/quotacolorproxymodel.h>
 #include <akonadi_next/recursivecollectionfilterproxymodel.h>
-#include <akonadi_next/krecursivefilterproxymodel.h>
+#include <krecursivefilterproxymodel.h>
 
 #include <QKeyEvent>
 #include <QLabel>
@@ -62,7 +62,7 @@ public:
   FolderTreeView *folderTreeView;
   Akonadi::QuotaColorProxyModel *quotaModel;
   ReadableCollectionProxyModel *readableproxy;
-  Future::KRecursiveFilterProxyModel *filterTreeViewModel;
+  KRecursiveFilterProxyModel *filterTreeViewModel;
   EntityCollectionOrderProxyModel *entityOrderProxy;
   KLineEdit *filterFolderLineEdit;
   QLabel *label;
@@ -117,7 +117,7 @@ FolderTreeWidget::FolderTreeWidget( QWidget *parent, KXMLGUIClient *xmlGuiClient
   // Use the model
 
   //Filter tree view.
-  d->filterTreeViewModel = new Future::KRecursiveFilterProxyModel( this );
+  d->filterTreeViewModel = new KRecursiveFilterProxyModel( this );
   d->filterTreeViewModel->setDynamicSortFilter( true );
   d->filterTreeViewModel->setSourceModel( d->readableproxy );
   d->filterTreeViewModel->setFilterCaseSensitivity( Qt::CaseInsensitive );
