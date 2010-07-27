@@ -209,7 +209,7 @@ kde4_add_kcfg_files(kmailprivate_LIB_SRCS
 )
 
 
-kde4_add_library(kmailprivate SHARED ${kmailprivate_LIB_SRCS})
+kde4_add_library(kmailprivate ${LIBRARY_TYPE} ${kmailprivate_LIB_SRCS})
 target_link_libraries(kmailprivate
   ${KDEPIMLIBS_KMIME_LIBRARY}
   ${KDEPIMLIBS_AKONADI_LIBS}
