@@ -646,6 +646,14 @@ void KMComposeWin::writeConfig( void )
 
 Message::Composer* KMComposeWin::createSimpleComposer()
 {
+  QList< QByteArray > charsets = mCodecAction->mimeCharsets();
+  if( !mOriginalPreferredCharset.isEmpty() ) {
+    charsets.insert( 0, mOriginalPreferredCharset );
+  }
+  mComposerBase->setFrom( from() );
+  mComposerBase->setReplyTo( replyTo() );
+  mComposerBase->setSubject( subject() );
+  mComposerBase->setCharsets( charsets );
   return mComposerBase->createSimpleComposer();
 }
 
