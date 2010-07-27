@@ -1531,7 +1531,7 @@ void KMMainWidget::slotRemoveFolder()
   if ( mCurrentFolder->isSystemFolder() ) return;
   if ( mCurrentFolder->isReadOnly() ) return;
 
-  Akonadi::CollectionFetchJob *job = new Akonadi::CollectionFetchJob( mCurrentFolder->collection(), CollectionFetchJob::FirstLevel, this );
+  Akonadi::CollectionFetchJob *job = new Akonadi::CollectionFetchJob( mCurrentFolder->collection(), CollectionFetchJob::Recursive, this );
   job->fetchScope().setContentMimeTypes( QStringList() << KMime::Message::mimeType() );
   connect( job, SIGNAL( result( KJob* ) ), SLOT( slotDelayedRemoveFolder( KJob* ) ) );
 }
