@@ -91,6 +91,7 @@
 #include <akonadi/collectionpropertiesdialog.h>
 #include <akonadi/entitydisplayattribute.h>
 #include <akonadi/entitylistview.h>
+#include <akonadi/etmviewstatesaver.h>
 #include <akonadi/agentinstance.h>
 #include <akonadi/agenttype.h>
 #include <akonadi/changerecorder.h>
@@ -98,7 +99,6 @@
 #include <akonadi/entitytreemodel.h>
 #include <akonadi/favoritecollectionsmodel.h>
 #include <akonadi/itemfetchscope.h>
-#include <akonadi/entitytreeviewstatesaver.h>
 #include <akonadi/control.h>
 #include <akonadi/entitytreeview.h>
 #include <akonadi/collectiondialog.h>
@@ -284,9 +284,10 @@ K_GLOBAL_STATIC( KMMainWidget::PtrList, theMainWidgetList )
 
 void KMMainWidget::restoreCollectionFolderViewConfig()
 {
-  const KConfigGroup cfg( KMKernel::config(), "CollectionFolderView" );
+  ETMViewStateSaver *saver = new ETMViewStateSaver;
+  saver->setView( mFolderTreeWidget->folderTreeView() );
+  const KConfigGroup cfg( KGlobal::config(), "CollectionFolderView" );
   mFolderTreeWidget->folderTreeView()->header()->restoreState( cfg.readEntry( "HeaderState", QByteArray() ) );
-  Akonadi::EntityTreeViewStateSaver* saver = new Akonadi::EntityTreeViewStateSaver(mFolderTreeWidget->folderTreeView() );
   saver->restoreState( cfg );
 
 }
@@ -857,8 +858,11 @@ void KMMainWidget::writeConfig()
       GlobalSettings::self()->setFolderViewWidth( mFolderTreeWidget->width() );
       KSharedConfig::Ptr config = KMKernel::config();
       KConfigGroup group(config, "CollectionFolderView");
-      Akonadi::EntityTreeViewStateSaver saver( mFolderTreeWidget->folderTreeView() );
+
+      ETMViewStateSaver saver;
+      saver.setView( mFolderTreeWidget->folderTreeView() );
       saver.saveState( group );
+
       group.writeEntry( "HeaderState", mFolderTreeWidget->folderTreeView()->header()->saveState() );
       group.sync();
     }
