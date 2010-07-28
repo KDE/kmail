@@ -37,7 +37,7 @@
 #include <akonadi/collection.h>
 #include <akonadi/statisticsproxymodel.h>
 #include <akonadi_next/quotacolorproxymodel.h>
-#include <akonadi_next/recursivecollectionfilterproxymodel.h>
+#include <akonadi/recursivecollectionfilterproxymodel.h>
 #include <krecursivefilterproxymodel.h>
 
 #include <QKeyEvent>
