@@ -49,7 +49,7 @@ namespace KMail {
   // top level kdepim folder as well.
 
   static const about_data authors[] = {
-    { "Thomas McGuire", I18N_NOOP("Maintainer"),
+    { "Thomas McGuire", I18N_NOOP("Former maintainer"),
       "mcguire@kde.org", 0 },
     { "Stefan Taferner", I18N_NOOP("Original author"),
       "taferner@kde.org", 0 },
