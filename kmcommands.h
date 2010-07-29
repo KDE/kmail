@@ -10,9 +10,9 @@
 #include "messageviewer/headerstrategy.h"
 #include "messageviewer/headerstyle.h"
 using MessageViewer::EditorWatcher;
-#include <messagecore/messagestatus.h>
+#include <akonadi/kmime/messagestatus.h>
 #include <messagelist/core/view.h>
-using KPIM::MessageStatus;
+using Akonadi::MessageStatus;
 #include <kservice.h>
 #include <ktemporaryfile.h>
 #include <kio/job.h>

@@ -1546,7 +1546,7 @@ KMCommand::Result KMSetStatusCommand::execute()
       itemStatus.set( mStatus );
     }
     /*if ( itemStatus != oldStatus )*/ {
-      item.setFlags( itemStatus.getStatusFlags() );
+      item.setFlags( itemStatus.statusFlags() );
       // Store back modified item
       Akonadi::ItemModifyJob *modifyJob = new Akonadi::ItemModifyJob( item, this );
       ++messageStatusChanged;

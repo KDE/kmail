@@ -833,11 +833,11 @@ KMFilterAction::ReturnCode KMFilterActionSetStatus::process( Akonadi::Item item 
   const int idx = mParameterList.indexOf( mParameter );
   if ( idx < 1 ) return ErrorButGoOn;
 
-  KPIM::MessageStatus status;
+  Akonadi::MessageStatus status;
   status.setStatusFromFlags( item.flags() );
   status.set( stati[ idx - 1 ] );
   Akonadi::Item i( item );
-  i.setFlags( status.getStatusFlags() );
+  i.setFlags( status.statusFlags() );
   new Akonadi::ItemModifyJob( i, kmkernel->filterMgr() ); // TODO handle error
   return GoOn;
 }
@@ -855,7 +855,7 @@ void KMFilterActionSetStatus::argsFromString( const QString &argsStr )
     for ( i = 0 ; i < StatiCount ; ++i )
     {
       status = stati[i];
-      if ( status.getStatusStr()[0] == argsStr[0].toLatin1() ) {
+      if ( status.statusStr()[0] == argsStr[0].toLatin1() ) {
         mParameter = mParameterList.at(i+1);
         return;
       }
@@ -869,7 +869,7 @@ const QString KMFilterActionSetStatus::argsAsString() const
   const int idx = mParameterList.indexOf( mParameter );
   if ( idx < 1 ) return QString();
 
-  return stati[idx-1].getStatusStr();
+  return stati[idx-1].statusStr();
 }
 
 const QString KMFilterActionSetStatus::displayString() const

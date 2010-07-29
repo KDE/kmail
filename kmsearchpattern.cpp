@@ -718,7 +718,7 @@ bool KMSearchRuleStatus::isEmpty() const
 bool KMSearchRuleStatus::matches( const Akonadi::Item &item ) const
 {
   const KMime::Message::Ptr msg = item.payload<KMime::Message::Ptr>();
-  KPIM::MessageStatus status;
+  Akonadi::MessageStatus status;
   status.setStatusFromFlags( item.flags() );
   bool rc = false;
   switch ( function() ) {
