@@ -55,6 +55,7 @@ using KMail::FolderRequester;
 #include "kleo/cryptobackendfactory.h"
 
 #include <kpimutils/email.h>
+#include <kpimutils/emailvalidator.h>
 #include <mailtransport/transport.h>
 #include <mailtransport/transportmanager.h>
 #include <mailtransport/transportcombobox.h>
@@ -172,6 +173,9 @@ namespace KMail {
                "will have trouble replying to you.</p></qt>");
     label->setWhatsThis( msg );
     mEmailEdit->setWhatsThis( msg );
+
+    KPIMUtils::EmailValidator* emailValidator = new KPIMUtils::EmailValidator( this );
+    mEmailEdit->setValidator( emailValidator );
 
     // "Email Aliases" stsring text edit and label:
     ++row;
