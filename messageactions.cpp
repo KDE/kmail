@@ -286,7 +286,7 @@ void MessageActions::updateActions()
   mToggleToActAction->setEnabled( flagsAvailable );
 
   if ( mCurrentItem.hasPayload<KMime::Message::Ptr>() ) {
-    Akonadi::MessageStatus status;
+    KPIM::MessageStatus status;
     status.setStatusFromFlags( mCurrentItem.flags() );
     mToggleToActAction->setChecked( status.isToAct() );
     mToggleFlagAction->setChecked( status.isImportant() );
@@ -437,22 +437,22 @@ void MessageActions::slotNoQuoteReplyToMsg()
 
 void MessageActions::slotSetMsgStatusUnread()
 {
-  setMessageStatus( Akonadi::MessageStatus::statusUnread() );
+  setMessageStatus( KPIM::MessageStatus::statusUnread() );
 }
 
 void MessageActions::slotSetMsgStatusRead()
 {
-  setMessageStatus( Akonadi::MessageStatus::statusRead() );
+  setMessageStatus( KPIM::MessageStatus::statusRead() );
 }
 
 void MessageActions::slotSetMsgStatusFlag()
 {
-  setMessageStatus( Akonadi::MessageStatus::statusImportant(), true );
+  setMessageStatus( KPIM::MessageStatus::statusImportant(), true );
 }
 
 void MessageActions::slotSetMsgStatusToAct()
 {
-  setMessageStatus( Akonadi::MessageStatus::statusToAct(), true );
+  setMessageStatus( KPIM::MessageStatus::statusToAct(), true );
 }
 
 void MessageActions::slotRunUrl( QAction *urlAction )
@@ -489,7 +489,7 @@ void MessageActions::slotPrintMsg()
   command->start();
 }
 
-void MessageActions::setMessageStatus( Akonadi::MessageStatus status, bool toggle )
+void MessageActions::setMessageStatus( KPIM::MessageStatus status, bool toggle )
 {
     Akonadi::Item::List items = mVisibleItems;
   if ( items.isEmpty() && mCurrentItem.isValid() )

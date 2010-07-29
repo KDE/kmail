@@ -976,8 +976,8 @@ void KMMainWidget::createWidgets()
   connect( mMessagePane, SIGNAL( currentTabChanged() ), this, SLOT( refreshMessageListSelection() ) );
   connect( mMessagePane, SIGNAL( messageActivated(  const Akonadi::Item & ) ),
            this, SLOT( slotMessageActivated( const Akonadi::Item & ) ) );
-  connect( mMessagePane, SIGNAL(messageStatusChangeRequest( const Akonadi::Item &, const Akonadi::MessageStatus &, const Akonadi::MessageStatus &) ),
-           SLOT( slotMessageStatusChangeRequest(  const Akonadi::Item &, const Akonadi::MessageStatus &, const Akonadi::MessageStatus & ) ) );
+  connect( mMessagePane, SIGNAL(messageStatusChangeRequest( const Akonadi::Item &, const KPIM::MessageStatus &, const KPIM::MessageStatus &) ),
+           SLOT( slotMessageStatusChangeRequest(  const Akonadi::Item &, const KPIM::MessageStatus &, const KPIM::MessageStatus & ) ) );
 
   connect( mMessagePane, SIGNAL(statusMessage(QString)),
            BroadcastStatus::instance(), SLOT(setStatusMsg(QString)) );
@@ -2003,7 +2003,7 @@ void KMMainWidget::refreshMessageListSelection()
 // FIXME: The "selection" version of these functions is in MessageActions.
 //        We should probably move everything there....
 void KMMainWidget::setMessageSetStatus( const QList<Akonadi::Item> &select,
-        const Akonadi::MessageStatus &status,
+        const KPIM::MessageStatus &status,
         bool toggle )
 {
   if ( select.isEmpty() )
@@ -2013,7 +2013,7 @@ void KMMainWidget::setMessageSetStatus( const QList<Akonadi::Item> &select,
   command->start();
 }
 
-void KMMainWidget::setCurrentThreadStatus( const Akonadi::MessageStatus &status, bool toggle )
+void KMMainWidget::setCurrentThreadStatus( const KPIM::MessageStatus &status, bool toggle )
 {
   QList<Akonadi::Item> select = mMessagePane->currentThreadAsMessageList();
   if ( select.isEmpty() )
@@ -2712,18 +2712,18 @@ void KMMainWidget::slotItemsFetchedForActivation( const Akonadi::Item::List &lis
   win->show();
 }
 
-void KMMainWidget::slotMessageStatusChangeRequest( const Akonadi::Item &item, const Akonadi::MessageStatus & set, const Akonadi::MessageStatus &clear )
+void KMMainWidget::slotMessageStatusChangeRequest( const Akonadi::Item &item, const KPIM::MessageStatus & set, const KPIM::MessageStatus &clear )
 {
   if ( !item.isValid() )
     return;
 
-  if ( clear.toQInt32() != Akonadi::MessageStatus().toQInt32() )
+  if ( clear.toQInt32() != KPIM::MessageStatus().toQInt32() )
   {
     KMCommand *command = new KMSetStatusCommand( clear, Akonadi::Item::List() << item, true );
     command->start();
   }
 
-  if ( set.toQInt32() != Akonadi::MessageStatus().toQInt32() )
+  if ( set.toQInt32() != KPIM::MessageStatus().toQInt32() )
   {
     KMCommand *command = new KMSetStatusCommand( set, Akonadi::Item::List() << item, false );
     command->start();

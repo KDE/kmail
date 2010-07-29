@@ -24,9 +24,9 @@
 #include <QTimer>
 #include <kurl.h>
 #include <kservice.h>
-#include <akonadi/kmime/messagestatus.h>
+#include <messagecore/messagestatus.h>
 #include <kvbox.h>
-using Akonadi::MessageStatus;
+using KPIM::MessageStatus;
 #include <map>
 #include <messageviewer/viewer.h>
 #include <messageviewer/interfaces/bodypart.h>

@@ -21,8 +21,8 @@
 #define _kmsearchpattern_h_
 
 #include <klocale.h>
-#include <akonadi/kmime/messagestatus.h>
-using Akonadi::MessageStatus;
+#include <messagecore/messagestatus.h>
+using KPIM::MessageStatus;
 
 #include <Nepomuk/Query/GroupTerm>
 #include <Nepomuk/Query/ComparisonTerm>

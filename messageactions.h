@@ -98,7 +98,7 @@ class MessageActions : public QObject
   private:
     void updateActions();
     template<typename T> void replyCommand();
-    void setMessageStatus( Akonadi::MessageStatus status, bool toggle = false );
+    void setMessageStatus( KPIM::MessageStatus status, bool toggle = false );
     void addMailingListAction( const QString &item, const KUrl &url );
     void addMailingListActions( const QString &item, const KUrl::List &list );
     void updateAnnotateAction();
