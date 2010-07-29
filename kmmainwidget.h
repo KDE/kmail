@@ -230,7 +230,7 @@ class KMAIL_EXPORT KMMainWidget : public QWidget
     void slotMessageSelected( const Akonadi::Item & );
 
     void slotItemsFetchedForActivation( const Akonadi::Item::List &list );
-    void slotMessageStatusChangeRequest(  const Akonadi::Item &, const KPIM::MessageStatus &, const KPIM::MessageStatus & );
+    void slotMessageStatusChangeRequest(  const Akonadi::Item &, const Akonadi::MessageStatus &, const Akonadi::MessageStatus & );
 
 
     void slotReplaceMsgByUnencryptedVersion();
@@ -480,7 +480,7 @@ class KMAIL_EXPORT KMMainWidget : public QWidget
      * The set parameter must not be null and the ownership is passed to this function.
      */
     void setMessageSetStatus( const QList<Akonadi::Item> &select,
-        const KPIM::MessageStatus &status,
+        const Akonadi::MessageStatus &status,
         bool toggle
       );
     /**
@@ -491,7 +491,7 @@ class KMAIL_EXPORT KMMainWidget : public QWidget
     /**
      * This applies setMessageSetStatus() on the current thread.
      */
-    void setCurrentThreadStatus( const KPIM::MessageStatus &status, bool toggle );
+    void setCurrentThreadStatus( const Akonadi::MessageStatus &status, bool toggle );
 
     /**
      * Internal helper that creates the folder selection dialog used for the

@@ -77,7 +77,7 @@
 #include <templateparser/templateparser.h>
 #include <templatesconfiguration.h>
 #include "messagecore/nodehelper.h"
-#include "messagecore/messagestatus.h"
+#include <akonadi/kmime/messagestatus.h>
 #include "messagecore/messagehelpers.h"
 
 // LIBKDEPIM includes
@@ -463,7 +463,7 @@ KMComposeWin::~KMComposeWin()
     item.setMimeType( "message/rfc822" );
     MessageStatus status;
     status.setRead();
-    item.setFlags( status.getStatusFlags() );
+    item.setFlags( status.statusFlags() );
     new Akonadi::ItemCreateJob( item, mFolder );
     // FIXME: listen to the result signal. The whole thing needs to be moved
     //        out of the destructor for this

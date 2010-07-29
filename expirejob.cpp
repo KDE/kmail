@@ -40,7 +40,7 @@ using KPIM::BroadcastStatus;
 #include "foldercollection.h"
 using namespace KMail;
 
-#include <messagecore/messagestatus.h>
+#include <akonadi/kmime/messagestatus.h>
 
 #include <Akonadi/ItemFetchJob>
 #include <akonadi/kmime/messageparts.h>
@@ -128,7 +128,7 @@ void ExpireJob::itemFetchResult( KJob *job )
     if ( !item.hasPayload<KMime::Message::Ptr>() )
       continue;
     const KMime::Message::Ptr mb = item.payload<KMime::Message::Ptr>();
-    KPIM::MessageStatus status;
+    Akonadi::MessageStatus status;
     status.setStatusFromFlags( item.flags() );
     if ( ( status.isImportant() || status.isToAct() || status.isWatched() )
       && GlobalSettings::self()->excludeImportantMailFromExpiry() )
