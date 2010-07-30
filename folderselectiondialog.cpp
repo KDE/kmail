@@ -199,7 +199,7 @@ static const char * myConfigGroupName = "FolderSelectionDialog";
 
 void FolderSelectionDialog::readConfig()
 {
-  KSharedConfigPtr config = KGlobal::config();
+  KSharedConfigPtr config = KMKernel::config();
   KConfigGroup group( config, myConfigGroupName );
 
   QSize size = group.readEntry( "Size", QSize() );
@@ -219,7 +219,7 @@ void FolderSelectionDialog::readConfig()
 
 void FolderSelectionDialog::writeConfig()
 {
-  KSharedConfig::Ptr config = KGlobal::config();
+  KSharedConfig::Ptr config = KMKernel::config();
   KConfigGroup group( config, myConfigGroupName );
   group.writeEntry( "Size", size() );
 
