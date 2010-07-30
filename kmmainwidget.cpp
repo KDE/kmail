@@ -998,12 +998,14 @@ void KMMainWidget::createWidgets()
                                 KMKernel::self()->entityTreeModel(),
                                 KMKernel::config()->group( "FavoriteCollections" ), this );
 
+#if 0
     // ... with statistics...
     Akonadi::StatisticsProxyModel* statisticsFilterModel = new Akonadi::StatisticsProxyModel( this );
     statisticsFilterModel->setSourceModel( mFavoritesModel );
 
     statisticsFilterModel->setToolTipEnabled( true );
-    mFavoriteCollectionsView->setModel( statisticsFilterModel );
+#endif
+    mFavoriteCollectionsView->setModel( /*statisticsFilterModel*/ mFavoritesModel );
 
     mAkonadiStandardActionManager->setFavoriteCollectionsModel( mFavoritesModel );
     mAkonadiStandardActionManager->setFavoriteSelectionModel( mFavoriteCollectionsView->selectionModel() );
