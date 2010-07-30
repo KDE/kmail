@@ -591,9 +591,6 @@ private:
     //  QPopupMenu *mMessageMenu;
     KMail::SearchWindow *mSearchWin;
 
-    FolderSelectionDialog* mMoveOrCopyToDialog;
-    FolderSelectionDialog* mSelectFromAllFoldersDialog;
-
     KAction *mRemoveFolderAction,
       *mExpireFolderAction,
       *mEmptyFolderAction, *mMarkAllAsReadAction, *mFolderMailingListPropertiesAction,
@@ -658,6 +655,8 @@ private:
     QMap<QString, collectionInfo> mCheckMail;
 
     bool mCheckMailInProgress;
+    FolderSelectionDialog* mMoveOrCopyToDialog;
+    FolderSelectionDialog* mSelectFromAllFoldersDialog;
 };
 
 #endif

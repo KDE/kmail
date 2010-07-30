@@ -1102,7 +1102,7 @@ void KMMainWidget::createWidgets()
            SLOT( slotItemMoved( Akonadi::Item, Akonadi::Collection, Akonadi::Collection ) ) );
 }
 
-void KMMainWidget::slotItemAdded( const Akonadi::Item &item, const Akonadi::Collection& col)
+void KMMainWidget::slotItemAdded( const Akonadi::Item &, const Akonadi::Collection& col)
 {
   if ( col.isValid() && ( col == kmkernel->outboxCollectionFolder() ) ) {
     startUpdateMessageActionsTimer();
@@ -2019,7 +2019,7 @@ void KMMainWidget::slotCustomReplyToMsg( const QString &tmpl )
   if ( !msg.isValid() )
     return;
 
-  QString text = mMsgView ? mMsgView->copyText() : "";
+  const QString text = mMsgView ? mMsgView->copyText() : "";
 
   kDebug() << "Reply with template:" << tmpl;
 
@@ -4166,7 +4166,7 @@ QString KMMainWidget::overrideEncoding() const
 
 void KMMainWidget::slotCreateTodo()
 {
-  Akonadi::Item msg = mMessagePane->currentItem();
+  const Akonadi::Item msg = mMessagePane->currentItem();
   if ( !msg.isValid() )
     return;
   KMCommand *command = new CreateTodoCommand( this, msg );
@@ -4254,7 +4254,7 @@ void KMMainWidget::itemsReceived(const Akonadi::Item::List &list )
   if ( mMessagePane )
     mMessagePane->show();
 
-  Item item = list.first();
+  const Item item = list.first();
 
   mMsgView->setMessage( item );
   // reset HTML override to the folder setting
