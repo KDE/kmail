@@ -495,11 +495,11 @@ void partNode::fillMimePartTree( KMMimePartTreeItem* parentItem,
         else
             cntType = "text/plain";
         if( cntDesc.isEmpty() )
-            cntDesc = msgPart().contentDescription();
-        if( cntDesc.isEmpty() )
             cntDesc = msgPart().name().stripWhiteSpace();
         if( cntDesc.isEmpty() )
             cntDesc = msgPart().fileName();
+        if( cntDesc.isEmpty() )
+            cntDesc = msgPart().contentDescription();
         if( cntDesc.isEmpty() ) {
             if( mRoot && mRoot->mRoot )
                 cntDesc = i18n("internal part");
