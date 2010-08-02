@@ -458,7 +458,7 @@ KMComposeWin::~KMComposeWin()
   if ( mFolder.isValid() && mMsg ) {
     Akonadi::Item item;
     item.setPayload( mMsg );
-    item.setMimeType( "message/rfc822" );
+    item.setMimeType( KMime::Message::mimeType() );
     MessageStatus status;
     status.setRead();
     item.setFlags( status.statusFlags() );
