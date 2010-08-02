@@ -72,8 +72,8 @@ void CollectionQuotaPage::init()
 void CollectionQuotaPage::load( const Akonadi::Collection & col )
 {
   if ( col.hasAttribute<Akonadi::CollectionQuotaAttribute>() ) {
-    qint64 currentValue = col.attribute<Akonadi::CollectionQuotaAttribute>()->currentValue();
-    qint64 maximumValue = col.attribute<Akonadi::CollectionQuotaAttribute>()->maximumValue();
+    const qint64 currentValue = col.attribute<Akonadi::CollectionQuotaAttribute>()->currentValue();
+    const qint64 maximumValue = col.attribute<Akonadi::CollectionQuotaAttribute>()->maximumValue();
     mQuotaWidget->setQuotaInfo( currentValue, maximumValue );
   }
 }

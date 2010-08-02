@@ -62,8 +62,6 @@ public:
   void setHideImapFolder( bool hide );
   bool hideImapFolder() const;
 
-  void setNecessaryRight( Akonadi::Collection::Rights right );
-
 protected:
   virtual bool acceptRow( int sourceRow, const QModelIndex &sourceParent ) const;
 

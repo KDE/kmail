@@ -54,7 +54,8 @@ void ConfigModuleWithTabs::addTab( ConfigModuleTab* tab, const QString & title )
 
 void ConfigModuleWithTabs::load()
 {
-  for ( int i = 0 ; i < mTabWidget->count() ; ++i ) {
+  const int numberOfTab = mTabWidget->count();
+  for ( int i = 0 ; i < numberOfTab ; ++i ) {
     ConfigModuleTab *tab = dynamic_cast<ConfigModuleTab*>( mTabWidget->widget(i) );
     if ( tab )
       tab->load();
@@ -65,7 +66,8 @@ void ConfigModuleWithTabs::load()
 void ConfigModuleWithTabs::save()
 {
   KCModule::save();
-   for ( int i = 0 ; i < mTabWidget->count() ; ++i ) {
+  const int numberOfTab = mTabWidget->count();
+  for ( int i = 0 ; i < numberOfTab ; ++i ) {
     ConfigModuleTab *tab = dynamic_cast<ConfigModuleTab*>( mTabWidget->widget(i) );
     if ( tab )
       tab->save();
