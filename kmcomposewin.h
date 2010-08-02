@@ -437,7 +437,6 @@ class KMComposeWin : public KMail::Composer
 
   private:
     Kleo::CryptoMessageFormat cryptoMessageFormat() const;
-    bool encryptToSelf() const;
 
   private:
     /**
