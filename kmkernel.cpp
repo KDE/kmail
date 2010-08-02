@@ -120,6 +120,7 @@ KMKernel::KMKernel (QObject *parent, const char *name) :
   mIdentityManager(0), mConfigureDialog(0), mMailService(0)
 {
   Akonadi::AttributeFactory::registerAttribute<Akonadi::SearchDescriptionAttribute>();
+  QDBusConnection::sessionBus().registerService("org.kde.kmail");
   migrateFromKMail1();
   kDebug() << "Starting up...";
 
