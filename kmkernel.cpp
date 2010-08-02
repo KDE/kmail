@@ -209,7 +209,6 @@ KMKernel::KMKernel (QObject *parent, const char *name) :
            this, SLOT( slotProgressItemCompletedOrCanceled( KPIM::ProgressItem* ) ) );
   connect( KPIM::ProgressManager::instance(), SIGNAL( progressItemCanceled( KPIM::ProgressItem * ) ),
            this, SLOT( slotProgressItemCompletedOrCanceled( KPIM::ProgressItem* ) ) );
-  connect( monitor(), SIGNAL( itemRemoved( const Akonadi::Item &) ), the_undoStack, SLOT( msgDestroyed( const Akonadi::Item& ) ) );
 }
 
 KMKernel::~KMKernel ()
@@ -1176,6 +1175,8 @@ void KMKernel::init()
   }
 
   connect( Akonadi::ServerManager::self(), SIGNAL( stateChanged( Akonadi::ServerManager::State ) ), this, SLOT( akonadiStateChanged( Akonadi::ServerManager::State ) ) );
+  connect( monitor(), SIGNAL( itemRemoved( const Akonadi::Item &) ), the_undoStack, SLOT( msgDestroyed( const Akonadi::Item& ) ) );
+
 
 }
 
