@@ -467,8 +467,6 @@ KMComposeWin::~KMComposeWin()
     //        out of the destructor for this
   }
 
-  //deleteAll( mComposedMessages );
-
   foreach ( KTempDir *const dir, mTempDirs ) {
     delete dir;
   }
