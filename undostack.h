@@ -53,8 +53,11 @@ public:
   void undo();
 
   void pushSingleAction(const Akonadi::Item &item, const Akonadi::Collection&, const Akonadi::Collection& destFolder);
-  void msgDestroyed( const Akonadi::Item &msg);
   void folderDestroyed( const Akonadi::Collection &folder);
+
+public slots:
+  void msgDestroyed( const Akonadi::Item &msg);
+
 protected:
   QList<UndoInfo*> mStack;
   int mSize;
