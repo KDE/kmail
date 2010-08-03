@@ -188,6 +188,9 @@ class KMAIL_EXPORT KMMainWidget : public QWidget
       return mFolderShortcutActionManager;
     }
 
+
+    void refreshMessageListView();
+
   public slots:
     // Moving messages around
     /**

@@ -1945,6 +1945,12 @@ void KMMainWidget::refreshMessageListSelection()
   mAkonadiStandardActionManager->setItemSelectionModel( mMessagePane->currentItemSelectionModel() );
 }
 
+void KMMainWidget::refreshMessageListView()
+{
+  //TODO find a method to refresh messagepane
+  //mMessagePane->reloadGlobalConfiguration();
+}
+
 //-----------------------------------------------------------------------------
 // Status setting for threads
 //

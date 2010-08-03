@@ -1954,7 +1954,10 @@ void KMKernel::stopAgentInstance()
 
 void KMKernel::refreshMessageListView()
 {
-  //TODO
+  KMMainWidget *mainWidget = getKMMainWidget();
+  if ( mainWidget ) {
+    mainWidget->refreshMessageListView();
+  }
 }
 
 #include "kmkernel.moc"
