@@ -509,6 +509,9 @@ class KMAIL_EXPORT KMMainWidget : public QWidget
      */
     FolderSelectionDialog* selectFromAllFoldersDialog();
 
+
+    void addInfoInNotification( const Akonadi::Collection&col );
+
   private slots:
     /**
      * Called when a "move to trash" operation is completed

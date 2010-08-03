@@ -1115,18 +1115,14 @@ void KMMainWidget::slotCollectionChanged( const Akonadi::Collection&col, const Q
 }
 
 
-void KMMainWidget::slotItemAdded( const Akonadi::Item &, const Akonadi::Collection& col)
+void KMMainWidget::slotItemAdded( const Akonadi::Item &msg, const Akonadi::Collection& col)
 {
   if ( col.isValid() && ( col == kmkernel->outboxCollectionFolder() ) ) {
     startUpdateMessageActionsTimer();
   }
-
-  const QString fullCollectionPath( KMail::Util::fullCollectionPath( col ) );
-  if ( mCheckMail.contains( fullCollectionPath ) ) {
-    mCheckMail[fullCollectionPath].nbMail++;
-  } else {
-    collectionInfo info( col, 1 );
-    mCheckMail.insert( fullCollectionPath, info );
+  const int resultFilter = slotFilterMsg( msg );
+  if ( resultFilter == 1 ) {
+    addInfoInNotification( col );
   }
 }
 
@@ -1139,10 +1135,23 @@ void KMMainWidget::slotItemRemoved( const Akonadi::Item & item)
 
 void KMMainWidget::slotItemMoved( Akonadi::Item item, Akonadi::Collection from, Akonadi::Collection to )
 {
+  kDebug()<<" slotItemMoved from :"<<from.id()<<" to "<<to.id();
   if( item.isValid() && ( ( from.id() == kmkernel->outboxCollectionFolder().id() )
                           || to.id() == kmkernel->outboxCollectionFolder().id() ) )
   {
     startUpdateMessageActionsTimer();
+  }
+  addInfoInNotification( to );
+}
+
+void KMMainWidget::addInfoInNotification( const Akonadi::Collection&col )
+{
+  const QString fullCollectionPath( KMail::Util::fullCollectionPath( col ) );
+  if ( mCheckMail.contains( fullCollectionPath ) ) {
+    mCheckMail[fullCollectionPath].nbMail++;
+  } else {
+    collectionInfo info( col, 1 );
+    mCheckMail.insert( fullCollectionPath, info );
   }
 }
 
