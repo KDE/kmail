@@ -1952,5 +1952,9 @@ void KMKernel::stopAgentInstance()
   }
 }
 
+void KMKernel::refreshMessageListView()
+{
+  //TODO
+}
 
 #include "kmkernel.moc"

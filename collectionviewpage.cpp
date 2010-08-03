@@ -289,7 +289,7 @@ void CollectionViewPage::save( Akonadi::Collection & col )
     } else {
       col.removeAttribute<Akonadi::MessageFolderAttribute>();
     }
-    //TODO refresh messagelistview
+    KMKernel::self()->refreshMessageListView();
   }
   // message list theme
   const bool usePrivateTheme = !mUseDefaultThemeCheckBox->isChecked();
