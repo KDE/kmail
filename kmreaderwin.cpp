@@ -1014,8 +1014,6 @@ void KMReaderWin::initHtmlWidget(void)
   connect(mViewer->browserExtension(),
           SIGNAL(createNewWindow(const KURL &, const KParts::URLArgs &)),this,
           SLOT(slotUrlOpen(const KURL &)));
-  connect(mViewer,SIGNAL(onURL(const QString &)),this,
-          SLOT(slotUrlOn(const QString &)));
   connect(mViewer,SIGNAL(popupMenu(const QString &, const QPoint &)),
           SLOT(slotUrlPopup(const QString &, const QPoint &)));
   connect( kmkernel->imProxy(), SIGNAL( sigContactPresenceChanged( const QString & ) ),
@@ -2625,6 +2623,31 @@ void KMReaderWin::slotIMChat()
 }
 
 //-----------------------------------------------------------------------------
+static QString linkForNode( const DOM::Node &node )
+{
+  try {
+    if ( node.isNull() )
+      return QString();
+
+    const DOM::NamedNodeMap attributes = node.attributes();
+    if ( !attributes.isNull() ) {
+      const DOM::Node href = attributes.getNamedItem( DOM::DOMString( "href" ) );
+      if ( !href.isNull() ) {
+        return href.nodeValue().string();
+      }
+    }
+    if ( !node.parentNode().isNull() ) {
+      return linkForNode( node.parentNode() );
+    } else {
+      return QString();
+    }
+  } catch ( DOM::DOMException &e ) {
+    kdWarning(5006) << "Got an exception when trying to determine link under cursor!" << endl;
+    return QString();
+  }
+}
+
+//-----------------------------------------------------------------------------
 bool KMReaderWin::eventFilter( QObject *, QEvent *e )
 {
   if ( e->type() == QEvent::MouseButtonPress ) {
@@ -2662,11 +2685,22 @@ bool KMReaderWin::eventFilter( QObject *, QEvent *e )
   if ( e->type() == QEvent::MouseMove ) {
     QMouseEvent* me = static_cast<QMouseEvent*>( e );
 
+    // Handle this ourselves instead of connecting to mViewer::onURL(), since KHTML misses some
+    // notifications in case we started a drag ourselves
+    slotUrlOn( linkForNode( mViewer->nodeUnderMouse() ) );
+
     if ( ( mLastClickPosition - me->pos() ).manhattanLength() > KGlobalSettings::dndEventDelay() ) {
       if ( mCanStartDrag && ( !( mHoveredUrl.isEmpty() && mLastClickImagePath.isEmpty() ) ) ) {
         if ( URLHandlerManager::instance()->handleDrag( mHoveredUrl, mLastClickImagePath, this ) ) {
           mCanStartDrag = false;
           slotUrlOn( QString() );
+
+          // HACK: Send a mouse release event to the KHTMLView, as otherwise that will be missed in
+          //       case we started a drag. If the event is missed, the HTML view gets into a wrong
+          //       state, in which funny things like unsolicited drags start to happen.
+          QMouseEvent mouseEvent( QEvent::MouseButtonRelease, me->pos(), Qt::NoButton, Qt::NoButton );
+          static_cast<QObject*>( mViewer->view() )->eventFilter( mViewer->view()->viewport(),
+                                                                 &mouseEvent );
           return true;
         }
       }
