@@ -373,9 +373,6 @@ public:
 
   void updateSystemTray();
 
-
-  void refreshMessageListView();
-
 public slots:
 
   /** Custom templates have changed, so all windows using them need

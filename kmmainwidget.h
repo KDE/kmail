@@ -188,9 +188,6 @@ class KMAIL_EXPORT KMMainWidget : public QWidget
       return mFolderShortcutActionManager;
     }
 
-
-    void refreshMessageListView();
-
   public slots:
     // Moving messages around
     /**
@@ -459,6 +456,7 @@ class KMAIL_EXPORT KMMainWidget : public QWidget
     void slotItemMoved( Akonadi::Item item, Akonadi::Collection from, Akonadi::Collection to );
 
     void slotAkonadiStandardActionUpdated();
+    void slotCollectionChanged( const Akonadi::Collection&, const QSet<QByteArray>& );
   private:
     /** Get override character encoding. */
     QString overrideEncoding() const;

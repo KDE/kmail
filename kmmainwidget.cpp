@@ -1102,7 +1102,18 @@ void KMMainWidget::createWidgets()
            SLOT(slotItemRemoved( const Akonadi::Item & ) ) );
   connect( kmkernel->monitor(), SIGNAL( itemMoved( Akonadi::Item,Akonadi::Collection, Akonadi::Collection ) ),
            SLOT( slotItemMoved( Akonadi::Item, Akonadi::Collection, Akonadi::Collection ) ) );
+  connect( kmkernel->monitor(), SIGNAL( collectionChanged( const Akonadi::Collection &, const QSet<QByteArray> &) ), SLOT( slotCollectionChanged( const Akonadi::Collection&, const QSet<QByteArray>& ) ) );
 }
+
+void KMMainWidget::slotCollectionChanged( const Akonadi::Collection&col, const QSet<QByteArray>&set )
+{
+  if ( mCurrentFolder
+       && ( col == mCurrentFolder->collection() )
+       && set.contains( "MESSAGEFOLDER" ) ) {
+    mMessagePane->resetModelStorage();
+  }
+}
+
 
 void KMMainWidget::slotItemAdded( const Akonadi::Item &, const Akonadi::Collection& col)
 {
@@ -1943,11 +1954,6 @@ void KMMainWidget::slotUpdateMessageTagList( const QString &taglabel )
 void KMMainWidget::refreshMessageListSelection()
 {
   mAkonadiStandardActionManager->setItemSelectionModel( mMessagePane->currentItemSelectionModel() );
-}
-
-void KMMainWidget::refreshMessageListView()
-{
-  mMessagePane->resetModelStorage();
 }
 
 //-----------------------------------------------------------------------------
