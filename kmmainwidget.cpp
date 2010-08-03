@@ -1947,8 +1947,7 @@ void KMMainWidget::refreshMessageListSelection()
 
 void KMMainWidget::refreshMessageListView()
 {
-  //TODO find a method to refresh messagepane
-  //mMessagePane->reloadGlobalConfiguration();
+  mMessagePane->resetModelStorage();
 }
 
 //-----------------------------------------------------------------------------
