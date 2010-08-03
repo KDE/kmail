@@ -58,8 +58,6 @@
 
 #include <stdlib.h>
 
-#ifdef Q_WS_MACX
-#endif
 #include "foldercollection.h"
 
 uint KMail::Util::folderIdentity(const Akonadi::Item& item)
