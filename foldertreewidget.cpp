@@ -323,7 +323,7 @@ void FolderTreeWidget::slotManualSortingChanged( bool active )
 bool FolderTreeWidget::eventFilter( QObject* o, QEvent *e )
 {
   if ( e->type() == QEvent::KeyPress ) {
-    const QKeyEvent* const ke = dynamic_cast<QKeyEvent*>( e );
+    const QKeyEvent* const ke = static_cast<QKeyEvent*>( e );
     switch( ke->key() )
     {
       case Qt::Key_Backspace:
