@@ -1,5 +1,5 @@
 #KDE_OPTIONS = nofinal
-KDE_CXXFLAGS = $(USE_RTTI)
+KDE_CXXFLAGS = $(USE_RTTI) -fexceptions
 
 SUBDIRS = interfaces . about pics profiles avscripts tests
 

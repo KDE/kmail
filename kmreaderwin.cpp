@@ -87,7 +87,7 @@ using KMail::TeeHtmlWriter;
 #include <dom/html_block.h>
 #include <dom/html_document.h>
 #include <dom/dom_string.h>
-
+#include <dom/dom_exception.h>
 
 #include <kapplication.h>
 // for the click on attachment stuff (dnaber):
