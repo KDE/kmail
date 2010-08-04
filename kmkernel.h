@@ -358,12 +358,6 @@ public:
    */
   Akonadi::Collection collectionFromId( const QString &idString ) const;
 
-  /**
-   * @deprecated this uses exec(), don't use. Use collectionFromId() but be aware of the
-   *             restrictions.
-   */
-  Akonadi::Collection KDE_DEPRECATED findFolderCollectionById( const QString& id );
-
   void raise();
 
 

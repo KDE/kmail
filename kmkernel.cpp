@@ -1702,18 +1702,6 @@ void KMKernel::expireAllFoldersNow() // called by the GUI
   mFolderCollectionMonitor->expireAllFolders( true /*immediate*/ );
 }
 
-Akonadi::Collection KMKernel::findFolderCollectionById( const QString& idString )
-{
-  int id = idString.toInt();
-  Akonadi::CollectionFetchJob *job = new Akonadi::CollectionFetchJob( Akonadi::Collection(id), Akonadi::CollectionFetchJob::Base, this );
-  if ( job->exec() ) {
-    Akonadi::Collection::List lst = job->collections();
-    if ( lst.count() == 1 )
-      return lst.at( 0 );
-  }
-  delete job;
-  return Akonadi::Collection();
-}
 
 Akonadi::Collection KMKernel::collectionFromId( const QString &idString ) const
 {
