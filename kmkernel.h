@@ -475,7 +475,7 @@ private:
   Akonadi::EntityMimeTypeFilterModel *mCollectionModel;
 
   /// List of Akonadi resources that are currently being checked.
-  QList<QString> mResoucesBeingChecked;
+  QList<QString> mResourcesBeingChecked;
 
   int mWrapCol;
 };
