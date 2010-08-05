@@ -172,7 +172,7 @@ QSize ConfigAgentDelegate::sizeHint ( const QStyleOptionViewItem &option, const 
     return size;
 }
 
-QWidget  * ConfigAgentDelegate::createEditor ( QWidget * parent, const QStyleOptionViewItem  & option, const QModelIndex & index ) const
+QWidget  * ConfigAgentDelegate::createEditor ( QWidget *, const QStyleOptionViewItem  &, const QModelIndex & ) const
 {
   return 0;
 }
@@ -190,9 +190,9 @@ bool ConfigAgentDelegate::editorEvent ( QEvent* event, QAbstractItemModel* model
         return false;
 
     QMouseEvent *me = static_cast<QMouseEvent*> ( event );
-    QPoint mousePos = me->pos() - option.rect.topLeft();
+    const QPoint mousePos = me->pos() - option.rect.topLeft();
 
-    QSizeF docSize = doc->documentLayout()->documentSize();
+    const QSizeF docSize = doc->documentLayout()->documentSize();
     delete doc;
     QStyleOptionButton buttonOpt = buttonOption ( option );
 
