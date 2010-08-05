@@ -108,6 +108,10 @@ using KMail::RedirectDialog;
 
 #include <messagelist/pane.h>
 
+#include <mailtransport/transportmanager.h>
+using MailTransport::TransportManager;
+
+
 #include "messageviewer/nodehelper.h"
 #include "messageviewer/objecttreeemptysource.h"
 
@@ -119,6 +123,7 @@ using KMail::RedirectDialog;
 #include "messagecomposer/messagecomposersettings.h"
 #include "messagecomposer/messagefactory.h"
 using MessageComposer::MessageFactory;
+
 
 #include "progressmanager.h"
 using KPIM::ProgressManager;
@@ -1268,6 +1273,10 @@ KMCommand::Result KMRedirectCommand::execute()
   if ( dlg->exec() == QDialog::Rejected || !dlg ) {
     return Failed;
   }
+  if ( !TransportManager::self()->showTransportCreationDialog( parentWidget(), TransportManager::IfNoTransportExists ) )
+    return Failed;
+
+
   KMime::Message::Ptr msg = MessageCore::Util::message( item );
   if ( !msg )
     return Failed;
