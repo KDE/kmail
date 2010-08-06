@@ -524,7 +524,7 @@ KMCommand::Result KMUrlSaveCommand::execute()
 {
   if ( mUrl.isEmpty() )
     return OK;
-  KUrl saveUrl = KFileDialog::getSaveUrl(mUrl.fileName(), QString(),
+  const KUrl saveUrl = KFileDialog::getSaveUrl(mUrl.fileName(), QString(),
                                          parentWidget() );
   if ( saveUrl.isEmpty() )
     return Canceled;
@@ -817,7 +817,7 @@ void KMSaveMsgCommand::slotSaveResult(KJob *job)
   {
     if (job->error() == KIO::ERR_FILE_ALREADY_EXIST)
     {
-      if (KMessageBox::warningContinueCancel(0,
+      if (KMessageBox::warningContinueCancel(parentWidget(),
         i18n("File %1 exists.\nDo you want to replace it?",
          mUrl.prettyUrl()), i18n("Save to File"), KGuiItem(i18n("&Replace")))
         == KMessageBox::Continue) {
@@ -1590,7 +1590,7 @@ KMCommand::Result KMSetTagCommand::execute()
 {
   //Set the visible name for the tag
   const Nepomuk::Tag n_tag( mTagLabel );
-  Q_FOREACH( const Akonadi::Item item, mItem ) {
+  Q_FOREACH( const Akonadi::Item& item, mItem ) {
     Nepomuk::Resource n_resource( item.url() );
     const QList<Nepomuk::Tag> tagList = n_resource.tags();
 
