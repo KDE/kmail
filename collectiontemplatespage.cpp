@@ -88,6 +88,9 @@ void CollectionTemplatesPage::init()
 void CollectionTemplatesPage::load(const Collection & col)
 {
   mFolderCollection = FolderCollection::forCollection( col );
+  if ( !mFolderCollection )
+    return;
+
   const QString fid = mFolderCollection->idString();
 
   Templates t( fid );
