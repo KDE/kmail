@@ -1583,7 +1583,7 @@ std::vector<GpgME::Key> Kleo::KeyResolver::selectKeys( const QString & person, c
   const bool x509 = containsSMIME( mCryptoMessageFormats );
 
   Kleo::KeySelectionDialog dlg( i18n("Encryption Key Selection"),
-				msg, selectedKeys,
+				msg, KPIM::getEmailAddress(person), selectedKeys,
                                 Kleo::KeySelectionDialog::ValidEncryptionKeys
                                 & ~(opgp ? 0 : Kleo::KeySelectionDialog::OpenPGPKeys)
                                 & ~(x509 ? 0 : Kleo::KeySelectionDialog::SMIMEKeys),
