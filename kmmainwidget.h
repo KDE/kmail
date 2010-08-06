@@ -457,6 +457,7 @@ class KMAIL_EXPORT KMMainWidget : public QWidget
 
     void slotAkonadiStandardActionUpdated();
     void slotCollectionChanged( const Akonadi::Collection&, const QSet<QByteArray>& );
+    void slotCollectionMoved( const Akonadi::Collection &collection, const Akonadi::Collection &source, const Akonadi::Collection &destination );
   private:
     /** Get override character encoding. */
     QString overrideEncoding() const;
