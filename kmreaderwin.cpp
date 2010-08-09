@@ -39,6 +39,9 @@
 #include "messageviewer/mailwebview.h"
 #include "messageviewer/globalsettings.h"
 
+#include <Akonadi/ItemModifyJob>
+
+
 #include "messageviewer/csshelper.h"
 using MessageViewer::CSSHelper;
 #include "util.h"
@@ -298,7 +301,6 @@ void KMReaderWin::displayBusyPage()
 
   displaySplashPage( info );
 }
-#include <Akonadi/ItemModifyJob>
 
 void KMReaderWin::displayOfflinePage()
 {
