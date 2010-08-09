@@ -182,8 +182,11 @@ void KMReaderMainWin::slotForwardInlineMsg()
    KMCommand *command = 0;
    if ( mReaderWin->message().isValid() && mReaderWin->message().parentCollection().isValid() ) {
      QSharedPointer<FolderCollection> fd = FolderCollection::forCollection( mReaderWin->message().parentCollection() );
-     command = new KMForwardCommand( this, mReaderWin->message(),
-                                     fd->identity() );
+     if ( fd )
+       command = new KMForwardCommand( this, mReaderWin->message(),
+                                       fd->identity() );
+     else
+       command = new KMForwardCommand( this, mReaderWin->message() );
    } else {
     command = new KMForwardCommand( this, mReaderWin->message() );
    }
@@ -198,8 +201,11 @@ void KMReaderMainWin::slotForwardAttachedMsg()
    KMCommand *command = 0;
    if ( mReaderWin->message().isValid() && mReaderWin->message().parentCollection().isValid() ) {
      QSharedPointer<FolderCollection> fd = FolderCollection::forCollection( mReaderWin->message().parentCollection() );
-     command = new KMForwardAttachedCommand( this, mReaderWin->message(),
-        fd->identity() );
+     if ( fd )
+       command = new KMForwardAttachedCommand( this, mReaderWin->message(),
+                                               fd->identity() );
+     else
+       command = new KMForwardAttachedCommand( this, mReaderWin->message() );
    } else {
      command = new KMForwardAttachedCommand( this, mReaderWin->message() );
    }
