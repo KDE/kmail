@@ -1112,10 +1112,10 @@ void KMMainWidget::slotCollectionMoved( const Akonadi::Collection &collection, c
   //TODO add undo/redo move collection
 }
 
-void KMMainWidget::slotCollectionChanged( const Akonadi::Collection&col, const QSet<QByteArray>&set )
+void KMMainWidget::slotCollectionChanged( const Akonadi::Collection&collection, const QSet<QByteArray>&set )
 {
   if ( mCurrentFolder
-       && ( col == mCurrentFolder->collection() )
+       && ( collection == mCurrentFolder->collection() )
        && set.contains( "MESSAGEFOLDER" ) ) {
     mMessagePane->resetModelStorage();
   }
