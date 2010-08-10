@@ -359,7 +359,7 @@ namespace KMail {
   }
 
   //-----------------------------------------------------------------------------
-  void ImapAccountBase::changeSubscription( bool subscribe, const QString& imapPath )
+  void ImapAccountBase::changeSubscription( bool subscribe, const QString& imapPath, bool quiet )
   {
     // change the subscription of the folder
     KURL url = getUrl();
@@ -382,6 +382,7 @@ namespace KMail {
     // a bit of a hack to save one slot
     if (subscribe) jd.onlySubscribed = true;
     else jd.onlySubscribed = false;
+    jd.quiet = quiet;
     insertJob(job, jd);
 
     connect(job, SIGNAL(result(KIO::Job *)),
@@ -398,7 +399,9 @@ namespace KMail {
     QString path = static_cast<KIO::SimpleJob*>(job)->url().path();
     if (job->error())
     {
-      handleJobError( job, i18n( "Error while trying to subscribe to %1:" ).arg( path ) + '\n' );
+      if ( !(*it).quiet )
+        handleJobError( job, i18n( "Error while trying to subscribe to %1:" ).arg( path ) + '\n' );
+      emit subscriptionChangeFailed( job->errorString() );
       // ## emit subscriptionChanged here in case anyone needs it to support continue/cancel
     }
     else

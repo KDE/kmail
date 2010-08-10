@@ -121,8 +121,16 @@ protected slots:
   virtual void slotListMessagesResult( KIO::Job * job );
   void slotDeleteNextMessages( KIO::Job* job = 0 );
   void slotProcessedSize( KIO::Job *, KIO::filesize_t processed );
+  void slotSubscribtionChange1Done( const QString&, bool );
+  void slotSubscribtionChange2Done( const QString&, bool );
+  void slotSubscribtionChange1Failed( const QString &errorMessage );
+  void slotSubscribtionChange2Failed( const QString &errorMessage );
 
 private:
+
+  void renameOnDisk();
+  void revertLabelChange();
+
   KMFolderCachedImap *mFolder;
   KMAcctCachedImap   *mAccount;
   QValueList<KMFolderCachedImap*> mFolderList;
@@ -133,6 +141,7 @@ private:
   QStringList mFoldersOrMessages; // Folder deletion: path list. Message deletion: sets of uids
   KMMessage* mMsg;
   QString mString; // Used as uids and as rename target
+  QString mOldImapPath, mNewImapPath, mNewName; // used for renaming
   KMFolderCachedImap *mParentFolder;
 };
 

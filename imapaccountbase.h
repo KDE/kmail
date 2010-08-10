@@ -187,8 +187,10 @@ namespace KMail {
      * Subscribe (@p subscribe = TRUE) / Unsubscribe the folder
      * identified by @p imapPath.
      * Emits subscriptionChanged signal on success.
+     * Emits subscriptionChangeFailed signal when it fails.
+     * @param quiet if false, an error message will be displayed if the job fails.
      */
-    void changeSubscription(bool subscribe, const QString& imapPath);
+    void changeSubscription(bool subscribe, const QString& imapPath, bool quiet = false );
 
     /**
      * Returns whether the account is locally subscribed to the
@@ -585,6 +587,12 @@ namespace KMail {
      * as a result of a changeSubscription call.
      */
     void subscriptionChanged(const QString& imapPath, bool subscribed);
+
+    /**
+     * Emitted when changeSubscription() failed.
+     * @param errorMessage the error message that contains the reason for the failure
+     */
+    void subscriptionChangeFailed( const QString &errorMessage );
 
     /**
      * Emitted upon completion of the job for setting the status for a group of UIDs,
