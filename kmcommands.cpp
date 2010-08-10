@@ -2044,7 +2044,7 @@ KMCommand::Result CreateTodoCommand::execute()
       new OrgKdeKorganizerCalendarInterface( "org.kde.korganizer", "/Calendar",
                                              QDBusConnection::sessionBus(), this );
   iface->openTodoEditor( i18n("Mail: %1", msg->subject()->asUnicodeString() ), txt, uri,
-                         tf.fileName(), QStringList(), "message/rfc822", true );
+                         tf.fileName(), QStringList(), "message/rfc822" );
   delete iface;
   tf.close();
   return OK;
