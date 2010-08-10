@@ -613,6 +613,7 @@ private:
   QValueList<KMFolder*> mToBeDeletedAfterRescue;
   int mRescueCommandCount;
 
+  QValueList< QGuardedPtr<KMFolderCachedImap> > mNewlyCreatedSubfolders;
   int mPermanentFlags;
 };
 

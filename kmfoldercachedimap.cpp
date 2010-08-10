@@ -1375,11 +1375,14 @@ void KMFolderCachedImap::buildSubFolderList()
     while( node ) {
       if( !node->isDir() ) {
         KMFolderCachedImap* storage = static_cast<KMFolderCachedImap*>(static_cast<KMFolder*>(node)->storage());
+        const bool folderIsNew = mNewlyCreatedSubfolders.contains( QGuardedPtr<KMFolderCachedImap>( storage ) );
         // Only sync folders that have been accepted by the server
         if ( !storage->imapPath().isEmpty()
              // and that were not just deleted from it
              && !foldersForDeletionOnServer.contains( storage->imapPath() ) ) {
-          mSubfoldersForSync << storage;
+          if ( mRecurse || folderIsNew ) {
+            mSubfoldersForSync << storage;
+          }
         } else {
           kdDebug(5006) << "Do not add " << storage->label()
                         << " to synclist" << endl;
@@ -1389,8 +1392,7 @@ void KMFolderCachedImap::buildSubFolderList()
     }
   }
 
-  if ( !mRecurse ) // "check mail for this folder" only
-    mSubfoldersForSync.clear();
+  mNewlyCreatedSubfolders.clear();
 }
 
 void KMFolderCachedImap::disconnectSubFolderSignals()
@@ -2345,6 +2347,7 @@ void KMFolderCachedImap::createFoldersNewOnServerAndFinishListing( const QValueV
       f->setNoChildren(mSubfolderMimeTypes[idx] == "message/digest");
       f->setImapPath(mSubfolderPaths[idx]);
       f->mFolderAttributes = mSubfolderAttributes[idx];
+      mNewlyCreatedSubfolders.append( QGuardedPtr<KMFolderCachedImap>( f ) );
       kdDebug(5006) << " ####### Attributes: " << f->mFolderAttributes <<endl;
       //kdDebug(5006) << subfolderPath << ": mAnnotationFolderType set to FROMSERVER" << endl;
       kmkernel->dimapFolderMgr()->contentsChanged();
@@ -2561,6 +2564,7 @@ void KMFolderCachedImap::resetSyncState()
 {
   if ( mSyncState == SYNC_STATE_INITIAL ) return;
   mSubfoldersForSync.clear();
+  mNewlyCreatedSubfolders.clear();
   mSyncState = SYNC_STATE_INITIAL;
   close("cachedimap");
   // Don't use newState here, it would revert to mProgress (which is < current value when listing messages)
