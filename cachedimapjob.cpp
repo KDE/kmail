@@ -819,7 +819,7 @@ void CachedImapJob::slotSubscribtionChange1Failed( const QString &errorMessage )
 
 void CachedImapJob::slotSubscribtionChange2Failed( const QString &errorMessage )
 {
-  Q_UNUSED( errorMessage );
+  kdWarning(5006) << k_funcinfo << errorMessage << endl;
   // Ignore this error, not something user-visible anyway
   delete this;
 }
