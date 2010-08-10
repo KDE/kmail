@@ -516,7 +516,8 @@ void KMMainWidget::folderSelected( const Akonadi::Collection & col )
 
 void KMMainWidget::slotShowSelectedForderInPane()
 {
-  mMessagePane->setCurrentFolder( mCurrentFolder->collection(), false, mPreSelectionMode );
+  if( mCurrentFolder ) 	
+     mMessagePane->setCurrentFolder( mCurrentFolder->collection(), false, mPreSelectionMode );
 }
 
 
