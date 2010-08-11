@@ -575,7 +575,6 @@ private:
     Akonadi::Collection mTemplateFolder;
     QMenu        *mViewMenu, *mBodyPartsMenu;
     KAction      *mlistFilterAction;
-    bool          mIntegrated;
     bool          mBeepOnNew;
     bool          mConfirmEmpty;
     int           mMessageStatusId;

@@ -209,7 +209,6 @@ K_GLOBAL_STATIC( KMMainWidget::PtrList, theMainWidgetList )
   mStartupDone = false;
   mWasEverShown = false;
   mSearchWin = 0;
-  mIntegrated  = true;
   mReaderWindowActive = true;
   mReaderWindowBelow = true;
   mFolderHtmlPref = false;
