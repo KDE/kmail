@@ -52,10 +52,10 @@ public:
 private:
     MDNAdviceHelper(QObject* parent = 0) {}
     virtual ~MDNAdviceHelper() {}
-    
+
     int requestAdviceOnMDN( const char * what );
     MessageComposer::MDNAdvice questionIgnoreSend( const QString &text, bool canDeny );
-    
+
     static MDNAdviceHelper* s_instance;
 private slots:
     void itemsReceived(Akonadi::Item::List);
@@ -64,13 +64,13 @@ private slots:
 class MDNAdviceDialog : public KDialog
 {
   Q_OBJECT
-  
-public:  
+
+public:
   MDNAdviceDialog( const QString &text, bool canDeny, QWidget *parent = 0 );
   ~MDNAdviceDialog();
 
-  MessageComposer::MDNAdvice result();
-  
+  MessageComposer::MDNAdvice result() const;
+
 private:
   MessageComposer::MDNAdvice m_result;
 

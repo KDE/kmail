@@ -100,7 +100,7 @@ MDNAdviceDialog::~MDNAdviceDialog()
 {
 }
 
-MessageComposer::MDNAdvice MDNAdviceDialog::result()
+MessageComposer::MDNAdvice MDNAdviceDialog::result() const
 {
   return m_result;
 }
@@ -121,7 +121,7 @@ MessageComposer::MDNAdvice MDNAdviceHelper::questionIgnoreSend( const QString &t
 QPair< bool, KMime::MDN::SendingMode > MDNAdviceHelper::checkAndSetMDNInfo( Akonadi::Item item, KMime::MDN::DispositionType d )
 {
   KMime::Message::Ptr msg = MessageCore::Util::message( item );
-  
+
   KConfigGroup mdnConfig( KMKernel::config(), "MDN" );
 
   // RFC 2298: At most one MDN may be issued on behalf of each
@@ -136,7 +136,7 @@ QPair< bool, KMime::MDN::SendingMode > MDNAdviceHelper::checkAndSetMDNInfo( Akon
   }
 
   Akonadi::MDNStateAttribute mdnStateAttr( Akonadi::MDNStateAttribute::MDNStateUnknown );
-  
+
   KMime::MDN::SendingMode s = KMime::MDN::SentAutomatically; // set to manual if asked user
   bool doSend = false;
   // default:
@@ -227,7 +227,7 @@ Akonadi::MDNStateAttribute::MDNSentState MDNAdviceHelper::dispositionToSentState
     default:
       return Akonadi::MDNStateAttribute::MDNStateUnknown;
   };
-  
+
 }
 
 
