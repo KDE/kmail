@@ -215,7 +215,8 @@ void insertLibraryCataloguesAndIcons() {
     "libmessagecore",
     "libmessagecomposer",
     "libtemplateparser",
-    "libakonadi_next"
+    "libakonadi_next",
+    "libakonadi-kde"
   };
 
   KLocale * l = KGlobal::locale();
