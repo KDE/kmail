@@ -673,7 +673,7 @@ KMSaveMsgCommand::KMSaveMsgCommand( QWidget *parent,
   fetchScope().fetchFullPayload( true ); // ### unless we call the corresponding KMCommand ctor, this has no effect
 }
 
-KUrl KMSaveMsgCommand::url()
+KUrl KMSaveMsgCommand::url() const
 {
   return mUrl;
 }
