@@ -352,11 +352,6 @@ void KMCommand::slotMsgTransfered(const Akonadi::Item::List& msgs)
   mRetrievedMsgs.append( msgs );
 }
 
-void KMCommand::slotProgress( unsigned long done, unsigned long /*total*/ )
-{
-  mProgressDialog->progressBar()->setValue( done );
-}
-
 void KMCommand::slotJobFinished()
 {
   // the job is finished (with / without error)

@@ -63,9 +63,6 @@ public slots:
   // Retrieve messages then calls execute
   void start();
 
-  // advance the progressbar, emitted by the folderjob
-  void slotProgress( unsigned long done, unsigned long total );
-
 signals:
 
   /// @param result The status of the command.
@@ -130,7 +127,7 @@ private slots:
   /** the transfer was canceled */
   void slotTransferCancelled();
 
-protected:  
+protected:
   QList<Akonadi::Item> mRetrievedMsgs;
 
 private:
