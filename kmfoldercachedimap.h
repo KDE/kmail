@@ -209,7 +209,7 @@ public:
 
   /* Reimplemented from KMFolderMaildir */
   virtual void removeMsg(int i, bool imapQuiet = false);
-  virtual void removeMsg(QPtrList<KMMessage> msgList, bool imapQuiet = false)
+  virtual void removeMsg( const QPtrList<KMMsgBase> & msgList, bool imapQuiet = false)
     { FolderStorage::removeMsg(msgList, imapQuiet); }
 
   /// Is the folder readonly?
