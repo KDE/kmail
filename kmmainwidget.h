@@ -632,7 +632,6 @@ private:
     QSharedPointer<FolderCollection> mCurrentFolder;
 
     FolderTreeWidget *mFolderTreeWidget;
-    bool mOpenedImapFolder;
 
     KMail::StatusBarLabel *mVacationScriptIndicator;
     bool mVacationIndicatorActive;

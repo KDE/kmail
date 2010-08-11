@@ -221,7 +221,6 @@ K_GLOBAL_STATIC( KMMainWidget::PtrList, theMainWidgetList )
   mTopLayout->setMargin( 0 );
   mConfig = config;
   mGUIClient = aGUIClient;
-  mOpenedImapFolder = false;
   mCustomTemplateMenus = 0;
   mFolderTreeWidget = 0;
 
@@ -516,7 +515,7 @@ void KMMainWidget::folderSelected( const Akonadi::Collection & col )
 
 void KMMainWidget::slotShowSelectedForderInPane()
 {
-  if( mCurrentFolder ) 	
+  if( mCurrentFolder )
      mMessagePane->setCurrentFolder( mCurrentFolder->collection(), false, mPreSelectionMode );
 }
 
