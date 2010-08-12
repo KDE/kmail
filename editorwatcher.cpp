@@ -174,7 +174,7 @@ void EditorWatcher::checkEditDone()
   if ( mEditTime.elapsed() <= 3000 ) {
     KMessageBox::information(
       mParentWidget,
-      i18n( "KMail is unable to detect when the choosen editor is closed. "
+      i18n( "KMail is unable to detect when the chosen editor is closed. "
             "To avoid data loss, editing the attachment will be aborted." ),
       i18n( "Unable to edit attachment" ),
       "UnableToEditAttachment" );
