@@ -32,6 +32,7 @@
 
 #include <config.h>
 
+#include "acljobs.h"
 #include "kmfolderdia.h"
 #include "kmacctfolder.h"
 #include "kmfoldermgr.h"
@@ -268,9 +269,59 @@ KMail::FolderDiaGeneralTab::FolderDiaGeneralTab( KMFolderDialog* dlg,
     label = new QLabel( i18n("&Name:"), this );
     hl->addWidget( label );
 
+    // Determine if we are allowed to rename this folder. Only possible if the folder supports
+    // ACLs.
+    bool nameChangeAllowed = true;
+    if ( mDlg->folder() && mDlg->parentFolder() &&
+         mDlg->folder()->storage() && mDlg->parentFolder()->storage() &&
+         ( mDlg->folder()->folderType() == KMFolderTypeCachedImap ||
+           mDlg->folder()->folderType() == KMFolderTypeImap ) ) {
+      ImapAccountBase *account = 0;
+      KMFolderCachedImap *dimap = 0;
+      KMFolderImap *imap = 0;
+      if ( mDlg->folder()->folderType() == KMFolderTypeCachedImap ) {
+        dimap = static_cast<KMFolderCachedImap*>( mDlg->folder()->storage() );
+        account = dynamic_cast<ImapAccountBase*>( dimap->account() );
+      }
+      if ( mDlg->folder()->folderType() == KMFolderTypeImap ) {
+        imap = static_cast<KMFolderImap*>( mDlg->folder()->storage() );
+        account = dynamic_cast<ImapAccountBase*>( imap->account() );
+      }
+
+      if ( account && account->hasACLSupport() ) {
+        int parentRights = -1;
+        int folderRights = -1;
+        if ( imap ) {
+          KMFolderImap * const parent = dynamic_cast<KMFolderImap*>( mDlg->parentFolder()->storage() );
+          folderRights = imap->userRights();
+          if ( parent ) {
+            parentRights = parent->userRights();
+          }
+        } else if ( dimap ) {
+          KMFolderCachedImap * const parent = dynamic_cast<KMFolderCachedImap*>( mDlg->parentFolder()->storage() );
+          folderRights = dimap->userRights();
+          if ( parent ) {
+            parentRights = parent->userRights();
+          }
+        }
+
+        // For renaming, we need support for deleting the mailbox and then re-creating it.
+        if ( parentRights > 0 && folderRights > 0 &&
+             ( !( parentRights & KMail::ACLJobs::Create ) || !( folderRights & KMail::ACLJobs::Delete ) ) ) {
+          nameChangeAllowed = false;
+        }
+      }
+    }
+
     mNameEdit = new KLineEdit( this );
-    if( !mDlg->folder() )
+    if( !mDlg->folder() && nameChangeAllowed )
       mNameEdit->setFocus();
+    mNameEdit->setEnabled( nameChangeAllowed );
+    if ( !nameChangeAllowed ) {
+      QToolTip::add( mNameEdit, i18n( "Not enough permissions to rename this folder.\n"
+                                      "The parent folder doesn't have write support.\n"
+                                      "A sync is needed after changing the permissions." ) );
+    }
     mNameEdit->setText( mDlg->folder() ? mDlg->folder()->label() : i18n("unnamed") );
     if (!aName.isEmpty())
             mNameEdit->setText(aName);
