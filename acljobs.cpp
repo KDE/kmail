@@ -48,7 +48,9 @@ static unsigned int IMAPRightsToPermission( const QString& str, const KURL& url,
     case 'w': perm |= ACLJobs::WriteFlags; break;
     case 'i': perm |= ACLJobs::Insert; break;
     case 'p': perm |= ACLJobs::Post; break;
+    case 'k': // fall through
     case 'c': perm |= ACLJobs::Create; break;
+    case 'x': // fall through
     case 'd': perm |= ACLJobs::Delete; break;
     case 'a': perm |= ACLJobs::Administer; break;
     default: break;
