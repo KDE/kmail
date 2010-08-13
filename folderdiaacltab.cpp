@@ -90,7 +90,7 @@ KMail::ACLEntryDialog::ACLEntryDialog( IMAPUserIdFormat userIdFormat, const QStr
 {
   QWidget *page = new QWidget( this );
   setMainWidget(page);
-  QGridLayout *topLayout = new QGridLayout( page, 3 /*rows*/, 3 /*cols*/, 0, spacingHint() );
+  QGridLayout *topLayout = new QGridLayout( page, 4 /*rows*/, 3 /*cols*/, 0, spacingHint() );
 
   QLabel *label = new QLabel( i18n( "&User identifier:" ), page );
   topLayout->addWidget( label, 0, 0 );
@@ -114,6 +114,9 @@ KMail::ACLEntryDialog::ACLEntryDialog( IMAPUserIdFormat userIdFormat, const QStr
     mButtonGroup->insert( cb, standardPermissions[i].permissions );
   }
   topLayout->setRowStretch(2, 10);
+
+  QLabel *noteLabel = new QLabel( i18n( "<b>Note: </b>Renaming requires write permissions on the parent folder." ), page );
+  topLayout->addMultiCellWidget( noteLabel, 2, 2, 0, 2 );
 
   connect( mUserIdLineEdit, SIGNAL( textChanged( const QString& ) ), SLOT( slotChanged() ) );
   connect( kabBtn, SIGNAL( clicked() ), SLOT( slotSelectAddresses() ) );
