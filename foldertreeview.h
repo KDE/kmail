@@ -1,6 +1,6 @@
 /* -*- mode: C++; c-file-style: "gnu" -*-
   This file is part of KMail, the KDE mail client.
-  Copyright (c) 2009 Montel Laurent <montel@kde.org>
+  Copyright (c) 2009, 2010 Montel Laurent <montel@kde.org>
 
   KMail is free software; you can redistribute it and/or modify it
   under the terms of the GNU General Public License, version 2, as
@@ -22,6 +22,8 @@
 #include <akonadi/entitytreeview.h>
 #include <akonadi/collection.h>
 #include "foldertreewidget.h"
+
+class QMouseEvent;
 
 namespace Akonadi
 {
@@ -65,6 +67,9 @@ protected:
 
   void setSortingPolicy( FolderTreeWidget::SortingPolicy policy );
 
+  virtual void mousePressEvent( QMouseEvent *e );
+
+
 public slots:
   void slotFocusNextFolder();
   void slotFocusPrevFolder();
@@ -76,16 +81,19 @@ protected slots:
   void slotHeaderContextMenuChangeHeader( bool );
   void slotHeaderContextMenuChangeToolTipDisplayPolicy( bool );
   void slotHeaderContextMenuChangeSortingPolicy( bool );
+  void slotCollectionChanged( const Akonadi::Collection & );
 
 signals:
   void changeTooltipsPolicy( FolderTreeWidget::ToolTipDisplayPolicy );
   void manualSortingChanged( bool actif );
+  void currentCollectionChanged( const Akonadi::Collection&, bool middleButtonWasPressed );
 
 private:
-  bool mbDisableContextMenuAndExtraColumn;
   FolderTreeWidget::ToolTipDisplayPolicy mToolTipDisplayPolicy;
   FolderTreeWidget::SortingPolicy mSortingPolicy;
   Akonadi::CollectionStatisticsDelegate *mCollectionStatisticsDelegate;
+  bool mbDisableContextMenuAndExtraColumn;
+  bool mLastButtonPressedWasMiddle;
 };
 
 

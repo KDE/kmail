@@ -27,8 +27,12 @@
 #include <KGuiItem>
 #include <KMenu>
 
+#include <QMouseEvent>
+
 FolderTreeView::FolderTreeView(QWidget *parent, bool showUnreadCount )
-  : Akonadi::EntityTreeView( parent ), mbDisableContextMenuAndExtraColumn( false )
+  : Akonadi::EntityTreeView( parent ),
+    mbDisableContextMenuAndExtraColumn( false ),
+    mLastButtonPressedWasMiddle( false )
 {
   init(showUnreadCount);
 }
@@ -77,6 +81,10 @@ void FolderTreeView::init( bool showUnreadCount )
   mCollectionStatisticsDelegate->setProgressAnimationEnabled( true );
   setItemDelegate(mCollectionStatisticsDelegate);
   mCollectionStatisticsDelegate->setUnreadCountShown( showUnreadCount && !header()->isSectionHidden( 1 ) );
+
+  connect( this, SIGNAL( currentChanged( const Akonadi::Collection & ) ),
+           this, SLOT( slotCollectionChanged( const Akonadi::Collection& ) ) );
+
 }
 
 void FolderTreeView::showStatisticAnimation( bool anim )
@@ -463,6 +471,17 @@ Akonadi::Collection FolderTreeView::currentFolder() const
     return collection;
   }
   return Akonadi::Collection();
+}
+
+void FolderTreeView::mousePressEvent( QMouseEvent * e )
+{
+  mLastButtonPressedWasMiddle = ( e->button() == Qt::MidButton );
+  EntityTreeView::mousePressEvent( e );
+}
+
+void FolderTreeView::slotCollectionChanged( const Akonadi::Collection& collection)
+{
+  emit currentCollectionChanged( collection, mLastButtonPressedWasMiddle );
 }
 
 #include "foldertreeview.moc"
