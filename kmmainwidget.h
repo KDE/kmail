@@ -278,6 +278,8 @@ class KMAIL_EXPORT KMMainWidget : public QWidget
     void slotStartCheckMail();
     void slotEndCheckMail();
 
+    void slotCollectionProperties();
+
   signals:
     void messagesTransfered( bool );
     void captionChangeRequest( const QString &caption );

@@ -27,12 +27,6 @@
 #include "kmfiltermgr.h"
 #include "kmversion.h"
 #include "searchwindow.h"
-#include "collectiontemplatespage.h"
-#include "collectionmaintenancepage.h"
-#include "collectiongeneralpage.h"
-#include "collectionviewpage.h"
-#include "collectionquotapage.h"
-#include "collectionaclpage.h"
 #include "mailinglist-magic.h"
 #include "antispamwizard.h"
 #include "filterlogdlg.h"
@@ -55,6 +49,7 @@
 #include "tagactionmanager.h"
 #include "foldershortcutactionmanager.h"
 #include "collectionpane.h"
+#include "kmcollectionpropertiesdialog.h"
 #if !defined(NDEBUG)
     #include "sievedebugdialog.h"
     using KMail::SieveDebugDialog;
@@ -175,12 +170,6 @@ using KMail::FilterLogDialog;
 using KMime::Types::AddrSpecList;
 using MessageViewer::AttachmentStrategy;
 
-AKONADI_COLLECTION_PROPERTIES_PAGE_FACTORY(CollectionTemplatesPageFactory, CollectionTemplatesPage )
-AKONADI_COLLECTION_PROPERTIES_PAGE_FACTORY(CollectionMaintenancePageFactory, CollectionMaintenancePage )
-AKONADI_COLLECTION_PROPERTIES_PAGE_FACTORY(CollectionGeneralPageFactory, CollectionGeneralPage )
-AKONADI_COLLECTION_PROPERTIES_PAGE_FACTORY(CollectionViewPageFactory, CollectionViewPage )
-AKONADI_COLLECTION_PROPERTIES_PAGE_FACTORY(CollectionQuotaPageFactory, CollectionQuotaPage )
-AKONADI_COLLECTION_PROPERTIES_PAGE_FACTORY(CollectionAclPageFactory, CollectionAclPage )
 
 K_GLOBAL_STATIC( KMMainWidget::PtrList, theMainWidgetList )
 
@@ -225,13 +214,6 @@ K_GLOBAL_STATIC( KMMainWidget::PtrList, theMainWidgetList )
 
   Akonadi::Control::widgetNeedsAkonadi( this );
 
-  CollectionPropertiesDialog::useDefaultPage( false );
-  CollectionPropertiesDialog::registerPage( new CollectionGeneralPageFactory() );
-  CollectionPropertiesDialog::registerPage( new CollectionViewPageFactory() );
-  CollectionPropertiesDialog::registerPage( new CollectionTemplatesPageFactory() );
-  CollectionPropertiesDialog::registerPage( new CollectionAclPageFactory() );
-  CollectionPropertiesDialog::registerPage( new CollectionQuotaPageFactory() );
-  CollectionPropertiesDialog::registerPage( new CollectionMaintenancePageFactory() );
 
   // FIXME This should become a line separator as soon as the API
   // is extended in kdelibs.
@@ -1020,6 +1002,10 @@ void KMMainWidget::createWidgets()
     mAkonadiStandardActionManager->setFavoriteSelectionModel( mFavoriteCollectionsView->selectionModel() );
   }
   mAkonadiStandardActionManager->createAllActions();
+
+  mAkonadiStandardActionManager->interceptAction( Akonadi::StandardActionManager::CollectionProperties );
+  connect( mAkonadiStandardActionManager->action( Akonadi::StandardActionManager::CollectionProperties ), SIGNAL( triggered( bool ) ), this, SLOT( slotCollectionProperties() ) );
+
 
   //
   // Create all kinds of actions
@@ -4235,3 +4221,15 @@ KAction *KMMainWidget::akonadiStandardAction( Akonadi::StandardActionManager::Ty
 {
   return mAkonadiStandardActionManager->action( type );
 }
+
+
+void KMMainWidget::slotCollectionProperties()
+{
+  if (!mCurrentFolder) return;
+  KMCollectionPropertiesDialog* dlg = new KMCollectionPropertiesDialog( mCurrentFolder->collection(), this );
+
+  //dlg->setCaption( contextText( Akonadi::StandardActionManager::CollectionProperties, Akonadi::StandardActionManager::DialogTitle ).arg( mCurrentFolder->collection().name() ) );
+  dlg->show();
+
+}
+

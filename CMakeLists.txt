@@ -48,6 +48,7 @@ add_subdirectory(kcm_kpimidentities)
 ########### kmailprivate ###############
 
 set(kmailprivate_LIB_SRCS
+   kmcollectionpropertiesdialog.cpp
    foldercollectionmonitor.cpp
    readablecollectionproxymodel.cpp
    entitycollectionorderproxymodel.cpp
