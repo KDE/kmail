@@ -518,7 +518,6 @@ void KMMainWidget::folderSelected( const Akonadi::Collection & col, bool middleW
 void KMMainWidget::slotShowSelectedForderInPane()
 {
   if( mCurrentFolder ) {
-    qDebug()<<"slotShowSelectedForderInPane";
     mMessagePane->setCurrentFolder( mCurrentFolder->collection(), false , mPreSelectionMode );
   }
 }
@@ -526,7 +525,6 @@ void KMMainWidget::slotShowSelectedForderInPane()
 void KMMainWidget::slotShowSelectedForderInNewTabInPane()
 {
   if( mCurrentFolder ) {
-    qDebug()<<" slotShowSelectedForderInNewTabInPane";
     mMessagePane->setCurrentFolder( mCurrentFolder->collection(), true , mPreSelectionMode );
   }
 }
