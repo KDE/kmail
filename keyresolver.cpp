@@ -1673,20 +1673,20 @@ std::vector<GpgME::Key> Kleo::KeyResolver::getEncryptionKeys( const QString & pe
   return trustedOrConfirmed( selectKeys( person,
           matchingKeys.empty()
           ? i18n("if in your language something like "
-              "'key(s)' isn't possible please "
+              "'certificate(s)' isn't possible please "
               "use the plural in the translation",
-              "<qt>No valid and trusted encryption key was "
+              "<qt>No valid and trusted encryption certificate was "
               "found for \"%1\".<br/><br/>"
-              "Select the key(s) which should "
-              "be used for this recipient. If there is no suitable key in the list "
-              "you can also <a href=\"%2\">search for external keys</a>.</qt>")
-             .arg( QStyleSheet::escape(person), KURL::encode_string( KPIM::getEmailAddress(person) ) )
+              "Select the certificate(s) which should "
+              "be used for this recipient. If there is no suitable certificate in the list "
+              "you can also search for external certificates by clicking this button:</qt>")
+             .arg( QStyleSheet::escape(person) )
           : i18n("if in your language something like "
-              "'key(s)' isn't possible please "
+              "'certificate(s)' isn't possible please "
               "use the plural in the translation",
-              "More than one key matches \"%1\".\n\n"
-              "Select the key(s) which should "
-              "be used for this recipient.").arg(person),
+              "More than one certificate matches \"%1\".\n\n"
+              "Select the certificate(s) which should "
+              "be used for this recipient.").arg( QStyleSheet::escape(person) ),
           matchingKeys ), address, canceled );
   // we can ignore 'canceled' here, since trustedOrConfirmed() returns
   // an empty vector when canceled == true, and we'd just do the same
