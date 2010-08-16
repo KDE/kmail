@@ -104,6 +104,7 @@ FolderSelectionDialog::FolderSelectionDialog( QWidget *parent, SelectionFolderOp
   readConfig();
 
   d->folderTreeWidget->folderTreeView()->expandAll();
+  d->folderTreeWidget->folderTreeView()->setFocus();
 }
 
 FolderSelectionDialog::~FolderSelectionDialog()
