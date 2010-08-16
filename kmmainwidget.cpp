@@ -980,7 +980,7 @@ void KMMainWidget::createWidgets()
   //
   // Create the favorite folder view
   //
-  mAkonadiStandardActionManager = new Akonadi::StandardActionManager( mGUIClient->actionCollection(), this );
+  mAkonadiStandardActionManager = new Akonadi::StandardMailActionManager( mGUIClient->actionCollection(), this );
   connect( mAkonadiStandardActionManager, SIGNAL( actionStateUpdated() ), this, SLOT( slotAkonadiStandardActionUpdated() ) );
 
   mAkonadiStandardActionManager->setCollectionSelectionModel( mFolderTreeWidget->folderTreeView()->selectionModel() );
@@ -3138,7 +3138,6 @@ void KMMainWidget::setupActions()
 
   {
     KAction *action =  mAkonadiStandardActionManager->action( Akonadi::StandardActionManager::CopyCollections);
-    mAkonadiStandardActionManager->setActionText(Akonadi::StandardActionManager::CopyCollections, ki18np( "Copy Folder", "Copy %1 Folders" ) );
     action->setShortcut(QKeySequence(Qt::SHIFT+Qt::CTRL+Qt::Key_C));
   }
   {
@@ -3147,12 +3146,10 @@ void KMMainWidget::setupActions()
   }
   {
     KAction *action = mAkonadiStandardActionManager->action( Akonadi::StandardActionManager::CopyItems);
-    mAkonadiStandardActionManager->setActionText(Akonadi::StandardActionManager::CopyItems, ki18np("Copy Message", "Copy %1 Messages") );
     action->setShortcut(QKeySequence(Qt::ALT+Qt::CTRL+Qt::Key_C));
   }
   {
     KAction *action = mAkonadiStandardActionManager->action( Akonadi::StandardActionManager::CutItems );
-    mAkonadiStandardActionManager->setActionText(Akonadi::StandardActionManager::CutItems, ki18np("Cut Message", "Cut %1 Messages") );
     action->setShortcut(QKeySequence(Qt::ALT+Qt::CTRL+Qt::Key_X));
   }
 

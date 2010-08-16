@@ -39,7 +39,7 @@
 #include <QLabel>
 #include <QHash>
 #include <QPointer>
-#include <akonadi/standardactionmanager.h>
+#include <akonadi/kmime/standardmailactionmanager.h>
 #include <messagelist/core/view.h>
 #include "foldertreewidget.h"
 
@@ -626,7 +626,7 @@ private:
     KXMLGUIClient *mGUIClient;
 
     KMail::MessageActions *mMsgActions;
-    Akonadi::StandardActionManager *mAkonadiStandardActionManager;
+    Akonadi::StandardMailActionManager *mAkonadiStandardActionManager;
     CollectionPane *mMessagePane;
     QSharedPointer<FolderCollection> mCurrentFolder;
 
