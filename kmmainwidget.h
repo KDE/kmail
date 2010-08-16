@@ -420,8 +420,6 @@ class KMAIL_EXPORT KMMainWidget : public QWidget
     void slotEditNotifications();
     void slotEditKeys();
 
-    void removeDuplicates();
-
     /** Slot to reply to a message */
     void slotCustomReplyToMsg( const QString &tmpl );
     void slotCustomReplyAllToMsg( const QString &tmpl );
@@ -599,7 +597,7 @@ private:
       *mExpireFolderAction,
       *mEmptyFolderAction, *mMarkAllAsReadAction, *mFolderMailingListPropertiesAction,
       *mShowFolderShortcutDialogAction,
-      *mRemoveDuplicatesAction, *mArchiveFolderAction,
+      *mArchiveFolderAction,
       *mPostToMailinglistAction;
     KToggleAction *mPreferHtmlAction, *mPreferHtmlLoadExtAction;
     KToggleAction *mFolderAction, *mHeaderAction, *mMimeAction;

@@ -1013,13 +1013,7 @@ void KMMainWidget::createWidgets()
   //
   // Create all kinds of actions
   //
-  {
-    mRemoveDuplicatesAction = new KAction( i18n("Remove Duplicate Messages"), this );
-    actionCollection()->addAction( "remove_duplicate_messages", mRemoveDuplicatesAction );
-    connect( mRemoveDuplicatesAction, SIGNAL( triggered( bool ) ),
-             SLOT( removeDuplicates() ) );
-    mRemoveDuplicatesAction->setShortcut( QKeySequence( Qt::CTRL + Qt::Key_Asterisk ) );
-  }
+  mAkonadiStandardActionManager->action( Akonadi::StandardMailActionManager::RemoveDuplicates )->setShortcut( QKeySequence( Qt::CTRL + Qt::Key_Asterisk ) );
   {
     mCollectionProperties = mAkonadiStandardActionManager->action( Akonadi::StandardActionManager::CollectionProperties );
   }
@@ -3886,7 +3880,6 @@ void KMMainWidget::updateFolderMenu()
   mPreferHtmlLoadExtAction->setEnabled( mFolderTreeWidget->folderTreeView()->currentFolder().isValid() && (mHtmlPref ? !mFolderHtmlPref : mFolderHtmlPref) ? true : false );
   mPreferHtmlAction->setChecked( mHtmlPref ? !mFolderHtmlPref : mFolderHtmlPref );
   mPreferHtmlLoadExtAction->setChecked( mHtmlLoadExtPref ? !mFolderHtmlLoadExtPref : mFolderHtmlLoadExtPref );
-  mRemoveDuplicatesAction->setEnabled( !multiFolder && mCurrentFolder && mCurrentFolder->canDeleteMessages() );
   mShowFolderShortcutDialogAction->setEnabled( !multiFolder && folderWithContent );
 
   actionlist << akonadiStandardAction( Akonadi::StandardActionManager::ManageLocalSubscriptions );
@@ -3941,75 +3934,6 @@ void KMMainWidget::slotShowTip()
 QList<KActionCollection*> KMMainWidget::actionCollections() const {
   return QList<KActionCollection*>() << actionCollection();
 }
-
-//-----------------------------------------------------------------------------
-void KMMainWidget::removeDuplicates()
-{
-  if ( !mCurrentFolder ) {
-    return;
-  }
-#ifdef OLD_MESSAGELIST
-  KMFolder *oFolder = mFolder;
-  mMessageListView->setCurrentFolder( 0 );
-  QMap< QString, QList<int> > idMD5s;
-  QList<int> redundantIds;
-  QList<int>::Iterator kt;
-  oFolder->open( "removedups" );
-  for ( int i = oFolder->count() - 1; i >= 0; --i ) {
-    QString id = (*oFolder)[i]->msgIdMD5();
-    if ( !id.isEmpty() ) {
-      QString subjMD5 = (*oFolder)[i]->strippedSubjectMD5();
-      int other = -1;
-      if ( idMD5s.contains(id) ) {
-        other = idMD5s[id].first();
-      } else {
-        idMD5s[id].append( i );
-      }
-      if ( other != -1 ) {
-        QString otherSubjMD5 = (*oFolder)[other]->strippedSubjectMD5();
-        if ( otherSubjMD5 == subjMD5 ) {
-          idMD5s[id].append( i );
-        }
-      }
-    }
-  }
-
-  QMap< QString, QList<int> >::Iterator it;
-  for ( it = idMD5s.begin(); it != idMD5s.end() ; ++it ) {
-    QList<int>::Iterator jt;
-    bool finished = false;
-    for ( jt = (*it).begin(); jt != (*it).end() && !finished; ++jt )
-      if (!((*oFolder)[*jt]->status().isUnread())) {
-        (*it).erase( jt );
-        (*it).prepend( *jt );
-        finished = true;
-      }
-    for ( jt = (*it).begin(), ++jt; jt != (*it).end(); ++jt )
-      redundantIds.append( *jt );
-  }
-  qSort( redundantIds );
-  kt = redundantIds.end();
-  int numDuplicates = 0;
-  if (kt != redundantIds.begin()) do {
-    oFolder->removeMsg( *(--kt) );
-    ++numDuplicates;
-  }
-  while (kt != redundantIds.begin());
-
-  oFolder->close( "removedups" );
-  mMessageListView->setCurrentFolder( oFolder );
-  QString msg;
-  if ( numDuplicates )
-    msg = i18np("Removed %1 duplicate message.",
-               "Removed %1 duplicate messages.", numDuplicates );
-    else
-      msg = i18n("No duplicate messages found.");
-  BroadcastStatus::instance()->setStatusMsg( msg );
-#else
-  kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
-#endif
-}
-
 
 //-----------------------------------------------------------------------------
 void KMMainWidget::slotUpdateUndo()
