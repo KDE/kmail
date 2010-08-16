@@ -218,7 +218,8 @@ void MessageActions::setCurrentMessage( const Akonadi::Item &msg )
     mVisibleItems.clear();
   }
 
-  mMonitor->setItemMonitored( mCurrentItem, true ); 
+  mMonitor->setItemMonitored( mCurrentItem, true );
+  updateActions();
 }
 
 void MessageActions::slotItemModified( const Akonadi::Item &  item, const QSet< QByteArray > &  partIdentifiers )
