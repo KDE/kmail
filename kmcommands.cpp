@@ -303,7 +303,6 @@ void KMCommand::transferSelectedMsgs()
   }
 
   // TODO once the message list is based on ETM and we get the more advanced caching we need to make that check a bit more clever
-#include <mdnstateattribute.h>
   if ( !mFetchScope.isEmpty() ) {
 #if 0 //TODO port to akonadi
     if ( thisMsg->parent() && !thisMsg->isComplete() &&

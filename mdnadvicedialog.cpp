@@ -118,7 +118,7 @@ MessageComposer::MDNAdvice MDNAdviceHelper::questionIgnoreSend( const QString &t
   return rc;
 }
 
-QPair< bool, KMime::MDN::SendingMode > MDNAdviceHelper::checkAndSetMDNInfo( Akonadi::Item item, KMime::MDN::DispositionType d )
+QPair< bool, KMime::MDN::SendingMode > MDNAdviceHelper::checkAndSetMDNInfo( const Akonadi::Item& item, KMime::MDN::DispositionType d )
 {
   KMime::Message::Ptr msg = MessageCore::Util::message( item );
 
@@ -202,7 +202,7 @@ QPair< bool, KMime::MDN::SendingMode > MDNAdviceHelper::checkAndSetMDNInfo( Akon
   return QPair< bool, KMime::MDN::SendingMode >( doSend, s);
 }
 
-void MDNAdviceHelper::itemsReceived( Akonadi::Item::List items )
+void MDNAdviceHelper::itemsReceived( const Akonadi::Item::List &items )
 {
   Akonadi::MDNStateAttribute* attr = new Akonadi::MDNStateAttribute( sender()->property( "mdnState" ).toByteArray() );
 
