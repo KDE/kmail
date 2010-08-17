@@ -396,6 +396,7 @@ public slots:
 
   void slotConfigChanged();
   void slotDefaultCollectionsChanged();
+  void slotCollectionMoved( const Akonadi::Collection &collection, const Akonadi::Collection &source, const Akonadi::Collection &destination );
 
 signals:
   void configChanged();

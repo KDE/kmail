@@ -1084,21 +1084,15 @@ void KMMainWidget::createWidgets()
   connect( kmkernel->monitor(), SIGNAL( itemMoved( Akonadi::Item,Akonadi::Collection, Akonadi::Collection ) ),
            SLOT( slotItemMoved( Akonadi::Item, Akonadi::Collection, Akonadi::Collection ) ) );
   connect( kmkernel->monitor(), SIGNAL( collectionChanged( const Akonadi::Collection &, const QSet<QByteArray> &) ), SLOT( slotCollectionChanged( const Akonadi::Collection&, const QSet<QByteArray>& ) ) );
-  connect( kmkernel->monitor(), SIGNAL( collectionMoved( const Akonadi::Collection &, const Akonadi::Collection &, const Akonadi::Collection &) ), SLOT( slotCollectionMoved( const Akonadi::Collection &, const Akonadi::Collection &, const Akonadi::Collection & ) ) );
 
 
 }
-
 
 void KMMainWidget::slotCreateNewTab( bool preferNewTab )
 {
   mMessagePane->setPreferEmptyTab( preferNewTab );
 }
 
-void KMMainWidget::slotCollectionMoved( const Akonadi::Collection &collection, const Akonadi::Collection &source, const Akonadi::Collection &destination )
-{
-  //TODO add undo/redo move collection
-}
 
 void KMMainWidget::slotCollectionChanged( const Akonadi::Collection&collection, const QSet<QByteArray>&set )
 {

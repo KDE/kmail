@@ -182,6 +182,10 @@ KMKernel::KMKernel (QObject *parent, const char *name) :
   the_trashCollectionFolder = -1;
 
   mFolderCollectionMonitor = new FolderCollectionMonitor( this );
+
+  connect( mFolderCollectionMonitor->monitor(), SIGNAL( collectionMoved( const Akonadi::Collection &, const Akonadi::Collection &, const Akonadi::Collection &) ), SLOT( slotCollectionMoved( const Akonadi::Collection &, const Akonadi::Collection &, const Akonadi::Collection & ) ) );
+
+
   Akonadi::Session *session = new Akonadi::Session( "KMail Kernel ETM", this );
   monitor()->setSession( session );
   mEntityTreeModel = new Akonadi::EntityTreeModel( monitor(), this );
@@ -1938,6 +1942,11 @@ void KMKernel::stopAgentInstance()
     if ( group.readEntry( "OfflineOnShutdown", false ) )
       type.setIsOnline( false );
   }
+}
+
+void KMKernel::slotCollectionMoved( const Akonadi::Collection &collection, const Akonadi::Collection &source, const Akonadi::Collection &destination )
+{
+  //TODO add undo/redo move collection
 }
 
 
