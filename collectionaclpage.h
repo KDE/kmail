@@ -117,7 +117,6 @@ private:
   QStringList mRemovedACLs;
   QString mImapUserName;
   KIMAP::Acl::Rights mUserRights;
-  QLabel* mLabel;
   QStackedWidget* mStack;
 
   bool mChanged;

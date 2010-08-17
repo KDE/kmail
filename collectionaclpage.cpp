@@ -268,11 +268,6 @@ void CollectionAclPage::init()
   mStack = new QStackedWidget( this );
   topLayout->addWidget( mStack );
 
-  mLabel = new QLabel( mStack );
-  mLabel->setAlignment( Qt::AlignHCenter | Qt::AlignVCenter );
-  mLabel->setWordWrap( true );
-  mStack->addWidget( mLabel );
-
   mACLWidget = new KHBox( mStack );
   mACLWidget->setSpacing( KDialog::spacingHint() );
 
