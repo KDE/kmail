@@ -983,6 +983,7 @@ void KMMainWidget::createWidgets()
 
     mFavoriteCollectionsView = new Akonadi::EntityListView( mGUIClient, this );
     mFavoriteCollectionsView->setViewMode( QListView::IconMode );
+    mFavoriteCollectionsView->setWordWrap( true );
     connect( mFavoriteCollectionsView, SIGNAL( currentChanged( const Akonadi::Collection &) ), this, SLOT( slotFolderChanged( const Akonadi::Collection& ) ) );
 
     mFavoritesModel = new Akonadi::FavoriteCollectionsModel(
