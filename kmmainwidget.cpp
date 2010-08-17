@@ -2072,7 +2072,7 @@ void KMMainWidget::slotCustomReplyAllToMsg( const QString &tmpl )
 //-----------------------------------------------------------------------------
 void KMMainWidget::slotCustomForwardMsg( const QString &tmpl )
 {
-  QList<Akonadi::Item> selectedMessages = mMessagePane->selectionAsMessageItemList();
+  const QList<Akonadi::Item> selectedMessages = mMessagePane->selectionAsMessageItemList();
   if ( selectedMessages.isEmpty() )
     return;
 
@@ -2672,7 +2672,7 @@ void KMMainWidget::slotItemsFetchedForActivation( const Akonadi::Item::List &lis
 {
   Q_ASSERT( list.size() == 1 );
 
-  Item msg = list.first();
+  const Item msg = list.first();
 
   KMReaderMainWin *win = new KMReaderMainWin( mFolderHtmlPref, mFolderHtmlLoadExtPref );
   const bool useFixedFont = mMsgView ? mMsgView->isFixedFont() :
@@ -4224,8 +4224,7 @@ void KMMainWidget::slotCollectionProperties()
 {
   if (!mCurrentFolder) return;
   KMCollectionPropertiesDialog* dlg = new KMCollectionPropertiesDialog( mCurrentFolder->collection(), this );
-
-  //dlg->setCaption( contextText( Akonadi::StandardActionManager::CollectionProperties, Akonadi::StandardActionManager::DialogTitle ).arg( mCurrentFolder->collection().name() ) );
+  dlg->setCaption( i18nc( "@title:window", "Properties of Folder %1", mCurrentFolder->collection().name() ) );
   dlg->show();
 
 }
