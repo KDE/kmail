@@ -116,6 +116,9 @@ ACLEntryDialog::ACLEntryDialog( const QString& caption, QWidget* parent )
   vbox->addStretch( 1 );
 
   topLayout->addWidget( groupBox, 1, 0, 1, 3 );
+  label = new QLabel( i18n( "<b>Note: </b>Renaming requires write permissions on the parent folder." ),
+                      page );
+  topLayout->addWidget( label, 2, 0, 1, 3 );
   topLayout->setRowStretch(2, 10);
 
   connect( mUserIdLineEdit, SIGNAL( textChanged( const QString& ) ), SLOT( slotChanged() ) );
