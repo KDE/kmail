@@ -387,14 +387,14 @@ void KMMainWidget::slotEndCheckMail()
   }
 }
 
-void KMMainWidget::slotFolderChanged( const Akonadi::Collection& col, bool middleWasLastButtonPressed)
+void KMMainWidget::slotFolderChanged( const Akonadi::Collection& col )
 {
   updateFolderMenu();
-  folderSelected( col, middleWasLastButtonPressed );
+  folderSelected( col );
   emit captionChangeRequest( KMail::Util::fullCollectionPath( col ) );
 }
 
-void KMMainWidget::folderSelected( const Akonadi::Collection & col, bool middleWasLastButtonPressed )
+void KMMainWidget::folderSelected( const Akonadi::Collection & col )
 {
   // This is connected to the MainFolderView signal triggering when a folder is selected
 
@@ -491,23 +491,13 @@ void KMMainWidget::folderSelected( const Akonadi::Collection & col, bool middleW
   // The message pane uses the selection model of the folder view to load the correct aggregation model and theme
   //  settings. At this point the selection model hasn't been updated yet to the user's new choice, so it would load
   //  the old folder settings instead.
-  if ( middleWasLastButtonPressed )
-    QTimer::singleShot( 0, this, SLOT( slotShowSelectedForderInNewTabInPane() ) );
-  else
-    QTimer::singleShot( 0, this, SLOT( slotShowSelectedForderInPane() ) );
+  QTimer::singleShot( 0, this, SLOT( slotShowSelectedForderInPane() ) );
 }
 
 void KMMainWidget::slotShowSelectedForderInPane()
 {
   if( mCurrentFolder ) {
     mMessagePane->setCurrentFolder( mCurrentFolder->collection(), false , mPreSelectionMode );
-  }
-}
-
-void KMMainWidget::slotShowSelectedForderInNewTabInPane()
-{
-  if( mCurrentFolder ) {
-    mMessagePane->setCurrentFolder( mCurrentFolder->collection(), true , mPreSelectionMode );
   }
 }
 
@@ -898,8 +888,9 @@ void KMMainWidget::createWidgets()
   opt |= FolderTreeWidget::ShowCollectionStatisticAnimation;
   mFolderTreeWidget = new FolderTreeWidget( this, mGUIClient, opt );
 
-  connect( mFolderTreeWidget->folderTreeView(), SIGNAL( currentCollectionChanged( const Akonadi::Collection &, bool ) ),
-           this, SLOT( slotFolderChanged( const Akonadi::Collection&, bool ) ) );
+  connect( mFolderTreeWidget->folderTreeView(), SIGNAL( currentChanged( const Akonadi::Collection & ) ), this, SLOT( slotFolderChanged( const Akonadi::Collection& ) ) );
+
+  connect( mFolderTreeWidget->folderTreeView(), SIGNAL( prefereCreateNewTab( bool ) ), this, SLOT( slotCreateNewTab( bool ) ) );
 
   mFolderTreeWidget->setSelectionMode( QAbstractItemView::ExtendedSelection );
   mMessagePane = new CollectionPane( KMKernel::self()->entityTreeModel(),
@@ -1096,6 +1087,12 @@ void KMMainWidget::createWidgets()
   connect( kmkernel->monitor(), SIGNAL( collectionMoved( const Akonadi::Collection &, const Akonadi::Collection &, const Akonadi::Collection &) ), SLOT( slotCollectionMoved( const Akonadi::Collection &, const Akonadi::Collection &, const Akonadi::Collection & ) ) );
 
 
+}
+
+
+void KMMainWidget::slotCreateNewTab( bool preferNewTab )
+{
+  mMessagePane->setPreferEmptyTab( preferNewTab );
 }
 
 void KMMainWidget::slotCollectionMoved( const Akonadi::Collection &collection, const Akonadi::Collection &source, const Akonadi::Collection &destination )

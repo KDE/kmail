@@ -217,7 +217,7 @@ class KMAIL_EXPORT KMMainWidget : public QWidget
       Select the given folder
       If the folder is 0 the intro is shown
     */
-    void folderSelected( const Akonadi::Collection & col, bool middleWasChanged );
+    void folderSelected( const Akonadi::Collection & col );
 
     /**
       Open a separate viewer window containing the specified message.
@@ -334,7 +334,6 @@ class KMAIL_EXPORT KMMainWidget : public QWidget
     void slotEmptyFolder();
     void slotAddFavoriteFolder();
     void slotShowSelectedForderInPane();
-    void slotShowSelectedForderInNewTabInPane();
     void slotOverrideHtml();
     void slotOverrideHtmlLoadExt();
     void slotMessageQueuedOrDrafted();
@@ -459,7 +458,10 @@ class KMAIL_EXPORT KMMainWidget : public QWidget
     void slotAkonadiStandardActionUpdated();
     void slotCollectionChanged( const Akonadi::Collection&, const QSet<QByteArray>& );
     void slotCollectionMoved( const Akonadi::Collection &collection, const Akonadi::Collection &source, const Akonadi::Collection &destination );
+  void slotCreateNewTab( bool );
+
   private:
+
     /** Get override character encoding. */
     QString overrideEncoding() const;
 
@@ -531,7 +533,7 @@ class KMAIL_EXPORT KMMainWidget : public QWidget
     void slotCopyMessagesCompleted( KMCommand *command );
 
     void slotRequestFullSearchFromQuickSearch();
-    void slotFolderChanged( const Akonadi::Collection&, bool middleWasLastButtonPressed = false );
+    void slotFolderChanged( const Akonadi::Collection& );
 
     void itemsReceived(const Akonadi::Item::List &list );
     void itemsFetchDone( KJob *job );

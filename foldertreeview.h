@@ -81,13 +81,11 @@ protected slots:
   void slotHeaderContextMenuChangeHeader( bool );
   void slotHeaderContextMenuChangeToolTipDisplayPolicy( bool );
   void slotHeaderContextMenuChangeSortingPolicy( bool );
-  void slotCollectionChanged( const Akonadi::Collection & );
 
 signals:
   void changeTooltipsPolicy( FolderTreeWidget::ToolTipDisplayPolicy );
   void manualSortingChanged( bool actif );
-  void currentCollectionChanged( const Akonadi::Collection&, bool middleButtonWasPressed );
-
+  void prefereCreateNewTab( bool );
 private:
   FolderTreeWidget::ToolTipDisplayPolicy mToolTipDisplayPolicy;
   FolderTreeWidget::SortingPolicy mSortingPolicy;
