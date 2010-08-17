@@ -3779,6 +3779,29 @@ void KMMainWidget::slotAkonadiStandardActionUpdated()
     mGUIClient->plugActionList( "akonadi_collection_collectionproperties_actionlist", collectionProperties );
 
   }
+
+  const bool folderWithContent = mCurrentFolder && !mCurrentFolder->isStructural();
+  const bool multiFolder = mFolderTreeWidget->selectedCollections().count() > 1;
+
+  if ( mAkonadiStandardActionManager->action( Akonadi::StandardActionManager::DeleteCollections ) ) {
+
+    mAkonadiStandardActionManager->action( Akonadi::StandardActionManager::DeleteCollections )->setEnabled( mCurrentFolder
+                                                                                                            && !multiFolder
+                                                                                                            && ( mCurrentFolder->collection().rights() & Collection::CanDeleteCollection )
+                                                                                                            && !mCurrentFolder->isSystemFolder()
+                                                                                                            && folderWithContent
+                                                                                                            && mCurrentFolder->collection().resource() != "akonadi_nepomuktag_resource" );
+  }
+
+  if ( mAkonadiStandardActionManager->action( Akonadi::StandardMailActionManager::MoveAllToTrash ) ) {
+    mAkonadiStandardActionManager->action( Akonadi::StandardMailActionManager::MoveAllToTrash )->setEnabled( folderWithContent
+                                                                                                             && ( mCurrentFolder->count() > 0 )
+                                                                                                             && mCurrentFolder->canDeleteMessages()
+                                                                                                             && !multiFolder );
+    mAkonadiStandardActionManager->action( Akonadi::StandardMailActionManager::MoveAllToTrash )->setText( (mCurrentFolder && kmkernel->folderIsTrash(mCurrentFolder->collection())) ? i18n("E&mpty Trash") : i18n("&Move All Messages to Trash") );
+  }
+
+
   QList< QAction* > addToFavorite;
   QAction *actionAddToFavoriteCollections = akonadiStandardAction( Akonadi::StandardActionManager::AddToFavoriteCollections );
   if ( actionAddToFavoriteCollections ) {
@@ -3829,18 +3852,7 @@ void KMMainWidget::updateFolderMenu()
                                                   !multiFolder &&
                                                   !mCurrentFolder->isSystemFolder() );
 
-  mAkonadiStandardActionManager->action( Akonadi::StandardMailActionManager::MoveAllToTrash )->setEnabled( folderWithContent
-                                  && ( mCurrentFolder->count() > 0 )
-                                  && mCurrentFolder->canDeleteMessages()
-                                  && !multiFolder );
-  mAkonadiStandardActionManager->action( Akonadi::StandardMailActionManager::MoveAllToTrash )->setText( (mCurrentFolder && kmkernel->folderIsTrash(mCurrentFolder->collection()))
-    ? i18n("E&mpty Trash") : i18n("&Move All Messages to Trash") );
-   mAkonadiStandardActionManager->action( Akonadi::StandardActionManager::DeleteCollections )->setEnabled( mCurrentFolder
-                                   && !multiFolder
-                                   && ( mCurrentFolder->collection().rights() & Collection::CanDeleteCollection )
-                                   && !mCurrentFolder->isSystemFolder()
-                                   && folderWithContent
-                                   && mCurrentFolder->collection().resource() != "akonadi_nepomuktag_resource" );
+
   QList< QAction* > actionlist;
   if ( mCurrentFolder && mCurrentFolder->collection().id() == kmkernel->outboxCollectionFolder().id() &&
       kmkernel->outboxCollectionFolder().statistics().count() > 0 ) {
