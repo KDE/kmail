@@ -1887,7 +1887,7 @@ void KMMainWidget::copySelectedMessagesToFolder( const Akonadi::Collection& dest
 //
 void KMMainWidget::trashMessageSelected( MessageList::Core::MessageItemSetReference ref )
 {
-  QList<Akonadi::Item> select = mMessagePane->itemListFromPersistentSet( ref );
+  const QList<Akonadi::Item> select = mMessagePane->itemListFromPersistentSet( ref );
   mMessagePane->markMessageItemsAsAboutToBeRemoved( ref, true );
 
     // FIXME: Why we don't use KMMoveCommand( trashFolder(), selectedMessages ); ?
@@ -1981,7 +1981,7 @@ void KMMainWidget::setMessageSetStatus( const QList<Akonadi::Item> &select,
 
 void KMMainWidget::setCurrentThreadStatus( const Akonadi::MessageStatus &status, bool toggle )
 {
-  QList<Akonadi::Item> select = mMessagePane->currentThreadAsMessageList();
+  const QList<Akonadi::Item> select = mMessagePane->currentThreadAsMessageList();
   if ( select.isEmpty() )
     return;
   setMessageSetStatus( select, status, toggle );
