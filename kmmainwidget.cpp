@@ -3846,8 +3846,8 @@ void KMMainWidget::slotAkonadiStandardActionUpdated()
 //-----------------------------------------------------------------------------
 void KMMainWidget::updateFolderMenu()
 {
-  bool folderWithContent = mCurrentFolder && !mCurrentFolder->isStructural();
-  bool multiFolder = mFolderTreeWidget->selectedCollections().count() > 1;
+  const bool folderWithContent = mCurrentFolder && !mCurrentFolder->isStructural();
+  const bool multiFolder = mFolderTreeWidget->selectedCollections().count() > 1;
   mFolderMailingListPropertiesAction->setEnabled( folderWithContent &&
                                                   !multiFolder &&
                                                   !mCurrentFolder->isSystemFolder() );
@@ -4237,6 +4237,7 @@ void KMMainWidget::slotCollectionProperties()
   if (!mCurrentFolder) return;
   KMCollectionPropertiesDialog* dlg = new KMCollectionPropertiesDialog( mCurrentFolder->collection(), this );
   dlg->setCaption( i18nc( "@title:window", "Properties of Folder %1", mCurrentFolder->collection().name() ) );
+  dlg->resize( 500, 400 );
   dlg->show();
 
 }
