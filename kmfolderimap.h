@@ -24,6 +24,7 @@
 #ifndef kmfolderimap_h
 #define kmfolderimap_h
 
+#include "acljobs.h"
 #include "kmacctimap.h"
 #include "kmfoldermbox.h"
 #include "kmmsgbase.h"
@@ -298,12 +299,14 @@ public:
 
   /**
    * The user's rights on this folder - see bitfield in ACLJobs namespace.
-   * @return 0 when not known yet
+   * Note that the returned value is only valid if userRightsState() returns Ok, so
+   * that should be checked first.
    */
   unsigned int userRights() const { return mUserRights; }
+  KMail::ACLJobs::ACLFetchState userRightsState() const { return mUserRightsState; }
 
   /** Set the user's rights on this folder - called by getUserRights */
-  void setUserRights( unsigned int userRights );
+  void setUserRights( unsigned int userRights, KMail::ACLJobs::ACLFetchState userRightsState );
 
   /**
     * Search for messages
@@ -518,6 +521,7 @@ protected:
   // the current uidvalidity
   QString mUidValidity;
   unsigned int mUserRights;
+  KMail::ACLJobs::ACLFetchState mUserRightsState;
 
 private:
   // if we're checking validity currently

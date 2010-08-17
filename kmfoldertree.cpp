@@ -1249,12 +1249,14 @@ static bool folderHasCreateRights( const KMFolder *folder )
   bool createRights = true; // we don't have acls for local folders yet
   if ( folder && folder->folderType() == KMFolderTypeImap ) {
     const KMFolderImap *imapFolder = static_cast<const KMFolderImap*>( folder->storage() );
-    createRights = imapFolder->userRights() == 0 || // hack, we should get the acls
-      ( imapFolder->userRights() > 0 && ( imapFolder->userRights() & KMail::ACLJobs::Create ) );
+    createRights = imapFolder->userRightsState() != KMail::ACLJobs::Ok || // hack, we should get the acls
+      ( imapFolder->userRightsState() == KMail::ACLJobs::Ok &&
+        ( imapFolder->userRights() & KMail::ACLJobs::Create ) );
   } else if ( folder && folder->folderType() == KMFolderTypeCachedImap ) {
     const KMFolderCachedImap *dimapFolder = static_cast<const KMFolderCachedImap*>( folder->storage() );
-    createRights = dimapFolder->userRights() == 0 ||
-      ( dimapFolder->userRights() > 0 && ( dimapFolder->userRights() & KMail::ACLJobs::Create ) );
+    createRights = dimapFolder->userRightsState() != KMail::ACLJobs::Ok ||
+      ( dimapFolder->userRightsState() != KMail::ACLJobs::Ok &&
+        ( dimapFolder->userRights() & KMail::ACLJobs::Create ) );
   }
   return createRights;
 }

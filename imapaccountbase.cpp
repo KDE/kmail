@@ -421,9 +421,9 @@ namespace KMail {
     // don't even allow removing one's own admin permission, so this code won't hurt either).
     if ( imapPath == "/INBOX/" ) {
       if ( parent->folderType() == KMFolderTypeImap )
-        static_cast<KMFolderImap*>( parent->storage() )->setUserRights( ACLJobs::All );
+        static_cast<KMFolderImap*>( parent->storage() )->setUserRights( ACLJobs::All, ACLJobs::Ok );
       else if ( parent->folderType() == KMFolderTypeCachedImap )
-        static_cast<KMFolderCachedImap*>( parent->storage() )->setUserRights( ACLJobs::All );
+        static_cast<KMFolderCachedImap*>( parent->storage() )->setUserRights( ACLJobs::All, ACLJobs::Ok );
       emit receivedUserRights( parent ); // warning, you need to connect first to get that one
       return;
     }
@@ -457,12 +457,15 @@ namespace KMail {
 #ifndef NDEBUG
       //kdDebug(5006) << "User Rights: " << ACLJobs::permissionsToString( job->permissions() ) << endl;
 #endif
-      // Store the permissions
-      if ( folder->folderType() == KMFolderTypeImap )
-        static_cast<KMFolderImap*>( folder->storage() )->setUserRights( job->permissions() );
-      else if ( folder->folderType() == KMFolderTypeCachedImap )
-        static_cast<KMFolderCachedImap*>( folder->storage() )->setUserRights( job->permissions() );
     }
+    // Store the permissions
+    if ( folder->folderType() == KMFolderTypeImap )
+      static_cast<KMFolderImap*>( folder->storage() )->setUserRights( job->permissions(),
+                         job->error() ? KMail::ACLJobs::FetchFailed : KMail::ACLJobs::Ok );
+    else if ( folder->folderType() == KMFolderTypeCachedImap )
+      static_cast<KMFolderCachedImap*>( folder->storage() )->setUserRights( job->permissions(),
+                         job->error() ? KMail::ACLJobs::FetchFailed : KMail::ACLJobs::Ok );
+
     if (mSlave) removeJob(job);
     emit receivedUserRights( folder );
   }

@@ -74,6 +74,7 @@ KMFolderImap::KMFolderImap(KMFolder* folder, const char* aName)
   mCheckMail = true;
   mCheckingValidity = false;
   mUserRights = 0;
+  mUserRightsState = KMail::ACLJobs::NotFetchedYet;
   mAlreadyRemoved = false;
   mHasChildren = ChildrenUnknown;
   mMailCheckProgressItem = 0;
@@ -2261,10 +2262,10 @@ int KMFolderImap::expungeContents()
 
 //-----------------------------------------------------------------------------
 void
-KMFolderImap::setUserRights( unsigned int userRights )
+KMFolderImap::setUserRights( unsigned int userRights, KMail::ACLJobs::ACLFetchState userRightsState )
 {
   mUserRights = userRights;
-  kdDebug(5006) << imapPath() << " setUserRights: " << userRights << endl;
+  mUserRightsState = userRightsState;
 }
 
 //-----------------------------------------------------------------------------
@@ -2435,7 +2436,7 @@ bool KMFolderImap::canDeleteMessages() const
 {
   if ( isReadOnly() )
     return false;
-  if ( mUserRights > 0 && !(mUserRights & KMail::ACLJobs::Delete) )
+  if ( mUserRightsState == KMail::ACLJobs::Ok && !(mUserRights & KMail::ACLJobs::Delete) )
     return false;
   return true;
 }

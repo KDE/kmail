@@ -291,22 +291,28 @@ KMail::FolderDiaGeneralTab::FolderDiaGeneralTab( KMFolderDialog* dlg,
       if ( account && account->hasACLSupport() ) {
         int parentRights = -1;
         int folderRights = -1;
+        bool parentRightsOk = false;
+        bool folderRightsOk = false;
         if ( imap ) {
           KMFolderImap * const parent = dynamic_cast<KMFolderImap*>( mDlg->parentFolder()->storage() );
           folderRights = imap->userRights();
+          folderRightsOk = imap->userRightsState() == KMail::ACLJobs::Ok;
           if ( parent ) {
             parentRights = parent->userRights();
+            parentRightsOk = parent->userRightsState() == KMail::ACLJobs::Ok;
           }
         } else if ( dimap ) {
           KMFolderCachedImap * const parent = dynamic_cast<KMFolderCachedImap*>( mDlg->parentFolder()->storage() );
           folderRights = dimap->userRights();
+          folderRightsOk = dimap->userRightsState() == KMail::ACLJobs::Ok;
           if ( parent ) {
             parentRights = parent->userRights();
+            parentRightsOk = parent->userRightsState() == KMail::ACLJobs::Ok;
           }
         }
 
         // For renaming, we need support for deleting the mailbox and then re-creating it.
-        if ( parentRights > 0 && folderRights > 0 &&
+        if ( parentRightsOk && folderRightsOk &&
              ( !( parentRights & KMail::ACLJobs::Create ) || !( folderRights & KMail::ACLJobs::Delete ) ) ) {
           nameChangeAllowed = false;
         }

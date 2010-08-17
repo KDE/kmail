@@ -59,6 +59,14 @@ namespace KMail {
  */
 namespace ACLJobs {
 
+  // Used by KMFolderCachedImap and KMFolderImap, no better place for that yet, until we have a
+  // common base class for both
+  enum ACLFetchState {
+    NotFetchedYet, ///< The user rights/ACL have not been fetched from the server yet, we don't know them
+    Ok,            ///< The user rights/ACL have been fetched from the server sucessfully
+    FetchFailed    ///< The attempt to fetch the user rights/ACL from the server failed
+  };
+
   /// Bitfield modelling the possible permissions.
   /// This is modelled after the imap4 permissions except that Read is "rs".
   /// The semantics of the bits is protocol-dependent.

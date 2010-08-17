@@ -33,6 +33,7 @@
 #define FOLDERDIAACL_H
 
 #include "kmfolderdia.h"
+#include "acljobs.h"
 #include "kmfoldertype.h"
 
 class KMFolderImap;
@@ -137,6 +138,7 @@ private:
   QString mImapPath;
   ImapAccountBase* mImapAccount;
   int mUserRights;
+  KMail::ACLJobs::ACLFetchState mUserRightsState;
   KMFolderType mFolderType;
   ACLList mInitialACLList;
   ACLList mACLList; // to be set

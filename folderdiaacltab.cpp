@@ -317,6 +317,7 @@ KMail::FolderDiaACLTab::FolderDiaACLTab( KMFolderDialog* dlg, QWidget* parent, c
   : FolderDiaTab( parent, name ),
     mImapAccount( 0 ),
     mUserRights( 0 ),
+    mUserRightsState( KMail::ACLJobs::NotFetchedYet ),
     mDlg( dlg ),
     mChanged( false ), mAccepting( false ), mSaving( false )
 {
@@ -379,12 +380,14 @@ void KMail::FolderDiaACLTab::initializeWithValuesFromFolder( KMFolder* folder )
     mImapPath = folderImap->imapPath();
     mImapAccount = folderImap->account();
     mUserRights = folderImap->userRights();
+    mUserRightsState = folderImap->userRightsState();
   }
   else if ( mFolderType == KMFolderTypeCachedImap ) {
     KMFolderCachedImap* folderImap = static_cast<KMFolderCachedImap*>( folder->storage() );
     mImapPath = folderImap->imapPath();
     mImapAccount = folderImap->account();
     mUserRights = folderImap->userRights();
+    mUserRightsState = folderImap->userRightsState();
   }
   else
     assert( 0 ); // see KMFolderDialog constructor
@@ -420,12 +423,15 @@ void KMail::FolderDiaACLTab::load()
   if ( mFolderType == KMFolderTypeCachedImap ) {
     KMFolder* folder = mDlg->folder() ? mDlg->folder() : mDlg->parentFolder();
     KMFolderCachedImap* folderImap = static_cast<KMFolderCachedImap*>( folder->storage() );
-    if ( mUserRights == -1 ) { // error
-      mLabel->setText( i18n( "Error retrieving user permissions." ) );
-    } else if ( mUserRights == 0 /* can't happen anymore*/ || folderImap->aclList().isEmpty() ) {
-      /* We either synced, or we read user rights from the config, so we can
-         assume the server supports acls and an empty list means we haven't
-         synced yet. */
+    if ( mUserRightsState == KMail::ACLJobs::FetchFailed ||
+         folderImap->aclListState() == KMail::ACLJobs::FetchFailed ) {
+      QString text = i18n( "Error retrieving user permissions." );
+      if ( mUserRightsState == KMail::ACLJobs::Ok ) {
+        text += "\n" + i18n( "You might not have enough permissions to see the permissions of this folder." );
+      }
+      mLabel->setText( text );
+    } else if ( mUserRightsState == KMail::ACLJobs::NotFetchedYet ||
+                folderImap->aclListState() == KMail::ACLJobs::NotFetchedYet ) {
       mLabel->setText( i18n( "Information not retrieved from server, you need to use \"Check Mail\" and have administrative privileges on the folder."));
     } else {
       loadFinished( folderImap->aclList() );
@@ -472,7 +478,7 @@ void KMail::FolderDiaACLTab::slotConnectionResult( int errorCode, const QString&
     return;
   }
 
-  if ( mUserRights == 0 ) {
+  if ( mUserRightsState != KMail::ACLJobs::Ok ) {
     connect( mImapAccount, SIGNAL( receivedUserRights( KMFolder* ) ),
              this, SLOT( slotReceivedUserRights( KMFolder* ) ) );
     KMFolder* folder = mDlg->folder() ? mDlg->folder() : mDlg->parentFolder();
@@ -492,6 +498,7 @@ void KMail::FolderDiaACLTab::slotReceivedUserRights( KMFolder* folder )
   if ( folder == mDlg->folder() ? mDlg->folder() : mDlg->parentFolder() ) {
     KMFolderImap* folderImap = static_cast<KMFolderImap*>( folder->storage() );
     mUserRights = folderImap->userRights();
+    mUserRightsState = folderImap->userRightsState();
     startListing();
   }
 }

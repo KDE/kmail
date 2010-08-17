@@ -192,7 +192,9 @@ KMFolderCachedImap::KMFolderCachedImap( KMFolder* folder, const char* aName )
     mCheckFlags( true ), mReadOnly( false ), mAccount( NULL ), uidMapDirty( true ),
     uidWriteTimer( -1 ), mLastUid( 0 ), mTentativeHighestUid( 0 ),
     mFoundAnIMAPDigest( false ),
-    mUserRights( 0 ), mOldUserRights( 0 ), mSilentUpload( false ),
+    mUserRights( 0 ), mOldUserRights( 0 ), mUserRightsState( KMail::ACLJobs::NotFetchedYet ),
+    mACLListState( KMail::ACLJobs::NotFetchedYet ),
+    mSilentUpload( false ),
     /*mHoldSyncs( false ),*/
     mFolderRemoved( false ),
     mRecurse( true ),
@@ -243,7 +245,7 @@ void KMFolderCachedImap::initializeFrom( KMFolderCachedImap* parent )
   // Now that we have an account, tell it that this folder was created:
   // if this folder was just removed, then we don't really want to remove it from the server.
   mAccount->removeDeletedFolder( imapPath() );
-  setUserRights( parent->userRights() );
+  setUserRights( parent->userRights(), parent->userRightsState() );
 }
 
 void KMFolderCachedImap::readConfig()
@@ -276,7 +278,9 @@ void KMFolderCachedImap::readConfig()
 //                << " readConfig: mIncidencesFor=" << mIncidencesFor << endl;
   mSharedSeenFlags = config->readBoolEntry( "SharedSeenFlags", false );
 
-  mUserRights = config->readNumEntry( "UserRights", 0 ); // default is we don't know
+  mUserRights = config->readNumEntry( "UserRights", 0 );
+  mUserRightsState = static_cast<KMail::ACLJobs::ACLFetchState>(
+      config->readNumEntry( "UserRightsState", KMail::ACLJobs::NotFetchedYet ) );
   mOldUserRights = mUserRights;
 
   int storageQuotaUsage = config->readNumEntry( "StorageQuotaUsage", -1 );
@@ -375,7 +379,10 @@ void KMFolderCachedImap::writeConfigKeysWhichShouldNotGetOverwrittenByReadConfig
     configGroup.writeEntry( "AlarmsBlocked", mAlarmsBlocked );
     configGroup.writeEntry( "SharedSeenFlags", mSharedSeenFlags );
     configGroup.writeEntry( "SharedSeenFlagsChanged", mSharedSeenFlagsChanged );
-    configGroup.writeEntry( "UserRights", mUserRights );
+    if ( mUserRightsState != KMail::ACLJobs::FetchFailed ) { // No point in overwriting valid results with invalid ones
+      configGroup.writeEntry( "UserRights", mUserRights );
+      configGroup.writeEntry( "UserRightsState", mUserRightsState );
+    }
 
     configGroup.deleteEntry( "StorageQuotaUsage");
     configGroup.deleteEntry( "StorageQuotaRoot");
@@ -533,7 +540,7 @@ int KMFolderCachedImap::addMsgInternal( KMMessage* msg, bool newMail,
   rc = KMFolderMaildir::addMsg(msg, index_return);
 
   if( newMail && ( imapPath() == "/INBOX/" ||
-      ( (userRights() <= 0 || userRights() & ACLJobs::Administer)
+      ( ( mUserRights != ACLJobs::Ok || userRights() & ACLJobs::Administer)
       && (contentsType() == ContentsTypeMail || GlobalSettings::self()->filterGroupwareFolders()) ) ) )
   {
     // This is a new message. Filter it - maybe
@@ -928,6 +935,14 @@ void KMFolderCachedImap::serverSyncInternal()
       break;
     }
 
+    else if ( !mQuotaOnly && noContent() && mAccount->hasACLSupport() ) {
+      // This is a no content folder. The server would simply say that mailbox does not exist when
+      // querying the rights for it. So pretend we have no rights.
+      mUserRights = 0;
+      mUserRightsState = KMail::ACLJobs::Ok;
+      writeConfigKeysWhichShouldNotGetOverwrittenByReadConfig();
+    }
+
   case SYNC_STATE_RENAME_FOLDER:
   {
     mSyncState = SYNC_STATE_CHECK_UIDVALIDITY;
@@ -974,7 +989,8 @@ void KMFolderCachedImap::serverSyncInternal()
          reloadUidMap();
        // Upload flags, unless we know from the ACL that we're not allowed
        // to do that or they did not change locally
-       if ( mUserRights <= 0 || ( mUserRights & (KMail::ACLJobs::WriteFlags ) ) ) {
+       if ( mUserRightsState != KMail::ACLJobs::Ok ||
+            ( mUserRights & (KMail::ACLJobs::WriteFlags ) ) ) {
          if ( !mUIDsOfLocallyChangedStatuses.empty() || mStatusChangedLocally ) {
            uploadFlags();
            break;
@@ -1116,7 +1132,7 @@ void KMFolderCachedImap::serverSyncInternal()
     mSyncState = SYNC_STATE_GET_ANNOTATIONS;
     // The first folder with user rights to write annotations
     if( !mQuotaOnly && !mAccount->annotationCheckPassed() &&
-         ( mUserRights <= 0 || ( mUserRights & ACLJobs::Administer ) )
+         ( mUserRightsState != KMail::ACLJobs::Ok || ( mUserRights & ACLJobs::Administer ) )
          && !imapPath().isEmpty() && imapPath() != "/" ) {
       kdDebug(5006) << "Setting test attribute on folder: "<< folder()->prettyURL() << endl;
       newState( mProgress, i18n("Checking annotation support"));
@@ -1190,7 +1206,7 @@ void KMFolderCachedImap::serverSyncInternal()
 
     mSyncState = SYNC_STATE_SET_ACLS;
     if ( !mQuotaOnly && !noContent() && mAccount->hasAnnotationSupport() &&
-         ( mUserRights <= 0 || ( mUserRights & ACLJobs::Administer ) ) ) {
+         ( mUserRightsState != KMail::ACLJobs::Ok || ( mUserRights & ACLJobs::Administer ) ) ) {
       newState( mProgress, i18n("Setting annotations"));
       KURL url = mAccount->getUrl();
       url.setPath( imapPath() );
@@ -1231,7 +1247,7 @@ void KMFolderCachedImap::serverSyncInternal()
     mSyncState = SYNC_STATE_GET_ACLS;
 
     if( !mQuotaOnly && !noContent() && mAccount->hasACLSupport() &&
-      ( mUserRights <= 0 || ( mUserRights & ACLJobs::Administer ) ) ) {
+      ( mUserRightsState != KMail::ACLJobs::Ok || ( mUserRights & ACLJobs::Administer ) ) ) {
       bool hasChangedACLs = false;
       ACLList::ConstIterator it = mACLList.begin();
       for ( ; it != mACLList.end() && !hasChangedACLs; ++it ) {
@@ -1441,7 +1457,7 @@ void KMFolderCachedImap::uploadNewMessages()
 {
   QValueList<unsigned long> newMsgs = findNewMessages();
   if( !newMsgs.isEmpty() ) {
-    if ( mUserRights <= 0 || ( mUserRights & ( KMail::ACLJobs::Insert ) ) ) {
+    if ( mUserRightsState != KMail::ACLJobs::Ok || ( mUserRights & ( KMail::ACLJobs::Insert ) ) ) {
       newState( mProgress, i18n("Uploading messages to server"));
       CachedImapJob *job = new CachedImapJob( newMsgs, CachedImapJob::tPutMessage, this );
       connect( job, SIGNAL( progress( unsigned long, unsigned long) ),
@@ -1688,7 +1704,7 @@ bool KMFolderCachedImap::deleteMessages()
         removeMsg( msgsForDeletion );
   }
 
-  if ( mUserRights > 0 && !( mUserRights & KMail::ACLJobs::Delete ) )
+  if ( mUserRightsState == KMail::ACLJobs::Ok && !( mUserRights & KMail::ACLJobs::Delete ) )
     return false;
 
   /* Delete messages from the server that we dont have anymore */
@@ -1822,7 +1838,7 @@ void KMFolderCachedImap::slotGetMessagesData(KIO::Job * job, const QByteArray & 
     // updated when selecting the folder again, which might not happen if using
     // RMB / Check Mail in this folder. We don't need two (potentially conflicting)
     // sources for the readonly setting, in any case.
-    if (a != -1 && mUserRights == -1 ) {
+    if (a != -1 && mUserRightsState != KMail::ACLJobs::Ok ) {
       int b = (*it).cdata.find("\r\n", a + 12);
       const QString access = (*it).cdata.mid(a + 12, b - a - 12);
       setReadOnly( access == "Read only" );
@@ -1885,7 +1901,7 @@ void KMFolderCachedImap::slotGetMessagesData(KIO::Job * job, const QByteArray & 
 #endif
           // double check we deleted it since the last sync
            if ( mDeletedUIDsSinceLastSync.contains(uid) ) {
-               if ( mUserRights <= 0 || ( mUserRights & KMail::ACLJobs::Delete ) ) {
+               if ( mUserRightsState != KMail::ACLJobs::Ok || ( mUserRights & KMail::ACLJobs::Delete ) ) {
 #if MAIL_LOSS_DEBUGGING
                    kdDebug(5006) << "message with uid " << uid << " is gone from local cache. Must be deleted on server!!!" << endl;
 #endif
@@ -2459,9 +2475,10 @@ KMFolderCachedImap::doCreateJob( QPtrList<KMMessage>& msgList, const QString& se
 }
 
 void
-KMFolderCachedImap::setUserRights( unsigned int userRights )
+KMFolderCachedImap::setUserRights( unsigned int userRights, KMail::ACLJobs::ACLFetchState state )
 {
   mUserRights = userRights;
+  mUserRightsState = state;
   writeConfigKeysWhichShouldNotGetOverwrittenByReadConfig();
 }
 
@@ -2471,10 +2488,9 @@ KMFolderCachedImap::slotReceivedUserRights( KMFolder* folder )
   if ( folder->storage() == this ) {
     disconnect( mAccount, SIGNAL( receivedUserRights( KMFolder* ) ),
                 this, SLOT( slotReceivedUserRights( KMFolder* ) ) );
-    if ( mUserRights == 0 ) // didn't work
-      mUserRights = -1; // error code (used in folderdia)
-    else
+    if ( mUserRightsState == KMail::ACLJobs::Ok ) {
       setReadOnly( ( mUserRights & KMail::ACLJobs::Insert ) == 0 );
+    }
     mProgress += 5;
     serverSyncInternal();
   }
@@ -2490,11 +2506,12 @@ KMFolderCachedImap::setReadOnly( bool readOnly )
 }
 
 void
-KMFolderCachedImap::slotReceivedACL( KMFolder* folder, KIO::Job*, const KMail::ACLList& aclList )
+KMFolderCachedImap::slotReceivedACL( KMFolder* folder, KIO::Job* job, const KMail::ACLList& aclList )
 {
   if ( folder->storage() == this ) {
     disconnect( mAccount, SIGNAL(receivedACL( KMFolder*, KIO::Job*, const KMail::ACLList& )),
                 this, SLOT(slotReceivedACL( KMFolder*, KIO::Job*, const KMail::ACLList& )) );
+    mACLListState = job->error() ? KMail::ACLJobs::FetchFailed : KMail::ACLJobs::Ok;
     mACLList = aclList;
     serverSyncInternal();
   }
@@ -2523,6 +2540,7 @@ void
 KMFolderCachedImap::setACLList( const ACLList& arr )
 {
   mACLList = arr;
+  mACLListState = KMail::ACLJobs::Ok;
 }
 
 void
@@ -3190,7 +3208,7 @@ bool KMFolderCachedImap::canDeleteMessages() const
 {
   if ( isReadOnly() )
     return false;
-  if ( userRights() > 0 && !(userRights() & ACLJobs::Delete) )
+  if ( mUserRightsState == KMail::ACLJobs::Ok && !(userRights() & ACLJobs::Delete) )
     return false;
   return true;
 }

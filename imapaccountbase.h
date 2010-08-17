@@ -604,7 +604,8 @@ namespace KMail {
     /**
      * Emitted when the get-user-rights job is done,
      * as a result of a getUserRights call.
-     * Use userRights() to retrieve them, they will still be on 0 if the job failed.
+     * Use userRights() to retrieve them after using userRightsState() to see if the results are
+     * valid.
      */
     void receivedUserRights( KMFolder* folder );
 

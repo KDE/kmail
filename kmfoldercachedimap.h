@@ -253,12 +253,14 @@ public:
 
   /**
    * The user's rights on this folder - see bitfield in ACLJobs namespace.
-   * @return 0 when not known yet, -1 if there was an error fetching them
+   * Note that the returned value is only valid if userRightsState() returns Ok, so
+   * that should be checked first.
    */
   int userRights() const { return mUserRights; }
+  KMail::ACLJobs::ACLFetchState userRightsState() const { return mUserRightsState; }
 
   /// Set the user's rights on this folder - called by getUserRights
-  void setUserRights( unsigned int userRights );
+  void setUserRights( unsigned int userRights, KMail::ACLJobs::ACLFetchState state  );
 
   /**
    * The quota information for this folder.
@@ -275,6 +277,7 @@ public:
   /// Return the list of ACL for this folder
   typedef QValueVector<KMail::ACLListEntry> ACLList;
   const ACLList& aclList() const { return mACLList; }
+  KMail::ACLJobs::ACLFetchState aclListState() const { return mACLListState; };
 
   /// Set the list of ACL for this folder (for FolderDiaACLTab)
   void setACLList( const ACLList& arr );
@@ -567,7 +570,9 @@ private:
   bool mFoundAnIMAPDigest;
 
   int mUserRights, mOldUserRights;
+  KMail::ACLJobs::ACLFetchState mUserRightsState;
   ACLList mACLList;
+  KMail::ACLJobs::ACLFetchState mACLListState;
 
   bool mSilentUpload;
   bool mFolderRemoved;

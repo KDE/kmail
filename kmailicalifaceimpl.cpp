@@ -2251,12 +2251,14 @@ bool KMailICalIfaceImpl::folderIsAlarmRelevant( const KMFolder *folder )
   if ( folder->folderType() == KMFolderTypeImap ) {
     const KMFolderImap *imapFolder = static_cast<const KMFolderImap*>( folder->storage() );
     administerRights =
-      imapFolder->userRights() <= 0 || imapFolder->userRights() & KMail::ACLJobs::Administer;
+      imapFolder->userRightsState() != KMail::ACLJobs::Ok ||
+      imapFolder->userRights() & KMail::ACLJobs::Administer;
   }
   if ( folder->folderType() == KMFolderTypeCachedImap ) {
     const KMFolderCachedImap *dimapFolder = static_cast<const KMFolderCachedImap*>( folder->storage() );
     administerRights =
-      dimapFolder->userRights() <= 0 || dimapFolder->userRights() & KMail::ACLJobs::Administer;
+      dimapFolder->userRightsState() != KMail::ACLJobs::Ok ||
+      dimapFolder->userRights() & KMail::ACLJobs::Administer;
     relevantForOwner = !dimapFolder->alarmsBlocked() && ( dimapFolder->incidencesFor () == KMFolderCachedImap::IncForAdmins );
     relevantForEveryone = !dimapFolder->alarmsBlocked() && ( dimapFolder->incidencesFor() == KMFolderCachedImap::IncForReaders );
   }
