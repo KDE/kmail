@@ -597,7 +597,7 @@ private:
     KMail::SearchWindow *mSearchWin;
 
     KAction *mExpireFolderAction,
-      *mEmptyFolderAction, *mMarkAllAsReadAction, *mFolderMailingListPropertiesAction,
+      *mMarkAllAsReadAction, *mFolderMailingListPropertiesAction,
       *mShowFolderShortcutDialogAction,
       *mArchiveFolderAction,
       *mPostToMailinglistAction;

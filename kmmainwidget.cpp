@@ -1476,7 +1476,7 @@ void KMMainWidget::slotEmptyFolder()
 
   // Disable empty trash/move all to trash action - we've just deleted/moved
   // all folder contents.
-  mEmptyFolderAction->setEnabled( false );
+  mAkonadiStandardActionManager->action( Akonadi::StandardMailActionManager::MoveAllToTrash )->setEnabled( false );
 }
 
 //-----------------------------------------------------------------------------
@@ -3102,11 +3102,8 @@ void KMMainWidget::setupActions()
 
 
 
-  mEmptyFolderAction = new KAction(KIcon("user-trash"),
-                                    "foo" /*set in updateFolderMenu*/, this);
-  actionCollection()->addAction("empty", mEmptyFolderAction );
-  connect(mEmptyFolderAction, SIGNAL(triggered(bool)), SLOT(slotEmptyFolder()));
-
+  mAkonadiStandardActionManager->interceptAction( Akonadi::StandardMailActionManager::MoveAllToTrash );
+  connect( mAkonadiStandardActionManager->action( Akonadi::StandardMailActionManager::MoveAllToTrash ), SIGNAL( triggered( bool ) ), this, SLOT( slotEmptyFolder() ) );
 
   mAkonadiStandardActionManager->interceptAction( Akonadi::StandardActionManager::DeleteCollections );
   connect( mAkonadiStandardActionManager->action( Akonadi::StandardActionManager::DeleteCollections ), SIGNAL( triggered( bool ) ), this, SLOT( slotRemoveFolder() ) );
@@ -3831,11 +3828,11 @@ void KMMainWidget::updateFolderMenu()
                                                   !multiFolder &&
                                                   !mCurrentFolder->isSystemFolder() );
 
-  mEmptyFolderAction->setEnabled( folderWithContent
+  mAkonadiStandardActionManager->action( Akonadi::StandardMailActionManager::MoveAllToTrash )->setEnabled( folderWithContent
                                   && ( mCurrentFolder->count() > 0 )
                                   && mCurrentFolder->canDeleteMessages()
                                   && !multiFolder );
-  mEmptyFolderAction->setText( (mCurrentFolder && kmkernel->folderIsTrash(mCurrentFolder->collection()))
+  mAkonadiStandardActionManager->action( Akonadi::StandardMailActionManager::MoveAllToTrash )->setText( (mCurrentFolder && kmkernel->folderIsTrash(mCurrentFolder->collection()))
     ? i18n("E&mpty Trash") : i18n("&Move All Messages to Trash") );
    mAkonadiStandardActionManager->action( Akonadi::StandardActionManager::DeleteCollections )->setEnabled( mCurrentFolder
                                    && !multiFolder
