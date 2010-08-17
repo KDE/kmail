@@ -206,12 +206,6 @@ KMCommand::Result KMCommand::result() const
   return mResult;
 }
 
-void KMCommand::start()
-{
-  QTimer::singleShot( 0, this, SLOT( slotStart() ) );
-}
-
-
 const QList<Akonadi::Item> KMCommand::retrievedMsgs() const
 {
   return mRetrievedMsgs;
@@ -231,7 +225,7 @@ QWidget *KMCommand::parentWidget() const
 
 int KMCommand::mCountJobs = 0;
 
-void KMCommand::slotStart()
+void KMCommand::start()
 {
   connect( this, SIGNAL( messagesTransfered( KMCommand::Result ) ),
            this, SLOT( slotPostTransfer( KMCommand::Result ) ) );
