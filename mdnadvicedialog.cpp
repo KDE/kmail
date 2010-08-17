@@ -135,7 +135,7 @@ QPair< bool, KMime::MDN::SendingMode > MDNAdviceHelper::checkAndSetMDNInfo( cons
     return QPair< bool, KMime::MDN::SendingMode >( false, KMime::MDN::SentAutomatically );
   }
 
-  Akonadi::MDNStateAttribute mdnStateAttr( Akonadi::MDNStateAttribute::MDNStateUnknown );
+  Akonadi::MDNStateAttribute *mdnStateAttr = new Akonadi::MDNStateAttribute( Akonadi::MDNStateAttribute::MDNStateUnknown );
 
   KMime::MDN::SendingMode s = KMime::MDN::SentAutomatically; // set to manual if asked user
   bool doSend = false;
@@ -143,7 +143,7 @@ QPair< bool, KMime::MDN::SendingMode > MDNAdviceHelper::checkAndSetMDNInfo( cons
   int mode = mdnConfig.readEntry( "default-policy", 0 );
   if ( !mode || mode < 0 || mode > 3 ) {
     // early out for ignore:
-    mdnStateAttr.setMDNState( Akonadi::MDNStateAttribute::MDNIgnore );
+    mdnStateAttr->setMDNState( Akonadi::MDNStateAttribute::MDNIgnore );
     s = KMime::MDN::SentManually;
   } else {
 
@@ -183,35 +183,29 @@ QPair< bool, KMime::MDN::SendingMode > MDNAdviceHelper::checkAndSetMDNInfo( cons
 
   // RFC 2298: An MDN MUST NOT be generated in response to an MDN.
   if ( MessageViewer::ObjectTreeParser::findType( msg.get(), "message", "disposition-notification", true, true ) ) {
-    mdnStateAttr.setMDNState( Akonadi::MDNStateAttribute::MDNIgnore );
+    mdnStateAttr->setMDNState( Akonadi::MDNStateAttribute::MDNIgnore );
   } else if( mode == 0 ) { // ignore
     doSend = false;
-    mdnStateAttr.setMDNState( Akonadi::MDNStateAttribute::MDNIgnore );
+    mdnStateAttr->setMDNState( Akonadi::MDNStateAttribute::MDNIgnore );
   } else if( mode == 2 ) { // denied
     doSend = true;
-    mdnStateAttr.setMDNState( Akonadi::MDNStateAttribute::MDNDenied );
+    mdnStateAttr->setMDNState( Akonadi::MDNStateAttribute::MDNDenied );
   } else if( mode == 3 ) { // the user wants to send. let's make sure we can, according to the RFC.
     doSend = true;
-    mdnStateAttr.setMDNState( dispositionToSentState( d ) );
+    mdnStateAttr->setMDNState( dispositionToSentState( d ) );
   }
 
-  Akonadi::ItemFetchJob* updateJob = new Akonadi::ItemFetchJob( item );
-  updateJob->setProperty( "mdnState", mdnStateAttr.serialized() );
-  QObject::connect( updateJob, SIGNAL(itemsReceived(Akonadi::Item::List)), this, SLOT(itemsReceived(Akonadi::Item::List)));
+  // create a minimal version of item with just the attribute we want to change
+  // so we can safely ignore any conflicts this might trigger, due to simulaneous
+  // flag changes for example.
+  Akonadi::Item i( item.id() );
+  i.setMimeType( item.mimeType() );
+  i.addAttribute( mdnStateAttr );
+  Akonadi::ItemModifyJob* modify = new Akonadi::ItemModifyJob( i );
+  modify->setIgnorePayload( true );
+  modify->disableRevisionCheck();
 
   return QPair< bool, KMime::MDN::SendingMode >( doSend, s);
-}
-
-void MDNAdviceHelper::itemsReceived( const Akonadi::Item::List &items )
-{
-  Akonadi::MDNStateAttribute* attr = new Akonadi::MDNStateAttribute( sender()->property( "mdnState" ).toByteArray() );
-
-  Q_ASSERT( items.size() == 1 );
-  Akonadi::Item item = items[ 0 ];
-
-  item.addAttribute( attr );
-  Akonadi::ItemModifyJob* modify = new Akonadi::ItemModifyJob( item );
-  modify->setIgnorePayload( true );
 }
 
 

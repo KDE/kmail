@@ -57,8 +57,6 @@ private:
     MessageComposer::MDNAdvice questionIgnoreSend( const QString &text, bool canDeny );
 
     static MDNAdviceHelper* s_instance;
-private slots:
-    void itemsReceived(const Akonadi::Item::List& items);
 };
 
 class MDNAdviceDialog : public KDialog
