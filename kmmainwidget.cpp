@@ -3107,10 +3107,9 @@ void KMMainWidget::setupActions()
   actionCollection()->addAction("empty", mEmptyFolderAction );
   connect(mEmptyFolderAction, SIGNAL(triggered(bool)), SLOT(slotEmptyFolder()));
 
-  mRemoveFolderAction = new KAction(KIcon("edit-delete"),
-                                     "foo" /*set in updateFolderMenu*/, this);
-  actionCollection()->addAction("delete_folder", mRemoveFolderAction );
-  connect(mRemoveFolderAction, SIGNAL(triggered(bool)), SLOT(slotRemoveFolder()));
+
+  mAkonadiStandardActionManager->interceptAction( Akonadi::StandardActionManager::DeleteCollections );
+  connect( mAkonadiStandardActionManager->action( Akonadi::StandardActionManager::DeleteCollections ), SIGNAL( triggered( bool ) ), this, SLOT( slotRemoveFolder() ) );
 
   // ### PORT ME: Add this to the context menu. Not possible right now because
   //              the context menu uses XMLGUI, and that would add the entry to
@@ -3838,7 +3837,7 @@ void KMMainWidget::updateFolderMenu()
                                   && !multiFolder );
   mEmptyFolderAction->setText( (mCurrentFolder && kmkernel->folderIsTrash(mCurrentFolder->collection()))
     ? i18n("E&mpty Trash") : i18n("&Move All Messages to Trash") );
-  mRemoveFolderAction->setEnabled( mCurrentFolder
+   mAkonadiStandardActionManager->action( Akonadi::StandardActionManager::DeleteCollections )->setEnabled( mCurrentFolder
                                    && !multiFolder
                                    && ( mCurrentFolder->collection().rights() & Collection::CanDeleteCollection )
                                    && !mCurrentFolder->isSystemFolder()
@@ -3858,7 +3857,7 @@ void KMMainWidget::updateFolderMenu()
   actionlist.clear();
 
   const bool isASearchFolder = mCurrentFolder && mCurrentFolder->collection().resource() == QLatin1String( "akonadi_search_resource" );
-  mRemoveFolderAction->setText( isASearchFolder ? i18n("&Delete Search") : i18n("&Delete Folder") );
+   mAkonadiStandardActionManager->action( Akonadi::StandardActionManager::DeleteCollections )->setText( isASearchFolder ? i18n("&Delete Search") : i18n("&Delete Folder") );
 
   mArchiveFolderAction->setEnabled( mCurrentFolder && !multiFolder && folderWithContent );
 

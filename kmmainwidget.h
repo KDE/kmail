@@ -596,8 +596,7 @@ private:
     //  QPopupMenu *mMessageMenu;
     KMail::SearchWindow *mSearchWin;
 
-    KAction *mRemoveFolderAction,
-      *mExpireFolderAction,
+    KAction *mExpireFolderAction,
       *mEmptyFolderAction, *mMarkAllAsReadAction, *mFolderMailingListPropertiesAction,
       *mShowFolderShortcutDialogAction,
       *mArchiveFolderAction,
