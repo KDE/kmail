@@ -282,7 +282,7 @@ void CollectionAclPage::init()
 
   mStack->addWidget( mACLWidget );
 
-  connect( mListView, SIGNAL( itemActivated( QTreeWidgetItem*, int ) ),
+  connect( mListView, SIGNAL( itemDoubleClicked( QTreeWidgetItem*, int ) ),
        SLOT( slotEditACL( QTreeWidgetItem* ) ) );
   connect( mListView, SIGNAL( itemSelectionChanged() ),
        SLOT( slotSelectionChanged() ) );
