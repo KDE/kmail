@@ -417,6 +417,7 @@ AccountsPageReceivingTab::AccountsPageReceivingTab( QWidget * parent )
   mAccountsReceiving.mAccountList->agentFilterProxyModel()->addMimeTypeFilter( KMime::Message::mimeType() );
   mAccountsReceiving.mAccountList->agentFilterProxyModel()->addCapabilityFilter( "Resource" ); // show only resources, no agents
   mAccountsReceiving.mAccountList->agentFilterProxyModel()->excludeCapabilities( "MailTransport" );
+  mAccountsReceiving.mAccountList->agentFilterProxyModel()->excludeCapabilities( "Notes" );
 
   mAccountsReceiving.mFilterAccount->setProxy( mAccountsReceiving.mAccountList->agentFilterProxyModel() );
 
@@ -565,6 +566,7 @@ void AccountsPage::ReceivingTab::slotAddAccount()
   filter->addMimeTypeFilter( "message/rfc822" );
   filter->addCapabilityFilter( "Resource" );
   filter->excludeCapabilities( "MailTransport" );
+  filter->excludeCapabilities( "Notes" );
   if ( dlg.exec() ) {
     const Akonadi::AgentType agentType = dlg.agentType();
 
