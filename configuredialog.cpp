@@ -562,6 +562,7 @@ void AccountsPage::ReceivingTab::slotAddAccount()
   Akonadi::AgentFilterProxyModel* filter = dlg.agentFilterProxyModel();
   filter->addMimeTypeFilter( "message/rfc822" );
   filter->addCapabilityFilter( "Resource" );
+  filter->excludeCapabilities( "MailTransport" );
   if ( dlg.exec() ) {
     const Akonadi::AgentType agentType = dlg.agentType();
 
