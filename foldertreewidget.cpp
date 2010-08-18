@@ -55,9 +55,11 @@ public:
      quotaModel( 0 ),
      readableproxy( 0 ),
      filterTreeViewModel( 0 ),
-     entityOrderProxy( 0 )
+     entityOrderProxy( 0 ),
+     dontKeyFilter( false )
   {
   }
+  QString filter;
   Akonadi::StatisticsProxyModel *filterModel;
   FolderTreeView *folderTreeView;
   Akonadi::QuotaColorProxyModel *quotaModel;
@@ -66,7 +68,7 @@ public:
   EntityCollectionOrderProxyModel *entityOrderProxy;
   KLineEdit *filterFolderLineEdit;
   QLabel *label;
-  QString filter;
+  bool dontKeyFilter;
 };
 
 
@@ -133,6 +135,9 @@ FolderTreeWidget::FolderTreeWidget( QWidget *parent, KXMLGUIClient *xmlGuiClient
     d->folderTreeView->setSelectionModel( new QItemSelectionModel( d->entityOrderProxy, this ) );
 
   lay->addWidget( d->folderTreeView );
+
+  d->dontKeyFilter = ( options & DontKeyFilter );
+
   if ( ( options & UseLineEditForFiltering ) ) {
     connect( d->filterFolderLineEdit, SIGNAL( textChanged(QString) ),
              d->filterTreeViewModel, SLOT( setFilterFixedString(QString) ) );
@@ -322,6 +327,9 @@ void FolderTreeWidget::slotManualSortingChanged( bool active )
 
 bool FolderTreeWidget::eventFilter( QObject* o, QEvent *e )
 {
+  if ( d->dontKeyFilter )
+    return false;
+
   if ( e->type() == QEvent::KeyPress ) {
     const QKeyEvent* const ke = static_cast<QKeyEvent*>( e );
     switch( ke->key() )

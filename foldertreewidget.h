@@ -52,7 +52,8 @@ public:
     ShowUnreadCount = 1,
     UseLineEditForFiltering = 2,
     UseDistinctSelectionModel = 4,
-    ShowCollectionStatisticAnimation = 8
+    ShowCollectionStatisticAnimation = 8,
+    DontKeyFilter = 16
   };
   Q_DECLARE_FLAGS( TreeViewOptions, TreeViewOption )
 
