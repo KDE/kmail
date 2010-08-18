@@ -416,6 +416,8 @@ AccountsPageReceivingTab::AccountsPageReceivingTab( QWidget * parent )
 
   mAccountsReceiving.mAccountList->agentFilterProxyModel()->addMimeTypeFilter( KMime::Message::mimeType() );
   mAccountsReceiving.mAccountList->agentFilterProxyModel()->addCapabilityFilter( "Resource" ); // show only resources, no agents
+  mAccountsReceiving.mAccountList->agentFilterProxyModel()->excludeCapabilities( "MailTransport" );
+
   mAccountsReceiving.mFilterAccount->setProxy( mAccountsReceiving.mAccountList->agentFilterProxyModel() );
 
   ConfigAgentDelegate *configDelegate = new ConfigAgentDelegate( mAccountsReceiving.mAccountList->view() );
