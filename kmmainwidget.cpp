@@ -1394,9 +1394,8 @@ void KMMainWidget::slotShowFolderShortcutDialog()
   if ( !mFolderTreeWidget || !mCurrentFolder )
     return;
 
-  MessageViewer::AutoQPointer<KMail::FolderShortcutDialog> shorty;
-  shorty = new KMail::FolderShortcutDialog( mCurrentFolder, kmkernel->getKMMainWidget(),
-                                            mFolderTreeWidget );
+  MessageViewer::AutoQPointer<KMail::FolderShortcutDialog> shorty( new KMail::FolderShortcutDialog( mCurrentFolder, kmkernel->getKMMainWidget(),
+                                                                                                    mFolderTreeWidget ) );
   shorty->exec();
 }
 
