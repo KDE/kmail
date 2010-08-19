@@ -409,7 +409,7 @@ void TemplateParser::processWithTemplate( const QString &tmpl )
         }
 
       } else if ( cmd.startsWith( "OADDRESSEESADDR" ) ) {
-        kdDebug() << "Command: OADDRESSEESADDR";
+        kdDebug() << "Command: OADDRESSEESADDR" << endl;
         i += strlen( "OADDRESSEESADDR" );
         const QString to = mOrigMsg->to();
         const QString cc = mOrigMsg->cc();
