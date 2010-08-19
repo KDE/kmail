@@ -19,7 +19,7 @@
 #ifndef ENTITYCOLLECTIONORDERPROXYMODEL_H
 #define ENTITYCOLLECTIONORDERPROXYMODEL_H
 
-#include <akonadi_next/entityorderproxymodel.h>
+#include <akonadi/entityorderproxymodel.h>
 
 class EntityCollectionOrderProxyModel : public Akonadi::EntityOrderProxyModel
 {
