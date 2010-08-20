@@ -18,6 +18,7 @@
 
 #include "kmfolderindex.h"
 #include "kmfolder.h"
+#include "kmfoldertype.h"
 #include <config.h>
 #include <qfileinfo.h>
 #include <qtimer.h>
@@ -213,9 +214,11 @@ int KMFolderIndex::writeIndex( bool createEmptyIndex )
   return 0;
 }
 
-
 bool KMFolderIndex::readIndex()
 {
+  if ( contentsType() != KMail::ContentsTypeMail ) {
+    kdDebug(5006) << k_funcinfo << "Reading index for " << label() << endl;
+  }
   Q_INT32 len;
   KMMsgInfo* mi;
 
@@ -239,15 +242,20 @@ bool KMFolderIndex::readIndex()
   {
     mi = 0;
     if(version >= 1505) {
-      if(!fread(&len, sizeof(len), 1, mIndexStream))
+      if(!fread(&len, sizeof(len), 1, mIndexStream)) {
+        // Seems to be normal?
+        // kdDebug(5006) << k_funcinfo << " Unable to read length field!" << endl;
         break;
+      }
 
       if (mIndexSwapByteOrder)
         len = kmail_swap_32(len);
 
       off_t offs = ftell(mIndexStream);
-      if(fseek(mIndexStream, len, SEEK_CUR))
+      if(fseek(mIndexStream, len, SEEK_CUR)) {
+        kdDebug(5006) << k_funcinfo << " Unable to seek to the end of the message!" << endl;
         break;
+      }
       mi = new KMMsgInfo(folder(), offs, len);
     }
     else
@@ -256,16 +264,18 @@ bool KMFolderIndex::readIndex()
       fgets(line.data(), MAX_LINE, mIndexStream);
       if (feof(mIndexStream)) break;
       if (*line.data() == '\0') {
-	  fclose(mIndexStream);
-	  mIndexStream = 0;
-	  clearIndex();
-	  return false;
+        fclose(mIndexStream);
+        mIndexStream = 0;
+        clearIndex();
+        return false;
       }
       mi = new KMMsgInfo(folder());
       mi->compat_fromOldIndexString(line, mConvertToUtf8);
     }
-    if(!mi)
+    if(!mi) {
+      kdDebug(5006) << k_funcinfo << " Unable to create message info object!" << endl;
       break;
+    }
 
     if (mi->isDeleted())
     {
@@ -303,6 +313,9 @@ bool KMFolderIndex::readIndex()
   }
 
   mTotalMsgs = mMsgList.count();
+  if ( contentsType() != KMail::ContentsTypeMail ) {
+    kdDebug(5006) << k_funcinfo << "Done reading the index for " << label() << ", we have " << mTotalMsgs << " messages." << endl;
+  }
   return true;
 }
 

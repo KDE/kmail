@@ -551,10 +551,12 @@ QMap<Q_UINT32, QString> KMailICalIfaceImpl::incidencesKolab( const QString& mime
 
   f->open( "incidences" );
 
+  kdDebug(5006) << k_funcinfo << "Getting incidences (" << mimetype << ") for folder " << f->label()
+                << ", starting with index " << startIndex << ", " << nbMessages << " messages." << endl;
+  kdDebug(5006) << "The folder has " << f->count() << " messages." << endl;
+
   int stopIndex = nbMessages == -1 ? f->count() :
                   QMIN( f->count(), startIndex + nbMessages );
-  kdDebug(5006) << "KMailICalIfaceImpl::incidencesKolab( " << mimetype << ", "
-                << resource << " ) from " << startIndex << " to " << stopIndex << endl;
 
   for(int i = startIndex; i < stopIndex; ++i) {
 #if 0
@@ -593,6 +595,8 @@ QMap<Q_UINT32, QString> KMailICalIfaceImpl::incidencesKolab( const QString& mime
 #else
       delete msg;
 #endif
+    } else {
+      kdDebug(5006) << k_funcinfo << " Unable to retrieve message " << i << " for incidence!" << endl;
     }
   }
   f->close( "incidences" );
@@ -1837,9 +1841,9 @@ void KMailICalIfaceImpl::readConfig()
     if ( mNotes->folderType() == KMFolderTypeCachedImap )
       static_cast<KMFolderCachedImap *>( mNotes->storage() )->updateAnnotationFolderType();
 
-    kdDebug(5006) << k_funcinfo << "mCalendar=" << mCalendar << " " << mCalendar->location() << endl;
-    kdDebug(5006) << k_funcinfo << "mContacts=" << mContacts << " " << mContacts->location() << endl;
-    kdDebug(5006) << k_funcinfo << "mNotes=" << mNotes << " " << mNotes->location() << endl;
+    //kdDebug(5006) << k_funcinfo << "mCalendar=" << mCalendar << " " << mCalendar->location() << endl;
+    //kdDebug(5006) << k_funcinfo << "mContacts=" << mContacts << " " << mContacts->location() << endl;
+    //kdDebug(5006) << k_funcinfo << "mNotes=" << mNotes << " " << mNotes->location() << endl;
 
     // Find all extra folders
     QStringList folderNames;

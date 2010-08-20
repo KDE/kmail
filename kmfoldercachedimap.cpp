@@ -581,6 +581,9 @@ void KMFolderCachedImap::rememberDeletion( int idx )
 /* Reimplemented from KMFolderMaildir */
 void KMFolderCachedImap::removeMsg(int idx, bool imapQuiet)
 {
+  if ( contentsType() != ContentsTypeMail ) {
+    kdDebug(5006) << k_funcinfo << "Deleting message with idx " << idx << " in folder " << label() << endl;
+  }
   uidMapDirty = true;
   rememberDeletion( idx );
   // Remove it from disk
@@ -1695,6 +1698,10 @@ bool KMFolderCachedImap::deleteMessages()
   }
 
   if( !msgsForDeletion.isEmpty() ) {
+    if ( contentsType() != ContentsTypeMail ) {
+      kdDebug(5006) << k_funcinfo << label() << " Going to locally delete " << msgsForDeletion.count()
+                    << " messages, with the uids " << uids.join( "," ) << endl;
+    }
 #if MAIL_LOSS_DEBUGGING
       if ( KMessageBox::warningYesNo(
              0, i18n( "<qt><p>Mails on the server in folder <b>%1</b> were deleted. "

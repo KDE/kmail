@@ -526,11 +526,16 @@ KMMessage* FolderStorage::getMsg(int idx)
 //-----------------------------------------------------------------------------
 KMMessage* FolderStorage::readTemporaryMsg(int idx)
 {
-  if(!(idx >= 0 && idx <= count()))
+  if(!(idx >= 0 && idx <= count())) {
+    kdDebug(5006) << k_funcinfo << "Invalid index " << idx << "!" << endl;
     return 0;
+  }
 
   KMMsgBase* mb = getMsgBase(idx);
-  if (!mb) return 0;
+  if (!mb) {
+    kdDebug(5006) << k_funcinfo << "getMsgBase() for " << idx << " failed!" << endl;
+    return 0;
+  }
 
   unsigned long sernum = mb->getMsgSerNum();
 
@@ -546,7 +551,11 @@ KMMessage* FolderStorage::readTemporaryMsg(int idx)
     msg = new KMMessage(*(KMMsgInfo*)mb);
     msg->setMsgSerNum(sernum); // before fromDwString so that readyToShow uses the right sernum
     msg->setComplete( true );
-    msg->fromDwString(getDwString(idx));
+    const DwString msgString = getDwString( idx );
+    if ( msgString.size() <= 0 ) {
+      kdDebug(5006) << k_funcinfo << " Calling getDwString() failed!" << endl;
+    }
+    msg->fromDwString( msgString );
   }
   msg->setEnableUndo(undo);
   return msg;
