@@ -44,7 +44,7 @@ public:
   * Will also set the Akonadi::MDNStateAttribute on the given item
   *  to what the user has selected.
   */
-  QPair< bool, KMime::MDN::SendingMode > checkAndSetMDNInfo( Akonadi::Item item, KMime::MDN::DispositionType d );
+  QPair< bool, KMime::MDN::SendingMode > checkAndSetMDNInfo( const Akonadi::Item &item, KMime::MDN::DispositionType d );
 
   Akonadi::MDNStateAttribute::MDNSentState dispositionToSentState( KMime::MDN::DispositionType d );
 

@@ -118,7 +118,7 @@ MessageComposer::MDNAdvice MDNAdviceHelper::questionIgnoreSend( const QString &t
   return rc;
 }
 
-QPair< bool, KMime::MDN::SendingMode > MDNAdviceHelper::checkAndSetMDNInfo( Akonadi::Item item, KMime::MDN::DispositionType d )
+QPair< bool, KMime::MDN::SendingMode > MDNAdviceHelper::checkAndSetMDNInfo( const Akonadi::Item& item, KMime::MDN::DispositionType d )
 {
   KMime::Message::Ptr msg = MessageCore::Util::message( item );
   

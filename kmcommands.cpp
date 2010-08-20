@@ -201,12 +201,6 @@ KMCommand::Result KMCommand::result() const
   return mResult;
 }
 
-void KMCommand::start()
-{
-  QTimer::singleShot( 0, this, SLOT( slotStart() ) );
-}
-
-
 const QList<Akonadi::Item> KMCommand::retrievedMsgs() const
 {
   return mRetrievedMsgs;
@@ -226,7 +220,7 @@ QWidget *KMCommand::parentWidget() const
 
 int KMCommand::mCountJobs = 0;
 
-void KMCommand::slotStart()
+void KMCommand::start()
 {
   connect( this, SIGNAL( messagesTransfered( KMCommand::Result ) ),
            this, SLOT( slotPostTransfer( KMCommand::Result ) ) );
@@ -298,7 +292,6 @@ void KMCommand::transferSelectedMsgs()
   }
 
   // TODO once the message list is based on ETM and we get the more advanced caching we need to make that check a bit more clever
-#include <mdnstateattribute.h>
   if ( !mFetchScope.isEmpty() ) {
 #if 0 //TODO port to akonadi
     if ( thisMsg->parent() && !thisMsg->isComplete() &&

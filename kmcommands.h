@@ -119,9 +119,6 @@ private:
   void transferSelectedMsgs();
 
 private slots:
-  /** Called from start() via a single shot timer. */
-  virtual void slotStart();
-
   void slotPostTransfer( KMCommand::Result result );
   /** the msg has been transferred */
   void slotMsgTransfered(const Akonadi::Item::List& msgs);
