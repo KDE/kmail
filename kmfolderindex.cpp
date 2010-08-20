@@ -328,6 +328,15 @@ bool KMFolderIndex::readIndexHeader(int *gv)
       return false; // index file has invalid header
   if(gv)
       *gv = indexVersion;
+
+  // Check if the index is corrupted ("not compactable") and recreate it if necessary. See
+  // FolderStorage::getMsg() for the detection code.
+  if ( !mCompactable ) {
+    kdWarning(5006) << "Index file " << indexLocation() << " is corrupted!!. Re-creating it." << endl;
+    recreateIndex( false /* don't call readIndex() afterwards */ );
+    return false;
+  }
+
   if (indexVersion < 1505 ) {
       if(indexVersion == 1503) {
 	  kdDebug(5006) << "Converting old index file " << indexLocation() << " to utf-8" << endl;
@@ -496,7 +505,7 @@ KMMsgInfo* KMFolderIndex::setIndexEntry( int idx, KMMessage *msg )
   return msgInfo;
 }
 
-void KMFolderIndex::recreateIndex()
+void KMFolderIndex::recreateIndex( bool readIndexAfterwards )
 {
   kapp->setOverrideCursor(KCursor::arrowCursor());
   KMessageBox::error(0,
@@ -504,7 +513,13 @@ void KMFolderIndex::recreateIndex()
             "but some information, including status flags, will be lost.").arg(name()));
   kapp->restoreOverrideCursor();
   createIndexFromContents();
-  readIndex();
+  if ( readIndexAfterwards ) {
+    readIndex();
+  }
+
+  // Clear the corrupted flag
+  mCompactable = true;
+  writeConfig();
 }
 
 void KMFolderIndex::updateInvitationAndAddressFieldsFromContents()
