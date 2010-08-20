@@ -28,7 +28,6 @@ include_directories(
   ${CMAKE_SOURCE_DIR}/korganizer
   ${GPGME_INCLUDES}
   ${Boost_INCLUDE_DIR}
-  ${CMAKE_SOURCE_DIR}/akonadi/
   ${CMAKE_CURRENT_BINARY_DIR}/../ontologies
   ${NEPOMUK_INCLUDES}
   ${SOPRANO_INCLUDE_DIR}
