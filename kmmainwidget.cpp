@@ -95,7 +95,6 @@
 #include <akonadi/favoritecollectionsmodel.h>
 #include <akonadi/itemfetchscope.h>
 #include <akonadi/control.h>
-#include <akonadi/entitytreeview.h>
 #include <akonadi/collectiondialog.h>
 #include <akonadi/collectionstatistics.h>
 #include <akonadi/favoritecollectionsmodel.h>
