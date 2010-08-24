@@ -48,6 +48,7 @@ public:
    */
   enum IndexStatus { IndexOk,
                      IndexMissing,
+                     IndexCorrupt,
                      IndexTooOld
   };
 
@@ -81,6 +82,15 @@ public:
   virtual int writeIndex( bool createEmptyIndex = false );
 
   void recreateIndex( bool readIndexAfterwards = true );
+  void silentlyRecreateIndex();
+
+  /** Tests whether the contents of this folder is newer than the index.
+      Should return IndexTooOld if the index is older than the contents.
+      Should return IndexMissing if there is contents but no index.
+      Should return IndexOk if the folder doesn't exist anymore "physically"
+      or if the index is not older than the contents.
+  */
+  virtual IndexStatus indexStatus() = 0;
 
 public slots:
   /** Incrementally update the index if possible else call writeIndex */
@@ -98,14 +108,6 @@ protected:
   virtual int createIndexFromContents() = 0;
 
   bool updateIndexStreamPtr(bool just_close=FALSE);
-
-  /** Tests whether the contents of this folder is newer than the index.
-      Should return IndexTooOld if the index is older than the contents.
-      Should return IndexMissing if there is contents but no index.
-      Should return IndexOk if the folder doesn't exist anymore "physically"
-      or if the index is not older than the contents.
-  */
-  virtual IndexStatus indexStatus() = 0;
 
     /** Inserts messages into the message dictionary by iterating over the
      * message list. The messages will get new serial numbers. This is only

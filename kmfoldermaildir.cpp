@@ -905,6 +905,9 @@ int KMFolderMaildir::createIndexFromContents()
 
 KMFolderIndex::IndexStatus KMFolderMaildir::indexStatus()
 {
+  if ( !mCompactable )
+    return KMFolderIndex::IndexCorrupt;
+
   QFileInfo new_info(location() + "/new");
   QFileInfo cur_info(location() + "/cur");
   QFileInfo index_info(indexLocation());

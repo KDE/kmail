@@ -19,6 +19,7 @@
 #include "kmfolderindex.h"
 #include "kmfolder.h"
 #include "kmfoldertype.h"
+#include "kcursorsaver.h"
 #include <config.h>
 #include <qfileinfo.h>
 #include <qtimer.h>
@@ -468,6 +469,9 @@ bool KMFolderIndex::updateIndexStreamPtr(bool)
 
 KMFolderIndex::IndexStatus KMFolderIndex::indexStatus()
 {
+    if ( !mCompactable )
+      return IndexCorrupt;
+
     QFileInfo contInfo(location());
     QFileInfo indInfo(indexLocation());
 
@@ -523,7 +527,7 @@ void KMFolderIndex::recreateIndex( bool readIndexAfterwards )
   kapp->setOverrideCursor(KCursor::arrowCursor());
   KMessageBox::information(0,
        i18n("The mail index for '%1' is corrupted and will be regenerated now, "
-            "but some information, including status flags, might get lost.").arg(name()));
+            "but some information, like status flags, might get lost.").arg(name()));
   kapp->restoreOverrideCursor();
   createIndexFromContents();
   if ( readIndexAfterwards ) {
@@ -533,6 +537,17 @@ void KMFolderIndex::recreateIndex( bool readIndexAfterwards )
   // Clear the corrupted flag
   mCompactable = true;
   writeConfig();
+}
+
+void KMFolderIndex::silentlyRecreateIndex()
+{
+  Q_ASSERT( !isOpened() );
+  open( "silentlyRecreateIndex" );
+  KCursorSaver busy( KBusyPtr::busy() );
+  createIndexFromContents();
+  mCompactable = true;
+  writeConfig();
+  close( "silentlyRecreateIndex" );
 }
 
 void KMFolderIndex::updateInvitationAndAddressFieldsFromContents()

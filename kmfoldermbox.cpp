@@ -523,6 +523,9 @@ int KMFolderMbox::unlock()
 //-----------------------------------------------------------------------------
 KMFolderIndex::IndexStatus KMFolderMbox::indexStatus()
 {
+  if ( !mCompactable )
+    return KMFolderIndex::IndexCorrupt;
+
   QFileInfo contInfo(location());
   QFileInfo indInfo(indexLocation());
 

@@ -1525,6 +1525,7 @@ void KMKernel::init()
   the_folderMgr     = new KMFolderMgr(foldersPath);
   the_imapFolderMgr = new KMFolderMgr( KMFolderImap::cacheLocation(), KMImapDir);
   the_dimapFolderMgr = new KMFolderMgr( KMFolderCachedImap::cacheLocation(), KMDImapDir);
+  recreateCorruptIndexFiles();
 
   the_searchFolderMgr = new KMFolderMgr(locateLocal("data","kmail/search"), KMSearchDir);
   KMFolder *lsf = the_searchFolderMgr->find( i18n("Last Search") );
@@ -1686,6 +1687,43 @@ void KMKernel::cleanupImapFolders()
     cfld->close("kmkernel");
   }
   the_dimapFolderMgr->quiet( false );
+}
+
+void KMKernel::recreateCorruptIndexFiles()
+{
+  QValueList<QGuardedPtr<KMFolder> > folders;
+  QValueList<KMFolderIndex*> foldersWithBrokenIndex;
+  QStringList strList;
+  the_folderMgr->createFolderList( &strList, &folders );
+  the_imapFolderMgr->createFolderList( &strList, &folders );
+  the_dimapFolderMgr->createFolderList( &strList, &folders );
+  for ( int i = 0; folders.at(i) != folders.end(); i++ ) {
+    KMFolder * const folder = *folders.at(i);
+    if ( !folder || folder->isDir() || folder->isOpened() )
+      continue;
+    KMFolderIndex * const index = dynamic_cast<KMFolderIndex*>( folder->storage() );
+    if ( index && index->indexStatus() != KMFolderIndex::IndexOk ) {
+      foldersWithBrokenIndex.append( index );
+    }
+  }
+
+  if ( !foldersWithBrokenIndex.isEmpty() ) {
+    QStringList folderNames;
+    for ( uint i = 0; i < foldersWithBrokenIndex.size(); i++ ) {
+      folderNames << foldersWithBrokenIndex[i]->label();
+    }
+
+    KMessageBox::informationList( 0, i18n( "There is a problem with the mail index of the following "
+                                           "folders, the indices will now be regenerated.\n"
+                                           "This can happen because the index files are out of date, missing or corrupted.\n"
+                                           "Contact your administrator if this happens frequently.\n"
+                                           "Some information, like status flags, might get lost." ),
+                                  folderNames, i18n( "Problem with mail indices" ) );
+
+    for ( uint i = 0; i < foldersWithBrokenIndex.size(); i++ ) {
+      foldersWithBrokenIndex[i]->silentlyRecreateIndex();
+    }
+  }
 }
 
 bool KMKernel::doSessionManagement()
