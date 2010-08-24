@@ -1277,8 +1277,7 @@ void KMFolderTree::addChildFolder( KMFolder *folder, QWidget * parent )
     if (!aFolder->createChildFolder())
       return;
     if ( !folderHasCreateRights( aFolder ) ) {
-      // FIXME: change this message to "Cannot create folder under ..." or similar
-      const QString message = i18n( "<qt>Cannot create folder <b>%1</b> because of insufficient "
+      const QString message = i18n( "<qt>Cannot create folder under <b>%1</b> because of insufficient "
                                     "permissions on the server. If you think you should be able to create "
                                     "subfolders here, ask your administrator to grant you rights to do so."
                                     "</qt> " ).arg(aFolder->label());
