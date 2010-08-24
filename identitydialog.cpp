@@ -95,7 +95,11 @@ namespace KMail {
     : KDialog( parent )
   {
     setCaption( i18n("Edit Identity") );
+#ifndef KDEPIM_MOBILE_UI
     setButtons( Ok|Cancel|Help );
+#else
+    setButtons( Ok|Cancel );
+#endif
     setDefaultButton( Ok );
 
     // tmp. vars:
