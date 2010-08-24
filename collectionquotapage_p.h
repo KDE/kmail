@@ -34,7 +34,7 @@
 #define COLLECTIONQUOTAPAGE_P_H
 
 
-#include <qlabel.h>
+#include <QWidget>
 
 class QProgressBar;
 class QuotaWidget : public QWidget {
