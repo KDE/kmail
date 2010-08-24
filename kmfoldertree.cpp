@@ -1255,7 +1255,7 @@ static bool folderHasCreateRights( const KMFolder *folder )
   } else if ( folder && folder->folderType() == KMFolderTypeCachedImap ) {
     const KMFolderCachedImap *dimapFolder = static_cast<const KMFolderCachedImap*>( folder->storage() );
     createRights = dimapFolder->userRightsState() != KMail::ACLJobs::Ok ||
-      ( dimapFolder->userRightsState() != KMail::ACLJobs::Ok &&
+      ( dimapFolder->userRightsState() == KMail::ACLJobs::Ok &&
         ( dimapFolder->userRights() & KMail::ACLJobs::Create ) );
   }
   return createRights;
