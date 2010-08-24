@@ -521,9 +521,9 @@ KMMsgInfo* KMFolderIndex::setIndexEntry( int idx, KMMessage *msg )
 void KMFolderIndex::recreateIndex( bool readIndexAfterwards )
 {
   kapp->setOverrideCursor(KCursor::arrowCursor());
-  KMessageBox::error(0,
+  KMessageBox::information(0,
        i18n("The mail index for '%1' is corrupted and will be regenerated now, "
-            "but some information, including status flags, will be lost.").arg(name()));
+            "but some information, including status flags, might get lost.").arg(name()));
   kapp->restoreOverrideCursor();
   createIndexFromContents();
   if ( readIndexAfterwards ) {
