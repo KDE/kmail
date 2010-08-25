@@ -47,12 +47,14 @@ class MailingListFolderPropertiesDialog : public KDialog
 public:
   MailingListFolderPropertiesDialog( QWidget *parent, const QSharedPointer<FolderCollection>& folder );
   ~MailingListFolderPropertiesDialog() {}
+
 protected:
   void load();
   bool save();
 
 protected slots:
   void slotOk();
+  void slotFetchDone( KJob* job );
 
 private slots:
   /*
