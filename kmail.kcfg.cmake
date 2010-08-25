@@ -156,10 +156,10 @@
         <label>Show folder quick search line edit</label>
         <default>false</default>
       </entry>
-      <entry name="HideLocalInbox" type="Bool">
+      <!-- <entry name="HideLocalInbox" type="Bool">
         <label>Hide local inbox if unused</label>
         <default>true</default>
-      </entry>
+      </entry> -->
     </group>
 
     <group name="Composer">
