@@ -358,6 +358,7 @@ void MailingListFolderPropertiesDialog::fillEditBox()
 
 void MailingListFolderPropertiesDialog::slotInvokeHandler()
 {
+  save();
   KMCommand *command =0;
   switch ( mAddressCombo->currentIndex() ) {
   case 0:
