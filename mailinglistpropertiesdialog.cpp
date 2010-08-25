@@ -215,7 +215,7 @@ void MailingListFolderPropertiesDialog::slotDetectMailingList()
   if ( curMsgIdx > 0 ) {
     KMMessage *mes = mFolder->getMsg( curMsgIdx );
     if ( mes )
-      mMailingList = MailingList::detect( mes );
+      mMailingList = MessageCore::MailingList::detect( mes );
   }
   */
 
@@ -228,7 +228,7 @@ void MailingListFolderPropertiesDialog::slotDetectMailingList()
       KMMessage *mes = mFolder->getMsg( i );
       if ( !mes )
         continue;
-      mMailingList = MailingList::detect( mes );
+      mMailingList = MessageCore::MailingList::detect( mes );
       if ( mMailingList.features() & MailingList::Post )
         break;
     }
