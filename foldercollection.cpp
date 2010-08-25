@@ -434,10 +434,7 @@ void FolderCollection::removeCollection()
 void FolderCollection::slotDeletionCollectionResult( KJob * job )
 {
   if ( job->error() ) {
-    if ( static_cast<KIO::Job*>( job )->ui() ) {
-      // handle errors
-      static_cast<KIO::Job*>(job)->ui()->showErrorMessage();
-    }
+    KMail::Util::showJobErrorMessage( job );
   }
 }
 

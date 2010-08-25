@@ -99,9 +99,7 @@ void FolderCollectionMonitor::expunge( const Akonadi::Collection & col )
 void FolderCollectionMonitor::slotExpungeJob( KJob *job )
 {
   if ( job->error() ) {
-    if ( static_cast<KIO::Job*>( job )->ui() )
-      static_cast<KIO::Job*>(job)->ui()->showErrorMessage();
-    kDebug()<<" job->errorString() :"<<job->errorString();
+    KMail::Util::showJobErrorMessage( job );
     return;
   }
   Akonadi::ItemFetchJob *fjob = dynamic_cast<Akonadi::ItemFetchJob*>( job );
@@ -117,11 +115,7 @@ void FolderCollectionMonitor::slotExpungeJob( KJob *job )
 
 void FolderCollectionMonitor::slotDeleteJob( KJob *job )
 {
-  if ( job->error() ) {
-    if ( static_cast<KIO::Job*>( job )->ui() )
-      static_cast<KIO::Job*>(job)->ui()->showErrorMessage();
-    kDebug()<<" job->errorString() :"<<job->errorString();
-    return;
-  }
+  if ( job->error() )
+    KMail::Util::showJobErrorMessage( job );
 }
 

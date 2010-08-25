@@ -116,6 +116,8 @@ namespace Util {
 
     QString fullCollectionPath( const Akonadi::Collection& collection );
 
+    void showJobErrorMessage( KJob *job );
+
 }
 }
 

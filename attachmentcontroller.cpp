@@ -31,6 +31,7 @@
 #include "kmcomposewin.h"
 #include "kmcommands.h"
 #include "foldercollection.h"
+#include "util.h"
 
 #include <akonadi/itemfetchjob.h>
 #include <kio/jobuidelegate.h>
@@ -123,9 +124,7 @@ void AttachmentController::addAttachmentItems( const Akonadi::Item::List &items 
 void AttachmentController::slotFetchJob( KJob *job )
 {
   if ( job->error() ) {
-    if ( static_cast<KIO::Job*>( job )->ui() ) {
-      static_cast<KIO::Job*>(job)->ui()->showErrorMessage();
-    }
+    KMail::Util::showJobErrorMessage( job );
     return;
   }
   Akonadi::ItemFetchJob *fjob = dynamic_cast<Akonadi::ItemFetchJob*>( job );

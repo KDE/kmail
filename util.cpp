@@ -54,6 +54,8 @@
 #include <KStandardDirs>
 #include <kascii.h>
 #include <KCharsets>
+#include <KJob>
+#include <kio/jobuidelegate.h>
 
 
 #include <stdlib.h>
@@ -246,3 +248,14 @@ QString KMail::Util::fullCollectionPath( const Akonadi::Collection& collection )
   }
   return fullPath;
 }
+
+void KMail::Util::showJobErrorMessage( KJob *job )
+{
+  if ( job->error() ) {
+    if ( static_cast<KIO::Job*>( job )->ui() )
+      static_cast<KIO::Job*>(job)->ui()->showErrorMessage();
+    else
+      kDebug()<<" job->errorString() :"<<job->errorString();
+  }
+}
+
