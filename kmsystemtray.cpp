@@ -67,7 +67,7 @@ KMSystemTray::KMSystemTray(QObject *parent)
     mSendQueued( 0 )
 {
   kDebug() << "Initting systray";
-  setToolTipTitle( "KMail" );
+  setToolTipTitle( i18n("KMail") );
   setToolTipIconByName( "kmail" );
   setIconByName( "kmail" );
 
