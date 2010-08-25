@@ -72,12 +72,12 @@
       </entry>
     </group>
 
-    <group name="ConfigurationDialogRestrictions">
+ <!--    <group name="ConfigurationDialogRestrictions">
       <entry name="MinimumCheckInterval" type="Int">
         <default>1</default>
         <whatsthis>This setting allows administrators to set a minimum delay between two mail checks. The user will not be able to choose a value smaller than the value set here.</whatsthis>
       </entry>
-    </group>
+    </group> -->
 
     <group name="FolderSelectionDialog">
       <entry name="LastSelectedFolder" type="LongLong">
