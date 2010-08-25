@@ -182,7 +182,7 @@ void MailingListFolderPropertiesDialog::load()
 }
 
 //-----------------------------------------------------------------------------
-bool MailingListFolderPropertiesDialog::save()
+void MailingListFolderPropertiesDialog::save()
 {
   if( mFolder )
   {
@@ -191,7 +191,6 @@ bool MailingListFolderPropertiesDialog::save()
     fillMLFromWidgets();
     mFolder->setMailingList( mMailingList );
   }
-  return true;
 }
 
 //----------------------------------------------------------------------------

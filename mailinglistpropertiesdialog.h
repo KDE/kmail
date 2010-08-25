@@ -50,7 +50,7 @@ public:
 
 protected:
   void load();
-  bool save();
+  void save();
 
 protected slots:
   void slotOk();
