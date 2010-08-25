@@ -42,7 +42,6 @@ Name[zh_TW]=KMail 檢視
 Type=Application
 Exec=kmail --view %u
 Icon=kmail
-X-DocPath=kmail/index.html
 NoDisplay=true
 MimeType=message/rfc822;application/mbox;application/x-mimearchive;
 
