@@ -942,7 +942,7 @@ void KMKernel::checkMailOnStartup()
       type.synchronize();
     }
 
-    if ( group.readEntry( "OfflineOnShutdown", false ) ) {
+    if ( group.readEntry( "OfflineOnShutdown", true ) ) {
       if ( !type.isOnline() )
         type.setIsOnline( true );
     }
@@ -1939,7 +1939,7 @@ void KMKernel::stopAgentInstance()
   const Akonadi::AgentInstance::List lst = KMail::Util::agentInstances();
   foreach( Akonadi::AgentInstance type, lst ) {
     KConfigGroup group( KMKernel::config(), resourceGroupPattern.arg( type.identifier() ) );
-    if ( group.readEntry( "OfflineOnShutdown", false ) )
+    if ( group.readEntry( "OfflineOnShutdown", true ) )
       type.setIsOnline( false );
   }
 }
