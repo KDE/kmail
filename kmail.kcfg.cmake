@@ -135,14 +135,14 @@
       </entry>
     </group>
 
-    <group name="Network">
+    <!-- <group name="Network">
       <entry name="MaxConnectionsPerHost" type="Int">
         <label>Maximal number of connections per host</label>
         <whatsthis>This can be used to restrict the number of connections per host while checking for new mail. By default the number of connections is unlimited (0).</whatsthis>
         <default>0</default>
         <min>0</min>
       </entry>
-    </group>
+    </group> -->
 
     <group name="UserInterface">
       <entry name="EnableFolderQuickSearch" type="Bool">
