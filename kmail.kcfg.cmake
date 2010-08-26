@@ -253,10 +253,6 @@
 
       <entry name="CustomTemplates" type="StringList" key="CustomTemplates" />
 
-      <entry name="MimetypesToStripWhenInlineForwarding" type="StringList">
-          <label>List of message part types to strip off mails that are being forwarded inline.</label>
-      </entry>
-
       <entry name="ShowSnippetManager" type="Bool">
           <label>Show the Text Snippet Management and Insertion Panel in the composer.</label>
           <default>false</default>
