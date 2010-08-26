@@ -60,11 +60,11 @@
         <default>DontSendOnCheck</default>
       </entry>
 
-      <entry name="AutoLostFoundMove" type="Bool">
+      <!-- <entry name="AutoLostFoundMove" type="Bool">
         <label>Automatically move non-synced mails from folders with insufficient access rights</label>
         <whatsthis>If there are new messages in a folder, which have not been uploaded to the server yet, but you do not have sufficient access rights on the folder now to upload them, these messages will automatically be moved into a lost and found folder.</whatsthis>
         <default>false</default>
-      </entry>
+      </entry> -->
 
       <entry name="AllowLocalFlags" type="Bool">
         <label>Allow local flags in read-only folders</label>
