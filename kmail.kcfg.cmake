@@ -126,9 +126,6 @@
 
 
     <group name="Internal">
-      <entry name="MsgDictSizeHint" type="Int" hidden="true">
-        <default>9973</default>
-      </entry>
       <entry name="PreviousNewFeaturesMD5" type="String" hidden="true">
         <whatsthis>This value is used to decide whether the KMail Introduction should be displayed.</whatsthis>
         <default></default>
