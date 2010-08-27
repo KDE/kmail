@@ -125,7 +125,7 @@ KMFilter::ReturnCode KMFilter::execActions( const Akonadi::Item &item, bool& sto
   for ( ; it != mActions.end() ; ++it ) {
 
     if ( FilterLog::instance()->isLogging() ) {
-      QString logText( i18n( "<b>Applying filter action:</b> %1",
+      const QString logText( i18n( "<b>Applying filter action:</b> %1",
                          (*it)->displayString() ) );
       FilterLog::instance()->add( logText, FilterLog::appliedAction );
     }
