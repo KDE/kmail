@@ -482,7 +482,7 @@ void KMReaderMainWin::slotEditToolbars()
 {
   saveMainWindowSettings( KConfigGroup(KMKernel::config(), "ReaderWindow") );
   KEditToolBar dlg( guiFactory(), this );
-  connect( &dlg, SIGNAL(newToolbarConfig()), SLOT(slotUpdateToolbars()) );
+  connect( &dlg, SIGNAL(newToolBarConfig()), SLOT(slotUpdateToolbars()) );
   dlg.exec();
 }
 

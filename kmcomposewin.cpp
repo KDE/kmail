@@ -2908,7 +2908,7 @@ void KMComposeWin::slotEditToolbars()
   saveMainWindowSettings( KMKernel::config()->group( "Composer") );
   KEditToolBar dlg( guiFactory(), this );
 
-  connect( &dlg, SIGNAL(newToolbarConfig()),
+  connect( &dlg, SIGNAL(newToolBarConfig()),
            SLOT(slotUpdateToolbars()) );
 
   dlg.exec();
