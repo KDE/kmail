@@ -95,7 +95,7 @@ public:
   void loadFilterList( bool createDummyFilter );
 
   /** Returns wheather the global option 'Show Later Msgs' is set or not */
-  bool showLaterMsgs();
+  bool showLaterMsgs() const;
 
   void insertFilter( KMFilter* aFilter );
 

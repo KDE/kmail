@@ -744,7 +744,7 @@ void KMFilterListBox::createFilter( const QByteArray & field,
   enableControls();
 }
 
-bool KMFilterListBox::showLaterMsgs()
+bool KMFilterListBox::showLaterMsgs() const
 {
   return mShowLater;
 }
