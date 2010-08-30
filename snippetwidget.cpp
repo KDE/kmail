@@ -558,7 +558,7 @@ QString SnippetWidget::showSingleVarDialog( const QString &var, QMap<QString, QS
   MessageViewer::AutoQPointer<QDialog> dlg( new QDialog( this ) );  // don't fix this krazy issues without actually trying the code!
   dlg->setWindowTitle(i18n("Enter Values for Variables"));
 
-  QGridLayout * layout = new QGridLayout( dlg );
+  QGridLayout * layout = new QGridLayout( dlg.get() );
   QGridLayout * layoutTop = new QGridLayout();
   QGridLayout * layoutVar = new QGridLayout();
   QGridLayout * layoutBtn = new QGridLayout();
@@ -579,19 +579,19 @@ QString SnippetWidget::showSingleVarDialog( const QString &var, QMap<QString, QS
   QLabel * labTop = NULL;
   QCheckBox * cb = NULL;
 
-  labTop = new QLabel( dlg );
+  labTop = new QLabel( dlg.get() );
   labTop->setObjectName( "label" );
   layoutTop->addWidget(labTop, 0, 0);
   labTop->setText( i18n("Enter the replacement values for %1:", var) );
   layout->addLayout( layoutTop, 0, 0, 1, 2 );
 
 
-  cb = new QCheckBox( dlg );
+  cb = new QCheckBox( dlg.get() );
   cb->setObjectName( "cbVar" );
   cb->setChecked( false );
   cb->setText(i18n( "Make value &default" ));
 
-  te = new KTextEdit( dlg );
+  te = new KTextEdit( dlg.get() );
   te->setObjectName( "teVar" );
   layoutVar->addWidget( te, 0, 1, Qt::AlignTop);
   layoutVar->addWidget( cb, 1, 1, Qt::AlignTop);
@@ -607,11 +607,11 @@ QString SnippetWidget::showSingleVarDialog( const QString &var, QMap<QString, QS
 
   layout->addLayout( layoutVar, 1, 0, 1, 2 );
 
-  KPushButton * btn1 = new KPushButton( KStandardGuiItem::cancel(), dlg );
+  KPushButton * btn1 = new KPushButton( KStandardGuiItem::cancel(), dlg.get() );
   btn1->setObjectName( "pushButton1") ;
   layoutBtn->addWidget( btn1, 0, 0 );
 
-  KPushButton * btn2 = new KPushButton( KStandardGuiItem::apply(), dlg );
+  KPushButton * btn2 = new KPushButton( KStandardGuiItem::apply(), dlg.get() );
   btn2->setObjectName( "pushButton2") ;
   btn2->setDefault( true );
   layoutBtn->addWidget( btn2, 0, 1 );
@@ -621,8 +621,8 @@ QString SnippetWidget::showSingleVarDialog( const QString &var, QMap<QString, QS
   // --END-- building a dynamic dialog
 
   //connect the buttons to the KDialog default slots
-  connect(btn1, SIGNAL(clicked()), dlg, SLOT(reject()) );
-  connect(btn2, SIGNAL(clicked()), dlg, SLOT(accept()) );
+  connect(btn1, SIGNAL(clicked()), dlg.get(), SLOT(reject()) );
+  connect(btn2, SIGNAL(clicked()), dlg.get(), SLOT(accept()) );
 
   //execute the dialog
   QString strReturn = "";
@@ -738,7 +738,7 @@ void SnippetWidget::startDrag( Qt::DropActions supportedActions )
   if ( dynamic_cast<SnippetGroup*>( currentItem() ) )
     return;
 
-  QString text = static_cast<SnippetItem*>( currentItem() )->getText();
+  const QString text = static_cast<SnippetItem*>( currentItem() )->getText();
   if( text.isEmpty() )
     return;
   QDrag *drag = new QDrag( this );
