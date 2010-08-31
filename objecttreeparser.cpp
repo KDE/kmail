@@ -265,6 +265,14 @@ namespace KMail {
       node->setProcessed( false, true );
     }
 
+    // Make sure the whole content is relative, so that nothing is painted over the header
+    // if a malicious message uses absolute positioning.
+    // Also force word wrapping, which is useful for printing, see https://issues.kolab.org/issue3992.
+    const bool isRoot = node == node->topLevelParent();
+    if ( isRoot && htmlWriter() ) {
+      htmlWriter()->queue( "<div style=\"position: relative; word-wrap: break-word\">\n" );
+    }
+
     for ( ; node ; node = node->nextSibling() ) {
       if ( node->processed() )
         continue;
@@ -325,6 +333,10 @@ namespace KMail {
 
       if ( showOnlyOneMimePart() )
         break;
+    }
+
+    if ( isRoot && htmlWriter() ) {
+      htmlWriter()->queue( "</div>\n" );
     }
   }
 
