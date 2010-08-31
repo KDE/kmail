@@ -394,6 +394,8 @@ KMComposeWin::KMComposeWin( KMMessage *aMsg, uint id  )
   mAtmListView = new AttachmentListView( this, mSplitter,
                                          "attachment list view" );
   mAtmListView->setSelectionMode( QListView::Extended );
+  mAtmListView->setSorting( 0 );
+  mAtmListView->setShowSortIndicator( true );
   mAtmListView->addColumn( i18n("Name"), 200 );
   mAtmListView->addColumn( i18n("Size"), 80 );
   mAtmListView->addColumn( i18n("Encoding"), 120 );
@@ -2459,6 +2461,7 @@ void KMComposeWin::addAttach(const KMMessagePart* msgPart)
       this, SLOT( uncompressAttach( int ) ) );
 
   slotUpdateAttachActions();
+  mAtmListView->sort();
 }
 
 
@@ -2547,6 +2550,8 @@ void KMComposeWin::removeAttach(int idx)
     mAtmListView->hide();
     mAtmListView->setMinimumSize(0, 0);
     resize(size());
+  } else {
+    mAtmListView->sort();
   }
 }
 
@@ -3350,6 +3355,9 @@ void KMComposeWin::compressAttach( int idx )
 
   KMAtmListViewItem* listItem = static_cast<KMAtmListViewItem*>( mAtmItemList.at( i ) );
   msgPartToItem( msgPart, listItem, false );
+
+  // The size has changed, so re-sort, might be sorted by size
+  mAtmListView->sort();
 }
 
 //-----------------------------------------------------------------------------
@@ -3425,6 +3433,7 @@ void KMComposeWin::uncompressAttach( int idx )
 
   KMAtmListViewItem* listItem = static_cast<KMAtmListViewItem*>(mAtmItemList.at( i ));
   msgPartToItem( msgPart, listItem, false );
+  mAtmListView->sort();
 }
 
 
