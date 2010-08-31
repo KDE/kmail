@@ -79,6 +79,7 @@ public:
   bool deleteInvitationAfterReply() const;
   bool exchangeCompatibleInvitations() const;
   bool outlookCompatibleInvitationReplyComments() const;
+  bool outlookCompatibleInvitationComparisons() const;
 
 private:
   QString askForTransport( bool nullIdentity ) const;

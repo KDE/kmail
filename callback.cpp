@@ -273,6 +273,11 @@ bool Callback::outlookCompatibleInvitationReplyComments() const
   return GlobalSettings::self()->outlookCompatibleInvitationReplyComments();
 }
 
+bool Callback::outlookCompatibleInvitationComparisons() const
+{
+  return GlobalSettings::self()->outlookCompatibleInvitationComparisons();
+}
+
 QString Callback::sender() const
 {
   return mMsg->from();
