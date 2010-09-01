@@ -890,7 +890,10 @@ void KMKernel::stopNetworkJobs()
 
   const Akonadi::AgentInstance::List lst = KMail::Util::agentInstances();
   foreach ( Akonadi::AgentInstance type, lst ) {
-    type.setIsOnline( false );
+    if ( type.identifier().contains( IMAP_RESOURCE_IDENTIFIER ) ||
+         type.identifier().contains( POP3_RESOURCE_IDENTIFIER ) ) {
+      type.setIsOnline( false );
+    }
   }
 
   GlobalSettings::setNetworkState( GlobalSettings::EnumNetworkState::Offline );
@@ -906,7 +909,10 @@ void KMKernel::resumeNetworkJobs()
 
   const Akonadi::AgentInstance::List lst = KMail::Util::agentInstances();
   foreach ( Akonadi::AgentInstance type, lst ) {
-    type.setIsOnline( true );
+    if ( type.identifier().contains( IMAP_RESOURCE_IDENTIFIER ) ||
+         type.identifier().contains( POP3_RESOURCE_IDENTIFIER ) ) {
+      type.setIsOnline( true );
+    }
   }
 
   GlobalSettings::setNetworkState( GlobalSettings::EnumNetworkState::Online );
