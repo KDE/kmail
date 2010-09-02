@@ -287,6 +287,7 @@ void KMReaderWin::objectTreeToDecryptedMsg( partNode* node,
         if( dataNode->parentNode() && !weAreReplacingTheRootNode ) {
           kdDebug(5006) << "dataNode is NOT replacing the root node:  Store the headers." << endl;
           resultingData += headers->AsString().c_str();
+          resultingData += QCString( "\n" );
         } else if( weAreReplacingTheRootNode && part && part->hasHeaders() ){
           kdDebug(5006) << "dataNode replace the root node:  Do NOT store the headers but change" << endl;
           kdDebug(5006) << "                                 the Message's headers accordingly." << endl;
