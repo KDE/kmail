@@ -278,20 +278,20 @@ void KMReaderWin::objectTreeToDecryptedMsg( partNode* node,
             ? &rootHeaders
             : 0 ) );
     if( dataNode == curNode ) {
-kdDebug(5006) << "dataNode == curNode:  Save curNode without replacing it." << endl;
+      kdDebug(5006) << "dataNode == curNode:  Save curNode without replacing it." << endl;
 
       // A) Store the headers of this part IF curNode is not the root node
       //    AND we are not replacing a node that already *has* replaced
       //    the root node in previous recursion steps of this function...
       if( headers ) {
         if( dataNode->parentNode() && !weAreReplacingTheRootNode ) {
-kdDebug(5006) << "dataNode is NOT replacing the root node:  Store the headers." << endl;
+          kdDebug(5006) << "dataNode is NOT replacing the root node:  Store the headers." << endl;
           resultingData += headers->AsString().c_str();
         } else if( weAreReplacingTheRootNode && part && part->hasHeaders() ){
-kdDebug(5006) << "dataNode replace the root node:  Do NOT store the headers but change" << endl;
-kdDebug(5006) << "                                 the Message's headers accordingly." << endl;
-kdDebug(5006) << "              old Content-Type = " << rootHeaders.ContentType().AsString().c_str() << endl;
-kdDebug(5006) << "              new Content-Type = " << headers->ContentType(   ).AsString().c_str() << endl;
+          kdDebug(5006) << "dataNode replace the root node:  Do NOT store the headers but change" << endl;
+          kdDebug(5006) << "                                 the Message's headers accordingly." << endl;
+          kdDebug(5006) << "              old Content-Type = " << rootHeaders.ContentType().AsString().c_str() << endl;
+          kdDebug(5006) << "              new Content-Type = " << headers->ContentType(   ).AsString().c_str() << endl;
           rootHeaders.ContentType()             = headers->ContentType();
           theMessage.setContentTransferEncodingStr(
               headers->HasContentTransferEncoding()
@@ -309,12 +309,12 @@ kdDebug(5006) << "              new Content-Type = " << headers->ContentType(   
 
       // B) Store the body of this part.
       if( headers && bIsMultipart && dataNode->firstChild() )  {
-kdDebug(5006) << "is valid Multipart, processing children:" << endl;
+        kdDebug(5006) << "is valid Multipart, processing children:" << endl;
         QCString boundary = headers->ContentType().Boundary().c_str();
         curNode = dataNode->firstChild();
         // store children of multipart
         while( curNode ) {
-kdDebug(5006) << "--boundary" << endl;
+          kdDebug(5006) << "--boundary" << endl;
           if( resultingData.size() &&
               ( '\n' != resultingData.at( resultingData.size()-1 ) ) )
             resultingData += QCString( "\n" );
@@ -332,24 +332,24 @@ kdDebug(5006) << "--boundary" << endl;
                                     recCount + 1 );
           curNode = curNode->nextSibling();
         }
-kdDebug(5006) << "--boundary--" << endl;
+        kdDebug(5006) << "--boundary--" << endl;
         resultingData += "\n--";
         resultingData += boundary;
         resultingData += "--\n\n";
-kdDebug(5006) << "Multipart processing children - DONE" << endl;
+        kdDebug(5006) << "Multipart processing children - DONE" << endl;
       } else if( part ){
         // store simple part
-kdDebug(5006) << "is Simple part or invalid Multipart, storing body data .. DONE" << endl;
+        kdDebug(5006) << "is Simple part or invalid Multipart, storing body data .. DONE" << endl;
         resultingData += part->Body().AsString().c_str();
       }
       }
     } else {
-kdDebug(5006) << "dataNode != curNode:  Replace curNode by dataNode." << endl;
+      kdDebug(5006) << "dataNode != curNode:  Replace curNode by dataNode." << endl;
       bool rootNodeReplaceFlag = weAreReplacingTheRootNode || !curNode->parentNode();
       if( rootNodeReplaceFlag ) {
-kdDebug(5006) << "                      Root node will be replaced." << endl;
+        kdDebug(5006) << "                      Root node will be replaced." << endl;
       } else {
-kdDebug(5006) << "                      Root node will NOT be replaced." << endl;
+        kdDebug(5006) << "                      Root node will NOT be replaced." << endl;
       }
       // store special data to replace the current part
       // (e.g. decrypted data or embedded RfC 822 data)
