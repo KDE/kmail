@@ -1577,71 +1577,71 @@ void KMReaderWin::parseMsg(KMMessage* aMsg)
   const KConfigGroup reader( KMKernel::config(), "Reader" );
   if ( reader.readBoolEntry( "store-displayed-messages-unencrypted", false ) ) {
 
-  // Hack to make sure the S/MIME CryptPlugs follows the strict requirement
-  // of german government:
-  // --> All received encrypted messages *must* be stored in unencrypted form
-  //     after they have been decrypted once the user has read them.
-  //     ( "Aufhebung der Verschluesselung nach dem Lesen" )
-  //
-  // note: Since there is no configuration option for this, we do that for
-  //       all kinds of encryption now - *not* just for S/MIME.
-  //       This could be changed in the objectTreeToDecryptedMsg() function
-  //       by deciding when (or when not, resp.) to set the 'dataNode' to
-  //       something different than 'curNode'.
+    // Hack to make sure the S/MIME CryptPlugs follows the strict requirement
+    // of german government:
+    // --> All received encrypted messages *must* be stored in unencrypted form
+    //     after they have been decrypted once the user has read them.
+    //     ( "Aufhebung der Verschluesselung nach dem Lesen" )
+    //
+    // note: Since there is no configuration option for this, we do that for
+    //       all kinds of encryption now - *not* just for S/MIME.
+    //       This could be changed in the objectTreeToDecryptedMsg() function
+    //       by deciding when (or when not, resp.) to set the 'dataNode' to
+    //       something different than 'curNode'.
 
 
-  kdDebug(5006) << "\n\n\nKMReaderWin::parseMsg()  -  special post-encryption handling:\n1." << endl;
-  kdDebug(5006) << "(aMsg == msg) = "                               << (aMsg == message()) << endl;
-  kdDebug(5006) << "aMsg->parent() && aMsg->parent() != kmkernel->outboxFolder() = " << (aMsg->parent() && aMsg->parent() != kmkernel->outboxFolder()) << endl;
-  kdDebug(5006) << "message_was_saved_decrypted_before( aMsg ) = " << message_was_saved_decrypted_before( aMsg ) << endl;
-  kdDebug(5006) << "this->decryptMessage() = " << decryptMessage() << endl;
-  kdDebug(5006) << "otp.hasPendingAsyncJobs() = " << otp.hasPendingAsyncJobs() << endl;
-  kdDebug(5006) << "   (KMMsgFullyEncrypted == encryptionState) = "     << (KMMsgFullyEncrypted == encryptionState) << endl;
-  kdDebug(5006) << "|| (KMMsgPartiallyEncrypted == encryptionState) = " << (KMMsgPartiallyEncrypted == encryptionState) << endl;
-         // only proceed if we were called the normal way - not by
-         // double click on the message (==not running in a separate window)
-  if(    (aMsg == message())
-         // don't remove encryption in the outbox folder :)
-      && ( aMsg->parent() && aMsg->parent() != kmkernel->outboxFolder() )
-         // only proceed if this message was not saved encryptedly before
-      && !message_was_saved_decrypted_before( aMsg )
-         // only proceed if the message has actually been decrypted
-      && decryptMessage()
-         // only proceed if no pending async jobs are running:
-      && !otp.hasPendingAsyncJobs()
-         // only proceed if this message is (at least partially) encrypted
-      && (    (KMMsgFullyEncrypted == encryptionState)
-           || (KMMsgPartiallyEncrypted == encryptionState) ) ) {
+    kdDebug(5006) << "\n\n\nKMReaderWin::parseMsg()  -  special post-encryption handling:\n1." << endl;
+    kdDebug(5006) << "(aMsg == msg) = "                               << (aMsg == message()) << endl;
+    kdDebug(5006) << "aMsg->parent() && aMsg->parent() != kmkernel->outboxFolder() = " << (aMsg->parent() && aMsg->parent() != kmkernel->outboxFolder()) << endl;
+    kdDebug(5006) << "message_was_saved_decrypted_before( aMsg ) = " << message_was_saved_decrypted_before( aMsg ) << endl;
+    kdDebug(5006) << "this->decryptMessage() = " << decryptMessage() << endl;
+    kdDebug(5006) << "otp.hasPendingAsyncJobs() = " << otp.hasPendingAsyncJobs() << endl;
+    kdDebug(5006) << "   (KMMsgFullyEncrypted == encryptionState) = "     << (KMMsgFullyEncrypted == encryptionState) << endl;
+    kdDebug(5006) << "|| (KMMsgPartiallyEncrypted == encryptionState) = " << (KMMsgPartiallyEncrypted == encryptionState) << endl;
+           // only proceed if we were called the normal way - not by
+           // double click on the message (==not running in a separate window)
+    if(    (aMsg == message())
+           // don't remove encryption in the outbox folder :)
+        && ( aMsg->parent() && aMsg->parent() != kmkernel->outboxFolder() )
+           // only proceed if this message was not saved encryptedly before
+        && !message_was_saved_decrypted_before( aMsg )
+           // only proceed if the message has actually been decrypted
+        && decryptMessage()
+           // only proceed if no pending async jobs are running:
+        && !otp.hasPendingAsyncJobs()
+           // only proceed if this message is (at least partially) encrypted
+        && (    (KMMsgFullyEncrypted == encryptionState)
+             || (KMMsgPartiallyEncrypted == encryptionState) ) ) {
 
-    kdDebug(5006) << "KMReaderWin  -  calling objectTreeToDecryptedMsg()" << endl;
+      kdDebug(5006) << "KMReaderWin  -  calling objectTreeToDecryptedMsg()" << endl;
 
-    NewByteArray decryptedData;
-    // note: The following call may change the message's headers.
-    objectTreeToDecryptedMsg( mRootNode, decryptedData, *aMsg );
-    // add a \0 to the data
-    decryptedData.appendNULL();
-    QCString resultString( decryptedData.data() );
-    kdDebug(5006) << "KMReaderWin  -  resulting data:" << resultString << endl;
+      NewByteArray decryptedData;
+      // note: The following call may change the message's headers.
+      objectTreeToDecryptedMsg( mRootNode, decryptedData, *aMsg );
+      // add a \0 to the data
+      decryptedData.appendNULL();
+      QCString resultString( decryptedData.data() );
+      kdDebug(5006) << "KMReaderWin  -  resulting data:" << resultString << endl;
 
-    if( !resultString.isEmpty() ) {
-      kdDebug(5006) << "KMReaderWin  -  composing unencrypted message" << endl;
-      // try this:
-      aMsg->setBody( resultString );
-      KMMessage* unencryptedMessage = new KMMessage( *aMsg );
-      unencryptedMessage->setParent( 0 );
-      // because this did not work:
-      /*
-      DwMessage dwMsg( aMsg->asDwString() );
-      dwMsg.Body() = DwBody( DwString( resultString.data() ) );
-      dwMsg.Body().Parse();
-      KMMessage* unencryptedMessage = new KMMessage( &dwMsg );
-      */
-      //kdDebug(5006) << "KMReaderWin  -  resulting message:" << unencryptedMessage->asString() << endl;
-      kdDebug(5006) << "KMReaderWin  -  attach unencrypted message to aMsg" << endl;
-      aMsg->setUnencryptedMsg( unencryptedMessage );
-      emitReplaceMsgByUnencryptedVersion = true;
+      if( !resultString.isEmpty() ) {
+        kdDebug(5006) << "KMReaderWin  -  composing unencrypted message" << endl;
+        // try this:
+        aMsg->setBody( resultString );
+        KMMessage* unencryptedMessage = new KMMessage( *aMsg );
+        unencryptedMessage->setParent( 0 );
+        // because this did not work:
+        /*
+        DwMessage dwMsg( aMsg->asDwString() );
+        dwMsg.Body() = DwBody( DwString( resultString.data() ) );
+        dwMsg.Body().Parse();
+        KMMessage* unencryptedMessage = new KMMessage( &dwMsg );
+        */
+        //kdDebug(5006) << "KMReaderWin  -  resulting message:" << unencryptedMessage->asString() << endl;
+        kdDebug(5006) << "KMReaderWin  -  attach unencrypted message to aMsg" << endl;
+        aMsg->setUnencryptedMsg( unencryptedMessage );
+        emitReplaceMsgByUnencryptedVersion = true;
+      }
     }
-  }
   }
 
   // save current main Content-Type before deleting mRootNode
