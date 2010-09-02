@@ -202,8 +202,8 @@ QByteArray& NewByteArray::qByteArray()
 // - This is used to store the message in decrypted form.
 void KMReaderWin::objectTreeToDecryptedMsg( partNode* node,
                                             NewByteArray& resultingData,
-                                            KMMessage& theMessage,
-                                            bool weAreReplacingTheRootNode,
+                                            DwMessage *currentDwMessage,
+                                            bool weAreReplacingAMessageNode,
                                             int recCount )
 {
   kdDebug(5006) << QString("-------------------------------------------------" ) << endl;
@@ -215,7 +215,9 @@ void KMReaderWin::objectTreeToDecryptedMsg( partNode* node,
     partNode* curNode = node;
     partNode* dataNode = curNode;
     partNode * child = node->firstChild();
-    const bool bIsMultipart = node->type() == DwMime::kTypeMultipart ;
+    const bool bIsMultipart = node->type() == DwMime::kTypeMultipart;
+    const bool isEncapsulatedMessage = node->type() == DwMime::kTypeMessage && node->parentNode();
+    const bool isFirstChildOfMessage = !node->parentNode() || node->parentNode()->type() == DwMime::kTypeMessage;
     bool bKeepPartAsIs = false;
 
     switch( curNode->type() ){
@@ -228,16 +230,6 @@ void KMReaderWin::objectTreeToDecryptedMsg( partNode* node,
           case DwMime::kSubtypeEncrypted: {
               if ( child )
                   dataNode = child;
-            }
-            break;
-          }
-        }
-        break;
-      case DwMime::kTypeMessage: {
-          switch( curNode->subType() ){
-          case DwMime::kSubtypeRfc822: {
-              if ( child )
-                dataNode = child;
             }
             break;
           }
@@ -269,47 +261,71 @@ void KMReaderWin::objectTreeToDecryptedMsg( partNode* node,
     }
 
 
-    DwHeaders& rootHeaders( theMessage.headers() );
-    DwBodyPart * part = dataNode->dwPart() ? dataNode->dwPart() : 0;
+    DwHeaders& messageHeaders( currentDwMessage->Headers() );
+    DwBodyPart * part = dataNode->dwPart();
     DwHeaders * headers(
         (part && part->hasHeaders())
         ? &part->Headers()
-        : (  (weAreReplacingTheRootNode || !dataNode->parentNode())
-            ? &rootHeaders
+        : (  (weAreReplacingAMessageNode || isFirstChildOfMessage)
+            ? &messageHeaders
             : 0 ) );
     if( dataNode == curNode ) {
       kdDebug(5006) << "dataNode == curNode:  Save curNode without replacing it." << endl;
 
-      // A) Store the headers of this part IF curNode is not the root node
+      // A) Store the headers of this part IF curNode is not a message node
       //    AND we are not replacing a node that already *has* replaced
-      //    the root node in previous recursion steps of this function...
+      //    a message node in previous recursion steps of this function...
       if( headers ) {
-        if( dataNode->parentNode() && !weAreReplacingTheRootNode ) {
-          kdDebug(5006) << "dataNode is NOT replacing the root node:  Store the headers." << endl;
+        if( dataNode->parentNode() && !weAreReplacingAMessageNode ) {
+          kdDebug(5006) << "dataNode is NOT replacing a message node:  Store the headers." << endl;
           resultingData += headers->AsString().c_str();
           resultingData += QCString( "\n" );
-        } else if( weAreReplacingTheRootNode && part && part->hasHeaders() ){
-          kdDebug(5006) << "dataNode replace the root node:  Do NOT store the headers but change" << endl;
-          kdDebug(5006) << "                                 the Message's headers accordingly." << endl;
-          kdDebug(5006) << "              old Content-Type = " << rootHeaders.ContentType().AsString().c_str() << endl;
-          kdDebug(5006) << "              new Content-Type = " << headers->ContentType(   ).AsString().c_str() << endl;
-          rootHeaders.ContentType()             = headers->ContentType();
-          theMessage.setContentTransferEncodingStr(
-              headers->HasContentTransferEncoding()
-            ? headers->ContentTransferEncoding().AsString().c_str()
-            : "" );
-          rootHeaders.ContentDescription() = headers->ContentDescription();
-          rootHeaders.ContentDisposition() = headers->ContentDisposition();
-          theMessage.setNeedsAssembly();
+        } else if( weAreReplacingAMessageNode && part && part->hasHeaders() ){
+          kdDebug(5006) << "dataNode replace a message node:  Do NOT store the headers but change" << endl;
+          kdDebug(5006) << "                                  the Message's headers accordingly." << endl;
+          kdDebug(5006) << "              old Content-Type = " << messageHeaders.ContentType().AsString().c_str() << endl;
+          kdDebug(5006) << "              new Content-Type = " << headers->ContentType().AsString().c_str() << endl;
+          messageHeaders.ContentType() = headers->ContentType();
+          messageHeaders.FindField( "Content-Type" )->SetModified();
+          if ( headers->HasContentTransferEncoding() ) {
+            messageHeaders.ContentTransferEncoding() = headers->ContentTransferEncoding();
+            messageHeaders.FindField( "Content-Transfer-Encoding" )->SetModified();
+          } else if ( messageHeaders.HasContentTransferEncoding() ) {
+            messageHeaders.RemoveField( messageHeaders.FindField( "Content-Transfer-Encoding" ) );
+          }
+          messageHeaders.ContentDescription() = headers->ContentDescription();
+          messageHeaders.FindField( "Content-Description" )->SetModified();
+          messageHeaders.ContentDisposition() = headers->ContentDisposition();
+          messageHeaders.FindField( "Content-Disposition" )->SetModified();
+          messageHeaders.SetModified();
+          messageHeaders.Assemble();
         }
       }
 
       if ( bKeepPartAsIs ) {
-          resultingData += dataNode->encodedBody();
+        kdDebug(5006) << "keeping body as is." << endl;
+        resultingData += dataNode->encodedBody();
       } else {
 
-        // B) Store the body of this part.
-        if( headers && bIsMultipart && dataNode->firstChild() )  {
+        // B) Store the body of this part
+        if ( isEncapsulatedMessage && part && part->Body().Message() ) {
+          kdDebug(5006) << "is a valid Message, processing it." << endl;
+          DwMessage * const message = part->Body().Message();
+
+          // We first get the body, and afterwards add the headers and the body to resultingData.
+          // This is because objectTreeToDecryptedMsg() might change the headers.
+          NewByteArray messageContents;
+          objectTreeToDecryptedMsg( curNode->firstChild(),
+                                    messageContents,
+                                    message,
+                                    false,
+                                    recCount + 1 );
+
+          resultingData += message->Headers().AsString().c_str();
+          resultingData += QCString( "\n" );
+          resultingData += messageContents;
+        }
+        else if( headers && bIsMultipart && dataNode->firstChild() )  {
           kdDebug(5006) << "is valid Multipart, processing children:" << endl;
           QCString boundary = headers->ContentType().Boundary().c_str();
           curNode = dataNode->firstChild();
@@ -328,7 +344,7 @@ void KMReaderWin::objectTreeToDecryptedMsg( partNode* node,
             //       we set their doStoreHeaders to true.
             objectTreeToDecryptedMsg( curNode,
                                       resultingData,
-                                      theMessage,
+                                      currentDwMessage,
                                       false,
                                       recCount + 1 );
             curNode = curNode->nextSibling();
@@ -346,18 +362,18 @@ void KMReaderWin::objectTreeToDecryptedMsg( partNode* node,
       }
     } else {
       kdDebug(5006) << "dataNode != curNode:  Replace curNode by dataNode." << endl;
-      bool rootNodeReplaceFlag = weAreReplacingTheRootNode || !curNode->parentNode();
-      if( rootNodeReplaceFlag ) {
-        kdDebug(5006) << "                      Root node will be replaced." << endl;
+      bool messageNodeReplaceFlag = weAreReplacingAMessageNode || isFirstChildOfMessage;
+      if( messageNodeReplaceFlag ) {
+        kdDebug(5006) << "                      A message node will be replaced." << endl;
       } else {
-        kdDebug(5006) << "                      Root node will NOT be replaced." << endl;
+        kdDebug(5006) << "                      A message will NOT be replaced." << endl;
       }
       // store special data to replace the current part
       // (e.g. decrypted data or embedded RfC 822 data)
       objectTreeToDecryptedMsg( dataNode,
                                 resultingData,
-                                theMessage,
-                                rootNodeReplaceFlag,
+                                currentDwMessage,
+                                messageNodeReplaceFlag,
                                 recCount + 1 );
     }
   }
@@ -1548,7 +1564,7 @@ bool KMReaderWin::saveDecryptedMessage( KMMessage* aMsg, ObjectTreeParser *otp,
 
       NewByteArray decryptedData;
       // note: The following call may change the message's headers.
-      objectTreeToDecryptedMsg( mRootNode, decryptedData, *aMsg );
+      objectTreeToDecryptedMsg( mRootNode, decryptedData, aMsg->getTopLevelPart() );
       // add a \0 to the data
       decryptedData.appendNULL();
       QCString resultString( decryptedData.data() );
