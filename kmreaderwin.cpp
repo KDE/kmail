@@ -307,41 +307,41 @@ void KMReaderWin::objectTreeToDecryptedMsg( partNode* node,
           resultingData += dataNode->encodedBody();
       } else {
 
-      // B) Store the body of this part.
-      if( headers && bIsMultipart && dataNode->firstChild() )  {
-        kdDebug(5006) << "is valid Multipart, processing children:" << endl;
-        QCString boundary = headers->ContentType().Boundary().c_str();
-        curNode = dataNode->firstChild();
-        // store children of multipart
-        while( curNode ) {
-          kdDebug(5006) << "--boundary" << endl;
-          if( resultingData.size() &&
-              ( '\n' != resultingData.at( resultingData.size()-1 ) ) )
+        // B) Store the body of this part.
+        if( headers && bIsMultipart && dataNode->firstChild() )  {
+          kdDebug(5006) << "is valid Multipart, processing children:" << endl;
+          QCString boundary = headers->ContentType().Boundary().c_str();
+          curNode = dataNode->firstChild();
+          // store children of multipart
+          while( curNode ) {
+            kdDebug(5006) << "--boundary" << endl;
+            if( resultingData.size() &&
+                ( '\n' != resultingData.at( resultingData.size()-1 ) ) )
+              resultingData += QCString( "\n" );
             resultingData += QCString( "\n" );
-          resultingData += QCString( "\n" );
-          resultingData += "--";
+            resultingData += "--";
+            resultingData += boundary;
+            resultingData += "\n";
+            // note: We are processing a harmless multipart that is *not*
+            //       to be replaced by one of it's children, therefor
+            //       we set their doStoreHeaders to true.
+            objectTreeToDecryptedMsg( curNode,
+                                      resultingData,
+                                      theMessage,
+                                      false,
+                                      recCount + 1 );
+            curNode = curNode->nextSibling();
+          }
+          kdDebug(5006) << "--boundary--" << endl;
+          resultingData += "\n--";
           resultingData += boundary;
-          resultingData += "\n";
-          // note: We are processing a harmless multipart that is *not*
-          //       to be replaced by one of it's children, therefor
-          //       we set their doStoreHeaders to true.
-          objectTreeToDecryptedMsg( curNode,
-                                    resultingData,
-                                    theMessage,
-                                    false,
-                                    recCount + 1 );
-          curNode = curNode->nextSibling();
+          resultingData += "--\n\n";
+          kdDebug(5006) << "Multipart processing children - DONE" << endl;
+        } else if( part ){
+          // store simple part
+          kdDebug(5006) << "is Simple part or invalid Multipart, storing body data .. DONE" << endl;
+          resultingData += part->Body().AsString().c_str();
         }
-        kdDebug(5006) << "--boundary--" << endl;
-        resultingData += "\n--";
-        resultingData += boundary;
-        resultingData += "--\n\n";
-        kdDebug(5006) << "Multipart processing children - DONE" << endl;
-      } else if( part ){
-        // store simple part
-        kdDebug(5006) << "is Simple part or invalid Multipart, storing body data .. DONE" << endl;
-        resultingData += part->Body().AsString().c_str();
-      }
       }
     } else {
       kdDebug(5006) << "dataNode != curNode:  Replace curNode by dataNode." << endl;
