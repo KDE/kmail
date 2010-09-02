@@ -344,6 +344,12 @@ private:
      message (as opposed to re-loading the same one again). */
   void clearBodyPartMementos();
 
+  /**
+   * @return true if the message was actually replaced
+   */
+  bool saveDecryptedMessage( KMMessage* aMsg, KMail::ObjectTreeParser *otp,
+                             KMMsgEncryptionState encryptionState );
+
 signals:
   /** Emitted after parsing of a message to have it stored
       in unencrypted state in it's folder. */
