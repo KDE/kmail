@@ -1205,6 +1205,8 @@ void KMReaderWin::setMsg( KMMessage* aMsg, bool force, bool updateOnly )
       mViewer->setDNDEnabled( true );
   }
 
+  const KMMessage * const oldMessage = message();
+
   // only display the msg if it is complete
   // otherwise we'll get flickering with progressively loaded messages
   if ( complete )
@@ -1221,11 +1223,18 @@ void KMReaderWin::setMsg( KMMessage* aMsg, bool force, bool updateOnly )
       mUpdateReaderWinTimer.start( 0, true );
   }
 
-  if ( aMsg && (aMsg->isUnread() || aMsg->isNew()) && GlobalSettings::self()->delayedMarkAsRead() ) {
-    if ( GlobalSettings::self()->delayedMarkTime() != 0 )
-      mDelayedMarkTimer.start( GlobalSettings::self()->delayedMarkTime() * 1000, true );
-    else
-      slotTouchMessage();
+  const bool messageChangedDuringUpdate = message() != oldMessage;
+
+  // The message can change during updateReaderWin() because of a recursive setMsg() call that
+  // is triggered by KMMainWidget::slotReplaceMsgByUnencryptedVersion.
+  // Don't touch aMsg in this case, since that pointer will be invalid.
+  if ( !messageChangedDuringUpdate ) {
+    if ( aMsg && (aMsg->isUnread() || aMsg->isNew()) && GlobalSettings::self()->delayedMarkAsRead() ) {
+      if ( GlobalSettings::self()->delayedMarkTime() != 0 )
+        mDelayedMarkTimer.start( GlobalSettings::self()->delayedMarkTime() * 1000, true );
+      else
+        slotTouchMessage();
+    }
   }
 }
 
@@ -1650,25 +1659,25 @@ void KMReaderWin::parseMsg(KMMessage* aMsg)
     aMsg->setSignatureState( signatureState );
   }
 
+  // Note that saveDecryptedMessage will delete aMsg, we can not use it afterwards anymore!
   const bool messageWasReplaced = saveDecryptedMessage( aMsg, &otp, encryptionState );
 
-  // save current main Content-Type before deleting mRootNode
-  const int rootNodeCntType = mRootNode ? mRootNode->type() : DwMime::kTypeText;
-  const int rootNodeCntSubtype = mRootNode ? mRootNode->subType() : DwMime::kSubtypePlain;
-
-  // store message id to avoid endless recursions
-  setIdOfLastViewedMessage( aMsg->msgId() );
-
   if( messageWasReplaced ) {
-    kdDebug(5006) << "KMReaderWin  -  invoce saving in decrypted form:" << endl;
+    kdDebug(5006) << "KMReaderWin  -  invoke saving in decrypted form:" << endl;
     emit replaceMsgByUnencryptedVersion();
   } else {
     kdDebug(5006) << "KMReaderWin  -  finished parsing and displaying of message." << endl;
-    showHideMimeTree( rootNodeCntType == DwMime::kTypeText &&
-		      rootNodeCntSubtype == DwMime::kSubtypePlain );
-  }
 
-  aMsg->setIsBeingParsed( false );
+    // store message id to avoid endless recursions
+    setIdOfLastViewedMessage( aMsg->msgId() );
+
+    // save current main Content-Type before deleting mRootNode
+    const int rootNodeCntType = mRootNode ? mRootNode->type() : DwMime::kTypeText;
+    const int rootNodeCntSubtype = mRootNode ? mRootNode->subType() : DwMime::kSubtypePlain;
+    showHideMimeTree( rootNodeCntType == DwMime::kTypeText &&
+                      rootNodeCntSubtype == DwMime::kSubtypePlain );
+    aMsg->setIsBeingParsed( false );
+  }
 }
 
 
