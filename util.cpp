@@ -39,9 +39,12 @@
 
 #include "util.h"
 #include "imapsettings.h"
+#include "kmkernel.h"
 
 #include "messagecore/stringutil.h"
 #include "messagecomposer/messagehelper.h"
+
+
 
 #include <kmime/kmime_message.h>
 #include <kpimutils/email.h>
@@ -259,3 +262,11 @@ void KMail::Util::showJobErrorMessage( KJob *job )
   }
 }
 
+
+QStringList KMail::Util::AttachmentKeywords()
+{
+  return i18nc(
+    "comma-separated list of keywords that are used to detect whether "
+    "the user forgot to attach his attachment",
+    "attachment,attached" ).split( ',' );
+}

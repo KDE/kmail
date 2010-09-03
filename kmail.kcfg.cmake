@@ -7,6 +7,7 @@
   <include>kglobalsettings.h</include>
   <include>kcolorscheme.h</include>
   <include>composer.h</include>
+  <include>util.h</include>
   <kcfgfile name="kmail2rc"/>
   <group name="Behaviour">
       <entry name="ActionEnterFolder"  type="Enum">
@@ -232,10 +233,7 @@
       </entry>
       <entry name="AttachmentKeywords" type="StringList" key="attachment-keywords">
         <default code="true">
-          i18nc(
-                "comma-separated list of keywords that are used to detect whether "
-                "the user forgot to attach his attachment",
-                "attachment,attached" ).split( ',' )
+        KMail::Util::AttachmentKeywords()
         </default>
       </entry>
       <entry name="AutosaveInterval" type="Int" key="autosave">

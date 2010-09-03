@@ -44,7 +44,6 @@
 #include <kmessagebox.h>
 #include <klocale.h>
 #include <akonadi/item.h>
-#include "kmkernel.h"
 #include <kmime/kmime_message.h>
 #include <Akonadi/AgentInstance>
 class KUrl;
@@ -117,6 +116,8 @@ namespace Util {
     QString fullCollectionPath( const Akonadi::Collection& collection );
 
     void showJobErrorMessage( KJob *job );
+
+    QStringList AttachmentKeywords();
 
 }
 }
