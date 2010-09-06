@@ -429,7 +429,7 @@ bool FolderTreeView::isUnreadFolder( const QModelIndex & current, QModelIndex &i
                                            KGuiItem( i18n( "Go To" ) ),
                                            KGuiItem( i18n( "Do Not Go To" ) ), // defaults
                                            ":kmail_AskNextFolder",
-                                           false
+                                           0
                                            ) == KMessageBox::No
                 )
               return true; // assume selected (do not continue looping)

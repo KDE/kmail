@@ -1593,7 +1593,7 @@ void KMMainWidget::slotOverrideHtml()
       i18n( "Security Warning" ),
       KGuiItem(i18n( "Use HTML" )),
       KStandardGuiItem::cancel(),
-      "OverrideHtmlWarning", false);
+      "OverrideHtmlWarning", 0);
     if( result == KMessageBox::Cancel ) {
       mPreferHtmlAction->setChecked( false );
       return;
@@ -1618,7 +1618,7 @@ void KMMainWidget::slotOverrideHtmlLoadExt()
       i18n( "Security Warning" ),
       KGuiItem(i18n( "Load External References" )),
       KStandardGuiItem::cancel(),
-      "OverrideHtmlLoadExtWarning", false);
+      "OverrideHtmlLoadExtWarning", 0);
     if( result == KMessageBox::Cancel ) {
       mPreferHtmlLoadExtAction->setChecked( false );
       return;
