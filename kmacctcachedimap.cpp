@@ -260,8 +260,10 @@ void KMAcctCachedImap::postProcessNewMail( KMFolderCachedImap* folder, bool )
   mNoopTimer.start( 60000 ); // send a noop every minute to avoid "connection broken" errors
   disconnect(folder, SIGNAL(folderComplete(KMFolderCachedImap*, bool)),
              this, SLOT(postProcessNewMail(KMFolderCachedImap*, bool)));
-  mMailCheckProgressItem->setComplete();
-  mMailCheckProgressItem = 0;
+  if ( mMailCheckProgressItem ) {
+    mMailCheckProgressItem->setComplete();
+    mMailCheckProgressItem = 0;
+  }
 
   if ( folder == mFolder ) {
     // We remove everything from the deleted folders list after a full sync.
