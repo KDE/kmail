@@ -1570,7 +1570,7 @@ bool KMReaderWin::saveDecryptedMessage( KMMessage* aMsg, ObjectTreeParser *otp,
       // add a \0 to the data
       decryptedData.appendNULL();
       QCString resultString( decryptedData.data() );
-      kdDebug(5006) << "KMReaderWin  -  resulting data:" << resultString << endl;
+      //kdDebug(5006) << "KMReaderWin  -  resulting data:" << resultString << endl;
 
       if( !resultString.isEmpty() && messageWasChanged ) {
         kdDebug(5006) << "KMReaderWin  -  composing unencrypted message" << endl;
