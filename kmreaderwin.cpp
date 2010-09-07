@@ -200,12 +200,13 @@ QByteArray& NewByteArray::qByteArray()
 // message parts - *after* all encryption has been removed that
 // could be removed.
 // - This is used to store the message in decrypted form.
-void KMReaderWin::objectTreeToDecryptedMsg( partNode* node,
+bool KMReaderWin::objectTreeToDecryptedMsg( partNode* node,
                                             NewByteArray& resultingData,
                                             DwMessage *currentDwMessage,
                                             bool weAreReplacingAMessageNode,
                                             int recCount )
 {
+  bool somethingWasChanged = false;
   kdDebug(5006) << QString("-------------------------------------------------" ) << endl;
   kdDebug(5006) << QString("KMReaderWin::objectTreeToDecryptedMsg( %1 )  START").arg( recCount ) << endl;
   if( node ) {
@@ -299,6 +300,7 @@ void KMReaderWin::objectTreeToDecryptedMsg( partNode* node,
           messageHeaders.FindField( "Content-Disposition" )->SetModified();
           messageHeaders.SetModified();
           messageHeaders.Assemble();
+          somethingWasChanged = true;
         }
       }
 
@@ -315,11 +317,11 @@ void KMReaderWin::objectTreeToDecryptedMsg( partNode* node,
           // We first get the body, and afterwards add the headers and the body to resultingData.
           // This is because objectTreeToDecryptedMsg() might change the headers.
           NewByteArray messageContents;
-          objectTreeToDecryptedMsg( curNode->firstChild(),
-                                    messageContents,
-                                    message,
-                                    false,
-                                    recCount + 1 );
+          const bool changed = objectTreeToDecryptedMsg( curNode->firstChild(), messageContents,
+                                                         message, false, recCount + 1 );
+          if ( !somethingWasChanged ) {
+            somethingWasChanged = changed;
+          }
 
           resultingData += message->Headers().AsString().c_str();
           resultingData += QCString( "\n" );
@@ -342,11 +344,11 @@ void KMReaderWin::objectTreeToDecryptedMsg( partNode* node,
             // note: We are processing a harmless multipart that is *not*
             //       to be replaced by one of it's children, therefor
             //       we set their doStoreHeaders to true.
-            objectTreeToDecryptedMsg( curNode,
-                                      resultingData,
-                                      currentDwMessage,
-                                      false,
-                                      recCount + 1 );
+            const bool changed = objectTreeToDecryptedMsg( curNode, resultingData, currentDwMessage,
+                                                           false, recCount + 1 );
+            if ( !somethingWasChanged ) {
+              somethingWasChanged = changed;
+            }
             curNode = curNode->nextSibling();
           }
           kdDebug(5006) << "--boundary--" << endl;
@@ -370,14 +372,13 @@ void KMReaderWin::objectTreeToDecryptedMsg( partNode* node,
       }
       // store special data to replace the current part
       // (e.g. decrypted data or embedded RfC 822 data)
-      objectTreeToDecryptedMsg( dataNode,
-                                resultingData,
-                                currentDwMessage,
-                                messageNodeReplaceFlag,
-                                recCount + 1 );
+      somethingWasChanged = objectTreeToDecryptedMsg( dataNode, resultingData, currentDwMessage,
+                                                      messageNodeReplaceFlag, recCount + 1 );
+      Q_ASSERT( somethingWasChanged );
     }
   }
   kdDebug(5006) << QString("\nKMReaderWin::objectTreeToDecryptedMsg( %1 )  END").arg( recCount ) << endl;
+  return somethingWasChanged;
 }
 
 
@@ -1564,13 +1565,14 @@ bool KMReaderWin::saveDecryptedMessage( KMMessage* aMsg, ObjectTreeParser *otp,
 
       NewByteArray decryptedData;
       // note: The following call may change the message's headers.
-      objectTreeToDecryptedMsg( mRootNode, decryptedData, aMsg->getTopLevelPart() );
+      const bool messageWasChanged =
+          objectTreeToDecryptedMsg( mRootNode, decryptedData, aMsg->getTopLevelPart() );
       // add a \0 to the data
       decryptedData.appendNULL();
       QCString resultString( decryptedData.data() );
       kdDebug(5006) << "KMReaderWin  -  resulting data:" << resultString << endl;
 
-      if( !resultString.isEmpty() ) {
+      if( !resultString.isEmpty() && messageWasChanged ) {
         kdDebug(5006) << "KMReaderWin  -  composing unencrypted message" << endl;
         // try this:
         aMsg->setBody( resultString );

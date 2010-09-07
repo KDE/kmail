@@ -258,11 +258,15 @@ public:
   KAction *urlSaveAsAction() { return mUrlSaveAsAction; }
   KAction *addBookmarksAction() { return mAddBookmarksAction;}
   KAction *startImChatAction() { return mStartIMChatAction; }
-  // This function returns the complete data that were in this
-  // message parts - *after* all encryption has been removed that
-  // could be removed.
-  // - This is used to store the message in decrypted form.
-  void objectTreeToDecryptedMsg( partNode* node,
+
+  /**
+   * This function returns the complete data that were in this
+   * message parts - *after* all encryption has been removed that
+   * could be removed.
+   * - This is used to store the message in decrypted form.
+   * @return true if something was actually changed
+   */
+  bool objectTreeToDecryptedMsg( partNode* node,
                                  NewByteArray& resultingData,
                                  DwMessage *currentDwMessage,
                                  bool weAreReplacingTheRootNode = false,
