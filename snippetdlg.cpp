@@ -30,18 +30,20 @@
  *  TRUE to construct a modal dialog.
  */
 //Laurent: don't use a KDialog here not necessary and create a layout warning
-SnippetDlg::SnippetDlg( KActionCollection* ac, QWidget* parent, bool modal,
-                        Qt::WindowFlags f )
-  : QDialog( parent, f ),
-    actionCollection( ac )
+SnippetDlg::SnippetDlg( KActionCollection *ac, QWidget *parent, bool modal,  Qt::WindowFlags f )
+  : QDialog( parent, f ), actionCollection( ac )
 {
-    setupUi( this );
-    setModal( modal );
+  setupUi( this );
+  setModal( modal );
 
-    keyWidget->setCheckActionCollections( QList<KActionCollection*>() << ac );
-    btnAdd->setEnabled( false );
-    connect( snippetName, SIGNAL( textChanged( const QString& ) ), this, SLOT( slotTextChanged( const QString & ) ) );
-    connect( snippetName, SIGNAL( returnPressed() ), this, SLOT( slotReturnPressed() ) );
+  keyWidget->setCheckActionCollections( QList<KActionCollection*>() << ac );
+  btnAdd->setEnabled( false );
+  connect( snippetName, SIGNAL(textChanged(const QString &)),
+           this, SLOT(slotTextChanged(const QString &)) );
+  connect( snippetName, SIGNAL(returnPressed()),
+           this, SLOT(slotReturnPressed()) );
+
+  snippetText->setMinimumSize( 500, 300 );
 }
 
 /*
@@ -49,7 +51,7 @@ SnippetDlg::SnippetDlg( KActionCollection* ac, QWidget* parent, bool modal,
  */
 SnippetDlg::~SnippetDlg()
 {
-    // no need to delete child widgets, Qt does it all for us
+  // no need to delete child widgets, Qt does it all for us
 }
 
 void SnippetDlg::slotTextChanged( const QString & text )
@@ -59,10 +61,10 @@ void SnippetDlg::slotTextChanged( const QString & text )
 
 void SnippetDlg::slotReturnPressed()
 {
-  if ( !snippetName->text().isEmpty() )
+  if ( !snippetName->text().isEmpty() ) {
     accept();
+  }
 }
-
 
 void SnippetDlg::setGroupMode( bool groupMode )
 {
@@ -73,8 +75,9 @@ void SnippetDlg::setGroupMode( bool groupMode )
   snippetText->setVisible( full );
   keyWidgetLabel->setVisible( full );
   keyWidget->setVisible( full );
-  if ( groupMode )
+  if ( groupMode ) {
     resize( width(), minimumSizeHint().height() );
+  }
 }
 
 #include "snippetdlg.moc"
