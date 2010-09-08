@@ -52,6 +52,8 @@ SnippetDlg::SnippetDlg( KActionCollection* ac, QWidget* parent, const char* name
     layout3->addWidget( textLabel3, 7, 0 );
     layout3->addWidget( keyButton, 7, 1 );
 
+    snippetText->setMinimumSize( 500, 300 );
+
     // tab order
     setTabOrder( snippetText, keyButton );
     setTabOrder( keyButton, btnAdd );
