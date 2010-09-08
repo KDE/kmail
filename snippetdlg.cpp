@@ -82,17 +82,19 @@ void SnippetDlg::languageChange()
   shortcutLabel->setText( i18n( "Sh&ortcut:" ) );
 }
 
-static bool shortcutIsValid( const KActionCollection* actionCollection, const KShortcut &sc )
+static bool shortcutIsValid( const KActionCollection *actionCollection, const KShortcut &sc )
 {
   KActionPtrList actions = actionCollection->actions();
   KActionPtrList::Iterator it( actions.begin() );
   for ( ; it != actions.end(); it++ ) {
-    if ( (*it)->shortcut() == sc ) return false;
+    if ( (*it)->shortcut() == sc ) {
+      return false;
+    }
   }
   return true;
 }
 
-void SnippetDlg::slotCapturedShortcut( const KShortcut& sc )
+void SnippetDlg::slotCapturedShortcut( const KShortcut &sc )
 {
 
   if ( sc == shortcutButton->shortcut() ) {
