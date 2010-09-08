@@ -13,17 +13,17 @@
 
 #include "snippetdlg.h"
 
-#include <kdialog.h>
+#include <kactioncollection.h>
+#include <kcombobox.h>
+#include <kkeybutton.h>
 #include <klineedit.h>
 #include <klocale.h>
+#include <kmessagebox.h>
+#include <kpushbutton.h>
+#include <ktextedit.h>
 
 #include <qlabel.h>
 #include <qlayout.h>
-#include <kpushbutton.h>
-#include <ktextedit.h>
-#include "kkeybutton.h"
-#include "kactioncollection.h"
-#include "kmessagebox.h"
 
 /*
  *  Constructs a SnippetDlg as a child of 'parent', with the
@@ -32,35 +32,37 @@
  *  The dialog will by default be modeless, unless you set 'modal' to
  *  TRUE to construct a modal dialog.
  */
-SnippetDlg::SnippetDlg( KActionCollection* ac, QWidget* parent, const char* name, bool modal, WFlags fl )
-    : SnippetDlgBase( parent, name, modal, fl ), actionCollection( ac )
+SnippetDlg::SnippetDlg( KActionCollection *ac, QWidget *parent, const char *name,
+                        bool modal, WFlags fl )
+  : SnippetDlgBase( parent, name, modal, fl ), actionCollection( ac )
 {
-    if ( !name )
-	setName( "SnippetDlg" );
+  if ( !name ) {
+    setName( "SnippetDlg" );
+  }
 
-    textLabel3 = new QLabel( this, "textLabel3" );
-    keyButton = new KKeyButton( this );
-    connect( keyButton, SIGNAL( capturedShortcut( const KShortcut& ) ),
-             this, SLOT( slotCapturedShortcut( const KShortcut& ) ) );
+  shortcutLabel = new QLabel( this, "shortcutLabel" );
+  shortcutButton = new KKeyButton( this );
+  connect( shortcutButton, SIGNAL(capturedShortcut( const KShortcut &)),
+           this, SLOT(slotCapturedShortcut(const KShortcut &)) );
 
-    btnAdd->setEnabled( false );
-    connect( snippetName, SIGNAL(textChanged(const QString &)),
-             this, SLOT(slotTextChanged(const QString &)) );
-    connect( snippetName, SIGNAL(returnPressed()),
-             this, SLOT(slotReturnPressed()) );
+  btnAdd->setEnabled( false );
+  connect( snippetName, SIGNAL(textChanged(const QString &)),
+           this, SLOT(slotTextChanged(const QString &)) );
+  connect( snippetName, SIGNAL(returnPressed()),
+           this, SLOT(slotReturnPressed()) );
 
-    layout3->addWidget( textLabel3, 7, 0 );
-    layout3->addWidget( keyButton, 7, 1 );
+  layout3->addWidget( shortcutLabel, 7, 0 );
+  layout3->addWidget( shortcutButton, 7, 1 );
 
-    snippetText->setMinimumSize( 500, 300 );
+  snippetText->setMinimumSize( 500, 300 );
 
-    // tab order
-    setTabOrder( snippetText, keyButton );
-    setTabOrder( keyButton, btnAdd );
-    setTabOrder( btnAdd, btnCancel );
+  // tab order
+  setTabOrder( snippetText, shortcutButton );
+  setTabOrder( shortcutButton, btnAdd );
+  setTabOrder( btnAdd, btnCancel );
 
-    textLabel3->setBuddy( keyButton );
-    languageChange();
+  shortcutLabel->setBuddy( shortcutButton );
+  languageChange();
 }
 
 /*
@@ -68,7 +70,7 @@ SnippetDlg::SnippetDlg( KActionCollection* ac, QWidget* parent, const char* name
  */
 SnippetDlg::~SnippetDlg()
 {
-    // no need to delete child widgets, Qt does it all for us
+  // no need to delete child widgets, Qt does it all for us
 }
 
 /*
@@ -77,7 +79,7 @@ SnippetDlg::~SnippetDlg()
  */
 void SnippetDlg::languageChange()
 {
-    textLabel3->setText( i18n( "Sh&ortcut:" ) );
+  shortcutLabel->setText( i18n( "Sh&ortcut:" ) );
 }
 
 static bool shortcutIsValid( const KActionCollection* actionCollection, const KShortcut &sc )
@@ -93,25 +95,27 @@ static bool shortcutIsValid( const KActionCollection* actionCollection, const KS
 void SnippetDlg::slotCapturedShortcut( const KShortcut& sc )
 {
 
-    if ( sc == keyButton->shortcut() ) return;
-    if ( sc.toString().isNull() ) {
-      // null is fine, that's reset, but sc.іsNull() will be false :/
-      keyButton->setShortcut( KShortcut::null(), false );
+  if ( sc == shortcutButton->shortcut() ) {
+    return;
+  }
+  if ( sc.toString().isNull() ) {
+    // null is fine, that's reset, but sc.іsNull() will be false :/
+    shortcutButton->setShortcut( KShortcut::null(), false );
+  } else {
+    if ( !shortcutIsValid( actionCollection, sc ) ) {
+      QString msg( i18n( "The selected shortcut is already used, "
+                         "please select a different one." ) );
+      KMessageBox::sorry( this, msg );
     } else {
-      if( !shortcutIsValid( actionCollection, sc ) ) {
-        QString msg( i18n( "The selected shortcut is already used, "
-              "please select a different one." ) );
-        KMessageBox::sorry( this, msg );
-      } else {
-        keyButton->setShortcut( sc, false );
-      }
+      shortcutButton->setShortcut( sc, false );
     }
+  }
 }
 
 void SnippetDlg::setShowShortcut( bool show )
 {
-    textLabel3->setShown( show );
-    keyButton->setShown( show );
+  shortcutLabel->setShown( show );
+  shortcutButton->setShown( show );
 }
 
 void SnippetDlg::slotTextChanged( const QString &text )
@@ -123,6 +127,19 @@ void SnippetDlg::slotReturnPressed()
 {
   if ( !snippetName->text().isEmpty() ) {
     accept();
+  }
+}
+
+void SnippetDlg::setGroupMode( bool groupMode )
+{
+  const bool full = !groupMode;
+  textLabelGroup->setShown( full );
+  cbGroup->setShown( full );
+  textLabel2->setShown( full );
+  snippetText->setShown( full );
+  setShowShortcut( !groupMode );
+  if ( groupMode ) {
+    resize( width(), 20 );
   }
 }
 

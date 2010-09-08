@@ -134,7 +134,7 @@ void SnippetWidget::slotAdd()
 
   if (dlg.exec() == QDialog::Accepted) {
       group = dynamic_cast<SnippetGroup*>(SnippetItem::findItemByName(dlg.cbGroup->currentText(), _list));
-      _list.append( makeItem( group, dlg.snippetName->text(), dlg.snippetText->text(), dlg.keyButton->shortcut() ) );
+      _list.append( makeItem( group, dlg.snippetName->text(), dlg.snippetText->text(), dlg.shortcutButton->shortcut() ) );
   }
 }
 
@@ -166,12 +166,8 @@ void SnippetWidget::slotAddGroup()
 {
   //kdDebug(5006) << "Ender slotAddGroup()" << endl;
   SnippetDlg dlg( mActionCollection, this, "SnippetDlg");
-  dlg.setShowShortcut( false );
-  dlg.snippetText->setEnabled(false);
-  dlg.snippetText->setText(i18n("GROUP"));
+  dlg.setGroupMode( true );
   dlg.setCaption(i18n("Add Group"));
-  dlg.cbGroup->insertItem(i18n("All"));
-  dlg.cbGroup->setCurrentText(i18n("All"));
 
   if (dlg.exec() == QDialog::Accepted) {
     _list.append( new SnippetGroup(this, dlg.snippetName->text(), SnippetGroup::getMaxId() ) );
@@ -186,33 +182,57 @@ void SnippetWidget::slotAddGroup()
 void SnippetWidget::slotRemove()
 {
   //get current data
-  QListViewItem * item = currentItem();
+  QListViewItem *item = currentItem();
   SnippetItem *snip = dynamic_cast<SnippetItem*>( item );
   SnippetGroup *group = dynamic_cast<SnippetGroup*>( item );
-  if (!snip)
+  if ( !snip ) {
     return;
+  }
 
-  if (group) {
-    if (group->childCount() > 0 &&
-        KMessageBox::warningContinueCancel(this, i18n("Do you really want to remove this group and all its snippets?"),QString::null,KStdGuiItem::del())
-        == KMessageBox::Cancel)
-      return;
+  if ( group ) {
+    if ( group->childCount() > 0 ) {
+      if ( KMessageBox::warningContinueCancel(
+             this,
+             i18n( "<qt>Do you really want to remove group \"%1\" along with all its snippets?"
+                   "<p><b>There is no way to undo the removal.</b></qt>" ).arg( group->getName() ),
+             QString::null,
+             KStdGuiItem::remove() ) == KMessageBox::Cancel ) {
+        return;
+      }
+    } else {
+      if ( KMessageBox::warningContinueCancel(
+             this,
+             i18n( "Do you really want to remove group \"%1\"?" ).arg( group->getName() ),
+             QString::null,
+             KStdGuiItem::remove() ) == KMessageBox::Cancel ) {
+        return;
+      }
+    }
 
-    SnippetItem *it=_list.first();
+    SnippetItem *it = _list.first();
     while ( it ) {
-      if (it->getParent() == group->getId()) {
+      if ( it->getParent() == group->getId() ) {
         SnippetItem *doomed = it;
         it = _list.next();
         //kdDebug(5006) << "remove " << doomed->getName() << endl;
-        _list.remove(doomed);
+        _list.remove( doomed );
       } else {
         it = _list.next();
       }
     }
+  } else {
+    if ( KMessageBox::warningContinueCancel(
+           this,
+           i18n( "<qt>Do you really want to remove snippet \"%1\"?"
+                 "<p><b>There is no way to undo the removal.</b></qt>" ).arg( snip->getName() ),
+           QString::null,
+           KStdGuiItem::remove() ) == KMessageBox::Cancel ) {
+      return;
+    }
   }
 
   //kdDebug(5006) << "remove " << snip->getName() << endl;
-  _list.remove(snip);
+  _list.remove( snip );
 }
 
 
@@ -236,7 +256,7 @@ void SnippetWidget::slotEdit( QListViewItem* item )
   SnippetDlg dlg( mActionCollection, this, "SnippetDlg");
   dlg.snippetName->setText(pSnippet->getName());
   dlg.snippetText->setText(pSnippet->getText());
-  dlg.keyButton->setShortcut( pSnippet->getAction()->shortcut(), false );
+  dlg.shortcutButton->setShortcut( pSnippet->getAction()->shortcut(), false );
   dlg.btnAdd->setText(i18n("&Apply"));
 
   dlg.setCaption(i18n("Edit Snippet"));
@@ -253,7 +273,7 @@ void SnippetWidget::slotEdit( QListViewItem* item )
     item->setText( 0, dlg.snippetName->text() );
     pSnippet->setName( dlg.snippetName->text() );
     pSnippet->setText( dlg.snippetText->text() );
-    pSnippet->getAction()->setShortcut( dlg.keyButton->shortcut());
+    pSnippet->getAction()->setShortcut( dlg.shortcutButton->shortcut());
 
     /* if the user changed the parent we need to move the snippet */
     if ( SnippetItem::findGroupById(pSnippet->getParent(), _list)->getName() != dlg.cbGroup->currentText() ) {
@@ -282,13 +302,10 @@ void SnippetWidget::slotEditGroup()
 
   //init the dialog
   SnippetDlg dlg( mActionCollection, this, "SnippetDlg" );
-  dlg.setShowShortcut( false );
-  dlg.snippetName->setText(pGroup->getName());
-  dlg.snippetText->setText(pGroup->getText());
-  dlg.btnAdd->setText(i18n("&Apply"));
-  dlg.snippetText->setEnabled(FALSE);
-  dlg.setCaption(i18n("Edit Group"));
-  dlg.cbGroup->insertItem(i18n("All"));
+  dlg.setGroupMode( true );
+  dlg.snippetName->setText( pGroup->getName() );
+  dlg.btnAdd->setText( i18n( "&Apply" ) );
+  dlg.setCaption( i18n( "Edit Group" ) );
 
   if (dlg.exec() == QDialog::Accepted) {
     //update the KListView and the SnippetGroup
@@ -301,14 +318,14 @@ void SnippetWidget::slotEditGroup()
 
 void SnippetWidget::slotExecuted(QListViewItem * item)
 {
-    if( item == 0 )
-    {
-	item = currentItem();
-    }
+  if ( item == 0 ) {
+    item = currentItem();
+  }
 
   SnippetItem *pSnippet = dynamic_cast<SnippetItem*>( item );
-  if (!pSnippet || dynamic_cast<SnippetGroup*>(item))
-      return;
+  if ( !pSnippet || dynamic_cast<SnippetGroup*>( item ) ) {
+    return;
+  }
 
   //process variables if any, then insert into the active view
   insertIntoActiveView( parseText(pSnippet->getText(), _SnippetConfig.getDelimiter()) );
@@ -515,47 +532,65 @@ void SnippetWidget::initConfig()
     \fn SnippetWidget::maybeTip( const QPoint & p )
     Shows the Snippet-Text as ToolTip
  */
-void SnippetWidget::maybeTip( const QPoint & p )
+void SnippetWidget::maybeTip( const QPoint &p )
 {
-	SnippetItem * item = dynamic_cast<SnippetItem*>( itemAt( p ) );
-	if (!item)
-	  return;
+  SnippetItem *item = dynamic_cast<SnippetItem*>( itemAt( p ) );
+  if ( !item ) {
+    return;
+  }
+  SnippetGroup *group = dynamic_cast<SnippetGroup *>(item);
+  if ( group ) { // only show tooltips for snippets.
+    return;
+  }
 
-	QRect r = itemRect( item );
+  QRect r = itemRect( item );
 
-	if (r.isValid() &&
-        _SnippetConfig.useToolTips() )
-	{
-	    tip( r, item->getText() );  //show the snippet's text
-	}
+  if ( r.isValid() && _SnippetConfig.useToolTips() ) {
+    tip( r, item->getText() );  //show the snippet's text
+  }
 }
 
 /*!
     \fn SnippetWidget::showPopupMenu( QListViewItem * item, const QPoint & p, int )
     Shows the Popup-Menu depending item is a valid pointer
 */
-void SnippetWidget::showPopupMenu( QListViewItem * item, const QPoint & p, int )
+void SnippetWidget::showPopupMenu( QListViewItem *item, const QPoint &p, int )
 {
-    KPopupMenu popup;
+  KPopupMenu popup;
 
-    SnippetItem * selectedItem = static_cast<SnippetItem *>(item);
-    if ( item ) {
-        popup.insertTitle( selectedItem->getName() );
-        if (dynamic_cast<SnippetGroup*>(item)) {
-            popup.insertItem( i18n("Edit &group..."), this, SLOT( slotEditGroup() ) );
-        } else {
-            popup.insertItem( SmallIconSet("editpaste"), i18n("&Paste"), this, SLOT( slotExecuted() ) );
-            popup.insertItem( SmallIconSet("edit"), i18n("&Edit..."), this, SLOT( slotEdit() ) );
-        }
-        popup.insertItem( SmallIconSet("editdelete"), i18n("&Remove"), this, SLOT( slotRemove() ) );
-        popup.insertSeparator();
+  SnippetItem * selectedItem = static_cast<SnippetItem *>(item);
+  bool canAddGroup = true;
+  bool canAddSnippet = true;
+  if ( item ) {
+    canAddGroup = false;  // subgroups are not permitted
+    popup.insertTitle( selectedItem->getName() );
+    if ( dynamic_cast<SnippetGroup*>( item ) ) {
+      popup.insertItem( SmallIconSet( "edit" ), i18n( "Rename &Group..." ),
+                        this, SLOT(slotEditGroup()) );
+      popup.insertItem( SmallIconSet( "editdelete" ), i18n( "&Remove Group" ),
+                        this, SLOT(slotRemove()) );
     } else {
-        popup.insertTitle(i18n("Text Snippets"));
+      canAddSnippet = false; // subsnippets are not permitted
+      popup.insertItem( SmallIconSet( "editpaste" ), i18n( "&Insert Snippet" ),
+                        this, SLOT(slotExecuted()) );
+      popup.insertSeparator();
+      popup.insertItem( SmallIconSet( "edit" ), i18n( "&Edit Snippet..." ),
+                        this, SLOT(slotEdit()) );
+      popup.insertItem( SmallIconSet( "editdelete" ), i18n( "&Remove Snippet" ),
+                        this, SLOT(slotRemove()) );
     }
-    popup.insertItem( i18n("&Add Snippet..."), this, SLOT( slotAdd() ) );
-    popup.insertItem( i18n("Add G&roup..."), this, SLOT( slotAddGroup() ) );
+    popup.insertSeparator();
+  } else {
+    popup.insertTitle( i18n( "Text Snippets" ) );
+  }
+  if ( canAddSnippet ) {
+    popup.insertItem( i18n( "&Add Snippet..." ), this, SLOT(slotAdd()) );
+  }
+  if ( canAddGroup ) {
+    popup.insertItem( i18n( "Add G&roup..." ), this, SLOT(slotAddGroup()) );
+  }
 
-    popup.exec(p);
+  popup.exec( p );
 }
 
 
@@ -934,7 +969,7 @@ void SnippetWidget::slotDropped(QDropEvent *e, QListViewItem *)
     if (dlg.exec() == QDialog::Accepted) {
       /* get the group that the user selected with the combobox */
       group = dynamic_cast<SnippetGroup*>(SnippetItem::findItemByName(dlg.cbGroup->currentText(), _list));
-      _list.append( makeItem(group, dlg.snippetName->text(), dlg.snippetText->text(), dlg.keyButton->shortcut() ) );
+      _list.append( makeItem(group, dlg.snippetName->text(), dlg.snippetText->text(), dlg.shortcutButton->shortcut() ) );
     }
   }
 }
