@@ -142,7 +142,7 @@ SnippetItem* SnippetWidget::makeItem( SnippetItem *parent, const QString &name,
                                       const QString &text, const QKeySequence &keySeq )
 {
   SnippetItem *item = new SnippetItem( parent, name, text );
-  const QString actionName = i18n( "Snippet %1", name );
+  const QString actionName = i18nc( "@action", "Snippet %1", name );
   const QString normalizedName = QString( actionName ).replace( ' ', '_' );
   item->setToolTip( 0, text );
   if ( !mActionCollection->action( normalizedName ) ) {
@@ -166,7 +166,7 @@ void SnippetWidget::slotAddGroup()
   MessageViewer::AutoQPointer<SnippetDlg> dlg( new SnippetDlg( mActionCollection, this ) );
   dlg->setObjectName( "SnippetDlg" );
   dlg->setGroupMode( true );
-  dlg->setWindowTitle( i18n("Add Group") );
+  dlg->setWindowTitle( i18nc( "@title:window", "Add Group" ) );
 
   if ( dlg->exec() == KDialog::Accepted && dlg ) {
     _list.append( new SnippetGroup(this, dlg->snippetName->text(), SnippetGroup::getMaxId() ) );
@@ -180,30 +180,58 @@ void SnippetWidget::slotAddGroup()
 void SnippetWidget::slotRemove()
 {
   //get current data
-  QTreeWidgetItem * item = currentItem();
+  QTreeWidgetItem *item = currentItem();
   SnippetItem *snip = dynamic_cast<SnippetItem*>( item );
-  if (!snip)
+  if (!snip) {
     return;
+  }
+
   SnippetGroup *group = dynamic_cast<SnippetGroup*>( item );
-  if (group) {
-    if (group->childCount() > 0 &&
-        KMessageBox::warningContinueCancel(this, i18n("Do you really want to remove this group and all its snippets?"),QString(), KStandardGuiItem::del())
-        == KMessageBox::Cancel)
-      return;
+  if ( group ) {
+    if ( group->childCount() > 0 ) {
+      if ( KMessageBox::warningContinueCancel(
+             this,
+             i18nc( "@info",
+                    "Do you really want to remove group \"%1\" along with all its snippets?<nl/>"
+                    "<warning>There is no way to undo the removal.</warning>", group->getName() ),
+             QString(),
+             KStandardGuiItem::remove() ) == KMessageBox::Cancel ) {
+        return;
+      }
+    } else {
+      if ( KMessageBox::warningContinueCancel(
+             this,
+             i18nc( "@info",
+                    "Do you really want to remove group \"%1\"?", group->getName() ),
+             QString(),
+             KStandardGuiItem::remove() ) == KMessageBox::Cancel ) {
+        return;
+      }
+    }
 
     for ( int i = 0; i < _list.size(); i++ ) {
       if (_list[i]->getParent() == group->getId()) {
         delete _list.takeAt( i-- );
       }
     }
+  } else {
+    if ( KMessageBox::warningContinueCancel(
+           this,
+           i18nc( "@info",
+                  "Do you really want to remove snippet \"%1\"?<nl/>"
+                  "<warning>There is no way to undo the removal.</warning>", snip->getName() ),
+           QString(),
+           KStandardGuiItem::remove() ) == KMessageBox::Cancel ) {
+      return;
+    }
   }
 
   //kDebug() << "remove " << snip->getName();
-  int snipIndex = _list.indexOf(snip);
-  if (snipIndex > -1)
-    delete _list.takeAt(snipIndex);
+  int snipIndex = _list.indexOf( snip );
+  if ( snipIndex > -1 ) {
+    delete _list.takeAt( snipIndex );
+  }
 }
-
 
 
 /*!
@@ -481,29 +509,41 @@ void SnippetWidget::readConfig()
 */
 void SnippetWidget::contextMenuEvent( QContextMenuEvent *e )
 {
-    KMenu popup;
+  KMenu popup;
 
-    SnippetItem *item = static_cast<SnippetItem *>(itemAt(e->pos()));
-    if ( item ) {
-        popup.addTitle( item->getName() );
-        if (dynamic_cast<SnippetGroup*>(item)) {
-            popup.addAction( i18n("Edit &group..."), this, SLOT( slotEditGroup() ) );
-        } else {
-            popup.addAction( KIcon("edit-paste"), i18n("&Paste"),
-                             this, SLOT( slotExecuted() ) );
-            popup.addAction( KIcon("document-properties"), i18n("&Edit..."),
-                             this, SLOT( slotEdit() ) );
-        }
-        popup.addAction( KIcon("edit-delete"), i18n("&Remove"),
-                         this, SLOT( slotRemove() ) );
-        popup.addSeparator();
+  SnippetItem *item = static_cast<SnippetItem *>( itemAt( e->pos() ) );
+  bool canAddGroup = true;
+  bool canAddSnippet = true;
+  if ( item ) {
+    canAddGroup = false;  // subgroups are not permitted
+    popup.addTitle( item->getName() );
+    if ( dynamic_cast<SnippetGroup*>( item ) ) {
+      popup.addAction( KIcon( "edit-rename" ), i18n( "Rename &Group..." ),
+                       this, SLOT(slotEditGroup()) );
+      popup.addAction( KIcon( "edit-delete" ), i18n( "&Remove Group" ),
+                       this, SLOT(slotRemove()) );
     } else {
-        popup.addTitle(i18n("Text Snippets"));
+      canAddSnippet = false; // subsnippets are not permitted
+      popup.addAction( KIcon( "edit-paste" ), i18n( "&Insert Snippet" ),
+                       this, SLOT(slotExecuted()) );
+      popup.addSeparator();
+      popup.addAction( KIcon( "document-properties" ), i18n( "&Edit Snippet..." ),
+                       this, SLOT(slotEdit()) );
+      popup.addAction( KIcon( "edit-delete" ), i18n( "&Remove Snippet" ),
+                       this, SLOT(slotRemove()) );
     }
-    popup.addAction( i18n("&Add Snippet..."), this, SLOT( slotAdd() ) );
-    popup.addAction( i18n("Add G&roup..."), this, SLOT( slotAddGroup() ) );
+    popup.addSeparator();
+  } else {
+    popup.addTitle( i18n( "Text Snippets" ) );
+  }
+  if ( canAddSnippet ) {
+    popup.addAction( i18n( "&Add Snippet..." ), this, SLOT(slotAdd()) );
+  }
+  if ( canAddGroup ) {
+    popup.addAction( i18n( "Add G&roup..." ), this, SLOT(slotAddGroup()) );
+  }
 
-    popup.exec(e->globalPos());
+  popup.exec( e->globalPos() );
 }
 
 /*!
@@ -528,7 +568,8 @@ QString SnippetWidget::parseText( const QString &text )
 
       if ( strName != QString('$') + QString('$') ) {  //if not doubel-delimiter
         if ( mapVar[strName].length() <= 0 ) {  // and not already in map
-          strMsg = i18n( "Please enter the value for <b>%1</b>:", strName );
+          strMsg = i18nc( "@title",
+                          "Please enter the value for <emphasis>%1</emphasis>:", strName );
           strNew = showSingleVarDialog( strName, &_mapSaved );
           if ( strNew.isEmpty() )
             return QString(); //user clicked Cancel
@@ -575,9 +616,9 @@ QString SnippetWidget::showSingleVarDialog( const QString &var, QMap<QString, QS
   layoutVar->setObjectName( "layoutVar" );
   layoutBtn->setObjectName( "layoutBtn" );
 
-  KTextEdit * te = NULL;
-  QLabel * labTop = NULL;
-  QCheckBox * cb = NULL;
+  KTextEdit *te = 0;
+  QLabel *labTop = 0;
+  QCheckBox *cb = 0;
 
   labTop = new QLabel( dlg.get() );
   labTop->setObjectName( "label" );
@@ -590,6 +631,15 @@ QString SnippetWidget::showSingleVarDialog( const QString &var, QMap<QString, QS
   cb->setObjectName( "cbVar" );
   cb->setChecked( false );
   cb->setText(i18n( "Make value &default" ));
+  cb->setToolTip(
+    i18nc( "@info:tooltip",
+           "Enable this to save the value entered to the right "
+           "as the default value for this variable" ) );
+  cb->setWhatsThis(
+    i18nc( "@info:whatsthis",
+           "If you enable this option, the value entered to the right will be saved. "
+           "If you use the same variable later, even in another snippet, the value entered "
+           "to the right will be the default value for that variable." ) );
 
   te = new KTextEdit( dlg.get() );
   te->setObjectName( "teVar" );
@@ -600,10 +650,6 @@ QString SnippetWidget::showSingleVarDialog( const QString &var, QMap<QString, QS
     te->setText((*mapSave)[var]);
   }
 
-  cb->setToolTip( i18n("Enable this to save the value entered to the right as the default value for this variable") );
-  cb->setWhatsThis( i18n("If you enable this option, the value entered to the right will be saved. "
-                         "If you use the same variable later, even in another snippet, the value entered to the right "
-                         "will be the default value for that variable.") );
 
   layout->addLayout( layoutVar, 1, 0, 1, 2 );
 
