@@ -172,7 +172,7 @@ KMKernel::KMKernel (QObject *parent, const char *name) :
     // QTextCodec::setCodecForLocale(cdc);
     // KGlobal::locale()->setEncoding(cdc->mibEnum());
   }
-  // till here ================================================
+  // until here ================================================
 
   the_draftsCollectionFolder = -1;
   the_inboxCollectionFolder = -1;
