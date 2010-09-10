@@ -500,7 +500,7 @@ KMMessage* FolderStorage::getMsg(int idx)
       msg = readMsg(idx);
       // sanity check
       if (mCompactable && (!msg || (msg->subject().isEmpty() != mbSubject.isEmpty()))) {
-        kdDebug(5006) << "Error: " << location() <<
+        kdWarning(5006) << "Error: " << location() <<
           " Index file is inconsistent with folder file. This should never happen." << endl;
 
         // We can't recreate the index at this point, since that would invalidate the current
