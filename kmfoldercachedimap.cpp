@@ -1917,9 +1917,9 @@ void KMFolderCachedImap::slotGetMessagesData(KIO::Job * job, const QByteArray & 
                    redownload = true;
                }
            } else {
-               kdDebug(5006) << "WARNING: ####### " << endl;
-               kdDebug(5006) << "Message locally missing but not deleted in folder: " << folder()->prettyURL() << endl;
-               kdDebug(5006) << "The missing UID: " << uid << ". It will be redownloaded " << endl;
+               kdWarning(5006) << "WARNING: ####### " << endl;
+               kdWarning(5006) << "Message locally missing but not deleted in folder: " << folder()->prettyURL() << endl;
+               kdWarning(5006) << "The missing UID: " << uid << ". It will be redownloaded " << endl;
                redownload = true;
            }
 
