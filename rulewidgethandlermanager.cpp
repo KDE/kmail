@@ -400,7 +400,7 @@ namespace {
   // also see KMSearchRule::matches() and KMSearchRule::Function
   // if you change the following strings!
   static const struct {
-    const KMSearchRule::Function id;
+    KMSearchRule::Function id;
     const char *displayName;
   } TextFunctions[] = {
     { KMSearchRule::FuncContains,           I18N_NOOP( "contains" )          },
@@ -720,7 +720,7 @@ namespace {
   // also see KMSearchRule::matches() and KMSearchRule::Function
   // if you change the following strings!
   static const struct {
-    const KMSearchRule::Function id;
+    KMSearchRule::Function id;
     const char *displayName;
   } MessageFunctions[] = {
     { KMSearchRule::FuncContains,        I18N_NOOP( "contains" )          },
@@ -987,7 +987,7 @@ namespace {
 
 namespace {
   static const struct {
-    const KMSearchRule::Function id;
+    KMSearchRule::Function id;
     const char *displayName;
   } StatusFunctions[] = {
     { KMSearchRule::FuncContains,    I18N_NOOP( "is" )    },
@@ -1227,7 +1227,7 @@ namespace {
 
 namespace {
   static const struct {
-    const KMSearchRule::Function id;
+    KMSearchRule::Function id;
     const char *displayName;
   } TagFunctions[] = {
     { KMSearchRule::FuncContains,           I18N_NOOP( "contains" )          },
@@ -1497,7 +1497,7 @@ namespace {
 
 namespace {
   static const struct {
-    const KMSearchRule::Function id;
+    KMSearchRule::Function id;
     const char *displayName;
   } NumericFunctions[] = {
     { KMSearchRule::FuncEquals,           I18N_NOOP( "is equal to" )         },

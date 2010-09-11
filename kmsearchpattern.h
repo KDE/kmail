@@ -240,8 +240,8 @@ public:
 namespace KMail {
 // The below are used in several places and here so they are accessible.
   struct MessageStatus {
-    const char * const text;
-    const char * const icon;
+    const char *text;
+    const char *icon;
   };
 
   // If you change the ordering here; also do it in the enum below
