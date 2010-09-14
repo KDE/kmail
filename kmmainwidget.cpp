@@ -80,6 +80,7 @@
 // KDEPIMLIBS includes
 #include <Akonadi/AgentManager>
 #include <akonadi/itemfetchjob.h>
+#include <akonadi/collectionattributessynchronizationjob.h>
 #include <akonadi/collectionfetchjob.h>
 #include <akonadi/collectionfetchscope.h>
 #include <akonadi/contact/contactsearchjob.h>
@@ -4225,10 +4226,18 @@ KAction *KMMainWidget::akonadiStandardAction( Akonadi::StandardActionManager::Ty
 void KMMainWidget::slotCollectionProperties()
 {
   if (!mCurrentFolder) return;
-  KMCollectionPropertiesDialog* dlg = new KMCollectionPropertiesDialog( mCurrentFolder->collection(), this );
-  dlg->setCaption( i18nc( "@title:window", "Properties of Folder %1", mCurrentFolder->collection().name() ) );
+
+  Akonadi::CollectionAttributesSynchronizationJob sync( mCurrentFolder->collection() );
+  sync.exec();
+
+  Akonadi::CollectionFetchJob fetch( mCurrentFolder->collection(), Akonadi::CollectionFetchJob::Base );
+  fetch.exec();
+
+  Akonadi::Collection c = fetch.collections().first();
+
+  KMCollectionPropertiesDialog* dlg = new KMCollectionPropertiesDialog( c, this );
+  dlg->setCaption( i18nc( "@title:window", "Properties of Folder %1", c.name() ) );
   dlg->resize( 500, 400 );
   dlg->show();
-
 }
 
