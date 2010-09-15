@@ -1572,6 +1572,7 @@ KMainWindow* KMKernel::mainWin()
 /**
  * Empties all trash folders
  */
+//TODO: Port it to StandardMailActionManager::EmptyAllTrash
 void KMKernel::slotEmptyTrash()
 {
   QString title = i18n("Empty Trash");
