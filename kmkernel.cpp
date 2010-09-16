@@ -1703,6 +1703,7 @@ void KMKernel::recreateCorruptIndexFiles()
       continue;
     KMFolderIndex * const index = dynamic_cast<KMFolderIndex*>( folder->storage() );
     if ( index && index->indexStatus() != KMFolderIndex::IndexOk ) {
+      kdDebug(5006) << "Folder with broken index has status = " << index->indexStatus() << endl;
       foldersWithBrokenIndex.append( index );
     }
   }
