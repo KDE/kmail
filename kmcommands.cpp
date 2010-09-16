@@ -2841,8 +2841,9 @@ void KMLoadPartsCommand::slotPartRetrieved( KMMessage *msg,
     for ( PartNodeMessageMap::const_iterator it = mPartMap.begin();
           it != mPartMap.end();
           ++it ) {
-      if ( it.key()->dwPart()->partId() == part->partId() )
+      if ( it.key()->dwPart() && ( it.key()->dwPart()->partId() == part->partId() ) ) {
         it.key()->setDwPart( part );
+      }
     }
   } else
     kdWarning(5006) << "KMLoadPartsCommand::slotPartRetrieved - could not find bodypart!" << endl;
