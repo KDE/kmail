@@ -345,11 +345,13 @@ bool KMFolderIndex::readIndexHeader(int *gv)
 
   // Check if the index is corrupted ("not compactable") and recreate it if necessary. See
   // FolderStorage::getMsg() for the detection code.
+#if 0
   if ( !mCompactable ) {
     kdWarning(5006) << "Index file " << indexLocation() << " is corrupted!!. Re-creating it." << endl;
     recreateIndex( false /* don't call readIndex() afterwards */ );
     return false;
   }
+#endif
 
   if (indexVersion < 1505 ) {
       if(indexVersion == 1503) {
