@@ -229,15 +229,15 @@ void KMCommand::slotStart()
            this, SLOT( slotPostTransfer( KMCommand::Result ) ) );
   kmkernel->filterMgr()->ref();
 
-  if (mMsgList.find(0) != -1) {
-      emit messagesTransfered( Failed );
-      return;
+  if ( mMsgList.find(0) != -1 ) {
+    emit messagesTransfered( Failed );
+    return;
   }
 
-  if ((mMsgList.count() == 1) &&
-      (mMsgList.getFirst()->isMessage()) &&
-      (mMsgList.getFirst()->parent() == 0))
-  {
+  if ( ( mMsgList.count() == 1 ) &&
+       mMsgList.getFirst() &&
+       mMsgList.getFirst()->isMessage() &&
+       !mMsgList.getFirst()->parent() ){
     // Special case of operating on message that isn't in a folder
     mRetrievedMsgs.append((KMMessage*)mMsgList.getFirst());
     emit messagesTransfered( OK );
