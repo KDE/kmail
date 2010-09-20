@@ -291,7 +291,7 @@ target_link_libraries(kmail
 
 install(TARGETS kmailprivate ${INSTALL_TARGETS_DEFAULT_ARGS} LIBRARY NAMELINK_SKIP)
 install(TARGETS kmail ${INSTALL_TARGETS_DEFAULT_ARGS})
-install(FILES KMail.desktop kmail_view.desktop DESTINATION ${XDG_APPS_INSTALL_DIR})
+install(FILES KMail2.desktop kmail_view.desktop DESTINATION ${XDG_APPS_INSTALL_DIR})
 install(FILES
   ${CMAKE_CURRENT_BINARY_DIR}/kmail.kcfg
   custommimeheader.kcfg
