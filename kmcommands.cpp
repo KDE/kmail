@@ -2381,12 +2381,21 @@ KMDeleteMsgCommand::KMDeleteMsgCommand( Q_UINT32 sernum )
   KMFolder *srcFolder = 0;
   int idx;
   KMMsgDict::instance()->getLocation( sernum, &srcFolder, &idx );
-  if ( srcFolder ) {
-    KMMsgBase *msg = srcFolder->getMsgBase( idx );
-    srcFolder->open("kmcommand");
-    mOpenedFolders.push_back( srcFolder );
-    addMsg( msg );
+  if ( !srcFolder || (idx == -1) ) {
+    setDestFolder( 0 );
+    return;
   }
+
+  KMMsgBase *msg = srcFolder->getMsgBase( idx );
+  if ( !msg ) {
+    setDestFolder( 0 );
+    return;
+  }
+
+  srcFolder->open("kmcommand");
+  mOpenedFolders.push_back( srcFolder );
+  addMsg( msg );
+
   setDestFolder( findTrashFolder( srcFolder ) );
 }
 
