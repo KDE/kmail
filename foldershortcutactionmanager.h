@@ -22,20 +22,46 @@
 #include "kmail_export.h"
 
 #include <Akonadi/Entity>
+#include <Akonadi/Collection>
 
 #include <QMap>
 #include <QModelIndex>
 #include <QObject>
 
 namespace Akonadi {
-  class Collection;
+  class ChangeRecorder;
+  class EntityMimeTypeFilterModel;
 }
 
-class FolderShortcutCommand;
+class QAction;
+
 class KActionCollection;
-class KMMainWidget;
 
 namespace KMail {
+
+  class FolderShortcutCommand : public QObject
+  {
+    Q_OBJECT
+
+  public:
+    FolderShortcutCommand( QWidget* mainwidget, const Akonadi::Collection & col );
+    ~FolderShortcutCommand();
+
+  public slots:
+    void start();
+    /** Assign a KAction to the command which is used to trigger it. This
+    * action will be deleted along with the command, so you don't need to
+    * keep track of it separately. */
+    void setAction( QAction* );
+
+  signals:
+    void selectCollectionFolder( const Akonadi::Collection & col );
+
+  private:
+    QWidget *mMainWidget;
+    Akonadi::Collection mCollectionFolder;
+    QAction *mAction;
+  };
 
   class KMAIL_EXPORT FolderShortcutActionManager : public QObject
   {
@@ -43,7 +69,7 @@ namespace KMail {
 
     public:
 
-      FolderShortcutActionManager( KMMainWidget *parent, KActionCollection *actionCollection );
+      FolderShortcutActionManager( QWidget *parent, KActionCollection *actionCollection, Akonadi::EntityMimeTypeFilterModel *collectionModel, Akonadi::ChangeRecorder *folderCollectionMonitor );
       void createActions();
 
     public slots:
@@ -68,8 +94,11 @@ namespace KMail {
       void updateShortcutsForIndex( const QModelIndex &parent, int start, int end );
       QMap< Akonadi::Entity::Id, FolderShortcutCommand* > mFolderShortcutCommands;
       KActionCollection *mActionCollection;
-      KMMainWidget *mParent;
+      QWidget *mParent;
+      Akonadi::EntityMimeTypeFilterModel *mCollectionModel;
+      Akonadi::ChangeRecorder *mFolderCollectionMonitor;
   };
+
 }
 
 #endif

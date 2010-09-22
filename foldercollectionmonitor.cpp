@@ -17,7 +17,6 @@
 */
 
 #include "foldercollectionmonitor.h"
-#include "kmkernel.h"
 #include "util.h"
 #include "foldercollection.h"
 
@@ -60,9 +59,10 @@ Akonadi::ChangeRecorder *FolderCollectionMonitor::monitor() const
   return mMonitor;
 }
 
-void FolderCollectionMonitor::expireAllFolders(bool immediate )
+void FolderCollectionMonitor::expireAllFolders(bool immediate, QAbstractItemModel* collectionModel  )
 {
-  expireAllCollection( KMKernel::self()->entityTreeModel(), immediate );
+  if ( collectionModel )
+    expireAllCollection( collectionModel, immediate );
 }
 
 void FolderCollectionMonitor::expireAllCollection( const QAbstractItemModel *model, bool immediate, const QModelIndex& parentIndex )

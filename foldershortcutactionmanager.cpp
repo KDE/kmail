@@ -19,25 +19,57 @@
 #include "foldershortcutactionmanager.h"
 
 #include "foldercollection.h"
-#include "kmcommands.h"
-#include "kmkernel.h"
-#include "kmmainwidget.h"
 
 #include <Akonadi/ChangeRecorder>
 #include <Akonadi/EntityDisplayAttribute>
-#include <akonadi/entitymimetypefiltermodel.h>
 #include <Akonadi/EntityTreeModel>
+#include <Akonadi/EntityMimeTypeFilterModel>
+
+#include <QSortFilterProxyModel>
 
 #include <KAction>
 #include <KActionCollection>
+#include <KLocale>
 
 using namespace KMail;
 
-FolderShortcutActionManager::FolderShortcutActionManager( KMMainWidget *parent,
-                                                          KActionCollection *actionCollection )
+
+FolderShortcutCommand::FolderShortcutCommand( QWidget *mainwidget,
+                                              const Akonadi::Collection&col  )
+    : QObject( mainwidget ), mMainWidget( mainwidget ), mCollectionFolder( col ), mAction( 0 )
+{
+  connect( this, SIGNAL(selectCollectionFolder(Akonadi::Collection)), mMainWidget, SLOT(slotSelectCollectionFolder(Akonadi::Collection)));
+}
+
+
+FolderShortcutCommand::~FolderShortcutCommand()
+{
+  if ( mAction && mAction->parentWidget() )
+    mAction->parentWidget()->removeAction( mAction );
+  delete mAction;
+}
+
+void FolderShortcutCommand::start()
+{
+  emit selectCollectionFolder( mCollectionFolder );
+}
+
+void FolderShortcutCommand::setAction( QAction* action )
+{
+  mAction = action;
+}
+
+
+FolderShortcutActionManager::FolderShortcutActionManager( QWidget *parent,
+                                                          KActionCollection *actionCollection,
+                                                          Akonadi::EntityMimeTypeFilterModel *collectionModel,
+                                                          Akonadi::ChangeRecorder *folderCollectionMonitor
+                                                        )
   : QObject( parent ),
     mActionCollection( actionCollection ),
-    mParent( parent )
+    mParent( parent ),
+    mCollectionModel( collectionModel ),
+    mFolderCollectionMonitor( folderCollectionMonitor )
 {
 }
 
@@ -46,10 +78,10 @@ void FolderShortcutActionManager::createActions()
   // When this function is called, the ETM has not finished loading yet. Therefore, when new
   // rows are inserted in the ETM, see if we have new collections that we can assign shortcuts
   // to.
-  const QAbstractItemModel *model = KMKernel::self()->collectionModel();
+  const QAbstractItemModel *model = mCollectionModel;
   connect( model, SIGNAL( rowsInserted( const QModelIndex &, int, int ) ),
            this, SLOT( slotRowsInserted( const QModelIndex &, int, int ) ), Qt::UniqueConnection );
-  connect( KMKernel::self()->monitor(), SIGNAL( collectionRemoved( const Akonadi::Collection & ) ),
+  connect( mFolderCollectionMonitor, SIGNAL( collectionRemoved( const Akonadi::Collection & ) ),
            this, SLOT( slotCollectionRemoved( const Akonadi::Collection& ) ), Qt::UniqueConnection );
 
   if ( model->rowCount() > 0 )
@@ -63,7 +95,7 @@ void FolderShortcutActionManager::slotRowsInserted( const QModelIndex &parent, i
 
 void FolderShortcutActionManager::updateShortcutsForIndex( const QModelIndex &parent, int start, int end )
 {
-  QAbstractItemModel *model = KMKernel::self()->collectionModel();
+  QAbstractItemModel *model = mCollectionModel;
   for ( int i = start; i <= end; i++ ) {
     const QModelIndex child = model->index( i, 0, parent );
     Akonadi::Collection collection =

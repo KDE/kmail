@@ -39,7 +39,7 @@ public:
   ~FolderCollectionMonitor();
 
   Akonadi::ChangeRecorder * monitor() const;
-  void expireAllFolders(bool immediate );
+  void expireAllFolders( bool immediate, QAbstractItemModel* collectionModel );
   void expunge( const Akonadi::Collection& );
 private slots:
   void slotExpungeJob( KJob *job );

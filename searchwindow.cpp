@@ -656,7 +656,7 @@ void SearchWindow::openSearchFolder()
 {
   Q_ASSERT( mFolder.isValid() );
   renameSearchFolder();
-  mKMMainWidget->selectCollectionFolder( mFolder );
+  mKMMainWidget->slotSelectCollectionFolder( mFolder );
   slotClose();
 }
 

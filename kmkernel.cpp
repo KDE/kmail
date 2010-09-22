@@ -1641,7 +1641,7 @@ void KMKernel::selectCollectionFromId( const Akonadi::Collection::Id id)
   Akonadi::Collection colFolder = collectionFromId( id );
 
   if( colFolder.isValid() )
-    widget->selectCollectionFolder( colFolder );
+    widget->slotSelectCollectionFolder( colFolder );
 }
 
 void KMKernel::selectFolder( const QString &folder )
@@ -1654,7 +1654,7 @@ void KMKernel::selectFolder( const QString &folder )
   Akonadi::Collection colFolder = collectionFromId( folder );
 
   if( colFolder.isValid() )
-    widget->selectCollectionFolder( colFolder );
+    widget->slotSelectCollectionFolder( colFolder );
 }
 
 KMMainWidget *KMKernel::getKMMainWidget()
@@ -1677,7 +1677,7 @@ void KMKernel::slotRunBackgroundTasks() // called regularly by timer
   // a stable kmail release goes out with a nasty bug in CompactionJob...
   KConfigGroup generalGroup( config(), "General" );
   if ( generalGroup.readEntry( "auto-expiring", true ) ) {
-      mFolderCollectionMonitor->expireAllFolders( false /*scheduled, not immediate*/ );
+      mFolderCollectionMonitor->expireAllFolders( false /*scheduled, not immediate*/, entityTreeModel() );
   }
 
 #ifdef DEBUG_SCHEDULER // for debugging, see jobscheduler.h
@@ -1711,7 +1711,7 @@ Akonadi::Collection::List KMKernel::allFolders() const
 
 void KMKernel::expireAllFoldersNow() // called by the GUI
 {
-  mFolderCollectionMonitor->expireAllFolders( true /*immediate*/ );
+  mFolderCollectionMonitor->expireAllFolders( true /*immediate*/, entityTreeModel() );
 }
 
 

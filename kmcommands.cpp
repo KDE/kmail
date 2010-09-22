@@ -1671,29 +1671,6 @@ void KMMetaFilterActionCommand::start()
   filterCommand->start();
 }
 
-FolderShortcutCommand::FolderShortcutCommand( KMMainWidget *mainwidget,
-                                              const Akonadi::Collection&col  )
-    : QObject( mainwidget ), mMainWidget( mainwidget ), mCollectionFolder( col ), mAction( 0 )
-{
-}
-
-
-FolderShortcutCommand::~FolderShortcutCommand()
-{
-  if ( mAction && mAction->parentWidget() )
-    mAction->parentWidget()->removeAction( mAction );
-  delete mAction;
-}
-
-void FolderShortcutCommand::start()
-{
-  mMainWidget->selectCollectionFolder( mCollectionFolder );
-}
-
-void FolderShortcutCommand::setAction( QAction* action )
-{
-  mAction = action;
-}
 
 KMMailingListFilterCommand::KMMailingListFilterCommand( QWidget *parent,
                                                         const Akonadi::Item &msg )

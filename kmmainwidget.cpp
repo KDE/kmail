@@ -2171,12 +2171,12 @@ void KMMainWidget::slotJumpToFolder()
   if ( selectFromAllFoldersDialog()->exec() && selectFromAllFoldersDialog() ) {
     Akonadi::Collection collection = selectFromAllFoldersDialog()->selectedCollection();
     if ( collection.isValid() ) {
-      selectCollectionFolder( collection );
+      slotSelectCollectionFolder( collection );
     }
   }
 }
 
-void KMMainWidget::selectCollectionFolder( const Akonadi::Collection & col )
+void KMMainWidget::slotSelectCollectionFolder( const Akonadi::Collection & col )
 {
   if ( mFolderTreeWidget ) {
     mFolderTreeWidget->selectCollectionFolder( col );
@@ -3439,7 +3439,7 @@ void KMMainWidget::setupActions()
   updateFolderMenu();
   mTagActionManager = new KMail::TagActionManager( this, actionCollection(), mMsgActions,
                                                    mGUIClient );
-  mFolderShortcutActionManager = new KMail::FolderShortcutActionManager( this, actionCollection() );
+  mFolderShortcutActionManager = new KMail::FolderShortcutActionManager( this, actionCollection(), KMKernel::self()->collectionModel(), KMKernel::self()->monitor() );
 
 }
 

@@ -593,27 +593,6 @@ private:
   KMMainWidget *mMainWidget;
 };
 
-class KMAIL_EXPORT FolderShortcutCommand : public QObject
-{
-  Q_OBJECT
-
-public:
-  FolderShortcutCommand( KMMainWidget* mainwidget, const Akonadi::Collection & col );
-  ~FolderShortcutCommand();
-
-public slots:
-  void start();
-  /** Assign a KActio to the command which is used to trigger it. This
-   * action will be deleted along with the command, so you don't need to
-   * keep track of it separately. */
-  void setAction( QAction* );
-
-private:
-  KMMainWidget *mMainWidget;
-  Akonadi::Collection mCollectionFolder;
-  QAction *mAction;
-};
-
 
 class KMAIL_EXPORT KMMailingListFilterCommand : public KMCommand
 {

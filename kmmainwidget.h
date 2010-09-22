@@ -171,7 +171,6 @@ class KMAIL_EXPORT KMMainWidget : public QWidget
 
     QLabel* vacationScriptIndicator() const;
     void updateVacationScriptStatus() { updateVacationScriptStatus( mVacationIndicatorActive ); }
-    void selectCollectionFolder( const Akonadi::Collection & col );
 
     FolderTreeView *folderTreeView() const {
       return mFolderTreeWidget->folderTreeView();
@@ -279,6 +278,8 @@ class KMAIL_EXPORT KMMainWidget : public QWidget
     void slotEndCheckMail();
 
     void slotCollectionProperties();
+
+    void slotSelectCollectionFolder( const Akonadi::Collection & col );
 
   signals:
     void messagesTransfered( bool );
