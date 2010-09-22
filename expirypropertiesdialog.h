@@ -9,6 +9,11 @@ class QCheckBox;
 class QRadioButton;
 class KIntSpinBox;
 class FolderCollection;
+
+namespace Akonadi {
+  class EntityMimeTypeFilterModel;
+}
+
 namespace KMail {
 
   class FolderRequester;
@@ -20,7 +25,8 @@ class ExpiryPropertiesDialog : public KDialog
 public:
     ExpiryPropertiesDialog(
       QWidget *tree,
-      const QSharedPointer<FolderCollection> &folder );
+      const QSharedPointer<FolderCollection> &folder,
+      Akonadi::EntityMimeTypeFilterModel *collectionModel );
     ~ExpiryPropertiesDialog();
 
 protected slots:
@@ -37,6 +43,7 @@ private:
     QRadioButton *moveToRB;
     FolderRequester *folderSelector;
     QRadioButton *deletePermanentlyRB;
+    Akonadi::EntityMimeTypeFilterModel *mCollectionModel;
 };
 } // namespace
 #endif // EXPIRYPROPERTIESDIALOG_H

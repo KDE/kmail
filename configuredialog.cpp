@@ -3671,7 +3671,7 @@ MiscPageFolderTab::MiscPageFolderTab( QWidget * parent )
   QHBoxLayout* layout = new QHBoxLayout;
   layout->setContentsMargins(0, 0, 0, 0);  
   mMMTab.mOnStartupOpenFolder->setLayout( layout );
-  mOnStartupOpenFolder = new KMail::FolderRequester( KMKernel::config(), mMMTab.mOnStartupOpenFolder );
+  mOnStartupOpenFolder = new KMail::FolderRequester( KMKernel::config(), KMKernel::self()->collectionModel(), mMMTab.mOnStartupOpenFolder );
   layout->addWidget( mOnStartupOpenFolder );
   
   mMMTab.gridLayout->setSpacing( KDialog::spacingHint() );

@@ -1780,7 +1780,7 @@ FolderSelectionDialog* KMMainWidget::moveOrCopyToDialog()
 {
   if ( mMoveOrCopyToDialog == 0 ) {
     FolderSelectionDialog::SelectionFolderOption options = FolderSelectionDialog::HideVirtualFolder;
-    mMoveOrCopyToDialog = new FolderSelectionDialog( this, options, KMKernel::config() );
+    mMoveOrCopyToDialog = new FolderSelectionDialog( this, options, KMKernel::config(), KMKernel::self()->collectionModel() );
     mMoveOrCopyToDialog->setModal( true );
   }
   return mMoveOrCopyToDialog;
@@ -1792,7 +1792,7 @@ FolderSelectionDialog* KMMainWidget::selectFromAllFoldersDialog()
     FolderSelectionDialog::SelectionFolderOptions options = FolderSelectionDialog::None;
     options |= FolderSelectionDialog::NotAllowToCreateNewFolder;
 
-    mSelectFromAllFoldersDialog = new FolderSelectionDialog( this, options, KMKernel::config() );
+    mSelectFromAllFoldersDialog = new FolderSelectionDialog( this, options, KMKernel::config(), KMKernel::self()->collectionModel() );
     mSelectFromAllFoldersDialog->setModal( true );
   }
   return mSelectFromAllFoldersDialog;
@@ -3469,7 +3469,7 @@ void KMMainWidget::slotEditNotifications()
 void KMMainWidget::slotShowExpiryProperties()
 {
   if ( mCurrentFolder ) {
-     KMail::ExpiryPropertiesDialog *dlg = new KMail::ExpiryPropertiesDialog( this, mCurrentFolder );
+     KMail::ExpiryPropertiesDialog *dlg = new KMail::ExpiryPropertiesDialog( this, mCurrentFolder, KMKernel::self()->collectionModel() );
      dlg->show();
   }
 }

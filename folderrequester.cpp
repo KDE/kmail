@@ -31,7 +31,6 @@
 #include "folderrequester.h"
 
 #include "folderselectiondialog.h"
-#include "kmkernel.h"
 #include "util.h"
 
 #include "messageviewer/autoqpointer.h"
@@ -49,9 +48,9 @@
 
 namespace KMail {
 
-FolderRequester::FolderRequester( KSharedConfigPtr config, QWidget *parent )
+FolderRequester::FolderRequester( KSharedConfigPtr config, Akonadi::EntityMimeTypeFilterModel* collectionModel, QWidget* parent )
   : QWidget( parent ),
-    mMustBeReadWrite( true ), mShowOutbox( true ), mShowImapFolders( true ), mNotCreateNewFolder( false ), mConfig( config )
+    mMustBeReadWrite( true ), mShowOutbox( true ), mShowImapFolders( true ), mNotCreateNewFolder( false ), mConfig( config ), mCollectionModel( collectionModel )
 {
   QHBoxLayout * hlay = new QHBoxLayout( this );
   hlay->setSpacing( KDialog::spacingHint() );
@@ -86,7 +85,7 @@ void FolderRequester::slotOpenDialog()
     options |= FolderSelectionDialog::HideOutboxFolder;
 
   MessageViewer::AutoQPointer<FolderSelectionDialog> dlg(
-      new FolderSelectionDialog( this, options, mConfig ) );
+      new FolderSelectionDialog( this, options, mConfig, mCollectionModel ) );
   dlg->setCaption( i18n("Select Folder") );
   dlg->setModal( false );
   dlg->setSelectedCollection( mCollection );
@@ -141,7 +140,7 @@ void FolderRequester::slotCollectionsReceived( const Akonadi::Collection::List& 
 //-----------------------------------------------------------------------------
 void FolderRequester::setFolder( const QString &idString )
 {
-  Akonadi::Collection folder = kmkernel->collectionFromId( idString );
+  Akonadi::Collection folder = KMail::Util::collectionFromId( idString, mCollectionModel );
   if ( folder.isValid() ) {
     setFolder( folder );
   } else {

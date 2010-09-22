@@ -69,7 +69,7 @@ ArchiveFolderDialog::ArchiveFolderDialog( QWidget *parent )
 
   QLabel *folderLabel = new QLabel( i18n( "&Folder:" ), mainWidget );
   mainLayout->addWidget( folderLabel, row, 0 );
-  mFolderRequester = new FolderRequester( KMKernel::config(), mainWidget );
+  mFolderRequester = new FolderRequester( KMKernel::config(), KMKernel::self()->collectionModel(), mainWidget );
   mFolderRequester->setMustBeReadWrite( false );
   mFolderRequester->setNotAllowToCreateNewFolder( true );
   connect( mFolderRequester, SIGNAL( folderChanged( const Akonadi::Collection& ) ), SLOT( slotFolderChanged( const Akonadi::Collection& ) ) );

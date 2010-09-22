@@ -1717,19 +1717,12 @@ void KMKernel::expireAllFoldersNow() // called by the GUI
 
 Akonadi::Collection KMKernel::collectionFromId( const QString &idString ) const
 {
-  bool ok;
-  Akonadi::Collection::Id id = idString.toLongLong( &ok );
-  if ( !ok )
-    return Akonadi::Collection();
-  return collectionFromId( id );
+  return KMail::Util::collectionFromId( idString, collectionModel() );
 }
 
 Akonadi::Collection KMKernel::collectionFromId(const Akonadi::Collection::Id& id) const
 {
-  const QModelIndex idx = Akonadi::EntityTreeModel::modelIndexForCollection(
-    collectionModel(), Akonadi::Collection(id)
-  );
-  return idx.data(Akonadi::EntityTreeModel::CollectionRole).value<Akonadi::Collection>();
+  return KMail::Util::collectionFromId( id, collectionModel() );
 }
 
 bool KMKernel::canQueryClose()

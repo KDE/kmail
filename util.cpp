@@ -270,3 +270,20 @@ QStringList KMail::Util::AttachmentKeywords()
     "the user forgot to attach his attachment",
     "attachment,attached" ).split( ',' );
 }
+
+Akonadi::Collection KMail::Util::collectionFromId(const Akonadi::Collection::Id& id, Akonadi::EntityMimeTypeFilterModel *collectionModel)
+{
+  const QModelIndex idx = Akonadi::EntityTreeModel::modelIndexForCollection(
+    collectionModel, Akonadi::Collection(id)
+  );
+  return idx.data(Akonadi::EntityTreeModel::CollectionRole).value<Akonadi::Collection>();
+}
+
+Akonadi::Collection KMail::Util::collectionFromId( const QString &idString, Akonadi::EntityMimeTypeFilterModel *collectionModel )
+{
+  bool ok;
+  Akonadi::Collection::Id id = idString.toLongLong( &ok );
+  if ( !ok )
+    return Akonadi::Collection();
+  return collectionFromId( id, collectionModel );
+}

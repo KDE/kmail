@@ -2,7 +2,7 @@
 #include "expirypropertiesdialog.h"
 #include "folderrequester.h"
 #include "foldercollection.h"
-
+#include "util.h"
 
 #include <QPushButton>
 #include <QCheckBox>
@@ -16,7 +16,7 @@
 #include <klocale.h>
 #include <kmessagebox.h>
 #include <akonadi/collection.h>
-#include "kmkernel.h"
+#include <akonadi/entitymimetypefiltermodel.h>
 
 using namespace KMail;
 
@@ -27,9 +27,10 @@ using namespace KMail;
  */
 ExpiryPropertiesDialog::ExpiryPropertiesDialog(
   QWidget *tree,
-  const QSharedPointer<FolderCollection> &folder )
+  const QSharedPointer<FolderCollection> &folder, Akonadi::EntityMimeTypeFilterModel *collectionModel )
     : KDialog( tree ),
-      mFolder( folder )
+      mFolder( folder ),
+      mCollectionModel( collectionModel )
 {
   setCaption( i18n( "Mail Expiry Properties" ) );
   setButtons( Ok|Cancel );
@@ -95,7 +96,7 @@ ExpiryPropertiesDialog::ExpiryPropertiesDialog(
   connect( moveToRB, SIGNAL( toggled( bool ) ), this, SLOT( slotUpdateControls() ) );
   moveToHBox->addWidget( moveToRB );
 
-  folderSelector = new KMail::FolderRequester( folder->config(), privateLayoutWidget );
+  folderSelector = new KMail::FolderRequester( folder->config(), mCollectionModel, privateLayoutWidget );
   folderSelector->setMustBeReadWrite( true );
   folderSelector->setShowOutbox( false );
   moveToHBox->addWidget( folderSelector );
@@ -141,7 +142,7 @@ ExpiryPropertiesDialog::ExpiryPropertiesDialog(
 
   QString destFolderID = mFolder->expireToFolderId();
   if ( !destFolderID.isEmpty() ) {
-    Akonadi::Collection destFolder = KMKernel::self()->collectionFromId( destFolderID );
+    Akonadi::Collection destFolder = KMail::Util::collectionFromId( destFolderID, mCollectionModel );
     if ( destFolder.isValid() )
       folderSelector->setFolder( destFolder );
   }

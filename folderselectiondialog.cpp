@@ -18,7 +18,6 @@
 
 #include "folderselectiondialog.h"
 #include "globalsettings.h"
-#include "kmkernel.h"
 #include <QKeyEvent>
 #include <kinputdialog.h>
 #include <kmessagebox.h>
@@ -29,9 +28,12 @@
 #include "foldertreeview.h"
 #include "foldercollection.h"
 #include "readablecollectionproxymodel.h"
+#include "util.h"
+
 #include <akonadi/collection.h>
 #include <akonadi/entitytreemodel.h>
 #include <akonadi/collectioncreatejob.h>
+#include <akonadi/entitymimetypefiltermodel.h>
 
 #include <KLocale>
 class FolderSelectionDialog::FolderSelectionDialogPrivate
@@ -47,14 +49,16 @@ public:
   bool mNotAllowToCreateNewFolder;
   bool mUseGlobalSettings;
   KSharedConfig::Ptr mConfig;
+  Akonadi::EntityMimeTypeFilterModel *mCollectionModel;
 };
 
-FolderSelectionDialog::FolderSelectionDialog( QWidget *parent, SelectionFolderOptions options, KSharedConfig::Ptr config )
+FolderSelectionDialog::FolderSelectionDialog( QWidget *parent, SelectionFolderOptions options, KSharedConfig::Ptr config, Akonadi::EntityMimeTypeFilterModel *collectionModel )
   :KDialog( parent ), d( new FolderSelectionDialogPrivate() )
 {
   setObjectName( "folder dialog" );
 
   d->mConfig = config;
+  d->mCollectionModel = collectionModel;
   d->mNotAllowToCreateNewFolder = ( options & FolderSelectionDialog::NotAllowToCreateNewFolder );
   if ( d->mNotAllowToCreateNewFolder )
     setButtons( Ok | Cancel );
@@ -212,7 +216,7 @@ void FolderSelectionDialog::readConfig()
   if ( d->mUseGlobalSettings ) {
     const Akonadi::Collection::Id id = GlobalSettings::self()->lastSelectedFolder();
     if ( id > -1 ) {
-      const Akonadi::Collection col = KMKernel::self()->collectionFromId( id );
+      const Akonadi::Collection col = KMail::Util::collectionFromId( id, d->mCollectionModel );
       d->folderTreeWidget->selectCollectionFolder( col );
     }
   }

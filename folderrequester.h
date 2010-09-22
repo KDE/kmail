@@ -36,7 +36,9 @@
 #include <QtGui/QWidget>
 #include <QKeyEvent>
 
-
+namespace Akonadi {
+  class EntityMimeTypeFilterModel;
+}
 
 namespace KMail {
 
@@ -55,7 +57,7 @@ namespace KMail {
        * Constructor
        * @param parent the parent widget
        */
-      FolderRequester( KSharedConfigPtr config, QWidget* parent );
+      FolderRequester( KSharedConfigPtr config, Akonadi::EntityMimeTypeFilterModel *collectionModel, QWidget* parent );
       virtual ~FolderRequester();
 
       Akonadi::Collection folderCollection() const;
@@ -113,6 +115,7 @@ namespace KMail {
       bool mShowImapFolders;
       bool mNotCreateNewFolder;
       KSharedConfig::Ptr mConfig;
+      Akonadi::EntityMimeTypeFilterModel *mCollectionModel;
   };
 
 } // namespace KMail
