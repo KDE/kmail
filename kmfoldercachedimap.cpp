@@ -1691,9 +1691,11 @@ bool KMFolderCachedImap::deleteMessages()
   QMap<ulong,int>::const_iterator it = uidMap.constBegin();
   for( ; it != uidMap.end(); it++ ) {
     ulong uid ( it.key() );
-    if( uid!=0 && !uidsOnServer.find( uid ) ) {
+    if ( uid!=0 && !uidsOnServer.find( uid ) ) {
+      KMMsgBase *msg = getMsgBase( *it );
+      if( !msg ) continue; /* what goes on if getMsg() returns 0? */
       uids << QString::number( uid );
-      msgsForDeletion.append( getMsgBase( *it ) );
+      msgsForDeletion.append( msg );
     }
   }
 
