@@ -21,6 +21,8 @@
 
 #include "kmail_export.h"
 
+#include <ksharedconfig.h>
+
 #include <Akonadi/Entity>
 #include <Akonadi/Collection>
 
@@ -69,7 +71,7 @@ namespace KMail {
 
     public:
 
-      FolderShortcutActionManager( QWidget *parent, KActionCollection *actionCollection, Akonadi::EntityMimeTypeFilterModel *collectionModel, Akonadi::ChangeRecorder *folderCollectionMonitor );
+      FolderShortcutActionManager( QWidget *parent, KActionCollection *actionCollection, Akonadi::EntityMimeTypeFilterModel *collectionModel, Akonadi::ChangeRecorder *folderCollectionMonitor, KSharedConfig::Ptr config );
       void createActions();
 
     public slots:
@@ -97,6 +99,7 @@ namespace KMail {
       QWidget *mParent;
       Akonadi::EntityMimeTypeFilterModel *mCollectionModel;
       Akonadi::ChangeRecorder *mFolderCollectionMonitor;
+      KSharedConfig::Ptr mConfig;
   };
 
 }

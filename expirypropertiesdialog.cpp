@@ -95,7 +95,7 @@ ExpiryPropertiesDialog::ExpiryPropertiesDialog(
   connect( moveToRB, SIGNAL( toggled( bool ) ), this, SLOT( slotUpdateControls() ) );
   moveToHBox->addWidget( moveToRB );
 
-  folderSelector = new KMail::FolderRequester( privateLayoutWidget );
+  folderSelector = new KMail::FolderRequester( folder->config(), privateLayoutWidget );
   folderSelector->setMustBeReadWrite( true );
   folderSelector->setShowOutbox( false );
   moveToHBox->addWidget( folderSelector );

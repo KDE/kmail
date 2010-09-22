@@ -39,7 +39,6 @@
 #include "colorlistbox.h"
 #include <kpimidentities/identitymanager.h>
 #include "folderrequester.h"
-using KMail::FolderRequester;
 #include "kmmainwidget.h"
 #include "composer.h"
 #include "tag.h"
@@ -3134,7 +3133,7 @@ void SecurityPage::GeneralTab::save()
     {
       MessageViewer::GlobalSettings::self()->setHtmlMail( mSGTab.mHtmlMailCheck->isChecked() );
       foreach( const Akonadi::Collection &collection, kmkernel->allFolders() ) {
-        QSharedPointer<FolderCollection> fd = FolderCollection::forCollection( collection );
+        QSharedPointer<FolderCollection> fd = FolderCollection::forCollection( collection, KMKernel::config() );
         if ( fd ) {
           KConfigGroup config( KMKernel::config(), fd->configGroupName() );
           config.writeEntry("htmlMailOverride", false);
@@ -3668,6 +3667,13 @@ MiscPageFolderTab::MiscPageFolderTab( QWidget * parent )
   : ConfigModuleTab( parent )
 {
   mMMTab.setupUi( this );
+  //replace QWidget with FolderRequester. Promote to doesn't work due to the custom constructor
+  QHBoxLayout* layout = new QHBoxLayout;
+  layout->setContentsMargins(0, 0, 0, 0);  
+  mMMTab.mOnStartupOpenFolder->setLayout( layout );
+  mOnStartupOpenFolder = new KMail::FolderRequester( KMKernel::config(), mMMTab.mOnStartupOpenFolder );
+  layout->addWidget( mOnStartupOpenFolder );
+  
   mMMTab.gridLayout->setSpacing( KDialog::spacingHint() );
   mMMTab.gridLayout->setMargin( KDialog::marginHint() );
   mMMTab.mStartUpFolderLabel->setBuddy( mMMTab.mOnStartupOpenFolder );
@@ -3690,7 +3696,7 @@ MiscPageFolderTab::MiscPageFolderTab( QWidget * parent )
            this , SLOT(slotEmitChanged( void )) );
   connect( mMMTab.mShowPopupAfterDnD, SIGNAL( stateChanged( int ) ),
            this, SLOT( slotEmitChanged( void ) ) );
-  connect( mMMTab.mOnStartupOpenFolder, SIGNAL( folderChanged( const Akonadi::Collection& ) ),
+  connect( mOnStartupOpenFolder, SIGNAL( folderChanged( const Akonadi::Collection& ) ),
            this, SLOT( slotEmitChanged( void ) ) );
   connect( mMMTab.mEmptyTrashCheck, SIGNAL( stateChanged( int ) ),
            this, SLOT( slotEmitChanged( void ) ) );
@@ -3714,7 +3720,7 @@ void MiscPage::FolderTab::doLoadOther()
 
   mMMTab.mEmptyTrashCheck->setChecked(
       general.readEntry( "empty-trash-on-exit", false ) );
-  mMMTab.mOnStartupOpenFolder->setFolder( general.readEntry( "startupFolder",
+  mOnStartupOpenFolder->setFolder( general.readEntry( "startupFolder",
       QString::number(kmkernel->inboxCollectionFolder().id() )) );
   mMMTab.mEmptyFolderConfirmCheck->setChecked(
       general.readEntry( "confirm-before-empty", true ) );
@@ -3727,8 +3733,8 @@ void MiscPage::FolderTab::save()
 
   general.writeEntry( "empty-trash-on-exit", mMMTab.mEmptyTrashCheck->isChecked() );
   general.writeEntry( "confirm-before-empty", mMMTab.mEmptyFolderConfirmCheck->isChecked() );
-  general.writeEntry( "startupFolder", mMMTab.mOnStartupOpenFolder->folderCollection().isValid() ?
-                                  QString::number(mMMTab.mOnStartupOpenFolder->folderCollection().id()) : QString() );
+  general.writeEntry( "startupFolder", mOnStartupOpenFolder->folderCollection().isValid() ?
+                                  QString::number(mOnStartupOpenFolder->folderCollection().id()) : QString() );
 
   MessageViewer::GlobalSettings::self()->setDelayedMarkAsRead( mMMTab.mDelayedMarkAsRead->isChecked() );
   MessageViewer::GlobalSettings::self()->setDelayedMarkTime( mMMTab.mDelayedMarkTime->value() );

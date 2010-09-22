@@ -1001,7 +1001,7 @@ ASWizSpamRulesPage::ASWizSpamRulesPage( QWidget * parent, const char * name)
             "but you may change that in the folder view below.") );
   layout->addWidget( mMoveSpamRules );
 
-  mFolderReqForSpamFolder = new FolderRequester( this );
+  mFolderReqForSpamFolder = new FolderRequester( KMKernel::config(), this );
   mFolderReqForSpamFolder->setFolder( KMKernel::self()->trashCollectionFolder() );
   mFolderReqForSpamFolder->setMustBeReadWrite( true );
   mFolderReqForSpamFolder->setShowOutbox( false );
@@ -1020,7 +1020,7 @@ ASWizSpamRulesPage::ASWizSpamRulesPage( QWidget * parent, const char * name)
             "selected a capable tool, you cannot select a folder as well.</p>") );
   layout->addWidget( mMoveUnsureRules );
 
-  mFolderReqForUnsureFolder = new FolderRequester( this );
+  mFolderReqForUnsureFolder = new FolderRequester( KMKernel::config(), this );
   mFolderReqForUnsureFolder->setFolder( "inbox" );
   mFolderReqForUnsureFolder->setMustBeReadWrite( true );
   mFolderReqForUnsureFolder->setShowOutbox( false );

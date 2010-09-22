@@ -79,6 +79,7 @@ class InvitationSettings;
 namespace KMail {
   class Tag;
   typedef QSharedPointer<Tag> TagPtr;
+  class FolderRequester;
 }
 
 namespace Kleo {
@@ -836,6 +837,7 @@ private:
 
 private:
   Ui_MiscMainTab mMMTab;
+  KMail::FolderRequester *mOnStartupOpenFolder;
 };
 
 class MiscPageInviteTab : public ConfigModuleTab  {

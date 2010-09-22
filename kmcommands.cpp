@@ -410,7 +410,7 @@ KMCommand::Result KMMailtoComposeCommand::execute()
   uint id = 0;
 
   if ( mMessage.isValid() && mMessage.parentCollection().isValid() ) {
-    QSharedPointer<FolderCollection> fd = FolderCollection::forCollection( mMessage.parentCollection() );
+    QSharedPointer<FolderCollection> fd = FolderCollection::forCollection( mMessage.parentCollection(), KMKernel::config() );
     id = fd->identity();
   }
 

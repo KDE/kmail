@@ -23,6 +23,7 @@
 #include <akonadi/collection.h>
 #include <akonadi/collectionstatistics.h>
 #include <KIO/Job>
+#include <ksharedconfig.h>
 
 #include "messagecore/mailinglist-magic.h"
 using MessageCore::MailingList;
@@ -33,7 +34,7 @@ class FolderCollection : public QObject
 {
   Q_OBJECT
 public:
-  static QSharedPointer<FolderCollection> forCollection( const Akonadi::Collection& coll );
+  static QSharedPointer<FolderCollection> forCollection( const Akonadi::Collection& coll, KSharedConfig::Ptr config );
 
   ~FolderCollection();
 
@@ -48,6 +49,8 @@ public:
 
 
   QString configGroupName() const;
+
+  KSharedConfig::Ptr config();
 
   void writeConfig() const;
   void readConfig();
@@ -207,7 +210,7 @@ signals:
 
 private:
 
-  explicit FolderCollection( const Akonadi::Collection & col, bool writeConfig = true );
+  explicit FolderCollection( const Akonadi::Collection & col, KSharedConfig::Ptr config, bool writeConfig = true );
 
   Akonadi::Collection mCollection;
   bool         mExpireMessages;          // true if old messages are expired
@@ -239,6 +242,7 @@ private:
   bool mWriteConfig;
 
   bool mOldIgnoreNewMail;
+  KSharedConfig::Ptr mConfig;
 };
 
 

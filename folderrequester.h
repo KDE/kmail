@@ -30,6 +30,7 @@
 #define folderrequester_h
 
 #include <klineedit.h>
+#include <ksharedconfig.h>
 #include <akonadi/collection.h>
 
 #include <QtGui/QWidget>
@@ -54,7 +55,7 @@ namespace KMail {
        * Constructor
        * @param parent the parent widget
        */
-      FolderRequester( QWidget *parent );
+      FolderRequester( KSharedConfigPtr config, QWidget* parent );
       virtual ~FolderRequester();
 
       Akonadi::Collection folderCollection() const;
@@ -111,6 +112,7 @@ namespace KMail {
       bool mShowOutbox;
       bool mShowImapFolders;
       bool mNotCreateNewFolder;
+      KSharedConfig::Ptr mConfig;
   };
 
 } // namespace KMail

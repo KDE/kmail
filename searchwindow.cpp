@@ -119,7 +119,7 @@ SearchWindow::SearchWindow(KMMainWidget* w, const Akonadi::Collection& curFolder
   mChkbxSpecificFolders = new QRadioButton( i18n("Search &only in:"), searchWidget );
   mChkbxSpecificFolders->setChecked(true);
 
-  mCbxFolders = new FolderRequester( searchWidget );
+  mCbxFolders = new FolderRequester( KMKernel::config(), searchWidget );
   mCbxFolders->setMustBeReadWrite( false );
   mCbxFolders->setNotAllowToCreateNewFolder( true );
 

@@ -63,13 +63,15 @@ void FolderShortcutCommand::setAction( QAction* action )
 FolderShortcutActionManager::FolderShortcutActionManager( QWidget *parent,
                                                           KActionCollection *actionCollection,
                                                           Akonadi::EntityMimeTypeFilterModel *collectionModel,
-                                                          Akonadi::ChangeRecorder *folderCollectionMonitor
+                                                          Akonadi::ChangeRecorder *folderCollectionMonitor,
+                                                          KSharedConfig::Ptr config
                                                         )
   : QObject( parent ),
     mActionCollection( actionCollection ),
     mParent( parent ),
     mCollectionModel( collectionModel ),
-    mFolderCollectionMonitor( folderCollectionMonitor )
+    mFolderCollectionMonitor( folderCollectionMonitor ),
+    mConfig( config )
 {
 }
 
@@ -118,7 +120,7 @@ void FolderShortcutActionManager::shortcutChanged( const Akonadi::Collection &co
 {
   // remove the old one, no autodelete in Qt4
   slotCollectionRemoved( col );
-  QSharedPointer<FolderCollection> folderCollection( FolderCollection::forCollection( col ) );
+  QSharedPointer<FolderCollection> folderCollection( FolderCollection::forCollection( col, mConfig ) );
   if ( folderCollection->shortcut().isEmpty() )
     return;
 

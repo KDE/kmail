@@ -54,7 +54,7 @@ CollectionViewPage::~CollectionViewPage()
 void CollectionViewPage::init(const Akonadi::Collection & col)
 {
   mCurrentCollection = col;
-  mFolderCollection = FolderCollection::forCollection( col );
+  mFolderCollection = FolderCollection::forCollection( col, KMKernel::config() );
   mIsLocalSystemFolder = KMKernel::self()->isSystemFolderCollection( col ) || mFolderCollection->isStructural();
 
   QVBoxLayout * topLayout = new QVBoxLayout( this );

@@ -64,9 +64,9 @@ using namespace KMail;
 */
 
 
-ExpireJob::ExpireJob( const Akonadi::Collection& folder, bool immediate )
+ExpireJob::ExpireJob( const Akonadi::Collection& folder, KSharedConfig::Ptr config, bool immediate )
  : ScheduledJob( folder, immediate ), mCurrentIndex( 0 ),
-   mFolderOpen( false ), mMoveToFolder( 0 )
+   mFolderOpen( false ), mMoveToFolder( 0 ), mConfig( config )
 {
 }
 
@@ -85,7 +85,7 @@ void ExpireJob::execute()
   mMaxUnreadTime = 0;
   mMaxReadTime = 0;
   mCurrentIndex = 0;
-  QSharedPointer<FolderCollection> fd( FolderCollection::forCollection( mSrcFolder ) );
+  QSharedPointer<FolderCollection> fd( FolderCollection::forCollection( mSrcFolder, mConfig ) );
   int unreadDays, readDays;
   fd->daysToExpire( unreadDays, readDays );
   if (unreadDays > 0) {
@@ -151,7 +151,7 @@ void ExpireJob::done()
 {
   QString str;
   bool moving = false;
-  QSharedPointer<FolderCollection> fd( FolderCollection::forCollection( mSrcFolder ) );
+  QSharedPointer<FolderCollection> fd( FolderCollection::forCollection( mSrcFolder, mConfig ) );
 
   if ( !mRemovedMsgs.isEmpty() ) {
     int count = mRemovedMsgs.count();
@@ -209,7 +209,7 @@ void ExpireJob::slotMessagesMoved( KMCommand *command )
 {
   kDebug() << command << command->result();
   QString msg;
-  QSharedPointer<FolderCollection> fd( FolderCollection::forCollection( mSrcFolder ) );
+  QSharedPointer<FolderCollection> fd( FolderCollection::forCollection( mSrcFolder, mConfig ) );
   if ( fd ) {
     switch ( command->result() ) {
     case KMCommand::OK:

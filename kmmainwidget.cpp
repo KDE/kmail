@@ -338,7 +338,7 @@ void KMMainWidget::slotEndCheckMail()
   for ( QStringList::const_iterator it=keys.constBegin(); it!=keys.constEnd(); ++it ) {
     collectionInfo info = mCheckMail.find( *it ).value();
     //kDebug() << info.nbMail << "new message(s) in" << *it;
-    QSharedPointer<FolderCollection> fd = FolderCollection::forCollection( info.col );
+    QSharedPointer<FolderCollection> fd = FolderCollection::forCollection( info.col, KMKernel::config() );
 
     if ( fd && !fd->ignoreNewMail() ) {
       showNotification = true;
@@ -459,7 +459,7 @@ void KMMainWidget::folderSelected( const Akonadi::Collection & col )
     writeFolderConfig();
   }
 
-  mCurrentFolder = FolderCollection::forCollection( col );
+  mCurrentFolder = FolderCollection::forCollection( col, KMKernel::config() );
 
   if ( col.isValid() && kmkernel->isImapFolder( col )
 #if 0 //PORT TO AKONADI
@@ -1780,7 +1780,7 @@ FolderSelectionDialog* KMMainWidget::moveOrCopyToDialog()
 {
   if ( mMoveOrCopyToDialog == 0 ) {
     FolderSelectionDialog::SelectionFolderOption options = FolderSelectionDialog::HideVirtualFolder;
-    mMoveOrCopyToDialog = new FolderSelectionDialog( this, options);
+    mMoveOrCopyToDialog = new FolderSelectionDialog( this, options, KMKernel::config() );
     mMoveOrCopyToDialog->setModal( true );
   }
   return mMoveOrCopyToDialog;
@@ -1792,7 +1792,7 @@ FolderSelectionDialog* KMMainWidget::selectFromAllFoldersDialog()
     FolderSelectionDialog::SelectionFolderOptions options = FolderSelectionDialog::None;
     options |= FolderSelectionDialog::NotAllowToCreateNewFolder;
 
-    mSelectFromAllFoldersDialog = new FolderSelectionDialog( this, options);
+    mSelectFromAllFoldersDialog = new FolderSelectionDialog( this, options, KMKernel::config() );
     mSelectFromAllFoldersDialog->setModal( true );
   }
   return mSelectFromAllFoldersDialog;
@@ -3439,7 +3439,7 @@ void KMMainWidget::setupActions()
   updateFolderMenu();
   mTagActionManager = new KMail::TagActionManager( this, actionCollection(), mMsgActions,
                                                    mGUIClient );
-  mFolderShortcutActionManager = new KMail::FolderShortcutActionManager( this, actionCollection(), KMKernel::self()->collectionModel(), KMKernel::self()->monitor() );
+  mFolderShortcutActionManager = new KMail::FolderShortcutActionManager( this, actionCollection(), KMKernel::self()->collectionModel(), KMKernel::self()->monitor(), KMKernel::config() );
 
 }
 

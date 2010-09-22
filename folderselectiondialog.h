@@ -22,6 +22,8 @@
 #include <QAbstractItemView>
 #include <KDialog>
 #include <akonadi/collection.h>
+#include <ksharedconfig.h>
+
 class KJob;
 
 /**
@@ -45,7 +47,7 @@ public:
   };
   Q_DECLARE_FLAGS( SelectionFolderOptions, SelectionFolderOption )
 
-  FolderSelectionDialog( QWidget *parent, SelectionFolderOptions options );
+  FolderSelectionDialog( QWidget* parent, FolderSelectionDialog::SelectionFolderOptions options, KSharedConfig::Ptr config );
   ~FolderSelectionDialog();
 
   void setSelectionMode( QAbstractItemView::SelectionMode mode );

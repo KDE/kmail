@@ -69,7 +69,7 @@ ArchiveFolderDialog::ArchiveFolderDialog( QWidget *parent )
 
   QLabel *folderLabel = new QLabel( i18n( "&Folder:" ), mainWidget );
   mainLayout->addWidget( folderLabel, row, 0 );
-  mFolderRequester = new FolderRequester( mainWidget );
+  mFolderRequester = new FolderRequester( KMKernel::config(), mainWidget );
   mFolderRequester->setMustBeReadWrite( false );
   mFolderRequester->setNotAllowToCreateNewFolder( true );
   connect( mFolderRequester, SIGNAL( folderChanged( const Akonadi::Collection& ) ), SLOT( slotFolderChanged( const Akonadi::Collection& ) ) );
@@ -122,7 +122,7 @@ ArchiveFolderDialog::ArchiveFolderDialog( QWidget *parent )
 
 bool canRemoveFolder( const Akonadi::Collection& col )
 {
-  const QSharedPointer<FolderCollection> folder = FolderCollection::forCollection( col );
+  const QSharedPointer<FolderCollection> folder = FolderCollection::forCollection( col, KMKernel::config() );
   return folder && col.isValid() && col.rights() & Akonadi::Collection::CanDeleteCollection && !folder->isStructural() && !folder->isSystemFolder();
 }
 
@@ -136,7 +136,7 @@ void ArchiveFolderDialog::setFolder( const Akonadi::Collection &defaultCollectio
   mFolderRequester->setFolder( defaultCollection );
   // TODO: what if the file already exists?
   mUrlRequester->setUrl( standardArchivePath( defaultCollection.name() ) );
-  const QSharedPointer<FolderCollection> folder = FolderCollection::forCollection( defaultCollection );
+  const QSharedPointer<FolderCollection> folder = FolderCollection::forCollection( defaultCollection, KMKernel::config() );
   mDeleteCheckBox->setEnabled( canRemoveFolder( defaultCollection ) );
   enableButtonOk( defaultCollection.isValid() && folder && !folder->isStructural() );
 }

@@ -40,20 +40,20 @@ using namespace Akonadi;
 static QMutex mapMutex;
 static QMap<Collection::Id,QWeakPointer<FolderCollection> > fcMap;
 
-QSharedPointer<FolderCollection> FolderCollection::forCollection( const Akonadi::Collection& coll )
+QSharedPointer<FolderCollection> FolderCollection::forCollection( const Akonadi::Collection& coll, KSharedConfig::Ptr config )
 {
   QMutexLocker lock( &mapMutex );
 
   QSharedPointer<FolderCollection> sptr = fcMap.value( coll.id() ).toStrongRef();
 
   if ( !sptr ) {
-    sptr = QSharedPointer<FolderCollection>( new FolderCollection( coll, true ) );
+    sptr = QSharedPointer<FolderCollection>( new FolderCollection( coll, config, true ) );
     fcMap.insert( coll.id(), sptr );
   }
   return sptr;
 }
 
-FolderCollection::FolderCollection( const Akonadi::Collection & col, bool writeconfig )
+FolderCollection::FolderCollection( const Akonadi::Collection & col, KSharedConfig::Ptr config, bool writeconfig )
   : mCollection( col ),
     mExpireMessages( false ),
     mUnreadExpireAge( 28 ),
@@ -65,7 +65,8 @@ FolderCollection::FolderCollection( const Akonadi::Collection & col, bool writec
     mPutRepliesInSameFolder( false ),
     mHideInSelectionDialog( false ),
     mWriteConfig( writeconfig ),
-    mOldIgnoreNewMail( false )
+    mOldIgnoreNewMail( false ),
+    mConfig( config )
 {
   assert( col.isValid() );
   mIdentity = KMKernel::self()->identityManager()->defaultIdentity().uoid();
@@ -154,7 +155,7 @@ QString FolderCollection::configGroupName() const
 
 void FolderCollection::readConfig()
 {
-  const KConfigGroup configGroup( KMKernel::config(), configGroupName() );
+  const KConfigGroup configGroup( mConfig, configGroupName() );
   mExpireMessages = configGroup.readEntry( "ExpireMessages", false );
   mReadExpireAge = configGroup.readEntry( "ReadExpireAge", 3 );
   mReadExpireUnits = (ExpireUnits)configGroup.readEntry( "ReadExpireUnits", (int)ExpireMonths );
@@ -197,7 +198,7 @@ QString FolderCollection::idString() const
 
 void FolderCollection::writeConfig() const
 {
-  KConfigGroup configGroup( KMKernel::config(), configGroupName() );
+  KConfigGroup configGroup( mConfig, configGroupName() );
   configGroup.writeEntry("ExpireMessages", mExpireMessages);
   configGroup.writeEntry("ReadExpireAge", mReadExpireAge);
   configGroup.writeEntry("ReadExpireUnits", (int)mReadExpireUnits);
@@ -407,8 +408,12 @@ void FolderCollection::slotDeletionCollectionResult( KJob * job )
 
 void FolderCollection::expireOldMessages( bool immediate )
 {
-  KMail::ScheduledExpireTask* task = new KMail::ScheduledExpireTask(mCollection, immediate);
+  KMail::ScheduledExpireTask* task = new KMail::ScheduledExpireTask(mCollection, mConfig, immediate);
   kmkernel->jobScheduler()->registerTask( task );
 }
 
+KSharedConfig::Ptr FolderCollection::config()
+{
+  return mConfig;
+}
 

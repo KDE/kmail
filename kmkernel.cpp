@@ -181,7 +181,7 @@ KMKernel::KMKernel (QObject *parent, const char *name) :
   the_templatesCollectionFolder = -1;
   the_trashCollectionFolder = -1;
 
-  mFolderCollectionMonitor = new FolderCollectionMonitor( this );
+  mFolderCollectionMonitor = new FolderCollectionMonitor( this, KMKernel::config() );
 
   connect( mFolderCollectionMonitor->monitor(), SIGNAL( collectionMoved( const Akonadi::Collection &, const Akonadi::Collection &, const Akonadi::Collection &) ), SLOT( slotCollectionMoved( const Akonadi::Collection &, const Akonadi::Collection &, const Akonadi::Collection & ) ) );
 

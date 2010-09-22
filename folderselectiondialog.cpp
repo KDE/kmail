@@ -46,13 +46,15 @@ public:
   FolderTreeWidget *folderTreeWidget;
   bool mNotAllowToCreateNewFolder;
   bool mUseGlobalSettings;
+  KSharedConfig::Ptr mConfig;
 };
 
-FolderSelectionDialog::FolderSelectionDialog( QWidget *parent, SelectionFolderOptions options )
+FolderSelectionDialog::FolderSelectionDialog( QWidget *parent, SelectionFolderOptions options, KSharedConfig::Ptr config )
   :KDialog( parent ), d( new FolderSelectionDialogPrivate() )
 {
   setObjectName( "folder dialog" );
 
+  d->mConfig = config;
   d->mNotAllowToCreateNewFolder = ( options & FolderSelectionDialog::NotAllowToCreateNewFolder );
   if ( d->mNotAllowToCreateNewFolder )
     setButtons( Ok | Cancel );
@@ -165,7 +167,7 @@ void FolderSelectionDialog::slotSelectionChanged()
     Akonadi::Collection parent;
     enableButton(KDialog::User1, canCreateCollection( parent ) );
     if ( parent.isValid() ) {
-      enableButton( KDialog::Ok, FolderCollection::forCollection( parent )->canCreateMessages() );
+      enableButton( KDialog::Ok, FolderCollection::forCollection( parent, d->mConfig )->canCreateMessages() );
     }
   }
 }
@@ -200,8 +202,7 @@ static const char * myConfigGroupName = "FolderSelectionDialog";
 
 void FolderSelectionDialog::readConfig()
 {
-  KSharedConfigPtr config = KMKernel::config();
-  KConfigGroup group( config, myConfigGroupName );
+  KConfigGroup group( d->mConfig, myConfigGroupName );
 
   QSize size = group.readEntry( "Size", QSize() );
   if ( !size.isEmpty() )
@@ -220,8 +221,7 @@ void FolderSelectionDialog::readConfig()
 
 void FolderSelectionDialog::writeConfig()
 {
-  KSharedConfig::Ptr config = KMKernel::config();
-  KConfigGroup group( config, myConfigGroupName );
+  KConfigGroup group( d->mConfig, myConfigGroupName );
   group.writeEntry( "Size", size() );
 
   if ( d->mUseGlobalSettings ) {

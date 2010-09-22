@@ -69,7 +69,7 @@ uint KMail::Util::folderIdentity(const Akonadi::Item& item)
 {
   uint id = 0;
   if( item.isValid() && item.parentCollection().isValid() ) {
-        QSharedPointer<FolderCollection> fd = FolderCollection::forCollection( item.parentCollection() );
+        QSharedPointer<FolderCollection> fd = FolderCollection::forCollection( item.parentCollection(), KMKernel::config() );
         id = fd->identity();
   }
   return id;
@@ -82,7 +82,7 @@ QStringList KMail::Util::mailingListsFromMessage( const Akonadi::Item& item )
   Akonadi::Collection parentCollection = item.parentCollection();
   QSharedPointer<FolderCollection> fd;
   if ( parentCollection.isValid() ) {
-    fd = FolderCollection::forCollection( parentCollection );
+    fd = FolderCollection::forCollection( parentCollection, KMKernel::config() );
     if ( fd->isMailingListEnabled() && !fd->mailingListPostAddress().isEmpty() ) {
       addresses << fd->mailingListPostAddress();
     }
@@ -95,7 +95,7 @@ Akonadi::Item::Id KMail::Util::putRepliesInSameFolder( const Akonadi::Item& item
   Akonadi::Collection parentCollection = item.parentCollection();
   QSharedPointer<FolderCollection> fd;
   if ( parentCollection.isValid() ) {
-    fd = FolderCollection::forCollection( parentCollection );
+    fd = FolderCollection::forCollection( parentCollection, KMKernel::config() );
     if( fd->putRepliesInSameFolder() ) {
       return parentCollection.id();
     }

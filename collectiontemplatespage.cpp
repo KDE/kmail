@@ -87,7 +87,7 @@ void CollectionTemplatesPage::init()
 
 void CollectionTemplatesPage::load(const Collection & col)
 {
-  mFolderCollection = FolderCollection::forCollection( col );
+  mFolderCollection = FolderCollection::forCollection( col, KMKernel::config() );
   if ( !mFolderCollection )
     return;
 

@@ -22,6 +22,8 @@
 #include <QObject>
 #include <kio/job.h>
 #include <kio/jobuidelegate.h>
+#include <ksharedconfig.h>
+
 #include <QModelIndex>
 
 class QAbstractItemModel;
@@ -35,7 +37,7 @@ class FolderCollectionMonitor : public QObject
 {
   Q_OBJECT
 public:
-  FolderCollectionMonitor(QObject *parent);
+  FolderCollectionMonitor(QObject *parent, KSharedConfig::Ptr config);
   ~FolderCollectionMonitor();
 
   Akonadi::ChangeRecorder * monitor() const;
@@ -50,6 +52,7 @@ protected:
 
 private:
   Akonadi::ChangeRecorder *mMonitor;
+  KSharedConfig::Ptr mConfig;
 };
 
 

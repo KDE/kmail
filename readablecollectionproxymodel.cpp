@@ -154,7 +154,7 @@ bool ReadableCollectionProxyModel::acceptRow( int sourceRow, const QModelIndex &
       return false;
   }
   if ( d->hideSpecificFolder ) {
-    QSharedPointer<FolderCollection> col = FolderCollection::forCollection( collection );
+    QSharedPointer<FolderCollection> col = FolderCollection::forCollection( collection, KMKernel::config() );
     if ( col && col->hideInSelectionDialog() )
       return false;
   }
