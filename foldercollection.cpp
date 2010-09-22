@@ -17,19 +17,18 @@
 */
 
 #include "foldercollection.h"
-#include <kdebug.h>
 #include "kmkernel.h"
-#include "kmmainwidget.h"
 #include "util.h"
 #include "imapsettings.h"
+#include "expirejob.h"
+
+#include <kdebug.h>
 #include <kpimidentities/identitymanager.h>
 #include <kpimidentities/identity.h>
 #include <akonadi/itemfetchjob.h>
 #include <akonadi/itemfetchscope.h>
 #include <akonadi/collectiondeletejob.h>
 #include <kio/jobuidelegate.h>
-#include "expirejob.h"
-#include "foldershortcutactionmanager.h"
 
 #include <QMutex>
 #include <QMutexLocker>
@@ -182,7 +181,7 @@ void FolderCollection::readConfig()
   const QString shortcut( configGroup.readEntry( "Shortcut" ) );
   if ( !shortcut.isEmpty() ) {
     KShortcut sc( shortcut );
-    setShortcut( sc, 0 );
+    setShortcut( sc );
   }
 }
 
@@ -243,13 +242,10 @@ void FolderCollection::writeConfig() const
   }
 }
 
-void FolderCollection::setShortcut( const KShortcut &sc, KMMainWidget *main )
+void FolderCollection::setShortcut( const KShortcut &sc )
 {
   if ( mShortcut != sc ) {
     mShortcut = sc;
-    if ( main) {
-      main->folderShortcutActionManager()->shortcutChanged( mCollection );
-    }
   }
 }
 

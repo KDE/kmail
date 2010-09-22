@@ -47,6 +47,7 @@
 
 #include "kmmainwidget.h"
 #include "foldercollection.h"
+#include "foldershortcutactionmanager.h"
 
 #include <QFrame>
 
@@ -89,7 +90,8 @@ FolderShortcutDialog::~FolderShortcutDialog()
 void FolderShortcutDialog::slotOk()
 {
   mKeySeqWidget->applyStealShortcut();
-  mFolder->setShortcut( KShortcut(mKeySeqWidget->keySequence(), QKeySequence()) , mMainWidget);
+  mFolder->setShortcut( KShortcut(mKeySeqWidget->keySequence(), QKeySequence()) );
+  mMainWidget->folderShortcutActionManager()->shortcutChanged( mFolder->collection() );
 }
 
 #include "foldershortcutdialog.moc"

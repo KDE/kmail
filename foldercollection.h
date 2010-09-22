@@ -28,8 +28,6 @@
 #include "messagecore/mailinglist-magic.h"
 using MessageCore::MailingList;
 
-class KMMainWidget;
-
 class FolderCollection : public QObject
 {
   Q_OBJECT
@@ -82,7 +80,7 @@ public:
 
   const KShortcut &shortcut() const { return mShortcut; }
 
-  void setShortcut( const KShortcut&, KMMainWidget * );
+  void setShortcut( const KShortcut& );
 
   /** Get / set whether the default identity should be used instead of the
    *  identity specified by setIdentity(). */
