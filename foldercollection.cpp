@@ -28,7 +28,6 @@
 #include <akonadi/itemfetchscope.h>
 #include <akonadi/collectiondeletejob.h>
 #include <kio/jobuidelegate.h>
-#include "kmcommands.h"
 #include "expirejob.h"
 #include "foldershortcutactionmanager.h"
 
@@ -392,38 +391,6 @@ void FolderCollection::daysToExpire(int& unreadDays, int& readDays) {
   unreadDays = ::daysToExpire( getUnreadExpireAge(), getUnreadExpireUnits() );
   readDays = ::daysToExpire( getReadExpireAge(), getReadExpireUnits() );
 }
-
-
-void FolderCollection::markUnreadAsRead()
-{
-  if ( mCollection.isValid() ) {
-    Akonadi::ItemFetchJob *job = new Akonadi::ItemFetchJob( mCollection,this );
-    job->fetchScope().setAncestorRetrieval( Akonadi::ItemFetchScope::Parent );
-    connect( job, SIGNAL( result( KJob* ) ), this, SLOT( slotMarkAsReadfetchDone( KJob* ) ) );
-  }
-}
-
-void FolderCollection::slotMarkAsReadfetchDone( KJob * job)
-{
-  if ( job->error() )
-    return;
-
-  Akonadi::ItemFetchJob *fjob = dynamic_cast<Akonadi::ItemFetchJob*>( job );
-  Q_ASSERT( fjob );
-  Akonadi::Item::List items;
-  foreach( const Akonadi::Item &item, fjob->items() ) {
-    MessageStatus status;
-    status.setStatusFromFlags( item.flags() );
-    if (status.isUnread()) {
-      items.append( item );
-    }
-  }
-  if ( items.empty() )
-    return;
-  KMCommand *command = new KMSetStatusCommand( MessageStatus::statusRead(), items );
-  command->start();
-}
-
 
 void FolderCollection::removeCollection()
 {

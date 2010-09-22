@@ -195,15 +195,11 @@ public:
 
   QString mailingListPostAddress() const;
 
-  /** Mark all new and unread messages as read. */
-  void markUnreadAsRead();
-
   void removeCollection();
   void expireOldMessages( bool immediate );
 
 protected slots:
   void slotIdentitiesChanged();
-  void slotMarkAsReadfetchDone( KJob * job);
   void slotDeletionCollectionResult( KJob *job );
 
 signals:

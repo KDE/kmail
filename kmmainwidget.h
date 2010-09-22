@@ -327,7 +327,6 @@ class KMAIL_EXPORT KMMainWidget : public QWidget
     void slotShowFolderShortcutDialog();
     void slotExpireFolder();
     void slotExpireAll();
-    void slotMarkAllAsRead();
     void slotArchiveFolder();
     void slotRemoveFolder();
     void slotDelayedRemoveFolder( KJob* );
@@ -410,11 +409,6 @@ class KMAIL_EXPORT KMMainWidget : public QWidget
 
     /** Update html and threaded messages preferences in Folder menu. */
     void updateFolderMenu();
-    /**
-      Enable or disable the "mark all as read" action. Needs to happen more
-      often than the other updates and is therefor in its own method.
-    */
-    void updateMarkAsReadAction();
 
     /** Settings menu */
 
@@ -597,7 +591,7 @@ private:
     KMail::SearchWindow *mSearchWin;
 
     KAction *mExpireFolderAction,
-      *mMarkAllAsReadAction, *mFolderMailingListPropertiesAction,
+      *mFolderMailingListPropertiesAction,
       *mShowFolderShortcutDialogAction,
       *mArchiveFolderAction,
       *mPostToMailinglistAction;

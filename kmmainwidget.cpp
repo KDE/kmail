@@ -1561,15 +1561,6 @@ void KMMainWidget::slotDelayedRemoveFolder( KJob *job )
 }
 
 //-----------------------------------------------------------------------------
-void KMMainWidget::slotMarkAllAsRead()
-{
-  if (!mCurrentFolder)
-    return;
-  mCurrentFolder->markUnreadAsRead();
-  updateMessageActions();
-}
-
-//-----------------------------------------------------------------------------
 void KMMainWidget::slotExpireAll()
 {
   int ret = 0;
@@ -3077,10 +3068,6 @@ void KMMainWidget::setupActions()
   connect( mShowFolderShortcutDialogAction, SIGNAL( triggered( bool ) ),
            SLOT( slotShowFolderShortcutDialog() ) );
 
-  mMarkAllAsReadAction = new KAction(KIcon("mail-mark-read"), i18n("Mark All Messages as &Read"), this);
-  actionCollection()->addAction("mark_all_as_read", mMarkAllAsReadAction );
-  connect(mMarkAllAsReadAction, SIGNAL(triggered(bool)), SLOT(slotMarkAllAsRead()));
-
   // FIXME: this action is not currently enabled in the rc file, but even if
   // it were there is inconsistency between the action name and action.
   // "Expiration Settings" implies that this will lead to a settings dialogue
@@ -3756,11 +3743,6 @@ void KMMainWidget::updateMessageActionsDelayed()
   mApplyFilterActionsMenu->setEnabled( count );
 }
 
-// This needs to be updated more often, so it is in its method.
-void KMMainWidget::updateMarkAsReadAction()
-{
-  mMarkAllAsReadAction->setEnabled( mCurrentFolder && mCurrentFolder->isValid() && (mCurrentFolder->statistics().unreadCount() > 0) );
-}
 
 void KMMainWidget::slotAkonadiStandardActionUpdated()
 {
@@ -3875,7 +3857,6 @@ void KMMainWidget::updateFolderMenu()
                                    folderWithContent &&
                                    !KMail::Util::isVirtualCollection( mCurrentFolder->collection() ) );
 
-  updateMarkAsReadAction();
   // the visual ones only make sense if we are showing a message list
   mPreferHtmlAction->setEnabled( mFolderTreeWidget->folderTreeView()->currentFolder().isValid() );
 
