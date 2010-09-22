@@ -30,8 +30,6 @@
 
 #include "folderjob.h"
 
-#include "globalsettings.h"
-
 #include <kdebug.h>
 #include <kio/global.h>
 
