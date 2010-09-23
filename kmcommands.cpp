@@ -2795,18 +2795,22 @@ KMCommand::Result KMSaveAttachmentsCommand::saveItem( partNode *node,
   return OK;
 }
 
-KMLoadPartsCommand::KMLoadPartsCommand( QPtrList<partNode>& parts, KMMessage *msg )
+KMLoadPartsCommand::KMLoadPartsCommand( QPtrList<partNode> &parts, KMMessage *msg )
   : mNeedsRetrieval( 0 )
 {
   for ( QPtrListIterator<partNode> it( parts ); it.current(); ++it ) {
-    mPartMap.insert( it.current(), msg );
+    if ( msg ) {
+      mPartMap.insert( it.current(), msg );
+    }
   }
 }
 
 KMLoadPartsCommand::KMLoadPartsCommand( partNode *node, KMMessage *msg )
   : mNeedsRetrieval( 0 )
 {
-  mPartMap.insert( node, msg );
+  if ( msg ) {
+    mPartMap.insert( node, msg );
+  }
 }
 
 KMLoadPartsCommand::KMLoadPartsCommand( PartNodeMessageMap& partMap )
@@ -2819,7 +2823,8 @@ void KMLoadPartsCommand::slotStart()
   for ( PartNodeMessageMap::const_iterator it = mPartMap.begin();
         it != mPartMap.end();
         ++it ) {
-    if ( !it.key()->msgPart().isComplete() &&
+    if ( it.data() &&
+         !it.key()->msgPart().isComplete() &&
          !it.key()->msgPart().partSpecifier().isEmpty() ) {
       // incomplete part, so retrieve it first
       ++mNeedsRetrieval;
