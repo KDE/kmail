@@ -26,6 +26,7 @@
 #include <QAbstractItemView>
 #include <akonadi/collection.h>
 
+class MailCommon;
 class KXMLGUIClient;
 class QItemSelectionModel;
 class FolderTreeView;
@@ -57,8 +58,8 @@ public:
   };
   Q_DECLARE_FLAGS( TreeViewOptions, TreeViewOption )
 
-  FolderTreeWidget( QWidget *parent = 0, KXMLGUIClient *xmlGuiClient = 0,
-                    TreeViewOptions option = (TreeViewOptions) (ShowUnreadCount|ShowCollectionStatisticAnimation),
+  FolderTreeWidget( MailCommon* mailCommon, QWidget *parent = 0, KXMLGUIClient *xmlGuiClient = 0,
+                    TreeViewOptions options = (TreeViewOptions) (ShowUnreadCount|ShowCollectionStatisticAnimation),
                     ReadableCollectionProxyModel::ReadableCollectionOptions optReadableProxy = ReadableCollectionProxyModel::None );
   ~FolderTreeWidget();
 

@@ -21,11 +21,13 @@
 
 #include <akonadi/entityorderproxymodel.h>
 
+class MailCommon;
+
 class EntityCollectionOrderProxyModel : public Akonadi::EntityOrderProxyModel
 {
   Q_OBJECT
 public:
-  EntityCollectionOrderProxyModel( QObject * parent = 0 );
+  EntityCollectionOrderProxyModel( MailCommon* mailCommon, QObject * parent = 0 );
 
   virtual ~EntityCollectionOrderProxyModel();
 

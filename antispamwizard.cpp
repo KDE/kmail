@@ -1166,7 +1166,7 @@ ASWizVirusRulesPage::ASWizVirusRulesPage( QWidget * parent, const char * name )
   optReadableProxy |= ReadableCollectionProxyModel::HideOutboxFolder;
   optReadableProxy |= ReadableCollectionProxyModel::HideImapFolder;
 
-  mFolderTree = new FolderTreeWidget( this, 0, opt, optReadableProxy );
+  mFolderTree = new FolderTreeWidget( KMKernel::self()->mailCommon(), this, 0, opt, optReadableProxy );
   mFolderTree->folderTreeView()->expandAll();
   mFolderTree->readableCollectionProxyModel()->setAccessRights( Akonadi::Collection::CanCreateCollection );
 

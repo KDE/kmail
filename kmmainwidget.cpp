@@ -887,7 +887,7 @@ void KMMainWidget::createWidgets()
   opt |= FolderTreeWidget::UseLineEditForFiltering;
   opt |= FolderTreeWidget::ShowCollectionStatisticAnimation;
   opt |= FolderTreeWidget::DontKeyFilter;
-  mFolderTreeWidget = new FolderTreeWidget( this, mGUIClient, opt );
+  mFolderTreeWidget = new FolderTreeWidget( KMKernel::self()->mailCommon(), this, mGUIClient, opt );
 
   connect( mFolderTreeWidget->folderTreeView(), SIGNAL( currentChanged( const Akonadi::Collection & ) ), this, SLOT( slotFolderChanged( const Akonadi::Collection& ) ) );
 

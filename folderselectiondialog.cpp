@@ -84,7 +84,7 @@ FolderSelectionDialog::FolderSelectionDialog( QWidget *parent, SelectionFolderOp
   if ( options & FolderSelectionDialog::HideImapFolder )
     optReadableProxy |= ReadableCollectionProxyModel::HideImapFolder;
 
-  d->folderTreeWidget = new FolderTreeWidget( this, 0, opt, optReadableProxy);
+  d->folderTreeWidget = new FolderTreeWidget( d->mMailCommon, this, 0, opt, optReadableProxy);
   d->folderTreeWidget->disableContextMenuAndExtraColumn();
   d->folderTreeWidget->readableCollectionProxyModel()->setEnabledCheck( ( options & EnableCheck ) );
   d->folderTreeWidget->folderTreeView()->setTooltipsPolicy( FolderTreeWidget::DisplayNever );

@@ -17,7 +17,8 @@
 */
 
 #include "entitycollectionorderproxymodel.h"
-#include "kmkernel.h"
+#include "mailcommon.h"
+
 #include <akonadi/collection.h>
 #include <akonadi/entitytreemodel.h>
 #include <akonadi/kmime/specialmailcollections.h>
@@ -32,31 +33,33 @@ public:
   }
   void createOrderSpecialCollection()
   {
-    if ( KMKernel::self()->inboxCollectionFolder().id()>0 &&
-         KMKernel::self()->outboxCollectionFolder().id()>0&&
-         KMKernel::self()->trashCollectionFolder().id()>0&&
-         KMKernel::self()->draftsCollectionFolder().id()>0&&
-         KMKernel::self()->templatesCollectionFolder().id()>0 &&
-         KMKernel::self()->sentCollectionFolder().id()>0)
+    if ( mailCommon->inboxCollectionFolder().id()>0 &&
+         mailCommon->outboxCollectionFolder().id()>0&&
+         mailCommon->trashCollectionFolder().id()>0&&
+         mailCommon->draftsCollectionFolder().id()>0&&
+         mailCommon->templatesCollectionFolder().id()>0 &&
+         mailCommon->sentCollectionFolder().id()>0)
       {
         orderSpecialCollection<<
-          KMKernel::self()->inboxCollectionFolder().id()<<
-          KMKernel::self()->outboxCollectionFolder().id()<<
-          KMKernel::self()->sentCollectionFolder().id()<<
-          KMKernel::self()->trashCollectionFolder().id()<<
-          KMKernel::self()->draftsCollectionFolder().id()<<
-          KMKernel::self()->templatesCollectionFolder().id();
+          mailCommon->inboxCollectionFolder().id()<<
+          mailCommon->outboxCollectionFolder().id()<<
+          mailCommon->sentCollectionFolder().id()<<
+          mailCommon->trashCollectionFolder().id()<<
+          mailCommon->draftsCollectionFolder().id()<<
+          mailCommon->templatesCollectionFolder().id();
       }
   }
   bool manualSortingActive;
   QList<qlonglong> orderSpecialCollection;
+  MailCommon* mailCommon;
 };
 
 
 
-EntityCollectionOrderProxyModel::EntityCollectionOrderProxyModel( QObject *parent )
+EntityCollectionOrderProxyModel::EntityCollectionOrderProxyModel( MailCommon* mailCommon, QObject* parent )
   : EntityOrderProxyModel( parent ), d( new EntityCollectionOrderProxyModelPrivate() )
 {
+  d->mailCommon = mailCommon;
   setDynamicSortFilter(true);
   connect( Akonadi::SpecialMailCollections::self(), SIGNAL( defaultCollectionsChanged() ),
            this, SLOT( slotDefaultCollectionsChanged () ) );

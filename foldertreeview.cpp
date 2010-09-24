@@ -17,28 +17,33 @@
 */
 
 #include "foldertreeview.h"
-#include <kdebug.h>
+#include "mailcommon.h"
+
+#include <KDebug>
 #include <KLocale>
 #include <akonadi/entitytreemodel.h>
 #include <akonadi/collectionstatistics.h>
 #include <akonadi/collectionstatisticsdelegate.h>
-#include "kmkernel.h"
 #include <KMessageBox>
 #include <KGuiItem>
 #include <KMenu>
+#include <KConfigGroup>
 
+#include <QHeaderView>
 #include <QMouseEvent>
 
-FolderTreeView::FolderTreeView(QWidget *parent, bool showUnreadCount )
+FolderTreeView::FolderTreeView(MailCommon* mailCommon, QWidget* parent, bool showUnreadCount )
   : Akonadi::EntityTreeView( parent ),
-    mbDisableContextMenuAndExtraColumn( false )
+    mbDisableContextMenuAndExtraColumn( false ),
+    mMailCommon( mailCommon )
 {
   init(showUnreadCount);
 }
 
 
-FolderTreeView::FolderTreeView(KXMLGUIClient *xmlGuiClient, QWidget *parent, bool showUnreadCount )
-  :Akonadi::EntityTreeView( xmlGuiClient, parent ), mbDisableContextMenuAndExtraColumn( false )
+FolderTreeView::FolderTreeView(MailCommon* mailCommon, KXMLGUIClient* xmlGuiClient, QWidget* parent, bool showUnreadCount )
+  :Akonadi::EntityTreeView( xmlGuiClient, parent ), mbDisableContextMenuAndExtraColumn( false ),
+    mMailCommon( mailCommon )
 {
   init(showUnreadCount);
 }
@@ -90,7 +95,7 @@ void FolderTreeView::showStatisticAnimation( bool anim )
 
 void FolderTreeView::writeConfig()
 {
-  KConfigGroup myGroup( KMKernel::config(), "MainFolderView");
+  KConfigGroup myGroup( mMailCommon->config(), "MainFolderView");
   myGroup.writeEntry( "IconSize", iconSize().width() );
   myGroup.writeEntry( "ToolTipDisplayPolicy", ( int ) mToolTipDisplayPolicy );
   myGroup.writeEntry( "SortingPolicy", ( int ) mSortingPolicy );
@@ -98,7 +103,7 @@ void FolderTreeView::writeConfig()
 
 void FolderTreeView::readConfig()
 {
-  KConfigGroup myGroup( KMKernel::config(), "MainFolderView" );
+  KConfigGroup myGroup( mMailCommon->config(), "MainFolderView" );
   int iIconSize = myGroup.readEntry( "IconSize", iconSize().width() );
   if ( iIconSize < 16 || iIconSize > 32 )
     iIconSize = 22;
@@ -414,9 +419,9 @@ bool FolderTreeView::isUnreadFolder( const QModelIndex & current, QModelIndex &i
             // via ctrl+ or ctrl- so we do this only if (confirm == true), which means
             // we are doing readOn.
 
-            if ( collection == KMKernel::self()->draftsCollectionFolder() ||
-                 collection == KMKernel::self()->templatesCollectionFolder() ||
-                 collection == KMKernel::self()->sentCollectionFolder() )
+            if ( collection == mMailCommon->draftsCollectionFolder() ||
+                 collection == mMailCommon->templatesCollectionFolder() ||
+                 collection == mMailCommon->sentCollectionFolder() )
               return false;
 
             // warn user that going to next folder - but keep track of

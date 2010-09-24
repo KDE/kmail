@@ -21,7 +21,7 @@
 #include "imapaclattribute.h"
 #include "readablecollectionproxymodel.h"
 #include "globalsettings.h"
-#include "kmkernel.h"
+#include "mailcommon.h"
 #include "entitycollectionorderproxymodel.h"
 
 #include "messageviewer/globalsettings.h"
@@ -69,15 +69,17 @@ public:
   KLineEdit *filterFolderLineEdit;
   QLabel *label;
   bool dontKeyFilter;
+  MailCommon* mailCommon;
 };
 
 
-FolderTreeWidget::FolderTreeWidget( QWidget *parent, KXMLGUIClient *xmlGuiClient, TreeViewOptions options, ReadableCollectionProxyModel::ReadableCollectionOptions optReadableProxy )
+FolderTreeWidget::FolderTreeWidget( MailCommon* mailCommon, QWidget* parent, KXMLGUIClient* xmlGuiClient, FolderTreeWidget::TreeViewOptions options, ReadableCollectionProxyModel::ReadableCollectionOptions optReadableProxy )
   : QWidget( parent ), d( new FolderTreeWidgetPrivate() )
 {
+  d->mailCommon = mailCommon;
   Akonadi::AttributeFactory::registerAttribute<Akonadi::ImapAclAttribute>();
 
-  d->folderTreeView = new FolderTreeView( xmlGuiClient, this, options & ShowUnreadCount );
+  d->folderTreeView = new FolderTreeView( mailCommon, xmlGuiClient, this, options & ShowUnreadCount );
   d->folderTreeView->showStatisticAnimation( options & ShowCollectionStatisticAnimation );
 
   connect( d->folderTreeView, SIGNAL( manualSortingChanged( bool ) ), this, SLOT( slotManualSortingChanged( bool ) ) );
@@ -96,7 +98,7 @@ FolderTreeWidget::FolderTreeWidget( QWidget *parent, KXMLGUIClient *xmlGuiClient
 
   Akonadi::RecursiveCollectionFilterProxyModel *recurfilter = new Akonadi::RecursiveCollectionFilterProxyModel( this );
   recurfilter->addContentMimeTypeInclusionFilter( KMime::Message::mimeType() );
-  recurfilter->setSourceModel( KMKernel::self()->collectionModel() );
+  recurfilter->setSourceModel( d->mailCommon->collectionModel() );
 
   // ... with statistics...
   d->filterModel = new Akonadi::StatisticsProxyModel( this );
@@ -105,7 +107,7 @@ FolderTreeWidget::FolderTreeWidget( QWidget *parent, KXMLGUIClient *xmlGuiClient
   d->quotaModel = new Akonadi::QuotaColorProxyModel( this );
   d->quotaModel->setSourceModel( d->filterModel );
 
-  d->readableproxy = new ReadableCollectionProxyModel( KMKernel::self()->mailCommon(), this, optReadableProxy );
+  d->readableproxy = new ReadableCollectionProxyModel( mailCommon, this, optReadableProxy );
   d->readableproxy->setSourceModel( d->quotaModel );
 
 
@@ -125,9 +127,9 @@ FolderTreeWidget::FolderTreeWidget( QWidget *parent, KXMLGUIClient *xmlGuiClient
   d->filterTreeViewModel->setFilterCaseSensitivity( Qt::CaseInsensitive );
 
   //Order proxy
-  d->entityOrderProxy = new EntityCollectionOrderProxyModel( this );
+  d->entityOrderProxy = new EntityCollectionOrderProxyModel( d->mailCommon, this );
   d->entityOrderProxy->setSourceModel( d->filterTreeViewModel );
-  KConfigGroup grp( KMKernel::config(), "CollectionTreeOrder" );
+  KConfigGroup grp( d->mailCommon->config(), "CollectionTreeOrder" );
   d->entityOrderProxy->setOrderConfig( grp );
   d->folderTreeView->setModel( d->entityOrderProxy );
 
@@ -234,13 +236,13 @@ void FolderTreeWidget::readConfig()
 {
   // Custom/System font support
   if (!MessageCore::GlobalSettings::self()->useDefaultFonts() ) {
-    KConfigGroup fontConfig( KMKernel::config(), "Fonts" );
+    KConfigGroup fontConfig( d->mailCommon->config(), "Fonts" );
     setFont( fontConfig.readEntry("folder-font", KGlobalSettings::generalFont() ) );
   } else {
     setFont( KGlobalSettings::generalFont() );
   }
 
-  KConfigGroup mainFolderView( KMKernel::config(), "MainFolderView" );
+  KConfigGroup mainFolderView( d->mailCommon->config(), "MainFolderView" );
   const int checkedFolderToolTipsPolicy = mainFolderView.readEntry( "ToolTipDisplayPolicy", 0 );
   changeToolTipsPolicyConfig( ( ToolTipDisplayPolicy )checkedFolderToolTipsPolicy );
 
@@ -277,7 +279,7 @@ void FolderTreeWidget::readQuotaConfig()
   QColor quotaColor;
   qreal threshold = 100;
   if ( !MessageCore::GlobalSettings::self()->useDefaultColors() ) {
-    KConfigGroup readerConfig( KMKernel::config(), "Reader" );
+    KConfigGroup readerConfig( d->mailCommon->config(), "Reader" );
     quotaColor = readerConfig.readEntry( "CloseToQuotaColor", quotaColor  );
     threshold = GlobalSettings::closeToQuotaThreshold();
   }
