@@ -51,7 +51,7 @@ public:
 
 private slots:
   void slotDoWork();
-  void slotMessagesMoved( KMCommand *command );
+  void slotMessagesMoved( KJob *job );
   void itemFetchResult( KJob* job );
 
 private:

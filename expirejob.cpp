@@ -33,7 +33,6 @@
 using KPIM::BroadcastStatus;
 #include "foldercollection.h"
 using namespace KMail;
-#include "kmcommands.h"
 #include "mailcommon.h"
 
 #include <kdebug.h>
@@ -42,8 +41,9 @@ using namespace KMail;
 
 #include <akonadi/kmime/messagestatus.h>
 
-#include <Akonadi/ItemFetchJob>
+#include <akonadi/itemfetchjob.h>
 #include <akonadi/kmime/messageparts.h>
+#include <akonadi/itemmovejob.h>
 
 // Look at this number of messages in each slotDoWork call
 #define EXPIREJOB_NRMESSAGES 100
@@ -162,10 +162,8 @@ void ExpireJob::done()
       kDebug() << "ExpireJob: finished expiring in folder"
                     << mSrcFolder.name()
                     << count << "messages to remove.";
-      KMMoveCommand* cmd = new KMMoveCommand( mMailCommon->trashCollectionFolder(), mRemovedMsgs, MessageList::Core::MessageItemSetReference() );
-      connect( cmd, SIGNAL( completed( KMCommand * ) ),
-               this, SLOT( slotMessagesMoved( KMCommand * ) ) );
-      cmd->start();
+      Akonadi::ItemMoveJob *job = new Akonadi::ItemMoveJob( mRemovedMsgs, mMailCommon->trashCollectionFolder(), this );
+      connect( job, SIGNAL(result(KJob*)), this, SLOT(slotMessagesMoved(KJob*)) );
       moving = true;
       str = i18np( "Removing 1 old message from folder %2...",
                   "Removing %1 old messages from folder %2...", count,
@@ -183,10 +181,8 @@ void ExpireJob::done()
                       << mSrcFolder.name()
                       << mRemovedMsgs.count() << "messages to move to"
                       << mMoveToFolder.name();
-        KMMoveCommand* cmd = new KMMoveCommand( mMoveToFolder, mRemovedMsgs, MessageList::Core::MessageItemSetReference() );
-        connect( cmd, SIGNAL( completed( KMCommand * ) ),
-                 this, SLOT( slotMessagesMoved( KMCommand * ) ) );
-        cmd->start();
+        Akonadi::ItemMoveJob *job = new Akonadi::ItemMoveJob( mRemovedMsgs, mMoveToFolder, this );
+        connect( job, SIGNAL(result(KJob*)), this, SLOT(slotMessagesMoved(KJob*)) );
         moving = true;
         str = i18np( "Moving 1 old message from folder %2 to folder %3...",
                      "Moving %1 old messages from folder %2 to folder %3...",
@@ -204,14 +200,15 @@ void ExpireJob::done()
     deleteLater();
 }
 
-void ExpireJob::slotMessagesMoved( KMCommand *command )
+void ExpireJob::slotMessagesMoved( KJob* job )
 {
-  kDebug() << command << command->result();
+  kDebug() << job << job->error();
   QString msg;
   QSharedPointer<FolderCollection> fd( FolderCollection::forCollection( mSrcFolder, mMailCommon ) );
   if ( fd ) {
-    switch ( command->result() ) {
-    case KMCommand::OK:
+    int error = job->error();
+    switch (error ) {
+     case KJob::NoError:
       if ( fd->expireAction() == FolderCollection::ExpireDelete ) {
         msg = i18np( "Removed 1 old message from folder %2.",
                      "Removed %1 old messages from folder %2.",
@@ -224,17 +221,7 @@ void ExpireJob::slotMessagesMoved( KMCommand *command )
                      mRemovedMsgs.count(), mSrcFolder.name(), mMoveToFolder.name() );
       }
       break;
-    case KMCommand::Failed:
-      if ( fd->expireAction() == FolderCollection::ExpireDelete ) {
-        msg = i18n( "Removing old messages from folder %1 failed.",
-                    mSrcFolder.name() );
-      }
-      else {
-        msg = i18n( "Moving old messages from folder %1 to folder %2 failed.",
-                    mSrcFolder.name(), mMoveToFolder.name() );
-      }
-      break;
-    case KMCommand::Canceled:
+    case Akonadi::Job::UserCanceled:
       if ( fd->expireAction() == FolderCollection::ExpireDelete ) {
         msg = i18n( "Removing old messages from folder %1 was canceled.",
                     mSrcFolder.name() );
@@ -244,7 +231,16 @@ void ExpireJob::slotMessagesMoved( KMCommand *command )
                     "canceled.",
                     mSrcFolder.name(), mMoveToFolder.name() );
       }
-    default: ;
+    default: //any other error
+      if ( fd->expireAction() == FolderCollection::ExpireDelete ) {
+        msg = i18n( "Removing old messages from folder %1 failed.",
+                    mSrcFolder.name() );
+      }
+      else {
+        msg = i18n( "Moving old messages from folder %1 to folder %2 failed.",
+                    mSrcFolder.name(), mMoveToFolder.name() );
+      }
+      break;
     }
     BroadcastStatus::instance()->setStatusMsg( msg );
   }
