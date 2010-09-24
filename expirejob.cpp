@@ -42,6 +42,7 @@ using namespace KMail;
 #include <akonadi/kmime/messagestatus.h>
 
 #include <akonadi/itemfetchjob.h>
+#include <akonadi/itemfetchscope.h>
 #include <akonadi/kmime/messageparts.h>
 #include <akonadi/itemmovejob.h>
 

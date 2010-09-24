@@ -31,9 +31,9 @@
 #include "jobscheduler.h"
 
 #include <akonadi/collection.h>
-
+#include <akonadi/item.h>
 #include <QList>
-
+#include <KJob>
 class MailCommon;
 
 namespace KMail {
