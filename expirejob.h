@@ -29,7 +29,6 @@
 #define EXPIREJOB_H
 
 #include "jobscheduler.h"
-#include "kmcommands.h"
 
 #include <akonadi/collection.h>
 
