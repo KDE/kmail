@@ -176,7 +176,7 @@ KMKernel::KMKernel (QObject *parent, const char *name) :
   // until here ================================================
 
   mMailCommon = new MailCommon( this ); //create here, init later down
-  
+
   mFolderCollectionMonitor = new FolderCollectionMonitor( this, mMailCommon );
 
   connect( mFolderCollectionMonitor->monitor(), SIGNAL( collectionMoved( const Akonadi::Collection &, const Akonadi::Collection &, const Akonadi::Collection &) ), SLOT( slotCollectionMoved( const Akonadi::Collection &, const Akonadi::Collection &, const Akonadi::Collection & ) ) );
@@ -230,7 +230,7 @@ KMKernel::~KMKernel ()
 
   delete mMailCommon;
   mMailCommon = 0;
-  
+
   mySelf = 0;
   kDebug();
 }
@@ -1314,7 +1314,7 @@ void KMKernel::slotShowConfigurationDialog()
     win->show();
 
   }
-	
+
   if( !mConfigureDialog ) {
     mConfigureDialog = new ConfigureDialog( 0, false );
     mConfigureDialog->setObjectName( "configure" );
@@ -1510,41 +1510,6 @@ KMainWindow* KMKernel::mainWin()
   return mWin;
 }
 
-
-/**
- * Empties all trash folders
- */
-//TODO: Port it to StandardMailActionManager::EmptyAllTrash
-void KMKernel::slotEmptyTrash()
-{
-  QString title = i18n("Empty Trash");
-  QString text = i18n("Are you sure you want to empty the trash folders of all accounts?");
-  if (KMessageBox::warningContinueCancel(0, text, title,
-                                         KStandardGuiItem::cont(), KStandardGuiItem::cancel(),
-                                         "confirm_empty_trash")
-      != KMessageBox::Continue)
-  {
-    return;
-  }
-  Akonadi::Collection trash = trashCollectionFolder();
-  mFolderCollectionMonitor->expunge( trash );
-
-  const Akonadi::AgentInstance::List lst = KMail::Util::agentInstances();
-  foreach ( const Akonadi::AgentInstance& type, lst ) {
-    if ( type.identifier().contains( IMAP_RESOURCE_IDENTIFIER ) ) {
-      if ( type.status() == Akonadi::AgentInstance::Broken )
-        continue;
-      OrgKdeAkonadiImapSettingsInterface *iface = KMail::Util::createImapSettingsInterface( type.identifier() );
-      if ( iface->isValid() ) {
-        int trashImap = iface->trashCollection();
-        if ( trashImap != trash.id() ) {
-          mFolderCollectionMonitor->expunge( Akonadi::Collection( trashImap ) );
-        }
-      }
-      delete iface;
-    }
-  }
-}
 
 KMKernel* KMKernel::self()
 {

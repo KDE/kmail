@@ -328,7 +328,7 @@ public:
    * is empty at startup.
    */
   Akonadi::Collection::List allFolders() const;
-// 
+//
   void selectCollectionFromId( const Akonadi::Collection::Id id);
 
 
@@ -387,9 +387,6 @@ public slots:
    */
   void slotSyncConfig();
 
-  /** empty all the trash bins */
-  void slotEmptyTrash();
-
   void slotShowConfigurationDialog();
   void slotRunBackgroundTasks();
 
@@ -412,7 +409,7 @@ private slots:
   void transportRenamed( int id, const QString &oldName, const QString &newName );
   void itemDispatchStarted();
   void instanceStatusChanged( Akonadi::AgentInstance );
-  
+
   void akonadiStateChanged( Akonadi::ServerManager::State );
   void slotProgressItemCompletedOrCanceled( KPIM::ProgressItem * item);
 private:

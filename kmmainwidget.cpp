@@ -2892,11 +2892,6 @@ void KMMainWidget::setupActions()
     connect(action, SIGNAL(triggered(bool) ), SLOT(slotExpireAll()));
   }
   {
-    KAction *action = new KAction(i18n("Empty All &Trash Folders"), this);
-    actionCollection()->addAction("empty_trash", action );
-    connect(action, SIGNAL(triggered(bool) ), KMKernel::self(), SLOT(slotEmptyTrash()));
-  }
-  {
     KAction *action = new KAction(KIcon("mail-receive"), i18n("Check &Mail"), this);
     actionCollection()->addAction("check_mail", action );
     connect(action, SIGNAL(triggered(bool) ), SLOT(slotCheckMail()));
