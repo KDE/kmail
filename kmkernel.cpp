@@ -106,6 +106,7 @@ using KMail::MailServiceImpl;
 #include "foldercollectionmonitor.h"
 #include "imapsettings.h"
 #include "util.h"
+#include "mailcommon.h"
 
 #include "searchdescriptionattribute.h"
 
@@ -174,14 +175,9 @@ KMKernel::KMKernel (QObject *parent, const char *name) :
   }
   // until here ================================================
 
-  the_draftsCollectionFolder = -1;
-  the_inboxCollectionFolder = -1;
-  the_outboxCollectionFolder = -1;
-  the_sentCollectionFolder = -1;
-  the_templatesCollectionFolder = -1;
-  the_trashCollectionFolder = -1;
-
-  mFolderCollectionMonitor = new FolderCollectionMonitor( this, KMKernel::config() );
+  mMailCommon = new MailCommon( this ); //create here, init later down
+  
+  mFolderCollectionMonitor = new FolderCollectionMonitor( this, mMailCommon );
 
   connect( mFolderCollectionMonitor->monitor(), SIGNAL( collectionMoved( const Akonadi::Collection &, const Akonadi::Collection &, const Akonadi::Collection &) ), SLOT( slotCollectionMoved( const Akonadi::Collection &, const Akonadi::Collection &, const Akonadi::Collection & ) ) );
 
@@ -214,6 +210,14 @@ KMKernel::KMKernel (QObject *parent, const char *name) :
            this, SLOT( slotProgressItemCompletedOrCanceled( KPIM::ProgressItem* ) ) );
   connect( KPIM::ProgressManager::instance(), SIGNAL( progressItemCanceled( KPIM::ProgressItem * ) ),
            this, SLOT( slotProgressItemCompletedOrCanceled( KPIM::ProgressItem* ) ) );
+
+  mMailCommon->setConfig( KMKernel::config() );
+  mMailCommon->setCollectionModel( mCollectionModel );
+  mMailCommon->setIdentityManager( identityManager() );
+  mMailCommon->setJobScheduler( mJobScheduler );
+  mMailCommon->setFolderCollectionMonitor( mFolderCollectionMonitor->monitor() );
+  connect( mMailCommon, SIGNAL(requestConfigSync()), this, SLOT(slotRequestConfigSync()) );
+  connect( mMailCommon, SIGNAL(requestSystemTrayUpdate()), this, SLOT(updateSystemTray()) );
 }
 
 KMKernel::~KMKernel ()
@@ -223,6 +227,10 @@ KMKernel::~KMKernel ()
 
   stopAgentInstance();
   slotSyncConfig();
+
+  delete mMailCommon;
+  mMailCommon = 0;
+  
   mySelf = 0;
   kDebug();
 }
@@ -1076,63 +1084,13 @@ void KMKernel::recoverDeadLetters()
   }
 }
 
-void KMKernel::findCreateDefaultCollection( Akonadi::SpecialMailCollections::Type type )
-{
-  if( Akonadi::SpecialMailCollections::self()->hasDefaultCollection( type ) ) {
-    const Akonadi::Collection col = Akonadi::SpecialMailCollections::self()->defaultCollection( type );
-    if ( !( col.rights() & Akonadi::Collection::AllRights ) )
-      emergencyExit( i18n("You do not have read/write permission to your inbox folder.") );
-  }
-  else {
-    Akonadi::SpecialMailCollectionsRequestJob *job = new Akonadi::SpecialMailCollectionsRequestJob( this );
-    connect( job, SIGNAL( result( KJob* ) ),
-             this, SLOT( createDefaultCollectionDone( KJob* ) ) );
-    job->requestDefaultCollection( type );
-  }
-}
-
-void KMKernel::createDefaultCollectionDone( KJob * job)
-{
-  if ( job->error() ) {
-    emergencyExit( job->errorText() );
-    return;
-  }
-
-  Akonadi::SpecialMailCollectionsRequestJob *requestJob = qobject_cast<Akonadi::SpecialMailCollectionsRequestJob*>( job );
-  const Akonadi::Collection col = requestJob->collection();
-  if ( !( col.rights() & Akonadi::Collection::AllRights ) )
-    emergencyExit( i18n("You do not have read/write permission to your inbox folder.") );
-
-  connect( Akonadi::SpecialMailCollections::self(), SIGNAL( defaultCollectionsChanged() ),
-           this, SLOT( slotDefaultCollectionsChanged () ), Qt::UniqueConnection  );
-}
-
-void KMKernel::slotDefaultCollectionsChanged()
-{
-  initFolders();
-}
-
-
-//-----------------------------------------------------------------------------
-void KMKernel::initFolders()
-{
-  kDebug() << "KMail is initialize and looking for default specialcollection folders.";
-  the_draftsCollectionFolder = the_inboxCollectionFolder = the_outboxCollectionFolder = the_sentCollectionFolder
-    = the_templatesCollectionFolder = the_trashCollectionFolder = -1;
-  findCreateDefaultCollection( Akonadi::SpecialMailCollections::Inbox );
-  findCreateDefaultCollection( Akonadi::SpecialMailCollections::Outbox );
-  findCreateDefaultCollection( Akonadi::SpecialMailCollections::SentMail );
-  findCreateDefaultCollection( Akonadi::SpecialMailCollections::Drafts );
-  findCreateDefaultCollection( Akonadi::SpecialMailCollections::Trash );
-  findCreateDefaultCollection( Akonadi::SpecialMailCollections::Templates );
-}
 
 void  KMKernel::akonadiStateChanged( Akonadi::ServerManager::State state )
 {
   kDebug() << "KMKernel has akonadi state changed to:" << state;
 
   if( state == Akonadi::ServerManager::Running ) {
-    initFolders();
+    mMailCommon->initFolders();
   }
 }
 static void kmCrashHandler( int sigId )
@@ -1183,7 +1141,7 @@ void KMKernel::init()
 
   kDebug() << "KMail init with akonadi server state:" << Akonadi::ServerManager::state();
   if( Akonadi::ServerManager::state() == Akonadi::ServerManager::Running ) {
-    initFolders();
+    mMailCommon->initFolders();
   }
 
   connect( Akonadi::ServerManager::self(), SIGNAL( stateChanged( Akonadi::ServerManager::State ) ), this, SLOT( akonadiStateChanged( Akonadi::ServerManager::State ) ) );
@@ -1271,10 +1229,11 @@ void KMKernel::cleanup(void)
 
   KSharedConfig::Ptr config =  KMKernel::config();
   KConfigGroup group(config, "General");
-  if ( the_trashCollectionFolder > 0 ) {
+  Akonadi::Collection trashCollection = mMailCommon->trashCollectionFolder();
+  if ( trashCollection.isValid() ) {
     if ( group.readEntry( "empty-trash-on-exit", false ) ) {
-      if ( collectionFromId( the_trashCollectionFolder ).statistics().count() > 0 ) {
-        mFolderCollectionMonitor->expunge( collectionFromId( the_trashCollectionFolder ) );
+      if ( trashCollection.statistics().count() > 0 ) {
+        mFolderCollectionMonitor->expunge( trashCollection );
       }
     }
   }
@@ -1421,24 +1380,7 @@ bool KMKernel::unregisterSystemTrayApplet( KMSystemTray* applet )
 
 void KMKernel::emergencyExit( const QString& reason )
 {
-  QString mesg;
-  if ( reason.length() == 0 ) {
-    mesg = i18n("KMail encountered a fatal error and will terminate now");
-  }
-  else {
-    mesg = i18n("KMail encountered a fatal error and will "
-                      "terminate now.\nThe error was:\n%1", reason );
-  }
-
-  kWarning() << mesg;
-
-  // Show error box for the first error that caused emergencyExit.
-  static bool s_showingErrorBox = false;
-  if ( !s_showingErrorBox ) {
-      s_showingErrorBox = true;
-      KMessageBox::error( 0, mesg );
-      ::exit(1);
-  }
+  mMailCommon->emergencyExit( reason );
 }
 
 /**
@@ -1717,12 +1659,12 @@ void KMKernel::expireAllFoldersNow() // called by the GUI
 
 Akonadi::Collection KMKernel::collectionFromId( const QString &idString ) const
 {
-  return KMail::Util::collectionFromId( idString, collectionModel() );
+  return mMailCommon->collectionFromId( idString );
 }
 
 Akonadi::Collection KMKernel::collectionFromId(const Akonadi::Collection::Id& id) const
 {
-  return KMail::Util::collectionFromId( id, collectionModel() );
+  return mMailCommon->collectionFromId( id );
 }
 
 bool KMKernel::canQueryClose()
@@ -1871,59 +1813,42 @@ void KMKernel::updatedTemplates()
 
 Akonadi::Collection KMKernel::inboxCollectionFolder()
 {
-  if ( the_inboxCollectionFolder < 0 )
-    the_inboxCollectionFolder = Akonadi::SpecialMailCollections::self()->defaultCollection( Akonadi::SpecialMailCollections::Inbox ).id();
-  return collectionFromId( the_inboxCollectionFolder );
+  return mMailCommon->inboxCollectionFolder();
 }
 
 Akonadi::Collection KMKernel::outboxCollectionFolder()
 {
-  if ( the_outboxCollectionFolder < 0 )
-    the_outboxCollectionFolder = Akonadi::SpecialMailCollections::self()->defaultCollection( Akonadi::SpecialMailCollections::Outbox ).id();
-  return collectionFromId( the_outboxCollectionFolder );
+  return mMailCommon->outboxCollectionFolder();
 }
 
 Akonadi::Collection KMKernel::sentCollectionFolder()
 {
-  if ( the_sentCollectionFolder < 0 )
-    the_sentCollectionFolder = Akonadi::SpecialMailCollections::self()->defaultCollection( Akonadi::SpecialMailCollections::SentMail ).id();
-  return collectionFromId( the_sentCollectionFolder );
+  return mMailCommon->sentCollectionFolder();
 }
 
 Akonadi::Collection KMKernel::trashCollectionFolder()
 {
-  if ( the_trashCollectionFolder < 0 )
-    the_trashCollectionFolder = Akonadi::SpecialMailCollections::self()->defaultCollection( Akonadi::SpecialMailCollections::Trash ).id();
-  return collectionFromId( the_trashCollectionFolder );
+  return mMailCommon->trashCollectionFolder();
 }
 
 Akonadi::Collection KMKernel::draftsCollectionFolder()
 {
-  if ( the_draftsCollectionFolder < 0 )
-    the_draftsCollectionFolder = Akonadi::SpecialMailCollections::self()->defaultCollection( Akonadi::SpecialMailCollections::Drafts ).id();
-  return collectionFromId( the_draftsCollectionFolder );
+  return mMailCommon->draftsCollectionFolder();
 }
 
 Akonadi::Collection KMKernel::templatesCollectionFolder()
 {
-  if ( the_templatesCollectionFolder < 0 )
-    the_templatesCollectionFolder = Akonadi::SpecialMailCollections::self()->defaultCollection( Akonadi::SpecialMailCollections::Templates ).id();
-  return collectionFromId( the_templatesCollectionFolder );
+  return mMailCommon->templatesCollectionFolder();
 }
 
 bool KMKernel::isSystemFolderCollection( const Akonadi::Collection &col)
 {
-  return ( col == inboxCollectionFolder() ||
-           col == outboxCollectionFolder() ||
-           col == sentCollectionFolder() ||
-           col == trashCollectionFolder() ||
-           col == draftsCollectionFolder() ||
-           col == templatesCollectionFolder() );
+  return mMailCommon->isSystemFolderCollection( col );
 }
 
 bool KMKernel::isMainFolderCollection( const Akonadi::Collection &col )
 {
-  return col == inboxCollectionFolder();
+  return mMailCommon->isMainFolderCollection( col );
 }
 
 bool KMKernel::isImapFolder( const Akonadi::Collection &col ) const
@@ -1949,6 +1874,11 @@ void KMKernel::stopAgentInstance()
 void KMKernel::slotCollectionMoved( const Akonadi::Collection &collection, const Akonadi::Collection &source, const Akonadi::Collection &destination )
 {
   //TODO add undo/redo move collection
+}
+
+MailCommon* KMKernel::mailCommon()
+{
+  return mMailCommon;
 }
 
 

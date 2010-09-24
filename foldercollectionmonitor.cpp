@@ -33,8 +33,8 @@
 #include <Akonadi/CollectionFetchScope>
 
 
-FolderCollectionMonitor::FolderCollectionMonitor(QObject *parent, KSharedConfig::Ptr config)
-  :QObject( parent ), mConfig( config )
+FolderCollectionMonitor::FolderCollectionMonitor(QObject *parent, MailCommon* mailCommon)
+  :QObject( parent ), mMailCommon( mailCommon )
 {
   // monitor collection changes
   mMonitor = new Akonadi::ChangeRecorder( this );
@@ -75,7 +75,7 @@ void FolderCollectionMonitor::expireAllCollection( const QAbstractItemModel *mod
     if ( !collection.isValid() || KMail::Util::isVirtualCollection( collection ) )
       continue;
 
-    QSharedPointer<FolderCollection> col = FolderCollection::forCollection( collection, mConfig );
+    QSharedPointer<FolderCollection> col = FolderCollection::forCollection( collection, mMailCommon );
     if ( col && col->isAutoExpire() ) {
       col->expireOldMessages( immediate );
     }

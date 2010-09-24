@@ -124,19 +124,6 @@ namespace Util {
 
     QStringList AttachmentKeywords();
 
-    /**
-    * Returns the collection associated with the given @p id, or an invalid collection if not found.
-    * The EntityTreeModel of the kernel is searched for the collection. Since the ETM is loaded
-    * async, this method will not find the collection right after startup, when the ETM is not yet
-    * fully loaded.
-    */
-    Akonadi::Collection collectionFromId( const Akonadi::Collection::Id& id, Akonadi::EntityMimeTypeFilterModel *collectionModel );
-
-    /**
-    * Converts @p idString into a number and returns the collection for it.
-    * @see collectionFromId( qint64 )
-    */
-    Akonadi::Collection collectionFromId( const QString &idString, Akonadi::EntityMimeTypeFilterModel *collectionModel );
 }
 }
 

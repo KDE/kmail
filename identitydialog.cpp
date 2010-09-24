@@ -402,7 +402,7 @@ namespace KMail {
 #ifndef KCM_KPIMIDENTITIES_STANDALONE // ### folder requester is too integrated into KMail atm
     // "Sent-mail Folder" combo box and label:
     ++row;
-    mFccCombo = new FolderRequester( KMKernel::config(), KMKernel::self()->collectionModel(), tab );
+    mFccCombo = new FolderRequester( KMKernel::self()->mailCommon(), tab );
     mFccCombo->setShowOutbox( false );
     glay->addWidget( mFccCombo, row, 1 );
     label = new QLabel( i18n("Sent-mail &folder:"), tab );
@@ -411,7 +411,7 @@ namespace KMail {
 
     // "Drafts Folder" combo box and label:
     ++row;
-    mDraftsCombo = new FolderRequester( KMKernel::config(), KMKernel::self()->collectionModel(), tab );
+    mDraftsCombo = new FolderRequester( KMKernel::self()->mailCommon(), tab );
     mDraftsCombo->setShowOutbox( false );
     glay->addWidget( mDraftsCombo, row, 1 );
     label = new QLabel( i18n("&Drafts folder:"), tab );
@@ -420,7 +420,7 @@ namespace KMail {
 
     // "Templates Folder" combo box and label:
     ++row;
-    mTemplatesCombo = new FolderRequester( KMKernel::config(), KMKernel::self()->collectionModel(), tab );
+    mTemplatesCombo = new FolderRequester( KMKernel::self()->mailCommon(), tab );
     mTemplatesCombo->setShowOutbox( false );
     glay->addWidget( mTemplatesCombo, row, 1 );
     label = new QLabel( i18n("&Templates folder:"), tab );

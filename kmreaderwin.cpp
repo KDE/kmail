@@ -659,7 +659,7 @@ void KMReaderWin::slotUrlClicked( const Akonadi::Item & item, const KUrl & url )
 {
   uint identity = 0;
   if ( item.isValid() && item.parentCollection().isValid() ) {
-    QSharedPointer<FolderCollection> fd = FolderCollection::forCollection( item.parentCollection(), KMKernel::config() );
+    QSharedPointer<FolderCollection> fd = FolderCollection::forCollection( item.parentCollection(), KMKernel::self()->mailCommon() );
     if ( fd )
       identity = fd->identity();
   }

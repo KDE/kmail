@@ -69,7 +69,7 @@ uint KMail::Util::folderIdentity(const Akonadi::Item& item)
 {
   uint id = 0;
   if( item.isValid() && item.parentCollection().isValid() ) {
-        QSharedPointer<FolderCollection> fd = FolderCollection::forCollection( item.parentCollection(), KMKernel::config() );
+        QSharedPointer<FolderCollection> fd = FolderCollection::forCollection( item.parentCollection(), KMKernel::self()->mailCommon() );
         id = fd->identity();
   }
   return id;
@@ -82,7 +82,7 @@ QStringList KMail::Util::mailingListsFromMessage( const Akonadi::Item& item )
   Akonadi::Collection parentCollection = item.parentCollection();
   QSharedPointer<FolderCollection> fd;
   if ( parentCollection.isValid() ) {
-    fd = FolderCollection::forCollection( parentCollection, KMKernel::config() );
+    fd = FolderCollection::forCollection( parentCollection, KMKernel::self()->mailCommon() );
     if ( fd->isMailingListEnabled() && !fd->mailingListPostAddress().isEmpty() ) {
       addresses << fd->mailingListPostAddress();
     }
@@ -95,7 +95,7 @@ Akonadi::Item::Id KMail::Util::putRepliesInSameFolder( const Akonadi::Item& item
   Akonadi::Collection parentCollection = item.parentCollection();
   QSharedPointer<FolderCollection> fd;
   if ( parentCollection.isValid() ) {
-    fd = FolderCollection::forCollection( parentCollection, KMKernel::config() );
+    fd = FolderCollection::forCollection( parentCollection, KMKernel::self()->mailCommon() );
     if( fd->putRepliesInSameFolder() ) {
       return parentCollection.id();
     }
@@ -271,19 +271,3 @@ QStringList KMail::Util::AttachmentKeywords()
     "attachment,attached" ).split( ',' );
 }
 
-Akonadi::Collection KMail::Util::collectionFromId(const Akonadi::Collection::Id& id, Akonadi::EntityMimeTypeFilterModel *collectionModel)
-{
-  const QModelIndex idx = Akonadi::EntityTreeModel::modelIndexForCollection(
-    collectionModel, Akonadi::Collection(id)
-  );
-  return idx.data(Akonadi::EntityTreeModel::CollectionRole).value<Akonadi::Collection>();
-}
-
-Akonadi::Collection KMail::Util::collectionFromId( const QString &idString, Akonadi::EntityMimeTypeFilterModel *collectionModel )
-{
-  bool ok;
-  Akonadi::Collection::Id id = idString.toLongLong( &ok );
-  if ( !ok )
-    return Akonadi::Collection();
-  return collectionFromId( id, collectionModel );
-}

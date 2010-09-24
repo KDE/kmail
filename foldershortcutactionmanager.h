@@ -30,11 +30,7 @@
 #include <QModelIndex>
 #include <QObject>
 
-namespace Akonadi {
-  class ChangeRecorder;
-  class EntityMimeTypeFilterModel;
-}
-
+class MailCommon;
 class QAction;
 
 class KActionCollection;
@@ -71,7 +67,7 @@ namespace KMail {
 
     public:
 
-      FolderShortcutActionManager( QWidget *parent, KActionCollection *actionCollection, Akonadi::EntityMimeTypeFilterModel *collectionModel, Akonadi::ChangeRecorder *folderCollectionMonitor, KSharedConfig::Ptr config );
+      FolderShortcutActionManager( QWidget *parent, KActionCollection *actionCollection, MailCommon* mailCommon );
       void createActions();
 
     public slots:
@@ -97,9 +93,7 @@ namespace KMail {
       QMap< Akonadi::Entity::Id, FolderShortcutCommand* > mFolderShortcutCommands;
       KActionCollection *mActionCollection;
       QWidget *mParent;
-      Akonadi::EntityMimeTypeFilterModel *mCollectionModel;
-      Akonadi::ChangeRecorder *mFolderCollectionMonitor;
-      KSharedConfig::Ptr mConfig;
+      MailCommon* mMailCommon;
   };
 
 }

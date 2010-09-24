@@ -21,7 +21,7 @@
 #include "readablecollectionproxymodel.h"
 #include "foldercollection.h"
 #include "util.h"
-#include "kmkernel.h"
+#include "mailcommon.h"
 
 #include <akonadi/collection.h>
 #include <akonadi/entitytreemodel.h>
@@ -46,9 +46,10 @@ public:
   bool hideSpecificFolder;
   bool hideOutboxFolder;
   bool hideImapFolder;
+  MailCommon* mailCommon;
 };
 
-ReadableCollectionProxyModel::ReadableCollectionProxyModel( QObject *parent, ReadableCollectionOptions option )
+ReadableCollectionProxyModel::ReadableCollectionProxyModel( MailCommon* mailCommon, QObject *parent, ReadableCollectionOptions option )
   : Akonadi::EntityRightsFilterModel( parent ),
     d( new Private )
 {
@@ -65,6 +66,7 @@ ReadableCollectionProxyModel::ReadableCollectionProxyModel( QObject *parent, Rea
   if ( option & HideImapFolder ) {
     d->hideImapFolder = true;
   }
+  d->mailCommon = mailCommon;
 }
 
 ReadableCollectionProxyModel::~ReadableCollectionProxyModel()
@@ -154,13 +156,13 @@ bool ReadableCollectionProxyModel::acceptRow( int sourceRow, const QModelIndex &
       return false;
   }
   if ( d->hideSpecificFolder ) {
-    QSharedPointer<FolderCollection> col = FolderCollection::forCollection( collection, KMKernel::config() );
+    QSharedPointer<FolderCollection> col = FolderCollection::forCollection( collection, d->mailCommon );
     if ( col && col->hideInSelectionDialog() )
       return false;
   }
 
   if ( d->hideOutboxFolder ) {
-    if ( collection == KMKernel::self()->outboxCollectionFolder() )
+    if ( collection == d->mailCommon->outboxCollectionFolder() )
       return false;
   }
   if ( d->hideImapFolder ) {

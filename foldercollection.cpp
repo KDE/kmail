@@ -17,10 +17,10 @@
 */
 
 #include "foldercollection.h"
-#include "kmkernel.h"
 #include "util.h"
 #include "imapsettings.h"
 #include "expirejob.h"
+#include "jobscheduler.h"
 
 #include <kdebug.h>
 #include <kpimidentities/identitymanager.h>
@@ -33,26 +33,27 @@
 #include <QMutex>
 #include <QMutexLocker>
 #include <QWeakPointer>
+#include "mailcommon.h"
 
 using namespace Akonadi;
 
 static QMutex mapMutex;
 static QMap<Collection::Id,QWeakPointer<FolderCollection> > fcMap;
 
-QSharedPointer<FolderCollection> FolderCollection::forCollection( const Akonadi::Collection& coll, KSharedConfig::Ptr config )
+QSharedPointer<FolderCollection> FolderCollection::forCollection( const Akonadi::Collection& coll, MailCommon* mailCommon )
 {
   QMutexLocker lock( &mapMutex );
 
   QSharedPointer<FolderCollection> sptr = fcMap.value( coll.id() ).toStrongRef();
 
   if ( !sptr ) {
-    sptr = QSharedPointer<FolderCollection>( new FolderCollection( coll, config, true ) );
+    sptr = QSharedPointer<FolderCollection>( new FolderCollection( coll, mailCommon, true ) );
     fcMap.insert( coll.id(), sptr );
   }
   return sptr;
 }
 
-FolderCollection::FolderCollection( const Akonadi::Collection & col, KSharedConfig::Ptr config, bool writeconfig )
+FolderCollection::FolderCollection( const Akonadi::Collection & col, MailCommon* mailCommon, bool writeconfig )
   : mCollection( col ),
     mExpireMessages( false ),
     mUnreadExpireAge( 28 ),
@@ -65,13 +66,13 @@ FolderCollection::FolderCollection( const Akonadi::Collection & col, KSharedConf
     mHideInSelectionDialog( false ),
     mWriteConfig( writeconfig ),
     mOldIgnoreNewMail( false ),
-    mConfig( config )
+    mMailCommon( mailCommon )
 {
   assert( col.isValid() );
-  mIdentity = KMKernel::self()->identityManager()->defaultIdentity().uoid();
+  mIdentity = mMailCommon->identityManager()->defaultIdentity().uoid();
 
   readConfig();
-  connect( KMKernel::self()->identityManager(), SIGNAL( changed() ),
+  connect( mMailCommon->identityManager(), SIGNAL( changed() ),
            this, SLOT( slotIdentitiesChanged() ) );
 }
 
@@ -89,7 +90,7 @@ QString FolderCollection::name() const
 
 bool FolderCollection::isSystemFolder() const
 {
-  return KMKernel::self()->isSystemFolderCollection( mCollection );
+  return mMailCommon->isSystemFolderCollection( mCollection );
 }
 
 bool FolderCollection::isStructural() const
@@ -134,14 +135,14 @@ Akonadi::Collection FolderCollection::collection() const
 
 void FolderCollection::slotIdentitiesChanged()
 {
-  uint defaultIdentity = KMKernel::self()->identityManager()->defaultIdentity().uoid();
+  uint defaultIdentity =  mMailCommon->identityManager()->defaultIdentity().uoid();
   // The default identity may have changed, therefore set it again
   // if necessary
   if ( mUseDefaultIdentity )
     mIdentity = defaultIdentity;
 
   // Fall back to the default identity if the one used currently is invalid
-  if ( KMKernel::self()->identityManager()->identityForUoid( mIdentity ).isNull() ) {
+  if ( mMailCommon->identityManager()->identityForUoid( mIdentity ).isNull() ) {
     mIdentity = defaultIdentity;
     mUseDefaultIdentity = true;
   }
@@ -154,7 +155,7 @@ QString FolderCollection::configGroupName() const
 
 void FolderCollection::readConfig()
 {
-  const KConfigGroup configGroup( mConfig, configGroupName() );
+  const KConfigGroup configGroup( mMailCommon->config(), configGroupName() );
   mExpireMessages = configGroup.readEntry( "ExpireMessages", false );
   mReadExpireAge = configGroup.readEntry( "ReadExpireAge", 3 );
   mReadExpireUnits = (ExpireUnits)configGroup.readEntry( "ReadExpireUnits", (int)ExpireMonths );
@@ -168,7 +169,7 @@ void FolderCollection::readConfig()
   mMailingList.readConfig( configGroup );
 
   mUseDefaultIdentity = configGroup.readEntry( "UseDefaultIdentity", true );
-  uint defaultIdentity = KMKernel::self()->identityManager()->defaultIdentity().uoid();
+  uint defaultIdentity = mMailCommon->identityManager()->defaultIdentity().uoid();
   mIdentity = configGroup.readEntry("Identity", defaultIdentity );
   slotIdentitiesChanged();
 
@@ -197,7 +198,7 @@ QString FolderCollection::idString() const
 
 void FolderCollection::writeConfig() const
 {
-  KConfigGroup configGroup( mConfig, configGroupName() );
+  KConfigGroup configGroup( mMailCommon->config(), configGroupName() );
   configGroup.writeEntry("ExpireMessages", mExpireMessages);
   configGroup.writeEntry("ReadExpireAge", mReadExpireAge);
   configGroup.writeEntry("ReadExpireUnits", (int)mReadExpireUnits);
@@ -238,7 +239,7 @@ void FolderCollection::writeConfig() const
   else
     configGroup.deleteEntry( "Shortcut" );
   if ( mIgnoreNewMail != mOldIgnoreNewMail ) {
-    KMKernel::self()->updateSystemTray();
+    mMailCommon->updateSystemTray();
   }
 }
 
@@ -253,14 +254,14 @@ void FolderCollection::setUseDefaultIdentity( bool useDefaultIdentity )
 {
   mUseDefaultIdentity = useDefaultIdentity;
   if ( mUseDefaultIdentity )
-    mIdentity = KMKernel::self()->identityManager()->defaultIdentity().uoid();
-  KMKernel::self()->slotRequestConfigSync();
+    mIdentity = mMailCommon->identityManager()->defaultIdentity().uoid();
+  mMailCommon->syncConfig();
 }
 
 void FolderCollection::setIdentity( uint identity )
 {
   mIdentity = identity;
-  KMKernel::self()->slotRequestConfigSync();
+  mMailCommon->syncConfig();
 }
 
 uint FolderCollection::identity() const
@@ -279,7 +280,7 @@ uint FolderCollection::identity() const
       }
     }
     delete imapSettingsInterface;
-    if ( identityId != -1 && !KMKernel::self()->identityManager()->identityForUoid( identityId ).isNull() )
+    if ( identityId != -1 && !mMailCommon->identityManager()->identityForUoid( identityId ).isNull() )
       return identityId;
   }
   return mIdentity;
@@ -404,12 +405,7 @@ void FolderCollection::slotDeletionCollectionResult( KJob * job )
 
 void FolderCollection::expireOldMessages( bool immediate )
 {
-  KMail::ScheduledExpireTask* task = new KMail::ScheduledExpireTask(mCollection, mConfig, immediate);
-  kmkernel->jobScheduler()->registerTask( task );
-}
-
-KSharedConfig::Ptr FolderCollection::config()
-{
-  return mConfig;
+  KMail::ScheduledExpireTask* task = new KMail::ScheduledExpireTask(mCollection, mMailCommon, immediate);
+  mMailCommon->jobScheduler()->registerTask( task );
 }
 

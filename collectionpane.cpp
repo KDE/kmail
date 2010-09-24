@@ -53,7 +53,7 @@ bool CollectionStorageModel::isOutBoundFolder( const Akonadi::Collection& c ) co
        && c.attribute<Akonadi::MessageFolderAttribute>()->isOutboundFolder() ) {
     return true;
   }
-  QSharedPointer<FolderCollection> fd = FolderCollection::forCollection( c, KMKernel::config() );
+  QSharedPointer<FolderCollection> fd = FolderCollection::forCollection( c, KMKernel::self()->mailCommon() );
   if ( fd ) {
     // default setting
     const KPIMIdentities::Identity & identity =

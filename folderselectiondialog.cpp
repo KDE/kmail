@@ -28,7 +28,7 @@
 #include "foldertreeview.h"
 #include "foldercollection.h"
 #include "readablecollectionproxymodel.h"
-#include "util.h"
+#include "mailcommon.h"
 
 #include <akonadi/collection.h>
 #include <akonadi/entitytreemodel.h>
@@ -48,17 +48,15 @@ public:
   FolderTreeWidget *folderTreeWidget;
   bool mNotAllowToCreateNewFolder;
   bool mUseGlobalSettings;
-  KSharedConfig::Ptr mConfig;
-  Akonadi::EntityMimeTypeFilterModel *mCollectionModel;
+  MailCommon *mMailCommon;
 };
 
-FolderSelectionDialog::FolderSelectionDialog( QWidget *parent, SelectionFolderOptions options, KSharedConfig::Ptr config, Akonadi::EntityMimeTypeFilterModel *collectionModel )
+FolderSelectionDialog::FolderSelectionDialog( QWidget *parent, SelectionFolderOptions options, MailCommon *mailCommon )
   :KDialog( parent ), d( new FolderSelectionDialogPrivate() )
 {
   setObjectName( "folder dialog" );
 
-  d->mConfig = config;
-  d->mCollectionModel = collectionModel;
+  d->mMailCommon = mailCommon;
   d->mNotAllowToCreateNewFolder = ( options & FolderSelectionDialog::NotAllowToCreateNewFolder );
   if ( d->mNotAllowToCreateNewFolder )
     setButtons( Ok | Cancel );
@@ -171,7 +169,7 @@ void FolderSelectionDialog::slotSelectionChanged()
     Akonadi::Collection parent;
     enableButton(KDialog::User1, canCreateCollection( parent ) );
     if ( parent.isValid() ) {
-      enableButton( KDialog::Ok, FolderCollection::forCollection( parent, d->mConfig )->canCreateMessages() );
+      enableButton( KDialog::Ok, FolderCollection::forCollection( parent, d->mMailCommon )->canCreateMessages() );
     }
   }
 }
@@ -206,7 +204,7 @@ static const char * myConfigGroupName = "FolderSelectionDialog";
 
 void FolderSelectionDialog::readConfig()
 {
-  KConfigGroup group( d->mConfig, myConfigGroupName );
+  KConfigGroup group( d->mMailCommon->config(), myConfigGroupName );
 
   QSize size = group.readEntry( "Size", QSize() );
   if ( !size.isEmpty() )
@@ -216,7 +214,7 @@ void FolderSelectionDialog::readConfig()
   if ( d->mUseGlobalSettings ) {
     const Akonadi::Collection::Id id = GlobalSettings::self()->lastSelectedFolder();
     if ( id > -1 ) {
-      const Akonadi::Collection col = KMail::Util::collectionFromId( id, d->mCollectionModel );
+      const Akonadi::Collection col = d->mMailCommon->collectionFromId( id );
       d->folderTreeWidget->selectCollectionFolder( col );
     }
   }
@@ -225,7 +223,7 @@ void FolderSelectionDialog::readConfig()
 
 void FolderSelectionDialog::writeConfig()
 {
-  KConfigGroup group( d->mConfig, myConfigGroupName );
+  KConfigGroup group( d->mMailCommon->config(), myConfigGroupName );
   group.writeEntry( "Size", size() );
 
   if ( d->mUseGlobalSettings ) {

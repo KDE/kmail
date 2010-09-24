@@ -230,7 +230,7 @@ void KMComposerEditor::slotFetchJob( KJob * job )
 
   uint identity = 0;
   if ( items.at( 0 ).isValid() && items.at( 0 ).parentCollection().isValid() ) {
-    QSharedPointer<FolderCollection> fd( FolderCollection::forCollection( items.at( 0 ).parentCollection(), KMKernel::config() ) );
+    QSharedPointer<FolderCollection> fd( FolderCollection::forCollection( items.at( 0 ).parentCollection(), KMKernel::self()->mailCommon() ) );
     if ( fd )
       identity = fd->identity();
   }

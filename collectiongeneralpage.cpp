@@ -353,7 +353,7 @@ void CollectionGeneralPage::init(const Akonadi::Collection &col)
 
 void CollectionGeneralPage::load(const Akonadi::Collection & col)
 {
-  mFolderCollection = FolderCollection::forCollection( col, KMKernel::config() );
+  mFolderCollection = FolderCollection::forCollection( col, KMKernel::self()->mailCommon() );
   init( col );
   QString displayName;
   if ( col.hasAttribute<Akonadi::EntityDisplayAttribute>() ) {

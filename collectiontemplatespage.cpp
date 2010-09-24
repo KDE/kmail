@@ -87,7 +87,7 @@ void CollectionTemplatesPage::init()
 
 void CollectionTemplatesPage::load(const Collection & col)
 {
-  mFolderCollection = FolderCollection::forCollection( col, KMKernel::config() );
+  mFolderCollection = FolderCollection::forCollection( col, KMKernel::self()->mailCommon() );
   if ( !mFolderCollection )
     return;
 

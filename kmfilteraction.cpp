@@ -286,7 +286,7 @@ KMFilterActionWithFolder::KMFilterActionWithFolder( const char* aName, const QSt
 
 QWidget* KMFilterActionWithFolder::createParamWidget( QWidget* parent ) const
 {
-  FolderRequester *req = new FolderRequester( KMKernel::config(), KMKernel::self()->collectionModel(), parent );
+  FolderRequester *req = new FolderRequester( KMKernel::self()->mailCommon(), parent );
   req->setShowOutbox( false );
   setParamWidgetValue( req );
   return req;

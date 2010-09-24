@@ -3133,7 +3133,7 @@ void SecurityPage::GeneralTab::save()
     {
       MessageViewer::GlobalSettings::self()->setHtmlMail( mSGTab.mHtmlMailCheck->isChecked() );
       foreach( const Akonadi::Collection &collection, kmkernel->allFolders() ) {
-        QSharedPointer<FolderCollection> fd = FolderCollection::forCollection( collection, KMKernel::config() );
+        QSharedPointer<FolderCollection> fd = FolderCollection::forCollection( collection, KMKernel::self()->mailCommon() );
         if ( fd ) {
           KConfigGroup config( KMKernel::config(), fd->configGroupName() );
           config.writeEntry("htmlMailOverride", false);
@@ -3671,7 +3671,7 @@ MiscPageFolderTab::MiscPageFolderTab( QWidget * parent )
   QHBoxLayout* layout = new QHBoxLayout;
   layout->setContentsMargins(0, 0, 0, 0);  
   mMMTab.mOnStartupOpenFolder->setLayout( layout );
-  mOnStartupOpenFolder = new KMail::FolderRequester( KMKernel::config(), KMKernel::self()->collectionModel(), mMMTab.mOnStartupOpenFolder );
+  mOnStartupOpenFolder = new KMail::FolderRequester( KMKernel::self()->mailCommon(), mMMTab.mOnStartupOpenFolder );
   layout->addWidget( mOnStartupOpenFolder );
   
   mMMTab.gridLayout->setSpacing( KDialog::spacingHint() );

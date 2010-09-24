@@ -338,7 +338,7 @@ void KMMainWidget::slotEndCheckMail()
   for ( QStringList::const_iterator it=keys.constBegin(); it!=keys.constEnd(); ++it ) {
     collectionInfo info = mCheckMail.find( *it ).value();
     //kDebug() << info.nbMail << "new message(s) in" << *it;
-    QSharedPointer<FolderCollection> fd = FolderCollection::forCollection( info.col, KMKernel::config() );
+    QSharedPointer<FolderCollection> fd = FolderCollection::forCollection( info.col, KMKernel::self()->mailCommon() );
 
     if ( fd && !fd->ignoreNewMail() ) {
       showNotification = true;
@@ -459,7 +459,7 @@ void KMMainWidget::folderSelected( const Akonadi::Collection & col )
     writeFolderConfig();
   }
 
-  mCurrentFolder = FolderCollection::forCollection( col, KMKernel::config() );
+  mCurrentFolder = FolderCollection::forCollection( col, KMKernel::self()->mailCommon() );
 
   if ( col.isValid() && kmkernel->isImapFolder( col )
 #if 0 //PORT TO AKONADI
@@ -1780,7 +1780,7 @@ FolderSelectionDialog* KMMainWidget::moveOrCopyToDialog()
 {
   if ( mMoveOrCopyToDialog == 0 ) {
     FolderSelectionDialog::SelectionFolderOption options = FolderSelectionDialog::HideVirtualFolder;
-    mMoveOrCopyToDialog = new FolderSelectionDialog( this, options, KMKernel::config(), KMKernel::self()->collectionModel() );
+    mMoveOrCopyToDialog = new FolderSelectionDialog( this, options, KMKernel::self()->mailCommon() );
     mMoveOrCopyToDialog->setModal( true );
   }
   return mMoveOrCopyToDialog;
@@ -1792,7 +1792,7 @@ FolderSelectionDialog* KMMainWidget::selectFromAllFoldersDialog()
     FolderSelectionDialog::SelectionFolderOptions options = FolderSelectionDialog::None;
     options |= FolderSelectionDialog::NotAllowToCreateNewFolder;
 
-    mSelectFromAllFoldersDialog = new FolderSelectionDialog( this, options, KMKernel::config(), KMKernel::self()->collectionModel() );
+    mSelectFromAllFoldersDialog = new FolderSelectionDialog( this, options, KMKernel::self()->mailCommon() );
     mSelectFromAllFoldersDialog->setModal( true );
   }
   return mSelectFromAllFoldersDialog;
@@ -3439,7 +3439,7 @@ void KMMainWidget::setupActions()
   updateFolderMenu();
   mTagActionManager = new KMail::TagActionManager( this, actionCollection(), mMsgActions,
                                                    mGUIClient );
-  mFolderShortcutActionManager = new KMail::FolderShortcutActionManager( this, actionCollection(), KMKernel::self()->collectionModel(), KMKernel::self()->monitor(), KMKernel::config() );
+  mFolderShortcutActionManager = new KMail::FolderShortcutActionManager( this, actionCollection(), KMKernel::self()->mailCommon() );
 
 }
 
@@ -3469,7 +3469,7 @@ void KMMainWidget::slotEditNotifications()
 void KMMainWidget::slotShowExpiryProperties()
 {
   if ( mCurrentFolder ) {
-     KMail::ExpiryPropertiesDialog *dlg = new KMail::ExpiryPropertiesDialog( this, mCurrentFolder, KMKernel::self()->collectionModel() );
+     KMail::ExpiryPropertiesDialog *dlg = new KMail::ExpiryPropertiesDialog( this, mCurrentFolder, KMKernel::self()->mailCommon() );
      dlg->show();
   }
 }

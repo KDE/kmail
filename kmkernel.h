@@ -70,6 +70,7 @@ class KMMainWidget;
 class ConfigureDialog;
 class FolderCollectionMonitor;
 class KMSystemTray;
+class MailCommon;
 
 /**
  * @short Central point of coordination in KMail
@@ -272,19 +273,6 @@ public:
   const KComponentData &xmlGuiInstance() { return mXmlGuiInstance; }
   void setXmlGuiInstance( const KComponentData &instance ) { mXmlGuiInstance = instance; }
 
-
-  Akonadi::Collection inboxCollectionFolder();
-  Akonadi::Collection outboxCollectionFolder();
-  Akonadi::Collection sentCollectionFolder();
-  Akonadi::Collection trashCollectionFolder();
-  Akonadi::Collection draftsCollectionFolder();
-  Akonadi::Collection templatesCollectionFolder();
-
-  bool isSystemFolderCollection( const Akonadi::Collection &col);
-
-  /** Returns true if this folder is the inbox on the local disk */
-  bool isMainFolderCollection( const Akonadi::Collection &col );
-
   UndoStack *undoStack() { return the_undoStack; }
   KMFilterMgr *filterMgr() { return the_filterMgr; }
   KMFilterMgr *popFilterMgr() { return the_popFilterMgr; }
@@ -340,7 +328,7 @@ public:
    * is empty at startup.
    */
   Akonadi::Collection::List allFolders() const;
-
+// 
   void selectCollectionFromId( const Akonadi::Collection::Id id);
 
 
@@ -360,14 +348,25 @@ public:
 
   void raise();
 
+  Akonadi::Collection inboxCollectionFolder();
+  Akonadi::Collection outboxCollectionFolder();
+  Akonadi::Collection sentCollectionFolder();
+  Akonadi::Collection trashCollectionFolder();
+  Akonadi::Collection draftsCollectionFolder();
+  Akonadi::Collection templatesCollectionFolder();
 
-  void findCreateDefaultCollection( Akonadi::SpecialMailCollections::Type );
+  bool isSystemFolderCollection( const Akonadi::Collection &col );
+
+  /** Returns true if this folder is the inbox on the local disk */
+  bool isMainFolderCollection( const Akonadi::Collection &col );
 
   void stopAgentInstance();
 
-  void updateSystemTray();
+  MailCommon *mailCommon();
 
 public slots:
+
+  void updateSystemTray();
 
   /** Custom templates have changed, so all windows using them need
       to regenerate their menus */
@@ -395,7 +394,6 @@ public slots:
   void slotRunBackgroundTasks();
 
   void slotConfigChanged();
-  void slotDefaultCollectionsChanged();
   void slotCollectionMoved( const Akonadi::Collection &collection, const Akonadi::Collection &source, const Akonadi::Collection &destination );
 
 signals:
@@ -414,24 +412,13 @@ private slots:
   void transportRenamed( int id, const QString &oldName, const QString &newName );
   void itemDispatchStarted();
   void instanceStatusChanged( Akonadi::AgentInstance );
-  void createDefaultCollectionDone( KJob * job);
-
-  void initFolders();
+  
   void akonadiStateChanged( Akonadi::ServerManager::State );
   void slotProgressItemCompletedOrCanceled( KPIM::ProgressItem * item);
 private:
   void migrateFromKMail1();
   void openReader( bool onlyCheck );
   QSharedPointer<FolderCollection> currentFolderCollection();
-
-
-
-  Akonadi::Collection::Id the_inboxCollectionFolder;
-  Akonadi::Collection::Id the_outboxCollectionFolder;
-  Akonadi::Collection::Id the_sentCollectionFolder;
-  Akonadi::Collection::Id the_trashCollectionFolder;
-  Akonadi::Collection::Id the_draftsCollectionFolder;
-  Akonadi::Collection::Id the_templatesCollectionFolder;
 
   UndoStack *the_undoStack;
   KMFilterMgr *the_filterMgr;
@@ -473,6 +460,8 @@ private:
   QList<QString> mResourcesBeingChecked;
 
   int mWrapCol;
+
+  MailCommon *mMailCommon;
 };
 
 #endif // _KMKERNEL_H

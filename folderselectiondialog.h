@@ -22,11 +22,8 @@
 #include <QAbstractItemView>
 #include <KDialog>
 #include <akonadi/collection.h>
-#include <ksharedconfig.h>
 
-namespace Akonadi {
-  class EntityMimeTypeFilterModel;
-}
+class MailCommon;
 
 class KJob;
 
@@ -51,7 +48,7 @@ public:
   };
   Q_DECLARE_FLAGS( SelectionFolderOptions, SelectionFolderOption )
 
-  FolderSelectionDialog( QWidget* parent, FolderSelectionDialog::SelectionFolderOptions options, KSharedConfig::Ptr config, Akonadi::EntityMimeTypeFilterModel *collectionModel );
+  FolderSelectionDialog( QWidget* parent, FolderSelectionDialog::SelectionFolderOptions options, MailCommon* mailCommon );
   ~FolderSelectionDialog();
 
   void setSelectionMode( QAbstractItemView::SelectionMode mode );

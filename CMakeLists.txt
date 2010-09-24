@@ -139,6 +139,7 @@ set(kmailprivate_LIB_SRCS
    addressvalidationjob.cpp
    identitypage.cpp
    newidentitydialog.cpp
+   mailcommon.cpp
 )
 
 soprano_add_ontology(kmailprivate_LIB_SRCS

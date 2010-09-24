@@ -24,6 +24,8 @@
 #include "akonadi/entityrightsfiltermodel.h"
 #include <akonadi/collection.h>
 
+class MailCommon;
+
 class ReadableCollectionProxyModel : public Akonadi::EntityRightsFilterModel
 {
   Q_OBJECT
@@ -39,7 +41,7 @@ public:
   };
   Q_DECLARE_FLAGS( ReadableCollectionOptions, ReadableCollectionOption )
 
-  explicit ReadableCollectionProxyModel( QObject *parent = 0, ReadableCollectionOptions = ReadableCollectionProxyModel::None );
+  explicit ReadableCollectionProxyModel( MailCommon* mailCommon, QObject *parent = 0, ReadableCollectionOptions = ReadableCollectionProxyModel::None );
 
   virtual ~ReadableCollectionProxyModel();
 
