@@ -329,4 +329,6 @@ install(FILES
   DESTINATION ${DBUS_INTERFACES_INSTALL_DIR}
 )
 
+install( FILES kmail_addattachmentservicemenu.desktop DESTINATION
+	${SERVICES_INSTALL_DIR}/ServiceMenus)
 

@@ -1,0 +1,10 @@
+[Desktop Entry]
+Type=Service
+ServiceTypes=KonqPopupMenu/Plugin
+MimeType=all/all;
+Actions=sendto;
+Icon=kmail
+
+[Desktop Action sendto]
+Name=Send To
+Exec=kmail --attach %F
