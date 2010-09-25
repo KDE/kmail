@@ -7,4 +7,5 @@ Icon=kmail
 
 [Desktop Action sendto]
 Name=Send To
+Name[x-test]=xxSend Toxx
 Exec=kmail --attach %F
