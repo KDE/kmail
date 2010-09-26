@@ -295,10 +295,8 @@ namespace KMail {
           part.setDefaultDisplay( (KMail::Interface::BodyPart::Display) attachmentStrategy()->defaultDisplay( node ) );
 
           writeAttachmentMarkHeader( node );
-          node->setDisplayedEmbedded( true );
           Callback callback( mReader->message(), mReader );
           const Interface::BodyPartFormatter::Result result = formatter->format( &part, htmlWriter(), callback );
-          writeAttachmentMarkFooter();
           switch ( result ) {
           case Interface::BodyPartFormatter::AsIcon:
             processResult.setNeverDisplayInline( true );
@@ -308,9 +306,11 @@ namespace KMail {
             break;
           case Interface::BodyPartFormatter::Ok:
           case Interface::BodyPartFormatter::NeedContent:
+            node->setDisplayedEmbedded( true );
             // FIXME: incomplete content handling
             ;
           }
+          writeAttachmentMarkFooter();
         }
       } else {
         const BodyPartFormatter * bpf
