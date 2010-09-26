@@ -7,5 +7,9 @@ Icon=kmail
 
 [Desktop Action sendto]
 Name=Send To
+Name[en_GB]=Send To
+Name[pt]=Enviar Para
+Name[pt_BR]=Enviar para
+Name[uk]=Надіслати до
 Name[x-test]=xxSend Toxx
 Exec=kmail --attach %F
