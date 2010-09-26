@@ -34,19 +34,13 @@ libkmailprivate_la_LIBADD  = \
         ../libkcal/libkcal.la \
         $(LIB_KHTML) $(LIB_KSPELL) $(LIB_KABC)
 
-kde_module_LTLIBRARIES = kcm_kmail.la libkmailpart.la libkmail_bodypartformatter_application_octetstream.la
+kde_module_LTLIBRARIES = kcm_kmail.la libkmailpart.la
 libkmailpart_la_LDFLAGS = $(all_libraries) $(KDE_RPATH) -module -avoid-version -no-undefined
 libkmailpart_la_LIBADD  = libkmailprivate.la
 
 kcm_kmail_la_SOURCES = kcm_kmail.cpp
 kcm_kmail_la_LDFLAGS = $(all_libraries) -module -avoid-version -no-undefined
 kcm_kmail_la_LIBADD = libkmailprivate.la $(LIB_KDECORE)
-
-libkmail_bodypartformatter_application_octetstream_la_SOURCES = app_octetstream.cpp
-libkmail_bodypartformatter_application_octetstream_la_LDFLAGS = $(all_libraries) -module $(KDE_PLUGIN)
-
-linkdir = $(kde_datadir)/kmail/plugins/bodypartformatter
-link_DATA = application_octetstream.desktop
 
 bin_PROGRAMS = kmail
 kmail_LDFLAGS = $(all_libraries) $(KDE_RPATH)
