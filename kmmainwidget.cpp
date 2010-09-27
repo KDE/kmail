@@ -43,6 +43,7 @@
 #include "folderselectiondialog.h"
 #include "foldertreewidget.h"
 #include "util.h"
+#include "mailutil.h"
 #include "archivefolderdialog.h"
 #include "globalsettings.h"
 #include "foldertreeview.h"
@@ -391,7 +392,7 @@ void KMMainWidget::slotFolderChanged( const Akonadi::Collection& col )
 {
   updateFolderMenu();
   folderSelected( col );
-  emit captionChangeRequest( KMail::Util::fullCollectionPath( col ) );
+  emit captionChangeRequest( MailCommonNS::Util::fullCollectionPath( col, KMKernel::self()->mailCommon() ) );
 }
 
 void KMMainWidget::folderSelected( const Akonadi::Collection & col )
@@ -1141,7 +1142,7 @@ void KMMainWidget::slotItemMoved( Akonadi::Item item, Akonadi::Collection from, 
 
 void KMMainWidget::addInfoInNotification( const Akonadi::Collection&col )
 {
-  const QString fullCollectionPath( KMail::Util::fullCollectionPath( col ) );
+  const QString fullCollectionPath( MailCommonNS::Util::fullCollectionPath( col, KMKernel::self()->mailCommon() ) );
   if ( mCheckMail.contains( fullCollectionPath ) ) {
     mCheckMail[fullCollectionPath].nbMail++;
   } else {
@@ -3744,7 +3745,7 @@ void KMMainWidget::slotAkonadiStandardActionUpdated()
   if ( mCollectionProperties ) {
     mCollectionProperties->setEnabled( mCurrentFolder &&
                                        !mCurrentFolder->isStructural() &&
-                                       !KMail::Util::isVirtualCollection( mCurrentFolder->collection() ) );
+                                       !MailCommonNS::Util::isVirtualCollection( mCurrentFolder->collection() ) );
     QList< QAction* > collectionProperties;
     if ( mCollectionProperties->isEnabled() )
       collectionProperties << mCollectionProperties;
@@ -3850,7 +3851,7 @@ void KMMainWidget::updateFolderMenu()
                                    !multiFolder &&
                                    mCurrentFolder->canDeleteMessages() &&
                                    folderWithContent &&
-                                   !KMail::Util::isVirtualCollection( mCurrentFolder->collection() ) );
+                                   !MailCommonNS::Util::isVirtualCollection( mCurrentFolder->collection() ) );
 
   // the visual ones only make sense if we are showing a message list
   mPreferHtmlAction->setEnabled( mFolderTreeWidget->folderTreeView()->currentFolder().isValid() );

@@ -25,6 +25,8 @@ include_directories(
   ${CMAKE_SOURCE_DIR}/messagecomposer
   ${CMAKE_BINARY_DIR}/messagecomposer
   ${CMAKE_SOURCE_DIR}/messagecore
+  ${CMAKE_SOURCE_DIR}/mailcommon
+  ${CMAKE_BINARY_DIR}/mailcommon
   ${CMAKE_SOURCE_DIR}/korganizer
   ${GPGME_INCLUDES}
   ${Boost_INCLUDE_DIR}
@@ -48,14 +50,7 @@ add_subdirectory(kcm_kpimidentities)
 
 set(kmailprivate_LIB_SRCS
    kmcollectionpropertiesdialog.cpp
-   foldercollectionmonitor.cpp
-   readablecollectionproxymodel.cpp
-   entitycollectionorderproxymodel.cpp
    collectionpane.cpp
-   foldertreewidget.cpp
-   folderselectiondialog.cpp
-   foldercollection.cpp
-   foldertreeview.cpp
    collectionannotationsattribute.cpp
    collectiontemplatespage.cpp
    collectionmaintenancepage.cpp
@@ -65,7 +60,6 @@ set(kmailprivate_LIB_SRCS
    collectionquotapage_p.cpp
    collectionaclpage.cpp
    colorlistbox.cpp
-   imapaclattribute.cpp
    kmmainwin.cpp
    configagentdelegate.cpp
    configuredialoglistview.cpp
@@ -100,7 +94,6 @@ set(kmailprivate_LIB_SRCS
    kmreadermainwin.cpp
    kmstartup.cpp
    kmmainwidget.cpp
-   folderjob.cpp
    aboutdata.cpp
    mailserviceimpl.cpp
    kmcomposereditor.cpp
@@ -113,12 +106,8 @@ set(kmailprivate_LIB_SRCS
    codecmanager.cpp
    regexplineedit.cpp
    rulewidgethandlermanager.cpp
-   expirejob.cpp
-   jobscheduler.cpp
    redirectdialog.cpp
    foldershortcutdialog.cpp
-   folderrequester.cpp
-   expirypropertiesdialog.cpp
    mailinglistpropertiesdialog.cpp
    managesievescriptsdialog.cpp
    util.cpp
@@ -139,7 +128,6 @@ set(kmailprivate_LIB_SRCS
    addressvalidationjob.cpp
    identitypage.cpp
    newidentitydialog.cpp
-   mailcommon.cpp
 )
 
 soprano_add_ontology(kmailprivate_LIB_SRCS
@@ -158,7 +146,7 @@ macro(add_resource_iface _kcfgFile _ifaceName _className)
   )
 endmacro(add_resource_iface)
 
-add_resource_iface( imapresource.kcfg org.kde.Akonadi.Imap.Settings ImapSettings )
+# add_resource_iface( imapresource.kcfg org.kde.Akonadi.Imap.Settings ImapSettings )
 # Pop3
 add_resource_iface( settings.kcfg org.kde.Akonadi.POP3.Settings Pop3Settings )
 
@@ -218,6 +206,7 @@ target_link_libraries(kmailprivate
   messagecore
   messagecomposer
   messagelist
+  mailcommon
   templateparser
   ${KDEPIMLIBS_KPIMIDENTITIES_LIBS}
   ${KDEPIMLIBS_KONTACTINTERFACE_LIBS}
@@ -270,6 +259,7 @@ target_link_libraries(kmailpart
   ${KDE4_KDECORE_LIBS}
   ${KDEPIMLIBS_AKONADI_LIBS}
   kmailprivate
+  mailcommon
   ${KDE4_KPARTS_LIBS}
   ${KDE4_KCMUTILS_LIBS}
 )

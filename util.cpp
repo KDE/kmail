@@ -172,10 +172,6 @@ KUrl KMail::Util::findSieveUrlForAccount( OrgKdeAkonadiImapSettingsInterface *a,
   }
 }
 
-OrgKdeAkonadiImapSettingsInterface *KMail::Util::createImapSettingsInterface( const QString &ident )
-{
-  return new OrgKdeAkonadiImapSettingsInterface("org.freedesktop.Akonadi.Resource." + ident, "/Settings", QDBusConnection::sessionBus() );
-}
 
 
 void KMail::Util::launchAccountWizard( QWidget *w )
@@ -230,38 +226,6 @@ void KMail::Util::handleClickedURL( const KUrl &url, uint identity )
     kWarning() << "Can't handle URL:" << url;
   }
 }
-
-bool KMail::Util::isVirtualCollection(const Akonadi::Collection & collection)
-{
-  return ( collection.resource() == QLatin1String( "akonadi_nepomuktag_resource" ) || collection.resource() == QLatin1String( "akonadi_search_resource" ) );
-
-}
-
-QString KMail::Util::fullCollectionPath( const Akonadi::Collection& collection )
-{
-  QString fullPath;
-  QModelIndex idx = Akonadi::EntityTreeModel::modelIndexForCollection( KMKernel::self()->collectionModel(), collection );
-  if ( !idx.isValid() )
-    return fullPath;
-  fullPath = idx.data().toString();
-  idx = idx.parent();
-  while ( idx != QModelIndex() ) {
-    fullPath = idx.data().toString() + '/' + fullPath;
-    idx = idx.parent();
-  }
-  return fullPath;
-}
-
-void KMail::Util::showJobErrorMessage( KJob *job )
-{
-  if ( job->error() ) {
-    if ( static_cast<KIO::Job*>( job )->ui() )
-      static_cast<KIO::Job*>(job)->ui()->showErrorMessage();
-    else
-      kDebug()<<" job->errorString() :"<<job->errorString();
-  }
-}
-
 
 QStringList KMail::Util::AttachmentKeywords()
 {

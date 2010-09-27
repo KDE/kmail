@@ -25,6 +25,9 @@
 #include "kmreaderwin.h" //for inline actions
 #include "kmkernel.h" // for access to config
 
+#include "foldertreewidget.h"
+#include "foldertreeview.h"
+
 #include <kurl.h>
 #include <kxmlguiclient.h>
 #include "messageactions.h"
@@ -41,7 +44,6 @@
 #include <QPointer>
 #include <akonadi/kmime/standardmailactionmanager.h>
 #include <messagelist/core/view.h>
-#include "foldertreewidget.h"
 
 namespace Akonadi {
   class EntityListView;
@@ -56,7 +58,6 @@ class QSplitter;
 
 class KActionMenu;
 class KToggleAction;
-class FolderTreeView;
 class KMMetaFilterActionCommand;
 class KMSystemTray;
 class CustomTemplatesMenu;
@@ -77,7 +78,6 @@ namespace KMail {
   class FolderShortcutActionManager;
 }
 
-class FolderTreeWidget;
 class FolderSelectionDialog;
 
 class KMAIL_EXPORT KMMainWidget : public QWidget

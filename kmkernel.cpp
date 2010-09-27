@@ -24,6 +24,7 @@ using KPIM::RecentAddresses;
 #include "kmsystemtray.h"
 #include "stringutil.h"
 #include "foldertreeview.h"
+#include "mailutil.h"
 
 // kdepimlibs includes
 #include <kpimidentities/identity.h>
@@ -1428,7 +1429,7 @@ Akonadi::Collection KMKernel::trashCollectionFromResource( const Akonadi::Collec
   Akonadi::Collection trashCol;
   if ( col.isValid() ) {
     if ( col.resource().contains( IMAP_RESOURCE_IDENTIFIER ) ) {
-      OrgKdeAkonadiImapSettingsInterface *iface = KMail::Util::createImapSettingsInterface( col.resource() );
+      OrgKdeAkonadiImapSettingsInterface *iface = MailCommonNS::Util::createImapSettingsInterface( col.resource() );
       if ( iface->isValid() ) {
 
         trashCol =  Akonadi::Collection( iface->trashCollection() );
@@ -1450,7 +1451,7 @@ bool KMKernel::folderIsTrash( const Akonadi::Collection & col )
     if ( type.status() == Akonadi::AgentInstance::Broken )
       continue;
     if ( type.identifier().contains( IMAP_RESOURCE_IDENTIFIER ) ) {
-      OrgKdeAkonadiImapSettingsInterface *iface = KMail::Util::createImapSettingsInterface( type.identifier() );
+      OrgKdeAkonadiImapSettingsInterface *iface = MailCommonNS::Util::createImapSettingsInterface( type.identifier() );
       if ( iface->isValid() ) {
         if ( iface->trashCollection() == col.id() ) {
           delete iface;

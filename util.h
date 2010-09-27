@@ -99,7 +99,6 @@ namespace Util {
     Akonadi::Item::Id putRepliesInSameFolder( const Akonadi::Item& item );
 
     KUrl findSieveUrlForAccount( OrgKdeAkonadiImapSettingsInterface *a,  const QString &ident);
-    OrgKdeAkonadiImapSettingsInterface *createImapSettingsInterface( const QString &ident );
 
     void launchAccountWizard( QWidget * );
 
@@ -114,13 +113,6 @@ namespace Util {
      * Currently only support mailto.
      */
     void handleClickedURL( const KUrl &url, uint identity );
-
-
-    bool isVirtualCollection(const Akonadi::Collection & col);
-
-    QString fullCollectionPath( const Akonadi::Collection& collection );
-
-    void showJobErrorMessage( KJob *job );
 
     QStringList AttachmentKeywords();
 

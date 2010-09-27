@@ -41,7 +41,7 @@
 #include <kdebug.h>
 #include <kmessagebox.h>
 #include <kmcommands.h>
-#include "util.h"
+#include "mailutil.h"
 
 #include <akonadi/itemfetchjob.h>
 #include <akonadi/itemfetchscope.h>
@@ -241,7 +241,7 @@ void MailingListFolderPropertiesDialog::slotFetchDone( KJob* job )
 {
   if ( job->error() ) {
     // handle errors
-    KMail::Util::showJobErrorMessage(job);
+    MailCommonNS::Util::showJobErrorMessage(job);
     return;
   }
   Akonadi::ItemFetchJob *fjob = dynamic_cast<Akonadi::ItemFetchJob*>( job );

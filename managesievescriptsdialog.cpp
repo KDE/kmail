@@ -6,6 +6,7 @@
 #include "kmkernel.h"
 #include "util.h"
 #include "imapsettings.h"
+#include "mailutil.h"
 
 #include <klocale.h>
 #include <kiconloader.h>
@@ -86,7 +87,7 @@ void KMail::ManageSieveScriptsDialog::slotRefresh()
     if ( type.identifier().contains( IMAP_RESOURCE_IDENTIFIER ) ) {
       if ( type.status() == Akonadi::AgentInstance::Broken )
         continue;
-      OrgKdeAkonadiImapSettingsInterface *iface = KMail::Util::createImapSettingsInterface(type.identifier());
+      OrgKdeAkonadiImapSettingsInterface *iface = MailCommonNS::Util::createImapSettingsInterface(type.identifier());
       if ( iface->isValid() ) {
         last = new QTreeWidgetItem( mListView, last );
         last->setText( 0, type.name() );

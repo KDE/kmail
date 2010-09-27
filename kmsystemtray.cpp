@@ -23,7 +23,7 @@
 #include "kmmainwidget.h"
 #include "foldercollection.h"
 #include "globalsettings.h"
-#include "util.h"
+#include "mailutil.h"
 
 
 #include <kxmlguiwindow.h>
@@ -260,7 +260,7 @@ void KMSystemTray::fillFoldersMenu( QMenu *menu, const QAbstractItemModel *model
   for ( int row = 0; row < rowCount; ++row ) {
     const QModelIndex index = model->index( row, 0, parentIndex );
     const Akonadi::Collection collection = model->data( index, Akonadi::CollectionModel::CollectionRole ).value<Akonadi::Collection>();
-    if ( KMail::Util::isVirtualCollection( collection ) )
+    if ( MailCommonNS::Util::isVirtualCollection( collection ) )
       continue;
     Akonadi::CollectionStatistics statistics = collection.statistics();
     qint64 count = qMax( 0LL, statistics.unreadCount() );
@@ -384,7 +384,7 @@ void KMSystemTray::unreadMail( const QAbstractItemModel *model, const QModelInde
     const QModelIndex index = model->index( row, 0, parentIndex );
     const Akonadi::Collection collection = model->data( index, Akonadi::CollectionModel::CollectionRole ).value<Akonadi::Collection>();
 
-    if ( KMail::Util::isVirtualCollection( collection ) )
+    if ( MailCommonNS::Util::isVirtualCollection( collection ) )
       continue;
 
     const Akonadi::CollectionStatistics statistics = collection.statistics();

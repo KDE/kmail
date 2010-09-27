@@ -37,6 +37,7 @@
 #include <kpimidentities/identitymanager.h>
 
 #include "util.h"
+#include "mailutil.h"
 #include <akonadi/agentinstance.h>
 #include "kmkernel.h"
 #include "sievejob.h"
@@ -230,7 +231,7 @@ void SieveDebugDialog::slotDiagNextAccount()
 
     mEdit->append( i18n( "Collecting data for account '%1'...\n", ident ) );
     mEdit->append( i18n( "------------------------------------------------------------\n" ) );
-    mImapSettingsInterface = KMail::Util::createImapSettingsInterface( ident );
+    mImapSettingsInterface = MailCommonNS::Util::createImapSettingsInterface( ident );
     if ( mImapSettingsInterface->isValid() )
     {
         // Detect URL for this IMAP account

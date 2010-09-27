@@ -37,6 +37,7 @@ using KMime::Types::AddrSpecList;
 #include <kmessagebox.h>
 #include <kdebug.h>
 #include "util.h"
+#include "mailutil.h"
 
 #include <akonadi/agentinstance.h>
 
@@ -498,7 +499,7 @@ namespace KMail {
       if ( type.identifier().contains( IMAP_RESOURCE_IDENTIFIER ) ) {
         if ( type.status() == Akonadi::AgentInstance::Broken )
           continue;
-        OrgKdeAkonadiImapSettingsInterface *iface = KMail::Util::createImapSettingsInterface(type.identifier());
+        OrgKdeAkonadiImapSettingsInterface *iface = MailCommonNS::Util::createImapSettingsInterface(type.identifier());
         if ( iface->isValid() ) {
           const KUrl u = KMail::Util::findSieveUrlForAccount( iface,type.identifier() );
           if ( !u.isEmpty() ) {

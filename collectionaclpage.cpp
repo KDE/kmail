@@ -34,7 +34,7 @@
 #include <QStackedWidget>
 #include "messageviewer/autoqpointer.h"
 #include "imapaclattribute.h"
-#include "util.h"
+#include "mailutil.h"
 #include "imapsettings.h"
 
 #include <akonadi/collection.h>
@@ -322,7 +322,7 @@ void CollectionAclPage::load(const Akonadi::Collection & col)
     if ( !col.isValid() ) // new collection? everything is new then
       item->setModified( true );
   }
-  OrgKdeAkonadiImapSettingsInterface *imapSettingsInterface = KMail::Util::createImapSettingsInterface( col.resource() );
+  OrgKdeAkonadiImapSettingsInterface *imapSettingsInterface = MailCommonNS::Util::createImapSettingsInterface( col.resource() );
   
   if ( imapSettingsInterface->isValid() ) {
     QDBusReply<QString> reply = imapSettingsInterface->userName();

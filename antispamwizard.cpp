@@ -40,6 +40,7 @@
 #include "foldertreeview.h"
 #include "readablecollectionproxymodel.h"
 #include "util.h"
+#include "mailutil.h"
 #include "imapsettings.h"
 #include "pop3settings.h"
 
@@ -518,7 +519,7 @@ void AntiSpamWizard::checkToolAvailability()
         if ( type.status() == Akonadi::AgentInstance::Broken )
           continue;
         if ( type.identifier().contains( IMAP_RESOURCE_IDENTIFIER ) ) {
-          OrgKdeAkonadiImapSettingsInterface *iface = KMail::Util::createImapSettingsInterface( type.identifier() );
+          OrgKdeAkonadiImapSettingsInterface *iface = MailCommonNS::Util::createImapSettingsInterface( type.identifier() );
           if ( iface->isValid() ) {
             QString host = iface->imapServer();
             if ( host.toLower().contains( pattern.toLower() ) ) {

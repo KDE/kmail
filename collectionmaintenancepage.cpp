@@ -17,7 +17,7 @@
 */
 
 #include "collectionmaintenancepage.h"
-#include "util.h"
+#include "mailutil.h"
 #include "kmkernel.h"
 
 #include <akonadi/collectionstatistics.h>
@@ -53,7 +53,7 @@ void CollectionMaintenancePage::init(const Akonadi::Collection & col)
   QGroupBox *filesGroup = new QGroupBox( i18n("Files"), this );
   QFormLayout *box = new QFormLayout( filesGroup );
   box->setSpacing( KDialog::spacingHint() );
-  mIsNotAVirtualCollection = !KMail::Util::isVirtualCollection( col );
+  mIsNotAVirtualCollection = !MailCommonNS::Util::isVirtualCollection( col );
   connect( KMKernel::self()->monitor(), SIGNAL( collectionStatisticsChanged( Akonadi::Collection::Id , const Akonadi::CollectionStatistics & ) ), this, SLOT( updateCollectionStatistic( Akonadi::Collection::Id, const Akonadi::CollectionStatistics& ) ) );
 
 
