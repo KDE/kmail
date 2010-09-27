@@ -50,6 +50,7 @@
 #include "mailinglist-magic.h"
 
 using namespace KMail;
+using namespace MailCommon;
 
 MailingListFolderPropertiesDialog::MailingListFolderPropertiesDialog( QWidget* parent, const QSharedPointer<FolderCollection> &col )
     : KDialog( parent ),
@@ -241,7 +242,7 @@ void MailingListFolderPropertiesDialog::slotFetchDone( KJob* job )
 {
   if ( job->error() ) {
     // handle errors
-    MailCommonNS::Util::showJobErrorMessage(job);
+    MailCommon::Util::showJobErrorMessage(job);
     return;
   }
   Akonadi::ItemFetchJob *fjob = dynamic_cast<Akonadi::ItemFetchJob*>( job );

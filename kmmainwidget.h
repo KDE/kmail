@@ -78,7 +78,9 @@ namespace KMail {
   class FolderShortcutActionManager;
 }
 
-class FolderSelectionDialog;
+namespace MailCommon {
+  class FolderSelectionDialog;
+}
 
 class KMAIL_EXPORT KMMainWidget : public QWidget
 {
@@ -121,7 +123,7 @@ class KMAIL_EXPORT KMMainWidget : public QWidget
     /** Access to the header list pane. */
     CollectionPane* messageListPane() const { return mMessagePane; }
 
-    QSharedPointer<FolderCollection> currentFolder() const;
+    QSharedPointer<MailCommon::FolderCollection> currentFolder() const;
 
     static void cleanup();
 
@@ -172,7 +174,7 @@ class KMAIL_EXPORT KMMainWidget : public QWidget
     QLabel* vacationScriptIndicator() const;
     void updateVacationScriptStatus() { updateVacationScriptStatus( mVacationIndicatorActive ); }
 
-    FolderTreeView *folderTreeView() const {
+    MailCommon::FolderTreeView *folderTreeView() const {
       return mFolderTreeWidget->folderTreeView();
     }
 
@@ -499,13 +501,13 @@ class KMAIL_EXPORT KMMainWidget : public QWidget
      * move and copy to folder actions on demand. Only folders where items can
      * be added are listed.
      */
-    FolderSelectionDialog* moveOrCopyToDialog();
+    MailCommon::FolderSelectionDialog* moveOrCopyToDialog();
 
     /**
      * Internal helper that creates the folder selection dialog used for
      * jumping to folders, or adding them as favourites. All folders are listed.
      */
-    FolderSelectionDialog* selectFromAllFoldersDialog();
+    MailCommon::FolderSelectionDialog* selectFromAllFoldersDialog();
 
 
     void addInfoInNotification( const Akonadi::Collection&col );
@@ -623,9 +625,9 @@ private:
     KMail::MessageActions *mMsgActions;
     Akonadi::StandardMailActionManager *mAkonadiStandardActionManager;
     CollectionPane *mMessagePane;
-    QSharedPointer<FolderCollection> mCurrentFolder;
+    QSharedPointer<MailCommon::FolderCollection> mCurrentFolder;
 
-    FolderTreeWidget *mFolderTreeWidget;
+    MailCommon::FolderTreeWidget *mFolderTreeWidget;
 
     KMail::StatusBarLabel *mVacationScriptIndicator;
     bool mVacationIndicatorActive;
@@ -653,8 +655,8 @@ private:
     QMap<QString, collectionInfo> mCheckMail;
 
     bool mCheckMailInProgress;
-    FolderSelectionDialog* mMoveOrCopyToDialog;
-    FolderSelectionDialog* mSelectFromAllFoldersDialog;
+    MailCommon::FolderSelectionDialog* mMoveOrCopyToDialog;
+    MailCommon::FolderSelectionDialog* mSelectFromAllFoldersDialog;
 };
 
 #endif

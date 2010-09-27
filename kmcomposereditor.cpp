@@ -43,6 +43,8 @@
 #include "foldercollection.h"
 #include <QTextCodec>
 
+using namespace MailCommon;
+
 KMComposerEditor::KMComposerEditor( KMComposeWin *win,QWidget *parent)
  : Message::KMeditor(parent, "kmail2rc" ),m_composerWin(win)
 {

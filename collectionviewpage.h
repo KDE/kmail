@@ -25,7 +25,11 @@ class QCheckBox;
 class QLabel;
 class KComboBox;
 class KIconButton;
+
+namespace MailCommon {
 class FolderCollection;
+}
+
 template <typename T> class QSharedPointer;
 
 namespace MessageList {
@@ -65,7 +69,7 @@ private:
   MessageList::Utils::AggregationComboBox *mAggregationComboBox;
   QCheckBox *mUseDefaultThemeCheckBox;
   MessageList::Utils::ThemeComboBox *mThemeComboBox;
-  QSharedPointer<FolderCollection> mFolderCollection;
+  QSharedPointer<MailCommon::FolderCollection> mFolderCollection;
   Akonadi::Collection mCurrentCollection;
   int mShowSenderReceiverValue;
 };

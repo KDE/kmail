@@ -30,9 +30,12 @@ namespace Akonadi
   class Collection;
 }
 
+namespace MailCommon {
+  class FolderRequester;
+}
+
 namespace KMail
 {
-class FolderRequester;
 
 class ArchiveFolderDialog : public KDialog
 {
@@ -54,7 +57,7 @@ class ArchiveFolderDialog : public KDialog
 
     QWidget *mParentWidget;
     QCheckBox *mDeleteCheckBox;
-    FolderRequester *mFolderRequester;
+    MailCommon::FolderRequester *mFolderRequester;
     KComboBox *mFormatComboBox;
     KUrlRequester *mUrlRequester;
 };

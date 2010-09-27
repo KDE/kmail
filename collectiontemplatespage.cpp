@@ -28,6 +28,7 @@
 #include "templateparser/templatesconfiguration_kfg.h"
 
 using namespace Akonadi;
+using namespace MailCommon;
 
 CollectionTemplatesPage::CollectionTemplatesPage(QWidget * parent) :
     CollectionPropertiesPage( parent ), mFolderCollection( 0 )

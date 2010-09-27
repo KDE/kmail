@@ -52,6 +52,7 @@
 #include <QFrame>
 
 using namespace KMail;
+using namespace MailCommon;
 
 FolderShortcutDialog::FolderShortcutDialog( const QSharedPointer<FolderCollection> &folder,
                                             KMMainWidget *mainwidget,

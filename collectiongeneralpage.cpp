@@ -45,6 +45,7 @@
 #include "util.h"
 
 using namespace Akonadi;
+using namespace MailCommon;
 
 CollectionGeneralPage::CollectionGeneralPage(QWidget * parent) :
     CollectionPropertiesPage( parent ), mFolderCollection( 0 )

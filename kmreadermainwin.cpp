@@ -61,6 +61,8 @@
 
 #include "messagecore/messagehelpers.h"
 
+using namespace MailCommon;
+
 KMReaderMainWin::KMReaderMainWin( bool htmlOverride, bool htmlLoadExtOverride,
                                   char *name )
   : KMail::SecondaryWindow( name ? name : "readerwindow#" )

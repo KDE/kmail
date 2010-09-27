@@ -72,6 +72,8 @@ using namespace KPIM;
 #include <assert.h>
 #include <stdlib.h>
 
+using namespace MailCommon;
+
 namespace KMail {
 
 const int SearchWindow::MSGID_COLUMN = 4;

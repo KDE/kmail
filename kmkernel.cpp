@@ -107,9 +107,11 @@ using KMail::MailServiceImpl;
 #include "foldercollectionmonitor.h"
 #include "imapsettings.h"
 #include "util.h"
-#include "mailcommon.h"
+#include "mailkernel.h"
 
 #include "searchdescriptionattribute.h"
+
+using namespace MailCommon;
 
 static KMKernel * mySelf = 0;
 static bool s_askingToGoOnline = false;
@@ -176,7 +178,7 @@ KMKernel::KMKernel (QObject *parent, const char *name) :
   }
   // until here ================================================
 
-  mMailCommon = new MailCommon( this ); //create here, init later down
+  mMailCommon = new Kernel( this ); //create here, init later down
 
   mFolderCollectionMonitor = new FolderCollectionMonitor( this, mMailCommon );
 
@@ -1429,7 +1431,7 @@ Akonadi::Collection KMKernel::trashCollectionFromResource( const Akonadi::Collec
   Akonadi::Collection trashCol;
   if ( col.isValid() ) {
     if ( col.resource().contains( IMAP_RESOURCE_IDENTIFIER ) ) {
-      OrgKdeAkonadiImapSettingsInterface *iface = MailCommonNS::Util::createImapSettingsInterface( col.resource() );
+      OrgKdeAkonadiImapSettingsInterface *iface = MailCommon::Util::createImapSettingsInterface( col.resource() );
       if ( iface->isValid() ) {
 
         trashCol =  Akonadi::Collection( iface->trashCollection() );
@@ -1451,7 +1453,7 @@ bool KMKernel::folderIsTrash( const Akonadi::Collection & col )
     if ( type.status() == Akonadi::AgentInstance::Broken )
       continue;
     if ( type.identifier().contains( IMAP_RESOURCE_IDENTIFIER ) ) {
-      OrgKdeAkonadiImapSettingsInterface *iface = MailCommonNS::Util::createImapSettingsInterface( type.identifier() );
+      OrgKdeAkonadiImapSettingsInterface *iface = MailCommon::Util::createImapSettingsInterface( type.identifier() );
       if ( iface->isValid() ) {
         if ( iface->trashCollection() == col.id() ) {
           delete iface;
@@ -1842,7 +1844,7 @@ void KMKernel::slotCollectionMoved( const Akonadi::Collection &collection, const
   //TODO add undo/redo move collection
 }
 
-MailCommon* KMKernel::mailCommon()
+MailCommon::Kernel* KMKernel::mailCommon()
 {
   return mMailCommon;
 }

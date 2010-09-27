@@ -38,10 +38,13 @@
 #include <QBoxLayout>
 #include <akonadi/collection.h>
 class QLabel;
-class FolderTreeWidget;
 
-namespace KMail {
+namespace MailCommon {
+  class FolderTreeWidget;
   class FolderRequester;
+}
+
+  namespace KMail {
 
   class ASWizInfoPage;
   class ASWizSpamRulesPage;
@@ -356,8 +359,8 @@ namespace KMail {
       QCheckBox * mMarkRules;
       QCheckBox * mMoveSpamRules;
       QCheckBox * mMoveUnsureRules;
-      FolderRequester *mFolderReqForSpamFolder;
-      FolderRequester *mFolderReqForUnsureFolder;
+      MailCommon::FolderRequester *mFolderReqForSpamFolder;
+      MailCommon::FolderRequester *mFolderReqForUnsureFolder;
   };
 
   //-------------------------------------------------------------------------
@@ -382,7 +385,7 @@ namespace KMail {
     private:
       QCheckBox * mPipeRules;
       QCheckBox * mMoveRules;
-      FolderTreeWidget *mFolderTree;
+      MailCommon::FolderTreeWidget *mFolderTree;
       QCheckBox * mMarkRules;
   };
 

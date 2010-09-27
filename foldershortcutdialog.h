@@ -44,7 +44,10 @@
 
 class KKeySequenceWidget;
 class KMMainWidget;
-class FolderCollection;
+
+namespace MailCommon {
+  class FolderCollection;
+}
 
 namespace KMail
 {
@@ -53,7 +56,7 @@ class FolderShortcutDialog : public KDialog
 {
 Q_OBJECT
 public:
-  FolderShortcutDialog( const QSharedPointer<FolderCollection>& folder, KMMainWidget *mw,
+  FolderShortcutDialog( const QSharedPointer<MailCommon::FolderCollection>& folder, KMMainWidget *mw,
                         QWidget *parent=0 );
   ~FolderShortcutDialog();
 
@@ -62,7 +65,7 @@ protected slots:
   void slotOk();
 
 private:
-  QSharedPointer<FolderCollection> mFolder;
+  QSharedPointer<MailCommon::FolderCollection> mFolder;
   KMMainWidget *mMainWidget;
   KKeySequenceWidget *mKeySeqWidget;
 

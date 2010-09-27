@@ -24,7 +24,10 @@
 class KComboBox;
 class QCheckBox;
 class KLineEdit;
-class FolderCollection;
+namespace MailCommon {
+  class FolderCollection;
+}
+
 template <typename T> class QSharedPointer;
 
 namespace KPIMIdentities {
@@ -79,7 +82,7 @@ private:
   QCheckBox   *mUseDefaultIdentityCheckBox;
   KLineEdit   *mNameEdit;
   KPIMIdentities::IdentityCombo *mIdentityComboBox;
-  QSharedPointer<FolderCollection> mFolderCollection;
+  QSharedPointer<MailCommon::FolderCollection> mFolderCollection;
   bool mIsLocalSystemFolder;
   bool mIsResourceFolder;
   bool mIsImapFolder;

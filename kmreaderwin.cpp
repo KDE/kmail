@@ -105,6 +105,7 @@ using MessageComposer::MessageFactory;
 #include <string.h>
 
 using namespace KMail;
+using namespace MailCommon;
 
 //-----------------------------------------------------------------------------
 KMReaderWin::KMReaderWin(QWidget *aParent,

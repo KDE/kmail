@@ -148,6 +148,9 @@ using namespace KMime;
 #include <algorithm>
 #include <memory>
 
+
+using namespace MailCommon;
+
 /// Small helper function to get the composer context from a reply
 static KMail::Composer::TemplateContext replyContext( MessageFactory::MessageReply reply )
 {

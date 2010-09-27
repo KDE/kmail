@@ -55,6 +55,9 @@ namespace KPIMIdentities {
 }
 namespace KMail {
   class XFaceConfigurator;
+}
+
+namespace MailCommon {
   class FolderRequester;
 }
 namespace Sonnet {
@@ -110,9 +113,9 @@ namespace KMail {
     KLineEdit                        *mReplyToEdit;
     KLineEdit                        *mBccEdit;
     Sonnet::DictionaryComboBox       *mDictionaryCombo;
-    FolderRequester                  *mFccCombo;
-    FolderRequester                  *mDraftsCombo;
-    FolderRequester                  *mTemplatesCombo;
+    MailCommon::FolderRequester      *mFccCombo;
+    MailCommon::FolderRequester      *mDraftsCombo;
+    MailCommon::FolderRequester      *mTemplatesCombo;
     QCheckBox                        *mTransportCheck;
     MailTransport::TransportComboBox *mTransportCombo;
     // "templates" tab:

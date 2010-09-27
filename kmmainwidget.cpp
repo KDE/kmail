@@ -162,6 +162,7 @@
 
 using namespace KMime;
 using namespace Akonadi;
+using namespace MailCommon;
 using KPIM::ProgressManager;
 using KPIM::BroadcastStatus;
 using KMail::SearchWindow;
@@ -392,7 +393,7 @@ void KMMainWidget::slotFolderChanged( const Akonadi::Collection& col )
 {
   updateFolderMenu();
   folderSelected( col );
-  emit captionChangeRequest( MailCommonNS::Util::fullCollectionPath( col, KMKernel::self()->mailCommon() ) );
+  emit captionChangeRequest( MailCommon::Util::fullCollectionPath( col, KMKernel::self()->mailCommon() ) );
 }
 
 void KMMainWidget::folderSelected( const Akonadi::Collection & col )
@@ -1135,7 +1136,7 @@ void KMMainWidget::slotItemMoved( Akonadi::Item item, Akonadi::Collection from, 
 
 void KMMainWidget::addInfoInNotification( const Akonadi::Collection&col )
 {
-  const QString fullCollectionPath( MailCommonNS::Util::fullCollectionPath( col, KMKernel::self()->mailCommon() ) );
+  const QString fullCollectionPath( MailCommon::Util::fullCollectionPath( col, KMKernel::self()->mailCommon() ) );
   if ( mCheckMail.contains( fullCollectionPath ) ) {
     mCheckMail[fullCollectionPath].nbMail++;
   } else {
@@ -3458,7 +3459,7 @@ void KMMainWidget::slotEditNotifications()
 void KMMainWidget::slotShowExpiryProperties()
 {
   if ( mCurrentFolder ) {
-     KMail::ExpiryPropertiesDialog *dlg = new KMail::ExpiryPropertiesDialog( this, mCurrentFolder, KMKernel::self()->mailCommon() );
+     ExpiryPropertiesDialog *dlg = new ExpiryPropertiesDialog( this, mCurrentFolder, KMKernel::self()->mailCommon() );
      dlg->show();
   }
 }
@@ -3738,7 +3739,7 @@ void KMMainWidget::slotAkonadiStandardActionUpdated()
   if ( mCollectionProperties ) {
     mCollectionProperties->setEnabled( mCurrentFolder &&
                                        !mCurrentFolder->isStructural() &&
-                                       !MailCommonNS::Util::isVirtualCollection( mCurrentFolder->collection() ) );
+                                       !MailCommon::Util::isVirtualCollection( mCurrentFolder->collection() ) );
     QList< QAction* > collectionProperties;
     if ( mCollectionProperties->isEnabled() )
       collectionProperties << mCollectionProperties;
@@ -3844,7 +3845,7 @@ void KMMainWidget::updateFolderMenu()
                                    !multiFolder &&
                                    mCurrentFolder->canDeleteMessages() &&
                                    folderWithContent &&
-                                   !MailCommonNS::Util::isVirtualCollection( mCurrentFolder->collection() ) );
+                                   !MailCommon::Util::isVirtualCollection( mCurrentFolder->collection() ) );
 
   // the visual ones only make sense if we are showing a message list
   mPreferHtmlAction->setEnabled( mFolderTreeWidget->folderTreeView()->currentFolder().isValid() );

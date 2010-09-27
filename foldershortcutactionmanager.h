@@ -30,7 +30,10 @@
 #include <QModelIndex>
 #include <QObject>
 
-class MailCommon;
+namespace MailCommon {
+  class Kernel;
+}
+
 class QAction;
 
 class KActionCollection;
@@ -67,7 +70,7 @@ namespace KMail {
 
     public:
 
-      FolderShortcutActionManager( QWidget *parent, KActionCollection *actionCollection, MailCommon* mailCommon );
+      FolderShortcutActionManager( QWidget *parent, KActionCollection *actionCollection, MailCommon::Kernel* mailCommon );
       void createActions();
 
     public slots:
@@ -93,7 +96,7 @@ namespace KMail {
       QMap< Akonadi::Entity::Id, FolderShortcutCommand* > mFolderShortcutCommands;
       KActionCollection *mActionCollection;
       QWidget *mParent;
-      MailCommon* mMailCommon;
+      MailCommon::Kernel* mMailCommon;
   };
 
 }

@@ -322,7 +322,7 @@ void CollectionAclPage::load(const Akonadi::Collection & col)
     if ( !col.isValid() ) // new collection? everything is new then
       item->setModified( true );
   }
-  OrgKdeAkonadiImapSettingsInterface *imapSettingsInterface = MailCommonNS::Util::createImapSettingsInterface( col.resource() );
+  OrgKdeAkonadiImapSettingsInterface *imapSettingsInterface = MailCommon::Util::createImapSettingsInterface( col.resource() );
   
   if ( imapSettingsInterface->isValid() ) {
     QDBusReply<QString> reply = imapSettingsInterface->userName();

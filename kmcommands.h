@@ -25,7 +25,11 @@ using Akonadi::MessageStatus;
 class KProgressDialog;
 class KMFilter;
 class KMMainWidget;
-class FolderCollection;
+
+namespace MailCommon {
+  class FolderCollection;
+}
+
 template <typename T> class QSharedPointer;
 
 namespace KIO { class Job; }
@@ -686,20 +690,20 @@ class KMAIL_EXPORT KMMailingListCommand : public KMCommand
 {
   Q_OBJECT
 public:
-  KMMailingListCommand( QWidget *parent, const QSharedPointer<FolderCollection> &parentFolder );
+  KMMailingListCommand( QWidget *parent, const QSharedPointer<MailCommon::FolderCollection> &parentFolder );
 private:
   virtual Result execute();
 protected:
   virtual KUrl::List urls() const =0;
 protected:
-  QSharedPointer<FolderCollection> mFolder;
+  QSharedPointer<MailCommon::FolderCollection> mFolder;
 };
 
 class KMAIL_EXPORT KMMailingListPostCommand : public KMMailingListCommand
 {
   Q_OBJECT
 public:
-  KMMailingListPostCommand( QWidget *parent, const QSharedPointer<FolderCollection> &parentFolder );
+  KMMailingListPostCommand( QWidget *parent, const QSharedPointer<MailCommon::FolderCollection> &parentFolder );
 protected:
   virtual KUrl::List urls() const;
 };
@@ -708,7 +712,7 @@ class KMAIL_EXPORT KMMailingListSubscribeCommand : public KMMailingListCommand
 {
   Q_OBJECT
 public:
-  KMMailingListSubscribeCommand( QWidget *parent, const QSharedPointer<FolderCollection> &parentFolder );
+  KMMailingListSubscribeCommand( QWidget *parent, const QSharedPointer<MailCommon::FolderCollection> &parentFolder );
 protected:
   virtual KUrl::List urls() const;
 };
@@ -717,7 +721,7 @@ class KMAIL_EXPORT KMMailingListUnsubscribeCommand : public KMMailingListCommand
 {
   Q_OBJECT
 public:
-  KMMailingListUnsubscribeCommand( QWidget *parent, const QSharedPointer<FolderCollection> &parentFolder );
+  KMMailingListUnsubscribeCommand( QWidget *parent, const QSharedPointer<MailCommon::FolderCollection> &parentFolder );
 protected:
   virtual KUrl::List urls() const;
 };
@@ -726,7 +730,7 @@ class KMAIL_EXPORT KMMailingListArchivesCommand : public KMMailingListCommand
 {
   Q_OBJECT
 public:
-  KMMailingListArchivesCommand( QWidget *parent, const QSharedPointer<FolderCollection> &parentFolder );
+  KMMailingListArchivesCommand( QWidget *parent, const QSharedPointer<MailCommon::FolderCollection> &parentFolder );
 protected:
   virtual KUrl::List urls() const;
 };
@@ -735,7 +739,7 @@ class KMAIL_EXPORT KMMailingListHelpCommand : public KMMailingListCommand
 {
   Q_OBJECT
 public:
-  KMMailingListHelpCommand( QWidget *parent, const QSharedPointer<FolderCollection> &parentFolder );
+  KMMailingListHelpCommand( QWidget *parent, const QSharedPointer<MailCommon::FolderCollection> &parentFolder );
 protected:
   virtual KUrl::List urls() const;
 };

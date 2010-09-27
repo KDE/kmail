@@ -55,6 +55,7 @@
 
 using namespace KMail;
 using namespace KPIM;
+using namespace MailCommon;
 
 AttachmentController::AttachmentController( Message::AttachmentModel *model, AttachmentView *view, KMComposeWin *composer )
   : AttachmentControllerBase( model, composer, composer->actionCollection() )
@@ -124,7 +125,7 @@ void AttachmentController::addAttachmentItems( const Akonadi::Item::List &items 
 void AttachmentController::slotFetchJob( KJob *job )
 {
   if ( job->error() ) {
-    MailCommonNS::Util::showJobErrorMessage( job );
+    MailCommon::Util::showJobErrorMessage( job );
     return;
   }
   Akonadi::ItemFetchJob *fjob = dynamic_cast<Akonadi::ItemFetchJob*>( job );

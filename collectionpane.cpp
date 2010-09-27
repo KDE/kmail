@@ -24,6 +24,8 @@
 #include <kpimidentities/identity.h>
 #include <akonadi/kmime/messagefolderattribute.h>
 
+using namespace MailCommon;
+
 CollectionPane::CollectionPane( QAbstractItemModel *model, QItemSelectionModel *selectionModel, QWidget *parent )
   :MessageList::Pane( model, selectionModel, parent )
 {

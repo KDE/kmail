@@ -35,7 +35,6 @@
 #include "xfaceconfigurator.h"
 #include "folderrequester.h"
 #include "simplestringlisteditor.h"
-using KMail::FolderRequester;
 #ifndef KCM_KPIMIDENTITIES_STANDALONE
 #include "kmkernel.h"
 #endif
@@ -88,6 +87,7 @@ using MailTransport::TransportManager;
 
 using namespace KPIM;
 using namespace MailTransport;
+using namespace MailCommon;
 
 namespace KMail {
 

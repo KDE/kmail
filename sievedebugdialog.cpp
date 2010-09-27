@@ -231,7 +231,7 @@ void SieveDebugDialog::slotDiagNextAccount()
 
     mEdit->append( i18n( "Collecting data for account '%1'...\n", ident ) );
     mEdit->append( i18n( "------------------------------------------------------------\n" ) );
-    mImapSettingsInterface = MailCommonNS::Util::createImapSettingsInterface( ident );
+    mImapSettingsInterface = MailCommon::Util::createImapSettingsInterface( ident );
     if ( mImapSettingsInterface->isValid() )
     {
         // Detect URL for this IMAP account

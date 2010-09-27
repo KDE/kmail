@@ -499,7 +499,7 @@ namespace KMail {
       if ( type.identifier().contains( IMAP_RESOURCE_IDENTIFIER ) ) {
         if ( type.status() == Akonadi::AgentInstance::Broken )
           continue;
-        OrgKdeAkonadiImapSettingsInterface *iface = MailCommonNS::Util::createImapSettingsInterface(type.identifier());
+        OrgKdeAkonadiImapSettingsInterface *iface = MailCommon::Util::createImapSettingsInterface(type.identifier());
         if ( iface->isValid() ) {
           const KUrl u = KMail::Util::findSieveUrlForAccount( iface,type.identifier() );
           if ( !u.isEmpty() ) {

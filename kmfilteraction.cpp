@@ -10,7 +10,6 @@
 #include "kmsoundtestwidget.h"
 #include "util.h"
 
-using KMail::FolderRequester;
 #include "messageproperty.h"
 using KMail::MessageProperty;
 #include "regexplineedit.h"
@@ -63,6 +62,8 @@ using MessageComposer::MessageFactory;
 #include "mdnadvicedialog.h"
 #include "mdnadvicedialog.h"
 #include <mdnstateattribute.h>
+
+using namespace MailCommon;
 
 //=============================================================================
 //

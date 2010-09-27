@@ -36,6 +36,7 @@
 #include <qlayout.h>
 
 using namespace KMail;
+using namespace MailCommon;
 
 static QString standardArchivePath( const QString &folderName )
 {

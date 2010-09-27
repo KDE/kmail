@@ -138,6 +138,9 @@ using MailTransport::TransportManagementWidget;
 #include <akonadi/agentmanager.h>
 #include <akonadi/agenttypedialog.h>
 #include <akonadi/agentinstancecreatejob.h>
+
+using namespace MailCommon;
+
 namespace {
 
   static const char * lockedDownWarning =
@@ -3671,7 +3674,7 @@ MiscPageFolderTab::MiscPageFolderTab( QWidget * parent )
   QHBoxLayout* layout = new QHBoxLayout;
   layout->setContentsMargins(0, 0, 0, 0);  
   mMMTab.mOnStartupOpenFolder->setLayout( layout );
-  mOnStartupOpenFolder = new KMail::FolderRequester( KMKernel::self()->mailCommon(), mMMTab.mOnStartupOpenFolder );
+  mOnStartupOpenFolder = new FolderRequester( KMKernel::self()->mailCommon(), mMMTab.mOnStartupOpenFolder );
   layout->addWidget( mOnStartupOpenFolder );
   
   mMMTab.gridLayout->setSpacing( KDialog::spacingHint() );

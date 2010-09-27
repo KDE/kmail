@@ -41,6 +41,8 @@
 
 #include "foldercollection.h"
 
+using namespace MailCommon;
+
 CollectionViewPage::CollectionViewPage(QWidget * parent) :
     CollectionPropertiesPage( parent ), mFolderCollection( 0 )
 {

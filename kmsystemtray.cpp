@@ -45,6 +45,8 @@
 #include <math.h>
 #include <assert.h>
 
+using namespace MailCommon;
+
 /**
  * Construct a KSystemTray icon to be displayed when new mail
  * has arrived in a non-system folder.  The KMSystemTray listens
@@ -260,7 +262,7 @@ void KMSystemTray::fillFoldersMenu( QMenu *menu, const QAbstractItemModel *model
   for ( int row = 0; row < rowCount; ++row ) {
     const QModelIndex index = model->index( row, 0, parentIndex );
     const Akonadi::Collection collection = model->data( index, Akonadi::CollectionModel::CollectionRole ).value<Akonadi::Collection>();
-    if ( MailCommonNS::Util::isVirtualCollection( collection ) )
+    if ( MailCommon::Util::isVirtualCollection( collection ) )
       continue;
     Akonadi::CollectionStatistics statistics = collection.statistics();
     qint64 count = qMax( 0LL, statistics.unreadCount() );
@@ -384,7 +386,7 @@ void KMSystemTray::unreadMail( const QAbstractItemModel *model, const QModelInde
     const QModelIndex index = model->index( row, 0, parentIndex );
     const Akonadi::Collection collection = model->data( index, Akonadi::CollectionModel::CollectionRole ).value<Akonadi::Collection>();
 
-    if ( MailCommonNS::Util::isVirtualCollection( collection ) )
+    if ( MailCommon::Util::isVirtualCollection( collection ) )
       continue;
 
     const Akonadi::CollectionStatistics statistics = collection.statistics();

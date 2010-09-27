@@ -43,7 +43,7 @@ class KMSearchPatternEdit;
 class KStatusBar;
 class KJob;
 
-namespace KMail {
+namespace MailCommon {
   class FolderRequester;
 }
 
@@ -167,7 +167,7 @@ protected:
   // GC'd by Qt
   QRadioButton *mChkbxAllFolders;
   QRadioButton *mChkbxSpecificFolders;
-  KMail::FolderRequester *mCbxFolders;
+  MailCommon::FolderRequester *mCbxFolders;
   QCheckBox *mChkSubFolders;
   Akonadi::ItemModel *mResultModel;
   Akonadi::EntityTreeView* mLbxMatches;

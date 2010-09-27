@@ -46,17 +46,15 @@ class KJob;
 namespace KMail {
   class MailServiceImpl;
   class UndoStack;
-  class JobScheduler;
 }
 namespace KPIM { class ProgressDialog; }
 using KMail::MailServiceImpl;
 using KMail::UndoStack;
-using KMail::JobScheduler;
 using KPIM::ProgressDialog;
 class KMFilterMgr;
 class KMFilterActionDict;
 class AkonadiSender;
-class FolderCollection;
+
 namespace KPIMIdentities {
   class Identity;
   class IdentityManager;
@@ -68,9 +66,14 @@ class KMMainWin;
 class KMainWindow;
 class KMMainWidget;
 class ConfigureDialog;
-class FolderCollectionMonitor;
 class KMSystemTray;
-class MailCommon;
+
+namespace MailCommon {
+  class Kernel;
+  class FolderCollection;
+  class FolderCollectionMonitor;
+  class JobScheduler;
+}
 
 /**
  * @short Central point of coordination in KMail
@@ -282,7 +285,7 @@ public:
   /** return the pointer to the identity manager */
   KPIMIdentities::IdentityManager *identityManager();
 
-  JobScheduler* jobScheduler() { return mJobScheduler; }
+  MailCommon::JobScheduler* jobScheduler() { return mJobScheduler; }
 
   /** Expire all folders, used for the gui action */
   void expireAllFoldersNow();
@@ -362,7 +365,7 @@ public:
 
   void stopAgentInstance();
 
-  MailCommon *mailCommon();
+  MailCommon::Kernel *mailCommon();
 
 public slots:
 
@@ -415,7 +418,7 @@ private slots:
 private:
   void migrateFromKMail1();
   void openReader( bool onlyCheck );
-  QSharedPointer<FolderCollection> currentFolderCollection();
+  QSharedPointer<MailCommon::FolderCollection> currentFolderCollection();
 
   UndoStack *the_undoStack;
   KMFilterMgr *the_filterMgr;
@@ -442,14 +445,14 @@ private:
   ConfigureDialog *mConfigureDialog;
 
   QTimer *mBackgroundTasksTimer;
-  JobScheduler* mJobScheduler;
+  MailCommon::JobScheduler* mJobScheduler;
   // temporary mainwin
   KMMainWin *mWin;
   MailServiceImpl *mMailService;
 
   QList<KMSystemTray*> systemTrayApplets;
 
-  FolderCollectionMonitor *mFolderCollectionMonitor;
+  MailCommon::FolderCollectionMonitor *mFolderCollectionMonitor;
   Akonadi::EntityTreeModel *mEntityTreeModel;
   Akonadi::EntityMimeTypeFilterModel *mCollectionModel;
 
@@ -458,7 +461,7 @@ private:
 
   int mWrapCol;
 
-  MailCommon *mMailCommon;
+  MailCommon::Kernel *mMailCommon;
 };
 
 #endif // _KMKERNEL_H

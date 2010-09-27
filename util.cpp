@@ -65,6 +65,8 @@
 
 #include "foldercollection.h"
 
+using namespace MailCommon;
+
 uint KMail::Util::folderIdentity(const Akonadi::Item& item)
 {
   uint id = 0;

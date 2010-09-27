@@ -19,7 +19,7 @@
 #include "foldershortcutactionmanager.h"
 
 #include "foldercollection.h"
-#include "mailcommon.h"
+#include "mailkernel.h"
 
 #include <Akonadi/ChangeRecorder>
 #include <Akonadi/EntityDisplayAttribute>
@@ -33,6 +33,7 @@
 #include <KLocale>
 
 using namespace KMail;
+using namespace MailCommon;
 
 
 FolderShortcutCommand::FolderShortcutCommand( QWidget *mainwidget,
@@ -63,7 +64,7 @@ void FolderShortcutCommand::setAction( QAction* action )
 
 FolderShortcutActionManager::FolderShortcutActionManager( QWidget *parent,
                                                           KActionCollection *actionCollection,
-                                                          MailCommon* mailCommon
+                                                          Kernel* mailCommon
                                                         )
   : QObject( parent ),
     mActionCollection( actionCollection ),
