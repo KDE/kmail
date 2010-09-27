@@ -985,17 +985,10 @@ void KMMainWidget::createWidgets()
     connect( mFavoriteCollectionsView, SIGNAL( currentChanged( const Akonadi::Collection &) ), this, SLOT( slotFolderChanged( const Akonadi::Collection& ) ) );
 
     mFavoritesModel = new Akonadi::FavoriteCollectionsModel(
-                                KMKernel::self()->entityTreeModel(),
+                                mFolderTreeWidget->folderTreeView()->model(),
                                 KMKernel::config()->group( "FavoriteCollections" ), this );
 
-#if 0
-    // ... with statistics...
-    Akonadi::StatisticsProxyModel* statisticsFilterModel = new Akonadi::StatisticsProxyModel( this );
-    statisticsFilterModel->setSourceModel( mFavoritesModel );
-
-    statisticsFilterModel->setToolTipEnabled( true );
-#endif
-    mFavoriteCollectionsView->setModel( /*statisticsFilterModel*/ mFavoritesModel );
+    mFavoriteCollectionsView->setModel( mFavoritesModel );
 
     mAkonadiStandardActionManager->setFavoriteCollectionsModel( mFavoritesModel );
     mAkonadiStandardActionManager->setFavoriteSelectionModel( mFavoriteCollectionsView->selectionModel() );
