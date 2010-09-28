@@ -100,6 +100,7 @@
 #include <akonadi/control.h>
 #include <akonadi/collectiondialog.h>
 #include <akonadi/collectionstatistics.h>
+#include <akonadi/collectionstatisticsdelegate.h>
 #include <akonadi/favoritecollectionsmodel.h>
 #include <akonadi/statisticsproxymodel.h>
 #include <kpimidentities/identity.h>
@@ -991,6 +992,11 @@ void KMMainWidget::createWidgets()
                                 KMKernel::self()->config()->group( "FavoriteCollections" ), this );
 
     mFavoriteCollectionsView->setModel( mFavoritesModel );
+
+    Akonadi::CollectionStatisticsDelegate *delegate = new Akonadi::CollectionStatisticsDelegate( mFavoriteCollectionsView );
+    delegate->setProgressAnimationEnabled( true );
+    mFavoriteCollectionsView->setItemDelegate(delegate);
+    delegate->setUnreadCountShown( true );
 
     mAkonadiStandardActionManager->setFavoriteCollectionsModel( mFavoritesModel );
     mAkonadiStandardActionManager->setFavoriteSelectionModel( mFavoriteCollectionsView->selectionModel() );
