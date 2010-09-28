@@ -19,6 +19,8 @@
 
 #include "collectionpane.h"
 #include "kmkernel.h"
+#include "mailkernel.h"
+
 #include "foldercollection.h"
 #include <kpimidentities/identitymanager.h>
 #include <kpimidentities/identity.h>
@@ -55,22 +57,22 @@ bool CollectionStorageModel::isOutBoundFolder( const Akonadi::Collection& c ) co
        && c.attribute<Akonadi::MessageFolderAttribute>()->isOutboundFolder() ) {
     return true;
   }
-  QSharedPointer<FolderCollection> fd = FolderCollection::forCollection( c, KMKernel::self()->mailCommon() );
+  QSharedPointer<FolderCollection> fd = FolderCollection::forCollection( c );
   if ( fd ) {
     // default setting
     const KPIMIdentities::Identity & identity =
       kmkernel->identityManager()->identityForUoidOrDefault( fd->identity() );
 
-    if ( kmkernel->isSystemFolderCollection(c) &&
+    if ( CommonKernel->isSystemFolderCollection(c) &&
          !kmkernel->isImapFolder( c ) ) {
       // local system folders
-      if ( c == kmkernel->inboxCollectionFolder() ||
-           c == kmkernel->trashCollectionFolder() )
+      if ( c == CommonKernel->inboxCollectionFolder() ||
+           c == CommonKernel->trashCollectionFolder() )
         return false;
-      if ( c == kmkernel->outboxCollectionFolder() ||
-           c == kmkernel->sentCollectionFolder() ||
-           c == kmkernel->templatesCollectionFolder() ||
-           c == kmkernel->draftsCollectionFolder() )
+      if ( c == CommonKernel->outboxCollectionFolder() ||
+           c == CommonKernel->sentCollectionFolder() ||
+           c == CommonKernel->templatesCollectionFolder() ||
+           c == CommonKernel->draftsCollectionFolder() )
         return true;
     } else if ( identity.drafts() == fd->idString() ||
                 identity.templates() == fd->idString() ||

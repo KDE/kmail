@@ -80,7 +80,7 @@ void KMComposerEditor::setHighlighterColors(KPIMTextEdit::EMailQuoteHighlighter 
   QColor misspelled = Qt::red;
 
   if ( !MessageCore::GlobalSettings::self()->useDefaultColors() ) {
-    KConfigGroup readerConfig( KMKernel::config(), "Reader" );
+    KConfigGroup readerConfig( KMKernel::self()->config(), "Reader" );
     color3 = readerConfig.readEntry( "QuotedText3", color3  );
     color2 = readerConfig.readEntry( "QuotedText2", color2  );
     color1 = readerConfig.readEntry( "QuotedText1", color1  );
@@ -232,7 +232,7 @@ void KMComposerEditor::slotFetchJob( KJob * job )
 
   uint identity = 0;
   if ( items.at( 0 ).isValid() && items.at( 0 ).parentCollection().isValid() ) {
-    QSharedPointer<FolderCollection> fd( FolderCollection::forCollection( items.at( 0 ).parentCollection(), KMKernel::self()->mailCommon() ) );
+    QSharedPointer<FolderCollection> fd( FolderCollection::forCollection( items.at( 0 ).parentCollection() ) );
     if ( fd )
       identity = fd->identity();
   }

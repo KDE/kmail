@@ -9,6 +9,7 @@
 #include "folderrequester.h"
 #include "kmsoundtestwidget.h"
 #include "util.h"
+#include "mailkernel.h"
 
 #include "messageproperty.h"
 using KMail::MessageProperty;
@@ -120,7 +121,7 @@ void KMFilterAction::sendMDN( Akonadi::Item item, KMime::MDN::DispositionType d,
 
   QPair< bool, KMime::MDN::SendingMode > mdnSend = MDNAdviceHelper::instance()->checkAndSetMDNInfo( item, d );
   if( mdnSend.first ) {
-    KConfigGroup mdnConfig( KMKernel::config(), "MDN" );
+    KConfigGroup mdnConfig( KMKernel::self()->config(), "MDN" );
     int quote = mdnConfig.readEntry<int>( "quote-message", 0 );
     MessageFactory factory( msg, Akonadi::Item().id() );
     factory.setIdentityManager( KMKernel::self()->identityManager() );
@@ -287,7 +288,7 @@ KMFilterActionWithFolder::KMFilterActionWithFolder( const char* aName, const QSt
 
 QWidget* KMFilterActionWithFolder::createParamWidget( QWidget* parent ) const
 {
-  FolderRequester *req = new FolderRequester( KMKernel::self()->mailCommon(), parent );
+  FolderRequester *req = new FolderRequester( parent );
   req->setShowOutbox( false );
   setParamWidgetValue( req );
   return req;
@@ -309,12 +310,12 @@ void KMFilterActionWithFolder::setParamWidgetValue( QWidget* paramWidget ) const
 
 void KMFilterActionWithFolder::clearParamWidget( QWidget* paramWidget ) const
 {
-  ((FolderRequester *)paramWidget)->setFolder( kmkernel->draftsCollectionFolder() );
+  ((FolderRequester *)paramWidget)->setFolder( CommonKernel->draftsCollectionFolder() );
 }
 
 void KMFilterActionWithFolder::argsFromString( const QString &argsStr )
 {
-  mFolder = kmkernel->collectionFromId( argsStr );
+  mFolder = CommonKernel->collectionFromId( argsStr );
   if ( mFolder.isValid() )
     mFolderName= QString::number(mFolder.id());
   else
@@ -1475,7 +1476,7 @@ KMFilterActionMove::KMFilterActionMove()
 KMFilterAction::ReturnCode KMFilterActionMove::process( Akonadi::Item item ) const
 {
   if ( !mFolder.isValid() ) {
-    const Akonadi::Collection targetFolder = kmkernel->collectionFromId( mFolderName );
+    const Akonadi::Collection targetFolder = CommonKernel->collectionFromId( mFolderName );
     if( !targetFolder.isValid() )
       return ErrorButGoOn;
     MessageProperty::setFilterFolder( item, targetFolder );

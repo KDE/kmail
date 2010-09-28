@@ -44,6 +44,7 @@
 #include "foldertreewidget.h"
 #include "util.h"
 #include "mailutil.h"
+#include "mailkernel.h"
 #include "archivefolderdialog.h"
 #include "globalsettings.h"
 #include "foldertreeview.h"
@@ -268,7 +269,7 @@ void KMMainWidget::restoreCollectionFolderViewConfig()
 {
   ETMViewStateSaver *saver = new ETMViewStateSaver;
   saver->setView( mFolderTreeWidget->folderTreeView() );
-  const KConfigGroup cfg( KMKernel::config(), "CollectionFolderView" );
+  const KConfigGroup cfg( KMKernel::self()->config(), "CollectionFolderView" );
   mFolderTreeWidget->folderTreeView()->header()->restoreState( cfg.readEntry( "HeaderState", QByteArray() ) );
   saver->restoreState( cfg );
 
@@ -340,7 +341,7 @@ void KMMainWidget::slotEndCheckMail()
   for ( QStringList::const_iterator it=keys.constBegin(); it!=keys.constEnd(); ++it ) {
     collectionInfo info = mCheckMail.find( *it ).value();
     //kDebug() << info.nbMail << "new message(s) in" << *it;
-    QSharedPointer<FolderCollection> fd = FolderCollection::forCollection( info.col, KMKernel::self()->mailCommon() );
+    QSharedPointer<FolderCollection> fd = FolderCollection::forCollection( info.col );
 
     if ( fd && !fd->ignoreNewMail() ) {
       showNotification = true;
@@ -393,7 +394,7 @@ void KMMainWidget::slotFolderChanged( const Akonadi::Collection& col )
 {
   updateFolderMenu();
   folderSelected( col );
-  emit captionChangeRequest( MailCommon::Util::fullCollectionPath( col, KMKernel::self()->mailCommon() ) );
+  emit captionChangeRequest( MailCommon::Util::fullCollectionPath( col ) );
 }
 
 void KMMainWidget::folderSelected( const Akonadi::Collection & col )
@@ -461,7 +462,7 @@ void KMMainWidget::folderSelected( const Akonadi::Collection & col )
     writeFolderConfig();
   }
 
-  mCurrentFolder = FolderCollection::forCollection( col, KMKernel::self()->mailCommon() );
+  mCurrentFolder = FolderCollection::forCollection( col );
 
   if ( col.isValid() && kmkernel->isImapFolder( col )
 #if 0 //PORT TO AKONADI
@@ -524,7 +525,7 @@ void KMMainWidget::readFolderConfig()
   if ( !mCurrentFolder || !mCurrentFolder->isValid() )
     return;
 
-  KSharedConfig::Ptr config = KMKernel::config();
+  KSharedConfig::Ptr config = KMKernel::self()->config();
   KConfigGroup group( config, mCurrentFolder->configGroupName() );
   mFolderHtmlPref =
       group.readEntry( "htmlMailOverride", false );
@@ -539,7 +540,7 @@ void KMMainWidget::writeFolderConfig()
   if ( !mCurrentFolder || (mCurrentFolder && !mCurrentFolder->isValid()) )
     return;
 
-  KSharedConfig::Ptr config = KMKernel::config();
+  KSharedConfig::Ptr config = KMKernel::self()->config();
   KConfigGroup group( config, mCurrentFolder->configGroupName() );
   group.writeEntry( "htmlMailOverride", mFolderHtmlPref );
   group.writeEntry( "htmlLoadExternalOverride", mFolderHtmlLoadExtPref );
@@ -741,7 +742,7 @@ void KMMainWidget::layoutSplitters()
 //-----------------------------------------------------------------------------
 void KMMainWidget::readConfig()
 {
-  KSharedConfig::Ptr config = KMKernel::config();
+  KSharedConfig::Ptr config = KMKernel::self()->config();
 
   bool oldLongFolderList = mLongFolderList;
   bool oldReaderWindowActive = mReaderWindowActive;
@@ -807,7 +808,7 @@ void KMMainWidget::readConfig()
 //-----------------------------------------------------------------------------
 void KMMainWidget::writeConfig()
 {
-  KSharedConfig::Ptr config = KMKernel::config();
+  KSharedConfig::Ptr config = KMKernel::self()->config();
   KConfigGroup geometry( config, "Geometry" );
   KConfigGroup general( config, "General" );
 
@@ -839,7 +840,7 @@ void KMMainWidget::writeConfig()
     if ( mFolderTreeWidget )
     {
       GlobalSettings::self()->setFolderViewWidth( mFolderTreeWidget->width() );
-      KSharedConfig::Ptr config = KMKernel::config();
+      KSharedConfig::Ptr config = KMKernel::self()->config();
       KConfigGroup group(config, "CollectionFolderView");
 
       ETMViewStateSaver saver;
@@ -889,7 +890,7 @@ void KMMainWidget::createWidgets()
   opt |= FolderTreeWidget::UseLineEditForFiltering;
   opt |= FolderTreeWidget::ShowCollectionStatisticAnimation;
   opt |= FolderTreeWidget::DontKeyFilter;
-  mFolderTreeWidget = new FolderTreeWidget( KMKernel::self()->mailCommon(), this, mGUIClient, opt );
+  mFolderTreeWidget = new FolderTreeWidget( this, mGUIClient, opt );
 
   connect( mFolderTreeWidget->folderTreeView(), SIGNAL( currentChanged( const Akonadi::Collection & ) ), this, SLOT( slotFolderChanged( const Akonadi::Collection& ) ) );
 
@@ -987,7 +988,7 @@ void KMMainWidget::createWidgets()
 
     mFavoritesModel = new Akonadi::FavoriteCollectionsModel(
                                 mFolderTreeWidget->folderTreeView()->model(),
-                                KMKernel::config()->group( "FavoriteCollections" ), this );
+                                KMKernel::self()->config()->group( "FavoriteCollections" ), this );
 
     mFavoriteCollectionsView->setModel( mFavoritesModel );
 
@@ -1078,13 +1079,13 @@ void KMMainWidget::createWidgets()
              this, SLOT( slotSelectFocusedMessage() ) );
     action->setShortcut( QKeySequence( Qt::ALT+Qt::Key_Space ) );
   }
-  connect( kmkernel->monitor(), SIGNAL( itemAdded( const Akonadi::Item &, const Akonadi::Collection &) ),
+  connect( kmkernel->folderCollectionMonitor(), SIGNAL( itemAdded( const Akonadi::Item &, const Akonadi::Collection &) ),
            SLOT(slotItemAdded( const Akonadi::Item &, const Akonadi::Collection&) ) );
-  connect( kmkernel->monitor(), SIGNAL( itemRemoved( const Akonadi::Item & ) ),
+  connect( kmkernel->folderCollectionMonitor(), SIGNAL( itemRemoved( const Akonadi::Item & ) ),
            SLOT(slotItemRemoved( const Akonadi::Item & ) ) );
-  connect( kmkernel->monitor(), SIGNAL( itemMoved( Akonadi::Item,Akonadi::Collection, Akonadi::Collection ) ),
+  connect( kmkernel->folderCollectionMonitor(), SIGNAL( itemMoved( Akonadi::Item,Akonadi::Collection, Akonadi::Collection ) ),
            SLOT( slotItemMoved( Akonadi::Item, Akonadi::Collection, Akonadi::Collection ) ) );
-  connect( kmkernel->monitor(), SIGNAL( collectionChanged( const Akonadi::Collection &, const QSet<QByteArray> &) ), SLOT( slotCollectionChanged( const Akonadi::Collection&, const QSet<QByteArray>& ) ) );
+  connect( kmkernel->folderCollectionMonitor(), SIGNAL( collectionChanged( const Akonadi::Collection &, const QSet<QByteArray> &) ), SLOT( slotCollectionChanged( const Akonadi::Collection&, const QSet<QByteArray>& ) ) );
 
 
 }
@@ -1107,7 +1108,7 @@ void KMMainWidget::slotCollectionChanged( const Akonadi::Collection&collection, 
 
 void KMMainWidget::slotItemAdded( const Akonadi::Item &msg, const Akonadi::Collection& col)
 {
-  if ( col.isValid() && ( col == kmkernel->outboxCollectionFolder() ) ) {
+  if ( col.isValid() && ( col == CommonKernel->outboxCollectionFolder() ) ) {
     startUpdateMessageActionsTimer();
   }
   const int resultFilter = slotFilterMsg( msg );
@@ -1118,7 +1119,7 @@ void KMMainWidget::slotItemAdded( const Akonadi::Item &msg, const Akonadi::Colle
 
 void KMMainWidget::slotItemRemoved( const Akonadi::Item & item)
 {
-  if ( item.isValid() && item.parentCollection().isValid() && ( item.parentCollection() == kmkernel->outboxCollectionFolder() ) ) {
+  if ( item.isValid() && item.parentCollection().isValid() && ( item.parentCollection() == CommonKernel->outboxCollectionFolder() ) ) {
     startUpdateMessageActionsTimer();
   }
 }
@@ -1126,8 +1127,8 @@ void KMMainWidget::slotItemRemoved( const Akonadi::Item & item)
 void KMMainWidget::slotItemMoved( Akonadi::Item item, Akonadi::Collection from, Akonadi::Collection to )
 {
   kDebug()<<" slotItemMoved from :"<<from.id()<<" to "<<to.id();
-  if( item.isValid() && ( ( from.id() == kmkernel->outboxCollectionFolder().id() )
-                          || to.id() == kmkernel->outboxCollectionFolder().id() ) )
+  if( item.isValid() && ( ( from.id() == CommonKernel->outboxCollectionFolder().id() )
+                          || to.id() == CommonKernel->outboxCollectionFolder().id() ) )
   {
     startUpdateMessageActionsTimer();
   }
@@ -1136,7 +1137,7 @@ void KMMainWidget::slotItemMoved( Akonadi::Item item, Akonadi::Collection from, 
 
 void KMMainWidget::addInfoInNotification( const Akonadi::Collection&col )
 {
-  const QString fullCollectionPath( MailCommon::Util::fullCollectionPath( col, KMKernel::self()->mailCommon() ) );
+  const QString fullCollectionPath( MailCommon::Util::fullCollectionPath( col ) );
   if ( mCheckMail.contains( fullCollectionPath ) ) {
     mCheckMail[fullCollectionPath].nbMail++;
   } else {
@@ -1299,11 +1300,11 @@ void KMMainWidget::slotShowNewFromTemplate()
     {
       const KPIMIdentities::Identity & ident =
         kmkernel->identityManager()->identityForUoidOrDefault( mCurrentFolder->identity() );
-      mTemplateFolder = kmkernel->collectionFromId( ident.templates() );
+      mTemplateFolder = CommonKernel->collectionFromId( ident.templates() );
     }
 
   if ( !mTemplateFolder.isValid() ) {
-    mTemplateFolder = kmkernel->templatesCollectionFolder();
+    mTemplateFolder = CommonKernel->templatesCollectionFolder();
   }
   if ( !mTemplateFolder.isValid() )
     return;
@@ -1775,7 +1776,7 @@ FolderSelectionDialog* KMMainWidget::moveOrCopyToDialog()
 {
   if ( mMoveOrCopyToDialog == 0 ) {
     FolderSelectionDialog::SelectionFolderOption options = FolderSelectionDialog::HideVirtualFolder;
-    mMoveOrCopyToDialog = new FolderSelectionDialog( this, options, KMKernel::self()->mailCommon() );
+    mMoveOrCopyToDialog = new FolderSelectionDialog( this, options );
     mMoveOrCopyToDialog->setModal( true );
   }
   return mMoveOrCopyToDialog;
@@ -1787,7 +1788,7 @@ FolderSelectionDialog* KMMainWidget::selectFromAllFoldersDialog()
     FolderSelectionDialog::SelectionFolderOptions options = FolderSelectionDialog::None;
     options |= FolderSelectionDialog::NotAllowToCreateNewFolder;
 
-    mSelectFromAllFoldersDialog = new FolderSelectionDialog( this, options, KMKernel::self()->mailCommon() );
+    mSelectFromAllFoldersDialog = new FolderSelectionDialog( this, options );
     mSelectFromAllFoldersDialog->setModal( true );
   }
   return mSelectFromAllFoldersDialog;
@@ -2252,7 +2253,7 @@ int KMMainWidget::slotFilterMsg( const Akonadi::Item &msg )
   if (filterResult == 2)
   {
     // something went horribly wrong (out of space?)
-    kmkernel->emergencyExit( i18n("Unable to process messages: " ) + QString::fromLocal8Bit(strerror(errno)));
+    CommonKernel->emergencyExit( i18n("Unable to process messages: " ) + QString::fromLocal8Bit(strerror(errno)));
     return 2;
   }
   return filterResult;
@@ -3429,7 +3430,7 @@ void KMMainWidget::setupActions()
   updateFolderMenu();
   mTagActionManager = new KMail::TagActionManager( this, actionCollection(), mMsgActions,
                                                    mGUIClient );
-  mFolderShortcutActionManager = new KMail::FolderShortcutActionManager( this, actionCollection(), KMKernel::self()->mailCommon() );
+  mFolderShortcutActionManager = new KMail::FolderShortcutActionManager( this, actionCollection() );
 
 }
 
@@ -3459,7 +3460,7 @@ void KMMainWidget::slotEditNotifications()
 void KMMainWidget::slotShowExpiryProperties()
 {
   if ( mCurrentFolder ) {
-     ExpiryPropertiesDialog *dlg = new ExpiryPropertiesDialog( this, mCurrentFolder, KMKernel::self()->mailCommon() );
+     ExpiryPropertiesDialog *dlg = new ExpiryPropertiesDialog( this, mCurrentFolder );
      dlg->show();
   }
 }
@@ -3715,7 +3716,7 @@ void KMMainWidget::updateMessageActionsDelayed()
   actionCollection()->action( "go_next_unread_message" )->setEnabled( enable_goto_unread );
   actionCollection()->action( "go_prev_message" )->setEnabled( mails );
   actionCollection()->action( "go_prev_unread_message" )->setEnabled( enable_goto_unread );
-  const qint64 nbMsgOutboxCollection = kmkernel->outboxCollectionFolder().statistics().count();
+  const qint64 nbMsgOutboxCollection = CommonKernel->outboxCollectionFolder().statistics().count();
 
   actionCollection()->action( "send_queued" )->setEnabled( nbMsgOutboxCollection > 0 );
   actionCollection()->action( "send_queued_via" )->setEnabled( nbMsgOutboxCollection > 0 );
@@ -3822,12 +3823,12 @@ void KMMainWidget::updateFolderMenu()
 
 
   QList< QAction* > actionlist;
-  if ( mCurrentFolder && mCurrentFolder->collection().id() == kmkernel->outboxCollectionFolder().id() &&
-      kmkernel->outboxCollectionFolder().statistics().count() > 0 ) {
+  if ( mCurrentFolder && mCurrentFolder->collection().id() == CommonKernel->outboxCollectionFolder().id() &&
+      CommonKernel->outboxCollectionFolder().statistics().count() > 0 ) {
     kDebug() << "Enabling send queued";
     actionlist << mSendQueued;
   }
-  if( mCurrentFolder && mCurrentFolder->collection().id() != kmkernel->trashCollectionFolder().id() ) {
+  if( mCurrentFolder && mCurrentFolder->collection().id() != CommonKernel->trashCollectionFolder().id() ) {
     actionlist << mTrashAction;
   }
   mGUIClient->unplugActionList( QLatin1String( "outbox_folder_actionlist" ) );

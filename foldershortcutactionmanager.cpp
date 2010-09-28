@@ -63,13 +63,11 @@ void FolderShortcutCommand::setAction( QAction* action )
 
 
 FolderShortcutActionManager::FolderShortcutActionManager( QWidget *parent,
-                                                          KActionCollection *actionCollection,
-                                                          Kernel* mailCommon
+                                                          KActionCollection *actionCollection
                                                         )
   : QObject( parent ),
     mActionCollection( actionCollection ),
-    mParent( parent ),
-    mMailCommon( mailCommon )
+    mParent( parent )
 {
 }
 
@@ -78,10 +76,10 @@ void FolderShortcutActionManager::createActions()
   // When this function is called, the ETM has not finished loading yet. Therefore, when new
   // rows are inserted in the ETM, see if we have new collections that we can assign shortcuts
   // to.
-  const QAbstractItemModel *model = mMailCommon->collectionModel();
+  const QAbstractItemModel *model = KernelIf->collectionModel();
   connect( model, SIGNAL( rowsInserted( const QModelIndex &, int, int ) ),
            this, SLOT( slotRowsInserted( const QModelIndex &, int, int ) ), Qt::UniqueConnection );
-  connect( mMailCommon->folderCollectionMonitor(), SIGNAL( collectionRemoved( const Akonadi::Collection & ) ),
+  connect( KernelIf->folderCollectionMonitor(), SIGNAL( collectionRemoved( const Akonadi::Collection & ) ),
            this, SLOT( slotCollectionRemoved( const Akonadi::Collection& ) ), Qt::UniqueConnection );
 
   if ( model->rowCount() > 0 )
@@ -95,7 +93,7 @@ void FolderShortcutActionManager::slotRowsInserted( const QModelIndex &parent, i
 
 void FolderShortcutActionManager::updateShortcutsForIndex( const QModelIndex &parent, int start, int end )
 {
-  QAbstractItemModel *model = mMailCommon->collectionModel();
+  QAbstractItemModel *model = KernelIf->collectionModel();
   for ( int i = start; i <= end; i++ ) {
     const QModelIndex child = model->index( i, 0, parent );
     Akonadi::Collection collection =
@@ -118,7 +116,7 @@ void FolderShortcutActionManager::shortcutChanged( const Akonadi::Collection &co
 {
   // remove the old one, no autodelete in Qt4
   slotCollectionRemoved( col );
-  QSharedPointer<FolderCollection> folderCollection( FolderCollection::forCollection( col, mMailCommon ) );
+  QSharedPointer<FolderCollection> folderCollection( FolderCollection::forCollection( col ) );
   if ( folderCollection->shortcut().isEmpty() )
     return;
 

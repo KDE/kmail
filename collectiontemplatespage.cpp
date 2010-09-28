@@ -18,14 +18,17 @@
 
 #include "collectiontemplatespage.h"
 
-#include <akonadi/collection.h>
-#include <KLocale>
-#include <KPushButton>
 #include "kmkernel.h"
-#include <QCheckBox>
+#include "mailkernel.h"
 #include "foldercollection.h"
 #include "templateparser/templatesconfiguration.h"
 #include "templateparser/templatesconfiguration_kfg.h"
+
+#include <akonadi/collection.h>
+
+#include <KLocale>
+#include <KPushButton>
+#include <QCheckBox>
 
 using namespace Akonadi;
 using namespace MailCommon;
@@ -44,7 +47,7 @@ CollectionTemplatesPage::~CollectionTemplatesPage()
 bool CollectionTemplatesPage::canHandle( const Collection &collection ) const
 {
 
-  return ( !KMKernel::self()->isSystemFolderCollection( collection ) || KMKernel::self()->isMainFolderCollection( collection ) );
+  return ( !CommonKernel->isSystemFolderCollection( collection ) || CommonKernel->isMainFolderCollection( collection ) );
 }
 
 void CollectionTemplatesPage::init()
@@ -88,7 +91,7 @@ void CollectionTemplatesPage::init()
 
 void CollectionTemplatesPage::load(const Collection & col)
 {
-  mFolderCollection = FolderCollection::forCollection( col, KMKernel::self()->mailCommon() );
+  mFolderCollection = FolderCollection::forCollection( col );
   if ( !mFolderCollection )
     return;
 

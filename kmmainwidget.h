@@ -99,7 +99,7 @@ class KMAIL_EXPORT KMMainWidget : public QWidget
 
     KMMainWidget(QWidget *parent, KXMLGUIClient *aGUIClient,
                  KActionCollection *actionCollection,
-                 KSharedConfig::Ptr config = KMKernel::config() );
+                 KSharedConfig::Ptr config = KMKernel::self()->config() );
     virtual ~KMMainWidget();
     void destruct();
 

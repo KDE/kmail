@@ -54,6 +54,7 @@
 #include "kmsearchpatternedit.h"
 #include "kmsearchpattern.h"
 #include "searchdescriptionattribute.h"
+#include "mailkernel.h"
 
 #include "regexplineedit.h"
 
@@ -103,7 +104,7 @@ SearchWindow::SearchWindow(KMMainWidget* w, const Akonadi::Collection& curFolder
                                IconSize( KIconLoader::Small ),
                                IconSize( KIconLoader::Small ) ) );
 
-  KSharedConfig::Ptr config = KMKernel::config();
+  KSharedConfig::Ptr config = KMKernel::self()->config();
   KConfigGroup group( config, "SearchDialog" );
 
   QWidget* searchWidget = new QWidget(this);
@@ -121,7 +122,7 @@ SearchWindow::SearchWindow(KMMainWidget* w, const Akonadi::Collection& curFolder
   mChkbxSpecificFolders = new QRadioButton( i18n("Search &only in:"), searchWidget );
   mChkbxSpecificFolders->setChecked(true);
 
-  mCbxFolders = new FolderRequester( KMKernel::self()->mailCommon(), searchWidget );
+  mCbxFolders = new FolderRequester( searchWidget );
   mCbxFolders->setMustBeReadWrite( false );
   mCbxFolders->setNotAllowToCreateNewFolder( true );
 
@@ -235,7 +236,7 @@ SearchWindow::SearchWindow(KMMainWidget* w, const Akonadi::Collection& curFolder
   } else {
     mSearchFolderEdt->setText( i18n("Last Search") );
     // find last search and reuse it if possible
-    mFolder = KMKernel::self()->collectionFromId( GlobalSettings::lastSearchCollectionId() );
+    mFolder = CommonKernel->collectionFromId( GlobalSettings::lastSearchCollectionId() );
     // when the last folder got renamed, create a new one
     if ( mFolder.isValid() && mFolder.name() != mSearchFolderEdt->text() ) {
       mFolder = Akonadi::Collection();
@@ -358,7 +359,7 @@ SearchWindow::SearchWindow(KMMainWidget* w, const Akonadi::Collection& curFolder
 SearchWindow::~SearchWindow()
 {
   if ( mResultModel ) {
-    KSharedConfig::Ptr config = KMKernel::config();
+    KSharedConfig::Ptr config = KMKernel::self()->config();
     KConfigGroup group( config, "SearchDialog" );
     group.writeEntry( "SubjectWidth", mLbxMatches->columnWidth( 0 ) );
     group.writeEntry( "SenderWidth", mLbxMatches->columnWidth( 1 ) );
@@ -546,7 +547,7 @@ void SearchWindow::searchDone( KJob* job )
       mResultModel->setCollection( mFolder );
       mLbxMatches->setModel( mResultModel );
 
-      KSharedConfig::Ptr config = KMKernel::config();
+      KSharedConfig::Ptr config = KMKernel::self()->config();
       KConfigGroup group( config, "SearchDialog" );
 
       mLbxMatches->setColumnWidth( 0, group.readEntry( "SubjectWidth", 150 ) );

@@ -65,7 +65,7 @@ RedirectDialog::RedirectDialog( QWidget *parent, bool immediate )
   hbox->setSpacing(4);
   mEditTo = new MessageComposer::ComposerLineEdit( true, hbox );
   mEditTo->setObjectName( "toLine" );
-  mEditTo->setRecentAddressConfig( KMKernel::config().data() );
+  mEditTo->setRecentAddressConfig( KMKernel::self()->config().data() );
   mEditTo->setMinimumWidth( 300 );
 
   mBtnTo = new QPushButton( QString(), hbox );

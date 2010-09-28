@@ -18,12 +18,13 @@
 
 
 #include "collectionviewpage.h"
+#include "kmkernel.h"
+#include "mailkernel.h"
 
 #include <akonadi/collection.h>
 #include <akonadi/entitydisplayattribute.h>
 #include <akonadi/kmime/messagefolderattribute.h>
 
-#include <kmkernel.h>
 #include <QGroupBox>
 #include <QHBoxLayout>
 #include <kicondialog.h>
@@ -56,8 +57,8 @@ CollectionViewPage::~CollectionViewPage()
 void CollectionViewPage::init(const Akonadi::Collection & col)
 {
   mCurrentCollection = col;
-  mFolderCollection = FolderCollection::forCollection( col, KMKernel::self()->mailCommon() );
-  mIsLocalSystemFolder = KMKernel::self()->isSystemFolderCollection( col ) || mFolderCollection->isStructural();
+  mFolderCollection = FolderCollection::forCollection( col );
+  mIsLocalSystemFolder = CommonKernel->isSystemFolderCollection( col ) || mFolderCollection->isStructural();
 
   QVBoxLayout * topLayout = new QVBoxLayout( this );
   topLayout->setSpacing( KDialog::spacingHint() );

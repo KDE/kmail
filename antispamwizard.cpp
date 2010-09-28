@@ -43,6 +43,7 @@
 #include "mailutil.h"
 #include "imapsettings.h"
 #include "pop3settings.h"
+#include "mailkernel.h"
 
 #include <Akonadi/AgentInstance>
 
@@ -1003,8 +1004,8 @@ ASWizSpamRulesPage::ASWizSpamRulesPage( QWidget * parent, const char * name)
             "but you may change that in the folder view below.") );
   layout->addWidget( mMoveSpamRules );
 
-  mFolderReqForSpamFolder = new FolderRequester( KMKernel::self()->mailCommon(), this );
-  mFolderReqForSpamFolder->setFolder( KMKernel::self()->trashCollectionFolder() );
+  mFolderReqForSpamFolder = new FolderRequester( this );
+  mFolderReqForSpamFolder->setFolder( CommonKernel->trashCollectionFolder() );
   mFolderReqForSpamFolder->setMustBeReadWrite( true );
   mFolderReqForSpamFolder->setShowOutbox( false );
   mFolderReqForSpamFolder->setShowImapFolders( false );
@@ -1022,7 +1023,7 @@ ASWizSpamRulesPage::ASWizSpamRulesPage( QWidget * parent, const char * name)
             "selected a capable tool, you cannot select a folder as well.</p>") );
   layout->addWidget( mMoveUnsureRules );
 
-  mFolderReqForUnsureFolder = new FolderRequester( KMKernel::self()->mailCommon(), this );
+  mFolderReqForUnsureFolder = new FolderRequester( this );
   mFolderReqForUnsureFolder->setFolder( "inbox" );
   mFolderReqForUnsureFolder->setMustBeReadWrite( true );
   mFolderReqForUnsureFolder->setShowOutbox( false );
@@ -1083,7 +1084,7 @@ Akonadi::Collection ASWizSpamRulesPage::selectedSpamCollection() const
   if ( mFolderReqForSpamFolder->folderCollection().isValid() )
     return mFolderReqForSpamFolder->folderCollection();
   else
-    return KMKernel::self()->trashCollectionFolder();
+    return CommonKernel->trashCollectionFolder();
 }
 
 
@@ -1092,7 +1093,7 @@ Akonadi::Collection ASWizSpamRulesPage::selectedUnsureCollection() const
   if ( mFolderReqForUnsureFolder->folderCollection().isValid() )
     return mFolderReqForUnsureFolder->folderCollection();
   else
-    return KMKernel::self()->inboxCollectionFolder();
+    return CommonKernel->inboxCollectionFolder();
 }
 
 QString ASWizSpamRulesPage::selectedUnsureCollectionName() const
@@ -1168,11 +1169,11 @@ ASWizVirusRulesPage::ASWizVirusRulesPage( QWidget * parent, const char * name )
   optReadableProxy |= ReadableCollectionProxyModel::HideOutboxFolder;
   optReadableProxy |= ReadableCollectionProxyModel::HideImapFolder;
 
-  mFolderTree = new FolderTreeWidget( KMKernel::self()->mailCommon(), this, 0, opt, optReadableProxy );
+  mFolderTree = new FolderTreeWidget( this, 0, opt, optReadableProxy );
   mFolderTree->folderTreeView()->expandAll();
   mFolderTree->readableCollectionProxyModel()->setAccessRights( Akonadi::Collection::CanCreateCollection );
 
-  mFolderTree->selectCollectionFolder( KMKernel::self()->trashCollectionFolder() );
+  mFolderTree->selectCollectionFolder( CommonKernel->trashCollectionFolder() );
   mFolderTree->folderTreeView()->setDragDropMode( QAbstractItemView::NoDragDrop );
 
   mFolderTree->disableContextMenuAndExtraColumn();
@@ -1211,7 +1212,7 @@ QString ASWizVirusRulesPage::selectedFolderName() const
   if ( mFolderTree->selectedCollection().isValid() )
     return QString::number( mFolderTree->selectedCollection().id() );
   else
-    return QString::number( KMKernel::self()->trashCollectionFolder().id() );
+    return QString::number( CommonKernel->trashCollectionFolder().id() );
 }
 
 void ASWizVirusRulesPage::processSelectionChange()

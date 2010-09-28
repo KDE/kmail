@@ -39,6 +39,8 @@
 #include "kmkernel.h"
 #endif
 
+#include "mailkernel.h"
+
 #include "addressvalidationjob.h"
 #include "kleo_util.h"
 #include "stringutil.h"
@@ -402,7 +404,7 @@ namespace KMail {
 #ifndef KCM_KPIMIDENTITIES_STANDALONE // ### folder requester is too integrated into KMail atm
     // "Sent-mail Folder" combo box and label:
     ++row;
-    mFccCombo = new FolderRequester( KMKernel::self()->mailCommon(), tab );
+    mFccCombo = new FolderRequester( tab );
     mFccCombo->setShowOutbox( false );
     glay->addWidget( mFccCombo, row, 1 );
     label = new QLabel( i18n("Sent-mail &folder:"), tab );
@@ -411,7 +413,7 @@ namespace KMail {
 
     // "Drafts Folder" combo box and label:
     ++row;
-    mDraftsCombo = new FolderRequester( KMKernel::self()->mailCommon(), tab );
+    mDraftsCombo = new FolderRequester( tab );
     mDraftsCombo->setShowOutbox( false );
     glay->addWidget( mDraftsCombo, row, 1 );
     label = new QLabel( i18n("&Drafts folder:"), tab );
@@ -420,7 +422,7 @@ namespace KMail {
 
     // "Templates Folder" combo box and label:
     ++row;
-    mTemplatesCombo = new FolderRequester( KMKernel::self()->mailCommon(), tab );
+    mTemplatesCombo = new FolderRequester( tab );
     mTemplatesCombo->setShowOutbox( false );
     glay->addWidget( mTemplatesCombo, row, 1 );
     label = new QLabel( i18n("&Templates folder:"), tab );
@@ -501,7 +503,7 @@ namespace KMail {
 #endif
 
 #ifndef KCM_KPIMIDENTITIES_STANDALONE
-    KConfigGroup geometry( KMKernel::config(), "Geometry" );
+    KConfigGroup geometry( KMKernel::self()->config(), "Geometry" );
     if ( geometry.hasKey( "Identity Dialog size" ) )
       resize( geometry.readEntry( "Identity Dialog size", QSize() ));
 #endif
@@ -514,7 +516,7 @@ namespace KMail {
 
   IdentityDialog::~IdentityDialog() {
 #ifndef KCM_KPIMIDENTITIES_STANDALONE
-    KConfigGroup geometry( KMKernel::config(), "Geometry" );
+    KConfigGroup geometry( KMKernel::self()->config(), "Geometry" );
     geometry.writeEntry( "Identity Dialog size", size() );
 #endif
   }
@@ -683,7 +685,7 @@ namespace KMail {
                                           const QString & msg )
   {
 #ifndef KCM_KPIMIDENTITIES_STANDALONE
-    Akonadi::Collection folder = kmkernel->collectionFromId( folderID );
+    Akonadi::Collection folder = CommonKernel->collectionFromId( folderID );
     if ( !folder.isValid() ) {
       KMessageBox::sorry( this, msg );
       return false;
@@ -731,7 +733,7 @@ namespace KMail {
                                   "therefore, the default sent-mail folder "
                                   "will be used.",
                                   ident.identityName() ) ) ) {
-      mFccCombo->setFolder( kmkernel->sentCollectionFolder() );
+      mFccCombo->setFolder( CommonKernel->sentCollectionFolder() );
     }
     else {
       mFccCombo->setFolder( ident.fcc() );
@@ -743,7 +745,7 @@ namespace KMail {
                                   "therefore, the default drafts folder "
                                   "will be used.",
                                   ident.identityName() ) ) ) {
-      mDraftsCombo->setFolder( kmkernel->draftsCollectionFolder() );
+      mDraftsCombo->setFolder( CommonKernel->draftsCollectionFolder() );
     }
     else
       mDraftsCombo->setFolder( ident.drafts() );
@@ -754,7 +756,7 @@ namespace KMail {
                                   "\"%1\" does not exist (anymore); "
                                   "therefore, the default templates folder "
                                   "will be used.", ident.identityName()) ) ) {
-      mTemplatesCombo->setFolder( kmkernel->templatesCollectionFolder() );
+      mTemplatesCombo->setFolder( CommonKernel->templatesCollectionFolder() );
 
     }
     else

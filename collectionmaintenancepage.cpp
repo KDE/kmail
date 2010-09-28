@@ -54,7 +54,7 @@ void CollectionMaintenancePage::init(const Akonadi::Collection & col)
   QFormLayout *box = new QFormLayout( filesGroup );
   box->setSpacing( KDialog::spacingHint() );
   mIsNotAVirtualCollection = !MailCommon::Util::isVirtualCollection( col );
-  connect( KMKernel::self()->monitor(), SIGNAL( collectionStatisticsChanged( Akonadi::Collection::Id , const Akonadi::CollectionStatistics & ) ), this, SLOT( updateCollectionStatistic( Akonadi::Collection::Id, const Akonadi::CollectionStatistics& ) ) );
+  connect( KMKernel::self()->folderCollectionMonitor(), SIGNAL( collectionStatisticsChanged( Akonadi::Collection::Id , const Akonadi::CollectionStatistics & ) ), this, SLOT( updateCollectionStatistic( Akonadi::Collection::Id, const Akonadi::CollectionStatistics& ) ) );
 
 
 

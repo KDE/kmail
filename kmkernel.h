@@ -3,6 +3,8 @@
 #ifndef _KMKERNEL_H
 #define _KMKERNEL_H
 
+#include "mailinterfaces.h"
+
 #include <QByteArray>
 #include <QList>
 #include <QObject>
@@ -95,7 +97,7 @@ namespace MailCommon {
  * - handling of some config settings, like wrapCol()
  * - various other stuff
  */
-class KMAIL_EXPORT KMKernel : public QObject
+class KMAIL_EXPORT KMKernel : public QObject, public MailCommon::IKernel, public MailCommon::ISettings
 {
   Q_OBJECT
   Q_CLASSINFO("D-Bus Interface", "org.kde.kmail.kmail")
@@ -228,13 +230,14 @@ public:
   /** normal control stuff */
 
   static KMKernel *self();
-  static KSharedConfig::Ptr config();
+  /*reimp*/ KSharedConfig::Ptr config();
+  /*reimp*/ void syncConfig();
 
   void init();
   void setupDBus();
   void readConfig();
 
-  Akonadi::ChangeRecorder *monitor() const;
+  /*reimp*/ Akonadi::ChangeRecorder *folderCollectionMonitor() const;
 
   /**
    * Returns the main model, which contains all folders and the items of recently opened folders.
@@ -245,7 +248,7 @@ public:
    * Returns a model of all folders in KMail. This is basically the same as entityTreeModel(),
    * but with items filtered out, the model contains only collections.
    */
-  Akonadi::EntityMimeTypeFilterModel *collectionModel() const;
+  /*reimp*/ Akonadi::EntityMimeTypeFilterModel *collectionModel() const;
 
   void recoverDeadLetters();
   void closeAllKMailWindows();
@@ -283,9 +286,9 @@ public:
   MessageSender *msgSender();
 
   /** return the pointer to the identity manager */
-  KPIMIdentities::IdentityManager *identityManager();
+  /*reimp*/ KPIMIdentities::IdentityManager *identityManager();
 
-  MailCommon::JobScheduler* jobScheduler() { return mJobScheduler; }
+  /*reimp*/ MailCommon::JobScheduler* jobScheduler() const { return mJobScheduler; }
 
   /** Expire all folders, used for the gui action */
   void expireAllFoldersNow();
@@ -315,9 +318,6 @@ public:
   bool registerSystemTrayApplet( KMSystemTray* );
   bool unregisterSystemTrayApplet( KMSystemTray* );
 
-  /// Reimplemented from KMailIface
-  void emergencyExit( const QString& reason );
-
   QTextCodec *networkCodec() { return netCodec; }
 
   /** returns a reference to the first Mainwin or a temporary Mainwin */
@@ -334,42 +334,24 @@ public:
 //
   void selectCollectionFromId( const Akonadi::Collection::Id id);
 
-
-  /**
-   * Returns the collection associated with the given @p id, or an invalid collection if not found.
-   * The EntityTreeModel of the kernel is searched for the collection. Since the ETM is loaded
-   * async, this method will not find the collection right after startup, when the ETM is not yet
-   * fully loaded.
-   */
-  Akonadi::Collection collectionFromId( const Akonadi::Collection::Id& id ) const;
-
-  /**
-   * Converts @p idString into a number and returns the collection for it.
-   * @see collectionFromId( qint64 )
-   */
-  Akonadi::Collection collectionFromId( const QString &idString ) const;
-
   void raise();
-
-  Akonadi::Collection inboxCollectionFolder();
-  Akonadi::Collection outboxCollectionFolder();
-  Akonadi::Collection sentCollectionFolder();
-  Akonadi::Collection trashCollectionFolder();
-  Akonadi::Collection draftsCollectionFolder();
-  Akonadi::Collection templatesCollectionFolder();
-
-  bool isSystemFolderCollection( const Akonadi::Collection &col );
-
-  /** Returns true if this folder is the inbox on the local disk */
-  bool isMainFolderCollection( const Akonadi::Collection &col );
 
   void stopAgentInstance();
 
-  MailCommon::Kernel *mailCommon();
+  //ISettings
+  /*reimp*/ bool showPopupAfterDnD();
+
+  /*reimp*/ bool excludeImportantMailFromExpiry();
+
+  /*reimp*/ qreal closeToQuotaThreshold();
+
+  /*reimp*/ Akonadi::Collection::Id lastSelectedFolder();
+  /*reimp*/ void setLastSelectedFolder( const Akonadi::Collection::Id  &col );
+
 
 public slots:
 
-  void updateSystemTray();
+  /*reimp*/ void updateSystemTray();
 
   /** Custom templates have changed, so all windows using them need
       to regenerate their menus */
@@ -461,7 +443,6 @@ private:
 
   int mWrapCol;
 
-  MailCommon::Kernel *mMailCommon;
 };
 
 #endif // _KMKERNEL_H

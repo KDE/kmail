@@ -70,7 +70,7 @@ namespace KMail {
 
     public:
 
-      FolderShortcutActionManager( QWidget *parent, KActionCollection *actionCollection, MailCommon::Kernel* mailCommon );
+      FolderShortcutActionManager( QWidget *parent, KActionCollection *actionCollection );
       void createActions();
 
     public slots:
@@ -96,7 +96,6 @@ namespace KMail {
       QMap< Akonadi::Entity::Id, FolderShortcutCommand* > mFolderShortcutCommands;
       KActionCollection *mActionCollection;
       QWidget *mParent;
-      MailCommon::Kernel* mMailCommon;
   };
 
 }

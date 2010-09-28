@@ -93,7 +93,7 @@ KMSystemTray::KMSystemTray(QObject *parent)
   connect( contextMenu(), SIGNAL( aboutToShow() ),
            this, SLOT( slotContextMenuAboutToShow() ) );
 
-  connect( kmkernel->monitor(), SIGNAL( collectionStatisticsChanged( Akonadi::Collection::Id, const Akonadi::CollectionStatistics &) ), SLOT( slotCollectionChanged( const Akonadi::Collection::Id, const Akonadi::CollectionStatistics& ) ) );
+  connect( kmkernel->folderCollectionMonitor(), SIGNAL( collectionStatisticsChanged( Akonadi::Collection::Id, const Akonadi::CollectionStatistics &) ), SLOT( slotCollectionChanged( const Akonadi::Collection::Id, const Akonadi::CollectionStatistics& ) ) );
 
 }
 
@@ -267,7 +267,7 @@ void KMSystemTray::fillFoldersMenu( QMenu *menu, const QAbstractItemModel *model
     Akonadi::CollectionStatistics statistics = collection.statistics();
     qint64 count = qMax( 0LL, statistics.unreadCount() );
     if ( count > 0 ) {
-      QSharedPointer<FolderCollection> col = FolderCollection::forCollection( collection, KMKernel::self()->mailCommon() );
+      QSharedPointer<FolderCollection> col = FolderCollection::forCollection( collection );
       if ( col && col->ignoreNewMail() )
         continue;
     }
@@ -393,7 +393,7 @@ void KMSystemTray::unreadMail( const QAbstractItemModel *model, const QModelInde
     const qint64 count = qMax( 0LL, statistics.unreadCount() );
 
     if ( count > 0 ) {
-      QSharedPointer<FolderCollection> col = FolderCollection::forCollection( collection, KMKernel::self()->mailCommon() );
+      QSharedPointer<FolderCollection> col = FolderCollection::forCollection( collection );
       if ( col && !col->ignoreNewMail() ) {
         mCount += count;
       }

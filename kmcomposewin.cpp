@@ -46,6 +46,7 @@
 #include <messagecomposer/keyresolver.h>
 #include "templatesconfiguration_kfg.h"
 #include "foldercollectionmonitor.h"
+#include "mailkernel.h"
 
 // KDEPIM includes
 #include <libkpgp/kpgpblock.h>
@@ -325,7 +326,7 @@ KMComposeWin::KMComposeWin( const KMime::Message::Ptr &aMsg, Composer::TemplateC
     mSignatureStateIndicator->setAlignment( Qt::AlignHCenter );
     hbox->addWidget( mSignatureStateIndicator );
 
-    KConfigGroup reader( KMKernel::config(), "Reader" );
+    KConfigGroup reader( KMKernel::self()->config(), "Reader" );
 
     // Get the colors for the label
     QPalette p( mSignatureStateIndicator->palette() );
@@ -407,7 +408,7 @@ KMComposeWin::KMComposeWin( const KMime::Message::Ptr &aMsg, Composer::TemplateC
   rethinkFields();
   slotUpdateSignatureAndEncrypionStateIndicators();
 
-  applyMainWindowSettings( KMKernel::config()->group( "Composer") );
+  applyMainWindowSettings( KMKernel::self()->config()->group( "Composer") );
 
   connect( mEdtSubject, SIGNAL(textChanged(const QString&)),
            SLOT(slotUpdWinTitle(const QString&)) );
@@ -418,7 +419,7 @@ KMComposeWin::KMComposeWin( const KMime::Message::Ptr &aMsg, Composer::TemplateC
 
   connect( mEdtFrom, SIGNAL(completionModeChanged(KGlobalSettings::Completion)),
            SLOT(slotCompletionModeChanged(KGlobalSettings::Completion)) );
-  connect( kmkernel->monitor(), SIGNAL(collectionRemoved(const Akonadi::Collection&)),
+  connect( kmkernel->folderCollectionMonitor(), SIGNAL(collectionRemoved(const Akonadi::Collection&)),
            SLOT(slotFolderRemoved(const Akonadi::Collection&)) );
   connect( kmkernel, SIGNAL( configChanged() ),
            this, SLOT( slotConfigChanged() ) );
@@ -634,7 +635,7 @@ void KMComposeWin::writeConfig( void )
   GlobalSettings::self()->setComposerSize( size() );
   GlobalSettings::self()->setShowSnippetManager( mSnippetAction->isChecked() );
 
-  saveMainWindowSettings( KMKernel::config()->group( "Composer" ) );
+  saveMainWindowSettings( KMKernel::self()->config()->group( "Composer" ) );
   if ( mSnippetAction->isChecked() )
     GlobalSettings::setSnippetSplitterPosition( mSnippetSplitter->sizes() );
 
@@ -1139,7 +1140,7 @@ void KMComposeWin::setupActions( void )
           SLOT(slotInsertRecentFile(const KUrl&)));
   connect(mRecentAction, SIGNAL(recentListCleared()),
           SLOT(slotRecentListFileClear()));
-  mRecentAction->loadEntries( KMKernel::config()->group( QString() ) );
+  mRecentAction->loadEntries( KMKernel::self()->config()->group( QString() ) );
 
   action = new KAction(KIcon("x-office-address-book"), i18n("&Address Book"), this);
   actionCollection()->addAction("addressbook", action );
@@ -1679,7 +1680,7 @@ void KMComposeWin::setFcc( const QString &idString )
 {
   // check if the sent-mail folder still exists
   if ( idString.isEmpty() )
-    mComposerBase->setFcc( KMKernel::self()->sentCollectionFolder() );
+    mComposerBase->setFcc( CommonKernel->sentCollectionFolder() );
   else
     mComposerBase->setFcc( Akonadi::Collection( idString.toInt() ) );
 }
@@ -1825,18 +1826,18 @@ void KMComposeWin::autoSaveMessage()
 bool KMComposeWin::encryptToSelf()
 {
   // return !Kpgp::Module::getKpgp() || Kpgp::Module::getKpgp()->encryptToSelf();
-  KConfigGroup group( KMKernel::config(), "Composer" );
+  KConfigGroup group( KMKernel::self()->config(), "Composer" );
   return group.readEntry( "crypto-encrypt-to-self", true );
 }
 
 bool KMComposeWin::showKeyApprovalDialog()
 {
-  KConfigGroup group( KMKernel::config(), "Composer" );
+  KConfigGroup group( KMKernel::self()->config(), "Composer" );
   return group.readEntry( "crypto-show-keys-for-approval", true );
 }
 
 int KMComposeWin::encryptKeyNearExpiryWarningThresholdInDays() {
-  const KConfigGroup composer( KMKernel::config(), "Composer" );
+  const KConfigGroup composer( KMKernel::self()->config(), "Composer" );
   if ( ! composer.readEntry( "crypto-warn-when-near-expire", true ) ) {
     return -1;
   }
@@ -1846,7 +1847,7 @@ int KMComposeWin::encryptKeyNearExpiryWarningThresholdInDays() {
 
 int KMComposeWin::signingKeyNearExpiryWarningThresholdInDays()
 {
-  const KConfigGroup composer( KMKernel::config(), "Composer" );
+  const KConfigGroup composer( KMKernel::self()->config(), "Composer" );
   if ( ! composer.readEntry( "crypto-warn-when-near-expire", true ) ) {
     return -1;
   }
@@ -1856,7 +1857,7 @@ int KMComposeWin::signingKeyNearExpiryWarningThresholdInDays()
 
 int KMComposeWin::encryptRootCertNearExpiryWarningThresholdInDays()
 {
-  const KConfigGroup composer( KMKernel::config(), "Composer" );
+  const KConfigGroup composer( KMKernel::self()->config(), "Composer" );
   if ( ! composer.readEntry( "crypto-warn-when-near-expire", true ) ) {
     return -1;
   }
@@ -1865,7 +1866,7 @@ int KMComposeWin::encryptRootCertNearExpiryWarningThresholdInDays()
 }
 
 int KMComposeWin::signingRootCertNearExpiryWarningThresholdInDays() {
-  const KConfigGroup composer( KMKernel::config(), "Composer" );
+  const KConfigGroup composer( KMKernel::self()->config(), "Composer" );
   if ( ! composer.readEntry( "crypto-warn-when-near-expire", true ) ) {
     return -1;
   }
@@ -1876,7 +1877,7 @@ int KMComposeWin::signingRootCertNearExpiryWarningThresholdInDays() {
 
 int KMComposeWin::encryptChainCertNearExpiryWarningThresholdInDays()
 {
-  const KConfigGroup composer( KMKernel::config(), "Composer" );
+  const KConfigGroup composer( KMKernel::self()->config(), "Composer" );
   if ( ! composer.readEntry( "crypto-warn-when-near-expire", true ) ) {
     return -1;
   }
@@ -1887,7 +1888,7 @@ int KMComposeWin::encryptChainCertNearExpiryWarningThresholdInDays()
 
 int KMComposeWin::signingChainCertNearExpiryWarningThresholdInDays()
 {
-  const KConfigGroup composer( KMKernel::config(), "Composer" );
+  const KConfigGroup composer( KMKernel::self()->config(), "Composer" );
   if ( ! composer.readEntry( "crypto-warn-when-near-expire", true ) ) {
     return -1;
   }
@@ -2011,7 +2012,7 @@ void KMComposeWin::slotInsertFile()
   mRecentAction->addUrl( u );
   // Prevent race condition updating list when multiple composers are open
   {
-    KSharedConfig::Ptr config = KMKernel::config();
+    KSharedConfig::Ptr config = KMKernel::self()->config();
     KConfigGroup group( config, "Composer" );
     QString encoding = MessageViewer::NodeHelper::encodingForName( u.fileEncoding() ).toLatin1();
     QStringList urls = group.readEntry( "recent-urls", QStringList() );
@@ -2040,7 +2041,7 @@ void KMComposeWin::slotInsertFile()
 
 void KMComposeWin::slotRecentListFileClear()
 {
-   KSharedConfig::Ptr config = KMKernel::config();
+   KSharedConfig::Ptr config = KMKernel::self()->config();
    KConfigGroup group( config, "Composer" );
    group.deleteEntry("recent-urls");
    group.deleteEntry("recent-encodings");
@@ -2055,7 +2056,7 @@ void KMComposeWin::slotInsertRecentFile( const KUrl &u )
 
   // Get the encoding previously used when inserting this file
   QString encoding;
-  KConfigGroup group( KMKernel::config(), "Composer" );
+  KConfigGroup group( KMKernel::self()->config(), "Composer" );
   const QStringList urls = group.readEntry( "recent-urls", QStringList() );
   const QStringList encodings = group.readEntry( "recent-encodings", QStringList() );
   const int index = urls.indexOf( u.prettyUrl() );
@@ -2905,7 +2906,7 @@ void KMComposeWin::slotSpellcheckConfig()
 //-----------------------------------------------------------------------------
 void KMComposeWin::slotEditToolbars()
 {
-  saveMainWindowSettings( KMKernel::config()->group( "Composer") );
+  saveMainWindowSettings( KMKernel::self()->config()->group( "Composer") );
   KEditToolBar dlg( guiFactory(), this );
 
   connect( &dlg, SIGNAL(newToolBarConfig()),
@@ -2917,7 +2918,7 @@ void KMComposeWin::slotEditToolbars()
 void KMComposeWin::slotUpdateToolbars()
 {
   createGUI( "kmcomposerui.rc" );
-  applyMainWindowSettings( KMKernel::config()->group( "Composer") );
+  applyMainWindowSettings( KMKernel::self()->config()->group( "Composer") );
 }
 
 void KMComposeWin::slotEditKeys()
@@ -2967,7 +2968,7 @@ void KMComposeWin::slotFolderRemoved( const Akonadi::Collection & col )
   kDebug() << "you killed me.";
   // TODO: need to handle templates here?
   if ( ( mFolder.isValid() ) && ( col.id() == mFolder.id() ) ) {
-    mFolder = kmkernel->draftsCollectionFolder();
+    mFolder = CommonKernel->draftsCollectionFolder();
     kDebug() << "restoring drafts to" << mFolder.id();
   }
 }

@@ -42,6 +42,7 @@
 
 #include "kmcommands.h"
 #include "collectionpane.h"
+#include "mailkernel.h"
 
 #include <unistd.h> // link()
 #include <kprogressdialog.h>
@@ -413,7 +414,7 @@ KMCommand::Result KMMailtoComposeCommand::execute()
   uint id = 0;
 
   if ( mMessage.isValid() && mMessage.parentCollection().isValid() ) {
-    QSharedPointer<FolderCollection> fd = FolderCollection::forCollection( mMessage.parentCollection(), KMKernel::self()->mailCommon() );
+    QSharedPointer<FolderCollection> fd = FolderCollection::forCollection( mMessage.parentCollection() );
     id = fd->identity();
   }
 
@@ -1453,7 +1454,7 @@ KMPrintCommand::KMPrintCommand( QWidget *parent, const Akonadi::Item &msg,
   if ( MessageCore::GlobalSettings::useDefaultFonts() )
     mOverrideFont = KGlobalSettings::generalFont();
   else {
-    KConfigGroup fonts( KMKernel::config(), "Fonts" );
+    KConfigGroup fonts( KMKernel::self()->config(), "Fonts" );
     mOverrideFont = fonts.readEntry( "print-font", KGlobalSettings::generalFont() );
   }
 }
@@ -1649,7 +1650,7 @@ KMCommand::Result KMFilterActionCommand::execute()
     if (filterResult == 2) {
       // something went horribly wrong (out of space?)
       kError() << "Critical error";
-      kmkernel->emergencyExit( i18n("Not enough free disk space?" ));
+      CommonKernel->emergencyExit( i18n("Not enough free disk space?" ));
     }
     progressItem->incCompletedItems();
   }
@@ -1837,7 +1838,7 @@ Akonadi::Collection KMTrashMsgCommand::findTrashFolder( const Akonadi::Collectio
 {
   Akonadi::Collection col = kmkernel->trashCollectionFromResource( folder );
   if ( !col.isValid() ) {
-    col = kmkernel->trashCollectionFolder();
+    col = CommonKernel->trashCollectionFolder();
   }
   if ( folder != col )
     return col;

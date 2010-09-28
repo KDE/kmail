@@ -122,7 +122,7 @@ QPair< bool, KMime::MDN::SendingMode > MDNAdviceHelper::checkAndSetMDNInfo( cons
 {
   KMime::Message::Ptr msg = MessageCore::Util::message( item );
 
-  KConfigGroup mdnConfig( KMKernel::config(), "MDN" );
+  KConfigGroup mdnConfig( KMKernel::self()->config(), "MDN" );
 
   // RFC 2298: At most one MDN may be issued on behalf of each
   // particular recipient by their user agent.  That is, once an MDN

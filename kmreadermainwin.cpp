@@ -103,7 +103,7 @@ void KMReaderMainWin::initKMReaderMainWin()
   setupAccel();
   setupGUI( Keys | StatusBar | Create, "kmreadermainwin.rc" );
   mMsgActions->setupForwardingActionsList( this );
-  applyMainWindowSettings( KMKernel::config()->group( "Separate Reader Window" ) );
+  applyMainWindowSettings( KMKernel::self()->config()->group( "Separate Reader Window" ) );
   if( ! mReaderWin->message().isValid() ) {
     menuBar()->hide();
     toolBar( "mainToolBar" )->hide();
@@ -118,7 +118,7 @@ void KMReaderMainWin::initKMReaderMainWin()
 //-----------------------------------------------------------------------------
 KMReaderMainWin::~KMReaderMainWin()
 {
-  saveMainWindowSettings( KMKernel::config()->group( "Separate Reader Window" ) );
+  saveMainWindowSettings( KMKernel::self()->config()->group( "Separate Reader Window" ) );
 }
 
 //-----------------------------------------------------------------------------
@@ -183,7 +183,7 @@ void KMReaderMainWin::slotForwardInlineMsg()
 {
    KMCommand *command = 0;
    if ( mReaderWin->message().isValid() && mReaderWin->message().parentCollection().isValid() ) {
-     QSharedPointer<FolderCollection> fd = FolderCollection::forCollection( mReaderWin->message().parentCollection(), KMKernel::self()->mailCommon() );
+     QSharedPointer<FolderCollection> fd = FolderCollection::forCollection( mReaderWin->message().parentCollection() );
      if ( fd )
        command = new KMForwardCommand( this, mReaderWin->message(),
                                        fd->identity() );
@@ -202,7 +202,7 @@ void KMReaderMainWin::slotForwardAttachedMsg()
 {
    KMCommand *command = 0;
    if ( mReaderWin->message().isValid() && mReaderWin->message().parentCollection().isValid() ) {
-     QSharedPointer<FolderCollection> fd = FolderCollection::forCollection( mReaderWin->message().parentCollection(), KMKernel::self()->mailCommon() );
+     QSharedPointer<FolderCollection> fd = FolderCollection::forCollection( mReaderWin->message().parentCollection() );
      if ( fd )
        command = new KMForwardAttachedCommand( this, mReaderWin->message(),
                                                fd->identity() );
@@ -482,7 +482,7 @@ void KMReaderMainWin::slotCreateTodo()
 
 void KMReaderMainWin::slotEditToolbars()
 {
-  saveMainWindowSettings( KConfigGroup(KMKernel::config(), "ReaderWindow") );
+  saveMainWindowSettings( KConfigGroup(KMKernel::self()->config(), "ReaderWindow") );
   KEditToolBar dlg( guiFactory(), this );
   connect( &dlg, SIGNAL(newToolBarConfig()), SLOT(slotUpdateToolbars()) );
   dlg.exec();
@@ -491,7 +491,7 @@ void KMReaderMainWin::slotEditToolbars()
 void KMReaderMainWin::slotUpdateToolbars()
 {
   createGUI("kmreadermainwin.rc");
-  applyMainWindowSettings( KConfigGroup(KMKernel::config(), "ReaderWindow") );
+  applyMainWindowSettings( KConfigGroup(KMKernel::self()->config(), "ReaderWindow") );
 }
 
 #include "kmreadermainwin.moc"

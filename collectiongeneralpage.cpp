@@ -40,7 +40,8 @@
 #define KOLAB_INCIDENCESFOR "/vendor/kolab/incidences-for"
 #define KOLAB_SHAREDSEEN "/vendor/cmu/cyrus-imapd/sharedseen"
 
-#include <kmkernel.h>
+#include "kmkernel.h"
+#include "mailkernel.h"
 #include "foldercollection.h"
 #include "util.h"
 
@@ -118,7 +119,7 @@ static QString folderContentDesc( CollectionGeneralPage::FolderContentsType type
 
 void CollectionGeneralPage::init(const Akonadi::Collection &col)
 {
-  mIsLocalSystemFolder = KMKernel::self()->isSystemFolderCollection( col );
+  mIsLocalSystemFolder = CommonKernel->isSystemFolderCollection( col );
   mIsImapFolder = KMKernel::self()->isImapFolder( col );
 
 #if 0
@@ -354,7 +355,7 @@ void CollectionGeneralPage::init(const Akonadi::Collection &col)
 
 void CollectionGeneralPage::load(const Akonadi::Collection & col)
 {
-  mFolderCollection = FolderCollection::forCollection( col, KMKernel::self()->mailCommon() );
+  mFolderCollection = FolderCollection::forCollection( col );
   init( col );
   QString displayName;
   if ( col.hasAttribute<Akonadi::EntityDisplayAttribute>() ) {

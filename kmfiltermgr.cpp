@@ -44,7 +44,7 @@ KMFilterMgr::KMFilterMgr( bool popFilter )
   if ( bPopFilter ) {
     kDebug() << "pPopFilter set";
   }
-  connect( kmkernel->monitor(), SIGNAL( collectionRemoved( const Akonadi::Collection& ) ),
+  connect( kmkernel->folderCollectionMonitor(), SIGNAL( collectionRemoved( const Akonadi::Collection& ) ),
            this, SLOT( slotFolderRemoved( const Akonadi::Collection & ) ) );
 
   mChangeRecorder = new Akonadi::ChangeRecorder( this );
@@ -73,7 +73,7 @@ void KMFilterMgr::clear()
 void KMFilterMgr::readConfig(void)
 {
   beginUpdate();
-  KSharedConfig::Ptr config = KMKernel::config();
+  KSharedConfig::Ptr config = KMKernel::self()->config();
   clear();
 
   if ( bPopFilter ) {
@@ -87,7 +87,7 @@ void KMFilterMgr::readConfig(void)
 //-----------------------------------------------------------------------------
 void KMFilterMgr::writeConfig(bool withSync)
 {
-  KSharedConfig::Ptr config = KMKernel::config();
+  KSharedConfig::Ptr config = KMKernel::self()->config();
 
   // Now, write out the new stuff:
   FilterImporterExporter::writeFiltersToConfig( mFilters, config, bPopFilter );

@@ -379,7 +379,7 @@ KMFilterDlg::KMFilterDlg(QWidget* parent, bool popFilter, bool createDummyFilter
   connect( mFilterList, SIGNAL( abortClosing() ),
            this, SLOT( slotDisableAccept() ) );
 
-  KConfigGroup geometry( KMKernel::config(), "Geometry");
+  KConfigGroup geometry( KMKernel::self()->config(), "Geometry");
   const char * configKey
     = bPopFilter ? "popFilterDialogSize" : "filterDialogSize";
   if ( geometry.hasKey( configKey ) )
@@ -406,7 +406,7 @@ void KMFilterDlg::slotFinished() {
 }
 
 void KMFilterDlg::slotSaveSize() {
-  KConfigGroup geometry( KMKernel::config(), "Geometry" );
+  KConfigGroup geometry( KMKernel::self()->config(), "Geometry" );
   geometry.writeEntry( bPopFilter ? "popFilterDialogSize" : "filterDialogSize", size() );
 }
 

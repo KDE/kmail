@@ -35,6 +35,7 @@
 
 // other KMail headers:
 #include "kmkernel.h"
+#include "mailkernel.h"
 #include "simplestringlisteditor.h"
 #include "colorlistbox.h"
 #include <kpimidentities/identitymanager.h>
@@ -222,7 +223,7 @@ ConfigureDialog::ConfigureDialog( QWidget *parent, bool modal )
   // the KCMultiDialog starts with the size of the first kcm, not
   // the largest one. This way at least after the first showing of
   // the largest kcm the size is kept.
-  KConfigGroup geometry( KMKernel::config(), "Geometry" );
+  KConfigGroup geometry( KMKernel::self()->config(), "Geometry" );
   int width = geometry.readEntry( "ConfigureDialogWidth", 0 );
   int height = geometry.readEntry( "ConfigureDialogHeight", 0 );
   if ( width != 0 && height != 0 ) {
@@ -233,7 +234,7 @@ ConfigureDialog::ConfigureDialog( QWidget *parent, bool modal )
 
 void ConfigureDialog::hideEvent( QHideEvent *ev )
 {
-  KConfigGroup geometry( KMKernel::config(), "Geometry" );
+  KConfigGroup geometry( KMKernel::self()->config(), "Geometry" );
   geometry.writeEntry( "ConfigureDialogWidth", width() );
   geometry.writeEntry( "ConfigureDialogHeight",height() );
   KDialog::hideEvent( ev );
@@ -475,7 +476,7 @@ void AccountsPageReceivingTab::slotShowMailCheckMenu( const QString &ident, cons
   if( !mRetrievalHash.contains( ident ) ) {
 
     const QString resourceGroupPattern( "Resource %1" );
-    KConfigGroup group( KMKernel::config(), resourceGroupPattern.arg( ident ) );
+    KConfigGroup group( KMKernel::self()->config(), resourceGroupPattern.arg( ident ) );
 
     IncludeInManualChecks = group.readEntry( "IncludeInManualChecks", true );
     OfflineOnShutdown = group.readEntry( "OfflineOnShutdown", false );
@@ -631,14 +632,14 @@ void AccountsPage::ReceivingTab::doLoadFromGlobalSettings()
 
 void AccountsPage::ReceivingTab::doLoadOther()
 {
-  KConfigGroup general( KMKernel::config(), "General" );
+  KConfigGroup general( KMKernel::self()->config(), "General" );
   mAccountsReceiving.mBeepNewMailCheck->setChecked( general.readEntry( "beep-on-mail", false ) );
 }
 
 void AccountsPage::ReceivingTab::save()
 {
   // Save Mail notification settings
-  KConfigGroup general( KMKernel::config(), "General" );
+  KConfigGroup general( KMKernel::self()->config(), "General" );
   general.writeEntry( "beep-on-mail", mAccountsReceiving.mBeepNewMailCheck->isChecked() );
   GlobalSettings::self()->setVerboseNewMailNotification( mAccountsReceiving.mVerboseNotificationCheck->isChecked() );
 
@@ -646,7 +647,7 @@ void AccountsPage::ReceivingTab::save()
   QHashIterator<QString, QSharedPointer<RetrievalOptions> > it( mRetrievalHash );
   while( it.hasNext() ) {
     it.next();
-    KConfigGroup group( KMKernel::config(), resourceGroupPattern.arg( it.key() ) );
+    KConfigGroup group( KMKernel::self()->config(), resourceGroupPattern.arg( it.key() ) );
     QSharedPointer<RetrievalOptions> opts = it.value();
     group.writeEntry( "IncludeInManualChecks", opts->IncludeInManualChecks);
     group.writeEntry( "OfflineOnShutdown", opts->OfflineOnShutdown);
@@ -842,8 +843,8 @@ void AppearancePage::FontsTab::slotFontSelectorChanged( int index )
 
 void AppearancePage::FontsTab::doLoadOther()
 {
-  KConfigGroup fonts( KMKernel::config(), "Fonts" );
-  KConfigGroup messagelistFont( KMKernel::config(), "MessageListView::Fonts" );
+  KConfigGroup fonts( KMKernel::self()->config(), "Fonts" );
+  KConfigGroup messagelistFont( KMKernel::self()->config(), "MessageListView::Fonts" );
 
   mFont[0] = KGlobalSettings::generalFont();
   QFont fixedFont = KGlobalSettings::fixedFont();
@@ -869,8 +870,8 @@ void AppearancePage::FontsTab::doLoadOther()
 
 void AppearancePage::FontsTab::save()
 {
-  KConfigGroup fonts( KMKernel::config(), "Fonts" );
-  KConfigGroup messagelistFont( KMKernel::config(), "MessageListView::Fonts" );
+  KConfigGroup fonts( KMKernel::self()->config(), "Fonts" );
+  KConfigGroup messagelistFont( KMKernel::self()->config(), "MessageListView::Fonts" );
 
   // read the current font (might have been modified)
   if ( mActiveFontIndex >= 0 )
@@ -996,8 +997,8 @@ AppearancePageColorsTab::AppearancePageColorsTab( QWidget * parent )
 
 void AppearancePage::ColorsTab::doLoadOther()
 {
-  KConfigGroup reader( KMKernel::config(), "Reader" );
-  KConfigGroup messageListView( KMKernel::config(), "MessageListView::Colors" );
+  KConfigGroup reader( KMKernel::self()->config(), "Reader" );
+  KConfigGroup messageListView( KMKernel::self()->config(), "MessageListView::Colors" );
 
   mCustomColorCheck->setChecked( !MessageCore::GlobalSettings::self()->useDefaultColors() );
   mRecycleColorCheck->setChecked( reader.readEntry( "RecycleQuoteColors", false ) );
@@ -1045,8 +1046,8 @@ void AppearancePage::ColorsTab::doLoadOther()
 
 void AppearancePage::ColorsTab::save()
 {
-  KConfigGroup reader( KMKernel::config(), "Reader" );
-  KConfigGroup messageListView( KMKernel::config(), "MessageListView::Colors" );
+  KConfigGroup reader( KMKernel::self()->config(), "Reader" );
+  KConfigGroup messageListView( KMKernel::self()->config(), "MessageListView::Colors" );
   bool customColors = mCustomColorCheck->isChecked();
   MessageCore::GlobalSettings::self()->setUseDefaultColors( !customColors );
 
@@ -1144,7 +1145,7 @@ void AppearancePage::LayoutTab::doLoadOther()
   loadWidget( mReaderWindowModeGroupBox, mReaderWindowModeGroup, GlobalSettings::self()->readerWindowModeItem() );
   mFavoriteFolderViewCB->setChecked( GlobalSettings::self()->enableFavoriteCollectionView() );
   mFolderQuickSearchCB->setChecked( GlobalSettings::self()->enableFolderQuickSearch() );
-  const KConfigGroup mainFolderView( KMKernel::config(), "MainFolderView" );
+  const KConfigGroup mainFolderView( KMKernel::self()->config(), "MainFolderView" );
   const int checkedFolderToolTipsPolicy = mainFolderView.readEntry( "ToolTipDisplayPolicy", 0 );
   if ( checkedFolderToolTipsPolicy < mFolderToolTipsGroup->buttons().size() && checkedFolderToolTipsPolicy >= 0 )
     mFolderToolTipsGroup->buttons()[ checkedFolderToolTipsPolicy ]->setChecked( true );
@@ -1156,7 +1157,7 @@ void AppearancePage::LayoutTab::save()
   saveButtonGroup( mReaderWindowModeGroup, GlobalSettings::self()->readerWindowModeItem() );
   GlobalSettings::self()->setEnableFavoriteCollectionView( mFavoriteFolderViewCB->isChecked() );
   GlobalSettings::self()->setEnableFolderQuickSearch( mFolderQuickSearchCB->isChecked() );
-  KConfigGroup mainFolderView( KMKernel::config(), "MainFolderView" );
+  KConfigGroup mainFolderView( KMKernel::self()->config(), "MainFolderView" );
   mainFolderView.writeEntry( "ToolTipDisplayPolicy", mFolderToolTipsGroup->checkedId() );
 }
 
@@ -2619,7 +2620,7 @@ void ComposerPage::CharsetTab::slotVerifyCharset( QString & charset )
 
 void ComposerPage::CharsetTab::doLoadOther()
 {
-  KConfigGroup composer( KMKernel::config(), "Composer" );
+  KConfigGroup composer( KMKernel::self()->config(), "Composer" );
 
   QStringList charsets = MessageComposer::MessageComposerSettings::preferredCharsets();
   for ( QStringList::Iterator it = charsets.begin() ;
@@ -2648,7 +2649,7 @@ void ComposerPage::CharsetTab::doResetToDefaultsOther()
 
 void ComposerPage::CharsetTab::save()
 {
-  KConfigGroup composer( KMKernel::config(), "Composer" );
+  KConfigGroup composer( KMKernel::self()->config(), "Composer" );
 
   QStringList charsetList = mCharsetListEditor->stringList();
   QStringList::Iterator it = charsetList.begin();
@@ -2849,10 +2850,10 @@ void ComposerPage::HeadersTab::doLoadOther()
 
   QTreeWidgetItem * item = 0;
 
-  const KConfigGroup general( KMKernel::config(), "General" );
+  const KConfigGroup general( KMKernel::self()->config(), "General" );
   int count = general.readEntry( "mime-header-count", 0 );
   for( int i = 0 ; i < count ; i++ ) {
-    KConfigGroup config( KMKernel::config(),
+    KConfigGroup config( KMKernel::self()->config(),
                          QString("Mime #") + QString::number(i) );
     QString name  = config.readEntry( "name" );
     QString value = config.readEntry( "value" );
@@ -2881,14 +2882,14 @@ void ComposerPage::HeadersTab::save()
   for ( int i = 0; i < mTagList->topLevelItemCount(); ++i ) {
     item = mTagList->topLevelItem( i );
     if( !item->text(0).isEmpty() ) {
-      KConfigGroup config( KMKernel::config(), QString("Mime #")
+      KConfigGroup config( KMKernel::self()->config(), QString("Mime #")
                              + QString::number( numValidEntries ) );
       config.writeEntry( "name",  item->text( 0 ) );
       config.writeEntry( "value", item->text( 1 ) );
       numValidEntries++;
     }
   }
-  KConfigGroup general( KMKernel::config(), "General" );
+  KConfigGroup general( KMKernel::self()->config(), "General" );
   general.writeEntry( "mime-header-count", numValidEntries );
 }
 
@@ -3112,7 +3113,7 @@ void SecurityPage::GeneralTab::doLoadOther()
 
   mSGTab.mAlwaysDecrypt->setChecked( MessageViewer::GlobalSettings::self()->alwaysDecrypt() );
 
-  const KConfigGroup mdn( KMKernel::config(), "MDN" );
+  const KConfigGroup mdn( KMKernel::self()->config(), "MDN" );
 
   int num = mdn.readEntry( "default-policy", 0 );
   if ( num < 0 || num >= mMDNGroup->buttons().count() ) num = 0;
@@ -3125,8 +3126,8 @@ void SecurityPage::GeneralTab::doLoadOther()
 
 void SecurityPage::GeneralTab::save()
 {
-  KConfigGroup reader( KMKernel::config(), "Reader" );
-  KConfigGroup mdn( KMKernel::config(), "MDN" );
+  KConfigGroup reader( KMKernel::self()->config(), "Reader" );
+  KConfigGroup mdn( KMKernel::self()->config(), "MDN" );
 
   if ( MessageViewer::GlobalSettings::self()->htmlMail() != mSGTab.mHtmlMailCheck->isChecked())
   {
@@ -3136,9 +3137,9 @@ void SecurityPage::GeneralTab::save()
     {
       MessageViewer::GlobalSettings::self()->setHtmlMail( mSGTab.mHtmlMailCheck->isChecked() );
       foreach( const Akonadi::Collection &collection, kmkernel->allFolders() ) {
-        QSharedPointer<FolderCollection> fd = FolderCollection::forCollection( collection, KMKernel::self()->mailCommon() );
+        QSharedPointer<FolderCollection> fd = FolderCollection::forCollection( collection );
         if ( fd ) {
-          KConfigGroup config( KMKernel::config(), fd->configGroupName() );
+          KConfigGroup config( KMKernel::self()->config(), fd->configGroupName() );
           config.writeEntry("htmlMailOverride", false);
         }
       }
@@ -3180,7 +3181,7 @@ SecurityPageComposerCryptoTab::SecurityPageComposerCryptoTab( QWidget * parent )
 
 void SecurityPage::ComposerCryptoTab::doLoadOther()
 {
-  const KConfigGroup composer( KMKernel::config(), "Composer" );
+  const KConfigGroup composer( KMKernel::self()->config(), "Composer" );
 
   // If you change default values, sync messagecomposer.cpp too
 
@@ -3205,7 +3206,7 @@ void SecurityPage::ComposerCryptoTab::doLoadOther()
 
 void SecurityPage::ComposerCryptoTab::save()
 {
-  KConfigGroup composer( KMKernel::config(), "Composer" );
+  KConfigGroup composer( KMKernel::self()->config(), "Composer" );
 
   composer.writeEntry( "pgp-auto-sign", mWidget->mAutoSignature->isChecked() );
 
@@ -3247,7 +3248,7 @@ SecurityPageWarningTab::SecurityPageWarningTab( QWidget * parent )
 
 void SecurityPage::WarningTab::doLoadOther()
 {
-  const KConfigGroup composer( KMKernel::config(), "Composer" );
+  const KConfigGroup composer( KMKernel::self()->config(), "Composer" );
 
   mWidget->warnUnencryptedCB->setChecked(
       composer.readEntry( "crypto-warning-unencrypted", false ) );
@@ -3286,7 +3287,7 @@ void SecurityPage::WarningTab::doLoadOther()
 
 void SecurityPage::WarningTab::save()
 {
-  KConfigGroup composer( KMKernel::config(), "Composer" );
+  KConfigGroup composer( KMKernel::self()->config(), "Composer" );
 
   composer.writeEntry( "crypto-warn-recv-not-in-cert", mWidget->warnReceiverNotInCertificateCB->isChecked() );
   composer.writeEntry( "crypto-warning-unencrypted", mWidget->warnUnencryptedCB->isChecked() );
@@ -3674,7 +3675,7 @@ MiscPageFolderTab::MiscPageFolderTab( QWidget * parent )
   QHBoxLayout* layout = new QHBoxLayout;
   layout->setContentsMargins(0, 0, 0, 0);  
   mMMTab.mOnStartupOpenFolder->setLayout( layout );
-  mOnStartupOpenFolder = new FolderRequester( KMKernel::self()->mailCommon(), mMMTab.mOnStartupOpenFolder );
+  mOnStartupOpenFolder = new FolderRequester( mMMTab.mOnStartupOpenFolder );
   layout->addWidget( mOnStartupOpenFolder );
   
   mMMTab.gridLayout->setSpacing( KDialog::spacingHint() );
@@ -3719,12 +3720,12 @@ void MiscPage::FolderTab::doLoadFromGlobalSettings()
 
 void MiscPage::FolderTab::doLoadOther()
 {
-  KConfigGroup general( KMKernel::config(), "General" );
+  KConfigGroup general( KMKernel::self()->config(), "General" );
 
   mMMTab.mEmptyTrashCheck->setChecked(
       general.readEntry( "empty-trash-on-exit", false ) );
   mOnStartupOpenFolder->setFolder( general.readEntry( "startupFolder",
-      QString::number(kmkernel->inboxCollectionFolder().id() )) );
+      QString::number(CommonKernel->inboxCollectionFolder().id() )) );
   mMMTab.mEmptyFolderConfirmCheck->setChecked(
       general.readEntry( "confirm-before-empty", true ) );
 
@@ -3732,7 +3733,7 @@ void MiscPage::FolderTab::doLoadOther()
 
 void MiscPage::FolderTab::save()
 {
-  KConfigGroup general( KMKernel::config(), "General" );
+  KConfigGroup general( KMKernel::self()->config(), "General" );
 
   general.writeEntry( "empty-trash-on-exit", mMMTab.mEmptyTrashCheck->isChecked() );
   general.writeEntry( "confirm-before-empty", mMMTab.mEmptyFolderConfirmCheck->isChecked() );

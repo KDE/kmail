@@ -419,7 +419,7 @@ void KMReaderWin::slotTouchMessage()
 
   QPair< bool, KMime::MDN::SendingMode > mdnSend = MDNAdviceHelper::instance()->checkAndSetMDNInfo( message(), KMime::MDN::Displayed );
   if( mdnSend.first ) {
-    KConfigGroup mdnConfig( KMKernel::config(), "MDN" );
+    KConfigGroup mdnConfig( KMKernel::self()->config(), "MDN" );
     int quote = mdnConfig.readEntry<int>( "quote-message", 0 );
     MessageFactory factory( msg, Akonadi::Item().id() );
     factory.setIdentityManager( KMKernel::self()->identityManager() );
@@ -660,7 +660,7 @@ void KMReaderWin::slotUrlClicked( const Akonadi::Item & item, const KUrl & url )
 {
   uint identity = 0;
   if ( item.isValid() && item.parentCollection().isValid() ) {
-    QSharedPointer<FolderCollection> fd = FolderCollection::forCollection( item.parentCollection(), KMKernel::self()->mailCommon() );
+    QSharedPointer<FolderCollection> fd = FolderCollection::forCollection( item.parentCollection() );
     if ( fd )
       identity = fd->identity();
   }

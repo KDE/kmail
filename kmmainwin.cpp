@@ -82,7 +82,7 @@ KMMainWin::KMMainWin(QWidget *)
   createGUI( "kmmainwin.rc" );
 
   //must be after createGUI, otherwise e.g toolbar settings are not loaded
-  applyMainWindowSettings( KMKernel::config()->group( "Main Window") );
+  applyMainWindowSettings( KMKernel::self()->config()->group( "Main Window") );
 
   connect( KPIM::BroadcastStatus::instance(), SIGNAL( statusMsg( const QString& ) ),
            this, SLOT( displayStatusMsg(const QString&) ) );
@@ -100,8 +100,8 @@ KMMainWin::KMMainWin(QWidget *)
 
 KMMainWin::~KMMainWin()
 {
-  saveMainWindowSettings( KMKernel::config()->group( "Main Window") );
-  KMKernel::config()->sync();
+  saveMainWindowSettings( KMKernel::self()->config()->group( "Main Window") );
+  KMKernel::self()->config()->sync();
 
 #if 0
   if ( mReallyClose ) {
@@ -154,7 +154,7 @@ void KMMainWin::slotNewMailReader()
 
 void KMMainWin::slotEditToolbars()
 {
-  saveMainWindowSettings(KMKernel::config()->group( "Main Window") );
+  saveMainWindowSettings(KMKernel::self()->config()->group( "Main Window") );
   KEditToolBar dlg(actionCollection(), this);
   dlg.setResourceFile( "kmmainwin.rc" );
 
@@ -170,7 +170,7 @@ void KMMainWin::slotUpdateToolbars()
   mKMMainWidget->tagActionManager()->clearActions();
 
   createGUI("kmmainwin.rc");
-  applyMainWindowSettings(KMKernel::config()->group( "Main Window") );
+  applyMainWindowSettings(KMKernel::self()->config()->group( "Main Window") );
 
   // plug dynamically created actions again
   mKMMainWidget->initializeFilterActions();
