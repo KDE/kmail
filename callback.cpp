@@ -111,11 +111,13 @@ bool Callback::mailICal( const QString& to, const QString &iCal,
     msg->setBody( iCal.utf8() );
   }
 
-  if ( delMessage && deleteInvitationAfterReply() )
+  if ( delMessage && deleteInvitationAfterReply() ) {
     /* We want the triggering mail to be moved to the trash once this one
     * has been sent successfully. Set a link header which accomplishes that. */
     msg->link( mMsg, KMMsgStatusDeleted );
-
+  } else {
+    mReaderWin->updateReaderWin();
+  }
   // Try and match the receiver with an identity.
   // Setting the identity here is important, as that is used to select the correct
   // transport later
@@ -240,6 +242,11 @@ QString Callback::receiver() const
   return mReceiver;
 }
 
+void Callback::updateReaderWindow() const
+{
+  mReaderWin->updateReaderWin();
+}
+
 void Callback::closeIfSecondaryWindow() const
 {
   KMail::SecondaryWindow *window = dynamic_cast<KMail::SecondaryWindow*>( mReaderWin->mainWindow() );
@@ -249,18 +256,20 @@ void Callback::closeIfSecondaryWindow() const
 
 bool Callback::askForComment( KCal::Attendee::PartStat status ) const
 {
-    if ( ( status != KCal::Attendee::Accepted
-            && GlobalSettings::self()->askForCommentWhenReactingToInvitation()
-            == GlobalSettings:: EnumAskForCommentWhenReactingToInvitation::AskForAllButAcceptance )
-        || GlobalSettings::self()->askForCommentWhenReactingToInvitation()
-        == GlobalSettings:: EnumAskForCommentWhenReactingToInvitation::AlwaysAsk )
-        return true;
+  if ( ( status != KCal::Attendee::Accepted &&
+         GlobalSettings::self()->askForCommentWhenReactingToInvitation() ==
+         GlobalSettings:: EnumAskForCommentWhenReactingToInvitation::AskForAllButAcceptance ) ||
+       GlobalSettings::self()->askForCommentWhenReactingToInvitation() ==
+       GlobalSettings:: EnumAskForCommentWhenReactingToInvitation::AlwaysAsk ) {
+    return true;
+  } else {
     return false;
+  }
 }
 
 bool Callback::deleteInvitationAfterReply() const
 {
-    return GlobalSettings::self()->deleteInvitationEmailsAfterSendingReply();
+  return GlobalSettings::self()->deleteInvitationEmailsAfterSendingReply();
 }
 
 bool Callback::exchangeCompatibleInvitations() const

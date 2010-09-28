@@ -72,6 +72,9 @@ public:
   /** Returns the sender of the mail. */
   QString sender() const;
 
+  /** Updates the current reader window. */
+  void updateReaderWindow() const;
+
   /** Close the main window showing this message, if it's a secondary window. */
   void closeIfSecondaryWindow() const;
 
