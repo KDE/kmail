@@ -116,7 +116,7 @@ bool Callback::mailICal( const QString& to, const QString &iCal,
     * has been sent successfully. Set a link header which accomplishes that. */
     msg->link( mMsg, KMMsgStatusDeleted );
   } else {
-    mReaderWin->updateReaderWin();
+    updateReaderWindow();
   }
   // Try and match the receiver with an identity.
   // Setting the identity here is important, as that is used to select the correct
@@ -244,7 +244,8 @@ QString Callback::receiver() const
 
 void Callback::updateReaderWindow() const
 {
-  mReaderWin->updateReaderWin();
+ // seems to hang the source code viewer window we do this.
+ // mReaderWin->updateReaderWin();
 }
 
 void Callback::closeIfSecondaryWindow() const
