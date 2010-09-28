@@ -1720,7 +1720,7 @@ bool KMComposeWin::queryClose ()
   }
 
   if ( isModified() ) {
-    bool istemplate = ( mFolder.isValid() && kmkernel->folderIsTemplates( mFolder ) );
+    bool istemplate = ( mFolder.isValid() && CommonKernel->folderIsTemplates( mFolder ) );
     const QString savebut = ( istemplate ?
                               i18n("Re&save as Template") :
                               i18n("&Save as Draft") );

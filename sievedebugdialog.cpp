@@ -191,7 +191,7 @@ SieveDebugDialog::SieveDebugDialog( QWidget *parent )
     setCaption( i18n( "Sieve Diagnostics" ) );
     setButtons( Ok );
     // Collect all accounts
-    Akonadi::AgentInstance::List lst = KMail::Util::agentInstances();
+    Akonadi::AgentInstance::List lst = MailCommon::Util::agentInstances();
     foreach ( const Akonadi::AgentInstance& type, lst )
     {
       if ( type.identifier().contains( IMAP_RESOURCE_IDENTIFIER ) ) {

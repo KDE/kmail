@@ -26,6 +26,8 @@
 #include "kmversion.h"
 #include "kmmainwidget.h"
 #include "kmreadermainwin.h"
+#include "mailkernel.h"
+
 #include <kpimutils/email.h>
 #include <kpimutils/kfileio.h>
 #include <libkdepim/addemailaddressjob.h>
@@ -407,10 +409,10 @@ void KMReaderWin::slotTouchMessage()
 #endif
   Akonadi::Collection col = message().parentCollection();
   if ( col.isValid() &&
-       ( KMKernel::self()->folderIsSentMailFolder( col ) ||
-         KMKernel::self()->folderIsTrash( col ) ||
-         KMKernel::self()->folderIsDraftOrOutbox( col ) ||
-         KMKernel::self()->folderIsTemplates( col ) ) )
+       ( CommonKernel->folderIsSentMailFolder( col ) ||
+         CommonKernel->folderIsTrash( col ) ||
+         CommonKernel->folderIsDraftOrOutbox( col ) ||
+         CommonKernel->folderIsTemplates( col ) ) )
     return;
 
   KMime::Message::Ptr msg = MessageCore::Util::message( message() );

@@ -261,18 +261,6 @@ public:
                const QString &bcc, const QString &subj, const QString &body,
                const KUrl &messageFile, const KUrl::List &attach,
                const QStringList &customHeaders );
-  bool folderIsDraftOrOutbox(const Akonadi::Collection &);
-  bool folderIsDrafts(const Akonadi::Collection&);
-
-  bool folderIsTemplates(const Akonadi::Collection &);
-  bool folderIsTrash( const Akonadi::Collection & );
-
-  Akonadi::Collection trashCollectionFromResource( const Akonadi::Collection & col );
-
-  /**
-   * Returns true if the folder is one of the sent-mail folders.
-   */
-  bool folderIsSentMailFolder( const Akonadi::Collection& );
 
   bool isImapFolder( const Akonadi::Collection& ) const;
 

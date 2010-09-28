@@ -103,12 +103,6 @@ namespace Util {
     void launchAccountWizard( QWidget * );
 
     /**
-     * Returns a list of agents instances that are relevant to KMail, i.e. agents that deal
-     * with rfc822 and that are resources.
-     */
-    Akonadi::AgentInstance::List agentInstances();
-
-    /**
      * Handles a clicked URL, but only in case the viewer didn't handle it.
      * Currently only support mailto.
      */

@@ -456,7 +456,7 @@ void KMKernel::checkMail () //might create a new reader but won't show!!
 
   const QString resourceGroupPattern( "Resource %1" );
 
-  const Akonadi::AgentInstance::List lst = KMail::Util::agentInstances();
+  const Akonadi::AgentInstance::List lst = MailCommon::Util::agentInstances();
   foreach( Akonadi::AgentInstance type, lst ) {
     KConfigGroup group( KMKernel::config(), resourceGroupPattern.arg( type.identifier() ) );
     if ( group.readEntry( "IncludeInManualChecks", true ) ) {
@@ -476,7 +476,7 @@ void KMKernel::checkMail () //might create a new reader but won't show!!
 QStringList KMKernel::accounts()
 {
   QStringList accountLst;
-  const Akonadi::AgentInstance::List lst = KMail::Util::agentInstances();
+  const Akonadi::AgentInstance::List lst = MailCommon::Util::agentInstances();
   foreach ( const Akonadi::AgentInstance& type, lst )
   {
     // Explicitly make a copy, as we're not changing values of the list but only
@@ -889,7 +889,7 @@ void KMKernel::stopNetworkJobs()
   if ( GlobalSettings::self()->networkState() == GlobalSettings::EnumNetworkState::Offline )
     return;
 
-  const Akonadi::AgentInstance::List lst = KMail::Util::agentInstances();
+  const Akonadi::AgentInstance::List lst = MailCommon::Util::agentInstances();
   foreach ( Akonadi::AgentInstance type, lst ) {
     if ( type.identifier().contains( IMAP_RESOURCE_IDENTIFIER ) ||
          type.identifier().contains( POP3_RESOURCE_IDENTIFIER ) ) {
@@ -908,7 +908,7 @@ void KMKernel::resumeNetworkJobs()
   if ( GlobalSettings::self()->networkState() == GlobalSettings::EnumNetworkState::Online )
     return;
 
-  const Akonadi::AgentInstance::List lst = KMail::Util::agentInstances();
+  const Akonadi::AgentInstance::List lst = MailCommon::Util::agentInstances();
   foreach ( Akonadi::AgentInstance type, lst ) {
     if ( type.identifier().contains( IMAP_RESOURCE_IDENTIFIER ) ||
          type.identifier().contains( POP3_RESOURCE_IDENTIFIER ) ) {
@@ -940,7 +940,7 @@ void KMKernel::checkMailOnStartup()
 
   const QString resourceGroupPattern( "Resource %1" );
 
-  const Akonadi::AgentInstance::List lst = KMail::Util::agentInstances();
+  const Akonadi::AgentInstance::List lst = MailCommon::Util::agentInstances();
   foreach( Akonadi::AgentInstance type, lst ) {
     KConfigGroup group( KMKernel::config(), resourceGroupPattern.arg( type.identifier() ) );
     if ( group.readEntry( "CheckOnStartup", false ) ) {
@@ -1371,100 +1371,6 @@ bool KMKernel::unregisterSystemTrayApplet( KMSystemTray* applet )
   return systemTrayApplets.removeAll( applet ) > 0;
 }
 
-/**
- * Returns true if the folder is either the outbox or one of the drafts-folders
- */
-bool KMKernel::folderIsDraftOrOutbox(const Akonadi::Collection & col)
-{
-  if ( col == Akonadi::SpecialMailCollections::self()->defaultCollection( Akonadi::SpecialMailCollections::Outbox ) )
-    return true;
-  return folderIsDrafts( col );
-}
-
-bool KMKernel::folderIsDrafts(const Akonadi::Collection & col)
-{
-  if ( col ==  Akonadi::SpecialMailCollections::self()->defaultCollection( Akonadi::SpecialMailCollections::Drafts ) )
-    return true;
-
-  const QString idString = QString::number( col.id() );
-  if ( idString.isEmpty() ) return false;
-
-  // search the identities if the folder matches the drafts-folder
-  const KPIMIdentities::IdentityManager * im = identityManager();
-  for( KPIMIdentities::IdentityManager::ConstIterator it = im->begin(); it != im->end(); ++it )
-    if ( (*it).drafts() == idString ) return true;
-  return false;
-}
-
-bool KMKernel::folderIsTemplates(const Akonadi::Collection &col)
-{
-  if ( col ==  Akonadi::SpecialMailCollections::self()->defaultCollection( Akonadi::SpecialMailCollections::Templates ) )
-    return true;
-
-  const QString idString = QString::number( col.id() );
-  if ( idString.isEmpty() ) return false;
-
-  // search the identities if the folder matches the templates-folder
-  const KPIMIdentities::IdentityManager * im = identityManager();
-  for( KPIMIdentities::IdentityManager::ConstIterator it = im->begin(); it != im->end(); ++it )
-    if ( (*it).templates() == idString ) return true;
-  return false;
-}
-
-Akonadi::Collection KMKernel::trashCollectionFromResource( const Akonadi::Collection & col )
-{
-  Akonadi::Collection trashCol;
-  if ( col.isValid() ) {
-    if ( col.resource().contains( IMAP_RESOURCE_IDENTIFIER ) ) {
-      OrgKdeAkonadiImapSettingsInterface *iface = MailCommon::Util::createImapSettingsInterface( col.resource() );
-      if ( iface->isValid() ) {
-
-        trashCol =  Akonadi::Collection( iface->trashCollection() );
-        delete iface;
-        return trashCol;
-      }
-      delete iface;
-    }
-  }
-  return trashCol;
-}
-
-bool KMKernel::folderIsTrash( const Akonadi::Collection & col )
-{
-  if ( col == Akonadi::SpecialMailCollections::self()->defaultCollection( Akonadi::SpecialMailCollections::Trash ) )
-    return true;
-  const Akonadi::AgentInstance::List lst = KMail::Util::agentInstances();
-  foreach ( const Akonadi::AgentInstance& type, lst ) {
-    if ( type.status() == Akonadi::AgentInstance::Broken )
-      continue;
-    if ( type.identifier().contains( IMAP_RESOURCE_IDENTIFIER ) ) {
-      OrgKdeAkonadiImapSettingsInterface *iface = MailCommon::Util::createImapSettingsInterface( type.identifier() );
-      if ( iface->isValid() ) {
-        if ( iface->trashCollection() == col.id() ) {
-          delete iface;
-          return true;
-        }
-      }
-      delete iface;
-    }
-  }
-  return false;
-}
-
-bool KMKernel::folderIsSentMailFolder( const Akonadi::Collection &col )
-{
-  if ( col == Akonadi::SpecialMailCollections::self()->defaultCollection( Akonadi::SpecialMailCollections::SentMail ) )
-    return true;
-
-  const QString idString = QString::number( col.id() );
-  if ( idString.isEmpty() ) return false;
-
-  // search the identities if the folder matches the sent-folder
-  const KPIMIdentities::IdentityManager * im = identityManager();
-  for( KPIMIdentities::IdentityManager::ConstIterator it = im->begin(); it != im->end(); ++it )
-    if ( (*it).fcc() == idString ) return true;
-  return false;
-}
 
 KPIMIdentities::IdentityManager * KMKernel::identityManager() {
   if ( !mIdentityManager ) {
@@ -1718,7 +1624,7 @@ void KMKernel::itemDispatchStarted()
 
 void KMKernel::instanceStatusChanged( Akonadi::AgentInstance instance )
 {
-  if ( KMail::Util::agentInstances().contains( instance ) ) {
+  if ( MailCommon::Util::agentInstances().contains( instance ) ) {
     if ( instance.status() == Akonadi::AgentInstance::Running ) {
 
       if ( mResourcesBeingChecked.isEmpty() ) {
@@ -1770,7 +1676,7 @@ void KMKernel::stopAgentInstance()
 {
   const QString resourceGroupPattern( "Resource %1" );
 
-  const Akonadi::AgentInstance::List lst = KMail::Util::agentInstances();
+  const Akonadi::AgentInstance::List lst = MailCommon::Util::agentInstances();
   foreach( Akonadi::AgentInstance type, lst ) {
     KConfigGroup group( KMKernel::config(), resourceGroupPattern.arg( type.identifier() ) );
     /* TODO should not assume true but notify or ask the user. other Akonadi clients could expect these resources to continue working */

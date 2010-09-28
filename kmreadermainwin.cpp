@@ -50,6 +50,7 @@
 #include "customtemplatesmenu.h"
 #include "messageactions.h"
 #include "util.h"
+#include "mailkernel.h"
 #include "foldercollection.h"
 
 #include <akonadi/contact/contactsearchjob.h>
@@ -424,9 +425,9 @@ void KMReaderMainWin::slotDelayedMessagePopup( KJob *job )
     }
     if ( mMsg.parentCollection().isValid() ) {
       Akonadi::Collection col = mMsg.parentCollection();
-      if ( ! ( KMKernel::self()->folderIsSentMailFolder( col ) ||
-               KMKernel::self()->folderIsDrafts( col ) ||
-               KMKernel::self()->folderIsTemplates( col ) ) ) {
+      if ( ! ( CommonKernel->folderIsSentMailFolder( col ) ||
+               CommonKernel->folderIsDrafts( col ) ||
+               CommonKernel->folderIsTemplates( col ) ) ) {
         // add the reply and forward actions only if we are not in a sent-mail,
         // templates or drafts folder
         //

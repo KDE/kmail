@@ -190,19 +190,6 @@ void KMail::Util::launchAccountWizard( QWidget *w )
 
 }
 
-Akonadi::AgentInstance::List KMail::Util::agentInstances()
-{
-  Akonadi::AgentInstance::List relevantInstances;
-  foreach ( const Akonadi::AgentInstance &instance, Akonadi::AgentManager::self()->instances() ) {
-    if ( instance.type().mimeTypes().contains( KMime::Message::mimeType() ) &&
-         instance.type().capabilities().contains( "Resource" ) &&
-         !instance.type().capabilities().contains( "Virtual" ) ) {
-      relevantInstances << instance;
-    }
-  }
-  return relevantInstances;
-}
-
 void KMail::Util::handleClickedURL( const KUrl &url, uint identity )
 {
   if ( url.protocol() == "mailto" )

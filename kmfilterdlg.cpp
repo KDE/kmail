@@ -25,7 +25,7 @@
 #include "kmfiltermgr.h"
 #include "kmmainwidget.h"
 #include "filterimporterexporter.h"
-#include "util.h"
+#include "mailutil.h"
 using KMail::FilterImporterExporter;
 
 // KDEPIMLIBS headers
@@ -595,7 +595,7 @@ void KMFilterDlg::slotUpdateAccountList()
   // slotApplicableAccountsChanged(), which will read the incomplete item
   // state and write that back to the filter
   mAccountList->blockSignals( true );
-  const Akonadi::AgentInstance::List lst = KMail::Util::agentInstances();
+  const Akonadi::AgentInstance::List lst = MailCommon::Util::agentInstances();
   const int nbAccount = lst.count();
   for ( int i = 0; i <nbAccount; ++i ) {
     if( lst.at( i ).type().identifier() == "akonadi_nepomuktag_resource" )

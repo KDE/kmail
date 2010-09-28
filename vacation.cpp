@@ -493,7 +493,7 @@ namespace KMail {
 
 
   KUrl Vacation::findURL() const {
-    const Akonadi::AgentInstance::List lst = KMail::Util::agentInstances();
+    const Akonadi::AgentInstance::List lst = MailCommon::Util::agentInstances();
     foreach ( const Akonadi::AgentInstance& type, lst )
     {
       if ( type.identifier().contains( IMAP_RESOURCE_IDENTIFIER ) ) {

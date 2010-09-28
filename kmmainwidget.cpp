@@ -1443,7 +1443,7 @@ void KMMainWidget::slotEmptyFolder()
   QString str;
 
   if (!mCurrentFolder) return;
-  const bool isTrash = kmkernel->folderIsTrash( mCurrentFolder->collection() );
+  const bool isTrash = CommonKernel->folderIsTrash( mCurrentFolder->collection() );
   if (mConfirmEmpty)
   {
     const QString title = (isTrash) ? i18n("Empty Trash") : i18n("Move to Trash");
@@ -1633,7 +1633,7 @@ void KMMainWidget::slotOverrideHtmlLoadExt()
 //-----------------------------------------------------------------------------
 void KMMainWidget::slotMessageQueuedOrDrafted()
 {
-  if (!kmkernel->folderIsDraftOrOutbox(mCurrentFolder->collection()))
+  if (!CommonKernel->folderIsDraftOrOutbox(mCurrentFolder->collection()))
       return;
   if (mMsgView)
     mMsgView->update(true);
@@ -2639,13 +2639,13 @@ void KMMainWidget::slotMessageActivated( const Akonadi::Item &msg )
   if ( !mCurrentFolder || !msg.isValid() )
     return;
 
-  if ( kmkernel->folderIsDraftOrOutbox( mCurrentFolder->collection() ) )
+  if ( CommonKernel->folderIsDraftOrOutbox( mCurrentFolder->collection() ) )
   {
     mMsgActions->editCurrentMessage();
     return;
   }
 
-  if ( kmkernel->folderIsTemplates( mCurrentFolder->collection() ) ) {
+  if ( CommonKernel->folderIsTemplates( mCurrentFolder->collection() ) ) {
     slotUseTemplate();
     return;
   }
@@ -2777,13 +2777,13 @@ void KMMainWidget::slotDelayedMessagePopup( KJob *job )
       return;
     }
     Akonadi::Collection parentCol = msg.parentCollection();
-    if ( parentCol.isValid() && KMKernel::self()->folderIsTemplates( parentCol) ) {
+    if ( parentCol.isValid() && CommonKernel->folderIsTemplates( parentCol) ) {
       menu->addAction( mUseAction );
     } else {
       menu->addAction( mMsgActions->replyMenu() );
       menu->addAction( mMsgActions->forwardMenu() );
     }
-    if( parentCol.isValid() && KMKernel::self()->folderIsSentMailFolder( parentCol ) ) {
+    if( parentCol.isValid() && CommonKernel->folderIsSentMailFolder( parentCol ) ) {
       menu->addAction( sendAgainAction() );
     } else {
       menu->addAction( editAction() );
@@ -2810,7 +2810,7 @@ void KMMainWidget::slotDelayedMessagePopup( KJob *job )
     menu->addAction( mSaveAttachmentsAction );
 
     menu->addSeparator();
-    if ( parentCol.isValid() && KMKernel::self()->folderIsTrash(parentCol) ) {
+    if ( parentCol.isValid() && CommonKernel->folderIsTrash(parentCol) ) {
       menu->addAction( mDeleteAction );
     } else {
       menu->addAction( mTrashAction );
@@ -2827,7 +2827,7 @@ void KMMainWidget::slotDelayedMessagePopup( KJob *job )
 void KMMainWidget::getAccountMenu()
 {
   mActMenu->clear();
-  const Akonadi::AgentInstance::List lst = KMail::Util::agentInstances();
+  const Akonadi::AgentInstance::List lst = MailCommon::Util::agentInstances();
   foreach ( const Akonadi::AgentInstance& type, lst )
   {
     // Explicitly make a copy, as we're not changing values of the list but only
@@ -3675,15 +3675,15 @@ void KMMainWidget::updateMessageActionsDelayed()
   mDeleteAction->setEnabled( mass_actions && !readOnly );
   mExpireConfigAction->setEnabled( canDeleteMessages );
 
-  mFindInMessageAction->setEnabled( mass_actions && !kmkernel->folderIsTemplates( mCurrentFolder->collection() ) );
-  mMsgActions->forwardInlineAction()->setEnabled( mass_actions && !kmkernel->folderIsTemplates( mCurrentFolder->collection() ) );
-  mMsgActions->forwardAttachedAction()->setEnabled( mass_actions && !kmkernel->folderIsTemplates( mCurrentFolder->collection() ) );
-  mMsgActions->forwardMenu()->setEnabled( mass_actions && !kmkernel->folderIsTemplates( mCurrentFolder->collection() ) );
+  mFindInMessageAction->setEnabled( mass_actions && !CommonKernel->folderIsTemplates( mCurrentFolder->collection() ) );
+  mMsgActions->forwardInlineAction()->setEnabled( mass_actions && !CommonKernel->folderIsTemplates( mCurrentFolder->collection() ) );
+  mMsgActions->forwardAttachedAction()->setEnabled( mass_actions && !CommonKernel->folderIsTemplates( mCurrentFolder->collection() ) );
+  mMsgActions->forwardMenu()->setEnabled( mass_actions && !CommonKernel->folderIsTemplates( mCurrentFolder->collection() ) );
 
   mMsgActions->editAction()->setEnabled( single_actions );
-  mUseAction->setEnabled( single_actions && kmkernel->folderIsTemplates( mCurrentFolder->collection() ) );
+  mUseAction->setEnabled( single_actions && CommonKernel->folderIsTemplates( mCurrentFolder->collection() ) );
   filterMenu()->setEnabled( single_actions );
-  mMsgActions->redirectAction()->setEnabled( single_actions && !kmkernel->folderIsTemplates( mCurrentFolder->collection() ) );
+  mMsgActions->redirectAction()->setEnabled( single_actions && !CommonKernel->folderIsTemplates( mCurrentFolder->collection() ) );
 
   if ( mCustomTemplateMenus )
   {
@@ -3702,7 +3702,7 @@ void KMMainWidget::updateMessageActionsDelayed()
   status.setStatusFromFlags( currentMessage.flags() );
 
   QList< QAction *> actionList;
-  bool statusSendAgain = single_actions && ( ( currentMessage.isValid() && status.isSent() ) || ( currentMessage.isValid() && kmkernel->folderIsSentMailFolder( mCurrentFolder->collection() ) ) );
+  bool statusSendAgain = single_actions && ( ( currentMessage.isValid() && status.isSent() ) || ( currentMessage.isValid() && CommonKernel->folderIsSentMailFolder( mCurrentFolder->collection() ) ) );
   if ( statusSendAgain ) {
     actionList << mSendAgainAction;
   } else if( single_actions ) {
@@ -3773,7 +3773,7 @@ void KMMainWidget::slotAkonadiStandardActionUpdated()
                                                                                                              && ( mCurrentFolder->count() > 0 )
                                                                                                              && mCurrentFolder->canDeleteMessages()
                                                                                                              && !multiFolder );
-    mAkonadiStandardActionManager->action( Akonadi::StandardMailActionManager::MoveAllToTrash )->setText( (mCurrentFolder && kmkernel->folderIsTrash(mCurrentFolder->collection())) ? i18n("E&mpty Trash") : i18n("&Move All Messages to Trash") );
+    mAkonadiStandardActionManager->action( Akonadi::StandardMailActionManager::MoveAllToTrash )->setText( (mCurrentFolder && CommonKernel->folderIsTrash(mCurrentFolder->collection())) ? i18n("E&mpty Trash") : i18n("&Move All Messages to Trash") );
   }
 
 
@@ -4057,7 +4057,7 @@ void KMMainWidget::slotFilterLogViewer()
 //-----------------------------------------------------------------------------
 void KMMainWidget::updateFileMenu()
 {
-  const bool isEmpty = KMail::Util::agentInstances().isEmpty();
+  const bool isEmpty = MailCommon::Util::agentInstances().isEmpty();
   actionCollection()->action("check_mail")->setEnabled( !isEmpty );
   actionCollection()->action("check_mail_in")->setEnabled( !isEmpty );
 }

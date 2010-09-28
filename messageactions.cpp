@@ -21,6 +21,7 @@
 #include "globalsettings.h"
 #include "kmreaderwin.h"
 #include "kmkernel.h"
+#include "mailkernel.h"
 #include "util.h"
 
 #include "messagecore/annotationdialog.h"
@@ -263,7 +264,7 @@ void MessageActions::updateActions()
   if ( singleMsg ) //=> valid
     parent = mCurrentItem.parentCollection();
   if ( parent.isValid() ) {
-    if ( KMKernel::self()->folderIsTemplates(parent) )
+    if ( CommonKernel->folderIsTemplates(parent) )
       singleMsg = false;
   }
 
@@ -549,8 +550,8 @@ void MessageActions::editCurrentMessage()
   // edit, unlike send again, removes the message from the folder
   // we only want that for templates and drafts folders
   if ( col.isValid()
-       && ( KMKernel::self()->folderIsDraftOrOutbox( col ) ||
-            KMKernel::self()->folderIsTemplates( col ) )
+       && ( CommonKernel->folderIsDraftOrOutbox( col ) ||
+            CommonKernel->folderIsTemplates( col ) )
     )
     command = new KMEditMsgCommand( mParent, mCurrentItem, true );
   else

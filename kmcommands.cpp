@@ -604,7 +604,7 @@ KMCommand::Result KMUseTemplateCommand::execute()
   Akonadi::Item item = retrievedMessage();
   if ( !item.isValid()
        || !item.parentCollection().isValid() ||
-       !kmkernel->folderIsTemplates( item.parentCollection() )
+       !CommonKernel->folderIsTemplates( item.parentCollection() )
        ) {
     return Failed;
   }
@@ -1836,7 +1836,7 @@ KMTrashMsgCommand::KMTrashMsgCommand( const Akonadi::Collection& srcFolder, cons
 
 Akonadi::Collection KMTrashMsgCommand::findTrashFolder( const Akonadi::Collection& folder )
 {
-  Akonadi::Collection col = kmkernel->trashCollectionFromResource( folder );
+  Akonadi::Collection col = CommonKernel->trashCollectionFromResource( folder );
   if ( !col.isValid() ) {
     col = CommonKernel->trashCollectionFolder();
   }
