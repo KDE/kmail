@@ -50,6 +50,13 @@ void ColorListBox::addColor( const QString& text, const QColor& color )
   addTopLevelItem( item );
 }
 
+void ColorListBox::setColorSilently( int index, const QColor &color )
+{
+  if (index < model()->rowCount()) {
+    topLevelItem( index )->setData( 0, Qt::DecorationRole, color );
+  }
+}
+
 void ColorListBox::setColor( int index, const QColor &color )
 {
   if (index < model()->rowCount()) {
