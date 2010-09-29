@@ -315,7 +315,7 @@ void KMFolderCachedImap::readConfig()
 
   QStringList delUids = config->readListEntry( "UIDSDeletedSinceLastSync" );
 #if MAIL_LOSS_DEBUGGING
-  kdDebug( 5006 ) << "READING IN UIDSDeletedSinceLastSync: " << folder()->prettyURL() << endl << uids << endl;
+  kdDebug( 5006 ) << "READING IN UIDSDeletedSinceLastSync: " << folder()->prettyURL() << endl << delUids << endl;
 #endif
   for ( QStringList::iterator it = delUids.begin(); it != delUids.end(); it++ ) {
     mDeletedUIDsSinceLastSync.insert( (*it).toULong(), 0);
