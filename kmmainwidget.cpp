@@ -4205,6 +4205,11 @@ KAction *KMMainWidget::akonadiStandardAction( Akonadi::StandardActionManager::Ty
   return mAkonadiStandardActionManager->action( type );
 }
 
+KAction *KMMainWidget::akonadiStandardAction( Akonadi::StandardMailActionManager::Type type )
+{
+  return mAkonadiStandardActionManager->action( type );
+}
+
 
 void KMMainWidget::slotCollectionProperties()
 {
