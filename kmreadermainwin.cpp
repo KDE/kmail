@@ -61,6 +61,7 @@
 #include <akonadi/item.h>
 
 #include "messagecore/messagehelpers.h"
+#include <mailutil.h>
 
 using namespace MailCommon;
 
@@ -477,8 +478,8 @@ void KMReaderMainWin::slotCreateTodo()
 {
   if ( !mReaderWin->message().isValid() )
     return;
-  KMCommand *command = new CreateTodoCommand( this, mReaderWin->message() );
-  command->start();
+
+  MailCommon::Util::createTodoFromMail( mReaderWin->message() );
 }
 
 void KMReaderMainWin::slotEditToolbars()

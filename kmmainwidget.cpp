@@ -4098,8 +4098,8 @@ void KMMainWidget::slotCreateTodo()
   const Akonadi::Item msg = mMessagePane->currentItem();
   if ( !msg.isValid() )
     return;
-  KMCommand *command = new CreateTodoCommand( this, msg );
-  command->start();
+
+  MailCommon::Util::createTodoFromMail( msg );
 }
 
 void KMMainWidget::showEvent( QShowEvent *event )

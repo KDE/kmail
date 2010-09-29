@@ -166,7 +166,6 @@ qt4_add_dbus_adaptor(kmailprivate_LIB_SRCS
 
 qt4_add_dbus_interfaces(kmailprivate_LIB_SRCS
   ${CMAKE_BINARY_DIR}/kmail/org.kde.kmail.kmail.xml
-  ${CMAKE_SOURCE_DIR}/korganizer/org.kde.Korganizer.Calendar.xml
 )
 
 kde4_add_ui_files(kmailprivate_LIB_SRCS

@@ -49,6 +49,7 @@
 #include <qwidget.h>
 #include <akonadi/collection.h>
 #include <Akonadi/Monitor>
+#include <mailutil.h>
 
 using namespace KMail;
 
@@ -353,8 +354,8 @@ void MessageActions::slotCreateTodo()
 {
   if ( !mCurrentItem.isValid() )
     return;
-  KMCommand *command = new CreateTodoCommand( mParent, mCurrentItem );
-  command->start();
+
+  MailCommon::Util::createTodoFromMail( mCurrentItem );
 }
 
 void MessageActions::setMessageView(KMReaderWin * msgView)

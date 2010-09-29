@@ -100,7 +100,6 @@ using KMail::RedirectDialog;
 #include "templateparser/templateparser.h"
 
 #include <kpimutils/kfileio.h>
-#include "calendarinterface.h"
 #include "interfaces/htmlwriter.h"
 
 #include <akonadi/itemmovejob.h>
@@ -1984,39 +1983,5 @@ KUrl::List KMMailingListHelpCommand::urls() const
   return mFolder->mailingList().helpURLS();
 }
 
-
-CreateTodoCommand::CreateTodoCommand(QWidget * parent, const Akonadi::Item &msg)
-  : KMCommand( parent, msg )
-{
-}
-
-KMCommand::Result CreateTodoCommand::execute()
-{
-  Akonadi::Item item = retrievedMessage();
-  KMime::Message::Ptr msg = MessageCore::Util::message( item );
-  if ( !msg )
-    return Failed;
-
-  MailCommon::Util::ensureKorganizerRunning();
-  const QString txt = i18n("From: %1\nTo: %2\nSubject: %3", msg->from()->asUnicodeString(),
-                     msg->to()->asUnicodeString(), msg->subject()->asUnicodeString() );
-  KTemporaryFile tf;
-  tf.setAutoRemove( true );
-  if ( !tf.open() ) {
-    kWarning() << "CreateTodoCommand: Unable to open temp file.";
-    return Failed;
-  }
-  const QString uri = "kmail:" + QString::number( item.id() ) + '/' + MessageHelper::msgId(msg);
-  tf.write( msg->encodedContent() );
-  tf.flush();
-  OrgKdeKorganizerCalendarInterface *iface =
-      new OrgKdeKorganizerCalendarInterface( "org.kde.korganizer", "/Calendar",
-                                             QDBusConnection::sessionBus(), this );
-  iface->openTodoEditor( i18n("Mail: %1", msg->subject()->asUnicodeString() ), txt, uri,
-                         tf.fileName(), QStringList(), "message/rfc822" );
-  delete iface;
-  tf.close();
-  return OK;
-}
 
 #include "kmcommands.moc"

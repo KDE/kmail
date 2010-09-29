@@ -744,14 +744,4 @@ protected:
   virtual KUrl::List urls() const;
 };
 
-class KMAIL_EXPORT CreateTodoCommand : public KMCommand
-{
-  Q_OBJECT
-  public:
-  CreateTodoCommand( QWidget *parent, const Akonadi::Item &msg );
-
-  private:
-    Result execute();
-};
-
 #endif /*KMCommands_h*/
