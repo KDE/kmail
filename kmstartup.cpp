@@ -214,6 +214,7 @@ void insertLibraryCataloguesAndIcons() {
     "libmessageviewer",
     "libmessagecore",
     "libmessagecomposer",
+    "libmailcommon",
     "libtemplateparser",
     "libakonadi_next",
     "libakonadi-kde",
