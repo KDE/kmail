@@ -447,17 +447,6 @@ void MessageActions::slotPrintMsg()
   command->start();
 }
 
-void MessageActions::setMessageStatus( Akonadi::MessageStatus status, bool toggle )
-{
-    Akonadi::Item::List items = mVisibleItems;
-  if ( items.isEmpty() && mCurrentItem.isValid() )
-    items.append( mCurrentItem );
-  if ( items.empty() )
-    return;
-  KMCommand *command = new KMSetStatusCommand( status, items, toggle );
-  command->start();
-}
-
 
 /**
  * This adds a list of actions to mMailingListActionMenu mapping the identifier item to
