@@ -43,6 +43,7 @@
 #include "kmcommands.h"
 #include "collectionpane.h"
 #include "mailkernel.h"
+#include "mailutil.h"
 
 #include <unistd.h> // link()
 #include <kprogressdialog.h>
@@ -90,7 +91,6 @@ using KMail::SecondaryWindow;
 using KMail::RedirectDialog;
 #include "util.h"
 #include "messageviewer/editorwatcher.h"
-#include "korghelper.h"
 #include "broadcaststatus.h"
 #include "globalsettings.h"
 #include "stringutil.h"
@@ -1997,7 +1997,7 @@ KMCommand::Result CreateTodoCommand::execute()
   if ( !msg )
     return Failed;
 
-  KMail::KorgHelper::ensureRunning();
+  MailCommon::Util::ensureKorganizerRunning();
   const QString txt = i18n("From: %1\nTo: %2\nSubject: %3", msg->from()->asUnicodeString(),
                      msg->to()->asUnicodeString(), msg->subject()->asUnicodeString() );
   KTemporaryFile tf;

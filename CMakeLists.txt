@@ -111,7 +111,6 @@ set(kmailprivate_LIB_SRCS
    mailinglistpropertiesdialog.cpp
    managesievescriptsdialog.cpp
    util.cpp
-   korghelper.cpp
    messageactions.cpp
    statusbarlabel.cpp
    kmcomposewin.cpp
