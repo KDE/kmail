@@ -110,8 +110,6 @@ class MessageActions : public QObject
     void slotReplyAllToMsg();
     void slotNoQuoteReplyToMsg();
     void slotCreateTodo();
-    void slotSetMsgStatusToAct();
-    void slotSetMsgStatusFlag();
     void slotRunUrl( QAction *urlAction );
     void slotPrintMsg();
 
@@ -131,7 +129,6 @@ class MessageActions : public QObject
     KActionMenu *mStatusMenu;
     KActionMenu *mForwardActionMenu;
     KActionMenu *mMailingListActionMenu;
-    KToggleAction *mToggleFlagAction, *mToggleToActAction;
     KAction *mEditAction, *mAnnotateAction, *mPrintAction;
     bool mKorganizerIsOnSystem;
     Akonadi::Monitor *mMonitor;

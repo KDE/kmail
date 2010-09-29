@@ -122,26 +122,13 @@ MessageActions::MessageActions( KActionCollection *ac, QWidget* parent ) :
     action = mainwin->akonadiStandardAction( Akonadi::StandardMailActionManager::MarkMailAsUnread );
     mStatusMenu->addAction( action );
     mStatusMenu->addSeparator();
+    action = mainwin->akonadiStandardAction( Akonadi::StandardMailActionManager::MarkMailAsImportant );
+    mStatusMenu->addAction( action );
+
+    action = mainwin->akonadiStandardAction( Akonadi::StandardMailActionManager::MarkMailAsActionItem );
+    mStatusMenu->addAction( action );
+
   }
-
-  mToggleFlagAction = new KToggleAction( KIcon("mail-mark-important"),
-                                         i18n("Mark Message as &Important"), this );
-  mToggleFlagAction->setShortcut( Qt::CTRL + Qt::Key_I );
-  connect( mToggleFlagAction, SIGNAL(triggered(bool)),
-           this, SLOT(slotSetMsgStatusFlag()) );
-  mToggleFlagAction->setCheckedState( KGuiItem(i18n("Remove &Important Message Mark")) );
-  mToggleFlagAction->setIconText( i18n( "Important" ) );
-  mActionCollection->addAction( "status_flag", mToggleFlagAction );
-  mStatusMenu->addAction( mToggleFlagAction );
-
-  mToggleToActAction = new KToggleAction( KIcon("mail-mark-task"),
-                                          i18n("Mark Message as &Action Item"), this );
-  connect( mToggleToActAction, SIGNAL(triggered(bool)),
-           this, SLOT(slotSetMsgStatusToAct()) );
-  mToggleToActAction->setCheckedState( KGuiItem(i18n("Remove &Action Item Message Mark")) );
-  mToggleToActAction->setIconText( i18n( "Action Item" ) );
-  mActionCollection->addAction( "status_toact", mToggleToActAction );
-  mStatusMenu->addAction( mToggleToActAction );
 
   mEditAction = new KAction( KIcon("accessories-text-editor"), i18n("&Edit Message"), this );
   mActionCollection->addAction( "edit", mEditAction );
@@ -279,14 +266,8 @@ void MessageActions::updateActions()
   updateAnnotateAction();
 
   mStatusMenu->setEnabled( multiVisible );
-  mToggleFlagAction->setEnabled( flagsAvailable );
-  mToggleToActAction->setEnabled( flagsAvailable );
 
   if ( mCurrentItem.hasPayload<KMime::Message::Ptr>() ) {
-    Akonadi::MessageStatus status;
-    status.setStatusFromFlags( mCurrentItem.flags() );
-    mToggleToActAction->setChecked( status.isToAct() );
-    mToggleFlagAction->setChecked( status.isImportant() );
 
     MessageCore::MailingList mailList;
     mailList = MessageCore::MailingList::detect( MessageCore::Util::message( mCurrentItem ) );
@@ -430,16 +411,6 @@ void MessageActions::slotNoQuoteReplyToMsg()
     return;
   KMCommand *command = new KMNoQuoteReplyToCommand( mParent, mCurrentItem );
   command->start();
-}
-
-void MessageActions::slotSetMsgStatusFlag()
-{
-  setMessageStatus( Akonadi::MessageStatus::statusImportant(), true );
-}
-
-void MessageActions::slotSetMsgStatusToAct()
-{
-  setMessageStatus( Akonadi::MessageStatus::statusToAct(), true );
 }
 
 void MessageActions::slotRunUrl( QAction *urlAction )
