@@ -22,6 +22,7 @@
 #include "kmreaderwin.h"
 #include "kmkernel.h"
 #include "mailkernel.h"
+#include "kmmainwidget.h"
 #include "util.h"
 
 #include "messagecore/annotationdialog.h"
@@ -111,24 +112,16 @@ MessageActions::MessageActions( KActionCollection *ac, QWidget* parent ) :
   mStatusMenu = new KActionMenu ( i18n( "Mar&k Message" ), this );
   mActionCollection->addAction( "set_status", mStatusMenu );
 
-  KAction *action;
 
-  action = new KAction( KIcon("mail-mark-read"), i18n("Mark Message as &Read"), this );
-  action->setHelpText( i18n("Mark selected messages as read") );
-  connect( action, SIGNAL(triggered(bool)),
-           this, SLOT(slotSetMsgStatusRead()) );
-  mActionCollection->addAction( "status_read", action );
-  mStatusMenu->addAction( action );
+  KMMainWidget* mainwin = kmkernel->getKMMainWidget();
+  if ( mainwin ) {
+    KAction * action = mainwin->akonadiStandardAction( Akonadi::StandardMailActionManager::MarkMailAsRead );
+    mStatusMenu->addAction( action );
 
-  action = new KAction( KIcon("mail-mark-unread"), i18n("Mark Message as &Unread"), this );
-  action->setHelpText( i18n("Mark selected messages as unread") );
-  connect( action, SIGNAL(triggered(bool)),
-           this, SLOT(slotSetMsgStatusUnread()) );
-  mActionCollection->addAction( "status_unread", action );
-  action->setShortcut( Qt::CTRL+Qt::Key_U );
-  mStatusMenu->addAction( action );
-
-  mStatusMenu->addSeparator();
+    action = mainwin->akonadiStandardAction( Akonadi::StandardMailActionManager::MarkMailAsUnread );
+    mStatusMenu->addAction( action );
+    mStatusMenu->addSeparator();
+  }
 
   mToggleFlagAction = new KToggleAction( KIcon("mail-mark-important"),
                                          i18n("Mark Message as &Important"), this );
@@ -436,16 +429,6 @@ void MessageActions::slotNoQuoteReplyToMsg()
     return;
   KMCommand *command = new KMNoQuoteReplyToCommand( mParent, mCurrentItem );
   command->start();
-}
-
-void MessageActions::slotSetMsgStatusUnread()
-{
-  setMessageStatus( Akonadi::MessageStatus::statusUnread() );
-}
-
-void MessageActions::slotSetMsgStatusRead()
-{
-  setMessageStatus( Akonadi::MessageStatus::statusRead() );
 }
 
 void MessageActions::slotSetMsgStatusFlag()
