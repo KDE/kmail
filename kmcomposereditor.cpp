@@ -42,7 +42,7 @@
 #include "kmkernel.h"
 #include "foldercollection.h"
 #include <QTextCodec>
-
+#include <QFileInfo>
 using namespace MailCommon;
 
 KMComposerEditor::KMComposerEditor( KMComposeWin *win,QWidget *parent)
@@ -129,22 +129,25 @@ void KMComposerEditor::insertFromMimeData( const QMimeData *source )
 {
   // If this is a PNG image, either add it as an attachment or as an inline image
   if ( source->hasImage() && source->hasFormat( "image/png" ) ) {
-    if ( textMode() == KRichTextEdit::Rich ) {
+    // Get the image data before showing the dialog, since that processes events which can delete
+    // the QMimeData object behind our back
+    const QByteArray imageData = source->data( "image/png" );
+ 	  
+    if ( textMode() == KRichTextEdit::Rich && isEnableImageActions() ) {
+      QImage image = qvariant_cast<QImage>( source->imageData() );
+      QFileInfo fi( source->text() );
+
       KMenu menu;
       const QAction *addAsInlineImageAction = menu.addAction( i18n("Add as &Inline Image") );
       /*const QAction *addAsAttachmentAction = */menu.addAction( i18n("Add as &Attachment") );
       const QAction *selectedAction = menu.exec( QCursor::pos() );
       if ( selectedAction == addAsInlineImageAction ) {
         // Let the textedit from kdepimlibs handle inline images
-        KPIMTextEdit::TextEdit::insertFromMimeData( source );
+        insertImage( image, fi );
         return;
       }
       // else fall through
     }
-
-    // Get the image data before showing the dialog, since that processes events which can delete
-    // the QMimeData object behind our back
-    const QByteArray imageData = source->data( "image/png" );
 
     // Ok, when we reached this point, the user wants to add the image as an attachment.
     // Ask for the filename first.
