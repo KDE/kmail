@@ -42,13 +42,21 @@
 #include "partnodebodypart.h"
 #include "kmreaderwin.h"
 #include "kmkernel.h"
+#include "broadcaststatus.h"
 #include "callback.h"
 #include "stl_util.h"
 
+#include <kabc/stdaddressbook.h>
+#include <kabc/addressee.h>
+#include <dcopclient.h>
 #include <kstandarddirs.h>
 #include <kurldrag.h>
 #include <kimproxy.h>
+#include <kpopupmenu.h>
+#include <krun.h>
 #include <kurl.h>
+
+#include <qclipboard.h>
 
 #include <algorithm>
 using std::for_each;
@@ -104,6 +112,16 @@ namespace {
     bool handleContextMenuRequest( const KURL &, const QPoint &, KMReaderWin * ) const {
       return false;
     }
+    QString statusBarMessage( const KURL &, KMReaderWin * ) const;
+  };
+
+  class ContactUidURLHandler : public KMail::URLHandler {
+  public:
+    ContactUidURLHandler() : KMail::URLHandler() {}
+    ~ContactUidURLHandler() {}
+
+    bool handleClick( const KURL &, KMReaderWin * ) const;
+    bool handleContextMenuRequest( const KURL &url, const QPoint &p, KMReaderWin * ) const;
     QString statusBarMessage( const KURL &, KMReaderWin * ) const;
   };
 
@@ -296,6 +314,7 @@ KMail::URLHandlerManager::URLHandlerManager() {
   registerHandler( new ExpandCollapseQuoteURLManager() );
   registerHandler( new SMimeURLHandler() );
   registerHandler( new MailToURLHandler() );
+  registerHandler( new ContactUidURLHandler() );
   registerHandler( new HtmlAnchorHandler() );
   registerHandler( new AttachmentURLHandler() );
   registerHandler( mBodyPartURLHandlerManager = new BodyPartURLHandlerManager() );
@@ -580,6 +599,98 @@ namespace {
     if ( url.protocol() != "mailto" )
       return QString::null;
     return KMMessage::decodeMailtoUrl( url.url() );
+  }
+}
+
+namespace {
+  static QString searchFullEmailByUid( const QString &uid )
+  {
+    QString fullEmail;
+    KABC::AddressBook *add_book = KABC::StdAddressBook::self( true );
+    KABC::Addressee o = add_book->findByUid( uid );
+    if ( !o.isEmpty() ) {
+      fullEmail = o.fullEmail();
+    }
+    return fullEmail;
+  }
+
+  static void runKAddressBook( const KURL &url )
+  {
+    QString uid = url.path();
+    DCOPClient *client = KApplication::kApplication()->dcopClient();
+    const QByteArray noParamData;
+    const QByteArray paramData;
+    QByteArray replyData;
+    QCString replyTypeStr;
+    bool foundAbbrowser = client->call( "kaddressbook", "KAddressBookIface",
+                                        "interfaces()",  noParamData,
+                                        replyTypeStr, replyData );
+    if ( foundAbbrowser ) {
+      // KAddressbook is already running, so just DCOP to it to bring up the contact editor
+      DCOPRef kaddressbook( "kaddressbook", "KAddressBookIface" );
+      kaddressbook.send( "showContactEditor", uid );
+    } else {
+      // KaddressBook is not already running.
+      // Pass it the UID of the contact via the command line while starting it - its neater.
+      // We start it without its main interface
+      QString iconPath = KGlobal::iconLoader()->iconPath( "go", KIcon::Small );
+      QString tmpStr = "kaddressbook --editor-only --uid ";
+      tmpStr += KProcess::quote( uid );
+      KRun::runCommand( tmpStr, "KAddressBook", iconPath );
+    }
+  }
+
+  bool ContactUidURLHandler::handleClick( const KURL &url, KMReaderWin * ) const
+  {
+    if ( url.protocol() != "uid" ) {
+      return false;
+    } else {
+      runKAddressBook( url );
+      return true;
+    }
+  }
+
+  bool ContactUidURLHandler::handleContextMenuRequest( const KURL &url, const QPoint &p,
+                                                       KMReaderWin * ) const
+  {
+    if ( url.protocol() != "uid" || url.path().isEmpty() ) {
+      return false;
+    }
+
+    KPopupMenu *menu = new KPopupMenu();
+    menu->insertItem( i18n( "&Open in Address Book" ), 0 );
+    menu->insertItem( i18n( "&Copy Email Address" ), 1 );
+
+    switch( menu->exec( p, 0 ) ) {
+    case 0: // open
+      runKAddressBook( url );
+      break;
+    case 1: // copy
+    {
+      const QString fullEmail = searchFullEmailByUid( url.path() );
+      if ( !fullEmail.isEmpty() ) {
+        QClipboard *clip = QApplication::clipboard();
+        clip->setSelectionMode( true );
+        clip->setText( fullEmail );
+        clip->setSelectionMode( false );
+        clip->setText( fullEmail );
+        KPIM::BroadcastStatus::instance()->setStatusMsg( i18n( "Address copied to clipboard." ) );
+      }
+      break;
+    }
+    default:
+      break;
+    }
+    return true;
+  }
+
+  QString ContactUidURLHandler::statusBarMessage( const KURL &url, KMReaderWin * ) const
+  {
+    if ( url.protocol() != "uid" ) {
+      return QString::null;
+    } else {
+      return i18n( "Lookup the contact in KAddressbook" );
+    }
   }
 }
 
