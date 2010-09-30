@@ -1,8 +1,9 @@
 project(kmail)
 
 include(CheckIncludeFiles)
-
 add_definitions(-DDISABLE_NEPOMUK_LEGACY)
+
+if (NOT WINCE)
 
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} ${KDE4_DATA_DIR}/cmake/modules)
 
@@ -12,6 +13,8 @@ add_custom_target(kmail_xml ALL
   DEPENDS ${CMAKE_CURRENT_BINARY_DIR}/org.kde.kmail.kmail.xml
   COMMENT "Helper target for XML stuff. The Kontact plugin, KOrganizer and others depend on it."
 )
+
+endif (NOT WINCE)
 
 include_directories(
   ${CMAKE_SOURCE_DIR}/libkdepim
@@ -38,16 +41,19 @@ include_directories(
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${KDE4_ENABLE_EXCEPTIONS}")
 
 
+if (NOT WINCE)
 add_subdirectory(about)
 add_subdirectory(pics)
 add_subdirectory(icons)
 add_subdirectory(avscripts)
 add_subdirectory(tests)
 add_subdirectory(kconf_update)
+endif(NOT WINCE)
 add_subdirectory(kcm_kpimidentities)
 
 ########### kmailprivate ###############
 
+if (NOT WINCE)
 set(kmailprivate_LIB_SRCS
    kmcollectionpropertiesdialog.cpp
    collectionpane.cpp
@@ -320,3 +326,5 @@ install(FILES
 install( FILES kmail_addattachmentservicemenu.desktop DESTINATION
 	${SERVICES_INSTALL_DIR}/ServiceMenus)
 
+endif (NOT WINCE)
+  

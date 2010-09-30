@@ -32,9 +32,11 @@
 #include "identitydialog.h"
 
 // other KMail headers:
+#ifndef KDEPIM_MOBILE_UI
 #include "xfaceconfigurator.h"
-#include "folderrequester.h"
+#endif
 #include "simplestringlisteditor.h"
+#include "folderrequester.h"
 #ifndef KCM_KPIMIDENTITIES_STANDALONE
 #include "kmkernel.h"
 #endif
@@ -44,7 +46,9 @@
 #include "addressvalidationjob.h"
 #include "kleo_util.h"
 #include "stringutil.h"
+#ifndef KDEPIM_MOBILE_UI
 #include "templatesconfiguration.h"
+#endif
 #include "templatesconfiguration_kfg.h"
 // other kdepim headers:
 #include <kpimidentities/identity.h>
@@ -103,6 +107,10 @@ namespace KMail {
     setButtons( Ok|Cancel );
 #endif
     setDefaultButton( Ok );
+
+#ifdef Q_OS_WINCE
+    setWindowState( Qt::WindowFullScreen );
+#endif
 
     // tmp. vars:
     QWidget * tab;
@@ -456,6 +464,7 @@ namespace KMail {
     mCustom = new QCheckBox( i18n("&Use custom message templates for this identity"), tab );
     tlay->addWidget( mCustom, Qt::AlignLeft );
 
+#ifndef KDEPIM_MOBILE_UI
     mWidget = new TemplatesConfiguration( tab, "identity-templates" );
     mWidget->setEnabled( false );
 
@@ -465,6 +474,7 @@ namespace KMail {
     tlay->addWidget( mWidget->helpLabel(), Qt::AlignRight );
 
     vlay->addWidget( mWidget );
+#endif
 
     QHBoxLayout *btns = new QHBoxLayout();
     btns->setSpacing( spacingHint() );
@@ -472,8 +482,10 @@ namespace KMail {
     mCopyGlobal->setEnabled( false );
     btns->addWidget( mCopyGlobal );
     vlay->addLayout( btns );
+#ifndef KDEPIM_MOBILE_UI
     connect( mCustom, SIGNAL(toggled( bool )),
              mWidget, SLOT(setEnabled( bool )) );
+#endif
     connect( mCustom, SIGNAL(toggled( bool )),
              mCopyGlobal, SLOT(setEnabled( bool )) );
     connect( mCopyGlobal, SIGNAL(clicked()),
@@ -494,11 +506,10 @@ namespace KMail {
     //
     // Tab Widget: Picture
     //
+    
+#ifndef KDEPIM_MOBILE_UI
     mXFaceConfigurator = new XFaceConfigurator( mTabWidget );
     mXFaceConfigurator->layout()->setMargin( KDialog::marginHint() );
-#ifdef KDEPIM_MOBILE_UI
-    mXFaceConfigurator->hide(); // not yet mobile ready
-#else
     mTabWidget->addTab( mXFaceConfigurator, i18n("Picture") );
 #endif
 
@@ -535,7 +546,9 @@ namespace KMail {
   }
 
   void IdentityDialog::slotCopyGlobal() {
+#ifndef KDEPIM_MOBILE_UI
     mWidget->loadFromGlobal();
+#endif
   }
 
   namespace {
@@ -764,17 +777,21 @@ namespace KMail {
 #endif
 
     // "Templates" tab:
+#ifndef KDEPIM_MOBILE_UI
     uint identity = ident.uoid();
     QString iid = TemplatesConfiguration::configIdString( identity );
     Templates t( iid );
     mCustom->setChecked(t.useCustomTemplates());
     mWidget->loadFromIdentity( identity );
+#endif
 
     // "Signature" tab:
     mSignatureConfigurator->setImageLocation( ident );
     mSignatureConfigurator->setSignature( ident.signature() );
+ #ifndef KDEPIM_MOBILE_UI   
     mXFaceConfigurator->setXFace( ident.xface() );
     mXFaceConfigurator->setXFaceEnabled( ident.isXFaceEnabled() );
+#endif
   }
 
   void IdentityDialog::updateIdentity( KPIMIdentities::Identity & ident ) {
@@ -807,6 +824,7 @@ namespace KMail {
 #endif
 
     // "Templates" tab:
+#ifndef KDEPIM_MOBILE_UI
     uint identity = ident.uoid();
     QString iid = TemplatesConfiguration::configIdString( identity );
     Templates t( iid );
@@ -814,11 +832,14 @@ namespace KMail {
     t.setUseCustomTemplates(mCustom->isChecked());
     t.writeConfig();
     mWidget->saveToIdentity( identity );
+#endif
 
     // "Signature" tab:
     ident.setSignature( mSignatureConfigurator->signature() );
+ #ifndef KDEPIM_MOBILE_UI  
     ident.setXFace( mXFaceConfigurator->xface() );
     ident.setXFaceEnabled( mXFaceConfigurator->isXFaceEnabled() );
+#endif
   }
 }
 

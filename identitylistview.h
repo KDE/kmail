@@ -89,7 +89,9 @@ namespace KMail {
     void rename( KMail::IdentityListViewItem *, const QString& );
 
   protected:
+#ifndef QT_NO_DRAGANDDROP
     virtual void startDrag ( Qt::DropActions supportedActions );
+#endif
 
   private:
     KPIMIdentities::IdentityManager* mIdentityManager;

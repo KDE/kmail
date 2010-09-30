@@ -113,8 +113,10 @@ namespace KMail {
     : QTreeWidget( parent ),
       mIdentityManager( 0 )
   {
+#ifndef QT_NO_DRAGANDDROP
     setDragEnabled( true );
     setAcceptDrops( true );
+#endif
     setHeaderLabels( QStringList() << i18n( "Identity Name" ) << i18n( "Email Address" ) );
     setRootIsDecorated( false );
     header()->setMovable( false );
@@ -178,6 +180,7 @@ namespace KMail {
     }
   }
 
+#ifndef QT_NO_DRAGANDDROP
   void IdentityListView::startDrag ( Qt::DropActions /*supportedActions*/ ) {
     IdentityListViewItem * item = dynamic_cast<IdentityListViewItem*>( currentItem() );
     if ( !item )
@@ -190,6 +193,7 @@ namespace KMail {
     drag->setPixmap( SmallIcon("user-identity") );
     drag->start();
   }
+#endif
 
   KPIMIdentities::IdentityManager* IdentityListView::identityManager() const
   {
