@@ -18,8 +18,6 @@
 */
 #include "backupjob.h"
 
-#include "progressmanager.h"
-
 #include <Akonadi/CollectionDeleteJob>
 #include <Akonadi/CollectionFetchJob>
 #include <Akonadi/CollectionFetchScope>

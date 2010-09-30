@@ -19,20 +19,19 @@
 #ifndef BACKUPJOB_H
 #define BACKUPJOB_H
 
+#include "progressmanager.h"
+
 #include <Akonadi/Collection>
 #include <Akonadi/Item>
 #include <kurl.h>
 #include <qlist.h>
 
 #include <qobject.h>
+#include <qpointer.h>
 
 class KArchive;
 class KJob;
 class QWidget;
-
-namespace KPIM {
-  class ProgressItem;
-}
 
 namespace Akonadi {
   class ItemFetchJob;
@@ -97,7 +96,7 @@ class BackupJob : public QObject
     QWidget *mParentWidget;
     int mArchivedMessages;
     uint mArchivedSize;
-    KPIM::ProgressItem *mProgressItem;
+    QPointer<KPIM::ProgressItem> mProgressItem;
     bool mAborted;
     bool mDeleteFoldersAfterCompletion;
 
