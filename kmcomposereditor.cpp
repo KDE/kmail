@@ -145,7 +145,9 @@ void KMComposerEditor::insertFromMimeData( const QMimeData *source )
         // Let the textedit from kdepimlibs handle inline images
         insertImage( image, fi );
         return;
-      }
+      } else if( !selectedAction ) {
+        return;
+      } 
       // else fall through
     }
 
