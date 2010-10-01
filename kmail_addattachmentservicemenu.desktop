@@ -13,4 +13,5 @@ Name[pt_BR]=Enviar para
 Name[sv]=Skicka till
 Name[uk]=Надіслати до
 Name[x-test]=xxSend Toxx
+Name[zh_TW]=傳送到
 Exec=kmail --attach %F
