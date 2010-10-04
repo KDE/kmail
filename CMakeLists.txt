@@ -209,6 +209,7 @@ if (NOT WINCE AND KDEPIM_BUILD_DESKTOP)
     ${KDEPIMLIBS_KMIME_LIBS}
     ${KDEPIMLIBS_AKONADI_LIBS}
     ${KDEPIMLIBS_AKONADI_KMIME_LIBS}
+    kmbox
     messagecore
     messagecomposer
     messagelist

@@ -253,21 +253,8 @@ public:
 private:
   virtual Result execute();
 
-private slots:
-  void slotSaveDataReq();
-  void slotSaveResult(KJob *job);
-  /** the message has been transferred for saving */
-  void slotMessageRetrievedForSaving(const Akonadi::Item &msg);
-
 private:
-  static const int MAX_CHUNK_SIZE = 64*1024;
   KUrl mUrl;
-  QList<unsigned long> mMsgList;
-  unsigned int mMsgListIndex;
-  QByteArray mData;
-  int mOffset;
-  size_t mTotalSize;
-  KIO::TransferJob *mJob;
 };
 
 class KMAIL_EXPORT KMOpenMsgCommand : public KMCommand

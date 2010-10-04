@@ -64,6 +64,7 @@
 #include <kio/jobuidelegate.h>
 #include <kio/netaccess.h>
 
+#include <kmbox/mbox.h>
 #include <kmime/kmime_message.h>
 
 #include <kpimidentities/identitymanager.h>
@@ -638,34 +639,23 @@ static KUrl subjectToUrl( const QString &subject )
 }
 
 KMSaveMsgCommand::KMSaveMsgCommand( QWidget *parent, const Akonadi::Item& msg )
-  : KMCommand( parent ),
-    mMsgListIndex( 0 ),
-    mOffset( 0 ),
-    mTotalSize( msg.size() )
+  : KMCommand( parent )
 {
-  if ( !msg.isValid() ) {
+  if ( !msg.isValid() )
     return;
-  }
-  setDeletesItself( true );
+
   mUrl = subjectToUrl( MessageViewer::NodeHelper::cleanSubject( msg.payload<KMime::Message::Ptr>().get() ) );
   fetchScope().fetchFullPayload( true ); // ### unless we call the corresponding KMCommand ctor, this has no effect
 }
 
-KMSaveMsgCommand::KMSaveMsgCommand( QWidget *parent,
-                                    const QList<Akonadi::Item> &msgList )
-  : KMCommand( parent, msgList ),
-    mMsgListIndex( 0 ),
-    mOffset( 0 ),
-    mTotalSize( 0 )
+KMSaveMsgCommand::KMSaveMsgCommand( QWidget *parent, const QList<Akonadi::Item> &msgList )
+  : KMCommand( parent, msgList )
 {
-  if ( msgList.empty() ) {
+  if ( msgList.empty() )
     return;
-  }
-  setDeletesItself( true );
-  mMsgListIndex = 0;
-  Akonadi::Item msgBase = msgList.at(0);
+
+  const Akonadi::Item msgBase = msgList.first();
   mUrl = subjectToUrl( MessageViewer::NodeHelper::cleanSubject( msgBase.payload<KMime::Message::Ptr>().get() ) );
-  kDebug() << mUrl;
   fetchScope().fetchFullPayload( true ); // ### unless we call the corresponding KMCommand ctor, this has no effect
 }
 
@@ -676,165 +666,28 @@ KUrl KMSaveMsgCommand::url() const
 
 KMCommand::Result KMSaveMsgCommand::execute()
 {
-  mJob = KIO::put( mUrl, MessageViewer::Util::getWritePermissions() );
-  mJob->setTotalSize( mTotalSize );
-  mJob->setAsyncDataEnabled( true );
-  connect(mJob, SIGNAL(dataReq(KIO::Job*, QByteArray &)),
-    SLOT(slotSaveDataReq()));
-  connect(mJob, SIGNAL(result(KJob*)),
-    SLOT(slotSaveResult(KJob*)));
+  const QString fileName = mUrl.toLocalFile();
+  if ( fileName.isEmpty() )
+    return OK;
 
-  setEmitsCompletedItself( true );
+  KMBox::MBox mbox;
+  if ( !mbox.load( fileName ) ) {
+    //TODO: error
+    return Failed;
+  }
+
+  foreach ( const Akonadi::Item &item, retrievedMsgs() ) {
+    if ( item.hasPayload<KMBox::MessagePtr>() ) {
+      mbox.appendMessage( item.payload<KMBox::MessagePtr>() );
+    }
+  }
+
+  if ( !mbox.save() ) {
+    //TODO: error
+    return Failed;
+  }
+
   return OK;
-}
-
-void KMSaveMsgCommand::slotSaveDataReq()
-{
-  int remainingBytes = mData.size() - mOffset;
-  if ( remainingBytes > 0 ) {
-    // eat leftovers first
-    if ( remainingBytes > MAX_CHUNK_SIZE )
-      remainingBytes = MAX_CHUNK_SIZE;
-
-    QByteArray data;
-    data = QByteArray( mData.data() + mOffset, remainingBytes );
-    mJob->sendAsyncData( data );
-    mOffset += remainingBytes;
-    return;
-  }
-  // No leftovers, process next message.
-  if ( mMsgListIndex < static_cast<unsigned int>( mRetrievedMsgs.size() ) ) {
-    slotMessageRetrievedForSaving( mRetrievedMsgs[mMsgListIndex] );
-  } else {
-    // No more messages. Tell the putjob we are done.
-    QByteArray data = QByteArray();
-    mJob->sendAsyncData( data );
-  }
-}
-
-#define STRDIM(x) (sizeof(x)/sizeof(*x)-1)
-//TODO: copied from runtime/resources/mbox/libmbox/mbox_p.cpp . Check if we can share it.
-QByteArray escapeFrom( const QByteArray &str )
-{
-  const unsigned int strLen = str.length();
-  if ( strLen <= STRDIM( "From " ) )
-    return str;
-
-  // worst case: \nFrom_\nFrom_\nFrom_... => grows to 7/6
-  QByteArray result( int( strLen + 5 ) / 6 * 7 + 1, '\0');
-
-  const char * s = str.data();
-  const char * const e = s + strLen - STRDIM( "From ");
-  char * d = result.data();
-
-  bool onlyAnglesAfterLF = false; // dont' match ^From_
-  while ( s < e ) {
-    switch ( *s ) {
-    case '\n':
-      onlyAnglesAfterLF = true;
-      break;
-    case '>':
-      break;
-    case 'F':
-      if ( onlyAnglesAfterLF && qstrncmp( s+1, "rom ", STRDIM("rom ") ) == 0 )
-        *d++ = '>';
-      // fall through
-    default:
-      onlyAnglesAfterLF = false;
-      break;
-    }
-    *d++ = *s++;
-  }
-  while ( s < str.data() + strLen )
-    *d++ = *s++;
-
-  result.truncate( d - result.data() );
-  return result;
-}
-#undef STRDIM
-
-QByteArray mboxMessageSeparator( const QByteArray &msg )
-{
-  KMime::Message mail;
-  mail.setHead( KMime::CRLFtoLF( msg ) );
-  mail.parse();
-
-  QByteArray separator = "From ";
-
-  KMime::Headers::From *from = mail.from( false );
-  if ( !from || from->addresses().isEmpty() )
-    separator += "unknown@unknown.invalid";
-  else
-    separator += from->addresses().first() + ' ';
-
-  KMime::Headers::Date *date = mail.date(false);
-  if (!date || date->isEmpty())
-    separator += QDateTime::currentDateTime().toString( Qt::TextDate ).toUtf8() + '\n';
-  else
-    separator += date->as7BitString(false) + '\n';
-
-  return separator;
-}
-
-void KMSaveMsgCommand::slotMessageRetrievedForSaving(const Akonadi::Item &msg)
-{
-  //if ( msg )
-  {
-    QByteArray msgData = msg.payloadData();
-    QByteArray str( mboxMessageSeparator( msgData ) );
-    str += escapeFrom( msgData );
-    str += '\n';
-    mData = str;
-    mData.resize( mData.size() - 1 );
-    mOffset = 0;
-    QByteArray data;
-    int size;
-    // Unless it is great than 64 k send the whole message. kio buffers for us.
-    if( mData.size() >  MAX_CHUNK_SIZE )
-      size = MAX_CHUNK_SIZE;
-    else
-      size = mData.size();
-
-    data = QByteArray( mData, size );
-    mJob->sendAsyncData( data );
-    mOffset += size;
-  }
-  ++mMsgListIndex;
-}
-
-void KMSaveMsgCommand::slotSaveResult(KJob *job)
-{
-  if (job->error())
-  {
-    if (job->error() == KIO::ERR_FILE_ALREADY_EXIST)
-    {
-      if (KMessageBox::warningContinueCancel(parentWidget(),
-        i18n("File %1 exists.\nDo you want to replace it?",
-         mUrl.prettyUrl()), i18n("Save to File"), KGuiItem(i18n("&Replace")))
-        == KMessageBox::Continue) {
-        mOffset = 0;
-
-        mJob = KIO::put( mUrl, MessageViewer::Util::getWritePermissions(), KIO::Overwrite );
-        mJob->setTotalSize( mTotalSize );
-        mJob->setAsyncDataEnabled( true );
-        connect(mJob, SIGNAL(dataReq(KIO::Job*, QByteArray &)),
-            SLOT(slotSaveDataReq()));
-        connect(mJob, SIGNAL(result(KJob*)),
-            SLOT(slotSaveResult(KJob*)));
-      }
-    }
-    else
-    {
-      showJobError(job);
-      setResult( Failed );
-      emit completed( this );
-      deleteLater();
-    }
-  } else {
-    setResult( OK );
-    emit completed( this );
-    deleteLater();
-  }
 }
 
 //-----------------------------------------------------------------------------
