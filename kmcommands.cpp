@@ -677,8 +677,8 @@ KMCommand::Result KMSaveMsgCommand::execute()
   }
 
   foreach ( const Akonadi::Item &item, retrievedMsgs() ) {
-    if ( item.hasPayload<KMBox::MessagePtr>() ) {
-      mbox.appendMessage( item.payload<KMBox::MessagePtr>() );
+    if ( item.hasPayload<KMime::Message::Ptr>() ) {
+      mbox.appendMessage( item.payload<KMime::Message::Ptr>() );
     }
   }
 
