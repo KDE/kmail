@@ -206,10 +206,10 @@ if (NOT WINCE AND KDEPIM_BUILD_DESKTOP)
   kde4_add_library(kmailprivate ${LIBRARY_TYPE} ${kmailprivate_LIB_SRCS})
 
   target_link_libraries(kmailprivate
+    ${KDEPIMLIBS_KMBOX_LIBS}
     ${KDEPIMLIBS_KMIME_LIBS}
     ${KDEPIMLIBS_AKONADI_LIBS}
     ${KDEPIMLIBS_AKONADI_KMIME_LIBS}
-    kmbox
     messagecore
     messagecomposer
     messagelist
