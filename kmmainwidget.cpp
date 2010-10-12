@@ -147,6 +147,7 @@
 
 // Qt includes
 #include <QByteArray>
+#include <QHeaderView>
 #include <QLabel>
 #include <QList>
 #include <QSplitter>
@@ -155,6 +156,7 @@
 #include <QProcess>
 #include <QDBusMessage>
 #include <QDBusConnection>
+#include <QTextDocument>
 
 // System includes
 #include <assert.h>
