@@ -3848,6 +3848,12 @@ void KMMainWidget::updateFolderMenu()
 
   mArchiveFolderAction->setEnabled( mCurrentFolder && !multiFolder && folderWithContent );
 
+  bool isInTrashFolder = (mCurrentFolder && CommonKernel->folderIsTrash(mCurrentFolder->collection()));
+  mTrashAction->setText( isInTrashFolder ? i18nc("@action Hard delete, bypassing trash", "&Delete"): i18n("&Move to Trash") );
+
+  mTrashThreadAction->setText(isInTrashFolder ?i18n("Delete T&hread"): i18n("M&ove Thread to Trash"));
+
+
 
   mExpireConfigAction->setEnabled( mCurrentFolder &&
                                    !mCurrentFolder->isStructural() &&
