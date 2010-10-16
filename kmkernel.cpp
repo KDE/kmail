@@ -1238,7 +1238,6 @@ void KMKernel::cleanup(void)
 
   if ( RecentAddresses::exists() )
     RecentAddresses::self( config.data() )->save( config.data() );
-  slotSyncConfig();
 }
 
 void KMKernel::dumpDeadLetters()
