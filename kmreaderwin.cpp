@@ -132,7 +132,7 @@ KMReaderWin::KMReaderWin(QWidget *aParent,
   mViewer->setAppName( "KMail" );
   connect( mViewer, SIGNAL(urlClicked( const Akonadi::Item &, const KUrl & ) ),
            this, SLOT( slotUrlClicked( const Akonadi::Item &, const KUrl& ) ) );
-  connect( mViewer, SIGNAL( requestConfigSync() ), kmkernel, SLOT( slotRequestConfigSync() ) );
+  connect( mViewer, SIGNAL( requestConfigSync() ), kmkernel, SLOT( slotRequestConfigSync() ), Qt::QueuedConnection ); // happens anyway on shutdown, so we can skip it there with using a queued connection
   connect( mViewer, SIGNAL( showReader( KMime::Content* , bool, const QString& ) ),
            this, SLOT( slotShowReader( KMime::Content* , bool, const QString& ) ) );
   connect( mViewer, SIGNAL( showMessage(KMime::Message::Ptr, const QString&) ),
