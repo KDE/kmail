@@ -8,6 +8,8 @@ Icon=kmail
 [Desktop Action sendto]
 Name=Send To
 Name[en_GB]=Send To
+Name[es]=Enviar a
+Name[nl]=Verzenden naar
 Name[pt]=Enviar Para
 Name[pt_BR]=Enviar para
 Name[sv]=Skicka till
