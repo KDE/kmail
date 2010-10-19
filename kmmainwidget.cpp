@@ -4224,7 +4224,9 @@ void KMMainWidget::slotCollectionProperties()
   if (!mCurrentFolder) return;
 
   Akonadi::CollectionAttributesSynchronizationJob sync( mCurrentFolder->collection() );
-  sync.exec();
+  // FIXME: this hangs kmail entirely when opening the folder properties dialog!
+//  sync.exec();
+  sync.start();
 
   Akonadi::CollectionFetchJob fetch( mCurrentFolder->collection(), Akonadi::CollectionFetchJob::Base );
   fetch.exec();
