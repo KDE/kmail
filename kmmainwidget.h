@@ -417,7 +417,6 @@ class KMAIL_EXPORT KMMainWidget : public QWidget
 
     /** XML-GUI stuff */
     void slotEditNotifications();
-    void slotEditKeys();
 
     /** Slot to reply to a message */
     void slotCustomReplyToMsg( const QString &tmpl );

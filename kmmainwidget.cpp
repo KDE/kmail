@@ -3473,11 +3473,6 @@ void KMMainWidget::slotShowExpiryProperties()
   }
 }
 
-void KMMainWidget::slotEditKeys()
-{
-  KShortcutsDialog::configure( actionCollection(), KShortcutsEditor::LetterShortcutsAllowed );
-}
-
 //-----------------------------------------------------------------------------
 void KMMainWidget::slotReadOn()
 {

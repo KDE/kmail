@@ -32,6 +32,7 @@
 #include <kedittoolbar.h>
 #include <kconfig.h>
 #include <kmessagebox.h>
+#include <kxmlguifactory.h>
 #include <kstringhandler.h>
 #include <kstandardaction.h>
 #include <kdebug.h>
@@ -70,7 +71,7 @@ KMMainWin::KMMainWin(QWidget *)
   KStandardAction::configureToolbars( this, SLOT( slotEditToolbars() ),
                                       actionCollection() );
 
-  KStandardAction::keyBindings( mKMMainWidget, SLOT( slotEditKeys() ),
+  KStandardAction::keyBindings( guiFactory(), SLOT( configureShortcuts() ),
                                 actionCollection() );
 
   KStandardAction::quit( this, SLOT( slotQuit() ), actionCollection() );
