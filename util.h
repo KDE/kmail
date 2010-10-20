@@ -108,8 +108,6 @@ namespace Util {
      */
     void handleClickedURL( const KUrl &url, uint identity );
 
-    QStringList AttachmentKeywords();
-
 }
 }
 

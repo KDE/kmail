@@ -1766,25 +1766,7 @@ bool KMComposeWin::userForgotAttachment()
   mComposerBase->setSubject( subject() ); //be sure the composer knows the subject
   bool missingAttachments = mComposerBase->checkForMissingAttachments( GlobalSettings::self()->attachmentKeywords() );
 
-  if ( !missingAttachments ) {
-    return false;
-  }
-
-  int rc = KMessageBox::warningYesNoCancel( this,
-                                            i18n("The message you have composed seems to refer to an "
-                                                 "attached file but you have not attached anything.\n"
-                                                 "Do you want to attach a file to your message?"),
-                                            i18n("File Attachment Reminder"),
-                                            KGuiItem(i18n("&Attach File...")),
-                                            KGuiItem(i18n("&Send as Is")) );
-  if ( rc == KMessageBox::Cancel )
-    return true;
-  if ( rc == KMessageBox::Yes ) {
-    mComposerBase->attachmentController()->showAddAttachmentDialog();
-    //preceed with editing
-    return true;
-  }
-  return false;
+  return missingAttachments;
 }
 
 void KMComposeWin::autoSaveMessage()

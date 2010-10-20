@@ -7,7 +7,7 @@
   <include>kglobalsettings.h</include>
   <include>kcolorscheme.h</include>
   <include>composer.h</include>
-  <include>util.h</include>
+  <include>messagecomposer/util.h</include>
   <kcfgfile name="kmail2rc"/>
   <group name="Behaviour">
       <entry name="ActionEnterFolder"  type="Enum">
@@ -233,7 +233,7 @@
       </entry>
       <entry name="AttachmentKeywords" type="StringList" key="attachment-keywords">
         <default code="true">
-        KMail::Util::AttachmentKeywords()
+        Message::Util::AttachmentKeywords()
         </default>
       </entry>
       <entry name="AutosaveInterval" type="Int" key="autosave">

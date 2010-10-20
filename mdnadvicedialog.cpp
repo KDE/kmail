@@ -30,6 +30,7 @@
 #include <Akonadi/ItemModifyJob>
 #include <objecttreeparser.h>
 #include <Akonadi/ItemFetchJob>
+#include <KLocale>
 
 using MessageComposer::MessageFactory;
 

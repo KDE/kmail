@@ -642,7 +642,7 @@ void KMReaderWin::setMessage( const Akonadi::Item &item, Viewer::UpdateMode upda
   }
 }
 
-void KMReaderWin::setMessage(Message::Ptr message)
+void KMReaderWin::setMessage( KMime::Message::Ptr message)
 {
   mViewer->setMessage( message );
 }

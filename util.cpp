@@ -216,11 +216,3 @@ void KMail::Util::handleClickedURL( const KUrl &url, uint identity )
   }
 }
 
-QStringList KMail::Util::AttachmentKeywords()
-{
-  return i18nc(
-    "comma-separated list of keywords that are used to detect whether "
-    "the user forgot to attach his attachment",
-    "attachment,attached" ).split( ',' );
-}
-
