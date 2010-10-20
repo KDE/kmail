@@ -1760,43 +1760,13 @@ bool KMComposeWin::userForgotAttachment()
 {
   bool checkForForgottenAttachments = GlobalSettings::self()->showForgottenAttachmentWarning();
 
-  if ( !checkForForgottenAttachments || ( mComposerBase->attachmentModel()->rowCount() > 0 ) ) {
+  if ( !checkForForgottenAttachments )
     return false;
-  }
 
-  QStringList attachWordsList = GlobalSettings::self()->attachmentKeywords();
-  if ( attachWordsList.isEmpty() ) {
-    return false;
-  }
+  mComposerBase->setSubject( subject() ); //be sure the composer knows the subject
+  bool missingAttachments = mComposerBase->checkForMissingAttachments( GlobalSettings::self()->attachmentKeywords() );
 
-  QRegExp rx ( QString::fromLatin1("\\b") +
-               attachWordsList.join("\\b|\\b") +
-               QString::fromLatin1("\\b") );
-  rx.setCaseSensitivity( Qt::CaseInsensitive );
-
-  bool gotMatch = false;
-
-  // check whether the subject contains one of the attachment key words
-  // unless the message is a reply or a forwarded message
-  QString subj = subject();
-  gotMatch = ( MessageHelper::stripOffPrefixes( subj ) == subj ) && ( rx.indexIn( subj ) >= 0 );
-
-  if ( !gotMatch ) {
-    // check whether the non-quoted text contains one of the attachment key
-    // words
-    QRegExp quotationRx ("^([ \\t]*([|>:}#]|[A-Za-z]+>))+");
-    QTextDocument *doc = mComposerBase->editor()->document();
-    for ( QTextBlock it = doc->begin(); it != doc->end(); it = it.next() ) {
-      QString line = it.text();
-      gotMatch = ( quotationRx.indexIn( line ) < 0 ) &&
-                 ( rx.indexIn( line ) >= 0 );
-      if ( gotMatch ) {
-        break;
-      }
-    }
-  }
-
-  if ( !gotMatch ) {
+  if ( !missingAttachments ) {
     return false;
   }
 
