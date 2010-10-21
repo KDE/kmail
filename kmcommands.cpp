@@ -77,7 +77,7 @@
 #include "mailinglist-magic.h"
 #include "messageviewer/nodehelper.h"
 #include "composer.h"
-#include "kmfiltermgr.h"
+#include "mailcommon/filtermanager.h"
 #include "kmmainwidget.h"
 #include "undostack.h"
 #include "messageviewer/kcursorsaver.h"
@@ -445,7 +445,7 @@ KMCommand::Result KMMailtoReplyCommand::execute()
     return Failed;
   MessageFactory factory( msg, item.id(), item.parentCollection() );
   factory.setIdentityManager( KMKernel::self()->identityManager() );
-  factory.setFolderIdentity( KMail::Util::folderIdentity( item ) );
+  factory.setFolderIdentity( MailCommon::Util::folderIdentity( item ) );
   factory.setMailingListAddresses( KMail::Util::mailingListsFromMessage( item ) );
   factory.putRepliesInSameFolder( KMail::Util::putRepliesInSameFolder( item ) );
   factory.setReplyStrategy( MessageComposer::ReplyNone );
@@ -478,7 +478,7 @@ KMCommand::Result KMMailtoForwardCommand::execute()
     return Failed;
   MessageFactory factory( msg, item.id(), item.parentCollection() );
   factory.setIdentityManager( KMKernel::self()->identityManager() );
-  factory.setFolderIdentity( KMail::Util::folderIdentity( item ) );
+  factory.setFolderIdentity( MailCommon::Util::folderIdentity( item ) );
   KMime::Message::Ptr fmsg = factory.createForward();
   fmsg->to()->fromUnicodeString( KPIMUtils::decodeMailtoUrl( mUrl ), "utf-8" ); //TODO check the utf-8
 
@@ -818,7 +818,7 @@ KMCommand::Result KMReplyToCommand::execute()
     return Failed;
   MessageFactory factory( msg, item.id(), item.parentCollection() );
   factory.setIdentityManager( KMKernel::self()->identityManager() );
-  factory.setFolderIdentity( KMail::Util::folderIdentity( item ) );
+  factory.setFolderIdentity( MailCommon::Util::folderIdentity( item ) );
   factory.setReplyStrategy( MessageComposer::ReplySmart );
   factory.setMailingListAddresses( KMail::Util::mailingListsFromMessage( item ) );
   factory.putRepliesInSameFolder( KMail::Util::putRepliesInSameFolder( item ) );
@@ -848,7 +848,7 @@ KMCommand::Result KMNoQuoteReplyToCommand::execute()
     return Failed;
   MessageFactory factory( msg, item.id(), item.parentCollection() );
   factory.setIdentityManager( KMKernel::self()->identityManager() );
-  factory.setFolderIdentity( KMail::Util::folderIdentity( item ) );
+  factory.setFolderIdentity( MailCommon::Util::folderIdentity( item ) );
   factory.setMailingListAddresses( KMail::Util::mailingListsFromMessage( item ) );
   factory.putRepliesInSameFolder( KMail::Util::putRepliesInSameFolder( item ) );
   factory.setReplyStrategy( MessageComposer::ReplySmart );
@@ -878,7 +878,7 @@ KMCommand::Result KMReplyListCommand::execute()
     return Failed;
   MessageFactory factory( msg, item.id(), item.parentCollection() );
   factory.setIdentityManager( KMKernel::self()->identityManager() );
-  factory.setFolderIdentity( KMail::Util::folderIdentity( item ) );
+  factory.setFolderIdentity( MailCommon::Util::folderIdentity( item ) );
   factory.setMailingListAddresses( KMail::Util::mailingListsFromMessage( item ) );
   factory.putRepliesInSameFolder( KMail::Util::putRepliesInSameFolder( item ) );
   factory.setReplyStrategy( MessageComposer::ReplyList );
@@ -911,7 +911,7 @@ KMCommand::Result KMReplyToAllCommand::execute()
     return Failed;
   MessageFactory factory( msg, item.id(), item.parentCollection() );
   factory.setIdentityManager( KMKernel::self()->identityManager() );
-  factory.setFolderIdentity( KMail::Util::folderIdentity( item ) );
+  factory.setFolderIdentity( MailCommon::Util::folderIdentity( item ) );
   factory.setMailingListAddresses( KMail::Util::mailingListsFromMessage( item ) );
   factory.putRepliesInSameFolder( KMail::Util::putRepliesInSameFolder( item ) );
   factory.setReplyStrategy( MessageComposer::ReplyAll );
@@ -943,7 +943,7 @@ KMCommand::Result KMReplyAuthorCommand::execute()
     return Failed;
   MessageFactory factory( msg, item.id(), item.parentCollection() );
   factory.setIdentityManager( KMKernel::self()->identityManager() );
-  factory.setFolderIdentity( KMail::Util::folderIdentity( item ) );
+  factory.setFolderIdentity( MailCommon::Util::folderIdentity( item ) );
   factory.setMailingListAddresses( KMail::Util::mailingListsFromMessage( item ) );
   factory.putRepliesInSameFolder( KMail::Util::putRepliesInSameFolder( item ) );
   factory.setReplyStrategy( MessageComposer::ReplyAuthor );
@@ -994,7 +994,7 @@ KMCommand::Result KMForwardCommand::execute()
     if ( answer == KMessageBox::Yes ) {
         MessageFactory factory( KMime::Message::Ptr( new KMime::Message ), mIdentity );
         factory.setIdentityManager( KMKernel::self()->identityManager() );
-        factory.setFolderIdentity( KMail::Util::folderIdentity( msgList.first() ) );
+        factory.setFolderIdentity( MailCommon::Util::folderIdentity( msgList.first() ) );
         // get a list of messages
         QList< KMime::Message::Ptr > msgs;
         foreach( const Akonadi::Item& item, msgList )
@@ -1015,7 +1015,7 @@ KMCommand::Result KMForwardCommand::execute()
         MessageViewer::KCursorSaver busy( MessageViewer::KBusyPtr::busy() );
         MessageFactory factory( msg, it->id(), it->parentCollection() );
         factory.setIdentityManager( KMKernel::self()->identityManager() );
-        factory.setFolderIdentity( KMail::Util::folderIdentity( *it ) );
+        factory.setFolderIdentity( MailCommon::Util::folderIdentity( *it ) );
         KMime::Message::Ptr fwdMsg = factory.createForward();
 
         uint id = msg->headerByType( "X-KMail-Identity" ) ?  msg->headerByType("X-KMail-Identity")->asUnicodeString().trimmed().toUInt() : 0;
@@ -1043,7 +1043,7 @@ KMCommand::Result KMForwardCommand::execute()
   MessageViewer::KCursorSaver busy( MessageViewer::KBusyPtr::busy() );
   MessageFactory factory( msg, item.id(), item.parentCollection() );
   factory.setIdentityManager( KMKernel::self()->identityManager() );
-  factory.setFolderIdentity( KMail::Util::folderIdentity( item ) );
+  factory.setFolderIdentity( MailCommon::Util::folderIdentity( item ) );
   KMime::Message::Ptr fwdMsg = factory.createForward();
 
   uint id = msg->headerByType( "X-KMail-Identity" ) ?  msg->headerByType("X-KMail-Identity")->asUnicodeString().trimmed().toUInt() : 0;
@@ -1080,7 +1080,7 @@ KMCommand::Result KMForwardAttachedCommand::execute()
   QList<Akonadi::Item> msgList = retrievedMsgs();
   MessageFactory factory( KMime::Message::Ptr( new KMime::Message ), mIdentity );
   factory.setIdentityManager( KMKernel::self()->identityManager() );
-  factory.setFolderIdentity( KMail::Util::folderIdentity( msgList.first() ) );
+  factory.setFolderIdentity( MailCommon::Util::folderIdentity( msgList.first() ) );
   // get a list of messages
   QList< KMime::Message::Ptr > msgs;
   foreach( const Akonadi::Item& item, msgList )
@@ -1126,7 +1126,7 @@ KMCommand::Result KMRedirectCommand::execute()
     return Failed;
   MessageFactory factory( msg,  item.id(), item.parentCollection() );
   factory.setIdentityManager( KMKernel::self()->identityManager() );
-  factory.setFolderIdentity( KMail::Util::folderIdentity( item ) );
+  factory.setFolderIdentity( MailCommon::Util::folderIdentity( item ) );
   KMime::Message::Ptr newMsg = factory.createRedirect( dlg->to() );
   if ( !newMsg )
     return Failed;
@@ -1134,7 +1134,7 @@ KMCommand::Result KMRedirectCommand::execute()
   MessageStatus status;
   status.setStatusFromFlags( item.flags() );
   if( status.isUnread() )
-  KMFilterAction::sendMDN( item, KMime::MDN::Dispatched );
+  FilterAction::sendMDN( item, KMime::MDN::Dispatched );
 
   const MessageSender::SendMethod method = dlg->sendImmediate()
     ? MessageSender::SendImmediate
@@ -1165,7 +1165,7 @@ KMCommand::Result KMCustomReplyToCommand::execute()
     return Failed;
   MessageFactory factory( msg, item.id(), item.parentCollection() );
   factory.setIdentityManager( KMKernel::self()->identityManager() );
-  factory.setFolderIdentity( KMail::Util::folderIdentity( item ) );
+  factory.setFolderIdentity( MailCommon::Util::folderIdentity( item ) );
   factory.setMailingListAddresses( KMail::Util::mailingListsFromMessage( item ) );
   factory.putRepliesInSameFolder( KMail::Util::putRepliesInSameFolder( item ) );
   factory.setReplyStrategy( MessageComposer::ReplySmart );
@@ -1200,7 +1200,7 @@ KMCommand::Result KMCustomReplyAllToCommand::execute()
     return Failed;
   MessageFactory factory( msg, item.id(), item.parentCollection() );
   factory.setIdentityManager( KMKernel::self()->identityManager() );
-  factory.setFolderIdentity( KMail::Util::folderIdentity( item ) );
+  factory.setFolderIdentity( MailCommon::Util::folderIdentity( item ) );
   factory.setMailingListAddresses( KMail::Util::mailingListsFromMessage( item ) );
   factory.putRepliesInSameFolder( KMail::Util::putRepliesInSameFolder( item ) );
   factory.setReplyStrategy( MessageComposer::ReplyAll );
@@ -1248,7 +1248,7 @@ KMCommand::Result KMCustomForwardCommand::execute()
         MessageViewer::KCursorSaver busy( MessageViewer::KBusyPtr::busy() );
         MessageFactory factory( msg, it->id(), it->parentCollection() );
         factory.setIdentityManager( KMKernel::self()->identityManager() );
-        factory.setFolderIdentity( KMail::Util::folderIdentity( *it ) );
+        factory.setFolderIdentity( MailCommon::Util::folderIdentity( *it ) );
         factory.setTemplate( mTemplate );
         KMime::Message::Ptr fwdMsg = factory.createForward();
 
@@ -1270,7 +1270,7 @@ KMCommand::Result KMCustomForwardCommand::execute()
     MessageViewer::KCursorSaver busy( MessageViewer::KBusyPtr::busy() );
     MessageFactory factory( msg, item.id(), item.parentCollection() );
     factory.setIdentityManager( KMKernel::self()->identityManager() );
-    factory.setFolderIdentity( KMail::Util::folderIdentity( item ) );
+    factory.setFolderIdentity( MailCommon::Util::folderIdentity( item ) );
     factory.setTemplate( mTemplate );
     KMime::Message::Ptr fwdMsg = factory.createForward();
 
@@ -1462,7 +1462,7 @@ KMFilterCommand::KMFilterCommand( const QByteArray &field, const QString &value 
 
 KMCommand::Result KMFilterCommand::execute()
 {
-  kmkernel->filterMgr()->createFilter( mField, mValue );
+  FilterIf->filterManager()->createFilter( mField, mValue );
 
   return OK;
 }
@@ -1470,7 +1470,7 @@ KMCommand::Result KMFilterCommand::execute()
 
 KMFilterActionCommand::KMFilterActionCommand( QWidget *parent,
                                               const QList<Akonadi::Item> &msgList,
-                                              KMFilter *filter )
+                                              MailFilter *filter )
   : KMCommand( parent, msgList ), mFilter( filter  )
 {
   fetchScope().fetchFullPayload();
@@ -1498,7 +1498,7 @@ KMCommand::Result KMFilterActionCommand::execute()
       qApp->processEvents( QEventLoop::ExcludeUserInputEvents, 50 );
     }
 
-    int filterResult = kmkernel->filterMgr()->process( item, mFilter );
+    int filterResult = FilterIf->filterManager()->process( item, mFilter );
     if (filterResult == 2) {
       // something went horribly wrong (out of space?)
       kError() << "Critical error";
@@ -1513,7 +1513,7 @@ KMCommand::Result KMFilterActionCommand::execute()
 }
 
 
-KMMetaFilterActionCommand::KMMetaFilterActionCommand( KMFilter *filter,
+KMMetaFilterActionCommand::KMMetaFilterActionCommand( MailFilter *filter,
                                                       KMMainWidget *main )
     : QObject( main ),
       mFilter( filter ), mMainWidget( main )
@@ -1543,7 +1543,7 @@ KMCommand::Result KMMailingListFilterCommand::execute()
   if ( !msg )
     return Failed;
   if ( !MailingList::name( msg, name, value ).isEmpty() ) {
-    kmkernel->filterMgr()->createFilter( name, value );
+    FilterIf->filterManager()->createFilter( name, value );
     return OK;
   } else {
     return Failed;
@@ -1750,7 +1750,7 @@ KMCommand::Result KMResendMessageCommand::execute()
 
   MessageFactory factory( msg, item.id(), item.parentCollection() );
   factory.setIdentityManager( KMKernel::self()->identityManager() );
-  factory.setFolderIdentity( KMail::Util::folderIdentity( item ) );
+  factory.setFolderIdentity( MailCommon::Util::folderIdentity( item ) );
   KMime::Message::Ptr newMsg = factory.createResend();
   newMsg->contentType()->setCharset( MessageViewer::NodeHelper::charset( msg.get() ) );
 

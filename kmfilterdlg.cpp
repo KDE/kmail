@@ -22,11 +22,11 @@
 
 // other KMail headers:
 #include "kmsearchpatternedit.h"
-#include "kmfiltermgr.h"
+#include "mailcommon/filtermanager.h"
 #include "kmmainwidget.h"
-#include "filterimporterexporter.h"
-#include "mailutil.h"
-using KMail::FilterImporterExporter;
+#include "mailcommon/filterimporterexporter.h"
+#include "mailcommon/mailutil.h"
+using MailCommon::FilterImporterExporter;
 
 // KDEPIMLIBS headers
 #include <Akonadi/AgentType>
@@ -61,6 +61,7 @@ using KMail::FilterImporterExporter;
 // other headers:
 #include <assert.h>
 
+using namespace MailCommon;
 
 // What's this help texts
 const char * _wt_filterlist =
@@ -301,8 +302,8 @@ KMFilterDlg::KMFilterDlg(QWidget* parent, bool popFilter, bool createDummyFilter
   vbl->addStretch( 1 );
 
   // load the filter parts into the edit widgets
-  connect( mFilterList, SIGNAL(filterSelected(KMFilter*)),
-           this, SLOT(slotFilterSelected(KMFilter*)) );
+  connect( mFilterList, SIGNAL(filterSelected(MailCommon::MailFilter*)),
+           this, SLOT(slotFilterSelected(MailCommon::MailFilter*)) );
 
   if (bPopFilter){
     // set the state of the global setting 'show later msgs'
@@ -310,8 +311,8 @@ KMFilterDlg::KMFilterDlg(QWidget* parent, bool popFilter, bool createDummyFilter
              mFilterList, SLOT(slotShowLaterToggled(bool)));
 
     // set the action in the filter when changed
-    connect( mActionGroup, SIGNAL(actionChanged(const KMPopFilterAction)),
-             this, SLOT(slotActionChanged(const KMPopFilterAction)) );
+    connect( mActionGroup, SIGNAL(actionChanged(const MailCommon::PopFilterAction)),
+             this, SLOT(slotActionChanged(const MailCommon::PopFilterAction)) );
   } else {
     // transfer changes from the 'Apply this filter on...'
     // combo box to the filter
@@ -411,12 +412,12 @@ void KMFilterDlg::slotSaveSize() {
 }
 
 /** Set action of popFilter */
-void KMFilterDlg::slotActionChanged(const KMPopFilterAction aAction)
+void KMFilterDlg::slotActionChanged(const MailCommon::PopFilterAction aAction)
 {
   mFilter->setAction(aAction);
 }
 
-void KMFilterDlg::slotFilterSelected( KMFilter* aFilter )
+void KMFilterDlg::slotFilterSelected( MailFilter* aFilter )
 {
   assert( aFilter );
 
@@ -443,8 +444,8 @@ void KMFilterDlg::slotFilterSelected( KMFilter* aFilter )
     // the filter! So make sure we have the correct values _before_ we
     // set the first one:
     const bool applyOnIn = aFilter->applyOnInbound();
-    const bool applyOnForAll = aFilter->applicability() == KMFilter::All;
-    const bool applyOnTraditional = aFilter->applicability() == KMFilter::ButImap;
+    const bool applyOnForAll = aFilter->applicability() == MailFilter::All;
+    const bool applyOnTraditional = aFilter->applicability() == MailFilter::ButImap;
     const bool applyBeforeOut = aFilter->applyBeforeOutbound();
     const bool applyOnOut = aFilter->applyOnOutbound();
     const bool applyOnExplicit = aFilter->applyOnExplicit();
@@ -506,11 +507,11 @@ void KMFilterDlg::slotApplicabilityChanged()
     mFilter->setApplyOnOutbound( mApplyOnOut->isChecked() );
     mFilter->setApplyOnExplicit( mApplyOnCtrlJ->isChecked() );
     if ( mApplyOnForAll->isChecked() )
-      mFilter->setApplicability( KMFilter::All );
+      mFilter->setApplicability( MailFilter::All );
     else if ( mApplyOnForTraditional->isChecked() )
-      mFilter->setApplicability( KMFilter::ButImap );
+      mFilter->setApplicability( MailFilter::ButImap );
     else if ( mApplyOnForChecked->isChecked() )
-      mFilter->setApplicability( KMFilter::Checked );
+      mFilter->setApplicability( MailFilter::Checked );
 
     mApplyOnForAll->setEnabled( mApplyOnIn->isChecked() );
     mApplyOnForTraditional->setEnabled(  mApplyOnIn->isChecked() );
@@ -730,13 +731,13 @@ KMFilterListBox::~KMFilterListBox()
 void KMFilterListBox::createFilter( const QByteArray & field,
                                     const QString & value )
 {
-  KMSearchRule::Ptr newRule = KMSearchRule::createInstance( field, KMSearchRule::FuncContains, value );
+  SearchRule::Ptr newRule = SearchRule::createInstance( field, SearchRule::FuncContains, value );
 
-  KMFilter *newFilter = new KMFilter( bPopFilter );
+  MailFilter *newFilter = new MailFilter( bPopFilter );
   newFilter->pattern()->append( newRule );
   newFilter->pattern()->setName( QString("<%1>:%2").arg( QString::fromLatin1( field ) ).arg( value) );
 
-  KMFilterActionDesc *desc = kmkernel->filterActionDict()->value( "transfer" );
+  FilterActionDesc *desc = kmkernel->filterActionDict()->value( "transfer" );
   if ( desc )
     newFilter->actions()->append( desc->create() );
 
@@ -756,7 +757,7 @@ void KMFilterListBox::slotUpdateFilterName()
     return;
   }
 
-  KMSearchPattern *p = mFilterList.at(mIdxSelItem)->pattern();
+  SearchPattern *p = mFilterList.at(mIdxSelItem)->pattern();
   if ( !p ) return;
 
   QString shouldBeName = p->name();
@@ -805,13 +806,13 @@ void KMFilterListBox::slotApplyFilterChanges( KDialog::ButtonCode button )
   // by now all edit widgets should have written back
   // their widget's data into our filter list.
 
-  KMFilterMgr *fm;
+  FilterManager *fm;
   if ( bPopFilter )
-    fm = kmkernel->popFilterMgr();
+    fm = kmkernel->popFilterManager();
   else
-    fm = kmkernel->filterMgr();
+    fm = kmkernel->filterManager();
 
-  QList<KMFilter *> newFilters = filtersForSaving( closeAfterSaving );
+  QList<MailFilter *> newFilters = filtersForSaving( closeAfterSaving );
 
   if ( bPopFilter )
     fm->setShowLaterMsgs( mShowLater );
@@ -819,13 +820,13 @@ void KMFilterListBox::slotApplyFilterChanges( KDialog::ButtonCode button )
   fm->setFilters( newFilters );
 }
 
-QList<KMFilter *> KMFilterListBox::filtersForSaving( bool closeAfterSaving ) const
+QList<MailFilter *> KMFilterListBox::filtersForSaving( bool closeAfterSaving ) const
 {
   const_cast<KMFilterListBox*>( this )->applyWidgets(); // signals aren't const
-  QList<KMFilter *> filters;
+  QList<MailFilter *> filters;
   QStringList emptyFilters;
-  foreach ( KMFilter *const it, mFilterList ) {
-    KMFilter *f = new KMFilter( *it ); // deep copy
+  foreach ( MailFilter *const it, mFilterList ) {
+    MailFilter *f = new MailFilter( *it ); // deep copy
     f->purify();
     if ( !f->isEmpty() )
       // the filter is valid:
@@ -872,7 +873,7 @@ void KMFilterListBox::slotSelected( int aIdx )
   mIdxSelItem = aIdx;
 
   if ( mIdxSelItem >= 0 && mIdxSelItem < mFilterList.count() ) {
-    KMFilter *f = mFilterList.at(aIdx);
+    MailFilter *f = mFilterList.at(aIdx);
     if ( f )
       emit filterSelected( f );
     else
@@ -886,7 +887,7 @@ void KMFilterListBox::slotSelected( int aIdx )
 void KMFilterListBox::slotNew()
 {
   // just insert a new filter.
-  insertFilter( new KMFilter( bPopFilter ) );
+  insertFilter( new MailFilter( bPopFilter ) );
   enableControls();
 }
 
@@ -900,14 +901,14 @@ void KMFilterListBox::slotCopy()
   // make sure that all changes are written to the filter before we copy it
   emit applyWidgets();
 
-  KMFilter *filter = mFilterList.at( mIdxSelItem );
+  MailFilter *filter = mFilterList.at( mIdxSelItem );
 
   // enableControls should make sure this method is
   // never called when no filter is selected.
   assert( filter );
 
   // inserts a copy of the current filter.
-  insertFilter( new KMFilter( *filter ) );
+  insertFilter( new MailFilter( *filter ) );
   enableControls();
 }
 
@@ -991,7 +992,7 @@ void KMFilterListBox::slotRename()
   }
 
   bool okPressed = false;
-  KMFilter *filter = mFilterList.at( mIdxSelItem );
+  MailFilter *filter = mFilterList.at( mIdxSelItem );
 
   // enableControls should make sure this method is
   // never called when no filter is selected.
@@ -1053,23 +1054,23 @@ void KMFilterListBox::loadFilterList( bool createDummyFilter )
   mFilterList.clear();
   mListWidget->clear();
 
-  const KMFilterMgr *manager = 0;
+  const FilterManager *manager = 0;
   if(bPopFilter)
   {
-    mShowLater = kmkernel->popFilterMgr()->showLaterMsgs();
-    manager = kmkernel->popFilterMgr();
+    mShowLater = kmkernel->popFilterManager()->showLaterMsgs();
+    manager = kmkernel->popFilterManager();
   }
   else
   {
-    manager = kmkernel->filterMgr();
+    manager = kmkernel->filterManager();
   }
   Q_ASSERT( manager );
 
-  QList<KMFilter*>::const_iterator it;
+  QList<MailFilter*>::const_iterator it;
   for ( it = manager->filters().constBegin() ;
         it != manager->filters().constEnd();
         ++it ) {
-    mFilterList.append( new KMFilter( **it ) ); // deep copy
+    mFilterList.append( new MailFilter( **it ) ); // deep copy
     mListWidget->addItem( (*it)->pattern()->name() );
   }
 
@@ -1088,7 +1089,7 @@ void KMFilterListBox::loadFilterList( bool createDummyFilter )
   enableControls();
 }
 
-void KMFilterListBox::insertFilter( KMFilter* aFilter )
+void KMFilterListBox::insertFilter( MailFilter* aFilter )
 {
   // must be really a filter...
   assert( aFilter );
@@ -1107,7 +1108,7 @@ void KMFilterListBox::insertFilter( KMFilter* aFilter )
 
 }
 
-void KMFilterListBox::appendFilter( KMFilter* aFilter )
+void KMFilterListBox::appendFilter( MailFilter* aFilter )
 {
   mFilterList.append( aFilter );
   mListWidget->addItems( QStringList( aFilter->pattern()->name() ) );
@@ -1126,7 +1127,7 @@ void KMFilterListBox::swapNeighbouringFilters( int untouchedOne, int movedOne )
   // insert the other item at idx, ie. above(below).
   mListWidget->insertItem( untouchedOne, item );
 
-  KMFilter* filter = mFilterList.takeAt( movedOne );
+  MailFilter* filter = mFilterList.takeAt( movedOne );
   mFilterList.insert( untouchedOne, filter );
 
   mIdxSelItem += movedOne - untouchedOne;
@@ -1156,11 +1157,11 @@ KMFilterActionWidget::KMFilterActionWidget( QWidget *parent, const char* name )
 
   setSpacing( 4 );
 
-  QList<KMFilterActionDesc*> list = kmkernel->filterActionDict()->list();
-  QList<KMFilterActionDesc*>::const_iterator it;
+  QList<FilterActionDesc*> list = kmkernel->filterActionDict()->list();
+  QList<FilterActionDesc*>::const_iterator it;
   for ( i=0, it = list.constBegin() ; it != list.constEnd() ; ++it, ++i ) {
     //create an instance:
-    KMFilterAction *a = (*it)->create();
+    FilterAction *a = (*it)->create();
     // append to the list of actions:
     mActionList.append( a );
     // add (i18n-ized) name to combo box
@@ -1212,7 +1213,7 @@ KMFilterActionWidget::~KMFilterActionWidget()
   qDeleteAll( mActionList );
 }
 
-void KMFilterActionWidget::setAction( const KMFilterAction* aAction )
+void KMFilterActionWidget::setAction( const FilterAction* aAction )
 {
   bool found = false;
   int count = mComboBox->count() - 1 ; // last entry is the empty one
@@ -1241,14 +1242,14 @@ void KMFilterActionWidget::setAction( const KMFilterAction* aAction )
   mComboBox->setCurrentIndex( count ); // last item
 }
 
-KMFilterAction * KMFilterActionWidget::action() const
+FilterAction * KMFilterActionWidget::action() const
 {
   // look up the action description via the label
   // returned by KComboBox::currentText()...
-  KMFilterActionDesc *desc = kmkernel->filterActionDict()->value( mComboBox->currentText() );
+  FilterActionDesc *desc = kmkernel->filterActionDict()->value( mComboBox->currentText() );
   if ( desc ) {
     // ...create an instance...
-    KMFilterAction *fa = desc->create();
+    FilterAction *fa = desc->create();
     if ( fa ) {
       // ...and apply the setting of the parameter widget.
       fa->applyParamWidgetValue( gl->itemAtPosition( 1, 2 )->widget() );
@@ -1274,7 +1275,7 @@ KMFilterActionWidgetLister::~KMFilterActionWidgetLister()
 {
 }
 
-void KMFilterActionWidgetLister::setActionList( QList<KMFilterAction*> *aList )
+void KMFilterActionWidgetLister::setActionList( QList<FilterAction*> *aList )
 {
   assert ( aList );
 
@@ -1304,7 +1305,7 @@ void KMFilterActionWidgetLister::setActionList( QList<KMFilterAction*> *aList )
 
   // load the actions into the widgets
   QList<QWidget*> widgetList = widgets();
-  QList<KMFilterAction*>::const_iterator aIt;
+  QList<FilterAction*>::const_iterator aIt;
   QList<QWidget*>::ConstIterator wIt = widgetList.constBegin();
   for ( aIt = mActionList->constBegin();
         ( aIt != mActionList->constEnd() && wIt != widgetList.constEnd() );
@@ -1340,7 +1341,7 @@ void KMFilterActionWidgetLister::regenerateActionListFromWidgets()
   mActionList->clear();
 
   foreach ( const QWidget* w, widgets() ) {
-    KMFilterAction *a = qobject_cast<const KMFilterActionWidget*>( w )->action();
+    FilterAction *a = qobject_cast<const KMFilterActionWidget*>( w )->action();
     if ( a )
       mActionList->append( a );
   }
@@ -1383,7 +1384,7 @@ KMPopFilterActionWidget::KMPopFilterActionWidget( const QString& title, QWidget 
 	   this, SLOT(slotActionClicked(QAbstractButton*)) );
 }
 
-void KMPopFilterActionWidget::setAction( KMPopFilterAction aAction )
+void KMPopFilterActionWidget::setAction( MailCommon::PopFilterAction aAction )
 {
   if( aAction == NoAction)
   {
@@ -1402,7 +1403,7 @@ void KMPopFilterActionWidget::setAction( KMPopFilterAction aAction )
   setEnabled(true);
 }
 
-KMPopFilterAction  KMPopFilterActionWidget::action()
+MailCommon::PopFilterAction  KMPopFilterActionWidget::action()
 {
   return mAction;
 }
@@ -1425,12 +1426,12 @@ void KMPopFilterActionWidget::reset()
 void KMFilterDlg::slotImportFilters()
 {
   FilterImporterExporter importer( this, bPopFilter );
-  QList<KMFilter *> filters = importer.importFilters();
+  QList<MailFilter *> filters = importer.importFilters();
 
   // FIXME message box how many were imported?
   if ( filters.isEmpty() ) return;
 
-  QList<KMFilter*>::ConstIterator it;
+  QList<MailFilter*>::ConstIterator it;
 
   for ( it = filters.constBegin() ; it != filters.constEnd() ; ++it ) {
     mFilterList->appendFilter( *it ); // no need to deep copy, ownership passes to the list
@@ -1440,9 +1441,9 @@ void KMFilterDlg::slotImportFilters()
 void KMFilterDlg::slotExportFilters()
 {
   FilterImporterExporter exporter( this, bPopFilter );
-  QList<KMFilter *> filters = mFilterList->filtersForSaving( false );
+  QList<MailFilter *> filters = mFilterList->filtersForSaving( false );
   exporter.exportFilters( filters );
-  QList<KMFilter *>::ConstIterator it;
+  QList<MailFilter *>::ConstIterator it;
   for ( it = filters.constBegin(); it != filters.constEnd(); ++it )
     delete *it;
 }

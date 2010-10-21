@@ -22,30 +22,29 @@
 
 #include "kwidgetlister.h"
 
-#include "kmsearchpattern.h"
+#include "mailcommon/searchpattern.h"
 
 #include <QGroupBox>
 #include <QByteArray>
 
 class KComboBox;
-class KMSearchPattern;
 class KMSearchPatternEdit;
 
 class QAbstractButton;
 class QRadioButton;
 class QStackedWidget;
 
-/** A widget to edit a single KMSearchRule.
+/** A widget to edit a single MailCommon::SearchRule.
     It consists of an editable KComboBox for the field,
     a read-only KComboBox for the function and
     a QLineEdit for the content or the pattern (in case of regexps).
     It manages the i18n itself, so field name should be in it's english form.
 
-    To use, you essentially give it the reference to a KMSearchRule and
+    To use, you essentially give it the reference to a MailCommon::SearchRule and
     it does the rest. It will never delete the rule itself, as it assumes
     that something outside of it manages this.
 
-    @short A widget to edit a single KMSearchRule.
+    @short A widget to edit a single MailCommon::SearchRule.
     @author Marc Mutz <Marc@Mutz.com>
 */
 
@@ -53,9 +52,9 @@ class KMSearchRuleWidget : public QWidget
 {
   Q_OBJECT
 public:
-  /** Constructor. You can give a KMSearchRule as parameter, which will
+  /** Constructor. You can give a MailCommon::SearchRule as parameter, which will
       be used to initialize the widget. */
-  explicit KMSearchRuleWidget( QWidget* parent=0, KMSearchRule::Ptr aRule = KMSearchRule::Ptr(), bool headersOnly = false, bool absoluteDates = false );
+  explicit KMSearchRuleWidget( QWidget* parent=0, MailCommon::SearchRule::Ptr aRule = MailCommon::SearchRule::Ptr(), bool headersOnly = false, bool absoluteDates = false );
 
   enum { Message, Body, AnyHeader, Recipients, Size, AgeInDays, Status,
          Tag, Subject, From, To, CC, ReplyTo, Organization };
@@ -66,14 +65,14 @@ public:
   void setHeadersOnly( bool headersOnly );
 
   /** Set the rule. The rule is accepted regardless of the return
-      value of KMSearchRule::isEmpty. This widget makes a shallow
+      value of MailCommon::SearchRule::isEmpty. This widget makes a shallow
       copy of @p aRule and operates directly on it. If @p aRule is
       0, resets itself, taks user input, but does essentially
       nothing. If you pass 0, you should probably disable it. */
-  void setRule( KMSearchRule::Ptr aRule );
+  void setRule( MailCommon::SearchRule::Ptr aRule );
 
-  /** Return a reference to the currently-worked-on KMSearchRule. */
-  KMSearchRule::Ptr rule() const;
+  /** Return a reference to the currently-worked-on MailCommon::SearchRule. */
+  MailCommon::SearchRule::Ptr rule() const;
 
   /** Resets the rule currently worked on and updates the widget
       accordingly. */
@@ -128,7 +127,7 @@ public:
 
   virtual ~KMSearchRuleWidgetLister();
 
-  void setRuleList( QList<KMSearchRule::Ptr> * aList );
+  void setRuleList( QList<MailCommon::SearchRule::Ptr> * aList );
   void setHeadersOnly( bool headersOnly );
 
 public slots:
@@ -140,7 +139,7 @@ protected:
 
 private:
   void regenerateRuleListFromWidgets();
-  QList<KMSearchRule::Ptr> *mRuleList;
+  QList<MailCommon::SearchRule::Ptr> *mRuleList;
   bool mHeadersOnly;
   bool mAbsoluteDates;
 };
@@ -150,7 +149,7 @@ private:
     well as in the message search dialogs. It consists of a frame,
     inside which there are placed two radio buttons entitled "Match
     {all,any} of the following", followed by a vertical stack of
-    KMSearchRuleWidgets (initially two) and two buttons to add and
+    MailCommon::SearchRuleWidgets (initially two) and two buttons to add and
     remove, resp., additional KMSearchWidget 's.
 
     To set the widget according to a given KMSearchPattern, use
@@ -174,7 +173,7 @@ private:
     change it. This is because it auto-names the pattern to
     "<$field>:$contents" iff the pattern begins with "<".
 
-    @short A widget which allows editing a set of KMSearchRule's.
+    @short A widget which allows editing a set of MailCommon::SearchRule's.
     @author Marc Mutz <Marc@Mutz.com>
 */
 
@@ -195,10 +194,10 @@ public:
   ~KMSearchPatternEdit();
 
   /** Set the search pattern. Rules are inserted regardless of the
-      return value of each rules' KMSearchRule::isEmpty. This
+      return value of each rules' MailCommon::SearchRule::isEmpty. This
       widget makes a shallow copy of @p aPattern and operates directly
       on it. */
-  void setSearchPattern( KMSearchPattern* aPattern );
+  void setSearchPattern( MailCommon::SearchPattern* aPattern );
   /** Set whether only header fields can be searched. If @p is true only
       header fields can be searched otherwise \<message\> and \<body\> searches
       are available also. */
@@ -224,7 +223,7 @@ private slots:
 private:
   void initLayout( bool headersOnly, bool absoluteDates );
 
-  KMSearchPattern *mPattern;
+  MailCommon::SearchPattern *mPattern;
   QRadioButton    *mAllRBtn, *mAnyRBtn;
   KMSearchRuleWidgetLister *mRuleLister;
 };

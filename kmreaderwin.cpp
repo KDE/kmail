@@ -105,6 +105,7 @@ using MessageComposer::MessageFactory;
 #include <stdio.h>
 #include <ctype.h>
 #include <string.h>
+#include <mailutil.h>
 
 using namespace KMail;
 using namespace MailCommon;
@@ -425,7 +426,7 @@ void KMReaderWin::slotTouchMessage()
     int quote = mdnConfig.readEntry<int>( "quote-message", 0 );
     MessageFactory factory( msg, Akonadi::Item().id() );
     factory.setIdentityManager( KMKernel::self()->identityManager() );
-    factory.setFolderIdentity( KMail::Util::folderIdentity( message() ) );
+    factory.setFolderIdentity( MailCommon::Util::folderIdentity( message() ) );
     KMime::Message::Ptr mdn = factory.createMDN( KMime::MDN::ManualAction, KMime::MDN::Displayed, mdnSend.second, quote );
     if ( mdn ) {
       if( !kmkernel->msgSender()->send( mdn, MessageSender::SendLater ) ) {

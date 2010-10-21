@@ -52,6 +52,8 @@
 #include <algorithm>
 using std::for_each;
 using std::remove;
+using namespace MailCommon;
+
 
 KMail::RuleWidgetHandlerManager * KMail::RuleWidgetHandlerManager::self = 0;
 
@@ -67,7 +69,7 @@ namespace {
     QWidget * createValueWidget( int number,
                                  QStackedWidget *valueStack,
                                  const QObject *receiver ) const;
-    KMSearchRule::Function function( const QByteArray & field,
+    SearchRule::Function function( const QByteArray & field,
                                      const QStackedWidget *functionStack ) const;
     QString value( const QByteArray & field,
                    const QStackedWidget *functionStack,
@@ -80,15 +82,15 @@ namespace {
                 QStackedWidget *valueStack ) const;
     bool setRule( QStackedWidget *functionStack,
                   QStackedWidget *valueStack,
-                  const KMSearchRule::Ptr rule ) const;
+                  const SearchRule::Ptr rule ) const;
     bool update( const QByteArray & field,
                  QStackedWidget *functionStack,
                  QStackedWidget *valueStack ) const;
 
  private:
-    KMSearchRule::Function currentFunction( const QStackedWidget *functionStack ) const;
+    SearchRule::Function currentFunction( const QStackedWidget *functionStack ) const;
     QString currentValue( const QStackedWidget *valueStack,
-                          KMSearchRule::Function func ) const;
+                          SearchRule::Function func ) const;
   };
 
   class MessageRuleWidgetHandler : public KMail::RuleWidgetHandler {
@@ -102,7 +104,7 @@ namespace {
     QWidget * createValueWidget( int number,
                                  QStackedWidget *valueStack,
                                  const QObject *receiver ) const;
-    KMSearchRule::Function function( const QByteArray & field,
+    SearchRule::Function function( const QByteArray & field,
                                      const QStackedWidget *functionStack ) const;
     QString value( const QByteArray & field,
                    const QStackedWidget *functionStack,
@@ -115,15 +117,15 @@ namespace {
                 QStackedWidget *valueStack ) const;
     bool setRule( QStackedWidget *functionStack,
                   QStackedWidget *valueStack,
-                  const KMSearchRule::Ptr rule ) const;
+                  const SearchRule::Ptr rule ) const;
     bool update( const QByteArray & field,
                  QStackedWidget *functionStack,
                  QStackedWidget *valueStack ) const;
 
  private:
-    KMSearchRule::Function currentFunction( const QStackedWidget *functionStack ) const;
+    SearchRule::Function currentFunction( const QStackedWidget *functionStack ) const;
     QString currentValue( const QStackedWidget *valueStack,
-                          KMSearchRule::Function func ) const;
+                          SearchRule::Function func ) const;
   };
 
 
@@ -138,7 +140,7 @@ namespace {
     QWidget * createValueWidget( int number,
                                  QStackedWidget *valueStack,
                                  const QObject *receiver ) const;
-    KMSearchRule::Function function( const QByteArray & field,
+    SearchRule::Function function( const QByteArray & field,
                                      const QStackedWidget *functionStack ) const;
     QString value( const QByteArray & field,
                    const QStackedWidget *functionStack,
@@ -151,13 +153,13 @@ namespace {
                 QStackedWidget *valueStack ) const;
     bool setRule( QStackedWidget *functionStack,
                   QStackedWidget *valueStack,
-                  const KMSearchRule::Ptr rule ) const;
+                  const SearchRule::Ptr rule ) const;
     bool update( const QByteArray & field,
                  QStackedWidget *functionStack,
                  QStackedWidget *valueStack ) const;
 
   private:
-    KMSearchRule::Function currentFunction( const QStackedWidget *functionStack ) const;
+    SearchRule::Function currentFunction( const QStackedWidget *functionStack ) const;
     int currentStatusValue( const QStackedWidget *valueStack ) const;
   };
 
@@ -172,7 +174,7 @@ namespace {
     QWidget * createValueWidget( int number,
                                  QStackedWidget *valueStack,
                                  const QObject *receiver ) const;
-    KMSearchRule::Function function( const QByteArray & field,
+    SearchRule::Function function( const QByteArray & field,
                                      const QStackedWidget *functionStack ) const;
     QString value( const QByteArray & field,
                    const QStackedWidget *functionStack,
@@ -185,7 +187,7 @@ namespace {
                 QStackedWidget *valueStack ) const;
     bool setRule( QStackedWidget *functionStack,
                   QStackedWidget *valueStack,
-                  const KMSearchRule::Ptr rule ) const;
+                  const SearchRule::Ptr rule ) const;
     bool update( const QByteArray & field,
                  QStackedWidget *functionStack,
                  QStackedWidget *valueStack ) const;
@@ -202,7 +204,7 @@ namespace {
     QWidget * createValueWidget( int number,
                                  QStackedWidget *valueStack,
                                  const QObject *receiver ) const;
-    KMSearchRule::Function function( const QByteArray & field,
+    SearchRule::Function function( const QByteArray & field,
                                      const QStackedWidget *functionStack ) const;
     QString value( const QByteArray & field,
                    const QStackedWidget *functionStack,
@@ -215,13 +217,13 @@ namespace {
                 QStackedWidget *valueStack ) const;
     bool setRule( QStackedWidget *functionStack,
                   QStackedWidget *valueStack,
-                  const KMSearchRule::Ptr rule ) const;
+                  const SearchRule::Ptr rule ) const;
     bool update( const QByteArray & field,
                  QStackedWidget *functionStack,
                  QStackedWidget *valueStack ) const;
 
   private:
-    KMSearchRule::Function currentFunction( const QStackedWidget *functionStack ) const;
+    SearchRule::Function currentFunction( const QStackedWidget *functionStack ) const;
     QString currentValue( const QStackedWidget *valueStack ) const;
   };
 }
@@ -307,16 +309,16 @@ void KMail::RuleWidgetHandlerManager::createWidgets( QStackedWidget *functionSta
   }
 }
 
-KMSearchRule::Function KMail::RuleWidgetHandlerManager::function( const QByteArray& field,
+SearchRule::Function KMail::RuleWidgetHandlerManager::function( const QByteArray& field,
                                                                   const QStackedWidget *functionStack ) const
 {
   for ( const_iterator it = mHandlers.begin(); it != mHandlers.end(); ++it ) {
-    const KMSearchRule::Function func = (*it)->function( field,
+    const SearchRule::Function func = (*it)->function( field,
                                                          functionStack );
-    if ( func != KMSearchRule::FuncNone )
+    if ( func != SearchRule::FuncNone )
       return func;
   }
-  return KMSearchRule::FuncNone;
+  return SearchRule::FuncNone;
 }
 
 QString KMail::RuleWidgetHandlerManager::value( const QByteArray& field,
@@ -354,7 +356,7 @@ void KMail::RuleWidgetHandlerManager::reset( QStackedWidget *functionStack,
 
 void KMail::RuleWidgetHandlerManager::setRule( QStackedWidget *functionStack,
                                                QStackedWidget *valueStack,
-                                               const KMSearchRule::Ptr rule ) const
+                                               const SearchRule::Ptr rule ) const
 {
   assert( rule );
   reset( functionStack, valueStack );
@@ -379,9 +381,9 @@ void KMail::RuleWidgetHandlerManager::update( const QByteArray &field,
 
 // these includes are temporary and should not be needed for the code
 // above this line, so they appear only here:
-#include "kmsearchpattern.h"
-#include "regexplineedit.h"
-using KMail::RegExpLineEdit;
+#include "mailcommon/searchpattern.h"
+#include "mailcommon/regexplineedit.h"
+using MailCommon::RegExpLineEdit;
 #include "kmkernel.h"
 
 #include <kcombobox.h>
@@ -397,22 +399,22 @@ using KMail::RegExpLineEdit;
 //=============================================================================
 
 namespace {
-  // also see KMSearchRule::matches() and KMSearchRule::Function
+  // also see SearchRule::matches() and SearchRule::Function
   // if you change the following strings!
   static const struct {
-    KMSearchRule::Function id;
+    SearchRule::Function id;
     const char *displayName;
   } TextFunctions[] = {
-    { KMSearchRule::FuncContains,           I18N_NOOP( "contains" )          },
-    { KMSearchRule::FuncContainsNot,        I18N_NOOP( "does not contain" )   },
-    { KMSearchRule::FuncEquals,             I18N_NOOP( "equals" )            },
-    { KMSearchRule::FuncNotEqual,           I18N_NOOP( "does not equal" )     },
-    { KMSearchRule::FuncRegExp,             I18N_NOOP( "matches regular expr." ) },
-    { KMSearchRule::FuncNotRegExp,          I18N_NOOP( "does not match reg. expr." ) },
-    { KMSearchRule::FuncIsInAddressbook,    I18N_NOOP( "is in address book" ) },
-    { KMSearchRule::FuncIsNotInAddressbook, I18N_NOOP( "is not in address book" ) },
-    { KMSearchRule::FuncIsInCategory,       I18N_NOOP( "is in category" ) },
-    { KMSearchRule::FuncIsNotInCategory,    I18N_NOOP( "is not in category" ) }
+    { SearchRule::FuncContains,           I18N_NOOP( "contains" )          },
+    { SearchRule::FuncContainsNot,        I18N_NOOP( "does not contain" )   },
+    { SearchRule::FuncEquals,             I18N_NOOP( "equals" )            },
+    { SearchRule::FuncNotEqual,           I18N_NOOP( "does not equal" )     },
+    { SearchRule::FuncRegExp,             I18N_NOOP( "matches regular expr." ) },
+    { SearchRule::FuncNotRegExp,          I18N_NOOP( "does not match reg. expr." ) },
+    { SearchRule::FuncIsInAddressbook,    I18N_NOOP( "is in address book" ) },
+    { SearchRule::FuncIsNotInAddressbook, I18N_NOOP( "is not in address book" ) },
+    { SearchRule::FuncIsInCategory,       I18N_NOOP( "is in category" ) },
+    { SearchRule::FuncIsNotInCategory,    I18N_NOOP( "is not in category" ) }
   };
   static const int TextFunctionCount =
     sizeof( TextFunctions ) / sizeof( *TextFunctions );
@@ -479,7 +481,7 @@ namespace {
 
   //---------------------------------------------------------------------------
 
-  KMSearchRule::Function TextRuleWidgetHandler::currentFunction( const QStackedWidget *functionStack ) const
+  SearchRule::Function TextRuleWidgetHandler::currentFunction( const QStackedWidget *functionStack ) const
   {
     const KComboBox *funcCombo =
       functionStack->findChild<KComboBox*>( QString( "textRuleFuncCombo" ) );
@@ -488,12 +490,12 @@ namespace {
       return TextFunctions[funcCombo->currentIndex()].id;
     }
 
-    return KMSearchRule::FuncNone;
+    return SearchRule::FuncNone;
   }
 
   //---------------------------------------------------------------------------
 
-  KMSearchRule::Function TextRuleWidgetHandler::function( const QByteArray &,
+  SearchRule::Function TextRuleWidgetHandler::function( const QByteArray &,
                                                           const QStackedWidget *functionStack ) const
   {
     return currentFunction( functionStack );
@@ -502,11 +504,11 @@ namespace {
   //---------------------------------------------------------------------------
 
   QString TextRuleWidgetHandler::currentValue( const QStackedWidget *valueStack,
-                                               KMSearchRule::Function func ) const
+                                               SearchRule::Function func ) const
   {
     // here we gotta check the combobox which contains the categories
-    if ( func  == KMSearchRule::FuncIsInCategory ||
-         func  == KMSearchRule::FuncIsNotInCategory ) {
+    if ( func  == SearchRule::FuncIsInCategory ||
+         func  == SearchRule::FuncIsNotInCategory ) {
       const KComboBox *combo = valueStack->findChild<KComboBox*>( "categoryCombo" );
 
       if ( combo ) {
@@ -533,10 +535,10 @@ namespace {
                                         const QStackedWidget *functionStack,
                                         const QStackedWidget *valueStack ) const
   {
-    KMSearchRule::Function func = currentFunction( functionStack );
-    if ( func == KMSearchRule::FuncIsInAddressbook )
+    SearchRule::Function func = currentFunction( functionStack );
+    if ( func == SearchRule::FuncIsInAddressbook )
       return "is in address book"; // just a non-empty dummy value
-    else if ( func == KMSearchRule::FuncIsNotInAddressbook )
+    else if ( func == SearchRule::FuncIsNotInAddressbook )
       return "is not in address book"; // just a non-empty dummy value
     else
       return currentValue( valueStack, func );
@@ -548,10 +550,10 @@ namespace {
                                               const QStackedWidget *functionStack,
                                               const QStackedWidget *valueStack ) const
   {
-    KMSearchRule::Function func = currentFunction( functionStack );
-    if ( func == KMSearchRule::FuncIsInAddressbook )
+    SearchRule::Function func = currentFunction( functionStack );
+    if ( func == SearchRule::FuncIsInAddressbook )
       return i18n( "is in address book" );
-    else if ( func == KMSearchRule::FuncIsNotInAddressbook )
+    else if ( func == SearchRule::FuncIsNotInAddressbook )
       return i18n( "is not in address book" );
     else
       return currentValue( valueStack, func );
@@ -605,7 +607,7 @@ namespace {
 
   bool TextRuleWidgetHandler::setRule( QStackedWidget *functionStack,
                                        QStackedWidget *valueStack,
-                                       const KMSearchRule::Ptr rule ) const
+                                       const SearchRule::Ptr rule ) const
   {
 
     if ( !rule ) {
@@ -613,7 +615,7 @@ namespace {
       return false;
     }
 
-    const KMSearchRule::Function func = rule->function();
+    const SearchRule::Function func = rule->function();
     int i = 0;
     for ( ; i < TextFunctionCount; ++i )
       if ( func == TextFunctions[i].id )
@@ -632,14 +634,14 @@ namespace {
       functionStack->setCurrentWidget( funcCombo );
     }
 
-    if ( func == KMSearchRule::FuncIsInAddressbook ||
-         func == KMSearchRule::FuncIsNotInAddressbook ) {
+    if ( func == SearchRule::FuncIsInAddressbook ||
+         func == SearchRule::FuncIsNotInAddressbook ) {
       QWidget *w =
               valueStack->findChild<QWidget*>( "textRuleValueHider");
       valueStack->setCurrentWidget( w );
     }
-    else if ( func == KMSearchRule::FuncIsInCategory ||
-              func == KMSearchRule::FuncIsNotInCategory) {
+    else if ( func == SearchRule::FuncIsInCategory ||
+              func == SearchRule::FuncIsNotInCategory) {
       KComboBox *combo =
               valueStack->findChild<KComboBox*>( "categoryCombo" );
 
@@ -663,8 +665,8 @@ namespace {
         lineEdit->blockSignals( true );
         lineEdit->setText( rule->contents() );
         lineEdit->blockSignals( false );
-        lineEdit->showEditButton( func == KMSearchRule::FuncRegExp ||
-                                  func == KMSearchRule::FuncNotRegExp );
+        lineEdit->showEditButton( func == SearchRule::FuncRegExp ||
+                                  func == SearchRule::FuncNotRegExp );
         valueStack->setCurrentWidget( lineEdit );
       }
     }
@@ -683,14 +685,14 @@ namespace {
             functionStack->findChild<QWidget*>( "textRuleFuncCombo" ));
 
     // raise the correct value widget
-    KMSearchRule::Function func = currentFunction( functionStack );
-    if ( func == KMSearchRule::FuncIsInAddressbook ||
-         func == KMSearchRule::FuncIsNotInAddressbook ) {
+    SearchRule::Function func = currentFunction( functionStack );
+    if ( func == SearchRule::FuncIsInAddressbook ||
+         func == SearchRule::FuncIsNotInAddressbook ) {
       valueStack->setCurrentWidget(
               valueStack->findChild<QWidget*>( "textRuleValueHider" ));
     }
-    else if ( func == KMSearchRule::FuncIsInCategory ||
-              func == KMSearchRule::FuncIsNotInCategory) {
+    else if ( func == SearchRule::FuncIsInCategory ||
+              func == SearchRule::FuncIsNotInCategory) {
       valueStack->setCurrentWidget(
               valueStack->findChild<QWidget*>( "categoryCombo" ));
     }
@@ -699,8 +701,8 @@ namespace {
                 valueStack->findChild<RegExpLineEdit*>( "regExpLineEdit" );
 
       if ( lineEdit ) {
-        lineEdit->showEditButton( func == KMSearchRule::FuncRegExp ||
-                                  func == KMSearchRule::FuncNotRegExp );
+        lineEdit->showEditButton( func == SearchRule::FuncRegExp ||
+                                  func == SearchRule::FuncNotRegExp );
         valueStack->setCurrentWidget( lineEdit );
       }
     }
@@ -717,18 +719,18 @@ namespace {
 //=============================================================================
 
 namespace {
-  // also see KMSearchRule::matches() and KMSearchRule::Function
+  // also see SearchRule::matches() and SearchRule::Function
   // if you change the following strings!
   static const struct {
-    KMSearchRule::Function id;
+    SearchRule::Function id;
     const char *displayName;
   } MessageFunctions[] = {
-    { KMSearchRule::FuncContains,        I18N_NOOP( "contains" )          },
-    { KMSearchRule::FuncContainsNot,     I18N_NOOP( "does not contain" )  },
-    { KMSearchRule::FuncRegExp,          I18N_NOOP( "matches regular expr." ) },
-    { KMSearchRule::FuncNotRegExp,       I18N_NOOP( "does not match reg. expr." ) },
-    { KMSearchRule::FuncHasAttachment,   I18N_NOOP( "has an attachment" ) },
-    { KMSearchRule::FuncHasNoAttachment, I18N_NOOP( "has no attachment" ) },
+    { SearchRule::FuncContains,        I18N_NOOP( "contains" )          },
+    { SearchRule::FuncContainsNot,     I18N_NOOP( "does not contain" )  },
+    { SearchRule::FuncRegExp,          I18N_NOOP( "matches regular expr." ) },
+    { SearchRule::FuncNotRegExp,       I18N_NOOP( "does not match reg. expr." ) },
+    { SearchRule::FuncHasAttachment,   I18N_NOOP( "has an attachment" ) },
+    { SearchRule::FuncHasNoAttachment, I18N_NOOP( "has no attachment" ) },
   };
   static const int MessageFunctionCount =
     sizeof( MessageFunctions ) / sizeof( *MessageFunctions );
@@ -781,7 +783,7 @@ namespace {
 
   //---------------------------------------------------------------------------
 
-  KMSearchRule::Function MessageRuleWidgetHandler::currentFunction( const QStackedWidget *functionStack ) const
+  SearchRule::Function MessageRuleWidgetHandler::currentFunction( const QStackedWidget *functionStack ) const
   {
     const KComboBox *funcCombo = functionStack->findChild<KComboBox*>( "messageRuleFuncCombo" );
 
@@ -789,16 +791,16 @@ namespace {
       return MessageFunctions[funcCombo->currentIndex()].id;
     }
 
-    return KMSearchRule::FuncNone;
+    return SearchRule::FuncNone;
   }
 
   //---------------------------------------------------------------------------
 
-  KMSearchRule::Function MessageRuleWidgetHandler::function( const QByteArray & field,
+  SearchRule::Function MessageRuleWidgetHandler::function( const QByteArray & field,
                                                              const QStackedWidget *functionStack ) const
   {
     if ( !handlesField( field ) )
-      return KMSearchRule::FuncNone;
+      return SearchRule::FuncNone;
 
     return currentFunction( functionStack );
   }
@@ -806,7 +808,7 @@ namespace {
   //---------------------------------------------------------------------------
 
   QString MessageRuleWidgetHandler::currentValue( const QStackedWidget *valueStack,
-                                                  KMSearchRule::Function ) const
+                                                  SearchRule::Function ) const
   {
     const RegExpLineEdit *lineEdit
               = valueStack->findChild<RegExpLineEdit*>( "regExpLineEdit" );
@@ -827,10 +829,10 @@ namespace {
     if ( !handlesField( field ) )
       return QString();
 
-    KMSearchRule::Function func = currentFunction( functionStack );
-    if ( func == KMSearchRule::FuncHasAttachment )
+    SearchRule::Function func = currentFunction( functionStack );
+    if ( func == SearchRule::FuncHasAttachment )
       return "has an attachment"; // just a non-empty dummy value
-    else if ( func == KMSearchRule::FuncHasNoAttachment )
+    else if ( func == SearchRule::FuncHasNoAttachment )
       return "has no attachment"; // just a non-empty dummy value
     else
       return currentValue( valueStack, func );
@@ -845,10 +847,10 @@ namespace {
     if ( !handlesField( field ) )
       return QString();
 
-    KMSearchRule::Function func = currentFunction( functionStack );
-    if ( func == KMSearchRule::FuncHasAttachment )
+    SearchRule::Function func = currentFunction( functionStack );
+    if ( func == SearchRule::FuncHasAttachment )
       return i18n( "has an attachment" );
-    else if ( func == KMSearchRule::FuncHasNoAttachment )
+    else if ( func == SearchRule::FuncHasNoAttachment )
       return i18n( "has no attachment" );
     else
       return currentValue( valueStack, func );
@@ -893,14 +895,14 @@ namespace {
 
   bool MessageRuleWidgetHandler::setRule( QStackedWidget *functionStack,
                                           QStackedWidget *valueStack,
-                                          const KMSearchRule::Ptr rule ) const
+                                          const SearchRule::Ptr rule ) const
   {
     if ( !rule || !handlesField( rule->field() ) ) {
       reset( functionStack, valueStack );
       return false;
     }
 
-    const KMSearchRule::Function func = rule->function();
+    const SearchRule::Function func = rule->function();
     int i = 0;
     for ( ; i < MessageFunctionCount; ++i )
       if ( func == MessageFunctions[i].id )
@@ -919,8 +921,8 @@ namespace {
       functionStack->setCurrentWidget( funcCombo );
     }
 
-    if ( func == KMSearchRule::FuncHasAttachment  ||
-         func == KMSearchRule::FuncHasNoAttachment ) {
+    if ( func == SearchRule::FuncHasAttachment  ||
+         func == SearchRule::FuncHasNoAttachment ) {
       QWidget *w =
               valueStack->findChild<QWidget*>( "textRuleValueHider" );
 
@@ -934,8 +936,8 @@ namespace {
         lineEdit->blockSignals( true );
         lineEdit->setText( rule->contents() );
         lineEdit->blockSignals( false );
-        lineEdit->showEditButton( func == KMSearchRule::FuncRegExp ||
-                                  func == KMSearchRule::FuncNotRegExp );
+        lineEdit->showEditButton( func == SearchRule::FuncRegExp ||
+                                  func == SearchRule::FuncNotRegExp );
         valueStack->setCurrentWidget( lineEdit );
       }
     }
@@ -956,9 +958,9 @@ namespace {
             functionStack->findChild<QWidget*>( "messageRuleFuncCombo" ));
 
     // raise the correct value widget
-    KMSearchRule::Function func = currentFunction( functionStack );
-    if ( func == KMSearchRule::FuncHasAttachment  ||
-         func == KMSearchRule::FuncHasNoAttachment ) {
+    SearchRule::Function func = currentFunction( functionStack );
+    if ( func == SearchRule::FuncHasAttachment  ||
+         func == SearchRule::FuncHasNoAttachment ) {
       QWidget *w = valueStack->findChild<QWidget*>( "textRuleValueHider" );
 
       valueStack->setCurrentWidget( w );
@@ -968,8 +970,8 @@ namespace {
               valueStack->findChild<RegExpLineEdit*>( "regExpLineEdit" );
 
       if ( lineEdit ) {
-        lineEdit->showEditButton( func == KMSearchRule::FuncRegExp ||
-                                  func == KMSearchRule::FuncNotRegExp );
+        lineEdit->showEditButton( func == SearchRule::FuncRegExp ||
+                                  func == SearchRule::FuncNotRegExp );
         valueStack->setCurrentWidget( lineEdit );
       }
     }
@@ -987,11 +989,11 @@ namespace {
 
 namespace {
   static const struct {
-    KMSearchRule::Function id;
+    SearchRule::Function id;
     const char *displayName;
   } StatusFunctions[] = {
-    { KMSearchRule::FuncContains,    I18N_NOOP( "is" )    },
-    { KMSearchRule::FuncContainsNot, I18N_NOOP( "is not" ) }
+    { SearchRule::FuncContains,    I18N_NOOP( "is" )    },
+    { SearchRule::FuncContainsNot, I18N_NOOP( "is not" ) }
   };
   static const int StatusFunctionCount =
     sizeof( StatusFunctions ) / sizeof( *StatusFunctions );
@@ -1027,12 +1029,12 @@ namespace {
 
     KComboBox *statusCombo = new KComboBox( valueStack );
     statusCombo->setObjectName( "statusRuleValueCombo" );
-    for ( int i = 0; i < KMail::StatusValueCountWithoutHidden; ++i ) {
-      if ( KMail::StatusValues[ i ].icon != 0 )
-        statusCombo->addItem( SmallIcon( KMail::StatusValues[ i ].icon ),
-                              i18nc("message status",  KMail::StatusValues[ i ].text ) );
+    for ( int i = 0; i < MailCommon::StatusValueCountWithoutHidden; ++i ) {
+      if ( MailCommon::StatusValues[ i ].icon != 0 )
+        statusCombo->addItem( SmallIcon( MailCommon::StatusValues[ i ].icon ),
+                              i18nc("message status",  MailCommon::StatusValues[ i ].text ) );
       else
-        statusCombo->addItem( i18nc("message status",  KMail::StatusValues[ i ].text ) );
+        statusCombo->addItem( i18nc("message status",  MailCommon::StatusValues[ i ].text ) );
     }
     statusCombo->adjustSize();
     QObject::connect( statusCombo, SIGNAL( activated( int ) ),
@@ -1042,7 +1044,7 @@ namespace {
 
   //---------------------------------------------------------------------------
 
-  KMSearchRule::Function StatusRuleWidgetHandler::currentFunction( const QStackedWidget *functionStack ) const
+  SearchRule::Function StatusRuleWidgetHandler::currentFunction( const QStackedWidget *functionStack ) const
   {
     const KComboBox *funcCombo = functionStack->findChild<KComboBox*>( "statusRuleFuncCombo" );
 
@@ -1050,16 +1052,16 @@ namespace {
       return StatusFunctions[funcCombo->currentIndex()].id;
     }
 
-    return KMSearchRule::FuncNone;
+    return SearchRule::FuncNone;
   }
 
   //---------------------------------------------------------------------------
 
-  KMSearchRule::Function StatusRuleWidgetHandler::function( const QByteArray & field,
+  SearchRule::Function StatusRuleWidgetHandler::function( const QByteArray & field,
                                                             const QStackedWidget *functionStack ) const
   {
     if ( !handlesField( field ) )
-      return KMSearchRule::FuncNone;
+      return SearchRule::FuncNone;
 
     return currentFunction( functionStack );
   }
@@ -1088,7 +1090,7 @@ namespace {
 
     const int status = currentStatusValue( valueStack );
     if ( status != -1 )
-      return QString::fromLatin1( KMail::StatusValues[ status ].text );
+      return QString::fromLatin1(MailCommon::StatusValues[ status ].text );
     else
       return QString();
   }
@@ -1104,7 +1106,7 @@ namespace {
 
     const int status = currentStatusValue( valueStack );
     if ( status != -1 )
-      return i18nc( "message status", KMail::StatusValues[ status ].text );
+      return i18nc( "message status",MailCommon::StatusValues[ status ].text );
     else
       return QString();
   }
@@ -1146,7 +1148,7 @@ namespace {
 
   bool StatusRuleWidgetHandler::setRule( QStackedWidget *functionStack,
                                          QStackedWidget *valueStack,
-                                         const KMSearchRule::Ptr rule ) const
+                                         const SearchRule::Ptr rule ) const
   {
     if ( !rule || !handlesField( rule->field() ) ) {
       reset( functionStack, valueStack );
@@ -1154,7 +1156,7 @@ namespace {
     }
 
     // set the function
-    const KMSearchRule::Function func = rule->function();
+    const SearchRule::Function func = rule->function();
     int funcIndex = 0;
     for ( ; funcIndex < StatusFunctionCount; ++funcIndex )
       if ( func == StatusFunctions[funcIndex].id )
@@ -1176,16 +1178,16 @@ namespace {
     // set the value
     const QString value = rule->contents();
     int valueIndex = 0;
-    for ( ; valueIndex < KMail::StatusValueCountWithoutHidden; ++valueIndex )
+    for ( ; valueIndex <MailCommon::StatusValueCountWithoutHidden; ++valueIndex )
       if ( value == QString::fromLatin1(
-               KMail::StatusValues[ valueIndex ].text ) )
+              MailCommon::StatusValues[ valueIndex ].text ) )
         break;
     KComboBox *statusCombo =
             valueStack->findChild<KComboBox*>( "statusRuleValueCombo" );
 
     if ( statusCombo ) {
       statusCombo->blockSignals( true );
-      if ( valueIndex < KMail::StatusValueCountWithoutHidden ) {
+      if ( valueIndex <MailCommon::StatusValueCountWithoutHidden ) {
         statusCombo->setCurrentIndex( valueIndex );
       } else {
         statusCombo->setCurrentIndex( 0 );
@@ -1227,15 +1229,15 @@ namespace {
 
 namespace {
   static const struct {
-    KMSearchRule::Function id;
+    SearchRule::Function id;
     const char *displayName;
   } TagFunctions[] = {
-    { KMSearchRule::FuncContains,           I18N_NOOP( "contains" )          },
-    { KMSearchRule::FuncContainsNot,        I18N_NOOP( "does not contain" )   },
-    { KMSearchRule::FuncEquals,             I18N_NOOP( "equals" )            },
-    { KMSearchRule::FuncNotEqual,           I18N_NOOP( "does not equal" )     },
-    { KMSearchRule::FuncRegExp,             I18N_NOOP( "matches regular expr." ) },
-    { KMSearchRule::FuncNotRegExp,          I18N_NOOP( "does not match reg. expr." ) }
+    { SearchRule::FuncContains,           I18N_NOOP( "contains" )          },
+    { SearchRule::FuncContainsNot,        I18N_NOOP( "does not contain" )   },
+    { SearchRule::FuncEquals,             I18N_NOOP( "equals" )            },
+    { SearchRule::FuncNotEqual,           I18N_NOOP( "does not equal" )     },
+    { SearchRule::FuncRegExp,             I18N_NOOP( "matches regular expr." ) },
+    { SearchRule::FuncNotRegExp,          I18N_NOOP( "does not match reg. expr." ) }
   };
   static const int TagFunctionCount =
     sizeof( TagFunctions ) / sizeof( *TagFunctions );
@@ -1298,18 +1300,18 @@ namespace {
 
   //---------------------------------------------------------------------------
 
-  KMSearchRule::Function TagRuleWidgetHandler::function( const QByteArray & field,
+  SearchRule::Function TagRuleWidgetHandler::function( const QByteArray & field,
                                                          const QStackedWidget *functionStack ) const
   {
     if ( !handlesField( field ) )
-      return KMSearchRule::FuncNone;
+      return SearchRule::FuncNone;
 
     const KComboBox *funcCombo = functionStack->findChild<KComboBox*>( "tagRuleFuncCombo" );
 
     if ( funcCombo && funcCombo->currentIndex() >= 0) {
       return TagFunctions[funcCombo->currentIndex()].id;
     }
-    return KMSearchRule::FuncNone;
+    return SearchRule::FuncNone;
   }
 
   //---------------------------------------------------------------------------
@@ -1321,8 +1323,8 @@ namespace {
     if ( !handlesField( field ) )
       return QString();
 
-    KMSearchRule::Function func = function( field, functionStack );
-    if ( func == KMSearchRule::FuncRegExp || func == KMSearchRule::FuncNotRegExp ) {
+    SearchRule::Function func = function( field, functionStack );
+    if ( func == SearchRule::FuncRegExp || func == SearchRule::FuncNotRegExp ) {
       // Use regexp line edit
       const RegExpLineEdit *lineEdit =
         valueStack->findChild<RegExpLineEdit*>( "tagRuleRegExpLineEdit ");
@@ -1391,7 +1393,7 @@ namespace {
 
   bool TagRuleWidgetHandler::setRule( QStackedWidget *functionStack,
                                       QStackedWidget *valueStack,
-                                      const KMSearchRule::Ptr rule ) const
+                                      const SearchRule::Ptr rule ) const
   {
     if ( !rule || !handlesField( rule->field() ) ) {
       reset( functionStack, valueStack );
@@ -1399,7 +1401,7 @@ namespace {
     }
 
     // set the function
-    const KMSearchRule::Function func = rule->function();
+    const SearchRule::Function func = rule->function();
     int funcIndex = 0;
     for ( ; funcIndex < StatusFunctionCount; ++funcIndex )
       if ( func == StatusFunctions[funcIndex].id )
@@ -1419,7 +1421,7 @@ namespace {
     }
 
     // set the value
-    if ( func == KMSearchRule::FuncRegExp || func == KMSearchRule::FuncNotRegExp ) {
+    if ( func == SearchRule::FuncRegExp || func == SearchRule::FuncNotRegExp ) {
       // set reg exp value
       RegExpLineEdit *lineEdit = valueStack->findChild<RegExpLineEdit*>( "tagRuleRegExpLineEdit" );
 
@@ -1476,8 +1478,8 @@ namespace {
     functionStack->setCurrentWidget( functionStack->findChild<QWidget*>( "tagRuleFuncCombo" ) );
 
     // raise the correct value widget
-    KMSearchRule::Function func = function( field, functionStack );
-    if ( func == KMSearchRule::FuncRegExp || func == KMSearchRule::FuncNotRegExp ) {
+    SearchRule::Function func = function( field, functionStack );
+    if ( func == SearchRule::FuncRegExp || func == SearchRule::FuncNotRegExp ) {
       valueStack->setCurrentWidget( valueStack->findChild<QWidget*>( "tagRuleRegExpLineEdit" ) );
     } else {
       valueStack->setCurrentWidget( valueStack->findChild<QWidget*>( "tagRuleValueCombo" ) );
@@ -1497,15 +1499,15 @@ namespace {
 
 namespace {
   static const struct {
-    KMSearchRule::Function id;
+    SearchRule::Function id;
     const char *displayName;
   } NumericFunctions[] = {
-    { KMSearchRule::FuncEquals,           I18N_NOOP( "is equal to" )         },
-    { KMSearchRule::FuncNotEqual,         I18N_NOOP( "is not equal to" )      },
-    { KMSearchRule::FuncIsGreater,        I18N_NOOP( "is greater than" )     },
-    { KMSearchRule::FuncIsLessOrEqual,    I18N_NOOP( "is less than or equal to" ) },
-    { KMSearchRule::FuncIsLess,           I18N_NOOP( "is less than" )        },
-    { KMSearchRule::FuncIsGreaterOrEqual, I18N_NOOP( "is greater than or equal to" ) }
+    { SearchRule::FuncEquals,           I18N_NOOP( "is equal to" )         },
+    { SearchRule::FuncNotEqual,         I18N_NOOP( "is not equal to" )      },
+    { SearchRule::FuncIsGreater,        I18N_NOOP( "is greater than" )     },
+    { SearchRule::FuncIsLessOrEqual,    I18N_NOOP( "is less than or equal to" ) },
+    { SearchRule::FuncIsLess,           I18N_NOOP( "is less than" )        },
+    { SearchRule::FuncIsGreaterOrEqual, I18N_NOOP( "is greater than or equal to" ) }
   };
   static const int NumericFunctionCount =
     sizeof( NumericFunctions ) / sizeof( *NumericFunctions );
@@ -1549,7 +1551,7 @@ namespace {
 
   //---------------------------------------------------------------------------
 
-  KMSearchRule::Function NumericRuleWidgetHandler::currentFunction( const QStackedWidget *functionStack ) const
+  SearchRule::Function NumericRuleWidgetHandler::currentFunction( const QStackedWidget *functionStack ) const
   {
     const KComboBox *funcCombo = functionStack->findChild<KComboBox*>( "numericRuleFuncCombo" );
 
@@ -1557,16 +1559,16 @@ namespace {
       return NumericFunctions[funcCombo->currentIndex()].id;
     }
 
-    return KMSearchRule::FuncNone;
+    return SearchRule::FuncNone;
   }
 
   //---------------------------------------------------------------------------
 
-  KMSearchRule::Function NumericRuleWidgetHandler::function( const QByteArray & field,
+  SearchRule::Function NumericRuleWidgetHandler::function( const QByteArray & field,
                                                              const QStackedWidget *functionStack ) const
   {
     if ( !handlesField( field ) )
-      return KMSearchRule::FuncNone;
+      return SearchRule::FuncNone;
 
     return currentFunction( functionStack );
   }
@@ -1661,7 +1663,7 @@ namespace {
 
   bool NumericRuleWidgetHandler::setRule( QStackedWidget *functionStack,
                                           QStackedWidget *valueStack,
-                                          const KMSearchRule::Ptr rule ) const
+                                          const SearchRule::Ptr rule ) const
   {
     if ( !rule || !handlesField( rule->field() ) ) {
       reset( functionStack, valueStack );
@@ -1669,7 +1671,7 @@ namespace {
     }
 
     // set the function
-    const KMSearchRule::Function func = rule->function();
+    const SearchRule::Function func = rule->function();
     int funcIndex = 0;
     for ( ; funcIndex < NumericFunctionCount; ++funcIndex )
       if ( func == NumericFunctions[funcIndex].id )

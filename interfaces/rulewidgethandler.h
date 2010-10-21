@@ -33,7 +33,7 @@
 #ifndef __KMAIL_INTERFACES_RULEWIDGETHANDLER_H__
 #define __KMAIL_INTERFACES_RULEWIDGETHANDLER_H__
 
-#include "../kmsearchpattern.h"
+#include "mailcommon/searchpattern.h"
 
 #include <QByteArray>
 
@@ -57,7 +57,7 @@ namespace KMail {
     virtual QWidget * createValueWidget( int number,
                                          QStackedWidget *valueStack,
                                          const QObject *receiver ) const = 0;
-    virtual KMSearchRule::Function function( const QByteArray & field,
+    virtual MailCommon::SearchRule::Function function( const QByteArray & field,
                                              const QStackedWidget *functionStack ) const = 0;
     virtual QString value( const QByteArray & field,
                            const QStackedWidget *functionStack,
@@ -70,7 +70,7 @@ namespace KMail {
                         QStackedWidget *valueStack ) const = 0;
     virtual bool setRule( QStackedWidget *functionStack,
                           QStackedWidget *valueStack,
-                          const KMSearchRule::Ptr rule ) const = 0;
+                          const MailCommon::SearchRule::Ptr rule ) const = 0;
     virtual bool update( const QByteArray & field,
                          QStackedWidget *functionStack,
                          QStackedWidget *valueStack ) const = 0;

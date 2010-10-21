@@ -28,7 +28,7 @@
 #include <KXMLGUIClient>
 #include <akonadi/collection.h>
 
-#include "kmsearchpattern.h"
+#include "mailcommon/searchpattern.h"
 
 class QCheckBox;
 class QCloseEvent;
@@ -103,12 +103,12 @@ public:
   /**
    * Loads a search pattern into the search window, replacing the current one.
    */
-  void setSearchPattern( const KMSearchPattern &pattern );
+  void setSearchPattern( const MailCommon::SearchPattern &pattern );
 
   /**
    * Loads a search pattern into the search window, appending its rules to the current one.
    */
-  void addRulesToSearchPattern( const KMSearchPattern &pattern );
+  void addRulesToSearchPattern( const MailCommon::SearchPattern &pattern );
 
 protected slots:
   /** Update status line widget. */
@@ -186,7 +186,7 @@ protected:
   // not owned by us
   KMMainWidget* mKMMainWidget;
   KMSearchPatternEdit *mPatternEdit;
-  KMSearchPattern mSearchPattern;
+  MailCommon::SearchPattern mSearchPattern;
 
   Akonadi::StandardActionManager *mAkonadiStandardAction;
 

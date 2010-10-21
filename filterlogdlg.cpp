@@ -29,7 +29,7 @@
 
 
 #include "filterlogdlg.h"
-#include "filterlog.h"
+#include "mailcommon/filterlog.h"
 #include "messageviewer/autoqpointer.h"
 
 #include <kdebug.h>
@@ -49,6 +49,7 @@
 #include <errno.h>
 
 using namespace KMail;
+using namespace MailCommon;
 
 
 FilterLogDialog::FilterLogDialog( QWidget * parent )

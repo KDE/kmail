@@ -8,6 +8,7 @@
 #include <QByteArray>
 #include <QList>
 #include <QObject>
+#include <QPointer>
 #include <QString>
 #include <QDBusObjectPath>
 
@@ -23,6 +24,7 @@
 #define kmkernel KMKernel::self()
 #define kmconfig KMKernel::config()
 
+class KMFilterDlg;
 namespace Akonadi {
   class Collection;
   class ChangeRecorder;
@@ -53,8 +55,6 @@ namespace KPIM { class ProgressDialog; }
 using KMail::MailServiceImpl;
 using KMail::UndoStack;
 using KPIM::ProgressDialog;
-class KMFilterMgr;
-class KMFilterActionDict;
 class AkonadiSender;
 
 namespace KPIMIdentities {
@@ -72,6 +72,8 @@ class KMSystemTray;
 
 namespace MailCommon {
   class Kernel;
+  class FilterManager;
+  class FilterActionDict;
   class FolderCollection;
   class FolderCollectionMonitor;
   class JobScheduler;
@@ -97,7 +99,7 @@ namespace MailCommon {
  * - handling of some config settings, like wrapCol()
  * - various other stuff
  */
-class KMAIL_EXPORT KMKernel : public QObject, public MailCommon::IKernel, public MailCommon::ISettings
+class KMAIL_EXPORT KMKernel : public QObject, public MailCommon::IKernel, public MailCommon::ISettings, public MailCommon::IFilter
 {
   Q_OBJECT
   Q_CLASSINFO("D-Bus Interface", "org.kde.kmail.kmail")
@@ -268,10 +270,13 @@ public:
   void setXmlGuiInstance( const KComponentData &instance ) { mXmlGuiInstance = instance; }
 
   UndoStack *undoStack() { return the_undoStack; }
-  KMFilterMgr *filterMgr() { return the_filterMgr; }
-  KMFilterMgr *popFilterMgr() { return the_popFilterMgr; }
-  KMFilterActionDict *filterActionDict() { return the_filterActionDict; }
+  MailCommon::FilterManager *filterManager() const { return the_filterMgr; }
+  MailCommon::FilterManager *popFilterManager() const { return the_popFilterMgr; }
+  MailCommon::FilterActionDict *filterActionDict() const { return the_filterActionDict; }
   MessageSender *msgSender();
+
+  /*reimp*/ void openFilterDialog(bool popFilter = false, bool createDummyFilter = true);
+  /*reimp*/ void createFilter(const QByteArray& field, const QString& value);
 
   /** return the pointer to the identity manager */
   /*reimp*/ KPIMIdentities::IdentityManager *identityManager();
@@ -336,6 +341,7 @@ public:
   /*reimp*/ Akonadi::Collection::Id lastSelectedFolder();
   /*reimp*/ void setLastSelectedFolder( const Akonadi::Collection::Id  &col );
 
+  /*reimp*/ QStringList customTemplates();
 
 public slots:
 
@@ -391,9 +397,9 @@ private:
   QSharedPointer<MailCommon::FolderCollection> currentFolderCollection();
 
   UndoStack *the_undoStack;
-  KMFilterMgr *the_filterMgr;
-  KMFilterMgr *the_popFilterMgr;
-  KMFilterActionDict *the_filterActionDict;
+  MailCommon::FilterManager *the_filterMgr;
+  MailCommon::FilterManager *the_popFilterMgr;
+  MailCommon::FilterActionDict *the_filterActionDict;
   mutable KPIMIdentities::IdentityManager *mIdentityManager;
   AkonadiSender *the_msgSender;
   /** previous KMail version. If different from current,
@@ -431,6 +437,7 @@ private:
 
   int mWrapCol;
 
+  QPointer<KMFilterDlg> mFilterEditDialog;
 };
 
 #endif // _KMKERNEL_H

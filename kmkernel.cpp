@@ -9,8 +9,6 @@ using KPIM::BroadcastStatus;
 #include "kmmainwin.h"
 #include "composer.h"
 #include "kmreadermainwin.h"
-#include "kmfiltermgr.h"
-#include "kmfilteraction.h"
 #include "undostack.h"
 #include <kpimutils/email.h>
 #include <kpimutils/kfileio.h>
@@ -107,9 +105,11 @@ using KMail::MailServiceImpl;
 #include "foldercollectionmonitor.h"
 #include "imapsettings.h"
 #include "util.h"
-#include "mailkernel.h"
+#include "mailcommon/mailkernel.h"
+#include "mailcommon/filtermanager.h"
 
 #include "searchdescriptionattribute.h"
+#include "kmfilterdlg.h"
 
 using namespace MailCommon;
 
@@ -139,6 +139,7 @@ KMKernel::KMKernel (QObject *parent, const char *name) :
   the_popFilterMgr = 0;
   the_filterActionDict = 0;
   the_msgSender = 0;
+  mFilterEditDialog = 0;
   mWin = 0;
   mWrapCol = 80;
   // make sure that we check for config updates before doing anything else
@@ -214,6 +215,7 @@ KMKernel::KMKernel (QObject *parent, const char *name) :
 
   CommonKernel->registerKernelIf( this );
   CommonKernel->registerSettingsIf( this );
+  CommonKernel->registerFilterIf( this );
 }
 
 KMKernel::~KMKernel ()
@@ -1111,9 +1113,9 @@ void KMKernel::init()
   readConfig();
 
   the_undoStack     = new UndoStack(20);
-  the_filterMgr     = new KMFilterMgr();
-  the_popFilterMgr     = new KMFilterMgr(true);
-  the_filterActionDict = new KMFilterActionDict;
+  the_filterMgr     = new FilterManager();
+  the_popFilterMgr     = new FilterManager(true);
+  the_filterActionDict = new FilterActionDict;
 
   the_filterMgr->readConfig();
   the_popFilterMgr->readConfig();
@@ -1713,5 +1715,25 @@ void KMKernel::setLastSelectedFolder(const Akonadi::Entity::Id& col)
 {
   GlobalSettings::self()->setLastSelectedFolder( col );
 }
+
+QStringList KMKernel::customTemplates()
+{
+  GlobalSettingsBase::self()->customTemplates();
+}
+
+void KMKernel::openFilterDialog(bool popFilter, bool createDummyFilter)
+{
+  if ( !mFilterEditDialog ) {
+    mFilterEditDialog = new KMFilterDlg( mainWin(), popFilter, createDummyFilter );
+    mFilterEditDialog->setObjectName( "filterdialog" );
+  }
+  mFilterEditDialog->show();
+}
+
+void KMKernel::createFilter(const QByteArray& field, const QString& value)
+{
+  mFilterEditDialog->createFilter( field, value );
+}
+
 
 #include "kmkernel.moc"

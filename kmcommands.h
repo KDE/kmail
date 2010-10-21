@@ -23,11 +23,11 @@ using Akonadi::MessageStatus;
 #include <akonadi/itemfetchscope.h>
 #include <akonadi/collection.h>
 class KProgressDialog;
-class KMFilter;
 class KMMainWidget;
 
 namespace MailCommon {
   class FolderCollection;
+  class MailFilter;
 }
 
 template <typename T> class QSharedPointer;
@@ -561,11 +561,11 @@ class KMAIL_EXPORT KMFilterActionCommand : public KMCommand
 
 public:
   KMFilterActionCommand( QWidget *parent,
-                         const QList<Akonadi::Item> &msgList, KMFilter *filter );
+                         const QList<Akonadi::Item> &msgList, MailCommon::MailFilter *filter );
 
 private:
   virtual Result execute();
-  KMFilter *mFilter;
+  MailCommon::MailFilter *mFilter;
 };
 
 
@@ -574,13 +574,13 @@ class KMAIL_EXPORT KMMetaFilterActionCommand : public QObject
   Q_OBJECT
 
 public:
-  KMMetaFilterActionCommand( KMFilter *filter, KMMainWidget *main );
+  KMMetaFilterActionCommand( MailCommon::MailFilter *filter, KMMainWidget *main );
 
 public slots:
   void start();
 
 private:
-  KMFilter *mFilter;
+  MailCommon::MailFilter *mFilter;
   KMMainWidget *mMainWidget;
 };
 

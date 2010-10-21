@@ -20,11 +20,9 @@
 */
 
 // KMail includes
-#include "kmfilter.h"
 #include "kmreadermainwin.h"
 #include "foldershortcutdialog.h"
 #include "composer.h"
-#include "kmfiltermgr.h"
 #include "kmversion.h"
 #include "searchwindow.h"
 #include "mailinglist-magic.h"
@@ -56,7 +54,10 @@
     #include "sievedebugdialog.h"
     using KMail::SieveDebugDialog;
 #endif
-
+    
+#include "mailcommon/filtermanager.h"
+#include "mailcommon/mailfilter.h"
+    
 // Other PIM includes
 #include "messageviewer/autoqpointer.h"
 #include "messageviewer/globalsettings.h"
@@ -1205,14 +1206,14 @@ void KMMainWidget::slotHelp()
 //-----------------------------------------------------------------------------
 void KMMainWidget::slotFilter()
 {
-  kmkernel->filterMgr()->openDialog( this );
+  FilterIf->filterManager()->openDialog( this );
 }
 
 
 //-----------------------------------------------------------------------------
 void KMMainWidget::slotPopFilter()
 {
-  kmkernel->popFilterMgr()->openDialog( this );
+  FilterIf->popFilterManager()->openDialog( this );
 }
 
 void KMMainWidget::slotManageSieveScripts()
@@ -2257,7 +2258,7 @@ int KMMainWidget::slotFilterMsg( const Akonadi::Item &msg )
 {
   if ( !msg.isValid() )
     return 2; // messageRetrieve(0) is always possible
-  int filterResult = kmkernel->filterMgr()->process(msg, KMFilterMgr::Explicit);
+  int filterResult = FilterIf->filterManager()->process(msg, FilterManager::Explicit);
   if (filterResult == 2)
   {
     // something went horribly wrong (out of space?)
@@ -3889,7 +3890,7 @@ void KMMainWidget::slotIntro()
 
 void KMMainWidget::slotShowStartupFolder()
 {
-  connect( kmkernel->filterMgr(), SIGNAL( filterListUpdated() ),
+  connect( FilterIf->filterManager(), SIGNAL( filterListUpdated() ),
            this, SLOT( initializeFilterActions() ) );
 
   // Plug various action lists. This can't be done in the constructor, as that is called before
@@ -3955,8 +3956,8 @@ void KMMainWidget::initializeFilterActions()
   mApplyFilterActionsMenu->menu()->addAction( mApplyAllFiltersAction );
   bool addedSeparator = false;
 
-  QList<KMFilter*>::const_iterator it = kmkernel->filterMgr()->filters().begin();
-  for ( ;it != kmkernel->filterMgr()->filters().end(); ++it ) {
+  QList<MailFilter*>::const_iterator it = FilterIf->filterManager()->filters().begin();
+  for ( ;it != FilterIf->filterManager()->filters().end(); ++it ) {
     if ( !(*it)->isEmpty() && (*it)->configureShortcut() ) {
       QString filterName = QString( "Filter %1").arg( (*it)->name() );
       QString normalizedName = filterName.replace(' ', '_');
@@ -4122,19 +4123,19 @@ void KMMainWidget::slotRequestFullSearchFromQuickSearch()
   // Now we look at the current state of the quick search, and if there's
   // something in there, we add the criteria to the existing search for
   // the search folder, if applicable, or make a new one from it.
-  KMSearchPattern pattern;
+  SearchPattern pattern;
   const QString searchString = mMessagePane->currentFilterSearchString();
   if ( !searchString.isEmpty() )
-    pattern.append( KMSearchRule::createInstance( "<message>", KMSearchRule::FuncContains, searchString ) );
+    pattern.append( SearchRule::createInstance( "<message>", SearchRule::FuncContains, searchString ) );
   MessageStatus status = mMessagePane->currentFilterStatus();
   if ( status.hasAttachment() )
   {
-    pattern.append( KMSearchRule::createInstance( "<message>", KMSearchRule::FuncHasAttachment ) );
+    pattern.append( SearchRule::createInstance( "<message>", SearchRule::FuncHasAttachment ) );
     status.setHasAttachment( false );
   }
 
   if ( !status.isOfUnknownStatus() ) {
-    pattern.append( KMSearchRule::Ptr( new KMSearchRuleStatus( status ) ) );
+    pattern.append( SearchRule::Ptr( new SearchRuleStatus( status ) ) );
   }
 
   if ( pattern.size() > 0 )

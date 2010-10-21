@@ -80,14 +80,8 @@ if (NOT WINCE AND KDEPIM_BUILD_DESKTOP)
      snippetwidget.cpp
      snippetitem.cpp
      kmreaderwin.cpp
-     messageproperty.cpp
      kmsystemtray.cpp
-     kmfiltermgr.cpp
-     filterimporterexporter.cpp
      kmsearchpatternedit.cpp
-     kmfilteraction.cpp
-     kmsearchpattern.cpp
-     kmfilter.cpp
      kmfilterdlg.cpp
      xfaceconfigurator.cpp
      undostack.cpp
@@ -107,11 +101,9 @@ if (NOT WINCE AND KDEPIM_BUILD_DESKTOP)
      composer.cpp
      antispamwizard.cpp
      secondarywindow.cpp
-     filterlog.cpp
      filterlogdlg.cpp
      codecaction.cpp
      codecmanager.cpp
-     regexplineedit.cpp
      rulewidgethandlermanager.cpp
      redirectdialog.cpp
      foldershortcutdialog.cpp
@@ -129,8 +121,6 @@ if (NOT WINCE AND KDEPIM_BUILD_DESKTOP)
      tag.cpp
      tagactionmanager.cpp
      foldershortcutactionmanager.cpp
-     mdnadvicedialog.cpp
-     kmsoundtestwidget.cpp
      addressvalidationjob.cpp
      identitypage.cpp
      newidentitydialog.cpp

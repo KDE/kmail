@@ -81,12 +81,6 @@ namespace Util {
     size_t crlf2lf( char* str, const size_t strLen );
 
     /**
-     * Returns the identity of the folder that contains the given
-     *  Akonadi::Item.
-     */
-    uint folderIdentity( const Akonadi::Item& item );
-
-    /**
      * Returns any mailing list post addresses set on the
      *  parent collection (the mail folder) of the item.
      */

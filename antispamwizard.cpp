@@ -30,9 +30,6 @@
 
 #include "antispamwizard.h"
 #include "messageviewer/kcursorsaver.h"
-#include "kmfilter.h"
-#include "kmfilteraction.h"
-#include "kmfiltermgr.h"
 #include "kmkernel.h"
 #include "kmmainwin.h"
 #include "folderrequester.h"
@@ -40,10 +37,13 @@
 #include "foldertreeview.h"
 #include "readablecollectionproxymodel.h"
 #include "util.h"
-#include "mailutil.h"
-#include "imapsettings.h"
 #include "pop3settings.h"
-#include "mailkernel.h"
+#include "mailcommon/mailutil.h"
+#include "mailcommon/imapsettings.h"
+#include "mailcommon/mailkernel.h"
+#include "mailcommon/mailfilter.h"
+#include "mailcommon/filteraction.h"
+#include "mailcommon/filtermanager.h"
 
 #include <Akonadi/AgentInstance>
 
@@ -157,8 +157,8 @@ void AntiSpamWizard::accept()
              << mVirusRulesPage->selectedFolderName();
   }
 
-  KMFilterActionDict dict;
-  QList<KMFilter*> filterList;
+  FilterActionDict dict;
+  QList<MailFilter*> filterList;
   bool replaceExistingFilters = false;
 
   // Let's start with virus detection and handling,
@@ -172,15 +172,15 @@ void AntiSpamWizard::accept()
         // pipe messages through the anti-virus tools,
         // one single filter for each tool
         // (could get combined but so it's easier to understand for the user)
-        KMFilter* pipeFilter = new KMFilter();
-        QList<KMFilterAction*> *pipeFilterActions = pipeFilter->actions();
-        KMFilterAction* pipeFilterAction = dict.value( "filter app" )->create();
+        MailFilter* pipeFilter = new MailFilter();
+        QList<FilterAction*> *pipeFilterActions = pipeFilter->actions();
+        FilterAction* pipeFilterAction = dict.value( "filter app" )->create();
         pipeFilterAction->argsFromString( (*it).getDetectCmd() );
         pipeFilterActions->append( pipeFilterAction );
-        KMSearchPattern* pipeFilterPattern = pipeFilter->pattern();
+        SearchPattern* pipeFilterPattern = pipeFilter->pattern();
         pipeFilterPattern->setName( uniqueNameFor( (*it).getFilterName() ) );
-        pipeFilterPattern->append( KMSearchRule::createInstance( "<size>",
-                                   KMSearchRule::FuncIsGreaterOrEqual, "0" ) );
+        pipeFilterPattern->append( SearchRule::createInstance( "<size>",
+                                   SearchRule::FuncIsGreaterOrEqual, "0" ) );
         pipeFilter->setApplyOnOutbound( false);
         pipeFilter->setApplyOnInbound();
         pipeFilter->setApplyOnExplicit();
@@ -194,19 +194,19 @@ void AntiSpamWizard::accept()
     if ( mVirusRulesPage->moveRulesSelected() )
     {
       // Sort out viruses depending on header fields set by the tools
-      KMFilter* virusFilter = new KMFilter();
-      QList<KMFilterAction*> *virusFilterActions = virusFilter->actions();
-      KMFilterAction* virusFilterAction1 = dict.value( "transfer" )->create();
+      MailFilter* virusFilter = new MailFilter();
+      QList<FilterAction*> *virusFilterActions = virusFilter->actions();
+      FilterAction* virusFilterAction1 = dict.value( "transfer" )->create();
       virusFilterAction1->argsFromString( mVirusRulesPage->selectedFolderName() );
       virusFilterActions->append( virusFilterAction1 );
       if ( mVirusRulesPage->markReadRulesSelected() ) {
-        KMFilterAction* virusFilterAction2 = dict.value( "set status" )->create();
+        FilterAction* virusFilterAction2 = dict.value( "set status" )->create();
         virusFilterAction2->argsFromString( "R" ); // Read
         virusFilterActions->append( virusFilterAction2 );
       }
-      KMSearchPattern* virusFilterPattern = virusFilter->pattern();
+      SearchPattern* virusFilterPattern = virusFilter->pattern();
       virusFilterPattern->setName( uniqueNameFor( i18n( "Virus handling" ) ) );
-      virusFilterPattern->setOp( KMSearchPattern::OpOr );
+      virusFilterPattern->setOp( SearchPattern::OpOr );
       for ( QList<SpamToolConfig>::Iterator it = mToolList.begin();
             it != mToolList.end(); ++it ) {
         if ( mInfoPage->isProgramSelected( (*it).getVisibleName() ))
@@ -217,12 +217,12 @@ void AntiSpamWizard::accept()
               const QString & pattern = (*it).getDetectionPattern();
               if ( (*it).isUseRegExp() )
                 virusFilterPattern->append(
-                  KMSearchRule::createInstance( header,
-                  KMSearchRule::FuncRegExp, pattern ) );
+                  SearchRule::createInstance( header,
+                  SearchRule::FuncRegExp, pattern ) );
               else
                 virusFilterPattern->append(
-                  KMSearchRule::createInstance( header,
-                  KMSearchRule::FuncContains, pattern ) );
+                  SearchRule::createInstance( header,
+                  SearchRule::FuncContains, pattern ) );
           }
         }
       }
@@ -248,18 +248,18 @@ void AntiSpamWizard::accept()
         // pipe messages through the anti-spam tools,
         // one single filter for each tool
         // (could get combined but so it's easier to understand for the user)
-        KMFilter* pipeFilter = new KMFilter();
-        QList<KMFilterAction*> *pipeFilterActions = pipeFilter->actions();
-        KMFilterAction* pipeFilterAction = dict.value( "filter app" )->create();
+        MailFilter* pipeFilter = new MailFilter();
+        QList<FilterAction*> *pipeFilterActions = pipeFilter->actions();
+        FilterAction* pipeFilterAction = dict.value( "filter app" )->create();
         pipeFilterAction->argsFromString( (*it).getDetectCmd() );
         pipeFilterActions->append( pipeFilterAction );
-        KMSearchPattern* pipeFilterPattern = pipeFilter->pattern();
+        SearchPattern* pipeFilterPattern = pipeFilter->pattern();
         if ( replaceExistingFilters )
           pipeFilterPattern->setName( (*it).getFilterName() );
         else
           pipeFilterPattern->setName( uniqueNameFor( (*it).getFilterName() ) );
-        pipeFilterPattern->append( KMSearchRule::createInstance( "<size>",
-                                   KMSearchRule::FuncIsLessOrEqual, "256000" ) );
+        pipeFilterPattern->append( SearchRule::createInstance( "<size>",
+                                   SearchRule::FuncIsLessOrEqual, "256000" ) );
         pipeFilter->setApplyOnOutbound( false);
         pipeFilter->setApplyOnInbound();
         pipeFilter->setApplyOnExplicit();
@@ -271,28 +271,28 @@ void AntiSpamWizard::accept()
     }
 
     // Sort out spam depending on header fields set by the tools
-    KMFilter* spamFilter = new KMFilter();
-    QList<KMFilterAction*> *spamFilterActions = spamFilter->actions();
+    MailFilter* spamFilter = new MailFilter();
+    QList<FilterAction*> *spamFilterActions = spamFilter->actions();
     if ( mSpamRulesPage->moveSpamSelected() )
     {
-      KMFilterAction* spamFilterAction1 = dict.value( "transfer" )->create();
+      FilterAction* spamFilterAction1 = dict.value( "transfer" )->create();
       spamFilterAction1->argsFromString( mSpamRulesPage->selectedSpamCollectionId() );
       spamFilterActions->append( spamFilterAction1 );
     }
-    KMFilterAction* spamFilterAction2 = dict.value( "set status" )->create();
+    FilterAction* spamFilterAction2 = dict.value( "set status" )->create();
     spamFilterAction2->argsFromString( "P" ); // Spam
     spamFilterActions->append( spamFilterAction2 );
     if ( mSpamRulesPage->markAsReadSelected() ) {
-      KMFilterAction* spamFilterAction3 = dict.value( "set status" )->create();
+      FilterAction* spamFilterAction3 = dict.value( "set status" )->create();
       spamFilterAction3->argsFromString( "R" ); // Read
       spamFilterActions->append( spamFilterAction3 );
     }
-    KMSearchPattern* spamFilterPattern = spamFilter->pattern();
+    SearchPattern* spamFilterPattern = spamFilter->pattern();
     if ( replaceExistingFilters )
       spamFilterPattern->setName( i18n( "Spam Handling" ) );
     else
       spamFilterPattern->setName( uniqueNameFor( i18n( "Spam Handling" ) ) );
-    spamFilterPattern->setOp( KMSearchPattern::OpOr );
+    spamFilterPattern->setOp( SearchPattern::OpOr );
     for ( QList<SpamToolConfig>::Iterator it = mToolList.begin();
           it != mToolList.end(); ++it ) {
       if ( mInfoPage->isProgramSelected( (*it).getVisibleName() ) )
@@ -303,12 +303,12 @@ void AntiSpamWizard::accept()
             const QString & pattern = (*it).getDetectionPattern();
             if ( (*it).isUseRegExp() )
               spamFilterPattern->append(
-                KMSearchRule::createInstance( header,
-                KMSearchRule::FuncRegExp, pattern ) );
+                SearchRule::createInstance( header,
+                SearchRule::FuncRegExp, pattern ) );
             else
               spamFilterPattern->append(
-                KMSearchRule::createInstance( header,
-                KMSearchRule::FuncContains, pattern ) );
+                SearchRule::createInstance( header,
+                SearchRule::FuncContains, pattern ) );
           }
       }
     }
@@ -323,17 +323,17 @@ void AntiSpamWizard::accept()
     {
       // Sort out messages classified as unsure
       bool atLeastOneUnsurePattern = false;
-      KMFilter* unsureFilter = new KMFilter();
-      QList<KMFilterAction*> *unsureFilterActions = unsureFilter->actions();
-      KMFilterAction* unsureFilterAction1 = dict.value( "transfer" )->create();
+      MailFilter* unsureFilter = new MailFilter();
+      QList<FilterAction*> *unsureFilterActions = unsureFilter->actions();
+      FilterAction* unsureFilterAction1 = dict.value( "transfer" )->create();
       unsureFilterAction1->argsFromString( mSpamRulesPage->selectedUnsureCollectionId() );
       unsureFilterActions->append( unsureFilterAction1 );
-      KMSearchPattern* unsureFilterPattern = unsureFilter->pattern();
+      SearchPattern* unsureFilterPattern = unsureFilter->pattern();
       if ( replaceExistingFilters )
         unsureFilterPattern->setName( i18n( "Semi spam (unsure) handling" ) );
       else
         unsureFilterPattern->setName( uniqueNameFor( i18n( "Semi spam (unsure) handling" ) ) );
-      unsureFilterPattern->setOp( KMSearchPattern::OpOr );
+      unsureFilterPattern->setOp( SearchPattern::OpOr );
       for ( QList<SpamToolConfig>::Iterator it = mToolList.begin();
             it != mToolList.end(); ++it ) {
         if ( mInfoPage->isProgramSelected( (*it).getVisibleName() ) )
@@ -345,12 +345,12 @@ void AntiSpamWizard::accept()
               const QString & pattern = (*it).getDetectionPattern2();
               if ( (*it).isUseRegExp() )
                 unsureFilterPattern->append(
-                  KMSearchRule::createInstance( header,
-                  KMSearchRule::FuncRegExp, pattern ) );
+                  SearchRule::createInstance( header,
+                  SearchRule::FuncRegExp, pattern ) );
               else
                 unsureFilterPattern->append(
-                  KMSearchRule::createInstance( header,
-                  KMSearchRule::FuncContains, pattern ) );
+                  SearchRule::createInstance( header,
+                  SearchRule::FuncContains, pattern ) );
             }
         }
       }
@@ -367,10 +367,10 @@ void AntiSpamWizard::accept()
     }
 
     // Classify messages manually as Spam
-    KMFilter* classSpamFilter = new KMFilter();
+    MailFilter* classSpamFilter = new MailFilter();
     classSpamFilter->setIcon( "mail-mark-junk" );
-    QList<KMFilterAction*> *classSpamFilterActions = classSpamFilter->actions();
-    KMFilterAction* classSpamFilterActionFirst = dict.value( "set status" )->create();
+    QList<FilterAction*> *classSpamFilterActions = classSpamFilter->actions();
+    FilterAction* classSpamFilterActionFirst = dict.value( "set status" )->create();
     classSpamFilterActionFirst->argsFromString( "P" );
     classSpamFilterActions->append( classSpamFilterActionFirst );
     for ( QList<SpamToolConfig>::Iterator it = mToolList.begin();
@@ -378,25 +378,25 @@ void AntiSpamWizard::accept()
       if ( mInfoPage->isProgramSelected( (*it).getVisibleName() )
           && (*it).useBayesFilter() && !(*it).isDetectionOnly() )
       {
-        KMFilterAction* classSpamFilterAction = dict.value( "execute" )->create();
+        FilterAction* classSpamFilterAction = dict.value( "execute" )->create();
         classSpamFilterAction->argsFromString( (*it).getSpamCmd() );
         classSpamFilterActions->append( classSpamFilterAction );
       }
     }
     if ( mSpamRulesPage->moveSpamSelected() )
     {
-      KMFilterAction* classSpamFilterActionLast = dict.value( "transfer" )->create();
+      FilterAction* classSpamFilterActionLast = dict.value( "transfer" )->create();
       classSpamFilterActionLast->argsFromString( mSpamRulesPage->selectedSpamCollectionId() );
       classSpamFilterActions->append( classSpamFilterActionLast );
     }
 
-    KMSearchPattern* classSpamFilterPattern = classSpamFilter->pattern();
+    SearchPattern* classSpamFilterPattern = classSpamFilter->pattern();
     if ( replaceExistingFilters )
       classSpamFilterPattern->setName( i18n( "Classify as Spam" ) );
     else
       classSpamFilterPattern->setName( uniqueNameFor( i18n( "Classify as Spam" ) ) );
-    classSpamFilterPattern->append( KMSearchRule::createInstance( "<size>",
-                                    KMSearchRule::FuncIsGreaterOrEqual, "0" ) );
+    classSpamFilterPattern->append( SearchRule::createInstance( "<size>",
+                                    SearchRule::FuncIsGreaterOrEqual, "0" ) );
     classSpamFilter->setApplyOnOutbound( false);
     classSpamFilter->setApplyOnInbound( false );
     classSpamFilter->setApplyOnExplicit( false );
@@ -407,10 +407,10 @@ void AntiSpamWizard::accept()
     filterList.append( classSpamFilter );
 
     // Classify messages manually as not Spam / as Ham
-    KMFilter* classHamFilter = new KMFilter();
+    MailFilter* classHamFilter = new MailFilter();
     classHamFilter->setIcon( "mail-mark-notjunk" );
-    QList<KMFilterAction*> *classHamFilterActions = classHamFilter->actions();
-    KMFilterAction* classHamFilterActionFirst = dict.value( "set status" )->create();
+    QList<FilterAction*> *classHamFilterActions = classHamFilter->actions();
+    FilterAction* classHamFilterActionFirst = dict.value( "set status" )->create();
     classHamFilterActionFirst->argsFromString( "H" );
     classHamFilterActions->append( classHamFilterActionFirst );
     for ( QList<SpamToolConfig>::Iterator it = mToolList.begin();
@@ -418,7 +418,7 @@ void AntiSpamWizard::accept()
       if ( mInfoPage->isProgramSelected( (*it).getVisibleName() )
           && (*it).useBayesFilter() && !(*it).isDetectionOnly() )
       {
-        KMFilterAction* classHamFilterAction = dict.value( "execute" )->create();
+        FilterAction* classHamFilterAction = dict.value( "execute" )->create();
         classHamFilterAction->argsFromString( (*it).getHamCmd() );
         classHamFilterActions->append( classHamFilterAction );
       }
@@ -428,18 +428,18 @@ void AntiSpamWizard::accept()
       if ( mInfoPage->isProgramSelected( (*it).getVisibleName() )
           && (*it).useBayesFilter() && !(*it).isDetectionOnly() )
       {
-        KMFilterAction* classHamFilterAction = dict.value( "filter app" )->create();
+        FilterAction* classHamFilterAction = dict.value( "filter app" )->create();
         classHamFilterAction->argsFromString( (*it).getNoSpamCmd() );
         classHamFilterActions->append( classHamFilterAction );
       }
     }
-    KMSearchPattern* classHamFilterPattern = classHamFilter->pattern();
+    SearchPattern* classHamFilterPattern = classHamFilter->pattern();
     if ( replaceExistingFilters )
       classHamFilterPattern->setName( i18n( "Classify as NOT Spam" ) );
     else
       classHamFilterPattern->setName( uniqueNameFor( i18n( "Classify as NOT Spam" ) ) );
-    classHamFilterPattern->append( KMSearchRule::createInstance( "<size>",
-                                    KMSearchRule::FuncIsGreaterOrEqual, "0" ) );
+    classHamFilterPattern->append( SearchRule::createInstance( "<size>",
+                                    SearchRule::FuncIsGreaterOrEqual, "0" ) );
     classHamFilter->setApplyOnOutbound( false);
     classHamFilter->setApplyOnInbound( false );
     classHamFilter->setApplyOnExplicit( false );
@@ -455,7 +455,7 @@ void AntiSpamWizard::accept()
    * which will result in the filter list in kmmainwidget being
    * initialized. This should happend only once. */
   if ( !filterList.isEmpty() )
-    KMKernel::self()->filterMgr()->appendFilters(
+    KMKernel::self()->filterManager()->appendFilters(
           filterList, replaceExistingFilters );
 
   KDialog::accept();
@@ -668,7 +668,7 @@ bool AntiSpamWizard::anyVirusOptionChecked()
 
 const QString AntiSpamWizard::uniqueNameFor( const QString & name )
 {
-  return KMKernel::self()->filterMgr()->createUniqueName( name );
+  return KMKernel::self()->filterManager()->createUniqueName( name );
 }
 
 

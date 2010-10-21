@@ -20,7 +20,6 @@
 #include "kmsearchpatternedit.h"
 
 #include <QStackedWidget>
-#include "kmsearchpattern.h"
 #include "rulewidgethandlermanager.h"
 using KMail::RuleWidgetHandlerManager;
 
@@ -37,7 +36,7 @@ using KMail::RuleWidgetHandlerManager;
 #include <assert.h>
 
 // Definition of special rule field strings
-// Note: Also see KMSearchRule::matches() and ruleFieldToEnglish() if
+// Note: Also see SearchRule::matches() and ruleFieldToEnglish() if
 //       you change the following i18n-ized strings!
 // Note: The index of the values in the following array has to correspond to
 //       the value of the entries in the enum in KMSearchRuleWidget.
@@ -46,6 +45,8 @@ using KMail::RuleWidgetHandlerManager;
 #define I18N_NOOP(t) 0, t
 #undef I18N_NOOP2
 #define I18N_NOOP2(c,t) c, t
+
+using namespace MailCommon;
 
 static const struct {
   const char *internalName;
@@ -79,7 +80,7 @@ static const int SpecialRuleFieldsCount =
 //
 //=============================================================================
 
-KMSearchRuleWidget::KMSearchRuleWidget( QWidget *parent, KMSearchRule::Ptr aRule,
+KMSearchRuleWidget::KMSearchRuleWidget( QWidget *parent, SearchRule::Ptr aRule,
                                         bool headersOnly,
                                         bool absoluteDates )
   : QWidget( parent ),
@@ -99,7 +100,7 @@ KMSearchRuleWidget::KMSearchRuleWidget( QWidget *parent, KMSearchRule::Ptr aRule
 
 void KMSearchRuleWidget::setHeadersOnly( bool headersOnly )
 {
-  KMSearchRule::Ptr srule = rule();
+  SearchRule::Ptr srule = rule();
   QByteArray currentText = srule->field();
 
   initFieldList( headersOnly, mAbsoluteDates );
@@ -159,7 +160,7 @@ void KMSearchRuleWidget::initWidget()
            this, SIGNAL( fieldChanged( const QString & ) ) );
 }
 
-void KMSearchRuleWidget::setRule( KMSearchRule::Ptr aRule )
+void KMSearchRuleWidget::setRule( SearchRule::Ptr aRule )
 {
   assert ( aRule );
 
@@ -184,16 +185,16 @@ void KMSearchRuleWidget::setRule( KMSearchRule::Ptr aRule )
                                                  aRule );
 }
 
-KMSearchRule::Ptr KMSearchRuleWidget::rule() const {
+SearchRule::Ptr KMSearchRuleWidget::rule() const {
   const QByteArray ruleField = ruleFieldToEnglish( mRuleField->currentText() );
-  const KMSearchRule::Function function =
+  const SearchRule::Function function =
     RuleWidgetHandlerManager::instance()->function( ruleField,
                                                     mFunctionStack );
   const QString value =
     RuleWidgetHandlerManager::instance()->value( ruleField, mFunctionStack,
                                                  mValueStack );
 
-  return KMSearchRule::createInstance( ruleField, function, value );
+  return SearchRule::createInstance( ruleField, function, value );
 }
 
 void KMSearchRuleWidget::reset()
@@ -324,7 +325,7 @@ KMSearchRuleWidgetLister::~KMSearchRuleWidgetLister()
 {
 }
 
-void KMSearchRuleWidgetLister::setRuleList( QList<KMSearchRule::Ptr> *aList )
+void KMSearchRuleWidgetLister::setRuleList( QList<SearchRule::Ptr> *aList )
 {
   assert ( aList );
 
@@ -357,7 +358,7 @@ void KMSearchRuleWidgetLister::setRuleList( QList<KMSearchRule::Ptr> *aList )
 
   // load the actions into the widgets
   QList<QWidget*> widgetList = widgets();
-  QList<KMSearchRule::Ptr>::const_iterator rIt;
+  QList<SearchRule::Ptr>::const_iterator rIt;
   QList<QWidget*>::const_iterator wIt = widgetList.constBegin();
   for ( rIt = mRuleList->constBegin();
         rIt != mRuleList->constEnd() && wIt != widgetList.constEnd(); ++rIt, ++wIt ) {
@@ -388,7 +389,7 @@ void KMSearchRuleWidgetLister::reset()
 
 QWidget* KMSearchRuleWidgetLister::createWidget( QWidget *parent )
 {
-  return new KMSearchRuleWidget(parent, KMSearchRule::Ptr(),  mHeadersOnly, mAbsoluteDates);
+  return new KMSearchRuleWidget(parent, SearchRule::Ptr(),  mHeadersOnly, mAbsoluteDates);
 }
 
 void KMSearchRuleWidgetLister::clearWidget( QWidget *aWidget )
@@ -404,7 +405,7 @@ void KMSearchRuleWidgetLister::regenerateRuleListFromWidgets()
   mRuleList->clear();
 
   foreach ( const QWidget *w, widgets() ) {
-    KMSearchRule::Ptr r = qobject_cast<const KMSearchRuleWidget*>( w )->rule();
+    SearchRule::Ptr r = qobject_cast<const KMSearchRuleWidget*>( w )->rule();
     if ( r )
       mRuleList->append( r );
   }
@@ -480,7 +481,7 @@ void KMSearchPatternEdit::initLayout(bool headersOnly, bool absoluteDates)
   layout->addWidget( mRuleLister );
 }
 
-void KMSearchPatternEdit::setSearchPattern( KMSearchPattern *aPattern )
+void KMSearchPatternEdit::setSearchPattern( SearchPattern *aPattern )
 {
   assert( aPattern );
 
@@ -489,7 +490,7 @@ void KMSearchPatternEdit::setSearchPattern( KMSearchPattern *aPattern )
   mPattern = aPattern;
 
   blockSignals(true);
-  if ( mPattern->op() == KMSearchPattern::OpOr )
+  if ( mPattern->op() == SearchPattern::OpOr )
     mAnyRBtn->setChecked(true);
   else
     mAllRBtn->setChecked(true);
@@ -518,9 +519,9 @@ void KMSearchPatternEdit::slotRadioClicked(QAbstractButton *aRBtn)
 {
   if ( mPattern ) {
     if ( aRBtn == mAllRBtn )
-      mPattern->setOp( KMSearchPattern::OpAnd );
+      mPattern->setOp( SearchPattern::OpAnd );
     else
-      mPattern->setOp( KMSearchPattern::OpOr );
+      mPattern->setOp( SearchPattern::OpOr );
   }
 }
 

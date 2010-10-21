@@ -67,15 +67,6 @@
 
 using namespace MailCommon;
 
-uint KMail::Util::folderIdentity(const Akonadi::Item& item)
-{
-  uint id = 0;
-  if( item.isValid() && item.parentCollection().isValid() ) {
-        QSharedPointer<FolderCollection> fd = FolderCollection::forCollection( item.parentCollection() );
-        id = fd->identity();
-  }
-  return id;
-}
 
 QStringList KMail::Util::mailingListsFromMessage( const Akonadi::Item& item )
 {

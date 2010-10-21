@@ -52,9 +52,8 @@
 #include "kmcommands.h"
 #include "kmmainwidget.h"
 #include "kmsearchpatternedit.h"
-#include "kmsearchpattern.h"
 #include "searchdescriptionattribute.h"
-#include "mailkernel.h"
+#include "mailcommon/mailkernel.h"
 
 #include "regexplineedit.h"
 
@@ -150,7 +149,7 @@ SearchWindow::SearchWindow(KMMainWidget* w, const Akonadi::Collection& curFolder
 
   if ( !curFolder.hasAttribute<Akonadi::PersistentSearchAttribute>() ) {
     // it's not a search folder, make a new search
-    mSearchPattern.append( KMSearchRule::createInstance( "Subject" ) );
+    mSearchPattern.append( SearchRule::createInstance( "Subject" ) );
   } else {
     // it's a search folder
     if ( curFolder.hasAttribute<Akonadi::SearchDescriptionAttribute>() ) {
@@ -489,7 +488,7 @@ void SearchWindow::slotSearch()
 #endif
 
   mPatternEdit->updateSearchPattern();
-  KMSearchPattern searchPattern( mSearchPattern );
+  SearchPattern searchPattern( mSearchPattern );
   searchPattern.purify();
   enableGUI();
 
@@ -836,19 +835,19 @@ void SearchWindow::slotPrintMsg()
     command->start();
 }
 
-void SearchWindow::addRulesToSearchPattern( const KMSearchPattern &pattern )
+void SearchWindow::addRulesToSearchPattern( const SearchPattern &pattern )
 {
-  KMSearchPattern p( mSearchPattern );
+  SearchPattern p( mSearchPattern );
   p.purify();
-  QList<KMSearchRule::Ptr>::const_iterator it;
+  QList<SearchRule::Ptr>::const_iterator it;
   for ( it = pattern.begin() ; it != pattern.end() ; ++it ) {
-     p.append( KMSearchRule::createInstance( **it ) );
+     p.append( SearchRule::createInstance( **it ) );
   }
   mSearchPattern = p;
   mPatternEdit->setSearchPattern( &mSearchPattern );
 }
 
-void SearchWindow::setSearchPattern( const KMSearchPattern &pattern )
+void SearchWindow::setSearchPattern( const SearchPattern &pattern )
 {
   mSearchPattern = pattern;
   mPatternEdit->setSearchPattern( &mSearchPattern );

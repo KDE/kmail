@@ -21,8 +21,8 @@
 #ifndef kmfilterdlg_h
 #define kmfilterdlg_h
 
-#include "kmfilter.h"
-#include "kmfilteraction.h"
+#include "mailcommon/mailfilter.h"
+#include "mailcommon/filteraction.h"
 
 #include <kwidgetlister.h>
 #include <kdialog.h>
@@ -65,9 +65,9 @@ class KKeySequenceWidget;
     long as you don't call slotApplyFilterChanges. It will then
     transfer the altered filter list back to KMFilterMgr.
 
-    @short A complex widget that allows managing a list of KMFilter's.
+    @short A complex widget that allows managing a list of MailCommon::MailFilter's.
     @author Marc Mutz <Marc@Mutz.com>, based upon work by Stefan Taferner <taferner@kde.org>.
-    @see KMFilter KMFilterDlg KMFilterActionEdit KMSearchPatternEdit
+    @see MailCommon::MailFilter KMFilterDlg KMFilterActionEdit KMSearchPatternEdit
 
  */
 class KMFilterListBox : public QGroupBox
@@ -97,21 +97,21 @@ public:
   /** Returns wheather the global option 'Show Later Msgs' is set or not */
   bool showLaterMsgs() const;
 
-  void insertFilter( KMFilter* aFilter );
+  void insertFilter( MailCommon::MailFilter* aFilter );
 
-  void appendFilter( KMFilter* aFilter );
+  void appendFilter( MailCommon::MailFilter* aFilter );
 
   /** Returns a list of _copies_ of the current list of filters.
    * The list owns the contents and thus the caller needs to clean them up.
    * @param closeAfterSaving If true user is given option to continue editing
    * after being warned about invalid filters. Otherwise, user is just warned. */
-  QList<KMFilter *> filtersForSaving( bool closeAfterSaving ) const;
+  QList<MailCommon::MailFilter *> filtersForSaving( bool closeAfterSaving ) const;
 
 signals:
   /** Emitted when a new filter has been selected by the user or if
       the current filter has changed after a 'new' or 'delete'
       operation. */
-  void filterSelected( KMFilter* filter );
+  void filterSelected( MailCommon::MailFilter* filter );
 
   /** Emitted when this widget wants the edit widgets to let go of
       their filter reference. Everyone holding a reference to a filter
@@ -166,7 +166,7 @@ protected slots:
 
 protected:
   /** The deep copy of the filter list. */
-  QList<KMFilter *> mFilterList;
+  QList<MailCommon::MailFilter *> mFilterList;
   /** The listbox displaying the filter list. */
   QListWidget *mListWidget;
   /** The various action buttons. */
@@ -182,21 +182,21 @@ private:
 };
 
 
-/** This widgets allows to edit a single KMFilterAction (in fact
+/** This widgets allows to edit a single MailCommon::FilterAction (in fact
     any derived class that is registered in
     KMFilterActionDict). It consists of a combo box which allows to
     select the type of actions this widget should act upon.
 
-    You can load a KMFilterAction into this widget with setAction,
+    You can load a MailCommon::FilterAction into this widget with setAction,
     and retrieve the result of user action with action.
     The widget will copy it's setting into the corresponding
     parameter widget. For that, it internally creates an instance of
-    every KMFilterAction in KMFilterActionDict and asks each
+    every MailCommon::FilterAction in KMFilterActionDict and asks each
     one to create a parameter widget.
 
-    @short A widget to edit a single KMFilterAction.
+    @short A widget to edit a single MailCommon::FilterAction.
     @author Marc Mutz <Marc@Mutz.com>
-    @see KMFilterAction KMFilter KMFilterActionWidgetLister
+    @see MailCommon::FilterAction MailCommon::MailFilter KMFilterActionWidgetLister
 
  */
 class KMFilterActionWidget : public KHBox
@@ -213,22 +213,22 @@ public:
   /** Set an action. The action's type is determined and the
       corresponding widget it loaded with @p aAction's parameters and
       then raised. If @ aAction is 0, the widget is cleared. */
-  void setAction( const KMFilterAction * aAction );
+  void setAction( const MailCommon::FilterAction * aAction );
   /** Retrieve the action. This method is necessary because the type
       of actions can change during editing. Therefore the widget
       always creates a new action object from the data in the combo
       box and returns that. */
-  KMFilterAction *action() const;
+  MailCommon::FilterAction *action() const;
 
 private slots:
   void slotFilterTypeChanged( int newIdx );
 
 private:
-  /** This list holds an instance of every KMFilterAction
+  /** This list holds an instance of every MailCommon::FilterAction
       subclass. The only reason that these 'slave' actions exist is
       that they are 'forced' to create parameter widgets
       and to clear them on setAction. */
-  QList<KMFilterAction*> mActionList;
+  QList<MailCommon::FilterAction*> mActionList;
   /** The combo box that contains the labels of all KMFilterActions.
       It's @p activated(int) signal is internally
       connected to the @p slotCboAction(int) slot of @p KMFilterActionWidget. */
@@ -245,8 +245,8 @@ public:
   explicit KMPopFilterActionWidget( const QString & title,
                                     QWidget * parent = 0,
                                     const char * name = 0 );
-  void setAction( KMPopFilterAction aAction );
-  KMPopFilterAction action();
+  void setAction( MailCommon::PopFilterAction aAction );
+  MailCommon::PopFilterAction action();
 
 public slots:
   void reset();
@@ -255,13 +255,13 @@ private slots:
   void slotActionClicked( QAbstractButton *btn );
 
 private:
-  KMPopFilterAction mAction;
-  KMFilter mFilter;
-  QMap<KMPopFilterAction, QRadioButton*> mActionMap;
-  QMap<QAbstractButton*, KMPopFilterAction> mButtonMap;
+  MailCommon::PopFilterAction mAction;
+  MailCommon::MailFilter mFilter;
+  QMap<MailCommon::PopFilterAction, QRadioButton*> mActionMap;
+  QMap<QAbstractButton*, MailCommon::PopFilterAction> mButtonMap;
 
 signals: // Signals
-  void actionChanged( const KMPopFilterAction aAction );
+  void actionChanged( const MailCommon::PopFilterAction aAction );
 };
 
 class KMFilterActionWidgetLister : public KPIM::KWidgetLister
@@ -272,7 +272,7 @@ public:
 
   virtual ~KMFilterActionWidgetLister();
 
-  void setActionList( QList<KMFilterAction*> * aList );
+  void setActionList( QList<MailCommon::FilterAction*> * aList );
 
   /** Updates the action list according to the current widget values */
   void updateActionList() { regenerateActionListFromWidgets(); }
@@ -286,7 +286,7 @@ protected:
 
 private:
   void regenerateActionListFromWidgets();
-  QList<KMFilterAction*> *mActionList;
+  QList<MailCommon::FilterAction*> *mActionList;
 
 };
 
@@ -343,7 +343,7 @@ private:
 
     @short The filter dialog.
     @author Marc Mutz <Marc@Mutz.com>, based upon work by Stefan Taferner <taferner@kde.org>.
-    @see KMFilter KMFilterActionEdit KMSearchPatternEdit KMFilterListBox
+    @see MailCommon::MailFilter KMFilterActionEdit KMSearchPatternEdit KMFilterListBox
 
  */
 
@@ -371,9 +371,9 @@ public slots:
    * KMSearchPatternEdit::setSearchPattern and
    * KMFilterActionEdit::setActionList.
    */
-  void slotFilterSelected(KMFilter * aFilter);
+  void slotFilterSelected(MailCommon::MailFilter * aFilter);
   /** Action for popFilter */
-  void slotActionChanged(const KMPopFilterAction aAction);
+  void slotActionChanged(const MailCommon::PopFilterAction aAction);
   /** Override QDialog::accept to allow disabling close */
   virtual void accept();
 
@@ -437,7 +437,7 @@ protected:
   QGroupBox *mGlobalsBox;
   QCheckBox *mShowLaterBtn;
 
-  KMFilter *mFilter;
+  MailCommon::MailFilter *mFilter;
   bool bPopFilter;
   bool mDoNotClose;
 };
