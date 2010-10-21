@@ -1082,7 +1082,7 @@ void KMKernel::recoverDeadLetters()
 
 void  KMKernel::akonadiStateChanged( Akonadi::ServerManager::State state )
 {
-  kDebug() << "KMKernel has akonadi state changed to:" << state;
+  kDebug() << "KMKernel has akonadi state changed to:" << int( state );
 
   if( state == Akonadi::ServerManager::Running ) {
     CommonKernel->initFolders();
@@ -1134,7 +1134,7 @@ void KMKernel::init()
 
   KCrash::setEmergencySaveFunction( kmCrashHandler );
 
-  kDebug() << "KMail init with akonadi server state:" << Akonadi::ServerManager::state();
+  kDebug() << "KMail init with akonadi server state:" << int( Akonadi::ServerManager::state() );
   if( Akonadi::ServerManager::state() == Akonadi::ServerManager::Running ) {
     CommonKernel->initFolders();
   }
@@ -1718,7 +1718,7 @@ void KMKernel::setLastSelectedFolder(const Akonadi::Entity::Id& col)
 
 QStringList KMKernel::customTemplates()
 {
-  GlobalSettingsBase::self()->customTemplates();
+  return GlobalSettingsBase::self()->customTemplates();
 }
 
 void KMKernel::openFilterDialog(bool popFilter, bool createDummyFilter)
