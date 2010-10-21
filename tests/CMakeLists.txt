@@ -44,4 +44,4 @@ target_link_libraries(dbustest ${KDE4_KIO_LIBS})
 
 #kunittest_storagelayermodule_la_SOURCES = storagelayermodule.cpp messagedicttests.cpp ../kmdict.cpp
 
-kmail_add_unittest( searchpatterntest.cpp )
+#kmail_add_unittest( searchpatterntest.cpp )
