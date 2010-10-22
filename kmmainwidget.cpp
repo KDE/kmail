@@ -2230,7 +2230,7 @@ void KMMainWidget::slotItemsFetchedForFilter( const Akonadi::Item::List &items )
 {
 
   KPIM::ProgressItem* progressItem;
-  if( !sender()->property( "progressItem" ).value< QObject*>() ) {
+  if( sender()->property( "progressItem" ).value< QObject*>() ) {
     progressItem = qobject_cast<KPIM::ProgressItem*>( sender()->property( "progressItem" ).value<QObject*>() );
   } else {
     progressItem = 0;
