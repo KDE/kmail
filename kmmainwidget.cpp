@@ -54,10 +54,10 @@
     #include "sievedebugdialog.h"
     using KMail::SieveDebugDialog;
 #endif
-    
+
 #include "mailcommon/filtermanager.h"
 #include "mailcommon/mailfilter.h"
-    
+
 // Other PIM includes
 #include "messageviewer/autoqpointer.h"
 #include "messageviewer/globalsettings.h"
@@ -1602,6 +1602,10 @@ void KMMainWidget::slotOverrideHtml()
     }
   }
   mFolderHtmlPref = !mFolderHtmlPref;
+
+  //Update mPrefererHtmlLoadExtAction
+  mPreferHtmlLoadExtAction->setEnabled( mCurrentFolder && (mHtmlPref ? !mFolderHtmlPref : mFolderHtmlPref) ? true : false );
+
   if (mMsgView) {
     mMsgView->setHtmlOverride(mFolderHtmlPref);
     mMsgView->update( true );
@@ -1627,6 +1631,7 @@ void KMMainWidget::slotOverrideHtmlLoadExt()
     }
   }
   mFolderHtmlLoadExtPref = !mFolderHtmlLoadExtPref;
+
   if (mMsgView) {
     mMsgView->setHtmlLoadExtOverride(mFolderHtmlLoadExtPref);
     mMsgView->update( true );
