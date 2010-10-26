@@ -2205,58 +2205,7 @@ void KMMainWidget::slotApplyFilters()
 void KMMainWidget::applyFilters( const QList<Akonadi::Item>& selectedMessages )
 {
   MessageViewer::KCursorSaver busy( MessageViewer::KBusyPtr::busy() );
-  const int msgCountToFilter = selectedMessages.size();
-
-  KPIM::ProgressItem *progressItem = KPIM::ProgressManager::createProgressItem (
-      "filter" + KPIM::ProgressManager::getUniqueID(),
-      i18n( "Filtering messages" )
-    );
-
-  progressItem->setTotalItems( msgCountToFilter );
-  ItemFetchJob *itemFetchJob = new ItemFetchJob( selectedMessages, this );
-  itemFetchJob->fetchScope().fetchFullPayload( true );
-  itemFetchJob->fetchScope().setAncestorRetrieval( ItemFetchScope::Parent );
-  itemFetchJob->setProperty( "progressItem", QVariant::fromValue( static_cast<QObject*>( progressItem ) ) );
-  connect( itemFetchJob, SIGNAL(itemsReceived(Akonadi::Item::List)), SLOT(slotItemsFetchedForFilter(Akonadi::Item::List)) );
-  connect( itemFetchJob, SIGNAL(result(KJob *)), SLOT(itemsFetchJobForFilterDone(KJob*)) );
-}
-
-void KMMainWidget::itemsFetchJobForFilterDone( KJob *job )
-{
-  if ( job->error() )
-    kDebug() << job->errorString();
-  KPIM::BroadcastStatus::instance()->setStatusMsg( QString() );
-
-  KPIM::ProgressItem *progressItem = qobject_cast<KPIM::ProgressItem*>( job->property( "progressItem" ).value<QObject*>() );
-  progressItem->setComplete();
-}
-
-void KMMainWidget::slotItemsFetchedForFilter( const Akonadi::Item::List &items )
-{
-
-  KPIM::ProgressItem* progressItem;
-  if( sender()->property( "progressItem" ).value< QObject*>() ) {
-    progressItem = qobject_cast<KPIM::ProgressItem*>( sender()->property( "progressItem" ).value<QObject*>() );
-  } else {
-    progressItem = 0;
-    kWarning() << "Got invalid progress item for slotItemsFetchedFromFilter! Something went wrong...";
-  }
-
-  foreach ( const Akonadi::Item &item, items ) {
-    if( progressItem ) {
-      progressItem->incCompletedItems();
-      if ( progressItem->totalItems() - progressItem->completedItems() < 10 ||
-        !( progressItem->completedItems() % 10 ) ||
-          progressItem->completedItems() <= 10 )
-      {
-        progressItem->updateProgress();
-        const QString statusMsg = i18n( "Filtering message %1 of %2", progressItem->completedItems(),
-                                        progressItem->totalItems() );
-        KPIM::BroadcastStatus::instance()->setStatusMsg( statusMsg );
-      }
-    }
-    slotFilterMsg( item );
-  }
+  FilterIf->filterManager()->applyFilters( selectedMessages );
 }
 
 int KMMainWidget::slotFilterMsg( const Akonadi::Item &msg )
