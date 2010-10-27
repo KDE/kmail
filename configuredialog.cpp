@@ -479,7 +479,10 @@ void AccountsPageReceivingTab::slotShowMailCheckMenu( const QString &ident, cons
     KConfigGroup group( KMKernel::self()->config(), resourceGroupPattern.arg( ident ) );
 
     IncludeInManualChecks = group.readEntry( "IncludeInManualChecks", true );
-    OfflineOnShutdown = group.readEntry( "OfflineOnShutdown", false );
+
+    // "true" is also hardcoded in kmkernel, don't forget to change there.
+    OfflineOnShutdown = group.readEntry( "OfflineOnShutdown", true );
+
     CheckOnStartup = group.readEntry( "CheckOnStartup", false );
     QSharedPointer<RetrievalOptions> opts( new RetrievalOptions( IncludeInManualChecks, OfflineOnShutdown, CheckOnStartup ) );
     mRetrievalHash.insert( ident, opts );
@@ -3673,11 +3676,11 @@ MiscPageFolderTab::MiscPageFolderTab( QWidget * parent )
   mMMTab.setupUi( this );
   //replace QWidget with FolderRequester. Promote to doesn't work due to the custom constructor
   QHBoxLayout* layout = new QHBoxLayout;
-  layout->setContentsMargins(0, 0, 0, 0);  
+  layout->setContentsMargins(0, 0, 0, 0);
   mMMTab.mOnStartupOpenFolder->setLayout( layout );
   mOnStartupOpenFolder = new FolderRequester( mMMTab.mOnStartupOpenFolder );
   layout->addWidget( mOnStartupOpenFolder );
-  
+
   mMMTab.gridLayout->setSpacing( KDialog::spacingHint() );
   mMMTab.gridLayout->setMargin( KDialog::marginHint() );
   mMMTab.mStartUpFolderLabel->setBuddy( mMMTab.mOnStartupOpenFolder );
