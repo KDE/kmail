@@ -1126,8 +1126,8 @@ void KMMainWidget::slotItemAdded( const Akonadi::Item &msg, const Akonadi::Colle
 
 void KMMainWidget::slotItemNotMovedByFilters( const Akonadi::Item& item )
 {
-  Akonadi::Collection col = item.parentCollection();
-  addInfoInNotification( col );
+  Akonadi::Collection collection = item.parentCollection();
+  addInfoInNotification( collection );
 }
 
 void KMMainWidget::slotItemRemoved( const Akonadi::Item & item)
