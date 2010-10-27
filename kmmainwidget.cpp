@@ -344,7 +344,7 @@ void KMMainWidget::slotEndCheckMail()
   keys.sort();
   for ( QStringList::const_iterator it=keys.constBegin(); it!=keys.constEnd(); ++it ) {
     collectionInfo info = mCheckMail.find( *it ).value();
-    //kDebug() << info.nbMail << "new message(s) in" << *it;
+    kDebug() << info.nbMail << "new message(s) in" << *it;
     QSharedPointer<FolderCollection> fd = FolderCollection::forCollection( info.col );
 
     if ( fd && !fd->ignoreNewMail() ) {
@@ -1095,6 +1095,8 @@ void KMMainWidget::createWidgets()
   connect( kmkernel->folderCollectionMonitor(), SIGNAL( itemMoved( Akonadi::Item,Akonadi::Collection, Akonadi::Collection ) ),
            SLOT( slotItemMoved( Akonadi::Item, Akonadi::Collection, Akonadi::Collection ) ) );
   connect( kmkernel->folderCollectionMonitor(), SIGNAL( collectionChanged( const Akonadi::Collection &, const QSet<QByteArray> &) ), SLOT( slotCollectionChanged( const Akonadi::Collection&, const QSet<QByteArray>& ) ) );
+  connect( FilterIf->filterManager(), SIGNAL( itemNotMoved( Akonadi::Item ) ),
+           SLOT( slotItemNotMovedByFilters( Akonadi::Item ) ) );
 
 
 }
@@ -1120,14 +1122,12 @@ void KMMainWidget::slotItemAdded( const Akonadi::Item &msg, const Akonadi::Colle
   if ( col.isValid() && ( col == CommonKernel->outboxCollectionFolder() ) ) {
     startUpdateMessageActionsTimer();
   }
-  //FIXME: don't do the filtering here, it is already done in FilterManager, that
-  //reacts to new items being added. TODO: port the addInfoInNotification part.
-  /*
-  cnst int resultFilter = slotFilterMsg( msg );
-  if ( resultFilter == 1 ) {
-    addInfoInNotification( col );
-  }
-  */
+}
+
+void KMMainWidget::slotItemNotMovedByFilters( const Akonadi::Item& item )
+{
+  Akonadi::Collection col = item.parentCollection();
+  addInfoInNotification( col );
 }
 
 void KMMainWidget::slotItemRemoved( const Akonadi::Item & item)
