@@ -480,8 +480,8 @@ void AccountsPageReceivingTab::slotShowMailCheckMenu( const QString &ident, cons
 
     IncludeInManualChecks = group.readEntry( "IncludeInManualChecks", true );
 
-    // "true" is also hardcoded in kmkernel, don't forget to change there.
-    OfflineOnShutdown = group.readEntry( "OfflineOnShutdown", true );
+    // "false" is also hardcoded in kmkernel, don't forget to change there.
+    OfflineOnShutdown = group.readEntry( "OfflineOnShutdown", false );
 
     CheckOnStartup = group.readEntry( "CheckOnStartup", false );
     QSharedPointer<RetrievalOptions> opts( new RetrievalOptions( IncludeInManualChecks, OfflineOnShutdown, CheckOnStartup ) );

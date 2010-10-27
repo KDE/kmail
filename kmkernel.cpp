@@ -951,8 +951,8 @@ void KMKernel::checkMailOnStartup()
       type.synchronize();
     }
 
-    /* TODO should not assume true but notify or ask the user. other Akonadi clients could expect these resources to continue working */
-    if ( group.readEntry( "OfflineOnShutdown", true ) ) {
+    // "false" is also hardcoded in ConfigureDialog, don't forget to change there.
+    if ( group.readEntry( "OfflineOnShutdown", false ) ) {
       if ( !type.isOnline() )
         type.setIsOnline( true );
     }
