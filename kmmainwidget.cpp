@@ -1120,10 +1120,14 @@ void KMMainWidget::slotItemAdded( const Akonadi::Item &msg, const Akonadi::Colle
   if ( col.isValid() && ( col == CommonKernel->outboxCollectionFolder() ) ) {
     startUpdateMessageActionsTimer();
   }
-  const int resultFilter = slotFilterMsg( msg );
+  //FIXME: don't do the filtering here, it is already done in FilterManager, that
+  //reacts to new items being added. TODO: port the addInfoInNotification part.
+  /*
+  cnst int resultFilter = slotFilterMsg( msg );
   if ( resultFilter == 1 ) {
     addInfoInNotification( col );
   }
+  */
 }
 
 void KMMainWidget::slotItemRemoved( const Akonadi::Item & item)
