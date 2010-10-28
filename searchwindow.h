@@ -39,12 +39,12 @@ class KActionMenu;
 class KLineEdit;
 class KMMainWidget;
 
-class KMSearchPatternEdit;
 class KStatusBar;
 class KJob;
 
 namespace MailCommon {
   class FolderRequester;
+  class SearchPatternEdit;
 }
 
 namespace KMime {
@@ -185,7 +185,7 @@ protected:
   QByteArray mHeaderState;
   // not owned by us
   KMMainWidget* mKMMainWidget;
-  KMSearchPatternEdit *mPatternEdit;
+  MailCommon::SearchPatternEdit *mPatternEdit;
   MailCommon::SearchPattern mSearchPattern;
 
   Akonadi::StandardActionManager *mAkonadiStandardAction;

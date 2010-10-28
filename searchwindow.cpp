@@ -51,7 +51,7 @@
 #include "folderrequester.h"
 #include "kmcommands.h"
 #include "kmmainwidget.h"
-#include "kmsearchpatternedit.h"
+#include "mailcommon/searchpatternedit.h"
 #include "searchdescriptionattribute.h"
 #include "mailcommon/mailkernel.h"
 
@@ -141,7 +141,7 @@ SearchWindow::SearchWindow(KMMainWidget* w, const Akonadi::Collection& curFolder
   mCbxFolders->hide();
   mChkbxAllFolders->hide();
 
-  mPatternEdit = new KMSearchPatternEdit( QString(), searchWidget, false, true );
+  mPatternEdit = new SearchPatternEdit( QString(), searchWidget, false, true );
   mPatternEdit->setFlat( true );
 
 

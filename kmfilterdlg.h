@@ -35,7 +35,6 @@
 #include <QString>
 #include <QGridLayout>
 
-class KMSearchPatternEdit;
 class QLabel;
 class QListWidget;
 class QPushButton;
@@ -45,6 +44,11 @@ class KComboBox;
 class KIconButton;
 class KKeySequenceWidget;
 
+namespace MailCommon {
+  class SearchPatternEdit;
+  class FilterActionWidgetLister;
+}
+
 
 /** This is a complex widget that is used to manipulate KMail's filter
     list. It consists of an internal list of filters, which is a deep
@@ -53,7 +57,7 @@ class KKeySequenceWidget;
     and change the order of filters.
 
     It does not provide means to change the actual filter (besides the
-    name), but relies on auxiliary widgets (KMSearchPatternEdit
+    name), but relies on auxiliary widgets (SearchPatternEdit
     and KMFilterActionEdit) to do that.
 
     Communication with this widget is quite easy: simply create an
@@ -67,7 +71,7 @@ class KKeySequenceWidget;
 
     @short A complex widget that allows managing a list of MailCommon::MailFilter's.
     @author Marc Mutz <Marc@Mutz.com>, based upon work by Stefan Taferner <taferner@kde.org>.
-    @see MailCommon::MailFilter KMFilterDlg KMFilterActionEdit KMSearchPatternEdit
+    @see MailCommon::MailFilter KMFilterDlg KMFilterActionEdit SearchPatternEdit
 
  */
 class KMFilterListBox : public QGroupBox
@@ -129,7 +133,7 @@ signals:
 
 public slots:
   /** Called when the name of a filter might have changed (e.g.
-      through changing the first rule in KMSearchPatternEdit).
+      through changing the first rule in SearchPatternEdit).
       Updates the corresponding entry in the
       listbox and (if necessary) auto-names the filter. */
   void slotUpdateFilterName();
@@ -182,61 +186,6 @@ private:
 };
 
 
-/** This widgets allows to edit a single MailCommon::FilterAction (in fact
-    any derived class that is registered in
-    KMFilterActionDict). It consists of a combo box which allows to
-    select the type of actions this widget should act upon.
-
-    You can load a MailCommon::FilterAction into this widget with setAction,
-    and retrieve the result of user action with action.
-    The widget will copy it's setting into the corresponding
-    parameter widget. For that, it internally creates an instance of
-    every MailCommon::FilterAction in KMFilterActionDict and asks each
-    one to create a parameter widget.
-
-    @short A widget to edit a single MailCommon::FilterAction.
-    @author Marc Mutz <Marc@Mutz.com>
-    @see MailCommon::FilterAction MailCommon::MailFilter KMFilterActionWidgetLister
-
- */
-class KMFilterActionWidget : public KHBox
-{
-  Q_OBJECT
-public:
-  /** Constructor. Creates a filter action widget with no type
-      selected. */
-  explicit KMFilterActionWidget( QWidget* parent=0, const char* name=0 );
-
-  /** Destructor. Clears mActionList. */
-  ~KMFilterActionWidget();
-
-  /** Set an action. The action's type is determined and the
-      corresponding widget it loaded with @p aAction's parameters and
-      then raised. If @ aAction is 0, the widget is cleared. */
-  void setAction( const MailCommon::FilterAction * aAction );
-  /** Retrieve the action. This method is necessary because the type
-      of actions can change during editing. Therefore the widget
-      always creates a new action object from the data in the combo
-      box and returns that. */
-  MailCommon::FilterAction *action() const;
-
-private slots:
-  void slotFilterTypeChanged( int newIdx );
-
-private:
-  /** This list holds an instance of every MailCommon::FilterAction
-      subclass. The only reason that these 'slave' actions exist is
-      that they are 'forced' to create parameter widgets
-      and to clear them on setAction. */
-  QList<MailCommon::FilterAction*> mActionList;
-  /** The combo box that contains the labels of all KMFilterActions.
-      It's @p activated(int) signal is internally
-      connected to the @p slotCboAction(int) slot of @p KMFilterActionWidget. */
-  KComboBox      *mComboBox;
-
-  void setFilterAction( QWidget* w=0 );
-  QGridLayout *gl;
-};
 
 class KMPopFilterActionWidget : public QGroupBox
 {
@@ -264,33 +213,6 @@ signals: // Signals
   void actionChanged( const MailCommon::PopFilterAction aAction );
 };
 
-class KMFilterActionWidgetLister : public KPIM::KWidgetLister
-{
-  Q_OBJECT
-public:
-  explicit KMFilterActionWidgetLister( QWidget *parent=0, const char* name=0 );
-
-  virtual ~KMFilterActionWidgetLister();
-
-  void setActionList( QList<MailCommon::FilterAction*> * aList );
-
-  /** Updates the action list according to the current widget values */
-  void updateActionList() { regenerateActionListFromWidgets(); }
-
-public slots:
-  void reset();
-
-protected:
-  virtual void clearWidget( QWidget *aWidget );
-  virtual QWidget* createWidget( QWidget *parent );
-
-private:
-  void regenerateActionListFromWidgets();
-  QList<MailCommon::FilterAction*> *mActionList;
-
-};
-
-
 
 /** The filter dialog. This is a non-modal dialog used to manage
     KMail's filters. It should only be called through KMFilterMgr::openDialog.
@@ -307,7 +229,7 @@ private:
     filter/rules list according to the results, but I first want the
     basic functionality in place).
 
-    @li The KMSearchPatternEdit in the upper-right quarter allows
+    @li The SearchPatternEdit in the upper-right quarter allows
     the user to modify the filter criteria.
 
     @li The KMFilterActionEdit in the lower-right quarter allows
@@ -343,7 +265,7 @@ private:
 
     @short The filter dialog.
     @author Marc Mutz <Marc@Mutz.com>, based upon work by Stefan Taferner <taferner@kde.org>.
-    @see MailCommon::MailFilter KMFilterActionEdit KMSearchPatternEdit KMFilterListBox
+    @see MailCommon::MailFilter KMFilterActionEdit SearchPatternEdit KMFilterListBox
 
  */
 
@@ -368,7 +290,7 @@ public slots:
   /**
    * Internally connected to KMFilterListBox::filterSelected.
    * Just does a simple check and then calls
-   * KMSearchPatternEdit::setSearchPattern and
+   * SearchPatternEdit::setSearchPattern and
    * KMFilterActionEdit::setActionList.
    */
   void slotFilterSelected(MailCommon::MailFilter * aFilter);
@@ -413,9 +335,9 @@ protected:
       order. */
   KMFilterListBox *mFilterList;
   /** The widget that allows editing of the filter pattern. */
-  KMSearchPatternEdit *mPatternEdit;
+  MailCommon::SearchPatternEdit *mPatternEdit;
   /** The widget that allows editing of the filter actions. */
-  KMFilterActionWidgetLister *mActionLister;
+  MailCommon::FilterActionWidgetLister *mActionLister;
   /** The widget that allows editing the popFilter actions. */
   KMPopFilterActionWidget *mActionGroup;
   /** Lets the user select whether to apply this filter on
