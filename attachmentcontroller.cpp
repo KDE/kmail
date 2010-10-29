@@ -56,6 +56,7 @@
 using namespace KMail;
 using namespace KPIM;
 using namespace MailCommon;
+using namespace MessageCore;
 
 AttachmentController::AttachmentController( Message::AttachmentModel *model, AttachmentView *view, KMComposeWin *composer )
   : AttachmentControllerBase( model, composer, composer->actionCollection() )

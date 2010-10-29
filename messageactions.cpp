@@ -508,7 +508,7 @@ void MessageActions::annotateMessage()
   if ( !mCurrentItem.isValid() )
     return;
 
-  KPIM::AnnotationEditDialog *dialog = new KPIM::AnnotationEditDialog( mCurrentItem.url() );
+  MessageCore::AnnotationEditDialog *dialog = new MessageCore::AnnotationEditDialog( mCurrentItem.url() );
   dialog->setAttribute( Qt::WA_DeleteOnClose );
   dialog->exec();
   updateAnnotateAction();

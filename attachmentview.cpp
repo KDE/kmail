@@ -34,7 +34,7 @@
 
 #include <messagecore/attachmentpart.h>
 #include <boost/shared_ptr.hpp>
-using KPIM::AttachmentPart;
+using MessageCore::AttachmentPart;
 
 using namespace KMail;
 
