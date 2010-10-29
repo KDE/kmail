@@ -191,9 +191,13 @@ KMFilterDlg::KMFilterDlg(QWidget* parent, bool popFilter, bool createDummyFilter
   vbl->setSpacing( spacingHint() );
   hbl->setStretchFactor( vbl, 2 );
 
-  mPatternEdit = new MailCommon::SearchPatternEdit( i18n("Filter Criteria"),
-                                          bPopFilter ? w : page1, bPopFilter );
-  vbl->addWidget( mPatternEdit, 0, Qt::AlignTop );
+  QGroupBox *patternGroupBox = new QGroupBox( i18n("Filter Criteria"), bPopFilter ? w : page1 );
+  QHBoxLayout *layout = new QHBoxLayout( patternGroupBox );
+  layout->setContentsMargins( 0, 0, 0, 0 );
+  mPatternEdit = new MailCommon::SearchPatternEdit(patternGroupBox, bPopFilter );
+  layout->addWidget( mPatternEdit );
+  
+  vbl->addWidget( patternGroupBox, 0, Qt::AlignTop );
 
   if(bPopFilter){
     mActionGroup = new KMPopFilterActionWidget( i18n("Filter Action"), w );

@@ -141,8 +141,12 @@ SearchWindow::SearchWindow(KMMainWidget* w, const Akonadi::Collection& curFolder
   mCbxFolders->hide();
   mChkbxAllFolders->hide();
 
-  mPatternEdit = new SearchPatternEdit( QString(), searchWidget, false, true );
-  mPatternEdit->setFlat( true );
+  QGroupBox *patternGroupBox = new QGroupBox( searchWidget );
+  QHBoxLayout *layout = new QHBoxLayout( patternGroupBox );
+  layout->setContentsMargins( 0, 0, 0, 0 );
+  mPatternEdit = new SearchPatternEdit( searchWidget, false, true );
+  layout->addWidget( mPatternEdit );
+  patternGroupBox->setFlat( true );
 
 
   bool currentFolderIsSearchFolder = false;
@@ -281,7 +285,7 @@ SearchWindow::SearchWindow(KMMainWidget* w, const Akonadi::Collection& curFolder
 
   //Bring all the layouts together
   vbl->addWidget( radioFrame );
-  vbl->addWidget( mPatternEdit );
+  vbl->addWidget( patternGroupBox );
   vbl->addWidget( mLbxMatches );
   vbl->addLayout( hbl2 );
   vbl->addWidget( mStatusBar );
