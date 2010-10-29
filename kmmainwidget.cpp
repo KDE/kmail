@@ -236,6 +236,17 @@ K_GLOBAL_STATIC( KMMainWidget::PtrList, theMainWidgetList )
 
   readConfig();
 
+  if ( !kmkernel->isOffline() ) { //kmail is set to online mode, make sure the agents are also online
+    const Akonadi::AgentInstance::List lst = MailCommon::Util::agentInstances();
+    foreach ( Akonadi::AgentInstance type, lst ) {
+      if ( type.identifier().contains( IMAP_RESOURCE_IDENTIFIER ) ||
+          type.identifier().contains( POP3_RESOURCE_IDENTIFIER ) ) {
+        type.setIsOnline( true );
+      }
+    }
+  }
+
+
   QTimer::singleShot( 0, this, SLOT( slotShowStartupFolder() ));
 
   connect( kmkernel, SIGNAL( startCheckMail() ),
