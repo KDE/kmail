@@ -315,7 +315,7 @@ void KMCommand::transferSelectedMsgs()
     complete = false;
     KMCommand::mCountJobs++;
     Akonadi::ItemFetchJob *fetch = new Akonadi::ItemFetchJob( mMsgList, this );
-    mFetchScope.fetchAttribute< Akonadi::MDNStateAttribute >();
+    mFetchScope.fetchAttribute< MessageCore::MDNStateAttribute >();
     fetch->setFetchScope( mFetchScope );
     connect( fetch, SIGNAL(itemsReceived(Akonadi::Item::List)), SLOT(slotMsgTransfered(Akonadi::Item::List)) );
     connect( fetch, SIGNAL(result(KJob*)), SLOT(slotJobFinished()) );
