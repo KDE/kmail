@@ -46,9 +46,6 @@
 #include <akonadi/itemfetchjob.h>
 #include <akonadi/itemfetchscope.h>
 
-
-#include "mailinglist-magic.h"
-
 using namespace KMail;
 using namespace MailCommon;
 
@@ -176,7 +173,7 @@ void MailingListFolderPropertiesDialog::load()
     mMailingList = mFolder->mailingList();
   mMLId->setText( (mMailingList.id().isEmpty() ? i18n("Not available") : mMailingList.id()) );
   mMLHandlerCombo->setCurrentIndex( mMailingList.handler() );
-  mEditList->insertStringList( mMailingList.postURLS().toStringList() );
+  mEditList->insertStringList( mMailingList.postUrls().toStringList() );
 
   mAddressCombo->setCurrentIndex( mLastItem );
   mHoldsMailingList->setChecked( mFolder && mFolder->isMailingListEnabled() );
@@ -314,19 +311,19 @@ void MailingListFolderPropertiesDialog::fillMLFromWidgets()
   //mMailingList.setHandler( static_cast<MailingList::Handler>( mMLHandlerCombo->currentIndex() ) );
   switch ( mLastItem ) {
   case 0:
-    mMailingList.setPostURLS( mEditList->items() );
+    mMailingList.setPostUrls( mEditList->items() );
     break;
   case 1:
-    mMailingList.setSubscribeURLS( mEditList->items() );
+    mMailingList.setSubscribeUrls( mEditList->items() );
     break;
   case 2:
-    mMailingList.setUnsubscribeURLS( mEditList->items() );
+    mMailingList.setUnsubscribeUrls( mEditList->items() );
     break;
   case 3:
-    mMailingList.setArchiveURLS( mEditList->items() );
+    mMailingList.setArchiveUrls( mEditList->items() );
     break;
   case 4:
-    mMailingList.setHelpURLS( mEditList->items() );
+    mMailingList.setHelpUrls( mEditList->items() );
     break;
   default:
     kWarning()<<"Wrong entry in the mailing list entry combo!";
@@ -338,19 +335,19 @@ void MailingListFolderPropertiesDialog::fillEditBox()
   mEditList->clear();
   switch ( mAddressCombo->currentIndex() ) {
   case 0:
-    mEditList->insertStringList( mMailingList.postURLS().toStringList() );
+    mEditList->insertStringList( mMailingList.postUrls().toStringList() );
     break;
   case 1:
-    mEditList->insertStringList( mMailingList.subscribeURLS().toStringList() );
+    mEditList->insertStringList( mMailingList.subscribeUrls().toStringList() );
     break;
   case 2:
-    mEditList->insertStringList( mMailingList.unsubscribeURLS().toStringList() );
+    mEditList->insertStringList( mMailingList.unsubscribeUrls().toStringList() );
     break;
   case 3:
-    mEditList->insertStringList( mMailingList.archiveURLS().toStringList() );
+    mEditList->insertStringList( mMailingList.archiveUrls().toStringList() );
     break;
   case 4:
-    mEditList->insertStringList( mMailingList.helpURLS().toStringList() );
+    mEditList->insertStringList( mMailingList.helpUrls().toStringList() );
     break;
   default:
     kWarning()<<"Wrong entry in the mailing list entry combo!";

@@ -25,7 +25,6 @@
 #include "composer.h"
 #include "kmversion.h"
 #include "searchwindow.h"
-#include "mailinglist-magic.h"
 #include "antispamwizard.h"
 #include "filterlogdlg.h"
 #include "mailinglistpropertiesdialog.h"
@@ -74,6 +73,7 @@
 #include "templateparser/templateparser.h"
 
 #include "messagecore/globalsettings.h"
+#include "messagecore/mailinglist.h"
 #include "messagecore/messagehelpers.h"
 
 // LIBKDEPIM includes

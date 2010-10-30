@@ -74,7 +74,7 @@
 
 #include "foldercollection.h"
 
-#include "mailinglist-magic.h"
+#include "messagecore/mailinglist.h"
 #include "messageviewer/nodehelper.h"
 #include "composer.h"
 #include "mailcommon/filtermanager.h"
@@ -1797,7 +1797,7 @@ KMMailingListPostCommand::KMMailingListPostCommand( QWidget *parent, const QShar
 }
 KUrl::List KMMailingListPostCommand::urls() const
 {
-  return mFolder->mailingList().postURLS();
+  return mFolder->mailingList().postUrls();
 }
 
 KMMailingListSubscribeCommand::KMMailingListSubscribeCommand( QWidget *parent, const QSharedPointer<FolderCollection> &folder )
@@ -1806,7 +1806,7 @@ KMMailingListSubscribeCommand::KMMailingListSubscribeCommand( QWidget *parent, c
 }
 KUrl::List KMMailingListSubscribeCommand::urls() const
 {
-  return mFolder->mailingList().subscribeURLS();
+  return mFolder->mailingList().subscribeUrls();
 }
 
 KMMailingListUnsubscribeCommand::KMMailingListUnsubscribeCommand( QWidget *parent, const QSharedPointer<FolderCollection> &folder )
@@ -1815,7 +1815,7 @@ KMMailingListUnsubscribeCommand::KMMailingListUnsubscribeCommand( QWidget *paren
 }
 KUrl::List KMMailingListUnsubscribeCommand::urls() const
 {
-  return mFolder->mailingList().unsubscribeURLS();
+  return mFolder->mailingList().unsubscribeUrls();
 }
 
 KMMailingListArchivesCommand::KMMailingListArchivesCommand( QWidget *parent, const QSharedPointer<FolderCollection> &folder )
@@ -1824,7 +1824,7 @@ KMMailingListArchivesCommand::KMMailingListArchivesCommand( QWidget *parent, con
 }
 KUrl::List KMMailingListArchivesCommand::urls() const
 {
-  return mFolder->mailingList().archiveURLS();
+  return mFolder->mailingList().archiveUrls();
 }
 
 KMMailingListHelpCommand::KMMailingListHelpCommand( QWidget *parent, const QSharedPointer<FolderCollection> &folder )
@@ -1833,7 +1833,7 @@ KMMailingListHelpCommand::KMMailingListHelpCommand( QWidget *parent, const QShar
 }
 KUrl::List KMMailingListHelpCommand::urls() const
 {
-  return mFolder->mailingList().helpURLS();
+  return mFolder->mailingList().helpUrls();
 }
 
 

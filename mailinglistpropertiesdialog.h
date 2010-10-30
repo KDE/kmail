@@ -29,7 +29,7 @@
 #ifndef MAILINGLISTPROPERTIESDIALOG_H
 #define MAILINGLISTPROPERTIESDIALOG_H
 
-#include "mailinglist-magic.h"
+#include "messagecore/mailinglist.h"
 #include <kdialog.h>
 #include "foldercollection.h"
 class QCheckBox;

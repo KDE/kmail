@@ -26,8 +26,8 @@
 #include "util.h"
 
 #include "messagecore/annotationdialog.h"
-#include "messagecore/mailinglist-magic.h"
 #include "messagecore/globalsettings.h"
+#include "messagecore/mailinglist.h"
 #include "messagecore/messagehelpers.h"
 #include "messageviewer/csshelper.h"
 #include "messageviewer/globalsettings.h"
@@ -298,19 +298,19 @@ void MessageActions::updateActions()
 
       if ( mailList.features() & MessageCore::MailingList::ArchivedAt )
         // IDEA: this may be something you want to copy - "Copy in submenu"?
-        addMailingListAction( i18n( "Open Message in List Archive" ), KUrl( mailList.archivedAt() ) );
+        addMailingListAction( i18n( "Open Message in List Archive" ), mailList.archivedAtUrl() );
       if ( mailList.features() & MessageCore::MailingList::Post )
-        addMailingListActions( i18n( "Post New Message" ), mailList.postURLS() );
+        addMailingListActions( i18n( "Post New Message" ), mailList.postUrls() );
       if ( mailList.features() & MessageCore::MailingList::Archive )
-        addMailingListActions( i18n( "Go to Archive" ), mailList.archiveURLS() );
+        addMailingListActions( i18n( "Go to Archive" ), mailList.archiveUrls() );
       if ( mailList.features() & MessageCore::MailingList::Help )
-        addMailingListActions( i18n( "Request Help" ), mailList.helpURLS() );
+        addMailingListActions( i18n( "Request Help" ), mailList.helpUrls() );
       if ( mailList.features() & MessageCore::MailingList::Owner )
-        addMailingListActions( i18n( "Contact Owner" ), mailList.ownerURLS() );
+        addMailingListActions( i18n( "Contact Owner" ), mailList.ownerUrls() );
       if ( mailList.features() & MessageCore::MailingList::Subscribe )
-        addMailingListActions( i18n( "Subscribe to List" ), mailList.subscribeURLS() );
+        addMailingListActions( i18n( "Subscribe to List" ), mailList.subscribeUrls() );
       if ( mailList.features() & MessageCore::MailingList::Unsubscribe )
-        addMailingListActions( i18n( "Unsubscribe from List" ), mailList.unsubscribeURLS() );
+        addMailingListActions( i18n( "Unsubscribe from List" ), mailList.unsubscribeUrls() );
       mMailingListActionMenu->setEnabled( true );
     } else {
       mMailingListActionMenu->setEnabled( false );
