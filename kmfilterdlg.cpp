@@ -932,10 +932,11 @@ void KMFilterListBox::slotDelete()
   // of the filter
   emit resetWidgets();
 
-  // remove the filter from both the filter list...
-  mFilterList.takeAt( oIdxSelItem );
-  // and the listbox
+  // remove the filter from both the listbox
   mListWidget->takeItem( oIdxSelItem );
+  // and the filter list...
+  mFilterList.takeAt( oIdxSelItem );
+
 
   int count = mListWidget->count();
   // and set the new current item.
