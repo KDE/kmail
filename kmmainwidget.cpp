@@ -2613,6 +2613,7 @@ void KMMainWidget::slotMessageActivated( const Akonadi::Item &msg )
 
   if ( CommonKernel->folderIsDraftOrOutbox( mCurrentFolder->collection() ) )
   {
+    mMsgActions->setCurrentMessage( msg );
     mMsgActions->editCurrentMessage();
     return;
   }
