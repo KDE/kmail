@@ -235,14 +235,20 @@ void KMComposerEditor::slotFetchJob( KJob * job )
   if ( items.isEmpty() )
     return;
 
-  uint identity = 0;
-  if ( items.at( 0 ).isValid() && items.at( 0 ).parentCollection().isValid() ) {
-    QSharedPointer<FolderCollection> fd( FolderCollection::forCollection( items.at( 0 ).parentCollection() ) );
-    if ( fd )
-      identity = fd->identity();
+  if ( items.first().mimeType() == KMime::Message::mimeType() ) {
+    uint identity = 0;
+    if ( items.at( 0 ).isValid() && items.at( 0 ).parentCollection().isValid() ) {
+      QSharedPointer<FolderCollection> fd( FolderCollection::forCollection( items.at( 0 ).parentCollection() ) );
+      if ( fd )
+        identity = fd->identity();
+    }
+    KMCommand *command = new KMForwardAttachedCommand( m_composerWin, items,identity, m_composerWin );
+    command->start();
+  } else {
+    foreach ( const Akonadi::Item &item, items ) {
+      m_composerWin->addAttachment( "attachment", KMime::Headers::CEbase64, QString(), item.payloadData(), item.mimeType().toLatin1() );
+    }
   }
-  KMCommand *command = new KMForwardAttachedCommand( m_composerWin, items,identity, m_composerWin );
-  command->start();
 }
 
 #include "kmcomposereditor.moc"

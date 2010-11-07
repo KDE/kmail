@@ -134,13 +134,22 @@ void AttachmentController::slotFetchJob( KJob *job )
     return;
   Akonadi::Item::List items = fjob->items();
 
-  uint identity = 0;
-  if ( items.at( 0 ).isValid() && items.at( 0 ).parentCollection().isValid() ) {
-    QSharedPointer<FolderCollection> fd( FolderCollection::forCollection( items.at( 0 ).parentCollection() ) );
-    identity = fd->identity();
+  if ( items.isEmpty() )
+    return;
+
+  if ( items.first().mimeType() == KMime::Message::mimeType() ) {
+    uint identity = 0;
+    if ( items.at( 0 ).isValid() && items.at( 0 ).parentCollection().isValid() ) {
+      QSharedPointer<FolderCollection> fd( FolderCollection::forCollection( items.at( 0 ).parentCollection() ) );
+      identity = fd->identity();
+    }
+    KMCommand *command = new KMForwardAttachedCommand( mComposer, items,identity, mComposer );
+    command->start();
+  } else {
+    foreach ( const Akonadi::Item &item, items ) {
+      mComposer->addAttachment( "attachment", KMime::Headers::CEbase64, QString(), item.payloadData(), item.mimeType().toLatin1() );
+    }
   }
-  KMCommand *command = new KMForwardAttachedCommand( mComposer, items,identity, mComposer );
-  command->start();
 }
 
 void AttachmentController::selectionChanged()
