@@ -34,6 +34,7 @@
 #include "mailutil.h"
 
 #include <akonadi/itemfetchjob.h>
+#include <kabc/addressee.h>
 #include <kio/jobuidelegate.h>
 
 
@@ -147,7 +148,13 @@ void AttachmentController::slotFetchJob( KJob *job )
     command->start();
   } else {
     foreach ( const Akonadi::Item &item, items ) {
-      mComposer->addAttachment( "attachment", KMime::Headers::CEbase64, QString(), item.payloadData(), item.mimeType().toLatin1() );
+      QString attachmentName = QLatin1String( "attachment" );
+      if ( item.hasPayload<KABC::Addressee>() ) {
+        const KABC::Addressee contact = item.payload<KABC::Addressee>();
+        attachmentName = contact.realName() + QLatin1String( ".vcf" );
+      }
+
+      mComposer->addAttachment( attachmentName, KMime::Headers::CEbase64, QString(), item.payloadData(), item.mimeType().toLatin1() );
     }
   }
 }

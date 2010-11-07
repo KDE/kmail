@@ -23,6 +23,7 @@
 #include "kmcomposewin.h"
 #include "kmcommands.h"
 
+#include <kabc/addressee.h>
 #include <kmime/kmime_codecs.h>
 #include <akonadi/itemfetchjob.h>
 
@@ -246,7 +247,13 @@ void KMComposerEditor::slotFetchJob( KJob * job )
     command->start();
   } else {
     foreach ( const Akonadi::Item &item, items ) {
-      m_composerWin->addAttachment( "attachment", KMime::Headers::CEbase64, QString(), item.payloadData(), item.mimeType().toLatin1() );
+      QString attachmentName = QLatin1String( "attachment" );
+      if ( item.hasPayload<KABC::Addressee>() ) {
+        const KABC::Addressee contact = item.payload<KABC::Addressee>();
+        attachmentName = contact.realName() + QLatin1String( ".vcf" );
+      }
+
+      m_composerWin->addAttachment( attachmentName, KMime::Headers::CEbase64, QString(), item.payloadData(), item.mimeType().toLatin1() );
     }
   }
 }
