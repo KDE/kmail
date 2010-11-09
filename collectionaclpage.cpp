@@ -307,12 +307,12 @@ void CollectionAclPage::init()
 
 bool CollectionAclPage::canHandle( const Akonadi::Collection &collection ) const
 {
-  return collection.hasAttribute<Akonadi::ImapAclAttribute>();
+  return collection.hasAttribute<MailCommon::ImapAclAttribute>();
 }
 
 void CollectionAclPage::load(const Akonadi::Collection & col)
 {
-  Akonadi::ImapAclAttribute *acls = col.attribute<Akonadi::ImapAclAttribute>();
+  MailCommon::ImapAclAttribute *acls = col.attribute<MailCommon::ImapAclAttribute>();
   QMap<QByteArray, KIMAP::Acl::Rights> rights = acls->rights();
 
   mListView->clear();
@@ -343,7 +343,7 @@ void CollectionAclPage::save(Akonadi::Collection & col)
     return;
   }
 
-  Akonadi::ImapAclAttribute *acls = col.attribute<Akonadi::ImapAclAttribute>();
+  MailCommon::ImapAclAttribute *acls = col.attribute<MailCommon::ImapAclAttribute>();
   QMap<QByteArray, KIMAP::Acl::Rights> rights;
 
   QTreeWidgetItemIterator it( mListView );
