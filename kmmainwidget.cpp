@@ -361,7 +361,7 @@ void KMMainWidget::slotEndCheckMail()
     if ( fd && !fd->ignoreNewMail() ) {
       showNotification = true;
       if ( GlobalSettings::self()->verboseNewMailNotification() ) {
-        summary += "<br>" + i18np( "1 new message in %2",
+        summary += "<br />" + i18np( "1 new message in %2",
                                    "%1 new messages in %2",
                                    info.nbMail,
                                    ( *it ) );
