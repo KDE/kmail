@@ -33,47 +33,13 @@
 #define COLLECTIONACLPAGE_H
 
 #include <akonadi/collectionpropertiespage.h>
-#include <kimap/acl.h>
-#include <KDialog>
+
+namespace MailCommon {
+class AclManager;
+}
+
 class KPushButton;
-class QStackedWidget;
 class KHBox;
-class QButtonGroup;
-class QTreeWidget;
-class QTreeWidgetItem;
-class QLabel;
-
-class KLineEdit;
-namespace KIO { class Job; }
-
-enum IMAPUserIdFormat { FullEmail, UserName };
-
-struct ACLListEntry;
-typedef QVector<ACLListEntry> ACLList;
-
-
-/**
- * "New Access Control Entry" dialog.
- * Internal class, only used by CollectionAclPage
- */
-class ACLEntryDialog :public KDialog {
-  Q_OBJECT
-
-public:
-  ACLEntryDialog( const QString& caption, QWidget* parent );
-  void setValues( const QString& userId, KIMAP::Acl::Rights permissions );
-  QString userId() const;
-  QStringList userIds() const;
-  KIMAP::Acl::Rights permissions() const;
-
-private slots:
-  void slotSelectAddresses();
-  void slotChanged();
-
-private:
-  QButtonGroup* mButtonGroup;
-  KLineEdit* mUserIdLineEdit;
-};
 
 /**
  * "Access Control" tab in the folder dialog
@@ -83,44 +49,27 @@ class CollectionAclPage : public Akonadi::CollectionPropertiesPage
 {
   Q_OBJECT
 
-public:
-  CollectionAclPage( QWidget* parent = 0 );
-  void load( const Akonadi::Collection & col );
-  void save( Akonadi::Collection & col );
-  bool canHandle( const Akonadi::Collection &collection ) const;
+  public:
+    CollectionAclPage( QWidget *parent = 0 );
 
-protected:
-  void init();
-private slots:
-  // User (QTreeWidget) slots
-  void slotEditACL( QTreeWidgetItem* );
-  void slotSelectionChanged();
+    void load( const Akonadi::Collection &collection );
+    void save( Akonadi::Collection &collection );
 
-  // User (pushbuttons) slots
-  void slotAddACL();
-  void slotEditACL();
-  void slotRemoveACL();
+    bool canHandle( const Akonadi::Collection &collection ) const;
 
-private:
-  void addACLs( const QStringList& userIds, KIMAP::Acl::Rights permissions );
+  protected:
+    void init();
 
-private:
-  // The widget containing the ACL widgets (listview and buttons)
-  KHBox* mACLWidget;
-  class ListViewItem;
+  private:
+    MailCommon::AclManager *mAclManager;
+    // The widget containing the ACL widgets (listview and buttons)
+    KHBox* mACLWidget;
 
-  QTreeWidget* mListView;
+    KPushButton* mAddACL;
+    KPushButton* mEditACL;
+    KPushButton* mRemoveACL;
 
-  KPushButton* mAddACL;
-  KPushButton* mEditACL;
-  KPushButton* mRemoveACL;
-  QStringList mRemovedACLs;
-  QString mImapUserName;
-  KIMAP::Acl::Rights mUserRights;
-  QStackedWidget* mStack;
-
-  bool mChanged;
+    bool mChanged;
 };
 
-#endif /* COLLECTIONACLPAGE_H */
-
+#endif
