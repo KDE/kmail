@@ -638,6 +638,12 @@ private:
         col = collection;
         nbMail = nb;
       }
+
+      collectionInfo( const collectionInfo &other )
+        : col( other.col ), nbMail( other.nbMail )
+      {
+      }
+
       collectionInfo & operator=( const collectionInfo & other) {
         if ( this == &other )
           return *this;
