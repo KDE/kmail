@@ -633,31 +633,8 @@ private:
     bool mGoToFirstUnreadMessageInSelectedFolder;
     MessageList::Core::PreSelectionMode mPreSelectionMode;
 
-    struct collectionInfo {
-      collectionInfo( const Akonadi::Collection& collection = Akonadi::Collection(), int nb = 0 ) {
-        col = collection;
-        nbMail = nb;
-      }
-
-      collectionInfo( const collectionInfo &other )
-        : col( other.col ), nbMail( other.nbMail )
-      {
-      }
-
-      collectionInfo & operator=( const collectionInfo & other) {
-        if ( this == &other )
-          return *this;
-        col = other.col;
-        nbMail = other.nbMail;
-        return *this;
-      }
-      Akonadi::Collection col;
-      int nbMail;
-    };
-
-    /// Map from folder paths to collection information.
     /// Used during mail check to remember how many mails there are in the folders
-    QMap<QString, collectionInfo> mCheckMail;
+    QMap<Akonadi::Collection::Id, int> mCheckMail;
 
     bool mCheckMailInProgress;
     MailCommon::FolderSelectionDialog* mMoveOrCopyToDialog;

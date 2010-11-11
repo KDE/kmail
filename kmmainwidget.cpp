@@ -351,20 +351,31 @@ void KMMainWidget::slotEndCheckMail()
   // build summary for new mail message
   bool showNotification = false;
   QString summary;
-  QStringList keys( mCheckMail.keys() );
-  keys.sort();
-  for ( QStringList::const_iterator it=keys.constBegin(); it!=keys.constEnd(); ++it ) {
-    collectionInfo info = mCheckMail.find( *it ).value();
-    kDebug() << info.nbMail << "new message(s) in" << *it;
-    QSharedPointer<FolderCollection> fd = FolderCollection::forCollection( info.col );
+
+  QMapIterator<Akonadi::Collection::Id, int> it( mCheckMail );
+  while ( it.hasNext() ) {
+    it.next();
+
+    Akonadi::CollectionFetchJob *job = new Akonadi::CollectionFetchJob( Akonadi::Collection( it.key() ),
+                                                                        Akonadi::CollectionFetchJob::Base );
+    if ( !job->exec() )
+      continue;
+
+    if ( job->collections().isEmpty() )
+      continue;
+
+    const Akonadi::Collection collection = job->collections().first();
+    const QString folderPath( MailCommon::Util::fullCollectionPath( collection ) );
+    const int numberOfMails = it.value();
+
+    const QSharedPointer<FolderCollection> fd = FolderCollection::forCollection( collection );
 
     if ( fd && !fd->ignoreNewMail() ) {
       showNotification = true;
       if ( GlobalSettings::self()->verboseNewMailNotification() ) {
         summary += "<br />" + i18np( "1 new message in %2",
-                                   "%1 new messages in %2",
-                                   info.nbMail,
-                                   ( *it ) );
+                                     "%1 new messages in %2",
+                                     numberOfMails, folderPath );
       }
     }
   }
@@ -1137,8 +1148,7 @@ void KMMainWidget::slotItemAdded( const Akonadi::Item &msg, const Akonadi::Colle
 
 void KMMainWidget::slotItemNotMovedByFilters( const Akonadi::Item& item )
 {
-  Akonadi::Collection collection = item.parentCollection();
-  addInfoInNotification( collection );
+  addInfoInNotification( item.parentCollection() );
 }
 
 void KMMainWidget::slotItemRemoved( const Akonadi::Item & item)
@@ -1159,15 +1169,9 @@ void KMMainWidget::slotItemMoved( Akonadi::Item item, Akonadi::Collection from, 
   addInfoInNotification( to );
 }
 
-void KMMainWidget::addInfoInNotification( const Akonadi::Collection&col )
+void KMMainWidget::addInfoInNotification( const Akonadi::Collection &collection )
 {
-  const QString fullCollectionPath( MailCommon::Util::fullCollectionPath( col ) );
-  if ( mCheckMail.contains( fullCollectionPath ) ) {
-    mCheckMail[fullCollectionPath].nbMail++;
-  } else {
-    collectionInfo info( col, 1 );
-    mCheckMail.insert( fullCollectionPath, info );
-  }
+  mCheckMail[ collection.id() ]++;
 }
 
 //-------------------------------------------------------------------------
