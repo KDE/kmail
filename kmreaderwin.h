@@ -21,12 +21,9 @@
 #define KMREADERWIN_H
 
 #include <QWidget>
-#include <QTimer>
 #include <kurl.h>
 #include <kservice.h>
-#include <akonadi/kmime/messagestatus.h>
 #include <kvbox.h>
-using Akonadi::MessageStatus;
 #include <map>
 #include <messageviewer/viewer.h>
 #include <messageviewer/interfaces/bodypart.h>
@@ -188,7 +185,6 @@ public slots:
   /** Save the page to a file */
   void slotUrlSave();
   void slotAddBookmarks();
-  void slotTouchMessage();
   void slotUrlClicked( const Akonadi::Item &,  const KUrl& );
   void slotShowReader( KMime::Content* , bool, const QString& );
   void slotShowMessage( KMime::Message::Ptr message, const QString& encoding );
@@ -199,7 +195,6 @@ protected:
 private:
   void createActions();
 private:
-  QTimer mDelayedMarkTimer;
   QWidget *mMainWindow;
   KActionCollection *mActionCollection;
 

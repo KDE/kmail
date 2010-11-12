@@ -136,7 +136,6 @@ void KMReaderMainWin::showMessage( const QString & encoding, const Akonadi::Item
   KMime::Message::Ptr message = MessageCore::Util::message( msg );
   if ( message )
     setCaption( message->subject()->asUnicodeString() );
-  mReaderWin->slotTouchMessage();
   mMsg = msg;
   mMsgActions->setCurrentMessage( msg );
 
@@ -154,7 +153,6 @@ void KMReaderMainWin::showMessage( const QString& encoding, KMime::Message::Ptr 
   mReaderWin->setMessage( message );
   if ( message )
     setCaption( message->subject()->asUnicodeString() );
-  mReaderWin->slotTouchMessage();
 
   mTrashAction->setEnabled( false );
 

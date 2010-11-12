@@ -33,12 +33,14 @@
 #include <libkdepim/addemailaddressjob.h>
 #include <libkdepim/openemailaddressjob.h>
 #include "kmcommands.h"
-#include "mdnadvicedialog.h"
+#include "mailcommon/mdnadvicedialog.h"
+#include "mailcommon/sendmdnhandler.h"
 #include <QByteArray>
 #include <QVBoxLayout>
 #include "messageviewer/headerstrategy.h"
 #include "messageviewer/headerstyle.h"
 #include "messageviewer/mailwebview.h"
+#include "messageviewer/markmessagereadhandler.h"
 #include "messageviewer/globalsettings.h"
 
 #include "messageviewer/csshelper.h"
@@ -139,12 +141,13 @@ KMReaderWin::KMReaderWin(QWidget *aParent,
            this, SIGNAL( showStatusBarMessage( const QString & ) ) );
   connect( mViewer, SIGNAL( deleteMessage( Akonadi::Item ) ),
            this, SLOT( slotDeleteMessage( Akonadi::Item ) ) );
+
+  mViewer->addMessageLoadedHandler( new MessageViewer::MarkMessageReadHandler( this ) );
+  mViewer->addMessageLoadedHandler( new MailCommon::SendMdnHandler( kmkernel, this ) );
+
   vlay->addWidget( mViewer );
   readConfig();
 
-  mDelayedMarkTimer.setSingleShot( true );
-  connect( &mDelayedMarkTimer, SIGNAL(timeout()),
-           this, SLOT(slotTouchMessage()) );
 }
 
 void KMReaderWin::createActions()
@@ -249,7 +252,6 @@ void KMReaderWin::setOverrideEncoding( const QString & encoding )
 void KMReaderWin::clearCache()
 {
   clear();
-  mDelayedMarkTimer.stop();
 }
 
 // enter items for the "Important changes" list here:
@@ -378,62 +380,6 @@ void KMReaderWin::displayAboutPage()
 
   displaySplashPage( info.toString() );
 }
-
-
-
-//-----------------------------------------------------------------------------
-void KMReaderWin::slotTouchMessage()
-{
-  if ( !message().isValid() )
-    return;
-  MessageStatus status;
-  status.setStatusFromFlags( message().flags() );
-
-  if ( !status.isUnread() )
-    return;
-
-  Akonadi::Item::List items;
-  items.append( message() );
-  KMCommand *command = new KMSetStatusCommand( MessageStatus::statusRead(), items );
-  command->start();
-#if 0
-  // should we send an MDN?
-  if ( MessageViewer::GlobalSettings::notSendWhenEncrypted() &&
-       message()->encryptionState() != KMMsgNotEncrypted &&
-       message()->encryptionState() != KMMsgEncryptionStateUnknown )
-    return;
-#else
-  kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
-#endif
-  Akonadi::Collection col = message().parentCollection();
-  if ( col.isValid() &&
-       ( CommonKernel->folderIsSentMailFolder( col ) ||
-         CommonKernel->folderIsTrash( col ) ||
-         CommonKernel->folderIsDraftOrOutbox( col ) ||
-         CommonKernel->folderIsTemplates( col ) ) )
-    return;
-
-  KMime::Message::Ptr msg = MessageCore::Util::message( message() );
-  if ( !msg )
-    return;
-
-  QPair< bool, KMime::MDN::SendingMode > mdnSend = MDNAdviceHelper::instance()->checkAndSetMDNInfo( message(), KMime::MDN::Displayed );
-  if( mdnSend.first ) {
-    KConfigGroup mdnConfig( KMKernel::self()->config(), "MDN" );
-    int quote = mdnConfig.readEntry<int>( "quote-message", 0 );
-    MessageFactory factory( msg, Akonadi::Item().id() );
-    factory.setIdentityManager( KMKernel::self()->identityManager() );
-    factory.setFolderIdentity( MailCommon::Util::folderIdentity( message() ) );
-    KMime::Message::Ptr mdn = factory.createMDN( KMime::MDN::ManualAction, KMime::MDN::Displayed, mdnSend.second, quote );
-    if ( mdn ) {
-      if( !kmkernel->msgSender()->send( mdn, MessageSender::SendLater ) ) {
-        kDebug() << "Sending failed.";
-      }
-    }
-  }
-}
-
-
 
 //-----------------------------------------------------------------------------
 void KMReaderWin::slotFind()
@@ -626,18 +572,6 @@ void KMReaderWin::setMessage( const Akonadi::Item &item, Viewer::UpdateMode upda
 {
   kDebug() << Q_FUNC_INFO << parentWidget();
   mViewer->setMessageItem( item, updateMode );
-
-  mDelayedMarkTimer.stop();
-  if ( item.isValid() ) {
-    MessageStatus status;
-    status.setStatusFromFlags( item.flags() );
-    if ( status.isUnread() && MessageViewer::GlobalSettings::self()->delayedMarkAsRead() ) {
-      if (MessageViewer::GlobalSettings::self()->delayedMarkTime() != 0 )
-        mDelayedMarkTimer.start( MessageViewer::GlobalSettings::self()->delayedMarkTime() * 1000 );
-      else
-        slotTouchMessage();
-    }
-  }
 }
 
 void KMReaderWin::setMessage( KMime::Message::Ptr message)
