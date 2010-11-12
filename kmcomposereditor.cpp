@@ -44,6 +44,8 @@
 #include "foldercollection.h"
 #include <QTextCodec>
 #include <QFileInfo>
+#include <QtCore/QMimeData>
+
 using namespace MailCommon;
 
 KMComposerEditor::KMComposerEditor( KMComposeWin *win,QWidget *parent)

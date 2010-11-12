@@ -139,6 +139,8 @@
 #include <QSplitter>
 #include <QUuid>
 #include <QDir>
+#include <QMimeData>
+#include <QKeyEvent>
 
 // System includes
 #include <stdlib.h>
