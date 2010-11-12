@@ -18,17 +18,18 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  *
  */
-#ifndef searchwindow_h
-#define searchwindow_h
 
-#include <QList>
-#include <QTimer>
-
-#include <KDialog>
-#include <KXMLGUIClient>
-#include <akonadi/collection.h>
+#ifndef KMAIL_SEARCHWINDOW_H
+#define KMAIL_SEARCHWINDOW_H
 
 #include "mailcommon/searchpattern.h"
+
+#include <akonadi/collection.h>
+#include <akonadi/item.h>
+#include <kdialog.h>
+#include <kxmlguiclient.h>
+
+#include <QtCore/QTimer>
 
 class QCheckBox;
 class QCloseEvent;
@@ -36,26 +37,24 @@ class QKeyEvent;
 class QLabel;
 class QRadioButton;
 class KActionMenu;
+class KJob;
 class KLineEdit;
 class KMMainWidget;
-
 class KStatusBar;
-class KJob;
 
-namespace MailCommon {
-  class FolderRequester;
-  class SearchPatternEdit;
+namespace Akonadi {
+class EntityTreeView;
+class ItemModel;
+class StandardActionManager;
 }
 
 namespace KMime {
-  class Message;
+class Message;
 }
 
-namespace Akonadi {
-  class EntityTreeView;
-  class ItemModel;
-  class Item;
-  class StandardActionManager;
+namespace MailCommon {
+class FolderRequester;
+class SearchPatternEdit;
 }
 
 namespace KMail {
@@ -70,128 +69,133 @@ class SearchWindow: public KDialog, virtual public KXMLGUIClient
 {
   Q_OBJECT
 
-public:
-  /**
-   * Creates a new search window.
-   * @param parent The parent widget.
-   * @param name The (widget) name of the dialog.
-   * @param curFolder The folder which will be pre-selected as the base folder
-   * of search operations.
-   * @param modal Whether the dialog is to be shown modal.
-   */
-  explicit SearchWindow( KMMainWidget* parent, const Akonadi::Collection & col=Akonadi::Collection() );
-  virtual ~SearchWindow();
+  public:
+    /**
+     * Creates a new search window.
+     *
+     * @param parent The parent widget.
+     * @param collection The folder which will be pre-selected as the base folder
+     *                   of search operations.
+     */
+    explicit SearchWindow( KMMainWidget* parent, const Akonadi::Collection &collection = Akonadi::Collection() );
 
-  /**
-   * Changes the base folder for search operations to a different folder.
-   * @param curFolder The folder to use as the new base for searches.
-   */
-  void activateFolder( const Akonadi::Collection& curFolder );
+    /**
+     * Destroys the search window.
+     */
+    virtual ~SearchWindow();
 
-  /**
-   * Provides access to the list of currently selected message in the listview.
-   * @return The list of currently selected search result messages.
-   */
-  QList<Akonadi::Item> selectedMessages();
+    /**
+     * Changes the base folder for search operations to a different folder.
+     *
+     * @param folder The folder to use as the new base for searches.
+     */
+    void activateFolder( const Akonadi::Collection &folder );
 
-  /**
-   * Provides access to the currently selected message.
-   * @return the currently selected message.
-   */
-  Akonadi::Item message();
+    /**
+     * Provides access to the list of currently selected message in the listview.
+     *
+     * @return The list of currently selected search result messages.
+     */
+    Akonadi::Item::List selectedMessages() const;
 
-  /**
-   * Loads a search pattern into the search window, replacing the current one.
-   */
-  void setSearchPattern( const MailCommon::SearchPattern &pattern );
+    /**
+     * Provides access to the currently selected message.
+     *
+     * @return the currently selected message.
+     */
+    Akonadi::Item selectedMessage() const;
 
-  /**
-   * Loads a search pattern into the search window, appending its rules to the current one.
-   */
-  void addRulesToSearchPattern( const MailCommon::SearchPattern &pattern );
+    /**
+     * Loads a search pattern into the search window, replacing the current one.
+     */
+    void setSearchPattern( const MailCommon::SearchPattern &pattern );
 
-protected slots:
-  /** Update status line widget. */
-  virtual void updateStatusLine(void);
+    /**
+     * Loads a search pattern into the search window, appending its rules to the current one.
+     */
+    void addRulesToSearchPattern( const MailCommon::SearchPattern &pattern );
 
-  void updateCollectionStatisticsFinished( KJob * job);
+  protected:
+    /** Reimplemented to react to Escape. */
+    virtual void keyPressEvent( QKeyEvent* );
 
-  virtual void slotClose();
-  virtual void slotSearch();
-  virtual void slotStop();
-  void scheduleRename(const QString &);
-  void renameSearchFolder();
-  void openSearchFolder();
-  virtual bool slotShowMsg( const Akonadi::Item &item );
-  void slotViewSelectedMsg();
-  virtual bool slotViewMsg( const Akonadi::Item &item );
-  void slotCurrentChanged(const Akonadi::Item&);
-  virtual void updateContextMenuActions();
-  virtual void slotFolderActivated();
-  void slotClearSelection();
-  void slotReplyToMsg();
-  void slotReplyAllToMsg();
-  void slotReplyListToMsg();
-  void slotForwardMsg();
-  void slotForwardAttachedMsg();
-  void slotSaveMsg();
-  void slotSaveAttachments();
-  void slotPrintMsg();
+    /** Reimplemented to stop searching when the window is closed */
+    virtual void closeEvent( QCloseEvent* );
 
-  /** GUI cleanup after search */
-  void searchDone(KJob* job);
-  void enableGUI();
+  private Q_SLOTS:
+    virtual void updateStatusLine();
 
-  void setEnabledSearchButton(bool);
-  void slotSearchFolderRenameDone( KJob* job );
+    void updateCollectionStatisticsFinished( KJob* );
 
-  void slotContextMenuRequested( const QPoint &pos );
+    virtual void slotClose();
+    virtual void slotSearch();
+    virtual void slotStop();
+    void scheduleRename( const QString& );
+    void renameSearchFolder();
+    void openSearchFolder();
+    virtual bool slotShowMsg( const Akonadi::Item& );
+    void slotViewSelectedMsg();
+    virtual bool slotViewMsg( const Akonadi::Item& );
+    void slotCurrentChanged( const Akonadi::Item& );
+    virtual void updateContextMenuActions();
+    virtual void slotFolderActivated();
+    void slotClearSelection();
+    void slotReplyToMsg();
+    void slotReplyAllToMsg();
+    void slotReplyListToMsg();
+    void slotForwardMsg();
+    void slotForwardAttachedMsg();
+    void slotSaveMsg();
+    void slotSaveAttachments();
+    void slotPrintMsg();
 
-protected:
+    /** GUI cleanup after search */
+    void searchDone( KJob* );
+    void enableGUI();
 
-  /** Reimplemented to react to Escape. */
-  virtual void keyPressEvent(QKeyEvent*);
+    void setEnabledSearchButton( bool );
+    void slotSearchFolderRenameDone( KJob* );
 
-  /** Reimplemented to stop searching when the window is closed */
-  virtual void closeEvent(QCloseEvent*);
+    void slotContextMenuRequested( const QPoint& );
 
-protected:
-  bool mStopped;
-  bool mCloseRequested;
-  int mSortColumn;
-  Qt::SortOrder mSortOrder;
-  Akonadi::Collection mFolder;
-  KJob *mSearchJob;
-  QTimer *mTimer;
+  private:
+    bool mStopped;
+    bool mCloseRequested;
+    int mSortColumn;
+    Qt::SortOrder mSortOrder;
+    Akonadi::Collection mFolder;
+    KJob *mSearchJob;
+    QTimer *mTimer;
 
-  // GC'd by Qt
-  QRadioButton *mChkbxAllFolders;
-  QRadioButton *mChkbxSpecificFolders;
-  MailCommon::FolderRequester *mCbxFolders;
-  QCheckBox *mChkSubFolders;
-  Akonadi::ItemModel *mResultModel;
-  Akonadi::EntityTreeView* mLbxMatches;
-  QLabel *mSearchFolderLbl;
-  KLineEdit *mSearchFolderEdt;
-  KPushButton *mSearchFolderOpenBtn;
-  KPushButton *mSearchResultOpenBtn;
-  KStatusBar* mStatusBar;
-  QWidget* mLastFocus; // to remember the position of the focus
-  QAction *mReplyAction, *mReplyAllAction, *mReplyListAction, *mSaveAsAction,
-    *mForwardInlineAction, *mForwardAttachedAction, *mPrintAction, *mClearAction,
-    *mSaveAtchAction;
-  KActionMenu *mForwardActionMenu;
-  QTimer mRenameTimer;
-  QByteArray mHeaderState;
-  // not owned by us
-  KMMainWidget* mKMMainWidget;
-  MailCommon::SearchPatternEdit *mPatternEdit;
-  MailCommon::SearchPattern mSearchPattern;
+    // GC'd by Qt
+    QRadioButton *mChkbxAllFolders;
+    QRadioButton *mChkbxSpecificFolders;
+    MailCommon::FolderRequester *mCbxFolders;
+    QCheckBox *mChkSubFolders;
+    Akonadi::ItemModel *mResultModel;
+    Akonadi::EntityTreeView *mLbxMatches;
+    QLabel *mSearchFolderLbl;
+    KLineEdit *mSearchFolderEdt;
+    KPushButton *mSearchFolderOpenBtn;
+    KPushButton *mSearchResultOpenBtn;
+    KStatusBar* mStatusBar;
+    QWidget* mLastFocus; // to remember the position of the focus
+    QAction *mReplyAction, *mReplyAllAction, *mReplyListAction, *mSaveAsAction,
+      *mForwardInlineAction, *mForwardAttachedAction, *mPrintAction, *mClearAction,
+      *mSaveAtchAction;
+    KActionMenu *mForwardActionMenu;
+    QTimer mRenameTimer;
+    QByteArray mHeaderState;
+    // not owned by us
+    KMMainWidget* mKMMainWidget;
+    MailCommon::SearchPatternEdit *mPatternEdit;
+    MailCommon::SearchPattern mSearchPattern;
 
-  Akonadi::StandardActionManager *mAkonadiStandardAction;
+    Akonadi::StandardActionManager *mAkonadiStandardAction;
 
-  static const int MSGID_COLUMN;
+    static const int MSGID_COLUMN;
 };
 
-} // namespace KMail
-#endif /*searchwindow_h*/
+}
+
+#endif
