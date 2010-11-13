@@ -144,7 +144,8 @@ void CollectionAclPage::save( Akonadi::Collection &collection )
 
   // The collection dialog expects the changed collection to run
   // its own ItemModifyJob, so make him happy...
-  collection = mAclManager->collection();
+  MailCommon::ImapAclAttribute *attribute = mAclManager->collection().attribute<MailCommon::ImapAclAttribute>();
+  collection.addAttribute( attribute->clone() ); ;
 }
 
 #include "collectionaclpage.moc"
