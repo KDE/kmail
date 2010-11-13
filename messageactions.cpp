@@ -34,6 +34,8 @@
 
 #include <Nepomuk/Resource>
 
+#include <akonadi/itemfetchjob.h>
+#include <akonadi/kmime/messageparts.h>
 #include <KAction>
 #include <KActionMenu>
 #include <KActionCollection>
@@ -174,9 +176,9 @@ MessageActions::MessageActions( KActionCollection *ac, QWidget* parent ) :
   //FIXME add KIcon("mail-list") as first arguement. Icon can be derived from
   // mail-reply-list icon by removing top layers off svg
   mMailingListActionMenu = new KActionMenu( i18nc( "Message->", "Mailing-&List" ), this );
-  connect( mMailingListActionMenu->menu(), SIGNAL(triggered(QAction *)),
-         this, SLOT(slotRunUrl(QAction *)) );
-  mActionCollection->addAction( "message_list", mMailingListActionMenu );
+  connect( mMailingListActionMenu->menu(), SIGNAL( triggered( QAction* ) ),
+           this, SLOT( slotRunUrl( QAction* ) ) );
+  mActionCollection->addAction( "mailing_list", mMailingListActionMenu );
 
   mMonitor = new Akonadi::Monitor( this );
   //FIXME: Attachment fetching is not needed here, but on-demand loading is not supported ATM
@@ -269,10 +271,20 @@ void MessageActions::updateActions()
 
   if ( mCurrentItem.hasPayload<KMime::Message::Ptr>() ) {
 
-    MessageCore::MailingList mailList;
-    mailList = MessageCore::MailingList::detect( MessageCore::Util::message( mCurrentItem ) );
+    Akonadi::Item messageItem = mCurrentItem;
 
-    if ( mailList.features() & ~MessageCore::MailingList::Id ) {
+    if ( messageItem.payloadData().simplified().isEmpty() ) {
+      Akonadi::ItemFetchJob *job = new Akonadi::ItemFetchJob( messageItem, this );
+      job->fetchScope().fetchPayloadPart( Akonadi::MessagePart::Header );
+      if ( job->exec() && !job->items().isEmpty() )
+        messageItem = job->items().first();
+    }
+
+    const MessageCore::MailingList mailList = MessageCore::MailingList::detect( MessageCore::Util::message( messageItem ) );
+
+    if ( mailList.features() == MessageCore::MailingList::None ) {
+      mMailingListActionMenu->setEnabled( false );
+    } else {
       // A mailing list menu with only a title is pretty boring
       // so make sure theres at least some content
       QString listId;
@@ -312,8 +324,6 @@ void MessageActions::updateActions()
       if ( mailList.features() & MessageCore::MailingList::Unsubscribe )
         addMailingListActions( i18n( "Unsubscribe from List" ), mailList.unsubscribeUrls() );
       mMailingListActionMenu->setEnabled( true );
-    } else {
-      mMailingListActionMenu->setEnabled( false );
     }
   }
 
