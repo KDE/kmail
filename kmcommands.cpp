@@ -460,7 +460,7 @@ KMCommand::Result KMMailtoReplyCommand::execute()
 
   item.setFlag( Akonadi::MessageFlags::Replied );
   Akonadi::ItemModifyJob *job = new Akonadi::ItemModifyJob( item );
-  job->ignorePayload();
+  job->setIgnorePayload( true );
 
   return OK;
 }
@@ -492,7 +492,7 @@ KMCommand::Result KMMailtoForwardCommand::execute()
 
   item.setFlag( Akonadi::MessageFlags::Forwarded );
   Akonadi::ItemModifyJob *job = new Akonadi::ItemModifyJob( item );
-  job->ignorePayload();
+  job->setIgnorePayload( true );
 
   return OK;
 }
@@ -839,7 +839,7 @@ KMCommand::Result KMReplyToCommand::execute()
 
   item.setFlag( Akonadi::MessageFlags::Replied );
   Akonadi::ItemModifyJob *job = new Akonadi::ItemModifyJob( item );
-  job->ignorePayload();
+  job->setIgnorePayload( true );
 
   return OK;
 }
@@ -871,7 +871,7 @@ KMCommand::Result KMNoQuoteReplyToCommand::execute()
 
   item.setFlag( Akonadi::MessageFlags::Replied );
   Akonadi::ItemModifyJob *job = new Akonadi::ItemModifyJob( item );
-  job->ignorePayload();
+  job->setIgnorePayload( true );
 
   return OK;
 }
@@ -907,7 +907,7 @@ KMCommand::Result KMReplyListCommand::execute()
 
   item.setFlag( Akonadi::MessageFlags::Replied );
   Akonadi::ItemModifyJob *job = new Akonadi::ItemModifyJob( item );
-  job->ignorePayload();
+  job->setIgnorePayload( true );
 
   return OK;
 }
@@ -944,7 +944,7 @@ KMCommand::Result KMReplyToAllCommand::execute()
 
   item.setFlag( Akonadi::MessageFlags::Replied );
   Akonadi::ItemModifyJob *job = new Akonadi::ItemModifyJob( item );
-  job->ignorePayload();
+  job->setIgnorePayload( true );
 
   return OK;
 }
@@ -980,7 +980,7 @@ KMCommand::Result KMReplyAuthorCommand::execute()
 
   item.setFlag( Akonadi::MessageFlags::Replied );
   Akonadi::ItemModifyJob *job = new Akonadi::ItemModifyJob( item );
-  job->ignorePayload();
+  job->setIgnorePayload( true );
 
   return OK;
 }
@@ -1037,7 +1037,7 @@ KMCommand::Result KMForwardCommand::execute()
         foreach( Akonadi::Item item, msgList ) {
           item.setFlag( Akonadi::MessageFlags::Forwarded );
           Akonadi::ItemModifyJob *job = new Akonadi::ItemModifyJob( item );
-          job->ignorePayload();
+          job->setIgnorePayload( true );
         }
 
       return OK;
@@ -1064,7 +1064,7 @@ KMCommand::Result KMForwardCommand::execute()
           Akonadi::Item item( *it );
           item.setFlag( Akonadi::MessageFlags::Forwarded );
           Akonadi::ItemModifyJob *job = new Akonadi::ItemModifyJob( item );
-          job->ignorePayload();
+          job->setIgnorePayload( true );
         }
 
       }
@@ -1095,7 +1095,7 @@ KMCommand::Result KMForwardCommand::execute()
 
     item.setFlag( Akonadi::MessageFlags::Forwarded );
     Akonadi::ItemModifyJob *job = new Akonadi::ItemModifyJob( item );
-    job->ignorePayload();
+    job->setIgnorePayload( true );
   }
   return OK;
 }
@@ -1142,7 +1142,7 @@ KMCommand::Result KMForwardAttachedCommand::execute()
   foreach( Akonadi::Item item, msgList ) {
     item.setFlag( Akonadi::MessageFlags::Forwarded );
     Akonadi::ItemModifyJob *job = new Akonadi::ItemModifyJob( item );
-    job->ignorePayload();
+    job->setIgnorePayload( true );
   }
 
   mWin->show();
@@ -1229,7 +1229,7 @@ KMCommand::Result KMCustomReplyToCommand::execute()
 
   item.setFlag( Akonadi::MessageFlags::Replied );
   Akonadi::ItemModifyJob *job = new Akonadi::ItemModifyJob( item );
-  job->ignorePayload();
+  job->setIgnorePayload( true );
 
   return OK;
 }
@@ -1267,7 +1267,7 @@ KMCommand::Result KMCustomReplyAllToCommand::execute()
 
   item.setFlag( Akonadi::MessageFlags::Replied );
   Akonadi::ItemModifyJob *job = new Akonadi::ItemModifyJob( item );
-  job->ignorePayload();
+  job->setIgnorePayload( true );
 
   return OK;
 }
@@ -1318,7 +1318,7 @@ KMCommand::Result KMCustomForwardCommand::execute()
           Akonadi::Item item( *it );
           item.setFlag( Akonadi::MessageFlags::Forwarded );
           Akonadi::ItemModifyJob *job = new Akonadi::ItemModifyJob( item );
-          job->ignorePayload();
+          job->setIgnorePayload( true );
         }
 
       }
@@ -1348,7 +1348,7 @@ KMCommand::Result KMCustomForwardCommand::execute()
 
       item.setFlag( Akonadi::MessageFlags::Forwarded );
       Akonadi::ItemModifyJob *job = new Akonadi::ItemModifyJob( item );
-      job->ignorePayload();
+      job->setIgnorePayload( true );
     }
   }
   return OK;
@@ -1461,7 +1461,7 @@ KMCommand::Result KMSetStatusCommand::execute()
       item.setFlags( itemStatus.statusFlags() );
       // Store back modified item
       Akonadi::ItemModifyJob *modifyJob = new Akonadi::ItemModifyJob( item, this );
-      modifyJob->ignorePayload();
+      modifyJob->setIgnorePayload( true );
       ++messageStatusChanged;
       connect( modifyJob, SIGNAL( result( KJob* ) ), this, SLOT( slotModifyItemDone( KJob* ) ) );
     }
