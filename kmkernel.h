@@ -157,7 +157,20 @@ public Q_SLOTS:
   Q_SCRIPTABLE bool handleCommandLine( bool noArgsOpensReader );
 
   /**
-   * returns id of composer if more are opened
+   * Opens a composer window and prefills it with different
+   * message parts.
+   *
+   * @returns The id of composer if more are opened.
+   *
+   * @param to A comma separated list of To addresses.
+   * @param cc A comma separated list of CC addresses.
+   * @param bcc A comma separated list of BCC addresses.
+   * @param subject The message subject.
+   * @param body The message body.
+   * @param hidden Whether the composer window shall initially be hidden.
+   * @param messageFile A message file that will be used as message body.
+   * @param attachmentPaths A list of files that will be attached to the message.
+   * @param customHeaders A list of custom headers.
    */
   Q_SCRIPTABLE int openComposer( const QString & to,
                                  const QString & cc,
@@ -169,6 +182,29 @@ public Q_SLOTS:
                                  const QStringList & attachmentPaths,
                                  const QStringList & customHeaders );
 
+  /**
+   * Opens a composer window and prefills it with different
+   * message parts.
+   *
+   * @returns The id of composer if more are opened.
+   *
+   * @param to A comma separated list of To addresses.
+   * @param cc A comma separated list of CC addresses.
+   * @param bcc A comma separated list of BCC addresses.
+   * @param subject The message subject.
+   * @param body The message body.
+   * @param hidden Whether the composer window shall initially be hidden.
+   * @param attachName The name of the attachment.
+   * @param attachCte The content transfer encoding of the attachment.
+   * @param attachData The raw data of the attachment.
+   * @param attachType The mime type of the attachment.
+   * @param attachSubType The sub mime type of the attachment.
+   * @param attachParamAttr The parameter attribute of the attachment.
+   * @param attachParamValue The parameter value of the attachment.
+   * @param attachContDisp The content display type of the attachment.
+   * @param attachCharset The charset of the attachment.
+   * @param identity The identity identifier which will be used as sender identity.
+   */
   Q_SCRIPTABLE int openComposer( const QString & to,
                                  const QString & cc,
                                  const QString & bcc,
@@ -186,6 +222,19 @@ public Q_SLOTS:
                                  const QByteArray & attachCharset,
                                  unsigned int identity );
 
+  /**
+   * Opens a composer window and prefills it with different
+   * message parts.
+   *
+   * @returns The DBus object path for the composer.
+   *
+   * @param to A comma separated list of To addresses.
+   * @param cc A comma separated list of CC addresses.
+   * @param bcc A comma separated list of BCC addresses.
+   * @param subject The message subject.
+   * @param body The message body.
+   * @param hidden Whether the composer window shall initially be hidden.
+   */
   Q_SCRIPTABLE QDBusObjectPath openComposer( const QString & to,
                                              const QString & cc,
                                              const QString & bcc,
@@ -194,7 +243,20 @@ public Q_SLOTS:
                                              bool hidden );
 
   /**
-   * D-Bus call used by the Kontact plugin to create a new message.
+   * Opens a composer window and prefills it with different
+   * message parts.
+   *
+   * @returns The DBus object path for the composer.
+   *
+   * @param to A comma separated list of To addresses.
+   * @param cc A comma separated list of CC addresses.
+   * @param bcc A comma separated list of BCC addresses.
+   * @param subject The message subject.
+   * @param body The message body.
+   * @param hidden Whether the composer window shall initially be hidden.
+   * @param useFolderId The id of the folder whose associated identity will be used.
+   * @param messageFile A message file that will be used as message body.
+   * @param attachURL The URL to the file that will be attached to the message.
    */
   Q_SCRIPTABLE QDBusObjectPath newMessage( const QString & to,
                                            const QString & cc,
