@@ -10,7 +10,6 @@ using KPIM::BroadcastStatus;
 #include "composer.h"
 #include "kmreadermainwin.h"
 #include "undostack.h"
-#include <kpimutils/email.h>
 #include <kpimutils/kfileio.h>
 #include "kmversion.h"
 #include "kmreaderwin.h"
@@ -552,29 +551,21 @@ int KMKernel::openComposer( const QString &to, const QString &cc,
   MessageHelper::initHeader( msg, identityManager() );
   msg->contentType()->setCharset("utf-8");
 
-  QByteArray displayName;
-  QByteArray addressSpec;
-  QByteArray comment;
-  if (!to.isEmpty()) {
-    KPIMUtils::splitAddress( to.toUtf8(), displayName, addressSpec, comment );
-    KMime::removeQuots( displayName );
-    msg->to()->addAddress( addressSpec, QString::fromUtf8( displayName ) );
-  }
-  if (!cc.isEmpty()) {
-    KPIMUtils::splitAddress( cc.toUtf8(), displayName, addressSpec, comment );
-    KMime::removeQuots( displayName );
-    msg->cc()->addAddress( addressSpec, QString::fromUtf8( displayName ) );
-  }
-  if (!bcc.isEmpty()) {
-    KPIMUtils::splitAddress( bcc.toUtf8(), displayName, addressSpec, comment );
-    KMime::removeQuots( displayName );
-    msg->bcc()->addAddress( addressSpec, QString::fromUtf8( displayName ) );
-  }
-  if (!subject.isEmpty()) msg->subject()->fromUnicodeString(subject, "utf-8" );
+  if ( !to.isEmpty() )
+    msg->to()->fromUnicodeString( to, "utf-8" );
+
+  if ( !cc.isEmpty() )
+    msg->cc()->fromUnicodeString( cc, "utf-8" );
+
+  if ( !bcc.isEmpty() )
+    msg->bcc()->fromUnicodeString( bcc, "utf-8" );
+
+  if ( !subject.isEmpty() )
+    msg->subject()->fromUnicodeString( subject, "utf-8" );
 
   KUrl messageUrl = KUrl( messageFile );
   if ( !messageUrl.isEmpty() && messageUrl.isLocalFile() ) {
-    QByteArray str = KPIMUtils::kFileToByteArray( messageUrl.toLocalFile(), true, false );
+    const QByteArray str = KPIMUtils::kFileToByteArray( messageUrl.toLocalFile(), true, false );
     if( !str.isEmpty() ) {
       context = KMail::Composer::NoTemplate;
       msg->setBody( QString::fromLocal8Bit( str.data(), str.size() ).toUtf8() );
