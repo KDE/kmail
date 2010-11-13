@@ -276,59 +276,76 @@ void MessageActions::updateActions()
     if ( messageItem.payloadData().simplified().isEmpty() ) {
       Akonadi::ItemFetchJob *job = new Akonadi::ItemFetchJob( messageItem, this );
       job->fetchScope().fetchPayloadPart( Akonadi::MessagePart::Header );
-      if ( job->exec() && !job->items().isEmpty() )
-        messageItem = job->items().first();
-    }
-
-    const MessageCore::MailingList mailList = MessageCore::MailingList::detect( MessageCore::Util::message( messageItem ) );
-
-    if ( mailList.features() == MessageCore::MailingList::None ) {
-      mMailingListActionMenu->setEnabled( false );
     } else {
-      // A mailing list menu with only a title is pretty boring
-      // so make sure theres at least some content
-      QString listId;
-      if ( mailList.features() & MessageCore::MailingList::Id ) {
-        // From a list-id in the form, "Birds of France <bof.yahoo.com>",
-        // take "Birds of France" if it exists otherwise "bof.yahoo.com".
-        listId = mailList.id();
-        const int start = listId.indexOf( '<' );
-        if ( start > 0 ) {
-          listId.truncate( start - 1 );
-        } else if ( start == 0 ) {
-          const int end = listId.lastIndexOf( '>' );
-          if ( end < 1 ) { // shouldn't happen but account for it anyway
-            listId.remove( 0, 1 );
-          } else {
-            listId = listId.mid( 1, end-1 );
-          }
-        }
-      }
-      mMailingListActionMenu->menu()->clear();
-      if ( !listId.isEmpty() )
-        mMailingListActionMenu->menu()->addTitle( listId );
-
-      if ( mailList.features() & MessageCore::MailingList::ArchivedAt )
-        // IDEA: this may be something you want to copy - "Copy in submenu"?
-        addMailingListAction( i18n( "Open Message in List Archive" ), mailList.archivedAtUrl() );
-      if ( mailList.features() & MessageCore::MailingList::Post )
-        addMailingListActions( i18n( "Post New Message" ), mailList.postUrls() );
-      if ( mailList.features() & MessageCore::MailingList::Archive )
-        addMailingListActions( i18n( "Go to Archive" ), mailList.archiveUrls() );
-      if ( mailList.features() & MessageCore::MailingList::Help )
-        addMailingListActions( i18n( "Request Help" ), mailList.helpUrls() );
-      if ( mailList.features() & MessageCore::MailingList::Owner )
-        addMailingListActions( i18n( "Contact Owner" ), mailList.ownerUrls() );
-      if ( mailList.features() & MessageCore::MailingList::Subscribe )
-        addMailingListActions( i18n( "Subscribe to List" ), mailList.subscribeUrls() );
-      if ( mailList.features() & MessageCore::MailingList::Unsubscribe )
-        addMailingListActions( i18n( "Unsubscribe from List" ), mailList.unsubscribeUrls() );
-      mMailingListActionMenu->setEnabled( true );
+      updateMailingListActions( mCurrentItem );
     }
   }
 
   mEditAction->setEnabled( singleMsg );
 }
+
+void MessageActions::slotUpdateActionsFetchDone(KJob* job)
+{
+  if ( job->error() )
+    return;
+
+  Akonadi::ItemFetchJob *fetchJob = static_cast<Akonadi::ItemFetchJob*>( job );
+  if ( fetchJob->items().isEmpty() )
+    return;
+
+  Akonadi::Item  messageItem = fetchJob->items().first();
+  updateMailingListActions( messageItem );
+}
+
+void MessageActions::updateMailingListActions( const Akonadi::Item& messageItem )
+{
+  const MessageCore::MailingList mailList = MessageCore::MailingList::detect( MessageCore::Util::message( messageItem ) );
+
+  if ( mailList.features() == MessageCore::MailingList::None ) {
+    mMailingListActionMenu->setEnabled( false );
+  } else {
+    // A mailing list menu with only a title is pretty boring
+    // so make sure theres at least some content
+    QString listId;
+    if ( mailList.features() & MessageCore::MailingList::Id ) {
+      // From a list-id in the form, "Birds of France <bof.yahoo.com>",
+      // take "Birds of France" if it exists otherwise "bof.yahoo.com".
+      listId = mailList.id();
+      const int start = listId.indexOf( '<' );
+      if ( start > 0 ) {
+        listId.truncate( start - 1 );
+      } else if ( start == 0 ) {
+        const int end = listId.lastIndexOf( '>' );
+        if ( end < 1 ) { // shouldn't happen but account for it anyway
+          listId.remove( 0, 1 );
+        } else {
+          listId = listId.mid( 1, end-1 );
+        }
+      }
+    }
+    mMailingListActionMenu->menu()->clear();
+    if ( !listId.isEmpty() )
+      mMailingListActionMenu->menu()->addTitle( listId );
+
+    if ( mailList.features() & MessageCore::MailingList::ArchivedAt )
+      // IDEA: this may be something you want to copy - "Copy in submenu"?
+      addMailingListAction( i18n( "Open Message in List Archive" ), mailList.archivedAtUrl() );
+    if ( mailList.features() & MessageCore::MailingList::Post )
+      addMailingListActions( i18n( "Post New Message" ), mailList.postUrls() );
+    if ( mailList.features() & MessageCore::MailingList::Archive )
+      addMailingListActions( i18n( "Go to Archive" ), mailList.archiveUrls() );
+    if ( mailList.features() & MessageCore::MailingList::Help )
+      addMailingListActions( i18n( "Request Help" ), mailList.helpUrls() );
+    if ( mailList.features() & MessageCore::MailingList::Owner )
+      addMailingListActions( i18n( "Contact Owner" ), mailList.ownerUrls() );
+    if ( mailList.features() & MessageCore::MailingList::Subscribe )
+      addMailingListActions( i18n( "Subscribe to List" ), mailList.subscribeUrls() );
+    if ( mailList.features() & MessageCore::MailingList::Unsubscribe )
+      addMailingListActions( i18n( "Unsubscribe from List" ), mailList.unsubscribeUrls() );
+    mMailingListActionMenu->setEnabled( true );
+  }
+}
+
 
 template<typename T> void MessageActions::replyCommand()
 {

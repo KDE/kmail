@@ -101,6 +101,8 @@ class MessageActions : public QObject
     void addMailingListAction( const QString &item, const KUrl &url );
     void addMailingListActions( const QString &item, const KUrl::List &list );
     void updateAnnotateAction();
+    void updateMailingListActions( const Akonadi::Item& messageItem );
+    
   private slots:
     void slotItemModified( const Akonadi::Item &  item, const QSet< QByteArray > &  partIdentifiers );
     void slotReplyToMsg();
@@ -111,6 +113,7 @@ class MessageActions : public QObject
     void slotCreateTodo();
     void slotRunUrl( QAction *urlAction );
     void slotPrintMsg();
+    void slotUpdateActionsFetchDone( KJob* job );
 
   private:
     QWidget *mParent;
