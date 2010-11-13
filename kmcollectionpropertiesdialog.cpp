@@ -24,11 +24,13 @@
 #include "collectionquotapage.h"
 #include "collectionaclpage.h"
 
+#include <akonadi/cachepolicypage.h>
+#include <akonadi/collectionmodifyjob.h>
 
 #include <ktabwidget.h>
 
 #include <QtGui/QBoxLayout>
-#include <akonadi/collectionmodifyjob.h>
+
 
 KMCollectionPropertiesDialog::KMCollectionPropertiesDialog( const Akonadi::Collection &collection, QWidget *parent ) :
   KDialog( parent )
@@ -43,6 +45,8 @@ KMCollectionPropertiesDialog::KMCollectionPropertiesDialog( const Akonadi::Colle
   insertPage( page );
   page = new CollectionViewPage( mTabWidget );
   insertPage( page );
+  page = new Akonadi::CachePolicyPage( mTabWidget );
+  insertPage( page );
   page = new CollectionTemplatesPage( mTabWidget );
   insertPage( page );
   page = new CollectionAclPage( mTabWidget );
@@ -51,7 +55,6 @@ KMCollectionPropertiesDialog::KMCollectionPropertiesDialog( const Akonadi::Colle
   insertPage( page );
   page = new CollectionMaintenancePage( mTabWidget );
   insertPage( page );
-
   connect( this, SIGNAL( okClicked() ), SLOT( save() ) );
   connect( this, SIGNAL( cancelClicked() ), SLOT( deleteLater() ) );
 
