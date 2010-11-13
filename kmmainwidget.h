@@ -130,7 +130,6 @@ class KMAIL_EXPORT KMMainWidget : public QWidget
     QAction *action( const char *name ) { return mActionCollection->action( name ); }
     KActionMenu *filterMenu() const { return mFilterMenu; }
     KActionMenu *mailingListActionMenu() const { return mMsgActions->mailingListActionMenu(); }
-    KAction *trashAction() const { return mTrashAction; }
     KAction *deleteAction() const { return mDeleteAction; }
     KAction *trashThreadAction() const { return mTrashThreadAction; }
     KAction *deleteThreadAction() const { return mDeleteThreadAction; }
@@ -536,7 +535,7 @@ class KMAIL_EXPORT KMMainWidget : public QWidget
     void slotItemNotMovedByFilters( const Akonadi::Item& item );
 private:
     // Message actions
-    KAction *mTrashAction, *mDeleteAction, *mTrashThreadAction,
+    KAction *mDeleteAction, *mTrashThreadAction,
       *mDeleteThreadAction, *mSaveAsAction, *mUseAction,
       *mSendAgainAction, *mApplyAllFiltersAction, *mFindInMessageAction,
       *mSaveAttachmentsAction, *mOpenAction, *mViewSourceAction,

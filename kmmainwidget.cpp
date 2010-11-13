@@ -2790,7 +2790,7 @@ void KMMainWidget::slotDelayedMessagePopup( KJob *job )
     if ( parentCol.isValid() && CommonKernel->folderIsTrash(parentCol) ) {
       menu->addAction( mDeleteAction );
     } else {
-      menu->addAction( mTrashAction );
+      menu->addAction( akonadiStandardAction( Akonadi::StandardMailActionManager::MoveToTrash ) );
     }
     menu->addSeparator();
     menu->addAction( mMsgActions->createTodoAction() );
@@ -2982,13 +2982,6 @@ void KMMainWidget::setupActions()
   standardDelAction->setShortcut( QKeySequence() );
 
   //----- Edit Menu
-  mTrashAction = new KAction(i18n("&Move to Trash"), this);
-  actionCollection()->addAction("move_to_trash", mTrashAction );
-  mTrashAction->setIcon(KIcon("user-trash"));
-  mTrashAction->setIconText( i18nc( "@action:intoolbar Move to Trash", "Trash" ) );
-  mTrashAction->setShortcut(QKeySequence(Qt::Key_Delete));
-  mTrashAction->setHelpText(i18n("Move message to trashcan"));
-  connect(mTrashAction, SIGNAL(triggered(bool)), SLOT(slotTrashSelectedMessages()));
 
   /* The delete action is nowhere in the gui, by default, so we need to make
    * sure it is plugged into the KAccel now, since that won't happen on
@@ -3642,7 +3635,6 @@ void KMMainWidget::updateMessageActionsDelayed()
   mMoveActionMenu->setEnabled( mass_actions && canDeleteMessages );
   mMoveMsgToFolderAction->setEnabled( mass_actions && canDeleteMessages );
   //mCopyActionMenu->setEnabled( mass_actions );
-  mTrashAction->setEnabled( mass_actions && !readOnly && !mCurrentFolder->isStructural());
 
   mDeleteAction->setEnabled( mass_actions && !readOnly );
   mExpireConfigAction->setEnabled( canDeleteMessages );
@@ -3806,9 +3798,9 @@ void KMMainWidget::updateFolderMenu()
     kDebug() << "Enabling send queued";
     actionlist << mSendQueued;
   }
-  if( mCurrentFolder && mCurrentFolder->collection().id() != CommonKernel->trashCollectionFolder().id() ) {
-    actionlist << mTrashAction;
-  }
+//   if( mCurrentFolder && mCurrentFolder->collection().id() != CommonKernel->trashCollectionFolder().id() ) {
+//     actionlist << mTrashAction;
+//   }
   mGUIClient->unplugActionList( QLatin1String( "outbox_folder_actionlist" ) );
   mGUIClient->plugActionList( QLatin1String( "outbox_folder_actionlist" ), actionlist );
   actionlist.clear();
@@ -3819,7 +3811,7 @@ void KMMainWidget::updateFolderMenu()
   mArchiveFolderAction->setEnabled( mCurrentFolder && !multiFolder && folderWithContent );
 
   bool isInTrashFolder = (mCurrentFolder && CommonKernel->folderIsTrash(mCurrentFolder->collection()));
-  mTrashAction->setText( isInTrashFolder ? i18nc("@action Hard delete, bypassing trash", "&Delete"): i18n("&Move to Trash") );
+  akonadiStandardAction( Akonadi::StandardMailActionManager::MoveToTrash )->setText( isInTrashFolder ? i18nc("@action Hard delete, bypassing trash", "&Delete"): i18n("&Move to Trash") );
 
   mTrashThreadAction->setText(isInTrashFolder ?i18n("Delete T&hread"): i18n("M&ove Thread to Trash"));
 
