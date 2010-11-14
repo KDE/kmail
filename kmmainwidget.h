@@ -516,7 +516,7 @@ private:
       *mDeleteThreadAction, *mSaveAsAction, *mUseAction,
       *mSendAgainAction, *mApplyAllFiltersAction, *mFindInMessageAction,
       *mSaveAttachmentsAction, *mOpenAction, *mViewSourceAction,
-      *mMoveMsgToFolderAction, *mCollectionProperties, *mSendQueued;
+      *mCollectionProperties, *mSendQueued;
     // Filter actions
     KActionMenu *mFilterMenu;
     KAction *mSubjectFilterAction, *mFromFilterAction, *mToFilterAction,

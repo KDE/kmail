@@ -3565,7 +3565,6 @@ void KMMainWidget::updateMessageActionsDelayed()
   }
 
   mMoveActionMenu->setEnabled( mass_actions && canDeleteMessages );
-  mMoveMsgToFolderAction->setEnabled( mass_actions && canDeleteMessages );
   //mCopyActionMenu->setEnabled( mass_actions );
 
   mDeleteAction->setEnabled( mass_actions && !readOnly );
