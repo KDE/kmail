@@ -26,7 +26,6 @@
 #include "kmkernel.h" // for access to config
 
 #include "foldertreewidget.h"
-#include "foldertreeview.h"
 
 #include <kurl.h>
 #include <kxmlguiclient.h>

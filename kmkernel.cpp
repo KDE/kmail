@@ -20,7 +20,6 @@ using KPIM::RecentAddresses;
 #include "kmcommands.h"
 #include "kmsystemtray.h"
 #include "stringutil.h"
-#include "foldertreeview.h"
 #include "mailutil.h"
 
 // kdepimlibs includes
