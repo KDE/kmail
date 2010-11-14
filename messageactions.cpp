@@ -121,8 +121,6 @@ MessageActions::MessageActions( KActionCollection *ac, QWidget* parent ) :
     KAction * action = mainwin->akonadiStandardAction( Akonadi::StandardMailActionManager::MarkMailAsRead );
     mStatusMenu->addAction( action );
 
-    action = mainwin->akonadiStandardAction( Akonadi::StandardMailActionManager::MarkMailAsUnread );
-    mStatusMenu->addAction( action );
     mStatusMenu->addSeparator();
     action = mainwin->akonadiStandardAction( Akonadi::StandardMailActionManager::MarkMailAsImportant );
     mStatusMenu->addAction( action );
