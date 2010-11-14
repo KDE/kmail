@@ -285,9 +285,8 @@ void KMMainWidget::restoreCollectionFolderViewConfig()
   ETMViewStateSaver *saver = new ETMViewStateSaver;
   saver->setView( mFolderTreeWidget->folderTreeView() );
   const KConfigGroup cfg( KMKernel::self()->config(), "CollectionFolderView" );
-  mFolderTreeWidget->folderTreeView()->header()->restoreState( cfg.readEntry( "HeaderState", QByteArray() ) );
+  mFolderTreeWidget->restoreHeaderState( cfg.readEntry( "HeaderState", QByteArray() ) );
   saver->restoreState( cfg );
-
 }
 
 
