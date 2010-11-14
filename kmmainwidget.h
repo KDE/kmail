@@ -188,21 +188,6 @@ class KMAIL_EXPORT KMMainWidget : public QWidget
     }
 
   public slots:
-    // Moving messages around
-    /**
-     * This will ask for a destination folder and move the currently selected
-     * messages (in MessageListView) into it.
-     */
-    void slotMoveSelectedMessageToFolder();
-
-    // Copying messages around
-
-    /**
-     * This will ask for a destination folder and copy the currently selected
-     * messages (in MessageListView) into it.
-     */
-    void slotCopySelectedMessagesToFolder();
-
     /**
      * Implements the "move to trash" action
      */
@@ -494,13 +479,6 @@ class KMAIL_EXPORT KMMainWidget : public QWidget
     void applyFilters( const QList<Akonadi::Item>& selectedMessages );
 
     /**
-     * Internal helper that creates the folder selection dialog used for the
-     * move and copy to folder actions on demand. Only folders where items can
-     * be added are listed.
-     */
-    MailCommon::FolderSelectionDialog* moveOrCopyToDialog();
-
-    /**
      * Internal helper that creates the folder selection dialog used for
      * jumping to folders, or adding them as favourites. All folders are listed.
      */
@@ -635,7 +613,6 @@ private:
     QMap<Akonadi::Collection::Id, int> mCheckMail;
 
     bool mCheckMailInProgress;
-    MailCommon::FolderSelectionDialog* mMoveOrCopyToDialog;
     MailCommon::FolderSelectionDialog* mSelectFromAllFoldersDialog;
 };
 
