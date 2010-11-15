@@ -86,7 +86,6 @@ if (NOT WINCE AND KDEPIM_BUILD_DESKTOP)
      undostack.cpp
      kmkernel.cpp
      searchwindow.cpp
-     sievedebugdialog.cpp
      kmcommands.cpp
      kmreadermainwin.cpp
      kmstartup.cpp
@@ -103,7 +102,6 @@ if (NOT WINCE AND KDEPIM_BUILD_DESKTOP)
      redirectdialog.cpp
      foldershortcutdialog.cpp
      mailinglistpropertiesdialog.cpp
-     managesievescriptsdialog.cpp
      util.cpp
      messageactions.cpp
      statusbarlabel.cpp

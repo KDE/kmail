@@ -34,7 +34,6 @@
 #include "kmcommands.h"
 #include "kmmainwin.h"
 #include "kmsystemtray.h"
-#include "managesievescriptsdialog.h"
 #include "customtemplatesmenu.h"
 #include "folderselectiondialog.h"
 #include "foldertreewidget.h"
@@ -49,8 +48,8 @@
 #include "collectionpane.h"
 #include "kmcollectionpropertiesdialog.h"
 #if !defined(NDEBUG)
-    #include "sievedebugdialog.h"
-    using KMail::SieveDebugDialog;
+    #include <ksieveui/sievedebugdialog.h>
+    using KSieveUi::SieveDebugDialog;
 #endif
 
 #include "mailcommon/filtermanager.h"
@@ -111,6 +110,7 @@
 #include <kmime/kmime_mdn.h>
 #include <kmime/kmime_header_parsing.h>
 #include <kmime/kmime_message.h>
+#include <ksieveui/managesievescriptsdialog.h>
 #include <ksieveui/util.h>
 #include <ksieveui/vacation.h>
 
@@ -1224,7 +1224,7 @@ void KMMainWidget::slotManageSieveScripts()
   if ( !kmkernel->askToGoOnline() ) {
     return;
   }
-  KMail::ManageSieveScriptsDialog * dlg = new KMail::ManageSieveScriptsDialog( this );
+  KSieveUi::ManageSieveScriptsDialog * dlg = new KSieveUi::ManageSieveScriptsDialog( this );
   dlg->show();
 }
 
@@ -2219,7 +2219,7 @@ void KMMainWidget::slotDebugSieve()
   if ( mSieveDebugDialog )
     return;
 
-  mSieveDebugDialog = new SieveDebugDialog( this );
+  mSieveDebugDialog = new KSieveUi::SieveDebugDialog( this );
   mSieveDebugDialog->exec();
   delete mSieveDebugDialog;
 #endif

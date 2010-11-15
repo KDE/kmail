@@ -69,7 +69,6 @@ namespace KIO {
 }
 
 namespace KMail {
-  class SieveDebugDialog;
   class SearchWindow;
   class StatusBarLabel;
   class TagActionManager;
@@ -77,6 +76,7 @@ namespace KMail {
 }
 
 namespace KSieveUi {
+  class SieveDebugDialog;
   class Vacation;
 }
 
@@ -584,7 +584,7 @@ private:
 
     QPointer<KSieveUi::Vacation> mVacation;
 #if !defined(NDEBUG)
-    QPointer<KMail::SieveDebugDialog> mSieveDebugDialog;
+    QPointer<KSieveUi::SieveDebugDialog> mSieveDebugDialog;
 #endif
     KActionCollection *mActionCollection;
     QAction *mToolbarActionSeparator;
