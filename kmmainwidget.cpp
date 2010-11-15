@@ -34,7 +34,6 @@
 #include "kmcommands.h"
 #include "kmmainwin.h"
 #include "kmsystemtray.h"
-#include "vacation.h"
 #include "managesievescriptsdialog.h"
 #include "customtemplatesmenu.h"
 #include "folderselectiondialog.h"
@@ -112,6 +111,7 @@
 #include <kmime/kmime_mdn.h>
 #include <kmime/kmime_header_parsing.h>
 #include <kmime/kmime_message.h>
+#include <ksieveui/vacation.h>
 
 // KDELIBS includes
 #include <kaboutdata.h>
@@ -171,10 +171,10 @@ using namespace MailCommon;
 using KPIM::ProgressManager;
 using KPIM::BroadcastStatus;
 using KMail::SearchWindow;
-using KMail::Vacation;
 using KMail::AntiSpamWizard;
 using KMail::FilterLogDialog;
 using KMime::Types::AddrSpecList;
+using KSieveUi::Vacation;
 using MessageViewer::AttachmentStrategy;
 
 
@@ -2182,6 +2182,7 @@ void KMMainWidget::slotCheckVacation()
 
   Vacation *vac = new Vacation( this, true /* check only */ );
   connect( vac, SIGNAL(scriptActive(bool)), SLOT(updateVacationScriptStatus(bool)) );
+  connect( vac, SIGNAL(requestEditVacation()), SLOT(slotEditVacation()) );
 }
 
 void KMMainWidget::slotEditVacation()
@@ -2195,6 +2196,7 @@ void KMMainWidget::slotEditVacation()
 
   mVacation = new Vacation( this );
   connect( mVacation, SIGNAL(scriptActive(bool)), SLOT(updateVacationScriptStatus(bool)) );
+  connect( mVacation, SIGNAL(requestEditVacation()), SLOT(slotEditVacation()) );
   if ( mVacation->isUsable() ) {
     connect( mVacation, SIGNAL(result(bool)), mVacation, SLOT(deleteLater()) );
   } else {

@@ -41,10 +41,13 @@ namespace KMime
   }
 }
 
-namespace KMail
+namespace KSieveUi
 {
 class SieveJob;
+}
 
+namespace KMail
+{
 /**
  * Diagnostic info for Sieve. Only compiled when debug is enabled, it is
  * not useful enough for non-developers to have this in releases.
@@ -58,23 +61,23 @@ public:
     virtual ~SieveDebugDialog();
 
 protected:
-    void handlePutResult( KMail::SieveJob *job, bool success, bool );
+    void handlePutResult( KSieveUi::SieveJob *job, bool success, bool );
 
 signals:
     void result( bool success );
 
 protected slots:
-    void slotGetScript( KMail::SieveJob *job, bool success, const QString &script, bool active );
-    void slotGetScriptList( KMail::SieveJob *job, bool success, const QStringList &scriptList, const QString &activeScript );
+    void slotGetScript( KSieveUi::SieveJob *job, bool success, const QString &script, bool active );
+    void slotGetScriptList( KSieveUi::SieveJob *job, bool success, const QStringList &scriptList, const QString &activeScript );
 
     void slotDialogOk();
-    void slotPutActiveResult( KMail::SieveJob*, bool );
-    void slotPutInactiveResult( KMail::SieveJob*, bool );
+    void slotPutActiveResult( KSieveUi::SieveJob*, bool );
+    void slotPutInactiveResult( KSieveUi::SieveJob*, bool );
     void slotDiagNextAccount();
     void slotDiagNextScript();
 
 protected:
-    KMail::SieveJob *mSieveJob;
+    KSieveUi::SieveJob *mSieveJob;
     KUrl mUrl;
 
     KTextEdit *mEdit;

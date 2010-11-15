@@ -2,7 +2,6 @@
 #include "managesievescriptsdialog.h"
 #include "managesievescriptsdialog_p.h"
 
-#include "sievejob.h"
 #include "kmkernel.h"
 #include "util.h"
 #include "imapsettings.h"
@@ -17,6 +16,8 @@
 
 
 #include <akonadi/agentinstance.h>
+#include <ksieveui/sievejob.h>
+#include <ksieveui/util.h>
 
 #include <QMenu>
 #include <QTreeWidget>
@@ -70,7 +71,7 @@ KMail::ManageSieveScriptsDialog::~ManageSieveScriptsDialog()
 
 void KMail::ManageSieveScriptsDialog::killAllJobs()
 {
-  for ( QMap<SieveJob*,QTreeWidgetItem*>::const_iterator it = mJobs.constBegin(),
+  for ( QMap<KSieveUi::SieveJob*,QTreeWidgetItem*>::const_iterator it = mJobs.constBegin(),
         end = mJobs.constEnd() ; it != end ; ++it )
     it.key()->kill();
   mJobs.clear();
@@ -81,40 +82,34 @@ void KMail::ManageSieveScriptsDialog::slotRefresh()
 {
   clear();
   QTreeWidgetItem *last = 0;
-  Akonadi::AgentInstance::List lst = MailCommon::Util::agentInstances();
+  Akonadi::AgentInstance::List lst = KSieveUi::Util::imapAgentInstances();
   foreach ( const Akonadi::AgentInstance& type, lst )
   {
-    if ( type.identifier().contains( IMAP_RESOURCE_IDENTIFIER ) ) {
-      if ( type.status() == Akonadi::AgentInstance::Broken )
-        continue;
-      OrgKdeAkonadiImapSettingsInterface *iface = MailCommon::Util::createImapSettingsInterface(type.identifier());
-      if ( iface->isValid() ) {
-        last = new QTreeWidgetItem( mListView, last );
-        last->setText( 0, type.name() );
-        last->setIcon( 0, SmallIcon( "network-server" ) );
+    if ( type.status() == Akonadi::AgentInstance::Broken )
+      continue;
 
-        const KUrl u = KMail::Util::findSieveUrlForAccount( iface,type.identifier() );
-        if ( u.isEmpty() ) {
-          QTreeWidgetItem *item = new QTreeWidgetItem( last );
-          item->setText( 0, i18n( "No Sieve URL configured" ) );
-          item->setFlags( item->flags() & ~Qt::ItemIsEnabled );
-          mListView->expandItem( last );
-        } else {
-          SieveJob * job = SieveJob::list( u );
-          connect( job, SIGNAL(item(KMail::SieveJob*,const QString&,bool)),
-                   this, SLOT(slotItem(KMail::SieveJob*,const QString&,bool)) );
-          connect( job, SIGNAL(result(KMail::SieveJob*,bool,const QString&,bool)),
-                   this, SLOT(slotResult(KMail::SieveJob*,bool,const QString&,bool)) );
-          mJobs.insert( job, last );
-          mUrls.insert( last, u );
-        }
-      }
-      delete iface;
+    last->setText( 0, type.name() );
+    last->setIcon( 0, SmallIcon( "network-server" ) );
+
+    const KUrl u = KSieveUi::Util::findSieveUrlForAccount( type.identifier() );
+    if ( u.isEmpty() ) {
+      QTreeWidgetItem *item = new QTreeWidgetItem( last );
+      item->setText( 0, i18n( "No Sieve URL configured" ) );
+      item->setFlags( item->flags() & ~Qt::ItemIsEnabled );
+      mListView->expandItem( last );
+    } else {
+      KSieveUi::SieveJob * job = KSieveUi::SieveJob::list( u );
+      connect( job, SIGNAL(item(KSieveUi::SieveJob*,const QString&,bool)),
+               this, SLOT(slotItem(KSieveUi::SieveJob*,const QString&,bool)) );
+      connect( job, SIGNAL(result(KSieveUi::SieveJob*,bool,const QString&,bool)),
+               this, SLOT(slotResult(KSieveUi::SieveJob*,bool,const QString&,bool)) );
+      mJobs.insert( job, last );
+      mUrls.insert( last, u );
     }
   }
 }
 
-void KMail::ManageSieveScriptsDialog::slotResult( KMail::SieveJob * job, bool success, const QString &, bool )
+void KMail::ManageSieveScriptsDialog::slotResult( KSieveUi::SieveJob * job, bool success, const QString &, bool )
 {
   QTreeWidgetItem * parent = mJobs[job];
   if ( !parent )
@@ -133,7 +128,7 @@ void KMail::ManageSieveScriptsDialog::slotResult( KMail::SieveJob * job, bool su
   item->setFlags( item->flags() & ~Qt::ItemIsEnabled );
 }
 
-void KMail::ManageSieveScriptsDialog::slotItem( KMail::SieveJob * job, const QString & filename, bool isActive )
+void KMail::ManageSieveScriptsDialog::slotItem( KSieveUi::SieveJob * job, const QString & filename, bool isActive )
 {
   QTreeWidgetItem * parent = mJobs[job];
   if ( !parent )
@@ -209,12 +204,12 @@ void KMail::ManageSieveScriptsDialog::changeActiveScript( QTreeWidgetItem * item
     return;
   u.setFileName( itemText( selected ) );
 
-  SieveJob * job;
+  KSieveUi::SieveJob * job;
   if ( activate )
-    job = SieveJob::activate( u );
+    job = KSieveUi::SieveJob::activate( u );
   else
-    job = SieveJob::desactivate( u );
-  connect( job, SIGNAL(result(KMail::SieveJob*,bool,const QString&,bool)),
+    job = KSieveUi::SieveJob::desactivate( u );
+  connect( job, SIGNAL(result(KSieveUi::SieveJob*,bool,const QString&,bool)),
            this, SLOT(slotRefresh()) );
 }
 
@@ -323,8 +318,8 @@ void KMail::ManageSieveScriptsDialog::slotDeleteScript()
                                    KStandardGuiItem::del() )
        != KMessageBox::Continue )
     return;
-  SieveJob * job = SieveJob::del( u );
-  connect( job, SIGNAL(result(KMail::SieveJob*,bool,const QString&,bool)),
+  KSieveUi::SieveJob * job = KSieveUi::SieveJob::del( u );
+  connect( job, SIGNAL(result(KSieveUi::SieveJob*,bool,const QString&,bool)),
            this, SLOT(slotRefresh()) );
 }
 
@@ -340,9 +335,9 @@ void KMail::ManageSieveScriptsDialog::slotEditScript()
     return;
   url.setFileName( itemText( mContextMenuItem ) );
   mCurrentURL = url;
-  SieveJob * job = SieveJob::get( url );
-  connect( job, SIGNAL(result(KMail::SieveJob*,bool,const QString&,bool)),
-           this, SLOT(slotGetResult(KMail::SieveJob*,bool,const QString&,bool)) );
+  KSieveUi::SieveJob * job = KSieveUi::SieveJob::get( url );
+  connect( job, SIGNAL(result(KSieveUi::SieveJob*,bool,const QString&,bool)),
+           this, SLOT(slotGetResult(KSieveUi::SieveJob*,bool,const QString&,bool)) );
 }
 
 void KMail::ManageSieveScriptsDialog::slotNewScript()
@@ -409,7 +404,7 @@ void KMail::SieveEditor::slotTextChanged()
   enableButtonOk( !script().isEmpty() );
 }
 
-void KMail::ManageSieveScriptsDialog::slotGetResult( KMail::SieveJob *, bool success, const QString & script, bool isActive )
+void KMail::ManageSieveScriptsDialog::slotGetResult( KSieveUi::SieveJob *, bool success, const QString & script, bool isActive )
 {
   if ( !success )
     return;
@@ -429,9 +424,9 @@ void KMail::ManageSieveScriptsDialog::slotSieveEditorOkClicked()
 {
   if ( !mSieveEditor )
     return;
-  SieveJob * job = SieveJob::put( mCurrentURL,mSieveEditor->script(), mWasActive, mWasActive );
-  connect( job, SIGNAL(result(KMail::SieveJob*,bool,const QString&,bool)),
-           this, SLOT(slotPutResult(KMail::SieveJob*,bool)) );
+  KSieveUi::SieveJob * job = KSieveUi::SieveJob::put( mCurrentURL,mSieveEditor->script(), mWasActive, mWasActive );
+  connect( job, SIGNAL(result(KSieveUi::SieveJob*,bool,const QString&,bool)),
+           this, SLOT(slotPutResult(KSieveUi::SieveJob*,bool)) );
 }
 
 void KMail::ManageSieveScriptsDialog::slotSieveEditorCancelClicked()
@@ -441,7 +436,7 @@ void KMail::ManageSieveScriptsDialog::slotSieveEditorCancelClicked()
   slotRefresh();
 }
 
-void KMail::ManageSieveScriptsDialog::slotPutResult( KMail::SieveJob *, bool success )
+void KMail::ManageSieveScriptsDialog::slotPutResult( KSieveUi::SieveJob *, bool success )
 {
   if ( success ) {
     KMessageBox::information( this, i18n( "The Sieve script was successfully uploaded." ),

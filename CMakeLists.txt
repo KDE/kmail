@@ -86,10 +86,7 @@ if (NOT WINCE AND KDEPIM_BUILD_DESKTOP)
      undostack.cpp
      kmkernel.cpp
      searchwindow.cpp
-     vacationdialog.cpp
-     vacation.cpp
      sievedebugdialog.cpp
-     sievejob.cpp
      kmcommands.cpp
      kmreadermainwin.cpp
      kmstartup.cpp
@@ -215,6 +212,7 @@ if (NOT WINCE AND KDEPIM_BUILD_DESKTOP)
     kleo
     ${QGPGME_LIBRARIES}
     ksieve
+    ksieveui
     kpgp
     kdepim
     ${KDE4_KIO_LIBS}

@@ -27,6 +27,8 @@
 #include <kdebug.h>
 #include <klocale.h>
 #include <kmessagebox.h>
+#include <ksieveui/sievejob.h>
+#include <ksieveui/util.h>
 #include <ktextedit.h>
 
 #include <kmime/kmime_header_parsing.h>
@@ -40,10 +42,9 @@
 #include "mailutil.h"
 #include <akonadi/agentinstance.h>
 #include "kmkernel.h"
-#include "sievejob.h"
 #include "imapsettings.h"
 
-using KMail::SieveJob;
+using KSieveUi::SieveJob;
 using KMime::Types::AddrSpecList;
 
 namespace
@@ -235,7 +236,7 @@ void SieveDebugDialog::slotDiagNextAccount()
     if ( mImapSettingsInterface->isValid() )
     {
         // Detect URL for this IMAP account
-      const KUrl url = KMail::Util::findSieveUrlForAccount( mImapSettingsInterface, ident );
+      const KUrl url = KSieveUi::Util::findSieveUrlForAccount( ident );
         if ( !url.isValid() )
         {
             mEdit->append( i18n( "(Account does not support Sieve)\n\n" ) );
@@ -244,8 +245,8 @@ void SieveDebugDialog::slotDiagNextAccount()
 
             mSieveJob = SieveJob::list( mUrl );
 
-            connect( mSieveJob, SIGNAL( gotList( KMail::SieveJob *, bool, const QStringList &, const QString & ) ),
-                SLOT( slotGetScriptList( KMail::SieveJob *, bool, const QStringList &, const QString & ) ) );
+            connect( mSieveJob, SIGNAL( gotList( KSieveUi::SieveJob *, bool, const QStringList &, const QString & ) ),
+                SLOT( slotGetScriptList( KSieveUi::SieveJob *, bool, const QStringList &, const QString & ) ) );
 
             // Bypass the singleShot timer -- it's fired when we get our data
             return;
@@ -274,14 +275,14 @@ void SieveDebugDialog::slotDiagNextScript()
 
     mEdit->append( i18n( "Contents of script '%1':\n", scriptFile ) );
 
-    mUrl = KMail::Util::findSieveUrlForAccount( mImapSettingsInterface, mResourceIdentifier.first() );
+    mUrl = KSieveUi::Util::findSieveUrlForAccount( mResourceIdentifier.first() );
 
     mUrl.setFileName( scriptFile );
 
     mSieveJob = SieveJob::get( mUrl );
 
-    connect( mSieveJob, SIGNAL( gotScript( KMail::SieveJob *, bool, const QString &, bool ) ),
-        SLOT( slotGetScript( KMail::SieveJob *, bool, const QString &, bool ) ) );
+    connect( mSieveJob, SIGNAL( gotScript( KSieveUi::SieveJob *, bool, const QString &, bool ) ),
+        SLOT( slotGetScript( KSieveUi::SieveJob *, bool, const QString &, bool ) ) );
 }
 
 void SieveDebugDialog::slotGetScript( SieveJob * /* job */, bool success,

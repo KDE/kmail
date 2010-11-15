@@ -92,8 +92,6 @@ namespace Util {
      */
     Akonadi::Item::Id putRepliesInSameFolder( const Akonadi::Item& item );
 
-    KUrl findSieveUrlForAccount( OrgKdeAkonadiImapSettingsInterface *a,  const QString &ident);
-
     void launchAccountWizard( QWidget * );
 
     /**
