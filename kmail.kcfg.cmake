@@ -367,29 +367,6 @@
     </entry>
   </group>
 
-    <group name="OutOfOffice">
-        <entry name="AllowOutOfOfficeSettings" type="Bool">
-            <default>true</default>
-            <label>Allow out-of-office settings to be changeable by the user.</label>
-        </entry>
-        <entry name="AllowOutOfOfficeUploadButNoSettings" type="Bool">
-            <default>false</default>
-            <label>Allow users to upload out-of-office sieve scripts, but prevent them from changing any settings, such as the domain to react to or the spam reaction switch.</label>
-        </entry>
-        <entry name="OutOfOfficeDomain" type="String">
-            <default></default>
-            <label>Send out-of-office replies to mails coming from this domain only.</label>
-        </entry>
-        <entry name="OutOfOfficeReactToSpam" type="Bool">
-            <default>false</default>
-            <label>Allow out-of-office replies to be sent to messages marked as SPAM.</label>
-        </entry>
-        <entry name="CheckOutOfOfficeOnStartup" type="Bool">
-              <default>true</default>
-              <label>Check if there is still an active out-of-office reply configured when starting KMail.</label>
-        </entry>
-    </group>
-
   <group name="FavoriteCollectionView">
     <entry name="EnableFavoriteCollectionView" type="Bool">
       <default>true</default>

@@ -111,6 +111,7 @@
 #include <kmime/kmime_mdn.h>
 #include <kmime/kmime_header_parsing.h>
 #include <kmime/kmime_message.h>
+#include <ksieveui/util.h>
 #include <ksieveui/vacation.h>
 
 // KDELIBS includes
@@ -270,7 +271,7 @@ K_GLOBAL_STATIC( KMMainWidget::PtrList, theMainWidgetList )
   mVacationScriptIndicator = new KMail::StatusBarLabel( sb );
   mVacationScriptIndicator->hide();
   connect( mVacationScriptIndicator, SIGNAL(clicked()), SLOT(slotEditVacation()) );
-  if ( GlobalSettings::self()->checkOutOfOfficeOnStartup() )
+  if ( KSieveUi::Util::checkOutOfOfficeOnStartup() )
     QTimer::singleShot( 0, this, SLOT(slotCheckVacation()) );
 
   restoreCollectionFolderViewConfig();
@@ -2904,7 +2905,7 @@ void KMMainWidget::setupActions()
     actionCollection()->addAction( "accountWizard", action );
     connect( action, SIGNAL(triggered(bool)), SLOT(slotAccountWizard()) );
   }
-  if ( GlobalSettings::self()->allowOutOfOfficeSettings() )
+  if ( KSieveUi::Util::allowOutOfOfficeSettings() )
   {
     KAction *action = new KAction( i18n("Edit \"Out of Office\" Replies..."), this );
     actionCollection()->addAction( "tools_edit_vacation", action );
