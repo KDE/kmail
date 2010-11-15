@@ -88,6 +88,7 @@ void KMail::ManageSieveScriptsDialog::slotRefresh()
     if ( type.status() == Akonadi::AgentInstance::Broken )
       continue;
 
+    last = new QTreeWidgetItem( mListView, last );
     last->setText( 0, type.name() );
     last->setIcon( 0, SmallIcon( "network-server" ) );
 
