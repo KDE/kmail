@@ -30,8 +30,6 @@ class QString;
 class QStringList;
 template <typename T> class QList;
 
-class OrgKdeAkonadiImapSettingsInterface;
-
 namespace KMime
 {
   namespace Types
@@ -84,7 +82,6 @@ protected:
 
     QStringList mResourceIdentifier;
     QStringList mScriptList;
-    OrgKdeAkonadiImapSettingsInterface *mImapSettingsInterface;
 };
 
 } // namespace KMail

@@ -38,11 +38,7 @@
 #include <kpimidentities/identity.h>
 #include <kpimidentities/identitymanager.h>
 
-#include "util.h"
-#include "mailutil.h"
 #include <akonadi/agentinstance.h>
-#include "kmkernel.h"
-#include "imapsettings.h"
 
 using KSieveUi::SieveJob;
 using KMime::Types::AddrSpecList;
@@ -191,13 +187,12 @@ SieveDebugDialog::SieveDebugDialog( QWidget *parent )
 {
     setCaption( i18n( "Sieve Diagnostics" ) );
     setButtons( Ok );
+
     // Collect all accounts
-    Akonadi::AgentInstance::List lst = MailCommon::Util::agentInstances();
+    Akonadi::AgentInstance::List lst = KSieveUi::Util::imapAgentInstances();
     foreach ( const Akonadi::AgentInstance& type, lst )
     {
-      if ( type.identifier().contains( IMAP_RESOURCE_IDENTIFIER ) ) {
-        mResourceIdentifier<<type.identifier();
-      }
+      mResourceIdentifier<<type.identifier();
     }
 
     mEdit = new KTextEdit( this );
@@ -228,35 +223,28 @@ void SieveDebugDialog::slotDiagNextAccount()
     if ( mResourceIdentifier.isEmpty() )
         return;
     QString ident = mResourceIdentifier.first();
-    mResourceIdentifier.pop_front();
 
     mEdit->append( i18n( "Collecting data for account '%1'...\n", ident ) );
     mEdit->append( i18n( "------------------------------------------------------------\n" ) );
-    mImapSettingsInterface = MailCommon::Util::createImapSettingsInterface( ident );
-    if ( mImapSettingsInterface->isValid() )
-    {
-        // Detect URL for this IMAP account
-      const KUrl url = KSieveUi::Util::findSieveUrlForAccount( ident );
-        if ( !url.isValid() )
-        {
-            mEdit->append( i18n( "(Account does not support Sieve)\n\n" ) );
-        } else {
-            mUrl = url;
 
-            mSieveJob = SieveJob::list( mUrl );
+    // Detect URL for this IMAP account
+    const KUrl url = KSieveUi::Util::findSieveUrlForAccount( ident );
+    if ( !url.isValid() ) {
+        mEdit->append( i18n( "(Account does not support Sieve)\n\n" ) );
+    } else {
+        mUrl = url;
 
-            connect( mSieveJob, SIGNAL( gotList( KSieveUi::SieveJob *, bool, const QStringList &, const QString & ) ),
-                SLOT( slotGetScriptList( KSieveUi::SieveJob *, bool, const QStringList &, const QString & ) ) );
+        mSieveJob = SieveJob::list( mUrl );
 
-            // Bypass the singleShot timer -- it's fired when we get our data
-            return;
-        }
-    } else
-    {
-        mEdit->append( i18n( "(Account is not an IMAP account)\n\n" ) );
+        connect( mSieveJob, SIGNAL( gotList( KSieveUi::SieveJob *, bool, const QStringList &, const QString & ) ),
+            SLOT( slotGetScriptList( KSieveUi::SieveJob *, bool, const QStringList &, const QString & ) ) );
+
+        // Bypass the singleShot timer -- it's fired when we get our data
+        return;
     }
 
     // Handle next account async
+    mResourceIdentifier.pop_front();
     QTimer::singleShot( 0, this, SLOT( slotDiagNextAccount() ) );
 }
 
@@ -266,6 +254,7 @@ void SieveDebugDialog::slotDiagNextScript()
     {
         // Continue handling accounts instead
         mScriptList.clear();
+        mResourceIdentifier.pop_front();
         QTimer::singleShot( 0, this, SLOT( slotDiagNextAccount() ) );
         return;
     }
