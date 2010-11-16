@@ -34,6 +34,7 @@
 #include "kmcommands.h"
 #include "kmmainwin.h"
 #include "kmsystemtray.h"
+#include "collectionannotationsattribute.h"
 #include "customtemplatesmenu.h"
 #include "folderselectiondialog.h"
 #include "foldertreewidget.h"
@@ -80,6 +81,7 @@
 
 // KDEPIMLIBS includes
 #include <Akonadi/AgentManager>
+#include <Akonadi/AttributeFactory>
 #include <akonadi/itemfetchjob.h>
 #include <akonadi/collectionattributessynchronizationjob.h>
 #include <akonadi/collectionfetchjob.h>
@@ -265,6 +267,8 @@ K_GLOBAL_STATIC( KMMainWidget::PtrList, theMainWidgetList )
            this, SLOT( slotUpdateMessageTagList( const QString & )) );
 
   toggleSystemTray();
+
+  Akonadi::AttributeFactory::registerAttribute<Akonadi::CollectionAnnotationsAttribute>();
 
   KMainWindow *mainWin = dynamic_cast<KMainWindow*>(topLevelWidget());
   KStatusBar *sb =  mainWin ? mainWin->statusBar() : 0;

@@ -66,6 +66,7 @@ protected:
 
 private slots:
   void slotIdentityCheckboxChanged();
+  void slotFolderContentsSelectionChanged( int );
 private:
   KComboBox *mContentsComboBox;
   KComboBox *mIncidencesForComboBox;

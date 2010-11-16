@@ -51,8 +51,7 @@ using namespace MailCommon;
 CollectionGeneralPage::CollectionGeneralPage(QWidget * parent) :
     CollectionPropertiesPage( parent ), mFolderCollection( 0 )
 {
-  Akonadi::AttributeFactory::registerAttribute<Akonadi::CollectionAnnotationsAttribute>();
-
+  
   setPageTitle(  i18nc("@title:tab General settings for a folder.", "General"));
 
 }
@@ -114,6 +113,54 @@ static QString folderContentDesc( CollectionGeneralPage::FolderContentsType type
   case CollectionGeneralPage::ContentsTypeTask:     return ( i18nc( "type of folder content", "Tasks" ) );
   case CollectionGeneralPage::ContentsTypeJournal:  return ( i18nc( "type of folder content", "Journal" ) );
   default:                   return ( i18nc( "type of folder content", "Unknown" ) );
+  }
+}
+
+
+static CollectionGeneralPage::FolderContentsType contentsTypeFromString( const QString& type )
+{
+  if ( type == i18nc( "type of folder content", "Mail" ) )
+    return CollectionGeneralPage::ContentsTypeMail;
+  if ( type == i18nc( "type of folder content", "Calendar" ) )
+    return CollectionGeneralPage::ContentsTypeCalendar;
+  if ( type == i18nc( "type of folder content", "Contacts" ) )
+    return CollectionGeneralPage::ContentsTypeContact;
+  if ( type == i18nc( "type of folder content", "Notes" ) )
+    return CollectionGeneralPage::ContentsTypeNote;
+  if ( type == i18nc( "type of folder content", "Tasks" ) )
+    return CollectionGeneralPage::ContentsTypeTask;
+  if ( type == i18nc( "type of folder content", "Journal" ) )
+    return CollectionGeneralPage::ContentsTypeJournal;
+
+  return CollectionGeneralPage::ContentsTypeMail; //safety return value
+}
+
+static QString typeNameFromKolabType( const QByteArray& type )
+{
+  if ( type == "task" || type == "task.default" )
+    return i18nc( "type of folder content", "Tasks" );
+  if ( type == "event" || type == "event.default" )
+    return i18nc( "type of folder content", "Calendar" );
+  if ( type == "contact" || type == "contact.default" )
+    return i18nc( "type of folder content", "Contacts" );
+  if ( type == "note" || type == "note.default" )
+    return i18nc( "type of folder content", "Notes" );
+  if ( type == "journal" || type == "journal.default" )
+    return i18nc( "type of folder content", "Journal" );
+
+  return i18nc( "type of folder content", "Mail" );
+}
+
+static QByteArray kolabNameFromType( CollectionGeneralPage::FolderContentsType type )
+{
+  switch ( type )
+  {
+  case CollectionGeneralPage::ContentsTypeCalendar: return "event";
+  case CollectionGeneralPage::ContentsTypeContact:  return "contact";
+  case CollectionGeneralPage::ContentsTypeNote:     return "note";
+  case CollectionGeneralPage::ContentsTypeTask:     return "task";
+  case CollectionGeneralPage::ContentsTypeJournal:  return "journal";
+  default:                   return QByteArray();
   }
 }
 
@@ -257,9 +304,11 @@ void CollectionGeneralPage::init(const Akonadi::Collection &col)
 
   IncidencesFor incidencesFor = incidencesForFromString( annotations.value(KOLAB_INCIDENCESFOR) );
 
-#if 0 // Should not be needed in akonadi powered kmail.
+    // Should not be needed in akonadi powered kmail.
     // Only do make this settable, if the IMAP resource is enabled
     // and it's not the personal folders (those must not be changed)
+  if ( col.resource().contains( IMAP_RESOURCE_IDENTIFIER ) )
+  {
     ++row;
     label = new QLabel( i18n("&Folder contents:"), this );
     gl->addWidget( label, row, 0 );
@@ -281,11 +330,8 @@ void CollectionGeneralPage::init(const Akonadi::Collection &col)
       mContentsComboBox->setEnabled( false );
 
   } else {
-#endif
     mContentsComboBox = 0;
-#if 0
   }
-#endif
   mIncidencesForComboBox = 0;
 #if 0
   mAlarmsBlockedCheckBox = 0;
@@ -380,6 +426,15 @@ void CollectionGeneralPage::load(const Akonadi::Collection & col)
   mKeepRepliesInSameFolderCheckBox->setChecked( keepInFolder );
   mKeepRepliesInSameFolderCheckBox->setEnabled( mFolderCollection->canCreateMessages() );
   mHideInSelectionDialogCheckBox->setChecked( mFolderCollection->hideInSelectionDialog() );
+  
+  if ( mContentsComboBox ) {
+    const Akonadi::CollectionAnnotationsAttribute *annotationsAttribute = col.attribute<Akonadi::CollectionAnnotationsAttribute>();
+    if ( annotationsAttribute ) {
+      const QMap<QByteArray, QByteArray> annotations = annotationsAttribute->annotations();
+      if ( annotations.contains( KOLAB_FOLDERTYPE ) )
+        mContentsComboBox->setCurrentItem( typeNameFromKolabType( annotations[ KOLAB_FOLDERTYPE ] ) );
+    }
+  }
 
 }
 
@@ -406,6 +461,12 @@ void CollectionGeneralPage::save(Collection & col)
   if ( mIncidencesForComboBox && mIncidencesForComboBox->isEnabled() )
     annotations[ KOLAB_INCIDENCESFOR ] = incidencesForToString( static_cast<IncidencesFor>( mIncidencesForComboBox->currentIndex() ) ).toLatin1();
 
+  if ( mContentsComboBox ) {
+    QByteArray kolabName = kolabNameFromType( contentsTypeFromString( mContentsComboBox->currentText() ) );
+    if ( !kolabName.isEmpty() )
+      annotations[ KOLAB_FOLDERTYPE ] = kolabName;
+  }
+
   annotationsAttribute->setAnnotations(annotations);
 
   if ( mFolderCollection ) {
@@ -415,13 +476,30 @@ void CollectionGeneralPage::save(Collection & col)
     mFolderCollection->setIgnoreNewMail( !mNotifyOnNewMailCheckBox->isChecked() );
     mFolderCollection->setPutRepliesInSameFolder( mKeepRepliesInSameFolderCheckBox->isChecked() );
     mFolderCollection->setHideInSelectionDialog( mHideInSelectionDialogCheckBox->isChecked() );
-
   }
+
 }
 
 void CollectionGeneralPage::slotIdentityCheckboxChanged()
 {
   mIdentityComboBox->setEnabled( !mUseDefaultIdentityCheckBox->isChecked() );
+}
+
+void CollectionGeneralPage::slotFolderContentsSelectionChanged( int )
+{
+  CollectionGeneralPage::FolderContentsType type = contentsTypeFromString( mContentsComboBox->currentText() );
+
+  if( type != CollectionGeneralPage::ContentsTypeMail  ) {
+    QString message = i18n("You have configured this folder to contain groupware information "
+    "That means that this folder will disappear once the configuration "
+    "dialog is closed.");
+    
+     KMessageBox::information( this, message );
+  }
+
+  const bool enable = type == CollectionGeneralPage::ContentsTypeCalendar || type == CollectionGeneralPage::ContentsTypeTask;
+  if ( mIncidencesForComboBox )
+      mIncidencesForComboBox->setEnabled( enable );
 }
 
 
