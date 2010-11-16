@@ -1183,7 +1183,7 @@ KMCommand::Result KMRedirectCommand::execute()
 
   MessageStatus status;
   status.setStatusFromFlags( item.flags() );
-  if( status.isUnread() )
+  if( !status.isRead() )
   FilterAction::sendMDN( item, KMime::MDN::Dispatched );
 
   const MessageSender::SendMethod method = dlg->sendImmediate()

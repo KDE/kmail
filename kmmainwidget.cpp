@@ -1942,7 +1942,7 @@ void KMMainWidget::setCurrentThreadStatus( const Akonadi::MessageStatus &status,
 
 void KMMainWidget::slotSetThreadStatusUnread()
 {
-  setCurrentThreadStatus( MessageStatus::statusUnread(), false );
+  setCurrentThreadStatus( MessageStatus::statusRead(), true );
 }
 
 void KMMainWidget::slotSetThreadStatusImportant()
