@@ -78,6 +78,7 @@
 #include "messagecore/mailinglist.h"
 #include "messageviewer/nodehelper.h"
 #include "composer.h"
+#include "mailcommon/filteraction.h"
 #include "mailcommon/filtermanager.h"
 #include "kmmainwidget.h"
 #include "undostack.h"
