@@ -196,7 +196,7 @@ KMFilterDlg::KMFilterDlg(QWidget* parent, bool popFilter, bool createDummyFilter
   layout->setContentsMargins( 0, 0, 0, 0 );
   mPatternEdit = new MailCommon::SearchPatternEdit(patternGroupBox, bPopFilter );
   layout->addWidget( mPatternEdit );
-  
+
   vbl->addWidget( patternGroupBox, 0, Qt::AlignTop );
 
   if(bPopFilter){
@@ -812,10 +812,11 @@ void KMFilterListBox::slotApplyFilterChanges( KDialog::ButtonCode button )
   // their widget's data into our filter list.
 
   FilterManager *fm;
-  if ( bPopFilter )
+/*  if ( bPopFilter )
     fm = kmkernel->popFilterManager();
-  else
-    fm = kmkernel->filterManager();
+    else*/
+  Q_ASSERT( !bPopFilter );
+  fm = kmkernel->filterManager();
 
   QList<MailFilter *> newFilters = filtersForSaving( closeAfterSaving );
 
@@ -1063,8 +1064,9 @@ void KMFilterListBox::loadFilterList( bool createDummyFilter )
   const FilterManager *manager = 0;
   if(bPopFilter)
   {
-    mShowLater = kmkernel->popFilterManager()->showLaterMsgs();
-    manager = kmkernel->popFilterManager();
+    Q_ASSERT_X( false, "loadFilterList", "pop filters aren't implemented" );
+    //mShowLater = kmkernel->popFilterManager()->showLaterMsgs();
+    //manager = kmkernel->popFilterManager();
   }
   else
   {

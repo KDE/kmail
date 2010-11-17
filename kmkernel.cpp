@@ -134,7 +134,6 @@ KMKernel::KMKernel (QObject *parent, const char *name) :
 
   the_undoStack = 0;
   the_filterMgr = 0;
-  the_popFilterMgr = 0;
   the_filterActionDict = 0;
   the_msgSender = 0;
   mFilterEditDialog = 0;
@@ -1104,11 +1103,9 @@ void KMKernel::init()
 
   the_undoStack     = new UndoStack(20);
   the_filterMgr     = new FilterManager();
-  the_popFilterMgr     = new FilterManager(true);
   the_filterActionDict = new FilterActionDict;
 
   the_filterMgr->readConfig();
-  the_popFilterMgr->readConfig();
   the_msgSender = new AkonadiSender;
   readConfig();
   // filterMgr->dump();
@@ -1209,8 +1206,6 @@ void KMKernel::cleanup(void)
   the_filterActionDict = 0;
   delete the_undoStack;
   the_undoStack = 0;
-  delete the_popFilterMgr;
-  the_popFilterMgr = 0;
 
   KSharedConfig::Ptr config =  KMKernel::config();
   KConfigGroup group(config, "General");

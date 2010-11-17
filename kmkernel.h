@@ -333,7 +333,6 @@ public:
 
   UndoStack *undoStack() { return the_undoStack; }
   MailCommon::FilterManager *filterManager() const { return the_filterMgr; }
-  MailCommon::FilterManager *popFilterManager() const { return the_popFilterMgr; }
   MailCommon::FilterActionDict *filterActionDict() const { return the_filterActionDict; }
   MessageSender *msgSender();
 
@@ -460,7 +459,6 @@ private:
 
   UndoStack *the_undoStack;
   MailCommon::FilterManager *the_filterMgr;
-  MailCommon::FilterManager *the_popFilterMgr;
   MailCommon::FilterActionDict *the_filterActionDict;
   mutable KPIMIdentities::IdentityManager *mIdentityManager;
   AkonadiSender *the_msgSender;
