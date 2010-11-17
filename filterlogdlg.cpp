@@ -71,7 +71,7 @@ FilterLogDialog::FilterLogDialog( QWidget * parent )
   mTextEdit->setLineWrapMode ( KTextEdit::NoWrap );
 
   QString text;
-  const QStringList logEntries = FilterLog::instance()->getLogEntries();
+  const QStringList logEntries = FilterLog::instance()->logEntries();
   for ( QStringList::ConstIterator it = logEntries.constBegin();
         it != logEntries.constEnd(); ++it )
   {
@@ -97,7 +97,7 @@ FilterLogDialog::FilterLogDialog( QWidget * parent )
   mLogPatternDescBox = new QCheckBox( i18n("Log pattern description") );
   layout->addWidget( mLogPatternDescBox );
   mLogPatternDescBox->setChecked(
-      FilterLog::instance()->isContentTypeEnabled( FilterLog::patternDesc ) );
+      FilterLog::instance()->isContentTypeEnabled( FilterLog::PatternDescription ) );
   connect( mLogPatternDescBox, SIGNAL(clicked()),
            this, SLOT(slotChangeLogDetail(void)) );
   // TODO
@@ -107,7 +107,7 @@ FilterLogDialog::FilterLogDialog( QWidget * parent )
   mLogRuleEvaluationBox = new QCheckBox( i18n("Log filter &rule evaluation") );
   layout->addWidget( mLogRuleEvaluationBox );
   mLogRuleEvaluationBox->setChecked(
-      FilterLog::instance()->isContentTypeEnabled( FilterLog::ruleResult ) );
+      FilterLog::instance()->isContentTypeEnabled( FilterLog::RuleResult ) );
   connect( mLogRuleEvaluationBox, SIGNAL(clicked()),
            this, SLOT(slotChangeLogDetail(void)) );
   mLogRuleEvaluationBox->setWhatsThis(
@@ -121,7 +121,7 @@ FilterLogDialog::FilterLogDialog( QWidget * parent )
   mLogPatternResultBox = new QCheckBox( i18n("Log filter pattern evaluation") );
   layout->addWidget( mLogPatternResultBox );
   mLogPatternResultBox->setChecked(
-      FilterLog::instance()->isContentTypeEnabled( FilterLog::patternResult ) );
+      FilterLog::instance()->isContentTypeEnabled( FilterLog::PatternResult ) );
   connect( mLogPatternResultBox, SIGNAL(clicked()),
            this, SLOT(slotChangeLogDetail(void)) );
   // TODO
@@ -131,7 +131,7 @@ FilterLogDialog::FilterLogDialog( QWidget * parent )
   mLogFilterActionBox = new QCheckBox( i18n("Log filter actions") );
   layout->addWidget( mLogFilterActionBox );
   mLogFilterActionBox->setChecked(
-      FilterLog::instance()->isContentTypeEnabled( FilterLog::appliedAction ) );
+      FilterLog::instance()->isContentTypeEnabled( FilterLog::AppliedAction ) );
   connect( mLogFilterActionBox, SIGNAL(clicked()),
            this, SLOT(slotChangeLogDetail(void)) );
   // TODO
@@ -144,7 +144,7 @@ FilterLogDialog::FilterLogDialog( QWidget * parent )
   mLogMemLimitSpin->setMinimum( 1 );
   mLogMemLimitSpin->setMaximum( 1024 * 256 ); // 256 MB
   // value in the QSpinBox is in KB while it's in Byte in the FilterLog
-  mLogMemLimitSpin->setValue( FilterLog::instance()->getMaxLogSize() / 1024 );
+  mLogMemLimitSpin->setValue( FilterLog::instance()->maxLogSize() / 1024 );
   mLogMemLimitSpin->setSuffix( " KB" );
   mLogMemLimitSpin->setSpecialValueText(
     i18nc("@label:spinbox Set the size of the logfile to unlimited.", "unlimited") );
@@ -189,16 +189,16 @@ void FilterLogDialog::slotLogStateChanged()
 {
   mLogActiveBox->setChecked( FilterLog::instance()->isLogging() );
   mLogPatternDescBox->setChecked(
-      FilterLog::instance()->isContentTypeEnabled( FilterLog::patternDesc ) );
+      FilterLog::instance()->isContentTypeEnabled( FilterLog::PatternDescription ) );
   mLogRuleEvaluationBox->setChecked(
-      FilterLog::instance()->isContentTypeEnabled( FilterLog::ruleResult ) );
+      FilterLog::instance()->isContentTypeEnabled( FilterLog::RuleResult ) );
   mLogPatternResultBox->setChecked(
-      FilterLog::instance()->isContentTypeEnabled( FilterLog::patternResult ) );
+      FilterLog::instance()->isContentTypeEnabled( FilterLog::PatternResult ) );
   mLogFilterActionBox->setChecked(
-      FilterLog::instance()->isContentTypeEnabled( FilterLog::appliedAction ) );
+      FilterLog::instance()->isContentTypeEnabled( FilterLog::AppliedAction ) );
 
   // value in the QSpinBox is in KB while it's in Byte in the FilterLog
-  int newLogSize = FilterLog::instance()->getMaxLogSize() / 1024;
+  int newLogSize = FilterLog::instance()->maxLogSize() / 1024;
   if ( mLogMemLimitSpin->value() != newLogSize )
     mLogMemLimitSpin->setValue( newLogSize );
 }
@@ -207,23 +207,23 @@ void FilterLogDialog::slotLogStateChanged()
 void FilterLogDialog::slotChangeLogDetail()
 {
   if ( mLogPatternDescBox->isChecked() !=
-       FilterLog::instance()->isContentTypeEnabled( FilterLog::patternDesc ) )
-    FilterLog::instance()->setContentTypeEnabled( FilterLog::patternDesc,
+       FilterLog::instance()->isContentTypeEnabled( FilterLog::PatternDescription ) )
+    FilterLog::instance()->setContentTypeEnabled( FilterLog::PatternDescription,
                                                   mLogPatternDescBox->isChecked() );
 
   if ( mLogRuleEvaluationBox->isChecked() !=
-       FilterLog::instance()->isContentTypeEnabled( FilterLog::ruleResult ) )
-    FilterLog::instance()->setContentTypeEnabled( FilterLog::ruleResult,
+       FilterLog::instance()->isContentTypeEnabled( FilterLog::RuleResult ) )
+    FilterLog::instance()->setContentTypeEnabled( FilterLog::RuleResult,
                                                   mLogRuleEvaluationBox->isChecked() );
 
   if ( mLogPatternResultBox->isChecked() !=
-       FilterLog::instance()->isContentTypeEnabled( FilterLog::patternResult ) )
-    FilterLog::instance()->setContentTypeEnabled( FilterLog::patternResult,
+       FilterLog::instance()->isContentTypeEnabled( FilterLog::PatternResult ) )
+    FilterLog::instance()->setContentTypeEnabled( FilterLog::PatternResult,
                                                   mLogPatternResultBox->isChecked() );
 
   if ( mLogFilterActionBox->isChecked() !=
-       FilterLog::instance()->isContentTypeEnabled( FilterLog::appliedAction ) )
-    FilterLog::instance()->setContentTypeEnabled( FilterLog::appliedAction,
+       FilterLog::instance()->isContentTypeEnabled( FilterLog::AppliedAction ) )
+    FilterLog::instance()->setContentTypeEnabled( FilterLog::AppliedAction,
                                                   mLogFilterActionBox->isChecked() );
 }
 
