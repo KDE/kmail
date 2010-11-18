@@ -1216,13 +1216,6 @@ void KMMainWidget::slotFilter()
   FilterIf->filterManager()->openDialog( this );
 }
 
-
-//-----------------------------------------------------------------------------
-void KMMainWidget::slotPopFilter()
-{
-  //FilterIf->popFilterManager()->openDialog( this );
-}
-
 void KMMainWidget::slotManageSieveScripts()
 {
   if ( !kmkernel->askToGoOnline() ) {
@@ -3279,12 +3272,6 @@ void KMMainWidget::setupActions()
     action->setMenuRole( QAction::NoRole ); // do not move to application menu on OS X
     actionCollection()->addAction("filter", action );
     connect(action, SIGNAL(triggered(bool) ), SLOT(slotFilter()));
-  }
-  {
-    //KAction *action = new KAction(i18n("Configure &POP Filters..."), this);
-    //actionCollection()->addAction("popFilter", action );
-    //action->setMenuRole( QAction::NoRole ); // do not move to application menu on OS X
-    //connect(action, SIGNAL(triggered(bool) ), SLOT(slotPopFilter()));
   }
   {
     KAction *action = new KAction(i18n("Manage &Sieve Scripts..."), this);

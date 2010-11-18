@@ -79,7 +79,7 @@ class KMFilterListBox : public QGroupBox
   Q_OBJECT
 public:
   /** Constructor. */
-  explicit KMFilterListBox( const QString & title, QWidget* parent=0, const char* name=0, bool popFilter = false);
+  explicit KMFilterListBox( const QString & title, QWidget* parent=0);
 
   /** Destructor. */
   ~KMFilterListBox();
@@ -97,9 +97,6 @@ public:
       is true, an empty filter is created to improve the usability of the
       dialog in case no filter has been defined so far.*/
   void loadFilterList( bool createDummyFilter );
-
-  /** Returns wheather the global option 'Show Later Msgs' is set or not */
-  bool showLaterMsgs() const;
 
   void insertFilter( MailCommon::MailFilter* aFilter );
 
@@ -140,9 +137,6 @@ public slots:
   /** Called when the user clicks either 'Apply' or 'OK' in
       KMFilterDlg. Updates the filter list in the KMFilterMgr. */
   void slotApplyFilterChanges( KDialog::ButtonCode );
-  /** Called when the user toggles the 'Show Download Later Msgs'
-      Checkbox in the Global Options section */
-  void slotShowLaterToggled(bool aOn);
 
 protected slots:
   /** Called when the user clicks on a filter in the filter
@@ -182,37 +176,7 @@ private:
   void enableControls();
 
   void swapNeighbouringFilters( int untouchedOne, int movedOne);
-  bool bPopFilter;
 };
-
-
-
-class KMPopFilterActionWidget : public QGroupBox
-{
-  Q_OBJECT
-public:
-  explicit KMPopFilterActionWidget( const QString & title,
-                                    QWidget * parent = 0,
-                                    const char * name = 0 );
-  void setAction( MailCommon::PopFilterAction aAction );
-  MailCommon::PopFilterAction action();
-
-public slots:
-  void reset();
-
-private slots:
-  void slotActionClicked( QAbstractButton *btn );
-
-private:
-  MailCommon::PopFilterAction mAction;
-  MailCommon::MailFilter mFilter;
-  QMap<MailCommon::PopFilterAction, QRadioButton*> mActionMap;
-  QMap<QAbstractButton*, MailCommon::PopFilterAction> mButtonMap;
-
-signals: // Signals
-  void actionChanged( const MailCommon::PopFilterAction aAction );
-};
-
 
 /** The filter dialog. This is a non-modal dialog used to manage
     KMail's filters. It should only be called through KMFilterMgr::openDialog.
@@ -276,8 +240,7 @@ public:
   /** Create the filter dialog. The only class which should be able to
       do this is KMFilterMgr. This ensures that there is only a
       single filter dialog */
-  explicit KMFilterDlg( QWidget* parent=0, bool popFilter=false,
-               bool createDummyFilter=true );
+  explicit KMFilterDlg( QWidget* parent=0, bool createDummyFilter=true );
 
   /** Called from KMFilterMgr. Creates a new filter and presets
       the first rule with "field equals value". Internally forwarded
@@ -294,8 +257,6 @@ public slots:
    * KMFilterActionEdit::setActionList.
    */
   void slotFilterSelected(MailCommon::MailFilter * aFilter);
-  /** Action for popFilter */
-  void slotActionChanged(const MailCommon::PopFilterAction aAction);
   /** Override QDialog::accept to allow disabling close */
   virtual void accept();
 
@@ -338,8 +299,6 @@ protected:
   MailCommon::SearchPatternEdit *mPatternEdit;
   /** The widget that allows editing of the filter actions. */
   MailCommon::FilterActionWidgetLister *mActionLister;
-  /** The widget that allows editing the popFilter actions. */
-  KMPopFilterActionWidget *mActionGroup;
   /** Lets the user select whether to apply this filter on
       inbound/outbound messages, both, or only on explicit CTRL-J. */
   QCheckBox *mApplyOnIn, *mApplyOnOut, *mApplyBeforeOut, *mApplyOnCtrlJ;
@@ -360,7 +319,6 @@ protected:
   QCheckBox *mShowLaterBtn;
 
   MailCommon::MailFilter *mFilter;
-  bool bPopFilter;
   bool mDoNotClose;
 };
 

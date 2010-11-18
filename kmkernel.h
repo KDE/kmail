@@ -336,7 +336,7 @@ public:
   MailCommon::FilterActionDict *filterActionDict() const { return the_filterActionDict; }
   MessageSender *msgSender();
 
-  /*reimp*/ void openFilterDialog(bool popFilter = false, bool createDummyFilter = true);
+  /*reimp*/ void openFilterDialog(bool createDummyFilter = true);
   /*reimp*/ void createFilter(const QByteArray& field, const QString& value);
 
   /** return the pointer to the identity manager */

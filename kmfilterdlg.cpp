@@ -122,7 +122,6 @@ I18N_NOOP( "<qt><p>Check this button to force the confirmation dialog to be "
 
 // The anchor of the filter dialog's help.
 const char * KMFilterDlgHelpAnchor =  "filters-id" ;
-const char * KMPopFilterDlgHelpAnchor =  "popfilters-id" ;
 
 //=============================================================================
 //
@@ -130,20 +129,16 @@ const char * KMPopFilterDlgHelpAnchor =  "popfilters-id" ;
 //
 //=============================================================================
 
-KMFilterDlg::KMFilterDlg(QWidget* parent, bool popFilter, bool createDummyFilter )
+KMFilterDlg::KMFilterDlg(QWidget* parent, bool createDummyFilter )
   : KDialog( parent ),
-  bPopFilter(popFilter),
   mDoNotClose( false )
 {
-  if ( popFilter )
-    setCaption( i18n("POP3 Filter Rules") );
-  else
-    setCaption( i18n("Filter Rules") );
+  setCaption( i18n("Filter Rules") );
   setButtons( Help|Ok|Apply|Cancel|User1|User2 );
   setModal( false );
   setButtonFocus( Ok );
   KWindowSystem::setIcons( winId(), qApp->windowIcon().pixmap(IconSize(KIconLoader::Desktop),IconSize(KIconLoader::Desktop)), qApp->windowIcon().pixmap(IconSize(KIconLoader::Small),IconSize(KIconLoader::Small)) );
-  setHelp( (bPopFilter)? KMPopFilterDlgHelpAnchor: KMFilterDlgHelpAnchor );
+  setHelp( KMFilterDlgHelpAnchor );
   setButtonText( User1, i18n("Import...") );
   setButtonText( User2, i18n("Export...") );
   connect( this, SIGNAL(user1Clicked()),
@@ -162,28 +157,26 @@ KMFilterDlg::KMFilterDlg(QWidget* parent, bool popFilter, bool createDummyFilter
   QWidget *page1 = 0;
   QWidget *page2 = 0;
 
-  mFilterList = new KMFilterListBox( i18n("Available Filters"), w, 0, bPopFilter);
+  mFilterList = new KMFilterListBox( i18n("Available Filters"), w );
   topLayout->addWidget( mFilterList, 1 /*stretch*/ );
 
-  if(!bPopFilter) {
-    KTabWidget *tabWidget = new KTabWidget( w );
-    tabWidget->setObjectName( "kmfd_tab" );
-    topLayout->addWidget( tabWidget );
+  KTabWidget *tabWidget = new KTabWidget( w );
+  tabWidget->setObjectName( "kmfd_tab" );
+  topLayout->addWidget( tabWidget );
 
-    page1 = new QWidget( tabWidget );
-    tabWidget->addTab( page1, i18nc("General mail filter settings.", "General") );
-    hbl = new QHBoxLayout( page1 );
-    hbl->setObjectName( "kmfd_hbl" );
-    hbl->setSpacing( spacingHint() );
-    hbl->setMargin( marginHint() );
+  page1 = new QWidget( tabWidget );
+  tabWidget->addTab( page1, i18nc("General mail filter settings.", "General") );
+  hbl = new QHBoxLayout( page1 );
+  hbl->setObjectName( "kmfd_hbl" );
+  hbl->setSpacing( spacingHint() );
+  hbl->setMargin( marginHint() );
 
-    page2 = new QWidget( tabWidget );
-    tabWidget->addTab( page2, i18nc("Advanced mail filter settings.","Advanced") );
-    vbl2 = new QVBoxLayout( page2 );
-    vbl2->setObjectName( "kmfd_vbl2" );
-    vbl2->setSpacing( spacingHint() );
-    vbl2->setMargin( marginHint() );
-  }
+  page2 = new QWidget( tabWidget );
+  tabWidget->addTab( page2, i18nc("Advanced mail filter settings.","Advanced") );
+  vbl2 = new QVBoxLayout( page2 );
+  vbl2->setObjectName( "kmfd_vbl2" );
+  vbl2->setSpacing( spacingHint() );
+  vbl2->setMargin( marginHint() );
 
   QVBoxLayout *vbl = new QVBoxLayout();
   hbl->addLayout( vbl );
@@ -191,118 +184,105 @@ KMFilterDlg::KMFilterDlg(QWidget* parent, bool popFilter, bool createDummyFilter
   vbl->setSpacing( spacingHint() );
   hbl->setStretchFactor( vbl, 2 );
 
-  QGroupBox *patternGroupBox = new QGroupBox( i18n("Filter Criteria"), bPopFilter ? w : page1 );
+  QGroupBox *patternGroupBox = new QGroupBox( i18n("Filter Criteria"), page1 );
   QHBoxLayout *layout = new QHBoxLayout( patternGroupBox );
   layout->setContentsMargins( 0, 0, 0, 0 );
-  mPatternEdit = new MailCommon::SearchPatternEdit(patternGroupBox, bPopFilter );
+  mPatternEdit = new MailCommon::SearchPatternEdit(patternGroupBox);
   layout->addWidget( mPatternEdit );
 
   vbl->addWidget( patternGroupBox, 0, Qt::AlignTop );
 
-  if(bPopFilter){
-    mActionGroup = new KMPopFilterActionWidget( i18n("Filter Action"), w );
-    vbl->addWidget( mActionGroup, 0, Qt::AlignTop );
+  QGroupBox *agb = new QGroupBox( i18n("Filter Actions"), page1 );
+  QHBoxLayout *layout2 = new QHBoxLayout;
+  mActionLister = new MailCommon::FilterActionWidgetLister( agb );
+  layout2->addWidget( mActionLister );
+  agb->setLayout( layout2 );
+  vbl->addWidget( agb, 0, Qt::AlignTop );
 
-    mGlobalsBox = new QGroupBox( i18n("Global Options"), w);
-    QHBoxLayout *layout = new QHBoxLayout;
-    mShowLaterBtn = new QCheckBox( i18n("Always &show matched 'Download Later' messages in confirmation dialog"), mGlobalsBox);
-    mShowLaterBtn->setWhatsThis( i18n(_wt_filterdlg_showLater) );
-    layout->addWidget( mShowLaterBtn );
-    mGlobalsBox->setLayout( layout );
-    vbl->addWidget( mGlobalsBox, 0, Qt::AlignTop );
+  mAdvOptsGroup = new QGroupBox (i18n("Advanced Options"), page2);
+  {
+    QGridLayout *gl = new QGridLayout();
+    QVBoxLayout *vbl3 = new QVBoxLayout();
+    gl->addLayout( vbl3, 0, 0 );
+    vbl3->setObjectName( "vbl3" );
+    vbl3->setSpacing( spacingHint() );
+    vbl3->addStretch( 1 );
+    mApplyOnIn = new QCheckBox( i18n("Apply this filter to incoming messages:"), mAdvOptsGroup );
+    vbl3->addWidget( mApplyOnIn );
+    QButtonGroup *bg = new QButtonGroup( mAdvOptsGroup );
+    bg->setObjectName( "bg" );
+    mApplyOnForAll = new QRadioButton( i18n("from all accounts"), mAdvOptsGroup );
+    bg->addButton( mApplyOnForAll );
+    vbl3->addWidget( mApplyOnForAll );
+    mApplyOnForTraditional = new QRadioButton( i18n("from all but online IMAP accounts"), mAdvOptsGroup );
+    bg->addButton( mApplyOnForTraditional );
+    vbl3->addWidget( mApplyOnForTraditional );
+    mApplyOnForChecked = new QRadioButton( i18n("from checked accounts only"), mAdvOptsGroup );
+    bg->addButton( mApplyOnForChecked );
+    vbl3->addWidget( mApplyOnForChecked );
+    vbl3->addStretch( 2 );
+
+    mAccountList = new QTreeWidget( mAdvOptsGroup );
+    mAccountList->setObjectName( "accountList" );
+    mAccountList->setColumnCount( 2 );
+    QStringList headerNames;
+    headerNames << i18n("Account Name") << i18n("Type");
+    mAccountList->setHeaderItem( new QTreeWidgetItem( headerNames ) );
+    mAccountList->setAllColumnsShowFocus( true );
+    mAccountList->setFrameStyle( QFrame::WinPanel + QFrame::Sunken );
+    mAccountList->setSortingEnabled( false );
+    mAccountList->setRootIsDecorated( false );
+    gl->addWidget( mAccountList, 0, 1, 4, 3 );
+
+    mApplyBeforeOut = new QCheckBox( i18n("Apply this filter &before sending messages"), mAdvOptsGroup );
+    mApplyBeforeOut->setToolTip( i18n( "<p>The filter will be triggered <b>before</b> the message is sent and it will affect both the local copy and the sent copy of the message.</p>"
+          "<p>This is required if the recipient's copy also needs to be modified.</p>" ) );
+    gl->addWidget( mApplyBeforeOut, 5, 0, 1, 4 );
+
+    mApplyOnOut = new QCheckBox( i18n("Apply this filter to &sent messages"), mAdvOptsGroup );
+    mApplyOnOut->setToolTip( i18n( "<p>The filter will be triggered <b>after</b> the message is sent and it will only affect the local copy of the message.</p>"
+          "<p>If the recipient's copy also needs to be modified, please use \"Apply this filter <b>before</b> sending messages\".</p>" ) );
+    gl->addWidget( mApplyOnOut, 4, 0, 1, 4 );
+
+    mApplyOnCtrlJ = new QCheckBox( i18n("Apply this filter on manual &filtering"), mAdvOptsGroup );
+    gl->addWidget( mApplyOnCtrlJ, 6, 0, 1, 4 );
+
+    mStopProcessingHere = new QCheckBox( i18n("If this filter &matches, stop processing here"), mAdvOptsGroup );
+    gl->addWidget( mStopProcessingHere, 7, 0, 1, 4 );
+    mConfigureShortcut = new QCheckBox( i18n("Add this filter to the Apply Filter menu"), mAdvOptsGroup );
+    gl->addWidget( mConfigureShortcut, 8, 0, 1, 2 );
+    QLabel *keyButtonLabel = new QLabel( i18n( "Shortcut:" ), mAdvOptsGroup );
+    keyButtonLabel->setAlignment( Qt::AlignVCenter | Qt::AlignRight );
+    gl->addWidget( keyButtonLabel, 8, 2, 1, 1);
+    mKeySeqWidget = new KKeySequenceWidget( mAdvOptsGroup );
+    mKeySeqWidget->setObjectName( "FilterShortcutSelector" );
+    gl->addWidget( mKeySeqWidget, 8, 3, 1, 1);
+    mKeySeqWidget->setEnabled( false );
+    mKeySeqWidget->setModifierlessAllowed( true );
+    mKeySeqWidget->setCheckActionCollections(
+                           kmkernel->getKMMainWidget()->actionCollections() );
+    mConfigureToolbar = new QCheckBox( i18n("Additionally add this filter to the toolbar"), mAdvOptsGroup );
+    gl->addWidget( mConfigureToolbar, 9, 0, 1, 4 );
+    mConfigureToolbar->setEnabled( false );
+
+    KHBox *hbox = new KHBox( mAdvOptsGroup );
+    mFilterActionLabel = new QLabel( i18n( "Icon for this filter:" ),
+                                     hbox );
+    mFilterActionLabel->setEnabled( false );
+
+    mFilterActionIconButton = new KIconButton( hbox );
+    mFilterActionLabel->setBuddy( mFilterActionIconButton );
+    mFilterActionIconButton->setIconType( KIconLoader::NoGroup, KIconLoader::Action, false );
+    mFilterActionIconButton->setIconSize( 16 );
+    mFilterActionIconButton->setIcon( "system-run" );
+    mFilterActionIconButton->setEnabled( false );
+
+    gl->addWidget( hbox, 10, 0, 1, 4 );
+
+    mAdvOptsGroup->setLayout( gl );
   }
-  else {
-    QGroupBox *agb = new QGroupBox( i18n("Filter Actions"), page1 );
-    QHBoxLayout *layout = new QHBoxLayout;
-    mActionLister = new MailCommon::FilterActionWidgetLister( agb );
-    layout->addWidget( mActionLister );
-    agb->setLayout( layout );
-    vbl->addWidget( agb, 0, Qt::AlignTop );
+  vbl2->addWidget( mAdvOptsGroup, 0, Qt::AlignTop );
 
-    mAdvOptsGroup = new QGroupBox (i18n("Advanced Options"), page2);
-    {
-      QGridLayout *gl = new QGridLayout();
-      QVBoxLayout *vbl3 = new QVBoxLayout();
-      gl->addLayout( vbl3, 0, 0 );
-      vbl3->setObjectName( "vbl3" );
-      vbl3->setSpacing( spacingHint() );
-      vbl3->addStretch( 1 );
-      mApplyOnIn = new QCheckBox( i18n("Apply this filter to incoming messages:"), mAdvOptsGroup );
-      vbl3->addWidget( mApplyOnIn );
-      QButtonGroup *bg = new QButtonGroup( mAdvOptsGroup );
-      bg->setObjectName( "bg" );
-      mApplyOnForAll = new QRadioButton( i18n("from all accounts"), mAdvOptsGroup );
-      bg->addButton( mApplyOnForAll );
-      vbl3->addWidget( mApplyOnForAll );
-      mApplyOnForTraditional = new QRadioButton( i18n("from all but online IMAP accounts"), mAdvOptsGroup );
-      bg->addButton( mApplyOnForTraditional );
-      vbl3->addWidget( mApplyOnForTraditional );
-      mApplyOnForChecked = new QRadioButton( i18n("from checked accounts only"), mAdvOptsGroup );
-      bg->addButton( mApplyOnForChecked );
-      vbl3->addWidget( mApplyOnForChecked );
-      vbl3->addStretch( 2 );
-
-      mAccountList = new QTreeWidget( mAdvOptsGroup );
-      mAccountList->setObjectName( "accountList" );
-      mAccountList->setColumnCount( 2 );
-      QStringList headerNames;
-      headerNames << i18n("Account Name") << i18n("Type");
-      mAccountList->setHeaderItem( new QTreeWidgetItem( headerNames ) );
-      mAccountList->setAllColumnsShowFocus( true );
-      mAccountList->setFrameStyle( QFrame::WinPanel + QFrame::Sunken );
-      mAccountList->setSortingEnabled( false );
-      mAccountList->setRootIsDecorated( false );
-      gl->addWidget( mAccountList, 0, 1, 4, 3 );
-
-      mApplyBeforeOut = new QCheckBox( i18n("Apply this filter &before sending messages"), mAdvOptsGroup );
-      mApplyBeforeOut->setToolTip( i18n( "<p>The filter will be triggered <b>before</b> the message is sent and it will affect both the local copy and the sent copy of the message.</p>"
-            "<p>This is required if the recipient's copy also needs to be modified.</p>" ) );
-      gl->addWidget( mApplyBeforeOut, 5, 0, 1, 4 );
-
-      mApplyOnOut = new QCheckBox( i18n("Apply this filter to &sent messages"), mAdvOptsGroup );
-      mApplyOnOut->setToolTip( i18n( "<p>The filter will be triggered <b>after</b> the message is sent and it will only affect the local copy of the message.</p>"
-            "<p>If the recipient's copy also needs to be modified, please use \"Apply this filter <b>before</b> sending messages\".</p>" ) );
-      gl->addWidget( mApplyOnOut, 4, 0, 1, 4 );
-
-      mApplyOnCtrlJ = new QCheckBox( i18n("Apply this filter on manual &filtering"), mAdvOptsGroup );
-      gl->addWidget( mApplyOnCtrlJ, 6, 0, 1, 4 );
-
-      mStopProcessingHere = new QCheckBox( i18n("If this filter &matches, stop processing here"), mAdvOptsGroup );
-      gl->addWidget( mStopProcessingHere, 7, 0, 1, 4 );
-      mConfigureShortcut = new QCheckBox( i18n("Add this filter to the Apply Filter menu"), mAdvOptsGroup );
-      gl->addWidget( mConfigureShortcut, 8, 0, 1, 2 );
-      QLabel *keyButtonLabel = new QLabel( i18n( "Shortcut:" ), mAdvOptsGroup );
-      keyButtonLabel->setAlignment( Qt::AlignVCenter | Qt::AlignRight );
-      gl->addWidget( keyButtonLabel, 8, 2, 1, 1);
-      mKeySeqWidget = new KKeySequenceWidget( mAdvOptsGroup );
-      mKeySeqWidget->setObjectName( "FilterShortcutSelector" );
-      gl->addWidget( mKeySeqWidget, 8, 3, 1, 1);
-      mKeySeqWidget->setEnabled( false );
-      mKeySeqWidget->setModifierlessAllowed( true );
-      mKeySeqWidget->setCheckActionCollections(
-                             kmkernel->getKMMainWidget()->actionCollections() );
-      mConfigureToolbar = new QCheckBox( i18n("Additionally add this filter to the toolbar"), mAdvOptsGroup );
-      gl->addWidget( mConfigureToolbar, 9, 0, 1, 4 );
-      mConfigureToolbar->setEnabled( false );
-
-      KHBox *hbox = new KHBox( mAdvOptsGroup );
-      mFilterActionLabel = new QLabel( i18n( "Icon for this filter:" ),
-                                       hbox );
-      mFilterActionLabel->setEnabled( false );
-
-      mFilterActionIconButton = new KIconButton( hbox );
-      mFilterActionLabel->setBuddy( mFilterActionIconButton );
-      mFilterActionIconButton->setIconType( KIconLoader::NoGroup, KIconLoader::Action, false );
-      mFilterActionIconButton->setIconSize( 16 );
-      mFilterActionIconButton->setIcon( "system-run" );
-      mFilterActionIconButton->setEnabled( false );
-
-      gl->addWidget( hbox, 10, 0, 1, 4 );
-
-      mAdvOptsGroup->setLayout( gl );
-    }
-    vbl2->addWidget( mAdvOptsGroup, 0, Qt::AlignTop );
-  }
   // spacer:
   vbl->addStretch( 1 );
 
@@ -310,51 +290,41 @@ KMFilterDlg::KMFilterDlg(QWidget* parent, bool popFilter, bool createDummyFilter
   connect( mFilterList, SIGNAL(filterSelected(MailCommon::MailFilter*)),
            this, SLOT(slotFilterSelected(MailCommon::MailFilter*)) );
 
-  if (bPopFilter){
-    // set the state of the global setting 'show later msgs'
-    connect( mShowLaterBtn, SIGNAL(toggled(bool)),
-             mFilterList, SLOT(slotShowLaterToggled(bool)));
+  // transfer changes from the 'Apply this filter on...'
+  // combo box to the filter
+  connect( mApplyOnIn, SIGNAL(clicked()),
+           this, SLOT(slotApplicabilityChanged()) );
+  connect( mApplyOnForAll, SIGNAL(clicked()),
+           this, SLOT(slotApplicabilityChanged()) );
+  connect( mApplyOnForTraditional, SIGNAL(clicked()),
+           this, SLOT(slotApplicabilityChanged()) );
+  connect( mApplyOnForChecked, SIGNAL(clicked()),
+           this, SLOT(slotApplicabilityChanged()) );
+  connect( mApplyBeforeOut, SIGNAL(clicked()),
+           this, SLOT(slotApplicabilityChanged()) );
+  connect( mApplyOnOut, SIGNAL(clicked()),
+           this, SLOT(slotApplicabilityChanged()) );
+  connect( mApplyOnCtrlJ, SIGNAL(clicked()),
+           this, SLOT(slotApplicabilityChanged()) );
+  connect( mAccountList, SIGNAL( itemChanged(QTreeWidgetItem *,int) ),
+           this, SLOT( slotApplicableAccountsChanged() ) );
 
-    // set the action in the filter when changed
-    connect( mActionGroup, SIGNAL(actionChanged(const MailCommon::PopFilterAction)),
-             this, SLOT(slotActionChanged(const MailCommon::PopFilterAction)) );
-  } else {
-    // transfer changes from the 'Apply this filter on...'
-    // combo box to the filter
-    connect( mApplyOnIn, SIGNAL(clicked()),
-             this, SLOT(slotApplicabilityChanged()) );
-    connect( mApplyOnForAll, SIGNAL(clicked()),
-             this, SLOT(slotApplicabilityChanged()) );
-    connect( mApplyOnForTraditional, SIGNAL(clicked()),
-             this, SLOT(slotApplicabilityChanged()) );
-    connect( mApplyOnForChecked, SIGNAL(clicked()),
-             this, SLOT(slotApplicabilityChanged()) );
-    connect( mApplyBeforeOut, SIGNAL(clicked()),
-             this, SLOT(slotApplicabilityChanged()) );
-    connect( mApplyOnOut, SIGNAL(clicked()),
-             this, SLOT(slotApplicabilityChanged()) );
-    connect( mApplyOnCtrlJ, SIGNAL(clicked()),
-             this, SLOT(slotApplicabilityChanged()) );
-    connect( mAccountList, SIGNAL( itemChanged(QTreeWidgetItem *,int) ),
-             this, SLOT( slotApplicableAccountsChanged() ) );
+  // transfer changes from the 'stop processing here'
+  // check box to the filter
+  connect( mStopProcessingHere, SIGNAL(toggled(bool)),
+           this, SLOT(slotStopProcessingButtonToggled(bool)) );
 
-    // transfer changes from the 'stop processing here'
-    // check box to the filter
-    connect( mStopProcessingHere, SIGNAL(toggled(bool)),
-             this, SLOT(slotStopProcessingButtonToggled(bool)) );
+  connect( mConfigureShortcut, SIGNAL(toggled(bool)),
+           this, SLOT(slotConfigureShortcutButtonToggled(bool)) );
 
-    connect( mConfigureShortcut, SIGNAL(toggled(bool)),
-             this, SLOT(slotConfigureShortcutButtonToggled(bool)) );
+  connect( mKeySeqWidget, SIGNAL( keySequenceChanged( const QKeySequence& ) ),
+           this, SLOT( slotShortcutChanged( const QKeySequence& ) ) );
 
-    connect( mKeySeqWidget, SIGNAL( keySequenceChanged( const QKeySequence& ) ),
-             this, SLOT( slotShortcutChanged( const QKeySequence& ) ) );
+  connect( mConfigureToolbar, SIGNAL(toggled(bool)),
+           this, SLOT(slotConfigureToolbarButtonToggled(bool)) );
 
-    connect( mConfigureToolbar, SIGNAL(toggled(bool)),
-             this, SLOT(slotConfigureToolbarButtonToggled(bool)) );
-
-    connect( mFilterActionIconButton, SIGNAL( iconChanged( const QString& ) ),
-             this, SLOT( slotFilterActionIconChanged( const QString& ) ) );
-  }
+  connect( mFilterActionIconButton, SIGNAL( iconChanged( const QString& ) ),
+           this, SLOT( slotFilterActionIconChanged( const QString& ) ) );
 
   // reset all widgets here
   connect( mFilterList, SIGNAL(resetWidgets()),
@@ -386,8 +356,7 @@ KMFilterDlg::KMFilterDlg(QWidget* parent, bool popFilter, bool createDummyFilter
            this, SLOT( slotDisableAccept() ) );
 
   KConfigGroup geometry( KMKernel::self()->config(), "Geometry");
-  const char * configKey
-    = bPopFilter ? "popFilterDialogSize" : "filterDialogSize";
+  const char * configKey = "filterDialogSize";
   if ( geometry.hasKey( configKey ) )
     resize( geometry.readEntry( configKey, QSize() ));
   else
@@ -413,72 +382,58 @@ void KMFilterDlg::slotFinished() {
 
 void KMFilterDlg::slotSaveSize() {
   KConfigGroup geometry( KMKernel::self()->config(), "Geometry" );
-  geometry.writeEntry( bPopFilter ? "popFilterDialogSize" : "filterDialogSize", size() );
-}
-
-/** Set action of popFilter */
-void KMFilterDlg::slotActionChanged(const MailCommon::PopFilterAction aAction)
-{
-  mFilter->setAction(aAction);
+  geometry.writeEntry( "filterDialogSize", size() );
 }
 
 void KMFilterDlg::slotFilterSelected( MailFilter* aFilter )
 {
   assert( aFilter );
 
-  if (bPopFilter){
-    mActionGroup->setAction( aFilter->action() );
-    mGlobalsBox->setEnabled(true);
-    mShowLaterBtn->setChecked(mFilterList->showLaterMsgs());
-  } else {
-    mActionLister->setActionList( aFilter->actions() );
+  mActionLister->setActionList( aFilter->actions() );
 
-    mAdvOptsGroup->setEnabled( true );
-  }
+  mAdvOptsGroup->setEnabled( true );
 
   mPatternEdit->setSearchPattern( aFilter->pattern() );
   mFilter = aFilter;
 
-  if (!bPopFilter) {
-    kDebug() << "apply on inbound ==" << aFilter->applyOnInbound();
-    kDebug() << "apply on outbound ==" << aFilter->applyOnOutbound();
-    kDebug() << "apply before outbound == " << aFilter->applyBeforeOutbound();
-    kDebug() << "apply on explicit ==" << aFilter->applyOnExplicit();
+  kDebug() << "apply on inbound ==" << aFilter->applyOnInbound();
+  kDebug() << "apply on outbound ==" << aFilter->applyOnOutbound();
+  kDebug() << "apply before outbound == " << aFilter->applyBeforeOutbound();
+  kDebug() << "apply on explicit ==" << aFilter->applyOnExplicit();
 
-    // NOTE: setting these values activates the slot that sets them in
-    // the filter! So make sure we have the correct values _before_ we
-    // set the first one:
-    const bool applyOnIn = aFilter->applyOnInbound();
-    const bool applyOnForAll = aFilter->applicability() == MailFilter::All;
-    const bool applyOnTraditional = aFilter->applicability() == MailFilter::ButImap;
-    const bool applyBeforeOut = aFilter->applyBeforeOutbound();
-    const bool applyOnOut = aFilter->applyOnOutbound();
-    const bool applyOnExplicit = aFilter->applyOnExplicit();
-    const bool stopHere = aFilter->stopProcessingHere();
-    const bool configureShortcut = aFilter->configureShortcut();
-    const bool configureToolbar = aFilter->configureToolbar();
-    const QString icon = aFilter->icon();
-    const KShortcut shortcut( aFilter->shortcut() );
+  // NOTE: setting these values activates the slot that sets them in
+  // the filter! So make sure we have the correct values _before_ we
+  // set the first one:
+  const bool applyOnIn = aFilter->applyOnInbound();
+  const bool applyOnForAll = aFilter->applicability() == MailFilter::All;
+  const bool applyOnTraditional = aFilter->applicability() == MailFilter::ButImap;
+  const bool applyBeforeOut = aFilter->applyBeforeOutbound();
+  const bool applyOnOut = aFilter->applyOnOutbound();
+  const bool applyOnExplicit = aFilter->applyOnExplicit();
+  const bool stopHere = aFilter->stopProcessingHere();
+  const bool configureShortcut = aFilter->configureShortcut();
+  const bool configureToolbar = aFilter->configureToolbar();
+  const QString icon = aFilter->icon();
+  const KShortcut shortcut( aFilter->shortcut() );
 
-    mApplyOnIn->setChecked( applyOnIn );
-    mApplyOnForAll->setEnabled( applyOnIn );
-    mApplyOnForTraditional->setEnabled( applyOnIn );
-    mApplyOnForChecked->setEnabled( applyOnIn );
-    mApplyOnForAll->setChecked( applyOnForAll );
-    mApplyOnForTraditional->setChecked( applyOnTraditional );
-    mApplyOnForChecked->setChecked( !applyOnForAll && !applyOnTraditional );
-    mAccountList->setEnabled( mApplyOnForChecked->isEnabled() && mApplyOnForChecked->isChecked() );
-    slotUpdateAccountList();
-    mApplyBeforeOut->setChecked( applyBeforeOut );
-    mApplyOnOut->setChecked( applyOnOut );
-    mApplyOnCtrlJ->setChecked( applyOnExplicit );
-    mStopProcessingHere->setChecked( stopHere );
-    mConfigureShortcut->setChecked( configureShortcut );
-    mKeySeqWidget->setKeySequence( shortcut.primary(),
-                                   KKeySequenceWidget::NoValidate );
-    mConfigureToolbar->setChecked( configureToolbar );
-    mFilterActionIconButton->setIcon( icon );
-  }
+  mApplyOnIn->setChecked( applyOnIn );
+  mApplyOnForAll->setEnabled( applyOnIn );
+  mApplyOnForTraditional->setEnabled( applyOnIn );
+  mApplyOnForChecked->setEnabled( applyOnIn );
+  mApplyOnForAll->setChecked( applyOnForAll );
+  mApplyOnForTraditional->setChecked( applyOnTraditional );
+  mApplyOnForChecked->setChecked( !applyOnForAll && !applyOnTraditional );
+  mAccountList->setEnabled( mApplyOnForChecked->isEnabled() && mApplyOnForChecked->isChecked() );
+  slotUpdateAccountList();
+  mApplyBeforeOut->setChecked( applyBeforeOut );
+  mApplyOnOut->setChecked( applyOnOut );
+  mApplyOnCtrlJ->setChecked( applyOnExplicit );
+  mStopProcessingHere->setChecked( stopHere );
+  mConfigureShortcut->setChecked( configureShortcut );
+  mKeySeqWidget->setKeySequence( shortcut.primary(),
+                                 KKeySequenceWidget::NoValidate );
+  mConfigureToolbar->setChecked( configureToolbar );
+  mFilterActionIconButton->setIcon( icon );
 }
 
 void KMFilterDlg::slotReset()
@@ -486,22 +441,15 @@ void KMFilterDlg::slotReset()
   mFilter = 0;
   mPatternEdit->reset();
 
-  if(bPopFilter) {
-    mActionGroup->reset();
-    mGlobalsBox->setEnabled( false );
-  } else {
-    mActionLister->reset();
-    mAdvOptsGroup->setEnabled( false );
-    slotUpdateAccountList();
-  }
+  mActionLister->reset();
+  mAdvOptsGroup->setEnabled( false );
+  slotUpdateAccountList();
 }
 
 void KMFilterDlg::slotUpdateFilter()
 {
   mPatternEdit->updateSearchPattern();
-  if ( !bPopFilter ) {
-    mActionLister->updateActionList();
-  }
+  mActionLister->updateActionList();
 }
 
 void KMFilterDlg::slotApplicabilityChanged()
@@ -634,12 +582,9 @@ void KMFilterDlg::slotUpdateAccountList()
 //
 //=============================================================================
 
-KMFilterListBox::KMFilterListBox( const QString & title, QWidget *parent,
-                                  const char* name, bool popFilter )
-  : QGroupBox( title, parent ),
-    bPopFilter(popFilter)
+KMFilterListBox::KMFilterListBox( const QString & title, QWidget *parent )
+  : QGroupBox( title, parent )
 {
-  setObjectName( name );
   QVBoxLayout *layout = new QVBoxLayout();
 
   mIdxSelItem = -1;
@@ -738,7 +683,7 @@ void KMFilterListBox::createFilter( const QByteArray & field,
 {
   SearchRule::Ptr newRule = SearchRule::createInstance( field, SearchRule::FuncContains, value );
 
-  MailFilter *newFilter = new MailFilter( bPopFilter );
+  MailFilter *newFilter = new MailFilter();
   newFilter->pattern()->append( newRule );
   newFilter->pattern()->setName( QString("<%1>:%2").arg( QString::fromLatin1( field ) ).arg( value) );
 
@@ -748,11 +693,6 @@ void KMFilterListBox::createFilter( const QByteArray & field,
 
   insertFilter( newFilter );
   enableControls();
-}
-
-bool KMFilterListBox::showLaterMsgs() const
-{
-  return mShowLater;
 }
 
 void KMFilterListBox::slotUpdateFilterName()
@@ -788,11 +728,6 @@ void KMFilterListBox::slotUpdateFilterName()
   mListWidget->blockSignals(false);
 }
 
-void KMFilterListBox::slotShowLaterToggled(bool aOn)
-{
-  mShowLater = aOn;
-}
-
 void KMFilterListBox::slotApplyFilterChanges( KDialog::ButtonCode button )
 {
   bool closeAfterSaving;
@@ -811,17 +746,9 @@ void KMFilterListBox::slotApplyFilterChanges( KDialog::ButtonCode button )
   // by now all edit widgets should have written back
   // their widget's data into our filter list.
 
-  FilterManager *fm;
-/*  if ( bPopFilter )
-    fm = kmkernel->popFilterManager();
-    else*/
-  Q_ASSERT( !bPopFilter );
-  fm = kmkernel->filterManager();
+  FilterManager *fm = kmkernel->filterManager();
 
-  QList<MailFilter *> newFilters = filtersForSaving( closeAfterSaving );
-
-  if ( bPopFilter )
-    fm->setShowLaterMsgs( mShowLater );
+  const QList<MailFilter*> newFilters = filtersForSaving( closeAfterSaving );
 
   fm->setFilters( newFilters );
 }
@@ -893,7 +820,7 @@ void KMFilterListBox::slotSelected( int aIdx )
 void KMFilterListBox::slotNew()
 {
   // just insert a new filter.
-  insertFilter( new MailFilter( bPopFilter ) );
+  insertFilter( new MailFilter() );
   enableControls();
 }
 
@@ -1061,17 +988,7 @@ void KMFilterListBox::loadFilterList( bool createDummyFilter )
   mFilterList.clear();
   mListWidget->clear();
 
-  const FilterManager *manager = 0;
-  if(bPopFilter)
-  {
-    Q_ASSERT_X( false, "loadFilterList", "pop filters aren't implemented" );
-    //mShowLater = kmkernel->popFilterManager()->showLaterMsgs();
-    //manager = kmkernel->popFilterManager();
-  }
-  else
-  {
-    manager = kmkernel->filterManager();
-  }
+  const FilterManager *manager = kmkernel->filterManager();
   Q_ASSERT( manager );
 
   QList<MailFilter*>::const_iterator it;
@@ -1142,84 +1059,9 @@ void KMFilterListBox::swapNeighbouringFilters( int untouchedOne, int movedOne )
 }
 
 
-//=============================================================================
-//
-// class KMPopFilterActionWidget
-//
-//=============================================================================
-
-KMPopFilterActionWidget::KMPopFilterActionWidget( const QString& title, QWidget *parent, const char* name )
-  : QGroupBox( title, parent )
-{
-  setObjectName( name );
-  QVBoxLayout *layout = new QVBoxLayout( this );
-  QButtonGroup *bg = new QButtonGroup( this );
-
-  QRadioButton *downBtn = new QRadioButton( i18n("&Download mail"), this );
-  QRadioButton *laterBtn = new QRadioButton( i18n("Download mail la&ter"), this );
-  QRadioButton *deleteBtn = new QRadioButton( i18n("D&elete mail from server"), this );
-
-  layout->addWidget( downBtn );
-  layout->addWidget( laterBtn );
-  layout->addWidget( deleteBtn );
-  bg->addButton( downBtn );
-  bg->addButton( laterBtn );
-  bg->addButton( deleteBtn );
-
-  mActionMap.insert( Down, downBtn );
-  mActionMap.insert( Later, laterBtn );
-  mActionMap.insert( Delete, deleteBtn );
-
-  mButtonMap.insert( downBtn, Down );
-  mButtonMap.insert( laterBtn, Later );
-  mButtonMap.insert( deleteBtn, Delete );
-
-  connect( bg, SIGNAL(buttonClicked(QAbstractButton*)),
-	   this, SLOT(slotActionClicked(QAbstractButton*)) );
-}
-
-void KMPopFilterActionWidget::setAction( MailCommon::PopFilterAction aAction )
-{
-  if( aAction == NoAction)
-  {
-    aAction = Later;
-  }
-
-  mAction = aAction;
-
-  blockSignals( true );
-  if(!mActionMap[aAction]->isChecked())
-  {
-    mActionMap[aAction]->setChecked(true);
-  }
-  blockSignals( false );
-
-  setEnabled(true);
-}
-
-MailCommon::PopFilterAction  KMPopFilterActionWidget::action()
-{
-  return mAction;
-}
-
-void KMPopFilterActionWidget::slotActionClicked( QAbstractButton *btn )
-{
-  emit actionChanged( mButtonMap[btn] );
-  setAction( mButtonMap[btn] );
-}
-
-void KMPopFilterActionWidget::reset()
-{
-  blockSignals(true);
-  mActionMap[Down]->setChecked( true );
-  blockSignals(false);
-
-  setEnabled( false );
-}
-
 void KMFilterDlg::slotImportFilters()
 {
-  FilterImporterExporter importer( this, bPopFilter );
+  FilterImporterExporter importer( this );
   QList<MailFilter *> filters = importer.importFilters();
 
   // FIXME message box how many were imported?
@@ -1234,7 +1076,7 @@ void KMFilterDlg::slotImportFilters()
 
 void KMFilterDlg::slotExportFilters()
 {
-  FilterImporterExporter exporter( this, bPopFilter );
+  FilterImporterExporter exporter( this );
   QList<MailFilter *> filters = mFilterList->filtersForSaving( false );
   exporter.exportFilters( filters );
   QList<MailFilter *>::ConstIterator it;

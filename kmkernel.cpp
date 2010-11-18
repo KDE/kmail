@@ -1707,10 +1707,10 @@ QStringList KMKernel::customTemplates()
   return GlobalSettingsBase::self()->customTemplates();
 }
 
-void KMKernel::openFilterDialog(bool popFilter, bool createDummyFilter)
+void KMKernel::openFilterDialog(bool createDummyFilter)
 {
   if ( !mFilterEditDialog ) {
-    mFilterEditDialog = new KMFilterDlg( mainWin(), popFilter, createDummyFilter );
+    mFilterEditDialog = new KMFilterDlg( mainWin(), createDummyFilter );
     mFilterEditDialog->setObjectName( "filterdialog" );
   }
   mFilterEditDialog->show();

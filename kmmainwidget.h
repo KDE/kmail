@@ -306,7 +306,6 @@ class KMAIL_EXPORT KMMainWidget : public QWidget
     void getTransportMenu();
     void slotHelp();
     void slotFilter();
-    void slotPopFilter();
     void slotManageSieveScripts();
     void slotAddrBook();
     void slotImport();
