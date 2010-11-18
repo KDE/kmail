@@ -3860,23 +3860,22 @@ void KMMainWidget::initializeFilterActions()
   mApplyFilterActionsMenu->menu()->addAction( mApplyAllFiltersAction );
   bool addedSeparator = false;
 
-  QList<MailFilter*>::const_iterator it = FilterIf->filterManager()->filters().begin();
-  for ( ;it != FilterIf->filterManager()->filters().end(); ++it ) {
-    if ( !(*it)->isEmpty() && (*it)->configureShortcut() ) {
-      QString filterName = QString( "Filter %1").arg( (*it)->name() );
+  foreach ( MailFilter *filter, FilterIf->filterManager()->filters() ) {
+    if ( !filter->isEmpty() && filter->configureShortcut() ) {
+      QString filterName = QString( "Filter %1").arg( filter->name() );
       QString normalizedName = filterName.replace(' ', '_');
       if ( action( normalizedName.toUtf8() ) ) {
         continue;
       }
-      KMMetaFilterActionCommand *filterCommand = new KMMetaFilterActionCommand( *it, this );
+      KMMetaFilterActionCommand *filterCommand = new KMMetaFilterActionCommand( filter, this );
       mFilterCommands.append( filterCommand );
-      QString displayText = i18n( "Filter %1", (*it)->name() );
-      QString icon = (*it)->icon();
+      QString displayText = i18n( "Filter %1", filter->name() );
+      QString icon = filter->icon();
       if ( icon.isEmpty() ) {
         icon = "system-run";
       }
       KAction *filterAction = new KAction( KIcon( icon ), displayText, actionCollection() );
-      filterAction->setIconText( (*it)->toolbarName() );
+      filterAction->setIconText( filter->toolbarName() );
 
       // The shortcut configuration is done in the filter dialog.
       // The shortcut set in the shortcut dialog would not be saved back to
@@ -3887,7 +3886,7 @@ void KMMainWidget::initializeFilterActions()
                                      filterAction );
       connect( filterAction, SIGNAL(triggered(bool) ),
                filterCommand, SLOT(start()) );
-      filterAction->setShortcuts( (*it)->shortcut() );
+      filterAction->setShortcuts( filter->shortcut() );
       if ( !addedSeparator ) {
         QAction *a = mApplyFilterActionsMenu->menu()->addSeparator();
         mFilterMenuActions.append( a );
@@ -3895,7 +3894,7 @@ void KMMainWidget::initializeFilterActions()
       }
       mApplyFilterActionsMenu->menu()->addAction( filterAction );
       mFilterMenuActions.append( filterAction );
-      if ( (*it)->configureToolbar() ) {
+      if ( filter->configureToolbar() ) {
         mFilterTBarActions.append( filterAction );
       }
     }
