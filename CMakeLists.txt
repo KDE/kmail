@@ -76,9 +76,7 @@ if (NOT WINCE AND KDEPIM_BUILD_DESKTOP)
      identitylistview.cpp
      identitydialog.cpp
      globalsettings.cpp
-     snippetdlg.cpp
      snippetwidget.cpp
-     snippetitem.cpp
      kmreaderwin.cpp
      kmsystemtray.cpp
      kmfilterdlg.cpp
@@ -162,7 +160,6 @@ if (NOT WINCE AND KDEPIM_BUILD_DESKTOP)
     ui/composercryptoconfiguration.ui
     ui/warningconfiguration.ui
     ui/smimeconfiguration.ui
-    ui/snippetdlgbase.ui
     ui/miscpagemaintab.ui
     ui/securitypagegeneraltab.ui
     ui/identitypage.ui

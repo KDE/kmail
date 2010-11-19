@@ -14,69 +14,31 @@
 #ifndef __SNIPPETWIDGET_H__
 #define __SNIPPETWIDGET_H__
 
-#include "kmcomposereditor.h"
+#include <QtGui/QTreeView>
 
-#include <qstring.h>
-#include <QTreeWidget>
-#include <qrect.h>
+namespace MailCommon {
+class SnippetsManager;
+}
 
-#include <ktexteditor/view.h>
-#include <KSharedConfig>
-
-class QTreeWidgetItem;
-class QContextMenuEvent;
-class SnippetItem;
-class QWidget;
 class KActionCollection;
-using Message::KMeditor;
+class KMComposerEditor;
+
+class QContextMenuEvent;
 
 /**
-@author Robert Gruber
-*/
-class SnippetWidget : public QTreeWidget
+ * @author Robert Gruber
+ */
+class SnippetWidget : public QTreeView
 {
-  Q_OBJECT
-
-public:
-    SnippetWidget(KMComposerEditor *editor, KActionCollection *actionCollection, QWidget *parent = 0);
+  public:
+    SnippetWidget( KMComposerEditor *editor, KActionCollection *actionCollection, QWidget *parent = 0 );
     ~SnippetWidget();
-    QList<SnippetItem * > * getList() { return (&_list); }
-    void writeConfig();
 
-private slots:
-    void readConfig();
+  protected:
+    virtual void contextMenuEvent( QContextMenuEvent* );
 
-protected:
-    virtual void dragMoveEvent( QDragMoveEvent * event );
-    virtual void dragEnterEvent( QDragEnterEvent * event );
-    virtual void startDrag( Qt::DropActions supportedActions );
-    virtual void dropEvent( QDropEvent * event );
-    virtual void contextMenuEvent( QContextMenuEvent *e );
-
-private:
-    void insertIntoActiveView( const QString &text );
-    QString parseText( const QString &text );
-    QString showSingleVarDialog( const QString &var, QMap<QString, QString> * mapSave );
-    QTreeWidgetItem *selectedItem() const;
-    SnippetItem* makeItem( SnippetItem *parent, const QString &name,
-                           const QString &text, const QKeySequence &keySeq );
-
-    QList<SnippetItem * > _list;
-    QMap<QString, QString> _mapSaved;
-    KMComposerEditor *mEditor;
-    KActionCollection* mActionCollection;
-    KSharedConfig::Ptr _cfg;
-
-public slots:
-    void slotRemove();
-    void slotEdit( QTreeWidgetItem *item_ = 0 );
-    void slotEditGroup();
-    void slotAdd();
-    void slotAddGroup();
-    void slotExecute();
-
-protected slots:
-    void slotExecuted( QTreeWidgetItem *item =  0 );
+  private:
+    MailCommon::SnippetsManager *mSnippetsManager;
 };
 
 #endif

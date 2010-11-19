@@ -156,6 +156,7 @@ using Sonnet::DictionaryComboBox;
 using MailTransport::TransportManager;
 using MailTransport::Transport;
 using KPIM::RecentAddresses;
+using Message::KMeditor;
 
 KMail::Composer *KMail::makeComposer( const KMime::Message::Ptr &msg, Composer::TemplateContext context,
                                       uint identity, const QString & textSelection,
