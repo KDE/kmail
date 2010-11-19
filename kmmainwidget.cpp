@@ -201,6 +201,7 @@ K_GLOBAL_STATIC( KMMainWidget::PtrList, theMainWidgetList )
     mVacationIndicatorActive( false ),
     mGoToFirstUnreadMessageInSelectedFolder( false ),
     mCheckMailInProgress( false ),
+    mMoveOrCopyToDialog( 0 ),
     mSelectFromAllFoldersDialog( 0 )
 {
   // must be the first line of the constructor:
@@ -1043,6 +1044,20 @@ void KMMainWidget::createWidgets()
     mCollectionProperties = mAkonadiStandardActionManager->action( Akonadi::StandardActionManager::CollectionProperties );
   }
   {
+    mMoveMsgToFolderAction = new KAction( i18n("Move Message to Folder"), this );
+    mMoveMsgToFolderAction->setShortcut( QKeySequence( Qt::Key_M ) );
+    actionCollection()->addAction( "move_message_to_folder", mMoveMsgToFolderAction );
+    connect( mMoveMsgToFolderAction, SIGNAL( triggered( bool ) ),
+             SLOT( slotMoveSelectedMessageToFolder() ) );
+  }
+  {
+    KAction *action = new KAction( i18n("Copy Message to Folder"), this );
+    actionCollection()->addAction( "copy_message_to_folder", action );
+    connect( action, SIGNAL( triggered( bool ) ),
+             SLOT( slotCopySelectedMessagesToFolder() ) );
+    action->setShortcut( QKeySequence( Qt::Key_C ) );
+  }
+  {
     KAction *action = new KAction( i18n("Jump to Folder..."), this );
     actionCollection()->addAction( "jump_to_folder", action );
     connect( action, SIGNAL( triggered ( bool ) ),
@@ -1099,7 +1114,6 @@ void KMMainWidget::createWidgets()
              this, SLOT( slotSelectFocusedMessage() ) );
     action->setShortcut( QKeySequence( Qt::ALT+Qt::Key_Space ) );
   }
-
   connect( kmkernel->folderCollectionMonitor(), SIGNAL( itemAdded( const Akonadi::Item &, const Akonadi::Collection &) ),
            SLOT(slotItemAdded( const Akonadi::Item &, const Akonadi::Collection&) ) );
   connect( kmkernel->folderCollectionMonitor(), SIGNAL( itemRemoved( const Akonadi::Item & ) ),
@@ -1109,6 +1123,8 @@ void KMMainWidget::createWidgets()
   connect( kmkernel->folderCollectionMonitor(), SIGNAL( collectionChanged( const Akonadi::Collection &, const QSet<QByteArray> &) ), SLOT( slotCollectionChanged( const Akonadi::Collection&, const QSet<QByteArray>& ) ) );
   connect( FilterIf->filterManager(), SIGNAL( itemNotMoved( Akonadi::Item ) ),
            SLOT( slotItemNotMovedByFilters( Akonadi::Item ) ) );
+
+
 }
 
 void KMMainWidget::slotCreateNewTab( bool preferNewTab )
@@ -1786,6 +1802,16 @@ void KMMainWidget::slotDeleteThread( bool confirmDelete )
     moveMessageSelected( ref, Akonadi::Collection(), confirmDelete );
 }
 
+FolderSelectionDialog* KMMainWidget::moveOrCopyToDialog()
+{
+  if ( mMoveOrCopyToDialog == 0 ) {
+    FolderSelectionDialog::SelectionFolderOption options = FolderSelectionDialog::HideVirtualFolder;
+    mMoveOrCopyToDialog = new FolderSelectionDialog( this, options );
+    mMoveOrCopyToDialog->setModal( true );
+  }
+  return mMoveOrCopyToDialog;
+}
+
 FolderSelectionDialog* KMMainWidget::selectFromAllFoldersDialog()
 {
   if ( mSelectFromAllFoldersDialog == 0 ) {
@@ -1797,6 +1823,27 @@ FolderSelectionDialog* KMMainWidget::selectFromAllFoldersDialog()
   }
   return mSelectFromAllFoldersDialog;
 }
+
+void KMMainWidget::slotMoveSelectedMessageToFolder()
+{
+  moveOrCopyToDialog()->setCaption(  i18n( "Move Messages to Folder" ) );
+  if ( moveOrCopyToDialog()->exec() && moveOrCopyToDialog() ) {
+    const Akonadi::Collection dest = moveOrCopyToDialog()->selectedCollection();
+    if ( dest.isValid() ) {
+      moveSelectedMessagesToFolder( dest );
+    }
+  }
+}
+
+void KMMainWidget::moveSelectedMessagesToFolder( const Akonadi::Collection & dest )
+{
+   MessageList::Core::MessageItemSetReference ref = mMessagePane->selectionAsPersistentSet();
+  if ( ref != -1 ) {
+    //Need to verify if dest == src ??? akonadi do it for us.
+    moveMessageSelected( ref, dest, false );
+  }
+}
+
 
 void KMMainWidget::copyMessageSelected( const QList<Akonadi::Item> &selectMsg, const Akonadi::Collection &dest )
 {
@@ -1826,6 +1873,26 @@ void KMMainWidget::slotCopyMessagesCompleted( KMCommand *command )
       BroadcastStatus::instance()->setStatusMsg( i18n( "Copying messages canceled." ) );
   }
   // The command will autodelete itself and will also kill the set.
+}
+
+void KMMainWidget::slotCopySelectedMessagesToFolder()
+{
+  moveOrCopyToDialog()->setCaption( i18n( "Copy Messages to Folder" ) );
+
+  if ( moveOrCopyToDialog()->exec() && moveOrCopyToDialog() ) {
+    const Akonadi::Collection dest = moveOrCopyToDialog()->selectedCollection();
+    if ( dest.isValid() ) {
+      copySelectedMessagesToFolder( dest );
+    }
+  }
+}
+
+void KMMainWidget::copySelectedMessagesToFolder( const Akonadi::Collection& dest )
+{
+  const QList<Akonadi::Item > lstMsg = mMessagePane->selectionAsMessageItemList();
+  if ( !lstMsg.isEmpty() ) {
+    copyMessageSelected( lstMsg, dest );
+  }
 }
 
 //-----------------------------------------------------------------------------
@@ -3559,6 +3626,7 @@ void KMMainWidget::updateMessageActionsDelayed()
   }
 
   mMoveActionMenu->setEnabled( mass_actions && canDeleteMessages );
+  mMoveMsgToFolderAction->setEnabled( mass_actions && canDeleteMessages );
   //mCopyActionMenu->setEnabled( mass_actions );
 
   mDeleteAction->setEnabled( mass_actions && !readOnly );
