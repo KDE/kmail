@@ -30,6 +30,7 @@
 #define MAILINGLISTPROPERTIESDIALOG_H
 
 #include "messagecore/mailinglist.h"
+#include <kdeversion.h>
 #include <kdialog.h>
 #include "foldercollection.h"
 class QCheckBox;
@@ -37,6 +38,7 @@ class QPushButton;
 class QLabel;
 class KComboBox;
 class KEditListBox;
+class KEditListWidget;
 
 namespace KMail
 {
@@ -77,7 +79,11 @@ private:
   QPushButton  *mDetectButton;
   KComboBox    *mAddressCombo;
   int           mLastItem;
+#if KDE_IS_VERSION( 4, 5, 74 )
+  KEditListWidget *mEditList;
+#else
   KEditListBox *mEditList;
+#endif
   QLabel       *mMLId;
   MailingList   mMailingList;
 }; // End of class MailingListFolderProperties
