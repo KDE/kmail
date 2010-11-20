@@ -37,7 +37,11 @@
 
 #include <kcombobox.h>
 #include <klocale.h>
+#if KDE_IS_VERSION( 4, 5, 74 )
+#include <keditlistwidget.h>
+#else
 #include <keditlistbox.h>
+#endif
 #include <kdebug.h>
 #include <kmessagebox.h>
 #include <kmcommands.h>
