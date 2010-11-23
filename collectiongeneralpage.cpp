@@ -19,10 +19,6 @@
 #include "collectiongeneralpage.h"
 
 #include "collectionannotationsattribute.h"
-#include "foldercollection.h"
-#include "kmkernel.h"
-#include "mailkernel.h"
-#include "util.h"
 
 #include <akonadi/agentmanager.h>
 #include <akonadi/attributefactory.h>
@@ -32,7 +28,11 @@
 #include <kdialog.h>
 #include <klineedit.h>
 #include <klocale.h>
+#include <kmessagebox.h>
 #include <kpimidentities/identitycombo.h>
+#include <mailcommon/foldercollection.h>
+#include <mailcommon/mailkernel.h>
+#include <mailcommon/mailutil.h>
 
 #include <QtGui/QCheckBox>
 #include <QtGui/QHBoxLayout>
@@ -188,7 +188,7 @@ static CollectionGeneralPage::FolderContentsType typeFromKolabName( const QByteA
 void CollectionGeneralPage::init( const Akonadi::Collection &collection )
 {
   mIsLocalSystemFolder = CommonKernel->isSystemFolderCollection( collection );
-  mIsImapFolder = KMKernel::self()->isImapFolder( collection );
+  mIsImapFolder = collection.resource().contains( IMAP_RESOURCE_IDENTIFIER );
 
   mIsResourceFolder = (collection.parentCollection() == Akonadi::Collection::root());
   QLabel *label;
@@ -234,7 +234,7 @@ void CollectionGeneralPage::init( const Akonadi::Collection &collection )
             "your trash and spam folder.</p></qt>" ) );
   hbl->addWidget( mNotifyOnNewMailCheckBox );
 #if 0
-  if ( KMKernel::self()->isImapFolder( col ) ) {
+  if ( collection.resource().contains( IMAP_RESOURCE_IDENTIFIER ) ) {
     // should this folder be included in new-mail-checks?
 
     QHBoxLayout *nml = new QHBoxLayout();
@@ -298,7 +298,7 @@ void CollectionGeneralPage::init( const Akonadi::Collection &collection )
   ++row;
   label = new QLabel( i18n( "&Sender identity:" ), this );
   gl->addWidget( label, row, 0 );
-  mIdentityComboBox = new KPIMIdentities::IdentityCombo( KMKernel::self()->identityManager(), this );
+  mIdentityComboBox = new KPIMIdentities::IdentityCombo( KernelIf->identityManager(), this );
   label->setBuddy( mIdentityComboBox );
   gl->addWidget( mIdentityComboBox, row, 1 );
   mIdentityComboBox->setWhatsThis(
@@ -381,7 +381,7 @@ void CollectionGeneralPage::init( const Akonadi::Collection &collection )
     mIncidencesForComboBox = 0;
   }
 
-  if ( KMKernel::self()->isImapFolder( collection ) ) {
+  if ( collection.resource().contains( IMAP_RESOURCE_IDENTIFIER ) ) {
     mSharedSeenFlagsCheckBox = new QCheckBox( this );
     mSharedSeenFlagsCheckBox->setText( i18n( "Share unread state with all users" ) );
     mSharedSeenFlagsCheckBox->setChecked( sharedSeen );
