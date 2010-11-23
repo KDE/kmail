@@ -57,10 +57,8 @@ if (NOT WINCE AND KDEPIM_BUILD_DESKTOP)
 
   set(kmailprivate_LIB_SRCS
      collectionpane.cpp
-     collectionannotationsattribute.cpp
      collectiontemplatespage.cpp
      collectionmaintenancepage.cpp
-     collectiongeneralpage.cpp
      collectionviewpage.cpp
      collectionquotapage.cpp
      collectionquotapage_p.cpp

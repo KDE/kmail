@@ -34,7 +34,6 @@
 #include "kmcommands.h"
 #include "kmmainwin.h"
 #include "kmsystemtray.h"
-#include "collectionannotationsattribute.h"
 #include "customtemplatesmenu.h"
 #include "folderselectiondialog.h"
 #include "foldertreewidget.h"
@@ -53,13 +52,12 @@
 #endif
 
 #include "collectionaclpage.h"
-#include "collectiongeneralpage.h"
 #include "collectionmaintenancepage.h"
 #include "collectionquotapage.h"
 #include "collectiontemplatespage.h"
 #include "collectionviewpage.h"
 
-
+#include "mailcommon/collectiongeneralpage.h"
 #include "mailcommon/filtermanager.h"
 #include "mailcommon/mailfilter.h"
 
@@ -276,14 +274,12 @@ K_GLOBAL_STATIC( KMMainWidget::PtrList, theMainWidgetList )
 
   toggleSystemTray();
 
-  Akonadi::AttributeFactory::registerAttribute<Akonadi::CollectionAnnotationsAttribute>();
-
   { // make sure the pages are registered only once, since there can be multiple instances of KMMainWidget
     static bool pagesRegistered = false;
 
     if ( !pagesRegistered ) {
       Akonadi::CollectionPropertiesDialog::registerPage( new CollectionAclPageFactory );
-      Akonadi::CollectionPropertiesDialog::registerPage( new CollectionGeneralPageFactory );
+      Akonadi::CollectionPropertiesDialog::registerPage( new MailCommon::CollectionGeneralPageFactory );
       Akonadi::CollectionPropertiesDialog::registerPage( new CollectionMaintenancePageFactory );
       Akonadi::CollectionPropertiesDialog::registerPage( new CollectionQuotaPageFactory );
       Akonadi::CollectionPropertiesDialog::registerPage( new CollectionTemplatesPageFactory );
@@ -4208,7 +4204,7 @@ void KMMainWidget::slotCollectionProperties()
 
   const Akonadi::Collection collection = fetch.collections().first();
 
-  const QStringList pages = QStringList() << QLatin1String( "KMail::CollectionGeneralPage" )
+  const QStringList pages = QStringList() << QLatin1String( "MailCommon::CollectionGeneralPage" )
                                           << QLatin1String( "KMail::CollectionViewPage" )
                                           << QLatin1String( "Akonadi::CachePolicyPage" )
                                           << QLatin1String( "KMail::CollectionTemplatesPage" )
