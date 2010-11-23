@@ -50,7 +50,7 @@ using namespace MailCommon;
 CollectionGeneralPage::CollectionGeneralPage( QWidget *parent )
   : CollectionPropertiesPage( parent ), mFolderCollection( 0 )
 {
-  setPageTitle( i18nc("@title:tab General settings for a folder.", "General"));
+  setPageTitle( i18nc( "@title:tab General settings for a folder.", "General" ) );
 }
 
 CollectionGeneralPage::~CollectionGeneralPage()
@@ -167,6 +167,22 @@ static QByteArray kolabNameFromType( CollectionGeneralPage::FolderContentsType t
     default:
       return QByteArray();
   }
+}
+
+static CollectionGeneralPage::FolderContentsType typeFromKolabName( const QByteArray &name )
+{
+  if ( name == "task" || name == "task.default" )
+    return CollectionGeneralPage::ContentsTypeTask;
+  if ( name == "event" || name == "event.default" )
+    return CollectionGeneralPage::ContentsTypeCalendar;
+  if ( name == "contact" || name == "contact.default" )
+    return CollectionGeneralPage::ContentsTypeContact;
+  if ( name == "note" || name == "note.default" )
+    return CollectionGeneralPage::ContentsTypeNote;
+  if ( name == "journal" || name == "journal.default" )
+    return CollectionGeneralPage::ContentsTypeJournal;
+
+  return CollectionGeneralPage::ContentsTypeMail;
 }
 
 void CollectionGeneralPage::init( const Akonadi::Collection &collection )
@@ -295,16 +311,13 @@ void CollectionGeneralPage::init( const Akonadi::Collection &collection )
 
   CollectionGeneralPage::FolderContentsType contentsType = CollectionGeneralPage::ContentsTypeMail;
 
-  Collection colCopy = collection;
+  const CollectionAnnotationsAttribute *annotationAttribute = collection.attribute<CollectionAnnotationsAttribute>();
+  const QMap<QByteArray, QByteArray> annotations = (annotationAttribute ? annotationAttribute->annotations() : QMap<QByteArray, QByteArray>());
 
-  CollectionAnnotationsAttribute *attr = colCopy.attribute<CollectionAnnotationsAttribute>( Entity::AddIfMissing );
-  QMap<QByteArray, QByteArray> annotations = attr->annotations();
+  const bool sharedSeen = (annotations.value( KOLAB_SHAREDSEEN ) == "true");
+  const IncidencesFor incidencesFor = incidencesForFromString( annotations.value( KOLAB_INCIDENCESFOR ) );
+  const FolderContentsType folderType = typeFromKolabName( annotations.value( KOLAB_FOLDERTYPE ) );
 
-  bool sharedSeen = annotations.value(KOLAB_SHAREDSEEN) == "true";
-
-  IncidencesFor incidencesFor = incidencesForFromString( annotations.value(KOLAB_INCIDENCESFOR) );
-
-  // Should not be needed in akonadi powered kmail.
   // Only do make this settable, if the IMAP resource is enabled
   // and it's not the personal folders (those must not be changed)
   if ( collection.resource().contains( IMAP_RESOURCE_IDENTIFIER ) ) {
@@ -332,14 +345,11 @@ void CollectionGeneralPage::init( const Akonadi::Collection &collection )
   } else {
     mContentsComboBox = 0;
   }
-  mIncidencesForComboBox = 0;
-#if 0
-  mAlarmsBlockedCheckBox = 0;
-#endif
+
   // Kolab incidences-for annotation.
   // Show incidences-for combobox if the contents type can be changed (new folder),
   // or if it's set to calendar or task (existing folder)
-  if ( collection.contentMimeTypes().contains( "application/x-vnd.akonadi.calendar.event" ) ) {
+  if ( folderType == ContentsTypeCalendar || folderType == ContentsTypeTask ) {
     ++row;
     QLabel* label = new QLabel( i18n( "Generate free/&busy and activate alarms for:" ), this );
     gl->addWidget( label, row, 0 );
@@ -366,18 +376,7 @@ void CollectionGeneralPage::init( const Akonadi::Collection &collection )
             "since it is not known who will go to those events." );
 
     mIncidencesForComboBox->setWhatsThis( whatsThisForMyOwnFolders );
-
-    kDebug() << "SETTING" << incidencesFor;
     mIncidencesForComboBox->setCurrentIndex( incidencesFor );
-#if 0
-    ++row;
-    const QString whatsThisForReadOnlyFolders =
-      i18n( "This setting allows you to disable alarms for folders shared by others." );
-    mAlarmsBlockedCheckBox = new QCheckBox( this );
-    mAlarmsBlockedCheckBox->setText( i18n( "Block alarms locally" ) );
-    gl->addWidget( mAlarmsBlockedCheckBox, row, 0, 1, 1 );
-    mAlarmsBlockedCheckBox->setWhatsThis( whatsThisForReadOnlyFolders );
-#endif
   } else {
     mIncidencesForComboBox = 0;
   }

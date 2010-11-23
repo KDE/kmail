@@ -70,9 +70,6 @@ private slots:
 private:
   KComboBox *mContentsComboBox;
   KComboBox *mIncidencesForComboBox;
-#if 0
-  QCheckBox *mAlarmsBlockedCheckBox;
-#endif
   QCheckBox *mSharedSeenFlagsCheckBox;
 #if 0
   QCheckBox   *mNewMailCheckBox;
