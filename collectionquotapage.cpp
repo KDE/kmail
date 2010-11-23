@@ -48,6 +48,7 @@
 CollectionQuotaPage::CollectionQuotaPage( QWidget* parent )
   : CollectionPropertiesPage( parent )
 {
+  setObjectName( QLatin1String( "KMail::CollectionQuotaPage" ) );
   setPageTitle( i18n("Quota") );
   init();
 }

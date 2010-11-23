@@ -36,6 +36,7 @@ using namespace MailCommon;
 CollectionTemplatesPage::CollectionTemplatesPage(QWidget * parent) :
     CollectionPropertiesPage( parent ), mFolderCollection( 0 )
 {
+  setObjectName( QLatin1String( "KMail::CollectionTemplatesPage" ) );
   setPageTitle( i18n( "Templates" ) );
   init();
 }

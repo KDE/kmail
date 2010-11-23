@@ -72,4 +72,6 @@ class CollectionAclPage : public Akonadi::CollectionPropertiesPage
     bool mChanged;
 };
 
+AKONADI_COLLECTION_PROPERTIES_PAGE_FACTORY( CollectionAclPageFactory, CollectionAclPage )
+
 #endif

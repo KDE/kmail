@@ -74,6 +74,7 @@ private:
   int mShowSenderReceiverValue;
 };
 
+AKONADI_COLLECTION_PROPERTIES_PAGE_FACTORY( CollectionViewPageFactory, CollectionViewPage )
 
 #endif /* COLLECTIONVIEWPAGE_H */
 

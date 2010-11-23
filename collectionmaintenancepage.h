@@ -52,7 +52,7 @@ private:
   QLabel *mCollectionUnread;
 };
 
-
+AKONADI_COLLECTION_PROPERTIES_PAGE_FACTORY( CollectionMaintenancePageFactory, CollectionMaintenancePage )
 
 #endif /* COLLECTIONMAINTENANCEPAGE_H */
 

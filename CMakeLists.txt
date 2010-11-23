@@ -56,7 +56,6 @@ add_subdirectory(kcm_kpimidentities)
 if (NOT WINCE AND KDEPIM_BUILD_DESKTOP)
 
   set(kmailprivate_LIB_SRCS
-     kmcollectionpropertiesdialog.cpp
      collectionpane.cpp
      collectionannotationsattribute.cpp
      collectiontemplatespage.cpp

@@ -40,6 +40,7 @@ using namespace Akonadi;
 CollectionMaintenancePage::CollectionMaintenancePage(QWidget * parent) :
   CollectionPropertiesPage( parent ), mIsNotAVirtualCollection( true )
 {
+  setObjectName( QLatin1String( "KMail::CollectionMaintenancePage" ) );
   setPageTitle(  i18n("Maintenance") );
 }
 

@@ -96,6 +96,8 @@ CollectionAclPage::CollectionAclPage( QWidget *parent )
     mAclManager( new MailCommon::AclManager( this ) ),
     mChanged( false )
 {
+  setObjectName( QLatin1String( "KMail::CollectionAclPage" ) );
+
   setPageTitle( i18n( "Access Control" ) );
   init();
 }

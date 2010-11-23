@@ -55,5 +55,7 @@ private:
   bool mIsLocalSystemFolder;
 };
 
+AKONADI_COLLECTION_PROPERTIES_PAGE_FACTORY( CollectionTemplatesPageFactory, CollectionTemplatesPage )
+
 #endif /* COLLECTIONTEMPLATESPAGE_H */
 

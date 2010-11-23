@@ -47,11 +47,18 @@
 #include "tagactionmanager.h"
 #include "foldershortcutactionmanager.h"
 #include "collectionpane.h"
-#include "kmcollectionpropertiesdialog.h"
 #if !defined(NDEBUG)
     #include <ksieveui/sievedebugdialog.h>
     using KSieveUi::SieveDebugDialog;
 #endif
+
+#include "collectionaclpage.h"
+#include "collectiongeneralpage.h"
+#include "collectionmaintenancepage.h"
+#include "collectionquotapage.h"
+#include "collectiontemplatespage.h"
+#include "collectionviewpage.h"
+
 
 #include "mailcommon/filtermanager.h"
 #include "mailcommon/mailfilter.h"
@@ -270,6 +277,21 @@ K_GLOBAL_STATIC( KMMainWidget::PtrList, theMainWidgetList )
   toggleSystemTray();
 
   Akonadi::AttributeFactory::registerAttribute<Akonadi::CollectionAnnotationsAttribute>();
+
+  { // make sure the pages are registered only once, since there can be multiple instances of KMMainWidget
+    static bool pagesRegistered = false;
+
+    if ( !pagesRegistered ) {
+      Akonadi::CollectionPropertiesDialog::registerPage( new CollectionAclPageFactory );
+      Akonadi::CollectionPropertiesDialog::registerPage( new CollectionGeneralPageFactory );
+      Akonadi::CollectionPropertiesDialog::registerPage( new CollectionMaintenancePageFactory );
+      Akonadi::CollectionPropertiesDialog::registerPage( new CollectionQuotaPageFactory );
+      Akonadi::CollectionPropertiesDialog::registerPage( new CollectionTemplatesPageFactory );
+      Akonadi::CollectionPropertiesDialog::registerPage( new CollectionViewPageFactory );
+
+      pagesRegistered = true;
+    }
+  }
 
   KMainWindow *mainWin = dynamic_cast<KMainWindow*>(topLevelWidget());
   KStatusBar *sb =  mainWin ? mainWin->statusBar() : 0;
@@ -4175,20 +4197,27 @@ KAction *KMMainWidget::akonadiStandardAction( Akonadi::StandardMailActionManager
 
 void KMMainWidget::slotCollectionProperties()
 {
-  if (!mCurrentFolder) return;
+  if ( !mCurrentFolder )
+    return;
 
   Akonadi::CollectionAttributesSynchronizationJob sync( mCurrentFolder->collection() );
-  // FIXME: this hangs kmail entirely when opening the folder properties dialog!
-//  sync.exec();
   sync.start();
 
   Akonadi::CollectionFetchJob fetch( mCurrentFolder->collection(), Akonadi::CollectionFetchJob::Base );
   fetch.exec();
 
-  Akonadi::Collection c = fetch.collections().first();
+  const Akonadi::Collection collection = fetch.collections().first();
 
-  KMCollectionPropertiesDialog* dlg = new KMCollectionPropertiesDialog( c, this );
-  dlg->setCaption( i18nc( "@title:window", "Properties of Folder %1", c.name() ) );
+  const QStringList pages = QStringList() << QLatin1String( "KMail::CollectionGeneralPage" )
+                                          << QLatin1String( "KMail::CollectionViewPage" )
+                                          << QLatin1String( "Akonadi::CachePolicyPage" )
+                                          << QLatin1String( "KMail::CollectionTemplatesPage" )
+                                          << QLatin1String( "KMail::CollectionAclPage" )
+                                          << QLatin1String( "KMail::CollectionQuotaPage" )
+                                          << QLatin1String( "KMail::CollectionMaintenancePage" );
+
+  Akonadi::CollectionPropertiesDialog *dlg = new Akonadi::CollectionPropertiesDialog( collection, pages, this );
+  dlg->setCaption( i18nc( "@title:window", "Properties of Folder %1", collection.name() ) );
   dlg->resize( 500, 400 );
   dlg->show();
 }

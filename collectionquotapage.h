@@ -54,6 +54,7 @@ private:
   QuotaWidget* mQuotaWidget;
 };
 
+AKONADI_COLLECTION_PROPERTIES_PAGE_FACTORY( CollectionQuotaPageFactory, CollectionQuotaPage )
 
 #endif /* COLLECTIONQUOTAPAGE_H */
 

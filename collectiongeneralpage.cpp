@@ -50,6 +50,7 @@ using namespace MailCommon;
 CollectionGeneralPage::CollectionGeneralPage( QWidget *parent )
   : CollectionPropertiesPage( parent ), mFolderCollection( 0 )
 {
+  setObjectName( QLatin1String( "KMail::CollectionGeneralPage" ) );
   setPageTitle( i18nc( "@title:tab General settings for a folder.", "General" ) );
 }
 
