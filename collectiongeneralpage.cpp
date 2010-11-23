@@ -16,108 +16,108 @@
   51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
 */
 
-
 #include "collectiongeneralpage.h"
-#include <klineedit.h>
-#include <QHBoxLayout>
-#include <QVBoxLayout>
-#include <QLabel>
-#include <KLocale>
-#include <KComboBox>
-#include <QCheckBox>
-#include <KDialog>
-#include <kpimidentities/identitycombo.h>
-
-#include <akonadi/attributefactory.h>
-#include <akonadi/agentmanager.h>
-#include <akonadi/collection.h>
-#include <akonadi/entitydisplayattribute.h>
 
 #include "collectionannotationsattribute.h"
+#include "foldercollection.h"
+#include "kmkernel.h"
+#include "mailkernel.h"
+#include "util.h"
+
+#include <akonadi/agentmanager.h>
+#include <akonadi/attributefactory.h>
+#include <akonadi/collection.h>
+#include <akonadi/entitydisplayattribute.h>
+#include <kcombobox.h>
+#include <kdialog.h>
+#include <klineedit.h>
+#include <klocale.h>
+#include <kpimidentities/identitycombo.h>
+
+#include <QtGui/QCheckBox>
+#include <QtGui/QHBoxLayout>
+#include <QtGui/QLabel>
+#include <QtGui/QVBoxLayout>
 
 // TODO Where should these be?
 #define KOLAB_FOLDERTYPE "/vendor/kolab/folder-type"
 #define KOLAB_INCIDENCESFOR "/vendor/kolab/incidences-for"
 #define KOLAB_SHAREDSEEN "/vendor/cmu/cyrus-imapd/sharedseen"
 
-#include "kmkernel.h"
-#include "mailkernel.h"
-#include "foldercollection.h"
-#include "util.h"
-
 using namespace Akonadi;
 using namespace MailCommon;
 
-CollectionGeneralPage::CollectionGeneralPage(QWidget * parent) :
-    CollectionPropertiesPage( parent ), mFolderCollection( 0 )
+CollectionGeneralPage::CollectionGeneralPage( QWidget *parent )
+  : CollectionPropertiesPage( parent ), mFolderCollection( 0 )
 {
-  
-  setPageTitle(  i18nc("@title:tab General settings for a folder.", "General"));
-
+  setPageTitle( i18nc("@title:tab General settings for a folder.", "General"));
 }
 
 CollectionGeneralPage::~CollectionGeneralPage()
 {
 }
 
-static void addLine( QWidget *parent, QVBoxLayout* layout )
+static void addLine( QWidget *parent, QVBoxLayout *layout )
 {
-   QFrame *line = new QFrame( parent );
-   line->setObjectName( "line" );
-   line->setGeometry( QRect( 80, 150, 250, 20 ) );
-   line->setFrameShape( QFrame::HLine );
-   line->setFrameShadow( QFrame::Sunken );
-   line->setFrameShape( QFrame::HLine );
-   layout->addWidget( line );
+  QFrame *line = new QFrame( parent );
+  line->setObjectName( "line" );
+  line->setGeometry( QRect( 80, 150, 250, 20 ) );
+  line->setFrameShape( QFrame::HLine );
+  line->setFrameShadow( QFrame::Sunken );
+  line->setFrameShape( QFrame::HLine );
+  layout->addWidget( line );
 }
 
-static QString incidencesForToString( CollectionGeneralPage::IncidencesFor r )
+static QString incidencesForToString( CollectionGeneralPage::IncidencesFor type )
 {
-  kDebug() << r;
-  switch ( r ) {
-  case CollectionGeneralPage::IncForNobody:
-    return "nobody";
-  case CollectionGeneralPage::IncForAdmins:
-    return "admins";
-  case CollectionGeneralPage::IncForReaders:
-    return "readers";
+  switch ( type ) {
+    case CollectionGeneralPage::IncForNobody:
+      return "nobody";
+    case CollectionGeneralPage::IncForAdmins:
+      return "admins";
+    case CollectionGeneralPage::IncForReaders:
+      return "readers";
   }
+
   return QString(); // can't happen
 }
 
-static CollectionGeneralPage::IncidencesFor incidencesForFromString( const QString &str )
+static CollectionGeneralPage::IncidencesFor incidencesForFromString( const QString &string )
 {
-  if ( str == "nobody" ) {
+  if ( string == "nobody" ) {
     return CollectionGeneralPage::IncForNobody;
   }
-  if ( str == "admins" ) {
+  if ( string == "admins" ) {
     return CollectionGeneralPage::IncForAdmins;
   }
-  if ( str == "readers" ) {
+  if ( string == "readers" ) {
     return CollectionGeneralPage::IncForReaders;
   }
+
   return CollectionGeneralPage::IncForAdmins; // by default
 }
 
-
-//----------------------------------------------------------------------------
-// Used by the "General" and "Maintenance" tabs
-static QString folderContentDesc( CollectionGeneralPage::FolderContentsType type )
+static QString folderContentDescription( CollectionGeneralPage::FolderContentsType type )
 {
-  switch ( type )
-  {
-  case CollectionGeneralPage::ContentsTypeMail:     return ( i18nc( "type of folder content", "Mail" ) );
-  case CollectionGeneralPage::ContentsTypeCalendar: return ( i18nc( "type of folder content", "Calendar" ) );
-  case CollectionGeneralPage::ContentsTypeContact:  return ( i18nc( "type of folder content", "Contacts" ) );
-  case CollectionGeneralPage::ContentsTypeNote:     return ( i18nc( "type of folder content", "Notes" ) );
-  case CollectionGeneralPage::ContentsTypeTask:     return ( i18nc( "type of folder content", "Tasks" ) );
-  case CollectionGeneralPage::ContentsTypeJournal:  return ( i18nc( "type of folder content", "Journal" ) );
-  default:                   return ( i18nc( "type of folder content", "Unknown" ) );
+  switch ( type ) {
+    case CollectionGeneralPage::ContentsTypeMail:
+      return ( i18nc( "type of folder content", "Mail" ) );
+    case CollectionGeneralPage::ContentsTypeCalendar:
+      return ( i18nc( "type of folder content", "Calendar" ) );
+    case CollectionGeneralPage::ContentsTypeContact:
+      return ( i18nc( "type of folder content", "Contacts" ) );
+    case CollectionGeneralPage::ContentsTypeNote:
+      return ( i18nc( "type of folder content", "Notes" ) );
+    case CollectionGeneralPage::ContentsTypeTask:
+      return ( i18nc( "type of folder content", "Tasks" ) );
+    case CollectionGeneralPage::ContentsTypeJournal:
+      return ( i18nc( "type of folder content", "Journal" ) );
+    default:
+      return ( i18nc( "type of folder content", "Unknown" ) );
   }
 }
 
-
-static CollectionGeneralPage::FolderContentsType contentsTypeFromString( const QString& type )
+static CollectionGeneralPage::FolderContentsType contentsTypeFromString( const QString &type )
 {
   if ( type == i18nc( "type of folder content", "Mail" ) )
     return CollectionGeneralPage::ContentsTypeMail;
@@ -135,7 +135,7 @@ static CollectionGeneralPage::FolderContentsType contentsTypeFromString( const Q
   return CollectionGeneralPage::ContentsTypeMail; //safety return value
 }
 
-static QString typeNameFromKolabType( const QByteArray& type )
+static QString typeNameFromKolabType( const QByteArray &type )
 {
   if ( type == "task" || type == "task.default" )
     return i18nc( "type of folder content", "Tasks" );
@@ -153,27 +153,28 @@ static QString typeNameFromKolabType( const QByteArray& type )
 
 static QByteArray kolabNameFromType( CollectionGeneralPage::FolderContentsType type )
 {
-  switch ( type )
-  {
-  case CollectionGeneralPage::ContentsTypeCalendar: return "event";
-  case CollectionGeneralPage::ContentsTypeContact:  return "contact";
-  case CollectionGeneralPage::ContentsTypeNote:     return "note";
-  case CollectionGeneralPage::ContentsTypeTask:     return "task";
-  case CollectionGeneralPage::ContentsTypeJournal:  return "journal";
-  default:                   return QByteArray();
+  switch ( type ) {
+    case CollectionGeneralPage::ContentsTypeCalendar:
+      return "event";
+    case CollectionGeneralPage::ContentsTypeContact:
+      return "contact";
+    case CollectionGeneralPage::ContentsTypeNote:
+      return "note";
+    case CollectionGeneralPage::ContentsTypeTask:
+      return "task";
+    case CollectionGeneralPage::ContentsTypeJournal:
+      return "journal";
+    default:
+      return QByteArray();
   }
 }
 
-void CollectionGeneralPage::init(const Akonadi::Collection &col)
+void CollectionGeneralPage::init( const Akonadi::Collection &collection )
 {
-  mIsLocalSystemFolder = CommonKernel->isSystemFolderCollection( col );
-  mIsImapFolder = KMKernel::self()->isImapFolder( col );
+  mIsLocalSystemFolder = CommonKernel->isSystemFolderCollection( collection );
+  mIsImapFolder = KMKernel::self()->isImapFolder( collection );
 
-#if 0
-  mIsResourceFolder = kmkernel->iCalIface().isStandardResourceFolder( mDlg->folder() );
-#endif
-  //TODO port it
-  mIsResourceFolder = false;
+  mIsResourceFolder = (collection.parentCollection() == Akonadi::Collection::root());
   QLabel *label;
 
   QVBoxLayout *topLayout = new QVBoxLayout( this );
@@ -188,11 +189,11 @@ void CollectionGeneralPage::init(const Akonadi::Collection &col)
     topLayout->addItem( hl );
     hl->setSpacing( KDialog::spacingHint() );
     hl->setMargin( KDialog::marginHint() );
-    label = new QLabel( i18nc("@label:textbox Name of the folder.","&Name:"), this );
+    label = new QLabel( i18nc( "@label:textbox Name of the folder.", "&Name:" ), this );
     hl->addWidget( label );
 
     mNameEdit = new KLineEdit( this );
-    mNameEdit->setEnabled( col.rights() & Collection::CanChangeCollection );
+    mNameEdit->setEnabled( collection.rights() & Collection::CanChangeCollection );
     label->setBuddy( mNameEdit );
     hl->addWidget( mNameEdit );
   }
@@ -242,7 +243,7 @@ void CollectionGeneralPage::init(const Akonadi::Collection &col)
   hbl->setSpacing( KDialog::spacingHint() );
   hbl->setMargin( KDialog::marginHint() );
   mKeepRepliesInSameFolderCheckBox =
-    new QCheckBox( i18n("Keep replies in this folder" ), this );
+    new QCheckBox( i18n( "Keep replies in this folder" ), this );
   mKeepRepliesInSameFolderCheckBox->setWhatsThis(
                    i18n( "Check this option if you want replies you write "
                          "to mails in this folder to be put in this same folder "
@@ -274,28 +275,27 @@ void CollectionGeneralPage::init(const Akonadi::Collection &col)
 
   // sender identity
   ++row;
-  mUseDefaultIdentityCheckBox = new QCheckBox( i18n("Use &default identity"),
-                                               this );
+  mUseDefaultIdentityCheckBox = new QCheckBox( i18n( "Use &default identity" ), this );
   gl->addWidget( mUseDefaultIdentityCheckBox );
-  connect( mUseDefaultIdentityCheckBox, SIGNAL( stateChanged(int) ),
+  connect( mUseDefaultIdentityCheckBox, SIGNAL( stateChanged( int ) ),
            this, SLOT( slotIdentityCheckboxChanged() ) );
   ++row;
-  label = new QLabel( i18n("&Sender identity:"), this );
+  label = new QLabel( i18n( "&Sender identity:" ), this );
   gl->addWidget( label, row, 0 );
   mIdentityComboBox = new KPIMIdentities::IdentityCombo( KMKernel::self()->identityManager(), this );
   label->setBuddy( mIdentityComboBox );
   gl->addWidget( mIdentityComboBox, row, 1 );
   mIdentityComboBox->setWhatsThis(
       i18n( "Select the sender identity to be used when writing new mail "
-        "or replying to mail in this folder. This means that if you are in "
-        "one of your work folders, you can make KMail use the corresponding "
-        "sender email address, signature and signing or encryption keys "
-        "automatically. Identities can be set up in the main configuration "
-        "dialog. (Settings -> Configure KMail)") );
+            "or replying to mail in this folder. This means that if you are in "
+            "one of your work folders, you can make KMail use the corresponding "
+            "sender email address, signature and signing or encryption keys "
+            "automatically. Identities can be set up in the main configuration "
+            "dialog. (Settings -> Configure KMail)") );
 
   CollectionGeneralPage::FolderContentsType contentsType = CollectionGeneralPage::ContentsTypeMail;
 
-  Collection colCopy = col;
+  Collection colCopy = collection;
 
   CollectionAnnotationsAttribute *attr = colCopy.attribute<CollectionAnnotationsAttribute>( Entity::AddIfMissing );
   QMap<QByteArray, QByteArray> annotations = attr->annotations();
@@ -304,28 +304,28 @@ void CollectionGeneralPage::init(const Akonadi::Collection &col)
 
   IncidencesFor incidencesFor = incidencesForFromString( annotations.value(KOLAB_INCIDENCESFOR) );
 
-    // Should not be needed in akonadi powered kmail.
-    // Only do make this settable, if the IMAP resource is enabled
-    // and it's not the personal folders (those must not be changed)
-  if ( col.resource().contains( IMAP_RESOURCE_IDENTIFIER ) )
-  {
+  // Should not be needed in akonadi powered kmail.
+  // Only do make this settable, if the IMAP resource is enabled
+  // and it's not the personal folders (those must not be changed)
+  if ( collection.resource().contains( IMAP_RESOURCE_IDENTIFIER ) ) {
     ++row;
-    label = new QLabel( i18n("&Folder contents:"), this );
+    label = new QLabel( i18n( "&Folder contents:" ), this );
     gl->addWidget( label, row, 0 );
     mContentsComboBox = new KComboBox( this );
     label->setBuddy( mContentsComboBox );
     gl->addWidget( mContentsComboBox, row, 1 );
-    mContentsComboBox->addItem( folderContentDesc( ContentsTypeMail ) );
-    mContentsComboBox->addItem( folderContentDesc( ContentsTypeCalendar ) );
-    mContentsComboBox->addItem( folderContentDesc( ContentsTypeContact ) );
-    mContentsComboBox->addItem( folderContentDesc( ContentsTypeNote ) );
-    mContentsComboBox->addItem( folderContentDesc( ContentsTypeTask ) );
-    mContentsComboBox->addItem( folderContentDesc( ContentsTypeJournal ) );
+    mContentsComboBox->addItem( folderContentDescription( ContentsTypeMail ) );
+    mContentsComboBox->addItem( folderContentDescription( ContentsTypeCalendar ) );
+    mContentsComboBox->addItem( folderContentDescription( ContentsTypeContact ) );
+    mContentsComboBox->addItem( folderContentDescription( ContentsTypeNote ) );
+    mContentsComboBox->addItem( folderContentDescription( ContentsTypeTask ) );
+    mContentsComboBox->addItem( folderContentDescription( ContentsTypeJournal ) );
 
     mContentsComboBox->setCurrentIndex( contentsType );
 
-    connect ( mContentsComboBox, SIGNAL ( activated( int ) ),
-        this, SLOT( slotFolderContentsSelectionChanged( int ) ) );
+    connect( mContentsComboBox, SIGNAL ( activated( int ) ),
+             this, SLOT( slotFolderContentsSelectionChanged( int ) ) );
+
     if ( mFolderCollection->isReadOnly() || mIsResourceFolder )
       mContentsComboBox->setEnabled( false );
 
@@ -339,7 +339,7 @@ void CollectionGeneralPage::init(const Akonadi::Collection &col)
   // Kolab incidences-for annotation.
   // Show incidences-for combobox if the contents type can be changed (new folder),
   // or if it's set to calendar or task (existing folder)
-  if ( col.contentMimeTypes().contains( "application/x-vnd.akonadi.calendar.event" ) ) {
+  if ( collection.contentMimeTypes().contains( "application/x-vnd.akonadi.calendar.event" ) ) {
     ++row;
     QLabel* label = new QLabel( i18n( "Generate free/&busy and activate alarms for:" ), this );
     gl->addWidget( label, row, 0 );
@@ -352,18 +352,18 @@ void CollectionGeneralPage::init(const Akonadi::Collection &col)
     mIncidencesForComboBox->addItem( i18n( "All Readers of This Folder" ) );
     const QString whatsThisForMyOwnFolders =
       i18n( "This setting defines which users sharing "
-          "this folder should get \"busy\" periods in their freebusy lists "
-          "and should see the alarms for the events or tasks in this folder. "
-          "The setting applies to Calendar and Task folders only "
-          "(for tasks, this setting is only used for alarms).\n\n"
-          "Example use cases: if the boss shares a folder with his secretary, "
-          "only the boss should be marked as busy for his meetings, so he should "
-          "select \"Admins\", since the secretary has no admin rights on the folder.\n"
-          "On the other hand if a working group shares a Calendar for "
-          "group meetings, all readers of the folders should be marked "
-          "as busy for meetings.\n"
-          "A company-wide folder with optional events in it would use \"Nobody\" "
-          "since it is not known who will go to those events." );
+            "this folder should get \"busy\" periods in their freebusy lists "
+            "and should see the alarms for the events or tasks in this folder. "
+            "The setting applies to Calendar and Task folders only "
+            "(for tasks, this setting is only used for alarms).\n\n"
+            "Example use cases: if the boss shares a folder with his secretary, "
+            "only the boss should be marked as busy for his meetings, so he should "
+            "select \"Admins\", since the secretary has no admin rights on the folder.\n"
+            "On the other hand if a working group shares a Calendar for "
+            "group meetings, all readers of the folders should be marked "
+            "as busy for meetings.\n"
+            "A company-wide folder with optional events in it would use \"Nobody\" "
+            "since it is not known who will go to those events." );
 
     mIncidencesForComboBox->setWhatsThis( whatsThisForMyOwnFolders );
 
@@ -382,7 +382,7 @@ void CollectionGeneralPage::init(const Akonadi::Collection &col)
     mIncidencesForComboBox = 0;
   }
 
-  if ( KMKernel::self()->isImapFolder( col ) ) {
+  if ( KMKernel::self()->isImapFolder( collection ) ) {
     mSharedSeenFlagsCheckBox = new QCheckBox( this );
     mSharedSeenFlagsCheckBox->setText( i18n( "Share unread state with all users" ) );
     mSharedSeenFlagsCheckBox->setChecked( sharedSeen );
@@ -399,18 +399,19 @@ void CollectionGeneralPage::init(const Akonadi::Collection &col)
 }
 
 
-void CollectionGeneralPage::load(const Akonadi::Collection & col)
+void CollectionGeneralPage::load( const Akonadi::Collection &collection )
 {
-  mFolderCollection = FolderCollection::forCollection( col );
-  init( col );
+  mFolderCollection = FolderCollection::forCollection( collection );
+  init( collection );
+
   QString displayName;
-  if ( col.hasAttribute<Akonadi::EntityDisplayAttribute>() ) {
-    displayName = col.attribute<Akonadi::EntityDisplayAttribute>()->displayName();
+  if ( collection.hasAttribute<Akonadi::EntityDisplayAttribute>() ) {
+    displayName = collection.attribute<Akonadi::EntityDisplayAttribute>()->displayName();
   }
 
   if ( !mIsLocalSystemFolder || mIsResourceFolder ) {
     if ( displayName.isEmpty() )
-      mNameEdit->setText( col.name() );
+      mNameEdit->setText( collection.name() );
     else
       mNameEdit->setText( displayName );
   }
@@ -426,35 +427,31 @@ void CollectionGeneralPage::load(const Akonadi::Collection & col)
   mKeepRepliesInSameFolderCheckBox->setChecked( keepInFolder );
   mKeepRepliesInSameFolderCheckBox->setEnabled( mFolderCollection->canCreateMessages() );
   mHideInSelectionDialogCheckBox->setChecked( mFolderCollection->hideInSelectionDialog() );
-  
+
   if ( mContentsComboBox ) {
-    const Akonadi::CollectionAnnotationsAttribute *annotationsAttribute = col.attribute<Akonadi::CollectionAnnotationsAttribute>();
+    const Akonadi::CollectionAnnotationsAttribute *annotationsAttribute = collection.attribute<Akonadi::CollectionAnnotationsAttribute>();
     if ( annotationsAttribute ) {
       const QMap<QByteArray, QByteArray> annotations = annotationsAttribute->annotations();
       if ( annotations.contains( KOLAB_FOLDERTYPE ) )
         mContentsComboBox->setCurrentItem( typeNameFromKolabType( annotations[ KOLAB_FOLDERTYPE ] ) );
     }
   }
-
 }
 
-void CollectionGeneralPage::save(Collection & col)
+void CollectionGeneralPage::save( Collection &collection )
 {
-
   if ( !mIsLocalSystemFolder || mIsResourceFolder ) {
-
-    if ( col.hasAttribute<Akonadi::EntityDisplayAttribute>() &&
-         !col.attribute<Akonadi::EntityDisplayAttribute>()->displayName().isEmpty() )
-      col.attribute<Akonadi::EntityDisplayAttribute>()->setDisplayName( mNameEdit->text() );
+    if ( collection.hasAttribute<Akonadi::EntityDisplayAttribute>() &&
+         !collection.attribute<Akonadi::EntityDisplayAttribute>()->displayName().isEmpty() )
+      collection.attribute<Akonadi::EntityDisplayAttribute>()->setDisplayName( mNameEdit->text() );
     else if( !mNameEdit->text().isEmpty() )
-      col.setName( mNameEdit->text() );
+      collection.setName( mNameEdit->text() );
   }
 
-  Akonadi::CollectionAnnotationsAttribute *annotationsAttribute = col.attribute<Akonadi::CollectionAnnotationsAttribute>( Entity::AddIfMissing );
+  Akonadi::CollectionAnnotationsAttribute *annotationsAttribute = collection.attribute<Akonadi::CollectionAnnotationsAttribute>( Entity::AddIfMissing );
 
   QMap<QByteArray, QByteArray> annotations = annotationsAttribute->annotations();
-  if ( mSharedSeenFlagsCheckBox && mSharedSeenFlagsCheckBox->isEnabled() )
-  {
+  if ( mSharedSeenFlagsCheckBox && mSharedSeenFlagsCheckBox->isEnabled() ) {
     annotations[ KOLAB_SHAREDSEEN ] = mSharedSeenFlagsCheckBox->isChecked() ? "true" : "false";
   }
 
@@ -462,12 +459,12 @@ void CollectionGeneralPage::save(Collection & col)
     annotations[ KOLAB_INCIDENCESFOR ] = incidencesForToString( static_cast<IncidencesFor>( mIncidencesForComboBox->currentIndex() ) ).toLatin1();
 
   if ( mContentsComboBox ) {
-    QByteArray kolabName = kolabNameFromType( contentsTypeFromString( mContentsComboBox->currentText() ) );
+    const QByteArray kolabName = kolabNameFromType( contentsTypeFromString( mContentsComboBox->currentText() ) );
     if ( !kolabName.isEmpty() )
       annotations[ KOLAB_FOLDERTYPE ] = kolabName;
   }
 
-  annotationsAttribute->setAnnotations(annotations);
+  annotationsAttribute->setAnnotations( annotations );
 
   if ( mFolderCollection ) {
     mFolderCollection->setIdentity( mIdentityComboBox->currentIdentity() );
@@ -477,7 +474,6 @@ void CollectionGeneralPage::save(Collection & col)
     mFolderCollection->setPutRepliesInSameFolder( mKeepRepliesInSameFolderCheckBox->isChecked() );
     mFolderCollection->setHideInSelectionDialog( mHideInSelectionDialogCheckBox->isChecked() );
   }
-
 }
 
 void CollectionGeneralPage::slotIdentityCheckboxChanged()
@@ -487,20 +483,19 @@ void CollectionGeneralPage::slotIdentityCheckboxChanged()
 
 void CollectionGeneralPage::slotFolderContentsSelectionChanged( int )
 {
-  CollectionGeneralPage::FolderContentsType type = contentsTypeFromString( mContentsComboBox->currentText() );
+  const CollectionGeneralPage::FolderContentsType type = contentsTypeFromString( mContentsComboBox->currentText() );
 
-  if( type != CollectionGeneralPage::ContentsTypeMail  ) {
-    QString message = i18n("You have configured this folder to contain groupware information "
-    "That means that this folder will disappear once the configuration "
-    "dialog is closed.");
-    
-     KMessageBox::information( this, message );
+  if ( type != CollectionGeneralPage::ContentsTypeMail  ) {
+    const QString message = i18n( "You have configured this folder to contain groupware information "
+                                  "That means that this folder will disappear once the configuration "
+                                  "dialog is closed." );
+
+    KMessageBox::information( this, message );
   }
 
-  const bool enable = type == CollectionGeneralPage::ContentsTypeCalendar || type == CollectionGeneralPage::ContentsTypeTask;
+  const bool enable = (type == CollectionGeneralPage::ContentsTypeCalendar || type == CollectionGeneralPage::ContentsTypeTask);
   if ( mIncidencesForComboBox )
-      mIncidencesForComboBox->setEnabled( enable );
+    mIncidencesForComboBox->setEnabled( enable );
 }
-
 
 #include "collectiongeneralpage.moc"
