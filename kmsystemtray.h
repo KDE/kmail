@@ -61,7 +61,6 @@ private slots:
 
 protected:
   bool mainWindowIsOnCurrentDesktop();
-  void showKMail();
   void buildPopupMenu();
   void updateCount();
   void fillFoldersMenu( QMenu *menu, const QAbstractItemModel *model, const QString& parentName = QString(), const QModelIndex& parentIndex = QModelIndex() );
@@ -70,7 +69,6 @@ protected:
 
 private:
 
-  bool mParentVisible;
   QPoint mPosOfMainWin;
   int mDesktopOfMainWin;
 
