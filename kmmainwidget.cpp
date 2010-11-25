@@ -4200,6 +4200,7 @@ void KMMainWidget::slotCollectionProperties()
   sync.start();
 
   Akonadi::CollectionFetchJob fetch( mCurrentFolder->collection(), Akonadi::CollectionFetchJob::Base );
+  fetch.fetchScope().setIncludeStatistics( true );
   fetch.exec();
 
   const Akonadi::Collection collection = fetch.collections().first();
