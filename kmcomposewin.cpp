@@ -2135,8 +2135,12 @@ void KMComposeWin::slotCopy()
   if ( !fw ) {
     return;
   }
-  QKeyEvent k( QEvent::KeyPress, Qt::Key_C, Qt::ControlModifier );
-  qApp->notify( fw, &k );
+
+  if ( ::qobject_cast<KMComposerEditor*>( fw ) ) {
+    static_cast<KTextEdit*>(fw)->copy();
+  } else if ( ::qobject_cast<KLineEdit*>( fw ) ) {
+    static_cast<KLineEdit*>( fw )->copy();
+  }
 }
 
 //-----------------------------------------------------------------------------
