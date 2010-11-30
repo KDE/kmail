@@ -338,6 +338,8 @@ void KMMainWidget::destruct()
   delete mSystemTray;
   delete mCustomTemplateMenus;
   mCurrentFolder.clear();
+  delete mMoveOrCopyToDialog;
+  delete mSelectFromAllFoldersDialog;
   mSystemTray = 0;
   mCustomTemplateMenus = 0;
   mDestructed = true;
