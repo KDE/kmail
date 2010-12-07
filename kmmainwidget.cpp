@@ -4199,7 +4199,7 @@ void KMMainWidget::slotCollectionProperties()
     return;
 
   Akonadi::CollectionAttributesSynchronizationJob sync( mCurrentFolder->collection() );
-  sync.start();
+  sync.exec();
 
   Akonadi::CollectionFetchJob fetch( mCurrentFolder->collection(), Akonadi::CollectionFetchJob::Base );
   fetch.fetchScope().setIncludeStatistics( true );
