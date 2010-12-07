@@ -409,7 +409,6 @@ namespace KMail {
     label->setBuddy( mDictionaryCombo );
     glay->addWidget( label, row, 0 );
 
-#ifndef KCM_KPIMIDENTITIES_STANDALONE // ### folder requester is too integrated into KMail atm
     // "Sent-mail Folder" combo box and label:
     ++row;
     mFccCombo = new FolderRequester( tab );
@@ -436,7 +435,6 @@ namespace KMail {
     label = new QLabel( i18n("&Templates folder:"), tab );
     label->setBuddy( mTemplatesCombo );
     glay->addWidget( label, row, 0 );
-#endif
 
     // "Special transport" combobox and label:
     ++row;
@@ -697,13 +695,12 @@ namespace KMail {
   bool IdentityDialog::checkFolderExists( const QString & folderID,
                                           const QString & msg )
   {
-#ifndef KCM_KPIMIDENTITIES_STANDALONE
     Akonadi::Collection folder = CommonKernel->collectionFromId( folderID );
     if ( !folder.isValid() ) {
       KMessageBox::sorry( this, msg );
       return false;
     }
-#endif
+
     return true;
   }
 
@@ -738,7 +735,6 @@ namespace KMail {
       mTransportCombo->setCurrentTransport( transport->id() );
     mDictionaryCombo->setCurrentByDictionaryName( ident.dictionary() );
 
-#ifndef KCM_KPIMIDENTITIES_STANDALONE
     if ( ident.fcc().isEmpty() ||
          !checkFolderExists( ident.fcc(),
                              i18n("The custom sent-mail folder for identity "
@@ -774,7 +770,6 @@ namespace KMail {
     }
     else
       mTemplatesCombo->setFolder( ident.templates() );
-#endif
 
     // "Templates" tab:
 #ifndef KDEPIM_MOBILE_UI
@@ -814,14 +809,12 @@ namespace KMail {
     ident.setTransport( ( mTransportCheck->isChecked() ) ?
                           mTransportCombo->currentText() : QString() );
     ident.setDictionary( mDictionaryCombo->currentDictionaryName() );
-#ifndef KCM_KPIMIDENTITIES_STANDALONE
     ident.setFcc( mFccCombo->folderCollection().isValid() ?
                   QString::number( mFccCombo->folderCollection().id() ) : QString() );
     ident.setDrafts( mDraftsCombo->folderCollection().isValid() ?
                      QString::number( mDraftsCombo->folderCollection().id() ) : QString() );
     ident.setTemplates( mTemplatesCombo->folderCollection().isValid() ?
                         QString::number( mTemplatesCombo->folderCollection().id() ) : QString() );
-#endif
 
     // "Templates" tab:
 #ifndef KDEPIM_MOBILE_UI
@@ -836,7 +829,7 @@ namespace KMail {
 
     // "Signature" tab:
     ident.setSignature( mSignatureConfigurator->signature() );
- #ifndef KDEPIM_MOBILE_UI  
+#ifndef KDEPIM_MOBILE_UI
     ident.setXFace( mXFaceConfigurator->xface() );
     ident.setXFaceEnabled( mXFaceConfigurator->isXFaceEnabled() );
 #endif

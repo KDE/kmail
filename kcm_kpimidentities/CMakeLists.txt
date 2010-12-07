@@ -32,6 +32,7 @@ target_link_libraries(kcm_kpimidentities
   ${KDE4_KCMUTILS_LIBS}
   ${KDE4_KIO_LIBS}
   akonadi_next
+  mailcommon
   messagecomposer
   messageviewer
   templateparser
