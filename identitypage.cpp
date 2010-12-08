@@ -31,6 +31,7 @@
 #include "globalsettings.h"
 #endif
 
+#include <mailcommon/mailkernel.h>
 #include <messageviewer/autoqpointer.h>
 #include <kpimidentities/identity.h>
 #include <kpimidentities/identitymanager.h>
@@ -49,11 +50,7 @@ QString IdentityPage::helpAnchor() const
 IdentityPage::IdentityPage( const KComponentData &instance, QWidget *parent )
   : ConfigModule( instance, parent ),
     mIdentityDialog( 0 ),
-#ifndef KCM_KPIMIDENTITIES_STANDALONE
-    mIdentityManager( KMKernel::self()->identityManager() )
-#else
-    mIdentityManager( new KPIMIdentities::IdentityManager )
-#endif
+    mIdentityManager( KernelIf->identityManager() )
 {
   mIPage.setupUi( this );
   mIPage.mIdentityList->setIdentityManager( mIdentityManager );
@@ -84,9 +81,6 @@ IdentityPage::IdentityPage( const KComponentData &instance, QWidget *parent )
 
 IdentityPage::~IdentityPage()
 {
-#ifdef KCM_KPIMIDENTITIES_STANDALONE
-  delete mIdentityManager;
-#endif
 }
 
 void IdentityPage::load()
