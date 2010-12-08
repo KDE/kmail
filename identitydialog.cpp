@@ -338,7 +338,7 @@ namespace KMail {
       << Kleo::cryptoMessageFormatToLabel( Kleo::SMIMEFormat )
       << Kleo::cryptoMessageFormatToLabel( Kleo::SMIMEOpaqueFormat );
     mPreferredCryptoMessageFormat->addItems( l );
-    label = new QLabel( i18n("Preferred crypto message format:"), tab );
+    label = new QLabel( i18nc("Preferred format:", "Crypto"), tab );
     label->setBuddy( mPreferredCryptoMessageFormat );
 
     glay->addWidget( label, row, 0 );
