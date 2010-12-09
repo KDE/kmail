@@ -459,10 +459,6 @@ KMCommand::Result KMMailtoReplyCommand::execute()
   win->setReplyFocus();
   win->show();
 
-  item.setFlag( Akonadi::MessageFlags::Replied );
-  Akonadi::ItemModifyJob *job = new Akonadi::ItemModifyJob( item );
-  job->setIgnorePayload( true );
-
   return OK;
 }
 
@@ -490,10 +486,6 @@ KMCommand::Result KMMailtoForwardCommand::execute()
 
   KMail::Composer * win = KMail::makeComposer( fmsg, KMail::Composer::Forward );
   win->show();
-
-  item.setFlag( Akonadi::MessageFlags::Forwarded );
-  Akonadi::ItemModifyJob *job = new Akonadi::ItemModifyJob( item );
-  job->setIgnorePayload( true );
 
   return OK;
 }
@@ -838,10 +830,6 @@ KMCommand::Result KMReplyToCommand::execute()
   win->setReplyFocus();
   win->show();
 
-  item.setFlag( Akonadi::MessageFlags::Replied );
-  Akonadi::ItemModifyJob *job = new Akonadi::ItemModifyJob( item );
-  job->setIgnorePayload( true );
-
   return OK;
 }
 
@@ -869,10 +857,6 @@ KMCommand::Result KMNoQuoteReplyToCommand::execute()
   KMail::Composer *win = KMail::makeComposer( KMime::Message::Ptr( reply.msg ), replyContext( reply ) );
   win->setReplyFocus( false );
   win->show();
-
-  item.setFlag( Akonadi::MessageFlags::Replied );
-  Akonadi::ItemModifyJob *job = new Akonadi::ItemModifyJob( item );
-  job->setIgnorePayload( true );
 
   return OK;
 }
@@ -905,10 +889,6 @@ KMCommand::Result KMReplyListCommand::execute()
                                                0, mSelection );
   win->setReplyFocus( false );
   win->show();
-
-  item.setFlag( Akonadi::MessageFlags::Replied );
-  Akonadi::ItemModifyJob *job = new Akonadi::ItemModifyJob( item );
-  job->setIgnorePayload( true );
 
   return OK;
 }
@@ -943,10 +923,6 @@ KMCommand::Result KMReplyToAllCommand::execute()
   win->setReplyFocus();
   win->show();
 
-  item.setFlag( Akonadi::MessageFlags::Replied );
-  Akonadi::ItemModifyJob *job = new Akonadi::ItemModifyJob( item );
-  job->setIgnorePayload( true );
-
   return OK;
 }
 
@@ -978,10 +954,6 @@ KMCommand::Result KMReplyAuthorCommand::execute()
                                                mSelection );
   win->setReplyFocus();
   win->show();
-
-  item.setFlag( Akonadi::MessageFlags::Replied );
-  Akonadi::ItemModifyJob *job = new Akonadi::ItemModifyJob( item );
-  job->setIgnorePayload( true );
 
   return OK;
 }
@@ -1035,12 +1007,6 @@ KMCommand::Result KMForwardCommand::execute()
           win->show();
         }
 
-        foreach( Akonadi::Item item, msgList ) {
-          item.setFlag( Akonadi::MessageFlags::Forwarded );
-          Akonadi::ItemModifyJob *job = new Akonadi::ItemModifyJob( item );
-          job->setIgnorePayload( true );
-        }
-
       return OK;
     } else if ( answer == KMessageBox::No ) {// NO MIME DIGEST, Multiple forward
       QList<Akonadi::Item>::const_iterator it;
@@ -1061,11 +1027,6 @@ KMCommand::Result KMForwardCommand::execute()
         {
           KMail::Composer * win = KMail::makeComposer( fwdMsg, KMail::Composer::Forward, id );
           win->show();
-
-          Akonadi::Item item( *it );
-          item.setFlag( Akonadi::MessageFlags::Forwarded );
-          Akonadi::ItemModifyJob *job = new Akonadi::ItemModifyJob( item );
-          job->setIgnorePayload( true );
         }
 
       }
@@ -1093,10 +1054,6 @@ KMCommand::Result KMForwardCommand::execute()
   {
     KMail::Composer * win = KMail::makeComposer( fwdMsg, KMail::Composer::Forward, id );
     win->show();
-
-    item.setFlag( Akonadi::MessageFlags::Forwarded );
-    Akonadi::ItemModifyJob *job = new Akonadi::ItemModifyJob( item );
-    job->setIgnorePayload( true );
   }
   return OK;
 }
@@ -1138,12 +1095,6 @@ KMCommand::Result KMForwardAttachedCommand::execute()
     foreach( KMime::Content* attach, fwdMsg.second )
       mWin->addAttach( attach );
     mWin->show();
-  }
-
-  foreach( Akonadi::Item item, msgList ) {
-    item.setFlag( Akonadi::MessageFlags::Forwarded );
-    Akonadi::ItemModifyJob *job = new Akonadi::ItemModifyJob( item );
-    job->setIgnorePayload( true );
   }
 
   mWin->show();
@@ -1228,10 +1179,6 @@ KMCommand::Result KMCustomReplyToCommand::execute()
   win->setReplyFocus();
   win->show();
 
-  item.setFlag( Akonadi::MessageFlags::Replied );
-  Akonadi::ItemModifyJob *job = new Akonadi::ItemModifyJob( item );
-  job->setIgnorePayload( true );
-
   return OK;
 }
 
@@ -1265,10 +1212,6 @@ KMCommand::Result KMCustomReplyAllToCommand::execute()
                                                mSelection, mTemplate );
   win->setReplyFocus();
   win->show();
-
-  item.setFlag( Akonadi::MessageFlags::Replied );
-  Akonadi::ItemModifyJob *job = new Akonadi::ItemModifyJob( item );
-  job->setIgnorePayload( true );
 
   return OK;
 }
@@ -1315,11 +1258,6 @@ KMCommand::Result KMCustomForwardCommand::execute()
         {
           KMail::Composer * win = KMail::makeComposer( fwdMsg, KMail::Composer::Forward, id );
           win->show();
-
-          Akonadi::Item item( *it );
-          item.setFlag( Akonadi::MessageFlags::Forwarded );
-          Akonadi::ItemModifyJob *job = new Akonadi::ItemModifyJob( item );
-          job->setIgnorePayload( true );
         }
 
       }
@@ -1346,10 +1284,6 @@ KMCommand::Result KMCustomForwardCommand::execute()
       KMail::Composer * win = KMail::makeComposer( fwdMsg, KMail::Composer::Forward, id,
                                                    QString(), mTemplate );
       win->show();
-
-      item.setFlag( Akonadi::MessageFlags::Forwarded );
-      Akonadi::ItemModifyJob *job = new Akonadi::ItemModifyJob( item );
-      job->setIgnorePayload( true );
     }
   }
   return OK;
