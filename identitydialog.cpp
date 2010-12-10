@@ -91,6 +91,10 @@ using MailTransport::TransportManager;
 #include <iterator>
 #include <algorithm>
 
+#include <akonadi/entitydisplayattribute.h>
+#include <akonadi/collectionmodifyjob.h>
+
+
 using namespace KPIM;
 using namespace MailTransport;
 using namespace MailCommon;
@@ -504,7 +508,7 @@ namespace KMail {
     //
     // Tab Widget: Picture
     //
-    
+
 #ifndef KDEPIM_MOBILE_UI
     mXFaceConfigurator = new XFaceConfigurator( mTabWidget );
     mXFaceConfigurator->layout()->setMargin( KDialog::marginHint() );
@@ -783,7 +787,7 @@ namespace KMail {
     // "Signature" tab:
     mSignatureConfigurator->setImageLocation( ident );
     mSignatureConfigurator->setSignature( ident.signature() );
- #ifndef KDEPIM_MOBILE_UI   
+ #ifndef KDEPIM_MOBILE_UI
     mXFaceConfigurator->setXFace( ident.xface() );
     mXFaceConfigurator->setXFaceEnabled( ident.isXFaceEnabled() );
 #endif
@@ -809,13 +813,35 @@ namespace KMail {
     ident.setTransport( ( mTransportCheck->isChecked() ) ?
                           mTransportCombo->currentText() : QString() );
     ident.setDictionary( mDictionaryCombo->currentDictionaryName() );
-    ident.setFcc( mFccCombo->folderCollection().isValid() ?
-                  QString::number( mFccCombo->folderCollection().id() ) : QString() );
-    ident.setDrafts( mDraftsCombo->folderCollection().isValid() ?
-                     QString::number( mDraftsCombo->folderCollection().id() ) : QString() );
-    ident.setTemplates( mTemplatesCombo->folderCollection().isValid() ?
-                        QString::number( mTemplatesCombo->folderCollection().id() ) : QString() );
+    Akonadi::Collection collection = mFccCombo->folderCollection();
+    if ( collection.isValid() ) {
+      ident.setFcc( QString::number( collection.id() ) );
+      Akonadi::EntityDisplayAttribute *attribute =  collection.attribute<Akonadi::EntityDisplayAttribute>( Akonadi::Entity::AddIfMissing );
+      attribute->setIconName( QLatin1String( "mail-folder-sent" ) );
+      new Akonadi::CollectionModifyJob( collection );
+    }
+    else
+      ident.setFcc( QString() );
 
+    collection = mDraftsCombo->folderCollection();
+    if ( collection.isValid() ) {
+      ident.setDrafts( QString::number( collection.id() ) );
+      Akonadi::EntityDisplayAttribute *attribute =  collection.attribute<Akonadi::EntityDisplayAttribute>( Akonadi::Entity::AddIfMissing );
+      attribute->setIconName( QLatin1String( "document-properties" ) );
+      new Akonadi::CollectionModifyJob( collection );
+    }
+    else
+      ident.setDrafts( QString() );
+
+    collection = mTemplatesCombo->folderCollection();
+    if ( collection.isValid() ) {
+      ident.setTemplates( QString::number( collection.id() ) );
+      Akonadi::EntityDisplayAttribute *attribute =  collection.attribute<Akonadi::EntityDisplayAttribute>( Akonadi::Entity::AddIfMissing );
+      attribute->setIconName( QLatin1String( "document-new" ) );
+      new Akonadi::CollectionModifyJob( collection );
+    }
+    else
+      ident.setTemplates( QString() );
     // "Templates" tab:
 #ifndef KDEPIM_MOBILE_UI
     uint identity = ident.uoid();
