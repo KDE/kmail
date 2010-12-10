@@ -128,6 +128,17 @@ signals:
    *  about invalid filters. */
   void abortClosing() const;
 
+  /** Emitted when a new filter is created */
+  void filterCreated();
+
+  /** Emitted when a filter is deleted */
+  void filterRemoved( MailCommon::MailFilter *filter );
+
+  /** Emitted when a filter is updated (e.g. renamed) */
+  void filterUpdated( MailCommon::MailFilter *filter );
+
+  /** Emitted whenever the order in which the filters are displayed is changed*/
+  void filterOrderAltered();
 public slots:
   /** Called when the name of a filter might have changed (e.g.
       through changing the first rule in SearchPatternEdit).
@@ -290,6 +301,13 @@ protected slots:
   /** Called when a user decides to continue editing invalid filters */
   void slotDisableAccept();
 
+  /** Called whenever a change in the filters configuration is detected,
+   *  to enable the Apply button
+   */
+  void slotDialogUpdated();
+
+  /** Called wherenever the apply button is pressed */
+  void slotApply();
 protected:
   /** The widget that contains the ListBox showing the filters, and
       the controls to remove filters, add new ones and to change their
@@ -320,6 +338,7 @@ protected:
 
   MailCommon::MailFilter *mFilter;
   bool mDoNotClose;
+  bool mIgnoreFilterUpdates;
 };
 
 
