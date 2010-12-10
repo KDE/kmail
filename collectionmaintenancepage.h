@@ -47,7 +47,6 @@ private:
   Akonadi::Collection mCurrentCollection;
   bool mIsNotAVirtualCollection;
   QLabel *mFolderSizeLabel;
-  KLineEdit *mCollectionLocation;
   QLabel *mCollectionCount;
   QLabel *mCollectionUnread;
 };

@@ -74,10 +74,6 @@ void CollectionMaintenancePage::init(const Akonadi::Collection & col)
   if ( mIsNotAVirtualCollection ) {
     QLabel *label = new QLabel( folderDesc, filesGroup );
     box->addRow( new QLabel( i18n("Folder type:"), filesGroup ), label );
-
-    mCollectionLocation = new KLineEdit( filesGroup );
-    mCollectionLocation->setReadOnly( true );
-    box->addRow( i18n("Location:"), mCollectionLocation );
   }
 
   mFolderSizeLabel = new QLabel( i18nc( "folder size", "Not available" ), filesGroup );
@@ -105,8 +101,6 @@ void CollectionMaintenancePage::load(const Collection & col)
   init( col );
   if ( col.isValid() ) {
     updateLabel( col.statistics().count(), col.statistics().unreadCount(), col.statistics().size() );
-    if ( mIsNotAVirtualCollection )
-      mCollectionLocation->setText( col.remoteId() );
   }
 }
 
