@@ -404,6 +404,8 @@ public:
 
   /*reimp*/ QStringList customTemplates();
 
+  void checkTrashFolderFromResources( const Akonadi::Collection::Id& collectionId );
+
 public slots:
 
   /*reimp*/ void updateSystemTray();

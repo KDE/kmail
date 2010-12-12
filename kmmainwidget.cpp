@@ -1596,6 +1596,7 @@ void KMMainWidget::slotDelayedRemoveFolder( KJob *job )
                                            KMessageBox::Notify | KMessageBox::Dangerous )
       == KMessageBox::Continue )
   {
+    kmkernel->checkTrashFolderFromResources( mCurrentFolder->collection().id() );
     mCurrentFolder->removeCollection();
   }
   mCurrentFolder.clear();

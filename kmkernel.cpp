@@ -1722,4 +1722,23 @@ void KMKernel::createFilter(const QByteArray& field, const QString& value)
 }
 
 
+void KMKernel::checkTrashFolderFromResources( const Akonadi::Collection::Id& collectionId )
+{
+  const Akonadi::AgentInstance::List lst = MailCommon::Util::agentInstances();
+  foreach( const Akonadi::AgentInstance& type, lst ) {
+    if ( type.status() == Akonadi::AgentInstance::Broken )
+      continue;
+    if ( type.identifier().contains( IMAP_RESOURCE_IDENTIFIER ) ) {
+      OrgKdeAkonadiImapSettingsInterface *iface = MailCommon::Util::createImapSettingsInterface( type.identifier() );
+      if ( iface->isValid() ) {
+        if ( iface->trashCollection() == collectionId ) {
+          //Use default trash
+          iface->setTrashCollection( CommonKernel->trashCollectionFolder().id() );
+        }
+
+      }
+      delete iface;
+    }
+  }
+}
 #include "kmkernel.moc"
