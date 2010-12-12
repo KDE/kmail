@@ -1734,6 +1734,7 @@ void KMKernel::checkTrashFolderFromResources( const Akonadi::Collection::Id& col
         if ( iface->trashCollection() == collectionId ) {
           //Use default trash
           iface->setTrashCollection( CommonKernel->trashCollectionFolder().id() );
+	  iface->writeConfig();
         }
 
       }
