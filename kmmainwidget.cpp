@@ -3846,7 +3846,9 @@ void KMMainWidget::updateFolderMenu()
   mPreferHtmlLoadExtAction->setChecked( mHtmlLoadExtPref ? !mFolderHtmlLoadExtPref : mFolderHtmlLoadExtPref );
   mShowFolderShortcutDialogAction->setEnabled( !multiFolder && folderWithContent );
 
-  actionlist << akonadiStandardAction( Akonadi::StandardActionManager::ManageLocalSubscriptions );
+  if ( mCurrentFolder && mCurrentFolder->collection().resource().contains( IMAP_RESOURCE_IDENTIFIER ) )
+    actionlist << akonadiStandardAction( Akonadi::StandardActionManager::ManageLocalSubscriptions );
+
   mGUIClient->unplugActionList( QLatin1String( "collectionview_actionlist" ) );
   mGUIClient->plugActionList( QLatin1String( "collectionview_actionlist" ), actionlist );
 
