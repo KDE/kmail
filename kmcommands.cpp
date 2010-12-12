@@ -767,7 +767,7 @@ void KMOpenMsgCommand::slotResult( KJob *job )
       multipleMessages = false;
     }
     KMime::Message *msg = new KMime::Message;
-    msg->setContent( mMsgString.mid( startOfMessage,endOfMessage - startOfMessage ).toUtf8() );
+    msg->setContent( KMime::CRLFtoLF( mMsgString.mid( startOfMessage,endOfMessage - startOfMessage ).toUtf8() ) );
     msg->parse();
     if ( !msg->hasContent() ) {
       KMessageBox::sorry( parentWidget(),
@@ -783,11 +783,8 @@ void KMOpenMsgCommand::slotResult( KJob *job )
       return;
     }
     KMReaderMainWin *win = new KMReaderMainWin();
-    Akonadi::Item item;
     KMime::Message::Ptr mMsg( msg );
-    item.setPayload( mMsg );
-    item.setMimeType( "message/rfc822" );
-    win->showMessage( mEncoding, item );
+    win->showMessage( mEncoding, mMsg );
     win->show();
     if ( multipleMessages )
       KMessageBox::information( win,
