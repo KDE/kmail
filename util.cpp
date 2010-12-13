@@ -68,18 +68,19 @@
 using namespace MailCommon;
 
 
-QStringList KMail::Util::mailingListsFromMessage( const Akonadi::Item& item )
+KMime::Types::Mailbox::List KMail::Util::mailingListsFromMessage( const Akonadi::Item& item )
 {
-  QStringList addresses;
+  KMime::Types::Mailbox::List addresses;
   // determine the mailing list posting address
   Akonadi::Collection parentCollection = item.parentCollection();
   QSharedPointer<FolderCollection> fd;
   if ( parentCollection.isValid() ) {
     fd = FolderCollection::forCollection( parentCollection );
     if ( fd->isMailingListEnabled() && !fd->mailingListPostAddress().isEmpty() ) {
-      addresses << fd->mailingListPostAddress();
+      addresses << MessageCore::StringUtil::mailboxFromUnicodeString( fd->mailingListPostAddress() );
     }
   }
+
   return addresses;
 }
 

@@ -84,7 +84,7 @@ namespace Util {
      * Returns any mailing list post addresses set on the
      *  parent collection (the mail folder) of the item.
      */
-    QStringList mailingListsFromMessage( const Akonadi::Item& item );
+    KMime::Types::Mailbox::List mailingListsFromMessage( const Akonadi::Item& item );
 
     /**
      * Whether or not the mail item has the keep-reply-in-folder
