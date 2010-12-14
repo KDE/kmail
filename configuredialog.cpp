@@ -1727,8 +1727,7 @@ AppearancePageMessageTagTab::~AppearancePageMessageTagTab()
 
 void AppearancePage::MessageTagTab::slotEmitChangeCheck()
 {
-  if ( mEmitChanges )
-    slotEmitChanged();
+  slotEmitChanged();
 }
 
 void AppearancePage::MessageTagTab::slotMoveTagUp()
@@ -1813,8 +1812,6 @@ void AppearancePage::MessageTagTab::slotRecordTagSettings( int aIndex )
 
 void AppearancePage::MessageTagTab::slotUpdateTagSettingWidgets( int aIndex )
 {
-  //We are just updating the display, so no need to mark dirty
-  mEmitChanges = false;
   //Check if selection is valid
   if ( ( aIndex < 0 ) || ( mTagListBox->currentRow() < 0 ) || ( mMsgTagList.count() <= aIndex ) ) {
     mTagRemoveButton->setEnabled( false );
@@ -1831,7 +1828,6 @@ void AppearancePage::MessageTagTab::slotUpdateTagSettingWidgets( int aIndex )
     mIconButton->setEnabled( false );
     mKeySequenceWidget->setEnabled( false );
     mBackgroundColorCombo->setEnabled( false );
-    mEmitChanges = true;
     return;
   }
 
@@ -1877,8 +1873,6 @@ void AppearancePage::MessageTagTab::slotUpdateTagSettingWidgets( int aIndex )
 
   mInToolbarCheck->setEnabled( true );
   mInToolbarCheck->setChecked( tmp_desc->inToolbar );
-
-  mEmitChanges = true;
 }
 
 void AppearancePage::MessageTagTab::slotSelectionChanged()

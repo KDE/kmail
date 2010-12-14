@@ -84,8 +84,10 @@ void ConfigModuleWithTabs::defaults()
 
 void ConfigModuleTab::load()
 {
+  mEmitChanges = false;
   doLoadFromGlobalSettings();
   doLoadOther();
+  mEmitChanges = true;
 }
 
 void ConfigModuleTab::defaults()
@@ -101,7 +103,8 @@ void ConfigModuleTab::defaults()
 
 void ConfigModuleTab::slotEmitChanged( void )
 {
-   emit changed( true );
+  if ( mEmitChanges )
+    emit changed( true );
 }
 
 

@@ -120,7 +120,8 @@ class ConfigModuleTab : public QWidget {
   Q_OBJECT
 public:
    ConfigModuleTab( QWidget *parent=0 )
-      : QWidget( parent )
+      : QWidget( parent ),
+        mEmitChanges( true )
       {}
   ~ConfigModuleTab() {}
   virtual void save() = 0;
@@ -131,6 +132,8 @@ signals:
 public slots:
   void slotEmitChanged();
   void load();
+protected:
+  bool mEmitChanges;
 private:
   // reimplement this for loading values of settings which are available
   // via GlobalSettings
@@ -481,8 +484,6 @@ private: // data
   // List of all Tags currently in the list
   QList<KMail::TagPtr> mMsgTagList;
 
-  /*If true, changes to the widgets activate the Apply button*/
-  bool mEmitChanges;
   /*Used to safely call slotRecordTagSettings when the selection in
     list box changes*/
   int mPreviousTag;
