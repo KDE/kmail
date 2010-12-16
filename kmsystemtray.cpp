@@ -174,8 +174,7 @@ void KMSystemTray::updateCount()
     setIconByName( "kmail" );
     return;
   }
-//  int overlaySize = KIconLoader::SizeSmallMedium;
-  int overlaySize = KIconLoader::SizeMedium;
+  int overlaySize = KIconLoader::SizeSmallMedium;
 
   QString countString = QString::number( mCount );
   QFont countFont = KGlobalSettings::generalFont();
@@ -183,14 +182,14 @@ void KMSystemTray::updateCount()
 
   // decrease the size of the font for the number of unread messages if the
   // number doesn't fit into the available space
-//   float countFontSize = countFont.pointSizeF();
-//   QFontMetrics qfm( countFont );
-//   int width = qfm.width( countString );
-//   if( width > (overlaySize - 2) )
-//   {
-//     countFontSize *= float( overlaySize - 2 ) / float( width );
-//     countFont.setPointSizeF( countFontSize );
-//   }
+  float countFontSize = countFont.pointSizeF();
+  QFontMetrics qfm( countFont );
+  int width = qfm.width( countString );
+  if( width > (overlaySize - 2) )
+  {
+    countFontSize *= float( overlaySize - 2 ) / float( width );
+    countFont.setPointSizeF( countFontSize );
+  }
 
   // Paint the number in a pixmap
   QPixmap overlayPixmap( overlaySize, overlaySize );
@@ -200,17 +199,6 @@ void KMSystemTray::updateCount()
   p.setFont( countFont );
   KColorScheme scheme( QPalette::Active, KColorScheme::View );
 
-//   qfm = QFontMetrics( countFont );
-//   QRect boundingRect = qfm.tightBoundingRect( countString );
-//   boundingRect.adjust( 0, 0, 0, 2 );
-//   boundingRect.setHeight( qMin( boundingRect.height(), overlaySize ) );
-//   boundingRect.moveTo( (overlaySize - boundingRect.width()) / 2,
-//                         ((overlaySize - boundingRect.height()) / 2) - 1 );
-//   p.setOpacity( 0.7 );
-//   p.setBrush( scheme.background( KColorScheme::LinkBackground ) );
-//   p.setPen( scheme.background( KColorScheme::LinkBackground ).color() );
-//   p.drawRoundedRect( boundingRect, 2.0, 2.0 );
-
   p.setBrush( Qt::NoBrush );
   p.setPen( scheme.foreground( KColorScheme::LinkText ).color() );
   p.setOpacity( 1.0 );
@@ -218,20 +206,12 @@ void KMSystemTray::updateCount()
   p.end();
 
   QPixmap iconPixmap = mIcon.pixmap(overlaySize, overlaySize);
-  //QPixmap overlayIcon = QIcon(overlayPixmap).pixmap(overlaySize/2, overlaySize/2);
 
   QPainter pp(&iconPixmap);
-  pp.drawPixmap(0,0 /*iconPixmap.width()-overlayIcon.width(), iconPixmap.height()-overlayIcon.height()*/, overlayPixmap);
+  pp.drawPixmap(0, 0, overlayPixmap);
   pp.end();
 
-  //QIcon countIcon = mIcon;
-
-  //countIcon.addPixmap(overlayPixmap);
-  //QPixmap overlayPixmap = overlayImage.pixmap(overlaySize/2, overlaySize/2);
-
   setIconByPixmap( iconPixmap );
-  //setIconByPixmap( iconPixmap );
-  kWarning() << "count:" << mCount;
 }
 
 
