@@ -19,6 +19,7 @@
 #define KMSYSTEMTRAY_H
 
 #include <akonadi/collection.h>
+#include <kicon.h>
 #include <kstatusnotifieritem.h>
 
 #include <QAction>
@@ -74,6 +75,7 @@ private:
 
   int mMode;
   int mCount;
+  KIcon mIcon;
 
   QMenu *mNewMessagesPopup;
   QAction *mSendQueued;
