@@ -79,6 +79,7 @@ private:
 
   QMenu *mNewMessagesPopup;
   QAction *mSendQueued;
+  QIcon mIcon;
 };
 
 #endif
