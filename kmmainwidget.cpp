@@ -170,6 +170,7 @@
 // System includes
 #include <assert.h>
 #include <errno.h> // ugh
+#include <akonadi/standardactionmanager.h>
 
 #include "kmmainwidget.moc"
 
@@ -3766,6 +3767,10 @@ void KMMainWidget::slotAkonadiStandardActionUpdated()
 
   QList< QAction* > syncActionList;
   QAction *actionSync = akonadiStandardAction( Akonadi::StandardActionManager::SynchronizeCollections );
+  if ( actionSync && actionSync->isEnabled() ) {
+    syncActionList << actionSync;
+  }
+  actionSync = akonadiStandardAction( Akonadi::StandardActionManager::SynchronizeCollectionsRecursive );
   if ( actionSync && actionSync->isEnabled() ) {
     syncActionList << actionSync;
   }
