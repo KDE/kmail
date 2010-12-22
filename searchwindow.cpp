@@ -488,8 +488,8 @@ void SearchWindow::slotSearch()
   mTimer->start( 200 );
 
 
-#if  AKONADI_USE_STRIGI_SEARCH
-  const QString query = "";
+#ifdef AKONADI_USE_STRIGI_SEARCH
+  const QString query = searchPattern.asXesamQuery();
   const QString queryLanguage = "XESAM";
 #else
   const QString query = searchPattern.asSparqlQuery();
