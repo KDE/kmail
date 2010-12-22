@@ -487,15 +487,24 @@ void SearchWindow::slotSearch()
 
   mTimer->start( 200 );
 
-  kDebug() << searchPattern.asSparqlQuery();
 
+#if  AKONADI_USE_STRIGI_SEARCH
+  const QString query = "";
+  const QString queryLanguage = "XESAM";
+#else
+  const QString query = searchPattern.asSparqlQuery();
+  const QString queryLanguage = "SPARQL";
+#endif
+
+  kDebug() << query;
   if ( !mFolder.isValid() ) {
     // FIXME if another app created a virtual 'Last Search' folder without
     // out custom attributes it will result in problems
-    mSearchJob = new Akonadi::SearchCreateJob( mSearchFolderEdt->text(), searchPattern.asSparqlQuery(), this );
+    mSearchJob = new Akonadi::SearchCreateJob( mSearchFolderEdt->text(), query, this );
   } else {
     Akonadi::PersistentSearchAttribute *attribute = mFolder.attribute<Akonadi::PersistentSearchAttribute>();
-    attribute->setQueryString( searchPattern.asSparqlQuery() );
+    attribute->setQueryLanguage( queryLanguage );
+    attribute->setQueryString( query );
     mSearchJob = new Akonadi::CollectionModifyJob( mFolder, this );
   }
 
