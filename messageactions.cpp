@@ -335,7 +335,7 @@ void MessageActions::updateMailingListActions( const Akonadi::Item& messageItem 
     if ( mailList.features() & MessageCore::MailingList::Help )
       addMailingListActions( i18n( "Request Help" ), mailList.helpUrls() );
     if ( mailList.features() & MessageCore::MailingList::Owner )
-      addMailingListActions( i18n( "Contact Owner" ), mailList.ownerUrls() );
+      addMailingListActions( i18nc( "Contact the owner of the mailing list", "Contact Owner" ), mailList.ownerUrls() );
     if ( mailList.features() & MessageCore::MailingList::Subscribe )
       addMailingListActions( i18n( "Subscribe to List" ), mailList.subscribeUrls() );
     if ( mailList.features() & MessageCore::MailingList::Unsubscribe )
