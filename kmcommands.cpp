@@ -80,6 +80,7 @@
 #include "composer.h"
 #include "mailcommon/filteraction.h"
 #include "mailcommon/filtermanager.h"
+#include "mailcommon/redirectdialog.h"
 #include "kmmainwidget.h"
 #include "undostack.h"
 #include "messageviewer/kcursorsaver.h"
@@ -90,8 +91,6 @@
 #include "kmreadermainwin.h"
 #include "secondarywindow.h"
 using KMail::SecondaryWindow;
-#include "redirectdialog.h"
-using KMail::RedirectDialog;
 #include "util.h"
 #include "messageviewer/editorwatcher.h"
 #include "broadcaststatus.h"
@@ -1109,9 +1108,13 @@ KMRedirectCommand::KMRedirectCommand( QWidget *parent,
 
 KMCommand::Result KMRedirectCommand::execute()
 {
-  Akonadi::Item item = retrievedMessage();
-  MessageViewer::AutoQPointer<RedirectDialog> dlg(
-      new RedirectDialog( parentWidget(), MessageComposer::MessageComposerSettings::self()->sendImmediate() ) );
+  const Akonadi::Item item = retrievedMessage();
+
+  const MailCommon::RedirectDialog::SendMode sendMode = MessageComposer::MessageComposerSettings::self()->sendImmediate()
+                                                          ? MailCommon::RedirectDialog::SendNow
+                                                          : MailCommon::RedirectDialog::SendLater;
+
+  MessageViewer::AutoQPointer<MailCommon::RedirectDialog> dlg( new MailCommon::RedirectDialog( sendMode, parentWidget() ) );
   dlg->setObjectName( "redirect" );
   if ( dlg->exec() == QDialog::Rejected || !dlg ) {
     return Failed;
@@ -1120,28 +1123,32 @@ KMCommand::Result KMRedirectCommand::execute()
     return Failed;
 
 
-  KMime::Message::Ptr msg = MessageCore::Util::message( item );
+  const KMime::Message::Ptr msg = MessageCore::Util::message( item );
   if ( !msg )
     return Failed;
-  MessageFactory factory( msg,  item.id(), item.parentCollection() );
+
+  MessageFactory factory( msg, item.id(), item.parentCollection() );
   factory.setIdentityManager( KMKernel::self()->identityManager() );
   factory.setFolderIdentity( MailCommon::Util::folderIdentity( item ) );
-  KMime::Message::Ptr newMsg = factory.createRedirect( dlg->to() );
+
+  const KMime::Message::Ptr newMsg = factory.createRedirect( dlg->to() );
   if ( !newMsg )
     return Failed;
 
   MessageStatus status;
   status.setStatusFromFlags( item.flags() );
-  if( !status.isRead() )
-  FilterAction::sendMDN( item, KMime::MDN::Dispatched );
+  if ( !status.isRead() )
+    FilterAction::sendMDN( item, KMime::MDN::Dispatched );
 
-  const MessageSender::SendMethod method = dlg->sendImmediate()
-    ? MessageSender::SendImmediate
-    : MessageSender::SendLater;
+  const MessageSender::SendMethod method = (dlg->sendMode() == MailCommon::RedirectDialog::SendNow)
+                                             ? MessageSender::SendImmediate
+                                             : MessageSender::SendLater;
+
   if ( !kmkernel->msgSender()->send( newMsg, method ) ) {
     kDebug() << "KMRedirectCommand: could not redirect message (sending failed)";
     return Failed; // error: couldn't send
   }
+
   return OK;
 }
 

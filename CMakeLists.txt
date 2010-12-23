@@ -94,7 +94,6 @@ if (NOT WINCE AND KDEPIM_BUILD_DESKTOP)
      filterlogdlg.cpp
      codecaction.cpp
      codecmanager.cpp
-     redirectdialog.cpp
      foldershortcutdialog.cpp
      mailinglistpropertiesdialog.cpp
      util.cpp
