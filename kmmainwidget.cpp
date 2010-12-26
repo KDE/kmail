@@ -4151,15 +4151,21 @@ void KMMainWidget::slotMessageSelected(const Akonadi::Item &item)
   delete mShowBusySplashTimer;
   mShowBusySplashTimer = 0;
   if ( mMsgView ) {
-    mShowBusySplashTimer = new QTimer( this );
-    mShowBusySplashTimer->setSingleShot( true );
-    connect( mShowBusySplashTimer, SIGNAL( timeout() ), this, SLOT( slotShowBusySplash() ) );
-    mShowBusySplashTimer->start( GlobalSettings::self()->folderLoadingTimeout() ); //TODO: check if we need a different timeout setting for this
+    // The current selection was cleared, so we'll remove the previously
+    // selected message from the preview pane
+    if ( !item.isValid() ) {
+      mMsgView->clear();
+    } else {
+      mShowBusySplashTimer = new QTimer( this );
+      mShowBusySplashTimer->setSingleShot( true );
+      connect( mShowBusySplashTimer, SIGNAL( timeout() ), this, SLOT( slotShowBusySplash() ) );
+      mShowBusySplashTimer->start( GlobalSettings::self()->folderLoadingTimeout() ); //TODO: check if we need a different timeout setting for this
 
-    Akonadi::ItemFetchJob *itemFetchJob = MessageViewer::Viewer::createFetchJob( item );
-    connect( itemFetchJob, SIGNAL(itemsReceived(Akonadi::Item::List)),
-             SLOT(itemsReceived(Akonadi::Item::List)) );
-    connect( itemFetchJob, SIGNAL(result(KJob *)), SLOT(itemsFetchDone(KJob *)) );
+      Akonadi::ItemFetchJob *itemFetchJob = MessageViewer::Viewer::createFetchJob( item );
+      connect( itemFetchJob, SIGNAL(itemsReceived(Akonadi::Item::List)),
+              SLOT(itemsReceived(Akonadi::Item::List)) );
+      connect( itemFetchJob, SIGNAL(result(KJob *)), SLOT(itemsFetchDone(KJob *)) );
+    }
   }
 }
 
