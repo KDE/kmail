@@ -180,7 +180,7 @@ MessageActions::MessageActions( KActionCollection *ac, QWidget* parent ) :
 
   mMonitor = new Akonadi::Monitor( this );
   //FIXME: Attachment fetching is not needed here, but on-demand loading is not supported ATM
-  mMonitor->itemFetchScope().fetchFullPayload();
+  mMonitor->itemFetchScope().fetchPayloadPart( Akonadi::MessagePart::Header );
   connect( mMonitor, SIGNAL(itemChanged( Akonadi::Item, QSet<QByteArray> )), SLOT(slotItemModified( Akonadi::Item, QSet<QByteArray> )));
 
   updateActions();
