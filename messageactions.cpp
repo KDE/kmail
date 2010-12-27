@@ -272,8 +272,10 @@ void MessageActions::updateActions()
     Akonadi::Item messageItem = mCurrentItem;
 
     if ( messageItem.payloadData().simplified().isEmpty() ) {
+      mMailingListActionMenu->setEnabled( false );
       Akonadi::ItemFetchJob *job = new Akonadi::ItemFetchJob( messageItem, this );
       job->fetchScope().fetchPayloadPart( Akonadi::MessagePart::Header );
+      connect( job, SIGNAL(result(KJob*)), SLOT(slotUpdateActionsFetchDone(KJob*)) );
     } else {
       updateMailingListActions( mCurrentItem );
     }
@@ -292,7 +294,10 @@ void MessageActions::slotUpdateActionsFetchDone(KJob* job)
     return;
 
   Akonadi::Item  messageItem = fetchJob->items().first();
-  updateMailingListActions( messageItem );
+  if ( messageItem == mCurrentItem ) {
+    mCurrentItem = messageItem;
+    updateMailingListActions( messageItem );
+  }
 }
 
 void MessageActions::updateMailingListActions( const Akonadi::Item& messageItem )
