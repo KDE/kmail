@@ -271,7 +271,7 @@ void MessageActions::updateActions()
 
     Akonadi::Item messageItem = mCurrentItem;
 
-    if ( messageItem.payloadData().simplified().isEmpty() ) {
+    if ( !messageItem.loadedPayloadParts().contains( Akonadi::MessagePart::Header ) ) {
       mMailingListActionMenu->setEnabled( false );
       Akonadi::ItemFetchJob *job = new Akonadi::ItemFetchJob( messageItem, this );
       job->fetchScope().fetchPayloadPart( Akonadi::MessagePart::Header );
