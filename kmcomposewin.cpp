@@ -442,7 +442,7 @@ KMComposeWin::KMComposeWin( const KMime::Message::Ptr &aMsg, Composer::TemplateC
     setMsg( aMsg );
   }
 
-  mComposerBase->identityCombo()->setFocus();
+  mComposerBase->recipientsEditor()->setFocus();
   editor->updateActionStates(); // set toolbar buttons to correct values
 
   mDone = true;
