@@ -153,6 +153,7 @@
 #include <kaction.h>
 #include <kvbox.h>
 #include <ktreewidgetsearchline.h>
+#include <Solid/Networking>
 
 // Qt includes
 #include <QByteArray>
@@ -4212,9 +4213,29 @@ void KMMainWidget::slotCollectionProperties()
   if ( !mCurrentFolder )
     return;
 
-  Akonadi::CollectionAttributesSynchronizationJob sync( mCurrentFolder->collection() );
-  sync.exec();
+  if ( Solid::Networking::status() == Solid::Networking::Unconnected ) {
+    // FIXME post message freeze, pop up a message box informing the user
+    // that the information on the dialog might not be current.
+    slotCollectionPropertiesContinued( 0 );
+  } else {
+    Akonadi::CollectionAttributesSynchronizationJob *sync
+        = new Akonadi::CollectionAttributesSynchronizationJob( mCurrentFolder->collection() );
+    sync->setProperty( "collectionId", mCurrentFolder->collection().id() );
+    connect( sync, SIGNAL( result( KJob* ) ),
+             this, SLOT( slotCollectionPropertiesContinued( KJob* ) ) );
+    sync->start();
+  }
+}
 
+void KMMainWidget::slotCollectionPropertiesContinued( KJob* job )
+{
+  if ( job ) {
+    Akonadi::CollectionAttributesSynchronizationJob *sync
+        = dynamic_cast<Akonadi::CollectionAttributesSynchronizationJob *>( job );
+    Q_ASSERT( sync );
+    if ( sync->property( "collectionId" ) != mCurrentFolder->collection().id() )
+      return;
+  }
   Akonadi::CollectionFetchJob fetch( mCurrentFolder->collection(), Akonadi::CollectionFetchJob::Base );
   fetch.fetchScope().setIncludeStatistics( true );
   fetch.exec();

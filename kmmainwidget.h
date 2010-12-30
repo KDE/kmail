@@ -534,6 +534,8 @@ class KMAIL_EXPORT KMMainWidget : public QWidget
     void itemsFetchDone( KJob *job );
 
     void slotItemNotMovedByFilters( const Akonadi::Item& item );
+
+    void slotCollectionPropertiesContinued( KJob* job );
 private:
     // Message actions
     KAction *mDeleteAction, *mTrashThreadAction,
