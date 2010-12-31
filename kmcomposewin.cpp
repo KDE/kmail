@@ -547,7 +547,7 @@ void KMComposeWin::readConfig( bool reload /* = false */ )
   }
   mBtnFcc->setChecked( GlobalSettings::self()->stickyFcc() );
   mBtnTransport->setChecked( GlobalSettings::self()->stickyTransport() );
-  QString currentTransport = GlobalSettings::self()->currentTransport();
+  const int currentTransport = GlobalSettings::self()->currentTransport().isEmpty() ? -1 : GlobalSettings::self()->currentTransport().toInt();
   mBtnDictionary->setChecked( GlobalSettings::self()->stickyDictionary() );
 
   mEdtFrom->setCompletionMode( (KGlobalSettings::Completion)GlobalSettings::self()->completionMode() );
@@ -591,9 +591,8 @@ void KMComposeWin::readConfig( bool reload /* = false */ )
   const KPIMIdentities::Identity & ident =
     kmkernel->identityManager()->identityForUoid( mId );
 
-  if ( mBtnTransport->isChecked() && !currentTransport.isEmpty() ) {
-    Transport *transport =
-        TransportManager::self()->transportByName( currentTransport );
+  if ( mBtnTransport->isChecked() && currentTransport != -1 ) {
+    const Transport *transport = TransportManager::self()->transportById( currentTransport );
     if ( transport )
       mComposerBase->transportComboBox()->setCurrentTransport( transport->id() );
   }
@@ -1043,17 +1042,16 @@ void KMComposeWin::setQuotePrefix( uint uoid )
 //-----------------------------------------------------------------------------
 void KMComposeWin::getTransportMenu()
 {
-  QStringList availTransports;
-
   mActNowMenu->clear();
   mActLaterMenu->clear();
-  availTransports = TransportManager::self()->transportNames();
-  QStringList::Iterator it;
-  for ( it = availTransports.begin(); it != availTransports.end() ; ++it ) {
-    QAction *action1 = new QAction( (*it).replace( '&', "&&" ), mActNowMenu );
-    QAction *action2 = new QAction( (*it).replace( '&', "&&" ), mActLaterMenu );
-    action1->setData( TransportManager::self()->transportByName( *it )->id() );
-    action2->setData( TransportManager::self()->transportByName( *it )->id() );
+
+  const QList<Transport*> transports = TransportManager::self()->transports();
+  foreach ( Transport *transport, transports ) {
+    const QString name = transport->name().replace( '&', "&&" );
+    QAction *action1 = new QAction( name, mActNowMenu );
+    QAction *action2 = new QAction( name, mActLaterMenu );
+    action1->setData( transport->id() );
+    action2->setData( transport->id() );
     mActNowMenu->addAction( action1 );
     mActLaterMenu->addAction( action2 );
   }
@@ -2789,16 +2787,13 @@ void KMComposeWin::slotIdentityChanged( uint uoid, bool initalChange )
   // If the transport sticky checkbox is not checked, set the transport
   // from the new identity
   if ( !mBtnTransport->isChecked() && !mIgnoreStickyFields ) {
-    QString transportName = ident.transport();
-    Transport *transport =
-        TransportManager::self()->transportByName( transportName, false );
+    const int transportId = ident.transport().isEmpty() ? -1 : ident.transport().toInt();
+    const Transport *transport = TransportManager::self()->transportById( transportId, true );
     if ( !transport ) {
       mMsg->removeHeader( "X-KMail-Transport" );
-      mComposerBase->transportComboBox()->setCurrentTransport(
-                               TransportManager::self()->defaultTransportId() );
-    }
-    else {
-      KMime::Headers::Generic *header = new KMime::Headers::Generic( "X-KMail-Transport", mMsg.get(), transportName, "utf-8" );
+      mComposerBase->transportComboBox()->setCurrentTransport( TransportManager::self()->defaultTransportId() );
+    } else {
+      KMime::Headers::Generic *header = new KMime::Headers::Generic( "X-KMail-Transport", mMsg.get(), QString::number( transport->id() ), "utf-8" );
       mMsg->setHeader( header );
       mComposerBase->transportComboBox()->setCurrentTransport( transport->id() );
     }
