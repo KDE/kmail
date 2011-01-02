@@ -369,10 +369,8 @@ KMFilterDlg::KMFilterDlg(QWidget* parent, bool createDummyFilter )
   connect( mActionLister, SIGNAL( widgetRemoved() ), this, SLOT( slotDialogUpdated() ) );
   connect( mActionLister, SIGNAL( filterModified() ), this, SLOT( slotDialogUpdated() ) );
   
-  KConfigGroup geometry( KMKernel::self()->config(), "Geometry");
-  const char * configKey = "filterDialogSize";
-  if ( geometry.hasKey( configKey ) )
-    resize( geometry.readEntry( configKey, QSize() ));
+  if ( GlobalSettings::self()->filterDialogSize() != QSize()  )
+    resize( GlobalSettings::self()->filterDialogSize() );
   else
     adjustSize();
 
@@ -400,9 +398,8 @@ void KMFilterDlg::slotFinished() {
 	deleteLater();
 }
 
-void KMFilterDlg::slotSaveSize() {
-  KConfigGroup geometry( KMKernel::self()->config(), "Geometry" );
-  geometry.writeEntry( "filterDialogSize", size() );
+void KMFilterDlg::slotSaveSize() {  
+  GlobalSettings::self()->setFilterDialogSize( size() );
 }
 
 void KMFilterDlg::slotFilterSelected( MailFilter* aFilter )

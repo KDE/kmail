@@ -223,9 +223,8 @@ ConfigureDialog::ConfigureDialog( QWidget *parent, bool modal )
   // the KCMultiDialog starts with the size of the first kcm, not
   // the largest one. This way at least after the first showing of
   // the largest kcm the size is kept.
-  KConfigGroup geometry( KMKernel::self()->config(), "Geometry" );
-  int width = geometry.readEntry( "ConfigureDialogWidth", 0 );
-  int height = geometry.readEntry( "ConfigureDialogHeight", 0 );
+  int width = GlobalSettings::self()->configureDialogWidth();
+  int height = GlobalSettings::self()->configureDialogHeight();
   if ( width != 0 && height != 0 ) {
      resize( width, height );
   }
@@ -234,9 +233,8 @@ ConfigureDialog::ConfigureDialog( QWidget *parent, bool modal )
 
 void ConfigureDialog::hideEvent( QHideEvent *ev )
 {
-  KConfigGroup geometry( KMKernel::self()->config(), "Geometry" );
-  geometry.writeEntry( "ConfigureDialogWidth", width() );
-  geometry.writeEntry( "ConfigureDialogHeight",height() );
+  GlobalSettings::self()->setConfigureDialogWidth( width() );
+  GlobalSettings::self()->setConfigureDialogHeight( height() );
   KDialog::hideEvent( ev );
 }
 
@@ -635,15 +633,13 @@ void AccountsPage::ReceivingTab::doLoadFromGlobalSettings()
 
 void AccountsPage::ReceivingTab::doLoadOther()
 {
-  KConfigGroup general( KMKernel::self()->config(), "General" );
-  mAccountsReceiving.mBeepNewMailCheck->setChecked( general.readEntry( "beep-on-mail", false ) );
+  mAccountsReceiving.mBeepNewMailCheck->setChecked( GlobalSettings::self()->beepOnMail() );
 }
 
 void AccountsPage::ReceivingTab::save()
 {
   // Save Mail notification settings
-  KConfigGroup general( KMKernel::self()->config(), "General" );
-  general.writeEntry( "beep-on-mail", mAccountsReceiving.mBeepNewMailCheck->isChecked() );
+  GlobalSettings::self()->setBeepOnMail( mAccountsReceiving.mBeepNewMailCheck->isChecked() );
   GlobalSettings::self()->setVerboseNewMailNotification( mAccountsReceiving.mVerboseNotificationCheck->isChecked() );
 
   const QString resourceGroupPattern( "Resource %1" );
@@ -1006,7 +1002,7 @@ void AppearancePage::ColorsTab::doLoadOther()
   KConfigGroup messageListView( KMKernel::self()->config(), "MessageListView::Colors" );
 
   mCustomColorCheck->setChecked( !MessageCore::GlobalSettings::self()->useDefaultColors() );
-  mRecycleColorCheck->setChecked( reader.readEntry( "RecycleQuoteColors", false ) );
+  mRecycleColorCheck->setChecked( MessageViewer::GlobalSettings::self()->recycleQuoteColors() );
   mCloseToQuotaThreshold->setValue( GlobalSettings::self()->closeToQuotaThreshold() );
   KColorScheme scheme( QPalette::Active, KColorScheme::View );
 
@@ -1070,7 +1066,7 @@ void AppearancePage::ColorsTab::save()
         reader.writeEntry( configName, mColorList->color(i) );
     }
   }
-  reader.writeEntry( "RecycleQuoteColors", mRecycleColorCheck->isChecked() );
+  MessageViewer::GlobalSettings::self()->setRecycleQuoteColors( mRecycleColorCheck->isChecked() );
   GlobalSettings::self()->setCloseToQuotaThreshold( mCloseToQuotaThreshold->value() );
 }
 
@@ -1148,8 +1144,7 @@ void AppearancePage::LayoutTab::doLoadOther()
   loadWidget( mReaderWindowModeGroupBox, mReaderWindowModeGroup, GlobalSettings::self()->readerWindowModeItem() );
   mFavoriteFolderViewCB->setChecked( GlobalSettings::self()->enableFavoriteCollectionView() );
   mFolderQuickSearchCB->setChecked( GlobalSettings::self()->enableFolderQuickSearch() );
-  const KConfigGroup mainFolderView( KMKernel::self()->config(), "MainFolderView" );
-  const int checkedFolderToolTipsPolicy = mainFolderView.readEntry( "ToolTipDisplayPolicy", 0 );
+  const int checkedFolderToolTipsPolicy = GlobalSettings::self()->toolTipDisplayPolicy();
   if ( checkedFolderToolTipsPolicy < mFolderToolTipsGroup->buttons().size() && checkedFolderToolTipsPolicy >= 0 )
     mFolderToolTipsGroup->buttons()[ checkedFolderToolTipsPolicy ]->setChecked( true );
 }
@@ -1160,8 +1155,7 @@ void AppearancePage::LayoutTab::save()
   saveButtonGroup( mReaderWindowModeGroup, GlobalSettings::self()->readerWindowModeItem() );
   GlobalSettings::self()->setEnableFavoriteCollectionView( mFavoriteFolderViewCB->isChecked() );
   GlobalSettings::self()->setEnableFolderQuickSearch( mFolderQuickSearchCB->isChecked() );
-  KConfigGroup mainFolderView( KMKernel::self()->config(), "MainFolderView" );
-  mainFolderView.writeEntry( "ToolTipDisplayPolicy", mFolderToolTipsGroup->checkedId() );
+  GlobalSettings::self()->setToolTipDisplayPolicy( mFolderToolTipsGroup->checkedId() );
 }
 
 //
@@ -2847,8 +2841,7 @@ void ComposerPage::HeadersTab::doLoadOther()
 
   QTreeWidgetItem * item = 0;
 
-  const KConfigGroup general( KMKernel::self()->config(), "General" );
-  int count = general.readEntry( "mime-header-count", 0 );
+  int count = GlobalSettings::self()->customMessageHeadersCount();
   for( int i = 0 ; i < count ; i++ ) {
     KConfigGroup config( KMKernel::self()->config(),
                          QString("Mime #") + QString::number(i) );
@@ -2886,8 +2879,7 @@ void ComposerPage::HeadersTab::save()
       numValidEntries++;
     }
   }
-  KConfigGroup general( KMKernel::self()->config(), "General" );
-  general.writeEntry( "mime-header-count", numValidEntries );
+  GlobalSettings::self()->setCustomMessageHeadersCount( numValidEntries );
 }
 
 void ComposerPage::HeadersTab::doResetToDefaultsOther()
@@ -3110,12 +3102,10 @@ void SecurityPage::GeneralTab::doLoadOther()
 
   mSGTab.mAlwaysDecrypt->setChecked( MessageViewer::GlobalSettings::self()->alwaysDecrypt() );
 
-  const KConfigGroup mdn( KMKernel::self()->config(), "MDN" );
-
-  int num = mdn.readEntry( "default-policy", 0 );
+  int num = MessageViewer::GlobalSettings::self()->defaultPolicy();
   if ( num < 0 || num >= mMDNGroup->buttons().count() ) num = 0;
   mMDNGroup->button(num)->setChecked(true);
-  num = mdn.readEntry( "quote-message", 0 );
+  num = MessageViewer::GlobalSettings::self()->quoteMessage();
   if ( num < 0 || num >= mOrigQuoteGroup->buttons().count() ) num = 0;
   mOrigQuoteGroup->button(num)->setChecked(true);
   mSGTab.mNoMDNsWhenEncryptedCheck->setChecked( MessageViewer::GlobalSettings::self()->notSendWhenEncrypted() );
@@ -3124,7 +3114,6 @@ void SecurityPage::GeneralTab::doLoadOther()
 void SecurityPage::GeneralTab::save()
 {
   KConfigGroup reader( KMKernel::self()->config(), "Reader" );
-  KConfigGroup mdn( KMKernel::self()->config(), "MDN" );
 
   if ( MessageViewer::GlobalSettings::self()->htmlMail() != mSGTab.mHtmlMailCheck->isChecked())
   {
@@ -3145,8 +3134,8 @@ void SecurityPage::GeneralTab::save()
   MessageViewer::GlobalSettings::self()->setHtmlLoadExternal( mSGTab.mExternalReferences->isChecked() );
   MessageViewer::GlobalSettings::self()->setAutoImportKeys(
       mSGTab.mAutomaticallyImportAttachedKeysCheck->isChecked() );
-  mdn.writeEntry( "default-policy", mMDNGroup->checkedId() );
-  mdn.writeEntry( "quote-message", mOrigQuoteGroup->checkedId() );
+  MessageViewer::GlobalSettings::self()->setDefaultPolicy( mMDNGroup->checkedId() );
+  MessageViewer::GlobalSettings::self()->setQuoteMessage( mOrigQuoteGroup->checkedId() );
   MessageViewer::GlobalSettings::self()->setNotSendWhenEncrypted( mSGTab.mNoMDNsWhenEncryptedCheck->isChecked() );
   MessageViewer::GlobalSettings::self()->setAlwaysDecrypt( mSGTab.mAlwaysDecrypt->isChecked() );
 }
@@ -3178,43 +3167,34 @@ SecurityPageComposerCryptoTab::SecurityPageComposerCryptoTab( QWidget * parent )
 
 void SecurityPage::ComposerCryptoTab::doLoadOther()
 {
-  const KConfigGroup composer( KMKernel::self()->config(), "Composer" );
-
   // If you change default values, sync messagecomposer.cpp too
 
-  mWidget->mAutoSignature->setChecked(
-      composer.readEntry( "pgp-auto-sign", false ) );
+  mWidget->mAutoSignature->setChecked( GlobalSettings::self()->pgpAutoSign() );
 
-  mWidget->mEncToSelf->setChecked(
-      composer.readEntry( "crypto-encrypt-to-self", true ) );
+  mWidget->mEncToSelf->setChecked( GlobalSettings::self()->cryptoEncryptToSelf() );
   mWidget->mShowEncryptionResult->setChecked( false ); //composer.readBoolEntry( "crypto-show-encryption-result", true ) );
   mWidget->mShowEncryptionResult->hide();
-  mWidget->mShowKeyApprovalDlg->setChecked(
-      composer.readEntry( "crypto-show-keys-for-approval", true ) );
+  mWidget->mShowKeyApprovalDlg->setChecked( GlobalSettings::self()->cryptoShowKeysForApproval() );
 
-  mWidget->mAutoEncrypt->setChecked(
-      composer.readEntry( "pgp-auto-encrypt", false ) );
+  mWidget->mAutoEncrypt->setChecked( GlobalSettings::self()->pgpAutoEncrypt() ) ;
   mWidget->mNeverEncryptWhenSavingInDrafts->setChecked(
-      composer.readEntry( "never-encrypt-drafts", true ) );
+      GlobalSettings::self()->neverEncryptDrafts() );
 
-  mWidget->mStoreEncrypted->setChecked(
-      composer.readEntry( "crypto-store-encrypted", true ) );
+  mWidget->mStoreEncrypted->setChecked( GlobalSettings::self()->cryptoStoreEncrypted() );
 }
 
 void SecurityPage::ComposerCryptoTab::save()
 {
-  KConfigGroup composer( KMKernel::self()->config(), "Composer" );
+  GlobalSettings::self()->setPgpAutoSign( mWidget->mAutoSignature->isChecked() );
 
-  composer.writeEntry( "pgp-auto-sign", mWidget->mAutoSignature->isChecked() );
+  GlobalSettings::self()->setCryptoEncryptToSelf( mWidget->mEncToSelf->isChecked() );
+  GlobalSettings::self()->setCryptoShowEncryptionResult( mWidget->mShowEncryptionResult->isChecked() );
+  GlobalSettings::self()->setCryptoShowKeysForApproval( mWidget->mShowKeyApprovalDlg->isChecked() );
 
-  composer.writeEntry( "crypto-encrypt-to-self", mWidget->mEncToSelf->isChecked() );
-  composer.writeEntry( "crypto-show-encryption-result", mWidget->mShowEncryptionResult->isChecked() );
-  composer.writeEntry( "crypto-show-keys-for-approval", mWidget->mShowKeyApprovalDlg->isChecked() );
+  GlobalSettings::self()->setPgpAutoEncrypt( mWidget->mAutoEncrypt->isChecked() );
+  GlobalSettings::self()->setNeverEncryptDrafts( mWidget->mNeverEncryptWhenSavingInDrafts->isChecked() );
 
-  composer.writeEntry( "pgp-auto-encrypt", mWidget->mAutoEncrypt->isChecked() );
-  composer.writeEntry( "never-encrypt-drafts", mWidget->mNeverEncryptWhenSavingInDrafts->isChecked() );
-
-  composer.writeEntry( "crypto-store-encrypted", mWidget->mStoreEncrypted->isChecked() );
+  GlobalSettings::self()->setCryptoStoreEncrypted( mWidget->mStoreEncrypted->isChecked() );
 }
 
 QString SecurityPage::WarningTab::helpAnchor() const
@@ -3245,38 +3225,36 @@ SecurityPageWarningTab::SecurityPageWarningTab( QWidget * parent )
 
 void SecurityPage::WarningTab::doLoadOther()
 {
-  const KConfigGroup composer( KMKernel::self()->config(), "Composer" );
-
   mWidget->warnUnencryptedCB->setChecked(
-      composer.readEntry( "crypto-warning-unencrypted", false ) );
+      MessageComposer::MessageComposerSettings::self()->cryptoWarningUnencrypted() );
   mWidget->mWarnUnsigned->setChecked(
-      composer.readEntry( "crypto-warning-unsigned", false ) );
+      MessageComposer::MessageComposerSettings::self()->cryptoWarningUnsigned() );
   mWidget->warnReceiverNotInCertificateCB->setChecked(
-      composer.readEntry( "crypto-warn-recv-not-in-cert", true ) );
+      MessageComposer::MessageComposerSettings::self()->cryptoWarnRecvNotInCert() );
 
   // The "-int" part of the key name is because there used to be a separate boolean
   // config entry for enabling/disabling. This is done with the single bool value now.
   mWidget->warnGroupBox->setChecked(
-      composer.readEntry( "crypto-warn-when-near-expire", true ) );
+      MessageComposer::MessageComposerSettings::self()->cryptoWarnWhenNearExpire() );
 
   mWidget->mWarnSignKeyExpiresSB->setValue(
-      composer.readEntry( "crypto-warn-sign-key-near-expire-int", 14 ) );
+      MessageComposer::MessageComposerSettings::self()->cryptoWarnSignKeyNearExpiryThresholdDays() );
   mWidget->mWarnSignKeyExpiresSB->setSuffix(ki18np(" day", " days"));
   mWidget->mWarnSignChainCertExpiresSB->setValue(
-      composer.readEntry( "crypto-warn-sign-chaincert-near-expire-int", 14 ) );
+      MessageComposer::MessageComposerSettings::self()->cryptoWarnSignChaincertNearExpiryThresholdDays() );
   mWidget->mWarnSignChainCertExpiresSB->setSuffix(ki18np(" day", " days"));
   mWidget->mWarnSignRootCertExpiresSB->setValue(
-      composer.readEntry( "crypto-warn-sign-root-near-expire-int", 14 ) );
+      MessageComposer::MessageComposerSettings::self()->cryptoWarnSignRootNearExpiryThresholdDays() );
   mWidget->mWarnSignRootCertExpiresSB->setSuffix(ki18np(" day", " days"));
 
   mWidget->mWarnEncrKeyExpiresSB->setValue(
-      composer.readEntry( "crypto-warn-encr-key-near-expire-int", 14 ) );
+      MessageComposer::MessageComposerSettings::self()->cryptoWarnEncrKeyNearExpiryThresholdDays() );
   mWidget->mWarnEncrKeyExpiresSB->setSuffix(ki18np(" day", " days"));
   mWidget->mWarnEncrChainCertExpiresSB->setValue(
-      composer.readEntry( "crypto-warn-encr-chaincert-near-expire-int", 14 ) );
+      MessageComposer::MessageComposerSettings::self()->cryptoWarnEncrChaincertNearExpiryThresholdDays() );
   mWidget->mWarnEncrChainCertExpiresSB->setSuffix(ki18np(" day", " days"));
   mWidget->mWarnEncrRootCertExpiresSB->setValue(
-      composer.readEntry( "crypto-warn-encr-root-near-expire-int", 14 ) );
+      MessageComposer::MessageComposerSettings::self()->cryptoWarnEncrRootNearExpiryThresholdDays() );
   mWidget->mWarnEncrRootCertExpiresSB->setSuffix(ki18np(" day", " days"));
 
   mWidget->enableAllWarningsPB->setEnabled( true );
@@ -3284,25 +3262,27 @@ void SecurityPage::WarningTab::doLoadOther()
 
 void SecurityPage::WarningTab::save()
 {
-  KConfigGroup composer( KMKernel::self()->config(), "Composer" );
+  MessageComposer::MessageComposerSettings::self()->setCryptoWarnRecvNotInCert(
+                       mWidget->warnReceiverNotInCertificateCB->isChecked() );
+  MessageComposer::MessageComposerSettings::self()->setCryptoWarningUnencrypted(
+                       mWidget->warnUnencryptedCB->isChecked() );
+  MessageComposer::MessageComposerSettings::self()->setCryptoWarningUnsigned(
+                       mWidget->mWarnUnsigned->isChecked() );
 
-  composer.writeEntry( "crypto-warn-recv-not-in-cert", mWidget->warnReceiverNotInCertificateCB->isChecked() );
-  composer.writeEntry( "crypto-warning-unencrypted", mWidget->warnUnencryptedCB->isChecked() );
-  composer.writeEntry( "crypto-warning-unsigned", mWidget->mWarnUnsigned->isChecked() );
-
-  composer.writeEntry( "crypto-warn-when-near-expire", mWidget->warnGroupBox->isChecked() );
-  composer.writeEntry( "crypto-warn-sign-key-near-expire-int",
+  MessageComposer::MessageComposerSettings::self()->setCryptoWarnWhenNearExpire(
+                       mWidget->warnGroupBox->isChecked() );
+  MessageComposer::MessageComposerSettings::self()->setCryptoWarnSignKeyNearExpiryThresholdDays(
                        mWidget->mWarnSignKeyExpiresSB->value() );
-  composer.writeEntry( "crypto-warn-sign-chaincert-near-expire-int",
+  MessageComposer::MessageComposerSettings::self()->setCryptoWarnSignChaincertNearExpiryThresholdDays(
                        mWidget->mWarnSignChainCertExpiresSB->value() );
-  composer.writeEntry( "crypto-warn-sign-root-near-expire-int",
+  MessageComposer::MessageComposerSettings::self()->setCryptoWarnSignRootNearExpiryThresholdDays(
                        mWidget->mWarnSignRootCertExpiresSB->value() );
 
-  composer.writeEntry( "crypto-warn-encr-key-near-expire-int",
+  MessageComposer::MessageComposerSettings::self()->setCryptoWarnEncrKeyNearExpiryThresholdDays(
                        mWidget->mWarnEncrKeyExpiresSB->value() );
-  composer.writeEntry( "crypto-warn-encr-chaincert-near-expire-int",
+  MessageComposer::MessageComposerSettings::self()->setCryptoWarnEncrChaincertNearExpiryThresholdDays(
                        mWidget->mWarnEncrChainCertExpiresSB->value() );
-  composer.writeEntry( "crypto-warn-encr-root-near-expire-int",
+  MessageComposer::MessageComposerSettings::self()->setCryptoWarnEncrRootNearExpiryThresholdDays(
                        mWidget->mWarnEncrRootCertExpiresSB->value() );
 }
 
@@ -3717,24 +3697,16 @@ void MiscPage::FolderTab::doLoadFromGlobalSettings()
 
 void MiscPage::FolderTab::doLoadOther()
 {
-  KConfigGroup general( KMKernel::self()->config(), "General" );
-
-  mMMTab.mEmptyTrashCheck->setChecked(
-      general.readEntry( "empty-trash-on-exit", false ) );
-  mOnStartupOpenFolder->setFolder( general.readEntry( "startupFolder",
-      QString::number(CommonKernel->inboxCollectionFolder().id() )) );
-  mMMTab.mEmptyFolderConfirmCheck->setChecked(
-      general.readEntry( "confirm-before-empty", true ) );
-
+  mMMTab.mEmptyTrashCheck->setChecked( GlobalSettings::self()->emptyTrashOnExit() );
+  mOnStartupOpenFolder->setFolder( GlobalSettings::self()->startupFolder() );
+  mMMTab.mEmptyFolderConfirmCheck->setChecked( GlobalSettings::self()->confirmBeforeEmpty() );
 }
 
 void MiscPage::FolderTab::save()
 {
-  KConfigGroup general( KMKernel::self()->config(), "General" );
-
-  general.writeEntry( "empty-trash-on-exit", mMMTab.mEmptyTrashCheck->isChecked() );
-  general.writeEntry( "confirm-before-empty", mMMTab.mEmptyFolderConfirmCheck->isChecked() );
-  general.writeEntry( "startupFolder", mOnStartupOpenFolder->folderCollection().isValid() ?
+  GlobalSettings::self()->setEmptyTrashOnExit( mMMTab.mEmptyTrashCheck->isChecked() );
+  GlobalSettings::self()->setConfirmBeforeEmpty( mMMTab.mEmptyFolderConfirmCheck->isChecked() );
+  GlobalSettings::self()->setStartupFolder( mOnStartupOpenFolder->folderCollection().isValid() ?
                                   QString::number(mOnStartupOpenFolder->folderCollection().id()) : QString() );
 
   MessageViewer::GlobalSettings::self()->setDelayedMarkAsRead( mMMTab.mDelayedMarkAsRead->isChecked() );

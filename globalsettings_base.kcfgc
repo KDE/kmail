@@ -4,5 +4,5 @@ Mutators=true
 Singleton=true
 ItemAccessors=true
 SetUserTexts=true
-IncludeFiles=qapplication.h,defaulttemplates.h
+IncludeFiles=qapplication.h,defaulttemplates.h,mailkernel.h,kmversion.h
 

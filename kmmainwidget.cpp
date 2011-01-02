@@ -437,7 +437,7 @@ void KMMainWidget::slotEndCheckMail()
                           KNotification::CloseOnTimeout );
   }
 
-  if ( mBeepOnNew ) {
+  if ( GlobalSettings::self()->beepOnMail() ) {
     KNotification::beep();
   }
 }
@@ -832,9 +832,6 @@ void KMMainWidget::readConfig()
   }
 
   { // area for config group "General"
-    KConfigGroup group( config, "General" );
-    mBeepOnNew = group.readEntry( "beep-on-mail", false );
-    mConfirmEmpty = group.readEntry( "confirm-before-empty", true );
     if ( !mStartupDone )
     {
       // check mail on startup
@@ -1485,7 +1482,7 @@ void KMMainWidget::slotEmptyFolder()
 
   if (!mCurrentFolder) return;
   const bool isTrash = CommonKernel->folderIsTrash( mCurrentFolder->collection() );
-  if (mConfirmEmpty)
+  if ( GlobalSettings::self()->confirmBeforeEmpty() )
   {
     const QString title = (isTrash) ? i18n("Empty Trash") : i18n("Move to Trash");
     const QString text = (isTrash) ?

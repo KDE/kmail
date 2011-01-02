@@ -38,6 +38,7 @@
 #include "simplestringlisteditor.h"
 #include "folderrequester.h"
 #ifndef KCM_KPIMIDENTITIES_STANDALONE
+#include "globalsettings.h"
 #include "kmkernel.h"
 #endif
 
@@ -516,9 +517,7 @@ namespace KMail {
 #endif
 
 #ifndef KCM_KPIMIDENTITIES_STANDALONE
-    KConfigGroup geometry( KMKernel::self()->config(), "Geometry" );
-    if ( geometry.hasKey( "Identity Dialog size" ) )
-      resize( geometry.readEntry( "Identity Dialog size", QSize() ));
+    resize( GlobalSettings::self()->identityDialogSize() );
 #endif
     mNameEdit->setFocus();
 
@@ -529,8 +528,7 @@ namespace KMail {
 
   IdentityDialog::~IdentityDialog() {
 #ifndef KCM_KPIMIDENTITIES_STANDALONE
-    KConfigGroup geometry( KMKernel::self()->config(), "Geometry" );
-    geometry.writeEntry( "Identity Dialog size", size() );
+    GlobalSettings::self()->setIdentityDialogSize( size() );
 #endif
   }
 

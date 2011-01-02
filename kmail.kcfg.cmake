@@ -114,13 +114,43 @@
         <label>Use e&amp;xternal editor instead of composer</label>
         <default>false</default>
       </entry>
-      <entry name="CustHeaderCount" type="Int" key="mime-header-count" />
+      <entry name="CustomMessageHeadersCount" type="Int" key="mime-header-count">
+        <label>Specifies the number of custom MIME header fields to be inserted in messages (for internal use only)</label>
+      </entry>
       <entry name="FolderLoadingTimeout" type="Int" hidden="true">
          <default>1000</default>
       </entry>
       <entry name="CloseToQuotaThreshold" type="Int">
         <label>The threshold for when to warn the user that a folder is nearing its quota limit.</label>
          <default>80</default>
+      </entry>
+      <entry name="BeepOnMail" type="Bool" key="beep-on-mail">
+        <label>Beep upon receiving new mail</label>
+        <default>false</default>
+      </entry>
+      <entry name="EmptyTrashOnExit" type="Bool" key="empty-trash-on-exit">
+        <label>Empty the local trash folder on program exit</label>
+        <default>false</default>
+      </entry>
+      <entry name="StartupFolder" type="String" key="startupFolder">
+        <label>Specify the folder to open when the program is started</label>
+        <default></default>
+      </entry>
+      <entry name="ConfirmBeforeEmpty" type="Bool" key="confirm-before-empty">
+        <label>Ask for confirmation before moving all messages to trash</label>
+        <default>true</default>
+      </entry>
+      <entry name="AutoExpiring" type="Bool" key="auto-expiring">
+        <label>Specifies whether the folders will expire in the background (for internal use only)</label>
+        <default>true</default>
+      </entry>
+      <entry name="FirstStart" type="Bool" key="first-start">
+        <label>Specifies whether this is the very first time that the application is run (for internal use only)</label>
+        <default>true</default>
+      </entry>
+      <entry name="PreviousVersion" type="String" key="previous-version">
+        <label>Specifies the version of the aplication that was last used (for internal use only)</label>
+        <default code="true">KMAIL_VERSION</default>
       </entry>
     </group>
 <!-- General -->
@@ -259,6 +289,34 @@
           <default>false</default>
       </entry>
 
+      <entry name="CryptoEncryptToSelf" type="Bool" key="crypto-encrypt-to-self">
+        <label>When encrypting emails, always also encrypt to the certificate of my own identity</label>
+        <default>true</default>
+      </entry>
+      <entry name="CryptoShowEncryptionResult" type="Bool" key="crypto-show-encryption-result">
+        <label>Show signed/encrypted text after composing</label>
+        <default>true</default>
+      </entry>
+      <entry name="CryptoShowKeysForApproval" type="Bool" key="crypto-show-keys-for-approval">
+        <label>Always show the list of encryption keys to select the one which will be used</label>
+        <default>true</default>
+      </entry>
+      <entry name="CryptoStoreEncrypted" type="Bool" key="crypto-store-encrypted">
+        <label>When check, sent messages will be stored in the encrypted form</label>
+        <default>true</default>
+      </entry>
+      <entry name="RecentUrls" type="StringList" key="recent-urls">
+        <label>A list of all the recently used URLs</label>
+        <default code="true">
+        QStringList()
+        </default>
+      </entry>
+      <entry name="RecentEncodings" type="StringList" key="recent-encoding">
+        <label>A list of all the recently used encodings</label>
+        <default code="true">
+        QStringList()
+        </default>
+      </entry>
     </group>
 <!-- Composer -->
 
@@ -271,6 +329,30 @@
     <group name="Geometry">
       <entry name="ComposerSize" type="Size" key="composer">
         <default>QSize(480,510)</default>
+      </entry>
+      <entry name="FilterDialogSize" type="Size" key="filterDialogSize">
+        <label>The size of the filter dialog (for internal use only)</label>
+        <default>QSize()</default>
+      </entry>
+      <entry name="IdentityDialogSize" type="Size" key="Identity Dialog size">
+        <label>The size of the identity dialog (for internal use only)</label>
+        <default>QSize()</default>
+      </entry>
+      <entry name="SearchWidgetWidth" type="Int">
+        <label>The width of the search window (for internal use only)</label>
+        <default>0</default>
+      </entry>
+      <entry name="SearchWidgetHeight" type="Int">
+        <label>The height of the search window (for internal use only)</label>
+        <default>0</default>
+      </entry>
+      <entry name="ConfigureDialogWidth" type="Int">
+        <label>The width of the Configure KMail dialog (for internal use only)</label>
+        <default>0</default>
+      </entry>
+      <entry name="ConfigureDialogHeight" type="Int">
+        <label>The height of the Configure KMail dialog (for internal use only)</label>
+        <default>0</default>
       </entry>
       <entry name="FolderViewWidth" type="Int">
         <default>250</default>
@@ -379,6 +461,41 @@
  <group name="Search">
    <entry name="LastSearchCollectionId" type="LongLong">
      <default>-1</default>
+   </entry>
+ </group>
+
+ <!-- Startup settings -->
+ <group name="Startup">
+   <entry name="UpdateLevel" type="Int" key="update-level">
+     <label>Specifies the number of updates to perform (for internal use only)</label>
+     <default>0</default>
+   </entry>
+ </group>
+ <!-- Main Folder View settings -->
+ <group name="MainFolderView">
+    <entry name="ToolTipDisplayPolicy" type="Int">
+      <label>Specifies the policy used when displaying policy</label>
+      <default>0</default>
+    </entry>
+ </group>
+
+ <!-- Search Dialog settings -->
+ <group name="SearchDialog">
+   <entry name="SubjectWidth" type="Int">
+     <label>Specifies the width of the subject field in the Search Window dialog (for internal use only)</label>
+     <default>150</default>
+   </entry>
+   <entry name="SenderWidth" type="Int">
+     <label>Specifies the width of the sender field in the Search Window dialog (for internal use only)</label>
+     <default>120</default>
+   </entry>
+   <entry name="DateWidth" type="Int">
+     <label>Specifies the width of the date field in the Search Window dialog (for internal use only)</label>
+     <default>120</default>
+   </entry>
+   <entry name="FolderWidth" type="Int">
+     <label>Specifies the width of the folder field in the Search Window dialog (for internal use only)</label>
+     <default>100</default>
    </entry>
  </group>
 </kcfg>

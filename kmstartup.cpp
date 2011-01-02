@@ -79,15 +79,14 @@ void checkConfigUpdates() {
   // Warning: do not remove entries in the above array, or the update-level check below will break
 
   KSharedConfig::Ptr config = KMKernel::self()->config();
-  KConfigGroup startup( config, "Startup" );
-  const int configUpdateLevel = startup.readEntry( "update-level", 0 );
+  const int configUpdateLevel = GlobalSettings::self()->updateLevel();
   if ( configUpdateLevel == numUpdates ) // Optimize for the common case that everything is OK
     return;
 
   for ( int i = configUpdateLevel ; i < numUpdates ; ++i ) {
     config->checkUpdate( updates[i], "kmail.upd" );
   }
-  startup.writeEntry( "update-level", numUpdates );
+  GlobalSettings::self()->setUpdateLevel( numUpdates );
 }
 
 void lockOrDie() {

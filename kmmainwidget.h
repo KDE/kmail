@@ -575,8 +575,6 @@ private:
     Akonadi::Collection mTemplateFolder;
     QMenu        *mViewMenu, *mBodyPartsMenu;
     KAction      *mlistFilterAction;
-    bool          mBeepOnNew;
-    bool          mConfirmEmpty;
     int           mMessageStatusId;
     KUrl          mUrlCurrent;
     QMenu        *mActMenu;

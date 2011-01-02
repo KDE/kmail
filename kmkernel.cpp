@@ -1091,13 +1091,10 @@ void KMKernel::init()
 {
   the_shuttingDown = false;
 
-  KSharedConfig::Ptr cfg = KMKernel::config();
-
-  KConfigGroup group(cfg, "General");
-  the_firstStart = group.readEntry("first-start", true );
-  group.writeEntry("first-start", false);
-  the_previousVersion = group.readEntry("previous-version");
-  group.writeEntry("previous-version", KMAIL_VERSION);
+  the_firstStart = GlobalSettings::self()->firstStart();
+  GlobalSettings::self()->setFirstStart( false );
+  the_previousVersion = GlobalSettings::self()->previousVersion();
+  GlobalSettings::self()->setPreviousVersion( KMAIL_VERSION );
 
   readConfig();
 
@@ -1208,10 +1205,9 @@ void KMKernel::cleanup(void)
   the_undoStack = 0;
 
   KSharedConfig::Ptr config =  KMKernel::config();
-  KConfigGroup group(config, "General");
   Akonadi::Collection trashCollection = CommonKernel->trashCollectionFolder();
   if ( trashCollection.isValid() ) {
-    if ( group.readEntry( "empty-trash-on-exit", false ) ) {
+    if ( GlobalSettings::self()->emptyTrashOnExit() ) {
       if ( trashCollection.statistics().count() > 0 ) {
         mFolderCollectionMonitor->expunge( trashCollection );
       }
@@ -1468,8 +1464,7 @@ void KMKernel::slotRunBackgroundTasks() // called regularly by timer
 {
   // Hidden KConfig keys. Not meant to be used, but a nice fallback in case
   // a stable kmail release goes out with a nasty bug in CompactionJob...
-  KConfigGroup generalGroup( config(), "General" );
-  if ( generalGroup.readEntry( "auto-expiring", true ) ) {
+  if ( GlobalSettings::self()->autoExpiring() ) {
       mFolderCollectionMonitor->expireAllFolders( false /*scheduled, not immediate*/, entityTreeModel() );
   }
 

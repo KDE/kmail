@@ -83,15 +83,14 @@ void KMComposerEditor::setHighlighterColors(KPIMTextEdit::EMailQuoteHighlighter 
   QColor misspelled = Qt::red;
 
   if ( !MessageCore::GlobalSettings::self()->useDefaultColors() ) {
-    KConfigGroup readerConfig( KMKernel::self()->config(), "Reader" );
-    color3 = readerConfig.readEntry( "QuotedText3", color3  );
-    color2 = readerConfig.readEntry( "QuotedText2", color2  );
-    color1 = readerConfig.readEntry( "QuotedText1", color1  );
-    misspelled = readerConfig.readEntry( "MisspelledColor", misspelled );
+    color1 = MessageCore::GlobalSettings::self()->quotedText1();
+    color2 = MessageCore::GlobalSettings::self()->quotedText2();
+    color3 = MessageCore::GlobalSettings::self()->quotedText3();
+    misspelled = MessageCore::GlobalSettings::self()->misspelledColor();
   }
 
   highlighter->setQuoteColor( Qt::black /* ignored anyway */,
-                              color3, color2, color1, misspelled );
+                              color1, color2, color3, misspelled );
 }
 
 QString KMComposerEditor::smartQuote( const QString & msg )
