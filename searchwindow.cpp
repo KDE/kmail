@@ -91,7 +91,7 @@ SearchWindow::SearchWindow( KMMainWidget *widget, const Akonadi::Collection &col
   setCaption( i18n( "Find Messages" ) );
   setButtons( User1 | User2 | Close );
   setDefaultButton( User1 );
-  setButtonGuiItem( User1, KGuiItem( i18nc( "@action:button Search for messags", "&Search" ), "edit-find" ) );
+  setButtonGuiItem( User1, KGuiItem( i18nc( "@action:button Search for messages", "&Search" ), "edit-find" ) );
   setButtonGuiItem( User2, KStandardGuiItem::stop() );
 
   KWindowSystem::setIcons( winId(), qApp->windowIcon().pixmap( IconSize( KIconLoader::Desktop ),
