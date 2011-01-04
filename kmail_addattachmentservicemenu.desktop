@@ -8,6 +8,7 @@ Icon=kmail
 [Desktop Action sendto]
 Name=Send To
 Name[ca]=Envia a
+Name[ca@valencia]=Envia a
 Name[de]=Senden an
 Name[el]=Αποστολή προς
 Name[en_GB]=Send To
