@@ -43,6 +43,7 @@
 #include <messagecore/attachmentfrommimecontentjob.h>
 #include <messagecore/attachmentfromurljob.h>
 #include <messagecore/attachmentpropertiesdialog.h>
+#include <messagecore/attachmentpart.h>
 #include <messageviewer/editorwatcher.h>
 
 using namespace KMail;
@@ -62,8 +63,8 @@ AttachmentController::AttachmentController( Message::AttachmentModel *model, Att
   connect( view, SIGNAL(contextMenuRequested()), this, SLOT(showContextMenu()) );
   connect( view->selectionModel(), SIGNAL(selectionChanged(QItemSelection,QItemSelection)),
       this, SLOT(selectionChanged()) );
-  connect( view, SIGNAL(doubleClicked(QModelIndex)),
-      this, SLOT(editSelectedAttachment()) );
+  connect( view, SIGNAL( doubleClicked( const QModelIndex & ) ),
+      this, SLOT( doubleClicked( const QModelIndex &) ) );
 
   connect( this, SIGNAL(refreshSelection()), SLOT(selectionChanged()));
 
@@ -167,6 +168,28 @@ void AttachmentController::onShowAttachment( KMime::Content *content, const QByt
   KMReaderMainWin *win =
     new KMReaderMainWin( content, false, charset );
   win->show();
+}
+
+void AttachmentController::doubleClicked( const QModelIndex &itemClicked )
+{
+  if ( !itemClicked.isValid() ) {
+    kDebug() << "Received an invalid item clicked index";
+    return;
+  }
+  // The itemClicked index will contain the column information. But we want to retrieve
+  // the AttachmentPart, so we must recreate the QModelIndex without the column information
+  const QModelIndex &properItemClickedIndex = mView->model()->index( itemClicked.row(), 0 );
+  AttachmentPart::Ptr part = mView->model()->data(
+          properItemClickedIndex,
+          Message::AttachmentModel::AttachmentPartRole ).value<AttachmentPart::Ptr>();
+
+  // We can't edit encapsulated messages, but we can view them.
+  if ( part->isMessageOrMessageCollection() ) {
+    viewAttachment( part );
+  }
+  else {
+    editAttachment( part );
+  }
 }
 
 #include "attachmentcontroller.moc"

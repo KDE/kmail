@@ -56,6 +56,7 @@ class AttachmentController : public Message::AttachmentControllerBase
     void slotFetchJob( KJob * job );
     void selectionChanged();
     void onShowAttachment( KMime::Content *content, const QByteArray &charset );
+    void doubleClicked( const QModelIndex &itemClicked );
 
   private:
     KMComposeWin *mComposer;
