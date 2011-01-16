@@ -24,7 +24,7 @@ class QLabel;
 class KLineEdit;
 namespace Akonadi {
   class CollectionStatistics;
-};
+}
 
 class CollectionMaintenancePage : public Akonadi::CollectionPropertiesPage
 {
