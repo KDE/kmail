@@ -660,12 +660,12 @@ void SearchWindow::openSearchFolder()
 
 bool SearchWindow::slotShowMsg( const Akonadi::Item &item )
 {
-  if ( !item.isValid() )
-    return false;
+  if ( item.isValid() ) {
+    mKMMainWidget->slotMessageSelected( item );
+    return true;
+  }
 
-  mKMMainWidget->slotMessageSelected( item );
-
-  return true;
+  return false;
 }
 
 void SearchWindow::slotViewSelectedMsg()
