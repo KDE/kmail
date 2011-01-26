@@ -1,1 +1,0 @@
-select distinct ?r where { ?r <http://www.semanticdesktop.org/ontologies/2007/08/15/nao#hasTag> <nepomuk:random-id> . }
