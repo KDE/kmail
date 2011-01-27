@@ -1,7 +1,6 @@
 project(kmail)
 
 include(CheckIncludeFiles)
-add_definitions(-DDISABLE_NEPOMUK_LEGACY)
 
 if (NOT WINCE)
 
