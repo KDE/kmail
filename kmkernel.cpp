@@ -1402,8 +1402,6 @@ KSharedConfig::Ptr KMKernel::config()
     KMail::checkConfigUpdates();
     MessageList::Core::Settings::self()->setSharedConfig( mySelf->mConfig );
     MessageList::Core::Settings::self()->readConfig();
-    MessageViewer::GlobalSettings::self()->setSharedConfig( mySelf->mConfig );
-    MessageViewer::GlobalSettings::self()->readConfig();
     TemplateParser::GlobalSettings::self()->setSharedConfig( mySelf->mConfig );
     TemplateParser::GlobalSettings::self()->readConfig();
     MessageComposer::MessageComposerSettings::self()->setSharedConfig( mySelf->mConfig );
