@@ -124,7 +124,7 @@ ArchiveFolderDialog::ArchiveFolderDialog( QWidget *parent )
 bool canRemoveFolder( const Akonadi::Collection& col )
 {
   const QSharedPointer<FolderCollection> folder = FolderCollection::forCollection( col );
-  return folder && col.isValid() && col.rights() & Akonadi::Collection::CanDeleteCollection && !folder->isStructural() && !folder->isSystemFolder();
+  return folder && col.isValid() && col.rights() & Akonadi::Collection::CanDeleteCollection && !folder->isStructural() && !folder->isSystemFolder() && col.resource() != "akonadi_nepomuktag_resource";
 }
 
 void ArchiveFolderDialog::slotFolderChanged( const Akonadi::Collection &folder )
