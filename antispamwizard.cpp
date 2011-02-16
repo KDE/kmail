@@ -112,7 +112,7 @@ AntiSpamWizard::AntiSpamWizard( WizardMode mode,
   setWindowTitle( ( mMode == AntiSpam ) ? i18n( "Anti-Spam Wizard" )
                                     : i18n( "Anti-Virus Wizard" ) );
   mInfoPage = new ASWizInfoPage( mMode, 0, "" );
-  addPage( mInfoPage,
+  mInfoPageItem = addPage( mInfoPage,
            ( mMode == AntiSpam )
            ? i18n( "Welcome to the KMail Anti-Spam Wizard" )
            : i18n( "Welcome to the KMail Anti-Virus Wizard" ) );
@@ -121,13 +121,13 @@ AntiSpamWizard::AntiSpamWizard( WizardMode mode,
 
   if ( mMode == AntiSpam ) {
     mSpamRulesPage = new ASWizSpamRulesPage( 0, "" );
-    addPage( mSpamRulesPage, i18n( "Options to fine-tune the handling of spam messages" ));
+    mSpamRulesPageItem = addPage( mSpamRulesPage, i18n( "Options to fine-tune the handling of spam messages" ));
     connect( mSpamRulesPage, SIGNAL( selectionChanged( void ) ),
              this, SLOT( slotBuildSummary( void ) ) );
   }
   else {
     mVirusRulesPage = new ASWizVirusRulesPage( 0, "" );
-    addPage( mVirusRulesPage, i18n( "Options to fine-tune the handling of virus messages" ));
+    mVirusRulesPageItem = addPage( mVirusRulesPage, i18n( "Options to fine-tune the handling of virus messages" ));
     connect( mVirusRulesPage, SIGNAL( selectionChanged( void ) ),
              this, SLOT( checkVirusRulesSelections( void ) ) );
   }
@@ -137,7 +137,7 @@ AntiSpamWizard::AntiSpamWizard( WizardMode mode,
 
   if ( mMode == AntiSpam ) {
     mSummaryPage = new ASWizSummaryPage( 0, "" );
-    addPage( mSummaryPage, i18n( "Summary of changes to be made by this wizard" ) );
+    mSummaryPageItem = addPage( mSummaryPage, i18n( "Summary of changes to be made by this wizard" ) );
   }
 
   QTimer::singleShot( 0, this, SLOT( checkToolAvailability( void ) ) );
@@ -164,6 +164,10 @@ void AntiSpamWizard::accept()
   // Let's start with virus detection and handling,
   // so we can avoid spam checks for viral messages
   if ( mMode == AntiVirus ) {
+    if ( !mVirusToolsUsed ) {
+      KDialog::accept();
+      return;
+    }
     for ( QList<SpamToolConfig>::const_iterator it = mToolList.constBegin();
           it != mToolList.constEnd(); ++it ) {
       if ( mInfoPage->isProgramSelected( (*it).getVisibleName() ) &&
@@ -236,6 +240,10 @@ void AntiSpamWizard::accept()
     }
   }
   else { // AntiSpam mode
+    if ( !mSpamToolsUsed ) {
+      KDialog::accept();
+      return;
+    }
     // TODO Existing filters with same name are replaced. This is hardcoded
     // ATM and needs to be replaced with a value from a (still missing)
     // checkbox in the GUI. At least, the replacement is announced in the GUI.
@@ -486,13 +494,17 @@ void AntiSpamWizard::checkProgramsSelections()
 
   if ( mMode == AntiSpam ) {
     mSpamRulesPage->allowUnsureFolderSelection( supportUnsure );
+    mSpamRulesPage->allowMoveSpam( mSpamToolsUsed );
     slotBuildSummary();
+    setAppropriate( mSpamRulesPageItem, mSpamToolsUsed );
+    setAppropriate( mSummaryPageItem, mSpamToolsUsed );
   }
 
-  if ( ( mMode == AntiVirus ) && mVirusToolsUsed )
-    checkVirusRulesSelections();
-
-  //setNextEnabled( mInfoPage, status );
+  if ( mMode == AntiVirus ) {
+    if ( mVirusToolsUsed )
+      checkVirusRulesSelections();
+    setAppropriate( mVirusRulesPageItem, mVirusToolsUsed );
+  }
 }
 
 
@@ -557,12 +569,14 @@ void AntiSpamWizard::checkToolAvailability()
     mInfoPage->setScanProgressText( ( mMode == AntiSpam )
                                     ? i18n("Scanning for anti-spam tools finished.")
                                     : i18n("Scanning for anti-virus tools finished.") );
-  else
+  else {
     mInfoPage->setScanProgressText( ( mMode == AntiSpam )
                                     ? i18n("<p>Sorry, no spam detection tools have been found. "
                                            "Install your spam detection software and "
                                            "re-run this wizard.</p>")
                                     : i18n("Scanning complete. No anti-virus tools found.") );
+  }
+  checkProgramsSelections();
 }
 
 
@@ -1127,6 +1141,14 @@ void ASWizSpamRulesPage::allowUnsureFolderSelection( bool enabled )
   mMoveUnsureRules->setVisible( enabled );
   mFolderReqForUnsureFolder->setEnabled( enabled );
   mFolderReqForUnsureFolder->setVisible( enabled );
+}
+
+void ASWizSpamRulesPage::allowMoveSpam( bool enabled )
+{
+  mMarkRules->setEnabled( enabled );
+  mMarkRules->setChecked( enabled );
+  mMoveSpamRules->setEnabled( enabled  );
+  mMoveSpamRules->setChecked( enabled  );
 }
 
 

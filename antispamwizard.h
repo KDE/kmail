@@ -271,6 +271,11 @@ namespace MailCommon {
       ASWizVirusRulesPage * mVirusRulesPage;
       ASWizSummaryPage * mSummaryPage;
 
+      KPageWidgetItem * mInfoPageItem;
+      KPageWidgetItem * mSpamRulesPageItem;
+      KPageWidgetItem * mVirusRulesPageItem;
+      KPageWidgetItem * mSummaryPageItem;
+
       /* The configured tools and it's settings to be used in the wizard. */
       QList<SpamToolConfig> mToolList;
 
@@ -340,6 +345,7 @@ namespace MailCommon {
       QString selectedUnsureCollectionId() const;
 
       void allowUnsureFolderSelection( bool enabled );
+      void allowMoveSpam( bool enabled );
 
       QString selectedSpamCollectionId() const;
       QString selectedSpamCollectionName() const;
