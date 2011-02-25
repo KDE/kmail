@@ -151,53 +151,7 @@
          </property>
         </widget>
        </item>
-       <item row="2" column="0" >
-        <layout class="QHBoxLayout" >
-         <item>
-          <layout class="QVBoxLayout" >
-           <item>
-            <widget class="QRadioButton" name="honorHTTPProxyRB" >
-             <property name="whatsThis" >
-              <string>If this option is selected, the value of the HTTP proxy shown on the right (which comes from the environment variable http_proxy) will be used for any HTTP request.</string>
-             </property>
-             <property name="text" >
-              <string>Use system HTTP proxy:</string>
-             </property>
-            </widget>
-           </item>
-           <item>
-            <widget class="QRadioButton" name="useCustomHTTPProxyRB" >
-             <property name="text" >
-              <string>Use this proxy for HTTP requests: </string>
-             </property>
-            </widget>
-           </item>
-          </layout>
-         </item>
-         <item>
-          <layout class="QVBoxLayout" >
-           <item>
-            <widget class="QLabel" name="systemHTTPProxy" >
-             <property name="text" >
-              <string>no proxy</string>
-             </property>
-             <property name="wordWrap" >
-              <bool>false</bool>
-             </property>
-            </widget>
-           </item>
-           <item>
-            <widget class="KLineEdit" name="customHTTPProxy" >
-             <property name="whatsThis" >
-              <string>Enter here the location of your HTTP Proxy, which will be used for all HTTP requests relating to S/MIME. The syntax is host:port, for instance myproxy.nowhere.com:3128.</string>
-             </property>
-            </widget>
-           </item>
-          </layout>
-         </item>
-        </layout>
-       </item>
-       <item row="3" column="0" >
+       <item row="3" column="0">
         <spacer>
          <property name="orientation" >
           <enum>Qt::Vertical</enum>
@@ -209,6 +163,44 @@
           </size>
          </property>
         </spacer>
+       </item>
+       <item row="2" column="0">
+        <layout class="QGridLayout" name="gridLayout">
+         <item row="0" column="0">
+          <widget class="QRadioButton" name="honorHTTPProxyRB">
+           <property name="whatsThis">
+            <string>If this option is selected, the value of the HTTP proxy shown on the right (which comes from the environment variable http_proxy) will be used for any HTTP request.</string>
+           </property>
+           <property name="text">
+            <string>Use system HTTP proxy:</string>
+           </property>
+          </widget>
+         </item>
+         <item row="0" column="1">
+          <widget class="QLabel" name="systemHTTPProxy">
+           <property name="text">
+            <string>no proxy</string>
+           </property>
+           <property name="wordWrap">
+            <bool>false</bool>
+           </property>
+          </widget>
+         </item>
+         <item row="1" column="0">
+          <widget class="QRadioButton" name="useCustomHTTPProxyRB">
+           <property name="text">
+            <string>Use this proxy for HTTP requests: </string>
+           </property>
+          </widget>
+         </item>
+         <item row="1" column="1">
+          <widget class="KLineEdit" name="customHTTPProxy">
+           <property name="whatsThis">
+            <string>Enter here the location of your HTTP Proxy, which will be used for all HTTP requests relating to S/MIME. The syntax is host:port, for instance myproxy.nowhere.com:3128.</string>
+           </property>
+          </widget>
+         </item>
+        </layout>
        </item>
       </layout>
      </widget>
