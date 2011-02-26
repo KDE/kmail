@@ -252,6 +252,23 @@ void KMKernel::migrateFromKMail1()
     const int currentVersion = migrationCfg.readEntry( "Version", 0 );
     const int targetVersion = migrationCfg.readEntry( "TargetVersion", 1 );
     if ( enabled && currentVersion < targetVersion ) {
+      const int choice = KMessageBox::questionYesNoCancel( 0, i18n(
+          "This is the first time you are starting KMail 2 and you have been using KMail 1 before. "
+          "KMail 2 uses a different back-end technology than KMail 1 and cannot use KMail 1 data and configuration without converting them first. "
+          "This process can take quite some time and must not be interrupted. "
+          "You can alternatively skip the conversion process and start with a fresh configuration."
+        ), i18n( "KMail Migration" ), KGuiItem(i18n( "Migrate Now" )), KGuiItem(i18n( "Skip Migration" )) );
+      if ( choice == KMessageBox::Cancel )
+        exit( 1 );
+
+      // we only will make one attempt at this
+      migrationCfg.writeEntry( "Version", targetVersion );
+      migrationCfg.sync();
+
+      if ( choice != KMessageBox::Yes ) {
+        return;
+      }
+
       kDebug() << "Performing Akonadi migration. Good luck!";
       KProcess proc;
       QStringList args = QStringList() << "--interactive-on-change";
@@ -264,8 +281,6 @@ void KMKernel::migrateFromKMail1()
       }
       if ( result && proc.exitCode() == 0 ) {
         kDebug() << "Akonadi migration has been successful";
-        migrationCfg.writeEntry( "Version", targetVersion );
-        migrationCfg.sync();
       } else {
         // exit code 1 means it is already running, so we are probably called by a migrator instance
         kError() << "Akonadi migration failed!";
