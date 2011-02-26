@@ -2933,7 +2933,7 @@ void KMMainWidget::setupActions()
     actionCollection()->addAction("addressbook", action );
     connect(action, SIGNAL(triggered(bool)), SLOT(slotAddrBook()));
     if (KStandardDirs::findExe("kaddressbook").isEmpty())
-	    action->setEnabled(false);
+      action->setEnabled(false);
   }
 
   {
