@@ -288,7 +288,10 @@ void KMKernel::migrateFromKMail1()
         kError() << "exit code: " << proc.exitCode();
         kError() << "stdout: " << proc.readAllStandardOutput();
         kError() << "stderr: " << proc.readAllStandardError();
-        exit( 42 );
+
+        KMessageBox::error( 0, i18n("Migration to KMail 2 failed. In case you want to try again, run 'kmail-migrator --interactive' manually."),
+          i18n( "Migration Failed" ) );
+        return;
       }
     }
   } else {
