@@ -253,11 +253,17 @@ void KMKernel::migrateFromKMail1()
     const int targetVersion = migrationCfg.readEntry( "TargetVersion", 1 );
     if ( enabled && currentVersion < targetVersion ) {
       const int choice = KMessageBox::questionYesNoCancel( 0, i18n(
-          "This is the first time you are starting KMail 2 and you have been using KMail 1 before. "
-          "KMail 2 uses a different back-end technology than KMail 1 and cannot use KMail 1 data and configuration without converting them first. "
-          "This process can take quite some time and must not be interrupted. "
-          "You can alternatively skip the conversion process and start with a fresh configuration."
-        ), i18n( "KMail Migration" ), KGuiItem(i18n( "Migrate Now" )), KGuiItem(i18n( "Skip Migration" )) );
+          "<b>Thanks for using KMail2!</b><br/>"
+          "<p>KMail2 uses a new storage technology that requires migration of your current KMail data and configuration.\n"
+          "<p>The conversion process can take a lot of time (depending on the amount of email you have) and it <emph>must not be interrupted</emph>.</p>\n"
+          "<p>You can:</p><ul>"
+          "<li>Migrate now (be prepared to wait)</li>"
+          "<li>Skip the migration and start with fresh data and configuration</li>"
+          "<li>Cancel and exit KMail2.</li>"
+          "</ul>"
+          "<p><a href=\"http://userbase.kde.org/Akonadi\">More Information...</a></p>"
+        ), i18n( "KMail Migration" ), KGuiItem(i18n( "Migrate Now" )), KGuiItem(i18n( "Skip Migration" )), KStandardGuiItem::cancel(),
+        QString(), KMessageBox::Notify | KMessageBox::Dangerous | KMessageBox::AllowLink );
       if ( choice == KMessageBox::Cancel )
         exit( 1 );
 
