@@ -20,6 +20,8 @@
 #define COLLECTIONMAINTENANCEPAGE_H
 #include <akonadi/collectionpropertiespage.h>
 #include <akonadi/collection.h>
+
+class QCheckBox;
 class QLabel;
 class KLineEdit;
 namespace Akonadi {
@@ -49,6 +51,7 @@ private:
   QLabel *mFolderSizeLabel;
   QLabel *mCollectionCount;
   QLabel *mCollectionUnread;
+  QCheckBox *mIndexingEnabled;
 };
 
 AKONADI_COLLECTION_PROPERTIES_PAGE_FACTORY( CollectionMaintenancePageFactory, CollectionMaintenancePage )

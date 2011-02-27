@@ -33,6 +33,8 @@
 #include <KLocale>
 #include <QFormLayout>
 #include <kio/global.h>
+#include <QtGui/QCheckBox>
+#include <akonadi/indexpolicyattribute.h>
 
 using namespace Akonadi;
 
@@ -56,17 +58,6 @@ void CollectionMaintenancePage::init(const Akonadi::Collection & col)
   box->setSpacing( KDialog::spacingHint() );
   mIsNotAVirtualCollection = !MailCommon::Util::isVirtualCollection( col );
   connect( KMKernel::self()->folderCollectionMonitor(), SIGNAL( collectionStatisticsChanged( Akonadi::Collection::Id , const Akonadi::CollectionStatistics & ) ), this, SLOT( updateCollectionStatistic( Akonadi::Collection::Id, const Akonadi::CollectionStatistics& ) ) );
-
-
-
-#if 0 //TODO remove it ?
-  QString contentsDesc = folderContentDesc( mFolder->storage()->contentsType() );
-  QLabel *label = new QLabel( contentsDesc, filesGroup );
-  // Passing a QLabel rather than QString to addRow(), so that it doesn't
-  // get a buddy set (except in the cases where we do want one).
-  box->addRow( new QLabel( i18nc( "@label:textbox Folder content type (eg. Mail)", "Contents:" ),
-                           filesGroup ), label );
-#endif
 
   const AgentInstance instance = Akonadi::AgentManager::self()->instance( col.resource() );
   const QString folderDesc = instance.type().name();
@@ -93,6 +84,13 @@ void CollectionMaintenancePage::init(const Akonadi::Collection & col)
 
   topLayout->addWidget( messagesGroup );
 
+  QGroupBox *indexingGroup = new QGroupBox( i18n( "Indexing" ), this );
+  QVBoxLayout *indexingLayout = new QVBoxLayout( indexingGroup );
+  mIndexingEnabled = new QCheckBox( i18n( "Enable Full Text Indexing" ) );
+  indexingLayout->addWidget( mIndexingEnabled );
+
+  topLayout->addWidget( indexingGroup );
+
   topLayout->addStretch( 100 );
 }
 
@@ -101,6 +99,8 @@ void CollectionMaintenancePage::load(const Collection & col)
   init( col );
   if ( col.isValid() ) {
     updateLabel( col.statistics().count(), col.statistics().unreadCount(), col.statistics().size() );
+    Akonadi::IndexPolicyAttribute *attr = col.attribute<Akonadi::IndexPolicyAttribute>();
+    mIndexingEnabled->setChecked( !attr || attr->indexingEnabled() );
   }
 }
 
@@ -112,9 +112,12 @@ void CollectionMaintenancePage::updateLabel( qint64 nbMail, qint64 nbUnreadMail,
 
 }
 
-void CollectionMaintenancePage::save(Collection & )
+void CollectionMaintenancePage::save(Collection &collection )
 {
-  //Nothing (read only)
+  if ( !collection.hasAttribute<Akonadi::IndexPolicyAttribute>() && mIndexingEnabled->isChecked() )
+    return;
+  Akonadi::IndexPolicyAttribute *attr = collection.attribute<Akonadi::IndexPolicyAttribute>( Akonadi::Collection::AddIfMissing );
+  attr->setIndexingEnabled( mIndexingEnabled->isChecked() );
 }
 
 void CollectionMaintenancePage::updateCollectionStatistic(Akonadi::Collection::Id id, const Akonadi::CollectionStatistics& statistic)
