@@ -1876,7 +1876,7 @@ void KMMainWidget::copyMessageSelected( const QList<Akonadi::Item> &selectMsg, c
       command, SIGNAL( completed( KMCommand * ) ),
       this, SLOT( slotCopyMessagesCompleted( KMCommand * ) )
     );
-
+  command->start();
   BroadcastStatus::instance()->setStatusMsg( i18n( "Copying messages..." ) );
 }
 
