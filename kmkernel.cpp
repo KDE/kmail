@@ -253,9 +253,9 @@ void KMKernel::migrateFromKMail1()
     const int targetVersion = migrationCfg.readEntry( "TargetVersion", 1 );
     if ( enabled && currentVersion < targetVersion ) {
       const int choice = KMessageBox::questionYesNoCancel( 0, i18n(
-          "<b>Thanks for using KMail2!</b><br/>"
-          "<p>KMail2 uses a new storage technology that requires migration of your current KMail data and configuration.\n"
-          "<p>The conversion process can take a lot of time (depending on the amount of email you have) and it <emph>must not be interrupted</emph>.</p>\n"
+          "<b>Thanks for using KMail2!</b>"
+          "<p>KMail2 uses a new storage technology that requires migration of your current KMail data and configuration.</p>\n"
+          "<p>The conversion process can take a lot of time (depending on the amount of email you have) and it <em>must not be interrupted</em>.</p>\n"
           "<p>You can:</p><ul>"
           "<li>Migrate now (be prepared to wait)</li>"
           "<li>Skip the migration and start with fresh data and configuration</li>"
