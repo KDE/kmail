@@ -22,7 +22,7 @@
 If this box is checked, you will be warned when you try to send parts of or the whole message unsigned.
 &lt;p&gt;
 It is recommended to leave this option turned on for maximum integrity.
-&lt;/qt&gt;</string>
+&lt;/p&gt;&lt;/qt&gt;</string>
      </property>
      <property name="text">
       <string>Warn when trying to send &amp;unsigned messages</string>
@@ -43,7 +43,7 @@ It is recommended to leave this option turned on for maximum integrity.
 If this box is checked, you will be warned when you try to send parts of or the whole message unencrypted.
 &lt;p&gt;
 It is recommended to leave this option turned on for maximum integrity.
-&lt;/qt&gt;</string>
+&lt;/p&gt;&lt;/qt&gt;</string>
      </property>
      <property name="text">
       <string>&amp;Warn when trying to send unencrypted messages</string>
@@ -64,7 +64,7 @@ It is recommended to leave this option turned on for maximum integrity.
 If this option is checked, a warning is issued if the email address of the receiver is not contained in the certificate used for encrypting.
 &lt;p&gt;
 It is recommended to leave this option turned on for maximum security.
-&lt;/qt&gt;</string>
+&lt;/p&gt;&lt;/qt&gt;</string>
      </property>
      <property name="text">
       <string>Warn if &amp;Receiver's Email Address is Not in Certificate</string>
@@ -126,7 +126,7 @@ It is recommended to leave this option turned on for maximum security.
 Select the minimum number of days the signature certificate should be valid without issuing a warning.
 &lt;p&gt;
 The recommended SPHINX setting is 14 days.
-&lt;/qt&gt;</string>
+&lt;/p&gt;&lt;/qt&gt;</string>
         </property>
         <property name="minimum">
          <number>1</number>
@@ -162,7 +162,7 @@ The recommended SPHINX setting is 14 days.
 Select the minimum number of days the encryption certificate should be valid without issuing a warning.
 &lt;p&gt;
 The recommended SPHINX setting is 14 days.
-&lt;/qt&gt;</string>
+&lt;/p&gt;&lt;/qt&gt;</string>
         </property>
         <property name="minimum">
          <number>1</number>
@@ -198,7 +198,7 @@ The recommended SPHINX setting is 14 days.
 Select the minimum number of days all certificates in the chain should be valid without issuing a warning.
 &lt;p&gt;
 The recommended SPHINX setting is 14 days.
-&lt;/qt&gt;</string>
+&lt;/p&gt;&lt;/qt&gt;</string>
         </property>
         <property name="minimum">
          <number>1</number>
@@ -228,7 +228,7 @@ The recommended SPHINX setting is 14 days.
 Select the minimum number of days the CA certificate should be valid without issuing a warning.
 &lt;p&gt;
 The recommended SPHINX setting is 14 days.
-&lt;/qt&gt;</string>
+&lt;/p&gt;&lt;/qt&gt;</string>
         </property>
         <property name="minimum">
          <number>1</number>
@@ -258,7 +258,7 @@ The recommended SPHINX setting is 14 days.
 Select the minimum number of days the root certificate should be valid without issuing a warning.
 &lt;p&gt;
 The recommended SPHINX setting is 14 days.
-&lt;/qt&gt;</string>
+&lt;/p&gt;&lt;/qt&gt;</string>
         </property>
         <property name="minimum">
          <number>1</number>
@@ -294,7 +294,7 @@ The recommended SPHINX setting is 14 days.
 Select the minimum number of days the root certificate should be valid without issuing a warning.
 &lt;p&gt;
 The recommended SPHINX setting is 14 days.
-&lt;/qt&gt;</string>
+&lt;/p&gt;&lt;/qt&gt;</string>
         </property>
         <property name="minimum">
          <number>1</number>

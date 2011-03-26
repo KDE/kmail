@@ -72,7 +72,7 @@
 When this box is checked, sent messages are stored encrypted like they were sent. This is not recommended, as you will not be able to read the messages any longer if a necessary certificate expires.
 &lt;p>
 However, there may be local rules that require you to turn this option on. When in doubt, check with your local administrator.
-&lt;/qt></string>
+&lt;/p>&lt;/qt></string>
                 </property>
               </widget>
             </item>
