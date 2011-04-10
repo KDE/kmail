@@ -4171,6 +4171,8 @@ void KMMainWidget::slotMessageSelected(const Akonadi::Item &item)
 void KMMainWidget::itemsReceived(const Akonadi::Item::List &list )
 {
   Q_ASSERT( list.size() == 1 );
+  delete mShowBusySplashTimer;
+  mShowBusySplashTimer = 0;
 
   if ( !mMsgView )
     return;
