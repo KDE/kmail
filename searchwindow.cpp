@@ -285,6 +285,8 @@ SearchWindow::SearchWindow( KMMainWidget *widget, const Akonadi::Collection &col
   vbl->addLayout( hbl2 );
   vbl->addWidget( mStatusBar );
 
+  patternGroupBox->setSizePolicy( QSizePolicy::Preferred, QSizePolicy::Maximum );
+
   connect( this, SIGNAL( user1Clicked() ), SLOT( slotSearch() ) );
   connect( this, SIGNAL( user2Clicked() ), SLOT( slotStop() ) );
   connect( this, SIGNAL( finished() ), this, SLOT( deleteLater() ) );
