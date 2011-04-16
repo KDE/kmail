@@ -1857,6 +1857,7 @@ void KMComposeWin::slotSendSuccessful()
 {
   setModified( false );
   mComposerBase->cleanupAutoSave();
+  mFolder = Akonadi::Collection(); // see dtor
   close();
 }
 
