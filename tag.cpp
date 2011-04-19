@@ -102,3 +102,21 @@ bool Tag::compare( Tag::Ptr &tag1, Tag::Ptr &tag2 )
 {
   return tag1->priority < tag2->priority;
 }
+
+bool Tag::operator==( const Tag &other ) const
+{
+  return tagName == other.tagName &&
+         textColor == other.textColor &&
+         backgroundColor == other.backgroundColor &&
+         textFont == other.textFont &&
+         iconName == other.iconName &&
+         inToolbar == other.inToolbar &&
+         shortcut.toString() == other.shortcut.toString() &&
+         priority == other.priority &&
+         nepomukResourceUri == other.nepomukResourceUri;
+}
+
+bool Tag::operator!=( const Tag &other ) const
+{
+  return !( *this == other );
+}

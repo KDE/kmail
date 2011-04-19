@@ -49,6 +49,11 @@ namespace KMail {
       };
       typedef QFlags<SaveFlag> SaveFlags;
 
+      // Returns true if two tags are equal
+      bool operator==( const Tag &other ) const;
+
+      bool operator!=( const Tag &other ) const;
+
       // Load a tag from a Nepomuk tag
       static Ptr fromNepomuk( const Nepomuk::Tag& nepomukTag );
 
