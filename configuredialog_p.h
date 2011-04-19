@@ -484,6 +484,9 @@ private: // data
   // List of all Tags currently in the list
   QList<KMail::TagPtr> mMsgTagList;
 
+  // So we can compare to mMsgTagList and see if the user changed tags
+  QList<KMail::TagPtr> mOriginalMsgTagList;
+
   /*Used to safely call slotRecordTagSettings when the selection in
     list box changes*/
   int mPreviousTag;

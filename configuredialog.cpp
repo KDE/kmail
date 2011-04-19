@@ -1976,11 +1976,30 @@ void AppearancePage::MessageTagTab::doLoadFromGlobalSettings()
   slotUpdateTagSettingWidgets( -1 );
   //Needed since the previous function doesn't affect add button
   mTagAddButton->setEnabled( false );
+
+  // Save the original list
+  mOriginalMsgTagList.clear();
+  foreach( const KMail::TagPtr &tag, mMsgTagList ) {
+    mOriginalMsgTagList.append( KMail::TagPtr( new KMail::Tag( *tag ) ) );
+  }
 }
 
 void AppearancePage::MessageTagTab::save()
 {
   slotRecordTagSettings( mTagListBox->currentRow() );
+
+  if ( mOriginalMsgTagList.count() == mMsgTagList.count() ) {
+    bool nothingChanged = true;
+    for ( int i=0; i<mMsgTagList.count(); ++i ) {
+      if ( *(mMsgTagList[i]) != *(mOriginalMsgTagList[i]) ) {
+        nothingChanged = false;
+        break;
+      }
+    }
+    if ( nothingChanged ) {
+      return;
+    }
+  }
 
   foreach( const KMail::Tag::Ptr &tag, mMsgTagList ) {
 
