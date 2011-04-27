@@ -86,10 +86,6 @@ KMMainWin::KMMainWin(QWidget *)
   connect( mKMMainWidget, SIGNAL( captionChangeRequest(const QString&) ),
            SLOT( setCaption(const QString&) ) );
 
-  if ( kmkernel->firstStart() )
-  {
-    KMail::Util::launchAccountWizard( this );
-  }
   if ( kmkernel->firstInstance() )
     QTimer::singleShot( 200, this, SLOT( slotShowTipOnStart() ) );
 }

@@ -301,6 +301,9 @@ K_GLOBAL_STATIC( KMMainWidget::PtrList, theMainWidgetList )
 
   restoreCollectionFolderViewConfig();
 
+  if ( kmkernel->firstStart() ) {
+    KMail::Util::launchAccountWizard( this );
+  }
   // must be the last line of the constructor:
   mStartupDone = true;
 }
