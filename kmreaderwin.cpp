@@ -256,8 +256,8 @@ void KMReaderWin::clearCache()
 
 // enter items for the "Important changes" list here:
 static const char * const kmailChanges[] = {
-  "KMail is now based on the Akonadi Personal Information Management framework, which brings many "
-  "changes all around."
+  I18N_NOOP( "KMail is now based on the Akonadi Personal Information Management framework, which brings many "
+  "changes all around.")
 };
 static const int numKMailChanges =
   sizeof kmailChanges / sizeof *kmailChanges;
@@ -267,12 +267,12 @@ static const int numKMailChanges =
 // the translators). Note that the <li>...</li> tags are added
 // automatically below:
 static const char * const kmailNewFeatures[] = {
-  "Push email (IMAP IDLE)",
-  "Improved virtual folders",
-  "Improved searches",
-  "Support for adding notes (annotations) to mails",
-  "Tag folders",
-  "Less GUI freezes, mail checks happen in the background"
+  I18N_NOOP( "Push email (IMAP IDLE)" ),
+  I18N_NOOP( "Improved virtual folders" ),
+  I18N_NOOP( "Improved searches" ),
+  I18N_NOOP( "Support for adding notes (annotations) to mails" ),
+  I18N_NOOP( "Tag folders" ),
+  I18N_NOOP( "Less GUI freezes, mail checks happen in the background" )
 };
 static const int numKMailNewFeatures =
   sizeof kmailNewFeatures / sizeof *kmailNewFeatures;
