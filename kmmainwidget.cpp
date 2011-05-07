@@ -2450,8 +2450,6 @@ void KMMainWidget::showOfflinePage()
   mShowingOfflineScreen = true;
 
   mMsgView->displayOfflinePage();
-  if ( mMessagePane && mLongFolderList )
-    mMessagePane->hide();
 }
 
 
