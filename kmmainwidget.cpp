@@ -1785,9 +1785,9 @@ void KMMainWidget::slotMoveMessagesCompleted( KMMoveCommand *command )
   mMessagePane->markMessageItemsAsAboutToBeRemoved( command->refSet(), false );
   mMessagePane->deletePersistentSet( command->refSet() );
   // Bleah :D
-  bool moveWasReallyADelete = !command->destFolder().isValid();
+  const bool moveWasReallyADelete = !command->destFolder().isValid();
 
-  if ( command->result() != KMCommand::OK )
+  if ( command->result() == KMCommand::OK )
   {
     if ( moveWasReallyADelete )
       BroadcastStatus::instance()->setStatusMsg( i18n( "Messages deleted successfully." ) );
