@@ -107,7 +107,7 @@
 #include <kapplication.h>
 #include <kcharsets.h>
 #include <kdebug.h>
-#include <libkdepim/kdescendantsproxymodel_p.h>
+#include <kdescendantsproxymodel.h>
 #include <kedittoolbar.h>
 #include <kencodingfiledialog.h>
 #include <kinputdialog.h>
