@@ -185,15 +185,12 @@ bool ConfigAgentDelegate::editorEvent ( QEvent* event, QAbstractItemModel* model
              || ( event->type() == QEvent::MouseMove ) ) )
         return false;
 
-    QTextDocument *doc = document ( option , index );
-    if ( !doc )
+    if ( !index.isValid() )
         return false;
 
     QMouseEvent *me = static_cast<QMouseEvent*> ( event );
     const QPoint mousePos = me->pos() - option.rect.topLeft();
 
-    const QSizeF docSize = doc->documentLayout()->documentSize();
-    delete doc;
     QStyleOptionButton buttonOpt = buttonOption ( option );
 
     if ( buttonOpt.rect.contains ( mousePos ) ) {
@@ -203,8 +200,7 @@ bool ConfigAgentDelegate::editorEvent ( QEvent* event, QAbstractItemModel* model
             return false;
             break;
         case QEvent::MouseButtonRelease: {
-            QPoint pos = buttonOpt.rect.bottomLeft();
-            pos.setY ( pos.y() + index.row() * docSize.height() ); // offset for the correct item
+            QPoint pos = buttonOpt.rect.bottomLeft() + option.rect.topLeft();
             const QString ident = index.data ( Akonadi::AgentInstanceModel::InstanceIdentifierRole ).toString();
             emit optionsClicked ( ident, pos );
             return true;
