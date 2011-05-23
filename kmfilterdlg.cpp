@@ -121,7 +121,7 @@ I18N_NOOP( "<qt><p>Check this button to force the confirmation dialog to be "
            "change the ruleset to tag the messages differently.</p></qt>" );
 
 // The anchor of the filter dialog's help.
-const char * KMFilterDlgHelpAnchor =  "filters-id" ;
+const char * KMFilterDlgHelpAnchor =  "filters" ;
 
 //=============================================================================
 //
@@ -139,7 +139,7 @@ KMFilterDlg::KMFilterDlg(QWidget* parent, bool createDummyFilter )
   setModal( false );
   setButtonFocus( Ok );
   KWindowSystem::setIcons( winId(), qApp->windowIcon().pixmap(IconSize(KIconLoader::Desktop),IconSize(KIconLoader::Desktop)), qApp->windowIcon().pixmap(IconSize(KIconLoader::Small),IconSize(KIconLoader::Small)) );
-  setHelp( KMFilterDlgHelpAnchor );
+  setHelp( KMFilterDlgHelpAnchor, "kmail" );
   setButtonText( User1, i18n("Import...") );
   setButtonText( User2, i18n("Export...") );
   connect( this, SIGNAL(user1Clicked()),
