@@ -1610,8 +1610,8 @@ void KMComposeWin::setMsg( const KMime::Message::Ptr &newMsg, bool mayAutoSign,
   bool shouldSetCharset = false;
   if ( ( mContext == Reply || mContext == ReplyToAll || mContext == Forward ) && MessageComposer::MessageComposerSettings::forceReplyCharset() )
     shouldSetCharset = true;
-  if ( shouldSetCharset && !otp.textualContentCharset().isEmpty() )
-    mOriginalPreferredCharset = otp.textualContentCharset();
+  if ( shouldSetCharset && !otp.plainTextContentCharset().isEmpty() )
+    mOriginalPreferredCharset = otp.plainTextContentCharset();
   // always set auto charset, but prefer original when composing if force reply is set.
   setAutoCharset();
 
