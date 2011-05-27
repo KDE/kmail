@@ -3,16 +3,16 @@ Type=Service
 ServiceTypes=KonqPopupMenu/Plugin
 MimeType=all/all;
 Actions=sendto;
-Icon=kmail
 
 [Desktop Action sendto]
-Name=Send To
+Icon=kmail
+Name=Send as Email Attachment
 Name[ca]=Envia a
 Name[ca@valencia]=Envia a
 Name[da]=Send til
 Name[de]=Senden an
 Name[el]=Αποστολή προς
-Name[en_GB]=Send To
+Name[en_GB]=Send as Email Attachment
 Name[es]=Enviar a
 Name[et]=Saada
 Name[fr]=Envoyer à
