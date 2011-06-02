@@ -175,7 +175,7 @@ void BackupJob::finish()
                         mArchivedMessages, KIO::convertSize( mArchivedSize ) );
   text += '\n' + i18n( "The archive file has a size of %1.",
                        KIO::convertSize( archiveFileInfo.size() ) );
-  KMessageBox::information( mParentWidget, text, i18n( "Archiving finished." ) );
+  KMessageBox::information( mParentWidget, text, i18n( "Archiving finished" ) );
 
   if ( mDeleteFoldersAfterCompletion ) {
     // Some safety checks first...
