@@ -29,7 +29,6 @@
 #include "mailkernel.h"
 
 #include <kpimutils/email.h>
-#include <kpimutils/kfileio.h>
 #include <libkdepim/addemailaddressjob.h>
 #include <libkdepim/openemailaddressjob.h>
 #include "kmcommands.h"
@@ -46,8 +45,7 @@
 #include "messageviewer/csshelper.h"
 using MessageViewer::CSSHelper;
 #include "util.h"
-#include <kicon.h>
-#include "messageviewer/attachmentdialog.h"
+//#include "messageviewer/attachmentdialog.h"
 #include "stringutil.h"
 
 #include <kmime/kmime_mdn.h>
@@ -69,25 +67,12 @@ using MessageComposer::MessageFactory;
 
 
 #include <kde_file.h>
-#include <kactionmenu.h>
-// for the click on attachment stuff (dnaber):
-#include <kcharsets.h>
-#include <kmenu.h>
 #include <kdebug.h>
-#include <kfiledialog.h>
 #include <klocale.h>
-#include <kmessagebox.h>
-#include <kmimetypetrader.h>
-#include <kglobalsettings.h>
-#include <krun.h>
-#include <ktemporaryfile.h>
-#include <kdialog.h>
 #include <kaction.h>
-#include <kfontaction.h>
+#include <kicon.h>
 #include <kiconloader.h>
 #include <kcodecs.h>
-#include <kascii.h>
-#include <kselectaction.h>
 #include <kstandardaction.h>
 #include <ktoggleaction.h>
 #include <kconfiggroup.h>
