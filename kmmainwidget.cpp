@@ -629,77 +629,72 @@ void KMMainWidget::layoutSplitters()
   bool readerWindowAtSide = !mReaderWindowBelow && mReaderWindowActive;
   bool readerWindowBelow = mReaderWindowBelow && mReaderWindowActive;
 
-  //
-  // Create the splitters
-  //
   mSplitter1 = new QSplitter( this );
+  mSplitter2 = new QSplitter( mSplitter1 );
+
+  QWidget * folderTreeWidget = mSearchAndTree;
+  if ( mFavoriteCollectionsView ) {
+    mFolderViewSplitter = new QSplitter( Qt::Vertical );
+    mFolderViewSplitter->setOpaqueResize( opaqueResize );
+    mFolderViewSplitter->setChildrenCollapsible( false );
+    mFolderViewSplitter->addWidget( mFavoriteCollectionsView );
+    mFavoriteCollectionsView->setParent( mFolderViewSplitter );
+    mFolderViewSplitter->addWidget( mSearchAndTree );
+    folderTreeWidget = mFolderViewSplitter;
+  }
+
+  if ( mLongFolderList ) {
+
+    // add folder tree
+    mSplitter1->setOrientation( Qt::Horizontal );
+    mSplitter1->addWidget( folderTreeWidget );
+
+    // and the rest to the right
+    mSplitter1->addWidget( mSplitter2 );
+
+    // add the message list to the right or below
+    if ( readerWindowAtSide ) {
+      mSplitter2->setOrientation( Qt::Horizontal );
+    } else {
+      mSplitter2->setOrientation( Qt::Vertical );
+    }
+    mSplitter2->addWidget( mMessagePane );
+
+    // add the preview window, if there is one
+    if ( mMsgView ) {
+      mSplitter2->addWidget( mMsgView );
+    }
+
+  } else { // short folder list
+    if ( mReaderWindowBelow ) {
+      mSplitter1->setOrientation( Qt::Vertical );
+      mSplitter2->setOrientation( Qt::Horizontal );
+    } else { // at side or none
+      mSplitter1->setOrientation( Qt::Horizontal );
+      mSplitter2->setOrientation( Qt::Vertical );
+    }
+
+    mSplitter1->addWidget( mSplitter2 );
+
+    // add folder tree
+    mSplitter2->addWidget( folderTreeWidget );
+    // add message list to splitter 2
+    mSplitter2->addWidget( mMessagePane );
+
+    // add the preview window, if there is one
+    if ( mMsgView )
+      mSplitter1->addWidget( mMsgView );
+  }
+
+  //
+  // Set splitter properties
+  //
   mSplitter1->setObjectName( "splitter1" );
   mSplitter1->setOpaqueResize( opaqueResize );
   mSplitter1->setChildrenCollapsible( false );
-  mSplitter2 = new QSplitter( mSplitter1 );
   mSplitter2->setObjectName( "splitter2" );
   mSplitter2->setOpaqueResize( opaqueResize );
   mSplitter2->setChildrenCollapsible( false );
-  mSplitter1->addWidget( mSplitter2 );
-
-  //
-  // Set the layout of the splitters and calculate the widget's parents
-  //
-  QSplitter *folderViewParent, *folderTreeParent, *messageViewerParent;
-  if ( mLongFolderList ) {
-
-    mSplitter1->setOrientation( Qt::Horizontal );
-    Qt::Orientation splitter2orientation;
-    if ( !readerWindowAtSide )
-      splitter2orientation = Qt::Vertical;
-    else
-      splitter2orientation = Qt::Horizontal;
-    mSplitter2->setOrientation( splitter2orientation );
-    folderViewParent = mSplitter1;
-    messageViewerParent = mSplitter2;
-
-  } else {
-
-    Qt::Orientation splitter1orientation;
-    if ( !readerWindowAtSide )
-      splitter1orientation = Qt::Vertical;
-    else
-      splitter1orientation = Qt::Horizontal;
-    mSplitter1->setOrientation( splitter1orientation );
-    mSplitter2->setOrientation( Qt::Horizontal );
-    folderViewParent = mSplitter2;
-    messageViewerParent = mSplitter1;
-  }
-
-  //
-  // Add the widgets to the splitters and set the parents calculated above
-  //
-
-  int folderTreePosition = 0;
-
-  if ( mFavoriteCollectionsView ) {
-    mFolderViewSplitter = new QSplitter( Qt::Vertical, folderViewParent );
-    mFolderViewSplitter->setOpaqueResize( opaqueResize );
-    mFolderViewSplitter->setChildrenCollapsible( false );
-    folderTreeParent = mFolderViewSplitter;
-    mFolderViewSplitter->addWidget( mFavoriteCollectionsView );
-    mFavoriteCollectionsView->setParent( mFolderViewSplitter );
-    folderViewParent->insertWidget( 0, mFolderViewSplitter );
-
-    folderTreePosition = 1;
-  } else
-    folderTreeParent = folderViewParent;
-
-  folderTreeParent->insertWidget( folderTreePosition, mSearchAndTree );
-  mSplitter2->addWidget( mMessagePane );
-
-  if ( mMsgView ) {
-    messageViewerParent->addWidget( mMsgView );
-    mMsgView->setParent( messageViewerParent );
-  }
-
-  mSearchAndTree->setParent( folderTreeParent );
-  mMessagePane->setParent( mSplitter2 );
 
   //
   // Set the stretch factors
