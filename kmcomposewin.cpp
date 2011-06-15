@@ -107,17 +107,13 @@
 #include <kapplication.h>
 #include <kcharsets.h>
 #include <kdebug.h>
-#include <libkdepim/kdescendantsproxymodel_p.h>
+#include <kdescendantsproxymodel.h>
 #include <kedittoolbar.h>
-#include <kencodingfiledialog.h>
 #include <kinputdialog.h>
 #include <kmenu.h>
-#include <kmimetypetrader.h>
+#include <kmimetype.h>
 #include <kmessagebox.h>
-#include <kpushbutton.h>
 #include <krecentfilesaction.h>
-#include <krun.h>
-#include <ksavefile.h>
 #include <kshortcutsdialog.h>
 #include <kstandarddirs.h>
 #include <kstandardshortcut.h>
@@ -126,12 +122,7 @@
 #include <ktoggleaction.h>
 #include <ktoolbar.h>
 #include <ktoolinvocation.h>
-#include <kwindowsystem.h>
-#include <kzip.h>
 #include <sonnet/dictionarycombobox.h>
-#include <kencodingprober.h>
-#include <kio/jobuidelegate.h>
-#include <kio/scheduler.h>
 
 // Qt includes
 #include <QClipboard>

@@ -148,7 +148,7 @@ void BackupJob::abort( const QString &errorMessage )
 
   QString text = i18n( "Failed to archive the folder '%1'.", mRootFolder.name() );
   text += '\n' + errorMessage;
-  KMessageBox::sorry( mParentWidget, text, i18n( "Archiving failed." ) );
+  KMessageBox::sorry( mParentWidget, text, i18n( "Archiving failed" ) );
   deleteLater();
   // Clean up archive file here?
 }
@@ -175,7 +175,7 @@ void BackupJob::finish()
                         mArchivedMessages, KIO::convertSize( mArchivedSize ) );
   text += '\n' + i18n( "The archive file has a size of %1.",
                        KIO::convertSize( archiveFileInfo.size() ) );
-  KMessageBox::information( mParentWidget, text, i18n( "Archiving finished." ) );
+  KMessageBox::information( mParentWidget, text, i18n( "Archiving finished" ) );
 
   if ( mDeleteFoldersAfterCompletion ) {
     // Some safety checks first...

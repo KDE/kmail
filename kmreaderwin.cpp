@@ -29,7 +29,6 @@
 #include "mailkernel.h"
 
 #include <kpimutils/email.h>
-#include <kpimutils/kfileio.h>
 #include <libkdepim/addemailaddressjob.h>
 #include <libkdepim/openemailaddressjob.h>
 #include "kmcommands.h"
@@ -46,8 +45,7 @@
 #include "messageviewer/csshelper.h"
 using MessageViewer::CSSHelper;
 #include "util.h"
-#include <kicon.h>
-#include "messageviewer/attachmentdialog.h"
+//#include "messageviewer/attachmentdialog.h"
 #include "stringutil.h"
 
 #include <kmime/kmime_mdn.h>
@@ -69,25 +67,12 @@ using MessageComposer::MessageFactory;
 
 
 #include <kde_file.h>
-#include <kactionmenu.h>
-// for the click on attachment stuff (dnaber):
-#include <kcharsets.h>
-#include <kmenu.h>
 #include <kdebug.h>
-#include <kfiledialog.h>
 #include <klocale.h>
-#include <kmessagebox.h>
-#include <kmimetypetrader.h>
-#include <kglobalsettings.h>
-#include <krun.h>
-#include <ktemporaryfile.h>
-#include <kdialog.h>
 #include <kaction.h>
-#include <kfontaction.h>
+#include <kicon.h>
 #include <kiconloader.h>
 #include <kcodecs.h>
-#include <kascii.h>
-#include <kselectaction.h>
 #include <kstandardaction.h>
 #include <ktoggleaction.h>
 #include <kconfiggroup.h>
@@ -256,8 +241,8 @@ void KMReaderWin::clearCache()
 
 // enter items for the "Important changes" list here:
 static const char * const kmailChanges[] = {
-  "KMail is now based on the Akonadi Personal Information Management framework, which brings many "
-  "changes all around."
+  I18N_NOOP( "KMail is now based on the Akonadi Personal Information Management framework, which brings many "
+  "changes all around.")
 };
 static const int numKMailChanges =
   sizeof kmailChanges / sizeof *kmailChanges;
@@ -267,12 +252,12 @@ static const int numKMailChanges =
 // the translators). Note that the <li>...</li> tags are added
 // automatically below:
 static const char * const kmailNewFeatures[] = {
-  "Push email (IMAP IDLE)",
-  "Improved virtual folders",
-  "Improved searches",
-  "Support for adding notes (annotations) to mails",
-  "Tag folders",
-  "Less GUI freezes, mail checks happen in the background"
+  I18N_NOOP( "Push email (IMAP IDLE)" ),
+  I18N_NOOP( "Improved virtual folders" ),
+  I18N_NOOP( "Improved searches" ),
+  I18N_NOOP( "Support for adding notes (annotations) to mails" ),
+  I18N_NOOP( "Tag folders" ),
+  I18N_NOOP( "Less GUI freezes, mail checks happen in the background" )
 };
 static const int numKMailNewFeatures =
   sizeof kmailNewFeatures / sizeof *kmailNewFeatures;

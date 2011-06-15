@@ -37,11 +37,7 @@
 
 #include <kcombobox.h>
 #include <klocale.h>
-#if KDE_IS_VERSION( 4, 5, 74 )
 #include <keditlistwidget.h>
-#else
-#include <keditlistbox.h>
-#endif
 #include <kdebug.h>
 #include <kmessagebox.h>
 #include <kmcommands.h>
@@ -144,11 +140,7 @@ MailingListFolderPropertiesDialog::MailingListFolderPropertiesDialog( QWidget* p
   }
   groupLayout->addWidget( handleButton, 6, 2 );
 
-#if KDE_IS_VERSION( 4, 5, 74 )
   mEditList = new KEditListWidget( mlGroup );
-#else
-  mEditList = new KEditListBox( mlGroup );
-#endif
   mEditList->setEnabled( false );
   groupLayout->addWidget( mEditList, 7, 0, 1, 4 );
 

@@ -53,9 +53,6 @@
 #include <kfiledialog.h>
 #include <klocale.h>
 #include <kmessagebox.h>
-#include <kmimetypetrader.h>
-#include <kparts/browserextension.h>
-#include <krun.h>
 #include <kbookmarkmanager.h>
 #include <kstandarddirs.h>
 #include <ktemporaryfile.h>
