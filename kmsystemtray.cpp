@@ -289,7 +289,7 @@ void KMSystemTray::fillFoldersMenu( QMenu *menu, const QAbstractItemModel *model
     }
     mCount += count;
 
-    QString label = parentName.isEmpty() ? "" : parentName + "->";
+    QString label = parentName.isEmpty() ? QLatin1String("") : QString(parentName + QLatin1String("->"));
     label += model->data( index ).toString();
     label.replace( QLatin1String( "&" ), QLatin1String( "&&" ) );
 
