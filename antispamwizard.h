@@ -37,7 +37,9 @@
 #include <QListWidget>
 #include <QBoxLayout>
 #include <akonadi/collection.h>
+
 class QLabel;
+class QTextEdit;
 
 namespace MailCommon {
   class FolderTreeWidget;
@@ -323,7 +325,7 @@ namespace MailCommon {
       void selectionChanged();
 
     private:
-      QLabel *mIntroText;
+      QTextEdit *mIntroText;
       QLabel *mScanProgressText;
       QLabel *mSelectionHint;
       QListWidget *mToolsList;

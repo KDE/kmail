@@ -60,6 +60,7 @@
 #include <QApplication>
 #include <qdom.h>
 #include <QLabel>
+#include <QTextEdit>
 #include <QTimer>
 #include <QGridLayout>
 #include <QHBoxLayout>
@@ -917,7 +918,7 @@ ASWizInfoPage::ASWizInfoPage( AntiSpamWizard::WizardMode mode,
   QBoxLayout * layout = new QVBoxLayout();
   mLayout->addItem( layout );
 
-  mIntroText = new QLabel( this );
+  mIntroText = new QTextEdit( this );
   mIntroText->setText(
     ( mode == AntiSpamWizard::AntiSpam )
     ? i18n(
@@ -939,7 +940,8 @@ ASWizInfoPage::ASWizInfoPage( AntiSpamWizard::WizardMode mode,
       "deleting the filter rules created by the wizard to get "
       "back to the former behavior.</p>"
       ) );
-  mIntroText->setWordWrap(true);
+  mIntroText->setReadOnly( true );
+  mIntroText->setSizePolicy( QSizePolicy( QSizePolicy::Expanding,  QSizePolicy::Expanding ) );
   layout->addWidget( mIntroText );
 
   mScanProgressText = new QLabel( this );
@@ -952,15 +954,15 @@ ASWizInfoPage::ASWizInfoPage( AntiSpamWizard::WizardMode mode,
   mToolsList->setSelectionMode( QAbstractItemView::MultiSelection );
   mToolsList->setLayoutMode( QListView::Batched );
   mToolsList->setBatchSize( 10 );
+  mToolsList->setSizePolicy( QSizePolicy( QSizePolicy::Expanding,  QSizePolicy::Maximum ) );
   layout->addWidget( mToolsList );
   connect( mToolsList->selectionModel(), SIGNAL(selectionChanged(const QItemSelection&, const QItemSelection&)),
            this, SLOT(processSelectionChange(void)) );
 
   mSelectionHint = new QLabel( this );
   mSelectionHint->clear();
+  mSelectionHint->setWordWrap( true );
   layout->addWidget( mSelectionHint );
-
-  layout->addStretch();
 }
 
 
