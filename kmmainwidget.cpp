@@ -1365,8 +1365,8 @@ void KMMainWidget::slotDelayedShowNewFromTemplate( KJob *job )
   Akonadi::ItemFetchJob *fetchJob = qobject_cast<Akonadi::ItemFetchJob*>( job );
 
   const Akonadi::Item::List items = fetchJob->items();
-
-  for ( int idx = 0; idx < items.count(); ++idx ) {
+  const int numberOfItems = items.count();
+  for ( int idx = 0; idx < numberOfItems; ++idx ) {
     KMime::Message::Ptr msg = MessageCore::Util::message( items.at( idx ) );
     if ( msg ) {
       QString subj = msg->subject()->asUnicodeString();
