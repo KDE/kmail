@@ -23,7 +23,7 @@
 
 #include "kmmainwin.h"
 #include "kmkernel.h"
-
+#include <KJob>
 #include <akonadi/itemmovejob.h>
 
 #include <kmessagebox.h>
@@ -90,8 +90,8 @@ void UndoStack::undo()
   {
     UndoInfo *info = mStack.takeFirst();
     emit undoStackChanged();
-    Akonadi::ItemMoveJob( info->items, info->srcFolder, this );
-    // TODO: handle job error?
+    Akonadi::ItemMoveJob * job = new Akonadi::ItemMoveJob( info->items, info->srcFolder, this );
+    connect( job, SIGNAL(result(KJob*)), this, SLOT(slotMoveResult(KJob*)) );
     delete info;
   }
   else
@@ -99,6 +99,12 @@ void UndoStack::undo()
     // Sorry.. stack is empty..
     KMessageBox::sorry( kmkernel->mainWin(), i18n("There is nothing to undo."));
   }
+}
+
+void UndoStack::slotMoveResult( KJob *job )
+{
+  if ( job->error() )
+    KMessageBox::sorry( kmkernel->mainWin(), i18n("Can not move message. %1").arg( job->errorString() ) );
 }
 
 void
