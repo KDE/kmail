@@ -114,7 +114,7 @@ public:
   void setHtmlLoadExtOverride( bool override );
 
   /** Is html mail to be supported? Takes into account override */
-  bool htmlMail();
+  bool htmlMail() const;
 
   /** Is loading ext. references to be supported? Takes into account override */
   bool htmlLoadExternal();

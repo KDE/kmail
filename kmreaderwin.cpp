@@ -409,7 +409,7 @@ void KMReaderWin::setHtmlLoadExtOverride( bool override )
 }
 
 //-----------------------------------------------------------------------------
-bool KMReaderWin::htmlMail()
+bool KMReaderWin::htmlMail() const
 {
   return mViewer->htmlMail();
 }
