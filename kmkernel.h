@@ -268,7 +268,7 @@ public Q_SLOTS:
 
   Q_SCRIPTABLE bool showMail( quint32 serialNumber, const QString & messageId );
 
-  Q_SCRIPTABLE int viewMessage( const KUrl & messageFile );
+  Q_SCRIPTABLE int viewMessage( const QString & messageFile );
 
 /**
  * End of D-Bus callable stuff

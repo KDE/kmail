@@ -462,7 +462,7 @@ bool KMKernel::handleCommandLine( bool noArgsOpensReader )
     return false;
 
   if ( viewOnly )
-    viewMessage( messageFile );
+    viewMessage( messageFile.url() );
   else
     action( mailto, checkMail, to, cc, bcc, subj, body, messageFile,
             attachURLs, customHeaders );
@@ -834,9 +834,9 @@ QDBusObjectPath KMKernel::newMessage( const QString &to,
   return QDBusObjectPath( win->dbusObjectPath() );
 }
 
-int KMKernel::viewMessage( const KUrl & messageFile )
+int KMKernel::viewMessage( const QString & messageFile )
 {
-  KMOpenMsgCommand *openCommand = new KMOpenMsgCommand( 0, messageFile );
+  KMOpenMsgCommand *openCommand = new KMOpenMsgCommand( 0, KUrl( messageFile ) );
 
   openCommand->start();
   return 1;
