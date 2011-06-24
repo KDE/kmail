@@ -1,7 +1,7 @@
 /* -*- mode: C++; c-file-style: "gnu" -*-
   This file is part of KMail, the KDE mail client.
   Copyright (c) 2002 Don Sanders <sanders@kde.org>
-  Copyright (c) 2009, 2010 Montel Laurent <montel@kde.org>
+  Copyright (c) 2009, 2010, 2011 Montel Laurent <montel@kde.org>
 
   Based on the work of Stefan Taferner <taferner@kde.org>
 
@@ -3890,6 +3890,11 @@ void KMMainWidget::slotShowStartupFolder()
     slotIntro();
     return;
   }
+  const QString startupFolder = GlobalSettings::self()->startupFolder();
+  Akonadi::Collection colFolder = CommonKernel->collectionFromId( startupFolder );
+  if ( !colFolder.isValid() )
+    colFolder = CommonKernel->inboxCollectionFolder();
+  mFolderTreeWidget->selectCollectionFolder( colFolder );
 }
 
 void KMMainWidget::slotShowTip()
