@@ -450,6 +450,7 @@ class KMAIL_EXPORT KMMainWidget : public QWidget
     void slotItemAdded( const Akonadi::Item &, const Akonadi::Collection& col);
     void slotItemRemoved( const Akonadi::Item & );
     void slotItemMoved( Akonadi::Item item, Akonadi::Collection from, Akonadi::Collection to );
+    void slotCollectionChanged( const Akonadi::Collection::Id, const Akonadi::CollectionStatistics& );
 
     void slotAkonadiStandardActionUpdated();
     void slotCollectionChanged( const Akonadi::Collection&, const QSet<QByteArray>& );
