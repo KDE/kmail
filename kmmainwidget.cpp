@@ -1141,18 +1141,17 @@ void KMMainWidget::createWidgets()
   connect( FilterIf->filterManager(), SIGNAL( itemNotMoved( Akonadi::Item ) ),
            SLOT( slotItemNotMovedByFilters( Akonadi::Item ) ) );
   
-  connect( kmkernel->folderCollectionMonitor(), SIGNAL( collectionStatisticsChanged( Akonadi::Collection::Id, const Akonadi::CollectionStatistics &) ), SLOT( slotCollectionChanged( const Akonadi::Collection::Id, const Akonadi::CollectionStatistics& ) ) );
+  connect( kmkernel->folderCollectionMonitor(), SIGNAL( collectionStatisticsChanged( Akonadi::Collection::Id, const Akonadi::CollectionStatistics &) ), SLOT( slotCollectionStatisticsChanged( const Akonadi::Collection::Id, const Akonadi::CollectionStatistics& ) ) );
 
 }
 
-void KMMainWidget::slotCollectionChanged( const Akonadi::Collection::Id col, const Akonadi::CollectionStatistics& statistic )
+void KMMainWidget::slotCollectionStatisticsChanged( const Akonadi::Collection::Id id, const Akonadi::CollectionStatistics& statistic )
 {
-  if (  ( col == CommonKernel->outboxCollectionFolder().id() ) ) {
+  if ( id == CommonKernel->outboxCollectionFolder().id() ) {
     const qint64 nbMsgOutboxCollection = statistic.count();  
     actionCollection()->action( "send_queued" )->setEnabled( nbMsgOutboxCollection > 0 );
     actionCollection()->action( "send_queued_via" )->setEnabled( nbMsgOutboxCollection > 0 );
   }
-
 }
 
 void KMMainWidget::slotCreateNewTab( bool preferNewTab )
