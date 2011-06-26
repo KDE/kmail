@@ -225,6 +225,10 @@ Key=ToActMessage,TodoMessageColor
 Id=4.6-akonadi
 File=kmail2rc,mailviewerrc
 Group=MDN
+Key=default-policy
+Key=not-send-when-encrypted
+Key=quote-message
+
 
 #
 # Important notice:
