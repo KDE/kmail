@@ -79,6 +79,7 @@ using KMail::MailServiceImpl;
 #include <Akonadi/Session>
 #include <Akonadi/EntityTreeModel>
 #include <akonadi/entitymimetypefiltermodel.h>
+#include <Akonadi/CollectionStatisticsJob>
 
 #include <QByteArray>
 #include <QDir>
@@ -1232,7 +1233,9 @@ void KMKernel::cleanup(void)
   Akonadi::Collection trashCollection = CommonKernel->trashCollectionFolder();
   if ( trashCollection.isValid() ) {
     if ( GlobalSettings::self()->emptyTrashOnExit() ) {
-      if ( trashCollection.statistics().count() > 0 ) {
+      Akonadi::CollectionStatisticsJob *jobStatistics = new Akonadi::CollectionStatisticsJob( trashCollection );
+      jobStatistics->exec();
+      if ( jobStatistics->statistics().count() > 0 ) {
         mFolderCollectionMonitor->expunge( trashCollection, true /*sync*/ );
       }
     }
