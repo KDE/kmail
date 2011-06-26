@@ -93,11 +93,14 @@ KMSystemTray::KMSystemTray(QObject *parent)
   connect( contextMenu(), SIGNAL( aboutToShow() ),
            this, SLOT( slotContextMenuAboutToShow() ) );
 
-  connect( kmkernel->folderCollectionMonitor(), SIGNAL( collectionStatisticsChanged( Akonadi::Collection::Id, const Akonadi::CollectionStatistics &) ), SLOT( slotCollectionChanged( const Akonadi::Collection::Id, const Akonadi::CollectionStatistics& ) ) );
+  connect( kmkernel->folderCollectionMonitor(), SIGNAL( collectionStatisticsChanged( Akonadi::Collection::Id, const Akonadi::CollectionStatistics &) ), SLOT( initListOfCollection() ) );
 
-  connect( kmkernel->folderCollectionMonitor(), SIGNAL( collectionAdded( const Akonadi::Collection&, const Akonadi::Collection& ) ), this, SLOT( slotCollectionAddedRemoved() ) );
-  connect( kmkernel->folderCollectionMonitor(), SIGNAL( collectionRemoved( const Akonadi::Collection& ) ), this, SLOT( slotCollectionAddedRemoved() ) );
+  connect( kmkernel->folderCollectionMonitor(), SIGNAL( collectionAdded( const Akonadi::Collection&, const Akonadi::Collection& ) ), this, SLOT( initListOfCollection() ) );
+  connect( kmkernel->folderCollectionMonitor(), SIGNAL( collectionRemoved( const Akonadi::Collection& ) ), this, SLOT( initListOfCollection() ) );
+  connect( kmkernel->folderCollectionMonitor(), SIGNAL( collectionSubscribed( const Akonadi::Collection&, const Akonadi::Collection& ) ),SLOT( initListOfCollection() ) );
+  connect( kmkernel->folderCollectionMonitor(), SIGNAL( collectionUnsubscribed( const Akonadi::Collection& ) ),SLOT( initListOfCollection() ) );
 
+  
   initListOfCollection();
 
 }
@@ -384,16 +387,6 @@ void KMSystemTray::unreadMail( const QAbstractItemModel *model, const QModelInde
 
   //kDebug()<<" mCount :"<<mCount;
   updateCount();
-}
-
-void KMSystemTray::slotCollectionChanged( const Akonadi::Collection::Id, const Akonadi::CollectionStatistics& )
-{
-  initListOfCollection();
-}
-
-void KMSystemTray::slotCollectionAddedRemoved()
-{
-  initListOfCollection();
 }
 
 bool KMSystemTray::hasUnreadMail() const
