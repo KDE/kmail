@@ -59,7 +59,8 @@ private slots:
   void slotActivated();
   void slotContextMenuAboutToShow();
   void slotSelectCollection(QAction*act);
-
+  void slotCollectionAddedRemoved();
+  
 protected:
   bool mainWindowIsOnCurrentDesktop();
   void buildPopupMenu();
