@@ -221,6 +221,11 @@ Key=FlagMessage,ImportantMessageColor
 Key=ToActMessage,TodoMessageColor
 
 
+#MDN settings
+Id=4.6-akonadi
+File=kmail2rc,mailviewerrc
+Group=MDN
+
 #
 # Important notice:
 # If you add updates here, keep this text below them.
