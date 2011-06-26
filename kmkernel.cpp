@@ -1233,7 +1233,7 @@ void KMKernel::cleanup(void)
   if ( trashCollection.isValid() ) {
     if ( GlobalSettings::self()->emptyTrashOnExit() ) {
       if ( trashCollection.statistics().count() > 0 ) {
-        mFolderCollectionMonitor->expunge( trashCollection );
+        mFolderCollectionMonitor->expunge( trashCollection, true /*sync*/ );
       }
     }
   }
