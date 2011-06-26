@@ -97,6 +97,9 @@ KMSystemTray::KMSystemTray(QObject *parent)
 
   connect( kmkernel->folderCollectionMonitor(), SIGNAL( collectionAdded( const Akonadi::Collection&, const Akonadi::Collection& ) ), this, SLOT( slotCollectionAddedRemoved() ) );
   connect( kmkernel->folderCollectionMonitor(), SIGNAL( collectionRemoved( const Akonadi::Collection& ) ), this, SLOT( slotCollectionAddedRemoved() ) );
+
+  initListOfCollection();
+
 }
 
 void KMSystemTray::buildPopupMenu()
