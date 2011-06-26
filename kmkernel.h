@@ -367,7 +367,7 @@ public:
    *  to know whether the application should be allowed to exit in case the
    *  last visible composer or separate message window is closed.
    */
-  bool haveSystemTrayApplet();
+  bool haveSystemTrayApplet() const;
 
   bool registerSystemTrayApplet( KMSystemTray* );
   bool unregisterSystemTrayApplet( KMSystemTray* );

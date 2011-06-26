@@ -1350,7 +1350,7 @@ QString KMKernel::localDataPath()
 
 //-------------------------------------------------------------------------------
 
-bool KMKernel::haveSystemTrayApplet()
+bool KMKernel::haveSystemTrayApplet() const
 {
   return !systemTrayApplets.isEmpty();
 }
