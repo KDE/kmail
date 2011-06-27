@@ -229,6 +229,14 @@ Key=default-policy
 Key=not-send-when-encrypted
 Key=quote-message
 
+#MDN settings
+Id=4.6-before-migrate-akonadi
+File=kmailrc,mailviewerrc
+Group=MDN
+Key=default-policy
+Key=not-send-when-encrypted
+Key=quote-message
+
 
 #
 # Important notice:
