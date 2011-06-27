@@ -1234,9 +1234,10 @@ void KMKernel::cleanup(void)
   if ( trashCollection.isValid() ) {
     if ( GlobalSettings::self()->emptyTrashOnExit() ) {
       Akonadi::CollectionStatisticsJob *jobStatistics = new Akonadi::CollectionStatisticsJob( trashCollection );
-      jobStatistics->exec();
-      if ( jobStatistics->statistics().count() > 0 ) {
-        mFolderCollectionMonitor->expunge( trashCollection, true /*sync*/ );
+      if ( jobStatistics->exec() ) {
+        if ( jobStatistics->statistics().count() > 0 ) {
+          mFolderCollectionMonitor->expunge( trashCollection, true /*sync*/ );
+        }
       }
     }
   }
