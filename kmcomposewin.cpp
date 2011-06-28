@@ -1305,21 +1305,7 @@ void KMComposeWin::setupActions( void )
   mLastEncryptActionState = false;
   mLastSignActionState = GlobalSettings::self()->pgpAutoSign();
 
-  if ( !Kleo::CryptoBackendFactory::instance()->openpgp() && !Kleo::CryptoBackendFactory::instance()->smime() ) {
-    // no crypto whatsoever
-    mEncryptAction->setEnabled( false );
-    setEncryption( false );
-    mSignAction->setEnabled( false );
-    setSigning( false );
-  } else {
-    const bool canOpenPGPSign = Kleo::CryptoBackendFactory::instance()->openpgp() &&
-      !ident.pgpSigningKey().isEmpty();
-    const bool canSMIMESign = Kleo::CryptoBackendFactory::instance()->smime() &&
-      !ident.smimeSigningKey().isEmpty();
-
-    setEncryption( false );
-    setSigning( ( canOpenPGPSign || canSMIMESign ) && GlobalSettings::self()->pgpAutoSign() );
-  }
+  changeCryptoAction();
 
   connect( mEncryptAction, SIGNAL(toggled(bool)),
            SLOT(slotEncryptToggled( bool )) );
@@ -1355,6 +1341,28 @@ void KMComposeWin::setupActions( void )
   if ( configureAction ) {
     configureAction->setText( i18n("Configure KMail..." ) );
   }
+}
+
+void KMComposeWin::changeCryptoAction()
+{
+  const KPIMIdentities::Identity &ident =
+    KMKernel::self()->identityManager()->identityForUoidOrDefault( mComposerBase->identityCombo()->currentIdentity() );
+  if ( !Kleo::CryptoBackendFactory::instance()->openpgp() && !Kleo::CryptoBackendFactory::instance()->smime() ) {
+    // no crypto whatsoever
+    mEncryptAction->setEnabled( false );
+    setEncryption( false );
+    mSignAction->setEnabled( false );
+    setSigning( false );
+  } else {
+    const bool canOpenPGPSign = Kleo::CryptoBackendFactory::instance()->openpgp() &&
+                                !ident.pgpSigningKey().isEmpty();
+    const bool canSMIMESign = Kleo::CryptoBackendFactory::instance()->smime() &&
+                              !ident.smimeSigningKey().isEmpty();
+
+    setEncryption( false );
+    setSigning( ( canOpenPGPSign || canSMIMESign ) && GlobalSettings::self()->pgpAutoSign() );
+  }
+
 }
 
 //-----------------------------------------------------------------------------
@@ -2830,7 +2838,7 @@ void KMComposeWin::slotIdentityChanged( uint uoid, bool initalChange )
   mLastIdentityHasEncryptionKey = bNewIdentityHasEncryptionKey;
 
   mId = uoid;
-
+  changeCryptoAction();
   // make sure the From and BCC fields are shown if necessary
   rethinkFields( false );
 }
