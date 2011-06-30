@@ -889,7 +889,6 @@ ASWizPage::ASWizPage( QWidget * parent, const char * name,
   QString banner = "kmwizard.png";
   if ( bannerName && !bannerName->isEmpty() )
     banner = *bannerName;
-
   mLayout = new QHBoxLayout( this );
   mLayout->setSpacing( KDialog::spacingHint() );
   mLayout->setMargin( KDialog::marginHint() );
@@ -899,7 +898,7 @@ ASWizPage::ASWizPage( QWidget * parent, const char * name,
   mLayout->addItem( new QSpacerItem( 5, 5, QSizePolicy::Minimum, QSizePolicy::Expanding ) );
 
   mBannerLabel = new QLabel( this );
-  mBannerLabel->setPixmap( UserIcon(banner) );
+  mBannerLabel->setPixmap( /*UserIcon(banner)*/KIconLoader::global()->iconPath(banner, KIconLoader::User) );
   mBannerLabel->setScaledContents( false );
   mBannerLabel->setFrameShape( QFrame::StyledPanel );
   mBannerLabel->setFrameShadow( QFrame::Sunken );

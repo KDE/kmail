@@ -6,4 +6,4 @@ kmwizard.png
 mail-deleted.png
 )
 
-install( FILES ${pics} DESTINATION ${DATA_INSTALL_DIR}/kmail/pics)
+install( FILES ${pics} DESTINATION ${DATA_INSTALL_DIR}/kmail2/pics)

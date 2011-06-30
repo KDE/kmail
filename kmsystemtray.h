@@ -55,18 +55,17 @@ public:
   void updateSystemTray();
 
 private slots:
-  void slotCollectionChanged( const Akonadi::Collection::Id, const Akonadi::CollectionStatistics& );
   void slotActivated();
   void slotContextMenuAboutToShow();
   void slotSelectCollection(QAction*act);
-
+  void initListOfCollection();
+  
 protected:
   bool mainWindowIsOnCurrentDesktop();
   void buildPopupMenu();
   void updateCount();
   void fillFoldersMenu( QMenu *menu, const QAbstractItemModel *model, const QString& parentName = QString(), const QModelIndex& parentIndex = QModelIndex() );
   void unreadMail( const QAbstractItemModel *model, const QModelIndex& parentIndex = QModelIndex() );
-  void initListOfCollection();
 
 private:
 

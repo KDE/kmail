@@ -1,7 +1,7 @@
 /* -*- mode: C++; c-file-style: "gnu" -*-
   This file is part of KMail, the KDE mail client.
   Copyright (c) 2002 Don Sanders <sanders@kde.org>
-  Copyright (c) 2009, 2010 Montel Laurent <montel@kde.org>
+  Copyright (c) 2009, 2010, 2011 Montel Laurent <montel@kde.org>
 
   Based on the work of Stefan Taferner <taferner@kde.org>
 
@@ -1140,8 +1140,18 @@ void KMMainWidget::createWidgets()
   connect( kmkernel->folderCollectionMonitor(), SIGNAL( collectionChanged( const Akonadi::Collection &, const QSet<QByteArray> &) ), SLOT( slotCollectionChanged( const Akonadi::Collection&, const QSet<QByteArray>& ) ) );
   connect( FilterIf->filterManager(), SIGNAL( itemNotMoved( Akonadi::Item ) ),
            SLOT( slotItemNotMovedByFilters( Akonadi::Item ) ) );
+  
+  connect( kmkernel->folderCollectionMonitor(), SIGNAL( collectionStatisticsChanged( Akonadi::Collection::Id, const Akonadi::CollectionStatistics &) ), SLOT( slotCollectionStatisticsChanged( const Akonadi::Collection::Id, const Akonadi::CollectionStatistics& ) ) );
 
+}
 
+void KMMainWidget::slotCollectionStatisticsChanged( const Akonadi::Collection::Id id, const Akonadi::CollectionStatistics& statistic )
+{
+  if ( id == CommonKernel->outboxCollectionFolder().id() ) {
+    const qint64 nbMsgOutboxCollection = statistic.count();  
+    actionCollection()->action( "send_queued" )->setEnabled( nbMsgOutboxCollection > 0 );
+    actionCollection()->action( "send_queued_via" )->setEnabled( nbMsgOutboxCollection > 0 );
+  }
 }
 
 void KMMainWidget::slotCreateNewTab( bool preferNewTab )
@@ -1182,7 +1192,6 @@ void KMMainWidget::slotItemRemoved( const Akonadi::Item & item)
 
 void KMMainWidget::slotItemMoved( Akonadi::Item item, Akonadi::Collection from, Akonadi::Collection to )
 {
-  kDebug()<<" slotItemMoved from :"<<from.id()<<" to "<<to.id();
   if( item.isValid() && ( ( from.id() == CommonKernel->outboxCollectionFolder().id() )
                           || to.id() == CommonKernel->outboxCollectionFolder().id() ) )
   {
@@ -3525,6 +3534,7 @@ void KMMainWidget::startUpdateMessageActionsTimer()
   // FIXME: This delay effectively CAN make the actions to be in an incoherent state
   //        Maybe we should mark actions as "dirty" here and check it in every action handler...
   updateMessageActions( true );
+  
   menutimer->stop();
   menutimer->start( 500 );
 }
@@ -3890,6 +3900,11 @@ void KMMainWidget::slotShowStartupFolder()
     slotIntro();
     return;
   }
+  const QString startupFolder = GlobalSettings::self()->startupFolder();
+  Akonadi::Collection colFolder = CommonKernel->collectionFromId( startupFolder );
+  if ( !colFolder.isValid() )
+    colFolder = CommonKernel->inboxCollectionFolder();
+  mFolderTreeWidget->selectCollectionFolder( colFolder );
 }
 
 void KMMainWidget::slotShowTip()
