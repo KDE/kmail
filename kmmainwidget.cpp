@@ -3077,6 +3077,9 @@ void KMMainWidget::setupActions()
   connect(mExpireFolderAction, SIGNAL(triggered(bool) ), SLOT(slotExpireFolder()));
 
 
+  mAkonadiStandardActionManager->interceptAction( Akonadi::StandardMailActionManager::MoveToTrash );
+  connect( mAkonadiStandardActionManager->action( Akonadi::StandardMailActionManager::MoveToTrash ), SIGNAL( triggered( bool ) ), this, SLOT( slotTrashSelectedMessages() ) );
+
 
   mAkonadiStandardActionManager->interceptAction( Akonadi::StandardMailActionManager::MoveAllToTrash );
   connect( mAkonadiStandardActionManager->action( Akonadi::StandardMailActionManager::MoveAllToTrash ), SIGNAL( triggered( bool ) ), this, SLOT( slotEmptyFolder() ) );
