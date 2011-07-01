@@ -280,7 +280,7 @@ void KMReaderMainWin::setupAccel()
   mSaveAsAction->setShortcut( KStandardShortcut::shortcut( KStandardShortcut::Save ) );
 
   mSaveAtmAction  = new KAction(KIcon("mail-attachment"), i18n("Save A&ttachments..."), actionCollection() );
-  connect( mSaveAtmAction, SIGNAL(triggered(bool)), mReaderWin->viewer(), SLOT(slotAttachmentSaveAs()) );
+  connect( mSaveAtmAction, SIGNAL(triggered(bool)), mReaderWin->viewer(), SLOT(slotAttachmentSaveAll()) );
 
   mTrashAction = new KAction( KIcon( "user-trash" ), i18n("&Move to Trash"), this );
   mTrashAction->setIconText( i18nc( "@action:intoolbar Move to Trash", "Trash" ) );
