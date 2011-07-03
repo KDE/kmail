@@ -268,7 +268,7 @@ public Q_SLOTS:
 
   Q_SCRIPTABLE bool showMail( quint32 serialNumber, const QString & messageId );
 
-  Q_SCRIPTABLE int viewMessage( const KUrl & messageFile );
+  Q_SCRIPTABLE int viewMessage( const QString & messageFile );
 
 /**
  * End of D-Bus callable stuff
@@ -367,7 +367,7 @@ public:
    *  to know whether the application should be allowed to exit in case the
    *  last visible composer or separate message window is closed.
    */
-  bool haveSystemTrayApplet();
+  bool haveSystemTrayApplet() const;
 
   bool registerSystemTrayApplet( KMSystemTray* );
   bool unregisterSystemTrayApplet( KMSystemTray* );

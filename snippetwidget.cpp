@@ -86,4 +86,3 @@ void SnippetWidget::contextMenuEvent( QContextMenuEvent *event )
   popup.exec( event->globalPos() );
 }
 
-#include "snippetwidget.moc"

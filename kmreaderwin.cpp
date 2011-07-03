@@ -32,7 +32,6 @@
 #include <libkdepim/addemailaddressjob.h>
 #include <libkdepim/openemailaddressjob.h>
 #include "kmcommands.h"
-#include "mailcommon/mdnadvicedialog.h"
 #include "mailcommon/sendmdnhandler.h"
 #include <QByteArray>
 #include <QVBoxLayout>
@@ -409,7 +408,7 @@ void KMReaderWin::setHtmlLoadExtOverride( bool override )
 }
 
 //-----------------------------------------------------------------------------
-bool KMReaderWin::htmlMail()
+bool KMReaderWin::htmlMail() const
 {
   return mViewer->htmlMail();
 }

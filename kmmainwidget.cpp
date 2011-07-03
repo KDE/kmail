@@ -1,7 +1,7 @@
 /* -*- mode: C++; c-file-style: "gnu" -*-
   This file is part of KMail, the KDE mail client.
   Copyright (c) 2002 Don Sanders <sanders@kde.org>
-  Copyright (c) 2009, 2010 Montel Laurent <montel@kde.org>
+  Copyright (c) 2009, 2010, 2011 Montel Laurent <montel@kde.org>
 
   Based on the work of Stefan Taferner <taferner@kde.org>
 
@@ -629,77 +629,72 @@ void KMMainWidget::layoutSplitters()
   bool readerWindowAtSide = !mReaderWindowBelow && mReaderWindowActive;
   bool readerWindowBelow = mReaderWindowBelow && mReaderWindowActive;
 
-  //
-  // Create the splitters
-  //
   mSplitter1 = new QSplitter( this );
+  mSplitter2 = new QSplitter( mSplitter1 );
+
+  QWidget * folderTreeWidget = mSearchAndTree;
+  if ( mFavoriteCollectionsView ) {
+    mFolderViewSplitter = new QSplitter( Qt::Vertical );
+    mFolderViewSplitter->setOpaqueResize( opaqueResize );
+    mFolderViewSplitter->setChildrenCollapsible( false );
+    mFolderViewSplitter->addWidget( mFavoriteCollectionsView );
+    mFavoriteCollectionsView->setParent( mFolderViewSplitter );
+    mFolderViewSplitter->addWidget( mSearchAndTree );
+    folderTreeWidget = mFolderViewSplitter;
+  }
+
+  if ( mLongFolderList ) {
+
+    // add folder tree
+    mSplitter1->setOrientation( Qt::Horizontal );
+    mSplitter1->addWidget( folderTreeWidget );
+
+    // and the rest to the right
+    mSplitter1->addWidget( mSplitter2 );
+
+    // add the message list to the right or below
+    if ( readerWindowAtSide ) {
+      mSplitter2->setOrientation( Qt::Horizontal );
+    } else {
+      mSplitter2->setOrientation( Qt::Vertical );
+    }
+    mSplitter2->addWidget( mMessagePane );
+
+    // add the preview window, if there is one
+    if ( mMsgView ) {
+      mSplitter2->addWidget( mMsgView );
+    }
+
+  } else { // short folder list
+    if ( mReaderWindowBelow ) {
+      mSplitter1->setOrientation( Qt::Vertical );
+      mSplitter2->setOrientation( Qt::Horizontal );
+    } else { // at side or none
+      mSplitter1->setOrientation( Qt::Horizontal );
+      mSplitter2->setOrientation( Qt::Vertical );
+    }
+
+    mSplitter1->addWidget( mSplitter2 );
+
+    // add folder tree
+    mSplitter2->addWidget( folderTreeWidget );
+    // add message list to splitter 2
+    mSplitter2->addWidget( mMessagePane );
+
+    // add the preview window, if there is one
+    if ( mMsgView )
+      mSplitter1->addWidget( mMsgView );
+  }
+
+  //
+  // Set splitter properties
+  //
   mSplitter1->setObjectName( "splitter1" );
   mSplitter1->setOpaqueResize( opaqueResize );
   mSplitter1->setChildrenCollapsible( false );
-  mSplitter2 = new QSplitter( mSplitter1 );
   mSplitter2->setObjectName( "splitter2" );
   mSplitter2->setOpaqueResize( opaqueResize );
   mSplitter2->setChildrenCollapsible( false );
-  mSplitter1->addWidget( mSplitter2 );
-
-  //
-  // Set the layout of the splitters and calculate the widget's parents
-  //
-  QSplitter *folderViewParent, *folderTreeParent, *messageViewerParent;
-  if ( mLongFolderList ) {
-
-    mSplitter1->setOrientation( Qt::Horizontal );
-    Qt::Orientation splitter2orientation;
-    if ( !readerWindowAtSide )
-      splitter2orientation = Qt::Vertical;
-    else
-      splitter2orientation = Qt::Horizontal;
-    mSplitter2->setOrientation( splitter2orientation );
-    folderViewParent = mSplitter1;
-    messageViewerParent = mSplitter2;
-
-  } else {
-
-    Qt::Orientation splitter1orientation;
-    if ( !readerWindowAtSide )
-      splitter1orientation = Qt::Vertical;
-    else
-      splitter1orientation = Qt::Horizontal;
-    mSplitter1->setOrientation( splitter1orientation );
-    mSplitter2->setOrientation( Qt::Horizontal );
-    folderViewParent = mSplitter2;
-    messageViewerParent = mSplitter1;
-  }
-
-  //
-  // Add the widgets to the splitters and set the parents calculated above
-  //
-
-  int folderTreePosition = 0;
-
-  if ( mFavoriteCollectionsView ) {
-    mFolderViewSplitter = new QSplitter( Qt::Vertical, folderViewParent );
-    mFolderViewSplitter->setOpaqueResize( opaqueResize );
-    mFolderViewSplitter->setChildrenCollapsible( false );
-    folderTreeParent = mFolderViewSplitter;
-    mFolderViewSplitter->addWidget( mFavoriteCollectionsView );
-    mFavoriteCollectionsView->setParent( mFolderViewSplitter );
-    folderViewParent->insertWidget( 0, mFolderViewSplitter );
-
-    folderTreePosition = 1;
-  } else
-    folderTreeParent = folderViewParent;
-
-  folderTreeParent->insertWidget( folderTreePosition, mSearchAndTree );
-  mSplitter2->addWidget( mMessagePane );
-
-  if ( mMsgView ) {
-    messageViewerParent->addWidget( mMsgView );
-    mMsgView->setParent( messageViewerParent );
-  }
-
-  mSearchAndTree->setParent( folderTreeParent );
-  mMessagePane->setParent( mSplitter2 );
 
   //
   // Set the stretch factors
@@ -1145,8 +1140,18 @@ void KMMainWidget::createWidgets()
   connect( kmkernel->folderCollectionMonitor(), SIGNAL( collectionChanged( const Akonadi::Collection &, const QSet<QByteArray> &) ), SLOT( slotCollectionChanged( const Akonadi::Collection&, const QSet<QByteArray>& ) ) );
   connect( FilterIf->filterManager(), SIGNAL( itemNotMoved( Akonadi::Item ) ),
            SLOT( slotItemNotMovedByFilters( Akonadi::Item ) ) );
+  
+  connect( kmkernel->folderCollectionMonitor(), SIGNAL( collectionStatisticsChanged( Akonadi::Collection::Id, const Akonadi::CollectionStatistics &) ), SLOT( slotCollectionStatisticsChanged( const Akonadi::Collection::Id, const Akonadi::CollectionStatistics& ) ) );
 
+}
 
+void KMMainWidget::slotCollectionStatisticsChanged( const Akonadi::Collection::Id id, const Akonadi::CollectionStatistics& statistic )
+{
+  if ( id == CommonKernel->outboxCollectionFolder().id() ) {
+    const qint64 nbMsgOutboxCollection = statistic.count();  
+    actionCollection()->action( "send_queued" )->setEnabled( nbMsgOutboxCollection > 0 );
+    actionCollection()->action( "send_queued_via" )->setEnabled( nbMsgOutboxCollection > 0 );
+  }
 }
 
 void KMMainWidget::slotCreateNewTab( bool preferNewTab )
@@ -1187,7 +1192,6 @@ void KMMainWidget::slotItemRemoved( const Akonadi::Item & item)
 
 void KMMainWidget::slotItemMoved( Akonadi::Item item, Akonadi::Collection from, Akonadi::Collection to )
 {
-  kDebug()<<" slotItemMoved from :"<<from.id()<<" to "<<to.id();
   if( item.isValid() && ( ( from.id() == CommonKernel->outboxCollectionFolder().id() )
                           || to.id() == CommonKernel->outboxCollectionFolder().id() ) )
   {
@@ -1370,8 +1374,8 @@ void KMMainWidget::slotDelayedShowNewFromTemplate( KJob *job )
   Akonadi::ItemFetchJob *fetchJob = qobject_cast<Akonadi::ItemFetchJob*>( job );
 
   const Akonadi::Item::List items = fetchJob->items();
-
-  for ( int idx = 0; idx < items.count(); ++idx ) {
+  const int numberOfItems = items.count();
+  for ( int idx = 0; idx < numberOfItems; ++idx ) {
     KMime::Message::Ptr msg = MessageCore::Util::message( items.at( idx ) );
     if ( msg ) {
       QString subj = msg->subject()->asUnicodeString();
@@ -3073,6 +3077,9 @@ void KMMainWidget::setupActions()
   connect(mExpireFolderAction, SIGNAL(triggered(bool) ), SLOT(slotExpireFolder()));
 
 
+  mAkonadiStandardActionManager->interceptAction( Akonadi::StandardMailActionManager::MoveToTrash );
+  connect( mAkonadiStandardActionManager->action( Akonadi::StandardMailActionManager::MoveToTrash ), SIGNAL( triggered( bool ) ), this, SLOT( slotTrashSelectedMessages() ) );
+
 
   mAkonadiStandardActionManager->interceptAction( Akonadi::StandardMailActionManager::MoveAllToTrash );
   connect( mAkonadiStandardActionManager->action( Akonadi::StandardMailActionManager::MoveAllToTrash ), SIGNAL( triggered( bool ) ), this, SLOT( slotEmptyFolder() ) );
@@ -3530,6 +3537,7 @@ void KMMainWidget::startUpdateMessageActionsTimer()
   // FIXME: This delay effectively CAN make the actions to be in an incoherent state
   //        Maybe we should mark actions as "dirty" here and check it in every action handler...
   updateMessageActions( true );
+  
   menutimer->stop();
   menutimer->start( 500 );
 }
@@ -3895,6 +3903,11 @@ void KMMainWidget::slotShowStartupFolder()
     slotIntro();
     return;
   }
+  const QString startupFolder = GlobalSettings::self()->startupFolder();
+  Akonadi::Collection colFolder = CommonKernel->collectionFromId( startupFolder );
+  if ( !colFolder.isValid() )
+    colFolder = CommonKernel->inboxCollectionFolder();
+  mFolderTreeWidget->selectCollectionFolder( colFolder );
 }
 
 void KMMainWidget::slotShowTip()

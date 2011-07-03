@@ -79,6 +79,7 @@ using KMail::MailServiceImpl;
 #include <Akonadi/Session>
 #include <Akonadi/EntityTreeModel>
 #include <akonadi/entitymimetypefiltermodel.h>
+#include <Akonadi/CollectionStatisticsJob>
 
 #include <QByteArray>
 #include <QDir>
@@ -462,7 +463,7 @@ bool KMKernel::handleCommandLine( bool noArgsOpensReader )
     return false;
 
   if ( viewOnly )
-    viewMessage( messageFile );
+    viewMessage( messageFile.url() );
   else
     action( mailto, checkMail, to, cc, bcc, subj, body, messageFile,
             attachURLs, customHeaders );
@@ -834,9 +835,9 @@ QDBusObjectPath KMKernel::newMessage( const QString &to,
   return QDBusObjectPath( win->dbusObjectPath() );
 }
 
-int KMKernel::viewMessage( const KUrl & messageFile )
+int KMKernel::viewMessage( const QString & messageFile )
 {
-  KMOpenMsgCommand *openCommand = new KMOpenMsgCommand( 0, messageFile );
+  KMOpenMsgCommand *openCommand = new KMOpenMsgCommand( 0, KUrl( messageFile ) );
 
   openCommand->start();
   return 1;
@@ -1232,8 +1233,11 @@ void KMKernel::cleanup(void)
   Akonadi::Collection trashCollection = CommonKernel->trashCollectionFolder();
   if ( trashCollection.isValid() ) {
     if ( GlobalSettings::self()->emptyTrashOnExit() ) {
-      if ( trashCollection.statistics().count() > 0 ) {
-        mFolderCollectionMonitor->expunge( trashCollection );
+      Akonadi::CollectionStatisticsJob *jobStatistics = new Akonadi::CollectionStatisticsJob( trashCollection );
+      if ( jobStatistics->exec() ) {
+        if ( jobStatistics->statistics().count() > 0 ) {
+          mFolderCollectionMonitor->expunge( trashCollection, true /*sync*/ );
+        }
       }
     }
   }
@@ -1347,7 +1351,7 @@ QString KMKernel::localDataPath()
 
 //-------------------------------------------------------------------------------
 
-bool KMKernel::haveSystemTrayApplet()
+bool KMKernel::haveSystemTrayApplet() const
 {
   return !systemTrayApplets.isEmpty();
 }

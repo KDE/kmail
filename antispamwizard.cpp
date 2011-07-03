@@ -37,7 +37,7 @@
 #include "foldertreeview.h"
 #include "readablecollectionproxymodel.h"
 #include "util.h"
-#include "pop3settings.h"
+#include "mailcommon/pop3settings.h"
 #include "mailcommon/mailutil.h"
 #include "mailcommon/imapsettings.h"
 #include "mailcommon/mailkernel.h"
@@ -544,7 +544,7 @@ void AntiSpamWizard::checkToolAvailability()
           delete iface;
         }
         else if ( type.identifier().contains( POP3_RESOURCE_IDENTIFIER ) ) {
-          OrgKdeAkonadiPOP3SettingsInterface *iface = new OrgKdeAkonadiPOP3SettingsInterface("org.freedesktop.Akonadi.Resource." + type.identifier(), "/Settings", QDBusConnection::sessionBus() );
+          OrgKdeAkonadiPOP3SettingsInterface *iface = MailCommon::Util::createPop3SettingsInterface( type.identifier() );
           if ( iface->isValid() ) {
             QString host = iface->host();
             if ( host.toLower().contains( pattern.toLower() ) ) {
@@ -889,7 +889,6 @@ ASWizPage::ASWizPage( QWidget * parent, const char * name,
   QString banner = "kmwizard.png";
   if ( bannerName && !bannerName->isEmpty() )
     banner = *bannerName;
-
   mLayout = new QHBoxLayout( this );
   mLayout->setSpacing( KDialog::spacingHint() );
   mLayout->setMargin( KDialog::marginHint() );
@@ -899,7 +898,7 @@ ASWizPage::ASWizPage( QWidget * parent, const char * name,
   mLayout->addItem( new QSpacerItem( 5, 5, QSizePolicy::Minimum, QSizePolicy::Expanding ) );
 
   mBannerLabel = new QLabel( this );
-  mBannerLabel->setPixmap( UserIcon(banner) );
+  mBannerLabel->setPixmap( /*UserIcon(banner)*/KIconLoader::global()->iconPath(banner, KIconLoader::User) );
   mBannerLabel->setScaledContents( false );
   mBannerLabel->setFrameShape( QFrame::StyledPanel );
   mBannerLabel->setFrameShadow( QFrame::Sunken );

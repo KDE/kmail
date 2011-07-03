@@ -26,6 +26,8 @@
 #include <QObject>
 #include <akonadi/collection.h>
 #include <akonadi/item.h>
+class KJob;
+
 namespace KMail {
 
 /** A class for storing Undo information. */
@@ -58,6 +60,9 @@ public:
 public slots:
   void msgDestroyed( const Akonadi::Item &msg);
 
+protected slots:
+  void slotMoveResult(KJob*);
+  
 protected:
   QList<UndoInfo*> mStack;
   int mSize;

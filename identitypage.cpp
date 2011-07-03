@@ -253,7 +253,7 @@ void IdentityPage::slotRenameIdentity( KMail::IdentityListViewItem *item , const
 {
   if ( !item ) return;
 
-  QString newName = text.trimmed();
+  const QString newName = text.trimmed();
   if ( !newName.isEmpty() &&
        !mIdentityManager->shadowIdentities().contains( newName ) ) {
     KPIMIdentities::Identity &ident = item->identity();
