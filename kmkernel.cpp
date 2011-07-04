@@ -1635,7 +1635,7 @@ void KMKernel::instanceStatusChanged( Akonadi::AgentInstance instance )
     if ( instance.status() == Akonadi::AgentInstance::Running ) {
 
       if ( mResourcesBeingChecked.isEmpty() ) {
-        kDebug() << "A Resource started to syncronize, starting a mail check.";
+        kDebug() << "A Resource started to synchronize, starting a mail check.";
         emit startCheckMail();
       }
 
