@@ -29,7 +29,7 @@
 #include "mailcommon/searchpatternedit.h"
 #include "regexplineedit.h"
 #include "searchdescriptionattribute.h"
-
+#include "foldertreeview.h"
 #include <Akonadi/AttributeFactory>
 #include <Akonadi/CollectionModifyJob>
 #include <Akonadi/CollectionStatisticsJob>
@@ -229,8 +229,9 @@ SearchWindow::SearchWindow( KMMainWidget *widget, const Akonadi::Collection &col
     mResultModel = new Akonadi::ItemModel( this );
     mResultModel->setCollection( mFolder );
     mLbxMatches->setModel( mResultModel );
-    mAkonadiStandardAction = new Akonadi::StandardActionManager( actionCollection(), this );
+    mAkonadiStandardAction = new Akonadi::StandardMailActionManager( actionCollection(), this );
     mAkonadiStandardAction->setItemSelectionModel( mLbxMatches->selectionModel() );
+    mAkonadiStandardAction->setCollectionSelectionModel( mKMMainWidget->folderTreeView()->selectionModel() );
   } else {
     mSearchFolderEdt->setText( i18n( "Last Search" ) );
     // find last search and reuse it if possible
@@ -558,8 +559,10 @@ void SearchWindow::searchDone( KJob* job )
     mLbxMatches->header()->setSortIndicator( 2, Qt::DescendingOrder );
     mLbxMatches->header()->setStretchLastSection( false );
     mLbxMatches->header()->setResizeMode( 3, QHeaderView::Stretch );
-    mAkonadiStandardAction = new Akonadi::StandardActionManager( actionCollection(), this );
+    mAkonadiStandardAction = new Akonadi::StandardMailActionManager( actionCollection(), this );
     mAkonadiStandardAction->setItemSelectionModel( mLbxMatches->selectionModel() );
+    mAkonadiStandardAction->setCollectionSelectionModel( mKMMainWidget->folderTreeView()->selectionModel() );
+
   } else {
     mResultModel->setCollection( mFolder );
     mLbxMatches->setModel( mResultModel );
@@ -749,7 +752,6 @@ void SearchWindow::slotContextMenuRequested( const QPoint& )
   menu->addAction( mReplyListAction );
   menu->addAction( mForwardActionMenu );
   menu->addSeparator();
-#if 0  
   KAction *act = mAkonadiStandardAction->createAction( Akonadi::StandardActionManager::CopyItems );
   mAkonadiStandardAction->setActionText( Akonadi::StandardActionManager::CopyItems, ki18np( "Copy Message", "Copy %1 Messages" ) );
   menu->addAction( act );
@@ -758,7 +760,6 @@ void SearchWindow::slotContextMenuRequested( const QPoint& )
   menu->addAction( act );
   menu->addAction( mAkonadiStandardAction->createAction( Akonadi::StandardActionManager::CopyItemToMenu ) );
   menu->addAction( mAkonadiStandardAction->createAction( Akonadi::StandardActionManager::MoveItemToMenu ) );
-#endif  
   menu->addSeparator();
   menu->addAction( mSaveAsAction );
   menu->addAction( mSaveAtchAction );
