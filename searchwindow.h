@@ -45,7 +45,7 @@ class KStatusBar;
 namespace Akonadi {
 class EntityTreeView;
 class ItemModel;
-class StandardActionManager;
+class StandardMailActionManager;
 }
 
 namespace KMime {
@@ -191,7 +191,7 @@ class SearchWindow: public KDialog, virtual public KXMLGUIClient
     MailCommon::SearchPatternEdit *mPatternEdit;
     MailCommon::SearchPattern mSearchPattern;
 
-    Akonadi::StandardActionManager *mAkonadiStandardAction;
+    Akonadi::StandardMailActionManager *mAkonadiStandardAction;
 
     static const int MSGID_COLUMN;
 };
