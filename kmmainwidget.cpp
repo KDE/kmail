@@ -1272,7 +1272,7 @@ void KMMainWidget::slotManageSieveScripts()
 //-----------------------------------------------------------------------------
 void KMMainWidget::slotAddrBook()
 {
-  KToolInvocation::startServiceByDesktopName( "kaddressbook" );
+  KRun::runCommand("kaddressbook", topLevelWidget());
 }
 
 
