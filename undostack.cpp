@@ -104,7 +104,7 @@ void UndoStack::undo()
 void UndoStack::slotMoveResult( KJob *job )
 {
   if ( job->error() )
-    KMessageBox::sorry( kmkernel->mainWin(), i18n("Can not move message. %1").arg( job->errorString() ) );
+    KMessageBox::sorry( kmkernel->mainWin(), i18n("Can not move message. %1", job->errorString() ) );
 }
 
 void
