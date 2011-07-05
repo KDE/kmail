@@ -76,7 +76,7 @@ KMSystemTray::KMSystemTray(QObject *parent)
 #ifdef Q_WS_X11
   KMMainWidget * mainWidget = kmkernel->getKMMainWidget();
   if ( mainWidget ) {
-    QWidget * mainWin = mainWidget->topLevelWidget();
+    QWidget * mainWin = mainWidget->window();
     if ( mainWin ) {
       mDesktopOfMainWin = KWindowSystem::windowInfo( mainWin->winId(),
                                             NET::WMDesktop ).desktop();
@@ -134,7 +134,7 @@ void KMSystemTray::buildPopupMenu()
     contextMenu()->addAction( action );
   contextMenu()->addSeparator();
 
-  KXmlGuiWindow *mainWin = ::qobject_cast<KXmlGuiWindow*>(kmkernel->getKMMainWidget()->topLevelWidget());
+  KXmlGuiWindow *mainWin = ::qobject_cast<KXmlGuiWindow*>(kmkernel->getKMMainWidget()->window());
   if(mainWin)
     if ( ( action=mainWin->actionCollection()->action("file_quit") ) )
       contextMenu()->addAction( action );
@@ -233,7 +233,7 @@ void KMSystemTray::slotActivated()
   if ( !mainWidget )
     return ;
 
-  QWidget *mainWin = kmkernel->getKMMainWidget()->topLevelWidget();
+  QWidget *mainWin = kmkernel->getKMMainWidget()->window();
   if ( !mainWin )
     return ;
 
@@ -325,7 +325,7 @@ void KMSystemTray::hideKMail()
 {
   if (!kmkernel->getKMMainWidget())
     return;
-  QWidget *mainWin = kmkernel->getKMMainWidget()->topLevelWidget();
+  QWidget *mainWin = kmkernel->getKMMainWidget()->window();
   assert(mainWin);
   if(mainWin)
   {

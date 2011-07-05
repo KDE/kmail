@@ -1479,7 +1479,7 @@ KMMainWidget *KMKernel::getKMMainWidget()
   QWidget *wid;
 
   Q_FOREACH( wid, l ) {
-    QList<KMMainWidget*> l2 = wid->topLevelWidget()->findChildren<KMMainWidget*>();
+    QList<KMMainWidget*> l2 = wid->window()->findChildren<KMMainWidget*>();
     if ( !l2.isEmpty() && l2.first() )
       return l2.first();
   }

@@ -980,7 +980,7 @@ void KMFilterListBox::slotRename()
      i18n("Rename filter \"%1\" to:\n(leave the field empty for automatic naming)",
           filter->pattern()->name() ) /*label*/,
      filter->pattern()->name() /* initial value */,
-     &okPressed, topLevelWidget(), validator
+     &okPressed, window(), validator
      );
   delete validator;
 
