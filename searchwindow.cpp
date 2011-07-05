@@ -650,9 +650,7 @@ void SearchWindow::slotSearchFolderRenameDone( KJob *job )
     KMessageBox::information( this, i18n( "There was a problem renaming your search folder. "
                                           "A common reason for this is that another search folder "
                                           "with the same name already exists." ) );
-  } else {
-    kDebug() << "Search Collection succesfully renamed.";
-  }
+  } 
 }
 
 void SearchWindow::openSearchFolder()
