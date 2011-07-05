@@ -291,7 +291,7 @@ K_GLOBAL_STATIC( KMMainWidget::PtrList, theMainWidgetList )
     }
   }
 
-  KMainWindow *mainWin = dynamic_cast<KMainWindow*>(topLevelWidget());
+  KMainWindow *mainWin = dynamic_cast<KMainWindow*>(window());
   KStatusBar *sb =  mainWin ? mainWin->statusBar() : 0;
   mVacationScriptIndicator = new KMail::StatusBarLabel( sb );
   mVacationScriptIndicator->hide();
@@ -429,14 +429,14 @@ void KMMainWidget::slotEndCheckMail()
     KNotification::event( "new-mail-arrived",
                           summary,
                           QPixmap(),
-                          topLevelWidget(),
+                          window(),
                           KNotification::CloseOnTimeout,
                           kmkernel->xmlGuiInstance() );
   } else {
     KNotification::event( "new-mail-arrived",
                           summary,
                           QPixmap(),
-                          topLevelWidget(),
+                          window(),
                           KNotification::CloseOnTimeout );
   }
 
@@ -1272,14 +1272,14 @@ void KMMainWidget::slotManageSieveScripts()
 //-----------------------------------------------------------------------------
 void KMMainWidget::slotAddrBook()
 {
-  KRun::runCommand("kaddressbook", topLevelWidget());
+  KRun::runCommand("kaddressbook", window());
 }
 
 
 //-----------------------------------------------------------------------------
 void KMMainWidget::slotImport()
 {
-  KRun::runCommand("kmailcvt", topLevelWidget());
+  KRun::runCommand("kmailcvt", window());
 }
 
 //-----------------------------------------------------------------------------
