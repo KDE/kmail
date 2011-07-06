@@ -1436,6 +1436,9 @@ KSharedConfig::Ptr KMKernel::config()
     MessageComposer::MessageComposerSettings::self()->readConfig();
     MessageCore::GlobalSettings::self()->setSharedConfig( mySelf->mConfig );
     MessageCore::GlobalSettings::self()->readConfig();
+    MessageViewer::GlobalSettings::self()->setSharedConfig( mySelf->mConfig );
+    MessageViewer::GlobalSettings::self()->readConfig();
+
   }
   return mySelf->mConfig;
 }
