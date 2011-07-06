@@ -999,6 +999,7 @@ AppearancePageColorsTab::AppearancePageColorsTab( QWidget * parent )
 void AppearancePage::ColorsTab::doLoadOther()
 {
   KConfigGroup reader( KMKernel::self()->config(), "Reader" );
+
   KConfigGroup messageListView( KMKernel::self()->config(), "MessageListView::Colors" );
 
   mCustomColorCheck->setChecked( !MessageCore::GlobalSettings::self()->useDefaultColors() );
@@ -3132,7 +3133,7 @@ void SecurityPage::GeneralTab::doLoadOther()
 
 void SecurityPage::GeneralTab::save()
 {
-  KConfigGroup reader( KMKernel::self()->config(), "Reader" );
+  //KConfigGroup reader( KMKernel::self()->config(), "Reader" );
 
   if ( MessageViewer::GlobalSettings::self()->htmlMail() != mSGTab.mHtmlMailCheck->isChecked())
   {
