@@ -221,23 +221,6 @@ Key=FlagMessage,ImportantMessageColor
 Key=ToActMessage,TodoMessageColor
 
 
-#MDN settings
-Id=4.6-akonadi
-File=kmail2rc,mailviewerrc
-Group=MDN
-Key=default-policy
-Key=not-send-when-encrypted
-Key=quote-message
-
-#MDN settings
-Id=4.6-before-migrate-akonadi
-File=kmailrc,mailviewerrc
-Group=MDN
-Key=default-policy
-Key=not-send-when-encrypted
-Key=quote-message
-
-
 #
 # Important notice:
 # If you add updates here, keep this text below them.
