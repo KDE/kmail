@@ -905,7 +905,6 @@ QString AppearancePage::ColorsTab::helpAnchor() const
   return QString::fromLatin1("configure-appearance-colors");
 }
 
-
 static const struct {
   const char * configName;
   const char * displayName;
@@ -998,14 +997,19 @@ AppearancePageColorsTab::AppearancePageColorsTab( QWidget * parent )
 
 void AppearancePage::ColorsTab::doLoadOther()
 {
-  KConfigGroup reader( KMKernel::self()->config(), "Reader" );
-
-  KConfigGroup messageListView( KMKernel::self()->config(), "MessageListView::Colors" );
-
   mCustomColorCheck->setChecked( !MessageCore::GlobalSettings::self()->useDefaultColors() );
   mRecycleColorCheck->setChecked( MessageViewer::GlobalSettings::self()->recycleQuoteColors() );
   mCloseToQuotaThreshold->setValue( GlobalSettings::self()->closeToQuotaThreshold() );
+  loadColor( true );
+}
+
+void AppearancePage::ColorsTab::loadColor( bool loadFromConfig )
+{
   KColorScheme scheme( QPalette::Active, KColorScheme::View );
+
+  KConfigGroup reader( KMKernel::self()->config(), "Reader" );
+
+  KConfigGroup messageListView( KMKernel::self()->config(), "MessageListView::Colors" );
 
   static const QColor defaultColor[ numColorNames ] = {
     QColor( 0x00, 0x80, 0x00 ), // quoted l1
@@ -1032,16 +1036,28 @@ void AppearancePage::ColorsTab::doLoadOther()
   };
 
   for ( int i = 0 ; i < numColorNames ; i++ ) {
-    QString configName = colorNames[i].configName;
-    if ( configName == "NewMessageColor" ||
-         configName == "UnreadMessageColor" ||
-         configName == "ImportantMessageColor" ||
-         configName == "TodoMessageColor" ) {
-      mColorList->setColorSilently( i, messageListView.readEntry( configName, defaultColor[i] ) );
-    }
-    else
-      mColorList->setColorSilently( i, reader.readEntry( configName, defaultColor[i] ) );
+    if ( loadFromConfig ) {
+      const QString configName = colorNames[i].configName;
+      if ( configName == QLatin1String( "NewMessageColor" ) ||
+           configName == QLatin1String( "UnreadMessageColor" ) ||
+           configName == QLatin1String( "ImportantMessageColor" ) ||
+           configName == QLatin1String( "TodoMessageColor" ) ) {
+        mColorList->setColorSilently( i, messageListView.readEntry( configName, defaultColor[i] ) );
+        }
+      else
+        mColorList->setColorSilently( i, reader.readEntry( configName, defaultColor[i] ) );
+    } else {
+      mColorList->setColorSilently( i, defaultColor[i] );
+    }        
   }
+}
+
+void AppearancePage::ColorsTab::doResetToDefaultsOther()
+{
+  mCustomColorCheck->setChecked( false );
+  mRecycleColorCheck->setChecked( false );
+  mCloseToQuotaThreshold->setValue( 80 );
+  loadColor( false ); 
 }
 
 void AppearancePage::ColorsTab::save()

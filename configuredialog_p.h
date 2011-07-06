@@ -303,7 +303,8 @@ public:
 private:
   //virtual void doLoadFromGlobalSettings();
   virtual void doLoadOther();
-  //FIXME virtual void doResetToDefaultsOther();
+  virtual void doResetToDefaultsOther();
+  void loadColor( bool loadFromConfig );
 
 private:
   QCheckBox    *mCustomColorCheck;
