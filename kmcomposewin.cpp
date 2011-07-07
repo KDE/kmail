@@ -123,6 +123,7 @@
 #include <ktoolbar.h>
 #include <ktoolinvocation.h>
 #include <sonnet/dictionarycombobox.h>
+#include <krun.h>
 
 // Qt includes
 #include <QClipboard>
@@ -1947,7 +1948,7 @@ void KMComposeWin::setCharset( const QByteArray &charset )
 //-----------------------------------------------------------------------------
 void KMComposeWin::slotAddrBook()
 {
-  KToolInvocation::startServiceByDesktopName( "kaddressbook" );
+  KRun::runCommand("kaddressbook", window());
 }
 
 //-----------------------------------------------------------------------------

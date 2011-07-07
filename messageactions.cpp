@@ -251,8 +251,6 @@ void MessageActions::updateActions()
   }
 
   const bool multiVisible = mVisibleItems.count() > 0 || mCurrentItem.isValid();
-  const bool flagsAvailable = GlobalSettings::self()->allowLocalFlags()
-                              || !(parent.isValid() ? parent.rights() & Akonadi::Collection::ReadOnly : true);
 
   mCreateTodoAction->setEnabled( singleMsg && mKorganizerIsOnSystem);
   mReplyActionMenu->setEnabled( singleMsg );

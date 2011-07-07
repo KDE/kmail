@@ -1436,6 +1436,9 @@ KSharedConfig::Ptr KMKernel::config()
     MessageComposer::MessageComposerSettings::self()->readConfig();
     MessageCore::GlobalSettings::self()->setSharedConfig( mySelf->mConfig );
     MessageCore::GlobalSettings::self()->readConfig();
+    MessageViewer::GlobalSettings::self()->setSharedConfig( mySelf->mConfig );
+    MessageViewer::GlobalSettings::self()->readConfig();
+
   }
   return mySelf->mConfig;
 }
@@ -1479,7 +1482,7 @@ KMMainWidget *KMKernel::getKMMainWidget()
   QWidget *wid;
 
   Q_FOREACH( wid, l ) {
-    QList<KMMainWidget*> l2 = wid->topLevelWidget()->findChildren<KMMainWidget*>();
+    QList<KMMainWidget*> l2 = wid->window()->findChildren<KMMainWidget*>();
     if ( !l2.isEmpty() && l2.first() )
       return l2.first();
   }
@@ -1635,7 +1638,7 @@ void KMKernel::instanceStatusChanged( Akonadi::AgentInstance instance )
     if ( instance.status() == Akonadi::AgentInstance::Running ) {
 
       if ( mResourcesBeingChecked.isEmpty() ) {
-        kDebug() << "A Resource started to syncronize, starting a mail check.";
+        kDebug() << "A Resource started to synchronize, starting a mail check.";
         emit startCheckMail();
       }
 

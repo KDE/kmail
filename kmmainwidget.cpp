@@ -291,7 +291,7 @@ K_GLOBAL_STATIC( KMMainWidget::PtrList, theMainWidgetList )
     }
   }
 
-  KMainWindow *mainWin = dynamic_cast<KMainWindow*>(topLevelWidget());
+  KMainWindow *mainWin = dynamic_cast<KMainWindow*>(window());
   KStatusBar *sb =  mainWin ? mainWin->statusBar() : 0;
   mVacationScriptIndicator = new KMail::StatusBarLabel( sb );
   mVacationScriptIndicator->hide();
@@ -429,14 +429,14 @@ void KMMainWidget::slotEndCheckMail()
     KNotification::event( "new-mail-arrived",
                           summary,
                           QPixmap(),
-                          topLevelWidget(),
+                          window(),
                           KNotification::CloseOnTimeout,
                           kmkernel->xmlGuiInstance() );
   } else {
     KNotification::event( "new-mail-arrived",
                           summary,
                           QPixmap(),
-                          topLevelWidget(),
+                          window(),
                           KNotification::CloseOnTimeout );
   }
 
@@ -1272,14 +1272,14 @@ void KMMainWidget::slotManageSieveScripts()
 //-----------------------------------------------------------------------------
 void KMMainWidget::slotAddrBook()
 {
-  KToolInvocation::startServiceByDesktopName( "kaddressbook" );
+  KRun::runCommand("kaddressbook", window());
 }
 
 
 //-----------------------------------------------------------------------------
 void KMMainWidget::slotImport()
 {
-  KRun::runCommand("kmailcvt", topLevelWidget());
+  KRun::runCommand("kmailcvt", window());
 }
 
 //-----------------------------------------------------------------------------
@@ -2013,9 +2013,6 @@ void KMMainWidget::setMessageSetStatus( const QList<Akonadi::Item> &select,
         const Akonadi::MessageStatus &status,
         bool toggle )
 {
-  if ( select.isEmpty() )
-    return;
-
   KMCommand *command = new KMSetStatusCommand( status, select, toggle );
   command->start();
 }
@@ -3076,6 +3073,9 @@ void KMMainWidget::setupActions()
   actionCollection()->addAction("expire", mExpireFolderAction );
   connect(mExpireFolderAction, SIGNAL(triggered(bool) ), SLOT(slotExpireFolder()));
 
+
+  mAkonadiStandardActionManager->interceptAction( Akonadi::StandardMailActionManager::MoveToTrash );
+  connect( mAkonadiStandardActionManager->action( Akonadi::StandardMailActionManager::MoveToTrash ), SIGNAL( triggered( bool ) ), this, SLOT( slotTrashSelectedMessages() ) );
 
 
   mAkonadiStandardActionManager->interceptAction( Akonadi::StandardMailActionManager::MoveAllToTrash );
