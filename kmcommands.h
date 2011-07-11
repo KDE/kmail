@@ -509,9 +509,7 @@ protected slots:
 
 private:
   virtual Result execute();
-
   MessageStatus mStatus;
-  int messageStatusChanged;
   bool mInvertMark;
 };
 
