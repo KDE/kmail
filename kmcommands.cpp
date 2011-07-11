@@ -1345,7 +1345,7 @@ KMCommand::Result KMPrintCommand::execute()
 
 KMSetStatusCommand::KMSetStatusCommand( const MessageStatus& status,
   const Akonadi::Item::List &items, bool invert )
-  : KMCommand( 0, items ), mStatus( status ), messageStatusChanged( 0 ), mInvertMark( invert )
+  : KMCommand( 0, items ), mStatus( status ), mInvertMark( invert )
 {
   setDeletesItself(true);
 }
@@ -1382,31 +1382,30 @@ KMCommand::Result KMSetStatusCommand::execute()
       }
     }
     Akonadi::Item item( it );
-    bool mustModify = false;
     const Akonadi::Item::Flag flag = *(mStatus.statusFlags().begin());
     if ( mInvertMark ) {
       if ( item.hasFlag( flag ) ) {
         item.clearFlag( flag );
-        mustModify = true;
+        itemsToModify.push_back( item );
       } else {
         item.setFlag( flag );
-        mustModify = true;
+        itemsToModify.push_back( item );
       }
     } else {
       if ( !item.hasFlag( flag ) ) {
         item.setFlag( flag );
-        mustModify = true;
+        itemsToModify.push_back( item );
       } 
     }
-    if ( mustModify ) {      
-      Akonadi::ItemModifyJob *modifyJob = new Akonadi::ItemModifyJob( item, this );
-      modifyJob->setIgnorePayload( true );
-      ++messageStatusChanged;
-      connect( modifyJob, SIGNAL( result( KJob* ) ), this, SLOT( slotModifyItemDone( KJob* ) ) );
-    }
   }
-  if ( messageStatusChanged == 0 )
-    deleteLater();
+  
+  if ( itemsToModify.isEmpty() ) {
+    slotModifyItemDone( 0 ); // pretend we did something
+  } else {
+    Akonadi::ItemModifyJob *modifyJob = new Akonadi::ItemModifyJob( itemsToModify, this );
+    modifyJob->setIgnorePayload( true );
+    connect( modifyJob, SIGNAL( result( KJob* ) ), this, SLOT( slotModifyItemDone( KJob* ) ) );
+  }
   return OK;
 }
 
@@ -1415,10 +1414,7 @@ void KMSetStatusCommand::slotModifyItemDone( KJob * job )
   if ( job->error() ) {
     kWarning() << " Error trying to set item status:" << job->errorText();
   }
-  --messageStatusChanged;
-  if ( messageStatusChanged == 0 ) {
-    deleteLater();
-  }
+  deleteLater();
 }
 
 KMSetTagCommand::KMSetTagCommand( const QString &tagLabel, const QList<Akonadi::Item> &item,
