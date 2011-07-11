@@ -502,7 +502,7 @@ class KMAIL_EXPORT KMSetStatusCommand : public KMCommand
 public:
   // Serial numbers
   KMSetStatusCommand( const MessageStatus& status, const Akonadi::Item::List &items,
-                      bool toggle=false );
+                      bool invert=false );
 
 protected slots:
   void slotModifyItemDone( KJob * job );
@@ -512,7 +512,7 @@ private:
 
   MessageStatus mStatus;
   int messageStatusChanged;
-  bool mToggle;
+  bool mInvertMark;
 };
 
 /** This command is used to set or toggle a tag for a list of messages. If toggle is
