@@ -150,7 +150,7 @@
       </entry>
       <entry name="PreviousVersion" type="String" key="previous-version">
         <label>Specifies the version of the application that was last used (for internal use only)</label>
-        <default code="true">KMAIL_VERSION</default>
+        <default code="true">KDEPIM_VERSION</default>
       </entry>
     </group>
 <!-- General -->

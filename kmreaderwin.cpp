@@ -23,11 +23,11 @@
 #include "kmreaderwin.h"
 
 #include "globalsettings.h"
-#include "kmversion.h"
 #include "kmmainwidget.h"
 #include "kmreadermainwin.h"
 #include "mailkernel.h"
 
+#include "kdepim-version.h"
 #include <kpimutils/email.h>
 #include <libkdepim/addemailaddressjob.h>
 #include <libkdepim/openemailaddressjob.h>
@@ -319,7 +319,7 @@ void KMReaderWin::displayAboutPage()
          "<p>We hope that you will enjoy KMail.</p>\n"
          "<p>Thank you,</p>\n"
          "<p style='margin-bottom: 0px'>&nbsp; &nbsp; The KMail Team</p>")
-           .subs( KMAIL_VERSION )
+           .subs( KDEPIM_VERSION )
            .subs( "help:/kmail/index.html" );
 
   if ( ( numKMailNewFeatures > 1 ) || ( numKMailNewFeatures == 1 && strlen(kmailNewFeatures[0]) > 0 ) ) {
