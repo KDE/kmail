@@ -23,7 +23,6 @@
 #include "kmreadermainwin.h"
 #include "foldershortcutdialog.h"
 #include "composer.h"
-#include "kmversion.h"
 #include "searchwindow.h"
 #include "antispamwizard.h"
 #include "filterlogdlg.h"
@@ -62,6 +61,8 @@
 #include "mailcommon/mailfilter.h"
 
 // Other PIM includes
+#include "kdepim-version.h"
+
 #include "messageviewer/autoqpointer.h"
 #include "messageviewer/globalsettings.h"
 #include "messageviewer/viewer.h"

@@ -11,7 +11,6 @@ using KPIM::BroadcastStatus;
 #include "kmreadermainwin.h"
 #include "undostack.h"
 #include <kpimutils/kfileio.h>
-#include "kmversion.h"
 #include "kmreaderwin.h"
 #include "kmmainwidget.h"
 #include "recentaddresses.h"
@@ -22,6 +21,9 @@ using KPIM::RecentAddresses;
 #include "stringutil.h"
 #include "mailutil.h"
 #include "mailcommon/pop3settings.h"
+
+// kdepim includes
+#include "kdepim-version.h"
 
 // kdepimlibs includes
 #include <kpimidentities/identity.h>
@@ -1120,7 +1122,7 @@ void KMKernel::init()
   the_firstStart = GlobalSettings::self()->firstStart();
   GlobalSettings::self()->setFirstStart( false );
   the_previousVersion = GlobalSettings::self()->previousVersion();
-  GlobalSettings::self()->setPreviousVersion( KMAIL_VERSION );
+  GlobalSettings::self()->setPreviousVersion( KDEPIM_VERSION );
 
   readConfig();
 

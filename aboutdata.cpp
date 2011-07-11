@@ -31,7 +31,7 @@
 
 #include "aboutdata.h"
 
-#include "kmversion.h"
+#include "kdepim-version.h"
 
 #include <klocale.h>
 
@@ -237,7 +237,7 @@ namespace KMail {
   };
 
   AboutData::AboutData()
-    : KAboutData( "kmail2", "kmail", ki18n("KMail"),KMAIL_VERSION,
+    : KAboutData( "kmail2", "kmail", ki18n("KMail"),KDEPIM_VERSION,
                   ki18n("KDE Email Client"), License_GPL,
                   ki18n("Copyright © 1997–2011, KMail authors"), KLocalizedString(),
                   "http://kontact.kde.org/kmail/" )
