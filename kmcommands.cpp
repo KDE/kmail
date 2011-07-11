@@ -1344,8 +1344,8 @@ KMCommand::Result KMPrintCommand::execute()
 
 
 KMSetStatusCommand::KMSetStatusCommand( const MessageStatus& status,
-  const Akonadi::Item::List &items, bool toggle )
-  : KMCommand( 0, items ), mStatus( status ), messageStatusChanged( 0 ), mToggle( toggle )
+  const Akonadi::Item::List &items, bool invert )
+  : KMCommand( 0, items ), mStatus( status ), messageStatusChanged( 0 ), mInvertMark( invert )
 {
   setDeletesItself(true);
 }
@@ -1355,7 +1355,7 @@ KMCommand::Result KMSetStatusCommand::execute()
   bool parentStatus = false;
   // Toggle actions on threads toggle the whole thread
   // depending on the state of the parent.
-  if ( mToggle ) {
+  if ( mInvertMark ) {
     const Akonadi::Item first = retrievedMsgs().first();
     MessageStatus pStatus;
     pStatus.setStatusFromFlags( first.flags() );
@@ -1365,8 +1365,9 @@ KMCommand::Result KMSetStatusCommand::execute()
       parentStatus = false;
   }
 
+  Akonadi::Item::List itemsToModify;
   foreach( const Akonadi::Item &it, retrievedMsgs() ) {
-    if ( mToggle ) {
+    if ( mInvertMark ) {
       //kDebug()<<" item ::"<<tmpItem;
       if ( it.isValid() ) {
         bool myStatus;
@@ -1380,21 +1381,24 @@ KMCommand::Result KMSetStatusCommand::execute()
           continue;
       }
     }
-
     Akonadi::Item item( it );
-
-    MessageStatus itemStatus;
-    itemStatus.setStatusFromFlags( it.flags() );
-
-    const MessageStatus oldStatus = itemStatus;
-    if ( mToggle ) {
-      itemStatus.toggle( mStatus );
+    bool mustModify = false;
+    const Akonadi::Item::Flag flag = *(mStatus.statusFlags().begin());
+    if ( mInvertMark ) {
+      if ( item.hasFlag( flag ) ) {
+        item.clearFlag( flag );
+        mustModify = true;
+      } else {
+        item.setFlag( flag );
+        mustModify = true;
+      }
     } else {
-      itemStatus.set( mStatus );
+      if ( !item.hasFlag( flag ) ) {
+        item.setFlag( flag );
+        mustModify = true;
+      } 
     }
-    if ( itemStatus != oldStatus ) {
-      item.setFlags( itemStatus.statusFlags() );
-      // Store back modified item
+    if ( mustModify ) {      
       Akonadi::ItemModifyJob *modifyJob = new Akonadi::ItemModifyJob( item, this );
       modifyJob->setIgnorePayload( true );
       ++messageStatusChanged;
