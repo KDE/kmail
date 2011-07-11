@@ -44,7 +44,6 @@
 #include "messageviewer/csshelper.h"
 using MessageViewer::CSSHelper;
 #include "util.h"
-//#include "messageviewer/attachmentdialog.h"
 #include "stringutil.h"
 
 #include <kmime/kmime_mdn.h>
