@@ -598,7 +598,7 @@ void KMComposeWin::readConfig( bool reload /* = false */ )
     mDictionaryCombo->setCurrentByDictionaryName( ident.dictionary() );
   }
 
-  QString fccName = "";
+  QString fccName;
   if ( mBtnFcc->isChecked() ) {
     fccName = GlobalSettings::self()->previousFcc();
   } else if ( !ident.fcc().isEmpty() ) {
