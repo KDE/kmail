@@ -603,6 +603,7 @@ public:
 
 private:
   virtual void doLoadFromGlobalSettings();
+  virtual void doResetToDefaultsOther();
 
 private:
   SimpleStringListEditor *mReplyListEditor;
