@@ -281,8 +281,8 @@ private slots:
 private:
   //virtual void doLoadFromGlobalSettings();
   virtual void doLoadOther();
-  //FIXME virtual void doResetToDefaultsOther();
   void updateFontSelector();
+  virtual void doResetToDefaultsOther();
 
 private:
   QCheckBox    *mCustomFontCheck;

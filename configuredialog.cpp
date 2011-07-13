@@ -900,6 +900,12 @@ void AppearancePage::FontsTab::save()
   }
 }
 
+void AppearancePage::FontsTab::doResetToDefaultsOther()
+{
+  mCustomFontCheck->setChecked( false );
+}
+
+
 QString AppearancePage::ColorsTab::helpAnchor() const
 {
   return QString::fromLatin1("configure-appearance-colors");
