@@ -900,6 +900,12 @@ void AppearancePage::FontsTab::save()
   }
 }
 
+void AppearancePage::FontsTab::doResetToDefaultsOther()
+{
+  mCustomFontCheck->setChecked( false );
+}
+
+
 QString AppearancePage::ColorsTab::helpAnchor() const
 {
   return QString::fromLatin1("configure-appearance-colors");
@@ -2574,6 +2580,23 @@ void ComposerPage::SubjectTab::save()
   MessageComposer::MessageComposerSettings::self()->setReplyPrefixes( mReplyListEditor->stringList() );
   MessageComposer::MessageComposerSettings::self()->setForwardPrefixes( mForwardListEditor->stringList() );
 }
+
+void ComposerPage::SubjectTab::doResetToDefaultsOther()
+{
+    const bool bUseDefaults = MessageComposer::MessageComposerSettings::self()->useDefaults( true );
+  const QStringList messageReplyPrefixes = MessageComposer::MessageComposerSettings::replyPrefixes();
+  const bool useMessageReplyPrefixes = MessageComposer::MessageComposerSettings::replaceReplyPrefix();
+
+  const QStringList messageForwardPrefixes = MessageComposer::MessageComposerSettings::forwardPrefixes();
+  const bool useMessageForwardPrefixes = MessageComposer::MessageComposerSettings::replaceForwardPrefix();
+  
+  MessageComposer::MessageComposerSettings::self()->useDefaults( bUseDefaults );
+  mReplyListEditor->setStringList( messageReplyPrefixes );
+  mReplaceReplyPrefixCheck->setChecked( useMessageForwardPrefixes );
+  mForwardListEditor->setStringList( messageForwardPrefixes );
+  mReplaceForwardPrefixCheck->setChecked( useMessageForwardPrefixes );
+}
+
 
 QString ComposerPage::CharsetTab::helpAnchor() const
 {
