@@ -23,7 +23,6 @@ using KPIM::RecentAddresses;
 #include "mailutil.h"
 #include "mailcommon/pop3settings.h"
 
-
 // kdepimlibs includes
 #include <kpimidentities/identity.h>
 #include <kpimidentities/identitymanager.h>
