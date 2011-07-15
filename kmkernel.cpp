@@ -20,6 +20,8 @@ using KPIM::RecentAddresses;
 #include "kmsystemtray.h"
 #include "stringutil.h"
 #include "mailutil.h"
+#include "mailcommon/pop3settings.h"
+
 
 // kdepim includes
 #include "kdepim-version.h"
@@ -1648,11 +1650,30 @@ void KMKernel::instanceStatusChanged( Akonadi::AgentInstance instance )
         mResourcesBeingChecked.append( instance.identifier() );
       }
 
+      bool useCrypto = false;
+      if ( instance.identifier().contains( IMAP_RESOURCE_IDENTIFIER ) ) {
+        OrgKdeAkonadiImapSettingsInterface *iface = MailCommon::Util::createImapSettingsInterface( instance.identifier() );
+        if ( iface->isValid() ) {
+          const QString imapSafety = iface->safety();
+          useCrypto = ( imapSafety == QLatin1String( "SSL" ) || imapSafety == QLatin1String( "STARTTLS" ) );
+        }
+        delete iface;
+      }
+      else if ( instance.identifier().contains( POP3_RESOURCE_IDENTIFIER ) ) {
+        OrgKdeAkonadiPOP3SettingsInterface *iface = MailCommon::Util::createPop3SettingsInterface( instance.identifier() );
+        if ( iface->isValid() ) {
+          useCrypto = ( iface->useSSL() || iface->useTLS() );
+        }
+        delete iface;
+      }
+
+
+      
       // Creating a progress item twice is ok, it will simply return the already existing
       // item
       KPIM::ProgressItem *progress =  KPIM::ProgressManager::createProgressItem( 0, instance,
                                         instance.identifier(), instance.name(), instance.statusMessage(),
-                                        true );
+                                        true, useCrypto );
       progress->setProperty( "AgentIdentifier", instance.identifier() );
     }
   }
