@@ -328,6 +328,8 @@ public:
 
   bool isImapFolder( const Akonadi::Collection& ) const;
 
+  void setAccountOnline();
+
   const KComponentData &xmlGuiInstance() { return mXmlGuiInstance; }
   void setXmlGuiInstance( const KComponentData &instance ) { mXmlGuiInstance = instance; }
 
