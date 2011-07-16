@@ -44,7 +44,7 @@ using KMail::MailServiceImpl;
 #include "messagecomposersettings.h"
 #include "messagecomposer/messagehelper.h"
 #include "messagecomposer/messagecomposersettings.h"
-
+#include "messagecomposer/custommimeheader.h"
 
 #include "templateparser/templateparser.h"
 #include "templateparser/globalsettings_base.h"
@@ -1439,6 +1439,8 @@ KSharedConfig::Ptr KMKernel::config()
     MessageCore::GlobalSettings::self()->readConfig();
     MessageViewer::GlobalSettings::self()->setSharedConfig( mySelf->mConfig );
     MessageViewer::GlobalSettings::self()->readConfig();
+    MessageCore::GlobalSettings::self()->setSharedConfig( mySelf->mConfig );
+    MessageCore::GlobalSettings::self()->readConfig();
 
   }
   return mySelf->mConfig;
