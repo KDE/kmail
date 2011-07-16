@@ -226,7 +226,7 @@ SearchWindow::SearchWindow( KMMainWidget *widget, const Akonadi::Collection &col
     mFolder = collection;
     mSearchFolderEdt->setText( collection.name() );
     Q_ASSERT ( !mResultModel );
-    mResultModel = new Akonadi::ItemModel( this );
+    mResultModel = new Akonadi::MessageModel( this );
     mResultModel->setCollection( mFolder );
     mLbxMatches->setModel( mResultModel );
     mAkonadiStandardAction = new Akonadi::StandardMailActionManager( actionCollection(), this );
