@@ -2191,7 +2191,7 @@ void KMMainWidget::updateListFilterAction()
 
   QByteArray name;
   QString value;
-  QString lname = MailingList::name( msg, name, value );
+  const QString lname = MailingList::name( msg, name, value );
   if ( lname.isNull() )
     mListFilterAction->setEnabled( false );
   else {
