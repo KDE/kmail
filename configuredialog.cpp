@@ -2592,7 +2592,7 @@ void ComposerPage::SubjectTab::doResetToDefaultsOther()
   
   MessageComposer::MessageComposerSettings::self()->useDefaults( bUseDefaults );
   mReplyListEditor->setStringList( messageReplyPrefixes );
-  mReplaceReplyPrefixCheck->setChecked( useMessageForwardPrefixes );
+  mReplaceReplyPrefixCheck->setChecked( useMessageReplyPrefixes );
   mForwardListEditor->setStringList( messageForwardPrefixes );
   mReplaceForwardPrefixCheck->setChecked( useMessageForwardPrefixes );
 }
