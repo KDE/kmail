@@ -827,6 +827,8 @@ void KMMainWidget::readConfig()
     }
     mMessagePane->reloadGlobalConfiguration();
     mFolderTreeWidget->readConfig();
+    if( mFavoriteCollectionsView )
+        mFavoriteCollectionsView->setDropActionMenuEnabled( kmkernel->showPopupAfterDnD() );
   }
 
   { // area for config group "General"
