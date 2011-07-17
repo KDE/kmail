@@ -1984,7 +1984,7 @@ void AppearancePage::MessageTagTab::doLoadFromGlobalSettings()
 
   qSort( mMsgTagList.begin(), mMsgTagList.end(), KMail::Tag::compare );
 
-  foreach( const KMail::Tag::Ptr tag, mMsgTagList ) {
+  foreach( const KMail::Tag::Ptr& tag, mMsgTagList ) {
     new QListWidgetItem( KIcon( tag->iconName ), tag->tagName, mTagListBox );
     if ( tag->priority == -1 )
       tag->priority = mTagListBox->count() - 1;
