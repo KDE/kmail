@@ -1984,7 +1984,7 @@ void AppearancePage::MessageTagTab::doLoadFromGlobalSettings()
 
   qSort( mMsgTagList.begin(), mMsgTagList.end(), KMail::Tag::compare );
 
-  foreach( const KMail::Tag::Ptr tag, mMsgTagList ) {
+  foreach( const KMail::Tag::Ptr& tag, mMsgTagList ) {
     new QListWidgetItem( KIcon( tag->iconName ), tag->tagName, mTagListBox );
     if ( tag->priority == -1 )
       tag->priority = mTagListBox->count() - 1;
@@ -2592,7 +2592,7 @@ void ComposerPage::SubjectTab::doResetToDefaultsOther()
   
   MessageComposer::MessageComposerSettings::self()->useDefaults( bUseDefaults );
   mReplyListEditor->setStringList( messageReplyPrefixes );
-  mReplaceReplyPrefixCheck->setChecked( useMessageForwardPrefixes );
+  mReplaceReplyPrefixCheck->setChecked( useMessageReplyPrefixes );
   mForwardListEditor->setStringList( messageForwardPrefixes );
   mReplaceForwardPrefixCheck->setChecked( useMessageForwardPrefixes );
 }

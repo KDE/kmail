@@ -248,13 +248,7 @@ K_GLOBAL_STATIC( KMMainWidget::PtrList, theMainWidgetList )
   readConfig();
 
   if ( !kmkernel->isOffline() ) { //kmail is set to online mode, make sure the agents are also online
-    const Akonadi::AgentInstance::List lst = MailCommon::Util::agentInstances();
-    foreach ( Akonadi::AgentInstance type, lst ) {
-      if ( type.identifier().contains( IMAP_RESOURCE_IDENTIFIER ) ||
-          type.identifier().contains( POP3_RESOURCE_IDENTIFIER ) ) {
-        type.setIsOnline( true );
-      }
-    }
+    kmkernel->setAccountOnline();
   }
 
 
@@ -828,6 +822,8 @@ void KMMainWidget::readConfig()
     }
     mMessagePane->reloadGlobalConfiguration();
     mFolderTreeWidget->readConfig();
+    if( mFavoriteCollectionsView )
+        mFavoriteCollectionsView->setDropActionMenuEnabled( kmkernel->showPopupAfterDnD() );
   }
 
   { // area for config group "General"
@@ -1032,6 +1028,8 @@ void KMMainWidget::createWidgets()
     mFavoriteCollectionsView = new Akonadi::EntityListView( mGUIClient, this );
     mFavoriteCollectionsView->setViewMode( QListView::IconMode );
     mFavoriteCollectionsView->setWordWrap( true );
+    mFavoriteCollectionsView->setDropActionMenuEnabled( kmkernel->showPopupAfterDnD() );
+
     connect( mFavoriteCollectionsView, SIGNAL( currentChanged( const Akonadi::Collection &) ), this, SLOT( slotFolderChanged( const Akonadi::Collection& ) ) );
 
     mFavoritesModel = new Akonadi::FavoriteCollectionsModel(
@@ -2197,7 +2195,7 @@ void KMMainWidget::updateListFilterAction()
 
   QByteArray name;
   QString value;
-  QString lname = MailingList::name( msg, name, value );
+  const QString lname = MailingList::name( msg, name, value );
   if ( lname.isNull() )
     mListFilterAction->setEnabled( false );
   else {
@@ -3250,17 +3248,17 @@ void KMMainWidget::setupActions()
   actionCollection()->addAction( "apply_filter_actions", mApplyFilterActionsMenu );
 
   {
-    KAction *action = new KAction(i18nc("View->","&Expand Thread"), this);
+    KAction *action = new KAction(i18nc("View->","&Expand Thread / Group"), this);
     actionCollection()->addAction("expand_thread", action );
     action->setShortcut(QKeySequence(Qt::Key_Period));
-    action->setHelpText(i18n("Expand the current thread"));
+    action->setHelpText(i18n("Expand the current thread or group"));
     connect(action, SIGNAL(triggered(bool) ), SLOT(slotExpandThread()));
   }
   {
-    KAction *action = new KAction(i18nc("View->","&Collapse Thread"), this);
+    KAction *action = new KAction(i18nc("View->","&Collapse Thread / Group"), this);
     actionCollection()->addAction("collapse_thread", action );
     action->setShortcut(QKeySequence(Qt::Key_Comma));
-    action->setHelpText( i18n("Collapse the current thread"));
+    action->setHelpText( i18n("Collapse the current thread or group"));
     connect(action, SIGNAL(triggered(bool) ), SLOT(slotCollapseThread()));
   }
   {
