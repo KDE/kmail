@@ -315,6 +315,8 @@ void KMMainWidget::restoreCollectionFolderViewConfig()
   const KConfigGroup cfg( KMKernel::self()->config(), "CollectionFolderView" );
   mFolderTreeWidget->restoreHeaderState( cfg.readEntry( "HeaderState", QByteArray() ) );
   saver->restoreState( cfg );
+  //Restore startup folder
+  saver->restoreCurrentItem( QString::fromLatin1("c%1").arg(GlobalSettings::self()->startupFolder()) );
 }
 
 
@@ -897,6 +899,8 @@ void KMMainWidget::writeConfig()
       saver.saveState( group );
 
       group.writeEntry( "HeaderState", mFolderTreeWidget->folderTreeView()->header()->saveState() );
+      //Work around from startup folder
+      group.deleteEntry( "Selection" );
       group.sync();
     }
 
