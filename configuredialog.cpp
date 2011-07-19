@@ -3798,6 +3798,10 @@ void MiscPage::InviteTab::save()
   mInvitationUi->save();
 }
 
+void MiscPage::InviteTab::doResetToDefaultsOther()
+{
+  mInvitationUi->doResetToDefaultsOther();
+}
 
 //----------------------------
 #include "configuredialog.moc"
