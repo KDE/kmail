@@ -603,8 +603,8 @@ void AccountsPage::ReceivingTab::slotRemoveSelectedAccount()
   const Akonadi::AgentInstance instance =  mAccountsReceiving.mAccountList->currentAgentInstance();
 
   int rc = KMessageBox::questionYesNo( this,
-                                       i18n("Do you want to remove account: %1", instance.name()),
-                                       i18n("Remove account"));
+                                       i18n("Do you want to remove account '%1'?", instance.name()),
+                                       i18n("Remove account?"));
   if ( rc == KMessageBox::No ) {
     return;
   }
