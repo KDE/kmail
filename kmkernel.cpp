@@ -1118,6 +1118,7 @@ static void kmCrashHandler( int sigId )
   if ( kmkernel ) {
     kmkernel->dumpDeadLetters();
     fprintf( stderr, "*** Dead letters dumped.\n" );
+    kmkernel->stopAgentInstance();
   }
 }
 
