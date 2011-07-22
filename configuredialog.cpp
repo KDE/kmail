@@ -603,8 +603,8 @@ void AccountsPage::ReceivingTab::slotRemoveSelectedAccount()
   const Akonadi::AgentInstance instance =  mAccountsReceiving.mAccountList->currentAgentInstance();
 
   int rc = KMessageBox::questionYesNo( this,
-                                       i18n("Do you want to remove account: %1", instance.name()),
-                                       i18n("Remove account"));
+                                       i18n("Do you want to remove account '%1'?", instance.name()),
+                                       i18n("Remove account?"));
   if ( rc == KMessageBox::No ) {
     return;
   }
@@ -3752,6 +3752,7 @@ void MiscPage::FolderTab::doLoadFromGlobalSettings()
   mMMTab.mDelayedMarkAsRead->setChecked( MessageViewer::GlobalSettings::self()->delayedMarkAsRead() );
   mMMTab.mDelayedMarkTime->setValue( MessageViewer::GlobalSettings::self()->delayedMarkTime() );
   mMMTab.mShowPopupAfterDnD->setChecked( GlobalSettings::self()->showPopupAfterDnD() );
+  doLoadOther();
 }
 
 void MiscPage::FolderTab::doLoadOther()
@@ -3798,6 +3799,10 @@ void MiscPage::InviteTab::save()
   mInvitationUi->save();
 }
 
+void MiscPage::InviteTab::doResetToDefaultsOther()
+{
+  mInvitationUi->doResetToDefaultsOther();
+}
 
 //----------------------------
 #include "configuredialog.moc"

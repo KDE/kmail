@@ -854,6 +854,7 @@ class MiscPageInviteTab : public ConfigModuleTab  {
 public:
   MiscPageInviteTab( QWidget * parent=0 );
   void save();
+  virtual void doResetToDefaultsOther();
 
 private:
   virtual void doLoadFromGlobalSettings();

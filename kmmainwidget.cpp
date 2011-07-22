@@ -310,6 +310,8 @@ void KMMainWidget::restoreCollectionFolderViewConfig()
   const KConfigGroup cfg( KMKernel::self()->config(), "CollectionFolderView" );
   mFolderTreeWidget->restoreHeaderState( cfg.readEntry( "HeaderState", QByteArray() ) );
   saver->restoreState( cfg );
+  //Restore startup folder
+  saver->restoreCurrentItem( QString::fromLatin1("c%1").arg(GlobalSettings::self()->startupFolder()) );
 }
 
 
@@ -892,6 +894,8 @@ void KMMainWidget::writeConfig()
       saver.saveState( group );
 
       group.writeEntry( "HeaderState", mFolderTreeWidget->folderTreeView()->header()->saveState() );
+      //Work around from startup folder
+      group.deleteEntry( "Selection" );
       group.sync();
     }
 
@@ -3899,11 +3903,6 @@ void KMMainWidget::slotShowStartupFolder()
     slotIntro();
     return;
   }
-  const QString startupFolder = GlobalSettings::self()->startupFolder();
-  Akonadi::Collection colFolder = CommonKernel->collectionFromId( startupFolder );
-  if ( !colFolder.isValid() )
-    colFolder = CommonKernel->inboxCollectionFolder();
-  mFolderTreeWidget->selectCollectionFolder( colFolder );
 }
 
 void KMMainWidget::slotShowTip()

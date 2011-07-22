@@ -249,7 +249,6 @@ void FilterLogDialog::slotUser1()
 
 void FilterLogDialog::slotUser2()
 {
-  QString fileName;
   KUrl url;
   MessageViewer::AutoQPointer<KFileDialog> fdlg( new KFileDialog( url, QString(), this) );
 
@@ -258,7 +257,8 @@ void FilterLogDialog::slotUser2()
   fdlg->setOperationMode( KFileDialog::Saving );
   if ( fdlg->exec() == QDialog::Accepted && fdlg )
   {
-    fileName = fdlg->selectedFile();
+    const QString fileName = fdlg->selectedFile();
+
     if ( !FilterLog::instance()->saveToFile( fileName ) )
     {
       KMessageBox::error( this,
