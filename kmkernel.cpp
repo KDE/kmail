@@ -47,7 +47,7 @@ using KMail::MailServiceImpl;
 #include "messagecomposersettings.h"
 #include "messagecomposer/messagehelper.h"
 #include "messagecomposer/messagecomposersettings.h"
-#include "messagecomposer/custommimeheader.h"
+#include "custommimeheader.h"
 
 #include "templateparser/templateparser.h"
 #include "templateparser/globalsettings_base.h"
