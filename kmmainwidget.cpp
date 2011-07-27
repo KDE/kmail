@@ -317,7 +317,9 @@ void KMMainWidget::restoreCollectionFolderViewConfig()
   mFolderTreeWidget->restoreHeaderState( cfg.readEntry( "HeaderState", QByteArray() ) );
   saver->restoreState( cfg );
   //Restore startup folder
-  saver->restoreCurrentItem( QString::fromLatin1("c%1").arg(GlobalSettings::self()->startupFolder()) );
+  const QString startupFolder = GlobalSettings::self()->startupFolder();
+  if ( !startupFolder.isEmpty() )
+    saver->restoreCurrentItem( QString::fromLatin1("c%1").arg(startupFolder) );
 }
 
 
