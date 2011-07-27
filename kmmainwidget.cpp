@@ -1608,7 +1608,10 @@ void KMMainWidget::slotDelayedRemoveFolder( KJob *job )
                                            KMessageBox::Notify | KMessageBox::Dangerous )
       == KMessageBox::Continue )
   {
-    kmkernel->checkTrashFolderFromResources( mCurrentFolder->collection().id() );
+    const Akonadi::Collection::Id collectionId = mCurrentFolder->collection().id();
+    kmkernel->checkTrashFolderFromResources( collectionId );
+    kmkernel->checkInboxFolderFromResources( collectionId );
+    
     mCurrentFolder->removeCollection();
   }
   mCurrentFolder.clear();

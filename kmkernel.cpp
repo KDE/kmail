@@ -1795,4 +1795,26 @@ void KMKernel::checkTrashFolderFromResources( const Akonadi::Collection::Id& col
     }
   }
 }
+
+void KMKernel::checkInboxFolderFromResources( const Akonadi::Collection::Id& collectionId )
+{
+  const Akonadi::AgentInstance::List lst = MailCommon::Util::agentInstances();
+  foreach( const Akonadi::AgentInstance& type, lst ) {
+    if ( type.status() == Akonadi::AgentInstance::Broken )
+      continue;
+    if ( type.identifier().contains( POP3_RESOURCE_IDENTIFIER ) ) {
+      OrgKdeAkonadiPOP3SettingsInterface *iface = MailCommon::Util::createPop3SettingsInterface( type.identifier() );
+      if ( iface->isValid() ) {
+        if ( iface->targetCollection() == collectionId ) {
+          //Use default inbox
+          iface->setTargetCollection( CommonKernel->inboxCollectionFolder().id() );
+	  iface->writeConfig();
+        }
+
+      }
+      delete iface;
+    }
+  }
+}
+
 #include "kmkernel.moc"

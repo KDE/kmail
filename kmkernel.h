@@ -407,6 +407,7 @@ public:
   /*reimp*/ QStringList customTemplates();
 
   void checkTrashFolderFromResources( const Akonadi::Collection::Id& collectionId );
+  void checkInboxFolderFromResources( const Akonadi::Collection::Id& collectionId );
 
 public slots:
 
