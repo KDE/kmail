@@ -586,7 +586,7 @@ void KMFilterDlg::slotUpdateAccountList()
   const Akonadi::AgentInstance::List lst = MailCommon::Util::agentInstances();
   const int nbAccount = lst.count();
   for ( int i = 0; i <nbAccount; ++i ) {
-    if( lst.at( i ).type().identifier() == "akonadi_nepomuktag_resource" )
+    if( lst.at( i ).type().identifier() == QLatin1String( "akonadi_nepomuktag_resource" ) )
       continue;
     QTreeWidgetItem *listItem = new QTreeWidgetItem( mAccountList, top );
     listItem->setText( 0, lst.at( i ).name() );
