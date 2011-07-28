@@ -1609,8 +1609,7 @@ void KMMainWidget::slotDelayedRemoveFolder( KJob *job )
       == KMessageBox::Continue )
   {
     const Akonadi::Collection::Id collectionId = mCurrentFolder->collection().id();
-    kmkernel->checkTrashFolderFromResources( collectionId );
-    kmkernel->checkInboxFolderFromResources( collectionId );
+    kmkernel->checkFolderFromResources( collectionId );
     
     mCurrentFolder->removeCollection();
   }
