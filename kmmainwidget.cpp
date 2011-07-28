@@ -311,7 +311,9 @@ void KMMainWidget::restoreCollectionFolderViewConfig()
   mFolderTreeWidget->restoreHeaderState( cfg.readEntry( "HeaderState", QByteArray() ) );
   saver->restoreState( cfg );
   //Restore startup folder
-  saver->restoreCurrentItem( QString::fromLatin1("c%1").arg(GlobalSettings::self()->startupFolder()) );
+  const QString startupFolder = GlobalSettings::self()->startupFolder();
+  if ( !startupFolder.isEmpty() )
+    saver->restoreCurrentItem( QString::fromLatin1("c%1").arg(startupFolder) );
 }
 
 
@@ -1606,7 +1608,9 @@ void KMMainWidget::slotDelayedRemoveFolder( KJob *job )
                                            KMessageBox::Notify | KMessageBox::Dangerous )
       == KMessageBox::Continue )
   {
-    kmkernel->checkTrashFolderFromResources( mCurrentFolder->collection().id() );
+    const Akonadi::Collection::Id collectionId = mCurrentFolder->collection().id();
+    kmkernel->checkFolderFromResources( collectionId );
+    
     mCurrentFolder->removeCollection();
   }
   mCurrentFolder.clear();

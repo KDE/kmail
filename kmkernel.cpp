@@ -47,7 +47,7 @@ using KMail::MailServiceImpl;
 #include "messagecomposersettings.h"
 #include "messagecomposer/messagehelper.h"
 #include "messagecomposer/messagecomposersettings.h"
-#include "messagecomposer/custommimeheader.h"
+#include "custommimeheader.h"
 
 #include "templateparser/templateparser.h"
 #include "templateparser/globalsettings_base.h"
@@ -1775,7 +1775,7 @@ void KMKernel::createFilter(const QByteArray& field, const QString& value)
 }
 
 
-void KMKernel::checkTrashFolderFromResources( const Akonadi::Collection::Id& collectionId )
+void KMKernel::checkFolderFromResources( const Akonadi::Collection::Id& collectionId )
 {
   const Akonadi::AgentInstance::List lst = MailCommon::Util::agentInstances();
   foreach( const Akonadi::AgentInstance& type, lst ) {
@@ -1793,6 +1793,19 @@ void KMKernel::checkTrashFolderFromResources( const Akonadi::Collection::Id& col
       }
       delete iface;
     }
+    else if ( type.identifier().contains( POP3_RESOURCE_IDENTIFIER ) ) {
+      OrgKdeAkonadiPOP3SettingsInterface *iface = MailCommon::Util::createPop3SettingsInterface( type.identifier() );
+      if ( iface->isValid() ) {
+        if ( iface->targetCollection() == collectionId ) {
+          //Use default inbox
+          iface->setTargetCollection( CommonKernel->inboxCollectionFolder().id() );
+	  iface->writeConfig();
+        }
+        
+      }
+      delete iface;
+    }
   }
 }
+
 #include "kmkernel.moc"

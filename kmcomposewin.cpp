@@ -47,6 +47,7 @@
 #include "templatesconfiguration_kfg.h"
 #include "foldercollectionmonitor.h"
 #include "mailkernel.h"
+#include "custommimeheader.h"
 
 // KDEPIM includes
 #include <libkpgp/kpgpblock.h>
@@ -2514,7 +2515,14 @@ void KMComposeWin::doDelayedSend( MessageSender::SendMethod method, MessageSende
                                    ( ( saveIn != MessageSender::SaveInNone && GlobalSettings::self()->neverEncryptDrafts() )
                                     || mSigningAndEncryptionExplicitlyDisabled ) );
 
-
+  int num = GlobalSettings::self()->customMessageHeadersCount();
+  QMap<QByteArray, QString> customHeader;
+  for(int ix=0; ix<num; ix++) {
+    CustomMimeHeader customMimeHeader( QString::number(ix) );
+    customMimeHeader.readConfig();
+    customHeader.insert(customMimeHeader.custHeaderName().toLatin1(), customMimeHeader.custHeaderValue() );
+  }
+  mComposerBase->setCustomHeader( customHeader );
   mComposerBase->send( method, saveIn );
 }
 
