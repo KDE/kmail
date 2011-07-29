@@ -39,7 +39,7 @@ ColorListBox::ColorListBox( QWidget *parent )
   setRootIsDecorated( false );
   header()->hide();
 
-  connect( this, SIGNAL(doubleClicked(const QModelIndex&)), this, SLOT(newColor(const QModelIndex&)) );
+  connect( this, SIGNAL(doubleClicked(QModelIndex)), this, SLOT(newColor(QModelIndex)) );
   setAcceptDrops( true );
 }
 

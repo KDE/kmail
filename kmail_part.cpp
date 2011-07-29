@@ -93,7 +93,7 @@ KMailPart::KMailPart(QWidget *parentWidget, QObject *parent, const QVariantList 
 #if 0
   //It's also possible to make a part out of a readerWin
   KMReaderWin *mReaderWin = new KMReaderWin( canvas, canvas, actionCollection() );
-  connect(mReaderWin, SIGNAL(urlClicked(const KUrl&,int)),
+  connect(mReaderWin, SIGNAL(urlClicked(KUrl,int)),
 	  mReaderWin, SLOT(slotUrlClicked()));
   QVBoxLayout *topLayout = new QVBoxLayout(canvas);
   topLayout->addWidget(mReaderWin);
@@ -118,10 +118,10 @@ KMailPart::KMailPart(QWidget *parentWidget, QObject *parent, const QVariantList 
   mStatusBar->addStatusBarItem( mainWidget->vacationScriptIndicator(), 2, false );
 
   // Get to know when the user clicked on a folder in the KMail part and update the headerWidget of Kontact
-  connect( mainWidget->folderTreeView(), SIGNAL( currentChanged( const Akonadi::Collection & ) ),
-           this, SLOT( slotFolderChanged( const Akonadi::Collection& ) ) );
-  connect( kmkernel->folderCollectionMonitor(), SIGNAL(collectionChanged( const Akonadi::Collection &, const QSet<QByteArray> &)),
-           this, SLOT(slotCollectionChanged( const Akonadi::Collection &, const QSet<QByteArray> &)));
+  connect( mainWidget->folderTreeView(), SIGNAL(currentChanged(Akonadi::Collection)),
+           this, SLOT(slotFolderChanged(Akonadi::Collection)) );
+  connect( kmkernel->folderCollectionMonitor(), SIGNAL(collectionChanged(Akonadi::Collection,QSet<QByteArray>)),
+           this, SLOT(slotCollectionChanged(Akonadi::Collection,QSet<QByteArray>)));
   setXMLFile( "kmail_part.rc", true );
 #endif
 

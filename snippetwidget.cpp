@@ -33,17 +33,17 @@ SnippetWidget::SnippetWidget( KMComposerEditor *editor, KActionCollection *actio
   setAlternatingRowColors( true );
 
   mSnippetsManager = new MailCommon::SnippetsManager( actionCollection, this );
-  mSnippetsManager->setEditor( editor, "insertPlainText", SIGNAL( insertSnippet() ) );
+  mSnippetsManager->setEditor( editor, "insertPlainText", SIGNAL(insertSnippet()) );
 
   setModel( mSnippetsManager->model() );
   setSelectionModel( mSnippetsManager->selectionModel() );
 
-  connect( this, SIGNAL( activated( const QModelIndex& ) ),
-           mSnippetsManager->editSnippetAction(), SLOT( trigger() ) );
-  connect( mSnippetsManager->model(), SIGNAL( rowsInserted( const QModelIndex&, int, int ) ),
-           this, SLOT( expandAll() ) );
-  connect( mSnippetsManager->model(), SIGNAL( rowsRemoved( const QModelIndex&, int, int ) ),
-           this, SLOT( expandAll() ) );
+  connect( this, SIGNAL(activated(QModelIndex)),
+           mSnippetsManager->editSnippetAction(), SLOT(trigger()) );
+  connect( mSnippetsManager->model(), SIGNAL(rowsInserted(QModelIndex,int,int)),
+           this, SLOT(expandAll()) );
+  connect( mSnippetsManager->model(), SIGNAL(rowsRemoved(QModelIndex,int,int)),
+           this, SLOT(expandAll()) );
 
   expandAll();
 }

@@ -88,17 +88,17 @@ KMSystemTray::KMSystemTray(QObject *parent)
   kmkernel->registerSystemTrayApplet( this );
 
 
-  connect( this, SIGNAL( activateRequested( bool, const QPoint& ) ),
-           this, SLOT( slotActivated() ) );
-  connect( contextMenu(), SIGNAL( aboutToShow() ),
-           this, SLOT( slotContextMenuAboutToShow() ) );
+  connect( this, SIGNAL(activateRequested(bool,QPoint)),
+           this, SLOT(slotActivated()) );
+  connect( contextMenu(), SIGNAL(aboutToShow()),
+           this, SLOT(slotContextMenuAboutToShow()) );
 
-  connect( kmkernel->folderCollectionMonitor(), SIGNAL( collectionStatisticsChanged( Akonadi::Collection::Id, const Akonadi::CollectionStatistics &) ), SLOT( initListOfCollection() ) );
+  connect( kmkernel->folderCollectionMonitor(), SIGNAL(collectionStatisticsChanged(Akonadi::Collection::Id,Akonadi::CollectionStatistics)), SLOT(initListOfCollection()) );
 
-  connect( kmkernel->folderCollectionMonitor(), SIGNAL( collectionAdded( const Akonadi::Collection&, const Akonadi::Collection& ) ), this, SLOT( initListOfCollection() ) );
-  connect( kmkernel->folderCollectionMonitor(), SIGNAL( collectionRemoved( const Akonadi::Collection& ) ), this, SLOT( initListOfCollection() ) );
-  connect( kmkernel->folderCollectionMonitor(), SIGNAL( collectionSubscribed( const Akonadi::Collection&, const Akonadi::Collection& ) ),SLOT( initListOfCollection() ) );
-  connect( kmkernel->folderCollectionMonitor(), SIGNAL( collectionUnsubscribed( const Akonadi::Collection& ) ),SLOT( initListOfCollection() ) );
+  connect( kmkernel->folderCollectionMonitor(), SIGNAL(collectionAdded(Akonadi::Collection,Akonadi::Collection)), this, SLOT(initListOfCollection()) );
+  connect( kmkernel->folderCollectionMonitor(), SIGNAL(collectionRemoved(Akonadi::Collection)), this, SLOT(initListOfCollection()) );
+  connect( kmkernel->folderCollectionMonitor(), SIGNAL(collectionSubscribed(Akonadi::Collection,Akonadi::Collection)),SLOT(initListOfCollection()) );
+  connect( kmkernel->folderCollectionMonitor(), SIGNAL(collectionUnsubscribed(Akonadi::Collection)),SLOT(initListOfCollection()) );
 
   
   initListOfCollection();
@@ -270,8 +270,8 @@ void KMSystemTray::slotContextMenuAboutToShow()
   }
   mNewMessagesPopup = new KMenu();
   fillFoldersMenu( mNewMessagesPopup, KMKernel::self()->entityTreeModel() );
-  connect( mNewMessagesPopup, SIGNAL( triggered(QAction*) ), this,
-           SLOT( slotSelectCollection(QAction*) ) );
+  connect( mNewMessagesPopup, SIGNAL(triggered(QAction*)), this,
+           SLOT(slotSelectCollection(QAction*)) );
 
 
   if ( mCount > 0 ) {

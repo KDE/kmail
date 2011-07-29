@@ -113,17 +113,17 @@ KMReaderWin::KMReaderWin(QWidget *aParent,
   vlay->setMargin( 0 );
   mViewer = new Viewer( this, mainWindow, mActionCollection );
   mViewer->setAppName( "KMail" );
-  connect( mViewer, SIGNAL(urlClicked( const Akonadi::Item &, const KUrl & ) ),
-           this, SLOT( slotUrlClicked( const Akonadi::Item &, const KUrl& ) ) );
-  connect( mViewer, SIGNAL( requestConfigSync() ), kmkernel, SLOT( slotRequestConfigSync() ), Qt::QueuedConnection ); // happens anyway on shutdown, so we can skip it there with using a queued connection
-  connect( mViewer, SIGNAL( showReader( KMime::Content* , bool, const QString& ) ),
-           this, SLOT( slotShowReader( KMime::Content* , bool, const QString& ) ) );
-  connect( mViewer, SIGNAL( showMessage(KMime::Message::Ptr, const QString&) ),
-           this, SLOT( slotShowMessage(KMime::Message::Ptr, const QString& ) ) );
-  connect( mViewer, SIGNAL( showStatusBarMessage( const QString & ) ),
-           this, SIGNAL( showStatusBarMessage( const QString & ) ) );
-  connect( mViewer, SIGNAL( deleteMessage( Akonadi::Item ) ),
-           this, SLOT( slotDeleteMessage( Akonadi::Item ) ) );
+  connect( mViewer, SIGNAL(urlClicked(Akonadi::Item,KUrl)),
+           this, SLOT(slotUrlClicked(Akonadi::Item,KUrl)) );
+  connect( mViewer, SIGNAL(requestConfigSync()), kmkernel, SLOT(slotRequestConfigSync()), Qt::QueuedConnection ); // happens anyway on shutdown, so we can skip it there with using a queued connection
+  connect( mViewer, SIGNAL(showReader(KMime::Content*,bool,QString)),
+           this, SLOT(slotShowReader(KMime::Content*,bool,QString)) );
+  connect( mViewer, SIGNAL(showMessage(KMime::Message::Ptr,QString)),
+           this, SLOT(slotShowMessage(KMime::Message::Ptr,QString)) );
+  connect( mViewer, SIGNAL(showStatusBarMessage(QString)),
+           this, SIGNAL(showStatusBarMessage(QString)) );
+  connect( mViewer, SIGNAL(deleteMessage(Akonadi::Item)),
+           this, SLOT(slotDeleteMessage(Akonadi::Item)) );
 
   mViewer->addMessageLoadedHandler( new MessageViewer::MarkMessageReadHandler( this ) );
   mViewer->addMessageLoadedHandler( new MailCommon::SendMdnHandler( kmkernel, this ) );

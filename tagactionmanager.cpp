@@ -48,7 +48,7 @@ TagActionManager::TagActionManager( QObject *parent, KActionCollection *actionCo
     mTagListMonitor( new MessageCore::TagListMonitor( this ) ),
     mSopranoModel( new Soprano::Util::SignalCacheModel( Nepomuk::ResourceManager::instance()->mainModel() ) )
 {
-  connect( mTagListMonitor, SIGNAL( tagsChanged() ), this, SLOT( tagsChanged() ) ); 
+  connect( mTagListMonitor, SIGNAL(tagsChanged()), this, SLOT(tagsChanged()) ); 
   // Listen to Nepomuk tag updates
   // ### This is way too slow for now, we use triggerUpdate() instead
   /*connect( mSopranoModel.data(), SIGNAL(statementAdded(Soprano::Statement)),
@@ -101,8 +101,8 @@ void TagActionManager::createActions()
 
   //Use a mapper to understand which tag button is triggered
   mMessageTagToggleMapper = new QSignalMapper( this );
-  connect( mMessageTagToggleMapper, SIGNAL( mapped( const QString& ) ),
-           this, SIGNAL( tagActionTriggered( const QString& ) ) );
+  connect( mMessageTagToggleMapper, SIGNAL(mapped(QString)),
+           this, SIGNAL(tagActionTriggered(QString)) );
 
   // Build a sorted list of tags
   QList<Tag::Ptr> tagList;
@@ -121,8 +121,8 @@ void TagActionManager::createActions()
     tagAction->setShortcut( tag->shortcut );
     tagAction->setIconText( tag->tagName );
     mActionCollection->addAction( tag->nepomukResourceUri.toString(), tagAction );
-    connect( tagAction, SIGNAL( triggered( bool ) ),
-             mMessageTagToggleMapper, SLOT( map() ) );
+    connect( tagAction, SIGNAL(triggered(bool)),
+             mMessageTagToggleMapper, SLOT(map()) );
 
     // The shortcut configuration is done in the config dialog.
     // The shortcut set in the shortcut dialog would not be saved back to

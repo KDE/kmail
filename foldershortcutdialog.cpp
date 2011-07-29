@@ -78,7 +78,7 @@ FolderShortcutDialog::FolderShortcutDialog( const QSharedPointer<FolderCollectio
   mKeySeqWidget->setObjectName( "FolderShortcutSelector" );
   new QWidget(hb);
 
-  connect( this, SIGNAL( okClicked() ), SLOT( slotOk() ) );
+  connect( this, SIGNAL(okClicked()), SLOT(slotOk()) );
   mKeySeqWidget->setKeySequence( folder->shortcut().primary(),
                                  KKeySequenceWidget::NoValidate );
   mKeySeqWidget->setCheckActionCollections( mMainWidget->actionCollections() );

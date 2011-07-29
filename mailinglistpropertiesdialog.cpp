@@ -61,7 +61,7 @@ MailingListFolderPropertiesDialog::MailingListFolderPropertiesDialog( QWidget* p
   QLabel* label;
   mLastItem = 0;
 
-  connect( this, SIGNAL( okClicked() ), SLOT( slotOk() ) );
+  connect( this, SIGNAL(okClicked()), SLOT(slotOk()) );
 
   QVBoxLayout *topLayout = new QVBoxLayout( mainWidget() );
   topLayout->setObjectName( "topLayout" );
@@ -226,7 +226,7 @@ void MailingListFolderPropertiesDialog::slotDetectMailingList()
     Akonadi::ItemFetchJob *job = new Akonadi::ItemFetchJob( mFolder->collection(), this );
     job->fetchScope().setAncestorRetrieval( Akonadi::ItemFetchScope::Parent );
     job->fetchScope().fetchFullPayload();
-    connect( job, SIGNAL( result( KJob* ) ), this, SLOT( slotFetchDone( KJob* ) ) );
+    connect( job, SIGNAL(result(KJob*)), this, SLOT(slotFetchDone(KJob*)) );
   }
   else {
     mMLId->setText( (mMailingList.id().isEmpty() ? i18n("Not available.") : mMailingList.id() ) );

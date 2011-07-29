@@ -105,8 +105,8 @@ SimpleStringListEditor::SimpleStringListEditor( QWidget * parent,
     vlay->addWidget( mModifyButton );
     connect( mModifyButton, SIGNAL(clicked()),
              this, SLOT(slotModify()) );
-    connect( mListBox, SIGNAL( itemDoubleClicked( QListWidgetItem* ) ),
-             this, SLOT( slotModify() ) );
+    connect( mListBox, SIGNAL(itemDoubleClicked(QListWidgetItem*)),
+             this, SLOT(slotModify()) );
   }
 
   if ( buttons & Up ) {

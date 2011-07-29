@@ -48,8 +48,8 @@ ConfigModuleWithTabs::ConfigModuleWithTabs( const KComponentData &instance, QWid
 void ConfigModuleWithTabs::addTab( ConfigModuleTab* tab, const QString & title )
 {
   mTabWidget->addTab( tab, title );
-  connect( tab, SIGNAL(changed( bool )),
-           this, SIGNAL(changed( bool )) );
+  connect( tab, SIGNAL(changed(bool)),
+           this, SIGNAL(changed(bool)) );
 }
 
 void ConfigModuleWithTabs::load()

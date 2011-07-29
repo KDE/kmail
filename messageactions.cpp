@@ -141,7 +141,7 @@ MessageActions::MessageActions( KActionCollection *ac, QWidget* parent ) :
   connect( mAnnotateAction, SIGNAL(triggered(bool)),
            this, SLOT(annotateMessage()) );
 
-  mPrintAction = KStandardAction::print( this, SLOT( slotPrintMsg() ), mActionCollection );
+  mPrintAction = KStandardAction::print( this, SLOT(slotPrintMsg()), mActionCollection );
 
   mForwardActionMenu  = new KActionMenu(KIcon("mail-forward"), i18nc("Message->","&Forward"), this);
   mActionCollection->addAction("message_forward", mForwardActionMenu );
@@ -150,38 +150,38 @@ MessageActions::MessageActions( KActionCollection *ac, QWidget* parent ) :
                                         i18nc( "@action:inmenu Message->Forward->",
                                                "As &Attachment..." ),
                                         this );
-  connect( mForwardAttachedAction, SIGNAL( triggered( bool ) ),
-           parent, SLOT( slotForwardAttachedMsg() ) );
+  connect( mForwardAttachedAction, SIGNAL(triggered(bool)),
+           parent, SLOT(slotForwardAttachedMsg()) );
   mActionCollection->addAction( "message_forward_as_attachment", mForwardAttachedAction );
 
   mForwardInlineAction = new KAction( KIcon( "mail-forward" ),
                                        i18nc( "@action:inmenu Message->Forward->",
                                               "&Inline..." ),
                                        this );
-  connect( mForwardInlineAction, SIGNAL( triggered( bool ) ),
-           parent, SLOT( slotForwardInlineMsg() ) );
+  connect( mForwardInlineAction, SIGNAL(triggered(bool)),
+           parent, SLOT(slotForwardInlineMsg()) );
   mActionCollection->addAction( "message_forward_inline", mForwardInlineAction );
 
   setupForwardActions();
 
   mRedirectAction  = new KAction(i18nc("Message->Forward->", "&Redirect..."), this );
   mActionCollection->addAction( "message_forward_redirect", mRedirectAction );
-  connect( mRedirectAction, SIGNAL( triggered( bool ) ),
-           parent, SLOT( slotRedirectMsg() ) );
+  connect( mRedirectAction, SIGNAL(triggered(bool)),
+           parent, SLOT(slotRedirectMsg()) );
   mRedirectAction->setShortcut( QKeySequence( Qt::Key_E ) );
   mForwardActionMenu->addAction( mRedirectAction );
 
   //FIXME add KIcon("mail-list") as first arguement. Icon can be derived from
   // mail-reply-list icon by removing top layers off svg
   mMailingListActionMenu = new KActionMenu( i18nc( "Message->", "Mailing-&List" ), this );
-  connect( mMailingListActionMenu->menu(), SIGNAL( triggered( QAction* ) ),
-           this, SLOT( slotRunUrl( QAction* ) ) );
+  connect( mMailingListActionMenu->menu(), SIGNAL(triggered(QAction*)),
+           this, SLOT(slotRunUrl(QAction*)) );
   mActionCollection->addAction( "mailing_list", mMailingListActionMenu );
 
   mMonitor = new Akonadi::Monitor( this );
   //FIXME: Attachment fetching is not needed here, but on-demand loading is not supported ATM
   mMonitor->itemFetchScope().fetchPayloadPart( Akonadi::MessagePart::Header );
-  connect( mMonitor, SIGNAL(itemChanged( Akonadi::Item, QSet<QByteArray> )), SLOT(slotItemModified( Akonadi::Item, QSet<QByteArray> )));
+  connect( mMonitor, SIGNAL(itemChanged(Akonadi::Item,QSet<QByteArray>)), SLOT(slotItemModified(Akonadi::Item,QSet<QByteArray>)));
 
   updateActions();
 }
@@ -353,8 +353,8 @@ template<typename T> void MessageActions::replyCommand()
     return;
   const QString text = mMessageView ? mMessageView->copyText() : QString();
   KMCommand *command = new T( mParent, mCurrentItem, text );
-  connect( command, SIGNAL( completed( KMCommand * ) ),
-           this, SIGNAL( replyActionFinished() ) );
+  connect( command, SIGNAL(completed(KMCommand*)),
+           this, SIGNAL(replyActionFinished()) );
   command->start();
 }
 
@@ -373,7 +373,7 @@ void MessageActions::setMessageView(KMReaderWin * msgView)
 
 void MessageActions::setupForwardActions()
 {
-  disconnect( mForwardActionMenu, SIGNAL( triggered(bool) ), 0, 0 );
+  disconnect( mForwardActionMenu, SIGNAL(triggered(bool)), 0, 0 );
   mForwardActionMenu->removeAction( mForwardInlineAction );
   mForwardActionMenu->removeAction( mForwardAttachedAction );
 

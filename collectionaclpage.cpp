@@ -61,7 +61,7 @@ class ActionButton : public QPushButton
     {
       if ( !actions().contains( action ) ) {
         addAction( action );
-        connect( this, SIGNAL( clicked() ), action, SLOT( trigger() ) );
+        connect( this, SIGNAL(clicked()), action, SLOT(trigger()) );
       }
 
       setText( action->text() );

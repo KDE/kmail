@@ -174,12 +174,12 @@ SearchWindow::SearchWindow( KMMainWidget *widget, const Akonadi::Collection &col
   mPatternEdit->setSearchPattern( &mSearchPattern );
 
   // enable/disable widgets depending on radio buttons:
-  connect( mChkbxSpecificFolders, SIGNAL( toggled( bool ) ),
-           mCbxFolders, SLOT( setEnabled( bool ) ) );
-  connect( mChkbxSpecificFolders, SIGNAL( toggled( bool ) ),
-           mChkSubFolders, SLOT( setEnabled( bool ) ) );
-  connect( mChkbxAllFolders, SIGNAL( toggled( bool ) ),
-           this, SLOT( setEnabledSearchButton( bool ) ) );
+  connect( mChkbxSpecificFolders, SIGNAL(toggled(bool)),
+           mCbxFolders, SLOT(setEnabled(bool)) );
+  connect( mChkbxSpecificFolders, SIGNAL(toggled(bool)),
+           mChkSubFolders, SLOT(setEnabled(bool)) );
+  connect( mChkbxAllFolders, SIGNAL(toggled(bool)),
+           this, SLOT(setEnabledSearchButton(bool)) );
 
   mLbxMatches = new Akonadi::EntityTreeView( mKMMainWidget->guiClient(), this );
   mLbxMatches->setAlternatingRowColors( true );
@@ -208,14 +208,14 @@ SearchWindow::SearchWindow( KMMainWidget *widget, const Akonadi::Collection &col
   mLbxMatches->setSelectionMode( QAbstractItemView::ExtendedSelection );
   mLbxMatches->setContextMenuPolicy( Qt::CustomContextMenu );
 
-  connect( mLbxMatches, SIGNAL( customContextMenuRequested( const QPoint& ) ),
-           this, SLOT( slotContextMenuRequested( const QPoint& ) ) );
-  connect( mLbxMatches, SIGNAL( clicked( const Akonadi::Item& ) ),
-           this, SLOT( slotShowMsg( const Akonadi::Item& ) ) );
-  connect( mLbxMatches, SIGNAL( doubleClicked( const Akonadi::Item& ) ),
-           this, SLOT( slotViewMsg( const Akonadi::Item& ) ) );
-  connect( mLbxMatches, SIGNAL( currentChanged( const Akonadi::Item& ) ),
-           this, SLOT( slotCurrentChanged( const Akonadi::Item& ) ) );
+  connect( mLbxMatches, SIGNAL(customContextMenuRequested(QPoint)),
+           this, SLOT(slotContextMenuRequested(QPoint)) );
+  connect( mLbxMatches, SIGNAL(clicked(Akonadi::Item)),
+           this, SLOT(slotShowMsg(Akonadi::Item)) );
+  connect( mLbxMatches, SIGNAL(doubleClicked(Akonadi::Item)),
+           this, SLOT(slotViewMsg(Akonadi::Item)) );
+  connect( mLbxMatches, SIGNAL(currentChanged(Akonadi::Item)),
+           this, SLOT(slotCurrentChanged(Akonadi::Item)) );
 
   QHBoxLayout *hbl2 = new QHBoxLayout();
   mSearchFolderLbl = new QLabel( i18n( "Search folder &name:" ), searchWidget );
@@ -245,17 +245,17 @@ SearchWindow::SearchWindow( KMMainWidget *widget, const Akonadi::Collection &col
   mSearchFolderLbl->setBuddy( mSearchFolderEdt );
   mSearchFolderOpenBtn = new KPushButton( i18n( "Op&en Search Folder" ), searchWidget );
   mSearchFolderOpenBtn->setEnabled( false );
-  connect( mSearchFolderEdt, SIGNAL( textChanged( const QString& ) ),
-           this, SLOT( scheduleRename( const QString& ) ) );
-  connect( &mRenameTimer, SIGNAL( timeout() ),
-           this, SLOT( renameSearchFolder() ) );
-  connect( mSearchFolderOpenBtn, SIGNAL( clicked() ),
-           this, SLOT( openSearchFolder() ) );
+  connect( mSearchFolderEdt, SIGNAL(textChanged(QString)),
+           this, SLOT(scheduleRename(QString)) );
+  connect( &mRenameTimer, SIGNAL(timeout()),
+           this, SLOT(renameSearchFolder()) );
+  connect( mSearchFolderOpenBtn, SIGNAL(clicked()),
+           this, SLOT(openSearchFolder()) );
 
   mSearchResultOpenBtn = new KPushButton( i18n( "Open &Message" ), searchWidget );
   mSearchResultOpenBtn->setEnabled( false );
-  connect( mSearchResultOpenBtn, SIGNAL( clicked() ),
-           this, SLOT( slotViewSelectedMsg() ) );
+  connect( mSearchResultOpenBtn, SIGNAL(clicked()),
+           this, SLOT(slotViewSelectedMsg()) );
 
   hbl2->addWidget( mSearchFolderLbl );
   hbl2->addWidget( mSearchFolderEdt );
@@ -288,10 +288,10 @@ SearchWindow::SearchWindow( KMMainWidget *widget, const Akonadi::Collection &col
 
   patternGroupBox->setSizePolicy( QSizePolicy::Preferred, QSizePolicy::Maximum );
 
-  connect( this, SIGNAL( user1Clicked() ), SLOT( slotSearch() ) );
-  connect( this, SIGNAL( user2Clicked() ), SLOT( slotStop() ) );
-  connect( this, SIGNAL( finished() ), this, SLOT( deleteLater() ) );
-  connect( this, SIGNAL( closeClicked() ),this,SLOT( slotClose() ) );
+  connect( this, SIGNAL(user1Clicked()), SLOT(slotSearch()) );
+  connect( this, SIGNAL(user2Clicked()), SLOT(slotStop()) );
+  connect( this, SIGNAL(finished()), this, SLOT(deleteLater()) );
+  connect( this, SIGNAL(closeClicked()),this,SLOT(slotClose()) );
 
   // give focus to the value field of the first search rule
   RegExpLineEdit* r = mPatternEdit->findChild<RegExpLineEdit*>( "regExpLineEdit" );
@@ -304,29 +304,29 @@ SearchWindow::SearchWindow( KMMainWidget *widget, const Akonadi::Collection &col
   KActionCollection *ac = actionCollection();
   mReplyAction = new KAction( KIcon( "mail-reply-sender" ), i18n( "&Reply..." ), this );
   actionCollection()->addAction( "search_reply", mReplyAction );
-  connect( mReplyAction, SIGNAL( triggered( bool ) ), SLOT( slotReplyToMsg() ) );
+  connect( mReplyAction, SIGNAL(triggered(bool)), SLOT(slotReplyToMsg()) );
 
   mReplyAllAction = new KAction( KIcon( "mail-reply-all" ), i18n( "Reply to &All..." ), this );
   actionCollection()->addAction( "search_reply_all", mReplyAllAction );
-  connect( mReplyAllAction, SIGNAL( triggered( bool ) ), SLOT( slotReplyAllToMsg() ) );
+  connect( mReplyAllAction, SIGNAL(triggered(bool)), SLOT(slotReplyAllToMsg()) );
 
   mReplyListAction = new KAction( KIcon( "mail-reply-list" ), i18n( "Reply to Mailing-&List..." ), this );
   actionCollection()->addAction( "search_reply_list", mReplyListAction );
-  connect( mReplyListAction, SIGNAL( triggered( bool ) ), SLOT( slotReplyListToMsg() ) );
+  connect( mReplyListAction, SIGNAL(triggered(bool)), SLOT(slotReplyListToMsg()) );
 
   mForwardActionMenu = new KActionMenu( KIcon( "mail-forward" ), i18nc( "Message->", "&Forward" ), this );
   actionCollection()->addAction( "search_message_forward", mForwardActionMenu );
-  connect( mForwardActionMenu, SIGNAL( triggered( bool ) ), this, SLOT( slotForwardMsg() ) );
+  connect( mForwardActionMenu, SIGNAL(triggered(bool)), this, SLOT(slotForwardMsg()) );
 
   mForwardInlineAction = new KAction( KIcon( "mail-forward" ),
                                       i18nc( "@action:inmenu Forward message inline.", "&Inline..." ),
                                       this );
   actionCollection()->addAction( "search_message_forward_inline", mForwardInlineAction );
-  connect( mForwardInlineAction, SIGNAL( triggered( bool ) ), SLOT( slotForwardMsg() ) );
+  connect( mForwardInlineAction, SIGNAL(triggered(bool)), SLOT(slotForwardMsg()) );
 
   mForwardAttachedAction = new KAction( KIcon( "mail-forward" ), i18nc( "Message->Forward->", "As &Attachment..." ), this );
   actionCollection()->addAction( "search_message_forward_as_attachment", mForwardAttachedAction );
-  connect( mForwardAttachedAction, SIGNAL( triggered( bool ) ), SLOT( slotForwardAttachedMsg() ) );
+  connect( mForwardAttachedAction, SIGNAL(triggered(bool)), SLOT(slotForwardAttachedMsg()) );
 
   if ( GlobalSettings::self()->forwardingInlineByDefault() ) {
     mForwardActionMenu->addAction( mForwardInlineAction );
@@ -336,21 +336,21 @@ SearchWindow::SearchWindow( KMMainWidget *widget, const Akonadi::Collection &col
     mForwardActionMenu->addAction( mForwardInlineAction );
   }
 
-  mSaveAsAction = actionCollection()->addAction( KStandardAction::SaveAs, "search_file_save_as", this, SLOT( slotSaveMsg() ) );
+  mSaveAsAction = actionCollection()->addAction( KStandardAction::SaveAs, "search_file_save_as", this, SLOT(slotSaveMsg()) );
 
   mSaveAtchAction = new KAction( KIcon( "mail-attachment" ), i18n( "Save Attachments..." ), this );
   actionCollection()->addAction( "search_save_attachments", mSaveAtchAction );
-  connect( mSaveAtchAction, SIGNAL( triggered( bool ) ), SLOT( slotSaveAttachments() ) );
+  connect( mSaveAtchAction, SIGNAL(triggered(bool)), SLOT(slotSaveAttachments()) );
 
-  mPrintAction = actionCollection()->addAction( KStandardAction::Print, "search_print", this, SLOT( slotPrintMsg() ) );
+  mPrintAction = actionCollection()->addAction( KStandardAction::Print, "search_print", this, SLOT(slotPrintMsg()) );
 
   mClearAction = new KAction( i18n( "Clear Selection" ), this );
   actionCollection()->addAction( "search_clear_selection", mClearAction );
-  connect( mClearAction, SIGNAL( triggered( bool ) ), SLOT( slotClearSelection() ) );
+  connect( mClearAction, SIGNAL(triggered(bool)), SLOT(slotClearSelection()) );
 
-  connect( mTimer, SIGNAL( timeout() ), this, SLOT( updateStatusLine() ) );
-  connect( mCbxFolders, SIGNAL( folderChanged( const Akonadi::Collection& ) ),
-           this, SLOT( slotFolderActivated() ) );
+  connect( mTimer, SIGNAL(timeout()), this, SLOT(updateStatusLine()) );
+  connect( mCbxFolders, SIGNAL(folderChanged(Akonadi::Collection)),
+           this, SLOT(slotFolderActivated()) );
 
   ac->addAssociatedWidget( this );
   foreach ( QAction* action, ac->actions() )
@@ -391,7 +391,7 @@ void SearchWindow::updateStatusLine()
 {
   if ( mFolder.isValid() ) {
     Akonadi::CollectionStatisticsJob *job = new Akonadi::CollectionStatisticsJob( mFolder );
-    connect( job, SIGNAL( result( KJob* ) ), SLOT( updateCollectionStatisticsFinished( KJob* ) ) );
+    connect( job, SIGNAL(result(KJob*)), SLOT(updateCollectionStatisticsFinished(KJob*)) );
   }
 }
 
@@ -516,7 +516,7 @@ void SearchWindow::slotSearch()
     mSearchJob = new Akonadi::CollectionModifyJob( mFolder, this );
   }
 
-  connect( mSearchJob, SIGNAL( result( KJob* ) ), SLOT( searchDone( KJob* ) ) );
+  connect( mSearchJob, SIGNAL(result(KJob*)), SLOT(searchDone(KJob*)) );
 }
 
 void SearchWindow::searchDone( KJob* job )
@@ -586,7 +586,7 @@ void SearchWindow::searchDone( KJob* job )
       mTimer->stop();
       updateStatusLine();
 
-      QTimer::singleShot( 0, this, SLOT( enableGUI() ) );
+      QTimer::singleShot( 0, this, SLOT(enableGUI()) );
 
       if ( mLastFocus )
         mLastFocus->setFocus();
@@ -626,7 +626,7 @@ void SearchWindow::closeEvent( QCloseEvent *event )
     mSearchJob->kill( KJob::Quietly );
     mSearchJob->deleteLater();
     mSearchJob = 0;
-    QTimer::singleShot( 0, this, SLOT( slotClose() ) );
+    QTimer::singleShot( 0, this, SLOT(slotClose()) );
   } else {
     KDialog::closeEvent( event );
   }
@@ -649,8 +649,8 @@ void SearchWindow::renameSearchFolder()
   if ( mFolder.isValid() && ( mFolder.name() != mSearchFolderEdt->text() ) ) {
     mFolder.setName( mSearchFolderEdt->text() );
     Akonadi::CollectionModifyJob *job = new Akonadi::CollectionModifyJob( mFolder, this );
-    connect( job, SIGNAL( result( KJob* ) ),
-             this, SLOT( slotSearchFolderRenameDone( KJob* ) ) );
+    connect( job, SIGNAL(result(KJob*)),
+             this, SLOT(slotSearchFolderRenameDone(KJob*)) );
   }
 
   if ( mFolder.isValid() )

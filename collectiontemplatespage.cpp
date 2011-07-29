@@ -80,10 +80,10 @@ void CollectionTemplatesPage::init()
   btns->addWidget( mCopyGlobal );
   topLayout->addLayout( btns );
 
-  connect( mCustom, SIGNAL(toggled( bool )),
-           mWidget, SLOT(setEnabled( bool )) );
-  connect( mCustom, SIGNAL(toggled( bool )),
-           mCopyGlobal, SLOT(setEnabled( bool )) );
+  connect( mCustom, SIGNAL(toggled(bool)),
+           mWidget, SLOT(setEnabled(bool)) );
+  connect( mCustom, SIGNAL(toggled(bool)),
+           mCopyGlobal, SLOT(setEnabled(bool)) );
 
   connect( mCopyGlobal, SIGNAL(clicked()),
            this, SLOT(slotCopyGlobal()) );
