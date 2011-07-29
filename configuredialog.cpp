@@ -3298,6 +3298,34 @@ SecurityPageWarningTab::SecurityPageWarningTab( QWidget * parent )
   connect( mWidget->enableAllWarningsPB, SIGNAL(clicked()), SLOT(slotReenableAllWarningsClicked()) );
 }
 
+void SecurityPage::WarningTab::doLoadFromGlobalSettings()
+{
+  mWidget->warnUnencryptedCB->setChecked(
+      MessageComposer::MessageComposerSettings::self()->cryptoWarningUnencrypted() );
+  mWidget->mWarnUnsigned->setChecked(
+      MessageComposer::MessageComposerSettings::self()->cryptoWarningUnsigned() );
+  mWidget->warnReceiverNotInCertificateCB->setChecked(
+      MessageComposer::MessageComposerSettings::self()->cryptoWarnRecvNotInCert() );
+
+  // The "-int" part of the key name is because there used to be a separate boolean
+  // config entry for enabling/disabling. This is done with the single bool value now.
+  mWidget->warnGroupBox->setChecked(
+      MessageComposer::MessageComposerSettings::self()->cryptoWarnWhenNearExpire() );
+  mWidget->mWarnSignKeyExpiresSB->setValue(
+      MessageComposer::MessageComposerSettings::self()->cryptoWarnSignKeyNearExpiryThresholdDays() );
+  mWidget->mWarnSignChainCertExpiresSB->setValue(
+      MessageComposer::MessageComposerSettings::self()->cryptoWarnSignChaincertNearExpiryThresholdDays() );
+  mWidget->mWarnSignRootCertExpiresSB->setValue(
+      MessageComposer::MessageComposerSettings::self()->cryptoWarnSignRootNearExpiryThresholdDays() );
+
+  mWidget->mWarnEncrKeyExpiresSB->setValue(
+      MessageComposer::MessageComposerSettings::self()->cryptoWarnEncrKeyNearExpiryThresholdDays() );
+  mWidget->mWarnEncrChainCertExpiresSB->setValue(
+      MessageComposer::MessageComposerSettings::self()->cryptoWarnEncrChaincertNearExpiryThresholdDays() );
+  mWidget->mWarnEncrRootCertExpiresSB->setValue(
+      MessageComposer::MessageComposerSettings::self()->cryptoWarnEncrRootNearExpiryThresholdDays() );
+}
+
 void SecurityPage::WarningTab::doLoadOther()
 {
   mWidget->warnUnencryptedCB->setChecked(
