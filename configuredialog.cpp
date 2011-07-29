@@ -3256,6 +3256,22 @@ void SecurityPage::ComposerCryptoTab::save()
   GlobalSettings::self()->setCryptoStoreEncrypted( mWidget->mStoreEncrypted->isChecked() );
 }
 
+void SecurityPage::ComposerCryptoTab::doLoadFromGlobalSettings()
+{
+  mWidget->mAutoSignature->setChecked( GlobalSettings::self()->pgpAutoSign() );
+
+  mWidget->mEncToSelf->setChecked( GlobalSettings::self()->cryptoEncryptToSelf() );
+  mWidget->mShowEncryptionResult->setChecked( GlobalSettings::self()->cryptoShowEncryptionResult() );
+  mWidget->mShowKeyApprovalDlg->setChecked(GlobalSettings::self()->cryptoShowKeysForApproval() );
+
+  mWidget->mAutoEncrypt->setChecked(GlobalSettings::self()->pgpAutoEncrypt() );
+  mWidget->mNeverEncryptWhenSavingInDrafts->setChecked( GlobalSettings::self()->neverEncryptDrafts() );
+
+  mWidget->mStoreEncrypted->setChecked(GlobalSettings::self()->cryptoStoreEncrypted() );
+  
+}
+
+
 QString SecurityPage::WarningTab::helpAnchor() const
 {
   return QString::fromLatin1("configure-security-warnings");
