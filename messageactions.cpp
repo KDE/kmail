@@ -52,6 +52,7 @@
 #include <akonadi/collection.h>
 #include <Akonadi/Monitor>
 #include <mailutil.h>
+#include <asyncnepomukresourceretriever.h>
 
 using namespace KMail;
 
@@ -60,7 +61,8 @@ MessageActions::MessageActions( KActionCollection *ac, QWidget* parent ) :
     mParent( parent ),
     mActionCollection( ac ),
     mMessageView( 0 ),
-    mRedirectAction( 0 )
+    mRedirectAction( 0 ),
+    mAsynNepomukRetriever( new MessageCore::AsyncNepomukResourceRetriever( this ) )
 {
   mReplyActionMenu = new KActionMenu( KIcon("mail-reply-sender"), i18nc("Message->","&Reply"), this );
   mActionCollection->addAction( "message_reply_menu", mReplyActionMenu );
@@ -183,6 +185,8 @@ MessageActions::MessageActions( KActionCollection *ac, QWidget* parent ) :
   mMonitor->itemFetchScope().fetchPayloadPart( Akonadi::MessagePart::Header );
   connect( mMonitor, SIGNAL(itemChanged(Akonadi::Item,QSet<QByteArray>)), SLOT(slotItemModified(Akonadi::Item,QSet<QByteArray>)));
 
+  connect( mAsynNepomukRetriever, SIGNAL(resourceReceived(QUrl,Nepomuk::Resource)), SLOT(updateAnnotateAction(QUrl,Nepomuk::Resource)) );
+
   updateActions();
 }
 
@@ -262,7 +266,7 @@ void MessageActions::updateActions()
   mNoQuoteReplyAction->setEnabled( singleMsg );
 
   mAnnotateAction->setEnabled( singleMsg );
-  updateAnnotateAction();
+  mAsynNepomukRetriever->requestResource( mCurrentItem.url() );
 
   mStatusMenu->setEnabled( multiVisible );
 
@@ -538,13 +542,12 @@ void MessageActions::annotateMessage()
   MessageCore::AnnotationEditDialog *dialog = new MessageCore::AnnotationEditDialog( mCurrentItem.url() );
   dialog->setAttribute( Qt::WA_DeleteOnClose );
   dialog->exec();
-  updateAnnotateAction();
+  mAsynNepomukRetriever->requestResource( mCurrentItem.url() );
 }
 
-void MessageActions::updateAnnotateAction()
+void MessageActions::updateAnnotateAction( const QUrl &url, const Nepomuk::Resource &resource )
 {
-  if( mCurrentItem.isValid() ) {
-    Nepomuk::Resource resource( mCurrentItem.url() );
+  if( mCurrentItem.isValid() && mCurrentItem.url() == url ) {
     if ( resource.description().isEmpty() )
       mAnnotateAction->setText( i18n( "Add Note..." ) );
     else
