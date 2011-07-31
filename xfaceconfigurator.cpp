@@ -128,7 +128,7 @@ namespace KMail {
     connect( mSourceCombo, SIGNAL(highlighted(int)),
              widgetStack, SLOT(setCurrentIndex(int)) );
     connect( mSourceCombo, SIGNAL(activated(int)),
-             widgetStack, SLOT(setCurrentIndex (int)) );
+             widgetStack, SLOT(setCurrentIndex(int)) );
     connect( mEnableCheck, SIGNAL(toggled(bool)),
              mSourceCombo, SLOT(setEnabled(bool)) );
     connect( mEnableCheck, SIGNAL(toggled(bool)),
@@ -253,7 +253,7 @@ namespace KMail {
     Akonadi::ContactSearchJob *job = new Akonadi::ContactSearchJob( this );
     job->setLimit( 1 );
     job->setQuery( Akonadi::ContactSearchJob::Email, email, Akonadi::ContactSearchJob::ExactMatch );
-    connect( job, SIGNAL( result( KJob* ) ), SLOT( slotDelayedSelectFromAddressbook( KJob* ) ) );
+    connect( job, SIGNAL(result(KJob*)), SLOT(slotDelayedSelectFromAddressbook(KJob*)) );
   }
 
   void XFaceConfigurator::slotDelayedSelectFromAddressbook( KJob *job )

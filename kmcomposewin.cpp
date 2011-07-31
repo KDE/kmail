@@ -202,14 +202,14 @@ KMComposeWin::KMComposeWin( const KMime::Message::Ptr &aMsg, Composer::TemplateC
   mComposerBase->setIdentityManager( kmkernel->identityManager() );
   mComposerBase->setParentWidgetForGui( this );
 
-  connect( mComposerBase, SIGNAL( disableHtml( Message::ComposerViewBase::Confirmation ) ),
-           this, SLOT( disableHtml( Message::ComposerViewBase::Confirmation ) ) );
+  connect( mComposerBase, SIGNAL(disableHtml(Message::ComposerViewBase::Confirmation)),
+           this, SLOT(disableHtml(Message::ComposerViewBase::Confirmation)) );
 
-  connect( mComposerBase, SIGNAL( enableHtml() ),
-           this, SLOT( enableHtml() ) );
-  connect( mComposerBase, SIGNAL( failed( QString) ), this, SLOT( slotSendFailed( QString ) ) );
-  connect( mComposerBase, SIGNAL( sentSuccessfully() ), this, SLOT( slotSendSuccessful() ) );
-  connect( mComposerBase, SIGNAL( modified( bool ) ), this, SLOT( setModified( bool ) ) );
+  connect( mComposerBase, SIGNAL(enableHtml()),
+           this, SLOT(enableHtml()) );
+  connect( mComposerBase, SIGNAL(failed(QString)), this, SLOT(slotSendFailed(QString)) );
+  connect( mComposerBase, SIGNAL(sentSuccessfully()), this, SLOT(slotSendSuccessful()) );
+  connect( mComposerBase, SIGNAL(modified(bool)), this, SLOT(setModified(bool)) );
 
   //(void) new MailcomposerAdaptor( this );
   mdbusObjectPath = "/Composer_" + QString::number( ++s_composerNumber );
@@ -271,8 +271,8 @@ KMComposeWin::KMComposeWin( const KMime::Message::Ptr &aMsg, Composer::TemplateC
   MessageComposer::RecipientsEditor* recipientsEditor = new MessageComposer::RecipientsEditor( mHeadersArea );
   recipientsEditor->setRecentAddressConfig( MessageComposer::MessageComposerSettings::self()->config() );
   connect( recipientsEditor,
-           SIGNAL( completionModeChanged( KGlobalSettings::Completion ) ),
-           SLOT( slotCompletionModeChanged( KGlobalSettings::Completion ) ) );
+           SIGNAL(completionModeChanged(KGlobalSettings::Completion)),
+           SLOT(slotCompletionModeChanged(KGlobalSettings::Completion)) );
   connect( recipientsEditor, SIGNAL(sizeHintChanged()), SLOT(recipientEditorSizeHintChanged()) );
   mComposerBase->setRecipientsEditor( recipientsEditor );
 
@@ -362,12 +362,12 @@ KMComposeWin::KMComposeWin( const KMime::Message::Ptr &aMsg, Composer::TemplateC
 
   mHeadersToEditorSplitter->addWidget( mSplitter );
   editor->setAcceptDrops( true );
-  connect( mDictionaryCombo, SIGNAL( dictionaryChanged( const QString & ) ),
-           editor, SLOT( setSpellCheckingLanguage( const QString & ) ) );
-  connect( editor, SIGNAL( languageChanged(const QString &) ),
-           this, SLOT( slotLanguageChanged(const QString&) ) );
-  connect( editor, SIGNAL( spellCheckStatus(const QString &)),
-           this, SLOT( slotSpellCheckingStatus(const QString &) ) );
+  connect( mDictionaryCombo, SIGNAL(dictionaryChanged(QString)),
+           editor, SLOT(setSpellCheckingLanguage(QString)) );
+  connect( editor, SIGNAL(languageChanged(QString)),
+           this, SLOT(slotLanguageChanged(QString)) );
+  connect( editor, SIGNAL(spellCheckStatus(QString)),
+           this, SLOT(slotSpellCheckingStatus(QString)) );
 
   mSnippetWidget = new SnippetWidget( editor, actionCollection(), mSnippetSplitter );
   mSnippetWidget->setVisible( GlobalSettings::self()->showSnippetManager() );
@@ -406,8 +406,8 @@ KMComposeWin::KMComposeWin( const KMime::Message::Ptr &aMsg, Composer::TemplateC
 
   applyMainWindowSettings( KMKernel::self()->config()->group( "Composer") );
 
-  connect( mEdtSubject, SIGNAL(textChanged(const QString&)),
-           SLOT(slotUpdWinTitle(const QString&)) );
+  connect( mEdtSubject, SIGNAL(textChanged(QString)),
+           SLOT(slotUpdWinTitle(QString)) );
   connect( identity, SIGNAL(identityChanged(uint)),
            SLOT(slotIdentityChanged(uint)) );
   connect( kmkernel->identityManager(), SIGNAL(changed(uint)),
@@ -415,10 +415,10 @@ KMComposeWin::KMComposeWin( const KMime::Message::Ptr &aMsg, Composer::TemplateC
 
   connect( mEdtFrom, SIGNAL(completionModeChanged(KGlobalSettings::Completion)),
            SLOT(slotCompletionModeChanged(KGlobalSettings::Completion)) );
-  connect( kmkernel->folderCollectionMonitor(), SIGNAL(collectionRemoved(const Akonadi::Collection&)),
-           SLOT(slotFolderRemoved(const Akonadi::Collection&)) );
-  connect( kmkernel, SIGNAL( configChanged() ),
-           this, SLOT( slotConfigChanged() ) );
+  connect( kmkernel->folderCollectionMonitor(), SIGNAL(collectionRemoved(Akonadi::Collection)),
+           SLOT(slotFolderRemoved(Akonadi::Collection)) );
+  connect( kmkernel, SIGNAL(configChanged()),
+           this, SLOT(slotConfigChanged()) );
 
   mMainWidget->resize( 480, 510 );
   setCentralWidget( mMainWidget );
@@ -827,21 +827,21 @@ void KMComposeWin::rethinkFields( bool fromSlot )
   mGrid->addWidget( mComposerBase->recipientsEditor(), row, 0, 1, 3 );
   ++row;
   if ( showHeaders & HDR_REPLY_TO ) {
-    connect( mEdtReplyTo, SIGNAL( focusDown() ), mComposerBase->recipientsEditor(),
-             SLOT( setFocusTop() ) );
-    connect( mComposerBase->recipientsEditor(), SIGNAL( focusUp() ), mEdtReplyTo,
-             SLOT( setFocus() ) );
+    connect( mEdtReplyTo, SIGNAL(focusDown()), mComposerBase->recipientsEditor(),
+             SLOT(setFocusTop()) );
+    connect( mComposerBase->recipientsEditor(), SIGNAL(focusUp()), mEdtReplyTo,
+             SLOT(setFocus()) );
   } else {
-    connect( mEdtFrom, SIGNAL( focusDown() ), mComposerBase->recipientsEditor(),
-             SLOT( setFocusTop() ) );
-    connect( mComposerBase->recipientsEditor(), SIGNAL( focusUp() ), mEdtFrom,
-             SLOT( setFocus() ) );
+    connect( mEdtFrom, SIGNAL(focusDown()), mComposerBase->recipientsEditor(),
+             SLOT(setFocusTop()) );
+    connect( mComposerBase->recipientsEditor(), SIGNAL(focusUp()), mEdtFrom,
+             SLOT(setFocus()) );
   }
 
-  connect( mComposerBase->recipientsEditor(), SIGNAL( focusDown() ), mEdtSubject,
-           SLOT( setFocus() ) );
-  connect( mEdtSubject, SIGNAL( focusUp() ), mComposerBase->recipientsEditor(),
-           SLOT( setFocusBottom() ) );
+  connect( mComposerBase->recipientsEditor(), SIGNAL(focusDown()), mEdtSubject,
+           SLOT(setFocus()) );
+  connect( mEdtSubject, SIGNAL(focusUp()), mComposerBase->recipientsEditor(),
+           SLOT(setFocusBottom()) );
 
   prevFocus = mComposerBase->recipientsEditor();
 
@@ -878,8 +878,8 @@ void KMComposeWin::rethinkFields( bool fromSlot )
 
 QWidget *KMComposeWin::connectFocusMoving( QWidget *prev, QWidget *next )
 {
-  connect( prev, SIGNAL( focusDown() ), next, SLOT( setFocus() ) );
-  connect( next, SIGNAL( focusUp() ), prev, SLOT( setFocus() ) );
+  connect( prev, SIGNAL(focusDown()), next, SLOT(setFocus()) );
+  connect( next, SIGNAL(focusUp()), prev, SLOT(setFocus()) );
 
   return next;
 }
@@ -988,7 +988,7 @@ void KMComposeWin::applyTemplate( uint uoid )
     job->fetchScope().setAncestorRetrieval( Akonadi::ItemFetchScope::Parent );
     job->setProperty( "mode", (int)mode );
     job->setProperty( "uoid", uoid );
-    connect( job, SIGNAL( result( KJob* ) ), SLOT( slotDelayedApplyTemplate( KJob* ) ) );
+    connect( job, SIGNAL(result(KJob*)), SLOT(slotDelayedApplyTemplate(KJob*)) );
   }
 }
 
@@ -1060,7 +1060,7 @@ void KMComposeWin::setupActions( void )
     KAction *action = new KAction(KIcon("mail-send"), i18n("&Send Mail"), this);
     actionCollection()->addAction("send_default", action );
     action->setShortcut( QKeySequence( Qt::CTRL + Qt::Key_Return ) );
-    connect( action, SIGNAL(triggered(bool)), SLOT(slotSendNow() ));
+    connect( action, SIGNAL(triggered(bool)), SLOT(slotSendNow()));
 
     // FIXME: change to mail_send_via icon when this exits.
     actActionNowMenu = new KActionMenu( KIcon( "mail-send" ), i18n("&Send Mail Via"), this );
@@ -1078,7 +1078,7 @@ void KMComposeWin::setupActions( void )
     //default = queue, alternative = send now
     QAction *action = new KAction( KIcon( "mail-queue" ), i18n("Send &Later"), this );
     actionCollection()->addAction( "send_default", action );
-    connect( action, SIGNAL(triggered(bool) ), SLOT(slotSendLater()) );
+    connect( action, SIGNAL(triggered(bool)), SLOT(slotSendLater()) );
     action->setShortcut( QKeySequence( Qt::CTRL + Qt::Key_Return ) );
     actActionLaterMenu = new KActionMenu( KIcon( "mail-queue" ), i18n("Send &Later Via"), this );
     actionCollection()->addAction( "send_default_via", actActionLaterMenu );
@@ -1106,55 +1106,55 @@ void KMComposeWin::setupActions( void )
   mActLaterMenu = actActionLaterMenu->menu();
 
   connect( mActNowMenu, SIGNAL(triggered(QAction*)), this,
-           SLOT(slotSendNowVia( QAction* )) );
+           SLOT(slotSendNowVia(QAction*)) );
   connect( mActNowMenu, SIGNAL(aboutToShow()), this,
            SLOT(getTransportMenu()) );
 
   connect( mActLaterMenu, SIGNAL(triggered(QAction*)), this,
-            SLOT(slotSendLaterVia( QAction*)) );
+            SLOT(slotSendLaterVia(QAction*)) );
   connect( mActLaterMenu, SIGNAL(aboutToShow()), this,
            SLOT(getTransportMenu()) );
 
   KAction *action = new KAction( KIcon( "document-save" ), i18n("Save as &Draft"), this );
   actionCollection()->addAction("save_in_drafts", action );
-  connect( action, SIGNAL(triggered(bool) ), SLOT(slotSaveDraft()) );
+  connect( action, SIGNAL(triggered(bool)), SLOT(slotSaveDraft()) );
 
   action = new KAction( KIcon( "document-save" ), i18n("Save as &Template"), this );
   actionCollection()->addAction( "save_in_templates", action );
-  connect( action, SIGNAL(triggered(bool) ), SLOT(slotSaveTemplate()) );
+  connect( action, SIGNAL(triggered(bool)), SLOT(slotSaveTemplate()) );
 
   action = new KAction(KIcon("document-open"), i18n("&Insert Text File..."), this);
   actionCollection()->addAction("insert_file", action );
-  connect(action, SIGNAL(triggered(bool) ), SLOT(slotInsertFile()));
+  connect(action, SIGNAL(triggered(bool)), SLOT(slotInsertFile()));
 
   mRecentAction = new KRecentFilesAction( KIcon( "document-open" ),
                                           i18n( "&Insert Recent Text File" ), this );
   actionCollection()->addAction("insert_file_recent", mRecentAction );
-  connect(mRecentAction, SIGNAL(urlSelected (const KUrl&)),
-          SLOT(slotInsertRecentFile(const KUrl&)));
+  connect(mRecentAction, SIGNAL(urlSelected(KUrl)),
+          SLOT(slotInsertRecentFile(KUrl)));
   connect(mRecentAction, SIGNAL(recentListCleared()),
           SLOT(slotRecentListFileClear()));
   mRecentAction->loadEntries( KMKernel::self()->config()->group( QString() ) );
 
   action = new KAction(KIcon("x-office-address-book"), i18n("&Address Book"), this);
   actionCollection()->addAction("addressbook", action );
-  connect(action, SIGNAL(triggered(bool) ), SLOT(slotAddrBook()));
+  connect(action, SIGNAL(triggered(bool)), SLOT(slotAddrBook()));
   action = new KAction(KIcon("mail-message-new"), i18n("&New Composer"), this);
   actionCollection()->addAction("new_composer", action );
-  connect(action, SIGNAL(triggered(bool) ), SLOT(slotNewComposer()));
+  connect(action, SIGNAL(triggered(bool)), SLOT(slotNewComposer()));
   action->setShortcuts( KStandardShortcut::shortcut( KStandardShortcut::New ) );
   action = new KAction( KIcon( "window-new" ), i18n("New Main &Window"), this );
   actionCollection()->addAction( "open_mailreader", action );
-  connect( action, SIGNAL(triggered(bool) ), SLOT(slotNewMailReader()) );
+  connect( action, SIGNAL(triggered(bool)), SLOT(slotNewMailReader()) );
 
   action = new KAction( i18n("Select &Recipients..."), this );
   actionCollection()->addAction( "select_recipients", action );
-  connect( action, SIGNAL( triggered(bool) ),
-           mComposerBase->recipientsEditor(), SLOT( selectRecipients()) );
+  connect( action, SIGNAL(triggered(bool)),
+           mComposerBase->recipientsEditor(), SLOT(selectRecipients()) );
   action = new KAction( i18n("Save &Distribution List..."), this );
   actionCollection()->addAction( "save_distribution_list", action );
-  connect( action, SIGNAL( triggered(bool) ),
-           mComposerBase->recipientsEditor(), SLOT( saveDistributionList() ) );
+  connect( action, SIGNAL(triggered(bool)),
+           mComposerBase->recipientsEditor(), SLOT(saveDistributionList()) );
 
   KStandardAction::print( this, SLOT(slotPrint()), actionCollection() );
   KStandardAction::close( this, SLOT(slotClose()), actionCollection() );
@@ -1175,15 +1175,15 @@ void KMComposeWin::setupActions( void )
 
   action = new KAction( i18n("Paste as Attac&hment"), this );
   actionCollection()->addAction( "paste_att", action );
-  connect( action, SIGNAL(triggered(bool) ), SLOT( slotPasteAsAttachment()) );
+  connect( action, SIGNAL(triggered(bool)), SLOT(slotPasteAsAttachment()) );
 
   mCleanSpace = new KAction( i18n("Cl&ean Spaces"), this );
   actionCollection()->addAction( "clean_spaces", mCleanSpace );
-  connect( mCleanSpace, SIGNAL(triggered(bool) ), mComposerBase->signatureController(), SLOT(cleanSpace()) );
+  connect( mCleanSpace, SIGNAL(triggered(bool)), mComposerBase->signatureController(), SLOT(cleanSpace()) );
 
   mFixedFontAction = new KToggleAction( i18n("Use Fi&xed Font"), this );
   actionCollection()->addAction( "toggle_fixedfont", mFixedFontAction );
-  connect( mFixedFontAction, SIGNAL(triggered(bool) ), SLOT(slotUpdateFont()) );
+  connect( mFixedFontAction, SIGNAL(triggered(bool)), SLOT(slotUpdateFont()) );
   mFixedFontAction->setChecked( MessageViewer::GlobalSettings::self()->useFixedFont() );
 
   //these are checkable!!!
@@ -1203,8 +1203,8 @@ void KMComposeWin::setupActions( void )
 
   mSnippetAction = new KToggleAction( i18n("&Snippets"), this );
   actionCollection()->addAction( "snippets", mSnippetAction );
-  connect( mSnippetAction, SIGNAL( toggled(bool) ),
-           mSnippetWidget, SLOT( setVisible(bool) ) );
+  connect( mSnippetAction, SIGNAL(toggled(bool)),
+           mSnippetWidget, SLOT(setVisible(bool)) );
   mSnippetAction->setChecked( GlobalSettings::self()->showSnippetManager() );
 
   mAutoSpellCheckingAction = new KToggleAction( KIcon( "tools-check-spelling" ),
@@ -1216,56 +1216,56 @@ void KMComposeWin::setupActions( void )
   mAutoSpellCheckingAction->setEnabled( !GlobalSettings::self()->useExternalEditor() );
   mAutoSpellCheckingAction->setChecked( spellCheckingEnabled );
   slotAutoSpellCheckingToggled( spellCheckingEnabled );
-  connect( mAutoSpellCheckingAction, SIGNAL( toggled( bool ) ),
-           this, SLOT( slotAutoSpellCheckingToggled( bool ) ) );
-  connect( mComposerBase->editor(), SIGNAL( checkSpellingChanged( bool ) ),
-           this, SLOT( slotAutoSpellCheckingToggled( bool ) ) );
+  connect( mAutoSpellCheckingAction, SIGNAL(toggled(bool)),
+           this, SLOT(slotAutoSpellCheckingToggled(bool)) );
+  connect( mComposerBase->editor(), SIGNAL(checkSpellingChanged(bool)),
+           this, SLOT(slotAutoSpellCheckingToggled(bool)) );
 
-  connect( mComposerBase->editor(), SIGNAL( textModeChanged( KRichTextEdit::Mode ) ),
-           this, SLOT( slotTextModeChanged( KRichTextEdit::Mode ) ) );
+  connect( mComposerBase->editor(), SIGNAL(textModeChanged(KRichTextEdit::Mode)),
+           this, SLOT(slotTextModeChanged(KRichTextEdit::Mode)) );
 
   //these are checkable!!!
   markupAction = new KToggleAction( i18n("Formatting (HTML)"), this );
   markupAction->setIconText( i18n("HTML") );
   actionCollection()->addAction( "html", markupAction );
-  connect( markupAction, SIGNAL(triggered(bool) ), SLOT(slotToggleMarkup()) );
+  connect( markupAction, SIGNAL(triggered(bool)), SLOT(slotToggleMarkup()) );
 
   mAllFieldsAction = new KToggleAction( i18n("&All Fields"), this);
   actionCollection()->addAction( "show_all_fields", mAllFieldsAction );
-  connect( mAllFieldsAction, SIGNAL(triggered(bool) ), SLOT(slotView()));
+  connect( mAllFieldsAction, SIGNAL(triggered(bool)), SLOT(slotView()));
   mIdentityAction = new KToggleAction(i18n("&Identity"), this);
   actionCollection()->addAction("show_identity", mIdentityAction );
-  connect( mIdentityAction, SIGNAL(triggered(bool) ), SLOT(slotView()));
+  connect( mIdentityAction, SIGNAL(triggered(bool)), SLOT(slotView()));
   mDictionaryAction = new KToggleAction(i18n("&Dictionary"), this);
   actionCollection()->addAction("show_dictionary", mDictionaryAction );
-  connect( mDictionaryAction, SIGNAL(triggered(bool) ), SLOT(slotView()));
+  connect( mDictionaryAction, SIGNAL(triggered(bool)), SLOT(slotView()));
   mFccAction = new KToggleAction(i18n("&Sent-Mail Folder"), this);
   actionCollection()->addAction("show_fcc", mFccAction );
-  connect( mFccAction, SIGNAL(triggered(bool) ), SLOT(slotView()));
+  connect( mFccAction, SIGNAL(triggered(bool)), SLOT(slotView()));
   mTransportAction = new KToggleAction(i18n("&Mail Transport"), this);
   actionCollection()->addAction("show_transport", mTransportAction );
-  connect( mTransportAction, SIGNAL(triggered(bool) ), SLOT(slotView()));
+  connect( mTransportAction, SIGNAL(triggered(bool)), SLOT(slotView()));
   mFromAction = new KToggleAction(i18n("&From"), this);
   actionCollection()->addAction("show_from", mFromAction );
-  connect( mFromAction, SIGNAL(triggered(bool) ), SLOT(slotView()));
+  connect( mFromAction, SIGNAL(triggered(bool)), SLOT(slotView()));
   mReplyToAction = new KToggleAction(i18n("&Reply To"), this);
   actionCollection()->addAction("show_reply_to", mReplyToAction );
-  connect( mReplyToAction, SIGNAL(triggered(bool) ), SLOT(slotView()));
+  connect( mReplyToAction, SIGNAL(triggered(bool)), SLOT(slotView()));
   mSubjectAction = new KToggleAction(
     i18nc("@action:inmenu Show the subject in the composer window.", "S&ubject"), this);
   actionCollection()->addAction("show_subject", mSubjectAction );
-  connect(mSubjectAction, SIGNAL(triggered(bool) ), SLOT(slotView()));
+  connect(mSubjectAction, SIGNAL(triggered(bool)), SLOT(slotView()));
   //end of checkable
 
   action = new KAction( i18n("Append S&ignature"), this );
   actionCollection()->addAction( "append_signature", action );
-  connect( action, SIGNAL(triggered(bool) ), mComposerBase->signatureController(), SLOT(appendSignature()));
+  connect( action, SIGNAL(triggered(bool)), mComposerBase->signatureController(), SLOT(appendSignature()));
   action = new KAction( i18n("Pr&epend Signature"), this );
   actionCollection()->addAction( "prepend_signature", action );
-  connect( action, SIGNAL( triggered(bool) ), mComposerBase->signatureController(), SLOT(prependSignature()) );
+  connect( action, SIGNAL(triggered(bool)), mComposerBase->signatureController(), SLOT(prependSignature()) );
   action = new KAction( i18n("Insert Signature At C&ursor Position"), this );
   actionCollection()->addAction( "insert_signature_at_cursor_position", action );
-  connect( action, SIGNAL( triggered(bool) ), mComposerBase->signatureController(), SLOT(insertSignatureAtCursor()) );
+  connect( action, SIGNAL(triggered(bool)), mComposerBase->signatureController(), SLOT(insertSignatureAtCursor()) );
 
   mComposerBase->attachmentController()->createActions();
 
@@ -1278,7 +1278,7 @@ void KMComposeWin::setupActions( void )
   action = new KAction( i18n("&Spellchecker..."), this );
   action->setIconText( i18n("Spellchecker") );
   actionCollection()->addAction( "setup_spellchecker", action );
-  connect( action, SIGNAL(triggered(bool) ), SLOT(slotSpellcheckConfig()) );
+  connect( action, SIGNAL(triggered(bool)), SLOT(slotSpellcheckConfig()) );
 
   if ( Kleo::CryptoBackendFactory::instance()->protocol( "Chiasmus" ) ) {
     KToggleAction *a = new KToggleAction( KIcon( "chiasmus_chi" ), i18n("Encrypt Message with Chiasmus..."), this );
@@ -1310,9 +1310,9 @@ void KMComposeWin::setupActions( void )
   changeCryptoAction();
 
   connect( mEncryptAction, SIGNAL(toggled(bool)),
-           SLOT(slotEncryptToggled( bool )) );
+           SLOT(slotEncryptToggled(bool)) );
   connect( mSignAction, SIGNAL(toggled(bool)),
-           SLOT(slotSignToggled( bool )) );
+           SLOT(slotSignToggled(bool)) );
 
   QStringList l;
   for ( int i=0 ; i<numCryptoMessageFormats ; ++i ) {
@@ -1328,14 +1328,14 @@ void KMComposeWin::setupActions( void )
   actionFormatReset = new KAction( KIcon( "draw-eraser" ), i18n("Reset Font Settings"), this );
   actionFormatReset->setIconText( i18n("Reset Font") );
   actionCollection()->addAction( "format_reset", actionFormatReset );
-  connect( actionFormatReset, SIGNAL(triggered(bool) ), SLOT( slotFormatReset() ) );
+  connect( actionFormatReset, SIGNAL(triggered(bool)), SLOT(slotFormatReset()) );
 
   mComposerBase->editor()->createActions( actionCollection() );
 
   createGUI( "kmcomposerui.rc" );
   connect( toolBar( "htmlToolBar" )->toggleViewAction(),
-           SIGNAL( toggled( bool ) ),
-           SLOT( htmlToolBarVisibilityChanged( bool ) ) );
+           SIGNAL(toggled(bool)),
+           SLOT(htmlToolBarVisibilityChanged(bool)) );
 
   // In Kontact, this entry would read "Configure Kontact", but bring
   // up KMail's config dialog. That's sensible, though, so fix the label.
@@ -1391,8 +1391,8 @@ void KMComposeWin::setupEditor( void )
   // Font setup
   slotUpdateFont();
 
-  connect( mComposerBase->editor(), SIGNAL( cursorPositionChanged() ),
-           this, SLOT( slotCursorPositionChanged() ) );
+  connect( mComposerBase->editor(), SIGNAL(cursorPositionChanged()),
+           this, SLOT(slotCursorPositionChanged()) );
   slotCursorPositionChanged();
 }
 
@@ -1491,8 +1491,8 @@ void KMComposeWin::setMsg( const KMime::Message::Ptr &newMsg, bool mayAutoSign,
   // don't overwrite the header values with identity specific values
   // unless the identity is sticky
   if ( !stickyIdentity ) {
-    disconnect( mComposerBase->identityCombo(),SIGNAL( identityChanged(uint) ),
-                this, SLOT( slotIdentityChanged(uint) ) ) ;
+    disconnect( mComposerBase->identityCombo(),SIGNAL(identityChanged(uint)),
+                this, SLOT(slotIdentityChanged(uint)) ) ;
   }
 
   // load the mId into the gui, sticky or not, without emitting
@@ -2350,8 +2350,8 @@ void KMComposeWin::slotPrint()
 {
   Message::Composer* composer = createSimpleComposer();
   mMiscComposers.append( composer );
-  connect( composer, SIGNAL( result( KJob* ) ),
-           this, SLOT( slotPrintComposeResult( KJob* ) ) );
+  connect( composer, SIGNAL(result(KJob*)),
+           this, SLOT(slotPrintComposeResult(KJob*)) );
   composer->start();
 }
 
@@ -2453,7 +2453,7 @@ void KMComposeWin::doSend( MessageSender::SendMethod method,
     AddressValidationJob *job = new AddressValidationJob( recipients.join( QLatin1String( ", ") ), this, this );
     job->setProperty( "method", static_cast<int>( method ) );
     job->setProperty( "saveIn", static_cast<int>( saveIn ) );
-    connect( job, SIGNAL( result( KJob* ) ), SLOT( slotDoDelayedSend( KJob* ) ) );
+    connect( job, SIGNAL(result(KJob*)), SLOT(slotDoDelayedSend(KJob*)) );
     job->start();
 
     // we'll call send from within slotDoDelaySend
@@ -2640,7 +2640,7 @@ void KMComposeWin::enableHtml()
     // toolbar (but the messagebox in disableHtml() prevented that and called us).
     // The toolbar can't correctly deal with being enabled right in a slot called from the "disabled"
     // signal, so wait one event loop run for that.
-    QTimer::singleShot( 0, toolBar( "htmlToolBar" ), SLOT( show() ) );
+    QTimer::singleShot( 0, toolBar( "htmlToolBar" ), SLOT(show()) );
   }
   if ( !markupAction->isChecked() )
     markupAction->setChecked( true );
@@ -2671,7 +2671,7 @@ void KMComposeWin::disableHtml( Message::ComposerViewBase::Confirmation confirma
   slotUpdateFont();
   if ( toolBar( "htmlToolBar" )->isVisible() ) {
     // See the comment in enableHtml() why we use a singleshot timer, similar situation here.
-    QTimer::singleShot( 0, toolBar( "htmlToolBar" ), SLOT( hide() ) );
+    QTimer::singleShot( 0, toolBar( "htmlToolBar" ), SLOT(hide()) );
   }
   if ( markupAction->isChecked() )
     markupAction->setChecked( false );

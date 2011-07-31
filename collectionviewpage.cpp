@@ -107,17 +107,17 @@ void CollectionViewPage::init(const Akonadi::Collection & col)
     iconHLayout->addStretch( 1 );
     topLayout->addLayout( iconHLayout );
 
-    connect( mIconsCheckBox, SIGNAL( toggled( bool ) ),
-             mNormalIconLabel, SLOT( setEnabled( bool ) ) );
-    connect( mIconsCheckBox, SIGNAL( toggled( bool ) ),
-             mNormalIconButton, SLOT( setEnabled( bool ) ) );
-    connect( mIconsCheckBox, SIGNAL( toggled( bool ) ),
-             mUnreadIconButton, SLOT( setEnabled( bool ) ) );
-    connect( mIconsCheckBox, SIGNAL( toggled( bool ) ),
-             mUnreadIconLabel, SLOT( setEnabled( bool ) ) );
+    connect( mIconsCheckBox, SIGNAL(toggled(bool)),
+             mNormalIconLabel, SLOT(setEnabled(bool)) );
+    connect( mIconsCheckBox, SIGNAL(toggled(bool)),
+             mNormalIconButton, SLOT(setEnabled(bool)) );
+    connect( mIconsCheckBox, SIGNAL(toggled(bool)),
+             mUnreadIconButton, SLOT(setEnabled(bool)) );
+    connect( mIconsCheckBox, SIGNAL(toggled(bool)),
+             mUnreadIconLabel, SLOT(setEnabled(bool)) );
 
-    connect( mNormalIconButton, SIGNAL( iconChanged( const QString& ) ),
-             this, SLOT( slotChangeIcon( const QString& ) ) );
+    connect( mNormalIconButton, SIGNAL(iconChanged(QString)),
+             this, SLOT(slotChangeIcon(QString)) );
   }
 
   // sender or receiver column
@@ -146,8 +146,8 @@ void CollectionViewPage::init(const Akonadi::Collection & col)
   // message list aggregation
   mUseDefaultAggregationCheckBox = new QCheckBox( i18n( "Use default aggregation" ), messageListGroup );
   messageListGroupLayout->addWidget( mUseDefaultAggregationCheckBox );
-  connect( mUseDefaultAggregationCheckBox, SIGNAL( stateChanged( int ) ),
-           this, SLOT( slotAggregationCheckboxChanged() ) );
+  connect( mUseDefaultAggregationCheckBox, SIGNAL(stateChanged(int)),
+           this, SLOT(slotAggregationCheckboxChanged()) );
 
   mAggregationComboBox = new MessageList::Utils::AggregationComboBox( messageListGroup );
 
@@ -157,8 +157,8 @@ void CollectionViewPage::init(const Akonadi::Collection & col)
   using MessageList::Utils::AggregationConfigButton;
   AggregationConfigButton * aggregationConfigButton = new AggregationConfigButton( messageListGroup, mAggregationComboBox );
   // Make sure any changes made in the aggregations configure dialog are reflected in the combo.
-  connect( aggregationConfigButton, SIGNAL( configureDialogCompleted() ),
-           this, SLOT( slotSelectFolderAggregation() ) );
+  connect( aggregationConfigButton, SIGNAL(configureDialogCompleted()),
+           this, SLOT(slotSelectFolderAggregation()) );
 
   QHBoxLayout * aggregationLayout = new QHBoxLayout();
   aggregationLayout->addWidget( aggregationLabel, 1 );
@@ -169,8 +169,8 @@ void CollectionViewPage::init(const Akonadi::Collection & col)
   // message list theme
   mUseDefaultThemeCheckBox = new QCheckBox( i18n( "Use default theme" ), messageListGroup );
   messageListGroupLayout->addWidget( mUseDefaultThemeCheckBox );
-  connect( mUseDefaultThemeCheckBox, SIGNAL( stateChanged( int ) ),
-           this, SLOT( slotThemeCheckboxChanged() ) );
+  connect( mUseDefaultThemeCheckBox, SIGNAL(stateChanged(int)),
+           this, SLOT(slotThemeCheckboxChanged()) );
 
   mThemeComboBox = new MessageList::Utils::ThemeComboBox( messageListGroup );
 
@@ -180,8 +180,8 @@ void CollectionViewPage::init(const Akonadi::Collection & col)
   using MessageList::Utils::ThemeConfigButton;
   ThemeConfigButton * themeConfigButton = new ThemeConfigButton( messageListGroup, mThemeComboBox );
   // Make sure any changes made in the themes configure dialog are reflected in the combo.
-  connect( themeConfigButton, SIGNAL( configureDialogCompleted() ),
-           this, SLOT( slotSelectFolderTheme() ) );
+  connect( themeConfigButton, SIGNAL(configureDialogCompleted()),
+           this, SLOT(slotSelectFolderTheme()) );
 
   QHBoxLayout * themeLayout = new QHBoxLayout();
   themeLayout->addWidget( themeLabel, 1 );

@@ -38,6 +38,14 @@ class Item;
 class Monitor;
 }
 
+namespace MessageCore {
+class AsyncNepomukResourceRetriever;
+}
+
+namespace Nepomuk {
+class Resource;
+}
+
 namespace KMail {
 
 /**
@@ -100,10 +108,10 @@ class MessageActions : public QObject
     template<typename T> void replyCommand();
     void addMailingListAction( const QString &item, const KUrl &url );
     void addMailingListActions( const QString &item, const KUrl::List &list );
-    void updateAnnotateAction();
     void updateMailingListActions( const Akonadi::Item& messageItem );
     
   private slots:
+    void updateAnnotateAction(const QUrl& url, const Nepomuk::Resource& resource);
     void slotItemModified( const Akonadi::Item &  item, const QSet< QByteArray > &  partIdentifiers );
     void slotReplyToMsg();
     void slotReplyAuthorToMsg();
@@ -134,6 +142,7 @@ class MessageActions : public QObject
     KAction *mEditAction, *mAnnotateAction, *mPrintAction;
     bool mKorganizerIsOnSystem;
     Akonadi::Monitor *mMonitor;
+    MessageCore::AsyncNepomukResourceRetriever *mAsynNepomukRetriever;
 };
 
 }

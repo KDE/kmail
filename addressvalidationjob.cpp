@@ -100,7 +100,7 @@ AddressValidationJob::~AddressValidationJob()
 void AddressValidationJob::start()
 {
   AliasesExpandJob *job = new AliasesExpandJob( d->mEmailAddresses, MessageComposer::MessageComposerSettings::defaultDomain(), this );
-  connect( job, SIGNAL( result( KJob* ) ), SLOT( slotAliasExpansionDone( KJob* ) ) );
+  connect( job, SIGNAL(result(KJob*)), SLOT(slotAliasExpansionDone(KJob*)) );
   job->start();
 }
 

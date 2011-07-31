@@ -56,7 +56,7 @@ KMMainWin::KMMainWin(QWidget *)
 
   KAction *action  = new KAction( KIcon("window-new"), i18n("New &Window"), this );
   actionCollection()->addAction( "new_mail_client", action );
-  connect( action, SIGNAL( triggered(bool) ), SLOT( slotNewMailReader() ) );
+  connect( action, SIGNAL(triggered(bool)), SLOT(slotNewMailReader()) );
 
   resize( 700, 500 ); // The default size
 
@@ -68,26 +68,26 @@ KMMainWin::KMMainWin(QWidget *)
 
   setStandardToolBarMenuEnabled( true );
 
-  KStandardAction::configureToolbars( this, SLOT( slotEditToolbars() ),
+  KStandardAction::configureToolbars( this, SLOT(slotEditToolbars()),
                                       actionCollection() );
 
-  KStandardAction::keyBindings( guiFactory(), SLOT( configureShortcuts() ),
+  KStandardAction::keyBindings( guiFactory(), SLOT(configureShortcuts()),
                                 actionCollection() );
 
-  KStandardAction::quit( this, SLOT( slotQuit() ), actionCollection() );
+  KStandardAction::quit( this, SLOT(slotQuit()), actionCollection() );
   createGUI( "kmmainwin.rc" );
 
   //must be after createGUI, otherwise e.g toolbar settings are not loaded
   applyMainWindowSettings( KMKernel::self()->config()->group( "Main Window") );
 
-  connect( KPIM::BroadcastStatus::instance(), SIGNAL( statusMsg( const QString& ) ),
-           this, SLOT( displayStatusMsg(const QString&) ) );
+  connect( KPIM::BroadcastStatus::instance(), SIGNAL(statusMsg(QString)),
+           this, SLOT(displayStatusMsg(QString)) );
 
-  connect( mKMMainWidget, SIGNAL( captionChangeRequest(const QString&) ),
-           SLOT( setCaption(const QString&) ) );
+  connect( mKMMainWidget, SIGNAL(captionChangeRequest(QString)),
+           SLOT(setCaption(QString)) );
 
   if ( kmkernel->firstInstance() )
-    QTimer::singleShot( 200, this, SLOT( slotShowTipOnStart() ) );
+    QTimer::singleShot( 200, this, SLOT(slotShowTipOnStart()) );
 }
 
 KMMainWin::~KMMainWin()
@@ -181,7 +181,7 @@ void KMMainWin::setupStatusBar()
   mLittleProgress->show();
 
   statusBar()->insertItem( i18n("Starting..."), 1, 4 );
-  QTimer::singleShot( 2000, KPIM::BroadcastStatus::instance(), SLOT( reset() ) );
+  QTimer::singleShot( 2000, KPIM::BroadcastStatus::instance(), SLOT(reset()) );
   statusBar()->setItemAlignment( 1, Qt::AlignLeft | Qt::AlignVCenter );
   statusBar()->addPermanentWidget( mKMMainWidget->vacationScriptIndicator() );
   statusBar()->addPermanentWidget( mLittleProgress );

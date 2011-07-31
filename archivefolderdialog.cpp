@@ -73,7 +73,7 @@ ArchiveFolderDialog::ArchiveFolderDialog( QWidget *parent )
   mFolderRequester = new FolderRequester( mainWidget );
   mFolderRequester->setMustBeReadWrite( false );
   mFolderRequester->setNotAllowToCreateNewFolder( true );
-  connect( mFolderRequester, SIGNAL( folderChanged( const Akonadi::Collection& ) ), SLOT( slotFolderChanged( const Akonadi::Collection& ) ) );
+  connect( mFolderRequester, SIGNAL(folderChanged(Akonadi::Collection)), SLOT(slotFolderChanged(Akonadi::Collection)) );
   folderLabel->setBuddy( mFolderRequester );
   mainLayout->addWidget( mFolderRequester, row, 1 );
   row++;
@@ -100,7 +100,7 @@ ArchiveFolderDialog::ArchiveFolderDialog( QWidget *parent )
   mUrlRequester->setMode( KFile::LocalOnly | KFile::File );
   mUrlRequester->setFilter( "*.tar *.zip *.tar.gz *.tar.bz2" );
   fileNameLabel->setBuddy( mUrlRequester );
-  connect( mUrlRequester, SIGNAL(urlSelected(const KUrl&)),
+  connect( mUrlRequester, SIGNAL(urlSelected(KUrl)),
            this, SLOT(slotFixFileExtension()) );
   mainLayout->addWidget( mUrlRequester, row, 1 );
   row++;

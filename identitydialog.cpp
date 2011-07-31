@@ -486,11 +486,11 @@ namespace KMail {
     btns->addWidget( mCopyGlobal );
     vlay->addLayout( btns );
 #ifndef KDEPIM_MOBILE_UI
-    connect( mCustom, SIGNAL(toggled( bool )),
-             mWidget, SLOT(setEnabled( bool )) );
+    connect( mCustom, SIGNAL(toggled(bool)),
+             mWidget, SLOT(setEnabled(bool)) );
 #endif
-    connect( mCustom, SIGNAL(toggled( bool )),
-             mCopyGlobal, SLOT(setEnabled( bool )) );
+    connect( mCustom, SIGNAL(toggled(bool)),
+             mCopyGlobal, SLOT(setEnabled(bool)) );
     connect( mCopyGlobal, SIGNAL(clicked()),
              this, SLOT(slotCopyGlobal()) );
 #ifdef KDEPIM_MOBILE_UI
@@ -614,7 +614,7 @@ namespace KMail {
     const QString recipients = mReplyToEdit->text().trimmed() + QLatin1String( ", " ) + mBccEdit->text().trimmed();
     AddressValidationJob *job = new AddressValidationJob( recipients, this, this );
     job->setProperty( "email", email );
-    connect( job, SIGNAL( result( KJob* ) ), SLOT( slotDelayedButtonClicked( KJob* ) ) );
+    connect( job, SIGNAL(result(KJob*)), SLOT(slotDelayedButtonClicked(KJob*)) );
     job->start();
   }
 

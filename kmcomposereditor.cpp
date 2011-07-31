@@ -63,15 +63,15 @@ void KMComposerEditor::createActions( KActionCollection *actionCollection )
 
   mPasteQuotation = new KAction( i18n("Pa&ste as Quotation"), this );
   actionCollection->addAction("paste_quoted", mPasteQuotation );
-  connect( mPasteQuotation, SIGNAL(triggered(bool) ), this, SLOT( slotPasteAsQuotation()) );
+  connect( mPasteQuotation, SIGNAL(triggered(bool)), this, SLOT(slotPasteAsQuotation()) );
 
   mAddQuoteChars = new KAction( i18n("Add &Quote Characters"), this );
   actionCollection->addAction( "tools_quote", mAddQuoteChars );
-  connect( mAddQuoteChars, SIGNAL(triggered(bool) ), this, SLOT(slotAddQuotes()) );
+  connect( mAddQuoteChars, SIGNAL(triggered(bool)), this, SLOT(slotAddQuotes()) );
 
   mRemQuoteChars = new KAction( i18n("Re&move Quote Characters"), this );
   actionCollection->addAction( "tools_unquote", mRemQuoteChars );
-  connect (mRemQuoteChars, SIGNAL(triggered(bool) ), this, SLOT(slotRemoveQuotes()) );
+  connect (mRemQuoteChars, SIGNAL(triggered(bool)), this, SLOT(slotRemoveQuotes()) );
 }
 
 void KMComposerEditor::setHighlighterColors(KPIMTextEdit::EMailQuoteHighlighter * highlighter)
@@ -215,7 +215,7 @@ void KMComposerEditor::insertFromMimeData( const QMimeData *source )
       Akonadi::ItemFetchJob *itemFetchJob = new Akonadi::ItemFetchJob( items, this );
       itemFetchJob->fetchScope().fetchFullPayload( true );
       itemFetchJob->fetchScope().setAncestorRetrieval( Akonadi::ItemFetchScope::Parent );
-      connect( itemFetchJob, SIGNAL( result( KJob* ) ), this, SLOT( slotFetchJob( KJob* ) ) );
+      connect( itemFetchJob, SIGNAL(result(KJob*)), this, SLOT(slotFetchJob(KJob*)) );
       return;
     }
   }

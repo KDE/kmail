@@ -751,7 +751,7 @@ public:
   void save();
 
 private:
-  //virtual void doLoadFromGlobalSettings();
+  virtual void doLoadFromGlobalSettings();
   virtual void doLoadOther();
   //FIXME virtual void doResetToDefaultsOther();
 
@@ -774,7 +774,7 @@ private Q_SLOTS:
   void slotConfigureChiasmus();
 
 private:
-  //virtual void doLoadFromGlobalSettings();
+  virtual void doLoadFromGlobalSettings();
   virtual void doLoadOther();
   //FIXME virtual void doResetToDefaultsOther();
 

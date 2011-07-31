@@ -336,7 +336,7 @@ void BackupJob::archiveNextFolder()
 
   Akonadi::ItemFetchJob *job = new Akonadi::ItemFetchJob( mCurrentFolder );
   job->setProperty( "folderName", folderName );
-  connect( job, SIGNAL( result( KJob* ) ), SLOT( onArchiveNextFolderDone( KJob* ) ) );
+  connect( job, SIGNAL(result(KJob*)), SLOT(onArchiveNextFolderDone(KJob*)) );
 }
 
 void BackupJob::onArchiveNextFolderDone( KJob *job )

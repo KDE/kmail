@@ -128,8 +128,8 @@ namespace KMail {
     setColumnWidth( 0, 175 );
 
     setContextMenuPolicy( Qt::CustomContextMenu );
-    connect( this, SIGNAL( customContextMenuRequested( const QPoint& ) ),
-             this, SLOT( slotCustomContextMenuRequested( const QPoint& ) ) );
+    connect( this, SIGNAL(customContextMenuRequested(QPoint)),
+             this, SLOT(slotCustomContextMenuRequested(QPoint)) );
   }
 
   void IdentityListView::editItem( QTreeWidgetItem *item, int column )

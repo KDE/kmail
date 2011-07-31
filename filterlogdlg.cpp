@@ -81,7 +81,7 @@ FilterLogDialog::FilterLogDialog( QWidget * parent )
   mLogActiveBox = new QCheckBox( i18n("&Log filter activities"), page );
   mLogActiveBox->setChecked( FilterLog::instance()->isLogging() );
   connect( mLogActiveBox, SIGNAL(clicked()),
-           this, SLOT(slotSwitchLogState(void)) );
+           this, SLOT(slotSwitchLogState()) );
   mLogActiveBox->setWhatsThis(
       i18n( "You can turn logging of filter activities on and off here. "
             "Of course, log data is collected and shown only when logging "
@@ -91,15 +91,15 @@ FilterLogDialog::FilterLogDialog( QWidget * parent )
   QVBoxLayout *layout = new QVBoxLayout;
   mLogDetailsBox->setLayout( layout );
   mLogDetailsBox->setEnabled( mLogActiveBox->isChecked() );
-  connect( mLogActiveBox, SIGNAL( toggled( bool ) ),
-           mLogDetailsBox, SLOT( setEnabled( bool ) ) );
+  connect( mLogActiveBox, SIGNAL(toggled(bool)),
+           mLogDetailsBox, SLOT(setEnabled(bool)) );
 
   mLogPatternDescBox = new QCheckBox( i18n("Log pattern description") );
   layout->addWidget( mLogPatternDescBox );
   mLogPatternDescBox->setChecked(
       FilterLog::instance()->isContentTypeEnabled( FilterLog::PatternDescription ) );
   connect( mLogPatternDescBox, SIGNAL(clicked()),
-           this, SLOT(slotChangeLogDetail(void)) );
+           this, SLOT(slotChangeLogDetail()) );
   // TODO
   //QWhatsThis::add( mLogPatternDescBox,
   //    i18n( "" ) );
@@ -109,7 +109,7 @@ FilterLogDialog::FilterLogDialog( QWidget * parent )
   mLogRuleEvaluationBox->setChecked(
       FilterLog::instance()->isContentTypeEnabled( FilterLog::RuleResult ) );
   connect( mLogRuleEvaluationBox, SIGNAL(clicked()),
-           this, SLOT(slotChangeLogDetail(void)) );
+           this, SLOT(slotChangeLogDetail()) );
   mLogRuleEvaluationBox->setWhatsThis(
       i18n( "You can control the feedback in the log concerning the "
             "evaluation of the filter rules of applied filters: "
@@ -123,7 +123,7 @@ FilterLogDialog::FilterLogDialog( QWidget * parent )
   mLogPatternResultBox->setChecked(
       FilterLog::instance()->isContentTypeEnabled( FilterLog::PatternResult ) );
   connect( mLogPatternResultBox, SIGNAL(clicked()),
-           this, SLOT(slotChangeLogDetail(void)) );
+           this, SLOT(slotChangeLogDetail()) );
   // TODO
   //QWhatsThis::add( mLogPatternResultBox,
   //    i18n( "" ) );
@@ -133,7 +133,7 @@ FilterLogDialog::FilterLogDialog( QWidget * parent )
   mLogFilterActionBox->setChecked(
       FilterLog::instance()->isContentTypeEnabled( FilterLog::AppliedAction ) );
   connect( mLogFilterActionBox, SIGNAL(clicked()),
-           this, SLOT(slotChangeLogDetail(void)) );
+           this, SLOT(slotChangeLogDetail()) );
   // TODO
   //QWhatsThis::add( mLogFilterActionBox,
   //    i18n( "" ) );
@@ -157,16 +157,16 @@ FilterLogDialog::FilterLogDialog( QWidget * parent )
             "this limit then the oldest data will be discarded until "
             "the limit is no longer exceeded. " ) );
 
-  connect(FilterLog::instance(), SIGNAL(logEntryAdded(const QString&)),
-          this, SLOT(slotLogEntryAdded(const QString&)));
-  connect(FilterLog::instance(), SIGNAL(logShrinked(void)),
-          this, SLOT(slotLogShrinked(void)));
-  connect(FilterLog::instance(), SIGNAL(logStateChanged(void)),
-          this, SLOT(slotLogStateChanged(void)));
+  connect(FilterLog::instance(), SIGNAL(logEntryAdded(QString)),
+          this, SLOT(slotLogEntryAdded(QString)));
+  connect(FilterLog::instance(), SIGNAL(logShrinked()),
+          this, SLOT(slotLogShrinked()));
+  connect(FilterLog::instance(), SIGNAL(logStateChanged()),
+          this, SLOT(slotLogStateChanged()));
 
   setInitialSize( QSize( 500, 500 ) );
-  connect( this, SIGNAL( user1Clicked() ), SLOT( slotUser1() ) );
-  connect( this, SIGNAL( user2Clicked() ), SLOT( slotUser2() ) );
+  connect( this, SIGNAL(user1Clicked()), SLOT(slotUser1()) );
+  connect( this, SIGNAL(user2Clicked()), SLOT(slotUser2()) );
 }
 
 

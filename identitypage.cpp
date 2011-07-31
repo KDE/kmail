@@ -55,28 +55,28 @@ IdentityPage::IdentityPage( const KComponentData &instance, QWidget *parent )
   mIPage.setupUi( this );
   mIPage.mIdentityList->setIdentityManager( mIdentityManager );
 
-  connect( mIPage.mIdentityList, SIGNAL( itemSelectionChanged() ),
-           SLOT( slotIdentitySelectionChanged() ) );
-  connect( this, SIGNAL( changed(bool) ),
-           SLOT( slotIdentitySelectionChanged() ) );
-  connect( mIPage.mIdentityList, SIGNAL( rename( KMail::IdentityListViewItem *, const QString & ) ),
-           SLOT( slotRenameIdentity(KMail::IdentityListViewItem *, const QString & ) ) );
-  connect( mIPage.mIdentityList, SIGNAL( itemDoubleClicked( QTreeWidgetItem*, int ) ),
-           SLOT( slotModifyIdentity() ) );
-  connect( mIPage.mIdentityList, SIGNAL( contextMenu( KMail::IdentityListViewItem *, const QPoint & ) ),
-           SLOT( slotContextMenu( KMail::IdentityListViewItem *, const QPoint & ) ) );
+  connect( mIPage.mIdentityList, SIGNAL(itemSelectionChanged()),
+           SLOT(slotIdentitySelectionChanged()) );
+  connect( this, SIGNAL(changed(bool)),
+           SLOT(slotIdentitySelectionChanged()) );
+  connect( mIPage.mIdentityList, SIGNAL(rename(KMail::IdentityListViewItem*,QString)),
+           SLOT(slotRenameIdentity(KMail::IdentityListViewItem*,QString)) );
+  connect( mIPage.mIdentityList, SIGNAL(itemDoubleClicked(QTreeWidgetItem*,int)),
+           SLOT(slotModifyIdentity()) );
+  connect( mIPage.mIdentityList, SIGNAL(contextMenu(KMail::IdentityListViewItem*,QPoint)),
+           SLOT(slotContextMenu(KMail::IdentityListViewItem*,QPoint)) );
   // ### connect dragged(...), ...
 
-  connect( mIPage.mButtonAdd, SIGNAL( clicked() ),
-           this, SLOT( slotNewIdentity() ) );
-  connect( mIPage.mModifyButton, SIGNAL( clicked() ),
-           this, SLOT( slotModifyIdentity() ) );
-  connect( mIPage.mRenameButton, SIGNAL( clicked() ),
-           this, SLOT( slotRenameIdentity() ) );
-  connect( mIPage.mRemoveButton, SIGNAL( clicked() ),
-           this, SLOT( slotRemoveIdentity() ) );
-  connect( mIPage.mSetAsDefaultButton, SIGNAL( clicked() ),
-           this, SLOT( slotSetAsDefault() ) );
+  connect( mIPage.mButtonAdd, SIGNAL(clicked()),
+           this, SLOT(slotNewIdentity()) );
+  connect( mIPage.mModifyButton, SIGNAL(clicked()),
+           this, SLOT(slotModifyIdentity()) );
+  connect( mIPage.mRenameButton, SIGNAL(clicked()),
+           this, SLOT(slotRenameIdentity()) );
+  connect( mIPage.mRemoveButton, SIGNAL(clicked()),
+           this, SLOT(slotRemoveIdentity()) );
+  connect( mIPage.mSetAsDefaultButton, SIGNAL(clicked()),
+           this, SLOT(slotSetAsDefault()) );
 }
 
 IdentityPage::~IdentityPage()
@@ -266,14 +266,14 @@ void IdentityPage::slotRenameIdentity( KMail::IdentityListViewItem *item , const
 void IdentityPage::slotContextMenu( IdentityListViewItem *item, const QPoint &pos )
 {
   QMenu *menu = new QMenu( this );
-  menu->addAction( i18n( "Add..." ), this, SLOT( slotNewIdentity() ) );
+  menu->addAction( i18n( "Add..." ), this, SLOT(slotNewIdentity()) );
   if ( item ) {
-    menu->addAction( i18n( "Modify..." ), this, SLOT( slotModifyIdentity() ) );
+    menu->addAction( i18n( "Modify..." ), this, SLOT(slotModifyIdentity()) );
     if ( mIPage.mIdentityList->topLevelItemCount() > 1 ) {
-      menu->addAction( i18n( "Remove" ), this, SLOT( slotRemoveIdentity() ) );
+      menu->addAction( i18n( "Remove" ), this, SLOT(slotRemoveIdentity()) );
     }
     if ( !item->identity().isDefault() ) {
-      menu->addAction( i18n( "Set as Default" ), this, SLOT( slotSetAsDefault() ) );
+      menu->addAction( i18n( "Set as Default" ), this, SLOT(slotSetAsDefault()) );
     }
   }
   menu->exec( pos );
