@@ -2356,11 +2356,7 @@ void KMMainWidget::slotSaveMsg()
   if ( selectedMessages.isEmpty() )
     return;
   KMSaveMsgCommand *saveCommand = new KMSaveMsgCommand( this, selectedMessages );
-
-  if ( saveCommand->url().isEmpty() )
-    delete saveCommand;
-  else
-    saveCommand->start();
+  saveCommand->start();
 }
 
 //-----------------------------------------------------------------------------
