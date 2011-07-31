@@ -61,7 +61,6 @@
 #include <kio/jobuidelegate.h>
 #include <kio/netaccess.h>
 
-#include <kmbox/mbox.h>
 #include <kmime/kmime_message.h>
 
 #include <kpimidentities/identitymanager.h>
@@ -664,27 +663,8 @@ KUrl KMSaveMsgCommand::url() const
 
 KMCommand::Result KMSaveMsgCommand::execute()
 {
-  const QString fileName = mUrl.toLocalFile();
-  if ( fileName.isEmpty() )
-    return OK;
-
-  KMBox::MBox mbox;
-  if ( !mbox.load( fileName ) ) {
-    //TODO: error
+  if ( !MessageViewer::Util::saveMessageInMbox( mUrl, retrievedMsgs()) )
     return Failed;
-  }
-
-  foreach ( const Akonadi::Item &item, retrievedMsgs() ) {
-    if ( item.hasPayload<KMime::Message::Ptr>() ) {
-      mbox.appendMessage( item.payload<KMime::Message::Ptr>() );
-    }
-  }
-
-  if ( !mbox.save() ) {
-    //TODO: error
-    return Failed;
-  }
-
   return OK;
 }
 
