@@ -1393,6 +1393,21 @@ void AppearancePage::HeadersTab::doLoadOther()
                   MessageCore::GlobalSettings::self()->customDateFormat() );
 }
 
+void AppearancePage::HeadersTab::doLoadFromGlobalSettings()
+{
+  mDisplayMessageToolTips->setChecked( MessageList::Core::Settings::self()->messageToolTipEnabled() );
+  mHideTabBarWithSingleTab->setChecked( MessageList::Core::Settings::self()->autoHideTabBarWithSingleTab() );
+  // "Aggregation":
+  slotSelectDefaultAggregation();
+
+  // "Theme":
+  slotSelectDefaultTheme();
+
+  setDateDisplay( MessageCore::GlobalSettings::self()->dateFormat(),
+                  MessageCore::GlobalSettings::self()->customDateFormat() );
+}
+
+
 void AppearancePage::HeadersTab::setDateDisplay( int num, const QString & format )
 {
   DateFormatter::FormatType dateDisplay =

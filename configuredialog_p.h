@@ -347,7 +347,7 @@ public:
   void save();
 
 private: // methods
-  //virtual void doLoadFromGlobalSettings();
+  virtual void doLoadFromGlobalSettings();
   virtual void doLoadOther();
   // virtual void doResetToDefaultsOther();
   void setDateDisplay( int id, const QString & format );
