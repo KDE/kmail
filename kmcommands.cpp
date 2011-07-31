@@ -622,26 +622,12 @@ KMCommand::Result KMUseTemplateCommand::execute()
   return OK;
 }
 
-static KUrl subjectToUrl( const QString &subject )
-{
-  QString fileName = MessageCore::StringUtil::cleanFileName( subject.trimmed() );
-
-  // avoid stripping off the last part of the subject after a "."
-  // by KFileDialog, which thinks it's an extension
-  if ( !fileName.endsWith( QLatin1String( ".mbox" ) ) )
-    fileName += ".mbox";
-
-  const QString filter = i18n( "*.mbox|email messages (*.mbox)\n*|all files (*)" );
-  return KFileDialog::getSaveUrl( KUrl::fromPath( fileName ), filter );
-}
-
 KMSaveMsgCommand::KMSaveMsgCommand( QWidget *parent, const Akonadi::Item& msg )
   : KMCommand( parent )
 {
   if ( !msg.isValid() )
     return;
 
-  mUrl = subjectToUrl( MessageViewer::NodeHelper::cleanSubject( msg.payload<KMime::Message::Ptr>().get() ) );
   fetchScope().fetchFullPayload( true ); // ### unless we call the corresponding KMCommand ctor, this has no effect
 }
 
@@ -651,19 +637,12 @@ KMSaveMsgCommand::KMSaveMsgCommand( QWidget *parent, const QList<Akonadi::Item> 
   if ( msgList.empty() )
     return;
 
-  const Akonadi::Item msgBase = msgList.first();
-  mUrl = subjectToUrl( MessageViewer::NodeHelper::cleanSubject( msgBase.payload<KMime::Message::Ptr>().get() ) );
   fetchScope().fetchFullPayload( true ); // ### unless we call the corresponding KMCommand ctor, this has no effect
-}
-
-KUrl KMSaveMsgCommand::url() const
-{
-  return mUrl;
 }
 
 KMCommand::Result KMSaveMsgCommand::execute()
 {
-  if ( !MessageViewer::Util::saveMessageInMbox( mUrl, retrievedMsgs()) )
+  if ( !MessageViewer::Util::saveMessageInMbox( retrievedMsgs(), parentWidget()) )
     return Failed;
   return OK;
 }

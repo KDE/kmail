@@ -815,11 +815,7 @@ void SearchWindow::slotForwardAttachedMsg()
 void SearchWindow::slotSaveMsg()
 {
   KMSaveMsgCommand *saveCommand = new KMSaveMsgCommand( this, selectedMessages() );
-
-  if ( saveCommand->url().isEmpty() )
-    delete saveCommand;
-  else
-    saveCommand->start();
+  saveCommand->start();
 }
 
 void SearchWindow::slotSaveAttachments()
