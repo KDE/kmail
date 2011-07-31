@@ -248,13 +248,10 @@ class KMAIL_EXPORT KMSaveMsgCommand : public KMCommand
 public:
   KMSaveMsgCommand( QWidget *parent, const QList<Akonadi::Item> &msgList );
   KMSaveMsgCommand( QWidget *parent, const Akonadi::Item & msg );
-  KUrl url() const;
 
 private:
   virtual Result execute();
 
-private:
-  KUrl mUrl;
 };
 
 class KMAIL_EXPORT KMOpenMsgCommand : public KMCommand
