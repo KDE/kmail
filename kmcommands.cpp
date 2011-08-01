@@ -1664,17 +1664,9 @@ KMCommand::Result KMSaveAttachmentsCommand::execute()
       kWarning() << "Retrieved item has no payload? Ignoring for saving the attachments";
     }
   }
-
-  if ( contentsToSave.isEmpty() ) {
-    KMessageBox::information( 0, i18n( "Found no attachments to save." ) );
-    return Failed;
-  }
-
-  if ( MessageViewer::Util::saveContents( parentWidget(), contentsToSave ) ) {
+  if ( MessageViewer::Util::saveAttachments( contentsToSave, parentWidget() ) )
     return OK;
-  } else {
-    return Failed;
-  }
+  return Failed;
 }
 
 KMResendMessageCommand::KMResendMessageCommand( QWidget *parent,
