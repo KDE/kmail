@@ -622,15 +622,6 @@ KMCommand::Result KMUseTemplateCommand::execute()
   return OK;
 }
 
-KMSaveMsgCommand::KMSaveMsgCommand( QWidget *parent, const Akonadi::Item& msg )
-  : KMCommand( parent )
-{
-  if ( !msg.isValid() )
-    return;
-
-  fetchScope().fetchFullPayload( true ); // ### unless we call the corresponding KMCommand ctor, this has no effect
-}
-
 KMSaveMsgCommand::KMSaveMsgCommand( QWidget *parent, const QList<Akonadi::Item> &msgList )
   : KMCommand( parent, msgList )
 {
