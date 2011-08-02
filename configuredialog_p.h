@@ -542,6 +542,7 @@ private:
   QCheckBox     *mAutoAppSignFileCheck;
   QCheckBox     *mTopQuoteCheck;
   QCheckBox     *mDashDashCheck;
+  QCheckBox     *mReplyUsingSameFormat;
   QCheckBox     *mSmartQuoteCheck;
   QCheckBox     *mStripSignatureCheck;
   QCheckBox     *mQuoteSelectionOnlyCheck;

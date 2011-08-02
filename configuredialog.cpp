@@ -2157,6 +2157,15 @@ ComposerPageGeneralTab::ComposerPageGeneralTab( QWidget * parent )
   connect( mSmartQuoteCheck, SIGNAL(stateChanged(int)),
            this, SLOT(slotEmitChanged()) );
 
+  mReplyUsingSameFormat = new QCheckBox( MessageComposer::MessageComposerSettings::self()->replyUsingSameFormatItem()->label(),
+                                            this );
+  mReplyUsingSameFormat->setToolTip(
+                 i18n( "When replying, only quote the message in the original format it was received "
+                       "or else, if unchecked, it will reply as plain text by default" ) );
+  vlay->addWidget( mReplyUsingSameFormat );
+  connect( mReplyUsingSameFormat, SIGNAL( stateChanged( int ) ),
+           this, SLOT( slotEmitChanged() ) );
+
   mQuoteSelectionOnlyCheck = new QCheckBox( MessageComposer::MessageComposerSettings::self()->quoteSelectionOnlyItem()->label(),
                                             this );
   mQuoteSelectionOnlyCheck->setToolTip(

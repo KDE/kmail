@@ -1466,7 +1466,6 @@ void KMComposeWin::setMsg( const KMime::Message::Ptr &newMsg, bool mayAutoSign,
   }
 
   mComposerBase->setMessage( newMsg );
-
   mMsg = newMsg;
   KPIMIdentities::IdentityManager * im = KMKernel::self()->identityManager();
 
