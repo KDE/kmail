@@ -41,6 +41,7 @@ class KJob;
 class KLineEdit;
 class KMMainWidget;
 class KStatusBar;
+class KMSearchMessageModel;
 
 namespace Akonadi {
 class EntityTreeView;
@@ -172,7 +173,7 @@ class SearchWindow: public KDialog, virtual public KXMLGUIClient
     QRadioButton *mChkbxSpecificFolders;
     MailCommon::FolderRequester *mCbxFolders;
     QCheckBox *mChkSubFolders;
-    Akonadi::ItemModel *mResultModel;
+    KMSearchMessageModel *mResultModel;
     Akonadi::EntityTreeView *mLbxMatches;
     QLabel *mSearchFolderLbl;
     KLineEdit *mSearchFolderEdt;
