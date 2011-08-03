@@ -24,7 +24,7 @@
 #include "foldercollection.h"
 #include "globalsettings.h"
 #include "mailutil.h"
-
+#include "mailcommon/mailkernel.h"
 
 #include <kxmlguiwindow.h>
 #include <kglobalsettings.h>
@@ -93,7 +93,7 @@ KMSystemTray::KMSystemTray(QObject *parent)
   connect( contextMenu(), SIGNAL(aboutToShow()),
            this, SLOT(slotContextMenuAboutToShow()) );
 
-  connect( kmkernel->folderCollectionMonitor(), SIGNAL(collectionStatisticsChanged(Akonadi::Collection::Id,Akonadi::CollectionStatistics)), SLOT(initListOfCollection()) );
+  connect( kmkernel->folderCollectionMonitor(), SIGNAL(collectionStatisticsChanged(Akonadi::Collection::Id,Akonadi::CollectionStatistics)), SLOT(slotCollectionStatisticsChanged( Akonadi::Collection::Id,Akonadi::CollectionStatistics)) );
 
   connect( kmkernel->folderCollectionMonitor(), SIGNAL(collectionAdded(Akonadi::Collection,Akonadi::Collection)), this, SLOT(initListOfCollection()) );
   connect( kmkernel->folderCollectionMonitor(), SIGNAL(collectionRemoved(Akonadi::Collection)), this, SLOT(initListOfCollection()) );
@@ -405,4 +405,13 @@ void KMSystemTray::updateSystemTray()
   initListOfCollection();
 }
 
+void KMSystemTray::slotCollectionStatisticsChanged( Akonadi::Collection::Id id,const Akonadi::CollectionStatistics& )
+{
+  //Exclude sent mail folder
+  if ( CommonKernel->outboxCollectionFolder().id() == id ) {
+    return;
+  }
+  initListOfCollection();
+}
+ 
 #include "kmsystemtray.moc"
