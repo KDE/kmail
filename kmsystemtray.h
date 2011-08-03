@@ -59,6 +59,7 @@ private slots:
   void slotContextMenuAboutToShow();
   void slotSelectCollection(QAction*act);
   void initListOfCollection();
+  void slotCollectionStatisticsChanged( Akonadi::Collection::Id,const Akonadi::CollectionStatistics& );
   
 protected:
   bool mainWindowIsOnCurrentDesktop();
