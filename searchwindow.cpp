@@ -761,11 +761,14 @@ void SearchWindow::updateContextMenuActions()
   mReplyAllAction->setEnabled( singleActions );
   mReplyListAction->setEnabled( singleActions );
   mPrintAction->setEnabled( singleActions );
+  mSaveAtchAction->setEnabled( count > 0 );
+  mSaveAsAction->setEnabled( count > 0 );
+  mClearAction->setEnabled( count > 0 );
 }
 
 void SearchWindow::slotContextMenuRequested( const QPoint& )
 {
-  if ( !selectedMessage().isValid() )
+  if ( !selectedMessage().isValid() || selectedMessages().count() == 0 )
     return;
 
   QMenu *menu = new QMenu( this );
