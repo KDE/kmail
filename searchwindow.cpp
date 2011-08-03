@@ -227,13 +227,7 @@ SearchWindow::SearchWindow( KMMainWidget *widget, const Akonadi::Collection &col
     mFolder = collection;
     mSearchFolderEdt->setText( collection.name() );
     Q_ASSERT ( !mResultModel );
-    mResultModel = new KMSearchMessageModel( this );
-    mResultModel->setCollection( mFolder );
-    mLbxMatches->setModel( mResultModel );
-    
-    mAkonadiStandardAction = new Akonadi::StandardMailActionManager( actionCollection(), this );
-    mAkonadiStandardAction->setItemSelectionModel( mLbxMatches->selectionModel() );
-    mAkonadiStandardAction->setCollectionSelectionModel( mKMMainWidget->folderTreeView()->selectionModel() );
+    createSearchModel();
   } else {
     mSearchFolderEdt->setText( i18n( "Last Search" ) );
     // find last search and reuse it if possible
@@ -385,6 +379,34 @@ SearchWindow::~SearchWindow()
     GlobalSettings::self()->requestSync();
   }
 }
+
+void SearchWindow::createSearchModel()
+{
+  mResultModel = new KMSearchMessageModel( this );
+  mResultModel->setCollection( mFolder );
+  QSortFilterProxyModel *sortproxy = new QSortFilterProxyModel( this );
+  sortproxy->setSourceModel( mResultModel );
+  sortproxy->setDynamicSortFilter( true );
+  sortproxy->setFilterCaseSensitivity ( Qt::CaseInsensitive );
+  mLbxMatches->setModel( sortproxy );
+
+  mLbxMatches->setColumnWidth( 0, GlobalSettings::self()->collectionWidth() );
+  mLbxMatches->setColumnWidth( 1, GlobalSettings::self()->subjectWidth() );
+  mLbxMatches->setColumnWidth( 2, GlobalSettings::self()->senderWidth() );
+  mLbxMatches->setColumnWidth( 3, GlobalSettings::self()->receiverWidth() );
+  mLbxMatches->setColumnWidth( 4, GlobalSettings::self()->dateWidth() );
+  mLbxMatches->setColumnWidth( 5, GlobalSettings::self()->folderWidth() );
+  mLbxMatches->setColumnWidth( 6, 0 );
+        
+  mLbxMatches->header()->setSortIndicator( 2, Qt::DescendingOrder );
+  mLbxMatches->header()->setStretchLastSection( false );
+  mLbxMatches->header()->setResizeMode( 3, QHeaderView::Stretch );
+  mAkonadiStandardAction = new Akonadi::StandardMailActionManager( actionCollection(), this );
+  mAkonadiStandardAction->setItemSelectionModel( mLbxMatches->selectionModel() );
+  mAkonadiStandardAction->setCollectionSelectionModel( mKMMainWidget->folderTreeView()->selectionModel() );
+
+}
+
 
 void SearchWindow::setEnabledSearchButton( bool )
 {
@@ -569,25 +591,7 @@ void SearchWindow::searchDone( KJob* job )
       mSearchJob = 0;
 
       if ( !mResultModel ) {
-        mResultModel = new KMSearchMessageModel( this );
-        mResultModel->setCollection( mFolder );
-        mLbxMatches->setModel( mResultModel );
-
-        mLbxMatches->setColumnWidth( 0, GlobalSettings::self()->collectionWidth() );
-        mLbxMatches->setColumnWidth( 1, GlobalSettings::self()->subjectWidth() );
-        mLbxMatches->setColumnWidth( 2, GlobalSettings::self()->senderWidth() );
-        mLbxMatches->setColumnWidth( 3, GlobalSettings::self()->receiverWidth() );
-        mLbxMatches->setColumnWidth( 4, GlobalSettings::self()->dateWidth() );
-        mLbxMatches->setColumnWidth( 5, GlobalSettings::self()->folderWidth() );
-        mLbxMatches->setColumnWidth( 6, 0 );
-
-        
-        mLbxMatches->header()->setSortIndicator( 2, Qt::DescendingOrder );
-        mLbxMatches->header()->setStretchLastSection( false );
-        mLbxMatches->header()->setResizeMode( 3, QHeaderView::Stretch );
-        mAkonadiStandardAction = new Akonadi::StandardMailActionManager( actionCollection(), this );
-        mAkonadiStandardAction->setItemSelectionModel( mLbxMatches->selectionModel() );
-        mAkonadiStandardAction->setCollectionSelectionModel( mKMMainWidget->folderTreeView()->selectionModel() );
+        createSearchModel();
 
       } else {
         mResultModel->setCollection( mFolder );
