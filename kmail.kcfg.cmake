@@ -481,12 +481,20 @@
 
  <!-- Search Dialog settings -->
  <group name="SearchDialog">
+   <entry name="CollectionWidth" type="Int">
+     <label>Specifies the width of the collection field in the Search Window dialog (for internal use only)</label>
+     <default>150</default>
+   </entry>
    <entry name="SubjectWidth" type="Int">
      <label>Specifies the width of the subject field in the Search Window dialog (for internal use only)</label>
      <default>150</default>
    </entry>
    <entry name="SenderWidth" type="Int">
      <label>Specifies the width of the sender field in the Search Window dialog (for internal use only)</label>
+     <default>120</default>
+   </entry>
+   <entry name="ReceiverWidth" type="Int">
+     <label>Specifies the width of the receiver field in the Search Window dialog (for internal use only)</label>
      <default>120</default>
    </entry>
    <entry name="DateWidth" type="Int">

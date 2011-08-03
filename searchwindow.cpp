@@ -30,6 +30,7 @@
 #include "regexplineedit.h"
 #include "searchdescriptionattribute.h"
 #include "foldertreeview.h"
+#include "kmsearchmessagemodel.h"
 #include <Akonadi/AttributeFactory>
 #include <Akonadi/CollectionModifyJob>
 #include <Akonadi/CollectionStatisticsJob>
@@ -39,7 +40,7 @@
 #include <akonadi/persistentsearchattribute.h>
 #include <Akonadi/SearchCreateJob>
 #include <akonadi/standardactionmanager.h>
-
+#include <Akonadi/EntityMimeTypeFilterModel>
 #include <KActionMenu>
 #include <KConfigGroup>
 #include <KDebug>
@@ -226,9 +227,10 @@ SearchWindow::SearchWindow( KMMainWidget *widget, const Akonadi::Collection &col
     mFolder = collection;
     mSearchFolderEdt->setText( collection.name() );
     Q_ASSERT ( !mResultModel );
-    mResultModel = new Akonadi::MessageModel( this );
+    mResultModel = new KMSearchMessageModel( this );
     mResultModel->setCollection( mFolder );
     mLbxMatches->setModel( mResultModel );
+    
     mAkonadiStandardAction = new Akonadi::StandardMailActionManager( actionCollection(), this );
     mAkonadiStandardAction->setItemSelectionModel( mLbxMatches->selectionModel() );
     mAkonadiStandardAction->setCollectionSelectionModel( mKMMainWidget->folderTreeView()->selectionModel() );
@@ -361,16 +363,22 @@ SearchWindow::~SearchWindow()
 {
   if ( mResultModel ) {
     if ( mLbxMatches->columnWidth( 0 ) > 0 ) {
-      GlobalSettings::self()->setSubjectWidth( mLbxMatches->columnWidth( 0 )  );
+      GlobalSettings::self()->setCollectionWidth( mLbxMatches->columnWidth( 0 )  );
     }
     if ( mLbxMatches->columnWidth( 1 ) > 0 ) {
-      GlobalSettings::self()->setSenderWidth( mLbxMatches->columnWidth( 1 ) );
+      GlobalSettings::self()->setSubjectWidth( mLbxMatches->columnWidth( 1 )  );
     }
     if ( mLbxMatches->columnWidth( 2 ) > 0 ) {
-      GlobalSettings::self()->setDateWidth( mLbxMatches->columnWidth( 2 ) );
+      GlobalSettings::self()->setSenderWidth( mLbxMatches->columnWidth( 2 ) );
     }
     if ( mLbxMatches->columnWidth( 3 ) > 0 ) {
-      GlobalSettings::self()->setFolderWidth( mLbxMatches->columnWidth( 3 ) );
+      GlobalSettings::self()->setReceiverWidth( mLbxMatches->columnWidth( 3 ) );
+    }
+    if ( mLbxMatches->columnWidth( 4 ) > 0 ) {
+      GlobalSettings::self()->setDateWidth( mLbxMatches->columnWidth( 4 ) );
+    }
+    if ( mLbxMatches->columnWidth( 5 ) > 0 ) {
+      GlobalSettings::self()->setFolderWidth( mLbxMatches->columnWidth( 5 ) );
     }
     GlobalSettings::self()->setSearchWidgetWidth( width() );
     GlobalSettings::self()->setSearchWidgetHeight( height() );
@@ -504,7 +512,7 @@ void SearchWindow::slotSearch()
   const QString queryLanguage = "SPARQL";
 #endif
 
-  kDebug() << query;
+  qDebug() << query;
   if ( !mFolder.isValid() ) {
     // FIXME if another app created a virtual 'Last Search' folder without
     // out custom attributes it will result in problems
@@ -561,15 +569,19 @@ void SearchWindow::searchDone( KJob* job )
       mSearchJob = 0;
 
       if ( !mResultModel ) {
-        mResultModel = new Akonadi::MessageModel( this );
+        mResultModel = new KMSearchMessageModel( this );
         mResultModel->setCollection( mFolder );
         mLbxMatches->setModel( mResultModel );
 
-        mLbxMatches->setColumnWidth( 0, GlobalSettings::self()->subjectWidth() );
-        mLbxMatches->setColumnWidth( 1, GlobalSettings::self()->senderWidth() );
-        mLbxMatches->setColumnWidth( 2, GlobalSettings::self()->dateWidth() );
-        mLbxMatches->setColumnWidth( 3, GlobalSettings::self()->folderWidth() );
-        mLbxMatches->setColumnWidth( 4, 0 );
+        mLbxMatches->setColumnWidth( 0, GlobalSettings::self()->collectionWidth() );
+        mLbxMatches->setColumnWidth( 1, GlobalSettings::self()->subjectWidth() );
+        mLbxMatches->setColumnWidth( 2, GlobalSettings::self()->senderWidth() );
+        mLbxMatches->setColumnWidth( 3, GlobalSettings::self()->receiverWidth() );
+        mLbxMatches->setColumnWidth( 4, GlobalSettings::self()->dateWidth() );
+        mLbxMatches->setColumnWidth( 5, GlobalSettings::self()->folderWidth() );
+        mLbxMatches->setColumnWidth( 6, 0 );
+
+        
         mLbxMatches->header()->setSortIndicator( 2, Qt::DescendingOrder );
         mLbxMatches->header()->setStretchLastSection( false );
         mLbxMatches->header()->setResizeMode( 3, QHeaderView::Stretch );
