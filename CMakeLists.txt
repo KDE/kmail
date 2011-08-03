@@ -110,6 +110,7 @@ if (NOT WINCE AND KDEPIM_BUILD_DESKTOP)
      addressvalidationjob.cpp
      identitypage.cpp
      newidentitydialog.cpp
+     kmsearchmessagemodel.cpp
   )
 
   soprano_add_ontology(kmailprivate_LIB_SRCS
