@@ -400,7 +400,7 @@ void SearchWindow::createSearchModel()
         
   mLbxMatches->header()->setSortIndicator( 2, Qt::DescendingOrder );
   mLbxMatches->header()->setStretchLastSection( false );
-  mLbxMatches->header()->setResizeMode( 3, QHeaderView::Stretch );
+  //mLbxMatches->header()->setResizeMode( 3, QHeaderView::Stretch );
   mAkonadiStandardAction = new Akonadi::StandardMailActionManager( actionCollection(), this );
   mAkonadiStandardAction->setItemSelectionModel( mLbxMatches->selectionModel() );
   mAkonadiStandardAction->setCollectionSelectionModel( mKMMainWidget->folderTreeView()->selectionModel() );
