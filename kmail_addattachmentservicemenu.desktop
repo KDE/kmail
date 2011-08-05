@@ -9,6 +9,7 @@ Icon=kmail
 Name=Send as Email Attachment
 Name[pt]=Enviar como Anexo do E-Mail
 Name[pt_BR]=Enviar como anexo de e-mail
+Name[sv]=Skicka som e-postbilaga
 Name[uk]=Надіслати у долученні до листа
 Name[x-test]=xxSend as Email Attachmentxx
 Exec=kmail --attach %F
