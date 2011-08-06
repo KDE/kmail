@@ -7,6 +7,7 @@ Actions=sendto;
 [Desktop Action sendto]
 Icon=kmail
 Name=Send as Email Attachment
+Name[de]=Als E-Mail-Anhang versenden
 Name[pt]=Enviar como Anexo do E-Mail
 Name[pt_BR]=Enviar como anexo de e-mail
 Name[sv]=Skicka som e-postbilaga
