@@ -67,6 +67,8 @@ protected:
   void updateCount();
   void fillFoldersMenu( QMenu *menu, const QAbstractItemModel *model, const QString& parentName = QString(), const QModelIndex& parentIndex = QModelIndex() );
   void unreadMail( const QAbstractItemModel *model, const QModelIndex& parentIndex = QModelIndex() );
+  
+  bool excludeFolder( const Akonadi::Collection& collection ) const;
 
 private:
 
