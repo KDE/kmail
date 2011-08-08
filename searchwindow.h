@@ -123,6 +123,8 @@ class SearchWindow: public KDialog, virtual public KXMLGUIClient
     /** Reimplemented to stop searching when the window is closed */
     virtual void closeEvent( QCloseEvent* );
 
+    void createSearchModel();
+  
   private Q_SLOTS:
     virtual void updateStatusLine();
 
