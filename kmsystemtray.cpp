@@ -25,6 +25,9 @@
 #include "globalsettings.h"
 #include "mailutil.h"
 #include "mailcommon/mailkernel.h"
+#include "mailcommon/foldertreeview.h"
+
+#include <QItemSelectionModel>
 
 #include <kxmlguiwindow.h>
 #include <kglobalsettings.h>
@@ -269,10 +272,13 @@ void KMSystemTray::slotContextMenuAboutToShow()
     mNewMessagesPopup = 0;
   }
   mNewMessagesPopup = new KMenu();
-  fillFoldersMenu( mNewMessagesPopup, KMKernel::self()->entityTreeModel() );
-  connect( mNewMessagesPopup, SIGNAL( triggered(QAction*) ), this,
-           SLOT( slotSelectCollection(QAction*) ) );
-
+  if ( KMKernel::self()->getKMMainWidget() )
+    fillFoldersMenu( mNewMessagesPopup, KMKernel::self()->getKMMainWidget()->folderTreeView()->selectionModel()->model() );
+  else
+    fillFoldersMenu( mNewMessagesPopup, KMKernel::self()->entityTreeModel() );
+  
+  connect( mNewMessagesPopup, SIGNAL(triggered(QAction*)), this,
+           SLOT(slotSelectCollection(QAction*)) );
 
   if ( mCount > 0 ) {
     mNewMessagesPopup->setTitle( i18n("New Messages In") );
