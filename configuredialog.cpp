@@ -46,6 +46,8 @@
 
 #include "foldertreewidget.h"
 
+#include "kmknotify.h"
+
 #include "recentaddresses.h"
 using KPIM::RecentAddresses;
 #include "completionordereditor.h"
@@ -620,10 +622,8 @@ void AccountsPage::ReceivingTab::slotRemoveSelectedAccount()
 
 void AccountsPage::ReceivingTab::slotEditNotifications()
 {
-  if(kmkernel->xmlGuiInstance().isValid())
-    KNotifyConfigWidget::configure(this,  kmkernel->xmlGuiInstance().componentName());
-  else
-    KNotifyConfigWidget::configure(this);
+  KMKnotify notifyDlg( this );
+  notifyDlg.exec();
 }
 
 void AccountsPage::ReceivingTab::doLoadFromGlobalSettings()
