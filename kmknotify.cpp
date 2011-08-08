@@ -47,13 +47,11 @@ KMKnotify::KMKnotify( QWidget * parent )
  
   QVBoxLayout *layout = new QVBoxLayout( page );
   layout->setMargin( 0 );
-  QLabel *label = new QLabel( i18n( "Event source:" ) );
   m_comboNotify = new KComboBox( false );
   m_comboNotify->setSizeAdjustPolicy( QComboBox::AdjustToContents );
 
   QHBoxLayout *hbox = new QHBoxLayout();
   layout->addLayout( hbox );
-  hbox->addWidget( label );
   hbox->addWidget( m_comboNotify, 10 );
 
   m_notifyWidget = new KNotifyConfigWidget( page );
