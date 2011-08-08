@@ -56,6 +56,8 @@
 #include "collectiontemplatespage.h"
 #include "collectionviewpage.h"
 
+
+
 #include "mailcommon/collectiongeneralpage.h"
 #include "mailcommon/filtermanager.h"
 #include "mailcommon/mailfilter.h"
@@ -80,6 +82,8 @@
 #include "messagecore/globalsettings.h"
 #include "messagecore/mailinglist.h"
 #include "messagecore/messagehelpers.h"
+
+#include "kmknotify.h"
 
 // LIBKDEPIM includes
 #include "progressmanager.h"
@@ -3452,13 +3456,8 @@ void KMMainWidget::slotAddFavoriteFolder()
 //-----------------------------------------------------------------------------
 void KMMainWidget::slotEditNotifications()
 {
-  KComponentData d = kmkernel->xmlGuiInstance();
-  if ( d.isValid() ) {
-    const KAboutData *a = d.aboutData();
-    KNotifyConfigWidget::configure( this, a->appName() );
-  } else {
-    KNotifyConfigWidget::configure( this );
-  }
+  KMKnotify notifyDlg( this );
+  notifyDlg.exec();
 }
 
 void KMMainWidget::slotShowExpiryProperties()
