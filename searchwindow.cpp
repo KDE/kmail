@@ -3,6 +3,7 @@
  * Copyright (c) 1996-1998 Stefan Taferner <taferner@kde.org>
  * Copyright (c) 2001 Aaron J. Seigo <aseigo@kde.org>
  * Copyright (c) 2010 Till Adam <adam@kde.org>
+ * Copyright (c) 2011 Laurent Montel <montel@kde.org>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -139,7 +140,7 @@ SearchWindow::SearchWindow( KMMainWidget *widget, const Akonadi::Collection &col
   QHBoxLayout *layout = new QHBoxLayout( patternGroupBox );
   layout->setContentsMargins( 0, 0, 0, 0 );
 
-  mPatternEdit = new SearchPatternEdit( searchWidget, false, true );
+  mPatternEdit = new SearchPatternEdit( searchWidget, false, false );
   layout->addWidget( mPatternEdit );
   patternGroupBox->setFlat( true );
 
