@@ -1296,7 +1296,7 @@ void KMMainWidget::slotHelp()
 //-----------------------------------------------------------------------------
 void KMMainWidget::slotFilter()
 {
-  //tokoe FilterIf->filterManager()->openDialog( this );
+  FilterIf->openFilterDialog( true );
 }
 
 void KMMainWidget::slotManageSieveScripts()

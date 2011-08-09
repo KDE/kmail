@@ -1430,7 +1430,8 @@ KMFilterCommand::KMFilterCommand( const QByteArray &field, const QString &value 
 
 KMCommand::Result KMFilterCommand::execute()
 {
-  //tokoe FilterIf->filterManager()->createFilter( mField, mValue );
+  FilterIf->openFilterDialog( false );
+  FilterIf->createFilter( mField, mValue );
 
   return OK;
 }
@@ -1514,7 +1515,8 @@ KMCommand::Result KMMailingListFilterCommand::execute()
   if ( !msg )
     return Failed;
   if ( !MailingList::name( msg, name, value ).isEmpty() ) {
-    //tokoe FilterIf->filterManager()->createFilter( name, value );
+    FilterIf->openFilterDialog( false );
+    FilterIf->createFilter( name, value );
     return OK;
   } else {
     return Failed;
