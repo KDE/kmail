@@ -78,19 +78,22 @@ void KMKnotify::slotComboChanged( int index )
 
 void KMKnotify::initCombobox()
 {
-  QStringList lstNotify =
-    KGlobal::dirs()->findAllResources("data", "*/*.notifyrc", KStandardDirs::NoDuplicates );
-  
+
+  QStringList lstNotify;
+  lstNotify<< QLatin1String( "kmail2/kmail2.notifyrc" );
+  lstNotify<< QLatin1String( "akonadi_maildispatcher_agent/akonadi_maildispatcher_agent.notifyrc" );  
   Q_FOREACH( const QString& notify, lstNotify )
   {
-    if ( notify.contains( "kmail2" ) || notify.contains( "akonadi_maildispatcher_agent" ) )
+    const QString fullPath = KStandardDirs::locate( "data", notify );
+    
+    if ( !fullPath.isEmpty() )
     {
-      int slash = notify.lastIndexOf( '/' ) - 1;
-      int slash2 = notify.lastIndexOf( '/', slash );
-      const QString appname= slash2 < 0 ? QString() :  notify.mid( slash2+1 , slash-slash2  );
+      int slash = fullPath.lastIndexOf( '/' ) - 1;
+      int slash2 = fullPath.lastIndexOf( '/', slash );
+      const QString appname= slash2 < 0 ? QString() :  fullPath.mid( slash2+1 , slash-slash2  );
       if ( !appname.isEmpty() )
       {
-        KConfig config(notify, KConfig::NoGlobals, "data" );
+        KConfig config(fullPath, KConfig::NoGlobals, "data" );
         KConfigGroup globalConfig( &config, QString::fromLatin1("Global") );
         const QString icon = globalConfig.readEntry(QString::fromLatin1("IconName"), QString::fromLatin1("misc"));
         const QString description = globalConfig.readEntry( QString::fromLatin1("Comment"), appname );
