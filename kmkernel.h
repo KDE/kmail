@@ -25,6 +25,7 @@
 #define kmconfig KMKernel::config()
 
 class KMFilterDlg;
+class QAbstractItemModel;
 namespace Akonadi {
   class Collection;
   class ChangeRecorder;
@@ -408,6 +409,8 @@ public:
 
   void checkFolderFromResources( const Akonadi::Collection::Id& collectionId );
 
+  const QAbstractItemModel* treeviewModelSelection();
+
 public slots:
 
   /*reimp*/ void updateSystemTray();
@@ -444,6 +447,8 @@ signals:
 
   void startCheckMail();
   void endCheckMail();
+
+
 
 
 private slots:
