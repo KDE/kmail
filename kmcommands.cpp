@@ -75,7 +75,6 @@
 #include "messageviewer/nodehelper.h"
 #include "composer.h"
 #include "mailcommon/filteraction.h"
-#include "mailcommon/filtermanager.h"
 #include "mailcommon/redirectdialog.h"
 #include "kmmainwidget.h"
 #include "undostack.h"
@@ -1431,7 +1430,7 @@ KMFilterCommand::KMFilterCommand( const QByteArray &field, const QString &value 
 
 KMCommand::Result KMFilterCommand::execute()
 {
-  FilterIf->filterManager()->createFilter( mField, mValue );
+  //tokoe FilterIf->filterManager()->createFilter( mField, mValue );
 
   return OK;
 }
@@ -1468,12 +1467,14 @@ KMCommand::Result KMFilterActionCommand::execute()
       qApp->processEvents( QEventLoop::ExcludeUserInputEvents, 50 );
     }
 
+/* tokoe
     int filterResult = FilterIf->filterManager()->process( item, mFilter );
     if (filterResult == 2) {
       // something went horribly wrong (out of space?)
       kError() << "Critical error";
       CommonKernel->emergencyExit( i18n("Not enough free disk space?" ));
     }
+*/
     progressItem->incCompletedItems();
   }
 
@@ -1513,7 +1514,7 @@ KMCommand::Result KMMailingListFilterCommand::execute()
   if ( !msg )
     return Failed;
   if ( !MailingList::name( msg, name, value ).isEmpty() ) {
-    FilterIf->filterManager()->createFilter( name, value );
+    //tokoe FilterIf->filterManager()->createFilter( name, value );
     return OK;
   } else {
     return Failed;

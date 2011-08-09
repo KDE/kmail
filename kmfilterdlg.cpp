@@ -22,7 +22,6 @@
 
 // other KMail headers:
 #include "mailcommon/searchpatternedit.h"
-#include "mailcommon/filtermanager.h"
 #include "kmmainwidget.h"
 #include "mailcommon/filterimporterexporter.h"
 #include "mailcommon/filteractionwidget.h"
@@ -780,11 +779,13 @@ void KMFilterListBox::slotApplyFilterChanges( KDialog::ButtonCode button )
   // by now all edit widgets should have written back
   // their widget's data into our filter list.
 
+/* tokoe
   FilterManager *fm = kmkernel->filterManager();
 
   const QList<MailFilter*> newFilters = filtersForSaving( closeAfterSaving );
 
   fm->setFilters( newFilters );
+*/
 }
 
 QList<MailFilter *> KMFilterListBox::filtersForSaving( bool closeAfterSaving ) const
@@ -1030,6 +1031,7 @@ void KMFilterListBox::loadFilterList( bool createDummyFilter )
   mFilterList.clear();
   mListWidget->clear();
 
+/* tokoe
   const FilterManager *manager = kmkernel->filterManager();
   Q_ASSERT( manager );
 
@@ -1040,7 +1042,7 @@ void KMFilterListBox::loadFilterList( bool createDummyFilter )
     mFilterList.append( new MailFilter( **it ) ); // deep copy
     mListWidget->addItem( (*it)->pattern()->name() );
   }
-
+*/
   blockSignals(false);
   setEnabled(true);
 

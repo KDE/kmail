@@ -59,7 +59,6 @@
 
 
 #include "mailcommon/collectiongeneralpage.h"
-#include "mailcommon/filtermanager.h"
 #include "mailcommon/mailfilter.h"
 
 // Other PIM includes
@@ -1153,9 +1152,12 @@ void KMMainWidget::createWidgets()
   connect( kmkernel->folderCollectionMonitor(), SIGNAL(itemMoved(Akonadi::Item,Akonadi::Collection,Akonadi::Collection)),
            SLOT(slotItemMoved(Akonadi::Item,Akonadi::Collection,Akonadi::Collection)) );
   connect( kmkernel->folderCollectionMonitor(), SIGNAL(collectionChanged(Akonadi::Collection,QSet<QByteArray>)), SLOT(slotCollectionChanged(Akonadi::Collection,QSet<QByteArray>)) );
+
+/* tokoe
   connect( FilterIf->filterManager(), SIGNAL(itemNotMoved(Akonadi::Item)),
            SLOT(slotItemNotMovedByFilters(Akonadi::Item)) );
-  
+*/
+
   connect( kmkernel->folderCollectionMonitor(), SIGNAL(collectionStatisticsChanged(Akonadi::Collection::Id,Akonadi::CollectionStatistics)), SLOT(slotCollectionStatisticsChanged(Akonadi::Collection::Id,Akonadi::CollectionStatistics)) );
 
 }
@@ -1294,7 +1296,7 @@ void KMMainWidget::slotHelp()
 //-----------------------------------------------------------------------------
 void KMMainWidget::slotFilter()
 {
-  FilterIf->filterManager()->openDialog( this );
+  //tokoe FilterIf->filterManager()->openDialog( this );
 }
 
 void KMMainWidget::slotManageSieveScripts()
@@ -2290,11 +2292,12 @@ void KMMainWidget::applyFilters( const QList<Akonadi::Item>& selectedMessages )
 #ifndef QT_NO_CURSOR
   MessageViewer::KCursorSaver busy( MessageViewer::KBusyPtr::busy() );
 #endif  
-  FilterIf->filterManager()->applyFilters( selectedMessages );
+  //tokoe FilterIf->filterManager()->applyFilters( selectedMessages );
 }
 
 int KMMainWidget::slotFilterMsg( const Akonadi::Item &msg )
 {
+/* tokoe
   if ( !msg.isValid() )
     return 2; // messageRetrieve(0) is always possible
   int filterResult = FilterIf->filterManager()->process(msg, FilterManager::Explicit);
@@ -2305,6 +2308,8 @@ int KMMainWidget::slotFilterMsg( const Akonadi::Item &msg )
     return 2;
   }
   return filterResult;
+*/
+  return 0;
 }
 
 //-----------------------------------------------------------------------------
@@ -3936,8 +3941,10 @@ void KMMainWidget::slotIntro()
 
 void KMMainWidget::slotShowStartupFolder()
 {
+/* tokoe
   connect( FilterIf->filterManager(), SIGNAL(filterListUpdated()),
            this, SLOT(initializeFilterActions()) );
+*/
 
   // Plug various action lists. This can't be done in the constructor, as that is called before
   // the main window or Kontact calls createGUI().
@@ -3998,6 +4005,7 @@ void KMMainWidget::clearFilterActions()
 //-----------------------------------------------------------------------------
 void KMMainWidget::initializeFilterActions()
 {
+/* tokoe
   clearFilterActions();
   mApplyFilterActionsMenu->menu()->addAction( mApplyAllFiltersAction );
   bool addedSeparator = false;
@@ -4050,6 +4058,7 @@ void KMMainWidget::initializeFilterActions()
 
   // Our filters have changed, now enable/disable them
   updateMessageActions();
+*/
 }
 
 //-----------------------------------------------------------------------------

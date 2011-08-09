@@ -45,7 +45,6 @@
 #include "mailcommon/mailkernel.h"
 #include "mailcommon/mailfilter.h"
 #include "mailcommon/filteraction.h"
-#include "mailcommon/filtermanager.h"
 
 #include <Akonadi/AgentInstance>
 
@@ -467,8 +466,10 @@ void AntiSpamWizard::accept()
    * which will result in the filter list in kmmainwidget being
    * initialized. This should happend only once. */
   if ( !filterList.isEmpty() )
+/* tokoe
     KMKernel::self()->filterManager()->appendFilters(
           filterList, replaceExistingFilters );
+*/
 
   KDialog::accept();
 }
@@ -687,7 +688,7 @@ bool AntiSpamWizard::anyVirusOptionChecked()
 
 const QString AntiSpamWizard::uniqueNameFor( const QString & name )
 {
-  return KMKernel::self()->filterManager()->createUniqueName( name );
+  return QString(); //tokoe KMKernel::self()->filterManager()->createUniqueName( name );
 }
 
 
