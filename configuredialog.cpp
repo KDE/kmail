@@ -1708,8 +1708,11 @@ AppearancePageMessageTagTab::AppearancePageMessageTagTab( QWidget * parent )
   QLabel *sclabel = new QLabel( i18n("Shortc&ut:") , mTagSettingGroupBox );
   sclabel->setBuddy( mKeySequenceWidget );
   settings->addWidget( sclabel, 6, 0 );
-  mKeySequenceWidget->setCheckActionCollections(
-      kmkernel->getKMMainWidget()->actionCollections() );
+  if( kmkernel->getKMMainWidget() )
+     mKeySequenceWidget->setCheckActionCollections(
+        kmkernel->getKMMainWidget()->actionCollections() );
+  else
+     mKeySequenceWidget->setEnabled(false);
 
   connect( mKeySequenceWidget, SIGNAL( keySequenceChanged( const QKeySequence & ) ),
            this, SLOT( slotEmitChangeCheck() ) );
