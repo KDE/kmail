@@ -272,10 +272,7 @@ void KMSystemTray::slotContextMenuAboutToShow()
     mNewMessagesPopup = 0;
   }
   mNewMessagesPopup = new KMenu();
-  if ( KMKernel::self()->getKMMainWidget() )
-    fillFoldersMenu( mNewMessagesPopup, KMKernel::self()->getKMMainWidget()->folderTreeView()->selectionModel()->model() );
-  else
-    fillFoldersMenu( mNewMessagesPopup, KMKernel::self()->entityTreeModel() );
+  fillFoldersMenu( mNewMessagesPopup, KMKernel::self()->treeviewModelSelection() );
   
   connect( mNewMessagesPopup, SIGNAL(triggered(QAction*)), this,
            SLOT(slotSelectCollection(QAction*)) );

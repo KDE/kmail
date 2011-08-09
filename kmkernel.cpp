@@ -21,6 +21,7 @@ using KPIM::RecentAddresses;
 #include "stringutil.h"
 #include "mailutil.h"
 #include "mailcommon/pop3settings.h"
+#include "mailcommon/foldertreeview.h"
 
 // kdepim includes
 #include "kdepim-version.h"
@@ -1799,6 +1800,14 @@ void KMKernel::checkFolderFromResources( const Akonadi::Collection::Id& collecti
       delete iface;
     }
   }
+}
+
+const QAbstractItemModel* KMKernel::treeviewModelSelection()
+{
+  if ( getKMMainWidget() )
+    return getKMMainWidget()->folderTreeView()->selectionModel()->model();
+  else
+    return entityTreeModel();
 }
 
 #include "kmkernel.moc"
