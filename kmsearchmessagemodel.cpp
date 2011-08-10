@@ -40,8 +40,8 @@ typedef boost::shared_ptr<KMime::Message> MessagePtr;
 #include <kglobal.h>
 #include <klocale.h>
 
-KMSearchMessageModel::KMSearchMessageModel( QObject *parent ) :
-  Akonadi::MessageModel( parent )
+KMSearchMessageModel::KMSearchMessageModel( QObject *parent )
+  : Akonadi::MessageModel( parent )
 {
   fetchScope().fetchPayloadPart( Akonadi::MessagePart::Envelope );
   fetchScope().setAncestorRetrieval( Akonadi::ItemFetchScope::All );

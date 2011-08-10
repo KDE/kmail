@@ -204,7 +204,7 @@ namespace KMail {
     { "Jeffrey McGee", 0, 0, 0 }, // fix for bug:64251
     { "Thomas Moenicke", 0, "tm@php-qt.org", 0 },
     { "Dirk M\303\274ller", 0, 0, 0 }, // KUrl() fixes and qt_cast optimizations
-    { "Torgny Nyblom", 0, "kde@nyblom.org", 0 },
+    { "Torgny Nyblom", 0, "nyblom@kde.org", 0 },
     { "OpenUsability", I18N_NOOP("Usability tests and improvements"), 0, "http://www.openusability.org" },
     { "Mario Teijeiro Otero", 0, 0, 0 }, // various vendor annotations fixes
     { "Kevin Ottens", 0, "ervin@kde.org", 0 },

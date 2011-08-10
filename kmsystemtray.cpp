@@ -25,6 +25,9 @@
 #include "globalsettings.h"
 #include "mailutil.h"
 #include "mailcommon/mailkernel.h"
+#include "mailcommon/foldertreeview.h"
+
+#include <QItemSelectionModel>
 
 #include <kxmlguiwindow.h>
 #include <kglobalsettings.h>
@@ -269,7 +272,8 @@ void KMSystemTray::slotContextMenuAboutToShow()
     mNewMessagesPopup = 0;
   }
   mNewMessagesPopup = new KMenu();
-  fillFoldersMenu( mNewMessagesPopup, KMKernel::self()->entityTreeModel() );
+  fillFoldersMenu( mNewMessagesPopup, KMKernel::self()->treeviewModelSelection() );
+  
   connect( mNewMessagesPopup, SIGNAL(triggered(QAction*)), this,
            SLOT(slotSelectCollection(QAction*)) );
 
@@ -286,7 +290,7 @@ void KMSystemTray::fillFoldersMenu( QMenu *menu, const QAbstractItemModel *model
   for ( int row = 0; row < rowCount; ++row ) {
     const QModelIndex index = model->index( row, 0, parentIndex );
     const Akonadi::Collection collection = model->data( index, Akonadi::CollectionModel::CollectionRole ).value<Akonadi::Collection>();
-    if ( MailCommon::Util::isVirtualCollection( collection ) )
+    if ( excludeFolder( collection ) )
       continue;
     Akonadi::CollectionStatistics statistics = collection.statistics();
     qint64 count = qMax( 0LL, statistics.unreadCount() );
@@ -357,7 +361,7 @@ void KMSystemTray::unreadMail( const QAbstractItemModel *model, const QModelInde
     const QModelIndex index = model->index( row, 0, parentIndex );
     const Akonadi::Collection collection = model->data( index, Akonadi::CollectionModel::CollectionRole ).value<Akonadi::Collection>();
 
-    if ( MailCommon::Util::isVirtualCollection( collection ) )
+    if ( excludeFolder( collection ) )
       continue;
 
     const Akonadi::CollectionStatistics statistics = collection.statistics();
@@ -408,10 +412,31 @@ void KMSystemTray::updateSystemTray()
 void KMSystemTray::slotCollectionStatisticsChanged( Akonadi::Collection::Id id,const Akonadi::CollectionStatistics& )
 {
   //Exclude sent mail folder
-  if ( CommonKernel->outboxCollectionFolder().id() == id ) {
+
+  if ( CommonKernel->outboxCollectionFolder().id() == id ||
+       CommonKernel->sentCollectionFolder().id() == id ||
+       CommonKernel->templatesCollectionFolder().id() == id ||
+       CommonKernel->trashCollectionFolder().id() == id ||
+       CommonKernel->draftsCollectionFolder().id() == id ) {
     return;
   }
   initListOfCollection();
 }
- 
+
+bool KMSystemTray::excludeFolder( const Akonadi::Collection& collection ) const
+{
+  if ( CommonKernel->outboxCollectionFolder() == collection ||
+       CommonKernel->sentCollectionFolder() == collection ||
+       CommonKernel->templatesCollectionFolder() == collection ||
+       CommonKernel->trashCollectionFolder() == collection ||
+       CommonKernel->draftsCollectionFolder() == collection ) {
+    return true;
+  }
+
+  if ( MailCommon::Util::isVirtualCollection( collection ) )
+    return true;
+  
+  return false;
+}
+
 #include "kmsystemtray.moc"
