@@ -336,7 +336,6 @@ public:
   void setXmlGuiInstance( const KComponentData &instance ) { mXmlGuiInstance = instance; }
 
   UndoStack *undoStack() { return the_undoStack; }
-  MailCommon::FilterManager *filterManager() const { return the_filterMgr; }
   MailCommon::FilterActionDict *filterActionDict() const { return the_filterActionDict; }
   MessageSender *msgSender();
 
@@ -473,7 +472,6 @@ private:
   QSharedPointer<MailCommon::FolderCollection> currentFolderCollection();
 
   UndoStack *the_undoStack;
-  MailCommon::FilterManager *the_filterMgr;
   MailCommon::FilterActionDict *the_filterActionDict;
   mutable KPIMIdentities::IdentityManager *mIdentityManager;
   AkonadiSender *the_msgSender;

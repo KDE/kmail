@@ -138,7 +138,6 @@ KMKernel::KMKernel (QObject *parent, const char *name) :
   the_firstInstance = true;
 
   the_undoStack = 0;
-  //tokoe the_filterMgr = 0;
   the_filterActionDict = 0;
   the_msgSender = 0;
   mFilterEditDialog = 0;
@@ -1137,10 +1136,8 @@ void KMKernel::init()
   readConfig();
 
   the_undoStack     = new UndoStack(20);
-  //tokoe the_filterMgr     = new FilterManager();
   the_filterActionDict = new FilterActionDict;
 
-  //tokoe the_filterMgr->readConfig();
   the_msgSender = new AkonadiSender;
   readConfig();
   // filterMgr->dump();
@@ -1233,8 +1230,6 @@ void KMKernel::cleanup(void)
   closeAllKMailWindows();
 
   // Write the config while all other managers are alive
-  //tokoe delete the_filterMgr;
-  //tokoe the_filterMgr = 0;
   delete the_msgSender;
   the_msgSender = 0;
   delete the_filterActionDict;
