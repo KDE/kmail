@@ -44,8 +44,8 @@ static QString standardArchivePath( const QString &folderName )
   QDir dir( currentPath );
   if( !dir.exists() )
     currentPath = QDir::homePath();
-  return currentPath + '/' +
-    i18nc( "Start of the filename for a mail archive file" , "Archive" ) + '_' + folderName + '_' + QDate::currentDate().toString( Qt::ISODate ) + ".tar.bz2";
+  return currentPath + QLatin1Char( '/' ) +
+    i18nc( "Start of the filename for a mail archive file" , "Archive" ) + QLatin1Char( '_' ) + folderName + QLatin1Char( '_' ) + QDate::currentDate().toString( Qt::ISODate ) + QLatin1String( ".tar.bz2" );
 }
 
 ArchiveFolderDialog::ArchiveFolderDialog( QWidget *parent )
@@ -124,7 +124,7 @@ ArchiveFolderDialog::ArchiveFolderDialog( QWidget *parent )
 bool canRemoveFolder( const Akonadi::Collection& col )
 {
   const QSharedPointer<FolderCollection> folder = FolderCollection::forCollection( col );
-  return folder && col.isValid() && col.rights() & Akonadi::Collection::CanDeleteCollection && !folder->isStructural() && !folder->isSystemFolder() && col.resource() != "akonadi_nepomuktag_resource";
+  return folder && col.isValid() && col.rights() & Akonadi::Collection::CanDeleteCollection && !folder->isStructural() && !folder->isSystemFolder() && col.resource() != QLatin1String( "akonadi_nepomuktag_resource" );
 }
 
 void ArchiveFolderDialog::slotFolderChanged( const Akonadi::Collection &folder )
@@ -187,8 +187,8 @@ void ArchiveFolderDialog::slotFixFileExtension()
                                     mFolderRequester->folderCollection().name() : QString() );
 
   // First, try to find the extension of the file name and remove it
-  for( int i = 0; i < numExtensions; i++ ) {
-    int index = fileName.toLower().lastIndexOf( sortedExtensions[i] );
+  for( int i = 0; i < numExtensions; ++i ) {
+    const int index = fileName.toLower().lastIndexOf( sortedExtensions[i] );
     if ( index != -1 ) {
       fileName = fileName.left( fileName.length() - QString( sortedExtensions[i] ).length() );
       break;
