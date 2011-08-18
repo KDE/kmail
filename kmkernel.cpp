@@ -1473,17 +1473,20 @@ void KMKernel::selectCollectionFromId( const Akonadi::Collection::Id id)
     widget->slotSelectCollectionFolder( colFolder );
 }
 
-void KMKernel::selectFolder( const QString &folder )
+bool KMKernel::selectFolder( const QString &folder )
 {
   KMMainWidget *widget = getKMMainWidget();
   Q_ASSERT( widget );
   if ( !widget )
-    return;
+    return false;
 
   Akonadi::Collection colFolder = CommonKernel->collectionFromId( folder );
 
-  if( colFolder.isValid() )
+  if( colFolder.isValid() ) {
     widget->slotSelectCollectionFolder( colFolder );
+    return true;
+  }
+  return false;
 }
 
 KMMainWidget *KMKernel::getKMMainWidget()
