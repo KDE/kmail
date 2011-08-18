@@ -552,10 +552,10 @@ void KMMainWidget::folderSelected( const Akonadi::Collection & col )
   // The message pane uses the selection model of the folder view to load the correct aggregation model and theme
   //  settings. At this point the selection model hasn't been updated yet to the user's new choice, so it would load
   //  the old folder settings instead.
-  QTimer::singleShot( 0, this, SLOT(slotShowSelectedForderInPane()) );
+  QTimer::singleShot( 0, this, SLOT(slotShowSelectedFolderInPane()) );
 }
 
-void KMMainWidget::slotShowSelectedForderInPane()
+void KMMainWidget::slotShowSelectedFolderInPane()
 {
   if( mCurrentFolder ) {
     mMessagePane->setCurrentFolder( mCurrentFolder->collection(), false , mPreSelectionMode );

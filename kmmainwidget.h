@@ -335,7 +335,7 @@ class KMAIL_EXPORT KMMainWidget : public QWidget
     void slotDelayedRemoveFolder( KJob* );
     void slotEmptyFolder();
     void slotAddFavoriteFolder();
-    void slotShowSelectedForderInPane();
+    void slotShowSelectedFolderInPane();
     void slotOverrideHtml();
     void slotOverrideHtmlLoadExt();
     void slotMessageQueuedOrDrafted();
