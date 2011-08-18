@@ -1523,7 +1523,8 @@ static Akonadi::Collection::List collect_collections( const QAbstractItemModel *
                                                       const QModelIndex &parent )
 {
   Akonadi::Collection::List collections;
-  for ( int i = 0; i < model->rowCount( parent ); i++ ) {
+  const int numberOfCollection( model->rowCount( parent ) );
+  for ( int i = 0; i < numberOfCollection; ++i ) {
     const QModelIndex child = model->index( i, 0, parent );
     Akonadi::Collection collection =
         model->data( child, Akonadi::EntityTreeModel::CollectionRole ).value<Akonadi::Collection>();
@@ -1626,7 +1627,7 @@ void KMKernel::transportRenamed(int id, const QString & oldName, const QString &
   }
 
   if ( !changedIdents.isEmpty() ) {
-    QString information =
+    const QString information =
       i18np( "This identity has been changed to use the modified transport:",
              "These %1 identities have been changed to use the modified transport:",
              changedIdents.count() );
