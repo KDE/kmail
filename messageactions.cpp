@@ -502,7 +502,7 @@ void MessageActions::addMailingListAction( const QString &item, const KUrl &url 
 {
   QString protocol = url.protocol().toLower();
   QString prettyUrl = url.prettyUrl();
-  if ( protocol == "mailto" ) {
+  if ( protocol == QLatin1String("mailto") ) {
     protocol = i18n( "email" );
     prettyUrl.remove( 0, 7 ); // length( "mailto:" )
   } else if ( protocol.startsWith( QLatin1String( "http" ) ) ) {
