@@ -252,7 +252,7 @@ K_GLOBAL_STATIC( KMMainWidget::PtrList, theMainWidgetList )
   readConfig();
 
   if ( !kmkernel->isOffline() ) { //kmail is set to online mode, make sure the agents are also online
-    kmkernel->setAccountOnline();
+    kmkernel->setAccountStatus(true);
   }
 
 
@@ -2431,11 +2431,11 @@ void KMMainWidget::slotNetworkStatusChanged ( Solid::Networking::Status status)
     
   if ( status == Solid::Networking::Connected ) {
     BroadcastStatus::instance()->setStatusMsg(i18n("Network connection detected, all network jobs resumed"));
-    kmkernel->setAccountOnline();
+    kmkernel->setAccountStatus(true);
   }
   else {
     BroadcastStatus::instance()->setStatusMsg(i18n("No network connection detected, all network jobs are suspended"));
-    kmkernel->setAccountOffline();
+    kmkernel->setAccountStatus(false);
   }
 }
 

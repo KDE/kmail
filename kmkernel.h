@@ -329,8 +329,8 @@ public:
 
   bool isImapFolder( const Akonadi::Collection& ) const;
 
-  void setAccountOnline();
-  void setAccountOffline();
+  //sets online status for akonadi accounts. true for online, false for offline
+  void setAccountStatus(bool);
 
   const KComponentData &xmlGuiInstance() { return mXmlGuiInstance; }
   void setXmlGuiInstance( const KComponentData &instance ) { mXmlGuiInstance = instance; }
