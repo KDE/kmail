@@ -212,15 +212,17 @@ void MessageActions::slotItemModified( const Akonadi::Item &  item, const QSet< 
 {
   Q_UNUSED( partIdentifiers );
   if ( item == mCurrentItem )
+  {
     mCurrentItem = item;
-  const int numberOfVisibleItems = mVisibleItems.count();
-  for( int i = 0; i < numberOfVisibleItems; ++i ) {
-    Akonadi::Item it = mVisibleItems[i];
-    if ( item == it ) {
-      mVisibleItems[i] = item;
+    const int numberOfVisibleItems = mVisibleItems.count();
+    for( int i = 0; i < numberOfVisibleItems; ++i ) {
+      Akonadi::Item it = mVisibleItems[i];
+      if ( item == it ) {
+        mVisibleItems[i] = item;
+      }
     }
+    updateActions();
   }
-  updateActions();
 }
 
 
