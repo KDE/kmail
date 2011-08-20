@@ -273,8 +273,8 @@ K_GLOBAL_STATIC( KMMainWidget::PtrList, theMainWidgetList )
   connect( mTagActionManager, SIGNAL(tagActionTriggered(QString)),
            this, SLOT(slotUpdateMessageTagList(QString)) );
 
-  connect ( Solid::Networking::notifier(), SIGNAL( statusChanged( Solid::Networking::Status ) ),
-           this, SLOT( slotNetworkStatusChanged( Solid::Networking::Status ) ) );
+  connect ( Solid::Networking::notifier(), SIGNAL(statusChanged(Solid::Networking::Status)),
+           this, SLOT(slotNetworkStatusChanged(Solid::Networking::Status)) );
 
   toggleSystemTray();
 
