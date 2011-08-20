@@ -2515,9 +2515,9 @@ void KMComposeWin::doDelayedSend( MessageSender::SendMethod method, MessageSende
                                    ( ( saveIn != MessageSender::SaveInNone && GlobalSettings::self()->neverEncryptDrafts() )
                                     || mSigningAndEncryptionExplicitlyDisabled ) );
 
-  int num = GlobalSettings::self()->customMessageHeadersCount();
+  const int num = GlobalSettings::self()->customMessageHeadersCount();
   QMap<QByteArray, QString> customHeader;
-  for(int ix=0; ix<num; ix++) {
+  for(int ix=0; ix<num; ++ix) {
     CustomMimeHeader customMimeHeader( QString::number(ix) );
     customMimeHeader.readConfig();
     customHeader.insert(customMimeHeader.custHeaderName().toLatin1(), customMimeHeader.custHeaderValue() );
@@ -2569,7 +2569,7 @@ void KMComposeWin::slotSendNowVia( QAction *item )
 void KMComposeWin::slotSendLaterVia( QAction *item )
 {
   QList<int> availTransports= TransportManager::self()->transportIds();
-  int transport = item->data().toInt();
+  const int transport = item->data().toInt();
   if ( availTransports.contains( transport ) ) {
     mComposerBase->transportComboBox()->setCurrentTransport( transport );
     slotSendLater();
@@ -2953,8 +2953,8 @@ void KMComposeWin::slotCursorPositionChanged()
 
   // Show link target in status bar
   if ( mComposerBase->editor()->textCursor().charFormat().isAnchor() ) {
-    QString text = mComposerBase->editor()->currentLinkText();
-    QString url = mComposerBase->editor()->currentLinkUrl();
+    const QString text = mComposerBase->editor()->currentLinkText();
+    const QString url = mComposerBase->editor()->currentLinkUrl();
     statusBar()->changeItem( text + " -> " + url, 0 );
   }
   else {
