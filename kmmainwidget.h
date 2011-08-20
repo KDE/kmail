@@ -43,6 +43,7 @@
 #include <QPointer>
 #include <akonadi/kmime/standardmailactionmanager.h>
 #include <messagelist/core/view.h>
+#include <Solid/Networking>
 
 namespace Akonadi {
   class EntityListView;
@@ -371,6 +372,7 @@ class KMAIL_EXPORT KMMainWidget : public QWidget
     void slotSendQueuedVia( QAction* item );
     void slotOnlineStatus();
     void slotUpdateOnlineStatus( GlobalSettings::EnumNetworkState::type );
+    void slotNetworkStatusChanged ( Solid::Networking::Status );
     void slotMessagePopup(const Akonadi::Item& ,const KUrl&,const QPoint& );
     void slotDelayedMessagePopup( KJob *job );
     void slotMarkAll();

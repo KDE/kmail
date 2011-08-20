@@ -273,6 +273,9 @@ K_GLOBAL_STATIC( KMMainWidget::PtrList, theMainWidgetList )
   connect( mTagActionManager, SIGNAL(tagActionTriggered(QString)),
            this, SLOT(slotUpdateMessageTagList(QString)) );
 
+  connect ( Solid::Networking::notifier(), SIGNAL( statusChanged( Solid::Networking::Status ) ),
+           this, SLOT( slotNetworkStatusChanged( Solid::Networking::Status ) ) );
+
   toggleSystemTray();
 
   { // make sure the pages are registered only once, since there can be multiple instances of KMMainWidget
@@ -2421,6 +2424,20 @@ void KMMainWidget::slotUpdateOnlineStatus( GlobalSettings::EnumNetworkState::typ
   }
 }
 
+void KMMainWidget::slotNetworkStatusChanged ( Solid::Networking::Status status)
+{
+  if (GlobalSettings::self()->networkState() == GlobalSettings::EnumNetworkState::Offline )
+    return;
+    
+  if ( status == Solid::Networking::Connected ) {
+    BroadcastStatus::instance()->setStatusMsg(i18n("Network connection detected, all network jobs resumed"));
+    kmkernel->setAccountOnline();
+  }
+  else {
+    BroadcastStatus::instance()->setStatusMsg(i18n("No network connection detected, all network jobs are suspended"));
+    kmkernel->setAccountOffline();
+  }
+}
 
 //-----------------------------------------------------------------------------
 void KMMainWidget::slotSendQueued()

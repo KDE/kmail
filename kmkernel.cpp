@@ -910,19 +910,25 @@ void KMKernel::stopNetworkJobs()
   if ( GlobalSettings::self()->networkState() == GlobalSettings::EnumNetworkState::Offline )
     return;
 
-  const Akonadi::AgentInstance::List lst = MailCommon::Util::agentInstances();
+  setAccountOffline();
+  
+  GlobalSettings::setNetworkState( GlobalSettings::EnumNetworkState::Offline );
+  BroadcastStatus::instance()->setStatusMsg( i18n("KMail is set to be offline; all network jobs are suspended"));
+  emit onlineStatusChanged( (GlobalSettings::EnumNetworkState::type)GlobalSettings::networkState() );
+
+}
+
+void KMKernel::setAccountOffline()
+{
+    const Akonadi::AgentInstance::List lst = MailCommon::Util::agentInstances();
   foreach ( Akonadi::AgentInstance type, lst ) {
     if ( type.identifier().contains( IMAP_RESOURCE_IDENTIFIER ) ||
          type.identifier().contains( POP3_RESOURCE_IDENTIFIER ) ) {
       type.setIsOnline( false );
     }
   }
-
-  GlobalSettings::setNetworkState( GlobalSettings::EnumNetworkState::Offline );
-  BroadcastStatus::instance()->setStatusMsg( i18n("KMail is set to be offline; all network jobs are suspended"));
-  emit onlineStatusChanged( (GlobalSettings::EnumNetworkState::type)GlobalSettings::networkState() );
-
 }
+
 
 void KMKernel::setAccountOnline()
 {
@@ -932,7 +938,10 @@ void KMKernel::setAccountOnline()
          type.identifier().contains( POP3_RESOURCE_IDENTIFIER ) ) {
       type.setIsOnline( true );
     }
-  }  
+  }
+  if ( MessageComposer::MessageComposerSettings::self()->sendImmediate() ) {
+    kmkernel->msgSender()->sendQueued();
+  }
 }
 
 void KMKernel::resumeNetworkJobs()
@@ -940,20 +949,20 @@ void KMKernel::resumeNetworkJobs()
   if ( GlobalSettings::self()->networkState() == GlobalSettings::EnumNetworkState::Online )
     return;
 
-  setAccountOnline();
-  
-  GlobalSettings::setNetworkState( GlobalSettings::EnumNetworkState::Online );
-  BroadcastStatus::instance()->setStatusMsg( i18n("KMail is set to be online; all network jobs resumed"));
-  emit onlineStatusChanged( (GlobalSettings::EnumNetworkState::type)GlobalSettings::networkState() );
-
-  if ( MessageComposer::MessageComposerSettings::self()->sendImmediate() ) {
-    kmkernel->msgSender()->sendQueued();
+  if ( Solid::Networking::status()==Solid::Networking::Connected ) {
+    setAccountOnline();
+    BroadcastStatus::instance()->setStatusMsg( i18n("KMail is set to be online; all network jobs resumed"));
   }
+  else {
+    BroadcastStatus::instance()->setStatusMsg( i18n ( "KMail is set to be online; all network jobs will resume when a network connection is detected" ) );
+  }
+  GlobalSettings::setNetworkState( GlobalSettings::EnumNetworkState::Online );
+  emit onlineStatusChanged( (GlobalSettings::EnumNetworkState::type)GlobalSettings::networkState() );
 }
 
 bool KMKernel::isOffline()
 {
-  if ( GlobalSettings::self()->networkState() == GlobalSettings::EnumNetworkState::Offline )
+  if ( ( GlobalSettings::self()->networkState() == GlobalSettings::EnumNetworkState::Offline ) || ( Solid::Networking::status() != Solid::Networking::Connected ) )
     return true;
   else
     return false;
