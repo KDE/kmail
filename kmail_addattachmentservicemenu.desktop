@@ -8,6 +8,7 @@ Actions=sendto;
 Icon=kmail
 Name=Send as Email Attachment
 Name[de]=Als E-Mail-Anhang versenden
+Name[es]=Enviar como adjunto de correo
 Name[nb]=Send som e-postvedlegg
 Name[nl]=Als e-mailbijlage verzenden
 Name[pt]=Enviar como Anexo do E-Mail
