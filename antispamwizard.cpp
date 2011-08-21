@@ -29,7 +29,9 @@
 
 
 #include "antispamwizard.h"
+#ifndef QT_NO_CURSOR
 #include "messageviewer/kcursorsaver.h"
+#endif
 #include "kmkernel.h"
 #include "kmmainwin.h"
 #include "folderrequester.h"
@@ -519,8 +521,9 @@ void AntiSpamWizard::checkVirusRulesSelections()
 void AntiSpamWizard::checkToolAvailability()
 {
   // this can take some time to find the tools
+#ifndef QT_NO_CURSOR
   MessageViewer::KCursorSaver busy( MessageViewer::KBusyPtr::busy() );
-
+#endif
   bool found = false;
   for ( QList<SpamToolConfig>::Iterator it = mToolList.begin();
         it != mToolList.end(); ++it ) {

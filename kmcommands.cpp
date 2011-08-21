@@ -79,7 +79,9 @@
 #include "mailcommon/redirectdialog.h"
 #include "kmmainwidget.h"
 #include "undostack.h"
+#ifndef QT_NO_CURSOR
 #include "messageviewer/kcursorsaver.h"
+#endif
 #include "messageviewer/objecttreeparser.h"
 #include "messageviewer/csshelper.h"
 #include "messageviewer/util.h"
@@ -756,7 +758,9 @@ KMReplyToCommand::KMReplyToCommand( QWidget *parent, const Akonadi::Item &msg,
 
 KMCommand::Result KMReplyToCommand::execute()
 {
+#ifndef QT_NO_CURSOR	
   MessageViewer::KCursorSaver busy( MessageViewer::KBusyPtr::busy() );
+#endif  
   Akonadi::Item item = retrievedMessage();
   KMime::Message::Ptr msg = MessageCore::Util::message( item );
   if ( !msg )
@@ -785,7 +789,9 @@ KMNoQuoteReplyToCommand::KMNoQuoteReplyToCommand( QWidget *parent,
 
 KMCommand::Result KMNoQuoteReplyToCommand::execute()
 {
+#ifndef QT_NO_CURSOR	
   MessageViewer::KCursorSaver busy( MessageViewer::KBusyPtr::busy() );
+#endif  
   Akonadi::Item item = retrievedMessage();
   KMime::Message::Ptr msg = MessageCore::Util::message( item );
   if ( !msg )
@@ -815,7 +821,9 @@ KMReplyListCommand::KMReplyListCommand( QWidget *parent,
 
 KMCommand::Result KMReplyListCommand::execute()
 {
+#ifndef QT_NO_CURSOR	
   MessageViewer::KCursorSaver busy( MessageViewer::KBusyPtr::busy() );
+#endif  
   Akonadi::Item item = retrievedMessage();
   KMime::Message::Ptr msg = MessageCore::Util::message( item );
   if ( !msg )
@@ -847,7 +855,9 @@ KMReplyToAllCommand::KMReplyToAllCommand( QWidget *parent,
 
 KMCommand::Result KMReplyToAllCommand::execute()
 {
+#ifndef QT_NO_CURSOR	
   MessageViewer::KCursorSaver busy( MessageViewer::KBusyPtr::busy() );
+#endif  
   Akonadi::Item item = retrievedMessage();
 
   KMime::Message::Ptr msg = MessageCore::Util::message( item );
@@ -880,7 +890,9 @@ KMReplyAuthorCommand::KMReplyAuthorCommand( QWidget *parent, const Akonadi::Item
 
 KMCommand::Result KMReplyAuthorCommand::execute()
 {
+#ifndef QT_NO_CURSOR
   MessageViewer::KCursorSaver busy( MessageViewer::KBusyPtr::busy() );
+#endif  
   Akonadi::Item item = retrievedMessage();
   KMime::Message::Ptr msg = MessageCore::Util::message( item );
   if ( !msg )
@@ -957,7 +969,9 @@ KMCommand::Result KMForwardCommand::execute()
         KMime::Message::Ptr msg = MessageCore::Util::message( *it );
         if ( !msg )
           return Failed;
+#ifndef QT_NO_CURSOR	
         MessageViewer::KCursorSaver busy( MessageViewer::KBusyPtr::busy() );
+#endif	
         MessageFactory factory( msg, it->id(), it->parentCollection() );
         factory.setIdentityManager( KMKernel::self()->identityManager() );
         factory.setFolderIdentity( MailCommon::Util::folderIdentity( *it ) );
@@ -985,7 +999,9 @@ KMCommand::Result KMForwardCommand::execute()
   KMime::Message::Ptr msg = MessageCore::Util::message( item );
   if ( !msg )
     return Failed;
+#ifndef QT_NO_CURSOR  
   MessageViewer::KCursorSaver busy( MessageViewer::KBusyPtr::busy() );
+#endif  
   MessageFactory factory( msg, item.id(), item.parentCollection() );
   factory.setIdentityManager( KMKernel::self()->identityManager() );
   factory.setFolderIdentity( MailCommon::Util::folderIdentity( item ) );
@@ -1111,7 +1127,9 @@ KMCustomReplyToCommand::KMCustomReplyToCommand( QWidget *parent, const Akonadi::
 
 KMCommand::Result KMCustomReplyToCommand::execute()
 {
+#ifndef QT_NO_CURSOR
   MessageViewer::KCursorSaver busy( MessageViewer::KBusyPtr::busy() );
+#endif
   Akonadi::Item item = retrievedMessage();
   KMime::Message::Ptr msg = MessageCore::Util::message( item );
   if ( !msg )
@@ -1145,7 +1163,9 @@ KMCustomReplyAllToCommand::KMCustomReplyAllToCommand( QWidget *parent, const Ako
 
 KMCommand::Result KMCustomReplyAllToCommand::execute()
 {
+#ifndef QT_NO_CURSOR	
   MessageViewer::KCursorSaver busy( MessageViewer::KBusyPtr::busy() );
+#endif  
   Akonadi::Item item = retrievedMessage();
   KMime::Message::Ptr msg = MessageCore::Util::message( item );
   if ( !msg )
@@ -1196,7 +1216,9 @@ KMCommand::Result KMCustomForwardCommand::execute()
         KMime::Message::Ptr msg = MessageCore::Util::message( *it );
         if ( !msg )
           return Failed;
+#ifndef QT_NO_CURSOR	
         MessageViewer::KCursorSaver busy( MessageViewer::KBusyPtr::busy() );
+#endif	
         MessageFactory factory( msg, it->id(), it->parentCollection() );
         factory.setIdentityManager( KMKernel::self()->identityManager() );
         factory.setFolderIdentity( MailCommon::Util::folderIdentity( *it ) );
@@ -1218,7 +1240,9 @@ KMCommand::Result KMCustomForwardCommand::execute()
     KMime::Message::Ptr msg = MessageCore::Util::message( item );
     if ( !msg )
       return Failed;
+#ifndef QT_NO_CURSOR    
     MessageViewer::KCursorSaver busy( MessageViewer::KBusyPtr::busy() );
+#endif    
     MessageFactory factory( msg, item.id(), item.parentCollection() );
     factory.setIdentityManager( KMKernel::self()->identityManager() );
     factory.setFolderIdentity( MailCommon::Util::folderIdentity( item ) );
@@ -1423,8 +1447,9 @@ KMFilterActionCommand::KMFilterActionCommand( QWidget *parent,
 
 KMCommand::Result KMFilterActionCommand::execute()
 {
+#ifndef QT_NO_CURSOR	
   MessageViewer::KCursorSaver busy( MessageViewer::KBusyPtr::busy() );
-
+#endif
   int msgCount = 0;
   int msgCountToFilter = retrievedMsgs().size();
   ProgressItem* progressItem =
@@ -1556,8 +1581,9 @@ void KMMoveCommand::slotMoveResult( KJob * job )
 
 KMCommand::Result KMMoveCommand::execute()
 {
+#ifndef QT_NO_CURSOR	
   MessageViewer::KCursorSaver busy( MessageViewer::KBusyPtr::busy() );
-
+#endif
   setEmitsCompletedItself( true );
   setDeletesItself( true );
   if ( mDestFolder.isValid() ) {

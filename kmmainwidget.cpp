@@ -71,8 +71,9 @@
 #include "messageviewer/attachmentstrategy.h"
 #include "messageviewer/headerstrategy.h"
 #include "messageviewer/headerstyle.h"
+#ifndef QT_NO_CURSOR
 #include "messageviewer/kcursorsaver.h"
-
+#endif
 
 #include "messagecomposer/messagesender.h"
 #include "messagecomposer/messagehelper.h"
@@ -489,8 +490,9 @@ void KMMainWidget::folderSelected( const Akonadi::Collection & col )
   }
 
   mGoToFirstUnreadMessageInSelectedFolder = false;
-
+#ifndef QT_NO_CURSOR
   MessageViewer::KCursorSaver busy( MessageViewer::KBusyPtr::busy() );
+#endif
 
   if (mMsgView)
     mMsgView->clear(true);
@@ -1513,7 +1515,9 @@ void KMMainWidget::slotEmptyFolder()
     if (KMessageBox::warningContinueCancel(this, text, title, KGuiItem( title, "user-trash"))
       != KMessageBox::Continue) return;
   }
+#ifndef QT_NO_CURSOR
   MessageViewer::KCursorSaver busy( MessageViewer::KBusyPtr::busy() );
+#endif  
   slotMarkAll();
   if (isTrash) {
     /* Don't ask for confirmation again when deleting, the user has already
@@ -2259,7 +2263,9 @@ void KMMainWidget::slotApplyFilters()
 
 void KMMainWidget::applyFilters( const QList<Akonadi::Item>& selectedMessages )
 {
+#ifndef QT_NO_CURSOR
   MessageViewer::KCursorSaver busy( MessageViewer::KBusyPtr::busy() );
+#endif  
   FilterIf->filterManager()->applyFilters( selectedMessages );
 }
 
@@ -3522,14 +3528,18 @@ void KMMainWidget::slotCollapseThread()
 void KMMainWidget::slotExpandAllThreads()
 {
   // TODO: Make this asynchronous ? (if there is enough demand)
+#ifndef QT_NO_CURSOR	
   MessageViewer::KCursorSaver busy( MessageViewer::KBusyPtr::busy() );
+#endif  
   mMessagePane->setAllThreadsExpanded( true );
 }
 
 void KMMainWidget::slotCollapseAllThreads()
 {
   // TODO: Make this asynchronous ? (if there is enough demand)
+#ifndef QT_NO_CURSOR
   MessageViewer::KCursorSaver busy( MessageViewer::KBusyPtr::busy() );
+#endif  
   mMessagePane->setAllThreadsExpanded( false );
 }
 
