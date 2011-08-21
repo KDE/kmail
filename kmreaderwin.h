@@ -88,9 +88,6 @@ public:
   /** Set the override character encoding. */
   void setOverrideEncoding( const QString & encoding );
   virtual void setPrinting(bool enable );
-
-  /** Zoom Factor */
-  void setZoomFactor( qreal zoomFactor );
   
   void setMessage( const Akonadi::Item& item, MessageViewer::Viewer::UpdateMode updateMode = MessageViewer::Viewer::Delayed);
 
@@ -192,6 +189,8 @@ public slots:
   void slotShowReader( KMime::Content* , bool, const QString& );
   void slotShowMessage( KMime::Message::Ptr message, const QString& encoding );
   void slotDeleteMessage( const Akonadi::Item& );
+  void slotZoomIn();
+  void slotZoomOut();
 protected:
 
   KUrl urlClicked() const;

@@ -94,10 +94,6 @@ private:
 
   // Custom template actions menu
   boost::scoped_ptr<CustomTemplatesMenu> mCustomTemplateMenus;
-
-  // zoom Factor
-  qreal mZoomFactor;
-  static const qreal mZoomBy;
 };
 
 #endif /*KMReaderMainWin_h*/

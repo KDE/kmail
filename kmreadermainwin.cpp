@@ -63,14 +63,11 @@
 #include "messagecore/messagehelpers.h"
 #include <mailutil.h>
 
-const qreal KMReaderMainWin::mZoomBy = 20;
-
 using namespace MailCommon;
 
 KMReaderMainWin::KMReaderMainWin( bool htmlOverride, bool htmlLoadExtOverride,
                                   char *name )
-  : KMail::SecondaryWindow( name ? name : "readerwindow#" ),
-    mZoomFactor(100)
+  : KMail::SecondaryWindow( name ? name : "readerwindow#" )
 {
   mReaderWin = new KMReaderWin( this, this, actionCollection() );
   //mReaderWin->setShowCompleteMessage( true );
@@ -83,8 +80,7 @@ KMReaderMainWin::KMReaderMainWin( bool htmlOverride, bool htmlLoadExtOverride,
 
 //-----------------------------------------------------------------------------
 KMReaderMainWin::KMReaderMainWin( char *name )
-  : KMail::SecondaryWindow( name ? name : "readerwindow#" ),
-    mZoomFactor(100)
+  : KMail::SecondaryWindow( name ? name : "readerwindow#" )
 {
   mReaderWin = new KMReaderWin( this, this, actionCollection() );
   initKMReaderMainWin();
@@ -93,8 +89,7 @@ KMReaderMainWin::KMReaderMainWin( char *name )
 
 //-----------------------------------------------------------------------------
 KMReaderMainWin::KMReaderMainWin(KMime::Content* aMsgPart, bool aHTML, const QString & encoding, char *name )
-  : KMail::SecondaryWindow( name ? name : "readerwindow#" ),
-    mZoomFactor(100)
+  : KMail::SecondaryWindow( name ? name : "readerwindow#" )
 {
   mReaderWin = new KMReaderWin( this, this, actionCollection() );
   mReaderWin->setOverrideEncoding( encoding );
@@ -516,22 +511,12 @@ void KMReaderMainWin::slotUpdateToolbars()
 
 void KMReaderMainWin::slotZoomIn()
 {
-  if( mZoomFactor >= 300 )
-    return;
-  mZoomFactor += mZoomBy;
-  if( mZoomFactor > 300 )
-    mZoomFactor = 300;
-  mReaderWin->setZoomFactor( mZoomFactor/100.0 );
+  mReaderWin->slotZoomIn();
 }
 
 void KMReaderMainWin::slotZoomOut()
 {
-  if ( mZoomFactor <= 100 )
-    return;
-  mZoomFactor -= mZoomBy;
-  if( mZoomFactor < 100 )
-    mZoomFactor = 100;
-  mReaderWin->setZoomFactor( mZoomFactor/100.0 );
+  mReaderWin->slotZoomOut();
 }
 
 #include "kmreadermainwin.moc"
