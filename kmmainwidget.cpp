@@ -3321,7 +3321,7 @@ void KMMainWidget::setupActions()
   mZoomResetAction = new KAction( i18n("Reset"), this);
   actionCollection()->addAction("zoom_reset", mZoomResetAction);
   connect(mZoomResetAction, SIGNAL(triggered(bool)), SLOT(slotZoomReset()));
-  //mZoomResetAction->setShortcut(QKeySequence(Qt::CTRL | Qt::Key_Minus));
+  mZoomResetAction->setShortcut(QKeySequence(Qt::CTRL | Qt::Key_0));
 
   
   mViewSourceAction = new KAction(i18n("&View Source"), this);
