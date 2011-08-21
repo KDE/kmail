@@ -605,6 +605,10 @@ void KMReaderWin::slotDeleteMessage(const Akonadi::Item& item)
   command->start();
 }
 
+void KMReaderWin::setZoomFactor( qreal zoomFactor )
+{
+  mViewer->setZoomFactor( zoomFactor );
+}
 
 #include "kmreaderwin.moc"
 

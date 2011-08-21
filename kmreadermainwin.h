@@ -65,7 +65,9 @@ private slots:
   void slotCustomReplyToMsg( const QString &tmpl );
   void slotCustomReplyAllToMsg( const QString &tmpl );
   void slotCustomForwardMsg( const QString &tmpl );
-
+  void slotZoomIn();
+  void slotZoomOut();
+  
   void slotEditToolbars();
   void slotConfigChanged();
   void slotUpdateToolbars();
@@ -85,13 +87,17 @@ private:
   KUrl mUrl;
   // a few actions duplicated from kmmainwidget
   KAction *mTrashAction, *mPrintAction, *mSaveAsAction, *mSaveAtmAction,
-          *mViewSourceAction;
+          *mViewSourceAction, *mZoomInAction, *mZoomOutAction;
   KFontAction *fontAction;
   KFontSizeAction *fontSizeAction;
   KMail::MessageActions *mMsgActions;
 
   // Custom template actions menu
   boost::scoped_ptr<CustomTemplatesMenu> mCustomTemplateMenus;
+
+  // zoom Factor
+  qreal mZoomFactor;
+  static const qreal mZoomBy;
 };
 
 #endif /*KMReaderMainWin_h*/

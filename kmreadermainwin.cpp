@@ -63,11 +63,14 @@
 #include "messagecore/messagehelpers.h"
 #include <mailutil.h>
 
+const qreal KMReaderMainWin::mZoomBy = 20;
+
 using namespace MailCommon;
 
 KMReaderMainWin::KMReaderMainWin( bool htmlOverride, bool htmlLoadExtOverride,
                                   char *name )
-  : KMail::SecondaryWindow( name ? name : "readerwindow#" )
+  : KMail::SecondaryWindow( name ? name : "readerwindow#" ),
+    mZoomFactor(100)
 {
   mReaderWin = new KMReaderWin( this, this, actionCollection() );
   //mReaderWin->setShowCompleteMessage( true );
@@ -80,7 +83,8 @@ KMReaderMainWin::KMReaderMainWin( bool htmlOverride, bool htmlLoadExtOverride,
 
 //-----------------------------------------------------------------------------
 KMReaderMainWin::KMReaderMainWin( char *name )
-  : KMail::SecondaryWindow( name ? name : "readerwindow#" )
+  : KMail::SecondaryWindow( name ? name : "readerwindow#" ),
+    mZoomFactor(100)
 {
   mReaderWin = new KMReaderWin( this, this, actionCollection() );
   initKMReaderMainWin();
@@ -89,7 +93,8 @@ KMReaderMainWin::KMReaderMainWin( char *name )
 
 //-----------------------------------------------------------------------------
 KMReaderMainWin::KMReaderMainWin(KMime::Content* aMsgPart, bool aHTML, const QString & encoding, char *name )
-  : KMail::SecondaryWindow( name ? name : "readerwindow#" )
+  : KMail::SecondaryWindow( name ? name : "readerwindow#" ),
+    mZoomFactor(100)
 {
   mReaderWin = new KMReaderWin( this, this, actionCollection() );
   mReaderWin->setOverrideEncoding( encoding );
@@ -300,6 +305,17 @@ void KMReaderMainWin::setupAccel()
   connect(mViewSourceAction, SIGNAL(triggered(bool)), mReaderWin->viewer(), SLOT(slotShowMessageSource()));
   mViewSourceAction->setShortcut(QKeySequence(Qt::Key_V));
 
+
+  mZoomInAction = new KAction( KIcon("zoom-in"), i18n("&Zoom In"), this);
+  actionCollection()->addAction("zoom_in", mZoomInAction);
+  connect(mZoomInAction, SIGNAL(triggered(bool)), SLOT(slotZoomIn()));
+  mZoomInAction->setShortcut(QKeySequence(Qt::CTRL | Qt::Key_Plus));
+  mZoomOutAction = new KAction( KIcon("zoom-out"), i18n("Zoom &Out"), this);
+  actionCollection()->addAction("zoom_out", mZoomOutAction);
+  connect(mZoomOutAction, SIGNAL(triggered(bool)), SLOT(slotZoomOut()));
+  mZoomOutAction->setShortcut(QKeySequence(Qt::CTRL | Qt::Key_Minus));
+
+  
   //----- Message Menu
 
   fontAction = new KFontAction( i18n("Select Font"), this );
@@ -449,6 +465,9 @@ void KMReaderMainWin::slotDelayedMessagePopup( KJob *job )
     menu->addAction( mSaveAtmAction );
     menu->addSeparator();
     menu->addAction( mMsgActions->createTodoAction() );
+    menu->addSeparator();
+    menu->addAction( mZoomInAction );
+    menu->addAction( mZoomOutAction );
   }
   menu->exec( aPoint, 0 );
   delete menu;
@@ -492,6 +511,27 @@ void KMReaderMainWin::slotUpdateToolbars()
 {
   createGUI("kmreadermainwin.rc");
   applyMainWindowSettings( KConfigGroup(KMKernel::self()->config(), "ReaderWindow") );
+}
+
+
+void KMReaderMainWin::slotZoomIn()
+{
+  if( mZoomFactor >= 300 )
+    return;
+  mZoomFactor += mZoomBy;
+  if( mZoomFactor > 300 )
+    mZoomFactor = 300;
+  mReaderWin->setZoomFactor( mZoomFactor/100.0 );
+}
+
+void KMReaderMainWin::slotZoomOut()
+{
+  if ( mZoomFactor <= 100 )
+    return;
+  mZoomFactor -= mZoomBy;
+  if( mZoomFactor < 100 )
+    mZoomFactor = 100;
+  mReaderWin->setZoomFactor( mZoomFactor/100.0 );
 }
 
 #include "kmreadermainwin.moc"

@@ -89,6 +89,9 @@ public:
   void setOverrideEncoding( const QString & encoding );
   virtual void setPrinting(bool enable );
 
+  /** Zoom Factor */
+  void setZoomFactor( qreal zoomFactor );
+  
   void setMessage( const Akonadi::Item& item, MessageViewer::Viewer::UpdateMode updateMode = MessageViewer::Viewer::Delayed);
 
   void setMessage( KMime::Message::Ptr message );
