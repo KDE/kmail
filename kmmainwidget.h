@@ -442,6 +442,7 @@ class KMAIL_EXPORT KMMainWidget : public QWidget
     void slotZoomIn();
     void slotZoomOut();
     void slotZoomReset();
+    void slotZoomOnlyText();
   
     /**
       Show a message screen explaining that we are currently offline, when

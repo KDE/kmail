@@ -3589,6 +3589,10 @@ void KMMainWidget::slotZoomOut()
   }
 }
 
+void KMMainWidget::slotZoomOnlyText()
+{
+}
+
 //-----------------------------------------------------------------------------
 void KMMainWidget::updateMessageMenu()
 {
