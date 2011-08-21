@@ -3312,10 +3312,16 @@ void KMMainWidget::setupActions()
   actionCollection()->addAction("zoom_in", mZoomInAction);
   connect(mZoomInAction, SIGNAL(triggered(bool)), SLOT(slotZoomIn()));
   mZoomInAction->setShortcut(QKeySequence(Qt::CTRL | Qt::Key_Plus));
+
   mZoomOutAction = new KAction( KIcon("zoom-out"), i18n("Zoom &Out"), this);
   actionCollection()->addAction("zoom_out", mZoomOutAction);
   connect(mZoomOutAction, SIGNAL(triggered(bool)), SLOT(slotZoomOut()));
   mZoomOutAction->setShortcut(QKeySequence(Qt::CTRL | Qt::Key_Minus));
+
+  mZoomResetAction = new KAction( i18n("Reset"), this);
+  actionCollection()->addAction("zoom_reset", mZoomResetAction);
+  connect(mZoomResetAction, SIGNAL(triggered(bool)), SLOT(slotZoomReset()));
+  //mZoomResetAction->setShortcut(QKeySequence(Qt::CTRL | Qt::Key_Minus));
 
   
   mViewSourceAction = new KAction(i18n("&View Source"), this);
@@ -3559,6 +3565,13 @@ void KMMainWidget::slotShowMsgSrc()
 {
   if ( mMsgView ) {
     mMsgView->viewer()->slotShowMessageSource();
+  }
+}
+
+void KMMainWidget::slotZoomReset()
+{
+  if ( mMsgView ) {
+    mMsgView->viewer()->slotZoomReset();
   }
 }
 

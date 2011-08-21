@@ -309,6 +309,12 @@ void KMReaderMainWin::setupAccel()
   connect(zoomOutAction, SIGNAL(triggered(bool)), mReaderWin->viewer(), SLOT(slotZoomOut()));
   zoomOutAction->setShortcut(QKeySequence(Qt::CTRL | Qt::Key_Minus));
 
+  KAction *zoomResetAction = new KAction( i18n("Reset"), this);
+  actionCollection()->addAction("zoom_reset", zoomResetAction);
+  connect(zoomResetAction, SIGNAL(triggered(bool)), mReaderWin->viewer(), SLOT(slotZoomReset()));
+  //mZoomResetAction->setShortcut(QKeySequence(Qt::CTRL | Qt::Key_Minus));
+
+  
   //----- Message Menu
 
   fontAction = new KFontAction( i18n("Select Font"), this );
