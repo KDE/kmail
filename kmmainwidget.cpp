@@ -3307,6 +3307,17 @@ void KMMainWidget::setupActions()
     connect(action, SIGNAL(triggered(bool)), SLOT(slotCollapseAllThreads()));
   }
 
+
+  mZoomInAction = new KAction( KIcon("zoom-in"), i18n("&Zoom In"), this);
+  actionCollection()->addAction("zoom_in", mZoomInAction);
+  connect(mZoomInAction, SIGNAL(triggered(bool)), SLOT(slotZoomIn()));
+  mZoomInAction->setShortcut(QKeySequence(Qt::CTRL | Qt::Key_Plus));
+  mZoomOutAction = new KAction( KIcon("zoom-out"), i18n("Zoom &Out"), this);
+  actionCollection()->addAction("zoom_out", mZoomOutAction);
+  connect(mZoomOutAction, SIGNAL(triggered(bool)), SLOT(slotZoomOut()));
+  mZoomOutAction->setShortcut(QKeySequence(Qt::CTRL | Qt::Key_Minus));
+
+  
   mViewSourceAction = new KAction(i18n("&View Source"), this);
   actionCollection()->addAction("view_source", mViewSourceAction );
   connect(mViewSourceAction, SIGNAL(triggered(bool)), SLOT(slotShowMsgSrc()));
@@ -3551,6 +3562,19 @@ void KMMainWidget::slotShowMsgSrc()
   }
 }
 
+void KMMainWidget::slotZoomIn()
+{
+  if ( mMsgView ) {
+    mMsgView->viewer()->slotZoomIn();
+  }
+}
+
+void KMMainWidget::slotZoomOut()
+{
+  if ( mMsgView ) {
+    mMsgView->viewer()->slotZoomOut();
+  }
+}
 
 //-----------------------------------------------------------------------------
 void KMMainWidget::updateMessageMenu()

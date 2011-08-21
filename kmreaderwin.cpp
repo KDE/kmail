@@ -605,16 +605,6 @@ void KMReaderWin::slotDeleteMessage(const Akonadi::Item& item)
   command->start();
 }
 
-void KMReaderWin::slotZoomIn()
-{
-  mViewer->slotZoomIn();
-}
-
-void KMReaderWin::slotZoomOut()
-{
-  mViewer->slotZoomOut();
-}
-
 #include "kmreaderwin.moc"
 
 

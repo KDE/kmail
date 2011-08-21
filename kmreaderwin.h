@@ -189,8 +189,6 @@ public slots:
   void slotShowReader( KMime::Content* , bool, const QString& );
   void slotShowMessage( KMime::Message::Ptr message, const QString& encoding );
   void slotDeleteMessage( const Akonadi::Item& );
-  void slotZoomIn();
-  void slotZoomOut();
 protected:
 
   KUrl urlClicked() const;

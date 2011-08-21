@@ -65,8 +65,6 @@ private slots:
   void slotCustomReplyToMsg( const QString &tmpl );
   void slotCustomReplyAllToMsg( const QString &tmpl );
   void slotCustomForwardMsg( const QString &tmpl );
-  void slotZoomIn();
-  void slotZoomOut();
   
   void slotEditToolbars();
   void slotConfigChanged();
@@ -87,7 +85,7 @@ private:
   KUrl mUrl;
   // a few actions duplicated from kmmainwidget
   KAction *mTrashAction, *mPrintAction, *mSaveAsAction, *mSaveAtmAction,
-          *mViewSourceAction, *mZoomInAction, *mZoomOutAction;
+    *mViewSourceAction;
   KFontAction *fontAction;
   KFontSizeAction *fontSizeAction;
   KMail::MessageActions *mMsgActions;

@@ -439,6 +439,9 @@ class KMAIL_EXPORT KMMainWidget : public QWidget
     /** Show a splash screen for the longer-lasting operation */
     void slotShowBusySplash();
 
+    void slotZoomIn();
+    void slotZoomOut();
+  
     /**
       Show a message screen explaining that we are currently offline, when
       an online folder is selected.
@@ -550,7 +553,7 @@ private:
     KActionMenu *mFilterMenu;
     KAction *mSubjectFilterAction, *mFromFilterAction, *mToFilterAction,
         *mListFilterAction;
-
+    KAction *mZoomInAction, *mZoomOutAction;
     KAction *mNextMessageAction, *mPreviousMessageAction;
     KAction *mExpireConfigAction;
     KAction *mAddFavoriteFolder;

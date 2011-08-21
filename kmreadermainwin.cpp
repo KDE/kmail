@@ -300,17 +300,15 @@ void KMReaderMainWin::setupAccel()
   connect(mViewSourceAction, SIGNAL(triggered(bool)), mReaderWin->viewer(), SLOT(slotShowMessageSource()));
   mViewSourceAction->setShortcut(QKeySequence(Qt::Key_V));
 
+  KAction *zoomInAction = new KAction( KIcon("zoom-in"), i18n("&Zoom In"), this);
+  actionCollection()->addAction("zoom_in", zoomInAction);
+  connect(zoomInAction, SIGNAL(triggered(bool)), mReaderWin->viewer(), SLOT(slotZoomIn()));
+  zoomInAction->setShortcut(QKeySequence(Qt::CTRL | Qt::Key_Plus));
+  KAction *zoomOutAction = new KAction( KIcon("zoom-out"), i18n("Zoom &Out"), this);
+  actionCollection()->addAction("zoom_out", zoomOutAction);
+  connect(zoomOutAction, SIGNAL(triggered(bool)), mReaderWin->viewer(), SLOT(slotZoomOut()));
+  zoomOutAction->setShortcut(QKeySequence(Qt::CTRL | Qt::Key_Minus));
 
-  mZoomInAction = new KAction( KIcon("zoom-in"), i18n("&Zoom In"), this);
-  actionCollection()->addAction("zoom_in", mZoomInAction);
-  connect(mZoomInAction, SIGNAL(triggered(bool)), SLOT(slotZoomIn()));
-  mZoomInAction->setShortcut(QKeySequence(Qt::CTRL | Qt::Key_Plus));
-  mZoomOutAction = new KAction( KIcon("zoom-out"), i18n("Zoom &Out"), this);
-  actionCollection()->addAction("zoom_out", mZoomOutAction);
-  connect(mZoomOutAction, SIGNAL(triggered(bool)), SLOT(slotZoomOut()));
-  mZoomOutAction->setShortcut(QKeySequence(Qt::CTRL | Qt::Key_Minus));
-
-  
   //----- Message Menu
 
   fontAction = new KFontAction( i18n("Select Font"), this );
@@ -461,8 +459,6 @@ void KMReaderMainWin::slotDelayedMessagePopup( KJob *job )
     menu->addSeparator();
     menu->addAction( mMsgActions->createTodoAction() );
     menu->addSeparator();
-    menu->addAction( mZoomInAction );
-    menu->addAction( mZoomOutAction );
   }
   menu->exec( aPoint, 0 );
   delete menu;
@@ -508,15 +504,5 @@ void KMReaderMainWin::slotUpdateToolbars()
   applyMainWindowSettings( KConfigGroup(KMKernel::self()->config(), "ReaderWindow") );
 }
 
-
-void KMReaderMainWin::slotZoomIn()
-{
-  mReaderWin->slotZoomIn();
-}
-
-void KMReaderMainWin::slotZoomOut()
-{
-  mReaderWin->slotZoomOut();
-}
 
 #include "kmreadermainwin.moc"
