@@ -438,11 +438,6 @@ class KMAIL_EXPORT KMMainWidget : public QWidget
 
     /** Show a splash screen for the longer-lasting operation */
     void slotShowBusySplash();
-
-    void slotZoomIn();
-    void slotZoomOut();
-    void slotZoomReset();
-    void slotZoomOnlyText();
   
     /**
       Show a message screen explaining that we are currently offline, when
@@ -555,7 +550,6 @@ private:
     KActionMenu *mFilterMenu;
     KAction *mSubjectFilterAction, *mFromFilterAction, *mToFilterAction,
         *mListFilterAction;
-    KAction *mZoomInAction, *mZoomOutAction, *mZoomResetAction;
     KAction *mNextMessageAction, *mPreviousMessageAction;
     KAction *mExpireConfigAction;
     KAction *mAddFavoriteFolder;
