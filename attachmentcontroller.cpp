@@ -77,7 +77,6 @@ AttachmentController::AttachmentController( Message::AttachmentModel *model, Att
 
 AttachmentController::~AttachmentController()
 {
-//   delete d;
 }
 
 void AttachmentController::identityChanged()

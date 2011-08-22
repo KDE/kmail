@@ -151,7 +151,7 @@ public Q_SLOTS:
    */
   Q_SCRIPTABLE void checkAccount( const QString & account );
 
-  Q_SCRIPTABLE void selectFolder( const QString & folder );
+  Q_SCRIPTABLE bool selectFolder( const QString & folder );
 
   Q_SCRIPTABLE bool canQueryClose();
 
@@ -329,7 +329,8 @@ public:
 
   bool isImapFolder( const Akonadi::Collection& ) const;
 
-  void setAccountOnline();
+  //sets online status for akonadi accounts. true for online, false for offline
+  void setAccountStatus(bool);
 
   const KComponentData &xmlGuiInstance() { return mXmlGuiInstance; }
   void setXmlGuiInstance( const KComponentData &instance ) { mXmlGuiInstance = instance; }

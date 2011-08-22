@@ -212,7 +212,7 @@ void IdentityPage::slotRemoveIdentity()
   }
 
   IdentityListViewItem *item = 0;
-  if ( mIPage.mIdentityList->selectedItems().size() > 0 ) {
+  if ( !mIPage.mIdentityList->selectedItems().isEmpty() ) {
     item = dynamic_cast<IdentityListViewItem*>( mIPage.mIdentityList->selectedItems()[0] );
   }
   if ( !item ) {

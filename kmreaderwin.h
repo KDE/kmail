@@ -88,7 +88,7 @@ public:
   /** Set the override character encoding. */
   void setOverrideEncoding( const QString & encoding );
   virtual void setPrinting(bool enable );
-
+  
   void setMessage( const Akonadi::Item& item, MessageViewer::Viewer::UpdateMode updateMode = MessageViewer::Viewer::Delayed);
 
   void setMessage( KMime::Message::Ptr message );

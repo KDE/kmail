@@ -605,7 +605,6 @@ void KMReaderWin::slotDeleteMessage(const Akonadi::Item& item)
   command->start();
 }
 
-
 #include "kmreaderwin.moc"
 
 

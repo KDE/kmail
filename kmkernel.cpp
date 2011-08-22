@@ -910,29 +910,26 @@ void KMKernel::stopNetworkJobs()
   if ( GlobalSettings::self()->networkState() == GlobalSettings::EnumNetworkState::Offline )
     return;
 
-  const Akonadi::AgentInstance::List lst = MailCommon::Util::agentInstances();
-  foreach ( Akonadi::AgentInstance type, lst ) {
-    if ( type.identifier().contains( IMAP_RESOURCE_IDENTIFIER ) ||
-         type.identifier().contains( POP3_RESOURCE_IDENTIFIER ) ) {
-      type.setIsOnline( false );
-    }
-  }
-
+  setAccountStatus(false);
+  
   GlobalSettings::setNetworkState( GlobalSettings::EnumNetworkState::Offline );
   BroadcastStatus::instance()->setStatusMsg( i18n("KMail is set to be offline; all network jobs are suspended"));
   emit onlineStatusChanged( (GlobalSettings::EnumNetworkState::type)GlobalSettings::networkState() );
 
 }
 
-void KMKernel::setAccountOnline()
+void KMKernel::setAccountStatus(bool goOnline)
 {
   const Akonadi::AgentInstance::List lst = MailCommon::Util::agentInstances();
   foreach ( Akonadi::AgentInstance type, lst ) {
     if ( type.identifier().contains( IMAP_RESOURCE_IDENTIFIER ) ||
          type.identifier().contains( POP3_RESOURCE_IDENTIFIER ) ) {
-      type.setIsOnline( true );
+      type.setIsOnline( goOnline );
     }
-  }  
+  }
+  if ( goOnline &&  MessageComposer::MessageComposerSettings::self()->sendImmediate() ) {
+    kmkernel->msgSender()->sendQueued();
+  }
 }
 
 void KMKernel::resumeNetworkJobs()
@@ -940,20 +937,20 @@ void KMKernel::resumeNetworkJobs()
   if ( GlobalSettings::self()->networkState() == GlobalSettings::EnumNetworkState::Online )
     return;
 
-  setAccountOnline();
-  
-  GlobalSettings::setNetworkState( GlobalSettings::EnumNetworkState::Online );
-  BroadcastStatus::instance()->setStatusMsg( i18n("KMail is set to be online; all network jobs resumed"));
-  emit onlineStatusChanged( (GlobalSettings::EnumNetworkState::type)GlobalSettings::networkState() );
-
-  if ( MessageComposer::MessageComposerSettings::self()->sendImmediate() ) {
-    kmkernel->msgSender()->sendQueued();
+  if ( Solid::Networking::status()==Solid::Networking::Connected ) {
+    setAccountStatus(true);
+    BroadcastStatus::instance()->setStatusMsg( i18n("KMail is set to be online; all network jobs resumed"));
   }
+  else {
+    BroadcastStatus::instance()->setStatusMsg( i18n ( "KMail is set to be online; all network jobs will resume when a network connection is detected" ) );
+  }
+  GlobalSettings::setNetworkState( GlobalSettings::EnumNetworkState::Online );
+  emit onlineStatusChanged( (GlobalSettings::EnumNetworkState::type)GlobalSettings::networkState() );
 }
 
 bool KMKernel::isOffline()
 {
-  if ( GlobalSettings::self()->networkState() == GlobalSettings::EnumNetworkState::Offline )
+  if ( ( GlobalSettings::self()->networkState() == GlobalSettings::EnumNetworkState::Offline ) || ( Solid::Networking::status() != Solid::Networking::Connected ) )
     return true;
   else
     return false;
@@ -1473,17 +1470,20 @@ void KMKernel::selectCollectionFromId( const Akonadi::Collection::Id id)
     widget->slotSelectCollectionFolder( colFolder );
 }
 
-void KMKernel::selectFolder( const QString &folder )
+bool KMKernel::selectFolder( const QString &folder )
 {
   KMMainWidget *widget = getKMMainWidget();
   Q_ASSERT( widget );
   if ( !widget )
-    return;
+    return false;
 
   Akonadi::Collection colFolder = CommonKernel->collectionFromId( folder );
 
-  if( colFolder.isValid() )
+  if( colFolder.isValid() ) {
     widget->slotSelectCollectionFolder( colFolder );
+    return true;
+  }
+  return false;
 }
 
 KMMainWidget *KMKernel::getKMMainWidget()
@@ -1520,7 +1520,8 @@ static Akonadi::Collection::List collect_collections( const QAbstractItemModel *
                                                       const QModelIndex &parent )
 {
   Akonadi::Collection::List collections;
-  for ( int i = 0; i < model->rowCount( parent ); i++ ) {
+  const int numberOfCollection( model->rowCount( parent ) );
+  for ( int i = 0; i < numberOfCollection; ++i ) {
     const QModelIndex child = model->index( i, 0, parent );
     Akonadi::Collection collection =
         model->data( child, Akonadi::EntityTreeModel::CollectionRole ).value<Akonadi::Collection>();
@@ -1623,7 +1624,7 @@ void KMKernel::transportRenamed(int id, const QString & oldName, const QString &
   }
 
   if ( !changedIdents.isEmpty() ) {
-    QString information =
+    const QString information =
       i18np( "This identity has been changed to use the modified transport:",
              "These %1 identities have been changed to use the modified transport:",
              changedIdents.count() );

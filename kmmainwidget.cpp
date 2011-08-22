@@ -71,8 +71,9 @@
 #include "messageviewer/attachmentstrategy.h"
 #include "messageviewer/headerstrategy.h"
 #include "messageviewer/headerstyle.h"
+#ifndef QT_NO_CURSOR
 #include "messageviewer/kcursorsaver.h"
-
+#endif
 
 #include "messagecomposer/messagesender.h"
 #include "messagecomposer/messagehelper.h"
@@ -252,7 +253,7 @@ K_GLOBAL_STATIC( KMMainWidget::PtrList, theMainWidgetList )
   readConfig();
 
   if ( !kmkernel->isOffline() ) { //kmail is set to online mode, make sure the agents are also online
-    kmkernel->setAccountOnline();
+    kmkernel->setAccountStatus(true);
   }
 
 
@@ -272,6 +273,9 @@ K_GLOBAL_STATIC( KMMainWidget::PtrList, theMainWidgetList )
 
   connect( mTagActionManager, SIGNAL(tagActionTriggered(QString)),
            this, SLOT(slotUpdateMessageTagList(QString)) );
+
+  connect ( Solid::Networking::notifier(), SIGNAL(statusChanged(Solid::Networking::Status)),
+           this, SLOT(slotNetworkStatusChanged(Solid::Networking::Status)) );
 
   toggleSystemTray();
 
@@ -486,8 +490,9 @@ void KMMainWidget::folderSelected( const Akonadi::Collection & col )
   }
 
   mGoToFirstUnreadMessageInSelectedFolder = false;
-
+#ifndef QT_NO_CURSOR
   MessageViewer::KCursorSaver busy( MessageViewer::KBusyPtr::busy() );
+#endif
 
   if (mMsgView)
     mMsgView->clear(true);
@@ -1510,7 +1515,9 @@ void KMMainWidget::slotEmptyFolder()
     if (KMessageBox::warningContinueCancel(this, text, title, KGuiItem( title, "user-trash"))
       != KMessageBox::Continue) return;
   }
+#ifndef QT_NO_CURSOR
   MessageViewer::KCursorSaver busy( MessageViewer::KBusyPtr::busy() );
+#endif  
   slotMarkAll();
   if (isTrash) {
     /* Don't ask for confirmation again when deleting, the user has already
@@ -2256,7 +2263,9 @@ void KMMainWidget::slotApplyFilters()
 
 void KMMainWidget::applyFilters( const QList<Akonadi::Item>& selectedMessages )
 {
+#ifndef QT_NO_CURSOR
   MessageViewer::KCursorSaver busy( MessageViewer::KBusyPtr::busy() );
+#endif  
   FilterIf->filterManager()->applyFilters( selectedMessages );
 }
 
@@ -2421,6 +2430,20 @@ void KMMainWidget::slotUpdateOnlineStatus( GlobalSettings::EnumNetworkState::typ
   }
 }
 
+void KMMainWidget::slotNetworkStatusChanged ( Solid::Networking::Status status)
+{
+  if (GlobalSettings::self()->networkState() == GlobalSettings::EnumNetworkState::Offline )
+    return;
+    
+  if ( status == Solid::Networking::Connected ) {
+    BroadcastStatus::instance()->setStatusMsg(i18n("Network connection detected, all network jobs resumed"));
+    kmkernel->setAccountStatus(true);
+  }
+  else {
+    BroadcastStatus::instance()->setStatusMsg(i18n("No network connection detected, all network jobs are suspended"));
+    kmkernel->setAccountStatus(false);
+  }
+}
 
 //-----------------------------------------------------------------------------
 void KMMainWidget::slotSendQueued()
@@ -3284,6 +3307,7 @@ void KMMainWidget::setupActions()
     connect(action, SIGNAL(triggered(bool)), SLOT(slotCollapseAllThreads()));
   }
 
+  
   mViewSourceAction = new KAction(i18n("&View Source"), this);
   actionCollection()->addAction("view_source", mViewSourceAction );
   connect(mViewSourceAction, SIGNAL(triggered(bool)), SLOT(slotShowMsgSrc()));
@@ -3505,14 +3529,18 @@ void KMMainWidget::slotCollapseThread()
 void KMMainWidget::slotExpandAllThreads()
 {
   // TODO: Make this asynchronous ? (if there is enough demand)
+#ifndef QT_NO_CURSOR	
   MessageViewer::KCursorSaver busy( MessageViewer::KBusyPtr::busy() );
+#endif  
   mMessagePane->setAllThreadsExpanded( true );
 }
 
 void KMMainWidget::slotCollapseAllThreads()
 {
   // TODO: Make this asynchronous ? (if there is enough demand)
+#ifndef QT_NO_CURSOR
   MessageViewer::KCursorSaver busy( MessageViewer::KBusyPtr::busy() );
+#endif  
   mMessagePane->setAllThreadsExpanded( false );
 }
 
@@ -3523,7 +3551,6 @@ void KMMainWidget::slotShowMsgSrc()
     mMsgView->viewer()->slotShowMessageSource();
   }
 }
-
 
 //-----------------------------------------------------------------------------
 void KMMainWidget::updateMessageMenu()

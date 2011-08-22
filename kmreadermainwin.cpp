@@ -300,6 +300,21 @@ void KMReaderMainWin::setupAccel()
   connect(mViewSourceAction, SIGNAL(triggered(bool)), mReaderWin->viewer(), SLOT(slotShowMessageSource()));
   mViewSourceAction->setShortcut(QKeySequence(Qt::Key_V));
 
+  KAction *zoomInAction = new KAction( KIcon("zoom-in"), i18n("&Zoom In"), this);
+  actionCollection()->addAction("zoom_in", zoomInAction);
+  connect(zoomInAction, SIGNAL(triggered(bool)), mReaderWin->viewer(), SLOT(slotZoomIn()));
+  zoomInAction->setShortcut(QKeySequence(Qt::CTRL | Qt::Key_Plus));
+  KAction *zoomOutAction = new KAction( KIcon("zoom-out"), i18n("Zoom &Out"), this);
+  actionCollection()->addAction("zoom_out", zoomOutAction);
+  connect(zoomOutAction, SIGNAL(triggered(bool)), mReaderWin->viewer(), SLOT(slotZoomOut()));
+  zoomOutAction->setShortcut(QKeySequence(Qt::CTRL | Qt::Key_Minus));
+
+  KAction *zoomResetAction = new KAction( i18n("Reset"), this);
+  actionCollection()->addAction("zoom_reset", zoomResetAction);
+  connect(zoomResetAction, SIGNAL(triggered(bool)), mReaderWin->viewer(), SLOT(slotZoomReset()));
+  //mZoomResetAction->setShortcut(QKeySequence(Qt::CTRL | Qt::Key_Minus));
+
+  
   //----- Message Menu
 
   fontAction = new KFontAction( i18n("Select Font"), this );
@@ -449,6 +464,7 @@ void KMReaderMainWin::slotDelayedMessagePopup( KJob *job )
     menu->addAction( mSaveAtmAction );
     menu->addSeparator();
     menu->addAction( mMsgActions->createTodoAction() );
+    menu->addSeparator();
   }
   menu->exec( aPoint, 0 );
   delete menu;
@@ -493,5 +509,6 @@ void KMReaderMainWin::slotUpdateToolbars()
   createGUI("kmreadermainwin.rc");
   applyMainWindowSettings( KConfigGroup(KMKernel::self()->config(), "ReaderWindow") );
 }
+
 
 #include "kmreadermainwin.moc"

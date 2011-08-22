@@ -29,7 +29,9 @@
 
 
 #include "antispamwizard.h"
+#ifndef QT_NO_CURSOR
 #include "messageviewer/kcursorsaver.h"
+#endif
 #include "kmkernel.h"
 #include "kmmainwin.h"
 #include "folderrequester.h"
@@ -110,17 +112,18 @@ AntiSpamWizard::AntiSpamWizard( WizardMode mode,
   }
 #endif
 
-  setWindowTitle( ( mMode == AntiSpam ) ? i18n( "Anti-Spam Wizard" )
+  const bool isAntiSpam = (mMode == AntiSpam);
+  setWindowTitle( isAntiSpam  ? i18n( "Anti-Spam Wizard" )
                                     : i18n( "Anti-Virus Wizard" ) );
   mInfoPage = new ASWizInfoPage( mMode, 0, "" );
   mInfoPageItem = addPage( mInfoPage,
-           ( mMode == AntiSpam )
+           isAntiSpam
            ? i18n( "Welcome to the KMail Anti-Spam Wizard" )
            : i18n( "Welcome to the KMail Anti-Virus Wizard" ) );
   connect( mInfoPage, SIGNAL(selectionChanged()),
             this, SLOT(checkProgramsSelections()) );
 
-  if ( mMode == AntiSpam ) {
+  if ( isAntiSpam ) {
     mSpamRulesPage = new ASWizSpamRulesPage( 0, "" );
     mSpamRulesPageItem = addPage( mSpamRulesPage, i18n( "Options to fine-tune the handling of spam messages" ));
     connect( mSpamRulesPage, SIGNAL(selectionChanged()),
@@ -136,7 +139,7 @@ AntiSpamWizard::AntiSpamWizard( WizardMode mode,
   connect( this, SIGNAL(helpClicked()),
             this, SLOT(slotHelpClicked()) );
 
-  if ( mMode == AntiSpam ) {
+  if ( isAntiSpam ) {
     mSummaryPage = new ASWizSummaryPage( 0, "" );
     mSummaryPageItem = addPage( mSummaryPage, i18n( "Summary of changes to be made by this wizard" ) );
   }
@@ -518,12 +521,13 @@ void AntiSpamWizard::checkVirusRulesSelections()
 void AntiSpamWizard::checkToolAvailability()
 {
   // this can take some time to find the tools
+#ifndef QT_NO_CURSOR
   MessageViewer::KCursorSaver busy( MessageViewer::KBusyPtr::busy() );
-
+#endif
   bool found = false;
   for ( QList<SpamToolConfig>::Iterator it = mToolList.begin();
         it != mToolList.end(); ++it ) {
-    QString text( i18n("Scanning for %1...", (*it).getId() ) );
+    const QString text( i18n("Scanning for %1...", (*it).getId() ) );
     mInfoPage->setScanProgressText( text );
     if ( (*it).isSpamTool() && (*it).isServerBased() ) {
       // check the configured account for pattern in <server>
@@ -749,8 +753,8 @@ void AntiSpamWizard::ConfigReader::readAndMergeConfig()
   // read the configuration from the global config file
   mConfig->setReadDefaults( true );
   KConfigGroup general( mConfig, "General" );
-  int registeredTools = general.readEntry( "tools", 0 );
-  for (int i = 1; i <= registeredTools; i++)
+  const int registeredTools = general.readEntry( "tools", 0 );
+  for (int i = 1; i <= registeredTools; ++i)
   {
     KConfigGroup toolConfig( mConfig, groupName.arg( i ) );
     if( !toolConfig.readEntry( "HeadersOnly", false ) )
@@ -761,8 +765,8 @@ void AntiSpamWizard::ConfigReader::readAndMergeConfig()
   // and merge newer config data
   mConfig->setReadDefaults( false );
   KConfigGroup user_general( mConfig, "General" );
-  int user_registeredTools = user_general.readEntry( "tools", 0 );
-  for (int i = 1; i <= user_registeredTools; i++)
+  const int user_registeredTools = user_general.readEntry( "tools", 0 );
+  for (int i = 1; i <= user_registeredTools; ++i)
   {
     KConfigGroup toolConfig( mConfig, groupName.arg( i ) );
     if( !toolConfig.readEntry( "HeadersOnly", false ) )
@@ -991,7 +995,7 @@ bool ASWizInfoPage::isProgramSelected( const QString &visibleName )
   QString listName = visibleName;
 
   QList<QListWidgetItem*> foundItems = mToolsList->findItems( listName, Qt::MatchFixedString );
-  return (foundItems.size() > 0 && foundItems[0]->isSelected());
+  return (!foundItems.isEmpty() && foundItems[0]->isSelected());
 }
 
 
