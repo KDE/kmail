@@ -1474,6 +1474,7 @@ void KMComposeWin::setMsg( const KMime::Message::Ptr &newMsg, bool mayAutoSign,
   mEdtReplyTo->setText( mMsg->replyTo()->asUnicodeString() );
   mEdtSubject->setText( mMsg->subject()->asUnicodeString() );
 
+
   // Restore the quote prefix. We can't just use the global quote prefix here,
   // since the prefix is different for each message, it might for example depend
   // on the original sender in a reply.
@@ -1773,6 +1774,7 @@ bool KMComposeWin::userForgotAttachment()
 
 void KMComposeWin::autoSaveMessage()
 {
+  applyComposerSetting( mComposerBase );
   mComposerBase->autoSaveMessage();
 }
 
@@ -2491,15 +2493,8 @@ void KMComposeWin::slotDoDelayedSend( KJob *job )
   doDelayedSend( method, saveIn );
 }
 
-void KMComposeWin::doDelayedSend( MessageSender::SendMethod method, MessageSender::SaveIn saveIn )
+void KMComposeWin::applyComposerSetting( Message::ComposerViewBase* mComposerBase )
 {
-  MessageViewer::KCursorSaver busy( MessageViewer::KBusyPtr::busy() );
-
-  bool sign = mSignAction->isChecked();
-  bool encrypt = mEncryptAction->isChecked();
-
-  if ( mForceDisableHtml )
-    disableHtml( Message::ComposerViewBase::NoConfirmationNeeded );
 
   QList< QByteArray > charsets = mCodecAction->mimeCharsets();
   if( !mOriginalPreferredCharset.isEmpty() ) {
@@ -2511,6 +2506,19 @@ void KMComposeWin::doDelayedSend( MessageSender::SendMethod method, MessageSende
   mComposerBase->setCharsets( charsets );
   mComposerBase->setUrgent( mUrgentAction->isChecked() );
   mComposerBase->setMDNRequested( mRequestMDNAction->isChecked() );
+}
+
+
+void KMComposeWin::doDelayedSend( MessageSender::SendMethod method, MessageSender::SaveIn saveIn )
+{
+  MessageViewer::KCursorSaver busy( MessageViewer::KBusyPtr::busy() );
+
+  applyComposerSetting( mComposerBase );
+  if ( mForceDisableHtml )
+    disableHtml( Message::ComposerViewBase::NoConfirmationNeeded );
+  bool sign = mSignAction->isChecked();
+  bool encrypt = mEncryptAction->isChecked();
+
   mComposerBase->setCryptoOptions( sign, encrypt, cryptoMessageFormat(),
                                    ( ( saveIn != MessageSender::SaveInNone && GlobalSettings::self()->neverEncryptDrafts() )
                                     || mSigningAndEncryptionExplicitlyDisabled ) );

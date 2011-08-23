@@ -549,6 +549,7 @@ class KMComposeWin : public KMail::Composer
     void doDelayedSend( MessageSender::SendMethod method, MessageSender::SaveIn saveIn );
 
     void changeCryptoAction();
+    void applyComposerSetting( Message::ComposerViewBase* mComposerBase );
 
 
   private slots:
