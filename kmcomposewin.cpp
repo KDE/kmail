@@ -1397,32 +1397,22 @@ void KMComposeWin::setupEditor( void )
 }
 
 //-----------------------------------------------------------------------------
-static QString cleanedUpHeaderString( const QString &s )
-{
-  // remove invalid characters from the header strings
-  QString res( s );
-  res.remove( '\r' );
-  res.replace( '\n', " " );
-  return res.trimmed();
-}
-
-//-----------------------------------------------------------------------------
 QString KMComposeWin::subject() const
 {
-  return cleanedUpHeaderString( mEdtSubject->text() );
+  return Message::Util::cleanedUpHeaderString( mEdtSubject->text() );
 }
 
 //-----------------------------------------------------------------------------
 QString KMComposeWin::from() const
 {
-  return cleanedUpHeaderString( mEdtFrom->text() );
+  return Message::Util::cleanedUpHeaderString( mEdtFrom->text() );
 }
 
 //-----------------------------------------------------------------------------
 QString KMComposeWin::replyTo() const
 {
   if ( mEdtReplyTo ) {
-    return cleanedUpHeaderString( mEdtReplyTo->text() );
+    return Message::Util::cleanedUpHeaderString( mEdtReplyTo->text() );
   } else {
     return QString();
   }
