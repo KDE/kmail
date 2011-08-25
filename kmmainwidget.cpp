@@ -220,7 +220,6 @@ K_GLOBAL_STATIC( KMMainWidget::PtrList, theMainWidgetList )
   // must be the first line of the constructor:
   mStartupDone = false;
   mWasEverShown = false;
-  mSearchWin = 0;
   mReaderWindowActive = true;
   mReaderWindowBelow = true;
   mFolderHtmlPref = false;
@@ -1233,8 +1232,6 @@ void KMMainWidget::slotSearch()
     mSearchWin = new SearchWindow(this, mCurrentFolder ? mCurrentFolder->collection() : Akonadi::Collection());
     mSearchWin->setModal( false );
     mSearchWin->setObjectName( "Search" );
-    connect(mSearchWin, SIGNAL(destroyed()),
-            this, SLOT(slotSearchClosed()));
   }
   else
   {
@@ -1245,12 +1242,6 @@ void KMMainWidget::slotSearch()
   KWindowSystem::activateWindow( mSearchWin->winId() );
 }
 
-
-//-------------------------------------------------------------------------
-void KMMainWidget::slotSearchClosed()
-{
-  mSearchWin = 0;
-}
 
 //-------------------------------------------------------------------------
 void KMMainWidget::slotFind()
