@@ -160,6 +160,7 @@
 #include <kvbox.h>
 #include <ktreewidgetsearchline.h>
 #include <Solid/Networking>
+#include <nepomuk/resourcemanager.h>
 
 // Qt includes
 #include <QByteArray>
@@ -1225,8 +1226,27 @@ void KMMainWidget::slotFocusQuickSearch()
 }
 
 //-------------------------------------------------------------------------
-void KMMainWidget::slotSearch()
+bool KMMainWidget::slotSearch()
 {
+  // check if we can search at all, ie. Nepomuk is running and email indexing is enabled
+  if ( !Nepomuk::ResourceManager::instance()->initialized() ) {
+    KMessageBox::information( this, i18n( "The Nepomuk semantic search service is not available. Searching is not possible without it."
+                                          "You can enable it in \"System Settings\"." ), i18n( "Search Not Available" ) );
+    return false;
+  }
+
+  {
+    KConfig config( "akonadi_nepomuk_feederrc" );
+    KConfigGroup cfgGroup( &config, "akonadi_nepomuk_email_feeder" );
+    if ( !cfgGroup.readEntry( "Enabled", true ) ) {
+      KMessageBox::information( this, i18n( "You have disabled full text indexing of emails. Searching is not possible without that."
+                                            "You can enable it in \"System Settings\". Note that searching will only be possible after "
+                                            "your emails have been fully indexed, which can take some time." ) );
+      return false;
+    }
+  }
+
+  
   if(!mSearchWin)
   {
     mSearchWin = new SearchWindow(this, mCurrentFolder ? mCurrentFolder->collection() : Akonadi::Collection());
@@ -1240,6 +1260,7 @@ void KMMainWidget::slotSearch()
 
   mSearchWin->show();
   KWindowSystem::activateWindow( mSearchWin->winId() );
+  return true;
 }
 
 
@@ -4127,7 +4148,8 @@ void KMMainWidget::slotRequestFullSearchFromQuickSearch()
 {
   // First, open the search window. If we are currently on a search folder,
   // the search associated with that will be loaded.
-  slotSearch();
+  if ( !slotSearch() )
+    return;
 
   assert( mSearchWin );
 

@@ -377,7 +377,7 @@ class KMAIL_EXPORT KMMainWidget : public QWidget
     void slotDelayedMessagePopup( KJob *job );
     void slotMarkAll();
     void slotFocusQuickSearch();
-    void slotSearch();
+    bool slotSearch();
     void slotFind();
     void slotIntro();
     void slotShowStartupFolder();
