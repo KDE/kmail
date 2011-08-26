@@ -71,6 +71,7 @@ class KToggleAction;
 class KUrl;
 class KRecentFilesAction;
 class SnippetWidget;
+class KMSubjectLineEdit;
 
 namespace boost {
   template <typename T> class shared_ptr;
@@ -359,7 +360,7 @@ class KMComposeWin : public KMail::Composer
     /**
      * Change window title to given string.
      */
-    void slotUpdWinTitle( const QString & );
+    void slotUpdWinTitle();
 
     /**
      * Switch the icon to lock or unlock respectivly.
@@ -457,6 +458,10 @@ class KMComposeWin : public KMail::Composer
 
     void rethinkHeaderLine( int aValue, int aMask, int &aRow,
                             QLabel *aLbl, KLineEdit *aEdt,
+                            QPushButton *aBtn = 0 );
+
+    void rethinkHeaderLine( int aValue, int aMask, int &aRow,
+                            QLabel *aLbl, KMSubjectLineEdit *aEdt,
                             QPushButton *aBtn = 0 );
 
     void rethinkHeaderLine( int value, int mask, int &row,
@@ -562,7 +567,7 @@ class KMComposeWin : public KMail::Composer
     Sonnet::DictionaryComboBox *mDictionaryCombo;
     Akonadi::CollectionComboBox *mFcc;
     MessageComposer::ComposerLineEdit *mEdtFrom, *mEdtReplyTo;
-    MessageComposer::ComposerLineEdit *mEdtSubject;
+    KMSubjectLineEdit *mEdtSubject;
     QLabel    *mLblIdentity, *mLblTransport, *mLblFcc;
     QLabel    *mLblFrom, *mLblReplyTo;
     QLabel    *mLblSubject;
