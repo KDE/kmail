@@ -60,14 +60,14 @@ It is recommended to leave this option turned on for maximum integrity.
      </property>
      <property name="whatsThis">
       <string>&lt;qt&gt;
-&lt;h1&gt;Warn if receiver's email address is not in certificate&lt;/h1&gt;
+&lt;h1&gt;Warn If Receiver's Email Address Is Not In Certificate&lt;/h1&gt;
 If this option is checked, a warning is issued if the email address of the receiver is not contained in the certificate used for encrypting.
 &lt;p&gt;
 It is recommended to leave this option turned on for maximum security.
 &lt;/p&gt;&lt;/qt&gt;</string>
      </property>
      <property name="text">
-      <string>Warn if &amp;Receiver's Email Address is Not in Certificate</string>
+      <string>Warn if &amp;receiver's email address is not in certificate</string>
      </property>
      <property name="checked">
       <bool>true</bool>
