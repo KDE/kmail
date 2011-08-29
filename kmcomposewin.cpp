@@ -1557,8 +1557,13 @@ void KMComposeWin::setMsg( const KMime::Message::Ptr &newMsg, bool mayAutoSign,
                                  GlobalSettings::self()->requestMDN() );
   }
   // check for presence of a priority header, indicating urgent mail:
-  //mUrgentAction->setChecked( newMsg->isUrgent() );
-
+  if ( newMsg->headerByType( "X-PRIORITY" ) && newMsg->headerByType("Priority" ) )
+  {
+    const QString xpriority = newMsg->headerByType( "X-PRIORITY" )->asUnicodeString();
+    const QString priority = newMsg->headerByType( "Priority" )->asUnicodeString();
+    if ( xpriority == QLatin1String( "2 (High)" ) && priority == QLatin1String( "urgent" ) )
+      mUrgentAction->setChecked( true );
+  }
 
   if ( !ident.isXFaceEnabled() || ident.xface().isEmpty() ) {
     if( mMsg->headerByType( "X-Face" ) )
