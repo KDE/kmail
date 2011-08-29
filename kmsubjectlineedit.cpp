@@ -74,7 +74,7 @@ void KMSubjectLineEdit::keyPressEvent(QKeyEvent *e)
     emit focusDown();
     return;
   }
-  if (e->key() == Qt::Key_Up)
+  else if (e->key() == Qt::Key_Up)
   {
     emit focusUp();
     return;
