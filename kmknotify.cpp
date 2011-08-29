@@ -58,8 +58,8 @@ KMKnotify::KMKnotify( QWidget * parent )
   layout->addWidget( m_notifyWidget );
   m_comboNotify->setFocus();
   
-  connect( m_comboNotify, SIGNAL( activated( int ) ),
-           SLOT( slotComboChanged( int )) );
+  connect( m_comboNotify, SIGNAL(activated(int)),
+           SLOT(slotComboChanged(int)) );
   connect( this, SIGNAL(okClicked()), SLOT(slotOk()) );
   connect( m_notifyWidget ,SIGNAL(changed(bool)) , this , SLOT(slotConfigChanged(bool)));
   initCombobox();
