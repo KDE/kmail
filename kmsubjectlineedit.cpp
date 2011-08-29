@@ -144,3 +144,4 @@ void KMSubjectLineEdit::insertFromMimeData(const QMimeData * source)
       KTextEdit::insertFromMimeData(source);
     }
 }
+#include "kmsubjectlineedit.moc"
