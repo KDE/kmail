@@ -41,15 +41,18 @@ public:
   explicit KMKnotify( QWidget * parent );
   ~KMKnotify();
 
-public slots:
-   void slotComboChanged( int );
-   void slotOk();
+public Q_SLOTS:
+  void slotComboChanged( int );
+  void slotOk();
+  void slotConfigChanged( bool changed );
+  
 protected:
   void initCombobox();
   
 private:
   KComboBox* m_comboNotify;
   KNotifyConfigWidget* m_notifyWidget;
+  bool m_changed;
 };
 
 
