@@ -42,6 +42,7 @@ public:
   ~KMSubjectLineEdit();
   
 protected:
+  void createHighlighter();
 
   virtual QSize sizeHint() const;
   virtual QSize minimumSizeHint() const;

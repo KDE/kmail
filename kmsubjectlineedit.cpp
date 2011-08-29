@@ -57,6 +57,14 @@ KMSubjectLineEdit::~KMSubjectLineEdit()
 {
 }
 
+void KMSubjectLineEdit::createHighlighter()
+{
+  Sonnet::Highlighter *highlighter = new Sonnet::Highlighter(this, "kmail2rc");
+  highlighter->setAutomatic( false );
+  
+  KTextEdit::setHighlighter(highlighter);
+}
+
 void KMSubjectLineEdit::keyPressEvent(QKeyEvent *e)
 {
   if ((e->key() == Qt::Key_Enter || e->key() == Qt::Key_Return))
