@@ -343,7 +343,7 @@ namespace KMail {
       << Kleo::cryptoMessageFormatToLabel( Kleo::SMIMEFormat )
       << Kleo::cryptoMessageFormatToLabel( Kleo::SMIMEOpaqueFormat );
     mPreferredCryptoMessageFormat->addItems( l );
-    label = new QLabel( i18nc("Preferred format:", "Crypto"), tab );
+    label = new QLabel( i18nc("preferred format of encrypted messages", "Preferred format:"), tab );
     label->setBuddy( mPreferredCryptoMessageFormat );
 
     glay->addWidget( label, row, 0 );
