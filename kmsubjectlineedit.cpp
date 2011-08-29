@@ -67,7 +67,9 @@ void KMSubjectLineEdit::createHighlighter()
 
 void KMSubjectLineEdit::keyPressEvent(QKeyEvent *e)
 {
-  if ((e->key() == Qt::Key_Enter || e->key() == Qt::Key_Return))
+  if (e->key() == Qt::Key_Enter ||
+      e->key() == Qt::Key_Return ||
+      e->key() == Qt::Key_Down)
   {
     emit focusDown();
     return;
@@ -75,11 +77,6 @@ void KMSubjectLineEdit::keyPressEvent(QKeyEvent *e)
   if (e->key() == Qt::Key_Up)
   {
     emit focusUp();
-    return;
-  }
-  if (e->key() == Qt::Key_Down)
-  {
-    emit focusDown();
     return;
   }
   KTextEdit::keyPressEvent(e);
