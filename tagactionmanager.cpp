@@ -175,3 +175,5 @@ void TagActionManager::tagsChanged()
   createActions();
 }
 
+
+#include "tagactionmanager.moc"

@@ -127,3 +127,5 @@ void CollectionMaintenancePage::updateCollectionStatistic(Akonadi::Collection::I
   }
 }
 
+
+#include "collectionmaintenancepage.moc"

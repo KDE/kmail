@@ -125,3 +125,5 @@ void KMKnotify::slotOk()
   if ( m_changed )
     m_notifyWidget->save();
 }
+
+#include "kmknotify.moc"
