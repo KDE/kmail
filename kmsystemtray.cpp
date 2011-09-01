@@ -29,7 +29,6 @@
 
 #include <QItemSelectionModel>
 
-#include <kxmlguiwindow.h>
 #include <kglobalsettings.h>
 #include <kiconloader.h>
 #include <kcolorscheme.h>
@@ -137,10 +136,8 @@ void KMSystemTray::buildPopupMenu()
     contextMenu()->addAction( action );
   contextMenu()->addSeparator();
 
-  KXmlGuiWindow *mainWin = ::qobject_cast<KXmlGuiWindow*>(kmkernel->getKMMainWidget()->window());
-  if(mainWin)
-    if ( ( action=mainWin->actionCollection()->action("file_quit") ) )
-      contextMenu()->addAction( action );
+  if ( ( action = actionCollection()->action("file_quit") ) )
+    contextMenu()->addAction( action );
 }
 
 KMSystemTray::~KMSystemTray()
