@@ -37,7 +37,7 @@
 #include <KConfig>
 #include <KStandardDirs>
 KMKnotify::KMKnotify( QWidget * parent )
-  :KDialog( parent )
+  :KDialog( parent ), m_changed( false )
 {
   setCaption( i18n("Notification") );
   setButtons( Ok|Cancel );
@@ -58,10 +58,10 @@ KMKnotify::KMKnotify( QWidget * parent )
   layout->addWidget( m_notifyWidget );
   m_comboNotify->setFocus();
   
-  connect( m_comboNotify, SIGNAL( activated( int ) ),
-           SLOT( slotComboChanged( int )) );
+  connect( m_comboNotify, SIGNAL(activated(int)),
+           SLOT(slotComboChanged(int)) );
   connect( this, SIGNAL(okClicked()), SLOT(slotOk()) );
-
+  connect( m_notifyWidget ,SIGNAL(changed(bool)) , this , SLOT(slotConfigChanged(bool)));
   initCombobox();
 }
 
@@ -69,10 +69,19 @@ KMKnotify::~KMKnotify()
 {
 }
 
+void KMKnotify::slotConfigChanged( bool changed )
+{
+  m_changed = changed;
+}
+
 void KMKnotify::slotComboChanged( int index )
 {
   QString text( m_comboNotify->itemData(index).toString() );
-  m_notifyWidget->save();
+  if ( m_changed ) {
+    m_notifyWidget->save();
+    m_changed = false;
+  }
+  
   m_notifyWidget->setApplication( text );
 }
 
@@ -113,5 +122,8 @@ void KMKnotify::initCombobox()
 
 void KMKnotify::slotOk()
 {
+  if ( m_changed )
     m_notifyWidget->save();
 }
+
+#include "kmknotify.moc"

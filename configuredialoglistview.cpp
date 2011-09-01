@@ -54,3 +54,5 @@ QSize ListView::sizeHint() const
   return s;
 }
 
+
+#include "configuredialoglistview.moc"

@@ -87,3 +87,5 @@ bool CollectionStorageModel::isOutBoundFolder( const Akonadi::Collection& c ) co
 }
 
 
+
+#include "collectionpane.moc"

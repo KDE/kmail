@@ -249,3 +249,5 @@ QStyleOptionButton ConfigAgentDelegate::buttonOption ( const QStyleOptionViewIte
 
     return buttonOpt;
 }
+
+#include "configagentdelegate.moc"

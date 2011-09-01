@@ -26,36 +26,34 @@
  *  your version.
  */
 
-#ifndef KMKNOTIFY_H
-#define KMKNOTIFY_H
+#ifndef KMSUBJECTLINEEDIT_H
+#define KMSUBJECTLINEEDIT_H
 
-#include <KDialog>
-class KComboBox;
-class KNotifyConfigWidget;
+#include <KTextEdit>
+class QContextMenuEvent;
+class QMimeData;
 
-
-class KMKnotify : public KDialog
+class KMSubjectLineEdit : public KTextEdit
 {
   Q_OBJECT
-public:
-  explicit KMKnotify( QWidget * parent );
-  ~KMKnotify();
 
-public Q_SLOTS:
-  void slotComboChanged( int );
-  void slotOk();
-  void slotConfigChanged( bool changed );
+public:
+  explicit KMSubjectLineEdit(QWidget* parent);
+  ~KMSubjectLineEdit();
   
 protected:
-  void initCombobox();
+  void createHighlighter();
+
+  virtual QSize sizeHint() const;
+  virtual QSize minimumSizeHint() const;
+  virtual void keyPressEvent(QKeyEvent*);
+  virtual void insertFromMimeData ( const QMimeData * source );
+
+signals:
+  void focusUp();
+  void focusDown();
   
-private:
-  KComboBox* m_comboNotify;
-  KNotifyConfigWidget* m_notifyWidget;
-  bool m_changed;
 };
 
-
-
-#endif /* KMKNOTIFY_H */
+#endif /* KMSUBJECTLINEEDIT_H */
 
