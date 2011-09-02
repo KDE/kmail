@@ -123,7 +123,7 @@ ArchiveFolderDialog::ArchiveFolderDialog( QWidget *parent )
 
 bool canRemoveFolder( const Akonadi::Collection& col )
 {
-  const QSharedPointer<FolderCollection> folder = FolderCollection::forCollection( col );
+  const QSharedPointer<FolderCollection> folder = FolderCollection::forCollection( col,false );
   return folder && col.isValid() && col.rights() & Akonadi::Collection::CanDeleteCollection && !folder->isStructural() && !folder->isSystemFolder() && col.resource() != QLatin1String( "akonadi_nepomuktag_resource" );
 }
 
@@ -137,7 +137,7 @@ void ArchiveFolderDialog::setFolder( const Akonadi::Collection &defaultCollectio
   mFolderRequester->setFolder( defaultCollection );
   // TODO: what if the file already exists?
   mUrlRequester->setUrl( standardArchivePath( defaultCollection.name() ) );
-  const QSharedPointer<FolderCollection> folder = FolderCollection::forCollection( defaultCollection );
+  const QSharedPointer<FolderCollection> folder = FolderCollection::forCollection( defaultCollection, false );
   mDeleteCheckBox->setEnabled( canRemoveFolder( defaultCollection ) );
   enableButtonOk( defaultCollection.isValid() && folder && !folder->isStructural() );
 }

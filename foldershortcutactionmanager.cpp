@@ -116,7 +116,7 @@ void FolderShortcutActionManager::shortcutChanged( const Akonadi::Collection &co
 {
   // remove the old one, no autodelete in Qt4
   slotCollectionRemoved( col );
-  QSharedPointer<FolderCollection> folderCollection( FolderCollection::forCollection( col ) );
+  QSharedPointer<FolderCollection> folderCollection( FolderCollection::forCollection( col, false ) );
   if ( folderCollection->shortcut().isEmpty() )
     return;
 

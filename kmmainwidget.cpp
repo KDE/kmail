@@ -404,7 +404,7 @@ void KMMainWidget::slotEndCheckMail()
     const QString folderPath( MailCommon::Util::fullCollectionPath( collection ) );
     const int numberOfMails = it.value();
 
-    const QSharedPointer<FolderCollection> fd = FolderCollection::forCollection( collection );
+    const QSharedPointer<FolderCollection> fd = FolderCollection::forCollection( collection,false );
 
     if ( fd && !fd->ignoreNewMail() ) {
       showNotification = true;
