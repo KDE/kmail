@@ -24,10 +24,6 @@ class KPushButton;
 class QCheckBox;
 class TemplatesConfiguration;
 
-namespace MailCommon {
-  class FolderCollection;
-}
-
 template <typename T> class QSharedPointer;
 
 class CollectionTemplatesPage : public Akonadi::CollectionPropertiesPage
@@ -51,7 +47,7 @@ private:
   TemplatesConfiguration* mWidget;
   KPushButton* mCopyGlobal;
   uint mIdentity;
-  QSharedPointer<MailCommon::FolderCollection> mFolderCollection;
+  QString mCollectionId;
   bool mIsLocalSystemFolder;
 };
 

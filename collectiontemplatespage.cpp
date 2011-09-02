@@ -1,6 +1,6 @@
 /* -*- mode: C++; c-file-style: "gnu" -*-
   This file is part of KMail, the KDE mail client.
-  Copyright (c) 2009 Montel Laurent <montel@kde.org>
+  Copyright (c) 2009, 2011 Montel Laurent <montel@kde.org>
 
   KMail is free software; you can redistribute it and/or modify it
   under the terms of the GNU General Public License, version 2, as
@@ -34,7 +34,7 @@ using namespace Akonadi;
 using namespace MailCommon;
 
 CollectionTemplatesPage::CollectionTemplatesPage(QWidget * parent) :
-    CollectionPropertiesPage( parent ), mFolderCollection( 0 )
+    CollectionPropertiesPage( parent )
 {
   setObjectName( QLatin1String( "KMail::CollectionTemplatesPage" ) );
   setPageTitle( i18n( "Templates" ) );
@@ -92,32 +92,31 @@ void CollectionTemplatesPage::init()
 
 void CollectionTemplatesPage::load(const Collection & col)
 {
-  mFolderCollection = FolderCollection::forCollection( col );
-  if ( !mFolderCollection )
+  const QSharedPointer<FolderCollection> fd = FolderCollection::forCollection( col, false );
+  if ( !fd )
     return;
 
-  const QString fid = mFolderCollection->idString();
+  mCollectionId = fd->idString();
 
-  Templates t( fid );
+  Templates t( mCollectionId );
 
   mCustom->setChecked(t.useCustomTemplates());
 
-  mIdentity = mFolderCollection->identity();
+  mIdentity = fd->identity();
 
-  mWidget->loadFromFolder( fid, mIdentity );
+  mWidget->loadFromFolder( mCollectionId, mIdentity );
 }
 
 void CollectionTemplatesPage::save(Collection &)
 {
-  if ( mFolderCollection ) {
-    const QString fid = mFolderCollection->idString();
-    Templates t(fid);
+  if ( !mCollectionId.isEmpty() ) {
+    Templates t(mCollectionId);
 
     //kDebug() << "use custom templates for folder" << fid <<":" << mCustom->isChecked();
     t.setUseCustomTemplates(mCustom->isChecked());
     t.writeConfig();
 
-    mWidget->saveToFolder(fid);
+    mWidget->saveToFolder(mCollectionId);
   }
 }
 
