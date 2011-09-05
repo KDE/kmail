@@ -586,9 +586,6 @@ void AccountsPage::ReceivingTab::slotAddAccount()
       job->start();
     }
   }
-
-
-  emit changed( true );
 }
 
 void AccountsPage::ReceivingTab::slotModifySelectedAccount()
@@ -598,7 +595,6 @@ void AccountsPage::ReceivingTab::slotModifySelectedAccount()
     KWindowSystem::allowExternalProcessWindowActivation();
     instance.configure( this );
   }
-  emit changed( true );
 }
 
 
@@ -626,8 +622,6 @@ void AccountsPage::ReceivingTab::slotRemoveSelectedAccount()
     Akonadi::AgentManager::self()->removeInstance( instance );
 
   slotAccountSelected( mAccountsReceiving.mAccountList->currentAgentInstance() );
-
-  emit changed( true );
 
 }
 
