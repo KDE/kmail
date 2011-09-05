@@ -1689,8 +1689,30 @@ void KMKernel::instanceStatusChanged( Akonadi::AgentInstance instance )
                                         instance.identifier(), instance.name(), instance.statusMessage(),
                                         true, useCrypto );
       progress->setProperty( "AgentIdentifier", instance.identifier() );
+    } else if ( instance.status() == Akonadi::AgentInstance::Broken ) {
+      agentInstanceBroken( instance );
     }
   }
+}
+
+void KMKernel::agentInstanceBroken( const Akonadi::AgentInstance& instance )
+{
+  const QString summary = i18n( "Resource %1 is broken. This resource is now %2",  instance.name(), instance.isOnline() ? i18n( "online" ) : i18n( "offline" ) );
+  if( xmlGuiInstance().isValid() ) {
+    KNotification::event( "akonadi-resource-broken",
+                          summary,
+                          QPixmap(),
+                          0,
+                          KNotification::CloseOnTimeout,
+                          xmlGuiInstance() );
+  } else {
+    KNotification::event( "akonadi-resource-broken",
+                          summary,
+                          QPixmap(),
+                          0,
+                          KNotification::CloseOnTimeout );
+  }
+
 }
 
 void KMKernel::slotProgressItemCompletedOrCanceled( KPIM::ProgressItem * item )

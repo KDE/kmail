@@ -70,6 +70,11 @@ Comment[x-test]=xxKMailxx
 Comment[zh_CN]=KMail
 Comment[zh_TW]=KMail 郵件軟體
 
+[Event/akonadi-resource-broken]
+Name=A resource is broken
+Comment=A resource change its state to broken
+Action=Popup
+
 [Event/mail-check-error]
 Name=Error While Checking Mail
 Name[bs]=Greška prilikom provjere pošte

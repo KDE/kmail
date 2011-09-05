@@ -412,6 +412,10 @@ public:
 
   const QAbstractItemModel* treeviewModelSelection();
 
+protected:
+  void agentInstanceBroken( const Akonadi::AgentInstance& instance );
+
+  
 public slots:
 
   /*reimp*/ void updateSystemTray();
