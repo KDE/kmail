@@ -215,6 +215,7 @@ private slots:
   void slotAddAccount();
   void slotModifySelectedAccount();
   void slotRemoveSelectedAccount();
+  void slotRestartSelectedAccount();
   void slotEditNotifications();
   void slotShowMailCheckMenu( const QString &, const QPoint & );
   void slotIncludeInCheckChanged( bool checked );

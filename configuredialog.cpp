@@ -443,6 +443,8 @@ AccountsPageReceivingTab::AccountsPageReceivingTab( QWidget * parent )
 
   connect( mAccountsReceiving.mRemoveAccountButton, SIGNAL(clicked()),
            this, SLOT(slotRemoveSelectedAccount()) );
+  connect( mAccountsReceiving.mRestartAccountButton, SIGNAL(clicked()),
+           this, SLOT(slotRestartSelectedAccount()) );
 
   mAccountsReceiving.group->layout()->setMargin( KDialog::marginHint() );
   mAccountsReceiving.group->layout()->setSpacing( KDialog::spacingHint() );
@@ -558,15 +560,16 @@ void AccountsPage::ReceivingTab::slotAccountSelected(const Akonadi::AgentInstanc
   if ( !current.isValid() ) {
     mAccountsReceiving.mModifyAccountButton->setEnabled( false );
     mAccountsReceiving.mRemoveAccountButton->setEnabled( false );
+    mAccountsReceiving.mRestartAccountButton->setEnabled( false );
   } else {
     mAccountsReceiving.mModifyAccountButton->setEnabled( !current.type().capabilities().contains( QLatin1String( "NoConfig" ) ) );
     mAccountsReceiving.mRemoveAccountButton->setEnabled( true );
+    mAccountsReceiving.mRestartAccountButton->setEnabled( true );
   }
 }
 
 void AccountsPage::ReceivingTab::slotAddAccount()
 {
-  //TODO verify this dialog box. We can see note etc...
   Akonadi::AgentTypeDialog dlg( this );
   Akonadi::AgentFilterProxyModel* filter = dlg.agentFilterProxyModel();
   filter->addMimeTypeFilter( "message/rfc822" );
@@ -599,6 +602,14 @@ void AccountsPage::ReceivingTab::slotModifySelectedAccount()
 }
 
 
+
+void AccountsPage::ReceivingTab::slotRestartSelectedAccount()
+{
+  const Akonadi::AgentInstance instance =  mAccountsReceiving.mAccountList->currentAgentInstance();
+  if ( instance.isValid() ) {
+    instance.restart();
+  }
+}
 
 void AccountsPage::ReceivingTab::slotRemoveSelectedAccount()
 {
