@@ -211,6 +211,11 @@ KMKernel::KMKernel (QObject *parent, const char *name) :
   connect( Akonadi::AgentManager::self(), SIGNAL(instanceStatusChanged(Akonadi::AgentInstance)),
            this, SLOT(instanceStatusChanged(Akonadi::AgentInstance)) );
 
+  connect( Akonadi::AgentManager::self(), SIGNAL(instanceError(Akonadi::AgentInstance,QString)),
+           this, SLOT(instanceError(Akonadi::AgentInstance,QString)) );
+
+
+  
   connect( KPIM::ProgressManager::instance(), SIGNAL(progressItemCompleted(KPIM::ProgressItem*)),
            this, SLOT(slotProgressItemCompletedOrCanceled(KPIM::ProgressItem*)) );
   connect( KPIM::ProgressManager::instance(), SIGNAL(progressItemCanceled(KPIM::ProgressItem*)),
@@ -1817,6 +1822,11 @@ const QAbstractItemModel* KMKernel::treeviewModelSelection()
     return getKMMainWidget()->folderTreeView()->selectionModel()->model();
   else
     return entityTreeModel();
+}
+
+void KMKernel::instanceError(const Akonadi::AgentInstance& instance, const QString & message)
+{
+  kDebug()<<" instance :"<<instance.identifier()<<" was got an error :"<<message;
 }
 
 #include "kmkernel.moc"
