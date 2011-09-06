@@ -37,9 +37,21 @@
 
 #include <KLocale>
 
-KMSubjectLineEdit::KMSubjectLineEdit(QWidget* parent)
-  :KTextEdit( parent )
+class KMSubjectLineEdit::Private
 {
+public:
+  Private( )
+    {
+    }
+  QString configFile;
+};
+
+KMSubjectLineEdit::KMSubjectLineEdit(QWidget* parent, const QString& configFile)
+  :KTextEdit( parent ),
+   d( new Private )
+{
+  d->configFile = configFile;
+  
   enableFindReplace(false);
   setAcceptRichText(false);
   // widget may not be resized vertically
@@ -55,11 +67,12 @@ KMSubjectLineEdit::KMSubjectLineEdit(QWidget* parent)
 
 KMSubjectLineEdit::~KMSubjectLineEdit()
 {
+  delete d;
 }
 
 void KMSubjectLineEdit::createHighlighter()
 {
-  Sonnet::Highlighter *highlighter = new Sonnet::Highlighter(this, "kmail2rc");
+  Sonnet::Highlighter *highlighter = new Sonnet::Highlighter(this, d->configFile);
   highlighter->setAutomatic( false );
   
   KTextEdit::setHighlighter(highlighter);

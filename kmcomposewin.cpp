@@ -279,7 +279,7 @@ KMComposeWin::KMComposeWin( const KMime::Message::Ptr &aMsg, Composer::TemplateC
   connect( recipientsEditor, SIGNAL(sizeHintChanged()), SLOT(recipientEditorSizeHintChanged()) );
   mComposerBase->setRecipientsEditor( recipientsEditor );
 
-  mEdtSubject = new KMSubjectLineEdit( mHeadersArea );
+  mEdtSubject = new KMSubjectLineEdit( mHeadersArea, QLatin1String( "kmail2rc" ) );
   mEdtSubject->setObjectName( "subjectLine" );
   //mEdtSubject->setRecentAddressConfig(  MessageComposer::MessageComposerSettings::self()->config() );
   mEdtSubject->setToolTip( i18n( "Set a subject for this message" ) );
