@@ -50,7 +50,7 @@
 #include "foldercollectionmonitor.h"
 #include "mailkernel.h"
 #include "custommimeheader.h"
-#include "kmsubjectlineedit.h"
+#include <messagecomposer/kmsubjectlineedit.h>
 
 // KDEPIM includes
 #include <libkpgp/kpgpblock.h>
@@ -279,7 +279,7 @@ KMComposeWin::KMComposeWin( const KMime::Message::Ptr &aMsg, Composer::TemplateC
   connect( recipientsEditor, SIGNAL(sizeHintChanged()), SLOT(recipientEditorSizeHintChanged()) );
   mComposerBase->setRecipientsEditor( recipientsEditor );
 
-  mEdtSubject = new KMSubjectLineEdit( mHeadersArea, QLatin1String( "kmail2rc" ) );
+  mEdtSubject = new Message::KMSubjectLineEdit( mHeadersArea, QLatin1String( "kmail2rc" ) );
   mEdtSubject->setObjectName( "subjectLine" );
   //mEdtSubject->setRecentAddressConfig(  MessageComposer::MessageComposerSettings::self()->config() );
   mEdtSubject->setToolTip( i18n( "Set a subject for this message" ) );
@@ -916,7 +916,7 @@ void KMComposeWin::rethinkHeaderLine( int aValue, int aMask, int &aRow,
 }
 
 void KMComposeWin::rethinkHeaderLine( int aValue, int aMask, int &aRow,
-                                      QLabel *aLbl, KMSubjectLineEdit *aEdt,
+                                      QLabel *aLbl, Message::KMSubjectLineEdit *aEdt,
                                       QPushButton *aBtn )
 {
   if ( aValue & aMask ) {
@@ -2112,8 +2112,8 @@ void KMComposeWin::slotUndo()
     return;
   }
 
-  if (::qobject_cast<KMSubjectLineEdit*>( fw )) {
-    static_cast<KMSubjectLineEdit*>( fw )->undo();
+  if (::qobject_cast<Message::KMSubjectLineEdit*>( fw )) {
+    static_cast<Message::KMSubjectLineEdit*>( fw )->undo();
   }else if ( ::qobject_cast<KMComposerEditor*>( fw ) ) {
     static_cast<KTextEdit*>( fw )->undo();
   } else if (::qobject_cast<KLineEdit*>( fw )) {
@@ -2128,8 +2128,8 @@ void KMComposeWin::slotRedo()
     return;
   }
 
-  if (::qobject_cast<KMSubjectLineEdit*>( fw )) {
-    static_cast<KMSubjectLineEdit*>( fw )->redo();
+  if (::qobject_cast<Message::KMSubjectLineEdit*>( fw )) {
+    static_cast<Message::KMSubjectLineEdit*>( fw )->redo();
   } else if ( ::qobject_cast<KMComposerEditor*>( fw ) ) {
     static_cast<KTextEdit*>( fw )->redo();
   } else if (::qobject_cast<KLineEdit*>( fw )) {
@@ -2145,8 +2145,8 @@ void KMComposeWin::slotCut()
     return;
   }
 
-  if ( ::qobject_cast<KMSubjectLineEdit*>( fw ) ) {
-    static_cast<KMSubjectLineEdit*>( fw )->cut();
+  if ( ::qobject_cast<Message::KMSubjectLineEdit*>( fw ) ) {
+    static_cast<Message::KMSubjectLineEdit*>( fw )->cut();
   } else if ( ::qobject_cast<KMComposerEditor*>( fw ) ) {
     static_cast<KTextEdit*>(fw)->cut();
   } else if ( ::qobject_cast<KLineEdit*>( fw ) ) {
@@ -2162,8 +2162,8 @@ void KMComposeWin::slotCopy()
     return;
   }
 
-  if ( ::qobject_cast<KMSubjectLineEdit*>( fw ) ) {
-    static_cast<KMSubjectLineEdit*>( fw )->copy();
+  if ( ::qobject_cast<Message::KMSubjectLineEdit*>( fw ) ) {
+    static_cast<Message::KMSubjectLineEdit*>( fw )->copy();
   } else if ( ::qobject_cast<KMComposerEditor*>( fw ) ) {
     static_cast<KTextEdit*>(fw)->copy();
   } else if ( ::qobject_cast<KLineEdit*>( fw ) ) {
@@ -2200,8 +2200,8 @@ void KMComposeWin::slotMarkAll()
     return;
   }
 
-  if (::qobject_cast<KMSubjectLineEdit*>( fw )) {
-    static_cast<KMSubjectLineEdit*>( fw )->selectAll();
+  if (::qobject_cast<Message::KMSubjectLineEdit*>( fw )) {
+    static_cast<Message::KMSubjectLineEdit*>( fw )->selectAll();
   } else if ( ::qobject_cast<KLineEdit*>( fw ) ) {
     static_cast<KLineEdit*>( fw )->selectAll();
   } else if (::qobject_cast<KMComposerEditor*>( fw )) {

@@ -71,7 +71,6 @@ class KToggleAction;
 class KUrl;
 class KRecentFilesAction;
 class SnippetWidget;
-class KMSubjectLineEdit;
 
 namespace boost {
   template <typename T> class shared_ptr;
@@ -101,6 +100,7 @@ namespace KIO {
 
 namespace Message {
   class Composer;
+  class KMSubjectLineEdit;
 }
 
 namespace MessageComposer
@@ -461,7 +461,7 @@ class KMComposeWin : public KMail::Composer
                             QPushButton *aBtn = 0 );
 
     void rethinkHeaderLine( int aValue, int aMask, int &aRow,
-                            QLabel *aLbl, KMSubjectLineEdit *aEdt,
+                            QLabel *aLbl, Message::KMSubjectLineEdit *aEdt,
                             QPushButton *aBtn = 0 );
 
     void rethinkHeaderLine( int value, int mask, int &row,
@@ -567,7 +567,7 @@ class KMComposeWin : public KMail::Composer
     Sonnet::DictionaryComboBox *mDictionaryCombo;
     Akonadi::CollectionComboBox *mFcc;
     MessageComposer::ComposerLineEdit *mEdtFrom, *mEdtReplyTo;
-    KMSubjectLineEdit *mEdtSubject;
+    Message::KMSubjectLineEdit *mEdtSubject;
     QLabel    *mLblIdentity, *mLblTransport, *mLblFcc;
     QLabel    *mLblFrom, *mLblReplyTo;
     QLabel    *mLblSubject;
