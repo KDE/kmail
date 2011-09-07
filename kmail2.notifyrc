@@ -72,7 +72,11 @@ Comment[zh_TW]=KMail 郵件軟體
 
 [Event/akonadi-resource-broken]
 Name=A resource is broken
+Name[uk]=Ресурс пошкоджено
+Name[x-test]=xxA resource is brokenxx
 Comment=A resource change its state to broken
+Comment[uk]=Ресурсом змінено стан на «пошкоджено»
+Comment[x-test]=xxA resource change its state to brokenxx
 Action=Popup
 
 [Event/mail-check-error]
