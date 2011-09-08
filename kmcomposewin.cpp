@@ -2407,7 +2407,6 @@ void KMComposeWin::slotPrintComposeResult( KJob *job )
     Q_ASSERT( composer->resultMessages().size() == 1 );
     Akonadi::Item printItem;
     printItem.setPayload<KMime::Message::Ptr>( composer->resultMessages().first() );
-    //TODO how to get headerStyle ???
     KMCommand *command = new KMPrintCommand( this, printItem,0,
                                              0, ( mComposerBase->editor()->textMode() == KMeditor::Rich ) );
     command->start();
