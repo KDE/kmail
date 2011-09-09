@@ -586,7 +586,6 @@ class KMComposeWin : public KMail::Composer
     Akonadi::Collection mFolder;
     long mShowHeaders;
     bool mConfirmSend;
-    //bool mDisableBreaking;
     bool mForceDisableHtml;     // Completely disable any HTML. Useful when sending invitations in the
                                 // mail body.
     int mNumHeaders;

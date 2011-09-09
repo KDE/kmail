@@ -113,6 +113,8 @@ class MessageActions : public QObject
   private slots:
     void updateAnnotateAction(const QUrl& url, const Nepomuk::Resource& resource);
     void slotItemModified( const Akonadi::Item &  item, const QSet< QByteArray > &  partIdentifiers );
+    void slotItemRemoved(const Akonadi::Item& item);
+
     void slotReplyToMsg();
     void slotReplyAuthorToMsg();
     void slotReplyListToMsg();
