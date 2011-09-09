@@ -2654,7 +2654,7 @@ void KMComposeWin::slotSendNow()
 //----------------------------------------------------------------------------
 bool KMComposeWin::checkRecipientNumber() const
 {
-  int thresHold = GlobalSettings::self()->recipientThreshold();
+  const int thresHold = GlobalSettings::self()->recipientThreshold();
   if ( GlobalSettings::self()->tooManyRecipients() && mComposerBase->recipientsEditor()->recipients().count() > thresHold ) {
     if ( KMessageBox::questionYesNo( mMainWidget,
          i18n("You are trying to send the mail to more than %1 recipients. Send message anyway?", thresHold),

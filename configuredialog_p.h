@@ -553,6 +553,7 @@ private:
   KIntSpinBox   *mAutoSave;
   QCheckBox     *mExternalEditorCheck;
   KUrlRequester *mEditorRequester;
+  KIntSpinBox   *mMaximumRecipients;
 #ifdef KDEPIM_ENTERPRISE_BUILD
   KComboBox     *mForwardTypeCombo;
   QCheckBox     *mRecipientCheck;
