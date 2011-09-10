@@ -49,6 +49,8 @@ namespace KMail {
   // top level kdepim folder as well.
 
   static const about_data authors[] = {
+    { "Laurent Montel", I18N_NOOP("Maintainer"),
+      "montel@kde.org", 0 },
     { "Thomas McGuire", I18N_NOOP("Former maintainer"),
       "mcguire@kde.org", 0 },
     { "Stefan Taferner", I18N_NOOP("Original author"),
@@ -114,8 +116,6 @@ namespace KMail {
       "glaurent@telegraph-road.org", 0 },
     { "Sam Magnuson", 0,
       "sam@trolltech.com", 0 },
-    { "Laurent Montel", I18N_NOOP( "Akonadi porting" ),
-      "montel@kde.org", 0 },
     { "Matt Newell", 0,
       "newellm@proaxis.com", 0 },
     { "Denis Perchine", 0,
