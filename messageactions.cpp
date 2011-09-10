@@ -554,8 +554,8 @@ void MessageActions::annotateMessage()
 
   MessageCore::AnnotationEditDialog *dialog = new MessageCore::AnnotationEditDialog( mCurrentItem.url() );
   dialog->setAttribute( Qt::WA_DeleteOnClose );
-  dialog->exec();
-  mAsynNepomukRetriever->requestResource( mCurrentItem.url(), QVector<QUrl>() << Nepomuk::Resource::descriptionUri() << Nepomuk::Resource::annotationUri() );
+  if ( dialog->exec() )
+    mAsynNepomukRetriever->requestResource( mCurrentItem.url(), QVector<QUrl>() << Nepomuk::Resource::descriptionUri() << Nepomuk::Resource::annotationUri() );
 }
 
 void MessageActions::updateAnnotateAction( const QUrl &url, const Nepomuk::Resource &resource )
