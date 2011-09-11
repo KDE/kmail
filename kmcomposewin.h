@@ -308,6 +308,7 @@ class KMComposeWin : public KMail::Composer
     void slotLanguageChanged( const QString &language );
 
     void slotEditorTextChanged();
+    void slotOverwriteModeChanged();
 
   public slots: // kmkernel
     /**
@@ -438,6 +439,7 @@ class KMComposeWin : public KMail::Composer
 
   private:
     Kleo::CryptoMessageFormat cryptoMessageFormat() const;
+    QString overwriteModeStr() const;
 
   private:
     /**

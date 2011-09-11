@@ -370,7 +370,9 @@ KMComposeWin::KMComposeWin( const KMime::Message::Ptr &aMsg, Composer::TemplateC
            this, SLOT(slotLanguageChanged(QString)) );
   connect( editor, SIGNAL(spellCheckStatus(QString)),
            this, SLOT(slotSpellCheckingStatus(QString)) );
-
+  connect( editor, SIGNAL( insertModeChanged() ),
+           this, SLOT( slotOverwriteModeChanged() ) );
+  
   mSnippetWidget = new SnippetWidget( editor, actionCollection(), mSnippetSplitter );
   mSnippetWidget->setVisible( GlobalSettings::self()->showSnippetManager() );
   mSnippetSplitter->addWidget( mSnippetWidget );
@@ -1367,6 +1369,7 @@ void KMComposeWin::setupActions( void )
            SIGNAL(toggled(bool)),
            SLOT(htmlToolBarVisibilityChanged(bool)) );
 
+  
   // In Kontact, this entry would read "Configure Kontact", but bring
   // up KMail's config dialog. That's sensible, though, so fix the label.
   QAction *configureAction = actionCollection()->action( "options_configure" );
@@ -1402,6 +1405,7 @@ void KMComposeWin::setupStatusBar( void )
 {
   statusBar()->insertItem( "", 0, 1 );
   statusBar()->setItemAlignment( 0, Qt::AlignLeft | Qt::AlignVCenter );
+  statusBar()->insertPermanentItem( overwriteModeStr(), 4,0 );
 
   statusBar()->insertPermanentItem( i18n(" Spellcheck: %1 ", QString( "     " )), 3, 0) ;
   statusBar()->insertPermanentItem( i18n(" Column: %1 ", QString( "     " ) ), 2, 0 );
@@ -2987,6 +2991,16 @@ void KMComposeWin::slotFormatReset()
 {
   mComposerBase->editor()->setTextForegroundColor( palette().text().color() );
   mComposerBase->editor()->setFont( mSaveFont );
+}
+
+void KMComposeWin::slotOverwriteModeChanged()
+{
+  statusBar()->changeItem( overwriteModeStr(), 4 );
+}
+
+QString KMComposeWin::overwriteModeStr() const
+{
+  return mComposerBase->editor()->overwriteMode () ? i18n("OVR") : i18n ("INS");
 }
 
 void KMComposeWin::slotCursorPositionChanged()
