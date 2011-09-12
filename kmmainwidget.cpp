@@ -3328,7 +3328,9 @@ void KMMainWidget::setupActions()
   KAction *dukeOfMonmoth = new KAction(i18n("&Display Message"), this);
   actionCollection()->addAction("display_message", dukeOfMonmoth );
   connect(dukeOfMonmoth, SIGNAL(triggered(bool)), SLOT(slotDisplayCurrentMessage()));
-  dukeOfMonmoth->setShortcut(QKeySequence(Qt::Key_Return));
+  KShortcut shortcut = KShortcut(QKeySequence( Qt::Key_Enter ));
+  shortcut.setAlternate( QKeySequence( Qt::Key_Return ) );
+  dukeOfMonmoth->setShortcuts( shortcut );
 
   //----- Go Menu
   {
