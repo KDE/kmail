@@ -215,6 +215,7 @@ private slots:
   void slotAddAccount();
   void slotModifySelectedAccount();
   void slotRemoveSelectedAccount();
+  void slotRestartSelectedAccount();
   void slotEditNotifications();
   void slotShowMailCheckMenu( const QString &, const QPoint & );
   void slotIncludeInCheckChanged( bool checked );
@@ -553,6 +554,7 @@ private:
   KIntSpinBox   *mAutoSave;
   QCheckBox     *mExternalEditorCheck;
   KUrlRequester *mEditorRequester;
+  KIntSpinBox   *mMaximumRecipients;
 #ifdef KDEPIM_ENTERPRISE_BUILD
   KComboBox     *mForwardTypeCombo;
   QCheckBox     *mRecipientCheck;

@@ -132,7 +132,7 @@ void AttachmentController::slotFetchJob( KJob *job )
   if ( items.first().mimeType() == KMime::Message::mimeType() ) {
     uint identity = 0;
     if ( items.at( 0 ).isValid() && items.at( 0 ).parentCollection().isValid() ) {
-      QSharedPointer<FolderCollection> fd( FolderCollection::forCollection( items.at( 0 ).parentCollection() ) );
+      QSharedPointer<FolderCollection> fd( FolderCollection::forCollection( items.at( 0 ).parentCollection(), false ) );
       identity = fd->identity();
     }
     KMCommand *command = new KMForwardAttachedCommand( mComposer, items,identity, mComposer );

@@ -184,6 +184,7 @@ MessageActions::MessageActions( KActionCollection *ac, QWidget* parent ) :
   //FIXME: Attachment fetching is not needed here, but on-demand loading is not supported ATM
   mMonitor->itemFetchScope().fetchPayloadPart( Akonadi::MessagePart::Header );
   connect( mMonitor, SIGNAL(itemChanged(Akonadi::Item,QSet<QByteArray>)), SLOT(slotItemModified(Akonadi::Item,QSet<QByteArray>)));
+  connect( mMonitor, SIGNAL(itemRemoved(Akonadi::Item)), SLOT(slotItemRemoved(Akonadi::Item)));
 
   connect( mAsynNepomukRetriever, SIGNAL(resourceReceived(QUrl,Nepomuk::Resource)), SLOT(updateAnnotateAction(QUrl,Nepomuk::Resource)) );
 
@@ -206,6 +207,15 @@ void MessageActions::setCurrentMessage( const Akonadi::Item &msg )
 
   mMonitor->setItemMonitored( mCurrentItem, true );
   updateActions();
+}
+
+void MessageActions::slotItemRemoved(const Akonadi::Item& item)
+{
+  if ( item == mCurrentItem )
+  {
+    mCurrentItem = Akonadi::Item();
+    updateActions();
+  }
 }
 
 void MessageActions::slotItemModified( const Akonadi::Item &  item, const QSet< QByteArray > &  partIdentifiers )
@@ -248,6 +258,7 @@ void MessageActions::setSelectedVisibleItems( const Akonadi::Item::List &items )
 void MessageActions::updateActions()
 {
   bool singleMsg = mCurrentItem.isValid();
+  qDebug()<<"singleMsg :"<<singleMsg<<" mCurrentItem :"<<mCurrentItem.id();
   Akonadi::Collection parent;
   if ( singleMsg ) //=> valid
     parent = mCurrentItem.parentCollection();
@@ -268,7 +279,7 @@ void MessageActions::updateActions()
   mNoQuoteReplyAction->setEnabled( singleMsg );
 
   mAnnotateAction->setEnabled( singleMsg );
-  mAsynNepomukRetriever->requestResource( mCurrentItem.url() );
+  mAsynNepomukRetriever->requestResource( mCurrentItem.url(), QVector<QUrl>() << Nepomuk::Resource::descriptionUri() << Nepomuk::Resource::annotationUri() );
 
   mStatusMenu->setEnabled( multiVisible );
 
@@ -543,8 +554,8 @@ void MessageActions::annotateMessage()
 
   MessageCore::AnnotationEditDialog *dialog = new MessageCore::AnnotationEditDialog( mCurrentItem.url() );
   dialog->setAttribute( Qt::WA_DeleteOnClose );
-  dialog->exec();
-  mAsynNepomukRetriever->requestResource( mCurrentItem.url() );
+  if ( dialog->exec() )
+    mAsynNepomukRetriever->requestResource( mCurrentItem.url(), QVector<QUrl>() << Nepomuk::Resource::descriptionUri() << Nepomuk::Resource::annotationUri() );
 }
 
 void MessageActions::updateAnnotateAction( const QUrl &url, const Nepomuk::Resource &resource )

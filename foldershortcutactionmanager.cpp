@@ -116,8 +116,9 @@ void FolderShortcutActionManager::shortcutChanged( const Akonadi::Collection &co
 {
   // remove the old one, no autodelete in Qt4
   slotCollectionRemoved( col );
-  QSharedPointer<FolderCollection> folderCollection( FolderCollection::forCollection( col ) );
-  if ( folderCollection->shortcut().isEmpty() )
+  const QSharedPointer<FolderCollection> folderCollection( FolderCollection::forCollection( col, false ) );
+  const KShortcut shortcut( folderCollection->shortcut() );
+  if ( shortcut.isEmpty() )
     return;
 
   FolderShortcutCommand *command = new FolderShortcutCommand( mParent, col );
@@ -138,7 +139,7 @@ void FolderShortcutActionManager::shortcutChanged( const Akonadi::Collection &co
   // the folder settings correctly.
   action->setShortcutConfigurable( false );
   action->setText( actionLabel );
-  action->setShortcuts( folderCollection->shortcut() );
+  action->setShortcuts( shortcut );
   action->setIcon( icon );
 
   connect( action, SIGNAL(triggered(bool)), command, SLOT(start()) );

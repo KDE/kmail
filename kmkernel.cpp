@@ -211,6 +211,11 @@ KMKernel::KMKernel (QObject *parent, const char *name) :
   connect( Akonadi::AgentManager::self(), SIGNAL(instanceStatusChanged(Akonadi::AgentInstance)),
            this, SLOT(instanceStatusChanged(Akonadi::AgentInstance)) );
 
+  connect( Akonadi::AgentManager::self(), SIGNAL(instanceError(Akonadi::AgentInstance,QString)),
+           this, SLOT(instanceError(Akonadi::AgentInstance,QString)) );
+
+
+  
   connect( KPIM::ProgressManager::instance(), SIGNAL(progressItemCompleted(KPIM::ProgressItem*)),
            this, SLOT(slotProgressItemCompletedOrCanceled(KPIM::ProgressItem*)) );
   connect( KPIM::ProgressManager::instance(), SIGNAL(progressItemCanceled(KPIM::ProgressItem*)),
@@ -1684,8 +1689,30 @@ void KMKernel::instanceStatusChanged( Akonadi::AgentInstance instance )
                                         instance.identifier(), instance.name(), instance.statusMessage(),
                                         true, useCrypto );
       progress->setProperty( "AgentIdentifier", instance.identifier() );
+    } else if ( instance.status() == Akonadi::AgentInstance::Broken ) {
+      agentInstanceBroken( instance );
     }
   }
+}
+
+void KMKernel::agentInstanceBroken( const Akonadi::AgentInstance& instance )
+{
+  const QString summary = i18n( "Resource %1 is broken. This resource is now %2",  instance.name(), instance.isOnline() ? i18n( "online" ) : i18n( "offline" ) );
+  if( xmlGuiInstance().isValid() ) {
+    KNotification::event( "akonadi-resource-broken",
+                          summary,
+                          QPixmap(),
+                          0,
+                          KNotification::CloseOnTimeout,
+                          xmlGuiInstance() );
+  } else {
+    KNotification::event( "akonadi-resource-broken",
+                          summary,
+                          QPixmap(),
+                          0,
+                          KNotification::CloseOnTimeout );
+  }
+
 }
 
 void KMKernel::slotProgressItemCompletedOrCanceled( KPIM::ProgressItem * item )
@@ -1817,6 +1844,11 @@ const QAbstractItemModel* KMKernel::treeviewModelSelection()
     return getKMMainWidget()->folderTreeView()->selectionModel()->model();
   else
     return entityTreeModel();
+}
+
+void KMKernel::instanceError(const Akonadi::AgentInstance& instance, const QString & message)
+{
+  kDebug()<<" instance :"<<instance.identifier()<<" was got an error :"<<message;
 }
 
 #include "kmkernel.moc"

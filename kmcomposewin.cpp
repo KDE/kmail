@@ -37,7 +37,6 @@
 #include "globalsettings.h"
 #include "kmmainwin.h"
 #include "kmmainwidget.h"
-#include "kmreadermainwin.h"
 #include "mailcomposeradaptor.h" // TODO port all D-Bus stuff...
 #include "messageviewer/stl_util.h"
 #include "messageviewer/util.h"
@@ -50,7 +49,7 @@
 #include "foldercollectionmonitor.h"
 #include "mailkernel.h"
 #include "custommimeheader.h"
-#include "kmsubjectlineedit.h"
+#include <messagecomposer/kmsubjectlineedit.h>
 
 // KDEPIM includes
 #include <libkpgp/kpgpblock.h>
@@ -279,7 +278,7 @@ KMComposeWin::KMComposeWin( const KMime::Message::Ptr &aMsg, Composer::TemplateC
   connect( recipientsEditor, SIGNAL(sizeHintChanged()), SLOT(recipientEditorSizeHintChanged()) );
   mComposerBase->setRecipientsEditor( recipientsEditor );
 
-  mEdtSubject = new KMSubjectLineEdit( mHeadersArea );
+  mEdtSubject = new Message::KMSubjectLineEdit( mHeadersArea, QLatin1String( "kmail2rc" ) );
   mEdtSubject->setObjectName( "subjectLine" );
   //mEdtSubject->setRecentAddressConfig(  MessageComposer::MessageComposerSettings::self()->config() );
   mEdtSubject->setToolTip( i18n( "Set a subject for this message" ) );
@@ -371,7 +370,9 @@ KMComposeWin::KMComposeWin( const KMime::Message::Ptr &aMsg, Composer::TemplateC
            this, SLOT(slotLanguageChanged(QString)) );
   connect( editor, SIGNAL(spellCheckStatus(QString)),
            this, SLOT(slotSpellCheckingStatus(QString)) );
-
+  connect( editor, SIGNAL( insertModeChanged() ),
+           this, SLOT( slotOverwriteModeChanged() ) );
+  
   mSnippetWidget = new SnippetWidget( editor, actionCollection(), mSnippetSplitter );
   mSnippetWidget->setVisible( GlobalSettings::self()->showSnippetManager() );
   mSnippetSplitter->addWidget( mSnippetWidget );
@@ -916,7 +917,7 @@ void KMComposeWin::rethinkHeaderLine( int aValue, int aMask, int &aRow,
 }
 
 void KMComposeWin::rethinkHeaderLine( int aValue, int aMask, int &aRow,
-                                      QLabel *aLbl, KMSubjectLineEdit *aEdt,
+                                      QLabel *aLbl, Message::KMSubjectLineEdit *aEdt,
                                       QPushButton *aBtn )
 {
   if ( aValue & aMask ) {
@@ -1368,6 +1369,7 @@ void KMComposeWin::setupActions( void )
            SIGNAL(toggled(bool)),
            SLOT(htmlToolBarVisibilityChanged(bool)) );
 
+  
   // In Kontact, this entry would read "Configure Kontact", but bring
   // up KMail's config dialog. That's sensible, though, so fix the label.
   QAction *configureAction = actionCollection()->action( "options_configure" );
@@ -1403,6 +1405,7 @@ void KMComposeWin::setupStatusBar( void )
 {
   statusBar()->insertItem( "", 0, 1 );
   statusBar()->setItemAlignment( 0, Qt::AlignLeft | Qt::AlignVCenter );
+  statusBar()->insertPermanentItem( overwriteModeStr(), 4,0 );
 
   statusBar()->insertPermanentItem( i18n(" Spellcheck: %1 ", QString( "     " )), 3, 0) ;
   statusBar()->insertPermanentItem( i18n(" Column: %1 ", QString( "     " ) ), 2, 0 );
@@ -2111,8 +2114,8 @@ void KMComposeWin::slotUndo()
     return;
   }
 
-  if (::qobject_cast<KMSubjectLineEdit*>( fw )) {
-    static_cast<KMSubjectLineEdit*>( fw )->undo();
+  if (::qobject_cast<Message::KMSubjectLineEdit*>( fw )) {
+    static_cast<Message::KMSubjectLineEdit*>( fw )->undo();
   }else if ( ::qobject_cast<KMComposerEditor*>( fw ) ) {
     static_cast<KTextEdit*>( fw )->undo();
   } else if (::qobject_cast<KLineEdit*>( fw )) {
@@ -2127,8 +2130,8 @@ void KMComposeWin::slotRedo()
     return;
   }
 
-  if (::qobject_cast<KMSubjectLineEdit*>( fw )) {
-    static_cast<KMSubjectLineEdit*>( fw )->redo();
+  if (::qobject_cast<Message::KMSubjectLineEdit*>( fw )) {
+    static_cast<Message::KMSubjectLineEdit*>( fw )->redo();
   } else if ( ::qobject_cast<KMComposerEditor*>( fw ) ) {
     static_cast<KTextEdit*>( fw )->redo();
   } else if (::qobject_cast<KLineEdit*>( fw )) {
@@ -2144,8 +2147,8 @@ void KMComposeWin::slotCut()
     return;
   }
 
-  if ( ::qobject_cast<KMSubjectLineEdit*>( fw ) ) {
-    static_cast<KMSubjectLineEdit*>( fw )->cut();
+  if ( ::qobject_cast<Message::KMSubjectLineEdit*>( fw ) ) {
+    static_cast<Message::KMSubjectLineEdit*>( fw )->cut();
   } else if ( ::qobject_cast<KMComposerEditor*>( fw ) ) {
     static_cast<KTextEdit*>(fw)->cut();
   } else if ( ::qobject_cast<KLineEdit*>( fw ) ) {
@@ -2161,8 +2164,8 @@ void KMComposeWin::slotCopy()
     return;
   }
 
-  if ( ::qobject_cast<KMSubjectLineEdit*>( fw ) ) {
-    static_cast<KMSubjectLineEdit*>( fw )->copy();
+  if ( ::qobject_cast<Message::KMSubjectLineEdit*>( fw ) ) {
+    static_cast<Message::KMSubjectLineEdit*>( fw )->copy();
   } else if ( ::qobject_cast<KMComposerEditor*>( fw ) ) {
     static_cast<KTextEdit*>(fw)->copy();
   } else if ( ::qobject_cast<KLineEdit*>( fw ) ) {
@@ -2199,8 +2202,8 @@ void KMComposeWin::slotMarkAll()
     return;
   }
 
-  if (::qobject_cast<KMSubjectLineEdit*>( fw )) {
-    static_cast<KMSubjectLineEdit*>( fw )->selectAll();
+  if (::qobject_cast<Message::KMSubjectLineEdit*>( fw )) {
+    static_cast<Message::KMSubjectLineEdit*>( fw )->selectAll();
   } else if ( ::qobject_cast<KLineEdit*>( fw ) ) {
     static_cast<KLineEdit*>( fw )->selectAll();
   } else if (::qobject_cast<KMComposerEditor*>( fw )) {
@@ -2407,7 +2410,8 @@ void KMComposeWin::slotPrintComposeResult( KJob *job )
     Q_ASSERT( composer->resultMessages().size() == 1 );
     Akonadi::Item printItem;
     printItem.setPayload<KMime::Message::Ptr>( composer->resultMessages().first() );
-    KMCommand *command = new KMPrintCommand( this, printItem );
+    KMCommand *command = new KMPrintCommand( this, printItem,0,
+                                             0, ( mComposerBase->editor()->textMode() == KMeditor::Rich ) );
     command->start();
   } else {
     // TODO: error reporting to the user
@@ -2653,7 +2657,7 @@ void KMComposeWin::slotSendNow()
 //----------------------------------------------------------------------------
 bool KMComposeWin::checkRecipientNumber() const
 {
-  int thresHold = GlobalSettings::self()->recipientThreshold();
+  const int thresHold = GlobalSettings::self()->recipientThreshold();
   if ( GlobalSettings::self()->tooManyRecipients() && mComposerBase->recipientsEditor()->recipients().count() > thresHold ) {
     if ( KMessageBox::questionYesNo( mMainWidget,
          i18n("You are trying to send the mail to more than %1 recipients. Send message anyway?", thresHold),
@@ -2986,6 +2990,16 @@ void KMComposeWin::slotFormatReset()
 {
   mComposerBase->editor()->setTextForegroundColor( palette().text().color() );
   mComposerBase->editor()->setFont( mSaveFont );
+}
+
+void KMComposeWin::slotOverwriteModeChanged()
+{
+  statusBar()->changeItem( overwriteModeStr(), 4 );
+}
+
+QString KMComposeWin::overwriteModeStr() const
+{
+  return mComposerBase->editor()->overwriteMode () ? i18n("OVR") : i18n ("INS");
 }
 
 void KMComposeWin::slotCursorPositionChanged()

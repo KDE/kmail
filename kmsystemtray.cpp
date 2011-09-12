@@ -29,7 +29,6 @@
 
 #include <QItemSelectionModel>
 
-#include <kxmlguiwindow.h>
 #include <kglobalsettings.h>
 #include <kiconloader.h>
 #include <kcolorscheme.h>
@@ -137,10 +136,8 @@ void KMSystemTray::buildPopupMenu()
     contextMenu()->addAction( action );
   contextMenu()->addSeparator();
 
-  KXmlGuiWindow *mainWin = ::qobject_cast<KXmlGuiWindow*>(kmkernel->getKMMainWidget()->window());
-  if(mainWin)
-    if ( ( action=mainWin->actionCollection()->action("file_quit") ) )
-      contextMenu()->addAction( action );
+  if ( ( action = actionCollection()->action("file_quit") ) )
+    contextMenu()->addAction( action );
 }
 
 KMSystemTray::~KMSystemTray()
@@ -295,7 +292,7 @@ void KMSystemTray::fillFoldersMenu( QMenu *menu, const QAbstractItemModel *model
     Akonadi::CollectionStatistics statistics = collection.statistics();
     qint64 count = qMax( 0LL, statistics.unreadCount() );
     if ( count > 0 ) {
-      QSharedPointer<FolderCollection> col = FolderCollection::forCollection( collection );
+      QSharedPointer<FolderCollection> col = FolderCollection::forCollection( collection, false );
       if ( col && col->ignoreNewMail() )
         continue;
     }
@@ -368,7 +365,7 @@ void KMSystemTray::unreadMail( const QAbstractItemModel *model, const QModelInde
     const qint64 count = qMax( 0LL, statistics.unreadCount() );
 
     if ( count > 0 ) {
-      QSharedPointer<FolderCollection> col = FolderCollection::forCollection( collection );
+      QSharedPointer<FolderCollection> col = FolderCollection::forCollection( collection, false );
       if ( col && !col->ignoreNewMail() ) {
         mCount += count;
       }

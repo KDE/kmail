@@ -45,7 +45,7 @@
 using namespace MailCommon;
 
 CollectionViewPage::CollectionViewPage(QWidget * parent) :
-    CollectionPropertiesPage( parent ), mFolderCollection( 0 )
+    CollectionPropertiesPage( parent )
 {
   setObjectName( QLatin1String( "KMail::CollectionViewPage" ) );
   setPageTitle( i18nc( "@title:tab View settings for a folder.", "View" ) );
@@ -58,8 +58,8 @@ CollectionViewPage::~CollectionViewPage()
 void CollectionViewPage::init(const Akonadi::Collection & col)
 {
   mCurrentCollection = col;
-  mFolderCollection = FolderCollection::forCollection( col );
-  mIsLocalSystemFolder = CommonKernel->isSystemFolderCollection( col ) || mFolderCollection->isStructural();
+  QSharedPointer<FolderCollection> fd = FolderCollection::forCollection( col );
+  mIsLocalSystemFolder = CommonKernel->isSystemFolderCollection( col ) || fd->isStructural();
 
   QVBoxLayout * topLayout = new QVBoxLayout( this );
   topLayout->setSpacing( KDialog::spacingHint() );

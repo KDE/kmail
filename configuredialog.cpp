@@ -443,6 +443,8 @@ AccountsPageReceivingTab::AccountsPageReceivingTab( QWidget * parent )
 
   connect( mAccountsReceiving.mRemoveAccountButton, SIGNAL(clicked()),
            this, SLOT(slotRemoveSelectedAccount()) );
+  connect( mAccountsReceiving.mRestartAccountButton, SIGNAL(clicked()),
+           this, SLOT(slotRestartSelectedAccount()) );
 
   mAccountsReceiving.group->layout()->setMargin( KDialog::marginHint() );
   mAccountsReceiving.group->layout()->setSpacing( KDialog::spacingHint() );
@@ -558,15 +560,16 @@ void AccountsPage::ReceivingTab::slotAccountSelected(const Akonadi::AgentInstanc
   if ( !current.isValid() ) {
     mAccountsReceiving.mModifyAccountButton->setEnabled( false );
     mAccountsReceiving.mRemoveAccountButton->setEnabled( false );
+    mAccountsReceiving.mRestartAccountButton->setEnabled( false );
   } else {
     mAccountsReceiving.mModifyAccountButton->setEnabled( !current.type().capabilities().contains( QLatin1String( "NoConfig" ) ) );
     mAccountsReceiving.mRemoveAccountButton->setEnabled( true );
+    mAccountsReceiving.mRestartAccountButton->setEnabled( true );
   }
 }
 
 void AccountsPage::ReceivingTab::slotAddAccount()
 {
-  //TODO verify this dialog box. We can see note etc...
   Akonadi::AgentTypeDialog dlg( this );
   Akonadi::AgentFilterProxyModel* filter = dlg.agentFilterProxyModel();
   filter->addMimeTypeFilter( "message/rfc822" );
@@ -583,9 +586,6 @@ void AccountsPage::ReceivingTab::slotAddAccount()
       job->start();
     }
   }
-
-
-  emit changed( true );
 }
 
 void AccountsPage::ReceivingTab::slotModifySelectedAccount()
@@ -595,10 +595,17 @@ void AccountsPage::ReceivingTab::slotModifySelectedAccount()
     KWindowSystem::allowExternalProcessWindowActivation();
     instance.configure( this );
   }
-  emit changed( true );
 }
 
 
+
+void AccountsPage::ReceivingTab::slotRestartSelectedAccount()
+{
+  const Akonadi::AgentInstance instance =  mAccountsReceiving.mAccountList->currentAgentInstance();
+  if ( instance.isValid() ) {
+    instance.restart();
+  }
+}
 
 void AccountsPage::ReceivingTab::slotRemoveSelectedAccount()
 {
@@ -615,8 +622,6 @@ void AccountsPage::ReceivingTab::slotRemoveSelectedAccount()
     Akonadi::AgentManager::self()->removeInstance( instance );
 
   slotAccountSelected( mAccountsReceiving.mAccountList->currentAgentInstance() );
-
-  emit changed( true );
 
 }
 
@@ -2235,6 +2240,18 @@ ComposerPageGeneralTab::ComposerPageGeneralTab( QWidget * parent )
   connect( mWordWrapCheck, SIGNAL(toggled(bool)),
            mWrapColumnSpin, SLOT(setEnabled(bool)) );
 
+  hlay = new QHBoxLayout();
+  vlay->addLayout( hlay );
+
+  label = new QLabel( MessageComposer::MessageComposerSettings::self()->maximumRecipientsItem()->label(), this );
+  hlay->addWidget( label );
+  
+  mMaximumRecipients = new KIntSpinBox( 0, 500, 1, 1, this );
+  hlay->addWidget( mMaximumRecipients );
+  hlay->addStretch( 1 );
+  connect( mMaximumRecipients, SIGNAL(valueChanged(int)),
+           this, SLOT(slotEmitChanged()) );  
+  
 #ifdef KDEPIM_ENTERPRISE_BUILD
   // a checkbox for "too many recipient warning" and a spinbox for the recipient threshold
   hlay = new QHBoxLayout(); // inherits spacing
@@ -2382,6 +2399,7 @@ void ComposerPage::GeneralTab::doLoadFromGlobalSettings()
   mAutoRequestMDNCheck->setChecked( GlobalSettings::self()->requestMDN() );
   mWordWrapCheck->setChecked( MessageComposer::MessageComposerSettings::self()->wordWrap() );
   mWrapColumnSpin->setValue( MessageComposer::MessageComposerSettings::self()->lineWrapWidth() );
+  mMaximumRecipients->setValue( MessageComposer::MessageComposerSettings::self()->maximumRecipients() );
   mAutoSave->setValue( GlobalSettings::self()->autosaveInterval() );
   mShowRecentAddressesInComposer->setChecked( MessageComposer::MessageComposerSettings::self()->showRecentAddressesInComposer() );
 
@@ -2411,6 +2429,7 @@ void ComposerPage::GeneralTab::save() {
   GlobalSettings::self()->setRequestMDN( mAutoRequestMDNCheck->isChecked() );
   MessageComposer::MessageComposerSettings::self()->setWordWrap( mWordWrapCheck->isChecked() );
   MessageComposer::MessageComposerSettings::self()->setLineWrapWidth( mWrapColumnSpin->value() );
+  MessageComposer::MessageComposerSettings::self()->setMaximumRecipients( mMaximumRecipients->value() );
   GlobalSettings::self()->setAutosaveInterval( mAutoSave->value() );
   MessageComposer::MessageComposerSettings::self()->setShowRecentAddressesInComposer( mShowRecentAddressesInComposer->isChecked() );
 
@@ -3210,7 +3229,7 @@ void SecurityPage::GeneralTab::save()
     {
       MessageViewer::GlobalSettings::self()->setHtmlMail( mSGTab.mHtmlMailCheck->isChecked() );
       foreach( const Akonadi::Collection &collection, kmkernel->allFolders() ) {
-        QSharedPointer<FolderCollection> fd = FolderCollection::forCollection( collection );
+        QSharedPointer<FolderCollection> fd = FolderCollection::forCollection( collection, true /*write config*/ );
         if ( fd ) {
           KConfigGroup config( KMKernel::self()->config(), fd->configGroupName() );
           config.writeEntry("htmlMailOverride", false);

@@ -412,6 +412,10 @@ public:
 
   const QAbstractItemModel* treeviewModelSelection();
 
+protected:
+  void agentInstanceBroken( const Akonadi::AgentInstance& instance );
+
+  
 public slots:
 
   /*reimp*/ void updateSystemTray();
@@ -462,6 +466,7 @@ private slots:
 
   void akonadiStateChanged( Akonadi::ServerManager::State );
   void slotProgressItemCompletedOrCanceled( KPIM::ProgressItem * item);
+  void instanceError(const Akonadi::AgentInstance& instance, const QString & message);
 private:
   void migrateFromKMail1();
   void openReader( bool onlyCheck );

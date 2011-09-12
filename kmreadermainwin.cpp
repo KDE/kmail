@@ -181,9 +181,11 @@ void KMReaderMainWin::slotTrashMsg()
 //-----------------------------------------------------------------------------
 void KMReaderMainWin::slotForwardInlineMsg()
 {
+   if ( !mReaderWin->message().isValid() ) return;
+
    KMCommand *command = 0;
    if ( mReaderWin->message().isValid() && mReaderWin->message().parentCollection().isValid() ) {
-     QSharedPointer<FolderCollection> fd = FolderCollection::forCollection( mReaderWin->message().parentCollection() );
+     QSharedPointer<FolderCollection> fd = FolderCollection::forCollection( mReaderWin->message().parentCollection(), false );
      if ( fd )
        command = new KMForwardCommand( this, mReaderWin->message(),
                                        fd->identity() );
@@ -200,9 +202,10 @@ void KMReaderMainWin::slotForwardInlineMsg()
 //-----------------------------------------------------------------------------
 void KMReaderMainWin::slotForwardAttachedMsg()
 {
+   if ( !mReaderWin->message().isValid() ) return;
    KMCommand *command = 0;
    if ( mReaderWin->message().isValid() && mReaderWin->message().parentCollection().isValid() ) {
-     QSharedPointer<FolderCollection> fd = FolderCollection::forCollection( mReaderWin->message().parentCollection() );
+     QSharedPointer<FolderCollection> fd = FolderCollection::forCollection( mReaderWin->message().parentCollection(), false );
      if ( fd )
        command = new KMForwardAttachedCommand( this, mReaderWin->message(),
                                                fd->identity() );
@@ -219,6 +222,8 @@ void KMReaderMainWin::slotForwardAttachedMsg()
 //-----------------------------------------------------------------------------
 void KMReaderMainWin::slotRedirectMsg()
 {
+  if( !mReaderWin->message().isValid() )
+      return;
   KMCommand *command = new KMRedirectCommand( this, mReaderWin->message() );
   connect( command, SIGNAL(completed(KMCommand*)),
          this, SLOT(slotReplyOrForwardFinished()) );
@@ -228,6 +233,7 @@ void KMReaderMainWin::slotRedirectMsg()
 //-----------------------------------------------------------------------------
 void KMReaderMainWin::slotCustomReplyToMsg( const QString &tmpl )
 {
+  if( !mReaderWin->message().isValid() ) return;
   KMCommand *command = new KMCustomReplyToCommand( this,
                                                    mReaderWin->message(),
                                                    mReaderWin->copyText(),
@@ -240,6 +246,7 @@ void KMReaderMainWin::slotCustomReplyToMsg( const QString &tmpl )
 //-----------------------------------------------------------------------------
 void KMReaderMainWin::slotCustomReplyAllToMsg( const QString &tmpl )
 {
+  if( !mReaderWin->message().isValid() ) return;
   KMCommand *command = new KMCustomReplyAllToCommand( this,
                                                       mReaderWin->message(),
                                                       mReaderWin->copyText(),
@@ -250,6 +257,7 @@ void KMReaderMainWin::slotCustomReplyAllToMsg( const QString &tmpl )
 //-----------------------------------------------------------------------------
 void KMReaderMainWin::slotCustomForwardMsg( const QString &tmpl)
 {
+  if( !mReaderWin->message().isValid() ) return;
   KMCommand *command = new KMCustomForwardCommand( this,
                                                    mReaderWin->message(),
                                                    0, tmpl );
@@ -486,14 +494,6 @@ void KMReaderMainWin::slotSizeAction( int size )
   mReaderWin->cssHelper()->setBodyFont( f );
   mReaderWin->cssHelper()->setPrintFont( f );
   mReaderWin->update();
-}
-
-void KMReaderMainWin::slotCreateTodo()
-{
-  if ( !mReaderWin->message().isValid() )
-    return;
-
-  MailCommon::Util::createTodoFromMail( mReaderWin->message() );
 }
 
 void KMReaderMainWin::slotEditToolbars()
