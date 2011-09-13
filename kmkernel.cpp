@@ -1848,7 +1848,7 @@ const QAbstractItemModel* KMKernel::treeviewModelSelection()
 
 void KMKernel::instanceError(const Akonadi::AgentInstance& instance, const QString & message)
 {
-  kDebug()<<" instance :"<<instance.identifier()<<" was got an error :"<<message;
+  kDebug()<<" instance :"<<instance.identifier()<<" received error :"<<message;
 }
 
 #include "kmkernel.moc"
