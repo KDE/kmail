@@ -346,7 +346,7 @@ void MessageActions::updateMailingListActions( const Akonadi::Item& messageItem 
 
     if ( mailList.features() & MessageCore::MailingList::ArchivedAt )
       // IDEA: this may be something you want to copy - "Copy in submenu"?
-      addMailingListAction( i18n( "Open Message in List Archive" ), mailList.archivedAtUrl() );
+      addMailingListActions( i18n( "Open Message in List Archive" ), mailList.archivedAtUrls() );
     if ( mailList.features() & MessageCore::MailingList::Post )
       addMailingListActions( i18n( "Post New Message" ), mailList.postUrls() );
     if ( mailList.features() & MessageCore::MailingList::Archive )
