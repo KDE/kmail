@@ -1180,8 +1180,9 @@ void KMMainWidget::slotCollectionChanged( const Akonadi::Collection&collection, 
        && ( collection == mCurrentFolder->collection() )
        && set.contains( "MESSAGEFOLDER" ) ) {
     mMessagePane->resetModelStorage();
+  } else if ( set.contains( "ENTITYDISPLAY" ) || set.contains( "NAME" ) ) {
+    mMessagePane->updateTabIconText( collection );
   }
-  //TODO update tab name/tab icons when collection changes
 }
 
 
