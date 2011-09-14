@@ -115,6 +115,7 @@
 #include <akonadi/collectionstatisticsdelegate.h>
 #include <akonadi/favoritecollectionsmodel.h>
 #include <akonadi/statisticsproxymodel.h>
+#include <Akonadi/EntityMimeTypeFilterModel>
 #include <kpimidentities/identity.h>
 #include <kpimidentities/identitymanager.h>
 #include <kpimutils/email.h>
@@ -1173,7 +1174,6 @@ void KMMainWidget::slotCreateNewTab( bool preferNewTab )
   mMessagePane->setPreferEmptyTab( preferNewTab );
 }
 
-
 void KMMainWidget::slotCollectionChanged( const Akonadi::Collection&collection, const QSet<QByteArray>&set )
 {
   if ( mCurrentFolder
@@ -1181,7 +1181,18 @@ void KMMainWidget::slotCollectionChanged( const Akonadi::Collection&collection, 
        && set.contains( "MESSAGEFOLDER" ) ) {
     mMessagePane->resetModelStorage();
   } else if ( set.contains( "ENTITYDISPLAY" ) || set.contains( "NAME" ) ) {
-    mMessagePane->updateTabIconText( collection );
+
+    QIcon icon = KIcon( QLatin1String( "folder" ) );
+    QString text;
+
+    const QModelIndex idx = Akonadi::EntityTreeModel::modelIndexForCollection( KMKernel::self()->collectionModel(), collection );
+    if ( idx.isValid() ) {
+      text = idx.data().toString();
+      icon = idx.data( Qt::DecorationRole ).value<QIcon>();
+    }
+
+    
+    mMessagePane->updateTabIconText( collection, text,icon );
   }
 }
 
