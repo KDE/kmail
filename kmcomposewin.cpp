@@ -1244,8 +1244,10 @@ void KMComposeWin::setupActions( void )
                                                 this );
   actionCollection()->addAction( "options_auto_spellchecking", mAutoSpellCheckingAction );
   const bool spellChecking = GlobalSettings::self()->autoSpellChecking();
-  const bool spellCheckingEnabled = !GlobalSettings::self()->useExternalEditor() && spellChecking;
-  mAutoSpellCheckingAction->setEnabled( !GlobalSettings::self()->useExternalEditor() );
+  const bool useKmailEditor = !GlobalSettings::self()->useExternalEditor();
+  const bool spellCheckingEnabled = useKmailEditor && spellChecking;
+  mAutoSpellCheckingAction->setEnabled( useKmailEditor );
+  
   mAutoSpellCheckingAction->setChecked( spellCheckingEnabled );
   slotAutoSpellCheckingToggled( spellCheckingEnabled );
   connect( mAutoSpellCheckingAction, SIGNAL(toggled(bool)),
