@@ -681,10 +681,6 @@ class KMComposeWin : public KMail::Composer
     QSplitter *mSnippetSplitter;
     QByteArray mOriginalPreferredCharset;
 
-    // These are for passing on methods over the applyChanges calls
-    MessageSender::SendMethod mSendMethod;
-    MessageSender::SaveIn mSaveIn;
-
     KToggleAction *mEncryptChiasmusAction;
     bool mEncryptWithChiasmus;
 

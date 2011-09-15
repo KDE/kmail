@@ -2414,11 +2414,8 @@ void KMComposeWin::doSend( MessageSender::SendMethod method,
                               i18n("KMail is currently in offline mode. "
                                    "Your messages will be kept in the outbox until you go online."),
                               i18n("Online/Offline"), "kmailIsOffline" );
-    mSendMethod = MessageSender::SendLater;
-  } else {
-    mSendMethod = method;
-  }
-  mSaveIn = saveIn;
+    method = MessageSender::SendLater;
+  } 
 
   if ( saveIn == MessageSender::SaveInNone ) { // don't save as draft or template, send immediately
     if ( KPIMUtils::firstEmailAddress( from() ).isEmpty() ) {
