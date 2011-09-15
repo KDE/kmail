@@ -59,7 +59,11 @@
 #include "kleo/exportjob.h"
 #include "kleo/specialjob.h"
 #include <messageviewer/objecttreeemptysource.h>
+
+#ifndef QT_NO_CURSOR
 #include <messageviewer/kcursorsaver.h>
+#endif
+
 #include <messageviewer/objecttreeparser.h>
 #include <messageviewer/nodehelper.h>
 #include "messageviewer/chiasmuskeyselector.h"
@@ -2556,8 +2560,9 @@ void KMComposeWin::applyComposerSetting( Message::ComposerViewBase* mComposerBas
 
 void KMComposeWin::doDelayedSend( MessageSender::SendMethod method, MessageSender::SaveIn saveIn )
 {
+#ifndef QT_NO_CURSOR
   MessageViewer::KCursorSaver busy( MessageViewer::KBusyPtr::busy() );
-
+#endif
   applyComposerSetting( mComposerBase );
   if ( mForceDisableHtml )
     disableHtml( Message::ComposerViewBase::NoConfirmationNeeded );
