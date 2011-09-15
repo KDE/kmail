@@ -198,6 +198,7 @@ KMComposeWin::KMComposeWin( const KMime::Message::Ptr &aMsg, Composer::TemplateC
     mComposerBase( 0 ),
     mSignatureStateIndicator( 0 ), mEncryptionStateIndicator( 0 ),
     mPreventFccOverwrite( false ),
+    mCheckForForgottenAttachments( true ), 
     mIgnoreStickyFields( false )
 {
 
@@ -1781,7 +1782,7 @@ bool KMComposeWin::queryClose ()
 //-----------------------------------------------------------------------------
 bool KMComposeWin::userForgotAttachment()
 {
-  bool checkForForgottenAttachments = GlobalSettings::self()->showForgottenAttachmentWarning();
+  bool checkForForgottenAttachments = mCheckForForgottenAttachments && GlobalSettings::self()->showForgottenAttachmentWarning();
 
   if ( !checkForForgottenAttachments )
     return false;
