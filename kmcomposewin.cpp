@@ -176,7 +176,6 @@ KMComposeWin::KMComposeWin( const KMime::Message::Ptr &aMsg, Composer::TemplateC
                             const QString & textSelection, const QString & customTemplate )
   : KMail::Composer( "kmail-composer#" ),
     mDone( false ),
-    //mAtmModified( false ),
     mTextSelection( textSelection ),
     mCustomTemplate( customTemplate ),
     mSigningAndEncryptionExplicitlyDisabled( false ),
@@ -1719,7 +1718,6 @@ bool KMComposeWin::isModified() const
            ( mEdtReplyTo && mEdtReplyTo->isModified() ) ||
            mComposerBase->recipientsEditor()->isModified() ||
            mEdtSubject->document()->isModified() );
-           // || mAtmModified );
 }
 
 //-----------------------------------------------------------------------------
@@ -1731,7 +1729,6 @@ void KMComposeWin::setModified( bool modified )
     if ( mEdtReplyTo ) mEdtReplyTo->setModified( false );
     mComposerBase->recipientsEditor()->clearModified();
     mEdtSubject->document()->setModified( false );
-    //mAtmModified =  false ;
   }
 }
 
@@ -2175,17 +2172,12 @@ void KMComposeWin::slotPaste()
   if ( !fw ) {
     return;
   }
-  if ( fw == mComposerBase->editor() ) {
-    mComposerBase->editor()->paste();
-  }
-  else if ( fw == mEdtSubject ) {
-    mEdtSubject->paste();
-  }
-  else {
-    QLineEdit * const lineEdit = ::qobject_cast<QLineEdit*>( fw );
-    if ( lineEdit ) {
-      lineEdit->paste();
-    }
+  if ( ::qobject_cast<Message::KMSubjectLineEdit*>( fw ) ) {
+    static_cast<Message::KMSubjectLineEdit*>( fw )->paste();
+  } else if ( ::qobject_cast<KMComposerEditor*>( fw ) ) {
+    static_cast<KTextEdit*>(fw)->paste();
+  } else if ( ::qobject_cast<KLineEdit*>( fw ) ) {
+    static_cast<KLineEdit*>( fw )->paste();
   }
 }
 
