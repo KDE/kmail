@@ -45,6 +45,7 @@
 #include "mailcommon/mailkernel.h"
 #include "mailcommon/mailfilter.h"
 #include "mailcommon/filteraction.h"
+#include "mailcommon/filtermanager.h"
 
 #include <Akonadi/AgentInstance>
 
@@ -688,7 +689,7 @@ bool AntiSpamWizard::anyVirusOptionChecked()
 
 const QString AntiSpamWizard::uniqueNameFor( const QString & name )
 {
-  return QString(); //tokoe KMKernel::self()->filterManager()->createUniqueName( name );
+  return MailCommon::FilterManager::instance()->createUniqueFilterName( name );
 }
 
 
