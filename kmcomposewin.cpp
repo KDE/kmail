@@ -306,8 +306,6 @@ KMComposeWin::KMComposeWin( const KMime::Message::Ptr &aMsg, Composer::TemplateC
   mShowHeaders = GlobalSettings::self()->headers();
   mDone = false;
   mGrid = 0;
-  //mAtmListView = 0;
-  //mAtmModified = false;
   mFixedFontAction = 0;
   // the attachment view is separated from the editor by a splitter
   mSplitter = new QSplitter( Qt::Vertical, mMainWidget );
@@ -861,14 +859,6 @@ void KMComposeWin::rethinkFields( bool fromSlot )
 
   assert( row <= mNumHeaders + 1 );
 
-
-#if 0
-  if ( !mAtmList.isEmpty() ) {
-    mAtmListView->show();
-  } else {
-    mAtmListView->hide();
-  }
-#endif
 
   mHeadersArea->setMaximumHeight( mHeadersArea->sizeHint().height() );
 
