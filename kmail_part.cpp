@@ -149,6 +149,7 @@ bool KMailPart::openFile()
 
 void KMailPart::slotFolderChanged( const Akonadi::Collection &col )
 {
+  //Don't know which code use it
   if ( col.isValid() ) {
     emit textChanged( col.name() );
     if ( col.hasAttribute<Akonadi::EntityDisplayAttribute>() &&
@@ -159,9 +160,8 @@ void KMailPart::slotFolderChanged( const Akonadi::Collection &col )
 }
 void KMailPart::slotCollectionChanged( const Akonadi::Collection &collection, const QSet<QByteArray> &attributeNames )
 {
-  if( !attributeNames.contains("ENTITYDISPLAY"))
-     return;
-  slotFolderChanged(collection);
+  if( attributeNames.contains("ENTITYDISPLAY")|| attributeNames.contains( "NAME" ) )
+    slotFolderChanged(collection);
 }
 
 //-----------------------------------------------------------------------------
