@@ -23,12 +23,9 @@
 #include <QWidget>
 #include <kurl.h>
 #include <kservice.h>
-#include <kvbox.h>
 #include <map>
 #include <messageviewer/viewer.h>
 #include <messageviewer/interfaces/bodypart.h>
-class QString;
-
 
 class KActionCollection;
 class KAction;
@@ -158,8 +155,6 @@ public:
   void setDecryptMessageOverwrite( bool overwrite = true );
 
   MessageViewer::CSSHelper* cssHelper() const;
-
-private:
 
 signals:
   /** Emitted after parsing of a message to have it stored
