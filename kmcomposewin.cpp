@@ -195,8 +195,6 @@ KMComposeWin::KMComposeWin( const KMime::Message::Ptr &aMsg, Composer::TemplateC
     mEncryptChiasmusAction( 0 ),
     mEncryptWithChiasmus( false ),
     mDummyComposer( 0 ),
-    mPendingQueueJobs( 0 ),
-    mPendingCreateItemJobs( 0 ),
     mLabelWidth( 0 ),
     mComposerBase( 0 ),
     mSignatureStateIndicator( 0 ), mEncryptionStateIndicator( 0 ),
