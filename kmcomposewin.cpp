@@ -88,6 +88,7 @@
 #include "messagecore/messagehelpers.h"
 
 // LIBKDEPIM includes
+#include <libkdepim/nepomukwarning.h>
 #include <libkdepim/recentaddresses.h>
 
 // KDEPIMLIBS includes
@@ -236,6 +237,7 @@ KMComposeWin::KMComposeWin( const KMime::Message::Ptr &aMsg, Composer::TemplateC
   defaultSizes << 0;
   mHeadersToEditorSplitter->setSizes( defaultSizes );
   QVBoxLayout *v = new QVBoxLayout( mMainWidget );
+  v->addWidget( new KPIM::NepomukWarning );
   v->setMargin(0);
   v->addWidget( mHeadersToEditorSplitter );
   KPIMIdentities::IdentityCombo* identity = new KPIMIdentities::IdentityCombo( kmkernel->identityManager(),
