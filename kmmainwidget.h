@@ -564,7 +564,6 @@ private:
     KToggleAction *mToggleThreadImportantAction;
     KToggleAction *mToggleThreadToActAction;
     KToggleAction *mToggleThreadFlagAction;
-    KToggleAction* mSizeColumnToggle;
 
     KToggleAction *mWatchThreadAction, *mIgnoreThreadAction;
 
@@ -576,7 +575,6 @@ private:
     Akonadi::Collection mTemplateFolder;
     QMenu        *mViewMenu, *mBodyPartsMenu;
     KAction      *mlistFilterAction;
-    int           mMessageStatusId;
     KUrl          mUrlCurrent;
     QMenu        *mActMenu;
     QMenu        *mSendMenu;
@@ -590,7 +588,6 @@ private:
     bool mEnableFavoriteFolderView;
     bool mEnableFolderQuickSearch;
 
-    //  QPopupMenu *mMessageMenu;
     QPointer<KMail::SearchWindow> mSearchWin;
 
     KAction *mExpireFolderAction,

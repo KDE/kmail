@@ -103,8 +103,6 @@
 #include <mailtransport/transportcombobox.h>
 #include <mailtransport/transportmanager.h>
 #include <mailtransport/transport.h>
-#include <mailtransport/messagequeuejob.h>
-#include <mailtransport/sentbehaviourattribute.h>
 #include <kmime/kmime_codecs.h>
 #include <kmime/kmime_message.h>
 
