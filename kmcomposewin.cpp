@@ -393,9 +393,9 @@ KMComposeWin::KMComposeWin( const KMime::Message::Ptr &aMsg, Composer::TemplateC
   mBtnDictionary->setFocusPolicy( Qt::NoFocus );
 
   Message::AttachmentModel* attachmentModel = new Message::AttachmentModel( this );
-  mAttachmentView = new KMail::AttachmentView( attachmentModel, mSplitter );
-  mAttachmentView->hideIfEmpty();
-  KMail::AttachmentController* attachmentController = new KMail::AttachmentController( attachmentModel, mAttachmentView, this );
+  KMail::AttachmentView *attachmentView = new KMail::AttachmentView( attachmentModel, mSplitter );
+  attachmentView->hideIfEmpty();
+  KMail::AttachmentController* attachmentController = new KMail::AttachmentController( attachmentModel, attachmentView, this );
 
   mComposerBase->setAttachmentModel( attachmentModel );
   mComposerBase->setAttachmentController( attachmentController );

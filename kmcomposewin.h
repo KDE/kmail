@@ -91,7 +91,6 @@ namespace Akonadi {
 
 namespace KMail {
   class AttachmentController;
-  class AttachmentView;
 }
 
 namespace KIO {
@@ -682,7 +681,6 @@ class KMComposeWin : public KMail::Composer
     QWidget* mHeadersArea;
     QSplitter *mSplitter;
     QSplitter *mSnippetSplitter;
-    KMail::AttachmentView *mAttachmentView;
     QByteArray mOriginalPreferredCharset;
 
     // These are for passing on methods over the applyChanges calls
