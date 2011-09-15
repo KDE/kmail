@@ -682,7 +682,6 @@ class KMComposeWin : public KMail::Composer
     QByteArray mOriginalPreferredCharset;
 
     KToggleAction *mEncryptChiasmusAction;
-    bool mEncryptWithChiasmus;
 
     Message::Composer *mDummyComposer;
     // used for auto saving, printing, etc. Not for sending, which happens in ComposerViewBase
