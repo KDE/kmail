@@ -135,3 +135,56 @@ void KMail::Util::handleClickedURL( const KUrl &url, uint identity )
   }
 }
 
+void KMail::Util::mailingListsHandleURL( const KUrl::List& lst,const QSharedPointer<MailCommon::FolderCollection> &folder )
+{
+  const QString handler = ( folder->mailingList().handler() == MailingList::KMail )
+    ? QLatin1String( "mailto" ) : QLatin1String( "https" );
+
+  KUrl urlToHandle;
+  for ( KUrl::List::ConstIterator itr = lst.constBegin(); itr != lst.constEnd(); ++itr ) {
+    if ( handler == (*itr).protocol() ) {
+      urlToHandle = *itr;
+      break;
+    }
+  }
+  if ( urlToHandle.isEmpty() && !lst.empty() ) {
+    urlToHandle = lst.first();
+  }
+
+  if ( !urlToHandle.isEmpty() ) {
+    KMail::Util::handleClickedURL( urlToHandle, folder->identity() );
+  } else {
+    kWarning()<< "Can't handle url";
+  }
+}
+
+void KMail::Util::mailingListPost( const QSharedPointer<MailCommon::FolderCollection> &fd )
+{
+  if ( fd )
+    KMail::Util::mailingListsHandleURL( fd->mailingList().postUrls(),fd );
+}
+
+void KMail::Util::mailingListSubscribe( const QSharedPointer<MailCommon::FolderCollection> &fd )
+{
+  if ( fd )
+    KMail::Util::mailingListsHandleURL( fd->mailingList().subscribeUrls(),fd );
+}
+
+void KMail::Util::mailingListUnsubscribe( const QSharedPointer<MailCommon::FolderCollection> &fd )
+{
+  if ( fd )
+    KMail::Util::mailingListsHandleURL( fd->mailingList().unsubscribeUrls(),fd );
+}
+
+void KMail::Util::mailingListArchives( const QSharedPointer<MailCommon::FolderCollection> &fd )
+{
+  if ( fd )
+    KMail::Util::mailingListsHandleURL( fd->mailingList().archiveUrls(),fd );
+}
+
+void KMail::Util::mailingListHelp( const QSharedPointer<MailCommon::FolderCollection> &fd )
+{
+  if ( fd )
+    KMail::Util::mailingListsHandleURL( fd->mailingList().helpUrls(),fd );
+}
+

@@ -1474,8 +1474,7 @@ void KMMainWidget::newFromTemplate( const Akonadi::Item &msg )
 void KMMainWidget::slotPostToML()
 {
   if ( mCurrentFolder && mCurrentFolder->isMailingListEnabled() ) {
-    KMCommand *command = new KMMailingListPostCommand( this, mCurrentFolder );
-    command->start();
+    KMail::Util::mailingListPost( mCurrentFolder );
   }
   else
     slotCompose();
