@@ -59,6 +59,7 @@
 
 
 #include "mailcommon/collectiongeneralpage.h"
+#include "mailcommon/filtermanager.h"
 #include "mailcommon/mailfilter.h"
 
 // Other PIM includes
@@ -2292,23 +2293,14 @@ void KMMainWidget::applyFilters( const QList<Akonadi::Item>& selectedMessages )
 #ifndef QT_NO_CURSOR
   MessageViewer::KCursorSaver busy( MessageViewer::KBusyPtr::busy() );
 #endif  
-  //tokoe FilterIf->filterManager()->applyFilters( selectedMessages );
+
+  MailCommon::FilterManager::instance()->filter( selectedMessages );
 }
 
 int KMMainWidget::slotFilterMsg( const Akonadi::Item &msg )
 {
-/* tokoe
-  if ( !msg.isValid() )
-    return 2; // messageRetrieve(0) is always possible
-  int filterResult = FilterIf->filterManager()->process(msg, FilterManager::Explicit);
-  if (filterResult == 2)
-  {
-    // something went horribly wrong (out of space?)
-    CommonKernel->emergencyExit( i18n("Unable to process messages: " ) + QString::fromLocal8Bit(strerror(errno)));
-    return 2;
-  }
-  return filterResult;
-*/
+  MailCommon::FilterManager::instance()->filter( msg, FilterManager::Explicit );
+
   return 0;
 }
 

@@ -75,6 +75,8 @@
 #include "messageviewer/nodehelper.h"
 #include "composer.h"
 #include "mailcommon/filteraction.h"
+#include "mailcommon/filtermanager.h"
+#include "mailcommon/mailfilter.h"
 #include "mailcommon/redirectdialog.h"
 #include "kmmainwidget.h"
 #include "undostack.h"
@@ -1468,14 +1470,7 @@ KMCommand::Result KMFilterActionCommand::execute()
       qApp->processEvents( QEventLoop::ExcludeUserInputEvents, 50 );
     }
 
-/* tokoe
-    int filterResult = FilterIf->filterManager()->process( item, mFilter );
-    if (filterResult == 2) {
-      // something went horribly wrong (out of space?)
-      kError() << "Critical error";
-      CommonKernel->emergencyExit( i18n("Not enough free disk space?" ));
-    }
-*/
+    MailCommon::FilterManager::instance()->filter( item, mFilter->identifier() );
     progressItem->incCompletedItems();
   }
 
