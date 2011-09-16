@@ -364,12 +364,12 @@ void MessageActions::updateMailingListActions( const Akonadi::Item& messageItem 
 }
 
 
-template<typename T> void MessageActions::replyCommand()
+void MessageActions::replyCommand(MessageComposer::ReplyStrategy strategy)
 {
   if ( !mCurrentItem.isValid() )
     return;
   const QString text = mMessageView ? mMessageView->copyText() : QString();
-  KMCommand *command = new T( mParent, mCurrentItem, text );
+  KMCommand *command = new KMReplyCommand( mParent, mCurrentItem, strategy, text );
   connect( command, SIGNAL(completed(KMCommand*)),
            this, SIGNAL(replyActionFinished()) );
   command->start();
@@ -431,22 +431,22 @@ void MessageActions::setupForwardingActionsList( KXMLGUIClient *guiClient )
 
 void MessageActions::slotReplyToMsg()
 {
-  replyCommand<KMReplyToCommand>();
+  replyCommand( MessageComposer::ReplySmart );
 }
 
 void MessageActions::slotReplyAuthorToMsg()
 {
-  replyCommand<KMReplyAuthorCommand>();
+  replyCommand( MessageComposer::ReplyAuthor );
 }
 
 void MessageActions::slotReplyListToMsg()
 {
-  replyCommand<KMReplyListCommand>();
+  replyCommand( MessageComposer::ReplyList );
 }
 
 void MessageActions::slotReplyAllToMsg()
 {
-  replyCommand<KMReplyToAllCommand>();
+  replyCommand( MessageComposer::ReplyAll );
 }
 
 void MessageActions::slotNoQuoteReplyToMsg()

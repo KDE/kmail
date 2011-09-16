@@ -21,7 +21,7 @@
 
 #include "kmcommands.h"
 #include "kmreaderwin.h"
-
+#include "messagecomposer/messagefactory.h"
 #include <KUrl>
 
 #include <qobject.h>
@@ -105,7 +105,7 @@ class MessageActions : public QObject
 
   private:
     void updateActions();
-    template<typename T> void replyCommand();
+    void replyCommand(MessageComposer::ReplyStrategy strategy);
     void addMailingListAction( const QString &item, const KUrl &url );
     void addMailingListActions( const QString &item, const KUrl::List &list );
     void updateMailingListActions( const Akonadi::Item& messageItem );

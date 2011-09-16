@@ -811,19 +811,19 @@ void SearchWindow::slotClearSelection()
 
 void SearchWindow::slotReplyToMsg()
 {
-  KMCommand *command = new KMReplyToCommand( this, selectedMessage() );
+  KMCommand *command = new KMReplyCommand( this, selectedMessage(), MessageComposer::ReplySmart );
   command->start();
 }
 
 void SearchWindow::slotReplyAllToMsg()
 {
-  KMCommand *command = new KMReplyToAllCommand( this, selectedMessage() );
+  KMCommand *command = new KMReplyCommand( this, selectedMessage(),MessageComposer::ReplyAll );
   command->start();
 }
 
 void SearchWindow::slotReplyListToMsg()
 {
-  KMCommand *command = new KMReplyListCommand( this, selectedMessage() );
+  KMCommand *command = new KMReplyCommand( this, selectedMessage(),MessageComposer::ReplyList );
   command->start();
 }
 

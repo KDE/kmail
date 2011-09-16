@@ -9,6 +9,8 @@
 #include "messageviewer/editorwatcher.h"
 #include "messageviewer/headerstrategy.h"
 #include "messageviewer/headerstyle.h"
+#include "messagecomposer/messagefactory.h"
+
 using MessageViewer::EditorWatcher;
 #include <akonadi/kmime/messagestatus.h>
 #include <messagelist/core/view.h>
@@ -22,6 +24,7 @@ using Akonadi::MessageStatus;
 #include <akonadi/item.h>
 #include <akonadi/itemfetchscope.h>
 #include <akonadi/collection.h>
+
 class KProgressDialog;
 class KMMainWidget;
 
@@ -295,19 +298,20 @@ private:
   virtual Result execute();
 };
 
-class KMAIL_EXPORT KMReplyToCommand : public KMCommand
+
+class KMAIL_EXPORT KMReplyCommand : public KMCommand
 {
   Q_OBJECT
-
 public:
-  KMReplyToCommand( QWidget *parent, const Akonadi::Item &msg,
-                    const QString &selection = QString() );
-
+  KMReplyCommand( QWidget *parent, const Akonadi::Item &msg,
+                  MessageComposer::ReplyStrategy replyStrategy, 
+                  const QString &selection = QString() );
 private:
   virtual Result execute();
-
+  
 private:
   QString mSelection;
+  MessageComposer::ReplyStrategy m_replyStrategy;
 };
 
 class KMAIL_EXPORT KMNoQuoteReplyToCommand : public KMCommand
@@ -319,51 +323,6 @@ public:
 
 private:
   virtual Result execute();
-};
-
-class KMReplyListCommand : public KMCommand
-{
-  Q_OBJECT
-
-public:
-  KMReplyListCommand( QWidget *parent, const Akonadi::Item &msg,
-                      const QString &selection = QString() );
-
-private:
-  virtual Result execute();
-
-private:
-  QString mSelection;
-};
-
-class KMAIL_EXPORT KMReplyToAllCommand : public KMCommand
-{
-  Q_OBJECT
-
-public:
-  KMReplyToAllCommand( QWidget *parent, const Akonadi::Item &msg,
-                       const QString &selection = QString() );
-
-private:
-  virtual Result execute();
-
-private:
-  QString mSelection;
-};
-
-class KMAIL_EXPORT KMReplyAuthorCommand : public KMCommand
-{
-  Q_OBJECT
-
-public:
-  KMReplyAuthorCommand( QWidget *parent, const Akonadi::Item &msg,
-                        const QString &selection = QString() );
-
-private:
-  virtual Result execute();
-
-private:
-  QString mSelection;
 };
 
 class KMAIL_EXPORT KMForwardCommand : public KMCommand

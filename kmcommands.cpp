@@ -748,39 +748,6 @@ void KMOpenMsgCommand::slotResult( KJob *job )
 
 //TODO: ReplyTo, NoQuoteReplyTo, ReplyList, ReplyToAll, ReplyAuthor
 //      are all similar and should be factored
-KMReplyToCommand::KMReplyToCommand( QWidget *parent, const Akonadi::Item &msg,
-                                    const QString &selection )
-  : KMCommand( parent, msg ), mSelection( selection )
-{
-  fetchScope().fetchFullPayload( true );
-  fetchScope().setAncestorRetrieval( Akonadi::ItemFetchScope::Parent );
-}
-
-KMCommand::Result KMReplyToCommand::execute()
-{
-#ifndef QT_NO_CURSOR	
-  MessageViewer::KCursorSaver busy( MessageViewer::KBusyPtr::busy() );
-#endif  
-  Akonadi::Item item = retrievedMessage();
-  KMime::Message::Ptr msg = MessageCore::Util::message( item );
-  if ( !msg )
-    return Failed;
-  MessageFactory factory( msg, item.id(), item.parentCollection() );
-  factory.setIdentityManager( KMKernel::self()->identityManager() );
-  factory.setFolderIdentity( MailCommon::Util::folderIdentity( item ) );
-  factory.setReplyStrategy( MessageComposer::ReplySmart );
-  factory.setMailingListAddresses( KMail::Util::mailingListsFromMessage( item ) );
-  factory.putRepliesInSameFolder( KMail::Util::putRepliesInSameFolder( item ) );
-  factory.setSelection( mSelection );
-  MessageFactory::MessageReply reply = factory.createReply();
-  KMail::Composer * win = KMail::makeComposer( KMime::Message::Ptr( reply.msg ), replyContext( reply ), 0, mSelection );
-  win->setReplyFocus();
-  win->show();
-
-  return OK;
-}
-
-
 KMNoQuoteReplyToCommand::KMNoQuoteReplyToCommand( QWidget *parent,
                                                   const Akonadi::Item &msg )
   : KMCommand( parent, msg )
@@ -811,84 +778,18 @@ KMCommand::Result KMNoQuoteReplyToCommand::execute()
 }
 
 
-KMReplyListCommand::KMReplyListCommand( QWidget *parent,
-                                        const Akonadi::Item &msg, const QString &selection )
- : KMCommand( parent, msg ), mSelection( selection )
-{
-  fetchScope().fetchFullPayload( true );
-  fetchScope().setAncestorRetrieval( Akonadi::ItemFetchScope::Parent );
-}
 
-KMCommand::Result KMReplyListCommand::execute()
-{
-#ifndef QT_NO_CURSOR	
-  MessageViewer::KCursorSaver busy( MessageViewer::KBusyPtr::busy() );
-#endif  
-  Akonadi::Item item = retrievedMessage();
-  KMime::Message::Ptr msg = MessageCore::Util::message( item );
-  if ( !msg )
-    return Failed;
-  MessageFactory factory( msg, item.id(), item.parentCollection() );
-  factory.setIdentityManager( KMKernel::self()->identityManager() );
-  factory.setFolderIdentity( MailCommon::Util::folderIdentity( item ) );
-  factory.setMailingListAddresses( KMail::Util::mailingListsFromMessage( item ) );
-  factory.putRepliesInSameFolder( KMail::Util::putRepliesInSameFolder( item ) );
-  factory.setReplyStrategy( MessageComposer::ReplyList );
-  factory.setSelection( mSelection );
-  MessageFactory::MessageReply reply = factory.createReply();
-  KMail::Composer * win = KMail::makeComposer( KMime::Message::Ptr( reply.msg ), replyContext( reply ),
-                                               0, mSelection );
-  win->setReplyFocus( false );
-  win->show();
-
-  return OK;
-}
-
-
-KMReplyToAllCommand::KMReplyToAllCommand( QWidget *parent,
-                                          const Akonadi::Item &msg, const QString &selection )
-  :KMCommand( parent, msg ), mSelection( selection )
-{
-  fetchScope().fetchFullPayload( true );
-  fetchScope().setAncestorRetrieval( Akonadi::ItemFetchScope::Parent );
-}
-
-KMCommand::Result KMReplyToAllCommand::execute()
-{
-#ifndef QT_NO_CURSOR	
-  MessageViewer::KCursorSaver busy( MessageViewer::KBusyPtr::busy() );
-#endif  
-  Akonadi::Item item = retrievedMessage();
-
-  KMime::Message::Ptr msg = MessageCore::Util::message( item );
-  if ( !msg )
-    return Failed;
-  MessageFactory factory( msg, item.id(), item.parentCollection() );
-  factory.setIdentityManager( KMKernel::self()->identityManager() );
-  factory.setFolderIdentity( MailCommon::Util::folderIdentity( item ) );
-  factory.setMailingListAddresses( KMail::Util::mailingListsFromMessage( item ) );
-  factory.putRepliesInSameFolder( KMail::Util::putRepliesInSameFolder( item ) );
-  factory.setReplyStrategy( MessageComposer::ReplyAll );
-  factory.setSelection( mSelection );
-  MessageFactory::MessageReply reply = factory.createReply();
-  KMail::Composer * win = KMail::makeComposer( KMime::Message::Ptr( reply.msg ), replyContext( reply ), 0,
-                                               mSelection );
-  win->setReplyFocus();
-  win->show();
-
-  return OK;
-}
-
-
-KMReplyAuthorCommand::KMReplyAuthorCommand( QWidget *parent, const Akonadi::Item &msg,
+KMReplyCommand::KMReplyCommand( QWidget *parent, const Akonadi::Item &msg, MessageComposer::ReplyStrategy replyStrategy, 
                                             const QString &selection )
-  : KMCommand( parent, msg ), mSelection( selection )
+  : KMCommand( parent, msg ),
+    mSelection( selection ),
+    m_replyStrategy( replyStrategy )
 {
   fetchScope().fetchFullPayload( true );
   fetchScope().setAncestorRetrieval( Akonadi::ItemFetchScope::Parent );
 }
 
-KMCommand::Result KMReplyAuthorCommand::execute()
+KMCommand::Result KMReplyCommand::execute()
 {
 #ifndef QT_NO_CURSOR
   MessageViewer::KCursorSaver busy( MessageViewer::KBusyPtr::busy() );
@@ -902,12 +803,12 @@ KMCommand::Result KMReplyAuthorCommand::execute()
   factory.setFolderIdentity( MailCommon::Util::folderIdentity( item ) );
   factory.setMailingListAddresses( KMail::Util::mailingListsFromMessage( item ) );
   factory.putRepliesInSameFolder( KMail::Util::putRepliesInSameFolder( item ) );
-  factory.setReplyStrategy( MessageComposer::ReplyAuthor );
+  factory.setReplyStrategy( m_replyStrategy );
   factory.setSelection( mSelection );
   MessageFactory::MessageReply reply = factory.createReply();
   KMail::Composer * win = KMail::makeComposer( KMime::Message::Ptr( reply.msg ), replyContext( reply ), 0,
                                                mSelection );
-  win->setReplyFocus();
+  win->setReplyFocus(( m_replyStrategy == MessageComposer::ReplyList ) ? false : true );
   win->show();
 
   return OK;
