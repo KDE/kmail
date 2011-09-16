@@ -3933,10 +3933,8 @@ void KMMainWidget::slotIntro()
 
 void KMMainWidget::slotShowStartupFolder()
 {
-/* tokoe
-  connect( FilterIf->filterManager(), SIGNAL(filterListUpdated()),
+  connect( MailCommon::FilterManager::instance(), SIGNAL( filtersChanged() ),
            this, SLOT(initializeFilterActions()) );
-*/
 
   // Plug various action lists. This can't be done in the constructor, as that is called before
   // the main window or Kontact calls createGUI().
@@ -3997,12 +3995,11 @@ void KMMainWidget::clearFilterActions()
 //-----------------------------------------------------------------------------
 void KMMainWidget::initializeFilterActions()
 {
-/* tokoe
   clearFilterActions();
   mApplyFilterActionsMenu->menu()->addAction( mApplyAllFiltersAction );
   bool addedSeparator = false;
 
-  foreach ( MailFilter *filter, FilterIf->filterManager()->filters() ) {
+  foreach ( MailFilter *filter, MailCommon::FilterManager::instance()->filters() ) {
     if ( !filter->isEmpty() && filter->configureShortcut() ) {
       QString filterName = QString( "Filter %1").arg( filter->name() );
       QString normalizedName = filterName.replace(' ', '_');
@@ -4050,7 +4047,6 @@ void KMMainWidget::initializeFilterActions()
 
   // Our filters have changed, now enable/disable them
   updateMessageActions();
-*/
 }
 
 //-----------------------------------------------------------------------------

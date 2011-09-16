@@ -467,10 +467,7 @@ void AntiSpamWizard::accept()
    * which will result in the filter list in kmmainwidget being
    * initialized. This should happend only once. */
   if ( !filterList.isEmpty() )
-/* tokoe
-    KMKernel::self()->filterManager()->appendFilters(
-          filterList, replaceExistingFilters );
-*/
+    MailCommon::FilterManager::instance()->appendFilters( filterList, replaceExistingFilters );
 
   KDialog::accept();
 }
