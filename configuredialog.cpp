@@ -1122,14 +1122,35 @@ AppearancePageLayoutTab::AppearancePageLayoutTab( QWidget * parent )
            this, SLOT(slotEmitChanged()) );
 
   QHBoxLayout* folderCBHLayout = new QHBoxLayout();
-  mFavoriteFolderViewCB = new QCheckBox( i18n("Show favorite folder view"), this );
-  connect( mFavoriteFolderViewCB, SIGNAL(toggled(bool)), SLOT(slotEmitChanged()) );
-  folderCBHLayout->addWidget( mFavoriteFolderViewCB );
   mFolderQuickSearchCB = new QCheckBox( i18n("Show folder quick search field"), this );
   connect( mFolderQuickSearchCB, SIGNAL(toggled(bool)), SLOT(slotEmitChanged()) );
   folderCBHLayout->addWidget( mFolderQuickSearchCB );
   vlay->addLayout( folderCBHLayout );
   vlay->addSpacing( KDialog::spacingHint() );   // space before next box
+
+  // "favorite folders view mode" radio buttons:
+  mFavoriteFoldersViewGroupBox = new QGroupBox( this );
+  mFavoriteFoldersViewGroupBox->setTitle( i18n( "Show Favorite Folders View" ) );
+  mFavoriteFoldersViewGroupBox->setLayout( new QHBoxLayout() );
+  mFavoriteFoldersViewGroupBox->layout()->setSpacing( KDialog::spacingHint() );
+  mFavoriteFoldersViewGroup = new QButtonGroup( this );
+  connect( mFavoriteFoldersViewGroup, SIGNAL(buttonClicked(int)),
+           this, SLOT(slotEmitChanged()) );
+
+  QRadioButton* favoriteFoldersViewHiddenRadio = new QRadioButton( i18n( "Never" ), mFavoriteFoldersViewGroupBox );
+  mFavoriteFoldersViewGroup->addButton( favoriteFoldersViewHiddenRadio, static_cast<int>( GlobalSettings::EnumFavoriteCollectionViewMode::HiddenMode ) );
+  mFavoriteFoldersViewGroupBox->layout()->addWidget( favoriteFoldersViewHiddenRadio );
+
+  QRadioButton* favoriteFoldersViewIconsRadio = new QRadioButton( i18n( "As Icons" ), mFavoriteFoldersViewGroupBox );
+  mFavoriteFoldersViewGroup->addButton( favoriteFoldersViewIconsRadio, static_cast<int>( GlobalSettings::EnumFavoriteCollectionViewMode::IconMode ) );
+  mFavoriteFoldersViewGroupBox->layout()->addWidget( favoriteFoldersViewIconsRadio );
+
+  QRadioButton* favoriteFoldersViewListRadio = new QRadioButton( i18n( "As List" ), mFavoriteFoldersViewGroupBox );
+  mFavoriteFoldersViewGroup->addButton( favoriteFoldersViewListRadio,  static_cast<int>( GlobalSettings::EnumFavoriteCollectionViewMode::ListMode ) );
+  mFavoriteFoldersViewGroupBox->layout()->addWidget( favoriteFoldersViewListRadio );
+
+  vlay->addWidget( mFavoriteFoldersViewGroupBox );
+
 
   // "folder tooltips" radio buttons:
   mFolderToolTipsGroupBox = new QGroupBox( this );
@@ -1170,7 +1191,7 @@ void AppearancePage::LayoutTab::doLoadOther()
 {
   loadWidget( mFolderListGroupBox, mFolderListGroup, GlobalSettings::self()->folderListItem() );
   loadWidget( mReaderWindowModeGroupBox, mReaderWindowModeGroup, GlobalSettings::self()->readerWindowModeItem() );
-  mFavoriteFolderViewCB->setChecked( GlobalSettings::self()->enableFavoriteCollectionView() );
+  loadWidget( mFavoriteFoldersViewGroupBox, mFavoriteFoldersViewGroup, GlobalSettings::self()->favoriteCollectionViewModeItem() );
   mFolderQuickSearchCB->setChecked( GlobalSettings::self()->enableFolderQuickSearch() );
   const int checkedFolderToolTipsPolicy = GlobalSettings::self()->toolTipDisplayPolicy();
   if ( checkedFolderToolTipsPolicy < mFolderToolTipsGroup->buttons().size() && checkedFolderToolTipsPolicy >= 0 )
@@ -1181,7 +1202,7 @@ void AppearancePage::LayoutTab::save()
 {
   saveButtonGroup( mFolderListGroup, GlobalSettings::self()->folderListItem() );
   saveButtonGroup( mReaderWindowModeGroup, GlobalSettings::self()->readerWindowModeItem() );
-  GlobalSettings::self()->setEnableFavoriteCollectionView( mFavoriteFolderViewCB->isChecked() );
+  saveButtonGroup( mFavoriteFoldersViewGroup, GlobalSettings::self()->favoriteCollectionViewModeItem() );
   GlobalSettings::self()->setEnableFolderQuickSearch( mFolderQuickSearchCB->isChecked() );
   GlobalSettings::self()->setToolTipDisplayPolicy( mFolderToolTipsGroup->checkedId() );
 }

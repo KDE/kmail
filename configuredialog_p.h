@@ -332,10 +332,11 @@ private: // data
   QGroupBox     *mFolderListGroupBox;
   QButtonGroup  *mReaderWindowModeGroup;
   QGroupBox     *mReaderWindowModeGroupBox;
-  QCheckBox     *mFavoriteFolderViewCB;
   QCheckBox     *mFolderQuickSearchCB;
   QButtonGroup  *mFolderToolTipsGroup;
   QGroupBox     *mFolderToolTipsGroupBox;
+  QButtonGroup  *mFavoriteFoldersViewGroup;
+  QGroupBox     *mFavoriteFoldersViewGroupBox;
 };
 
 class AppearancePageHeadersTab : public ConfigModuleTab {
