@@ -138,7 +138,6 @@ KMKernel::KMKernel (QObject *parent, const char *name) :
   the_firstInstance = true;
 
   the_undoStack = 0;
-  the_filterActionDict = 0;
   the_msgSender = 0;
   mFilterEditDialog = 0;
   mWin = 0;
@@ -1136,7 +1135,6 @@ void KMKernel::init()
   readConfig();
 
   the_undoStack     = new UndoStack(20);
-  the_filterActionDict = new FilterActionDict;
 
   the_msgSender = new AkonadiSender;
   readConfig();
@@ -1232,8 +1230,6 @@ void KMKernel::cleanup(void)
   // Write the config while all other managers are alive
   delete the_msgSender;
   the_msgSender = 0;
-  delete the_filterActionDict;
-  the_filterActionDict = 0;
   delete the_undoStack;
   the_undoStack = 0;
 
