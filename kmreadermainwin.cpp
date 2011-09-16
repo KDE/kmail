@@ -318,21 +318,6 @@ void KMReaderMainWin::setupAccel()
   actionCollection()->addAction("view_source", mViewSourceAction );
   connect(mViewSourceAction, SIGNAL(triggered(bool)), mReaderWin->viewer(), SLOT(slotShowMessageSource()));
   mViewSourceAction->setShortcut(QKeySequence(Qt::Key_V));
-
-  KAction *zoomInAction = new KAction( KIcon("zoom-in"), i18n("&Zoom In"), this);
-  actionCollection()->addAction("zoom_in", zoomInAction);
-  connect(zoomInAction, SIGNAL(triggered(bool)), mReaderWin->viewer(), SLOT(slotZoomIn()));
-  zoomInAction->setShortcut(QKeySequence(Qt::CTRL | Qt::Key_Plus));
-  KAction *zoomOutAction = new KAction( KIcon("zoom-out"), i18n("Zoom &Out"), this);
-  actionCollection()->addAction("zoom_out", zoomOutAction);
-  connect(zoomOutAction, SIGNAL(triggered(bool)), mReaderWin->viewer(), SLOT(slotZoomOut()));
-  zoomOutAction->setShortcut(QKeySequence(Qt::CTRL | Qt::Key_Minus));
-
-  KAction *zoomResetAction = new KAction( i18n("Reset"), this);
-  actionCollection()->addAction("zoom_reset", zoomResetAction);
-  connect(zoomResetAction, SIGNAL(triggered(bool)), mReaderWin->viewer(), SLOT(slotZoomReset()));
-  zoomResetAction->setShortcut(QKeySequence(Qt::CTRL | Qt::Key_0));
-
   
   //----- Message Menu
 
