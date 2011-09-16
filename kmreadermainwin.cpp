@@ -255,6 +255,9 @@ void KMReaderMainWin::slotCustomReplyAllToMsg( const QString &tmpl )
                                                       mReaderWin->message(),
                                                       mReaderWin->copyText(),
                                                       tmpl,MessageComposer::ReplyAll );
+  connect( command, SIGNAL( completed( KMCommand * ) ),
+           this, SLOT( slotReplyOrForwardFinished() ) );
+
   command->start();
 }
 
@@ -266,6 +269,9 @@ void KMReaderMainWin::slotCustomForwardMsg( const QString &tmpl)
   KMCommand *command = new KMCustomForwardCommand( this,
                                                    mReaderWin->message(),
                                                    0, tmpl );
+  connect( command, SIGNAL( completed( KMCommand * ) ),
+           this, SLOT( slotReplyOrForwardFinished() ) );
+
   command->start();
 }
 
