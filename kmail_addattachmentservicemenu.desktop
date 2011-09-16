@@ -22,4 +22,5 @@ Name[sr@latin]=Pošalji kao prilog e‑pošte
 Name[sv]=Skicka som e-postbilaga
 Name[uk]=Надіслати у долученні до листа
 Name[x-test]=xxSend as Email Attachmentxx
+Name[zh_TW]=以電子郵件附件傳送
 Exec=kmail --attach %F

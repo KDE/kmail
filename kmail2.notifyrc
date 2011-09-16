@@ -80,6 +80,7 @@ Name[pt_BR]=Um recurso é inválido
 Name[sv]=En resurs är felaktig
 Name[uk]=Ресурс пошкоджено
 Name[x-test]=xxA resource is brokenxx
+Name[zh_TW]=某個資源已損毀
 Comment=A resource change its state to broken
 Comment[ia]=Un ressource cambia su stato a rupte
 Comment[nds]=En Ressource hett en schaadhaftig Tostand
@@ -89,6 +90,7 @@ Comment[pt_BR]=Um recurso alterou o seu estado para inválido
 Comment[sv]=En resurs ändrade tillstånd till felaktig
 Comment[uk]=Ресурсом змінено стан на «пошкоджено»
 Comment[x-test]=xxA resource change its state to brokenxx
+Comment[zh_TW]=某個資源將它的狀態變更為已損毀
 Action=Popup
 
 [Event/mail-check-error]
