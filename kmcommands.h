@@ -370,14 +370,15 @@ private:
   virtual Result execute();
 };
 
-class KMAIL_EXPORT KMCustomReplyToCommand : public KMCommand
+class KMAIL_EXPORT KMCustomReplyCommand : public KMCommand
 {
   Q_OBJECT
 
 public:
-  KMCustomReplyToCommand( QWidget *parent, const Akonadi::Item &msg,
+  KMCustomReplyCommand( QWidget *parent, const Akonadi::Item &msg,
                           const QString &selection,
-                          const QString &tmpl );
+                          const QString &tmpl,
+                          MessageComposer::ReplyStrategy replyStrategy );
 
 private:
   virtual Result execute();
@@ -385,23 +386,8 @@ private:
 private:
   QString mSelection;
   QString mTemplate;
-};
+  MessageComposer::ReplyStrategy m_replyStrategy;
 
-class KMAIL_EXPORT KMCustomReplyAllToCommand : public KMCommand
-{
-  Q_OBJECT
-
-public:
-  KMCustomReplyAllToCommand( QWidget *parent, const Akonadi::Item &msg,
-                          const QString &selection,
-                          const QString &tmpl );
-
-private:
-  virtual Result execute();
-
-private:
-  QString mSelection;
-  QString mTemplate;
 };
 
 class KMAIL_EXPORT KMCustomForwardCommand : public KMCommand

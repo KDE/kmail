@@ -237,10 +237,10 @@ void KMReaderMainWin::slotCustomReplyToMsg( const QString &tmpl )
 {
   if( !mReaderWin->message().isValid() )
     return;
-  KMCommand *command = new KMCustomReplyToCommand( this,
+  KMCommand *command = new KMCustomReplyCommand( this,
                                                    mReaderWin->message(),
                                                    mReaderWin->copyText(),
-                                                   tmpl );
+                                                   tmpl,MessageComposer::ReplySmart );
   connect( command, SIGNAL(completed(KMCommand*)),
            this, SLOT(slotReplyOrForwardFinished()) );
   command->start();
@@ -251,10 +251,10 @@ void KMReaderMainWin::slotCustomReplyAllToMsg( const QString &tmpl )
 {
   if( !mReaderWin->message().isValid() )
     return;
-  KMCommand *command = new KMCustomReplyAllToCommand( this,
+  KMCommand *command = new KMCustomReplyCommand( this,
                                                       mReaderWin->message(),
                                                       mReaderWin->copyText(),
-                                                      tmpl );
+                                                      tmpl,MessageComposer::ReplyAll );
   command->start();
 }
 
