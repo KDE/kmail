@@ -22,10 +22,10 @@
 
 // other KMail headers:
 #include "mailcommon/searchpatternedit.h"
-#include "mailcommon/filtermanager.h"
 #include "kmmainwidget.h"
-#include "mailcommon/filterimporterexporter.h"
 #include "mailcommon/filteractionwidget.h"
+#include "mailcommon/filterimporterexporter.h"
+#include "mailcommon/filtermanager.h"
 #include "mailcommon/mailutil.h"
 using MailCommon::FilterImporterExporter;
 
@@ -721,7 +721,7 @@ void KMFilterListBox::createFilter( const QByteArray & field,
   newFilter->pattern()->append( newRule );
   newFilter->pattern()->setName( QString("<%1>:%2").arg( QString::fromLatin1( field ) ).arg( value) );
 
-  FilterActionDesc *desc = kmkernel->filterActionDict()->value( "transfer" );
+  FilterActionDesc *desc = MailCommon::FilterManager::filterActionDict()->value( "transfer" );
   if ( desc )
     newFilter->actions()->append( desc->create() );
 
@@ -780,11 +780,9 @@ void KMFilterListBox::slotApplyFilterChanges( KDialog::ButtonCode button )
   // by now all edit widgets should have written back
   // their widget's data into our filter list.
 
-  FilterManager *fm = kmkernel->filterManager();
-
   const QList<MailFilter*> newFilters = filtersForSaving( closeAfterSaving );
 
-  fm->setFilters( newFilters );
+  MailCommon::FilterManager::instance()->setFilters( newFilters );
 }
 
 QList<MailFilter *> KMFilterListBox::filtersForSaving( bool closeAfterSaving ) const
@@ -1030,15 +1028,10 @@ void KMFilterListBox::loadFilterList( bool createDummyFilter )
   mFilterList.clear();
   mListWidget->clear();
 
-  const FilterManager *manager = kmkernel->filterManager();
-  Q_ASSERT( manager );
-
-  QList<MailFilter*>::const_iterator it;
-  for ( it = manager->filters().constBegin() ;
-        it != manager->filters().constEnd();
-        ++it ) {
-    mFilterList.append( new MailFilter( **it ) ); // deep copy
-    mListWidget->addItem( (*it)->pattern()->name() );
+  const QList<MailFilter*> filters = MailCommon::FilterManager::instance()->filters();
+  foreach ( MailFilter *filter, filters ) {
+    mFilterList.append( new MailFilter( *filter ) ); // deep copy
+    mListWidget->addItem( filter->pattern()->name() );
   }
 
   blockSignals(false);

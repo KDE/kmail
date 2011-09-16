@@ -1165,9 +1165,12 @@ void KMMainWidget::createWidgets()
   connect( kmkernel->folderCollectionMonitor(), SIGNAL(itemMoved(Akonadi::Item,Akonadi::Collection,Akonadi::Collection)),
            SLOT(slotItemMoved(Akonadi::Item,Akonadi::Collection,Akonadi::Collection)) );
   connect( kmkernel->folderCollectionMonitor(), SIGNAL(collectionChanged(Akonadi::Collection,QSet<QByteArray>)), SLOT(slotCollectionChanged(Akonadi::Collection,QSet<QByteArray>)) );
+
+/* tokoe
   connect( FilterIf->filterManager(), SIGNAL(itemNotMoved(Akonadi::Item)),
            SLOT(slotItemNotMovedByFilters(Akonadi::Item)) );
-  
+*/
+
   connect( kmkernel->folderCollectionMonitor(), SIGNAL(collectionStatisticsChanged(Akonadi::Collection::Id,Akonadi::CollectionStatistics)), SLOT(slotCollectionStatisticsChanged(Akonadi::Collection::Id,Akonadi::CollectionStatistics)) );
 
 }
@@ -1306,7 +1309,7 @@ void KMMainWidget::slotHelp()
 //-----------------------------------------------------------------------------
 void KMMainWidget::slotFilter()
 {
-  FilterIf->filterManager()->openDialog( this );
+  FilterIf->openFilterDialog( true );
 }
 
 void KMMainWidget::slotManageSieveScripts()
@@ -2301,21 +2304,15 @@ void KMMainWidget::applyFilters( const QList<Akonadi::Item>& selectedMessages )
 #ifndef QT_NO_CURSOR
   MessageViewer::KCursorSaver busy( MessageViewer::KBusyPtr::busy() );
 #endif  
-  FilterIf->filterManager()->applyFilters( selectedMessages );
+
+  MailCommon::FilterManager::instance()->filter( selectedMessages );
 }
 
 int KMMainWidget::slotFilterMsg( const Akonadi::Item &msg )
 {
-  if ( !msg.isValid() )
-    return 2; // messageRetrieve(0) is always possible
-  int filterResult = FilterIf->filterManager()->process(msg, FilterManager::Explicit);
-  if (filterResult == 2)
-  {
-    // something went horribly wrong (out of space?)
-    CommonKernel->emergencyExit( i18n("Unable to process messages: " ) + QString::fromLocal8Bit(strerror(errno)));
-    return 2;
-  }
-  return filterResult;
+  MailCommon::FilterManager::instance()->filter( msg, FilterManager::Explicit );
+
+  return 0;
 }
 
 //-----------------------------------------------------------------------------
@@ -3947,7 +3944,7 @@ void KMMainWidget::slotIntro()
 
 void KMMainWidget::slotShowStartupFolder()
 {
-  connect( FilterIf->filterManager(), SIGNAL(filterListUpdated()),
+  connect( MailCommon::FilterManager::instance(), SIGNAL( filtersChanged() ),
            this, SLOT(initializeFilterActions()) );
 
   // Plug various action lists. This can't be done in the constructor, as that is called before
@@ -4013,7 +4010,7 @@ void KMMainWidget::initializeFilterActions()
   mApplyFilterActionsMenu->menu()->addAction( mApplyAllFiltersAction );
   bool addedSeparator = false;
 
-  foreach ( MailFilter *filter, FilterIf->filterManager()->filters() ) {
+  foreach ( MailFilter *filter, MailCommon::FilterManager::instance()->filters() ) {
     if ( !filter->isEmpty() && filter->configureShortcut() ) {
       QString filterName = QString( "Filter %1").arg( filter->name() );
       QString normalizedName = filterName.replace(' ', '_');

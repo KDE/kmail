@@ -467,8 +467,7 @@ void AntiSpamWizard::accept()
    * which will result in the filter list in kmmainwidget being
    * initialized. This should happend only once. */
   if ( !filterList.isEmpty() )
-    KMKernel::self()->filterManager()->appendFilters(
-          filterList, replaceExistingFilters );
+    MailCommon::FilterManager::instance()->appendFilters( filterList, replaceExistingFilters );
 
   KDialog::accept();
 }
@@ -687,7 +686,7 @@ bool AntiSpamWizard::anyVirusOptionChecked()
 
 const QString AntiSpamWizard::uniqueNameFor( const QString & name )
 {
-  return KMKernel::self()->filterManager()->createUniqueName( name );
+  return MailCommon::FilterManager::instance()->createUniqueFilterName( name );
 }
 
 
