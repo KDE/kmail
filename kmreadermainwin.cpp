@@ -331,7 +331,7 @@ void KMReaderMainWin::setupAccel()
   KAction *zoomResetAction = new KAction( i18n("Reset"), this);
   actionCollection()->addAction("zoom_reset", zoomResetAction);
   connect(zoomResetAction, SIGNAL(triggered(bool)), mReaderWin->viewer(), SLOT(slotZoomReset()));
-  //mZoomResetAction->setShortcut(QKeySequence(Qt::CTRL | Qt::Key_Minus));
+  zoomResetAction->setShortcut(QKeySequence(Qt::CTRL | Qt::Key_0));
 
   
   //----- Message Menu
