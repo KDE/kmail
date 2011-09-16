@@ -721,7 +721,7 @@ void KMFilterListBox::createFilter( const QByteArray & field,
   newFilter->pattern()->append( newRule );
   newFilter->pattern()->setName( QString("<%1>:%2").arg( QString::fromLatin1( field ) ).arg( value) );
 
-  FilterActionDesc *desc = kmkernel->filterActionDict()->value( "transfer" );
+  FilterActionDesc *desc = MailCommon::FilterManager::filterActionDict()->value( "transfer" );
   if ( desc )
     newFilter->actions()->append( desc->create() );
 
