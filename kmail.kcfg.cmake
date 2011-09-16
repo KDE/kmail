@@ -450,11 +450,23 @@
   </group>
 
   <group name="FavoriteCollectionView">
-    <entry name="EnableFavoriteCollectionView" type="Bool">
-      <default>true</default>
-    </entry>
     <entry name="FavoriteCollectionViewHeight" type="Int">
       <default>100</default>
+    </entry>
+    <entry name="FavoriteCollectionViewMode" type="Enum">
+    <label>Display Mode of the Favorite Collections View</label>
+       <choices>
+         <choice name ="HiddenMode">
+           <label>Do not show the favorite folders view.</label>
+         </choice>
+         <choice name="IconMode">
+           <label>Show favorite folders in icon mode.</label>
+         </choice>
+         <choice name="ListMode">
+           <label>Show favorite folders in list mode.</label>
+         </choice>
+       </choices>
+       <default>IconMode</default>
     </entry>
   </group>
 

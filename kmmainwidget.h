@@ -513,6 +513,12 @@ class KMAIL_EXPORT KMMainWidget : public QWidget
 
     void addInfoInNotification( const Akonadi::Collection&col );
 
+    /**
+     * Internal helper that applies the current settings so the
+     * favorite folder view.
+     */
+    void refreshFavoriteFoldersViewProperties();
+
   private slots:
     /**
      * Called when a "move to trash" operation is completed

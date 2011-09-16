@@ -578,7 +578,7 @@ void KMMainWidget::readPreConfig()
 
   mHtmlPref = MessageViewer::GlobalSettings::self()->htmlMail();
   mHtmlLoadExtPref = MessageViewer::GlobalSettings::self()->htmlLoadExternal();
-  mEnableFavoriteFolderView = GlobalSettings::self()->enableFavoriteCollectionView();
+  mEnableFavoriteFolderView = ( GlobalSettings::self()->favoriteCollectionViewMode() != GlobalSettings::EnumFavoriteCollectionViewMode::HiddenMode );
   mEnableFolderQuickSearch = GlobalSettings::self()->enableFolderQuickSearch();
 }
 
@@ -799,6 +799,21 @@ void KMMainWidget::layoutSplitters()
 }
 
 //-----------------------------------------------------------------------------
+void KMMainWidget::refreshFavoriteFoldersViewProperties()
+{
+  if( mFavoriteCollectionsView ) {
+    if ( GlobalSettings::self()->favoriteCollectionViewMode() == GlobalSettings::EnumFavoriteCollectionViewMode::IconMode )
+      mFavoriteCollectionsView->setViewMode( QListView::IconMode );
+    else if ( GlobalSettings::self()->favoriteCollectionViewMode() == GlobalSettings::EnumFavoriteCollectionViewMode::ListMode )
+      mFavoriteCollectionsView->setViewMode( QListView::ListMode );
+    else
+      Q_ASSERT(false); // we should never get here in hidden mode
+    mFavoriteCollectionsView->setDropActionMenuEnabled( kmkernel->showPopupAfterDnD() );
+    mFavoriteCollectionsView->setWordWrap( true );
+  }
+}
+
+//-----------------------------------------------------------------------------
 void KMMainWidget::readConfig()
 {
   KSharedConfig::Ptr config = KMKernel::self()->config();
@@ -836,8 +851,7 @@ void KMMainWidget::readConfig()
     }
     mMessagePane->reloadGlobalConfiguration();
     mFolderTreeWidget->readConfig();
-    if( mFavoriteCollectionsView )
-        mFavoriteCollectionsView->setDropActionMenuEnabled( kmkernel->showPopupAfterDnD() );
+    refreshFavoriteFoldersViewProperties();
   }
 
   { // area for config group "General"
@@ -1042,9 +1056,7 @@ void KMMainWidget::createWidgets()
   if ( mEnableFavoriteFolderView ) {
 
     mFavoriteCollectionsView = new Akonadi::EntityListView( mGUIClient, this );
-    mFavoriteCollectionsView->setViewMode( QListView::IconMode );
-    mFavoriteCollectionsView->setWordWrap( true );
-    mFavoriteCollectionsView->setDropActionMenuEnabled( kmkernel->showPopupAfterDnD() );
+    refreshFavoriteFoldersViewProperties();
 
     connect( mFavoriteCollectionsView, SIGNAL(currentChanged(Akonadi::Collection)), this, SLOT(slotFolderChanged(Akonadi::Collection)) );
 
