@@ -92,7 +92,6 @@ if (NOT WINCE AND KDEPIM_BUILD_DESKTOP)
      composer.cpp
      antispamwizard.cpp
      secondarywindow.cpp
-     filterlogdlg.cpp
      codecaction.cpp
      codecmanager.cpp
      foldershortcutdialog.cpp

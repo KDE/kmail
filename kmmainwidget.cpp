@@ -25,7 +25,6 @@
 #include "composer.h"
 #include "searchwindow.h"
 #include "antispamwizard.h"
-#include "filterlogdlg.h"
 #include "mailinglistpropertiesdialog.h"
 #include "statusbarlabel.h"
 #include "expirypropertiesdialog.h"
@@ -190,7 +189,6 @@ using KPIM::ProgressManager;
 using KPIM::BroadcastStatus;
 using KMail::SearchWindow;
 using KMail::AntiSpamWizard;
-using KMail::FilterLogDialog;
 using KMime::Types::AddrSpecList;
 using KSieveUi::Vacation;
 using MessageViewer::AttachmentStrategy;
@@ -4107,8 +4105,7 @@ void KMMainWidget::slotAccountWizard()
 //-----------------------------------------------------------------------------
 void KMMainWidget::slotFilterLogViewer()
 {
-  FilterLogDialog * dlg = new FilterLogDialog( 0 );
-  dlg->show();
+  MailCommon::FilterManager::instance()->showFilterLogDialog();
 }
 
 //-----------------------------------------------------------------------------
