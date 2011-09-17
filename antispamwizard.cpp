@@ -1026,7 +1026,7 @@ ASWizSpamRulesPage::ASWizSpamRulesPage( QWidget * parent, const char * name)
   mFolderReqForSpamFolder->setFolder( CommonKernel->trashCollectionFolder() );
   mFolderReqForSpamFolder->setMustBeReadWrite( true );
   mFolderReqForSpamFolder->setShowOutbox( false );
-  mFolderReqForSpamFolder->setShowImapFolders( false );
+  mFolderReqForSpamFolder->setShowImapFolders( true );
 
   QHBoxLayout *hLayout1 = new QHBoxLayout();
   layout->addItem( hLayout1 );
