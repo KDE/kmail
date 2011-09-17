@@ -380,37 +380,47 @@ void KMMainWidget::slotEndCheckMail()
   // FIXME: This is wrong! Items can arrive _after_ the mail check, in which case mCheckMail can be empty
   //        here
   if ( mCheckMail.isEmpty() ) {
+    slotEndCheckFetchCollectionsDone(0);
     return;
   }
+  
+  Akonadi::Collection::List collections;
+  QMap<Akonadi::Collection::Id, int>::const_iterator it = mCheckMail.constBegin();
+  while ( it != mCheckMail.constEnd() ) {
+    Akonadi::Collection collection( it.key() );
+    collections << collection;
+    ++it;
+  }
+  
+  Akonadi::CollectionFetchJob *job = new Akonadi::CollectionFetchJob( collections, Akonadi::CollectionFetchJob::Base );
+  connect( job, SIGNAL(finished(KJob*)), this, SLOT(slotEndCheckFetchCollectionsDone(KJob*) ) );
+}
 
+void KMMainWidget::slotEndCheckFetchCollectionsDone(KJob* job)
+{
   // build summary for new mail message
   bool showNotification = false;
   QString summary;
 
-  QMapIterator<Akonadi::Collection::Id, int> it( mCheckMail );
-  while ( it.hasNext() ) {
-    it.next();
+  if ( job && !job->error() ) {
 
-    Akonadi::CollectionFetchJob *job = new Akonadi::CollectionFetchJob( Akonadi::Collection( it.key() ),
-                                                                        Akonadi::CollectionFetchJob::Base );
-    if ( !job->exec() )
-      continue;
+    Akonadi::CollectionFetchJob *colJob = static_cast<Akonadi::CollectionFetchJob *>(job);
+    Akonadi::Collection::List collections = colJob->collections();
 
-    if ( job->collections().isEmpty() )
-      continue;
 
-    const Akonadi::Collection collection = job->collections().first();
-    const QString folderPath( MailCommon::Util::fullCollectionPath( collection ) );
-    const int numberOfMails = it.value();
+    Q_FOREACH( const Akonadi::Collection& collection, collections ) {
+      const QString folderPath( MailCommon::Util::fullCollectionPath( collection ) );
+      const int numberOfMails = mCheckMail[ collection.id() ];
 
-    const QSharedPointer<FolderCollection> fd = FolderCollection::forCollection( collection,false );
+      const QSharedPointer<FolderCollection> fd = FolderCollection::forCollection( collection,false );
 
-    if ( fd && !fd->ignoreNewMail() ) {
-      showNotification = true;
-      if ( GlobalSettings::self()->verboseNewMailNotification() ) {
-        summary += "<br />" + i18np( "1 new message in %2",
-                                     "%1 new messages in %2",
-                                     numberOfMails, folderPath );
+      if ( fd && !fd->ignoreNewMail() ) {
+        showNotification = true;
+        if ( GlobalSettings::self()->verboseNewMailNotification() ) {
+          summary += "<br />" + i18np( "1 new message in %2",
+                                      "%1 new messages in %2",
+                                      numberOfMails, folderPath );
+        }
       }
     }
   }
@@ -1164,11 +1174,6 @@ void KMMainWidget::createWidgets()
            SLOT(slotItemMoved(Akonadi::Item,Akonadi::Collection,Akonadi::Collection)) );
   connect( kmkernel->folderCollectionMonitor(), SIGNAL(collectionChanged(Akonadi::Collection,QSet<QByteArray>)), SLOT(slotCollectionChanged(Akonadi::Collection,QSet<QByteArray>)) );
 
-/* tokoe
-  connect( FilterIf->filterManager(), SIGNAL(itemNotMoved(Akonadi::Item)),
-           SLOT(slotItemNotMovedByFilters(Akonadi::Item)) );
-*/
-
   connect( kmkernel->folderCollectionMonitor(), SIGNAL(collectionStatisticsChanged(Akonadi::Collection::Id,Akonadi::CollectionStatistics)), SLOT(slotCollectionStatisticsChanged(Akonadi::Collection::Id,Akonadi::CollectionStatistics)) );
 
 }
@@ -1212,14 +1217,13 @@ void KMMainWidget::slotCollectionChanged( const Akonadi::Collection&collection, 
 
 void KMMainWidget::slotItemAdded( const Akonadi::Item &msg, const Akonadi::Collection& col)
 {
-  if ( col.isValid() && ( col == CommonKernel->outboxCollectionFolder() ) ) {
-    startUpdateMessageActionsTimer();
+  if ( col.isValid() ) {
+    if ( col == CommonKernel->outboxCollectionFolder() ) {
+      startUpdateMessageActionsTimer();
+    } else {
+      addInfoInNotification( col );
+    }
   }
-}
-
-void KMMainWidget::slotItemNotMovedByFilters( const Akonadi::Item& item )
-{
-  addInfoInNotification( item.parentCollection() );
 }
 
 void KMMainWidget::slotItemRemoved( const Akonadi::Item & item)

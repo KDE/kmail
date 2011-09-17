@@ -280,6 +280,7 @@ class KMAIL_EXPORT KMMainWidget : public QWidget
 
     void slotStartCheckMail();
     void slotEndCheckMail();
+    void slotEndCheckFetchCollectionsDone(KJob* job);
 
     void slotCollectionProperties();
 
@@ -540,8 +541,6 @@ class KMAIL_EXPORT KMMainWidget : public QWidget
 
     void itemsReceived(const Akonadi::Item::List &list );
     void itemsFetchDone( KJob *job );
-
-    void slotItemNotMovedByFilters( const Akonadi::Item& item );
 
     void slotCollectionPropertiesContinued( KJob* job );
 private:
