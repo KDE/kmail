@@ -842,13 +842,17 @@ void KMMainWidget::readConfig()
     layoutChanged = ( oldLongFolderList != mLongFolderList ) ||
                     ( oldReaderWindowActive != mReaderWindowActive ) ||
                     ( oldReaderWindowBelow != mReaderWindowBelow ) ||
-                    ( oldFavoriteFolderView != mEnableFavoriteFolderView ) ||
-                    ( oldFolderQuickSearch != mEnableFolderQuickSearch );
+                    ( oldFavoriteFolderView != mEnableFavoriteFolderView );
 
     if( layoutChanged ) {
       deleteWidgets();
       createWidgets();
       restoreCollectionFolderViewConfig();
+    } else if ( oldFolderQuickSearch != mEnableFolderQuickSearch ) {
+      if ( mEnableFolderQuickSearch )
+        mFolderTreeWidget->filterFolderLineEdit()->show();
+      else
+        mFolderTreeWidget->filterFolderLineEdit()->hide();
     }
   }
 
