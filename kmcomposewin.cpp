@@ -430,7 +430,11 @@ KMComposeWin::KMComposeWin( const KMime::Message::Ptr &aMsg, Composer::TemplateC
 
   if ( GlobalSettings::self()->useHtmlMarkup() )
     enableHtml();
+  else
+    disableHtml( Message::ComposerViewBase::LetUserConfirm );
 
+
+  
   if ( GlobalSettings::self()->useExternalEditor() ) {
     editor->setUseExternalEditor( true );
     editor->setExternalEditorPath( GlobalSettings::self()->externalEditor() );
