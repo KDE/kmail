@@ -826,11 +826,11 @@ void KMMainWidget::readConfig()
 {
   KSharedConfig::Ptr config = KMKernel::self()->config();
 
-  bool oldLongFolderList = mLongFolderList;
-  bool oldReaderWindowActive = mReaderWindowActive;
-  bool oldReaderWindowBelow = mReaderWindowBelow;
-  bool oldFavoriteFolderView = mEnableFavoriteFolderView;
-  bool oldFolderQuickSearch = mEnableFolderQuickSearch;
+  const bool oldLongFolderList = mLongFolderList;
+  const bool oldReaderWindowActive = mReaderWindowActive;
+  const bool oldReaderWindowBelow = mReaderWindowBelow;
+  const bool oldFavoriteFolderView = mEnableFavoriteFolderView;
+  const bool oldFolderQuickSearch = mEnableFolderQuickSearch;
 
   // on startup, the layout is always new and we need to relayout the widgets
   bool layoutChanged = !mStartupDone;
@@ -941,7 +941,7 @@ void KMMainWidget::writeConfig()
       if ( !mReaderWindowBelow )
         GlobalSettings::self()->setReaderWindowWidth( mMsgView->width() );
       mMsgView->viewer()->writeConfig();
-      GlobalSettings::self()->setReaderWindowHeight( mMsgView->width() );
+      GlobalSettings::self()->setReaderWindowHeight( mMsgView->height() );
     }
   }
 }
