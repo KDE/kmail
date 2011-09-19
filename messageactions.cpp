@@ -258,7 +258,6 @@ void MessageActions::setSelectedVisibleItems( const Akonadi::Item::List &items )
 void MessageActions::updateActions()
 {
   bool singleMsg = mCurrentItem.isValid();
-  qDebug()<<"singleMsg :"<<singleMsg<<" mCurrentItem :"<<mCurrentItem.id();
   Akonadi::Collection parent;
   if ( singleMsg ) //=> valid
     parent = mCurrentItem.parentCollection();
