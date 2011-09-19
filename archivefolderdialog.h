@@ -43,7 +43,7 @@ class ArchiveFolderDialog : public KDialog
 
   public:
 
-    ArchiveFolderDialog( QWidget *parent = 0 );
+    explicit ArchiveFolderDialog( QWidget *parent = 0 );
     void setFolder( const Akonadi::Collection &defaultCollection );
 
   protected slots:
@@ -57,6 +57,7 @@ class ArchiveFolderDialog : public KDialog
 
     QWidget *mParentWidget;
     QCheckBox *mDeleteCheckBox;
+    QCheckBox *mRecursiveCheckBox;
     MailCommon::FolderRequester *mFolderRequester;
     KComboBox *mFormatComboBox;
     KUrlRequester *mUrlRequester;

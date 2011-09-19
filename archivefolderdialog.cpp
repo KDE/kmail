@@ -110,6 +110,11 @@ ArchiveFolderDialog::ArchiveFolderDialog( QWidget *parent )
   mainLayout->addWidget( mDeleteCheckBox, row, 0, 1, 2, Qt::AlignLeft );
   row++;
 
+  mRecursiveCheckBox = new QCheckBox( i18n( "Archive all subfolders" ), mainWidget );
+  mainLayout->addWidget( mRecursiveCheckBox, row, 0, 1, 2, Qt::AlignLeft );
+  mRecursiveCheckBox->setChecked( true );
+  row++;
+
   // TODO: what's this, tooltips
 
   // TODO: Warn that user should do mail check for online IMAP and possibly cached IMAP as well
@@ -165,6 +170,7 @@ void ArchiveFolderDialog::slotButtonClicked( int button )
   backupJob->setSaveLocation( mUrlRequester->url() );
   backupJob->setArchiveType( static_cast<BackupJob::ArchiveType>( mFormatComboBox->currentIndex() ) );
   backupJob->setDeleteFoldersAfterCompletion( mDeleteCheckBox->isEnabled() && mDeleteCheckBox->isChecked());
+  backupJob->setRecursive( mRecursiveCheckBox->isChecked() );
   backupJob->start();
   accept();
 }

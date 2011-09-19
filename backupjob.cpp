@@ -47,6 +47,7 @@ BackupJob::BackupJob( QWidget *parent )
     mProgressItem( 0 ),
     mAborted( false ),
     mDeleteFoldersAfterCompletion( false ),
+    mRecursive( true ), 
     mCurrentFolder( Akonadi::Collection() ),
     mCurrentJob( 0 )
 {
@@ -79,31 +80,38 @@ void BackupJob::setDeleteFoldersAfterCompletion( bool deleteThem )
   mDeleteFoldersAfterCompletion = deleteThem;
 }
 
+void BackupJob::setRecursive( bool recursive )
+{
+  mRecursive = recursive;
+}
+
 bool BackupJob::queueFolders( const Akonadi::Collection &root )
 {
   mPendingFolders.append( root );
-  // FIXME: Get rid of the exec()
-  // We could do a recursive CollectionFetchJob, but we only fetch the first level
-  // and then recurse manually. This is needed because a recursive fetch doesn't
-  // sort the collections the way we want. We need all first level children to be
-  // in the mPendingFolders list before all second level children, so that the
-  // directories for the first level are written before the directories in the
-  // second level, in the archive file.
-  Akonadi::CollectionFetchJob *job = new Akonadi::CollectionFetchJob( root,
-      Akonadi::CollectionFetchJob::FirstLevel );
-  job->fetchScope().setAncestorRetrieval( Akonadi::CollectionFetchScope::All );
-  job->exec();
-  if ( job->error() ) {
-    kWarning() << job->errorString();
-    abort( i18n( "Unable to retrieve folder list." ) );
-    return false;
-  }
-
-  foreach ( const Akonadi::Collection &collection, job->collections() ) {
-    if ( !queueFolders( collection ) )
+  if ( mRecursive )
+  {
+    // FIXME: Get rid of the exec()
+    // We could do a recursive CollectionFetchJob, but we only fetch the first level
+    // and then recurse manually. This is needed because a recursive fetch doesn't
+    // sort the collections the way we want. We need all first level children to be
+    // in the mPendingFolders list before all second level children, so that the
+    // directories for the first level are written before the directories in the
+    // second level, in the archive file.
+    Akonadi::CollectionFetchJob *job = new Akonadi::CollectionFetchJob( root,
+                                                                        Akonadi::CollectionFetchJob::FirstLevel );
+    job->fetchScope().setAncestorRetrieval( Akonadi::CollectionFetchScope::All );
+    job->exec();
+    if ( job->error() ) {
+      kWarning() << job->errorString();
+      abort( i18n( "Unable to retrieve folder list." ) );
       return false;
-  }
+    }
 
+    foreach ( const Akonadi::Collection &collection, job->collections() ) {
+      if ( !queueFolders( collection ) )
+        return false;
+    }
+  }
   mAllFolders = mPendingFolders;
   return true;
 }
@@ -398,6 +406,8 @@ void BackupJob::start()
 
   archiveNextFolder();
 }
+
+
 
 #include "backupjob.moc"
 

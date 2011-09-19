@@ -62,6 +62,7 @@ class BackupJob : public QObject
     void setSaveLocation( const KUrl& savePath );
     void setArchiveType( ArchiveType type );
     void setDeleteFoldersAfterCompletion( bool deleteThem );
+    void setRecursive( bool recursive );
     void start();
 
   private slots:
@@ -99,6 +100,7 @@ class BackupJob : public QObject
     QPointer<KPIM::ProgressItem> mProgressItem;
     bool mAborted;
     bool mDeleteFoldersAfterCompletion;
+    bool mRecursive;
 
     Akonadi::Collection::List mPendingFolders;
     Akonadi::Collection::List mAllFolders;
