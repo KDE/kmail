@@ -32,14 +32,10 @@
 #include "messageactions.h"
 #include <kaction.h>
 #include <kactioncollection.h>
-#include <kvbox.h>
 #include <foldercollection.h>
 
 #include <QList>
-#include <QVBoxLayout>
-#include <QMenu>
 #include <QLabel>
-#include <QHash>
 #include <QPointer>
 #include <akonadi/kmime/standardmailactionmanager.h>
 #include <messagelist/core/view.h>
@@ -56,6 +52,7 @@ namespace KMime {
 class QVBoxLayout;
 class QSplitter;
 
+class QMenu;
 class KActionMenu;
 class KToggleAction;
 class KMMetaFilterActionCommand;

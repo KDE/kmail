@@ -128,6 +128,7 @@ using MailTransport::TransportManagementWidget;
 #include <QDBusConnection>
 #include <QHostInfo>
 #include <QTextCodec>
+#include <QMenu>
 
 // other headers:
 #include <assert.h>
