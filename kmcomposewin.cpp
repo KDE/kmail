@@ -887,7 +887,7 @@ QWidget *KMComposeWin::connectFocusMoving( QWidget *prev, QWidget *next )
 
 //-----------------------------------------------------------------------------
 void KMComposeWin::rethinkHeaderLine( int aValue, int aMask, int &aRow,
-                                      QLabel *aLbl, KLineEdit *aEdt,
+                                      QLabel *aLbl, QWidget *aEdt,
                                       QPushButton *aBtn )
 {
   if ( aValue & aMask ) {
@@ -912,38 +912,10 @@ void KMComposeWin::rethinkHeaderLine( int aValue, int aMask, int &aRow,
     }
   }
 }
-
-void KMComposeWin::rethinkHeaderLine( int aValue, int aMask, int &aRow,
-                                      QLabel *aLbl, Message::KMSubjectLineEdit *aEdt,
-                                      QPushButton *aBtn )
-{
-  if ( aValue & aMask ) {
-    aLbl->setFixedWidth( mLabelWidth );
-    aLbl->setBuddy( aEdt );
-    mGrid->addWidget( aLbl, aRow, 0 );
-    aEdt->show();
-
-    if ( aBtn ) {
-      mGrid->addWidget( aEdt, aRow, 1 );
-      mGrid->addWidget( aBtn, aRow, 2 );
-      aBtn->show();
-    } else {
-      mGrid->addWidget( aEdt, aRow, 1, 1, 2 );
-    }
-    aRow++;
-  } else {
-    aLbl->hide();
-    aEdt->hide();
-    if ( aBtn ) {
-      aBtn->hide();
-    }
-  }
-}
-
 
 //-----------------------------------------------------------------------------
 void KMComposeWin::rethinkHeaderLine( int aValue, int aMask, int &aRow,
-                                      QLabel *aLbl, QComboBox *aCbx, // krazy:exclude=qclasses
+                                      QLabel *aLbl, QWidget *aCbx,
                                       QCheckBox *aChk )
 {
   if ( aValue & aMask ) {
@@ -965,32 +937,6 @@ void KMComposeWin::rethinkHeaderLine( int aValue, int aMask, int &aRow,
     }
   }
 }
-
-//-----------------------------------------------------------------------------
-void KMComposeWin::rethinkHeaderLine( int aValue, int aMask, int &aRow,
-                                      QLabel *aLbl, MailCommon::FolderRequester *aRequester,
-                                      QCheckBox *aChk )
-{
-  if ( aValue & aMask ) {
-    aLbl->setBuddy( aRequester );
-    mGrid->addWidget( aLbl, aRow, 0 );
-
-    mGrid->addWidget( aRequester, aRow, 1 );
-    aRequester->show();
-    if ( aChk ) {
-      mGrid->addWidget( aChk, aRow, 2 );
-      aChk->show();
-    }
-    aRow++;
-  } else {
-    aLbl->hide();
-    aRequester->hide();
-    if ( aChk ) {
-      aChk->hide();
-    }
-  }
-}
-
 
 //-----------------------------------------------------------------------------
 void KMComposeWin::applyTemplate( uint uoid )

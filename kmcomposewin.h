@@ -459,21 +459,13 @@ class KMComposeWin : public KMail::Composer
     /**
      * Show or hide header lines
      */
-
     void rethinkHeaderLine( int aValue, int aMask, int &aRow,
-                            QLabel *aLbl, KLineEdit *aEdt,
-                            QPushButton *aBtn = 0 );
-
-    void rethinkHeaderLine( int aValue, int aMask, int &aRow,
-                            QLabel *aLbl, Message::KMSubjectLineEdit *aEdt,
+                            QLabel *aLbl, QWidget *aEdt,
                             QPushButton *aBtn = 0 );
 
     void rethinkHeaderLine( int value, int mask, int &row,
-                            QLabel *lbl, QComboBox *cbx, QCheckBox *chk ); // krazy:exclude=qclasses
+                            QLabel *lbl, QWidget *cbx, QCheckBox *chk ); // krazy:exclude=qclasses
 
-    void rethinkHeaderLine( int aValue, int aMask, int &aRow,
-                            QLabel *aLbl, MailCommon::FolderRequester *aRequester,
-                            QCheckBox *aChk );
 
     /**
      * Apply template to new or unmodified message.
