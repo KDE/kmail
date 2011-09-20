@@ -2697,10 +2697,7 @@ void KMComposeWin::disableHtml( Message::ComposerViewBase::Confirmation confirma
 //-----------------------------------------------------------------------------
 void KMComposeWin::slotToggleMarkup()
 {
-  if ( markupAction->isChecked() )
-    enableHtml();
-  else
-    disableHtml( Message::ComposerViewBase::LetUserConfirm );
+  htmlToolBarVisibilityChanged( markupAction->isChecked() );
 }
 
 //-----------------------------------------------------------------------------
