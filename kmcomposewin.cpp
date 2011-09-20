@@ -86,6 +86,7 @@
 #include "messagecore/nodehelper.h"
 #include <akonadi/kmime/messagestatus.h>
 #include "messagecore/messagehelpers.h"
+#include "mailcommon/folderrequester.h"
 
 // LIBKDEPIM includes
 #include <libkdepim/nepomukwarning.h>
@@ -253,11 +254,15 @@ KMComposeWin::KMComposeWin( const KMime::Message::Ptr &aMsg, Composer::TemplateC
   mDictionaryCombo = new DictionaryComboBox( mHeadersArea );
   mDictionaryCombo->setToolTip( i18n( "Select the dictionary to use when spell-checking this message" ) );
 
-  Akonadi::CollectionComboBox* fcc = new Akonadi::CollectionComboBox( kmkernel->collectionModel(), mHeadersArea );
-  fcc->setMimeTypeFilter( QStringList()<<KMime::Message::mimeType() );
-  fcc->setAccessRightsFilter( Akonadi::Collection::CanCreateItem );
-  fcc->setToolTip( i18n( "Select the sent-mail folder where a copy of this message will be saved" ) );
-  mComposerBase->setFccCombo( fcc );
+  mFccFolder = new MailCommon::FolderRequester( mHeadersArea );
+  mFccFolder->setNotAllowToCreateNewFolder( true );
+  mFccFolder->setMustBeReadWrite( true );
+
+
+  mFccFolder->setToolTip( i18n( "Select the sent-mail folder where a copy of this message will be saved" ) );
+  connect( mFccFolder, SIGNAL(folderChanged(Akonadi::Collection)),
+           this, SLOT(slotFccFolderChanged(Akonadi::Collection)) );
+
   MailTransport::TransportComboBox* transport = new MailTransport::TransportComboBox( mHeadersArea );
   transport->setToolTip( i18n( "Select the outgoing account to use for sending this message" ) );
   mComposerBase->setTransportCombo( transport );
@@ -624,7 +629,7 @@ void KMComposeWin::writeConfig( void )
     GlobalSettings::self()->setStickyIdentity( mBtnIdentity->isChecked() );
     GlobalSettings::self()->setPreviousIdentity( mComposerBase->identityCombo()->currentIdentity() );
   }
-  GlobalSettings::self()->setPreviousFcc( QString::number(mComposerBase->fccCombo()->currentCollection().id()) );
+  GlobalSettings::self()->setPreviousFcc( mFccFolder->folderId() );
   GlobalSettings::self()->setPreviousDictionary( mDictionaryCombo->currentDictionaryName() );
   GlobalSettings::self()->setAutoSpellChecking(
                                                mAutoSpellCheckingAction->isChecked() );
@@ -805,7 +810,7 @@ void KMComposeWin::rethinkFields( bool fromSlot )
   if ( !fromSlot ) {
     mFccAction->setChecked( abs( mShowHeaders )&HDR_FCC );
   }
-  rethinkHeaderLine( showHeaders,HDR_FCC, row, mLblFcc, mComposerBase->fccCombo(), mBtnFcc );
+  rethinkHeaderLine( showHeaders,HDR_FCC, row, mLblFcc, mFccFolder, mBtnFcc );
 
   if ( !fromSlot ) {
     mTransportAction->setChecked( abs( mShowHeaders )&HDR_TRANSPORT );
@@ -960,6 +965,32 @@ void KMComposeWin::rethinkHeaderLine( int aValue, int aMask, int &aRow,
     }
   }
 }
+
+//-----------------------------------------------------------------------------
+void KMComposeWin::rethinkHeaderLine( int aValue, int aMask, int &aRow,
+                                      QLabel *aLbl, MailCommon::FolderRequester *aRequester,
+                                      QCheckBox *aChk )
+{
+  if ( aValue & aMask ) {
+    aLbl->setBuddy( aRequester );
+    mGrid->addWidget( aLbl, aRow, 0 );
+
+    mGrid->addWidget( aRequester, aRow, 1 );
+    aRequester->show();
+    if ( aChk ) {
+      mGrid->addWidget( aChk, aRow, 2 );
+      aChk->show();
+    }
+    aRow++;
+  } else {
+    aLbl->hide();
+    aRequester->hide();
+    if ( aChk ) {
+      aChk->hide();
+    }
+  }
+}
+
 
 //-----------------------------------------------------------------------------
 void KMComposeWin::applyTemplate( uint uoid )
@@ -1705,10 +1736,14 @@ void KMComposeWin::setCustomTemplate( const QString& customTemplate )
 void KMComposeWin::setFcc( const QString &idString )
 {
   // check if the sent-mail folder still exists
+  Akonadi::Collection col;
   if ( idString.isEmpty() )
-    mComposerBase->setFcc( CommonKernel->sentCollectionFolder() );
+    col = CommonKernel->sentCollectionFolder();
   else
-    mComposerBase->setFcc( Akonadi::Collection( idString.toInt() ) );
+    col = Akonadi::Collection( idString.toInt() );
+
+  mComposerBase->setFcc( col );
+  mFccFolder->setFolder( col );
 }
 
 //-----------------------------------------------------------------------------
@@ -3128,3 +3163,8 @@ void KMComposeWin::slotLanguageChanged( const QString &language )
   mDictionaryCombo->setCurrentByDictionary( language );
 }
 
+
+void KMComposeWin::slotFccFolderChanged(const Akonadi::Collection& collection)
+{
+  mComposerBase->setFcc( collection );
+}

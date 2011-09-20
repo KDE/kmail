@@ -105,7 +105,11 @@ namespace MessageComposer
 {
   class ComposerLineEdit;
 }
-
+namespace MailCommon
+{
+  class FolderRequester;
+}
+ 
 //-----------------------------------------------------------------------------
 class KMComposeWin : public KMail::Composer
 {
@@ -304,7 +308,7 @@ class KMComposeWin : public KMail::Composer
 
   void slotFolderRemoved( const Akonadi::Collection& );
     void slotLanguageChanged( const QString &language );
-
+  void slotFccFolderChanged(const Akonadi::Collection&);
     void slotEditorTextChanged();
     void slotOverwriteModeChanged();
 
@@ -466,6 +470,10 @@ class KMComposeWin : public KMail::Composer
 
     void rethinkHeaderLine( int value, int mask, int &row,
                             QLabel *lbl, QComboBox *cbx, QCheckBox *chk ); // krazy:exclude=qclasses
+
+    void rethinkHeaderLine( int aValue, int aMask, int &aRow,
+                            QLabel *aLbl, MailCommon::FolderRequester *aRequester,
+                            QCheckBox *aChk );
 
     /**
      * Apply template to new or unmodified message.
@@ -701,8 +709,8 @@ class KMComposeWin : public KMail::Composer
     SnippetWidget *mSnippetWidget;
 
     QLabel *mSignatureStateIndicator;
-    QLabel *mEncryptionStateIndicator;
-
+  QLabel *mEncryptionStateIndicator;
+  MailCommon::FolderRequester *mFccFolder;
     bool mPreventFccOverwrite;
     bool mCheckForForgottenAttachments;
     bool mIgnoreStickyFields;
