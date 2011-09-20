@@ -111,6 +111,7 @@ ArchiveFolderDialog::ArchiveFolderDialog( QWidget *parent )
   row++;
 
   mRecursiveCheckBox = new QCheckBox( i18n( "Archive all subfolders" ), mainWidget );
+  connect( mRecursiveCheckBox, SIGNAL( clicked() ), this, SLOT( slotRecursiveCheckboxClicked() ) );
   mainLayout->addWidget( mRecursiveCheckBox, row, 0, 1, 2, Qt::AlignLeft );
   mRecursiveCheckBox->setChecked( true );
   row++;
@@ -129,12 +130,22 @@ ArchiveFolderDialog::ArchiveFolderDialog( QWidget *parent )
 bool canRemoveFolder( const Akonadi::Collection& col )
 {
   const QSharedPointer<FolderCollection> folder = FolderCollection::forCollection( col,false );
-  return folder && col.isValid() && col.rights() & Akonadi::Collection::CanDeleteCollection && !folder->isStructural() && !folder->isSystemFolder() && col.resource() != QLatin1String( "akonadi_nepomuktag_resource" );
+  return folder && col.isValid() && ( col.rights() & Akonadi::Collection::CanDeleteCollection ) && !folder->isStructural() && !folder->isSystemFolder() && ( col.resource() != QLatin1String( "akonadi_nepomuktag_resource" ) );
+}
+
+void ArchiveFolderDialog::slotRecursiveCheckboxClicked()
+{
+  slotFolderChanged( mFolderRequester->folderCollection() );
 }
 
 void ArchiveFolderDialog::slotFolderChanged( const Akonadi::Collection &folder )
 {
-  mDeleteCheckBox->setEnabled( canRemoveFolder( folder ) );
+  mDeleteCheckBox->setEnabled( allowToDeleteFolders( folder ) );
+}
+
+bool ArchiveFolderDialog::allowToDeleteFolders( const Akonadi::Collection &folder) const
+{
+  return canRemoveFolder( folder ) && mRecursiveCheckBox->isChecked();
 }
 
 void ArchiveFolderDialog::setFolder( const Akonadi::Collection &defaultCollection )
@@ -143,7 +154,7 @@ void ArchiveFolderDialog::setFolder( const Akonadi::Collection &defaultCollectio
   // TODO: what if the file already exists?
   mUrlRequester->setUrl( standardArchivePath( defaultCollection.name() ) );
   const QSharedPointer<FolderCollection> folder = FolderCollection::forCollection( defaultCollection, false );
-  mDeleteCheckBox->setEnabled( canRemoveFolder( defaultCollection ) );
+  mDeleteCheckBox->setEnabled( allowToDeleteFolders( defaultCollection ) );
   enableButtonOk( defaultCollection.isValid() && folder && !folder->isStructural() );
 }
 

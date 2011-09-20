@@ -50,10 +50,12 @@ class ArchiveFolderDialog : public KDialog
 
     void slotFixFileExtension();
     void slotFolderChanged( const Akonadi::Collection& );
+    void slotRecursiveCheckboxClicked();
     /** reimp */
     virtual void slotButtonClicked( int button );
 
   private:
+    bool allowToDeleteFolders( const Akonadi::Collection &folder) const;
 
     QWidget *mParentWidget;
     QCheckBox *mDeleteCheckBox;
