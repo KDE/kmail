@@ -17,7 +17,7 @@
    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 #include "backupjob.h"
-
+#include <broadcaststatus.h>
 #include <Akonadi/CollectionDeleteJob>
 #include <Akonadi/CollectionFetchJob>
 #include <Akonadi/CollectionFetchScope>
@@ -170,7 +170,10 @@ void BackupJob::finish()
     }
   }
 
-  mProgressItem->setStatus( i18n( "Archiving finished" ) );
+  const QString archivingStr( i18n( "Archiving finished" ) );
+  KPIM::BroadcastStatus::instance()->setStatusMsg( archivingStr );
+
+  mProgressItem->setStatus( archivingStr );
   mProgressItem->setComplete();
   mProgressItem = 0;
 
@@ -320,8 +323,10 @@ void BackupJob::archiveNextFolder()
 
   mCurrentFolder = mPendingFolders.takeAt( 0 );
   kDebug() << "===> Archiving next folder: " << mCurrentFolder.name();
-  mProgressItem->setStatus( i18n( "Archiving folder %1", mCurrentFolder.name() ) );
-
+  const QString archivingStr( i18n( "Archiving folder %1", mCurrentFolder.name() ) );
+  mProgressItem->setStatus( archivingStr );
+  KPIM::BroadcastStatus::instance()->setStatusMsg( archivingStr );
+  
   const QString folderName = mCurrentFolder.name();
   bool success = true;
   if ( hasChildren( mCurrentFolder ) ) {
