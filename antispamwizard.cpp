@@ -1026,7 +1026,6 @@ ASWizSpamRulesPage::ASWizSpamRulesPage( QWidget * parent, const char * name)
   mFolderReqForSpamFolder->setFolder( CommonKernel->trashCollectionFolder() );
   mFolderReqForSpamFolder->setMustBeReadWrite( true );
   mFolderReqForSpamFolder->setShowOutbox( false );
-  mFolderReqForSpamFolder->setShowImapFolders( true );
 
   QHBoxLayout *hLayout1 = new QHBoxLayout();
   layout->addItem( hLayout1 );
@@ -1045,7 +1044,6 @@ ASWizSpamRulesPage::ASWizSpamRulesPage( QWidget * parent, const char * name)
   mFolderReqForUnsureFolder->setFolder( "inbox" );
   mFolderReqForUnsureFolder->setMustBeReadWrite( true );
   mFolderReqForUnsureFolder->setShowOutbox( false );
-  mFolderReqForUnsureFolder->setShowImapFolders( false );
 
   QHBoxLayout *hLayout2 = new QHBoxLayout();
   layout->addItem( hLayout2 );
@@ -1193,7 +1191,6 @@ ASWizVirusRulesPage::ASWizVirusRulesPage( QWidget * parent, const char * name )
   ReadableCollectionProxyModel::ReadableCollectionOptions optReadableProxy = ReadableCollectionProxyModel::None;
   optReadableProxy |= ReadableCollectionProxyModel::HideVirtualFolder;
   optReadableProxy |= ReadableCollectionProxyModel::HideOutboxFolder;
-  optReadableProxy |= ReadableCollectionProxyModel::HideImapFolder;
 
   mFolderTree = new FolderTreeWidget( this, 0, opt, optReadableProxy );
   mFolderTree->folderTreeView()->expandAll();
