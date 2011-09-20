@@ -2574,8 +2574,8 @@ void KMComposeWin::slotSaveTemplate()
 //----------------------------------------------------------------------------
 void KMComposeWin::slotSendNowVia( QAction *item )
 {
-  QList<int> availTransports= TransportManager::self()->transportIds();
-  int transport = item->data().toInt();
+  const QList<int> availTransports= TransportManager::self()->transportIds();
+  const int transport = item->data().toInt();
   if ( availTransports.contains( transport ) ) {
     mComposerBase->transportComboBox()->setCurrentTransport( transport );
     slotSendNow();
@@ -2585,7 +2585,7 @@ void KMComposeWin::slotSendNowVia( QAction *item )
 //----------------------------------------------------------------------------
 void KMComposeWin::slotSendLaterVia( QAction *item )
 {
-  QList<int> availTransports= TransportManager::self()->transportIds();
+  const QList<int> availTransports= TransportManager::self()->transportIds();
   const int transport = item->data().toInt();
   if ( availTransports.contains( transport ) ) {
     mComposerBase->transportComboBox()->setCurrentTransport( transport );
