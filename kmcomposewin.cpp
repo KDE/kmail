@@ -2959,6 +2959,7 @@ void KMComposeWin::slotFormatReset()
 
 void KMComposeWin::slotOverwriteModeChanged()
 {
+  mComposerBase->editor()->setCursorWidth( mComposerBase->editor()->overwriteMode () ? 5 : 1 );
   statusBar()->changeItem( overwriteModeStr(), 4 );
 }
 
