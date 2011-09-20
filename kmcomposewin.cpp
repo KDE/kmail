@@ -282,8 +282,6 @@ KMComposeWin::KMComposeWin( const KMime::Message::Ptr &aMsg, Composer::TemplateC
   mComposerBase->setRecipientsEditor( recipientsEditor );
 
   mEdtSubject = new Message::KMSubjectLineEdit( mHeadersArea, QLatin1String( "kmail2rc" ) );
-  mEdtSubject->setObjectName( "subjectLine" );
-  //mEdtSubject->setRecentAddressConfig(  MessageComposer::MessageComposerSettings::self()->config() );
   mEdtSubject->setToolTip( i18n( "Set a subject for this message" ) );
   mLblIdentity = new QLabel( i18n("&Identity:"), mHeadersArea );
   mDictionaryLabel = new QLabel( i18n("&Dictionary:"), mHeadersArea );
