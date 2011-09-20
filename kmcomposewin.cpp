@@ -2372,7 +2372,7 @@ void KMComposeWin::slotWordWrapToggled( bool on )
   if ( on )
     mComposerBase->editor()->enableWordWrap( MessageComposer::MessageComposerSettings::self()->lineWrapWidth() );
   else
-    mComposerBase->editor()->disableWordWrap();
+    disableWordWrap();
 }
 
 //-----------------------------------------------------------------------------
