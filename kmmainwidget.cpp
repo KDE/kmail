@@ -1243,7 +1243,8 @@ void KMMainWidget::slotItemMoved( Akonadi::Item item, Akonadi::Collection from, 
   {
     startUpdateMessageActionsTimer();
   }
-  addInfoInNotification( to );
+  else
+    addInfoInNotification( to );
 }
 
 void KMMainWidget::addInfoInNotification( const Akonadi::Collection &collection )

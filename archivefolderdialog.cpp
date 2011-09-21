@@ -18,7 +18,7 @@
 */
 #include "archivefolderdialog.h"
 
-#include "backupjob.h"
+#include "mailcommon/backupjob.h"
 #include "kmkernel.h"
 #include "kmmainwidget.h"
 #include "folderrequester.h"
@@ -176,7 +176,7 @@ void ArchiveFolderDialog::slotButtonClicked( int button )
     return;
   }
 
-  KMail::BackupJob *backupJob = new KMail::BackupJob( mParentWidget );
+  MailCommon::BackupJob *backupJob = new MailCommon::BackupJob( mParentWidget );
   backupJob->setRootFolder( mFolderRequester->folderCollection() );
   backupJob->setSaveLocation( mUrlRequester->url() );
   backupJob->setArchiveType( static_cast<BackupJob::ArchiveType>( mFormatComboBox->currentIndex() ) );

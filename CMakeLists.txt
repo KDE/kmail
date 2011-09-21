@@ -102,7 +102,6 @@ if (NOT WINCE AND KDEPIM_BUILD_DESKTOP)
      kmcomposewin.cpp
      attachmentcontroller.cpp
      attachmentview.cpp
-     backupjob.cpp
      archivefolderdialog.cpp
      searchdescriptionattribute.cpp
      tag.cpp
