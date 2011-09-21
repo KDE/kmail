@@ -564,14 +564,20 @@ void KMFilterDlg::slotShortcutChanged( const QKeySequence &newSeq )
 
 void KMFilterDlg::slotConfigureToolbarButtonToggled( bool aChecked )
 {
-  if ( mFilter )
+  if ( mFilter ) {
     mFilter->setConfigureToolbar( aChecked );
+    // Enable the apply button
+    slotDialogUpdated();
+  }
 }
 
 void KMFilterDlg::slotFilterActionIconChanged( const QString &icon )
 {
-  if ( mFilter )
+  if ( mFilter ) {
     mFilter->setIcon( icon );
+    // Enable the apply button
+    slotDialogUpdated();
+ }
 }
 
 void KMFilterDlg::slotUpdateAccountList()
