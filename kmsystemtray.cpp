@@ -62,7 +62,6 @@ using namespace MailCommon;
  */
 KMSystemTray::KMSystemTray(QObject *parent)
   : KStatusNotifierItem( parent),
-    mPosOfMainWin( 0, 0 ),
     mDesktopOfMainWin( 0 ),
     mMode( GlobalSettings::EnumSystemTrayPolicy::ShowOnUnread ),
     mCount( 0 ),
@@ -82,7 +81,6 @@ KMSystemTray::KMSystemTray(QObject *parent)
     if ( mainWin ) {
       mDesktopOfMainWin = KWindowSystem::windowInfo( mainWin->winId(),
                                             NET::WMDesktop ).desktop();
-      mPosOfMainWin = mainWin->pos();
     }
   }
 #endif
@@ -330,7 +328,6 @@ void KMSystemTray::hideKMail()
   assert(mainWin);
   if(mainWin)
   {
-    mPosOfMainWin = mainWin->pos();
 #ifdef Q_WS_X11
     mDesktopOfMainWin = KWindowSystem::windowInfo( mainWin->winId(),
                                           NET::WMDesktop ).desktop();
