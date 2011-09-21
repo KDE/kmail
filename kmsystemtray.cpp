@@ -288,9 +288,9 @@ void KMSystemTray::fillFoldersMenu( QMenu *menu, const QAbstractItemModel *model
     if ( excludeFolder( collection ) )
       continue;
     Akonadi::CollectionStatistics statistics = collection.statistics();
-    qint64 count = qMax( 0LL, statistics.unreadCount() );
+    const qint64 count = qMax( 0LL, statistics.unreadCount() );
     if ( count > 0 ) {
-      QSharedPointer<FolderCollection> col = FolderCollection::forCollection( collection, false );
+      const QSharedPointer<FolderCollection> col = FolderCollection::forCollection( collection, false );
       if ( col && col->ignoreNewMail() )
         continue;
     }
@@ -299,21 +299,13 @@ void KMSystemTray::fillFoldersMenu( QMenu *menu, const QAbstractItemModel *model
     QString label = parentName.isEmpty() ? QLatin1String("") : QString(parentName + QLatin1String("->"));
     label += model->data( index ).toString();
     label.replace( QLatin1String( "&" ), QLatin1String( "&&" ) );
-
+    if ( count > 0 ) {
+      // insert an item
+      QAction* action = menu->addAction( label );
+      action->setData( collection.id() );
+    }
     if ( model->rowCount( index ) > 0 ) {
-      // new level
-      if ( count > 0 ) {
-        QAction * action = menu->addAction( label );
-        action->setData( collection.id() );
-      }
       fillFoldersMenu( menu, model, label, index );
-
-    } else {
-      if ( count > 0 ) {
-        // insert an item
-        QAction* action = menu->addAction( label );
-        action->setData( collection.id() );
-      }
     }
   }
 }
