@@ -354,7 +354,7 @@ void KMSystemTray::unreadMail( const QAbstractItemModel *model, const QModelInde
     const qint64 count = qMax( 0LL, statistics.unreadCount() );
 
     if ( count > 0 ) {
-      QSharedPointer<FolderCollection> col = FolderCollection::forCollection( collection, false );
+      const QSharedPointer<FolderCollection> col = FolderCollection::forCollection( collection, false );
       if ( col && !col->ignoreNewMail() ) {
         mCount += count;
       }
