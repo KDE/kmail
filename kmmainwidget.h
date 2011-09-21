@@ -575,7 +575,6 @@ private:
     KMReaderWin  *mMsgView;
     QSplitter    *mSplitter1, *mSplitter2, *mFolderViewSplitter;
     Akonadi::Collection mTemplateFolder;
-    QMenu        *mViewMenu, *mBodyPartsMenu;
     KAction      *mlistFilterAction;
     KUrl          mUrlCurrent;
     QMenu        *mActMenu;
