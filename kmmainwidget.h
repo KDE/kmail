@@ -565,7 +565,6 @@ private:
     KAction *mMarkThreadAsUnreadAction;
     KToggleAction *mToggleThreadImportantAction;
     KToggleAction *mToggleThreadToActAction;
-    KToggleAction *mToggleThreadFlagAction;
 
     KToggleAction *mWatchThreadAction, *mIgnoreThreadAction;
 
@@ -575,7 +574,6 @@ private:
     KMReaderWin  *mMsgView;
     QSplitter    *mSplitter1, *mSplitter2, *mFolderViewSplitter;
     Akonadi::Collection mTemplateFolder;
-    KAction      *mlistFilterAction;
     KUrl          mUrlCurrent;
     QMenu        *mActMenu;
     QMenu        *mSendMenu;
