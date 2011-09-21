@@ -24,8 +24,6 @@
 #ifndef NEWIDENTITYDIALOG_H
 #define NEWIDENTITYDIALOG_H
 
-#include <config-enterprise.h>
-
 #include <KDialog>
 
 class KComboBox;

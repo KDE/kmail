@@ -24,7 +24,6 @@
 #ifndef IDENTITYPAGE_H
 #define IDENTITYPAGE_H
 
-#include <config-enterprise.h>
 #include "kmail_export.h"
 
 #include "configmodule.h"

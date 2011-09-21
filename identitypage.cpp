@@ -21,7 +21,6 @@
  *
  */
 
-#include <config-enterprise.h>
 #include "identitypage.h"
 
 #include "identitydialog.h"

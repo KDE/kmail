@@ -24,8 +24,6 @@
 #ifndef KMAIL_CONFIGMODULE_H
 #define KMAIL_CONFIGMODULE_H
 
-#include <config-enterprise.h>
-
 #include "kmail_export.h"
 
 #include <kcmodule.h>
