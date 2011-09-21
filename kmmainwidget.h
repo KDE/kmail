@@ -580,7 +580,6 @@ private:
     KUrl          mUrlCurrent;
     QMenu        *mActMenu;
     QMenu        *mSendMenu;
-    QMenu        *mFileMenu;
     bool          mLongFolderList;
     bool          mStartupDone;
     bool          mWasEverShown;
