@@ -505,12 +505,14 @@ class KMAIL_EXPORT KMMainWidget : public QWidget
 
 
     void addInfoInNotification( const Akonadi::Collection&col );
+    void updateInfoInNotification( const Akonadi::Collection& from, const Akonadi::Collection& to );
 
     /**
      * Internal helper that applies the current settings so the
      * favorite folder view.
      */
     void refreshFavoriteFoldersViewProperties();
+    bool excludeSpecialFolder( const Akonadi::Collection &collection );
 
   private slots:
     /**
@@ -535,6 +537,7 @@ class KMAIL_EXPORT KMMainWidget : public QWidget
     void itemsFetchDone( KJob *job );
 
     void slotCollectionPropertiesContinued( KJob* job );
+  
 private:
     // Message actions
     KAction *mDeleteAction, *mTrashThreadAction,

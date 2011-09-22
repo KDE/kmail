@@ -1243,16 +1243,33 @@ void KMMainWidget::slotItemMoved( Akonadi::Item item, Akonadi::Collection from, 
   {
     startUpdateMessageActionsTimer();
   }
-  addInfoInNotification( to );
+  else
+    updateInfoInNotification( from, to );
 }
 
-void KMMainWidget::addInfoInNotification( const Akonadi::Collection &collection )
+void KMMainWidget::updateInfoInNotification( const Akonadi::Collection& from, const Akonadi::Collection& to )
+{
+  if ( mCheckMail.contains( from.id() ) )
+       mCheckMail[ from.id() ]--;
+
+  if ( !excludeSpecialFolder( to ) )
+    mCheckMail[ to.id() ]++;
+}
+
+bool KMMainWidget::excludeSpecialFolder( const Akonadi::Collection &collection )
 {
   if ( CommonKernel->outboxCollectionFolder() == collection ||
        CommonKernel->sentCollectionFolder() == collection ||
        CommonKernel->templatesCollectionFolder() == collection ||
        CommonKernel->trashCollectionFolder() == collection ||
        CommonKernel->draftsCollectionFolder() == collection )
+    return true;
+  return false;
+}
+  
+void KMMainWidget::addInfoInNotification( const Akonadi::Collection &collection )
+{
+  if ( excludeSpecialFolder( collection ) )
     return;
   
   mCheckMail[ collection.id() ]++;
