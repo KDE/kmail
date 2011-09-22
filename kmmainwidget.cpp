@@ -2314,13 +2314,6 @@ void KMMainWidget::applyFilters( const QList<Akonadi::Item>& selectedMessages )
   MailCommon::FilterManager::instance()->filter( selectedMessages );
 }
 
-int KMMainWidget::slotFilterMsg( const Akonadi::Item &msg )
-{
-  MailCommon::FilterManager::instance()->filter( msg, FilterManager::Explicit );
-
-  return 0;
-}
-
 //-----------------------------------------------------------------------------
 void KMMainWidget::slotCheckVacation()
 {
