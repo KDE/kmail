@@ -112,7 +112,7 @@ QTextDocument* ConfigAgentDelegate::document ( const QStyleOptionViewItem &optio
                       + QString::fromLatin1 (
                           "<tr>"
                           "<td><img src=\"status_icon\"/> %1 %2</td>"
-                          "</tr>" ).arg ( statusMessage ).arg ( status == 1 ? QString ( QLatin1String ( "(%1%)" ) ).arg ( progress ) : QLatin1String ( "" ) )
+                          "</tr>" ).arg ( statusMessage ).arg ( status == 1 ? QString::fromLatin1( "(%1%)" ).arg ( progress ) : QLatin1String ( "" ) )
                       + QLatin1String ( "</table></body></html>" );
 
     document->setHtml ( content );
@@ -229,7 +229,7 @@ void ConfigAgentDelegate::drawFocus ( QPainter *painter, const QStyleOptionViewI
 
 QStyleOptionButton ConfigAgentDelegate::buttonOption ( const QStyleOptionViewItem& option ) const
 {
-    QString label = i18n( "Retrieval Options" );
+    const QString label = i18n( "Retrieval Options" );
     QStyleOptionButton buttonOpt;
     QRect buttonRect = option.rect;
     int height = option.rect.height() / 2;
