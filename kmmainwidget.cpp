@@ -1243,12 +1243,18 @@ void KMMainWidget::slotItemMoved( Akonadi::Item item, Akonadi::Collection from, 
   {
     startUpdateMessageActionsTimer();
   }
-  else
-    addInfoInNotification( to );
+  addInfoInNotification( to );
 }
 
 void KMMainWidget::addInfoInNotification( const Akonadi::Collection &collection )
 {
+  if ( CommonKernel->outboxCollectionFolder() == collection ||
+       CommonKernel->sentCollectionFolder() == collection ||
+       CommonKernel->templatesCollectionFolder() == collection ||
+       CommonKernel->trashCollectionFolder() == collection ||
+       CommonKernel->draftsCollectionFolder() == collection )
+    return;
+  
   mCheckMail[ collection.id() ]++;
 }
 
@@ -1496,7 +1502,6 @@ void KMMainWidget::slotFolderMailingListProperties()
     return;
 
   ( new KMail::MailingListFolderPropertiesDialog( this, mCurrentFolder ) )->show();
-  //slotModifyFolder( KMMainWidget::PropsMailingList );
 }
 
 //-----------------------------------------------------------------------------
