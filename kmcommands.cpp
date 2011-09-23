@@ -1306,8 +1306,8 @@ KMCommand::Result KMFilterCommand::execute()
 
 KMFilterActionCommand::KMFilterActionCommand( QWidget *parent,
                                               const QList<Akonadi::Item> &msgList,
-                                              MailFilter *filter )
-  : KMCommand( parent, msgList ), mFilter( filter  )
+                                              const QString &filterId )
+  : KMCommand( parent, msgList ), mFilterId( filterId  )
 {
   fetchScope().fetchFullPayload();
 }
@@ -1335,7 +1335,7 @@ KMCommand::Result KMFilterActionCommand::execute()
       qApp->processEvents( QEventLoop::ExcludeUserInputEvents, 50 );
     }
 
-    MailCommon::FilterManager::instance()->filter( item, mFilter->identifier() );
+    MailCommon::FilterManager::instance()->filter( item, mFilterId );
     progressItem->incCompletedItems();
   }
 
@@ -1345,17 +1345,17 @@ KMCommand::Result KMFilterActionCommand::execute()
 }
 
 
-KMMetaFilterActionCommand::KMMetaFilterActionCommand( MailFilter *filter,
+KMMetaFilterActionCommand::KMMetaFilterActionCommand( const QString &filterId,
                                                       KMMainWidget *main )
     : QObject( main ),
-      mFilter( filter ), mMainWidget( main )
+      mFilterId( filterId ), mMainWidget( main )
 {
 }
 
 void KMMetaFilterActionCommand::start()
 {
   KMCommand *filterCommand = new KMFilterActionCommand(
-      mMainWidget, mMainWidget->messageListPane()->selectionAsMessageItemList() , mFilter );
+      mMainWidget, mMainWidget->messageListPane()->selectionAsMessageItemList() , mFilterId );
   filterCommand->start();
 }
 

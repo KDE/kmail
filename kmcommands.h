@@ -30,7 +30,6 @@ class KMMainWidget;
 
 namespace MailCommon {
   class FolderCollection;
-  class MailFilter;
 }
 
 template <typename T> class QSharedPointer;
@@ -500,11 +499,11 @@ class KMAIL_EXPORT KMFilterActionCommand : public KMCommand
 
 public:
   KMFilterActionCommand( QWidget *parent,
-                         const QList<Akonadi::Item> &msgList, MailCommon::MailFilter *filter );
+                         const QList<Akonadi::Item> &msgList, const QString &filterId );
 
 private:
   virtual Result execute();
-  MailCommon::MailFilter *mFilter;
+  QString mFilterId;
 };
 
 
@@ -513,13 +512,13 @@ class KMAIL_EXPORT KMMetaFilterActionCommand : public QObject
   Q_OBJECT
 
 public:
-  KMMetaFilterActionCommand( MailCommon::MailFilter *filter, KMMainWidget *main );
+  KMMetaFilterActionCommand( const QString &filterId, KMMainWidget *main );
 
 public slots:
   void start();
 
 private:
-  MailCommon::MailFilter *mFilter;
+  QString mFilterId;
   KMMainWidget *mMainWidget;
 };
 
