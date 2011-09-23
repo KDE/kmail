@@ -24,12 +24,10 @@
 #include "mailcommon/mailfilter.h"
 #include "mailcommon/filteraction.h"
 
-#include <kwidgetlister.h>
 #include <kdialog.h>
 
 #include <QGroupBox>
 #include <QList>
-#include <QMap>
 
 class QLabel;
 class QListWidget;
