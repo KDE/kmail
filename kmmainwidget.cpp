@@ -108,6 +108,7 @@
 #include <akonadi/entitytreemodel.h>
 #include <akonadi/favoritecollectionsmodel.h>
 #include <akonadi/itemfetchscope.h>
+#include <akonadi/itemmodifyjob.h>
 #include <akonadi/control.h>
 #include <akonadi/collectiondialog.h>
 #include <akonadi/collectionstatistics.h>
@@ -115,6 +116,7 @@
 #include <akonadi/favoritecollectionsmodel.h>
 #include <akonadi/statisticsproxymodel.h>
 #include <Akonadi/EntityMimeTypeFilterModel>
+#include <akonadi/kmime/messageflags.h>
 #include <kpimidentities/identity.h>
 #include <kpimidentities/identitymanager.h>
 #include <kpimutils/email.h>
@@ -4266,10 +4268,23 @@ void KMMainWidget::itemsReceived(const Akonadi::Item::List &list )
   if ( !mMsgView )
     return;
 
-  if ( mMessagePane )
+  Item item = list.first();
+
+  if ( mMessagePane ) {
     mMessagePane->show();
 
-  const Item item = list.first();
+    if ( mMessagePane->currentItem() != item ) {
+      // The user has selected another email already, so don't render this one.
+      // Mark it as read, though, if the user settings say so.
+      if ( MessageViewer::GlobalSettings::self()->delayedMarkAsRead() &&
+           MessageViewer::GlobalSettings::self()->delayedMarkTime() == 0 ) {
+        item.setFlag( Akonadi::MessageFlags::Seen );
+        Akonadi::ItemModifyJob *modifyJob = new Akonadi::ItemModifyJob( item, this );
+        modifyJob->setIgnorePayload( true );
+      }
+      return;
+    }
+  }
 
   mMsgView->setMessage( item );
   // reset HTML override to the folder setting
