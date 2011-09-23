@@ -311,6 +311,12 @@ K_GLOBAL_STATIC( KMMainWidget::PtrList, theMainWidgetList )
   }
   // must be the last line of the constructor:
   mStartupDone = true;
+
+  
+  m_notificationTimer.setInterval( 10 * 1000 );
+  m_notificationTimer.setSingleShot( true );
+  connect( &m_notificationTimer, SIGNAL(timeout()), SLOT(slotShowNotification()) );
+
 }
 
 void KMMainWidget::restoreCollectionFolderViewConfig()
@@ -362,14 +368,28 @@ void KMMainWidget::destruct()
 
 void KMMainWidget::slotStartCheckMail()
 {
-  if ( !mCheckMailInProgress ) {
-    mCheckMail.clear();
-    mCheckMailInProgress = true;
-  }
+  mCheckMailInProgress = true;
+  if ( m_notificationTimer.isActive() )
+    m_notificationTimer.stop();
 }
 
 void KMMainWidget::slotEndCheckMail()
 {
+  if ( !m_notificationTimer.isActive() )
+    m_notificationTimer.start();
+}
+
+void KMMainWidget::slotShowNotification()
+{
+  if ( mCheckMailInProgress )
+    mCheckMailInProgress = false;
+  showNotifications();  
+}
+
+void KMMainWidget::showNotifications()
+{
+  if ( mCheckMailInProgress  )
+    return;
   const bool sendOnAll =
     GlobalSettings::self()->sendOnCheck() == GlobalSettings::EnumSendOnCheck::SendOnAllChecks;
   const bool sendOnManual =
@@ -377,15 +397,8 @@ void KMMainWidget::slotEndCheckMail()
   if ( !kmkernel->isOffline() && ( sendOnAll || (sendOnManual /*&& sendOnCheck*/ ) ) ) {
     slotSendQueued();
   }
-
-  mCheckMailInProgress = false;
-
-  // FIXME: This is wrong! Items can arrive _after_ the mail check, in which case mCheckMail can be empty
-  //        here
-  if ( mCheckMail.isEmpty() ) {
-    slotEndCheckFetchCollectionsDone(0);
+  if (  mCheckMail.isEmpty() )
     return;
-  }
   
   Akonadi::Collection::List collections;
   QMap<Akonadi::Collection::Id, int>::const_iterator it = mCheckMail.constBegin();
@@ -401,6 +414,7 @@ void KMMainWidget::slotEndCheckMail()
 
 void KMMainWidget::slotEndCheckFetchCollectionsDone(KJob* job)
 {
+  
   // build summary for new mail message
   bool showNotification = false;
   QString summary;
@@ -433,6 +447,7 @@ void KMMainWidget::slotEndCheckFetchCollectionsDone(KJob* job)
   updateFolderMenu();
 
   if ( !showNotification ) {
+    mCheckMail.clear();
     return;
   }
 
@@ -462,6 +477,7 @@ void KMMainWidget::slotEndCheckFetchCollectionsDone(KJob* job)
   if ( GlobalSettings::self()->beepOnMail() ) {
     KNotification::beep();
   }
+  mCheckMail.clear();
 }
 
 void KMMainWidget::slotFolderChanged( const Akonadi::Collection& col )
@@ -1251,11 +1267,13 @@ void KMMainWidget::slotItemMoved( Akonadi::Item item, Akonadi::Collection from, 
 
 void KMMainWidget::updateInfoInNotification( const Akonadi::Collection& from, const Akonadi::Collection& to )
 {
-  if ( mCheckMail.contains( from.id() ) )
-       mCheckMail[ from.id() ]--;
+  if ( mCheckMail.contains( from.id() ) ) {
+    mCheckMail[ from.id() ]--;
+  }
 
-  if ( !excludeSpecialFolder( to ) )
+  if ( !excludeSpecialFolder( to ) ) {
     mCheckMail[ to.id() ]++;
+  }
 }
 
 bool KMMainWidget::excludeSpecialFolder( const Akonadi::Collection &collection )
@@ -1273,7 +1291,6 @@ void KMMainWidget::addInfoInNotification( const Akonadi::Collection &collection 
 {
   if ( excludeSpecialFolder( collection ) )
     return;
-  
   mCheckMail[ collection.id() ]++;
 }
 

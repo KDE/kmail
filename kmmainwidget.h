@@ -449,8 +449,10 @@ class KMAIL_EXPORT KMMainWidget : public QWidget
     void slotAkonadiStandardActionUpdated();
     void slotCollectionChanged( const Akonadi::Collection&, const QSet<QByteArray>& );
     void slotCreateNewTab( bool );
+    void slotShowNotification();
 
   private:
+    void showNotifications();
 
     /** Get override character encoding. */
     QString overrideEncoding() const;
@@ -631,6 +633,8 @@ private:
     QMap<Akonadi::Collection::Id, int> mCheckMail;
 
     bool mCheckMailInProgress;
+    QTimer m_notificationTimer;
+
     MailCommon::FolderSelectionDialog* mMoveOrCopyToDialog;
     MailCommon::FolderSelectionDialog* mSelectFromAllFoldersDialog;
 };
