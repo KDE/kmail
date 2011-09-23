@@ -19,10 +19,11 @@
 */
 
 #include "kmfilterdlg.h"
+#include "globalsettings.h"
+
 
 // other KMail headers:
 #include "mailcommon/searchpatternedit.h"
-#include "kmmainwidget.h"
 #include "mailcommon/filteractionwidget.h"
 #include "mailcommon/filterimporterexporter.h"
 #include "mailcommon/filtermanager.h"
@@ -47,7 +48,6 @@ using MailCommon::FilterImporterExporter;
 #include <kpushbutton.h>
 #include <kconfiggroup.h>
 #include <ktabwidget.h>
-#include <kvbox.h>
 #include <klistwidgetsearchline.h>
 
 // Qt headers:
@@ -58,6 +58,9 @@ using MailCommon::FilterImporterExporter;
 #include <QButtonGroup>
 #include <QVBoxLayout>
 #include <QTreeWidget>
+#include <QRadioButton>
+#include <QApplication>
+
 
 // other headers:
 #include <assert.h>
@@ -129,7 +132,7 @@ const char * KMFilterDlgHelpAnchor =  "filters" ;
 //
 //=============================================================================
 
-KMFilterDlg::KMFilterDlg(QWidget* parent, bool createDummyFilter )
+KMFilterDlg::KMFilterDlg(const QList<KActionCollection*>& actionCollection, QWidget* parent, bool createDummyFilter )
   : KDialog( parent ),
   mDoNotClose( false ),
   mIgnoreFilterUpdates( true )
@@ -261,8 +264,7 @@ KMFilterDlg::KMFilterDlg(QWidget* parent, bool createDummyFilter )
     gl->addWidget( mKeySeqWidget, 8, 3, 1, 1);
     mKeySeqWidget->setEnabled( false );
     mKeySeqWidget->setModifierlessAllowed( true );
-    mKeySeqWidget->setCheckActionCollections(
-                           kmkernel->getKMMainWidget()->actionCollections() );
+    mKeySeqWidget->setCheckActionCollections( actionCollection );
     mConfigureToolbar = new QCheckBox( i18n("Additionally add this filter to the toolbar"), mAdvOptsGroup );
     gl->addWidget( mConfigureToolbar, 9, 0, 1, 4 );
     mConfigureToolbar->setEnabled( false );

@@ -1783,7 +1783,7 @@ QStringList KMKernel::customTemplates()
 void KMKernel::openFilterDialog(bool createDummyFilter)
 {
   if ( !mFilterEditDialog ) {
-    mFilterEditDialog = new KMFilterDlg( 0, createDummyFilter );
+    mFilterEditDialog = new KMFilterDlg( getKMMainWidget()->actionCollections(), 0, createDummyFilter );
     mFilterEditDialog->setObjectName( "filterdialog" );
   }
   mFilterEditDialog->show();

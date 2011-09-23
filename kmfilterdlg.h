@@ -26,23 +26,21 @@
 
 #include <kwidgetlister.h>
 #include <kdialog.h>
-#include <kvbox.h>
 
 #include <QGroupBox>
 #include <QList>
 #include <QMap>
-#include <QRadioButton>
-#include <QString>
-#include <QGridLayout>
 
 class QLabel;
 class QListWidget;
 class QPushButton;
+class QRadioButton;
 class QCheckBox;
 class QTreeWidget;
 class KComboBox;
 class KIconButton;
 class KKeySequenceWidget;
+class KActionCollection;
 
 namespace MailCommon {
   class SearchPatternEdit;
@@ -251,7 +249,7 @@ public:
   /** Create the filter dialog. The only class which should be able to
       do this is KMFilterMgr. This ensures that there is only a
       single filter dialog */
-  explicit KMFilterDlg( QWidget* parent=0, bool createDummyFilter=true );
+  explicit KMFilterDlg( const QList<KActionCollection*>& actionCollection, QWidget* parent=0, bool createDummyFilter=true );
 
   /** Called from KMFilterMgr. Creates a new filter and presets
       the first rule with "field equals value". Internally forwarded
