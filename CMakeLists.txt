@@ -77,7 +77,6 @@ if (NOT WINCE AND KDEPIM_BUILD_DESKTOP)
      snippetwidget.cpp
      kmreaderwin.cpp
      kmsystemtray.cpp
-     kmfilterdlg.cpp
      xfaceconfigurator.cpp
      undostack.cpp
      kmkernel.cpp

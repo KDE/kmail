@@ -24,7 +24,10 @@
 #define kmkernel KMKernel::self()
 #define kmconfig KMKernel::config()
 
-class KMFilterDlg;
+namespace MailCommon {
+  class KMFilterDlg;
+}
+
 class QAbstractItemModel;
 namespace Akonadi {
   class Collection;
@@ -508,7 +511,7 @@ private:
 
   int mWrapCol;
 
-  QPointer<KMFilterDlg> mFilterEditDialog;
+  QPointer<MailCommon::KMFilterDlg> mFilterEditDialog;
 };
 
 #endif // _KMKERNEL_H

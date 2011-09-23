@@ -22,6 +22,7 @@ using KPIM::RecentAddresses;
 #include "mailutil.h"
 #include "mailcommon/pop3settings.h"
 #include "mailcommon/foldertreeview.h"
+#include "mailcommon/kmfilterdlg.h"
 
 
 // kdepim includes
@@ -112,7 +113,6 @@ using KMail::MailServiceImpl;
 #include "mailcommon/mailkernel.h"
 
 #include "searchdescriptionattribute.h"
-#include "kmfilterdlg.h"
 
 using namespace MailCommon;
 
@@ -1783,7 +1783,7 @@ QStringList KMKernel::customTemplates()
 void KMKernel::openFilterDialog(bool createDummyFilter)
 {
   if ( !mFilterEditDialog ) {
-    mFilterEditDialog = new KMFilterDlg( getKMMainWidget()->actionCollections(), 0, createDummyFilter );
+    mFilterEditDialog = new MailCommon::KMFilterDlg( getKMMainWidget()->actionCollections(), 0, createDummyFilter );
     mFilterEditDialog->setObjectName( "filterdialog" );
   }
   mFilterEditDialog->show();
