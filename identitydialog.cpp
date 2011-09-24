@@ -743,10 +743,10 @@ namespace KMail {
                                   "therefore, the default sent-mail folder "
                                   "will be used.",
                                   ident.identityName() ) ) ) {
-      mFccCombo->setFolder( CommonKernel->sentCollectionFolder() );
+      mFccCombo->setCollection( CommonKernel->sentCollectionFolder() );
     }
     else {
-      mFccCombo->setFolder( ident.fcc() );
+      mFccCombo->setCollection( Akonadi::Collection( ident.fcc().toLongLong() ) );
     }
     if ( ident.drafts().isEmpty() ||
          !checkFolderExists( ident.drafts(),
@@ -755,10 +755,10 @@ namespace KMail {
                                   "therefore, the default drafts folder "
                                   "will be used.",
                                   ident.identityName() ) ) ) {
-      mDraftsCombo->setFolder( CommonKernel->draftsCollectionFolder() );
+      mDraftsCombo->setCollection( CommonKernel->draftsCollectionFolder() );
     }
     else
-      mDraftsCombo->setFolder( ident.drafts() );
+      mDraftsCombo->setCollection( Akonadi::Collection( ident.drafts().toLongLong() ) );
 
     if ( ident.templates().isEmpty() ||
          !checkFolderExists( ident.templates(),
@@ -766,11 +766,11 @@ namespace KMail {
                                   "\"%1\" does not exist (anymore); "
                                   "therefore, the default templates folder "
                                   "will be used.", ident.identityName()) ) ) {
-      mTemplatesCombo->setFolder( CommonKernel->templatesCollectionFolder() );
+      mTemplatesCombo->setCollection( CommonKernel->templatesCollectionFolder() );
 
     }
     else
-      mTemplatesCombo->setFolder( ident.templates() );
+      mTemplatesCombo->setCollection( Akonadi::Collection( ident.templates().toLongLong() ) );
 
     // "Templates" tab:
 #ifndef KDEPIM_MOBILE_UI
@@ -810,7 +810,7 @@ namespace KMail {
     ident.setTransport( mTransportCheck->isChecked() ? QString::number( mTransportCombo->currentTransportId() )
                                                      : QString() );
     ident.setDictionary( mDictionaryCombo->currentDictionaryName() );
-    Akonadi::Collection collection = mFccCombo->folderCollection();
+    Akonadi::Collection collection = mFccCombo->collection();
     if ( collection.isValid() ) {
       ident.setFcc( QString::number( collection.id() ) );
       Akonadi::EntityDisplayAttribute *attribute =  collection.attribute<Akonadi::EntityDisplayAttribute>( Akonadi::Entity::AddIfMissing );
@@ -820,7 +820,7 @@ namespace KMail {
     else
       ident.setFcc( QString() );
 
-    collection = mDraftsCombo->folderCollection();
+    collection = mDraftsCombo->collection();
     if ( collection.isValid() ) {
       ident.setDrafts( QString::number( collection.id() ) );
       Akonadi::EntityDisplayAttribute *attribute =  collection.attribute<Akonadi::EntityDisplayAttribute>( Akonadi::Entity::AddIfMissing );
@@ -830,7 +830,7 @@ namespace KMail {
     else
       ident.setDrafts( QString() );
 
-    collection = mTemplatesCombo->folderCollection();
+    collection = mTemplatesCombo->collection();
     if ( collection.isValid() ) {
       ident.setTemplates( QString::number( collection.id() ) );
       Akonadi::EntityDisplayAttribute *attribute =  collection.attribute<Akonadi::EntityDisplayAttribute>( Akonadi::Entity::AddIfMissing );

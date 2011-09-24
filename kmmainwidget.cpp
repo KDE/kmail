@@ -327,8 +327,8 @@ void KMMainWidget::restoreCollectionFolderViewConfig()
   mFolderTreeWidget->restoreHeaderState( cfg.readEntry( "HeaderState", QByteArray() ) );
   saver->restoreState( cfg );
   //Restore startup folder
-  const QString startupFolder = GlobalSettings::self()->startupFolder();
-  if ( !startupFolder.isEmpty() )
+  Akonadi::Collection::Id startupFolder = GlobalSettings::self()->startupFolder();
+  if ( startupFolder > 0 )
     saver->restoreCurrentItem( QString::fromLatin1("c%1").arg(startupFolder) );
 }
 

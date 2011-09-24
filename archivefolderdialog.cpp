@@ -135,7 +135,7 @@ bool canRemoveFolder( const Akonadi::Collection& col )
 
 void ArchiveFolderDialog::slotRecursiveCheckboxClicked()
 {
-  slotFolderChanged( mFolderRequester->folderCollection() );
+  slotFolderChanged( mFolderRequester->collection() );
 }
 
 void ArchiveFolderDialog::slotFolderChanged( const Akonadi::Collection &folder )
@@ -150,7 +150,7 @@ bool ArchiveFolderDialog::allowToDeleteFolders( const Akonadi::Collection &folde
 
 void ArchiveFolderDialog::setFolder( const Akonadi::Collection &defaultCollection )
 {
-  mFolderRequester->setFolder( defaultCollection );
+  mFolderRequester->setCollection( defaultCollection );
   // TODO: what if the file already exists?
   mUrlRequester->setUrl( standardArchivePath( defaultCollection.name() ) );
   const QSharedPointer<FolderCollection> folder = FolderCollection::forCollection( defaultCollection, false );
@@ -170,14 +170,14 @@ void ArchiveFolderDialog::slotButtonClicked( int button )
     return;
   }
 
-  if ( !mFolderRequester->folderCollection().isValid() ) {
+  if ( !mFolderRequester->hasCollection() ) {
     KMessageBox::information( this, i18n( "Please select the folder that should be archived." ),
                               i18n( "No folder selected" ) );
     return;
   }
 
   MailCommon::BackupJob *backupJob = new MailCommon::BackupJob( mParentWidget );
-  backupJob->setRootFolder( mFolderRequester->folderCollection() );
+  backupJob->setRootFolder( mFolderRequester->collection() );
   backupJob->setSaveLocation( mUrlRequester->url() );
   backupJob->setArchiveType( static_cast<BackupJob::ArchiveType>( mFormatComboBox->currentIndex() ) );
   backupJob->setDeleteFoldersAfterCompletion( mDeleteCheckBox->isEnabled() && mDeleteCheckBox->isChecked());
@@ -200,8 +200,8 @@ void ArchiveFolderDialog::slotFixFileExtension()
 
   QString fileName = mUrlRequester->url().path();
   if ( fileName.isEmpty() )
-    fileName = standardArchivePath( mFolderRequester->folderCollection().isValid() ?
-                                    mFolderRequester->folderCollection().name() : QString() );
+    fileName = standardArchivePath( mFolderRequester->hasCollection() ?
+                                    mFolderRequester->collection().name() : QString() );
 
   // First, try to find the extension of the file name and remove it
   for( int i = 0; i < numExtensions; ++i ) {

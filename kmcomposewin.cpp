@@ -629,7 +629,7 @@ void KMComposeWin::writeConfig( void )
     GlobalSettings::self()->setStickyIdentity( mBtnIdentity->isChecked() );
     GlobalSettings::self()->setPreviousIdentity( mComposerBase->identityCombo()->currentIdentity() );
   }
-  GlobalSettings::self()->setPreviousFcc( mFccFolder->folderId() );
+  GlobalSettings::self()->setPreviousFcc( QString::number(mFccFolder->collection().id()) );
   GlobalSettings::self()->setPreviousDictionary( mDictionaryCombo->currentDictionaryName() );
   GlobalSettings::self()->setAutoSpellChecking(
                                                mAutoSpellCheckingAction->isChecked() );
@@ -1686,10 +1686,10 @@ void KMComposeWin::setFcc( const QString &idString )
   if ( idString.isEmpty() )
     col = CommonKernel->sentCollectionFolder();
   else
-    col = Akonadi::Collection( idString.toInt() );
+    col = Akonadi::Collection( idString.toLongLong() );
 
   mComposerBase->setFcc( col );
-  mFccFolder->setFolder( col );
+  mFccFolder->setCollection( col );
 }
 
 //-----------------------------------------------------------------------------

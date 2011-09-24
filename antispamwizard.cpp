@@ -1021,7 +1021,7 @@ ASWizSpamRulesPage::ASWizSpamRulesPage( QWidget * parent, const char * name)
   layout->addWidget( mMoveSpamRules );
 
   mFolderReqForSpamFolder = new FolderRequester( this );
-  mFolderReqForSpamFolder->setFolder( CommonKernel->trashCollectionFolder() );
+  mFolderReqForSpamFolder->setCollection( CommonKernel->trashCollectionFolder() );
   mFolderReqForSpamFolder->setMustBeReadWrite( true );
   mFolderReqForSpamFolder->setShowOutbox( false );
 
@@ -1039,7 +1039,7 @@ ASWizSpamRulesPage::ASWizSpamRulesPage( QWidget * parent, const char * name)
   layout->addWidget( mMoveUnsureRules );
 
   mFolderReqForUnsureFolder = new FolderRequester( this );
-  mFolderReqForUnsureFolder->setFolder( CommonKernel->inboxCollectionFolder() );
+  mFolderReqForUnsureFolder->setCollection( CommonKernel->inboxCollectionFolder() );
   mFolderReqForUnsureFolder->setMustBeReadWrite( true );
   mFolderReqForUnsureFolder->setShowOutbox( false );
 
@@ -1095,8 +1095,8 @@ QString ASWizSpamRulesPage::selectedSpamCollectionName() const
 
 Akonadi::Collection ASWizSpamRulesPage::selectedSpamCollection() const
 {
-  if ( mFolderReqForSpamFolder->folderCollection().isValid() )
-    return mFolderReqForSpamFolder->folderCollection();
+  if ( mFolderReqForSpamFolder->hasCollection() )
+    return mFolderReqForSpamFolder->collection();
   else
     return CommonKernel->trashCollectionFolder();
 }
@@ -1104,8 +1104,8 @@ Akonadi::Collection ASWizSpamRulesPage::selectedSpamCollection() const
 
 Akonadi::Collection ASWizSpamRulesPage::selectedUnsureCollection() const
 {
-  if ( mFolderReqForUnsureFolder->folderCollection().isValid() )
-    return mFolderReqForUnsureFolder->folderCollection();
+  if ( mFolderReqForUnsureFolder->hasCollection() )
+    return mFolderReqForUnsureFolder->collection();
   else
     return CommonKernel->inboxCollectionFolder();
 }

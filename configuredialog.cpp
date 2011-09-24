@@ -3861,7 +3861,7 @@ void MiscPage::FolderTab::doLoadFromGlobalSettings()
 void MiscPage::FolderTab::doLoadOther()
 {
   mMMTab.mEmptyTrashCheck->setChecked( GlobalSettings::self()->emptyTrashOnExit() );
-  mOnStartupOpenFolder->setFolder( GlobalSettings::self()->startupFolder() );
+  mOnStartupOpenFolder->setCollection( Akonadi::Collection( GlobalSettings::self()->startupFolder() ) );
   mMMTab.mEmptyFolderConfirmCheck->setChecked( GlobalSettings::self()->confirmBeforeEmpty() );
 }
 
@@ -3869,8 +3869,7 @@ void MiscPage::FolderTab::save()
 {
   GlobalSettings::self()->setEmptyTrashOnExit( mMMTab.mEmptyTrashCheck->isChecked() );
   GlobalSettings::self()->setConfirmBeforeEmpty( mMMTab.mEmptyFolderConfirmCheck->isChecked() );
-  GlobalSettings::self()->setStartupFolder( mOnStartupOpenFolder->folderCollection().isValid() ?
-                                  QString::number(mOnStartupOpenFolder->folderCollection().id()) : QString() );
+  GlobalSettings::self()->setStartupFolder( mOnStartupOpenFolder->collection().id() );
 
   MessageViewer::GlobalSettings::self()->setDelayedMarkAsRead( mMMTab.mDelayedMarkAsRead->isChecked() );
   MessageViewer::GlobalSettings::self()->setDelayedMarkTime( mMMTab.mDelayedMarkTime->value() );

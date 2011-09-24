@@ -132,9 +132,9 @@
         <label>Empty the local trash folder on program exit</label>
         <default>false</default>
       </entry>
-      <entry name="StartupFolder" type="String" key="startupFolder">
+      <entry name="StartupFolder" type="LongLong" key="startupFolder">
         <label>Specify the folder to open when the program is started</label>
-        <default></default>
+        <default>-1</default>
       </entry>
       <entry name="ConfirmBeforeEmpty" type="Bool" key="confirm-before-empty">
         <label>Ask for confirmation before moving all messages to trash</label>
