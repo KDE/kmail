@@ -72,6 +72,7 @@ Comment[zh_TW]=KMail 郵件軟體
 
 [Event/akonadi-resource-broken]
 Name=A resource is broken
+Name[es]=Un recurso está dañado
 Name[ia]=Un ressource es rupte
 Name[lt]=Resursas sugadintas
 Name[nds]=En Ressource is schaadhaftig
@@ -83,6 +84,7 @@ Name[uk]=Ресурс пошкоджено
 Name[x-test]=xxA resource is brokenxx
 Name[zh_TW]=某個資源已損毀
 Comment=A resource change its state to broken
+Comment[es]=Un recurso cambia su estado a dañado
 Comment[ia]=Un ressource cambia su stato a rupte
 Comment[nds]=En Ressource hett en schaadhaftig Tostand
 Comment[nl]=Een hulpbron heeft zijn status gewijzigd in gebroken
