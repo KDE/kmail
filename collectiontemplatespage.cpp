@@ -96,7 +96,7 @@ void CollectionTemplatesPage::load(const Collection & col)
   if ( !fd )
     return;
 
-  mCollectionId = fd->idString();
+  mCollectionId = QString::number( col.id() );
 
   Templates t( mCollectionId );
 

@@ -1473,7 +1473,7 @@ bool KMKernel::selectFolder( const QString &folder )
   if ( !widget )
     return false;
 
-  Akonadi::Collection colFolder = CommonKernel->collectionFromId( folder );
+  const Akonadi::Collection colFolder = CommonKernel->collectionFromId( folder.toLongLong() );
 
   if( colFolder.isValid() ) {
     widget->slotSelectCollectionFolder( colFolder );

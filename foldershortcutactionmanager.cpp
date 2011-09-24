@@ -131,7 +131,7 @@ void FolderShortcutActionManager::shortcutChanged( const Akonadi::Collection &co
   }
 
   const QString actionLabel = i18n( "Folder Shortcut %1", col.name() );
-  QString actionName = i18n( "Folder Shortcut %1", folderCollection->idString() );
+  QString actionName = i18n( "Folder Shortcut %1", QString::number( col.id() ) );
   actionName.replace( ' ', '_' );
   KAction *action = mActionCollection->addAction( actionName );
   // The folder shortcut is set in the folder shortcut dialog.
