@@ -47,6 +47,7 @@
 #include <kmime/kmime_message.h>
 #include <Akonadi/AgentInstance>
 #include <Akonadi/Collection>
+#include "mailcommon/foldercollection.h"
 class KUrl;
 
 class OrgKdeAkonadiImapSettingsInterface;
@@ -99,6 +100,15 @@ namespace Util {
      * Currently only support mailto.
      */
     void handleClickedURL( const KUrl &url, uint identity );
+
+
+    void mailingListsHandleURL( const KUrl::List& lst,const QSharedPointer<MailCommon::FolderCollection> &folder );
+
+    void mailingListPost( const QSharedPointer<MailCommon::FolderCollection> &fd );
+    void mailingListSubscribe( const QSharedPointer<MailCommon::FolderCollection> &fd );
+    void mailingListUnsubscribe( const QSharedPointer<MailCommon::FolderCollection> &fd );
+    void mailingListArchives( const QSharedPointer<MailCommon::FolderCollection> &fd );
+    void mailingListHelp( const QSharedPointer<MailCommon::FolderCollection> &fd );
 
 }
 }

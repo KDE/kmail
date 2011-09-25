@@ -22,6 +22,7 @@ using KPIM::RecentAddresses;
 #include "mailutil.h"
 #include "mailcommon/pop3settings.h"
 #include "mailcommon/foldertreeview.h"
+#include "mailcommon/kmfilterdlg.h"
 
 
 // kdepim includes
@@ -110,10 +111,8 @@ using KMail::MailServiceImpl;
 #include "imapsettings.h"
 #include "util.h"
 #include "mailcommon/mailkernel.h"
-#include "mailcommon/filtermanager.h"
 
 #include "searchdescriptionattribute.h"
-#include "kmfilterdlg.h"
 
 using namespace MailCommon;
 
@@ -139,8 +138,6 @@ KMKernel::KMKernel (QObject *parent, const char *name) :
   the_firstInstance = true;
 
   the_undoStack = 0;
-  the_filterMgr = 0;
-  the_filterActionDict = 0;
   the_msgSender = 0;
   mFilterEditDialog = 0;
   mWin = 0;
@@ -1138,10 +1135,7 @@ void KMKernel::init()
   readConfig();
 
   the_undoStack     = new UndoStack(20);
-  the_filterMgr     = new FilterManager();
-  the_filterActionDict = new FilterActionDict;
 
-  the_filterMgr->readConfig();
   the_msgSender = new AkonadiSender;
   readConfig();
   // filterMgr->dump();
@@ -1234,12 +1228,8 @@ void KMKernel::cleanup(void)
   closeAllKMailWindows();
 
   // Write the config while all other managers are alive
-  delete the_filterMgr;
-  the_filterMgr = 0;
   delete the_msgSender;
   the_msgSender = 0;
-  delete the_filterActionDict;
-  the_filterActionDict = 0;
   delete the_undoStack;
   the_undoStack = 0;
 
@@ -1483,7 +1473,7 @@ bool KMKernel::selectFolder( const QString &folder )
   if ( !widget )
     return false;
 
-  Akonadi::Collection colFolder = CommonKernel->collectionFromId( folder );
+  const Akonadi::Collection colFolder = CommonKernel->collectionFromId( folder.toLongLong() );
 
   if( colFolder.isValid() ) {
     widget->slotSelectCollectionFolder( colFolder );
@@ -1793,7 +1783,7 @@ QStringList KMKernel::customTemplates()
 void KMKernel::openFilterDialog(bool createDummyFilter)
 {
   if ( !mFilterEditDialog ) {
-    mFilterEditDialog = new KMFilterDlg( 0, createDummyFilter );
+    mFilterEditDialog = new MailCommon::KMFilterDlg( getKMMainWidget()->actionCollections(), 0, createDummyFilter );
     mFilterEditDialog->setObjectName( "filterdialog" );
   }
   mFilterEditDialog->show();
@@ -1848,7 +1838,7 @@ const QAbstractItemModel* KMKernel::treeviewModelSelection()
 
 void KMKernel::instanceError(const Akonadi::AgentInstance& instance, const QString & message)
 {
-  kDebug()<<" instance :"<<instance.identifier()<<" was got an error :"<<message;
+  kDebug()<<" instance :"<<instance.identifier()<<" received error :"<<message;
 }
 
 #include "kmkernel.moc"

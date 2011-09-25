@@ -77,7 +77,6 @@ if (NOT WINCE AND KDEPIM_BUILD_DESKTOP)
      snippetwidget.cpp
      kmreaderwin.cpp
      kmsystemtray.cpp
-     kmfilterdlg.cpp
      xfaceconfigurator.cpp
      undostack.cpp
      kmkernel.cpp
@@ -92,7 +91,6 @@ if (NOT WINCE AND KDEPIM_BUILD_DESKTOP)
      composer.cpp
      antispamwizard.cpp
      secondarywindow.cpp
-     filterlogdlg.cpp
      codecaction.cpp
      codecmanager.cpp
      foldershortcutdialog.cpp
@@ -103,7 +101,6 @@ if (NOT WINCE AND KDEPIM_BUILD_DESKTOP)
      kmcomposewin.cpp
      attachmentcontroller.cpp
      attachmentview.cpp
-     backupjob.cpp
      archivefolderdialog.cpp
      searchdescriptionattribute.cpp
      tag.cpp

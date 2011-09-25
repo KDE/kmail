@@ -120,7 +120,7 @@ SearchWindow::SearchWindow( KMMainWidget *widget, const Akonadi::Collection &col
   mCbxFolders->setMustBeReadWrite( false );
   mCbxFolders->setNotAllowToCreateNewFolder( true );
 
-  mCbxFolders->setFolder( collection );
+  mCbxFolders->setCollection( collection );
 
   mChkSubFolders = new QCheckBox( i18n( "I&nclude sub-folders" ), searchWidget );
   mChkSubFolders->setChecked( true );
@@ -160,7 +160,7 @@ SearchWindow::SearchWindow( KMMainWidget *widget, const Akonadi::Collection &col
       const Akonadi::Collection col = searchDescription->baseCollection();
       if ( col.isValid() ) {
         mChkbxSpecificFolders->setChecked( true );
-        mCbxFolders->setFolder( col );
+        mCbxFolders->setCollection( col );
         mChkSubFolders->setChecked( searchDescription->recursive() );
       } else {
         mChkbxAllFolders->setChecked( true );
@@ -476,7 +476,7 @@ void SearchWindow::slotFolderActivated()
 void SearchWindow::activateFolder( const Akonadi::Collection &collection )
 {
   mChkbxSpecificFolders->setChecked( true );
-  mCbxFolders->setFolder( collection );
+  mCbxFolders->setCollection( collection );
 }
 
 void SearchWindow::slotSearch()
@@ -583,7 +583,7 @@ void SearchWindow::searchDone( KJob* job )
       Akonadi::SearchDescriptionAttribute *searchDescription = mFolder.attribute<Akonadi::SearchDescriptionAttribute>( Akonadi::Entity::AddIfMissing );
       searchDescription->setDescription( search );
 
-      const Akonadi::Collection collection = mCbxFolders->folderCollection();
+      const Akonadi::Collection collection = mCbxFolders->collection();
       searchDescription->setBaseCollection( collection );
       searchDescription->setRecursive( mChkSubFolders->isChecked() );
 
@@ -811,19 +811,19 @@ void SearchWindow::slotClearSelection()
 
 void SearchWindow::slotReplyToMsg()
 {
-  KMCommand *command = new KMReplyToCommand( this, selectedMessage() );
+  KMCommand *command = new KMReplyCommand( this, selectedMessage(), MessageComposer::ReplySmart );
   command->start();
 }
 
 void SearchWindow::slotReplyAllToMsg()
 {
-  KMCommand *command = new KMReplyToAllCommand( this, selectedMessage() );
+  KMCommand *command = new KMReplyCommand( this, selectedMessage(),MessageComposer::ReplyAll );
   command->start();
 }
 
 void SearchWindow::slotReplyListToMsg()
 {
-  KMCommand *command = new KMReplyListCommand( this, selectedMessage() );
+  KMCommand *command = new KMReplyCommand( this, selectedMessage(),MessageComposer::ReplyList );
   command->start();
 }
 

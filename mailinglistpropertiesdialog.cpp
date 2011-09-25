@@ -40,9 +40,8 @@
 #include <keditlistwidget.h>
 #include <kdebug.h>
 #include <kmessagebox.h>
-#include <kmcommands.h>
 #include "mailutil.h"
-
+#include "util.h"
 #include <akonadi/itemfetchjob.h>
 #include <akonadi/itemfetchscope.h>
 
@@ -357,28 +356,25 @@ void MailingListFolderPropertiesDialog::fillEditBox()
 void MailingListFolderPropertiesDialog::slotInvokeHandler()
 {
   save();
-  KMCommand *command =0;
   switch ( mAddressCombo->currentIndex() ) {
   case 0:
-    command = new KMMailingListPostCommand( this, mFolder );
+    KMail::Util::mailingListPost( mFolder );
     break;
   case 1:
-    command = new KMMailingListSubscribeCommand( this, mFolder );
+    KMail::Util::mailingListSubscribe( mFolder );
     break;
   case 2:
-    command = new KMMailingListUnsubscribeCommand( this, mFolder );
+    KMail::Util::mailingListUnsubscribe( mFolder );
     break;
   case 3:
-    command = new KMMailingListArchivesCommand( this, mFolder );
+    KMail::Util::mailingListArchives( mFolder );
     break;
   case 4:
-    command = new KMMailingListHelpCommand( this, mFolder );
+    KMail::Util::mailingListHelp( mFolder );
     break;
   default:
     kWarning()<<"Wrong entry in the mailing list entry combo!";
   }
-  if ( command )
-    command->start();
 }
 
 #include "mailinglistpropertiesdialog.moc"

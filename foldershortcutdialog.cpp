@@ -50,7 +50,7 @@
 #include "foldershortcutactionmanager.h"
 
 #include <QFrame>
-
+#include <QHBoxLayout>
 using namespace KMail;
 using namespace MailCommon;
 

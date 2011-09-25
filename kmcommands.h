@@ -9,6 +9,8 @@
 #include "messageviewer/editorwatcher.h"
 #include "messageviewer/headerstrategy.h"
 #include "messageviewer/headerstyle.h"
+#include "messagecomposer/messagefactory.h"
+
 using MessageViewer::EditorWatcher;
 #include <akonadi/kmime/messagestatus.h>
 #include <messagelist/core/view.h>
@@ -22,12 +24,12 @@ using Akonadi::MessageStatus;
 #include <akonadi/item.h>
 #include <akonadi/itemfetchscope.h>
 #include <akonadi/collection.h>
+
 class KProgressDialog;
 class KMMainWidget;
 
 namespace MailCommon {
   class FolderCollection;
-  class MailFilter;
 }
 
 template <typename T> class QSharedPointer;
@@ -295,19 +297,20 @@ private:
   virtual Result execute();
 };
 
-class KMAIL_EXPORT KMReplyToCommand : public KMCommand
+
+class KMAIL_EXPORT KMReplyCommand : public KMCommand
 {
   Q_OBJECT
-
 public:
-  KMReplyToCommand( QWidget *parent, const Akonadi::Item &msg,
-                    const QString &selection = QString() );
-
+  KMReplyCommand( QWidget *parent, const Akonadi::Item &msg,
+                  MessageComposer::ReplyStrategy replyStrategy, 
+                  const QString &selection = QString() );
 private:
   virtual Result execute();
-
+  
 private:
   QString mSelection;
+  MessageComposer::ReplyStrategy m_replyStrategy;
 };
 
 class KMAIL_EXPORT KMNoQuoteReplyToCommand : public KMCommand
@@ -319,51 +322,6 @@ public:
 
 private:
   virtual Result execute();
-};
-
-class KMReplyListCommand : public KMCommand
-{
-  Q_OBJECT
-
-public:
-  KMReplyListCommand( QWidget *parent, const Akonadi::Item &msg,
-                      const QString &selection = QString() );
-
-private:
-  virtual Result execute();
-
-private:
-  QString mSelection;
-};
-
-class KMAIL_EXPORT KMReplyToAllCommand : public KMCommand
-{
-  Q_OBJECT
-
-public:
-  KMReplyToAllCommand( QWidget *parent, const Akonadi::Item &msg,
-                       const QString &selection = QString() );
-
-private:
-  virtual Result execute();
-
-private:
-  QString mSelection;
-};
-
-class KMAIL_EXPORT KMReplyAuthorCommand : public KMCommand
-{
-  Q_OBJECT
-
-public:
-  KMReplyAuthorCommand( QWidget *parent, const Akonadi::Item &msg,
-                        const QString &selection = QString() );
-
-private:
-  virtual Result execute();
-
-private:
-  QString mSelection;
 };
 
 class KMAIL_EXPORT KMForwardCommand : public KMCommand
@@ -411,14 +369,15 @@ private:
   virtual Result execute();
 };
 
-class KMAIL_EXPORT KMCustomReplyToCommand : public KMCommand
+class KMAIL_EXPORT KMCustomReplyCommand : public KMCommand
 {
   Q_OBJECT
 
 public:
-  KMCustomReplyToCommand( QWidget *parent, const Akonadi::Item &msg,
+  KMCustomReplyCommand( QWidget *parent, const Akonadi::Item &msg,
                           const QString &selection,
-                          const QString &tmpl );
+                          const QString &tmpl,
+                          MessageComposer::ReplyStrategy replyStrategy );
 
 private:
   virtual Result execute();
@@ -426,23 +385,8 @@ private:
 private:
   QString mSelection;
   QString mTemplate;
-};
+  MessageComposer::ReplyStrategy m_replyStrategy;
 
-class KMAIL_EXPORT KMCustomReplyAllToCommand : public KMCommand
-{
-  Q_OBJECT
-
-public:
-  KMCustomReplyAllToCommand( QWidget *parent, const Akonadi::Item &msg,
-                          const QString &selection,
-                          const QString &tmpl );
-
-private:
-  virtual Result execute();
-
-private:
-  QString mSelection;
-  QString mTemplate;
 };
 
 class KMAIL_EXPORT KMCustomForwardCommand : public KMCommand
@@ -555,11 +499,11 @@ class KMAIL_EXPORT KMFilterActionCommand : public KMCommand
 
 public:
   KMFilterActionCommand( QWidget *parent,
-                         const QList<Akonadi::Item> &msgList, MailCommon::MailFilter *filter );
+                         const QList<Akonadi::Item> &msgList, const QString &filterId );
 
 private:
   virtual Result execute();
-  MailCommon::MailFilter *mFilter;
+  QString mFilterId;
 };
 
 
@@ -568,13 +512,13 @@ class KMAIL_EXPORT KMMetaFilterActionCommand : public QObject
   Q_OBJECT
 
 public:
-  KMMetaFilterActionCommand( MailCommon::MailFilter *filter, KMMainWidget *main );
+  KMMetaFilterActionCommand( const QString &filterId, KMMainWidget *main );
 
 public slots:
   void start();
 
 private:
-  MailCommon::MailFilter *mFilter;
+  QString mFilterId;
   KMMainWidget *mMainWidget;
 };
 
@@ -663,66 +607,6 @@ public:
 
 private:
   virtual Result execute();
-};
-
-// TODO: Remove this class. There is no reason why the mailing list stuff should be based
-//       on KMCommand, they should instead be utilty methods.
-class KMAIL_EXPORT KMMailingListCommand : public KMCommand
-{
-  Q_OBJECT
-public:
-  KMMailingListCommand( QWidget *parent, const QSharedPointer<MailCommon::FolderCollection> &parentFolder );
-private:
-  virtual Result execute();
-protected:
-  virtual KUrl::List urls() const =0;
-protected:
-  QSharedPointer<MailCommon::FolderCollection> mFolder;
-};
-
-class KMAIL_EXPORT KMMailingListPostCommand : public KMMailingListCommand
-{
-  Q_OBJECT
-public:
-  KMMailingListPostCommand( QWidget *parent, const QSharedPointer<MailCommon::FolderCollection> &parentFolder );
-protected:
-  virtual KUrl::List urls() const;
-};
-
-class KMAIL_EXPORT KMMailingListSubscribeCommand : public KMMailingListCommand
-{
-  Q_OBJECT
-public:
-  KMMailingListSubscribeCommand( QWidget *parent, const QSharedPointer<MailCommon::FolderCollection> &parentFolder );
-protected:
-  virtual KUrl::List urls() const;
-};
-
-class KMAIL_EXPORT KMMailingListUnsubscribeCommand : public KMMailingListCommand
-{
-  Q_OBJECT
-public:
-  KMMailingListUnsubscribeCommand( QWidget *parent, const QSharedPointer<MailCommon::FolderCollection> &parentFolder );
-protected:
-  virtual KUrl::List urls() const;
-};
-
-class KMAIL_EXPORT KMMailingListArchivesCommand : public KMMailingListCommand
-{
-  Q_OBJECT
-public:
-  KMMailingListArchivesCommand( QWidget *parent, const QSharedPointer<MailCommon::FolderCollection> &parentFolder );
-protected:
-  virtual KUrl::List urls() const;
-};
-
-class KMAIL_EXPORT KMMailingListHelpCommand : public KMMailingListCommand
-{
-  Q_OBJECT
-public:
-  KMMailingListHelpCommand( QWidget *parent, const QSharedPointer<MailCommon::FolderCollection> &parentFolder );
-protected:
-  virtual KUrl::List urls() const;
 };
 
 #endif /*KMCommands_h*/

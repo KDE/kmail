@@ -42,7 +42,7 @@ class KMSystemTray : public KStatusNotifierItem
   Q_OBJECT
 public:
   /** construtor */
-  KMSystemTray(QObject* parent=0);
+  explicit KMSystemTray(QObject* parent=0);
   /** destructor */
   ~KMSystemTray();
 
@@ -71,8 +71,6 @@ protected:
   bool excludeFolder( const Akonadi::Collection& collection ) const;
 
 private:
-
-  QPoint mPosOfMainWin;
   int mDesktopOfMainWin;
 
   int mMode;

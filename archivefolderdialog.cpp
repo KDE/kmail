@@ -18,7 +18,7 @@
 */
 #include "archivefolderdialog.h"
 
-#include "backupjob.h"
+#include "mailcommon/backupjob.h"
 #include "kmkernel.h"
 #include "kmmainwidget.h"
 #include "folderrequester.h"
@@ -110,6 +110,12 @@ ArchiveFolderDialog::ArchiveFolderDialog( QWidget *parent )
   mainLayout->addWidget( mDeleteCheckBox, row, 0, 1, 2, Qt::AlignLeft );
   row++;
 
+  mRecursiveCheckBox = new QCheckBox( i18n( "Archive all subfolders" ), mainWidget );
+  connect( mRecursiveCheckBox, SIGNAL( clicked() ), this, SLOT( slotRecursiveCheckboxClicked() ) );
+  mainLayout->addWidget( mRecursiveCheckBox, row, 0, 1, 2, Qt::AlignLeft );
+  mRecursiveCheckBox->setChecked( true );
+  row++;
+
   // TODO: what's this, tooltips
 
   // TODO: Warn that user should do mail check for online IMAP and possibly cached IMAP as well
@@ -124,21 +130,31 @@ ArchiveFolderDialog::ArchiveFolderDialog( QWidget *parent )
 bool canRemoveFolder( const Akonadi::Collection& col )
 {
   const QSharedPointer<FolderCollection> folder = FolderCollection::forCollection( col,false );
-  return folder && col.isValid() && col.rights() & Akonadi::Collection::CanDeleteCollection && !folder->isStructural() && !folder->isSystemFolder() && col.resource() != QLatin1String( "akonadi_nepomuktag_resource" );
+  return folder && col.isValid() && ( col.rights() & Akonadi::Collection::CanDeleteCollection ) && !folder->isStructural() && !folder->isSystemFolder() && ( col.resource() != QLatin1String( "akonadi_nepomuktag_resource" ) );
+}
+
+void ArchiveFolderDialog::slotRecursiveCheckboxClicked()
+{
+  slotFolderChanged( mFolderRequester->collection() );
 }
 
 void ArchiveFolderDialog::slotFolderChanged( const Akonadi::Collection &folder )
 {
-  mDeleteCheckBox->setEnabled( canRemoveFolder( folder ) );
+  mDeleteCheckBox->setEnabled( allowToDeleteFolders( folder ) );
+}
+
+bool ArchiveFolderDialog::allowToDeleteFolders( const Akonadi::Collection &folder) const
+{
+  return canRemoveFolder( folder ) && mRecursiveCheckBox->isChecked();
 }
 
 void ArchiveFolderDialog::setFolder( const Akonadi::Collection &defaultCollection )
 {
-  mFolderRequester->setFolder( defaultCollection );
+  mFolderRequester->setCollection( defaultCollection );
   // TODO: what if the file already exists?
   mUrlRequester->setUrl( standardArchivePath( defaultCollection.name() ) );
   const QSharedPointer<FolderCollection> folder = FolderCollection::forCollection( defaultCollection, false );
-  mDeleteCheckBox->setEnabled( canRemoveFolder( defaultCollection ) );
+  mDeleteCheckBox->setEnabled( allowToDeleteFolders( defaultCollection ) );
   enableButtonOk( defaultCollection.isValid() && folder && !folder->isStructural() );
 }
 
@@ -154,17 +170,18 @@ void ArchiveFolderDialog::slotButtonClicked( int button )
     return;
   }
 
-  if ( !mFolderRequester->folderCollection().isValid() ) {
+  if ( !mFolderRequester->hasCollection() ) {
     KMessageBox::information( this, i18n( "Please select the folder that should be archived." ),
                               i18n( "No folder selected" ) );
     return;
   }
 
-  KMail::BackupJob *backupJob = new KMail::BackupJob( mParentWidget );
-  backupJob->setRootFolder( mFolderRequester->folderCollection() );
+  MailCommon::BackupJob *backupJob = new MailCommon::BackupJob( mParentWidget );
+  backupJob->setRootFolder( mFolderRequester->collection() );
   backupJob->setSaveLocation( mUrlRequester->url() );
   backupJob->setArchiveType( static_cast<BackupJob::ArchiveType>( mFormatComboBox->currentIndex() ) );
   backupJob->setDeleteFoldersAfterCompletion( mDeleteCheckBox->isEnabled() && mDeleteCheckBox->isChecked());
+  backupJob->setRecursive( mRecursiveCheckBox->isChecked() );
   backupJob->start();
   accept();
 }
@@ -183,8 +200,8 @@ void ArchiveFolderDialog::slotFixFileExtension()
 
   QString fileName = mUrlRequester->url().path();
   if ( fileName.isEmpty() )
-    fileName = standardArchivePath( mFolderRequester->folderCollection().isValid() ?
-                                    mFolderRequester->folderCollection().name() : QString() );
+    fileName = standardArchivePath( mFolderRequester->hasCollection() ?
+                                    mFolderRequester->collection().name() : QString() );
 
   // First, try to find the extension of the file name and remove it
   for( int i = 0; i < numExtensions; ++i ) {

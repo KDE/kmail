@@ -43,20 +43,23 @@ class ArchiveFolderDialog : public KDialog
 
   public:
 
-    ArchiveFolderDialog( QWidget *parent = 0 );
+    explicit ArchiveFolderDialog( QWidget *parent = 0 );
     void setFolder( const Akonadi::Collection &defaultCollection );
 
   protected slots:
 
     void slotFixFileExtension();
     void slotFolderChanged( const Akonadi::Collection& );
+    void slotRecursiveCheckboxClicked();
     /** reimp */
     virtual void slotButtonClicked( int button );
 
   private:
+    bool allowToDeleteFolders( const Akonadi::Collection &folder) const;
 
     QWidget *mParentWidget;
     QCheckBox *mDeleteCheckBox;
+    QCheckBox *mRecursiveCheckBox;
     MailCommon::FolderRequester *mFolderRequester;
     KComboBox *mFormatComboBox;
     KUrlRequester *mUrlRequester;

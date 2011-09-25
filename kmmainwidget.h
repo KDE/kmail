@@ -32,14 +32,10 @@
 #include "messageactions.h"
 #include <kaction.h>
 #include <kactioncollection.h>
-#include <kvbox.h>
 #include <foldercollection.h>
 
 #include <QList>
-#include <QVBoxLayout>
-#include <QMenu>
 #include <QLabel>
-#include <QHash>
 #include <QPointer>
 #include <akonadi/kmime/standardmailactionmanager.h>
 #include <messagelist/core/view.h>
@@ -56,6 +52,7 @@ namespace KMime {
 class QVBoxLayout;
 class QSplitter;
 
+class QMenu;
 class KActionMenu;
 class KToggleAction;
 class KMMetaFilterActionCommand;
@@ -280,6 +277,7 @@ class KMAIL_EXPORT KMMainWidget : public QWidget
 
     void slotStartCheckMail();
     void slotEndCheckMail();
+    void slotEndCheckFetchCollectionsDone(KJob* job);
 
     void slotCollectionProperties();
 
@@ -314,10 +312,6 @@ class KMAIL_EXPORT KMMainWidget : public QWidget
   protected slots:
     void updateFileMenu();
     void slotCheckOneAccount( QAction* );
-#if 0
-    void slotMailChecked( bool newMail, bool sendOnCheck,
-                          const QMap<QString, int> & newInFolder );
-#endif
     void getAccountMenu();
     void getTransportMenu();
     void slotHelp();
@@ -356,7 +350,6 @@ class KMAIL_EXPORT KMMainWidget : public QWidget
     void slotStartCertManager();
     void slotStartWatchGnuPG();
     void slotApplyFilters();
-    int slotFilterMsg( const Akonadi::Item &msg );
     void slotExpandThread();
     void slotExpandAllThreads();
     void slotCollapseThread();
@@ -456,8 +449,10 @@ class KMAIL_EXPORT KMMainWidget : public QWidget
     void slotAkonadiStandardActionUpdated();
     void slotCollectionChanged( const Akonadi::Collection&, const QSet<QByteArray>& );
     void slotCreateNewTab( bool );
+    void slotShowNotification();
 
   private:
+    void showNotifications();
 
     /** Get override character encoding. */
     QString overrideEncoding() const;
@@ -512,6 +507,14 @@ class KMAIL_EXPORT KMMainWidget : public QWidget
 
 
     void addInfoInNotification( const Akonadi::Collection&col );
+    void updateInfoInNotification( const Akonadi::Collection& from, const Akonadi::Collection& to );
+
+    /**
+     * Internal helper that applies the current settings so the
+     * favorite folder view.
+     */
+    void refreshFavoriteFoldersViewProperties();
+    bool excludeSpecialFolder( const Akonadi::Collection &collection );
 
   private slots:
     /**
@@ -535,9 +538,8 @@ class KMAIL_EXPORT KMMainWidget : public QWidget
     void itemsReceived(const Akonadi::Item::List &list );
     void itemsFetchDone( KJob *job );
 
-    void slotItemNotMovedByFilters( const Akonadi::Item& item );
-
     void slotCollectionPropertiesContinued( KJob* job );
+  
 private:
     // Message actions
     KAction *mDeleteAction, *mTrashThreadAction,
@@ -563,8 +565,6 @@ private:
     KAction *mMarkThreadAsUnreadAction;
     KToggleAction *mToggleThreadImportantAction;
     KToggleAction *mToggleThreadToActAction;
-    KToggleAction *mToggleThreadFlagAction;
-    KToggleAction* mSizeColumnToggle;
 
     KToggleAction *mWatchThreadAction, *mIgnoreThreadAction;
 
@@ -574,13 +574,9 @@ private:
     KMReaderWin  *mMsgView;
     QSplitter    *mSplitter1, *mSplitter2, *mFolderViewSplitter;
     Akonadi::Collection mTemplateFolder;
-    QMenu        *mViewMenu, *mBodyPartsMenu;
-    KAction      *mlistFilterAction;
-    int           mMessageStatusId;
     KUrl          mUrlCurrent;
     QMenu        *mActMenu;
     QMenu        *mSendMenu;
-    QMenu        *mFileMenu;
     bool          mLongFolderList;
     bool          mStartupDone;
     bool          mWasEverShown;
@@ -590,7 +586,6 @@ private:
     bool mEnableFavoriteFolderView;
     bool mEnableFolderQuickSearch;
 
-    //  QPopupMenu *mMessageMenu;
     QPointer<KMail::SearchWindow> mSearchWin;
 
     KAction *mExpireFolderAction,
@@ -638,6 +633,8 @@ private:
     QMap<Akonadi::Collection::Id, int> mCheckMail;
 
     bool mCheckMailInProgress;
+    QTimer m_notificationTimer;
+
     MailCommon::FolderSelectionDialog* mMoveOrCopyToDialog;
     MailCommon::FolderSelectionDialog* mSelectFromAllFoldersDialog;
 };

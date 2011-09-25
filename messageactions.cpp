@@ -258,7 +258,6 @@ void MessageActions::setSelectedVisibleItems( const Akonadi::Item::List &items )
 void MessageActions::updateActions()
 {
   bool singleMsg = mCurrentItem.isValid();
-  qDebug()<<"singleMsg :"<<singleMsg<<" mCurrentItem :"<<mCurrentItem.id();
   Akonadi::Collection parent;
   if ( singleMsg ) //=> valid
     parent = mCurrentItem.parentCollection();
@@ -346,7 +345,7 @@ void MessageActions::updateMailingListActions( const Akonadi::Item& messageItem 
 
     if ( mailList.features() & MessageCore::MailingList::ArchivedAt )
       // IDEA: this may be something you want to copy - "Copy in submenu"?
-      addMailingListAction( i18n( "Open Message in List Archive" ), mailList.archivedAtUrl() );
+      addMailingListActions( i18n( "Open Message in List Archive" ), mailList.archivedAtUrls() );
     if ( mailList.features() & MessageCore::MailingList::Post )
       addMailingListActions( i18n( "Post New Message" ), mailList.postUrls() );
     if ( mailList.features() & MessageCore::MailingList::Archive )
@@ -364,12 +363,12 @@ void MessageActions::updateMailingListActions( const Akonadi::Item& messageItem 
 }
 
 
-template<typename T> void MessageActions::replyCommand()
+void MessageActions::replyCommand(MessageComposer::ReplyStrategy strategy)
 {
   if ( !mCurrentItem.isValid() )
     return;
   const QString text = mMessageView ? mMessageView->copyText() : QString();
-  KMCommand *command = new T( mParent, mCurrentItem, text );
+  KMCommand *command = new KMReplyCommand( mParent, mCurrentItem, strategy, text );
   connect( command, SIGNAL(completed(KMCommand*)),
            this, SIGNAL(replyActionFinished()) );
   command->start();
@@ -431,22 +430,22 @@ void MessageActions::setupForwardingActionsList( KXMLGUIClient *guiClient )
 
 void MessageActions::slotReplyToMsg()
 {
-  replyCommand<KMReplyToCommand>();
+  replyCommand( MessageComposer::ReplySmart );
 }
 
 void MessageActions::slotReplyAuthorToMsg()
 {
-  replyCommand<KMReplyAuthorCommand>();
+  replyCommand( MessageComposer::ReplyAuthor );
 }
 
 void MessageActions::slotReplyListToMsg()
 {
-  replyCommand<KMReplyListCommand>();
+  replyCommand( MessageComposer::ReplyList );
 }
 
 void MessageActions::slotReplyAllToMsg()
 {
-  replyCommand<KMReplyToAllCommand>();
+  replyCommand( MessageComposer::ReplyAll );
 }
 
 void MessageActions::slotNoQuoteReplyToMsg()

@@ -24,7 +24,10 @@
 #define kmkernel KMKernel::self()
 #define kmconfig KMKernel::config()
 
-class KMFilterDlg;
+namespace MailCommon {
+  class KMFilterDlg;
+}
+
 class QAbstractItemModel;
 namespace Akonadi {
   class Collection;
@@ -336,8 +339,6 @@ public:
   void setXmlGuiInstance( const KComponentData &instance ) { mXmlGuiInstance = instance; }
 
   UndoStack *undoStack() { return the_undoStack; }
-  MailCommon::FilterManager *filterManager() const { return the_filterMgr; }
-  MailCommon::FilterActionDict *filterActionDict() const { return the_filterActionDict; }
   MessageSender *msgSender();
 
   /*reimp*/ void openFilterDialog(bool createDummyFilter = true);
@@ -473,8 +474,6 @@ private:
   QSharedPointer<MailCommon::FolderCollection> currentFolderCollection();
 
   UndoStack *the_undoStack;
-  MailCommon::FilterManager *the_filterMgr;
-  MailCommon::FilterActionDict *the_filterActionDict;
   mutable KPIMIdentities::IdentityManager *mIdentityManager;
   AkonadiSender *the_msgSender;
   /** previous KMail version. If different from current,
@@ -512,7 +511,7 @@ private:
 
   int mWrapCol;
 
-  QPointer<KMFilterDlg> mFilterEditDialog;
+  QPointer<MailCommon::KMFilterDlg> mFilterEditDialog;
 };
 
 #endif // _KMKERNEL_H

@@ -72,6 +72,9 @@ Comment[zh_TW]=KMail 郵件軟體
 
 [Event/akonadi-resource-broken]
 Name=A resource is broken
+Name[es]=Un recurso está dañado
+Name[ia]=Un ressource es rupte
+Name[lt]=Resursas sugadintas
 Name[nds]=En Ressource is schaadhaftig
 Name[nl]=Er is een gebroken hulpbron
 Name[pt]=Um recurso é inválido
@@ -79,7 +82,10 @@ Name[pt_BR]=Um recurso é inválido
 Name[sv]=En resurs är felaktig
 Name[uk]=Ресурс пошкоджено
 Name[x-test]=xxA resource is brokenxx
+Name[zh_TW]=某個資源已損毀
 Comment=A resource change its state to broken
+Comment[es]=Un recurso cambia su estado a dañado
+Comment[ia]=Un ressource cambia su stato a rupte
 Comment[nds]=En Ressource hett en schaadhaftig Tostand
 Comment[nl]=Een hulpbron heeft zijn status gewijzigd in gebroken
 Comment[pt]=Um recurso mudou o seu estado para inválido
@@ -87,6 +93,7 @@ Comment[pt_BR]=Um recurso alterou o seu estado para inválido
 Comment[sv]=En resurs ändrade tillstånd till felaktig
 Comment[uk]=Ресурсом змінено стан на «пошкоджено»
 Comment[x-test]=xxA resource change its state to brokenxx
+Comment[zh_TW]=某個資源將它的狀態變更為已損毀
 Action=Popup
 
 [Event/mail-check-error]

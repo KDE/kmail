@@ -467,8 +467,7 @@ void AntiSpamWizard::accept()
    * which will result in the filter list in kmmainwidget being
    * initialized. This should happend only once. */
   if ( !filterList.isEmpty() )
-    KMKernel::self()->filterManager()->appendFilters(
-          filterList, replaceExistingFilters );
+    MailCommon::FilterManager::instance()->appendFilters( filterList, replaceExistingFilters );
 
   KDialog::accept();
 }
@@ -687,7 +686,7 @@ bool AntiSpamWizard::anyVirusOptionChecked()
 
 const QString AntiSpamWizard::uniqueNameFor( const QString & name )
 {
-  return KMKernel::self()->filterManager()->createUniqueName( name );
+  return MailCommon::FilterManager::instance()->createUniqueFilterName( name );
 }
 
 
@@ -992,9 +991,7 @@ void ASWizInfoPage::addAvailableTool( const QString &visibleName )
 
 bool ASWizInfoPage::isProgramSelected( const QString &visibleName )
 {
-  QString listName = visibleName;
-
-  QList<QListWidgetItem*> foundItems = mToolsList->findItems( listName, Qt::MatchFixedString );
+  const QList<QListWidgetItem*> foundItems = mToolsList->findItems( visibleName, Qt::MatchFixedString );
   return (!foundItems.isEmpty() && foundItems[0]->isSelected());
 }
 
@@ -1024,10 +1021,9 @@ ASWizSpamRulesPage::ASWizSpamRulesPage( QWidget * parent, const char * name)
   layout->addWidget( mMoveSpamRules );
 
   mFolderReqForSpamFolder = new FolderRequester( this );
-  mFolderReqForSpamFolder->setFolder( CommonKernel->trashCollectionFolder() );
+  mFolderReqForSpamFolder->setCollection( CommonKernel->trashCollectionFolder() );
   mFolderReqForSpamFolder->setMustBeReadWrite( true );
   mFolderReqForSpamFolder->setShowOutbox( false );
-  mFolderReqForSpamFolder->setShowImapFolders( false );
 
   QHBoxLayout *hLayout1 = new QHBoxLayout();
   layout->addItem( hLayout1 );
@@ -1043,10 +1039,9 @@ ASWizSpamRulesPage::ASWizSpamRulesPage( QWidget * parent, const char * name)
   layout->addWidget( mMoveUnsureRules );
 
   mFolderReqForUnsureFolder = new FolderRequester( this );
-  mFolderReqForUnsureFolder->setFolder( "inbox" );
+  mFolderReqForUnsureFolder->setCollection( CommonKernel->inboxCollectionFolder() );
   mFolderReqForUnsureFolder->setMustBeReadWrite( true );
   mFolderReqForUnsureFolder->setShowOutbox( false );
-  mFolderReqForUnsureFolder->setShowImapFolders( false );
 
   QHBoxLayout *hLayout2 = new QHBoxLayout();
   layout->addItem( hLayout2 );
@@ -1100,8 +1095,8 @@ QString ASWizSpamRulesPage::selectedSpamCollectionName() const
 
 Akonadi::Collection ASWizSpamRulesPage::selectedSpamCollection() const
 {
-  if ( mFolderReqForSpamFolder->folderCollection().isValid() )
-    return mFolderReqForSpamFolder->folderCollection();
+  if ( mFolderReqForSpamFolder->hasCollection() )
+    return mFolderReqForSpamFolder->collection();
   else
     return CommonKernel->trashCollectionFolder();
 }
@@ -1109,8 +1104,8 @@ Akonadi::Collection ASWizSpamRulesPage::selectedSpamCollection() const
 
 Akonadi::Collection ASWizSpamRulesPage::selectedUnsureCollection() const
 {
-  if ( mFolderReqForUnsureFolder->folderCollection().isValid() )
-    return mFolderReqForUnsureFolder->folderCollection();
+  if ( mFolderReqForUnsureFolder->hasCollection() )
+    return mFolderReqForUnsureFolder->collection();
   else
     return CommonKernel->inboxCollectionFolder();
 }
@@ -1194,7 +1189,6 @@ ASWizVirusRulesPage::ASWizVirusRulesPage( QWidget * parent, const char * name )
   ReadableCollectionProxyModel::ReadableCollectionOptions optReadableProxy = ReadableCollectionProxyModel::None;
   optReadableProxy |= ReadableCollectionProxyModel::HideVirtualFolder;
   optReadableProxy |= ReadableCollectionProxyModel::HideOutboxFolder;
-  optReadableProxy |= ReadableCollectionProxyModel::HideImapFolder;
 
   mFolderTree = new FolderTreeWidget( this, 0, opt, optReadableProxy );
   mFolderTree->folderTreeView()->expandAll();

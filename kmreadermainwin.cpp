@@ -184,7 +184,7 @@ void KMReaderMainWin::slotForwardInlineMsg()
    if ( !mReaderWin->message().isValid() ) return;
 
    KMCommand *command = 0;
-   if ( mReaderWin->message().isValid() && mReaderWin->message().parentCollection().isValid() ) {
+   if ( mReaderWin->message().parentCollection().isValid() ) {
      QSharedPointer<FolderCollection> fd = FolderCollection::forCollection( mReaderWin->message().parentCollection(), false );
      if ( fd )
        command = new KMForwardCommand( this, mReaderWin->message(),
@@ -202,18 +202,20 @@ void KMReaderMainWin::slotForwardInlineMsg()
 //-----------------------------------------------------------------------------
 void KMReaderMainWin::slotForwardAttachedMsg()
 {
-   if ( !mReaderWin->message().isValid() ) return;
+   if ( !mReaderWin->message().isValid() )
+     return;
    KMCommand *command = 0;
-   if ( mReaderWin->message().isValid() && mReaderWin->message().parentCollection().isValid() ) {
+   if ( mReaderWin->message().parentCollection().isValid() ) {
      QSharedPointer<FolderCollection> fd = FolderCollection::forCollection( mReaderWin->message().parentCollection(), false );
      if ( fd )
        command = new KMForwardAttachedCommand( this, mReaderWin->message(),
                                                fd->identity() );
      else
        command = new KMForwardAttachedCommand( this, mReaderWin->message() );
-   } else {
-     command = new KMForwardAttachedCommand( this, mReaderWin->message() );
    }
+   else
+     command = new KMForwardAttachedCommand( this, mReaderWin->message() );
+   
    connect( command, SIGNAL(completed(KMCommand*)),
             this, SLOT(slotReplyOrForwardFinished()) );
    command->start();
@@ -233,11 +235,12 @@ void KMReaderMainWin::slotRedirectMsg()
 //-----------------------------------------------------------------------------
 void KMReaderMainWin::slotCustomReplyToMsg( const QString &tmpl )
 {
-  if( !mReaderWin->message().isValid() ) return;
-  KMCommand *command = new KMCustomReplyToCommand( this,
+  if( !mReaderWin->message().isValid() )
+    return;
+  KMCommand *command = new KMCustomReplyCommand( this,
                                                    mReaderWin->message(),
                                                    mReaderWin->copyText(),
-                                                   tmpl );
+                                                   tmpl,MessageComposer::ReplySmart );
   connect( command, SIGNAL(completed(KMCommand*)),
            this, SLOT(slotReplyOrForwardFinished()) );
   command->start();
@@ -246,21 +249,29 @@ void KMReaderMainWin::slotCustomReplyToMsg( const QString &tmpl )
 //-----------------------------------------------------------------------------
 void KMReaderMainWin::slotCustomReplyAllToMsg( const QString &tmpl )
 {
-  if( !mReaderWin->message().isValid() ) return;
-  KMCommand *command = new KMCustomReplyAllToCommand( this,
+  if( !mReaderWin->message().isValid() )
+    return;
+  KMCommand *command = new KMCustomReplyCommand( this,
                                                       mReaderWin->message(),
                                                       mReaderWin->copyText(),
-                                                      tmpl );
+                                                      tmpl,MessageComposer::ReplyAll );
+  connect( command, SIGNAL( completed( KMCommand * ) ),
+           this, SLOT( slotReplyOrForwardFinished() ) );
+
   command->start();
 }
 
 //-----------------------------------------------------------------------------
 void KMReaderMainWin::slotCustomForwardMsg( const QString &tmpl)
 {
-  if( !mReaderWin->message().isValid() ) return;
+  if( !mReaderWin->message().isValid() )
+    return;
   KMCommand *command = new KMCustomForwardCommand( this,
                                                    mReaderWin->message(),
                                                    0, tmpl );
+  connect( command, SIGNAL( completed( KMCommand * ) ),
+           this, SLOT( slotReplyOrForwardFinished() ) );
+
   command->start();
 }
 
@@ -307,21 +318,6 @@ void KMReaderMainWin::setupAccel()
   actionCollection()->addAction("view_source", mViewSourceAction );
   connect(mViewSourceAction, SIGNAL(triggered(bool)), mReaderWin->viewer(), SLOT(slotShowMessageSource()));
   mViewSourceAction->setShortcut(QKeySequence(Qt::Key_V));
-
-  KAction *zoomInAction = new KAction( KIcon("zoom-in"), i18n("&Zoom In"), this);
-  actionCollection()->addAction("zoom_in", zoomInAction);
-  connect(zoomInAction, SIGNAL(triggered(bool)), mReaderWin->viewer(), SLOT(slotZoomIn()));
-  zoomInAction->setShortcut(QKeySequence(Qt::CTRL | Qt::Key_Plus));
-  KAction *zoomOutAction = new KAction( KIcon("zoom-out"), i18n("Zoom &Out"), this);
-  actionCollection()->addAction("zoom_out", zoomOutAction);
-  connect(zoomOutAction, SIGNAL(triggered(bool)), mReaderWin->viewer(), SLOT(slotZoomOut()));
-  zoomOutAction->setShortcut(QKeySequence(Qt::CTRL | Qt::Key_Minus));
-
-  KAction *zoomResetAction = new KAction( i18n("Reset"), this);
-  actionCollection()->addAction("zoom_reset", zoomResetAction);
-  connect(zoomResetAction, SIGNAL(triggered(bool)), mReaderWin->viewer(), SLOT(slotZoomReset()));
-  //mZoomResetAction->setShortcut(QKeySequence(Qt::CTRL | Qt::Key_Minus));
-
   
   //----- Message Menu
 
