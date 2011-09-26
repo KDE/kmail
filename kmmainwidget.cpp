@@ -1273,6 +1273,8 @@ void KMMainWidget::updateInfoInNotification( const Akonadi::Collection& from, co
 {
   if ( mCheckMail.contains( from.id() ) ) {
     mCheckMail[ from.id() ]--;
+    if ( mCheckMail[from.id()] == 0 )
+      mCheckMail.remove( from.id() );
   }
 
   if ( !excludeSpecialFolder( to ) ) {
