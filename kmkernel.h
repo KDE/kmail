@@ -25,7 +25,7 @@
 #define kmconfig KMKernel::config()
 
 namespace MailCommon {
-  class KMFilterDlg;
+  class KMFilterDialog;
 }
 
 class QAbstractItemModel;
@@ -511,7 +511,7 @@ private:
 
   int mWrapCol;
 
-  QPointer<MailCommon::KMFilterDlg> mFilterEditDialog;
+  QPointer<MailCommon::KMFilterDialog> mFilterEditDialog;
 };
 
 #endif // _KMKERNEL_H
