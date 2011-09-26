@@ -404,12 +404,15 @@ void KMMainWidget::showNotifications()
   QMap<Akonadi::Collection::Id, int>::const_iterator it = mCheckMail.constBegin();
   while ( it != mCheckMail.constEnd() ) {
     Akonadi::Collection collection( it.key() );
-    collections << collection;
+    if ( it.value() != 0 )
+      collections << collection;
     ++it;
   }
+  if ( collections.isEmpty() )
+    return;
   
   Akonadi::CollectionFetchJob *job = new Akonadi::CollectionFetchJob( collections, Akonadi::CollectionFetchJob::Base );
-  connect( job, SIGNAL(finished(KJob*)), this, SLOT(slotEndCheckFetchCollectionsDone(KJob*) ) );
+  connect( job, SIGNAL(finished(KJob*)), this, SLOT(slotEndCheckFetchCollectionsDone(KJob*)) );
 }
 
 void KMMainWidget::slotEndCheckFetchCollectionsDone(KJob* job)
@@ -1261,8 +1264,9 @@ void KMMainWidget::slotItemMoved( Akonadi::Item item, Akonadi::Collection from, 
   {
     startUpdateMessageActionsTimer();
   }
-  else
+  else{
     updateInfoInNotification( from, to );
+  }
 }
 
 void KMMainWidget::updateInfoInNotification( const Akonadi::Collection& from, const Akonadi::Collection& to )
@@ -3984,7 +3988,7 @@ void KMMainWidget::slotIntro()
 
 void KMMainWidget::slotShowStartupFolder()
 {
-  connect( MailCommon::FilterManager::instance(), SIGNAL( filtersChanged() ),
+  connect( MailCommon::FilterManager::instance(), SIGNAL(filtersChanged()),
            this, SLOT(initializeFilterActions()) );
 
   // Plug various action lists. This can't be done in the constructor, as that is called before
