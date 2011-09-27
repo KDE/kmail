@@ -70,19 +70,16 @@ using MailTransport::TransportManager;
 // other KDE headers:
 #include <klocale.h>
 #include <kmessagebox.h>
-#include <kconfig.h>
 #include <kfileitem.h>
 #include <kurl.h>
 #include <kdebug.h>
 #include <kpushbutton.h>
-#include <kconfiggroup.h>
 #include <kcombobox.h>
 #include <ktabwidget.h>
 #include <sonnet/dictionarycombobox.h>
 
 // Qt headers:
 #include <QLabel>
-#include <QPushButton>
 #include <QCheckBox>
 #include <QVBoxLayout>
 #include <QGridLayout>

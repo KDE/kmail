@@ -35,7 +35,6 @@
 #include <kdialog.h>
 
 class QCheckBox;
-class QString;
 class TemplatesConfiguration;
 class SimpleStringListEditor;
 
