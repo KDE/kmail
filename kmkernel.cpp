@@ -49,7 +49,7 @@ using KMail::MailServiceImpl;
 #include "messagecomposersettings.h"
 #include "messagecomposer/messagehelper.h"
 #include "messagecomposer/messagecomposersettings.h"
-#include "custommimeheader.h"
+//#include "custommimeheader.h"
 
 #include "templateparser/templateparser.h"
 #include "templateparser/globalsettings_base.h"
@@ -87,10 +87,7 @@ using KMail::MailServiceImpl;
 #include <akonadi/entitymimetypefiltermodel.h>
 #include <Akonadi/CollectionStatisticsJob>
 
-#include <QByteArray>
 #include <QDir>
-#include <QList>
-#include <QObject>
 #include <QWidget>
 #include <QFileInfo>
 #include <QtDBus/QtDBus>

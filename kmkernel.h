@@ -5,14 +5,11 @@
 
 #include "mailinterfaces.h"
 
-#include <QByteArray>
 #include <QList>
 #include <QObject>
 #include <QPointer>
-#include <QString>
 #include <QDBusObjectPath>
 
-#include <kconfig.h>
 #include <kurl.h>
 
 #include "kmail_export.h"
@@ -65,7 +62,6 @@ namespace KPIMIdentities {
   class Identity;
   class IdentityManager;
 }
-class KMKernel;
 class KComponentData;
 class QTimer;
 class KMMainWin;

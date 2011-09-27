@@ -33,7 +33,6 @@
 #include <libkdepim/openemailaddressjob.h>
 #include "kmcommands.h"
 #include "mailcommon/sendmdnhandler.h"
-#include <QByteArray>
 #include <QVBoxLayout>
 #include "messageviewer/headerstrategy.h"
 #include "messageviewer/headerstyle.h"
@@ -59,21 +58,13 @@ using MessageComposer::MessageFactory;
 #include "messagecore/messagehelpers.h"
 
 
-// KABC includes
-#include <kabc/addressee.h>
-#include <kabc/vcardconverter.h>
-
-
 #include <kde_file.h>
 #include <kdebug.h>
 #include <klocale.h>
 #include <kaction.h>
 #include <kicon.h>
-#include <kiconloader.h>
 #include <kcodecs.h>
-#include <kstandardaction.h>
 #include <ktoggleaction.h>
-#include <kconfiggroup.h>
 
 #include <QClipboard>
 

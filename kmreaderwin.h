@@ -22,7 +22,7 @@
 
 #include <QWidget>
 #include <kurl.h>
-#include <kservice.h>
+//#include <kservice.h>
 #include <map>
 #include <messageviewer/viewer.h>
 #include <messageviewer/interfaces/bodypart.h>
@@ -30,8 +30,6 @@
 class KActionCollection;
 class KAction;
 class KToggleAction;
-class KToggleAction;
-class KUrl;
 namespace MessageViewer {
   class HeaderStrategy;
   class HeaderStyle;
@@ -40,9 +38,6 @@ namespace MessageViewer {
   class AttachmentStrategy;
 }
 
-namespace KParts {
-  struct BrowserArguments;
-}
 
 namespace Akonadi {
   class Item;
