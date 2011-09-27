@@ -62,8 +62,6 @@ class KMComposerEditor;
 class KSelectAction;
 class KAction;
 class KJob;
-class KTemporaryFile;
-class KTempDir;
 class KToggleAction;
 class KUrl;
 class KRecentFilesAction;
