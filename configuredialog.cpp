@@ -133,7 +133,6 @@ using MailTransport::TransportManagementWidget;
 // other headers:
 #include <assert.h>
 #include <stdlib.h>
-#include <kvbox.h>
 
 
 #include <akonadi/agentfilterproxymodel.h>

@@ -159,7 +159,6 @@
 #include <kxmlguiclient.h>
 #include <kstatusbar.h>
 #include <kaction.h>
-#include <kvbox.h>
 #include <ktreewidgetsearchline.h>
 #include <Solid/Networking>
 #include <nepomuk/resourcemanager.h>

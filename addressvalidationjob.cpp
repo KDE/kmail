@@ -31,7 +31,6 @@ using MessageComposer::AliasesExpandJob;
 
 #include <KPIMUtils/Email>
 
-#include <messagecore/stringutil.h>
 
 class AddressValidationJob::Private
 {
