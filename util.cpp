@@ -35,35 +35,19 @@
 **   your version.
 **
 *******************************************************************************/
-
-
 #include "util.h"
-#include "imapsettings.h"
 #include "kmkernel.h"
 
 #include "messagecore/stringutil.h"
 #include "messagecomposer/messagehelper.h"
 
-
-
 #include <kmime/kmime_message.h>
-#include <kpimutils/email.h>
-#include <kimap/loginjob.h>
-#include <mailtransport/transport.h>
-#include <Akonadi/AgentManager>
-#include <Akonadi/EntityTreeModel>
-#include <akonadi/entitymimetypefiltermodel.h>
 #include <kmessagebox.h>
 #include <KLocale>
 
 #include <KStandardDirs>
-#include <kascii.h>
-#include <KCharsets>
-#include <KJob>
-#include <kio/jobuidelegate.h>
 
-
-#include <stdlib.h>
+#include <QProcess>
 
 #include "foldercollection.h"
 
