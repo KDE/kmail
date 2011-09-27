@@ -49,7 +49,6 @@ class ListView;
 class ConfigureDialog;
 class KIntSpinBox;
 class SimpleStringListEditor;
-class KConfig;
 class SMimeConfiguration;
 class TemplatesConfiguration;
 class CustomTemplates;

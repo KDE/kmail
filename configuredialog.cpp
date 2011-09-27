@@ -98,7 +98,6 @@ using MailTransport::TransportManagementWidget;
 #include <kseparator.h>
 #include <kiconloader.h>
 #include <kwindowsystem.h>
-#include <kconfig.h>
 #include <kcmultidialog.h>
 #include <knotifyconfigwidget.h>
 #include <kconfiggroup.h>
