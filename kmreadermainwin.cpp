@@ -33,7 +33,6 @@
 #include <kwindowsystem.h>
 #include <kaction.h>
 #include <kfontaction.h>
-#include <kiconloader.h>
 #include <kstandardaction.h>
 #include <ktoggleaction.h>
 #include <ktoolbar.h>
