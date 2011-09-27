@@ -631,13 +631,12 @@ void KMMainWidget::readFolderConfig()
 //-----------------------------------------------------------------------------
 void KMMainWidget::writeFolderConfig()
 {
-  if ( !mCurrentFolder || (mCurrentFolder && !mCurrentFolder->isValid()) )
-    return;
-
-  KSharedConfig::Ptr config = KMKernel::self()->config();
-  KConfigGroup group( config, mCurrentFolder->configGroupName() );
-  group.writeEntry( "htmlMailOverride", mFolderHtmlPref );
-  group.writeEntry( "htmlLoadExternalOverride", mFolderHtmlLoadExtPref );
+  if ( mCurrentFolder && mCurrentFolder->isValid() ) {
+    KSharedConfig::Ptr config = KMKernel::self()->config();
+    KConfigGroup group( config, mCurrentFolder->configGroupName() );
+    group.writeEntry( "htmlMailOverride", mFolderHtmlPref );
+    group.writeEntry( "htmlLoadExternalOverride", mFolderHtmlLoadExtPref );
+  }
 }
 
 //-----------------------------------------------------------------------------
@@ -4320,8 +4319,9 @@ void KMMainWidget::itemsFetchDone( KJob *job )
 {
   delete mShowBusySplashTimer;
   mShowBusySplashTimer = 0;
-  if ( job->error() )
+  if ( job->error() ) {
     kDebug() << job->errorString();
+  }
 }
 
 KAction *KMMainWidget::akonadiStandardAction( Akonadi::StandardActionManager::Type type )
