@@ -53,6 +53,8 @@
 #include <Akonadi/AgentManager>
 #include <Akonadi/EntityTreeModel>
 #include <akonadi/entitymimetypefiltermodel.h>
+#include <kmessagebox.h>
+#include <KLocale>
 
 #include <KStandardDirs>
 #include <kascii.h>

@@ -33,7 +33,7 @@
 
 #include <qlabel.h>
 #include <qcheckbox.h>
-#include <qlayout.h>
+#include <QGridLayout>
 
 using namespace KMail;
 using namespace MailCommon;
