@@ -35,6 +35,7 @@
 #include <kwindowsystem.h>
 #include <kdebug.h>
 #include <KMenu>
+#include <KLocale>
 
 #include <QPainter>
 #include <QWidget>
