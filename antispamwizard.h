@@ -32,14 +32,14 @@
 #include <KAssistantDialog>
 #include <KSharedConfig>
 
-#include <QCheckBox>
 #include <QList>
-#include <QListWidget>
-#include <QBoxLayout>
 #include <akonadi/collection.h>
 
 class QLabel;
 class QTextEdit;
+class QCheckBox;
+class QBoxLayout;
+class QListWidget;
 
 namespace MailCommon {
   class FolderTreeWidget;

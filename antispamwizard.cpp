@@ -68,6 +68,8 @@
 #include <QHBoxLayout>
 #include <QBoxLayout>
 #include <QVBoxLayout>
+#include <QCheckBox>
+#include <QListWidget>
 
 using namespace KMail;
 using namespace MailCommon;
