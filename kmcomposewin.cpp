@@ -1577,14 +1577,6 @@ void KMComposeWin::setMsg( const KMime::Message::Ptr &newMsg, bool mayAutoSign,
   }
   slotUpdateSignatureAndEncrypionStateIndicators();
 
-#if 0 //TODO port to attachmentcontroller
-
-  // "Attach my public key" is only possible if the user uses OpenPGP
-  // support and he specified his key:
-  mAttachMPK->setEnabled( Kleo::CryptoBackendFactory::instance()->openpgp() &&
-                          !ident.pgpEncryptionKey().isEmpty() );
-#endif
-
   QString kmailFcc;
   if ( mMsg->headerByType( "X-KMail-Fcc" ) ) {
     kmailFcc = mMsg->headerByType( "X-KMail-Fcc" )->asUnicodeString();
