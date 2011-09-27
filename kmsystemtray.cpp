@@ -29,7 +29,6 @@
 
 #include <QItemSelectionModel>
 
-#include <kglobalsettings.h>
 #include <kiconloader.h>
 #include <kcolorscheme.h>
 #include <kwindowsystem.h>
@@ -40,12 +39,10 @@
 #include <QPainter>
 #include <QWidget>
 #include <QObject>
-#include <QSignalMapper>
 
 #include <Akonadi/ChangeRecorder>
 #include <Akonadi/EntityTreeModel>
 #include <Akonadi/CollectionModel>
-#include <math.h>
 #include <assert.h>
 
 using namespace MailCommon;
