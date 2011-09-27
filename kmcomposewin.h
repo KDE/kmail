@@ -81,10 +81,6 @@ namespace KPIMIdentities {
   class Identity;
 }
 
-namespace Akonadi {
-  class CollectionComboBox;
-}
-
 
 namespace KMail {
   class AttachmentController;
@@ -594,7 +590,6 @@ class KMComposeWin : public KMail::Composer
   private:
     QWidget   *mMainWidget;
     Sonnet::DictionaryComboBox *mDictionaryCombo;
-    Akonadi::CollectionComboBox *mFcc;
     MessageComposer::ComposerLineEdit *mEdtFrom, *mEdtReplyTo;
     Message::KMSubjectLineEdit *mEdtSubject;
     QLabel    *mLblIdentity, *mLblTransport, *mLblFcc;
