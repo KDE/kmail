@@ -214,9 +214,9 @@ KMComposeWin::KMComposeWin( const KMime::Message::Ptr &aMsg, Composer::TemplateC
   connect( mComposerBase, SIGNAL(sentSuccessfully()), this, SLOT(slotSendSuccessful()) );
   connect( mComposerBase, SIGNAL(modified(bool)), this, SLOT(setModified(bool)) );
 
-  //(void) new MailcomposerAdaptor( this );
+  (void) new MailcomposerAdaptor( this );
   mdbusObjectPath = "/Composer_" + QString::number( ++s_composerNumber );
-  //QDBusConnection::sessionBus().registerObject( mdbusObjectPath, this );
+  QDBusConnection::sessionBus().registerObject( mdbusObjectPath, this );
 
   Message::SignatureController* sigController = new Message::SignatureController( this );
   connect( sigController, SIGNAL(enableHtml()), SLOT(enableHtml()) );
