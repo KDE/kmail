@@ -43,7 +43,6 @@
 #include <akonadi/standardactionmanager.h>
 #include <Akonadi/EntityMimeTypeFilterModel>
 #include <KActionMenu>
-#include <KConfigGroup>
 #include <KDebug>
 #include <KIcon>
 #include <KIconLoader>
@@ -75,8 +74,6 @@ using namespace KPIM;
 using namespace MailCommon;
 
 namespace KMail {
-
-const int SearchWindow::MSGID_COLUMN = 4;
 
 SearchWindow::SearchWindow( KMMainWidget *widget, const Akonadi::Collection &collection )
   : KDialog( 0 ),
