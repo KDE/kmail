@@ -110,7 +110,7 @@ NewIdentityDialog::NewIdentityDialog( KPIMIdentities::IdentityManager* manager, 
 
 NewIdentityDialog::DuplicateMode NewIdentityDialog::duplicateMode() const
 {
-  int id = mButtonGroup->checkedId();
+  const int id = mButtonGroup->checkedId();
   assert( id == (int)Empty
           || id == (int)ControlCenter
           || id == (int)ExistingEntry );
@@ -120,7 +120,7 @@ NewIdentityDialog::DuplicateMode NewIdentityDialog::duplicateMode() const
 void NewIdentityDialog::slotEnableOK( const QString & proposedIdentityName )
 {
   // OK button is disabled if
-  QString name = proposedIdentityName.trimmed();
+  const QString name = proposedIdentityName.trimmed();
   // name isn't empty
   if ( name.isEmpty() ) {
     enableButtonOk( false );
