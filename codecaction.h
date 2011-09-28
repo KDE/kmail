@@ -21,7 +21,6 @@
 #define CODECACTION_H
 
 // Qt
-#include <QByteArray>
 #include <QList>
 
 // KDE
