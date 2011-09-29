@@ -87,6 +87,7 @@ Name[zh_TW]=某個資源已損毀
 Comment=A resource change its state to broken
 Comment[es]=Un recurso cambia su estado a dañado
 Comment[ia]=Un ressource cambia su stato a rupte
+Comment[lt]=Šaltinis keičia savo būseną į sugadintą
 Comment[nb]=En ressurs endret sin status til ødelagt
 Comment[nds]=En Ressource hett en schaadhaftig Tostand
 Comment[nl]=Een hulpbron heeft zijn status gewijzigd in gebroken
