@@ -479,14 +479,15 @@ bool KMKernel::handleCommandLine( bool noArgsOpensReader )
 /********************************************************************/
 void KMKernel::checkMail () //might create a new reader but won't show!!
 {
-  if ( !kmkernel->askToGoOnline() )
+   if ( !kmkernel->askToGoOnline() )
     return;
 
   const QString resourceGroupPattern( "Resource %1" );
 
   const Akonadi::AgentInstance::List lst = MailCommon::Util::agentInstances();
   foreach( Akonadi::AgentInstance type, lst ) {
-    KConfigGroup group( KMKernel::config(), resourceGroupPattern.arg( type.identifier() ) );
+    const QString id = type.identifier();
+    KConfigGroup group( KMKernel::config(), resourceGroupPattern.arg( id ) );
     if ( group.readEntry( "IncludeInManualChecks", true ) ) {
       if ( !type.isOnline() )
         type.setIsOnline( true );
@@ -495,7 +496,9 @@ void KMKernel::checkMail () //might create a new reader but won't show!!
         emit startCheckMail();
       }
 
-      mResourcesBeingChecked.append( type.identifier() );
+      if ( !mResourcesBeingChecked.contains( id ) ) {
+        mResourcesBeingChecked.append( id );
+      }
       type.synchronize();
     }
   }
