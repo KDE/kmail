@@ -61,6 +61,10 @@ class AttachmentView : public QTreeView
     /** reimpl to avoid default drag cursor */
     virtual void startDrag( Qt::DropActions supportedActions );
 
+  private:
+    void saveHeaderState();
+    void restoreHeaderState();
+
   signals:
     void contextMenuRequested();
 

@@ -1,5 +1,7 @@
 /*
  * This file is part of KMail.
+ * Copyright (c) 2011 Laurent Montel <montel@kde.org>
+ * 
  * Copyright (c) 2009 Constantin Berzan <exit3219@gmail.com>
  *
  * Parts based on KMail code by:
@@ -24,6 +26,7 @@
 #include "attachmentview.h"
 
 #include "messagecomposer/attachmentmodel.h"
+#include "kmkernel.h"
 
 #include <QContextMenuEvent>
 #include <QHeaderView>
@@ -31,6 +34,7 @@
 #include <QSortFilterProxyModel>
 
 #include <KDebug>
+#include <KConfigGroup>
 
 #include <messagecore/attachmentpart.h>
 #include <boost/shared_ptr.hpp>
@@ -70,12 +74,27 @@ AttachmentView::AttachmentView( Message::AttachmentModel *model, QWidget *parent
   header()->setResizeMode( QHeaderView::Interactive );
   header()->setResizeMode( Message::AttachmentModel::MimeTypeColumn, QHeaderView::Stretch );
   header()->setStretchLastSection( false );
+  restoreHeaderState();
   setColumnWidth( 0, 200 );
 }
 
 AttachmentView::~AttachmentView()
 {
+  saveHeaderState();
   delete d;
+}
+
+void AttachmentView::restoreHeaderState()
+{
+  KConfigGroup grp( KMKernel::self()->config(), "AttachmentView" );
+  header()->restoreState( grp.readEntry( "State", QByteArray() ) );
+}
+
+void AttachmentView::saveHeaderState()
+{
+  KConfigGroup grp( KMKernel::self()->config(), "AttachmentView" );
+  grp.writeEntry( "State", header()->saveState() );
+  grp.sync();
 }
 
 void AttachmentView::contextMenuEvent( QContextMenuEvent *event )
