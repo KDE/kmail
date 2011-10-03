@@ -40,15 +40,8 @@ class AttachmentView : public QTreeView
 
   public:
     /// can't change model afterwards.
-    AttachmentView( Message::AttachmentModel *model, QWidget *parent = 0 );
+    explicit AttachmentView( Message::AttachmentModel *model, QWidget *parent = 0 );
     ~AttachmentView();
-
-    /* reimpl */
-    virtual void contextMenuEvent( QContextMenuEvent *event );
-    /* reimpl */
-    virtual void keyPressEvent( QKeyEvent *event );
-    /** reimpl to avoid drags from ourselves */
-    virtual void dragEnterEvent( QDragEnterEvent *event );
 
   public slots:
     /// model sets these
@@ -60,6 +53,12 @@ class AttachmentView : public QTreeView
   protected:
     /** reimpl to avoid default drag cursor */
     virtual void startDrag( Qt::DropActions supportedActions );
+    /* reimpl */
+    virtual void contextMenuEvent( QContextMenuEvent *event );
+    /* reimpl */
+    virtual void keyPressEvent( QKeyEvent *event );
+    /** reimpl to avoid drags from ourselves */
+    virtual void dragEnterEvent( QDragEnterEvent *event );
 
   private:
     void saveHeaderState();
