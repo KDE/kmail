@@ -4075,7 +4075,7 @@ void KMMainWidget::initializeFilterActions()
       // The shortcut set in the shortcut dialog would not be saved back to
       // the filter settings correctly.
       filterAction->setShortcutConfigurable( false );
-
+      filterAction->setEnabled( filter->isEnabled() );
       actionCollection()->addAction( normalizedName.toLocal8Bit(),
                                      filterAction );
       connect( filterAction, SIGNAL(triggered(bool)),
