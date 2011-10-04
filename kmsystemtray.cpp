@@ -178,9 +178,9 @@ void KMSystemTray::updateCount()
     setIconByName( "kmail" );
     return;
   }
-  int overlaySize = KIconLoader::SizeSmallMedium;
+  const int overlaySize = KIconLoader::SizeSmallMedium;
 
-  QString countString = QString::number( mCount );
+  const QString countString = QString::number( mCount );
   QFont countFont = KGlobalSettings::generalFont();
   countFont.setBold(true);
 
