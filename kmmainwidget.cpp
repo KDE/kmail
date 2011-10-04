@@ -4055,7 +4055,7 @@ void KMMainWidget::initializeFilterActions()
   bool addedSeparator = false;
 
   foreach ( MailFilter *filter, MailCommon::FilterManager::instance()->filters() ) {
-    if ( !filter->isEmpty() && filter->configureShortcut() ) {
+    if ( !filter->isEmpty() && filter->configureShortcut() && filter->isEnabled() ) {
       QString filterName = QString( "Filter %1").arg( filter->name() );
       QString normalizedName = filterName.replace(' ', '_');
       if ( action( normalizedName.toUtf8() ) ) {
@@ -4075,7 +4075,6 @@ void KMMainWidget::initializeFilterActions()
       // The shortcut set in the shortcut dialog would not be saved back to
       // the filter settings correctly.
       filterAction->setShortcutConfigurable( false );
-      filterAction->setEnabled( filter->isEnabled() );
       actionCollection()->addAction( normalizedName.toLocal8Bit(),
                                      filterAction );
       connect( filterAction, SIGNAL(triggered(bool)),
