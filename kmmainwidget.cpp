@@ -3037,7 +3037,7 @@ void KMMainWidget::setupActions()
 
   //----- Tools menu
   if (parent()->inherits("KMMainWin")) {
-    KAction *action = new KAction(KIcon("help-contents"), i18n("&Address Book"), this);
+    KAction *action = new KAction(KIcon("x-office-address-book"), i18n("&Address Book"), this);
     actionCollection()->addAction("addressbook", action );
     connect(action, SIGNAL(triggered(bool)), SLOT(slotAddrBook()));
     if (KStandardDirs::findExe("kaddressbook").isEmpty())
