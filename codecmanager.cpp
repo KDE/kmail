@@ -63,8 +63,7 @@ CodecManagerPrivate::~CodecManagerPrivate()
 
 
 CodecManager::CodecManager( CodecManagerPrivate *dd )
-  : QObject() // TODO does it need to be a QObject?
-  , d( dd )
+  : d( dd )
 {
 }
 
@@ -109,5 +108,3 @@ void CodecManager::updatePreferredCharsets()
     d->preferredCharsets << charset;
   }
 }
-
-#include "codecmanager.moc"
