@@ -95,7 +95,7 @@ void AttachmentController::attachMyPublicKey()
 {
   const KPIMIdentities::Identity &identity = mComposer->identity();
   kDebug() << identity.identityName();
-  exportPublicKey( mComposer->identity().pgpEncryptionKey() );
+  exportPublicKey( identity.pgpEncryptionKey() );
 }
 
 void AttachmentController::actionsCreated()
