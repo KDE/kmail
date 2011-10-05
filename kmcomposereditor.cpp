@@ -104,12 +104,11 @@ void KMComposerEditor::replaceUnknownChars( const QTextCodec *codec )
   cursor.beginEditBlock();
   while ( !cursor.atEnd() ) {
     cursor.movePosition( QTextCursor::NextCharacter, QTextCursor::KeepAnchor );
-    QChar cur = cursor.selectedText().at( 0 );
-    if ( !codec->canEncode( cur ) ) {
-      cursor.insertText( "?" );
-    }
-    else {
-      cursor.clearSelection();
+    const QChar cur = cursor.selectedText().at( 0 );
+    if ( codec->canEncode( cur ) ) {
+       cursor.clearSelection();
+    } else {
+       cursor.insertText( "?" );
     }
   }
   cursor.endEditBlock();

@@ -25,7 +25,6 @@ class KTextEdit;
 class KUrl;
 
 class QCheckBox;
-class QString;
 class QLabel;
 
 namespace KMail {

@@ -23,18 +23,19 @@
 #ifndef COLORLISTBOX_H
 #define COLORLISTBOX_H
 
-#include <QDragEnterEvent>
-#include <QDragLeaveEvent>
-#include <QDragMoveEvent>
-#include <QDropEvent>
 #include <QTreeWidget>
+
+class QDragLeaveEvent;
+class QDropEvent;
+class QDragMoveEvent;
+class QDragLeaveEvent;
 
 class ColorListBox : public QTreeWidget
 {
   Q_OBJECT
 
   public:
-    ColorListBox( QWidget *parent=0 );
+    explicit ColorListBox( QWidget *parent=0 );
     void addColor( const QString& text, const QColor& color=Qt::black );
     void setColor( int index, const QColor &color );
     // like setColor, but does not emit changed()

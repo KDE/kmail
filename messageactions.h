@@ -19,20 +19,19 @@
 #ifndef KMAIL_MESSAGEACTIONS_H
 #define KMAIL_MESSAGEACTIONS_H
 
-#include "kmcommands.h"
-#include "kmreaderwin.h"
 #include "messagecomposer/messagefactory.h"
 #include <KUrl>
 
 #include <qobject.h>
-#include <qlist.h>
 
 class QWidget;
+class QAction;
+class KJob;
 class KAction;
 class KActionMenu;
 class KActionCollection;
 class KXMLGUIClient;
-
+class KMReaderWin;
 namespace Akonadi {
 class Item;
 class Monitor;

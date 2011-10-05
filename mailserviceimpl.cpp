@@ -40,7 +40,6 @@
 #include <kurl.h>
 #include <kdebug.h>
 
-#include <QString>
 #include <QDBusConnection>
 
 namespace KMail {

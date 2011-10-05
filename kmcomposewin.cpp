@@ -93,7 +93,6 @@
 #include <libkdepim/recentaddresses.h>
 
 // KDEPIMLIBS includes
-#include <akonadi/collectioncombobox.h>
 #include <akonadi/changerecorder.h>
 #include <akonadi/itemcreatejob.h>
 #include <akonadi/entitymimetypefiltermodel.h>
@@ -214,9 +213,9 @@ KMComposeWin::KMComposeWin( const KMime::Message::Ptr &aMsg, Composer::TemplateC
   connect( mComposerBase, SIGNAL(sentSuccessfully()), this, SLOT(slotSendSuccessful()) );
   connect( mComposerBase, SIGNAL(modified(bool)), this, SLOT(setModified(bool)) );
 
-  //(void) new MailcomposerAdaptor( this );
+  (void) new MailcomposerAdaptor( this );
   mdbusObjectPath = "/Composer_" + QString::number( ++s_composerNumber );
-  //QDBusConnection::sessionBus().registerObject( mdbusObjectPath, this );
+  QDBusConnection::sessionBus().registerObject( mdbusObjectPath, this );
 
   Message::SignatureController* sigController = new Message::SignatureController( this );
   connect( sigController, SIGNAL(enableHtml()), SLOT(enableHtml()) );
@@ -1575,14 +1574,6 @@ void KMComposeWin::setMsg( const KMime::Message::Ptr &newMsg, bool mayAutoSign,
     setSigning( ( canOpenPGPSign || canSMIMESign ) && mLastSignActionState );
   }
   slotUpdateSignatureAndEncrypionStateIndicators();
-
-#if 0 //TODO port to attachmentcontroller
-
-  // "Attach my public key" is only possible if the user uses OpenPGP
-  // support and he specified his key:
-  mAttachMPK->setEnabled( Kleo::CryptoBackendFactory::instance()->openpgp() &&
-                          !ident.pgpEncryptionKey().isEmpty() );
-#endif
 
   QString kmailFcc;
   if ( mMsg->headerByType( "X-KMail-Fcc" ) ) {

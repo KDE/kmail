@@ -58,7 +58,7 @@ CollectionViewPage::~CollectionViewPage()
 void CollectionViewPage::init(const Akonadi::Collection & col)
 {
   mCurrentCollection = col;
-  QSharedPointer<FolderCollection> fd = FolderCollection::forCollection( col );
+  QSharedPointer<FolderCollection> fd = FolderCollection::forCollection( col, false );
   mIsLocalSystemFolder = CommonKernel->isSystemFolderCollection( col ) || fd->isStructural();
 
   QVBoxLayout * topLayout = new QVBoxLayout( this );

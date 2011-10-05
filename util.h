@@ -41,8 +41,6 @@
 #include <stdlib.h>
 #include <QWidget>
 #include <kio/netaccess.h>
-#include <kmessagebox.h>
-#include <klocale.h>
 #include <akonadi/item.h>
 #include <kmime/kmime_message.h>
 #include <Akonadi/AgentInstance>

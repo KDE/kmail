@@ -5,14 +5,11 @@
 
 #include "mailinterfaces.h"
 
-#include <QByteArray>
 #include <QList>
 #include <QObject>
 #include <QPointer>
-#include <QString>
 #include <QDBusObjectPath>
 
-#include <kconfig.h>
 #include <kurl.h>
 
 #include "kmail_export.h"
@@ -25,7 +22,7 @@
 #define kmconfig KMKernel::config()
 
 namespace MailCommon {
-  class KMFilterDlg;
+  class KMFilterDialog;
 }
 
 class QAbstractItemModel;
@@ -65,7 +62,6 @@ namespace KPIMIdentities {
   class Identity;
   class IdentityManager;
 }
-class KMKernel;
 class KComponentData;
 class QTimer;
 class KMMainWin;
@@ -511,7 +507,7 @@ private:
 
   int mWrapCol;
 
-  QPointer<MailCommon::KMFilterDlg> mFilterEditDialog;
+  QPointer<MailCommon::KMFilterDialog> mFilterEditDialog;
 };
 
 #endif // _KMKERNEL_H

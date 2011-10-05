@@ -54,7 +54,6 @@
 #include <kdialog.h>
 #include <kiconloader.h>
 #include <klocale.h>
-#include <kmessagebox.h>
 #include <KProcess>
 #include <ktoolinvocation.h>
 #include <kconfiggroup.h>
@@ -68,6 +67,8 @@
 #include <QHBoxLayout>
 #include <QBoxLayout>
 #include <QVBoxLayout>
+#include <QCheckBox>
+#include <QListWidget>
 
 using namespace KMail;
 using namespace MailCommon;

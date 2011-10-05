@@ -10,16 +10,12 @@
 #include "kmail_export.h"
 #include "configmodule.h"
 
-#include <QString>
 #include <QStringList>
-#include <QLabel>
 #include <QList>
 #include <QShowEvent>
 #include <QHash>
 #include <QSharedPointer>
 
-#include <klineedit.h>
-#include <kcombobox.h>
 #include <kdialog.h>
 #include <kcmodule.h>
 #include <klocale.h>
@@ -53,7 +49,6 @@ class ListView;
 class ConfigureDialog;
 class KIntSpinBox;
 class SimpleStringListEditor;
-class KConfig;
 class SMimeConfiguration;
 class TemplatesConfiguration;
 class CustomTemplates;

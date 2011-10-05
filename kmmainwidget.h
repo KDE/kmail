@@ -37,6 +37,7 @@
 #include <QList>
 #include <QLabel>
 #include <QPointer>
+#include <QTimer>
 #include <akonadi/kmime/standardmailactionmanager.h>
 #include <messagelist/core/view.h>
 #include <Solid/Networking>
@@ -59,6 +60,8 @@ class KMMetaFilterActionCommand;
 class KMSystemTray;
 class CustomTemplatesMenu;
 class CollectionPane;
+class KMCommand;
+class KMMoveCommand;
 
 template <typename T, typename S> class QMap;
 

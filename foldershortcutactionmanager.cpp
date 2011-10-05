@@ -26,8 +26,6 @@
 #include <Akonadi/EntityTreeModel>
 #include <Akonadi/EntityMimeTypeFilterModel>
 
-#include <QSortFilterProxyModel>
-
 #include <KAction>
 #include <KActionCollection>
 #include <KLocale>

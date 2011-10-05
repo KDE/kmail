@@ -29,22 +29,20 @@
 
 #include <QItemSelectionModel>
 
-#include <kglobalsettings.h>
 #include <kiconloader.h>
 #include <kcolorscheme.h>
 #include <kwindowsystem.h>
 #include <kdebug.h>
 #include <KMenu>
+#include <KLocale>
 
 #include <QPainter>
 #include <QWidget>
 #include <QObject>
-#include <QSignalMapper>
 
 #include <Akonadi/ChangeRecorder>
 #include <Akonadi/EntityTreeModel>
 #include <Akonadi/CollectionModel>
-#include <math.h>
 #include <assert.h>
 
 using namespace MailCommon;
@@ -180,9 +178,9 @@ void KMSystemTray::updateCount()
     setIconByName( "kmail" );
     return;
   }
-  int overlaySize = KIconLoader::SizeSmallMedium;
+  const int overlaySize = KIconLoader::SizeSmallMedium;
 
-  QString countString = QString::number( mCount );
+  const QString countString = QString::number( mCount );
   QFont countFont = KGlobalSettings::generalFont();
   countFont.setBold(true);
 

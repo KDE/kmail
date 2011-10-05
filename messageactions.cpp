@@ -24,6 +24,7 @@
 #include "mailkernel.h"
 #include "kmmainwidget.h"
 #include "util.h"
+#include "kmcommands.h"
 
 #include "messagecore/annotationdialog.h"
 #include "messagecore/globalsettings.h"

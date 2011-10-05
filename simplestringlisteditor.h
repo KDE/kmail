@@ -34,7 +34,7 @@
 
 #include <QWidget>
 #include <QStringList>
-#include <QString>
+
 
 class QListWidget;
 class QPushButton;

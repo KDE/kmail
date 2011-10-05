@@ -31,33 +31,26 @@
 #include "collectionquotapage_p.h"
 
 #include <qlayout.h>
-#include <qlabel.h>
 #include <qprogressbar.h>
-#include <qwhatsthis.h>
-#include <qcombobox.h>
-
-#include <math.h>
 
 #include "kmkernel.h"
 #include "klocale.h"
-#include "kconfig.h"
 #include "kdebug.h"
-#include "kdialog.h"
-#include "globalsettings.h"
+#include <KDialog>
 
 
 QuotaWidget::QuotaWidget( QWidget* parent )
-        :QWidget( parent )
+  :QWidget( parent )
 {
-      QVBoxLayout *box = new QVBoxLayout( this );
-      QWidget *stuff = new QWidget( this );
-      QGridLayout* layout = new QGridLayout( stuff );
-      layout->setMargin( KDialog::marginHint() );
-      layout->setSpacing( KDialog::spacingHint() );
-      mProgressBar = new QProgressBar( stuff );
-      layout->addWidget( mProgressBar, 2, 1 );
-      box->addWidget( stuff );
-      box->addStretch( 2 );
+  QVBoxLayout *box = new QVBoxLayout( this );
+  QWidget *stuff = new QWidget( this );
+  QGridLayout* layout = new QGridLayout( stuff );
+  layout->setMargin( KDialog::marginHint() );
+  layout->setSpacing( KDialog::spacingHint() );
+  mProgressBar = new QProgressBar( stuff );
+  layout->addWidget( mProgressBar, 2, 1 );
+  box->addWidget( stuff );
+  box->addStretch( 2 );
 }
 
 void QuotaWidget::setQuotaInfo( qint64 current, qint64 maxValue )

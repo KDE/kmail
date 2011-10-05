@@ -23,14 +23,10 @@
 #include "secondarywindow.h"
 
 #include <kurl.h>
-#include <kglobalsettings.h>
 #include <kmime/kmime_message.h>
 #include <akonadi/collection.h>
-#include <QString>
 
 #include <boost/shared_ptr.hpp>
-
-class MailComposerIface;
 
 namespace KMime {
   class Content;

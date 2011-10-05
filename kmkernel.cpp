@@ -22,7 +22,7 @@ using KPIM::RecentAddresses;
 #include "mailutil.h"
 #include "mailcommon/pop3settings.h"
 #include "mailcommon/foldertreeview.h"
-#include "mailcommon/kmfilterdlg.h"
+#include "mailcommon/kmfilterdialog.h"
 
 
 // kdepim includes
@@ -49,7 +49,7 @@ using KMail::MailServiceImpl;
 #include "messagecomposersettings.h"
 #include "messagecomposer/messagehelper.h"
 #include "messagecomposer/messagecomposersettings.h"
-#include "custommimeheader.h"
+//#include "custommimeheader.h"
 
 #include "templateparser/templateparser.h"
 #include "templateparser/globalsettings_base.h"
@@ -87,10 +87,7 @@ using KMail::MailServiceImpl;
 #include <akonadi/entitymimetypefiltermodel.h>
 #include <Akonadi/CollectionStatisticsJob>
 
-#include <QByteArray>
 #include <QDir>
-#include <QList>
-#include <QObject>
 #include <QWidget>
 #include <QFileInfo>
 #include <QtDBus/QtDBus>
@@ -482,14 +479,15 @@ bool KMKernel::handleCommandLine( bool noArgsOpensReader )
 /********************************************************************/
 void KMKernel::checkMail () //might create a new reader but won't show!!
 {
-  if ( !kmkernel->askToGoOnline() )
+   if ( !kmkernel->askToGoOnline() )
     return;
 
   const QString resourceGroupPattern( "Resource %1" );
 
   const Akonadi::AgentInstance::List lst = MailCommon::Util::agentInstances();
   foreach( Akonadi::AgentInstance type, lst ) {
-    KConfigGroup group( KMKernel::config(), resourceGroupPattern.arg( type.identifier() ) );
+    const QString id = type.identifier();
+    KConfigGroup group( KMKernel::config(), resourceGroupPattern.arg( id ) );
     if ( group.readEntry( "IncludeInManualChecks", true ) ) {
       if ( !type.isOnline() )
         type.setIsOnline( true );
@@ -498,7 +496,9 @@ void KMKernel::checkMail () //might create a new reader but won't show!!
         emit startCheckMail();
       }
 
-      mResourcesBeingChecked.append( type.identifier() );
+      if ( !mResourcesBeingChecked.contains( id ) ) {
+        mResourcesBeingChecked.append( id );
+      }
       type.synchronize();
     }
   }
@@ -1783,7 +1783,7 @@ QStringList KMKernel::customTemplates()
 void KMKernel::openFilterDialog(bool createDummyFilter)
 {
   if ( !mFilterEditDialog ) {
-    mFilterEditDialog = new MailCommon::KMFilterDlg( getKMMainWidget()->actionCollections(), 0, createDummyFilter );
+    mFilterEditDialog = new MailCommon::KMFilterDialog( getKMMainWidget()->actionCollections(), 0, createDummyFilter );
     mFilterEditDialog->setObjectName( "filterdialog" );
   }
   mFilterEditDialog->show();

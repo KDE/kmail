@@ -23,7 +23,6 @@
 
 class QCheckBox;
 class QLabel;
-class KLineEdit;
 namespace Akonadi {
   class CollectionStatistics;
 }

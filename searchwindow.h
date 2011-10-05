@@ -196,7 +196,6 @@ class SearchWindow: public KDialog, virtual public KXMLGUIClient
 
     Akonadi::StandardMailActionManager *mAkonadiStandardAction;
 
-    static const int MSGID_COLUMN;
 };
 
 }

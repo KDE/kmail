@@ -159,7 +159,6 @@
 #include <kxmlguiclient.h>
 #include <kstatusbar.h>
 #include <kaction.h>
-#include <kvbox.h>
 #include <ktreewidgetsearchline.h>
 #include <Solid/Networking>
 #include <nepomuk/resourcemanager.h>
@@ -404,12 +403,15 @@ void KMMainWidget::showNotifications()
   QMap<Akonadi::Collection::Id, int>::const_iterator it = mCheckMail.constBegin();
   while ( it != mCheckMail.constEnd() ) {
     Akonadi::Collection collection( it.key() );
-    collections << collection;
+    if ( it.value() != 0 )
+      collections << collection;
     ++it;
   }
+  if ( collections.isEmpty() )
+    return;
   
   Akonadi::CollectionFetchJob *job = new Akonadi::CollectionFetchJob( collections, Akonadi::CollectionFetchJob::Base );
-  connect( job, SIGNAL(finished(KJob*)), this, SLOT(slotEndCheckFetchCollectionsDone(KJob*) ) );
+  connect( job, SIGNAL(finished(KJob*)), this, SLOT(slotEndCheckFetchCollectionsDone(KJob*)) );
 }
 
 void KMMainWidget::slotEndCheckFetchCollectionsDone(KJob* job)
@@ -628,13 +630,12 @@ void KMMainWidget::readFolderConfig()
 //-----------------------------------------------------------------------------
 void KMMainWidget::writeFolderConfig()
 {
-  if ( !mCurrentFolder || (mCurrentFolder && !mCurrentFolder->isValid()) )
-    return;
-
-  KSharedConfig::Ptr config = KMKernel::self()->config();
-  KConfigGroup group( config, mCurrentFolder->configGroupName() );
-  group.writeEntry( "htmlMailOverride", mFolderHtmlPref );
-  group.writeEntry( "htmlLoadExternalOverride", mFolderHtmlLoadExtPref );
+  if ( mCurrentFolder && mCurrentFolder->isValid() ) {
+    KSharedConfig::Ptr config = KMKernel::self()->config();
+    KConfigGroup group( config, mCurrentFolder->configGroupName() );
+    group.writeEntry( "htmlMailOverride", mFolderHtmlPref );
+    group.writeEntry( "htmlLoadExternalOverride", mFolderHtmlLoadExtPref );
+  }
 }
 
 //-----------------------------------------------------------------------------
@@ -1261,14 +1262,17 @@ void KMMainWidget::slotItemMoved( Akonadi::Item item, Akonadi::Collection from, 
   {
     startUpdateMessageActionsTimer();
   }
-  else
+  else{
     updateInfoInNotification( from, to );
+  }
 }
 
 void KMMainWidget::updateInfoInNotification( const Akonadi::Collection& from, const Akonadi::Collection& to )
 {
   if ( mCheckMail.contains( from.id() ) ) {
     mCheckMail[ from.id() ]--;
+    if ( mCheckMail[from.id()] == 0 )
+      mCheckMail.remove( from.id() );
   }
 
   if ( !excludeSpecialFolder( to ) ) {
@@ -3984,7 +3988,7 @@ void KMMainWidget::slotIntro()
 
 void KMMainWidget::slotShowStartupFolder()
 {
-  connect( MailCommon::FilterManager::instance(), SIGNAL( filtersChanged() ),
+  connect( MailCommon::FilterManager::instance(), SIGNAL(filtersChanged()),
            this, SLOT(initializeFilterActions()) );
 
   // Plug various action lists. This can't be done in the constructor, as that is called before
@@ -4051,7 +4055,7 @@ void KMMainWidget::initializeFilterActions()
   bool addedSeparator = false;
 
   foreach ( MailFilter *filter, MailCommon::FilterManager::instance()->filters() ) {
-    if ( !filter->isEmpty() && filter->configureShortcut() ) {
+    if ( !filter->isEmpty() && filter->configureShortcut() && filter->isEnabled() ) {
       QString filterName = QString( "Filter %1").arg( filter->name() );
       QString normalizedName = filterName.replace(' ', '_');
       if ( action( normalizedName.toUtf8() ) ) {
@@ -4071,7 +4075,6 @@ void KMMainWidget::initializeFilterActions()
       // The shortcut set in the shortcut dialog would not be saved back to
       // the filter settings correctly.
       filterAction->setShortcutConfigurable( false );
-
       actionCollection()->addAction( normalizedName.toLocal8Bit(),
                                      filterAction );
       connect( filterAction, SIGNAL(triggered(bool)),
@@ -4314,8 +4317,9 @@ void KMMainWidget::itemsFetchDone( KJob *job )
 {
   delete mShowBusySplashTimer;
   mShowBusySplashTimer = 0;
-  if ( job->error() )
+  if ( job->error() ) {
     kDebug() << job->errorString();
+  }
 }
 
 KAction *KMMainWidget::akonadiStandardAction( Akonadi::StandardActionManager::Type type )

@@ -21,8 +21,6 @@
 
 #include "kmail_export.h"
 
-#include <ksharedconfig.h>
-
 #include <Akonadi/Entity>
 #include <Akonadi/Collection>
 

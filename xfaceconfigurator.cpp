@@ -33,7 +33,6 @@
 #include "xfaceconfigurator.h"
 
 #include <akonadi/contact/contactsearchjob.h>
-#include <kabc/addressee.h>
 #include <kcombobox.h>
 #include <kdialog.h>
 #include <kfiledialog.h>

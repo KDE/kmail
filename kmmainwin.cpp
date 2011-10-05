@@ -27,6 +27,8 @@
 #include "util.h"
 #include "tagactionmanager.h"
 
+#include <QTimer>
+
 #include <kapplication.h>
 #include <klocale.h>
 #include <kedittoolbar.h>

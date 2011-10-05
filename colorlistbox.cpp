@@ -1,5 +1,5 @@
 /*
- *   This file is part of libkdepim.
+ *   This file is part of kmail
  *
  *   Copyright (C) 2000 Espen Sand, espen@kde.org
  *   Copyright (C) 2007 Mathias Soeken, msoeken@tzi.de
@@ -30,7 +30,6 @@
 #include <QDragMoveEvent>
 #include <QDropEvent>
 #include <QHeaderView>
-#include <QStringList>
 
 ColorListBox::ColorListBox( QWidget *parent )
   : QTreeWidget( parent ), mCurrentOnDragEnter( 0L )

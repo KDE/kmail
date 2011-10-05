@@ -33,7 +33,7 @@
 
 #include <qlabel.h>
 #include <qcheckbox.h>
-#include <qlayout.h>
+#include <QGridLayout>
 
 using namespace KMail;
 using namespace MailCommon;
@@ -111,7 +111,7 @@ ArchiveFolderDialog::ArchiveFolderDialog( QWidget *parent )
   row++;
 
   mRecursiveCheckBox = new QCheckBox( i18n( "Archive all subfolders" ), mainWidget );
-  connect( mRecursiveCheckBox, SIGNAL( clicked() ), this, SLOT( slotRecursiveCheckboxClicked() ) );
+  connect( mRecursiveCheckBox, SIGNAL(clicked()), this, SLOT(slotRecursiveCheckboxClicked()) );
   mainLayout->addWidget( mRecursiveCheckBox, row, 0, 1, 2, Qt::AlignLeft );
   mRecursiveCheckBox->setChecked( true );
   row++;

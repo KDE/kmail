@@ -98,7 +98,6 @@ using MailTransport::TransportManagementWidget;
 #include <kseparator.h>
 #include <kiconloader.h>
 #include <kwindowsystem.h>
-#include <kconfig.h>
 #include <kcmultidialog.h>
 #include <knotifyconfigwidget.h>
 #include <kconfiggroup.h>
@@ -133,7 +132,6 @@ using MailTransport::TransportManagementWidget;
 // other headers:
 #include <assert.h>
 #include <stdlib.h>
-#include <kvbox.h>
 
 
 #include <akonadi/agentfilterproxymodel.h>
@@ -2969,12 +2967,12 @@ void ComposerPage::HeadersTab::doLoadOther()
 
   QTreeWidgetItem * item = 0;
 
-  int count = GlobalSettings::self()->customMessageHeadersCount();
+  const int count = GlobalSettings::self()->customMessageHeadersCount();
   for( int i = 0 ; i < count ; i++ ) {
     KConfigGroup config( KMKernel::self()->config(),
                          QString("Mime #") + QString::number(i) );
-    QString name  = config.readEntry( "name" );
-    QString value = config.readEntry( "value" );
+    const QString name  = config.readEntry( "name" );
+    const QString value = config.readEntry( "value" );
     if( !name.isEmpty() ) {
       item = new QTreeWidgetItem( mTagList, item );
       item->setText( 0, name );
@@ -2995,13 +2993,24 @@ void ComposerPage::HeadersTab::save()
   MessageComposer::MessageComposerSettings::self()->setCustomMsgIDSuffix( mMessageIdSuffixEdit->text() );
   MessageComposer::MessageComposerSettings::self()->setUseCustomMessageIdSuffix( mCreateOwnMessageIdCheck->isChecked() );
 
+  //Clean config
+  const int oldHeadersCount = GlobalSettings::self()->customMessageHeadersCount();
+  for ( int i = 0; i < oldHeadersCount; ++i ) {
+    const QString groupMimeName = QString::fromLatin1( "Mime #%1" ).arg( i );
+    if ( KMKernel::self()->config()->hasGroup( groupMimeName ) ) {
+      KConfigGroup config( KMKernel::self()->config(), groupMimeName);
+      config.deleteGroup();
+    }
+  }
+
+  
   int numValidEntries = 0;
   QTreeWidgetItem *item = 0;
-  for ( int i = 0; i < mTagList->topLevelItemCount(); ++i ) {
+  const int numberOfEntry( mTagList->topLevelItemCount() );
+  for ( int i = 0; i < numberOfEntry; ++i ) {
     item = mTagList->topLevelItem( i );
     if( !item->text(0).isEmpty() ) {
-      KConfigGroup config( KMKernel::self()->config(), QString("Mime #")
-                             + QString::number( numValidEntries ) );
+      KConfigGroup config( KMKernel::self()->config(), QString::fromLatin1("Mime #").arg( numValidEntries ) );
       config.writeEntry( "name",  item->text( 0 ) );
       config.writeEntry( "value", item->text( 1 ) );
       numValidEntries++;

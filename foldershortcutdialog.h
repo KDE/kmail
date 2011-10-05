@@ -56,7 +56,7 @@ class FolderShortcutDialog : public KDialog
 {
 Q_OBJECT
 public:
-  FolderShortcutDialog( const QSharedPointer<MailCommon::FolderCollection>& folder, KMMainWidget *mw,
+  explicit FolderShortcutDialog( const QSharedPointer<MailCommon::FolderCollection>& folder, KMMainWidget *mw,
                         QWidget *parent=0 );
   ~FolderShortcutDialog();
 

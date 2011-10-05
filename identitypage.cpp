@@ -156,7 +156,7 @@ void IdentityPage::slotNewIdentity()
     //
     KPIMIdentities::Identity &newIdent = mIdentityManager->modifyIdentityForName( identityName );
     QTreeWidgetItem *item = 0;
-    if ( mIPage.mIdentityList->selectedItems().size() > 0 ) {
+    if ( !mIPage.mIdentityList->selectedItems().isEmpty() ) {
       item = mIPage.mIdentityList->selectedItems()[0];
     }
 
@@ -181,7 +181,7 @@ void IdentityPage::slotModifyIdentity()
   Q_ASSERT( !mIdentityDialog );
 
   IdentityListViewItem *item = 0;
-  if ( mIPage.mIdentityList->selectedItems().size() > 0 ) {
+  if ( !mIPage.mIdentityList->selectedItems().isEmpty() ) {
     item = dynamic_cast<IdentityListViewItem*>( mIPage.mIdentityList->selectedItems()[0] );
   }
   if ( !item ) {
@@ -240,7 +240,7 @@ void IdentityPage::slotRenameIdentity()
 
   QTreeWidgetItem *item = 0;
 
-  if ( mIPage.mIdentityList->selectedItems().size() > 0 ) {
+  if ( !mIPage.mIdentityList->selectedItems().isEmpty() ) {
     item = mIPage.mIdentityList->selectedItems()[0];
   }
   if ( !item ) return;
@@ -285,7 +285,7 @@ void IdentityPage::slotSetAsDefault()
   Q_ASSERT( !mIdentityDialog );
 
   IdentityListViewItem *item = 0;
-  if ( mIPage.mIdentityList->selectedItems().size() > 0 ) {
+  if ( !mIPage.mIdentityList->selectedItems().isEmpty() ) {
     item = dynamic_cast<IdentityListViewItem*>( mIPage.mIdentityList->selectedItems()[0] );
   }
   if ( !item ) {
@@ -310,7 +310,7 @@ void IdentityPage::refreshList()
 void IdentityPage::slotIdentitySelectionChanged()
 {
   IdentityListViewItem *item = 0;
-  if ( mIPage.mIdentityList->selectedItems().size() >  0 ) {
+  if ( !mIPage.mIdentityList->selectedItems().isEmpty() ) {
     item = dynamic_cast<IdentityListViewItem*>( mIPage.mIdentityList->selectedItems()[0] );
   }
 

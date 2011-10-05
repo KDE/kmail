@@ -60,12 +60,8 @@ class KLineEdit;
 class KMComposeWin;
 class KMComposerEditor;
 class KSelectAction;
-class KSelectAction;
 class KAction;
 class KJob;
-class KToggleAction;
-class KTemporaryFile;
-class KTempDir;
 class KToggleAction;
 class KUrl;
 class KRecentFilesAction;
@@ -81,10 +77,6 @@ namespace Sonnet {
 
 namespace KPIMIdentities {
   class Identity;
-}
-
-namespace Akonadi {
-  class CollectionComboBox;
 }
 
 
@@ -596,7 +588,6 @@ class KMComposeWin : public KMail::Composer
   private:
     QWidget   *mMainWidget;
     Sonnet::DictionaryComboBox *mDictionaryCombo;
-    Akonadi::CollectionComboBox *mFcc;
     MessageComposer::ComposerLineEdit *mEdtFrom, *mEdtReplyTo;
     Message::KMSubjectLineEdit *mEdtSubject;
     QLabel    *mLblIdentity, *mLblTransport, *mLblFcc;
