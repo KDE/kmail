@@ -797,29 +797,29 @@ void AntiSpamWizard::ConfigReader::readAndMergeConfig()
 AntiSpamWizard::SpamToolConfig
     AntiSpamWizard::ConfigReader::readToolConfig( KConfigGroup & configGroup )
 {
-  QString id = configGroup.readEntry( "Ident" );
-  int version = configGroup.readEntry( "Version", 0 );
+  const QString id = configGroup.readEntry( "Ident" );
+  const int version = configGroup.readEntry( "Version", 0 );
 #ifndef NDEBUG
   kDebug() << "Found predefined tool:" << id;
   kDebug() << "With config version  :" << version;
 #endif
-  int prio = configGroup.readEntry( "Priority", 1 );
-  QString name = configGroup.readEntry( "VisibleName" );
-  QString executable = configGroup.readEntry( "Executable" );
-  QString url = configGroup.readEntry( "URL" );
-  QString filterName = configGroup.readEntry( "PipeFilterName" );
-  QString detectCmd = configGroup.readEntry( "PipeCmdDetect" );
-  QString spamCmd = configGroup.readEntry( "ExecCmdSpam" );
-  QString hamCmd = configGroup.readEntry( "ExecCmdHam" );
-  QString noSpamCmd = configGroup.readEntry( "PipeCmdNoSpam" );
-  QString header = configGroup.readEntry( "DetectionHeader" );
-  QString pattern = configGroup.readEntry( "DetectionPattern" );
-  QString pattern2 = configGroup.readEntry( "DetectionPattern2" );
-  QString serverPattern = configGroup.readEntry( "ServerPattern" );
-  bool detectionOnly = configGroup.readEntry( "DetectionOnly", false );
-  bool useRegExp = configGroup.readEntry( "UseRegExp", false );
-  bool supportsBayes = configGroup.readEntry( "SupportsBayes", false );
-  bool supportsUnsure = configGroup.readEntry( "SupportsUnsure", false );
+  const int prio = configGroup.readEntry( "Priority", 1 );
+  const QString name = configGroup.readEntry( "VisibleName" );
+  const QString executable = configGroup.readEntry( "Executable" );
+  const QString url = configGroup.readEntry( "URL" );
+  const QString filterName = configGroup.readEntry( "PipeFilterName" );
+  const QString detectCmd = configGroup.readEntry( "PipeCmdDetect" );
+  const QString spamCmd = configGroup.readEntry( "ExecCmdSpam" );
+  const QString hamCmd = configGroup.readEntry( "ExecCmdHam" );
+  const QString noSpamCmd = configGroup.readEntry( "PipeCmdNoSpam" );
+  const QString header = configGroup.readEntry( "DetectionHeader" );
+  const QString pattern = configGroup.readEntry( "DetectionPattern" );
+  const QString pattern2 = configGroup.readEntry( "DetectionPattern2" );
+  const QString serverPattern = configGroup.readEntry( "ServerPattern" );
+  const bool detectionOnly = configGroup.readEntry( "DetectionOnly", false );
+  const bool useRegExp = configGroup.readEntry( "UseRegExp", false );
+  const bool supportsBayes = configGroup.readEntry( "SupportsBayes", false );
+  const bool supportsUnsure = configGroup.readEntry( "SupportsUnsure", false );
   return SpamToolConfig( id, version, prio, name, executable, url,
                          filterName, detectCmd, spamCmd, hamCmd, noSpamCmd,
                          header, pattern, pattern2, serverPattern,
@@ -845,8 +845,9 @@ AntiSpamWizard::SpamToolConfig AntiSpamWizard::ConfigReader::createDummyConfig()
 void AntiSpamWizard::ConfigReader::mergeToolConfig( AntiSpamWizard::SpamToolConfig config )
 {
   bool found = false;
+  QList<SpamToolConfig>::Iterator end( mToolList.end() );
   for ( QList<SpamToolConfig>::Iterator it = mToolList.begin();
-        it != mToolList.end(); ++it ) {
+        it != end; ++it ) {
 #ifndef NDEBUG
     kDebug() << "Check against tool:" << (*it).getId();
     kDebug() << "Against version   :" << (*it).getVersion();
