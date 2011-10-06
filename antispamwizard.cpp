@@ -484,7 +484,6 @@ void AntiSpamWizard::accept()
 
 void AntiSpamWizard::checkProgramsSelections()
 {
-  bool status = false;
   bool supportUnsure = false;
 
   mSpamToolsUsed = false;
@@ -494,7 +493,6 @@ void AntiSpamWizard::checkProgramsSelections()
         it != end; ++it ) {
     if ( mInfoPage->isProgramSelected( (*it).getVisibleName() ) )
     {
-      status = true;
       if ( (*it).isSpamTool() ) {
         mSpamToolsUsed = true;
         if ( (*it).hasTristateDetection() )
@@ -502,6 +500,9 @@ void AntiSpamWizard::checkProgramsSelections()
       }
       if ( (*it).isVirusTool() )
         mVirusToolsUsed = true;
+
+      if ( mSpamToolsUsed && mVirusToolsUsed && supportUnsure )
+        break;
     }
   }
 
