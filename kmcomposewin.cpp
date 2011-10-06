@@ -1003,6 +1003,7 @@ void KMComposeWin::slotDelayedApplyTemplate( KJob *job )
   TemplateParser::TemplateParser parser( mMsg, mode );
   parser.setSelection( mTextSelection );
   parser.setAllowDecryption( MessageViewer::GlobalSettings::self()->automaticDecrypt() );
+  parser.setWordWrap( MessageComposer::MessageComposerSettings::self()->wordWrap(), MessageComposer::MessageComposerSettings::self()->wordWrap() );
 
   foreach ( const Akonadi::Item &item, items ) {
     if ( !mCustomTemplate.isEmpty() )
