@@ -80,8 +80,8 @@ protected:
 protected slots:
   void slotFetchJob( KJob * job );
 
-  signals:
-     void insertSnippet();
+signals:
+  void insertSnippet();
 
 };
 
