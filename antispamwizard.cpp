@@ -38,7 +38,6 @@
 #include "foldertreewidget.h"
 #include "foldertreeview.h"
 #include "readablecollectionproxymodel.h"
-#include "util.h"
 #include "mailcommon/pop3settings.h"
 #include "mailcommon/mailutil.h"
 #include "mailcommon/imapsettings.h"
@@ -680,7 +679,7 @@ void AntiSpamWizard::slotBuildSummary()
 }
 
 
-int AntiSpamWizard::checkForProgram( const QString &executable )
+int AntiSpamWizard::checkForProgram( const QString &executable ) const
 {
   kDebug() << "Testing for executable:" << executable;
   KProcess process;
@@ -689,7 +688,7 @@ int AntiSpamWizard::checkForProgram( const QString &executable )
 }
 
 
-bool AntiSpamWizard::anyVirusOptionChecked()
+bool AntiSpamWizard::anyVirusOptionChecked() const
 {
   return ( mVirusRulesPage->moveRulesSelected()
            || mVirusRulesPage->pipeRulesSelected() );
@@ -1004,7 +1003,7 @@ void ASWizInfoPage::addAvailableTool( const QString &visibleName )
   }
 }
 
-bool ASWizInfoPage::isProgramSelected( const QString &visibleName )
+bool ASWizInfoPage::isProgramSelected( const QString &visibleName ) const
 {
   const QList<QListWidgetItem*> foundItems = mToolsList->findItems( visibleName, Qt::MatchFixedString );
   return (!foundItems.isEmpty() && foundItems[0]->isSelected());
