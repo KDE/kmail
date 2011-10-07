@@ -2839,7 +2839,7 @@ void KMMainWidget::slotDelayedMessagePopup( KJob *job )
   bool urlMenuAdded = false;
 
   if ( !mUrlCurrent.isEmpty() ) {
-    if ( mUrlCurrent.protocol() == "mailto" ) {
+    if ( mUrlCurrent.protocol() == QLatin1String( "mailto" ) ) {
       // popup on a mailto URL
       menu->addAction( mMsgView->mailToComposeAction() );
       menu->addAction( mMsgView->mailToReplyAction() );
@@ -4056,7 +4056,7 @@ void KMMainWidget::initializeFilterActions()
 
   foreach ( MailFilter *filter, MailCommon::FilterManager::instance()->filters() ) {
     if ( !filter->isEmpty() && filter->configureShortcut() && filter->isEnabled() ) {
-      QString filterName = QString( "Filter %1").arg( filter->name() );
+      QString filterName = QString::fromLatin1( "Filter %1").arg( filter->name() );
       QString normalizedName = filterName.replace(' ', '_');
       if ( action( normalizedName.toUtf8() ) ) {
         continue;
