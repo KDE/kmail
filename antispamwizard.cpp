@@ -129,6 +129,9 @@ AntiSpamWizard::AntiSpamWizard( WizardMode mode,
     mSpamRulesPageItem = addPage( mSpamRulesPage, i18n( "Options to fine-tune the handling of spam messages" ));
     connect( mSpamRulesPage, SIGNAL(selectionChanged()),
              this, SLOT(slotBuildSummary()) );
+    
+    mSummaryPage = new ASWizSummaryPage( 0, "" );
+    mSummaryPageItem = addPage( mSummaryPage, i18n( "Summary of changes to be made by this wizard" ) );
   }
   else {
     mVirusRulesPage = new ASWizVirusRulesPage( 0, "" );
@@ -139,11 +142,6 @@ AntiSpamWizard::AntiSpamWizard( WizardMode mode,
 
   connect( this, SIGNAL(helpClicked()),
             this, SLOT(slotHelpClicked()) );
-
-  if ( isAntiSpam ) {
-    mSummaryPage = new ASWizSummaryPage( 0, "" );
-    mSummaryPageItem = addPage( mSummaryPage, i18n( "Summary of changes to be made by this wizard" ) );
-  }
 
   QTimer::singleShot( 0, this, SLOT(checkToolAvailability()) );
 }
@@ -513,8 +511,7 @@ void AntiSpamWizard::checkProgramsSelections()
     setAppropriate( mSpamRulesPageItem, mSpamToolsUsed );
     setAppropriate( mSummaryPageItem, mSpamToolsUsed );
   }
-
-  if ( mMode == AntiVirus ) {
+  else if ( mMode == AntiVirus ) {
     if ( mVirusToolsUsed )
       checkVirusRulesSelections();
     setAppropriate( mVirusRulesPageItem, mVirusToolsUsed );
@@ -551,7 +548,7 @@ void AntiSpamWizard::checkToolAvailability()
         if ( type.identifier().contains( IMAP_RESOURCE_IDENTIFIER ) ) {
           OrgKdeAkonadiImapSettingsInterface *iface = MailCommon::Util::createImapSettingsInterface( type.identifier() );
           if ( iface->isValid() ) {
-            QString host = iface->imapServer();
+            const QString host = iface->imapServer();
             if ( host.toLower().contains( pattern.toLower() ) ) {
               mInfoPage->addAvailableTool( (*it).getVisibleName() );
               found = true;
@@ -562,7 +559,7 @@ void AntiSpamWizard::checkToolAvailability()
         else if ( type.identifier().contains( POP3_RESOURCE_IDENTIFIER ) ) {
           OrgKdeAkonadiPOP3SettingsInterface *iface = MailCommon::Util::createPop3SettingsInterface( type.identifier() );
           if ( iface->isValid() ) {
-            QString host = iface->host();
+            const QString host = iface->host();
             if ( host.toLower().contains( pattern.toLower() ) ) {
               mInfoPage->addAvailableTool( (*it).getVisibleName() );
               found = true;
@@ -650,8 +647,10 @@ void AntiSpamWizard::slotBuildSummary()
       for ( QList<SpamToolConfig>::ConstIterator it = mToolList.constBegin();
             it != end; ++it ) {
         if ( mInfoPage->isProgramSelected( (*it).getVisibleName() ) ) {
-            if ( (*it).isSpamTool() && (*it).hasTristateDetection())
+          if ( (*it).isSpamTool() && (*it).hasTristateDetection()) {
               atLeastOneUnsurePattern = true;
+              break;
+            }
         }
       }
       if ( atLeastOneUnsurePattern ) {
