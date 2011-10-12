@@ -853,12 +853,12 @@ void AppearancePage::FontsTab::doLoadOther()
   QFont fixedFont = KGlobalSettings::fixedFont();
 
   for ( int i = 0 ; i < numFontNames ; i++ ) {
-    QString configName = fontNames[i].configName;
-    if ( configName == "MessageListFont" ||
-         configName == "NewMessageFont" ||
-         configName == "UnreadMessageFont" ||
-         configName == "ImportantMessageFont" ||
-         configName == "TodoMessageFont" ) {
+    const QString configName = fontNames[i].configName;
+    if ( configName == QLatin1String( "MessageListFont" ) ||
+         configName == QLatin1String( "NewMessageFont" ) ||
+         configName == QLatin1String( "UnreadMessageFont" ) ||
+         configName == QLatin1String( "ImportantMessageFont" ) ||
+         configName == QLatin1String( "TodoMessageFont" ) ) {
       mFont[i] = messagelistFont.readEntry( configName,
                                             (fontNames[i].onlyFixed) ? fixedFont : mFont[0] );
     } else {
@@ -884,12 +884,12 @@ void AppearancePage::FontsTab::save()
   MessageCore::GlobalSettings::self()->setUseDefaultFonts( !customFonts );
 
   for ( int i = 0 ; i < numFontNames ; i++ ) {
-    QString configName = fontNames[i].configName;
-    if ( configName == "MessageListFont" ||
-         configName == "NewMessageFont" ||
-         configName == "UnreadMessageFont" ||
-         configName == "ImportantMessageFont" ||
-         configName == "TodoMessageFont" ) {
+    const QString configName = fontNames[i].configName;
+    if ( configName == QLatin1String( "MessageListFont" ) ||
+         configName == QLatin1String( "NewMessageFont" ) ||
+         configName == QLatin1String( "UnreadMessageFont" ) ||
+         configName == QLatin1String( "ImportantMessageFont" ) ||
+         configName == QLatin1String( "TodoMessageFont" ) ) {
       if ( customFonts || messagelistFont.hasKey( configName ) ) {
         // Don't write font info when we use default fonts, but write
         // if it's already there:
@@ -1080,11 +1080,11 @@ void AppearancePage::ColorsTab::save()
   for ( int i = 0 ; i < numColorNames ; i++ ) {
     // Don't write color info when we use default colors, but write
     // if it's already there:
-    QString configName = colorNames[i].configName;
-    if ( configName == "NewMessageColor" ||
-         configName == "UnreadMessageColor" ||
-         configName == "ImportantMessageColor" ||
-         configName == "TodoMessageColor" ) {
+    const QString configName = colorNames[i].configName;
+    if ( configName == QLatin1String( "NewMessageColor" ) ||
+         configName == QLatin1String( "UnreadMessageColor" ) ||
+         configName == QLatin1String( "ImportantMessageColor" ) ||
+         configName == QLatin1String( "TodoMessageColor" ) ) {
       if ( customColors || messageListView.hasKey( configName ) )
         messageListView.writeEntry( configName, mColorList->color(i) );
 
@@ -1385,7 +1385,7 @@ AppearancePageHeadersTab::AppearancePageHeadersTab( QWidget * parent )
 
 void AppearancePageHeadersTab::slotLinkClicked( const QString & link )
 {
-  if ( link == "whatsthis1" )
+  if ( link == QLatin1String( "whatsthis1" ) )
     QWhatsThis::showText( QCursor::pos(), mCustomDateWhatsThis );
 }
 
@@ -2056,7 +2056,8 @@ void AppearancePage::MessageTagTab::save()
 
   if ( mOriginalMsgTagList.count() == mMsgTagList.count() ) {
     bool nothingChanged = true;
-    for ( int i=0; i<mMsgTagList.count(); ++i ) {
+    const int numberOfMsgTagList( mMsgTagList.count() );
+    for ( int i=0; i<numberOfMsgTagList; ++i ) {
       if ( *(mMsgTagList[i]) != *(mOriginalMsgTagList[i]) ) {
         nothingChanged = false;
         break;
@@ -2464,7 +2465,9 @@ void ComposerPage::GeneralTab::slotConfigureRecentAddresses()
     RecentAddresses::self(  MessageComposer::MessageComposerSettings::self()->config() )->clear();
     const QStringList &addrList = dlg->addresses();
     QStringList::ConstIterator it;
-    for ( it = addrList.constBegin(); it != addrList.constEnd(); ++it )
+    QStringList::ConstIterator end( addrList.constEnd() );
+    
+    for ( it = addrList.constBegin(); it != end; ++it )
       RecentAddresses::self(  MessageComposer::MessageComposerSettings::self()->config() )->add( *it );
   }
 }
@@ -2730,12 +2733,13 @@ void ComposerPage::CharsetTab::doLoadOther()
   KConfigGroup composer( KMKernel::self()->config(), "Composer" );
 
   QStringList charsets = MessageComposer::MessageComposerSettings::preferredCharsets();
+  QStringList::Iterator end( charsets.end() );
   for ( QStringList::Iterator it = charsets.begin() ;
-        it != charsets.end() ; ++it )
+        it != end ; ++it )
     if ( (*it) == QString::fromLatin1("locale") ) {
       QByteArray cset = kmkernel->networkCodec()->name();
       kAsciiToLower( cset.data() );
-      (*it) = QString("%1 (locale)").arg( QString::fromLatin1( cset ) );
+      (*it) = QString::fromLatin1("%1 (locale)").arg( QString::fromLatin1( cset ) );
     }
 
   mCharsetListEditor->setStringList( charsets );
@@ -2760,7 +2764,9 @@ void ComposerPage::CharsetTab::save()
 
   QStringList charsetList = mCharsetListEditor->stringList();
   QStringList::Iterator it = charsetList.begin();
-  for ( ; it != charsetList.end() ; ++it )
+  QStringList::Iterator end = charsetList.end();
+  
+  for ( ; it != end ; ++it )
     if ( (*it).endsWith( QLatin1String("(locale)") ) )
       (*it) = "locale";
   MessageComposer::MessageComposerSettings::setPreferredCharsets( charsetList );
@@ -3212,11 +3218,11 @@ SecurityPageGeneralTab::SecurityPageGeneralTab( QWidget * parent )
 
 void SecurityPageGeneralTab::slotLinkClicked( const QString & link )
 {
-    if ( link == "whatsthis1" )
+    if ( link == QLatin1String( "whatsthis1" ) )
         QWhatsThis::showText( QCursor::pos(), mSGTab.mHtmlMailCheck->whatsThis() );
-    else if (link == "whatsthis2")
+    else if (link == QLatin1String( "whatsthis2" ) )
         QWhatsThis::showText( QCursor::pos(), mSGTab.mExternalReferences->whatsThis() );
-    else if ( link == "whatsthis3" )
+    else if ( link == QLatin1String( "whatsthis3" ) )
         QWhatsThis::showText( QCursor::pos(), mSGTab.radioIgnore->whatsThis() );
 }
 
