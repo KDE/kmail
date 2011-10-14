@@ -488,6 +488,7 @@ private: // data
   /*Used to safely call slotRecordTagSettings when the selection in
     list box changes*/
   int mPreviousTag;
+  bool mNepomukActive;
 };
 class KMAIL_EXPORT AppearancePage : public ConfigModuleWithTabs {
   Q_OBJECT
