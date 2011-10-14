@@ -912,10 +912,6 @@ void KMMainWidget::readConfig()
 //-----------------------------------------------------------------------------
 void KMMainWidget::writeConfig()
 {
-  KSharedConfig::Ptr config = KMKernel::self()->config();
-  KConfigGroup geometry( config, "Geometry" );
-  KConfigGroup general( config, "General" );
-
   // Don't save the sizes of all the widgets when we were never shown.
   // This can happen in Kontact, where the KMail plugin is automatically
   // loaded, but not necessarily shown.
