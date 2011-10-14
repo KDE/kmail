@@ -121,6 +121,8 @@ class KMAIL_EXPORT KMMainWidget : public QWidget
     /** Write configuration options. */
     virtual void writeConfig();
 
+    void writeReaderConfig();
+
     /** Easy access to main components of the window. */
     KMReaderWin* messageView() const { return mMsgView; }
     /** Access to the header list pane. */
