@@ -37,7 +37,7 @@
 #include "folderrequester.h"
 #include "foldertreewidget.h"
 #include "foldertreeview.h"
-#include "readablecollectionproxymodel.h"
+#include "foldertreewidgetproxymodel.h"
 #include "mailcommon/pop3settings.h"
 #include "mailcommon/mailutil.h"
 #include "mailcommon/imapsettings.h"
@@ -1200,13 +1200,13 @@ ASWizVirusRulesPage::ASWizVirusRulesPage( QWidget * parent, const char * name )
   FolderTreeWidget::TreeViewOptions opt = FolderTreeWidget::None;
   opt |= FolderTreeWidget::UseDistinctSelectionModel;
 
-  ReadableCollectionProxyModel::ReadableCollectionOptions optReadableProxy = ReadableCollectionProxyModel::None;
-  optReadableProxy |= ReadableCollectionProxyModel::HideVirtualFolder;
-  optReadableProxy |= ReadableCollectionProxyModel::HideOutboxFolder;
+  FolderTreeWidgetProxyModel::FolderTreeWidgetProxyModelOptions optReadableProxy = FolderTreeWidgetProxyModel::None;
+  optReadableProxy |= FolderTreeWidgetProxyModel::HideVirtualFolder;
+  optReadableProxy |= FolderTreeWidgetProxyModel::HideOutboxFolder;
 
   mFolderTree = new FolderTreeWidget( this, 0, opt, optReadableProxy );
   mFolderTree->folderTreeView()->expandAll();
-  mFolderTree->readableCollectionProxyModel()->setAccessRights( Akonadi::Collection::CanCreateCollection );
+  mFolderTree->folderTreeWidgetProxyModel()->setAccessRights( Akonadi::Collection::CanCreateCollection );
 
   mFolderTree->selectCollectionFolder( CommonKernel->trashCollectionFolder() );
   mFolderTree->folderTreeView()->setDragDropMode( QAbstractItemView::NoDragDrop );
