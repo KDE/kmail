@@ -37,7 +37,7 @@ SnippetWidget::SnippetWidget( KMComposerEditor *editor, KActionCollection *actio
 
   setModel( mSnippetsManager->model() );
   setSelectionModel( mSnippetsManager->selectionModel() );
-
+  
   connect( this, SIGNAL(activated(QModelIndex)),
            mSnippetsManager->editSnippetAction(), SLOT(trigger()) );
   connect( mSnippetsManager->model(), SIGNAL(rowsInserted(QModelIndex,int,int)),
@@ -58,12 +58,10 @@ void SnippetWidget::contextMenuEvent( QContextMenuEvent *event )
 
   const bool itemSelected = mSnippetsManager->selectionModel()->hasSelection();
 
-  bool canAddGroup = true;
   bool canAddSnippet = true;
   if ( itemSelected ) {
     popup.addTitle( mSnippetsManager->selectedName() );
     if ( mSnippetsManager->snippetGroupSelected() ) {
-      canAddGroup = false;  // subgroups are not permitted
       popup.addAction( mSnippetsManager->editSnippetGroupAction() );
       popup.addAction( mSnippetsManager->deleteSnippetGroupAction() );
     } else {
@@ -79,9 +77,7 @@ void SnippetWidget::contextMenuEvent( QContextMenuEvent *event )
   if ( canAddSnippet ) {
     popup.addAction( mSnippetsManager->addSnippetAction() );
   }
-  if ( canAddGroup ) {
-    popup.addAction( mSnippetsManager->addSnippetGroupAction() );
-  }
+  popup.addAction( mSnippetsManager->addSnippetGroupAction() );
 
   popup.exec( event->globalPos() );
 }
