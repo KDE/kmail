@@ -752,7 +752,7 @@ int KMComposeWin::calcColumnWidth( int which, long allShowing, int width ) const
 void KMComposeWin::rethinkFields( bool fromSlot )
 {
   //This sucks even more but again no ids. sorry (sven)
-  int mask, row, numRows;
+  int mask, row;
   long showHeaders;
 
   if ( mShowHeaders < 0 ) {
@@ -766,8 +766,6 @@ void KMComposeWin::rethinkFields( bool fromSlot )
       mNumHeaders++;
     }
   }
-
-  numRows = mNumHeaders + 1;
 
   delete mGrid;
   mGrid = new QGridLayout( mHeadersArea );
