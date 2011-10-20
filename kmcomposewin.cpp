@@ -666,7 +666,6 @@ void KMComposeWin::slotView( void )
     return; // otherwise called from rethinkFields during the construction
             // which is not the intended behavior
   }
-  int id;
 
   //This sucks awfully, but no, I cannot get an activated(int id) from
   // actionContainer()
@@ -674,6 +673,7 @@ void KMComposeWin::slotView( void )
   if ( !act ) {
     return;
   }
+  int id;
 
   if ( act == mAllFieldsAction ) {
     id = 0;
