@@ -463,7 +463,7 @@ KMComposeWin::~KMComposeWin()
   // When we have a collection set, store the message back to that collection.
   // Note that when we save the message or sent it, mFolder is set back to 0.
   // So this for example kicks in when opening a draft and then closing the window.
-  if ( mFolder.isValid() && mMsg ) {
+  if ( mFolder.isValid() && mMsg && isModified() ) {
     Akonadi::Item item;
     item.setPayload( mMsg );
     item.setMimeType( KMime::Message::mimeType() );
