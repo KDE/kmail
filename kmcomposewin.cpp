@@ -1719,7 +1719,7 @@ bool KMComposeWin::queryClose ()
   }
 
   if ( isModified() ) {
-    bool istemplate = ( mFolder.isValid() && CommonKernel->folderIsTemplates( mFolder ) );
+    const bool istemplate = ( mFolder.isValid() && CommonKernel->folderIsTemplates( mFolder ) );
     const QString savebut = ( istemplate ?
                               i18n("Re&save as Template") :
                               i18n("&Save as Draft") );
@@ -1739,8 +1739,10 @@ bool KMComposeWin::queryClose ()
       return false;
     } else if ( rc == KMessageBox::Yes ) {
       // doSend will close the window. Just return false from this method
-      if (istemplate) slotSaveTemplate();
-      else slotSaveDraft();
+      if (istemplate)
+        slotSaveTemplate();
+      else
+        slotSaveDraft();
       return false;
     }
     //else fall through: return true
@@ -2066,7 +2068,7 @@ void KMComposeWin::slotPasteAsAttachment()
 
 QString KMComposeWin::addQuotesToText( const QString &inputText ) const
 {
-  QString answer = QString( inputText );
+  QString answer( inputText );
   QString indentStr = mComposerBase->editor()->quotePrefixName();
   answer.replace( '\n', '\n' + indentStr );
   answer.prepend( indentStr );
