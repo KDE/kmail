@@ -226,8 +226,8 @@ ConfigureDialog::ConfigureDialog( QWidget *parent, bool modal )
   // the KCMultiDialog starts with the size of the first kcm, not
   // the largest one. This way at least after the first showing of
   // the largest kcm the size is kept.
-  int width = GlobalSettings::self()->configureDialogWidth();
-  int height = GlobalSettings::self()->configureDialogHeight();
+  const int width = GlobalSettings::self()->configureDialogWidth();
+  const int height = GlobalSettings::self()->configureDialogHeight();
   if ( width != 0 && height != 0 ) {
      resize( width, height );
   }
