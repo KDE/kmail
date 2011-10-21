@@ -466,7 +466,6 @@ void KMReaderMainWin::slotDelayedMessagePopup( KJob *job )
     menu->addAction( mSaveAtmAction );
     menu->addSeparator();
     menu->addAction( mMsgActions->createTodoAction() );
-    menu->addSeparator();
   }
   menu->exec( aPoint, 0 );
   delete menu;
