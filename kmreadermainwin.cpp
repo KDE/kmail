@@ -148,6 +148,11 @@ void KMReaderMainWin::showMessage( const QString & encoding, const Akonadi::Item
 
 void KMReaderMainWin::showMessage( const QString& encoding, KMime::Message::Ptr message )
 {
+  Akonadi::Item item( "message/rfc822" );
+  item.setPayload( message );
+  mMsg = item;
+  mMsgActions->setCurrentMessage( item );
+  
   mReaderWin->setOverrideEncoding( encoding );
   mReaderWin->setMessage( message );
   if ( message )
@@ -180,8 +185,7 @@ void KMReaderMainWin::slotTrashMsg()
 //-----------------------------------------------------------------------------
 void KMReaderMainWin::slotForwardInlineMsg()
 {
-   if ( !mReaderWin->message().isValid() ) return;
-
+  if ( !mReaderWin->message().hasPayload<KMime::Message::Ptr>() ) return;
    KMCommand *command = 0;
    if ( mReaderWin->message().parentCollection().isValid() ) {
      QSharedPointer<FolderCollection> fd = FolderCollection::forCollection( mReaderWin->message().parentCollection(), false );
@@ -201,8 +205,7 @@ void KMReaderMainWin::slotForwardInlineMsg()
 //-----------------------------------------------------------------------------
 void KMReaderMainWin::slotForwardAttachedMsg()
 {
-   if ( !mReaderWin->message().isValid() )
-     return;
+  if ( !mReaderWin->message().hasPayload<KMime::Message::Ptr>() ) return;
    KMCommand *command = 0;
    if ( mReaderWin->message().parentCollection().isValid() ) {
      QSharedPointer<FolderCollection> fd = FolderCollection::forCollection( mReaderWin->message().parentCollection(), false );
@@ -223,8 +226,7 @@ void KMReaderMainWin::slotForwardAttachedMsg()
 //-----------------------------------------------------------------------------
 void KMReaderMainWin::slotRedirectMsg()
 {
-  if( !mReaderWin->message().isValid() )
-      return;
+  if ( !mReaderWin->message().hasPayload<KMime::Message::Ptr>() ) return;
   KMCommand *command = new KMRedirectCommand( this, mReaderWin->message() );
   connect( command, SIGNAL(completed(KMCommand*)),
          this, SLOT(slotReplyOrForwardFinished()) );
@@ -234,8 +236,7 @@ void KMReaderMainWin::slotRedirectMsg()
 //-----------------------------------------------------------------------------
 void KMReaderMainWin::slotCustomReplyToMsg( const QString &tmpl )
 {
-  if( !mReaderWin->message().isValid() )
-    return;
+  if ( !mReaderWin->message().hasPayload<KMime::Message::Ptr>() ) return;
   KMCommand *command = new KMCustomReplyCommand( this,
                                                    mReaderWin->message(),
                                                    mReaderWin->copyText(),
@@ -248,8 +249,7 @@ void KMReaderMainWin::slotCustomReplyToMsg( const QString &tmpl )
 //-----------------------------------------------------------------------------
 void KMReaderMainWin::slotCustomReplyAllToMsg( const QString &tmpl )
 {
-  if( !mReaderWin->message().isValid() )
-    return;
+  if ( !mReaderWin->message().hasPayload<KMime::Message::Ptr>() ) return;
   KMCommand *command = new KMCustomReplyCommand( this,
                                                       mReaderWin->message(),
                                                       mReaderWin->copyText(),
@@ -263,8 +263,7 @@ void KMReaderMainWin::slotCustomReplyAllToMsg( const QString &tmpl )
 //-----------------------------------------------------------------------------
 void KMReaderMainWin::slotCustomForwardMsg( const QString &tmpl)
 {
-  if( !mReaderWin->message().isValid() )
-    return;
+  if ( !mReaderWin->message().hasPayload<KMime::Message::Ptr>() ) return;
   KMCommand *command = new KMCustomForwardCommand( this,
                                                    mReaderWin->message(),
                                                    0, tmpl );
