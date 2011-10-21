@@ -36,7 +36,7 @@ class SnippetWidget : public QTreeView
 
   protected:
     virtual void contextMenuEvent( QContextMenuEvent* );
-
+  virtual void dropEvent( QDropEvent * );
   private:
     MailCommon::SnippetsManager *mSnippetsManager;
 };

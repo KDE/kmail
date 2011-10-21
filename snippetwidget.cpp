@@ -31,7 +31,6 @@ SnippetWidget::SnippetWidget( KMComposerEditor *editor, KActionCollection *actio
   setDragEnabled( true );
   setRootIsDecorated( true );
   setAlternatingRowColors( true );
-
   mSnippetsManager = new MailCommon::SnippetsManager( actionCollection, this, this );
   mSnippetsManager->setEditor( editor, "insertPlainText", SIGNAL(insertSnippet()) );
 
@@ -80,5 +79,13 @@ void SnippetWidget::contextMenuEvent( QContextMenuEvent *event )
   popup.addAction( mSnippetsManager->addSnippetGroupAction() );
 
   popup.exec( event->globalPos() );
+}
+
+void SnippetWidget::dropEvent ( QDropEvent * event )
+{
+  if ( event->source() == this ) {
+    event->setDropAction( Qt::MoveAction );
+  }
+  QTreeView::dropEvent( event );
 }
 
