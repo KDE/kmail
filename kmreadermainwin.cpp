@@ -434,7 +434,7 @@ void KMReaderMainWin::slotDelayedMessagePopup( KJob *job )
     menu->addAction( mReaderWin->selectAllAction() );
   } else if ( !urlMenuAdded ) {
     // popup somewhere else (i.e., not a URL) on the message
-    if (!mMsg.isValid()) {
+    if (!mMsg.hasPayload<KMime::Message::Ptr>() ) {
       // no message
       delete menu;
       return;
@@ -454,7 +454,8 @@ void KMReaderMainWin::slotDelayedMessagePopup( KJob *job )
         menu->addSeparator();
       }
     }
-    menu->addAction( copyActionMenu() );
+    if ( mMsg.isValid() ) 
+      menu->addAction( copyActionMenu() );
 
     menu->addSeparator();
     menu->addAction( mViewSourceAction );
