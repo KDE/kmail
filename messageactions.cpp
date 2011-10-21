@@ -271,7 +271,7 @@ void MessageActions::updateActions()
   const bool multiVisible = mVisibleItems.count() > 0 || mCurrentItem.isValid();
 
   mCreateTodoAction->setEnabled( singleMsg && mKorganizerIsOnSystem);
-  mReplyActionMenu->setEnabled( /*singleMsg*/hasPayload );
+  mReplyActionMenu->setEnabled( hasPayload );
   mReplyAction->setEnabled( hasPayload );
   mNoQuoteReplyAction->setEnabled( hasPayload );
   mReplyAuthorAction->setEnabled( hasPayload );
