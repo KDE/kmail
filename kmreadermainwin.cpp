@@ -400,7 +400,7 @@ void KMReaderMainWin::slotDelayedMessagePopup( KJob *job )
     if ( mUrl.protocol() == "mailto" ) {
       // popup on a mailto URL
       menu->addAction( mReaderWin->mailToComposeAction() );
-      if ( mMsg.isValid() ) {
+      if ( mMsg.hasPayload<KMime::Message::Ptr>() ) {
         menu->addAction( mReaderWin->mailToReplyAction() );
         menu->addAction( mReaderWin->mailToForwardAction() );
         menu->addSeparator();
@@ -454,7 +454,8 @@ void KMReaderMainWin::slotDelayedMessagePopup( KJob *job )
         menu->addSeparator();
       }
     }
-    if ( mMsg.isValid() ) 
+    const bool messageIsValid = mMsg.isValid();
+    if ( messageIsValid ) 
       menu->addAction( copyActionMenu() );
 
     menu->addSeparator();
@@ -465,8 +466,10 @@ void KMReaderMainWin::slotDelayedMessagePopup( KJob *job )
     menu->addAction( mMsgActions->printAction() );
     menu->addAction( mSaveAsAction );
     menu->addAction( mSaveAtmAction );
-    menu->addSeparator();
-    menu->addAction( mMsgActions->createTodoAction() );
+    if ( messageIsValid ) {
+      menu->addSeparator();
+      menu->addAction( mMsgActions->createTodoAction() );
+    }
   }
   menu->exec( aPoint, 0 );
   delete menu;
