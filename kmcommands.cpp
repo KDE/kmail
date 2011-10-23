@@ -946,13 +946,8 @@ KMCommand::Result KMForwardAttachedCommand::execute()
   MessageFactory factory( KMime::Message::Ptr( new KMime::Message ), firstItem.id(), firstItem.parentCollection() );
   factory.setIdentityManager( KMKernel::self()->identityManager() );
   factory.setFolderIdentity( MailCommon::Util::folderIdentity( firstItem ) );
-  
-  // get a list of messages
-  QList< KMime::Message::Ptr > msgs;
-  foreach( const Akonadi::Item& item, msgList )
-    msgs << MessageCore::Util::message( item );
-  
-  QPair< KMime::Message::Ptr, QList< KMime::Content* > > fwdMsg = factory.createAttachedForward( msgs );
+    
+  QPair< KMime::Message::Ptr, QList< KMime::Content* > > fwdMsg = factory.createAttachedForward( msgList );
   if ( !mWin ) {
     mWin = KMail::makeComposer( fwdMsg.first, KMail::Composer::Forward, mIdentity );
   }
