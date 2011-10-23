@@ -850,20 +850,19 @@ KMCommand::Result KMForwardCommand::execute()
                    KGuiItem(i18n("Send Individually")) );
 
     if ( answer == KMessageBox::Yes ) {
-        MessageFactory factory( KMime::Message::Ptr( new KMime::Message ), mIdentity );
-        factory.setIdentityManager( KMKernel::self()->identityManager() );
-        factory.setFolderIdentity( MailCommon::Util::folderIdentity( msgList.first() ) );
-        // get a list of messages
-        QList< KMime::Message::Ptr > msgs;
-        foreach( const Akonadi::Item& item, msgList )
-          msgs << MessageCore::Util::message( item );
-        QPair< KMime::Message::Ptr, KMime::Content* > fwdMsg = factory.createForwardDigestMIME( msgs );
-        {
-          KMail::Composer * win = KMail::makeComposer( fwdMsg.first, KMail::Composer::Forward, mIdentity );
-          win->addAttach( fwdMsg.second );
-          win->show();
-        }
-
+      Akonadi::Item firstItem( msgList.first() );
+      MessageFactory factory( KMime::Message::Ptr( new KMime::Message ), firstItem.id(), firstItem.parentCollection() );
+      factory.setIdentityManager( KMKernel::self()->identityManager() );
+      factory.setFolderIdentity( MailCommon::Util::folderIdentity( firstItem ) );
+      // get a list of messages
+      QList< KMime::Message::Ptr > msgs;
+      foreach( const Akonadi::Item& item, msgList )
+        msgs << MessageCore::Util::message( item );
+      
+      QPair< KMime::Message::Ptr, KMime::Content* > fwdMsg = factory.createForwardDigestMIME( msgs );
+      KMail::Composer * win = KMail::makeComposer( fwdMsg.first, KMail::Composer::Forward, mIdentity );
+      win->addAttach( fwdMsg.second );
+      win->show();
       return OK;
     } else if ( answer == KMessageBox::No ) {// NO MIME DIGEST, Multiple forward
       QList<Akonadi::Item>::const_iterator it;
