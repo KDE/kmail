@@ -867,7 +867,9 @@ KMCommand::Result KMForwardCommand::execute()
       return OK;
     } else if ( answer == KMessageBox::No ) {// NO MIME DIGEST, Multiple forward
       QList<Akonadi::Item>::const_iterator it;
-      for ( it = msgList.constBegin(); it != msgList.constEnd(); ++it ) {
+      QList<Akonadi::Item>::const_iterator end( msgList.constEnd() );
+      
+      for ( it = msgList.constBegin(); it != end; ++it ) {
         KMime::Message::Ptr msg = MessageCore::Util::message( *it );
         if ( !msg )
           return Failed;
@@ -941,23 +943,22 @@ KMForwardAttachedCommand::KMForwardAttachedCommand( QWidget *parent,
 KMCommand::Result KMForwardAttachedCommand::execute()
 {
   QList<Akonadi::Item> msgList = retrievedMsgs();
-  MessageFactory factory( KMime::Message::Ptr( new KMime::Message ), mIdentity );
+  Akonadi::Item firstItem( msgList.first() );
+  MessageFactory factory( KMime::Message::Ptr( new KMime::Message ), firstItem.id(), firstItem.parentCollection() );
   factory.setIdentityManager( KMKernel::self()->identityManager() );
-  factory.setFolderIdentity( MailCommon::Util::folderIdentity( msgList.first() ) );
+  factory.setFolderIdentity( MailCommon::Util::folderIdentity( firstItem ) );
+  
   // get a list of messages
   QList< KMime::Message::Ptr > msgs;
   foreach( const Akonadi::Item& item, msgList )
     msgs << MessageCore::Util::message( item );
+  
   QPair< KMime::Message::Ptr, QList< KMime::Content* > > fwdMsg = factory.createAttachedForward( msgs );
-  {
-    if ( !mWin ) {
-      mWin = KMail::makeComposer( fwdMsg.first, KMail::Composer::Forward, mIdentity );
-    }
-    foreach( KMime::Content* attach, fwdMsg.second )
-      mWin->addAttach( attach );
-    mWin->show();
+  if ( !mWin ) {
+    mWin = KMail::makeComposer( fwdMsg.first, KMail::Composer::Forward, mIdentity );
   }
-
+  foreach( KMime::Content* attach, fwdMsg.second )
+    mWin->addAttach( attach );
   mWin->show();
   return OK;
 }
