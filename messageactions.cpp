@@ -54,6 +54,7 @@
 #include <Akonadi/Monitor>
 #include <mailutil.h>
 #include <asyncnepomukresourceretriever.h>
+#include <nepomuk/resourcemanager.h>
 
 using namespace KMail;
 
@@ -279,7 +280,7 @@ void MessageActions::updateActions()
   mReplyListAction->setEnabled( hasPayload );
   mNoQuoteReplyAction->setEnabled( hasPayload );
 
-  mAnnotateAction->setEnabled( singleMsg );
+  mAnnotateAction->setEnabled( singleMsg && Nepomuk::ResourceManager::instance()->initialized() );
   mAsynNepomukRetriever->requestResource( mCurrentItem.url(), QVector<QUrl>() << Nepomuk::Resource::descriptionUri() << Nepomuk::Resource::annotationUri() );
 
   mStatusMenu->setEnabled( multiVisible );
