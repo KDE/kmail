@@ -2372,7 +2372,8 @@ ComposerPageGeneralTab::ComposerPageGeneralTab( QWidget * parent )
   label = new QLabel( GlobalSettings::self()->externalEditorItem()->label(),
                    hbox );
   mEditorRequester = new KUrlRequester( hbox );
-  mEditorRequester->setObjectName( "kcfg_ExternalEditor" );
+  //Laurent 25/10/2011 fix #Bug 256655 - A "save changes?" dialog appears ALWAYS when leaving composer settings, even when unchanged.
+  //mEditorRequester->setObjectName( "kcfg_ExternalEditor" );
   connect( mEditorRequester, SIGNAL(urlSelected(KUrl)),
            this, SLOT(slotEmitChanged()) );
   connect( mEditorRequester, SIGNAL(textChanged(QString)),
