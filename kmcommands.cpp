@@ -1266,14 +1266,14 @@ KMCommand::Result KMSetTagCommand::execute()
   const Nepomuk::Tag n_tag( mTagLabel );
   Q_FOREACH( const Akonadi::Item& item, mItem ) {
     Nepomuk::Resource n_resource( item.url() );
-    const QList<Nepomuk::Tag> tagList = n_resource.tags();
+    QList<Nepomuk::Tag> n_tag_list = n_resource.tags();
 
-    const int tagPosition = tagList.indexOf( mTagLabel );
+    const int tagPosition = n_tag_list.indexOf( mTagLabel );
     if ( tagPosition == -1 ) {
       n_resource.addTag( n_tag );
     } else if ( mMode == Toggle ) {
-      QList< Nepomuk::Tag > n_tag_list = n_resource.tags();
-      for (int i = 0; i < n_tag_list.count(); ++i ) {
+      const int numberOfTag( n_tag_list.count() );
+      for (int i = 0; i < numberOfTag; ++i ) {
         if ( n_tag_list[i].resourceUri() == mTagLabel ) {
           n_tag_list.removeAt( i );
           break;
