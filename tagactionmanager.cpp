@@ -145,18 +145,19 @@ void TagActionManager::updateActionStates( int numberOfSelectedMessages,
                                            const Akonadi::Item &selectedItem )
 {
   QMap<QString,KToggleAction*>::const_iterator it = mTagActions.constBegin();
+  QMap<QString,KToggleAction*>::const_iterator end = mTagActions.constEnd();
   if ( 1 == numberOfSelectedMessages )
   {
     Q_ASSERT( selectedItem.isValid() );
     Nepomuk::Resource itemResource( selectedItem.url() );
-    for ( ; it != mTagActions.constEnd(); ++it ) {
+    for ( ; it != end; ++it ) {
       const bool hasTag = itemResource.tags().contains( Nepomuk::Tag( it.key() ) );
       it.value()->setChecked( hasTag );
       it.value()->setEnabled( true );
     }
   }
   else if ( numberOfSelectedMessages > 1 ) {
-    for ( ; it != mTagActions.constEnd(); ++it ) {
+    for ( ; it != end; ++it ) {
       Nepomuk::Tag tag( it.key() );
       it.value()->setChecked( false );
       it.value()->setEnabled( true );
@@ -164,7 +165,8 @@ void TagActionManager::updateActionStates( int numberOfSelectedMessages,
     }
   }
   else {
-    for ( ; it != mTagActions.constEnd(); ++it ) {
+    
+    for ( ; it != end; ++it ) {
       it.value()->setEnabled( false );
     }
   }
