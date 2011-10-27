@@ -62,6 +62,8 @@ namespace KMail {
 
       // Compare, based on priority
       static bool compare( Ptr &tag1, Ptr &tag2 );
+      // Compare, based on name
+      static bool compareName( Ptr &tag1, Ptr &tag2 );
 
       QString tagName;
       QColor textColor;

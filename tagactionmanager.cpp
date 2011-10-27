@@ -111,6 +111,9 @@ void TagActionManager::createActions()
   }
   qSort( tagList.begin(), tagList.end(), KMail::Tag::compare );
 
+  QAction *separator = new QAction( this );
+  separator->setSeparator( true );
+  mMessageActions->messageStatusMenu()->menu()->addAction( separator );
   // Create a action for each tag and plug it into various places
   foreach( const Tag::Ptr &tag, tagList ) {
 
