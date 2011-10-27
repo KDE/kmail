@@ -237,7 +237,7 @@ KMComposeWin::KMComposeWin( const KMime::Message::Ptr &aMsg, Composer::TemplateC
   defaultSizes << 0;
   mHeadersToEditorSplitter->setSizes( defaultSizes );
   QVBoxLayout *v = new QVBoxLayout( mMainWidget );
-  KPIM::NepomukWarning *nepomukWarning = new KPIM::NepomukWarning( "kmail-composer" );
+  KPIM::NepomukWarning *nepomukWarning = new KPIM::NepomukWarning( "kmail-composer", this );
   nepomukWarning->setMissingFeatures( QStringList() << i18n("Recipient auto-completion") << i18n("Distribution lists") << i18n("Per-contact crypto preferences") );
   v->addWidget( nepomukWarning );
   v->setMargin(0);
