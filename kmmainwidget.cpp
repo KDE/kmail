@@ -2111,7 +2111,7 @@ void KMMainWidget::slotSelectMoreMessageTagList()
   if ( selectedMessages.isEmpty() )
     return;
   
-  TagSelectDialog dlg( this );
+  TagSelectDialog dlg( this, selectedMessages.count(), selectedMessages.first() );
   if ( dlg.exec() ) {
     const QList<QString> lst = dlg.selectedTag();
   

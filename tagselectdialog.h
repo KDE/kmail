@@ -34,11 +34,15 @@
 
 class QListWidget;
 
+namespace Akonadi {
+class Item;
+}
+
 class TagSelectDialog : public KDialog
 {
   Q_OBJECT
 public:
-  explicit TagSelectDialog( QWidget * parent );
+  explicit TagSelectDialog( QWidget * parent, int numberOfSelectedMessages, const Akonadi::Item &selectedItem );
   ~TagSelectDialog();
   QList<QString> selectedTag() const;
 private:

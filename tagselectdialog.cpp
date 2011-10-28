@@ -32,9 +32,11 @@
 #include <Nepomuk/Tag>
 #include <QGridLayout>
 #include <QListWidget>
+#include <akonadi/item.h>
+
 using namespace KMail;
 
-TagSelectDialog::TagSelectDialog( QWidget * parent )
+TagSelectDialog::TagSelectDialog( QWidget * parent, int numberOfSelectedMessages, const Akonadi::Item &selectedItem)
   : KDialog( parent )
 {
   setCaption( i18n( "Select Tags" ) );
@@ -57,12 +59,23 @@ TagSelectDialog::TagSelectDialog( QWidget * parent )
   }
   qSort( tagList.begin(), tagList.end(), KMail::Tag::compare );
 
+  Nepomuk::Resource itemResource( selectedItem.url() );
+
   foreach( const Tag::Ptr &tag, tagList ) {
     QListWidgetItem *item = new QListWidgetItem( tag->tagName, mListTag );
     item->setFlags( Qt::ItemIsUserCheckable | Qt::ItemIsEnabled | Qt::ItemIsSelectable );
     item->setCheckState( Qt::Unchecked );
     mListTag->addItem( item );
-  }  
+
+    if ( numberOfSelectedMessages == 1 )
+    {
+      const bool hasTag = itemResource.tags().contains(  Nepomuk::Tag( tag->tagName ) );
+      item->setCheckState( hasTag ? Qt::Checked : Qt::Unchecked );
+    }
+    else if ( numberOfSelectedMessages > 1 ) {
+      item->setCheckState( Qt::Unchecked );
+    }    
+  }
 }
 
 TagSelectDialog::~TagSelectDialog()
