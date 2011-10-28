@@ -1266,14 +1266,14 @@ KMCommand::Result KMSetTagCommand::execute()
     Nepomuk::Resource n_resource( item.url() );
     QList<Nepomuk::Tag> n_tag_list;
 
-    if ( mMode != CleanExistingAndAddNew )
-      n_tag_list= n_resource.tags();
+    if ( mMode != CleanExistingAndAddNew ){
+      n_tag_list = n_resource.tags();
+    }
     
     Q_FOREACH( const QString &tagLabel, mTagLabel ) {
       const Nepomuk::Tag n_tag( tagLabel );
       if ( mMode == CleanExistingAndAddNew ) {
         n_resource.addTag( n_tag );
-        qDebug()<<" add  :"<<tagLabel;
       } else {
         const int tagPosition = n_tag_list.indexOf( tagLabel );
         if ( tagPosition == -1 ) {
@@ -1286,10 +1286,10 @@ KMCommand::Result KMSetTagCommand::execute()
               break;
             }
           }
-          n_resource.setTags( n_tag_list );
         }
       }
     }
+    n_resource.setTags( n_tag_list );
   }
   return OK;
 }

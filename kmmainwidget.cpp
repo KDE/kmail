@@ -2113,8 +2113,7 @@ void KMMainWidget::slotSelectMoreMessageTagList()
   
   TagSelectDialog dlg( this );
   if ( dlg.exec() ) {
-    //TODO
-    QList<QString> lst = dlg.selectedTag();
+    const QList<QString> lst = dlg.selectedTag();
   
     KMCommand *command = new KMSetTagCommand( lst, selectedMessages, KMSetTagCommand::CleanExistingAndAddNew );
     command->start();
