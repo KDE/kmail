@@ -2100,16 +2100,24 @@ void KMMainWidget::toggleMessageSetTag( const QList<Akonadi::Item> &select, cons
 {
   if ( select.isEmpty() )
     return;
-  KMCommand *command = new KMSetTagCommand( taglabel, select, KMSetTagCommand::Toggle );
+  KMCommand *command = new KMSetTagCommand( QList<QString>()<<taglabel,select, KMSetTagCommand::Toggle );
   command->start();
 }
 
 
 void KMMainWidget::slotSelectMoreMessageTagList()
 {
+  const QList<Akonadi::Item> selectedMessages = mMessagePane->selectionAsMessageItemList();
+  if ( selectedMessages.isEmpty() )
+    return;
+  
   TagSelectDialog dlg( this );
   if ( dlg.exec() ) {
     //TODO
+    QList<QString> lst = dlg.selectedTag();
+  
+    KMCommand *command = new KMSetTagCommand( lst, selectedMessages, KMSetTagCommand::CleanExistingAndAddNew );
+    command->start();
   }    
 }
 

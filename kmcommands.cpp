@@ -1252,7 +1252,7 @@ void KMSetStatusCommand::slotModifyItemDone( KJob * job )
   deleteLater();
 }
 
-KMSetTagCommand::KMSetTagCommand( const QString &tagLabel, const QList<Akonadi::Item> &item,
+KMSetTagCommand::KMSetTagCommand( const QList<QString> &tagLabel, const QList<Akonadi::Item> &item,
     SetTagMode mode )
   : mTagLabel( tagLabel )
   , mItem( item )
@@ -1262,24 +1262,33 @@ KMSetTagCommand::KMSetTagCommand( const QString &tagLabel, const QList<Akonadi::
 
 KMCommand::Result KMSetTagCommand::execute()
 {
-  //Set the visible name for the tag
-  const Nepomuk::Tag n_tag( mTagLabel );
   Q_FOREACH( const Akonadi::Item& item, mItem ) {
     Nepomuk::Resource n_resource( item.url() );
-    QList<Nepomuk::Tag> n_tag_list = n_resource.tags();
+    QList<Nepomuk::Tag> n_tag_list;
 
-    const int tagPosition = n_tag_list.indexOf( mTagLabel );
-    if ( tagPosition == -1 ) {
-      n_resource.addTag( n_tag );
-    } else if ( mMode == Toggle ) {
-      const int numberOfTag( n_tag_list.count() );
-      for (int i = 0; i < numberOfTag; ++i ) {
-        if ( n_tag_list[i].resourceUri() == mTagLabel ) {
-          n_tag_list.removeAt( i );
-          break;
+    if ( mMode != CleanExistingAndAddNew )
+      n_tag_list= n_resource.tags();
+    
+    Q_FOREACH( const QString &tagLabel, mTagLabel ) {
+      const Nepomuk::Tag n_tag( tagLabel );
+      if ( mMode == CleanExistingAndAddNew ) {
+        n_resource.addTag( n_tag );
+        qDebug()<<" add  :"<<tagLabel;
+      } else {
+        const int tagPosition = n_tag_list.indexOf( tagLabel );
+        if ( tagPosition == -1 ) {
+          n_resource.addTag( n_tag );
+        } else if ( mMode == Toggle ) {
+          const int numberOfTag( n_tag_list.count() );
+          for (int i = 0; i < numberOfTag; ++i ) {
+            if ( n_tag_list[i].resourceUri() == tagLabel ) {
+              n_tag_list.removeAt( i );
+              break;
+            }
+          }
+          n_resource.setTags( n_tag_list );
         }
       }
-      n_resource.setTags( n_tag_list );
     }
   }
   return OK;
