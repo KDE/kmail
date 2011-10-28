@@ -103,7 +103,10 @@ namespace KMail {
         * should connect to this signal and change the tags of the messages
         */
       void tagActionTriggered( const QString &tagLabel );
-
+      /**
+       * Emitted when we want to select more action
+       */
+      void tagMoreActionClicked();
     private Q_SLOTS:
 
       void tagsChanged();

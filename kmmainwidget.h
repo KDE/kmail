@@ -265,6 +265,7 @@ class KMAIL_EXPORT KMMainWidget : public QWidget
     /** Adds if not existing/removes if existing the tag identified by @p aLabel
         in all selected messages */
     void slotUpdateMessageTagList( const QString &aLabel );
+    void slotSelectMoreMessageTagList();
 
     /**
      * Convenience function to get the action collection in a list.

@@ -38,6 +38,8 @@
 
 using namespace KMail;
 
+static int s_numberMaxTag = 10;
+
 TagActionManager::TagActionManager( QObject *parent, KActionCollection *actionCollection,
                                     MessageActions *messageActions, KXMLGUIClient *guiClient )
   : QObject( parent ),
@@ -111,10 +113,11 @@ void TagActionManager::createActions()
   }
   qSort( tagList.begin(), tagList.end(), KMail::Tag::compare );
 
-  QAction *separator = new QAction( this );
+  KAction *separator = new KAction( this );
   separator->setSeparator( true );
   mMessageActions->messageStatusMenu()->menu()->addAction( separator );
   // Create a action for each tag and plug it into various places
+  int i = 0;
   foreach( const Tag::Ptr &tag, tagList ) {
 
     QString cleanName( i18n("Message Tag %1", tag->tagName ) );
@@ -134,9 +137,25 @@ void TagActionManager::createActions()
     mMessageTagToggleMapper->setMapping( tagAction, tag->nepomukResourceUri.toString() );
 
     mTagActions.insert( tag->nepomukResourceUri.toString(), tagAction );
-    mMessageActions->messageStatusMenu()->menu()->addAction( tagAction );
+    //Add to menu.
+    if ( i< s_numberMaxTag )
+      mMessageActions->messageStatusMenu()->menu()->addAction( tagAction );
+    else if ( i == s_numberMaxTag && i <tagList.count() )
+    {
+      KAction *separator = new KAction( this );
+      separator->setSeparator( true );
+      mMessageActions->messageStatusMenu()->menu()->addAction( separator );
+      
+      KAction *tagMoreAction = new KAction( i18n( "More..." ), this );
+      mMessageActions->messageStatusMenu()->menu()->addAction( tagMoreAction );
+      connect( tagMoreAction, SIGNAL(triggered(bool)),
+               this, SIGNAL(tagMoreActionClicked()) );
+    }
+    
     if ( tag->inToolbar )
       mToolbarActions.append( tagAction );
+    
+    ++i;
   }
 
   if ( !mToolbarActions.isEmpty() && mGUIClient->factory() ) {

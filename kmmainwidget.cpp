@@ -54,7 +54,7 @@
 #include "collectionquotapage.h"
 #include "collectiontemplatespage.h"
 #include "collectionviewpage.h"
-
+#include "tagselectdialog.h"
 
 
 #include "mailcommon/collectiongeneralpage.h"
@@ -274,6 +274,9 @@ K_GLOBAL_STATIC( KMMainWidget::PtrList, theMainWidgetList )
 
   connect( mTagActionManager, SIGNAL(tagActionTriggered(QString)),
            this, SLOT(slotUpdateMessageTagList(QString)) );
+
+  connect( mTagActionManager, SIGNAL(tagMoreActionClicked()),
+           this, SLOT(slotSelectMoreMessageTagList()) );
 
   connect ( Solid::Networking::notifier(), SIGNAL(statusChanged(Solid::Networking::Status)),
            this, SLOT(slotNetworkStatusChanged(Solid::Networking::Status)) );
@@ -2099,6 +2102,15 @@ void KMMainWidget::toggleMessageSetTag( const QList<Akonadi::Item> &select, cons
     return;
   KMCommand *command = new KMSetTagCommand( taglabel, select, KMSetTagCommand::Toggle );
   command->start();
+}
+
+
+void KMMainWidget::slotSelectMoreMessageTagList()
+{
+  TagSelectDialog dlg( this );
+  if ( dlg.exec() ) {
+    //TODO
+  }    
 }
 
 
