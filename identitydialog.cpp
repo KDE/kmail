@@ -694,7 +694,7 @@ namespace KMail {
   bool IdentityDialog::checkFolderExists( const QString & folderID,
                                           const QString & msg )
   {
-    Akonadi::Collection folder = CommonKernel->collectionFromId( folderID.toLongLong() );
+    const Akonadi::Collection folder = CommonKernel->collectionFromId( folderID.toLongLong() );
     if ( !folder.isValid() ) {
       KMessageBox::sorry( this, msg );
       return false;

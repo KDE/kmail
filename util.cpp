@@ -97,7 +97,7 @@ void KMail::Util::launchAccountWizard( QWidget *w )
 
 void KMail::Util::handleClickedURL( const KUrl &url, uint identity )
 {
-  if ( url.protocol() == "mailto" )
+  if ( url.protocol() == QLatin1String( "mailto" ) )
   {
     KMime::Message::Ptr msg ( new KMime::Message );
     MessageHelper::initHeader( msg, KMKernel::self()->identityManager(), identity );
@@ -127,7 +127,8 @@ void KMail::Util::mailingListsHandleURL( const KUrl::List& lst,const QSharedPoin
     ? QLatin1String( "mailto" ) : QLatin1String( "https" );
 
   KUrl urlToHandle;
-  for ( KUrl::List::ConstIterator itr = lst.constBegin(); itr != lst.constEnd(); ++itr ) {
+  KUrl::List::ConstIterator end( lst.constEnd() );
+  for ( KUrl::List::ConstIterator itr = lst.constBegin(); itr != end; ++itr ) {
     if ( handler == (*itr).protocol() ) {
       urlToHandle = *itr;
       break;

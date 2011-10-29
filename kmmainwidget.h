@@ -121,6 +121,8 @@ class KMAIL_EXPORT KMMainWidget : public QWidget
     /** Write configuration options. */
     virtual void writeConfig();
 
+    void writeReaderConfig();
+
     /** Easy access to main components of the window. */
     KMReaderWin* messageView() const { return mMsgView; }
     /** Access to the header list pane. */
@@ -263,6 +265,7 @@ class KMAIL_EXPORT KMMainWidget : public QWidget
     /** Adds if not existing/removes if existing the tag identified by @p aLabel
         in all selected messages */
     void slotUpdateMessageTagList( const QString &aLabel );
+    void slotSelectMoreMessageTagList();
 
     /**
      * Convenience function to get the action collection in a list.

@@ -257,9 +257,9 @@ namespace MailCommon {
 
     private:
       /* Check for the availability of an executible along the PATH */
-      int checkForProgram( const QString &executable );
+      int checkForProgram( const QString &executable ) const;
       /* generic checks if any option in a page is checked */
-      bool anyVirusOptionChecked();
+      bool anyVirusOptionChecked() const;
       /* convenience method calling the appropriate filter manager method */
       const QString uniqueNameFor( const QString & name );
       /* convenience method to sort out new and existing filters */
@@ -299,7 +299,6 @@ namespace MailCommon {
 
     protected:
       QBoxLayout *mLayout;
-
     private:
       QLabel *mBannerLabel;
   };
@@ -316,7 +315,7 @@ namespace MailCommon {
 
       void setScanProgressText( const QString &toolName );
       void addAvailableTool( const QString &visibleName );
-      bool isProgramSelected( const QString &visibleName );
+      bool isProgramSelected( const QString &visibleName ) const;
 
     private slots:
       void processSelectionChange();

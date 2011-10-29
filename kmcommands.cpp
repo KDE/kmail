@@ -850,24 +850,25 @@ KMCommand::Result KMForwardCommand::execute()
                    KGuiItem(i18n("Send Individually")) );
 
     if ( answer == KMessageBox::Yes ) {
-        MessageFactory factory( KMime::Message::Ptr( new KMime::Message ), mIdentity );
-        factory.setIdentityManager( KMKernel::self()->identityManager() );
-        factory.setFolderIdentity( MailCommon::Util::folderIdentity( msgList.first() ) );
-        // get a list of messages
-        QList< KMime::Message::Ptr > msgs;
-        foreach( const Akonadi::Item& item, msgList )
-          msgs << MessageCore::Util::message( item );
-        QPair< KMime::Message::Ptr, KMime::Content* > fwdMsg = factory.createForwardDigestMIME( msgs );
-        {
-          KMail::Composer * win = KMail::makeComposer( fwdMsg.first, KMail::Composer::Forward, mIdentity );
-          win->addAttach( fwdMsg.second );
-          win->show();
-        }
-
+      Akonadi::Item firstItem( msgList.first() );
+      MessageFactory factory( KMime::Message::Ptr( new KMime::Message ), firstItem.id(), firstItem.parentCollection() );
+      factory.setIdentityManager( KMKernel::self()->identityManager() );
+      factory.setFolderIdentity( MailCommon::Util::folderIdentity( firstItem ) );
+      // get a list of messages
+      QList< KMime::Message::Ptr > msgs;
+      foreach( const Akonadi::Item& item, msgList )
+        msgs << MessageCore::Util::message( item );
+      
+      QPair< KMime::Message::Ptr, KMime::Content* > fwdMsg = factory.createForwardDigestMIME( msgs );
+      KMail::Composer * win = KMail::makeComposer( fwdMsg.first, KMail::Composer::Forward, mIdentity );
+      win->addAttach( fwdMsg.second );
+      win->show();
       return OK;
     } else if ( answer == KMessageBox::No ) {// NO MIME DIGEST, Multiple forward
       QList<Akonadi::Item>::const_iterator it;
-      for ( it = msgList.constBegin(); it != msgList.constEnd(); ++it ) {
+      QList<Akonadi::Item>::const_iterator end( msgList.constEnd() );
+      
+      for ( it = msgList.constBegin(); it != end; ++it ) {
         KMime::Message::Ptr msg = MessageCore::Util::message( *it );
         if ( !msg )
           return Failed;
@@ -941,23 +942,17 @@ KMForwardAttachedCommand::KMForwardAttachedCommand( QWidget *parent,
 KMCommand::Result KMForwardAttachedCommand::execute()
 {
   QList<Akonadi::Item> msgList = retrievedMsgs();
-  MessageFactory factory( KMime::Message::Ptr( new KMime::Message ), mIdentity );
+  Akonadi::Item firstItem( msgList.first() );
+  MessageFactory factory( KMime::Message::Ptr( new KMime::Message ), firstItem.id(), firstItem.parentCollection() );
   factory.setIdentityManager( KMKernel::self()->identityManager() );
-  factory.setFolderIdentity( MailCommon::Util::folderIdentity( msgList.first() ) );
-  // get a list of messages
-  QList< KMime::Message::Ptr > msgs;
-  foreach( const Akonadi::Item& item, msgList )
-    msgs << MessageCore::Util::message( item );
-  QPair< KMime::Message::Ptr, QList< KMime::Content* > > fwdMsg = factory.createAttachedForward( msgs );
-  {
-    if ( !mWin ) {
-      mWin = KMail::makeComposer( fwdMsg.first, KMail::Composer::Forward, mIdentity );
-    }
-    foreach( KMime::Content* attach, fwdMsg.second )
-      mWin->addAttach( attach );
-    mWin->show();
+  factory.setFolderIdentity( MailCommon::Util::folderIdentity( firstItem ) );
+    
+  QPair< KMime::Message::Ptr, QList< KMime::Content* > > fwdMsg = factory.createAttachedForward( msgList );
+  if ( !mWin ) {
+    mWin = KMail::makeComposer( fwdMsg.first, KMail::Composer::Forward, mIdentity );
   }
-
+  foreach( KMime::Content* attach, fwdMsg.second )
+    mWin->addAttach( attach );
   mWin->show();
   return OK;
 }
@@ -1251,13 +1246,13 @@ KMCommand::Result KMSetStatusCommand::execute()
 
 void KMSetStatusCommand::slotModifyItemDone( KJob * job )
 {
-  if ( job->error() ) {
+  if ( job && job->error() ) {
     kWarning() << " Error trying to set item status:" << job->errorText();
   }
   deleteLater();
 }
 
-KMSetTagCommand::KMSetTagCommand( const QString &tagLabel, const QList<Akonadi::Item> &item,
+KMSetTagCommand::KMSetTagCommand( const QList<QString> &tagLabel, const QList<Akonadi::Item> &item,
     SetTagMode mode )
   : mTagLabel( tagLabel )
   , mItem( item )
@@ -1267,25 +1262,34 @@ KMSetTagCommand::KMSetTagCommand( const QString &tagLabel, const QList<Akonadi::
 
 KMCommand::Result KMSetTagCommand::execute()
 {
-  //Set the visible name for the tag
-  const Nepomuk::Tag n_tag( mTagLabel );
   Q_FOREACH( const Akonadi::Item& item, mItem ) {
     Nepomuk::Resource n_resource( item.url() );
-    const QList<Nepomuk::Tag> tagList = n_resource.tags();
+    QList<Nepomuk::Tag> n_tag_list;
 
-    const int tagPosition = tagList.indexOf( mTagLabel );
-    if ( tagPosition == -1 ) {
-      n_resource.addTag( n_tag );
-    } else if ( mMode == Toggle ) {
-      QList< Nepomuk::Tag > n_tag_list = n_resource.tags();
-      for (int i = 0; i < n_tag_list.count(); ++i ) {
-        if ( n_tag_list[i].resourceUri() == mTagLabel ) {
-          n_tag_list.removeAt( i );
-          break;
+    if ( mMode != CleanExistingAndAddNew ){
+      n_tag_list = n_resource.tags();
+    }
+    
+    Q_FOREACH( const QString &tagLabel, mTagLabel ) {
+      const Nepomuk::Tag n_tag( tagLabel );
+      if ( mMode == CleanExistingAndAddNew ) {
+        n_resource.addTag( n_tag );
+      } else {
+        const int tagPosition = n_tag_list.indexOf( tagLabel );
+        if ( tagPosition == -1 ) {
+          n_resource.addTag( n_tag );
+        } else if ( mMode == Toggle ) {
+          const int numberOfTag( n_tag_list.count() );
+          for (int i = 0; i < numberOfTag; ++i ) {
+            if ( n_tag_list[i].resourceUri() == tagLabel ) {
+              n_tag_list.removeAt( i );
+              break;
+            }
+          }
         }
       }
-      n_resource.setTags( n_tag_list );
     }
+    n_resource.setTags( n_tag_list );
   }
   return OK;
 }

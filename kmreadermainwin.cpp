@@ -148,6 +148,11 @@ void KMReaderMainWin::showMessage( const QString & encoding, const Akonadi::Item
 
 void KMReaderMainWin::showMessage( const QString& encoding, KMime::Message::Ptr message )
 {
+  Akonadi::Item item( "message/rfc822" );
+  item.setPayload( message );
+  mMsg = item;
+  mMsgActions->setCurrentMessage( item );
+  
   mReaderWin->setOverrideEncoding( encoding );
   mReaderWin->setMessage( message );
   if ( message )
@@ -180,8 +185,7 @@ void KMReaderMainWin::slotTrashMsg()
 //-----------------------------------------------------------------------------
 void KMReaderMainWin::slotForwardInlineMsg()
 {
-   if ( !mReaderWin->message().isValid() ) return;
-
+  if ( !mReaderWin->message().hasPayload<KMime::Message::Ptr>() ) return;
    KMCommand *command = 0;
    if ( mReaderWin->message().parentCollection().isValid() ) {
      QSharedPointer<FolderCollection> fd = FolderCollection::forCollection( mReaderWin->message().parentCollection(), false );
@@ -201,8 +205,7 @@ void KMReaderMainWin::slotForwardInlineMsg()
 //-----------------------------------------------------------------------------
 void KMReaderMainWin::slotForwardAttachedMsg()
 {
-   if ( !mReaderWin->message().isValid() )
-     return;
+  if ( !mReaderWin->message().hasPayload<KMime::Message::Ptr>() ) return;
    KMCommand *command = 0;
    if ( mReaderWin->message().parentCollection().isValid() ) {
      QSharedPointer<FolderCollection> fd = FolderCollection::forCollection( mReaderWin->message().parentCollection(), false );
@@ -223,8 +226,7 @@ void KMReaderMainWin::slotForwardAttachedMsg()
 //-----------------------------------------------------------------------------
 void KMReaderMainWin::slotRedirectMsg()
 {
-  if( !mReaderWin->message().isValid() )
-      return;
+  if ( !mReaderWin->message().hasPayload<KMime::Message::Ptr>() ) return;
   KMCommand *command = new KMRedirectCommand( this, mReaderWin->message() );
   connect( command, SIGNAL(completed(KMCommand*)),
          this, SLOT(slotReplyOrForwardFinished()) );
@@ -234,8 +236,7 @@ void KMReaderMainWin::slotRedirectMsg()
 //-----------------------------------------------------------------------------
 void KMReaderMainWin::slotCustomReplyToMsg( const QString &tmpl )
 {
-  if( !mReaderWin->message().isValid() )
-    return;
+  if ( !mReaderWin->message().hasPayload<KMime::Message::Ptr>() ) return;
   KMCommand *command = new KMCustomReplyCommand( this,
                                                    mReaderWin->message(),
                                                    mReaderWin->copyText(),
@@ -248,8 +249,7 @@ void KMReaderMainWin::slotCustomReplyToMsg( const QString &tmpl )
 //-----------------------------------------------------------------------------
 void KMReaderMainWin::slotCustomReplyAllToMsg( const QString &tmpl )
 {
-  if( !mReaderWin->message().isValid() )
-    return;
+  if ( !mReaderWin->message().hasPayload<KMime::Message::Ptr>() ) return;
   KMCommand *command = new KMCustomReplyCommand( this,
                                                       mReaderWin->message(),
                                                       mReaderWin->copyText(),
@@ -263,8 +263,7 @@ void KMReaderMainWin::slotCustomReplyAllToMsg( const QString &tmpl )
 //-----------------------------------------------------------------------------
 void KMReaderMainWin::slotCustomForwardMsg( const QString &tmpl)
 {
-  if( !mReaderWin->message().isValid() )
-    return;
+  if ( !mReaderWin->message().hasPayload<KMime::Message::Ptr>() ) return;
   KMCommand *command = new KMCustomForwardCommand( this,
                                                    mReaderWin->message(),
                                                    0, tmpl );
@@ -401,7 +400,7 @@ void KMReaderMainWin::slotDelayedMessagePopup( KJob *job )
     if ( mUrl.protocol() == "mailto" ) {
       // popup on a mailto URL
       menu->addAction( mReaderWin->mailToComposeAction() );
-      if ( mMsg.isValid() ) {
+      if ( mMsg.hasPayload<KMime::Message::Ptr>() ) {
         menu->addAction( mReaderWin->mailToReplyAction() );
         menu->addAction( mReaderWin->mailToForwardAction() );
         menu->addSeparator();
@@ -435,16 +434,23 @@ void KMReaderMainWin::slotDelayedMessagePopup( KJob *job )
     menu->addAction( mReaderWin->selectAllAction() );
   } else if ( !urlMenuAdded ) {
     // popup somewhere else (i.e., not a URL) on the message
-    if (!mMsg.isValid()) {
+    if (!mMsg.hasPayload<KMime::Message::Ptr>() ) {
       // no message
       delete menu;
       return;
     }
+    bool replyForwardMenu = false;
     if ( mMsg.parentCollection().isValid() ) {
       Akonadi::Collection col = mMsg.parentCollection();
       if ( ! ( CommonKernel->folderIsSentMailFolder( col ) ||
                CommonKernel->folderIsDrafts( col ) ||
                CommonKernel->folderIsTemplates( col ) ) ) {
+        replyForwardMenu = true;
+      }
+    } else if ( mMsg.hasPayload<KMime::Message::Ptr>() ) {
+      replyForwardMenu = true;
+    }
+    if ( replyForwardMenu ) {
         // add the reply and forward actions only if we are not in a sent-mail,
         // templates or drafts folder
         //
@@ -453,9 +459,10 @@ void KMReaderMainWin::slotDelayedMessagePopup( KJob *job )
         menu->addAction( mMsgActions->replyMenu() );
         menu->addAction( mMsgActions->forwardMenu() );
         menu->addSeparator();
-      }
     }
-    menu->addAction( copyActionMenu() );
+    const bool messageIsValid = mMsg.isValid();
+    if ( messageIsValid ) 
+      menu->addAction( copyActionMenu() );
 
     menu->addSeparator();
     menu->addAction( mViewSourceAction );
@@ -465,9 +472,10 @@ void KMReaderMainWin::slotDelayedMessagePopup( KJob *job )
     menu->addAction( mMsgActions->printAction() );
     menu->addAction( mSaveAsAction );
     menu->addAction( mSaveAtmAction );
-    menu->addSeparator();
-    menu->addAction( mMsgActions->createTodoAction() );
-    menu->addSeparator();
+    if ( messageIsValid ) {
+      menu->addSeparator();
+      menu->addAction( mMsgActions->createTodoAction() );
+    }
   }
   menu->exec( aPoint, 0 );
   delete menu;

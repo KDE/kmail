@@ -54,6 +54,7 @@
 #include <Akonadi/Monitor>
 #include <mailutil.h>
 #include <asyncnepomukresourceretriever.h>
+#include <nepomuk/resourcemanager.h>
 
 using namespace KMail;
 
@@ -258,6 +259,7 @@ void MessageActions::setSelectedVisibleItems( const Akonadi::Item::List &items )
 
 void MessageActions::updateActions()
 {
+  const bool hasPayload = mCurrentItem.hasPayload<KMime::Message::Ptr>();
   bool singleMsg = mCurrentItem.isValid();
   Akonadi::Collection parent;
   if ( singleMsg ) //=> valid
@@ -270,15 +272,15 @@ void MessageActions::updateActions()
   const bool multiVisible = mVisibleItems.count() > 0 || mCurrentItem.isValid();
 
   mCreateTodoAction->setEnabled( singleMsg && mKorganizerIsOnSystem);
-  mReplyActionMenu->setEnabled( singleMsg );
-  mReplyAction->setEnabled( singleMsg );
-  mNoQuoteReplyAction->setEnabled( singleMsg );
-  mReplyAuthorAction->setEnabled( singleMsg );
-  mReplyAllAction->setEnabled( singleMsg );
-  mReplyListAction->setEnabled( singleMsg );
-  mNoQuoteReplyAction->setEnabled( singleMsg );
+  mReplyActionMenu->setEnabled( hasPayload );
+  mReplyAction->setEnabled( hasPayload );
+  mNoQuoteReplyAction->setEnabled( hasPayload );
+  mReplyAuthorAction->setEnabled( hasPayload );
+  mReplyAllAction->setEnabled( hasPayload );
+  mReplyListAction->setEnabled( hasPayload );
+  mNoQuoteReplyAction->setEnabled( hasPayload );
 
-  mAnnotateAction->setEnabled( singleMsg );
+  mAnnotateAction->setEnabled( singleMsg && Nepomuk::ResourceManager::instance()->initialized() );
   mAsynNepomukRetriever->requestResource( mCurrentItem.url(), QVector<QUrl>() << Nepomuk::Resource::descriptionUri() << Nepomuk::Resource::annotationUri() );
 
   mStatusMenu->setEnabled( multiVisible );
@@ -366,8 +368,8 @@ void MessageActions::updateMailingListActions( const Akonadi::Item& messageItem 
 
 void MessageActions::replyCommand(MessageComposer::ReplyStrategy strategy)
 {
-  if ( !mCurrentItem.isValid() )
-    return;
+  if ( !mCurrentItem.hasPayload<KMime::Message::Ptr>() ) return;
+
   const QString text = mMessageView ? mMessageView->copyText() : QString();
   KMCommand *command = new KMReplyCommand( mParent, mCurrentItem, strategy, text );
   connect( command, SIGNAL(completed(KMCommand*)),
@@ -451,7 +453,7 @@ void MessageActions::slotReplyAllToMsg()
 
 void MessageActions::slotNoQuoteReplyToMsg()
 {
-  if ( !mCurrentItem.isValid() )
+  if ( !mCurrentItem.hasPayload<KMime::Message::Ptr>() )
     return;
   KMCommand *command = new KMNoQuoteReplyToCommand( mParent, mCurrentItem );
   command->start();
@@ -531,7 +533,7 @@ void MessageActions::addMailingListAction( const QString &item, const KUrl &url 
 
 void MessageActions::editCurrentMessage()
 {
-  if ( !mCurrentItem.isValid() )
+  if ( !mCurrentItem.hasPayload<KMime::Message::Ptr>() )
     return;
   KMCommand *command = 0;
   Akonadi::Collection col = mCurrentItem.parentCollection();

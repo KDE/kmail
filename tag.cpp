@@ -100,7 +100,17 @@ void Tag::saveToNepomuk( SaveFlags saveFlags ) const
 
 bool Tag::compare( Tag::Ptr &tag1, Tag::Ptr &tag2 )
 {
-  return tag1->priority < tag2->priority;
+  if ( tag1->priority < tag2->priority )
+    return true;
+  else if (tag1->priority == tag2->priority)
+    return ( tag1->tagName < tag2->tagName );
+  else
+    return false;
+}
+
+bool Tag::compareName( Tag::Ptr &tag1, Tag::Ptr &tag2 )
+{
+  return ( tag1->tagName < tag2->tagName );
 }
 
 bool Tag::operator==( const Tag &other ) const

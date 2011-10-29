@@ -245,9 +245,12 @@ namespace KMail {
     setProgramIconName("kmail");
     using KMail::authors;
     using KMail::credits;
-    for ( unsigned int i = 0 ; i < sizeof authors / sizeof *authors ; ++i )
+    const unsigned int numberAuthors( sizeof authors / sizeof *authors );
+    for ( unsigned int i = 0 ; i < numberAuthors; ++i )
       addAuthor( ki18n(authors[i].name), ki18n(authors[i].desc), authors[i].email, authors[i].web );
-    for ( unsigned int i = 0 ; i < sizeof credits / sizeof *credits ; ++i )
+
+    const unsigned int numberCredits( sizeof credits / sizeof *credits );
+    for ( unsigned int i = 0 ; i < numberCredits; ++i )
       addCredit( ki18n(credits[i].name), ki18n(credits[i].desc), credits[i].email, credits[i].web );
   }
 

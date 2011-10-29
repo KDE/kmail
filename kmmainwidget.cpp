@@ -54,7 +54,7 @@
 #include "collectionquotapage.h"
 #include "collectiontemplatespage.h"
 #include "collectionviewpage.h"
-
+#include "tagselectdialog.h"
 
 
 #include "mailcommon/collectiongeneralpage.h"
@@ -274,6 +274,9 @@ K_GLOBAL_STATIC( KMMainWidget::PtrList, theMainWidgetList )
 
   connect( mTagActionManager, SIGNAL(tagActionTriggered(QString)),
            this, SLOT(slotUpdateMessageTagList(QString)) );
+
+  connect( mTagActionManager, SIGNAL(tagMoreActionClicked()),
+           this, SLOT(slotSelectMoreMessageTagList()) );
 
   connect ( Solid::Networking::notifier(), SIGNAL(statusChanged(Solid::Networking::Status)),
            this, SLOT(slotNetworkStatusChanged(Solid::Networking::Status)) );
@@ -912,10 +915,6 @@ void KMMainWidget::readConfig()
 //-----------------------------------------------------------------------------
 void KMMainWidget::writeConfig()
 {
-  KSharedConfig::Ptr config = KMKernel::self()->config();
-  KConfigGroup geometry( config, "Geometry" );
-  KConfigGroup general( config, "General" );
-
   // Don't save the sizes of all the widgets when we were never shown.
   // This can happen in Kontact, where the KMail plugin is automatically
   // loaded, but not necessarily shown.
@@ -962,6 +961,15 @@ void KMMainWidget::writeConfig()
         GlobalSettings::self()->setReaderWindowWidth( mMsgView->width() );
       mMsgView->viewer()->writeConfig();
       GlobalSettings::self()->setReaderWindowHeight( mMsgView->height() );
+    }
+  }
+}
+
+void KMMainWidget::writeReaderConfig()
+{
+  if ( mWasEverShown ) {
+    if ( mMsgView ) {
+      mMsgView->viewer()->writeConfig();
     }
   }
 }
@@ -2092,8 +2100,24 @@ void KMMainWidget::toggleMessageSetTag( const QList<Akonadi::Item> &select, cons
 {
   if ( select.isEmpty() )
     return;
-  KMCommand *command = new KMSetTagCommand( taglabel, select, KMSetTagCommand::Toggle );
+  KMCommand *command = new KMSetTagCommand( QList<QString>()<<taglabel,select, KMSetTagCommand::Toggle );
   command->start();
+}
+
+
+void KMMainWidget::slotSelectMoreMessageTagList()
+{
+  const QList<Akonadi::Item> selectedMessages = mMessagePane->selectionAsMessageItemList();
+  if ( selectedMessages.isEmpty() )
+    return;
+  
+  TagSelectDialog dlg( this, selectedMessages.count(), selectedMessages.first() );
+  if ( dlg.exec() ) {
+    const QList<QString> lst = dlg.selectedTag();
+  
+    KMCommand *command = new KMSetTagCommand( lst, selectedMessages, KMSetTagCommand::CleanExistingAndAddNew );
+    command->start();
+  }    
 }
 
 
@@ -2839,7 +2863,7 @@ void KMMainWidget::slotDelayedMessagePopup( KJob *job )
   bool urlMenuAdded = false;
 
   if ( !mUrlCurrent.isEmpty() ) {
-    if ( mUrlCurrent.protocol() == "mailto" ) {
+    if ( mUrlCurrent.protocol() == QLatin1String( "mailto" ) ) {
       // popup on a mailto URL
       menu->addAction( mMsgView->mailToComposeAction() );
       menu->addAction( mMsgView->mailToReplyAction() );
@@ -3037,7 +3061,7 @@ void KMMainWidget::setupActions()
 
   //----- Tools menu
   if (parent()->inherits("KMMainWin")) {
-    KAction *action = new KAction(KIcon("help-contents"), i18n("&Address Book"), this);
+    KAction *action = new KAction(KIcon("x-office-address-book"), i18n("&Address Book"), this);
     actionCollection()->addAction("addressbook", action );
     connect(action, SIGNAL(triggered(bool)), SLOT(slotAddrBook()));
     if (KStandardDirs::findExe("kaddressbook").isEmpty())
@@ -4056,7 +4080,7 @@ void KMMainWidget::initializeFilterActions()
 
   foreach ( MailFilter *filter, MailCommon::FilterManager::instance()->filters() ) {
     if ( !filter->isEmpty() && filter->configureShortcut() && filter->isEnabled() ) {
-      QString filterName = QString( "Filter %1").arg( filter->name() );
+      QString filterName = QString::fromLatin1( "Filter %1").arg( filter->name() );
       QString normalizedName = filterName.replace(' ', '_');
       if ( action( normalizedName.toUtf8() ) ) {
         continue;

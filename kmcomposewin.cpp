@@ -237,7 +237,7 @@ KMComposeWin::KMComposeWin( const KMime::Message::Ptr &aMsg, Composer::TemplateC
   defaultSizes << 0;
   mHeadersToEditorSplitter->setSizes( defaultSizes );
   QVBoxLayout *v = new QVBoxLayout( mMainWidget );
-  KPIM::NepomukWarning *nepomukWarning = new KPIM::NepomukWarning( "kmail-composer" );
+  KPIM::NepomukWarning *nepomukWarning = new KPIM::NepomukWarning( "kmail-composer", this );
   nepomukWarning->setMissingFeatures( QStringList() << i18n("Recipient auto-completion") << i18n("Distribution lists") << i18n("Per-contact crypto preferences") );
   v->addWidget( nepomukWarning );
   v->setMargin(0);
@@ -463,7 +463,7 @@ KMComposeWin::~KMComposeWin()
   // When we have a collection set, store the message back to that collection.
   // Note that when we save the message or sent it, mFolder is set back to 0.
   // So this for example kicks in when opening a draft and then closing the window.
-  if ( mFolder.isValid() && mMsg ) {
+  if ( mFolder.isValid() && mMsg && isModified() ) {
     Akonadi::Item item;
     item.setPayload( mMsg );
     item.setMimeType( KMime::Message::mimeType() );
@@ -666,7 +666,6 @@ void KMComposeWin::slotView( void )
     return; // otherwise called from rethinkFields during the construction
             // which is not the intended behavior
   }
-  int id;
 
   //This sucks awfully, but no, I cannot get an activated(int id) from
   // actionContainer()
@@ -674,6 +673,7 @@ void KMComposeWin::slotView( void )
   if ( !act ) {
     return;
   }
+  int id;
 
   if ( act == mAllFieldsAction ) {
     id = 0;
@@ -752,7 +752,7 @@ int KMComposeWin::calcColumnWidth( int which, long allShowing, int width ) const
 void KMComposeWin::rethinkFields( bool fromSlot )
 {
   //This sucks even more but again no ids. sorry (sven)
-  int mask, row, numRows;
+  int mask, row;
   long showHeaders;
 
   if ( mShowHeaders < 0 ) {
@@ -766,8 +766,6 @@ void KMComposeWin::rethinkFields( bool fromSlot )
       mNumHeaders++;
     }
   }
-
-  numRows = mNumHeaders + 1;
 
   delete mGrid;
   mGrid = new QGridLayout( mHeadersArea );
@@ -1003,6 +1001,7 @@ void KMComposeWin::slotDelayedApplyTemplate( KJob *job )
   TemplateParser::TemplateParser parser( mMsg, mode );
   parser.setSelection( mTextSelection );
   parser.setAllowDecryption( MessageViewer::GlobalSettings::self()->automaticDecrypt() );
+  parser.setWordWrap( MessageComposer::MessageComposerSettings::self()->wordWrap(), MessageComposer::MessageComposerSettings::self()->lineWrapWidth() );
 
   foreach ( const Akonadi::Item &item, items ) {
     if ( !mCustomTemplate.isEmpty() )
@@ -1138,6 +1137,8 @@ void KMComposeWin::setupActions( void )
 
   action = new KAction(KIcon("x-office-address-book"), i18n("&Address Book"), this);
   actionCollection()->addAction("addressbook", action );
+  if (KStandardDirs::findExe("kaddressbook").isEmpty())
+     action->setEnabled(false);
   connect(action, SIGNAL(triggered(bool)), SLOT(slotAddrBook()));
   action = new KAction(KIcon("mail-message-new"), i18n("&New Composer"), this);
   actionCollection()->addAction("new_composer", action );
@@ -1715,7 +1716,7 @@ bool KMComposeWin::queryClose ()
   }
 
   if ( isModified() ) {
-    bool istemplate = ( mFolder.isValid() && CommonKernel->folderIsTemplates( mFolder ) );
+    const bool istemplate = ( mFolder.isValid() && CommonKernel->folderIsTemplates( mFolder ) );
     const QString savebut = ( istemplate ?
                               i18n("Re&save as Template") :
                               i18n("&Save as Draft") );
@@ -1735,8 +1736,10 @@ bool KMComposeWin::queryClose ()
       return false;
     } else if ( rc == KMessageBox::Yes ) {
       // doSend will close the window. Just return false from this method
-      if (istemplate) slotSaveTemplate();
-      else slotSaveDraft();
+      if (istemplate)
+        slotSaveTemplate();
+      else
+        slotSaveDraft();
       return false;
     }
     //else fall through: return true
@@ -2062,7 +2065,7 @@ void KMComposeWin::slotPasteAsAttachment()
 
 QString KMComposeWin::addQuotesToText( const QString &inputText ) const
 {
-  QString answer = QString( inputText );
+  QString answer( inputText );
   QString indentStr = mComposerBase->editor()->quotePrefixName();
   answer.replace( '\n', '\n' + indentStr );
   answer.prepend( indentStr );

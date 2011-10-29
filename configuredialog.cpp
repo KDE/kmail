@@ -141,6 +141,8 @@ using MailTransport::TransportManagementWidget;
 #include <akonadi/agenttypedialog.h>
 #include <akonadi/agentinstancecreatejob.h>
 
+#include <nepomuk/resourcemanager.h>
+
 using namespace MailCommon;
 
 namespace {
@@ -224,8 +226,8 @@ ConfigureDialog::ConfigureDialog( QWidget *parent, bool modal )
   // the KCMultiDialog starts with the size of the first kcm, not
   // the largest one. This way at least after the first showing of
   // the largest kcm the size is kept.
-  int width = GlobalSettings::self()->configureDialogWidth();
-  int height = GlobalSettings::self()->configureDialogHeight();
+  const int width = GlobalSettings::self()->configureDialogWidth();
+  const int height = GlobalSettings::self()->configureDialogHeight();
   if ( width != 0 && height != 0 ) {
      resize( width, height );
   }
@@ -732,7 +734,6 @@ static const struct {
 } fontNames[] = {
   { "body-font", I18N_NOOP("Message Body"), true, false },
   { "MessageListFont", I18N_NOOP("Message List"), true, false },
-  { "NewMessageFont", I18N_NOOP("Message List - New Messages"), true, false },
   { "UnreadMessageFont", I18N_NOOP("Message List - Unread Messages"), true, false },
   { "ImportantMessageFont", I18N_NOOP("Message List - Important Messages"), true, false },
   { "TodoMessageFont", I18N_NOOP("Message List - Action Item Messages"), true, false },
@@ -853,12 +854,11 @@ void AppearancePage::FontsTab::doLoadOther()
   QFont fixedFont = KGlobalSettings::fixedFont();
 
   for ( int i = 0 ; i < numFontNames ; i++ ) {
-    QString configName = fontNames[i].configName;
-    if ( configName == "MessageListFont" ||
-         configName == "NewMessageFont" ||
-         configName == "UnreadMessageFont" ||
-         configName == "ImportantMessageFont" ||
-         configName == "TodoMessageFont" ) {
+    const QString configName = fontNames[i].configName;
+    if ( configName == QLatin1String( "MessageListFont" ) ||
+         configName == QLatin1String( "UnreadMessageFont" ) ||
+         configName == QLatin1String( "ImportantMessageFont" ) ||
+         configName == QLatin1String( "TodoMessageFont" ) ) {
       mFont[i] = messagelistFont.readEntry( configName,
                                             (fontNames[i].onlyFixed) ? fixedFont : mFont[0] );
     } else {
@@ -884,12 +884,11 @@ void AppearancePage::FontsTab::save()
   MessageCore::GlobalSettings::self()->setUseDefaultFonts( !customFonts );
 
   for ( int i = 0 ; i < numFontNames ; i++ ) {
-    QString configName = fontNames[i].configName;
-    if ( configName == "MessageListFont" ||
-         configName == "NewMessageFont" ||
-         configName == "UnreadMessageFont" ||
-         configName == "ImportantMessageFont" ||
-         configName == "TodoMessageFont" ) {
+    const QString configName = fontNames[i].configName;
+    if ( configName == QLatin1String( "MessageListFont" ) ||
+         configName == QLatin1String( "UnreadMessageFont" ) ||
+         configName == QLatin1String( "ImportantMessageFont" ) ||
+         configName == QLatin1String( "TodoMessageFont" ) ) {
       if ( customFonts || messagelistFont.hasKey( configName ) ) {
         // Don't write font info when we use default fonts, but write
         // if it's already there:
@@ -925,7 +924,6 @@ static const struct {
   { "LinkColor", I18N_NOOP("Link") },
   { "FollowedColor", I18N_NOOP("Followed Link") },
   { "MisspelledColor", I18N_NOOP("Misspelled Words") },
-  { "NewMessageColor", I18N_NOOP("New Message") },
   { "UnreadMessageColor", I18N_NOOP("Unread Message") },
   { "ImportantMessageColor", I18N_NOOP("Important Message") },
   { "TodoMessageColor", I18N_NOOP("Action Item Message") },
@@ -1028,7 +1026,6 @@ void AppearancePage::ColorsTab::loadColor( bool loadFromConfig )
     scheme.foreground( KColorScheme::LinkText ).color(), // link
     scheme.foreground( KColorScheme::VisitedText ).color(),// visited link
     scheme.foreground( KColorScheme::NegativeText ).color(), // misspelled words
-    Qt::red, // new msg
     Qt::blue, // unread mgs
     QColor( 0x00, 0x7F, 0x00 ), // important msg
     scheme.foreground( KColorScheme::LinkText ).color(), // action item mgs
@@ -1048,8 +1045,7 @@ void AppearancePage::ColorsTab::loadColor( bool loadFromConfig )
   for ( int i = 0 ; i < numColorNames ; i++ ) {
     if ( loadFromConfig ) {
       const QString configName = colorNames[i].configName;
-      if ( configName == QLatin1String( "NewMessageColor" ) ||
-           configName == QLatin1String( "UnreadMessageColor" ) ||
+      if ( configName == QLatin1String( "UnreadMessageColor" ) ||
            configName == QLatin1String( "ImportantMessageColor" ) ||
            configName == QLatin1String( "TodoMessageColor" ) ) {
         mColorList->setColorSilently( i, messageListView.readEntry( configName, defaultColor[i] ) );
@@ -1080,11 +1076,10 @@ void AppearancePage::ColorsTab::save()
   for ( int i = 0 ; i < numColorNames ; i++ ) {
     // Don't write color info when we use default colors, but write
     // if it's already there:
-    QString configName = colorNames[i].configName;
-    if ( configName == "NewMessageColor" ||
-         configName == "UnreadMessageColor" ||
-         configName == "ImportantMessageColor" ||
-         configName == "TodoMessageColor" ) {
+    const QString configName = colorNames[i].configName;
+    if ( configName == QLatin1String( "UnreadMessageColor" ) ||
+         configName == QLatin1String( "ImportantMessageColor" ) ||
+         configName == QLatin1String( "TodoMessageColor" ) ) {
       if ( customColors || messageListView.hasKey( configName ) )
         messageListView.writeEntry( configName, mColorList->color(i) );
 
@@ -1385,7 +1380,7 @@ AppearancePageHeadersTab::AppearancePageHeadersTab( QWidget * parent )
 
 void AppearancePageHeadersTab::slotLinkClicked( const QString & link )
 {
-  if ( link == "whatsthis1" )
+  if ( link == QLatin1String( "whatsthis1" ) )
     QWhatsThis::showText( QCursor::pos(), mCustomDateWhatsThis );
 }
 
@@ -1583,202 +1578,210 @@ AppearancePageMessageTagTab::AppearancePageMessageTagTab( QWidget * parent )
   maingrid->setMargin( KDialog::marginHint() );
   maingrid->setSpacing( KDialog::spacingHint() );
 
-  //Lefthand side Listbox and friends
+  mNepomukActive = Nepomuk::ResourceManager::instance()->initialized();
+  if ( mNepomukActive ) {
+  
+    //Lefthand side Listbox and friends
 
-  //Groupbox frame
-  mTagsGroupBox = new QGroupBox( i18n("A&vailable Tags"), this );
-  maingrid->addWidget( mTagsGroupBox );
-  QVBoxLayout *tageditgrid = new QVBoxLayout( mTagsGroupBox );
-  tageditgrid->setMargin( KDialog::marginHint() );
-  tageditgrid->setSpacing( KDialog::spacingHint() );
-  tageditgrid->addSpacing( 2 * KDialog::spacingHint() );
+    //Groupbox frame
+    mTagsGroupBox = new QGroupBox( i18n("A&vailable Tags"), this );
+    maingrid->addWidget( mTagsGroupBox );
+    QVBoxLayout *tageditgrid = new QVBoxLayout( mTagsGroupBox );
+    tageditgrid->setMargin( KDialog::marginHint() );
+    tageditgrid->setSpacing( KDialog::spacingHint() );
+    tageditgrid->addSpacing( 2 * KDialog::spacingHint() );
 
-  //Listbox, add, remove row
-  QHBoxLayout *addremovegrid = new QHBoxLayout();
-  tageditgrid->addLayout( addremovegrid );
+    //Listbox, add, remove row
+    QHBoxLayout *addremovegrid = new QHBoxLayout();
+    tageditgrid->addLayout( addremovegrid );
 
-  mTagAddLineEdit = new KLineEdit( mTagsGroupBox );
-  addremovegrid->addWidget( mTagAddLineEdit );
+    mTagAddLineEdit = new KLineEdit( mTagsGroupBox );
+    addremovegrid->addWidget( mTagAddLineEdit );
 
-  mTagAddButton = new KPushButton( mTagsGroupBox );
-  mTagAddButton->setToolTip( i18n("Add new tag") );
-  mTagAddButton->setIcon( KIcon( "list-add" ) );
-  addremovegrid->addWidget( mTagAddButton );
+    mTagAddButton = new KPushButton( mTagsGroupBox );
+    mTagAddButton->setToolTip( i18n("Add new tag") );
+    mTagAddButton->setIcon( KIcon( "list-add" ) );
+    addremovegrid->addWidget( mTagAddButton );
 
-  mTagRemoveButton = new KPushButton( mTagsGroupBox );
-  mTagRemoveButton->setToolTip( i18n("Remove selected tag") );
-  mTagRemoveButton->setIcon( KIcon( "list-remove" ) );
-  addremovegrid->addWidget( mTagRemoveButton );
+    mTagRemoveButton = new KPushButton( mTagsGroupBox );
+    mTagRemoveButton->setToolTip( i18n("Remove selected tag") );
+    mTagRemoveButton->setIcon( KIcon( "list-remove" ) );
+    addremovegrid->addWidget( mTagRemoveButton );
 
-  //Up and down buttons
-  QHBoxLayout *updowngrid = new QHBoxLayout();
-  tageditgrid->addLayout( updowngrid );
+    //Up and down buttons
+    QHBoxLayout *updowngrid = new QHBoxLayout();
+    tageditgrid->addLayout( updowngrid );
 
-  mTagUpButton = new KPushButton( mTagsGroupBox );
-  mTagUpButton->setToolTip( i18n("Increase tag priority") );
-  mTagUpButton->setIcon( KIcon( "arrow-up" ) );
-  mTagUpButton->setAutoRepeat( true );
-  updowngrid->addWidget( mTagUpButton );
+    mTagUpButton = new KPushButton( mTagsGroupBox );
+    mTagUpButton->setToolTip( i18n("Increase tag priority") );
+    mTagUpButton->setIcon( KIcon( "arrow-up" ) );
+    mTagUpButton->setAutoRepeat( true );
+    updowngrid->addWidget( mTagUpButton );
 
-  mTagDownButton = new KPushButton( mTagsGroupBox );
-  mTagDownButton->setToolTip( i18n("Decrease tag priority") );
-  mTagDownButton->setIcon( KIcon( "arrow-down" ) );
-  mTagDownButton->setAutoRepeat( true );
-  updowngrid->addWidget( mTagDownButton );
+    mTagDownButton = new KPushButton( mTagsGroupBox );
+    mTagDownButton->setToolTip( i18n("Decrease tag priority") );
+    mTagDownButton->setIcon( KIcon( "arrow-down" ) );
+    mTagDownButton->setAutoRepeat( true );
+    updowngrid->addWidget( mTagDownButton );
 
-  //Listbox for tag names
-  QHBoxLayout *listboxgrid = new QHBoxLayout();
-  tageditgrid->addLayout( listboxgrid );
-  mTagListBox = new QListWidget( mTagsGroupBox );
-  mTagListBox->setMinimumWidth( 150 );
-  listboxgrid->addWidget( mTagListBox );
+    //Listbox for tag names
+    QHBoxLayout *listboxgrid = new QHBoxLayout();
+    tageditgrid->addLayout( listboxgrid );
+    mTagListBox = new QListWidget( mTagsGroupBox );
+    mTagListBox->setMinimumWidth( 150 );
+    listboxgrid->addWidget( mTagListBox );
 
-  //RHS for individual tag settings
+    //RHS for individual tag settings
 
-  //Extra VBoxLayout for stretchers around settings
-  QVBoxLayout *tagsettinggrid = new QVBoxLayout();
-  maingrid->addLayout( tagsettinggrid );
-  tagsettinggrid->addStretch( 10 );
+    //Extra VBoxLayout for stretchers around settings
+    QVBoxLayout *tagsettinggrid = new QVBoxLayout();
+    maingrid->addLayout( tagsettinggrid );
+    tagsettinggrid->addStretch( 10 );
 
-  //Groupbox frame
-  mTagSettingGroupBox = new QGroupBox( i18n("Ta&g Settings"),
-                                      this );
-  tagsettinggrid->addWidget( mTagSettingGroupBox );
-  QGridLayout *settings = new QGridLayout( mTagSettingGroupBox );
-  settings->setMargin( KDialog::marginHint() );
-  settings->setSpacing( KDialog::spacingHint() );
+    //Groupbox frame
+    mTagSettingGroupBox = new QGroupBox( i18n("Ta&g Settings"),
+                                         this );
+    tagsettinggrid->addWidget( mTagSettingGroupBox );
+    QGridLayout *settings = new QGridLayout( mTagSettingGroupBox );
+    settings->setMargin( KDialog::marginHint() );
+    settings->setSpacing( KDialog::spacingHint() );
 
-  //Stretcher layout for adding some space after the label
-  QVBoxLayout *spacer = new QVBoxLayout();
-  settings->addLayout( spacer, 0, 0, 1, 2 );
-  spacer->addSpacing( 2 * KDialog::spacingHint() );
+    //Stretcher layout for adding some space after the label
+    QVBoxLayout *spacer = new QVBoxLayout();
+    settings->addLayout( spacer, 0, 0, 1, 2 );
+    spacer->addSpacing( 2 * KDialog::spacingHint() );
 
-  //First row for renaming
-  mTagNameLineEdit = new KLineEdit( mTagSettingGroupBox );
-  settings->addWidget( mTagNameLineEdit, 1, 1 );
+    //First row for renaming
+    mTagNameLineEdit = new KLineEdit( mTagSettingGroupBox );
+    settings->addWidget( mTagNameLineEdit, 1, 1 );
 
-  QLabel *namelabel = new QLabel( i18nc("@label:listbox Name of the tag", "Name:")
-    , mTagSettingGroupBox );
-  namelabel->setBuddy( mTagNameLineEdit );
-  settings->addWidget( namelabel, 1, 0 );
+    QLabel *namelabel = new QLabel( i18nc("@label:listbox Name of the tag", "Name:")
+                                    , mTagSettingGroupBox );
+    namelabel->setBuddy( mTagNameLineEdit );
+    settings->addWidget( namelabel, 1, 0 );
 
-  connect( mTagNameLineEdit, SIGNAL(textChanged(QString)),
-            this, SLOT(slotEmitChangeCheck()) );
+    connect( mTagNameLineEdit, SIGNAL(textChanged(QString)),
+             this, SLOT(slotEmitChangeCheck()) );
 
-  //Second row for text color
-  mTextColorCheck = new QCheckBox( i18n("Change te&xt color:"),
-                                   mTagSettingGroupBox );
-  settings->addWidget( mTextColorCheck, 2, 0 );
+    //Second row for text color
+    mTextColorCheck = new QCheckBox( i18n("Change te&xt color:"),
+                                     mTagSettingGroupBox );
+    settings->addWidget( mTextColorCheck, 2, 0 );
 
-  mTextColorCombo = new KColorCombo( mTagSettingGroupBox );
-  settings->addWidget( mTextColorCombo, 2, 1 );
+    mTextColorCombo = new KColorCombo( mTagSettingGroupBox );
+    settings->addWidget( mTextColorCombo, 2, 1 );
 
-  connect( mTextColorCheck, SIGNAL(toggled(bool)),
-          mTextColorCombo, SLOT(setEnabled(bool)) );
-  connect( mTextColorCheck, SIGNAL(stateChanged(int)),
-          this, SLOT(slotEmitChangeCheck()) );
-  connect( mTextColorCombo, SIGNAL(activated(int)),
-          this, SLOT(slotEmitChangeCheck()) );
+    connect( mTextColorCheck, SIGNAL(toggled(bool)),
+             mTextColorCombo, SLOT(setEnabled(bool)) );
+    connect( mTextColorCheck, SIGNAL(stateChanged(int)),
+             this, SLOT(slotEmitChangeCheck()) );
+    connect( mTextColorCombo, SIGNAL(activated(int)),
+             this, SLOT(slotEmitChangeCheck()) );
 
-  //Third row for text background color
-  mBackgroundColorCheck = new QCheckBox( i18n("Change &background color:"),
-                                             mTagSettingGroupBox );
-  settings->addWidget( mBackgroundColorCheck, 3, 0 );
+    //Third row for text background color
+    mBackgroundColorCheck = new QCheckBox( i18n("Change &background color:"),
+                                           mTagSettingGroupBox );
+    settings->addWidget( mBackgroundColorCheck, 3, 0 );
 
-  mBackgroundColorCombo = new KColorCombo( mTagSettingGroupBox );
-  settings->addWidget( mBackgroundColorCombo, 3, 1 );
+    mBackgroundColorCombo = new KColorCombo( mTagSettingGroupBox );
+    settings->addWidget( mBackgroundColorCombo, 3, 1 );
 
-  connect( mBackgroundColorCheck, SIGNAL(toggled(bool)),
-          mBackgroundColorCombo, SLOT(setEnabled(bool)) );
-  connect( mBackgroundColorCheck, SIGNAL(stateChanged(int)),
-          this, SLOT(slotEmitChangeCheck()) );
-  connect( mBackgroundColorCombo, SIGNAL(activated(int)),
-          this, SLOT(slotEmitChangeCheck()) );
+    connect( mBackgroundColorCheck, SIGNAL(toggled(bool)),
+             mBackgroundColorCombo, SLOT(setEnabled(bool)) );
+    connect( mBackgroundColorCheck, SIGNAL(stateChanged(int)),
+             this, SLOT(slotEmitChangeCheck()) );
+    connect( mBackgroundColorCombo, SIGNAL(activated(int)),
+             this, SLOT(slotEmitChangeCheck()) );
 
-  //Fourth for font selection
-  mTextFontCheck = new QCheckBox( i18n("Change fo&nt:"), mTagSettingGroupBox );
-  settings->addWidget( mTextFontCheck, 4, 0 );
+    //Fourth for font selection
+    mTextFontCheck = new QCheckBox( i18n("Change fo&nt:"), mTagSettingGroupBox );
+    settings->addWidget( mTextFontCheck, 4, 0 );
 
-  mFontRequester = new KFontRequester( mTagSettingGroupBox );
-  settings->addWidget( mFontRequester, 4, 1 );
+    mFontRequester = new KFontRequester( mTagSettingGroupBox );
+    settings->addWidget( mFontRequester, 4, 1 );
 
-  connect( mTextFontCheck, SIGNAL(toggled(bool)),
-          mFontRequester, SLOT(setEnabled(bool)) );
-  connect( mTextFontCheck, SIGNAL(stateChanged(int)),
-          this, SLOT(slotEmitChangeCheck()) );
-  connect( mFontRequester, SIGNAL(fontSelected(QFont)),
-          this, SLOT(slotEmitChangeCheck()) );
+    connect( mTextFontCheck, SIGNAL(toggled(bool)),
+             mFontRequester, SLOT(setEnabled(bool)) );
+    connect( mTextFontCheck, SIGNAL(stateChanged(int)),
+             this, SLOT(slotEmitChangeCheck()) );
+    connect( mFontRequester, SIGNAL(fontSelected(QFont)),
+             this, SLOT(slotEmitChangeCheck()) );
 
-  //Fifth for toolbar icon
-  mIconButton = new KIconButton( mTagSettingGroupBox );
-  mIconButton->setIconSize( 16 );
-  mIconButton->setIconType( KIconLoader::NoGroup, KIconLoader::Action );
-  settings->addWidget( mIconButton, 5, 1 );
-  connect( mIconButton, SIGNAL(iconChanged(QString)),
-           SLOT(slotIconNameChanged(QString)) );
+    //Fifth for toolbar icon
+    mIconButton = new KIconButton( mTagSettingGroupBox );
+    mIconButton->setIconSize( 16 );
+    mIconButton->setIconType( KIconLoader::NoGroup, KIconLoader::Action );
+    settings->addWidget( mIconButton, 5, 1 );
+    connect( mIconButton, SIGNAL(iconChanged(QString)),
+             SLOT(slotIconNameChanged(QString)) );
 
-  QLabel *iconlabel = new QLabel( i18n("Message tag &icon:"),
-                                  mTagSettingGroupBox );
-  iconlabel->setBuddy( mIconButton );
-  settings->addWidget( iconlabel, 5, 0 );
-
-  //We do not connect the checkbox to icon selector since icons are used in the
-  //menus as well
-  connect( mIconButton, SIGNAL(iconChanged(QString)),
-          this, SLOT(slotEmitChangeCheck()) );
-
-  //Sixth for shortcut
-  mKeySequenceWidget = new KKeySequenceWidget( mTagSettingGroupBox );
-  settings->addWidget( mKeySequenceWidget, 6, 1 );
-  QLabel *sclabel = new QLabel( i18n("Shortc&ut:") , mTagSettingGroupBox );
-  sclabel->setBuddy( mKeySequenceWidget );
-  settings->addWidget( sclabel, 6, 0 );
-  if( kmkernel->getKMMainWidget() )
-     mKeySequenceWidget->setCheckActionCollections(
-        kmkernel->getKMMainWidget()->actionCollections() );
-  else
-     mKeySequenceWidget->setEnabled(false);
-
-  connect( mKeySequenceWidget, SIGNAL(keySequenceChanged(QKeySequence)),
-           this, SLOT(slotEmitChangeCheck()) );
-
-  //Seventh for Toolbar checkbox
-  mInToolbarCheck = new QCheckBox( i18n("Enable &toolbar button"),
+    QLabel *iconlabel = new QLabel( i18n("Message tag &icon:"),
                                     mTagSettingGroupBox );
-  settings->addWidget( mInToolbarCheck, 7, 0 );
-  connect( mInToolbarCheck, SIGNAL(stateChanged(int)),
-           this, SLOT(slotEmitChangeCheck()) );
+    iconlabel->setBuddy( mIconButton );
+    settings->addWidget( iconlabel, 5, 0 );
 
-  tagsettinggrid->addStretch( 10 );
+    //We do not connect the checkbox to icon selector since icons are used in the
+    //menus as well
+    connect( mIconButton, SIGNAL(iconChanged(QString)),
+             this, SLOT(slotEmitChangeCheck()) );
 
-  //Adjust widths for columns
-  maingrid->setStretchFactor( mTagsGroupBox, 1 );
-  maingrid->setStretchFactor( tagsettinggrid, 1 );
+    //Sixth for shortcut
+    mKeySequenceWidget = new KKeySequenceWidget( mTagSettingGroupBox );
+    settings->addWidget( mKeySequenceWidget, 6, 1 );
+    QLabel *sclabel = new QLabel( i18n("Shortc&ut:") , mTagSettingGroupBox );
+    sclabel->setBuddy( mKeySequenceWidget );
+    settings->addWidget( sclabel, 6, 0 );
+    if( kmkernel->getKMMainWidget() )
+      mKeySequenceWidget->setCheckActionCollections(
+                                                    kmkernel->getKMMainWidget()->actionCollections() );
+    else
+      mKeySequenceWidget->setEnabled(false);
 
-  //Other Connections
+    connect( mKeySequenceWidget, SIGNAL(keySequenceChanged(QKeySequence)),
+             this, SLOT(slotEmitChangeCheck()) );
 
-  //For enabling the add button in case box is non-empty
-  connect( mTagAddLineEdit, SIGNAL(textChanged(QString)),
-          this, SLOT(slotAddLineTextChanged(QString)) );
+    //Seventh for Toolbar checkbox
+    mInToolbarCheck = new QCheckBox( i18n("Enable &toolbar button"),
+                                     mTagSettingGroupBox );
+    settings->addWidget( mInToolbarCheck, 7, 0 );
+    connect( mInToolbarCheck, SIGNAL(stateChanged(int)),
+             this, SLOT(slotEmitChangeCheck()) );
 
-  //For on-the-fly updating of tag name in editbox
-  connect( mTagNameLineEdit, SIGNAL(textChanged(QString)),
-          this, SLOT(slotNameLineTextChanged(QString)) );
+    tagsettinggrid->addStretch( 10 );
 
-  connect( mTagAddButton, SIGNAL(clicked()),
-          this, SLOT(slotAddNewTag()) );
+    //Adjust widths for columns
+    maingrid->setStretchFactor( mTagsGroupBox, 1 );
+    maingrid->setStretchFactor( tagsettinggrid, 1 );
 
-  connect( mTagRemoveButton, SIGNAL(clicked()),
-          this, SLOT(slotRemoveTag()) );
+    //Other Connections
 
-  connect( mTagUpButton, SIGNAL(clicked()),
-          this, SLOT(slotMoveTagUp()) );
+    //For enabling the add button in case box is non-empty
+    connect( mTagAddLineEdit, SIGNAL(textChanged(QString)),
+             this, SLOT(slotAddLineTextChanged(QString)) );
 
-  connect( mTagDownButton, SIGNAL(clicked()),
-          this, SLOT(slotMoveTagDown()) );
+    //For on-the-fly updating of tag name in editbox
+    connect( mTagNameLineEdit, SIGNAL(textChanged(QString)),
+             this, SLOT(slotNameLineTextChanged(QString)) );
 
-  connect( mTagListBox, SIGNAL(itemSelectionChanged()),
-          this, SLOT(slotSelectionChanged()) );
+    connect( mTagAddButton, SIGNAL(clicked()),
+             this, SLOT(slotAddNewTag()) );
+
+    connect( mTagRemoveButton, SIGNAL(clicked()),
+             this, SLOT(slotRemoveTag()) );
+
+    connect( mTagUpButton, SIGNAL(clicked()),
+             this, SLOT(slotMoveTagUp()) );
+
+    connect( mTagDownButton, SIGNAL(clicked()),
+             this, SLOT(slotMoveTagDown()) );
+
+    connect( mTagListBox, SIGNAL(itemSelectionChanged()),
+             this, SLOT(slotSelectionChanged()) );
+  } else {
+    QLabel *lab = new QLabel;
+    lab->setText( i18n( "The Nepomuk semantic search service is not available. We can not configurate tags. You can enable it in \"System Settings\"" ) );
+    maingrid->addWidget( lab );
+  }
 }
 
 AppearancePageMessageTagTab::~AppearancePageMessageTagTab()
@@ -1907,6 +1910,7 @@ void AppearancePage::MessageTagTab::slotUpdateTagSettingWidgets( int aIndex )
     mTextColorCombo->setColor( tmp_color );
     mTextColorCheck->setChecked( true );
   } else {
+    mTextColorCombo->setColor( Qt::white );
     mTextColorCheck->setChecked( false );
   }
 
@@ -1916,6 +1920,7 @@ void AppearancePage::MessageTagTab::slotUpdateTagSettingWidgets( int aIndex )
     mBackgroundColorCombo->setColor( tmp_color );
     mBackgroundColorCheck->setChecked( true );
   } else {
+    mBackgroundColorCombo->setColor( Qt::white );
     mBackgroundColorCheck->setChecked( false );
   }
 
@@ -2015,6 +2020,9 @@ void AppearancePage::MessageTagTab::slotAddNewTag()
 
 void AppearancePage::MessageTagTab::doLoadFromGlobalSettings()
 {
+  if ( !mNepomukActive )
+    return;
+  
   mMsgTagDict.clear();
   mMsgTagList.clear();
   mTagListBox->clear();
@@ -2052,11 +2060,14 @@ void AppearancePage::MessageTagTab::doLoadFromGlobalSettings()
 
 void AppearancePage::MessageTagTab::save()
 {
+  if ( !mNepomukActive )
+    return;
   slotRecordTagSettings( mTagListBox->currentRow() );
 
   if ( mOriginalMsgTagList.count() == mMsgTagList.count() ) {
     bool nothingChanged = true;
-    for ( int i=0; i<mMsgTagList.count(); ++i ) {
+    const int numberOfMsgTagList( mMsgTagList.count() );
+    for ( int i=0; i<numberOfMsgTagList; ++i ) {
       if ( *(mMsgTagList[i]) != *(mOriginalMsgTagList[i]) ) {
         nothingChanged = false;
         break;
@@ -2371,7 +2382,8 @@ ComposerPageGeneralTab::ComposerPageGeneralTab( QWidget * parent )
   label = new QLabel( GlobalSettings::self()->externalEditorItem()->label(),
                    hbox );
   mEditorRequester = new KUrlRequester( hbox );
-  mEditorRequester->setObjectName( "kcfg_ExternalEditor" );
+  //Laurent 25/10/2011 fix #Bug 256655 - A "save changes?" dialog appears ALWAYS when leaving composer settings, even when unchanged.
+  //mEditorRequester->setObjectName( "kcfg_ExternalEditor" );
   connect( mEditorRequester, SIGNAL(urlSelected(KUrl)),
            this, SLOT(slotEmitChanged()) );
   connect( mEditorRequester, SIGNAL(textChanged(QString)),
@@ -2474,7 +2486,9 @@ void ComposerPage::GeneralTab::slotConfigureRecentAddresses()
     RecentAddresses::self(  MessageComposer::MessageComposerSettings::self()->config() )->clear();
     const QStringList &addrList = dlg->addresses();
     QStringList::ConstIterator it;
-    for ( it = addrList.constBegin(); it != addrList.constEnd(); ++it )
+    QStringList::ConstIterator end( addrList.constEnd() );
+    
+    for ( it = addrList.constBegin(); it != end; ++it )
       RecentAddresses::self(  MessageComposer::MessageComposerSettings::self()->config() )->add( *it );
   }
 }
@@ -2740,12 +2754,13 @@ void ComposerPage::CharsetTab::doLoadOther()
   KConfigGroup composer( KMKernel::self()->config(), "Composer" );
 
   QStringList charsets = MessageComposer::MessageComposerSettings::preferredCharsets();
+  QStringList::Iterator end( charsets.end() );
   for ( QStringList::Iterator it = charsets.begin() ;
-        it != charsets.end() ; ++it )
+        it != end ; ++it )
     if ( (*it) == QString::fromLatin1("locale") ) {
       QByteArray cset = kmkernel->networkCodec()->name();
       kAsciiToLower( cset.data() );
-      (*it) = QString("%1 (locale)").arg( QString::fromLatin1( cset ) );
+      (*it) = QString::fromLatin1("%1 (locale)").arg( QString::fromLatin1( cset ) );
     }
 
   mCharsetListEditor->setStringList( charsets );
@@ -2770,7 +2785,9 @@ void ComposerPage::CharsetTab::save()
 
   QStringList charsetList = mCharsetListEditor->stringList();
   QStringList::Iterator it = charsetList.begin();
-  for ( ; it != charsetList.end() ; ++it )
+  QStringList::Iterator end = charsetList.end();
+  
+  for ( ; it != end ; ++it )
     if ( (*it).endsWith( QLatin1String("(locale)") ) )
       (*it) = "locale";
   MessageComposer::MessageComposerSettings::setPreferredCharsets( charsetList );
@@ -3222,11 +3239,11 @@ SecurityPageGeneralTab::SecurityPageGeneralTab( QWidget * parent )
 
 void SecurityPageGeneralTab::slotLinkClicked( const QString & link )
 {
-    if ( link == "whatsthis1" )
+    if ( link == QLatin1String( "whatsthis1" ) )
         QWhatsThis::showText( QCursor::pos(), mSGTab.mHtmlMailCheck->whatsThis() );
-    else if (link == "whatsthis2")
+    else if (link == QLatin1String( "whatsthis2" ) )
         QWhatsThis::showText( QCursor::pos(), mSGTab.mExternalReferences->whatsThis() );
-    else if ( link == "whatsthis3" )
+    else if ( link == QLatin1String( "whatsthis3" ) )
         QWhatsThis::showText( QCursor::pos(), mSGTab.radioIgnore->whatsThis() );
 }
 

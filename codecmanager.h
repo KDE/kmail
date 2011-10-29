@@ -26,10 +26,8 @@
 
 class CodecManagerPrivate;
 
-class CodecManager: public QObject
+class CodecManager
 {
-  Q_OBJECT
-
   public:
     /**
       Returns the CodecManager instance.

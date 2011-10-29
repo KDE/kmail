@@ -110,6 +110,7 @@ if (NOT WINCE AND KDEPIM_BUILD_DESKTOP)
      newidentitydialog.cpp
      kmsearchmessagemodel.cpp
      kmknotify.cpp
+     tagselectdialog.cpp
   )
 
   soprano_add_ontology(kmailprivate_LIB_SRCS

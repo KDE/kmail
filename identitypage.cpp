@@ -88,7 +88,9 @@ void IdentityPage::load()
   // Fill the list:
   mIPage.mIdentityList->clear();
   QTreeWidgetItem *item = 0;
-  for ( KPIMIdentities::IdentityManager::Iterator it = mIdentityManager->modifyBegin(); it != mIdentityManager->modifyEnd(); ++it ) {
+  KPIMIdentities::IdentityManager::Iterator end( mIdentityManager->modifyEnd() );
+
+  for ( KPIMIdentities::IdentityManager::Iterator it = mIdentityManager->modifyBegin(); it != end; ++it ) {
     item = new IdentityListViewItem( mIPage.mIdentityList, item, *it );
   }
   if ( mIPage.mIdentityList->currentItem() ) {
@@ -298,7 +300,8 @@ void IdentityPage::slotSetAsDefault()
 
 void IdentityPage::refreshList()
 {
-  for ( int i = 0; i < mIPage.mIdentityList->topLevelItemCount(); ++i ) {
+  const int numberOfTopLevel( mIPage.mIdentityList->topLevelItemCount() );
+  for ( int i = 0; i < numberOfTopLevel; ++i ) {
     IdentityListViewItem *item = dynamic_cast<IdentityListViewItem*>( mIPage.mIdentityList->topLevelItem( i ) );
     if ( item ) {
       item->redisplay();
