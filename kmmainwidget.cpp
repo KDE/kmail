@@ -2519,7 +2519,7 @@ void KMMainWidget::slotOnlineStatus()
 
 void KMMainWidget::slotUpdateOnlineStatus( GlobalSettings::EnumNetworkState::type )
 {
-  QAction *action = actionCollection()->action( "online_status" );
+  KAction * action = mAkonadiStandardActionManager->action( Akonadi::StandardActionManager::ToggleWorkOffline );
   if ( GlobalSettings::self()->networkState() == GlobalSettings::EnumNetworkState::Online ) {
     action->setText( i18n("Work Offline") );
     action->setIcon( KIcon("user-offline") );
@@ -3046,9 +3046,11 @@ void KMMainWidget::setupActions()
     connect(mSendQueued, SIGNAL(triggered(bool)), SLOT(slotSendQueued()));
   }
   {
-    KAction *action = new KAction( i18n("Online status (unknown)"), this );
-    actionCollection()->addAction( "online_status", action );
-    connect( action, SIGNAL(triggered(bool)), SLOT(slotOnlineStatus()) );
+
+    KAction * action = mAkonadiStandardActionManager->action( Akonadi::StandardActionManager::ToggleWorkOffline );
+    mAkonadiStandardActionManager->interceptAction( Akonadi::StandardActionManager::ToggleWorkOffline );
+    connect( action, SIGNAL(triggered(bool)), this, SLOT(slotOnlineStatus()) );
+    action->setText( i18n("Online status (unknown)") );
   }
 
   KActionMenu *sendActionMenu = new KActionMenu(KIcon("mail-send-via"), i18n("Send Queued Messages Via"), this);
