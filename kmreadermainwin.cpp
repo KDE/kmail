@@ -128,8 +128,9 @@ void KMReaderMainWin::setUseFixedFont( bool useFixedFont )
   mReaderWin->setUseFixedFont( useFixedFont );
 }
 
-void KMReaderMainWin::showMessage( const QString & encoding, const Akonadi::Item &msg )
+void KMReaderMainWin::showMessage( const QString & encoding, const Akonadi::Item &msg, const Akonadi::Collection& parentCollection )
 {
+  mParentCollection = parentCollection;
   mReaderWin->setOverrideEncoding( encoding );
   mReaderWin->setMessage( msg, MessageViewer::Viewer::Force );
   KMime::Message::Ptr message = MessageCore::Util::message( msg );
@@ -138,8 +139,7 @@ void KMReaderMainWin::showMessage( const QString & encoding, const Akonadi::Item
   mMsg = msg;
   mMsgActions->setCurrentMessage( msg );
 
-  const Akonadi::Collection parent = msg.parentCollection();
-  const bool canChange = parent.isValid() ? !( parent.rights() & Akonadi::Collection::ReadOnly ) : false;
+  const bool canChange = mParentCollection.isValid() ? !( mParentCollection.rights() & Akonadi::Collection::ReadOnly ) : false;
   mTrashAction->setEnabled( canChange );
 
   menuBar()->show();
@@ -172,12 +172,20 @@ void KMReaderMainWin::slotReplyOrForwardFinished()
   }
 }
 
+Akonadi::Collection KMReaderMainWin::parentCollection() const
+{
+  if ( mParentCollection.isValid() )
+    return mParentCollection;
+  else
+    return mMsg.parentCollection();
+}
+
 //-----------------------------------------------------------------------------
 void KMReaderMainWin::slotTrashMsg()
 {
   if ( !mMsg.isValid() )
     return;
-  KMTrashMsgCommand *command = new KMTrashMsgCommand( mMsg.parentCollection(), mMsg, -1 );
+  KMTrashMsgCommand *command = new KMTrashMsgCommand( parentCollection(), mMsg, -1 );
   command->start();
   close();
 }
@@ -440,8 +448,8 @@ void KMReaderMainWin::slotDelayedMessagePopup( KJob *job )
       return;
     }
     bool replyForwardMenu = false;
-    if ( mMsg.parentCollection().isValid() ) {
-      Akonadi::Collection col = mMsg.parentCollection();
+    Akonadi::Collection col = parentCollection();
+    if ( col.isValid() ) {
       if ( ! ( CommonKernel->folderIsSentMailFolder( col ) ||
                CommonKernel->folderIsDrafts( col ) ||
                CommonKernel->folderIsTemplates( col ) ) ) {

@@ -2796,7 +2796,10 @@ void KMMainWidget::slotItemsFetchedForActivation( const Akonadi::Item::List &lis
   const bool useFixedFont = mMsgView ? mMsgView->isFixedFont() :
                             MessageViewer::GlobalSettings::self()->useFixedFont();
   win->setUseFixedFont( useFixedFont );
-  win->showMessage( overrideEncoding(), msg );
+
+
+  const Akonadi::Collection parentCollection = MailCommon::Util::parentCollectionFromItem(msg);  
+  win->showMessage( overrideEncoding(), msg, parentCollection );
   win->show();
 }
 

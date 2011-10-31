@@ -10,6 +10,7 @@
 
 #include <boost/scoped_ptr.hpp>
 #include <akonadi/item.h>
+#include <akonadi/collection.h>
 class KMReaderWin;
 class KAction;
 class KFontAction;
@@ -25,9 +26,6 @@ class MessageActions;
 namespace KMime {
   class Message;
   class Content;
-}
-namespace Akonadi {
-  class Item;
 }
 
 class KMReaderMainWin : public KMail::SecondaryWindow
@@ -50,7 +48,8 @@ public:
    * Then, the reader needs to know about that original message, so those to parameters are passed
    * onto setOriginalMsg() of KMReaderWin.
    */
-  void showMessage( const QString & encoding, const Akonadi::Item &msg );
+  void showMessage( const QString & encoding, const Akonadi::Item &msg, const Akonadi::Collection & parentCollection = Akonadi::Collection());
+  
   void showMessage( const QString & encoding, KMime::Message::Ptr message);
 private slots:
   void slotMessagePopup(const Akonadi::Item& ,const KUrl&,const QPoint& );
@@ -74,6 +73,7 @@ private slots:
   void slotReplyOrForwardFinished();
 
 private:
+  Akonadi::Collection parentCollection() const;
   void initKMReaderMainWin();
   void setupAccel();
   KAction *copyActionMenu();
@@ -88,6 +88,7 @@ private:
   KFontAction *fontAction;
   KFontSizeAction *fontSizeAction;
   KMail::MessageActions *mMsgActions;
+  Akonadi::Collection mParentCollection;
 
   // Custom template actions menu
   boost::scoped_ptr<CustomTemplatesMenu> mCustomTemplateMenus;
