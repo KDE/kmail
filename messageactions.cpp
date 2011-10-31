@@ -280,8 +280,15 @@ void MessageActions::updateActions()
   mReplyListAction->setEnabled( hasPayload );
   mNoQuoteReplyAction->setEnabled( hasPayload );
 
-  mAnnotateAction->setEnabled( singleMsg && Nepomuk::ResourceManager::instance()->initialized() );
-  mAsynNepomukRetriever->requestResource( mCurrentItem.url(), QVector<QUrl>() << Nepomuk::Resource::descriptionUri() << Nepomuk::Resource::annotationUri() );
+  if ( Nepomuk::ResourceManager::instance()->initialized() )
+  {
+    mAnnotateAction->setEnabled( singleMsg );
+    mAsynNepomukRetriever->requestResource( mCurrentItem.url(), QVector<QUrl>() << Nepomuk::Resource::descriptionUri() << Nepomuk::Resource::annotationUri() );
+  }
+  else
+  {
+    mAnnotateAction->setEnabled( false );
+  }
 
   mStatusMenu->setEnabled( multiVisible );
 
@@ -308,7 +315,6 @@ void MessageActions::slotUpdateActionsFetchDone(KJob* job)
   Akonadi::ItemFetchJob *fetchJob = static_cast<Akonadi::ItemFetchJob*>( job );
   if ( fetchJob->items().isEmpty() )
     return;
-
   Akonadi::Item  messageItem = fetchJob->items().first();
   if ( messageItem == mCurrentItem ) {
     mCurrentItem = messageItem;
