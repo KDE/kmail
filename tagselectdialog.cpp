@@ -27,6 +27,7 @@
  */
 
 #include "tagselectdialog.h"
+#include "tag.h"
 #include <Nepomuk/Resource>
 #include <Nepomuk/ResourceManager>
 #include <Nepomuk/Tag>
@@ -72,7 +73,7 @@ TagSelectDialog::TagSelectDialog( QWidget * parent, int numberOfSelectedMessages
       const bool hasTag = itemResource.tags().contains(  Nepomuk::Tag( tag->tagName ) );
       item->setCheckState( hasTag ? Qt::Checked : Qt::Unchecked );
     }
-    else if ( numberOfSelectedMessages > 1 ) {
+    else {
       item->setCheckState( Qt::Unchecked );
     }    
   }
@@ -97,3 +98,5 @@ QList<QString> TagSelectDialog::selectedTag() const
   }
   return lst;
 }
+
+#include "tagselectdialog.moc"

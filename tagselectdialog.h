@@ -30,7 +30,6 @@
 #define TAGSELECTDIALOG_H
 
 #include <KDialog>
-#include "tag.h"
 
 class QListWidget;
 
