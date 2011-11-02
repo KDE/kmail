@@ -28,7 +28,7 @@ class KXMLGUIClient;
 class KToggleAction;
 class QAction;
 class QSignalMapper;
-
+class KAction;
 namespace Akonadi {
   class Item;
 }
@@ -120,6 +120,8 @@ namespace KMail {
       KXMLGUIClient *mGUIClient;
       MessageCore::TagListMonitor *mTagListMonitor;
 
+      KAction *mSeparatorAction;
+      KAction *mMoreAction;
       // Maps the resource URI or a tag to the action of a tag.
       // Contains all existing tags
       QMap<QString,KToggleAction*> mTagActions;

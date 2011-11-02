@@ -48,6 +48,8 @@ TagActionManager::TagActionManager( QObject *parent, KActionCollection *actionCo
     mMessageTagToggleMapper( 0 ),
     mGUIClient( guiClient ),
     mTagListMonitor( new MessageCore::TagListMonitor( this ) ),
+    mSeparatorAction( 0 ), 
+    mMoreAction( 0 ), 
     mSopranoModel( new Soprano::Util::SignalCacheModel( Nepomuk::ResourceManager::instance()->mainModel() ) )
 {
   connect( mTagListMonitor, SIGNAL(tagsChanged()), this, SLOT(tagsChanged()) ); 
@@ -57,6 +59,9 @@ TagActionManager::TagActionManager( QObject *parent, KActionCollection *actionCo
            SLOT(statementChanged(Soprano::Statement)) );
   connect( mSopranoModel.data(), SIGNAL(statementRemoved(Soprano::Statement)),
            SLOT(statementChanged(Soprano::Statement)) );*/
+  KAction *separator = new KAction( this );
+  separator->setSeparator( true );
+  mMessageActions->messageStatusMenu()->menu()->addAction( separator );
 }
 
 TagActionManager::~TagActionManager()
@@ -92,6 +97,15 @@ void TagActionManager::clearActions()
     mActionCollection->removeAction( action );
   }
 
+  if ( mSeparatorAction ) {
+    mMessageActions->messageStatusMenu()->removeAction( mSeparatorAction );
+    mSeparatorAction = 0;
+  }
+  if ( mMoreAction ) {
+    mMessageActions->messageStatusMenu()->removeAction( mMoreAction );
+    mMoreAction = 0;
+  }
+  
   mTagActions.clear();
   delete mMessageTagToggleMapper;
   mMessageTagToggleMapper = 0;
@@ -118,9 +132,6 @@ void TagActionManager::createActions()
   connect( mMessageTagToggleMapper, SIGNAL(mapped(QString)),
            this, SIGNAL(tagActionTriggered(QString)) );
 
-  KAction *separator = new KAction( this );
-  separator->setSeparator( true );
-  mMessageActions->messageStatusMenu()->menu()->addAction( separator );
   // Create a action for each tag and plug it into various places
   int i = 0;
   foreach( const Tag::Ptr &tag, tagList ) {
@@ -147,13 +158,13 @@ void TagActionManager::createActions()
       mMessageActions->messageStatusMenu()->menu()->addAction( tagAction );
     else if ( i == s_numberMaxTag && i <tagList.count() )
     {
-      KAction *separator = new KAction( this );
-      separator->setSeparator( true );
-      mMessageActions->messageStatusMenu()->menu()->addAction( separator );
+      mSeparatorAction = new KAction( this );
+      mSeparatorAction->setSeparator( true );
+      mMessageActions->messageStatusMenu()->menu()->addAction( mSeparatorAction );
       
-      KAction *tagMoreAction = new KAction( i18n( "More..." ), this );
-      mMessageActions->messageStatusMenu()->menu()->addAction( tagMoreAction );
-      connect( tagMoreAction, SIGNAL(triggered(bool)),
+      mMoreAction = new KAction( i18n( "More..." ), this );
+      mMessageActions->messageStatusMenu()->menu()->addAction( mMoreAction );
+      connect( mMoreAction, SIGNAL(triggered(bool)),
                this, SIGNAL(tagMoreActionClicked()) );
     }
     
