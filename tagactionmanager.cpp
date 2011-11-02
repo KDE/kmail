@@ -100,18 +100,23 @@ void TagActionManager::clearActions()
 void TagActionManager::createActions()
 {
   clearActions();
+  
+
+  const QList<Nepomuk::Tag> alltags( Nepomuk::Tag::allTags() );
+  if ( alltags.isEmpty() )
+    return;
+  
+  // Build a sorted list of tags
+  QList<Tag::Ptr> tagList;
+  foreach( const Nepomuk::Tag &nepomukTag, alltags ) {
+    tagList.append( Tag::fromNepomuk( nepomukTag ) );
+  }
+  qSort( tagList.begin(), tagList.end(), KMail::Tag::compare );
 
   //Use a mapper to understand which tag button is triggered
   mMessageTagToggleMapper = new QSignalMapper( this );
   connect( mMessageTagToggleMapper, SIGNAL(mapped(QString)),
            this, SIGNAL(tagActionTriggered(QString)) );
-
-  // Build a sorted list of tags
-  QList<Tag::Ptr> tagList;
-  foreach( const Nepomuk::Tag &nepomukTag, Nepomuk::Tag::allTags() ) {
-    tagList.append( Tag::fromNepomuk( nepomukTag ) );
-  }
-  qSort( tagList.begin(), tagList.end(), KMail::Tag::compare );
 
   KAction *separator = new KAction( this );
   separator->setSeparator( true );
