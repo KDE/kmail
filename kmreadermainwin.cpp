@@ -407,7 +407,7 @@ void KMReaderMainWin::slotDelayedMessagePopup( KJob *job )
   bool urlMenuAdded = false;
   bool copyAdded = false;
   if ( !mUrl.isEmpty() ) {
-    if ( mUrl.protocol() == "mailto" ) {
+    if ( mUrl.protocol() == QLatin1String( "mailto" ) ) {
       // popup on a mailto URL
       menu->addAction( mReaderWin->mailToComposeAction() );
       if ( mMsg.hasPayload<KMime::Message::Ptr>() ) {
