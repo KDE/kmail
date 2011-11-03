@@ -279,6 +279,8 @@ class KMAIL_EXPORT KMMainWidget : public QWidget
 
     KAction *akonadiStandardAction( Akonadi::StandardActionManager::Type type );
     KAction *akonadiStandardAction( Akonadi::StandardMailActionManager::Type type );
+    Akonadi::StandardMailActionManager *standardMailActionManager() const { return mAkonadiStandardActionManager; }
+
     void refreshMessageListSelection();
 
     void slotStartCheckMail();

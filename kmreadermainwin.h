@@ -11,6 +11,7 @@
 #include <boost/scoped_ptr.hpp>
 #include <akonadi/item.h>
 #include <akonadi/collection.h>
+#include <QModelIndex>
 class KMReaderWin;
 class KAction;
 class KFontAction;
@@ -27,6 +28,7 @@ namespace KMime {
   class Message;
   class Content;
 }
+Q_DECLARE_METATYPE(QModelIndex)
 
 class KMReaderMainWin : public KMail::SecondaryWindow
 {
@@ -71,6 +73,7 @@ private slots:
   /// This closes the window if the setting to close the window after replying or
   /// forwarding is set.
   void slotReplyOrForwardFinished();
+  void slotCopyItem(QAction*);
 
 private:
   Akonadi::Collection parentCollection() const;

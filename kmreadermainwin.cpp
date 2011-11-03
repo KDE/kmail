@@ -58,6 +58,7 @@
 
 #include <messageviewer/viewer.h>
 #include <akonadi/item.h>
+#include <akonadi/itemcopyjob.h>
 
 #include "messagecore/messagehelpers.h"
 #include <mailutil.h>
@@ -378,10 +379,32 @@ KAction *KMReaderMainWin::copyActionMenu()
 {
   KMMainWidget* mainwin = kmkernel->getKMMainWidget();
   if ( mainwin )
-    return mainwin->akonadiStandardAction(  Akonadi::StandardActionManager::CopyItemToMenu );
+  {
+    KActionMenu *action = new KActionMenu( this );
+    action->setIcon( KIcon( "edit-copy") );
+    action->setText( i18n("Copy Item To...") );
+    mainwin->standardMailActionManager()->standardActionManager()->createActionFolderMenu( action->menu(), Akonadi::StandardActionManager::CopyItemToMenu );
+    connect( action->menu(), SIGNAL(triggered(QAction*)), SLOT( slotCopyItem(QAction*) ) );
+
+    return action;
+  }
   return 0;
+ 
 }
 
+void KMReaderMainWin::slotCopyItem(QAction*action)
+{
+  if ( action )
+  {
+    const QModelIndex index = action->data().value<QModelIndex>();
+    QAbstractItemModel *model = const_cast<QAbstractItemModel *>( index.model() );
+    const Akonadi::Collection collection = index.data( Akonadi::EntityTreeModel::CollectionRole ).value<Akonadi::Collection>();
+
+    Akonadi::ItemCopyJob *job = new Akonadi::ItemCopyJob( mMsg, collection,this );
+    //TODO look at error
+  }
+}
+  
 void KMReaderMainWin::slotMessagePopup(const Akonadi::Item&aMsg ,const KUrl&aUrl,const QPoint& aPoint)
 {
   mUrl = aUrl;
