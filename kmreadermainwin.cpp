@@ -59,6 +59,7 @@
 #include <messageviewer/viewer.h>
 #include <akonadi/item.h>
 #include <akonadi/itemcopyjob.h>
+#include <akonadi/itemcreatejob.h>
 
 #include "messagecore/messagehelpers.h"
 #include <mailutil.h>
@@ -149,8 +150,11 @@ void KMReaderMainWin::showMessage( const QString & encoding, const Akonadi::Item
 
 void KMReaderMainWin::showMessage( const QString& encoding, KMime::Message::Ptr message )
 {
-  Akonadi::Item item( "message/rfc822" );
+  Akonadi::Item item;
+
   item.setPayload( message );
+  item.setMimeType( KMime::Message::mimeType() );
+  
   mMsg = item;
   mMsgActions->setCurrentMessage( item );
   
@@ -400,7 +404,12 @@ void KMReaderMainWin::slotCopyItem(QAction*action)
     QAbstractItemModel *model = const_cast<QAbstractItemModel *>( index.model() );
     const Akonadi::Collection collection = index.data( Akonadi::EntityTreeModel::CollectionRole ).value<Akonadi::Collection>();
 
-    Akonadi::ItemCopyJob *job = new Akonadi::ItemCopyJob( mMsg, collection,this );
+    if ( mMsg.isValid() )
+      Akonadi::ItemCopyJob *job = new Akonadi::ItemCopyJob( mMsg, collection,this );
+    else
+    {
+      Akonadi::ItemCreateJob *job = new Akonadi::ItemCreateJob( mMsg, collection, this );
+    }
     //TODO look at error
   }
 }
@@ -493,8 +502,7 @@ void KMReaderMainWin::slotDelayedMessagePopup( KJob *job )
         menu->addAction( mMsgActions->forwardMenu() );
         menu->addSeparator();
     }
-    const bool messageIsValid = mMsg.isValid();
-    if ( messageIsValid ) 
+    if ( mMsg.isValid() )
       menu->addAction( copyActionMenu() );
 
     menu->addSeparator();
@@ -505,7 +513,7 @@ void KMReaderMainWin::slotDelayedMessagePopup( KJob *job )
     menu->addAction( mMsgActions->printAction() );
     menu->addAction( mSaveAsAction );
     menu->addAction( mSaveAtmAction );
-    if ( messageIsValid ) {
+    if ( mMsg.isValid() ) {
       menu->addSeparator();
       menu->addAction( mMsgActions->createTodoAction() );
     }
