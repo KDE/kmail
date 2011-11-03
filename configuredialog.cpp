@@ -565,7 +565,8 @@ void AccountsPage::ReceivingTab::slotAccountSelected(const Akonadi::AgentInstanc
   } else {
     mAccountsReceiving.mModifyAccountButton->setEnabled( !current.type().capabilities().contains( QLatin1String( "NoConfig" ) ) );
     mAccountsReceiving.mRemoveAccountButton->setEnabled( true );
-    mAccountsReceiving.mRestartAccountButton->setEnabled( true );
+    // Restarting an agent is not possible if it's in Running status... (see AgentProcessInstance::restartWhenIdle)
+    mAccountsReceiving.mRestartAccountButton->setEnabled( ( current.status() != 1 ) );
   }
 }
 
