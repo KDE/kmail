@@ -374,7 +374,8 @@ KMComposeWin::KMComposeWin( const KMime::Message::Ptr &aMsg, Composer::TemplateC
   mHeadersToEditorSplitter->addWidget( mSplitter );
   editor->setAcceptDrops( true );
   connect( mDictionaryCombo, SIGNAL(dictionaryChanged(QString)),
-           editor, SLOT(setSpellCheckingLanguage(QString)) );
+           this, SLOT(slotSpellCheckingLanguage(QString)) );
+  
   connect( editor, SIGNAL(languageChanged(QString)),
            this, SLOT(slotLanguageChanged(QString)) );
   connect( editor, SIGNAL(spellCheckStatus(QString)),
@@ -484,6 +485,13 @@ KMComposeWin::~KMComposeWin()
   delete mComposerBase;
 }
 
+
+void KMComposeWin::slotSpellCheckingLanguage(const QString& language)
+{
+  qDebug()<<" language :"<<language;
+  mComposerBase->editor()->setSpellCheckingLanguage(language );
+  mEdtSubject->setSpellCheckingLanguage(language );
+}
 
 QString KMComposeWin::dbusObjectPath() const
 {
@@ -2819,8 +2827,7 @@ void KMComposeWin::slotIdentityChanged( uint uoid, bool initalChange )
   if ( !mBtnDictionary->isChecked() && !mIgnoreStickyFields ) {
     mDictionaryCombo->setCurrentByDictionaryName( ident.dictionary() );
   }
-  mComposerBase->editor()->setSpellCheckingLanguage( mDictionaryCombo->currentDictionary() );
-  mEdtSubject->setSpellCheckingLanguage( mDictionaryCombo->currentDictionary() );
+  slotSpellCheckingLanguage( mDictionaryCombo->currentDictionary() );
   if ( !mBtnFcc->isChecked() && !mPreventFccOverwrite ) {
     setFcc( ident.fcc() );
   }

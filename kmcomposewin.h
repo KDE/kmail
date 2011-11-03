@@ -412,6 +412,7 @@ class KMComposeWin : public KMail::Composer
     void slotUpdateSignatureAndEncrypionStateIndicators();
 
     virtual void setAutoSaveFileName( const QString& fileName );
+    void slotSpellCheckingLanguage(const QString& language);
   
 
   public: // kmcommand
