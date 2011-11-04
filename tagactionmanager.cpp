@@ -193,7 +193,7 @@ void TagActionManager::updateActionStates( int numberOfSelectedMessages,
 {
   QMap<QString,KToggleAction*>::const_iterator it = mTagActions.constBegin();
   QMap<QString,KToggleAction*>::const_iterator end = mTagActions.constEnd();
-  if ( 1 == numberOfSelectedMessages )
+  if ( numberOfSelectedMessages == 1 )
   {
     Q_ASSERT( selectedItem.isValid() );
     Nepomuk::Resource itemResource( selectedItem.url() );
@@ -212,7 +212,6 @@ void TagActionManager::updateActionStates( int numberOfSelectedMessages,
     }
   }
   else {
-    
     for ( ; it != end; ++it ) {
       it.value()->setEnabled( false );
     }
