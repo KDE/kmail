@@ -1645,7 +1645,7 @@ void KMComposeWin::setMsg( const KMime::Message::Ptr &newMsg, bool mayAutoSign,
   }
 #endif
 
-  if( (MessageComposer::MessageComposerSettings::self()->autoTextSignature()=="auto") && mayAutoSign ) {
+  if( (MessageComposer::MessageComposerSettings::self()->autoTextSignature()==QLatin1String( "auto" )) && mayAutoSign ) {
     //
     // Espen 2000-05-16
     // Delay the signature appending. It may start a fileseletor.
