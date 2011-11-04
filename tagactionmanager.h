@@ -1,5 +1,7 @@
 /* Copyright 2010 Thomas McGuire <mcguire@kde.org>
 
+   Copyright 2011 Laurent Montel <montel@kde.org>
+
    This program is free software; you can redistribute it and/or
    modify it under the terms of the GNU General Public License as
    published by the Free Software Foundation; either version 2 of
@@ -20,6 +22,7 @@
 #define TAGACTIONMANAGER_H
 
 #include "kmail_export.h"
+#include "tag.h"
 
 #include <Soprano/Statement>
 
@@ -113,6 +116,7 @@ namespace KMail {
       void statementChanged( Soprano::Statement statement );
 
     private:
+      void createTagAction( const KMail::Tag::Ptr &tag, bool addToMenu );
 
       KActionCollection *mActionCollection;
       MessageActions *mMessageActions;

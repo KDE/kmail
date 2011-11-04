@@ -1,5 +1,6 @@
 /* Copyright 2010 Thomas McGuire <mcguire@kde.org>
-
+   Copyright 2011 Laurent Montel <montel@kde.org>
+   
    This program is free software; you can redistribute it and/or
    modify it under the terms of the GNU General Public License as
    published by the Free Software Foundation; either version 2 of
@@ -19,7 +20,6 @@
 #include "tagactionmanager.h"
 
 #include "messageactions.h"
-#include "tag.h"
 
 #include "messagecore/taglistmonitor.h"
 
@@ -111,6 +111,32 @@ void TagActionManager::clearActions()
   mMessageTagToggleMapper = 0;
 }
 
+void TagActionManager::createTagAction( const Tag::Ptr &tag, bool addToMenu )
+{
+  QString cleanName( i18n("Message Tag %1", tag->tagName ) );
+  cleanName.replace('&',"&&");
+  KToggleAction * const tagAction = new KToggleAction( KIcon( tag->iconName ),
+                                                       cleanName, this );
+  tagAction->setShortcut( tag->shortcut );
+  tagAction->setIconText( tag->tagName );
+  mActionCollection->addAction( tag->nepomukResourceUri.toString(), tagAction );
+  connect( tagAction, SIGNAL(triggered(bool)),
+           mMessageTagToggleMapper, SLOT(map()) );
+
+  // The shortcut configuration is done in the config dialog.
+  // The shortcut set in the shortcut dialog would not be saved back to
+  // the tag descriptions correctly.
+  tagAction->setShortcutConfigurable( false );
+  mMessageTagToggleMapper->setMapping( tagAction, tag->nepomukResourceUri.toString() );
+
+  mTagActions.insert( tag->nepomukResourceUri.toString(), tagAction );
+  if ( addToMenu )
+    mMessageActions->messageStatusMenu()->menu()->addAction( tagAction );
+      
+  if ( tag->inToolbar )
+    mToolbarActions.append( tagAction );
+}
+
 void TagActionManager::createActions()
 {
   clearActions();
@@ -135,42 +161,25 @@ void TagActionManager::createActions()
   // Create a action for each tag and plug it into various places
   int i = 0;
   foreach( const Tag::Ptr &tag, tagList ) {
-
-    QString cleanName( i18n("Message Tag %1", tag->tagName ) );
-    cleanName.replace('&',"&&");
-    KToggleAction * const tagAction = new KToggleAction( KIcon( tag->iconName ),
-                                                         cleanName, this );
-    tagAction->setShortcut( tag->shortcut );
-    tagAction->setIconText( tag->tagName );
-    mActionCollection->addAction( tag->nepomukResourceUri.toString(), tagAction );
-    connect( tagAction, SIGNAL(triggered(bool)),
-             mMessageTagToggleMapper, SLOT(map()) );
-
-    // The shortcut configuration is done in the config dialog.
-    // The shortcut set in the shortcut dialog would not be saved back to
-    // the tag descriptions correctly.
-    tagAction->setShortcutConfigurable( false );
-    mMessageTagToggleMapper->setMapping( tagAction, tag->nepomukResourceUri.toString() );
-
-    mTagActions.insert( tag->nepomukResourceUri.toString(), tagAction );
-    //Add to menu.
     if ( i< s_numberMaxTag )
-      mMessageActions->messageStatusMenu()->menu()->addAction( tagAction );
-    else if ( i == s_numberMaxTag && i <tagList.count() )
+      createTagAction( tag,true );
+    else
     {
-      mSeparatorAction = new KAction( this );
-      mSeparatorAction->setSeparator( true );
-      mMessageActions->messageStatusMenu()->menu()->addAction( mSeparatorAction );
+      if ( tag->inToolbar || !tag->shortcut.isEmpty() )
+        createTagAction( tag, false );
       
-      mMoreAction = new KAction( i18n( "More..." ), this );
-      mMessageActions->messageStatusMenu()->menu()->addAction( mMoreAction );
-      connect( mMoreAction, SIGNAL(triggered(bool)),
-               this, SIGNAL(tagMoreActionClicked()) );
+      if ( i == s_numberMaxTag && i <tagList.count() )
+      {
+        mSeparatorAction = new KAction( this );
+        mSeparatorAction->setSeparator( true );
+        mMessageActions->messageStatusMenu()->menu()->addAction( mSeparatorAction );
+      
+        mMoreAction = new KAction( i18n( "More..." ), this );
+        mMessageActions->messageStatusMenu()->menu()->addAction( mMoreAction );
+        connect( mMoreAction, SIGNAL(triggered(bool)),
+                 this, SIGNAL(tagMoreActionClicked()) );
+      }
     }
-    
-    if ( tag->inToolbar )
-      mToolbarActions.append( tagAction );
-    
     ++i;
   }
 
