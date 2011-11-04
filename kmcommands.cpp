@@ -854,12 +854,8 @@ KMCommand::Result KMForwardCommand::execute()
       MessageFactory factory( KMime::Message::Ptr( new KMime::Message ), firstItem.id(), firstItem.parentCollection() );
       factory.setIdentityManager( KMKernel::self()->identityManager() );
       factory.setFolderIdentity( MailCommon::Util::folderIdentity( firstItem ) );
-      // get a list of messages
-      QList< KMime::Message::Ptr > msgs;
-      foreach( const Akonadi::Item& item, msgList )
-        msgs << MessageCore::Util::message( item );
       
-      QPair< KMime::Message::Ptr, KMime::Content* > fwdMsg = factory.createForwardDigestMIME( msgs );
+      QPair< KMime::Message::Ptr, KMime::Content* > fwdMsg = factory.createForwardDigestMIME(msgList );
       KMail::Composer * win = KMail::makeComposer( fwdMsg.first, KMail::Composer::Forward, mIdentity );
       win->addAttach( fwdMsg.second );
       win->show();
