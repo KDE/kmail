@@ -2950,12 +2950,6 @@ void KMComposeWin::slotFolderRemoved( const Akonadi::Collection & col )
   }
 }
 
-void KMComposeWin::slotSetAlwaysSend( bool bAlways )
-{
-  //Never implemented in kmail 4.x or 4.8... => comment it for the moment it's a virtual function in composer.
-  //mAlwaysSend = bAlways;
-}
-
 void KMComposeWin::slotFormatReset()
 {
   mComposerBase->editor()->setTextForegroundColor( palette().text().color() );
