@@ -2653,7 +2653,7 @@ void KMComposeWin::slotHelp()
 void KMComposeWin::enableHtml()
 {
   if ( mForceDisableHtml ) {
-    disableHtml( Message::ComposerViewBase::NoConfirmationNeeded );;
+    disableHtml( Message::ComposerViewBase::NoConfirmationNeeded );
     return;
   }
 
