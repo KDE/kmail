@@ -32,6 +32,8 @@
 #include "searchdescriptionattribute.h"
 #include "foldertreeview.h"
 #include "kmsearchmessagemodel.h"
+#include "kmsearchfilterproxymodel.h"
+
 #include <Akonadi/AttributeFactory>
 #include <Akonadi/CollectionModifyJob>
 #include <Akonadi/CollectionStatisticsJob>
@@ -382,10 +384,8 @@ void SearchWindow::createSearchModel()
 {
   mResultModel = new KMSearchMessageModel( this );
   mResultModel->setCollection( mFolder );
-  QSortFilterProxyModel *sortproxy = new QSortFilterProxyModel( this );
+  KMSearchFilterProxyModel *sortproxy = new KMSearchFilterProxyModel( this );
   sortproxy->setSourceModel( mResultModel );
-  sortproxy->setDynamicSortFilter( true );
-  sortproxy->setFilterCaseSensitivity ( Qt::CaseInsensitive );
   mLbxMatches->setModel( sortproxy );
 
   mLbxMatches->setColumnWidth( 0, GlobalSettings::self()->collectionWidth() );

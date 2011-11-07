@@ -101,6 +101,8 @@ QVariant KMSearchMessageModel::data( const QModelIndex & index, int role ) const
           return i18nc( "@label No size available", "-" );
         else
           return KGlobal::locale()->formatByteSize( item.size() );
+      case DateNotTranslated:
+        return msg->date()->dateTime().dateTime();
       default:
         return QVariant();
     }
@@ -118,6 +120,8 @@ QVariant KMSearchMessageModel::data( const QModelIndex & index, int role ) const
         return msg->date()->dateTime().dateTime();
       case Size:
         return item.size();
+      case DateNotTranslated:
+        return msg->date()->dateTime().dateTime();
       default:
         return QVariant();
     }

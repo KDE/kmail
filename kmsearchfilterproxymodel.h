@@ -25,33 +25,23 @@
  *  you do not wish to do so, delete this exception statement from
  *  your version.
  */
-#ifndef KMSEARCHMESSAGEMODEL_H
-#define KMSEARCHMESSAGEMODEL_H
 
-#include <akonadi/kmime/messagemodel.h>
+#ifndef KMSEARCHFILTERPROXYMODEL_H
+#define KMSEARCHFILTERPROXYMODEL_H
 
-class KMSearchMessageModel : public Akonadi::MessageModel
+#include <QSortFilterProxyModel>
+
+class QModelIndex;
+
+class KMSearchFilterProxyModel : public QSortFilterProxyModel
 {
-  Q_OBJECT
-
-  public:
-    enum Column {
-      Collection, 
-      Subject,
-      Sender,
-      Receiver,
-      Date,
-      Size,
-      DateNotTranslated
-    };
-    explicit KMSearchMessageModel( QObject* parent = 0 );
-    virtual ~KMSearchMessageModel();
-
-    virtual int columnCount( const QModelIndex & parent = QModelIndex() ) const;
-    virtual QVariant data( const QModelIndex & index, int role = Qt::DisplayRole ) const;
-
-    virtual QVariant headerData( int section, Qt::Orientation orientation, int role = Qt::DisplayRole ) const;
-
+public:
+  explicit KMSearchFilterProxyModel( QObject *parent );
+  ~KMSearchFilterProxyModel();
+protected:
+  virtual bool lessThan( const QModelIndex & left, const QModelIndex & right ) const;
 };
 
-#endif
+
+#endif /* KMSEARCHFILTERPROXYMODEL_H */
+

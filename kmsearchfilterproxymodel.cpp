@@ -25,33 +25,33 @@
  *  you do not wish to do so, delete this exception statement from
  *  your version.
  */
-#ifndef KMSEARCHMESSAGEMODEL_H
-#define KMSEARCHMESSAGEMODEL_H
 
-#include <akonadi/kmime/messagemodel.h>
+#include "kmsearchfilterproxymodel.h"
+#include "kmsearchmessagemodel.h"
+#include <QModelIndex>
+#include <QDateTime>
 
-class KMSearchMessageModel : public Akonadi::MessageModel
+KMSearchFilterProxyModel::KMSearchFilterProxyModel( QObject *parent )
+  :QSortFilterProxyModel( parent )
 {
-  Q_OBJECT
+  setDynamicSortFilter( true );
+  setFilterCaseSensitivity ( Qt::CaseInsensitive );
 
-  public:
-    enum Column {
-      Collection, 
-      Subject,
-      Sender,
-      Receiver,
-      Date,
-      Size,
-      DateNotTranslated
-    };
-    explicit KMSearchMessageModel( QObject* parent = 0 );
-    virtual ~KMSearchMessageModel();
+}
 
-    virtual int columnCount( const QModelIndex & parent = QModelIndex() ) const;
-    virtual QVariant data( const QModelIndex & index, int role = Qt::DisplayRole ) const;
+KMSearchFilterProxyModel::~KMSearchFilterProxyModel()
+{
+}
 
-    virtual QVariant headerData( int section, Qt::Orientation orientation, int role = Qt::DisplayRole ) const;
 
-};
-
-#endif
+bool KMSearchFilterProxyModel::lessThan( const QModelIndex & left, const QModelIndex & right ) const
+{
+  if ( left.column() == KMSearchMessageModel::Date )
+  {
+    const QDateTime dateLeft = left.data( KMSearchMessageModel::DateNotTranslated ).toDateTime();
+    const QDateTime dateRight = right.data( KMSearchMessageModel::DateNotTranslated ).toDateTime();
+    return dateLeft<dateRight;
+  }
+  
+  return QSortFilterProxyModel::lessThan( left, right );
+}
