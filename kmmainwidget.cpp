@@ -3865,8 +3865,9 @@ void KMMainWidget::updateMessageActionsDelayed()
 
 void KMMainWidget::slotAkonadiStandardActionUpdated()
 {
+  const bool multiFolder = mFolderTreeWidget->selectedCollections().count() > 1;
   if ( mCollectionProperties ) {
-    mCollectionProperties->setEnabled( mCurrentFolder &&
+    mCollectionProperties->setEnabled( mCurrentFolder && !multiFolder && 
                                        !mCurrentFolder->isStructural() &&
                                        !MailCommon::Util::isVirtualCollection( mCurrentFolder->collection() ) );
     QList< QAction* > collectionProperties;
@@ -3878,7 +3879,6 @@ void KMMainWidget::slotAkonadiStandardActionUpdated()
   }
 
   const bool folderWithContent = mCurrentFolder && !mCurrentFolder->isStructural();
-  const bool multiFolder = mFolderTreeWidget->selectedCollections().count() > 1;
 
   if ( mAkonadiStandardActionManager->action( Akonadi::StandardActionManager::DeleteCollections ) ) {
 
