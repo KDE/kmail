@@ -485,7 +485,7 @@ void MessageActions::slotPrintMsg()
   // FIXME: This is broken when the Viewer shows an encapsulated message
   const Akonadi::Item message = mMessageView ? mMessageView->message() : mCurrentItem;
   KMPrintCommand *command =
-    new KMPrintCommand( mParent, message,
+    new KMPrintCommand( mParent, Akonadi::Item::List()<<message,
                         mMessageView ? mMessageView->headerStyle() : 0,
                         mMessageView ? mMessageView->headerStrategy() : 0,
                         htmlOverride, htmlLoadExtOverride,

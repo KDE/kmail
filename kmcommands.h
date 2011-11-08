@@ -400,7 +400,7 @@ class KMAIL_EXPORT KMPrintCommand : public KMCommand
   Q_OBJECT
 
 public:
-  KMPrintCommand( QWidget *parent, const Akonadi::Item &msg,
+  KMPrintCommand( QWidget *parent, const QList<Akonadi::Item> &msgList, 
                   MessageViewer::HeaderStyle *headerStyle = 0,
                   const MessageViewer::HeaderStrategy *headerStrategy = 0,
                   bool htmlOverride = false,
