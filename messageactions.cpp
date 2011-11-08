@@ -461,7 +461,7 @@ void MessageActions::slotNoQuoteReplyToMsg()
 {
   if ( !mCurrentItem.hasPayload<KMime::Message::Ptr>() )
     return;
-  KMCommand *command = new KMNoQuoteReplyToCommand( mParent, mCurrentItem );
+  KMCommand *command = new KMReplyCommand( mParent, mCurrentItem, MessageComposer::ReplySmart, QString(), true );
   command->start();
 }
 

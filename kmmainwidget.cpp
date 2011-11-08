@@ -2263,7 +2263,7 @@ void KMMainWidget::slotNoQuoteReplyToMsg()
   if ( !msg.isValid() )
     return;
 
-  KMCommand *command = new KMNoQuoteReplyToCommand( this, msg );
+  KMCommand *command = new KMReplyCommand( this, msg, MessageComposer::ReplySmart, QString(), true );
   command->start();
 }
 

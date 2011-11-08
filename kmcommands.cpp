@@ -746,47 +746,15 @@ void KMOpenMsgCommand::slotResult( KJob *job )
 }
 
 //-----------------------------------------------------------------------------
-
-//TODO: ReplyTo, NoQuoteReplyTo, ReplyList, ReplyToAll, ReplyAuthor
-//      are all similar and should be factored
-KMNoQuoteReplyToCommand::KMNoQuoteReplyToCommand( QWidget *parent,
-                                                  const Akonadi::Item &msg )
-  : KMCommand( parent, msg )
-{
-}
-
-KMCommand::Result KMNoQuoteReplyToCommand::execute()
-{
-#ifndef QT_NO_CURSOR	
-  MessageViewer::KCursorSaver busy( MessageViewer::KBusyPtr::busy() );
-#endif  
-  Akonadi::Item item = retrievedMessage();
-  KMime::Message::Ptr msg = MessageCore::Util::message( item );
-  if ( !msg )
-    return Failed;
-  MessageFactory factory( msg, item.id(), item.parentCollection() );
-  factory.setIdentityManager( KMKernel::self()->identityManager() );
-  factory.setFolderIdentity( MailCommon::Util::folderIdentity( item ) );
-  factory.setMailingListAddresses( KMail::Util::mailingListsFromMessage( item ) );
-  factory.putRepliesInSameFolder( KMail::Util::putRepliesInSameFolder( item ) );
-  factory.setReplyStrategy( MessageComposer::ReplySmart );
-  MessageFactory::MessageReply reply = factory.createReply();
-  KMail::Composer *win = KMail::makeComposer( KMime::Message::Ptr( reply.msg ), replyContext( reply ) );
-  win->setReplyFocus( false );
-  win->show();
-
-  return OK;
-}
-
-
-
 KMReplyCommand::KMReplyCommand( QWidget *parent, const Akonadi::Item &msg, MessageComposer::ReplyStrategy replyStrategy, 
-                                            const QString &selection )
+                                            const QString &selection, bool noquote )
   : KMCommand( parent, msg ),
     mSelection( selection ),
     m_replyStrategy( replyStrategy )
 {
-  fetchScope().fetchFullPayload( true );
+  if ( !noquote )
+    fetchScope().fetchFullPayload( true );
+  
   fetchScope().setAncestorRetrieval( Akonadi::ItemFetchScope::Parent );
 }
 

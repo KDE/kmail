@@ -304,24 +304,13 @@ class KMAIL_EXPORT KMReplyCommand : public KMCommand
 public:
   KMReplyCommand( QWidget *parent, const Akonadi::Item &msg,
                   MessageComposer::ReplyStrategy replyStrategy, 
-                  const QString &selection = QString() );
+                  const QString &selection = QString(), bool noquote = false );
 private:
   virtual Result execute();
   
 private:
   QString mSelection;
   MessageComposer::ReplyStrategy m_replyStrategy;
-};
-
-class KMAIL_EXPORT KMNoQuoteReplyToCommand : public KMCommand
-{
-  Q_OBJECT
-
-public:
-  KMNoQuoteReplyToCommand( QWidget *parent, const Akonadi::Item &msg );
-
-private:
-  virtual Result execute();
 };
 
 class KMAIL_EXPORT KMForwardCommand : public KMCommand
