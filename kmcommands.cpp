@@ -1036,7 +1036,8 @@ KMCommand::Result KMCustomForwardCommand::execute()
   QList<Akonadi::Item> msgList = retrievedMsgs();
   if (msgList.count() >= 2) { // Multiple forward
      QList<Akonadi::Item>::const_iterator it;
-      for ( it = msgList.constBegin(); it != msgList.constEnd(); ++it ) {
+     QList<Akonadi::Item>::const_iterator end( msgList.constEnd() );     
+      for ( it = msgList.constBegin(); it != end; ++it ) {
 
         KMime::Message::Ptr msg = MessageCore::Util::message( *it );
         if ( !msg )
