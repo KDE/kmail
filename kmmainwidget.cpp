@@ -4370,8 +4370,7 @@ void KMMainWidget::slotCollectionProperties()
     return;
 
   if ( Solid::Networking::status() == Solid::Networking::Unconnected ) {
-    // FIXME post message freeze, pop up a message box informing the user
-    // that the information on the dialog might not be current.
+    KMessageBox::information( this, i18n( "Network is unconnected, some infos from folder could not be updated." ) );
     slotCollectionPropertiesContinued( 0 );
   } else {
     Akonadi::CollectionAttributesSynchronizationJob *sync
