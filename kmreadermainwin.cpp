@@ -281,9 +281,9 @@ void KMReaderMainWin::slotCustomReplyAllToMsg( const QString &tmpl )
 void KMReaderMainWin::slotCustomForwardMsg( const QString &tmpl)
 {
   if ( !mReaderWin->message().hasPayload<KMime::Message::Ptr>() ) return;
-  KMCommand *command = new KMCustomForwardCommand( this,
-                                                   mReaderWin->message(),
-                                                   0, tmpl );
+  KMCommand *command = new KMForwardCommand( this,
+                                             mReaderWin->message(),
+                                             0, tmpl );
   connect( command, SIGNAL(completed(KMCommand*)),
            this, SLOT(slotReplyOrForwardFinished()) );
 

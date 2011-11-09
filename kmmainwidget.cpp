@@ -2254,7 +2254,7 @@ void KMMainWidget::slotCustomForwardMsg( const QString &tmpl )
     return;
 
   kDebug() << "Forward with template:" << tmpl;
-  KMCustomForwardCommand * command = new KMCustomForwardCommand(
+  KMForwardCommand * command = new KMForwardCommand(
       this, selectedMessages, mCurrentFolder->identity(), tmpl
     );
 

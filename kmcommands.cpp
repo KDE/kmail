@@ -775,6 +775,8 @@ KMCommand::Result KMReplyCommand::execute()
   factory.putRepliesInSameFolder( KMail::Util::putRepliesInSameFolder( item ) );
   factory.setReplyStrategy( m_replyStrategy );
   factory.setSelection( mSelection );
+  if ( !mTemplate.isEmpty() )
+    factory.setTemplate( mTemplate );
   MessageFactory::MessageReply reply = factory.createReply();
   KMail::Composer * win = KMail::makeComposer( KMime::Message::Ptr( reply.msg ), replyContext( reply ), 0,
                                                mSelection,mTemplate );
@@ -786,18 +788,20 @@ KMCommand::Result KMReplyCommand::execute()
 
 
 KMForwardCommand::KMForwardCommand( QWidget *parent,
-  const QList<Akonadi::Item> &msgList, uint identity )
+  const QList<Akonadi::Item> &msgList, uint identity,const QString& templateName )
   : KMCommand( parent, msgList ),
-    mIdentity( identity )
+    mIdentity( identity ),
+    mTemplate( templateName )
 {
   fetchScope().fetchFullPayload( true );
   fetchScope().setAncestorRetrieval( Akonadi::ItemFetchScope::Parent );
 }
 
 KMForwardCommand::KMForwardCommand( QWidget *parent, const Akonadi::Item &msg,
-                                    uint identity )
+                                    uint identity, const QString& templateName )
   : KMCommand( parent, msg ),
-    mIdentity( identity )
+    mIdentity( identity ),
+    mTemplate( templateName )
 {
   fetchScope().fetchFullPayload( true );
   fetchScope().setAncestorRetrieval( Akonadi::ItemFetchScope::Parent );
@@ -843,6 +847,8 @@ KMCommand::Result KMForwardCommand::execute()
         MessageFactory factory( msg, it->id(), it->parentCollection() );
         factory.setIdentityManager( KMKernel::self()->identityManager() );
         factory.setFolderIdentity( MailCommon::Util::folderIdentity( *it ) );
+        if ( !mTemplate.isEmpty() )
+          factory.setTemplate( mTemplate );
         KMime::Message::Ptr fwdMsg = factory.createForward();
 
         uint id = msg->headerByType( "X-KMail-Identity" ) ?  msg->headerByType("X-KMail-Identity")->asUnicodeString().trimmed().toUInt() : 0;
@@ -873,13 +879,15 @@ KMCommand::Result KMForwardCommand::execute()
   MessageFactory factory( msg, item.id(), item.parentCollection() );
   factory.setIdentityManager( KMKernel::self()->identityManager() );
   factory.setFolderIdentity( MailCommon::Util::folderIdentity( item ) );
+  if ( !mTemplate.isEmpty() )
+    factory.setTemplate( mTemplate );
   KMime::Message::Ptr fwdMsg = factory.createForward();
 
   uint id = msg->headerByType( "X-KMail-Identity" ) ?  msg->headerByType("X-KMail-Identity")->asUnicodeString().trimmed().toUInt() : 0;
   if ( id == 0 )
     id = mIdentity;
   {
-    KMail::Composer * win = KMail::makeComposer( fwdMsg, KMail::Composer::Forward, id );
+    KMail::Composer * win = KMail::makeComposer( fwdMsg, KMail::Composer::Forward, id, QString(), mTemplate );
     win->show();
   }
   return OK;
@@ -974,84 +982,6 @@ KMCommand::Result KMRedirectCommand::execute()
     return Failed; // error: couldn't send
   }
 
-  return OK;
-}
-
-
-KMCustomForwardCommand::KMCustomForwardCommand( QWidget *parent,
-  const QList<Akonadi::Item> &msgList, uint identity, const QString &tmpl )
-  : KMCommand( parent, msgList ),
-    mIdentity( identity ), mTemplate( tmpl )
-{
-  fetchScope().fetchFullPayload( true );
-  fetchScope().setAncestorRetrieval( Akonadi::ItemFetchScope::Parent );
-}
-
-KMCustomForwardCommand::KMCustomForwardCommand( QWidget *parent,
-                                                const Akonadi::Item &msg, uint identity, const QString &tmpl )
-  : KMCommand( parent, msg ),
-    mIdentity( identity ), mTemplate( tmpl )
-{
-  fetchScope().fetchFullPayload( true );
-  fetchScope().setAncestorRetrieval( Akonadi::ItemFetchScope::Parent );
-}
-
-KMCommand::Result KMCustomForwardCommand::execute()
-{
-  QList<Akonadi::Item> msgList = retrievedMsgs();
-  if (msgList.count() >= 2) { // Multiple forward
-     QList<Akonadi::Item>::const_iterator it;
-     QList<Akonadi::Item>::const_iterator end( msgList.constEnd() );     
-      for ( it = msgList.constBegin(); it != end; ++it ) {
-
-        KMime::Message::Ptr msg = MessageCore::Util::message( *it );
-        if ( !msg )
-          return Failed;
-#ifndef QT_NO_CURSOR	
-        MessageViewer::KCursorSaver busy( MessageViewer::KBusyPtr::busy() );
-#endif	
-        MessageFactory factory( msg, it->id(), it->parentCollection() );
-        factory.setIdentityManager( KMKernel::self()->identityManager() );
-        factory.setFolderIdentity( MailCommon::Util::folderIdentity( *it ) );
-        factory.setTemplate( mTemplate );
-        KMime::Message::Ptr fwdMsg = factory.createForward();
-
-        uint id = msg->headerByType( "X-KMail-Identity" ) ?  msg->headerByType("X-KMail-Identity")->asUnicodeString().trimmed().toUInt() : 0;
-        if ( id == 0 )
-          id = mIdentity;
-        {
-          KMail::Composer * win = KMail::makeComposer( fwdMsg, KMail::Composer::Forward, id );
-          win->show();
-        }
-
-      }
-  } else { // forward a single message at most
-
-    Akonadi::Item item = msgList.first();
-    KMime::Message::Ptr msg = MessageCore::Util::message( item );
-    if ( !msg )
-      return Failed;
-#ifndef QT_NO_CURSOR    
-    MessageViewer::KCursorSaver busy( MessageViewer::KBusyPtr::busy() );
-#endif    
-    MessageFactory factory( msg, item.id(), item.parentCollection() );
-    factory.setIdentityManager( KMKernel::self()->identityManager() );
-    factory.setFolderIdentity( MailCommon::Util::folderIdentity( item ) );
-    factory.setTemplate( mTemplate );
-    KMime::Message::Ptr fwdMsg = factory.createForward();
-
-    uint id = 0;
-    QString strId = msg->headerByType( "X-KMail-Identity" ) ? msg->headerByType( "X-KMail-Identity" )->asUnicodeString().trimmed() : "";
-    if ( !strId.isEmpty())
-      id = strId.toUInt();
-    if ( id == 0 )
-      id = mIdentity;
-    {
-      KMail::Composer * win = KMail::makeComposer( fwdMsg, KMail::Composer::Forward, id,
-                                                   QString(), mTemplate );
-      win->show();
-    }
-  }
   return OK;
 }
 

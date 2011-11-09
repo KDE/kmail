@@ -320,15 +320,16 @@ class KMAIL_EXPORT KMForwardCommand : public KMCommand
 
 public:
   KMForwardCommand( QWidget *parent, const QList<Akonadi::Item> &msgList,
-                    uint identity = 0 );
+                    uint identity = 0, const QString& templateName = QString() );
   KMForwardCommand( QWidget *parent, const Akonadi::Item& msg,
-                    uint identity = 0 );
+                    uint identity = 0, const QString& templateName =QString());
 
 private:
   virtual Result execute();
 
 private:
   uint mIdentity;
+  QString mTemplate;
 };
 
 class KMAIL_EXPORT KMForwardAttachedCommand : public KMCommand
@@ -357,23 +358,6 @@ public:
 
 private:
   virtual Result execute();
-};
-
-class KMAIL_EXPORT KMCustomForwardCommand : public KMCommand
-{
-  Q_OBJECT
-
-public:
-  KMCustomForwardCommand( QWidget *parent, const QList<Akonadi::Item> &msgList,
-                          uint identity, const QString &tmpl );
-  KMCustomForwardCommand( QWidget *parent, const Akonadi::Item& msg,
-                          uint identity, const QString &tmpl );
-
-private:
-  virtual Result execute();
-
-  uint mIdentity;
-  QString mTemplate;
 };
 
 class KMAIL_EXPORT KMPrintCommand : public KMCommand
