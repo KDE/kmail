@@ -923,9 +923,10 @@ void KMKernel::setAccountStatus(bool goOnline)
 {
   const Akonadi::AgentInstance::List lst = MailCommon::Util::agentInstances(false);
   foreach ( Akonadi::AgentInstance type, lst ) {
-    if ( type.identifier().contains( IMAP_RESOURCE_IDENTIFIER ) ||
-         type.identifier().contains( POP3_RESOURCE_IDENTIFIER ) ||
-         type.identifier().contains( MAILDISPATCHER_RESOURCE_IDENTIFIER ) ) {
+    const QString identifier( type.identifier() ); 
+    if ( identifier.contains( IMAP_RESOURCE_IDENTIFIER ) ||
+         identifier.contains( POP3_RESOURCE_IDENTIFIER ) ||
+         identifier.contains( MAILDISPATCHER_RESOURCE_IDENTIFIER ) ) {
       type.setIsOnline( goOnline );
     }
   }
