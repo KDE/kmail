@@ -475,27 +475,26 @@ void MessageActions::slotRunUrl( QAction *urlAction )
 
 void MessageActions::slotPrintMsg()
 {
-  const bool htmlOverride = mMessageView ? mMessageView->htmlOverride() : false;
-  const bool htmlLoadExtOverride = mMessageView ? mMessageView->htmlLoadExtOverride() : false;
-  const bool useFixedFont = mMessageView ? mMessageView->isFixedFont() :
-                                           MessageViewer::GlobalSettings::self()->useFixedFont();
-  const QString overrideEncoding = mMessageView ? mMessageView->overrideEncoding() :
-                                 MessageCore::GlobalSettings::self()->overrideCharacterEncoding();
-
-  const Akonadi::Item message = mMessageView ? mMessageView->message() : mCurrentItem;
-  KMPrintCommand *command =
-    new KMPrintCommand( mParent, Akonadi::Item::List()<<message,
-                        mMessageView ? mMessageView->headerStyle() : 0,
-                        mMessageView ? mMessageView->headerStrategy() : 0,
-                        htmlOverride, htmlLoadExtOverride,
-                        useFixedFont, overrideEncoding );
-
-  if ( mMessageView ) {
-    command->setAttachmentStrategy( mMessageView->attachmentStrategy() );
-    command->setOverrideFont( mMessageView->cssHelper()->bodyFont(
-        mMessageView->isFixedFont(), true /*printing*/ ) );
+  if ( mMessageView )
+  {
+    mMessageView->viewer()->print();
   }
-  command->start();
+  else
+  {
+    const bool htmlOverride = false;
+    const bool htmlLoadExtOverride = false;
+    const bool useFixedFont = MessageViewer::GlobalSettings::self()->useFixedFont();
+    const QString overrideEncoding = MessageCore::GlobalSettings::self()->overrideCharacterEncoding();
+
+    const Akonadi::Item message = mCurrentItem;
+    KMPrintCommand *command =
+      new KMPrintCommand( mParent, Akonadi::Item::List()<<message,
+                          0,
+                          0,
+                          htmlOverride, htmlLoadExtOverride,
+                          useFixedFont, overrideEncoding );
+    command->start();
+  }
 }
 
 
