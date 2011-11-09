@@ -807,6 +807,32 @@ KMForwardCommand::KMForwardCommand( QWidget *parent, const Akonadi::Item &msg,
   fetchScope().setAncestorRetrieval( Akonadi::ItemFetchScope::Parent );
 }
 
+KMCommand::Result KMForwardCommand::createComposer(const Akonadi::Item& item)
+{
+  KMime::Message::Ptr msg = MessageCore::Util::message( item );
+  if ( !msg )
+    return Failed;
+#ifndef QT_NO_CURSOR	
+  MessageViewer::KCursorSaver busy( MessageViewer::KBusyPtr::busy() );
+#endif	
+  MessageFactory factory( msg, item.id(), item.parentCollection() );
+  factory.setIdentityManager( KMKernel::self()->identityManager() );
+  factory.setFolderIdentity( MailCommon::Util::folderIdentity( item ) );
+  if ( !mTemplate.isEmpty() )
+    factory.setTemplate( mTemplate );
+  KMime::Message::Ptr fwdMsg = factory.createForward();
+  
+  uint id = msg->headerByType( "X-KMail-Identity" ) ?  msg->headerByType("X-KMail-Identity")->asUnicodeString().trimmed().toUInt() : 0;
+  kDebug() << "mail" << msg->encodedContent();
+  if ( id == 0 )
+    id = mIdentity;
+  {
+    KMail::Composer * win = KMail::makeComposer( fwdMsg, KMail::Composer::Forward, id,QString(), mTemplate );
+    win->show();
+  }
+  return OK;
+}
+
 KMCommand::Result KMForwardCommand::execute()
 {
   QList<Akonadi::Item> msgList = retrievedMsgs();
@@ -838,28 +864,8 @@ KMCommand::Result KMForwardCommand::execute()
       QList<Akonadi::Item>::const_iterator end( msgList.constEnd() );
       
       for ( it = msgList.constBegin(); it != end; ++it ) {
-        KMime::Message::Ptr msg = MessageCore::Util::message( *it );
-        if ( !msg )
+        if ( createComposer( *it ) == Failed )
           return Failed;
-#ifndef QT_NO_CURSOR	
-        MessageViewer::KCursorSaver busy( MessageViewer::KBusyPtr::busy() );
-#endif	
-        MessageFactory factory( msg, it->id(), it->parentCollection() );
-        factory.setIdentityManager( KMKernel::self()->identityManager() );
-        factory.setFolderIdentity( MailCommon::Util::folderIdentity( *it ) );
-        if ( !mTemplate.isEmpty() )
-          factory.setTemplate( mTemplate );
-        KMime::Message::Ptr fwdMsg = factory.createForward();
-
-        uint id = msg->headerByType( "X-KMail-Identity" ) ?  msg->headerByType("X-KMail-Identity")->asUnicodeString().trimmed().toUInt() : 0;
-        kDebug() << "mail" << msg->encodedContent();
-        if ( id == 0 )
-          id = mIdentity;
-        {
-          KMail::Composer * win = KMail::makeComposer( fwdMsg, KMail::Composer::Forward, id,QString(), mTemplate );
-          win->show();
-        }
-
       }
       return OK;
     } else {
@@ -870,26 +876,8 @@ KMCommand::Result KMForwardCommand::execute()
 
   // forward a single message at most.
   Akonadi::Item item = msgList.first();
-  KMime::Message::Ptr msg = MessageCore::Util::message( item );
-  if ( !msg )
+  if ( createComposer( item ) == Failed )
     return Failed;
-#ifndef QT_NO_CURSOR  
-  MessageViewer::KCursorSaver busy( MessageViewer::KBusyPtr::busy() );
-#endif  
-  MessageFactory factory( msg, item.id(), item.parentCollection() );
-  factory.setIdentityManager( KMKernel::self()->identityManager() );
-  factory.setFolderIdentity( MailCommon::Util::folderIdentity( item ) );
-  if ( !mTemplate.isEmpty() )
-    factory.setTemplate( mTemplate );
-  KMime::Message::Ptr fwdMsg = factory.createForward();
-
-  uint id = msg->headerByType( "X-KMail-Identity" ) ?  msg->headerByType("X-KMail-Identity")->asUnicodeString().trimmed().toUInt() : 0;
-  if ( id == 0 )
-    id = mIdentity;
-  {
-    KMail::Composer * win = KMail::makeComposer( fwdMsg, KMail::Composer::Forward, id, QString(), mTemplate );
-    win->show();
-  }
   return OK;
 }
 

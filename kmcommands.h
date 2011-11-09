@@ -325,6 +325,7 @@ public:
                     uint identity = 0, const QString& templateName =QString());
 
 private:
+  KMCommand::Result createComposer(const Akonadi::Item& item);
   virtual Result execute();
 
 private:
