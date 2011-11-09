@@ -482,7 +482,6 @@ void MessageActions::slotPrintMsg()
   const QString overrideEncoding = mMessageView ? mMessageView->overrideEncoding() :
                                  MessageCore::GlobalSettings::self()->overrideCharacterEncoding();
 
-  // FIXME: This is broken when the Viewer shows an encapsulated message
   const Akonadi::Item message = mMessageView ? mMessageView->message() : mCurrentItem;
   KMPrintCommand *command =
     new KMPrintCommand( mParent, Akonadi::Item::List()<<message,
