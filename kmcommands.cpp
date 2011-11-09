@@ -747,9 +747,10 @@ void KMOpenMsgCommand::slotResult( KJob *job )
 
 //-----------------------------------------------------------------------------
 KMReplyCommand::KMReplyCommand( QWidget *parent, const Akonadi::Item &msg, MessageComposer::ReplyStrategy replyStrategy, 
-                                            const QString &selection, bool noquote )
+                                            const QString &selection, bool noquote, const QString& templateName )
   : KMCommand( parent, msg ),
     mSelection( selection ),
+    mTemplate( templateName ), 
     m_replyStrategy( replyStrategy )
 {
   if ( !noquote )
@@ -776,8 +777,8 @@ KMCommand::Result KMReplyCommand::execute()
   factory.setSelection( mSelection );
   MessageFactory::MessageReply reply = factory.createReply();
   KMail::Composer * win = KMail::makeComposer( KMime::Message::Ptr( reply.msg ), replyContext( reply ), 0,
-                                               mSelection );
-  win->setReplyFocus(( m_replyStrategy == MessageComposer::ReplyList ) ? false : true );
+                                               mSelection,mTemplate );
+  win->setReplyFocus();
   win->show();
 
   return OK;
@@ -976,42 +977,6 @@ KMCommand::Result KMRedirectCommand::execute()
   return OK;
 }
 
-
-KMCustomReplyCommand::KMCustomReplyCommand( QWidget *parent, const Akonadi::Item &msg,
-                                                const QString &selection,
-                                                const QString &tmpl, MessageComposer::ReplyStrategy replyStrategy )
-  : KMCommand( parent, msg ), mSelection( selection ), mTemplate( tmpl ), m_replyStrategy( replyStrategy )
-
-{
-  fetchScope().fetchFullPayload( true );
-  fetchScope().setAncestorRetrieval( Akonadi::ItemFetchScope::Parent );
-}
-
-KMCommand::Result KMCustomReplyCommand::execute()
-{
-#ifndef QT_NO_CURSOR
-  MessageViewer::KCursorSaver busy( MessageViewer::KBusyPtr::busy() );
-#endif
-  Akonadi::Item item = retrievedMessage();
-  KMime::Message::Ptr msg = MessageCore::Util::message( item );
-  if ( !msg )
-    return Failed;
-  MessageFactory factory( msg, item.id(), item.parentCollection() );
-  factory.setIdentityManager( KMKernel::self()->identityManager() );
-  factory.setFolderIdentity( MailCommon::Util::folderIdentity( item ) );
-  factory.setMailingListAddresses( KMail::Util::mailingListsFromMessage( item ) );
-  factory.putRepliesInSameFolder( KMail::Util::putRepliesInSameFolder( item ) );
-  factory.setReplyStrategy( m_replyStrategy );
-  factory.setSelection( mSelection );
-  factory.setTemplate( mTemplate );
-  MessageFactory::MessageReply reply = factory.createReply();
-  KMail::Composer * win = KMail::makeComposer( KMime::Message::Ptr( reply.msg ), replyContext( reply ), 0,
-                                               mSelection, mTemplate );
-  win->setReplyFocus();
-  win->show();
-
-  return OK;
-}
 
 KMCustomForwardCommand::KMCustomForwardCommand( QWidget *parent,
   const QList<Akonadi::Item> &msgList, uint identity, const QString &tmpl )

@@ -2214,9 +2214,11 @@ void KMMainWidget::slotCustomReplyToMsg( const QString &tmpl )
 
   kDebug() << "Reply with template:" << tmpl;
 
-  KMCommand *command = new KMCustomReplyCommand(
-      this, msg, text, tmpl, MessageComposer::ReplySmart
-    );
+  KMCommand *command = new KMReplyCommand( this,
+                                           msg,
+                                           MessageComposer::ReplySmart, 
+                                           text, false, 
+                                           tmpl );
   command->start();
 }
 
@@ -2232,9 +2234,13 @@ void KMMainWidget::slotCustomReplyAllToMsg( const QString &tmpl )
 
   kDebug() << "Reply to All with template:" << tmpl;
 
-  KMCommand *command = new KMCustomReplyCommand(
-      this, msg, text, tmpl, MessageComposer::ReplyAll
-    );
+  KMCommand *command = new KMReplyCommand(this,
+                                          msg,
+                                          MessageComposer::ReplyAll, 
+                                          text,
+                                          false, 
+                                          tmpl
+                                          );
 
   command->start();
 }

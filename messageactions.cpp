@@ -336,11 +336,11 @@ void MessageActions::updateMailingListActions( const Akonadi::Item& messageItem 
       // From a list-id in the form, "Birds of France <bof.yahoo.com>",
       // take "Birds of France" if it exists otherwise "bof.yahoo.com".
       listId = mailList.id();
-      const int start = listId.indexOf( '<' );
+      const int start = listId.indexOf( QLatin1Char( '<' ) );
       if ( start > 0 ) {
         listId.truncate( start - 1 );
       } else if ( start == 0 ) {
-        const int end = listId.lastIndexOf( '>' );
+        const int end = listId.lastIndexOf( QLatin1Char( '>' ) );
         if ( end < 1 ) { // shouldn't happen but account for it anyway
           listId.remove( 0, 1 );
         } else {

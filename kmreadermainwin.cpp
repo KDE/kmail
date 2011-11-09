@@ -252,10 +252,11 @@ void KMReaderMainWin::slotRedirectMsg()
 void KMReaderMainWin::slotCustomReplyToMsg( const QString &tmpl )
 {
   if ( !mReaderWin->message().hasPayload<KMime::Message::Ptr>() ) return;
-  KMCommand *command = new KMCustomReplyCommand( this,
-                                                   mReaderWin->message(),
-                                                   mReaderWin->copyText(),
-                                                   tmpl,MessageComposer::ReplySmart );
+  KMCommand *command = new KMReplyCommand( this,
+                                           mReaderWin->message(),
+                                           MessageComposer::ReplySmart, 
+                                           mReaderWin->copyText(),
+                                           false, tmpl );
   connect( command, SIGNAL(completed(KMCommand*)),
            this, SLOT(slotReplyOrForwardFinished()) );
   command->start();
@@ -265,10 +266,11 @@ void KMReaderMainWin::slotCustomReplyToMsg( const QString &tmpl )
 void KMReaderMainWin::slotCustomReplyAllToMsg( const QString &tmpl )
 {
   if ( !mReaderWin->message().hasPayload<KMime::Message::Ptr>() ) return;
-  KMCommand *command = new KMCustomReplyCommand( this,
-                                                      mReaderWin->message(),
-                                                      mReaderWin->copyText(),
-                                                      tmpl,MessageComposer::ReplyAll );
+  KMCommand *command = new KMReplyCommand( this,
+                                           mReaderWin->message(),
+                                           MessageComposer::ReplyAll, 
+                                           mReaderWin->copyText(),
+                                           false, tmpl );
   connect( command, SIGNAL(completed(KMCommand*)),
            this, SLOT(slotReplyOrForwardFinished()) );
 
