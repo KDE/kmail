@@ -314,7 +314,7 @@ K_GLOBAL_STATIC( KMMainWidget::PtrList, theMainWidgetList )
   // must be the last line of the constructor:
   mStartupDone = true;
 
-  
+
   m_notificationTimer.setInterval( 10 * 1000 );
   m_notificationTimer.setSingleShot( true );
   connect( &m_notificationTimer, SIGNAL(timeout()), SLOT(slotShowNotification()) );
@@ -385,7 +385,7 @@ void KMMainWidget::slotShowNotification()
 {
   if ( mCheckMailInProgress )
     mCheckMailInProgress = false;
-  showNotifications();  
+  showNotifications();
 }
 
 void KMMainWidget::showNotifications()
@@ -401,7 +401,7 @@ void KMMainWidget::showNotifications()
   }
   if (  mCheckMail.isEmpty() )
     return;
-  
+
   Akonadi::Collection::List collections;
   QMap<Akonadi::Collection::Id, int>::const_iterator it = mCheckMail.constBegin();
   while ( it != mCheckMail.constEnd() ) {
@@ -412,14 +412,14 @@ void KMMainWidget::showNotifications()
   }
   if ( collections.isEmpty() )
     return;
-  
+
   Akonadi::CollectionFetchJob *job = new Akonadi::CollectionFetchJob( collections, Akonadi::CollectionFetchJob::Base );
   connect( job, SIGNAL(finished(KJob*)), this, SLOT(slotEndCheckFetchCollectionsDone(KJob*)) );
 }
 
 void KMMainWidget::slotEndCheckFetchCollectionsDone(KJob* job)
 {
-  
+
   // build summary for new mail message
   bool showNotification = false;
   QString summary;
@@ -1215,7 +1215,7 @@ void KMMainWidget::createWidgets()
 void KMMainWidget::slotCollectionStatisticsChanged( const Akonadi::Collection::Id id, const Akonadi::CollectionStatistics& statistic )
 {
   if ( id == CommonKernel->outboxCollectionFolder().id() ) {
-    const qint64 nbMsgOutboxCollection = statistic.count();  
+    const qint64 nbMsgOutboxCollection = statistic.count();
     actionCollection()->action( "send_queued" )->setEnabled( nbMsgOutboxCollection > 0 );
     actionCollection()->action( "send_queued_via" )->setEnabled( nbMsgOutboxCollection > 0 );
   }
@@ -1247,8 +1247,10 @@ void KMMainWidget::slotCollectionChanged( const Akonadi::Collection&collection, 
 }
 
 
-void KMMainWidget::slotItemAdded( const Akonadi::Item &msg, const Akonadi::Collection& col)
+void KMMainWidget::slotItemAdded( const Akonadi::Item &msg, const Akonadi::Collection &col )
 {
+  Q_UNUSED( msg );
+
   if ( col.isValid() ) {
     if ( col == CommonKernel->outboxCollectionFolder() ) {
       startUpdateMessageActionsTimer();
@@ -1300,7 +1302,7 @@ bool KMMainWidget::excludeSpecialFolder( const Akonadi::Collection &collection )
     return true;
   return false;
 }
-  
+
 void KMMainWidget::addInfoInNotification( const Akonadi::Collection &collection )
 {
   if ( excludeSpecialFolder( collection ) )
@@ -1335,7 +1337,7 @@ bool KMMainWidget::slotSearch()
     }
   }
 
-  
+
   if(!mSearchWin)
   {
     mSearchWin = new SearchWindow(this, mCurrentFolder ? mCurrentFolder->collection() : Akonadi::Collection());
@@ -1616,7 +1618,7 @@ void KMMainWidget::slotEmptyFolder()
   }
 #ifndef QT_NO_CURSOR
   MessageViewer::KCursorSaver busy( MessageViewer::KBusyPtr::busy() );
-#endif  
+#endif
   slotMarkAll();
   if (isTrash) {
     /* Don't ask for confirmation again when deleting, the user has already
@@ -1720,7 +1722,7 @@ void KMMainWidget::slotDelayedRemoveFolder( KJob *job )
   {
     const Akonadi::Collection::Id collectionId = mCurrentFolder->collection().id();
     kmkernel->checkFolderFromResources( collectionId );
-    
+
     mCurrentFolder->removeCollection();
   }
   mCurrentFolder.clear();
@@ -2112,14 +2114,14 @@ void KMMainWidget::slotSelectMoreMessageTagList()
   const QList<Akonadi::Item> selectedMessages = mMessagePane->selectionAsMessageItemList();
   if ( selectedMessages.isEmpty() )
     return;
-  
+
   TagSelectDialog dlg( this, selectedMessages.count(), selectedMessages.first() );
   if ( dlg.exec() ) {
     const QList<QString> lst = dlg.selectedTag();
-  
+
     KMCommand *command = new KMSetTagCommand( lst, selectedMessages, KMSetTagCommand::CleanExistingAndAddNew );
     command->start();
-  }    
+  }
 }
 
 
@@ -2216,8 +2218,8 @@ void KMMainWidget::slotCustomReplyToMsg( const QString &tmpl )
 
   KMCommand *command = new KMReplyCommand( this,
                                            msg,
-                                           MessageComposer::ReplySmart, 
-                                           text, false, 
+                                           MessageComposer::ReplySmart,
+                                           text, false,
                                            tmpl );
   command->start();
 }
@@ -2236,9 +2238,9 @@ void KMMainWidget::slotCustomReplyAllToMsg( const QString &tmpl )
 
   KMCommand *command = new KMReplyCommand(this,
                                           msg,
-                                          MessageComposer::ReplyAll, 
+                                          MessageComposer::ReplyAll,
                                           text,
-                                          false, 
+                                          false,
                                           tmpl
                                           );
 
@@ -2386,7 +2388,7 @@ void KMMainWidget::applyFilters( const QList<Akonadi::Item>& selectedMessages )
 {
 #ifndef QT_NO_CURSOR
   MessageViewer::KCursorSaver busy( MessageViewer::KBusyPtr::busy() );
-#endif  
+#endif
 
   MailCommon::FilterManager::instance()->filter( selectedMessages );
 }
@@ -2531,8 +2533,7 @@ void KMMainWidget::slotUpdateOnlineStatus( GlobalSettings::EnumNetworkState::typ
   if ( GlobalSettings::self()->networkState() == GlobalSettings::EnumNetworkState::Online ) {
     action->setText( i18n("Work Offline") );
     action->setIcon( KIcon("user-offline") );
-  }
-  else {
+  } else {
     action->setText( i18n("Work Online") );
     action->setIcon( KIcon("user-online") );
   }
@@ -2540,16 +2541,18 @@ void KMMainWidget::slotUpdateOnlineStatus( GlobalSettings::EnumNetworkState::typ
 
 void KMMainWidget::slotNetworkStatusChanged ( Solid::Networking::Status status)
 {
-  if (GlobalSettings::self()->networkState() == GlobalSettings::EnumNetworkState::Offline )
+  if ( GlobalSettings::self()->networkState() == GlobalSettings::EnumNetworkState::Offline ) {
     return;
-    
-  if ( status == Solid::Networking::Connected ) {
-    BroadcastStatus::instance()->setStatusMsg(i18n("Network connection detected, all network jobs resumed"));
-    kmkernel->setAccountStatus(true);
   }
-  else {
-    BroadcastStatus::instance()->setStatusMsg(i18n("No network connection detected, all network jobs are suspended"));
-    kmkernel->setAccountStatus(false);
+
+  if ( status == Solid::Networking::Connected ) {
+    BroadcastStatus::instance()->
+      setStatusMsg( i18n( "Network connection detected, all network jobs resumed" ) );
+    kmkernel->setAccountStatus( true );
+  } else {
+    BroadcastStatus::instance()->
+      setStatusMsg( i18n( "No network connection detected, all network jobs are suspended" ) );
+    kmkernel->setAccountStatus( false );
   }
 }
 
@@ -2560,19 +2563,24 @@ void KMMainWidget::slotSendQueued()
     return;
   }
 
-  kmkernel->msgSender()->sendQueued();
+  if ( kmkernel->msgSender() ) {
+    kmkernel->msgSender()->sendQueued();
+  }
 }
 
 //-----------------------------------------------------------------------------
-void KMMainWidget::slotSendQueuedVia( QAction* item )
+void KMMainWidget::slotSendQueuedVia( QAction *item )
 {
   if ( !kmkernel->askToGoOnline() ) {
     return;
   }
 
-  const QStringList availTransports= MailTransport::TransportManager::self()->transportNames();
-  if (availTransports.contains(item->text()))
-    kmkernel->msgSender()->sendQueued( item->text() );
+  const QStringList availTransports = MailTransport::TransportManager::self()->transportNames();
+  if ( !availTransports.isEmpty() && availTransports.contains( item->text() ) ) {
+    if ( kmkernel->msgSender() ) {
+      kmkernel->msgSender()->sendQueued( item->text() );
+    }
+  }
 }
 
 //-----------------------------------------------------------------------------
@@ -2806,7 +2814,7 @@ void KMMainWidget::slotItemsFetchedForActivation( const Akonadi::Item::List &lis
   win->setUseFixedFont( useFixedFont );
 
 
-  const Akonadi::Collection parentCollection = MailCommon::Util::parentCollectionFromItem(msg);  
+  const Akonadi::Collection parentCollection = MailCommon::Util::parentCollectionFromItem(msg);
   win->showMessage( overrideEncoding(), msg, parentCollection );
   win->show();
 }
@@ -3420,7 +3428,7 @@ void KMMainWidget::setupActions()
     connect(action, SIGNAL(triggered(bool)), SLOT(slotCollapseAllThreads()));
   }
 
-  
+
   mViewSourceAction = new KAction(i18n("&View Source"), this);
   actionCollection()->addAction("view_source", mViewSourceAction );
   connect(mViewSourceAction, SIGNAL(triggered(bool)), SLOT(slotShowMsgSrc()));
@@ -3644,9 +3652,9 @@ void KMMainWidget::slotCollapseThread()
 void KMMainWidget::slotExpandAllThreads()
 {
   // TODO: Make this asynchronous ? (if there is enough demand)
-#ifndef QT_NO_CURSOR	
+#ifndef QT_NO_CURSOR
   MessageViewer::KCursorSaver busy( MessageViewer::KBusyPtr::busy() );
-#endif  
+#endif
   mMessagePane->setAllThreadsExpanded( true );
 }
 
@@ -3655,7 +3663,7 @@ void KMMainWidget::slotCollapseAllThreads()
   // TODO: Make this asynchronous ? (if there is enough demand)
 #ifndef QT_NO_CURSOR
   MessageViewer::KCursorSaver busy( MessageViewer::KBusyPtr::busy() );
-#endif  
+#endif
   mMessagePane->setAllThreadsExpanded( false );
 }
 
@@ -3678,7 +3686,7 @@ void KMMainWidget::startUpdateMessageActionsTimer()
   // FIXME: This delay effectively CAN make the actions to be in an incoherent state
   //        Maybe we should mark actions as "dirty" here and check it in every action handler...
   updateMessageActions( true );
-  
+
   menutimer->stop();
   menutimer->start( 500 );
 }
@@ -3873,7 +3881,7 @@ void KMMainWidget::slotAkonadiStandardActionUpdated()
 {
   const bool multiFolder = mFolderTreeWidget->selectedCollections().count() > 1;
   if ( mCollectionProperties ) {
-    mCollectionProperties->setEnabled( mCurrentFolder && !multiFolder && 
+    mCollectionProperties->setEnabled( mCurrentFolder && !multiFolder &&
                                        !mCurrentFolder->isStructural() &&
                                        !MailCommon::Util::isVirtualCollection( mCurrentFolder->collection() ) );
     QList< QAction* > collectionProperties;
