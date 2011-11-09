@@ -1008,7 +1008,7 @@ void KMMainWidget::createWidgets()
 
   connect( mFolderTreeWidget->folderTreeView(), SIGNAL(currentChanged(Akonadi::Collection)), this, SLOT(slotFolderChanged(Akonadi::Collection)) );
 
-  connect( mFolderTreeWidget->folderTreeView()->selectionModel(), SIGNAL( selectionChanged(QItemSelection,QItemSelection)), this, SLOT(updateFolderMenu()) );
+  connect( mFolderTreeWidget->folderTreeView()->selectionModel(), SIGNAL(selectionChanged(QItemSelection,QItemSelection)), this, SLOT(updateFolderMenu()) );
 
   connect( mFolderTreeWidget->folderTreeView(), SIGNAL(prefereCreateNewTab(bool)), this, SLOT(slotCreateNewTab(bool)) );
 
