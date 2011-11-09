@@ -3188,7 +3188,7 @@ void KMMainWidget::setupActions()
   actionCollection()->addAction("find_in_messages", mFindInMessageAction );
   connect(mFindInMessageAction, SIGNAL(triggered(bool)), SLOT(slotFind()));
   mFindInMessageAction->setShortcut(KStandardShortcut::find());
-
+                                   
   {
     KAction *action = new KAction(i18n("Select &All Messages"), this);
     actionCollection()->addAction("mark_all_messages", action );
@@ -3811,7 +3811,7 @@ void KMMainWidget::updateMessageActionsDelayed()
   mDeleteAction->setEnabled( mass_actions && !readOnly );
   mExpireConfigAction->setEnabled( canDeleteMessages );
 
-  mFindInMessageAction->setEnabled( mass_actions && !CommonKernel->folderIsTemplates( mCurrentFolder->collection() ) );
+  mFindInMessageAction->setEnabled( mass_actions && !CommonKernel->folderIsTemplates( mCurrentFolder->collection() ) && mMsgView);
   mMsgActions->forwardInlineAction()->setEnabled( mass_actions && !CommonKernel->folderIsTemplates( mCurrentFolder->collection() ) );
   mMsgActions->forwardAttachedAction()->setEnabled( mass_actions && !CommonKernel->folderIsTemplates( mCurrentFolder->collection() ) );
   mMsgActions->forwardMenu()->setEnabled( mass_actions && !CommonKernel->folderIsTemplates( mCurrentFolder->collection() ) );
