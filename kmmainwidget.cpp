@@ -3832,7 +3832,7 @@ void KMMainWidget::updateMessageActionsDelayed()
   mMsgActions->printAction()->setEnabled( singleVisibleMessageSelected );
 
   // "View Source" will act on the current message: it will ignore any hidden selection
-  viewSourceAction()->setEnabled( singleVisibleMessageSelected );
+  viewSourceAction()->setEnabled( singleVisibleMessageSelected && mMsgView);
 
   MessageStatus status;
   status.setStatusFromFlags( currentMessage.flags() );
