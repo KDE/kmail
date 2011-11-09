@@ -1091,12 +1091,12 @@ KMCommand::Result KMCustomForwardCommand::execute()
 }
 
 
-KMPrintCommand::KMPrintCommand( QWidget *parent, const QList<Akonadi::Item> &msgList,
+KMPrintCommand::KMPrintCommand( QWidget *parent, const Akonadi::Item &msg,
                                 MessageViewer::HeaderStyle *headerStyle,
                                 const MessageViewer::HeaderStrategy *headerStrategy,
                                 bool htmlOverride, bool htmlLoadExtOverride,
                                 bool useFixedFont, const QString & encoding )
-  : KMCommand( parent, msgList ),
+  : KMCommand( parent, msg ),
     mHeaderStyle( headerStyle ), mHeaderStrategy( headerStrategy ),
     mAttachmentStrategy( 0 ),
     mHtmlOverride( htmlOverride ),

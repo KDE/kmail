@@ -850,7 +850,7 @@ void SearchWindow::slotSaveAttachments()
 
 void SearchWindow::slotPrintMsg()
 {
-  KMCommand *command = new KMPrintCommand( this, selectedMessages() );
+  KMCommand *command = new KMPrintCommand( this, selectedMessage() );
   command->start();
 }
 

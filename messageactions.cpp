@@ -488,7 +488,7 @@ void MessageActions::slotPrintMsg()
 
     const Akonadi::Item message = mCurrentItem;
     KMPrintCommand *command =
-      new KMPrintCommand( mParent, Akonadi::Item::List()<<message,
+      new KMPrintCommand( mParent, message,
                           0,
                           0,
                           htmlOverride, htmlLoadExtOverride,
