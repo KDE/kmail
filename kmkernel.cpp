@@ -921,10 +921,12 @@ void KMKernel::stopNetworkJobs()
 
 void KMKernel::setAccountStatus(bool goOnline)
 {
-  const Akonadi::AgentInstance::List lst = MailCommon::Util::agentInstances();
+  const Akonadi::AgentInstance::List lst = MailCommon::Util::agentInstances(false);
   foreach ( Akonadi::AgentInstance type, lst ) {
+    qDebug()<<" type.identifier() :"<<type.identifier();
     if ( type.identifier().contains( IMAP_RESOURCE_IDENTIFIER ) ||
-         type.identifier().contains( POP3_RESOURCE_IDENTIFIER ) ) {
+         type.identifier().contains( POP3_RESOURCE_IDENTIFIER ) ||
+         type.identifier().contains( MAILDISPATCHER_RESOURCE_IDENTIFIER ) ) {
       type.setIsOnline( goOnline );
     }
   }
