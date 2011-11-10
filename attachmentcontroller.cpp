@@ -36,15 +36,9 @@
 #include <kabc/addressee.h>
 #include <kdebug.h>
 #include <libkleo/kleo/cryptobackendfactory.h>
-#include <libkleo/ui/keyselectiondialog.h>
 
 #include <messagecomposer/attachmentmodel.h>
-#include <messagecore/attachmentcompressjob.h>
-#include <messagecore/attachmentfrommimecontentjob.h>
-#include <messagecore/attachmentfromurljob.h>
-#include <messagecore/attachmentpropertiesdialog.h>
 #include <messagecore/attachmentpart.h>
-#include <messageviewer/editorwatcher.h>
 
 using namespace KMail;
 using namespace KPIM;

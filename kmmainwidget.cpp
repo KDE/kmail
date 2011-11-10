@@ -404,7 +404,8 @@ void KMMainWidget::showNotifications()
 
   Akonadi::Collection::List collections;
   QMap<Akonadi::Collection::Id, int>::const_iterator it = mCheckMail.constBegin();
-  while ( it != mCheckMail.constEnd() ) {
+  QMap<Akonadi::Collection::Id, int>::const_iterator end = mCheckMail.constEnd();
+  while ( it != end ) {
     Akonadi::Collection collection( it.key() );
     if ( it.value() != 0 )
       collections << collection;
