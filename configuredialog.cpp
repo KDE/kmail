@@ -169,7 +169,8 @@ namespace {
       box->setLayout( new QVBoxLayout() );
     }
     box->layout()->setSpacing( KDialog::spacingHint() );
-    for (int i = 0; i < e->choices().size(); ++i) {
+    const int numberChoices(e->choices().size());
+    for (int i = 0; i < numberChoices; ++i) {
       QRadioButton *button = new QRadioButton( e->choices()[i].label, box );
       group->addButton( button, i );
       box->layout()->addWidget( button );
