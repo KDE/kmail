@@ -87,11 +87,15 @@
 #include "messageviewer/csshelper.h"
 #include "messageviewer/util.h"
 #include "messageviewer/mailsourceviewer.h"
+#include "messageviewer/viewer.h"
+#include "messageviewer/headerstrategy.h"
+#include "messageviewer/headerstyle.h"
 #include "kmreadermainwin.h"
 #include "secondarywindow.h"
 using KMail::SecondaryWindow;
 #include "util.h"
 #include "messageviewer/editorwatcher.h"
+using MessageViewer::EditorWatcher;
 #include "broadcaststatus.h"
 #include "globalsettings.h"
 #include "stringutil.h"

@@ -5,18 +5,11 @@
 
 #include "kmail_export.h"
 #include <kmime/kmime_message.h>
-#include "messageviewer/viewer.h"
-#include "messageviewer/editorwatcher.h"
-#include "messageviewer/headerstrategy.h"
-#include "messageviewer/headerstyle.h"
 #include "messagecomposer/messagefactory.h"
 
-using MessageViewer::EditorWatcher;
 #include <akonadi/kmime/messagestatus.h>
 #include <messagelist/core/view.h>
 using Akonadi::MessageStatus;
-#include <kservice.h>
-#include <ktemporaryfile.h>
 #include <kio/job.h>
 
 #include <QPointer>
@@ -28,11 +21,13 @@ using Akonadi::MessageStatus;
 class KProgressDialog;
 class KMMainWidget;
 
-namespace MailCommon {
-  class FolderCollection;
-}
-
 template <typename T> class QSharedPointer;
+
+namespace MessageViewer {
+  class HeaderStyle;
+  class HeaderStrategy;
+  class AttachmentStrategy;
+}
 
 namespace KIO { class Job; }
 namespace KMail {

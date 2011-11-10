@@ -65,6 +65,7 @@ using MessageComposer::MessageFactory;
 #include <kicon.h>
 #include <kcodecs.h>
 #include <ktoggleaction.h>
+#include <kservice.h>
 
 #include <QClipboard>
 
