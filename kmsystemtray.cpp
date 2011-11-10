@@ -27,8 +27,6 @@
 #include "mailcommon/mailkernel.h"
 #include "mailcommon/foldertreeview.h"
 
-#include <QItemSelectionModel>
-
 #include <kiconloader.h>
 #include <kcolorscheme.h>
 #include <kwindowsystem.h>
@@ -37,13 +35,10 @@
 #include <KLocale>
 
 #include <QPainter>
-#include <QWidget>
-#include <QObject>
 
 #include <Akonadi/ChangeRecorder>
 #include <Akonadi/EntityTreeModel>
 #include <Akonadi/CollectionModel>
-#include <assert.h>
 
 using namespace MailCommon;
 
@@ -315,7 +310,7 @@ void KMSystemTray::hideKMail()
   if (!kmkernel->getKMMainWidget())
     return;
   QWidget *mainWin = kmkernel->getKMMainWidget()->window();
-  assert(mainWin);
+  Q_ASSERT(mainWin);
   if(mainWin)
   {
 #ifdef Q_WS_X11
