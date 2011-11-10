@@ -66,7 +66,6 @@ using KMail::MailServiceImpl;
 #include <kconfiggroup.h>
 #include <kdebug.h>
 #include <kio/jobuidelegate.h>
-#include <kio/netaccess.h>
 #include <kprocess.h>
 #include <KCrash>
 
