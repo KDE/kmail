@@ -40,7 +40,6 @@
 #include <KFontAction>
 #include <KFontSizeAction>
 #include <kstatusbar.h>
-#include <kwebview.h>
 #include "kmcommands.h"
 #include "kmenubar.h"
 #include "kmenu.h"

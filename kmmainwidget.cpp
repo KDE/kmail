@@ -2992,7 +2992,9 @@ void KMMainWidget::getTransportMenu()
   mSendMenu->clear();
   QStringList availTransports = MailTransport::TransportManager::self()->transportNames();
   QStringList::Iterator it;
-  for(it = availTransports.begin(); it != availTransports.end() ; ++it)
+  QStringList::Iterator end( availTransports.end() );
+  
+  for(it = availTransports.begin(); it != end ; ++it)
     mSendMenu->addAction((*it).replace('&', "&&"));
 }
 
