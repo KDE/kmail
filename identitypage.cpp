@@ -49,8 +49,13 @@ QString IdentityPage::helpAnchor() const
 IdentityPage::IdentityPage( const KComponentData &instance, QWidget *parent )
   : ConfigModule( instance, parent ),
     mIdentityDialog( 0 ),
-    mIdentityManager( KernelIf->identityManager() )
+    mIdentityManager( 0 )
 {
+  if ( !MailCommon::Kernel::self()->kernelIsRegistered() ) {
+    return;
+  }
+  mIdentityManager = KernelIf->identityManager();
+
   mIPage.setupUi( this );
   mIPage.mIdentityList->setIdentityManager( mIdentityManager );
 
