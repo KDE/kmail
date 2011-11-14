@@ -581,7 +581,6 @@ KMCommand::Result KMEditMsgCommand::execute()
   win->setFolder( item.parentCollection() );
   const MailTransport::TransportAttribute *transportAttribute = item.attribute<MailTransport::TransportAttribute>();
   if ( transportAttribute ) {
-    qDebug()<<" EDIT !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! :"<<item.hasAttribute<MailTransport::TransportAttribute>();
     win->setCurrentTransport( transportAttribute->transportId() );
   }
   win->show();
