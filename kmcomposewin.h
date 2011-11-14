@@ -162,6 +162,8 @@ class KMComposeWin : public KMail::Composer
     void setMsg( const KMime::Message::Ptr &newMsg, bool mayAutoSign=true,
                  bool allowDecryption=false, bool isModified=false );
 
+    void setCurrentTransport( int transportId );
+
      /**
       * Disables word wrap completely. No wrapping at all will occur, not even
       * at the right end of the editor.

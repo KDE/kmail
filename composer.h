@@ -78,7 +78,7 @@ class Composer : public KMail::SecondaryWindow
      */
     virtual void setMsg( const KMime::Message::Ptr &newMsg, bool mayAutoSign=true,
                          bool allowDecryption=false, bool isModified=false ) = 0;
-
+    virtual void setCurrentTransport( int transportId ) = 0;
     /**
      * Returns @c true while the message composing is in progress.
      */

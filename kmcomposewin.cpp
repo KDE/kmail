@@ -1464,6 +1464,11 @@ void KMComposeWin::decryptOrStripOffCleartextSignature( QByteArray &body )
   }
 }
 
+void KMComposeWin::setCurrentTransport( int transportId )
+{
+  mComposerBase->transportComboBox()->setCurrentTransport( transportId );
+}
+
 //-----------------------------------------------------------------------------
 void KMComposeWin::setMsg( const KMime::Message::Ptr &newMsg, bool mayAutoSign,
                            bool allowDecryption, bool isModified )
