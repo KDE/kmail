@@ -141,7 +141,7 @@ SimpleStringListEditor::SimpleStringListEditor( QWidget * parent,
 
   vlay->addStretch( 1 ); // spacer
 
-  connect( mListBox, SIGNAL(itemSelectionChanged()),
+  connect( mListBox, SIGNAL(currentItemChanged(QListWidgetItem*,QListWidgetItem*)), 
            this, SLOT(slotSelectionChanged()) );
 }
 
