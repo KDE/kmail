@@ -3489,6 +3489,13 @@ void SecurityPage::WarningTab::save()
 void SecurityPage::WarningTab::slotReenableAllWarningsClicked()
 {
   KMessageBox::enableAllMessages();
+
+  //Nepomuk composer.
+  if ( KMKernel::self()->config()->hasGroup(  QLatin1String( "Missing Nepomuk Warning" ) ) ) {
+    KConfigGroup cfgGroup( KMKernel::self()->config(), QLatin1String( "Missing Nepomuk Warning" ) );
+    cfgGroup.deleteGroup();
+  }
+  
   mWidget->enableAllWarningsPB->setEnabled( false );
 }
 
