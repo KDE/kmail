@@ -1642,7 +1642,7 @@ void KMKernel::itemDispatchStarted()
 
 void KMKernel::instanceStatusChanged( Akonadi::AgentInstance instance )
 {
-  if ( MailCommon::Util::agentInstances().contains( instance ) ) {
+  if ( MailCommon::Util::agentInstances(true).contains( instance ) ) {
     if ( instance.status() == Akonadi::AgentInstance::Running ) {
 
       if ( mResourcesBeingChecked.isEmpty() ) {
