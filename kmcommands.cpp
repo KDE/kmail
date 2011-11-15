@@ -558,7 +558,7 @@ KMEditMsgCommand::KMEditMsgCommand( QWidget *parent, const Akonadi::Item&msg, bo
   , mDeleteFromSource( deleteFromSource )
 {
   fetchScope().fetchFullPayload( true );
-  fetchScope().fetchAllAttributes();
+  fetchScope().fetchAttribute<MailTransport::TransportAttribute>();
   fetchScope().setAncestorRetrieval( Akonadi::ItemFetchScope::Parent );
   setDeletesItself( true );
 }
