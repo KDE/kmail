@@ -65,7 +65,8 @@ MessageActions::MessageActions( KActionCollection *ac, QWidget* parent ) :
     mActionCollection( ac ),
     mMessageView( 0 ),
     mRedirectAction( 0 ),
-    mAsynNepomukRetriever( new MessageCore::AsyncNepomukResourceRetriever( this ) )
+    mAsynNepomukRetriever( new MessageCore::AsyncNepomukResourceRetriever( this ) ),
+    mCustomTemplateMenus( 0 )
 {
   mReplyActionMenu = new KActionMenu( KIcon("mail-reply-sender"), i18nc("Message->","&Reply"), this );
   mActionCollection->addAction( "message_reply_menu", mReplyActionMenu );
@@ -196,10 +197,19 @@ MessageActions::MessageActions( KActionCollection *ac, QWidget* parent ) :
 
 MessageActions::~MessageActions()
 {
+  delete mCustomTemplateMenus;
+}
+
+CustomTemplatesMenu* MessageActions::customTemplatesMenus()
+{
+  return mCustomTemplateMenus;
 }
 
 void MessageActions::addCustomTemplate(CustomTemplatesMenu *customTemplatesMenus )
 {
+  delete mCustomTemplateMenus;
+  mCustomTemplateMenus = customTemplatesMenus;
+  
   forwardMenu()->addSeparator();
   forwardMenu()->addAction( customTemplatesMenus->forwardActionMenu() );
   replyMenu()->addSeparator();

@@ -58,7 +58,6 @@ class KActionMenu;
 class KToggleAction;
 class KMMetaFilterActionCommand;
 class KMSystemTray;
-class CustomTemplatesMenu;
 class CollectionPane;
 class KMCommand;
 class KMMoveCommand;
@@ -564,7 +563,6 @@ private:
     KAction *mAddFavoriteFolder;
     // Custom template actions menu
     KActionMenu *mTemplateMenu;
-    CustomTemplatesMenu *mCustomTemplateMenus;
 
     KActionMenu *mThreadStatusMenu, *mApplyFilterActionsMenu;
     KAction *mCopyActionMenu;

@@ -17,7 +17,6 @@ class KAction;
 class KFontAction;
 class KFontSizeAction;
 class KJob;
-class CustomTemplatesMenu;
 template <typename T, typename S> class QMap;
 
 namespace KMail {
@@ -93,8 +92,6 @@ private:
   KMail::MessageActions *mMsgActions;
   Akonadi::Collection mParentCollection;
 
-  // Custom template actions menu
-  boost::scoped_ptr<CustomTemplatesMenu> mCustomTemplateMenus;
 };
 
 #endif /*KMReaderMainWin_h*/

@@ -359,17 +359,19 @@ void KMReaderMainWin::setupAccel()
 //-----------------------------------------------------------------------------
 void KMReaderMainWin::updateCustomTemplateMenus()
 {
-  if ( !mCustomTemplateMenus ) {
-    mCustomTemplateMenus.reset( new CustomTemplatesMenu( this, actionCollection() ) );
-    connect( mCustomTemplateMenus.get(), SIGNAL(replyTemplateSelected(QString)),
+  CustomTemplatesMenu *customTemplateMenus = mMsgActions->customTemplatesMenus();
+  if ( !customTemplateMenus )
+  {
+    customTemplateMenus = new CustomTemplatesMenu( this, actionCollection() );
+    connect( customTemplateMenus, SIGNAL(replyTemplateSelected(QString)),
              this, SLOT(slotCustomReplyToMsg(QString)) );
-    connect( mCustomTemplateMenus.get(), SIGNAL(replyAllTemplateSelected(QString)),
+    connect( customTemplateMenus, SIGNAL(replyAllTemplateSelected(QString)),
              this, SLOT(slotCustomReplyAllToMsg(QString)) );
-    connect( mCustomTemplateMenus.get(), SIGNAL(forwardTemplateSelected(QString)),
+    connect( customTemplateMenus, SIGNAL(forwardTemplateSelected(QString)),
              this, SLOT(slotCustomForwardMsg(QString)) );
-    connect( KMKernel::self(), SIGNAL(customTemplatesChanged()), mCustomTemplateMenus.get(), SLOT(update()) );
+    connect( KMKernel::self(), SIGNAL(customTemplatesChanged()), customTemplateMenus, SLOT(update()) );
   }
-  mMsgActions->addCustomTemplate( mCustomTemplateMenus.get() );
+  mMsgActions->addCustomTemplate( customTemplateMenus );
 }
 
 

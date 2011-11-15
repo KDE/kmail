@@ -91,6 +91,7 @@ class MessageActions : public QObject
 
     KActionMenu* mailingListActionMenu() const { return mMailingListActionMenu; }
     void addCustomTemplate(CustomTemplatesMenu *customTemplatesMenus );
+    CustomTemplatesMenu* customTemplatesMenus();
 
   signals:
 
@@ -146,6 +147,7 @@ class MessageActions : public QObject
     bool mKorganizerIsOnSystem;
     Akonadi::Monitor *mMonitor;
     MessageCore::AsyncNepomukResourceRetriever *mAsynNepomukRetriever;
+    CustomTemplatesMenu *mCustomTemplateMenus;
 };
 
 }

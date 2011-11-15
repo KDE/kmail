@@ -233,7 +233,6 @@ K_GLOBAL_STATIC( KMMainWidget::PtrList, theMainWidgetList )
   mTopLayout->setMargin( 0 );
   mConfig = config;
   mGUIClient = aGUIClient;
-  mCustomTemplateMenus = 0;
   mFolderTreeWidget = 0;
 
   Akonadi::Control::widgetNeedsAkonadi( this );
@@ -358,12 +357,10 @@ void KMMainWidget::destruct()
   writeFolderConfig();
   deleteWidgets();
   delete mSystemTray;
-  delete mCustomTemplateMenus;
   mCurrentFolder.clear();
   delete mMoveOrCopyToDialog;
   delete mSelectFromAllFoldersDialog;
   mSystemTray = 0;
-  mCustomTemplateMenus = 0;
   mDestructed = true;
 }
 
@@ -3003,19 +3000,19 @@ void KMMainWidget::getTransportMenu()
 //-----------------------------------------------------------------------------
 void KMMainWidget::updateCustomTemplateMenus()
 {
-  if ( !mCustomTemplateMenus )
+  CustomTemplatesMenu *customTemplateMenus = mMsgActions->customTemplatesMenus();
+  if ( !customTemplateMenus )
   {
-    mCustomTemplateMenus = new CustomTemplatesMenu( this, actionCollection() );
-    connect( mCustomTemplateMenus, SIGNAL(replyTemplateSelected(QString)),
+    customTemplateMenus = new CustomTemplatesMenu( this, actionCollection() );
+    connect( customTemplateMenus, SIGNAL(replyTemplateSelected(QString)),
              this, SLOT(slotCustomReplyToMsg(QString)) );
-    connect( mCustomTemplateMenus, SIGNAL(replyAllTemplateSelected(QString)),
+    connect( customTemplateMenus, SIGNAL(replyAllTemplateSelected(QString)),
              this, SLOT(slotCustomReplyAllToMsg(QString)) );
-    connect( mCustomTemplateMenus, SIGNAL(forwardTemplateSelected(QString)),
+    connect( customTemplateMenus, SIGNAL(forwardTemplateSelected(QString)),
              this, SLOT(slotCustomForwardMsg(QString)) );
-    connect( KMKernel::self(), SIGNAL(customTemplatesChanged()), mCustomTemplateMenus, SLOT(update()) );
-    
+    connect( KMKernel::self(), SIGNAL(customTemplatesChanged()), customTemplateMenus, SLOT(update()) );
   }
-  mMsgActions->addCustomTemplate(mCustomTemplateMenus );
+  mMsgActions->addCustomTemplate( customTemplateMenus );
 }
 
 
@@ -3819,11 +3816,11 @@ void KMMainWidget::updateMessageActionsDelayed()
   filterMenu()->setEnabled( single_actions );
   mMsgActions->redirectAction()->setEnabled( single_actions && !CommonKernel->folderIsTemplates( mCurrentFolder->collection() ) );
 
-  if ( mCustomTemplateMenus )
+  if ( mMsgActions->customTemplatesMenus() )
   {
-    mCustomTemplateMenus->forwardActionMenu()->setEnabled( mass_actions );
-    mCustomTemplateMenus->replyActionMenu()->setEnabled( single_actions );
-    mCustomTemplateMenus->replyAllActionMenu()->setEnabled( single_actions );
+    mMsgActions->customTemplatesMenus()->forwardActionMenu()->setEnabled( mass_actions );
+    mMsgActions->customTemplatesMenus()->replyActionMenu()->setEnabled( single_actions );
+    mMsgActions->customTemplatesMenus()->replyAllActionMenu()->setEnabled( single_actions );
   }
 
   // "Print" will act on the current message: it will ignore any hidden selection
