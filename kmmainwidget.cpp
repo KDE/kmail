@@ -2998,7 +2998,7 @@ void KMMainWidget::getTransportMenu()
 
 
 //-----------------------------------------------------------------------------
-void KMMainWidget::updateCustomTemplateMenus()
+void KMMainWidget::connectCustomTemplateMenus()
 {
   CustomTemplatesMenu *customTemplateMenus = mMsgActions->customTemplatesMenu();
   if ( customTemplateMenus )
@@ -3568,7 +3568,7 @@ void KMMainWidget::setupActions()
            SIGNAL(undoStackChanged()), this, SLOT(slotUpdateUndo()));
 
   updateMessageActions();
-  updateCustomTemplateMenus();
+  connectCustomTemplateMenus();
   updateFolderMenu();
   mTagActionManager = new KMail::TagActionManager( this, actionCollection(), mMsgActions,
                                                    mGUIClient );

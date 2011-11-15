@@ -346,7 +346,7 @@ void KMReaderMainWin::setupAccel()
   connect( fontSizeAction, SIGNAL(fontSizeChanged(int)),
            SLOT(slotSizeAction(int)) );
 
-  updateCustomTemplateMenus();
+  connectCustomTemplateMenus();
 
   connect( mReaderWin->viewer(), SIGNAL(popupMenu(Akonadi::Item,KUrl,QPoint)),
            this, SLOT(slotMessagePopup(Akonadi::Item,KUrl,QPoint)) );
@@ -357,19 +357,16 @@ void KMReaderMainWin::setupAccel()
 
 
 //-----------------------------------------------------------------------------
-void KMReaderMainWin::updateCustomTemplateMenus()
+void KMReaderMainWin::connectCustomTemplateMenus()
 {
   CustomTemplatesMenu *customTemplateMenus = mMsgActions->customTemplatesMenu();
-  if ( customTemplateMenus )
-  {
-    connect( customTemplateMenus, SIGNAL(replyTemplateSelected(QString)),
-             this, SLOT(slotCustomReplyToMsg(QString)) );
-    connect( customTemplateMenus, SIGNAL(replyAllTemplateSelected(QString)),
+  connect( customTemplateMenus, SIGNAL(replyTemplateSelected(QString)),
+           this, SLOT(slotCustomReplyToMsg(QString)) );
+  connect( customTemplateMenus, SIGNAL(replyAllTemplateSelected(QString)),
              this, SLOT(slotCustomReplyAllToMsg(QString)) );
-    connect( customTemplateMenus, SIGNAL(forwardTemplateSelected(QString)),
-             this, SLOT(slotCustomForwardMsg(QString)) );
-    connect( KMKernel::self(), SIGNAL(customTemplatesChanged()), customTemplateMenus, SLOT(update()) );
-  }
+  connect( customTemplateMenus, SIGNAL(forwardTemplateSelected(QString)),
+           this, SLOT(slotCustomForwardMsg(QString)) );
+  connect( KMKernel::self(), SIGNAL(customTemplatesChanged()), customTemplateMenus, SLOT(update()) );
 }
 
 

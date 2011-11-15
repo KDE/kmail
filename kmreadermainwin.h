@@ -79,7 +79,7 @@ private:
   void initKMReaderMainWin();
   void setupAccel();
   KAction *copyActionMenu();
-  void updateCustomTemplateMenus();
+  void connectCustomTemplateMenus();
 
   KMReaderWin *mReaderWin;
   Akonadi::Item mMsg;

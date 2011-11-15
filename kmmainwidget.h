@@ -465,7 +465,7 @@ class KMAIL_EXPORT KMMainWidget : public QWidget
     QString overrideEncoding() const;
 
     /** Update the custom template menus. */
-    void updateCustomTemplateMenus();
+    void connectCustomTemplateMenus();
 
 
     void moveMessageSelected( MessageList::Core::MessageItemSetReference ref, const Akonadi::Collection &dest, bool confirmOnDeletion = true );
