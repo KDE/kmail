@@ -369,13 +369,7 @@ void KMReaderMainWin::updateCustomTemplateMenus()
              this, SLOT(slotCustomForwardMsg(QString)) );
     connect( KMKernel::self(), SIGNAL(customTemplatesChanged()), mCustomTemplateMenus.get(), SLOT(update()) );
   }
-
-  mMsgActions->forwardMenu()->addSeparator();
-  mMsgActions->forwardMenu()->addAction( mCustomTemplateMenus->forwardActionMenu() );
-
-  mMsgActions->replyMenu()->addSeparator();
-  mMsgActions->replyMenu()->addAction( mCustomTemplateMenus->replyActionMenu() );
-  mMsgActions->replyMenu()->addAction( mCustomTemplateMenus->replyAllActionMenu() );
+  mMsgActions->addCustomTemplate( mCustomTemplateMenus.get() );
 }
 
 

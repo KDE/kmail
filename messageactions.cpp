@@ -25,6 +25,7 @@
 #include "kmmainwidget.h"
 #include "util.h"
 #include "kmcommands.h"
+#include "customtemplatesmenu.h"
 
 #include "messagecore/annotationdialog.h"
 #include "messagecore/globalsettings.h"
@@ -195,6 +196,15 @@ MessageActions::MessageActions( KActionCollection *ac, QWidget* parent ) :
 
 MessageActions::~MessageActions()
 {
+}
+
+void MessageActions::addCustomTemplate(CustomTemplatesMenu *customTemplatesMenus )
+{
+  forwardMenu()->addSeparator();
+  forwardMenu()->addAction( customTemplatesMenus->forwardActionMenu() );
+  replyMenu()->addSeparator();
+  replyMenu()->addAction( customTemplatesMenus->replyActionMenu() );
+  replyMenu()->addAction( customTemplatesMenus->replyAllActionMenu() );
 }
 
 void MessageActions::setCurrentMessage( const Akonadi::Item &msg )

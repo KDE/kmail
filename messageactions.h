@@ -32,6 +32,7 @@ class KActionMenu;
 class KActionCollection;
 class KXMLGUIClient;
 class KMReaderWin;
+class CustomTemplatesMenu;
 namespace Akonadi {
 class Item;
 class Monitor;
@@ -89,6 +90,7 @@ class MessageActions : public QObject
     KAction* printAction() const { return mPrintAction; }
 
     KActionMenu* mailingListActionMenu() const { return mMailingListActionMenu; }
+    void addCustomTemplate(CustomTemplatesMenu *customTemplatesMenus );
 
   signals:
 
