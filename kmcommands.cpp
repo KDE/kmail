@@ -66,7 +66,6 @@
 #include <kpimidentities/identitymanager.h>
 #include <akonadi/itemmodifyjob.h>
 #include <akonadi/itemfetchjob.h>
-#include <akonadi/kmime/messageflags.h>
 
 
 #include "foldercollection.h"
