@@ -66,7 +66,7 @@ MessageActions::MessageActions( KActionCollection *ac, QWidget* parent ) :
     mMessageView( 0 ),
     mRedirectAction( 0 ),
     mAsynNepomukRetriever( new MessageCore::AsyncNepomukResourceRetriever( this ) ),
-    mCustomTemplateMenus( 0 )
+    mCustomTemplatesMenu( 0 )
 {
   mReplyActionMenu = new KActionMenu( KIcon("mail-reply-sender"), i18nc("Message->","&Reply"), this );
   mActionCollection->addAction( "message_reply_menu", mReplyActionMenu );
@@ -192,29 +192,24 @@ MessageActions::MessageActions( KActionCollection *ac, QWidget* parent ) :
 
   connect( mAsynNepomukRetriever, SIGNAL(resourceReceived(QUrl,Nepomuk::Resource)), SLOT(updateAnnotateAction(QUrl,Nepomuk::Resource)) );
 
+  mCustomTemplatesMenu = new CustomTemplatesMenu( parent, ac );
+  forwardMenu()->addSeparator();
+  forwardMenu()->addAction( mCustomTemplatesMenu->forwardActionMenu() );
+  replyMenu()->addSeparator();
+  replyMenu()->addAction( mCustomTemplatesMenu->replyActionMenu() );
+  replyMenu()->addAction( mCustomTemplatesMenu->replyAllActionMenu() );
+
   updateActions();
 }
 
 MessageActions::~MessageActions()
 {
-  delete mCustomTemplateMenus;
+  delete mCustomTemplatesMenu;
 }
 
-CustomTemplatesMenu* MessageActions::customTemplatesMenus()
+CustomTemplatesMenu* MessageActions::customTemplatesMenu() const
 {
-  return mCustomTemplateMenus;
-}
-
-void MessageActions::addCustomTemplate(CustomTemplatesMenu *customTemplatesMenus )
-{
-  delete mCustomTemplateMenus;
-  mCustomTemplateMenus = customTemplatesMenus;
-  
-  forwardMenu()->addSeparator();
-  forwardMenu()->addAction( customTemplatesMenus->forwardActionMenu() );
-  replyMenu()->addSeparator();
-  replyMenu()->addAction( customTemplatesMenus->replyActionMenu() );
-  replyMenu()->addAction( customTemplatesMenus->replyAllActionMenu() );
+  return mCustomTemplatesMenu;
 }
 
 void MessageActions::setCurrentMessage( const Akonadi::Item &msg )

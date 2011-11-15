@@ -359,10 +359,9 @@ void KMReaderMainWin::setupAccel()
 //-----------------------------------------------------------------------------
 void KMReaderMainWin::updateCustomTemplateMenus()
 {
-  CustomTemplatesMenu *customTemplateMenus = mMsgActions->customTemplatesMenus();
-  if ( !customTemplateMenus )
+  CustomTemplatesMenu *customTemplateMenus = mMsgActions->customTemplatesMenu();
+  if ( customTemplateMenus )
   {
-    customTemplateMenus = new CustomTemplatesMenu( this, actionCollection() );
     connect( customTemplateMenus, SIGNAL(replyTemplateSelected(QString)),
              this, SLOT(slotCustomReplyToMsg(QString)) );
     connect( customTemplateMenus, SIGNAL(replyAllTemplateSelected(QString)),
@@ -371,7 +370,6 @@ void KMReaderMainWin::updateCustomTemplateMenus()
              this, SLOT(slotCustomForwardMsg(QString)) );
     connect( KMKernel::self(), SIGNAL(customTemplatesChanged()), customTemplateMenus, SLOT(update()) );
   }
-  mMsgActions->addCustomTemplate( customTemplateMenus );
 }
 
 

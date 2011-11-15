@@ -3000,10 +3000,9 @@ void KMMainWidget::getTransportMenu()
 //-----------------------------------------------------------------------------
 void KMMainWidget::updateCustomTemplateMenus()
 {
-  CustomTemplatesMenu *customTemplateMenus = mMsgActions->customTemplatesMenus();
-  if ( !customTemplateMenus )
+  CustomTemplatesMenu *customTemplateMenus = mMsgActions->customTemplatesMenu();
+  if ( customTemplateMenus )
   {
-    customTemplateMenus = new CustomTemplatesMenu( this, actionCollection() );
     connect( customTemplateMenus, SIGNAL(replyTemplateSelected(QString)),
              this, SLOT(slotCustomReplyToMsg(QString)) );
     connect( customTemplateMenus, SIGNAL(replyAllTemplateSelected(QString)),
@@ -3012,7 +3011,6 @@ void KMMainWidget::updateCustomTemplateMenus()
              this, SLOT(slotCustomForwardMsg(QString)) );
     connect( KMKernel::self(), SIGNAL(customTemplatesChanged()), customTemplateMenus, SLOT(update()) );
   }
-  mMsgActions->addCustomTemplate( customTemplateMenus );
 }
 
 
@@ -3816,11 +3814,11 @@ void KMMainWidget::updateMessageActionsDelayed()
   filterMenu()->setEnabled( single_actions );
   mMsgActions->redirectAction()->setEnabled( single_actions && !CommonKernel->folderIsTemplates( mCurrentFolder->collection() ) );
 
-  if ( mMsgActions->customTemplatesMenus() )
+  if ( mMsgActions->customTemplatesMenu() )
   {
-    mMsgActions->customTemplatesMenus()->forwardActionMenu()->setEnabled( mass_actions );
-    mMsgActions->customTemplatesMenus()->replyActionMenu()->setEnabled( single_actions );
-    mMsgActions->customTemplatesMenus()->replyAllActionMenu()->setEnabled( single_actions );
+    mMsgActions->customTemplatesMenu()->forwardActionMenu()->setEnabled( mass_actions );
+    mMsgActions->customTemplatesMenu()->replyActionMenu()->setEnabled( single_actions );
+    mMsgActions->customTemplatesMenu()->replyAllActionMenu()->setEnabled( single_actions );
   }
 
   // "Print" will act on the current message: it will ignore any hidden selection
