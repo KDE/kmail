@@ -299,17 +299,12 @@ void MessageActions::updateActions()
   mStatusMenu->setEnabled( multiVisible );
 
   if ( mCurrentItem.hasPayload<KMime::Message::Ptr>() ) {
-
-    if ( !mCurrentItem.loadedPayloadParts().contains( Akonadi::MessagePart::Header ) ) {
-      mMailingListActionMenu->setEnabled( false );
-      Akonadi::ItemFetchJob *job = new Akonadi::ItemFetchJob( mCurrentItem, this );
-      job->fetchScope().fetchPayloadPart( Akonadi::MessagePart::Header );
-      connect( job, SIGNAL(result(KJob*)), SLOT(slotUpdateActionsFetchDone(KJob*)) );
-    } else {
-      updateMailingListActions( mCurrentItem );
-    }
+    Akonadi::ItemFetchJob *job = new Akonadi::ItemFetchJob( mCurrentItem );
+    job->fetchScope().fetchAllAttributes();
+    job->fetchScope().fetchFullPayload( true );
+    job->fetchScope().fetchPayloadPart( Akonadi::MessagePart::Header );
+    connect( job, SIGNAL(result(KJob*)), SLOT(slotUpdateActionsFetchDone(KJob*)) );
   }
-
   mEditAction->setEnabled( singleMsg );
 }
 
@@ -330,7 +325,8 @@ void MessageActions::slotUpdateActionsFetchDone(KJob* job)
 
 void MessageActions::updateMailingListActions( const Akonadi::Item& messageItem )
 {
-  const MessageCore::MailingList mailList = MessageCore::MailingList::detect( MessageCore::Util::message( messageItem ) );
+  KMime::Message::Ptr message = messageItem.payload<KMime::Message::Ptr>();
+  const MessageCore::MailingList mailList = MessageCore::MailingList::detect( message );
 
   if ( mailList.features() == MessageCore::MailingList::None ) {
     mMailingListActionMenu->setEnabled( false );
