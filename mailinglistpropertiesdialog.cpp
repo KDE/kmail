@@ -222,7 +222,7 @@ void MailingListFolderPropertiesDialog::slotDetectMailingList()
 
   // next try the 5 most recently added messages
   if ( !( mMailingList.features() & MailingList::Post ) ) {
-
+    //FIXME not load all folder
     Akonadi::ItemFetchJob *job = new Akonadi::ItemFetchJob( mFolder->collection(), this );
     job->fetchScope().fetchPayloadPart( Akonadi::MessagePart::Header );
     connect( job, SIGNAL(result(KJob*)), this, SLOT(slotFetchDone(KJob*)) );
