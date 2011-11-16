@@ -1081,7 +1081,10 @@ void KMKernel::recoverDeadLetters()
   const QFileInfoList autoSaveFiles = dir.entryInfoList();
   foreach( const QFileInfo &file, autoSaveFiles ) {
     // Disregard the '.' and '..' folders
-    if( file.fileName() == "." || file.fileName() == ".." || file.isDir() )
+    const QString filename = file.fileName();
+    if( filename == QLatin1String( "." ) ||
+        filename == QLatin1String( ".." )
+        || file.isDir() )
       continue;
     kDebug() << "Opening autosave file:" << file.absoluteFilePath();
     QFile autoSaveFile( file.absoluteFilePath() );
@@ -1094,7 +1097,7 @@ void KMKernel::recoverDeadLetters()
       // Show the a new composer dialog for the message
       KMail::Composer * autoSaveWin = KMail::makeComposer();
       autoSaveWin->setMsg( autoSaveMessage, false );
-      autoSaveWin->setAutoSaveFileName( file.fileName() );
+      autoSaveWin->setAutoSaveFileName( filename );
       autoSaveWin->show();
       autoSaveFile.close();
     } else {
@@ -1614,7 +1617,8 @@ void KMKernel::transportRenamed(int id, const QString & oldName, const QString &
 
   QStringList changedIdents;
   KPIMIdentities::IdentityManager * im = identityManager();
-  for ( KPIMIdentities::IdentityManager::Iterator it = im->modifyBegin(); it != im->modifyEnd(); ++it ) {
+  KPIMIdentities::IdentityManager::Iterator end = im->modifyEnd();
+  for ( KPIMIdentities::IdentityManager::Iterator it = im->modifyBegin(); it != end; ++it ) {
     if ( oldName == (*it).transport() ) {
       (*it).setTransport( newName );
       changedIdents << (*it).identityName();
