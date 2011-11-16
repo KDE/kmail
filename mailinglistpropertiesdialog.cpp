@@ -224,7 +224,6 @@ void MailingListFolderPropertiesDialog::slotDetectMailingList()
   if ( !( mMailingList.features() & MailingList::Post ) ) {
 
     Akonadi::ItemFetchJob *job = new Akonadi::ItemFetchJob( mFolder->collection(), this );
-    job->fetchScope().setAncestorRetrieval( Akonadi::ItemFetchScope::Parent );
     job->fetchScope().fetchPayloadPart( Akonadi::MessagePart::Header );
     connect( job, SIGNAL(result(KJob*)), this, SLOT(slotFetchDone(KJob*)) );
     //Don't allow to reactive it
