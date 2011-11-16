@@ -108,6 +108,10 @@ MessageActions::MessageActions( KActionCollection *ac, QWidget* parent ) :
            this, SLOT(slotNoQuoteReplyToMsg()) );
 
 
+  mListFilterAction = new KAction(i18n("Filter on Mailing-&List..."), this);
+  mActionCollection->addAction("mlist_filter", mListFilterAction );
+  connect(mListFilterAction, SIGNAL(triggered(bool)), SLOT(slotMailingListFilter()));
+  
   mCreateTodoAction = new KAction( KIcon( "task-new" ), i18n( "Create To-do/Reminder..." ), this );
   mCreateTodoAction->setIconText( i18n( "Create To-do" ) );
   mCreateTodoAction->setHelpText( i18n( "Allows you to create a calendar to-do or reminder from this message" ) );
@@ -330,6 +334,8 @@ void MessageActions::updateMailingListActions( const Akonadi::Item& messageItem 
 
   if ( mailList.features() == MessageCore::MailingList::None ) {
     mMailingListActionMenu->setEnabled( false );
+    mListFilterAction->setEnabled( false );
+    mListFilterAction->setText( i18n("Filter on Mailing-List...") );
   } else {
     // A mailing list menu with only a title is pretty boring
     // so make sure theres at least some content
@@ -370,6 +376,15 @@ void MessageActions::updateMailingListActions( const Akonadi::Item& messageItem 
     if ( mailList.features() & MessageCore::MailingList::Unsubscribe )
       addMailingListActions( i18n( "Unsubscribe from List" ), mailList.unsubscribeUrls() );
     mMailingListActionMenu->setEnabled( true );
+
+    QByteArray name;
+    QString value;
+    const QString lname = MailingList::name( message, name, value );
+    if ( !lname.isEmpty() )
+    {
+      mListFilterAction->setEnabled( true );
+      mListFilterAction->setText( i18n( "Filter on Mailing-List %1...", lname ) );
+    }
   }
 }
 
@@ -474,6 +489,16 @@ void MessageActions::slotRunUrl( QAction *urlAction )
     new KRun( KUrl( q.toString() ) , mParent );
   }
 }
+
+void MessageActions::slotMailingListFilter()
+{
+  if ( !mCurrentItem.hasPayload<KMime::Message::Ptr>() )
+    return;
+  
+  KMCommand *command = new KMMailingListFilterCommand( mParent, mCurrentItem );
+  command->start();
+}
+
 
 void MessageActions::slotPrintMsg()
 {

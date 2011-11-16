@@ -159,8 +159,6 @@ class KMAIL_EXPORT KMMainWidget : public QWidget
 
     void toggleSystemTray();
 
-    void updateListFilterAction();
-
     /**
       Returns a list of all KMMainWidgets. Warning, the list itself can be 0.
       @return the list of all main widgets, or 0 if it is not yet initialized
@@ -428,7 +426,6 @@ class KMAIL_EXPORT KMMainWidget : public QWidget
     void slotCustomForwardMsg( const QString &tmpl );
     void slotNoQuoteReplyToMsg();
     void slotSubjectFilter();
-    void slotMailingListFilter();
     void slotFromFilter();
     void slotToFilter();
     void slotCreateTodo();

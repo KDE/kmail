@@ -87,6 +87,7 @@ class MessageActions : public QObject
     KAction* editAction() const { return mEditAction; }
     KAction* annotateAction() const { return mAnnotateAction; }
     KAction* printAction() const { return mPrintAction; }
+    KAction* listFilterAction() const { return mListFilterAction; }
 
     KActionMenu* mailingListActionMenu() const { return mMailingListActionMenu; }
     CustomTemplatesMenu* customTemplatesMenu() const;
@@ -124,6 +125,7 @@ class MessageActions : public QObject
     void slotRunUrl( QAction *urlAction );
     void slotPrintMsg();
     void slotUpdateActionsFetchDone( KJob* job );
+    void slotMailingListFilter();
 
   private:
     QWidget *mParent;
@@ -145,6 +147,7 @@ class MessageActions : public QObject
     Akonadi::Monitor *mMonitor;
     MessageCore::AsyncNepomukResourceRetriever *mAsynNepomukRetriever;
     CustomTemplatesMenu *mCustomTemplatesMenu;
+    KAction *mListFilterAction;
 };
 
 }

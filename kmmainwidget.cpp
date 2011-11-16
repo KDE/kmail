@@ -2285,17 +2285,6 @@ void KMMainWidget::slotSubjectFilter()
 }
 
 //-----------------------------------------------------------------------------
-void KMMainWidget::slotMailingListFilter()
-{
-  const Akonadi::Item msg = mMessagePane->currentItem();
-  if ( !msg.isValid() )
-    return;
-
-  KMCommand *command = new KMMailingListFilterCommand( this, msg );
-  command->start();
-}
-
-//-----------------------------------------------------------------------------
 void KMMainWidget::slotFromFilter()
 {
   KMime::Message::Ptr msg = mMessagePane->currentMessage();
@@ -2320,30 +2309,6 @@ void KMMainWidget::slotToFilter()
   KMCommand *command = new KMFilterCommand( "To",  msg->to()->asUnicodeString() );
   command->start();
 }
-
-//-----------------------------------------------------------------------------
-void KMMainWidget::updateListFilterAction()
-{
-  //Proxy the mListFilterAction to update the action text
-
-  mListFilterAction->setText( i18n("Filter on Mailing-List...") );
-  KMime::Message::Ptr msg = mMessagePane->currentMessage();
-  if ( !msg ) {
-    mListFilterAction->setEnabled( false );
-    return;
-  }
-
-  QByteArray name;
-  QString value;
-  const QString lname = MailingList::name( msg, name, value );
-  if ( lname.isNull() )
-    mListFilterAction->setEnabled( false );
-  else {
-    mListFilterAction->setEnabled( true );
-    mListFilterAction->setText( i18n( "Filter on Mailing-List %1...", lname ) );
-  }
-}
-
 
 //-----------------------------------------------------------------------------
 void KMMainWidget::slotUndo()
@@ -3320,10 +3285,7 @@ void KMMainWidget::setupActions()
   connect(mToFilterAction, SIGNAL(triggered(bool)), SLOT(slotToFilter()));
   mFilterMenu->addAction( mToFilterAction );
 
-  mListFilterAction = new KAction(i18n("Filter on Mailing-&List..."), this);
-  actionCollection()->addAction("mlist_filter", mListFilterAction );
-  connect(mListFilterAction, SIGNAL(triggered(bool)), SLOT(slotMailingListFilter()));
-  mFilterMenu->addAction( mListFilterAction );
+  mFilterMenu->addAction( mMsgActions->listFilterAction() );
 
   mUseAction = new KAction( KIcon("document-new"), i18n("New Message From &Template"), this );
   actionCollection()->addAction("use_template", mUseAction);
@@ -3755,7 +3717,6 @@ void KMMainWidget::updateMessageActionsDelayed()
   //       the selection contains any.
   //
 
-  updateListFilterAction();
   bool readOnly = mCurrentFolder && mCurrentFolder->isValid() && ( mCurrentFolder->rights() & Akonadi::Collection::ReadOnly );
   // can we apply strictly single message actions ? (this is false if the whole selection contains more than one message)
   bool single_actions = count == 1;
