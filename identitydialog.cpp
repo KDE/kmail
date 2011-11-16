@@ -561,7 +561,8 @@ namespace KMail {
 
     bool DoesntMatchEMailAddress::operator()( const GpgME::Key & key ) const {
       const std::vector<GpgME::UserID> uids = key.userIDs();
-      for ( std::vector<GpgME::UserID>::const_iterator it = uids.begin() ; it != uids.end() ; ++it )
+      std::vector<GpgME::UserID>::const_iterator end = uids.end();
+      for ( std::vector<GpgME::UserID>::const_iterator it = uids.begin() ; it != end ; ++it )
         if ( checkForEmail( it->email() ? it->email() : it->id() ) )
           return false;
       return true; // note the negation!
@@ -781,7 +782,7 @@ namespace KMail {
     // "Signature" tab:
     mSignatureConfigurator->setImageLocation( ident );
     mSignatureConfigurator->setSignature( ident.signature() );
- #ifndef KDEPIM_MOBILE_UI
+#ifndef KDEPIM_MOBILE_UI
     mXFaceConfigurator->setXFace( ident.xface() );
     mXFaceConfigurator->setXFaceEnabled( ident.isXFaceEnabled() );
 #endif
