@@ -227,6 +227,8 @@ void MailingListFolderPropertiesDialog::slotDetectMailingList()
     job->fetchScope().setAncestorRetrieval( Akonadi::ItemFetchScope::Parent );
     job->fetchScope().fetchPayloadPart( Akonadi::MessagePart::Header );
     connect( job, SIGNAL(result(KJob*)), this, SLOT(slotFetchDone(KJob*)) );
+    //Don't allow to reactive it
+    mDetectButton->setEnabled( false );
   }
   else {
     mMLId->setText( (mMailingList.id().isEmpty() ? i18n("Not available.") : mMailingList.id() ) );
@@ -237,6 +239,7 @@ void MailingListFolderPropertiesDialog::slotDetectMailingList()
 
 void MailingListFolderPropertiesDialog::slotFetchDone( KJob* job )
 {
+  mDetectButton->setEnabled( true );
   if ( job->error() ) {
     // handle errors
     MailCommon::Util::showJobErrorMessage(job);
