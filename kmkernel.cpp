@@ -389,8 +389,9 @@ bool KMKernel::handleCommandLine( bool noArgsOpensReader )
   const QStringList attachList = args->getOptionList("attach");
   if ( !attachList.isEmpty() ) {
     mailto = true;
+    QStringList::ConstIterator end = attachList.constEnd();
     for ( QStringList::ConstIterator it = attachList.constBegin();
-          it != attachList.constEnd(); ++it ) {
+          it != end; ++it ) {
       if ( !(*it).isEmpty() ) {
         KUrl url( *it );
         if ( url.protocol().isEmpty() ) {
@@ -614,7 +615,8 @@ int KMKernel::openComposer( const QString &to, const QString &cc,
 
   if ( !customHeaders.isEmpty() )
   {
-    for ( QStringList::ConstIterator it = customHeaders.begin() ; it != customHeaders.end() ; ++it )
+    QStringList::ConstIterator end = customHeaders.constEnd();
+    for ( QStringList::ConstIterator it = customHeaders.constBegin() ; it != end ; ++it )
       if ( !(*it).isEmpty() )
       {
         const int pos = (*it).indexOf( ':' );
