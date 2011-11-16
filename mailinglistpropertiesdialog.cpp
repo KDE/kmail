@@ -44,6 +44,7 @@
 #include "util.h"
 #include <akonadi/itemfetchjob.h>
 #include <akonadi/itemfetchscope.h>
+#include <akonadi/kmime/messageparts.h>
 
 using namespace KMail;
 using namespace MailCommon;
@@ -224,7 +225,7 @@ void MailingListFolderPropertiesDialog::slotDetectMailingList()
 
     Akonadi::ItemFetchJob *job = new Akonadi::ItemFetchJob( mFolder->collection(), this );
     job->fetchScope().setAncestorRetrieval( Akonadi::ItemFetchScope::Parent );
-    job->fetchScope().fetchFullPayload();
+    job->fetchScope().fetchPayloadPart( Akonadi::MessagePart::Header );
     connect( job, SIGNAL(result(KJob*)), this, SLOT(slotFetchDone(KJob*)) );
   }
   else {
@@ -291,8 +292,8 @@ void MailingListFolderPropertiesDialog::fillMLFromWidgets()
   bool changed = false;
   QStringList oldList = mEditList->items();
   QStringList newList; // the correct string list
-  for ( QStringList::ConstIterator it = oldList.constBegin();
-        it != oldList.constEnd(); ++it ) {
+  QStringList::ConstIterator end = oldList.constEnd();
+  for ( QStringList::ConstIterator it = oldList.constBegin(); it != end; ++it ) {
     if ( !(*it).startsWith(QLatin1String("http:")) && !(*it).startsWith(QLatin1String("https:")) &&
          !(*it).startsWith(QLatin1String("mailto:")) && ( (*it).contains(QLatin1Char('@')) ) ) {
       changed = true;
