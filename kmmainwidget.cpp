@@ -3695,7 +3695,6 @@ void KMMainWidget::updateMessageActions( bool fast )
      )
   {
     mMsgActions->setCurrentMessage( mMessagePane->currentItem() );
-    mMsgActions->setSelectedItem( selectedItems );
     mMsgActions->setSelectedVisibleItems( selectedVisibleItems );
 
   } else {

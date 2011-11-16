@@ -218,7 +218,6 @@ void MessageActions::setCurrentMessage( const Akonadi::Item &msg )
   mCurrentItem = msg;
 
   if ( !msg.isValid() ) {
-    mSelectedItems.clear();
     mVisibleItems.clear();
   }
 
@@ -250,14 +249,6 @@ void MessageActions::slotItemModified( const Akonadi::Item &  item, const QSet< 
     }
     updateActions();
   }
-}
-
-
-
-void MessageActions::setSelectedItem( const Akonadi::Item::List &items )
-{
-  mSelectedItems = items;
-  updateActions();
 }
 
 void MessageActions::setSelectedVisibleItems( const Akonadi::Item::List &items )

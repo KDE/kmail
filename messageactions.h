@@ -72,7 +72,6 @@ class MessageActions : public QObject
     void setupForwardingActionsList( KXMLGUIClient *guiClient );
 
     void setCurrentMessage( const Akonadi::Item &item );
-    void setSelectedItem( const Akonadi::Item::List& items );
     void setSelectedVisibleItems( const Akonadi::Item::List& items );
 
     KActionMenu* replyMenu() const { return mReplyActionMenu; }
@@ -130,7 +129,6 @@ class MessageActions : public QObject
     QWidget *mParent;
     KActionCollection *mActionCollection;
     Akonadi::Item mCurrentItem;
-    Akonadi::Item::List mSelectedItems;
     Akonadi::Item::List mVisibleItems;
     KMReaderWin *mMessageView;
 
