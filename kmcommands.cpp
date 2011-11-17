@@ -101,10 +101,8 @@ using MessageViewer::EditorWatcher;
 #include "messageviewer/autoqpointer.h"
 #include "messageviewer/globalsettings.h"
 #include "messagecore/globalsettings.h"
-#include "templateparser/templateparser.h"
 
 #include <kpimutils/kfileio.h>
-#include "interfaces/htmlwriter.h"
 
 #include <akonadi/itemmovejob.h>
 #include <akonadi/itemcopyjob.h>
@@ -136,7 +134,6 @@ using KPIM::ProgressItem;
 #include <kmime/kmime_mdn.h>
 using namespace KMime;
 
-#include "kleo/specialjob.h"
 #include "kleo/cryptobackend.h"
 #include "kleo/cryptobackendfactory.h"
 
