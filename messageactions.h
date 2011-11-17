@@ -55,7 +55,7 @@ class MessageActions : public QObject
 {
   Q_OBJECT
   public:
-    MessageActions( KActionCollection* ac, QWidget *parent );
+    explicit MessageActions( KActionCollection* ac, QWidget *parent );
     ~MessageActions();
     void setMessageView( KMReaderWin *msgView );
 

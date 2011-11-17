@@ -508,8 +508,6 @@ void MessageActions::slotPrintMsg()
   }
   else
   {
-    const bool htmlOverride = false;
-    const bool htmlLoadExtOverride = false;
     const bool useFixedFont = MessageViewer::GlobalSettings::self()->useFixedFont();
     const QString overrideEncoding = MessageCore::GlobalSettings::self()->overrideCharacterEncoding();
 
@@ -518,7 +516,7 @@ void MessageActions::slotPrintMsg()
       new KMPrintCommand( mParent, message,
                           0,
                           0,
-                          htmlOverride, htmlLoadExtOverride,
+                          false, false,
                           useFixedFont, overrideEncoding );
     command->start();
   }
