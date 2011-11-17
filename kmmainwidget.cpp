@@ -2065,7 +2065,7 @@ void KMMainWidget::slotTrashMessagesCompleted( KMMoveCommand *command )
   Q_ASSERT( command );
   mMessagePane->markMessageItemsAsAboutToBeRemoved( command->refSet(), false );
   mMessagePane->deletePersistentSet( command->refSet() );
-  if ( command->result() != KMCommand::OK )
+  if ( command->result() == KMCommand::OK )
   {
     BroadcastStatus::instance()->setStatusMsg( i18n( "Messages moved to trash successfully." ) );
   } else {
