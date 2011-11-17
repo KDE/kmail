@@ -57,8 +57,6 @@
 #include <ktoolinvocation.h>
 #include <kconfiggroup.h>
 
-#include <QApplication>
-#include <qdom.h>
 #include <QLabel>
 #include <QTextEdit>
 #include <QTimer>

@@ -22,8 +22,6 @@
 
 #include <QWidget>
 #include <kurl.h>
-//#include <kservice.h>
-#include <map>
 #include <messageviewer/viewer.h>
 #include <messageviewer/interfaces/bodypart.h>
 
