@@ -45,8 +45,8 @@ class MailingListFolderPropertiesDialog : public KDialog
 {
   Q_OBJECT
 public:
-  MailingListFolderPropertiesDialog( QWidget *parent, const QSharedPointer<MailCommon::FolderCollection>& folder );
-  ~MailingListFolderPropertiesDialog() {}
+  explicit MailingListFolderPropertiesDialog( QWidget *parent, const QSharedPointer<MailCommon::FolderCollection>& folder );
+  ~MailingListFolderPropertiesDialog();
 
 protected:
   void load();
@@ -71,15 +71,14 @@ private:
   void fillMLFromWidgets();
   void fillEditBox();
 
-  bool          mMLInfoChanged;
+  int           mLastItem;
+  MailingList   mMailingList;
   QCheckBox    *mHoldsMailingList;
   KComboBox    *mMLHandlerCombo;
   QPushButton  *mDetectButton;
   KComboBox    *mAddressCombo;
-  int           mLastItem;
   KEditListWidget *mEditList;
   QLabel       *mMLId;
-  MailingList   mMailingList;
 }; // End of class MailingListFolderProperties
 
 } // End of namespace KMail

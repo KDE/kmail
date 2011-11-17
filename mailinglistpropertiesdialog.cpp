@@ -8,6 +8,8 @@
 *******************************************************************************/
 
 /*******************************************************************************
+**  Copyright (c) 2011 Montel Laurent <montel@kde.org>
+
 **
 **   This program is free software; you can redistribute it and/or modify
 **   it under the terms of the GNU General Public License as published by
@@ -160,6 +162,10 @@ MailingListFolderPropertiesDialog::MailingListFolderPropertiesDialog( QWidget* p
   load();
   resize( QSize(295, 204).expandedTo(minimumSizeHint()) );
   setAttribute(Qt::WA_WState_Polished);
+}
+
+MailingListFolderPropertiesDialog::~MailingListFolderPropertiesDialog()
+{
 }
 
 void MailingListFolderPropertiesDialog::slotOk()
