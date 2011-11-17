@@ -215,17 +215,6 @@ void MailingListFolderPropertiesDialog::slotDetectMailingList()
 
   kDebug()<< "Detecting mailing list";
 
-  /* FIXME Till - make work without the folder tree
-  // first try the currently selected message
-  KMFolderTree *folderTree = static_cast<KMFolderTree *>( mDlg->parent() );
-  int curMsgIdx = folderTree->mainWidget()->headers()->currentItemIndex();
-  if ( curMsgIdx > 0 ) {
-    KMMessage *mes = mFolder->getMsg( curMsgIdx );
-    if ( mes )
-      mMailingList = MessageCore::MailingList::detect( mes );
-  }
-  */
-
   // next try the 5 most recently added messages
   if ( !( mMailingList.features() & MailingList::Post ) ) {
     //FIXME not load all folder
