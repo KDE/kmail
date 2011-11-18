@@ -197,6 +197,15 @@ MessageActions::MessageActions( KActionCollection *ac, QWidget* parent ) :
   connect( mAsynNepomukRetriever, SIGNAL(resourceReceived(QUrl,Nepomuk::Resource)), SLOT(updateAnnotateAction(QUrl,Nepomuk::Resource)) );
 
   mCustomTemplatesMenu = new CustomTemplatesMenu( parent, ac );
+  
+  connect( mCustomTemplatesMenu, SIGNAL(replyTemplateSelected(QString)),
+           parent, SLOT(slotCustomReplyToMsg(QString)) );
+  connect( mCustomTemplatesMenu, SIGNAL(replyAllTemplateSelected(QString)),
+             parent, SLOT(slotCustomReplyAllToMsg(QString)) );
+  connect( mCustomTemplatesMenu, SIGNAL(forwardTemplateSelected(QString)),
+           parent, SLOT(slotCustomForwardMsg(QString)) );
+  connect( KMKernel::self(), SIGNAL(customTemplatesChanged()), mCustomTemplatesMenu, SLOT(update()) );
+
   forwardMenu()->addSeparator();
   forwardMenu()->addAction( mCustomTemplatesMenu->forwardActionMenu() );
   replyMenu()->addSeparator();

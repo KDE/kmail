@@ -346,7 +346,6 @@ void KMReaderMainWin::setupAccel()
   connect( fontSizeAction, SIGNAL(fontSizeChanged(int)),
            SLOT(slotSizeAction(int)) );
 
-  connectCustomTemplateMenus();
 
   connect( mReaderWin->viewer(), SIGNAL(popupMenu(Akonadi::Item,KUrl,QPoint)),
            this, SLOT(slotMessagePopup(Akonadi::Item,KUrl,QPoint)) );
@@ -354,21 +353,6 @@ void KMReaderMainWin::setupAccel()
   setStandardToolBarMenuEnabled(true);
   KStandardAction::configureToolbars(this, SLOT(slotEditToolbars()), actionCollection());
 }
-
-
-//-----------------------------------------------------------------------------
-void KMReaderMainWin::connectCustomTemplateMenus()
-{
-  CustomTemplatesMenu *customTemplateMenus = mMsgActions->customTemplatesMenu();
-  connect( customTemplateMenus, SIGNAL(replyTemplateSelected(QString)),
-           this, SLOT(slotCustomReplyToMsg(QString)) );
-  connect( customTemplateMenus, SIGNAL(replyAllTemplateSelected(QString)),
-             this, SLOT(slotCustomReplyAllToMsg(QString)) );
-  connect( customTemplateMenus, SIGNAL(forwardTemplateSelected(QString)),
-           this, SLOT(slotCustomForwardMsg(QString)) );
-  connect( KMKernel::self(), SIGNAL(customTemplatesChanged()), customTemplateMenus, SLOT(update()) );
-}
-
 
 //-----------------------------------------------------------------------------
 KAction *KMReaderMainWin::copyActionMenu()

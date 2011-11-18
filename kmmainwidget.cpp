@@ -2963,23 +2963,6 @@ void KMMainWidget::getTransportMenu()
 
 
 //-----------------------------------------------------------------------------
-void KMMainWidget::connectCustomTemplateMenus()
-{
-  CustomTemplatesMenu *customTemplateMenus = mMsgActions->customTemplatesMenu();
-  if ( customTemplateMenus )
-  {
-    connect( customTemplateMenus, SIGNAL(replyTemplateSelected(QString)),
-             this, SLOT(slotCustomReplyToMsg(QString)) );
-    connect( customTemplateMenus, SIGNAL(replyAllTemplateSelected(QString)),
-             this, SLOT(slotCustomReplyAllToMsg(QString)) );
-    connect( customTemplateMenus, SIGNAL(forwardTemplateSelected(QString)),
-             this, SLOT(slotCustomForwardMsg(QString)) );
-    connect( KMKernel::self(), SIGNAL(customTemplatesChanged()), customTemplateMenus, SLOT(update()) );
-  }
-}
-
-
-//-----------------------------------------------------------------------------
 void KMMainWidget::setupActions()
 {
   mMsgActions = new KMail::MessageActions( actionCollection(), this );
@@ -3530,7 +3513,6 @@ void KMMainWidget::setupActions()
            SIGNAL(undoStackChanged()), this, SLOT(slotUpdateUndo()));
 
   updateMessageActions();
-  connectCustomTemplateMenus();
   updateFolderMenu();
   mTagActionManager = new KMail::TagActionManager( this, actionCollection(), mMsgActions,
                                                    mGUIClient );
