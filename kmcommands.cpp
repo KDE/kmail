@@ -108,6 +108,7 @@ using MessageViewer::EditorWatcher;
 #include <akonadi/itemcopyjob.h>
 #include <akonadi/itemdeletejob.h>
 #include <mailtransport/transportattribute.h>
+#include <mailtransport/sentbehaviourattribute.h>
 
 #include <messagelist/pane.h>
 
@@ -555,6 +556,7 @@ KMEditMsgCommand::KMEditMsgCommand( QWidget *parent, const Akonadi::Item&msg, bo
 {
   fetchScope().fetchFullPayload( true );
   fetchScope().fetchAttribute<MailTransport::TransportAttribute>();
+  fetchScope().fetchAttribute<MailTransport::SentBehaviourAttribute>();
   fetchScope().setAncestorRetrieval( Akonadi::ItemFetchScope::Parent );
   setDeletesItself( true );
 }
@@ -578,6 +580,12 @@ KMCommand::Result KMEditMsgCommand::execute()
   const MailTransport::TransportAttribute *transportAttribute = item.attribute<MailTransport::TransportAttribute>();
   if ( transportAttribute ) {
     win->setCurrentTransport( transportAttribute->transportId() );
+  }
+
+  const MailTransport::SentBehaviourAttribute *sentAttribute = item.attribute<MailTransport::SentBehaviourAttribute>();
+  if ( sentAttribute ) {
+    if ( sentAttribute->sentBehaviour() == MailTransport::SentBehaviourAttribute::MoveToCollection )
+      win->setFcc( QString::number( sentAttribute->moveToCollection().id() ) );
   }
   win->show();
 

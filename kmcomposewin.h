@@ -164,6 +164,13 @@ class KMComposeWin : public KMail::Composer
 
     void setCurrentTransport( int transportId );
 
+    /**
+     * Use the given folder as sent-mail folder if the given folder exists.
+     * Else show an error message and use the default sent-mail folder as
+     * sent-mail folder.
+     */
+    void setFcc( const QString &idString );
+
      /**
       * Disables word wrap completely. No wrapping at all will occur, not even
       * at the right end of the editor.
@@ -489,13 +496,6 @@ class KMComposeWin : public KMail::Composer
     QString subject() const;
     QString from() const;
     QString replyTo() const;
-
-    /**
-     * Use the given folder as sent-mail folder if the given folder exists.
-     * Else show an error message and use the default sent-mail folder as
-     * sent-mail folder.
-     */
-    void setFcc( const QString &idString );
 
     void setCharset( const QByteArray &charset );
     void setAutoCharset();
