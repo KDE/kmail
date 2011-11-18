@@ -588,6 +588,8 @@ KMCommand::Result KMEditMsgCommand::execute()
       win->setFcc( QString::number( sentAttribute->moveToCollection().id() ) );
   }
   win->show();
+  if ( mDeleteFromSource )
+    win->setModified( true );
 
   return OK;
 }
