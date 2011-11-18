@@ -938,6 +938,9 @@ KMRedirectCommand::KMRedirectCommand( QWidget *parent,
   : KMCommand( parent, msg )
 {
   fetchScope().fetchFullPayload( true );
+  fetchScope().fetchAttribute<MailTransport::SentBehaviourAttribute>();
+  fetchScope().fetchAttribute<MailTransport::TransportAttribute>();
+
   fetchScope().setAncestorRetrieval( Akonadi::ItemFetchScope::Parent );
 }
 
@@ -966,7 +969,25 @@ KMCommand::Result KMRedirectCommand::execute()
   factory.setIdentityManager( KMKernel::self()->identityManager() );
   factory.setFolderIdentity( MailCommon::Util::folderIdentity( item ) );
 
-  const KMime::Message::Ptr newMsg = factory.createRedirect( dlg->to() );
+  const MailTransport::TransportAttribute *transportAttribute = item.attribute<MailTransport::TransportAttribute>();
+  int transportId = -1;
+  if ( transportAttribute ) {
+    transportId = transportAttribute->transportId();
+    const MailTransport::Transport *transport = MailTransport::TransportManager::self()->transportById( transportId );
+    if ( !transport ) {
+      transportId = -1;
+    }
+  }
+
+  const MailTransport::SentBehaviourAttribute *sentAttribute = item.attribute<MailTransport::SentBehaviourAttribute>();
+  QString fcc;
+  if ( sentAttribute ) {
+    if ( sentAttribute->sentBehaviour() == MailTransport::SentBehaviourAttribute::MoveToCollection )
+      fcc =  QString::number( sentAttribute->moveToCollection().id() );
+  }
+
+  
+  const KMime::Message::Ptr newMsg = factory.createRedirect( dlg->to(), transportId, fcc );
   if ( !newMsg )
     return Failed;
 
