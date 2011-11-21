@@ -239,6 +239,8 @@ class KMComposeWin : public KMail::Composer
      * Returns true if the message was modified by the user.
      */
     bool isModified() const;
+    bool isComposerModified() const;
+    void changeModifiedState( bool modified );
 
 
   
@@ -664,6 +666,7 @@ class KMComposeWin : public KMail::Composer
     bool mPreventFccOverwrite;
     bool mCheckForForgottenAttachments;
     bool mIgnoreStickyFields;
+  bool mWasModified;
 };
 
 #endif
