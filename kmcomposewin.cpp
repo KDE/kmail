@@ -200,7 +200,7 @@ KMComposeWin::KMComposeWin( const KMime::Message::Ptr &aMsg, Composer::TemplateC
     mIgnoreStickyFields( false )
 {
 
-  mComposerBase = new Message::ComposerViewBase( this );
+  mComposerBase = new Message::ComposerViewBase( this, this );
   mComposerBase->setIdentityManager( kmkernel->identityManager() );
   mComposerBase->setParentWidgetForGui( this );
 
@@ -1417,6 +1417,7 @@ void KMComposeWin::setupEditor( void )
 //-----------------------------------------------------------------------------
 QString KMComposeWin::subject() const
 {
+  qDebug()<<" mEdtSubject->toPlainText();"<<mEdtSubject->toPlainText();
   return Message::Util::cleanedUpHeaderString( mEdtSubject->toPlainText() );
 }
 
@@ -2525,6 +2526,8 @@ void KMComposeWin::applyComposerSetting( Message::ComposerViewBase* mComposerBas
   mComposerBase->setCharsets( charsets );
   mComposerBase->setUrgent( mUrgentAction->isChecked() );
   mComposerBase->setMDNRequested( mRequestMDNAction->isChecked() );
+  qDebug()<<" subject()********************* ;"<<subject();
+  qDebug()<<" from() :"<<from();
 }
 
 
