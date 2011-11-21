@@ -1668,6 +1668,7 @@ void KMComposeWin::setMsg( const KMime::Message::Ptr &newMsg, bool mayAutoSign,
 
   // honor "keep reply in this folder" setting even when the identity is changed later on
   mPreventFccOverwrite = ( !kmailFcc.isEmpty() && ident.fcc() != kmailFcc );
+  autoSaveMessage( true ); //Force save message otherwise restore session will not work
 }
 
 void KMComposeWin::setAutoSaveFileName(const QString& fileName)
