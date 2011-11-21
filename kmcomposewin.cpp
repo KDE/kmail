@@ -202,7 +202,6 @@ KMComposeWin::KMComposeWin( const KMime::Message::Ptr &aMsg, Composer::TemplateC
 
   mComposerBase = new Message::ComposerViewBase( this, this );
   mComposerBase->setIdentityManager( kmkernel->identityManager() );
-  mComposerBase->setParentWidgetForGui( this );
 
   connect( mComposerBase, SIGNAL(disableHtml(Message::ComposerViewBase::Confirmation)),
            this, SLOT(disableHtml(Message::ComposerViewBase::Confirmation)) );
