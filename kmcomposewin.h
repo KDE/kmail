@@ -268,7 +268,7 @@ class KMComposeWin : public KMail::Composer
     void slotTextModeChanged( KRichTextEdit::Mode );
     void htmlToolBarVisibilityChanged( bool visible );
     void slotSpellcheckDoneClearStatus();
-    void autoSaveMessage();
+    void autoSaveMessage(bool force = false);
     /**
      * Set whether the message should be treated as modified or not.
      */

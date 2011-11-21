@@ -1268,7 +1268,7 @@ void KMKernel::dumpDeadLetters()
   // make all composer windows autosave their contents
   foreach ( KMainWindow* window, KMainWindow::memberList() ) {
     if ( KMail::Composer * win = ::qobject_cast<KMail::Composer*>( window ) ) {
-      win->autoSaveMessage();
+      win->autoSaveMessage(true);
 
       while ( win->isComposing() ) {
         kWarning() << "Danger, using an event loop, this should no longer be happening!";

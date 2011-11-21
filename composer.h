@@ -134,7 +134,7 @@ class Composer : public KMail::SecondaryWindow
     virtual void slotWordWrapToggled( bool ) = 0;
     virtual void setModified( bool modified ) = 0;
   public slots: // kmkernel
-    virtual void autoSaveMessage() = 0;
+    virtual void autoSaveMessage(bool force = false ) = 0;
 
   public: // kmkernel, attachmentlistview
     virtual void disableWordWrap() = 0;
