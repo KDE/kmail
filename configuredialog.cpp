@@ -2418,12 +2418,38 @@ ComposerPageGeneralTab::ComposerPageGeneralTab( QWidget * parent )
   vlay->addStretch( 100 );
 }
 
+void ComposerPage::GeneralTab::doResetToDefaultsOther()
+{
+  const bool bUseDefaults = MessageComposer::MessageComposerSettings::self()->useDefaults( true );
+
+  const bool autoAppSignFile = MessageComposer::MessageComposerSettings::self()->autoTextSignature()==QLatin1String( "auto" );
+  const bool topQuoteCheck = MessageComposer::MessageComposerSettings::self()->prependSignature();
+  const bool dashDashSignature = MessageComposer::MessageComposerSettings::self()->dashDashSignature();
+  const bool smartQuoteCheck = MessageComposer::MessageComposerSettings::self()->quoteSelectionOnly();
+  const bool wordWrap = MessageComposer::MessageComposerSettings::self()->wordWrap();
+  const int wrapColumn = MessageComposer::MessageComposerSettings::self()->lineWrapWidth();
+  const bool showRecentAddress = MessageComposer::MessageComposerSettings::self()->showRecentAddressesInComposer();
+  const int maximumRecipient = MessageComposer::MessageComposerSettings::self()->maximumRecipients();
+  
+  MessageComposer::MessageComposerSettings::self()->useDefaults( bUseDefaults );
+
+  mAutoAppSignFileCheck->setChecked( autoAppSignFile );
+  mTopQuoteCheck->setChecked( topQuoteCheck );
+  mDashDashCheck->setChecked( dashDashSignature );
+  mQuoteSelectionOnlyCheck->setChecked( smartQuoteCheck );
+  mWordWrapCheck->setChecked( wordWrap );
+  mWrapColumnSpin->setValue( wrapColumn );
+  mMaximumRecipients->setValue( maximumRecipient );
+  mShowRecentAddressesInComposer->setChecked( showRecentAddress );
+
+}
+
 void ComposerPage::GeneralTab::doLoadFromGlobalSettings()
 {
   // various check boxes:
 
   mAutoAppSignFileCheck->setChecked(
-           MessageComposer::MessageComposerSettings::self()->autoTextSignature()=="auto" );
+           MessageComposer::MessageComposerSettings::self()->autoTextSignature()==QLatin1String( "auto" ) );
   mTopQuoteCheck->setChecked( MessageComposer::MessageComposerSettings::self()->prependSignature() );
   mDashDashCheck->setChecked( MessageComposer::MessageComposerSettings::self()->dashDashSignature() );
   mSmartQuoteCheck->setChecked( TemplateParser::GlobalSettings::self()->smartQuote() );
