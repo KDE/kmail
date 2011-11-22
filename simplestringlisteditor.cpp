@@ -156,13 +156,15 @@ void SimpleStringListEditor::appendStringList( const QStringList & strings ) {
 
 QStringList SimpleStringListEditor::stringList() const {
   QStringList result;
-  for ( int i = 0; i < mListBox->count(); i++ )
+  const int numberOfItem(mListBox->count());
+  for ( int i = 0; i < numberOfItem; i++ )
     result << ( mListBox->item( i )->text() );
   return result;
 }
 
 bool SimpleStringListEditor::containsString( const QString & str ) {
-  for ( int i = 0; i < mListBox->count(); i++ ) {
+  const int numberOfItem(mListBox->count());
+  for ( int i = 0; i < numberOfItem; i++ ) {
     if ( mListBox->item( i )->text() == str )
       return true;
   }
