@@ -3305,12 +3305,8 @@ QString SecurityPage::ComposerCryptoTab::helpAnchor() const
 SecurityPageComposerCryptoTab::SecurityPageComposerCryptoTab( QWidget * parent )
   : ConfigModuleTab( parent )
 {
-  // the margins are inside mWidget itself
-  QVBoxLayout* vlay = new QVBoxLayout( this );
-  vlay->setSpacing( 0 );
-  vlay->setMargin( 0 );
-
-  mWidget = new ComposerCryptoConfiguration( this );
+  mWidget = new Ui::ComposerCryptoConfiguration;
+  mWidget->setupUi( this );
   connect( mWidget->mAutoSignature, SIGNAL(toggled(bool)), this, SLOT(slotEmitChanged()) );
   connect( mWidget->mEncToSelf, SIGNAL(toggled(bool)), this, SLOT(slotEmitChanged()) );
   connect( mWidget->mShowEncryptionResult, SIGNAL(toggled(bool)), this, SLOT(slotEmitChanged()) );
@@ -3318,7 +3314,11 @@ SecurityPageComposerCryptoTab::SecurityPageComposerCryptoTab( QWidget * parent )
   connect( mWidget->mAutoEncrypt, SIGNAL(toggled(bool)), this, SLOT(slotEmitChanged()) );
   connect( mWidget->mNeverEncryptWhenSavingInDrafts, SIGNAL(toggled(bool)), this, SLOT(slotEmitChanged()) );
   connect( mWidget->mStoreEncrypted, SIGNAL(toggled(bool)), this, SLOT(slotEmitChanged()) );
-  vlay->addWidget( mWidget );
+}
+
+SecurityPageComposerCryptoTab::~SecurityPageComposerCryptoTab()
+{
+  delete mWidget;
 }
 
 void SecurityPage::ComposerCryptoTab::doLoadOther()
@@ -3377,13 +3377,8 @@ QString SecurityPage::WarningTab::helpAnchor() const
 SecurityPageWarningTab::SecurityPageWarningTab( QWidget * parent )
   : ConfigModuleTab( parent )
 {
-  // the margins are inside mWidget itself
-  QVBoxLayout* vlay = new QVBoxLayout( this );
-  vlay->setSpacing( 0 );
-  vlay->setMargin( 0 );
-
-  mWidget = new WarningConfiguration( this );
-  vlay->addWidget( mWidget );
+  mWidget = new Ui::WarningConfiguration;
+  mWidget->setupUi( this );
 
   connect( mWidget->warnGroupBox, SIGNAL(toggled(bool)), SLOT(slotEmitChanged()) );
   connect( mWidget->mWarnUnsigned, SIGNAL(toggled(bool)), SLOT(slotEmitChanged()) );
@@ -3393,6 +3388,11 @@ SecurityPageWarningTab::SecurityPageWarningTab( QWidget * parent )
   connect( mWidget->gnupgButton, SIGNAL(clicked()), SLOT(slotConfigureGnupg()) );
   connect( mWidget->chiasmusButton, SIGNAL(clicked()), SLOT(slotConfigureChiasmus()) );
   connect( mWidget->enableAllWarningsPB, SIGNAL(clicked()), SLOT(slotReenableAllWarningsClicked()) );
+}
+
+SecurityPageWarningTab::~SecurityPageWarningTab()
+{
+  delete mWidget;
 }
 
 void SecurityPage::WarningTab::doLoadFromGlobalSettings()
@@ -3538,16 +3538,12 @@ QString SecurityPage::SMimeTab::helpAnchor() const
 SecurityPageSMimeTab::SecurityPageSMimeTab( QWidget * parent )
   : ConfigModuleTab( parent )
 {
-  // the margins are inside mWidget itself
-  QVBoxLayout* vlay = new QVBoxLayout( this );
-  vlay->setSpacing( 0 );
-  vlay->setMargin( 0 );
 
-  mWidget = new SMimeConfiguration( this );
-  vlay->addWidget( mWidget );
+  mWidget = new Ui::SMimeConfiguration;
+  mWidget->setupUi( this );
 
   // Button-group for exclusive radiobuttons
-  QButtonGroup* bg = new QButtonGroup( mWidget );
+  QButtonGroup* bg = new QButtonGroup( this );
   bg->addButton( mWidget->CRLRB );
   bg->addButton( mWidget->OCSPRB );
 
@@ -3586,7 +3582,7 @@ SecurityPageSMimeTab::SecurityPageSMimeTab( QWidget * parent )
            this, SLOT(slotUpdateHTTPActions()) );
 
   // Button-group for exclusive radiobuttons
-  QButtonGroup* bgHTTPProxy = new QButtonGroup( mWidget );
+  QButtonGroup* bgHTTPProxy = new QButtonGroup( this );
   bgHTTPProxy->addButton( mWidget->honorHTTPProxyRB );
   bgHTTPProxy->addButton( mWidget->useCustomHTTPProxyRB );
 
@@ -3595,6 +3591,7 @@ SecurityPageSMimeTab::SecurityPageSMimeTab( QWidget * parent )
 
 SecurityPageSMimeTab::~SecurityPageSMimeTab()
 {
+  delete mWidget;
 }
 
 static void disableDirmngrWidget( QWidget* w )

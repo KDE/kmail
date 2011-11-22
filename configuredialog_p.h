@@ -12,7 +12,6 @@
 
 #include <QStringList>
 #include <QList>
-#include <QShowEvent>
 #include <QHash>
 #include <QSharedPointer>
 
@@ -49,7 +48,6 @@ class ListView;
 class ConfigureDialog;
 class KIntSpinBox;
 class SimpleStringListEditor;
-class SMimeConfiguration;
 class TemplatesConfiguration;
 class CustomTemplates;
 class KColorCombo;
@@ -83,32 +81,6 @@ namespace MailCommon {
 namespace Kleo {
   class CryptoConfig;
 }
-
-class WarningConfiguration : public QWidget, public Ui::WarningConfiguration
-{
-public:
-  WarningConfiguration( QWidget *parent ) : QWidget( parent ) {
-    setupUi( this );
-  }
-};
-
-class SMimeConfiguration : public QWidget, public Ui::SMimeConfiguration
-{
-public:
-  SMimeConfiguration( QWidget *parent ) : QWidget( parent ) {
-    setupUi( this );
-  }
-};
-
-
-class ComposerCryptoConfiguration : public QWidget, public Ui::ComposerCryptoConfiguration
-{
-public:
-  ComposerCryptoConfiguration( QWidget *parent ) : QWidget( parent ) {
-    setupUi( this );
-  }
-};
-
 
 // Individual tab of a ConfigModuleWithTabs
 class ConfigModuleTab : public QWidget {
@@ -744,7 +716,8 @@ private slots:
 class SecurityPageComposerCryptoTab : public ConfigModuleTab {
   Q_OBJECT
 public:
-  SecurityPageComposerCryptoTab( QWidget * parent=0 );
+  explicit SecurityPageComposerCryptoTab( QWidget * parent=0 );
+  ~SecurityPageComposerCryptoTab();
 
   QString helpAnchor() const;
 
@@ -756,14 +729,15 @@ private:
   //FIXME virtual void doResetToDefaultsOther();
 
 private:
-  ComposerCryptoConfiguration* mWidget;
+  Ui::ComposerCryptoConfiguration* mWidget;
 };
 
 class SecurityPageWarningTab : public ConfigModuleTab {
   Q_OBJECT
 public:
-  SecurityPageWarningTab( QWidget * parent=0 );
-
+  explicit SecurityPageWarningTab( QWidget * parent=0 );
+  ~SecurityPageWarningTab();
+  
   QString helpAnchor() const;
 
   void save();
@@ -779,13 +753,13 @@ private:
   //FIXME virtual void doResetToDefaultsOther();
 
 private:
-  WarningConfiguration* mWidget;
+  Ui::WarningConfiguration* mWidget;
 };
 
 class SecurityPageSMimeTab : public ConfigModuleTab {
   Q_OBJECT
 public:
-  SecurityPageSMimeTab( QWidget * parent=0 );
+  explicit SecurityPageSMimeTab( QWidget * parent=0 );
   ~SecurityPageSMimeTab();
 
   QString helpAnchor() const;
@@ -801,7 +775,7 @@ private:
   //FIXME virtual void doResetToDefaultsOther();
 
 private:
-  SMimeConfiguration* mWidget;
+  Ui::SMimeConfiguration* mWidget;
   Kleo::CryptoConfig* mConfig;
 };
 
