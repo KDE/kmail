@@ -1998,12 +1998,12 @@ void KMComposeWin::slotInsertFile()
   mRecentAction->addUrl( u );
   // Prevent race condition updating list when multiple composers are open
   {
-    QString encoding = MessageViewer::NodeHelper::encodingForName( u.fileEncoding() ).toLatin1();
+    const QString encoding = MessageViewer::NodeHelper::encodingForName( u.fileEncoding() ).toLatin1();
     QStringList urls = GlobalSettings::self()->recentUrls();
     QStringList encodings = GlobalSettings::self()->recentEncodings();
     // Prevent config file from growing without bound
     // Would be nicer to get this constant from KRecentFilesAction
-    int mMaxRecentFiles = 30;
+    const int mMaxRecentFiles = 30;
     while ( urls.count() > mMaxRecentFiles )
       urls.removeLast();
     while ( encodings.count() > mMaxRecentFiles )
@@ -2045,8 +2045,12 @@ void KMComposeWin::slotInsertRecentFile( const KUrl &u )
   const int index = urls.indexOf( u.prettyUrl() );
   if ( index != -1 ) {
     encoding = encodings[ index ];
+  } else {
+    kDebug()<<" encoding not found so we can't insert text"; //see InsertTextFileJob
+    return;
   }
-
+  
+  
   Message::InsertTextFileJob *job = new Message::InsertTextFileJob( mComposerBase->editor(), u );
   job->setEncoding( encoding );
   job->start();
@@ -2105,7 +2109,7 @@ void KMComposeWin::slotPasteAsAttachment()
 QString KMComposeWin::addQuotesToText( const QString &inputText ) const
 {
   QString answer( inputText );
-  QString indentStr = mComposerBase->editor()->quotePrefixName();
+  const QString indentStr = mComposerBase->editor()->quotePrefixName();
   answer.replace( '\n', '\n' + indentStr );
   answer.prepend( indentStr );
   answer += '\n';
@@ -2366,11 +2370,6 @@ void KMComposeWin::forceDisableHtml()
   disableHtml( Message::ComposerViewBase::NoConfirmationNeeded );
   markupAction->setEnabled( false );
   // FIXME: Remove the toggle toolbar action somehow
-}
-
-void KMComposeWin::disableRecipientNumberCheck()
-{
-  // mCheckForRecipients = false; // TODO composer...
 }
 
 void KMComposeWin::disableForgottenAttachmentsCheck()

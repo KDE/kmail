@@ -424,8 +424,6 @@ class KMComposeWin : public KMail::Composer
     void addAttach( KMime::Content *msgPart );
   
     const KPIMIdentities::Identity &identity() const;
-    /** Don't check if there are too many recipients for a mail, eg. when sending out invitations. */
-    virtual void disableRecipientNumberCheck();
 
     /** Don't check for forgotten attachments for a mail, eg. when sending out invitations. */
     void disableForgottenAttachmentsCheck();

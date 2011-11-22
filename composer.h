@@ -141,8 +141,6 @@ class Composer : public KMail::SecondaryWindow
 
     virtual void forceDisableHtml() = 0;
 
-    virtual void disableRecipientNumberCheck() = 0;
-
     virtual void disableForgottenAttachmentsCheck() = 0;
 
     virtual void ignoreStickyFields() = 0;

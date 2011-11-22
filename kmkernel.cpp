@@ -739,7 +739,7 @@ int KMKernel::openComposer (const QString &to, const QString &cc,
     cWin->addAttach( msgPart );
   if ( isICalInvitation ) {
     cWin->forceDisableHtml();
-    cWin->disableRecipientNumberCheck();
+    //cWin->disableRecipientNumberCheck();
     cWin->disableForgottenAttachmentsCheck();
   }
 
