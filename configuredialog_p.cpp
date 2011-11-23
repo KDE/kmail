@@ -36,7 +36,7 @@
 
 
 ConfigModuleWithTabs::ConfigModuleWithTabs( const KComponentData &instance, QWidget *parent )
-  : ConfigModule( instance, parent )
+  : ConfigModule( instance, parent ), mWasInitialized( false )
 {
   QVBoxLayout *vlay = new QVBoxLayout( this );
   vlay->setSpacing( KDialog::spacingHint() );
@@ -52,6 +52,12 @@ void ConfigModuleWithTabs::addTab( ConfigModuleTab* tab, const QString & title )
            this, SIGNAL(changed(bool)) );
 }
 
+void ConfigModuleWithTabs::showEvent ( QShowEvent * event )
+{
+  mWasInitialized = true;
+  ConfigModule::showEvent( event );
+}
+
 void ConfigModuleWithTabs::load()
 {
   const int numberOfTab = mTabWidget->count();
@@ -65,12 +71,14 @@ void ConfigModuleWithTabs::load()
 
 void ConfigModuleWithTabs::save()
 {
-  KCModule::save();
-  const int numberOfTab = mTabWidget->count();
-  for ( int i = 0 ; i < numberOfTab ; ++i ) {
-    ConfigModuleTab *tab = dynamic_cast<ConfigModuleTab*>( mTabWidget->widget(i) );
-    if ( tab )
-      tab->save();
+  if ( mWasInitialized ) {
+    KCModule::save();
+    const int numberOfTab = mTabWidget->count();
+    for ( int i = 0 ; i < numberOfTab ; ++i ) {
+      ConfigModuleTab *tab = dynamic_cast<ConfigModuleTab*>( mTabWidget->widget(i) );
+      if ( tab )
+        tab->save();
+    }
   }
 }
 
