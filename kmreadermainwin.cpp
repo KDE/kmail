@@ -149,9 +149,12 @@ void KMReaderMainWin::showMessage( const QString & encoding, const Akonadi::Item
 
 void KMReaderMainWin::showMessage( const QString& encoding, KMime::Message::Ptr message )
 {
+  if ( !message )
+    return;
+  
   Akonadi::Item item;
 
-  item.setPayload( message );
+  item.setPayload<KMime::Message::Ptr>( message );
   item.setMimeType( KMime::Message::mimeType() );
   
   mMsg = item;
@@ -159,8 +162,7 @@ void KMReaderMainWin::showMessage( const QString& encoding, KMime::Message::Ptr 
   
   mReaderWin->setOverrideEncoding( encoding );
   mReaderWin->setMessage( message );
-  if ( message )
-    setCaption( message->subject()->asUnicodeString() );
+  setCaption( message->subject()->asUnicodeString() );
 
   mTrashAction->setEnabled( false );
 
@@ -471,9 +473,6 @@ void KMReaderMainWin::slotDelayedMessagePopup( KJob *job )
     if ( replyForwardMenu ) {
         // add the reply and forward actions only if we are not in a sent-mail,
         // templates or drafts folder
-        //
-        // FIXME: needs custom templates added to menu
-        // (see KMMainWidget::updateCustomTemplateMenus)
         menu->addAction( mMsgActions->replyMenu() );
         menu->addAction( mMsgActions->forwardMenu() );
         menu->addSeparator();
