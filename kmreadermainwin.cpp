@@ -477,8 +477,7 @@ void KMReaderMainWin::slotDelayedMessagePopup( KJob *job )
         menu->addAction( mMsgActions->forwardMenu() );
         menu->addSeparator();
     }
-    if ( mMsg.isValid() )
-      menu->addAction( copyActionMenu() );
+    menu->addAction( copyActionMenu() );
 
     menu->addSeparator();
     menu->addAction( mViewSourceAction );
