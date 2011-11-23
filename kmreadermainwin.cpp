@@ -1,6 +1,7 @@
 /*
     This file is part of KMail, the KDE mail client.
     Copyright (c) 2002 Don Sanders <sanders@kde.org>
+    Copyright (c) 2011 Montel Laurent <montel@kde.org>
 
     KMail is free software; you can redistribute it and/or modify it
     under the terms of the GNU General Public License, version 2, as
@@ -40,6 +41,7 @@
 #include <KFontAction>
 #include <KFontSizeAction>
 #include <kstatusbar.h>
+#include <KMessageBox>
 #include "kmcommands.h"
 #include "kmenubar.h"
 #include "kmenu.h"
@@ -382,16 +384,25 @@ void KMReaderMainWin::slotCopyItem(QAction*action)
     QAbstractItemModel *model = const_cast<QAbstractItemModel *>( index.model() );
     const Akonadi::Collection collection = index.data( Akonadi::EntityTreeModel::CollectionRole ).value<Akonadi::Collection>();
 
-    if ( mMsg.isValid() )
+    if ( mMsg.isValid() ) {
       Akonadi::ItemCopyJob *job = new Akonadi::ItemCopyJob( mMsg, collection,this );
+      connect( job, SIGNAL(result(KJob*)), this, SLOT(slotCopyResult(KJob*)) );
+    }
     else
     {
       Akonadi::ItemCreateJob *job = new Akonadi::ItemCreateJob( mMsg, collection, this );
+      connect( job, SIGNAL(result(KJob*)), this, SLOT(slotCopyResult(KJob*)) );
     }
-    //TODO look at error
   }
 }
-  
+
+void KMReaderMainWin::slotCopyResult( KJob * job )
+{
+  if ( job->error() ) {
+    KMessageBox::sorry( this, i18n("Can not copy item. %1", job->errorString() ) );
+  }
+}
+
 void KMReaderMainWin::slotMessagePopup(const Akonadi::Item&aMsg ,const KUrl&aUrl,const QPoint& aPoint)
 {
   mUrl = aUrl;

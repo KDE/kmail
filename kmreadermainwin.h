@@ -73,7 +73,8 @@ private slots:
   /// forwarding is set.
   void slotReplyOrForwardFinished();
   void slotCopyItem(QAction*);
-
+  void slotCopyResult( KJob * job );
+ 
 private:
   Akonadi::Collection parentCollection() const;
   void initKMReaderMainWin();
