@@ -770,7 +770,7 @@ void SearchWindow::updateContextMenuActions()
 
 void SearchWindow::slotContextMenuRequested( const QPoint& )
 {
-  if ( !selectedMessage().isValid() || selectedMessages().count() == 0 )
+  if ( !selectedMessage().isValid() || selectedMessages().isEmpty() )
     return;
 
   QMenu *menu = new QMenu( this );
