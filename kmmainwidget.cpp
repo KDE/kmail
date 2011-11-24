@@ -1114,7 +1114,58 @@ void KMMainWidget::createWidgets()
     mAkonadiStandardActionManager->setFavoriteCollectionsModel( mFavoritesModel );
     mAkonadiStandardActionManager->setFavoriteSelectionModel( mFavoriteCollectionsView->selectionModel() );
   }
-  mAkonadiStandardActionManager->createAllActions();
+  //mAkonadiStandardActionManager->createAllActions();
+  //Don't use mMailActionManager->createAllActions() to save memory by not
+  //creating actions that doesn't make sense.
+  QList<StandardActionManager::Type> standardActions;
+  standardActions << StandardActionManager::CreateCollection
+                  << StandardActionManager::CopyCollections
+                  << StandardActionManager::DeleteCollections
+                  << StandardActionManager::SynchronizeCollections
+                  << StandardActionManager::CollectionProperties
+                  << StandardActionManager::CopyItems
+                  << StandardActionManager::Paste
+                  << StandardActionManager::DeleteItems
+                  << StandardActionManager::ManageLocalSubscriptions
+                  << StandardActionManager::AddToFavoriteCollections
+                  << StandardActionManager::RemoveFromFavoriteCollections
+                  << StandardActionManager::RenameFavoriteCollection
+                  << StandardActionManager::CopyCollectionToMenu
+                  << StandardActionManager::CopyItemToMenu
+                  << StandardActionManager::MoveItemToMenu
+                  << StandardActionManager::MoveCollectionToMenu
+                  << StandardActionManager::CutItems
+                  << StandardActionManager::CutCollections
+                  << StandardActionManager::CreateResource
+                  << StandardActionManager::DeleteResources
+                  << StandardActionManager::ResourceProperties
+                  << StandardActionManager::SynchronizeResources
+                  << StandardActionManager::ToggleWorkOffline
+                  << StandardActionManager::SynchronizeCollectionsRecursive
+                  << StandardActionManager::MoveCollectionsToTrash
+                  << StandardActionManager::SynchronizeFavoriteCollections;
+
+  Q_FOREACH( StandardActionManager::Type standardAction, standardActions ) {
+    mAkonadiStandardActionManager->createAction( standardAction );
+  }
+
+  QList<StandardMailActionManager::Type> mailActions;
+  mailActions << StandardMailActionManager::MarkAllMailAsRead
+              << StandardMailActionManager::MoveToTrash
+              << StandardMailActionManager::MoveAllToTrash
+              << StandardMailActionManager::RemoveDuplicates
+              << StandardMailActionManager::EmptyAllTrash
+              << StandardMailActionManager::MarkMailAsRead
+              << StandardMailActionManager::MarkMailAsImportant
+              << StandardMailActionManager::MarkMailAsActionItem;
+
+  Q_FOREACH( StandardMailActionManager::Type mailAction, mailActions ) {
+    mAkonadiStandardActionManager->createAction( mailAction );
+  }
+
+
+
+  
 
   mAkonadiStandardActionManager->interceptAction( Akonadi::StandardActionManager::CollectionProperties );
   connect( mAkonadiStandardActionManager->action( Akonadi::StandardActionManager::CollectionProperties ), SIGNAL(triggered(bool)), this, SLOT(slotCollectionProperties()) );
