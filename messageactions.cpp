@@ -279,18 +279,18 @@ void MessageActions::setSelectedVisibleItems( const Akonadi::Item::List &items )
 void MessageActions::updateActions()
 {
   const bool hasPayload = mCurrentItem.hasPayload<KMime::Message::Ptr>();
-  bool singleMsg = mCurrentItem.isValid();
+  bool itemValid = mCurrentItem.isValid();
   Akonadi::Collection parent;
-  if ( singleMsg ) //=> valid
+  if ( itemValid ) //=> valid
     parent = mCurrentItem.parentCollection();
   if ( parent.isValid() ) {
     if ( CommonKernel->folderIsTemplates(parent) )
-      singleMsg = false;
+      itemValid = false;
   }
 
   const bool multiVisible = mVisibleItems.count() > 0 || mCurrentItem.isValid();
-
-  mCreateTodoAction->setEnabled( singleMsg && mKorganizerIsOnSystem);
+  const bool uniqItem = ( itemValid||hasPayload ) && ( mVisibleItems.count()==1 );
+  mCreateTodoAction->setEnabled( uniqItem && mKorganizerIsOnSystem);
   mReplyActionMenu->setEnabled( hasPayload );
   mReplyAction->setEnabled( hasPayload );
   mNoQuoteReplyAction->setEnabled( hasPayload );
@@ -301,7 +301,7 @@ void MessageActions::updateActions()
 
   if ( Nepomuk::ResourceManager::instance()->initialized() )
   {
-    mAnnotateAction->setEnabled( singleMsg );
+    mAnnotateAction->setEnabled( uniqItem );
     mAsynNepomukRetriever->requestResource( mCurrentItem.url(), QVector<QUrl>() << Nepomuk::Resource::descriptionUri() << Nepomuk::Resource::annotationUri() );
   }
   else
@@ -318,7 +318,7 @@ void MessageActions::updateActions()
     job->fetchScope().fetchPayloadPart( Akonadi::MessagePart::Header );
     connect( job, SIGNAL(result(KJob*)), SLOT(slotUpdateActionsFetchDone(KJob*)) );
   }
-  mEditAction->setEnabled( singleMsg );
+  mEditAction->setEnabled( uniqItem );
 }
 
 void MessageActions::slotUpdateActionsFetchDone(KJob* job)
