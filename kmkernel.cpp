@@ -1801,7 +1801,7 @@ void KMKernel::createFilter(const QByteArray& field, const QString& value)
 }
 
 
-void KMKernel::checkFolderFromResources( const Akonadi::Collection::Id& collectionId )
+void KMKernel::checkFolderFromResources( const Akonadi::Collection::List& collectionList )
 {
   const Akonadi::AgentInstance::List lst = MailCommon::Util::agentInstances();
   foreach( const Akonadi::AgentInstance& type, lst ) {
@@ -1810,24 +1810,30 @@ void KMKernel::checkFolderFromResources( const Akonadi::Collection::Id& collecti
     if ( type.identifier().contains( IMAP_RESOURCE_IDENTIFIER ) ) {
       OrgKdeAkonadiImapSettingsInterface *iface = MailCommon::Util::createImapSettingsInterface( type.identifier() );
       if ( iface->isValid() ) {
-        if ( iface->trashCollection() == collectionId ) {
-          //Use default trash
-          iface->setTrashCollection( CommonKernel->trashCollectionFolder().id() );
-	  iface->writeConfig();
+        foreach( const Akonadi::Collection& collection, collectionList ) {
+          const Akonadi::Collection::Id collectionId = collection.id();
+          if ( iface->trashCollection() == collectionId ) {
+            //Use default trash
+            iface->setTrashCollection( CommonKernel->trashCollectionFolder().id() );
+            iface->writeConfig();
+            break; 
+          }
         }
-
       }
       delete iface;
     }
     else if ( type.identifier().contains( POP3_RESOURCE_IDENTIFIER ) ) {
       OrgKdeAkonadiPOP3SettingsInterface *iface = MailCommon::Util::createPop3SettingsInterface( type.identifier() );
       if ( iface->isValid() ) {
-        if ( iface->targetCollection() == collectionId ) {
-          //Use default inbox
-          iface->setTargetCollection( CommonKernel->inboxCollectionFolder().id() );
-	  iface->writeConfig();
+        foreach( const Akonadi::Collection& collection, collectionList ) {
+          const Akonadi::Collection::Id collectionId = collection.id();
+          if ( iface->targetCollection() == collectionId ) {
+            //Use default inbox
+            iface->setTargetCollection( CommonKernel->inboxCollectionFolder().id() );
+            iface->writeConfig();
+            break;
+          }
         }
-        
       }
       delete iface;
     }
