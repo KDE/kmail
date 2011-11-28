@@ -289,7 +289,7 @@ void MessageActions::updateActions()
   }
 
   const bool multiVisible = mVisibleItems.count() > 0 || mCurrentItem.isValid();
-  const bool uniqItem = ( itemValid||hasPayload ) && ( mVisibleItems.count()==1 );
+  const bool uniqItem = ( itemValid||hasPayload ) && ( mVisibleItems.count()<=1 );
   mCreateTodoAction->setEnabled( uniqItem && mKorganizerIsOnSystem);
   mReplyActionMenu->setEnabled( hasPayload );
   mReplyAction->setEnabled( hasPayload );
