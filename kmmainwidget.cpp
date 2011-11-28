@@ -1142,7 +1142,6 @@ void KMMainWidget::createWidgets()
                   << StandardActionManager::SynchronizeResources
                   << StandardActionManager::ToggleWorkOffline
                   << StandardActionManager::SynchronizeCollectionsRecursive
-                  << StandardActionManager::MoveCollectionsToTrash
                   << StandardActionManager::SynchronizeFavoriteCollections;
 
   Q_FOREACH( StandardActionManager::Type standardAction, standardActions ) {
