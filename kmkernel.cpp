@@ -177,7 +177,7 @@ KMKernel::KMKernel (QObject *parent, const char *name) :
   mFolderCollectionMonitor = new FolderCollectionMonitor( this );
 
   connect( mFolderCollectionMonitor->monitor(), SIGNAL(collectionMoved(Akonadi::Collection,Akonadi::Collection,Akonadi::Collection)), SLOT(slotCollectionMoved(Akonadi::Collection,Akonadi::Collection,Akonadi::Collection)) );
-
+  connect( mFolderCollectionMonitor->monitor(), SIGNAL(collectionRemoved(Akonadi::Collection)), SLOT(slotCollectionRemoved(Akonadi::Collection)));
 
   Akonadi::Session *session = new Akonadi::Session( "KMail Kernel ETM", this );
   folderCollectionMonitor()->setSession( session );
@@ -1749,6 +1749,13 @@ void KMKernel::stopAgentInstance()
     if ( group.readEntry( "OfflineOnShutdown", false ) )
       type.setIsOnline( false );
   }
+}
+
+void KMKernel::slotCollectionRemoved(const Akonadi::Collection& col)
+{
+  KConfigGroup group( KMKernel::config(), MailCommon::FolderCollection::configGroupName( col ) );
+  group.deleteGroup();
+  group.sync();
 }
 
 void KMKernel::slotCollectionMoved( const Akonadi::Collection &collection, const Akonadi::Collection &source, const Akonadi::Collection &destination )
