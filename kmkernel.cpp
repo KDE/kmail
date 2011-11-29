@@ -1100,7 +1100,6 @@ void KMKernel::recoverDeadLetters()
       KMail::Composer * autoSaveWin = KMail::makeComposer();
       autoSaveWin->setMsg( autoSaveMessage, false );
       autoSaveWin->setAutoSaveFileName( filename );
-      autoSaveWin->autoSaveMessage( true ); //Force autosaving to make sure this composer reappears if a crash happens before the autosave timer kicks in.
       autoSaveWin->show();
       autoSaveFile.close();
     } else {

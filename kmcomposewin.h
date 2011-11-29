@@ -417,6 +417,7 @@ class KMComposeWin : public KMail::Composer
 
     virtual void setAutoSaveFileName( const QString& fileName );
     void slotSpellCheckingLanguage(const QString& language);
+    void forceAutoSaveMessage();
   
 
   public: // kmcommand

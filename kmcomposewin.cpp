@@ -1668,6 +1668,8 @@ void KMComposeWin::setMsg( const KMime::Message::Ptr &newMsg, bool mayAutoSign,
 
   // honor "keep reply in this folder" setting even when the identity is changed later on
   mPreventFccOverwrite = ( !kmailFcc.isEmpty() && ident.fcc() != kmailFcc );
+  QTimer::singleShot( 0, this, SLOT(forceAutoSaveMessage()) ); //Force autosaving to make sure this composer reappears if a crash happens before the autosave timer kicks in.
+
 }
 
 void KMComposeWin::setAutoSaveFileName(const QString& fileName)
@@ -1795,6 +1797,11 @@ bool KMComposeWin::userForgotAttachment()
   bool missingAttachments = mComposerBase->checkForMissingAttachments( GlobalSettings::self()->attachmentKeywords() );
 
   return missingAttachments;
+}
+
+void KMComposeWin::forceAutoSaveMessage()
+{
+  autoSaveMessage( true );
 }
 
 void KMComposeWin::autoSaveMessage(bool force)
