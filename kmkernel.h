@@ -465,6 +465,7 @@ private slots:
   void instanceError(const Akonadi::AgentInstance& instance, const QString & message);
   void slotCollectionMoved( const Akonadi::Collection &collection, const Akonadi::Collection &source, const Akonadi::Collection &destination );
   void slotCollectionRemoved(const Akonadi::Collection& col);
+  void slotDeleteIdentity( uint identity);
 
 private:
   void migrateFromKMail1();

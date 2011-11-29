@@ -213,7 +213,7 @@ KMKernel::KMKernel (QObject *parent, const char *name) :
            this, SLOT(slotProgressItemCompletedOrCanceled(KPIM::ProgressItem*)) );
   connect( KPIM::ProgressManager::instance(), SIGNAL(progressItemCanceled(KPIM::ProgressItem*)),
            this, SLOT(slotProgressItemCompletedOrCanceled(KPIM::ProgressItem*)) );
-
+  connect( identityManager(), SIGNAL( deleted( uint ) ), this, SLOT( slotDeleteIdentity( uint ) ) );
   CommonKernel->registerKernelIf( this );
   CommonKernel->registerSettingsIf( this );
   CommonKernel->registerFilterIf( this );
@@ -1759,6 +1759,11 @@ void KMKernel::slotCollectionRemoved(const Akonadi::Collection& col)
   group.deleteGroup();
   group.sync();
   TemplateParser::Util::deleteTemplate( QString::number( col.id() ) );
+}
+
+void KMKernel::slotDeleteIdentity( uint identity)
+{
+  TemplateParser::Util::deleteTemplate( QString::fromLatin1( "IDENTITY_%1" ).arg( identity ) );
 }
 
 void KMKernel::slotCollectionMoved( const Akonadi::Collection &collection, const Akonadi::Collection &source, const Akonadi::Collection &destination )
