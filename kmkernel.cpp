@@ -1099,6 +1099,7 @@ void KMKernel::recoverDeadLetters()
       KMail::Composer * autoSaveWin = KMail::makeComposer();
       autoSaveWin->setMsg( autoSaveMessage, false );
       autoSaveWin->setAutoSaveFileName( filename );
+      autoSaveWin->autoSaveMessage( true );//Force save message otherwise restore session will not work
       autoSaveWin->show();
       autoSaveFile.close();
     } else {
