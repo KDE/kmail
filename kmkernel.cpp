@@ -1591,7 +1591,8 @@ void KMKernel::transportRemoved(int id, const QString & name)
   // reset all identities using the deleted transport
   QStringList changedIdents;
   KPIMIdentities::IdentityManager * im = identityManager();
-  for ( KPIMIdentities::IdentityManager::Iterator it = im->modifyBegin(); it != im->modifyEnd(); ++it ) {
+  KPIMIdentities::IdentityManager::Iterator end = im->modifyEnd();
+  for ( KPIMIdentities::IdentityManager::Iterator it = im->modifyBegin(); it != end; ++it ) {
     if ( name == (*it).transport() ) {
       (*it).setTransport( QString() );
       changedIdents += (*it).identityName();
