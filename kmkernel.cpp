@@ -44,6 +44,7 @@ using KMail::MailServiceImpl;
 
 #include "messagecore/globalsettings.h"
 #include "messagelist/core/settings.h"
+#include "messagelist/messagelistutil.h"
 #include "messageviewer/globalsettings.h"
 #include "messagecomposer/akonadisender.h"
 #include "messagecomposersettings.h"
@@ -1099,7 +1100,7 @@ void KMKernel::recoverDeadLetters()
       KMail::Composer * autoSaveWin = KMail::makeComposer();
       autoSaveWin->setMsg( autoSaveMessage, false );
       autoSaveWin->setAutoSaveFileName( filename );
-      autoSaveWin->autoSaveMessage( true );//Force save message otherwise restore session will not work
+      autoSaveWin->autoSaveMessage( true ); //Force autosaving to make sure this composer reappears if a crash happens before the autosave timer kicks in.
       autoSaveWin->show();
       autoSaveFile.close();
     } else {
@@ -1759,7 +1760,9 @@ void KMKernel::slotCollectionRemoved(const Akonadi::Collection& col)
   KConfigGroup group( KMKernel::config(), MailCommon::FolderCollection::configGroupName( col ) );
   group.deleteGroup();
   group.sync();
-  TemplateParser::Util::deleteTemplate( QString::number( col.id() ) );
+  const QString colStr = QString::number( col.id() );
+  TemplateParser::Util::deleteTemplate( colStr );
+  MessageList::Util::deleteConfig( colStr );
 }
 
 void KMKernel::slotDeleteIdentity( uint identity)
