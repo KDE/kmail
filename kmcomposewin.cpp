@@ -87,6 +87,7 @@
 #include <akonadi/kmime/messagestatus.h>
 #include "messagecore/messagehelpers.h"
 #include "mailcommon/folderrequester.h"
+#include "mailcommon/foldercollection.h"
 
 // LIBKDEPIM includes
 #include <libkdepim/nepomukwarning.h>
@@ -2097,8 +2098,21 @@ void KMComposeWin::slotPasteAsAttachment()
   if( mimeData->hasUrls() ) {
     // If the clipboard contains a list of URL, attach each file.
     const KUrl::List urls = KUrl::List::fromMimeData( mimeData );
+    Akonadi::Item::List items;
     foreach( const KUrl &url, urls ) {
-      mComposerBase->attachmentController()->addAttachment( url );
+      const Akonadi::Item item = Akonadi::Item::fromUrl( url );
+      if ( item.isValid() ) {
+        items << item;
+      }
+      if ( items.isEmpty() )
+        mComposerBase->attachmentController()->addAttachment( url );
+      else {
+        Akonadi::ItemFetchJob *itemFetchJob = new Akonadi::ItemFetchJob( items, this );
+        itemFetchJob->fetchScope().fetchFullPayload( true );
+        itemFetchJob->fetchScope().setAncestorRetrieval( Akonadi::ItemFetchScope::Parent );
+        connect( itemFetchJob, SIGNAL(result(KJob*)), this, SLOT(slotFetchJob(KJob*)) );
+        return;
+      }
     }
   } else if( mimeData->hasText() ) {
     bool ok;
@@ -2108,6 +2122,41 @@ void KMComposeWin::slotPasteAsAttachment()
         QString(), &ok, this );
     if( ok ) {
       mComposerBase->addAttachment( attName, attName, "utf-8", QApplication::clipboard()->text().toUtf8(), "text/plain" );
+    }
+  }
+}
+
+void KMComposeWin::slotFetchJob(KJob*job)
+{
+  if ( job->error() ) {
+    static_cast<KIO::Job*>(job)->ui()->showErrorMessage();
+    return;
+  }
+  Akonadi::ItemFetchJob *fjob = dynamic_cast<Akonadi::ItemFetchJob*>( job );
+  if ( !fjob )
+    return;
+  const Akonadi::Item::List items = fjob->items();
+
+  if ( items.isEmpty() )
+    return;
+
+  if ( items.first().mimeType() == KMime::Message::mimeType() ) {
+    uint identity = 0;
+    if ( items.at( 0 ).isValid() && items.at( 0 ).parentCollection().isValid() ) {
+      QSharedPointer<MailCommon::FolderCollection> fd( MailCommon::FolderCollection::forCollection( items.at( 0 ).parentCollection(), false ) );
+      if ( fd )
+        identity = fd->identity();
+    }
+    KMCommand *command = new KMForwardAttachedCommand( this, items,identity, this );
+    command->start();
+  } else {
+    foreach ( const Akonadi::Item &item, items ) {
+      QString attachmentName = QLatin1String( "attachment" );
+      if ( item.hasPayload<KABC::Addressee>() ) {
+        const KABC::Addressee contact = item.payload<KABC::Addressee>();
+        attachmentName = contact.realName() + QLatin1String( ".vcf" );
+      }
+      addAttachment( attachmentName, KMime::Headers::CEbase64, QString(), item.payloadData(), item.mimeType().toLatin1() );
     }
   }
 }

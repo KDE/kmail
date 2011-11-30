@@ -214,48 +214,12 @@ void KMComposerEditor::insertFromMimeData( const QMimeData *source )
       Akonadi::ItemFetchJob *itemFetchJob = new Akonadi::ItemFetchJob( items, this );
       itemFetchJob->fetchScope().fetchFullPayload( true );
       itemFetchJob->fetchScope().setAncestorRetrieval( Akonadi::ItemFetchScope::Parent );
-      connect( itemFetchJob, SIGNAL(result(KJob*)), this, SLOT(slotFetchJob(KJob*)) );
+      connect( itemFetchJob, SIGNAL(result(KJob*)), m_composerWin, SLOT(slotFetchJob(KJob*)) );
       return;
     }
   }
 
   KPIMTextEdit::TextEdit::insertFromMimeData( source );
-}
-
-void KMComposerEditor::slotFetchJob( KJob * job )
-{
-  if ( job->error() ) {
-    static_cast<KIO::Job*>(job)->ui()->showErrorMessage();
-    return;
-  }
-  Akonadi::ItemFetchJob *fjob = dynamic_cast<Akonadi::ItemFetchJob*>( job );
-  if ( !fjob )
-    return;
-  const Akonadi::Item::List items = fjob->items();
-
-  if ( items.isEmpty() )
-    return;
-
-  if ( items.first().mimeType() == KMime::Message::mimeType() ) {
-    uint identity = 0;
-    if ( items.at( 0 ).isValid() && items.at( 0 ).parentCollection().isValid() ) {
-      QSharedPointer<FolderCollection> fd( FolderCollection::forCollection( items.at( 0 ).parentCollection(), false ) );
-      if ( fd )
-        identity = fd->identity();
-    }
-    KMCommand *command = new KMForwardAttachedCommand( m_composerWin, items,identity, m_composerWin );
-    command->start();
-  } else {
-    foreach ( const Akonadi::Item &item, items ) {
-      QString attachmentName = QLatin1String( "attachment" );
-      if ( item.hasPayload<KABC::Addressee>() ) {
-        const KABC::Addressee contact = item.payload<KABC::Addressee>();
-        attachmentName = contact.realName() + QLatin1String( ".vcf" );
-      }
-
-      m_composerWin->addAttachment( attachmentName, KMime::Headers::CEbase64, QString(), item.payloadData(), item.mimeType().toLatin1() );
-    }
-  }
 }
 
 #include "kmcomposereditor.moc"

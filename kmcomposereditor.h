@@ -77,9 +77,6 @@ protected:
   virtual bool canInsertFromMimeData( const QMimeData *source ) const;
   virtual void insertFromMimeData( const QMimeData *source );
 
-protected slots:
-  void slotFetchJob( KJob * job );
-
 signals:
   void insertSnippet();
 

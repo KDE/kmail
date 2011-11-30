@@ -273,6 +273,7 @@ class KMComposeWin : public KMail::Composer
      * Set whether the message should be treated as modified or not.
      */
     void setModified( bool modified );
+  void slotFetchJob(KJob*);
 
   private slots:
      /**
