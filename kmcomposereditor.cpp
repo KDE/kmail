@@ -151,17 +151,7 @@ void KMComposerEditor::insertFromMimeData( const QMimeData *source )
       } 
       // else fall through
     }
-
-    // Ok, when we reached this point, the user wants to add the image as an attachment.
-    // Ask for the filename first.
-    bool ok;
-    const QString attName =
-       KInputDialog::getText( "KMail", i18n( "Name of the attachment:" ), QString(), &ok, this );
-    if ( !ok ) {
-      return;
-    }
-
-    m_composerWin->addAttachment( attName, KMime::Headers::CEbase64, QString(), imageData, "image/png" );
+    m_composerWin->addImageAsAttachement(imageData);
     return;
   }
 

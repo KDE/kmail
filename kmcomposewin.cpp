@@ -2123,7 +2123,27 @@ void KMComposeWin::slotPasteAsAttachment()
     if( ok ) {
       mComposerBase->addAttachment( attName, attName, "utf-8", QApplication::clipboard()->text().toUtf8(), "text/plain" );
     }
+  } else if ( mimeData->hasImage() && mimeData->hasFormat( "image/png" ) ) {
+    // Get the image data before showing the dialog, since that processes events which can delete
+    // the QMimeData object behind our back
+    const QByteArray imageData = mimeData->data( "image/png" );
+    addImageAsAttachement( imageData );
   }
+
+}
+
+void KMComposeWin::addImageAsAttachement(const QByteArray & imageData)
+{
+  // Ok, when we reached this point, the user wants to add the image as an attachment.
+  // Ask for the filename first.
+  bool ok;
+  const QString attName =
+    KInputDialog::getText( "KMail", i18n( "Name of the attachment:" ), QString(), &ok, this );
+  if ( !ok ) {
+    return;
+  }
+  
+  addAttachment( attName, KMime::Headers::CEbase64, QString(), imageData, "image/png" );
 }
 
 void KMComposeWin::slotFetchJob(KJob*job)
