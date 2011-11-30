@@ -466,7 +466,8 @@ private slots:
   void slotCollectionMoved( const Akonadi::Collection &collection, const Akonadi::Collection &source, const Akonadi::Collection &destination );
   void slotCollectionRemoved(const Akonadi::Collection& col);
   void slotDeleteIdentity( uint identity);
-
+  void slotInstanceRemoved(const Akonadi::AgentInstance&);
+  
 private:
   void migrateFromKMail1();
   void openReader( bool onlyCheck );

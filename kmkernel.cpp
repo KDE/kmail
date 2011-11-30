@@ -208,6 +208,9 @@ KMKernel::KMKernel (QObject *parent, const char *name) :
   connect( Akonadi::AgentManager::self(), SIGNAL(instanceError(Akonadi::AgentInstance,QString)),
            this, SLOT(instanceError(Akonadi::AgentInstance,QString)) );
 
+  connect( Akonadi::AgentManager::self(), SIGNAL(instanceRemoved(Akonadi::AgentInstance)),
+           this, SLOT(slotInstanceRemoved(Akonadi::AgentInstance)) );
+
 
   
   connect( KPIM::ProgressManager::instance(), SIGNAL(progressItemCompleted(KPIM::ProgressItem*)),
@@ -1869,6 +1872,17 @@ const QAbstractItemModel* KMKernel::treeviewModelSelection()
 void KMKernel::instanceError(const Akonadi::AgentInstance& instance, const QString & message)
 {
   kDebug()<<" instance :"<<instance.identifier()<<" received error :"<<message;
+}
+
+
+void KMKernel::slotInstanceRemoved(const Akonadi::AgentInstance& instance)
+{
+  const QString resourceGroup = QString::fromLatin1( "Resource %1" ).arg( instance.identifier() );
+  if ( KMKernel::config()->hasGroup( resourceGroup ) ) {
+    KConfigGroup group( KMKernel::config(), resourceGroup );
+    group.deleteGroup();
+    group.sync();
+  }
 }
 
 #include "kmkernel.moc"
