@@ -430,17 +430,18 @@ void KMMainWidget::slotEndCheckFetchCollectionsDone(KJob* job)
 
 
     Q_FOREACH( const Akonadi::Collection& collection, collections ) {
-      const QString folderPath( MailCommon::Util::fullCollectionPath( collection ) );
-      const int numberOfMails = mCheckMail[ collection.id() ];
-
       const QSharedPointer<FolderCollection> fd = FolderCollection::forCollection( collection,false );
 
       if ( fd && !fd->ignoreNewMail() ) {
         showNotification = true;
         if ( GlobalSettings::self()->verboseNewMailNotification() ) {
+          const QString folderPath( MailCommon::Util::fullCollectionPath( collection ) );
+          const int numberOfMails = mCheckMail[ collection.id() ];
           summary += "<br />" + i18np( "1 new message in %2",
                                       "%1 new messages in %2",
                                       numberOfMails, folderPath );
+        } else {
+          break;
         }
       }
     }
