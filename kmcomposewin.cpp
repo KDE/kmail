@@ -2091,60 +2091,113 @@ QString KMComposeWin::smartQuote( const QString & msg )
   return MessageCore::StringUtil::smartQuote( msg, MessageComposer::MessageComposerSettings::self()->lineWrapWidth() );
 }
 
-void KMComposeWin::slotPasteAsAttachment()
-{
-  const QMimeData *mimeData = QApplication::clipboard()->mimeData();
 
-  if( mimeData->hasUrls() ) {
-    // If the clipboard contains a list of URL, attach each file.
-    const KUrl::List urls = KUrl::List::fromMimeData( mimeData );
+bool KMComposeWin::insertFromMimeData( const QMimeData *source, bool forceAttachment )
+{
+  // If this is a PNG image, either add it as an attachment or as an inline image
+  if ( source->hasImage() && source->hasFormat( "image/png" ) ) {
+    // Get the image data before showing the dialog, since that processes events which can delete
+    // the QMimeData object behind our back
+    const QByteArray imageData = source->data( "image/png" );
+    if ( !forceAttachment ) {
+      if ( mComposerBase->editor()->textMode() == KRichTextEdit::Rich && mComposerBase->editor()->isEnableImageActions() ) {
+        QImage image = qvariant_cast<QImage>( source->imageData() );
+        QFileInfo fi( source->text() );
+
+        KMenu menu;
+        const QAction *addAsInlineImageAction = menu.addAction( i18n("Add as &Inline Image") );
+        /*const QAction *addAsAttachmentAction = */menu.addAction( i18n("Add as &Attachment") );
+        const QAction *selectedAction = menu.exec( QCursor::pos() );
+        if ( selectedAction == addAsInlineImageAction ) {
+          // Let the textedit from kdepimlibs handle inline images
+          mComposerBase->editor()->insertImage( image, fi );
+          return true;
+        } else if( !selectedAction ) {
+          return true;
+        } 
+        // else fall through
+      }
+    }
+    // Ok, when we reached this point, the user wants to add the image as an attachment.
+    // Ask for the filename first.
+    bool ok;
+    const QString attName =
+      KInputDialog::getText( "KMail", i18n( "Name of the attachment:" ), QString(), &ok, this );
+    if ( !ok ) {
+      return true;
+    }  
+    addAttachment( attName, KMime::Headers::CEbase64, QString(), imageData, "image/png" );
+    return true;
+  }
+
+  // If this is a URL list, add those files as attachments or text
+  const KUrl::List urlList = KUrl::List::fromMimeData( source );
+  if ( !urlList.isEmpty() ) {
+    //Search if it's message items.
     Akonadi::Item::List items;
-    foreach( const KUrl &url, urls ) {
+    bool allLocalURLs = true;
+
+    foreach ( const KUrl &url, urlList ) {
+      if ( !url.isLocalFile() ) {
+        allLocalURLs = false;
+      }
       const Akonadi::Item item = Akonadi::Item::fromUrl( url );
       if ( item.isValid() ) {
         items << item;
       }
-      if ( items.isEmpty() )
-        mComposerBase->attachmentController()->addAttachment( url );
-      else {
-        Akonadi::ItemFetchJob *itemFetchJob = new Akonadi::ItemFetchJob( items, this );
-        itemFetchJob->fetchScope().fetchFullPayload( true );
-        itemFetchJob->fetchScope().setAncestorRetrieval( Akonadi::ItemFetchScope::Parent );
-        connect( itemFetchJob, SIGNAL(result(KJob*)), this, SLOT(slotFetchJob(KJob*)) );
-        return;
-      }
     }
-  } else if( mimeData->hasText() ) {
+
+    if ( items.isEmpty() ) {
+      if ( allLocalURLs || forceAttachment ) {
+        foreach( const KUrl &url, urlList ) {
+          addAttachment( url, "" );
+        }
+      } else {
+        KMenu p;
+        const QAction *addAsTextAction = p.addAction( i18np("Add URL into Message &Text", "Add URLs into Message &Text", urlList.size() ) );
+        const QAction *addAsAttachmentAction = p.addAction( i18np("Add File as &Attachment", "Add Files as &Attachment", urlList.size() ) );
+        const QAction *selectedAction = p.exec( QCursor::pos() );
+
+        if ( selectedAction == addAsTextAction ) {
+          foreach( const KUrl &url, urlList ) {
+            mComposerBase->editor()->textCursor().insertText(url.url() + '\n');
+          }
+        } else if ( selectedAction == addAsAttachmentAction ) {
+          foreach( const KUrl &url, urlList ) {
+            addAttachment( url, "" );
+          }
+        }
+      }
+      return true;
+    } else {
+      Akonadi::ItemFetchJob *itemFetchJob = new Akonadi::ItemFetchJob( items, this );
+      itemFetchJob->fetchScope().fetchFullPayload( true );
+      itemFetchJob->fetchScope().setAncestorRetrieval( Akonadi::ItemFetchScope::Parent );
+      connect( itemFetchJob, SIGNAL(result(KJob*)), this, SLOT(slotFetchJob(KJob*)) );
+      return true;
+    }
+  }
+  return false;
+}
+
+void KMComposeWin::slotPasteAsAttachment()
+{
+  const QMimeData *mimeData = QApplication::clipboard()->mimeData();
+  if ( insertFromMimeData( mimeData, true ) )
+    return;
+  if( mimeData->hasText() ) {
     bool ok;
     const QString attName = KInputDialog::getText(
-        i18n( "Insert clipboard text as attachment" ),
-        i18n( "Name of the attachment:" ),
-        QString(), &ok, this );
+      i18n( "Insert clipboard text as attachment" ),
+      i18n( "Name of the attachment:" ),
+      QString(), &ok, this );
     if( ok ) {
       mComposerBase->addAttachment( attName, attName, "utf-8", QApplication::clipboard()->text().toUtf8(), "text/plain" );
     }
-  } else if ( mimeData->hasImage() && mimeData->hasFormat( "image/png" ) ) {
-    // Get the image data before showing the dialog, since that processes events which can delete
-    // the QMimeData object behind our back
-    const QByteArray imageData = mimeData->data( "image/png" );
-    addImageAsAttachement( imageData );
-  }
-
-}
-
-void KMComposeWin::addImageAsAttachement(const QByteArray & imageData)
-{
-  // Ok, when we reached this point, the user wants to add the image as an attachment.
-  // Ask for the filename first.
-  bool ok;
-  const QString attName =
-    KInputDialog::getText( "KMail", i18n( "Name of the attachment:" ), QString(), &ok, this );
-  if ( !ok ) {
     return;
   }
-  
-  addAttachment( attName, KMime::Headers::CEbase64, QString(), imageData, "image/png" );
 }
+
 
 void KMComposeWin::slotFetchJob(KJob*job)
 {

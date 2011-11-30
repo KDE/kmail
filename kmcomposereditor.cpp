@@ -128,88 +128,13 @@ bool KMComposerEditor::canInsertFromMimeData( const QMimeData *source ) const
 
 void KMComposerEditor::insertFromMimeData( const QMimeData *source )
 {
-  // If this is a PNG image, either add it as an attachment or as an inline image
-  if ( source->hasImage() && source->hasFormat( "image/png" ) ) {
-    // Get the image data before showing the dialog, since that processes events which can delete
-    // the QMimeData object behind our back
-    const QByteArray imageData = source->data( "image/png" );
- 	  
-    if ( textMode() == KRichTextEdit::Rich && isEnableImageActions() ) {
-      QImage image = qvariant_cast<QImage>( source->imageData() );
-      QFileInfo fi( source->text() );
-
-      KMenu menu;
-      const QAction *addAsInlineImageAction = menu.addAction( i18n("Add as &Inline Image") );
-      /*const QAction *addAsAttachmentAction = */menu.addAction( i18n("Add as &Attachment") );
-      const QAction *selectedAction = menu.exec( QCursor::pos() );
-      if ( selectedAction == addAsInlineImageAction ) {
-        // Let the textedit from kdepimlibs handle inline images
-        insertImage( image, fi );
-        return;
-      } else if( !selectedAction ) {
-        return;
-      } 
-      // else fall through
-    }
-    m_composerWin->addImageAsAttachement(imageData);
-    return;
-  }
-
-
   if ( source->hasFormat( "text/x-kmail-textsnippet" ) ) {
     emit insertSnippet();
     return;
   }
-
-  // If this is a URL list, add those files as attachments or text
-  const KUrl::List urlList = KUrl::List::fromMimeData( source );
-  if ( !urlList.isEmpty() ) {
-    //Search if it's message items.
-    Akonadi::Item::List items;
-    bool allLocalURLs = true;
-
-    foreach ( const KUrl &url, urlList ) {
-      if ( !url.isLocalFile() ) {
-        allLocalURLs = false;
-      }
-      const Akonadi::Item item = Akonadi::Item::fromUrl( url );
-      if ( item.isValid() ) {
-        items << item;
-      }
-    }
-
-    if ( items.isEmpty() ) {
-      if ( allLocalURLs ) {
-        foreach( const KUrl &url, urlList ) {
-          m_composerWin->addAttachment( url, "" );
-        }
-      } else {
-        KMenu p;
-        const QAction *addAsTextAction = p.addAction( i18np("Add URL into Message &Text", "Add URLs into Message &Text", urlList.size() ) );
-        const QAction *addAsAttachmentAction = p.addAction( i18np("Add File as &Attachment", "Add Files as &Attachment", urlList.size() ) );
-        const QAction *selectedAction = p.exec( QCursor::pos() );
-
-        if ( selectedAction == addAsTextAction ) {
-          foreach( const KUrl &url, urlList ) {
-            textCursor().insertText(url.url() + '\n');
-          }
-        } else if ( selectedAction == addAsAttachmentAction ) {
-          foreach( const KUrl &url, urlList ) {
-            m_composerWin->addAttachment( url, "" );
-          }
-        }
-      }
-      return;
-    } else {
-      Akonadi::ItemFetchJob *itemFetchJob = new Akonadi::ItemFetchJob( items, this );
-      itemFetchJob->fetchScope().fetchFullPayload( true );
-      itemFetchJob->fetchScope().setAncestorRetrieval( Akonadi::ItemFetchScope::Parent );
-      connect( itemFetchJob, SIGNAL(result(KJob*)), m_composerWin, SLOT(slotFetchJob(KJob*)) );
-      return;
-    }
-  }
-
-  KPIMTextEdit::TextEdit::insertFromMimeData( source );
+  
+  if ( !m_composerWin->insertFromMimeData( source, false ) )
+    KPIMTextEdit::TextEdit::insertFromMimeData( source );
 }
 
 #include "kmcomposereditor.moc"
