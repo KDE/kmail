@@ -2135,6 +2135,7 @@ bool KMComposeWin::insertFromMimeData( const QMimeData *source, bool forceAttach
   if ( !urlList.isEmpty() ) {
     //Search if it's message items.
     Akonadi::Item::List items;
+    Akonadi::Collection::List collections;
     bool allLocalURLs = true;
 
     foreach ( const KUrl &url, urlList ) {
@@ -2144,10 +2145,14 @@ bool KMComposeWin::insertFromMimeData( const QMimeData *source, bool forceAttach
       const Akonadi::Item item = Akonadi::Item::fromUrl( url );
       if ( item.isValid() ) {
         items << item;
+      } else {
+        const Akonadi::Collection collection = Akonadi::Collection::fromUrl( url );
+        if ( collection.isValid() )
+          collections << collection;
       }
     }
 
-    if ( items.isEmpty() ) {
+    if ( items.isEmpty() && collections.isEmpty() ) {
       if ( allLocalURLs || forceAttachment ) {
         foreach( const KUrl &url, urlList ) {
           addAttachment( url, "" );
@@ -2170,10 +2175,15 @@ bool KMComposeWin::insertFromMimeData( const QMimeData *source, bool forceAttach
       }
       return true;
     } else {
-      Akonadi::ItemFetchJob *itemFetchJob = new Akonadi::ItemFetchJob( items, this );
-      itemFetchJob->fetchScope().fetchFullPayload( true );
-      itemFetchJob->fetchScope().setAncestorRetrieval( Akonadi::ItemFetchScope::Parent );
-      connect( itemFetchJob, SIGNAL(result(KJob*)), this, SLOT(slotFetchJob(KJob*)) );
+      if ( !items.isEmpty() ){
+        Akonadi::ItemFetchJob *itemFetchJob = new Akonadi::ItemFetchJob( items, this );
+        itemFetchJob->fetchScope().fetchFullPayload( true );
+        itemFetchJob->fetchScope().setAncestorRetrieval( Akonadi::ItemFetchScope::Parent );
+        connect( itemFetchJob, SIGNAL(result(KJob*)), this, SLOT(slotFetchJob(KJob*)) );
+      } 
+      if ( !collections.isEmpty() ) {
+        //TODO
+      }
       return true;
     }
   }
