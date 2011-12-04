@@ -946,7 +946,7 @@ void KMKernel::resumeNetworkJobs()
   if ( GlobalSettings::self()->networkState() == GlobalSettings::EnumNetworkState::Online )
     return;
 
-  if ( Solid::Networking::status()==Solid::Networking::Connected ) {
+  if ( Solid::Networking::status() == Solid::Networking::Connected || Solid::Networking::status() == Solid::Networking::Unknown ) {
     setAccountStatus(true);
     BroadcastStatus::instance()->setStatusMsg( i18n("KMail is set to be online; all network jobs resumed"));
   }
