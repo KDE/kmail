@@ -60,7 +60,7 @@ int KMSearchMessageModel::columnCount( const QModelIndex & parent ) const
     return 1;
 
   if ( !parent.isValid() )
-    return 6; // keep in sync with the column type enum
+    return 7; // keep in sync with the column type enum
 
   return 0;
 }

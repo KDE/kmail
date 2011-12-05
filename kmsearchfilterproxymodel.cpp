@@ -48,10 +48,11 @@ bool KMSearchFilterProxyModel::lessThan( const QModelIndex & left, const QModelI
 {
   if ( left.column() == KMSearchMessageModel::Date )
   {
-    const QDateTime dateLeft = left.data( KMSearchMessageModel::DateNotTranslated ).toDateTime();
-    const QDateTime dateRight = right.data( KMSearchMessageModel::DateNotTranslated ).toDateTime();
-    return dateLeft<dateRight;
+    QDateTime leftData = sourceModel()->data(left.sibling( left.row(), KMSearchMessageModel::DateNotTranslated )).toDateTime();
+    QDateTime rightData = sourceModel()->data(right.sibling( right.row(), KMSearchMessageModel::DateNotTranslated )).toDateTime();
+
+    return  leftData<rightData;
   }
-  
+
   return QSortFilterProxyModel::lessThan( left, right );
 }

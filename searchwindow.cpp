@@ -394,8 +394,7 @@ void SearchWindow::createSearchModel()
   mLbxMatches->setColumnWidth( 3, GlobalSettings::self()->receiverWidth() );
   mLbxMatches->setColumnWidth( 4, GlobalSettings::self()->dateWidth() );
   mLbxMatches->setColumnWidth( 5, GlobalSettings::self()->folderWidth() );
-  mLbxMatches->setColumnWidth( 6, 0 );
-        
+  mLbxMatches->setColumnHidden( 6, true );
   mLbxMatches->header()->setSortIndicator( 2, Qt::DescendingOrder );
   mLbxMatches->header()->setStretchLastSection( false );
   //mLbxMatches->header()->setResizeMode( 3, QHeaderView::Stretch );
@@ -679,7 +678,7 @@ void SearchWindow::slotSearchFolderRenameDone( KJob *job )
     KMessageBox::information( this, i18n( "There was a problem renaming your search folder. "
                                           "A common reason for this is that another search folder "
                                           "with the same name already exists." ) );
-  } 
+  }
 }
 
 void SearchWindow::openSearchFolder()
@@ -861,7 +860,7 @@ void SearchWindow::addRulesToSearchPattern( const SearchPattern &pattern )
 
   QList<SearchRule::Ptr>::const_iterator it;
   QList<SearchRule::Ptr>::const_iterator end(pattern.constEnd() ) ;
-  
+
   for ( it = pattern.constBegin() ; it != end ; ++it ) {
     p.append( SearchRule::createInstance( **it ) );
   }
