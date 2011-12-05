@@ -1166,7 +1166,7 @@ void KMMainWidget::createWidgets()
 
 
 
-  
+
 
   mAkonadiStandardActionManager->interceptAction( Akonadi::StandardActionManager::CollectionProperties );
   connect( mAkonadiStandardActionManager->action( Akonadi::StandardActionManager::CollectionProperties ), SIGNAL(triggered(bool)), this, SLOT(slotCollectionProperties()) );
@@ -3019,7 +3019,7 @@ void KMMainWidget::getTransportMenu()
   QStringList availTransports = MailTransport::TransportManager::self()->transportNames();
   QStringList::Iterator it;
   QStringList::Iterator end( availTransports.end() );
-  
+
   for(it = availTransports.begin(); it != end ; ++it)
     mSendMenu->addAction((*it).replace('&', "&&"));
 }
@@ -3192,7 +3192,7 @@ void KMMainWidget::setupActions()
   actionCollection()->addAction("find_in_messages", mFindInMessageAction );
   connect(mFindInMessageAction, SIGNAL(triggered(bool)), SLOT(slotFind()));
   mFindInMessageAction->setShortcut(KStandardShortcut::find());
-                                   
+
   {
     KAction *action = new KAction(i18n("Select &All Messages"), this);
     actionCollection()->addAction("mark_all_messages", action );
@@ -3877,7 +3877,10 @@ void KMMainWidget::updateMessageActionsDelayed()
 
 void KMMainWidget::slotAkonadiStandardActionUpdated()
 {
-  const bool multiFolder = mFolderTreeWidget->selectedCollections().count() > 1;
+  bool multiFolder = false;
+  if ( mFolderTreeWidget ) {
+    multiFolder = mFolderTreeWidget->selectedCollections().count() > 1;
+  }
   if ( mCollectionProperties ) {
     mCollectionProperties->setEnabled( mCurrentFolder && !multiFolder &&
                                        !mCurrentFolder->isStructural() &&
@@ -3960,7 +3963,10 @@ void KMMainWidget::slotAkonadiStandardActionUpdated()
 void KMMainWidget::updateFolderMenu()
 {
   const bool folderWithContent = mCurrentFolder && !mCurrentFolder->isStructural();
-  const bool multiFolder = mFolderTreeWidget->selectedCollections().count() > 1;
+  bool multiFolder = false;
+  if ( mFolderTreeWidget ) {
+    multiFolder = mFolderTreeWidget->selectedCollections().count() > 1;
+  }
   mFolderMailingListPropertiesAction->setEnabled( folderWithContent &&
                                                   !multiFolder &&
                                                   !mCurrentFolder->isSystemFolder() );
@@ -3999,9 +4005,15 @@ void KMMainWidget::updateFolderMenu()
                                    !MailCommon::Util::isVirtualCollection( mCurrentFolder->collection() ) );
 
   // the visual ones only make sense if we are showing a message list
-  mPreferHtmlAction->setEnabled( mFolderTreeWidget->folderTreeView()->currentFolder().isValid() && !multiFolder );
+  mPreferHtmlAction->setEnabled( mFolderTreeWidget &&
+                                 mFolderTreeWidget->folderTreeView()->currentFolder().isValid() &&
+                                 !multiFolder );
 
-  mPreferHtmlLoadExtAction->setEnabled( mFolderTreeWidget->folderTreeView()->currentFolder().isValid() && !multiFolder && (mHtmlPref ? !mFolderHtmlPref : mFolderHtmlPref) ? true : false );
+  mPreferHtmlLoadExtAction->setEnabled( mFolderTreeWidget &&
+                                        mFolderTreeWidget->folderTreeView()->currentFolder().isValid() &&
+                                        !multiFolder &&
+                                        (mHtmlPref ? !mFolderHtmlPref : mFolderHtmlPref) ? true : false );
+
   mPreferHtmlAction->setChecked( !multiFolder &&  ( mHtmlPref ? !mFolderHtmlPref : mFolderHtmlPref ) );
   mPreferHtmlLoadExtAction->setChecked( !multiFolder &&  ( mHtmlLoadExtPref ? !mFolderHtmlLoadExtPref : mFolderHtmlLoadExtPref ) );
   mShowFolderShortcutDialogAction->setEnabled( !multiFolder && folderWithContent );
