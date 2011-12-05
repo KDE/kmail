@@ -217,7 +217,7 @@ KMKernel::KMKernel (QObject *parent, const char *name) :
            this, SLOT(slotProgressItemCompletedOrCanceled(KPIM::ProgressItem*)) );
   connect( KPIM::ProgressManager::instance(), SIGNAL(progressItemCanceled(KPIM::ProgressItem*)),
            this, SLOT(slotProgressItemCompletedOrCanceled(KPIM::ProgressItem*)) );
-  connect( identityManager(), SIGNAL( deleted( uint ) ), this, SLOT( slotDeleteIdentity( uint ) ) );
+  connect( identityManager(), SIGNAL(deleted(uint)), this, SLOT(slotDeleteIdentity(uint)) );
   CommonKernel->registerKernelIf( this );
   CommonKernel->registerSettingsIf( this );
   CommonKernel->registerFilterIf( this );
