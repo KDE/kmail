@@ -1599,6 +1599,7 @@ AppearancePageMessageTagTab::AppearancePageMessageTagTab( QWidget * parent )
     tageditgrid->addLayout( addremovegrid );
 
     mTagAddLineEdit = new KLineEdit( mTagsGroupBox );
+    mTagAddLineEdit->setTrapReturnKey( true );
     addremovegrid->addWidget( mTagAddLineEdit );
 
     mTagAddButton = new KPushButton( mTagsGroupBox );
@@ -1765,6 +1766,10 @@ AppearancePageMessageTagTab::AppearancePageMessageTagTab( QWidget * parent )
     //For on-the-fly updating of tag name in editbox
     connect( mTagNameLineEdit, SIGNAL(textChanged(QString)),
              this, SLOT(slotNameLineTextChanged(QString)) );
+
+    connect(  mTagAddLineEdit, SIGNAL(returnPressed()),
+             this, SLOT(slotAddNewTag()) );
+
 
     connect( mTagAddButton, SIGNAL(clicked()),
              this, SLOT(slotAddNewTag()) );
