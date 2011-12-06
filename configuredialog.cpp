@@ -1571,6 +1571,22 @@ QString AppearancePage::MessageTagTab::helpAnchor() const
   return QString::fromLatin1("configure-appearance-messagetag");
 }
 
+
+TagListWidgetItem::TagListWidgetItem(QListWidget *parent)
+  : QListWidgetItem(parent)
+{
+}
+
+TagListWidgetItem::TagListWidgetItem(const QIcon & icon, const QString & text, QListWidget * parent )
+  : QListWidgetItem(icon, text, parent)
+{
+}
+
+TagListWidgetItem::~TagListWidgetItem()
+{
+}
+
+
 AppearancePageMessageTagTab::AppearancePageMessageTagTab( QWidget * parent )
   : ConfigModuleTab( parent )
 {
@@ -1963,7 +1979,6 @@ void AppearancePage::MessageTagTab::slotRemoveTag()
   int tmp_index = mTagListBox->currentRow();
   if ( !( tmp_index < 0 ) ) {
     KMail::Tag::Ptr tmp_desc = mMsgTagList.takeAt( tmp_index );
-    mMsgTagDict.remove( tmp_desc->nepomukResourceUri.toString() );
     Nepomuk::Tag nepomukTag( tmp_desc->nepomukResourceUri );
     nepomukTag.remove();
     mPreviousTag = -1;
@@ -2020,12 +2035,9 @@ void AppearancePage::MessageTagTab::slotAddNewTag()
 
   KMail::Tag::Ptr tag = KMail::Tag::fromNepomuk( nepomukTag );
   tag->priority = tmp_priority;
-  mMsgTagDict.insert( tag->nepomukResourceUri.toString() , tag );
   mMsgTagList.append( tag );
   slotEmitChangeCheck();
-  QListWidgetItem *newItem = new QListWidgetItem( mTagListBox );
-  newItem->setText( newTagName );
-  newItem->setIcon( KIcon( tag->iconName ) );
+  TagListWidgetItem *newItem = new TagListWidgetItem( KIcon( tag->iconName ), newTagName,  mTagListBox );
   mTagListBox->addItem( newItem );
   mTagListBox->setCurrentItem( newItem );
   mTagAddLineEdit->setText( QString() );
@@ -2036,20 +2048,18 @@ void AppearancePage::MessageTagTab::doLoadFromGlobalSettings()
   if ( !mNepomukActive )
     return;
 
-  mMsgTagDict.clear();
   mMsgTagList.clear();
   mTagListBox->clear();
 
   foreach( const Nepomuk::Tag &nepomukTag, Nepomuk::Tag::allTags() ) {
     KMail::Tag::Ptr tag = KMail::Tag::fromNepomuk( nepomukTag );
-    mMsgTagDict.insert( nepomukTag.resourceUri().toString(), tag );
     mMsgTagList.append( tag );
   }
 
   qSort( mMsgTagList.begin(), mMsgTagList.end(), KMail::Tag::compare );
 
   foreach( const KMail::Tag::Ptr& tag, mMsgTagList ) {
-    new QListWidgetItem( KIcon( tag->iconName ), tag->tagName, mTagListBox );
+    new TagListWidgetItem( KIcon( tag->iconName ), tag->tagName, mTagListBox );
     if ( tag->priority == -1 )
       tag->priority = mTagListBox->count() - 1;
   }
@@ -2078,9 +2088,9 @@ void AppearancePage::MessageTagTab::save()
     return;
   slotRecordTagSettings( mTagListBox->currentRow() );
 
-  if ( mOriginalMsgTagList.count() == mMsgTagList.count() ) {
+  const int numberOfMsgTagList( mMsgTagList.count() );
+  if ( mOriginalMsgTagList.count() == numberOfMsgTagList ) {
     bool nothingChanged = true;
-    const int numberOfMsgTagList( mMsgTagList.count() );
     for ( int i=0; i<numberOfMsgTagList; ++i ) {
       if ( *(mMsgTagList[i]) != *(mOriginalMsgTagList[i]) ) {
         nothingChanged = false;

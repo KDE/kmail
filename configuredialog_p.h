@@ -14,6 +14,7 @@
 #include <QList>
 #include <QHash>
 #include <QSharedPointer>
+#include <QListWidgetItem>
 
 #include <kdialog.h>
 #include <kcmodule.h>
@@ -373,6 +374,16 @@ private: // data
   KButtonGroup *mSystemTrayGroup;
 };
 
+
+class TagListWidgetItem : public QListWidgetItem
+{
+public:
+  explicit TagListWidgetItem( QListWidget *parent = 0);
+  explicit TagListWidgetItem( const QIcon & icon, const QString & text, QListWidget * parent = 0);
+
+  ~TagListWidgetItem();
+};
+
 /**Configuration tab in the appearance page for modifying the available set of
 +message tags*/
 class AppearancePageMessageTagTab : public ConfigModuleTab {
@@ -448,9 +459,6 @@ private: // data
   KIconButton *mIconButton;
 
   KKeySequenceWidget *mKeySequenceWidget;
-
-  // Maps Nepomuk::Tag resource URIs to Tags
-  QHash<QString,KMail::TagPtr> mMsgTagDict;
 
   // List of all Tags currently in the list
   QList<KMail::TagPtr> mMsgTagList;
@@ -739,7 +747,7 @@ class SecurityPageWarningTab : public ConfigModuleTab {
 public:
   explicit SecurityPageWarningTab( QWidget * parent=0 );
   ~SecurityPageWarningTab();
-  
+
   QString helpAnchor() const;
 
   void save();
