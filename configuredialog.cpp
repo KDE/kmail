@@ -2896,7 +2896,7 @@ ComposerPageHeadersTab::ComposerPageHeadersTab( QWidget * parent )
   mTagList->setHeaderLabels( QStringList() << i18nc("@title:column Name of the mime header.","Name")
     << i18nc("@title:column Value of the mimeheader.","Value") );
   mTagList->setSortingEnabled( false );
-  connect( mTagList, SIGNAL(itemSelectionChanged()),
+  connect( mTagList, SIGNAL(currentItemChanged(QListWidgetItem*,QListWidgetItem*)),
            this, SLOT(slotMimeHeaderSelectionChanged()) );
   glay->addWidget( mTagList, 0, 0, 3, 2 );
 
