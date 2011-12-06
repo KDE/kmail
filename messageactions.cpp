@@ -111,7 +111,7 @@ MessageActions::MessageActions( KActionCollection *ac, QWidget* parent ) :
   mListFilterAction = new KAction(i18n("Filter on Mailing-&List..."), this);
   mActionCollection->addAction("mlist_filter", mListFilterAction );
   connect(mListFilterAction, SIGNAL(triggered(bool)), SLOT(slotMailingListFilter()));
-  
+
   mCreateTodoAction = new KAction( KIcon( "task-new" ), i18n( "Create To-do/Reminder..." ), this );
   mCreateTodoAction->setIconText( i18n( "Create To-do" ) );
   mCreateTodoAction->setHelpText( i18n( "Allows you to create a calendar to-do or reminder from this message" ) );
@@ -197,7 +197,7 @@ MessageActions::MessageActions( KActionCollection *ac, QWidget* parent ) :
   connect( mAsynNepomukRetriever, SIGNAL(resourceReceived(QUrl,Nepomuk::Resource)), SLOT(updateAnnotateAction(QUrl,Nepomuk::Resource)) );
 
   mCustomTemplatesMenu = new CustomTemplatesMenu( parent, ac );
-  
+
   connect( mCustomTemplatesMenu, SIGNAL(replyTemplateSelected(QString)),
            parent, SLOT(slotCustomReplyToMsg(QString)) );
   connect( mCustomTemplatesMenu, SIGNAL(replyAllTemplateSelected(QString)),
@@ -503,7 +503,7 @@ void MessageActions::slotMailingListFilter()
 {
   if ( !mCurrentItem.hasPayload<KMime::Message::Ptr>() )
     return;
-  
+
   KMCommand *command = new KMMailingListFilterCommand( mParent, mCurrentItem );
   command->start();
 }
@@ -592,10 +592,11 @@ void MessageActions::annotateMessage()
   if ( !mCurrentItem.isValid() )
     return;
 
-  MessageCore::AnnotationEditDialog *dialog = new MessageCore::AnnotationEditDialog( mCurrentItem.url() );
+  const QUrl url = mCurrentItem.url();
+  MessageCore::AnnotationEditDialog *dialog = new MessageCore::AnnotationEditDialog( url );
   dialog->setAttribute( Qt::WA_DeleteOnClose );
   if ( dialog->exec() )
-    mAsynNepomukRetriever->requestResource( mCurrentItem.url(), QVector<QUrl>() << Nepomuk::Resource::descriptionUri() << Nepomuk::Resource::annotationUri() );
+    mAsynNepomukRetriever->requestResource( url, QVector<QUrl>() << Nepomuk::Resource::descriptionUri() << Nepomuk::Resource::annotationUri() );
 }
 
 void MessageActions::updateAnnotateAction( const QUrl &url, const Nepomuk::Resource &resource )
