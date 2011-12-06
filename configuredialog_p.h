@@ -29,7 +29,7 @@
 #include "ui_miscpagemaintab.h"
 #include "ui_securitypagegeneraltab.h"
 #include "ui_accountspagereceivingtab.h"
-
+#include "tag.h"
 class QPushButton;
 class QLabel;
 class QCheckBox;
@@ -382,6 +382,10 @@ public:
   explicit TagListWidgetItem( const QIcon & icon, const QString & text, QListWidget * parent = 0);
 
   ~TagListWidgetItem();
+  void setKMailTag( const KMail::Tag::Ptr& tag );
+  KMail::Tag::Ptr setKMailTag() const;
+private:
+  KMail::Tag::Ptr mTag;
 };
 
 /**Configuration tab in the appearance page for modifying the available set of

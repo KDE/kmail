@@ -1573,17 +1573,27 @@ QString AppearancePage::MessageTagTab::helpAnchor() const
 
 
 TagListWidgetItem::TagListWidgetItem(QListWidget *parent)
-  : QListWidgetItem(parent)
+  : QListWidgetItem(parent), mTag( 0 )
 {
 }
 
 TagListWidgetItem::TagListWidgetItem(const QIcon & icon, const QString & text, QListWidget * parent )
-  : QListWidgetItem(icon, text, parent)
+  : QListWidgetItem(icon, text, parent), mTag( 0 )
 {
 }
 
 TagListWidgetItem::~TagListWidgetItem()
 {
+}
+
+void TagListWidgetItem::setKMailTag( const KMail::Tag::Ptr& tag )
+{
+  mTag = tag;
+}
+
+KMail::Tag::Ptr TagListWidgetItem::setKMailTag() const
+{
+  return mTag;
 }
 
 
@@ -2038,6 +2048,7 @@ void AppearancePage::MessageTagTab::slotAddNewTag()
   mMsgTagList.append( tag );
   slotEmitChangeCheck();
   TagListWidgetItem *newItem = new TagListWidgetItem( KIcon( tag->iconName ), newTagName,  mTagListBox );
+  newItem->setKMailTag( tag );
   mTagListBox->addItem( newItem );
   mTagListBox->setCurrentItem( newItem );
   mTagAddLineEdit->setText( QString() );
@@ -2059,7 +2070,9 @@ void AppearancePage::MessageTagTab::doLoadFromGlobalSettings()
   qSort( mMsgTagList.begin(), mMsgTagList.end(), KMail::Tag::compare );
 
   foreach( const KMail::Tag::Ptr& tag, mMsgTagList ) {
-    new TagListWidgetItem( KIcon( tag->iconName ), tag->tagName, mTagListBox );
+    TagListWidgetItem *newItem = new TagListWidgetItem( KIcon( tag->iconName ), tag->tagName, mTagListBox );
+    newItem->setKMailTag( tag );
+
     if ( tag->priority == -1 )
       tag->priority = mTagListBox->count() - 1;
   }
