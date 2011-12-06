@@ -425,6 +425,7 @@ AccountsPageReceivingTab::AccountsPageReceivingTab( QWidget * parent )
   mAccountsReceiving.mAccountList->agentFilterProxyModel()->excludeCapabilities( "Notes" );
 
   mAccountsReceiving.mFilterAccount->setProxy( mAccountsReceiving.mAccountList->agentFilterProxyModel() );
+  mAccountsReceiving.mFilterAccount->lineEdit()->setTrapReturnKey( true );
 
   ConfigAgentDelegate *configDelegate = new ConfigAgentDelegate( mAccountsReceiving.mAccountList->view() );
   mAccountsReceiving.mAccountList->view()->setItemDelegate( configDelegate );
@@ -1056,7 +1057,7 @@ void AppearancePage::ColorsTab::loadColor( bool loadFromConfig )
         mColorList->setColorSilently( i, reader.readEntry( configName, defaultColor[i] ) );
     } else {
       mColorList->setColorSilently( i, defaultColor[i] );
-    }        
+    }
   }
 }
 
@@ -1065,7 +1066,7 @@ void AppearancePage::ColorsTab::doResetToDefaultsOther()
   mCustomColorCheck->setChecked( false );
   mRecycleColorCheck->setChecked( false );
   mCloseToQuotaThreshold->setValue( 80 );
-  loadColor( false ); 
+  loadColor( false );
 }
 
 void AppearancePage::ColorsTab::save()
@@ -1582,7 +1583,7 @@ AppearancePageMessageTagTab::AppearancePageMessageTagTab( QWidget * parent )
 
   mNepomukActive = Nepomuk::ResourceManager::instance()->initialized();
   if ( mNepomukActive ) {
-  
+
     //Lefthand side Listbox and friends
 
     //Groupbox frame
@@ -2024,7 +2025,7 @@ void AppearancePage::MessageTagTab::doLoadFromGlobalSettings()
 {
   if ( !mNepomukActive )
     return;
-  
+
   mMsgTagDict.clear();
   mMsgTagList.clear();
   mTagListBox->clear();
@@ -2278,13 +2279,13 @@ ComposerPageGeneralTab::ComposerPageGeneralTab( QWidget * parent )
 
   label = new QLabel( MessageComposer::MessageComposerSettings::self()->maximumRecipientsItem()->label(), this );
   hlay->addWidget( label );
-  
+
   mMaximumRecipients = new KIntSpinBox( 0, 500, 1, 1, this );
   hlay->addWidget( mMaximumRecipients );
   hlay->addStretch( 1 );
   connect( mMaximumRecipients, SIGNAL(valueChanged(int)),
-           this, SLOT(slotEmitChanged()) );  
-  
+           this, SLOT(slotEmitChanged()) );
+
 #ifdef KDEPIM_ENTERPRISE_BUILD
   // a checkbox for "too many recipient warning" and a spinbox for the recipient threshold
   hlay = new QHBoxLayout(); // inherits spacing
@@ -2430,7 +2431,7 @@ void ComposerPage::GeneralTab::doResetToDefaultsOther()
   const int wrapColumn = MessageComposer::MessageComposerSettings::self()->lineWrapWidth();
   const bool showRecentAddress = MessageComposer::MessageComposerSettings::self()->showRecentAddressesInComposer();
   const int maximumRecipient = MessageComposer::MessageComposerSettings::self()->maximumRecipients();
-  
+
   MessageComposer::MessageComposerSettings::self()->useDefaults( bUseDefaults );
 
   mAutoAppSignFileCheck->setChecked( autoAppSignFile );
@@ -2515,7 +2516,7 @@ void ComposerPage::GeneralTab::slotConfigureRecentAddresses()
     const QStringList &addrList = dlg->addresses();
     QStringList::ConstIterator it;
     QStringList::ConstIterator end( addrList.constEnd() );
-    
+
     for ( it = addrList.constBegin(); it != end; ++it )
       RecentAddresses::self(  MessageComposer::MessageComposerSettings::self()->config() )->add( *it );
   }
@@ -2698,7 +2699,7 @@ void ComposerPage::SubjectTab::doResetToDefaultsOther()
 
   const QStringList messageForwardPrefixes = MessageComposer::MessageComposerSettings::forwardPrefixes();
   const bool useMessageForwardPrefixes = MessageComposer::MessageComposerSettings::replaceForwardPrefix();
-  
+
   MessageComposer::MessageComposerSettings::self()->useDefaults( bUseDefaults );
   mReplyListEditor->setStringList( messageReplyPrefixes );
   mReplaceReplyPrefixCheck->setChecked( useMessageReplyPrefixes );
@@ -2814,7 +2815,7 @@ void ComposerPage::CharsetTab::save()
   QStringList charsetList = mCharsetListEditor->stringList();
   QStringList::Iterator it = charsetList.begin();
   QStringList::Iterator end = charsetList.end();
-  
+
   for ( ; it != end ; ++it )
     if ( (*it).endsWith( QLatin1String("(locale)") ) )
       (*it) = "locale";
@@ -3048,7 +3049,7 @@ void ComposerPage::HeadersTab::save()
     }
   }
 
-  
+
   int numValidEntries = 0;
   QTreeWidgetItem *item = 0;
   const int numberOfEntry( mTagList->topLevelItemCount() );
@@ -3388,7 +3389,7 @@ void SecurityPage::ComposerCryptoTab::doLoadFromGlobalSettings()
   mWidget->mNeverEncryptWhenSavingInDrafts->setChecked( GlobalSettings::self()->neverEncryptDrafts() );
 
   mWidget->mStoreEncrypted->setChecked(GlobalSettings::self()->cryptoStoreEncrypted() );
-  
+
 }
 
 
@@ -3518,7 +3519,7 @@ void SecurityPage::WarningTab::slotReenableAllWarningsClicked()
     KConfigGroup cfgGroup( KMKernel::self()->config(), QLatin1String( "Missing Nepomuk Warning" ) );
     cfgGroup.deleteGroup();
   }
-  
+
   mWidget->enableAllWarningsPB->setEnabled( false );
 }
 
