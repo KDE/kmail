@@ -1783,7 +1783,7 @@ AppearancePageMessageTagTab::AppearancePageMessageTagTab( QWidget * parent )
     connect( mTagDownButton, SIGNAL(clicked()),
              this, SLOT(slotMoveTagDown()) );
 
-    connect( mTagListBox, SIGNAL(itemSelectionChanged()),
+    connect( mTagListBox, SIGNAL(currentItemChanged(QListWidgetItem*,QListWidgetItem*)),
              this, SLOT(slotSelectionChanged()) );
   } else {
     QLabel *lab = new QLabel;
