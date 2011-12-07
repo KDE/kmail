@@ -126,9 +126,7 @@ class SearchWindow: public KDialog, virtual public KXMLGUIClient
     void createSearchModel();
   
   private Q_SLOTS:
-    virtual void updateStatusLine();
-
-    void updateCollectionStatisticsFinished( KJob* );
+    void updateCollectionStatistic(Akonadi::Collection::Id,Akonadi::CollectionStatistics);
 
     virtual void slotClose();
     virtual void slotSearch();

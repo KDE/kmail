@@ -42,6 +42,7 @@
 #include <Akonadi/KMime/MessageModel>
 #include <akonadi/persistentsearchattribute.h>
 #include <Akonadi/SearchCreateJob>
+#include <Akonadi/ChangeRecorder>
 #include <akonadi/standardactionmanager.h>
 #include <Akonadi/EntityMimeTypeFilterModel>
 #include <KActionMenu>
@@ -218,6 +219,8 @@ SearchWindow::SearchWindow( KMMainWidget *widget, const Akonadi::Collection &col
   connect( mLbxMatches, SIGNAL(currentChanged(Akonadi::Item)),
            this, SLOT(slotCurrentChanged(Akonadi::Item)) );
 
+  connect( KMKernel::self()->folderCollectionMonitor(), SIGNAL(collectionStatisticsChanged(Akonadi::Collection::Id,Akonadi::CollectionStatistics)), this, SLOT(updateCollectionStatistic(Akonadi::Collection::Id,Akonadi::CollectionStatistics)) );
+
   QHBoxLayout *hbl2 = new QHBoxLayout();
   mSearchFolderLbl = new QLabel( i18n( "Search folder &name:" ), searchWidget );
   mSearchFolderEdt = new KLineEdit( searchWidget );
@@ -344,7 +347,6 @@ SearchWindow::SearchWindow( KMMainWidget *widget, const Akonadi::Collection &col
   actionCollection()->addAction( "search_clear_selection", mClearAction );
   connect( mClearAction, SIGNAL(triggered(bool)), SLOT(slotClearSelection()) );
 
-  connect( mTimer, SIGNAL(timeout()), this, SLOT(updateStatusLine()) );
   connect( mCbxFolders, SIGNAL(folderChanged(Akonadi::Collection)),
            this, SLOT(slotFolderActivated()) );
 
@@ -414,44 +416,16 @@ void SearchWindow::setEnabledSearchButton( bool )
   enableButton( User1, true );
 }
 
-void SearchWindow::updateStatusLine()
+void SearchWindow::updateCollectionStatistic(Akonadi::Collection::Id id,Akonadi::CollectionStatistics statistic)
 {
-  if ( mFolder.isValid() ) {
-    Akonadi::CollectionStatisticsJob *job = new Akonadi::CollectionStatisticsJob( mFolder );
-    connect( job, SIGNAL(result(KJob*)), SLOT(updateCollectionStatisticsFinished(KJob*)) );
+  QString genMsg, detailMsg;
+  int numMatches = 0;
+  if ( id == mFolder.id() ) {
+    genMsg = i18np( "%1 match", "%1 matches", statistic.count() );
+    detailMsg = i18n( "Searching in %1", mFolder.name() );
   }
-}
-
-void SearchWindow::updateCollectionStatisticsFinished( KJob * job)
-{
-  if ( job->error() ) {
-    kWarning() << job->errorText(); // TODO
-  } else {
-    QString genMsg, detailMsg;
-    int numMatches = 0;
-
-    Akonadi::CollectionStatisticsJob *statisticsJob = qobject_cast<Akonadi::CollectionStatisticsJob*>( job );
-    const Akonadi::CollectionStatistics statistics = statisticsJob->statistics();
-
-    numMatches = statistics.count();
-
-    if ( mFolder.isValid() && mSearchJob ) {
-      if ( !mStopped ) {
-        genMsg = i18nc( "Search finished.", "Done" );
-        detailMsg = i18np( "%1 match", "%1 matches", numMatches );
-      } else {
-        genMsg = i18n( "Search canceled" );
-        detailMsg = i18np( "%1 match so far",
-                           "%1 matches so far", numMatches );
-      }
-    } else {
-      genMsg = i18np( "%1 match", "%1 matches", numMatches );
-      detailMsg = i18n( "Searching in %1", mFolder.name() );
-    }
-
-    mStatusBar->changeItem( genMsg, 0 );
-    mStatusBar->changeItem( detailMsg, 1 );
-  }
+  mStatusBar->changeItem( genMsg, 0 );
+  mStatusBar->changeItem( detailMsg, 1 );
 }
 
 void SearchWindow::keyPressEvent( QKeyEvent *event )
@@ -597,7 +571,6 @@ void SearchWindow::searchDone( KJob* job )
       }
 
       mTimer->stop();
-      updateStatusLine();
 
       QTimer::singleShot( 0, this, SLOT(enableGUI()) );
 
