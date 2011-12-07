@@ -1997,7 +1997,7 @@ void AppearancePage::MessageTagTab::slotRemoveTag()
 {
   int tmp_index = mTagListBox->currentRow();
   if ( tmp_index >= 0 ) {
-    QListWidgetItem * item = mTagListBox->currentItem();
+    QListWidgetItem * item = mTagListBox->takeItem( mTagListBox->currentRow() );
     TagListWidgetItem *tagItem = static_cast<TagListWidgetItem*>( item );
     KMail::Tag::Ptr tmp_desc = tagItem->kmailTag();
     Nepomuk::Tag nepomukTag( tmp_desc->nepomukResourceUri );
