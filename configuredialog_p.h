@@ -383,7 +383,7 @@ public:
 
   ~TagListWidgetItem();
   void setKMailTag( const KMail::Tag::Ptr& tag );
-  KMail::Tag::Ptr setKMailTag() const;
+  KMail::Tag::Ptr kmailTag() const;
 private:
   KMail::Tag::Ptr mTag;
 };
@@ -464,8 +464,6 @@ private: // data
 
   KKeySequenceWidget *mKeySequenceWidget;
 
-  // List of all Tags currently in the list
-  QList<KMail::TagPtr> mMsgTagList;
 
   // So we can compare to mMsgTagList and see if the user changed tags
   QList<KMail::TagPtr> mOriginalMsgTagList;

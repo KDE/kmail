@@ -1591,7 +1591,7 @@ void TagListWidgetItem::setKMailTag( const KMail::Tag::Ptr& tag )
   mTag = tag;
 }
 
-KMail::Tag::Ptr TagListWidgetItem::setKMailTag() const
+KMail::Tag::Ptr TagListWidgetItem::kmailTag() const
 {
   return mTag;
 }
@@ -1834,6 +1834,7 @@ void AppearancePage::MessageTagTab::slotMoveTagUp()
   if ( tmp_index <= 0 )
     return;
   swapTagsInListBox( tmp_index, tmp_index - 1 );
+  mTagListBox->setCurrentRow( tmp_index - 1 );
     //Reached the first row
   if ( 1 == tmp_index )
     mTagUpButton->setEnabled( false );
@@ -1849,6 +1850,7 @@ void AppearancePage::MessageTagTab::slotMoveTagDown()
         || ( tmp_index >= int( mTagListBox->count() ) - 1 ) )
     return;
   swapTagsInListBox( tmp_index, tmp_index + 1 );
+  mTagListBox->setCurrentRow( tmp_index + 1 );
     //Reached last row
   if ( int( mTagListBox->count() ) - 2 == tmp_index )
     mTagDownButton->setEnabled( false );
@@ -1860,38 +1862,24 @@ void AppearancePage::MessageTagTab::slotMoveTagDown()
 void AppearancePage::MessageTagTab::swapTagsInListBox( const int first,
                                                        const int second )
 {
-  const QString tmp_label = mTagListBox->item( first )->text();
-  const QIcon tmp_icon = mTagListBox->item( first )->icon();
-  KMail::Tag::Ptr tmp_ptr = mMsgTagList.at( first );
-
-  mMsgTagList.replace( first, mMsgTagList.at( second ) );
-  mMsgTagList.replace( second, tmp_ptr );
-
-  disconnect( mTagListBox, SIGNAL(currentItemChanged(QListWidgetItem*,QListWidgetItem*)),
-           this, SLOT(slotSelectionChanged()) );
-
-  mTagListBox->item( first )->setText( mTagListBox->item( second )->text() );
-  mTagListBox->item( first )->setIcon( mTagListBox->item( second )->icon() );
-  mTagListBox->item( second )->setText( tmp_label );
-  mTagListBox->item( second )->setIcon( tmp_icon );
-  mTagListBox->setCurrentItem( mTagListBox->item( second ) );
-  connect( mTagListBox, SIGNAL(currentItemChanged(QListWidgetItem*,QListWidgetItem*)),
-           this, SLOT(slotSelectionChanged()) );
-
-
+  QListWidgetItem *item = mTagListBox->takeItem( first );
+  // now selected item is at idx(idx-1), so
+  // insert the other item at idx, ie. above(below).
   mPreviousTag = second;
-
+  mTagListBox->insertItem( second, item );
   slotEmitChangeCheck();
 }
 
 void AppearancePage::MessageTagTab::slotRecordTagSettings( int aIndex )
 {
-  if ( ( aIndex < 0 ) || ( aIndex >= int( mTagListBox->count() ) ) || (mMsgTagList.count() <= aIndex) )
+  if ( ( aIndex < 0 ) || ( aIndex >= int( mTagListBox->count() ) )  )
     return;
+  QListWidgetItem *item = mTagListBox->item( aIndex );
+  TagListWidgetItem *tagItem = static_cast<TagListWidgetItem*>( item );
 
-  KMail::Tag::Ptr tmp_desc = mMsgTagList.at( aIndex );
+  KMail::Tag::Ptr tmp_desc = tagItem->kmailTag();
 
-  tmp_desc->tagName = mTagListBox->item( aIndex )->text();
+  tmp_desc->tagName = tagItem->text();
 
   tmp_desc->textColor = mTextColorCheck->isChecked() ?
                           mTextColorCombo->color() : QColor();
@@ -1913,7 +1901,7 @@ void AppearancePage::MessageTagTab::slotRecordTagSettings( int aIndex )
 void AppearancePage::MessageTagTab::slotUpdateTagSettingWidgets( int aIndex )
 {
   //Check if selection is valid
-  if ( ( aIndex < 0 ) || ( mTagListBox->currentRow() < 0 ) || ( mMsgTagList.count() <= aIndex ) ) {
+  if ( ( aIndex < 0 ) || ( mTagListBox->currentRow() < 0 )  ) {
     mTagRemoveButton->setEnabled( false );
     mTagUpButton->setEnabled( false );
     mTagDownButton->setEnabled( false );
@@ -1933,10 +1921,11 @@ void AppearancePage::MessageTagTab::slotUpdateTagSettingWidgets( int aIndex )
 
   mTagRemoveButton->setEnabled( true );
   mTagUpButton->setEnabled( ( 0 != aIndex ) );
-  mTagDownButton->setEnabled(
-                          ( ( int( mMsgTagList.count() ) - 1 ) != aIndex ) );
+  mTagDownButton->setEnabled(( ( int( mTagListBox->count() ) - 1 ) != aIndex ) );
 
-  KMail::Tag::Ptr tmp_desc = mMsgTagList.at( mTagListBox->currentRow() );
+  QListWidgetItem * item = mTagListBox->currentItem();
+  TagListWidgetItem *tagItem = static_cast<TagListWidgetItem*>( item );
+  KMail::Tag::Ptr tmp_desc = tagItem->kmailTag();
 
   mTagNameLineEdit->setEnabled( true );
   mTagNameLineEdit->setText( tmp_desc->tagName );
@@ -1987,8 +1976,10 @@ void AppearancePage::MessageTagTab::slotSelectionChanged()
 void AppearancePage::MessageTagTab::slotRemoveTag()
 {
   int tmp_index = mTagListBox->currentRow();
-  if ( !( tmp_index < 0 ) ) {
-    KMail::Tag::Ptr tmp_desc = mMsgTagList.takeAt( tmp_index );
+  if ( tmp_index >= 0 ) {
+    QListWidgetItem * item = mTagListBox->currentItem();
+    TagListWidgetItem *tagItem = static_cast<TagListWidgetItem*>( item );
+    KMail::Tag::Ptr tmp_desc = tagItem->kmailTag();
     Nepomuk::Tag nepomukTag( tmp_desc->nepomukResourceUri );
     nepomukTag.remove();
     mPreviousTag = -1;
@@ -1999,7 +1990,7 @@ void AppearancePage::MessageTagTab::slotRemoveTag()
     disconnect( mTagListBox, SIGNAL(currentItemChanged(QListWidgetItem*,QListWidgetItem*)),
              this, SLOT(slotSelectionChanged()) );
 
-    delete mTagListBox->takeItem( tmp_index );
+    delete item;
     connect( mTagListBox, SIGNAL(currentItemChanged(QListWidgetItem*,QListWidgetItem*)),
              this, SLOT(slotSelectionChanged()) );
 
@@ -2038,14 +2029,13 @@ void AppearancePage::MessageTagTab::slotAddLineTextChanged( const QString &aText
 
 void AppearancePage::MessageTagTab::slotAddNewTag()
 {
-  const int tmp_priority = mMsgTagList.count();
+  const int tmp_priority = mTagListBox->count();
   const QString newTagName = mTagAddLineEdit->text();
   Nepomuk::Tag nepomukTag( newTagName );
   nepomukTag.setLabel( newTagName );
 
   KMail::Tag::Ptr tag = KMail::Tag::fromNepomuk( nepomukTag );
   tag->priority = tmp_priority;
-  mMsgTagList.append( tag );
   slotEmitChangeCheck();
   TagListWidgetItem *newItem = new TagListWidgetItem( KIcon( tag->iconName ), newTagName,  mTagListBox );
   newItem->setKMailTag( tag );
@@ -2059,17 +2049,16 @@ void AppearancePage::MessageTagTab::doLoadFromGlobalSettings()
   if ( !mNepomukActive )
     return;
 
-  mMsgTagList.clear();
   mTagListBox->clear();
-
+  QList<KMail::TagPtr> msgTagList;
   foreach( const Nepomuk::Tag &nepomukTag, Nepomuk::Tag::allTags() ) {
     KMail::Tag::Ptr tag = KMail::Tag::fromNepomuk( nepomukTag );
-    mMsgTagList.append( tag );
+    msgTagList.append( tag );
   }
 
-  qSort( mMsgTagList.begin(), mMsgTagList.end(), KMail::Tag::compare );
+  qSort( msgTagList.begin(), msgTagList.end(), KMail::Tag::compare );
 
-  foreach( const KMail::Tag::Ptr& tag, mMsgTagList ) {
+  foreach( const KMail::Tag::Ptr& tag, msgTagList ) {
     TagListWidgetItem *newItem = new TagListWidgetItem( KIcon( tag->iconName ), tag->tagName, mTagListBox );
     newItem->setKMailTag( tag );
 
@@ -2090,7 +2079,7 @@ void AppearancePage::MessageTagTab::doLoadFromGlobalSettings()
 
   // Save the original list
   mOriginalMsgTagList.clear();
-  foreach( const KMail::TagPtr &tag, mMsgTagList ) {
+  foreach( const KMail::TagPtr &tag, msgTagList ) {
     mOriginalMsgTagList.append( KMail::TagPtr( new KMail::Tag( *tag ) ) );
   }
 }
@@ -2101,11 +2090,13 @@ void AppearancePage::MessageTagTab::save()
     return;
   slotRecordTagSettings( mTagListBox->currentRow() );
 
-  const int numberOfMsgTagList( mMsgTagList.count() );
+  const int numberOfMsgTagList( mTagListBox->count() );
   if ( mOriginalMsgTagList.count() == numberOfMsgTagList ) {
     bool nothingChanged = true;
     for ( int i=0; i<numberOfMsgTagList; ++i ) {
-      if ( *(mMsgTagList[i]) != *(mOriginalMsgTagList[i]) ) {
+      QListWidgetItem * item = mTagListBox->currentItem();
+      TagListWidgetItem *tagItem = static_cast<TagListWidgetItem*>( item );
+      if ( *(tagItem->kmailTag()) != *(mOriginalMsgTagList[i]) ) {
         nothingChanged = false;
         break;
       }
@@ -2115,9 +2106,11 @@ void AppearancePage::MessageTagTab::save()
     }
   }
 
-  foreach( const KMail::Tag::Ptr &tag, mMsgTagList ) {
-
-    tag->priority = mMsgTagList.indexOf( tag );
+  for ( int i=0; i<numberOfMsgTagList; ++i ) {
+    QListWidgetItem * item = mTagListBox->currentItem();
+    TagListWidgetItem *tagItem = static_cast<TagListWidgetItem*>( item );
+    KMail::Tag::Ptr tag = tagItem->kmailTag();
+    tag->priority = i;
 
     KMail::Tag::SaveFlags saveFlags = 0;
     if ( mTextColorCheck->isChecked() )
