@@ -2094,36 +2094,22 @@ void AppearancePage::MessageTagTab::save()
   slotRecordTagSettings( mTagListBox->currentRow() );
 
   const int numberOfMsgTagList( mTagListBox->count() );
-  if ( mOriginalMsgTagList.count() == numberOfMsgTagList ) {
-    bool nothingChanged = true;
-    for ( int i=0; i<numberOfMsgTagList; ++i ) {
-      QListWidgetItem * item = mTagListBox->currentItem();
-      TagListWidgetItem *tagItem = static_cast<TagListWidgetItem*>( item );
-      if ( *(tagItem->kmailTag()) != *(mOriginalMsgTagList[i]) ) {
-        nothingChanged = false;
-        break;
-      }
-    }
-    if ( nothingChanged ) {
-      return;
-    }
-  }
-
   for ( int i=0; i<numberOfMsgTagList; ++i ) {
     QListWidgetItem * item = mTagListBox->currentItem();
     TagListWidgetItem *tagItem = static_cast<TagListWidgetItem*>( item );
-    KMail::Tag::Ptr tag = tagItem->kmailTag();
-    tag->priority = i;
+    if ( ( i>=mOriginalMsgTagList.count() ) || *(tagItem->kmailTag()) != *(mOriginalMsgTagList[i]) ) {
+      KMail::Tag::Ptr tag = tagItem->kmailTag();
+      tag->priority = i;
 
-    KMail::Tag::SaveFlags saveFlags = 0;
-    if ( mTextColorCheck->isChecked() )
-      saveFlags |= KMail::Tag::TextColor;
-    if ( mBackgroundColorCheck->isChecked() )
-      saveFlags |= KMail::Tag::BackgroundColor;
-    if ( mTextFontCheck->isChecked() )
-      saveFlags |= KMail::Tag::Font;
-
-    tag->saveToNepomuk( saveFlags );
+      KMail::Tag::SaveFlags saveFlags = 0;
+      if ( mTextColorCheck->isChecked() )
+        saveFlags |= KMail::Tag::TextColor;
+      if ( mBackgroundColorCheck->isChecked() )
+        saveFlags |= KMail::Tag::BackgroundColor;
+      if ( mTextFontCheck->isChecked() )
+        saveFlags |= KMail::Tag::Font;
+      tag->saveToNepomuk( saveFlags );
+    }
   }
 
   MessageCore::TagListMonitor::triggerUpdate();
