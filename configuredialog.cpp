@@ -1686,6 +1686,7 @@ AppearancePageMessageTagTab::AppearancePageMessageTagTab( QWidget * parent )
 
     //First row for renaming
     mTagNameLineEdit = new KLineEdit( mTagSettingGroupBox );
+    mTagNameLineEdit->setTrapReturnKey( true );
     settings->addWidget( mTagNameLineEdit, 1, 1 );
 
     QLabel *namelabel = new QLabel( i18nc("@label:listbox Name of the tag", "Name:")
