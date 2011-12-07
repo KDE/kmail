@@ -1834,7 +1834,6 @@ void AppearancePage::MessageTagTab::slotMoveTagUp()
   if ( tmp_index <= 0 )
     return;
   swapTagsInListBox( tmp_index, tmp_index - 1 );
-  mTagListBox->setCurrentRow( tmp_index - 1 );
     //Reached the first row
   if ( 1 == tmp_index )
     mTagUpButton->setEnabled( false );
@@ -1850,7 +1849,6 @@ void AppearancePage::MessageTagTab::slotMoveTagDown()
         || ( tmp_index >= int( mTagListBox->count() ) - 1 ) )
     return;
   swapTagsInListBox( tmp_index, tmp_index + 1 );
-  mTagListBox->setCurrentRow( tmp_index + 1 );
     //Reached last row
   if ( int( mTagListBox->count() ) - 2 == tmp_index )
     mTagDownButton->setEnabled( false );
@@ -1862,11 +1860,16 @@ void AppearancePage::MessageTagTab::slotMoveTagDown()
 void AppearancePage::MessageTagTab::swapTagsInListBox( const int first,
                                                        const int second )
 {
+  disconnect( mTagListBox, SIGNAL(currentItemChanged(QListWidgetItem*,QListWidgetItem*)),
+           this, SLOT(slotSelectionChanged()) );
   QListWidgetItem *item = mTagListBox->takeItem( first );
   // now selected item is at idx(idx-1), so
   // insert the other item at idx, ie. above(below).
   mPreviousTag = second;
   mTagListBox->insertItem( second, item );
+  mTagListBox->setCurrentRow( second );
+  connect( mTagListBox, SIGNAL(currentItemChanged(QListWidgetItem*,QListWidgetItem*)),
+           this, SLOT(slotSelectionChanged()) );
   slotEmitChangeCheck();
 }
 
