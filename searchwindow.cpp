@@ -659,15 +659,16 @@ void SearchWindow::scheduleRename( const QString &text )
 
 void SearchWindow::renameSearchFolder()
 {
-  if ( mFolder.isValid() && ( mFolder.name() != mSearchFolderEdt->text() ) ) {
-    mFolder.setName( mSearchFolderEdt->text() );
-    Akonadi::CollectionModifyJob *job = new Akonadi::CollectionModifyJob( mFolder, this );
-    connect( job, SIGNAL(result(KJob*)),
-             this, SLOT(slotSearchFolderRenameDone(KJob*)) );
-  }
-
-  if ( mFolder.isValid() )
+  const QString name = mSearchFolderEdt->text();
+  if ( mFolder.isValid() ) {
+    if ( mFolder.name() != name ) {
+      mFolder.setName( name );
+      Akonadi::CollectionModifyJob *job = new Akonadi::CollectionModifyJob( mFolder, this );
+      connect( job, SIGNAL(result(KJob*)),
+               this, SLOT(slotSearchFolderRenameDone(KJob*)) );
+    }
     mSearchFolderOpenBtn->setEnabled( true );
+  }
 }
 
 void SearchWindow::slotSearchFolderRenameDone( KJob *job )
