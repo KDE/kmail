@@ -419,7 +419,6 @@ void SearchWindow::setEnabledSearchButton( bool )
 void SearchWindow::updateCollectionStatistic(Akonadi::Collection::Id id,Akonadi::CollectionStatistics statistic)
 {
   QString genMsg, detailMsg;
-  int numMatches = 0;
   if ( id == mFolder.id() ) {
     genMsg = i18np( "%1 match", "%1 matches", statistic.count() );
     detailMsg = i18n( "Searching in %1", mFolder.name() );
@@ -567,6 +566,7 @@ void SearchWindow::searchDone( KJob* job )
       } else {
         mResultModel->setCollection( mFolder );
         mLbxMatches->setModel( mResultModel );
+        mAkonadiStandardAction->setItemSelectionModel( mLbxMatches->selectionModel() );
         mLbxMatches->header()->restoreState( mHeaderState );
       }
 
