@@ -1659,6 +1659,8 @@ AppearancePageMessageTagTab::AppearancePageMessageTagTab( QWidget * parent )
     tageditgrid->addLayout( listboxgrid );
     mTagListBox = new QListWidget( mTagsGroupBox );
     mTagListBox->setDragDropMode(QAbstractItemView::InternalMove);
+    connect( mTagListBox->model(),SIGNAL(rowsMoved(QModelIndex,int,int,QModelIndex,int)),SLOT(slotRowsMoved(QModelIndex,int,int,QModelIndex,int)) );
+
     mTagListBox->setMinimumWidth( 150 );
     listboxgrid->addWidget( mTagListBox );
 
@@ -1828,18 +1830,37 @@ void AppearancePage::MessageTagTab::slotEmitChangeCheck()
   slotEmitChanged();
 }
 
+void AppearancePage::MessageTagTab::slotRowsMoved( const QModelIndex &,
+                                                   int sourcestart, int sourceEnd,
+                                                   const QModelIndex &, int destinationRow )
+{
+  Q_UNUSED( sourceEnd );
+  Q_UNUSED( sourcestart );
+  Q_UNUSED( destinationRow );
+  updateButtons();
+  slotEmitChangeCheck();
+}
+
+
+void AppearancePage::MessageTagTab::updateButtons()
+{
+  const int currentIndex = mTagListBox->currentRow();
+
+  const bool theFirst = ( currentIndex == 0 );
+  const bool theLast = ( currentIndex >= (int)mTagListBox->count() - 1 );
+  const bool aFilterIsSelected = ( currentIndex >= 0 );
+
+  mTagUpButton->setEnabled( aFilterIsSelected && !theFirst );
+  mTagDownButton->setEnabled( aFilterIsSelected && !theLast );
+}
+
 void AppearancePage::MessageTagTab::slotMoveTagUp()
 {
   const int tmp_index = mTagListBox->currentRow();
   if ( tmp_index <= 0 )
     return;
   swapTagsInListBox( tmp_index, tmp_index - 1 );
-    //Reached the first row
-  if ( 1 == tmp_index )
-    mTagUpButton->setEnabled( false );
-    //Escaped from last row
-  if ( int( mTagListBox->count() ) - 1 == tmp_index )
-    mTagDownButton->setEnabled( true );
+  updateButtons();
 }
 
 void AppearancePage::MessageTagTab::slotMoveTagDown()
@@ -1849,12 +1870,7 @@ void AppearancePage::MessageTagTab::slotMoveTagDown()
         || ( tmp_index >= int( mTagListBox->count() ) - 1 ) )
     return;
   swapTagsInListBox( tmp_index, tmp_index + 1 );
-    //Reached last row
-  if ( int( mTagListBox->count() ) - 2 == tmp_index )
-    mTagDownButton->setEnabled( false );
-    //Escaped from first row
-  if ( 0 == tmp_index )
-    mTagUpButton->setEnabled( true );
+  updateButtons();
 }
 
 void AppearancePage::MessageTagTab::swapTagsInListBox( const int first,
@@ -2064,7 +2080,6 @@ void AppearancePage::MessageTagTab::doLoadFromGlobalSettings()
   foreach( const KMail::Tag::Ptr& tag, msgTagList ) {
     TagListWidgetItem *newItem = new TagListWidgetItem( KIcon( tag->iconName ), tag->tagName, mTagListBox );
     newItem->setKMailTag( tag );
-
     if ( tag->priority == -1 )
       tag->priority = mTagListBox->count() - 1;
   }

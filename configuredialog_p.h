@@ -438,10 +438,14 @@ private slots:
   since calling externally decouples the name in the list box from name edit box*/
   void slotNameLineTextChanged( const QString & );
   void slotIconNameChanged( const QString &iconName );
+  void slotRowsMoved( const QModelIndex &,
+                      int sourcestart, int sourceEnd,
+                      const QModelIndex &, int destinationRow );
 
 private:
   virtual void doLoadFromGlobalSettings();
   void swapTagsInListBox( const int first, const int second );
+  void updateButtons();
 
 private: // data
 
