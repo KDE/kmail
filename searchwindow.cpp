@@ -560,15 +560,9 @@ void SearchWindow::searchDone( KJob* job )
 
       mSearchJob = 0;
 
-      if ( !mResultModel ) {
-        createSearchModel();
-
-      } else {
-        mResultModel->setCollection( mFolder );
-        mLbxMatches->setModel( mResultModel );
-        mAkonadiStandardAction->setItemSelectionModel( mLbxMatches->selectionModel() );
-        mLbxMatches->header()->restoreState( mHeaderState );
-      }
+      mResultModel->deleteLater();
+      mResultModel = 0;
+      createSearchModel();
 
       mTimer->stop();
 
