@@ -720,7 +720,7 @@ int KMKernel::openComposer (const QString &to, const QString &cc,
       msgPart->contentType()->setName( attachName, "utf-8" );
       msgPart->contentTransferEncoding()->fromUnicodeString(attachCte, "utf-8" );
       msgPart->setBody( attachData ); //TODO: check if was setBodyEncoded
-      msgPart->contentType()->setMimeType( attachType + "/" +  attachSubType );
+      msgPart->contentType()->setMimeType( attachType + '/' +  attachSubType );
       msgPart->contentDisposition()->setParameter( attachParamAttr, attachParamValue ); //TODO: Check if the content disposition parameter needs to be set!
        if( ! MessageViewer::GlobalSettings::self()->exchangeCompatibleInvitations() ) {
         msgPart->contentDisposition()->fromUnicodeString(attachContDisp, "utf-8" );

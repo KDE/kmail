@@ -72,7 +72,6 @@
 #include <messagecomposer/globalpart.h>
 #include <messagecomposer/infopart.h>
 #include <messagecomposer/textpart.h>
-#include <messagecomposer/messagehelper.h>
 #include <messagecomposersettings.h>
 #include <messagecomposer/messagehelper.h>
 #include <messagecomposer/signaturecontroller.h>

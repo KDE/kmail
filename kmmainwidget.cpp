@@ -113,7 +113,6 @@
 #include <akonadi/collectiondialog.h>
 #include <akonadi/collectionstatistics.h>
 #include <akonadi/collectionstatisticsdelegate.h>
-#include <akonadi/favoritecollectionsmodel.h>
 #include <akonadi/statisticsproxymodel.h>
 #include <Akonadi/EntityMimeTypeFilterModel>
 #include <akonadi/kmime/messageflags.h>
@@ -150,7 +149,6 @@
 #include <kstandarddirs.h>
 #include <kstandardaction.h>
 #include <ktoggleaction.h>
-#include <ktoolinvocation.h>
 #include <knotification.h>
 #include <knotifyconfigwidget.h>
 #include <kstringhandler.h>
