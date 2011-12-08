@@ -23,8 +23,7 @@
 
 #include "kmail_export.h"
 #include "tag.h"
-
-#include <Soprano/Statement>
+#include <QMap>
 
 class KActionCollection;
 class KXMLGUIClient;
@@ -34,12 +33,6 @@ class QSignalMapper;
 class KAction;
 namespace Akonadi {
   class Item;
-}
-
-namespace Soprano {
-  namespace Util {
-    class SignalCacheModel;
-  }
 }
 
 namespace MessageCore {
@@ -113,7 +106,6 @@ namespace KMail {
     private Q_SLOTS:
 
       void tagsChanged();
-      //void statementChanged( Soprano::Statement statement );
 
     private:
       void createTagAction( const KMail::Tag::Ptr &tag, bool addToMenu );
@@ -133,8 +125,6 @@ namespace KMail {
       // The actions of all tags that are in the toolbar
       QList<QAction*> mToolbarActions;
 
-      // Needed so we can listen to Nepomuk Tag changes
-      //QScopedPointer<Soprano::Util::SignalCacheModel> mSopranoModel;
   };
 }
 

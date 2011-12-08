@@ -1,6 +1,6 @@
 /* Copyright 2010 Thomas McGuire <mcguire@kde.org>
    Copyright 2011 Laurent Montel <montel@kde.org>
-   
+
    This program is free software; you can redistribute it and/or
    modify it under the terms of the GNU General Public License as
    published by the Free Software Foundation; either version 2 of
@@ -22,6 +22,7 @@
 #include "messageactions.h"
 
 #include "messagecore/taglistmonitor.h"
+#include <nepomuk/tag.h>
 
 #include <KAction>
 #include <KActionCollection>
@@ -29,10 +30,6 @@
 #include <KMenu>
 #include <KToggleAction>
 #include <KXMLGUIClient>
-#include <Nepomuk/Resource>
-#include <Nepomuk/ResourceManager>
-#include <Nepomuk/Tag>
-#include <Soprano/Util/SignalCacheModel>
 
 #include <QSignalMapper>
 
@@ -48,20 +45,10 @@ TagActionManager::TagActionManager( QObject *parent, KActionCollection *actionCo
     mMessageTagToggleMapper( 0 ),
     mGUIClient( guiClient ),
     mTagListMonitor( new MessageCore::TagListMonitor( this ) ),
-    mSeparatorAction( 0 ), 
+    mSeparatorAction( 0 ),
     mMoreAction( 0 )
-#if 0
-	, 
-    mSopranoModel( new Soprano::Util::SignalCacheModel( Nepomuk::ResourceManager::instance()->mainModel() ) )
-#endif
 {
-  connect( mTagListMonitor, SIGNAL(tagsChanged()), this, SLOT(tagsChanged()) ); 
-  // Listen to Nepomuk tag updates
-  // ### This is way too slow for now, we use triggerUpdate() instead
-  /*connect( mSopranoModel.data(), SIGNAL(statementAdded(Soprano::Statement)),
-           SLOT(statementChanged(Soprano::Statement)) );
-  connect( mSopranoModel.data(), SIGNAL(statementRemoved(Soprano::Statement)),
-           SLOT(statementChanged(Soprano::Statement)) );*/
+  connect( mTagListMonitor, SIGNAL(tagsChanged()), this, SLOT(tagsChanged()) );
   KAction *separator = new KAction( this );
   separator->setSeparator( true );
   mMessageActions->messageStatusMenu()->menu()->addAction( separator );
@@ -70,19 +57,6 @@ TagActionManager::TagActionManager( QObject *parent, KActionCollection *actionCo
 TagActionManager::~TagActionManager()
 {
 }
-
-#if 0
-void TagActionManager::statementChanged( Soprano::Statement statement )
-{
-  // When a tag changes, immediatley update the actions to reflect that
-  if ( statement.subject().type() == Soprano::Node::ResourceNode ) {
-    Nepomuk::Resource res( statement.subject().uri() );
-    if ( res.resourceType() == Nepomuk::Tag::resourceTypeUri() ) {
-      createActions();
-    }
-  }
-}
-#endif
 
 void TagActionManager::clearActions()
 {
@@ -110,7 +84,7 @@ void TagActionManager::clearActions()
     mMessageActions->messageStatusMenu()->removeAction( mMoreAction );
     mMoreAction = 0;
   }
-  
+
   mTagActions.clear();
   delete mMessageTagToggleMapper;
   mMessageTagToggleMapper = 0;
@@ -137,7 +111,7 @@ void TagActionManager::createTagAction( const Tag::Ptr &tag, bool addToMenu )
   mTagActions.insert( tag->nepomukResourceUri.toString(), tagAction );
   if ( addToMenu )
     mMessageActions->messageStatusMenu()->menu()->addAction( tagAction );
-      
+
   if ( tag->inToolbar )
     mToolbarActions.append( tagAction );
 }
@@ -145,12 +119,12 @@ void TagActionManager::createTagAction( const Tag::Ptr &tag, bool addToMenu )
 void TagActionManager::createActions()
 {
   clearActions();
-  
+
 
   const QList<Nepomuk::Tag> alltags( Nepomuk::Tag::allTags() );
   if ( alltags.isEmpty() )
     return;
-  
+
   // Build a sorted list of tags
   QList<Tag::Ptr> tagList;
   foreach( const Nepomuk::Tag &nepomukTag, alltags ) {
@@ -172,13 +146,13 @@ void TagActionManager::createActions()
     {
       if ( tag->inToolbar || !tag->shortcut.isEmpty() )
         createTagAction( tag, false );
-      
+
       if ( i == s_numberMaxTag && i <tagList.count() )
       {
         mSeparatorAction = new KAction( this );
         mSeparatorAction->setSeparator( true );
         mMessageActions->messageStatusMenu()->menu()->addAction( mSeparatorAction );
-      
+
         mMoreAction = new KAction( i18n( "More..." ), this );
         mMessageActions->messageStatusMenu()->menu()->addAction( mMoreAction );
         connect( mMoreAction, SIGNAL(triggered(bool)),
