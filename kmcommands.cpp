@@ -1150,7 +1150,6 @@ KMCommand::Result KMSetTagCommand::execute()
   Q_FOREACH( const Akonadi::Item& item, mItem ) {
     Nepomuk::Resource n_resource( item.url() );
     QList<Nepomuk::Tag> n_tag_list;
-
     if ( mMode != CleanExistingAndAddNew ){
       n_tag_list = n_resource.tags();
     }
@@ -1171,10 +1170,10 @@ KMCommand::Result KMSetTagCommand::execute()
               break;
             }
           }
+          n_resource.setTags( n_tag_list );
         }
       }
     }
-    n_resource.setTags( n_tag_list );
   }
   return OK;
 }
