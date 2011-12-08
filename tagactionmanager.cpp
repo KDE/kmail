@@ -49,8 +49,11 @@ TagActionManager::TagActionManager( QObject *parent, KActionCollection *actionCo
     mGUIClient( guiClient ),
     mTagListMonitor( new MessageCore::TagListMonitor( this ) ),
     mSeparatorAction( 0 ), 
-    mMoreAction( 0 ), 
+    mMoreAction( 0 )
+#if 0
+	, 
     mSopranoModel( new Soprano::Util::SignalCacheModel( Nepomuk::ResourceManager::instance()->mainModel() ) )
+#endif
 {
   connect( mTagListMonitor, SIGNAL(tagsChanged()), this, SLOT(tagsChanged()) ); 
   // Listen to Nepomuk tag updates
@@ -68,6 +71,7 @@ TagActionManager::~TagActionManager()
 {
 }
 
+#if 0
 void TagActionManager::statementChanged( Soprano::Statement statement )
 {
   // When a tag changes, immediatley update the actions to reflect that
@@ -78,6 +82,7 @@ void TagActionManager::statementChanged( Soprano::Statement statement )
     }
   }
 }
+#endif
 
 void TagActionManager::clearActions()
 {

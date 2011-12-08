@@ -113,7 +113,7 @@ namespace KMail {
     private Q_SLOTS:
 
       void tagsChanged();
-      void statementChanged( Soprano::Statement statement );
+      //void statementChanged( Soprano::Statement statement );
 
     private:
       void createTagAction( const KMail::Tag::Ptr &tag, bool addToMenu );
@@ -134,7 +134,7 @@ namespace KMail {
       QList<QAction*> mToolbarActions;
 
       // Needed so we can listen to Nepomuk Tag changes
-      QScopedPointer<Soprano::Util::SignalCacheModel> mSopranoModel;
+      //QScopedPointer<Soprano::Util::SignalCacheModel> mSopranoModel;
   };
 }
 
