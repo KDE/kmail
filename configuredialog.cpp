@@ -423,6 +423,7 @@ AccountsPageReceivingTab::AccountsPageReceivingTab( QWidget * parent )
   mAccountsReceiving.mAccountList->agentFilterProxyModel()->addCapabilityFilter( "Resource" ); // show only resources, no agents
   mAccountsReceiving.mAccountList->agentFilterProxyModel()->excludeCapabilities( "MailTransport" );
   mAccountsReceiving.mAccountList->agentFilterProxyModel()->excludeCapabilities( "Notes" );
+  mAccountsReceiving.mAccountList->view()->setSelectionMode( QAbstractItemView::SingleSelection );
 
   mAccountsReceiving.mFilterAccount->setProxy( mAccountsReceiving.mAccountList->agentFilterProxyModel() );
   mAccountsReceiving.mFilterAccount->lineEdit()->setTrapReturnKey( true );
