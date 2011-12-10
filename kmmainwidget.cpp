@@ -113,7 +113,6 @@
 #include <akonadi/collectiondialog.h>
 #include <akonadi/collectionstatistics.h>
 #include <akonadi/collectionstatisticsdelegate.h>
-#include <akonadi/statisticsproxymodel.h>
 #include <Akonadi/EntityMimeTypeFilterModel>
 #include <akonadi/kmime/messageflags.h>
 #include <akonadi/collectiondeletejob.h>
