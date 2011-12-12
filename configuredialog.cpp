@@ -2106,14 +2106,29 @@ void AppearancePage::MessageTagTab::doLoadFromGlobalSettings()
 
 void AppearancePage::MessageTagTab::save()
 {
-  if ( !mNepomukActive )
+  if ( !mNepomukActive ) {
     return;
-  slotRecordTagSettings( mTagListBox->currentRow() );
+  }
 
-  const int numberOfMsgTagList( mTagListBox->count() );
-  for ( int i=0; i<numberOfMsgTagList; ++i ) {
-    QListWidgetItem * item = mTagListBox->currentItem();
-    TagListWidgetItem *tagItem = static_cast<TagListWidgetItem*>( item );
+  const int currentRow = mTagListBox->currentRow();
+  if ( currentRow < 0 ) {
+    return;
+  }
+
+  const int count = mTagListBox->count();
+  if ( !count ) {
+    return;
+  }
+
+  QListWidgetItem *item = mTagListBox->currentItem();
+  TagListWidgetItem *tagItem = static_cast<TagListWidgetItem*>( item );
+  if ( !tagItem ) {
+    return;
+  }
+
+  slotRecordTagSettings( currentRow );
+  const int numberOfMsgTagList = count;
+  for ( int i=0; i < numberOfMsgTagList; ++i ) {
     if ( ( i>=mOriginalMsgTagList.count() ) || *(tagItem->kmailTag()) != *(mOriginalMsgTagList[i]) ) {
       KMail::Tag::Ptr tag = tagItem->kmailTag();
       tag->priority = i;
@@ -3085,7 +3100,7 @@ void ComposerPage::HeadersTab::save()
 
   int numValidEntries = 0;
   QTreeWidgetItem *item = 0;
-  const int numberOfEntry( mTagList->topLevelItemCount() );
+  const int numberOfEntry = mTagList->topLevelItemCount();
   for ( int i = 0; i < numberOfEntry; ++i ) {
     item = mTagList->topLevelItem( i );
     if( !item->text(0).isEmpty() ) {
