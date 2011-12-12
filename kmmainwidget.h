@@ -434,7 +434,7 @@ class KMAIL_EXPORT KMMainWidget : public QWidget
 
     /** Show a splash screen for the longer-lasting operation */
     void slotShowBusySplash();
-  
+
     /**
       Show a message screen explaining that we are currently offline, when
       an online folder is selected.
@@ -506,8 +506,8 @@ class KMAIL_EXPORT KMMainWidget : public QWidget
     MailCommon::FolderSelectionDialog* selectFromAllFoldersDialog();
 
 
-    void addInfoInNotification( const Akonadi::Collection&col );
-    void updateInfoInNotification( const Akonadi::Collection& from, const Akonadi::Collection& to );
+    void addInfoInNotification( const Akonadi::Collection&col, Akonadi::Item::Id id );
+    void updateInfoInNotification( const Akonadi::Collection& from, const Akonadi::Collection& to, Akonadi::Item::Id id );
 
     /**
      * Internal helper that applies the current settings so the
@@ -540,7 +540,7 @@ class KMAIL_EXPORT KMMainWidget : public QWidget
 
     void slotCollectionPropertiesContinued( KJob* job );
     void slotDeletionCollectionResult(KJob* job);
-  
+
 private:
     // Message actions
     KAction *mDeleteAction, *mTrashThreadAction,
@@ -630,7 +630,7 @@ private:
     MessageList::Core::PreSelectionMode mPreSelectionMode;
 
     /// Used during mail check to remember how many mails there are in the folders
-    QMap<Akonadi::Collection::Id, int> mCheckMail;
+    QMap<Akonadi::Collection::Id, QList<Akonadi::Item::Id> > mCheckMail;
 
     bool mCheckMailInProgress;
     QTimer m_notificationTimer;
