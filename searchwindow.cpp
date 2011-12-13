@@ -455,7 +455,6 @@ void SearchWindow::slotSearch()
 
   mStopped = false;
 
-  mSearchFolderOpenBtn->setEnabled( true );
   if ( mSearchFolderEdt->text().isEmpty() ) {
     mSearchFolderEdt->setText( i18n( "Last Search" ) );
   }
@@ -507,6 +506,8 @@ void SearchWindow::slotSearch()
   qDebug() << query;
   if ( query.isEmpty() )
     return;
+  mSearchFolderOpenBtn->setEnabled( true );
+
   if ( !mFolder.isValid() ) {
     // FIXME if another app created a virtual 'Last Search' folder without
     // out custom attributes it will result in problems
