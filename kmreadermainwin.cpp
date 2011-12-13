@@ -133,6 +133,7 @@ void KMReaderMainWin::setUseFixedFont( bool useFixedFont )
 
 void KMReaderMainWin::showMessage( const QString & encoding, const Akonadi::Item &msg, const Akonadi::Collection& parentCollection )
 {
+
   mParentCollection = parentCollection;
   mReaderWin->setOverrideEncoding( encoding );
   mReaderWin->setMessage( msg, MessageViewer::Viewer::Force );
@@ -142,7 +143,7 @@ void KMReaderMainWin::showMessage( const QString & encoding, const Akonadi::Item
   mMsg = msg;
   mMsgActions->setCurrentMessage( msg );
 
-  const bool canChange = mParentCollection.isValid() ? !( mParentCollection.rights() & Akonadi::Collection::ReadOnly ) : false;
+  const bool canChange = mParentCollection.isValid() ? (bool)( mParentCollection.rights() & Akonadi::Collection::CanDeleteItem ) : false;
   mTrashAction->setEnabled( canChange );
 
   menuBar()->show();
@@ -153,15 +154,15 @@ void KMReaderMainWin::showMessage( const QString& encoding, KMime::Message::Ptr 
 {
   if ( !message )
     return;
-  
+
   Akonadi::Item item;
 
   item.setPayload<KMime::Message::Ptr>( message );
   item.setMimeType( KMime::Message::mimeType() );
-  
+
   mMsg = item;
   mMsgActions->setCurrentMessage( item );
-  
+
   mReaderWin->setOverrideEncoding( encoding );
   mReaderWin->setMessage( message );
   setCaption( message->subject()->asUnicodeString() );
@@ -235,7 +236,7 @@ void KMReaderMainWin::slotForwardAttachedMsg()
    }
    else
      command = new KMForwardAttachedCommand( this, mReaderWin->message() );
-   
+
    connect( command, SIGNAL(completed(KMCommand*)),
             this, SLOT(slotReplyOrForwardFinished()) );
    command->start();
@@ -257,7 +258,7 @@ void KMReaderMainWin::slotCustomReplyToMsg( const QString &tmpl )
   if ( !mReaderWin->message().hasPayload<KMime::Message::Ptr>() ) return;
   KMCommand *command = new KMReplyCommand( this,
                                            mReaderWin->message(),
-                                           MessageComposer::ReplySmart, 
+                                           MessageComposer::ReplySmart,
                                            mReaderWin->copyText(),
                                            false, tmpl );
   connect( command, SIGNAL(completed(KMCommand*)),
@@ -271,7 +272,7 @@ void KMReaderMainWin::slotCustomReplyAllToMsg( const QString &tmpl )
   if ( !mReaderWin->message().hasPayload<KMime::Message::Ptr>() ) return;
   KMCommand *command = new KMReplyCommand( this,
                                            mReaderWin->message(),
-                                           MessageComposer::ReplyAll, 
+                                           MessageComposer::ReplyAll,
                                            mReaderWin->copyText(),
                                            false, tmpl );
   connect( command, SIGNAL(completed(KMCommand*)),
@@ -336,7 +337,7 @@ void KMReaderMainWin::setupAccel()
   actionCollection()->addAction("view_source", mViewSourceAction );
   connect(mViewSourceAction, SIGNAL(triggered(bool)), mReaderWin->viewer(), SLOT(slotShowMessageSource()));
   mViewSourceAction->setShortcut(QKeySequence(Qt::Key_V));
-  
+
   //----- Message Menu
 
   fontAction = new KFontAction( i18n("Select Font"), this );
@@ -373,7 +374,7 @@ KAction *KMReaderMainWin::copyActionMenu()
     return action;
   }
   return 0;
- 
+
 }
 
 void KMReaderMainWin::slotCopyItem(QAction*action)
