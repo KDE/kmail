@@ -1300,7 +1300,9 @@ void KMMainWidget::slotItemAdded( const Akonadi::Item &msg, const Akonadi::Colle
     if ( col == CommonKernel->outboxCollectionFolder() ) {
       startUpdateMessageActionsTimer();
     } else {
-      addInfoInNotification( col,msg.id() );
+      if( !CommonKernel->folderIsSentMailFolder(col ) ) {
+          addInfoInNotification( col,msg.id() );
+      }
     }
   }
 }
