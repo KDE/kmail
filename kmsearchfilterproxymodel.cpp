@@ -44,14 +44,21 @@ KMSearchFilterProxyModel::~KMSearchFilterProxyModel()
 }
 
 
-bool KMSearchFilterProxyModel::lessThan( const QModelIndex & left, const QModelIndex & right ) const
+bool KMSearchFilterProxyModel::lessThan( const QModelIndex &left, const QModelIndex &right ) const
 {
-  if ( left.column() == KMSearchMessageModel::Date )
-  {
-    QDateTime leftData = sourceModel()->data(left.sibling( left.row(), KMSearchMessageModel::DateNotTranslated )).toDateTime();
-    QDateTime rightData = sourceModel()->data(right.sibling( right.row(), KMSearchMessageModel::DateNotTranslated )).toDateTime();
+  if ( right.model() && left.model() && left.column() == KMSearchMessageModel::Date )  {
+    if ( sourceModel() ) {
+      QDateTime leftData =
+        sourceModel()->data(
+          left.sibling( left.row(), KMSearchMessageModel::DateNotTranslated ) ).toDateTime();
 
-    return  leftData<rightData;
+      QDateTime rightData =
+        sourceModel()->data(
+          right.sibling( right.row(), KMSearchMessageModel::DateNotTranslated ) ).toDateTime();
+      return  leftData<rightData;
+    } else {
+      return false;
+    }
   }
 
   return QSortFilterProxyModel::lessThan( left, right );

@@ -519,7 +519,7 @@ void SearchWindow::slotSearch()
     mSearchJob = new Akonadi::CollectionModifyJob( mFolder, this );
   }
 
-  connect( mSearchJob, SIGNAL(result(KJob*)), SLOT(searchDone(KJob*)) );
+  connect( mSearchJob, SIGNAL(result(KJob*)), this, SLOT(searchDone(KJob*)) );
 }
 
 void SearchWindow::searchDone( KJob* job )
