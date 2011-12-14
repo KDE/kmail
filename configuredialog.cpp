@@ -981,14 +981,13 @@ AppearancePageColorsTab::AppearancePageColorsTab( QWidget * parent )
   vlay->addLayout( hbox );
   QLabel *l = new QLabel( i18n("Close to quota threshold:"), this );
   hbox->addWidget( l );
-  l->setEnabled( false );
   mCloseToQuotaThreshold = new QSpinBox( this );
   mCloseToQuotaThreshold->setRange( 0, 100 );
   mCloseToQuotaThreshold->setSingleStep( 1 );
   connect( mCloseToQuotaThreshold, SIGNAL(valueChanged(int)),
            this, SLOT(slotEmitChanged()) );
-  mCloseToQuotaThreshold->setEnabled( false );
   mCloseToQuotaThreshold->setSuffix( i18n("%"));
+
   hbox->addWidget( mCloseToQuotaThreshold );
   hbox->addWidget( new QWidget(this), 2 );
 
@@ -997,11 +996,6 @@ AppearancePageColorsTab::AppearancePageColorsTab( QWidget * parent )
            mColorList, SLOT(setEnabled(bool)) );
   connect( mCustomColorCheck, SIGNAL(toggled(bool)),
            mRecycleColorCheck, SLOT(setEnabled(bool)) );
-  connect( mCustomColorCheck, SIGNAL(toggled(bool)),
-           l, SLOT(setEnabled(bool)) );
-  connect( mCustomColorCheck, SIGNAL(toggled(bool)),
-           mCloseToQuotaThreshold, SLOT(setEnabled(bool)) );
-
   connect( mCustomColorCheck, SIGNAL(stateChanged(int)),
            this, SLOT(slotEmitChanged()) );
   connect( mColorList, SIGNAL(changed()),
