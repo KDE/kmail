@@ -70,7 +70,7 @@ using KPIM::RecentAddresses;
 #include "templateparser/templatesconfiguration.h"
 #include "templateparser/customtemplates.h"
 #include "templateparser/globalsettings_base.h"
-
+#include "mailcommon/mailutil.h"
 
 #include "messagecomposer/messagecomposersettings.h"
 
@@ -1040,7 +1040,7 @@ void AppearancePage::ColorsTab::loadColor( bool loadFromConfig )
     QColor( 0xFF, 0xFF, 0x40 ), // pgp unchk
     Qt::red, // pgp bad
     QColor( 0xFF, 0x40, 0x40 ), // warning text color
-    scheme.foreground( KColorScheme::NegativeText ).color(), // close to quota
+    MailCommon::Util::defaultQuotaColor(), // close to quota
     Qt::lightGray, // colorbar plain bg
     Qt::black,     // colorbar plain fg
     Qt::black,     // colorbar html  bg
