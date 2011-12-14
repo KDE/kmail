@@ -62,6 +62,7 @@ using KPIM::RecentAddresses;
 #include "messageviewer/globalsettings.h"
 #include "messageviewer/invitationsettings.h"
 #include "messagelist/core/settings.h"
+#include "messagelist/messagelistutil.h"
 #include "messagecore/globalsettings.h"
 #include "messagecore/taglistmonitor.h"
 
@@ -1030,9 +1031,9 @@ void AppearancePage::ColorsTab::loadColor( bool loadFromConfig )
     scheme.foreground( KColorScheme::LinkText ).color(), // link
     scheme.foreground( KColorScheme::VisitedText ).color(),// visited link
     scheme.foreground( KColorScheme::NegativeText ).color(), // misspelled words
-    Qt::blue, // unread mgs
-    QColor( 0x00, 0x7F, 0x00 ), // important msg
-    scheme.foreground( KColorScheme::LinkText ).color(), // action item mgs
+    MessageList::Util::unreadDefaultMessageColor(), // unread mgs
+    MessageList::Util::importantDefaultMessageColor(), // important msg
+    MessageList::Util::todoDefaultMessageColor(), // action item mgs
     QColor( 0x00, 0x80, 0xFF ), // pgp encrypted
     scheme.background( KColorScheme::PositiveBackground ).color(), // pgp ok, trusted key
     QColor( 0xFF, 0xFF, 0x40 ), // pgp ok, untrusted key
