@@ -58,7 +58,7 @@
 
 
 #include "mailcommon/collectiongeneralpage.h"
-#include "mailcommon/expirationcollectionattribute.h"
+#include "mailcommon/expirecollectionattribute.h"
 #include "mailcommon/filtermanager.h"
 #include "mailcommon/mailfilter.h"
 
@@ -1630,13 +1630,13 @@ void KMMainWidget::slotExpireFolder()
   if ( !mCurrentFolder )
     return;
   bool mustDeleteExpirationAttribute = false;
-  MailCommon::ExpirationCollectionAttribute *attr = MailCommon::ExpirationCollectionAttribute::expirationCollectionAttribute( mCurrentFolder->collection(), mustDeleteExpirationAttribute );
+  MailCommon::ExpireCollectionAttribute *attr = MailCommon::ExpireCollectionAttribute::expirationCollectionAttribute( mCurrentFolder->collection(), mustDeleteExpirationAttribute );
 ;
   bool canBeExpired = true;
   if ( !attr->isAutoExpire() ) {
     canBeExpired = false;
-  } else if ( attr->unreadExpireUnits() == MailCommon::ExpirationCollectionAttribute::ExpireNever &&
-              attr->readExpireUnits() == MailCommon::ExpirationCollectionAttribute::ExpireNever ) {
+  } else if ( attr->unreadExpireUnits() == MailCommon::ExpireCollectionAttribute::ExpireNever &&
+              attr->readExpireUnits() == MailCommon::ExpireCollectionAttribute::ExpireNever ) {
     canBeExpired = false;
   }
 
