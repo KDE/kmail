@@ -58,6 +58,7 @@
 
 
 #include "mailcommon/collectiongeneralpage.h"
+#include "mailcommon/expirationcollectionattribute.h"
 #include "mailcommon/filtermanager.h"
 #include "mailcommon/mailfilter.h"
 
@@ -1277,8 +1278,12 @@ void KMMainWidget::slotCollectionChanged( const Akonadi::Collection&collection, 
 {
   if ( mCurrentFolder
        && ( collection == mCurrentFolder->collection() )
-       && set.contains( "MESSAGEFOLDER" ) ) {
-    mMessagePane->resetModelStorage();
+       && ( set.contains( "MESSAGEFOLDER" ) || set.contains( "expirationcollectionattribute" ) ) ) {
+    if ( set.contains( "MESSAGEFOLDER" ) )
+      mMessagePane->resetModelStorage();
+    else {
+      mCurrentFolder->setCollection( collection );
+    }
   } else if ( set.contains( "ENTITYDISPLAY" ) || set.contains( "NAME" ) ) {
 
     QIcon icon = KIcon( QLatin1String( "folder" ) );
@@ -1624,18 +1629,22 @@ void KMMainWidget::slotExpireFolder()
 {
   if ( !mCurrentFolder )
     return;
-
+  bool mustDeleteExpirationAttribute = false;
+  MailCommon::ExpirationCollectionAttribute *attr = MailCommon::ExpirationCollectionAttribute::expirationCollectionAttribute( mCurrentFolder->collection(), mustDeleteExpirationAttribute );
+;
   bool canBeExpired = true;
-  if ( !mCurrentFolder->isAutoExpire() ) {
+  if ( !attr->isAutoExpire() ) {
     canBeExpired = false;
-  } else if ( mCurrentFolder->getUnreadExpireUnits() == FolderCollection::ExpireNever &&
-              mCurrentFolder->getReadExpireUnits() == FolderCollection::ExpireNever ) {
+  } else if ( attr->unreadExpireUnits() == MailCommon::ExpirationCollectionAttribute::ExpireNever &&
+              attr->readExpireUnits() == MailCommon::ExpirationCollectionAttribute::ExpireNever ) {
     canBeExpired = false;
   }
 
   if ( !canBeExpired ) {
     const QString message = i18n( "This folder does not have any expiry options set" );
     KMessageBox::information( this, message );
+    if ( mustDeleteExpirationAttribute )
+      delete attr;
     return;
   }
 
@@ -1644,10 +1653,16 @@ void KMMainWidget::slotExpireFolder()
                                   Qt::escape( mCurrentFolder->name() ) );
     if ( KMessageBox::warningContinueCancel( this, message, i18n( "Expire Folder" ),
                                              KGuiItem( i18n( "&Expire" ) ) )
-        != KMessageBox::Continue )
+         != KMessageBox::Continue ) {
+      if ( mustDeleteExpirationAttribute )
+        delete attr;
       return;
+    }
   }
-  mCurrentFolder->expireOldMessages( true /*immediate*/ );
+
+  MailCommon::Util::expireOldMessages( mCurrentFolder->collection(), true /*immediate*/ );
+  if ( mustDeleteExpirationAttribute )
+    delete attr;
 }
 
 //-----------------------------------------------------------------------------
@@ -3606,7 +3621,7 @@ void KMMainWidget::slotEditNotifications()
 void KMMainWidget::slotShowExpiryProperties()
 {
   if ( mCurrentFolder ) {
-     ExpiryPropertiesDialog *dlg = new ExpiryPropertiesDialog( this, mCurrentFolder );
+     ExpiryPropertiesDialog *dlg = new ExpiryPropertiesDialog( this, mCurrentFolder->collection() );
      dlg->show();
   }
 }
