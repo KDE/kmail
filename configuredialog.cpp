@@ -500,8 +500,7 @@ void AccountsPageReceivingTab::slotShowMailCheckMenu( const QString &ident, cons
     CheckOnStartup = opts->CheckOnStartup;
   }
 
-  if ( ( ident != QLatin1String( "akonadi_nepomuktag_resource" ) ) &&
-       ( ident != QLatin1String( "akonadi_search_resource" ) ) ) {
+  if ( !MailCommon::Util::isVirtualCollection( ident ) ) {
     QAction *manualMailCheck = new QAction( i18nc( "Label to a checkbox, so is either checked/unchecked", "Include in Manual Mail Check" ), menu );
     manualMailCheck->setCheckable( true );
     manualMailCheck->setChecked( IncludeInManualChecks );
