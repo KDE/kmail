@@ -144,6 +144,7 @@ using MailTransport::TransportManagementWidget;
 
 #include <nepomuk/resourcemanager.h>
 
+#include <libkdepim/nepomukwarning.h>
 using namespace MailCommon;
 
 namespace {
@@ -3557,8 +3558,9 @@ void SecurityPage::WarningTab::slotReenableAllWarningsClicked()
   KMessageBox::enableAllMessages();
 
   //Nepomuk composer.
-  if ( KMKernel::self()->config()->hasGroup(  QLatin1String( "Missing Nepomuk Warning" ) ) ) {
-    KConfigGroup cfgGroup( KMKernel::self()->config(), QLatin1String( "Missing Nepomuk Warning" ) );
+  const QString groupName = KPIM::NepomukWarning::nepomukWarningGroupName();
+  if ( KMKernel::self()->config()->hasGroup( groupName ) ) {
+    KConfigGroup cfgGroup( KMKernel::self()->config(), groupName );
     cfgGroup.deleteGroup();
   }
 
