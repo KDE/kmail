@@ -379,11 +379,15 @@ SearchWindow::~SearchWindow()
     GlobalSettings::self()->setSearchWidgetWidth( width() );
     GlobalSettings::self()->setSearchWidgetHeight( height() );
     GlobalSettings::self()->requestSync();
+    mResultModel->deleteLater();
   }
 }
 
 void SearchWindow::createSearchModel()
 {
+  if ( mResultModel ) {
+    mResultModel->deleteLater();
+  }
   mResultModel = new KMSearchMessageModel( this );
   mResultModel->setCollection( mFolder );
   KMSearchFilterProxyModel *sortproxy = new KMSearchFilterProxyModel( this );
@@ -503,7 +507,8 @@ void SearchWindow::slotSearch()
   const QString queryLanguage = "SPARQL";
 #endif
 
-  qDebug() << query;
+  kDebug() << queryLanguage;
+  kDebug() << query;
   if ( query.isEmpty() )
     return;
   mSearchFolderOpenBtn->setEnabled( true );
@@ -519,7 +524,7 @@ void SearchWindow::slotSearch()
     mSearchJob = new Akonadi::CollectionModifyJob( mFolder, this );
   }
 
-  connect( mSearchJob, SIGNAL(result(KJob*)), this, SLOT(searchDone(KJob*)) );
+  connect( mSearchJob, SIGNAL(result(KJob*)), SLOT(searchDone(KJob*)) );
 }
 
 void SearchWindow::searchDone( KJob* job )
@@ -551,20 +556,14 @@ void SearchWindow::searchDone( KJob* job )
       // the server, for easy retrieval when editing it again
       const QByteArray search = mSearchPattern.serialize();
       Q_ASSERT( !search.isEmpty() );
-
       Akonadi::SearchDescriptionAttribute *searchDescription = mFolder.attribute<Akonadi::SearchDescriptionAttribute>( Akonadi::Entity::AddIfMissing );
       searchDescription->setDescription( search );
-
       const Akonadi::Collection collection = mCbxFolders->collection();
       searchDescription->setBaseCollection( collection );
       searchDescription->setRecursive( mChkSubFolders->isChecked() );
-
       new Akonadi::CollectionModifyJob( mFolder, this );
-
       mSearchJob = 0;
 
-      mResultModel->deleteLater();
-      mResultModel = 0;
       createSearchModel();
 
       mTimer->stop();
