@@ -948,8 +948,9 @@ KMCommand::Result KMForwardAttachedCommand::execute()
   if ( !mWin ) {
     mWin = KMail::makeComposer( fwdMsg.first, KMail::Composer::Forward, mIdentity );
   }
-  foreach( KMime::Content* attach, fwdMsg.second )
+  foreach( KMime::Content* attach, fwdMsg.second ) {
     mWin->addAttach( attach );
+  }
   mWin->show();
   return OK;
 }
@@ -1003,11 +1004,8 @@ KMCommand::Result KMRedirectCommand::execute()
 
   const MailTransport::SentBehaviourAttribute *sentAttribute = item.attribute<MailTransport::SentBehaviourAttribute>();
   QString fcc;
-  if ( sentAttribute ) {
-    if ( sentAttribute->sentBehaviour() == MailTransport::SentBehaviourAttribute::MoveToCollection )
-      fcc =  QString::number( sentAttribute->moveToCollection().id() );
-  }
-
+  if ( sentAttribute && ( sentAttribute->sentBehaviour() == MailTransport::SentBehaviourAttribute::MoveToCollection ) )
+    fcc =  QString::number( sentAttribute->moveToCollection().id() );
 
   const KMime::Message::Ptr newMsg = factory.createRedirect( dlg->to(), transportId, fcc );
   if ( !newMsg )
