@@ -290,7 +290,7 @@ void MessageActions::updateActions()
 
   const bool multiVisible = mVisibleItems.count() > 0 || mCurrentItem.isValid();
   const bool uniqItem = ( itemValid||hasPayload ) && ( mVisibleItems.count()<=1 );
-  mCreateTodoAction->setEnabled( uniqItem && mKorganizerIsOnSystem);
+  mCreateTodoAction->setEnabled( itemValid && ( mVisibleItems.count()<=1 ) && mKorganizerIsOnSystem);
   mReplyActionMenu->setEnabled( hasPayload );
   mReplyAction->setEnabled( hasPayload );
   mNoQuoteReplyAction->setEnabled( hasPayload );
@@ -318,7 +318,7 @@ void MessageActions::updateActions()
     job->fetchScope().fetchPayloadPart( Akonadi::MessagePart::Header );
     connect( job, SIGNAL(result(KJob*)), SLOT(slotUpdateActionsFetchDone(KJob*)) );
   }
-  mEditAction->setEnabled( uniqItem );
+  mEditAction->setEnabled( itemValid && ( mVisibleItems.count()<=1 ) );
 }
 
 void MessageActions::slotUpdateActionsFetchDone(KJob* job)
