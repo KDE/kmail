@@ -240,7 +240,7 @@ namespace KMail {
     : KAboutData( "kmail2", "kmail", ki18n("KMail"),KDEPIM_VERSION,
                   ki18n("KDE Email Client"), License_GPL,
                   ki18n("Copyright © 1997–2011, KMail authors"), KLocalizedString(),
-                  "http://kontact.kde.org/kmail/" )
+                  "http://userbase.kde.org/KMail" )
   {
     setProgramIconName("kmail");
     using KMail::authors;
