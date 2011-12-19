@@ -1941,7 +1941,7 @@ QString KMComposeWin::prettyMimeType( const QString &type )
     return t;
   }
 
-  QString pretty = !st->isDefault() ? st->comment() : t;
+  const QString pretty = !st->isDefault() ? st->comment() : t;
   if ( pretty.isEmpty() )
     return type;
   else
