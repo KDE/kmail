@@ -548,8 +548,26 @@ void KMUrlSaveCommand::slotUrlSaveResult( KJob *job )
   }
 }
 
+KMEditMessageCommand::KMEditMessageCommand( QWidget *parent, const KMime::Message::Ptr& msg )
+  :KMCommand( parent ), mMessage( msg )
+{
+  setDeletesItself( true );
+}
 
-KMEditMsgCommand::KMEditMsgCommand( QWidget *parent, const Akonadi::Item&msg, bool deleteFromSource )
+KMCommand::Result KMEditMessageCommand::execute()
+{
+  if ( !mMessage )
+    return Failed;
+  
+  KMail::Composer *win = KMail::makeComposer();
+  win->setMsg( mMessage, false, false );
+  win->show();
+  win->setModified( true );
+  return OK;
+}
+
+
+KMEditItemCommand::KMEditItemCommand( QWidget *parent, const Akonadi::Item&msg, bool deleteFromSource )
   :KMCommand( parent, msg )
   , mDeleteFromSource( deleteFromSource )
 {
@@ -560,7 +578,7 @@ KMEditMsgCommand::KMEditMsgCommand( QWidget *parent, const Akonadi::Item&msg, bo
   setDeletesItself( true );
 }
 
-KMCommand::Result KMEditMsgCommand::execute()
+KMCommand::Result KMEditItemCommand::execute()
 {
   Akonadi::Item item = retrievedMessage();
   if (!item.isValid() || !item.parentCollection().isValid() ) {
@@ -582,10 +600,8 @@ KMCommand::Result KMEditMsgCommand::execute()
   }
 
   const MailTransport::SentBehaviourAttribute *sentAttribute = item.attribute<MailTransport::SentBehaviourAttribute>();
-  if ( sentAttribute ) {
-    if ( sentAttribute->sentBehaviour() == MailTransport::SentBehaviourAttribute::MoveToCollection )
-      win->setFcc( QString::number( sentAttribute->moveToCollection().id() ) );
-  }
+  if ( sentAttribute && ( sentAttribute->sentBehaviour() == MailTransport::SentBehaviourAttribute::MoveToCollection ) )
+    win->setFcc( QString::number( sentAttribute->moveToCollection().id() ) );
   win->show();
   if ( mDeleteFromSource )
     win->setModified( true );
@@ -593,7 +609,7 @@ KMCommand::Result KMEditMsgCommand::execute()
   return OK;
 }
 
-void KMEditMsgCommand::slotDeleteItem( KJob *job )
+void KMEditItemCommand::slotDeleteItem( KJob *job )
 {
   if ( job->error() ) {
     showJobError(job);

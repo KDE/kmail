@@ -318,7 +318,7 @@ void MessageActions::updateActions()
     job->fetchScope().fetchPayloadPart( Akonadi::MessagePart::Header );
     connect( job, SIGNAL(result(KJob*)), SLOT(slotUpdateActionsFetchDone(KJob*)) );
   }
-  mEditAction->setEnabled( itemValid && ( mVisibleItems.count()<=1 ) );
+  mEditAction->setEnabled( uniqItem );
 }
 
 void MessageActions::slotUpdateActionsFetchDone(KJob* job)
@@ -571,20 +571,24 @@ void MessageActions::addMailingListAction( const QString &item, const KUrl &url 
 
 void MessageActions::editCurrentMessage()
 {
-  if ( !mCurrentItem.hasPayload<KMime::Message::Ptr>() )
-    return;
   KMCommand *command = 0;
-  Akonadi::Collection col = mCurrentItem.parentCollection();
-  // edit, unlike send again, removes the message from the folder
-  // we only want that for templates and drafts folders
-  if ( col.isValid()
-       && ( CommonKernel->folderIsDraftOrOutbox( col ) ||
-            CommonKernel->folderIsTemplates( col ) )
-    )
-    command = new KMEditMsgCommand( mParent, mCurrentItem, true );
-  else
-    command = new KMEditMsgCommand( mParent, mCurrentItem, false );
-  command->start();
+  if ( mCurrentItem.isValid() )
+  {
+    Akonadi::Collection col = mCurrentItem.parentCollection();
+    // edit, unlike send again, removes the message from the folder
+    // we only want that for templates and drafts folders
+    if ( col.isValid()
+         && ( CommonKernel->folderIsDraftOrOutbox( col ) ||
+              CommonKernel->folderIsTemplates( col ) )
+      )
+      command = new KMEditItemCommand( mParent, mCurrentItem, true );
+    else
+      command = new KMEditItemCommand( mParent, mCurrentItem, false );
+    command->start();
+  } else if ( mCurrentItem.hasPayload<KMime::Message::Ptr>() ) {
+    command = new KMEditMessageCommand( mParent, mCurrentItem.payload<KMime::Message::Ptr>() );
+    command->start();
+  }
 }
 
 void MessageActions::annotateMessage()

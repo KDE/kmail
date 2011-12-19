@@ -214,17 +214,28 @@ private:
   KUrl mUrl;
 };
 
-class KMAIL_EXPORT KMEditMsgCommand : public KMCommand
+class KMAIL_EXPORT KMEditItemCommand : public KMCommand
 {
   Q_OBJECT
 
 public:
-  KMEditMsgCommand( QWidget *parent, const Akonadi::Item &msg, bool deleteFromSource = true );
+  explicit KMEditItemCommand( QWidget *parent, const Akonadi::Item &msg, bool deleteFromSource = true );
 private slots:
   void slotDeleteItem( KJob *job );
 private:
   virtual Result execute();
   bool mDeleteFromSource;
+};
+
+class KMAIL_EXPORT KMEditMessageCommand : public KMCommand
+{
+  Q_OBJECT
+
+public:
+  explicit KMEditMessageCommand( QWidget *parent, const KMime::Message::Ptr& msg );
+private:
+  virtual Result execute();
+  KMime::Message::Ptr mMessage;
 };
 
 class KMAIL_EXPORT KMUseTemplateCommand : public KMCommand
