@@ -1382,17 +1382,14 @@ KMCommand::Result KMMoveCommand::execute()
     }
   }
 
-#if 0 //TODO port to akonadi
   // TODO set SSL state according to source and destfolder connection?
   Q_ASSERT( !mProgressItem );
   mProgressItem =
     ProgressManager::createProgressItem ("move"+ProgressManager::getUniqueID(),
-         mDestFolder ? i18n( "Moving messages" ) : i18n( "Deleting messages" ) );
+         mDestFolder.isValid() ? i18n( "Moving messages" ) : i18n( "Deleting messages" ) );
+  mProgressItem->setUsesBusyIndicator( true );
   connect( mProgressItem, SIGNAL(progressItemCanceled(KPIM::ProgressItem*)),
            this, SLOT(slotMoveCanceled()) );
-#else
-  kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
-#endif
   return OK;
 }
 
