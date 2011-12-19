@@ -686,7 +686,6 @@ KMOpenMsgCommand::KMOpenMsgCommand( QWidget *parent, const KUrl & url,
     mUrl( url ),
     mEncoding( encoding )
 {
-  setDeletesItself( true );
 }
 
 KMCommand::Result KMOpenMsgCommand::execute()
@@ -697,9 +696,9 @@ KMCommand::Result KMOpenMsgCommand::execute()
                                     parentWidget(), i18n("Open Message") );
   }
   if ( mUrl.isEmpty() ) {
-    setDeletesItself( false );
     return Canceled;
   }
+  setDeletesItself( true );
   mJob = KIO::get( mUrl, KIO::NoReload, KIO::HideProgressInfo );
   connect( mJob, SIGNAL(data(KIO::Job*,QByteArray)),
            this, SLOT(slotDataArrived(KIO::Job*,QByteArray)) );
