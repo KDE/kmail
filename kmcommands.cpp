@@ -551,7 +551,6 @@ void KMUrlSaveCommand::slotUrlSaveResult( KJob *job )
 KMEditMessageCommand::KMEditMessageCommand( QWidget *parent, const KMime::Message::Ptr& msg )
   :KMCommand( parent ), mMessage( msg )
 {
-  setDeletesItself( true );
 }
 
 KMCommand::Result KMEditMessageCommand::execute()
