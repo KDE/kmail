@@ -575,8 +575,12 @@ KMEditItemCommand::KMEditItemCommand( QWidget *parent, const Akonadi::Item&msg, 
   fetchScope().fetchAttribute<MailTransport::TransportAttribute>();
   fetchScope().fetchAttribute<MailTransport::SentBehaviourAttribute>();
   fetchScope().setAncestorRetrieval( Akonadi::ItemFetchScope::Parent );
-  setDeletesItself( true );
 }
+
+KMEditItemCommand::~KMEditItemCommand()
+{
+}
+
 
 KMCommand::Result KMEditItemCommand::execute()
 {
@@ -585,9 +589,12 @@ KMCommand::Result KMEditItemCommand::execute()
     return Failed;
   }
   KMime::Message::Ptr msg = MessageCore::Util::message( item );
-  if ( !msg )
+  if ( !msg ) {
     return Failed;
+  }
+  
   if ( mDeleteFromSource ) {
+    setDeletesItself( true );
     Akonadi::ItemDeleteJob *job = new Akonadi::ItemDeleteJob( item );
     connect( job, SIGNAL(result(KJob*)), this, SLOT(slotDeleteItem(KJob*)) );
   }

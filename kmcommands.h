@@ -220,6 +220,7 @@ class KMAIL_EXPORT KMEditItemCommand : public KMCommand
 
 public:
   explicit KMEditItemCommand( QWidget *parent, const Akonadi::Item &msg, bool deleteFromSource = true );
+  ~KMEditItemCommand();
 private slots:
   void slotDeleteItem( KJob *job );
 private:
