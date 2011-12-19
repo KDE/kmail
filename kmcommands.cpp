@@ -1291,20 +1291,18 @@ KMCommand::Result KMMailingListFilterCommand::execute()
 
 KMCopyCommand::KMCopyCommand( const Akonadi::Collection& destFolder,
                               const QList<Akonadi::Item> &msgList)
-  :mDestFolder( destFolder ), mMsgList( msgList )
+  :KMCommand( 0, msgList ), mDestFolder( destFolder )
 {
-  setDeletesItself( true );
 }
 
 KMCopyCommand::KMCopyCommand( const Akonadi::Collection& destFolder, const Akonadi::Item& msg)
-  :mDestFolder( destFolder )
+  :KMCommand( 0,msg ), mDestFolder( destFolder )
 {
-  setDeletesItself( true );
-  mMsgList.append( msg );
 }
 
 KMCommand::Result KMCopyCommand::execute()
 {
+  setDeletesItself( true );
   Akonadi::ItemCopyJob *job = new Akonadi::ItemCopyJob( mMsgList, mDestFolder,this );
   connect( job, SIGNAL(result(KJob*)), this, SLOT(slotCopyResult(KJob*)) );
 
