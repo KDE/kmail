@@ -63,7 +63,7 @@ void CollectionTemplatesPage::init()
   mCustom = new QCheckBox( i18n("&Use custom message templates in this folder"), this );
   topItems->addWidget( mCustom, Qt::AlignLeft );
 
-  mWidget = new TemplatesConfiguration( this, "folder-templates" );
+  mWidget = new TemplateParser::TemplatesConfiguration( this, "folder-templates" );
   mWidget->setEnabled( false );
 
   // Move the help label outside of the templates configuration widget,
@@ -98,7 +98,7 @@ void CollectionTemplatesPage::load(const Collection & col)
 
   mCollectionId = QString::number( col.id() );
 
-  Templates t( mCollectionId );
+  TemplateParser::Templates t( mCollectionId );
 
   mCustom->setChecked(t.useCustomTemplates());
 
@@ -110,7 +110,7 @@ void CollectionTemplatesPage::load(const Collection & col)
 void CollectionTemplatesPage::save(Collection &)
 {
   if ( !mCollectionId.isEmpty() ) {
-    Templates t(mCollectionId);
+    TemplateParser::Templates t(mCollectionId);
 
     //kDebug() << "use custom templates for folder" << fid <<":" << mCustom->isChecked();
     t.setUseCustomTemplates(mCustom->isChecked());

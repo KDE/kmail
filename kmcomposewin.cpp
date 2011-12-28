@@ -1,7 +1,7 @@
 /*
  * This file is part of KMail.
  * Copyright (c) 2011 Laurent Montel <montel@kde.org>
- * 
+ *
  * Copyright (c) 2009 Constantin Berzan <exit3219@gmail.com>
  *
  * Based on KMail code by:
@@ -196,7 +196,7 @@ KMComposeWin::KMComposeWin( const KMime::Message::Ptr &aMsg, Composer::TemplateC
     mComposerBase( 0 ),
     mSignatureStateIndicator( 0 ), mEncryptionStateIndicator( 0 ),
     mPreventFccOverwrite( false ),
-    mCheckForForgottenAttachments( true ), 
+    mCheckForForgottenAttachments( true ),
     mIgnoreStickyFields( false ),
     mWasModified( false )
 {
@@ -238,7 +238,7 @@ KMComposeWin::KMComposeWin( const KMime::Message::Ptr &aMsg, Composer::TemplateC
   mHeadersToEditorSplitter->setSizes( defaultSizes );
 
 
-  
+
   QVBoxLayout *v = new QVBoxLayout( mMainWidget );
   if ( !KPIM::NepomukWarning::missingNepomukWarning( "kmail-composer" ) )
   {
@@ -375,14 +375,14 @@ KMComposeWin::KMComposeWin( const KMime::Message::Ptr &aMsg, Composer::TemplateC
   editor->setAcceptDrops( true );
   connect( mDictionaryCombo, SIGNAL(dictionaryChanged(QString)),
            this, SLOT(slotSpellCheckingLanguage(QString)) );
-  
+
   connect( editor, SIGNAL(languageChanged(QString)),
            this, SLOT(slotLanguageChanged(QString)) );
   connect( editor, SIGNAL(spellCheckStatus(QString)),
            this, SLOT(slotSpellCheckingStatus(QString)) );
   connect( editor, SIGNAL(insertModeChanged()),
            this, SLOT(slotOverwriteModeChanged()) );
-  
+
   mSnippetWidget = new SnippetWidget( editor, actionCollection(), mSnippetSplitter );
   mSnippetWidget->setVisible( GlobalSettings::self()->showSnippetManager() );
   mSnippetSplitter->addWidget( mSnippetWidget );
@@ -443,7 +443,7 @@ KMComposeWin::KMComposeWin( const KMime::Message::Ptr &aMsg, Composer::TemplateC
     disableHtml( Message::ComposerViewBase::LetUserConfirm );
 
 
-  
+
   if ( GlobalSettings::self()->useExternalEditor() ) {
     editor->setUseExternalEditor( true );
     editor->setExternalEditorPath( GlobalSettings::self()->externalEditor() );
@@ -548,6 +548,7 @@ void KMComposeWin::addAttachment( const QString& name,
                                   const QByteArray& data,
                                   const QByteArray& mimeType )
 {
+  Q_UNUSED( cte );
   mComposerBase->addAttachment( name, name, charset, data, mimeType );
 }
 
@@ -1036,7 +1037,8 @@ void KMComposeWin::setQuotePrefix( uint uoid )
       const KPIMIdentities::Identity &identity = kmkernel->identityManager()->identityForUoidOrDefault( uoid );
       // Get quote prefix from template
       // ( custom templates don't specify custom quotes prefixes )
-      ::Templates quoteTemplate( TemplatesConfiguration::configIdString( identity.uoid() ) );
+      TemplateParser::Templates quoteTemplate(
+        TemplateParser::TemplatesConfiguration::configIdString( identity.uoid() ) );
       quotePrefix = quoteTemplate.quoteString();
     }
   }
@@ -1229,7 +1231,7 @@ void KMComposeWin::setupActions( void )
   const bool useKmailEditor = !GlobalSettings::self()->useExternalEditor();
   const bool spellCheckingEnabled = useKmailEditor && spellChecking;
   mAutoSpellCheckingAction->setEnabled( useKmailEditor );
-  
+
   mAutoSpellCheckingAction->setChecked( spellCheckingEnabled );
   slotAutoSpellCheckingToggled( spellCheckingEnabled );
   connect( mAutoSpellCheckingAction, SIGNAL(toggled(bool)),
@@ -1353,7 +1355,7 @@ void KMComposeWin::setupActions( void )
            SIGNAL(toggled(bool)),
            SLOT(htmlToolBarVisibilityChanged(bool)) );
 
-  
+
   // In Kontact, this entry would read "Configure Kontact", but bring
   // up KMail's config dialog. That's sensible, though, so fix the label.
   QAction *configureAction = actionCollection()->action( "options_configure" );
@@ -2055,8 +2057,8 @@ void KMComposeWin::slotInsertRecentFile( const KUrl &u )
     kDebug()<<" encoding not found so we can't insert text"; //see InsertTextFileJob
     return;
   }
-  
-  
+
+
   Message::InsertTextFileJob *job = new Message::InsertTextFileJob( mComposerBase->editor(), u );
   job->setEncoding( encoding );
   job->start();
@@ -2113,7 +2115,7 @@ bool KMComposeWin::insertFromMimeData( const QMimeData *source, bool forceAttach
           return true;
         } else if( !selectedAction ) {
           return true;
-        } 
+        }
         // else fall through
       }
     }
@@ -2124,7 +2126,7 @@ bool KMComposeWin::insertFromMimeData( const QMimeData *source, bool forceAttach
       KInputDialog::getText( "KMail", i18n( "Name of the attachment:" ), QString(), &ok, this );
     if ( !ok ) {
       return true;
-    }  
+    }
     addAttachment( attName, KMime::Headers::CEbase64, QString(), imageData, "image/png" );
     return true;
   }
@@ -2179,7 +2181,7 @@ bool KMComposeWin::insertFromMimeData( const QMimeData *source, bool forceAttach
         itemFetchJob->fetchScope().fetchFullPayload( true );
         itemFetchJob->fetchScope().setAncestorRetrieval( Akonadi::ItemFetchScope::Parent );
         connect( itemFetchJob, SIGNAL(result(KJob*)), this, SLOT(slotFetchJob(KJob*)) );
-      } 
+      }
       if ( !collections.isEmpty() ) {
         //TODO
       }
@@ -2266,7 +2268,7 @@ void KMComposeWin::slotUndo()
   }else if ( ::qobject_cast<KMComposerEditor*>( fw ) ) {
     static_cast<KTextEdit*>( fw )->undo();
   } else if (::qobject_cast<KLineEdit*>( fw )) {
-    static_cast<KLineEdit*>( fw )->undo(); 
+    static_cast<KLineEdit*>( fw )->undo();
   }
 }
 
@@ -2567,7 +2569,7 @@ void KMComposeWin::doSend( MessageSender::SendMethod method,
                                    "Your messages will be kept in the outbox until you go online."),
                               i18n("Online/Offline"), "kmailIsOffline" );
     method = MessageSender::SendLater;
-  } 
+  }
 
   if ( saveIn == MessageSender::SaveInNone ) { // don't save as draft or template, send immediately
     if ( KPIMUtils::firstEmailAddress( from() ).isEmpty() ) {
@@ -2895,7 +2897,7 @@ void KMComposeWin::slotAutoSpellCheckingToggled( bool on )
   if ( on != mEdtSubject->checkSpellingEnabled() )
     mEdtSubject->setCheckSpellingEnabled( on );
 
-  
+
   QString temp;
   if ( on ) {
     temp = i18n( "Spellcheck: on" );

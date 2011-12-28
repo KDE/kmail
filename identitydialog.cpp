@@ -465,7 +465,7 @@ namespace KMail {
     tlay->addWidget( mCustom, Qt::AlignLeft );
 
 #ifndef KDEPIM_MOBILE_UI
-    mWidget = new TemplatesConfiguration( tab, "identity-templates" );
+    mWidget = new TemplateParser::TemplatesConfiguration( tab, "identity-templates" );
     mWidget->setEnabled( false );
 
     // Move the help label outside of the templates configuration widget,
@@ -773,8 +773,8 @@ namespace KMail {
     // "Templates" tab:
 #ifndef KDEPIM_MOBILE_UI
     uint identity = ident.uoid();
-    QString iid = TemplatesConfiguration::configIdString( identity );
-    Templates t( iid );
+    QString iid = TemplateParser::TemplatesConfiguration::configIdString( identity );
+    TemplateParser::Templates t( iid );
     mCustom->setChecked(t.useCustomTemplates());
     mWidget->loadFromIdentity( identity );
 #endif
@@ -840,8 +840,8 @@ namespace KMail {
     // "Templates" tab:
 #ifndef KDEPIM_MOBILE_UI
     uint identity = ident.uoid();
-    QString iid = TemplatesConfiguration::configIdString( identity );
-    Templates t( iid );
+    QString iid = TemplateParser::TemplatesConfiguration::configIdString( identity );
+    TemplateParser::Templates t( iid );
     kDebug() << "use custom templates for identity" << identity <<":" << mCustom->isChecked();
     t.setUseCustomTemplates(mCustom->isChecked());
     t.writeConfig();

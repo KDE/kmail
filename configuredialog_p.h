@@ -49,8 +49,6 @@ class ListView;
 class ConfigureDialog;
 class KIntSpinBox;
 class SimpleStringListEditor;
-class TemplatesConfiguration;
-class CustomTemplates;
 class KColorCombo;
 class KFontRequester;
 class KIconButton;
@@ -67,7 +65,12 @@ namespace MessageList {
 
 namespace MessageViewer {
   class ConfigureWidget;
-class InvitationSettings;
+  class InvitationSettings;
+}
+
+namespace TemplateParser {
+  class CustomTemplates;
+  class TemplatesConfiguration;
 }
 
 namespace KMail {
@@ -561,7 +564,7 @@ private:
   virtual void doLoadFromGlobalSettings();
   virtual void doResetToDefaultsOther();
 private:
-    TemplatesConfiguration* mWidget;
+  TemplateParser::TemplatesConfiguration* mWidget;
 };
 
 class ComposerPageCustomTemplatesTab : public ConfigModuleTab {
@@ -578,7 +581,7 @@ private:
   virtual void doLoadFromGlobalSettings();
 
 private:
-    CustomTemplates* mWidget;
+  TemplateParser::CustomTemplates* mWidget;
 };
 
 class ComposerPageSubjectTab : public ConfigModuleTab {

@@ -196,7 +196,7 @@ MessageActions::MessageActions( KActionCollection *ac, QWidget* parent ) :
 
   connect( mAsynNepomukRetriever, SIGNAL(resourceReceived(QUrl,Nepomuk::Resource)), SLOT(updateAnnotateAction(QUrl,Nepomuk::Resource)) );
 
-  mCustomTemplatesMenu = new CustomTemplatesMenu( parent, ac );
+  mCustomTemplatesMenu = new TemplateParser::CustomTemplatesMenu( parent, ac );
 
   connect( mCustomTemplatesMenu, SIGNAL(replyTemplateSelected(QString)),
            parent, SLOT(slotCustomReplyToMsg(QString)) );
@@ -220,7 +220,7 @@ MessageActions::~MessageActions()
   delete mCustomTemplatesMenu;
 }
 
-CustomTemplatesMenu* MessageActions::customTemplatesMenu() const
+TemplateParser::CustomTemplatesMenu* MessageActions::customTemplatesMenu() const
 {
   return mCustomTemplatesMenu;
 }

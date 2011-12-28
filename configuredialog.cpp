@@ -2584,7 +2584,7 @@ ComposerPageTemplatesTab::ComposerPageTemplatesTab( QWidget * parent )
   vlay->setMargin( 0 );
   vlay->setSpacing( KDialog::spacingHint() );
 
-  mWidget = new TemplatesConfiguration( this );
+  mWidget = new TemplateParser::TemplatesConfiguration( this );
   vlay->addWidget( mWidget );
 
   connect( mWidget, SIGNAL(changed()),
@@ -2618,7 +2618,7 @@ ComposerPageCustomTemplatesTab::ComposerPageCustomTemplatesTab( QWidget * parent
   vlay->setMargin( 0 );
   vlay->setSpacing( KDialog::spacingHint() );
 
-  mWidget = new CustomTemplates( kmkernel->getKMMainWidget() ? kmkernel->getKMMainWidget()->actionCollections() : QList<KActionCollection*>(), this );
+  mWidget = new TemplateParser::CustomTemplates( kmkernel->getKMMainWidget() ? kmkernel->getKMMainWidget()->actionCollections() : QList<KActionCollection*>(), this );
   vlay->addWidget( mWidget );
 
   connect( mWidget, SIGNAL(changed()),

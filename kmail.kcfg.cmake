@@ -425,27 +425,27 @@
     <entry name="TemplateNewMessage" type="String" key="TemplateNewMessage">
       <label>Message template for new message</label>
       <whatsthis></whatsthis>
-      <default code="true">DefaultTemplates::defaultNewMessage()</default>
+      <default code="true">TemplateParser::DefaultTemplates::defaultNewMessage()</default>
     </entry>
     <entry name="TemplateReply" type="String" key="TemplateReply">
       <label>Message template for reply</label>
       <whatsthis></whatsthis>
-      <default code="true">DefaultTemplates::defaultReply()</default>
+      <default code="true">TemplateParser::DefaultTemplates::defaultReply()</default>
     </entry>
     <entry name="TemplateReplyAll" type="String" key="TemplateReplyAll">
       <label>Message template for reply to all</label>
       <whatsthis></whatsthis>
-      <default code="true">DefaultTemplates::defaultReplyAll()</default>
+      <default code="true">TemplateParser::DefaultTemplates::defaultReplyAll()</default>
     </entry>
     <entry name="TemplateForward" type="String" key="TemplateForward">
       <label>Message template for forward</label>
       <whatsthis></whatsthis>
-      <default code="true">DefaultTemplates::defaultForward()</default>
+      <default code="true">TemplateParser::DefaultTemplates::defaultForward()</default>
     </entry>
     <entry name="QuoteString" type="String" key="QuoteString">
       <label>Quote characters</label>
       <whatsthis></whatsthis>
-      <default code="true">DefaultTemplates::defaultQuoteString()</default>
+      <default code="true">TemplateParser::DefaultTemplates::defaultQuoteString()</default>
     </entry>
   </group>
 

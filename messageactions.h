@@ -32,18 +32,22 @@ class KActionMenu;
 class KActionCollection;
 class KXMLGUIClient;
 class KMReaderWin;
-class CustomTemplatesMenu;
+
 namespace Akonadi {
-class Item;
-class Monitor;
+  class Item;
+  class Monitor;
 }
 
 namespace MessageCore {
-class AsyncNepomukResourceRetriever;
+  class AsyncNepomukResourceRetriever;
 }
 
 namespace Nepomuk {
-class Resource;
+  class Resource;
+}
+
+namespace TemplateParser {
+  class CustomTemplatesMenu;
 }
 
 namespace KMail {
@@ -90,7 +94,7 @@ class MessageActions : public QObject
     KAction* listFilterAction() const { return mListFilterAction; }
 
     KActionMenu* mailingListActionMenu() const { return mMailingListActionMenu; }
-    CustomTemplatesMenu* customTemplatesMenu() const;
+    TemplateParser::CustomTemplatesMenu* customTemplatesMenu() const;
 
   signals:
 
@@ -110,7 +114,7 @@ class MessageActions : public QObject
     void addMailingListAction( const QString &item, const KUrl &url );
     void addMailingListActions( const QString &item, const KUrl::List &list );
     void updateMailingListActions( const Akonadi::Item& messageItem );
-    
+
   private slots:
     void updateAnnotateAction(const QUrl& url, const Nepomuk::Resource& resource);
     void slotItemModified( const Akonadi::Item &  item, const QSet< QByteArray > &  partIdentifiers );
@@ -146,7 +150,7 @@ class MessageActions : public QObject
     bool mKorganizerIsOnSystem;
     Akonadi::Monitor *mMonitor;
     MessageCore::AsyncNepomukResourceRetriever *mAsynNepomukRetriever;
-    CustomTemplatesMenu *mCustomTemplatesMenu;
+    TemplateParser::CustomTemplatesMenu *mCustomTemplatesMenu;
     KAction *mListFilterAction;
 };
 

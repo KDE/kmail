@@ -22,7 +22,9 @@
 
 class KPushButton;
 class QCheckBox;
-class TemplatesConfiguration;
+namespace TemplateParser {
+  class TemplatesConfiguration;
+}
 
 template <typename T> class QSharedPointer;
 
@@ -44,7 +46,7 @@ protected:
   void init();
 private:
   QCheckBox* mCustom;
-  TemplatesConfiguration* mWidget;
+  TemplateParser::TemplatesConfiguration* mWidget;
   KPushButton* mCopyGlobal;
   uint mIdentity;
   QString mCollectionId;
