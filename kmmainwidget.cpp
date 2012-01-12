@@ -1498,10 +1498,13 @@ void KMMainWidget::slotCompose()
 
   if ( mCurrentFolder ) {
       MessageHelper::initHeader( msg, KMKernel::self()->identityManager(), mCurrentFolder->identity() );
+      //Laurent: bug 289905
+      /*
       if ( mCurrentFolder->collection().isValid() && mCurrentFolder->putRepliesInSameFolder() ) {
         KMime::Headers::Generic *header = new KMime::Headers::Generic( "X-KMail-Fcc", msg.get(), QString::number( mCurrentFolder->collection().id() ), "utf-8" );
         msg->setHeader( header );
       }
+      */
       TemplateParser::TemplateParser parser( msg, TemplateParser::TemplateParser::NewMessage );
       parser.setIdentityManager( KMKernel::self()->identityManager() );
       parser.process( msg, mCurrentFolder->collection() );
