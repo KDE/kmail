@@ -3099,7 +3099,7 @@ void ComposerPage::HeadersTab::save()
   for ( int i = 0; i < numberOfEntry; ++i ) {
     item = mTagList->topLevelItem( i );
     if( !item->text(0).isEmpty() ) {
-      KConfigGroup config( KMKernel::self()->config(), QString::fromLatin1("Mime #").arg( numValidEntries ) );
+      KConfigGroup config( KMKernel::self()->config(), QString::fromLatin1("Mime #%1").arg( numValidEntries ) );
       config.writeEntry( "name",  item->text( 0 ) );
       config.writeEntry( "value", item->text( 1 ) );
       numValidEntries++;
