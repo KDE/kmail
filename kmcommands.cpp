@@ -176,13 +176,13 @@ static void showJobError( KJob* job )
 }
 
 KMCommand::KMCommand( QWidget *parent )
-  : mProgressDialog( 0 ), mResult( Undefined ), mDeletesItself( false ),
+  : mResult( Undefined ), mDeletesItself( false ),
     mEmitsCompletedItself( false ), mParent( parent )
 {
 }
 
 KMCommand::KMCommand( QWidget *parent, const Akonadi::Item &msg )
-  : mProgressDialog( 0 ), mResult( Undefined ), mDeletesItself( false ),
+  : mResult( Undefined ), mDeletesItself( false ),
     mEmitsCompletedItself( false ), mParent( parent )
 {
   if ( msg.isValid() || msg.hasPayload<KMime::Message::Ptr>() ) {
@@ -191,7 +191,7 @@ KMCommand::KMCommand( QWidget *parent, const Akonadi::Item &msg )
 }
 
 KMCommand::KMCommand( QWidget *parent, const QList<Akonadi::Item> &msgList )
-  : mProgressDialog( 0 ), mResult( Undefined ), mDeletesItself( false ),
+  : mResult( Undefined ), mDeletesItself( false ),
     mEmitsCompletedItself( false ), mParent( parent )
 {
   mMsgList = msgList;
@@ -297,8 +297,8 @@ void KMCommand::transferSelectedMsgs()
       i18n("Please wait"),
       i18np("Please wait while the message is transferred",
         "Please wait while the %1 messages are transferred", mMsgList.count()));
-    mProgressDialog->setModal(true);
-    mProgressDialog->setMinimumDuration(1000);
+    mProgressDialog.data()->setModal(true);
+    mProgressDialog.data()->setMinimumDuration(1000);
   }
 
   // TODO once the message list is based on ETM and we get the more advanced caching we need to make that check a bit more clever
@@ -327,22 +327,22 @@ void KMCommand::transferSelectedMsgs()
   }
 
   if ( complete ) {
-    delete mProgressDialog;
-    mProgressDialog = 0;
+    delete mProgressDialog.data();
+    mProgressDialog.clear();
     emit messagesTransfered( OK );
   } else {
     // wait for the transfer and tell the progressBar the necessary steps
-    if ( mProgressDialog ) {
-      connect(mProgressDialog, SIGNAL(cancelClicked()),
+    if ( mProgressDialog.data() ) {
+      connect(mProgressDialog.data(), SIGNAL(cancelClicked()),
               this, SLOT(slotTransferCancelled()));
-      mProgressDialog->progressBar()->setMaximum(totalSize);
+      mProgressDialog.data()->progressBar()->setMaximum(totalSize);
     }
   }
 }
 
 void KMCommand::slotMsgTransfered(const Akonadi::Item::List& msgs)
 {
-  if ( mProgressDialog && mProgressDialog->wasCancelled() ) {
+  if ( mProgressDialog.data() && mProgressDialog.data()->wasCancelled() ) {
     emit messagesTransfered( Canceled );
     return;
   }
@@ -355,26 +355,26 @@ void KMCommand::slotJobFinished()
   // the job is finished (with / without error)
   KMCommand::mCountJobs--;
 
-  if ( mProgressDialog && mProgressDialog->wasCancelled() ) return;
+  if ( mProgressDialog.data() && mProgressDialog.data()->wasCancelled() ) return;
 
   if ( mCountMsgs > mRetrievedMsgs.count() )
   {
     // the message wasn't retrieved before => error
-    if ( mProgressDialog )
-      mProgressDialog->hide();
+    if ( mProgressDialog.data() )
+      mProgressDialog.data()->hide();
     slotTransferCancelled();
     return;
   }
   // update the progressbar
-  if ( mProgressDialog ) {
-    mProgressDialog->setLabelText(i18np("Please wait while the message is transferred",
+  if ( mProgressDialog.data() ) {
+    mProgressDialog.data()->setLabelText(i18np("Please wait while the message is transferred",
           "Please wait while the %1 messages are transferred", KMCommand::mCountJobs));
   }
   if (KMCommand::mCountJobs == 0)
   {
     // all done
-    delete mProgressDialog;
-    mProgressDialog = 0;
+    delete mProgressDialog.data();
+    mProgressDialog.clear();
     emit messagesTransfered( OK );
   }
 }
