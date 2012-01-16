@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2011 Montel Laurent <montel@kde.org>
+ * Copyright (c) 2011, 2012 Montel Laurent <montel@kde.org>
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -27,6 +27,14 @@
  */
 #include "kmsearchmessagemodel.h"
 #include "mailcommon/mailutil.h"
+
+#include "messagecore/stringutil.h"
+
+#include <nepomuk/nmo.h>
+#include <Nepomuk/Resource>
+#include <Nepomuk/Variant>
+
+
 #include <akonadi/itemfetchscope.h>
 #include <akonadi/monitor.h>
 #include <akonadi/session.h>
@@ -36,6 +44,10 @@
 #include <boost/shared_ptr.hpp>
 typedef boost::shared_ptr<KMime::Message> MessagePtr;
 
+#include <QColor>
+#include <QApplication>
+#include <QPalette>
+#include <QTextDocument>
 #include <kdebug.h>
 #include <kglobal.h>
 #include <klocale.h>
@@ -51,6 +63,104 @@ KMSearchMessageModel::~KMSearchMessageModel( )
 {
 }
 
+QString contentSummary( const Akonadi::Item& item )
+{
+  Nepomuk::Resource mail( item.url() );
+  const QString content =
+      mail.property( Nepomuk::Vocabulary::NMO::plainTextMessageContent() ).toString();
+  // Extract the first 5 non-empty, non-quoted lines from the content and return it
+  int numLines = 0;
+  const int maxLines = 5;
+  const QStringList lines = content.split( QLatin1Char( '\n' ) );
+  QString ret;
+  foreach( const QString &line, lines ) {
+    const bool isQuoted = line.trimmed().startsWith( QLatin1Char( '>' ) ) || line.trimmed().startsWith( QLatin1Char( '|' ) );
+    if ( !line.trimmed().isEmpty() && !isQuoted ) {
+      ret += line + QLatin1Char( '\n' );
+      numLines++;
+      if ( numLines >= maxLines )
+        break;
+    }
+  }
+  return ret;
+}
+
+
+QString toolTip( const Akonadi::Item& item )
+{
+  MessagePtr msg = item.payload<MessagePtr>();
+
+  QColor bckColor = QApplication::palette().color( QPalette::ToolTipBase );
+  QColor txtColor = QApplication::palette().color( QPalette::ToolTipText );
+  QColor darkerColor(
+    ( ( bckColor.red() * 8 ) + ( txtColor.red() * 2 ) ) / 10,
+    ( ( bckColor.green() * 8 ) + ( txtColor.green() * 2 ) ) / 10,
+    ( ( bckColor.blue() * 8 ) + ( txtColor.blue() * 2 ) ) / 10
+    );
+
+  QString bckColorName = bckColor.name();
+  QString txtColorName = txtColor.name();
+  QString darkerColorName = darkerColor.name();
+  const bool textIsLeftToRight = ( QApplication::layoutDirection() == Qt::LeftToRight );
+  const QString textDirection =  textIsLeftToRight ? QLatin1String( "left" ) : QLatin1String( "right" );
+  const QString firstColumnWidth =  textIsLeftToRight ? QLatin1String( "45" ) : QLatin1String( "55" );
+
+  QString tip = QString::fromLatin1(
+    "<table width=\"100%\" border=\"0\" cellpadding=\"2\" cellspacing=\"0\">"
+    );
+  tip += QString::fromLatin1(
+    "<tr>"                                                         \
+    "<td bgcolor=\"%1\" align=\"%4\" valign=\"middle\">"           \
+    "<div style=\"color: %2; font-weight: bold;\">"                \
+    "%3"                                                           \
+    "</div>"                                                       \
+    "</td>"                                                        \
+    "</tr>"
+    ).arg( txtColorName ).arg( bckColorName ).arg( Qt::escape( msg->subject()->asUnicodeString() ) ).arg( textDirection );
+
+  tip += QString::fromLatin1(
+    "<tr>"                                                              \
+    "<td align=\"center\" valign=\"middle\">"                           \
+    "<table width=\"100%\" border=\"0\" cellpadding=\"2\" cellspacing=\"0\">"
+    );
+
+  const QString htmlCodeForStandardRow = QString::fromLatin1(
+    "<tr>"                                                       \
+    "<td align=\"right\" valign=\"top\" width=\"45\">"           \
+    "<div style=\"font-weight: bold;\"><nobr>"                   \
+    "%1:"                                                        \
+    "</nobr></div>"                                              \
+    "</td>"                                                      \
+    "<td align=\"left\" valign=\"top\">"                         \
+    "%2"                                                         \
+    "</td>"                                                      \
+    "</tr>" );
+
+  if ( textIsLeftToRight ) {
+    tip += htmlCodeForStandardRow.arg( i18n( "From" ) ).arg( MessageCore::StringUtil::stripEmailAddr( msg->from()->asUnicodeString() ) );
+    tip += htmlCodeForStandardRow.arg( i18nc( "Receiver of the emial", "To" ) ).arg( MessageCore::StringUtil::stripEmailAddr( msg->to()->asUnicodeString() ) );
+    tip += htmlCodeForStandardRow.arg( i18n( "Date" ) ).arg(  KGlobal::locale()->formatDateTime( msg->date()->dateTime().toLocalZone(), KLocale::FancyLongDate ) );
+  } else {
+    tip += htmlCodeForStandardRow.arg(  MessageCore::StringUtil::stripEmailAddr( msg->from()->asUnicodeString() ) ).arg( i18n( "From" ) );
+    tip += htmlCodeForStandardRow.arg(  MessageCore::StringUtil::stripEmailAddr( msg->to()->asUnicodeString() ) ).arg( i18nc( "Receiver of the emial", "To" ) );
+    tip += htmlCodeForStandardRow.arg(   KGlobal::locale()->formatDateTime( msg->date()->dateTime().toLocalZone(), KLocale::FancyLongDate ) ).arg( i18n( "Date" ) );
+  }
+  QString content = contentSummary(item);
+  if ( !content.isEmpty() ) {
+    if ( textIsLeftToRight ) {
+      tip += htmlCodeForStandardRow.arg( i18n( "Preview" ) ).arg( content.replace( QLatin1Char( '\n' ), QLatin1String( "<br>" ) ) );
+        } else {
+      tip += htmlCodeForStandardRow.arg( content.replace( QLatin1Char( '\n' ), QLatin1String( "<br>" ) ) ).arg( i18n( "Preview" ) );
+    }
+  }
+
+  tip += QString::fromLatin1(
+    "</table"         \
+    "</td>"           \
+    "</tr>"
+    );
+  return tip;
+}
 
 int KMSearchMessageModel::columnCount( const QModelIndex & parent ) const
 {
@@ -125,9 +235,13 @@ QVariant KMSearchMessageModel::data( const QModelIndex & index, int role ) const
       default:
         return QVariant();
     }
+  } else if( role == Qt::ToolTipRole ) {
+      return toolTip( item );
   }
   return ItemModel::data( index, role );
 }
+
+
 
 QVariant KMSearchMessageModel::headerData( int section, Qt::Orientation orientation, int role ) const
 {
