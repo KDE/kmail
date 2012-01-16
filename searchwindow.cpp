@@ -140,7 +140,7 @@ SearchWindow::SearchWindow( KMMainWidget *widget, const Akonadi::Collection &col
   QHBoxLayout *layout = new QHBoxLayout( patternGroupBox );
   layout->setContentsMargins( 0, 0, 0, 0 );
 
-  mPatternEdit = new SearchPatternEdit( searchWidget, false, false );
+  mPatternEdit = new SearchPatternEdit( searchWidget );
   layout->addWidget( mPatternEdit );
   patternGroupBox->setFlat( true );
 
