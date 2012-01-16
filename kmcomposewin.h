@@ -633,8 +633,6 @@ class KMComposeWin : public KMail::Composer
     KSelectAction *mCryptoModuleAction;
 
     KAction *mFindText, *mFindNextText, *mReplaceText, *mSelectAll;
-
-  //bool mAlwaysSend;
   
     QFont mSaveFont;
     QSplitter *mHeadersToEditorSplitter;
