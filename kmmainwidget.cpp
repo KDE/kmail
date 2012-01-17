@@ -3104,6 +3104,7 @@ void KMMainWidget::setupActions()
 
     KAction * action = mAkonadiStandardActionManager->action( Akonadi::StandardActionManager::ToggleWorkOffline );
     mAkonadiStandardActionManager->interceptAction( Akonadi::StandardActionManager::ToggleWorkOffline );
+    action->setCheckable(false);
     connect( action, SIGNAL(triggered(bool)), this, SLOT(slotOnlineStatus()) );
     action->setText( i18n("Online status (unknown)") );
   }
