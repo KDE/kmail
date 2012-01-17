@@ -74,8 +74,9 @@ QString contentSummary( const Akonadi::Item& item )
   const QStringList lines = content.split( QLatin1Char( '\n' ) );
   QString ret;
   foreach( const QString &line, lines ) {
-    const bool isQuoted = line.trimmed().startsWith( QLatin1Char( '>' ) ) || line.trimmed().startsWith( QLatin1Char( '|' ) );
-    if ( !line.trimmed().isEmpty() && !isQuoted ) {
+    const QString lineTrimmed = line.trimmed();
+    const bool isQuoted = lineTrimmed.startsWith( QLatin1Char( '>' ) ) || lineTrimmed.startsWith( QLatin1Char( '|' ) );
+    if ( !isQuoted && !lineTrimmed.isEmpty() ) {
       ret += line + QLatin1Char( '\n' );
       numLines++;
       if ( numLines >= maxLines )
