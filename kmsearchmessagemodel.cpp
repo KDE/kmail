@@ -98,9 +98,9 @@ QString toolTip( const Akonadi::Item& item )
     ( ( bckColor.blue() * 8 ) + ( txtColor.blue() * 2 ) ) / 10
     );
 
-  QString bckColorName = bckColor.name();
-  QString txtColorName = txtColor.name();
-  QString darkerColorName = darkerColor.name();
+  const QString bckColorName = bckColor.name();
+  const QString txtColorName = txtColor.name();
+  const QString darkerColorName = darkerColor.name();
   const bool textIsLeftToRight = ( QApplication::layoutDirection() == Qt::LeftToRight );
   const QString textDirection =  textIsLeftToRight ? QLatin1String( "left" ) : QLatin1String( "right" );
   const QString firstColumnWidth =  textIsLeftToRight ? QLatin1String( "45" ) : QLatin1String( "55" );
@@ -136,24 +136,23 @@ QString toolTip( const Akonadi::Item& item )
     "</td>"                                                      \
     "</tr>" );
 
+  QString content = contentSummary(item);
+
   if ( textIsLeftToRight ) {
     tip += htmlCodeForStandardRow.arg( i18n( "From" ) ).arg( MessageCore::StringUtil::stripEmailAddr( msg->from()->asUnicodeString() ) );
-    tip += htmlCodeForStandardRow.arg( i18nc( "Receiver of the emial", "To" ) ).arg( MessageCore::StringUtil::stripEmailAddr( msg->to()->asUnicodeString() ) );
+    tip += htmlCodeForStandardRow.arg( i18nc( "Receiver of the email", "To" ) ).arg( MessageCore::StringUtil::stripEmailAddr( msg->to()->asUnicodeString() ) );
     tip += htmlCodeForStandardRow.arg( i18n( "Date" ) ).arg(  KGlobal::locale()->formatDateTime( msg->date()->dateTime().toLocalZone(), KLocale::FancyLongDate ) );
+    if ( !content.isEmpty() ) {
+        tip += htmlCodeForStandardRow.arg( i18n( "Preview" ) ).arg( content.replace( QLatin1Char( '\n' ), QLatin1String( "<br>" ) ) );
+    }
   } else {
     tip += htmlCodeForStandardRow.arg(  MessageCore::StringUtil::stripEmailAddr( msg->from()->asUnicodeString() ) ).arg( i18n( "From" ) );
-    tip += htmlCodeForStandardRow.arg(  MessageCore::StringUtil::stripEmailAddr( msg->to()->asUnicodeString() ) ).arg( i18nc( "Receiver of the emial", "To" ) );
+    tip += htmlCodeForStandardRow.arg(  MessageCore::StringUtil::stripEmailAddr( msg->to()->asUnicodeString() ) ).arg( i18nc( "Receiver of the email", "To" ) );
     tip += htmlCodeForStandardRow.arg(   KGlobal::locale()->formatDateTime( msg->date()->dateTime().toLocalZone(), KLocale::FancyLongDate ) ).arg( i18n( "Date" ) );
-  }
-  QString content = contentSummary(item);
-  if ( !content.isEmpty() ) {
-    if ( textIsLeftToRight ) {
-      tip += htmlCodeForStandardRow.arg( i18n( "Preview" ) ).arg( content.replace( QLatin1Char( '\n' ), QLatin1String( "<br>" ) ) );
-        } else {
-      tip += htmlCodeForStandardRow.arg( content.replace( QLatin1Char( '\n' ), QLatin1String( "<br>" ) ) ).arg( i18n( "Preview" ) );
+    if ( !content.isEmpty() ) {
+        tip += htmlCodeForStandardRow.arg( content.replace( QLatin1Char( '\n' ), QLatin1String( "<br>" ) ) ).arg( i18n( "Preview" ) );
     }
   }
-
   tip += QString::fromLatin1(
     "</table"         \
     "</td>"           \
