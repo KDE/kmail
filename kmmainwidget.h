@@ -540,6 +540,7 @@ class KMAIL_EXPORT KMMainWidget : public QWidget
 
     void slotCollectionPropertiesContinued( KJob* job );
     void slotDeletionCollectionResult(KJob* job);
+    void slotServerSideSubscription();
 
 private:
     // Message actions
@@ -637,6 +638,7 @@ private:
 
     MailCommon::FolderSelectionDialog* mMoveOrCopyToDialog;
     MailCommon::FolderSelectionDialog* mSelectFromAllFoldersDialog;
+    KAction *mServerSideSubscription;
 };
 
 #endif

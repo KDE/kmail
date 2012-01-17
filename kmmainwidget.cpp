@@ -117,6 +117,7 @@
 #include <Akonadi/EntityMimeTypeFilterModel>
 #include <akonadi/kmime/messageflags.h>
 #include <akonadi/collectiondeletejob.h>
+#include <akonadi/dbusconnectionpool.h>
 #include <kpimidentities/identity.h>
 #include <kpimidentities/identitymanager.h>
 #include <kpimutils/email.h>
@@ -175,6 +176,9 @@
 #include <QDBusConnection>
 #include <QTextDocument>
 #include <QMenu>
+#include <QtDBus/QDBusInterface>
+#include <QtDBus/QDBusReply>
+
 
 // System includes
 #include <assert.h>
@@ -3595,7 +3599,11 @@ void KMMainWidget::setupActions()
     connect( mAddFavoriteFolder, SIGNAL(triggered(bool)), this, SLOT(slotAddFavoriteFolder()) );
   }
 
-
+  {
+      mServerSideSubscription = new KAction( KIcon( "folder-bookmarks" ), i18n( "Serverside Subscription..." ), this);
+      actionCollection()->addAction( "serverside_subscription", mServerSideSubscription);
+      connect( mServerSideSubscription, SIGNAL(triggered(bool)), this, SLOT(slotServerSideSubscription()) );
+  }
 
   actionCollection()->addAction(KStandardAction::Undo,  "kmail_undo", this, SLOT(slotUndo()));
 
@@ -4053,6 +4061,8 @@ void KMMainWidget::updateFolderMenu()
   mShowFolderShortcutDialogAction->setEnabled( !multiFolder && folderWithContent );
 
   actionlist << akonadiStandardAction( Akonadi::StandardActionManager::ManageLocalSubscriptions );
+  if(mCurrentFolder && kmkernel->isImapFolder( mCurrentFolder->collection() ))
+      actionlist << mServerSideSubscription;
 
   mGUIClient->unplugActionList( QLatin1String( "collectionview_actionlist" ) );
   mGUIClient->plugActionList( QLatin1String( "collectionview_actionlist" ), actionlist );
@@ -4467,5 +4477,33 @@ void KMMainWidget::slotCollectionPropertiesContinued( KJob* job )
   dlg->setCaption( i18nc( "@title:window", "Properties of Folder %1", collection.name() ) );
   dlg->resize( 500, 400 );
   dlg->show();
+}
+
+void KMMainWidget::slotServerSideSubscription()
+{
+    if ( !mCurrentFolder )
+        return;
+    if( kmkernel->isImapFolder( mCurrentFolder->collection() ) ) {
+        QDBusInterface *iface  = new QDBusInterface(
+                    QLatin1String( "org.freedesktop.Akonadi.Resource.")+mCurrentFolder->collection().resource(),
+                    QLatin1String( "/" ), QLatin1String( "org.kde.Akonadi.Imap.Resource" ),
+                    DBusConnectionPool::threadConnection(), this );
+        if ( !iface->isValid() ) {
+            kDebug()<<"Can not create imap dbus interface";
+            delete iface;
+            return;
+        }
+        const QDBusReply<int> reply = iface->call( QLatin1String( "configureSubscription" ) );
+        if ( !reply.isValid() ) {
+            delete iface;
+            return;
+        }
+        if(reply == -2 ){
+            KMessageBox::error(this,i18n("Imap server not configurated. We can not configure server side subscription."));
+        } else if(reply == -1) {
+            KMessageBox::error(this,i18n("We must logging Imap server before to configure it."));
+        }
+        delete iface;
+    }
 }
 
