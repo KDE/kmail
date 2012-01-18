@@ -2213,7 +2213,10 @@ void KMComposeWin::slotPasteAsAttachment()
 void KMComposeWin::slotFetchJob(KJob*job)
 {
   if ( job->error() ) {
-    static_cast<KIO::Job*>(job)->ui()->showErrorMessage();
+    if ( static_cast<KIO::Job*>(job)->ui() )
+      static_cast<KIO::Job*>(job)->ui()->showErrorMessage();
+    else
+      kDebug()<<" job->errorString() :"<<job->errorString();
     return;
   }
   Akonadi::ItemFetchJob *fjob = dynamic_cast<Akonadi::ItemFetchJob*>( job );

@@ -52,7 +52,6 @@ class AttachmentController : public Message::AttachmentControllerBase
     void identityChanged();
     void actionsCreated();
     void addAttachmentItems( const Akonadi::Item::List &items );
-    void slotFetchJob( KJob * job );
     void selectionChanged();
     void onShowAttachment( KMime::Content *content, const QByteArray &charset );
     void doubleClicked( const QModelIndex &itemClicked );
