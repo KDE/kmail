@@ -188,8 +188,8 @@ namespace KMail {
     mTextEdit->setWordWrapMode( QTextOption::WrapAnywhere);
     mTextEdit->setAcceptRichText( false );
     label2 = new QLabel( i18n("Examples are available at <a "
-            "href=\"http://www.xs4all.nl/~ace/X-Faces/\">"
-            "http://www.xs4all.nl/~ace/X-Faces/</a>."), page );
+            "href=\"http://ace.home.xs4all.nl/X-Faces/\">"
+            "http://ace.home.xs4all.nl/X-Faces/</a>."), page );
     label2->setOpenExternalLinks(true);
     label2->setTextInteractionFlags(Qt::TextBrowserInteraction);
 
