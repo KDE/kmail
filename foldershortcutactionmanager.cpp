@@ -80,8 +80,9 @@ void FolderShortcutActionManager::createActions()
   connect( KernelIf->folderCollectionMonitor(), SIGNAL(collectionRemoved(Akonadi::Collection)),
            this, SLOT(slotCollectionRemoved(Akonadi::Collection)), Qt::UniqueConnection );
 
-  if ( model->rowCount() > 0 )
+  if ( model->rowCount() > 0 ) {
     updateShortcutsForIndex( QModelIndex(), 0, model->rowCount() - 1 );
+  }
 }
 
 void FolderShortcutActionManager::slotRowsInserted( const QModelIndex &parent, int start, int end )
@@ -89,18 +90,21 @@ void FolderShortcutActionManager::slotRowsInserted( const QModelIndex &parent, i
   updateShortcutsForIndex( parent, start, end );
 }
 
-void FolderShortcutActionManager::updateShortcutsForIndex( const QModelIndex &parent, int start, int end )
+void FolderShortcutActionManager::updateShortcutsForIndex( const QModelIndex &parent,
+                                                           int start, int end )
 {
   QAbstractItemModel *model = KernelIf->collectionModel();
   for ( int i = start; i <= end; i++ ) {
-    const QModelIndex child = model->index( i, 0, parent );
-    Akonadi::Collection collection =
+    if ( model->hasIndex( i, 0, parent ) ) {
+      const QModelIndex child = model->index( i, 0, parent );
+      Akonadi::Collection collection =
         model->data( child, Akonadi::EntityTreeModel::CollectionRole ).value<Akonadi::Collection>();
-    if ( collection.isValid() ) {
-      shortcutChanged( collection );
-    }
-    if ( model->rowCount( child ) > 0 ) {
-      updateShortcutsForIndex( child, 0, model->rowCount( child ) - 1 );
+      if ( collection.isValid() ) {
+        shortcutChanged( collection );
+      }
+      if ( model->rowCount( child ) > 0 ) {
+        updateShortcutsForIndex( child, 0, model->rowCount( child ) - 1 );
+      }
     }
   }
 }
