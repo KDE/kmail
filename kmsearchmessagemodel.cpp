@@ -197,6 +197,9 @@ QVariant KMSearchMessageModel::data( const QModelIndex & index, int role ) const
   if ( role == Qt::DisplayRole ) {
     switch ( index.column() ) {
       case Collection:
+        if ( item.storageCollectionId() >= 0 ) {
+          return MailCommon::Util::fullCollectionPath( Akonadi::Collection( item.storageCollectionId() ) );
+        }
         return MailCommon::Util::fullCollectionPath(item.parentCollection());
       case Subject:
         return msg->subject()->asUnicodeString();
@@ -219,6 +222,9 @@ QVariant KMSearchMessageModel::data( const QModelIndex & index, int role ) const
   } else if ( role == Qt::EditRole ) {
     switch ( index.column() ) {
       case Collection:
+        if ( item.storageCollectionId() >= 0 ) {
+          return MailCommon::Util::fullCollectionPath( Akonadi::Collection( item.storageCollectionId() ) );
+        }
         return MailCommon::Util::fullCollectionPath(item.parentCollection());
       case Subject:
         return msg->subject()->asUnicodeString();
