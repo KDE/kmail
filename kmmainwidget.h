@@ -82,6 +82,7 @@ namespace KSieveUi {
 
 namespace MailCommon {
   class FolderSelectionDialog;
+  class FavoriteCollectionWidget;
 }
 
 class KMAIL_EXPORT KMMainWidget : public QWidget
@@ -569,7 +570,7 @@ private:
 
     KToggleAction *mWatchThreadAction, *mIgnoreThreadAction;
 
-    Akonadi::EntityListView *mFavoriteCollectionsView;
+    MailCommon::FavoriteCollectionWidget *mFavoriteCollectionsView;
     Akonadi::FavoriteCollectionsModel *mFavoritesModel;
     QWidget      *mSearchAndTree;
     KMReaderWin  *mMsgView;
