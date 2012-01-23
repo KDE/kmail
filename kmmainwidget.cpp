@@ -889,6 +889,9 @@ void KMMainWidget::readConfig()
     }
     mMessagePane->reloadGlobalConfiguration();
     mFolderTreeWidget->readConfig();
+    if( mFavoriteCollectionsView ) {
+       mFavoriteCollectionsView->readConfig();
+    }
     refreshFavoriteFoldersViewProperties();
   }
 
