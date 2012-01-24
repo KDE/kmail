@@ -943,6 +943,8 @@ static const struct {
   { "ColorbarForegroundPlain", I18N_NOOP("HTML Status Bar Foreground - No HTML Message") },
   { "ColorbarBackgroundHTML",  I18N_NOOP("HTML Status Bar Background - HTML Message") },
   { "ColorbarForegroundHTML",  I18N_NOOP("HTML Status Bar Foreground - HTML Message") },
+  { "OfflineAccountColor",  I18N_NOOP("Offline Account - Folder Text Color") },
+  { "BrokenAccountColor",  I18N_NOOP("Broken Account - Folder Text Color") },
 };
 static const int numColorNames = sizeof colorNames / sizeof *colorNames;
 
@@ -1018,6 +1020,8 @@ void AppearancePage::ColorsTab::loadColor( bool loadFromConfig )
 
   KConfigGroup messageListView( KMKernel::self()->config(), "MessageListView::Colors" );
 
+  KConfigGroup collectionFolderView( KMKernel::self()->config(), "CollectionFolderView" );
+
   static const QColor defaultColor[ numColorNames ] = {
     QColor( 0x00, 0x80, 0x00 ), // quoted l1
     QColor( 0x00, 0x70, 0x00 ), // quoted l2
@@ -1038,7 +1042,9 @@ void AppearancePage::ColorsTab::loadColor( bool loadFromConfig )
     Qt::lightGray, // colorbar plain bg
     Qt::black,     // colorbar plain fg
     Qt::black,     // colorbar html  bg
-    Qt::white      // colorbar html  fg
+    Qt::white,     // colorbar html  fg
+    scheme.foreground(KColorScheme::NegativeText).color(), //Offline Account Color
+    scheme.foreground(KColorScheme::InactiveText).color()  //Broken Account Color
   };
 
   for ( int i = 0 ; i < numColorNames ; i++ ) {
@@ -1048,7 +1054,11 @@ void AppearancePage::ColorsTab::loadColor( bool loadFromConfig )
            configName == QLatin1String( "ImportantMessageColor" ) ||
            configName == QLatin1String( "TodoMessageColor" ) ) {
         mColorList->setColorSilently( i, messageListView.readEntry( configName, defaultColor[i] ) );
-        }
+      }
+      else if( configName == QLatin1String("OfflineAccountColor") ||
+               configName == QLatin1String("BrokenAccountColor")) {
+          mColorList->setColorSilently( i, collectionFolderView.readEntry(configName,defaultColor[i]));
+      }
       else
         mColorList->setColorSilently( i, reader.readEntry( configName, defaultColor[i] ) );
     } else {
@@ -1069,6 +1079,7 @@ void AppearancePage::ColorsTab::save()
 {
   KConfigGroup reader( KMKernel::self()->config(), "Reader" );
   KConfigGroup messageListView( KMKernel::self()->config(), "MessageListView::Colors" );
+  KConfigGroup collectionFolderView( KMKernel::self()->config(), "CollectionFolderView" );
   bool customColors = mCustomColorCheck->isChecked();
   MessageCore::GlobalSettings::self()->setUseDefaultColors( !customColors );
 
@@ -1082,6 +1093,10 @@ void AppearancePage::ColorsTab::save()
       if ( customColors || messageListView.hasKey( configName ) )
         messageListView.writeEntry( configName, mColorList->color(i) );
 
+    } else if( configName == QLatin1String("OfflineAccountColor") ||
+               configName == QLatin1String("BrokenAccountColor")) {
+        if ( customColors || collectionFolderView.hasKey( configName ) )
+            collectionFolderView.writeEntry(configName,mColorList->color(i));
     } else {
       if ( customColors || reader.hasKey( configName ) )
         reader.writeEntry( configName, mColorList->color(i) );
