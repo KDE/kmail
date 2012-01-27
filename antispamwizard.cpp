@@ -1203,6 +1203,7 @@ ASWizVirusRulesPage::ASWizVirusRulesPage( QWidget * parent, const char * name )
   optReadableProxy |= FolderTreeWidgetProxyModel::HideOutboxFolder;
 
   mFolderTree = new FolderTreeWidget( this, 0, opt, optReadableProxy );
+  mFolderTree->readConfig();
   mFolderTree->folderTreeView()->expandAll();
   mFolderTree->folderTreeWidgetProxyModel()->setAccessRights( Akonadi::Collection::CanCreateCollection );
 
