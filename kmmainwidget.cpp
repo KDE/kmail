@@ -1810,10 +1810,9 @@ void KMMainWidget::slotDelayedRemoveFolder( KJob *job )
 void KMMainWidget::slotDeletionCollectionResult(KJob* job)
 {
   if ( job ) {
-    if ( job->error() ) {
-      Util::showJobErrorMessage( job );
-      return;
-    }
+      if(Util::showJobErrorMessage( job )) {
+          return;
+      }
   }
 }
 

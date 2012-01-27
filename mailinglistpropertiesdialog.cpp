@@ -234,9 +234,7 @@ void MailingListFolderPropertiesDialog::slotDetectMailingList()
 void MailingListFolderPropertiesDialog::slotFetchDone( KJob* job )
 {
   mDetectButton->setEnabled( true );
-  if ( job->error() ) {
-    // handle errors
-    MailCommon::Util::showJobErrorMessage(job);
+  if ( MailCommon::Util::showJobErrorMessage(job) ) {
     return;
   }
   Akonadi::ItemFetchJob *fjob = dynamic_cast<Akonadi::ItemFetchJob*>( job );
