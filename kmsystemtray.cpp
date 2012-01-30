@@ -381,6 +381,12 @@ void KMSystemTray::slotSelectCollection(QAction*act)
 {
   const Akonadi::Collection::Id id = act->data().value<Akonadi::Collection::Id>();
   KMKernel::self()->selectCollectionFromId( id );
+  KMMainWidget * mainWidget = kmkernel->getKMMainWidget();
+  if ( !mainWidget )
+    return ;
+  QWidget *mainWin = kmkernel->getKMMainWidget()->window();
+  if( mainWin && !mainWin->isVisible() )
+    activate();
 }
 
 void KMSystemTray::updateSystemTray()
