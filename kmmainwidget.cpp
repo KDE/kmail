@@ -2443,11 +2443,21 @@ void KMMainWidget::slotSelectCollectionFolder( const Akonadi::Collection & col )
 
 void KMMainWidget::slotApplyFilters()
 {
-  const QList<Akonadi::Item> selectedMessages = mMessagePane->selectionAsMessageItemList();
+  const QVector<qlonglong> selectedMessages = mMessagePane->selectionAsMessageItemListId();
   if ( selectedMessages.isEmpty() )
     return;
   applyFilters( selectedMessages );
 }
+
+void KMMainWidget::applyFilters( const QVector<qlonglong>& selectedMessages )
+{
+#ifndef QT_NO_CURSOR
+  MessageViewer::KCursorSaver busy( MessageViewer::KBusyPtr::busy() );
+#endif
+
+  MailCommon::FilterManager::instance()->filter( selectedMessages );
+}
+
 
 void KMMainWidget::applyFilters( const QList<Akonadi::Item>& selectedMessages )
 {
