@@ -2449,6 +2449,22 @@ void KMMainWidget::slotApplyFilters()
   applyFilters( selectedMessages );
 }
 
+void KMMainWidget::slotApplyFiltersOnFolder()
+{
+    if ( mCurrentFolder ) {
+        Akonadi::ItemFetchJob *job = new Akonadi::ItemFetchJob( mCurrentFolder->collection(), this );
+        connect( job, SIGNAL(result(KJob*)), this, SLOT(slotFetchDone(KJob*)) );
+    }
+}
+
+void KMMainWidget::slotFetchDone(KJob*job)
+{
+    Akonadi::ItemFetchJob *fjob = dynamic_cast<Akonadi::ItemFetchJob*>( job );
+    Q_ASSERT( fjob );
+    Akonadi::Item::List items = fjob->items();
+    applyFilters( items );
+}
+
 void KMMainWidget::applyFilters( const QVector<qlonglong>& selectedMessages )
 {
 #ifndef QT_NO_CURSOR
@@ -3618,6 +3634,14 @@ void KMMainWidget::setupActions()
       connect( mServerSideSubscription, SIGNAL(triggered(bool)), this, SLOT(slotServerSideSubscription()) );
   }
 
+
+  {
+      mApplyFiltersOnFolder = new KAction( KIcon( "view-filter" ), i18n( "Appl&y All Filters On Folder" ), this );
+      actionCollection()->addAction( "apply_filters_on_folder", mApplyFiltersOnFolder );
+      connect( mApplyFiltersOnFolder, SIGNAL(triggered(bool)),
+               SLOT(slotApplyFiltersOnFolder()) );
+
+  }
   actionCollection()->addAction(KStandardAction::Undo,  "kmail_undo", this, SLOT(slotUndo()));
 
   KStandardAction::tipOfDay( this, SLOT(slotShowTip()), actionCollection() );

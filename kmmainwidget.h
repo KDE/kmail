@@ -356,6 +356,7 @@ class KMAIL_EXPORT KMMainWidget : public QWidget
     void slotStartCertManager();
     void slotStartWatchGnuPG();
     void slotApplyFilters();
+    void slotApplyFiltersOnFolder();
     void slotExpandThread();
     void slotExpandAllThreads();
     void slotCollapseThread();
@@ -543,6 +544,7 @@ class KMAIL_EXPORT KMMainWidget : public QWidget
     void slotCollectionPropertiesContinued( KJob* job );
     void slotDeletionCollectionResult(KJob* job);
     void slotServerSideSubscription();
+    void slotFetchDone(KJob*job);
 
 private:
     // Message actions
@@ -558,6 +560,7 @@ private:
     KAction *mNextMessageAction, *mPreviousMessageAction;
     KAction *mExpireConfigAction;
     KAction *mAddFavoriteFolder;
+    KAction *mApplyFiltersOnFolder;
     // Custom template actions menu
     KActionMenu *mTemplateMenu;
 
