@@ -119,6 +119,7 @@
 #include <akonadi/kmime/messageflags.h>
 #include <akonadi/collectiondeletejob.h>
 #include <akonadi/dbusconnectionpool.h>
+#include <Akonadi/CachePolicy>
 #include <kpimidentities/identity.h>
 #include <kpimidentities/identitymanager.h>
 #include <kpimutils/email.h>
@@ -488,11 +489,13 @@ void KMMainWidget::slotEndCheckFetchCollectionsDone(KJob* job)
   mCheckMail.clear();
 }
 
-void KMMainWidget::slotFolderChanged( const Akonadi::Collection& col )
+void KMMainWidget::slotFolderChanged( const Akonadi::Collection& collection )
 {
   updateFolderMenu();
-  folderSelected( col );
-  emit captionChangeRequest( MailCommon::Util::fullCollectionPath( col ) );
+  folderSelected( collection );
+  if(collection.cachePolicy().syncOnDemand())
+      AgentManager::self()->synchronizeCollection( collection, false );
+  emit captionChangeRequest( MailCommon::Util::fullCollectionPath( collection ) );
 }
 
 void KMMainWidget::folderSelected( const Akonadi::Collection & col )
