@@ -168,7 +168,7 @@ SearchWindow::SearchWindow( KMMainWidget *widget, const Akonadi::Collection &col
     } else {
       // it's a search folder, but not one of ours, warn the user that we can't edit it
       // FIXME show results, but disable edit GUI
-      kWarning() << "This search was not created with KMail. It can not be edited within it.";
+      kWarning() << "This search was not created with KMail. It cannot be edited within it.";
       mSearchPattern.clear();
     }
   }

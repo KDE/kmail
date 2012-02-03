@@ -126,7 +126,7 @@ namespace MailCommon {
     protected:
       /**
         Instances of this class store the settings for one tool as read from
-        the config file. Visible name and What's this text can not get
+        the config file. Visible name and What's this text cannot get
         translated!
       */
       class SpamToolConfig
