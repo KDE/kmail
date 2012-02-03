@@ -4540,9 +4540,9 @@ void KMMainWidget::slotServerSideSubscription()
             return;
         }
         if(reply == -2 ){
-            KMessageBox::error(this,i18n("Imap server not configurated. We can not configure server side subscription."));
+            KMessageBox::error(this,i18n("IMAP server not configured yet. Please configure the server in the IMAP account before setting up server-side subscription."));
         } else if(reply == -1) {
-            KMessageBox::error(this,i18n("We must logging Imap server before to configure it."));
+            KMessageBox::error(this,i18n("Log in failed, please configure the IMAP account before setting up server-side subscription."));
         }
         delete iface;
     }
