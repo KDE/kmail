@@ -460,11 +460,12 @@ class KMAIL_EXPORT KMFilterActionCommand : public KMCommand
   Q_OBJECT
 
 public:
-  KMFilterActionCommand( QWidget *parent,
-                         const QList<Akonadi::Item> &msgList, const QString &filterId );
+  KMFilterActionCommand(QWidget *parent,
+                         const QVector<qlonglong> &msgListId, const QString &filterId );
 
 private:
   virtual Result execute();
+  QVector<qlonglong> mMsgListId;
   QString mFilterId;
 };
 

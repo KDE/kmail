@@ -1211,11 +1211,10 @@ KMCommand::Result KMFilterCommand::execute()
 
 
 KMFilterActionCommand::KMFilterActionCommand( QWidget *parent,
-                                              const QList<Akonadi::Item> &msgList,
+                                              const QVector<qlonglong> &msgListId,
                                               const QString &filterId )
-  : KMCommand( parent, msgList ), mFilterId( filterId  )
+    : KMCommand( parent ), mMsgListId(msgListId), mFilterId( filterId  )
 {
-  fetchScope().fetchFullPayload();
 }
 
 KMCommand::Result KMFilterActionCommand::execute()
@@ -1224,24 +1223,24 @@ KMCommand::Result KMFilterActionCommand::execute()
   MessageViewer::KCursorSaver busy( MessageViewer::KBusyPtr::busy() );
 #endif
   int msgCount = 0;
-  int msgCountToFilter = retrievedMsgs().size();
+  const int msgCountToFilter = mMsgListId.count();
   ProgressItem* progressItem =
      ProgressManager::createProgressItem (
          "filter"+ProgressManager::getUniqueID(),
          i18n( "Filtering messages" ) );
   progressItem->setTotalItems( msgCountToFilter );
 
-  foreach ( const Akonadi::Item &item, retrievedMsgs() ) {
+  foreach ( const qlonglong &id, mMsgListId ) {
     int diff = msgCountToFilter - ++msgCount;
     if ( diff < 10 || !( msgCount % 10 ) || msgCount <= 10 ) {
       progressItem->updateProgress();
-      QString statusMsg = i18n( "Filtering message %1 of %2",
+      const QString statusMsg = i18n( "Filtering message %1 of %2",
                                 msgCount, msgCountToFilter );
       KPIM::BroadcastStatus::instance()->setStatusMsg( statusMsg );
       qApp->processEvents( QEventLoop::ExcludeUserInputEvents, 50 );
     }
 
-    MailCommon::FilterManager::instance()->filter( item, mFilterId );
+    MailCommon::FilterManager::instance()->filter( id, mFilterId );
     progressItem->incCompletedItems();
   }
 
@@ -1261,7 +1260,7 @@ KMMetaFilterActionCommand::KMMetaFilterActionCommand( const QString &filterId,
 void KMMetaFilterActionCommand::start()
 {
   KMCommand *filterCommand = new KMFilterActionCommand(
-      mMainWidget, mMainWidget->messageListPane()->selectionAsMessageItemList() , mFilterId );
+      mMainWidget, mMainWidget->messageListPane()->selectionAsMessageItemListId() , mFilterId );
   filterCommand->start();
 }
 
