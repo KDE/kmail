@@ -544,7 +544,7 @@ class KMAIL_EXPORT KMMainWidget : public QWidget
     void slotCollectionPropertiesContinued( KJob* job );
     void slotDeletionCollectionResult(KJob* job);
     void slotServerSideSubscription();
-    void slotFetchDone(KJob*job);
+    void slotFetchItemsForFolderDone(KJob*job);
 
 private:
     // Message actions

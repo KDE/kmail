@@ -2457,11 +2457,11 @@ void KMMainWidget::slotApplyFiltersOnFolder()
 {
     if ( mCurrentFolder ) {
         Akonadi::ItemFetchJob *job = new Akonadi::ItemFetchJob( mCurrentFolder->collection(), this );
-        connect( job, SIGNAL(result(KJob*)), this, SLOT(slotFetchDone(KJob*)) );
+        connect( job, SIGNAL(result(KJob*)), this, SLOT(slotFetchItemsForFolderDone(KJob*)) );
     }
 }
 
-void KMMainWidget::slotFetchDone(KJob*job)
+void KMMainWidget::slotFetchItemsForFolderDone(KJob*job)
 {
     Akonadi::ItemFetchJob *fjob = dynamic_cast<Akonadi::ItemFetchJob*>( job );
     Q_ASSERT( fjob );
