@@ -3816,6 +3816,8 @@ void KMMainWidget::updateMessageActionsDelayed()
     currentMessage = Akonadi::Item();
   }
 
+  mApplyFiltersOnFolder->setEnabled( mCurrentFolder && mCurrentFolder->isValid() );
+
   //
   // Here we have:
   //
