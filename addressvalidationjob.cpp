@@ -65,8 +65,21 @@ void AddressValidationJob::Private::slotAliasExpansionDone( KJob *job )
 
   const KPIMUtils::EmailParseResult errorCode = KPIMUtils::isValidAddressList( expandJob->addresses(), brokenAddress );
   if ( !emptyDistributionLists.isEmpty() ) {
-    const QString errorMsg = i18n( "Distribution list \"%1\" is empty, it cannot be used.",
-                                   emptyDistributionLists.join( ", " ) );
+    QString errorMsg;
+    const int numberOfDistributionList( emptyDistributionLists.count() ); 
+    if ( numberOfDistributionList == 1 ) {
+      errorMsg = i18n( "Distribution list \"%1\" is empty, it cannot be used.",
+                       emptyDistributionLists.join( ", " ) );
+    } else {
+      QString listOfDistributionList;
+      for ( int i = 0; i < numberOfDistributionList; ++i )
+      {
+        if ( i != 0 )
+          listOfDistributionList.append( ", " );
+        listOfDistributionList.append( QString::fromLatin1( "\"%1\"" ).arg( emptyDistributionLists.at( i ) ) );
+      }
+      errorMsg = i18n( "Distributions lists %1 are empty, it cannot be used.", listOfDistributionList );
+    }
     KMessageBox::sorry( mParentWidget, errorMsg, i18n( "Invalid Email Address" ) );
     mIsValid = false;
   } else {
