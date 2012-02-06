@@ -69,7 +69,7 @@ void AddressValidationJob::Private::slotAliasExpansionDone( KJob *job )
     const int numberOfDistributionList( emptyDistributionLists.count() ); 
     if ( numberOfDistributionList == 1 ) {
       errorMsg = i18n( "Distribution list \"%1\" is empty, it cannot be used.",
-                       emptyDistributionLists.join( ", " ) );
+                       emptyDistributionLists.first() );
     } else {
       QString listOfDistributionList;
       for ( int i = 0; i < numberOfDistributionList; ++i )
