@@ -1223,6 +1223,11 @@ KMCommand::Result KMFilterActionCommand::execute()
   MessageViewer::KCursorSaver busy( MessageViewer::KBusyPtr::busy() );
 #endif
   int msgCount = 0;
+  MailCommon::FilterManager::FilterRequires filterrequires = MailCommon::FilterManager::Unknown;
+  if( mRequireBody )
+      filterrequires = MailCommon::FilterManager::FullMessage;
+  else
+      filterrequires = MailCommon::FilterManager::HeaderMessage;
   const int msgCountToFilter = mMsgListId.count();
   ProgressItem* progressItem =
      ProgressManager::createProgressItem (
@@ -1240,7 +1245,8 @@ KMCommand::Result KMFilterActionCommand::execute()
       qApp->processEvents( QEventLoop::ExcludeUserInputEvents, 50 );
     }
 
-    MailCommon::FilterManager::instance()->filter( id, mFilterId );
+
+    MailCommon::FilterManager::instance()->filter( id, mFilterId,filterrequires );
     progressItem->incCompletedItems();
   }
 
