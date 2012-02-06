@@ -1212,8 +1212,8 @@ KMCommand::Result KMFilterCommand::execute()
 
 KMFilterActionCommand::KMFilterActionCommand( QWidget *parent,
                                               const QVector<qlonglong> &msgListId,
-                                              const QString &filterId )
-    : KMCommand( parent ), mMsgListId(msgListId), mFilterId( filterId  )
+                                              const QString &filterId, bool requireBody )
+    : KMCommand( parent ), mMsgListId(msgListId), mFilterId( filterId  ), mRequireBody(requireBody)
 {
 }
 
@@ -1250,17 +1250,17 @@ KMCommand::Result KMFilterActionCommand::execute()
 }
 
 
-KMMetaFilterActionCommand::KMMetaFilterActionCommand( const QString &filterId,
+KMMetaFilterActionCommand::KMMetaFilterActionCommand( const QString &filterId, bool requireBody,
                                                       KMMainWidget *main )
     : QObject( main ),
-      mFilterId( filterId ), mMainWidget( main )
+      mFilterId( filterId ), mRequireBody(requireBody), mMainWidget( main )
 {
 }
 
 void KMMetaFilterActionCommand::start()
 {
   KMCommand *filterCommand = new KMFilterActionCommand(
-      mMainWidget, mMainWidget->messageListPane()->selectionAsMessageItemListId() , mFilterId );
+      mMainWidget, mMainWidget->messageListPane()->selectionAsMessageItemListId() , mFilterId, mRequireBody );
   filterCommand->start();
 }
 

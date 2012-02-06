@@ -461,12 +461,13 @@ class KMAIL_EXPORT KMFilterActionCommand : public KMCommand
 
 public:
   KMFilterActionCommand(QWidget *parent,
-                         const QVector<qlonglong> &msgListId, const QString &filterId );
+                         const QVector<qlonglong> &msgListId, const QString &filterId , bool requireBody);
 
 private:
   virtual Result execute();
   QVector<qlonglong> mMsgListId;
   QString mFilterId;
+  bool mRequireBody;
 };
 
 
@@ -475,13 +476,14 @@ class KMAIL_EXPORT KMMetaFilterActionCommand : public QObject
   Q_OBJECT
 
 public:
-  KMMetaFilterActionCommand( const QString &filterId, KMMainWidget *main );
+  KMMetaFilterActionCommand( const QString &filterId, bool requireBody, KMMainWidget *main );
 
 public slots:
   void start();
 
 private:
   QString mFilterId;
+  bool mRequireBody;
   KMMainWidget *mMainWidget;
 };
 
