@@ -130,6 +130,7 @@
 #include <ktoolinvocation.h>
 #include <sonnet/dictionarycombobox.h>
 #include <krun.h>
+#include <KIO/JobUiDelegate>
 
 // Qt includes
 #include <QClipboard>
