@@ -48,6 +48,13 @@ namespace KMail {
   public:
     SecondaryWindow( const char * name = 0 );
     ~SecondaryWindow();
+  public Q_SLOTS:
+    /**
+     * Reimplement because we have this bug #Bug 163978
+     * @brief setCaption
+     * @param caption
+     */
+    virtual void setCaption( const QString &caption);
 
   protected:
     /**

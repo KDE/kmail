@@ -34,6 +34,7 @@
 #include "kmkernel.h"
 
 #include <kglobal.h>
+#include <klocale.h>
 
 #include <QCloseEvent>
 
@@ -74,6 +75,21 @@ namespace KMail {
     } else {
       KMainWindow::closeEvent( e );
     }
+  }
+
+  void SecondaryWindow::setCaption( const QString &userCaption )
+  {
+      QString caption = KGlobal::caption();
+      QString captionString = userCaption.isEmpty() ? caption : userCaption;
+      if ( !userCaption.isEmpty() ) {
+          // Add the application name if:
+          // User asked for it, it's not a duplication  and the app name (caption()) is not empty
+          if ( !caption.isEmpty() ) {
+              captionString += i18nc("Document/application separator in titlebar", " – ") + caption;
+          }
+      }
+
+      setWindowTitle(captionString);
   }
 
 } // namespace KMail
