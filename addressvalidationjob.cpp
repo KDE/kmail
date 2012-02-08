@@ -67,19 +67,16 @@ void AddressValidationJob::Private::slotAliasExpansionDone( KJob *job )
   if ( !emptyDistributionLists.isEmpty() ) {
     QString errorMsg;
     const int numberOfDistributionList( emptyDistributionLists.count() ); 
-    if ( numberOfDistributionList == 1 ) {
-      errorMsg = i18n( "Distribution list \"%1\" is empty, it cannot be used.",
-                       emptyDistributionLists.first() );
-    } else {
-      QString listOfDistributionList;
-      for ( int i = 0; i < numberOfDistributionList; ++i )
-      {
-        if ( i != 0 )
-          listOfDistributionList.append( ", " );
-        listOfDistributionList.append( QString::fromLatin1( "\"%1\"" ).arg( emptyDistributionLists.at( i ) ) );
-      }
-      errorMsg = i18n( "Distributions lists %1 are empty, they cannot be used.", listOfDistributionList );
+    QString listOfDistributionList;
+    for ( int i = 0; i < numberOfDistributionList; ++i )
+    {
+      if ( i != 0 )
+        listOfDistributionList.append( ", " );
+      listOfDistributionList.append( QString::fromLatin1( "\"%1\"" ).arg( emptyDistributionLists.at( i ) ) );
     }
+    errorMsg = i18np( "Distribution list %2 is empty, it cannot be used.",
+                      "Distribution lists %2 are empty, they cannot be used.",
+                      numberOfDistributionList, listOfDistributionList );
     KMessageBox::sorry( mParentWidget, errorMsg, i18n( "Invalid Email Address" ) );
     mIsValid = false;
   } else {
