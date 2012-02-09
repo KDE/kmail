@@ -62,6 +62,7 @@ SimpleStringListEditor::SimpleStringListEditor( QWidget * parent,
   hlay->setMargin( 0 );
 
   mListBox = new QListWidget( this );
+  mListBox->setSelectionMode(QAbstractItemView::ExtendedSelection);
   hlay->addWidget( mListBox, 1 );
 
   if ( buttons == None ) {
@@ -141,7 +142,9 @@ SimpleStringListEditor::SimpleStringListEditor( QWidget * parent,
 
   vlay->addStretch( 1 ); // spacer
 
-  connect( mListBox, SIGNAL(currentItemChanged(QListWidgetItem*,QListWidgetItem*)), 
+  connect( mListBox, SIGNAL(currentItemChanged(QListWidgetItem*,QListWidgetItem*)),
+           this, SLOT(slotSelectionChanged()) );
+  connect( mListBox, SIGNAL(itemSelectionChanged()),
            this, SLOT(slotSelectionChanged()) );
 }
 
@@ -216,10 +219,13 @@ void SimpleStringListEditor::slotAdd() {
 }
 
 void SimpleStringListEditor::slotRemove() {
-  if ( mListBox->currentItem() ) {
-    delete mListBox->takeItem( mListBox->currentRow() );
+    QList<QListWidgetItem *> selectedItems = mListBox->selectedItems();
+    if(selectedItems.isEmpty())
+        return;
+    Q_FOREACH(QListWidgetItem *item, selectedItems) {
+        delete mListBox->takeItem(mListBox->row(item));
+    }
     emit changed();
-  }
 }
 
 void SimpleStringListEditor::slotModify() {
@@ -263,19 +269,21 @@ void SimpleStringListEditor::slotDown() {
 
 void SimpleStringListEditor::slotSelectionChanged() {
 
-  QListWidgetItem * item = mListBox->currentItem();
-  int row = mListBox->currentRow();
-
+  QList<QListWidgetItem *> lstSelectedItems = mListBox->selectedItems();
+  const int numberOfItemSelected( lstSelectedItems.count() );
   // if there is one, item will be non-null (ie. true), else 0
   // (ie. false):
   if ( mRemoveButton )
-    mRemoveButton->setEnabled( item );
+    mRemoveButton->setEnabled( !lstSelectedItems.isEmpty() );
+
   if ( mModifyButton )
-    mModifyButton->setEnabled( item );
+    mModifyButton->setEnabled( numberOfItemSelected == 1);
+
+  const int row = mListBox->currentRow();
   if ( mUpButton )
-    mUpButton->setEnabled( item && row > 0 );
+    mUpButton->setEnabled( ( numberOfItemSelected == 1 ) && row > 0 );
   if ( mDownButton )
-    mDownButton->setEnabled( item && row < mListBox->count() - 1 );
+    mDownButton->setEnabled( ( numberOfItemSelected == 1 ) && row < mListBox->count() - 1 );
 }
 
 
