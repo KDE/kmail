@@ -50,6 +50,8 @@ class AddressValidationJob::Private
 
 void AddressValidationJob::Private::slotAliasExpansionDone( KJob *job )
 {
+  mIsValid = true;
+
   if ( job->error() ) {
     q->setError( job->error() );
     q->setErrorText( job->errorText() );
@@ -90,8 +92,6 @@ void AddressValidationJob::Private::slotAliasExpansionDone( KJob *job )
       mIsValid = false;
     }
   }
-
-  mIsValid = true;
 
   q->emitResult();
 }
