@@ -37,6 +37,7 @@
 
 
 class QListWidget;
+class QListWidgetItem;
 class QPushButton;
 
 //
@@ -92,6 +93,7 @@ protected slots:
 
 protected:
   bool containsString( const QString & str );
+  QList<QListWidgetItem*> selectedItems() const;
   QListWidget   *mListBox;
   QPushButton   *mAddButton;
   QPushButton   *mRemoveButton;
