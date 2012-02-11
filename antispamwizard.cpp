@@ -44,6 +44,7 @@
 #include "mailcommon/mailkernel.h"
 #include "mailcommon/filter/mailfilter.h"
 #include "mailcommon/filter/filteraction.h"
+#include "mailcommon/filter/filteractiondict.h"
 #include "mailcommon/filter/filtermanager.h"
 
 #include <Akonadi/AgentInstance>
