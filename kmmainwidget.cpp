@@ -59,8 +59,8 @@
 
 #include "mailcommon/collectiongeneralpage.h"
 #include "mailcommon/expirecollectionattribute.h"
-#include "mailcommon/filtermanager.h"
-#include "mailcommon/mailfilter.h"
+#include "mailcommon/filter/filtermanager.h"
+#include "mailcommon/filter/mailfilter.h"
 #include "mailcommon/favoritecollectionwidget.h"
 
 // Other PIM includes

@@ -22,7 +22,7 @@ using KPIM::RecentAddresses;
 #include "mailutil.h"
 #include "mailcommon/pop3settings.h"
 #include "mailcommon/foldertreeview.h"
-#include "mailcommon/kmfilterdialog.h"
+#include "mailcommon/filter/kmfilterdialog.h"
 
 
 // kdepim includes

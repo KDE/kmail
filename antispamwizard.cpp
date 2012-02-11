@@ -42,9 +42,9 @@
 #include "mailcommon/mailutil.h"
 #include "mailcommon/imapsettings.h"
 #include "mailcommon/mailkernel.h"
-#include "mailcommon/mailfilter.h"
-#include "mailcommon/filteraction.h"
-#include "mailcommon/filtermanager.h"
+#include "mailcommon/filter/mailfilter.h"
+#include "mailcommon/filter/filteraction.h"
+#include "mailcommon/filter/filtermanager.h"
 
 #include <Akonadi/AgentInstance>
 

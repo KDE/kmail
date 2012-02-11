@@ -72,9 +72,9 @@
 
 #include "messagecore/mailinglist.h"
 #include "composer.h"
-#include "mailcommon/filteraction.h"
-#include "mailcommon/filtermanager.h"
-#include "mailcommon/mailfilter.h"
+#include "mailcommon/filter/filteraction.h"
+#include "mailcommon/filter/filtermanager.h"
+#include "mailcommon/filter/mailfilter.h"
 #include "mailcommon/redirectdialog.h"
 #include "kmmainwidget.h"
 #include "undostack.h"
