@@ -315,11 +315,16 @@ void MessageActions::updateActions()
   mStatusMenu->setEnabled( multiVisible );
 
   if ( mCurrentItem.hasPayload<KMime::Message::Ptr>() ) {
-    Akonadi::ItemFetchJob *job = new Akonadi::ItemFetchJob( mCurrentItem );
-    job->fetchScope().fetchAllAttributes();
-    job->fetchScope().fetchFullPayload( true );
-    job->fetchScope().fetchPayloadPart( Akonadi::MessagePart::Header );
-    connect( job, SIGNAL(result(KJob*)), SLOT(slotUpdateActionsFetchDone(KJob*)) );
+    if ( mCurrentItem.loadedPayloadParts().contains("RFC822") ) {
+      updateMailingListActions( mCurrentItem );      
+    } else
+    {
+      Akonadi::ItemFetchJob *job = new Akonadi::ItemFetchJob( mCurrentItem );
+      job->fetchScope().fetchAllAttributes();
+      job->fetchScope().fetchFullPayload( true );
+      job->fetchScope().fetchPayloadPart( Akonadi::MessagePart::Header );
+      connect( job, SIGNAL(result(KJob*)), SLOT(slotUpdateActionsFetchDone(KJob*)) );
+    }
   }
   mEditAction->setEnabled( uniqItem );
 }
