@@ -1268,6 +1268,13 @@ AppearancePageHeadersTab::AppearancePageHeadersTab( QWidget * parent )
   connect( mHideTabBarWithSingleTab, SIGNAL(stateChanged(int)),
            this, SLOT(slotEmitChanged()) );
 
+  mTabsHaveCloseButton = new QCheckBox(
+                 MessageList::Core::Settings::self()->tabsHaveCloseButtonItem()->label(), group );
+  gvlay->addWidget(  mTabsHaveCloseButton );
+
+  connect( mTabsHaveCloseButton, SIGNAL(stateChanged(int)),
+           this, SLOT(slotEmitChanged()) );
+
   // "Aggregation"
   using MessageList::Utils::AggregationComboBox;
   mAggregationComboBox = new AggregationComboBox( group );
@@ -1413,8 +1420,14 @@ void AppearancePage::HeadersTab::slotSelectDefaultTheme()
 void AppearancePage::HeadersTab::doLoadOther()
 {
   // "General Options":
-  mDisplayMessageToolTips->setChecked( MessageList::Core::Settings::self()->messageToolTipEnabled() );
-  mHideTabBarWithSingleTab->setChecked( MessageList::Core::Settings::self()->autoHideTabBarWithSingleTab() );
+  mDisplayMessageToolTips->setChecked(
+    MessageList::Core::Settings::self()->messageToolTipEnabled() );
+
+  mHideTabBarWithSingleTab->setChecked(
+    MessageList::Core::Settings::self()->autoHideTabBarWithSingleTab() );
+
+  mTabsHaveCloseButton->setChecked(
+    MessageList::Core::Settings::self()->tabsHaveCloseButton() );
 
   // "Aggregation":
   slotSelectDefaultAggregation();
@@ -1429,8 +1442,15 @@ void AppearancePage::HeadersTab::doLoadOther()
 
 void AppearancePage::HeadersTab::doLoadFromGlobalSettings()
 {
-  mDisplayMessageToolTips->setChecked( MessageList::Core::Settings::self()->messageToolTipEnabled() );
-  mHideTabBarWithSingleTab->setChecked( MessageList::Core::Settings::self()->autoHideTabBarWithSingleTab() );
+  mDisplayMessageToolTips->setChecked(
+    MessageList::Core::Settings::self()->messageToolTipEnabled() );
+
+  mHideTabBarWithSingleTab->setChecked(
+    MessageList::Core::Settings::self()->autoHideTabBarWithSingleTab() );
+
+  mTabsHaveCloseButton->setChecked(
+    MessageList::Core::Settings::self()->tabsHaveCloseButton() );
+
   // "Aggregation":
   slotSelectDefaultAggregation();
 
@@ -1462,8 +1482,14 @@ void AppearancePage::HeadersTab::setDateDisplay( int num, const QString & format
 
 void AppearancePage::HeadersTab::save()
 {
-  MessageList::Core::Settings::self()->setMessageToolTipEnabled( mDisplayMessageToolTips->isChecked() );
-  MessageList::Core::Settings::self()->setAutoHideTabBarWithSingleTab( mHideTabBarWithSingleTab->isChecked() );
+  MessageList::Core::Settings::self()->
+    setMessageToolTipEnabled( mDisplayMessageToolTips->isChecked() );
+
+  MessageList::Core::Settings::self()->
+    setAutoHideTabBarWithSingleTab( mHideTabBarWithSingleTab->isChecked() );
+
+  MessageList::Core::Settings::self()->
+    setTabsHaveCloseButton( mTabsHaveCloseButton->isChecked() );
 
   // "Aggregation"
   mAggregationComboBox->writeDefaultConfig();
