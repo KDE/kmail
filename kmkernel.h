@@ -270,6 +270,7 @@ public Q_SLOTS:
 
   Q_SCRIPTABLE int viewMessage( const QString & messageFile );
 
+  Q_SCRIPTABLE void updateConfig();
 /**
  * End of D-Bus callable stuff
  */

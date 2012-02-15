@@ -1321,6 +1321,11 @@ void KMKernel::slotSyncConfig()
   KMKernel::config()->sync();
 }
 
+void KMKernel::updateConfig()
+{
+  slotConfigChanged();
+}
+
 void KMKernel::slotShowConfigurationDialog()
 {
   if( KMKernel::getKMMainWidget() == 0 ) {
