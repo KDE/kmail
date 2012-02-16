@@ -119,7 +119,7 @@ class KMAIL_EXPORT KMMainWidget : public QWidget
     virtual void readConfig();
 
     /** Write configuration options. */
-    virtual void writeConfig();
+    virtual void writeConfig(bool force = true);
 
     void writeReaderConfig();
 
