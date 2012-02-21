@@ -1237,6 +1237,10 @@ void KMKernel::cleanup(void)
   the_shuttingDown = true;
   closeAllKMailWindows();
 
+  // Flush the cache of foldercollection objects. This results
+  // in configuration writes, so we need to do it early enough.
+  MailCommon::FolderCollection::clearCache();
+
   // Write the config while all other managers are alive
   delete the_msgSender;
   the_msgSender = 0;
