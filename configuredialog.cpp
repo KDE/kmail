@@ -1043,8 +1043,8 @@ void AppearancePage::ColorsTab::loadColor( bool loadFromConfig )
     Qt::black,     // colorbar plain fg
     Qt::black,     // colorbar html  bg
     Qt::white,     // colorbar html  fg
-    scheme.foreground(KColorScheme::NegativeText).color(), //Offline Account Color
-    scheme.foreground(KColorScheme::InactiveText).color()  //Broken Account Color
+    scheme.foreground(KColorScheme::InactiveText).color(), //Offline Account Color
+    scheme.foreground(KColorScheme::NegativeText).color()  //Broken Account Color
   };
 
   for ( int i = 0 ; i < numColorNames ; i++ ) {
