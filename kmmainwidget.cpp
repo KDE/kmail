@@ -3967,9 +3967,17 @@ void KMMainWidget::slotAkonadiStandardActionUpdated()
     multiFolder = mFolderTreeWidget->selectedCollections().count() > 1;
   }
   if ( mCollectionProperties ) {
-    mCollectionProperties->setEnabled( mCurrentFolder && !multiFolder &&
-                                       !mCurrentFolder->isStructural() &&
-                                       !MailCommon::Util::isVirtualCollection( mCurrentFolder->collection() ) );
+      if( mCurrentFolder ) {
+        const Akonadi::AgentInstance instance =
+            Akonadi::AgentManager::self()->instance( mCurrentFolder->collection().resource() );
+
+        mCollectionProperties->setEnabled( !multiFolder &&
+                                           !mCurrentFolder->isStructural() &&
+                                           !MailCommon::Util::isVirtualCollection( mCurrentFolder->collection() ) &&
+                                           (instance.status()!=Akonadi::AgentInstance::Broken) );
+      } else {
+        mCollectionProperties->setEnabled(false);
+      }
     QList< QAction* > collectionProperties;
     if ( mCollectionProperties->isEnabled() )
       collectionProperties << mCollectionProperties;
