@@ -22,6 +22,7 @@
 
 
 #include <KLocale>
+#include <KPushButton>
 
 #include <Akonadi/AgentInstance>
 #include <Akonadi/AgentManager>
@@ -50,6 +51,25 @@ AccountConfigOrderDialog::AccountConfigOrderDialog(QWidget *parent)
     mListAccount = new QListWidget(this);
     mListAccount->setDragDropMode( QAbstractItemView::InternalMove );
     vlay->addWidget(mListAccount);
+
+    QHBoxLayout *layout = new QHBoxLayout;
+    mUpButton = new KPushButton;
+    mUpButton->setIcon( KIcon("go-up") );
+    mUpButton->setEnabled( false ); // b/c no item is selected yet
+    mUpButton->setFocusPolicy( Qt::StrongFocus );
+
+    mDownButton = new KPushButton;
+    mDownButton->setIcon( KIcon("go-down") );
+    mDownButton->setEnabled( false ); // b/c no item is selected yet
+    mDownButton->setFocusPolicy( Qt::StrongFocus );
+    layout->addWidget(mUpButton);
+    layout->addWidget(mDownButton);
+
+    vlay->addLayout(layout);
+
+    connect( mUpButton, SIGNAL(clicked()), this, SLOT(slotMoveUp()) );
+    connect( mDownButton, SIGNAL(clicked()), this, SLOT(slotMoveDown()) );
+
     connect( this, SIGNAL(okClicked()), SLOT(slotOk()) );
     init();
 }
@@ -58,6 +78,17 @@ AccountConfigOrderDialog::~AccountConfigOrderDialog()
 {
 
 }
+
+void AccountConfigOrderDialog::slotMoveUp()
+{
+
+}
+
+void AccountConfigOrderDialog::slotMoveDown()
+{
+
+}
+
 
 void AccountConfigOrderDialog::init()
 {

@@ -21,6 +21,7 @@
 #include <KDialog>
 
 class QListWidget;
+class KPushButton;
 
 class AccountConfigOrderDialog : public KDialog
 {
@@ -33,9 +34,14 @@ public:
     };
 protected slots:
     void slotOk();
+    void slotMoveUp();
+    void slotMoveDown();
+
 private:
     void init();
     QListWidget *mListAccount;
+    KPushButton *mUpButton;
+    KPushButton *mDownButton;
 };
 
 #endif // ACCOUNTCONFIGORDERDIALOG_H
