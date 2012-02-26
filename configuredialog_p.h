@@ -190,6 +190,7 @@ private slots:
   void slotRestartSelectedAccount();
   void slotEditNotifications();
   void slotShowMailCheckMenu( const QString &, const QPoint & );
+  void slotCustomizeAccountOrder();
   void slotIncludeInCheckChanged( bool checked );
   void slotOfflineOnShutdownChanged( bool checked );
   void slotCheckOnStatupChanged( bool checked );

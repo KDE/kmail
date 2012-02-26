@@ -43,6 +43,7 @@
 #include "kmmainwidget.h"
 #include "composer.h"
 #include "tag.h"
+#include "accountconfigorderdialog.h"
 
 #include "foldertreewidget.h"
 
@@ -465,6 +466,8 @@ AccountsPageReceivingTab::AccountsPageReceivingTab( QWidget * parent )
 
   connect( mAccountsReceiving.mOtherNewMailActionsButton, SIGNAL(clicked()),
            this, SLOT(slotEditNotifications()) );
+  connect( mAccountsReceiving.customizeAccountOrder,SIGNAL(clicked()),this,SLOT(slotCustomizeAccountOrder()));
+
   slotAccountSelected( mAccountsReceiving.mAccountList->currentAgentInstance() );
 
 }
@@ -472,6 +475,12 @@ AccountsPageReceivingTab::AccountsPageReceivingTab( QWidget * parent )
 AccountsPageReceivingTab::~AccountsPageReceivingTab()
 {
   mRetrievalHash.clear();
+}
+
+void AccountsPageReceivingTab::slotCustomizeAccountOrder()
+{
+    AccountConfigOrderDialog dlg(this);
+    dlg.exec();
 }
 
 void AccountsPageReceivingTab::slotShowMailCheckMenu( const QString &ident, const QPoint & pos )

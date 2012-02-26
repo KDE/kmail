@@ -112,6 +112,7 @@ if (NOT WINCE AND KDEPIM_BUILD_DESKTOP)
      kmsearchfilterproxymodel.cpp
      kmknotify.cpp
      tagselectdialog.cpp
+     accountconfigorderdialog.cpp
 
   )
 
