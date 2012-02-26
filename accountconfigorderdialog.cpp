@@ -31,6 +31,12 @@
 #include <QVBoxLayout>
 #include <QListWidget>
 
+struct InstanceStruct {
+    QString name;
+    QIcon icon;
+};
+
+
 AccountConfigOrderDialog::AccountConfigOrderDialog(QWidget *parent)
     :KDialog(parent)
 {
@@ -58,7 +64,8 @@ void AccountConfigOrderDialog::init()
     KConfigGroup group( KMKernel::self()->config(), "AccountOrder" );
     const QStringList listOrderAccount = group.readEntry("order",QStringList());
     QStringList instanceList;
-    QMap<QString, QString> mapInstance;
+
+    QMap<QString, InstanceStruct> mapInstance;
     foreach ( const Akonadi::AgentInstance &instance, Akonadi::AgentManager::self()->instances() ) {
         const QStringList capabilities( instance.type().capabilities() );
         if ( instance.type().mimeTypes().contains( KMime::Message::mimeType() ) ) {
@@ -68,7 +75,10 @@ void AccountConfigOrderDialog::init()
             {
                 if(!instance.identifier().contains(POP3_RESOURCE_IDENTIFIER)) {
                     instanceList<<instance.identifier();
-                    mapInstance.insert(instance.identifier(),instance.name());
+                    InstanceStruct instanceStruct;
+                    instanceStruct.name = instance.name();
+                    instanceStruct.icon = instance.type().icon();
+                    mapInstance.insert(instance.identifier(),instanceStruct);
                 }
             }
         }
@@ -85,7 +95,8 @@ void AccountConfigOrderDialog::init()
     for(int i = 0; i <numberOfElement;++i) {
         const QString identifier(finalList.at(i));
         if(mapInstance.contains(identifier)) {
-            QListWidgetItem * item = new QListWidgetItem(mapInstance.value(identifier),mListAccount);
+            InstanceStruct tmp = mapInstance.value(identifier);
+            QListWidgetItem * item = new QListWidgetItem(tmp.icon,tmp.name,mListAccount);
             item->setData(AccountConfigOrderDialog::IdentifierAccount, identifier);
             mListAccount->addItem( item );
         }
