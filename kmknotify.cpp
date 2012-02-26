@@ -91,6 +91,7 @@ void KMKnotify::initCombobox()
   QStringList lstNotify;
   lstNotify<< QLatin1String( "kmail2/kmail2.notifyrc" );
   lstNotify<< QLatin1String( "akonadi_maildispatcher_agent/akonadi_maildispatcher_agent.notifyrc" ); 
+  lstNotify<< QLatin1String( "akonadi_mailfilter_agent/akonadi_mailfilter_agent.notifyrc" );
    //TODO add other notifyrc here if necessary
 
   Q_FOREACH( const QString& notify, lstNotify )
