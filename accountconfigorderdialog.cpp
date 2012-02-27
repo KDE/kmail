@@ -58,11 +58,13 @@ AccountConfigOrderDialog::AccountConfigOrderDialog(QWidget *parent)
     QHBoxLayout *layout = new QHBoxLayout;
     mUpButton = new KPushButton;
     mUpButton->setIcon( KIcon("go-up") );
+    mUpButton->setToolTip( i18nc( "Move selected account up.", "Up" ) );
     mUpButton->setEnabled( false ); // b/c no item is selected yet
     mUpButton->setFocusPolicy( Qt::StrongFocus );
 
     mDownButton = new KPushButton;
     mDownButton->setIcon( KIcon("go-down") );
+    mDownButton->setToolTip( i18nc( "Move selected account down.", "Down" ) );
     mDownButton->setEnabled( false ); // b/c no item is selected yet
     mDownButton->setFocusPolicy( Qt::StrongFocus );
     layout->addWidget(mUpButton);
