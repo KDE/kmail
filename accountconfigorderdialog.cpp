@@ -72,6 +72,7 @@ AccountConfigOrderDialog::AccountConfigOrderDialog(QWidget *parent)
     connect( mUpButton, SIGNAL(clicked()), this, SLOT(slotMoveUp()) );
     connect( mDownButton, SIGNAL(clicked()), this, SLOT(slotMoveDown()) );
     connect( mListAccount, SIGNAL(itemSelectionChanged()), this, SLOT(slotEnableControls()));
+    connect( mListAccount->model(), SIGNAL(rowsMoved(QModelIndex,int,int,QModelIndex,int)),SLOT(slotEnableControls()) );
 
     connect( this, SIGNAL(okClicked()), SLOT(slotOk()) );
     init();
