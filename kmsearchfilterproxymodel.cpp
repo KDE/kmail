@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2011 Montel Laurent <montel@kde.org>
+ * Copyright (c) 2011,2012 Montel Laurent <montel@kde.org>
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -30,6 +30,8 @@
 #include "kmsearchmessagemodel.h"
 #include <QModelIndex>
 #include <QDateTime>
+
+using namespace KMail;
 
 KMSearchFilterProxyModel::KMSearchFilterProxyModel( QObject *parent )
   :QSortFilterProxyModel( parent )

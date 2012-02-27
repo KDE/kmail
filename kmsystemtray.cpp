@@ -6,7 +6,7 @@
     copyright            : (C) 2001 by Ryan Breen
     email                : ryan@porivo.com
 
-    Copyright (c) 2010, 2011 Montel Laurent <montel@kde.org>
+    Copyright (c) 2010, 2011, 2012 Montel Laurent <montel@kde.org>
  ***************************************************************************/
 
 /***************************************************************************
@@ -53,6 +53,7 @@ using namespace MailCommon;
  * with its count of unread messages, allowing the user to jump
  * to the first unread message in each folder.
  */
+namespace KMail {
 KMSystemTray::KMSystemTray(QObject *parent)
   : KStatusNotifierItem( parent),
     mDesktopOfMainWin( 0 ),
@@ -423,5 +424,5 @@ bool KMSystemTray::excludeFolder( const Akonadi::Collection& collection ) const
   
   return false;
 }
-
+}
 #include "kmsystemtray.moc"

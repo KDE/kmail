@@ -32,6 +32,8 @@
 #include <QVBoxLayout>
 #include <QListWidget>
 
+using namespace KMail;
+
 struct InstanceStruct {
     QString name;
     QIcon icon;

@@ -1389,7 +1389,7 @@ void KMKernel::updateSystemTray()
   }
 }
 
-bool KMKernel::registerSystemTrayApplet( KMSystemTray* applet )
+bool KMKernel::registerSystemTrayApplet( KMail::KMSystemTray* applet )
 {
   if ( !systemTrayApplets.contains( applet ) ) {
     systemTrayApplets.append( applet );
@@ -1399,7 +1399,7 @@ bool KMKernel::registerSystemTrayApplet( KMSystemTray* applet )
     return false;
 }
 
-bool KMKernel::unregisterSystemTrayApplet( KMSystemTray* applet )
+bool KMKernel::unregisterSystemTrayApplet( KMail::KMSystemTray* applet )
 {
   return systemTrayApplets.removeAll( applet ) > 0;
 }
@@ -1566,7 +1566,7 @@ bool KMKernel::canQueryClose()
   KMMainWidget *widget = getKMMainWidget();
   if ( !widget )
     return true;
-  KMSystemTray* systray = widget->systray();
+  KMail::KMSystemTray* systray = widget->systray();
   if ( !systray || GlobalSettings::closeDespiteSystemTray() )
       return true;
   if ( systray->mode() == GlobalSettings::EnumSystemTrayPolicy::ShowAlways ) {

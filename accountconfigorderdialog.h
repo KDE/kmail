@@ -23,6 +23,8 @@
 class QListWidget;
 class KPushButton;
 
+namespace KMail {
+
 class AccountConfigOrderDialog : public KDialog
 {
     Q_OBJECT
@@ -43,5 +45,6 @@ private:
     KPushButton *mUpButton;
     KPushButton *mDownButton;
 };
+}
 
 #endif // ACCOUNTCONFIGORDERDIALOG_H

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2011 Montel Laurent <montel@kde.org>
+ * Copyright (c) 2011, 2012 Montel Laurent <montel@kde.org>
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -33,7 +33,7 @@
 class KComboBox;
 class KNotifyConfigWidget;
 
-
+namespace KMail {
 class KMKnotify : public KDialog
 {
   Q_OBJECT
@@ -54,7 +54,7 @@ private:
   KNotifyConfigWidget* m_notifyWidget;
   bool m_changed;
 };
-
+}
 
 
 #endif /* KMKNOTIFY_H */

@@ -3679,7 +3679,7 @@ void KMMainWidget::slotAddFavoriteFolder()
 //-----------------------------------------------------------------------------
 void KMMainWidget::slotEditNotifications()
 {
-  KMKnotify notifyDlg( this );
+  KMail::KMKnotify notifyDlg( this );
   notifyDlg.exec();
 }
 
@@ -4264,7 +4264,7 @@ QList<QAction*> KMMainWidget::actionList()
 void KMMainWidget::toggleSystemTray()
 {
   if ( !mSystemTray && GlobalSettings::self()->systemTrayEnabled() ) {
-    mSystemTray = new KMSystemTray(this);
+    mSystemTray = new KMail::KMSystemTray(this);
   }
   else if ( mSystemTray && !GlobalSettings::self()->systemTrayEnabled() ) {
     // Get rid of system tray on user's request
@@ -4328,7 +4328,7 @@ QSharedPointer<FolderCollection> KMMainWidget::currentFolder() const
 }
 
 //-----------------------------------------------------------------------------
-KMSystemTray *KMMainWidget::systray() const
+KMail::KMSystemTray *KMMainWidget::systray() const
 {
   return mSystemTray;
 }

@@ -147,7 +147,7 @@ using MailTransport::TransportManagementWidget;
 
 #include <libkdepim/nepomukwarning.h>
 using namespace MailCommon;
-
+using namespace KMail;
 namespace {
 
   static const char * lockedDownWarning =

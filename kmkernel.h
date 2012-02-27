@@ -51,6 +51,7 @@ class KJob;
 namespace KMail {
   class MailServiceImpl;
   class UndoStack;
+  class KMSystemTray;
 }
 namespace KPIM { class ProgressDialog; }
 using KMail::MailServiceImpl;
@@ -68,7 +69,6 @@ class KMMainWin;
 class KMainWindow;
 class KMMainWidget;
 class ConfigureDialog;
-class KMSystemTray;
 
 namespace MailCommon {
   class Kernel;
@@ -371,8 +371,8 @@ public:
    */
   bool haveSystemTrayApplet() const;
 
-  bool registerSystemTrayApplet( KMSystemTray* );
-  bool unregisterSystemTrayApplet( KMSystemTray* );
+  bool registerSystemTrayApplet( KMail::KMSystemTray* );
+  bool unregisterSystemTrayApplet( KMail::KMSystemTray* );
 
   QTextCodec *networkCodec() { return netCodec; }
 
@@ -501,7 +501,7 @@ private:
   KMMainWin *mWin;
   MailServiceImpl *mMailService;
 
-  QList<KMSystemTray*> systemTrayApplets;
+  QList<KMail::KMSystemTray*> systemTrayApplets;
 
   MailCommon::FolderCollectionMonitor *mFolderCollectionMonitor;
   Akonadi::EntityTreeModel *mEntityTreeModel;

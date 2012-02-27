@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2011 Montel Laurent <montel@kde.org>
+ * Copyright (c) 2011, 2012 Montel Laurent <montel@kde.org>
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -33,6 +33,7 @@
 
 class QModelIndex;
 
+namespace KMail {
 class KMSearchFilterProxyModel : public QSortFilterProxyModel
 {
 public:
@@ -41,7 +42,7 @@ public:
 protected:
   virtual bool lessThan( const QModelIndex & left, const QModelIndex & right ) const;
 };
-
+}
 
 #endif /* KMSEARCHFILTERPROXYMODEL_H */
 

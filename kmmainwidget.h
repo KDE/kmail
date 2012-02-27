@@ -57,7 +57,6 @@ class QMenu;
 class KActionMenu;
 class KToggleAction;
 class KMMetaFilterActionCommand;
-class KMSystemTray;
 class CollectionPane;
 class KMCommand;
 class KMMoveCommand;
@@ -73,6 +72,7 @@ namespace KMail {
   class StatusBarLabel;
   class TagActionManager;
   class FolderShortcutActionManager;
+  class KMSystemTray;
 }
 
 namespace KSieveUi {
@@ -166,7 +166,7 @@ class KMAIL_EXPORT KMMainWidget : public QWidget
     */
     static const PtrList *mainWidgetList();
 
-    KMSystemTray *systray() const;
+    KMail::KMSystemTray *systray() const;
 
     /**
       Return the list of all action, in order to check shortcuts conflicts against them.
@@ -619,7 +619,7 @@ private:
 
     KMail::TagActionManager *mTagActionManager;
     KMail::FolderShortcutActionManager *mFolderShortcutActionManager;
-    KMSystemTray *mSystemTray;
+    KMail::KMSystemTray *mSystemTray;
     KSharedConfig::Ptr mConfig;
     KXMLGUIClient *mGUIClient;
 
