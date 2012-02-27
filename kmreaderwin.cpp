@@ -108,6 +108,7 @@ KMReaderWin::KMReaderWin(QWidget *aParent,
   connect( mViewer, SIGNAL(urlClicked(Akonadi::Item,KUrl)),
            this, SLOT(slotUrlClicked(Akonadi::Item,KUrl)) );
   connect( mViewer, SIGNAL(requestConfigSync()), kmkernel, SLOT(slotRequestConfigSync()), Qt::QueuedConnection ); // happens anyway on shutdown, so we can skip it there with using a queued connection
+  connect( mViewer, SIGNAL(resumeNetworkJobs()), kmkernel, SLOT(resumeNetworkJobs()));
   connect( mViewer, SIGNAL(showReader(KMime::Content*,bool,QString)),
            this, SLOT(slotShowReader(KMime::Content*,bool,QString)) );
   connect( mViewer, SIGNAL(showMessage(KMime::Message::Ptr,QString)),
