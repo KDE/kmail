@@ -106,7 +106,7 @@ ArchiveFolderDialog::ArchiveFolderDialog( QWidget *parent )
   row++;
 
   // TODO: Make this appear more dangerous!
-  mDeleteCheckBox = new QCheckBox( i18n( "&Delete folders after completion" ), mainWidget );
+  mDeleteCheckBox = new QCheckBox( i18n( "&Delete folder and subfolders after completion" ), mainWidget );
   mainLayout->addWidget( mDeleteCheckBox, row, 0, 1, 2, Qt::AlignLeft );
   row++;
 
