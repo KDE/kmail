@@ -71,6 +71,7 @@ AccountConfigOrderDialog::AccountConfigOrderDialog(QWidget *parent)
 
     connect( mUpButton, SIGNAL(clicked()), this, SLOT(slotMoveUp()) );
     connect( mDownButton, SIGNAL(clicked()), this, SLOT(slotMoveDown()) );
+    connect( mListAccount, SIGNAL(itemSelectionChanged()), this, SLOT(slotEnableControls()));
 
     connect( this, SIGNAL(okClicked()), SLOT(slotOk()) );
     init();
@@ -83,14 +84,38 @@ AccountConfigOrderDialog::~AccountConfigOrderDialog()
 
 void AccountConfigOrderDialog::slotMoveUp()
 {
-
+  if ( !mListAccount->currentItem() )
+    return;
+  const int pos = mListAccount->row( mListAccount->currentItem() );
+  QListWidgetItem *item = mListAccount->takeItem( pos );
+  // now selected item is at idx(idx-1), so
+  // insert the other item at idx, ie. above(below).
+  mListAccount->insertItem( pos -1,  item );
+  mListAccount->setCurrentRow( pos - 1 );
+  slotEnableControls();
 }
 
 void AccountConfigOrderDialog::slotMoveDown()
 {
-
+  if ( !mListAccount->currentItem() )
+    return;
+  const int pos = mListAccount->row( mListAccount->currentItem() );
+  QListWidgetItem *item = mListAccount->takeItem( pos );
+  // now selected item is at idx(idx-1), so
+  // insert the other item at idx, ie. above(below).
+  mListAccount->insertItem( pos +1 , item );
+  mListAccount->setCurrentRow( pos + 1 );
+  slotEnableControls();
 }
 
+
+void AccountConfigOrderDialog::slotEnableControls()
+{
+  QListWidgetItem *item = mListAccount->currentItem();
+
+  mUpButton->setEnabled( item && mListAccount->currentRow()!=0 );
+  mDownButton->setEnabled( item && mListAccount->currentRow()!=mListAccount->count()-1 );  
+}
 
 void AccountConfigOrderDialog::init()
 {
@@ -146,7 +171,7 @@ void AccountConfigOrderDialog::slotOk()
     KConfigGroup group( KMKernel::self()->config(), "AccountOrder" );
     group.writeEntry("order",order);
     group.sync();
-
+    KDialog::accept();
 }
 
 #include "accountconfigorderdialog.moc"

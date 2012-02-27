@@ -38,7 +38,8 @@ protected slots:
     void slotOk();
     void slotMoveUp();
     void slotMoveDown();
-
+    void slotEnableControls();
+  
 private:
     void init();
     QListWidget *mListAccount;
