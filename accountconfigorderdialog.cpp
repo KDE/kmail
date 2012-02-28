@@ -31,6 +31,7 @@
 
 #include <QVBoxLayout>
 #include <QListWidget>
+#include <KVBox>
 #include <QDebug>
 
 using namespace KMail;
@@ -50,27 +51,28 @@ AccountConfigOrderDialog::AccountConfigOrderDialog(QWidget *parent)
 
     QWidget *page = new QWidget( this );
     setMainWidget( page );
-    QVBoxLayout * vlay = new QVBoxLayout( page );
+    QHBoxLayout * vlay = new QHBoxLayout( page );
     mListAccount = new QListWidget(this);
     mListAccount->setDragDropMode( QAbstractItemView::InternalMove );
     vlay->addWidget(mListAccount);
 
-    QHBoxLayout *layout = new QHBoxLayout;
-    mUpButton = new KPushButton;
+    KVBox* upDownBox = new KVBox( page );
+    mUpButton = new KPushButton( upDownBox );
     mUpButton->setIcon( KIcon("go-up") );
     mUpButton->setToolTip( i18nc( "Move selected account up.", "Up" ) );
     mUpButton->setEnabled( false ); // b/c no item is selected yet
     mUpButton->setFocusPolicy( Qt::StrongFocus );
 
-    mDownButton = new KPushButton;
+    mDownButton = new KPushButton( upDownBox );
     mDownButton->setIcon( KIcon("go-down") );
     mDownButton->setToolTip( i18nc( "Move selected account down.", "Down" ) );
     mDownButton->setEnabled( false ); // b/c no item is selected yet
     mDownButton->setFocusPolicy( Qt::StrongFocus );
-    layout->addWidget(mUpButton);
-    layout->addWidget(mDownButton);
 
-    vlay->addLayout(layout);
+    QWidget* spacer = new QWidget( upDownBox );
+    upDownBox->setStretchFactor( spacer, 100 );
+    vlay->addWidget( upDownBox );
+
 
     connect( mUpButton, SIGNAL(clicked()), this, SLOT(slotMoveUp()) );
     connect( mDownButton, SIGNAL(clicked()), this, SLOT(slotMoveDown()) );
