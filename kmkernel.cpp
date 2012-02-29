@@ -831,7 +831,8 @@ QDBusObjectPath KMKernel::newMessage( const QString &to,
   if ( !to.isEmpty() )      msg->to()->fromUnicodeString( to, "utf-8" );
 
   TemplateParser::TemplateParser parser( msg, TemplateParser::TemplateParser::NewMessage );
-  parser.process( KMime::Message::Ptr(), folder ? folder->collection() : Akonadi::Collection() );
+  parser.setIdentityManager( identityManager() );
+  parser.process( msg, folder ? folder->collection() : Akonadi::Collection() );
 
   KMail::Composer *win = makeComposer( msg, KMail::Composer::New, id );
 
