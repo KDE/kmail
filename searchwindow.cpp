@@ -3,7 +3,7 @@
  * Copyright (c) 1996-1998 Stefan Taferner <taferner@kde.org>
  * Copyright (c) 2001 Aaron J. Seigo <aseigo@kde.org>
  * Copyright (c) 2010 Till Adam <adam@kde.org>
- * Copyright (c) 2011 Laurent Montel <montel@kde.org>
+ * Copyright (c) 2011, 2012 Laurent Montel <montel@kde.org>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -131,11 +131,9 @@ SearchWindow::SearchWindow( KMMainWidget *widget, const Akonadi::Collection &col
   hbl->addWidget( mChkSubFolders );
   radioLayout->addLayout( hbl );
 
-  mChkbxSpecificFolders->hide();
+  //mChkbxSpecificFolders->hide();
   mChkSubFolders->hide();
-  mCbxFolders->hide();
-  mChkbxAllFolders->hide();
-
+  
   QGroupBox *patternGroupBox = new QGroupBox( searchWidget );
   QHBoxLayout *layout = new QHBoxLayout( patternGroupBox );
   layout->setContentsMargins( 0, 0, 0, 0 );
@@ -480,17 +478,14 @@ void SearchWindow::slotSearch()
   }
 
   mSearchFolderEdt->setEnabled( false );
-#if 0
-  if ( mChkbxAllFolders->isChecked() ) {
-    search->setRecursive( true );
-  } else {
-    search->setRoot( mCbxFolders->folder() );
-    search->setRecursive( mChkSubFolders->isChecked() );
-  }
-#else
-  kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
-#endif
 
+  KUrl url;
+  if ( !mChkbxAllFolders->isChecked() ) {
+    url =  mCbxFolders->collection().url( Akonadi::Collection::UrlShort ); 
+  }
+
+
+  
   mPatternEdit->updateSearchPattern();
   SearchPattern searchPattern( mSearchPattern );
   searchPattern.purify();
@@ -503,12 +498,12 @@ void SearchWindow::slotSearch()
   const QString query = searchPattern.asXesamQuery();
   const QString queryLanguage = "XESAM";
 #else
-  const QString query = searchPattern.asSparqlQuery();
+  const QString query = searchPattern.asSparqlQuery(url);
   const QString queryLanguage = "SPARQL";
 #endif
 
-  kDebug() << queryLanguage;
-  kDebug() << query;
+  qDebug() << queryLanguage;
+  qDebug() << query;
   if ( query.isEmpty() )
     return;
   mSearchFolderOpenBtn->setEnabled( true );
