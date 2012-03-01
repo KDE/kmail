@@ -1,4 +1,5 @@
 /* Copyright 2010 Thomas McGuire <mcguire@kde.org>
+   Copyright 2012 Laurent Montel <montel@kde.org>
 
    This program is free software; you can redistribute it and/or
    modify it under the terms of the GNU General Public License as
@@ -20,6 +21,7 @@
 
 #include "messagetag.h"
 
+#include <soprano/nao.h>
 #include <Nepomuk/Tag>
 #include <Nepomuk/Variant>
 
@@ -76,8 +78,15 @@ Tag::Ptr Tag::fromNepomuk( const Nepomuk::Tag& nepomukTag )
 void Tag::saveToNepomuk( SaveFlags saveFlags ) const
 {
   Nepomuk::Tag nepomukTag( nepomukResourceUri );
+
   nepomukTag.setLabel( tagName );
-  nepomukTag.setSymbols( QStringList( iconName ) );
+
+  Nepomuk::Resource symbol( QUrl(), Soprano::Vocabulary::NAO::FreeDesktopIcon() );
+  symbol.setProperty( Soprano::Vocabulary::NAO::iconName(), iconName );
+
+  nepomukTag.setProperty( Soprano::Vocabulary::NAO::hasSymbol(), symbol );
+
+  //nepomukTag.setSymbols( QStringList( iconName ) );
   nepomukTag.setProperty( Vocabulary::MessageTag::priority(), priority );
   nepomukTag.setProperty( Vocabulary::MessageTag::inToolbar(), inToolbar );
   nepomukTag.setProperty( Vocabulary::MessageTag::shortcut(), shortcut.toString() );
