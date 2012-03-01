@@ -41,6 +41,8 @@
 #include "messagecore/stringutil.h"
 #include "messagecomposer/messagehelper.h"
 
+#include "templateparser/templateparser.h"
+
 #include <kmime/kmime_message.h>
 #include <kmessagebox.h>
 #include <KLocale>
@@ -95,11 +97,38 @@ void KMail::Util::launchAccountWizard( QWidget *w )
 
 }
 
-void KMail::Util::handleClickedURL( const KUrl &url, uint identity )
+void KMail::Util::handleClickedURL( const KUrl &url )
 {
   if ( url.protocol() == QLatin1String( "mailto" ) )
   {
     KMime::Message::Ptr msg ( new KMime::Message );
+    MessageHelper::initHeader( msg, KMKernel::self()->identityManager(), 0 );
+    msg->contentType()->setCharset("utf-8");
+
+    QMap<QString, QString> fields =  MessageCore::StringUtil::parseMailtoUrl( url );
+
+    msg->to()->fromUnicodeString( fields.value( "to" ),"utf-8" );
+    if ( !fields.value( "subject" ).isEmpty() )
+      msg->subject()->fromUnicodeString( fields.value( "subject" ),"utf-8" );
+    if ( !fields.value( "body" ).isEmpty() )
+      msg->setBody( fields.value( "body" ).toUtf8() );
+    if ( !fields.value( "cc" ).isEmpty() )
+      msg->cc()->fromUnicodeString( fields.value( "cc" ),"utf-8" );
+
+    KMail::Composer * win = KMail::makeComposer( msg, KMail::Composer::New, 0 );
+    win->setFocusToSubject();
+    win->show();
+  } else {
+    kWarning() << "Can't handle URL:" << url;
+  }
+}
+
+void KMail::Util::handleClickedURL( const KUrl &url, const QSharedPointer<MailCommon::FolderCollection> &folder )
+{
+  if ( url.protocol() == QLatin1String( "mailto" ) )
+  {
+    KMime::Message::Ptr msg ( new KMime::Message );
+    uint identity = folder->identity();
     MessageHelper::initHeader( msg, KMKernel::self()->identityManager(), identity );
     msg->contentType()->setCharset("utf-8");
 
@@ -112,6 +141,10 @@ void KMail::Util::handleClickedURL( const KUrl &url, uint identity )
       msg->setBody( fields.value( "body" ).toUtf8() );
     if ( !fields.value( "cc" ).isEmpty() )
       msg->cc()->fromUnicodeString( fields.value( "cc" ),"utf-8" );
+
+    TemplateParser::TemplateParser parser( msg, TemplateParser::TemplateParser::NewMessage );
+    parser.setIdentityManager( KMKernel::self()->identityManager() );
+    parser.process( msg, folder->collection() );
 
     KMail::Composer * win = KMail::makeComposer( msg, KMail::Composer::New, identity );
     win->setFocusToSubject();
@@ -139,7 +172,7 @@ void KMail::Util::mailingListsHandleURL( const KUrl::List& lst,const QSharedPoin
   }
 
   if ( !urlToHandle.isEmpty() ) {
-    KMail::Util::handleClickedURL( urlToHandle, folder->identity() );
+    KMail::Util::handleClickedURL( urlToHandle, folder );
   } else {
     kWarning()<< "Can't handle url";
   }

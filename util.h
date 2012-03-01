@@ -98,7 +98,8 @@ namespace Util {
      * Handles a clicked URL, but only in case the viewer didn't handle it.
      * Currently only support mailto.
      */
-    void handleClickedURL( const KUrl &url, uint identity );
+    void handleClickedURL( const KUrl &url,  const QSharedPointer<MailCommon::FolderCollection> &folder );
+    void handleClickedURL( const KUrl &url );
 
 
     void mailingListsHandleURL( const KUrl::List& lst,const QSharedPointer<MailCommon::FolderCollection> &folder );
