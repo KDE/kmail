@@ -86,7 +86,6 @@ void Tag::saveToNepomuk( SaveFlags saveFlags ) const
 
   nepomukTag.setProperty( Soprano::Vocabulary::NAO::hasSymbol(), symbol );
 
-  //nepomukTag.setSymbols( QStringList( iconName ) );
   nepomukTag.setProperty( Vocabulary::MessageTag::priority(), priority );
   nepomukTag.setProperty( Vocabulary::MessageTag::inToolbar(), inToolbar );
   nepomukTag.setProperty( Vocabulary::MessageTag::shortcut(), shortcut.toString() );
