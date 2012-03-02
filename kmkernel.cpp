@@ -213,7 +213,7 @@ KMKernel::KMKernel (QObject *parent, const char *name) :
            this, SLOT(slotInstanceRemoved(Akonadi::AgentInstance)) );
 
   connect ( Solid::Networking::notifier(), SIGNAL( statusChanged(Solid::Networking::Status )),
-            this, SLOT( systemNetworkStatusChanged( Solid::Networking::Status )) );
+            this, SLOT( slotSystemNetworkStatusChanged( Solid::Networking::Status )) );
   
   connect( KPIM::ProgressManager::instance(), SIGNAL(progressItemCompleted(KPIM::ProgressItem*)),
            this, SLOT(slotProgressItemCompletedOrCanceled(KPIM::ProgressItem*)) );
@@ -949,8 +949,8 @@ void KMKernel::resumeNetworkJobs()
   if ( GlobalSettings::self()->networkState() == GlobalSettings::EnumNetworkState::Online )
     return;
 
-  if ( ( mSystemNetworkStatus != Solid::Networking::Unconnected ) ||
-    ( mSystemNetworkStatus != Solid::Networking::Disconnecting ) ) {
+  if ( ( mSystemNetworkStatus == Solid::Networking::Connected ) ||
+    ( mSystemNetworkStatus == Solid::Networking::Unknown ) ) {
     setAccountStatus(true);
     BroadcastStatus::instance()->setStatusMsg( i18n("KMail is set to be online; all network jobs resumed"));
   }
@@ -964,8 +964,9 @@ void KMKernel::resumeNetworkJobs()
 bool KMKernel::isOffline()
 {
   if ( ( GlobalSettings::self()->networkState() == GlobalSettings::EnumNetworkState::Offline ) ||
-       ( Solid::Networking::status() == Solid::Networking::Unconnected ) ||
-       ( Solid::Networking::status() == Solid::Networking::Disconnecting ) )
+       ( mSystemNetworkStatus == Solid::Networking::Unconnected ) ||
+       ( mSystemNetworkStatus == Solid::Networking::Disconnecting ) ||
+       ( mSystemNetworkStatus == Solid::Networking::Connecting ))
     return true;
   else
     return false;
@@ -1031,7 +1032,7 @@ void KMKernel::slotSystemNetworkStatusChanged( Solid::Networking::Status status 
   if ( GlobalSettings::self()->networkState() == GlobalSettings::EnumNetworkState::Offline )
     return;
 
-  if ( status != Solid::Networking::Unconnected || status != Solid::Networking::Disconnecting) {
+  if ( status == Solid::Networking::Connected || status == Solid::Networking::Unknown) {
    BroadcastStatus::instance()->setStatusMsg( i18n(
       "Network connection detected, all network jobs resumed") );
     kmkernel->setAccountStatus( true );
