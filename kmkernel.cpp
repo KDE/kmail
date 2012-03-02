@@ -963,10 +963,11 @@ void KMKernel::resumeNetworkJobs()
 
 bool KMKernel::isOffline()
 {
+  Solid::Networking::Status networkStatus = Solid::Networking::status();
   if ( ( GlobalSettings::self()->networkState() == GlobalSettings::EnumNetworkState::Offline ) ||
-       ( mSystemNetworkStatus == Solid::Networking::Unconnected ) ||
-       ( mSystemNetworkStatus == Solid::Networking::Disconnecting ) ||
-       ( mSystemNetworkStatus == Solid::Networking::Connecting ))
+       ( networkStatus == Solid::Networking::Unconnected ) ||
+       ( networkStatus == Solid::Networking::Disconnecting ) ||
+       ( networkStatus == Solid::Networking::Connecting ))
     return true;
   else
     return false;
