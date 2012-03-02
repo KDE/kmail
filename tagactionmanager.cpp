@@ -32,6 +32,8 @@
 #include <KXMLGUIClient>
 
 #include <QSignalMapper>
+#include <soprano/nao.h>
+#include <nepomuk/resourcewatcher.h>
 
 using namespace KMail;
 
@@ -52,6 +54,14 @@ TagActionManager::TagActionManager( QObject *parent, KActionCollection *actionCo
   KAction *separator = new KAction( this );
   separator->setSeparator( true );
   mMessageActions->messageStatusMenu()->menu()->addAction( separator );
+
+#if 0
+  Nepomuk::ResourceWatcher* watcher = new Nepomuk::ResourceWatcher(this);
+  watcher->addType(Soprano::Vocabulary::NAO::Tag());
+  connect(watcher, SIGNAL(propertyAdded(Nepomuk::Resource,Nepomuk::Types::Property, QVariant)), this, SLOT(tagsChanged()));
+  connect(watcher, SIGNAL(propertyRemoved(Nepomuk::Resource,Nepomuk::Types::Property, QVariant)),this, SLOT(tagsChanged()));
+  watcher->start();
+#endif
 }
 
 TagActionManager::~TagActionManager()
