@@ -121,7 +121,8 @@ static bool s_askingToGoOnline = false;
 /********************************************************************/
 KMKernel::KMKernel (QObject *parent, const char *name) :
   QObject(parent),
-  mIdentityManager(0), mConfigureDialog(0), mMailService(0)
+  mIdentityManager(0), mConfigureDialog(0), mMailService(0),
+  mSystemNetworkStatus ( Solid::Networking::status() )
 {
   Akonadi::AttributeFactory::registerAttribute<Akonadi::SearchDescriptionAttribute>();
   QDBusConnection::sessionBus().registerService("org.kde.kmail");
@@ -211,7 +212,8 @@ KMKernel::KMKernel (QObject *parent, const char *name) :
   connect( Akonadi::AgentManager::self(), SIGNAL(instanceRemoved(Akonadi::AgentInstance)),
            this, SLOT(slotInstanceRemoved(Akonadi::AgentInstance)) );
 
-
+  connect ( Solid::Networking::notifier(), SIGNAL( statusChanged(Solid::Networking::Status )),
+            this, SLOT( systemNetworkStatusChanged( Solid::Networking::Status )) );
   
   connect( KPIM::ProgressManager::instance(), SIGNAL(progressItemCompleted(KPIM::ProgressItem*)),
            this, SLOT(slotProgressItemCompletedOrCanceled(KPIM::ProgressItem*)) );
@@ -947,7 +949,8 @@ void KMKernel::resumeNetworkJobs()
   if ( GlobalSettings::self()->networkState() == GlobalSettings::EnumNetworkState::Online )
     return;
 
-  if ( Solid::Networking::status() == Solid::Networking::Connected || Solid::Networking::status() == Solid::Networking::Unknown ) {
+  if ( ( mSystemNetworkStatus != Solid::Networking::Unconnected ) ||
+    ( mSystemNetworkStatus != Solid::Networking::Disconnecting ) ) {
     setAccountStatus(true);
     BroadcastStatus::instance()->setStatusMsg( i18n("KMail is set to be online; all network jobs resumed"));
   }
@@ -961,7 +964,8 @@ void KMKernel::resumeNetworkJobs()
 bool KMKernel::isOffline()
 {
   if ( ( GlobalSettings::self()->networkState() == GlobalSettings::EnumNetworkState::Offline ) ||
-       ( Solid::Networking::status() == Solid::Networking::Unconnected ) || ( Solid::Networking::status() == Solid::Networking::Disconnecting ) )
+       ( Solid::Networking::status() == Solid::Networking::Unconnected ) ||
+       ( Solid::Networking::status() == Solid::Networking::Disconnecting ) )
     return true;
   else
     return false;
@@ -998,7 +1002,7 @@ bool KMKernel::askToGoOnline()
     return false;
   }
 
-  if ( kmkernel->isOffline() ) {
+  if ( GlobalSettings::self()->networkState() == GlobalSettings::EnumNetworkState::Offline ) {
     s_askingToGoOnline = true;
     int rc =
     KMessageBox::questionYesNo( KMKernel::self()->mainWin(),
@@ -1015,7 +1019,28 @@ bool KMKernel::askToGoOnline()
       kmkernel->resumeNetworkJobs();
     }
   }
+  if( kmkernel->isOffline() )
+    return false;
+
   return true;
+}
+
+void KMKernel::slotSystemNetworkStatusChanged( Solid::Networking::Status status )
+{
+  mSystemNetworkStatus = status;
+  if ( GlobalSettings::self()->networkState() == GlobalSettings::EnumNetworkState::Offline )
+    return;
+
+  if ( status != Solid::Networking::Unconnected || status != Solid::Networking::Disconnecting) {
+   BroadcastStatus::instance()->setStatusMsg( i18n(
+      "Network connection detected, all network jobs resumed") );
+    kmkernel->setAccountStatus( true );
+ }
+  else {
+    BroadcastStatus::instance()->setStatusMsg( i18n(
+      "No network connection detected, all network jobs are suspended"));
+    kmkernel->setAccountStatus( false );
+  }
 }
 
 /********************************************************************/

@@ -9,6 +9,7 @@
 #include <QObject>
 #include <QPointer>
 #include <QDBusObjectPath>
+#include <Solid/Networking>
 
 #include <kurl.h>
 
@@ -468,6 +469,7 @@ private slots:
   void slotCollectionRemoved(const Akonadi::Collection& col);
   void slotDeleteIdentity( uint identity);
   void slotInstanceRemoved(const Akonadi::AgentInstance&);
+  void slotSystemNetworkStatusChanged( Solid::Networking::Status );
   
 private:
   void migrateFromKMail1();
@@ -500,6 +502,8 @@ private:
   // temporary mainwin
   KMMainWin *mWin;
   MailServiceImpl *mMailService;
+
+  Solid::Networking::Status mSystemNetworkStatus;
 
   QList<KMail::KMSystemTray*> systemTrayApplets;
 
