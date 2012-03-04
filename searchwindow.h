@@ -127,8 +127,8 @@ class SearchWindow: public KDialog, virtual public KXMLGUIClient
 
     void createSearchModel();
   
-    Akonadi::Collection::List childCollectionsFromSelectedCollection( const Akonadi::Collection& collection );
-    void getChildren( const QAbstractItemModel *model, const QModelIndex &parentIndex, Akonadi::Collection::List &list );
+    void childCollectionsFromSelectedCollection( const Akonadi::Collection& collection, KUrl::List &list );
+    void getChildren( const QAbstractItemModel *model, const QModelIndex &parentIndex, KUrl::List &list );
 
   
   private Q_SLOTS:

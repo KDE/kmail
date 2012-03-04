@@ -131,7 +131,6 @@ SearchWindow::SearchWindow( KMMainWidget *widget, const Akonadi::Collection &col
   hbl->addWidget( mChkSubFolders );
   radioLayout->addLayout( hbl );
 
-  //mChkbxSpecificFolders->hide();
   mChkSubFolders->hide();
   
   QGroupBox *patternGroupBox = new QGroupBox( searchWidget );
@@ -483,9 +482,8 @@ void SearchWindow::slotSearch()
   if ( !mChkbxAllFolders->isChecked() ) {
     const Akonadi::Collection col = mCbxFolders->collection();
     url<< col.url( Akonadi::Collection::UrlShort );
-    const Akonadi::Collection::List listChildren = childCollectionsFromSelectedCollection( col );
-    Q_FOREACH( const Akonadi::Collection& c, listChildren ) {
-      url<< c.url( Akonadi::Collection::UrlShort );
+    if ( mChkSubFolders->isChecked() ) {
+      childCollectionsFromSelectedCollection( col, url );
     }
   }
 
@@ -846,22 +844,19 @@ void SearchWindow::setSearchPattern( const SearchPattern &pattern )
 }
 
 
-Akonadi::Collection::List SearchWindow::childCollectionsFromSelectedCollection( const Akonadi::Collection& collection )
-{
-  Akonadi::Collection::List lstCollection;
-  
+void SearchWindow::childCollectionsFromSelectedCollection( const Akonadi::Collection& collection, KUrl::List&lstUrlCollection )
+{  
   if ( collection.isValid() )  {
     QModelIndex idx = Akonadi::EntityTreeModel::modelIndexForCollection( KMKernel::self()->collectionModel(), collection );
     if ( idx.isValid() ) {
-      getChildren( KMKernel::self()->collectionModel(), idx, lstCollection );
+      getChildren( KMKernel::self()->collectionModel(), idx, lstUrlCollection );
     }
   }
-  return lstCollection;
 }
 
 void SearchWindow::getChildren( const QAbstractItemModel *model,
                                 const QModelIndex &parentIndex,
-                                Akonadi::Collection::List &list )
+                                KUrl::List &list )
 {
   const int rowCount = model->rowCount( parentIndex );
   for ( int row = 0; row < rowCount; ++row ) {
@@ -870,7 +865,9 @@ void SearchWindow::getChildren( const QAbstractItemModel *model,
       
       getChildren( model, index, list );
     }
-    list << model->data(index, Akonadi::EntityTreeModel::CollectionRole ).value<Akonadi::Collection>();
+    Akonadi::Collection c = model->data(index, Akonadi::EntityTreeModel::CollectionRole ).value<Akonadi::Collection>();
+    if ( c.isValid() )
+      list << c.url( Akonadi::Collection::UrlShort );
   }
 }
 
