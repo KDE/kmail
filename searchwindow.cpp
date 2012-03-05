@@ -131,8 +131,6 @@ SearchWindow::SearchWindow( KMMainWidget *widget, const Akonadi::Collection &col
   hbl->addWidget( mChkSubFolders );
   radioLayout->addLayout( hbl );
 
-  mChkSubFolders->hide();
-  
   QGroupBox *patternGroupBox = new QGroupBox( searchWidget );
   QHBoxLayout *layout = new QHBoxLayout( patternGroupBox );
   layout->setContentsMargins( 0, 0, 0, 0 );
