@@ -478,12 +478,12 @@ void SearchWindow::slotSearch()
 
   mSearchFolderEdt->setEnabled( false );
 
-  KUrl::List url;
+  KUrl::List urls;
   if ( !mChkbxAllFolders->isChecked() ) {
     const Akonadi::Collection col = mCbxFolders->collection();
-    url<< col.url( Akonadi::Collection::UrlShort );
+    urls<< col.url( Akonadi::Collection::UrlShort );
     if ( mChkSubFolders->isChecked() ) {
-      childCollectionsFromSelectedCollection( col, url );
+      childCollectionsFromSelectedCollection( col, urls );
     }
   }
 
@@ -501,7 +501,7 @@ void SearchWindow::slotSearch()
   const QString query = searchPattern.asXesamQuery();
   const QString queryLanguage = "XESAM";
 #else
-  const QString query = searchPattern.asSparqlQuery(url.isEmpty() ? KUrl() : url.at( 0 ));
+  const QString query = searchPattern.asSparqlQuery(urls);
   const QString queryLanguage = "SPARQL";
 #endif
 
