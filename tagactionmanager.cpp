@@ -58,8 +58,8 @@ TagActionManager::TagActionManager( QObject *parent, KActionCollection *actionCo
 #if 0
   Nepomuk::ResourceWatcher* watcher = new Nepomuk::ResourceWatcher(this);
   watcher->addType(Soprano::Vocabulary::NAO::Tag());
-  connect(watcher, SIGNAL(propertyAdded(Nepomuk::Resource,Nepomuk::Types::Property, QVariant)), this, SLOT(tagsChanged()));
-  connect(watcher, SIGNAL(propertyRemoved(Nepomuk::Resource,Nepomuk::Types::Property, QVariant)),this, SLOT(tagsChanged()));
+  connect(watcher, SIGNAL(propertyAdded(Nepomuk::Resource,Nepomuk::Types::Property,QVariant)), this, SLOT(tagsChanged()));
+  connect(watcher, SIGNAL(propertyRemoved(Nepomuk::Resource,Nepomuk::Types::Property,QVariant)),this, SLOT(tagsChanged()));
   watcher->start();
 #endif
 }

@@ -212,8 +212,8 @@ KMKernel::KMKernel (QObject *parent, const char *name) :
   connect( Akonadi::AgentManager::self(), SIGNAL(instanceRemoved(Akonadi::AgentInstance)),
            this, SLOT(slotInstanceRemoved(Akonadi::AgentInstance)) );
 
-  connect ( Solid::Networking::notifier(), SIGNAL( statusChanged(Solid::Networking::Status )),
-            this, SLOT( slotSystemNetworkStatusChanged( Solid::Networking::Status )) );
+  connect ( Solid::Networking::notifier(), SIGNAL(statusChanged(Solid::Networking::Status)),
+            this, SLOT(slotSystemNetworkStatusChanged(Solid::Networking::Status)) );
   
   connect( KPIM::ProgressManager::instance(), SIGNAL(progressItemCompleted(KPIM::ProgressItem*)),
            this, SLOT(slotProgressItemCompletedOrCanceled(KPIM::ProgressItem*)) );
