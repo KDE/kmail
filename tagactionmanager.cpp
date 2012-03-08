@@ -33,7 +33,7 @@
 
 #include <QSignalMapper>
 #include <soprano/nao.h>
-#include <nepomuk/resourcewatcher.h>
+//#include <nepomuk/resourcewatcher.h>
 
 using namespace KMail;
 
