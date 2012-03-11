@@ -131,16 +131,17 @@ void TagActionManager::createActions()
   clearActions();
 
 
-  const QList<Nepomuk::Tag> alltags( Nepomuk::Tag::allTags() );
-  if ( alltags.isEmpty() )
-    return;
+  if ( mTags.isEmpty() ) {
+    const QList<Nepomuk::Tag> alltags( Nepomuk::Tag::allTags() );
+    if ( alltags.isEmpty() )
+      return;
 
-  // Build a sorted list of tags
-  QList<Tag::Ptr> tagList;
-  foreach( const Nepomuk::Tag &nepomukTag, alltags ) {
-    tagList.append( Tag::fromNepomuk( nepomukTag ) );
+    // Build a sorted list of tags
+    foreach( const Nepomuk::Tag &nepomukTag, alltags ) {
+      mTags.append( Tag::fromNepomuk( nepomukTag ) );
+    }
+    qSort( mTags.begin(), mTags.end(), KMail::Tag::compare );
   }
-  qSort( tagList.begin(), tagList.end(), KMail::Tag::compare );
 
   //Use a mapper to understand which tag button is triggered
   mMessageTagToggleMapper = new QSignalMapper( this );
@@ -149,7 +150,7 @@ void TagActionManager::createActions()
 
   // Create a action for each tag and plug it into various places
   int i = 0;
-  foreach( const Tag::Ptr &tag, tagList ) {
+  foreach( const Tag::Ptr &tag, mTags ) {
     if ( i< s_numberMaxTag )
       createTagAction( tag,true );
     else
@@ -157,7 +158,7 @@ void TagActionManager::createActions()
       if ( tag->inToolbar || !tag->shortcut.isEmpty() )
         createTagAction( tag, false );
 
-      if ( i == s_numberMaxTag && i <tagList.count() )
+      if ( i == s_numberMaxTag && i < mTags.count() )
       {
         mSeparatorAction = new KAction( this );
         mSeparatorAction->setSeparator( true );
@@ -209,6 +210,7 @@ void TagActionManager::updateActionStates( int numberOfSelectedMessages,
 
 void TagActionManager::tagsChanged()
 {
+  mTags.clear(); // re-read the tags
   createActions();
 }
 

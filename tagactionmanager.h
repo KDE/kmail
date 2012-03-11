@@ -125,6 +125,9 @@ namespace KMail {
       // The actions of all tags that are in the toolbar
       QList<QAction*> mToolbarActions;
 
+      // Cache of the tags to avoid expensive Nepomuk queries
+      QList<Tag::Ptr> mTags;
+
   };
 }
 
