@@ -1275,6 +1275,26 @@ void KMMainWidget::slotCollectionStatisticsChanged( const Akonadi::Collection::I
     const qint64 nbMsgOutboxCollection = statistic.count();
     actionCollection()->action( "send_queued" )->setEnabled( nbMsgOutboxCollection > 0 );
     actionCollection()->action( "send_queued_via" )->setEnabled( nbMsgOutboxCollection > 0 );
+  } else if ( mCurrentFolder && ( id == mCurrentFolder->collection().id() ) ) {
+    const bool mails = statistic.count() > 0;
+    bool multiFolder = false;
+    if ( mFolderTreeWidget ) {
+      multiFolder = mFolderTreeWidget->selectedCollections().count() > 1;
+    }
+    const bool enable_goto_unread = mails
+      || (GlobalSettings::self()->loopOnGotoUnread() == GlobalSettings::EnumLoopOnGotoUnread::LoopInAllFolders)
+      || (GlobalSettings::self()->loopOnGotoUnread() == GlobalSettings::EnumLoopOnGotoUnread::LoopInAllMarkedFolders);
+    actionCollection()->action( "go_next_message" )->setEnabled( mails );
+    actionCollection()->action( "go_next_unread_message" )->setEnabled( enable_goto_unread );
+    actionCollection()->action( "go_prev_message" )->setEnabled( mails );
+    actionCollection()->action( "go_prev_unread_message" )->setEnabled( enable_goto_unread );
+    if ( mAkonadiStandardActionManager->action( Akonadi::StandardMailActionManager::MoveAllToTrash ) ) {
+      const bool folderWithContent = mCurrentFolder && !mCurrentFolder->isStructural();
+      mAkonadiStandardActionManager->action( Akonadi::StandardMailActionManager::MoveAllToTrash )->setEnabled( folderWithContent
+                                                                                                               && ( mails > 0 )
+                                                                                                               && mCurrentFolder->canDeleteMessages()
+                                                                                                               && !multiFolder );
+    }
   }
 }
 
