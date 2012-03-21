@@ -559,6 +559,11 @@ void KMReaderWin::setPrinting(bool enable)
   mViewer->setPrinting( enable );
 }
 
+KAction* KMReaderWin::speakTextAction()
+{
+  return mViewer->speakTextAction();
+}
+
 void KMReaderWin::clear(bool force )
 {
   mViewer->clear( force ? Viewer::Force : Viewer::Delayed );

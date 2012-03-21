@@ -139,6 +139,7 @@ public:
   KAction *urlSaveAsAction() { return mUrlSaveAsAction; }
   KAction *addBookmarksAction() { return mAddBookmarksAction;}
   KAction *toggleMimePartTreeAction();
+  KAction *speakTextAction();
 
   Akonadi::Item message() const;
 

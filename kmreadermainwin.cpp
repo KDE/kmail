@@ -423,7 +423,6 @@ void KMReaderMainWin::slotDelayedMessagePopup( KJob *job )
   const bool contactAlreadyExists = !searchJob->contacts().isEmpty();
 
   const QPoint aPoint = job->property( "point" ).toPoint();
-
   KMenu *menu = new KMenu;
 
   bool urlMenuAdded = false;
@@ -464,6 +463,8 @@ void KMReaderMainWin::slotDelayedMessagePopup( KJob *job )
     if( !copyAdded )
       menu->addAction( mReaderWin->copyAction() );
     menu->addAction( mReaderWin->selectAllAction() );
+    menu->addSeparator();
+    menu->addAction( mReaderWin->speakTextAction());
   } else if ( !urlMenuAdded ) {
     // popup somewhere else (i.e., not a URL) on the message
     if (!mMsg.hasPayload<KMime::Message::Ptr>() ) {
