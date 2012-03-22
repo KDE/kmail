@@ -456,6 +456,9 @@ class KMAIL_EXPORT KMMainWidget : public QWidget
     void slotShowNotification();
 
   private:
+    void updateMoveAction( int statistics );
+    void updateAllToTrashAction(int statistics);
+
     void showNotifications();
 
     /** Get override character encoding. */

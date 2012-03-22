@@ -1269,6 +1269,34 @@ void KMMainWidget::createWidgets()
 
 }
 
+void KMMainWidget::updateMoveAction( int statistics )
+{
+  const bool mails = statistics > 0;
+  const bool enable_goto_unread = mails
+    || (GlobalSettings::self()->loopOnGotoUnread() == GlobalSettings::EnumLoopOnGotoUnread::LoopInAllFolders)
+    || (GlobalSettings::self()->loopOnGotoUnread() == GlobalSettings::EnumLoopOnGotoUnread::LoopInAllMarkedFolders);
+  actionCollection()->action( "go_next_message" )->setEnabled( mails );
+  actionCollection()->action( "go_next_unread_message" )->setEnabled( enable_goto_unread );
+  actionCollection()->action( "go_prev_message" )->setEnabled( mails );
+  actionCollection()->action( "go_prev_unread_message" )->setEnabled( enable_goto_unread );
+
+}
+
+void KMMainWidget::updateAllToTrashAction(int statistics)
+{
+  bool multiFolder = false;
+  if ( mFolderTreeWidget ) {
+    multiFolder = mFolderTreeWidget->selectedCollections().count() > 1;
+  }
+  if ( mAkonadiStandardActionManager->action( Akonadi::StandardMailActionManager::MoveAllToTrash ) ) {
+    const bool folderWithContent = mCurrentFolder && !mCurrentFolder->isStructural();
+    mAkonadiStandardActionManager->action( Akonadi::StandardMailActionManager::MoveAllToTrash )->setEnabled( folderWithContent
+                                                                                                             && ( statistics > 0 )
+                                                                                                             && mCurrentFolder->canDeleteMessages()
+                                                                                                             && !multiFolder );
+  }
+}
+
 void KMMainWidget::slotCollectionStatisticsChanged( const Akonadi::Collection::Id id, const Akonadi::CollectionStatistics& statistic )
 {
   if ( id == CommonKernel->outboxCollectionFolder().id() ) {
@@ -1276,25 +1304,8 @@ void KMMainWidget::slotCollectionStatisticsChanged( const Akonadi::Collection::I
     actionCollection()->action( "send_queued" )->setEnabled( nbMsgOutboxCollection > 0 );
     actionCollection()->action( "send_queued_via" )->setEnabled( nbMsgOutboxCollection > 0 );
   } else if ( mCurrentFolder && ( id == mCurrentFolder->collection().id() ) ) {
-    const bool mails = statistic.count() > 0;
-    bool multiFolder = false;
-    if ( mFolderTreeWidget ) {
-      multiFolder = mFolderTreeWidget->selectedCollections().count() > 1;
-    }
-    const bool enable_goto_unread = mails
-      || (GlobalSettings::self()->loopOnGotoUnread() == GlobalSettings::EnumLoopOnGotoUnread::LoopInAllFolders)
-      || (GlobalSettings::self()->loopOnGotoUnread() == GlobalSettings::EnumLoopOnGotoUnread::LoopInAllMarkedFolders);
-    actionCollection()->action( "go_next_message" )->setEnabled( mails );
-    actionCollection()->action( "go_next_unread_message" )->setEnabled( enable_goto_unread );
-    actionCollection()->action( "go_prev_message" )->setEnabled( mails );
-    actionCollection()->action( "go_prev_unread_message" )->setEnabled( enable_goto_unread );
-    if ( mAkonadiStandardActionManager->action( Akonadi::StandardMailActionManager::MoveAllToTrash ) ) {
-      const bool folderWithContent = mCurrentFolder && !mCurrentFolder->isStructural();
-      mAkonadiStandardActionManager->action( Akonadi::StandardMailActionManager::MoveAllToTrash )->setEnabled( folderWithContent
-                                                                                                               && ( mails > 0 )
-                                                                                                               && mCurrentFolder->canDeleteMessages()
-                                                                                                               && !multiFolder );
-    }
+    updateMoveAction( statistic.count() );
+    updateAllToTrashAction(statistic.count());
   }
 }
 
@@ -3936,14 +3947,8 @@ void KMMainWidget::updateMessageActionsDelayed()
 
   mSaveAsAction->setEnabled( mass_actions );
 
-  const bool mails = mCurrentFolder&& mCurrentFolder->isValid() && mCurrentFolder->statistics().count() > 0;
-  const bool enable_goto_unread = mails
-       || (GlobalSettings::self()->loopOnGotoUnread() == GlobalSettings::EnumLoopOnGotoUnread::LoopInAllFolders)
-       || (GlobalSettings::self()->loopOnGotoUnread() == GlobalSettings::EnumLoopOnGotoUnread::LoopInAllMarkedFolders);
-  actionCollection()->action( "go_next_message" )->setEnabled( mails );
-  actionCollection()->action( "go_next_unread_message" )->setEnabled( enable_goto_unread );
-  actionCollection()->action( "go_prev_message" )->setEnabled( mails );
-  actionCollection()->action( "go_prev_unread_message" )->setEnabled( enable_goto_unread );
+  updateMoveAction( (mCurrentFolder&& mCurrentFolder->isValid()) ? mCurrentFolder->statistics().count() : 0 );
+
   const qint64 nbMsgOutboxCollection = CommonKernel->outboxCollectionFolder().statistics().count();
 
   actionCollection()->action( "send_queued" )->setEnabled( nbMsgOutboxCollection > 0 );
