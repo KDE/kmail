@@ -202,7 +202,7 @@ void IdentityPage::slotModifyIdentity()
   if ( mIdentityDialog->exec() == QDialog::Accepted ) {
     mIdentityDialog->updateIdentity( item->identity() );
     item->redisplay();
-    emit changed( true );
+    save();
   }
 
   delete mIdentityDialog;
@@ -264,7 +264,7 @@ void IdentityPage::slotRenameIdentity( KMail::IdentityListViewItem *item , const
        !mIdentityManager->shadowIdentities().contains( newName ) ) {
     KPIMIdentities::Identity &ident = item->identity();
     ident.setIdentityName( newName );
-    emit changed( true );
+    save();
   }
   item->redisplay();
 }
@@ -312,7 +312,7 @@ void IdentityPage::refreshList()
       item->redisplay();
     }
   }
-  emit changed( true );
+  save();
 }
 
 void IdentityPage::slotIdentitySelectionChanged()
