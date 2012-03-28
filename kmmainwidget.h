@@ -456,6 +456,8 @@ class KMAIL_EXPORT KMMainWidget : public QWidget
     void slotShowNotification();
 
   private:
+    void updateHtmlMenuEntry();
+
     void updateMoveAction( int statistics );
     void updateAllToTrashAction(int statistics);
 
