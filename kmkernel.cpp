@@ -608,6 +608,7 @@ int KMKernel::openComposer( const QString &to, const QString &cc,
     }
     else {
       TemplateParser::TemplateParser parser( msg, TemplateParser::TemplateParser::NewMessage );
+      parser.setIdentityManager( KMKernel::self()->identityManager() );
       parser.process( KMime::Message::Ptr() );
     }
   }
@@ -617,6 +618,7 @@ int KMKernel::openComposer( const QString &to, const QString &cc,
   }
   else {
     TemplateParser::TemplateParser parser( msg, TemplateParser::TemplateParser::NewMessage );
+    parser.setIdentityManager( KMKernel::self()->identityManager() );
     parser.process( KMime::Message::Ptr() );
   }
 
@@ -689,6 +691,7 @@ int KMKernel::openComposer (const QString &to, const QString &cc,
     context = KMail::Composer::NoTemplate;
   } else {
     TemplateParser::TemplateParser parser( msg, TemplateParser::TemplateParser::NewMessage );
+    parser.setIdentityManager( KMKernel::self()->identityManager() );
     parser.process( KMime::Message::Ptr() );
   }
 
@@ -784,6 +787,7 @@ QDBusObjectPath KMKernel::openComposer( const QString &to, const QString &cc,
     msg->setBody(body.toUtf8());
   } else {
     TemplateParser::TemplateParser parser( msg, TemplateParser::TemplateParser::NewMessage );
+    parser.setIdentityManager( KMKernel::self()->identityManager() );
     parser.process( KMime::Message::Ptr() );
   }
 
