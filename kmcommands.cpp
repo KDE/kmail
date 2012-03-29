@@ -1308,7 +1308,9 @@ KMCopyCommand::KMCopyCommand( const Akonadi::Collection& destFolder, const Akona
 KMCommand::Result KMCopyCommand::execute()
 {
   setDeletesItself( true );
-  Akonadi::ItemCopyJob *job = new Akonadi::ItemCopyJob( mMsgList, mDestFolder,this );
+
+  QList<Akonadi::Item> listItem = retrievedMsgs();
+  Akonadi::ItemCopyJob *job = new Akonadi::ItemCopyJob( listItem, Akonadi::Collection(mDestFolder.id()),this );
   connect( job, SIGNAL(result(KJob*)), this, SLOT(slotCopyResult(KJob*)) );
 
   return OK;

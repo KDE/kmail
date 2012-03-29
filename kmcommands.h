@@ -514,7 +514,6 @@ private:
   virtual Result execute();
 
   Akonadi::Collection mDestFolder;
-  QList<Akonadi::Item> mMsgList;
 };
 
 namespace KPIM {
