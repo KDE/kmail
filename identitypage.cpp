@@ -105,8 +105,6 @@ void IdentityPage::load()
 
 void IdentityPage::save()
 {
-  Q_ASSERT( !mIdentityDialog );
-
   mIdentityManager->sort();
   mIdentityManager->commit();
 
