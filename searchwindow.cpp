@@ -120,8 +120,6 @@ SearchWindow::SearchWindow( KMMainWidget *widget, const Akonadi::Collection &col
   mCbxFolders->setMustBeReadWrite( false );
   mCbxFolders->setNotAllowToCreateNewFolder( true );
 
-  mCbxFolders->setCollection( collection );
-
   mChkSubFolders = new QCheckBox( i18n( "I&nclude sub-folders" ), searchWidget );
   mChkSubFolders->setChecked( true );
 
@@ -144,6 +142,7 @@ SearchWindow::SearchWindow( KMMainWidget *widget, const Akonadi::Collection &col
   if ( !collection.hasAttribute<Akonadi::PersistentSearchAttribute>() ) {
     // it's not a search folder, make a new search
     mSearchPattern.append( SearchRule::createInstance( "Subject" ) );
+    mCbxFolders->setCollection( collection );
   } else {
     // it's a search folder
     if ( collection.hasAttribute<Akonadi::SearchDescriptionAttribute>() ) {
