@@ -485,9 +485,8 @@ void SearchWindow::slotSearch()
     }
   }
 
-
-  
   mPatternEdit->updateSearchPattern();
+
   SearchPattern searchPattern( mSearchPattern );
   searchPattern.purify();
   enableGUI();
@@ -554,8 +553,12 @@ void SearchWindow::searchDone( KJob* job )
       Q_ASSERT( !search.isEmpty() );
       Akonadi::SearchDescriptionAttribute *searchDescription = mFolder.attribute<Akonadi::SearchDescriptionAttribute>( Akonadi::Entity::AddIfMissing );
       searchDescription->setDescription( search );
-      const Akonadi::Collection collection = mCbxFolders->collection();
-      searchDescription->setBaseCollection( collection );
+      if ( !mChkbxAllFolders->isChecked() ) {
+        const Akonadi::Collection collection = mCbxFolders->collection();
+        searchDescription->setBaseCollection( collection );
+      } else {
+        searchDescription->setBaseCollection( Akonadi::Collection() );
+      }
       searchDescription->setRecursive( mChkSubFolders->isChecked() );
       new Akonadi::CollectionModifyJob( mFolder, this );
       mSearchJob = 0;
