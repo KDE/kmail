@@ -109,7 +109,7 @@ SearchWindow::SearchWindow( KMMainWidget *widget, const Akonadi::Collection &col
 
   QFrame *radioFrame = new QFrame( searchWidget );
   QVBoxLayout *radioLayout = new QVBoxLayout( radioFrame );
-  mChkbxAllFolders = new QRadioButton( i18n( "Search in &all local folders" ), searchWidget );
+  mChkbxAllFolders = new QRadioButton( i18n( "Search in &all folders" ), searchWidget );
 
   QHBoxLayout *hbl = new QHBoxLayout();
 
