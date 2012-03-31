@@ -416,13 +416,11 @@ void SearchWindow::setEnabledSearchButton( bool )
 
 void SearchWindow::updateCollectionStatistic(Akonadi::Collection::Id id,Akonadi::CollectionStatistics statistic)
 {
-  QString genMsg, detailMsg;
+  QString genMsg;
   if ( id == mFolder.id() ) {
     genMsg = i18np( "%1 match", "%1 matches", statistic.count() );
-    detailMsg = i18n( "Searching in %1", mFolder.name() );
   }
   mStatusBar->changeItem( genMsg, 0 );
-  mStatusBar->changeItem( detailMsg, 1 );
 }
 
 void SearchWindow::keyPressEvent( QKeyEvent *event )
