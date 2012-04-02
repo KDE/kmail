@@ -1,7 +1,7 @@
 /* -*- mode: C++; c-file-style: "gnu" -*-
   This file is part of KMail, the KDE mail client.
   Copyright (c) 2002 Don Sanders <sanders@kde.org>
-  Copyright (c) 2009, 2010, 2011 Montel Laurent <montel@kde.org>
+  Copyright (c) 2009, 2010, 2011, 2012 Montel Laurent <montel@kde.org>
 
   Based on the work of Stefan Taferner <taferner@kde.org>
 
@@ -3233,6 +3233,11 @@ void KMMainWidget::setupActions()
     actionCollection()->addAction( "accountWizard", action );
     connect( action, SIGNAL(triggered(bool)), SLOT(slotAccountWizard()) );
   }
+  {
+    KAction *action = new KAction( i18n("&Import Wizard..."), this );
+    actionCollection()->addAction( "importWizard", action );
+    connect( action, SIGNAL(triggered(bool)), SLOT(slotImportWizard()) );
+  }
   if ( KSieveUi::Util::allowOutOfOfficeSettings() )
   {
     KAction *action = new KAction( i18n("Edit \"Out of Office\" Replies..."), this );
@@ -4315,6 +4320,15 @@ void KMMainWidget::slotAntiVirusWizard()
 void KMMainWidget::slotAccountWizard()
 {
   KMail::Util::launchAccountWizard( this );
+}
+
+void KMMainWidget::slotImportWizard()
+{
+  const QString path = KStandardDirs::findExe( QLatin1String("importwizard" ) );
+  if( !QProcess::startDetached( path ) )
+    KMessageBox::error( this, i18n( "Could not start the import wizard. "
+                                 "Please check your installation." ),
+                        i18n( "Unable to start import wizard" ) );
 }
 
 //-----------------------------------------------------------------------------
