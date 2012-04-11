@@ -114,6 +114,7 @@ namespace KMail {
     // "advanced" tab:
     KLineEdit                        *mReplyToEdit;
     KLineEdit                        *mBccEdit;
+    KLineEdit                        *mCcEdit;
     Sonnet::DictionaryComboBox       *mDictionaryCombo;
     MailCommon::FolderRequester      *mFccCombo;
     MailCommon::FolderRequester      *mDraftsCombo;

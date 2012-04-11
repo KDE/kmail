@@ -359,7 +359,7 @@ namespace KMail {
     glay->setSpacing( spacingHint() );
     glay->setMargin( marginHint() );
     // the last (empty) row takes all the remaining space
-    glay->setRowStretch( 8-1, 1 );
+    glay->setRowStretch( 9-1, 1 );
     glay->setColumnStretch( 1, 1 );
 
     // "Reply-To Address" line edit and label:
@@ -382,6 +382,28 @@ namespace KMail {
                "<p>If in doubt, leave this field blank.</p></qt>");
     label->setWhatsThis( msg );
     mReplyToEdit->setWhatsThis( msg );
+
+
+
+    // "CC addresses" line edit and label:
+    ++row;
+    mCcEdit = new KPIM::AddresseeLineEdit( tab, true );
+    mCcEdit->setObjectName( "mCcEdit" );
+    glay->addWidget( mCcEdit, row, 1 );
+    label = new QLabel( i18n("&CC addresses:"), tab );
+    label->setBuddy( mCcEdit );
+    glay->addWidget( label, row, 0 );
+    msg = i18n("<qt><h3>CC (Carbon Copy) addresses</h3>"
+               "<p>The addresses that you enter here will be added to each "
+               "outgoing mail that is sent with this identity.</p>"
+               "<p>This is commonly used to send a copy of each sent message to "
+               "another account of yours.</p>"
+               "<p>To specify more than one address, use commas to separate "
+               "the list of CC recipients.</p>"
+               "<p>If in doubt, leave this field blank.</p></qt>");
+    label->setWhatsThis( msg );
+    mCcEdit->setWhatsThis( msg );
+
 
     // "BCC addresses" line edit and label:
     ++row;
@@ -609,7 +631,7 @@ namespace KMail {
     }
 
     // Check if the 'Reply to' and 'BCC' recipients are valid
-    const QString recipients = mReplyToEdit->text().trimmed() + QLatin1String( ", " ) + mBccEdit->text().trimmed();
+    const QString recipients = mReplyToEdit->text().trimmed() + QLatin1String( ", " ) + mBccEdit->text().trimmed() + mCcEdit->text().trimmed();
     AddressValidationJob *job = new AddressValidationJob( recipients, this, this );
     job->setProperty( "email", email );
     connect( job, SIGNAL(result(KJob*)), SLOT(slotDelayedButtonClicked(KJob*)) );
@@ -726,6 +748,7 @@ namespace KMail {
     // "Advanced" tab:
     mReplyToEdit->setText( ident.replyToAddr() );
     mBccEdit->setText( ident.bcc() );
+    mCcEdit->setText( ident.cc() );
     const int transportId = ident.transport().isEmpty() ? -1 : ident.transport().toInt();
     const Transport *transport = TransportManager::self()->transportById( transportId, true );
     mTransportCheck->setChecked( transportId != -1 );
@@ -805,6 +828,7 @@ namespace KMail {
     // "Advanced" tab:
     ident.setReplyToAddr( mReplyToEdit->text() );
     ident.setBcc( mBccEdit->text() );
+    ident.setCc( mCcEdit->text() );
     ident.setTransport( mTransportCheck->isChecked() ? QString::number( mTransportCombo->currentTransportId() )
                                                      : QString() );
     ident.setDictionary( mDictionaryCombo->currentDictionaryName() );
