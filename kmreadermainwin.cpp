@@ -352,8 +352,8 @@ void KMReaderMainWin::setupAccel()
            SLOT(slotSizeAction(int)) );
 
 
-  connect( mReaderWin->viewer(), SIGNAL(popupMenu(Akonadi::Item,KUrl,QPoint)),
-           this, SLOT(slotMessagePopup(Akonadi::Item,KUrl,QPoint)) );
+  connect( mReaderWin->viewer(), SIGNAL(popupMenu(Akonadi::Item,KUrl,KUrl,QPixmap,QPoint)),
+           this, SLOT(slotMessagePopup(Akonadi::Item,KUrl,KUrl,QPixmap,QPoint)) );
 
   setStandardToolBarMenuEnabled(true);
   KStandardAction::configureToolbars(this, SLOT(slotEditToolbars()), actionCollection());
@@ -404,7 +404,7 @@ void KMReaderMainWin::slotCopyResult( KJob * job )
   }
 }
 
-void KMReaderMainWin::slotMessagePopup(const Akonadi::Item&aMsg ,const KUrl&aUrl,const QPoint& aPoint)
+void KMReaderMainWin::slotMessagePopup(const Akonadi::Item&aMsg , const KUrl&aUrl, const KUrl&imageUrl, const QPoint& aPoint)
 {
   mUrl = aUrl;
   mMsg = aMsg;

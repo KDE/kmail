@@ -53,7 +53,7 @@ public:
   
   void showMessage( const QString & encoding, KMime::Message::Ptr message);
 private slots:
-  void slotMessagePopup(const Akonadi::Item& ,const KUrl&,const QPoint& );
+  void slotMessagePopup(const Akonadi::Item& , const KUrl&, const KUrl &imageUrl, const QPoint& );
   void slotDelayedMessagePopup( KJob* );
   void slotTrashMsg();
   void slotForwardInlineMsg();

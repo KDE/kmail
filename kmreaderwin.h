@@ -135,6 +135,7 @@ public:
   KAction *copyAction();
   KAction *selectAllAction();
   KAction *copyURLAction();
+  KAction *copyImageLocation();
   KAction *urlOpenAction();
   KAction *urlSaveAsAction() { return mUrlSaveAsAction; }
   KAction *addBookmarksAction() { return mAddBookmarksAction;}

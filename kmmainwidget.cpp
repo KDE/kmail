@@ -1070,8 +1070,8 @@ void KMMainWidget::createWidgets()
     }
     connect( mMsgView->viewer(), SIGNAL(replaceMsgByUnencryptedVersion()),
              this, SLOT(slotReplaceMsgByUnencryptedVersion()) );
-    connect( mMsgView->viewer(), SIGNAL(popupMenu(Akonadi::Item,KUrl,QPoint)),
-             this, SLOT(slotMessagePopup(Akonadi::Item,KUrl,QPoint)) );
+    connect( mMsgView->viewer(), SIGNAL(popupMenu(Akonadi::Item,KUrl,KUrl,QPoint)),
+             this, SLOT(slotMessagePopup(Akonadi::Item,KUrl,KUrl,QPoint)) );
   }
   else {
     if ( mMsgActions ) {
@@ -2953,7 +2953,7 @@ void KMMainWidget::slotMarkAll()
   updateMessageActions();
 }
 
-void KMMainWidget::slotMessagePopup(const Akonadi::Item&msg ,const KUrl&aUrl,const QPoint& aPoint)
+void KMMainWidget::slotMessagePopup(const Akonadi::Item&msg ,const KUrl&aUrl,const KUrl &imageUrl,const QPoint& aPoint)
 {
   updateMessageMenu();
   mUrlCurrent = aUrl;
@@ -2964,6 +2964,7 @@ void KMMainWidget::slotMessagePopup(const Akonadi::Item&msg ,const KUrl&aUrl,con
   job->setQuery( Akonadi::ContactSearchJob::Email, email, Akonadi::ContactSearchJob::ExactMatch );
   job->setProperty( "msg", QVariant::fromValue( msg ) );
   job->setProperty( "point", aPoint );
+  job->setProperty( "imageUrl", imageUrl );
 
   connect( job, SIGNAL(result(KJob*)), SLOT(slotDelayedMessagePopup(KJob*)) );
 }
@@ -2985,7 +2986,8 @@ void KMMainWidget::slotDelayedMessagePopup( KJob *job )
 
   const Akonadi::Item msg = job->property( "msg" ).value<Akonadi::Item>();
   const QPoint aPoint = job->property( "point" ).toPoint();
-
+  const KUrl iUrl = job->property("imageUrl").value<KUrl>();
+  qDebug()<<" iUrl "<<iUrl;
   KMenu *menu = new KMenu;
 
   bool urlMenuAdded = false;
@@ -3011,6 +3013,10 @@ void KMMainWidget::slotDelayedMessagePopup( KJob *job )
       menu->addAction( mMsgView->addBookmarksAction() );
       menu->addAction( mMsgView->urlSaveAsAction() );
       menu->addAction( mMsgView->copyURLAction() );
+      if(!iUrl.isEmpty()) {
+        menu->addSeparator();
+        menu->addAction( mMsgView->copyImageLocation());
+      }
     }
 
     urlMenuAdded = true;

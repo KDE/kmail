@@ -546,6 +546,11 @@ KAction *KMReaderWin::copyURLAction()
   return mViewer->copyURLAction();
 }
 
+KAction *KMReaderWin::copyImageLocation()
+{
+  return mViewer->copyImageLocation();
+}
+
 KAction *KMReaderWin::copyAction()
 {
   return mViewer->copyAction();
