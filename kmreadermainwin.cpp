@@ -352,8 +352,8 @@ void KMReaderMainWin::setupAccel()
            SLOT(slotSizeAction(int)) );
 
 
-  connect( mReaderWin->viewer(), SIGNAL(popupMenu(Akonadi::Item,KUrl,KUrl,QPixmap,QPoint)),
-           this, SLOT(slotMessagePopup(Akonadi::Item,KUrl,KUrl,QPixmap,QPoint)) );
+  connect( mReaderWin->viewer(), SIGNAL(popupMenu(Akonadi::Item,KUrl,KUrl,QPoint)),
+           this, SLOT(slotMessagePopup(Akonadi::Item,KUrl,KUrl,QPoint)) );
 
   setStandardToolBarMenuEnabled(true);
   KStandardAction::configureToolbars(this, SLOT(slotEditToolbars()), actionCollection());
