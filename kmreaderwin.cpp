@@ -194,6 +194,12 @@ void KMReaderWin::createActions()
   connect(action, SIGNAL(triggered(bool)), SLOT(slotFind()));
   action->setShortcut(KStandardShortcut::find());
 
+  // save Image On Disk
+  mImageUrlSaveAsAction = new KAction( i18n( "Save Image On Disk..." ), this );
+  ac->addAction( "saveas_imageurl", mImageUrlSaveAsAction );
+  mImageUrlSaveAsAction->setShortcutConfigurable( false );
+  connect( mImageUrlSaveAsAction, SIGNAL(triggered(bool)), SLOT(slotSaveOnDisk()) );
+
 }
 
 void KMReaderWin::setUseFixedFont( bool useFixedFont )
@@ -484,6 +490,16 @@ void KMReaderWin::slotUrlSave()
   command->start();
 }
 
+void KMReaderWin::slotSaveOnDisk()
+{
+  const KUrl url = imageUrlClicked();
+  if( url.isEmpty() )
+    return;
+  KMCommand *command = new KMUrlSaveCommand( url, mMainWindow );
+  command->start();
+
+}
+
 //-----------------------------------------------------------------------------
 void KMReaderWin::slotMailtoReply()
 {
@@ -569,9 +585,9 @@ KAction* KMReaderWin::speakTextAction()
   return mViewer->speakTextAction();
 }
 
-QAction* KMReaderWin::downloadImageToDiskAction() const
+KAction* KMReaderWin::downloadImageToDiskAction() const
 {
-  return mViewer->downloadImageToDiskAction();
+  return mImageUrlSaveAsAction;
 }
 
 void KMReaderWin::clear(bool force )
@@ -594,6 +610,11 @@ void KMReaderWin::setMessage( KMime::Message::Ptr message)
 KUrl KMReaderWin::urlClicked() const
 {
   return mViewer->urlClicked();
+}
+
+KUrl KMReaderWin::imageUrlClicked() const
+{
+  return mViewer->imageUrlClicked();
 }
 
 void KMReaderWin::update( bool force )

@@ -457,10 +457,7 @@ void KMReaderMainWin::slotDelayedMessagePopup( KJob *job )
       if(!iUrl.isEmpty()) {
         menu->addSeparator();
         menu->addAction( mReaderWin->copyImageLocation());
-        QAction *downloadImageToDisk = mReaderWin->downloadImageToDiskAction();
-        if(downloadImageToDisk){
-          menu->addAction(downloadImageToDisk);
-        }
+        menu->addAction(mReaderWin->downloadImageToDiskAction());
       }
     }
     urlMenuAdded = true;

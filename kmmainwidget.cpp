@@ -3015,10 +3015,7 @@ void KMMainWidget::slotDelayedMessagePopup( KJob *job )
       if(!iUrl.isEmpty()) {
         menu->addSeparator();
         menu->addAction( mMsgView->copyImageLocation());
-        QAction *downloadImageToDisk = mMsgView->downloadImageToDiskAction();
-        if(downloadImageToDisk){
-          menu->addAction(downloadImageToDisk);
-        }
+        menu->addAction( mMsgView->downloadImageToDiskAction());
       }
     }
 
