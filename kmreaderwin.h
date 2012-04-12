@@ -141,6 +141,7 @@ public:
   KAction *addBookmarksAction() { return mAddBookmarksAction;}
   KAction *toggleMimePartTreeAction();
   KAction *speakTextAction();
+  QAction* downloadImageToDiskAction() const;
 
   Akonadi::Item message() const;
 

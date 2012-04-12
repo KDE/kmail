@@ -569,6 +569,11 @@ KAction* KMReaderWin::speakTextAction()
   return mViewer->speakTextAction();
 }
 
+QAction* KMReaderWin::downloadImageToDiskAction() const
+{
+  return mViewer->downloadImageToDiskAction();
+}
+
 void KMReaderWin::clear(bool force )
 {
   mViewer->clear( force ? Viewer::Force : Viewer::Delayed );

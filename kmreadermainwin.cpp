@@ -414,6 +414,7 @@ void KMReaderMainWin::slotMessagePopup(const Akonadi::Item&aMsg , const KUrl&aUr
   job->setLimit( 1 );
   job->setQuery( Akonadi::ContactSearchJob::Email, email, Akonadi::ContactSearchJob::ExactMatch );
   job->setProperty( "point", aPoint );
+  job->setProperty( "imageUrl", imageUrl );
   connect( job, SIGNAL(result(KJob*)), SLOT(slotDelayedMessagePopup(KJob*)) );
 }
 
@@ -423,6 +424,8 @@ void KMReaderMainWin::slotDelayedMessagePopup( KJob *job )
   const bool contactAlreadyExists = !searchJob->contacts().isEmpty();
 
   const QPoint aPoint = job->property( "point" ).toPoint();
+  const KUrl iUrl = job->property("imageUrl").value<KUrl>();
+
   KMenu *menu = new KMenu;
 
   bool urlMenuAdded = false;
@@ -451,6 +454,14 @@ void KMReaderMainWin::slotDelayedMessagePopup( KJob *job )
       menu->addAction( mReaderWin->addBookmarksAction() );
       menu->addAction( mReaderWin->urlSaveAsAction() );
       menu->addAction( mReaderWin->copyURLAction() );
+      if(!iUrl.isEmpty()) {
+        menu->addSeparator();
+        menu->addAction( mReaderWin->copyImageLocation());
+        QAction *downloadImageToDisk = mReaderWin->downloadImageToDiskAction();
+        if(downloadImageToDisk){
+          menu->addAction(downloadImageToDisk);
+        }
+      }
     }
     urlMenuAdded = true;
   }

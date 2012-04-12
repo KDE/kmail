@@ -2987,7 +2987,6 @@ void KMMainWidget::slotDelayedMessagePopup( KJob *job )
   const Akonadi::Item msg = job->property( "msg" ).value<Akonadi::Item>();
   const QPoint aPoint = job->property( "point" ).toPoint();
   const KUrl iUrl = job->property("imageUrl").value<KUrl>();
-  qDebug()<<" iUrl "<<iUrl;
   KMenu *menu = new KMenu;
 
   bool urlMenuAdded = false;
@@ -3016,6 +3015,10 @@ void KMMainWidget::slotDelayedMessagePopup( KJob *job )
       if(!iUrl.isEmpty()) {
         menu->addSeparator();
         menu->addAction( mMsgView->copyImageLocation());
+        QAction *downloadImageToDisk = mMsgView->downloadImageToDiskAction();
+        if(downloadImageToDisk){
+          menu->addAction(downloadImageToDisk);
+        }
       }
     }
 
