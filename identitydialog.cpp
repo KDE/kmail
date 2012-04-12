@@ -631,7 +631,7 @@ namespace KMail {
     }
 
     // Check if the 'Reply to' and 'BCC' recipients are valid
-    const QString recipients = mReplyToEdit->text().trimmed() + QLatin1String( ", " ) + mBccEdit->text().trimmed() + mCcEdit->text().trimmed();
+    const QString recipients = mReplyToEdit->text().trimmed() + QLatin1String( ", " ) + mBccEdit->text().trimmed() + QLatin1String( ", " ) + mCcEdit->text().trimmed();
     AddressValidationJob *job = new AddressValidationJob( recipients, this, this );
     job->setProperty( "email", email );
     connect( job, SIGNAL(result(KJob*)), SLOT(slotDelayedButtonClicked(KJob*)) );
