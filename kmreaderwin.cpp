@@ -198,7 +198,7 @@ void KMReaderWin::createActions()
   mImageUrlSaveAsAction = new KAction( i18n( "Save Image On Disk..." ), this );
   ac->addAction( "saveas_imageurl", mImageUrlSaveAsAction );
   mImageUrlSaveAsAction->setShortcutConfigurable( false );
-  connect( mImageUrlSaveAsAction, SIGNAL(triggered(bool)), SLOT(slotSaveOnDisk()) );
+  connect( mImageUrlSaveAsAction, SIGNAL(triggered(bool)), SLOT(slotSaveImageOnDisk()) );
 
 }
 
@@ -490,7 +490,7 @@ void KMReaderWin::slotUrlSave()
   command->start();
 }
 
-void KMReaderWin::slotSaveOnDisk()
+void KMReaderWin::slotSaveImageOnDisk()
 {
   const KUrl url = imageUrlClicked();
   if( url.isEmpty() )

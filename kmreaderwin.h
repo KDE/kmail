@@ -180,7 +180,7 @@ public slots:
   void slotShowReader( KMime::Content* , bool, const QString& );
   void slotShowMessage( KMime::Message::Ptr message, const QString& encoding );
   void slotDeleteMessage( const Akonadi::Item& );
-  void slotSaveOnDisk();
+  void slotSaveImageOnDisk();
 protected:
 
   KUrl urlClicked() const;
