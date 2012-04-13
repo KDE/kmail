@@ -48,8 +48,11 @@
 #include <KLocale>
 
 #include <KStandardDirs>
+#include <Akonadi/EntityTreeModel>
+#include <Akonadi/EntityMimeTypeFilterModel>
 
 #include <QProcess>
+#include <QModelIndex>
 
 #include "foldercollection.h"
 
@@ -208,3 +211,9 @@ void KMail::Util::mailingListHelp( const QSharedPointer<MailCommon::FolderCollec
     KMail::Util::mailingListsHandleURL( fd->mailingList().helpUrls(),fd );
 }
 
+Akonadi::Collection KMail::Util::updatedCollection( const Akonadi::Collection& col )
+{
+  const QModelIndex idx = Akonadi::EntityTreeModel::modelIndexForCollection( KMKernel::self()->collectionModel(), CommonKernel->outboxCollectionFolder() );
+  const Akonadi::Collection collection = idx.data( Akonadi::EntityTreeModel::CollectionRole ).value<Akonadi::Collection>();
+  return collection;
+}

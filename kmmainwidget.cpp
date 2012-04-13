@@ -3962,8 +3962,8 @@ void KMMainWidget::updateMessageActionsDelayed()
 
   updateMoveAction( (mCurrentFolder&& mCurrentFolder->isValid()) ? mCurrentFolder->statistics().count() : 0 );
 
-  const qint64 nbMsgOutboxCollection = CommonKernel->outboxCollectionFolder().statistics().count();
-
+  const qint64 nbMsgOutboxCollection = KMail::Util::updatedCollection( CommonKernel->outboxCollectionFolder() ).statistics().count();
+  
   actionCollection()->action( "send_queued" )->setEnabled( nbMsgOutboxCollection > 0 );
   actionCollection()->action( "send_queued_via" )->setEnabled( nbMsgOutboxCollection > 0 );
 
