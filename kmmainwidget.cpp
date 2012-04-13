@@ -2956,7 +2956,6 @@ void KMMainWidget::slotMarkAll()
 void KMMainWidget::slotMessagePopup(const Akonadi::Item&msg ,const KUrl&aUrl,const KUrl &imageUrl,const QPoint& aPoint)
 {
   updateMessageMenu();
-  mUrlCurrent = aUrl;
 
   const QString email =  KPIMUtils::firstEmailAddress( aUrl.path() );
   Akonadi::ContactSearchJob *job = new Akonadi::ContactSearchJob( this );
@@ -2965,7 +2964,7 @@ void KMMainWidget::slotMessagePopup(const Akonadi::Item&msg ,const KUrl&aUrl,con
   job->setProperty( "msg", QVariant::fromValue( msg ) );
   job->setProperty( "point", aPoint );
   job->setProperty( "imageUrl", imageUrl );
-
+  job->setProperty( "url", aUrl );
   connect( job, SIGNAL(result(KJob*)), SLOT(slotDelayedMessagePopup(KJob*)) );
 }
 
@@ -2987,12 +2986,13 @@ void KMMainWidget::slotDelayedMessagePopup( KJob *job )
   const Akonadi::Item msg = job->property( "msg" ).value<Akonadi::Item>();
   const QPoint aPoint = job->property( "point" ).toPoint();
   const KUrl iUrl = job->property("imageUrl").value<KUrl>();
+  const KUrl url = job->property( "url" ).value<KUrl>();
   KMenu *menu = new KMenu;
 
   bool urlMenuAdded = false;
 
-  if ( !mUrlCurrent.isEmpty() ) {
-    if ( mUrlCurrent.protocol() == QLatin1String( "mailto" ) ) {
+  if ( !url.isEmpty() ) {
+    if ( url.protocol() == QLatin1String( "mailto" ) ) {
       // popup on a mailto URL
       menu->addAction( mMsgView->mailToComposeAction() );
       menu->addAction( mMsgView->mailToReplyAction() );
@@ -3020,7 +3020,7 @@ void KMMainWidget::slotDelayedMessagePopup( KJob *job )
     }
 
     urlMenuAdded = true;
-    kDebug() << "URL is:" << mUrlCurrent;
+    kDebug() << "URL is:" << url;
   }
 
   if ( mMsgView && !mMsgView->copyText().isEmpty() ) {

@@ -83,7 +83,6 @@ private:
   
   KMReaderWin *mReaderWin;
   Akonadi::Item mMsg;
-  KUrl mUrl;
   // a few actions duplicated from kmmainwidget
   KAction *mTrashAction, *mPrintAction, *mSaveAsAction, *mSaveAtmAction,
     *mViewSourceAction;

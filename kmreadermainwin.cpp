@@ -406,7 +406,6 @@ void KMReaderMainWin::slotCopyResult( KJob * job )
 
 void KMReaderMainWin::slotMessagePopup(const Akonadi::Item&aMsg , const KUrl&aUrl, const KUrl&imageUrl, const QPoint& aPoint)
 {
-  mUrl = aUrl;
   mMsg = aMsg;
 
   const QString email =  KPIMUtils::firstEmailAddress( aUrl.path() );
@@ -415,6 +414,7 @@ void KMReaderMainWin::slotMessagePopup(const Akonadi::Item&aMsg , const KUrl&aUr
   job->setQuery( Akonadi::ContactSearchJob::Email, email, Akonadi::ContactSearchJob::ExactMatch );
   job->setProperty( "point", aPoint );
   job->setProperty( "imageUrl", imageUrl );
+  job->setProperty( "url", aUrl );
   connect( job, SIGNAL(result(KJob*)), SLOT(slotDelayedMessagePopup(KJob*)) );
 }
 
@@ -425,13 +425,13 @@ void KMReaderMainWin::slotDelayedMessagePopup( KJob *job )
 
   const QPoint aPoint = job->property( "point" ).toPoint();
   const KUrl iUrl = job->property("imageUrl").value<KUrl>();
-
+  const KUrl url = job->property("url").value<KUrl>();
   KMenu *menu = new KMenu;
 
   bool urlMenuAdded = false;
   bool copyAdded = false;
-  if ( !mUrl.isEmpty() ) {
-    if ( mUrl.protocol() == QLatin1String( "mailto" ) ) {
+  if ( !url.isEmpty() ) {
+    if ( url.protocol() == QLatin1String( "mailto" ) ) {
       // popup on a mailto URL
       menu->addAction( mReaderWin->mailToComposeAction() );
       if ( mMsg.hasPayload<KMime::Message::Ptr>() ) {
