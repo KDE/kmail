@@ -32,6 +32,7 @@ class KActionMenu;
 class KActionCollection;
 class KXMLGUIClient;
 class KMReaderWin;
+class KMenu;
 
 namespace Akonadi {
   class Item;
@@ -97,6 +98,9 @@ class MessageActions : public QObject
     KActionMenu* mailingListActionMenu() const { return mMailingListActionMenu; }
     TemplateParser::CustomTemplatesMenu* customTemplatesMenu() const;
 
+    void addWebShortcutsMenu( KMenu *menu, const QString & text );
+
+
   signals:
 
     // This signal is emitted when a reply is triggered and the
@@ -133,6 +137,9 @@ class MessageActions : public QObject
 
     void slotUpdateActionsFetchDone( KJob* job );
     void slotMailingListFilter();
+    void slotHandleWebShortcutAction();
+    void slotConfigureWebShortcuts();
+
 
   private:
     QWidget *mParent;

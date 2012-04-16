@@ -3022,8 +3022,8 @@ void KMMainWidget::slotDelayedMessagePopup( KJob *job )
     urlMenuAdded = true;
     kDebug() << "URL is:" << url;
   }
-
-  if ( mMsgView && !mMsgView->copyText().isEmpty() ) {
+  const QString selectedText(mMsgView->copyText());
+  if ( mMsgView && !selectedText.isEmpty() ) {
     if ( urlMenuAdded ) {
       menu->addSeparator();
     }
@@ -3032,6 +3032,8 @@ void KMMainWidget::slotDelayedMessagePopup( KJob *job )
 
     menu->addAction( mMsgView->copyAction() );
     menu->addAction( mMsgView->selectAllAction() );
+    menu->addSeparator();
+    mMsgActions->addWebShortcutsMenu(menu,selectedText);
     menu->addSeparator();
     menu->addAction( mMsgView->speakTextAction());
   } else if ( !urlMenuAdded ) {

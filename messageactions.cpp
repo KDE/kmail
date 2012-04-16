@@ -48,6 +48,10 @@
 #include <KStandardDirs>
 #include <KRun>
 #include <KMenu>
+#include <KUriFilterData>
+#include <KToolInvocation>
+#include <KUriFilter>
+#include <KStringHandler>
 
 #include <QVariant>
 #include <qwidget.h>
@@ -624,6 +628,75 @@ void MessageActions::updateAnnotateAction( const QUrl &url, const Nepomuk::Resou
     else
       mAnnotateAction->setText( i18n( "Edit Note...") );
   }
+}
+
+void MessageActions::addWebShortcutsMenu( KMenu *menu, const QString & text )
+{
+    if ( text.isEmpty() )
+        return;
+
+    QString searchText = text;
+    searchText = searchText.replace( QLatin1Char('\n'), QLatin1Char(' ') ).replace( QLatin1Char('\r'), QLatin1Char(' ') ).simplified();
+
+    if ( searchText.isEmpty() )
+        return;
+
+    KUriFilterData filterData( searchText );
+
+    filterData.setSearchFilteringOptions( KUriFilterData::RetrievePreferredSearchProvidersOnly );
+
+    if ( KUriFilter::self()->filterSearchUri( filterData, KUriFilter::NormalTextFilter ) )
+    {
+        const QStringList searchProviders = filterData.preferredSearchProviders();
+
+        if ( !searchProviders.isEmpty() )
+        {
+            KMenu *webShortcutsMenu = new KMenu( menu );
+            webShortcutsMenu->setIcon( KIcon( "preferences-web-browser-shortcuts" ) );
+
+            const QString squeezedText = KStringHandler::rsqueeze( searchText, 21 );
+            webShortcutsMenu->setTitle( i18n( "Search for '%1' with", squeezedText ) );
+
+            KAction *action = 0;
+
+            foreach( const QString &searchProvider, searchProviders )
+            {
+                action = new KAction( searchProvider, webShortcutsMenu );
+                action->setIcon( KIcon( filterData.iconNameForPreferredSearchProvider( searchProvider ) ) );
+                action->setData( filterData.queryForPreferredSearchProvider( searchProvider ) );
+                connect( action, SIGNAL(triggered()), this, SLOT(slotHandleWebShortcutAction()) );
+                webShortcutsMenu->addAction( action );
+            }
+
+            webShortcutsMenu->addSeparator();
+
+            action = new KAction( i18n( "Configure Web Shortcuts..." ), webShortcutsMenu );
+            action->setIcon( KIcon( "configure" ) );
+            connect( action, SIGNAL(triggered()), this, SLOT(slotConfigureWebShortcuts()) );
+            webShortcutsMenu->addAction( action );
+
+            menu->addMenu(webShortcutsMenu);
+        }
+    }
+}
+
+void MessageActions::slotHandleWebShortcutAction()
+{
+  KAction *action = qobject_cast<KAction*>( sender() );
+
+  if (action)
+  {
+      KUriFilterData filterData( action->data().toString() );
+      if ( KUriFilter::self()->filterSearchUri( filterData, KUriFilter::WebShortcutFilter ) )
+      {
+          KToolInvocation::invokeBrowser( filterData.uri().url() );
+      }
+  }
+}
+
+void MessageActions::slotConfigureWebShortcuts()
+{
+ KToolInvocation::kdeinitExec( QLatin1String("kcmshell4"), QStringList() << QLatin1String("ebrowsing") );
 }
 
 #include "messageactions.moc"

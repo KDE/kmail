@@ -462,7 +462,8 @@ void KMReaderMainWin::slotDelayedMessagePopup( KJob *job )
     }
     urlMenuAdded = true;
   }
-  if ( !mReaderWin->copyText().isEmpty() ) {
+  const QString selectedText(mReaderWin->copyText());
+  if ( !selectedText.isEmpty() ) {
     if ( urlMenuAdded ) {
       menu->addSeparator();
     }
@@ -471,6 +472,8 @@ void KMReaderMainWin::slotDelayedMessagePopup( KJob *job )
     if( !copyAdded )
       menu->addAction( mReaderWin->copyAction() );
     menu->addAction( mReaderWin->selectAllAction() );
+    menu->addSeparator();
+    mMsgActions->addWebShortcutsMenu(menu,selectedText);
     menu->addSeparator();
     menu->addAction( mReaderWin->speakTextAction());
   } else if ( !urlMenuAdded ) {
