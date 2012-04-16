@@ -155,6 +155,7 @@ MessageActions::MessageActions( KActionCollection *ac, QWidget* parent ) :
            this, SLOT(annotateMessage()) );
 
   mPrintAction = KStandardAction::print( this, SLOT(slotPrintMsg()), mActionCollection );
+  mPrintPreviewAction = KStandardAction::printPreview( this, SLOT(slotPrintPreviewMsg()), mActionCollection );
 
   mForwardActionMenu  = new KActionMenu(KIcon("mail-forward"), i18nc("Message->","&Forward"), this);
   mActionCollection->addAction("message_forward", mForwardActionMenu );
@@ -516,6 +517,10 @@ void MessageActions::slotMailingListFilter()
   command->start();
 }
 
+void MessageActions::slotPrintPreviewMsg()
+{
+  //TODO
+}
 
 void MessageActions::slotPrintMsg()
 {

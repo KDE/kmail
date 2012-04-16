@@ -91,6 +91,7 @@ class MessageActions : public QObject
     KAction* editAction() const { return mEditAction; }
     KAction* annotateAction() const { return mAnnotateAction; }
     KAction* printAction() const { return mPrintAction; }
+    KAction* printPreviewAction() const { return mPrintPreviewAction; }
     KAction* listFilterAction() const { return mListFilterAction; }
 
     KActionMenu* mailingListActionMenu() const { return mMailingListActionMenu; }
@@ -128,6 +129,8 @@ class MessageActions : public QObject
     void slotCreateTodo();
     void slotRunUrl( QAction *urlAction );
     void slotPrintMsg();
+    void slotPrintPreviewMsg();
+
     void slotUpdateActionsFetchDone( KJob* job );
     void slotMailingListFilter();
 
@@ -146,7 +149,7 @@ class MessageActions : public QObject
     KActionMenu *mStatusMenu;
     KActionMenu *mForwardActionMenu;
     KActionMenu *mMailingListActionMenu;
-    KAction *mEditAction, *mAnnotateAction, *mPrintAction;
+    KAction *mEditAction, *mAnnotateAction, *mPrintAction, *mPrintPreviewAction;
     bool mKorganizerIsOnSystem;
     Akonadi::Monitor *mMonitor;
     MessageCore::AsyncNepomukResourceRetriever *mAsynNepomukRetriever;
