@@ -3942,6 +3942,10 @@ void KMMainWidget::updateMessageActionsDelayed()
 
   // "Print" will act on the current message: it will ignore any hidden selection
   mMsgActions->printAction()->setEnabled( singleVisibleMessageSelected );
+  // "Print preview" will act on the current message: it will ignore any hidden selection
+  KAction *printPreviewAction = mMsgActions->printPreviewAction();
+  if(printPreviewAction)
+    printPreviewAction->setEnabled( singleVisibleMessageSelected );
 
   // "View Source" will act on the current message: it will ignore any hidden selection
   viewSourceAction()->setEnabled( singleVisibleMessageSelected && mMsgView);

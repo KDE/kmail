@@ -383,6 +383,7 @@ public:
 
   void setOverrideFont( const QFont& );
   void setAttachmentStrategy( const MessageViewer::AttachmentStrategy *strategy );
+  void setPrintPreview( bool preview );
 
 private:
   virtual Result execute();
@@ -390,11 +391,12 @@ private:
   MessageViewer::HeaderStyle *mHeaderStyle;
   const MessageViewer::HeaderStrategy *mHeaderStrategy;
   const MessageViewer::AttachmentStrategy *mAttachmentStrategy;
+  QFont mOverrideFont;
+  QString mEncoding;
   bool mHtmlOverride;
   bool mHtmlLoadExtOverride;
   bool mUseFixedFont;
-  QFont mOverrideFont;
-  QString mEncoding;
+  bool mPrintPreview;
 };
 
 class KMAIL_EXPORT KMSetStatusCommand : public KMCommand

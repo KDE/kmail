@@ -1037,9 +1037,11 @@ KMPrintCommand::KMPrintCommand( QWidget *parent, const Akonadi::Item &msg,
   : KMCommand( parent, msg ),
     mHeaderStyle( headerStyle ), mHeaderStrategy( headerStrategy ),
     mAttachmentStrategy( 0 ),
+    mEncoding( encoding ),
     mHtmlOverride( htmlOverride ),
     mHtmlLoadExtOverride( htmlLoadExtOverride ),
-    mUseFixedFont( useFixedFont ), mEncoding( encoding )
+    mUseFixedFont( useFixedFont ),
+    mPrintPreview(false)
 {
   fetchScope().fetchFullPayload( true );
   if ( MessageCore::GlobalSettings::useDefaultFonts() )
@@ -1060,6 +1062,11 @@ void KMPrintCommand::setAttachmentStrategy( const MessageViewer::AttachmentStrat
   mAttachmentStrategy = strategy;
 }
 
+void KMPrintCommand::setPrintPreview( bool preview )
+{
+  mPrintPreview = preview;
+}
+
 KMCommand::Result KMPrintCommand::execute()
 {
   // the window will be deleted after printout is performed, in KMReaderWin::slotPrintMsg()
@@ -1076,7 +1083,10 @@ KMCommand::Result KMPrintCommand::execute()
   printerWin->setDecryptMessageOverwrite( true );
   if ( mAttachmentStrategy != 0 )
     printerWin->setAttachmentStrategy( mAttachmentStrategy );
-  printerWin->viewer()->printMessage( retrievedMessage() );
+  if(mPrintPreview)
+    printerWin->viewer()->printPreviousMessage( retrievedMessage() );
+  else
+    printerWin->viewer()->printMessage(retrievedMessage());
   return OK;
 }
 

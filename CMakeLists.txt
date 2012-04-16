@@ -208,6 +208,7 @@ if (NOT WINCE AND KDEPIM_BUILD_DESKTOP)
     ${QT_QTSCRIPT_LIBRARY}
     ${NEPOMUK_LIBRARIES}
     ${NEPOMUK_QUERY_LIBRARIES}
+    ${KDE4_KUTILS_LIBS}
   )
 
   set_target_properties(kmailprivate

@@ -52,6 +52,7 @@
 #include <KToolInvocation>
 #include <KUriFilter>
 #include <KStringHandler>
+#include <KPrintPreview>
 
 #include <QVariant>
 #include <qwidget.h>
@@ -69,6 +70,7 @@ MessageActions::MessageActions( KActionCollection *ac, QWidget* parent ) :
     mActionCollection( ac ),
     mMessageView( 0 ),
     mRedirectAction( 0 ),
+    mPrintPreviewAction( 0 ),
     mAsynNepomukRetriever( new MessageCore::AsyncNepomukResourceRetriever( this ) ),
     mCustomTemplatesMenu( 0 )
 {
@@ -159,7 +161,8 @@ MessageActions::MessageActions( KActionCollection *ac, QWidget* parent ) :
            this, SLOT(annotateMessage()) );
 
   mPrintAction = KStandardAction::print( this, SLOT(slotPrintMsg()), mActionCollection );
-  mPrintPreviewAction = KStandardAction::printPreview( this, SLOT(slotPrintPreviewMsg()), mActionCollection );
+  if(KPrintPreview::isAvailable())
+    mPrintPreviewAction = KStandardAction::printPreview( this, SLOT(slotPrintPreviewMsg()), mActionCollection );
 
   mForwardActionMenu  = new KActionMenu(KIcon("mail-forward"), i18nc("Message->","&Forward"), this);
   mActionCollection->addAction("message_forward", mForwardActionMenu );
@@ -523,7 +526,25 @@ void MessageActions::slotMailingListFilter()
 
 void MessageActions::slotPrintPreviewMsg()
 {
-  //TODO
+  if(mMessageView)
+  {
+    mMessageView->viewer()->printPreview();
+  }
+  else
+  {
+    const bool useFixedFont = MessageViewer::GlobalSettings::self()->useFixedFont();
+    const QString overrideEncoding = MessageCore::GlobalSettings::self()->overrideCharacterEncoding();
+
+    const Akonadi::Item message = mCurrentItem;
+    KMPrintCommand *command =
+      new KMPrintCommand( mParent, message,
+                          0,
+                          0,
+                          false, false,
+                          useFixedFont, overrideEncoding );
+    command->setPrintPreview(true);
+    command->start();
+  }
 }
 
 void MessageActions::slotPrintMsg()
