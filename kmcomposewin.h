@@ -293,6 +293,8 @@ class KMComposeWin : public KMail::Composer
      * Actions:
      */
     void slotPrint();
+    void slotPrintPreview();
+
     void slotInsertRecentFile( const KUrl & );
     void slotRecentListFileClear();
 
@@ -402,6 +404,7 @@ class KMComposeWin : public KMail::Composer
     void slotConfigChanged();
 
     void slotPrintComposeResult( KJob *job );
+    void slotPrintPreviewComposeResult( KJob *job );
 
     void slotEncryptChiasmusToggled( bool );
 
@@ -446,6 +449,7 @@ class KMComposeWin : public KMail::Composer
   private:
     Kleo::CryptoMessageFormat cryptoMessageFormat() const;
     QString overwriteModeStr() const;
+    void printComposeResult( KJob *job, bool preview );
 
     /**
      * Install grid management and header fields. If fields exist that

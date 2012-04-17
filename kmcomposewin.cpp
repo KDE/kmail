@@ -1,6 +1,6 @@
 /*
  * This file is part of KMail.
- * Copyright (c) 2011 Laurent Montel <montel@kde.org>
+ * Copyright (c) 2011,2012 Laurent Montel <montel@kde.org>
  *
  * Copyright (c) 2009 Constantin Berzan <exit3219@gmail.com>
  *
@@ -131,6 +131,7 @@
 #include <sonnet/dictionarycombobox.h>
 #include <krun.h>
 #include <KIO/JobUiDelegate>
+#include <KPrintPreview>
 
 // Qt includes
 #include <QClipboard>
@@ -1174,6 +1175,8 @@ void KMComposeWin::setupActions( void )
            mComposerBase->recipientsEditor(), SLOT(saveDistributionList()) );
 
   KStandardAction::print( this, SLOT(slotPrint()), actionCollection() );
+  if(KPrintPreview::isAvailable())
+    KStandardAction::printPreview( this, SLOT(slotPrintPreview()), actionCollection() );
   KStandardAction::close( this, SLOT(slotClose()), actionCollection() );
 
   KStandardAction::undo( this, SLOT(slotUndo()), actionCollection() );
@@ -2531,7 +2534,7 @@ void KMComposeWin::ignoreStickyFields()
   mBtnIdentity->setEnabled( false );
 }
 
-//-----------------------------------------------------------------------------
+
 void KMComposeWin::slotPrint()
 {
   Message::Composer* composer = createSimpleComposer();
@@ -2541,7 +2544,26 @@ void KMComposeWin::slotPrint()
   composer->start();
 }
 
+void KMComposeWin::slotPrintPreview()
+{
+  Message::Composer* composer = createSimpleComposer();
+  mMiscComposers.append( composer );
+  connect( composer, SIGNAL(result(KJob*)),
+           this, SLOT(slotPrintPreviewComposeResult(KJob*)) );
+  composer->start();
+}
+
+void KMComposeWin::slotPrintPreviewComposeResult( KJob *job )
+{
+  printComposeResult( job, true );
+}
+
 void KMComposeWin::slotPrintComposeResult( KJob *job )
+{
+  printComposeResult( job, false );
+}
+
+void KMComposeWin::printComposeResult( KJob *job, bool preview )
 {
   Q_ASSERT( dynamic_cast< Message::Composer* >( job ) );
   Message::Composer* composer = dynamic_cast< Message::Composer* >( job );
@@ -2553,13 +2575,15 @@ void KMComposeWin::slotPrintComposeResult( KJob *job )
     Q_ASSERT( composer->resultMessages().size() == 1 );
     Akonadi::Item printItem;
     printItem.setPayload<KMime::Message::Ptr>( composer->resultMessages().first() );
-    KMCommand *command = new KMPrintCommand( this, printItem,0,
+    KMPrintCommand *command = new KMPrintCommand( this, printItem,0,
                                              0, ( mComposerBase->editor()->textMode() == KMeditor::Rich ) );
+    command->setPrintPreview( preview );
     command->start();
   } else {
     // TODO: error reporting to the user
     kWarning() << "Composer for printing failed:" << composer->errorString();
   }
+
 }
 
 //----------------------------------------------------------------------------
