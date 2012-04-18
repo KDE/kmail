@@ -475,6 +475,8 @@ void KMReaderMainWin::slotDelayedMessagePopup( KJob *job )
     menu->addSeparator();
     mMsgActions->addWebShortcutsMenu(menu,selectedText);
     menu->addSeparator();
+    menu->addAction(mReaderWin->translateAction());
+    menu->addSeparator();
     menu->addAction( mReaderWin->speakTextAction());
   } else if ( !urlMenuAdded ) {
     // popup somewhere else (i.e., not a URL) on the message

@@ -1,5 +1,5 @@
 <!DOCTYPE kpartgui SYSTEM "kpartgui.dtd" >
-<kpartgui version="413" name="kmcomposer" >
+<kpartgui version="414" name="kmcomposer" >
  <MenuBar>
   <Menu noMerge="1" name="file" >
    <text>&amp;Message</text>
@@ -62,6 +62,7 @@
    <Separator/>
    <Action name="toggle_fixedfont" />
    <Action name="snippets" />
+   <Action name="translator" />
   </Menu>
   <Menu name="attach" >
    <text>&amp;Attach</text>

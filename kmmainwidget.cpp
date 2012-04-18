@@ -3035,6 +3035,8 @@ void KMMainWidget::slotDelayedMessagePopup( KJob *job )
     menu->addSeparator();
     mMsgActions->addWebShortcutsMenu(menu,selectedText);
     menu->addSeparator();
+    menu->addAction(mMsgView->translateAction());
+    menu->addSeparator();
     menu->addAction( mMsgView->speakTextAction());
   } else if ( !urlMenuAdded ) {
     // popup somewhere else (i.e., not a URL) on the message

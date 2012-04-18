@@ -590,6 +590,11 @@ KAction* KMReaderWin::downloadImageToDiskAction() const
   return mImageUrlSaveAsAction;
 }
 
+KAction* KMReaderWin::translateAction()
+{
+  return mViewer->translateAction();
+}
+
 void KMReaderWin::clear(bool force )
 {
   mViewer->clear( force ? Viewer::Force : Viewer::Delayed );

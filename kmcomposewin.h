@@ -102,6 +102,11 @@ namespace MailCommon
   class FolderRequester;
 }
  
+namespace MessageViewer
+{
+  class TranslatorWidget;
+}
+
 //-----------------------------------------------------------------------------
 class KMComposeWin : public KMail::Composer
 {
@@ -320,6 +325,7 @@ class KMComposeWin : public KMail::Composer
     void slotPasteAsAttachment();
     void slotFormatReset();
     void slotMarkAll();
+    void slotTranslatorWasClosed();
 
   void slotFolderRemoved( const Akonadi::Collection& );
     void slotLanguageChanged( const QString &language );
@@ -628,7 +634,7 @@ class KMComposeWin : public KMail::Composer
     KToggleAction *mSubjectAction;
     KToggleAction *mIdentityAction, *mTransportAction, *mFccAction;
     KToggleAction *mWordWrapAction, *mFixedFontAction, *mAutoSpellCheckingAction;
-    KToggleAction *mDictionaryAction, *mSnippetAction;
+    KToggleAction *mDictionaryAction, *mSnippetAction, *mTranslateAction;
 
     KToggleAction *markupAction;
     KAction *actionFormatReset;
@@ -663,6 +669,7 @@ class KMComposeWin : public KMail::Composer
 
 
     SnippetWidget *mSnippetWidget;
+    MessageViewer::TranslatorWidget *mTranslatorWidget;
 
     QLabel *mSignatureStateIndicator;
   QLabel *mEncryptionStateIndicator;

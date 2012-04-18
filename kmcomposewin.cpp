@@ -50,6 +50,7 @@
 #include "mailkernel.h"
 #include "custommimeheader.h"
 #include <messagecomposer/kmsubjectlineedit.h>
+#include "messageviewer/translator/translatorwidget.h"
 
 // KDEPIM includes
 #include <libkpgp/kpgpblock.h>
@@ -189,7 +190,7 @@ KMComposeWin::KMComposeWin( const KMime::Message::Ptr &aMsg, Composer::TemplateC
     mReplyToAction( 0 ), mSubjectAction( 0 ),
     mIdentityAction( 0 ), mTransportAction( 0 ), mFccAction( 0 ),
     mWordWrapAction( 0 ), mFixedFontAction( 0 ), mAutoSpellCheckingAction( 0 ),
-    mDictionaryAction( 0 ), mSnippetAction( 0 ),
+    mDictionaryAction( 0 ), mSnippetAction( 0 ), mTranslateAction(0),
     mCodecAction( 0 ),
     mCryptoModuleAction( 0 ),
     mEncryptChiasmusAction( 0 ),
@@ -404,6 +405,10 @@ KMComposeWin::KMComposeWin( const KMime::Message::Ptr &aMsg, Composer::TemplateC
   mBtnFcc->setFocusPolicy( Qt::NoFocus );
   mBtnTransport->setFocusPolicy( Qt::NoFocus );
   mBtnDictionary->setFocusPolicy( Qt::NoFocus );
+
+  mTranslatorWidget = new MessageViewer::TranslatorWidget(this);
+  connect(mTranslatorWidget,SIGNAL(translatorWasClosed()),this,SLOT(slotTranslatorWasClosed()));
+  mSplitter->addWidget(mTranslatorWidget);
 
   Message::AttachmentModel* attachmentModel = new Message::AttachmentModel( this );
   KMail::AttachmentView *attachmentView = new KMail::AttachmentView( attachmentModel, mSplitter );
@@ -1301,6 +1306,12 @@ void KMComposeWin::setupActions( void )
   action->setIconText( i18n("Spellchecker") );
   actionCollection()->addAction( "setup_spellchecker", action );
   connect( action, SIGNAL(triggered(bool)), SLOT(slotSpellcheckConfig()) );
+
+  mTranslateAction = new KToggleAction( i18n("&Translator"), this );
+  actionCollection()->addAction( "translator", mTranslateAction );
+  mTranslateAction->setChecked(false);
+  connect(mTranslateAction, SIGNAL(triggered(bool)), mTranslatorWidget,SLOT(setVisible(bool) ));
+
 
   if ( Kleo::CryptoBackendFactory::instance()->protocol( "Chiasmus" ) ) {
     KToggleAction *a = new KToggleAction( KIcon( "chiasmus_chi" ), i18n("Encrypt Message with Chiasmus..."), this );
@@ -3302,4 +3313,9 @@ void KMComposeWin::slotLanguageChanged( const QString &language )
 void KMComposeWin::slotFccFolderChanged(const Akonadi::Collection& collection)
 {
   mComposerBase->setFcc( collection );
+}
+
+void KMComposeWin::slotTranslatorWasClosed()
+{
+  mTranslateAction->setChecked(false);
 }
