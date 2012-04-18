@@ -109,7 +109,6 @@ namespace Util {
     void mailingListUnsubscribe( const QSharedPointer<MailCommon::FolderCollection> &fd );
     void mailingListArchives( const QSharedPointer<MailCommon::FolderCollection> &fd );
     void mailingListHelp( const QSharedPointer<MailCommon::FolderCollection> &fd );
-    Akonadi::Collection updatedCollection( const Akonadi::Collection& col );
 
 }
 }
