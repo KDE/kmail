@@ -1310,7 +1310,7 @@ void KMComposeWin::setupActions( void )
   mTranslateAction = new KToggleAction( i18n("&Translator"), this );
   actionCollection()->addAction( "translator", mTranslateAction );
   mTranslateAction->setChecked(false);
-  connect(mTranslateAction, SIGNAL(triggered(bool)), mTranslatorWidget,SLOT(setVisible(bool) ));
+  connect(mTranslateAction, SIGNAL(triggered(bool)), mTranslatorWidget,SLOT(setVisible(bool)));
 
 
   if ( Kleo::CryptoBackendFactory::instance()->protocol( "Chiasmus" ) ) {
