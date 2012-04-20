@@ -3437,7 +3437,7 @@ void KMMainWidget::setupActions()
   mUseAction = new KAction( KIcon("document-new"), i18n("New Message From &Template"), this );
   actionCollection()->addAction("use_template", mUseAction);
   connect(mUseAction, SIGNAL(triggered(bool)), SLOT(slotUseTemplate()));
-  mUseAction->setShortcut(QKeySequence(Qt::Key_N));
+  mUseAction->setShortcut(QKeySequence(Qt::SHIFT + Qt::Key_N));
 
   //----- "Mark Thread" submenu
   mThreadStatusMenu = new KActionMenu(i18n("Mark &Thread"), this);
