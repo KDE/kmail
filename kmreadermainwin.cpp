@@ -138,8 +138,15 @@ void KMReaderMainWin::showMessage( const QString & encoding, const Akonadi::Item
   mReaderWin->setOverrideEncoding( encoding );
   mReaderWin->setMessage( msg, MessageViewer::Viewer::Force );
   KMime::Message::Ptr message = MessageCore::Util::message( msg );
-  if ( message )
-    setCaption( message->subject()->asUnicodeString() );
+  QString caption;
+  if(mParentCollection.isValid()) {
+    caption = MailCommon::Util::fullCollectionPath( mParentCollection );
+    caption += QLatin1String(" - ");
+  }
+  if ( message ) {
+    caption += message->subject()->asUnicodeString();
+    setCaption( caption );
+  }
   mMsg = msg;
   mMsgActions->setCurrentMessage( msg );
 
