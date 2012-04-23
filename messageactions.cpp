@@ -561,6 +561,10 @@ void MessageActions::slotPrintMsg()
   printMessage(false);
 }
 
+void MessageActions::printSelectedText()
+{
+  //TODO
+}
 
 /**
  * This adds a list of actions to mMailingListActionMenu mapping the identifier item to
