@@ -524,11 +524,14 @@ void MessageActions::slotMailingListFilter()
   command->start();
 }
 
-void MessageActions::slotPrintPreviewMsg()
+void MessageActions::printMessage(bool preview)
 {
-  if(mMessageView)
+  if ( mMessageView )
   {
-    mMessageView->viewer()->printPreview();
+    if(preview)
+      mMessageView->viewer()->printPreview();
+    else
+      mMessageView->viewer()->print();
   }
   else
   {
@@ -542,31 +545,20 @@ void MessageActions::slotPrintPreviewMsg()
                           0,
                           false, false,
                           useFixedFont, overrideEncoding );
-    command->setPrintPreview(true);
+    command->setPrintPreview(preview);
     command->start();
   }
+
+}
+
+void MessageActions::slotPrintPreviewMsg()
+{
+  printMessage(true);
 }
 
 void MessageActions::slotPrintMsg()
 {
-  if ( mMessageView )
-  {
-    mMessageView->viewer()->print();
-  }
-  else
-  {
-    const bool useFixedFont = MessageViewer::GlobalSettings::self()->useFixedFont();
-    const QString overrideEncoding = MessageCore::GlobalSettings::self()->overrideCharacterEncoding();
-
-    const Akonadi::Item message = mCurrentItem;
-    KMPrintCommand *command =
-      new KMPrintCommand( mParent, message,
-                          0,
-                          0,
-                          false, false,
-                          useFixedFont, overrideEncoding );
-    command->start();
-  }
+  printMessage(false);
 }
 
 

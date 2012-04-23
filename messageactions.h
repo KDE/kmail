@@ -119,6 +119,7 @@ class MessageActions : public QObject
     void addMailingListAction( const QString &item, const KUrl &url );
     void addMailingListActions( const QString &item, const KUrl::List &list );
     void updateMailingListActions( const Akonadi::Item& messageItem );
+    void printMessage(bool preview);
 
   private slots:
     void updateAnnotateAction(const QUrl& url, const Nepomuk::Resource& resource);
