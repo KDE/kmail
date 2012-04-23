@@ -2591,8 +2591,11 @@ void KMComposeWin::printComposeResult( KJob *job, bool preview )
     command->setPrintPreview( preview );
     command->start();
   } else {
-    // TODO: error reporting to the user
-    kWarning() << "Composer for printing failed:" << composer->errorString();
+    if ( static_cast<KIO::Job*>(job)->ui() ) {
+      static_cast<KIO::Job*>(job)->ui()->showErrorMessage();
+    } else {
+      kWarning() << "Composer for printing failed:" << composer->errorString();
+    }
   }
 
 }
