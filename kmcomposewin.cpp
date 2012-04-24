@@ -2548,30 +2548,28 @@ void KMComposeWin::ignoreStickyFields()
 
 void KMComposeWin::slotPrint()
 {
+  printComposer(false);
+}
+
+void KMComposeWin::slotPrintPreview()
+{
+  printComposer(true);
+}
+
+void KMComposeWin::printComposer(bool preview)
+{
   Message::Composer* composer = createSimpleComposer();
   mMiscComposers.append( composer );
+  composer->setProperty("preview",preview);
   connect( composer, SIGNAL(result(KJob*)),
            this, SLOT(slotPrintComposeResult(KJob*)) );
   composer->start();
 }
 
-void KMComposeWin::slotPrintPreview()
-{
-  Message::Composer* composer = createSimpleComposer();
-  mMiscComposers.append( composer );
-  connect( composer, SIGNAL(result(KJob*)),
-           this, SLOT(slotPrintPreviewComposeResult(KJob*)) );
-  composer->start();
-}
-
-void KMComposeWin::slotPrintPreviewComposeResult( KJob *job )
-{
-  printComposeResult( job, true );
-}
-
 void KMComposeWin::slotPrintComposeResult( KJob *job )
 {
-  printComposeResult( job, false );
+  const bool preview = job->property("preview").toBool();
+  printComposeResult( job, preview );
 }
 
 void KMComposeWin::printComposeResult( KJob *job, bool preview )
