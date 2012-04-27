@@ -462,7 +462,7 @@ namespace KMail {
 
     // "Special transport" combobox and label:
     ++row;
-    mTransportCheck = new QCheckBox( i18n("Special &transport:"), tab );
+    mTransportCheck = new QCheckBox( i18n("Outgoing Account:"), tab );
     glay->addWidget( mTransportCheck, row, 0 );
     mTransportCombo = new TransportComboBox( tab );
     mTransportCombo->setEnabled( false ); // since !mTransportCheck->isChecked()
