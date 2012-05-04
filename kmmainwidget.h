@@ -189,6 +189,7 @@ class KMAIL_EXPORT KMMainWidget : public QWidget
     KMail::FolderShortcutActionManager *folderShortcutActionManager() const {
       return mFolderShortcutActionManager;
     }
+    void savePaneSelection();
 
   public slots:
     // Moving messages around

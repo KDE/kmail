@@ -4606,3 +4606,9 @@ void KMMainWidget::slotServerSideSubscription()
     }
 }
 
+void KMMainWidget::savePaneSelection()
+{
+  if(mMessagePane) {
+    mMessagePane->saveCurrentSelection();
+  }
+}

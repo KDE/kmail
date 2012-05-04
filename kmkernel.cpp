@@ -1926,4 +1926,12 @@ void KMKernel::slotInstanceRemoved(const Akonadi::AgentInstance& instance)
   }
 }
 
+void KMKernel::savePaneSelection()
+{
+  KMMainWidget *widget = getKMMainWidget();
+  if ( widget  ) {
+    widget->savePaneSelection();
+  }
+}
+
 #include "kmkernel.moc"
