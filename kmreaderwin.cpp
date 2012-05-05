@@ -53,6 +53,9 @@ using namespace MessageViewer;
 #include "messageviewer/attachmentstrategy.h"
 #include "messagecomposer/messagesender.h"
 #include "messagecomposer/messagefactory.h"
+#include "messagecomposer/composer.h"
+#include "messagecomposer/textpart.h"
+#include "messagecomposer/infopart.h"
 using MessageComposer::MessageFactory;
 
 #include "messagecore/messagehelpers.h"
@@ -665,7 +668,13 @@ void KMReaderWin::printSelectedText()
   const QString str = mViewer->selectedText();
   if(str.isEmpty())
     return;
-  //TODO
+  Message::Composer* composer = new Message::Composer;
+  composer->textPart()->setCleanPlainText(str);
+  KMime::Message::Ptr messagePtr = message().payload<KMime::Message::Ptr>();
+  composer->infoPart()->setFrom(messagePtr->from()->asUnicodeString());
+  composer->infoPart()->setTo(QStringList()<<messagePtr->to()->asUnicodeString());
+  composer->infoPart()->setCc(QStringList()<<messagePtr->cc()->asUnicodeString());
+  composer->infoPart()->setSubject(messagePtr->subject()->asUnicodeString());
 }
 
 #include "kmreaderwin.moc"
