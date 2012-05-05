@@ -153,6 +153,7 @@ public:
 
   MessageViewer::CSSHelper* cssHelper() const;
 
+  void printSelectedText();
 signals:
   /** Emitted after parsing of a message to have it stored
       in unencrypted state in it's folder. */

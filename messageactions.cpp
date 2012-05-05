@@ -563,7 +563,7 @@ void MessageActions::slotPrintMsg()
 
 void MessageActions::printSelectedText()
 {
-  //TODO
+  mMessageView->printSelectedText();
 }
 
 /**

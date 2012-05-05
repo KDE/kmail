@@ -660,6 +660,14 @@ void KMReaderWin::slotDeleteMessage(const Akonadi::Item& item)
   command->start();
 }
 
+void KMReaderWin::printSelectedText()
+{
+  const QString str = mViewer->selectedText();
+  if(str.isEmpty())
+    return;
+  //TODO
+}
+
 #include "kmreaderwin.moc"
 
 
