@@ -663,19 +663,57 @@ void KMReaderWin::slotDeleteMessage(const Akonadi::Item& item)
   command->start();
 }
 
-void KMReaderWin::printSelectedText()
+bool KMReaderWin::printSelectedText(bool preview)
 {
   const QString str = mViewer->selectedText();
   if(str.isEmpty())
-    return;
+    return false;
   Message::Composer* composer = new Message::Composer;
   composer->textPart()->setCleanPlainText(str);
+  composer->textPart()->setWrappedPlainText(str);
   KMime::Message::Ptr messagePtr = message().payload<KMime::Message::Ptr>();
   composer->infoPart()->setFrom(messagePtr->from()->asUnicodeString());
   composer->infoPart()->setTo(QStringList()<<messagePtr->to()->asUnicodeString());
   composer->infoPart()->setCc(QStringList()<<messagePtr->cc()->asUnicodeString());
   composer->infoPart()->setSubject(messagePtr->subject()->asUnicodeString());
+  composer->setProperty("preview",preview);
+  connect( composer, SIGNAL(result(KJob*)),
+           this, SLOT(slotPrintComposeResult(KJob*)) );
+  composer->start();
+  return true;
 }
+
+void KMReaderWin::slotPrintComposeResult( KJob *job )
+{
+  const bool preview = job->property("preview").toBool();
+  printComposeResult( job, preview );
+}
+
+void KMReaderWin::printComposeResult( KJob *job, bool preview )
+{
+  Q_ASSERT( dynamic_cast< Message::Composer* >( job ) );
+
+  Message::Composer* composer = dynamic_cast< Message::Composer* >( job );
+  if( composer->error() == Message::Composer::NoError ) {
+
+    Q_ASSERT( composer->resultMessages().size() == 1 );
+    Akonadi::Item printItem;
+    printItem.setPayload<KMime::Message::Ptr>( composer->resultMessages().first() );
+    //const bool isHtml = ( mComposerBase->editor()->textMode() == KMeditor::Rich );
+    KMPrintCommand *command = new KMPrintCommand( this, printItem,0,
+                                             0, false, false );
+    command->setPrintPreview( preview );
+    command->start();
+  } else {
+    if ( static_cast<KIO::Job*>(job)->ui() ) {
+      //static_cast<KIO::Job*>(job)->ui()->showErrorMessage();
+    } else {
+      kWarning() << "Composer for printing failed:" << composer->errorString();
+    }
+  }
+
+}
+
 
 #include "kmreaderwin.moc"
 

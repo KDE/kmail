@@ -528,10 +528,16 @@ void MessageActions::printMessage(bool preview)
 {
   if ( mMessageView )
   {
-    if(preview)
-      mMessageView->viewer()->printPreview();
-    else
-      mMessageView->viewer()->print();
+    bool result = false;
+    if(GlobalSettings::self()->printSelectedText()) {
+      result = mMessageView->printSelectedText(preview);
+    }
+    if(!result) {
+      if(preview)
+        mMessageView->viewer()->printPreview();
+      else
+        mMessageView->viewer()->print();
+    }
   }
   else
   {
@@ -559,11 +565,6 @@ void MessageActions::slotPrintPreviewMsg()
 void MessageActions::slotPrintMsg()
 {
   printMessage(false);
-}
-
-void MessageActions::printSelectedText()
-{
-  mMessageView->printSelectedText();
 }
 
 /**

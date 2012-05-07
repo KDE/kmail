@@ -1488,7 +1488,6 @@ KMResendMessageCommand::KMResendMessageCommand( QWidget *parent,
 
 KMCommand::Result KMResendMessageCommand::execute()
 {
-
   Akonadi::Item item = retrievedMessage();
   KMime::Message::Ptr msg = MessageCore::Util::message( item );
   if ( !msg )
@@ -1506,5 +1505,20 @@ KMCommand::Result KMResendMessageCommand::execute()
 
   return OK;
 }
+
+KMPrintSelectedTextCommand::KMPrintSelectedTextCommand(QWidget *parent,
+                                                       const Akonadi::Item &msg, const QString& selection )
+  :KMCommand(parent,msg),mSelection(selection)
+{
+  fetchScope().fetchFullPayload( true );
+}
+
+KMCommand::Result KMPrintSelectedTextCommand::execute()
+{
+  retrievedMessage();
+  //TODO
+  return Failed;
+}
+
 
 #include "kmcommands.moc"

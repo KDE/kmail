@@ -43,6 +43,9 @@
        </property>
       </widget>
      </item>
+     <item row="7" column="1">
+      <widget class="QWidget" name="mOnStartupOpenFolder" native="true"/>
+     </item>
      <item row="2" column="1">
       <widget class="KComboBox" name="mLoopOnGotoUnread">
        <property name="sizePolicy">
@@ -178,8 +181,12 @@ p, li { white-space: pre-wrap; }
        </property>
       </widget>
      </item>
-     <item row="7" column="1">
-      <widget class="QWidget" name="mOnStartupOpenFolder" native="true"/>
+     <item row="9" column="0">
+      <widget class="QCheckBox" name="mPrintEmptySelectedText">
+       <property name="text">
+        <string>Print only selected text</string>
+       </property>
+      </widget>
      </item>
     </layout>
    </item>
@@ -200,14 +207,14 @@ p, li { white-space: pre-wrap; }
  </widget>
  <customwidgets>
   <customwidget>
-   <class>KIntSpinBox</class>
-   <extends>QSpinBox</extends>
-   <header>knuminput.h</header>
-  </customwidget>
-  <customwidget>
    <class>KComboBox</class>
    <extends>QComboBox</extends>
    <header>kcombobox.h</header>
+  </customwidget>
+  <customwidget>
+   <class>KIntSpinBox</class>
+   <extends>QSpinBox</extends>
+   <header>knuminput.h</header>
   </customwidget>
  </customwidgets>
  <resources/>

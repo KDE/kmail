@@ -120,7 +120,6 @@ class MessageActions : public QObject
     void addMailingListActions( const QString &item, const KUrl::List &list );
     void updateMailingListActions( const Akonadi::Item& messageItem );
     void printMessage(bool preview);
-    void printSelectedText();
 
 
   private slots:
