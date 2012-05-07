@@ -191,7 +191,6 @@ protected:
   KUrl urlClicked() const;
   KUrl imageUrlClicked() const;
 
-  void printComposeResult( KJob *job, bool preview );
 private:
   void createActions();
 private:

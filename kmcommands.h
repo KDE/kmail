@@ -575,15 +575,5 @@ private:
   virtual Result execute();
 };
 
-class KMAIL_EXPORT KMPrintSelectedTextCommand: public KMCommand
-{
- Q_OBJECT
-public:
-  KMPrintSelectedTextCommand(QWidget *parent,const Akonadi::Item &msg, const QString& selection );
-private:
-  virtual Result execute();
-private:
-  QString mSelection;
-};
 
 #endif /*KMCommands_h*/

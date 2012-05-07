@@ -56,6 +56,7 @@ using namespace MessageViewer;
 #include "messagecomposer/composer.h"
 #include "messagecomposer/textpart.h"
 #include "messagecomposer/infopart.h"
+#include <KIO/JobUiDelegate>
 using MessageComposer::MessageFactory;
 
 #include "messagecore/messagehelpers.h"
@@ -686,11 +687,6 @@ bool KMReaderWin::printSelectedText(bool preview)
 void KMReaderWin::slotPrintComposeResult( KJob *job )
 {
   const bool preview = job->property("preview").toBool();
-  printComposeResult( job, preview );
-}
-
-void KMReaderWin::printComposeResult( KJob *job, bool preview )
-{
   Q_ASSERT( dynamic_cast< Message::Composer* >( job ) );
 
   Message::Composer* composer = dynamic_cast< Message::Composer* >( job );
@@ -706,7 +702,7 @@ void KMReaderWin::printComposeResult( KJob *job, bool preview )
     command->start();
   } else {
     if ( static_cast<KIO::Job*>(job)->ui() ) {
-      //static_cast<KIO::Job*>(job)->ui()->showErrorMessage();
+      static_cast<KIO::Job*>(job)->ui()->showErrorMessage();
     } else {
       kWarning() << "Composer for printing failed:" << composer->errorString();
     }
