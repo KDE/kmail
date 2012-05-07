@@ -39,7 +39,6 @@
 #include "messageviewer/mailwebview.h"
 #include "messageviewer/markmessagereadhandler.h"
 #include "messageviewer/globalsettings.h"
-
 #include "messageviewer/csshelper.h"
 using MessageViewer::CSSHelper;
 #include "util.h"
@@ -50,6 +49,8 @@ using namespace KMime;
 
 #include "messageviewer/viewer.h"
 using namespace MessageViewer;
+#include <messagecore/globalsettings.h>
+
 #include "messageviewer/attachmentstrategy.h"
 #include "messagecomposer/messagesender.h"
 #include "messagecomposer/messagefactory.h"
@@ -695,9 +696,13 @@ void KMReaderWin::slotPrintComposeResult( KJob *job )
     Q_ASSERT( composer->resultMessages().size() == 1 );
     Akonadi::Item printItem;
     printItem.setPayload<KMime::Message::Ptr>( composer->resultMessages().first() );
+    //FIXME
     //const bool isHtml = ( mComposerBase->editor()->textMode() == KMeditor::Rich );
+    const bool useFixedFont = MessageViewer::GlobalSettings::self()->useFixedFont();
+    const QString overrideEncoding = MessageCore::GlobalSettings::self()->overrideCharacterEncoding();
+
     KMPrintCommand *command = new KMPrintCommand( this, printItem,0,
-                                             0, false, false );
+                                             0, false, false,useFixedFont, overrideEncoding );
     command->setPrintPreview( preview );
     command->start();
   } else {
