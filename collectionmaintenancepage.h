@@ -51,6 +51,7 @@ private:
   QLabel *mCollectionCount;
   QLabel *mCollectionUnread;
   QCheckBox *mIndexingEnabled;
+  QLabel *mLastIndexed;
 };
 
 AKONADI_COLLECTION_PROPERTIES_PAGE_FACTORY( CollectionMaintenancePageFactory, CollectionMaintenancePage )
