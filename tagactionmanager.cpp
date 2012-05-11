@@ -150,6 +150,7 @@ void TagActionManager::createActions()
 
   // Create a action for each tag and plug it into various places
   int i = 0;
+  const int numberOfTag(mTags.count());
   foreach( const Tag::Ptr &tag, mTags ) {
     if ( i< s_numberMaxTag )
       createTagAction( tag,true );
@@ -158,7 +159,7 @@ void TagActionManager::createActions()
       if ( tag->inToolbar || !tag->shortcut.isEmpty() )
         createTagAction( tag, false );
 
-      if ( i == s_numberMaxTag && i < mTags.count() )
+      if ( i == s_numberMaxTag && i < numberOfTag )
       {
         mSeparatorAction = new KAction( this );
         mSeparatorAction->setSeparator( true );

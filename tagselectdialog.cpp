@@ -28,6 +28,9 @@
 
 #include "tagselectdialog.h"
 #include "tag.h"
+
+#include <KListWidgetSearchLine>
+
 #include <Nepomuk/Resource>
 #include <Nepomuk/ResourceManager>
 #include <Nepomuk/Tag>
@@ -52,6 +55,11 @@ TagSelectDialog::TagSelectDialog( QWidget * parent, int numberOfSelectedMessages
   setMainWidget( mainWidget );
 
   mListTag = new QListWidget( this );
+  mListWidgetSearchLine = new KListWidgetSearchLine(this,mListTag);
+  mListWidgetSearchLine->setClickMessage(i18n("Search tag"));
+  mListWidgetSearchLine->setClearButtonShown(true);
+
+  mainLayout->addWidget(mListWidgetSearchLine);
   mainLayout->addWidget( mListTag );
   
   QList<Tag::Ptr> tagList;
@@ -68,12 +76,10 @@ TagSelectDialog::TagSelectDialog( QWidget * parent, int numberOfSelectedMessages
     item->setCheckState( Qt::Unchecked );
     mListTag->addItem( item );
 
-    if ( numberOfSelectedMessages == 1 )
-    {
+    if ( numberOfSelectedMessages == 1 ) {
       const bool hasTag = itemResource.tags().contains(  Nepomuk::Tag( tag->tagName ) );
       item->setCheckState( hasTag ? Qt::Checked : Qt::Unchecked );
-    }
-    else {
+    } else {
       item->setCheckState( Qt::Unchecked );
     }    
   }
