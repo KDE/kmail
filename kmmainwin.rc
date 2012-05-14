@@ -187,6 +187,7 @@
    <Action name="importWizard"/>
    <Separator/>
    <Action name="tools_automatic_archiving"/>
+   <Separator/>
    <Action name="accountWizard"/>
    <Action name="antiSpamWizard"/>
    <Action name="antiVirusWizard"/>
