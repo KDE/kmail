@@ -457,7 +457,7 @@ class KMAIL_EXPORT KMMainWidget : public QWidget
     void slotCollectionChanged( const Akonadi::Collection&, const QSet<QByteArray>& );
     void slotCreateNewTab( bool );
     void slotShowNotification();
-
+    void slotConfigureAutomaticArchiving();
   private:
     void updateHtmlMenuEntry();
 

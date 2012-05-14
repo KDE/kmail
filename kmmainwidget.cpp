@@ -55,6 +55,7 @@
 #include "collectiontemplatespage.h"
 #include "collectionviewpage.h"
 #include "tagselectdialog.h"
+#include "archivemailagentinterface.h"
 
 
 #include "mailcommon/collectiongeneralpage.h"
@@ -3255,6 +3256,12 @@ void KMMainWidget::setupActions()
     connect( action, SIGNAL(triggered(bool)), SLOT(slotEditVacation()) );
   }
 
+  {
+    KAction *action = new KAction(i18n("&Configure Automatic Archiving..."), this);
+    actionCollection()->addAction("tools_automatic_archiving", action );
+    connect(action, SIGNAL(triggered(bool)), SLOT(slotConfigureAutomaticArchiving()));
+  }
+
   // Disable the standard action delete key sortcut.
   KAction* const standardDelAction = akonadiStandardAction(  Akonadi::StandardActionManager::DeleteItems );
   standardDelAction->setShortcut( QKeySequence() );
@@ -4611,4 +4618,10 @@ void KMMainWidget::savePaneSelection()
   if(mMessagePane) {
     mMessagePane->saveCurrentSelection();
   }
+}
+
+void KMMainWidget::slotConfigureAutomaticArchiving()
+{
+  OrgFreedesktopAkonadiArchiveMailAgentInterface archiveMailInterface(QLatin1String("org.freedesktop.Akonadi.ArchiveMailAgent"), QLatin1String("/ArchiveMailAgent"),QDBusConnection::sessionBus(), this);
+  archiveMailInterface.showConfigureDialog();
 }

@@ -2,7 +2,7 @@
      the same menu entries at the same place in KMail and Kontact  -->
 
 <!DOCTYPE kpartgui>
-<kpartgui version="477" name="kmmainwin" >
+<kpartgui version="478" name="kmmainwin" >
  <MenuBar>
   <Menu noMerge="1" name="file" >
    <text>&amp;File</text>
@@ -186,6 +186,7 @@
    <Separator/>
    <Action name="importWizard"/>
    <Separator/>
+   <Action name="tools_automatic_archiving"/>
    <Action name="accountWizard"/>
    <Action name="antiSpamWizard"/>
    <Action name="antiVirusWizard"/>
