@@ -1838,16 +1838,16 @@ void KMMainWidget::slotDelayedRemoveFolder( KJob *job )
 
     Akonadi::CollectionDeleteJob *job = new Akonadi::CollectionDeleteJob( mCurrentFolder->collection() );
     connect( job, SIGNAL(result(KJob*)), this, SLOT(slotDeletionCollectionResult(KJob*)) );
+    mCurrentFolder.clear();
   }
-  mCurrentFolder.clear();
 }
 
 void KMMainWidget::slotDeletionCollectionResult(KJob* job)
 {
   if ( job ) {
-      if(Util::showJobErrorMessage( job )) {
-          return;
-      }
+    if(Util::showJobErrorMessage( job )) {
+      return;
+    }
   }
 }
 
