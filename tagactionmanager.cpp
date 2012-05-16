@@ -23,6 +23,7 @@
 
 #include "messagecore/taglistmonitor.h"
 #include <nepomuk/tag.h>
+#include <Nepomuk/ResourceManager>
 
 #include <KAction>
 #include <KActionCollection>
@@ -54,6 +55,10 @@ TagActionManager::TagActionManager( QObject *parent, KActionCollection *actionCo
   KAction *separator = new KAction( this );
   separator->setSeparator( true );
   mMessageActions->messageStatusMenu()->menu()->addAction( separator );
+  connect( Nepomuk::ResourceManager::instance(), SIGNAL(nepomukSystemStarted()),
+           SLOT(slotNepomukStarted()) );
+  connect( Nepomuk::ResourceManager::instance(), SIGNAL(nepomukSystemStopped()),
+           SLOT(slotNepomukStopped()) );
 
 #if 0
   Nepomuk::ResourceWatcher* watcher = new Nepomuk::ResourceWatcher(this);
@@ -213,6 +218,17 @@ void TagActionManager::tagsChanged()
 {
   mTags.clear(); // re-read the tags
   createActions();
+}
+
+void TagActionManager::slotNepomukStarted()
+{
+  tagsChanged();
+}
+
+void TagActionManager::slotNepomukStopped()
+{
+  mTags.clear();
+  clearActions();
 }
 
 

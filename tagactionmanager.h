@@ -103,10 +103,11 @@ namespace KMail {
        * Emitted when we want to select more action
        */
       void tagMoreActionClicked();
+
     private Q_SLOTS:
-
       void tagsChanged();
-
+      void slotNepomukStarted();
+      void slotNepomukStopped();
     private:
       void createTagAction( const KMail::Tag::Ptr &tag, bool addToMenu );
 
