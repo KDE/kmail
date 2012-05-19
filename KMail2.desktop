@@ -158,3 +158,4 @@ X-DBUS-ServiceName=org.kde.kmail
 X-KDE-ServiceTypes=DBUS/Mailer
 Categories=Qt;KDE;Network;Email;
 MimeType=x-scheme-handler/mailto;
+InitialPreference=10
