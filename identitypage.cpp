@@ -178,6 +178,7 @@ void IdentityPage::slotNewIdentity()
     }
 
     slotModifyIdentity();
+    updateButtons();
   }
 }
 
@@ -235,6 +236,7 @@ void IdentityPage::slotRemoveIdentity()
         mIPage.mIdentityList->currentItem()->setSelected( true );
       }
       refreshList();
+      updateButtons();
     }
   }
 }
@@ -315,11 +317,15 @@ void IdentityPage::refreshList()
 
 void IdentityPage::slotIdentitySelectionChanged()
 {
+  updateButtons();
+}
+
+void IdentityPage::updateButtons()
+{
   IdentityListViewItem *item = 0;
   if ( !mIPage.mIdentityList->selectedItems().isEmpty() ) {
     item = dynamic_cast<IdentityListViewItem*>( mIPage.mIdentityList->selectedItems()[0] );
   }
-
   mIPage.mRemoveButton->setEnabled( item && mIPage.mIdentityList->topLevelItemCount() > 1 );
   mIPage.mModifyButton->setEnabled( item );
   mIPage.mRenameButton->setEnabled( item );

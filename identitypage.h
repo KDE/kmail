@@ -65,7 +65,7 @@ private slots:
 
 private: // methods
   void refreshList();
-
+  void updateButtons();
 private: // data members
   KMail::IdentityDialog   *mIdentityDialog;
   int                      mOldNumberOfIdentities;
