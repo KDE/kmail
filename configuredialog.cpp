@@ -112,6 +112,7 @@ using MailTransport::TransportManagementWidget;
 #include <KColorScheme>
 #include <KComboBox>
 #include <Nepomuk/Tag>
+#include <KCModuleProxy>
 
 // Qt headers:
 #include <QCheckBox>
@@ -3962,6 +3963,9 @@ MiscPage::MiscPage( const KComponentData &instance, QWidget *parent )
 
   mInviteTab = new InviteTab();
   addTab( mInviteTab, i18n("Invitations" ) );
+
+  mProxyTab = new ProxyTab();
+  addTab( mProxyTab, i18n("Proxy" ) );
 }
 
 QString MiscPage::FolderTab::helpAnchor() const
@@ -4072,6 +4076,24 @@ void MiscPage::InviteTab::doResetToDefaultsOther()
 {
   mInvitationUi->doResetToDefaultsOther();
 }
+
+
+MiscPageProxyTab::MiscPageProxyTab( QWidget* parent )
+  : ConfigModuleTab( parent )
+{
+  KCModuleInfo proxyInfo("proxy.desktop");
+  mProxyModule = new KCModuleProxy(proxyInfo, parent);
+  QHBoxLayout *l = new QHBoxLayout( this );
+  l->setContentsMargins( 0 , 0, 0, 0 );
+  l->addWidget( mProxyModule );
+  connect(mProxyModule,SIGNAL(changed(bool)), this, SLOT(slotEmitChanged()));
+}
+
+void MiscPage::ProxyTab::save()
+{
+  mProxyModule->save();
+}
+
 
 //----------------------------
 #include "configuredialog.moc"

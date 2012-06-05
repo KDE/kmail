@@ -55,6 +55,7 @@ class KIconButton;
 class KKeySequenceWidget;
 class KComboBox;
 class ColorListBox;
+class KCModuleProxy;
 
 namespace MessageList {
   namespace Utils {
@@ -858,6 +859,17 @@ private:
   MessageViewer::InvitationSettings *mInvitationUi;
 };
 
+
+class MiscPageProxyTab : public ConfigModuleTab  {
+  Q_OBJECT
+public:
+  MiscPageProxyTab( QWidget * parent=0 );
+  void save();
+private:
+  KCModuleProxy *mProxyModule;
+};
+
+
 class KMAIL_EXPORT MiscPage : public ConfigModuleWithTabs {
   Q_OBJECT
 public:
@@ -866,10 +878,11 @@ public:
 
   typedef MiscPageFolderTab FolderTab;
   typedef MiscPageInviteTab InviteTab;
-
+  typedef MiscPageProxyTab ProxyTab;
 private:
   FolderTab * mFolderTab;
   InviteTab * mInviteTab;
+  ProxyTab * mProxyTab;
 };
 
 #endif // _CONFIGURE_DIALOG_PRIVATE_H_
