@@ -2526,9 +2526,11 @@ void KMMainWidget::slotCheckVacation()
   if ( !kmkernel->askToGoOnline() )
     return;
 
-  Vacation *vac = new Vacation( this, true /* check only */ );
-  connect( vac, SIGNAL(scriptActive(bool)), SLOT(updateVacationScriptStatus(bool)) );
-  connect( vac, SIGNAL(requestEditVacation()), SLOT(slotEditVacation()) );
+  delete mCheckVacation;
+
+  mCheckVacation = new Vacation( this, true /* check only */ );
+  connect( mCheckVacation, SIGNAL(scriptActive(bool)), SLOT(updateVacationScriptStatus(bool)) );
+  connect( mCheckVacation, SIGNAL(requestEditVacation()), SLOT(slotEditVacation()) );
 }
 
 void KMMainWidget::slotEditVacation()

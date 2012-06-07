@@ -611,6 +611,7 @@ private:
     QTimer *mShowBusySplashTimer;
 
     QPointer<KSieveUi::Vacation> mVacation;
+    QPointer<KSieveUi::Vacation> mCheckVacation;
 #if !defined(NDEBUG)
     QPointer<KSieveUi::SieveDebugDialog> mSieveDebugDialog;
 #endif
