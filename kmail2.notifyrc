@@ -70,6 +70,16 @@ Comment[x-test]=xxKMailxx
 Comment[zh_CN]=KMail
 Comment[zh_TW]=KMail 郵件軟體
 
+[Event/akonadi-instance-warning]
+Name=Akonadi server sent a warning
+Comment=Akonadi server sent a warning
+Action=None
+
+[Event/akonadi-instance-error]
+Name=Akonadi server sent an error
+Comment=Akonadi server sent an error
+Action=None
+
 [Event/akonadi-resource-broken]
 Name=A resource is broken
 Name[ca]=Hi ha un recurs trencat

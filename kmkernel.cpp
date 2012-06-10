@@ -207,7 +207,10 @@ KMKernel::KMKernel (QObject *parent, const char *name) :
            this, SLOT(instanceStatusChanged(Akonadi::AgentInstance)) );
 
   connect( Akonadi::AgentManager::self(), SIGNAL(instanceError(Akonadi::AgentInstance,QString)),
-           this, SLOT(instanceError(Akonadi::AgentInstance,QString)) );
+           this, SLOT(slotInstanceError(Akonadi::AgentInstance,QString)) );
+
+  connect( Akonadi::AgentManager::self(), SIGNAL(instanceWarning(Akonadi::AgentInstance,QString)),
+           SLOT(slotInstanceWarning(Akonadi::AgentInstance,QString)) );
 
   connect( Akonadi::AgentManager::self(), SIGNAL(instanceRemoved(Akonadi::AgentInstance)),
            this, SLOT(slotInstanceRemoved(Akonadi::AgentInstance)) );
@@ -1910,9 +1913,42 @@ const QAbstractItemModel* KMKernel::treeviewModelSelection()
     return entityTreeModel();
 }
 
-void KMKernel::instanceError(const Akonadi::AgentInstance& instance, const QString & message)
+void KMKernel::slotInstanceWarning(const Akonadi::AgentInstance&instance , const QString& message)
 {
-  kDebug()<<" instance :"<<instance.identifier()<<" received error :"<<message;
+  const QString summary = i18nc( "<source>: <error message>", "%1: %2", instance.name(), message );
+  if( xmlGuiInstance().isValid() ) {
+    KNotification::event( "akonadi-instance-warning",
+                          summary,
+                          QPixmap(),
+                          0,
+                          KNotification::CloseOnTimeout,
+                          xmlGuiInstance() );
+  } else {
+    KNotification::event( "akonadi-instance-warning",
+                          summary,
+                          QPixmap(),
+                          0,
+                          KNotification::CloseOnTimeout );
+  }
+}
+
+void KMKernel::slotInstanceError(const Akonadi::AgentInstance& instance, const QString & message)
+{
+  const QString summary = i18nc( "<source>: <error message>", "%1: %2", instance.name(), message );
+  if( xmlGuiInstance().isValid() ) {
+    KNotification::event( "akonadi-instance-error",
+                          summary,
+                          QPixmap(),
+                          0,
+                          KNotification::CloseOnTimeout,
+                          xmlGuiInstance() );
+  } else {
+    KNotification::event( "akonadi-instance-error",
+                          summary,
+                          QPixmap(),
+                          0,
+                          KNotification::CloseOnTimeout );
+  }
 }
 
 
