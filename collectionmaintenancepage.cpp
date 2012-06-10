@@ -27,6 +27,7 @@
 
 #include <Soprano/Vocabulary/NAO>
 #include <Nepomuk/Variant>
+#include <Nepomuk/ResourceManager>
 
 #include <QLabel>
 #include <KDialog>
@@ -91,6 +92,9 @@ void CollectionMaintenancePage::init(const Akonadi::Collection & col)
   indexingLayout->addWidget( mIndexingEnabled );
 
   mLastIndexed = new QLabel( i18n( "Still not indexed." ) );
+  if(!Nepomuk::ResourceManager::instance()->initialized())
+    mLastIndexed->hide();
+
   indexingLayout->addWidget( mLastIndexed );
 
   topLayout->addWidget( indexingGroup );
