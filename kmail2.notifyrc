@@ -72,12 +72,36 @@ Comment[zh_TW]=KMail 郵件軟體
 
 [Event/akonadi-instance-warning]
 Name=Akonadi server sent a warning
+Name[et]=Akonadi server saatis hoiatuse
+Name[ia]=Servitor de Akonadi inviava un aviso
+Name[pt]=O servidor do Akonadi emitiu um aviso
+Name[sv]=Akonadi-servern skickade en varning
+Name[uk]=Сервером Akonadi надіслано попередження
+Name[x-test]=xxAkonadi server sent a warningxx
 Comment=Akonadi server sent a warning
+Comment[et]=Akonadi server saatis hoiatuse
+Comment[ia]=Servitor de Akonadi inviava un aviso
+Comment[pt]=O servidor do Akonadi emitiu um aviso
+Comment[sv]=Akonadi-servern skickade en varning
+Comment[uk]=Сервером Akonadi надіслано попередження
+Comment[x-test]=xxAkonadi server sent a warningxx
 Action=None
 
 [Event/akonadi-instance-error]
 Name=Akonadi server sent an error
+Name[et]=Akonadi server saatis vea
+Name[ia]=Servitor de Akonadi inviava un error
+Name[pt]=O servidor do Akonadi emitiu um erro
+Name[sv]=Akonadi-servern skickade ett fel
+Name[uk]=Сервером Akonadi надіслано повідомлення про помилку
+Name[x-test]=xxAkonadi server sent an errorxx
 Comment=Akonadi server sent an error
+Comment[et]=Akonadi server saatis vea
+Comment[ia]=Servitor de Akonadi inviava un error
+Comment[pt]=O servidor do Akonadi emitiu um erro
+Comment[sv]=Akonadi-servern skickade ett fel
+Comment[uk]=Сервером Akonadi надіслано повідомлення про помилку
+Comment[x-test]=xxAkonadi server sent an errorxx
 Action=None
 
 [Event/akonadi-resource-broken]
