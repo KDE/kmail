@@ -80,6 +80,7 @@ Name[pt_BR]=O servidor do Akonadi emitiu um aviso
 Name[sv]=Akonadi-servern skickade en varning
 Name[uk]=Сервером Akonadi надіслано попередження
 Name[x-test]=xxAkonadi server sent a warningxx
+Name[zh_TW]=Akonadi 伺服器送出一個警告
 Comment=Akonadi server sent a warning
 Comment[et]=Akonadi server saatis hoiatuse
 Comment[ia]=Servitor de Akonadi inviava un aviso
@@ -89,6 +90,7 @@ Comment[pt_BR]=O servidor do Akonadi emitiu um aviso
 Comment[sv]=Akonadi-servern skickade en varning
 Comment[uk]=Сервером Akonadi надіслано попередження
 Comment[x-test]=xxAkonadi server sent a warningxx
+Comment[zh_TW]=Akonadi 伺服器送出一個警告
 Action=None
 
 [Event/akonadi-instance-error]
@@ -101,6 +103,7 @@ Name[pt_BR]=O servidor do Akonadi emitiu um erro
 Name[sv]=Akonadi-servern skickade ett fel
 Name[uk]=Сервером Akonadi надіслано повідомлення про помилку
 Name[x-test]=xxAkonadi server sent an errorxx
+Name[zh_TW]=Akonadi 伺服器送出一個錯誤
 Comment=Akonadi server sent an error
 Comment[et]=Akonadi server saatis vea
 Comment[ia]=Servitor de Akonadi inviava un error
@@ -110,6 +113,7 @@ Comment[pt_BR]=O servidor do Akonadi emitiu um erro
 Comment[sv]=Akonadi-servern skickade ett fel
 Comment[uk]=Сервером Akonadi надіслано повідомлення про помилку
 Comment[x-test]=xxAkonadi server sent an errorxx
+Comment[zh_TW]=Akonadi 伺服器送出一個錯誤
 Action=None
 
 [Event/akonadi-resource-broken]
