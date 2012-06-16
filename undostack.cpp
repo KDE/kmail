@@ -145,7 +145,7 @@ UndoStack::folderDestroyed( const Akonadi::Collection &folder)
       it = mStack.erase( it );
     }
     else
-      it++;
+      ++it;
   }
   emit undoStackChanged();
 }
