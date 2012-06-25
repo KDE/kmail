@@ -281,17 +281,17 @@ void KMSystemTray::fillFoldersMenu( QMenu *menu, const QAbstractItemModel *model
   for ( int row = 0; row < rowCount; ++row ) {
     const QModelIndex index = model->index( row, 0, parentIndex );
     const Akonadi::Collection collection = model->data( index, Akonadi::CollectionModel::CollectionRole ).value<Akonadi::Collection>();
-    if ( excludeFolder( collection ) )
-      continue;
-    Akonadi::CollectionStatistics statistics = collection.statistics();
-    const qint64 count = qMax( 0LL, statistics.unreadCount() );
-    if ( count > 0 ) {
-      const QSharedPointer<FolderCollection> col = FolderCollection::forCollection( collection, false );
-      if ( col && col->ignoreNewMail() )
-        continue;
+    qint64 count = 0;
+    if ( !excludeFolder( collection ) ) {
+      Akonadi::CollectionStatistics statistics = collection.statistics();
+      count = qMax( 0LL, statistics.unreadCount() );
+      if ( count > 0 ) {
+        const QSharedPointer<FolderCollection> col = FolderCollection::forCollection( collection, false );
+        if ( col && !col->ignoreNewMail() ) {
+          mCount += count;
+        }
+      }
     }
-    mCount += count;
-
     QString label = parentName.isEmpty() ? QLatin1String("") : QString(parentName + QLatin1String("->"));
     label += model->data( index ).toString();
     label.replace( QLatin1String( "&" ), QLatin1String( "&&" ) );
