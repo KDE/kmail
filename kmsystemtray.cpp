@@ -412,6 +412,10 @@ void KMSystemTray::slotCollectionStatisticsChanged( Akonadi::Collection::Id id,c
 
 bool KMSystemTray::excludeFolder( const Akonadi::Collection& collection ) const
 {
+  if(!collection.contentMimeTypes().contains(KMime::Message::mimeType())) {
+    return true;
+  }
+
   if ( CommonKernel->outboxCollectionFolder() == collection ||
        CommonKernel->sentCollectionFolder() == collection ||
        CommonKernel->templatesCollectionFolder() == collection ||
