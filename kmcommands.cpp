@@ -600,9 +600,15 @@ KMCommand::Result KMEditItemCommand::execute()
   KMail::Composer *win = KMail::makeComposer();
   win->setMsg( msg, false, true );
   win->setFolder( item.parentCollection() );
+
   const MailTransport::TransportAttribute *transportAttribute = item.attribute<MailTransport::TransportAttribute>();
   if ( transportAttribute ) {
     win->setCurrentTransport( transportAttribute->transportId() );
+  } else {
+    int transportId = msg->headerByType( "X-KMail-Transport"  ) ? msg->headerByType( "X-KMail-Transport" )->asUnicodeString().toInt() : -1;
+    if(transportId!=-1) {
+      win->setCurrentTransport( transportId );
+    }
   }
 
   const MailTransport::SentBehaviourAttribute *sentAttribute = item.attribute<MailTransport::SentBehaviourAttribute>();

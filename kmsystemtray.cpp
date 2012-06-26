@@ -329,11 +329,18 @@ void KMSystemTray::hideKMail()
 void KMSystemTray::initListOfCollection()
 {
   mCount = 0;
+  unreadMail( KMKernel::self()->entityTreeModel() );
+
   if ( mMode == GlobalSettings::EnumSystemTrayPolicy::ShowOnUnread ) {
-    setStatus( KStatusNotifierItem::Passive );
+    if(status() == KStatusNotifierItem::Passive && (mCount > 0)) {
+      setStatus( KStatusNotifierItem::Active );
+    } else if( status() == KStatusNotifierItem::Active && (mCount == 0) ) {
+      setStatus( KStatusNotifierItem::Passive );
+    }
   }
 
-  unreadMail( KMKernel::self()->entityTreeModel() );
+  //kDebug()<<" mCount :"<<mCount;
+  updateCount();
 }
 
 void KMSystemTray::unreadMail( const QAbstractItemModel *model, const QModelIndex& parentIndex  )
@@ -343,19 +350,18 @@ void KMSystemTray::unreadMail( const QAbstractItemModel *model, const QModelInde
     const QModelIndex index = model->index( row, 0, parentIndex );
     const Akonadi::Collection collection = model->data( index, Akonadi::CollectionModel::CollectionRole ).value<Akonadi::Collection>();
 
-    if ( excludeFolder( collection ) )
-      continue;
+    if ( !excludeFolder( collection ) ) {
 
-    const Akonadi::CollectionStatistics statistics = collection.statistics();
-    const qint64 count = qMax( 0LL, statistics.unreadCount() );
+      const Akonadi::CollectionStatistics statistics = collection.statistics();
+      const qint64 count = qMax( 0LL, statistics.unreadCount() );
 
-    if ( count > 0 ) {
-      const QSharedPointer<FolderCollection> col = FolderCollection::forCollection( collection, false );
-      if ( col && !col->ignoreNewMail() ) {
-        mCount += count;
+      if ( count > 0 ) {
+        const QSharedPointer<FolderCollection> col = FolderCollection::forCollection( collection, false );
+        if ( col && !col->ignoreNewMail() ) {
+          mCount += count;
+        }
       }
     }
-
     if ( model->rowCount( index ) > 0 ) {
       unreadMail( model, index );
     }
@@ -365,14 +371,6 @@ void KMSystemTray::unreadMail( const QAbstractItemModel *model, const QModelInde
                                   : i18np("1 unread message",
                                           "%1 unread messages",
                                           mCount));
-  // Make sure the icon will be displayed
-  if ( ( mMode == GlobalSettings::EnumSystemTrayPolicy::ShowOnUnread ) &&
-       status() == KStatusNotifierItem::Passive && mCount > 0) {
-    setStatus( KStatusNotifierItem::Active );
-  }
-
-  //kDebug()<<" mCount :"<<mCount;
-  updateCount();
 }
 
 bool KMSystemTray::hasUnreadMail() const
@@ -413,6 +411,12 @@ void KMSystemTray::slotCollectionStatisticsChanged( Akonadi::Collection::Id id,c
 
 bool KMSystemTray::excludeFolder( const Akonadi::Collection& collection ) const
 {
+  if(!collection.isValid()) {
+    return true;
+  }
+  if(!collection.contentMimeTypes().contains(KMime::Message::mimeType())) {
+    return true;
+  }
   if ( CommonKernel->outboxCollectionFolder() == collection ||
        CommonKernel->sentCollectionFolder() == collection ||
        CommonKernel->templatesCollectionFolder() == collection ||
@@ -423,7 +427,6 @@ bool KMSystemTray::excludeFolder( const Akonadi::Collection& collection ) const
 
   if ( MailCommon::Util::isVirtualCollection( collection ) )
     return true;
-  
   return false;
 }
 }
