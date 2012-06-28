@@ -509,7 +509,7 @@ private:
   Solid::Networking::Status mSystemNetworkStatus;
 
   QList<KMail::KMSystemTray*> systemTrayApplets;
-
+  QHash<QString, bool> mResourceCryptoSettingCache;
   MailCommon::FolderCollectionMonitor *mFolderCollectionMonitor;
   Akonadi::EntityTreeModel *mEntityTreeModel;
   Akonadi::EntityMimeTypeFilterModel *mCollectionModel;

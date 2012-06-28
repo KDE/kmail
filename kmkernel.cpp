@@ -1706,27 +1706,32 @@ void KMKernel::instanceStatusChanged( Akonadi::AgentInstance instance )
         emit startCheckMail();
       }
 
-      if ( !mResourcesBeingChecked.contains( instance.identifier() ) ) {
-        mResourcesBeingChecked.append( instance.identifier() );
+      const QString identifier(instance.identifier());
+      if ( !mResourcesBeingChecked.contains( identifier ) ) {
+        mResourcesBeingChecked.append( identifier );
       }
 
       bool useCrypto = false;
-      if ( instance.identifier().contains( IMAP_RESOURCE_IDENTIFIER ) ) {
-        OrgKdeAkonadiImapSettingsInterface *iface = MailCommon::Util::createImapSettingsInterface( instance.identifier() );
-        if ( iface->isValid() ) {
-          const QString imapSafety = iface->safety();
-          useCrypto = ( imapSafety == QLatin1String( "SSL" ) || imapSafety == QLatin1String( "STARTTLS" ) );
+      if(mResourceCryptoSettingCache.contains(identifier)) {
+          useCrypto = mResourceCryptoSettingCache.value(identifier);
+      } else {
+        if ( identifier.contains( IMAP_RESOURCE_IDENTIFIER ) ) {
+            OrgKdeAkonadiImapSettingsInterface *iface = MailCommon::Util::createImapSettingsInterface( identifier );
+            if ( iface->isValid() ) {
+                const QString imapSafety = iface->safety();
+                useCrypto = ( imapSafety == QLatin1String( "SSL" ) || imapSafety == QLatin1String( "STARTTLS" ) );
+                mResourceCryptoSettingCache.insert(identifier,useCrypto);
+            }
+            delete iface;
+        } else if ( identifier.contains( POP3_RESOURCE_IDENTIFIER ) ) {
+            OrgKdeAkonadiPOP3SettingsInterface *iface = MailCommon::Util::createPop3SettingsInterface( identifier );
+            if ( iface->isValid() ) {
+                useCrypto = ( iface->useSSL() || iface->useTLS() );
+                mResourceCryptoSettingCache.insert(identifier,useCrypto);
+            }
+            delete iface;
         }
-        delete iface;
-      }
-      else if ( instance.identifier().contains( POP3_RESOURCE_IDENTIFIER ) ) {
-        OrgKdeAkonadiPOP3SettingsInterface *iface = MailCommon::Util::createPop3SettingsInterface( instance.identifier() );
-        if ( iface->isValid() ) {
-          useCrypto = ( iface->useSSL() || iface->useTLS() );
-        }
-        delete iface;
-      }
-
+     }
 
       
       // Creating a progress item twice is ok, it will simply return the already existing
@@ -1954,11 +1959,15 @@ void KMKernel::slotInstanceError(const Akonadi::AgentInstance& instance, const Q
 
 void KMKernel::slotInstanceRemoved(const Akonadi::AgentInstance& instance)
 {
-  const QString resourceGroup = QString::fromLatin1( "Resource %1" ).arg( instance.identifier() );
+  const QString identifier(instance.identifier());
+  const QString resourceGroup = QString::fromLatin1( "Resource %1" ).arg( identifier );
   if ( KMKernel::config()->hasGroup( resourceGroup ) ) {
     KConfigGroup group( KMKernel::config(), resourceGroup );
     group.deleteGroup();
     group.sync();
+  }
+  if(mResourceCryptoSettingCache.contains(identifier)) {
+    mResourceCryptoSettingCache.remove(identifier);
   }
 }
 
