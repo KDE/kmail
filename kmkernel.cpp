@@ -341,6 +341,18 @@ void KMKernel::setupDBus()
   mMailService = new MailServiceImpl();
 }
 
+static KUrl makeAbsoluteUrl( const QString& str )
+{
+    KUrl url( str );
+    if ( url.protocol().isEmpty() ) {
+      const QString newUrl = KCmdLineArgs::cwd() + '/' + url.fileName();
+      return KUrl( newUrl );
+    }
+    else {
+      return url;
+    }
+}
+
 bool KMKernel::handleCommandLine( bool noArgsOpensReader )
 {
   QString to, cc, bcc, subj, body;
@@ -403,14 +415,7 @@ bool KMKernel::handleCommandLine( bool noArgsOpensReader )
     for ( QStringList::ConstIterator it = attachList.constBegin();
           it != end; ++it ) {
       if ( !(*it).isEmpty() ) {
-        KUrl url( *it );
-        if ( url.protocol().isEmpty() ) {
-          const QString newUrl = QDir::currentPath () + QDir::separator () + url.fileName();
-          attachURLs.append( KUrl( newUrl ) );
-        }
-        else {
-          attachURLs.append( url );
-        }
+        attachURLs.append( makeAbsoluteUrl( *it ) );
       }
     }
   }
@@ -452,6 +457,10 @@ bool KMKernel::handleCommandLine( bool noArgsOpensReader )
           body = values.value( "body" );
         if ( !values.value( "in-reply-to" ).isEmpty() )
           customHeaders << "In-Reply-To:" + values.value( "in-reply-to" );
+        const QString attach = values.value( "attachment" );
+        if ( !attach.isEmpty() ) {
+            attachURLs << makeAbsoluteUrl( attach );
+        }
       }
       else {
         QString tmpArg = args->arg(i);
