@@ -461,7 +461,9 @@ class KMAIL_EXPORT KMMainWidget : public QWidget
   private:
     void updateHtmlMenuEntry();
 
-    void updateMoveAction( int statistics );
+    void updateMoveAction( const Akonadi::CollectionStatistics& statistic );
+    void updateMoveAction( bool hasUnreadMails, bool hasMails );
+
     void updateAllToTrashAction(int statistics);
 
     void showNotifications();
