@@ -71,7 +71,7 @@ MessageActions::MessageActions( KActionCollection *ac, QWidget* parent ) :
     mMessageView( 0 ),
     mRedirectAction( 0 ),
     mPrintPreviewAction( 0 ),
-    mAsynNepomukRetriever( new MessageCore::AsyncNepomukResourceRetriever( this ) ),
+    mAsynNepomukRetriever( new MessageCore::AsyncNepomukResourceRetriever( QVector<QUrl>() << Nepomuk::Resource::descriptionUri() << Nepomuk::Resource::annotationUri(), this ) ),
     mCustomTemplatesMenu( 0 )
 {
   mReplyActionMenu = new KActionMenu( KIcon("mail-reply-sender"), i18nc("Message->","&Reply"), this );
@@ -313,7 +313,7 @@ void MessageActions::updateActions()
   if ( Nepomuk::ResourceManager::instance()->initialized() )
   {
     mAnnotateAction->setEnabled( uniqItem );
-    mAsynNepomukRetriever->requestResource( mCurrentItem.url(), QVector<QUrl>() << Nepomuk::Resource::descriptionUri() << Nepomuk::Resource::annotationUri() );
+    mAsynNepomukRetriever->requestResource( mCurrentItem.url() );
   }
   else
   {
@@ -324,7 +324,7 @@ void MessageActions::updateActions()
 
   if ( mCurrentItem.hasPayload<KMime::Message::Ptr>() ) {
     if ( mCurrentItem.loadedPayloadParts().contains("RFC822") ) {
-      updateMailingListActions( mCurrentItem );      
+      updateMailingListActions( mCurrentItem );
     } else
     {
       Akonadi::ItemFetchJob *job = new Akonadi::ItemFetchJob( mCurrentItem );
@@ -635,7 +635,7 @@ void MessageActions::annotateMessage()
   MessageCore::AnnotationEditDialog *dialog = new MessageCore::AnnotationEditDialog( url );
   dialog->setAttribute( Qt::WA_DeleteOnClose );
   if ( dialog->exec() )
-    mAsynNepomukRetriever->requestResource( url, QVector<QUrl>() << Nepomuk::Resource::descriptionUri() << Nepomuk::Resource::annotationUri() );
+    mAsynNepomukRetriever->requestResource( url );
 }
 
 void MessageActions::updateAnnotateAction( const QUrl &url, const Nepomuk::Resource &resource )
