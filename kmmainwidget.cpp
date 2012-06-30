@@ -1272,17 +1272,22 @@ void KMMainWidget::createWidgets()
 
 }
 
-void KMMainWidget::updateMoveAction( int statistics )
+void KMMainWidget::updateMoveAction( const Akonadi::CollectionStatistics& statistic )
 {
-  const bool mails = statistics > 0;
-  const bool enable_goto_unread = mails
+  const bool hasUnreadMails = (statistic.unreadCount() > 0);
+  const bool hasMails = (statistic.count()>0);
+  updateMoveAction(hasUnreadMails,hasMails);
+}
+
+void KMMainWidget::updateMoveAction( bool hasUnreadMails, bool hasMails )
+{
+  const bool enable_goto_unread = hasUnreadMails
     || (GlobalSettings::self()->loopOnGotoUnread() == GlobalSettings::EnumLoopOnGotoUnread::LoopInAllFolders)
     || (GlobalSettings::self()->loopOnGotoUnread() == GlobalSettings::EnumLoopOnGotoUnread::LoopInAllMarkedFolders);
-  actionCollection()->action( "go_next_message" )->setEnabled( mails );
+  actionCollection()->action( "go_next_message" )->setEnabled( hasMails );
   actionCollection()->action( "go_next_unread_message" )->setEnabled( enable_goto_unread );
-  actionCollection()->action( "go_prev_message" )->setEnabled( mails );
+  actionCollection()->action( "go_prev_message" )->setEnabled( hasMails );
   actionCollection()->action( "go_prev_unread_message" )->setEnabled( enable_goto_unread );
-
 }
 
 void KMMainWidget::updateAllToTrashAction(int statistics)
@@ -1307,7 +1312,7 @@ void KMMainWidget::slotCollectionStatisticsChanged( const Akonadi::Collection::I
     actionCollection()->action( "send_queued" )->setEnabled( nbMsgOutboxCollection > 0 );
     actionCollection()->action( "send_queued_via" )->setEnabled( nbMsgOutboxCollection > 0 );
   } else if ( mCurrentFolder && ( id == mCurrentFolder->collection().id() ) ) {
-    updateMoveAction( statistic.count() );
+    updateMoveAction( statistic );
     updateAllToTrashAction(statistic.count());
   }
 }
@@ -3977,7 +3982,11 @@ void KMMainWidget::updateMessageActionsDelayed()
 
   mSaveAsAction->setEnabled( mass_actions );
 
-  updateMoveAction( (mCurrentFolder&& mCurrentFolder->isValid()) ? mCurrentFolder->statistics().count() : 0 );
+  if((mCurrentFolder&& mCurrentFolder->isValid()))
+    updateMoveAction( mCurrentFolder->statistics() );
+  else {
+    updateMoveAction(false,false);
+  }
 
   const qint64 nbMsgOutboxCollection = MailCommon::Util::updatedCollection( CommonKernel->outboxCollectionFolder() ).statistics().count();
   
