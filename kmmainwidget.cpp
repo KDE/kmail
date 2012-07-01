@@ -1314,6 +1314,7 @@ void KMMainWidget::slotCollectionStatisticsChanged( const Akonadi::Collection::I
   } else if ( mCurrentFolder && ( id == mCurrentFolder->collection().id() ) ) {
     updateMoveAction( statistic );
     updateAllToTrashAction(statistic.count());
+    mCurrentFolder->setCollection(MailCommon::Util::updatedCollection( mCurrentFolder->collection() ));
   }
 }
 
@@ -3982,8 +3983,9 @@ void KMMainWidget::updateMessageActionsDelayed()
 
   mSaveAsAction->setEnabled( mass_actions );
 
-  if((mCurrentFolder&& mCurrentFolder->isValid()))
+  if((mCurrentFolder&& mCurrentFolder->isValid())) {
     updateMoveAction( mCurrentFolder->statistics() );
+  }
   else {
     updateMoveAction(false,false);
   }
