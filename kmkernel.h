@@ -328,7 +328,7 @@ public:
                const KUrl &messageFile, const KUrl::List &attach,
                const QStringList &customHeaders );
 
-  bool isImapFolder( const Akonadi::Collection& ) const;
+  bool isImapFolder(const Akonadi::Collection& , bool &isOnline) const;
 
   //sets online status for akonadi accounts. true for online, false for offline
   void setAccountStatus(bool);

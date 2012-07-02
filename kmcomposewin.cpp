@@ -2604,12 +2604,10 @@ void KMComposeWin::doSend( MessageSender::SendMethod method,
                            MessageSender::SaveIn saveIn )
 {
   // TODO integrate with MDA online status
-  if ( method != MessageSender::SendLater && KMKernel::self()->isOffline() ) {
-    KMessageBox::information( this,
-                              i18n("KMail is currently in offline mode. "
-                                   "Your messages will be kept in the outbox until you go online."),
-                              i18n("Online/Offline"), "kmailIsOffline" );
-    method = MessageSender::SendLater;
+  if ( method == MessageSender::SendImmediate ) {
+    if( !Message::Util::sendMailDispatcherIsOnline() ) {
+      method = MessageSender::SendLater;
+    }
   }
 
   if ( saveIn == MessageSender::SaveInNone ) { // don't save as draft or template, send immediately
