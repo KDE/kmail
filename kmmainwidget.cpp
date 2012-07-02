@@ -547,7 +547,7 @@ void KMMainWidget::folderSelected( const Akonadi::Collection & col )
   const bool isNewImapFolder = col.isValid() && folderIsAnImap && newFolder;
   if( ( !mCurrentFolder  )
       || ( !isNewImapFolder && mShowBusySplashTimer )
-      || ( newFolder && mShowingOfflineScreen && !( isNewImapFolder && isImapResourceOnline ) ) ) {
+      || ( newFolder && mShowingOfflineScreen && !( isNewImapFolder && !isImapResourceOnline ) ) ) {
     if ( mMsgView ) {
       mMsgView->viewer()->enableMessageDisplay();
       mMsgView->clear( true );
@@ -572,7 +572,7 @@ void KMMainWidget::folderSelected( const Akonadi::Collection & col )
        && ( !mMessageListView->isFolderOpen( mFolder ) )
 #endif
        ) {
-    if ( isImapResourceOnline )
+    if ( !isImapResourceOnline )
     {
         //mMessageListView->setCurrentFolder( 0 ); <-- useless in the new view: just do nothing
         // FIXME: Use an "offline tab" ?
