@@ -1524,10 +1524,6 @@ void KMMainWidget::slotCheckOneAccount( QAction* item )
     return;
   }
 
-  if ( !kmkernel->askToGoOnline() ) {
-    return;
-  }
-
   Akonadi::AgentInstance agent = Akonadi::AgentManager::self()->instance( item->data().toString() );
   if ( agent.isValid() ) {
     if ( !agent.isOnline() ) {
@@ -2677,10 +2673,6 @@ void KMMainWidget::slotUpdateOnlineStatus( GlobalSettings::EnumNetworkState::typ
 //-----------------------------------------------------------------------------
 void KMMainWidget::slotSendQueued()
 {
-  if ( !kmkernel->askToGoOnline() ) {
-    return;
-  }
-
   if ( kmkernel->msgSender() ) {
     kmkernel->msgSender()->sendQueued();
   }
@@ -2689,10 +2681,6 @@ void KMMainWidget::slotSendQueued()
 //-----------------------------------------------------------------------------
 void KMMainWidget::slotSendQueuedVia( QAction *item )
 {
-  if ( !kmkernel->askToGoOnline() ) {
-    return;
-  }
-
   const QStringList availTransports = MailTransport::TransportManager::self()->transportNames();
   if ( !availTransports.isEmpty() && availTransports.contains( item->text() ) ) {
     if ( kmkernel->msgSender() ) {
