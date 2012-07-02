@@ -64,8 +64,9 @@ bool CollectionStorageModel::isOutBoundFolder( const Akonadi::Collection& c ) co
     const KPIMIdentities::Identity & identity =
       kmkernel->identityManager()->identityForUoidOrDefault( fd->identity() );
 
+    bool isOnline = false;
     if ( CommonKernel->isSystemFolderCollection(c) &&
-         !kmkernel->isImapFolder( c ) ) {
+         !kmkernel->isImapFolder( c, isOnline ) ) {
       // local system folders
       if ( c == CommonKernel->inboxCollectionFolder() ||
            c == CommonKernel->trashCollectionFolder() )

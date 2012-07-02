@@ -542,10 +542,12 @@ void KMMainWidget::folderSelected( const Akonadi::Collection & col )
   // when the new folder is also an IMAP folder, because that's an
   // async operation and we don't want flicker if it results in just
   // a new splash.
-  const bool isNewImapFolder = col.isValid() && KMKernel::self()->isImapFolder( col ) && newFolder;
+  bool isImapResourceOnline = false;
+  bool folderIsAnImap = KMKernel::self()->isImapFolder( col, isImapResourceOnline );
+  const bool isNewImapFolder = col.isValid() && folderIsAnImap && newFolder;
   if( ( !mCurrentFolder  )
       || ( !isNewImapFolder && mShowBusySplashTimer )
-      || ( newFolder && mShowingOfflineScreen && !( isNewImapFolder && kmkernel->isOffline() ) ) ) {
+      || ( newFolder && mShowingOfflineScreen && !( isNewImapFolder && isImapResourceOnline ) ) ) {
     if ( mMsgView ) {
       mMsgView->viewer()->enableMessageDisplay();
       mMsgView->clear( true );
@@ -565,18 +567,18 @@ void KMMainWidget::folderSelected( const Akonadi::Collection & col )
 
   mCurrentFolder = FolderCollection::forCollection( col );
 
-  if ( col.isValid() && kmkernel->isImapFolder( col )
+  if ( col.isValid() && folderIsAnImap
 #if 0 //PORT TO AKONADI
        && ( !mMessageListView->isFolderOpen( mFolder ) )
 #endif
        ) {
-    if ( kmkernel->isOffline() )
-      {
+    if ( isImapResourceOnline )
+    {
         //mMessageListView->setCurrentFolder( 0 ); <-- useless in the new view: just do nothing
         // FIXME: Use an "offline tab" ?
         showOfflinePage();
         return;
-      }
+    }
   }
 
   readFolderConfig();
@@ -4159,8 +4161,12 @@ void KMMainWidget::updateFolderMenu()
   mShowFolderShortcutDialogAction->setEnabled( !multiFolder && folderWithContent );
 
   actionlist << akonadiStandardAction( Akonadi::StandardActionManager::ManageLocalSubscriptions );
-  if(mCurrentFolder && kmkernel->isImapFolder( mCurrentFolder->collection() ))
-      actionlist << mServerSideSubscription;
+  bool imapFolderIsOnline = false;
+  if(mCurrentFolder && kmkernel->isImapFolder( mCurrentFolder->collection(),imapFolderIsOnline )) {
+    if(imapFolderIsOnline) {
+      actionlist << mServerSideSubscription; 
+    }
+  }
 
   mGUIClient->unplugActionList( QLatin1String( "collectionview_actionlist" ) );
   mGUIClient->plugActionList( QLatin1String( "collectionview_actionlist" ), actionlist );
@@ -4590,7 +4596,8 @@ void KMMainWidget::slotServerSideSubscription()
 {
     if ( !mCurrentFolder )
         return;
-    if( kmkernel->isImapFolder( mCurrentFolder->collection() ) ) {
+    bool isImapOnline = false;
+    if( kmkernel->isImapFolder( mCurrentFolder->collection(), isImapOnline ) ) {
         QDBusInterface *iface  = new QDBusInterface(
                     QLatin1String( "org.freedesktop.Akonadi.Resource.")+mCurrentFolder->collection().resource(),
                     QLatin1String( "/" ), QLatin1String( "org.kde.Akonadi.Imap.Resource" ),
