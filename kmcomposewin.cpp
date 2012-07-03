@@ -2694,14 +2694,17 @@ void KMComposeWin::slotDoDelayedSend( KJob *job )
 {
   if ( job->error() ) {
     KMessageBox::error( this, job->errorText() );
+    setEnabled(true);
     return;
   }
 
   const AddressValidationJob *validateJob = qobject_cast<AddressValidationJob*>( job );
 
   // Abort sending if one of the recipient addresses is invalid ...
-  if ( !validateJob->isValid() )
+  if ( !validateJob->isValid() ) {
+    setEnabled(true);
     return;
+  }
 
   // ... otherwise continue as usual
   const MessageSender::SendMethod method = static_cast<MessageSender::SendMethod>( job->property( "method" ).toInt() );
