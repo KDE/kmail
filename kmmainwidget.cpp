@@ -4264,7 +4264,7 @@ void KMMainWidget::initializeFilterActions()
       if ( action( normalizedName.toUtf8() ) ) {
         continue;
       }
-      KMMetaFilterActionCommand *filterCommand = new KMMetaFilterActionCommand( filter->identifier(), filter->requiresBody(), this );
+      KMMetaFilterActionCommand *filterCommand = new KMMetaFilterActionCommand( filter->identifier(), filter->requiredPart(), this );
       mFilterCommands.append( filterCommand );
       QString displayText = i18n( "Filter %1", filter->name() );
       QString icon = filter->icon();

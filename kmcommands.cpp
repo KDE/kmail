@@ -1228,8 +1228,9 @@ KMCommand::Result KMFilterCommand::execute()
 
 KMFilterActionCommand::KMFilterActionCommand( QWidget *parent,
                                               const QVector<qlonglong> &msgListId,
-                                              const QString &filterId, bool requireBody )
-    : KMCommand( parent ), mMsgListId(msgListId), mFilterId( filterId  ), mRequireBody(requireBody)
+                                              const QString &filterId,
+                                              MailCommon::SearchRule::RequiredPart requiredPart )
+    : KMCommand( parent ), mMsgListId(msgListId), mFilterId( filterId  ), mRequiredPart(requiredPart)
 {
 }
 
@@ -1239,11 +1240,6 @@ KMCommand::Result KMFilterActionCommand::execute()
   MessageViewer::KCursorSaver busy( MessageViewer::KBusyPtr::busy() );
 #endif
   int msgCount = 0;
-  MailCommon::FilterManager::FilterRequires filterrequires = MailCommon::FilterManager::Unknown;
-  if( mRequireBody )
-      filterrequires = MailCommon::FilterManager::FullMessage;
-  else
-      filterrequires = MailCommon::FilterManager::HeaderMessage;
   const int msgCountToFilter = mMsgListId.count();
   ProgressItem* progressItem =
      ProgressManager::createProgressItem (
@@ -1262,7 +1258,7 @@ KMCommand::Result KMFilterActionCommand::execute()
     }
 
 
-    MailCommon::FilterManager::instance()->filter( id, mFilterId,filterrequires );
+    MailCommon::FilterManager::instance()->filter( id, mFilterId, mRequiredPart );
     progressItem->incCompletedItems();
   }
 
@@ -1272,17 +1268,17 @@ KMCommand::Result KMFilterActionCommand::execute()
 }
 
 
-KMMetaFilterActionCommand::KMMetaFilterActionCommand( const QString &filterId, bool requireBody,
+KMMetaFilterActionCommand::KMMetaFilterActionCommand( const QString &filterId, SearchRule::RequiredPart requiredPart,
                                                       KMMainWidget *main )
     : QObject( main ),
-      mFilterId( filterId ), mRequireBody(requireBody), mMainWidget( main )
+      mFilterId( filterId ), mRequiredPart(requiredPart), mMainWidget( main )
 {
 }
 
 void KMMetaFilterActionCommand::start()
 {
   KMCommand *filterCommand = new KMFilterActionCommand(
-      mMainWidget, mMainWidget->messageListPane()->selectionAsMessageItemListId() , mFilterId, mRequireBody );
+      mMainWidget, mMainWidget->messageListPane()->selectionAsMessageItemListId() , mFilterId, mRequiredPart );
   filterCommand->start();
 }
 
