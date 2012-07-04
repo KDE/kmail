@@ -4,19 +4,21 @@
 #define KMCommands_h
 
 #include "kmail_export.h"
-#include <kmime/kmime_message.h>
 #include "messagecomposer/messagefactory.h"
+#include "messagelist/core/view.h"
+#include "searchpattern.h"
 
 #include <akonadi/kmime/messagestatus.h>
-#include <messagelist/core/view.h>
-using Akonadi::MessageStatus;
 #include <kio/job.h>
+#include <kmime/kmime_message.h>
 
 #include <QPointer>
 #include <QList>
 #include <akonadi/item.h>
 #include <akonadi/itemfetchscope.h>
 #include <akonadi/collection.h>
+
+using Akonadi::MessageStatus;
 
 class KProgressDialog;
 class KMMainWidget;
@@ -463,13 +465,14 @@ class KMAIL_EXPORT KMFilterActionCommand : public KMCommand
 
 public:
   KMFilterActionCommand(QWidget *parent,
-                         const QVector<qlonglong> &msgListId, const QString &filterId , bool requireBody);
+                         const QVector<qlonglong> &msgListId, const QString &filterId,
+                        MailCommon::SearchRule::RequiredPart requiredPart);
 
 private:
   virtual Result execute();
   QVector<qlonglong> mMsgListId;
   QString mFilterId;
-  bool mRequireBody;
+  MailCommon::SearchRule::RequiredPart mRequiredPart;
 };
 
 
@@ -478,14 +481,14 @@ class KMAIL_EXPORT KMMetaFilterActionCommand : public QObject
   Q_OBJECT
 
 public:
-  KMMetaFilterActionCommand( const QString &filterId, bool requireBody, KMMainWidget *main );
+  KMMetaFilterActionCommand( const QString &filterId, MailCommon::SearchRule::RequiredPart requiredPart, KMMainWidget *main );
 
 public slots:
   void start();
 
 private:
   QString mFilterId;
-  bool mRequireBody;
+  MailCommon::SearchRule::RequiredPart mRequiredPart;
   KMMainWidget *mMainWidget;
 };
 
