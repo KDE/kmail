@@ -956,7 +956,10 @@ void KMKernel::setAccountStatus(bool goOnline)
     }
   }
   if ( goOnline &&  MessageComposer::MessageComposerSettings::self()->sendImmediate() ) {
-    kmkernel->msgSender()->sendQueued();
+    const qint64 nbMsgOutboxCollection = MailCommon::Util::updatedCollection( CommonKernel->outboxCollectionFolder() ).statistics().count();
+    if(nbMsgOutboxCollection > 0) {
+      kmkernel->msgSender()->sendQueued();
+    }
   }
 }
 
