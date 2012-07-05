@@ -1230,7 +1230,7 @@ KMFilterActionCommand::KMFilterActionCommand( QWidget *parent,
                                               const QVector<qlonglong> &msgListId,
                                               const QString &filterId,
                                               MailCommon::SearchRule::RequiredPart requiredPart )
-    : KMCommand( parent ), mMsgListId(msgListId), mFilterId( filterId  ), mRequiredPart(requiredPart)
+    : KMCommand( parent ), mMsgListId(msgListId), mFilterId( filterId  ), mRequiredPart( requiredPart )
 {
 }
 
@@ -1271,7 +1271,7 @@ KMCommand::Result KMFilterActionCommand::execute()
 KMMetaFilterActionCommand::KMMetaFilterActionCommand( const QString &filterId, SearchRule::RequiredPart requiredPart,
                                                       KMMainWidget *main )
     : QObject( main ),
-      mFilterId( filterId ), mRequiredPart(requiredPart), mMainWidget( main )
+      mFilterId( filterId ), mRequiredPart( requiredPart ), mMainWidget( main )
 {
 }
 
