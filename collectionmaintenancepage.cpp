@@ -133,7 +133,10 @@ void CollectionMaintenancePage::save(Collection &collection )
   if ( !collection.hasAttribute<Akonadi::IndexPolicyAttribute>() && mIndexingEnabled->isChecked() )
     return;
   Akonadi::IndexPolicyAttribute *attr = collection.attribute<Akonadi::IndexPolicyAttribute>( Akonadi::Collection::AddIfMissing );
-  attr->setIndexingEnabled( mIndexingEnabled->isChecked() );
+  if( mIndexingEnabled->isChecked() )
+    attr->setIndexingEnabled( true );
+  else
+    collection.removeAttribute<Akonadi::IndexPolicyAttribute>();
 }
 
 void CollectionMaintenancePage::updateCollectionStatistic(Akonadi::Collection::Id id, const Akonadi::CollectionStatistics& statistic)
