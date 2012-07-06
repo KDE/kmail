@@ -108,13 +108,18 @@ void CollectionMaintenancePage::load(const Collection & col)
   if ( col.isValid() ) {
     updateLabel( col.statistics().count(), col.statistics().unreadCount(), col.statistics().size() );
     Akonadi::IndexPolicyAttribute *attr = col.attribute<Akonadi::IndexPolicyAttribute>();
-    mIndexingEnabled->setChecked( !attr || attr->indexingEnabled() );
-    KUrl url = col.url( Akonadi::Collection::UrlShort );
-    if(!url.isEmpty()) {
-      const Nepomuk::Resource parentResource( url );
-      const QDateTime dt = parentResource.property( Soprano::Vocabulary::NAO::lastModified() ).toDateTime();
-      if(dt.isValid()) {
-        mLastIndexed->setText(i18n("Folder was indexed: %1",KGlobal::locale()->formatDate(dt.date())));
+    const bool indexingWasEnabled(!attr || attr->indexingEnabled());
+    mIndexingEnabled->setChecked( indexingWasEnabled );
+    if(!indexingWasEnabled)
+      mLastIndexed->hide();
+    else {
+      KUrl url = col.url( Akonadi::Collection::UrlShort );
+      if(!url.isEmpty()) {
+        const Nepomuk::Resource parentResource( url );
+        const QDateTime dt = parentResource.property( Soprano::Vocabulary::NAO::lastModified() ).toDateTime();
+        if(dt.isValid()) {
+          mLastIndexed->setText(i18n("Folder was indexed: %1",KGlobal::locale()->formatDate(dt.date())));
+        }
       }
     }
   }
@@ -133,10 +138,7 @@ void CollectionMaintenancePage::save(Collection &collection )
   if ( !collection.hasAttribute<Akonadi::IndexPolicyAttribute>() && mIndexingEnabled->isChecked() )
     return;
   Akonadi::IndexPolicyAttribute *attr = collection.attribute<Akonadi::IndexPolicyAttribute>( Akonadi::Collection::AddIfMissing );
-  if( mIndexingEnabled->isChecked() )
-    attr->setIndexingEnabled( true );
-  else
-    collection.removeAttribute<Akonadi::IndexPolicyAttribute>();
+  attr->setIndexingEnabled( mIndexingEnabled->isChecked() );
 }
 
 void CollectionMaintenancePage::updateCollectionStatistic(Akonadi::Collection::Id id, const Akonadi::CollectionStatistics& statistic)
