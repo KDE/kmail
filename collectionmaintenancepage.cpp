@@ -28,6 +28,7 @@
 #include <Soprano/Vocabulary/NAO>
 #include <Nepomuk2/Variant>
 #include <Nepomuk2/ResourceManager>
+#include <nepomuk2/datamanagement.h>
 
 #include <QLabel>
 #include <KDialog>
@@ -135,8 +136,10 @@ void CollectionMaintenancePage::save(Collection &collection )
   Akonadi::IndexPolicyAttribute *attr = collection.attribute<Akonadi::IndexPolicyAttribute>( Akonadi::Collection::AddIfMissing );
   if( mIndexingEnabled->isChecked() )
     attr->setIndexingEnabled( true );
-  else
+  else {
     collection.removeAttribute<Akonadi::IndexPolicyAttribute>();
+    Nepomuk2::removeResources( QList <QUrl>() << collection.url() );
+  }
 }
 
 void CollectionMaintenancePage::updateCollectionStatistic(Akonadi::Collection::Id id, const Akonadi::CollectionStatistics& statistic)
