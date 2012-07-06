@@ -534,10 +534,7 @@ class KMComposeWin : public KMail::Composer
      */
     void setSigning( bool sign, bool setByUser = false );
 
-    /**
-      Returns true if the user forgot to attach something.
-    */
-    bool userForgotAttachment();
+    Message::ComposerViewBase::MissingAttachment userForgotAttachment();
 
     /**
      * Decrypt an OpenPGP block or strip off the OpenPGP envelope of a text
