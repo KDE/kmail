@@ -164,7 +164,7 @@
 #include <kaction.h>
 #include <ktreewidgetsearchline.h>
 #include <Solid/Networking>
-#include <nepomuk/resourcemanager.h>
+#include <nepomuk2/resourcemanager.h>
 
 // Qt includes
 #include <QByteArray>
@@ -1428,7 +1428,7 @@ void KMMainWidget::slotFocusQuickSearch()
 bool KMMainWidget::slotSearch()
 {
   // check if we can search at all, ie. Nepomuk is running and email indexing is enabled
-  if ( !Nepomuk::ResourceManager::instance()->initialized() ) {
+  if ( !Nepomuk2::ResourceManager::instance()->initialized() ) {
     KMessageBox::information( this, i18n( "The Nepomuk semantic search service is not available. Searching is not possible without it. "
                                           "You can enable it in \"System Settings\"." ), i18n( "Search Not Available" ) );
     return false;

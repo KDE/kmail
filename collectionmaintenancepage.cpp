@@ -26,8 +26,8 @@
 #include <Akonadi/ChangeRecorder>
 
 #include <Soprano/Vocabulary/NAO>
-#include <Nepomuk/Variant>
-#include <Nepomuk/ResourceManager>
+#include <Nepomuk2/Variant>
+#include <Nepomuk2/ResourceManager>
 
 #include <QLabel>
 #include <KDialog>
@@ -92,7 +92,7 @@ void CollectionMaintenancePage::init(const Akonadi::Collection & col)
   indexingLayout->addWidget( mIndexingEnabled );
 
   mLastIndexed = new QLabel( i18n( "Still not indexed." ) );
-  if(!Nepomuk::ResourceManager::instance()->initialized())
+  if(!Nepomuk2::ResourceManager::instance()->initialized())
     mLastIndexed->hide();
 
   indexingLayout->addWidget( mLastIndexed );
@@ -111,7 +111,7 @@ void CollectionMaintenancePage::load(const Collection & col)
     mIndexingEnabled->setChecked( !attr || attr->indexingEnabled() );
     KUrl url = col.url( Akonadi::Collection::UrlShort );
     if(!url.isEmpty()) {
-      const Nepomuk::Resource parentResource( url );
+      const Nepomuk2::Resource parentResource( url );
       const QDateTime dt = parentResource.property( Soprano::Vocabulary::NAO::lastModified() ).toDateTime();
       if(dt.isValid()) {
         mLastIndexed->setText(i18n("Folder was indexed: %1",KGlobal::locale()->formatDate(dt.date())));

@@ -30,9 +30,9 @@
 
 #include "messagecore/stringutil.h"
 
-#include <nepomuk/nmo.h>
-#include <Nepomuk/Resource>
-#include <Nepomuk/Variant>
+#include <nepomuk2/nmo.h>
+#include <Nepomuk2/Resource>
+#include <Nepomuk2/Variant>
 
 
 #include <akonadi/itemfetchscope.h>
@@ -65,9 +65,9 @@ KMSearchMessageModel::~KMSearchMessageModel( )
 
 QString contentSummary( const Akonadi::Item& item )
 {
-  Nepomuk::Resource mail( item.url() );
+  Nepomuk2::Resource mail( item.url() );
   const QString content =
-      mail.property( Nepomuk::Vocabulary::NMO::plainTextMessageContent() ).toString();
+      mail.property( Nepomuk2::Vocabulary::NMO::plainTextMessageContent() ).toString();
   // Extract the first 5 non-empty, non-quoted lines from the content and return it
   int numLines = 0;
   const int maxLines = 5;

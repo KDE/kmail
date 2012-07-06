@@ -43,7 +43,7 @@ namespace MessageCore {
   class AsyncNepomukResourceRetriever;
 }
 
-namespace Nepomuk {
+namespace Nepomuk2 {
   class Resource;
 }
 
@@ -123,7 +123,7 @@ class MessageActions : public QObject
 
 
   private slots:
-    void updateAnnotateAction(const QUrl& url, const Nepomuk::Resource& resource);
+    void updateAnnotateAction(const QUrl& url, const Nepomuk2::Resource& resource);
     void slotItemModified( const Akonadi::Item &  item, const QSet< QByteArray > &  partIdentifiers );
     void slotItemRemoved(const Akonadi::Item& item);
 

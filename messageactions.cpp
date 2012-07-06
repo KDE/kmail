@@ -34,7 +34,7 @@
 #include "messageviewer/csshelper.h"
 #include "messageviewer/globalsettings.h"
 
-#include <Nepomuk/Resource>
+#include <Nepomuk2/Resource>
 
 #include <akonadi/itemfetchjob.h>
 #include <akonadi/kmime/messageparts.h>
@@ -60,7 +60,8 @@
 #include <Akonadi/Monitor>
 #include <mailutil.h>
 #include <asyncnepomukresourceretriever.h>
-#include <nepomuk/resourcemanager.h>
+#include <nepomuk2/resourcemanager.h>
+#include <Soprano/Vocabulary/NAO>
 
 using namespace KMail;
 
@@ -71,7 +72,8 @@ MessageActions::MessageActions( KActionCollection *ac, QWidget* parent ) :
     mMessageView( 0 ),
     mRedirectAction( 0 ),
     mPrintPreviewAction( 0 ),
-    mAsynNepomukRetriever( new MessageCore::AsyncNepomukResourceRetriever( QVector<QUrl>() << Nepomuk::Resource::descriptionUri() << Nepomuk::Resource::annotationUri(), this ) ),
+    mAsynNepomukRetriever( new MessageCore::AsyncNepomukResourceRetriever( QVector<QUrl>() <<  Soprano::Vocabulary::NAO::annotation().toString()
+                                                                           << Soprano::Vocabulary::NAO::description().toString(), this ) ),
     mCustomTemplatesMenu( 0 )
 {
   mReplyActionMenu = new KActionMenu( KIcon("mail-reply-sender"), i18nc("Message->","&Reply"), this );
@@ -205,7 +207,7 @@ MessageActions::MessageActions( KActionCollection *ac, QWidget* parent ) :
   connect( mMonitor, SIGNAL(itemChanged(Akonadi::Item,QSet<QByteArray>)), SLOT(slotItemModified(Akonadi::Item,QSet<QByteArray>)));
   connect( mMonitor, SIGNAL(itemRemoved(Akonadi::Item)), SLOT(slotItemRemoved(Akonadi::Item)));
 
-  connect( mAsynNepomukRetriever, SIGNAL(resourceReceived(QUrl,Nepomuk::Resource)), SLOT(updateAnnotateAction(QUrl,Nepomuk::Resource)) );
+  connect( mAsynNepomukRetriever, SIGNAL(resourceReceived(QUrl,Nepomuk2::Resource)), SLOT(updateAnnotateAction(QUrl,Nepomuk2::Resource)) );
 
   mCustomTemplatesMenu = new TemplateParser::CustomTemplatesMenu( parent, ac );
 
@@ -310,7 +312,7 @@ void MessageActions::updateActions()
   mReplyListAction->setEnabled( hasPayload );
   mNoQuoteReplyAction->setEnabled( hasPayload );
 
-  if ( Nepomuk::ResourceManager::instance()->initialized() )
+  if ( Nepomuk2::ResourceManager::instance()->initialized() )
   {
     mAnnotateAction->setEnabled( uniqItem );
     mAsynNepomukRetriever->requestResource( mCurrentItem.url() );
@@ -638,7 +640,7 @@ void MessageActions::annotateMessage()
     mAsynNepomukRetriever->requestResource( url );
 }
 
-void MessageActions::updateAnnotateAction( const QUrl &url, const Nepomuk::Resource &resource )
+void MessageActions::updateAnnotateAction( const QUrl &url, const Nepomuk2::Resource &resource )
 {
   if( mCurrentItem.isValid() && mCurrentItem.url() == url ) {
     if ( resource.description().isEmpty() )

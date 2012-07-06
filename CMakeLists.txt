@@ -213,6 +213,7 @@ if (NOT WINCE AND KDEPIM_BUILD_DESKTOP)
     ${NEPOMUK_LIBRARIES}
     ${NEPOMUK_QUERY_LIBRARIES}
     ${KDE4_KPRINTUTILS_LIBS}
+    ${NEPOMUK_CORE_LIBRARY}
   )
 
   set_target_properties(kmailprivate
