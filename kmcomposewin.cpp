@@ -1803,15 +1803,15 @@ bool KMComposeWin::queryClose ()
 }
 
 //-----------------------------------------------------------------------------
-bool KMComposeWin::userForgotAttachment()
+Message::ComposerViewBase::MissingAttachment KMComposeWin::userForgotAttachment()
 {
   bool checkForForgottenAttachments = mCheckForForgottenAttachments && GlobalSettings::self()->showForgottenAttachmentWarning();
 
   if ( !checkForForgottenAttachments )
-    return false;
+    return Message::ComposerViewBase::NoMissingAttachmentFound;
 
   mComposerBase->setSubject( subject() ); //be sure the composer knows the subject
-  bool missingAttachments = mComposerBase->checkForMissingAttachments( GlobalSettings::self()->attachmentKeywords() );
+  Message::ComposerViewBase::MissingAttachment missingAttachments = mComposerBase->checkForMissingAttachments( GlobalSettings::self()->attachmentKeywords() );
 
   return missingAttachments;
 }
@@ -2660,7 +2660,9 @@ void KMComposeWin::doSend( MessageSender::SendMethod method,
       }
     }
 
-    if ( userForgotAttachment() ) {
+    const Message::ComposerViewBase::MissingAttachment forgotAttachment = userForgotAttachment();
+    if ( (forgotAttachment == Message::ComposerViewBase::FoundMissingAttachmentAndAddedAttachment) ||
+         (forgotAttachment == Message::ComposerViewBase::FoundMissingAttachmentAndCancel) ) {
       return;
     }
 
