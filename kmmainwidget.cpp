@@ -4114,6 +4114,11 @@ void KMMainWidget::updateHtmlMenuEntry()
 //-----------------------------------------------------------------------------
 void KMMainWidget::updateFolderMenu()
 {
+  if(!CommonKernel->outboxCollectionFolder().isValid()) {
+    QTimer::singleShot(1000,this,SLOT(updateFolderMenu()));
+    return;
+  }
+
   const bool folderWithContent = mCurrentFolder && !mCurrentFolder->isStructural();
   bool multiFolder = false;
   if ( mFolderTreeWidget ) {
@@ -4123,11 +4128,10 @@ void KMMainWidget::updateFolderMenu()
                                                   !multiFolder &&
                                                   !mCurrentFolder->isSystemFolder() );
 
-
   QList< QAction* > actionlist;
-  if ( mCurrentFolder && mCurrentFolder->collection().id() == CommonKernel->outboxCollectionFolder().id() &&
-      CommonKernel->outboxCollectionFolder().statistics().count() > 0 ) {
+  if ( mCurrentFolder && mCurrentFolder->collection().id() == CommonKernel->outboxCollectionFolder().id() && (mCurrentFolder->collection()).statistics().count() > 0) {
     kDebug() << "Enabling send queued";
+    mSendQueued->setEnabled(true);
     actionlist << mSendQueued;
   }
 //   if( mCurrentFolder && mCurrentFolder->collection().id() != CommonKernel->trashCollectionFolder().id() ) {
