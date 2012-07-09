@@ -73,8 +73,6 @@ using KMail::MailServiceImpl;
 
 #include <kmime/kmime_message.h>
 #include <kmime/kmime_util.h>
-#include <Akonadi/KMime/SpecialMailCollections>
-#include <Akonadi/KMime/SpecialMailCollectionsRequestJob>
 #include <Akonadi/Collection>
 #include <Akonadi/CollectionFetchJob>
 #include <Akonadi/ChangeRecorder>

@@ -16,7 +16,6 @@
 #include "kmail_export.h"
 #include "globalsettings.h"
 #include <kcomponentdata.h>
-#include <akonadi/kmime/specialmailcollections.h>
 #include <akonadi/servermanager.h>
 
 #define kmkernel KMKernel::self()
