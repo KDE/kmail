@@ -915,7 +915,7 @@ ASWizPage::ASWizPage( QWidget * parent, const char * name,
   mLayout->addItem( new QSpacerItem( 5, 5, QSizePolicy::Minimum, QSizePolicy::Expanding ) );
 
   mBannerLabel = new QLabel( this );
-  mBannerLabel->setPixmap( /*UserIcon(banner)*/KIconLoader::global()->iconPath(banner, KIconLoader::User) );
+  mBannerLabel->setPixmap( UserIcon(banner) );
   mBannerLabel->setScaledContents( false );
   mBannerLabel->setFrameShape( QFrame::StyledPanel );
   mBannerLabel->setFrameShadow( QFrame::Sunken );
