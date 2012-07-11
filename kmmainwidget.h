@@ -191,6 +191,8 @@ class KMAIL_EXPORT KMMainWidget : public QWidget
     }
     void savePaneSelection();
 
+    void updatePaneTagComboBox();
+
   public slots:
     // Moving messages around
     /**

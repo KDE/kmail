@@ -1181,6 +1181,7 @@ KMSetTagCommand::KMSetTagCommand( const QList<QString> &tagLabel, const QList<Ak
 
 KMCommand::Result KMSetTagCommand::execute()
 {
+  QStringList tagSelectedlst;
   Q_FOREACH( const Akonadi::Item& item, mItem ) {
     Nepomuk::Resource n_resource( item.url() );
     QList<Nepomuk::Tag> n_tag_list;
@@ -1190,12 +1191,17 @@ KMCommand::Result KMSetTagCommand::execute()
 
     Q_FOREACH( const QString &tagLabel, mTagLabel ) {
       const Nepomuk::Tag n_tag( tagLabel );
+      const QString tagUri(n_tag.resourceUri().toString());
       if ( mMode == CleanExistingAndAddNew ) {
         n_resource.addTag( n_tag );
+        if(!tagSelectedlst.contains(tagUri))
+          tagSelectedlst<<tagUri;
       } else {
         const int tagPosition = n_tag_list.indexOf( tagLabel );
         if ( tagPosition == -1 ) {
           n_resource.addTag( n_tag );
+          if(!tagSelectedlst.contains(tagUri))
+            tagSelectedlst<<tagUri;
         } else if ( mMode == Toggle ) {
           const int numberOfTag( n_tag_list.count() );
           for (int i = 0; i < numberOfTag; ++i ) {
@@ -1209,6 +1215,20 @@ KMCommand::Result KMSetTagCommand::execute()
       }
     }
   }
+
+  if(!tagSelectedlst.isEmpty()) {
+    KConfigGroup tag( KMKernel::self()->config(), "MessageListView" );
+    const QString oldTagList = tag.readEntry("TagSelected");
+    QStringList lst = oldTagList.split(QLatin1String(","));
+    Q_FOREACH(const QString& str,tagSelectedlst ) {
+      if(!lst.contains(str)) {
+          lst.append(str);
+      }
+    }
+    tag.writeEntry("TagSelected",lst);
+    KMKernel::self()->updatePaneTagComboBox();
+  }
+
   return OK;
 }
 
