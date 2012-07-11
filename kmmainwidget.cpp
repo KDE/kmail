@@ -4637,3 +4637,10 @@ void KMMainWidget::slotConfigureAutomaticArchiving()
   OrgFreedesktopAkonadiArchiveMailAgentInterface archiveMailInterface(QLatin1String("org.freedesktop.Akonadi.ArchiveMailAgent"), QLatin1String("/ArchiveMailAgent"),QDBusConnection::sessionBus(), this);
   archiveMailInterface.showConfigureDialog(winId());
 }
+
+void KMMainWidget::updatePaneTagComboBox()
+{
+  if(mMessagePane) {
+    mMessagePane->updateTagComboBox();
+  }
+}

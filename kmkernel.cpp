@@ -1991,4 +1991,12 @@ void KMKernel::savePaneSelection()
   }
 }
 
+void KMKernel::updatePaneTagComboBox()
+{
+  KMMainWidget *widget = getKMMainWidget();
+  if ( widget  ) {
+    widget->updatePaneTagComboBox();
+  }
+}
+
 #include "kmkernel.moc"

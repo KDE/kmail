@@ -412,6 +412,8 @@ public:
 
   void savePaneSelection();
 
+  void updatePaneTagComboBox();
+
 protected:
   void agentInstanceBroken( const Akonadi::AgentInstance& instance );
 
