@@ -3597,9 +3597,6 @@ void KMMainWidget::setupActions()
     connect(action, SIGNAL(triggered(bool)), SLOT(slotNextUnreadFolder()));
     action->setShortcut(QKeySequence(Qt::ALT+Qt::Key_Plus));
     action->setHelpText(i18n("Go to the next folder with unread messages"));
-    KShortcut shortcut = KShortcut(action->shortcuts());
-    shortcut.setAlternate( QKeySequence( Qt::CTRL+Qt::Key_Plus ) );
-    action->setShortcuts( shortcut );
   }
   {
     KAction *action = new KAction(i18n("Previous Unread F&older"), this);
@@ -3607,9 +3604,6 @@ void KMMainWidget::setupActions()
     action->setShortcut(QKeySequence(Qt::ALT+Qt::Key_Minus));
     action->setHelpText(i18n("Go to the previous folder with unread messages"));
     connect(action, SIGNAL(triggered(bool)), SLOT(slotPrevUnreadFolder()));
-    KShortcut shortcut = KShortcut(action->shortcuts());
-    shortcut.setAlternate( QKeySequence( Qt::CTRL+Qt::Key_Minus ) );
-    action->setShortcuts( shortcut );
   }
   {
     KAction *action = new KAction(i18nc("Go->","Next Unread &Text"), this);
