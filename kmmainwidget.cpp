@@ -2414,6 +2414,12 @@ void KMMainWidget::slotNoQuoteReplyToMsg()
   command->start();
 }
 
+void KMMainWidget::openFilterDialog(const QByteArray &field, const QString &value)
+{
+  FilterIf->openFilterDialog( false );
+  FilterIf->createFilter( field, value );
+}
+
 //-----------------------------------------------------------------------------
 void KMMainWidget::slotSubjectFilter()
 {
@@ -2421,8 +2427,7 @@ void KMMainWidget::slotSubjectFilter()
   if ( !msg )
     return;
 
-  KMCommand *command = new KMFilterCommand( "Subject", msg->subject()->asUnicodeString() );
-  command->start();
+  openFilterDialog("Subject", msg->subject()->asUnicodeString());
 }
 
 //-----------------------------------------------------------------------------
@@ -2433,12 +2438,10 @@ void KMMainWidget::slotFromFilter()
     return;
 
   AddrSpecList al = MessageHelper::extractAddrSpecs( msg, "From" );
-  KMCommand *command;
   if ( al.empty() )
-    command = new KMFilterCommand( "From",  msg->from()->asUnicodeString() );
+    openFilterDialog("From",  msg->from()->asUnicodeString());
   else
-    command = new KMFilterCommand( "From",  al.front().asString() );
-  command->start();
+    openFilterDialog("From",  al.front().asString());
 }
 
 //-----------------------------------------------------------------------------
@@ -2447,8 +2450,7 @@ void KMMainWidget::slotToFilter()
   KMime::Message::Ptr msg = mMessagePane->currentMessage();
   if ( !msg )
     return;
-  KMCommand *command = new KMFilterCommand( "To",  msg->to()->asUnicodeString() );
-  command->start();
+  openFilterDialog("To",  msg->to()->asUnicodeString());
 }
 
 //-----------------------------------------------------------------------------
