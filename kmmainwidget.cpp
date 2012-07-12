@@ -2332,10 +2332,11 @@ void KMMainWidget::slotSetThreadStatusIgnored()
 //-----------------------------------------------------------------------------
 void KMMainWidget::slotRedirectMsg()
 {
-  const Akonadi::Item msg = mMessagePane->currentItem();
-  if ( !msg.isValid() )
+  const QList<Akonadi::Item> selectedMessages = mMessagePane->selectionAsMessageItemList();
+  if ( selectedMessages.isEmpty() )
     return;
-  KMCommand *command = new KMRedirectCommand( this, msg );
+
+  KMCommand *command = new KMRedirectCommand( this, selectedMessages );
   command->start();
 }
 
@@ -3597,9 +3598,6 @@ void KMMainWidget::setupActions()
     connect(action, SIGNAL(triggered(bool)), SLOT(slotNextUnreadFolder()));
     action->setShortcut(QKeySequence(Qt::ALT+Qt::Key_Plus));
     action->setHelpText(i18n("Go to the next folder with unread messages"));
-    KShortcut shortcut = KShortcut(action->shortcuts());
-    shortcut.setAlternate( QKeySequence( Qt::CTRL+Qt::Key_Plus ) );
-    action->setShortcuts( shortcut );
   }
   {
     KAction *action = new KAction(i18n("Previous Unread F&older"), this);
@@ -3607,9 +3605,6 @@ void KMMainWidget::setupActions()
     action->setShortcut(QKeySequence(Qt::ALT+Qt::Key_Minus));
     action->setHelpText(i18n("Go to the previous folder with unread messages"));
     connect(action, SIGNAL(triggered(bool)), SLOT(slotPrevUnreadFolder()));
-    KShortcut shortcut = KShortcut(action->shortcuts());
-    shortcut.setAlternate( QKeySequence( Qt::CTRL+Qt::Key_Minus ) );
-    action->setShortcuts( shortcut );
   }
   {
     KAction *action = new KAction(i18nc("Go->","Next Unread &Text"), this);
@@ -3940,7 +3935,7 @@ void KMMainWidget::updateMessageActionsDelayed()
   mMsgActions->editAction()->setEnabled( single_actions );
   mUseAction->setEnabled( single_actions && CommonKernel->folderIsTemplates( mCurrentFolder->collection() ) );
   filterMenu()->setEnabled( single_actions );
-  mMsgActions->redirectAction()->setEnabled( single_actions && !CommonKernel->folderIsTemplates( mCurrentFolder->collection() ) );
+  mMsgActions->redirectAction()->setEnabled( /*single_actions &&*/mass_actions && !CommonKernel->folderIsTemplates( mCurrentFolder->collection() ) );
 
   if ( mMsgActions->customTemplatesMenu() )
   {
