@@ -26,7 +26,7 @@
 #include <QSharedPointer>
 #include <QUrl>
 
-namespace Nepomuk {
+namespace Nepomuk2 {
   class Tag;
 }
 
@@ -55,7 +55,7 @@ namespace KMail {
       bool operator!=( const Tag &other ) const;
 
       // Load a tag from a Nepomuk tag
-      static Ptr fromNepomuk( const Nepomuk::Tag& nepomukTag );
+      static Ptr fromNepomuk( const Nepomuk2::Tag& nepomukTag );
 
       // Save this tag to Nepomuk the corresponding Nepomuk tag
       void saveToNepomuk( SaveFlags saveFlags ) const;

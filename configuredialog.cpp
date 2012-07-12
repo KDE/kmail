@@ -111,7 +111,7 @@ using MailTransport::TransportManagementWidget;
 #include <KIconButton>
 #include <KColorScheme>
 #include <KComboBox>
-#include <Nepomuk/Tag>
+#include <Nepomuk2/Tag>
 #include <KCModuleProxy>
 
 // Qt headers:
@@ -144,7 +144,7 @@ using MailTransport::TransportManagementWidget;
 #include <akonadi/agenttypedialog.h>
 #include <akonadi/agentinstancecreatejob.h>
 
-#include <nepomuk/resourcemanager.h>
+#include <nepomuk2/resourcemanager.h>
 
 #include <libkdepim/nepomukwarning.h>
 using namespace MailCommon;
@@ -1650,7 +1650,7 @@ AppearancePageMessageTagTab::AppearancePageMessageTagTab( QWidget * parent )
   maingrid->setMargin( KDialog::marginHint() );
   maingrid->setSpacing( KDialog::spacingHint() );
 
-  mNepomukActive = Nepomuk::ResourceManager::instance()->initialized();
+  mNepomukActive = Nepomuk2::ResourceManager::instance()->initialized();
   if ( mNepomukActive ) {
 
     //Lefthand side Listbox and friends
@@ -2044,7 +2044,7 @@ void AppearancePage::MessageTagTab::slotRemoveTag()
     QListWidgetItem * item = mTagListBox->takeItem( mTagListBox->currentRow() );
     TagListWidgetItem *tagItem = static_cast<TagListWidgetItem*>( item );
     KMail::Tag::Ptr tmp_desc = tagItem->kmailTag();
-    Nepomuk::Tag nepomukTag( tmp_desc->nepomukResourceUri );
+    Nepomuk2::Tag nepomukTag( tmp_desc->nepomukResourceUri );
     nepomukTag.remove();
     mPreviousTag = -1;
 
@@ -2095,7 +2095,7 @@ void AppearancePage::MessageTagTab::slotAddNewTag()
 {
   const int tmp_priority = mTagListBox->count();
   const QString newTagName = mTagAddLineEdit->text();
-  Nepomuk::Tag nepomukTag( newTagName );
+  Nepomuk2::Tag nepomukTag( newTagName );
   nepomukTag.setLabel( newTagName );
 
   KMail::Tag::Ptr tag = KMail::Tag::fromNepomuk( nepomukTag );
@@ -2115,7 +2115,7 @@ void AppearancePage::MessageTagTab::doLoadFromGlobalSettings()
 
   mTagListBox->clear();
   QList<KMail::TagPtr> msgTagList;
-  foreach( const Nepomuk::Tag &nepomukTag, Nepomuk::Tag::allTags() ) {
+  foreach( const Nepomuk2::Tag &nepomukTag, Nepomuk2::Tag::allTags() ) {
     KMail::Tag::Ptr tag = KMail::Tag::fromNepomuk( nepomukTag );
     msgTagList.append( tag );
   }

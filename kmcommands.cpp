@@ -40,6 +40,9 @@
 // The type of async operation supported by KMCommand is retrieval
 // of messages from an IMAP server.
 
+#include <Nepomuk2/Tag>
+#include <nepomuk2/resource.h>
+
 #include "kmcommands.h"
 #include "collectionpane.h"
 #include "mailkernel.h"
@@ -137,7 +140,8 @@ using namespace KMime;
 #include "kleo/cryptobackend.h"
 #include "kleo/cryptobackendfactory.h"
 
-#include <nepomuk/tag.h>
+#include <Nepomuk2/Tag>
+#include <nepomuk2/resource.h>
 
 #include <gpgme++/error.h>
 
@@ -1183,15 +1187,15 @@ KMCommand::Result KMSetTagCommand::execute()
 {
   QStringList tagSelectedlst;
   Q_FOREACH( const Akonadi::Item& item, mItem ) {
-    Nepomuk::Resource n_resource( item.url() );
-    QList<Nepomuk::Tag> n_tag_list;
+    Nepomuk2::Resource n_resource( item.url() );
+    QList<Nepomuk2::Tag> n_tag_list;
     if ( mMode != CleanExistingAndAddNew ){
       n_tag_list = n_resource.tags();
     }
 
     Q_FOREACH( const QString &tagLabel, mTagLabel ) {
-      const Nepomuk::Tag n_tag( tagLabel );
-      const QString tagUri(n_tag.resourceUri().toString());
+      const Nepomuk2::Tag n_tag( tagLabel );
+      const QString tagUri(n_tag.uri().toString());
       if ( mMode == CleanExistingAndAddNew ) {
         n_resource.addTag( n_tag );
         if(!tagSelectedlst.contains(tagUri))
@@ -1205,7 +1209,7 @@ KMCommand::Result KMSetTagCommand::execute()
         } else if ( mMode == Toggle ) {
           const int numberOfTag( n_tag_list.count() );
           for (int i = 0; i < numberOfTag; ++i ) {
-            if ( n_tag_list[i].resourceUri() == tagLabel ) {
+            if ( n_tag_list[i].uri() == tagLabel ) {
               n_tag_list.removeAt( i );
               break;
             }

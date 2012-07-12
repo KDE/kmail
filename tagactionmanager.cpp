@@ -22,8 +22,8 @@
 #include "messageactions.h"
 
 #include "messagecore/taglistmonitor.h"
-#include <nepomuk/tag.h>
-#include <Nepomuk/ResourceManager>
+#include <nepomuk2/tag.h>
+#include <Nepomuk2/ResourceManager>
 
 #include <KAction>
 #include <KActionCollection>
@@ -55,9 +55,9 @@ TagActionManager::TagActionManager( QObject *parent, KActionCollection *actionCo
   KAction *separator = new KAction( this );
   separator->setSeparator( true );
   mMessageActions->messageStatusMenu()->menu()->addAction( separator );
-  connect( Nepomuk::ResourceManager::instance(), SIGNAL(nepomukSystemStarted()),
+  connect( Nepomuk2::ResourceManager::instance(), SIGNAL(nepomukSystemStarted()),
            SLOT(slotNepomukStarted()) );
-  connect( Nepomuk::ResourceManager::instance(), SIGNAL(nepomukSystemStopped()),
+  connect( Nepomuk2::ResourceManager::instance(), SIGNAL(nepomukSystemStopped()),
            SLOT(slotNepomukStopped()) );
 
 #if 0
@@ -137,12 +137,12 @@ void TagActionManager::createActions()
 
 
   if ( mTags.isEmpty() ) {
-    const QList<Nepomuk::Tag> alltags( Nepomuk::Tag::allTags() );
+    const QList<Nepomuk2::Tag> alltags( Nepomuk2::Tag::allTags() );
     if ( alltags.isEmpty() )
       return;
 
     // Build a sorted list of tags
-    foreach( const Nepomuk::Tag &nepomukTag, alltags ) {
+    foreach( const Nepomuk2::Tag &nepomukTag, alltags ) {
       mTags.append( Tag::fromNepomuk( nepomukTag ) );
     }
     qSort( mTags.begin(), mTags.end(), KMail::Tag::compare );
@@ -192,16 +192,16 @@ void TagActionManager::updateActionStates( int numberOfSelectedMessages,
   if ( numberOfSelectedMessages == 1 )
   {
     Q_ASSERT( selectedItem.isValid() );
-    Nepomuk::Resource itemResource( selectedItem.url() );
+    Nepomuk2::Resource itemResource( selectedItem.url() );
     for ( ; it != end; ++it ) {
-      const bool hasTag = itemResource.tags().contains( Nepomuk::Tag( it.key() ) );
+      const bool hasTag = itemResource.tags().contains( Nepomuk2::Tag( it.key() ) );
       it.value()->setChecked( hasTag );
       it.value()->setEnabled( true );
     }
   }
   else if ( numberOfSelectedMessages > 1 ) {
     for ( ; it != end; ++it ) {
-      Nepomuk::Tag tag( it.key() );
+      Nepomuk2::Tag tag( it.key() );
       it.value()->setChecked( false );
       it.value()->setEnabled( true );
       it.value()->setText( i18n("Toggle Message Tag %1", tag.label() ) );

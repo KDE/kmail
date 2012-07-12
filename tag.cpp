@@ -22,22 +22,23 @@
 #include "messagetag.h"
 
 #include <soprano/nao.h>
-#include <Nepomuk/Tag>
-#include <Nepomuk/Variant>
+#include <Nepomuk2/Tag>
+#include <Nepomuk2/Variant>
 
 using namespace KMail;
 
-Tag::Ptr Tag::fromNepomuk( const Nepomuk::Tag& nepomukTag )
+Tag::Ptr Tag::fromNepomuk( const Nepomuk2::Tag& nepomukTag )
 {
   Tag::Ptr tag( new Tag() );
   tag->tagName = nepomukTag.label();
 
+#if 0 //FIXME NEPOMUK-CORE
   if ( nepomukTag.symbols().isEmpty() )
     tag->iconName = "mail-tagged";
   else
     tag->iconName = nepomukTag.symbols().first();
-
-  tag->nepomukResourceUri = nepomukTag.resourceUri();
+#endif
+  tag->nepomukResourceUri = nepomukTag.uri();
 
   if ( nepomukTag.hasProperty( Vocabulary::MessageTag::textColor() ) ) {
     const QString name = nepomukTag.property( Vocabulary::MessageTag::textColor() ).toString();
@@ -77,11 +78,11 @@ Tag::Ptr Tag::fromNepomuk( const Nepomuk::Tag& nepomukTag )
 
 void Tag::saveToNepomuk( SaveFlags saveFlags ) const
 {
-  Nepomuk::Tag nepomukTag( nepomukResourceUri );
+  Nepomuk2::Tag nepomukTag( nepomukResourceUri );
 
   nepomukTag.setLabel( tagName );
 
-  Nepomuk::Resource symbol( QUrl(), Soprano::Vocabulary::NAO::FreeDesktopIcon() );
+  Nepomuk2::Resource symbol( QUrl(), Soprano::Vocabulary::NAO::FreeDesktopIcon() );
   symbol.setProperty( Soprano::Vocabulary::NAO::iconName(), iconName );
 
   nepomukTag.setProperty( Soprano::Vocabulary::NAO::hasSymbol(), symbol );
