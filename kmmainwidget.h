@@ -529,6 +529,8 @@ class KMAIL_EXPORT KMMainWidget : public QWidget
     void refreshFavoriteFoldersViewProperties();
     bool excludeSpecialFolder( const Akonadi::Collection &collection );
 
+    void openFilterDialog(const QByteArray &field, const QString &value);
+
   private slots:
     /**
      * Called when a "move to trash" operation is completed

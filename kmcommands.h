@@ -440,23 +440,6 @@ private:
   SetTagMode mMode;
 };
 
-/* This command is used to create a filter based on the user's
-    decision, e.g. filter by From header */
-class KMAIL_EXPORT KMFilterCommand : public KMCommand
-{
-  Q_OBJECT
-
-public:
-  KMFilterCommand( const QByteArray &field, const QString &value );
-
-private:
-  virtual Result execute();
-
-  QByteArray mField;
-  QString mValue;
-};
-
-
 /* This command is used to apply a single filter (AKA ad-hoc filter)
     to a set of messages */
 class KMAIL_EXPORT KMFilterActionCommand : public KMCommand

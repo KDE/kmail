@@ -1232,20 +1232,6 @@ KMCommand::Result KMSetTagCommand::execute()
   return OK;
 }
 
-KMFilterCommand::KMFilterCommand( const QByteArray &field, const QString &value )
-  : mField( field ), mValue( value )
-{
-}
-
-KMCommand::Result KMFilterCommand::execute()
-{
-  FilterIf->openFilterDialog( false );
-  FilterIf->createFilter( mField, mValue );
-
-  return OK;
-}
-
-
 KMFilterActionCommand::KMFilterActionCommand( QWidget *parent,
                                               const QVector<qlonglong> &msgListId,
                                               const QString &filterId,
