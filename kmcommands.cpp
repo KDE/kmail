@@ -961,6 +961,16 @@ KMCommand::Result KMForwardAttachedCommand::execute()
   return OK;
 }
 
+KMRedirectCommand::KMRedirectCommand( QWidget *parent,
+                                      const QList<Akonadi::Item> &msgList )
+  : KMCommand( parent, msgList )
+{
+  fetchScope().fetchFullPayload( true );
+  fetchScope().fetchAttribute<MailTransport::SentBehaviourAttribute>();
+  fetchScope().fetchAttribute<MailTransport::TransportAttribute>();
+
+  fetchScope().setAncestorRetrieval( Akonadi::ItemFetchScope::Parent );
+}
 
 KMRedirectCommand::KMRedirectCommand( QWidget *parent,
                                       const Akonadi::Item &msg )
@@ -975,8 +985,6 @@ KMRedirectCommand::KMRedirectCommand( QWidget *parent,
 
 KMCommand::Result KMRedirectCommand::execute()
 {
-  const Akonadi::Item item = retrievedMessage();
-
   const MailCommon::RedirectDialog::SendMode sendMode = MessageComposer::MessageComposerSettings::self()->sendImmediate()
                                                           ? MailCommon::RedirectDialog::SendNow
                                                           : MailCommon::RedirectDialog::SendLater;
@@ -989,46 +997,49 @@ KMCommand::Result KMRedirectCommand::execute()
   if ( !TransportManager::self()->showTransportCreationDialog( parentWidget(), TransportManager::IfNoTransportExists ) )
     return Failed;
 
-
-  const KMime::Message::Ptr msg = MessageCore::Util::message( item );
-  if ( !msg )
-    return Failed;
-
-  MessageFactory factory( msg, item.id(), MailCommon::Util::updatedCollection(item.parentCollection()) );
-  factory.setIdentityManager( KMKernel::self()->identityManager() );
-  factory.setFolderIdentity( MailCommon::Util::folderIdentity( item ) );
-
-  const MailTransport::TransportAttribute *transportAttribute = item.attribute<MailTransport::TransportAttribute>();
-  int transportId = -1;
-  if ( transportAttribute ) {
-    transportId = transportAttribute->transportId();
-    const MailTransport::Transport *transport = MailTransport::TransportManager::self()->transportById( transportId );
-    if ( !transport ) {
-      transportId = -1;
-    }
-  }
-
-  const MailTransport::SentBehaviourAttribute *sentAttribute = item.attribute<MailTransport::SentBehaviourAttribute>();
-  QString fcc;
-  if ( sentAttribute && ( sentAttribute->sentBehaviour() == MailTransport::SentBehaviourAttribute::MoveToCollection ) )
-    fcc =  QString::number( sentAttribute->moveToCollection().id() );
-
-  const KMime::Message::Ptr newMsg = factory.createRedirect( dlg->to(), transportId, fcc );
-  if ( !newMsg )
-    return Failed;
-
-  MessageStatus status;
-  status.setStatusFromFlags( item.flags() );
-  if ( !status.isRead() )
-    FilterAction::sendMDN( item, KMime::MDN::Dispatched );
-
   const MessageSender::SendMethod method = (dlg->sendMode() == MailCommon::RedirectDialog::SendNow)
                                              ? MessageSender::SendImmediate
                                              : MessageSender::SendLater;
 
-  if ( !kmkernel->msgSender()->send( newMsg, method ) ) {
-    kDebug() << "KMRedirectCommand: could not redirect message (sending failed)";
-    return Failed; // error: couldn't send
+  const QString to = dlg->to();
+  foreach( const Akonadi::Item &item, retrievedMsgs() ) {
+    const KMime::Message::Ptr msg = MessageCore::Util::message( item );
+    if ( !msg )
+      return Failed;
+
+    MessageFactory factory( msg, item.id(), MailCommon::Util::updatedCollection(item.parentCollection()) );
+    factory.setIdentityManager( KMKernel::self()->identityManager() );
+    factory.setFolderIdentity( MailCommon::Util::folderIdentity( item ) );
+
+    const MailTransport::TransportAttribute *transportAttribute = item.attribute<MailTransport::TransportAttribute>();
+    int transportId = -1;
+    if ( transportAttribute ) {
+      transportId = transportAttribute->transportId();
+      const MailTransport::Transport *transport = MailTransport::TransportManager::self()->transportById( transportId );
+      if ( !transport ) {
+        transportId = -1;
+      }
+    }
+
+    const MailTransport::SentBehaviourAttribute *sentAttribute = item.attribute<MailTransport::SentBehaviourAttribute>();
+    QString fcc;
+    if ( sentAttribute && ( sentAttribute->sentBehaviour() == MailTransport::SentBehaviourAttribute::MoveToCollection ) )
+      fcc =  QString::number( sentAttribute->moveToCollection().id() );
+
+    const KMime::Message::Ptr newMsg = factory.createRedirect( to, transportId, fcc );
+    if ( !newMsg )
+      return Failed;
+
+    MessageStatus status;
+    status.setStatusFromFlags( item.flags() );
+    if ( !status.isRead() )
+      FilterAction::sendMDN( item, KMime::MDN::Dispatched );
+
+
+    if ( !kmkernel->msgSender()->send( newMsg, method ) ) {
+      kDebug() << "KMRedirectCommand: could not redirect message (sending failed)";
+      return Failed; // error: couldn't send
+    }
   }
 
   return OK;

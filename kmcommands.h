@@ -365,6 +365,7 @@ class KMAIL_EXPORT KMRedirectCommand : public KMCommand
 
 public:
   KMRedirectCommand( QWidget *parent, const Akonadi::Item &msg );
+  KMRedirectCommand( QWidget *parent, const QList<Akonadi::Item> &msgList );
 
 private:
   virtual Result execute();

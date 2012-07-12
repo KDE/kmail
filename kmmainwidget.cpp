@@ -2332,10 +2332,11 @@ void KMMainWidget::slotSetThreadStatusIgnored()
 //-----------------------------------------------------------------------------
 void KMMainWidget::slotRedirectMsg()
 {
-  const Akonadi::Item msg = mMessagePane->currentItem();
-  if ( !msg.isValid() )
+  const QList<Akonadi::Item> selectedMessages = mMessagePane->selectionAsMessageItemList();
+  if ( selectedMessages.isEmpty() )
     return;
-  KMCommand *command = new KMRedirectCommand( this, msg );
+
+  KMCommand *command = new KMRedirectCommand( this, selectedMessages );
   command->start();
 }
 
@@ -3934,7 +3935,7 @@ void KMMainWidget::updateMessageActionsDelayed()
   mMsgActions->editAction()->setEnabled( single_actions );
   mUseAction->setEnabled( single_actions && CommonKernel->folderIsTemplates( mCurrentFolder->collection() ) );
   filterMenu()->setEnabled( single_actions );
-  mMsgActions->redirectAction()->setEnabled( single_actions && !CommonKernel->folderIsTemplates( mCurrentFolder->collection() ) );
+  mMsgActions->redirectAction()->setEnabled( /*single_actions &&*/mass_actions && !CommonKernel->folderIsTemplates( mCurrentFolder->collection() ) );
 
   if ( mMsgActions->customTemplatesMenu() )
   {
