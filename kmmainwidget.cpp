@@ -3211,7 +3211,7 @@ void KMMainWidget::setupActions()
     action->setEnabled(usableKWatchGnupg);
   }
   {
-    KAction *action = new KAction(KIcon("document-import"), i18n("&Import Messages"), this);
+    KAction *action = new KAction(KIcon("document-import"), i18n("&Import Messages..."), this);
     actionCollection()->addAction("import", action );
     connect(action, SIGNAL(triggered(bool)), SLOT(slotImport()));
     if (KStandardDirs::findExe("kmailcvt").isEmpty()) action->setEnabled(false);
