@@ -32,9 +32,9 @@ namespace Nepomuk2 {
 
 namespace KMail {
 
-  // Our own copy of the tag data normally attached to a Nepomuk::Tag.
+  // Our own copy of the tag data normally attached to a Nepomuk2::Tag.
   // Useful in the config dialog, because the user might cancel his changes,
-  // in which case we don't write them back to the Nepomuk::Tag.
+  // in which case we don't write them back to the Nepomuk2::Tag.
   // Also used as a convenience class in the TagActionManager.
   class Tag
   {
