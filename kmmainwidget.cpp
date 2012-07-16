@@ -4632,7 +4632,11 @@ void KMMainWidget::savePaneSelection()
 void KMMainWidget::slotConfigureAutomaticArchiving()
 {
   OrgFreedesktopAkonadiArchiveMailAgentInterface archiveMailInterface(QLatin1String("org.freedesktop.Akonadi.ArchiveMailAgent"), QLatin1String("/ArchiveMailAgent"),QDBusConnection::sessionBus(), this);
-  archiveMailInterface.showConfigureDialog(winId());
+  if(archiveMailInterface.isValid()) {
+      archiveMailInterface.showConfigureDialog(winId());
+  } else {
+      KMessageBox::error(this,i18n("Archive Mail Agent was not registered."));
+  }
 }
 
 void KMMainWidget::updatePaneTagComboBox()
