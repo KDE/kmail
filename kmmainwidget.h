@@ -460,6 +460,7 @@ class KMAIL_EXPORT KMMainWidget : public QWidget
     void slotCreateNewTab( bool );
     void slotShowNotification();
     void slotConfigureAutomaticArchiving();
+    void slotExportData();
   private:
     void updateHtmlMenuEntry();
 

@@ -3679,6 +3679,13 @@ void KMMainWidget::setupActions()
                SLOT(slotApplyFiltersOnFolder()) );
 
   }
+
+  {
+      KAction *action = new KAction(KIcon("backup-mail"), i18n("&Export KMail Data..."), this);
+      actionCollection()->addAction("kmail_export_data", action );
+      connect(action, SIGNAL(triggered(bool)), this, SLOT(slotExportData()));
+  }
+
   actionCollection()->addAction(KStandardAction::Undo,  "kmail_undo", this, SLOT(slotUndo()));
 
   KStandardAction::tipOfDay( this, SLOT(slotShowTip()), actionCollection() );
@@ -4644,4 +4651,14 @@ void KMMainWidget::updatePaneTagComboBox()
   if(mMessagePane) {
     mMessagePane->updateTagComboBox();
   }
+}
+
+
+void KMMainWidget::slotExportData()
+{
+    const QString path = KStandardDirs::findExe( QLatin1String("backupmail" ) );
+    if( !QProcess::startDetached( path ) )
+      KMessageBox::error( this, i18n( "Could not start backupmail. "
+                                      "Please check your installation." ),
+                         i18n( "Unable to start backupmail" ) );
 }
