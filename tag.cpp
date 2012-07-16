@@ -32,12 +32,10 @@ Tag::Ptr Tag::fromNepomuk( const Nepomuk2::Tag& nepomukTag )
   Tag::Ptr tag( new Tag() );
   tag->tagName = nepomukTag.label();
 
-#if 0 //FIXME NEPOMUK-CORE
   if ( nepomukTag.symbols().isEmpty() )
     tag->iconName = "mail-tagged";
   else
     tag->iconName = nepomukTag.symbols().first();
-#endif
   tag->nepomukResourceUri = nepomukTag.uri();
 
   if ( nepomukTag.hasProperty( Vocabulary::MessageTag::textColor() ) ) {
