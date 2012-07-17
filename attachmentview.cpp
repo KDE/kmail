@@ -72,7 +72,6 @@ AttachmentView::AttachmentView( Message::AttachmentModel *model, QWidget *parent
   setSortingEnabled( true );
 
   header()->setResizeMode( QHeaderView::Interactive );
-  header()->setResizeMode( Message::AttachmentModel::MimeTypeColumn, QHeaderView::Stretch );
   header()->setStretchLastSection( false );
   restoreHeaderState();
   setColumnWidth( 0, 200 );
