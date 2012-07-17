@@ -3344,5 +3344,5 @@ void KMComposeWin::insertSpecialCharacter()
 
 void KMComposeWin::charSelected(const QChar& c)
 {
-//TODO
+  mComposerBase->editor()->insertPlainText(c);
 }

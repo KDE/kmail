@@ -30,6 +30,7 @@ InsertSpecialChar::InsertSpecialChar(QWidget *parent)
   setMainWidget( page );
   QHBoxLayout *lay = new QHBoxLayout(page);
   mCharSelect = new KCharSelect(this,KCharSelect::CharacterTable|KCharSelect::BlockCombos);
+  connect(mCharSelect,SIGNAL(charSelected(QChar)),this,SIGNAL(charSelected(QChar)));
   lay->addWidget(mCharSelect);
   connect(this,SIGNAL(user1Clicked()),SLOT(slotInsertChar()));
 }
