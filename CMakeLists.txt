@@ -113,7 +113,7 @@ if (NOT WINCE AND KDEPIM_BUILD_DESKTOP)
      kmknotify.cpp
      tagselectdialog.cpp
      accountconfigorderdialog.cpp
-
+     insertspecialchar.cpp
   )
 
   soprano_add_ontology(kmailprivate_LIB_SRCS

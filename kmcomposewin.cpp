@@ -51,6 +51,7 @@
 #include "custommimeheader.h"
 #include <messagecomposer/kmsubjectlineedit.h>
 #include "messageviewer/translator/translatorwidget.h"
+#include "insertspecialchar.h"
 
 // KDEPIM includes
 #include <libkpgp/kpgpblock.h>
@@ -197,6 +198,7 @@ KMComposeWin::KMComposeWin( const KMime::Message::Ptr &aMsg, Composer::TemplateC
     mDummyComposer( 0 ),
     mLabelWidth( 0 ),
     mComposerBase( 0 ),
+    mInsertSpecialChar( 0 ),
     mSignatureStateIndicator( 0 ), mEncryptionStateIndicator( 0 ),
     mPreventFccOverwrite( false ),
     mCheckForForgottenAttachments( true ),
@@ -1293,6 +1295,12 @@ void KMComposeWin::setupActions( void )
   action = new KAction( i18n("Insert Signature At C&ursor Position"), this );
   actionCollection()->addAction( "insert_signature_at_cursor_position", action );
   connect( action, SIGNAL(triggered(bool)), mComposerBase->signatureController(), SLOT(insertSignatureAtCursor()) );
+
+
+  action = new KAction( i18n("Insert Special Character"), this );
+  actionCollection()->addAction( "insert_special_character", action );
+  connect( action, SIGNAL(triggered(bool)), this, SLOT(insertSpecialCharacter()) );
+
 
   mComposerBase->attachmentController()->createActions();
 
@@ -3323,4 +3331,18 @@ void KMComposeWin::slotFccFolderChanged(const Akonadi::Collection& collection)
 void KMComposeWin::slotTranslatorWasClosed()
 {
   mTranslateAction->setChecked(false);
+}
+
+void KMComposeWin::insertSpecialCharacter()
+{
+  if(!mInsertSpecialChar) {
+    mInsertSpecialChar = new InsertSpecialChar(this);
+    connect(mInsertSpecialChar,SIGNAL(charSelected(QChar)),this,SLOT(charSelected(QChar)));
+  }
+  mInsertSpecialChar->show();
+}
+
+void KMComposeWin::charSelected(const QChar& c)
+{
+//TODO
 }
