@@ -64,13 +64,18 @@ AttachmentController::AttachmentController( Message::AttachmentModel *model, Att
 
   connect( this, SIGNAL(showAttachment(KMime::Content*,QByteArray)),
            SLOT(onShowAttachment(KMime::Content*,QByteArray)));
-
+  connect( this, SIGNAL(selectedAllAttachment()), SLOT(slotSelectAllAttachment()));
   connect( model, SIGNAL(attachItemsRequester(Akonadi::Item::List)), this, SLOT(addAttachmentItems(Akonadi::Item::List)) );
 
 }
 
 AttachmentController::~AttachmentController()
 {
+}
+
+void AttachmentController::slotSelectAllAttachment()
+{
+  mView->selectAll();
 }
 
 void AttachmentController::identityChanged()
