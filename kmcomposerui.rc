@@ -1,5 +1,5 @@
 <!DOCTYPE kpartgui SYSTEM "kpartgui.dtd" >
-<kpartgui version="418" name="kmcomposer" >
+<kpartgui version="417" name="kmcomposer" >
  <MenuBar>
   <Menu noMerge="1" name="file" >
    <text>&amp;Message</text>
@@ -24,6 +24,7 @@
    <text>&amp;Edit</text>
    <Action name="paste_quoted" append="edit_paste_merge"/>
    <Action name="paste_att" append="edit_paste_merge"/>
+   <Action name="paste_without_formatting" append="edit_paste_merge"/>
    <Action name="clean_spaces" />
    <Separator/>
    <Action name="tools_quote"/>

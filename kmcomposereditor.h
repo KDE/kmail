@@ -70,7 +70,7 @@ class KMComposerEditor : public Message::KMeditor
   private:
 
      KMComposeWin *m_composerWin;
-     KAction *mPasteQuotation, *mAddQuoteChars, *mRemQuoteChars;
+     KAction *mPasteQuotation, *mAddQuoteChars, *mRemQuoteChars, *mPasteWithoutFormatting;
 
 protected:
 

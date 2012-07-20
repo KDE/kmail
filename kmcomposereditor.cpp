@@ -72,6 +72,10 @@ void KMComposerEditor::createActions( KActionCollection *actionCollection )
   mRemQuoteChars = new KAction( i18n("Re&move Quote Characters"), this );
   actionCollection->addAction( "tools_unquote", mRemQuoteChars );
   connect (mRemQuoteChars, SIGNAL(triggered(bool)), this, SLOT(slotRemoveQuotes()) );
+
+  mPasteWithoutFormatting = new KAction( i18n("Paste Without Formatting"), this );
+  actionCollection->addAction( "paste_without_formatting", mPasteWithoutFormatting );
+  connect (mPasteWithoutFormatting, SIGNAL(triggered(bool)), this, SLOT(slotPasteWithoutFormatting()) );
 }
 
 void KMComposerEditor::setHighlighterColors(KPIMTextEdit::EMailQuoteHighlighter * highlighter)
