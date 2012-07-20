@@ -1297,7 +1297,7 @@ void KMComposeWin::setupActions( void )
   connect( action, SIGNAL(triggered(bool)), mComposerBase->signatureController(), SLOT(insertSignatureAtCursor()) );
 
 
-  action = new KAction( i18n("Insert Special Character"), this );
+  action = new KAction( i18n("Insert Special Character..."), this );
   actionCollection()->addAction( "insert_special_character", action );
   connect( action, SIGNAL(triggered(bool)), this, SLOT(insertSpecialCharacter()) );
 
