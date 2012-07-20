@@ -1,5 +1,5 @@
 <!DOCTYPE kpartgui SYSTEM "kpartgui.dtd" >
-<kpartgui version="417" name="kmcomposer" >
+<kpartgui version="418" name="kmcomposer" >
  <MenuBar>
   <Menu noMerge="1" name="file" >
    <text>&amp;Message</text>
@@ -127,6 +127,7 @@
   <Action name="insert_horizontal_rule" />
   <Action name="add_image" />
   <Action name="insert_html" />
+  <Action name="insert_table" />
  </ToolBar>
  <ToolBar noMerge="1" newline="true" hidden="true" enable="0" name="directionToolBar" iconText="icononly" >
   <text>Text Direction Toolbar</text>
