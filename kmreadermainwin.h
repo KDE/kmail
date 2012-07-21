@@ -79,7 +79,7 @@ private:
   Akonadi::Collection parentCollection() const;
   void initKMReaderMainWin();
   void setupAccel();
-  KAction *copyActionMenu();
+  KAction *copyActionMenu(QMenu *menu);
   
   KMReaderWin *mReaderWin;
   Akonadi::Item mMsg;
