@@ -382,6 +382,8 @@ void MessageActions::updateMailingListActions( const Akonadi::Item& messageItem 
       }
     }
     mMailingListActionMenu->menu()->clear();
+    qDeleteAll(mMailListActionList);
+    mMailListActionList.clear();
     if ( !listId.isEmpty() )
       mMailingListActionMenu->menu()->addTitle( listId );
 
@@ -598,6 +600,7 @@ void MessageActions::addMailingListAction( const QString &item, const KUrl &url 
   }
   // item is a mailing list url description passed from the updateActions method above.
   KAction *act = new KAction( i18nc( "%1 is a 'Contact Owner' or similar action. %2 is a protocol normally web or email though could be irc/ftp or other url variant", "%1 (%2)",  item, protocol ) , this );
+  mMailListActionList.append(act);
   const QVariant v(  url.url() );
   act-> setData( v );
   act-> setHelpText( prettyUrl );
