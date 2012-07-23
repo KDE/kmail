@@ -772,10 +772,13 @@ void KMMainWidget::layoutSplitters()
   QList<int> splitter2Sizes;
 
   const int folderViewWidth = GlobalSettings::self()->folderViewWidth();
+  int ftHeight = GlobalSettings::self()->folderTreeHeight();
   int headerHeight = GlobalSettings::self()->searchAndHeaderHeight();
   const int messageViewerWidth = GlobalSettings::self()->readerWindowWidth();
   int headerWidth = GlobalSettings::self()->searchAndHeaderWidth();
   int messageViewerHeight = GlobalSettings::self()->readerWindowHeight();
+
+  int ffvHeight = mFolderViewSplitter ? GlobalSettings::self()->favoriteCollectionViewHeight() : 0;
 
   // If the message viewer was hidden before, make sure it is not zero height
   if ( messageViewerHeight < 10 && readerWindowBelow ) {
@@ -797,7 +800,7 @@ void KMMainWidget::layoutSplitters()
       splitter2Sizes << folderViewWidth << headerWidth;
     } else {
       splitter1Sizes << headerWidth << messageViewerWidth;
-      splitter2Sizes << folderViewWidth << ( headerWidth + messageViewerWidth );
+      splitter2Sizes<< ftHeight + ffvHeight << messageViewerHeight;
     }
   }
 
@@ -806,8 +809,6 @@ void KMMainWidget::layoutSplitters()
 
   if ( mFolderViewSplitter ) {
     QList<int> splitterSizes;
-    int ffvHeight = GlobalSettings::self()->favoriteCollectionViewHeight();
-    int ftHeight = GlobalSettings::self()->folderTreeHeight();
     splitterSizes << ffvHeight << ftHeight;
     mFolderViewSplitter->setSizes( splitterSizes );
   }
@@ -931,7 +932,6 @@ void KMMainWidget::writeConfig(bool force)
   // loaded, but not necessarily shown.
   // This prevents invalid sizes from being saved
   if ( mWasEverShown ) {
-
     // The height of the header widget can be 0, this happens when the user
     // did not switch to the header widget onced and the "Welcome to KMail"
     // HTML widget was shown the whole time
@@ -944,13 +944,14 @@ void KMMainWidget::writeConfig(bool force)
     if ( mFavoriteCollectionsView ) {
       GlobalSettings::self()->setFavoriteCollectionViewHeight( mFavoriteCollectionsView->height() );
       GlobalSettings::self()->setFolderTreeHeight( mFolderTreeWidget->height() );
-      if ( !mLongFolderList )
+      if ( !mLongFolderList ) {
         GlobalSettings::self()->setFolderViewHeight( mFolderViewSplitter->height() );
+      }
     }
     else if ( !mLongFolderList && mFolderTreeWidget )
-      {
-        GlobalSettings::self()->setFolderTreeHeight( mFolderTreeWidget->height() );
-      }
+    {
+       GlobalSettings::self()->setFolderTreeHeight( mFolderTreeWidget->height() );
+    }
     if ( mFolderTreeWidget )
     {
       GlobalSettings::self()->setFolderViewWidth( mFolderTreeWidget->width() );
