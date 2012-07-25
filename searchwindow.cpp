@@ -385,7 +385,7 @@ void SearchWindow::createSearchModel()
   }
   mResultModel = new KMSearchMessageModel( this );
   mResultModel->setCollection( mFolder );
-  KMSearchFilterProxyModel *sortproxy = new KMSearchFilterProxyModel( this );
+  KMSearchFilterProxyModel *sortproxy = new KMSearchFilterProxyModel( mResultModel );
   sortproxy->setSourceModel( mResultModel );
   mLbxMatches->setModel( sortproxy );
 
