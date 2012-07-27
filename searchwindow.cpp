@@ -88,7 +88,8 @@ SearchWindow::SearchWindow( KMMainWidget *widget, const Akonadi::Collection &col
     mTimer( new QTimer( this ) ),
     mResultModel( 0 ),
     mLastFocus( 0 ),
-    mKMMainWidget( widget )
+    mKMMainWidget( widget ),
+    mAkonadiStandardAction( 0 )
 {
   setCaption( i18n( "Find Messages" ) );
   setButtons( User1 | User2 | Close );
@@ -384,7 +385,7 @@ void SearchWindow::createSearchModel()
   }
   mResultModel = new KMSearchMessageModel( this );
   mResultModel->setCollection( mFolder );
-  KMSearchFilterProxyModel *sortproxy = new KMSearchFilterProxyModel( this );
+  KMSearchFilterProxyModel *sortproxy = new KMSearchFilterProxyModel( mResultModel );
   sortproxy->setSourceModel( mResultModel );
   mLbxMatches->setModel( sortproxy );
 
@@ -398,7 +399,8 @@ void SearchWindow::createSearchModel()
   mLbxMatches->header()->setSortIndicator( 2, Qt::DescendingOrder );
   mLbxMatches->header()->setStretchLastSection( false );
   //mLbxMatches->header()->setResizeMode( 3, QHeaderView::Stretch );
-  mAkonadiStandardAction = new Akonadi::StandardMailActionManager( actionCollection(), this );
+  if(!mAkonadiStandardAction)
+      mAkonadiStandardAction = new Akonadi::StandardMailActionManager( actionCollection(), this );
   mAkonadiStandardAction->setItemSelectionModel( mLbxMatches->selectionModel() );
   mAkonadiStandardAction->setCollectionSelectionModel( mKMMainWidget->folderTreeView()->selectionModel() );
 
