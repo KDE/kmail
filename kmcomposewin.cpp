@@ -134,6 +134,7 @@
 #include <krun.h>
 #include <KIO/JobUiDelegate>
 #include <KPrintPreview>
+#include <KFileDialog>
 
 // Qt includes
 #include <QClipboard>
@@ -1146,6 +1147,11 @@ void KMComposeWin::setupActions( void )
   action = new KAction( KIcon( "document-save" ), i18n("Save as &Template"), this );
   actionCollection()->addAction( "save_in_templates", action );
   connect( action, SIGNAL(triggered(bool)), SLOT(slotSaveTemplate()) );
+
+  action = new KAction( KIcon( "document-save" ), i18n("Save as &File"), this );
+  actionCollection()->addAction( "save_as_file", action );
+  connect( action, SIGNAL(triggered(bool)), SLOT(slotSaveAsFile()) );
+
 
   action = new KAction(KIcon("document-open"), i18n("&Insert Text File..."), this);
   actionCollection()->addAction("insert_file", action );
@@ -3347,4 +3353,30 @@ void KMComposeWin::insertSpecialCharacter()
 void KMComposeWin::charSelected(const QChar& c)
 {
   mComposerBase->editor()->insertPlainText(c);
+}
+
+void KMComposeWin::slotSaveAsFile()
+{
+    KFileDialog *dlg = new KFileDialog(KUrl(),QString(),this);
+    dlg->setOperationMode(KFileDialog::Saving);
+    if(mComposerBase->editor()->textMode() == KMeditor::Rich ) {
+      dlg->setFilter( QString::fromLatin1("text/html text/plain") );
+    } else {
+      dlg->setFilter( QString::fromLatin1("text/plain") );
+    }
+
+    if(dlg->exec()) {
+        QFile file( dlg->selectedUrl().path() );
+        if ( !file.open( QIODevice::WriteOnly| QIODevice::Text ) ) {
+          delete dlg;
+          return;
+        }
+        QTextStream out(&file);
+        if(dlg->currentFilter() == QString::fromLatin1("text/html") ) {
+          out<<mComposerBase->editor()->toHtml();
+        } else {
+          out<<mComposerBase->editor()->toPlainText();
+        }
+    }
+    delete dlg;
 }

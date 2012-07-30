@@ -432,6 +432,7 @@ class KMComposeWin : public KMail::Composer
     void forceAutoSaveMessage();
     void insertSpecialCharacter();
     void charSelected(const QChar& c);
+    void slotSaveAsFile();
 
   public: // kmcommand
     // FIXME we need to remove these, but they're pure virtual in Composer.
