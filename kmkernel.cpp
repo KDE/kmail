@@ -1875,11 +1875,14 @@ void KMKernel::openFilterDialog(bool createDummyFilter)
     mFilterEditDialog->setObjectName( "filterdialog" );
   }
   mFilterEditDialog->show();
+  mFilterEditDialog->raise();
+  mFilterEditDialog->activateWindow();
 }
 
 void KMKernel::createFilter(const QByteArray& field, const QString& value)
 {
   mFilterEditDialog->createFilter( field, value );
+
 }
 
 
