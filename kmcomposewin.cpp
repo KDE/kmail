@@ -1505,6 +1505,13 @@ void KMComposeWin::setCurrentTransport( int transportId )
   mComposerBase->transportComboBox()->setCurrentTransport( transportId );
 }
 
+void KMComposeWin::setCurrentReplyTo(const QString& replyTo)
+{
+  if ( mEdtReplyTo ) {
+    mEdtReplyTo->setText( replyTo );
+  }
+}
+
 //-----------------------------------------------------------------------------
 void KMComposeWin::setMsg( const KMime::Message::Ptr &newMsg, bool mayAutoSign,
                            bool allowDecryption, bool isModified )
@@ -1519,7 +1526,6 @@ void KMComposeWin::setMsg( const KMime::Message::Ptr &newMsg, bool mayAutoSign,
   KPIMIdentities::IdentityManager * im = KMKernel::self()->identityManager();
 
   mEdtFrom->setText( mMsg->from()->asUnicodeString() );
-  mEdtReplyTo->setText( mMsg->replyTo()->asUnicodeString() );
   mEdtSubject->setText( mMsg->subject()->asUnicodeString() );
 
 
@@ -1646,6 +1652,8 @@ void KMComposeWin::setMsg( const KMime::Message::Ptr &newMsg, bool mayAutoSign,
   if ( !stickyDictionary ) {
     mDictionaryCombo->setCurrentByDictionaryName( ident.dictionary() );
   }
+
+  mEdtReplyTo->setText( mMsg->replyTo()->asUnicodeString() );
 
   KMime::Content *msgContent = new KMime::Content;
   msgContent->setContent( mMsg->encodedContent() );

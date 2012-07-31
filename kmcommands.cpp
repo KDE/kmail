@@ -615,6 +615,12 @@ KMCommand::Result KMEditItemCommand::execute()
     }
   }
 
+
+  if(msg->headerByType( "Reply-To" )) {
+    const QString replyTo = msg->headerByType( "Reply-To" )->asUnicodeString();
+    win->setCurrentReplyTo(replyTo);
+  }
+
   const MailTransport::SentBehaviourAttribute *sentAttribute = item.attribute<MailTransport::SentBehaviourAttribute>();
   if ( sentAttribute && ( sentAttribute->sentBehaviour() == MailTransport::SentBehaviourAttribute::MoveToCollection ) )
     win->setFcc( QString::number( sentAttribute->moveToCollection().id() ) );
@@ -1523,6 +1529,10 @@ KMCommand::Result KMResendMessageCommand::execute()
   newMsg->contentType()->setCharset( MessageViewer::NodeHelper::charset( msg.get() ) );
 
   KMail::Composer * win = KMail::makeComposer();
+  if(msg->headerByType( "Reply-To" )) {
+    const QString replyTo = msg->headerByType( "Reply-To" )->asUnicodeString();
+    win->setCurrentReplyTo(replyTo);
+  }
   win->setMsg( newMsg, false, true );
   win->show();
 
