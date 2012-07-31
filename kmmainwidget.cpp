@@ -3081,6 +3081,12 @@ void KMMainWidget::slotDelayedMessagePopup( KJob *job )
 
     menu->addAction( mMsgActions->messageStatusMenu() );
     menu->addSeparator();
+    if(!iUrl.isEmpty()) {
+      menu->addSeparator();
+      menu->addAction( mMsgView->copyImageLocation());
+      menu->addAction( mMsgView->downloadImageToDiskAction());
+      menu->addSeparator();
+    }
 
     menu->addAction( viewSourceAction() );
     if ( mMsgView ) {
@@ -3101,6 +3107,7 @@ void KMMainWidget::slotDelayedMessagePopup( KJob *job )
     menu->addSeparator();
     menu->addAction( mMsgActions->createTodoAction() );
     menu->addAction( mMsgActions->annotateAction() );
+
   }
   KAcceleratorManager::manage(menu);
   menu->exec( aPoint, 0 );
