@@ -324,7 +324,7 @@ K_GLOBAL_STATIC( KMMainWidget::PtrList, theMainWidgetList )
 
 }
 
-void KMMainWidget::restoreCollectionFolderViewConfig()
+void KMMainWidget::restoreCollectionFolderViewConfig(Akonadi::Collection::Id id)
 {
   ETMViewStateSaver *saver = new ETMViewStateSaver;
   saver->setView( mFolderTreeWidget->folderTreeView() );
@@ -332,9 +332,14 @@ void KMMainWidget::restoreCollectionFolderViewConfig()
   mFolderTreeWidget->restoreHeaderState( cfg.readEntry( "HeaderState", QByteArray() ) );
   saver->restoreState( cfg );
   //Restore startup folder
-  Akonadi::Collection::Id startupFolder = GlobalSettings::self()->startupFolder();
-  if ( startupFolder > 0 )
-    saver->restoreCurrentItem( QString::fromLatin1("c%1").arg(startupFolder) );
+
+  if(id == -1) {
+    Akonadi::Collection::Id startupFolder = GlobalSettings::self()->startupFolder();
+    if ( startupFolder > 0 )
+      saver->restoreCurrentItem( QString::fromLatin1("c%1").arg(startupFolder) );
+  } else {
+    saver->restoreCurrentItem( QString::fromLatin1("c%1").arg(id) );
+  }
 }
 
 
@@ -879,7 +884,11 @@ void KMMainWidget::readConfig()
     if( layoutChanged ) {
       deleteWidgets();
       createWidgets();
-      restoreCollectionFolderViewConfig();
+      Akonadi::Collection::Id id = -1;
+      if(mCurrentFolder && mCurrentFolder->collection().isValid() ) {
+          id = mCurrentFolder->collection().id();
+      }
+      restoreCollectionFolderViewConfig(id);
     } else if ( oldFolderQuickSearch != mEnableFolderQuickSearch ) {
       if ( mEnableFolderQuickSearch )
         mFolderTreeWidget->filterFolderLineEdit()->show();
