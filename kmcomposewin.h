@@ -230,6 +230,7 @@ class KMComposeWin : public KMail::Composer
 
   bool insertFromMimeData( const QMimeData *source, bool forceAttachment = false );
 
+     void setCurrentReplyTo(const QString&);
   private:
   /**
    * Write settings to app's config file.
