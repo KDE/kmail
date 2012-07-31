@@ -1141,14 +1141,17 @@ void KMComposeWin::setupActions( void )
 
   KAction *action = new KAction( KIcon( "document-save" ), i18n("Save as &Draft"), this );
   actionCollection()->addAction("save_in_drafts", action );
+  action->setHelpText(i18n("Save email in Draft folder"));
   action->setShortcut(QKeySequence(Qt::CTRL + Qt::Key_S));
   connect( action, SIGNAL(triggered(bool)), SLOT(slotSaveDraft()) );
 
   action = new KAction( KIcon( "document-save" ), i18n("Save as &Template"), this );
+  action->setHelpText(i18n("Save email in Template folder"));
   actionCollection()->addAction( "save_in_templates", action );
   connect( action, SIGNAL(triggered(bool)), SLOT(slotSaveTemplate()) );
 
   action = new KAction( KIcon( "document-save" ), i18n("Save as &File"), this );
+  action->setHelpText(i18n("Save email as text or html file"));
   actionCollection()->addAction( "save_as_file", action );
   connect( action, SIGNAL(triggered(bool)), SLOT(slotSaveAsFile()) );
 
@@ -1167,6 +1170,7 @@ void KMComposeWin::setupActions( void )
   mRecentAction->loadEntries( KMKernel::self()->config()->group( QString() ) );
 
   action = new KAction(KIcon("x-office-address-book"), i18n("&Address Book"), this);
+  action->setHelpText(i18n("Open Address Book"));
   actionCollection()->addAction("addressbook", action );
   if (KStandardDirs::findExe("kaddressbook").isEmpty())
      action->setEnabled(false);
