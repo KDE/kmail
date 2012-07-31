@@ -514,6 +514,13 @@ void KMReaderMainWin::slotDelayedMessagePopup( KJob *job )
     menu->addAction( copyActionMenu(menu) );
 
     menu->addSeparator();
+    if(!iUrl.isEmpty()) {
+      menu->addSeparator();
+      menu->addAction( mReaderWin->copyImageLocation());
+      menu->addAction( mReaderWin->downloadImageToDiskAction());
+      menu->addSeparator();
+    }
+
     menu->addAction( mViewSourceAction );
     menu->addAction( mReaderWin->toggleFixFontAction() );
     menu->addAction( mReaderWin->toggleMimePartTreeAction() );
