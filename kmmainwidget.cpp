@@ -4371,7 +4371,7 @@ void KMMainWidget::slotImportWizard()
 //-----------------------------------------------------------------------------
 void KMMainWidget::slotFilterLogViewer()
 {
-  MailCommon::FilterManager::instance()->showFilterLogDialog();
+  MailCommon::FilterManager::instance()->showFilterLogDialog(winId());
 }
 
 //-----------------------------------------------------------------------------
