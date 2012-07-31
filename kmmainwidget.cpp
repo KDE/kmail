@@ -2547,8 +2547,10 @@ void KMMainWidget::slotEditVacation()
     return;
   }
 
-  if ( mVacation )
+  if ( mVacation ) {
+    mVacation->showVacationDialog();
     return;
+  }
 
   mVacation = new Vacation( this );
   connect( mVacation, SIGNAL(scriptActive(bool)), SLOT(updateVacationScriptStatus(bool)) );
