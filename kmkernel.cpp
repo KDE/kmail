@@ -1278,6 +1278,14 @@ void KMKernel::closeAllKMailWindows()
 
 void KMKernel::cleanup(void)
 {
+  disconnect( Akonadi::AgentManager::self(), SIGNAL(instanceStatusChanged(Akonadi::AgentInstance)));
+  disconnect( Akonadi::AgentManager::self(), SIGNAL(instanceError(Akonadi::AgentInstance,QString)));
+  disconnect( Akonadi::AgentManager::self(), SIGNAL(instanceWarning(Akonadi::AgentInstance,QString)));
+  disconnect( Akonadi::AgentManager::self(), SIGNAL(instanceRemoved(Akonadi::AgentInstance)));
+  disconnect ( Solid::Networking::notifier(), SIGNAL(statusChanged(Solid::Networking::Status)));
+  disconnect( KPIM::ProgressManager::instance(), SIGNAL(progressItemCompleted(KPIM::ProgressItem*)));
+  disconnect( KPIM::ProgressManager::instance(), SIGNAL(progressItemCanceled(KPIM::ProgressItem*)));
+
   dumpDeadLetters();
   the_shuttingDown = true;
   closeAllKMailWindows();
@@ -1875,11 +1883,14 @@ void KMKernel::openFilterDialog(bool createDummyFilter)
     mFilterEditDialog->setObjectName( "filterdialog" );
   }
   mFilterEditDialog->show();
+  mFilterEditDialog->raise();
+  mFilterEditDialog->activateWindow();
 }
 
 void KMKernel::createFilter(const QByteArray& field, const QString& value)
 {
   mFilterEditDialog->createFilter( field, value );
+
 }
 
 

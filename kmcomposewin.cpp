@@ -1097,7 +1097,7 @@ void KMComposeWin::setupActions( void )
 
   } else {
     //default = queue, alternative = send now
-    QAction *action = new KAction( KIcon( "mail-queue" ), i18n("Send &Later"), this );
+    KAction *action = new KAction( KIcon( "mail-queue" ), i18n("Send &Later"), this );
     actionCollection()->addAction( "send_default", action );
     connect( action, SIGNAL(triggered(bool)), SLOT(slotSendLater()) );
     action->setShortcut( QKeySequence( Qt::CTRL + Qt::Key_Return ) );
@@ -1138,6 +1138,7 @@ void KMComposeWin::setupActions( void )
 
   KAction *action = new KAction( KIcon( "document-save" ), i18n("Save as &Draft"), this );
   actionCollection()->addAction("save_in_drafts", action );
+  action->setShortcut(QKeySequence(Qt::CTRL + Qt::Key_S));
   connect( action, SIGNAL(triggered(bool)), SLOT(slotSaveDraft()) );
 
   action = new KAction( KIcon( "document-save" ), i18n("Save as &Template"), this );
@@ -1486,6 +1487,13 @@ void KMComposeWin::setCurrentTransport( int transportId )
   mComposerBase->transportComboBox()->setCurrentTransport( transportId );
 }
 
+void KMComposeWin::setCurrentReplyTo(const QString& replyTo)
+{
+  if ( mEdtReplyTo ) {
+    mEdtReplyTo->setText( replyTo );
+  }
+}
+
 //-----------------------------------------------------------------------------
 void KMComposeWin::setMsg( const KMime::Message::Ptr &newMsg, bool mayAutoSign,
                            bool allowDecryption, bool isModified )
@@ -1500,7 +1508,6 @@ void KMComposeWin::setMsg( const KMime::Message::Ptr &newMsg, bool mayAutoSign,
   KPIMIdentities::IdentityManager * im = KMKernel::self()->identityManager();
 
   mEdtFrom->setText( mMsg->from()->asUnicodeString() );
-  mEdtReplyTo->setText( mMsg->replyTo()->asUnicodeString() );
   mEdtSubject->setText( mMsg->subject()->asUnicodeString() );
 
 
@@ -1627,6 +1634,8 @@ void KMComposeWin::setMsg( const KMime::Message::Ptr &newMsg, bool mayAutoSign,
   if ( !stickyDictionary ) {
     mDictionaryCombo->setCurrentByDictionaryName( ident.dictionary() );
   }
+
+  mEdtReplyTo->setText( mMsg->replyTo()->asUnicodeString() );
 
   KMime::Content *msgContent = new KMime::Content;
   msgContent->setContent( mMsg->encodedContent() );

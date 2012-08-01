@@ -324,7 +324,7 @@ K_GLOBAL_STATIC( KMMainWidget::PtrList, theMainWidgetList )
 
 }
 
-void KMMainWidget::restoreCollectionFolderViewConfig()
+void KMMainWidget::restoreCollectionFolderViewConfig(Akonadi::Collection::Id id)
 {
   ETMViewStateSaver *saver = new ETMViewStateSaver;
   saver->setView( mFolderTreeWidget->folderTreeView() );
@@ -332,9 +332,14 @@ void KMMainWidget::restoreCollectionFolderViewConfig()
   mFolderTreeWidget->restoreHeaderState( cfg.readEntry( "HeaderState", QByteArray() ) );
   saver->restoreState( cfg );
   //Restore startup folder
-  Akonadi::Collection::Id startupFolder = GlobalSettings::self()->startupFolder();
-  if ( startupFolder > 0 )
-    saver->restoreCurrentItem( QString::fromLatin1("c%1").arg(startupFolder) );
+
+  if(id == -1) {
+    Akonadi::Collection::Id startupFolder = GlobalSettings::self()->startupFolder();
+    if ( startupFolder > 0 )
+      saver->restoreCurrentItem( QString::fromLatin1("c%1").arg(startupFolder) );
+  } else {
+    saver->restoreCurrentItem( QString::fromLatin1("c%1").arg(id) );
+  }
 }
 
 
@@ -772,10 +777,13 @@ void KMMainWidget::layoutSplitters()
   QList<int> splitter2Sizes;
 
   const int folderViewWidth = GlobalSettings::self()->folderViewWidth();
+  int ftHeight = GlobalSettings::self()->folderTreeHeight();
   int headerHeight = GlobalSettings::self()->searchAndHeaderHeight();
   const int messageViewerWidth = GlobalSettings::self()->readerWindowWidth();
   int headerWidth = GlobalSettings::self()->searchAndHeaderWidth();
   int messageViewerHeight = GlobalSettings::self()->readerWindowHeight();
+
+  int ffvHeight = mFolderViewSplitter ? GlobalSettings::self()->favoriteCollectionViewHeight() : 0;
 
   // If the message viewer was hidden before, make sure it is not zero height
   if ( messageViewerHeight < 10 && readerWindowBelow ) {
@@ -797,7 +805,7 @@ void KMMainWidget::layoutSplitters()
       splitter2Sizes << folderViewWidth << headerWidth;
     } else {
       splitter1Sizes << headerWidth << messageViewerWidth;
-      splitter2Sizes << folderViewWidth << ( headerWidth + messageViewerWidth );
+      splitter2Sizes<< ftHeight + ffvHeight << messageViewerHeight;
     }
   }
 
@@ -806,8 +814,6 @@ void KMMainWidget::layoutSplitters()
 
   if ( mFolderViewSplitter ) {
     QList<int> splitterSizes;
-    int ffvHeight = GlobalSettings::self()->favoriteCollectionViewHeight();
-    int ftHeight = GlobalSettings::self()->folderTreeHeight();
     splitterSizes << ffvHeight << ftHeight;
     mFolderViewSplitter->setSizes( splitterSizes );
   }
@@ -878,7 +884,11 @@ void KMMainWidget::readConfig()
     if( layoutChanged ) {
       deleteWidgets();
       createWidgets();
-      restoreCollectionFolderViewConfig();
+      Akonadi::Collection::Id id = -1;
+      if(mCurrentFolder && mCurrentFolder->collection().isValid() ) {
+          id = mCurrentFolder->collection().id();
+      }
+      restoreCollectionFolderViewConfig(id);
     } else if ( oldFolderQuickSearch != mEnableFolderQuickSearch ) {
       if ( mEnableFolderQuickSearch )
         mFolderTreeWidget->filterFolderLineEdit()->show();
@@ -931,7 +941,6 @@ void KMMainWidget::writeConfig(bool force)
   // loaded, but not necessarily shown.
   // This prevents invalid sizes from being saved
   if ( mWasEverShown ) {
-
     // The height of the header widget can be 0, this happens when the user
     // did not switch to the header widget onced and the "Welcome to KMail"
     // HTML widget was shown the whole time
@@ -944,13 +953,14 @@ void KMMainWidget::writeConfig(bool force)
     if ( mFavoriteCollectionsView ) {
       GlobalSettings::self()->setFavoriteCollectionViewHeight( mFavoriteCollectionsView->height() );
       GlobalSettings::self()->setFolderTreeHeight( mFolderTreeWidget->height() );
-      if ( !mLongFolderList )
+      if ( !mLongFolderList ) {
         GlobalSettings::self()->setFolderViewHeight( mFolderViewSplitter->height() );
+      }
     }
     else if ( !mLongFolderList && mFolderTreeWidget )
-      {
-        GlobalSettings::self()->setFolderTreeHeight( mFolderTreeWidget->height() );
-      }
+    {
+       GlobalSettings::self()->setFolderTreeHeight( mFolderTreeWidget->height() );
+    }
     if ( mFolderTreeWidget )
     {
       GlobalSettings::self()->setFolderViewWidth( mFolderTreeWidget->width() );
@@ -2546,8 +2556,10 @@ void KMMainWidget::slotEditVacation()
     return;
   }
 
-  if ( mVacation )
+  if ( mVacation ) {
+    mVacation->showVacationDialog();
     return;
+  }
 
   mVacation = new Vacation( this );
   connect( mVacation, SIGNAL(scriptActive(bool)), SLOT(updateVacationScriptStatus(bool)) );
@@ -3069,6 +3081,12 @@ void KMMainWidget::slotDelayedMessagePopup( KJob *job )
 
     menu->addAction( mMsgActions->messageStatusMenu() );
     menu->addSeparator();
+    if(!iUrl.isEmpty()) {
+      menu->addSeparator();
+      menu->addAction( mMsgView->copyImageLocation());
+      menu->addAction( mMsgView->downloadImageToDiskAction());
+      menu->addSeparator();
+    }
 
     menu->addAction( viewSourceAction() );
     if ( mMsgView ) {
@@ -3089,6 +3107,7 @@ void KMMainWidget::slotDelayedMessagePopup( KJob *job )
     menu->addSeparator();
     menu->addAction( mMsgActions->createTodoAction() );
     menu->addAction( mMsgActions->annotateAction() );
+
   }
   KAcceleratorManager::manage(menu);
   menu->exec( aPoint, 0 );

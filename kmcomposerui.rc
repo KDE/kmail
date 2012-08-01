@@ -1,5 +1,5 @@
 <!DOCTYPE kpartgui SYSTEM "kpartgui.dtd" >
-<kpartgui version="418" name="kmcomposer" >
+<kpartgui version="419" name="kmcomposer" >
  <MenuBar>
   <Menu noMerge="1" name="file" >
    <text>&amp;Message</text>
@@ -93,6 +93,8 @@
   <Action name="send_default_via" />
   <Action name="send_alternative_via" />
   <Separator/>
+  <Action name="spellcheck" />
+  <Separator/> 
   <Action name="attach" />
   <Separator/>
   <Action name="edit_cut" />

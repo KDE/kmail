@@ -139,13 +139,15 @@ void KMReaderMainWin::showMessage( const QString & encoding, const Akonadi::Item
   mReaderWin->setMessage( msg, MessageViewer::Viewer::Force );
   KMime::Message::Ptr message = MessageCore::Util::message( msg );
   QString caption;
-  if(mParentCollection.isValid()) {
-    caption = MailCommon::Util::fullCollectionPath( mParentCollection );
-    caption += QLatin1String(" - ");
-  }
   if ( message ) {
-    caption += message->subject()->asUnicodeString();
-    setCaption( caption );
+    caption = message->subject()->asUnicodeString();
+  }
+  if(mParentCollection.isValid()) {
+    caption += QLatin1String(" - ");
+    caption += MailCommon::Util::fullCollectionPath( mParentCollection );
+  }
+  if(!caption.isEmpty()) {
+    setCaption(caption);
   }
   mMsg = msg;
   mMsgActions->setCurrentMessage( msg );
@@ -512,6 +514,13 @@ void KMReaderMainWin::slotDelayedMessagePopup( KJob *job )
     menu->addAction( copyActionMenu(menu) );
 
     menu->addSeparator();
+    if(!iUrl.isEmpty()) {
+      menu->addSeparator();
+      menu->addAction( mReaderWin->copyImageLocation());
+      menu->addAction( mReaderWin->downloadImageToDiskAction());
+      menu->addSeparator();
+    }
+
     menu->addAction( mViewSourceAction );
     menu->addAction( mReaderWin->toggleFixFontAction() );
     menu->addAction( mReaderWin->toggleMimePartTreeAction() );
