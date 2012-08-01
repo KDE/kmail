@@ -278,11 +278,11 @@ void KMKernel::migrateFromKMail1()
       if ( choice == KMessageBox::Cancel )
         exit( 1 );
 
-      // we only will make one attempt at this
-      migrationCfg.writeEntry( "Version", targetVersion );
-      migrationCfg.sync();
+      if ( choice != KMessageBox::Yes ) {  // user skipped migration
+        // we only will make one attempt at this
+        migrationCfg.writeEntry( "Version", targetVersion );
+        migrationCfg.sync();
 
-      if ( choice != KMessageBox::Yes ) {
         return;
       }
 
