@@ -1011,6 +1011,8 @@ KMCommand::Result KMRedirectCommand::execute()
                                              ? MessageSender::SendImmediate
                                              : MessageSender::SendLater;
 
+  const int identity = dlg->identity();
+  int transportId = dlg->transportId();
   const QString to = dlg->to();
   foreach( const Akonadi::Item &item, retrievedMsgs() ) {
     const KMime::Message::Ptr msg = MessageCore::Util::message( item );
@@ -1021,13 +1023,14 @@ KMCommand::Result KMRedirectCommand::execute()
     factory.setIdentityManager( KMKernel::self()->identityManager() );
     factory.setFolderIdentity( MailCommon::Util::folderIdentity( item ) );
 
-    const MailTransport::TransportAttribute *transportAttribute = item.attribute<MailTransport::TransportAttribute>();
-    int transportId = -1;
-    if ( transportAttribute ) {
-      transportId = transportAttribute->transportId();
-      const MailTransport::Transport *transport = MailTransport::TransportManager::self()->transportById( transportId );
-      if ( !transport ) {
-        transportId = -1;
+    if(transportId == -1) {
+      const MailTransport::TransportAttribute *transportAttribute = item.attribute<MailTransport::TransportAttribute>();
+      if ( transportAttribute ) {
+        transportId = transportAttribute->transportId();
+        const MailTransport::Transport *transport = MailTransport::TransportManager::self()->transportById( transportId );
+        if ( !transport ) {
+          transportId = -1;
+        }
       }
     }
 
@@ -1036,7 +1039,7 @@ KMCommand::Result KMRedirectCommand::execute()
     if ( sentAttribute && ( sentAttribute->sentBehaviour() == MailTransport::SentBehaviourAttribute::MoveToCollection ) )
       fcc =  QString::number( sentAttribute->moveToCollection().id() );
 
-    const KMime::Message::Ptr newMsg = factory.createRedirect( to, transportId, fcc );
+    const KMime::Message::Ptr newMsg = factory.createRedirect( to, transportId, fcc, identity );
     if ( !newMsg )
       return Failed;
 
