@@ -4389,7 +4389,7 @@ void KMMainWidget::slotImportWizard()
 //-----------------------------------------------------------------------------
 void KMMainWidget::slotFilterLogViewer()
 {
-  MailCommon::FilterManager::instance()->showFilterLogDialog(winId());
+  MailCommon::FilterManager::instance()->showFilterLogDialog( (qlonglong)winId() );
 }
 
 //-----------------------------------------------------------------------------
@@ -4659,7 +4659,7 @@ void KMMainWidget::slotConfigureAutomaticArchiving()
 {
   OrgFreedesktopAkonadiArchiveMailAgentInterface archiveMailInterface(QLatin1String("org.freedesktop.Akonadi.ArchiveMailAgent"), QLatin1String("/ArchiveMailAgent"),QDBusConnection::sessionBus(), this);
   if(archiveMailInterface.isValid()) {
-      archiveMailInterface.showConfigureDialog(winId());
+      archiveMailInterface.showConfigureDialog( (qlonglong)winId() );
   } else {
       KMessageBox::error(this,i18n("Archive Mail Agent was not registered."));
   }
