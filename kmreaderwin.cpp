@@ -45,7 +45,6 @@ using MessageViewer::CSSHelper;
 #include "stringutil.h"
 
 #include <kmime/kmime_mdn.h>
-using namespace KMime;
 
 #include "messageviewer/viewer.h"
 using namespace MessageViewer;
