@@ -2282,6 +2282,7 @@ void KMMainWidget::slotUpdateMessageTagList( const QString &taglabel )
 void KMMainWidget::refreshMessageListSelection()
 {
   mAkonadiStandardActionManager->setItemSelectionModel( mMessagePane->currentItemSelectionModel() );
+  slotMessageSelected(mMessagePane->currentItem());
 }
 
 //-----------------------------------------------------------------------------
