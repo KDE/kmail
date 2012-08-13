@@ -799,7 +799,9 @@ KMReplyCommand::KMReplyCommand( QWidget *parent, const Akonadi::Item &msg, Messa
   : KMCommand( parent, msg ),
     mSelection( selection ),
     mTemplate( templateName ),
-    m_replyStrategy( replyStrategy )
+    m_replyStrategy( replyStrategy ),
+    mNoQuote(noquote)
+
 {
   if ( !noquote )
     fetchScope().fetchFullPayload( true );
@@ -825,6 +827,9 @@ KMCommand::Result KMReplyCommand::execute()
   factory.setSelection( mSelection );
   if ( !mTemplate.isEmpty() )
     factory.setTemplate( mTemplate );
+  if(mNoQuote) {
+    factory.setQuote(false);
+  }
   MessageFactory::MessageReply reply = factory.createReply();
   KMail::Composer * win = KMail::makeComposer( KMime::Message::Ptr( reply.msg ), replyContext( reply ), 0,
                                                mSelection,mTemplate );

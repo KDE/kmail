@@ -321,6 +321,7 @@ private:
   QString mSelection;
   QString mTemplate;
   MessageComposer::ReplyStrategy m_replyStrategy;
+  bool mNoQuote;
 };
 
 class KMAIL_EXPORT KMForwardCommand : public KMCommand
