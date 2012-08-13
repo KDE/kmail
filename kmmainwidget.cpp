@@ -2414,17 +2414,6 @@ void KMMainWidget::slotCustomForwardMsg( const QString &tmpl )
 }
 
 
-//-----------------------------------------------------------------------------
-void KMMainWidget::slotNoQuoteReplyToMsg()
-{
-  const Akonadi::Item msg = mMessagePane->currentItem();
-  if ( !msg.isValid() )
-    return;
-
-  KMCommand *command = new KMReplyCommand( this, msg, MessageComposer::ReplySmart, QString(), true );
-  command->start();
-}
-
 void KMMainWidget::openFilterDialog(const QByteArray &field, const QString &value)
 {
   FilterIf->openFilterDialog( false );

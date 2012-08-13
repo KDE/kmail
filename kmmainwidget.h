@@ -429,7 +429,6 @@ class KMAIL_EXPORT KMMainWidget : public QWidget
     void slotForwardAttachedMsg();
     void slotRedirectMsg();
     void slotCustomForwardMsg( const QString &tmpl );
-    void slotNoQuoteReplyToMsg();
     void slotSubjectFilter();
     void slotFromFilter();
     void slotToFilter();
