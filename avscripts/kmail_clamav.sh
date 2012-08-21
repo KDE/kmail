@@ -35,7 +35,7 @@ export TEMPFILE
 cat > $TEMPFILE
 
 # check for a running daemon
-if [ "`ps -eo comm|grep clamd`" = "clamd" ]; then
+if [ "`ps -axo comm|grep clamd`" = "clamd" ]; then
     chmod a+r $TEMPFILE
     CLAMCOMANDO="clamdscan --stdout --no-summary "
 else
