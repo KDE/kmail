@@ -2266,8 +2266,22 @@ void KMComposeWin::slotFetchJob(KJob*job)
       if ( item.hasPayload<KABC::Addressee>() ) {
         const KABC::Addressee contact = item.payload<KABC::Addressee>();
         attachmentName = contact.realName() + QLatin1String( ".vcf" );
+        //Workaround about broken kaddressbook fields.
+        QByteArray data = item.payloadData();
+        data.replace("X-messaging/aim-All",("X-AIM"));
+        data.replace("X-messaging/icq-All",("X-ICQ"));
+        data.replace("X-messaging/xmpp-All",("X-JABBER"));
+        data.replace("X-messaging/msn-All",("X-MSN"));
+        data.replace("X-messaging/yahoo-All",("X-YAHOO"));
+        data.replace("X-messaging/gadu-All",("X-GADUGADU"));
+        data.replace("X-messaging/skype-All",("X-SKYPE"));
+        data.replace("X-messaging/groupwise-All",("X-GROUPWISE"));
+        data.replace(("X-messaging/sms-All"),("X-SMS"));
+        data.replace(("X-messaging/meanwhile-All"),("X-MEANWHILE"));
+        addAttachment( attachmentName, KMime::Headers::CEbase64, QString(), data, item.mimeType().toLatin1() );
+      } else {
+        addAttachment( attachmentName, KMime::Headers::CEbase64, QString(), item.payloadData(), item.mimeType().toLatin1() );
       }
-      addAttachment( attachmentName, KMime::Headers::CEbase64, QString(), item.payloadData(), item.mimeType().toLatin1() );
     }
   }
 }
