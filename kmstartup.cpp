@@ -220,7 +220,8 @@ void insertLibraryCataloguesAndIcons() {
     "libakonadi-kmime",
     "akonadicontact",
     "libkpimtextedit",
-    "libkpimutils"
+    "libkpimutils",
+    "akonadicontact"
 
   };
 

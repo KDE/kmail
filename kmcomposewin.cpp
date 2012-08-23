@@ -547,7 +547,6 @@ void KMComposeWin::addAttachmentsAndSend( const KUrl::List &urls, const QString 
 //-----------------------------------------------------------------------------
 void KMComposeWin::addAttachment( const KUrl &url, const QString &comment )
 {
-  Q_UNUSED( comment );
   mComposerBase->addAttachment( url, comment );
 }
 
@@ -2651,6 +2650,7 @@ void KMComposeWin::doSend( MessageSender::SendMethod method,
     }
   }
 
+
   if ( saveIn == MessageSender::SaveInNone ) { // don't save as draft or template, send immediately
     if ( KPIMUtils::firstEmailAddress( from() ).isEmpty() ) {
       if ( !( mShowHeaders & HDR_FROM ) ) {
@@ -3019,7 +3019,6 @@ void KMComposeWin::slotIdentityChanged( uint uoid, bool initalChange )
   }
 
   emit identityChanged( identity() );
-
   if ( !ident.fullEmailAddr().isNull() ) {
     mEdtFrom->setText( ident.fullEmailAddr() );
   }

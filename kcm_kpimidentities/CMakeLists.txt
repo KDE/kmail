@@ -10,6 +10,7 @@ set(kcm_identities_srcs
   ../identitylistview.cpp
   ../newidentitydialog.cpp
   ../simplestringlisteditor.cpp
+  ../identityeditvcarddialog.cpp
 )
 if (NOT WINCE)
 set(kcm_identities_srcs

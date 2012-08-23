@@ -93,7 +93,7 @@ namespace KMail {
 
   private slots:
     void slotDelayedButtonClicked( KJob* );
-
+void slotEditVcard();
   private:
     bool checkFolderExists( const QString & folder, const QString & msg );
     bool validateAddresses( const QString & addresses );
@@ -121,6 +121,8 @@ namespace KMail {
     MailCommon::FolderRequester      *mTemplatesCombo;
     QCheckBox                        *mTransportCheck;
     MailTransport::TransportComboBox *mTransportCombo;
+    QCheckBox                        *mAttachMyVCard;
+    QString                          mVcardFilename;
     // "templates" tab:
     TemplateParser::TemplatesConfiguration *mWidget;
     QCheckBox                    *mCustom;

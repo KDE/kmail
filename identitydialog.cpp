@@ -30,6 +30,7 @@
 */
 
 #include "identitydialog.h"
+#include "identityeditvcarddialog.h"
 
 // other KMail headers:
 #ifndef KDEPIM_MOBILE_UI
@@ -76,6 +77,7 @@ using MailTransport::TransportManager;
 #include <kpushbutton.h>
 #include <kcombobox.h>
 #include <ktabwidget.h>
+#include <KStandardDirs>
 #include <sonnet/dictionarycombobox.h>
 
 // Qt headers:
@@ -359,7 +361,7 @@ namespace KMail {
     glay->setSpacing( spacingHint() );
     glay->setMargin( marginHint() );
     // the last (empty) row takes all the remaining space
-    glay->setRowStretch( 9-1, 1 );
+    glay->setRowStretch( 10-1, 1 );
     glay->setColumnStretch( 1, 1 );
 
     // "Reply-To Address" line edit and label:
@@ -470,6 +472,12 @@ namespace KMail {
     connect( mTransportCheck, SIGNAL(toggled(bool)),
              mTransportCombo, SLOT(setEnabled(bool)) );
 
+    ++row;
+    mAttachMyVCard = new QCheckBox(i18n("Attach my vcard to message"), tab);
+    glay->addWidget( mAttachMyVCard, row, 0 );
+    KPushButton *editVCard = new KPushButton(i18n("Edit..."),tab);
+    connect(editVCard,SIGNAL(clicked()),SLOT(slotEditVcard()));
+    glay->addWidget( editVCard, row, 1 );
     // the last row is a spacer
 
     //
@@ -793,6 +801,12 @@ namespace KMail {
     else
       mTemplatesCombo->setCollection( Akonadi::Collection( ident.templates().toLongLong() ) );
 
+    mVcardFilename = ident.vCardFile();
+    if(mVcardFilename.isEmpty()) {
+      //Store in default place.
+      mVcardFilename = KStandardDirs::locateLocal("appdata",ident.identityName() + QLatin1String(".vcf"));
+    }
+    mAttachMyVCard->setChecked(ident.attachVcard());
     // "Templates" tab:
 #ifndef KDEPIM_MOBILE_UI
     uint identity = ident.uoid();
@@ -861,6 +875,9 @@ namespace KMail {
     }
     else
       ident.setTemplates( QString() );
+    ident.setVCardFile(mVcardFilename);
+    ident.setAttachVcard(mAttachMyVCard->isChecked());
+
     // "Templates" tab:
 #ifndef KDEPIM_MOBILE_UI
     uint identity = ident.uoid();
@@ -878,6 +895,16 @@ namespace KMail {
     ident.setXFace( mXFaceConfigurator->xface() );
     ident.setXFaceEnabled( mXFaceConfigurator->isXFaceEnabled() );
 #endif
+
+  }
+  void IdentityDialog::slotEditVcard()
+  {
+    IdentityEditVcardDialog *dlg = new IdentityEditVcardDialog(this);
+    dlg->loadVcard(mVcardFilename);
+    if(dlg->exec()) {
+       mVcardFilename = dlg->saveVcard();
+    }
+    delete dlg;
   }
 }
 
