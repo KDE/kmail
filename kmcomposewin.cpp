@@ -538,7 +538,7 @@ void KMComposeWin::addAttachmentsAndSend( const KUrl::List &urls, const QString 
   kDebug() << "addAttachment and sending!";
   const int nbUrl = urls.count();
   for( int i =0; i < nbUrl; ++i ) {
-    addAttachment( urls[i], comment );
+    mComposerBase->addAttachmentUrlSync( urls[i], comment );
   }
 
   send( how );
