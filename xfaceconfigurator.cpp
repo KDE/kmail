@@ -186,6 +186,7 @@ namespace KMail {
     mTextEdit->setWhatsThis( i18n( "Use this field to enter an arbitrary X-Face string." ) );
     mTextEdit->setFont( KGlobalSettings::fixedFont() );
     mTextEdit->setWordWrapMode( QTextOption::WrapAnywhere);
+    mTextEdit->enableFindReplace(false);
     mTextEdit->setAcceptRichText( false );
     label2 = new QLabel( i18n("Examples are available at <a "
             "href=\"http://ace.home.xs4all.nl/X-Faces/\">"
