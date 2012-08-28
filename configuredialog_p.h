@@ -214,6 +214,7 @@ private:
   //FIXME virtual void doResetToDefaultsOther();
 
 private:
+  QString mSpecialMailCollectionIdentifier;
   Ui_AccountsPageReceivingTab mAccountsReceiving;
 };
 
