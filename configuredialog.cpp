@@ -432,11 +432,17 @@ AccountsPageReceivingTab::AccountsPageReceivingTab( QWidget * parent )
   mAccountsReceiving.mFilterAccount->setProxy( mAccountsReceiving.mAccountList->agentFilterProxyModel() );
   mAccountsReceiving.mFilterAccount->lineEdit()->setTrapReturnKey( true );
 
+  KConfig specialMailCollection(QLatin1String("specialmailcollectionsrc"));
+  if(specialMailCollection.hasGroup(QLatin1String("SpecialCollections"))) {
+      KConfigGroup grp = specialMailCollection.group(QLatin1String("SpecialCollections"));
+      mSpecialMailCollectionIdentifier = grp.readEntry(QLatin1String("DefaultResourceId"));
+  }
+
   ConfigAgentDelegate *configDelegate = new ConfigAgentDelegate( mAccountsReceiving.mAccountList->view() );
   mAccountsReceiving.mAccountList->view()->setItemDelegate( configDelegate );
   connect( configDelegate, SIGNAL(optionsClicked(QString,QPoint)), this, SLOT(slotShowMailCheckMenu(QString,QPoint)) );
 
-  connect( mAccountsReceiving.mAccountList, SIGNAL(currentChanged(Akonadi::AgentInstance,Akonadi::AgentInstance)),
+  connect( mAccountsReceiving.mAccountList, SIGNAL(clicked(Akonadi::AgentInstance)),
            SLOT(slotAccountSelected(Akonadi::AgentInstance)) );
   connect( mAccountsReceiving.mAccountList, SIGNAL(doubleClicked(Akonadi::AgentInstance)),
            this, SLOT(slotModifySelectedAccount()) );
@@ -578,7 +584,7 @@ void AccountsPage::ReceivingTab::slotAccountSelected(const Akonadi::AgentInstanc
     mAccountsReceiving.mRestartAccountButton->setEnabled( false );
   } else {
     mAccountsReceiving.mModifyAccountButton->setEnabled( !current.type().capabilities().contains( QLatin1String( "NoConfig" ) ) );
-    mAccountsReceiving.mRemoveAccountButton->setEnabled( true );
+    mAccountsReceiving.mRemoveAccountButton->setEnabled( mSpecialMailCollectionIdentifier != current.identifier() );
     // Restarting an agent is not possible if it's in Running status... (see AgentProcessInstance::restartWhenIdle)
     mAccountsReceiving.mRestartAccountButton->setEnabled( ( current.status() != 1 ) );
   }
