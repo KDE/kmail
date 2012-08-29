@@ -3450,12 +3450,12 @@ void SecurityPage::ComposerCryptoTab::doLoadOther()
 
   mWidget->mAutoSignature->setChecked( GlobalSettings::self()->pgpAutoSign() );
 
-  mWidget->mEncToSelf->setChecked( GlobalSettings::self()->cryptoEncryptToSelf() );
+  mWidget->mEncToSelf->setChecked( MessageComposer::MessageComposerSettings::self()->cryptoEncryptToSelf() );
   mWidget->mShowEncryptionResult->setChecked( false ); //composer.readBoolEntry( "crypto-show-encryption-result", true ) );
   mWidget->mShowEncryptionResult->hide();
-  mWidget->mShowKeyApprovalDlg->setChecked( GlobalSettings::self()->cryptoShowKeysForApproval() );
+  mWidget->mShowKeyApprovalDlg->setChecked( MessageComposer::MessageComposerSettings::self()->cryptoShowKeysForApproval() );
 
-  mWidget->mAutoEncrypt->setChecked( GlobalSettings::self()->pgpAutoEncrypt() ) ;
+  mWidget->mAutoEncrypt->setChecked( MessageComposer::MessageComposerSettings::self()->pgpAutoEncrypt() ) ;
   mWidget->mNeverEncryptWhenSavingInDrafts->setChecked(
       GlobalSettings::self()->neverEncryptDrafts() );
 
@@ -3466,11 +3466,11 @@ void SecurityPage::ComposerCryptoTab::save()
 {
   GlobalSettings::self()->setPgpAutoSign( mWidget->mAutoSignature->isChecked() );
 
-  GlobalSettings::self()->setCryptoEncryptToSelf( mWidget->mEncToSelf->isChecked() );
+  MessageComposer::MessageComposerSettings::self()->setCryptoEncryptToSelf( mWidget->mEncToSelf->isChecked() );
   GlobalSettings::self()->setCryptoShowEncryptionResult( mWidget->mShowEncryptionResult->isChecked() );
-  GlobalSettings::self()->setCryptoShowKeysForApproval( mWidget->mShowKeyApprovalDlg->isChecked() );
+  MessageComposer::MessageComposerSettings::self()->setCryptoShowKeysForApproval( mWidget->mShowKeyApprovalDlg->isChecked() );
 
-  GlobalSettings::self()->setPgpAutoEncrypt( mWidget->mAutoEncrypt->isChecked() );
+  MessageComposer::MessageComposerSettings::self()->setPgpAutoEncrypt( mWidget->mAutoEncrypt->isChecked() );
   GlobalSettings::self()->setNeverEncryptDrafts( mWidget->mNeverEncryptWhenSavingInDrafts->isChecked() );
 
   GlobalSettings::self()->setCryptoStoreEncrypted( mWidget->mStoreEncrypted->isChecked() );
@@ -3480,11 +3480,11 @@ void SecurityPage::ComposerCryptoTab::doLoadFromGlobalSettings()
 {
   mWidget->mAutoSignature->setChecked( GlobalSettings::self()->pgpAutoSign() );
 
-  mWidget->mEncToSelf->setChecked( GlobalSettings::self()->cryptoEncryptToSelf() );
+  mWidget->mEncToSelf->setChecked( MessageComposer::MessageComposerSettings::self()->cryptoEncryptToSelf() );
   mWidget->mShowEncryptionResult->setChecked( GlobalSettings::self()->cryptoShowEncryptionResult() );
-  mWidget->mShowKeyApprovalDlg->setChecked(GlobalSettings::self()->cryptoShowKeysForApproval() );
+  mWidget->mShowKeyApprovalDlg->setChecked(MessageComposer::MessageComposerSettings::self()->cryptoShowKeysForApproval() );
 
-  mWidget->mAutoEncrypt->setChecked(GlobalSettings::self()->pgpAutoEncrypt() );
+  mWidget->mAutoEncrypt->setChecked(MessageComposer::MessageComposerSettings::self()->pgpAutoEncrypt() );
   mWidget->mNeverEncryptWhenSavingInDrafts->setChecked( GlobalSettings::self()->neverEncryptDrafts() );
 
   mWidget->mStoreEncrypted->setChecked(GlobalSettings::self()->cryptoStoreEncrypted() );

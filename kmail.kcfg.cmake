@@ -232,9 +232,6 @@
       <entry name="PgpAutoSign" type="Bool" key="pgp-auto-sign">
         <default>false</default>
       </entry>
-      <entry name="PgpAutoEncrypt" type="Bool" key="pgp-auto-encrypt">
-        <default>false</default>
-      </entry>
       <entry name="NeverEncryptDrafts" type="Bool" key="never-encrypt-drafts">
         <default>true</default>
       </entry>
@@ -293,16 +290,8 @@
           <default>false</default>
       </entry>
 
-      <entry name="CryptoEncryptToSelf" type="Bool" key="crypto-encrypt-to-self">
-        <label>When encrypting emails, always also encrypt to the certificate of my own identity</label>
-        <default>true</default>
-      </entry>
       <entry name="CryptoShowEncryptionResult" type="Bool" key="crypto-show-encryption-result">
         <label>Show signed/encrypted text after composing</label>
-        <default>true</default>
-      </entry>
-      <entry name="CryptoShowKeysForApproval" type="Bool" key="crypto-show-keys-for-approval">
-        <label>Always show the list of encryption keys to select the one which will be used</label>
         <default>true</default>
       </entry>
       <entry name="CryptoStoreEncrypted" type="Bool" key="crypto-store-encrypted">

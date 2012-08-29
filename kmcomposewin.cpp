@@ -1861,75 +1861,13 @@ void KMComposeWin::autoSaveMessage(bool force)
   }
 }
 
-
 bool KMComposeWin::encryptToSelf()
 {
   // return !Kpgp::Module::getKpgp() || Kpgp::Module::getKpgp()->encryptToSelf();
-  return GlobalSettings::self()->cryptoEncryptToSelf();
+  return MessageComposer::MessageComposerSettings::self()->cryptoEncryptToSelf();
 }
 
-bool KMComposeWin::showKeyApprovalDialog()
-{
-  return GlobalSettings::self()->cryptoShowKeysForApproval();
-}
 
-int KMComposeWin::encryptKeyNearExpiryWarningThresholdInDays() {
-  if ( ! MessageComposer::MessageComposerSettings::self()->cryptoWarnWhenNearExpire() ) {
-    return -1;
-  }
-  const int num =
-  MessageComposer::MessageComposerSettings::self()->cryptoWarnEncrKeyNearExpiryThresholdDays();
-  return qMax( 1, num );
-}
-
-int KMComposeWin::signingKeyNearExpiryWarningThresholdInDays()
-{
-  if ( ! MessageComposer::MessageComposerSettings::self()->cryptoWarnWhenNearExpire() ) {
-    return -1;
-  }
-  const int num =
-  MessageComposer::MessageComposerSettings::self()->cryptoWarnSignKeyNearExpiryThresholdDays();
-  return qMax( 1, num );
-}
-
-int KMComposeWin::encryptRootCertNearExpiryWarningThresholdInDays()
-{
-  if ( ! MessageComposer::MessageComposerSettings::self()->cryptoWarnWhenNearExpire() ) {
-    return -1;
-  }
-  const int num =
-  MessageComposer::MessageComposerSettings::self()->cryptoWarnEncrRootNearExpiryThresholdDays();
-  return qMax( 1, num );
-}
-
-int KMComposeWin::signingRootCertNearExpiryWarningThresholdInDays() {
-  if ( ! MessageComposer::MessageComposerSettings::self()->cryptoWarnWhenNearExpire() ) {
-    return -1;
-  }
-  const int num =
-  MessageComposer::MessageComposerSettings::self()->cryptoWarnSignRootNearExpiryThresholdDays();
-  return qMax( 1, num );
-}
-
-int KMComposeWin::encryptChainCertNearExpiryWarningThresholdInDays()
-{
-  if ( ! MessageComposer::MessageComposerSettings::self()->cryptoWarnWhenNearExpire() ) {
-    return -1;
-  }
-  const int num =
-  MessageComposer::MessageComposerSettings::self()->cryptoWarnEncrChaincertNearExpiryThresholdDays();
-  return qMax( 1, num );
-}
-
-int KMComposeWin::signingChainCertNearExpiryWarningThresholdInDays()
-{
-  if ( ! MessageComposer::MessageComposerSettings::self()->cryptoWarnWhenNearExpire() ) {
-    return -1;
-  }
-  const int num =
-  MessageComposer::MessageComposerSettings::self()->cryptoWarnSignChaincertNearExpiryThresholdDays();;
-  return qMax( 1, num );
-}
 
 void KMComposeWin::slotSendFailed( const QString& msg )
 {

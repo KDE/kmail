@@ -582,18 +582,7 @@ class KMComposeWin : public KMail::Composer
       of setAutomaticFields(), see below, is still required. */
     void initHeader( KMime::Message *message, uint identity=0 );
 
-    /**
-     * Helper methods to read from config various encryption settings
-     */
     inline bool encryptToSelf();
-    inline bool showKeyApprovalDialog();
-    inline int encryptKeyNearExpiryWarningThresholdInDays();
-    inline int signingKeyNearExpiryWarningThresholdInDays();
-    inline int encryptRootCertNearExpiryWarningThresholdInDays();
-    inline int signingRootCertNearExpiryWarningThresholdInDays();
-    inline int encryptChainCertNearExpiryWarningThresholdInDays();
-    inline int signingChainCertNearExpiryWarningThresholdInDays();
-
 
   private:
     QWidget   *mMainWidget;
