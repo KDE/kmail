@@ -2377,7 +2377,7 @@ ComposerPageGeneralTab::ComposerPageGeneralTab( QWidget * parent )
   label = new QLabel( MessageComposer::MessageComposerSettings::self()->maximumRecipientsItem()->label(), this );
   hlay->addWidget( label );
 
-  mMaximumRecipients = new KIntSpinBox( 0, 500, 1, 1, this );
+  mMaximumRecipients = new KIntSpinBox( 0, 9999, 1, 1, this );
   hlay->addWidget( mMaximumRecipients );
   hlay->addStretch( 1 );
   connect( mMaximumRecipients, SIGNAL(valueChanged(int)),
