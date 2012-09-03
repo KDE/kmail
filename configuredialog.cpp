@@ -3219,6 +3219,23 @@ ComposerPageAttachmentsTab::ComposerPageAttachmentsTab( QWidget * parent )
            this, SLOT(slotEmitChanged()) );
   vlay->addWidget( mMissingAttachmentDetectionCheck );
 
+
+  QHBoxLayout * layAttachment = new QHBoxLayout;
+  label = new QLabel( i18n("Warn when inserting a attachments larger than:"), this );
+  label->setAlignment( Qt::AlignLeft );
+  layAttachment->addWidget(label);
+
+  mMaximumAttachmentSize = new KIntNumInput( this );
+  mMaximumAttachmentSize->setRange( -1, 99999 );
+  mMaximumAttachmentSize->setSingleStep( 100 );
+  mMaximumAttachmentSize->setSuffix(i18nc("spinbox suffix: unit for kilobyte", " kB"));
+  connect( mMaximumAttachmentSize, SIGNAL(valueChanged(int)),
+           this, SLOT(slotEmitChanged()) );
+  mMaximumAttachmentSize->setSpecialValueText(i18n("No limit"));
+  layAttachment->addWidget(mMaximumAttachmentSize);
+  vlay->addLayout(layAttachment);
+
+
   // "Attachment key words" label and string list editor
   label = new QLabel( i18n("Recognize any of the following key words as "
                            "intention to attach a file:"), this );
@@ -3253,6 +3270,8 @@ void ComposerPage::AttachmentsTab::doLoadFromGlobalSettings()
 
   const QStringList attachWordsList = GlobalSettings::self()->attachmentKeywords();
   mAttachWordsListEditor->setStringList( attachWordsList );
+  const int maximumAttachmentSize(MessageComposer::MessageComposerSettings::self()->maximumAttachmentSize());
+  mMaximumAttachmentSize->setValue(maximumAttachmentSize == -1 ? -1 : MessageComposer::MessageComposerSettings::self()->maximumAttachmentSize()/1024);
 }
 
 void ComposerPage::AttachmentsTab::save()
@@ -3265,6 +3284,8 @@ void ComposerPage::AttachmentsTab::save()
     mAttachWordsListEditor->stringList() );
 
   KMime::setUseOutlookAttachmentEncoding( mOutlookCompatibleCheck->isChecked() );
+  const int maximumAttachmentSize(mMaximumAttachmentSize->value());
+  MessageComposer::MessageComposerSettings::self()->setMaximumAttachmentSize(maximumAttachmentSize == -1 ? -1 : maximumAttachmentSize*1024);
 
 }
 

@@ -56,6 +56,7 @@ class KKeySequenceWidget;
 class KComboBox;
 class ColorListBox;
 class KCModuleProxy;
+class KIntNumInput;
 
 namespace MessageList {
   namespace Utils {
@@ -679,6 +680,7 @@ private:
   QCheckBox   *mOutlookCompatibleCheck;
   QCheckBox   *mMissingAttachmentDetectionCheck;
   SimpleStringListEditor *mAttachWordsListEditor;
+  KIntNumInput *mMaximumAttachmentSize;
 };
 
 class KMAIL_EXPORT ComposerPage : public ConfigModuleWithTabs {
