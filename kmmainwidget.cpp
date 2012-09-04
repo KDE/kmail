@@ -121,6 +121,9 @@
 #include <akonadi/collectiondeletejob.h>
 #include <akonadi/dbusconnectionpool.h>
 #include <Akonadi/CachePolicy>
+#include <Akonadi/Contact/ContactEditorDialog>
+
+
 #include <kpimidentities/identity.h>
 #include <kpimidentities/identitymanager.h>
 #include <kpimutils/email.h>
@@ -3708,6 +3711,14 @@ void KMMainWidget::setupActions()
       connect(action, SIGNAL(triggered(bool)), this, SLOT(slotExportData()));
   }
 
+  {
+      KAction *action = new KAction(i18n("New AddressBook Contact..."),this);
+      actionCollection()->addAction("kmail_new_addressbook_contact", action );
+      connect(action, SIGNAL(triggered(bool)), this, SLOT(slotCreateAddressBookContact()));
+
+
+  }
+
   actionCollection()->addAction(KStandardAction::Undo,  "kmail_undo", this, SLOT(slotUndo()));
 
   KStandardAction::tipOfDay( this, SLOT(slotShowTip()), actionCollection() );
@@ -4683,4 +4694,10 @@ void KMMainWidget::slotExportData()
       KMessageBox::error( this, i18n( "Could not start backupmail. "
                                       "Please check your installation." ),
                          i18n( "Unable to start backupmail" ) );
+}
+
+void KMMainWidget::slotCreateAddressBookContact()
+{
+  Akonadi::ContactEditorDialog *dlg = new Akonadi::ContactEditorDialog( Akonadi::ContactEditorDialog::CreateMode, this );
+  dlg->exec();
 }

@@ -99,6 +99,7 @@
 #include <akonadi/itemcreatejob.h>
 #include <akonadi/entitymimetypefiltermodel.h>
 #include <akonadi/itemfetchjob.h>
+#include <Akonadi/Contact/ContactEditorDialog>
 #include <kpimutils/email.h>
 #include <kpimidentities/identitymanager.h>
 #include <kpimidentities/identitycombo.h>
@@ -1153,6 +1154,11 @@ void KMComposeWin::setupActions( void )
   action->setHelpText(i18n("Save email as text or html file"));
   actionCollection()->addAction( "save_as_file", action );
   connect( action, SIGNAL(triggered(bool)), SLOT(slotSaveAsFile()) );
+
+  action = new KAction(i18n("New AddressBook Contact..."),this);
+  actionCollection()->addAction("kmail_new_addressbook_contact", action );
+  connect(action, SIGNAL(triggered(bool)), this, SLOT(slotCreateAddressBookContact()));
+
 
 
   action = new KAction(KIcon("document-open"), i18n("&Insert Text File..."), this);
@@ -3342,4 +3348,10 @@ void KMComposeWin::slotSaveAsFile()
         }
     }
     delete dlg;
+}
+
+void KMComposeWin::slotCreateAddressBookContact()
+{
+  Akonadi::ContactEditorDialog *dlg = new Akonadi::ContactEditorDialog( Akonadi::ContactEditorDialog::CreateMode, this );
+  dlg->exec();
 }

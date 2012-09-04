@@ -434,6 +434,7 @@ class KMComposeWin : public KMail::Composer
     void insertSpecialCharacter();
     void charSelected(const QChar& c);
     void slotSaveAsFile();
+    void slotCreateAddressBookContact();
 
   public: // kmcommand
     // FIXME we need to remove these, but they're pure virtual in Composer.
