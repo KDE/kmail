@@ -3221,7 +3221,7 @@ ComposerPageAttachmentsTab::ComposerPageAttachmentsTab( QWidget * parent )
 
 
   QHBoxLayout * layAttachment = new QHBoxLayout;
-  label = new QLabel( i18n("Warn when inserting a attachments larger than:"), this );
+  label = new QLabel( i18n("Warn when inserting attachments larger than:"), this );
   label->setAlignment( Qt::AlignLeft );
   layAttachment->addWidget(label);
 
