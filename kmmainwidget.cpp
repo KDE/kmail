@@ -2993,6 +2993,13 @@ void KMMainWidget::slotDelayedMessagePopup( KJob *job )
   const Akonadi::ContactSearchJob *searchJob = qobject_cast<Akonadi::ContactSearchJob*>( job );
   const bool contactAlreadyExists = !searchJob->contacts().isEmpty();
 
+  const QList<Akonadi::Item> listContact = searchJob->items();
+  const bool uniqContactFound = (listContact.count() == 1);
+  if(uniqContactFound) {
+      mMsgView->setContactItem(listContact.first());
+  } else {
+      mMsgView->setContactItem(Akonadi::Item());
+  }
 #if 0 //TODO port it
   mMessageListView->activateMessage( &msg ); // make sure that this message is the active one
 
@@ -3021,7 +3028,11 @@ void KMMainWidget::slotDelayedMessagePopup( KJob *job )
       menu->addSeparator();
 
       if ( contactAlreadyExists ) {
-        menu->addAction( mMsgView->openAddrBookAction() );
+        if(uniqContactFound) {
+          menu->addAction( mMsgView->editContactAction() );
+        } else {
+          menu->addAction( mMsgView->openAddrBookAction() );
+        }
       } else {
         menu->addAction( mMsgView->addAddrBookAction() );
       }

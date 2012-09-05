@@ -61,6 +61,7 @@ using MessageComposer::MessageFactory;
 
 #include "messagecore/messagehelpers.h"
 
+#include <Akonadi/Contact/ContactEditorDialog>
 
 #include <kde_file.h>
 #include <kdebug.h>
@@ -185,6 +186,13 @@ void KMReaderWin::createActions()
   ac->addAction( "add_bookmarks", mAddBookmarksAction );
   connect( mAddBookmarksAction, SIGNAL(triggered(bool)),
            SLOT(slotAddBookmarks()) );
+
+  mEditContactAction = new KAction( KIcon( "view-pim-contacts" ),
+                                     i18n( "Edit contact..." ), this );
+  mEditContactAction->setShortcutConfigurable( false );
+  ac->addAction( "edit_contact", mOpenAddrBookAction );
+  connect( mEditContactAction, SIGNAL(triggered(bool)),
+           SLOT(slotEditContact()) );
 
   // save URL as
   mUrlSaveAsAction = new KAction( i18n( "Save Link As..." ), this );
@@ -714,6 +722,20 @@ void KMReaderWin::slotPrintComposeResult( KJob *job )
 
 }
 
+void KMReaderWin::setContactItem(const Akonadi::Item& contact)
+{
+  mSearchedContact = contact;
+}
+
+void KMReaderWin::slotEditContact()
+{
+  if( mSearchedContact.isValid() ) {
+    Akonadi::ContactEditorDialog *dlg = new Akonadi::ContactEditorDialog( Akonadi::ContactEditorDialog::EditMode, this );
+    dlg->setContact(mSearchedContact);
+    dlg->exec();
+    delete dlg;
+  }
+}
 
 #include "kmreaderwin.moc"
 

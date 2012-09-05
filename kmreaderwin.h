@@ -24,7 +24,7 @@
 #include <kurl.h>
 #include <messageviewer/viewer.h>
 #include <messageviewer/interfaces/bodypart.h>
-
+#include <Akonadi/Item>
 class KActionCollection;
 class KAction;
 class KToggleAction;
@@ -37,9 +37,6 @@ namespace MessageViewer {
 }
 
 
-namespace Akonadi {
-  class Item;
-}
 class KJob;
 
 /**
@@ -145,6 +142,8 @@ public:
   KAction* translateAction();
   KAction* downloadImageToDiskAction() const;
 
+  KAction* editContactAction() const { return mEditContactAction; }
+
   Akonadi::Item message() const;
 
   QWidget* mainWindow() { return mMainWindow; }
@@ -155,6 +154,8 @@ public:
   MessageViewer::CSSHelper* cssHelper() const;
 
   bool printSelectedText(bool preview);
+
+  void setContactItem(const Akonadi::Item& contact);
 signals:
   /** Emitted after parsing of a message to have it stored
       in unencrypted state in it's folder. */
@@ -186,6 +187,8 @@ public slots:
   void slotSaveImageOnDisk();
 
   void slotPrintComposeResult( KJob *job );
+  void slotEditContact();
+
 protected:
 
   KUrl urlClicked() const;
@@ -194,13 +197,15 @@ protected:
 private:
   void createActions();
 private:
+  Akonadi::Item mSearchedContact;
   QWidget *mMainWindow;
   KActionCollection *mActionCollection;
 
   KAction *mMailToComposeAction, *mMailToReplyAction, *mMailToForwardAction,
-    *mAddAddrBookAction, *mOpenAddrBookAction, *mUrlSaveAsAction, *mAddBookmarksAction,*mImageUrlSaveAsAction;
+    *mAddAddrBookAction, *mOpenAddrBookAction, *mUrlSaveAsAction, *mAddBookmarksAction,*mImageUrlSaveAsAction, *mEditContactAction;
 
   MessageViewer::Viewer *mViewer;
+
 };
 
 
