@@ -427,7 +427,7 @@ KMCommand::Result KMMailtoComposeCommand::execute()
   msg->contentType()->setCharset("utf-8");
   msg->to()->fromUnicodeString( KPIMUtils::decodeMailtoUrl( mUrl ), "utf-8" );
 
-  KMail::Composer * win = KMail::makeComposer( msg, KMail::Composer::New, id );
+  KMail::Composer * win = KMail::makeComposer( msg, false, false,KMail::Composer::New, id );
   win->setFocusToSubject();
   win->show();
   return OK;
@@ -457,8 +457,11 @@ KMCommand::Result KMMailtoReplyCommand::execute()
   factory.setSelection( mSelection );
   KMime::Message::Ptr rmsg = factory.createReply().msg;
   rmsg->to()->fromUnicodeString( KPIMUtils::decodeMailtoUrl( mUrl ), "utf-8" ); //TODO Check the UTF-8
+  bool lastEncrypt = false;
+  bool lastSign = false;
+  KMail::Util::lastEncryptAndSignState(lastEncrypt, lastSign, msg);
 
-  KMail::Composer * win = KMail::makeComposer( rmsg, KMail::Composer::Reply, 0, mSelection );
+  KMail::Composer * win = KMail::makeComposer( rmsg, lastSign, lastEncrypt, KMail::Composer::Reply, 0, mSelection );
   win->setReplyFocus();
   win->show();
 
@@ -486,8 +489,11 @@ KMCommand::Result KMMailtoForwardCommand::execute()
   factory.setFolderIdentity( MailCommon::Util::folderIdentity( item ) );
   KMime::Message::Ptr fmsg = factory.createForward();
   fmsg->to()->fromUnicodeString( KPIMUtils::decodeMailtoUrl( mUrl ), "utf-8" ); //TODO check the utf-8
+  bool lastEncrypt = false;
+  bool lastSign = false;
+  KMail::Util::lastEncryptAndSignState(lastEncrypt, lastSign, msg);
 
-  KMail::Composer * win = KMail::makeComposer( fmsg, KMail::Composer::Forward );
+  KMail::Composer * win = KMail::makeComposer( fmsg, lastSign, lastEncrypt, KMail::Composer::Forward );
   win->show();
 
   return OK;
@@ -563,7 +569,10 @@ KMCommand::Result KMEditMessageCommand::execute()
     return Failed;
   
   KMail::Composer *win = KMail::makeComposer();
-  win->setMsg( mMessage, false, false );
+  bool lastEncrypt = false;
+  bool lastSign = false;
+  KMail::Util::lastEncryptAndSignState(lastEncrypt, lastSign, mMessage);
+  win->setMessage( mMessage, lastSign, lastEncrypt, false, false );
   win->show();
   win->setModified( true );
   return OK;
@@ -602,7 +611,11 @@ KMCommand::Result KMEditItemCommand::execute()
     connect( job, SIGNAL(result(KJob*)), this, SLOT(slotDeleteItem(KJob*)) );
   }
   KMail::Composer *win = KMail::makeComposer();
-  win->setMsg( msg, false, true );
+  bool lastEncrypt = false;
+  bool lastSign = false;
+  KMail::Util::lastEncryptAndSignState(lastEncrypt, lastSign, msg);
+  win->setMessage( msg, lastSign, lastEncrypt, false, true );
+
   win->setFolder( item.parentCollection() );
 
   const MailTransport::TransportAttribute *transportAttribute = item.attribute<MailTransport::TransportAttribute>();
@@ -673,7 +686,8 @@ KMCommand::Result KMUseTemplateCommand::execute()
   newMsg->removeHeader("Message-ID");
 
   KMail::Composer *win = KMail::makeComposer();
-  win->setMsg( newMsg, false, true );
+
+  win->setMessage( newMsg, false, false, false, true );
   win->show();
   return OK;
 }
@@ -822,6 +836,7 @@ KMCommand::Result KMReplyCommand::execute()
   KMime::Message::Ptr msg = MessageCore::Util::message( item );
   if ( !msg )
     return Failed;
+
   MessageFactory factory( msg, item.id(), MailCommon::Util::updatedCollection(item.parentCollection()) );
   factory.setIdentityManager( KMKernel::self()->identityManager() );
   factory.setFolderIdentity( MailCommon::Util::folderIdentity( item ) );
@@ -834,8 +849,12 @@ KMCommand::Result KMReplyCommand::execute()
   if(mNoQuote) {
     factory.setQuote(false);
   }
+  bool lastEncrypt = false;
+  bool lastSign = false;
+  KMail::Util::lastEncryptAndSignState(lastEncrypt, lastSign, msg);
+
   MessageFactory::MessageReply reply = factory.createReply();
-  KMail::Composer * win = KMail::makeComposer( KMime::Message::Ptr( reply.msg ), replyContext( reply ), 0,
+  KMail::Composer * win = KMail::makeComposer( KMime::Message::Ptr( reply.msg ), lastSign, lastEncrypt, replyContext( reply ), 0,
                                                mSelection,mTemplate );
   win->setReplyFocus();
   win->show();
@@ -881,10 +900,14 @@ KMCommand::Result KMForwardCommand::createComposer(const Akonadi::Item& item)
 
   uint id = msg->headerByType( "X-KMail-Identity" ) ?  msg->headerByType("X-KMail-Identity")->asUnicodeString().trimmed().toUInt() : 0;
   kDebug() << "mail" << msg->encodedContent();
+  bool lastEncrypt = false;
+  bool lastSign = false;
+  KMail::Util::lastEncryptAndSignState(lastEncrypt, lastSign, msg);
+
   if ( id == 0 )
     id = mIdentity;
   {
-    KMail::Composer * win = KMail::makeComposer( fwdMsg, KMail::Composer::Forward, id,QString(), mTemplate );
+    KMail::Composer * win = KMail::makeComposer( fwdMsg, lastSign, lastEncrypt, KMail::Composer::Forward, id,QString(), mTemplate );
     win->show();
   }
   return OK;
@@ -912,7 +935,7 @@ KMCommand::Result KMForwardCommand::execute()
       factory.setFolderIdentity( MailCommon::Util::folderIdentity( firstItem ) );
 
       QPair< KMime::Message::Ptr, KMime::Content* > fwdMsg = factory.createForwardDigestMIME(msgList );
-      KMail::Composer * win = KMail::makeComposer( fwdMsg.first, KMail::Composer::Forward, mIdentity );
+      KMail::Composer * win = KMail::makeComposer( fwdMsg.first, false, false, KMail::Composer::Forward, mIdentity );
       win->addAttach( fwdMsg.second );
       win->show();
       return OK;
@@ -967,7 +990,7 @@ KMCommand::Result KMForwardAttachedCommand::execute()
 
   QPair< KMime::Message::Ptr, QList< KMime::Content* > > fwdMsg = factory.createAttachedForward( msgList );
   if ( !mWin ) {
-    mWin = KMail::makeComposer( fwdMsg.first, KMail::Composer::Forward, mIdentity );
+    mWin = KMail::makeComposer( fwdMsg.first, false, false, KMail::Composer::Forward, mIdentity );
   }
   foreach( KMime::Content* attach, fwdMsg.second ) {
     mWin->addAttach( attach );
@@ -1541,7 +1564,11 @@ KMCommand::Result KMResendMessageCommand::execute()
     const QString replyTo = msg->headerByType( "Reply-To" )->asUnicodeString();
     win->setCurrentReplyTo(replyTo);
   }
-  win->setMsg( newMsg, false, true );
+  bool lastEncrypt = false;
+  bool lastSign = false;
+  KMail::Util::lastEncryptAndSignState(lastEncrypt, lastSign, msg);
+  win->setMessage( newMsg, lastSign, lastEncrypt, false, true );
+
   win->show();
 
   return OK;

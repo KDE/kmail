@@ -651,7 +651,7 @@ int KMKernel::openComposer( const QString &to, const QString &cc,
       }
   }
 
-  KMail::Composer * cWin = KMail::makeComposer( msg, context );
+  KMail::Composer * cWin = KMail::makeComposer( msg, false, false, context );
   if (!to.isEmpty())
     cWin->setFocusToSubject();
   KUrl::List attachURLs = KUrl::List( attachmentPaths );
@@ -749,8 +749,8 @@ int KMKernel::openComposer (const QString &to, const QString &cc,
     }
   }
 
-  KMail::Composer * cWin = KMail::makeComposer( KMime::Message::Ptr(), context );
-  cWin->setMsg( msg, !isICalInvitation /* mayAutoSign */ );
+  KMail::Composer * cWin = KMail::makeComposer( KMime::Message::Ptr(), false, false,context );
+  cWin->setMessage( msg, false, false, !isICalInvitation /* mayAutoSign */ );
   cWin->setSigningAndEncryptionDisabled( isICalInvitation
       && MessageViewer::GlobalSettings::self()->legacyBodyInvites() );
   if ( noWordWrap )
@@ -803,7 +803,7 @@ QDBusObjectPath KMKernel::openComposer( const QString &to, const QString &cc,
 
   const KMail::Composer::TemplateContext context = body.isEmpty() ? KMail::Composer::New :
                                                    KMail::Composer::NoTemplate;
-  KMail::Composer * cWin = KMail::makeComposer( msg, context );
+  KMail::Composer * cWin = KMail::makeComposer( msg, false, false, context );
   if ( !hidden ) {
     cWin->show();
     // Activate window - doing this instead of KWindowSystem::activateWindow(cWin->winId());
@@ -850,7 +850,7 @@ QDBusObjectPath KMKernel::newMessage( const QString &to,
   parser.setIdentityManager( identityManager() );
   parser.process( msg, folder ? folder->collection() : Akonadi::Collection() );
 
-  KMail::Composer *win = makeComposer( msg, KMail::Composer::New, id );
+  KMail::Composer *win = makeComposer( msg, false, false, KMail::Composer::New, id );
 
   //Add the attachment if we have one
   if ( !attachURL.isEmpty() && attachURL.isValid() ) {
@@ -1146,7 +1146,7 @@ void KMKernel::recoverDeadLetters()
 
       // Show the a new composer dialog for the message
       KMail::Composer * autoSaveWin = KMail::makeComposer();
-      autoSaveWin->setMsg( autoSaveMessage, false );
+      autoSaveWin->setMessage( autoSaveMessage, false, false, false );
       autoSaveWin->setAutoSaveFileName( filename );
       autoSaveWin->show();
       autoSaveFile.close();

@@ -109,7 +109,7 @@ namespace Util {
     void mailingListUnsubscribe( const QSharedPointer<MailCommon::FolderCollection> &fd );
     void mailingListArchives( const QSharedPointer<MailCommon::FolderCollection> &fd );
     void mailingListHelp( const QSharedPointer<MailCommon::FolderCollection> &fd );
-
+    void lastEncryptAndSignState(bool &lastEncrypt, bool &lastSign, const KMime::Message::Ptr& msg);
 }
 }
 
