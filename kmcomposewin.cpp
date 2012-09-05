@@ -159,22 +159,22 @@ using MailTransport::Transport;
 using KPIM::RecentAddresses;
 using Message::KMeditor;
 
-KMail::Composer *KMail::makeComposer( const KMime::Message::Ptr &msg, Composer::TemplateContext context,
+KMail::Composer *KMail::makeComposer( const KMime::Message::Ptr &msg, bool lastSignState, bool lastEncryptState, Composer::TemplateContext context,
                                       uint identity, const QString & textSelection,
                                       const QString & customTemplate ) {
-  return KMComposeWin::create( msg, context, identity, textSelection, customTemplate );
+  return KMComposeWin::create( msg, lastSignState, lastEncryptState, context, identity, textSelection, customTemplate );
 }
 
-KMail::Composer *KMComposeWin::create( const KMime::Message::Ptr &msg, Composer::TemplateContext context,
+KMail::Composer *KMComposeWin::create( const KMime::Message::Ptr &msg, bool lastSignState, bool lastEncryptState, Composer::TemplateContext context,
                                        uint identity, const QString & textSelection,
                                        const QString & customTemplate ) {
-  return new KMComposeWin( msg, context, identity, textSelection, customTemplate );
+  return new KMComposeWin( msg, lastSignState, lastEncryptState, context, identity, textSelection, customTemplate );
 }
 
 int KMComposeWin::s_composerNumber = 0;
 
 //-----------------------------------------------------------------------------
-KMComposeWin::KMComposeWin( const KMime::Message::Ptr &aMsg, Composer::TemplateContext context, uint id,
+KMComposeWin::KMComposeWin( const KMime::Message::Ptr &aMsg, bool lastSignState, bool lastEncryptState, Composer::TemplateContext context, uint id,
                             const QString & textSelection, const QString & customTemplate )
   : KMail::Composer( "kmail-composer#" ),
     mDone( false ),
@@ -457,7 +457,7 @@ KMComposeWin::KMComposeWin( const KMime::Message::Ptr &aMsg, Composer::TemplateC
   }
 
   if ( aMsg ) {
-    setMsg( aMsg );
+    setMessage( aMsg, lastSignState, lastEncryptState );
   }
 
   mComposerBase->recipientsEditor()->setFocus();
@@ -1495,13 +1495,16 @@ void KMComposeWin::setCurrentReplyTo(const QString& replyTo)
 }
 
 //-----------------------------------------------------------------------------
-void KMComposeWin::setMsg( const KMime::Message::Ptr &newMsg, bool mayAutoSign,
+void KMComposeWin::setMessage( const KMime::Message::Ptr &newMsg, bool lastSignState, bool lastEncryptState, bool mayAutoSign,
                            bool allowDecryption, bool isModified )
 {
   if ( !newMsg ) {
     kDebug() << "newMsg == 0!";
     return;
   }
+
+  mLastSignActionState = lastSignState;
+  mLastEncryptActionState = lastEncryptState;
 
   mComposerBase->setMessage( newMsg );
   mMsg = newMsg;
@@ -2347,7 +2350,7 @@ void KMComposeWin::slotNewComposer()
   KMime::Message::Ptr msg( new KMime::Message );
 
   MessageHelper::initHeader( msg, KMKernel::self()->identityManager() );
-  win = new KMComposeWin( msg );
+  win = new KMComposeWin( msg, false, false );
   win->show();
 }
 

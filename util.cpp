@@ -118,7 +118,7 @@ void KMail::Util::handleClickedURL( const KUrl &url )
     if ( !fields.value( "cc" ).isEmpty() )
       msg->cc()->fromUnicodeString( fields.value( "cc" ),"utf-8" );
 
-    KMail::Composer * win = KMail::makeComposer( msg, KMail::Composer::New, 0 );
+    KMail::Composer * win = KMail::makeComposer( msg, false, false,KMail::Composer::New, 0 );
     win->setFocusToSubject();
     win->show();
   } else {
@@ -149,7 +149,7 @@ void KMail::Util::handleClickedURL( const KUrl &url, const QSharedPointer<MailCo
     parser.setIdentityManager( KMKernel::self()->identityManager() );
     parser.process( msg, folder->collection() );
 
-    KMail::Composer * win = KMail::makeComposer( msg, KMail::Composer::New, identity );
+    KMail::Composer * win = KMail::makeComposer( msg, false, false, KMail::Composer::New, identity );
     win->setFocusToSubject();
     win->show();
   } else {
@@ -211,3 +211,8 @@ void KMail::Util::mailingListHelp( const QSharedPointer<MailCommon::FolderCollec
     KMail::Util::mailingListsHandleURL( fd->mailingList().helpUrls(),fd );
 }
 
+void KMail::Util::lastEncryptAndSignState(bool &lastEncrypt, bool &lastSign, const KMime::Message::Ptr& msg)
+{
+    lastSign = KMime::isSigned(msg.get());
+    lastEncrypt = KMime::isEncrypted(msg.get());
+}
