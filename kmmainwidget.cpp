@@ -4700,4 +4700,5 @@ void KMMainWidget::slotCreateAddressBookContact()
 {
   Akonadi::ContactEditorDialog *dlg = new Akonadi::ContactEditorDialog( Akonadi::ContactEditorDialog::CreateMode, this );
   dlg->exec();
+  delete dlg;
 }
