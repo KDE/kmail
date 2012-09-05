@@ -72,7 +72,6 @@ QString IdentityEditVcardDialog::saveVcard()
   KABC::Addressee addr = mContactEditor->contact();
   KABC::VCardConverter converter;
   QFile file(mVcardFileName);
-  qDebug()<<" file.filename"<<file.fileName();
   if ( file.open( QIODevice::WriteOnly |QIODevice::Text ) ) {
     const QByteArray data = converter.exportVCard( addr, KABC::VCardConverter::v3_0 );
     file.write( data );
