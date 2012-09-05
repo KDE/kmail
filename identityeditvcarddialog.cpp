@@ -80,3 +80,5 @@ QString IdentityEditVcardDialog::saveVcard()
   }
   return mVcardFileName;
 }
+
+#include "identityeditvcarddialog.moc"
