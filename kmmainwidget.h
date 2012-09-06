@@ -193,6 +193,7 @@ class KMAIL_EXPORT KMMainWidget : public QWidget
 
     void updatePaneTagComboBox();
 
+    void clearViewer();
   public slots:
     // Moving messages around
     /**
@@ -444,7 +445,7 @@ class KMAIL_EXPORT KMMainWidget : public QWidget
       an online folder is selected.
     */
     void showOfflinePage();
-
+    void showResourceOfflinePage();
     void updateVacationScriptStatus( bool active );
 
 

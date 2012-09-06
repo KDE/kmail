@@ -597,7 +597,10 @@ void KMMainWidget::folderSelected( const Akonadi::Collection & col )
     {
         //mMessageListView->setCurrentFolder( 0 ); <-- useless in the new view: just do nothing
         // FIXME: Use an "offline tab" ?
-        showOfflinePage();
+        if(kmkernel->isOffline())
+            showOfflinePage();
+        else
+            showResourceOfflinePage();
         return;
     }
   }
@@ -628,6 +631,13 @@ void KMMainWidget::slotShowSelectedFolderInPane()
   }
 }
 
+void KMMainWidget::clearViewer()
+{
+  if (mMsgView) {
+      mMsgView->clear( true );
+      mMsgView->displayAboutPage();
+  }
+}
 
 //-----------------------------------------------------------------------------
 void KMMainWidget::readPreConfig()
@@ -2726,6 +2736,14 @@ void KMMainWidget::showOfflinePage()
   mShowingOfflineScreen = true;
 
   mMsgView->displayOfflinePage();
+}
+
+void KMMainWidget::showResourceOfflinePage()
+{
+  if ( !mReaderWindowActive ) return;
+  mShowingOfflineScreen = true;
+
+  mMsgView->displayResourceOfflinePage();
 }
 
 

@@ -121,6 +121,8 @@ public:
   /** Display the 'we are currently in offline mode' page instead of a message */
   void displayOfflinePage();
 
+  void displayResourceOfflinePage();
+
   bool isFixedFont() const;
   void setUseFixedFont( bool useFixedFont );
   MessageViewer::Viewer *viewer() { return mViewer; }

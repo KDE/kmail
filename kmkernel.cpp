@@ -976,6 +976,10 @@ void KMKernel::resumeNetworkJobs()
   }
   GlobalSettings::setNetworkState( GlobalSettings::EnumNetworkState::Online );
   emit onlineStatusChanged( (GlobalSettings::EnumNetworkState::type)GlobalSettings::networkState() );
+  KMMainWidget *widget = getKMMainWidget();
+  if ( widget  ) {
+    widget->clearViewer();
+  }
 }
 
 bool KMKernel::isOffline()
@@ -2007,6 +2011,19 @@ void KMKernel::updatePaneTagComboBox()
   KMMainWidget *widget = getKMMainWidget();
   if ( widget  ) {
     widget->updatePaneTagComboBox();
+  }
+}
+
+void KMKernel::resourceGoOnLine()
+{
+  KMMainWidget *widget = getKMMainWidget();
+  if ( widget  ) {
+    if(widget->currentFolder()) {
+      Akonadi::Collection collection = widget->currentFolder()->collection();
+      Akonadi::AgentInstance instance = Akonadi::AgentManager::self()->instance( collection.resource() );
+      instance.setIsOnline( true );
+      widget->clearViewer();
+    }
   }
 }
 

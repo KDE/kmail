@@ -141,6 +141,7 @@ public Q_SLOTS:
    */
   Q_SCRIPTABLE void resumeNetworkJobs();
 
+  Q_SCRIPTABLE void resourceGoOnLine();
   Q_SCRIPTABLE QStringList accounts();
 
   /**
