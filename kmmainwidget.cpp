@@ -511,7 +511,6 @@ void KMMainWidget::slotEndCheckFetchCollectionsDone(KJob* job)
 
 void KMMainWidget::slotFolderChanged( const Akonadi::Collection& collection )
 {
-  updateFolderMenu();
   folderSelected( collection );
   if(collection.cachePolicy().syncOnDemand())
       AgentManager::self()->synchronizeCollection( collection, false );
@@ -601,6 +600,7 @@ void KMMainWidget::folderSelected( const Akonadi::Collection & col )
             showOfflinePage();
         else
             showResourceOfflinePage();
+	updateFolderMenu();
         return;
     }
   }
