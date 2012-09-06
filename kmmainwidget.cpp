@@ -495,7 +495,6 @@ void KMMainWidget::slotEndCheckFetchCollectionsDone(KJob* job)
 
 void KMMainWidget::slotFolderChanged( const Akonadi::Collection& collection )
 {
-  updateFolderMenu();
   folderSelected( collection );
   if(collection.cachePolicy().syncOnDemand())
       AgentManager::self()->synchronizeCollection( collection, false );
@@ -581,6 +580,7 @@ void KMMainWidget::folderSelected( const Akonadi::Collection & col )
     {
         //mMessageListView->setCurrentFolder( 0 ); <-- useless in the new view: just do nothing
         // FIXME: Use an "offline tab" ?
+	updateFolderMenu();
         showOfflinePage();
         return;
     }
