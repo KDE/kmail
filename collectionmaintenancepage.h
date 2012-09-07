@@ -23,6 +23,7 @@
 
 class QCheckBox;
 class QLabel;
+class KPushButton;
 namespace Akonadi {
   class CollectionStatistics;
 }
@@ -40,7 +41,7 @@ protected:
 
 protected slots:
   void updateCollectionStatistic(Akonadi::Collection::Id, const Akonadi::CollectionStatistics& );
-
+  void slotReindexing();
 private:
   void updateLabel( qint64 nbMail, qint64 nbUnreadMail, qint64 size );
 
@@ -52,6 +53,7 @@ private:
   QLabel *mCollectionUnread;
   QCheckBox *mIndexingEnabled;
   QLabel *mLastIndexed;
+  KPushButton *mForceReindex;
 };
 
 AKONADI_COLLECTION_PROPERTIES_PAGE_FACTORY( CollectionMaintenancePageFactory, CollectionMaintenancePage )
