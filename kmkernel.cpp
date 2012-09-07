@@ -2027,4 +2027,16 @@ void KMKernel::resourceGoOnLine()
   }
 }
 
+void KMKernel::makeResourceOnline(MessageViewer::Viewer::ResourceOnlineMode mode)
+{
+  switch(mode) {
+  case MessageViewer::Viewer::AllResources:
+    resumeNetworkJobs();
+    break;
+  case MessageViewer::Viewer::SelectedResource:
+    resourceGoOnLine();
+    break;
+  }
+}
+
 #include "kmkernel.moc"

@@ -17,6 +17,7 @@
 #include "globalsettings.h"
 #include <kcomponentdata.h>
 #include <akonadi/servermanager.h>
+#include "messageviewer/viewer.h"
 
 #define kmkernel KMKernel::self()
 #define kmconfig KMKernel::config()
@@ -141,8 +142,9 @@ public Q_SLOTS:
    */
   Q_SCRIPTABLE void resumeNetworkJobs();
 
-  Q_SCRIPTABLE void resourceGoOnLine();
   Q_SCRIPTABLE QStringList accounts();
+
+  Q_SCRIPTABLE void makeResourceOnline(MessageViewer::Viewer::ResourceOnlineMode mode);
 
   /**
    * Checks the account with the specified name for new mail.
@@ -477,6 +479,7 @@ private slots:
   void slotSystemNetworkStatusChanged( Solid::Networking::Status );
   
 private:
+  void resourceGoOnLine();
   void migrateFromKMail1();
   void openReader( bool onlyCheck );
   QSharedPointer<MailCommon::FolderCollection> currentFolderCollection();
