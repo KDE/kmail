@@ -1526,8 +1526,8 @@ void KMComposeWin::setMessage( const KMime::Message::Ptr &newMsg, bool lastSignS
     return;
   }
 
-  mLastSignActionState = lastSignState;
-  mLastEncryptActionState = lastEncryptState;
+  if( lastSignState )
+    mLastSignActionState = true;
 
   mComposerBase->setMessage( newMsg );
   mMsg = newMsg;
