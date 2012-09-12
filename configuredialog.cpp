@@ -57,6 +57,8 @@ using KPIM::RecentAddresses;
 #include "messagelist/utils/themecombobox.h"
 #include "messagelist/utils/themeconfigbutton.h"
 
+#include "messagecomposer/autocorrection/kmcomposerautocorrectionwidget.h"
+
 #include "messageviewer/autoqpointer.h"
 #include "messageviewer/nodehelper.h"
 #include "messageviewer/configurewidget.h"
@@ -2254,6 +2256,13 @@ ComposerPage::ComposerPage( const KComponentData &instance, QWidget *parent )
   //
   mAttachmentsTab = new AttachmentsTab();
   addTab( mAttachmentsTab, i18nc("Config->Composer->Attachments", "Attachments") );
+
+  //
+  // "autocorrection" tab:
+  //
+  mAutoCorrectionTab = new AutoCorrectionTab();
+  addTab( mAutoCorrectionTab, i18n("Autocorrection") );
+
 }
 
 QString ComposerPage::GeneralTab::helpAnchor() const
@@ -3302,6 +3311,34 @@ void ComposerPageAttachmentsTab::slotOutlookCompatibleClicked()
     "other choice, you should not enable this option." ) );
   }
 }
+
+ComposerPageAutoCorrectionTab::ComposerPageAutoCorrectionTab(QWidget *parent)
+  : ConfigModuleTab(parent)
+{
+  QVBoxLayout *vlay = new QVBoxLayout( this );
+  vlay->setSpacing( 0 );
+  vlay->setMargin( 0 );
+  //TODO fixme
+  autocorrectionWidget = new KMComposerAutoCorrectionWidget(0);
+  vlay->addWidget(autocorrectionWidget);
+  setLayout(vlay);
+}
+
+QString ComposerPageAutoCorrectionTab::helpAnchor() const
+{
+  return QString::fromLatin1("configure-autocorrection");
+}
+
+void ComposerPageAutoCorrectionTab::save()
+{
+
+}
+
+void ComposerPageAutoCorrectionTab::doLoadFromGlobalSettings()
+{
+
+}
+
 
 // *************************************************************
 // *                                                           *

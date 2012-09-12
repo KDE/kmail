@@ -57,6 +57,7 @@ class KComboBox;
 class ColorListBox;
 class KCModuleProxy;
 class KIntNumInput;
+class KMComposerAutoCorrectionWidget;
 
 namespace MessageList {
   namespace Utils {
@@ -683,6 +684,24 @@ private:
   KIntNumInput *mMaximumAttachmentSize;
 };
 
+class ComposerPageAutoCorrectionTab : public ConfigModuleTab {
+  Q_OBJECT
+public:
+  ComposerPageAutoCorrectionTab( QWidget * parent=0 );
+  QString helpAnchor() const;
+
+  void save();
+
+private:
+  virtual void doLoadFromGlobalSettings();
+  //FIXME virtual void doResetToDefaultsOther();
+
+private:
+  KMComposerAutoCorrectionWidget *autocorrectionWidget;
+};
+
+
+
 class KMAIL_EXPORT ComposerPage : public ConfigModuleWithTabs {
   Q_OBJECT
 public:
@@ -698,6 +717,7 @@ public:
   typedef ComposerPageCharsetTab CharsetTab;
   typedef ComposerPageHeadersTab HeadersTab;
   typedef ComposerPageAttachmentsTab AttachmentsTab;
+  typedef ComposerPageAutoCorrectionTab AutoCorrectionTab;
 
 private:
   GeneralTab  *mGeneralTab;
@@ -707,6 +727,7 @@ private:
   CharsetTab  *mCharsetTab;
   HeadersTab  *mHeadersTab;
   AttachmentsTab  *mAttachmentsTab;
+  AutoCorrectionTab *mAutoCorrectionTab;
 };
 
 //
