@@ -339,9 +339,6 @@ KMComposeWin::KMComposeWin( const KMime::Message::Ptr &aMsg, bool lastSignState,
     mSignatureStateIndicator = new QLabel( editorAndCryptoStateIndicators );
     mSignatureStateIndicator->setAlignment( Qt::AlignHCenter );
     hbox->addWidget( mSignatureStateIndicator );
-
-    KConfigGroup reader( KMKernel::self()->config(), "Reader" );
-
     // Get the colors for the label
     QPalette p( mSignatureStateIndicator->palette() );
     KColorScheme scheme( QPalette::Active, KColorScheme::View );
