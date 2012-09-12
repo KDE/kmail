@@ -272,10 +272,6 @@
         <whatsthis>A backup copy of the text in the composer window can be created regularly. The interval used to create the backups is set here. You can disable autosaving by setting it to the value 0.</whatsthis>
         <default>2</default>
       </entry>
-      <entry name="QuoteSelectionOnly" type="Bool">
-        <label>Only quote selected text when replying</label>
-        <default>true</default>
-      </entry>
 
       <entry name="CustomTemplates" type="StringList" key="CustomTemplates" />
 
