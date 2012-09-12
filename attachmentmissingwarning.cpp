@@ -26,7 +26,7 @@ AttachmentMissingWarning::AttachmentMissingWarning(QWidget *parent)
   setVisible(false);
   setCloseButtonVisible(true);
   setMessageType(Information);
-  setText( i18n( "The message you have composed seems to refer to an attached file but you have not attached anything.Do you want to attach a file to your message?" ) );
+  setText( i18n( "The message you have composed seems to refer to an attached file but you have not attached anything. Do you want to attach a file to your message?" ) );
   setWordWrap(true);
 
   KAction *action = this->findChild<KAction *>(); // should give us the close action...
