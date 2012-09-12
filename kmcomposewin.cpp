@@ -52,6 +52,7 @@
 #include <messagecomposer/kmsubjectlineedit.h>
 #include "messageviewer/translator/translatorwidget.h"
 #include "insertspecialchar.h"
+#include "attachmentmissingwarning.h"
 
 // KDEPIM includes
 #include <libkpgp/kpgpblock.h>
@@ -418,6 +419,14 @@ KMComposeWin::KMComposeWin( const KMime::Message::Ptr &aMsg, bool lastSignState,
 
   mComposerBase->setAttachmentModel( attachmentModel );
   mComposerBase->setAttachmentController( attachmentController );
+
+  mAttachmentMissing = new AttachmentMissingWarning(this);
+  connect(mAttachmentMissing,SIGNAL(attachMissingFile()),this,SLOT(slotAttachMissingFile()));
+  connect(mAttachmentMissing,SIGNAL(closeAttachMissingFile()),this,SLOT(slotCloseAttachMissingFile()));
+  v->addWidget(mAttachmentMissing);
+  m_verifyMissingAttachment = new QTimer(this);
+  m_verifyMissingAttachment->start(1000*30);
+  connect( m_verifyMissingAttachment, SIGNAL(timeout()), this, SLOT(slotVerifyMissingAttachmentTimeout()) );
 
   readConfig();
   setupStatusBar();
@@ -3355,4 +3364,23 @@ void KMComposeWin::slotCreateAddressBookContact()
   Akonadi::ContactEditorDialog *dlg = new Akonadi::ContactEditorDialog( Akonadi::ContactEditorDialog::CreateMode, this );
   dlg->exec();
   delete dlg;
+}
+
+void KMComposeWin::slotAttachMissingFile()
+{
+  mComposerBase->attachmentController()->showAddAttachmentDialog();
+}
+
+void KMComposeWin::slotCloseAttachMissingFile()
+{
+  m_verifyMissingAttachment->stop();
+}
+
+void KMComposeWin::slotVerifyMissingAttachmentTimeout()
+{
+  if( mComposerBase->hasMissingAttachments( GlobalSettings::self()->attachmentKeywords() )) {
+    mAttachmentMissing->setVisible(true);
+  } else {
+    m_verifyMissingAttachment->start();
+  }
 }
