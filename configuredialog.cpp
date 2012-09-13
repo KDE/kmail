@@ -3318,8 +3318,8 @@ ComposerPageAutoCorrectionTab::ComposerPageAutoCorrectionTab(QWidget *parent)
   QVBoxLayout *vlay = new QVBoxLayout( this );
   vlay->setSpacing( 0 );
   vlay->setMargin( 0 );
-  //TODO fixme
-  autocorrectionWidget = new KMComposerAutoCorrectionWidget(0);
+  autocorrectionWidget = new KMComposerAutoCorrectionWidget(this);
+  //TODO autocorrectionWidget->setAutoCorrection();
   vlay->addWidget(autocorrectionWidget);
   setLayout(vlay);
 }
@@ -3331,12 +3331,12 @@ QString ComposerPageAutoCorrectionTab::helpAnchor() const
 
 void ComposerPageAutoCorrectionTab::save()
 {
-
+  autocorrectionWidget->writeConfig();
 }
 
 void ComposerPageAutoCorrectionTab::doLoadFromGlobalSettings()
 {
-
+  autocorrectionWidget->loadConfig();
 }
 
 
