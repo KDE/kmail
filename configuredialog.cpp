@@ -3322,6 +3322,8 @@ ComposerPageAutoCorrectionTab::ComposerPageAutoCorrectionTab(QWidget *parent)
   autocorrectionWidget->setAutoCorrection(KMKernel::self()->composerAutoCorrection());
   vlay->addWidget(autocorrectionWidget);
   setLayout(vlay);
+  connect( autocorrectionWidget, SIGNAL(changed()), this, SLOT(slotEmitChanged()) );
+
 }
 
 QString ComposerPageAutoCorrectionTab::helpAnchor() const
