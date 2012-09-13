@@ -50,6 +50,7 @@ using KMail::MailServiceImpl;
 #include "messagecomposersettings.h"
 #include "messagecomposer/messagehelper.h"
 #include "messagecomposer/messagecomposersettings.h"
+#include "messagecomposer/autocorrection/kmcomposerautocorrection.h"
 
 #include "templateparser/templateparser.h"
 #include "templateparser/globalsettings_base.h"
@@ -148,6 +149,7 @@ KMKernel::KMKernel (QObject *parent, const char *name) :
   mJobScheduler = new JobScheduler( this );
   mXmlGuiInstance = KComponentData();
 
+  mAutoCorrection = new KMComposerAutoCorrection();
   KMime::setFallbackCharEncoding( MessageCore::GlobalSettings::self()->fallbackCharacterEncoding() );
   KMime::setUseOutlookAttachmentEncoding( MessageComposer::MessageComposerSettings::self()->outlookCompatibleAttachments() );
 
@@ -234,6 +236,7 @@ KMKernel::~KMKernel ()
   stopAgentInstance();
   slotSyncConfig();
 
+  delete mAutoCorrection;
   mySelf = 0;
   kDebug();
 }
@@ -2037,6 +2040,11 @@ void KMKernel::makeResourceOnline(MessageViewer::Viewer::ResourceOnlineMode mode
     resourceGoOnLine();
     break;
   }
+}
+
+KMComposerAutoCorrection* KMKernel::composerAutoCorrection()
+{
+  return mAutoCorrection;
 }
 
 #include "kmkernel.moc"

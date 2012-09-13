@@ -43,6 +43,7 @@ namespace KPIM {
 }
 
 class MessageSender;
+class KMComposerAutoCorrection;
 
 class KJob;
 /** The KMail namespace contains classes used for KMail.
@@ -417,6 +418,9 @@ public:
 
   void updatePaneTagComboBox();
 
+
+  KMComposerAutoCorrection* composerAutoCorrection();
+
 protected:
   void agentInstanceBroken( const Akonadi::AgentInstance& instance );
 
@@ -525,6 +529,7 @@ private:
   int mWrapCol;
 
   QPointer<MailCommon::KMFilterDialog> mFilterEditDialog;
+  KMComposerAutoCorrection *mAutoCorrection;
 };
 
 #endif // _KMKERNEL_H
