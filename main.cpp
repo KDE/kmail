@@ -37,6 +37,8 @@
 #include <windows.h>
 #endif
 
+#include <QDir>
+
 //-----------------------------------------------------------------------------
 
 class KMailApplication : public KontactInterface::PimUniqueApplication
@@ -105,6 +107,7 @@ int main(int argc, char *argv[])
 #endif
   KMail::AboutData about;
 
+  KCmdLineArgs::setCwd(QDir::currentPath().toLocal8Bit());
   KCmdLineArgs::init(argc, argv, &about);
   KCmdLineArgs::addCmdLineOptions( kmail_options() ); // Add kmail options
   if (!KMailApplication::start())
