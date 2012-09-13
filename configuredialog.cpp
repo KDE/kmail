@@ -3319,7 +3319,7 @@ ComposerPageAutoCorrectionTab::ComposerPageAutoCorrectionTab(QWidget *parent)
   vlay->setSpacing( 0 );
   vlay->setMargin( 0 );
   autocorrectionWidget = new KMComposerAutoCorrectionWidget(this);
-  //TODO autocorrectionWidget->setAutoCorrection();
+  autocorrectionWidget->setAutoCorrection(KMKernel::self()->composerAutoCorrection());
   vlay->addWidget(autocorrectionWidget);
   setLayout(vlay);
 }

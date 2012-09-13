@@ -51,6 +51,7 @@ using namespace MailCommon;
 KMComposerEditor::KMComposerEditor( KMComposeWin *win,QWidget *parent)
  : Message::KMeditor(parent, "kmail2rc" ),m_composerWin(win)
 {
+  setAutocorrection(KMKernel::self()->composerAutoCorrection());
 }
 
 KMComposerEditor::~KMComposerEditor()
