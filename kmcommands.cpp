@@ -711,10 +711,11 @@ KMCommand::Result KMSaveMsgCommand::execute()
 //-----------------------------------------------------------------------------
 
 KMOpenMsgCommand::KMOpenMsgCommand( QWidget *parent, const KUrl & url,
-                                    const QString & encoding )
+                                    const QString & encoding, KMMainWidget *main )
   : KMCommand( parent ),
     mUrl( url ),
-    mEncoding( encoding )
+    mEncoding( encoding ),
+    mMainWidget( main )
 {
 }
 
@@ -728,6 +729,11 @@ KMCommand::Result KMOpenMsgCommand::execute()
   if ( mUrl.isEmpty() ) {
     return Canceled;
   }
+
+  if(mMainWidget) {
+    mMainWidget->addRecentFile(mUrl);
+  }
+
   setDeletesItself( true );
   mJob = KIO::get( mUrl, KIO::NoReload, KIO::HideProgressInfo );
   connect( mJob, SIGNAL(data(KIO::Job*,QByteArray)),

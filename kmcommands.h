@@ -269,8 +269,8 @@ class KMAIL_EXPORT KMOpenMsgCommand : public KMCommand
   Q_OBJECT
 
 public:
-  explicit KMOpenMsgCommand( QWidget *parent, const KUrl & url = KUrl(),
-                             const QString & encoding = QString() );
+  explicit KMOpenMsgCommand(QWidget *parent, const KUrl & url = KUrl(),
+                             const QString & encoding = QString() , KMMainWidget *main = 0);
 
 private:
   virtual Result execute();
@@ -285,6 +285,7 @@ private:
   QString mMsgString;
   KIO::TransferJob *mJob;
   const QString mEncoding;
+  KMMainWidget *mMainWidget;
 };
 
 class KMAIL_EXPORT KMSaveAttachmentsCommand : public KMCommand

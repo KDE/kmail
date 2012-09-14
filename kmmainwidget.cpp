@@ -168,6 +168,7 @@
 #include <ktreewidgetsearchline.h>
 #include <Solid/Networking>
 #include <nepomuk2/resourcemanager.h>
+#include <KRecentFilesAction>
 
 // Qt includes
 #include <QByteArray>
@@ -385,6 +386,10 @@ void KMMainWidget::destruct()
   mCurrentFolder.clear();
   delete mMoveOrCopyToDialog;
   delete mSelectFromAllFoldersDialog;
+
+  KConfigGroup grp = mConfig->group(QLatin1String("Recent Files"));
+  mOpenRecentAction->saveEntries(grp);
+
   mSystemTray = 0;
   mDestructed = true;
 }
@@ -2648,7 +2653,7 @@ void KMMainWidget::slotSaveMsg()
 //-----------------------------------------------------------------------------
 void KMMainWidget::slotOpenMsg()
 {
-  KMOpenMsgCommand *openCommand = new KMOpenMsgCommand( this, KUrl(), overrideEncoding() );
+  KMOpenMsgCommand *openCommand = new KMOpenMsgCommand( this, KUrl(), overrideEncoding(), this );
 
   openCommand->start();
 }
@@ -3190,6 +3195,11 @@ void KMMainWidget::setupActions()
 
   mOpenAction = KStandardAction::open( this, SLOT(slotOpenMsg()),
                                   actionCollection() );
+
+  mOpenRecentAction = KStandardAction::openRecent( this, SLOT(slotOpenRecentMsg(KUrl)),
+                                  actionCollection() );
+  KConfigGroup grp = mConfig->group(QLatin1String("Recent Files"));
+  mOpenRecentAction->loadEntries(grp);
 
   {
     KAction *action = new KAction(i18n("&Expire All Folders"), this);
@@ -4730,4 +4740,15 @@ void KMMainWidget::slotCreateAddressBookContact()
   Akonadi::ContactEditorDialog *dlg = new Akonadi::ContactEditorDialog( Akonadi::ContactEditorDialog::CreateMode, this );
   dlg->exec();
   delete dlg;
+}
+
+void KMMainWidget::slotOpenRecentMsg(const KUrl& url)
+{
+  KMOpenMsgCommand *openCommand = new KMOpenMsgCommand( this, url, overrideEncoding(), this );
+  openCommand->start();
+}
+
+void KMMainWidget::addRecentFile(const KUrl& mUrl)
+{
+  mOpenRecentAction->addUrl(mUrl);
 }
