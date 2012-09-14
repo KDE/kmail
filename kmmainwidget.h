@@ -107,19 +107,19 @@ class KMAIL_EXPORT KMMainWidget : public QWidget
     void destruct();
 
     /** Read configuration options before widgets are created. */
-    virtual void readPreConfig();
+    void readPreConfig();
 
     /** Read configuration for current folder. */
-    virtual void readFolderConfig();
+    void readFolderConfig();
 
     /** Write configuration for current folder. */
-    virtual void writeFolderConfig();
+    void writeFolderConfig();
 
     /** Read configuration options after widgets are created. */
-    virtual void readConfig();
+    void readConfig();
 
     /** Write configuration options. */
-    virtual void writeConfig(bool force = true);
+    void writeConfig(bool force = true);
 
     void writeReaderConfig();
 
