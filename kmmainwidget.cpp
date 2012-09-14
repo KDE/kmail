@@ -3741,7 +3741,7 @@ void KMMainWidget::setupActions()
   }
 
   {
-      KAction *action = new KAction(i18n("New AddressBook Contact..."),this);
+      KAction *action = new KAction(KIcon( QLatin1String( "contact-new" ) ),i18n("New AddressBook Contact..."),this);
       actionCollection()->addAction("kmail_new_addressbook_contact", action );
       connect(action, SIGNAL(triggered(bool)), this, SLOT(slotCreateAddressBookContact()));
 

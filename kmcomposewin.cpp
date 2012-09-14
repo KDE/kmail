@@ -1161,7 +1161,7 @@ void KMComposeWin::setupActions( void )
   actionCollection()->addAction( "save_as_file", action );
   connect( action, SIGNAL(triggered(bool)), SLOT(slotSaveAsFile()) );
 
-  action = new KAction(i18n("New AddressBook Contact..."),this);
+  action = new KAction(KIcon( QLatin1String( "contact-new" ) ), i18n("New AddressBook Contact..."),this);
   actionCollection()->addAction("kmail_new_addressbook_contact", action );
   connect(action, SIGNAL(triggered(bool)), this, SLOT(slotCreateAddressBookContact()));
 
