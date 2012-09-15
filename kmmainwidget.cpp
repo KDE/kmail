@@ -2192,6 +2192,10 @@ void KMMainWidget::copySelectedMessagesToFolder( const Akonadi::Collection& dest
 //
 void KMMainWidget::trashMessageSelected( MessageList::Core::MessageItemSetReference ref )
 {
+  if ( !mCurrentFolder ) {
+    return;
+  }
+
   const QList<Akonadi::Item> select = mMessagePane->itemListFromPersistentSet( ref );
   mMessagePane->markMessageItemsAsAboutToBeRemoved( ref, true );
 
@@ -3987,7 +3991,7 @@ void KMMainWidget::updateMessageActionsDelayed()
   }
 
   const qint64 nbMsgOutboxCollection = MailCommon::Util::updatedCollection( CommonKernel->outboxCollectionFolder() ).statistics().count();
-  
+
   actionCollection()->action( "send_queued" )->setEnabled( nbMsgOutboxCollection > 0 );
   actionCollection()->action( "send_queued_via" )->setEnabled( nbMsgOutboxCollection > 0 );
 
@@ -4174,7 +4178,7 @@ void KMMainWidget::updateFolderMenu()
   bool imapFolderIsOnline = false;
   if(mCurrentFolder && kmkernel->isImapFolder( mCurrentFolder->collection(),imapFolderIsOnline )) {
     if(imapFolderIsOnline) {
-      actionlist << mServerSideSubscription; 
+      actionlist << mServerSideSubscription;
     }
   }
 
