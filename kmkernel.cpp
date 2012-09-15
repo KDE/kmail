@@ -400,7 +400,8 @@ bool KMKernel::handleCommandLine( bool noArgsOpensReader )
   if (args->isSet("msg"))
   {
      mailto = true;
-     messageFile.setPath( args->getOption("msg") );
+     const QString file = args->getOption("msg");
+     messageFile = makeAbsoluteUrl(file);
   }
 
   if (args->isSet("body"))
@@ -1356,10 +1357,11 @@ void KMKernel::action( bool mailto, bool check, const QString &to,
                        const KUrl::List &attachURLs,
                        const QStringList &customHeaders )
 {
-  if ( mailto )
+  if ( mailto ) {
     openComposer( to, cc, bcc, subj, body, 0,
                   messageFile.pathOrUrl(), attachURLs.toStringList(),
                   customHeaders );
+  }
   else
     openReader( check );
 
