@@ -2951,6 +2951,11 @@ void KMMainWidget::slotMessageActivated( const Akonadi::Item &msg )
     return;
   }
 
+  bool isImapResourceOnline = false;
+  bool folderIsAnImap = KMKernel::self()->isImapFolder( mCurrentFolder->collection(), isImapResourceOnline );
+  if(folderIsAnImap && !isImapResourceOnline) {
+    return;
+  }
   ItemFetchJob *itemFetchJob = MessageViewer::Viewer::createFetchJob( msg );
   connect( itemFetchJob, SIGNAL(itemsReceived(Akonadi::Item::List)),
            SLOT(slotItemsFetchedForActivation(Akonadi::Item::List)) );
