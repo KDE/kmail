@@ -51,7 +51,7 @@
 #include "custommimeheader.h"
 #include <messagecomposer/kmsubjectlineedit.h>
 #include "messageviewer/translator/translatorwidget.h"
-#include "insertspecialchar.h"
+#include "messagecomposer/selectspecialchar.h"
 #include "attachmentmissingwarning.h"
 
 // KDEPIM includes
@@ -201,7 +201,7 @@ KMComposeWin::KMComposeWin( const KMime::Message::Ptr &aMsg, bool lastSignState,
     mDummyComposer( 0 ),
     mLabelWidth( 0 ),
     mComposerBase( 0 ),
-    mInsertSpecialChar( 0 ),
+    mSelectSpecialChar( 0 ),
     mSignatureStateIndicator( 0 ), mEncryptionStateIndicator( 0 ),
     mPreventFccOverwrite( false ),
     mCheckForForgottenAttachments( true ),
@@ -3321,11 +3321,11 @@ void KMComposeWin::slotTranslatorWasClosed()
 
 void KMComposeWin::insertSpecialCharacter()
 {
-  if(!mInsertSpecialChar) {
-    mInsertSpecialChar = new InsertSpecialChar(this);
-    connect(mInsertSpecialChar,SIGNAL(charSelected(QChar)),this,SLOT(charSelected(QChar)));
+  if(!mSelectSpecialChar) {
+    mSelectSpecialChar = new SelectSpecialChar(this);
+    connect(mSelectSpecialChar,SIGNAL(charSelected(QChar)),this,SLOT(charSelected(QChar)));
   }
-  mInsertSpecialChar->show();
+  mSelectSpecialChar->show();
 }
 
 void KMComposeWin::charSelected(const QChar& c)

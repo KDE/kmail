@@ -66,7 +66,7 @@ class KToggleAction;
 class KUrl;
 class KRecentFilesAction;
 class SnippetWidget;
-class InsertSpecialChar;
+class SelectSpecialChar;
 class AttachmentMissingWarning;
 
 namespace boost {
@@ -664,7 +664,7 @@ class KMComposeWin : public KMail::Composer
 
     SnippetWidget *mSnippetWidget;
     MessageViewer::TranslatorWidget *mTranslatorWidget;
-    QPointer<InsertSpecialChar> mInsertSpecialChar;
+    QPointer<SelectSpecialChar> mSelectSpecialChar;
     AttachmentMissingWarning *mAttachmentMissing;
     QTimer *m_verifyMissingAttachment;
     QLabel *mSignatureStateIndicator;

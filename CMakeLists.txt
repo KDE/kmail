@@ -113,7 +113,6 @@ if (NOT WINCE AND KDEPIM_BUILD_DESKTOP)
      kmknotify.cpp
      tagselectdialog.cpp
      accountconfigorderdialog.cpp
-     insertspecialchar.cpp
      identityeditvcarddialog.cpp
      attachmentmissingwarning.cpp
   )
