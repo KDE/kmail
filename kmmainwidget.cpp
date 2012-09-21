@@ -1137,6 +1137,7 @@ void KMMainWidget::createWidgets()
     mAkonadiStandardActionManager->setFavoriteCollectionsModel( mFavoritesModel );
     mAkonadiStandardActionManager->setFavoriteSelectionModel( mFavoriteCollectionsView->selectionModel() );
   }
+
   //mAkonadiStandardActionManager->createAllActions();
   //Don't use mMailActionManager->createAllActions() to save memory by not
   //creating actions that doesn't make sense.
@@ -1169,6 +1170,16 @@ void KMMainWidget::createWidgets()
 
   Q_FOREACH( StandardActionManager::Type standardAction, standardActions ) {
     mAkonadiStandardActionManager->createAction( standardAction );
+  }
+
+  QList<StandardActionManager::Type> favoriteActions;
+  favoriteActions << StandardActionManager::AddToFavoriteCollections
+                  << StandardActionManager::RemoveFromFavoriteCollections
+                  << StandardActionManager::RenameFavoriteCollection
+                  << StandardActionManager::SynchronizeFavoriteCollections;
+
+  Q_FOREACH( StandardActionManager::Type favoriteAction, favoriteActions) {
+    mAkonadiStandardActionManager->action( favoriteAction )->setEnabled( mEnableFavoriteFolderView );
   }
 
   QList<StandardMailActionManager::Type> mailActions;
