@@ -87,7 +87,6 @@
 #include "messagecore/messagehelpers.h"
 
 #include "kmknotify.h"
-#include "../../kdepimlibs/akonadi/standardactionmanager.h"
 
 // LIBKDEPIM includes
 #include "progressmanager.h"
