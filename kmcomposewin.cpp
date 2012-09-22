@@ -429,7 +429,7 @@ KMComposeWin::KMComposeWin( const KMime::Message::Ptr &aMsg, bool lastSignState,
   connect( m_verifyMissingAttachment, SIGNAL(timeout()), this, SLOT(slotVerifyMissingAttachmentTimeout()) );
 
   readConfig();
-  setupStatusBar();
+  setupStatusBar(attachmentView->toolButton());
   setupActions();
   setupEditor();
   rethinkFields();
@@ -1432,8 +1432,9 @@ void KMComposeWin::changeCryptoAction()
 }
 
 //-----------------------------------------------------------------------------
-void KMComposeWin::setupStatusBar( void )
+void KMComposeWin::setupStatusBar( QWidget *w )
 {
+  statusBar()->addWidget(w);
   statusBar()->insertItem( "", 0, 1 );
   statusBar()->setItemAlignment( 0, Qt::AlignLeft | Qt::AlignVCenter );
   statusBar()->insertPermanentItem( overwriteModeStr(), 4,0 );

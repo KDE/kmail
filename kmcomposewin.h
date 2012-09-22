@@ -509,7 +509,7 @@ class KMComposeWin : public KMail::Composer
      * Initialization methods
      */
     void setupActions();
-    void setupStatusBar();
+    void setupStatusBar(QWidget *w);
     void setupEditor();
 
     /**

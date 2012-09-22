@@ -1,6 +1,6 @@
 /*
  * This file is part of KMail.
- * Copyright (c) 2011 Laurent Montel <montel@kde.org>
+ * Copyright (c) 2011-2012 Laurent Montel <montel@kde.org>
  * 
  * Copyright (c) 2009 Constantin Berzan <exit3219@gmail.com>
  *
@@ -32,9 +32,12 @@
 #include <QHeaderView>
 #include <QKeyEvent>
 #include <QSortFilterProxyModel>
+#include <QToolButton>
 
 #include <KDebug>
 #include <KConfigGroup>
+#include <KIcon>
+#include <KLocale>
 
 #include <messagecore/attachmentpart.h>
 #include <boost/shared_ptr.hpp>
@@ -45,12 +48,25 @@ using namespace KMail;
 class KMail::AttachmentView::Private
 {
   public:
+    Private(AttachmentView *qq)
+      : q(qq)
+    {
+      toolButton = new QToolButton;
+      connect(toolButton,SIGNAL(toggled(bool)),q,SLOT(setVisible(bool)));
+      toolButton->setIcon(KIcon(QLatin1String( "mail-attachment" )));
+      toolButton->setToolTip(i18n("Show tree attachment"));
+      toolButton->setAutoRaise(true);
+      toolButton->setCheckable(true);
+    }
+
     Message::AttachmentModel *model;
+    QToolButton *toolButton;
+    AttachmentView *q;
 };
 
 AttachmentView::AttachmentView( Message::AttachmentModel *model, QWidget *parent )
   : QTreeView( parent )
-  , d( new Private )
+  , d( new Private(this) )
 {
   d->model = model;
   connect( model, SIGNAL(encryptEnabled(bool)), this, SLOT(setEncryptEnabled(bool)) );
@@ -141,7 +157,10 @@ void AttachmentView::setSignEnabled( bool enabled )
 
 void AttachmentView::hideIfEmpty()
 {
-  setVisible( model()->rowCount() > 0 );
+  const bool needToShowIt = (model()->rowCount() > 0);
+  setVisible( needToShowIt );
+  toolButton()->setChecked( needToShowIt );
+  toolButton()->setVisible( needToShowIt );
 }
 
 void AttachmentView::selectNewAttachment()
@@ -163,6 +182,11 @@ void AttachmentView::startDrag( Qt::DropActions supportedActions )
     drag->setMimeData( mimeData );
     drag->exec( Qt::CopyAction );
   }
+}
+
+QToolButton *AttachmentView::toolButton()
+{
+  return d->toolButton;
 }
 
 #include "attachmentview.moc"
