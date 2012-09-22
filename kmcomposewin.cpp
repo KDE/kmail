@@ -3363,9 +3363,8 @@ void KMComposeWin::slotSaveAsFile()
 
 void KMComposeWin::slotCreateAddressBookContact()
 {
-  Akonadi::ContactEditorDialog *dlg = new Akonadi::ContactEditorDialog( Akonadi::ContactEditorDialog::CreateMode, this );
-  dlg->exec();
-  delete dlg;
+  Akonadi::ContactEditorDialog dlg( Akonadi::ContactEditorDialog::CreateMode, this );
+  dlg.exec();
 }
 
 void KMComposeWin::slotAttachMissingFile()
