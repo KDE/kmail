@@ -3376,6 +3376,8 @@ void KMComposeWin::slotAttachMissingFile()
 void KMComposeWin::slotCloseAttachMissingFile()
 {
   m_verifyMissingAttachment->stop();
+  delete m_verifyMissingAttachment;
+  m_verifyMissingAttachment = 0;
 }
 
 void KMComposeWin::slotVerifyMissingAttachmentTimeout()
