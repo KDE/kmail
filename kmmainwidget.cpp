@@ -4757,9 +4757,8 @@ void KMMainWidget::slotExportData()
 
 void KMMainWidget::slotCreateAddressBookContact()
 {
-  Akonadi::ContactEditorDialog *dlg = new Akonadi::ContactEditorDialog( Akonadi::ContactEditorDialog::CreateMode, this );
-  dlg->exec();
-  delete dlg;
+  Akonadi::ContactEditorDialog dlg( Akonadi::ContactEditorDialog::CreateMode, this );
+  dlg.exec();
 }
 
 void KMMainWidget::slotOpenRecentMsg(const KUrl& url)
