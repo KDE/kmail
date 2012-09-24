@@ -54,7 +54,6 @@ class KMail::AttachmentView::Private
       toolButton = new QToolButton;
       connect(toolButton,SIGNAL(toggled(bool)),q,SLOT(setVisible(bool)));
       toolButton->setIcon(KIcon(QLatin1String( "mail-attachment" )));
-      toolButton->setToolTip(i18n("Show tree attachment"));
       toolButton->setAutoRaise(true);
       toolButton->setCheckable(true);
     }
@@ -159,6 +158,11 @@ void AttachmentView::hideIfEmpty()
 {
   const bool needToShowIt = (model()->rowCount() > 0);
   setVisible( needToShowIt );
+  if(needToShowIt) {
+    toolButton()->setToolTip(i18n("Hide attachment list"));
+  } else {
+    toolButton()->setToolTip(i18n("Show attachment list"));
+  }
   toolButton()->setChecked( needToShowIt );
   toolButton()->setVisible( needToShowIt );
 }
