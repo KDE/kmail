@@ -20,8 +20,8 @@
 #include <kmenu.h>
 #include <mailcommon/snippetsmanager.h>
 
-#include <QtGui/QContextMenuEvent>
-#include <QtGui/QHeaderView>
+#include <QContextMenuEvent>
+#include <QHeaderView>
 
 SnippetWidget::SnippetWidget( KMComposerEditor *editor, KActionCollection *actionCollection, QWidget *parent )
   : QTreeView( parent )

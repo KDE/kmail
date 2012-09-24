@@ -59,16 +59,16 @@
 #include <KWindowSystem>
 #include <KMessageBox>
 
-#include <QtGui/QCheckBox>
-#include <QtGui/QCloseEvent>
-#include <QtGui/QCursor>
-#include <QtGui/QHBoxLayout>
-#include <QtGui/QHeaderView>
-#include <QtGui/QKeyEvent>
-#include <QtGui/QLabel>
-#include <QtGui/QMenu>
-#include <QtGui/QRadioButton>
-#include <QtGui/QVBoxLayout>
+#include <QCheckBox>
+#include <QCloseEvent>
+#include <QCursor>
+#include <QHBoxLayout>
+#include <QHeaderView>
+#include <QKeyEvent>
+#include <QLabel>
+#include <QMenu>
+#include <QRadioButton>
+#include <QVBoxLayout>
 
 #include <assert.h>
 #include <stdlib.h>

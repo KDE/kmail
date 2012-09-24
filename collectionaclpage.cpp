@@ -38,11 +38,11 @@
 #include <mailcommon/aclmanager.h>
 #include <mailcommon/imapaclattribute.h>
 
-#include <QtGui/QAction>
-#include <QtGui/QActionEvent>
-#include <QtGui/QHBoxLayout>
-#include <QtGui/QListView>
-#include <QtGui/QPushButton>
+#include <QAction>
+#include <QActionEvent>
+#include <QHBoxLayout>
+#include <QListView>
+#include <QPushButton>
 
 /**
  * Unfortunately QPushButton doesn't support to plug in

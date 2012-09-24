@@ -14,7 +14,7 @@
 #ifndef __SNIPPETWIDGET_H__
 #define __SNIPPETWIDGET_H__
 
-#include <QtGui/QTreeView>
+#include <QTreeView>
 
 namespace MailCommon {
 class SnippetsManager;

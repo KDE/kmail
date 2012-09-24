@@ -40,7 +40,7 @@
 #include <KPushButton>
 #include <QFormLayout>
 #include <kio/global.h>
-#include <QtGui/QCheckBox>
+#include <QCheckBox>
 #include <akonadi/indexpolicyattribute.h>
 
 using namespace Akonadi;

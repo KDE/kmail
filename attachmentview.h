@@ -25,7 +25,7 @@
 #ifndef KMAIL_ATTACHMENTVIEW_H
 #define KMAIL_ATTACHMENTVIEW_H
 
-#include <QtGui/QTreeView>
+#include <QTreeView>
 
 class QContextMenuEvent;
 class QToolButton;
