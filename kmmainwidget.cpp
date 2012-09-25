@@ -3910,7 +3910,6 @@ void KMMainWidget::updateMessageActions( bool fast )
   Akonadi::Item::List selectedItems;
   Akonadi::Item::List selectedVisibleItems;
   bool allSelectedBelongToSameThread = false;
-  Akonadi::Item currentMessage;
   if (mCurrentFolder && mCurrentFolder->isValid() &&
        mMessagePane->getSelectionStats( selectedItems, selectedVisibleItems, &allSelectedBelongToSameThread )
      )
