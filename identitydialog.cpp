@@ -802,12 +802,9 @@ namespace KMail {
       mTemplatesCombo->setCollection( Akonadi::Collection( ident.templates().toLongLong() ) );
 
     mVcardFilename = ident.vCardFile();
+    updateVcardButton();
     if(mVcardFilename.isEmpty()) {
-      mEditVCard->setText(i18n("Create..."));
-      //Store in default place.
       mVcardFilename = KStandardDirs::locateLocal("appdata",ident.identityName() + QLatin1String(".vcf"));
-    } else {
-      mEditVCard->setText(i18n("Edit..."));
     }
     mAttachMyVCard->setChecked(ident.attachVcard());
     // "Templates" tab:
@@ -879,6 +876,7 @@ namespace KMail {
     else
       ident.setTemplates( QString() );
     ident.setVCardFile(mVcardFilename);
+    updateVcardButton();
     ident.setAttachVcard(mAttachMyVCard->isChecked());
 
     // "Templates" tab:
@@ -909,8 +907,19 @@ namespace KMail {
     dlg.loadVcard(mVcardFilename);
     if(dlg.exec()) {
        mVcardFilename = dlg.saveVcard();
+       updateVcardButton();
     }
   }
+
+  void IdentityDialog::updateVcardButton()
+  {
+    if(mVcardFilename.isEmpty()) {
+      mEditVCard->setText(i18n("Create..."));
+    } else {
+      mEditVCard->setText(i18n("Edit..."));
+    }
+  }
+
 }
 
 #include "identitydialog.moc"

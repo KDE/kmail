@@ -93,10 +93,11 @@ namespace KMail {
 
   private slots:
     void slotDelayedButtonClicked( KJob* );
-void slotEditVcard();
+    void slotEditVcard();
   private:
     bool checkFolderExists( const QString & folder, const QString & msg );
     bool validateAddresses( const QString & addresses );
+    void updateVcardButton();
 
   protected:
     // "general" tab:
