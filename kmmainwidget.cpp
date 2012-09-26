@@ -247,7 +247,7 @@ K_GLOBAL_STATIC( KMMainWidget::PtrList, theMainWidgetList )
   mPreferHtmlAction = 0;
   mPreferHtmlLoadExtAction = 0;
   Akonadi::Control::widgetNeedsAkonadi( this );
-
+  mFavoritesModel = 0;
 
   // FIXME This should become a line separator as soon as the API
   // is extended in kdelibs.
@@ -1041,6 +1041,7 @@ void KMMainWidget::deleteWidgets()
   mFavoriteCollectionsView = 0;
   mSplitter1 = 0;
   mSplitter2 = 0;
+  mFavoritesModel = 0;
 }
 
 //-----------------------------------------------------------------------------
@@ -1182,9 +1183,6 @@ void KMMainWidget::createWidgets()
                   << StandardActionManager::Paste
                   << StandardActionManager::DeleteItems
                   << StandardActionManager::ManageLocalSubscriptions
-                  << StandardActionManager::AddToFavoriteCollections
-                  << StandardActionManager::RemoveFromFavoriteCollections
-                  << StandardActionManager::RenameFavoriteCollection
                   << StandardActionManager::CopyCollectionToMenu
                   << StandardActionManager::CopyItemToMenu
                   << StandardActionManager::MoveItemToMenu
@@ -1196,21 +1194,22 @@ void KMMainWidget::createWidgets()
                   << StandardActionManager::ResourceProperties
                   << StandardActionManager::SynchronizeResources
                   << StandardActionManager::ToggleWorkOffline
-                  << StandardActionManager::SynchronizeCollectionsRecursive
-                  << StandardActionManager::SynchronizeFavoriteCollections;
+                  << StandardActionManager::SynchronizeCollectionsRecursive;
 
   Q_FOREACH( StandardActionManager::Type standardAction, standardActions ) {
     mAkonadiStandardActionManager->createAction( standardAction );
   }
 
-  QList<StandardActionManager::Type> favoriteActions;
-  favoriteActions << StandardActionManager::AddToFavoriteCollections
-                  << StandardActionManager::RemoveFromFavoriteCollections
-                  << StandardActionManager::RenameFavoriteCollection
-                  << StandardActionManager::SynchronizeFavoriteCollections;
 
-  Q_FOREACH( StandardActionManager::Type favoriteAction, favoriteActions) {
-    mAkonadiStandardActionManager->action( favoriteAction )->setEnabled( mEnableFavoriteFolderView );
+  if(mEnableFavoriteFolderView) {
+    QList<StandardActionManager::Type> favoriteActions;
+    favoriteActions << StandardActionManager::AddToFavoriteCollections
+                    << StandardActionManager::RemoveFromFavoriteCollections
+                    << StandardActionManager::RenameFavoriteCollection
+                    << StandardActionManager::SynchronizeFavoriteCollections;
+    Q_FOREACH( StandardActionManager::Type favoriteAction, favoriteActions) {
+      mAkonadiStandardActionManager->createAction( favoriteAction );
+    }
   }
 
   QList<StandardMailActionManager::Type> mailActions;
@@ -1220,7 +1219,7 @@ void KMMainWidget::createWidgets()
               << StandardMailActionManager::RemoveDuplicates
               << StandardMailActionManager::EmptyAllTrash
               << StandardMailActionManager::MarkMailAsRead
-	      << StandardMailActionManager::MarkMailAsUnread
+              << StandardMailActionManager::MarkMailAsUnread
               << StandardMailActionManager::MarkMailAsImportant
               << StandardMailActionManager::MarkMailAsActionItem;
 
@@ -3799,6 +3798,8 @@ void KMMainWidget::setupActions()
 
 void KMMainWidget::slotAddFavoriteFolder()
 {
+  if(!mFavoritesModel)
+    return;
   selectFromAllFoldersDialog()->setCaption( i18n("Add Favorite Folder") );
   if ( selectFromAllFoldersDialog()->exec() && selectFromAllFoldersDialog() ) {
     const Akonadi::Collection collection = selectFromAllFoldersDialog()->selectedCollection();
