@@ -123,6 +123,7 @@ void slotEditVcard();
     MailTransport::TransportComboBox *mTransportCombo;
     QCheckBox                        *mAttachMyVCard;
     QString                          mVcardFilename;
+    KPushButton                      *mEditVCard;
     // "templates" tab:
     TemplateParser::TemplatesConfiguration *mWidget;
     QCheckBox                    *mCustom;

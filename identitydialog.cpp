@@ -475,9 +475,9 @@ namespace KMail {
     ++row;
     mAttachMyVCard = new QCheckBox(i18n("Attach my vcard to message"), tab);
     glay->addWidget( mAttachMyVCard, row, 0 );
-    KPushButton *editVCard = new KPushButton(i18n("Edit..."),tab);
-    connect(editVCard,SIGNAL(clicked()),SLOT(slotEditVcard()));
-    glay->addWidget( editVCard, row, 1 );
+    mEditVCard = new KPushButton(i18n("Create..."),tab);
+    connect(mEditVCard,SIGNAL(clicked()),SLOT(slotEditVcard()));
+    glay->addWidget( mEditVCard, row, 1 );
     // the last row is a spacer
 
     //
@@ -803,8 +803,11 @@ namespace KMail {
 
     mVcardFilename = ident.vCardFile();
     if(mVcardFilename.isEmpty()) {
+      mEditVCard->setText(i18n("Create..."));
       //Store in default place.
       mVcardFilename = KStandardDirs::locateLocal("appdata",ident.identityName() + QLatin1String(".vcf"));
+    } else {
+      mEditVCard->setText(i18n("Edit..."));
     }
     mAttachMyVCard->setChecked(ident.attachVcard());
     // "Templates" tab:
