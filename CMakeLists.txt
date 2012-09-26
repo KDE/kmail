@@ -114,6 +114,7 @@ if (NOT WINCE AND KDEPIM_BUILD_DESKTOP)
      tagselectdialog.cpp
      accountconfigorderdialog.cpp
      identityeditvcarddialog.cpp
+     identityaddvcarddialog.cpp
      attachmentmissingwarning.cpp
   )
 

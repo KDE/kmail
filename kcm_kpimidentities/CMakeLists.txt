@@ -11,6 +11,7 @@ set(kcm_identities_srcs
   ../newidentitydialog.cpp
   ../simplestringlisteditor.cpp
   ../identityeditvcarddialog.cpp
+  ../identityaddvcarddialog.cpp
 )
 if (NOT WINCE)
 set(kcm_identities_srcs

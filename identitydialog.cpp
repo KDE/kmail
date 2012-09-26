@@ -85,6 +85,7 @@ using MailTransport::TransportManager;
 #include <QCheckBox>
 #include <QVBoxLayout>
 #include <QGridLayout>
+#include <QFile>
 
 // other headers:
 #include <gpgme++/key.h>
@@ -900,20 +901,27 @@ namespace KMail {
   }
   void IdentityDialog::slotEditVcard()
   {
-    if(mVcardFilename.isEmpty()) {
+    if(QFile(mVcardFilename).exists()) {
+      IdentityEditVcardDialog dlg(this);
+      dlg.loadVcard(mVcardFilename);
+      if(dlg.exec()) {
+         mVcardFilename = dlg.saveVcard();
+         updateVcardButton();
+      }
+    } else {
+        IdentityEditVcardDialog dlg(this);
+        dlg.loadVcard(mVcardFilename);
+        if(dlg.exec()) {
+           mVcardFilename = dlg.saveVcard();
+           updateVcardButton();
+        }
 
-    }
-    IdentityEditVcardDialog dlg(this);
-    dlg.loadVcard(mVcardFilename);
-    if(dlg.exec()) {
-       mVcardFilename = dlg.saveVcard();
-       updateVcardButton();
     }
   }
 
   void IdentityDialog::updateVcardButton()
   {
-    if(mVcardFilename.isEmpty()) {
+    if(!QFile(mVcardFilename).exists()) {
       mEditVCard->setText(i18n("Create..."));
     } else {
       mEditVCard->setText(i18n("Edit..."));
