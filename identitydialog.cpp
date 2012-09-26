@@ -33,6 +33,8 @@
 #include "identityeditvcarddialog.h"
 #include "identityaddvcarddialog.h"
 
+#include <kpimidentities/identitymanager.h>
+
 // other KMail headers:
 #ifndef KDEPIM_MOBILE_UI
 #include "xfaceconfigurator.h"
@@ -918,9 +920,14 @@ namespace KMail {
               editVcard(mVcardFilename);
           }
           break;
-          case IdentityAddVcardDialog::ExistingEntry:
-              //TODO copy existing vcard
+          case IdentityAddVcardDialog::ExistingEntry: {
+              KPIMIdentities::Identity ident = manager->modifyIdentityForName( dlg.duplicateVcardFromIdentity() );
+              QString filename = ident.vCardFile();
+              if(!filename.isEmpty()) {
+                QFile::copy(filename,mVcardFilename);
+              }
               editVcard(mVcardFilename);
+          }
           break;
           }
        }
