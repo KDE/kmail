@@ -899,12 +899,14 @@ namespace KMail {
   }
   void IdentityDialog::slotEditVcard()
   {
-    IdentityEditVcardDialog *dlg = new IdentityEditVcardDialog(this);
-    dlg->loadVcard(mVcardFilename);
-    if(dlg->exec()) {
-       mVcardFilename = dlg->saveVcard();
+    if(mVcardFilename.isEmpty()) {
+
     }
-    delete dlg;
+    IdentityEditVcardDialog dlg(this);
+    dlg.loadVcard(mVcardFilename);
+    if(dlg.exec()) {
+       mVcardFilename = dlg.saveVcard();
+    }
   }
 }
 
