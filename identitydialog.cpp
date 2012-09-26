@@ -922,7 +922,7 @@ namespace KMail {
         break;
         case IdentityAddVcardDialog::ExistingEntry: {
            KPIMIdentities::Identity ident = manager->modifyIdentityForName( dlg.duplicateVcardFromIdentity() );
-           QString filename = ident.vCardFile();
+           const QString filename = ident.vCardFile();
            if(!filename.isEmpty()) {
              QFile::copy(filename,mVcardFilename);
            }
