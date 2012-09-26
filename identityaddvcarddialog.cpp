@@ -17,6 +17,8 @@
 
 #include "identityaddvcarddialog.h"
 
+#include <kpimidentities/identitymanager.h>
+
 #include <QVBoxLayout>
 #include <QRadioButton>
 #include <QLabel>
@@ -25,7 +27,7 @@
 #include <QButtonGroup>
 
 
-IdentityAddVcardDialog::IdentityAddVcardDialog(QWidget *parent)
+IdentityAddVcardDialog::IdentityAddVcardDialog(KPIMIdentities::IdentityManager *manager, QWidget *parent)
   :KDialog(parent)
 {
   setCaption( i18n( "Create own vcard" ) );
@@ -56,7 +58,8 @@ IdentityAddVcardDialog::IdentityAddVcardDialog(QWidget *parent)
   vlay->addLayout( hlay );
   mComboBox = new KComboBox( this );
   mComboBox->setEditable( false );
-  //mComboBox->addItems( manager->shadowIdentities() );
+
+  mComboBox->addItems( manager->shadowIdentities() );
   mComboBox->setEnabled( false );
   QLabel *label = new QLabel( i18n("&Existing identities:"), this );
   label->setBuddy( mComboBox );

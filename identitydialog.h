@@ -98,7 +98,7 @@ namespace KMail {
     bool checkFolderExists( const QString & folder, const QString & msg );
     bool validateAddresses( const QString & addresses );
     void updateVcardButton();
-
+    void editVcard(const QString& filename);
   protected:
     // "general" tab:
     KLineEdit                    *mNameEdit;

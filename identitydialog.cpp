@@ -31,6 +31,7 @@
 
 #include "identitydialog.h"
 #include "identityeditvcarddialog.h"
+#include "identityaddvcarddialog.h"
 
 // other KMail headers:
 #ifndef KDEPIM_MOBILE_UI
@@ -902,20 +903,37 @@ namespace KMail {
   void IdentityDialog::slotEditVcard()
   {
     if(QFile(mVcardFilename).exists()) {
-      IdentityEditVcardDialog dlg(this);
-      dlg.loadVcard(mVcardFilename);
-      if(dlg.exec()) {
-         mVcardFilename = dlg.saveVcard();
-         updateVcardButton();
-      }
+      editVcard(mVcardFilename);
     } else {
-        IdentityEditVcardDialog dlg(this);
-        dlg.loadVcard(mVcardFilename);
-        if(dlg.exec()) {
-           mVcardFilename = dlg.saveVcard();
-           updateVcardButton();
+        if ( !MailCommon::Kernel::self()->kernelIsRegistered() ) {
+          return;
         }
+        KPIMIdentities::IdentityManager *manager = KernelIf->identityManager();
 
+        IdentityAddVcardDialog dlg(manager, this);
+        if(dlg.exec()) {
+          IdentityAddVcardDialog::DuplicateMode mode = dlg.duplicateMode();
+          switch(mode) {
+          case IdentityAddVcardDialog::Empty: {
+              editVcard(mVcardFilename);
+          }
+          break;
+          case IdentityAddVcardDialog::ExistingEntry:
+              //TODO copy existing vcard
+              editVcard(mVcardFilename);
+          break;
+          }
+       }
+    }
+  }
+
+  void IdentityDialog::editVcard(const QString& filename)
+  {
+    IdentityEditVcardDialog dlg(this);
+    dlg.loadVcard(filename);
+    if(dlg.exec()) {
+       mVcardFilename = dlg.saveVcard();
+       updateVcardButton();
     }
   }
 

@@ -21,12 +21,16 @@
 class QButtonGroup;
 class KComboBox;
 
+namespace KPIMIdentities {
+  class IdentityManager;
+}
+
 class IdentityAddVcardDialog: public KDialog
 {
   Q_OBJECT
 public:
   enum DuplicateMode { Empty, ExistingEntry };
-  explicit IdentityAddVcardDialog(QWidget *parent = 0);
+  explicit IdentityAddVcardDialog(KPIMIdentities::IdentityManager *manager, QWidget *parent = 0);
   ~IdentityAddVcardDialog();
 
   DuplicateMode duplicateMode() const;
