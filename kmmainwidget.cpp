@@ -1152,9 +1152,6 @@ void KMMainWidget::createWidgets()
                   << StandardActionManager::Paste
                   << StandardActionManager::DeleteItems
                   << StandardActionManager::ManageLocalSubscriptions
-                  << StandardActionManager::AddToFavoriteCollections
-                  << StandardActionManager::RemoveFromFavoriteCollections
-                  << StandardActionManager::RenameFavoriteCollection
                   << StandardActionManager::CopyCollectionToMenu
                   << StandardActionManager::CopyItemToMenu
                   << StandardActionManager::MoveItemToMenu
@@ -1166,21 +1163,22 @@ void KMMainWidget::createWidgets()
                   << StandardActionManager::ResourceProperties
                   << StandardActionManager::SynchronizeResources
                   << StandardActionManager::ToggleWorkOffline
-                  << StandardActionManager::SynchronizeCollectionsRecursive
-                  << StandardActionManager::SynchronizeFavoriteCollections;
+                  << StandardActionManager::SynchronizeCollectionsRecursive;
 
   Q_FOREACH( StandardActionManager::Type standardAction, standardActions ) {
     mAkonadiStandardActionManager->createAction( standardAction );
   }
 
-  QList<StandardActionManager::Type> favoriteActions;
-  favoriteActions << StandardActionManager::AddToFavoriteCollections
-                  << StandardActionManager::RemoveFromFavoriteCollections
-                  << StandardActionManager::RenameFavoriteCollection
-                  << StandardActionManager::SynchronizeFavoriteCollections;
 
-  Q_FOREACH( StandardActionManager::Type favoriteAction, favoriteActions) {
-    mAkonadiStandardActionManager->action( favoriteAction )->setEnabled( mEnableFavoriteFolderView );
+  if(mEnableFavoriteFolderView) {
+    QList<StandardActionManager::Type> favoriteActions;
+    favoriteActions << StandardActionManager::AddToFavoriteCollections
+                    << StandardActionManager::RemoveFromFavoriteCollections
+                    << StandardActionManager::RenameFavoriteCollection
+                    << StandardActionManager::SynchronizeFavoriteCollections;
+    Q_FOREACH( StandardActionManager::Type favoriteAction, favoriteActions) {
+      mAkonadiStandardActionManager->createAction( favoriteAction );
+    }
   }
 
   QList<StandardMailActionManager::Type> mailActions;
@@ -1190,7 +1188,7 @@ void KMMainWidget::createWidgets()
               << StandardMailActionManager::RemoveDuplicates
               << StandardMailActionManager::EmptyAllTrash
               << StandardMailActionManager::MarkMailAsRead
-	      << StandardMailActionManager::MarkMailAsUnread
+              << StandardMailActionManager::MarkMailAsUnread
               << StandardMailActionManager::MarkMailAsImportant
               << StandardMailActionManager::MarkMailAsActionItem;
 
