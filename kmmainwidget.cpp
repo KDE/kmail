@@ -243,7 +243,7 @@ K_GLOBAL_STATIC( KMMainWidget::PtrList, theMainWidgetList )
   mPreferHtmlAction = 0;
   mPreferHtmlLoadExtAction = 0;
   Akonadi::Control::widgetNeedsAkonadi( this );
-
+  mFavoritesModel = 0;
 
   // FIXME This should become a line separator as soon as the API
   // is extended in kdelibs.
@@ -1010,6 +1010,7 @@ void KMMainWidget::deleteWidgets()
   mFavoriteCollectionsView = 0;
   mSplitter1 = 0;
   mSplitter2 = 0;
+  mFavoritesModel = 0;
 }
 
 //-----------------------------------------------------------------------------
@@ -3724,6 +3725,8 @@ void KMMainWidget::setupActions()
 
 void KMMainWidget::slotAddFavoriteFolder()
 {
+  if(!mFavoritesModel)
+    return;
   selectFromAllFoldersDialog()->setCaption( i18n("Add Favorite Folder") );
   if ( selectFromAllFoldersDialog()->exec() && selectFromAllFoldersDialog() ) {
     const Akonadi::Collection collection = selectFromAllFoldersDialog()->selectedCollection();
