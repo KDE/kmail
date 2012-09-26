@@ -907,30 +907,30 @@ namespace KMail {
     if(QFile(mVcardFilename).exists()) {
       editVcard(mVcardFilename);
     } else {
-        if ( !MailCommon::Kernel::self()->kernelIsRegistered() ) {
-          return;
-        }
-        KPIMIdentities::IdentityManager *manager = KernelIf->identityManager();
+      if ( !MailCommon::Kernel::self()->kernelIsRegistered() ) {
+        return;
+      }
+      KPIMIdentities::IdentityManager *manager = KernelIf->identityManager();
 
-        IdentityAddVcardDialog dlg(manager, this);
-        if(dlg.exec()) {
-          IdentityAddVcardDialog::DuplicateMode mode = dlg.duplicateMode();
-          switch(mode) {
-          case IdentityAddVcardDialog::Empty: {
-              editVcard(mVcardFilename);
-          }
-          break;
-          case IdentityAddVcardDialog::ExistingEntry: {
-              KPIMIdentities::Identity ident = manager->modifyIdentityForName( dlg.duplicateVcardFromIdentity() );
-              QString filename = ident.vCardFile();
-              if(!filename.isEmpty()) {
-                QFile::copy(filename,mVcardFilename);
-              }
-              editVcard(mVcardFilename);
-          }
-          break;
-          }
-       }
+      IdentityAddVcardDialog dlg(manager, this);
+      if(dlg.exec()) {
+        IdentityAddVcardDialog::DuplicateMode mode = dlg.duplicateMode();
+        switch(mode) {
+        case IdentityAddVcardDialog::Empty: {
+          editVcard(mVcardFilename);
+        }
+        break;
+        case IdentityAddVcardDialog::ExistingEntry: {
+           KPIMIdentities::Identity ident = manager->modifyIdentityForName( dlg.duplicateVcardFromIdentity() );
+           QString filename = ident.vCardFile();
+           if(!filename.isEmpty()) {
+             QFile::copy(filename,mVcardFilename);
+           }
+           editVcard(mVcardFilename);
+        }
+        break;
+        }
+      }
     }
   }
 
