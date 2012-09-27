@@ -2250,6 +2250,7 @@ void KMComposeWin::slotFetchJob(KJob*job)
         data.replace(("X-messaging/sms-All"),("X-SMS"));
         data.replace(("X-messaging/meanwhile-All"),("X-MEANWHILE"));
         data.replace(("X-messaging/irc-All"),("X-IRC"));
+        data.replace(("X-messaging/googletalk-All"),("X-GOOGLETALK"));
         addAttachment( attachmentName, KMime::Headers::CEbase64, QString(), data, item.mimeType().toLatin1() );
       } else {
         addAttachment( attachmentName, KMime::Headers::CEbase64, QString(), item.payloadData(), item.mimeType().toLatin1() );
