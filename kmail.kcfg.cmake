@@ -245,6 +245,10 @@
         <label>Confirm &amp;before send</label>
         <default>false</default>
       </entry>
+      <entry name="CheckSpellingBeforeSend" type="Bool" key="check-spelling-before-send">
+      <label>Check spelling before send</label>
+        <default>false</default>
+      </entry>
       <entry name="RequestMDN" type="Bool" key="request-mdn">
         <label>Automatically request &amp;message disposition notifications</label>
         <whatsthis>&lt;qt&gt;&lt;p&gt;Enable this option if you want KMail to request Message Disposition Notifications (MDNs) for each of your outgoing messages.&lt;/p&gt;&lt;p&gt;This option only affects the default; you can still enable or disable MDN requesting on a per-message basis in the composer, menu item &lt;em&gt;Options&lt;/em&gt;-&gt;&lt;em&gt;Request Disposition Notification&lt;/em&gt;.&lt;/p&gt;&lt;/qt&gt;</whatsthis>

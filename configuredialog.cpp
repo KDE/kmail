@@ -337,6 +337,11 @@ AccountsPageSendingTab::AccountsPageSendingTab( QWidget * parent )
   connect( mConfirmSendCheck, SIGNAL(stateChanged(int)),
            this, SLOT(slotEmitChanged()) );
 
+  mCheckSpellingBeforeSending = new QCheckBox( i18n("Check spelling before sending"), group );
+  glay->addWidget( mCheckSpellingBeforeSending, 1, 0, 1, 2 );
+  connect( mCheckSpellingBeforeSending, SIGNAL(stateChanged(int)),
+           this, SLOT(slotEmitChanged()) );
+
   // "send on check" combo:
   mSendOnCheckCombo = new KComboBox( group );
   mSendOnCheckCombo->setEditable( false );
@@ -344,7 +349,7 @@ AccountsPageSendingTab::AccountsPageSendingTab( QWidget * parent )
                                       << i18n("Never Automatically")
                                       << i18n("On Manual Mail Checks")
                                       << i18n("On All Mail Checks") );
-  glay->addWidget( mSendOnCheckCombo, 1, 1 );
+  glay->addWidget( mSendOnCheckCombo, 2, 1 );
   connect( mSendOnCheckCombo, SIGNAL(activated(int)),
            this, SLOT(slotEmitChanged()) );
 
@@ -354,20 +359,20 @@ AccountsPageSendingTab::AccountsPageSendingTab( QWidget * parent )
   mSendMethodCombo->addItems( QStringList()
                                       << i18n("Send Now")
                                       << i18n("Send Later") );
-  glay->addWidget( mSendMethodCombo, 2, 1 );
+  glay->addWidget( mSendMethodCombo, 3, 1 );
   connect( mSendMethodCombo, SIGNAL(activated(int)),
            this, SLOT(slotEmitChanged()) );
 
   // "default domain" input field:
   mDefaultDomainEdit = new KLineEdit( group );
-  glay->addWidget( mDefaultDomainEdit, 3, 1 );
+  glay->addWidget( mDefaultDomainEdit, 4, 1 );
   connect( mDefaultDomainEdit, SIGNAL(textChanged(QString)),
            this, SLOT(slotEmitChanged()) );
 
   // labels:
   QLabel *l =  new QLabel( i18n("Send &messages in outbox folder:"), group );
   l->setBuddy( mSendOnCheckCombo );
-  glay->addWidget( l, 1, 0 );
+  glay->addWidget( l, 2, 0 );
 
   QString msg = i18n( GlobalSettings::self()->sendOnCheckItem()->whatsThis().toUtf8() );
   l->setWhatsThis( msg );
@@ -375,10 +380,10 @@ AccountsPageSendingTab::AccountsPageSendingTab( QWidget * parent )
 
   l = new QLabel( i18n("Defa&ult send method:"), group );
   l->setBuddy( mSendMethodCombo );
-  glay->addWidget( l, 2, 0 );
+  glay->addWidget( l, 3, 0 );
   l = new QLabel( i18n("Defaul&t domain:"), group );
   l->setBuddy( mDefaultDomainEdit );
-  glay->addWidget( l, 3, 0 );
+  glay->addWidget( l, 4, 0 );
 
   // and now: add QWhatsThis:
   msg = i18n( "<qt><p>The default domain is used to complete email "
@@ -397,6 +402,7 @@ void AccountsPage::SendingTab::doLoadOther()
 {
   mSendMethodCombo->setCurrentIndex( MessageComposer::MessageComposerSettings::self()->sendImmediate() ? 0 : 1 );
   mConfirmSendCheck->setChecked( GlobalSettings::self()->confirmBeforeSend() );
+  mCheckSpellingBeforeSending->setChecked(GlobalSettings::self()->checkSpellingBeforeSend());
   QString defaultDomain = MessageComposer::MessageComposerSettings::defaultDomain();
   if( defaultDomain.isEmpty() ) {
     defaultDomain = QHostInfo::localHostName();
@@ -409,6 +415,7 @@ void AccountsPage::SendingTab::save()
   GlobalSettings::self()->setSendOnCheck( mSendOnCheckCombo->currentIndex() );
   MessageComposer::MessageComposerSettings::self()->setDefaultDomain( mDefaultDomainEdit->text() );
   GlobalSettings::self()->setConfirmBeforeSend( mConfirmSendCheck->isChecked() );
+  GlobalSettings::self()->setCheckSpellingBeforeSend(mCheckSpellingBeforeSending->isChecked());
   MessageComposer::MessageComposerSettings::self()->setSendImmediate( mSendMethodCombo->currentIndex() == 0 );
 }
 

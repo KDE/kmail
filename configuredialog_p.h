@@ -168,6 +168,7 @@ private:
 
 private:
   QCheckBox   *mConfirmSendCheck;
+  QCheckBox   *mCheckSpellingBeforeSending;
   KComboBox   *mSendOnCheckCombo;
   KComboBox   *mSendMethodCombo;
   KLineEdit   *mDefaultDomainEdit;

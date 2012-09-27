@@ -387,7 +387,9 @@ KMComposeWin::KMComposeWin( const KMime::Message::Ptr &aMsg, bool lastSignState,
            this, SLOT(slotSpellCheckingStatus(QString)) );
   connect( editor, SIGNAL(insertModeChanged()),
            this, SLOT(slotOverwriteModeChanged()) );
-
+#ifdef HAVE_FORCESPELLCHECKING
+  connect(editor,SIGNAL(spellCheckingFinished()),this,SLOT(slotCheckSendNow()));
+#endif
   mSnippetWidget = new SnippetWidget( editor, actionCollection(), mSnippetSplitter );
   mSnippetWidget->setVisible( GlobalSettings::self()->showSnippetManager() );
   mSnippetSplitter->addWidget( mSnippetWidget );
@@ -2815,6 +2817,19 @@ void KMComposeWin::slotSendNow()
   if ( !checkRecipientNumber() )
     return;
 
+  if( GlobalSettings::self()->checkSpellingBeforeSend()) {
+#ifdef HAVE_FORCESPELLCHECKING
+    mComposerBase->editor()->forceCheckSpelling();
+#else
+    slotCheckSendNow();
+#endif
+  } else {
+    slotCheckSendNow();
+  }
+}
+
+void KMComposeWin::slotCheckSendNow()
+{
   if ( GlobalSettings::self()->confirmBeforeSend() ) {
     int rc = KMessageBox::warningYesNoCancel( mMainWidget,
                                               i18n("About to send email..."),
