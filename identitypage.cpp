@@ -279,6 +279,7 @@ void IdentityPage::slotContextMenu( IdentityListViewItem *item, const QPoint &po
       menu->addAction( i18n( "Remove" ), this, SLOT(slotRemoveIdentity()) );
     }
     if ( !item->identity().isDefault() ) {
+      menu->addSeparator();
       menu->addAction( i18n( "Set as Default" ), this, SLOT(slotSetAsDefault()) );
     }
   }

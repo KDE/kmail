@@ -14,7 +14,7 @@
    <item>
     <layout class="QHBoxLayout" name="horizontalLayout">
      <item>
-      <widget class="KMail::IdentityListView" name="mIdentityList" native="true" />
+      <widget class="KMail::IdentityListView" name="mIdentityList" native="true"/>
      </item>
      <item>
       <layout class="QVBoxLayout" name="verticalLayout">
@@ -68,6 +68,9 @@
         </widget>
        </item>
        <item>
+        <widget class="KSeparator" name="kseparator"/>
+       </item>
+       <item>
         <widget class="QPushButton" name="mSetAsDefaultButton">
          <property name="enabled">
           <bool>false</bool>
@@ -100,6 +103,11 @@
   </layout>
  </widget>
  <customwidgets>
+  <customwidget>
+   <class>KSeparator</class>
+   <extends>QFrame</extends>
+   <header>kseparator.h</header>
+  </customwidget>
   <customwidget>
    <class>KMail::IdentityListView</class>
    <extends>QWidget</extends>
