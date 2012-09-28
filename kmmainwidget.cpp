@@ -2939,7 +2939,7 @@ void KMMainWidget::slotSelectPreviousUnreadMessage()
 
 void KMMainWidget::slotDisplayCurrentMessage()
 {
-  if ( mMessagePane->currentItem().isValid() )
+  if ( mMessagePane->currentItem().isValid() && !mMessagePane->searchEditHasFocus() )
     slotMessageActivated( mMessagePane->currentItem() );
 }
 
