@@ -2819,7 +2819,7 @@ void KMComposeWin::slotSendNow()
 
   if( GlobalSettings::self()->checkSpellingBeforeSend()) {
 #ifdef HAVE_FORCESPELLCHECKING
-    mComposerBase->editor()->forceCheckSpelling();
+    mComposerBase->editor()->forceSpellChecking();
 #else
     slotCheckSendNow();
 #endif
