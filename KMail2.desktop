@@ -156,6 +156,6 @@ X-KDE-StartupNotify=true
 X-DBUS-StartupType=Unique
 X-DBUS-ServiceName=org.kde.kmail
 X-KDE-ServiceTypes=DBUS/Mailer
-Categories=Qt;KDE;Network;Email;
+Categories=Qt;KDE;Office;Network;Email;
 MimeType=x-scheme-handler/mailto;
 InitialPreference=10
