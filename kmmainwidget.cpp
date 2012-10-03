@@ -389,6 +389,11 @@ void KMMainWidget::destruct()
 
   KConfigGroup grp = mConfig->group(QLatin1String("Recent Files"));
   mOpenRecentAction->saveEntries(grp);
+  disconnect( kmkernel->folderCollectionMonitor(), SIGNAL(itemAdded(Akonadi::Item,Akonadi::Collection)), 0, 0);
+  disconnect( kmkernel->folderCollectionMonitor(), SIGNAL(itemRemoved(Akonadi::Item)), 0, 0);
+  disconnect( kmkernel->folderCollectionMonitor(), SIGNAL(itemMoved(Akonadi::Item,Akonadi::Collection,Akonadi::Collection)), 0, 0);
+  disconnect( kmkernel->folderCollectionMonitor(), SIGNAL(collectionChanged(Akonadi::Collection,QSet<QByteArray>)), 0, 0);
+  disconnect( kmkernel->folderCollectionMonitor(), SIGNAL(collectionStatisticsChanged(Akonadi::Collection::Id,Akonadi::CollectionStatistics)), 0, 0);
 
   mSystemTray = 0;
   mDestructed = true;
@@ -1032,6 +1037,7 @@ void KMMainWidget::deleteWidgets()
   // akonadi action manager is created in createWidgets(), parented to this
   //  so not autocleaned up.
   delete mAkonadiStandardActionManager;
+  mAkonadiStandardActionManager = 0;
   delete mSplitter1;
   mMsgView = 0;
   mSearchAndTree = 0;
@@ -1168,7 +1174,6 @@ void KMMainWidget::createWidgets()
     mAkonadiStandardActionManager->setFavoriteSelectionModel( mFavoriteCollectionsView->selectionModel() );
   }
 
-  //mAkonadiStandardActionManager->createAllActions();
   //Don't use mMailActionManager->createAllActions() to save memory by not
   //creating actions that doesn't make sense.
   QList<StandardActionManager::Type> standardActions;
@@ -2709,6 +2714,9 @@ void KMMainWidget::slotOnlineStatus()
 
 void KMMainWidget::slotUpdateOnlineStatus( GlobalSettings::EnumNetworkState::type )
 {
+  if( !mAkonadiStandardActionManager ) {
+    return;
+  } 
   KAction * action = mAkonadiStandardActionManager->action( Akonadi::StandardActionManager::ToggleWorkOffline );
   if ( GlobalSettings::self()->networkState() == GlobalSettings::EnumNetworkState::Online ) {
     action->setText( i18n("Work Offline") );
