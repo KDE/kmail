@@ -861,8 +861,6 @@ void KMMainWidget::refreshFavoriteFoldersViewProperties()
 //-----------------------------------------------------------------------------
 void KMMainWidget::readConfig()
 {
-  KSharedConfig::Ptr config = KMKernel::self()->config();
-
   const bool oldLongFolderList = mLongFolderList;
   const bool oldReaderWindowActive = mReaderWindowActive;
   const bool oldReaderWindowBelow = mReaderWindowBelow;
