@@ -50,7 +50,7 @@ class CollectionAclPage : public Akonadi::CollectionPropertiesPage
   Q_OBJECT
 
   public:
-    CollectionAclPage( QWidget *parent = 0 );
+    explicit CollectionAclPage( QWidget *parent = 0 );
 
     void load( const Akonadi::Collection &collection );
     void save( Akonadi::Collection &collection );

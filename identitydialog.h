@@ -75,7 +75,7 @@ namespace KMail {
   class IdentityDialog : public KDialog {
     Q_OBJECT
   public:
-    IdentityDialog( QWidget * parent=0 );
+    explicit IdentityDialog( QWidget * parent=0 );
     virtual ~IdentityDialog();
 
     void setIdentity( /*_not_ const*/ KPIMIdentities::Identity & ident );

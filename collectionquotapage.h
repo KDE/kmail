@@ -43,7 +43,7 @@ class CollectionQuotaPage : public Akonadi::CollectionPropertiesPage
   Q_OBJECT
 
 public:
-  CollectionQuotaPage( QWidget* parent = 0 );
+  explicit CollectionQuotaPage( QWidget* parent = 0 );
   void load( const Akonadi::Collection & col );
   void save( Akonadi::Collection & col );
   bool canHandle( const Akonadi::Collection &collection ) const;
