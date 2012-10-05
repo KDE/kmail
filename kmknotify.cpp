@@ -105,9 +105,9 @@ void KMKnotify::initCombobox()
     
     if ( !fullPath.isEmpty() )
     {
-      int slash = fullPath.lastIndexOf( '/' ) - 1;
-      int slash2 = fullPath.lastIndexOf( '/', slash );
-      const QString appname= slash2 < 0 ? QString() :  fullPath.mid( slash2+1 , slash-slash2  );
+      int slash = fullPath.lastIndexOf( QLatin1Char('/') ) - 1;
+      int slash2 = fullPath.lastIndexOf( QLatin1Char('/'), slash );
+      const QString appname= ( slash2 < 0 ) ? QString() :  fullPath.mid( slash2+1 , slash-slash2  );
       if ( !appname.isEmpty() )
       {
         KConfig config(fullPath, KConfig::NoGlobals, "data" );
