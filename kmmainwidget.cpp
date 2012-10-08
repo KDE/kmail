@@ -502,6 +502,19 @@ void KMMainWidget::slotEndCheckFetchCollectionsDone(KJob* job)
   mCheckMail.clear();
 }
 
+void KMMainWidget::slotCollectionFetched( int collectionId )
+{
+  // Called when a collection is fetched for the first time by the ETM.
+  // This is the right time to update the caption (which still says "Loading...")
+  // and to update the actions that depend on the number of mails in the folder.
+  if ( mCurrentFolder && collectionId == mCurrentFolder->collection().id() ) {
+    mCurrentFolder->setCollection( MailCommon::Util::updatedCollection( mCurrentFolder->collection() ) );
+    updateMessageActions();
+    updateFolderMenu();
+    emit captionChangeRequest( MailCommon::Util::fullCollectionPath( mCurrentFolder->collection() ) );
+  }
+}
+
 void KMMainWidget::slotFolderChanged( const Akonadi::Collection& collection )
 {
   folderSelected( collection );
@@ -1046,6 +1059,7 @@ void KMMainWidget::createWidgets()
   mMessagePane = new CollectionPane( KMKernel::self()->entityTreeModel(),
                                         mFolderTreeWidget->folderTreeView()->selectionModel(),
                                         this );
+  connect( KMKernel::self()->entityTreeModel(), SIGNAL(collectionFetched(int)), this, SLOT(slotCollectionFetched(int)));
 
   mMessagePane->setXmlGuiClient( mGUIClient );
   connect( mMessagePane, SIGNAL(messageSelected(Akonadi::Item)),
