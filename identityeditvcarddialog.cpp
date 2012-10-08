@@ -69,7 +69,7 @@ void IdentityEditVcardDialog::loadVcard( const QString& vcardFileName)
 
 QString IdentityEditVcardDialog::saveVcard()
 {
-  KABC::Addressee addr = mContactEditor->contact();
+  const KABC::Addressee addr = mContactEditor->contact();
   KABC::VCardConverter converter;
   QFile file(mVcardFileName);
   if ( file.open( QIODevice::WriteOnly |QIODevice::Text ) ) {
