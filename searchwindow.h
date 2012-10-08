@@ -85,7 +85,7 @@ class SearchWindow: public KDialog, virtual public KXMLGUIClient
     /**
      * Destroys the search window.
      */
-    virtual ~SearchWindow();
+    ~SearchWindow();
 
     /**
      * Changes the base folder for search operations to a different folder.
@@ -120,10 +120,10 @@ class SearchWindow: public KDialog, virtual public KXMLGUIClient
 
   protected:
     /** Reimplemented to react to Escape. */
-    virtual void keyPressEvent( QKeyEvent* );
+    void keyPressEvent( QKeyEvent* );
 
     /** Reimplemented to stop searching when the window is closed */
-    virtual void closeEvent( QCloseEvent* );
+    void closeEvent( QCloseEvent* );
 
     void createSearchModel();
   
@@ -134,18 +134,18 @@ class SearchWindow: public KDialog, virtual public KXMLGUIClient
   private Q_SLOTS:
     void updateCollectionStatistic(Akonadi::Collection::Id,Akonadi::CollectionStatistics);
 
-    virtual void slotClose();
-    virtual void slotSearch();
-    virtual void slotStop();
+    void slotClose();
+    void slotSearch();
+    void slotStop();
     void scheduleRename( const QString& );
     void renameSearchFolder();
     void openSearchFolder();
-    virtual bool slotShowMsg( const Akonadi::Item& );
+    bool slotShowMsg( const Akonadi::Item& );
     void slotViewSelectedMsg();
-    virtual bool slotViewMsg( const Akonadi::Item& );
+    bool slotViewMsg( const Akonadi::Item& );
     void slotCurrentChanged( const Akonadi::Item& );
-    virtual void updateContextMenuActions();
-    virtual void slotFolderActivated();
+    void updateContextMenuActions();
+    void slotFolderActivated();
     void slotClearSelection();
     void slotReplyToMsg();
     void slotReplyAllToMsg();
