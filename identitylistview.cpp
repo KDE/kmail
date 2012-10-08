@@ -167,9 +167,7 @@ namespace KMail {
 
   void IdentityListView::slotCustomContextMenuRequested( const QPoint &pos )
   {
-    kDebug() << "position:" << pos;
     QTreeWidgetItem *item = itemAt( pos );
-    kDebug() << "item:" << item;
     if ( item ) {
       IdentityListViewItem *lvItem = dynamic_cast<IdentityListViewItem*>( item );
       if ( lvItem ) {
