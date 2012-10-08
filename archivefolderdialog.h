@@ -52,7 +52,7 @@ class ArchiveFolderDialog : public KDialog
     void slotFolderChanged( const Akonadi::Collection& );
     void slotRecursiveCheckboxClicked();
     /** reimp */
-    virtual void slotButtonClicked( int button );
+    void slotButtonClicked( int button );
 
   private:
     bool allowToDeleteFolders( const Akonadi::Collection &folder) const;

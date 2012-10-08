@@ -50,7 +50,7 @@ public:
   DuplicateMode duplicateMode() const;
 
 protected slots:
-  virtual void slotEnableOK( const QString & );
+  void slotEnableOK( const QString & );
 
 private:
   KLineEdit  *mLineEdit;

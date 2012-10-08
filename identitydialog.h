@@ -76,7 +76,7 @@ namespace KMail {
     Q_OBJECT
   public:
     explicit IdentityDialog( QWidget * parent=0 );
-    virtual ~IdentityDialog();
+    ~IdentityDialog();
 
     void setIdentity( /*_not_ const*/ KPIMIdentities::Identity & ident );
 
@@ -86,7 +86,7 @@ namespace KMail {
     void slotAboutToShow( int );
 
     /*! \reimp */
-    virtual void slotButtonClicked( int button );
+    void slotButtonClicked( int button );
 
     // copy default templates to identity templates
     void slotCopyGlobal();
