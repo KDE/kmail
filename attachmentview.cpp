@@ -179,7 +179,7 @@ void AttachmentView::hideIfEmpty()
     Q_FOREACH(MessageCore::AttachmentPart::Ptr part, list) {
       size += part->size();
     }
-    d->infoAttachment->setText(i18np("1 attachment (%2)", "%1 attachements (%2)",model()->rowCount(), KGlobal::locale()->formatByteSize(qMax( 0LL, size ))));
+    d->infoAttachment->setText(i18np("1 attachment (%2)", "%1 attachments (%2)",model()->rowCount(), KGlobal::locale()->formatByteSize(qMax( 0LL, size ))));
   } else {
     d->infoAttachment->clear();
   }
