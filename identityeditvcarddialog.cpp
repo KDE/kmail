@@ -38,7 +38,7 @@ IdentityEditVcardDialog::IdentityEditVcardDialog(QWidget *parent)
   mainLayout->setMargin( KDialog::marginHint() );
   setMainWidget( mainWidget );
 
-  mContactEditor = new Akonadi::ContactEditor( Akonadi::ContactEditor::CreateMode, this );
+  mContactEditor = new Akonadi::ContactEditor( Akonadi::ContactEditor::CreateMode, Akonadi::ContactEditor::VCardMode, this );
   mainLayout->addWidget(mContactEditor);
 }
 
