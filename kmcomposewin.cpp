@@ -431,7 +431,7 @@ KMComposeWin::KMComposeWin( const KMime::Message::Ptr &aMsg, bool lastSignState,
   connect( m_verifyMissingAttachment, SIGNAL(timeout()), this, SLOT(slotVerifyMissingAttachmentTimeout()) );
 
   readConfig();
-  setupStatusBar(attachmentView->toolButton());
+  setupStatusBar(attachmentView->widget());
   setupActions();
   setupEditor();
   rethinkFields();

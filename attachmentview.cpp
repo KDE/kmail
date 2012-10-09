@@ -33,11 +33,14 @@
 #include <QKeyEvent>
 #include <QSortFilterProxyModel>
 #include <QToolButton>
+#include <QHBoxLayout>
+#include <QLabel>
 
 #include <KDebug>
 #include <KConfigGroup>
 #include <KIcon>
 #include <KLocale>
+#include <KGlobal>
 
 #include <messagecore/attachmentpart.h>
 #include <boost/shared_ptr.hpp>
@@ -51,15 +54,25 @@ class KMail::AttachmentView::Private
     Private(AttachmentView *qq)
       : q(qq)
     {
+      widget = new QWidget();
+      QHBoxLayout *lay = new QHBoxLayout;
+      lay->setMargin(0);
+      widget->setLayout(lay);
       toolButton = new QToolButton;
       connect(toolButton,SIGNAL(toggled(bool)),q,SLOT(slotShowHideAttchementList(bool)));
       toolButton->setIcon(KIcon(QLatin1String( "mail-attachment" )));
       toolButton->setAutoRaise(true);
       toolButton->setCheckable(true);
+      lay->addWidget(toolButton);
+      infoAttachment = new QLabel;
+      infoAttachment->setMargin(0);
+      lay->addWidget(infoAttachment);
     }
 
     Message::AttachmentModel *model;
     QToolButton *toolButton;
+    QLabel *infoAttachment;
+    QWidget *widget;
     AttachmentView *q;
 };
 
@@ -158,8 +171,18 @@ void AttachmentView::hideIfEmpty()
 {
   const bool needToShowIt = (model()->rowCount() > 0);
   setVisible( needToShowIt );
-  toolButton()->setChecked( needToShowIt );
-  toolButton()->setVisible( needToShowIt );
+  d->toolButton->setChecked( needToShowIt );
+  widget()->setVisible( needToShowIt );
+  if (needToShowIt) {
+    MessageCore::AttachmentPart::List list = d->model->attachments();
+    qint64 size = 0;
+    Q_FOREACH(MessageCore::AttachmentPart::Ptr part, list) {
+      size += part->size();
+    }
+    d->infoAttachment->setText(i18np("1 attachment (%2)", "%1 attachement (%2)",model()->rowCount(), KGlobal::locale()->formatByteSize(qMax( 0LL, size ))));
+  } else {
+    d->infoAttachment->clear();
+  }
 }
 
 void AttachmentView::selectNewAttachment()
@@ -183,18 +206,18 @@ void AttachmentView::startDrag( Qt::DropActions supportedActions )
   }
 }
 
-QToolButton *AttachmentView::toolButton()
+QWidget *AttachmentView::widget()
 {
-  return d->toolButton;
+  return d->widget;
 }
 
 void AttachmentView::slotShowHideAttchementList(bool show)
 {
   setVisible(show);
   if(show) {
-    toolButton()->setToolTip(i18n("Hide attachment list"));
+    d->toolButton->setToolTip(i18n("Hide attachment list"));
   } else {
-    toolButton()->setToolTip(i18n("Show attachment list"));
+    d->toolButton->setToolTip(i18n("Show attachment list"));
   }
 }
 

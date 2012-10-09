@@ -44,7 +44,8 @@ class AttachmentView : public QTreeView
     /// can't change model afterwards.
     explicit AttachmentView( Message::AttachmentModel *model, QWidget *parent = 0 );
     ~AttachmentView();
-    QToolButton *toolButton();
+
+    QWidget *widget();
 
   public slots:
     /// model sets these
