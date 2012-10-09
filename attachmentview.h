@@ -63,6 +63,8 @@ class AttachmentView : public QTreeView
     /** reimpl to avoid drags from ourselves */
     virtual void dragEnterEvent( QDragEnterEvent *event );
 
+  private Q_SLOTS:
+    void slotShowHideAttchementList(bool);
   private:
     void saveHeaderState();
     void restoreHeaderState();
