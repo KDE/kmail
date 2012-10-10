@@ -149,7 +149,7 @@ KMKernel::KMKernel (QObject *parent, const char *name) :
   mJobScheduler = new JobScheduler( this );
   mXmlGuiInstance = KComponentData();
 
-  mAutoCorrection = new KMComposerAutoCorrection();
+  mAutoCorrection = new MessageComposer::KMComposerAutoCorrection();
   KMime::setFallbackCharEncoding( MessageCore::GlobalSettings::self()->fallbackCharacterEncoding() );
   KMime::setUseOutlookAttachmentEncoding( MessageComposer::MessageComposerSettings::self()->outlookCompatibleAttachments() );
 
@@ -2044,7 +2044,7 @@ void KMKernel::makeResourceOnline(MessageViewer::Viewer::ResourceOnlineMode mode
   }
 }
 
-KMComposerAutoCorrection* KMKernel::composerAutoCorrection()
+MessageComposer::KMComposerAutoCorrection* KMKernel::composerAutoCorrection()
 {
   return mAutoCorrection;
 }
