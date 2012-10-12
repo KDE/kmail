@@ -1774,7 +1774,7 @@ AppearancePageMessageTagTab::AppearancePageMessageTagTab( QWidget * parent )
     //Adjust widths for columns
     maingrid->setStretchFactor( mTagsGroupBox, 1 );
     maingrid->setStretchFactor( lay, 1 );
-
+    tagsettinggrid->addStretch( 10 );
 
 
   } else {
