@@ -85,6 +85,7 @@ namespace KMail {
 
 namespace MailCommon {
   class FolderRequester;
+  class TagWidget;
 }
 
 namespace Kleo {
@@ -461,25 +462,15 @@ private:
 
 private: // data
 
-  KLineEdit *mTagNameLineEdit, *mTagAddLineEdit;
+  KLineEdit *mTagAddLineEdit;
   QPushButton *mTagAddButton, *mTagRemoveButton,
               *mTagUpButton, *mTagDownButton;
 
   QListWidget *mTagListBox;
 
-  QCheckBox *mTextColorCheck, *mBackgroundColorCheck,
-            *mTextFontCheck, *mInToolbarCheck;
-
   QGroupBox *mTagsGroupBox, *mTagSettingGroupBox;
 
-  KColorCombo *mTextColorCombo, *mBackgroundColorCombo;
-
-  KFontRequester *mFontRequester;
-
-  KIconButton *mIconButton;
-
-  KKeySequenceWidget *mKeySequenceWidget;
-
+  MailCommon::TagWidget *mTagWidget;
 
   // So we can compare to mMsgTagList and see if the user changed tags
   QList<KMail::TagPtr> mOriginalMsgTagList;

@@ -74,7 +74,7 @@ using KPIM::RecentAddresses;
 #include "templateparser/customtemplates.h"
 #include "templateparser/globalsettings_base.h"
 #include "mailcommon/mailutil.h"
-
+#include "mailcommon/tagwidget.h"
 #include "messagecomposer/messagecomposersettings.h"
 
 // other kdenetwork headers:
@@ -1733,127 +1733,25 @@ AppearancePageMessageTagTab::AppearancePageMessageTagTab( QWidget * parent )
     mTagSettingGroupBox = new QGroupBox( i18n("Ta&g Settings"),
                                          this );
     tagsettinggrid->addWidget( mTagSettingGroupBox );
-    QGridLayout *settings = new QGridLayout( mTagSettingGroupBox );
-    settings->setMargin( KDialog::marginHint() );
-    settings->setSpacing( KDialog::spacingHint() );
-
-    //Stretcher layout for adding some space after the label
-    QVBoxLayout *spacer = new QVBoxLayout();
-    settings->addLayout( spacer, 0, 0, 1, 2 );
-    spacer->addSpacing( 2 * KDialog::spacingHint() );
-
-    //First row for renaming
-    mTagNameLineEdit = new KLineEdit( mTagSettingGroupBox );
-    mTagNameLineEdit->setTrapReturnKey( true );
-    settings->addWidget( mTagNameLineEdit, 1, 1 );
-
-    QLabel *namelabel = new QLabel( i18nc("@label:listbox Name of the tag", "Name:")
-                                    , mTagSettingGroupBox );
-    namelabel->setBuddy( mTagNameLineEdit );
-    settings->addWidget( namelabel, 1, 0 );
-
-    connect( mTagNameLineEdit, SIGNAL(textChanged(QString)),
-             this, SLOT(slotEmitChangeCheck()) );
-
-    //Second row for text color
-    mTextColorCheck = new QCheckBox( i18n("Change te&xt color:"),
-                                     mTagSettingGroupBox );
-    settings->addWidget( mTextColorCheck, 2, 0 );
-
-    mTextColorCombo = new KColorCombo( mTagSettingGroupBox );
-    settings->addWidget( mTextColorCombo, 2, 1 );
-
-    connect( mTextColorCheck, SIGNAL(toggled(bool)),
-             mTextColorCombo, SLOT(setEnabled(bool)) );
-    connect( mTextColorCheck, SIGNAL(stateChanged(int)),
-             this, SLOT(slotEmitChangeCheck()) );
-    connect( mTextColorCombo, SIGNAL(activated(int)),
-             this, SLOT(slotEmitChangeCheck()) );
-
-    //Third row for text background color
-    mBackgroundColorCheck = new QCheckBox( i18n("Change &background color:"),
-                                           mTagSettingGroupBox );
-    settings->addWidget( mBackgroundColorCheck, 3, 0 );
-
-    mBackgroundColorCombo = new KColorCombo( mTagSettingGroupBox );
-    settings->addWidget( mBackgroundColorCombo, 3, 1 );
-
-    connect( mBackgroundColorCheck, SIGNAL(toggled(bool)),
-             mBackgroundColorCombo, SLOT(setEnabled(bool)) );
-    connect( mBackgroundColorCheck, SIGNAL(stateChanged(int)),
-             this, SLOT(slotEmitChangeCheck()) );
-    connect( mBackgroundColorCombo, SIGNAL(activated(int)),
-             this, SLOT(slotEmitChangeCheck()) );
-
-    //Fourth for font selection
-    mTextFontCheck = new QCheckBox( i18n("Change fo&nt:"), mTagSettingGroupBox );
-    settings->addWidget( mTextFontCheck, 4, 0 );
-
-    mFontRequester = new KFontRequester( mTagSettingGroupBox );
-    settings->addWidget( mFontRequester, 4, 1 );
-
-    connect( mTextFontCheck, SIGNAL(toggled(bool)),
-             mFontRequester, SLOT(setEnabled(bool)) );
-    connect( mTextFontCheck, SIGNAL(stateChanged(int)),
-             this, SLOT(slotEmitChangeCheck()) );
-    connect( mFontRequester, SIGNAL(fontSelected(QFont)),
-             this, SLOT(slotEmitChangeCheck()) );
-
-    //Fifth for toolbar icon
-    mIconButton = new KIconButton( mTagSettingGroupBox );
-    mIconButton->setIconSize( 16 );
-    mIconButton->setIconType( KIconLoader::NoGroup, KIconLoader::Action );
-    settings->addWidget( mIconButton, 5, 1 );
-    connect( mIconButton, SIGNAL(iconChanged(QString)),
-             SLOT(slotIconNameChanged(QString)) );
-
-    QLabel *iconlabel = new QLabel( i18n("Message tag &icon:"),
-                                    mTagSettingGroupBox );
-    iconlabel->setBuddy( mIconButton );
-    settings->addWidget( iconlabel, 5, 0 );
-
-    //We do not connect the checkbox to icon selector since icons are used in the
-    //menus as well
-    connect( mIconButton, SIGNAL(iconChanged(QString)),
-             this, SLOT(slotEmitChangeCheck()) );
-
-    //Sixth for shortcut
-    mKeySequenceWidget = new KKeySequenceWidget( mTagSettingGroupBox );
-    settings->addWidget( mKeySequenceWidget, 6, 1 );
-    QLabel *sclabel = new QLabel( i18n("Shortc&ut:") , mTagSettingGroupBox );
-    sclabel->setBuddy( mKeySequenceWidget );
-    settings->addWidget( sclabel, 6, 0 );
+    QList<KActionCollection *> actionCollections;
     if( kmkernel->getKMMainWidget() )
-      mKeySequenceWidget->setCheckActionCollections(
-                                                    kmkernel->getKMMainWidget()->actionCollections() );
-    else
-      mKeySequenceWidget->setEnabled(false);
+      actionCollections = kmkernel->getKMMainWidget()->actionCollections();
 
-    connect( mKeySequenceWidget, SIGNAL(keySequenceChanged(QKeySequence)),
-             this, SLOT(slotEmitChangeCheck()) );
+    QHBoxLayout *lay = new QHBoxLayout(mTagSettingGroupBox);
+    mTagWidget = new MailCommon::TagWidget(actionCollections,this);
+    lay->addWidget(mTagWidget);
 
-    //Seventh for Toolbar checkbox
-    mInToolbarCheck = new QCheckBox( i18n("Enable &toolbar button"),
-                                     mTagSettingGroupBox );
-    settings->addWidget( mInToolbarCheck, 7, 0 );
-    connect( mInToolbarCheck, SIGNAL(stateChanged(int)),
-             this, SLOT(slotEmitChangeCheck()) );
-
-    tagsettinggrid->addStretch( 10 );
-
-    //Adjust widths for columns
-    maingrid->setStretchFactor( mTagsGroupBox, 1 );
-    maingrid->setStretchFactor( tagsettinggrid, 1 );
-
-    //Other Connections
+    connect(mTagWidget,SIGNAL(changed()),this, SLOT(slotEmitChangeCheck()));
 
     //For enabling the add button in case box is non-empty
     connect( mTagAddLineEdit, SIGNAL(textChanged(QString)),
              this, SLOT(slotAddLineTextChanged(QString)) );
 
     //For on-the-fly updating of tag name in editbox
-    connect( mTagNameLineEdit, SIGNAL(textChanged(QString)),
+    connect( mTagWidget->tagNameLineEdit(), SIGNAL(textChanged(QString)),
              this, SLOT(slotNameLineTextChanged(QString)) );
+
+    connect( mTagWidget, SIGNAL(iconNameChanged(QString)), SLOT(slotIconNameChanged(QString)) );
 
     connect(  mTagAddLineEdit, SIGNAL(returnPressed()),
              this, SLOT(slotAddNewTag()) );
@@ -1873,6 +1771,12 @@ AppearancePageMessageTagTab::AppearancePageMessageTagTab( QWidget * parent )
 
     connect( mTagListBox, SIGNAL(currentItemChanged(QListWidgetItem*,QListWidgetItem*)),
              this, SLOT(slotSelectionChanged()) );
+    //Adjust widths for columns
+    maingrid->setStretchFactor( mTagsGroupBox, 1 );
+    maingrid->setStretchFactor( lay, 1 );
+
+
+
   } else {
     QLabel *lab = new QLabel;
     lab->setText( i18n( "The Nepomuk semantic search service is not available. We cannot configure tags. You can enable it in \"System Settings\"" ) );
@@ -1960,21 +1864,21 @@ void AppearancePage::MessageTagTab::slotRecordTagSettings( int aIndex )
 
   tmp_desc->tagName = tagItem->text();
 
-  tmp_desc->textColor = mTextColorCheck->isChecked() ?
-                          mTextColorCombo->color() : QColor();
+  tmp_desc->textColor = mTagWidget->textColorCheck()->isChecked() ?
+                          mTagWidget->textColorCombo()->color() : QColor();
 
-  tmp_desc->backgroundColor = mBackgroundColorCheck->isChecked() ?
-                                mBackgroundColorCombo->color() : QColor();
+  tmp_desc->backgroundColor = mTagWidget->backgroundColorCheck()->isChecked() ?
+                                mTagWidget->backgroundColorCombo()->color() : QColor();
 
-  tmp_desc->textFont = mTextFontCheck->isChecked() ?
-                          mFontRequester->font() : QFont();
+  tmp_desc->textFont = mTagWidget->textFontCheck()->isChecked() ?
+                          mTagWidget->fontRequester()->font() : QFont();
 
-  tmp_desc->iconName = mIconButton->icon();
+  tmp_desc->iconName = mTagWidget->iconButton()->icon();
 
-  mKeySequenceWidget->applyStealShortcut();
-  tmp_desc->shortcut = KShortcut( mKeySequenceWidget->keySequence() );
+  mTagWidget->keySequenceWidget()->applyStealShortcut();
+  tmp_desc->shortcut = KShortcut( mTagWidget->keySequenceWidget()->keySequence() );
 
-  tmp_desc->inToolbar = mInToolbarCheck->isChecked();
+  tmp_desc->inToolbar = mTagWidget->inToolBarCheck()->isChecked();
 }
 
 void AppearancePage::MessageTagTab::slotUpdateTagSettingWidgets( int aIndex )
@@ -1985,16 +1889,16 @@ void AppearancePage::MessageTagTab::slotUpdateTagSettingWidgets( int aIndex )
     mTagUpButton->setEnabled( false );
     mTagDownButton->setEnabled( false );
 
-    mTagNameLineEdit->setEnabled( false );
-    mTextColorCheck->setEnabled( false );
-    mBackgroundColorCheck->setEnabled( false );
-    mTextFontCheck->setEnabled( false );
-    mInToolbarCheck->setEnabled( false );
-    mTextColorCombo->setEnabled( false );
-    mFontRequester->setEnabled( false );
-    mIconButton->setEnabled( false );
-    mKeySequenceWidget->setEnabled( false );
-    mBackgroundColorCombo->setEnabled( false );
+    mTagWidget->tagNameLineEdit()->setEnabled( false );
+    mTagWidget->textColorCheck()->setEnabled( false );
+    mTagWidget->backgroundColorCheck()->setEnabled( false );
+    mTagWidget->textFontCheck()->setEnabled( false );
+    mTagWidget->inToolBarCheck()->setEnabled( false );
+    mTagWidget->textColorCombo()->setEnabled( false );
+    mTagWidget->fontRequester()->setEnabled( false );
+    mTagWidget->iconButton()->setEnabled( false );
+    mTagWidget->keySequenceWidget()->setEnabled( false );
+    mTagWidget->backgroundColorCombo()->setEnabled( false );
     return;
   }
 
@@ -2006,43 +1910,43 @@ void AppearancePage::MessageTagTab::slotUpdateTagSettingWidgets( int aIndex )
   TagListWidgetItem *tagItem = static_cast<TagListWidgetItem*>( item );
   KMail::Tag::Ptr tmp_desc = tagItem->kmailTag();
 
-  mTagNameLineEdit->setEnabled( true );
-  mTagNameLineEdit->setText( tmp_desc->tagName );
+  mTagWidget->tagNameLineEdit()->setEnabled( true );
+  mTagWidget->tagNameLineEdit()->setText( tmp_desc->tagName );
 
   QColor tmp_color = tmp_desc->textColor;
-  mTextColorCheck->setEnabled( true );
+  mTagWidget->textColorCheck()->setEnabled( true );
   if ( tmp_color.isValid() ) {
-    mTextColorCombo->setColor( tmp_color );
-    mTextColorCheck->setChecked( true );
+    mTagWidget->textColorCombo()->setColor( tmp_color );
+    mTagWidget->textColorCheck()->setChecked( true );
   } else {
-    mTextColorCombo->setColor( Qt::white );
-    mTextColorCheck->setChecked( false );
+    mTagWidget->textColorCombo()->setColor( Qt::white );
+    mTagWidget->textColorCheck()->setChecked( false );
   }
 
   tmp_color = tmp_desc->backgroundColor;
-  mBackgroundColorCheck->setEnabled( true );
+  mTagWidget->backgroundColorCheck()->setEnabled( true );
   if ( tmp_color.isValid() ) {
-    mBackgroundColorCombo->setColor( tmp_color );
-    mBackgroundColorCheck->setChecked( true );
+    mTagWidget->backgroundColorCombo()->setColor( tmp_color );
+    mTagWidget->backgroundColorCheck()->setChecked( true );
   } else {
-    mBackgroundColorCombo->setColor( Qt::white );
-    mBackgroundColorCheck->setChecked( false );
+    mTagWidget->backgroundColorCombo()->setColor( Qt::white );
+    mTagWidget->backgroundColorCheck()->setChecked( false );
   }
 
   QFont tmp_font = tmp_desc->textFont;
-  mTextFontCheck->setEnabled( true );
-  mTextFontCheck->setChecked( ( tmp_font != QFont() ) );
-  mFontRequester->setFont( tmp_font );
+  mTagWidget->textFontCheck()->setEnabled( true );
+  mTagWidget->textFontCheck()->setChecked( ( tmp_font != QFont() ) );
+  mTagWidget->fontRequester()->setFont( tmp_font );
 
-  mIconButton->setEnabled( true );
-  mIconButton->setIcon( tmp_desc->iconName );
+  mTagWidget->iconButton()->setEnabled( true );
+  mTagWidget->iconButton()->setIcon( tmp_desc->iconName );
 
-  mKeySequenceWidget->setEnabled( true );
-  mKeySequenceWidget->setKeySequence( tmp_desc->shortcut.primary(),
+  mTagWidget->keySequenceWidget()->setEnabled( true );
+  mTagWidget->keySequenceWidget()->setKeySequence( tmp_desc->shortcut.primary(),
                                       KKeySequenceWidget::NoValidate );
 
-  mInToolbarCheck->setEnabled( true );
-  mInToolbarCheck->setChecked( tmp_desc->inToolbar );
+  mTagWidget->inToolBarCheck()->setEnabled( true );
+  mTagWidget->inToolBarCheck()->setChecked( tmp_desc->inToolbar );
 }
 
 void AppearancePage::MessageTagTab::slotSelectionChanged()
@@ -2192,11 +2096,11 @@ void AppearancePage::MessageTagTab::save()
       tag->priority = i;
 
       KMail::Tag::SaveFlags saveFlags = 0;
-      if ( mTextColorCheck->isChecked() )
+      if ( mTagWidget->textColorCheck()->isChecked() )
         saveFlags |= KMail::Tag::TextColor;
-      if ( mBackgroundColorCheck->isChecked() )
+      if ( mTagWidget->backgroundColorCheck()->isChecked() )
         saveFlags |= KMail::Tag::BackgroundColor;
-      if ( mTextFontCheck->isChecked() )
+      if ( mTagWidget->textFontCheck()->isChecked() )
         saveFlags |= KMail::Tag::Font;
       tag->saveToNepomuk( saveFlags );
     }
