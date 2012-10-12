@@ -2597,7 +2597,8 @@ ComposerPageCustomTemplatesTab::ComposerPageCustomTemplatesTab( QWidget * parent
 
   connect( mWidget, SIGNAL(changed()),
            this, SLOT(slotEmitChanged()) );
-  connect( mWidget, SIGNAL(templatesUpdated()), KMKernel::self(), SLOT(updatedTemplates()) );
+  if( KMKernel::self() )
+    connect( mWidget, SIGNAL(templatesUpdated()), KMKernel::self(), SLOT(updatedTemplates()) );
 }
 
 void ComposerPage::CustomTemplatesTab::doLoadFromGlobalSettings()
@@ -3230,7 +3231,8 @@ ComposerPageAutoCorrectionTab::ComposerPageAutoCorrectionTab(QWidget *parent)
   vlay->setSpacing( 0 );
   vlay->setMargin( 0 );
   autocorrectionWidget = new MessageComposer::KMComposerAutoCorrectionWidget(this);
-  autocorrectionWidget->setAutoCorrection(KMKernel::self()->composerAutoCorrection());
+  if(KMKernel::self())
+    autocorrectionWidget->setAutoCorrection(KMKernel::self()->composerAutoCorrection());
   vlay->addWidget(autocorrectionWidget);
   setLayout(vlay);
   connect( autocorrectionWidget, SIGNAL(changed()), this, SLOT(slotEmitChanged()) );
