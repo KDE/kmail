@@ -22,8 +22,11 @@
 #include "messageactions.h"
 
 #include "messagecore/taglistmonitor.h"
-#include <nepomuk2/tag.h>
+#include <Nepomuk2/Tag>
 #include <Nepomuk2/ResourceManager>
+#include <Nepomuk2/Query/QueryServiceClient>
+#include <Nepomuk2/Query/Result>
+#include <Nepomuk2/Query/ResourceTypeTerm>
 
 #include <KAction>
 #include <KActionCollection>
@@ -137,17 +140,21 @@ void TagActionManager::createActions()
 
 
   if ( mTags.isEmpty() ) {
-    const QList<Nepomuk2::Tag> alltags( Nepomuk2::Tag::allTags() );
-    if ( alltags.isEmpty() )
-      return;
+      mTagQueryClient = new Nepomuk2::Query::QueryServiceClient(this);
+      connect( mTagQueryClient, SIGNAL(newEntries(QList<Nepomuk2::Query::Result>)),
+            this, SLOT(newTagEntries(QList<Nepomuk2::Query::Result>)) );
+      connect( mTagQueryClient, SIGNAL(finishedListing()),
+            this, SLOT(finishedTagListing()) );
 
-    // Build a sorted list of tags
-    foreach( const Nepomuk2::Tag &nepomukTag, alltags ) {
-      mTags.append( Tag::fromNepomuk( nepomukTag ) );
-    }
-    qSort( mTags.begin(), mTags.end(), KMail::Tag::compare );
+      Nepomuk2::Query::Query query( Nepomuk2::Query::ResourceTypeTerm( Soprano::Vocabulary::NAO::Tag() ) );
+      mTagQueryClient->query(query);
+  } else {
+    createTagActions();
   }
+}
 
+void TagActionManager::createTagActions()
+{
   //Use a mapper to understand which tag button is triggered
   mMessageTagToggleMapper = new QSignalMapper( this );
   connect( mMessageTagToggleMapper, SIGNAL(mapped(QString)),
@@ -183,6 +190,25 @@ void TagActionManager::createActions()
     mGUIClient->plugActionList( "toolbar_messagetag_actions", mToolbarActions );
   }
 }
+
+void TagActionManager::newTagEntries (const QList<Nepomuk2::Query::Result> &results)
+{
+  foreach (const Nepomuk2::Query::Result &result, results) {
+    Nepomuk2::Resource resource = result.resource();
+    mTags.append( Tag::fromNepomuk( resource ) );
+  }
+}
+
+void TagActionManager::finishedTagListing()
+{
+  mTagQueryClient->deleteLater();
+  mTagQueryClient = 0;
+  if ( mTags.isEmpty() )
+    return;
+  qSort( mTags.begin(), mTags.end(), KMail::Tag::compare );
+  createTagActions();
+}
+
 
 void TagActionManager::updateActionStates( int numberOfSelectedMessages,
                                            const Akonadi::Item &selectedItem )

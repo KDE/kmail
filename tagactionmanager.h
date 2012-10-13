@@ -25,6 +25,15 @@
 #include "tag.h"
 #include <QMap>
 
+namespace Nepomuk2
+{
+namespace Query
+{
+class QueryServiceClient;
+class Result;
+}
+}
+
 class KActionCollection;
 class KXMLGUIClient;
 class KToggleAction;
@@ -105,11 +114,15 @@ namespace KMail {
       void tagMoreActionClicked();
 
     private Q_SLOTS:
+      void newTagEntries(const QList<Nepomuk2::Query::Result>& results);
+      void finishedTagListing();
       void tagsChanged();
       void slotNepomukStarted();
       void slotNepomukStopped();
+
     private:
       void createTagAction( const KMail::Tag::Ptr &tag, bool addToMenu );
+      void createTagActions();
 
       KActionCollection *mActionCollection;
       MessageActions *mMessageActions;
@@ -129,7 +142,8 @@ namespace KMail {
       // Cache of the tags to avoid expensive Nepomuk queries
       QList<Tag::Ptr> mTags;
 
-  };
+      Nepomuk2::Query::QueryServiceClient *mTagQueryClient;
+ };
 }
 
 #endif
