@@ -3052,11 +3052,9 @@ void KMComposeWin::slotIdentityChanged( uint uoid, bool initalChange )
   }
 
   // if unmodified, apply new template, if one is set
-  bool msgCleared = false;
   if ( !isModified() && !( ident.templates().isEmpty() && mCustomTemplate.isEmpty() ) &&
        !initalChange ) {
     applyTemplate( uoid );
-    msgCleared = true;
   }
 
 

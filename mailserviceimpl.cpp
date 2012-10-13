@@ -109,7 +109,7 @@ bool MailServiceImpl::sendMessage( const QString& from, const QString& to,
   part->setBody( attachment ); //TODO: check it!
   msg->addContent( part );
 
-  KMail::Composer * cWin = KMail::makeComposer( msg, false, false );
+  KMail::makeComposer( msg, false, false );
   return true;
 }
 

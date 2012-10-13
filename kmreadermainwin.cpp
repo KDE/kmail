@@ -391,7 +391,6 @@ void KMReaderMainWin::slotCopyItem(QAction*action)
   if ( action )
   {
     const QModelIndex index = action->data().value<QModelIndex>();
-    QAbstractItemModel *model = const_cast<QAbstractItemModel *>( index.model() );
     const Akonadi::Collection collection = index.data( Akonadi::EntityTreeModel::CollectionRole ).value<Akonadi::Collection>();
 
     if ( mMsg.isValid() ) {

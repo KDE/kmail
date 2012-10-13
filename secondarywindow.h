@@ -48,6 +48,7 @@ namespace KMail {
   public:
     SecondaryWindow( const char * name = 0 );
     ~SecondaryWindow();
+    using KMainWindow::setCaption;
   public Q_SLOTS:
     /**
      * Reimplement because we have this bug #Bug 163978
