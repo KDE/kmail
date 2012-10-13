@@ -217,7 +217,7 @@ KMKernel::KMKernel (QObject *parent, const char *name) :
 
   connect ( Solid::Networking::notifier(), SIGNAL(statusChanged(Solid::Networking::Status)),
             this, SLOT(slotSystemNetworkStatusChanged(Solid::Networking::Status)) );
-  
+
   connect( KPIM::ProgressManager::instance(), SIGNAL(progressItemCompleted(KPIM::ProgressItem*)),
            this, SLOT(slotProgressItemCompletedOrCanceled(KPIM::ProgressItem*)) );
   connect( KPIM::ProgressManager::instance(), SIGNAL(progressItemCanceled(KPIM::ProgressItem*)),
@@ -939,7 +939,7 @@ void KMKernel::stopNetworkJobs()
     return;
 
   setAccountStatus(false);
-  
+
   GlobalSettings::setNetworkState( GlobalSettings::EnumNetworkState::Offline );
   BroadcastStatus::instance()->setStatusMsg( i18n("KMail is set to be offline; all network jobs are suspended"));
   emit onlineStatusChanged( (GlobalSettings::EnumNetworkState::type)GlobalSettings::networkState() );
@@ -950,7 +950,7 @@ void KMKernel::setAccountStatus(bool goOnline)
 {
   const Akonadi::AgentInstance::List lst = MailCommon::Util::agentInstances(false);
   foreach ( Akonadi::AgentInstance type, lst ) {
-    const QString identifier( type.identifier() ); 
+    const QString identifier( type.identifier() );
     if ( identifier.contains( IMAP_RESOURCE_IDENTIFIER ) ||
          identifier.contains( POP3_RESOURCE_IDENTIFIER ) ||
          identifier.contains( MAILDISPATCHER_RESOURCE_IDENTIFIER ) ) {
@@ -1725,6 +1725,15 @@ void KMKernel::itemDispatchStarted()
 
 void KMKernel::instanceStatusChanged( Akonadi::AgentInstance instance )
 {
+  if (instance.identifier() == QLatin1String( "akonadi_mailfilter_agent" ) ) {
+     // Creating a progress item twice is ok, it will simply return the already existing
+      // item
+      KPIM::ProgressItem *progress =  KPIM::ProgressManager::createProgressItem( 0, instance,
+                                        instance.identifier(), instance.name(), instance.statusMessage(),
+                                        false, true );
+      progress->setProperty( "AgentIdentifier", instance.identifier() );
+      return;
+  }
   if ( MailCommon::Util::agentInstances(true).contains( instance ) ) {
     if ( instance.status() == Akonadi::AgentInstance::Running ) {
 
@@ -1760,7 +1769,7 @@ void KMKernel::instanceStatusChanged( Akonadi::AgentInstance instance )
         }
      }
 
-      
+
       // Creating a progress item twice is ok, it will simply return the already existing
       // item
       KPIM::ProgressItem *progress =  KPIM::ProgressManager::createProgressItem( 0, instance,
@@ -1918,7 +1927,7 @@ void KMKernel::checkFolderFromResources( const Akonadi::Collection::List& collec
             //Use default trash
             iface->setTrashCollection( CommonKernel->trashCollectionFolder().id() );
             iface->writeConfig();
-            break; 
+            break;
           }
         }
       }
