@@ -145,8 +145,8 @@ void TagActionManager::createActions()
             this, SLOT(newTagEntries(QList<Nepomuk2::Query::Result>)) );
       connect( mTagQueryClient, SIGNAL(finishedListing()),
             this, SLOT(finishedTagListing()) );
-
-      Nepomuk2::Query::Query query( Nepomuk2::Query::ResourceTypeTerm( Soprano::Vocabulary::NAO::Tag() ) );
+      Nepomuk2::Query::ResourceTypeTerm term( Soprano::Vocabulary::NAO::Tag() );
+      Nepomuk2::Query::Query query( term );
       mTagQueryClient->query(query);
   } else {
     createTagActions();
