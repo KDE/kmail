@@ -2543,7 +2543,7 @@ void KMMainWidget::slotSelectCollectionFolder( const Akonadi::Collection & col )
 
 void KMMainWidget::slotApplyFilters()
 {
-  const QVector<qlonglong> selectedMessages = mMessagePane->selectionAsMessageItemListId();
+  const QList<Akonadi::Item> selectedMessages = mMessagePane->selectionAsMessageItemList();
   if ( selectedMessages.isEmpty() )
     return;
   applyFilters( selectedMessages );
@@ -2564,16 +2564,6 @@ void KMMainWidget::slotFetchItemsForFolderDone(KJob*job)
     Akonadi::Item::List items = fjob->items();
     applyFilters( items );
 }
-
-void KMMainWidget::applyFilters( const QVector<qlonglong>& selectedMessages )
-{
-#ifndef QT_NO_CURSOR
-  MessageViewer::KCursorSaver busy( MessageViewer::KBusyPtr::busy() );
-#endif
-
-  MailCommon::FilterManager::instance()->filter( selectedMessages );
-}
-
 
 void KMMainWidget::applyFilters( const QList<Akonadi::Item>& selectedMessages )
 {
@@ -2726,7 +2716,7 @@ void KMMainWidget::slotUpdateOnlineStatus( GlobalSettings::EnumNetworkState::typ
 {
   if( !mAkonadiStandardActionManager ) {
     return;
-  } 
+  }
   KAction * action = mAkonadiStandardActionManager->action( Akonadi::StandardActionManager::ToggleWorkOffline );
   if ( GlobalSettings::self()->networkState() == GlobalSettings::EnumNetworkState::Online ) {
     action->setText( i18n("Work Offline") );
@@ -4380,7 +4370,7 @@ void KMMainWidget::initializeFilterActions()
       if ( action( normalizedName.toUtf8() ) ) {
         continue;
       }
-      KMMetaFilterActionCommand *filterCommand = new KMMetaFilterActionCommand( filter->identifier(), filter->requiredPart(), this );
+      KMMetaFilterActionCommand *filterCommand = new KMMetaFilterActionCommand( filter->identifier(), this );
       mFilterCommands.append( filterCommand );
       QString displayText = i18n( "Filter %1", filter->name() );
       QString icon = filter->icon();

@@ -484,8 +484,7 @@ class KMAIL_EXPORT KMMainWidget : public QWidget
      */
     void setCurrentThreadStatus( const Akonadi::MessageStatus &status, bool toggle );
 
-    void applyFilters( const QList<Akonadi::Item>& selectedMessages );
-    void applyFilters( const QVector<qlonglong>& selectedMessages );
+    void applyFilters( const QList< Akonadi::Item >& selectedMessages );
 
     /**
      * Internal helper that creates the folder selection dialog used for the

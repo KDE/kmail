@@ -313,11 +313,11 @@ class KMAIL_EXPORT KMReplyCommand : public KMCommand
   Q_OBJECT
 public:
   KMReplyCommand( QWidget *parent, const Akonadi::Item &msg,
-                  MessageComposer::ReplyStrategy replyStrategy, 
+                  MessageComposer::ReplyStrategy replyStrategy,
                   const QString &selection = QString(), bool noquote = false, const QString & templateName = QString());
 private:
   virtual Result execute();
-  
+
 private:
   QString mSelection;
   QString mTemplate;
@@ -378,7 +378,7 @@ class KMAIL_EXPORT KMPrintCommand : public KMCommand
   Q_OBJECT
 
 public:
-  KMPrintCommand( QWidget *parent, const Akonadi::Item &msg, 
+  KMPrintCommand( QWidget *parent, const Akonadi::Item &msg,
                   MessageViewer::HeaderStyle *headerStyle = 0,
                   const MessageViewer::HeaderStrategy *headerStrategy = 0,
                   bool htmlOverride = false,
@@ -451,14 +451,12 @@ class KMAIL_EXPORT KMFilterActionCommand : public KMCommand
 
 public:
   KMFilterActionCommand(QWidget *parent,
-                         const QVector<qlonglong> &msgListId, const QString &filterId,
-                        MailCommon::SearchRule::RequiredPart requiredPart);
+                         const QVector<qlonglong> &msgListId, const QString &filterId);
 
 private:
   virtual Result execute();
   QVector<qlonglong> mMsgListId;
   QString mFilterId;
-  MailCommon::SearchRule::RequiredPart mRequiredPart;
 };
 
 
@@ -467,14 +465,13 @@ class KMAIL_EXPORT KMMetaFilterActionCommand : public QObject
   Q_OBJECT
 
 public:
-  KMMetaFilterActionCommand( const QString &filterId, MailCommon::SearchRule::RequiredPart requiredPart, KMMainWidget *main );
+  KMMetaFilterActionCommand( const QString &filterId, KMMainWidget *main );
 
 public slots:
   void start();
 
 private:
   QString mFilterId;
-  MailCommon::SearchRule::RequiredPart mRequiredPart;
   KMMainWidget *mMainWidget;
 };
 

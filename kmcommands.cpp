@@ -567,7 +567,7 @@ KMCommand::Result KMEditMessageCommand::execute()
 {
   if ( !mMessage )
     return Failed;
-  
+
   KMail::Composer *win = KMail::makeComposer();
   bool lastEncrypt = false;
   bool lastSign = false;
@@ -604,7 +604,7 @@ KMCommand::Result KMEditItemCommand::execute()
   if ( !msg ) {
     return Failed;
   }
-  
+
   if ( mDeleteFromSource ) {
     setDeletesItself( true );
     Akonadi::ItemDeleteJob *job = new Akonadi::ItemDeleteJob( item );
@@ -1292,9 +1292,8 @@ KMCommand::Result KMSetTagCommand::execute()
 
 KMFilterActionCommand::KMFilterActionCommand( QWidget *parent,
                                               const QVector<qlonglong> &msgListId,
-                                              const QString &filterId,
-                                              MailCommon::SearchRule::RequiredPart requiredPart )
-    : KMCommand( parent ), mMsgListId(msgListId), mFilterId( filterId  ), mRequiredPart( requiredPart )
+                                              const QString &filterId)
+    : KMCommand( parent ), mMsgListId(msgListId), mFilterId( filterId  )
 {
 }
 
@@ -1322,7 +1321,7 @@ KMCommand::Result KMFilterActionCommand::execute()
     }
 
 
-    MailCommon::FilterManager::instance()->filter( id, mFilterId, mRequiredPart );
+    MailCommon::FilterManager::instance()->filter( Akonadi::Item(id), mFilterId, QString() );
     progressItem->incCompletedItems();
   }
 
@@ -1332,17 +1331,17 @@ KMCommand::Result KMFilterActionCommand::execute()
 }
 
 
-KMMetaFilterActionCommand::KMMetaFilterActionCommand( const QString &filterId, SearchRule::RequiredPart requiredPart,
+KMMetaFilterActionCommand::KMMetaFilterActionCommand( const QString &filterId,
                                                       KMMainWidget *main )
     : QObject( main ),
-      mFilterId( filterId ), mRequiredPart( requiredPart ), mMainWidget( main )
+      mFilterId( filterId ), mMainWidget( main )
 {
 }
 
 void KMMetaFilterActionCommand::start()
 {
   KMCommand *filterCommand = new KMFilterActionCommand(
-      mMainWidget, mMainWidget->messageListPane()->selectionAsMessageItemListId() , mFilterId, mRequiredPart );
+      mMainWidget, mMainWidget->messageListPane()->selectionAsMessageItemListId() , mFilterId);
   filterCommand->start();
 }
 
