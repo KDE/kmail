@@ -2873,7 +2873,7 @@ void KMMainWidget::slotSelectNextMessage()
 {
   mMessagePane->selectNextMessageItem( MessageList::Core::MessageTypeAny,
                                        MessageList::Core::ClearExistingSelection,
-                                       true, true );
+                                       true, false );
 }
 
 void KMMainWidget::slotExtendSelectionToNextMessage()
@@ -2922,7 +2922,7 @@ void KMMainWidget::slotSelectPreviousMessage()
 {
   mMessagePane->selectPreviousMessageItem( MessageList::Core::MessageTypeAny,
                                            MessageList::Core::ClearExistingSelection,
-                                           true, true );
+                                           true, false );
 }
 
 void KMMainWidget::slotExtendSelectionToPreviousMessage()
