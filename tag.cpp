@@ -24,7 +24,7 @@
 #include <soprano/nao.h>
 #include <Nepomuk2/Tag>
 #include <Nepomuk2/Variant>
-
+#include <QDebug>
 using namespace KMail;
 
 Tag::Ptr Tag::fromNepomuk( const Nepomuk2::Tag& nepomukTag )
@@ -32,10 +32,10 @@ Tag::Ptr Tag::fromNepomuk( const Nepomuk2::Tag& nepomukTag )
   Tag::Ptr tag( new Tag() );
   tag->tagName = nepomukTag.label();
 
-  if ( nepomukTag.symbols().isEmpty() )
+  tag->iconName = nepomukTag.genericIcon();
+  if ( tag->iconName.isEmpty() )
     tag->iconName = "mail-tagged";
-  else
-    tag->iconName = nepomukTag.symbols().first();
+
   tag->nepomukResourceUri = nepomukTag.uri();
 
   if ( nepomukTag.hasProperty( Vocabulary::MessageTag::textColor() ) ) {
