@@ -1889,18 +1889,10 @@ void AppearancePage::MessageTagTab::slotUpdateTagSettingWidgets( int aIndex )
     mTagUpButton->setEnabled( false );
     mTagDownButton->setEnabled( false );
 
-    mTagWidget->tagNameLineEdit()->setEnabled( false );
-    mTagWidget->textColorCheck()->setEnabled( false );
-    mTagWidget->backgroundColorCheck()->setEnabled( false );
-    mTagWidget->textFontCheck()->setEnabled( false );
-    mTagWidget->inToolBarCheck()->setEnabled( false );
-    mTagWidget->textColorCombo()->setEnabled( false );
-    mTagWidget->fontRequester()->setEnabled( false );
-    mTagWidget->iconButton()->setEnabled( false );
-    mTagWidget->keySequenceWidget()->setEnabled( false );
-    mTagWidget->backgroundColorCombo()->setEnabled( false );
+    mTagWidget->setEnabled(false);
     return;
   }
+  mTagWidget->setEnabled(true);
 
   mTagRemoveButton->setEnabled( true );
   mTagUpButton->setEnabled( ( 0 != aIndex ) );
