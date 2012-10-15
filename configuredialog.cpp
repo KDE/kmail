@@ -76,6 +76,7 @@ using KPIM::RecentAddresses;
 #include "mailcommon/mailutil.h"
 #include "mailcommon/tagwidget.h"
 #include "messagecomposer/messagecomposersettings.h"
+#include <soprano/nao.h>
 
 // other kdenetwork headers:
 #include <kpimidentities/identity.h>
@@ -1897,32 +1898,39 @@ void AppearancePage::MessageTagTab::slotUpdateTagSettingWidgets( int aIndex )
   mTagRemoveButton->setEnabled( true );
   mTagUpButton->setEnabled( ( 0 != aIndex ) );
   mTagDownButton->setEnabled(( ( int( mTagListBox->count() ) - 1 ) != aIndex ) );
-
   QListWidgetItem * item = mTagListBox->currentItem();
   TagListWidgetItem *tagItem = static_cast<TagListWidgetItem*>( item );
   KMail::Tag::Ptr tmp_desc = tagItem->kmailTag();
 
-  mTagWidget->tagNameLineEdit()->setEnabled( true );
+  mTagRemoveButton->setEnabled( !tmp_desc->tagStatus );
+
+  disconnect( mTagWidget->tagNameLineEdit(), SIGNAL(textChanged(QString)),
+           this, SLOT(slotNameLineTextChanged(QString)) );
+
+  mTagWidget->tagNameLineEdit()->setEnabled(!tmp_desc->tagStatus);
   mTagWidget->tagNameLineEdit()->setText( tmp_desc->tagName );
+  connect( mTagWidget->tagNameLineEdit(), SIGNAL(textChanged(QString)),
+           this, SLOT(slotNameLineTextChanged(QString)) );
+
 
   QColor tmp_color = tmp_desc->textColor;
   mTagWidget->textColorCheck()->setEnabled( true );
   if ( tmp_color.isValid() ) {
-    mTagWidget->textColorCombo()->setColor( tmp_color );
     mTagWidget->textColorCheck()->setChecked( true );
+    mTagWidget->textColorCombo()->setColor( tmp_color );
   } else {
-    mTagWidget->textColorCombo()->setColor( Qt::white );
     mTagWidget->textColorCheck()->setChecked( false );
+    mTagWidget->textColorCombo()->setColor( Qt::white );
   }
 
   tmp_color = tmp_desc->backgroundColor;
   mTagWidget->backgroundColorCheck()->setEnabled( true );
   if ( tmp_color.isValid() ) {
-    mTagWidget->backgroundColorCombo()->setColor( tmp_color );
     mTagWidget->backgroundColorCheck()->setChecked( true );
+    mTagWidget->backgroundColorCombo()->setColor( tmp_color );
   } else {
-    mTagWidget->backgroundColorCombo()->setColor( Qt::white );
     mTagWidget->backgroundColorCheck()->setChecked( false );
+    mTagWidget->backgroundColorCombo()->setColor( Qt::white );
   }
 
   QFont tmp_font = tmp_desc->textFont;
@@ -1930,7 +1938,7 @@ void AppearancePage::MessageTagTab::slotUpdateTagSettingWidgets( int aIndex )
   mTagWidget->textFontCheck()->setChecked( ( tmp_font != QFont() ) );
   mTagWidget->fontRequester()->setFont( tmp_font );
 
-  mTagWidget->iconButton()->setEnabled( true );
+  mTagWidget->iconButton()->setEnabled( !tmp_desc->tagStatus );
   mTagWidget->iconButton()->setIcon( tmp_desc->iconName );
 
   mTagWidget->keySequenceWidget()->setEnabled( true );
@@ -1982,6 +1990,20 @@ void AppearancePage::MessageTagTab::slotNameLineTextChanged( const QString
   if ( aText.isEmpty() && !mTagListBox->currentItem())
     return;
 
+  const int count = mTagListBox->count();
+  for ( int i=0; i < count; ++i ) {
+    if(mTagListBox->item(i)->text() == aText) {
+      KMessageBox::error(this,i18n("We can not create tag. A tag with same name already exists."));
+      disconnect( mTagWidget->tagNameLineEdit(), SIGNAL(textChanged(QString)),
+               this, SLOT(slotNameLineTextChanged(QString)) );
+      mTagWidget->tagNameLineEdit()->setText(mTagListBox->currentItem()->text());
+      connect( mTagWidget->tagNameLineEdit(), SIGNAL(textChanged(QString)),
+               this, SLOT(slotNameLineTextChanged(QString)) );
+      return;
+    }
+  }
+
+
   //Disconnect so the tag information is not saved and reloaded with every
   //letter
   disconnect( mTagListBox, SIGNAL(currentItemChanged(QListWidgetItem*,QListWidgetItem*)),
@@ -2003,9 +2025,18 @@ void AppearancePage::MessageTagTab::slotAddLineTextChanged( const QString &aText
 }
 
 void AppearancePage::MessageTagTab::slotAddNewTag()
-{
-  const int tmp_priority = mTagListBox->count();
+{  
   const QString newTagName = mTagAddLineEdit->text();
+  const int count = mTagListBox->count();
+  for ( int i=0; i < count; ++i ) {
+    if(mTagListBox->item(i)->text() == newTagName) {
+      KMessageBox::error(this,i18n("We can not create tag. A tag with same name already exists."));
+      return;
+    }
+  }
+
+
+  const int tmp_priority = mTagListBox->count();
   Nepomuk2::Tag nepomukTag( newTagName );
   nepomukTag.setLabel( newTagName );
 

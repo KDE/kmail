@@ -164,6 +164,8 @@ void TagActionManager::createTagActions()
   int i = 0;
   const int numberOfTag(mTags.count());
   foreach( const Tag::Ptr &tag, mTags ) {
+    if(tag->tagStatus)
+      continue;
     if ( i< s_numberMaxTag )
       createTagAction( tag,true );
     else

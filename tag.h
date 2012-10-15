@@ -73,6 +73,7 @@ namespace KMail {
       QUrl nepomukResourceUri;
       KShortcut shortcut;
       bool inToolbar;
+      bool tagStatus;
 
       // Priority, i.e. sort order of the tag. Only used when loading the tag, when saving
       // the priority is set to the position in the list widget

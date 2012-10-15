@@ -38,6 +38,19 @@ Tag::Ptr Tag::fromNepomuk( const Nepomuk2::Tag& nepomukTag )
 
   tag->nepomukResourceUri = nepomukTag.uri();
 
+  const QString identifier = nepomukTag.property( Soprano::Vocabulary::NAO::identifier() ).toString();
+  tag->tagStatus = (identifier == QLatin1String("important")) ||
+          (identifier == QLatin1String("todo")) ||
+          (identifier == QLatin1String("watched")) ||
+          (identifier == QLatin1String("deleted")) ||
+          (identifier == QLatin1String("spam")) ||
+          (identifier == QLatin1String("replied")) ||
+          (identifier == QLatin1String("ignored")) ||
+          (identifier == QLatin1String("forwarded")) ||
+          (identifier == QLatin1String("sent")) ||
+          (identifier == QLatin1String("queued")) ||
+          (identifier == QLatin1String("ham"));
+
   if ( nepomukTag.hasProperty( Vocabulary::MessageTag::textColor() ) ) {
     const QString name = nepomukTag.property( Vocabulary::MessageTag::textColor() ).toString();
     tag->textColor = QColor( name );
