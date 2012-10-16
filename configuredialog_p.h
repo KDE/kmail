@@ -384,6 +384,7 @@ private:
 
 private: // data
   QCheckBox    *mSystemTrayCheck;
+  QCheckBox    *mSystemTrayShowUnreadMail;
   KButtonGroup *mSystemTrayGroup;
 };
 

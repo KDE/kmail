@@ -2051,8 +2051,10 @@ void KMKernel::toggleSystemTray()
     }
 
     // Set mode of systemtray. If mode has changed, tray will handle this.
-    if ( mSystemTray )
+    if ( mSystemTray ) {
       mSystemTray->setMode( GlobalSettings::self()->systemTrayPolicy() );
+      mSystemTray->setShowUnread( GlobalSettings::self()->systemTrayShowUnread() );
+    }
 
   }
 }

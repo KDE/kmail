@@ -59,6 +59,7 @@ KMSystemTray::KMSystemTray(QObject *parent)
     mDesktopOfMainWin( 0 ),
     mMode( GlobalSettings::EnumSystemTrayPolicy::ShowOnUnread ),
     mCount( 0 ),
+    mShowUnreadMail( true ),
     mNewMessagesPopup( 0 ),
     mSendQueued( 0 )
 {
@@ -138,6 +139,14 @@ KMSystemTray::~KMSystemTray()
 {
 }
 
+void KMSystemTray::setShowUnread(bool showUnread)
+{
+  if(mShowUnreadMail == showUnread)
+    return;
+  mShowUnreadMail = showUnread;
+  updateSystemTray();
+}
+
 void KMSystemTray::setMode(int newMode)
 {
   if(newMode == mMode) return;
@@ -201,10 +210,12 @@ void KMSystemTray::updateCount()
   p.setFont( countFont );
   KColorScheme scheme( QPalette::Active, KColorScheme::View );
 
-  p.setBrush( Qt::NoBrush );
-  p.setPen( scheme.foreground( KColorScheme::LinkText ).color() );
-  p.setOpacity( 1.0 );
-  p.drawText( overlayPixmap.rect(),Qt::AlignCenter, countString );
+  if(mShowUnreadMail) {
+    p.setBrush( Qt::NoBrush );
+    p.setPen( scheme.foreground( KColorScheme::LinkText ).color() );
+    p.setOpacity( 1.0 );
+    p.drawText( overlayPixmap.rect(),Qt::AlignCenter, countString );
+  }
   p.end();
 
   QPixmap iconPixmap = mIcon.pixmap(overlaySize, overlaySize);

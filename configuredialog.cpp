@@ -1593,6 +1593,14 @@ AppearancePageSystemTrayTab::AppearancePageSystemTrayTab( QWidget * parent )
   connect( mSystemTrayCheck, SIGNAL(stateChanged(int)),
            this, SLOT(slotEmitChanged()) );
 
+  mSystemTrayShowUnreadMail = new QCheckBox( i18n("Show unread mail in tray icon"), this );
+  vlay->addWidget( mSystemTrayShowUnreadMail );
+  connect( mSystemTrayShowUnreadMail, SIGNAL(stateChanged(int)),
+           this, SLOT(slotEmitChanged()) );
+  connect( mSystemTrayCheck, SIGNAL(toggled(bool)),
+           mSystemTrayShowUnreadMail, SLOT(setEnabled(bool)) );
+
+
   // System tray modes
   mSystemTrayGroup = new KButtonGroup( this );
   mSystemTrayGroup->setTitle( i18n("System Tray Mode" ) );
@@ -1614,6 +1622,7 @@ AppearancePageSystemTrayTab::AppearancePageSystemTrayTab( QWidget * parent )
 void AppearancePage::SystemTrayTab::doLoadFromGlobalSettings()
 {
   mSystemTrayCheck->setChecked( GlobalSettings::self()->systemTrayEnabled() );
+  mSystemTrayShowUnreadMail->setChecked( GlobalSettings::self()->systemTrayShowUnread() );
   mSystemTrayGroup->setSelected( GlobalSettings::self()->systemTrayPolicy() );
   mSystemTrayGroup->setEnabled( mSystemTrayCheck->isChecked() );
 }
@@ -1622,6 +1631,7 @@ void AppearancePage::SystemTrayTab::save()
 {
   GlobalSettings::self()->setSystemTrayEnabled( mSystemTrayCheck->isChecked() );
   GlobalSettings::self()->setSystemTrayPolicy( mSystemTrayGroup->selected() );
+  GlobalSettings::self()->setSystemTrayShowUnread( mSystemTrayShowUnreadMail->isChecked() );
   GlobalSettings::self()->writeConfig();
 }
 

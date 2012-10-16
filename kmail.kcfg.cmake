@@ -97,6 +97,10 @@
         </choices>
         <default>ShowOnUnread</default>
       </entry>
+      <entry name="SystemTrayShowUnread" type="Bool">
+        <label>Show unread mail in system tray</label>
+        <default>true</default>
+      </entry>
       <entry name="CloseDespiteSystemTray" type="Bool">
           <label>Close the application when the main window is closed, even if there is a system tray icon active.</label>
         <default>false</default>

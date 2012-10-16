@@ -47,6 +47,7 @@ public:
   /** destructor */
   ~KMSystemTray();
 
+  void setShowUnread(bool showUnread);
   void setMode(int mode);
   int mode() const;
 
@@ -72,12 +73,13 @@ protected:
   bool excludeFolder( const Akonadi::Collection& collection ) const;
 
 private:
+  KIcon mIcon;
   int mDesktopOfMainWin;
 
   int mMode;
   int mCount;
-  KIcon mIcon;
 
+  bool mShowUnreadMail;
   QMenu *mNewMessagesPopup;
   QAction *mSendQueued;
 };
