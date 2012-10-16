@@ -73,7 +73,7 @@ TagSelectDialog::TagSelectDialog( QWidget * parent, int numberOfSelectedMessages
   foreach( const Tag::Ptr &tag, tagList ) {
     if(tag->tagStatus)
       continue;
-    QListWidgetItem *item = new QListWidgetItem( tag->tagName, mListTag );
+    QListWidgetItem *item = new QListWidgetItem(KIcon(tag->iconName), tag->tagName, mListTag );
     item->setFlags( Qt::ItemIsUserCheckable | Qt::ItemIsEnabled | Qt::ItemIsSelectable );
     item->setCheckState( Qt::Unchecked );
     mListTag->addItem( item );
