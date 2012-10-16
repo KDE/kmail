@@ -28,6 +28,7 @@
 
 #include "tagselectdialog.h"
 #include "tag.h"
+#include "kmkernel.h"
 
 #include <KListWidgetSearchLine>
 
@@ -85,11 +86,22 @@ TagSelectDialog::TagSelectDialog( QWidget * parent, int numberOfSelectedMessages
       item->setCheckState( Qt::Unchecked );
     }    
   }
+
+  KConfigGroup group( KMKernel::self()->config(), "TagSelectDialog" );
+  const QSize size = group.readEntry( "Size", QSize() );
+  if ( size.isValid() ) {
+    resize( size );
+  } else {
+    resize( 500, 300 );
+  }
+
 }
 
 TagSelectDialog::~TagSelectDialog()
 {
-  
+  KConfigGroup group( KMKernel::self()->config(), "TagSelectDialog" );
+  group.writeEntry( "Size", size() );
+
 }
 
 QList<QString> TagSelectDialog::selectedTag() const
