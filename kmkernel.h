@@ -377,9 +377,6 @@ public:
    */
   bool haveSystemTrayApplet() const;
 
-  bool registerSystemTrayApplet( KMail::KMSystemTray* );
-  bool unregisterSystemTrayApplet( KMail::KMSystemTray* );
-
   QTextCodec *networkCodec() { return netCodec; }
 
   /** returns a reference to the first Mainwin or a temporary Mainwin */
@@ -422,6 +419,8 @@ public:
 
 
   MessageComposer::KMComposerAutoCorrection* composerAutoCorrection();
+
+  void toggleSystemTray();
 
 protected:
   void agentInstanceBroken( const Akonadi::AgentInstance& instance );
@@ -519,7 +518,7 @@ private:
 
   Solid::Networking::Status mSystemNetworkStatus;
 
-  QList<KMail::KMSystemTray*> systemTrayApplets;
+  KMail::KMSystemTray* mSystemTray;
   QHash<QString, bool> mResourceCryptoSettingCache;
   MailCommon::FolderCollectionMonitor *mFolderCollectionMonitor;
   Akonadi::EntityTreeModel *mEntityTreeModel;

@@ -72,7 +72,6 @@ namespace KMail {
   class StatusBarLabel;
   class TagActionManager;
   class FolderShortcutActionManager;
-  class KMSystemTray;
 }
 
 namespace KSieveUi {
@@ -139,15 +138,11 @@ class KMAIL_EXPORT KMMainWidget : public QWidget
     KAction *viewSourceAction() const { return mViewSourceAction; }
     KMail::MessageActions *messageActions() const { return mMsgActions; }
 
-    void toggleSystemTray();
-
     /**
       Returns a list of all KMMainWidgets. Warning, the list itself can be 0.
       @return the list of all main widgets, or 0 if it is not yet initialized
     */
     static const PtrList *mainWidgetList();
-
-    KMail::KMSystemTray *systray() const;
 
     /**
       Return the list of all action, in order to check shortcuts conflicts against them.
@@ -619,7 +614,6 @@ private:
 
     KMail::TagActionManager *mTagActionManager;
     KMail::FolderShortcutActionManager *mFolderShortcutActionManager;
-    KMail::KMSystemTray *mSystemTray;
     KSharedConfig::Ptr mConfig;
     KXMLGUIClient *mGUIClient;
 

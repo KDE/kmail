@@ -236,7 +236,6 @@ K_GLOBAL_STATIC( KMMainWidget::PtrList, theMainWidgetList )
   mReaderWindowBelow = true;
   mFolderHtmlPref = false;
   mFolderHtmlLoadExtPref = false;
-  mSystemTray = 0;
   mDestructed = false;
   mActionCollection = actionCollection;
   mTopLayout = new QVBoxLayout( this );
@@ -288,7 +287,7 @@ K_GLOBAL_STATIC( KMMainWidget::PtrList, theMainWidgetList )
   connect( mTagActionManager, SIGNAL(tagMoreActionClicked()),
            this, SLOT(slotSelectMoreMessageTagList()) );
 
-  toggleSystemTray();
+  kmkernel->toggleSystemTray();
 
   { // make sure the pages are registered only once, since there can be multiple instances of KMMainWidget
     static bool pagesRegistered = false;
@@ -382,7 +381,6 @@ void KMMainWidget::destruct()
   writeConfig(false); /* don't force kmkernel sync when close BUG: 289287 */
   writeFolderConfig();
   deleteWidgets();
-  delete mSystemTray;
   mCurrentFolder.clear();
   delete mMoveOrCopyToDialog;
   delete mSelectFromAllFoldersDialog;
@@ -395,7 +393,6 @@ void KMMainWidget::destruct()
   disconnect( kmkernel->folderCollectionMonitor(), SIGNAL(collectionChanged(Akonadi::Collection,QSet<QByteArray>)), 0, 0);
   disconnect( kmkernel->folderCollectionMonitor(), SIGNAL(collectionStatisticsChanged(Akonadi::Collection::Id,Akonadi::CollectionStatistics)), 0, 0);
 
-  mSystemTray = 0;
   mDestructed = true;
 }
 
@@ -972,7 +969,7 @@ void KMMainWidget::readConfig()
 
   updateMessageMenu();
   updateFileMenu();
-  toggleSystemTray();
+  kmkernel->toggleSystemTray();
 
   connect( Akonadi::AgentManager::self(), SIGNAL(instanceAdded(Akonadi::AgentInstance)),
            this, SLOT(updateFileMenu()) );
@@ -4434,24 +4431,6 @@ QList<QAction*> KMMainWidget::actionList()
 }
 
 //-----------------------------------------------------------------------------
-void KMMainWidget::toggleSystemTray()
-{
-  if ( !mSystemTray && GlobalSettings::self()->systemTrayEnabled() ) {
-    mSystemTray = new KMail::KMSystemTray(this);
-  }
-  else if ( mSystemTray && !GlobalSettings::self()->systemTrayEnabled() ) {
-    // Get rid of system tray on user's request
-    kDebug() << "deleting systray";
-    delete mSystemTray;
-    mSystemTray = 0;
-  }
-
-  // Set mode of systemtray. If mode has changed, tray will handle this.
-  if ( mSystemTray )
-    mSystemTray->setMode( GlobalSettings::self()->systemTrayPolicy() );
-}
-
-//-----------------------------------------------------------------------------
 void KMMainWidget::slotAntiSpamWizard()
 {
   AntiSpamWizard wiz( AntiSpamWizard::AntiSpam, this );
@@ -4507,12 +4486,6 @@ const KMMainWidget::PtrList * KMMainWidget::mainWidgetList()
 QSharedPointer<FolderCollection> KMMainWidget::currentFolder() const
 {
   return mCurrentFolder;
-}
-
-//-----------------------------------------------------------------------------
-KMail::KMSystemTray *KMMainWidget::systray() const
-{
-  return mSystemTray;
 }
 
 //-----------------------------------------------------------------------------

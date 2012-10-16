@@ -78,8 +78,6 @@ KMSystemTray::KMSystemTray(QObject *parent)
     }
   }
 #endif
-  // register the applet with the kernel
-  kmkernel->registerSystemTrayApplet( this );
 
 
   connect( this, SIGNAL(activateRequested(bool,QPoint)),
@@ -133,8 +131,6 @@ void KMSystemTray::buildPopupMenu()
 
 KMSystemTray::~KMSystemTray()
 {
-  // unregister the applet
-  kmkernel->unregisterSystemTrayApplet( this );
 }
 
 void KMSystemTray::setMode(int newMode)

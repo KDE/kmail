@@ -121,7 +121,7 @@ static bool s_askingToGoOnline = false;
 KMKernel::KMKernel (QObject *parent, const char *name) :
   QObject(parent),
   mIdentityManager(0), mConfigureDialog(0), mMailService(0),
-  mSystemNetworkStatus ( Solid::Networking::status() )
+  mSystemNetworkStatus ( Solid::Networking::status() ), mSystemTray(0)
 {
   Akonadi::AttributeFactory::registerAttribute<Akonadi::SearchDescriptionAttribute>();
   QDBusConnection::sessionBus().registerService("org.kde.kmail");
@@ -232,6 +232,8 @@ KMKernel::~KMKernel ()
 {
   delete mMailService;
   mMailService = 0;
+
+  mSystemTray = 0;
 
   stopAgentInstance();
   slotSyncConfig();
@@ -1438,34 +1440,15 @@ QString KMKernel::localDataPath()
 
 bool KMKernel::haveSystemTrayApplet() const
 {
-  return !systemTrayApplets.isEmpty();
+  return (mSystemTray!=0);
 }
 
 void KMKernel::updateSystemTray()
 {
-  if ( haveSystemTrayApplet() ) {
-    const int nbSystemTray = systemTrayApplets.count();
-    for (int i = 0; i < nbSystemTray; ++i) {
-      systemTrayApplets.at( i )->updateSystemTray();
-    }
+  if ( mSystemTray ) {
+    mSystemTray->updateSystemTray();
   }
 }
-
-bool KMKernel::registerSystemTrayApplet( KMail::KMSystemTray* applet )
-{
-  if ( !systemTrayApplets.contains( applet ) ) {
-    systemTrayApplets.append( applet );
-    return true;
-  }
-  else
-    return false;
-}
-
-bool KMKernel::unregisterSystemTrayApplet( KMail::KMSystemTray* applet )
-{
-  return systemTrayApplets.removeAll( applet ) > 0;
-}
-
 
 KPIMIdentities::IdentityManager * KMKernel::identityManager() {
   if ( !mIdentityManager ) {
@@ -1625,18 +1608,14 @@ bool KMKernel::canQueryClose()
   if ( KMMainWidget::mainWidgetList() &&
        KMMainWidget::mainWidgetList()->count() > 1 )
     return true;
-  KMMainWidget *widget = getKMMainWidget();
-  if ( !widget )
-    return true;
-  KMail::KMSystemTray* systray = widget->systray();
-  if ( !systray || GlobalSettings::closeDespiteSystemTray() )
+  if ( !mSystemTray || GlobalSettings::closeDespiteSystemTray() )
       return true;
-  if ( systray->mode() == GlobalSettings::EnumSystemTrayPolicy::ShowAlways ) {
-    systray->hideKMail();
+  if ( mSystemTray->mode() == GlobalSettings::EnumSystemTrayPolicy::ShowAlways ) {
+    mSystemTray->hideKMail();
     return false;
-  } else if ( ( systray->mode() == GlobalSettings::EnumSystemTrayPolicy::ShowOnUnread ) && ( systray->hasUnreadMail() )) {
-    systray->setStatus( KStatusNotifierItem::Active );
-    systray->hideKMail();
+  } else if ( ( mSystemTray->mode() == GlobalSettings::EnumSystemTrayPolicy::ShowOnUnread ) && ( mSystemTray->hasUnreadMail() )) {
+    mSystemTray->setStatus( KStatusNotifierItem::Active );
+    mSystemTray->hideKMail();
     return false;
   }
   return true;
@@ -2057,5 +2036,26 @@ MessageComposer::KMComposerAutoCorrection* KMKernel::composerAutoCorrection()
 {
   return mAutoCorrection;
 }
+
+void KMKernel::toggleSystemTray()
+{
+  KMMainWidget *widget = getKMMainWidget();
+  if ( widget  ) {
+    if ( !mSystemTray && GlobalSettings::self()->systemTrayEnabled() ) {
+      mSystemTray = new KMail::KMSystemTray(widget);
+    } else if ( mSystemTray && !GlobalSettings::self()->systemTrayEnabled() ) {
+      // Get rid of system tray on user's request
+      kDebug() << "deleting systray";
+      delete mSystemTray;
+      mSystemTray = 0;
+    }
+
+    // Set mode of systemtray. If mode has changed, tray will handle this.
+    if ( mSystemTray )
+      mSystemTray->setMode( GlobalSettings::self()->systemTrayPolicy() );
+
+  }
+}
+
 
 #include "kmkernel.moc"
