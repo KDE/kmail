@@ -124,6 +124,11 @@ void KMSystemTray::buildPopupMenu()
   if ( ( action = mainWidget->action("kmail_configure_kmail") ) )
     contextMenu()->addAction( action );
   contextMenu()->addSeparator();
+  if ( (action = mainWidget->action("akonadi_work_offline") ) )
+    contextMenu()->addAction( action );
+  contextMenu()->addSeparator();
+
+
 
   if ( ( action = actionCollection()->action("file_quit") ) )
     contextMenu()->addAction( action );
