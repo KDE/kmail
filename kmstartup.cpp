@@ -213,6 +213,7 @@ void insertLibraryCataloguesAndIcons() {
     "libmessageviewer",
     "libmessagecore",
     "libmessagecomposer",
+    "libpimcommon",
     "libmailcommon",
     "libtemplateparser",
     "libakonadi_next",

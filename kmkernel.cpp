@@ -23,7 +23,7 @@ using KPIM::RecentAddresses;
 #include "mailcommon/pop3settings.h"
 #include "mailcommon/foldertreeview.h"
 #include "mailcommon/filter/kmfilterdialog.h"
-
+#include "pimcommon/pimutil.h"
 
 // kdepim includes
 #include "kdepim-version.h"
@@ -1731,7 +1731,7 @@ void KMKernel::instanceStatusChanged( Akonadi::AgentInstance instance )
           useCrypto = mResourceCryptoSettingCache.value(identifier);
       } else {
         if ( identifier.contains( IMAP_RESOURCE_IDENTIFIER ) ) {
-            OrgKdeAkonadiImapSettingsInterface *iface = MailCommon::Util::createImapSettingsInterface( identifier );
+            OrgKdeAkonadiImapSettingsInterface *iface = PimCommon::Util::createImapSettingsInterface( identifier );
             if ( iface->isValid() ) {
                 const QString imapSafety = iface->safety();
                 useCrypto = ( imapSafety == QLatin1String( "SSL" ) || imapSafety == QLatin1String( "STARTTLS" ) );
@@ -1898,7 +1898,7 @@ void KMKernel::checkFolderFromResources( const Akonadi::Collection::List& collec
     if ( type.status() == Akonadi::AgentInstance::Broken )
       continue;
     if ( type.identifier().contains( IMAP_RESOURCE_IDENTIFIER ) ) {
-      OrgKdeAkonadiImapSettingsInterface *iface = MailCommon::Util::createImapSettingsInterface( type.identifier() );
+      OrgKdeAkonadiImapSettingsInterface *iface = PimCommon::Util::createImapSettingsInterface( type.identifier() );
       if ( iface->isValid() ) {
         foreach( const Akonadi::Collection& collection, collectionList ) {
           const Akonadi::Collection::Id collectionId = collection.id();

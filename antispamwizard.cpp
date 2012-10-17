@@ -40,12 +40,14 @@
 #include "foldertreewidgetproxymodel.h"
 #include "mailcommon/pop3settings.h"
 #include "mailcommon/mailutil.h"
-#include "mailcommon/imapsettings.h"
+#include "pimcommon/imapsettings.h"
 #include "mailcommon/mailkernel.h"
 #include "mailcommon/filter/mailfilter.h"
 #include "mailcommon/filter/filteraction.h"
 #include "mailcommon/filter/filteractiondict.h"
 #include "mailcommon/filter/filtermanager.h"
+
+#include "pimcommon/pimutil.h"
 
 #include <Akonadi/AgentInstance>
 
@@ -544,7 +546,7 @@ void AntiSpamWizard::checkToolAvailability()
         if ( type.status() == Akonadi::AgentInstance::Broken )
           continue;
         if ( type.identifier().contains( IMAP_RESOURCE_IDENTIFIER ) ) {
-          OrgKdeAkonadiImapSettingsInterface *iface = MailCommon::Util::createImapSettingsInterface( type.identifier() );
+          OrgKdeAkonadiImapSettingsInterface *iface = PimCommon::Util::createImapSettingsInterface( type.identifier() );
           if ( iface->isValid() ) {
             const QString host = iface->imapServer();
             if ( host.toLower().contains( pattern.toLower() ) ) {
