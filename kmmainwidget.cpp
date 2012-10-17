@@ -4562,6 +4562,7 @@ void KMMainWidget::itemsReceived(const Akonadi::Item::List &list )
            MessageViewer::GlobalSettings::self()->delayedMarkTime() == 0 ) {
         item.setFlag( Akonadi::MessageFlags::Seen );
         Akonadi::ItemModifyJob *modifyJob = new Akonadi::ItemModifyJob( item, this );
+        modifyJob->disableRevisionCheck();
         modifyJob->setIgnorePayload( true );
       }
       return;
