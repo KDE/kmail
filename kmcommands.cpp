@@ -1215,6 +1215,7 @@ KMCommand::Result KMSetStatusCommand::execute()
     slotModifyItemDone( 0 ); // pretend we did something
   } else {
     Akonadi::ItemModifyJob *modifyJob = new Akonadi::ItemModifyJob( itemsToModify, this );
+    modifyJob->disableRevisionCheck();
     modifyJob->setIgnorePayload( true );
     connect( modifyJob, SIGNAL(result(KJob*)), this, SLOT(slotModifyItemDone(KJob*)) );
   }
