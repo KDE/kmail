@@ -62,7 +62,6 @@ if (NOT WINCE AND KDEPIM_BUILD_DESKTOP)
      collectionviewpage.cpp
      collectionquotapage.cpp
      collectionquotapage_p.cpp
-     collectionaclpage.cpp
      colorlistbox.cpp
      kmmainwin.cpp
      configagentdelegate.cpp

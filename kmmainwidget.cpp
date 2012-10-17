@@ -49,7 +49,6 @@
     using KSieveUi::SieveDebugDialog;
 #endif
 
-#include "collectionaclpage.h"
 #include "collectionmaintenancepage.h"
 #include "collectionquotapage.h"
 #include "collectiontemplatespage.h"
@@ -57,7 +56,7 @@
 #include "tagselectdialog.h"
 #include "archivemailagentinterface.h"
 
-
+#include "mailcommon/collectionaclpage.h"
 #include "mailcommon/collectiongeneralpage.h"
 #include "mailcommon/expirecollectionattribute.h"
 #include "mailcommon/filter/filtermanager.h"
@@ -293,7 +292,7 @@ K_GLOBAL_STATIC( KMMainWidget::PtrList, theMainWidgetList )
     static bool pagesRegistered = false;
 
     if ( !pagesRegistered ) {
-      Akonadi::CollectionPropertiesDialog::registerPage( new CollectionAclPageFactory );
+      Akonadi::CollectionPropertiesDialog::registerPage( new MailCommon::CollectionAclPageFactory );
       Akonadi::CollectionPropertiesDialog::registerPage( new MailCommon::CollectionGeneralPageFactory );
       Akonadi::CollectionPropertiesDialog::registerPage( new CollectionMaintenancePageFactory );
       Akonadi::CollectionPropertiesDialog::registerPage( new CollectionQuotaPageFactory );
@@ -4675,7 +4674,7 @@ void KMMainWidget::slotCollectionPropertiesContinued( KJob* job )
                                           << QLatin1String( "KMail::CollectionViewPage" )
                                           << QLatin1String( "Akonadi::CachePolicyPage" )
                                           << QLatin1String( "KMail::CollectionTemplatesPage" )
-                                          << QLatin1String( "KMail::CollectionAclPage" )
+                                          << QLatin1String( "MailCommon::CollectionAclPage" )
                                           << QLatin1String( "KMail::CollectionQuotaPage" )
                                           << QLatin1String( "KMail::CollectionMaintenancePage" );
 
