@@ -4605,12 +4605,18 @@ void KMMainWidget::slotCollectionProperties()
     KMessageBox::information( this, i18n( "Network is unconnected, some infos from folder could not be updated." ) );
     slotCollectionPropertiesContinued( 0 );
   } else {
-    Akonadi::CollectionAttributesSynchronizationJob *sync
-        = new Akonadi::CollectionAttributesSynchronizationJob( mCurrentFolder->collection() );
-    sync->setProperty( "collectionId", mCurrentFolder->collection().id() );
-    connect( sync, SIGNAL(result(KJob*)),
-             this, SLOT(slotCollectionPropertiesContinued(KJob*)) );
-    sync->start();
+    const Akonadi::AgentInstance agentInstance = Akonadi::AgentManager::self()->instance( mCurrentFolder->collection().resource() );
+    bool isOnline = agentInstance.isOnline();
+    if (!isOnline) {
+	  slotCollectionPropertiesContinued( 0 );
+    } else {
+      Akonadi::CollectionAttributesSynchronizationJob *sync
+          = new Akonadi::CollectionAttributesSynchronizationJob( mCurrentFolder->collection() );
+      sync->setProperty( "collectionId", mCurrentFolder->collection().id() );
+      connect( sync, SIGNAL(result(KJob*)),
+               this, SLOT(slotCollectionPropertiesContinued(KJob*)) );
+      sync->start();
+    }
   }
 }
 
