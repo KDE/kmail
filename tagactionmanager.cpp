@@ -52,7 +52,8 @@ TagActionManager::TagActionManager( QObject *parent, KActionCollection *actionCo
     mGUIClient( guiClient ),
     mTagListMonitor( new MessageCore::TagListMonitor( this ) ),
     mSeparatorAction( 0 ),
-    mMoreAction( 0 )
+    mMoreAction( 0 ),
+    mTagQueryClient( 0 )
 {
   connect( mTagListMonitor, SIGNAL(tagsChanged()), this, SLOT(tagsChanged()) );
   KAction *separator = new KAction( this );
@@ -136,8 +137,9 @@ void TagActionManager::createTagAction( const Tag::Ptr &tag, bool addToMenu )
 
 void TagActionManager::createActions()
 {
+  if( mTagQueryClient )
+      return;
   clearActions();
-
 
   if ( mTags.isEmpty() ) {
       mTagQueryClient = new Nepomuk2::Query::QueryServiceClient(this);
