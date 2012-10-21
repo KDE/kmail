@@ -211,6 +211,7 @@ K_GLOBAL_STATIC( KMMainWidget::PtrList, theMainWidgetList )
   KMMainWidget::KMMainWidget( QWidget *parent, KXMLGUIClient *aGUIClient,
                               KActionCollection *actionCollection, KSharedConfig::Ptr config ) :
     QWidget( parent ),
+    mMoveMsgToFolderAction(0),
     mCollectionProperties( 0 ),
     mFavoriteCollectionsView( 0 ),
     mMsgView( 0 ),
@@ -1220,17 +1221,6 @@ void KMMainWidget::createWidgets()
   Q_FOREACH( StandardMailActionManager::Type mailAction, mailActions ) {
     mAkonadiStandardActionManager->createAction( mailAction );
   }
-
-
-  {
-    mMoveMsgToFolderAction = new KAction( i18n("Move Message to Folder"), this );
-    mMoveMsgToFolderAction->setShortcut( QKeySequence( Qt::Key_M ) );
-    actionCollection()->addAction( "move_message_to_folder", mMoveMsgToFolderAction );
-    connect( mMoveMsgToFolderAction, SIGNAL(triggered(bool)),
-             SLOT(slotMoveSelectedMessageToFolder()) );
-  }
-
-
 
   mAkonadiStandardActionManager->interceptAction( Akonadi::StandardActionManager::CollectionProperties );
   connect( mAkonadiStandardActionManager->action( Akonadi::StandardActionManager::CollectionProperties ), SIGNAL(triggered(bool)), this, SLOT(slotCollectionProperties()) );
@@ -3803,6 +3793,15 @@ void KMMainWidget::setupActions()
     connect( action, SIGNAL(triggered(bool)),
              this, SLOT(slotExtendSelectionToNextMessage()) );
   }
+
+  {
+    mMoveMsgToFolderAction = new KAction( i18n("Move Message to Folder"), this );
+    mMoveMsgToFolderAction->setShortcut( QKeySequence( Qt::Key_M ) );
+    actionCollection()->addAction( "move_message_to_folder", mMoveMsgToFolderAction );
+    connect( mMoveMsgToFolderAction, SIGNAL(triggered(bool)),
+             SLOT(slotMoveSelectedMessageToFolder()) );
+  }
+
 }
 
 void KMMainWidget::slotAddFavoriteFolder()
@@ -4028,7 +4027,8 @@ void KMMainWidget::updateMessageActionsDelayed()
   }
 
   mMoveActionMenu->setEnabled( mass_actions && canDeleteMessages );
-  mMoveMsgToFolderAction->setEnabled( mass_actions && canDeleteMessages );
+  if(mMoveMsgToFolderAction)
+    mMoveMsgToFolderAction->setEnabled( mass_actions && canDeleteMessages );
   //mCopyActionMenu->setEnabled( mass_actions );
 
   mDeleteAction->setEnabled( mass_actions && canDeleteMessages );
