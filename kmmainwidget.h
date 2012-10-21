@@ -551,7 +551,6 @@ private:
     KActionMenu *mFilterMenu;
     KAction *mSubjectFilterAction, *mFromFilterAction, *mToFilterAction,
         *mListFilterAction;
-    KAction *mNextMessageAction, *mPreviousMessageAction;
     KAction *mExpireConfigAction;
     KAction *mAddFavoriteFolder;
     KAction *mApplyFiltersOnFolder;

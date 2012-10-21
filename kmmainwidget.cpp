@@ -3789,18 +3789,20 @@ void KMMainWidget::setupActions()
     connect( action, SIGNAL(triggered(bool)),
              SLOT(slotFocusQuickSearch()) );
   }
-  mPreviousMessageAction = new KAction( i18n( "Extend Selection to Previous Message" ), this );
-  mPreviousMessageAction->setShortcut( QKeySequence( Qt::SHIFT + Qt::Key_Left ) );
-  actionCollection()->addAction( "previous_message", mPreviousMessageAction );
-  connect( mPreviousMessageAction, SIGNAL(triggered(bool)),
-           this, SLOT(slotExtendSelectionToPreviousMessage()) );
-
-  mNextMessageAction = new KAction( i18n( "Extend Selection to Next Message" ), this );
-  mNextMessageAction->setShortcut( QKeySequence( Qt::SHIFT + Qt::Key_Right ) );
-  actionCollection()->addAction( "next_message", mNextMessageAction );
-  connect( mNextMessageAction, SIGNAL(triggered(bool)),
-           this, SLOT(slotExtendSelectionToNextMessage()) );
-
+  {
+    KAction *action = new KAction( i18n( "Extend Selection to Previous Message" ), this );
+    action->setShortcut( QKeySequence( Qt::SHIFT + Qt::Key_Left ) );
+    actionCollection()->addAction( "previous_message", action );
+    connect( action, SIGNAL(triggered(bool)),
+             this, SLOT(slotExtendSelectionToPreviousMessage()) );
+  }
+  {
+    KAction *action = new KAction( i18n( "Extend Selection to Next Message" ), this );
+    action->setShortcut( QKeySequence( Qt::SHIFT + Qt::Key_Right ) );
+    actionCollection()->addAction( "next_message", action );
+    connect( action, SIGNAL(triggered(bool)),
+             this, SLOT(slotExtendSelectionToNextMessage()) );
+  }
 }
 
 void KMMainWidget::slotAddFavoriteFolder()
