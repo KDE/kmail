@@ -552,7 +552,6 @@ private:
     KAction *mSubjectFilterAction, *mFromFilterAction, *mToFilterAction,
         *mListFilterAction;
     KAction *mExpireConfigAction;
-    KAction *mAddFavoriteFolder;
     KAction *mApplyFiltersOnFolder;
     // Custom template actions menu
     KActionMenu *mTemplateMenu;

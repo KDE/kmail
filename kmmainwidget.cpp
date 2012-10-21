@@ -3666,9 +3666,9 @@ void KMMainWidget::setupActions()
   }
 
   {
-    mAddFavoriteFolder = new KAction( KIcon( "bookmark-new" ), i18n( "Add Favorite Folder..." ), this );
-    actionCollection()->addAction( "add_favorite_folder", mAddFavoriteFolder );
-    connect( mAddFavoriteFolder, SIGNAL(triggered(bool)), this, SLOT(slotAddFavoriteFolder()) );
+    KAction *action = new KAction( KIcon( "bookmark-new" ), i18n( "Add Favorite Folder..." ), this );
+    actionCollection()->addAction( "add_favorite_folder", action );
+    connect( action, SIGNAL(triggered(bool)), this, SLOT(slotAddFavoriteFolder()) );
   }
 
   {
