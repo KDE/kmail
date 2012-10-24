@@ -3421,10 +3421,12 @@ void KMMainWidget::setupActions()
   actionCollection()->addAction("create_filter", mFilterMenu );
   connect( mFilterMenu, SIGNAL(triggered(bool)), this,
            SLOT(slotFilter()) );
-  mSubjectFilterAction = new KAction(i18n("Filter on &Subject..."), this);
-  actionCollection()->addAction("subject_filter", mSubjectFilterAction );
-  connect(mSubjectFilterAction, SIGNAL(triggered(bool)), SLOT(slotSubjectFilter()));
-  mFilterMenu->addAction( mSubjectFilterAction );
+  {
+    KAction *action = new KAction(i18n("Filter on &Subject..."), this);
+    actionCollection()->addAction("subject_filter", action );
+    connect(action, SIGNAL(triggered(bool)), SLOT(slotSubjectFilter()));
+    mFilterMenu->addAction( action );
+  }
 
   mFromFilterAction = new KAction(i18n("Filter on &From..."), this);
   actionCollection()->addAction("from_filter", mFromFilterAction );

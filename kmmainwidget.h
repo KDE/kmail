@@ -549,7 +549,7 @@ private:
       *mMoveMsgToFolderAction, *mCollectionProperties, *mSendQueued;
     // Filter actions
     KActionMenu *mFilterMenu;
-    KAction *mSubjectFilterAction, *mFromFilterAction, *mToFilterAction,
+    KAction *mFromFilterAction, *mToFilterAction,
         *mListFilterAction;
     KAction *mExpireConfigAction;
     KAction *mApplyFiltersOnFolder;
