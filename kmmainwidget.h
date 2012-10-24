@@ -589,7 +589,6 @@ private:
       *mArchiveFolderAction,
       *mPostToMailinglistAction;
     KToggleAction *mPreferHtmlAction, *mPreferHtmlLoadExtAction;
-    KToggleAction *mFolderAction, *mHeaderAction, *mMimeAction;
 
     QTimer *menutimer;
     QTimer *mShowBusySplashTimer;
