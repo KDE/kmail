@@ -549,8 +549,6 @@ private:
       *mMoveMsgToFolderAction, *mCollectionProperties, *mSendQueued;
     // Filter actions
     KActionMenu *mFilterMenu;
-    KAction *mFromFilterAction, *mToFilterAction,
-        *mListFilterAction;
     KAction *mExpireConfigAction;
     KAction *mApplyFiltersOnFolder;
     // Custom template actions menu

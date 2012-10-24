@@ -3428,16 +3428,18 @@ void KMMainWidget::setupActions()
     mFilterMenu->addAction( action );
   }
 
-  mFromFilterAction = new KAction(i18n("Filter on &From..."), this);
-  actionCollection()->addAction("from_filter", mFromFilterAction );
-  connect(mFromFilterAction, SIGNAL(triggered(bool)), SLOT(slotFromFilter()));
-  mFilterMenu->addAction( mFromFilterAction );
-
-  mToFilterAction = new KAction(i18n("Filter on &To..."), this);
-  actionCollection()->addAction("to_filter", mToFilterAction );
-  connect(mToFilterAction, SIGNAL(triggered(bool)), SLOT(slotToFilter()));
-  mFilterMenu->addAction( mToFilterAction );
-
+  {
+    KAction *action = new KAction(i18n("Filter on &From..."), this);
+    actionCollection()->addAction("from_filter", action );
+    connect(action, SIGNAL(triggered(bool)), SLOT(slotFromFilter()));
+    mFilterMenu->addAction( action );
+  }
+  {
+    KAction *action = new KAction(i18n("Filter on &To..."), this);
+    actionCollection()->addAction("to_filter", action );
+    connect(action, SIGNAL(triggered(bool)), SLOT(slotToFilter()));
+    mFilterMenu->addAction( action );
+  }
   mFilterMenu->addAction( mMsgActions->listFilterAction() );
 
   mUseAction = new KAction( KIcon("document-new"), i18n("New Message From &Template"), this );
