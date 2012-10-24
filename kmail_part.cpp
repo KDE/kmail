@@ -32,6 +32,7 @@
 #include "aboutdata.h"
 
 #include <QVBoxLayout>
+#include <QLabel>
 
 #include <kparts/mainwindow.h>
 #include <kpluginfactory.h>

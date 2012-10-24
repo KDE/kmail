@@ -184,6 +184,8 @@
 #include <QMenu>
 #include <QtDBus/QDBusInterface>
 #include <QtDBus/QDBusReply>
+#include <QLabel>
+
 
 
 // System includes

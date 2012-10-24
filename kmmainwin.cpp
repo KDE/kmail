@@ -41,6 +41,7 @@
 #include <ktip.h>
 #include <kicon.h>
 
+#include <QLabel>
 #include "messagecomposer/messagesender.h"
 
 

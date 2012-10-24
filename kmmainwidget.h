@@ -35,7 +35,6 @@
 #include <foldercollection.h>
 
 #include <QList>
-#include <QLabel>
 #include <QPointer>
 #include <QTimer>
 #include <akonadi/kmime/standardmailactionmanager.h>
@@ -48,11 +47,12 @@ namespace Akonadi {
 namespace KMime {
   class Message;
 }
-
+class QLabel;
 class QVBoxLayout;
 class QSplitter;
 
 class QMenu;
+class KAction;
 class KActionMenu;
 class KToggleAction;
 class KMMetaFilterActionCommand;
