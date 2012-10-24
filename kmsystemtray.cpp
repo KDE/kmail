@@ -33,6 +33,7 @@
 #include <kdebug.h>
 #include <KMenu>
 #include <KLocale>
+#include <KActionCollection>
 
 #include <QPainter>
 

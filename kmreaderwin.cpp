@@ -71,6 +71,7 @@ using MessageComposer::MessageFactory;
 #include <kcodecs.h>
 #include <ktoggleaction.h>
 #include <kservice.h>
+#include <KActionCollection>
 
 #include <QClipboard>
 

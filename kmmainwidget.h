@@ -27,14 +27,11 @@
 
 #include "foldertreewidget.h"
 
-#include <kurl.h>
 #include <kxmlguiclient.h>
 #include "messageactions.h"
-#include <kaction.h>
 #include <kactioncollection.h>
 #include <foldercollection.h>
 
-#include <QList>
 #include <QPointer>
 #include <QTimer>
 #include <akonadi/kmime/standardmailactionmanager.h>
@@ -47,6 +44,7 @@ namespace Akonadi {
 namespace KMime {
   class Message;
 }
+class KUrl;
 class QLabel;
 class QVBoxLayout;
 class QSplitter;
@@ -60,7 +58,6 @@ class CollectionPane;
 class KMCommand;
 class KMMoveCommand;
 class KRecentFilesAction;
-
 template <typename T, typename S> class QMap;
 
 namespace KIO {

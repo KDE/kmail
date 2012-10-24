@@ -53,6 +53,7 @@
 #include "mailkernel.h"
 #include "foldercollection.h"
 
+#include <KActionCollection>
 #include <akonadi/contact/contactsearchjob.h>
 #include <kpimutils/email.h>
 #include <kmime/kmime_message.h>
