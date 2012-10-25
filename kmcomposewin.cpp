@@ -2096,6 +2096,9 @@ bool KMComposeWin::insertFromMimeData( const QMimeData *source, bool forceAttach
     // Get the image data before showing the dialog, since that processes events which can delete
     // the QMimeData object behind our back
     const QByteArray imageData = source->data( "image/png" );
+    if ( imageData.isEmpty() ) {
+       return true;
+    }
     if ( !forceAttachment ) {
       if ( mComposerBase->editor()->textMode() == KRichTextEdit::Rich && mComposerBase->editor()->isEnableImageActions() ) {
         QImage image = qvariant_cast<QImage>( source->imageData() );
