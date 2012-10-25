@@ -155,10 +155,10 @@ namespace KMail {
     kDebug() << "after editing";
 
     if ( !selectedItems().isEmpty() ) {
-      IdentityListViewItem *item = dynamic_cast<IdentityListViewItem*>( selectedItems()[0] );
 
       QLineEdit *edit = dynamic_cast<QLineEdit*>( editor ); // krazy:exclude=qclasses
       if ( edit ) {
+        IdentityListViewItem *item = dynamic_cast<IdentityListViewItem*>( selectedItems()[0] );
         const QString text = edit->text();
         emit rename( item, text );
       }
