@@ -56,6 +56,7 @@ ArchiveFolderDialog::ArchiveFolderDialog( QWidget *parent )
   setCaption( i18n( "Archive Folder" ) );
   setButtons( Ok|Cancel );
   setDefaultButton( Ok );
+  setButtonText(KDialog::Ok,i18n("Archive"));
   setModal( true );
   QWidget *mainWidget = new QWidget( this );
   QGridLayout *mainLayout = new QGridLayout( mainWidget );
@@ -65,7 +66,6 @@ ArchiveFolderDialog::ArchiveFolderDialog( QWidget *parent )
 
   int row = 0;
 
-  // TODO: better label for "Ok" button
   // TODO: Explaination label
   // TODO: Use QFormLayout in KDE4
 
