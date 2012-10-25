@@ -54,6 +54,7 @@ class AttachmentView : public QTreeView
     void hideIfEmpty();
     void selectNewAttachment();
 
+    void updateAttachmentLabel();
   protected:
     /** reimpl to avoid default drag cursor */
     virtual void startDrag( Qt::DropActions supportedActions );

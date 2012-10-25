@@ -91,6 +91,7 @@ AttachmentView::AttachmentView( Message::AttachmentModel *model, QWidget *parent
   connect( sortModel, SIGNAL(rowsInserted(QModelIndex,int,int)), this, SLOT(hideIfEmpty()) );
   connect( sortModel, SIGNAL(rowsRemoved(QModelIndex,int,int)), this, SLOT(hideIfEmpty()) );
   connect( sortModel, SIGNAL(rowsRemoved(QModelIndex,int,int)), this, SLOT(selectNewAttachment()) );
+  connect( sortModel, SIGNAL(dataChanged(QModelIndex,QModelIndex)), this, SLOT(updateAttachmentLabel()) );
 
   setRootIsDecorated( false );
   setUniformRowHeights( true );
@@ -174,15 +175,20 @@ void AttachmentView::hideIfEmpty()
   d->toolButton->setChecked( needToShowIt );
   widget()->setVisible( needToShowIt );
   if (needToShowIt) {
-    MessageCore::AttachmentPart::List list = d->model->attachments();
-    qint64 size = 0;
-    Q_FOREACH(MessageCore::AttachmentPart::Ptr part, list) {
-      size += part->size();
-    }
-    d->infoAttachment->setText(i18np("1 attachment (%2)", "%1 attachments (%2)",model()->rowCount(), KGlobal::locale()->formatByteSize(qMax( 0LL, size ))));
+    updateAttachmentLabel();
   } else {
     d->infoAttachment->clear();
   }
+}
+
+void AttachmentView::updateAttachmentLabel()
+{
+  MessageCore::AttachmentPart::List list = d->model->attachments();
+  qint64 size = 0;
+  Q_FOREACH(MessageCore::AttachmentPart::Ptr part, list) {
+    size += part->size();
+  }
+  d->infoAttachment->setText(i18np("1 attachment (%2)", "%1 attachments (%2)",model()->rowCount(), KGlobal::locale()->formatByteSize(qMax( 0LL, size ))));
 }
 
 void AttachmentView::selectNewAttachment()
