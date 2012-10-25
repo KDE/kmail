@@ -67,7 +67,6 @@ ArchiveFolderDialog::ArchiveFolderDialog( QWidget *parent )
   int row = 0;
 
   // TODO: Explaination label
-  // TODO: Use QFormLayout in KDE4
 
   QLabel *folderLabel = new QLabel( i18n( "&Folder:" ), mainWidget );
   mainLayout->addWidget( folderLabel, row, 0 );
