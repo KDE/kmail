@@ -143,6 +143,7 @@ public:
   KAction *speakTextAction();
   KAction* translateAction();
   KAction* downloadImageToDiskAction() const;
+  KAction *viewSourceAction();
 
   KAction* editContactAction() const { return mEditContactAction; }
 

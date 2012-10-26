@@ -132,7 +132,6 @@ class KMAIL_EXPORT KMMainWidget : public QWidget
     KActionMenu *mailingListActionMenu() const { return mMsgActions->mailingListActionMenu(); }
     KAction *editAction() const { return mMsgActions->editAction(); }
     KAction *sendAgainAction() const { return mSendAgainAction; }
-    KAction *viewSourceAction() const { return mViewSourceAction; }
     KMail::MessageActions *messageActions() const { return mMsgActions; }
 
     /**
@@ -542,7 +541,7 @@ private:
     KAction *mDeleteAction, *mTrashThreadAction,
       *mDeleteThreadAction, *mSaveAsAction, *mUseAction,
       *mSendAgainAction, *mApplyAllFiltersAction, *mFindInMessageAction,
-      *mSaveAttachmentsAction, *mOpenAction, *mViewSourceAction,
+      *mSaveAttachmentsAction, *mOpenAction,
       *mMoveMsgToFolderAction, *mCollectionProperties, *mSendQueued;
     // Filter actions
     KActionMenu *mFilterMenu;

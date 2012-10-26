@@ -593,6 +593,12 @@ KAction *KMReaderWin::copyAction()
 {
   return mViewer->copyAction();
 }
+
+KAction *KMReaderWin::viewSourceAction()
+{
+  return mViewer->viewSourceAction();
+}
+
 KAction *KMReaderWin::urlOpenAction()
 {
   return mViewer->urlOpenAction();

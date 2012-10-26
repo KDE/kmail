@@ -3062,8 +3062,9 @@ void KMMainWidget::slotDelayedMessagePopup( KJob *job )
       menu->addSeparator();
     }
 
-    menu->addAction( viewSourceAction() );
+
     if ( mMsgView ) {
+      menu->addAction( mMsgView->viewSourceAction() );
       menu->addAction( mMsgView->toggleFixFontAction() );
       menu->addAction( mMsgView->toggleMimePartTreeAction() );
     }
@@ -3540,11 +3541,6 @@ void KMMainWidget::setupActions()
     connect(action, SIGNAL(triggered(bool)), SLOT(slotCollapseAllThreads()));
   }
 
-
-  mViewSourceAction = new KAction(i18n("&View Source"), this);
-  actionCollection()->addAction("view_source", mViewSourceAction );
-  connect(mViewSourceAction, SIGNAL(triggered(bool)), SLOT(slotShowMsgSrc()));
-  mViewSourceAction->setShortcut(QKeySequence(Qt::Key_V));
 
   KAction *dukeOfMonmoth = new KAction(i18n("&Display Message"), this);
   actionCollection()->addAction("display_message", dukeOfMonmoth );
@@ -4066,8 +4062,9 @@ void KMMainWidget::updateMessageActionsDelayed()
     printPreviewAction->setEnabled( singleVisibleMessageSelected );
 
   // "View Source" will act on the current message: it will ignore any hidden selection
-  viewSourceAction()->setEnabled( singleVisibleMessageSelected && mMsgView);
-
+  if(mMsgView) {
+    mMsgView->viewSourceAction()->setEnabled( singleVisibleMessageSelected );
+  }
   MessageStatus status;
   status.setStatusFromFlags( currentMessage.flags() );
 
