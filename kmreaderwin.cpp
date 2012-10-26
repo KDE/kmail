@@ -599,6 +599,11 @@ KAction *KMReaderWin::viewSourceAction()
   return mViewer->viewSourceAction();
 }
 
+KAction *KMReaderWin::findInMessageAction()
+{
+  return mViewer->findInMessageAction();
+}
+
 KAction *KMReaderWin::urlOpenAction()
 {
   return mViewer->urlOpenAction();

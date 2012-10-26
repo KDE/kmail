@@ -540,7 +540,7 @@ private:
     // Message actions
     KAction *mDeleteAction, *mTrashThreadAction,
       *mDeleteThreadAction, *mSaveAsAction, *mUseAction,
-      *mSendAgainAction, *mApplyAllFiltersAction, *mFindInMessageAction,
+      *mSendAgainAction, *mApplyAllFiltersAction,
       *mSaveAttachmentsAction, *mOpenAction,
       *mMoveMsgToFolderAction, *mCollectionProperties, *mSendQueued;
     // Filter actions
