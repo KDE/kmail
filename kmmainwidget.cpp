@@ -3055,15 +3055,13 @@ void KMMainWidget::slotDelayedMessagePopup( KJob *job )
 
     menu->addAction( mMsgActions->messageStatusMenu() );
     menu->addSeparator();
-    if(!iUrl.isEmpty()) {
-      menu->addSeparator();
-      menu->addAction( mMsgView->copyImageLocation());
-      menu->addAction( mMsgView->downloadImageToDiskAction());
-      menu->addSeparator();
-    }
-
-
     if ( mMsgView ) {
+      if (!iUrl.isEmpty()) {
+        menu->addSeparator();
+        menu->addAction( mMsgView->copyImageLocation());
+        menu->addAction( mMsgView->downloadImageToDiskAction());
+        menu->addSeparator();
+      }
       menu->addAction( mMsgView->viewSourceAction() );
       menu->addAction( mMsgView->toggleFixFontAction() );
       menu->addAction( mMsgView->toggleMimePartTreeAction() );
