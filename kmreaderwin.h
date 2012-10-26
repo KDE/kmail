@@ -144,6 +144,7 @@ public:
   KAction *speakTextAction();
   KAction* translateAction();
   KAction* downloadImageToDiskAction() const;
+  KAction *viewSourceAction();
 
   Akonadi::Item message() const;
 
