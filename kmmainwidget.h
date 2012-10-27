@@ -339,7 +339,6 @@ class KMAIL_EXPORT KMMainWidget : public QWidget
     void slotExpandAllThreads();
     void slotCollapseThread();
     void slotCollapseAllThreads();
-    void slotShowMsgSrc();
     void slotSetThreadStatusUnread();
     void slotSetThreadStatusRead();
     void slotSetThreadStatusImportant();

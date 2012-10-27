@@ -3002,7 +3002,7 @@ void KMMainWidget::slotDelayedMessagePopup( KJob *job )
     urlMenuAdded = true;
     kDebug() << "URL is:" << url;
   }
-  const QString selectedText(mMsgView->copyText());
+  const QString selectedText = mMsgView ? mMsgView->copyText() : QString();
   if ( mMsgView && !selectedText.isEmpty() ) {
     if ( urlMenuAdded ) {
       menu->addSeparator();
@@ -3874,14 +3874,6 @@ void KMMainWidget::slotCollapseAllThreads()
   MessageViewer::KCursorSaver busy( MessageViewer::KBusyPtr::busy() );
 #endif
   mMessagePane->setAllThreadsExpanded( false );
-}
-
-//-----------------------------------------------------------------------------
-void KMMainWidget::slotShowMsgSrc()
-{
-  if ( mMsgView ) {
-    mMsgView->viewer()->slotShowMessageSource();
-  }
 }
 
 //-----------------------------------------------------------------------------
