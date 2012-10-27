@@ -1436,14 +1436,6 @@ bool KMMainWidget::slotSearch()
 }
 
 
-//-------------------------------------------------------------------------
-void KMMainWidget::slotFind()
-{
-  if( mMsgView )
-    mMsgView->slotFind();
-}
-
-
 //-----------------------------------------------------------------------------
 void KMMainWidget::slotHelp()
 {

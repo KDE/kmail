@@ -355,7 +355,6 @@ class KMAIL_EXPORT KMMainWidget : public QWidget
     void slotMarkAll();
     void slotFocusQuickSearch();
     bool slotSearch();
-    void slotFind();
     void slotIntro();
     void slotShowStartupFolder();
     /** Show tip-of-the-day, forced */
