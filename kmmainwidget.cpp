@@ -3391,13 +3391,15 @@ void KMMainWidget::setupActions()
   connect( mTemplateMenu->menu(), SIGNAL(triggered(QAction*)), this,
            SLOT(slotNewFromTemplate(QAction*)) );
 
-  mPostToMailinglistAction = new KAction( KIcon( "mail-message-new-list" ),
+  {
+    KAction *action = new KAction( KIcon( "mail-message-new-list" ),
                                           i18n( "New Message t&o Mailing-List..." ),
                                           this );
-  actionCollection()->addAction("post_message", mPostToMailinglistAction );
-  connect( mPostToMailinglistAction, SIGNAL(triggered(bool)),
-           SLOT(slotPostToML()) );
-  mPostToMailinglistAction->setShortcut( QKeySequence( Qt::CTRL + Qt::SHIFT + Qt::Key_N ) );
+    actionCollection()->addAction("post_message", action );
+    connect( action, SIGNAL(triggered(bool)),
+             SLOT(slotPostToML()) );
+    action->setShortcut( QKeySequence( Qt::CTRL + Qt::SHIFT + Qt::Key_N ) );
+  }
 
   mSendAgainAction = new KAction(i18n("Send A&gain..."), this);
   actionCollection()->addAction("send_again", mSendAgainAction );

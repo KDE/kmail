@@ -580,8 +580,7 @@ private:
     KAction *mExpireFolderAction,
       *mFolderMailingListPropertiesAction,
       *mShowFolderShortcutDialogAction,
-      *mArchiveFolderAction,
-      *mPostToMailinglistAction;
+      *mArchiveFolderAction;
     KToggleAction *mPreferHtmlAction, *mPreferHtmlLoadExtAction;
 
     QTimer *menutimer;
