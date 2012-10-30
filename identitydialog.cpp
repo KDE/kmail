@@ -367,7 +367,6 @@ namespace KMail {
     glay->setSpacing( spacingHint() );
     glay->setMargin( marginHint() );
     // the last (empty) row takes all the remaining space
-    glay->setRowStretch( 11-1, 1 );
     glay->setColumnStretch( 1, 1 );
 
     // "Reply-To Address" line edit and label:
@@ -492,6 +491,10 @@ namespace KMail {
     label = new QLabel( i18n("Autocorrection Language:"), tab );
     label->setBuddy( mAutoCorrectionLanguage );
     glay->addWidget( label, row, 0 );
+
+    ++row;
+    glay->setRowStretch( row, 1 );
+
     // the last row is a spacer
 
     //
