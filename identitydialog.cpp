@@ -819,6 +819,8 @@ namespace KMail {
       mTemplatesCombo->setCollection( Akonadi::Collection( ident.templates().toLongLong() ) );
 
     mVcardFilename = ident.vCardFile();
+
+    mAutoCorrectionLanguage->setLanguage(ident.autocorrectionLanguage());
     updateVcardButton();
     if(mVcardFilename.isEmpty()) {
       mVcardFilename = KStandardDirs::locateLocal("appdata",ident.identityName() + QLatin1String(".vcf"));
@@ -893,6 +895,7 @@ namespace KMail {
     else
       ident.setTemplates( QString() );
     ident.setVCardFile(mVcardFilename);
+    ident.setAutocorrectionLanguage(mAutoCorrectionLanguage->language());
     updateVcardButton();
     ident.setAttachVcard(mAttachMyVCard->isChecked());
 
