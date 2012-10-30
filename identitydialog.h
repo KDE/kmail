@@ -70,6 +70,11 @@ namespace TemplateParser {
   class TemplatesConfiguration;
 }
 
+namespace MessageComposer {
+  class KMComposerAutoCorrectionLanguage;
+}
+
+
 namespace KMail {
 
   class IdentityDialog : public KDialog {
@@ -125,6 +130,8 @@ namespace KMail {
     QCheckBox                        *mAttachMyVCard;
     QString                          mVcardFilename;
     KPushButton                      *mEditVCard;
+    MessageComposer::KMComposerAutoCorrectionLanguage *mAutoCorrectionLanguage;
+
     // "templates" tab:
     TemplateParser::TemplatesConfiguration *mWidget;
     QCheckBox                    *mCustom;
