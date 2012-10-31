@@ -527,6 +527,9 @@ void KMMainWidget::slotCollectionFetched( int collectionId )
     mCurrentFolder->setCollection( MailCommon::Util::updatedCollection( mCurrentFolder->collection() ) );
     updateMessageActions();
     updateFolderMenu();
+  }
+  // We call this for any collection, it could be one of our parents...
+  if ( mCurrentFolder ) {
     emit captionChangeRequest( MailCommon::Util::fullCollectionPath( mCurrentFolder->collection() ) );
   }
 }
