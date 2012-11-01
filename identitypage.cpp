@@ -89,6 +89,9 @@ IdentityPage::~IdentityPage()
 
 void IdentityPage::load()
 {
+  if ( !MailCommon::Kernel::self()->kernelIsRegistered() ) {
+    return;
+  }
   mOldNumberOfIdentities = mIdentityManager->shadowIdentities().count();
   // Fill the list:
   mIPage.mIdentityList->clear();
@@ -105,6 +108,9 @@ void IdentityPage::load()
 
 void IdentityPage::save()
 {
+  if ( !MailCommon::Kernel::self()->kernelIsRegistered() ) {
+    return;
+  }
   mIdentityManager->sort();
   mIdentityManager->commit();
 
