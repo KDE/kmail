@@ -544,6 +544,7 @@ private:
   QCheckBox     *mExternalEditorCheck;
   KUrlRequester *mEditorRequester;
   KIntSpinBox   *mMaximumRecipients;
+  QCheckBox     *mImprovePlainTextOfHtmlMessage;
 #ifdef KDEPIM_ENTERPRISE_BUILD
   KComboBox     *mForwardTypeCombo;
   QCheckBox     *mRecipientCheck;

@@ -2,6 +2,10 @@ project(kmail)
 
 include(CheckIncludeFiles)
 
+if(GRANTLEE_GREATER_0_2)
+  add_definitions(-DGRANTLEE_GREATER_0_2)
+endif()
+
 if (NOT WINCE)
 
   set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} ${KDE4_DATA_DIR}/cmake/modules)
