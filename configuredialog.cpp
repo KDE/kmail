@@ -2270,7 +2270,6 @@ ComposerPageGeneralTab::ComposerPageGeneralTab( QWidget * parent )
   QGroupBox   *group;
   QLabel      *label;
   KHBox       *hbox;
-  QString      msg;
 
   vlay = new QVBoxLayout( this );
   vlay->setSpacing( KDialog::spacingHint() );
