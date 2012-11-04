@@ -2259,7 +2259,9 @@ ComposerPageGeneralTab::ComposerPageGeneralTab( QWidget * parent )
   connect( mImprovePlainTextOfHtmlMessage, SIGNAL(stateChanged(int)),
            this, SLOT(slotEmitChanged()) );
 #else
-  mImprovePlainTextOfHtmlMessage->setWhatsThis(i18n("To support improve plain text of HTML message kmail must compile with Grantlee 0.3"));
+  mImprovePlainTextOfHtmlMessage->setWhatsThis(
+                 i18n( "To support improving the plain text of HTML messages, KMail must be compiled "
+                       "with Grantlee 0.3 or greater." ) );
   mImprovePlainTextOfHtmlMessage->setEnabled(false);
 #endif
 
