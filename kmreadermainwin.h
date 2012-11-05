@@ -84,7 +84,7 @@ private:
   KMReaderWin *mReaderWin;
   Akonadi::Item mMsg;
   // a few actions duplicated from kmmainwidget
-  KAction *mTrashAction, *mPrintAction, *mSaveAsAction, *mSaveAtmAction,
+  KAction *mTrashAction, *mSaveAsAction, *mSaveAtmAction,
     *mViewSourceAction;
   KFontAction *fontAction;
   KFontSizeAction *fontSizeAction;
