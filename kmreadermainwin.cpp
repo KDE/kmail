@@ -42,6 +42,7 @@
 #include <KFontSizeAction>
 #include <kstatusbar.h>
 #include <KMessageBox>
+#include <KAcceleratorManager>
 #include "kmcommands.h"
 #include "kmenubar.h"
 #include "kmenu.h"
@@ -533,6 +534,7 @@ void KMReaderMainWin::slotDelayedMessagePopup( KJob *job )
       menu->addAction( mMsgActions->createTodoAction() );
     }
   }
+  KAcceleratorManager::manage(menu);
   menu->exec( aPoint, 0 );
   delete menu;
 }
