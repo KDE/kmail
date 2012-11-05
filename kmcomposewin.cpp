@@ -1093,7 +1093,7 @@ void KMComposeWin::setupActions( void )
     action->setShortcut( QKeySequence( Qt::CTRL + Qt::Key_Return ) );
     connect( action, SIGNAL(triggered(bool)), SLOT(slotSendNow()));
 
-    // FIXME: change to mail_send_via icon when this exits.
+    // FIXME: change to mail_send_via icon when this exist.
     actActionNowMenu = new KActionMenu( KIcon( "mail-send" ), i18n("&Send Mail Via"), this );
     actActionNowMenu->setIconText( i18n( "Send" ) );
     actionCollection()->addAction( "send_default_via", actActionNowMenu );
@@ -3405,3 +3405,4 @@ void KMComposeWin::slotVerifyMissingAttachmentTimeout()
     m_verifyMissingAttachment->start();
   }
 }
+
