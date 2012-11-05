@@ -135,7 +135,7 @@ void KMMainWin::displayStatusMsg( const QString& aText )
 //  text.replace("<", "&lt;");
 //  text.replace(">", "&gt;");
 
-  statusBar()->changeItem( text, mMessageStatusId );
+  statusBar()->changeItem( text, 1 );
 }
 
 //-----------------------------------------------------------------------------
@@ -176,8 +176,6 @@ void KMMainWin::slotUpdateGui()
 
 void KMMainWin::setupStatusBar()
 {
-  mMessageStatusId = 1;
-
   /* Create a progress dialog and hide it. */
   mProgressDialog = new KPIM::ProgressDialog( statusBar(), this );
   mProgressDialog->hide();

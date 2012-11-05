@@ -73,7 +73,6 @@ private:
   KMMainWidget *mKMMainWidget;
   StatusbarProgressWidget *mLittleProgress;
   ProgressDialog *mProgressDialog;
-  int mMessageStatusId;
   bool mReallyClose;
 };
 
