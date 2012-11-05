@@ -264,6 +264,10 @@ class KMAIL_EXPORT KMMainWidget : public QWidget
     void slotEndCheckFetchCollectionsDone(KJob* job);
 
     void slotCollectionProperties();
+    void slotRemoveDuplicates();
+    void slotRemoveDuplicatesDone( KJob* );
+    void slotRemoveDuplicatesCanceled( KPIM::ProgressItem* );
+    void slotRemoveDuplicatesUpdate( KJob *, const QString& );
 
     void slotSelectCollectionFolder( const Akonadi::Collection & col );
 
