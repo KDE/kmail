@@ -52,7 +52,7 @@ public:
 public slots:
   void displayStatusMsg(const QString&);
   void slotEditToolbars();
-  void slotUpdateToolbars();
+  void slotUpdateGui();
   void setupStatusBar();
 
 protected:

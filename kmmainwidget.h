@@ -293,6 +293,7 @@ class KMAIL_EXPORT KMMainWidget : public QWidget
   signals:
     void messagesTransfered( bool );
     void captionChangeRequest( const QString &caption );
+    void recreateGui();
 
   protected:
     void restoreCollectionFolderViewConfig(Akonadi::Collection::Id id = -1);

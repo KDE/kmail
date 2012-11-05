@@ -63,6 +63,7 @@ KMMainWin::KMMainWin(QWidget *)
   resize( 700, 500 ); // The default size
 
   mKMMainWidget = new KMMainWidget( this, this, actionCollection() );
+  connect(mKMMainWidget,SIGNAL(recreateGui()),this,SLOT(slotUpdateGui()));
   setCentralWidget( mKMMainWidget );
   setupStatusBar();
   if ( kmkernel->xmlGuiInstance().isValid() )
@@ -152,12 +153,12 @@ void KMMainWin::slotEditToolbars()
   KEditToolBar dlg(actionCollection(), this);
   dlg.setResourceFile( "kmmainwin.rc" );
 
-  connect( &dlg, SIGNAL(newToolBarConfig()), SLOT(slotUpdateToolbars()) );
+  connect( &dlg, SIGNAL(newToolBarConfig()), SLOT(slotUpdateGui()) );
 
   dlg.exec();
 }
 
-void KMMainWin::slotUpdateToolbars()
+void KMMainWin::slotUpdateGui()
 {
   // remove dynamically created actions before editing
   mKMMainWidget->clearFilterActions();
@@ -227,4 +228,3 @@ void KMMainWin::slotShowTipOnStart()
 {
   KTipDialog::showTip( this );
 }
-
