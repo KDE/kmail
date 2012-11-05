@@ -938,6 +938,7 @@ void KMMainWidget::readConfig()
           id = mCurrentFolder->collection().id();
       }
       restoreCollectionFolderViewConfig(id);
+      emit recreateGui();
     } else if ( oldFolderQuickSearch != mEnableFolderQuickSearch ) {
       if ( mEnableFolderQuickSearch )
         mFolderTreeWidget->filterFolderLineEdit()->show();
