@@ -456,7 +456,7 @@ void KMReaderMainWin::slotDelayedMessagePopup( KJob *job )
 
       menu->addAction( mReaderWin->copyURLAction() );
       copyAdded = true;
-    } else {
+    } else if( url.protocol() != QLatin1String( "attachment" ) ){
       // popup on a not-mailto URL
       menu->addAction( mReaderWin->urlOpenAction() );
       menu->addAction( mReaderWin->addBookmarksAction() );

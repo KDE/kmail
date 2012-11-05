@@ -2969,7 +2969,7 @@ void KMMainWidget::slotDelayedMessagePopup( KJob *job )
         menu->addAction( mMsgView->addAddrBookAction() );
       }
       menu->addAction( mMsgView->copyURLAction() );
-    } else {
+    } else if( url.protocol() != QLatin1String( "attachment" ) ) {
       // popup on a not-mailto URL
       menu->addAction( mMsgView->urlOpenAction() );
       menu->addAction( mMsgView->addBookmarksAction() );
