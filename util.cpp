@@ -213,6 +213,26 @@ void KMail::Util::mailingListHelp( const QSharedPointer<MailCommon::FolderCollec
 
 void KMail::Util::lastEncryptAndSignState(bool &lastEncrypt, bool &lastSign, const KMime::Message::Ptr& msg)
 {
-    lastSign = KMime::isSigned(msg.get());
-    lastEncrypt = KMime::isEncrypted(msg.get());
+  lastSign = KMime::isSigned(msg.get());
+  lastEncrypt = KMime::isEncrypted(msg.get());
+}
+
+QColor KMail::Util::misspelledColor()
+{
+  return QColor(Qt::red);
+}
+
+QColor KMail::Util::quoteL1Color()
+{
+  return QColor( 0x00, 0x80, 0x00 );
+}
+
+QColor KMail::Util::quoteL2Color()
+{
+  return QColor( 0x00, 0x70, 0x00 );
+}
+
+QColor KMail::Util::quoteL3Color()
+{
+  return QColor( 0x00, 0x60, 0x00 );
 }

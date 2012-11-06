@@ -44,6 +44,7 @@
 #include "composer.h"
 #include "tag.h"
 #include "accountconfigorderdialog.h"
+#include "util.h"
 
 #include "foldertreewidget.h"
 
@@ -1048,9 +1049,9 @@ void AppearancePage::ColorsTab::loadColor( bool loadFromConfig )
   KConfigGroup collectionFolderView( KMKernel::self()->config(), "CollectionFolderView" );
 
   static const QColor defaultColor[ numColorNames ] = {
-    QColor( 0x00, 0x80, 0x00 ), // quoted l1
-    QColor( 0x00, 0x70, 0x00 ), // quoted l2
-    QColor( 0x00, 0x60, 0x00 ), // quoted l3
+    KMail::Util::quoteL1Color(),
+    KMail::Util::quoteL2Color(),
+    KMail::Util::quoteL3Color(),
     scheme.foreground( KColorScheme::LinkText ).color(), // link
     scheme.foreground( KColorScheme::VisitedText ).color(),// visited link
     scheme.foreground( KColorScheme::NegativeText ).color(), // misspelled words

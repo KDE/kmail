@@ -22,6 +22,7 @@
 #include "kmcomposereditor.h"
 #include "kmcomposewin.h"
 #include "kmcommands.h"
+#include "util.h"
 
 #include <kabc/addressee.h>
 #include <kmime/kmime_codecs.h>
@@ -83,11 +84,10 @@ void KMComposerEditor::createActions( KActionCollection *actionCollection )
 
 void KMComposerEditor::setHighlighterColors(KPIMTextEdit::EMailQuoteHighlighter * highlighter)
 {
-  // defaults from kmreaderwin.cpp. FIXME: centralize somewhere.
-  QColor color1( 0x00, 0x80, 0x00 );
-  QColor color2( 0x00, 0x70, 0x00 );
-  QColor color3( 0x00, 0x60, 0x00 );
-  QColor misspelled = Qt::red;
+  QColor color1 = KMail::Util::quoteL1Color();
+  QColor color2 = KMail::Util::quoteL2Color();
+  QColor color3 = KMail::Util::quoteL3Color();
+  QColor misspelled = KMail::Util::misspelledColor();
 
   if ( !MessageCore::GlobalSettings::self()->useDefaultColors() ) {
     color1 = MessageCore::GlobalSettings::self()->quotedText1();

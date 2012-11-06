@@ -110,6 +110,11 @@ namespace Util {
     void mailingListArchives( const QSharedPointer<MailCommon::FolderCollection> &fd );
     void mailingListHelp( const QSharedPointer<MailCommon::FolderCollection> &fd );
     void lastEncryptAndSignState(bool &lastEncrypt, bool &lastSign, const KMime::Message::Ptr& msg);
+
+    QColor misspelledColor();
+    QColor quoteL1Color();
+    QColor quoteL2Color();
+    QColor quoteL3Color();
 }
 }
 
