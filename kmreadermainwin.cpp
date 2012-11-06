@@ -343,12 +343,6 @@ void KMReaderMainWin::setupAccel()
   closeShortcut.setAlternate( QKeySequence(Qt::Key_Escape));
   closeAction->setShortcuts(closeShortcut);
 
-  //----- View Menu
-  mViewSourceAction  = new KAction(i18n("&View Source"), this);
-  actionCollection()->addAction("view_source", mViewSourceAction );
-  connect(mViewSourceAction, SIGNAL(triggered(bool)), mReaderWin->viewer(), SLOT(slotShowMessageSource()));
-  mViewSourceAction->setShortcut(QKeySequence(Qt::Key_V));
-
   //----- Message Menu
 
   fontAction = new KFontAction( i18n("Select Font"), this );
@@ -522,7 +516,7 @@ void KMReaderMainWin::slotDelayedMessagePopup( KJob *job )
       menu->addSeparator();
     }
 
-    menu->addAction( mViewSourceAction );
+    menu->addAction( mReaderWin->viewSourceAction() );
     menu->addAction( mReaderWin->toggleFixFontAction() );
     menu->addAction( mReaderWin->toggleMimePartTreeAction() );
     menu->addSeparator();
