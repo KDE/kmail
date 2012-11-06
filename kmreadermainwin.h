@@ -85,8 +85,8 @@ private:
   Akonadi::Item mMsg;
   // a few actions duplicated from kmmainwidget
   KAction *mTrashAction, *mSaveAtmAction;
-  KFontAction *fontAction;
-  KFontSizeAction *fontSizeAction;
+  KFontAction *mFontAction;
+  KFontSizeAction *mFontSizeAction;
   KMail::MessageActions *mMsgActions;
   Akonadi::Collection mParentCollection;
 

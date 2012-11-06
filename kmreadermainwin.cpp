@@ -342,15 +342,15 @@ void KMReaderMainWin::setupAccel()
 
   //----- Message Menu
 
-  fontAction = new KFontAction( i18n("Select Font"), this );
-  actionCollection()->addAction( "text_font", fontAction );
-  fontAction->setFont( mReaderWin->cssHelper()->bodyFont().family() );
-  connect( fontAction, SIGNAL(triggered(QString)),
+  mFontAction = new KFontAction( i18n("Select Font"), this );
+  actionCollection()->addAction( "text_font", mFontAction );
+  mFontAction->setFont( mReaderWin->cssHelper()->bodyFont().family() );
+  connect( mFontAction, SIGNAL(triggered(QString)),
            SLOT(slotFontAction(QString)) );
-  fontSizeAction = new KFontSizeAction( i18n( "Select Size" ), this );
-  fontSizeAction->setFontSize( mReaderWin->cssHelper()->bodyFont().pointSize() );
-  actionCollection()->addAction( "text_size", fontSizeAction );
-  connect( fontSizeAction, SIGNAL(fontSizeChanged(int)),
+  mFontSizeAction = new KFontSizeAction( i18n( "Select Size" ), this );
+  mFontSizeAction->setFontSize( mReaderWin->cssHelper()->bodyFont().pointSize() );
+  actionCollection()->addAction( "text_size", mFontSizeAction );
+  connect( mFontSizeAction, SIGNAL(fontSizeChanged(int)),
            SLOT(slotSizeAction(int)) );
 
 
