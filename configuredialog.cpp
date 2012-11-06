@@ -3284,6 +3284,11 @@ void ComposerPageAutoCorrectionTab::doLoadFromGlobalSettings()
   autocorrectionWidget->loadConfig();
 }
 
+void ComposerPageAutoCorrectionTab::doResetToDefaultsOther()
+{
+  autocorrectionWidget->resetToDefault();
+}
+
 
 // *************************************************************
 // *                                                           *

@@ -690,7 +690,7 @@ public:
 
 private:
   virtual void doLoadFromGlobalSettings();
-  //FIXME virtual void doResetToDefaultsOther();
+  virtual void doResetToDefaultsOther();
 
 private:
   MessageComposer::KMComposerAutoCorrectionWidget *autocorrectionWidget;
