@@ -324,9 +324,6 @@ void KMReaderMainWin::setupAccel()
            this, SLOT(slotReplyOrForwardFinished()) );
 
   //----- File Menu
-  mSaveAsAction = KStandardAction::saveAs( mReaderWin->viewer(), SLOT(slotSaveMessage()),
-                                           actionCollection() );
-  mSaveAsAction->setShortcut( KStandardShortcut::shortcut( KStandardShortcut::Save ) );
 
   mSaveAtmAction  = new KAction(KIcon("mail-attachment"), i18n("Save A&ttachments..."), actionCollection() );
   connect( mSaveAtmAction, SIGNAL(triggered(bool)), mReaderWin->viewer(), SLOT(slotAttachmentSaveAll()) );
@@ -521,7 +518,7 @@ void KMReaderMainWin::slotDelayedMessagePopup( KJob *job )
     menu->addAction( mReaderWin->toggleMimePartTreeAction() );
     menu->addSeparator();
     menu->addAction( mMsgActions->printAction() );
-    menu->addAction( mSaveAsAction );
+    menu->addAction( mReaderWin->saveAsAction() );
     menu->addAction( mSaveAtmAction );
     if ( mMsg.isValid() ) {
       menu->addSeparator();

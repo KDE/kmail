@@ -145,6 +145,7 @@ public:
   KAction* downloadImageToDiskAction() const;
   KAction *viewSourceAction();
   KAction *findInMessageAction();
+  KAction *saveAsAction();
 
   KAction* editContactAction() const { return mEditContactAction; }
 
