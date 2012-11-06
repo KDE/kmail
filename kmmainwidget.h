@@ -411,7 +411,6 @@ class KMAIL_EXPORT KMMainWidget : public QWidget
     void slotSubjectFilter();
     void slotFromFilter();
     void slotToFilter();
-    void slotCreateTodo();
 
     void slotConfigChanged();
 
