@@ -4593,6 +4593,7 @@ void KMMainWidget::itemsReceived(const Akonadi::Item::List &list )
   mMsgView->setHtmlOverride(mFolderHtmlPref);
   mMsgView->setHtmlLoadExtOverride(mFolderHtmlLoadExtPref);
   mMsgView->setDecryptMessageOverwrite( false );
+  mMsgActions->setCurrentMessage( item );
 }
 
 void KMMainWidget::itemsFetchDone( KJob *job )
