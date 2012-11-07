@@ -4783,11 +4783,11 @@ void KMMainWidget::updatePaneTagComboBox()
 
 void KMMainWidget::slotExportData()
 {
-    const QString path = KStandardDirs::findExe( QLatin1String("backupmail" ) );
+    const QString path = KStandardDirs::findExe( QLatin1String("pimsettingexporter" ) );
     if( !QProcess::startDetached( path ) )
-      KMessageBox::error( this, i18n( "Could not start backupmail. "
+      KMessageBox::error( this, i18n( "Could not start \"PIM Setting Exporter\" program. "
                                       "Please check your installation." ),
-                         i18n( "Unable to start backupmail" ) );
+                         i18n( "Unable to start \"PIM Setting Exporter\" program" ) );
 }
 
 void KMMainWidget::slotCreateAddressBookContact()
