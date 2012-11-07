@@ -413,8 +413,8 @@ class KMComposeWin : public KMail::Composer
     void slotConfigChanged();
 
     void slotPrintComposeResult( KJob *job );
-
-    void slotEncryptChiasmusToggled( bool );
+    
+    //void slotEncryptChiasmusToggled( bool );
 
     void slotSendFailed( const QString& msg );
     void slotSendSuccessful();
@@ -646,7 +646,7 @@ class KMComposeWin : public KMail::Composer
     QSplitter *mSnippetSplitter;
     QByteArray mOriginalPreferredCharset;
 
-    KToggleAction *mEncryptChiasmusAction;
+    //KToggleAction *mEncryptChiasmusAction;
 
     Message::Composer *mDummyComposer;
     // used for auto saving, printing, etc. Not for sending, which happens in ComposerViewBase

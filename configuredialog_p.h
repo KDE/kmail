@@ -787,7 +787,7 @@ public:
 private Q_SLOTS:
   void slotReenableAllWarningsClicked();
   void slotConfigureGnupg();
-  void slotConfigureChiasmus();
+  //void slotConfigureChiasmus();
 
 private:
   virtual void doLoadFromGlobalSettings();

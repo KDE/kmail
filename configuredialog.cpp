@@ -3511,13 +3511,15 @@ SecurityPageWarningTab::SecurityPageWarningTab( QWidget * parent )
   mWidget = new Ui::WarningConfiguration;
   mWidget->setupUi( this );
 
+  mWidget->chiasmusButton->hide();
+
   connect( mWidget->warnGroupBox, SIGNAL(toggled(bool)), SLOT(slotEmitChanged()) );
   connect( mWidget->mWarnUnsigned, SIGNAL(toggled(bool)), SLOT(slotEmitChanged()) );
   connect( mWidget->warnUnencryptedCB, SIGNAL(toggled(bool)), SLOT(slotEmitChanged()) );
   connect( mWidget->warnReceiverNotInCertificateCB, SIGNAL(toggled(bool)), SLOT(slotEmitChanged()) );
 
   connect( mWidget->gnupgButton, SIGNAL(clicked()), SLOT(slotConfigureGnupg()) );
-  connect( mWidget->chiasmusButton, SIGNAL(clicked()), SLOT(slotConfigureChiasmus()) );
+  //connect( mWidget->chiasmusButton, SIGNAL(clicked()), SLOT(slotConfigureChiasmus()) );
   connect( mWidget->enableAllWarningsPB, SIGNAL(clicked()), SLOT(slotReenableAllWarningsClicked()) );
 }
 
@@ -3639,6 +3641,7 @@ void SecurityPage::WarningTab::slotConfigureGnupg()
   delete dlg;
 }
 
+#if 0
 void SecurityPage::WarningTab::slotConfigureChiasmus()
 {
   using namespace Kleo;
@@ -3659,7 +3662,7 @@ void SecurityPage::WarningTab::slotConfigureChiasmus()
   else
     kDebug() << "Kleo::CryptoBackendFactory::instance() returned NULL!";
 }
-
+#endif
 ////
 
 QString SecurityPage::SMimeTab::helpAnchor() const
