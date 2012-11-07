@@ -55,6 +55,9 @@ It is recommended to leave this option turned on for maximum integrity.
    </item>
    <item>
     <widget class="QCheckBox" name="warnReceiverNotInCertificateCB">
+     <property name="enabled">
+      <bool>false</bool>
+     </property>
      <property name="toolTip">
       <string>Check to be warned if the address is not in the certificate</string>
      </property>
