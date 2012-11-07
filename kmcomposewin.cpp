@@ -193,7 +193,7 @@ KMComposeWin::KMComposeWin( const KMime::Message::Ptr &aMsg, bool lastSignState,
     mDictionaryAction( 0 ), mSnippetAction( 0 ), mTranslateAction(0),
     mCodecAction( 0 ),
     mCryptoModuleAction( 0 ),
-    mEncryptChiasmusAction( 0 ),
+    //mEncryptChiasmusAction( 0 ),
     mDummyComposer( 0 ),
     mLabelWidth( 0 ),
     mComposerBase( 0 ),
@@ -1310,7 +1310,8 @@ void KMComposeWin::setupActions( void )
   mTranslateAction->setChecked(false);
   connect(mTranslateAction, SIGNAL(triggered(bool)), mTranslatorWidget,SLOT(setVisible(bool)));
 
-
+  //Chiamus not supported in kmail2
+#if 0
   if ( Kleo::CryptoBackendFactory::instance()->protocol( "Chiasmus" ) ) {
     KToggleAction *a = new KToggleAction( KIcon( "chiasmus_chi" ), i18n("Encrypt Message with Chiasmus..."), this );
     actionCollection()->addAction( "encrypt_message_chiasmus", a );
@@ -1321,6 +1322,7 @@ void KMComposeWin::setupActions( void )
   } else {
     mEncryptChiasmusAction = 0;
   }
+#endif
 
   mEncryptAction = new KToggleAction(KIcon("document-encrypt"), i18n("&Encrypt Message"), this);
   mEncryptAction->setIconText( i18n( "Encrypt" ) );
@@ -3163,6 +3165,7 @@ void KMComposeWin::slotCursorPositionChanged()
   }
 }
 
+#if 0
 namespace {
 class KToggleActionResetter {
   KToggleAction *mAction;
@@ -3248,6 +3251,7 @@ void KMComposeWin::slotEncryptChiasmusToggled( bool on )
   assert( !GlobalSettings::chiasmusKey().isEmpty() );
   resetter.disable();
 }
+#endif
 
 void KMComposeWin::recipientEditorSizeHintChanged()
 {
