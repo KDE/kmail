@@ -2934,6 +2934,7 @@ ComposerPageHeadersTab::ComposerPageHeadersTab( QWidget * parent )
   QLabel      *label;
   QPushButton *button;
 
+  mBlockSignal = false;
   vlay = new QVBoxLayout( this );
   vlay->setSpacing( KDialog::spacingHint() );
   vlay->setMargin( KDialog::marginHint() );
@@ -3022,6 +3023,7 @@ ComposerPageHeadersTab::ComposerPageHeadersTab( QWidget * parent )
 
 void ComposerPage::HeadersTab::slotMimeHeaderSelectionChanged()
 {
+  mBlockSignal = true;
   QTreeWidgetItem * item = mTagList->currentItem();
 
   if ( item ) {
@@ -3036,6 +3038,7 @@ void ComposerPage::HeadersTab::slotMimeHeaderSelectionChanged()
   mTagValueEdit->setEnabled( item );
   mTagNameLabel->setEnabled( item );
   mTagValueLabel->setEnabled( item );
+  mBlockSignal = false;
 }
 
 
@@ -3046,7 +3049,8 @@ void ComposerPage::HeadersTab::slotMimeHeaderNameChanged( const QString & text )
   QTreeWidgetItem * item = mTagList->currentItem();
   if ( item )
     item->setText( 0, text );
-  emit changed( true );
+  if(!mBlockSignal)
+      emit changed( true );
 }
 
 
@@ -3057,7 +3061,8 @@ void ComposerPage::HeadersTab::slotMimeHeaderValueChanged( const QString & text 
   QTreeWidgetItem * item = mTagList->currentItem();
   if ( item )
     item->setText( 1, text );
-  emit changed( true );
+  if(!mBlockSignal)
+      emit changed( true );
 }
 
 

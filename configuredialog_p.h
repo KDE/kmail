@@ -658,6 +658,7 @@ private:
   KLineEdit   *mTagValueEdit;
   QLabel      *mTagNameLabel;
   QLabel      *mTagValueLabel;
+  bool        mBlockSignal;
 };
 
 class ComposerPageAttachmentsTab : public ConfigModuleTab {
