@@ -88,10 +88,10 @@ AttachmentView::AttachmentView( Message::AttachmentModel *model, QWidget *parent
   sortModel->setSortCaseSensitivity( Qt::CaseInsensitive );
   sortModel->setSourceModel( model );
   setModel( sortModel );
-  connect( sortModel, SIGNAL(rowsInserted(QModelIndex,int,int)), this, SLOT(hideIfEmpty()) );
-  connect( sortModel, SIGNAL(rowsRemoved(QModelIndex,int,int)), this, SLOT(hideIfEmpty()) );
-  connect( sortModel, SIGNAL(rowsRemoved(QModelIndex,int,int)), this, SLOT(selectNewAttachment()) );
-  connect( sortModel, SIGNAL(dataChanged(QModelIndex,QModelIndex)), this, SLOT(updateAttachmentLabel()) );
+  connect( model, SIGNAL(rowsInserted(QModelIndex,int,int)), this, SLOT(hideIfEmpty()) );
+  connect( model, SIGNAL(rowsRemoved(QModelIndex,int,int)), this, SLOT(hideIfEmpty()) );
+  connect( model, SIGNAL(rowsRemoved(QModelIndex,int,int)), this, SLOT(selectNewAttachment()) );
+  connect( model, SIGNAL(dataChanged(QModelIndex,QModelIndex)), this, SLOT(updateAttachmentLabel()) );
 
   setRootIsDecorated( false );
   setUniformRowHeights( true );
