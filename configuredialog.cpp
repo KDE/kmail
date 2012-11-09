@@ -1649,9 +1649,7 @@ KMail::Tag::Ptr TagListWidgetItem::kmailTag() const
 AppearancePageMessageTagTab::AppearancePageMessageTagTab( QWidget * parent )
   : ConfigModuleTab( parent )
 {
-  mEmitChanges = true;
   mPreviousTag = -1;
-
   QHBoxLayout *maingrid = new QHBoxLayout( this );
   maingrid->setMargin( KDialog::marginHint() );
   maingrid->setSpacing( KDialog::spacingHint() );
@@ -2038,9 +2036,11 @@ void AppearancePage::MessageTagTab::slotUpdateTagSettingWidgets( int aIndex )
 
 void AppearancePage::MessageTagTab::slotSelectionChanged()
 {
+  mEmitChanges = false;
   slotRecordTagSettings( mPreviousTag );
   slotUpdateTagSettingWidgets( mTagListBox->currentRow() );
   mPreviousTag = mTagListBox->currentRow();
+  mEmitChanges = true;
 }
 
 void AppearancePage::MessageTagTab::slotRemoveTag()
@@ -2934,7 +2934,6 @@ ComposerPageHeadersTab::ComposerPageHeadersTab( QWidget * parent )
   QLabel      *label;
   QPushButton *button;
 
-  mBlockSignal = false;
   vlay = new QVBoxLayout( this );
   vlay->setSpacing( KDialog::spacingHint() );
   vlay->setMargin( KDialog::marginHint() );
@@ -3023,7 +3022,7 @@ ComposerPageHeadersTab::ComposerPageHeadersTab( QWidget * parent )
 
 void ComposerPage::HeadersTab::slotMimeHeaderSelectionChanged()
 {
-  mBlockSignal = true;
+  mEmitChanges = false;
   QTreeWidgetItem * item = mTagList->currentItem();
 
   if ( item ) {
@@ -3038,7 +3037,7 @@ void ComposerPage::HeadersTab::slotMimeHeaderSelectionChanged()
   mTagValueEdit->setEnabled( item );
   mTagNameLabel->setEnabled( item );
   mTagValueLabel->setEnabled( item );
-  mBlockSignal = false;
+  mEmitChanges = true;
 }
 
 
@@ -3049,8 +3048,7 @@ void ComposerPage::HeadersTab::slotMimeHeaderNameChanged( const QString & text )
   QTreeWidgetItem * item = mTagList->currentItem();
   if ( item )
     item->setText( 0, text );
-  if(!mBlockSignal)
-      emit changed( true );
+  slotEmitChanged();
 }
 
 
@@ -3061,8 +3059,7 @@ void ComposerPage::HeadersTab::slotMimeHeaderValueChanged( const QString & text 
   QTreeWidgetItem * item = mTagList->currentItem();
   if ( item )
     item->setText( 1, text );
-  if(!mBlockSignal)
-      emit changed( true );
+  slotEmitChanged();
 }
 
 
@@ -3070,7 +3067,7 @@ void ComposerPage::HeadersTab::slotNewMimeHeader()
 {
   QTreeWidgetItem *listItem = new QTreeWidgetItem( mTagList );
   mTagList->setCurrentItem( listItem );
-  emit changed( true );
+  slotEmitChanged();
 }
 
 
@@ -3100,7 +3097,7 @@ void ComposerPage::HeadersTab::slotRemoveMimeHeader()
     );
   }
 
-  emit changed( true );
+  slotEmitChanged();
 }
 
 void ComposerPage::HeadersTab::doLoadOther()
