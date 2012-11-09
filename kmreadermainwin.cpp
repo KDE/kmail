@@ -410,22 +410,43 @@ void KMReaderMainWin::slotMessagePopup(const Akonadi::Item&aMsg , const KUrl&aUr
   mMsg = aMsg;
 
   const QString email =  KPIMUtils::firstEmailAddress( aUrl.path() );
-  Akonadi::ContactSearchJob *job = new Akonadi::ContactSearchJob( this );
-  job->setLimit( 1 );
-  job->setQuery( Akonadi::ContactSearchJob::Email, email, Akonadi::ContactSearchJob::ExactMatch );
-  job->setProperty( "point", aPoint );
-  job->setProperty( "imageUrl", imageUrl );
-  job->setProperty( "url", aUrl );
-  connect( job, SIGNAL(result(KJob*)), SLOT(slotDelayedMessagePopup(KJob*)) );
+  if ( aUrl.protocol() == "mailto" && !email.isEmpty()) {
+    Akonadi::ContactSearchJob *job = new Akonadi::ContactSearchJob( this );
+    job->setLimit( 1 );
+    job->setQuery( Akonadi::ContactSearchJob::Email, email, Akonadi::ContactSearchJob::ExactMatch );
+    job->setProperty( "msg", QVariant::fromValue( mMsg ) );
+    job->setProperty( "point", aPoint );
+    job->setProperty( "imageUrl", imageUrl );
+    job->setProperty( "url", aUrl );
+    connect( job, SIGNAL(result(KJob*)), SLOT(slotContactSearchJobForMessagePopupDone(KJob*)) );
+  } else {
+    showMessagePopup(mMsg, aUrl, imageUrl, aPoint, false, false);
+  }
 }
 
-void KMReaderMainWin::slotDelayedMessagePopup( KJob *job )
+void KMReaderMainWin::slotContactSearchJobForMessagePopupDone( KJob *job )
 {
   const Akonadi::ContactSearchJob *searchJob = qobject_cast<Akonadi::ContactSearchJob*>( job );
   const bool contactAlreadyExists = !searchJob->contacts().isEmpty();
+
+  const QList<Akonadi::Item> listContact = searchJob->items();
+  const bool uniqueContactFound = (listContact.count() == 1);
+  if(uniqueContactFound) {
+      mReaderWin->setContactItem(listContact.first());
+  } else {
+      mReaderWin->setContactItem(Akonadi::Item());
+  }
+
+  const Akonadi::Item msg = job->property( "msg" ).value<Akonadi::Item>();
   const QPoint aPoint = job->property( "point" ).toPoint();
-  const KUrl iUrl = job->property("imageUrl").value<KUrl>();
+  const KUrl imageUrl = job->property("imageUrl").value<KUrl>();
   const KUrl url = job->property("url").value<KUrl>();
+
+  showMessagePopup(msg, url, imageUrl, aPoint, contactAlreadyExists, uniqueContactFound);
+}
+
+void KMReaderMainWin::showMessagePopup(const Akonadi::Item&msg ,const KUrl&url,const KUrl &imageUrl,const QPoint& aPoint, bool contactAlreadyExists, bool uniqueContactFound)
+{
   KMenu *menu = new KMenu;
 
   bool urlMenuAdded = false;
@@ -434,14 +455,18 @@ void KMReaderMainWin::slotDelayedMessagePopup( KJob *job )
     if ( url.protocol() == QLatin1String( "mailto" ) ) {
       // popup on a mailto URL
       menu->addAction( mReaderWin->mailToComposeAction() );
-      if ( mMsg.hasPayload<KMime::Message::Ptr>() ) {
+      if ( msg.hasPayload<KMime::Message::Ptr>() ) {
         menu->addAction( mReaderWin->mailToReplyAction() );
         menu->addAction( mReaderWin->mailToForwardAction() );
         menu->addSeparator();
       }
 
       if ( contactAlreadyExists ) {
-        menu->addAction( mReaderWin->openAddrBookAction() );
+        if(uniqueContactFound) {
+          menu->addAction( mReaderWin->editContactAction() );
+        } else {
+          menu->addAction( mReaderWin->openAddrBookAction() );
+        }
       } else {
         menu->addAction( mReaderWin->addAddrBookAction() );
       }
@@ -454,7 +479,7 @@ void KMReaderMainWin::slotDelayedMessagePopup( KJob *job )
       menu->addAction( mReaderWin->addBookmarksAction() );
       menu->addAction( mReaderWin->urlSaveAsAction() );
       menu->addAction( mReaderWin->copyURLAction() );
-      if(!iUrl.isEmpty()) {
+      if(!imageUrl.isEmpty()) {
         menu->addSeparator();
         menu->addAction( mReaderWin->copyImageLocation());
         menu->addAction(mReaderWin->downloadImageToDiskAction());
@@ -480,7 +505,7 @@ void KMReaderMainWin::slotDelayedMessagePopup( KJob *job )
     menu->addAction( mReaderWin->speakTextAction());
   } else if ( !urlMenuAdded ) {
     // popup somewhere else (i.e., not a URL) on the message
-    if (!mMsg.hasPayload<KMime::Message::Ptr>() ) {
+    if (!msg.hasPayload<KMime::Message::Ptr>() ) {
       // no message
       delete menu;
       return;
@@ -493,7 +518,7 @@ void KMReaderMainWin::slotDelayedMessagePopup( KJob *job )
                CommonKernel->folderIsTemplates( col ) ) ) {
         replyForwardMenu = true;
       }
-    } else if ( mMsg.hasPayload<KMime::Message::Ptr>() ) {
+    } else if ( msg.hasPayload<KMime::Message::Ptr>() ) {
       replyForwardMenu = true;
     }
     if ( replyForwardMenu ) {
@@ -506,7 +531,7 @@ void KMReaderMainWin::slotDelayedMessagePopup( KJob *job )
     menu->addAction( copyActionMenu(menu) );
 
     menu->addSeparator();
-    if(!iUrl.isEmpty()) {
+    if(!imageUrl.isEmpty()) {
       menu->addSeparator();
       menu->addAction( mReaderWin->copyImageLocation());
       menu->addAction( mReaderWin->downloadImageToDiskAction());
@@ -520,7 +545,7 @@ void KMReaderMainWin::slotDelayedMessagePopup( KJob *job )
     menu->addAction( mMsgActions->printAction() );
     menu->addAction( mReaderWin->saveAsAction() );
     menu->addAction( mSaveAtmAction );
-    if ( mMsg.isValid() ) {
+    if ( msg.isValid() ) {
       menu->addSeparator();
       menu->addAction( mMsgActions->createTodoAction() );
     }

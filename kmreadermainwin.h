@@ -52,9 +52,11 @@ public:
   void showMessage( const QString & encoding, const Akonadi::Item &msg, const Akonadi::Collection & parentCollection = Akonadi::Collection());
   
   void showMessage( const QString & encoding, KMime::Message::Ptr message);
+  void showMessagePopup(const Akonadi::Item&msg ,const KUrl&aUrl,const KUrl &imageUrl,const QPoint& aPoint, bool contactAlreadyExists, bool uniqueContactFound);
+
 private slots:
-  void slotMessagePopup(const Akonadi::Item& , const KUrl&, const KUrl &imageUrl, const QPoint& );
-  void slotDelayedMessagePopup( KJob* );
+  void slotMessagePopup(const Akonadi::Item& ,const KUrl&,const KUrl &imageUrl,const QPoint& );
+  void slotContactSearchJobForMessagePopupDone(KJob*);
   void slotTrashMsg();
   void slotForwardInlineMsg();
   void slotForwardAttachedMsg();

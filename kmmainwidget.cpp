@@ -2937,42 +2937,42 @@ void KMMainWidget::slotMessagePopup(const Akonadi::Item&msg ,const KUrl&aUrl,con
   updateMessageMenu();
 
   const QString email =  KPIMUtils::firstEmailAddress( aUrl.path() );
-  Akonadi::ContactSearchJob *job = new Akonadi::ContactSearchJob( this );
-  job->setLimit( 1 );
-  job->setQuery( Akonadi::ContactSearchJob::Email, email, Akonadi::ContactSearchJob::ExactMatch );
-  job->setProperty( "msg", QVariant::fromValue( msg ) );
-  job->setProperty( "point", aPoint );
-  job->setProperty( "imageUrl", imageUrl );
-  job->setProperty( "url", aUrl );
-  connect( job, SIGNAL(result(KJob*)), SLOT(slotDelayedMessagePopup(KJob*)) );
+  if ( aUrl.protocol() == "mailto" && !email.isEmpty()) {
+    Akonadi::ContactSearchJob *job = new Akonadi::ContactSearchJob( this );
+    job->setLimit( 1 );
+    job->setQuery( Akonadi::ContactSearchJob::Email, email, Akonadi::ContactSearchJob::ExactMatch );
+    job->setProperty( "msg", QVariant::fromValue( msg ) );
+    job->setProperty( "point", aPoint );
+    job->setProperty( "imageUrl", imageUrl );
+    job->setProperty( "url", aUrl );
+    connect( job, SIGNAL(result(KJob*)), SLOT(slotContactSearchJobForMessagePopupDone(KJob*)) );
+  } else {
+    showMessagePopup(msg, aUrl, imageUrl, aPoint, false, false);
+  }
 }
 
-void KMMainWidget::slotDelayedMessagePopup( KJob *job )
+void KMMainWidget::slotContactSearchJobForMessagePopupDone( KJob *job )
 {
   const Akonadi::ContactSearchJob *searchJob = qobject_cast<Akonadi::ContactSearchJob*>( job );
   const bool contactAlreadyExists = !searchJob->contacts().isEmpty();
 
   const QList<Akonadi::Item> listContact = searchJob->items();
-  const bool uniqContactFound = (listContact.count() == 1);
-  if(uniqContactFound) {
+  const bool uniqueContactFound = (listContact.count() == 1);
+  if(uniqueContactFound) {
       mMsgView->setContactItem(listContact.first());
   } else {
       mMsgView->setContactItem(Akonadi::Item());
   }
-#if 0 //TODO port it
-  mMessageListView->activateMessage( &msg ); // make sure that this message is the active one
-
-  // If this assertion fails then our current KMReaderWin is displaying a
-  // message from a folder that is not the current in mMessageListView.
-  // This should never happen as all the actions are messed up in this case.
-  Q_ASSERT( &msg == mMessageListView->currentMessage() );
-
-#endif
-
   const Akonadi::Item msg = job->property( "msg" ).value<Akonadi::Item>();
   const QPoint aPoint = job->property( "point" ).toPoint();
-  const KUrl iUrl = job->property("imageUrl").value<KUrl>();
+  const KUrl imageUrl = job->property("imageUrl").value<KUrl>();
   const KUrl url = job->property( "url" ).value<KUrl>();
+
+  showMessagePopup(msg, url, imageUrl, aPoint, contactAlreadyExists, uniqueContactFound);
+}
+
+void KMMainWidget::showMessagePopup(const Akonadi::Item&msg ,const KUrl&url,const KUrl &imageUrl,const QPoint& aPoint, bool contactAlreadyExists, bool uniqueContactFound)
+{
   KMenu *menu = new KMenu;
 
   bool urlMenuAdded = false;
@@ -2987,7 +2987,7 @@ void KMMainWidget::slotDelayedMessagePopup( KJob *job )
       menu->addSeparator();
 
       if ( contactAlreadyExists ) {
-        if(uniqContactFound) {
+        if(uniqueContactFound) {
           menu->addAction( mMsgView->editContactAction() );
         } else {
           menu->addAction( mMsgView->openAddrBookAction() );
@@ -3002,7 +3002,7 @@ void KMMainWidget::slotDelayedMessagePopup( KJob *job )
       menu->addAction( mMsgView->addBookmarksAction() );
       menu->addAction( mMsgView->urlSaveAsAction() );
       menu->addAction( mMsgView->copyURLAction() );
-      if(!iUrl.isEmpty()) {
+      if(!imageUrl.isEmpty()) {
         menu->addSeparator();
         menu->addAction( mMsgView->copyImageLocation());
         menu->addAction( mMsgView->downloadImageToDiskAction());
@@ -3058,7 +3058,7 @@ void KMMainWidget::slotDelayedMessagePopup( KJob *job )
     menu->addAction( mMsgActions->messageStatusMenu() );
     menu->addSeparator();
     if ( mMsgView ) {
-      if (!iUrl.isEmpty()) {
+      if (!imageUrl.isEmpty()) {
         menu->addSeparator();
         menu->addAction( mMsgView->copyImageLocation());
         menu->addAction( mMsgView->downloadImageToDiskAction());
