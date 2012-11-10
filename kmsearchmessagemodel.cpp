@@ -70,11 +70,6 @@ QString toolTip( const Akonadi::Item& item )
 
   QColor bckColor = QApplication::palette().color( QPalette::ToolTipBase );
   QColor txtColor = QApplication::palette().color( QPalette::ToolTipText );
-  QColor darkerColor(
-    ( ( bckColor.red() * 8 ) + ( txtColor.red() * 2 ) ) / 10,
-    ( ( bckColor.green() * 8 ) + ( txtColor.green() * 2 ) ) / 10,
-    ( ( bckColor.blue() * 8 ) + ( txtColor.blue() * 2 ) ) / 10
-    );
 
   const QString bckColorName = bckColor.name();
   const QString txtColorName = txtColor.name();
