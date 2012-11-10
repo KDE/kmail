@@ -27,6 +27,7 @@
  */
 #include "kmsearchmessagemodel.h"
 #include "mailcommon/mailutil.h"
+#include "messagelist/messagelistutil.h"
 
 #include "messagecore/stringutil.h"
 
@@ -62,30 +63,6 @@ KMSearchMessageModel::KMSearchMessageModel( QObject *parent )
 KMSearchMessageModel::~KMSearchMessageModel( )
 {
 }
-
-QString contentSummary( const Akonadi::Item& item )
-{
-  Nepomuk2::Resource mail( item.url() );
-  const QString content =
-      mail.property( Nepomuk2::Vocabulary::NMO::plainTextMessageContent() ).toString();
-  // Extract the first 5 non-empty, non-quoted lines from the content and return it
-  int numLines = 0;
-  const int maxLines = 5;
-  const QStringList lines = content.split( QLatin1Char( '\n' ) );
-  QString ret;
-  foreach( const QString &line, lines ) {
-    const QString lineTrimmed = line.trimmed();
-    const bool isQuoted = lineTrimmed.startsWith( QLatin1Char( '>' ) ) || lineTrimmed.startsWith( QLatin1Char( '|' ) );
-    if ( !isQuoted && !lineTrimmed.isEmpty() ) {
-      ret += line + QLatin1Char( '\n' );
-      numLines++;
-      if ( numLines >= maxLines )
-        break;
-    }
-  }
-  return ret;
-}
-
 
 QString toolTip( const Akonadi::Item& item )
 {
@@ -135,7 +112,7 @@ QString toolTip( const Akonadi::Item& item )
     "</td>"                                                      \
     "</tr>" );
 
-  QString content = Qt::escape(contentSummary(item));
+  QString content = Qt::escape(MessageList::Util::contentSummary( item.url() ));
 
   if ( textIsLeftToRight ) {
     tip += htmlCodeForStandardRow.arg( i18n( "From" ) ).arg( MessageCore::StringUtil::stripEmailAddr( msg->from()->asUnicodeString() ) );
