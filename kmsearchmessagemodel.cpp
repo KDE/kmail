@@ -137,7 +137,7 @@ QString toolTip( const Akonadi::Item& item )
     "</td>"                                                      \
     "</tr>" );
 
-  QString content = contentSummary(item);
+  QString content = Qt::escape(contentSummary(item));
 
   if ( textIsLeftToRight ) {
     tip += htmlCodeForStandardRow.arg( i18n( "From" ) ).arg( MessageCore::StringUtil::stripEmailAddr( msg->from()->asUnicodeString() ) );
