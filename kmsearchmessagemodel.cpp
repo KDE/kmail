@@ -101,10 +101,8 @@ QString toolTip( const Akonadi::Item& item )
 
   const QString bckColorName = bckColor.name();
   const QString txtColorName = txtColor.name();
-  const QString darkerColorName = darkerColor.name();
   const bool textIsLeftToRight = ( QApplication::layoutDirection() == Qt::LeftToRight );
   const QString textDirection =  textIsLeftToRight ? QLatin1String( "left" ) : QLatin1String( "right" );
-  const QString firstColumnWidth =  textIsLeftToRight ? QLatin1String( "45" ) : QLatin1String( "55" );
 
   QString tip = QString::fromLatin1(
     "<table width=\"100%\" border=\"0\" cellpadding=\"2\" cellspacing=\"0\">"
