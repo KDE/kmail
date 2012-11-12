@@ -4295,11 +4295,10 @@ void KMMainWidget::slotShowStartupFolder()
 {
   connect( MailCommon::FilterManager::instance(), SIGNAL(filtersChanged()),
            this, SLOT(initializeFilterActions()) );
-
   // Plug various action lists. This can't be done in the constructor, as that is called before
   // the main window or Kontact calls createGUI().
   // This function however is called with a single shot timer.
-  initializeFilterActions();
+  checkAkonadiServerManagerState();
   mFolderShortcutActionManager->createActions();
   mTagActionManager->createActions();
   messageActions()->setupForwardingActionsList( mGUIClient );
@@ -4312,6 +4311,26 @@ void KMMainWidget::slotShowStartupFolder()
     return;
   }
 }
+
+void KMMainWidget::checkAkonadiServerManagerState()
+{
+    Akonadi::ServerManager::State state = Akonadi::ServerManager::self()->state();
+    if(state == Akonadi::ServerManager::Running) {
+        initializeFilterActions();
+    } else {
+        connect( Akonadi::ServerManager::self(), SIGNAL(stateChanged(Akonadi::ServerManager::State)),
+                 SLOT(slotServerStateChanged(Akonadi::ServerManager::State)) );
+    }
+}
+
+void KMMainWidget::slotServerStateChanged(Akonadi::ServerManager::State state)
+{
+  if(state == Akonadi::ServerManager::Running) {
+    initializeFilterActions();
+    disconnect( Akonadi::ServerManager::self(), SIGNAL(stateChanged(Akonadi::ServerManager::State)));
+  }
+}
+
 
 void KMMainWidget::slotShowTip()
 {

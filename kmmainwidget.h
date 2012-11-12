@@ -441,6 +441,7 @@ class KMAIL_EXPORT KMMainWidget : public QWidget
     void slotCreateAddressBookContact();
     void slotOpenRecentMsg(const KUrl& url);
   private:
+    void checkAkonadiServerManagerState();
     void updateHtmlMenuEntry();
 
     void updateMoveAction( const Akonadi::CollectionStatistics& statistic );
@@ -540,6 +541,7 @@ class KMAIL_EXPORT KMMainWidget : public QWidget
     void slotDeletionCollectionResult(KJob* job);
     void slotServerSideSubscription();
     void slotFetchItemsForFolderDone(KJob*job);
+    void slotServerStateChanged(Akonadi::ServerManager::State state);
 
 private:
     // Message actions
