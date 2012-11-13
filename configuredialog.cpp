@@ -3262,7 +3262,7 @@ ComposerPageAutoCorrectionTab::ComposerPageAutoCorrectionTab(QWidget *parent)
   QVBoxLayout *vlay = new QVBoxLayout( this );
   vlay->setSpacing( 0 );
   vlay->setMargin( 0 );
-  autocorrectionWidget = new MessageComposer::KMComposerAutoCorrectionWidget(this);
+  autocorrectionWidget = new MessageComposer::ComposerAutoCorrectionWidget(this);
   if(KMKernel::self())
     autocorrectionWidget->setAutoCorrection(KMKernel::self()->composerAutoCorrection());
   vlay->addWidget(autocorrectionWidget);

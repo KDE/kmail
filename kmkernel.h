@@ -44,7 +44,7 @@ namespace KPIM {
 
 class MessageSender;
 namespace MessageComposer {
-  class KMComposerAutoCorrection;
+  class ComposerAutoCorrection;
 }
 
 class KJob;
@@ -418,7 +418,7 @@ public:
   void updatePaneTagComboBox();
 
 
-  MessageComposer::KMComposerAutoCorrection* composerAutoCorrection();
+  MessageComposer::ComposerAutoCorrection* composerAutoCorrection();
 
   void toggleSystemTray();
 
@@ -530,7 +530,7 @@ private:
   int mWrapCol;
 
   QPointer<MailCommon::KMFilterDialog> mFilterEditDialog;
-  MessageComposer::KMComposerAutoCorrection *mAutoCorrection;
+  MessageComposer::ComposerAutoCorrection *mAutoCorrection;
 };
 
 #endif // _KMKERNEL_H

@@ -71,7 +71,7 @@ namespace TemplateParser {
 }
 
 namespace MessageComposer {
-  class KMComposerAutoCorrectionLanguage;
+  class ComposerAutoCorrectionLanguage;
 }
 
 
@@ -130,7 +130,7 @@ namespace KMail {
     QCheckBox                        *mAttachMyVCard;
     QString                          mVcardFilename;
     KPushButton                      *mEditVCard;
-    MessageComposer::KMComposerAutoCorrectionLanguage *mAutoCorrectionLanguage;
+    MessageComposer::ComposerAutoCorrectionLanguage *mAutoCorrectionLanguage;
 
     // "templates" tab:
     TemplateParser::TemplatesConfiguration *mWidget;

@@ -58,7 +58,7 @@ class ColorListBox;
 class KCModuleProxy;
 class KIntNumInput;
 namespace MessageComposer {
-  class KMComposerAutoCorrectionWidget;
+  class ComposerAutoCorrectionWidget;
 }
 
 namespace MessageList {
@@ -693,7 +693,7 @@ private:
   virtual void doResetToDefaultsOther();
 
 private:
-  MessageComposer::KMComposerAutoCorrectionWidget *autocorrectionWidget;
+  MessageComposer::ComposerAutoCorrectionWidget *autocorrectionWidget;
 };
 
 
