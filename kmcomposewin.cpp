@@ -409,6 +409,7 @@ KMComposeWin::KMComposeWin( const KMime::Message::Ptr &aMsg, bool lastSignState,
 
   Message::AttachmentModel* attachmentModel = new Message::AttachmentModel( this );
   KMail::AttachmentView *attachmentView = new KMail::AttachmentView( attachmentModel, mSplitter );
+  connect(attachmentView,SIGNAL(modified(bool)),SLOT(setModified(bool)));
   attachmentView->hideIfEmpty();
   KMail::AttachmentController* attachmentController = new KMail::AttachmentController( attachmentModel, attachmentView, this );
 

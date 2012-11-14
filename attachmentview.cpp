@@ -142,6 +142,7 @@ void AttachmentView::setSignEnabled( bool enabled )
 void AttachmentView::hideIfEmpty()
 {
   setVisible( model()->rowCount() > 0 );
+  emit modified(true);
 }
 
 void AttachmentView::selectNewAttachment()
