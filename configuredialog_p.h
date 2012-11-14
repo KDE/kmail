@@ -59,6 +59,7 @@ class KCModuleProxy;
 class KIntNumInput;
 namespace MessageComposer {
   class ComposerAutoCorrectionWidget;
+  class AutoResizeImageWidget;
 }
 
 namespace MessageList {
@@ -696,6 +697,23 @@ private:
   MessageComposer::ComposerAutoCorrectionWidget *autocorrectionWidget;
 };
 
+class ComposerPageAutoImageResizeTab : public ConfigModuleTab {
+  Q_OBJECT
+public:
+  ComposerPageAutoImageResizeTab( QWidget * parent=0 );
+  QString helpAnchor() const;
+
+  void save();
+
+private:
+  virtual void doLoadFromGlobalSettings();
+  virtual void doResetToDefaultsOther();
+
+private:
+  MessageComposer::AutoResizeImageWidget *autoResizeWidget;
+};
+
+
 
 
 class KMAIL_EXPORT ComposerPage : public ConfigModuleWithTabs {
@@ -714,7 +732,7 @@ public:
   typedef ComposerPageHeadersTab HeadersTab;
   typedef ComposerPageAttachmentsTab AttachmentsTab;
   typedef ComposerPageAutoCorrectionTab AutoCorrectionTab;
-
+  typedef ComposerPageAutoImageResizeTab AutoImageResizeTab;
 private:
   GeneralTab  *mGeneralTab;
   TemplatesTab  *mTemplatesTab;
@@ -724,6 +742,7 @@ private:
   HeadersTab  *mHeadersTab;
   AttachmentsTab  *mAttachmentsTab;
   AutoCorrectionTab *mAutoCorrectionTab;
+  AutoImageResizeTab *mAutoImageResizeTab;
 };
 
 //

@@ -59,6 +59,7 @@ using KPIM::RecentAddresses;
 #include "messagelist/utils/themeconfigbutton.h"
 
 #include "messagecomposer/autocorrection/composerautocorrectionwidget.h"
+#include "messagecomposer/autoimageresizing/autoresizeimagewidget.h"
 
 #include "messageviewer/autoqpointer.h"
 #include "messageviewer/nodehelper.h"
@@ -2189,6 +2190,12 @@ ComposerPage::ComposerPage( const KComponentData &instance, QWidget *parent )
   mAutoCorrectionTab = new AutoCorrectionTab();
   addTab( mAutoCorrectionTab, i18n("Autocorrection") );
 
+  //
+  // "autoresize" tab:
+  //
+  mAutoImageResizeTab = new AutoImageResizeTab();
+  addTab( mAutoImageResizeTab, i18n("Auto Resize Image") );
+
 }
 
 QString ComposerPage::GeneralTab::helpAnchor() const
@@ -3289,6 +3296,40 @@ void ComposerPageAutoCorrectionTab::doLoadFromGlobalSettings()
 void ComposerPageAutoCorrectionTab::doResetToDefaultsOther()
 {
   autocorrectionWidget->resetToDefault();
+}
+
+
+ComposerPageAutoImageResizeTab::ComposerPageAutoImageResizeTab(QWidget *parent)
+  : ConfigModuleTab(parent)
+{
+  QVBoxLayout *vlay = new QVBoxLayout( this );
+  vlay->setSpacing( 0 );
+  vlay->setMargin( 0 );
+  autoResizeWidget = new MessageComposer::AutoResizeImageWidget(this);
+  vlay->addWidget(autoResizeWidget);
+  setLayout(vlay);
+  connect( autoResizeWidget, SIGNAL(changed()), this, SLOT(slotEmitChanged()) );
+
+}
+
+QString ComposerPageAutoImageResizeTab::helpAnchor() const
+{
+  return QString::fromLatin1("configure-image-resize");
+}
+
+void ComposerPageAutoImageResizeTab::save()
+{
+  autoResizeWidget->writeConfig();
+}
+
+void ComposerPageAutoImageResizeTab::doLoadFromGlobalSettings()
+{
+  autoResizeWidget->loadConfig();
+}
+
+void ComposerPageAutoImageResizeTab::doResetToDefaultsOther()
+{
+  autoResizeWidget->resetToDefault();
 }
 
 
