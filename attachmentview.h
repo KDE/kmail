@@ -73,6 +73,7 @@ class AttachmentView : public QTreeView
 
   signals:
     void contextMenuRequested();
+    void modified(bool);
 
   private:
     class Private;

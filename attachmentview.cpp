@@ -179,6 +179,7 @@ void AttachmentView::hideIfEmpty()
   } else {
     d->infoAttachment->clear();
   }
+  emit modified(true)
 }
 
 void AttachmentView::updateAttachmentLabel()
