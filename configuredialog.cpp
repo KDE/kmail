@@ -526,11 +526,15 @@ void AccountsPageReceivingTab::slotShowMailCheckMenu( const QString &ident, cons
     connect( manualMailCheck, SIGNAL(toggled(bool)), this, SLOT(slotIncludeInCheckChanged(bool)) );
   }
 
-  QAction *switchOffline = new QAction( i18nc( "Label to a checkbox, so is either checked/unchecked", "Switch offline on KMail Shutdown" ), menu );
-  switchOffline->setCheckable( true );
-  switchOffline->setChecked( OfflineOnShutdown );
-  switchOffline->setData( ident );
-  menu->addAction( switchOffline );
+  if( !MailCommon::Util::isLocalCollection( ident ) ) {
+    QAction *switchOffline = new QAction( i18nc( "Label to a checkbox, so is either checked/unchecked", "Switch offline on KMail Shutdown" ), menu );
+    switchOffline->setCheckable( true );
+    switchOffline->setChecked( OfflineOnShutdown );
+    switchOffline->setData( ident );
+    menu->addAction( switchOffline );
+    connect( switchOffline, SIGNAL(toggled(bool)), this, SLOT(slotOfflineOnShutdownChanged(bool)) );
+  }
+
 
   QAction *checkOnStartup = new QAction( i18n( "Check mail on startup" ), menu );
   checkOnStartup->setCheckable( true );
@@ -538,7 +542,6 @@ void AccountsPageReceivingTab::slotShowMailCheckMenu( const QString &ident, cons
   checkOnStartup->setData( ident );
   menu->addAction( checkOnStartup );
 
-  connect( switchOffline, SIGNAL(toggled(bool)), this, SLOT(slotOfflineOnShutdownChanged(bool)) );
   connect( checkOnStartup, SIGNAL(toggled(bool)), this, SLOT(slotCheckOnStatupChanged(bool)) );
 
   menu->exec(  mAccountsReceiving.mAccountList->view()->mapToGlobal( pos ) );
