@@ -58,7 +58,7 @@ using KPIM::RecentAddresses;
 #include "messagelist/utils/themecombobox.h"
 #include "messagelist/utils/themeconfigbutton.h"
 
-#include "messagecomposer/autocorrection/kmcomposerautocorrectionwidget.h"
+#include "messagecomposer/autocorrection/composerautocorrectionwidget.h"
 
 #include "messageviewer/autoqpointer.h"
 #include "messageviewer/nodehelper.h"

@@ -59,7 +59,7 @@
 #include <kpimidentities/identity.h>
 #include <kpimidentities/signatureconfigurator.h>
 
-#include "messagecomposer/autocorrection/kmcomposerautocorrectionlanguage.h"
+#include "messagecomposer/autocorrection/composerautocorrectionlanguage.h"
 
 #include <libkdepim/addresseelineedit.h>
 // libkleopatra:

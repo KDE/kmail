@@ -50,7 +50,7 @@ using KMail::MailServiceImpl;
 #include "messagecomposersettings.h"
 #include "messagecomposer/messagehelper.h"
 #include "messagecomposer/messagecomposersettings.h"
-#include "messagecomposer/autocorrection/kmcomposerautocorrection.h"
+#include "messagecomposer/autocorrection/composerautocorrection.h"
 
 #include "templateparser/templateparser.h"
 #include "templateparser/globalsettings_base.h"
