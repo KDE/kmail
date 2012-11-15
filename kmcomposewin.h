@@ -601,7 +601,6 @@ class KMComposeWin : public KMail::Composer
     bool mLastIdentityHasSigningKey, mLastIdentityHasEncryptionKey;
     Akonadi::Collection mFolder;
     long mShowHeaders;
-    bool mConfirmSend;
     bool mForceDisableHtml;     // Completely disable any HTML. Useful when sending invitations in the
                                 // mail body.
     int mNumHeaders;
