@@ -2948,7 +2948,7 @@ void KMComposeWin::slotIdentityChanged( uint uoid, bool initalChange )
   if ( ident.isNull() ) {
     return;
   }
-
+  bool wasModified(isModified());
   emit identityChanged( identity() );
 
   if ( !ident.fullEmailAddr().isNull() ) {
@@ -3014,7 +3014,7 @@ void KMComposeWin::slotIdentityChanged( uint uoid, bool initalChange )
 
   // if unmodified, apply new template, if one is set
   bool msgCleared = false;
-  if ( !isModified() && !( ident.templates().isEmpty() && mCustomTemplate.isEmpty() ) &&
+  if ( !wasModified && !( ident.templates().isEmpty() && mCustomTemplate.isEmpty() ) &&
        !initalChange ) {
     applyTemplate( uoid );
     msgCleared = true;
@@ -3053,6 +3053,7 @@ void KMComposeWin::slotIdentityChanged( uint uoid, bool initalChange )
   changeCryptoAction();
   // make sure the From and BCC fields are shown if necessary
   rethinkFields( false );
+  setModified(wasModified);
 }
 
 //-----------------------------------------------------------------------------
