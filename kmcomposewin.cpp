@@ -968,7 +968,7 @@ void KMComposeWin::rethinkHeaderLine( int aValue, int aMask, int &aRow,
 }
 
 //-----------------------------------------------------------------------------
-void KMComposeWin::applyTemplate( uint uoid )
+void KMComposeWin::applyTemplate( uint uoid, uint uOldId )
 {
   const KPIMIdentities::Identity &ident = kmkernel->identityManager()->identityForUoid( uoid );
   if ( ident.isNull() )
@@ -1000,10 +1000,11 @@ void KMComposeWin::applyTemplate( uint uoid )
     parser.setAllowDecryption( MessageViewer::GlobalSettings::self()->automaticDecrypt() );
     parser.setIdentityManager( KMKernel::self()->identityManager() );
     if ( !mCustomTemplate.isEmpty() )
-      parser.process( mCustomTemplate, KMime::Message::Ptr() );
+      parser.process( mCustomTemplate, mMsg, mCollectionForNewMessage );
     else
-      parser.processWithIdentity( uoid, KMime::Message::Ptr() );
-
+      parser.processWithIdentity( uoid, mMsg, mCollectionForNewMessage );
+    mComposerBase->updateTemplate( mMsg );
+    updateSignature(uoid, uOldId);
     return;
   }
 
@@ -1018,6 +1019,7 @@ void KMComposeWin::applyTemplate( uint uoid )
     job->fetchScope().setAncestorRetrieval( Akonadi::ItemFetchScope::Parent );
     job->setProperty( "mode", (int)mode );
     job->setProperty( "uoid", uoid );
+    job->setProperty( "uOldid", uOldId );
     connect( job, SIGNAL(result(KJob*)), SLOT(slotDelayedApplyTemplate(KJob*)) );
   }
 }
@@ -1029,6 +1031,7 @@ void KMComposeWin::slotDelayedApplyTemplate( KJob *job )
 
   const TemplateParser::TemplateParser::Mode mode = static_cast<TemplateParser::TemplateParser::Mode>( fetchJob->property( "mode" ).toInt() );
   const uint uoid = fetchJob->property( "uoid" ).toUInt();
+  const uint uOldId = fetchJob->property( "uOldid" ).toUInt();
 
   TemplateParser::TemplateParser parser( mMsg, mode );
   parser.setSelection( mTextSelection );
@@ -1041,7 +1044,21 @@ void KMComposeWin::slotDelayedApplyTemplate( KJob *job )
     else
       parser.processWithIdentity( uoid, MessageCore::Util::message( item ) );
   }
+  mComposerBase->updateTemplate( mMsg );
+  updateSignature(uoid, uOldId);
 
+}
+
+void KMComposeWin::updateSignature(uint uoid, uint uOldId)
+{
+    const KPIMIdentities::Identity &ident = kmkernel->identityManager()->identityForUoid( uoid );
+    const KPIMIdentities::Identity &oldIdentity = kmkernel->identityManager()->identityForUoid( uOldId  );
+    mComposerBase->identityChanged( ident, oldIdentity, true );
+}
+
+void KMComposeWin::setCollectionForNewMessage( const Akonadi::Collection& folder)
+{
+    mCollectionForNewMessage = folder;
 }
 
 void KMComposeWin::setQuotePrefix( uint uoid )
@@ -3016,7 +3033,6 @@ void KMComposeWin::slotIdentityChanged( uint uoid, bool initalChange )
   const KPIMIdentities::Identity &oldIdentity =
       KMKernel::self()->identityManager()->identityForUoidOrDefault( mId );
 
-  mComposerBase->identityChanged( ident, oldIdentity );
 
   if ( ident.organization().isEmpty() ) {
     mMsg->organization()->clear();
@@ -3064,7 +3080,9 @@ void KMComposeWin::slotIdentityChanged( uint uoid, bool initalChange )
   // if unmodified, apply new template, if one is set
   if ( !wasModified && !( ident.templates().isEmpty() && mCustomTemplate.isEmpty() ) &&
        !initalChange ) {
-    applyTemplate( uoid );
+    applyTemplate( uoid, mId );
+  } else {
+    mComposerBase->identityChanged( ident, oldIdentity, false );
   }
 
 

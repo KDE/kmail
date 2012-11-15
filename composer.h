@@ -98,6 +98,7 @@ class Composer : public KMail::SecondaryWindow
     virtual void setCustomTemplate( const QString& customTemplate ) = 0;
 
     virtual void setAutoSaveFileName( const QString &fileName ) = 0;
+    virtual void setCollectionForNewMessage( const Akonadi::Collection& folder ) = 0;
 
   public: // kmcommand
     /**

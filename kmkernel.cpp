@@ -854,10 +854,12 @@ QDBusObjectPath KMKernel::newMessage( const QString &to,
 
   TemplateParser::TemplateParser parser( msg, TemplateParser::TemplateParser::NewMessage );
   parser.setIdentityManager( identityManager() );
-  parser.process( msg, folder ? folder->collection() : Akonadi::Collection() );
+  Akonadi::Collection col = folder ? folder->collection() : Akonadi::Collection();
+  parser.process( msg, col );
 
   KMail::Composer *win = makeComposer( msg, false, false, KMail::Composer::New, id );
 
+  win->setCollectionForNewMessage(col);
   //Add the attachment if we have one
   if ( !attachURL.isEmpty() && attachURL.isValid() ) {
     win->addAttachment( attachURL, "" );

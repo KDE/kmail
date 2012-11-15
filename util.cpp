@@ -151,6 +151,7 @@ void KMail::Util::handleClickedURL( const KUrl &url, const QSharedPointer<MailCo
 
     KMail::Composer * win = KMail::makeComposer( msg, false, false, KMail::Composer::New, identity );
     win->setFocusToSubject();
+    win->setCollectionForNewMessage( folder->collection() );
     win->show();
   } else {
     kWarning() << "Can't handle URL:" << url;

@@ -1531,6 +1531,7 @@ void KMMainWidget::slotCompose()
       parser.setIdentityManager( KMKernel::self()->identityManager() );
       parser.process( msg, mCurrentFolder->collection() );
       win = KMail::makeComposer( msg, false, false, KMail::Composer::New, mCurrentFolder->identity() );
+      win->setCollectionForNewMessage( mCurrentFolder->collection() );
   } else {
       MessageHelper::initHeader( msg, KMKernel::self()->identityManager() );
       TemplateParser::TemplateParser parser( msg, TemplateParser::TemplateParser::NewMessage );
