@@ -415,8 +415,8 @@ KMComposeWin::KMComposeWin( const KMime::Message::Ptr &aMsg, bool lastSignState,
 
   Message::AttachmentModel* attachmentModel = new Message::AttachmentModel( this );
   KMail::AttachmentView *attachmentView = new KMail::AttachmentView( attachmentModel, mSplitter );
-  connect(attachmentView,SIGNAL(modified(bool)),SLOT(setModified(bool)));
   attachmentView->hideIfEmpty();
+  connect(attachmentView,SIGNAL(modified(bool)),SLOT(setModified(bool)));
   KMail::AttachmentController* attachmentController = new KMail::AttachmentController( attachmentModel, attachmentView, this );
 
   mComposerBase->setAttachmentModel( attachmentModel );
@@ -1376,9 +1376,9 @@ void KMComposeWin::setupActions( void )
 
   changeCryptoAction();
 
-  connect( mEncryptAction, SIGNAL(toggled(bool)),
+  connect( mEncryptAction, SIGNAL(triggered(bool)),
            SLOT(slotEncryptToggled(bool)) );
-  connect( mSignAction, SIGNAL(toggled(bool)),
+  connect( mSignAction, SIGNAL(triggered(bool)),
            SLOT(slotSignToggled(bool)) );
 
   QStringList l;
@@ -2450,7 +2450,9 @@ void KMComposeWin::setEncryption( bool encrypt, bool setByUser )
 
   // make sure the mEncryptAction is in the right state
   mEncryptAction->setChecked( encrypt );
-
+  if(!setByUser) {
+    slotUpdateSignatureAndEncrypionStateIndicators();
+  }
   // show the appropriate icon
   if ( encrypt ) {
     mEncryptAction->setIcon( KIcon( "document-encrypt" ) );
@@ -2502,6 +2504,9 @@ void KMComposeWin::setSigning( bool sign, bool setByUser )
   // make sure the mSignAction is in the right state
   mSignAction->setChecked( sign );
 
+  if(!setByUser) {
+    slotUpdateSignatureAndEncrypionStateIndicators();
+  }
   // mark the attachments for (no) signing
   if ( canSignEncryptAttachments() ) {
     mComposerBase->attachmentModel()->setSignSelected( sign );
@@ -2993,7 +2998,7 @@ void KMComposeWin::slotIdentityChanged( uint uoid, bool initalChange )
   if ( ident.isNull() ) {
     return;
   }
-
+  bool wasModified(isModified());
   emit identityChanged( identity() );
   if ( !ident.fullEmailAddr().isNull() ) {
     mEdtFrom->setText( ident.fullEmailAddr() );
@@ -3057,7 +3062,7 @@ void KMComposeWin::slotIdentityChanged( uint uoid, bool initalChange )
   }
 
   // if unmodified, apply new template, if one is set
-  if ( !isModified() && !( ident.templates().isEmpty() && mCustomTemplate.isEmpty() ) &&
+  if ( !wasModified && !( ident.templates().isEmpty() && mCustomTemplate.isEmpty() ) &&
        !initalChange ) {
     applyTemplate( uoid );
   }
@@ -3095,6 +3100,7 @@ void KMComposeWin::slotIdentityChanged( uint uoid, bool initalChange )
   changeCryptoAction();
   // make sure the From and BCC fields are shown if necessary
   rethinkFields( false );
+  setModified(wasModified);
 }
 
 //-----------------------------------------------------------------------------
