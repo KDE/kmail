@@ -418,7 +418,7 @@ class KMComposeWin : public KMail::Composer
     
     //void slotEncryptChiasmusToggled( bool );
 
-    void slotSendFailed( const QString& msg );
+    void slotSendFailed(const QString& msg , Message::ComposerViewBase::FailedType type);
     void slotSendSuccessful();
 
     /**

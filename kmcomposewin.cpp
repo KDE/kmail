@@ -216,7 +216,7 @@ KMComposeWin::KMComposeWin( const KMime::Message::Ptr &aMsg, bool lastSignState,
 
   connect( mComposerBase, SIGNAL(enableHtml()),
            this, SLOT(enableHtml()) );
-  connect( mComposerBase, SIGNAL(failed(QString)), this, SLOT(slotSendFailed(QString)) );
+  connect( mComposerBase, SIGNAL(failed(QString,Message::ComposerViewBase::FailedType)), this, SLOT(slotSendFailed(QString,Message::ComposerViewBase::FailedType)) );
   connect( mComposerBase, SIGNAL(sentSuccessfully()), this, SLOT(slotSendSuccessful()) );
   connect( mComposerBase, SIGNAL(modified(bool)), this, SLOT(setModified(bool)) );
 
@@ -1906,12 +1906,12 @@ bool KMComposeWin::encryptToSelf()
 
 
 
-void KMComposeWin::slotSendFailed( const QString& msg )
+void KMComposeWin::slotSendFailed( const QString& msg,Message::ComposerViewBase::FailedType type)
 {
   //   setModified( false );
   setEnabled( true );
   KMessageBox::sorry( mMainWidget, msg,
-                      i18n( "Sending Message Failed" ) );
+                      (type == Message::ComposerViewBase::AutoSave) ? i18n( "Autosave Message Failed" ) : i18n( "Sending Message Failed" ) );
 }
 
 void KMComposeWin::slotSendSuccessful()
