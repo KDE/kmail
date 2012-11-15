@@ -1343,9 +1343,9 @@ void KMComposeWin::setupActions( void )
 
   changeCryptoAction();
 
-  connect( mEncryptAction, SIGNAL(toggled(bool)),
+  connect( mEncryptAction, SIGNAL(triggered(bool)),
            SLOT(slotEncryptToggled(bool)) );
-  connect( mSignAction, SIGNAL(toggled(bool)),
+  connect( mSignAction, SIGNAL(triggered(bool)),
            SLOT(slotSignToggled(bool)) );
 
   QStringList l;
@@ -2415,7 +2415,9 @@ void KMComposeWin::setEncryption( bool encrypt, bool setByUser )
 
   // make sure the mEncryptAction is in the right state
   mEncryptAction->setChecked( encrypt );
-
+  if(!setByUser) {
+    slotUpdateSignatureAndEncrypionStateIndicators();
+  }
   // show the appropriate icon
   if ( encrypt ) {
     mEncryptAction->setIcon( KIcon( "document-encrypt" ) );
@@ -2467,6 +2469,9 @@ void KMComposeWin::setSigning( bool sign, bool setByUser )
   // make sure the mSignAction is in the right state
   mSignAction->setChecked( sign );
 
+  if(!setByUser) {
+    slotUpdateSignatureAndEncrypionStateIndicators();
+  }
   // mark the attachments for (no) signing
   if ( canSignEncryptAttachments() ) {
     mComposerBase->attachmentModel()->setSignSelected( sign );
