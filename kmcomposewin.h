@@ -609,13 +609,10 @@ class KMComposeWin : public KMail::Composer
     QGridLayout *mGrid;
     QString mTextSelection;
     QString mCustomTemplate;
-    QAction *mOpenId, *mViewId, *mRemoveId, *mSaveAsId, *mPropertiesId,
-            *mEditAction, *mEditWithAction;
     bool mLastSignActionState, mLastEncryptActionState, mSigningAndEncryptionExplicitlyDisabled;
     bool mLastIdentityHasSigningKey, mLastIdentityHasEncryptionKey;
     Akonadi::Collection mFolder;
     long mShowHeaders;
-    bool mConfirmSend;
     bool mForceDisableHtml;     // Completely disable any HTML. Useful when sending invitations in the
                                 // mail body.
     int mNumHeaders;
