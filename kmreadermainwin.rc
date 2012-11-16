@@ -65,8 +65,6 @@
    <Action name="set_status" />
    <Separator/>
    <Action name="create_todo"/>
-   <Separator/>
-   <Action name="copy_to" />
   </Menu>
   <Menu noMerge="1" name="settings">
    <text>&amp;Settings</text>
@@ -87,8 +85,6 @@
   <Action name="move_to_trash" />
   <Separator/>
   <Action name="create_todo"/>
-  <Action name="status_flag" />
-  <Action name="status_toact" />
   <Separator/>
   <Action name="text_font" />
   <Action name="text_size" />
