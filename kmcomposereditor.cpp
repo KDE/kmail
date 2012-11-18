@@ -50,7 +50,7 @@
 using namespace MailCommon;
 
 KMComposerEditor::KMComposerEditor( KMComposeWin *win,QWidget *parent)
- : Message::KMeditor(parent, "kmail2rc" ),m_composerWin(win)
+ : Message::KMeditor(parent, "kmail2rc" ),mComposerWin(win)
 {
   setAutocorrection(KMKernel::self()->composerAutoCorrection());
 }
@@ -102,7 +102,7 @@ void KMComposerEditor::setHighlighterColors(KPIMTextEdit::EMailQuoteHighlighter 
 
 QString KMComposerEditor::smartQuote( const QString & msg )
 {
-  return m_composerWin->smartQuote( msg );
+  return mComposerWin->smartQuote( msg );
 }
 
 void KMComposerEditor::replaceUnknownChars( const QTextCodec *codec )
@@ -140,7 +140,7 @@ void KMComposerEditor::insertFromMimeData( const QMimeData *source )
     return;
   }
   
-  if ( !m_composerWin->insertFromMimeData( source, false ) )
+  if ( !mComposerWin->insertFromMimeData( source, false ) )
     KPIMTextEdit::TextEdit::insertFromMimeData( source );
 }
 
