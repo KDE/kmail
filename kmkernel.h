@@ -502,7 +502,6 @@ private:
   /** are we going down? set from here */
   bool the_shuttingDown;
   /** true unles kmail is closed by session management */
-  bool closed_by_user;
   bool the_firstInstance;
 
   KSharedConfig::Ptr mConfig;

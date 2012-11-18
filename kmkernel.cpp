@@ -131,7 +131,6 @@ KMKernel::KMKernel (QObject *parent, const char *name) :
   setObjectName( name );
   mySelf = this;
   the_startingUp = true;
-  closed_by_user = true;
   the_firstInstance = true;
 
   the_undoStack = 0;
