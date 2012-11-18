@@ -56,11 +56,11 @@ TagSelectDialog::TagSelectDialog( QWidget * parent, int numberOfSelectedMessages
   setMainWidget( mainWidget );
 
   mListTag = new QListWidget( this );
-  mListWidgetSearchLine = new KListWidgetSearchLine(this,mListTag);
-  mListWidgetSearchLine->setClickMessage(i18n("Search tag"));
-  mListWidgetSearchLine->setClearButtonShown(true);
+  KListWidgetSearchLine *listWidgetSearchLine = new KListWidgetSearchLine(this,mListTag);
+  listWidgetSearchLine->setClickMessage(i18n("Search tag"));
+  listWidgetSearchLine->setClearButtonShown(true);
 
-  mainLayout->addWidget(mListWidgetSearchLine);
+  mainLayout->addWidget(listWidgetSearchLine);
   mainLayout->addWidget( mListTag );
   
   QList<Tag::Ptr> tagList;

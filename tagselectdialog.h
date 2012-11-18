@@ -32,7 +32,6 @@
 #include <KDialog>
 
 class QListWidget;
-class KListWidgetSearchLine;
 
 namespace Akonadi {
 class Item;
@@ -47,7 +46,6 @@ public:
   QList<QString> selectedTag() const;
 private:
   QListWidget *mListTag;
-  KListWidgetSearchLine *mListWidgetSearchLine;
 };
 
 
