@@ -80,7 +80,6 @@ namespace KMail {
 
 SearchWindow::SearchWindow( KMMainWidget *widget, const Akonadi::Collection &collection )
   : KDialog( 0 ),
-    mStopped( false ),
     mCloseRequested( false ),
     mSortColumn( 0 ),
     mSortOrder( Qt::AscendingOrder ),
@@ -451,7 +450,6 @@ void SearchWindow::slotSearch()
   mLastFocus = focusWidget();
   setButtonFocus( User1 );     // set focus so we don't miss key event
 
-  mStopped = false;
 
   if ( mSearchFolderEdt->text().isEmpty() ) {
     mSearchFolderEdt->setText( i18n( "Last Search" ) );
@@ -589,7 +587,6 @@ void SearchWindow::slotStop()
     mSearchJob = 0;
   }
 
-  mStopped = true;
   enableButton( User2, false );
 }
 

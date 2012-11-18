@@ -166,7 +166,6 @@ class SearchWindow: public KDialog, virtual public KXMLGUIClient
     void slotContextMenuRequested( const QPoint& );
 
   private:
-    bool mStopped;
     bool mCloseRequested;
     int mSortColumn;
     Qt::SortOrder mSortOrder;
