@@ -42,13 +42,6 @@ namespace KMail {
     QString xface() const;
     void setXFace( const QString & text );
 
-  protected:
-    QCheckBox     * mEnableCheck;
-    KTextEdit     * mTextEdit;
-    QLabel        * mXFaceLabel;
-    KComboBox     * mSourceCombo;
-
-
   private:
     void setXfaceFromFile( const KUrl &url );
 
@@ -57,6 +50,14 @@ namespace KMail {
     void slotSelectFromAddressbook();
     void slotDelayedSelectFromAddressbook( KJob* );
     void slotUpdateXFace();
+
+  private:
+    QCheckBox     * mEnableCheck;
+    KTextEdit     * mTextEdit;
+    QLabel        * mXFaceLabel;
+    KComboBox     * mSourceCombo;
+
+
   };
 } // namespace KMail
 
