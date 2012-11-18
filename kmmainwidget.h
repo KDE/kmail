@@ -88,14 +88,6 @@ class KMAIL_EXPORT KMMainWidget : public QWidget
   public:
     typedef QList<KMMainWidget*> PtrList;
 
-    enum PropsPage
-    {
-      PropsGeneral,
-      PropsShortcut,
-      PropsMailingList,
-      PropsExpire
-    };
-
     KMMainWidget(QWidget *parent, KXMLGUIClient *aGUIClient,
                  KActionCollection *actionCollection,
                  KSharedConfig::Ptr config = KMKernel::self()->config() );
