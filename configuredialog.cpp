@@ -2913,9 +2913,9 @@ ComposerPageHeadersTab::ComposerPageHeadersTab( QWidget * parent )
   mMessageIdSuffixEdit = new KLineEdit( this );
   mMessageIdSuffixEdit->setClearButtonShown( true );
   // only ASCII letters, digits, plus, minus and dots are allowed
-  mMessageIdSuffixValidator =
+  QRegExpValidator *messageIdSuffixValidator =
     new QRegExpValidator( QRegExp( "[a-zA-Z0-9+-]+(?:\\.[a-zA-Z0-9+-]+)*" ), this );
-  mMessageIdSuffixEdit->setValidator( mMessageIdSuffixValidator );
+  mMessageIdSuffixEdit->setValidator( messageIdSuffixValidator );
   label = new QLabel(i18n("Custom message-&id suffix:"), this );
   label->setBuddy( mMessageIdSuffixEdit );
   label->setEnabled( false ); // since !mCreateOwnMessageIdCheck->isChecked()

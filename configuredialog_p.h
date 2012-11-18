@@ -34,7 +34,6 @@ class QPushButton;
 class QLabel;
 class QCheckBox;
 class QFont;
-class QRegExpValidator;
 class QPoint;
 class QGroupBox;
 class QSpinBox;
@@ -650,7 +649,6 @@ private:
 private:
   QCheckBox   *mCreateOwnMessageIdCheck;
   KLineEdit   *mMessageIdSuffixEdit;
-  QRegExpValidator *mMessageIdSuffixValidator;
   ListView    *mTagList;
   QPushButton *mRemoveHeaderButton;
   KLineEdit   *mTagNameEdit;
