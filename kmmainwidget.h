@@ -603,7 +603,7 @@ private:
     KActionCollection *mActionCollection;
     QAction *mToolbarActionSeparator;
     QVBoxLayout *mTopLayout;
-    bool mDestructed, mForceJumpToUnread, mShowingOfflineScreen;
+    bool mDestructed, mShowingOfflineScreen;
     QList<QAction*> mFilterMenuActions;
     QList<QAction*> mFilterTBarActions;
     QList<KMMetaFilterActionCommand*> mFilterCommands;
