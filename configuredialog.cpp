@@ -2461,7 +2461,9 @@ ComposerPageGeneralTab::ComposerPageGeneralTab( QWidget * parent )
            mEditorRequester, SLOT(setEnabled(bool)) );
 
   label = new QLabel( i18n("<b>%f</b> will be replaced with the "
-                           "filename to edit."), group );
+                           "filename to edit.<br />"
+                           "<b>%w</b> will be replace with window id.<br />"
+                           "<b>%l</b> will be replace with line number."), group );
   label->setEnabled( false ); // see above
   connect( mExternalEditorCheck, SIGNAL(toggled(bool)),
            label, SLOT(setEnabled(bool)) );
