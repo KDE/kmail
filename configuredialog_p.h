@@ -366,6 +366,7 @@ private:
 
 private: // data
   QCheckBox *mCloseAfterReplyOrForwardCheck;
+  QCheckBox *mAccessKeyEnabled;
   MessageViewer::ConfigureWidget *mViewerSettings;
 };
 
