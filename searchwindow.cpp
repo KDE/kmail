@@ -397,6 +397,7 @@ void SearchWindow::createSearchModel()
   mLbxMatches->setColumnHidden( 6, true );
   mLbxMatches->header()->setSortIndicator( 2, Qt::DescendingOrder );
   mLbxMatches->header()->setStretchLastSection( false );
+  mLbxMatches->header()->restoreState( mHeaderState );
   //mLbxMatches->header()->setResizeMode( 3, QHeaderView::Stretch );
   if(!mAkonadiStandardAction)
       mAkonadiStandardAction = new Akonadi::StandardMailActionManager( actionCollection(), this );
