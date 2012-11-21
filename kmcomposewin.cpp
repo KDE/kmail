@@ -2925,6 +2925,26 @@ void KMComposeWin::enableHtml()
 //-----------------------------------------------------------------------------
 void KMComposeWin::disableHtml( Message::ComposerViewBase::Confirmation confirmation )
 {
+  bool forcePlainTextMarkup = false;
+#ifdef GRANTLEE_GREATER_0_2
+  if ( confirmation == Message::ComposerViewBase::LetUserConfirm && mComposerBase->editor()->isFormattingUsed() && !mForceDisableHtml ) {
+    int choice = KMessageBox::warningYesNoCancel( this, i18n( "Turning HTML mode off "
+        "will cause the text to lose the formatting. Are you sure?" ),
+        i18n( "Lose the formatting?" ), KGuiItem( i18n( "Lose Formatting" ) ), KGuiItem( i18n( "Add Markup Plain Text" ) ) , KStandardGuiItem::cancel(),
+              "LoseFormattingWarning" );
+
+    switch(choice) {
+    case KMessageBox::Cancel:
+        enableHtml();
+        return;
+    case KMessageBox::No:
+        forcePlainTextMarkup = true;
+        break;
+    case KMessageBox::Yes:
+        break;
+    }
+  }
+#else
   if ( confirmation == Message::ComposerViewBase::LetUserConfirm && mComposerBase->editor()->isFormattingUsed() && !mForceDisableHtml ) {
     int choice = KMessageBox::warningContinueCancel( this, i18n( "Turning HTML mode off "
         "will cause the text to lose the formatting. Are you sure?" ),
@@ -2935,7 +2955,9 @@ void KMComposeWin::disableHtml( Message::ComposerViewBase::Confirmation confirma
       return;
     }
   }
+#endif
 
+  mComposerBase->editor()->forcePlainTextMarkup(forcePlainTextMarkup);
   mComposerBase->editor()->switchToPlainText();
   mComposerBase->editor()->setActionsEnabled( false );
 
