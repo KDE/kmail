@@ -1409,11 +1409,6 @@ void KMComposeWin::setupActions( void )
   mCryptoModuleAction->setItems( l );
   mCryptoModuleAction->setToolTip( i18n( "Select a cryptographic format for this message" ) );
 
-  actionFormatReset = new KAction( KIcon( "draw-eraser" ), i18n("Reset Font Settings"), this );
-  actionFormatReset->setIconText( i18n("Reset Font") );
-  actionCollection()->addAction( "format_reset", actionFormatReset );
-  connect( actionFormatReset, SIGNAL(triggered(bool)), SLOT(slotFormatReset()) );
-
   mComposerBase->editor()->createActions( actionCollection() );
 
   createGUI( "kmcomposerui.rc" );
@@ -2915,7 +2910,6 @@ void KMComposeWin::enableHtml()
   if ( !markupAction->isChecked() )
     markupAction->setChecked( true );
 
-  mSaveFont = mComposerBase->editor()->currentFont();
   mComposerBase->editor()->updateActionStates();
   mComposerBase->editor()->setActionsEnabled( true );
 }
@@ -3219,12 +3213,6 @@ void KMComposeWin::slotFolderRemoved( const Akonadi::Collection & col )
   }
 }
 
-void KMComposeWin::slotFormatReset()
-{
-  mComposerBase->editor()->setTextBackgroundColor( palette().highlightedText().color() );
-  mComposerBase->editor()->setTextForegroundColor( palette().text().color() );
-  mComposerBase->editor()->setFont( mSaveFont );
-}
 
 void KMComposeWin::slotOverwriteModeChanged()
 {

@@ -328,7 +328,6 @@ class KMComposeWin : public KMail::Composer
     void slotCopy();
     void slotPaste();
     void slotPasteAsAttachment();
-    void slotFormatReset();
     void slotMarkAll();
     void slotTranslatorWasClosed();
 
@@ -632,14 +631,12 @@ class KMComposeWin : public KMail::Composer
     KToggleAction *mDictionaryAction, *mSnippetAction, *mTranslateAction;
 
     KToggleAction *markupAction;
-    KAction *actionFormatReset;
 
     CodecAction *mCodecAction;
     KSelectAction *mCryptoModuleAction;
 
     KAction *mFindText, *mFindNextText, *mReplaceText, *mSelectAll;
   
-    QFont mSaveFont;
     QSplitter *mHeadersToEditorSplitter;
     QWidget* mHeadersArea;
     QSplitter *mSplitter;
