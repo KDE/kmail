@@ -505,6 +505,8 @@ class KMAIL_EXPORT KMMainWidget : public QWidget
 
     void showMessagePopup(const Akonadi::Item&msg ,const KUrl&aUrl,const KUrl &imageUrl,const QPoint& aPoint, bool contactAlreadyExists, bool uniqueContactFound);
 
+    void showCollectionProperties( const QString &pageToShow );
+    void showCollectionPropertiesContinued( const QString &pageToShow );
 
   private slots:
     /**

@@ -25,7 +25,6 @@
 #include "composer.h"
 #include "searchwindow.h"
 #include "antispamwizard.h"
-#include "mailinglistpropertiesdialog.h"
 #include "statusbarlabel.h"
 #include "expirypropertiesdialog.h"
 #include "undostack.h"
@@ -53,6 +52,7 @@
 #include "collectionquotapage.h"
 #include "collectiontemplatespage.h"
 #include "collectionviewpage.h"
+#include "collectionmailinglistpage.h"
 #include "tagselectdialog.h"
 #include "archivemailagentinterface.h"
 
@@ -304,6 +304,7 @@ K_GLOBAL_STATIC( KMMainWidget::PtrList, theMainWidgetList )
       Akonadi::CollectionPropertiesDialog::registerPage( new CollectionQuotaPageFactory );
       Akonadi::CollectionPropertiesDialog::registerPage( new CollectionTemplatesPageFactory );
       Akonadi::CollectionPropertiesDialog::registerPage( new CollectionViewPageFactory );
+      Akonadi::CollectionPropertiesDialog::registerPage( new CollectionMailingListPageFactory );
 
       pagesRegistered = true;
     }
@@ -1633,10 +1634,7 @@ void KMMainWidget::slotPostToML()
 //-----------------------------------------------------------------------------
 void KMMainWidget::slotFolderMailingListProperties()
 {
-  if ( !mFolderTreeWidget || !mCurrentFolder )
-    return;
-
-  ( new KMail::MailingListFolderPropertiesDialog( this, mCurrentFolder ) )->show();
+  showCollectionProperties( QLatin1String( "KMail::CollectionMailingListPage" ) );
 }
 
 //-----------------------------------------------------------------------------
@@ -4635,24 +4633,29 @@ KAction *KMMainWidget::akonadiStandardAction( Akonadi::StandardMailActionManager
   return mAkonadiStandardActionManager->action( type );
 }
 
-
 void KMMainWidget::slotCollectionProperties()
+{
+  showCollectionProperties( QString() );
+}
+
+void KMMainWidget::showCollectionProperties( const QString &pageToShow )
 {
   if ( !mCurrentFolder )
     return;
 
   if ( Solid::Networking::status() == Solid::Networking::Unconnected ) {
     KMessageBox::information( this, i18n( "Network is unconnected, some infos from folder could not be updated." ) );
-    slotCollectionPropertiesContinued( 0 );
+    showCollectionPropertiesContinued( pageToShow );
   } else {
     const Akonadi::AgentInstance agentInstance = Akonadi::AgentManager::self()->instance( mCurrentFolder->collection().resource() );
     bool isOnline = agentInstance.isOnline();
     if (!isOnline) {
-	  slotCollectionPropertiesContinued( 0 );
+	  showCollectionPropertiesContinued( pageToShow );
     } else {
       Akonadi::CollectionAttributesSynchronizationJob *sync
           = new Akonadi::CollectionAttributesSynchronizationJob( mCurrentFolder->collection() );
       sync->setProperty( "collectionId", mCurrentFolder->collection().id() );
+      sync->setProperty( "pageToShow", pageToShow );	// note for dialog later
       connect( sync, SIGNAL(result(KJob*)),
                this, SLOT(slotCollectionPropertiesContinued(KJob*)) );
       sync->start();
@@ -4662,13 +4665,21 @@ void KMMainWidget::slotCollectionProperties()
 
 void KMMainWidget::slotCollectionPropertiesContinued( KJob* job )
 {
+  QString pageToShow;
   if ( job ) {
     Akonadi::CollectionAttributesSynchronizationJob *sync
         = dynamic_cast<Akonadi::CollectionAttributesSynchronizationJob *>( job );
     Q_ASSERT( sync );
     if ( sync->property( "collectionId" ) != mCurrentFolder->collection().id() )
       return;
+    pageToShow = sync->property( "pageToShow" ).toString();
   }
+
+  showCollectionPropertiesContinued( pageToShow );
+}
+
+void KMMainWidget::showCollectionPropertiesContinued( const QString &pageToShow )
+{
   Akonadi::CollectionFetchJob fetch( mCurrentFolder->collection(), Akonadi::CollectionFetchJob::Base );
   fetch.fetchScope().setIncludeStatistics( true );
   fetch.exec();
@@ -4680,12 +4691,16 @@ void KMMainWidget::slotCollectionPropertiesContinued( KJob* job )
                                           << QLatin1String( "Akonadi::CachePolicyPage" )
                                           << QLatin1String( "KMail::CollectionTemplatesPage" )
                                           << QLatin1String( "PimCommon::CollectionAclPage" )
+                                          << QLatin1String( "KMail::CollectionMailingListPage" )
                                           << QLatin1String( "KMail::CollectionQuotaPage" )
                                           << QLatin1String( "KMail::CollectionMaintenancePage" );
 
   Akonadi::CollectionPropertiesDialog *dlg = new Akonadi::CollectionPropertiesDialog( collection, pages, this );
   dlg->setCaption( i18nc( "@title:window", "Properties of Folder %1", collection.name() ) );
   dlg->resize( 500, 400 );
+  if ( !pageToShow.isEmpty() ) {			// show a specific page
+    dlg->setCurrentPage( pageToShow );
+  }
   dlg->show();
 }
 

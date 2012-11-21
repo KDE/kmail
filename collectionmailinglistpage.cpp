@@ -1,149 +1,134 @@
-/*******************************************************************************
-**
-** Filename   : mailinglistpropertiesdialog.cpp
-** Created on : 30 January, 2005
-** Copyright  : (c) 2005 Till Adam
-** Email      : adam@kde.org
-**
-*******************************************************************************/
+/* -*- mode: C++; c-file-style: "gnu" -*-
+  This file is part of KMail, the KDE mail client.
+  Copyright (c) 2005 Till Adam <adam@kde.org>
+  Copyright (c) 2011 Montel Laurent <montel@kde.org>
+  Copyright (c) 2012 Jonathan Marten <jjm@keelhaul.me.uk>
 
-/*******************************************************************************
-**  Copyright (c) 2011 Montel Laurent <montel@kde.org>
+  KMail is free software; you can redistribute it and/or modify it
+  under the terms of the GNU General Public License, version 2, as
+  published by the Free Software Foundation.
 
-**
-**   This program is free software; you can redistribute it and/or modify
-**   it under the terms of the GNU General Public License as published by
-**   the Free Software Foundation; either version 2 of the License, or
-**   (at your option) any later version.
-**
-**   In addition, as a special exception, the copyright holders give
-**   permission to link the code of this program with any edition of
-**   the Qt library by Trolltech AS, Norway (or with modified versions
-**   of Qt that use the same license as Qt), and distribute linked
-**   combinations including the two.  You must obey the GNU General
-**   Public License in all respects for all of the code used other than
-**   Qt.  If you modify this file, you may extend this exception to
-**   your version of the file, but you are not obligated to do so.  If
-**   you do not wish to do so, delete this exception statement from
-**   your version.
-*******************************************************************************/
+  KMail is distributed in the hope that it will be useful, but
+  WITHOUT ANY WARRANTY; without even the implied warranty of
+  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+  General Public License for more details.
 
-#include "mailinglistpropertiesdialog.h"
+  You should have received a copy of the GNU General Public License along
+  with this program; if not, write to the Free Software Foundation, Inc.,
+  51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
+*/
 
-#include <QLabel>
-#include <QGroupBox>
-#include <QCheckBox>
-#include <QPushButton>
-#include <QVBoxLayout>
-#include <QGridLayout>
 
-#include <kcombobox.h>
-#include <klocale.h>
-#include <keditlistwidget.h>
-#include <kdebug.h>
-#include <kmessagebox.h>
+#include "collectionmailinglistpage.h"
+#include "kmkernel.h"
+#include "mailkernel.h"
 #include "mailutil.h"
 #include "util.h"
+
 #include <akonadi/itemfetchjob.h>
 #include <akonadi/itemfetchscope.h>
 #include <akonadi/kmime/messageparts.h>
 
-using namespace KMail;
+#include <QGridLayout>
+#include <QLabel>
+#include <QCheckBox>
+#include <QGroupBox>
+#include <QPushButton>
+#include <QSpacerItem>
+#include <QVBoxLayout>
+
+#include <KComboBox>
+#include <KDialog>
+#include <KEditListWidget>
+#include <KLocale>
+#include <KMessageBox>
+#include <KSqueezedTextLabel>
+
 using namespace MailCommon;
 
-MailingListFolderPropertiesDialog::MailingListFolderPropertiesDialog( QWidget* parent, const QSharedPointer<FolderCollection> &col )
-    : KDialog( parent ),
-      mFolder( col )
+
+CollectionMailingListPage::CollectionMailingListPage(QWidget * parent) :
+    CollectionPropertiesPage( parent )
 {
-  setCaption( i18n( "Mailinglist Folder Properties" ) );
-  setButtons( Ok | Cancel );
-  setObjectName( "mailinglist_properties" );
-  setModal( false );
-  setAttribute( Qt::WA_DeleteOnClose );
-  QLabel* label;
+  setObjectName( QLatin1String( "KMail::CollectionMailingListPage" ) );
+  setPageTitle( i18nc( "@title:tab Mailing list settings for a folder.", "Mailing List" ) );
+}
+
+CollectionMailingListPage::~CollectionMailingListPage()
+{
+}
+
+bool CollectionMailingListPage::canHandle( const Akonadi::Collection &col ) const
+{
+  QSharedPointer<FolderCollection> fd = FolderCollection::forCollection( col, false );
+  return ( !CommonKernel->isSystemFolderCollection( col ) &&
+           !fd->isStructural() );
+}
+
+void CollectionMailingListPage::init(const Akonadi::Collection & col)
+{
+  mCurrentCollection = col;
+  mFolder = FolderCollection::forCollection( col, false );
+
   mLastItem = 0;
 
-  connect( this, SIGNAL(okClicked()), SLOT(slotOk()) );
+  QVBoxLayout *topLayout = new QVBoxLayout( this );
+  topLayout->setSpacing( KDialog::spacingHint() );
 
-  QVBoxLayout *topLayout = new QVBoxLayout( mainWidget() );
-  topLayout->setObjectName( "topLayout" );
-  topLayout->setSpacing( spacingHint() );
-
-  QGroupBox *mlGroup = new QGroupBox( i18n("Associated Mailing List" ), this );
-
-//  mlGroup->setColumnLayout( 0,  Qt::Vertical );
-  QGridLayout *groupLayout = new QGridLayout( mlGroup );
-  //mlGroup->layout()->addItem( groupLayout );
-  groupLayout->setSpacing( spacingHint() );
-  topLayout->addWidget( mlGroup );
-  setMainWidget( mlGroup );
-
-  mHoldsMailingList = new QCheckBox( i18n("&Folder holds a mailing list"), mlGroup );
+  mHoldsMailingList = new QCheckBox( i18n("Folder holds a mailing list"), this );
   connect( mHoldsMailingList, SIGNAL(toggled(bool)),
            SLOT(slotHoldsML(bool)) );
-  groupLayout->addWidget( mHoldsMailingList, 0, 0, 1, 3 );
+  topLayout->addWidget( mHoldsMailingList );
 
-  groupLayout->addItem( new QSpacerItem( 0, 10 ), 1, 0 );
+  mGroupWidget = new QWidget( this );
+  QGridLayout *groupLayout = new QGridLayout( mGroupWidget );
+  groupLayout->setSpacing( KDialog::spacingHint() );
 
-  mDetectButton = new QPushButton( i18n("Detect Automatically"), mlGroup );
-  mDetectButton->setEnabled( false );
+  mDetectButton = new QPushButton( i18n("Detect Automatically"), mGroupWidget );
   connect( mDetectButton, SIGNAL(pressed()),
            SLOT(slotDetectMailingList()) );
   groupLayout->addWidget( mDetectButton, 2, 1 );
 
   groupLayout->addItem( new QSpacerItem( 0, 10 ), 3, 0 );
 
-  label = new QLabel( i18n("Mailing list description:"), mlGroup );
-  label->setEnabled( false );
-  connect( mHoldsMailingList, SIGNAL(toggled(bool)),
-           label, SLOT(setEnabled(bool)) );
+  QLabel *label = new QLabel( i18n("Mailing list description:"), mGroupWidget );
   groupLayout->addWidget( label, 4, 0 );
-  mMLId = new QLabel( "", mlGroup );
-  mMLId->setBuddy( label );
+  mMLId = new KSqueezedTextLabel( "", mGroupWidget );
+  mMLId->setTextElideMode( Qt::ElideRight );
   groupLayout->addWidget( mMLId, 4, 1, 1, 2 );
-  mMLId->setEnabled( false );
 
   //FIXME: add QWhatsThis
-  label = new QLabel( i18n("Preferred handler:"), mlGroup );
-  label->setEnabled(false);
-  connect( mHoldsMailingList, SIGNAL(toggled(bool)),
-           label, SLOT(setEnabled(bool)) );
+  label = new QLabel( i18n("Preferred handler:"), mGroupWidget );
   groupLayout->addWidget( label, 5, 0 );
-  mMLHandlerCombo = new KComboBox( mlGroup );
+  mMLHandlerCombo = new KComboBox( mGroupWidget );
   mMLHandlerCombo->addItem( i18n("KMail"), MailingList::KMail );
   mMLHandlerCombo->addItem( i18n("Browser"), MailingList::Browser );
-  mMLHandlerCombo->setEnabled( false );
   groupLayout->addWidget( mMLHandlerCombo, 5, 1, 1, 2 );
   connect( mMLHandlerCombo, SIGNAL(activated(int)),
            SLOT(slotMLHandling(int)) );
   label->setBuddy( mMLHandlerCombo );
 
-  label = new QLabel( i18n("&Address type:"), mlGroup );
-  label->setEnabled(false);
-  connect( mHoldsMailingList, SIGNAL(toggled(bool)),
-           label, SLOT(setEnabled(bool)) );
+  label = new QLabel( i18n("Address type:"), mGroupWidget );
   groupLayout->addWidget( label, 6, 0 );
-  mAddressCombo = new KComboBox( mlGroup );
+  mAddressCombo = new KComboBox( mGroupWidget );
   label->setBuddy( mAddressCombo );
   groupLayout->addWidget( mAddressCombo, 6, 1 );
-  mAddressCombo->setEnabled( false );
 
   //FIXME: if the mailing list actions have either KAction's or toolbar buttons
   //       associated with them - remove this button since it's really silly
   //       here
-  QPushButton *handleButton = new QPushButton( i18n( "Invoke Handler" ), mlGroup );
-  handleButton->setEnabled( false );
+  QPushButton *handleButton = new QPushButton( i18n( "Invoke Handler" ), mGroupWidget );
   if( mFolder)
   {
-    connect( mHoldsMailingList, SIGNAL(toggled(bool)),
-             handleButton, SLOT(setEnabled(bool)) );
     connect( handleButton, SIGNAL(clicked()),
              SLOT(slotInvokeHandler()) );
+  } else {
+    handleButton->setEnabled( false );
   }
+
   groupLayout->addWidget( handleButton, 6, 2 );
 
-  mEditList = new KEditListWidget( mlGroup );
-  mEditList->setEnabled( false );
+  mEditList = new KEditListWidget( mGroupWidget );
   groupLayout->addWidget( mEditList, 7, 0, 1, 4 );
 
   QStringList el;
@@ -159,36 +144,29 @@ MailingListFolderPropertiesDialog::MailingListFolderPropertiesDialog( QWidget* p
   connect( mAddressCombo, SIGNAL(activated(int)),
            SLOT(slotAddressChanged(int)) );
 
-  load();
-  resize( QSize(295, 204).expandedTo(minimumSizeHint()) );
-  setAttribute(Qt::WA_WState_Polished);
+  topLayout->addWidget( mGroupWidget );
+  mGroupWidget->setEnabled( false );
 }
 
-MailingListFolderPropertiesDialog::~MailingListFolderPropertiesDialog()
+void CollectionMailingListPage::load( const Akonadi::Collection & col )
 {
-}
+  init( col );
 
-void MailingListFolderPropertiesDialog::slotOk()
-{
-  save();
-}
-
-void MailingListFolderPropertiesDialog::load()
-{
   if ( mFolder )
     mMailingList = mFolder->mailingList();
+
   mMLId->setText( (mMailingList.id().isEmpty() ? i18n("Not available") : mMailingList.id()) );
   mMLHandlerCombo->setCurrentIndex( mMailingList.handler() );
   mEditList->insertStringList( mMailingList.postUrls().toStringList() );
 
   mAddressCombo->setCurrentIndex( mLastItem );
   mHoldsMailingList->setChecked( mFolder && mFolder->isMailingListEnabled() );
+  slotHoldsML( mHoldsMailingList->isChecked() );
 }
 
-//-----------------------------------------------------------------------------
-void MailingListFolderPropertiesDialog::save()
+void CollectionMailingListPage::save( Akonadi::Collection & col )
 {
-  if( mFolder )
+  if ( mFolder )
   {
     // settings for mailingList
     mFolder->setMailingListEnabled( mHoldsMailingList && mHoldsMailingList->isChecked() );
@@ -198,18 +176,14 @@ void MailingListFolderPropertiesDialog::save()
 }
 
 //----------------------------------------------------------------------------
-void MailingListFolderPropertiesDialog::slotHoldsML( bool holdsML )
+void CollectionMailingListPage::slotHoldsML( bool holdsML )
 {
-  mMLHandlerCombo->setEnabled( holdsML );
-  if ( mFolder && mFolder->count() )
-    mDetectButton->setEnabled( holdsML );
-  mAddressCombo->setEnabled( holdsML );
-  mEditList->setEnabled( holdsML );
-  mMLId->setEnabled( holdsML );
+  mGroupWidget->setEnabled( holdsML );
+  mDetectButton->setEnabled( mFolder && mFolder->count()!=0 );
 }
 
 //----------------------------------------------------------------------------
-void MailingListFolderPropertiesDialog::slotDetectMailingList()
+void CollectionMailingListPage::slotDetectMailingList()
 {
   if ( !mFolder ) return; // in case the folder was just created
 
@@ -231,7 +205,7 @@ void MailingListFolderPropertiesDialog::slotDetectMailingList()
 }
 
 
-void MailingListFolderPropertiesDialog::slotFetchDone( KJob* job )
+void CollectionMailingListPage::slotFetchDone( KJob* job )
 {
   mDetectButton->setEnabled( true );
   if ( MailCommon::Util::showJobErrorMessage(job) ) {
@@ -240,7 +214,6 @@ void MailingListFolderPropertiesDialog::slotFetchDone( KJob* job )
   Akonadi::ItemFetchJob *fjob = dynamic_cast<Akonadi::ItemFetchJob*>( job );
   Q_ASSERT( fjob );
   Akonadi::Item::List items = fjob->items();
-
   const int maxchecks = 5;
   int num = items.size();
   for ( int i = --num ; ( i > num - maxchecks ) && ( i >= 0 ); --i ) {
@@ -253,9 +226,14 @@ void MailingListFolderPropertiesDialog::slotFetchDone( KJob* job )
     }
   }
   if ( !(mMailingList.features() & MailingList::Post) ) {
-    KMessageBox::error( this,
-                        i18n("KMail was unable to detect a mailing list in this folder. "
-                             "Please fill the addresses by hand.") );
+    if ( mMailingList.features() == MailingList::None ) {
+      KMessageBox::error( this,
+                          i18n("KMail was unable to detect any mailing list in this folder.") );
+    } else {
+      KMessageBox::error( this,
+                          i18n("KMail was unable to fully detect a mailing list in this folder. "
+                               "Please fill in the addresses by hand.") );
+    }
   } else {
     mMLId->setText( (mMailingList.id().isEmpty() ? i18n("Not available.") : mMailingList.id() ) );
     fillEditBox();
@@ -264,13 +242,13 @@ void MailingListFolderPropertiesDialog::slotFetchDone( KJob* job )
 }
 
 //----------------------------------------------------------------------------
-void MailingListFolderPropertiesDialog::slotMLHandling( int element )
+void CollectionMailingListPage::slotMLHandling( int element )
 {
   mMailingList.setHandler( static_cast<MailingList::Handler>( element ) );
 }
 
 //----------------------------------------------------------------------------
-void MailingListFolderPropertiesDialog::slotAddressChanged( int i )
+void CollectionMailingListPage::slotAddressChanged( int i )
 {
   fillMLFromWidgets();
   fillEditBox();
@@ -278,7 +256,7 @@ void MailingListFolderPropertiesDialog::slotAddressChanged( int i )
 }
 
 //----------------------------------------------------------------------------
-void MailingListFolderPropertiesDialog::fillMLFromWidgets()
+void CollectionMailingListPage::fillMLFromWidgets()
 {
   if ( !mHoldsMailingList->isChecked() )
     return;
@@ -325,7 +303,7 @@ void MailingListFolderPropertiesDialog::fillMLFromWidgets()
   }
 }
 
-void MailingListFolderPropertiesDialog::fillEditBox()
+void CollectionMailingListPage::fillEditBox()
 {
   mEditList->clear();
   switch ( mAddressCombo->currentIndex() ) {
@@ -349,9 +327,9 @@ void MailingListFolderPropertiesDialog::fillEditBox()
   }
 }
 
-void MailingListFolderPropertiesDialog::slotInvokeHandler()
+void CollectionMailingListPage::slotInvokeHandler()
 {
-  save();
+  save( mCurrentCollection );
   switch ( mAddressCombo->currentIndex() ) {
   case 0:
     KMail::Util::mailingListPost( mFolder );
@@ -373,4 +351,4 @@ void MailingListFolderPropertiesDialog::slotInvokeHandler()
   }
 }
 
-#include "mailinglistpropertiesdialog.moc"
+#include "collectionmailinglistpage.moc"
