@@ -3221,6 +3221,7 @@ void KMComposeWin::slotFolderRemoved( const Akonadi::Collection & col )
 
 void KMComposeWin::slotFormatReset()
 {
+  mComposerBase->editor()->setTextBackgroundColor( palette().highlightedText().color() );
   mComposerBase->editor()->setTextForegroundColor( palette().text().color() );
   mComposerBase->editor()->setFont( mSaveFont );
 }
