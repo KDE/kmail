@@ -3749,6 +3749,20 @@ void KMMainWidget::setupActions()
     action->setShortcut( QKeySequence( Qt::CTRL+Qt::Key_Space ) );
   }
   {
+    KAction *action = new KAction(i18n("Focus on First Folder"), this);
+    actionCollection()->addAction("focus_first_folder", action );
+    connect( action, SIGNAL(triggered(bool)),
+             mFolderTreeWidget->folderTreeView(), SLOT(slotFocusFirstFolder()) );
+    action->setShortcut( QKeySequence( Qt::CTRL + Qt::Key_Home ) );
+  }
+  {
+    KAction *action = new KAction(i18n("Focus on Last Folder"), this);
+    actionCollection()->addAction("focus_last_folder", action );
+    connect( action, SIGNAL(triggered(bool)),
+             mFolderTreeWidget->folderTreeView(), SLOT(slotFocusLastFolder()) );
+    action->setShortcut( QKeySequence( Qt::CTRL + Qt::Key_End ) );
+  }
+  {
     KAction *action = new KAction(i18n("Focus on Next Message"), this);
     actionCollection()->addAction("inc_current_message", action );
     connect( action, SIGNAL(triggered(bool)),
