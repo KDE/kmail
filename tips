@@ -12,18 +12,6 @@ subject and mailing lists with <em>Message-&gt;Create Filter</em>?</p>
 </html>
 </tip>
 
-<tip category="KMail|Filters">
-<html>
-<p>...that you can get rid of the &quot;[mailing list name]&quot;
-added to the subject of some mailing lists by using the <em>rewrite
-header</em> filter action? Just use
-<pre>rewrite header &quot;Subject&quot;
-   replace &quot;\s*\[mailing list name\]\s*&quot;
-   with &quot;&quot;</pre>
-</p>
-</html>
-</tip>
-
 <tip category="KMail|General">
 <html>
 <p>...that you can associate mailing lists with folders in the
