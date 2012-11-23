@@ -2764,6 +2764,16 @@ void KMMainWidget::slotFocusOnPrevMessage()
   mMessagePane->focusPreviousMessageItem( MessageList::Core::MessageTypeAny, true, false );
 }
 
+void KMMainWidget::slotSelectFirstMessage()
+{
+  mMessagePane->selectFirstMessageItem( MessageList::Core::MessageTypeAny, true );
+}
+
+void KMMainWidget::slotSelectLastMessage()
+{
+  mMessagePane->selectLastMessageItem( MessageList::Core::MessageTypeAny, true );
+}
+
 void KMMainWidget::slotSelectFocusedMessage()
 {
   mMessagePane->selectFocusedMessageItem(true );
@@ -3775,6 +3785,20 @@ void KMMainWidget::setupActions()
     connect( action, SIGNAL(triggered(bool)),
              this, SLOT(slotFocusOnPrevMessage()) );
     action->setShortcut( QKeySequence( Qt::ALT+Qt::Key_Left ) );
+  }
+  {
+    KAction *action = new KAction(i18n("Select First Message"), this);
+    actionCollection()->addAction("select_first_message", action );
+    connect ( action, SIGNAL(triggered(bool)),
+              this, SLOT(slotSelectFirstMessage()) );
+    action->setShortcut( QKeySequence( Qt::ALT + Qt::Key_Home ) );
+  }
+  {
+    KAction *action = new KAction(i18n("Select Last Message"), this);
+    actionCollection()->addAction("select_last_message", action );
+    connect ( action, SIGNAL(triggered(bool)),
+              this, SLOT(slotSelectLastMessage()) );
+    action->setShortcut( QKeySequence( Qt::ALT + Qt::Key_End ) );
   }
   {
     KAction *action = new KAction(i18n("Select Message with Focus"), this);

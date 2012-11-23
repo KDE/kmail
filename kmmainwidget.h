@@ -364,6 +364,8 @@ class KMAIL_EXPORT KMMainWidget : public QWidget
     void slotSelectPreviousUnreadMessage();
     void slotFocusOnNextMessage();
     void slotFocusOnPrevMessage();
+    void slotSelectFirstMessage();
+    void slotSelectLastMessage();
     void slotSelectFocusedMessage();
 
     void slotNextUnreadFolder();
