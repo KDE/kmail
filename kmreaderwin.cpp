@@ -110,6 +110,7 @@ KMReaderWin::KMReaderWin(QWidget *aParent,
   QVBoxLayout * vlay = new QVBoxLayout( this );
   vlay->setMargin( 0 );
   mViewer = new Viewer( this, mainWindow, mActionCollection );
+  mViewer->setExternalWindow( true );
   mViewer->setAppName( "KMail" );
   connect( mViewer, SIGNAL(urlClicked(Akonadi::Item,KUrl)),
            this, SLOT(slotUrlClicked(Akonadi::Item,KUrl)) );
