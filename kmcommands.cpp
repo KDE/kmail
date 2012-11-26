@@ -180,13 +180,13 @@ static void showJobError( KJob* job )
 }
 
 KMCommand::KMCommand( QWidget *parent )
-  : mResult( Undefined ), mDeletesItself( false ),
+  : mCountMsgs(0), mResult( Undefined ), mDeletesItself( false ),
     mEmitsCompletedItself( false ), mParent( parent )
 {
 }
 
 KMCommand::KMCommand( QWidget *parent, const Akonadi::Item &msg )
-  : mResult( Undefined ), mDeletesItself( false ),
+  : mCountMsgs(0), mResult( Undefined ), mDeletesItself( false ),
     mEmitsCompletedItself( false ), mParent( parent )
 {
   if ( msg.isValid() || msg.hasPayload<KMime::Message::Ptr>() ) {
@@ -195,7 +195,7 @@ KMCommand::KMCommand( QWidget *parent, const Akonadi::Item &msg )
 }
 
 KMCommand::KMCommand( QWidget *parent, const QList<Akonadi::Item> &msgList )
-  : mResult( Undefined ), mDeletesItself( false ),
+  : mCountMsgs(0), mResult( Undefined ), mDeletesItself( false ),
     mEmitsCompletedItself( false ), mParent( parent )
 {
   mMsgList = msgList;

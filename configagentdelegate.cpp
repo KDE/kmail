@@ -198,13 +198,11 @@ bool ConfigAgentDelegate::editorEvent ( QEvent* event, QAbstractItemModel* model
         switch ( event->type() ) {
         case QEvent::MouseButtonPress:
             return false;
-            break;
         case QEvent::MouseButtonRelease: {
             QPoint pos = buttonOpt.rect.bottomLeft() + option.rect.topLeft();
             const QString ident = index.data ( Akonadi::AgentInstanceModel::InstanceIdentifierRole ).toString();
             emit optionsClicked ( ident, pos );
             return true;
-            break;
         }
         default:
             return false;

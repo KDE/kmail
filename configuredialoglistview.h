@@ -18,8 +18,6 @@ protected:
   virtual void resizeEvent( QResizeEvent *e );
   virtual void showEvent( QShowEvent *e );
 
-private:
-  int mVisibleItem;
 };
 
 #endif // configuredialoglistview_h

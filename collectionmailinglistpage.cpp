@@ -48,7 +48,7 @@ using namespace MailCommon;
 
 
 CollectionMailingListPage::CollectionMailingListPage(QWidget * parent) :
-    CollectionPropertiesPage( parent )
+    CollectionPropertiesPage( parent ),mLastItem(0)
 {
   setObjectName( QLatin1String( "KMail::CollectionMailingListPage" ) );
   setPageTitle( i18nc( "@title:tab Mailing list settings for a folder.", "Mailing List" ) );
@@ -69,8 +69,6 @@ void CollectionMailingListPage::init(const Akonadi::Collection & col)
 {
   mCurrentCollection = col;
   mFolder = FolderCollection::forCollection( col, false );
-
-  mLastItem = 0;
 
   QVBoxLayout *topLayout = new QVBoxLayout( this );
   topLayout->setSpacing( KDialog::spacingHint() );

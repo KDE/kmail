@@ -45,7 +45,7 @@
 using namespace MailCommon;
 
 CollectionViewPage::CollectionViewPage(QWidget * parent) :
-    CollectionPropertiesPage( parent )
+    CollectionPropertiesPage( parent ), mIsLocalSystemFolder(false)
 {
   setObjectName( QLatin1String( "KMail::CollectionViewPage" ) );
   setPageTitle( i18nc( "@title:tab View settings for a folder.", "View" ) );

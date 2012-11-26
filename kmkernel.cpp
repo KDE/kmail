@@ -569,7 +569,7 @@ void KMKernel::openReader( bool onlyCheck )
 
   bool activate;
   if (ktmw) {
-    mWin = (KMMainWin *) ktmw;
+    mWin = static_cast<KMMainWin *>(ktmw);
     activate = !onlyCheck; // existing window: only activate if not --check
     if ( activate )
        mWin->show();

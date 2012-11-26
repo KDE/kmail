@@ -534,7 +534,6 @@ private:
   Akonadi::Collection mDestFolder;
   KPIM::ProgressItem *mProgressItem;
   MessageList::Core::MessageItemSetReference mRef;
-  bool mCompleteWithAddedMsg;
 };
 
 class KMAIL_EXPORT KMTrashMsgCommand : public KMMoveCommand
