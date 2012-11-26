@@ -87,7 +87,6 @@ public:
 
 private:
   KMailPart *mParent;
-  StatusbarProgressWidget *mLittleProgress;
 };
 
 #endif
