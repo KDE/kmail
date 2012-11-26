@@ -409,7 +409,7 @@ void KMReaderMainWin::slotMessagePopup(const Akonadi::Item&aMsg , const KUrl&aUr
 {
   mMsg = aMsg;
 
-  const QString email =  KPIMUtils::firstEmailAddress( aUrl.path() );
+  const QString email =  KPIMUtils::firstEmailAddress( aUrl.path() ).toLower();
   if ( aUrl.protocol() == "mailto" && !email.isEmpty()) {
     Akonadi::ContactSearchJob *job = new Akonadi::ContactSearchJob( this );
     job->setLimit( 1 );

@@ -248,7 +248,7 @@ namespace KMail {
 
     IdentityManager manager( true );
     const Identity defaultIdentity = manager.defaultIdentity();
-    const QString email = defaultIdentity.primaryEmailAddress();
+    const QString email = defaultIdentity.primaryEmailAddress().toLower();
 
     Akonadi::ContactSearchJob *job = new Akonadi::ContactSearchJob( this );
     job->setLimit( 1 );

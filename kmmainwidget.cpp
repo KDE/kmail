@@ -2939,7 +2939,7 @@ void KMMainWidget::slotMessagePopup(const Akonadi::Item&msg ,const KUrl&aUrl,con
 {
   updateMessageMenu();
 
-  const QString email =  KPIMUtils::firstEmailAddress( aUrl.path() );
+  const QString email =  KPIMUtils::firstEmailAddress( aUrl.path() ).toLower();
   if ( aUrl.protocol() == "mailto" && !email.isEmpty()) {
     Akonadi::ContactSearchJob *job = new Akonadi::ContactSearchJob( this );
     job->setLimit( 1 );
@@ -3204,11 +3204,12 @@ void KMMainWidget::setupActions()
     KAction *action = new KAction(KIcon("pgp-keys"), i18n("GnuPG Log Viewer"), this);
     actionCollection()->addAction("tools_start_kwatchgnupg", action );
     connect(action, SIGNAL(triggered(bool)), SLOT(slotStartWatchGnuPG()));
-    // disable action if no kwatchgnupg binary is around
-    bool usableKWatchGnupg = !KStandardDirs::findExe("kwatchgnupg").isEmpty();
 #ifdef Q_OS_WIN32
     // not ported yet, underlying infrastructure missing on Windows
-    usableKWatchGnupg = false;
+    const bool usableKWatchGnupg = false;
+#else
+    // disable action if no kwatchgnupg binary is around
+    bool usableKWatchGnupg = !KStandardDirs::findExe("kwatchgnupg").isEmpty();
 #endif
     action->setEnabled(usableKWatchGnupg);
   }
