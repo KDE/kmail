@@ -1836,10 +1836,8 @@ void KMMainWidget::slotDeletionCollectionResult(KJob* job)
 //-----------------------------------------------------------------------------
 void KMMainWidget::slotExpireAll()
 {
-  int ret = 0;
-
   if ( GlobalSettings::self()->warnBeforeExpire() ) {
-    ret = KMessageBox::warningContinueCancel(KMainWindow::memberList().first(),
+    const int ret = KMessageBox::warningContinueCancel(KMainWindow::memberList().first(),
                          i18n("Are you sure you want to expire all old messages?"),
                          i18n("Expire Old Messages?"), KGuiItem(i18n("Expire")));
     if (ret != KMessageBox::Continue) {
