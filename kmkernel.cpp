@@ -1614,8 +1614,9 @@ bool KMKernel::canQueryClose()
   if ( mSystemTray->mode() == GlobalSettings::EnumSystemTrayPolicy::ShowAlways ) {
     mSystemTray->hideKMail();
     return false;
-  } else if ( ( mSystemTray->mode() == GlobalSettings::EnumSystemTrayPolicy::ShowOnUnread ) && ( mSystemTray->hasUnreadMail() )) {
-    mSystemTray->setStatus( KStatusNotifierItem::Active );
+  } else if ( ( mSystemTray->mode() == GlobalSettings::EnumSystemTrayPolicy::ShowOnUnread ) ) {
+    if( mSystemTray->hasUnreadMail() )
+      mSystemTray->setStatus( KStatusNotifierItem::Active );
     mSystemTray->hideKMail();
     return false;
   }
