@@ -132,11 +132,6 @@ class KMAIL_EXPORT KMMainWidget : public QWidget
     */
     static const PtrList *mainWidgetList();
 
-    /**
-      Return the list of all action, in order to check shortcuts conflicts against them.
-    */
-    QList<QAction*> actionList();
-
     QLabel* vacationScriptIndicator() const;
     void updateVacationScriptStatus() { updateVacationScriptStatus( mVacationIndicatorActive ); }
 

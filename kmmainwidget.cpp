@@ -4430,13 +4430,6 @@ void KMMainWidget::initializeFilterActions()
 }
 
 //-----------------------------------------------------------------------------
-
-QList<QAction*> KMMainWidget::actionList()
-{
-  return actionCollection()->actions();
-}
-
-//-----------------------------------------------------------------------------
 void KMMainWidget::slotAntiSpamWizard()
 {
   AntiSpamWizard wiz( AntiSpamWizard::AntiSpam, this );
