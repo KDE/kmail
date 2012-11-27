@@ -1931,11 +1931,6 @@ Kleo::CryptoMessageFormat KMComposeWin::cryptoMessageFormat() const
   return cb2format( mCryptoModuleAction->currentItem() );
 }
 
-bool KMComposeWin::queryExit ()
-{
-  return true;
-}
-
 //-----------------------------------------------------------------------------
 void KMComposeWin::addAttach( KMime::Content *msgPart )
 {

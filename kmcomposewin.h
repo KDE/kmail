@@ -531,10 +531,6 @@ class KMComposeWin : public KMail::Composer
     virtual bool queryClose();
 
     /**
-     * prevent kmail from exiting when last window is deleted (kernel rules)
-     */
-    virtual bool queryExit();
-    /**
      * Turn encryption on/off. If setByUser is true then a message box is shown
      * in case encryption isn't possible.
      */
