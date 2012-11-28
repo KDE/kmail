@@ -281,6 +281,7 @@ void IdentityPage::slotContextMenu( IdentityListViewItem *item, const QPoint &po
   menu->addAction( i18n( "Add..." ), this, SLOT(slotNewIdentity()) );
   if ( item ) {
     menu->addAction( i18n( "Modify..." ), this, SLOT(slotModifyIdentity()) );
+    menu->addAction( i18n( "Rename" ), this, SLOT(slotRenameIdentity()) );
     if ( mIPage.mIdentityList->topLevelItemCount() > 1 ) {
       menu->addAction( i18n( "Remove" ), this, SLOT(slotRemoveIdentity()) );
     }
