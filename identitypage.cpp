@@ -309,6 +309,7 @@ void IdentityPage::slotSetAsDefault()
 
   mIdentityManager->setAsDefault( item->identity().uoid() );
   refreshList();
+  mIPage.mSetAsDefaultButton->setEnabled( false );
 }
 
 void IdentityPage::refreshList()
