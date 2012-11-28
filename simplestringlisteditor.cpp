@@ -84,17 +84,6 @@ SimpleStringListEditor::SimpleStringListEditor( QWidget * parent,
              this, SLOT(slotAdd()) );
   }
 
-  if ( buttons & Remove ) {
-    if ( removeLabel.isEmpty() )
-      mRemoveButton = new QPushButton( i18n("&Remove"), this );
-    else
-      mRemoveButton = new QPushButton( removeLabel, this );
-    mRemoveButton->setAutoDefault( false );
-    mRemoveButton->setEnabled( false ); // no selection yet
-    vlay->addWidget( mRemoveButton );
-    connect( mRemoveButton, SIGNAL(clicked()),
-             this, SLOT(slotRemove()) );
-  }
 
   if ( buttons & Modify ) {
     if ( modifyLabel.isEmpty() )
@@ -108,6 +97,18 @@ SimpleStringListEditor::SimpleStringListEditor( QWidget * parent,
              this, SLOT(slotModify()) );
     connect( mListBox, SIGNAL(itemDoubleClicked(QListWidgetItem*)),
              this, SLOT(slotModify()) );
+  }
+
+  if ( buttons & Remove ) {
+    if ( removeLabel.isEmpty() )
+      mRemoveButton = new QPushButton( i18n("&Remove"), this );
+    else
+      mRemoveButton = new QPushButton( removeLabel, this );
+    mRemoveButton->setAutoDefault( false );
+    mRemoveButton->setEnabled( false ); // no selection yet
+    vlay->addWidget( mRemoveButton );
+    connect( mRemoveButton, SIGNAL(clicked()),
+             this, SLOT(slotRemove()) );
   }
 
   if ( buttons & Up ) {
