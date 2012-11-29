@@ -97,6 +97,9 @@ namespace KMail {
                          "dialog, section Identity, to indicate the "
                          "default identity", "%1 (Default)",
                          ident.identityName() ) );
+      QFont fontItem(font(0));
+      fontItem.setBold(true);
+      setFont(0,fontItem);
     } else {
       setText( 0, ident.identityName() );
     }

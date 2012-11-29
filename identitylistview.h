@@ -36,7 +36,9 @@
 #include <QTreeWidget>
 #include <QTreeWidgetItem>
 
-namespace KPIMIdentities { class Identity; class IdentityManager;
+namespace KPIMIdentities {
+class Identity;
+class IdentityManager;
 }
 
 namespace KMail {
