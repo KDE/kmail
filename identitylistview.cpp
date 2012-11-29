@@ -101,6 +101,10 @@ namespace KMail {
       fontItem.setBold(true);
       setFont(0,fontItem);
     } else {
+      QFont fontItem(font(0));
+      fontItem.setBold(false);
+      setFont(0,fontItem);
+
       setText( 0, ident.identityName() );
     }
     setText( 1, ident.fullEmailAddr() );
@@ -123,6 +127,7 @@ namespace KMail {
     setHeaderLabels( QStringList() << i18n( "Identity Name" ) << i18n( "Email Address" ) );
     setRootIsDecorated( false );
     header()->setMovable( false );
+    header()->setResizeMode( QHeaderView::ResizeToContents );
     setAllColumnsShowFocus( true );
     setAlternatingRowColors( true );
     setSortingEnabled( true );
