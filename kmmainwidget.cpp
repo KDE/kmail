@@ -4676,11 +4676,28 @@ void KMMainWidget::slotCollectionPropertiesContinued( KJob* job )
 
 void KMMainWidget::showCollectionPropertiesContinued( const QString &pageToShow )
 {
-  Akonadi::CollectionFetchJob fetch( mCurrentFolder->collection(), Akonadi::CollectionFetchJob::Base );
-  fetch.fetchScope().setIncludeStatistics( true );
-  fetch.exec();
+  Akonadi::CollectionFetchJob *fetch = new Akonadi::CollectionFetchJob( mCurrentFolder->collection(),
+                                                                        Akonadi::CollectionFetchJob::Base );
+  fetch->fetchScope().setIncludeStatistics( true );
+  fetch->setProperty( "pageToShow", pageToShow );
+  connect( fetch, SIGNAL(result(KJob*)),
+           this, SLOT(slotCollectionPropertiesFinished(KJob*)) );
+}
 
-  const Akonadi::Collection collection = fetch.collections().first();
+void KMMainWidget::slotCollectionPropertiesFinished( KJob *job )
+{
+  if ( !job )
+    return;
+
+  Akonadi::CollectionFetchJob *fetch = dynamic_cast<Akonadi::CollectionFetchJob *>( job );
+  Q_ASSERT( fetch );
+  if ( fetch->collections().isEmpty() )
+  {
+    kWarning() << "no collection";
+    return;
+  }
+
+  const Akonadi::Collection collection = fetch->collections().first();
 
   const QStringList pages = QStringList() << QLatin1String( "MailCommon::CollectionGeneralPage" )
                                           << QLatin1String( "KMail::CollectionViewPage" )
@@ -4694,6 +4711,8 @@ void KMMainWidget::showCollectionPropertiesContinued( const QString &pageToShow 
   Akonadi::CollectionPropertiesDialog *dlg = new Akonadi::CollectionPropertiesDialog( collection, pages, this );
   dlg->setCaption( i18nc( "@title:window", "Properties of Folder %1", collection.name() ) );
   dlg->resize( 500, 400 );
+
+  const QString pageToShow = fetch->property( "pageToShow" ).toString();
   if ( !pageToShow.isEmpty() ) {			// show a specific page
     dlg->setCurrentPage( pageToShow );
   }

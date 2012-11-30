@@ -527,6 +527,7 @@ class KMAIL_EXPORT KMMainWidget : public QWidget
     void itemsFetchDone( KJob *job );
 
     void slotCollectionPropertiesContinued( KJob* job );
+    void slotCollectionPropertiesFinished( KJob *job );
     void slotDeletionCollectionResult(KJob* job);
     void slotServerSideSubscription();
     void slotFetchItemsForFolderDone(KJob*job);
