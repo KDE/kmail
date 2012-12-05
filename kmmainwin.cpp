@@ -152,9 +152,7 @@ void KMMainWin::slotNewMailReader()
 void KMMainWin::slotEditToolbars()
 {
   saveMainWindowSettings(KMKernel::self()->config()->group( "Main Window") );
-  KEditToolBar dlg(actionCollection(), this);
-  dlg.setResourceFile( "kmmainwin.rc" );
-
+  KEditToolBar dlg(guiFactory(), this);
   connect( &dlg, SIGNAL(newToolBarConfig()), SLOT(slotUpdateGui()) );
 
   dlg.exec();
