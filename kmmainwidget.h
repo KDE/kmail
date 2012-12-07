@@ -579,7 +579,7 @@ private:
     KAction *mExpireFolderAction,
       *mFolderMailingListPropertiesAction,
       *mShowFolderShortcutDialogAction,
-      *mArchiveFolderAction;
+      *mArchiveFolderAction, *mMessageNewList;
     KToggleAction *mPreferHtmlAction, *mPreferHtmlLoadExtAction;
 
     QTimer *menutimer;

@@ -3404,15 +3404,13 @@ void KMMainWidget::setupActions()
   connect( mTemplateMenu->menu(), SIGNAL(triggered(QAction*)), this,
            SLOT(slotNewFromTemplate(QAction*)) );
 
-  {
-    KAction *action = new KAction( KIcon( "mail-message-new-list" ),
+  mMessageNewList = new KAction( KIcon( "mail-message-new-list" ),
                                           i18n( "New Message t&o Mailing-List..." ),
                                           this );
-    actionCollection()->addAction("post_message", action );
-    connect( action, SIGNAL(triggered(bool)),
-             SLOT(slotPostToML()) );
-    action->setShortcut( QKeySequence( Qt::CTRL + Qt::SHIFT + Qt::Key_N ) );
-  }
+  actionCollection()->addAction("post_message",  mMessageNewList);
+  connect( mMessageNewList, SIGNAL(triggered(bool)),
+           SLOT(slotPostToML()) );
+  mMessageNewList->setShortcut( QKeySequence( Qt::CTRL + Qt::SHIFT + Qt::Key_N ) );
 
   mSendAgainAction = new KAction(i18n("Send A&gain..."), this);
   actionCollection()->addAction("send_again", mSendAgainAction );
@@ -4087,7 +4085,7 @@ void KMMainWidget::updateMessageActionsDelayed()
   actionCollection()->action( "send_queued_via" )->setEnabled( nbMsgOutboxCollection > 0 );
 
   const bool newPostToMailingList = mCurrentFolder && mCurrentFolder->isMailingListEnabled();
-  actionCollection()->action( "post_message" )->setEnabled(newPostToMailingList);
+  mMessageNewList->setEnabled(newPostToMailingList);
 
   slotUpdateOnlineStatus( static_cast<GlobalSettingsBase::EnumNetworkState::type>( GlobalSettings::self()->networkState() ) );
   if (action( "kmail_undo" ))
