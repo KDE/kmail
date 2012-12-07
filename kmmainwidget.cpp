@@ -4085,6 +4085,9 @@ void KMMainWidget::updateMessageActionsDelayed()
   actionCollection()->action( "send_queued" )->setEnabled( nbMsgOutboxCollection > 0 );
   actionCollection()->action( "send_queued_via" )->setEnabled( nbMsgOutboxCollection > 0 );
 
+  const bool newPostToMailingList = mCurrentFolder && mCurrentFolder->isMailingListEnabled();
+  actionCollection()->action( "post_message" )->setEnabled(newPostToMailingList);
+
   slotUpdateOnlineStatus( static_cast<GlobalSettingsBase::EnumNetworkState::type>( GlobalSettings::self()->networkState() ) );
   if (action( "kmail_undo" ))
     action( "kmail_undo" )->setEnabled( kmkernel->undoStack()->size() > 0 );
