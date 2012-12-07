@@ -124,6 +124,9 @@ class KMAIL_EXPORT KMMainWidget : public QWidget
     KActionMenu *mailingListActionMenu() const { return mMsgActions->mailingListActionMenu(); }
     KAction *editAction() const { return mMsgActions->editAction(); }
     KAction *sendAgainAction() const { return mSendAgainAction; }
+    KAction *sendQueuedAction() const { return mSendQueued; }
+    KActionMenu *sendQueueViaMenu() const { return mSendActionMenu; }
+
     KMail::MessageActions *messageActions() const { return mMsgActions; }
 
     /**
@@ -540,6 +543,7 @@ private:
       *mSendAgainAction, *mApplyAllFiltersAction,
       *mSaveAttachmentsAction, *mOpenAction,
       *mMoveMsgToFolderAction, *mCollectionProperties, *mSendQueued;
+    KActionMenu *mSendActionMenu;
     // Filter actions
     KActionMenu *mFilterMenu;
     KAction *mExpireConfigAction;

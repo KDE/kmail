@@ -33,6 +33,8 @@
 #include <kdebug.h>
 #include <KMenu>
 #include <KLocale>
+#include <KAction>
+#include <KActionMenu>
 #include <KActionCollection>
 
 #include <QPainter>
@@ -116,10 +118,11 @@ void KMSystemTray::buildPopupMenu()
     contextMenu()->addAction( action );
   if ( ( action = mainWidget->action("check_mail_in") ) )
     contextMenu()->addAction( action );
-  if ( ( mSendQueued = mainWidget->action("send_queued") ) )
-    contextMenu()->addAction( mSendQueued );
-  if ( ( action = mainWidget->action("send_queued_via") ) )
-    contextMenu()->addAction( action );
+
+  mSendQueued = mainWidget->sendQueuedAction();
+  contextMenu()->addAction( mSendQueued );
+  contextMenu()->addAction( mainWidget->sendQueueViaMenu() );
+
   contextMenu()->addSeparator();
   if ( ( action = mainWidget->action("new_message") ) )
     contextMenu()->addAction( action );
