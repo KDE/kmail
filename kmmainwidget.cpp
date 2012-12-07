@@ -1625,10 +1625,11 @@ void KMMainWidget::newFromTemplate( const Akonadi::Item &msg )
 void KMMainWidget::slotPostToML()
 {
   if ( mCurrentFolder && mCurrentFolder->isMailingListEnabled() ) {
-    KMail::Util::mailingListPost( mCurrentFolder );
+    if(KMail::Util::mailingListPost( mCurrentFolder )) {
+        return;
+    }
   }
-  else
-    slotCompose();
+  slotCompose();
 }
 
 //-----------------------------------------------------------------------------

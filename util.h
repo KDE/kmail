@@ -102,13 +102,14 @@ namespace Util {
     void handleClickedURL( const KUrl &url );
 
 
-    void mailingListsHandleURL( const KUrl::List& lst,const QSharedPointer<MailCommon::FolderCollection> &folder );
+    bool mailingListsHandleURL( const KUrl::List& lst,const QSharedPointer<MailCommon::FolderCollection> &folder );
 
-    void mailingListPost( const QSharedPointer<MailCommon::FolderCollection> &fd );
-    void mailingListSubscribe( const QSharedPointer<MailCommon::FolderCollection> &fd );
-    void mailingListUnsubscribe( const QSharedPointer<MailCommon::FolderCollection> &fd );
-    void mailingListArchives( const QSharedPointer<MailCommon::FolderCollection> &fd );
-    void mailingListHelp( const QSharedPointer<MailCommon::FolderCollection> &fd );
+    bool mailingListPost( const QSharedPointer<MailCommon::FolderCollection> &fd );
+    bool mailingListSubscribe( const QSharedPointer<MailCommon::FolderCollection> &fd );
+    bool mailingListUnsubscribe( const QSharedPointer<MailCommon::FolderCollection> &fd );
+    bool mailingListArchives( const QSharedPointer<MailCommon::FolderCollection> &fd );
+    bool mailingListHelp( const QSharedPointer<MailCommon::FolderCollection> &fd );
+
     void lastEncryptAndSignState(bool &lastEncrypt, bool &lastSign, const KMime::Message::Ptr& msg);
 
     QColor misspelledColor();

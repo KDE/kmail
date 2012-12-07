@@ -158,7 +158,7 @@ void KMail::Util::handleClickedURL( const KUrl &url, const QSharedPointer<MailCo
   }
 }
 
-void KMail::Util::mailingListsHandleURL( const KUrl::List& lst,const QSharedPointer<MailCommon::FolderCollection> &folder )
+bool KMail::Util::mailingListsHandleURL( const KUrl::List& lst,const QSharedPointer<MailCommon::FolderCollection> &folder )
 {
   const QString handler = ( folder->mailingList().handler() == MailingList::KMail )
     ? QLatin1String( "mailto" ) : QLatin1String( "https" );
@@ -177,39 +177,46 @@ void KMail::Util::mailingListsHandleURL( const KUrl::List& lst,const QSharedPoin
 
   if ( !urlToHandle.isEmpty() ) {
     KMail::Util::handleClickedURL( urlToHandle, folder );
+    return true;
   } else {
     kWarning()<< "Can't handle url";
+    return false;
   }
 }
 
-void KMail::Util::mailingListPost( const QSharedPointer<MailCommon::FolderCollection> &fd )
+bool KMail::Util::mailingListPost( const QSharedPointer<MailCommon::FolderCollection> &fd )
 {
   if ( fd )
-    KMail::Util::mailingListsHandleURL( fd->mailingList().postUrls(),fd );
+    return KMail::Util::mailingListsHandleURL( fd->mailingList().postUrls(),fd );
+  return false;
 }
 
-void KMail::Util::mailingListSubscribe( const QSharedPointer<MailCommon::FolderCollection> &fd )
+bool KMail::Util::mailingListSubscribe( const QSharedPointer<MailCommon::FolderCollection> &fd )
 {
   if ( fd )
-    KMail::Util::mailingListsHandleURL( fd->mailingList().subscribeUrls(),fd );
+    return KMail::Util::mailingListsHandleURL( fd->mailingList().subscribeUrls(),fd );
+  return false;
 }
 
-void KMail::Util::mailingListUnsubscribe( const QSharedPointer<MailCommon::FolderCollection> &fd )
+bool KMail::Util::mailingListUnsubscribe( const QSharedPointer<MailCommon::FolderCollection> &fd )
 {
   if ( fd )
-    KMail::Util::mailingListsHandleURL( fd->mailingList().unsubscribeUrls(),fd );
+    return KMail::Util::mailingListsHandleURL( fd->mailingList().unsubscribeUrls(),fd );
+  return false;
 }
 
-void KMail::Util::mailingListArchives( const QSharedPointer<MailCommon::FolderCollection> &fd )
+bool KMail::Util::mailingListArchives( const QSharedPointer<MailCommon::FolderCollection> &fd )
 {
   if ( fd )
-    KMail::Util::mailingListsHandleURL( fd->mailingList().archiveUrls(),fd );
+    return KMail::Util::mailingListsHandleURL( fd->mailingList().archiveUrls(),fd );
+  return false;
 }
 
-void KMail::Util::mailingListHelp( const QSharedPointer<MailCommon::FolderCollection> &fd )
+bool KMail::Util::mailingListHelp( const QSharedPointer<MailCommon::FolderCollection> &fd )
 {
   if ( fd )
-    KMail::Util::mailingListsHandleURL( fd->mailingList().helpUrls(),fd );
+    return KMail::Util::mailingListsHandleURL( fd->mailingList().helpUrls(),fd );
+  return false;
 }
 
 void KMail::Util::lastEncryptAndSignState(bool &lastEncrypt, bool &lastSign, const KMime::Message::Ptr& msg)
