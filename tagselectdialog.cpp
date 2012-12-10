@@ -63,15 +63,15 @@ TagSelectDialog::TagSelectDialog( QWidget * parent, int numberOfSelectedMessages
   mainLayout->addWidget(listWidgetSearchLine);
   mainLayout->addWidget( mListTag );
   
-  QList<Tag::Ptr> tagList;
+  QList<MailCommon::Tag::Ptr> tagList;
   foreach( const Nepomuk2::Tag &nepomukTag, Nepomuk2::Tag::allTags() ) {
-    tagList.append( Tag::fromNepomuk( nepomukTag ) );
+    tagList.append( MailCommon::Tag::fromNepomuk( nepomukTag ) );
   }
-  qSort( tagList.begin(), tagList.end(), KMail::Tag::compare );
+  qSort( tagList.begin(), tagList.end(), MailCommon::Tag::compare );
 
   Nepomuk2::Resource itemResource( selectedItem.url() );
 
-  foreach( const Tag::Ptr &tag, tagList ) {
+  foreach( const MailCommon::Tag::Ptr &tag, tagList ) {
     if(tag->tagStatus)
       continue;
     QListWidgetItem *item = new QListWidgetItem(KIcon(tag->iconName), tag->tagName, mListTag );

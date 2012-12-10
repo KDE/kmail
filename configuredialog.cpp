@@ -42,7 +42,6 @@
 #include "folderrequester.h"
 #include "kmmainwidget.h"
 #include "composer.h"
-#include "tag.h"
 #include "accountconfigorderdialog.h"
 #include "util.h"
 
@@ -77,6 +76,8 @@ using KPIM::RecentAddresses;
 #include "templateparser/globalsettings_base.h"
 #include "mailcommon/mailutil.h"
 #include "mailcommon/tagwidget.h"
+#include "mailcommon/tag.h"
+
 #include "messagecomposer/messagecomposersettings.h"
 #include <soprano/nao.h>
 
@@ -1667,12 +1668,12 @@ TagListWidgetItem::~TagListWidgetItem()
 {
 }
 
-void TagListWidgetItem::setKMailTag( const KMail::Tag::Ptr& tag )
+void TagListWidgetItem::setKMailTag( const MailCommon::Tag::Ptr& tag )
 {
   mTag = tag;
 }
 
-KMail::Tag::Ptr TagListWidgetItem::kmailTag() const
+MailCommon::Tag::Ptr TagListWidgetItem::kmailTag() const
 {
   return mTag;
 }
@@ -1881,7 +1882,7 @@ void AppearancePage::MessageTagTab::slotRecordTagSettings( int aIndex )
   QListWidgetItem *item = mTagListBox->item( aIndex );
   TagListWidgetItem *tagItem = static_cast<TagListWidgetItem*>( item );
 
-  KMail::Tag::Ptr tmp_desc = tagItem->kmailTag();
+  MailCommon::Tag::Ptr tmp_desc = tagItem->kmailTag();
 
   tmp_desc->tagName = tagItem->text();
 
@@ -1920,7 +1921,7 @@ void AppearancePage::MessageTagTab::slotUpdateTagSettingWidgets( int aIndex )
   mTagDownButton->setEnabled(( ( int( mTagListBox->count() ) - 1 ) != aIndex ) );
   QListWidgetItem * item = mTagListBox->currentItem();
   TagListWidgetItem *tagItem = static_cast<TagListWidgetItem*>( item );
-  KMail::Tag::Ptr tmp_desc = tagItem->kmailTag();
+  MailCommon::Tag::Ptr tmp_desc = tagItem->kmailTag();
 
   mTagRemoveButton->setEnabled( !tmp_desc->tagStatus );
 
@@ -1965,7 +1966,7 @@ void AppearancePage::MessageTagTab::slotRemoveTag()
   if ( tmp_index >= 0 ) {
     QListWidgetItem * item = mTagListBox->takeItem( mTagListBox->currentRow() );
     TagListWidgetItem *tagItem = static_cast<TagListWidgetItem*>( item );
-    KMail::Tag::Ptr tmp_desc = tagItem->kmailTag();
+    MailCommon::Tag::Ptr tmp_desc = tagItem->kmailTag();
     Nepomuk2::Tag nepomukTag( tmp_desc->nepomukResourceUri );
     nepomukTag.remove();
     mPreviousTag = -1;
@@ -2043,7 +2044,7 @@ void AppearancePage::MessageTagTab::slotAddNewTag()
   Nepomuk2::Tag nepomukTag( newTagName );
   nepomukTag.setLabel( newTagName );
 
-  KMail::Tag::Ptr tag = KMail::Tag::fromNepomuk( nepomukTag );
+  MailCommon::Tag::Ptr tag = MailCommon::Tag::fromNepomuk( nepomukTag );
   tag->priority = tmp_priority;
   slotEmitChangeCheck();
   TagListWidgetItem *newItem = new TagListWidgetItem( KIcon( tag->iconName ), newTagName,  mTagListBox );
@@ -2059,15 +2060,15 @@ void AppearancePage::MessageTagTab::doLoadFromGlobalSettings()
     return;
 
   mTagListBox->clear();
-  QList<KMail::TagPtr> msgTagList;
+  QList<MailCommon::TagPtr> msgTagList;
   foreach( const Nepomuk2::Tag &nepomukTag, Nepomuk2::Tag::allTags() ) {
-    KMail::Tag::Ptr tag = KMail::Tag::fromNepomuk( nepomukTag );
+    MailCommon::Tag::Ptr tag = MailCommon::Tag::fromNepomuk( nepomukTag );
     msgTagList.append( tag );
   }
 
-  qSort( msgTagList.begin(), msgTagList.end(), KMail::Tag::compare );
+  qSort( msgTagList.begin(), msgTagList.end(), MailCommon::Tag::compare );
 
-  foreach( const KMail::Tag::Ptr& tag, msgTagList ) {
+  foreach( const MailCommon::Tag::Ptr& tag, msgTagList ) {
     TagListWidgetItem *newItem = new TagListWidgetItem( KIcon( tag->iconName ), tag->tagName, mTagListBox );
     newItem->setKMailTag( tag );
     if ( tag->priority == -1 )
@@ -2087,8 +2088,8 @@ void AppearancePage::MessageTagTab::doLoadFromGlobalSettings()
 
   // Save the original list
   mOriginalMsgTagList.clear();
-  foreach( const KMail::TagPtr &tag, msgTagList ) {
-    mOriginalMsgTagList.append( KMail::TagPtr( new KMail::Tag( *tag ) ) );
+  foreach( const MailCommon::TagPtr &tag, msgTagList ) {
+    mOriginalMsgTagList.append( MailCommon::TagPtr( new MailCommon::Tag( *tag ) ) );
   }
 }
 
@@ -2118,16 +2119,16 @@ void AppearancePage::MessageTagTab::save()
   const int numberOfMsgTagList = count;
   for ( int i=0; i < numberOfMsgTagList; ++i ) {
     if ( ( i>=mOriginalMsgTagList.count() ) || *(tagItem->kmailTag()) != *(mOriginalMsgTagList[i]) ) {
-      KMail::Tag::Ptr tag = tagItem->kmailTag();
+      MailCommon::Tag::Ptr tag = tagItem->kmailTag();
       tag->priority = i;
 
-      KMail::Tag::SaveFlags saveFlags = 0;
+      MailCommon::Tag::SaveFlags saveFlags = 0;
       if ( mTagWidget->textColorCheck()->isChecked() )
-        saveFlags |= KMail::Tag::TextColor;
+        saveFlags |= MailCommon::Tag::TextColor;
       if ( mTagWidget->backgroundColorCheck()->isChecked() )
-        saveFlags |= KMail::Tag::BackgroundColor;
+        saveFlags |= MailCommon::Tag::BackgroundColor;
       if ( mTagWidget->textFontCheck()->isChecked() )
-        saveFlags |= KMail::Tag::Font;
+        saveFlags |= MailCommon::Tag::Font;
       tag->saveToNepomuk( saveFlags );
     }
   }

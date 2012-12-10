@@ -107,7 +107,6 @@ if (NOT WINCE AND KDEPIM_BUILD_DESKTOP)
      attachmentview.cpp
      archivefolderdialog.cpp
      searchdescriptionattribute.cpp
-     tag.cpp
      tagactionmanager.cpp
      foldershortcutactionmanager.cpp
      addressvalidationjob.cpp
@@ -121,13 +120,6 @@ if (NOT WINCE AND KDEPIM_BUILD_DESKTOP)
      identityeditvcarddialog.cpp
      identityaddvcarddialog.cpp
      attachmentmissingwarning.cpp
-  )
-
-  soprano_add_ontology(kmailprivate_LIB_SRCS
-    ${CMAKE_SOURCE_DIR}/messagecore/messagetag.trig
-    "MessageTag"
-    "Vocabulary"
-    "trig"
   )
 
   # TODO PORT

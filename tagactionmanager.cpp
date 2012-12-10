@@ -109,7 +109,7 @@ void TagActionManager::clearActions()
   mMessageTagToggleMapper = 0;
 }
 
-void TagActionManager::createTagAction( const Tag::Ptr &tag, bool addToMenu )
+void TagActionManager::createTagAction( const MailCommon::Tag::Ptr &tag, bool addToMenu )
 {
   QString cleanName( i18n("Message Tag %1", tag->tagName ) );
   cleanName.replace('&',"&&");
@@ -165,7 +165,7 @@ void TagActionManager::createTagActions()
   // Create a action for each tag and plug it into various places
   int i = 0;
   const int numberOfTag(mTags.count());
-  foreach( const Tag::Ptr &tag, mTags ) {
+  foreach( const MailCommon::Tag::Ptr &tag, mTags ) {
     if(tag->tagStatus)
       continue;
     if ( i< s_numberMaxTag )
@@ -199,7 +199,7 @@ void TagActionManager::newTagEntries (const QList<Nepomuk2::Query::Result> &resu
 {
   foreach (const Nepomuk2::Query::Result &result, results) {
     Nepomuk2::Resource resource = result.resource();
-    mTags.append( Tag::fromNepomuk( resource ) );
+    mTags.append( MailCommon::Tag::fromNepomuk( resource ) );
   }
 }
 
@@ -209,7 +209,7 @@ void TagActionManager::finishedTagListing()
   mTagQueryClient = 0;
   if ( mTags.isEmpty() )
     return;
-  qSort( mTags.begin(), mTags.end(), KMail::Tag::compare );
+  qSort( mTags.begin(), mTags.end(), MailCommon::Tag::compare );
   createTagActions();
 }
 

@@ -78,7 +78,7 @@ namespace TemplateParser {
   class TemplatesConfiguration;
 }
 
-namespace KMail {
+namespace MailCommon {
   class Tag;
   typedef QSharedPointer<Tag> TagPtr;
 }
@@ -397,10 +397,10 @@ public:
   explicit TagListWidgetItem( const QIcon & icon, const QString & text, QListWidget * parent = 0);
 
   ~TagListWidgetItem();
-  void setKMailTag( const KMail::Tag::Ptr& tag );
-  KMail::Tag::Ptr kmailTag() const;
+  void setKMailTag( const MailCommon::Tag::Ptr& tag );
+  MailCommon::Tag::Ptr kmailTag() const;
 private:
-  KMail::Tag::Ptr mTag;
+  MailCommon::Tag::Ptr mTag;
 };
 
 /**Configuration tab in the appearance page for modifying the available set of
@@ -475,7 +475,7 @@ private: // data
   MailCommon::TagWidget *mTagWidget;
 
   // So we can compare to mMsgTagList and see if the user changed tags
-  QList<KMail::TagPtr> mOriginalMsgTagList;
+  QList<MailCommon::TagPtr> mOriginalMsgTagList;
 
   /*Used to safely call slotRecordTagSettings when the selection in
     list box changes*/
