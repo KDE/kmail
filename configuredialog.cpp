@@ -2122,13 +2122,7 @@ void AppearancePage::MessageTagTab::save()
       MailCommon::Tag::Ptr tag = tagItem->kmailTag();
       tag->priority = i;
 
-      MailCommon::Tag::SaveFlags saveFlags = 0;
-      if ( mTagWidget->textColorCheck()->isChecked() )
-        saveFlags |= MailCommon::Tag::TextColor;
-      if ( mTagWidget->backgroundColorCheck()->isChecked() )
-        saveFlags |= MailCommon::Tag::BackgroundColor;
-      if ( mTagWidget->textFontCheck()->isChecked() )
-        saveFlags |= MailCommon::Tag::Font;
+      MailCommon::Tag::SaveFlags saveFlags = mTagWidget->saveFlags();
       tag->saveToNepomuk( saveFlags );
     }
   }
