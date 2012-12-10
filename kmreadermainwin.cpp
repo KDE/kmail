@@ -451,11 +451,12 @@ void KMReaderMainWin::showMessagePopup(const Akonadi::Item&msg ,const KUrl&url,c
 
   bool urlMenuAdded = false;
   bool copyAdded = false;
+  const bool messageHasPayload = msg.hasPayload<KMime::Message::Ptr>();
   if ( !url.isEmpty() ) {
     if ( url.protocol() == QLatin1String( "mailto" ) ) {
       // popup on a mailto URL
       menu->addAction( mReaderWin->mailToComposeAction() );
-      if ( msg.hasPayload<KMime::Message::Ptr>() ) {
+      if ( messageHasPayload ) {
         menu->addAction( mReaderWin->mailToReplyAction() );
         menu->addAction( mReaderWin->mailToForwardAction() );
         menu->addSeparator();
@@ -492,8 +493,10 @@ void KMReaderMainWin::showMessagePopup(const Akonadi::Item&msg ,const KUrl&url,c
     if ( urlMenuAdded ) {
       menu->addSeparator();
     }
-    menu->addAction( mMsgActions->replyMenu() );
-    menu->addSeparator();
+    if(messageHasPayload) {
+      menu->addAction( mMsgActions->replyMenu() );
+      menu->addSeparator();
+    }
     if( !copyAdded )
       menu->addAction( mReaderWin->copyAction() );
     menu->addAction( mReaderWin->selectAllAction() );
@@ -505,49 +508,47 @@ void KMReaderMainWin::showMessagePopup(const Akonadi::Item&msg ,const KUrl&url,c
     menu->addAction( mReaderWin->speakTextAction());
   } else if ( !urlMenuAdded ) {
     // popup somewhere else (i.e., not a URL) on the message
-    if (!msg.hasPayload<KMime::Message::Ptr>() ) {
-      // no message
-      delete menu;
-      return;
-    }
-    bool replyForwardMenu = false;
-    Akonadi::Collection col = parentCollection();
-    if ( col.isValid() ) {
-      if ( ! ( CommonKernel->folderIsSentMailFolder( col ) ||
-               CommonKernel->folderIsDrafts( col ) ||
-               CommonKernel->folderIsTemplates( col ) ) ) {
+    if (messageHasPayload) {
+      bool replyForwardMenu = false;
+      Akonadi::Collection col = parentCollection();
+      if ( col.isValid() ) {
+        if ( ! ( CommonKernel->folderIsSentMailFolder( col ) ||
+                 CommonKernel->folderIsDrafts( col ) ||
+                 CommonKernel->folderIsTemplates( col ) ) ) {
+          replyForwardMenu = true;
+        }
+      } else if ( messageHasPayload ) {
         replyForwardMenu = true;
       }
-    } else if ( msg.hasPayload<KMime::Message::Ptr>() ) {
-      replyForwardMenu = true;
-    }
-    if ( replyForwardMenu ) {
-        // add the reply and forward actions only if we are not in a sent-mail,
-        // templates or drafts folder
-        menu->addAction( mMsgActions->replyMenu() );
-        menu->addAction( mMsgActions->forwardMenu() );
+      if ( replyForwardMenu ) {
+          // add the reply and forward actions only if we are not in a sent-mail,
+          // templates or drafts folder
+          menu->addAction( mMsgActions->replyMenu() );
+          menu->addAction( mMsgActions->forwardMenu() );
+          menu->addSeparator();
+      }
+      menu->addAction( copyActionMenu(menu) );
+
+      menu->addSeparator();
+      if(!imageUrl.isEmpty()) {
         menu->addSeparator();
-    }
-    menu->addAction( copyActionMenu(menu) );
+        menu->addAction( mReaderWin->copyImageLocation());
+        menu->addAction( mReaderWin->downloadImageToDiskAction());
+        menu->addSeparator();
+      }
 
-    menu->addSeparator();
-    if(!imageUrl.isEmpty()) {
-      menu->addSeparator();
-      menu->addAction( mReaderWin->copyImageLocation());
-      menu->addAction( mReaderWin->downloadImageToDiskAction());
-      menu->addSeparator();
-    }
-
-    menu->addAction( mReaderWin->viewSourceAction() );
-    menu->addAction( mReaderWin->toggleFixFontAction() );
-    menu->addAction( mReaderWin->toggleMimePartTreeAction() );
-    menu->addSeparator();
-    menu->addAction( mMsgActions->printAction() );
-    menu->addAction( mReaderWin->saveAsAction() );
-    menu->addAction( mSaveAtmAction );
-    if ( msg.isValid() ) {
-      menu->addSeparator();
-      menu->addAction( mMsgActions->createTodoAction() );
+      menu->addAction( mReaderWin->viewSourceAction() );
+      menu->addAction( mReaderWin->toggleFixFontAction() );
+      menu->addAction( mReaderWin->toggleMimePartTreeAction() );
+      menu->addAction( mReaderWin->saveAsAction() );
+      menu->addAction( mSaveAtmAction );
+      if ( msg.isValid() ) {
+        menu->addSeparator();
+        menu->addAction( mMsgActions->createTodoAction() );
+      }
+    } else {
+      menu->addAction( mReaderWin->toggleFixFontAction() );
+      menu->addAction( mReaderWin->toggleMimePartTreeAction() );
     }
   }
   KAcceleratorManager::manage(menu);
