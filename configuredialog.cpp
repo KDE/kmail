@@ -2095,14 +2095,14 @@ void AppearancePage::MessageTagTab::save()
   }
 
   QListWidgetItem *item = mTagListBox->currentItem();
-  TagListWidgetItem *tagItem = static_cast<TagListWidgetItem*>( item );
-  if ( !tagItem ) {
+  if ( !item ) {
     return;
   }
 
   slotRecordTagSettings( currentRow );
   const int numberOfMsgTagList = count;
   for ( int i=0; i < numberOfMsgTagList; ++i ) {
+    TagListWidgetItem *tagItem = static_cast<TagListWidgetItem*>( mTagListBox->item(i) );
     if ( ( i>=mOriginalMsgTagList.count() ) || *(tagItem->kmailTag()) != *(mOriginalMsgTagList[i]) ) {
       MailCommon::Tag::Ptr tag = tagItem->kmailTag();
       tag->priority = i;
