@@ -56,9 +56,7 @@ TagActionManager::TagActionManager( QObject *parent, KActionCollection *actionCo
     mTagQueryClient( 0 )
 {
   connect( mTagListMonitor, SIGNAL(tagsChanged()), this, SLOT(tagsChanged()) );
-  KAction *separator = new KAction( this );
-  separator->setSeparator( true );
-  mMessageActions->messageStatusMenu()->menu()->addAction( separator );
+  mMessageActions->messageStatusMenu()->menu()->addSeparator();
   connect( Nepomuk2::ResourceManager::instance(), SIGNAL(nepomukSystemStarted()),
            SLOT(slotNepomukStarted()) );
   connect( Nepomuk2::ResourceManager::instance(), SIGNAL(nepomukSystemStopped()),
