@@ -1885,22 +1885,7 @@ void AppearancePage::MessageTagTab::slotRecordTagSettings( int aIndex )
   MailCommon::Tag::Ptr tmp_desc = tagItem->kmailTag();
 
   tmp_desc->tagName = tagItem->text();
-
-  tmp_desc->textColor = mTagWidget->textColorCheck()->isChecked() ?
-                          mTagWidget->textColorCombo()->color() : QColor();
-
-  tmp_desc->backgroundColor = mTagWidget->backgroundColorCheck()->isChecked() ?
-                                mTagWidget->backgroundColorCombo()->color() : QColor();
-
-  tmp_desc->textFont = mTagWidget->textFontCheck()->isChecked() ?
-                          mTagWidget->fontRequester()->font() : QFont();
-
-  tmp_desc->iconName = mTagWidget->iconButton()->icon();
-
-  mTagWidget->keySequenceWidget()->applyStealShortcut();
-  tmp_desc->shortcut = KShortcut( mTagWidget->keySequenceWidget()->keySequence() );
-
-  tmp_desc->inToolbar = mTagWidget->inToolBarCheck()->isChecked();
+  mTagWidget->recordTagSettings(tmp_desc);
 }
 
 void AppearancePage::MessageTagTab::slotUpdateTagSettingWidgets( int aIndex )
