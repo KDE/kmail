@@ -37,7 +37,7 @@
 
 #include <QSignalMapper>
 #include <soprano/nao.h>
-//#include <nepomuk/resourcewatcher.h>
+#include <nepomuk2/resourcewatcher.h>
 
 using namespace KMail;
 
@@ -58,17 +58,15 @@ TagActionManager::TagActionManager( QObject *parent, KActionCollection *actionCo
   connect( mTagListMonitor, SIGNAL(tagsChanged()), this, SLOT(tagsChanged()) );
   mMessageActions->messageStatusMenu()->menu()->addSeparator();
   connect( Nepomuk2::ResourceManager::instance(), SIGNAL(nepomukSystemStarted()),
-           SLOT(slotNepomukStarted()) );
+           SLOT(tagsChanged()) );
   connect( Nepomuk2::ResourceManager::instance(), SIGNAL(nepomukSystemStopped()),
-           SLOT(slotNepomukStopped()) );
+           SLOT(tagsChanged()) );
 
-#if 0
-  Nepomuk::ResourceWatcher* watcher = new Nepomuk::ResourceWatcher(this);
+  Nepomuk2::ResourceWatcher* watcher = new Nepomuk2::ResourceWatcher(this);
   watcher->addType(Soprano::Vocabulary::NAO::Tag());
-  connect(watcher, SIGNAL(propertyAdded(Nepomuk::Resource,Nepomuk::Types::Property,QVariant)), this, SLOT(tagsChanged()));
-  connect(watcher, SIGNAL(propertyRemoved(Nepomuk::Resource,Nepomuk::Types::Property,QVariant)),this, SLOT(tagsChanged()));
+  connect(watcher, SIGNAL(resourceCreated(Nepomuk2::Resource,QList<QUrl>)), this, SLOT(tagsChanged()));
+  connect(watcher, SIGNAL(resourceRemoved(QUrl,QList<QUrl>)),this, SLOT(tagsChanged()));
   watcher->start();
-#endif
 }
 
 TagActionManager::~TagActionManager()
@@ -203,6 +201,7 @@ void TagActionManager::newTagEntries (const QList<Nepomuk2::Query::Result> &resu
 
 void TagActionManager::finishedTagListing()
 {
+  mTagQueryClient->close();
   mTagQueryClient->deleteLater();
   mTagQueryClient = 0;
   if ( mTags.isEmpty() )
@@ -246,17 +245,6 @@ void TagActionManager::tagsChanged()
 {
   mTags.clear(); // re-read the tags
   createActions();
-}
-
-void TagActionManager::slotNepomukStarted()
-{
-  tagsChanged();
-}
-
-void TagActionManager::slotNepomukStopped()
-{
-  mTags.clear();
-  clearActions();
 }
 
 
