@@ -200,6 +200,7 @@ MessageActions::MessageActions( KActionCollection *ac, QWidget* parent ) :
   connect( mMailingListActionMenu->menu(), SIGNAL(triggered(QAction*)),
            this, SLOT(slotRunUrl(QAction*)) );
   mActionCollection->addAction( "mailing_list", mMailingListActionMenu );
+  mMailingListActionMenu->setEnabled(false);
 
   mMonitor = new Akonadi::Monitor( this );
   //FIXME: Attachment fetching is not needed here, but on-demand loading is not supported ATM
