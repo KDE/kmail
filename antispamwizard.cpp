@@ -222,7 +222,7 @@ void AntiSpamWizard::accept()
         {
           if ( (*it).isVirusTool() )
           {
-              const QByteArray header = (*it).getDetectionHeader().toAscii();
+              const QByteArray header = (*it).getDetectionHeader().toLatin1();
               const QString & pattern = (*it).getDetectionPattern();
               if ( (*it).isUseRegExp() )
                 virusFilterPattern->append(
@@ -314,7 +314,7 @@ void AntiSpamWizard::accept()
       {
           if ( (*it).isSpamTool() )
           {
-            const QByteArray header = (*it).getDetectionHeader().toAscii();
+            const QByteArray header = (*it).getDetectionHeader().toLatin1();
             const QString & pattern = (*it).getDetectionPattern();
             if ( (*it).isUseRegExp() )
               spamFilterPattern->append(
@@ -357,7 +357,7 @@ void AntiSpamWizard::accept()
             if ( (*it).isSpamTool() && (*it).hasTristateDetection())
             {
               atLeastOneUnsurePattern = true;
-              const QByteArray header = (*it).getDetectionHeader().toAscii();
+              const QByteArray header = (*it).getDetectionHeader().toLatin1();
               const QString & pattern = (*it).getDetectionPattern2();
               if ( (*it).isUseRegExp() )
                 unsureFilterPattern->append(
