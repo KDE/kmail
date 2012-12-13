@@ -55,6 +55,7 @@
 #include "collectionmailinglistpage.h"
 #include "tagselectdialog.h"
 #include "archivemailagentinterface.h"
+#include "createnewcontactjob.h"
 
 #include "pimcommon/collectionaclpage.h"
 #include "mailcommon/collectiongeneralpage.h"
@@ -4842,8 +4843,8 @@ void KMMainWidget::slotExportData()
 
 void KMMainWidget::slotCreateAddressBookContact()
 {
-  Akonadi::ContactEditorDialog dlg( Akonadi::ContactEditorDialog::CreateMode, this );
-  dlg.exec();
+  CreateNewContactJob *job = new CreateNewContactJob( this, this );
+  job->start();
 }
 
 void KMMainWidget::slotOpenRecentMsg(const KUrl& url)

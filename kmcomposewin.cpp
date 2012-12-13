@@ -52,6 +52,7 @@
 #include "messageviewer/translator/translatorwidget.h"
 #include "messagecomposer/selectspecialchar.h"
 #include "attachmentmissingwarning.h"
+#include "createnewcontactjob.h"
 
 // KDEPIM includes
 #include <libkpgp/kpgpblock.h>
@@ -3416,8 +3417,8 @@ void KMComposeWin::slotSaveAsFile()
 
 void KMComposeWin::slotCreateAddressBookContact()
 {
-  Akonadi::ContactEditorDialog dlg( Akonadi::ContactEditorDialog::CreateMode, this );
-  dlg.exec();
+  CreateNewContactJob *job = new CreateNewContactJob( this, this );
+  job->start();
 }
 
 void KMComposeWin::slotAttachMissingFile()
