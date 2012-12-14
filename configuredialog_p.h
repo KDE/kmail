@@ -50,7 +50,6 @@ class KIntSpinBox;
 class SimpleStringListEditor;
 class KColorCombo;
 class KFontRequester;
-class KIconButton;
 class KKeySequenceWidget;
 class KComboBox;
 class ColorListBox;

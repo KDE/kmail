@@ -30,7 +30,15 @@ class IdentityEditVcardDialog : public KDialog
 public:
   explicit IdentityEditVcardDialog(QWidget *parent = 0);
   ~IdentityEditVcardDialog();
+    /**
+   * @brief loadVcard load vcard in a contact editor
+   * @param vcardFileName
+   */
   void loadVcard(const QString& vcardFileName);
+  /**
+   * @brief saveVcard
+   * @return The file path for current vcard.
+   */
   QString saveVcard();
 private:
   QString mVcardFileName;
