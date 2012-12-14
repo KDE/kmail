@@ -37,10 +37,6 @@
 #include <akonadi/kmime/standardmailactionmanager.h>
 #include <messagelist/core/view.h>
 
-namespace Akonadi {
-  class EntityListView;
-}
-
 namespace KMime {
   class Message;
 }

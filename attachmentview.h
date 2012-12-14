@@ -28,7 +28,6 @@
 #include <QTreeView>
 
 class QContextMenuEvent;
-class QToolButton;
 
 namespace Message {
 class AttachmentModel;

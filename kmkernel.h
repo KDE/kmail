@@ -47,7 +47,6 @@ namespace MessageComposer {
   class ComposerAutoCorrection;
 }
 
-class KJob;
 /** The KMail namespace contains classes used for KMail.
 * This is to keep them out of the way from all the other
 * un-namespaced classes in libs and the rest of PIM.
@@ -76,8 +75,6 @@ class ConfigureDialog;
 
 namespace MailCommon {
   class Kernel;
-  class FilterManager;
-  class FilterActionDict;
   class FolderCollection;
   class FolderCollectionMonitor;
   class JobScheduler;

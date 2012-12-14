@@ -49,14 +49,12 @@
 
 class QByteArray;
 class QCheckBox;
-class QComboBox;
 class QGridLayout;
 class QLabel;
 class QPushButton;
 class QSplitter;
 
 class CodecAction;
-class KLineEdit;
 class KMComposeWin;
 class KMComposerEditor;
 class KSelectAction;
@@ -83,7 +81,6 @@ namespace KPIMIdentities {
 
 
 namespace KMail {
-  class AttachmentController;
 }
 
 namespace KIO {

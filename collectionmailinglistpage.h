@@ -29,7 +29,6 @@
 
 
 class QCheckBox;
-class QLabel;
 class QPushButton;
 
 template <typename T> class QSharedPointer;

@@ -28,10 +28,6 @@
 #include <QModelIndex>
 #include <QObject>
 
-namespace MailCommon {
-  class Kernel;
-}
-
 class QAction;
 
 class KActionCollection;

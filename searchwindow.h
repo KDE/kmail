@@ -48,7 +48,6 @@ namespace Akonadi {
 class EntityTreeView;
 class ItemModel;
 class StandardMailActionManager;
-class EntityMimeTypeFilterModel;
 }
 
 namespace KMime {
