@@ -22,20 +22,40 @@
 #define CREATENEWCONTACTJOB_H
 
 #include <kjob.h>
-
+/**
+ * @brief The CreateNewContactJob class
+ * The job will check if there is address book folder to store new contact to akonadi
+ * otherise it will allow to create new one.
+ */
 class CreateNewContactJob : public KJob
 {
     Q_OBJECT
 public:
+    /**
+     * @brief CreateNewContactJob create a new contact job
+     * @param parentWidget The widget that will be used as parent for dialog.
+     * @param parent The parent object
+     */
     explicit CreateNewContactJob(QWidget *parentWidget, QObject *parent = 0);
+
+    /**
+     * Destroys the new contact job
+     */
     ~CreateNewContactJob();
 
+    /**
+     * @brief start the job
+     */
     virtual void start();
+
 private Q_SLOTS:
     void slotCollectionsFetched(KJob*);
     void slotResourceCreationDone(KJob* job);
+
 private:
     void createContact();
+
+private:
     QWidget *mParentWidget;
 };
 

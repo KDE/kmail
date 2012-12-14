@@ -43,13 +43,11 @@ CreateNewContactJob::~CreateNewContactJob()
 
 void CreateNewContactJob::start()
 {
-    const QStringList mimeTypes( KABC::Addressee::mimeType() );
-
     Akonadi::CollectionFetchJob * const addressBookJob =
       new Akonadi::CollectionFetchJob( Akonadi::Collection::root(),
                                        Akonadi::CollectionFetchJob::Recursive );
 
-    addressBookJob->fetchScope().setContentMimeTypes( mimeTypes );
+    addressBookJob->fetchScope().setContentMimeTypes( QStringList() << KABC::Addressee::mimeType() );
     connect( addressBookJob, SIGNAL(result(KJob*)), SLOT(slotCollectionsFetched(KJob*)) );
 }
 
@@ -74,6 +72,7 @@ void CreateNewContactJob::slotCollectionsFetched(KJob*job)
     }
     if ( canCreateItemCollections.isEmpty() ) {
         Akonadi::AgentTypeDialog dlg( mParentWidget );
+        //TODO add caption
         dlg.agentFilterProxyModel()->addMimeTypeFilter(KABC::Addressee::mimeType());
         dlg.agentFilterProxyModel()->addMimeTypeFilter(KABC::ContactGroup::mimeType());
         dlg.agentFilterProxyModel()->addCapabilityFilter( QLatin1String( "Resource" ) );
