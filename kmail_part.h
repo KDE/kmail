@@ -81,7 +81,7 @@ class KMailPart: public KParts::ReadOnlyPart
 class KMailStatusBarExtension : public KParts::StatusBarExtension
 {
 public:
-  KMailStatusBarExtension( KMailPart *parent );
+  explicit KMailStatusBarExtension( KMailPart *parent );
 
   KMainWindow *mainWindow() const;
 

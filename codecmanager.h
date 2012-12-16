@@ -50,7 +50,7 @@ class CodecManager
     CodecManagerPrivate *const d;
 
     // Singleton.  The only instance lives in sInstance->instance
-    CodecManager( CodecManagerPrivate *dd );
+    explicit CodecManager( CodecManagerPrivate *dd );
     //~CodecManager();
 };
 

@@ -45,7 +45,7 @@ class UndoStack : public QObject
   Q_OBJECT
 
 public:
-  UndoStack(int size);
+  explicit UndoStack(int size);
   ~UndoStack();
 
   void clear();

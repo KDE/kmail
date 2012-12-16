@@ -38,7 +38,7 @@ class KMMainWin : public KXmlGuiWindow
 public:
   // the main window needs to have a name since else restoring the window
   // settings by kwin doesn't work
-  KMMainWin(QWidget *parent = 0);
+  explicit KMMainWin(QWidget *parent = 0);
   virtual ~KMMainWin();
   KMMainWidget *mainKMWidget() const { return mKMMainWidget; }
   StatusbarProgressWidget* progressWidget() const { return mLittleProgress; }

@@ -46,7 +46,7 @@ namespace KMail {
     Q_OBJECT
 
   public:
-    SecondaryWindow( const char * name = 0 );
+    explicit SecondaryWindow( const char * name = 0 );
     ~SecondaryWindow();
     using KMainWindow::setCaption;
   public Q_SLOTS:

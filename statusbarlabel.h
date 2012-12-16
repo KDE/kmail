@@ -32,7 +32,7 @@ class StatusBarLabel : public QLabel
 {
   Q_OBJECT
   public:
-    StatusBarLabel( QWidget *parent = 0 );
+    explicit StatusBarLabel( QWidget *parent = 0 );
 
     void setBackgroundColor( const QColor &color );
 

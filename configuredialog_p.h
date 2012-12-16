@@ -92,7 +92,7 @@ namespace Kleo {
 class ConfigModuleTab : public QWidget {
   Q_OBJECT
 public:
-   ConfigModuleTab( QWidget *parent=0 )
+   explicit ConfigModuleTab( QWidget *parent=0 )
       : QWidget( parent ),
         mEmitChanges( true )
       {}
@@ -155,7 +155,7 @@ private:
 class AccountsPageSendingTab : public ConfigModuleTab {
   Q_OBJECT
 public:
-  AccountsPageSendingTab( QWidget * parent=0 );
+  explicit AccountsPageSendingTab( QWidget * parent=0 );
   virtual ~AccountsPageSendingTab();
   QString helpAnchor() const;
   void save();
@@ -177,7 +177,7 @@ private:
 class AccountsPageReceivingTab : public ConfigModuleTab {
   Q_OBJECT
 public:
-  AccountsPageReceivingTab( QWidget * parent=0 );
+  explicit AccountsPageReceivingTab( QWidget * parent=0 );
   ~AccountsPageReceivingTab();
   QString helpAnchor() const;
   void save();
@@ -249,7 +249,7 @@ private:
 class AppearancePageFontsTab : public ConfigModuleTab {
   Q_OBJECT
 public:
-  AppearancePageFontsTab( QWidget * parent=0 );
+  explicit AppearancePageFontsTab( QWidget * parent=0 );
   QString helpAnchor() const;
   void save();
 
@@ -274,7 +274,7 @@ private:
 class AppearancePageColorsTab : public ConfigModuleTab {
   Q_OBJECT
 public:
-  AppearancePageColorsTab( QWidget * parent=0 );
+  explicit AppearancePageColorsTab( QWidget * parent=0 );
   QString helpAnchor() const;
   void save();
 
@@ -294,7 +294,7 @@ private:
 class AppearancePageLayoutTab : public ConfigModuleTab {
   Q_OBJECT
 public:
-  AppearancePageLayoutTab( QWidget * parent=0 );
+  explicit AppearancePageLayoutTab( QWidget * parent=0 );
   QString helpAnchor() const;
 
   void save();
@@ -319,7 +319,7 @@ private: // data
 class AppearancePageHeadersTab : public ConfigModuleTab {
   Q_OBJECT
 public:
-  AppearancePageHeadersTab( QWidget * parent=0 );
+  explicit AppearancePageHeadersTab( QWidget * parent=0 );
 
   QString helpAnchor() const;
 
@@ -350,7 +350,7 @@ private slots:
 class AppearancePageReaderTab : public ConfigModuleTab {
   Q_OBJECT
 public:
-  AppearancePageReaderTab( QWidget * parent=0 );
+  explicit AppearancePageReaderTab( QWidget * parent=0 );
 
   QString helpAnchor() const;
 
@@ -370,7 +370,7 @@ private: // data
 class AppearancePageSystemTrayTab : public ConfigModuleTab {
   Q_OBJECT
 public:
-  AppearancePageSystemTrayTab( QWidget * parent=0 );
+  explicit AppearancePageSystemTrayTab( QWidget * parent=0 );
 
   QString helpAnchor() const;
 
@@ -404,7 +404,7 @@ private:
 class AppearancePageMessageTagTab : public ConfigModuleTab {
   Q_OBJECT
 public:
-  AppearancePageMessageTagTab( QWidget * parent=0);
+  explicit AppearancePageMessageTagTab( QWidget * parent=0);
   ~AppearancePageMessageTagTab();
 
   QString helpAnchor() const;
@@ -513,7 +513,7 @@ private:
 class ComposerPageGeneralTab : public ConfigModuleTab {
   Q_OBJECT
 public:
-  ComposerPageGeneralTab( QWidget * parent=0 );
+  explicit ComposerPageGeneralTab( QWidget * parent=0 );
   QString helpAnchor() const;
 
   void save();
@@ -552,7 +552,7 @@ private:
 class ComposerPageTemplatesTab : public ConfigModuleTab {
   Q_OBJECT
 public:
-  ComposerPageTemplatesTab( QWidget * parent = 0 );
+  explicit ComposerPageTemplatesTab( QWidget * parent = 0 );
   QString helpAnchor() const;
 
   void save();
@@ -569,7 +569,7 @@ private:
 class ComposerPageCustomTemplatesTab : public ConfigModuleTab {
   Q_OBJECT
 public:
-  ComposerPageCustomTemplatesTab( QWidget * parent = 0 );
+  explicit ComposerPageCustomTemplatesTab( QWidget * parent = 0 );
   QString helpAnchor() const;
 
   void save();
@@ -586,7 +586,7 @@ private:
 class ComposerPageSubjectTab : public ConfigModuleTab {
   Q_OBJECT
 public:
-  ComposerPageSubjectTab( QWidget * parent = 0 );
+  explicit ComposerPageSubjectTab( QWidget * parent = 0 );
   QString helpAnchor() const;
 
   void save();
@@ -605,7 +605,7 @@ private:
 class ComposerPageCharsetTab : public ConfigModuleTab {
   Q_OBJECT
 public:
-  ComposerPageCharsetTab( QWidget * parent=0 );
+  explicit ComposerPageCharsetTab( QWidget * parent=0 );
   QString helpAnchor() const;
 
   void save();
@@ -626,7 +626,7 @@ private:
 class ComposerPageHeadersTab : public ConfigModuleTab {
   Q_OBJECT
 public:
-  ComposerPageHeadersTab( QWidget * parent=0 );
+  explicit ComposerPageHeadersTab( QWidget * parent=0 );
   QString helpAnchor() const;
 
   void save();
@@ -657,7 +657,7 @@ private:
 class ComposerPageAttachmentsTab : public ConfigModuleTab {
   Q_OBJECT
 public:
-  ComposerPageAttachmentsTab( QWidget * parent=0 );
+  explicit ComposerPageAttachmentsTab( QWidget * parent=0 );
   QString helpAnchor() const;
 
   void save();
@@ -679,7 +679,7 @@ private:
 class ComposerPageAutoCorrectionTab : public ConfigModuleTab {
   Q_OBJECT
 public:
-  ComposerPageAutoCorrectionTab( QWidget * parent=0 );
+  explicit ComposerPageAutoCorrectionTab( QWidget * parent=0 );
   QString helpAnchor() const;
 
   void save();
@@ -695,7 +695,7 @@ private:
 class ComposerPageAutoImageResizeTab : public ConfigModuleTab {
   Q_OBJECT
 public:
-  ComposerPageAutoImageResizeTab( QWidget * parent=0 );
+  explicit ComposerPageAutoImageResizeTab( QWidget * parent=0 );
   QString helpAnchor() const;
 
   void save();
@@ -749,7 +749,7 @@ private:
 class SecurityPageGeneralTab : public ConfigModuleTab {
   Q_OBJECT
 public:
-  SecurityPageGeneralTab( QWidget * parent=0 );
+  explicit SecurityPageGeneralTab( QWidget * parent=0 );
   QString helpAnchor() const;
 
   void save();
@@ -864,7 +864,7 @@ private:
 class MiscPageFolderTab : public ConfigModuleTab {
   Q_OBJECT
 public:
-  MiscPageFolderTab( QWidget * parent=0 );
+  explicit MiscPageFolderTab( QWidget * parent=0 );
 
   void save();
  QString helpAnchor() const;
@@ -882,7 +882,7 @@ private:
 class MiscPageInviteTab : public ConfigModuleTab  {
   Q_OBJECT
 public:
-  MiscPageInviteTab( QWidget * parent=0 );
+  explicit MiscPageInviteTab( QWidget * parent=0 );
   void save();
   virtual void doResetToDefaultsOther();
 
@@ -897,7 +897,7 @@ private:
 class MiscPageProxyTab : public ConfigModuleTab  {
   Q_OBJECT
 public:
-  MiscPageProxyTab( QWidget * parent=0 );
+  explicit MiscPageProxyTab( QWidget * parent=0 );
   void save();
 private:
   KCModuleProxy *mProxyModule;
