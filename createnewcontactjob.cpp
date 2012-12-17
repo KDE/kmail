@@ -21,6 +21,8 @@
 #include "createnewcontactjob.h"
 #include "util.h"
 
+#include <KLocale>
+
 #include <KABC/Addressee>
 #include <KABC/ContactGroup>
 
