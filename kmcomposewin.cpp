@@ -3391,7 +3391,7 @@ void KMComposeWin::charSelected(const QChar& c)
 
 void KMComposeWin::slotSaveAsFile()
 {
-    KFileDialog *dlg = new KFileDialog(KUrl(),QString(),this);
+    QPointer<KFileDialog> dlg = new KFileDialog(KUrl(),QString(),this);
     dlg->setOperationMode(KFileDialog::Saving);
     if(mComposerBase->editor()->textMode() == KMeditor::Rich ) {
       dlg->setFilter( QString::fromLatin1("text/html text/plain") );
@@ -3406,11 +3406,12 @@ void KMComposeWin::slotSaveAsFile()
           return;
         }
         QTextStream out(&file);
-        if(dlg->currentFilter() == QString::fromLatin1("text/html") ) {
-          out<<mComposerBase->editor()->toHtml();
-        } else {
+        if(dlg->currentFilter() == QString::fromLatin1("text/plain") ) {
           out<<mComposerBase->editor()->toPlainText();
+        } else {
+          out<<mComposerBase->editor()->toHtml();
         }
+        file.close();
     }
     delete dlg;
 }
