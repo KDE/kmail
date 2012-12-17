@@ -85,9 +85,17 @@ void CreateNewContactJob::slotCollectionsFetched(KJob*job)
                 connect( job, SIGNAL(result(KJob*)), SLOT(slotResourceCreationDone(KJob*)) );
                 job->configure( mParentWidget );
                 job->start();
+                return;
+            } else { //if agent is not valid => return error and finish job
+                setError( UserDefinedError );
+                emitResult();
+                return;
             }
+        } else { //dialog canceled => return error and finish job
+            setError( UserDefinedError );
+            emitResult();
+            return;
         }
-        return;
     }
     createContact();
     emitResult();
