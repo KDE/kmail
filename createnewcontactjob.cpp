@@ -72,7 +72,7 @@ void CreateNewContactJob::slotCollectionsFetched(KJob*job)
     }
     if ( canCreateItemCollections.isEmpty() ) {
         Akonadi::AgentTypeDialog dlg( mParentWidget );
-        //TODO add caption
+        dlg.setCaption( i18n("Add address book") );
         dlg.agentFilterProxyModel()->addMimeTypeFilter(KABC::Addressee::mimeType());
         dlg.agentFilterProxyModel()->addMimeTypeFilter(KABC::ContactGroup::mimeType());
         dlg.agentFilterProxyModel()->addCapabilityFilter( QLatin1String( "Resource" ) );
