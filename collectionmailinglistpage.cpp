@@ -164,6 +164,7 @@ void CollectionMailingListPage::load( const Akonadi::Collection & col )
 
 void CollectionMailingListPage::save( Akonadi::Collection & col )
 {
+  Q_UNUSED( col );
   if ( mFolder )
   {
     // settings for mailingList

@@ -1545,6 +1545,8 @@ void KMComposeWin::setCurrentReplyTo(const QString& replyTo)
 void KMComposeWin::setMessage( const KMime::Message::Ptr &newMsg, bool lastSignState, bool lastEncryptState, bool mayAutoSign,
                            bool allowDecryption, bool isModified )
 {
+  Q_UNUSED( lastEncryptState );
+  Q_UNUSED( allowDecryption );
   if ( !newMsg ) {
     kDebug() << "newMsg == 0!";
     return;
