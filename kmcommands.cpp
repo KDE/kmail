@@ -1148,7 +1148,7 @@ KMCommand::Result KMPrintCommand::execute()
   if ( mAttachmentStrategy != 0 )
     printerWin->setAttachmentStrategy( mAttachmentStrategy );
   if(mPrintPreview)
-    printerWin->viewer()->printPreviousMessage( retrievedMessage() );
+    printerWin->viewer()->printPreviewMessage( retrievedMessage() );
   else
     printerWin->viewer()->printMessage(retrievedMessage());
   return OK;
