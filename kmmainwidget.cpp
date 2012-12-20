@@ -4831,7 +4831,7 @@ void KMMainWidget::slotServerSideSubscription()
             delete iface;
             return;
         }
-        const QDBusReply<int> reply = iface->call( QLatin1String( "configureSubscription" ) );
+        const QDBusReply<int> reply = iface->call( QLatin1String( "configureSubscription" ), (qlonglong)winId() );
         if ( !reply.isValid() ) {
             delete iface;
             return;
