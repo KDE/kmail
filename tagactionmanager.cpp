@@ -64,8 +64,8 @@ TagActionManager::TagActionManager( QObject *parent, KActionCollection *actionCo
 
   Nepomuk2::ResourceWatcher* watcher = new Nepomuk2::ResourceWatcher(this);
   watcher->addType(Soprano::Vocabulary::NAO::Tag());
-  connect(watcher, SIGNAL(resourceCreated(Nepomuk2::Resource,QList<QUrl>)), this, SLOT(tagsChanged()));
-  connect(watcher, SIGNAL(resourceRemoved(QUrl,QList<QUrl>)),this, SLOT(tagsChanged()));
+  connect(watcher, SIGNAL(resourceCreated(Nepomuk2::Resource,QList<QUrl>)), this, SLOT(resourceCreated(Nepomuk2::Resource,QList<QUrl>)));
+  connect(watcher, SIGNAL(resourceRemoved(QUrl,QList<QUrl>)),this, SLOT(resourceRemoved(QUrl,QList<QUrl>)));
   watcher->start();
 }
 
@@ -247,5 +247,25 @@ void TagActionManager::tagsChanged()
   createActions();
 }
 
+void TagActionManager::resourceCreated(const Nepomuk2::Resource& res,const QList<QUrl>&)
+{
+    clearActions();
+    mTags.append( MailCommon::Tag::fromNepomuk( res ) );
+    qSort( mTags.begin(), mTags.end(), MailCommon::Tag::compare );
+    createTagActions();
+}
+
+void TagActionManager::resourceRemoved(const QUrl& url,const QList<QUrl>&)
+{
+    foreach( const MailCommon::Tag::Ptr &tag, mTags ) {
+        if(tag->nepomukResourceUri == url) {
+            mTags.removeAll(tag);
+            break;
+        }
+    }
+    clearActions();
+    qSort( mTags.begin(), mTags.end(), MailCommon::Tag::compare );
+    createTagActions();
+}
 
 #include "tagactionmanager.moc"
