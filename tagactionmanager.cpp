@@ -21,7 +21,6 @@
 
 #include "messageactions.h"
 
-#include "messagecore/taglistmonitor.h"
 #include <Nepomuk2/Tag>
 #include <Nepomuk2/ResourceManager>
 #include <Nepomuk2/Query/QueryServiceClient>
@@ -50,12 +49,10 @@ TagActionManager::TagActionManager( QObject *parent, KActionCollection *actionCo
     mMessageActions( messageActions ),
     mMessageTagToggleMapper( 0 ),
     mGUIClient( guiClient ),
-    mTagListMonitor( new MessageCore::TagListMonitor( this ) ),
     mSeparatorAction( 0 ),
     mMoreAction( 0 ),
     mTagQueryClient( 0 )
 {
-  connect( mTagListMonitor, SIGNAL(tagsChanged()), this, SLOT(tagsChanged()) );
   mMessageActions->messageStatusMenu()->menu()->addSeparator();
   connect( Nepomuk2::ResourceManager::instance(), SIGNAL(nepomukSystemStarted()),
            SLOT(tagsChanged()) );
@@ -66,6 +63,7 @@ TagActionManager::TagActionManager( QObject *parent, KActionCollection *actionCo
   watcher->addType(Soprano::Vocabulary::NAO::Tag());
   connect(watcher, SIGNAL(resourceCreated(Nepomuk2::Resource,QList<QUrl>)), this, SLOT(resourceCreated(Nepomuk2::Resource,QList<QUrl>)));
   connect(watcher, SIGNAL(resourceRemoved(QUrl,QList<QUrl>)),this, SLOT(resourceRemoved(QUrl,QList<QUrl>)));
+  connect(watcher, SIGNAL(propertyChanged(Nepomuk2::Resource,Nepomuk2::Types::Property,QVariantList,QVariantList)),this,SLOT(propertyChanged(Nepomuk2::Resource)));
   watcher->start();
 }
 
@@ -75,10 +73,11 @@ TagActionManager::~TagActionManager()
 
 void TagActionManager::clearActions()
 {
-  //Remove the tag actions from the toolbar
+    //Remove the tag actions from the toolbar
   if ( !mToolbarActions.isEmpty() ) {
-    if ( mGUIClient->factory() )
+    if ( mGUIClient->factory() ) {
       mGUIClient->unplugActionList( "toolbar_messagetag_actions" );
+    }
     mToolbarActions.clear();
   }
 
@@ -127,8 +126,9 @@ void TagActionManager::createTagAction( const MailCommon::Tag::Ptr &tag, bool ad
   if ( addToMenu )
     mMessageActions->messageStatusMenu()->menu()->addAction( tagAction );
 
-  if ( tag->inToolbar )
+  if ( tag->inToolbar ) {
     mToolbarActions.append( tagAction );
+  }
 }
 
 void TagActionManager::createActions()
@@ -168,8 +168,9 @@ void TagActionManager::createTagActions()
       createTagAction( tag,true );
     else
     {
-      if ( tag->inToolbar || !tag->shortcut.isEmpty() )
+      if ( tag->inToolbar || !tag->shortcut.isEmpty() ) {
         createTagAction( tag, false );
+      }
 
       if ( i == s_numberMaxTag && i < numberOfTag )
       {
@@ -263,6 +264,20 @@ void TagActionManager::resourceRemoved(const QUrl& url,const QList<QUrl>&)
             break;
         }
     }
+    clearActions();
+    qSort( mTags.begin(), mTags.end(), MailCommon::Tag::compare );
+    createTagActions();
+}
+
+void TagActionManager::propertyChanged(const Nepomuk2::Resource& res)
+{
+    foreach( const MailCommon::Tag::Ptr &tag, mTags ) {
+        if(tag->nepomukResourceUri == res.uri()) {
+            mTags.removeAll(tag);
+            break;
+        }
+    }
+    mTags.append( MailCommon::Tag::fromNepomuk( res ) );
     clearActions();
     qSort( mTags.begin(), mTags.end(), MailCommon::Tag::compare );
     createTagActions();
