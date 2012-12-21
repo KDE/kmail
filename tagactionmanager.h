@@ -45,10 +45,6 @@ namespace Akonadi {
   class Item;
 }
 
-namespace MessageCore {
-  class TagListMonitor;
-}
-
 namespace KMail {
 
   class MessageActions;
@@ -120,6 +116,7 @@ namespace KMail {
       void tagsChanged();
       void resourceCreated(const Nepomuk2::Resource&,const QList<QUrl>&);
       void resourceRemoved(const QUrl&,const QList<QUrl>&);
+      void propertyChanged(const Nepomuk2::Resource&);
 
     private:
       void createTagAction( const MailCommon::Tag::Ptr &tag, bool addToMenu );
@@ -129,7 +126,6 @@ namespace KMail {
       MessageActions *mMessageActions;
       QSignalMapper *mMessageTagToggleMapper;
       KXMLGUIClient *mGUIClient;
-      MessageCore::TagListMonitor *mTagListMonitor;
 
       KAction *mSeparatorAction;
       KAction *mMoreAction;
