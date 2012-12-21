@@ -72,6 +72,7 @@ TagSelectDialog::TagSelectDialog( QWidget * parent, int numberOfSelectedMessages
 
   foreach( const Tag::Ptr &tag, tagList ) {
     QListWidgetItem *item = new QListWidgetItem( tag->tagName, mListTag );
+    item->setData(UrlTag, tag->nepomukResourceUri.toString());
     item->setFlags( Qt::ItemIsUserCheckable | Qt::ItemIsEnabled | Qt::ItemIsSelectable );
     item->setCheckState( Qt::Unchecked );
     mListTag->addItem( item );
@@ -99,7 +100,7 @@ QList<QString> TagSelectDialog::selectedTag() const
     QListWidgetItem *item = mListTag->item( i );
     if ( item->checkState() == Qt::Checked )
     {
-      lst.append( item->text() );
+      lst.append( item->data(UrlTag).toString() );
     }
   }
   return lst;

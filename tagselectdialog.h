@@ -46,6 +46,10 @@ public:
   ~TagSelectDialog();
   QList<QString> selectedTag() const;
 private:
+  enum ItemType {
+      UrlTag = Qt::UserRole + 1
+  };
+
   QListWidget *mListTag;
   KListWidgetSearchLine *mListWidgetSearchLine;
 };
