@@ -27,6 +27,7 @@
 
 namespace Nepomuk2
 {
+class Resource;
 namespace Query
 {
 class QueryServiceClient;
@@ -117,6 +118,8 @@ namespace KMail {
       void newTagEntries(const QList<Nepomuk2::Query::Result>& results);
       void finishedTagListing();
       void tagsChanged();
+      void resourceCreated(const Nepomuk2::Resource&,const QList<QUrl>&);
+      void resourceRemoved(const QUrl&,const QList<QUrl>&);
 
     private:
       void createTagAction( const MailCommon::Tag::Ptr &tag, bool addToMenu );
