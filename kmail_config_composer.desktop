@@ -124,6 +124,7 @@ Comment[x-test]=xxMessage Composer Settingsxx
 Comment[zh_CN]=信件撰写器设置
 Comment[zh_TW]=訊息編寫器設定
 X-KDE-Keywords=kmail,composer
+X-KDE-Keywords[bs]=kmail, composer
 X-KDE-Keywords[ca]=kmail,editor
 X-KDE-Keywords[da]=kmail,brevskriver
 X-KDE-Keywords[de]=KMail,Komposer,Editor

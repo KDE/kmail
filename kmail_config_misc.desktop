@@ -143,6 +143,7 @@ Comment[x-test]=xxSettings that don't fit elsewherexx
 Comment[zh_CN]=其它设置
 Comment[zh_TW]=不屬於任何其他地方的設定
 X-KDE-Keywords=kmail,misc
+X-KDE-Keywords[bs]=kmail, razno
 X-KDE-Keywords[ca]=kmail,misc
 X-KDE-Keywords[da]=kmail,diverse
 X-KDE-Keywords[de]=KMail,Verschiedenes
