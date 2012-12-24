@@ -1,6 +1,7 @@
 [Desktop Entry]
 Name=KMail view
 Name[ar]=عرض KMail 
+Name[bs]=KMail pogled
 Name[ca]=Vista del KMail
 Name[ca@valencia]=Vista del KMail
 Name[cs]=KMail pohled
@@ -42,6 +43,7 @@ Name[sr@latin]=Prikaz K‑pošte
 Name[sv]=Kmail-vy
 Name[tr]=KMail görünümü
 Name[uk]=Перегляд KMail
+Name[wa]=Vuwe KMail
 Name[x-test]=xxKMail viewxx
 Name[zh_CN]=KMail 视图
 Name[zh_TW]=KMail 檢視
