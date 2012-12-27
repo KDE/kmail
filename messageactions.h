@@ -146,7 +146,6 @@ class MessageActions : public QObject
   private:
     QList<KAction*> mMailListActionList;
     QWidget *mParent;
-    KActionCollection *mActionCollection;
     Akonadi::Item mCurrentItem;
     Akonadi::Item::List mVisibleItems;
     KMReaderWin *mMessageView;
