@@ -42,17 +42,5 @@ void ListView::resizeColums()
   setColumnWidth( c-1, w3 );
 }
 
-QSize ListView::sizeHint() const
-{
-  QSize s = QTreeWidget::sizeHint();
-
-  // FIXME indentation is horizontal distance
-  /*int h = fontMetrics().height() + 2*indentation();
-  if( h % 2 > 0 ) { h++; }
-
-  s.setHeight( h*mVisibleItem + lineWidth()*2 + header()->sizeHint().height());*/
-  return s;
-}
-
 
 #include "configuredialoglistview.moc"
