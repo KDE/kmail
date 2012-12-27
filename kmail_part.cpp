@@ -103,7 +103,7 @@ KMailPart::KMailPart(QWidget *parentWidget, QObject *parent, const QVariantList 
   KMMessage *msg = kmkernel->inboxFolder()->getMsg(0);
   mReaderWin->setMsg( msg, true );
   mReaderWin->setFocusPolicy(Qt::ClickFocus);
-  mStatusBar  = new KMailStatusBarExtension(this);
+  KMailStatusBarExtension *statusBar  = new KMailStatusBarExtension(this);
   //new KParts::SideBarExtension( kmkernel->mainWin()-mainKMWidget()->leftFrame(), this );
   setXMLFile( "kmail_part.rc" );
   kmkernel->inboxFolder()->close();
@@ -115,8 +115,8 @@ KMailPart::KMailPart(QWidget *parentWidget, QObject *parent, const QVariantList 
   topLayout->addWidget(mainWidget);
   topLayout->setMargin(0);
   mainWidget->setFocusPolicy(Qt::ClickFocus);
-  mStatusBar  = new KMailStatusBarExtension(this);
-  mStatusBar->addStatusBarItem( mainWidget->vacationScriptIndicator(), 2, false );
+  KMailStatusBarExtension *statusBar  = new KMailStatusBarExtension(this);
+  statusBar->addStatusBarItem( mainWidget->vacationScriptIndicator(), 2, false );
 
   // Get to know when the user clicked on a folder in the KMail part and update the headerWidget of Kontact
   connect( mainWidget->folderTreeView(), SIGNAL(currentChanged(Akonadi::Collection)),

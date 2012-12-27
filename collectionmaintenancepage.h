@@ -23,7 +23,6 @@
 
 class QCheckBox;
 class QLabel;
-class KPushButton;
 namespace Akonadi {
   class CollectionStatistics;
 }
@@ -53,7 +52,6 @@ private:
   QLabel *mCollectionUnread;
   QCheckBox *mIndexingEnabled;
   QLabel *mLastIndexed;
-  KPushButton *mForceReindex;
 };
 
 AKONADI_COLLECTION_PROPERTIES_PAGE_FACTORY( CollectionMaintenancePageFactory, CollectionMaintenancePage )

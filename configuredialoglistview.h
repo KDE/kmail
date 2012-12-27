@@ -12,8 +12,6 @@ public:
   explicit ListView( QWidget *parent=0 );
   void resizeColums();
 
-  QSize sizeHint() const;
-
 protected:
   void resizeEvent( QResizeEvent *e );
   void showEvent( QShowEvent *e );

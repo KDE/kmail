@@ -68,7 +68,6 @@ using namespace KMail;
 MessageActions::MessageActions( KActionCollection *ac, QWidget* parent ) :
     QObject( parent ),
     mParent( parent ),
-    mActionCollection( ac ),
     mMessageView( 0 ),
     mRedirectAction( 0 ),
     mPrintPreviewAction( 0 ),
@@ -77,61 +76,61 @@ MessageActions::MessageActions( KActionCollection *ac, QWidget* parent ) :
     mCustomTemplatesMenu( 0 )
 {
   mReplyActionMenu = new KActionMenu( KIcon("mail-reply-sender"), i18nc("Message->","&Reply"), this );
-  mActionCollection->addAction( "message_reply_menu", mReplyActionMenu );
+  ac->addAction( "message_reply_menu", mReplyActionMenu );
   connect( mReplyActionMenu, SIGNAL(triggered(bool)),
            this, SLOT(slotReplyToMsg()) );
 
   mReplyAction = new KAction( KIcon("mail-reply-sender"), i18n("&Reply..."), this );
-  mActionCollection->addAction( "reply", mReplyAction );
+  ac->addAction( "reply", mReplyAction );
   mReplyAction->setShortcut(Qt::Key_R);
   connect( mReplyAction, SIGNAL(triggered(bool)),
            this, SLOT(slotReplyToMsg()) );
   mReplyActionMenu->addAction( mReplyAction );
 
   mReplyAuthorAction = new KAction( KIcon("mail-reply-sender"), i18n("Reply to A&uthor..."), this );
-  mActionCollection->addAction( "reply_author", mReplyAuthorAction );
+  ac->addAction( "reply_author", mReplyAuthorAction );
   mReplyAuthorAction->setShortcut(Qt::SHIFT+Qt::Key_A);
   connect( mReplyAuthorAction, SIGNAL(triggered(bool)),
            this, SLOT(slotReplyAuthorToMsg()) );
   mReplyActionMenu->addAction( mReplyAuthorAction );
 
   mReplyAllAction = new KAction( KIcon("mail-reply-all"), i18n("Reply to &All..."), this );
-  mActionCollection->addAction( "reply_all", mReplyAllAction );
+  ac->addAction( "reply_all", mReplyAllAction );
   mReplyAllAction->setShortcut( Qt::Key_A );
   connect( mReplyAllAction, SIGNAL(triggered(bool)),
            this, SLOT(slotReplyAllToMsg()) );
   mReplyActionMenu->addAction( mReplyAllAction );
 
   mReplyListAction = new KAction( KIcon("mail-reply-list"), i18n("Reply to Mailing-&List..."), this );
-  mActionCollection->addAction( "reply_list", mReplyListAction );
+  ac->addAction( "reply_list", mReplyListAction );
   mReplyListAction->setShortcut( Qt::Key_L );
   connect( mReplyListAction, SIGNAL(triggered(bool)),
            this, SLOT(slotReplyListToMsg()) );
   mReplyActionMenu->addAction( mReplyListAction );
 
   mNoQuoteReplyAction = new KAction( i18n("Reply Without &Quote..."), this );
-  mActionCollection->addAction( "noquotereply", mNoQuoteReplyAction );
+  ac->addAction( "noquotereply", mNoQuoteReplyAction );
   mNoQuoteReplyAction->setShortcut( Qt::SHIFT+Qt::Key_R );
   connect( mNoQuoteReplyAction, SIGNAL(triggered(bool)),
            this, SLOT(slotNoQuoteReplyToMsg()) );
 
 
   mListFilterAction = new KAction(i18n("Filter on Mailing-&List..."), this);
-  mActionCollection->addAction("mlist_filter", mListFilterAction );
+  ac->addAction("mlist_filter", mListFilterAction );
   connect(mListFilterAction, SIGNAL(triggered(bool)), SLOT(slotMailingListFilter()));
 
   mCreateTodoAction = new KAction( KIcon( "task-new" ), i18n( "Create To-do/Reminder..." ), this );
   mCreateTodoAction->setIconText( i18n( "Create To-do" ) );
   mCreateTodoAction->setHelpText( i18n( "Allows you to create a calendar to-do or reminder from this message" ) );
   mCreateTodoAction->setWhatsThis( i18n( "This option starts the KOrganizer to-do editor with initial values taken from the currently selected message. Then you can edit the to-do to your liking before saving it to your calendar." ) );
-  mActionCollection->addAction( "create_todo", mCreateTodoAction );
+  ac->addAction( "create_todo", mCreateTodoAction );
   connect( mCreateTodoAction, SIGNAL(triggered(bool)),
            this, SLOT(slotCreateTodo()) );
   mKorganizerIsOnSystem = !KStandardDirs::findExe("korganizer").isEmpty();
   mCreateTodoAction->setEnabled( mKorganizerIsOnSystem );
 
   mStatusMenu = new KActionMenu ( i18n( "Mar&k Message" ), this );
-  mActionCollection->addAction( "set_status", mStatusMenu );
+  ac->addAction( "set_status", mStatusMenu );
 
 
   KMMainWidget* mainwin = kmkernel->getKMMainWidget();
@@ -152,22 +151,22 @@ MessageActions::MessageActions( KActionCollection *ac, QWidget* parent ) :
   }
 
   mEditAction = new KAction( KIcon("accessories-text-editor"), i18n("&Edit Message"), this );
-  mActionCollection->addAction( "edit", mEditAction );
+  ac->addAction( "edit", mEditAction );
   connect( mEditAction, SIGNAL(triggered(bool)),
            this, SLOT(editCurrentMessage()) );
   mEditAction->setShortcut( Qt::Key_T );
 
   mAnnotateAction = new KAction( KIcon( "view-pim-notes" ), i18n( "Add Note..."), this );
-  mActionCollection->addAction( "annotate", mAnnotateAction );
+  ac->addAction( "annotate", mAnnotateAction );
   connect( mAnnotateAction, SIGNAL(triggered(bool)),
            this, SLOT(annotateMessage()) );
 
-  mPrintAction = KStandardAction::print( this, SLOT(slotPrintMsg()), mActionCollection );
+  mPrintAction = KStandardAction::print( this, SLOT(slotPrintMsg()), ac );
   if(KPrintPreview::isAvailable())
-    mPrintPreviewAction = KStandardAction::printPreview( this, SLOT(slotPrintPreviewMsg()), mActionCollection );
+    mPrintPreviewAction = KStandardAction::printPreview( this, SLOT(slotPrintPreviewMsg()), ac );
 
   mForwardActionMenu  = new KActionMenu(KIcon("mail-forward"), i18nc("Message->","&Forward"), this);
-  mActionCollection->addAction("message_forward", mForwardActionMenu );
+  ac->addAction("message_forward", mForwardActionMenu );
 
   mForwardAttachedAction = new KAction( KIcon("mail-forward"),
                                         i18nc( "@action:inmenu Message->Forward->",
@@ -175,7 +174,7 @@ MessageActions::MessageActions( KActionCollection *ac, QWidget* parent ) :
                                         this );
   connect( mForwardAttachedAction, SIGNAL(triggered(bool)),
            parent, SLOT(slotForwardAttachedMsg()) );
-  mActionCollection->addAction( "message_forward_as_attachment", mForwardAttachedAction );
+  ac->addAction( "message_forward_as_attachment", mForwardAttachedAction );
 
   mForwardInlineAction = new KAction( KIcon( "mail-forward" ),
                                        i18nc( "@action:inmenu Message->Forward->",
@@ -183,12 +182,12 @@ MessageActions::MessageActions( KActionCollection *ac, QWidget* parent ) :
                                        this );
   connect( mForwardInlineAction, SIGNAL(triggered(bool)),
            parent, SLOT(slotForwardInlineMsg()) );
-  mActionCollection->addAction( "message_forward_inline", mForwardInlineAction );
+  ac->addAction( "message_forward_inline", mForwardInlineAction );
 
   setupForwardActions();
 
   mRedirectAction  = new KAction(i18nc("Message->Forward->", "&Redirect..."), this );
-  mActionCollection->addAction( "message_forward_redirect", mRedirectAction );
+  ac->addAction( "message_forward_redirect", mRedirectAction );
   connect( mRedirectAction, SIGNAL(triggered(bool)),
            parent, SLOT(slotRedirectMsg()) );
   mRedirectAction->setShortcut( QKeySequence( Qt::Key_E ) );
@@ -199,7 +198,7 @@ MessageActions::MessageActions( KActionCollection *ac, QWidget* parent ) :
   mMailingListActionMenu = new KActionMenu( i18nc( "Message->", "Mailing-&List" ), this );
   connect( mMailingListActionMenu->menu(), SIGNAL(triggered(QAction*)),
            this, SLOT(slotRunUrl(QAction*)) );
-  mActionCollection->addAction( "mailing_list", mMailingListActionMenu );
+  ac->addAction( "mailing_list", mMailingListActionMenu );
   mMailingListActionMenu->setEnabled(false);
 
   mMonitor = new Akonadi::Monitor( this );
