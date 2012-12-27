@@ -100,14 +100,14 @@ void CollectionMaintenancePage::init(const Akonadi::Collection & col)
 
   indexingLayout->addWidget( mLastIndexed );
 
-  mForceReindex = new KPushButton(i18n("Force reindexing"));
-  indexingLayout->addWidget( mForceReindex );
+  KPushButton *forceReindex = new KPushButton(i18n("Force reindexing"));
+  indexingLayout->addWidget( forceReindex );
 
   if(!Nepomuk2::ResourceManager::instance()->initialized()) {
     mLastIndexed->hide();
-    mForceReindex->setEnabled(false);
+    forceReindex->setEnabled(false);
   } else {
-    connect(mForceReindex,SIGNAL(clicked()),SLOT(slotReindexing()));
+    connect(forceReindex,SIGNAL(clicked()),SLOT(slotReindexing()));
   }
 
   topLayout->addWidget( indexingGroup );

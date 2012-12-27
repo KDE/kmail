@@ -27,9 +27,9 @@ class CollectionPane : public MessageList::Pane
   Q_OBJECT
 public:
   explicit CollectionPane( QAbstractItemModel *model, QItemSelectionModel *selectionModel, QWidget *parent = 0 );
-  virtual ~CollectionPane();
+  ~CollectionPane();
 
-  virtual MessageList::StorageModel *createStorageModel( QAbstractItemModel *model, QItemSelectionModel *selectionModel, QObject *parent );
+  MessageList::StorageModel *createStorageModel( QAbstractItemModel *model, QItemSelectionModel *selectionModel, QObject *parent );
 };
 
 class CollectionStorageModel : public MessageList::StorageModel
@@ -41,8 +41,8 @@ public:
    * Create a StorageModel wrapping the specified folder.
    */
   explicit CollectionStorageModel( QAbstractItemModel *model, QItemSelectionModel *selectionModel, QObject *parent = 0 );
-  virtual ~CollectionStorageModel();
-  virtual bool isOutBoundFolder( const Akonadi::Collection& c ) const;
+  ~CollectionStorageModel();
+  bool isOutBoundFolder( const Akonadi::Collection& c ) const;
 };
 
 
