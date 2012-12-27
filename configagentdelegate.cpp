@@ -28,6 +28,7 @@
 #include <KIcon>
 #include <KGlobal>
 #include <KLocale>
+#include <KIconLoader>
 
 #include <QUrl>
 #include <QAbstractTextDocumentLayout>
@@ -40,6 +41,8 @@
 
 using Akonadi::AgentInstanceModel;
 using Akonadi::AgentInstance;
+
+static const int s_delegatePaddingSize = 7;
 
 struct Icons {
     Icons()
@@ -69,14 +72,14 @@ QTextDocument* ConfigAgentDelegate::document ( const QStyleOptionViewItem &optio
     int status = index.model()->data ( index, AgentInstanceModel::StatusRole ).toInt();
     uint progress = index.model()->data ( index, AgentInstanceModel::ProgressRole ).toUInt();
     const QString statusMessage = index.model()->data ( index, AgentInstanceModel::StatusMessageRole ).toString();
-    const QStringList capabilities = index.model()->data ( index, AgentInstanceModel::CapabilitiesRole ).toStringList();
 
     QTextDocument *document = new QTextDocument ( 0 );
 
+    const QSize decorationSize( KIconLoader::global()->currentSize( KIconLoader::Desktop ), KIconLoader::global()->currentSize( KIconLoader::Desktop ) );
     const QVariant data = index.model()->data ( index, Qt::DecorationRole );
     if ( data.isValid() && data.type() == QVariant::Icon ) {
         document->addResource ( QTextDocument::ImageResource, QUrl ( QLatin1String ( "agent_icon" ) ),
-                                qvariant_cast<QIcon> ( data ).pixmap ( QSize ( 64, 64 ) ) );
+                                qvariant_cast<QIcon> ( data ).pixmap ( decorationSize ) );
     }
 
     if ( !index.data ( AgentInstanceModel::OnlineRole ).toBool() )
@@ -96,12 +99,11 @@ QTextDocument* ConfigAgentDelegate::document ( const QStyleOptionViewItem &optio
     QColor textColor;
     if ( option.state & QStyle::State_Selected ) {
         textColor = option.palette.color ( cg, QPalette::HighlightedText );
-    }
-    else {
+    } else {
         textColor = option.palette.color ( cg, QPalette::Text );
     }
 
-    QString content = QString::fromLatin1 (
+    const QString content = QString::fromLatin1 (
                           "<html style=\"color:%1\">"
                           "<body>"
                           "<table>"
@@ -157,19 +159,13 @@ void ConfigAgentDelegate::paint ( QPainter *painter, const QStyleOptionViewItem 
     delete doc;
 }
 
-QSize ConfigAgentDelegate::sizeHint ( const QStyleOptionViewItem &option, const QModelIndex &index ) const
+QSize ConfigAgentDelegate::sizeHint ( const QStyleOptionViewItem &option, const QModelIndex & ) const
 {
-    if ( !index.isValid() )
-        return QSize ( 0, 0 );
+    const int iconHeight = KIconLoader::global()->currentSize(KIconLoader::Desktop) + ( s_delegatePaddingSize*2 );  //icon height + padding either side
+    const int textHeight = option.fontMetrics.height() + qMax( option.fontMetrics.height(), 16 ) + ( s_delegatePaddingSize*2 ); //height of text + icon/text + padding either side
 
-    QTextDocument *doc = document ( option, index );
-    if ( !doc )
-        return QSize ( 0, 0 );
+    return QSize( 1,qMax( iconHeight, textHeight ) ); //any width,the view will give us the whole thing in list mode
 
-    const QSize size = doc->documentLayout()->documentSize().toSize();
-    delete doc;
-
-    return size;
 }
 
 QWidget  * ConfigAgentDelegate::createEditor ( QWidget *, const QStyleOptionViewItem  &, const QModelIndex & ) const
@@ -180,13 +176,13 @@ QWidget  * ConfigAgentDelegate::createEditor ( QWidget *, const QStyleOptionView
 bool ConfigAgentDelegate::editorEvent ( QEvent* event, QAbstractItemModel* model, const QStyleOptionViewItem& option, const QModelIndex& index )
 {
     Q_UNUSED ( model );
+    if ( !index.isValid() )
+        return false;
     if ( ! ( ( event->type() == QEvent::MouseButtonRelease )
              || ( event->type() == QEvent::MouseButtonPress )
              || ( event->type() == QEvent::MouseMove ) ) )
         return false;
 
-    if ( !index.isValid() )
-        return false;
 
     QMouseEvent *me = static_cast<QMouseEvent*> ( event );
     const QPoint mousePos = me->pos() - option.rect.topLeft();

@@ -34,6 +34,7 @@
 #include <QVBoxLayout>
 #include <QLabel>
 
+#include <kparts/statusbarextension.h>
 #include <kparts/mainwindow.h>
 #include <kpluginfactory.h>
 #include <kpluginloader.h>
@@ -91,23 +92,6 @@ KMailPart::KMailPart(QWidget *parentWidget, QObject *parent, const QVariantList 
   canvas->setObjectName( "canvas" );
   setWidget(canvas);
   KIconLoader::global()->addAppDir( "libkdepim" );
-#if 0
-  //It's also possible to make a part out of a readerWin
-  KMReaderWin *mReaderWin = new KMReaderWin( canvas, canvas, actionCollection() );
-  connect(mReaderWin, SIGNAL(urlClicked(KUrl,int)),
-	  mReaderWin, SLOT(slotUrlClicked()));
-  QVBoxLayout *topLayout = new QVBoxLayout(canvas);
-  topLayout->addWidget(mReaderWin);
-  mReaderWin->setAutoDelete( true );
-  kmkernel->inboxFolder()->open();
-  KMMessage *msg = kmkernel->inboxFolder()->getMsg(0);
-  mReaderWin->setMsg( msg, true );
-  mReaderWin->setFocusPolicy(Qt::ClickFocus);
-  KMailStatusBarExtension *statusBar  = new KMailStatusBarExtension(this);
-  //new KParts::SideBarExtension( kmkernel->mainWin()-mainKMWidget()->leftFrame(), this );
-  setXMLFile( "kmail_part.rc" );
-  kmkernel->inboxFolder()->close();
-#else
   mainWidget = new KMMainWidget( canvas, this, actionCollection(),
                                  KGlobal::config() );
   mainWidget->setObjectName( "partmainwidget" );
@@ -115,7 +99,7 @@ KMailPart::KMailPart(QWidget *parentWidget, QObject *parent, const QVariantList 
   topLayout->addWidget(mainWidget);
   topLayout->setMargin(0);
   mainWidget->setFocusPolicy(Qt::ClickFocus);
-  KMailStatusBarExtension *statusBar  = new KMailStatusBarExtension(this);
+  KParts::StatusBarExtension *statusBar  = new KParts::StatusBarExtension(this);
   statusBar->addStatusBarItem( mainWidget->vacationScriptIndicator(), 2, false );
 
   // Get to know when the user clicked on a folder in the KMail part and update the headerWidget of Kontact
@@ -124,7 +108,6 @@ KMailPart::KMailPart(QWidget *parentWidget, QObject *parent, const QVariantList 
   connect( kmkernel->folderCollectionMonitor(), SIGNAL(collectionChanged(Akonadi::Collection,QSet<QByteArray>)),
            this, SLOT(slotCollectionChanged(Akonadi::Collection,QSet<QByteArray>)));
   setXMLFile( "kmail_part.rc", true );
-#endif
 
   KSettings::Dispatcher::registerComponent( KMailFactory::componentData(), mKMailKernel, "slotConfigChanged" );
 }
@@ -186,17 +169,5 @@ QWidget* KMailPart::parentWidget() const
 {
   return mParentWidget;
 }
-
-
-KMailStatusBarExtension::KMailStatusBarExtension( KMailPart *parent )
-  : KParts::StatusBarExtension( parent ), mParent( parent )
-{
-}
-
-KMainWindow * KMailStatusBarExtension::mainWindow() const
-{
-  return static_cast<KMainWindow*>( mParent->parentWidget() );
-}
-
 #include "kmail_part.moc"
 
