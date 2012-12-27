@@ -36,13 +36,9 @@
 #include <QPixmap>
 
 class KMailStatusBarExtension;
-class KMKernel;
 class KMMainWidget;
 namespace KPIM { class StatusbarProgressWidget; }
 using KPIM::StatusbarProgressWidget;
-
-class ActionManager;
-
 
 class KMailPart: public KParts::ReadOnlyPart
 {
@@ -71,10 +67,7 @@ class KMailPart: public KParts::ReadOnlyPart
     virtual void guiActivateEvent(KParts::GUIActivateEvent *e);
 
   private:
-    KMKernel *mKMailKernel;
     KMMainWidget *mainWidget;
-    ActionManager *mActionManager;
-    KMailStatusBarExtension *mStatusBar;
     QWidget *mParentWidget;
 };
 
