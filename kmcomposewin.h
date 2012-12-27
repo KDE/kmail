@@ -328,9 +328,9 @@ class KMComposeWin : public KMail::Composer
     void slotMarkAll();
     void slotTranslatorWasClosed();
 
-  void slotFolderRemoved( const Akonadi::Collection& );
+    void slotFolderRemoved( const Akonadi::Collection& );
     void slotLanguageChanged( const QString &language );
-  void slotFccFolderChanged(const Akonadi::Collection&);
+    void slotFccFolderChanged(const Akonadi::Collection&);
     void slotEditorTextChanged();
     void slotOverwriteModeChanged();
     /**
@@ -659,13 +659,13 @@ class KMComposeWin : public KMail::Composer
     AttachmentMissingWarning *mAttachmentMissing;
     QTimer *m_verifyMissingAttachment;
     QLabel *mSignatureStateIndicator;
-  QLabel *mEncryptionStateIndicator;
-  MailCommon::FolderRequester *mFccFolder;
+    QLabel *mEncryptionStateIndicator;
+    MailCommon::FolderRequester *mFccFolder;
     bool mPreventFccOverwrite;
     bool mCheckForForgottenAttachments;
     bool mIgnoreStickyFields;
-  bool mWasModified;
-  Akonadi::Collection mCollectionForNewMessage;
+    bool mWasModified;
+    Akonadi::Collection mCollectionForNewMessage;
 };
 
 #endif
