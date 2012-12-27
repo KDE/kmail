@@ -68,7 +68,6 @@ using KPIM::RecentAddresses;
 #include "messagelist/core/settings.h"
 #include "messagelist/messagelistutil.h"
 #include "messagecore/globalsettings.h"
-#include "messagecore/taglistmonitor.h"
 
 #include "templateparser/templatesconfiguration_kfg.h"
 #include "templateparser/templatesconfiguration.h"
@@ -2112,7 +2111,6 @@ void AppearancePage::MessageTagTab::save()
     }
   }
 
-  MessageCore::TagListMonitor::triggerUpdate();
 }
 
 
