@@ -27,7 +27,6 @@
 
 #include "kmail_export.h"
 #include <kparts/browserextension.h>
-#include <kparts/statusbarextension.h>
 #include <kparts/event.h>
 #include <kparts/part.h>
 #include <akonadi/collection.h>
@@ -69,17 +68,6 @@ class KMailPart: public KParts::ReadOnlyPart
   private:
     KMMainWidget *mainWidget;
     QWidget *mParentWidget;
-};
-
-class KMailStatusBarExtension : public KParts::StatusBarExtension
-{
-public:
-  KMailStatusBarExtension( KMailPart *parent );
-
-  KMainWindow *mainWindow() const;
-
-private:
-  KMailPart *mParent;
 };
 
 #endif
