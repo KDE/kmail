@@ -392,8 +392,6 @@ void KMMainWidget::destruct()
   delete mMoveOrCopyToDialog;
   delete mSelectFromAllFoldersDialog;
 
-  KConfigGroup grp = mConfig->group(QLatin1String("Recent Files"));
-  mOpenRecentAction->saveEntries(grp);
   disconnect( kmkernel->folderCollectionMonitor(), SIGNAL(itemAdded(Akonadi::Item,Akonadi::Collection)), 0, 0);
   disconnect( kmkernel->folderCollectionMonitor(), SIGNAL(itemRemoved(Akonadi::Item)), 0, 0);
   disconnect( kmkernel->folderCollectionMonitor(), SIGNAL(itemMoved(Akonadi::Item,Akonadi::Collection,Akonadi::Collection)), 0, 0);
@@ -4856,4 +4854,8 @@ void KMMainWidget::slotOpenRecentMsg(const KUrl& url)
 void KMMainWidget::addRecentFile(const KUrl& mUrl)
 {
   mOpenRecentAction->addUrl(mUrl);
+  KConfigGroup grp = mConfig->group(QLatin1String("Recent Files"));
+  mOpenRecentAction->saveEntries(grp);
+  grp.sync();
+
 }
