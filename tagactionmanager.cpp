@@ -164,6 +164,8 @@ void TagActionManager::createTagActions()
   foreach( const MailCommon::Tag::Ptr &tag, mTags ) {
     if(tag->tagStatus)
       continue;
+    if ( tag->nepomukResourceUri.toString().isEmpty() )
+      continue;
     if ( i< s_numberMaxTag )
       createTagAction( tag,true );
     else
