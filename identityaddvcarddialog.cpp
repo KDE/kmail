@@ -30,7 +30,7 @@
 IdentityAddVcardDialog::IdentityAddVcardDialog(KPIMIdentities::IdentityManager *manager, QWidget *parent)
   :KDialog(parent)
 {
-  setCaption( i18n( "Create own vcard" ) );
+  setCaption( i18n( "Create own vCard" ) );
   setButtons( Ok|Cancel );
   setDefaultButton( Ok );
   setModal( true );
@@ -49,7 +49,7 @@ IdentityAddVcardDialog::IdentityAddVcardDialog(KPIMIdentities::IdentityManager *
   mButtonGroup->addButton( radio, (int)Empty );
 
   // row 2: radio button
-  radio = new QRadioButton( i18n("&Duplicate existing vcard"), this );
+  radio = new QRadioButton( i18n("&Duplicate existing vCard"), this );
   vlay->addWidget( radio );
   mButtonGroup->addButton( radio, (int)ExistingEntry );
 

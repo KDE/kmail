@@ -28,7 +28,7 @@
 IdentityEditVcardDialog::IdentityEditVcardDialog(QWidget *parent)
   : KDialog(parent)
 {
-  setCaption( i18n( "Edit own vcard" ) );
+  setCaption( i18n( "Edit own vCard" ) );
   setButtons( Ok|Cancel );
   setDefaultButton( Ok );
   setModal( true );

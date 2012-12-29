@@ -478,7 +478,7 @@ namespace KMail {
              mTransportCombo, SLOT(setEnabled(bool)) );
 
     ++row;
-    mAttachMyVCard = new QCheckBox(i18n("Attach my vcard to message"), tab);
+    mAttachMyVCard = new QCheckBox(i18n("Attach my vCard to message"), tab);
     glay->addWidget( mAttachMyVCard, row, 0 );
     mEditVCard = new KPushButton(i18n("Create..."),tab);
     connect(mEditVCard,SIGNAL(clicked()),SLOT(slotEditVcard()));
