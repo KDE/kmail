@@ -2,6 +2,8 @@
  *
  * Copyright (c) 2006 Till Adam <adam@kde.org>
  *
+ * Copyright (c) 2012 Laurent Montel <montel@kde.or>
+ *
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -30,14 +32,15 @@
 
 #include "collectionquotapage_p.h"
 
-#include <qlayout.h>
-#include <qprogressbar.h>
 
 #include "kmkernel.h"
-#include "klocale.h"
-#include "kdebug.h"
+
+#include <KLocale>
 #include <KDialog>
 
+#include <QLabel>
+#include <qlayout.h>
+#include <qprogressbar.h>
 
 QuotaWidget::QuotaWidget( QWidget* parent )
   :QWidget( parent )
@@ -47,8 +50,20 @@ QuotaWidget::QuotaWidget( QWidget* parent )
   QGridLayout* layout = new QGridLayout( stuff );
   layout->setMargin( KDialog::marginHint() );
   layout->setSpacing( KDialog::spacingHint() );
+
+  QLabel *lab = new QLabel(i18n("Usage:"));
+  layout->addWidget( lab, 0, 0 );
+
+  mUsage = new QLabel;
+  layout->addWidget( mUsage, 0, 1 );
+
+
+  QLabel *Status = new QLabel(i18n("Status:"));
+  layout->addWidget( Status, 1, 0 );
   mProgressBar = new QProgressBar( stuff );
-  layout->addWidget( mProgressBar, 2, 1 );
+  // xgettext: no-c-format
+  mProgressBar->setFormat(i18n("%p% full"));
+  layout->addWidget( mProgressBar, 1, 1 );
   box->addWidget( stuff );
   box->addStretch( 2 );
 }
@@ -57,6 +72,7 @@ void QuotaWidget::setQuotaInfo( qint64 current, qint64 maxValue )
 {
   mProgressBar->setMaximum( maxValue );
   mProgressBar->setValue( current );
+  mUsage->setText(i18n("%1 of %2 KB used",current, maxValue));
 }
 
 #include "collectionquotapage_p.moc"

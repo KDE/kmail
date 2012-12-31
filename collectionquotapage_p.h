@@ -37,6 +37,8 @@
 #include <QWidget>
 
 class QProgressBar;
+class QLabel;
+
 class QuotaWidget : public QWidget {
 
   Q_OBJECT
@@ -48,6 +50,7 @@ public:
 
 private:
   QProgressBar* mProgressBar;
+  QLabel *mUsage;
 };
 
 #endif /* COLLECTIONQUOTAPAGE_P_H */
