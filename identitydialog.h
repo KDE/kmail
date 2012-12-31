@@ -123,6 +123,7 @@ namespace KMail {
     KLineEdit                        *mCcEdit;
     Sonnet::DictionaryComboBox       *mDictionaryCombo;
     MailCommon::FolderRequester      *mFccCombo;
+    QCheckBox                        *mSentMailFolderCheck;
     MailCommon::FolderRequester      *mDraftsCombo;
     MailCommon::FolderRequester      *mTemplatesCombo;
     QCheckBox                        *mTransportCheck;

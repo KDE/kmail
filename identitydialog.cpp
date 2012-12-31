@@ -445,9 +445,9 @@ namespace KMail {
     mFccCombo = new FolderRequester( tab );
     mFccCombo->setShowOutbox( false );
     glay->addWidget( mFccCombo, row, 1 );
-    label = new QLabel( i18n("Sent-mail &folder:"), tab );
-    label->setBuddy( mFccCombo );
-    glay->addWidget( label, row, 0 );
+    mSentMailFolderCheck = new QCheckBox( i18n("Sent-mail &folder:"), tab );
+    glay->addWidget( mSentMailFolderCheck, row, 0 );
+    connect(mSentMailFolderCheck,SIGNAL(toggled(bool)),mFccCombo,SLOT(setEnabled(bool)));
 
     // "Drafts Folder" combo box and label:
     ++row;
@@ -782,6 +782,8 @@ namespace KMail {
       mTransportCombo->setCurrentTransport( transport->id() );
     mDictionaryCombo->setCurrentByDictionaryName( ident.dictionary() );
 
+    mSentMailFolderCheck->setChecked(!ident.disabledFcc());
+    mFccCombo->setEnabled(mSentMailFolderCheck->isChecked());
     if ( ident.fcc().isEmpty() ||
          !checkFolderExists( ident.fcc(),
                              i18n("The custom sent-mail folder for identity "
@@ -865,6 +867,7 @@ namespace KMail {
     ident.setTransport( mTransportCheck->isChecked() ? QString::number( mTransportCombo->currentTransportId() )
                                                      : QString() );
     ident.setDictionary( mDictionaryCombo->currentDictionaryName() );
+    ident.setDisabledFcc( !mSentMailFolderCheck->isChecked() );
     Akonadi::Collection collection = mFccCombo->collection();
     if ( collection.isValid() ) {
       ident.setFcc( QString::number( collection.id() ) );
