@@ -3083,6 +3083,16 @@ void KMComposeWin::slotIdentityChanged( uint uoid, bool initalChange )
     }
   }
 
+  const bool fccIsDisabled = ident.disabledFcc();
+  if (fccIsDisabled) {
+      KMime::Headers::Generic *header = new KMime::Headers::Generic( "X-KMail-FccDisabled", mMsg.get(), QLatin1String("true"), "utf-8" );
+      mMsg->setHeader( header );
+  } else {
+      mMsg->removeHeader( "X-KMail-FccDisabled" );
+  }
+  mFccFolder->setEnabled(!fccIsDisabled);
+
+
   if ( !mBtnDictionary->isChecked() && !mIgnoreStickyFields ) {
     mDictionaryCombo->setCurrentByDictionaryName( ident.dictionary() );
   }
@@ -3132,7 +3142,6 @@ void KMComposeWin::slotIdentityChanged( uint uoid, bool initalChange )
   changeCryptoAction();
   // make sure the From and BCC fields are shown if necessary
   rethinkFields( false );
-  mFccFolder->setEnabled(!ident.disabledFcc());
   setModified(wasModified);
 }
 
