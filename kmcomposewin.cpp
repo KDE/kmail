@@ -3132,6 +3132,7 @@ void KMComposeWin::slotIdentityChanged( uint uoid, bool initalChange )
   changeCryptoAction();
   // make sure the From and BCC fields are shown if necessary
   rethinkFields( false );
+  mFccFolder->setEnabled(!ident.disabledFcc());
   setModified(wasModified);
 }
 
