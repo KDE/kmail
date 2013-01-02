@@ -272,21 +272,21 @@ void CollectionMailingListPage::fillMLFromWidgets()
     return;
 
   // make sure that email addresses are prepended by "mailto:"
-  bool changed = false;
-  QStringList oldList = mEditList->items();
+  bool listChanged = false;
+  const QStringList oldList = mEditList->items();
   QStringList newList; // the correct string list
   QStringList::ConstIterator end = oldList.constEnd();
   for ( QStringList::ConstIterator it = oldList.constBegin(); it != end; ++it ) {
     if ( !(*it).startsWith(QLatin1String("http:")) && !(*it).startsWith(QLatin1String("https:")) &&
          !(*it).startsWith(QLatin1String("mailto:")) && ( (*it).contains(QLatin1Char('@')) ) ) {
-      changed = true;
+      listChanged = true;
       newList << "mailto:" + *it;
     }
     else {
       newList << *it;
     }
   }
-  if ( changed ) {
+  if ( listChanged ) {
     mEditList->clear();
     mEditList->insertStringList( newList );
   }
