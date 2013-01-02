@@ -66,6 +66,7 @@ private slots:
   void slotMLHandling( int element );
   void slotHoldsML( bool holdsML );
   void slotAddressChanged( int addr );
+  void slotConfigChanged();
 
 private:
   void fillMLFromWidgets();
@@ -83,6 +84,7 @@ private:
   KEditListWidget *mEditList;
   KSqueezedTextLabel *mMLId;
   QWidget *mGroupWidget;
+  bool changed;
 };
 
 AKONADI_COLLECTION_PROPERTIES_PAGE_FACTORY( CollectionMailingListPageFactory, CollectionMailingListPage )
