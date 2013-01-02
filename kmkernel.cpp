@@ -646,8 +646,8 @@ int KMKernel::openComposer( const QString &to, const QString &cc,
         const int pos = (*it).indexOf( ':' );
         if ( pos > 0 )
         {
-          QString header = (*it).left( pos ).trimmed();
-          QString value = (*it).mid( pos+1 ).trimmed();
+          const QString header = (*it).left( pos ).trimmed();
+          const QString value = (*it).mid( pos+1 ).trimmed();
           if ( !header.isEmpty() && !value.isEmpty() ) {
             KMime::Headers::Generic *h = new KMime::Headers::Generic( header.toUtf8(), msg.get(), value.toUtf8() );
             msg->setHeader( h );
@@ -660,8 +660,14 @@ int KMKernel::openComposer( const QString &to, const QString &cc,
   if (!to.isEmpty())
     cWin->setFocusToSubject();
   KUrl::List attachURLs = KUrl::List( attachmentPaths );
-  for ( KUrl::List::ConstIterator it = attachURLs.constBegin() ; it != attachURLs.constEnd() ; ++it )
+  for ( KUrl::List::ConstIterator it = attachURLs.constBegin() ; it != attachURLs.constEnd() ; ++it ) {
+    if( KMimeType::findByUrl( *it )->name() == QLatin1String( "inode/directory" ) ) {
+      if(KMessageBox::questionYesNo(0, i18n("Do you want to attach this folder \"%1\"?",(*it).prettyUrl()), i18n("Attach Folder")) == KMessageBox::No ) {
+        continue;
+      }
+    }
     cWin->addAttachment( (*it), "" );
+  }
   if ( !hidden ) {
     cWin->show();
     // Activate window - doing this instead of KWindowSystem::activateWindow(cWin->winId());

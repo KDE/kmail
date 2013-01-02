@@ -302,7 +302,7 @@ if (NOT WINCE AND KDEPIM_BUILD_DESKTOP)
     DESTINATION ${DBUS_INTERFACES_INSTALL_DIR}
   )
 
-  install( FILES kmail_addattachmentservicemenu.desktop DESTINATION
+  install( FILES kmail_addattachmentservicemenu.desktop kmail_addattachmentfolderservicemenu.desktop DESTINATION
     ${SERVICES_INSTALL_DIR}/ServiceMenus)
 
 endif (NOT WINCE AND KDEPIM_BUILD_DESKTOP)
