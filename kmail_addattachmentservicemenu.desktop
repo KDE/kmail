@@ -1,8 +1,7 @@
 [Desktop Entry]
 Type=Service
 ServiceTypes=KonqPopupMenu/Plugin
-# all files inherit from application/octet-stream
-MimeType=application/octet-stream;
+MimeType=all/all;
 Actions=sendto;
 
 [Desktop Action sendto]
