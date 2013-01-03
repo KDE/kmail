@@ -28,6 +28,7 @@ public:
 private Q_SLOTS:
   void explicitlyClosed();
   void slotAttachFile();
+  void slotFileAttached();
 Q_SIGNALS:
   void attachMissingFile();
   void closeAttachMissingFile();
