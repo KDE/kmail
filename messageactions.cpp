@@ -460,7 +460,7 @@ void MessageActions::setupForwardActions()
     mForwardActionMenu->insertAction( mRedirectAction, mForwardAttachedAction );
     mForwardActionMenu->insertAction( mRedirectAction, mForwardInlineAction );
     mForwardInlineAction->setShortcut(QKeySequence(Qt::Key_F));
-    mForwardAttachedAction->setShortcut(QKeySequence(Qt::ALT+Qt::Key_F));
+    mForwardAttachedAction->setShortcut(QKeySequence(Qt::SHIFT+Qt::Key_F));
     QObject::connect( mForwardActionMenu, SIGNAL(triggered(bool)),
                       mParent, SLOT(slotForwardAttachedMsg()) );
   }
