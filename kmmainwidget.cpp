@@ -2997,6 +2997,7 @@ void KMMainWidget::showMessagePopup(const Akonadi::Item&msg ,const KUrl&url,cons
         menu->addAction( mMsgView->addAddrBookAction() );
       }
       menu->addAction( mMsgView->copyURLAction() );
+      urlMenuAdded = true;
     } else if( url.protocol() != QLatin1String( "attachment" ) ) {
       // popup on a not-mailto URL
       menu->addAction( mMsgView->urlOpenAction() );
@@ -3008,9 +3009,8 @@ void KMMainWidget::showMessagePopup(const Akonadi::Item&msg ,const KUrl&url,cons
         menu->addAction( mMsgView->copyImageLocation());
         menu->addAction( mMsgView->downloadImageToDiskAction());
       }
+      urlMenuAdded = true;
     }
-
-    urlMenuAdded = true;
     kDebug() << "URL is:" << url;
   }
   const QString selectedText = mMsgView ? mMsgView->copyText() : QString();

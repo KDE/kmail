@@ -447,7 +447,7 @@ void KMReaderMainWin::slotContactSearchJobForMessagePopupDone( KJob *job )
 
 void KMReaderMainWin::showMessagePopup(const Akonadi::Item&msg ,const KUrl&url,const KUrl &imageUrl,const QPoint& aPoint, bool contactAlreadyExists, bool uniqueContactFound)
 {
-  KMenu *menu = new KMenu;
+  KMenu *menu = 0;
 
   bool urlMenuAdded = false;
   bool copyAdded = false;
@@ -455,6 +455,7 @@ void KMReaderMainWin::showMessagePopup(const Akonadi::Item&msg ,const KUrl&url,c
   if ( !url.isEmpty() ) {
     if ( url.protocol() == QLatin1String( "mailto" ) ) {
       // popup on a mailto URL
+      menu = new KMenu;
       menu->addAction( mReaderWin->mailToComposeAction() );
       if ( messageHasPayload ) {
         menu->addAction( mReaderWin->mailToReplyAction() );
@@ -474,8 +475,11 @@ void KMReaderMainWin::showMessagePopup(const Akonadi::Item&msg ,const KUrl&url,c
 
       menu->addAction( mReaderWin->copyURLAction() );
       copyAdded = true;
+      urlMenuAdded = true;
     } else if( url.protocol() != QLatin1String( "attachment" ) ){
       // popup on a not-mailto URL
+      if(!menu)
+        menu = new KMenu;
       menu->addAction( mReaderWin->urlOpenAction() );
       menu->addAction( mReaderWin->addBookmarksAction() );
       menu->addAction( mReaderWin->urlSaveAsAction() );
@@ -485,11 +489,13 @@ void KMReaderMainWin::showMessagePopup(const Akonadi::Item&msg ,const KUrl&url,c
         menu->addAction( mReaderWin->copyImageLocation());
         menu->addAction(mReaderWin->downloadImageToDiskAction());
       }
+      urlMenuAdded = true;
     }
-    urlMenuAdded = true;
   }
   const QString selectedText(mReaderWin->copyText());
   if ( !selectedText.isEmpty() ) {
+    if(!menu)
+      menu = new KMenu;
     if ( urlMenuAdded ) {
       menu->addSeparator();
     }
@@ -507,6 +513,9 @@ void KMReaderMainWin::showMessagePopup(const Akonadi::Item&msg ,const KUrl&url,c
     menu->addSeparator();
     menu->addAction( mReaderWin->speakTextAction());
   } else if ( !urlMenuAdded ) {
+    if(!menu)
+      menu = new KMenu;
+
     // popup somewhere else (i.e., not a URL) on the message
     if (messageHasPayload) {
       bool replyForwardMenu = false;
@@ -551,9 +560,11 @@ void KMReaderMainWin::showMessagePopup(const Akonadi::Item&msg ,const KUrl&url,c
       menu->addAction( mReaderWin->toggleMimePartTreeAction() );
     }
   }
-  KAcceleratorManager::manage(menu);
-  menu->exec( aPoint, 0 );
-  delete menu;
+  if (menu) {
+    KAcceleratorManager::manage(menu);
+    menu->exec( aPoint, 0 );
+    delete menu;
+  }
 }
 
 void KMReaderMainWin::slotFontAction( const QString& font)
