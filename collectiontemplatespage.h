@@ -42,6 +42,9 @@ public:
 public slots:
   void slotCopyGlobal();
 
+private Q_SLOTS:
+  void slotChanged();
+
 protected:
   void init();
 private:
@@ -51,6 +54,7 @@ private:
   uint mIdentity;
   QString mCollectionId;
   bool mIsLocalSystemFolder;
+  bool mChanged;
 };
 
 AKONADI_COLLECTION_PROPERTIES_PAGE_FACTORY( CollectionTemplatesPageFactory, CollectionTemplatesPage )
