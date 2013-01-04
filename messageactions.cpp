@@ -451,7 +451,7 @@ void MessageActions::setupForwardActions()
   if ( GlobalSettings::self()->forwardingInlineByDefault() ) {
     mForwardActionMenu->insertAction( mRedirectAction, mForwardInlineAction );
     mForwardActionMenu->insertAction( mRedirectAction, mForwardAttachedAction );
-    mForwardInlineAction->setShortcut(QKeySequence(Qt::ALT+Qt::Key_F));
+    mForwardInlineAction->setShortcut(QKeySequence(Qt::Key_F));
     mForwardAttachedAction->setShortcut(QKeySequence(Qt::SHIFT+Qt::Key_F));
     QObject::connect( mForwardActionMenu, SIGNAL(triggered(bool)),
                       mParent, SLOT(slotForwardInlineMsg()) );
@@ -459,7 +459,7 @@ void MessageActions::setupForwardActions()
   else {
     mForwardActionMenu->insertAction( mRedirectAction, mForwardAttachedAction );
     mForwardActionMenu->insertAction( mRedirectAction, mForwardInlineAction );
-    mForwardInlineAction->setShortcut(QKeySequence(Qt::SHIFT+Qt::Key_F));
+    mForwardInlineAction->setShortcut(QKeySequence(Qt::Key_F));
     mForwardAttachedAction->setShortcut(QKeySequence(Qt::ALT+Qt::Key_F));
     QObject::connect( mForwardActionMenu, SIGNAL(triggered(bool)),
                       mParent, SLOT(slotForwardAttachedMsg()) );
