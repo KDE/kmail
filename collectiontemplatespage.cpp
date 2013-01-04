@@ -34,7 +34,7 @@ using namespace Akonadi;
 using namespace MailCommon;
 
 CollectionTemplatesPage::CollectionTemplatesPage(QWidget * parent) :
-    CollectionPropertiesPage( parent )
+    CollectionPropertiesPage( parent ), mChanged(false)
 {
   setObjectName( QLatin1String( "KMail::CollectionTemplatesPage" ) );
   setPageTitle( i18n( "Templates" ) );
@@ -61,9 +61,11 @@ void CollectionTemplatesPage::init()
   topLayout->addLayout( topItems );
 
   mCustom = new QCheckBox( i18n("&Use custom message templates in this folder"), this );
+  connect(mCustom, SIGNAL(clicked(bool)), this, SLOT(slotChanged()));
   topItems->addWidget( mCustom, Qt::AlignLeft );
 
   mWidget = new TemplateParser::TemplatesConfiguration( this, "folder-templates" );
+  connect(mWidget, SIGNAL(changed()), this, SLOT(slotChanged()));
   mWidget->setEnabled( false );
 
   // Move the help label outside of the templates configuration widget,
@@ -105,13 +107,13 @@ void CollectionTemplatesPage::load(const Collection & col)
   mIdentity = fd->identity();
 
   mWidget->loadFromFolder( mCollectionId, mIdentity );
+  mChanged = false;
 }
 
 void CollectionTemplatesPage::save(Collection &)
 {
-  if ( !mCollectionId.isEmpty() ) {
+  if ( mChanged && !mCollectionId.isEmpty() ) {
     TemplateParser::Templates t(mCollectionId);
-
     //kDebug() << "use custom templates for folder" << fid <<":" << mCustom->isChecked();
     t.setUseCustomTemplates(mCustom->isChecked());
     t.writeConfig();
@@ -123,10 +125,14 @@ void CollectionTemplatesPage::save(Collection &)
 void CollectionTemplatesPage::slotCopyGlobal() {
   if ( mIdentity ) {
     mWidget->loadFromIdentity( mIdentity );
-  }
-  else {
+  } else {
     mWidget->loadFromGlobal();
   }
+}
+
+void CollectionTemplatesPage::slotChanged()
+{
+  mChanged = true;
 }
 
 #include "collectiontemplatespage.moc"
