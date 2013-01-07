@@ -3683,7 +3683,7 @@ void KMMainWidget::setupActions()
   }
 
   {
-      KAction *action = new KAction(KIcon("backup-mail"), i18n("&Export KMail Data..."), this);
+      KAction *action = new KAction(KIcon("kmail"), i18n("&Export KMail Data..."), this);
       actionCollection()->addAction("kmail_export_data", action );
       connect(action, SIGNAL(triggered(bool)), this, SLOT(slotExportData()));
   }
