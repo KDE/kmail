@@ -430,7 +430,7 @@ KMComposeWin::KMComposeWin( const KMime::Message::Ptr &aMsg, bool lastSignState,
   m_verifyMissingAttachment = new QTimer(this);
   m_verifyMissingAttachment->start(1000*30);
   connect( m_verifyMissingAttachment, SIGNAL(timeout()), this, SLOT(slotVerifyMissingAttachmentTimeout()) );
-  connect( attachmentController, SIGNAL( fileAttached() ), mAttachmentMissing, SLOT(slotFileAttached()) );
+  connect( attachmentController, SIGNAL(fileAttached()), mAttachmentMissing, SLOT(slotFileAttached()) );
 
   readConfig();
   setupStatusBar(attachmentView->widget());
