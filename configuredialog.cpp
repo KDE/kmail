@@ -58,7 +58,7 @@ using KPIM::RecentAddresses;
 #include "messagelist/utils/themeconfigbutton.h"
 
 #include "messagecomposer/autocorrection/composerautocorrectionwidget.h"
-#include "messagecomposer/autoimageresizing/autoresizeimagewidget.h"
+#include "messagecomposer/autoimageresizing/imagescalingwidget.h"
 
 #include "messageviewer/autoqpointer.h"
 #include "messageviewer/nodehelper.h"
@@ -3295,7 +3295,7 @@ ComposerPageAutoImageResizeTab::ComposerPageAutoImageResizeTab(QWidget *parent)
   QVBoxLayout *vlay = new QVBoxLayout( this );
   vlay->setSpacing( 0 );
   vlay->setMargin( 0 );
-  autoResizeWidget = new MessageComposer::AutoResizeImageWidget(this);
+  autoResizeWidget = new MessageComposer::ImageScalingWidget(this);
   vlay->addWidget(autoResizeWidget);
   setLayout(vlay);
   connect( autoResizeWidget, SIGNAL(changed()), this, SLOT(slotEmitChanged()) );

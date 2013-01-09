@@ -54,7 +54,7 @@ class KCModuleProxy;
 class KIntNumInput;
 namespace MessageComposer {
   class ComposerAutoCorrectionWidget;
-  class AutoResizeImageWidget;
+  class ImageScalingWidget;
 }
 
 namespace MessageList {
@@ -705,7 +705,7 @@ private:
   virtual void doResetToDefaultsOther();
 
 private:
-  MessageComposer::AutoResizeImageWidget *autoResizeWidget;
+  MessageComposer::ImageScalingWidget *autoResizeWidget;
 };
 
 
