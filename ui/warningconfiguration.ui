@@ -475,13 +475,16 @@ The recommended SPHINX setting is 14 days.
   <tabstop>mWarnUnsigned</tabstop>
   <tabstop>warnUnencryptedCB</tabstop>
   <tabstop>warnReceiverNotInCertificateCB</tabstop>
+  <tabstop>warnGroupBox</tabstop>
   <tabstop>mWarnSignKeyExpiresSB</tabstop>
   <tabstop>mWarnSignChainCertExpiresSB</tabstop>
   <tabstop>mWarnSignRootCertExpiresSB</tabstop>
   <tabstop>mWarnEncrKeyExpiresSB</tabstop>
   <tabstop>mWarnEncrChainCertExpiresSB</tabstop>
   <tabstop>mWarnEncrRootCertExpiresSB</tabstop>
+  <tabstop>gnupgButton</tabstop>
   <tabstop>enableAllWarningsPB</tabstop>
+  <tabstop>chiasmusButton</tabstop>
  </tabstops>
  <resources/>
  <connections/>
