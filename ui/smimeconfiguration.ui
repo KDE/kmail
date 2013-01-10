@@ -1,7 +1,8 @@
-<ui version="4.0" >
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
  <class>SMimeConfiguration</class>
- <widget class="QWidget" name="SMimeConfiguration" >
-  <property name="geometry" >
+ <widget class="QWidget" name="SMimeConfiguration">
+  <property name="geometry">
    <rect>
     <x>0</x>
     <y>0</y>
@@ -9,56 +10,56 @@
     <height>434</height>
    </rect>
   </property>
-  <layout class="QGridLayout" >
-   <item row="0" column="0" >
-    <widget class="QRadioButton" name="CRLRB" >
-     <property name="whatsThis" >
+  <layout class="QGridLayout">
+   <item row="0" column="0">
+    <widget class="QRadioButton" name="CRLRB">
+     <property name="whatsThis">
       <string>If this option is selected, S/MIME certificates are validated using Certificate Revocation Lists (CRLs).</string>
      </property>
-     <property name="text" >
+     <property name="text">
       <string>Validate certificates using CRLs</string>
      </property>
-     <property name="checked" >
+     <property name="checked">
       <bool>true</bool>
      </property>
     </widget>
    </item>
-   <item row="1" column="0" >
-    <widget class="QRadioButton" name="OCSPRB" >
-     <property name="whatsThis" >
+   <item row="1" column="0">
+    <widget class="QRadioButton" name="OCSPRB">
+     <property name="whatsThis">
       <string>If this option is selected, S/MIME certificates are validated online using the Online Certificates Status Protocol (OCSP). Fill in the URL of the OCSP responder below.</string>
      </property>
-     <property name="text" >
+     <property name="text">
       <string>Validate certificates online (OCSP)</string>
      </property>
     </widget>
    </item>
-   <item row="2" column="0" >
-    <widget class="QGroupBox" name="OCSPGroupBox" >
-     <property name="title" >
+   <item row="2" column="0">
+    <widget class="QGroupBox" name="OCSPGroupBox">
+     <property name="title">
       <string>Online Certificate Validation</string>
      </property>
-     <layout class="QGridLayout" >
-      <item row="0" column="0" >
-       <layout class="QHBoxLayout" >
+     <layout class="QGridLayout">
+      <item row="0" column="0">
+       <layout class="QHBoxLayout">
         <item>
-         <layout class="QVBoxLayout" >
+         <layout class="QVBoxLayout">
           <item>
-           <widget class="QLabel" name="textLabel1" >
-            <property name="text" >
+           <widget class="QLabel" name="textLabel1">
+            <property name="text">
              <string>OCSP responder URL:</string>
             </property>
-            <property name="wordWrap" >
+            <property name="wordWrap">
              <bool>false</bool>
             </property>
            </widget>
           </item>
           <item>
-           <widget class="QLabel" name="textLabel2" >
-            <property name="text" >
+           <widget class="QLabel" name="textLabel2">
+            <property name="text">
              <string>OCSP responder signature:</string>
             </property>
-            <property name="wordWrap" >
+            <property name="wordWrap">
              <bool>false</bool>
             </property>
            </widget>
@@ -66,24 +67,24 @@
          </layout>
         </item>
         <item>
-         <layout class="QVBoxLayout" >
+         <layout class="QVBoxLayout">
           <item>
-           <widget class="KLineEdit" name="OCSPResponderURL" >
-            <property name="whatsThis" >
+           <widget class="KLineEdit" name="OCSPResponderURL">
+            <property name="whatsThis">
              <string>Enter here the address of the server for online validation of certificates (OCSP responder). The URL is usually starting with http://.</string>
             </property>
            </widget>
           </item>
           <item>
-           <widget class="Kleo::KeyRequester" native="1" name="OCSPResponderSignature" />
+           <widget class="Kleo::KeyRequester" name="OCSPResponderSignature" native="true"/>
           </item>
          </layout>
         </item>
        </layout>
       </item>
-      <item row="1" column="0" >
-       <widget class="QCheckBox" name="ignoreServiceURLCB" >
-        <property name="text" >
+      <item row="1" column="0">
+       <widget class="QCheckBox" name="ignoreServiceURLCB">
+        <property name="text">
          <string>Ignore service URL of certificates</string>
         </property>
        </widget>
@@ -91,72 +92,72 @@
      </layout>
     </widget>
    </item>
-   <item row="3" column="0" >
-    <widget class="QCheckBox" name="doNotCheckCertPolicyCB" >
-     <property name="whatsThis" >
+   <item row="3" column="0">
+    <widget class="QCheckBox" name="doNotCheckCertPolicyCB">
+     <property name="whatsThis">
       <string>By default GnuPG uses the file ~/.gnupg/policies.txt to check if a certificate policy is allowed. If this option is selected, policies are not checked.</string>
      </property>
-     <property name="text" >
+     <property name="text">
       <string>Do not check certificate policies</string>
      </property>
     </widget>
    </item>
-   <item row="4" column="0" >
-    <widget class="QCheckBox" name="neverConsultCB" >
-     <property name="whatsThis" >
+   <item row="4" column="0">
+    <widget class="QCheckBox" name="neverConsultCB">
+     <property name="whatsThis">
       <string>If this option is checked, Certificate Revocation Lists are never used to validate S/MIME certificates.</string>
      </property>
-     <property name="text" >
+     <property name="text">
       <string>Never consult a CRL</string>
      </property>
     </widget>
    </item>
-   <item row="5" column="0" >
-    <widget class="QCheckBox" name="fetchMissingCB" >
-     <property name="whatsThis" >
+   <item row="5" column="0">
+    <widget class="QCheckBox" name="fetchMissingCB">
+     <property name="whatsThis">
       <string>If this option is checked, missing issuer certificates are fetched when necessary (this applies to both validation methods, CRLs and OCSP)</string>
      </property>
-     <property name="text" >
+     <property name="text">
       <string>Fetch missing issuer certificates</string>
      </property>
     </widget>
    </item>
-   <item row="6" column="0" >
-    <widget class="KTabWidget" name="requestsTabs" >
-     <property name="currentIndex" >
+   <item row="6" column="0">
+    <widget class="KTabWidget" name="requestsTabs">
+     <property name="currentIndex">
       <number>0</number>
      </property>
-     <widget class="QWidget" name="tabHTTP" >
-      <attribute name="title" >
+     <widget class="QWidget" name="tabHTTP">
+      <attribute name="title">
        <string>HTTP Requests</string>
       </attribute>
-      <layout class="QGridLayout" >
-       <item row="0" column="0" >
-        <widget class="QCheckBox" name="disableHTTPCB" >
-         <property name="whatsThis" >
+      <layout class="QGridLayout">
+       <item row="0" column="0">
+        <widget class="QCheckBox" name="disableHTTPCB">
+         <property name="whatsThis">
           <string>Entirely disables the use of HTTP for S/MIME.</string>
          </property>
-         <property name="text" >
+         <property name="text">
           <string>Do not perform any HTTP requests</string>
          </property>
         </widget>
        </item>
-       <item row="1" column="0" >
-        <widget class="QCheckBox" name="ignoreHTTPDPCB" >
-         <property name="whatsThis" >
-          <string>When looking for the location of a CRL, the to-be-tested certificate usually contains what are known as "CRL Distribution Point" (DP) entries, which are URLs describing the way to access the URL. The first found DP entry is used.  With this option all entries using the HTTP scheme are ignored when looking for a suitable DP.</string>
+       <item row="1" column="0">
+        <widget class="QCheckBox" name="ignoreHTTPDPCB">
+         <property name="whatsThis">
+          <string>When looking for the location of a CRL, the to-be-tested certificate usually contains what are known as &quot;CRL Distribution Point&quot; (DP) entries, which are URLs describing the way to access the URL. The first found DP entry is used.  With this option all entries using the HTTP scheme are ignored when looking for a suitable DP.</string>
          </property>
-         <property name="text" >
+         <property name="text">
           <string>Ignore HTTP CRL distribution point of certificates</string>
          </property>
         </widget>
        </item>
        <item row="3" column="0">
         <spacer>
-         <property name="orientation" >
+         <property name="orientation">
           <enum>Qt::Vertical</enum>
          </property>
-         <property name="sizeHint" >
+         <property name="sizeHint" stdset="0">
           <size>
            <width>20</width>
            <height>40</height>
@@ -204,50 +205,50 @@
        </item>
       </layout>
      </widget>
-     <widget class="QWidget" name="tabLDAP" >
-      <attribute name="title" >
+     <widget class="QWidget" name="tabLDAP">
+      <attribute name="title">
        <string>LDAP Requests</string>
       </attribute>
-      <layout class="QGridLayout" >
-       <item row="0" column="0" >
-        <layout class="QVBoxLayout" >
+      <layout class="QGridLayout">
+       <item row="0" column="0">
+        <layout class="QVBoxLayout">
          <item>
-          <widget class="QCheckBox" name="disableLDAPCB" >
-           <property name="whatsThis" >
+          <widget class="QCheckBox" name="disableLDAPCB">
+           <property name="whatsThis">
             <string>Entirely disables the use of LDAP for S/MIME.</string>
            </property>
-           <property name="text" >
+           <property name="text">
             <string>Do not perform any LDAP requests</string>
            </property>
           </widget>
          </item>
          <item>
-          <widget class="QCheckBox" name="ignoreLDAPDPCB" >
-           <property name="whatsThis" >
-            <string>When looking for the location of a CRL, the to-be-tested certificate usually contains what are known as "CRL Distribution Point" (DP) entries, which are URLs describing the way to access the URL. The first found DP entry is used.  With this option all entries using the LDAP scheme are ignored when looking for a suitable DP.</string>
+          <widget class="QCheckBox" name="ignoreLDAPDPCB">
+           <property name="whatsThis">
+            <string>When looking for the location of a CRL, the to-be-tested certificate usually contains what are known as &quot;CRL Distribution Point&quot; (DP) entries, which are URLs describing the way to access the URL. The first found DP entry is used.  With this option all entries using the LDAP scheme are ignored when looking for a suitable DP.</string>
            </property>
-           <property name="text" >
+           <property name="text">
             <string>Ignore LDAP CRL distribution point of certificates</string>
            </property>
           </widget>
          </item>
          <item>
-          <layout class="QHBoxLayout" >
+          <layout class="QHBoxLayout">
            <item>
-            <widget class="QLabel" name="customLDAPLabel" >
-             <property name="text" >
+            <widget class="QLabel" name="customLDAPLabel">
+             <property name="text">
               <string>Primary host for LDAP requests:</string>
              </property>
-             <property name="wordWrap" >
+             <property name="wordWrap">
               <bool>false</bool>
              </property>
             </widget>
            </item>
            <item>
-            <widget class="KLineEdit" name="customLDAPProxy" >
-             <property name="whatsThis" >
-              <string>Entering a LDAP server here will make all LDAP requests go to that server first. More precisely, this setting overrides any specified host and port part in a LDAP URL and will also be used if host and port have been omitted from the URL. Other LDAP servers will be used only if the connection to the "proxy" failed.
-The syntax is "HOST" or "HOST:PORT". If PORT is omitted, port 389 (standard LDAP port) is used.</string>
+            <widget class="KLineEdit" name="customLDAPProxy">
+             <property name="whatsThis">
+              <string>Entering a LDAP server here will make all LDAP requests go to that server first. More precisely, this setting overrides any specified host and port part in a LDAP URL and will also be used if host and port have been omitted from the URL. Other LDAP servers will be used only if the connection to the &quot;proxy&quot; failed.
+The syntax is &quot;HOST&quot; or &quot;HOST:PORT&quot;. If PORT is omitted, port 389 (standard LDAP port) is used.</string>
              </property>
             </widget>
            </item>
@@ -255,12 +256,12 @@ The syntax is "HOST" or "HOST:PORT". If PORT is omitted, port 389 (standard LDAP
          </item>
         </layout>
        </item>
-       <item row="1" column="0" >
+       <item row="1" column="0">
         <spacer>
-         <property name="orientation" >
+         <property name="orientation">
           <enum>Qt::Vertical</enum>
          </property>
-         <property name="sizeHint" >
+         <property name="sizeHint" stdset="0">
           <size>
            <width>20</width>
            <height>40</height>
@@ -276,11 +277,6 @@ The syntax is "HOST" or "HOST:PORT". If PORT is omitted, port 389 (standard LDAP
  </widget>
  <customwidgets>
   <customwidget>
-   <class>Kleo::KeyRequester</class>
-   <extends></extends>
-   <header location="global" >ui/keyrequester.h</header>
-  </customwidget>
-  <customwidget>
    <class>KLineEdit</class>
    <extends>QLineEdit</extends>
    <header>klineedit.h</header>
@@ -289,10 +285,34 @@ The syntax is "HOST" or "HOST:PORT". If PORT is omitted, port 389 (standard LDAP
    <class>KTabWidget</class>
    <extends>QTabWidget</extends>
    <header>ktabwidget.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>Kleo::KeyRequester</class>
+   <extends></extends>
+   <header location="global">ui/keyrequester.h</header>
   </customwidget>
  </customwidgets>
+ <tabstops>
+  <tabstop>CRLRB</tabstop>
+  <tabstop>OCSPRB</tabstop>
+  <tabstop>OCSPResponderURL</tabstop>
+  <tabstop>ignoreServiceURLCB</tabstop>
+  <tabstop>doNotCheckCertPolicyCB</tabstop>
+  <tabstop>neverConsultCB</tabstop>
+  <tabstop>fetchMissingCB</tabstop>
+  <tabstop>requestsTabs</tabstop>
+  <tabstop>disableHTTPCB</tabstop>
+  <tabstop>ignoreHTTPDPCB</tabstop>
+  <tabstop>honorHTTPProxyRB</tabstop>
+  <tabstop>useCustomHTTPProxyRB</tabstop>
+  <tabstop>customHTTPProxy</tabstop>
+  <tabstop>disableLDAPCB</tabstop>
+  <tabstop>ignoreLDAPDPCB</tabstop>
+  <tabstop>customLDAPProxy</tabstop>
+ </tabstops>
  <includes>
-  <include location="local" >ui/keyrequester.h</include>
+  <include location="local">ui/keyrequester.h</include>
  </includes>
  <resources/>
  <connections>
@@ -302,11 +322,11 @@ The syntax is "HOST" or "HOST:PORT". If PORT is omitted, port 389 (standard LDAP
    <receiver>OCSPGroupBox</receiver>
    <slot>setDisabled(bool)</slot>
    <hints>
-    <hint type="sourcelabel" >
+    <hint type="sourcelabel">
      <x>20</x>
      <y>20</y>
     </hint>
-    <hint type="destinationlabel" >
+    <hint type="destinationlabel">
      <x>20</x>
      <y>20</y>
     </hint>
@@ -318,11 +338,11 @@ The syntax is "HOST" or "HOST:PORT". If PORT is omitted, port 389 (standard LDAP
    <receiver>OCSPGroupBox</receiver>
    <slot>setEnabled(bool)</slot>
    <hints>
-    <hint type="sourcelabel" >
+    <hint type="sourcelabel">
      <x>20</x>
      <y>20</y>
     </hint>
-    <hint type="destinationlabel" >
+    <hint type="destinationlabel">
      <x>20</x>
      <y>20</y>
     </hint>
@@ -334,11 +354,11 @@ The syntax is "HOST" or "HOST:PORT". If PORT is omitted, port 389 (standard LDAP
    <receiver>customHTTPProxy</receiver>
    <slot>setEnabled(bool)</slot>
    <hints>
-    <hint type="sourcelabel" >
+    <hint type="sourcelabel">
      <x>20</x>
      <y>20</y>
     </hint>
-    <hint type="destinationlabel" >
+    <hint type="destinationlabel">
      <x>20</x>
      <y>20</y>
     </hint>
@@ -350,11 +370,11 @@ The syntax is "HOST" or "HOST:PORT". If PORT is omitted, port 389 (standard LDAP
    <receiver>customHTTPProxy</receiver>
    <slot>setDisabled(bool)</slot>
    <hints>
-    <hint type="sourcelabel" >
+    <hint type="sourcelabel">
      <x>20</x>
      <y>20</y>
     </hint>
-    <hint type="destinationlabel" >
+    <hint type="destinationlabel">
      <x>20</x>
      <y>20</y>
     </hint>
