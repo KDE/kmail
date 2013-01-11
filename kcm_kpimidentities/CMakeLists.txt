@@ -18,14 +18,14 @@ set(kcm_identities_srcs
   ${kcm_identities_srcs}
   ../xfaceconfigurator.cpp
 )
-endif(NOT WINCE)
+endif()
 
 kde4_add_ui_files(kcm_identities_srcs ../ui/identitypage.ui)
 if (WINCE)
   kde4_add_plugin(kcm_kpimidentities STATIC ${kcm_identities_srcs})
-else(WINCE)
+else()
   kde4_add_plugin(kcm_kpimidentities ${kcm_identities_srcs})
-endif(WINCE)
+endif()
 target_link_libraries(kcm_kpimidentities
   ${KDEPIMLIBS_GPGMEPP_LIBS}
   ${KDEPIMLIBS_AKONADI_LIBS}
