@@ -63,23 +63,23 @@ void KMComposerEditor::createActions( KActionCollection *actionCollection )
 {
   KMeditor::createActions( actionCollection );
 
-  mPasteQuotation = new KAction( i18n("Pa&ste as Quotation"), this );
-  actionCollection->addAction("paste_quoted", mPasteQuotation );
-  mPasteQuotation->setShortcut(QKeySequence(Qt::CTRL+Qt::SHIFT+Qt::Key_O));
-  connect( mPasteQuotation, SIGNAL(triggered(bool)), this, SLOT(slotPasteAsQuotation()) );
+  KAction *pasteQuotation = new KAction( i18n("Pa&ste as Quotation"), this );
+  actionCollection->addAction("paste_quoted", pasteQuotation );
+  pasteQuotation->setShortcut(QKeySequence(Qt::CTRL+Qt::SHIFT+Qt::Key_O));
+  connect( pasteQuotation, SIGNAL(triggered(bool)), this, SLOT(slotPasteAsQuotation()) );
 
-  mAddQuoteChars = new KAction( i18n("Add &Quote Characters"), this );
-  actionCollection->addAction( "tools_quote", mAddQuoteChars );
-  connect( mAddQuoteChars, SIGNAL(triggered(bool)), this, SLOT(slotAddQuotes()) );
+  KAction *addQuoteChars = new KAction( i18n("Add &Quote Characters"), this );
+  actionCollection->addAction( "tools_quote", addQuoteChars );
+  connect( addQuoteChars, SIGNAL(triggered(bool)), this, SLOT(slotAddQuotes()) );
 
-  mRemQuoteChars = new KAction( i18n("Re&move Quote Characters"), this );
-  actionCollection->addAction( "tools_unquote", mRemQuoteChars );
-  connect (mRemQuoteChars, SIGNAL(triggered(bool)), this, SLOT(slotRemoveQuotes()) );
+  KAction *remQuoteChars = new KAction( i18n("Re&move Quote Characters"), this );
+  actionCollection->addAction( "tools_unquote", remQuoteChars );
+  connect (remQuoteChars, SIGNAL(triggered(bool)), this, SLOT(slotRemoveQuotes()) );
 
-  mPasteWithoutFormatting = new KAction( i18n("Paste Without Formatting"), this );
-  actionCollection->addAction( "paste_without_formatting", mPasteWithoutFormatting );
-  mPasteWithoutFormatting->setShortcut(QKeySequence(Qt::CTRL+Qt::SHIFT+Qt::Key_V));
-  connect (mPasteWithoutFormatting, SIGNAL(triggered(bool)), this, SLOT(slotPasteWithoutFormatting()) );
+  KAction *pasteWithoutFormatting = new KAction( i18n("Paste Without Formatting"), this );
+  actionCollection->addAction( "paste_without_formatting", pasteWithoutFormatting );
+  pasteWithoutFormatting->setShortcut(QKeySequence(Qt::CTRL+Qt::SHIFT+Qt::Key_V));
+  connect (pasteWithoutFormatting, SIGNAL(triggered(bool)), this, SLOT(slotPasteWithoutFormatting()) );
 }
 
 void KMComposerEditor::setHighlighterColors(KPIMTextEdit::EMailQuoteHighlighter * highlighter)
