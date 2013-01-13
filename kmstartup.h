@@ -28,9 +28,7 @@ extern "C" {
 
 namespace KMail {
   KMAIL_EXPORT void checkConfigUpdates();
-  //KMAIL_EXPORT void lockOrDie();
   KMAIL_EXPORT void insertLibraryCataloguesAndIcons();
-  //KMAIL_EXPORT void cleanup();
 }
 
 #endif
