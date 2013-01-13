@@ -38,10 +38,10 @@ class ConfigAgentDelegate : public QStyledItemDelegate
 public:
     explicit ConfigAgentDelegate ( QObject *parent = 0 );
 
-    virtual void paint ( QPainter *painter, const QStyleOptionViewItem &option, const QModelIndex &index ) const;
-    virtual QSize sizeHint ( const QStyleOptionViewItem &option, const QModelIndex &index ) const;
-    virtual bool editorEvent ( QEvent* event, QAbstractItemModel* model, const QStyleOptionViewItem& option, const QModelIndex& index );
-    virtual QWidget  *createEditor ( QWidget * parent, const QStyleOptionViewItem  & option, const QModelIndex & index ) const;
+    void paint ( QPainter *painter, const QStyleOptionViewItem &option, const QModelIndex &index ) const;
+    QSize sizeHint ( const QStyleOptionViewItem &option, const QModelIndex &index ) const;
+    bool editorEvent ( QEvent* event, QAbstractItemModel* model, const QStyleOptionViewItem& option, const QModelIndex& index );
+    QWidget  *createEditor ( QWidget * parent, const QStyleOptionViewItem  & option, const QModelIndex & index ) const;
 
 signals:
     void optionsClicked ( const QString &, const QPoint & );
