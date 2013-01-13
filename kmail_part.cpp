@@ -69,8 +69,6 @@ KMailPart::KMailPart(QWidget *parentWidget, QObject *parent, const QVariantList 
   KMail::insertLibraryCataloguesAndIcons();
 
 
-  //KMail::lockOrDie();
-
   //local, do the init
   KMKernel *mKMailKernel = new KMKernel();
   mKMailKernel->init();
@@ -120,7 +118,6 @@ KMailPart::~KMailPart()
   mainWidget->destruct();
   kmkernel->cleanup();
   delete kmkernel;
-  //KMail::cleanup(); // pid file (see kmstartup.cpp)
 }
 
 bool KMailPart::openFile()

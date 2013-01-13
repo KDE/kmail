@@ -125,8 +125,6 @@ int main(int argc, char *argv[])
   // import i18n data and icons from libraries:
   KMail::insertLibraryCataloguesAndIcons();
 
-  //KMail::lockOrDie();
-
   //local, do the init
   KMKernel kmailKernel;
   kmailKernel.init();
@@ -148,6 +146,5 @@ int main(int argc, char *argv[])
   int ret = qApp->exec();
   // clean up
   kmailKernel.cleanup();
-  //KMail::cleanup(); // pid file (see kmstartup.cpp)
   return ret;
 }
