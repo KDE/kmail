@@ -1705,6 +1705,7 @@ void KMComposeWin::setMessage( const KMime::Message::Ptr &newMsg, bool lastSignS
   // always set auto charset, but prefer original when composing if force reply is set.
   setAutoCharset();
 
+  delete msgContent;
 #if 0 //TODO port to kmime
 
   /* Handle the special case of non-mime mails */
