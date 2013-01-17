@@ -56,13 +56,13 @@ class AttachmentView : public QTreeView
     void updateAttachmentLabel();
   protected:
     /** reimpl to avoid default drag cursor */
-    virtual void startDrag( Qt::DropActions supportedActions );
+    void startDrag( Qt::DropActions supportedActions );
     /* reimpl */
-    virtual void contextMenuEvent( QContextMenuEvent *event );
+    void contextMenuEvent( QContextMenuEvent *event );
     /* reimpl */
-    virtual void keyPressEvent( QKeyEvent *event );
+    void keyPressEvent( QKeyEvent *event );
     /** reimpl to avoid drags from ourselves */
-    virtual void dragEnterEvent( QDragEnterEvent *event );
+    void dragEnterEvent( QDragEnterEvent *event );
 
   private Q_SLOTS:
     void slotShowHideAttchementList(bool);

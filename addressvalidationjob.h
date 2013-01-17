@@ -30,10 +30,10 @@ class AddressValidationJob : public KJob
   Q_OBJECT
 
   public:
-    AddressValidationJob( const QString &emailAddresses, QWidget *parentWidget, QObject *parent = 0 );
+    explicit AddressValidationJob( const QString &emailAddresses, QWidget *parentWidget, QObject *parent = 0 );
     ~AddressValidationJob();
 
-    virtual void start();
+    void start();
 
     bool isValid() const;
 
