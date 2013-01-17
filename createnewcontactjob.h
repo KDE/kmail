@@ -46,7 +46,7 @@ public:
     /**
      * @brief start the job
      */
-    virtual void start();
+    void start();
 
 private Q_SLOTS:
     void slotCollectionsFetched(KJob*);
