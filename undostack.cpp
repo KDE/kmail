@@ -43,8 +43,7 @@ UndoStack::UndoStack(int size)
 
 UndoStack::~UndoStack()
 {
-  qDeleteAll( mStack );
-  mStack.clear();
+  clear();
 }
 
 void UndoStack::clear()
