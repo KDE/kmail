@@ -58,9 +58,9 @@ public slots:
 protected:
 
   /// Reimplemented to save the docked state
-  virtual void saveProperties( KConfigGroup & );
+  void saveProperties( KConfigGroup & );
 
-  virtual bool queryClose ();
+  bool queryClose ();
 
 protected slots:
   void slotQuit();

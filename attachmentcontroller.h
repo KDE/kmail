@@ -45,7 +45,7 @@ class AttachmentController : public Message::AttachmentControllerBase
   public slots:
 
      /// @reimp
-    virtual void attachMyPublicKey();
+    void attachMyPublicKey();
 
   private slots:
 

@@ -19,7 +19,6 @@
 
 #include <QWidget>
 
-class KComboBox;
 class KJob;
 class KTextEdit;
 class KUrl;
@@ -55,9 +54,6 @@ namespace KMail {
     QCheckBox     * mEnableCheck;
     KTextEdit     * mTextEdit;
     QLabel        * mXFaceLabel;
-    KComboBox     * mSourceCombo;
-
-
   };
 } // namespace KMail
 

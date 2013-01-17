@@ -104,32 +104,32 @@ namespace KMail {
     // "obtain X-Face from" combo and label:
     hlay = new QHBoxLayout(); // inherits spacing
     vlay->addLayout( hlay );
-    mSourceCombo = new KComboBox( this );
-    mSourceCombo->setEditable( false );
-    mSourceCombo->setWhatsThis(
+    KComboBox *sourceCombo = new KComboBox( this );
+    sourceCombo->setEditable( false );
+    sourceCombo->setWhatsThis(
                     i18n("Click on the widgets below to obtain help on the input methods."));
-    mSourceCombo->setEnabled( false ); // since !mEnableCheck->isChecked()
-    mSourceCombo->addItems( QStringList()
+    sourceCombo->setEnabled( false ); // since !mEnableCheck->isChecked()
+    sourceCombo->addItems( QStringList()
         << i18nc( "continuation of \"obtain picture from\"",
                  "External Source" )
         << i18nc( "continuation of \"obtain picture from\"",
                  "Input Field Below" ) );
     label = new QLabel( i18n("Obtain pic&ture from:"), this );
-    label->setBuddy( mSourceCombo );
+    label->setBuddy( sourceCombo );
     label->setEnabled( false ); // since !mEnableCheck->isChecked()
     hlay->addWidget( label );
-    hlay->addWidget( mSourceCombo, 1 );
+    hlay->addWidget( sourceCombo, 1 );
 
     // widget stack that is controlled by the source combo:
     QStackedWidget * widgetStack = new QStackedWidget( this );
     widgetStack->setEnabled( false ); // since !mEnableCheck->isChecked()
     vlay->addWidget( widgetStack, 1 );
-    connect( mSourceCombo, SIGNAL(highlighted(int)),
+    connect( sourceCombo, SIGNAL(highlighted(int)),
              widgetStack, SLOT(setCurrentIndex(int)) );
-    connect( mSourceCombo, SIGNAL(activated(int)),
+    connect( sourceCombo, SIGNAL(activated(int)),
              widgetStack, SLOT(setCurrentIndex(int)) );
     connect( mEnableCheck, SIGNAL(toggled(bool)),
-             mSourceCombo, SLOT(setEnabled(bool)) );
+             sourceCombo, SLOT(setEnabled(bool)) );
     connect( mEnableCheck, SIGNAL(toggled(bool)),
              widgetStack, SLOT(setEnabled(bool)) );
     connect( mEnableCheck, SIGNAL(toggled(bool)),
@@ -172,7 +172,7 @@ namespace KMail {
     label1->setWordWrap( true );
     page_vlay->addWidget( label1 );
 
-    widgetStack->setCurrentIndex( 0 ); // since mSourceCombo->currentItem() == 0
+    widgetStack->setCurrentIndex( 0 ); // since sourceCombo->currentItem() == 0
 
     // page 1: input field for direct entering
     ++pageno;
