@@ -69,6 +69,7 @@ if (NOT WINCE AND KDEPIM_BUILD_DESKTOP)
      collectionquotapage.cpp
      collectionquotapage_p.cpp
      collectionmailinglistpage.cpp
+     collectionshortcutpage.cpp
      colorlistbox.cpp
      kmmainwin.cpp
      configagentdelegate.cpp
@@ -98,7 +99,6 @@ if (NOT WINCE AND KDEPIM_BUILD_DESKTOP)
      secondarywindow.cpp
      codecaction.cpp
      codecmanager.cpp
-     foldershortcutdialog.cpp
      util.cpp
      messageactions.cpp
      statusbarlabel.cpp

@@ -21,7 +21,6 @@
 
 // KMail includes
 #include "kmreadermainwin.h"
-#include "foldershortcutdialog.h"
 #include "composer.h"
 #include "searchwindow.h"
 #include "antispamwizard.h"
@@ -51,6 +50,7 @@
 #include "collectionmaintenancepage.h"
 #include "collectionquotapage.h"
 #include "collectiontemplatespage.h"
+#include "collectionshortcutpage.h"
 #include "collectionviewpage.h"
 #include "collectionmailinglistpage.h"
 #include "tagselectdialog.h"
@@ -306,6 +306,7 @@ K_GLOBAL_STATIC( KMMainWidget::PtrList, theMainWidgetList )
       Akonadi::CollectionPropertiesDialog::registerPage( new CollectionTemplatesPageFactory );
       Akonadi::CollectionPropertiesDialog::registerPage( new CollectionViewPageFactory );
       Akonadi::CollectionPropertiesDialog::registerPage( new CollectionMailingListPageFactory );
+      Akonadi::CollectionPropertiesDialog::registerPage( new CollectionShortcutPageFactory );
 
       pagesRegistered = true;
     }
@@ -1640,12 +1641,7 @@ void KMMainWidget::slotFolderMailingListProperties()
 //-----------------------------------------------------------------------------
 void KMMainWidget::slotShowFolderShortcutDialog()
 {
-  if ( !mFolderTreeWidget || !mCurrentFolder )
-    return;
-
-  MessageViewer::AutoQPointer<KMail::FolderShortcutDialog> shorty( new KMail::FolderShortcutDialog( mCurrentFolder, kmkernel->getKMMainWidget(),
-                                                                                                    mFolderTreeWidget ) );
-  shorty->exec();
+  showCollectionProperties( QLatin1String( "KMail::CollectionShortcutPage" ) );
 }
 
 //-----------------------------------------------------------------------------
@@ -4740,6 +4736,7 @@ void KMMainWidget::slotCollectionPropertiesFinished( KJob *job )
                                           << QLatin1String( "KMail::CollectionViewPage" )
                                           << QLatin1String( "Akonadi::CachePolicyPage" )
                                           << QLatin1String( "KMail::CollectionTemplatesPage" )
+                                          << QLatin1String( "KMail::CollectionShortcutPage" )
                                           << QLatin1String( "PimCommon::CollectionAclPage" )
                                           << QLatin1String( "KMail::CollectionMailingListPage" )
                                           << QLatin1String( "KMail::CollectionQuotaPage" )
