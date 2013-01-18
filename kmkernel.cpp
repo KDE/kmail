@@ -1452,7 +1452,7 @@ bool KMKernel::haveSystemTrayApplet() const
 
 void KMKernel::updateSystemTray()
 {
-  if ( mSystemTray ) {
+  if ( mSystemTray && !the_shuttingDown ) {
     mSystemTray->updateSystemTray();
   }
 }
