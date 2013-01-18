@@ -65,8 +65,8 @@ void CollectionShortcutPage::init(const Akonadi::Collection & col)
   new QWidget(hb);
   mKeySeqWidget = new KKeySequenceWidget( hb );
   mKeySeqWidget->setObjectName( "FolderShortcutSelector" );
-  connect( mKeySeqWidget, SIGNAL( keySequenceChanged( const QKeySequence & ) ),
-           SLOT( slotShortcutChanged() ) );
+  connect( mKeySeqWidget, SIGNAL(keySequenceChanged(QKeySequence)),
+           SLOT(slotShortcutChanged()) );
   new QWidget(hb);
 
   topLayout->addItem( new QSpacerItem( 0, 10 ));
