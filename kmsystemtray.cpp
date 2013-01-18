@@ -302,6 +302,8 @@ void KMSystemTray::fillFoldersMenu( QMenu *menu, const QAbstractItemModel *model
         const QSharedPointer<FolderCollection> col = FolderCollection::forCollection( collection, false );
         if ( col && !col->ignoreNewMail() ) {
           mCount += count;
+        } else { //Don't show menu entry when we exclude it with ignoreNewMail
+          count = 0;
         }
       }
     }
