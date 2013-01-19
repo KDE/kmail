@@ -2734,6 +2734,8 @@ void ComposerPage::SubjectTab::save()
 {
   MessageComposer::MessageComposerSettings::self()->setReplyPrefixes( mReplyListEditor->stringList() );
   MessageComposer::MessageComposerSettings::self()->setForwardPrefixes( mForwardListEditor->stringList() );
+  MessageComposer::MessageComposerSettings::self()->setReplaceForwardPrefix( mReplaceForwardPrefixCheck->isChecked() );
+  MessageComposer::MessageComposerSettings::self()->setReplaceReplyPrefix( mReplaceReplyPrefixCheck->isChecked() );
 }
 
 void ComposerPage::SubjectTab::doResetToDefaultsOther()
