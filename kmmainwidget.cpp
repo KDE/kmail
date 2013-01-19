@@ -25,7 +25,6 @@
 #include "searchwindow.h"
 #include "antispamwizard.h"
 #include "statusbarlabel.h"
-#include "expirypropertiesdialog.h"
 #include "undostack.h"
 #include "kmcommands.h"
 #include "kmmainwin.h"
@@ -59,6 +58,7 @@
 
 #include "pimcommon/collectionaclpage.h"
 #include "mailcommon/collectiongeneralpage.h"
+#include "mailcommon/collectionexpirypage.h"
 #include "mailcommon/expirecollectionattribute.h"
 #include "mailcommon/filter/filtermanager.h"
 #include "mailcommon/filter/mailfilter.h"
@@ -304,6 +304,7 @@ K_GLOBAL_STATIC( KMMainWidget::PtrList, theMainWidgetList )
       Akonadi::CollectionPropertiesDialog::registerPage( new CollectionMaintenancePageFactory );
       Akonadi::CollectionPropertiesDialog::registerPage( new CollectionQuotaPageFactory );
       Akonadi::CollectionPropertiesDialog::registerPage( new CollectionTemplatesPageFactory );
+      Akonadi::CollectionPropertiesDialog::registerPage( new MailCommon::CollectionExpiryPageFactory );
       Akonadi::CollectionPropertiesDialog::registerPage( new CollectionViewPageFactory );
       Akonadi::CollectionPropertiesDialog::registerPage( new CollectionMailingListPageFactory );
       Akonadi::CollectionPropertiesDialog::registerPage( new CollectionShortcutPageFactory );
@@ -3856,10 +3857,7 @@ void KMMainWidget::slotEditNotifications()
 
 void KMMainWidget::slotShowExpiryProperties()
 {
-  if ( mCurrentFolder ) {
-     ExpiryPropertiesDialog *dlg = new ExpiryPropertiesDialog( this, mCurrentFolder->collection() );
-     dlg->show();
-  }
+  showCollectionProperties( QLatin1String( "MailCommon::CollectionExpiryPage" ) );
 }
 
 //-----------------------------------------------------------------------------
@@ -4736,10 +4734,11 @@ void KMMainWidget::slotCollectionPropertiesFinished( KJob *job )
                                           << QLatin1String( "KMail::CollectionViewPage" )
                                           << QLatin1String( "Akonadi::CachePolicyPage" )
                                           << QLatin1String( "KMail::CollectionTemplatesPage" )
-                                          << QLatin1String( "KMail::CollectionShortcutPage" )
+                                          << QLatin1String( "MailCommon::CollectionExpiryPage" )
                                           << QLatin1String( "PimCommon::CollectionAclPage" )
                                           << QLatin1String( "KMail::CollectionMailingListPage" )
                                           << QLatin1String( "KMail::CollectionQuotaPage" )
+                                          << QLatin1String( "KMail::CollectionShortcutPage" )
                                           << QLatin1String( "KMail::CollectionMaintenancePage" );
 
   Akonadi::CollectionPropertiesDialog *dlg = new Akonadi::CollectionPropertiesDialog( collection, pages, this );
