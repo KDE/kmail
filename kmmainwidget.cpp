@@ -123,7 +123,6 @@
 #include <akonadi/dbusconnectionpool.h>
 #include <Akonadi/CachePolicy>
 
-
 #include <kpimidentities/identity.h>
 #include <kpimidentities/identitymanager.h>
 #include <kpimutils/email.h>
