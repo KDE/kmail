@@ -123,6 +123,7 @@ void CreateNewContactJob::createContact()
   QPointer<Akonadi::ContactEditorDialog> dlg =
     new Akonadi::ContactEditorDialog(
       Akonadi::ContactEditorDialog::CreateMode, mParentWidget );
+  dlg->setAttribute( Qt::WA_DeleteOnClose );
   dlg->show();
 }
 

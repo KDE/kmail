@@ -763,6 +763,7 @@ void KMReaderWin::slotEditContact()
     connect( dlg, SIGNAL(contactStored(const Akonadi::Item&)),
              this, SLOT(contactStored(const Akonadi::Item&)) );
     dlg->setContact( mSearchedContact );
+    dlg->setAttribute( Qt::WA_DeleteOnClose );
     dlg->show();
   }
 }
