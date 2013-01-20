@@ -33,6 +33,8 @@
 #include <Akonadi/AgentFilterProxyModel>
 #include <Akonadi/Contact/ContactEditorDialog>
 
+#include <QPointer>
+
 CreateNewContactJob::CreateNewContactJob(QWidget *parentWidget, QObject *parent)
     : KJob(parent),
       mParentWidget(parentWidget)
@@ -118,8 +120,10 @@ void CreateNewContactJob::slotResourceCreationDone(KJob* job)
 
 void CreateNewContactJob::createContact()
 {
-    Akonadi::ContactEditorDialog dlg( Akonadi::ContactEditorDialog::CreateMode, mParentWidget );
-    dlg.exec();
+  QPointer<Akonadi::ContactEditorDialog> dlg =
+    new Akonadi::ContactEditorDialog(
+      Akonadi::ContactEditorDialog::CreateMode, mParentWidget );
+  dlg->show();
 }
 
 #include "createnewcontactjob.moc"
