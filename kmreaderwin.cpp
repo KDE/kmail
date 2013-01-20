@@ -31,6 +31,7 @@
 #include <kpimutils/email.h>
 #include <libkdepim/addemailaddressjob.h>
 #include <libkdepim/openemailaddressjob.h>
+#include <libkdepim/broadcaststatus.h>
 #include "kmcommands.h"
 #include "mailcommon/sendmdnhandler.h"
 #include <QVBoxLayout>
@@ -757,12 +758,19 @@ void KMReaderWin::setContactItem(const Akonadi::Item& contact)
 void KMReaderWin::slotEditContact()
 {
   if( mSearchedContact.isValid() ) {
-    QPointer<Akonadi::ContactEditorDialog> dlg =
+   QPointer<Akonadi::ContactEditorDialog> dlg =
       new Akonadi::ContactEditorDialog( Akonadi::ContactEditorDialog::EditMode, this );
-    dlg->setContact(mSearchedContact);
-    dlg->exec();
-    delete dlg;
+    connect( dlg, SIGNAL(contactStored(const Akonadi::Item&)),
+             this, SLOT(contactStored(const Akonadi::Item&)) );
+    dlg->setContact( mSearchedContact );
+    dlg->show();
   }
+}
+
+void KMReaderWin::contactStored( const Akonadi::Item &item )
+{
+  Q_UNUSED( item );
+  KPIM::BroadcastStatus::instance()->setStatusMsg( i18n( "Contact modified successfully" ) );
 }
 
 #include "kmreaderwin.moc"
