@@ -186,8 +186,7 @@
 #include <QtDBus/QDBusInterface>
 #include <QtDBus/QDBusReply>
 #include <QLabel>
-
-
+#include <QDBusPendingCallWatcher>
 
 // System includes
 #include <assert.h>
@@ -4815,27 +4814,32 @@ void KMMainWidget::slotServerSideSubscription()
         return;
     bool isImapOnline = false;
     if( kmkernel->isImapFolder( mCurrentFolder->collection(), isImapOnline ) ) {
-        QDBusInterface *iface  = new QDBusInterface(
+        QDBusInterface iface(
                     QLatin1String( "org.freedesktop.Akonadi.Resource.")+mCurrentFolder->collection().resource(),
                     QLatin1String( "/" ), QLatin1String( "org.kde.Akonadi.Imap.Resource" ),
                     DBusConnectionPool::threadConnection(), this );
-        if ( !iface->isValid() ) {
+        if ( !iface.isValid() ) {
             kDebug()<<"Can not create imap dbus interface";
-            delete iface;
             return;
         }
-        const QDBusReply<int> reply = iface->call( QLatin1String( "configureSubscription" ), (qlonglong)winId() );
-        if ( !reply.isValid() ) {
-            delete iface;
-            return;
-        }
-        if(reply == -2 ){
-            KMessageBox::error(this,i18n("IMAP server not configured yet. Please configure the server in the IMAP account before setting up server-side subscription."));
-        } else if(reply == -1) {
-            KMessageBox::error(this,i18n("Log in failed, please configure the IMAP account before setting up server-side subscription."));
-        }
-        delete iface;
+        QDBusPendingCall call = iface.asyncCall( QLatin1String( "configureSubscription" ), (qlonglong)winId() );
+        QDBusPendingCallWatcher *watcher = new QDBusPendingCallWatcher(call, this);
+        connect(watcher, SIGNAL(finished(QDBusPendingCallWatcher*)), this, SLOT(slotConfigureSubscriptionFinished(QDBusPendingCallWatcher*)));
     }
+}
+
+void KMMainWidget::slotConfigureSubscriptionFinished(QDBusPendingCallWatcher* watcher)
+{
+    QDBusPendingReply<int> reply = *watcher;
+    if ( !reply.isValid() ) {
+        return;
+    }
+    if(reply == -2 ){
+        KMessageBox::error(this,i18n("IMAP server not configured yet. Please configure the server in the IMAP account before setting up server-side subscription."));
+    } else if(reply == -1) {
+        KMessageBox::error(this,i18n("Log in failed, please configure the IMAP account before setting up server-side subscription."));
+    }
+    watcher->deleteLater();
 }
 
 void KMMainWidget::savePaneSelection()

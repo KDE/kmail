@@ -54,6 +54,7 @@ class CollectionPane;
 class KMCommand;
 class KMMoveCommand;
 class KRecentFilesAction;
+class QDBusPendingCallWatcher;
 template <typename T, typename S> class QMap;
 
 namespace KIO {
@@ -533,7 +534,7 @@ class KMAIL_EXPORT KMMainWidget : public QWidget
     void slotServerSideSubscription();
     void slotFetchItemsForFolderDone(KJob*job);
     void slotServerStateChanged(Akonadi::ServerManager::State state);
-
+    void slotConfigureSubscriptionFinished(QDBusPendingCallWatcher* watcher);
 private:
     // Message actions
     KAction *mDeleteAction, *mTrashThreadAction,
