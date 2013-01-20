@@ -21,7 +21,9 @@
 #ifndef CREATENEWCONTACTJOB_H
 #define CREATENEWCONTACTJOB_H
 
-#include <kjob.h>
+#include <Akonadi/Item>
+#include <KJob>
+
 /**
  * @brief The CreateNewContactJob class
  * The job will check if there is address book folder to store new contact to akonadi
@@ -51,6 +53,9 @@ public:
 private Q_SLOTS:
     void slotCollectionsFetched(KJob*);
     void slotResourceCreationDone(KJob* job);
+
+public Q_SLOTS:
+    void contactStored( const Akonadi::Item &item );
 
 private:
     void createContact();
