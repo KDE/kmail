@@ -122,7 +122,6 @@
 #include <akonadi/collectiondeletejob.h>
 #include <akonadi/dbusconnectionpool.h>
 #include <Akonadi/CachePolicy>
-#include <Akonadi/Contact/ContactEditorDialog>
 
 
 #include <kpimidentities/identity.h>

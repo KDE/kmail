@@ -100,7 +100,6 @@
 #include <akonadi/itemcreatejob.h>
 #include <akonadi/entitymimetypefiltermodel.h>
 #include <akonadi/itemfetchjob.h>
-#include <Akonadi/Contact/ContactEditorDialog>
 #include <kpimutils/email.h>
 #include <kpimidentities/identitymanager.h>
 #include <kpimidentities/identitycombo.h>
