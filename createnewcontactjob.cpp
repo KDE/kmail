@@ -126,8 +126,8 @@ void CreateNewContactJob::createContact()
     new Akonadi::ContactEditorDialog(
       Akonadi::ContactEditorDialog::CreateMode, mParentWidget );
   dlg->setAttribute( Qt::WA_DeleteOnClose );
-  connect( dlg, SIGNAL(contactStored(const Akonadi::Item&)),
-           this, SLOT(contactStored(const Akonadi::Item&)) );
+  connect( dlg, SIGNAL(contactStored(Akonadi::Item)),
+           this, SLOT(contactStored(Akonadi::Item)) );
   dlg->show();
 }
 

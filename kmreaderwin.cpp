@@ -760,8 +760,8 @@ void KMReaderWin::slotEditContact()
   if( mSearchedContact.isValid() ) {
    QPointer<Akonadi::ContactEditorDialog> dlg =
       new Akonadi::ContactEditorDialog( Akonadi::ContactEditorDialog::EditMode, this );
-    connect( dlg, SIGNAL(contactStored(const Akonadi::Item&)),
-             this, SLOT(contactStored(const Akonadi::Item&)) );
+    connect( dlg, SIGNAL(contactStored(Akonadi::Item)),
+             this, SLOT(contactStored(Akonadi::Item)) );
     dlg->setContact( mSearchedContact );
     dlg->setAttribute( Qt::WA_DeleteOnClose );
     dlg->show();
