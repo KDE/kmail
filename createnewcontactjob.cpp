@@ -121,7 +121,7 @@ void CreateNewContactJob::slotResourceCreationDone(KJob* job)
 void CreateNewContactJob::createContact()
 {
     Akonadi::ContactEditorDialog dlg( Akonadi::ContactEditorDialog::CreateMode, mParentWidget );
-    connect( dlg, SIGNAL(contactStored(Akonadi::Item)), this, SLOT(contactStored(Akonadi::Item)) )
+    connect( &dlg, SIGNAL(contactStored(Akonadi::Item)), this, SLOT(contactStored(Akonadi::Item)) );
     dlg.exec();
 }
 
