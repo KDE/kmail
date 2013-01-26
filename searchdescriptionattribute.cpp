@@ -26,6 +26,7 @@
 using namespace Akonadi;
 
 SearchDescriptionAttribute::SearchDescriptionAttribute()
+  : mRecursive(false)
 {
 }
 
