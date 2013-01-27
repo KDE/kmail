@@ -338,7 +338,7 @@ void KMReaderWin::displayAboutPage()
          "%4: First-time user text (only shown on first start); "
          "%5: generated list of important changes; "
          "--- end of comment ---",
-         "<h2 style='margin-top: 0px;'>Welcome to KMail %1</h2><p>KMail is the email client by KDE."
+         "<h2 style='margin-top: 0px;'>Welcome to KMail %1</h2><p>KMail is the email client by KDE. "
          "It is designed to be fully compatible with "
          "Internet mailing standards including MIME, SMTP, POP3, and IMAP."
          "</p>\n"
