@@ -37,6 +37,7 @@
 #include <kdebug.h>
 #include <kpushbutton.h>
 #include <kdialog.h>
+#include <KMenu>
 #include <QVBoxLayout>
 #include <QHBoxLayout>
 #include <QListWidget>
@@ -62,6 +63,12 @@ SimpleStringListEditor::SimpleStringListEditor( QWidget * parent,
   hlay->setMargin( 0 );
 
   mListBox = new QListWidget( this );
+
+  mListBox->setContextMenuPolicy( Qt::CustomContextMenu );
+  connect( mListBox, SIGNAL(customContextMenuRequested(QPoint)),
+           SLOT(slotContextMenu(QPoint)) );
+
+
   mListBox->setSelectionMode(QAbstractItemView::ExtendedSelection);
   hlay->addWidget( mListBox, 1 );
 
@@ -345,6 +352,24 @@ void SimpleStringListEditor::slotSelectionChanged() {
                             ( ( uniqItemSelected && !theLast ) ||
                             ( !uniqItemSelected ) ) && !allItemSelected );
   }
+}
+
+void SimpleStringListEditor::slotContextMenu(const QPoint&pos)
+{
+    QList<QListWidgetItem *> lstSelectedItems = mListBox->selectedItems();
+    const bool hasItemsSelected = !lstSelectedItems.isEmpty();
+    KMenu *menu = new KMenu( this );
+    if (mAddButton) {
+        menu->addAction( mAddButton->text(), this, SLOT(slotAdd()));
+    }
+    if (mModifyButton && (lstSelectedItems.count() == 1)) {
+        menu->addAction( mModifyButton->text(), this, SLOT(slotModify()));
+    }
+    if (mRemoveButton && hasItemsSelected) {
+        menu->addAction( mRemoveButton->text(), this, SLOT(slotRemove()));
+    }
+    menu->exec( mListBox->mapToGlobal( pos ) );
+    delete menu;
 }
 
 
