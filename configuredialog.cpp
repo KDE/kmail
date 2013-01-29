@@ -2927,14 +2927,14 @@ ComposerPageHeadersTab::ComposerPageHeadersTab( QWidget * parent )
   vlay->addLayout( glay );
   glay->setRowStretch( 2, 1 );
   glay->setColumnStretch( 1, 1 );
-  mTagList = new ListView( this );
-  mTagList->setObjectName( "tagList" );
-  mTagList->setHeaderLabels( QStringList() << i18nc("@title:column Name of the mime header.","Name")
+  mHeaderList = new ListView( this );
+  mHeaderList->setObjectName( "tagList" );
+  mHeaderList->setHeaderLabels( QStringList() << i18nc("@title:column Name of the mime header.","Name")
     << i18nc("@title:column Value of the mimeheader.","Value") );
-  mTagList->setSortingEnabled( false );
-  connect( mTagList, SIGNAL(currentItemChanged(QTreeWidgetItem*,QTreeWidgetItem*)),
+  mHeaderList->setSortingEnabled( false );
+  connect( mHeaderList, SIGNAL(currentItemChanged(QTreeWidgetItem*,QTreeWidgetItem*)),
            this, SLOT(slotMimeHeaderSelectionChanged()) );
-  glay->addWidget( mTagList, 0, 0, 3, 2 );
+  glay->addWidget( mHeaderList, 0, 0, 3, 2 );
 
   // "new" and "remove" buttons:
   button = new QPushButton( i18nc("@action:button Add new mime header field.","Ne&w"), this );
@@ -2974,7 +2974,7 @@ ComposerPageHeadersTab::ComposerPageHeadersTab( QWidget * parent )
 void ComposerPage::HeadersTab::slotMimeHeaderSelectionChanged()
 {
   mEmitChanges = false;
-  QTreeWidgetItem * item = mTagList->currentItem();
+  QTreeWidgetItem * item = mHeaderList->currentItem();
 
   if ( item ) {
     mTagNameEdit->setText( item->text( 0 ) );
@@ -2996,7 +2996,7 @@ void ComposerPage::HeadersTab::slotMimeHeaderNameChanged( const QString & text )
 {
   // is called on ::setup(), when clearing the line edits. So be
   // prepared to not find a selection:
-  QTreeWidgetItem * item = mTagList->currentItem();
+  QTreeWidgetItem * item = mHeaderList->currentItem();
   if ( item )
     item->setText( 0, text );
   slotEmitChanged();
@@ -3007,7 +3007,7 @@ void ComposerPage::HeadersTab::slotMimeHeaderValueChanged( const QString & text 
 {
   // is called on ::setup(), when clearing the line edits. So be
   // prepared to not find a selection:
-  QTreeWidgetItem * item = mTagList->currentItem();
+  QTreeWidgetItem * item = mHeaderList->currentItem();
   if ( item )
     item->setText( 1, text );
   slotEmitChanged();
@@ -3016,8 +3016,8 @@ void ComposerPage::HeadersTab::slotMimeHeaderValueChanged( const QString & text 
 
 void ComposerPage::HeadersTab::slotNewMimeHeader()
 {
-  QTreeWidgetItem *listItem = new QTreeWidgetItem( mTagList );
-  mTagList->setCurrentItem( listItem );
+  QTreeWidgetItem *listItem = new QTreeWidgetItem( mHeaderList );
+  mHeaderList->setCurrentItem( listItem );
   slotEmitChanged();
 }
 
@@ -3025,7 +3025,7 @@ void ComposerPage::HeadersTab::slotNewMimeHeader()
 void ComposerPage::HeadersTab::slotRemoveMimeHeader()
 {
   // calling this w/o selection is a programming error:
-  QTreeWidgetItem *item = mTagList->currentItem();
+  QTreeWidgetItem *item = mHeaderList->currentItem();
   if ( !item ) {
     kDebug() << "=================================================="
                   << "Error: Remove button was pressed although no custom header was selected\n"
@@ -3033,18 +3033,18 @@ void ComposerPage::HeadersTab::slotRemoveMimeHeader()
     return;
   }
 
-  QTreeWidgetItem *below = mTagList->itemBelow( item );
+  QTreeWidgetItem *below = mHeaderList->itemBelow( item );
 
   if ( below ) {
     kDebug() << "below";
-    mTagList->setCurrentItem( below );
+    mHeaderList->setCurrentItem( below );
     delete item;
     item = 0;
-  } else if ( mTagList->topLevelItemCount() > 0 ) {
+  } else if ( mHeaderList->topLevelItemCount() > 0 ) {
     delete item;
     item = 0;
-    mTagList->setCurrentItem(
-      mTagList->topLevelItem( mTagList->topLevelItemCount() - 1 )
+    mHeaderList->setCurrentItem(
+      mHeaderList->topLevelItem( mHeaderList->topLevelItemCount() - 1 )
     );
   }
 
@@ -3058,7 +3058,7 @@ void ComposerPage::HeadersTab::doLoadOther()
                        MessageComposer::MessageComposerSettings::useCustomMessageIdSuffix() );
   mCreateOwnMessageIdCheck->setChecked( state );
 
-  mTagList->clear();
+  mHeaderList->clear();
   mTagNameEdit->clear();
   mTagValueEdit->clear();
 
@@ -3071,13 +3071,13 @@ void ComposerPage::HeadersTab::doLoadOther()
     const QString name  = config.readEntry( "name" );
     const QString value = config.readEntry( "value" );
     if( !name.isEmpty() ) {
-      item = new QTreeWidgetItem( mTagList, item );
+      item = new QTreeWidgetItem( mHeaderList, item );
       item->setText( 0, name );
       item->setText( 1, value );
     }
   }
-  if ( mTagList->topLevelItemCount() > 0 ) {
-    mTagList->setCurrentItem( mTagList->topLevelItem( 0 ) );
+  if ( mHeaderList->topLevelItemCount() > 0 ) {
+    mHeaderList->setCurrentItem( mHeaderList->topLevelItem( 0 ) );
   }
   else {
     // disable the "Remove" button
@@ -3103,9 +3103,9 @@ void ComposerPage::HeadersTab::save()
 
   int numValidEntries = 0;
   QTreeWidgetItem *item = 0;
-  const int numberOfEntry = mTagList->topLevelItemCount();
+  const int numberOfEntry = mHeaderList->topLevelItemCount();
   for ( int i = 0; i < numberOfEntry; ++i ) {
-    item = mTagList->topLevelItem( i );
+    item = mHeaderList->topLevelItem( i );
     if( !item->text(0).isEmpty() ) {
       KConfigGroup config( KMKernel::self()->config(), QString::fromLatin1("Mime #%1").arg( numValidEntries ) );
       config.writeEntry( "name",  item->text( 0 ) );
@@ -3127,7 +3127,7 @@ void ComposerPage::HeadersTab::doResetToDefaultsOther()
   const bool state = ( !messageIdSuffix.isEmpty() && useCustomMessageIdSuffix );
   mCreateOwnMessageIdCheck->setChecked( state );
 
-  mTagList->clear();
+  mHeaderList->clear();
   mTagNameEdit->clear();
   mTagValueEdit->clear();
   // disable the "Remove" button
