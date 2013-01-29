@@ -105,7 +105,7 @@ void KMail::Util::handleClickedURL( const KUrl &url, const QSharedPointer<MailCo
   if ( url.protocol() == QLatin1String( "mailto" ) )
   {
     KMime::Message::Ptr msg ( new KMime::Message );
-    uint identity = folder.isNull() ? folder->identity() : 0;
+    uint identity = !folder.isNull() ? folder->identity() : 0;
     MessageHelper::initHeader( msg, KMKernel::self()->identityManager(), identity );
     msg->contentType()->setCharset("utf-8");
 
