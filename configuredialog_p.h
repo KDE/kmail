@@ -644,7 +644,7 @@ private:
 private:
   QCheckBox   *mCreateOwnMessageIdCheck;
   KLineEdit   *mMessageIdSuffixEdit;
-  ListView    *mTagList;
+  ListView    *mHeaderList;
   QPushButton *mRemoveHeaderButton;
   KLineEdit   *mTagNameEdit;
   KLineEdit   *mTagValueEdit;
