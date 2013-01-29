@@ -1,4 +1,11 @@
+/*   -*- mode: C++; c-file-style: "gnu" -*-
+ *   kmail: KDE mail client
+ */
+
 #include "configuredialoglistview.h"
+
+#include <KLocale>
+#include <KMenu>
 
 ListView::ListView( QWidget *parent )
   : QTreeWidget( parent )
@@ -7,6 +14,8 @@ ListView::ListView( QWidget *parent )
   setAlternatingRowColors( true );
   setSelectionMode( QAbstractItemView::SingleSelection );
   setRootIsDecorated( false );
+  setContextMenuPolicy( Qt::CustomContextMenu );
+  connect( this, SIGNAL(customContextMenuRequested(QPoint)), SLOT(slotContextMenu(QPoint)) );
 }
 
 
@@ -40,5 +49,15 @@ void ListView::resizeColums()
   setColumnWidth( c-1, w3 );
 }
 
+void ListView::slotContextMenu(const QPoint& pos)
+{
+    KMenu *menu = new KMenu( this );
+    menu->addAction( i18n("Add"), this, SIGNAL(addHeader()));
+    if (currentItem()) {
+        menu->addAction( i18n("Remove"), this, SIGNAL(removeHeader()));
+    }
+    menu->exec( viewport()->mapToGlobal( pos ) );
+    delete menu;
+}
 
 #include "configuredialoglistview.moc"

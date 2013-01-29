@@ -11,9 +11,16 @@ class ListView : public QTreeWidget {
 public:
   explicit ListView( QWidget *parent=0 );
 
+Q_SIGNALS:
+  void addHeader();
+  void removeHeader();
+
 protected:
   void resizeEvent( QResizeEvent *e );
   void showEvent( QShowEvent *e );
+
+private Q_SLOTS:
+  void slotContextMenu(const QPoint& pos);
 
 private:
   void resizeColums();

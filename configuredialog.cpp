@@ -2934,6 +2934,8 @@ ComposerPageHeadersTab::ComposerPageHeadersTab( QWidget * parent )
   mHeaderList->setSortingEnabled( false );
   connect( mHeaderList, SIGNAL(currentItemChanged(QTreeWidgetItem*,QTreeWidgetItem*)),
            this, SLOT(slotMimeHeaderSelectionChanged()) );
+  connect( mHeaderList, SIGNAL(addHeader()), SLOT(slotNewMimeHeader()));
+  connect( mHeaderList, SIGNAL(removeHeader()), SLOT(slotRemoveMimeHeader()));
   glay->addWidget( mHeaderList, 0, 0, 3, 2 );
 
   // "new" and "remove" buttons:
