@@ -75,8 +75,7 @@ QColor ColorListBox::color( int index ) const
 
 void ColorListBox::newColor( const QModelIndex& index )
 {
-  if( !isEnabled() )
-  {
+  if ( !isEnabled() ) {
     return;
   }
 
