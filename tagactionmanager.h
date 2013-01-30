@@ -117,10 +117,14 @@ namespace KMail {
       void resourceCreated(const Nepomuk2::Resource&,const QList<QUrl>&);
       void resourceRemoved(const QUrl&,const QList<QUrl>&);
       void propertyChanged(const Nepomuk2::Resource&);
+      void newTagActionClicked();
 
     private:
       void createTagAction( const MailCommon::Tag::Ptr &tag, bool addToMenu );
       void createTagActions();
+
+      QList<QUrl> checkedTags() const;
+      void checkTags( const QList<QUrl> &tags );
 
       KActionCollection *mActionCollection;
       MessageActions *mMessageActions;
@@ -129,6 +133,7 @@ namespace KMail {
 
       KAction *mSeparatorAction;
       KAction *mMoreAction;
+      KAction *mNewTagAction;
       // Maps the resource URI or a tag to the action of a tag.
       // Contains all existing tags
       QMap<QString,KToggleAction*> mTagActions;
@@ -140,6 +145,9 @@ namespace KMail {
       QList<MailCommon::Tag::Ptr> mTags;
 
       Nepomuk2::Query::QueryServiceClient *mTagQueryClient;
+
+      // Uri of a newly created tag
+      QString mNewTagUri;
  };
 }
 
