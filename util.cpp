@@ -100,7 +100,7 @@ void KMail::Util::launchAccountWizard( QWidget *w )
 
 }
 
-void KMail::Util::handleClickedURL( const KUrl &url, const QSharedPointer<MailCommon::FolderCollection> &folder )
+bool KMail::Util::handleClickedURL( const KUrl &url, const QSharedPointer<MailCommon::FolderCollection> &folder )
 {
   if ( url.protocol() == QLatin1String( "mailto" ) )
   {
