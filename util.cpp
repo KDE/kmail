@@ -100,7 +100,7 @@ void KMail::Util::launchAccountWizard( QWidget *w )
 
 }
 
-void KMail::Util::handleClickedURL( const KUrl &url )
+bool KMail::Util::handleClickedURL( const KUrl &url )
 {
   if ( url.protocol() == QLatin1String( "mailto" ) )
   {
@@ -121,12 +121,14 @@ void KMail::Util::handleClickedURL( const KUrl &url )
     KMail::Composer * win = KMail::makeComposer( msg, false, false,KMail::Composer::New, 0 );
     win->setFocusToSubject();
     win->show();
+    return true;
   } else {
     kWarning() << "Can't handle URL:" << url;
+    return false;
   }
 }
 
-void KMail::Util::handleClickedURL( const KUrl &url, const QSharedPointer<MailCommon::FolderCollection> &folder )
+bool KMail::Util::handleClickedURL( const KUrl &url, const QSharedPointer<MailCommon::FolderCollection> &folder )
 {
   if ( url.protocol() == QLatin1String( "mailto" ) )
   {
@@ -153,8 +155,10 @@ void KMail::Util::handleClickedURL( const KUrl &url, const QSharedPointer<MailCo
     win->setFocusToSubject();
     win->setCollectionForNewMessage( folder->collection() );
     win->show();
+    return true;
   } else {
     kWarning() << "Can't handle URL:" << url;
+    return false;
   }
 }
 
@@ -176,8 +180,7 @@ bool KMail::Util::mailingListsHandleURL( const KUrl::List& lst,const QSharedPoin
   }
 
   if ( !urlToHandle.isEmpty() ) {
-    KMail::Util::handleClickedURL( urlToHandle, folder );
-    return true;
+    return KMail::Util::handleClickedURL( urlToHandle, folder );
   } else {
     kWarning()<< "Can't handle url";
     return false;
