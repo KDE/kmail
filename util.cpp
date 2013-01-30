@@ -131,8 +131,10 @@ void KMail::Util::handleClickedURL( const KUrl &url, const QSharedPointer<MailCo
       win->setCollectionForNewMessage( folder->collection() );
     }
     win->show();
+    return true;
   } else {
     kWarning() << "Can't handle URL:" << url;
+    return false;
   }
 }
 
@@ -154,8 +156,7 @@ bool KMail::Util::mailingListsHandleURL( const KUrl::List& lst,const QSharedPoin
   }
 
   if ( !urlToHandle.isEmpty() ) {
-    KMail::Util::handleClickedURL( urlToHandle, folder );
-    return true;
+    return KMail::Util::handleClickedURL( urlToHandle, folder );
   } else {
     kWarning()<< "Can't handle url";
     return false;
