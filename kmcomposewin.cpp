@@ -50,7 +50,6 @@
 #include "custommimeheader.h"
 #include <messagecomposer/kmsubjectlineedit.h>
 #include "messageviewer/translator/translatorwidget.h"
-#include "messagecomposer/selectspecialchar.h"
 #include "attachmentmissingwarning.h"
 #include "createnewcontactjob.h"
 
@@ -109,6 +108,8 @@
 #include <mailtransport/transport.h>
 #include <kmime/kmime_codecs.h>
 #include <kmime/kmime_message.h>
+#include <kpimtextedit/selectspecialchar.h>
+
 
 // KDELIBS includes
 #include <kactioncollection.h>
@@ -3389,7 +3390,7 @@ void KMComposeWin::slotTranslatorWasClosed()
 void KMComposeWin::insertSpecialCharacter()
 {
   if(!mSelectSpecialChar) {
-    mSelectSpecialChar = new SelectSpecialChar(this);
+    mSelectSpecialChar = new KPIMTextEdit::SelectSpecialChar(this);
     mSelectSpecialChar->setCaption(i18n("Insert Special Character"));
     mSelectSpecialChar->setOkButtonText(i18n("Insert"));
     connect(mSelectSpecialChar,SIGNAL(charSelected(QChar)),this,SLOT(charSelected(QChar)));

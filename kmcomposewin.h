@@ -79,8 +79,8 @@ namespace KPIMIdentities {
   class Identity;
 }
 
-
-namespace KMail {
+namespace KPIMTextEdit {
+  class SelectSpecialChar;
 }
 
 namespace KIO {
@@ -655,7 +655,7 @@ class KMComposeWin : public KMail::Composer
 
     SnippetWidget *mSnippetWidget;
     MessageViewer::TranslatorWidget *mTranslatorWidget;
-    QPointer<SelectSpecialChar> mSelectSpecialChar;
+    QPointer<KPIMTextEdit::SelectSpecialChar> mSelectSpecialChar;
     AttachmentMissingWarning *mAttachmentMissing;
     QTimer *m_verifyMissingAttachment;
     QLabel *mSignatureStateIndicator;
