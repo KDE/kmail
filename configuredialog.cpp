@@ -436,6 +436,10 @@ AccountsPageReceivingTab::AccountsPageReceivingTab( QWidget * parent )
   mAccountsReceiving.vlay->setMargin( KDialog::marginHint() );
 
   mAccountsReceiving.mAccountList->agentFilterProxyModel()->addMimeTypeFilter( KMime::Message::mimeType() );
+#ifdef MERGE_KNODE_IN_KMAIL
+  mAccountsReceiving.mAccountList->agentFilterProxyModel()->addMimeTypeFilter( QString::fromLatin1("message/news") );
+#endif
+
   mAccountsReceiving.mAccountList->agentFilterProxyModel()->addCapabilityFilter( "Resource" ); // show only resources, no agents
   mAccountsReceiving.mAccountList->agentFilterProxyModel()->excludeCapabilities( "MailTransport" );
   mAccountsReceiving.mAccountList->agentFilterProxyModel()->excludeCapabilities( "Notes" );
