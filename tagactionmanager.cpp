@@ -193,7 +193,7 @@ void TagActionManager::createTagActions()
 
       if ( i == s_numberMaxTag && i < numberOfTag )
       {
-        mSeparatorAction = new KAction( this );
+        mSeparatorAction = new QAction( this );
         mSeparatorAction->setSeparator( true );
         mMessageActions->messageStatusMenu()->menu()->addAction( mSeparatorAction );
 
