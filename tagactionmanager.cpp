@@ -101,15 +101,17 @@ void TagActionManager::clearActions()
     mMessageActions->messageStatusMenu()->removeAction( mSeparatorAction );
     mSeparatorAction = 0;
   }
-  if ( mMoreAction ) {
-    mMessageActions->messageStatusMenu()->removeAction( mMoreAction );
-    mMoreAction = 0;
-  }
 
   if ( mNewTagAction ) {
     mMessageActions->messageStatusMenu()->removeAction( mNewTagAction );
     mNewTagAction = 0;
   }
+
+  if ( mMoreAction ) {
+    mMessageActions->messageStatusMenu()->removeAction( mMoreAction );
+    mMoreAction = 0;
+  }
+
 
   mTagActions.clear();
   delete mMessageTagToggleMapper;
@@ -174,6 +176,7 @@ void TagActionManager::createTagActions()
 
   // Create a action for each tag and plug it into various places
   int i = 0;
+  bool needToAddMoreAction = false;
   const int numberOfTag(mTags.count());
   foreach( const MailCommon::Tag::Ptr &tag, mTags ) {
     if(tag->tagStatus)
@@ -194,10 +197,7 @@ void TagActionManager::createTagActions()
         mSeparatorAction->setSeparator( true );
         mMessageActions->messageStatusMenu()->menu()->addAction( mSeparatorAction );
 
-        mMoreAction = new KAction( i18n( "More..." ), this );
-        mMessageActions->messageStatusMenu()->menu()->addAction( mMoreAction );
-        connect( mMoreAction, SIGNAL(triggered(bool)),
-                 this, SIGNAL(tagMoreActionClicked()) );
+        needToAddMoreAction = true;
       }
     }
     ++i;
@@ -207,6 +207,13 @@ void TagActionManager::createTagActions()
   mMessageActions->messageStatusMenu()->menu()->addAction( mNewTagAction );
   connect( mNewTagAction, SIGNAL(triggered(bool)),
            this, SLOT(newTagActionClicked()) );
+
+  if (needToAddMoreAction) {
+    mMoreAction = new KAction( i18n( "More..." ), this );
+    mMessageActions->messageStatusMenu()->menu()->addAction( mMoreAction );
+    connect( mMoreAction, SIGNAL(triggered(bool)),
+             this, SIGNAL(tagMoreActionClicked()) );
+  }
 
   if ( !mToolbarActions.isEmpty() && mGUIClient->factory() ) {
     mGUIClient->plugActionList( "toolbar_messagetag_actions", mToolbarActions );
