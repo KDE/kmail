@@ -92,11 +92,9 @@ void TagActionManager::clearActions()
 
   if ( mSeparatorAction ) {
     mMessageActions->messageStatusMenu()->removeAction( mSeparatorAction );
-    mSeparatorAction = 0;
   }
   if ( mMoreAction ) {
     mMessageActions->messageStatusMenu()->removeAction( mMoreAction );
-    mMoreAction = 0;
   }
 
   mTagActions.clear();
@@ -175,15 +173,20 @@ void TagActionManager::createTagActions()
       }
 
       if ( i == s_numberMaxTag && i < numberOfTag )
-      {
-        mSeparatorAction = new QAction( this );
-        mSeparatorAction->setSeparator( true );
+      { 
+        if (!mSeparatorAction) {
+          mSeparatorAction = new QAction( this );
+          mSeparatorAction->setSeparator( true );
+        }
         mMessageActions->messageStatusMenu()->menu()->addAction( mSeparatorAction );
 
-        mMoreAction = new KAction( i18n( "More..." ), this );
+	if (!mMoreAction) {
+          mMoreAction = new KAction( i18n( "More..." ), this );
+          connect( mMoreAction, SIGNAL(triggered(bool)),
+                   this, SIGNAL(tagMoreActionClicked()) );
+	
+	}
         mMessageActions->messageStatusMenu()->menu()->addAction( mMoreAction );
-        connect( mMoreAction, SIGNAL(triggered(bool)),
-                 this, SIGNAL(tagMoreActionClicked()) );
       }
     }
     ++i;
