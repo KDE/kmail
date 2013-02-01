@@ -55,7 +55,8 @@ TagActionManager::TagActionManager( QObject *parent, KActionCollection *actionCo
     mMessageActions( messageActions ),
     mMessageTagToggleMapper( 0 ),
     mGUIClient( guiClient ),
-    mSeparatorAction( 0 ),
+    mSeparatorMoreAction( 0 ),
+    mSeparatorNewTagAction( 0 ),
     mMoreAction( 0 ),
     mNewTagAction( 0 ),
     mTagQueryClient( 0 )
@@ -97,8 +98,12 @@ void TagActionManager::clearActions()
     mActionCollection->removeAction( action );
   }
 
-  if ( mSeparatorAction ) {
-    mMessageActions->messageStatusMenu()->removeAction( mSeparatorAction );
+  if ( mSeparatorMoreAction ) {
+    mMessageActions->messageStatusMenu()->removeAction( mSeparatorMoreAction );
+  }
+
+  if ( mSeparatorNewTagAction ) {
+    mMessageActions->messageStatusMenu()->removeAction( mSeparatorNewTagAction );
   }
 
   if ( mNewTagAction ) {
@@ -190,17 +195,18 @@ void TagActionManager::createTagActions()
 
       if ( i == s_numberMaxTag && i < numberOfTag )
       {
-        if(!mSeparatorAction) {
-          mSeparatorAction = new QAction( this );
-          mSeparatorAction->setSeparator( true );
-        }
-        mMessageActions->messageStatusMenu()->menu()->addAction( mSeparatorAction );
-
         needToAddMoreAction = true;
       }
     }
     ++i;
   }
+
+
+  if(!mSeparatorNewTagAction) {
+    mSeparatorNewTagAction = new QAction( this );
+    mSeparatorNewTagAction->setSeparator( true );
+  }
+  mMessageActions->messageStatusMenu()->menu()->addAction( mSeparatorNewTagAction );
 
   if (!mNewTagAction) {
     mNewTagAction = new KAction( i18n( "Add new tag..." ), this );
@@ -210,6 +216,12 @@ void TagActionManager::createTagActions()
   mMessageActions->messageStatusMenu()->menu()->addAction( mNewTagAction );
 
   if (needToAddMoreAction) {
+    if(!mSeparatorMoreAction) {
+      mSeparatorMoreAction = new QAction( this );
+      mSeparatorMoreAction->setSeparator( true );
+    }
+    mMessageActions->messageStatusMenu()->menu()->addAction( mSeparatorMoreAction );
+
     if (!mMoreAction) {
       mMoreAction = new KAction( i18n( "More..." ), this );
       connect( mMoreAction, SIGNAL(triggered(bool)),

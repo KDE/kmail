@@ -131,7 +131,8 @@ namespace KMail {
       QSignalMapper *mMessageTagToggleMapper;
       KXMLGUIClient *mGUIClient;
 
-      QAction *mSeparatorAction;
+      QAction *mSeparatorMoreAction;
+      QAction *mSeparatorNewTagAction;
       KAction *mMoreAction;
       KAction *mNewTagAction;
       // Maps the resource URI or a tag to the action of a tag.
