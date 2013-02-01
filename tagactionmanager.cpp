@@ -1,5 +1,5 @@
 /* Copyright 2010 Thomas McGuire <mcguire@kde.org>
-   Copyright 2011 Laurent Montel <montel@kde.org>
+   Copyright 2011-2012-2013 Laurent Montel <montel@kde.org>
 
    This program is free software; you can redistribute it and/or
    modify it under the terms of the GNU General Public License as
@@ -21,7 +21,7 @@
 
 #include "messageactions.h"
 
-#include "mailcommon/tagwidget.h"
+#include "mailcommon/addtagdialog.h"
 
 #include <Nepomuk2/Tag>
 #include <Nepomuk2/ResourceManager>
@@ -343,37 +343,13 @@ void TagActionManager::propertyChanged(const Nepomuk2::Resource& res)
 
 void TagActionManager::newTagActionClicked()
 {
-    QPointer<KDialog> dialog = new KDialog();
-    dialog->setCaption( i18n( "Add Tag" ) );
-    dialog->setButtons( KDialog::Ok | KDialog::Cancel );
-    dialog->setDefaultButton( KDialog::Ok );
-    dialog->showButtonSeparator( true );
-    MailCommon::TagWidget *tagWidget = new MailCommon::TagWidget( QList<KActionCollection*>() << mActionCollection, dialog );
-    dialog->setMainWidget( tagWidget );
+    QPointer<MailCommon::AddTagDialog> dialog = new MailCommon::AddTagDialog(QList<KActionCollection*>() << mActionCollection, 0);
+    dialog->setTags(mTags);
     if ( dialog->exec() ) {
-      const QString name = tagWidget->tagNameLineEdit()->text();
-
-      foreach( const MailCommon::Tag::Ptr &tag, mTags ) {
-        if ( tag->tagName == name ) {
-          KMessageBox::error( dialog, i18n( "Tag %1 already exists", name ) );
-          delete dialog;
-          return;
-        }
-      }
-
-      Nepomuk2::Tag nepomukTag( name );
-      nepomukTag.setLabel( name );
-
-      MailCommon::Tag::Ptr tag = MailCommon::Tag::fromNepomuk( nepomukTag );
-      tagWidget->recordTagSettings( tag );
-      MailCommon::Tag::SaveFlags saveFlags = tagWidget->saveFlags();
-      tag->saveToNepomuk( saveFlags );
-      mNewTagUri = tag->nepomukResourceUri.toString();
-
+      mNewTagUri = dialog->nepomukUrl();
       // Assign tag to all selected items right away
       emit tagActionTriggered( mNewTagUri );
     }
-
     delete dialog;
 }
 
