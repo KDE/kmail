@@ -99,17 +99,14 @@ void TagActionManager::clearActions()
 
   if ( mSeparatorAction ) {
     mMessageActions->messageStatusMenu()->removeAction( mSeparatorAction );
-    mSeparatorAction = 0;
   }
 
   if ( mNewTagAction ) {
     mMessageActions->messageStatusMenu()->removeAction( mNewTagAction );
-    mNewTagAction = 0;
   }
 
   if ( mMoreAction ) {
     mMessageActions->messageStatusMenu()->removeAction( mMoreAction );
-    mMoreAction = 0;
   }
 
 
@@ -193,8 +190,10 @@ void TagActionManager::createTagActions()
 
       if ( i == s_numberMaxTag && i < numberOfTag )
       {
-        mSeparatorAction = new QAction( this );
-        mSeparatorAction->setSeparator( true );
+        if(!mSeparatorAction) {
+          mSeparatorAction = new QAction( this );
+          mSeparatorAction->setSeparator( true );
+        }
         mMessageActions->messageStatusMenu()->menu()->addAction( mSeparatorAction );
 
         needToAddMoreAction = true;
@@ -203,16 +202,20 @@ void TagActionManager::createTagActions()
     ++i;
   }
 
-  mNewTagAction = new KAction( i18n( "Add new tag..." ), this );
+  if (!mNewTagAction) {
+    mNewTagAction = new KAction( i18n( "Add new tag..." ), this );
+    connect( mNewTagAction, SIGNAL(triggered(bool)),
+             this, SLOT(newTagActionClicked()) );
+  }
   mMessageActions->messageStatusMenu()->menu()->addAction( mNewTagAction );
-  connect( mNewTagAction, SIGNAL(triggered(bool)),
-           this, SLOT(newTagActionClicked()) );
 
   if (needToAddMoreAction) {
-    mMoreAction = new KAction( i18n( "More..." ), this );
+    if (!mMoreAction) {
+      mMoreAction = new KAction( i18n( "More..." ), this );
+      connect( mMoreAction, SIGNAL(triggered(bool)),
+               this, SIGNAL(tagMoreActionClicked()) );
+    }
     mMessageActions->messageStatusMenu()->menu()->addAction( mMoreAction );
-    connect( mMoreAction, SIGNAL(triggered(bool)),
-             this, SIGNAL(tagMoreActionClicked()) );
   }
 
   if ( !mToolbarActions.isEmpty() && mGUIClient->factory() ) {
