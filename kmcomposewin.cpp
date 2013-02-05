@@ -48,7 +48,7 @@
 #include "foldercollectionmonitor.h"
 #include "mailkernel.h"
 #include "custommimeheader.h"
-#include <libkdepim/kmsubjectlineedit.h>
+#include <libkdepim/spellchecklineedit.h>
 #include "messageviewer/translator/translatorwidget.h"
 #include "attachmentmissingwarning.h"
 #include "createnewcontactjob.h"
@@ -299,7 +299,7 @@ KMComposeWin::KMComposeWin( const KMime::Message::Ptr &aMsg, bool lastSignState,
   connect( recipientsEditor, SIGNAL(sizeHintChanged()), SLOT(recipientEditorSizeHintChanged()) );
   mComposerBase->setRecipientsEditor( recipientsEditor );
 
-  mEdtSubject = new KPIM::KMSubjectLineEdit( mHeadersArea, QLatin1String( "kmail2rc" ) );
+  mEdtSubject = new KPIM::SpellCheckLineEdit( mHeadersArea, QLatin1String( "kmail2rc" ) );
   mEdtSubject->setToolTip( i18n( "Set a subject for this message" ) );
   mLblIdentity = new QLabel( i18n("&Identity:"), mHeadersArea );
   mDictionaryLabel = new QLabel( i18n("&Dictionary:"), mHeadersArea );
@@ -2296,8 +2296,8 @@ void KMComposeWin::slotUndo()
     return;
   }
 
-  if (::qobject_cast<KPIM::KMSubjectLineEdit*>( fw )) {
-    static_cast<KPIM::KMSubjectLineEdit*>( fw )->undo();
+  if (::qobject_cast<KPIM::SpellCheckLineEdit*>( fw )) {
+    static_cast<KPIM::SpellCheckLineEdit*>( fw )->undo();
   }else if ( ::qobject_cast<KMComposerEditor*>( fw ) ) {
     static_cast<KTextEdit*>( fw )->undo();
   } else if (::qobject_cast<KLineEdit*>( fw )) {
@@ -2312,8 +2312,8 @@ void KMComposeWin::slotRedo()
     return;
   }
 
-  if (::qobject_cast<KPIM::KMSubjectLineEdit*>( fw )) {
-    static_cast<KPIM::KMSubjectLineEdit*>( fw )->redo();
+  if (::qobject_cast<KPIM::SpellCheckLineEdit*>( fw )) {
+    static_cast<KPIM::SpellCheckLineEdit*>( fw )->redo();
   } else if ( ::qobject_cast<KMComposerEditor*>( fw ) ) {
     static_cast<KTextEdit*>( fw )->redo();
   } else if (::qobject_cast<KLineEdit*>( fw )) {
@@ -2329,8 +2329,8 @@ void KMComposeWin::slotCut()
     return;
   }
 
-  if ( ::qobject_cast<KPIM::KMSubjectLineEdit*>( fw ) ) {
-    static_cast<KPIM::KMSubjectLineEdit*>( fw )->cut();
+  if ( ::qobject_cast<KPIM::SpellCheckLineEdit*>( fw ) ) {
+    static_cast<KPIM::SpellCheckLineEdit*>( fw )->cut();
   } else if ( ::qobject_cast<KMComposerEditor*>( fw ) ) {
     static_cast<KTextEdit*>(fw)->cut();
   } else if ( ::qobject_cast<KLineEdit*>( fw ) ) {
@@ -2346,8 +2346,8 @@ void KMComposeWin::slotCopy()
     return;
   }
 
-  if ( ::qobject_cast<KPIM::KMSubjectLineEdit*>( fw ) ) {
-    static_cast<KPIM::KMSubjectLineEdit*>( fw )->copy();
+  if ( ::qobject_cast<KPIM::SpellCheckLineEdit*>( fw ) ) {
+    static_cast<KPIM::SpellCheckLineEdit*>( fw )->copy();
   } else if ( ::qobject_cast<KMComposerEditor*>( fw ) ) {
     static_cast<KTextEdit*>(fw)->copy();
   } else if ( ::qobject_cast<KLineEdit*>( fw ) ) {
@@ -2362,8 +2362,8 @@ void KMComposeWin::slotPaste()
   if ( !fw ) {
     return;
   }
-  if ( ::qobject_cast<KPIM::KMSubjectLineEdit*>( fw ) ) {
-    static_cast<KPIM::KMSubjectLineEdit*>( fw )->paste();
+  if ( ::qobject_cast<KPIM::SpellCheckLineEdit*>( fw ) ) {
+    static_cast<KPIM::SpellCheckLineEdit*>( fw )->paste();
   } else if ( ::qobject_cast<KMComposerEditor*>( fw ) ) {
     static_cast<KTextEdit*>(fw)->paste();
   } else if ( ::qobject_cast<KLineEdit*>( fw ) ) {
@@ -2379,8 +2379,8 @@ void KMComposeWin::slotMarkAll()
     return;
   }
 
-  if (::qobject_cast<KPIM::KMSubjectLineEdit*>( fw )) {
-    static_cast<KPIM::KMSubjectLineEdit*>( fw )->selectAll();
+  if (::qobject_cast<KPIM::SpellCheckLineEdit*>( fw )) {
+    static_cast<KPIM::SpellCheckLineEdit*>( fw )->selectAll();
   } else if ( ::qobject_cast<KLineEdit*>( fw ) ) {
     static_cast<KLineEdit*>( fw )->selectAll();
   } else if (::qobject_cast<KMComposerEditor*>( fw )) {
