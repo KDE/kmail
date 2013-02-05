@@ -89,20 +89,20 @@ namespace KIO {
 
 namespace Message {
   class Composer;
+}
+
+namespace KPIM {
   class KMSubjectLineEdit;
 }
 
-namespace MessageComposer
-{
+namespace MessageComposer {
   class ComposerLineEdit;
 }
-namespace MailCommon
-{
+namespace MailCommon {
   class FolderRequester;
 }
  
-namespace MessageViewer
-{
+namespace MessageViewer {
   class TranslatorWidget;
 }
 
@@ -589,7 +589,7 @@ class KMComposeWin : public KMail::Composer
     QWidget   *mMainWidget;
     Sonnet::DictionaryComboBox *mDictionaryCombo;
     MessageComposer::ComposerLineEdit *mEdtFrom, *mEdtReplyTo;
-    Message::KMSubjectLineEdit *mEdtSubject;
+    KPIM::KMSubjectLineEdit *mEdtSubject;
     QLabel    *mLblIdentity, *mLblTransport, *mLblFcc;
     QLabel    *mLblFrom, *mLblReplyTo;
     QLabel    *mLblSubject;
