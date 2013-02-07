@@ -1607,6 +1607,7 @@ AppearancePageSystemTrayTab::AppearancePageSystemTrayTab( QWidget * parent )
 
   mSystemTrayShowUnreadMail = new QCheckBox( i18n("Show unread mail in tray icon"), this );
   vlay->addWidget( mSystemTrayShowUnreadMail );
+  mSystemTrayShowUnreadMail->setEnabled(false);
   connect( mSystemTrayShowUnreadMail, SIGNAL(stateChanged(int)),
            this, SLOT(slotEmitChanged()) );
   connect( mSystemTrayCheck, SIGNAL(toggled(bool)),
