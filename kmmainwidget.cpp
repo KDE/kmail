@@ -207,6 +207,7 @@ using MessageViewer::AttachmentStrategy;
 
 Q_DECLARE_METATYPE(KPIM::ProgressItem*)
 Q_DECLARE_METATYPE(Akonadi::Job*)
+Q_DECLARE_METATYPE(QPointer<KPIM::ProgressItem>)
 
 K_GLOBAL_STATIC( KMMainWidget::PtrList, theMainWidgetList )
 
@@ -4669,19 +4670,27 @@ void KMMainWidget::showCollectionProperties( const QString &pageToShow )
 
   if ( Solid::Networking::status() == Solid::Networking::Unconnected ) {
     KMessageBox::information( this, i18n( "Network is unconnected, some infos from folder could not be updated." ) );
-    showCollectionPropertiesContinued( pageToShow );
+    showCollectionPropertiesContinued( pageToShow, QPointer<KPIM::ProgressItem>() );
   } else {
     const Akonadi::AgentInstance agentInstance = Akonadi::AgentManager::self()->instance( mCurrentFolder->collection().resource() );
     bool isOnline = agentInstance.isOnline();
     if (!isOnline) {
-	  showCollectionPropertiesContinued( pageToShow );
+	  showCollectionPropertiesContinued( pageToShow, QPointer<KPIM::ProgressItem>() );
     } else {
+      QPointer<KPIM::ProgressItem> progressItem( KPIM::ProgressManager::createProgressItem( i18n( "Retrieving folder properties" ) ) );
+      progressItem->setUsesBusyIndicator( true );
+
       Akonadi::CollectionAttributesSynchronizationJob *sync
           = new Akonadi::CollectionAttributesSynchronizationJob( mCurrentFolder->collection() );
       sync->setProperty( "collectionId", mCurrentFolder->collection().id() );
       sync->setProperty( "pageToShow", pageToShow );	// note for dialog later
+      sync->setProperty( "progressItem", QVariant::fromValue( progressItem ) );
       connect( sync, SIGNAL(result(KJob*)),
                this, SLOT(slotCollectionPropertiesContinued(KJob*)) );
+      connect( progressItem, SIGNAL(progressItemCanceled(KPIM::ProgressItem*)),
+               sync, SLOT(kill()) );
+      connect( progressItem, SIGNAL(progressItemCanceled(KPIM::ProgressItem*)),
+               KPIM::ProgressManager::instance(), SLOT(slotStandardCancelHandler(KPIM::ProgressItem*)) );
       sync->start();
     }
   }
@@ -4690,6 +4699,8 @@ void KMMainWidget::showCollectionProperties( const QString &pageToShow )
 void KMMainWidget::slotCollectionPropertiesContinued( KJob* job )
 {
   QString pageToShow;
+  QPointer<KPIM::ProgressItem> progressItem;
+
   if ( job ) {
     Akonadi::CollectionAttributesSynchronizationJob *sync
         = dynamic_cast<Akonadi::CollectionAttributesSynchronizationJob *>( job );
@@ -4697,25 +4708,53 @@ void KMMainWidget::slotCollectionPropertiesContinued( KJob* job )
     if ( sync->property( "collectionId" ) != mCurrentFolder->collection().id() )
       return;
     pageToShow = sync->property( "pageToShow" ).toString();
+    progressItem = sync->property( "progressItem" ).value< QPointer<KPIM::ProgressItem> >();
+    if ( progressItem ) {
+        disconnect( progressItem, SIGNAL(progressItemCanceled(KPIM::ProgressItem*)),
+                    sync, SLOT(kill()) );
+    } else {
+      // progressItem does not exist anymore, operation has been canceled
+      return;
+    }
   }
 
-  showCollectionPropertiesContinued( pageToShow );
+  showCollectionPropertiesContinued( pageToShow, progressItem );
 }
 
-void KMMainWidget::showCollectionPropertiesContinued( const QString &pageToShow )
+void KMMainWidget::showCollectionPropertiesContinued( const QString &pageToShow, QPointer<KPIM::ProgressItem> progressItem )
 {
+  if ( !progressItem ) {
+    progressItem = KPIM::ProgressManager::createProgressItem( i18n( "Retrieving folder properties" ) );
+    progressItem->setUsesBusyIndicator( true );
+    connect( progressItem, SIGNAL(progressItemCanceled(KPIM::ProgressItem*)),
+           KPIM::ProgressManager::instance(), SLOT(slotStandardCancelHandler(KPIM::ProgressItem*)) );
+  }
+
   Akonadi::CollectionFetchJob *fetch = new Akonadi::CollectionFetchJob( mCurrentFolder->collection(),
                                                                         Akonadi::CollectionFetchJob::Base );
+  connect( progressItem, SIGNAL(progressItemCanceled(KPIM::ProgressItem*)), fetch, SLOT(kill()) );
   fetch->fetchScope().setIncludeStatistics( true );
   fetch->setProperty( "pageToShow", pageToShow );
+  fetch->setProperty( "progressItem", QVariant::fromValue( progressItem ) );
   connect( fetch, SIGNAL(result(KJob*)),
            this, SLOT(slotCollectionPropertiesFinished(KJob*)) );
+  connect( progressItem, SIGNAL(progressItemCanceled(KPIM::ProgressItem*)),
+           fetch, SLOT(kill()) );
 }
 
 void KMMainWidget::slotCollectionPropertiesFinished( KJob *job )
 {
   if ( !job )
     return;
+
+  QPointer<KPIM::ProgressItem> progressItem = job->property( "progressItem" ).value< QPointer<KPIM::ProgressItem> >();
+  // progressItem does not exist anymore, operation has been canceled
+  if ( !progressItem ) {
+    return;
+  }
+
+  progressItem->setComplete();
+  progressItem->setStatus( i18n( "Done" ) );
 
   Akonadi::CollectionFetchJob *fetch = dynamic_cast<Akonadi::CollectionFetchJob *>( job );
   Q_ASSERT( fetch );
