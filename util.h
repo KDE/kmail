@@ -54,7 +54,6 @@ namespace Akonadi {
   class EntityMimeTypeFilterModel;
 }
 
-#define IMAP_RESOURCE_IDENTIFIER "akonadi_imap_resource"
 #define POP3_RESOURCE_IDENTIFIER "akonadi_pop3_resource"
 #define MAILDISPATCHER_RESOURCE_IDENTIFIER "akonadi_maildispatcher_agent"
 namespace KMail

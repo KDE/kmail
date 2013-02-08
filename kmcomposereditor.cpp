@@ -44,7 +44,6 @@
 #include "kmkernel.h"
 #include "foldercollection.h"
 #include <QTextCodec>
-#include <QFileInfo>
 #include <QtCore/QMimeData>
 
 using namespace MailCommon;
