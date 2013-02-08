@@ -1670,7 +1670,8 @@ void KMKernel::transportRemoved(int id, const QString & name)
     QString information = i18np( "This identity has been changed to use the default transport:",
                           "These %1 identities have been changed to use the default transport:",
                           changedIdents.count() );
-    KMessageBox::informationList( mWin, information, changedIdents );
+    //Don't set parent otherwise we will swith to current KMail and we configure it. So not good
+    KMessageBox::informationList( 0, information, changedIdents );
     im->commit();
   }
 }
@@ -1694,7 +1695,8 @@ void KMKernel::transportRenamed(int id, const QString & oldName, const QString &
       i18np( "This identity has been changed to use the modified transport:",
              "These %1 identities have been changed to use the modified transport:",
              changedIdents.count() );
-    KMessageBox::informationList( mWin, information, changedIdents );
+    //Don't set parent otherwise we will swith to current KMail and we configure it. So not good
+    KMessageBox::informationList( 0, information, changedIdents );
     im->commit();
   }
 }
