@@ -23,15 +23,15 @@
 
 #include <KLocale>
 #include <KPushButton>
+#include <KVBox>
 
 #include <Akonadi/AgentInstance>
 #include <Akonadi/AgentManager>
 
 #include <KMime/KMimeMessage>
 
-#include <QVBoxLayout>
 #include <QListWidget>
-#include <KVBox>
+#include <QHBoxLayout>
 #include <QDebug>
 
 using namespace KMail;
@@ -139,7 +139,7 @@ void AccountConfigOrderDialog::init()
                  !capabilities.contains( "Virtual" ) &&
                  !capabilities.contains( "MailTransport" ) )
             {
-                if(!instance.identifier().contains(POP3_RESOURCE_IDENTIFIER)) {
+                if (!instance.identifier().contains(POP3_RESOURCE_IDENTIFIER)) {
                     instanceList<<instance.identifier();
                     InstanceStruct instanceStruct;
                     instanceStruct.name = instance.name();
@@ -150,7 +150,7 @@ void AccountConfigOrderDialog::init()
         }
     }
     const int numberOfList(listOrderAccount.count());
-    for(int i = 0; i< numberOfList;++i) {
+    for (int i = 0; i< numberOfList;++i) {
         instanceList.removeOne(listOrderAccount.at(i));
     }
 
@@ -158,9 +158,9 @@ void AccountConfigOrderDialog::init()
     finalList += instanceList;
 
     const int numberOfElement(finalList.count());
-    for(int i = 0; i <numberOfElement;++i) {
+    for (int i = 0; i <numberOfElement;++i) {
         const QString identifier(finalList.at(i));
-        if(mapInstance.contains(identifier)) {
+        if (mapInstance.contains(identifier)) {
             InstanceStruct tmp = mapInstance.value(identifier);
             QListWidgetItem * item = new QListWidgetItem(tmp.icon,tmp.name,mListAccount);
             item->setData(AccountConfigOrderDialog::IdentifierAccount, identifier);
@@ -173,7 +173,7 @@ void AccountConfigOrderDialog::slotOk()
 {
     QStringList order;
     const int numberOfItems(mListAccount->count());
-    for(int i = 0; i<numberOfItems; ++i) {
+    for (int i = 0; i<numberOfItems; ++i) {
         order<<mListAccount->item(i)->data(AccountConfigOrderDialog::IdentifierAccount).toString();
     }
     KConfigGroup group( KMKernel::self()->config(), "AccountOrder" );
