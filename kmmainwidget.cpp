@@ -4707,7 +4707,7 @@ void KMMainWidget::slotCollectionPropertiesFinished( KJob *job )
 
   Akonadi::CollectionPropertiesDialog *dlg = new Akonadi::CollectionPropertiesDialog( collection, pages, this );
   dlg->setCaption( i18nc( "@title:window", "Properties of Folder %1", collection.name() ) );
-  dlg->resize( 500, 400 );
+
 
   const QString pageToShow = fetch->property( "pageToShow" ).toString();
   if ( !pageToShow.isEmpty() ) {			// show a specific page
