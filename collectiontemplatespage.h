@@ -20,7 +20,6 @@
 #define COLLECTIONTEMPLATESPAGE_H
 #include <akonadi/collectionpropertiespage.h>
 
-class KPushButton;
 class QCheckBox;
 namespace TemplateParser {
   class TemplatesConfiguration;
@@ -50,7 +49,6 @@ protected:
 private:
   QCheckBox* mCustom;
   TemplateParser::TemplatesConfiguration* mWidget;
-  KPushButton* mCopyGlobal;
   uint mIdentity;
   QString mCollectionId;
   bool mIsLocalSystemFolder;

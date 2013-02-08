@@ -77,17 +77,17 @@ void CollectionTemplatesPage::init()
 
   QHBoxLayout *btns = new QHBoxLayout();
   btns->setSpacing( KDialog::spacingHint() );
-  mCopyGlobal = new KPushButton( i18n("&Copy Global Templates"), this );
-  mCopyGlobal->setEnabled( false );
-  btns->addWidget( mCopyGlobal );
+  KPushButton *copyGlobal = new KPushButton( i18n("&Copy Global Templates"), this );
+  copyGlobal->setEnabled( false );
+  btns->addWidget( copyGlobal );
   topLayout->addLayout( btns );
 
   connect( mCustom, SIGNAL(toggled(bool)),
            mWidget, SLOT(setEnabled(bool)) );
   connect( mCustom, SIGNAL(toggled(bool)),
-           mCopyGlobal, SLOT(setEnabled(bool)) );
+           copyGlobal, SLOT(setEnabled(bool)) );
 
-  connect( mCopyGlobal, SIGNAL(clicked()),
+  connect( copyGlobal, SIGNAL(clicked()),
            this, SLOT(slotCopyGlobal()) );
 }
 
