@@ -109,11 +109,9 @@ QList<QString> TagSelectDialog::selectedTag() const
 {
   QList<QString> lst;
   const int numberOfItems( mListTag->count() );
-  for ( int i = 0; i< numberOfItems;++i )
-  {
+  for ( int i = 0; i< numberOfItems;++i ) {
     QListWidgetItem *item = mListTag->item( i );
-    if ( item->checkState() == Qt::Checked )
-    {
+    if ( item->checkState() == Qt::Checked ) {
       lst.append( item->data(UrlTag).toString() );
     }
   }

@@ -223,8 +223,7 @@ namespace KMail {
   void XFaceConfigurator::setXfaceFromFile( const KUrl &url )
   {
     QString tmpFile;
-    if( KIO::NetAccess::download( url, tmpFile, this ) )
-    {
+    if (KIO::NetAccess::download( url, tmpFile, this )) {
       KXFace xf;
       mTextEdit->setText( xf.fromImage( QImage( tmpFile ) ) );
       KIO::NetAccess::removeTempFile( tmpFile );
@@ -235,8 +234,8 @@ namespace KMail {
 
   void XFaceConfigurator::slotSelectFile()
   {
-    QStringList mimeTypes = KImageIO::mimeTypes (KImageIO::Reading);
-    const QString filter = mimeTypes.join (" ");
+    const QStringList mimeTypes = KImageIO::mimeTypes (KImageIO::Reading);
+    const QString filter = mimeTypes.join (QLatin1String(" "));
     const KUrl url = KFileDialog::getOpenUrl( QString(), filter, this, QString() );
     if ( !url.isEmpty() )
       setXfaceFromFile( url );
@@ -269,13 +268,12 @@ namespace KMail {
     if ( contact.photo().isIntern() )
     {
       const QImage photo = contact.photo().data();
-      if ( !photo.isNull() )
-      {
+      if ( !photo.isNull() ) {
         KXFace xf;
         mTextEdit->setText( xf.fromImage( photo ) );
-      }
-      else
+      } else {
         KMessageBox::information( this, i18n("No picture set for your address book entry."), i18n("No Picture") );
+      }
 
     }
     else
@@ -292,8 +290,7 @@ namespace KMail {
   {
     QString str = mTextEdit->toPlainText();
 
-    if ( !str.isEmpty() )
-    {
+    if ( !str.isEmpty() ) {
       if ( str.startsWith( QLatin1String("x-face:"), Qt::CaseInsensitive ) )
       {
         str = str.remove( "x-face:", Qt::CaseInsensitive );
@@ -302,9 +299,7 @@ namespace KMail {
       KXFace xf;
       const QPixmap p = QPixmap::fromImage( xf.toImage(str) );
       mXFaceLabel->setPixmap( p );
-    }
-    else
-    {
+    } else {
       mXFaceLabel->clear();
     }
   }
