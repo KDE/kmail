@@ -49,7 +49,7 @@
 #include "mailkernel.h"
 #include "custommimeheader.h"
 #include <libkdepim/spellchecklineedit.h>
-#include "messageviewer/translator/translatorwidget.h"
+#include "pimcommon/translator/translatorwidget.h"
 #include "attachmentmissingwarning.h"
 #include "createnewcontactjob.h"
 
@@ -410,7 +410,7 @@ KMComposeWin::KMComposeWin( const KMime::Message::Ptr &aMsg, bool lastSignState,
   mBtnTransport->setFocusPolicy( Qt::NoFocus );
   mBtnDictionary->setFocusPolicy( Qt::NoFocus );
 
-  mTranslatorWidget = new MessageViewer::TranslatorWidget(this);
+  mTranslatorWidget = new PimCommon::TranslatorWidget(this);
   connect(mTranslatorWidget,SIGNAL(translatorWasClosed()),this,SLOT(slotTranslatorWasClosed()));
   mSplitter->addWidget(mTranslatorWidget);
 

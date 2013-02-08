@@ -102,7 +102,7 @@ namespace MailCommon {
   class FolderRequester;
 }
  
-namespace MessageViewer {
+namespace PimCommon {
   class TranslatorWidget;
 }
 
@@ -654,7 +654,7 @@ class KMComposeWin : public KMail::Composer
 
 
     SnippetWidget *mSnippetWidget;
-    MessageViewer::TranslatorWidget *mTranslatorWidget;
+    PimCommon::TranslatorWidget *mTranslatorWidget;
     QPointer<KPIMTextEdit::SelectSpecialChar> mSelectSpecialChar;
     AttachmentMissingWarning *mAttachmentMissing;
     QTimer *m_verifyMissingAttachment;
