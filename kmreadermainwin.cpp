@@ -357,6 +357,9 @@ void KMReaderMainWin::setupAccel()
   connect( mReaderWin->viewer(), SIGNAL(popupMenu(Akonadi::Item,KUrl,KUrl,QPoint)),
            this, SLOT(slotMessagePopup(Akonadi::Item,KUrl,KUrl,QPoint)) );
 
+  connect( mReaderWin->viewer(), SIGNAL(itemRemoved()),
+           this, SLOT(close()) );
+
   setStandardToolBarMenuEnabled(true);
   KStandardAction::configureToolbars(this, SLOT(slotEditToolbars()), actionCollection());
 }
