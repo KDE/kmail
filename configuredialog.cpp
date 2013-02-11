@@ -1204,11 +1204,6 @@ AppearancePageLayoutTab::AppearancePageLayoutTab( QWidget * parent )
   mFolderToolTipsGroup->addButton( folderToolTipsAlwaysRadio, static_cast< int >( FolderTreeWidget::DisplayAlways ) );
   mFolderToolTipsGroupBox->layout()->addWidget( folderToolTipsAlwaysRadio );
 
-  QRadioButton* folderToolTipsElidedRadio = new QRadioButton( i18n( "When Text Obscured" ), mFolderToolTipsGroupBox );
-  mFolderToolTipsGroup->addButton( folderToolTipsElidedRadio, static_cast< int >( FolderTreeWidget::DisplayWhenTextElided ) );
-  folderToolTipsElidedRadio->setEnabled( false ); //Disable it until we reimplement it.
-  mFolderToolTipsGroupBox->layout()->addWidget( folderToolTipsElidedRadio );
-
   QRadioButton* folderToolTipsNeverRadio = new QRadioButton( i18n( "Never" ), mFolderToolTipsGroupBox );
   mFolderToolTipsGroup->addButton( folderToolTipsNeverRadio, static_cast< int >( FolderTreeWidget::DisplayNever ) );
   mFolderToolTipsGroupBox->layout()->addWidget( folderToolTipsNeverRadio );
