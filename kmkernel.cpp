@@ -629,7 +629,7 @@ int KMKernel::openComposer( const QString &to, const QString &cc,
   }
   else if ( !body.isEmpty() ) {
     context = KMail::Composer::NoTemplate;
-    msg->setBody( body.toLatin1() );
+    msg->setBody( body.toUtf8() );
   }
   else {
     TemplateParser::TemplateParser parser( msg, TemplateParser::TemplateParser::NewMessage );
@@ -656,6 +656,7 @@ int KMKernel::openComposer( const QString &to, const QString &cc,
       }
   }
 
+  msg->assemble();
   KMail::Composer * cWin = KMail::makeComposer( msg, false, false, context );
   if (!to.isEmpty())
     cWin->setFocusToSubject();
@@ -760,6 +761,7 @@ int KMKernel::openComposer (const QString &to, const QString &cc,
     }
   }
 
+  msg->assemble();
   KMail::Composer * cWin = KMail::makeComposer( KMime::Message::Ptr(), false, false,context );
   cWin->setMessage( msg, false, false, !isICalInvitation /* mayAutoSign */ );
   cWin->setSigningAndEncryptionDisabled( isICalInvitation
@@ -805,13 +807,14 @@ QDBusObjectPath KMKernel::openComposer( const QString &to, const QString &cc,
   if ( !subject.isEmpty() ) msg->subject()->fromUnicodeString( subject, "utf-8" );
   if ( !to.isEmpty() )      msg->to()->fromUnicodeString( to, "utf-8" );
   if ( !body.isEmpty() ) {
-    msg->setBody(body.toLatin1());
+    msg->setBody( body.toUtf8() );
   } else {
     TemplateParser::TemplateParser parser( msg, TemplateParser::TemplateParser::NewMessage );
     parser.setIdentityManager( KMKernel::self()->identityManager() );
     parser.process( KMime::Message::Ptr() );
   }
 
+  msg->assemble();
   const KMail::Composer::TemplateContext context = body.isEmpty() ? KMail::Composer::New :
                                                    KMail::Composer::NoTemplate;
   KMail::Composer * cWin = KMail::makeComposer( msg, false, false, context );
@@ -857,6 +860,7 @@ QDBusObjectPath KMKernel::newMessage( const QString &to,
   if ( !bcc.isEmpty() )     msg->bcc()->fromUnicodeString( bcc, "utf-8" );
   if ( !to.isEmpty() )      msg->to()->fromUnicodeString( to, "utf-8" );
 
+  msg->assemble();
   TemplateParser::TemplateParser parser( msg, TemplateParser::TemplateParser::NewMessage );
   parser.setIdentityManager( identityManager() );
   Akonadi::Collection col = folder ? folder->collection() : Akonadi::Collection();
