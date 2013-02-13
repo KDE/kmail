@@ -49,6 +49,7 @@ QString IdentityPage::helpAnchor() const
 IdentityPage::IdentityPage( const KComponentData &instance, QWidget *parent )
   : ConfigModule( instance, parent ),
     mIdentityDialog( 0 ),
+    mOldNumberOfIdentities( 0 ),
     mIdentityManager( 0 )
 {
   if ( !MailCommon::Kernel::self()->kernelIsRegistered() ) {
