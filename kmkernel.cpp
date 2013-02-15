@@ -2073,5 +2073,12 @@ void KMKernel::toggleSystemTray()
   }
 }
 
+void KMKernel::showFolder(const QString &collectionId)
+{
+    if (!collectionId.isEmpty()) {
+        const Akonadi::Collection::Id id = collectionId.toLongLong();
+        selectCollectionFromId(id);
+    }
+}
 
 #include "kmkernel.moc"
