@@ -274,6 +274,9 @@ public Q_SLOTS:
   Q_SCRIPTABLE int viewMessage( const QString & messageFile );
 
   Q_SCRIPTABLE void updateConfig();
+
+  Q_SCRIPTABLE void showFolder(const QString &collectionId);
+
 /**
  * End of D-Bus callable stuff
  */
