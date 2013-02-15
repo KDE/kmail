@@ -47,7 +47,7 @@ class ArchiveFolderDialog : public KDialog
     explicit ArchiveFolderDialog( QWidget *parent = 0 );
     void setFolder( const Akonadi::Collection &defaultCollection );
 
-  protected slots:
+  private slots:
 
     void slotFixFileExtension();
     void slotFolderChanged( const Akonadi::Collection& );
