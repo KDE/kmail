@@ -300,6 +300,7 @@ KMComposeWin::KMComposeWin( const KMime::Message::Ptr &aMsg, bool lastSignState,
   mComposerBase->setRecipientsEditor( recipientsEditor );
 
   mEdtSubject = new KPIM::SpellCheckLineEdit( mHeadersArea, QLatin1String( "kmail2rc" ) );
+  mEdtSubject->setActivateLanguageMenu(false);
   mEdtSubject->setToolTip( i18n( "Set a subject for this message" ) );
   mLblIdentity = new QLabel( i18n("&Identity:"), mHeadersArea );
   mDictionaryLabel = new QLabel( i18n("&Dictionary:"), mHeadersArea );
