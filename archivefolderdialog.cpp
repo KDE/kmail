@@ -102,6 +102,8 @@ ArchiveFolderDialog::ArchiveFolderDialog( QWidget *parent )
   fileNameLabel->setBuddy( mUrlRequester );
   connect( mUrlRequester, SIGNAL(urlSelected(KUrl)),
            this, SLOT(slotFixFileExtension()) );
+  connect( mUrlRequester, SIGNAL(textChanged(QString)),
+          this, SLOT(slotUrlChanged(QString)) );
   mainLayout->addWidget( mUrlRequester, row, 1 );
   row++;
 
@@ -211,6 +213,11 @@ void ArchiveFolderDialog::slotFixFileExtension()
   // Now, we've got a filename without an extension, simply append the correct one
   fileName += extensions[mFormatComboBox->currentIndex()];
   mUrlRequester->setUrl( fileName );
+}
+
+void ArchiveFolderDialog::slotUrlChanged(const QString &url)
+{
+    enableButtonOk(!url.isEmpty());
 }
 
 #include "archivefolderdialog.moc"

@@ -24,6 +24,7 @@
 class QCheckBox;
 class KUrlRequester;
 class KComboBox;
+class KUrl;
 
 namespace Akonadi
 {
@@ -53,6 +54,7 @@ class ArchiveFolderDialog : public KDialog
     void slotRecursiveCheckboxClicked();
     /** reimp */
     void slotButtonClicked( int button );
+    void slotUrlChanged(const QString&);
 
   private:
     bool allowToDeleteFolders( const Akonadi::Collection &folder) const;
