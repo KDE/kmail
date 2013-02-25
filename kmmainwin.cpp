@@ -29,6 +29,8 @@
 
 #include <QTimer>
 
+#include <KMenuBar>
+#include <KToggleAction>
 #include <kapplication.h>
 #include <klocale.h>
 #include <kedittoolbar.h>
@@ -78,6 +80,11 @@ KMMainWin::KMMainWin(QWidget *)
 
   KStandardAction::keyBindings( guiFactory(), SLOT(configureShortcuts()),
                                 actionCollection() );
+
+  mHideMenuBarAction = KStandardAction::showMenubar( this, SLOT(slotToggleMenubar()), actionCollection() );
+  mHideMenuBarAction->setChecked( GlobalSettings::self()->showMenuBar() );
+  slotToggleMenubar( true );
+
 
   KStandardAction::quit( this, SLOT(slotQuit()), actionCollection() );
   createGUI( "kmmainwin.rc" );
@@ -137,6 +144,26 @@ void KMMainWin::displayStatusMsg( const QString& aText )
 
   statusBar()->changeItem( text, 1 );
 }
+
+void KMMainWin::slotToggleMenubar(bool dontShowWarning)
+{
+    if ( menuBar() ) {
+        if ( mHideMenuBarAction->isChecked() ) {
+            menuBar()->show();
+        } else {
+            if ( !dontShowWarning ) {
+                const QString accel = mHideMenuBarAction->shortcut().toString();
+                KMessageBox::information( this,
+                                          i18n( "<qt>This will hide the menu bar completely."
+                                                " You can show it again by typing %1.</qt>", accel ),
+                                          "Hide menu bar", "HideMenuBarWarning" );
+            }
+            menuBar()->hide();
+        }
+        GlobalSettings::self()->setShowMenuBar( mHideMenuBarAction->isChecked() );
+    }
+}
+
 
 //-----------------------------------------------------------------------------
 void KMMainWin::slotNewMailReader()

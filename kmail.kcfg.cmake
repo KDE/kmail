@@ -160,6 +160,12 @@
         <label>Only print selected text in viewer</label>
 	<default>false</default>
       </entry>
+      <entry key="ShowMenuBar" type="Bool">
+        <default>true</default>
+         <!-- label and whatsthis are already provided by KStandardAction::showMenubar -->
+        <label></label>
+        <whatsthis></whatsthis>
+      </entry>
     </group>
 <!-- General -->
 
