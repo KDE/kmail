@@ -425,7 +425,7 @@ KMCommand::Result KMMailtoComposeCommand::execute()
 
   MessageHelper::initHeader( msg, KMKernel::self()->identityManager(),id );
   msg->contentType()->setCharset("utf-8");
-  msg->to()->fromUnicodeString( KPIMUtils::decodeMailtoUrl( mUrl ), "utf-8" );
+  msg->to()->fromUnicodeString( KPIMUtils::decodeMailtoUrl( mUrl ).toLower(), "utf-8" );
 
   KMail::Composer * win = KMail::makeComposer( msg, false, false,KMail::Composer::New, id );
   win->setFocusToSubject();
@@ -456,7 +456,7 @@ KMCommand::Result KMMailtoReplyCommand::execute()
   factory.setReplyStrategy( MessageComposer::ReplyNone );
   factory.setSelection( mSelection );
   KMime::Message::Ptr rmsg = factory.createReply().msg;
-  rmsg->to()->fromUnicodeString( KPIMUtils::decodeMailtoUrl( mUrl ), "utf-8" ); //TODO Check the UTF-8
+  rmsg->to()->fromUnicodeString( KPIMUtils::decodeMailtoUrl( mUrl ).toLower(), "utf-8" ); //TODO Check the UTF-8
   bool lastEncrypt = false;
   bool lastSign = false;
   KMail::Util::lastEncryptAndSignState(lastEncrypt, lastSign, msg);
@@ -488,7 +488,7 @@ KMCommand::Result KMMailtoForwardCommand::execute()
   factory.setIdentityManager( KMKernel::self()->identityManager() );
   factory.setFolderIdentity( MailCommon::Util::folderIdentity( item ) );
   KMime::Message::Ptr fmsg = factory.createForward();
-  fmsg->to()->fromUnicodeString( KPIMUtils::decodeMailtoUrl( mUrl ), "utf-8" ); //TODO check the utf-8
+  fmsg->to()->fromUnicodeString( KPIMUtils::decodeMailtoUrl( mUrl ).toLower(), "utf-8" ); //TODO check the utf-8
   bool lastEncrypt = false;
   bool lastSign = false;
   KMail::Util::lastEncryptAndSignState(lastEncrypt, lastSign, msg);
