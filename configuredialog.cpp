@@ -2251,15 +2251,8 @@ ComposerPageGeneralTab::ComposerPageGeneralTab( QWidget * parent )
 
   mImprovePlainTextOfHtmlMessage = new QCheckBox( MessageComposer::MessageComposerSettings::self()->improvePlainTextOfHtmlMessageItem()->label(), this );
   vlay->addWidget( mImprovePlainTextOfHtmlMessage );
-#ifdef GRANTLEE_GREATER_0_2
   connect( mImprovePlainTextOfHtmlMessage, SIGNAL(stateChanged(int)),
            this, SLOT(slotEmitChanged()) );
-#else
-  mImprovePlainTextOfHtmlMessage->setWhatsThis(
-                 i18n( "To support improving the plain text of HTML messages, KMail must be compiled "
-                       "with Grantlee 0.3 or greater." ) );
-  mImprovePlainTextOfHtmlMessage->setEnabled(false);
-#endif
 
   mQuoteSelectionOnlyCheck = new QCheckBox( MessageComposer::MessageComposerSettings::self()->quoteSelectionOnlyItem()->label(),
                                             this );

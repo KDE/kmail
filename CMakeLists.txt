@@ -2,9 +2,6 @@ project(kmail)
 
 include(CheckIncludeFiles)
 
-if(GRANTLEE_GREATER_0_2)
-  add_definitions(-DGRANTLEE_GREATER_0_2)
-endif()
 
 if (NOT WINCE)
 
