@@ -1558,11 +1558,6 @@ AppearancePageReaderTab::AppearancePageReaderTab( QWidget * parent )
   connect( mCloseAfterReplyOrForwardCheck, SIGNAL (stateChanged(int)),
            this, SLOT(slotEmitChanged()) );
 
-  mAccessKeyEnabled = new QCheckBox( i18n("Enable Access Key"),this );
-  vlay->addWidget( mAccessKeyEnabled );
-  connect( mAccessKeyEnabled, SIGNAL (stateChanged(int)),
-           this, SLOT(slotEmitChanged()) );
-
   mViewerSettings = new MessageViewer::ConfigureWidget( this );
   connect( mViewerSettings, SIGNAL(settingsChanged()),
            this, SLOT(slotEmitChanged()) );
@@ -1574,7 +1569,6 @@ AppearancePageReaderTab::AppearancePageReaderTab( QWidget * parent )
 void AppearancePage::ReaderTab::doLoadOther()
 {
   loadWidget( mCloseAfterReplyOrForwardCheck, GlobalSettings::self()->closeAfterReplyOrForwardItem() );
-  loadWidget( mAccessKeyEnabled, MessageViewer::GlobalSettings::self()->accessKeyEnabledItem() );
   mViewerSettings->readConfig();
 }
 
@@ -1582,7 +1576,6 @@ void AppearancePage::ReaderTab::doLoadOther()
 void AppearancePage::ReaderTab::save()
 {
   saveCheckBox( mCloseAfterReplyOrForwardCheck, GlobalSettings::self()->closeAfterReplyOrForwardItem() );
-  saveCheckBox( mAccessKeyEnabled, MessageViewer::GlobalSettings::self()->accessKeyEnabledItem() );
   mViewerSettings->writeConfig();
 }
 
