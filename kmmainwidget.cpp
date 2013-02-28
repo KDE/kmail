@@ -341,7 +341,7 @@ K_GLOBAL_STATIC( KMMainWidget::PtrList, theMainWidgetList )
   mStartupDone = true;
 
 
-  m_notificationTimer.setInterval( 10 * 1000 );
+  m_notificationTimer.setInterval( 3 * 1000 );
   m_notificationTimer.setSingleShot( true );
   connect( &m_notificationTimer, SIGNAL(timeout()), SLOT(slotShowNotification()) );
 
