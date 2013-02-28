@@ -923,34 +923,35 @@ namespace KMail {
   }
   void IdentityDialog::slotEditVcard()
   {
-    if(QFile(mVcardFilename).exists()) {
-      editVcard(mVcardFilename);
-    } else {
-      if ( !MailCommon::Kernel::self()->kernelIsRegistered() ) {
-        return;
-      }
-      KPIMIdentities::IdentityManager *manager = KernelIf->identityManager();
-
-      IdentityAddVcardDialog dlg(manager, this);
-      if(dlg.exec()) {
-        IdentityAddVcardDialog::DuplicateMode mode = dlg.duplicateMode();
-        switch(mode) {
-        case IdentityAddVcardDialog::Empty: {
+      if(QFile(mVcardFilename).exists()) {
           editVcard(mVcardFilename);
-        }
-        break;
-        case IdentityAddVcardDialog::ExistingEntry: {
-           KPIMIdentities::Identity ident = manager->modifyIdentityForName( dlg.duplicateVcardFromIdentity() );
-           const QString filename = ident.vCardFile();
-           if(!filename.isEmpty()) {
-             QFile::copy(filename,mVcardFilename);
-           }
-           editVcard(mVcardFilename);
-        }
-        break;
-        }
+      } else {
+          if ( !MailCommon::Kernel::self()->kernelIsRegistered() ) {
+              return;
+          }
+          KPIMIdentities::IdentityManager *manager = KernelIf->identityManager();
+
+          QPointer<IdentityAddVcardDialog> dlg = new IdentityAddVcardDialog(manager, this);
+          if(dlg->exec()) {
+              IdentityAddVcardDialog::DuplicateMode mode = dlg->duplicateMode();
+              switch(mode) {
+              case IdentityAddVcardDialog::Empty: {
+                  editVcard(mVcardFilename);
+                  break;
+              }
+              case IdentityAddVcardDialog::ExistingEntry: {
+                  KPIMIdentities::Identity ident = manager->modifyIdentityForName( dlg->duplicateVcardFromIdentity() );
+                  const QString filename = ident.vCardFile();
+                  if(!filename.isEmpty()) {
+                      QFile::copy(filename,mVcardFilename);
+                  }
+                  editVcard(mVcardFilename);
+                  break;
+              }
+              }
+          }
+          delete dlg;
       }
-    }
   }
 
   void IdentityDialog::editVcard(const QString& filename)
