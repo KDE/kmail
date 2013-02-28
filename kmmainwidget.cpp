@@ -1687,8 +1687,6 @@ void KMMainWidget::slotExpireFolder()
 //-----------------------------------------------------------------------------
 void KMMainWidget::slotEmptyFolder()
 {
-  QString str;
-
   if (!mCurrentFolder) return;
   const bool isTrash = CommonKernel->folderIsTrash( mCurrentFolder->collection() );
   if ( GlobalSettings::self()->confirmBeforeEmpty() )
