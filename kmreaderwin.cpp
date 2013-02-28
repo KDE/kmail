@@ -73,6 +73,7 @@ using MessageComposer::MessageFactory;
 #include <ktoggleaction.h>
 #include <kservice.h>
 #include <KActionCollection>
+#include <KMessageBox>
 
 #include <QClipboard>
 
@@ -762,10 +763,17 @@ void KMReaderWin::slotEditContact()
       new Akonadi::ContactEditorDialog( Akonadi::ContactEditorDialog::EditMode, this );
     connect( dlg, SIGNAL(contactStored(Akonadi::Item)),
              this, SLOT(contactStored(Akonadi::Item)) );
+    connect( dlg, SIGNAL(error(QString)),
+             this, SLOT(slotContactEditorError(QString)) );
     dlg->setContact( mSearchedContact );
     dlg->exec();
     delete dlg;
   }
+}
+
+void KMReaderWin::slotContactEditorError(const QString &error)
+{
+    KMessageBox::error(this, i18n("Contact can not stored: %1", error), i18n("Failed to store contact"));
 }
 
 void KMReaderWin::contactStored( const Akonadi::Item &item )

@@ -194,6 +194,7 @@ public slots:
   void slotPrintComposeResult( KJob *job );
   void slotEditContact();
   void contactStored( const Akonadi::Item &item );
+  void slotContactEditorError(const QString &error);
 
 protected:
 
