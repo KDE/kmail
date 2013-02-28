@@ -2181,9 +2181,10 @@ void KMMainWidget::slotTrashMessagesCompleted( KMMoveCommand *command )
   {
     BroadcastStatus::instance()->setStatusMsg( i18n( "Messages moved to trash successfully." ) );
   } else {
-    if ( command->result() == KMCommand::Failed )
+    if ( command->result() == KMCommand::Failed ) {
       BroadcastStatus::instance()->setStatusMsg( i18n( "Moving messages to trash failed." ) );
-    else
+      KMessageBox::error(this, i18n("Moving messages to trash failed. Please verify your trash in your IMAP account and retry."), i18n("Moving messages to trash failed"));
+    } else
       BroadcastStatus::instance()->setStatusMsg( i18n( "Moving messages to trash canceled." ) );
   }
 
