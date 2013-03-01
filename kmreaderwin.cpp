@@ -773,7 +773,7 @@ void KMReaderWin::slotEditContact()
 
 void KMReaderWin::slotContactEditorError(const QString &error)
 {
-    KMessageBox::error(this, i18n("Contact can not stored: %1", error), i18n("Failed to store contact"));
+    KMessageBox::error(this, i18n("Contact cannot be stored: %1", error), i18n("Failed to store contact"));
 }
 
 void KMReaderWin::contactStored( const Akonadi::Item &item )
