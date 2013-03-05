@@ -1545,25 +1545,32 @@ QString AppearancePage::ReaderTab::helpAnchor() const
 AppearancePageReaderTab::AppearancePageReaderTab( QWidget * parent )
   : ConfigModuleTab( parent )
 {
-  QVBoxLayout *vlay = new QVBoxLayout( this );
-  vlay->setSpacing( KDialog::spacingHint() );
-  vlay->setMargin( KDialog::marginHint() );
+    QVBoxLayout *topLayout = new QVBoxLayout(this);
+    topLayout->setSpacing( KDialog::spacingHint() );
+    topLayout->setMargin( KDialog::marginHint() );
+    QGroupBox *box = new QGroupBox(i18n("General"));
+    topLayout->addWidget(box);
 
-  // "Close message window after replying or forwarding" check box:
-  populateCheckBox( mCloseAfterReplyOrForwardCheck = new QCheckBox( this ),
-                    GlobalSettings::self()->closeAfterReplyOrForwardItem() );
-  mCloseAfterReplyOrForwardCheck->setToolTip(
-      i18n( "Close the standalone message window after replying or forwarding the message" ) );
-  vlay->addWidget( mCloseAfterReplyOrForwardCheck );
-  connect( mCloseAfterReplyOrForwardCheck, SIGNAL (stateChanged(int)),
-           this, SLOT(slotEmitChanged()) );
+    QVBoxLayout *vlay = new QVBoxLayout;
+    vlay->setSpacing( KDialog::spacingHint() );
+    vlay->setMargin( KDialog::marginHint() );
+    box->setLayout(vlay);
 
-  mViewerSettings = new MessageViewer::ConfigureWidget( this );
-  connect( mViewerSettings, SIGNAL(settingsChanged()),
-           this, SLOT(slotEmitChanged()) );
-  vlay->addWidget( mViewerSettings );
+    // "Close message window after replying or forwarding" check box:
+    populateCheckBox( mCloseAfterReplyOrForwardCheck = new QCheckBox( this ),
+                      GlobalSettings::self()->closeAfterReplyOrForwardItem() );
+    mCloseAfterReplyOrForwardCheck->setToolTip(
+                i18n( "Close the standalone message window after replying or forwarding the message" ) );
+    vlay->addWidget( mCloseAfterReplyOrForwardCheck );
+    connect( mCloseAfterReplyOrForwardCheck, SIGNAL (stateChanged(int)),
+             this, SLOT(slotEmitChanged()) );
 
-  vlay->addStretch( 100 ); // spacer
+    mViewerSettings = new MessageViewer::ConfigureWidget;
+    connect( mViewerSettings, SIGNAL(settingsChanged()),
+             this, SLOT(slotEmitChanged()) );
+    vlay->addWidget( mViewerSettings );
+
+    vlay->addStretch( 100 ); // spacer
 }
 
 void AppearancePage::ReaderTab::doLoadOther()
