@@ -203,7 +203,7 @@ namespace KMail {
 
     // "Email Aliases" stsring text edit and label:
     ++row;
-    mAliasEdit = new SimpleStringListEditor( tab );
+    mAliasEdit = new PimCommon::SimpleStringListEditor( tab );
     glay->addWidget( mAliasEdit, row, 1 );
     label = new QLabel( i18n("Email a&liases:"), tab );
     label->setBuddy( mAliasEdit );

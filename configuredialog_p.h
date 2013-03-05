@@ -47,7 +47,9 @@ class KTabWidget;
 class ListView;
 class ConfigureDialog;
 class KIntSpinBox;
-class SimpleStringListEditor;
+namespace PimCommon {
+  class SimpleStringListEditor;
+}
 class KComboBox;
 class ColorListBox;
 class KCModuleProxy;
@@ -593,9 +595,9 @@ private:
   void doResetToDefaultsOther();
 
 private:
-  SimpleStringListEditor *mReplyListEditor;
+  PimCommon::SimpleStringListEditor *mReplyListEditor;
   QCheckBox              *mReplaceReplyPrefixCheck;
-  SimpleStringListEditor *mForwardListEditor;
+  PimCommon::SimpleStringListEditor *mForwardListEditor;
   QCheckBox              *mReplaceForwardPrefixCheck;
 };
 
@@ -616,7 +618,7 @@ private:
   void doResetToDefaultsOther();
 
 private:
-  SimpleStringListEditor *mCharsetListEditor;
+  PimCommon::SimpleStringListEditor *mCharsetListEditor;
   QCheckBox              *mKeepReplyCharsetCheck;
 };
 
@@ -669,7 +671,7 @@ private:
 private:
   QCheckBox   *mOutlookCompatibleCheck;
   QCheckBox   *mMissingAttachmentDetectionCheck;
-  SimpleStringListEditor *mAttachWordsListEditor;
+  PimCommon::SimpleStringListEditor *mAttachWordsListEditor;
   KIntNumInput *mMaximumAttachmentSize;
 };
 

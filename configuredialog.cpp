@@ -2660,10 +2660,10 @@ ComposerPageSubjectTab::ComposerPageSubjectTab( QWidget * parent )
   label->setAlignment( Qt::AlignLeft );
 
   // row 1, string list editor:
-  SimpleStringListEditor::ButtonCode buttonCode =
-    static_cast<SimpleStringListEditor::ButtonCode>( SimpleStringListEditor::Add | SimpleStringListEditor::Remove | SimpleStringListEditor::Modify );
+  PimCommon::SimpleStringListEditor::ButtonCode buttonCode =
+    static_cast<PimCommon::SimpleStringListEditor::ButtonCode>( PimCommon::SimpleStringListEditor::Add | PimCommon::SimpleStringListEditor::Remove | PimCommon::SimpleStringListEditor::Modify );
   mReplyListEditor =
-    new SimpleStringListEditor( group, buttonCode,
+    new PimCommon::SimpleStringListEditor( group, buttonCode,
                                 i18n("A&dd..."), i18n("Re&move"),
                                 i18n("Mod&ify..."),
                                 i18n("Enter new reply prefix:") );
@@ -2695,7 +2695,7 @@ ComposerPageSubjectTab::ComposerPageSubjectTab( QWidget * parent )
 
   // row 1: string list editor
   mForwardListEditor =
-    new SimpleStringListEditor( group, buttonCode,
+    new PimCommon::SimpleStringListEditor( group, buttonCode,
                                 i18n("Add..."),
                                 i18n("Remo&ve"),
                                 i18n("Modify..."),
@@ -2771,7 +2771,7 @@ ComposerPageCharsetTab::ComposerPageCharsetTab( QWidget * parent )
   vlay->addWidget( label );
 
   mCharsetListEditor =
-    new SimpleStringListEditor( this, SimpleStringListEditor::All,
+    new PimCommon::SimpleStringListEditor( this, PimCommon::SimpleStringListEditor::All,
                                 i18n("A&dd..."), i18n("Remo&ve"),
                                 i18n("&Modify..."), i18n("Enter charset:") );
   connect( mCharsetListEditor, SIGNAL(changed()),
@@ -3191,10 +3191,10 @@ ComposerPageAttachmentsTab::ComposerPageAttachmentsTab( QWidget * parent )
 
   vlay->addWidget( label );
 
-  SimpleStringListEditor::ButtonCode buttonCode =
-    static_cast<SimpleStringListEditor::ButtonCode>( SimpleStringListEditor::Add | SimpleStringListEditor::Remove | SimpleStringListEditor::Modify );
+  PimCommon::SimpleStringListEditor::ButtonCode buttonCode =
+    static_cast<PimCommon::SimpleStringListEditor::ButtonCode>( PimCommon::SimpleStringListEditor::Add | PimCommon::SimpleStringListEditor::Remove | PimCommon::SimpleStringListEditor::Modify );
   mAttachWordsListEditor =
-    new SimpleStringListEditor( this, buttonCode,
+    new PimCommon::SimpleStringListEditor( this, buttonCode,
                                 i18n("A&dd..."), i18n("Re&move"),
                                 i18n("Mod&ify..."),
                                 i18n("Enter new key word:") );

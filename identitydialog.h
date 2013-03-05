@@ -35,7 +35,10 @@
 #include <kdialog.h>
 
 class QCheckBox;
-class SimpleStringListEditor;
+
+namespace PimCommon {
+  class SimpleStringListEditor;
+}
 
 class KComboBox;
 class KJob;
@@ -109,7 +112,7 @@ namespace KMail {
     KLineEdit                    *mNameEdit;
     KLineEdit                    *mOrganizationEdit;
     KLineEdit                    *mEmailEdit;
-    SimpleStringListEditor       *mAliasEdit;
+    PimCommon::SimpleStringListEditor       *mAliasEdit;
     // "cryptography" tab:
     QWidget                      *mCryptographyTab;
     Kleo::SigningKeyRequester    *mPGPSigningKeyRequester;

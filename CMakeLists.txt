@@ -73,7 +73,6 @@ if (NOT WINCE AND KDEPIM_BUILD_DESKTOP)
      configuredialoglistview.cpp
      configuredialog.cpp
      configuredialog_p.cpp
-     simplestringlisteditor.cpp
      identitylistview.cpp
      identitydialog.cpp
      globalsettings.cpp

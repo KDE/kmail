@@ -9,7 +9,6 @@ set(kcm_identities_srcs
   ../identitydialog.cpp
   ../identitylistview.cpp
   ../newidentitydialog.cpp
-  ../simplestringlisteditor.cpp
   ../identityeditvcarddialog.cpp
   ../identityaddvcarddialog.cpp
 )
@@ -38,6 +37,7 @@ target_link_libraries(kcm_kpimidentities
   messagecomposer
   messageviewer
   templateparser
+  pimcommon
   kleo
   kdepim
 )
