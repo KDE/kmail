@@ -1,5 +1,5 @@
 /*
-  Copyright (c) 2012 Montel Laurent <montel@kde.org>
+  Copyright (c) 2012-2013 Montel Laurent <montel@kde.org>
   
   This program is free software; you can redistribute it and/or modify it
   under the terms of the GNU General Public License, version 2, as
@@ -20,10 +20,10 @@
 #include <KABC/VCardConverter>
 #include <KLocale>
 #include <Akonadi/Contact/ContactEditor>
+#include <KDebug>
 
 #include <QHBoxLayout>
 #include <QFile>
-#include <QDebug>
 
 IdentityEditVcardDialog::IdentityEditVcardDialog(QWidget *parent)
   : KDialog(parent)
@@ -50,7 +50,7 @@ IdentityEditVcardDialog::~IdentityEditVcardDialog()
 
 void IdentityEditVcardDialog::loadVcard( const QString& vcardFileName)
 {
-  if(vcardFileName.isEmpty()) {
+  if (vcardFileName.isEmpty()) {
     return;
   }
   mVcardFileName = vcardFileName;
@@ -77,6 +77,8 @@ QString IdentityEditVcardDialog::saveVcard()
     file.write( data );
     file.flush();
     file.close();
+  } else {
+      kDebug()<<"We can not open file: "<<mVcardFileName;
   }
   return mVcardFileName;
 }
