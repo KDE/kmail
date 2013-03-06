@@ -65,6 +65,7 @@ using KPIM::RecentAddresses;
 #include "messageviewer/configurewidget.h"
 #include "messageviewer/globalsettings.h"
 #include "messageviewer/invitationsettings.h"
+#include "messageviewer/customheadersettingwidget.h"
 #include "messagelist/core/settings.h"
 #include "messagelist/messagelistutil.h"
 #include "messagecore/globalsettings.h"
@@ -1570,6 +1571,18 @@ AppearancePageReaderTab::AppearancePageReaderTab( QWidget * parent )
              this, SLOT(slotEmitChanged()) );
     vlay->addWidget( mViewerSettings );
 
+    box = new QGroupBox(i18n("Custom Headers"));
+    topLayout->addWidget(box);
+
+    mCustomHeaderSettings = new MessageViewer::CustomHeaderSettingWidget;
+    connect( mCustomHeaderSettings, SIGNAL (changed()), this, SLOT(slotEmitChanged()) );
+
+    vlay = new QVBoxLayout;
+    vlay->setSpacing( KDialog::spacingHint() );
+    vlay->setMargin( KDialog::marginHint() );
+    box->setLayout(vlay);
+    vlay->addWidget(mCustomHeaderSettings);
+
     vlay->addStretch( 100 ); // spacer
 }
 
@@ -1577,6 +1590,7 @@ void AppearancePage::ReaderTab::doLoadOther()
 {
   loadWidget( mCloseAfterReplyOrForwardCheck, GlobalSettings::self()->closeAfterReplyOrForwardItem() );
   mViewerSettings->readConfig();
+  mCustomHeaderSettings->readConfig();
 }
 
 
@@ -1584,6 +1598,7 @@ void AppearancePage::ReaderTab::save()
 {
   saveCheckBox( mCloseAfterReplyOrForwardCheck, GlobalSettings::self()->closeAfterReplyOrForwardItem() );
   mViewerSettings->writeConfig();
+  mCustomHeaderSettings->writeConfig();
 }
 
 QString AppearancePage::SystemTrayTab::helpAnchor() const

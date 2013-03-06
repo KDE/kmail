@@ -69,6 +69,7 @@ namespace MessageList {
 namespace MessageViewer {
   class ConfigureWidget;
   class InvitationSettings;
+  class CustomHeaderSettingWidget;
 }
 
 namespace TemplateParser {
@@ -365,6 +366,7 @@ private:
 private: // data
   QCheckBox *mCloseAfterReplyOrForwardCheck;
   MessageViewer::ConfigureWidget *mViewerSettings;
+  MessageViewer::CustomHeaderSettingWidget *mCustomHeaderSettings;
 };
 
 
