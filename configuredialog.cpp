@@ -1571,7 +1571,7 @@ AppearancePageReaderTab::AppearancePageReaderTab( QWidget * parent )
              this, SLOT(slotEmitChanged()) );
     vlay->addWidget( mViewerSettings );
 
-    box = new QGroupBox(i18n("Custom Headers"));
+    box = new QGroupBox(i18n("Custom Headers Style"));
     topLayout->addWidget(box);
 
     mCustomHeaderSettings = new MessageViewer::CustomHeaderSettingWidget;
