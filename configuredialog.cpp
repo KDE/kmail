@@ -1586,6 +1586,11 @@ AppearancePageReaderTab::AppearancePageReaderTab( QWidget * parent )
     vlay->addStretch( 100 ); // spacer
 }
 
+void AppearancePage::ReaderTab::doResetToDefaultsOther()
+{
+    mCustomHeaderSettings->resetToDefault();
+}
+
 void AppearancePage::ReaderTab::doLoadOther()
 {
   loadWidget( mCloseAfterReplyOrForwardCheck, GlobalSettings::self()->closeAfterReplyOrForwardItem() );

@@ -361,7 +361,7 @@ public:
 
 private:
   void doLoadOther();
-  //FIXME virtual void doResetToDefaultsOther();
+  void doResetToDefaultsOther();
 
 private: // data
   QCheckBox *mCloseAfterReplyOrForwardCheck;
