@@ -60,7 +60,7 @@ public:
   /** Set the header style and strategy. We only want them to be set
       together. */
   void setHeaderStyleAndStrategy( MessageViewer::HeaderStyle * style,
-                                  const MessageViewer::HeaderStrategy * strategy );
+                                  MessageViewer::HeaderStrategy * strategy );
   /** Getthe message header strategy. */
   const MessageViewer::HeaderStrategy * headerStrategy() const;
 

@@ -380,7 +380,7 @@ class KMAIL_EXPORT KMPrintCommand : public KMCommand
 public:
   KMPrintCommand( QWidget *parent, const Akonadi::Item &msg,
                   MessageViewer::HeaderStyle *headerStyle = 0,
-                  const MessageViewer::HeaderStrategy *headerStrategy = 0,
+                  MessageViewer::HeaderStrategy *headerStrategy = 0,
                   bool htmlOverride = false,
                   bool htmlLoadExtOverride = false,
                   bool useFixedFont = false,
@@ -394,7 +394,7 @@ private:
   virtual Result execute();
 
   MessageViewer::HeaderStyle *mHeaderStyle;
-  const MessageViewer::HeaderStrategy *mHeaderStrategy;
+  MessageViewer::HeaderStrategy *mHeaderStrategy;
   const MessageViewer::AttachmentStrategy *mAttachmentStrategy;
   QFont mOverrideFont;
   QString mEncoding;

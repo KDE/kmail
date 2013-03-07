@@ -245,7 +245,7 @@ void KMReaderWin::setAttachmentStrategy( const AttachmentStrategy * strategy ) {
 }
 
 void KMReaderWin::setHeaderStyleAndStrategy( HeaderStyle * style,
-                                             const HeaderStrategy * strategy ) {
+                                             HeaderStrategy * strategy ) {
   mViewer->setHeaderStyleAndStrategy( style, strategy );
 }
 //-----------------------------------------------------------------------------

@@ -1095,7 +1095,7 @@ KMCommand::Result KMRedirectCommand::execute()
 
 KMPrintCommand::KMPrintCommand( QWidget *parent, const Akonadi::Item &msg,
                                 MessageViewer::HeaderStyle *headerStyle,
-                                const MessageViewer::HeaderStrategy *headerStrategy,
+                                MessageViewer::HeaderStrategy *headerStrategy,
                                 bool htmlOverride, bool htmlLoadExtOverride,
                                 bool useFixedFont, const QString & encoding )
   : KMCommand( parent, msg ),
