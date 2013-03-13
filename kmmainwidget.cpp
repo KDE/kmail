@@ -3077,6 +3077,7 @@ void KMMainWidget::showMessagePopup(const Akonadi::Item&msg ,const KUrl&url,cons
     menu->addAction( mMsgActions->printAction() );
     menu->addAction( mSaveAsAction );
     menu->addAction( mSaveAttachmentsAction );
+    menu->addAction( mMsgView->saveMessageDisplayFormatAction() );
 
     menu->addSeparator();
     if ( parentCol.isValid() && CommonKernel->folderIsTrash(parentCol) ) {

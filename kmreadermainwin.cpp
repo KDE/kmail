@@ -557,6 +557,7 @@ void KMReaderMainWin::showMessagePopup(const Akonadi::Item&msg ,const KUrl&url,c
       if ( msg.isValid() ) {
         menu->addSeparator();
         menu->addAction( mMsgActions->createTodoAction() );
+        menu->addAction( mReaderWin->saveMessageDisplayFormatAction() );
       }
     } else {
       menu->addAction( mReaderWin->toggleFixFontAction() );

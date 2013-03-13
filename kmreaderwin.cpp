@@ -782,6 +782,12 @@ void KMReaderWin::contactStored( const Akonadi::Item &item )
   KPIM::BroadcastStatus::instance()->setStatusMsg( i18n( "Contact modified successfully" ) );
 }
 
+KAction *KMReaderWin::saveMessageDisplayFormatAction()
+{
+    return mViewer->saveMessageDisplayFormatAction();
+}
+
+
 #include "kmreaderwin.moc"
 
 
