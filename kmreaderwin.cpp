@@ -787,6 +787,10 @@ KAction *KMReaderWin::saveMessageDisplayFormatAction()
     return mViewer->saveMessageDisplayFormatAction();
 }
 
+KAction *KMReaderWin::resetMessageDisplayFormatAction()
+{
+    return mViewer->resetMessageDisplayFormatAction();
+}
 
 #include "kmreaderwin.moc"
 
