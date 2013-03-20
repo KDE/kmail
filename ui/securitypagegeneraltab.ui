@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>734</width>
-    <height>425</height>
+    <height>551</height>
    </rect>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout_2">
@@ -199,6 +199,29 @@
     </widget>
    </item>
    <item>
+    <widget class="QGroupBox" name="groupBox_3">
+     <property name="title">
+      <string>E-mails Scams</string>
+     </property>
+     <layout class="QVBoxLayout" name="verticalLayout_5">
+      <item>
+       <widget class="QLabel" name="label">
+        <property name="text">
+         <string>KMail can analyse messages for suspected email scams by looking for common techniques used to deceive you</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QCheckBox" name="mScamDetection">
+        <property name="text">
+         <string>Informs if message reading is a suspected email scam</string>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </widget>
+   </item>
+   <item>
     <spacer name="verticalSpacer">
      <property name="orientation">
       <enum>Qt::Vertical</enum>
@@ -206,7 +229,7 @@
      <property name="sizeHint" stdset="0">
       <size>
        <width>20</width>
-       <height>26</height>
+       <height>40</height>
       </size>
      </property>
     </spacer>

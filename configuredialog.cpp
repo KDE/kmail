@@ -3421,6 +3421,9 @@ SecurityPageGeneralTab::SecurityPageGeneralTab( QWidget * parent )
 
   connect( mSGTab.mAutomaticallyImportAttachedKeysCheck, SIGNAL(toggled(bool)),
            SLOT(slotEmitChanged()) );
+
+  connect( mSGTab.mScamDetection, SIGNAL(toggled(bool)),
+           SLOT(slotEmitChanged()) );
 }
 
 void SecurityPageGeneralTab::slotLinkClicked( const QString & link )
@@ -3449,12 +3452,12 @@ void SecurityPage::GeneralTab::doLoadOther()
   if ( num < 0 || num >= mOrigQuoteGroup->buttons().count() ) num = 0;
   mOrigQuoteGroup->button(num)->setChecked(true);
   mSGTab.mNoMDNsWhenEncryptedCheck->setChecked( MessageViewer::GlobalSettings::self()->notSendWhenEncrypted() );
+
+  mSGTab.mScamDetection->setChecked( MessageViewer::GlobalSettings::self()->scamDetectionEnabled());
 }
 
 void SecurityPage::GeneralTab::save()
 {
-  //KConfigGroup reader( KMKernel::self()->config(), "Reader" );
-
   if ( MessageViewer::GlobalSettings::self()->htmlMail() != mSGTab.mHtmlMailCheck->isChecked())
   {
     if (KMessageBox::warningContinueCancel(this, i18n("Changing the global "
@@ -3475,6 +3478,7 @@ void SecurityPage::GeneralTab::save()
   MessageViewer::GlobalSettings::self()->setQuoteMessage( mOrigQuoteGroup->checkedId() );
   MessageViewer::GlobalSettings::self()->setNotSendWhenEncrypted( mSGTab.mNoMDNsWhenEncryptedCheck->isChecked() );
   MessageViewer::GlobalSettings::self()->setAlwaysDecrypt( mSGTab.mAlwaysDecrypt->isChecked() );
+  MessageViewer::GlobalSettings::self()->setScamDetectionEnabled( mSGTab.mScamDetection->isChecked() );
 }
 
 
