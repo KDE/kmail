@@ -4095,8 +4095,8 @@ void KMMainWidget::updateMessageActionsDelayed()
     actionList << mSendAgainAction;
   } else if ( single_actions ) {
     actionList << messageActions()->editAction();
-    actionList << mSaveAttachmentsAction;
   }
+  actionList << mSaveAttachmentsAction;
   mGUIClient->unplugActionList( QLatin1String( "messagelist_actionlist" ) );
   mGUIClient->plugActionList( QLatin1String( "messagelist_actionlist" ), actionList );
   mSendAgainAction->setEnabled( statusSendAgain );
