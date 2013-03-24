@@ -133,7 +133,7 @@
 #include <kmime/kmime_message.h>
 #include <ksieveui/managesievescriptsdialog.h>
 #include <ksieveui/util.h>
-#include <ksieveui/vacation.h>
+#include <ksieveui/vacation/vacation.h>
 
 // KDELIBS includes
 #include <kaboutdata.h>
