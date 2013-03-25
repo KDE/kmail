@@ -3394,6 +3394,7 @@ void KMComposeWin::slotSaveAsFile()
 {
     QPointer<KFileDialog> dlg = new KFileDialog(KUrl(),QString(),this);
     dlg->setOperationMode(KFileDialog::Saving);
+    dlg->setConfirmOverwrite(true);
     if(mComposerBase->editor()->textMode() == KMeditor::Rich ) {
       dlg->setFilter( QString::fromLatin1("text/html text/plain") );
     } else {
