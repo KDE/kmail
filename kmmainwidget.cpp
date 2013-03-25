@@ -1464,8 +1464,11 @@ void KMMainWidget::slotManageSieveScripts()
   if ( !kmkernel->askToGoOnline() ) {
     return;
   }
-  KSieveUi::ManageSieveScriptsDialog * dlg = new KSieveUi::ManageSieveScriptsDialog( this );
-  dlg->show();
+  if (mManageSieveDialog)
+      return;
+
+  mManageSieveDialog = new KSieveUi::ManageSieveScriptsDialog( this );
+  mManageSieveDialog->show();
 }
 
 

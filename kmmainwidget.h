@@ -71,6 +71,7 @@ namespace KMail {
 namespace KSieveUi {
   class SieveDebugDialog;
   class Vacation;
+  class ManageSieveScriptsDialog;
 }
 
 namespace MailCommon {
@@ -628,6 +629,7 @@ private:
     MailCommon::FolderSelectionDialog* mSelectFromAllFoldersDialog;
     KAction *mServerSideSubscription;
     KRecentFilesAction *mOpenRecentAction;
+    QPointer<KSieveUi::ManageSieveScriptsDialog> mManageSieveDialog;
 };
 
 #endif
