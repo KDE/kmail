@@ -980,6 +980,7 @@ static const struct {
   { "ColorbarBackgroundHTML",  I18N_NOOP("HTML Status Bar Background - HTML Message") },
   { "ColorbarForegroundHTML",  I18N_NOOP("HTML Status Bar Foreground - HTML Message") },
   { "BrokenAccountColor",  I18N_NOOP("Broken Account - Folder Text Color") },
+  { "BackgroundColor",  I18N_NOOP("Background Color") },
 };
 static const int numColorNames = sizeof colorNames / sizeof *colorNames;
 
@@ -1078,7 +1079,8 @@ void AppearancePage::ColorsTab::loadColor( bool loadFromConfig )
     Qt::black,     // colorbar plain fg
     Qt::black,     // colorbar html  bg
     Qt::white,     // colorbar html  fg
-    scheme.foreground(KColorScheme::NegativeText).color()  //Broken Account Color
+    scheme.foreground(KColorScheme::NegativeText).color(),  //Broken Account Color
+    scheme.background().color() // reader background color
   };
 
   for ( int i = 0 ; i < numColorNames ; i++ ) {
@@ -1088,12 +1090,11 @@ void AppearancePage::ColorsTab::loadColor( bool loadFromConfig )
            configName == QLatin1String( "ImportantMessageColor" ) ||
            configName == QLatin1String( "TodoMessageColor" ) ) {
         mColorList->setColorSilently( i, messageListView.readEntry( configName, defaultColor[i] ) );
-      }
-      else if( configName == QLatin1String("BrokenAccountColor")) {
+      } else if( configName == QLatin1String("BrokenAccountColor")) {
         mColorList->setColorSilently( i, collectionFolderView.readEntry(configName,defaultColor[i]));
-      }
-      else
+      } else {
         mColorList->setColorSilently( i, reader.readEntry( configName, defaultColor[i] ) );
+      }
     } else {
       mColorList->setColorSilently( i, defaultColor[i] );
     }
@@ -1116,6 +1117,8 @@ void AppearancePage::ColorsTab::save()
   bool customColors = mCustomColorCheck->isChecked();
   MessageCore::GlobalSettings::self()->setUseDefaultColors( !customColors );
 
+  KColorScheme scheme( QPalette::Active, KColorScheme::View );
+
   for ( int i = 0 ; i < numColorNames ; i++ ) {
     // Don't write color info when we use default colors, but write
     // if it's already there:
@@ -1129,6 +1132,9 @@ void AppearancePage::ColorsTab::save()
     } else if( configName == QLatin1String("BrokenAccountColor")) {
         if ( customColors || collectionFolderView.hasKey( configName ) )
             collectionFolderView.writeEntry(configName,mColorList->color(i));
+    } else if (configName == QLatin1String("BackgroundColor")) {
+        if (customColors && (mColorList->color(i) != scheme.background().color() ))
+            reader.writeEntry(configName, mColorList->color(i));
     } else {
       if ( customColors || reader.hasKey( configName ) )
         reader.writeEntry( configName, mColorList->color(i) );
