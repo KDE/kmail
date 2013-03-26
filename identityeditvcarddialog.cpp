@@ -67,7 +67,7 @@ void IdentityEditVcardDialog::loadVcard( const QString& vcardFileName)
   }
 }
 
-QString IdentityEditVcardDialog::saveVcard()
+QString IdentityEditVcardDialog::saveVcard() const
 {
   const KABC::Addressee addr = mContactEditor->contact();
   KABC::VCardConverter converter;

@@ -39,7 +39,7 @@ public:
    * @brief saveVcard
    * @return The file path for current vcard.
    */
-  QString saveVcard();
+  QString saveVcard() const;
 private:
   QString mVcardFileName;
   Akonadi::ContactEditor *mContactEditor;
