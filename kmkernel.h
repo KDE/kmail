@@ -175,7 +175,7 @@ public Q_SLOTS:
    * @param attachmentPaths A list of files that will be attached to the message.
    * @param customHeaders A list of custom headers.
    */
-  Q_SCRIPTABLE int openComposer( const QString & to,
+  Q_SCRIPTABLE int openComposer(const QString & to,
                                  const QString & cc,
                                  const QString & bcc,
                                  const QString & subject,
@@ -183,7 +183,7 @@ public Q_SLOTS:
                                  bool hidden,
                                  const QString & messageFile,
                                  const QStringList & attachmentPaths,
-                                 const QStringList & customHeaders );
+                                const QStringList & customHeaders , const QString &inReplyTo = QString());
 
   /**
    * Opens a composer window and prefills it with different
@@ -328,10 +328,10 @@ public:
   bool doSessionManagement();
   bool firstInstance() const { return the_firstInstance; }
   void setFirstInstance(bool value) { the_firstInstance = value; }
-  void action( bool mailto, bool check, const QString &to, const QString &cc,
+  void action(bool mailto, bool check, const QString &to, const QString &cc,
                const QString &bcc, const QString &subj, const QString &body,
                const KUrl &messageFile, const KUrl::List &attach,
-               const QStringList &customHeaders );
+               const QStringList &customHeaders , const QString &inReplyTo);
 
   bool isImapFolder(const Akonadi::Collection& , bool &isOnline) const;
 
