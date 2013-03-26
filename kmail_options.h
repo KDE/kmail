@@ -26,7 +26,6 @@ static KCmdLineOptions kmail_options ()
   options.add("+[address|URL]",		ki18n( "Send message to 'address' or "
                                          "attach the file the 'URL' points "
                                          "to" ) );
-  //options.add("+[file]",                  ki18n("Show message from 'file'"));
   return options;
 }
 
