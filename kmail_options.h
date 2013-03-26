@@ -15,6 +15,7 @@ static KCmdLineOptions kmail_options ()
   options.add("b");
   options.add("bcc <address>",		ki18n("Send BCC: to 'address'"));
   options.add("h");
+  options.add("replyTo <address>",		ki18n("Set replyTo to 'address'"));
   options.add("header <header_name:header_value>",	ki18n("Add 'header' to message. This can be repeated"));
   options.add("msg <file>",		ki18n("Read message body from 'file'"));
   options.add("body <text>",		ki18n("Set body of message"));

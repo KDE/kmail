@@ -357,7 +357,7 @@ static KUrl makeAbsoluteUrl( const QString& str )
 
 bool KMKernel::handleCommandLine( bool noArgsOpensReader )
 {
-  QString to, cc, bcc, subj, body, inReplyTo;
+  QString to, cc, bcc, subj, body, inReplyTo, replyTo;
   QStringList customHeaders;
   KUrl messageFile;
   KUrl::List attachURLs;
@@ -397,6 +397,13 @@ bool KMKernel::handleCommandLine( bool noArgsOpensReader )
      mailto = true;
      bcc = args->getOption("bcc");
   }
+
+  if (args->isSet("replyTo"))
+  {
+     mailto = true;
+     replyTo = args->getOption("replyTo");
+  }
+
 
   if (args->isSet("msg"))
   {
@@ -491,7 +498,7 @@ bool KMKernel::handleCommandLine( bool noArgsOpensReader )
     viewMessage( messageFile.url() );
   else
     action( mailto, checkMail, to, cc, bcc, subj, body, messageFile,
-            attachURLs, customHeaders, inReplyTo );
+            attachURLs, customHeaders, replyTo );
   return true;
 }
 
@@ -595,7 +602,7 @@ int KMKernel::openComposer( const QString &to, const QString &cc,
                             const QString &messageFile,
                             const QStringList &attachmentPaths,
                             const QStringList &customHeaders,
-                            const QString &inReplyTo)
+                            const QString &replyTo)
 {
   kDebug();
   KMail::Composer::TemplateContext context = KMail::Composer::New;
@@ -651,8 +658,8 @@ int KMKernel::openComposer( const QString &to, const QString &cc,
     }
     cWin->addAttachment( (*it), "" );
   }
-  if (!inReplyTo.isEmpty()) {
-      cWin->setCurrentReplyTo(inReplyTo);
+  if (!replyTo.isEmpty()) {
+      cWin->setCurrentReplyTo(replyTo);
   }
 
   if (!customHeaders.isEmpty()) {
@@ -1373,12 +1380,12 @@ void KMKernel::action( bool mailto, bool check, const QString &to,
                        const KUrl &messageFile,
                        const KUrl::List &attachURLs,
                        const QStringList &customHeaders,
-                       const QString &inReplyTo)
+                       const QString &replyTo)
 {
   if ( mailto ) {
     openComposer( to, cc, bcc, subj, body, 0,
                   messageFile.pathOrUrl(), attachURLs.toStringList(),
-                  customHeaders, inReplyTo );
+                  customHeaders, replyTo );
   }
   else
     openReader( check );

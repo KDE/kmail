@@ -183,7 +183,7 @@ public Q_SLOTS:
                                  bool hidden,
                                  const QString & messageFile,
                                  const QStringList & attachmentPaths,
-                                const QStringList & customHeaders , const QString &inReplyTo = QString());
+                                const QStringList & customHeaders , const QString &replyTo = QString());
 
   /**
    * Opens a composer window and prefills it with different
@@ -331,7 +331,7 @@ public:
   void action(bool mailto, bool check, const QString &to, const QString &cc,
                const QString &bcc, const QString &subj, const QString &body,
                const KUrl &messageFile, const KUrl::List &attach,
-               const QStringList &customHeaders , const QString &inReplyTo);
+               const QStringList &customHeaders , const QString &replyTo);
 
   bool isImapFolder(const Akonadi::Collection& , bool &isOnline) const;
 
