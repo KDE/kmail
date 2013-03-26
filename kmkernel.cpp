@@ -465,8 +465,9 @@ bool KMKernel::handleCommandLine( bool noArgsOpensReader )
           subj = values.value( "subject" );
         if ( !values.value( "body" ).isEmpty() )
           body = values.value( "body" );
-        if ( !values.value( "in-reply-to" ).isEmpty() )
+        if ( !values.value( "in-reply-to" ).isEmpty() ) {
           inReplyTo = values.value( "in-reply-to" );
+        }
         const QString attach = values.value( "attachment" );
         if ( !attach.isEmpty() ) {
             attachURLs << makeAbsoluteUrl( attach );
@@ -498,7 +499,7 @@ bool KMKernel::handleCommandLine( bool noArgsOpensReader )
     viewMessage( messageFile.url() );
   else
     action( mailto, checkMail, to, cc, bcc, subj, body, messageFile,
-            attachURLs, customHeaders, replyTo );
+            attachURLs, customHeaders, replyTo, inReplyTo );
   return true;
 }
 
@@ -596,13 +597,13 @@ void KMKernel::openReader( bool onlyCheck )
   }
 }
 
-int KMKernel::openComposer( const QString &to, const QString &cc,
+int KMKernel::openComposer(const QString &to, const QString &cc,
                             const QString &bcc, const QString &subject,
                             const QString &body, bool hidden,
                             const QString &messageFile,
                             const QStringList &attachmentPaths,
                             const QStringList &customHeaders,
-                            const QString &replyTo)
+                            const QString &replyTo, const QString &inReplyTo)
 {
   kDebug();
   KMail::Composer::TemplateContext context = KMail::Composer::New;
@@ -643,6 +644,11 @@ int KMKernel::openComposer( const QString &to, const QString &cc,
     TemplateParser::TemplateParser parser( msg, TemplateParser::TemplateParser::NewMessage );
     parser.setIdentityManager( KMKernel::self()->identityManager() );
     parser.process( KMime::Message::Ptr() );
+  }
+
+  if (!inReplyTo.isEmpty()) {
+      KMime::Headers::InReplyTo *header = new KMime::Headers::InReplyTo( msg.get(), inReplyTo.toUtf8(), "utf-8" );
+      msg->setHeader( header );
   }
 
   msg->assemble();
@@ -1380,12 +1386,13 @@ void KMKernel::action( bool mailto, bool check, const QString &to,
                        const KUrl &messageFile,
                        const KUrl::List &attachURLs,
                        const QStringList &customHeaders,
-                       const QString &replyTo)
+                       const QString &replyTo,
+                       const QString &inReplyTo)
 {
   if ( mailto ) {
     openComposer( to, cc, bcc, subj, body, 0,
                   messageFile.pathOrUrl(), attachURLs.toStringList(),
-                  customHeaders, replyTo );
+                  customHeaders, replyTo, inReplyTo );
   }
   else
     openReader( check );
