@@ -15,7 +15,7 @@ static KCmdLineOptions kmail_options ()
   options.add("b");
   options.add("bcc <address>",		ki18n("Send BCC: to 'address'"));
   options.add("h");
-  options.add("header <header>",	ki18n("Add 'header' to message"));
+  options.add("header <header_name:header_value>",	ki18n("Add 'header' to message"));
   options.add("msg <file>",		ki18n("Read message body from 'file'"));
   options.add("body <text>",		ki18n("Set body of message"));
   options.add("attach <url>",		ki18n("Add an attachment to the mail. This can be repeated"));
