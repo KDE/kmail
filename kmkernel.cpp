@@ -660,7 +660,7 @@ int KMKernel::openComposer( const QString &to, const QString &cc,
       QStringList::ConstIterator end = customHeaders.constEnd();
       for ( QStringList::ConstIterator it = customHeaders.constBegin() ; it != end ; ++it ) {
           if ( !(*it).isEmpty() ) {
-              const int pos = (*it).indexOf( ':' );
+              const int pos = (*it).indexOf( QLatin1Char(':') );
               if ( pos > 0 ) {
                   const QString header = (*it).left( pos ).trimmed();
                   const QString value = (*it).mid( pos+1 ).trimmed();
