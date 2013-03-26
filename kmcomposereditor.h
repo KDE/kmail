@@ -49,7 +49,7 @@ class KMComposerEditor : public Message::KMeditor
      * - tools_quote
      * - tools_unquote
      */
-    virtual void createActions( KActionCollection *actionCollection );
+    void createActions( KActionCollection *actionCollection );
 
     /**
      * This replaces all characters not known to the specified codec with
@@ -60,12 +60,12 @@ class KMComposerEditor : public Message::KMeditor
     /**
      * Reimplemented from KMEditor.
      */
-    virtual QString smartQuote( const QString & msg );
+    QString smartQuote( const QString & msg );
 
     /**
      * Reimplemented from KMEditor.
      */
-    virtual void setHighlighterColors(KPIMTextEdit::EMailQuoteHighlighter * highlighter);
+    void setHighlighterColors(KPIMTextEdit::EMailQuoteHighlighter * highlighter);
 
   private:
 
@@ -73,8 +73,8 @@ class KMComposerEditor : public Message::KMeditor
 
 protected:
 
-  virtual bool canInsertFromMimeData( const QMimeData *source ) const;
-  virtual void insertFromMimeData( const QMimeData *source );
+  bool canInsertFromMimeData( const QMimeData *source ) const;
+  void insertFromMimeData( const QMimeData *source );
 
 signals:
   void insertSnippet();
