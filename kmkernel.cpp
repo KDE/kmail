@@ -638,26 +638,6 @@ int KMKernel::openComposer( const QString &to, const QString &cc,
     parser.process( KMime::Message::Ptr() );
   }
 
-  if ( !customHeaders.isEmpty() )
-  {
-    QStringList::ConstIterator end = customHeaders.constEnd();
-    for ( QStringList::ConstIterator it = customHeaders.constBegin() ; it != end ; ++it )
-      if ( !(*it).isEmpty() )
-      {
-        const int pos = (*it).indexOf( ':' );
-        if ( pos > 0 )
-        {
-          const QString header = (*it).left( pos ).trimmed();
-          const QString value = (*it).mid( pos+1 ).trimmed();
-          if ( !header.isEmpty() && !value.isEmpty() ) {
-
-            KMime::Headers::Generic *h = new KMime::Headers::Generic( header.toUtf8(), msg.get(), value.toUtf8() );
-            msg->setHeader( h );
-          }
-        }
-      }
-  }
-
   msg->assemble();
   KMail::Composer * cWin = KMail::makeComposer( msg, false, false, context );
   if (!to.isEmpty())
@@ -673,6 +653,25 @@ int KMKernel::openComposer( const QString &to, const QString &cc,
   }
   if (!inReplyTo.isEmpty()) {
       cWin->setCurrentReplyTo(inReplyTo);
+  }
+
+  if (!customHeaders.isEmpty()) {
+      QMap<QByteArray, QString> extraCustomHeaders;
+      QStringList::ConstIterator end = customHeaders.constEnd();
+      for ( QStringList::ConstIterator it = customHeaders.constBegin() ; it != end ; ++it ) {
+          if ( !(*it).isEmpty() ) {
+              const int pos = (*it).indexOf( ':' );
+              if ( pos > 0 ) {
+                  const QString header = (*it).left( pos ).trimmed();
+                  const QString value = (*it).mid( pos+1 ).trimmed();
+                  if ( !header.isEmpty() && !value.isEmpty() ) {
+                      extraCustomHeaders.insert(header.toUtf8(), value.toUtf8());
+                  }
+              }
+          }
+      }
+      if (!extraCustomHeaders.isEmpty())
+          cWin->addExtraCustomHeaders(extraCustomHeaders);
   }
   if ( !hidden ) {
     cWin->show();

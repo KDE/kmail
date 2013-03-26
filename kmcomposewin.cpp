@@ -2775,6 +2775,13 @@ void KMComposeWin::doDelayedSend( MessageSender::SendMethod method, MessageSende
     customMimeHeader.readConfig();
     customHeader.insert(customMimeHeader.custHeaderName().toLatin1(), customMimeHeader.custHeaderValue() );
   }
+
+  QMapIterator<QByteArray, QString> extraCustomHeader(mExtraHeaders);
+  while (extraCustomHeader.hasNext()) {
+     extraCustomHeader.next();
+     customHeader.insert(extraCustomHeader.key(), extraCustomHeader.value() );
+  }
+
   mComposerBase->setCustomHeader( customHeader );
   mComposerBase->send( method, saveIn );
 }
@@ -3448,3 +3455,8 @@ void KMComposeWin::slotVerifyMissingAttachmentTimeout()
   }
 }
 
+
+void KMComposeWin::addExtraCustomHeaders( const QMap<QByteArray, QString> &headers)
+{
+    mExtraHeaders = headers;
+}

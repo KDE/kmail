@@ -81,6 +81,7 @@ class Composer : public KMail::SecondaryWindow
     virtual void setCurrentTransport( int transportId ) = 0;
 
     virtual void setCurrentReplyTo(const QString& replyTo) = 0; 
+
     virtual void setFcc( const QString &idString ) = 0;
     /**
      * Returns @c true while the message composing is in progress.
@@ -99,6 +100,8 @@ class Composer : public KMail::SecondaryWindow
 
     virtual void setAutoSaveFileName( const QString &fileName ) = 0;
     virtual void setCollectionForNewMessage( const Akonadi::Collection& folder ) = 0;
+
+    virtual void addExtraCustomHeaders( const QMap<QByteArray, QString> &header) = 0;
 
   public: // kmcommand
     /**

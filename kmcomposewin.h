@@ -232,6 +232,8 @@ class KMComposeWin : public KMail::Composer
      void setCurrentReplyTo(const QString&);
      void setCollectionForNewMessage( const Akonadi::Collection& folder);
 
+     void addExtraCustomHeaders( const QMap<QByteArray, QString> &header);
+
   private:
   /**
    * Write settings to app's config file.
@@ -666,6 +668,7 @@ class KMComposeWin : public KMail::Composer
     bool mIgnoreStickyFields;
     bool mWasModified;
     Akonadi::Collection mCollectionForNewMessage;
+    QMap<QByteArray, QString> mExtraHeaders;
 };
 
 #endif
