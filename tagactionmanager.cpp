@@ -21,7 +21,7 @@
 
 #include "messageactions.h"
 
-#include "mailcommon/addtagdialog.h"
+#include "mailcommon/tag/addtagdialog.h"
 
 #include <Nepomuk2/Tag>
 #include <Nepomuk2/ResourceManager>
