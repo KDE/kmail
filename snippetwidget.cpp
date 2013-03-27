@@ -18,7 +18,7 @@
 #include <kactioncollection.h>
 #include <klocale.h>
 #include <kmenu.h>
-#include <mailcommon/snippetsmanager.h>
+#include <mailcommon/snippets/snippetsmanager.h>
 
 #include <QContextMenuEvent>
 #include <QHeaderView>
