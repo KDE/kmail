@@ -56,7 +56,7 @@
 #include "archivemailagentinterface.h"
 #include "createnewcontactjob.h"
 
-#include "pimcommon/collectionaclpage.h"
+#include "pimcommon/acl/collectionaclpage.h"
 #include "mailcommon/collectiongeneralpage.h"
 #include "mailcommon/collectionexpirypage.h"
 #include "mailcommon/expirecollectionattribute.h"
