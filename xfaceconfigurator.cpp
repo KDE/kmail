@@ -45,7 +45,7 @@
 #include <kpimidentities/identitymanager.h>
 #include <ktextedit.h>
 #include <kurl.h>
-#include <messageviewer/kxface.h>
+#include <messageviewer/header/kxface.h>
 
 #include <QCheckBox>
 #include <QHBoxLayout>

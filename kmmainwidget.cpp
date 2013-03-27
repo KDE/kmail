@@ -42,7 +42,7 @@
 #include "foldershortcutactionmanager.h"
 #include "collectionpane.h"
 #if !defined(NDEBUG)
-    #include <ksieveui/sievedebugdialog.h>
+    #include <ksieveui/debug/sievedebugdialog.h>
     using KSieveUi::SieveDebugDialog;
 #endif
 
