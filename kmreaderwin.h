@@ -163,6 +163,9 @@ public:
   bool printSelectedText(bool preview);
 
   void setContactItem(const Akonadi::Item& contact);
+
+  void setXmlGuiClient( KXMLGUIClient *guiClient );
+
 signals:
   /** Emitted after parsing of a message to have it stored
       in unencrypted state in it's folder. */

@@ -114,7 +114,7 @@ void KMReaderMainWin::initKMReaderMainWin()
     menuBar()->hide();
     toolBar( "mainToolBar" )->hide();
   }
-
+  mReaderWin->setXmlGuiClient(this);
   connect( kmkernel, SIGNAL(configChanged()),
            this, SLOT(slotConfigChanged()) );
   connect( mReaderWin, SIGNAL(showStatusBarMessage(QString)),

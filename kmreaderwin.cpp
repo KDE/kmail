@@ -792,6 +792,12 @@ KAction *KMReaderWin::resetMessageDisplayFormatAction()
     return mViewer->resetMessageDisplayFormatAction();
 }
 
+void KMReaderWin::setXmlGuiClient( KXMLGUIClient *guiClient )
+{
+    mViewer->setXmlGuiClient(guiClient);
+}
+
+
 #include "kmreaderwin.moc"
 
 
