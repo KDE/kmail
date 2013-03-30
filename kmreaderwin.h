@@ -48,7 +48,7 @@ class KMReaderWin: public QWidget {
   Q_OBJECT
 
 public:
-  explicit KMReaderWin( QWidget *parent, QWidget *mainWindow,
+  explicit KMReaderWin( KXMLGUIClient *guiClient, QWidget *parent, QWidget *mainWindow,
                KActionCollection *actionCollection, Qt::WindowFlags f = 0 );
   virtual ~KMReaderWin();
 

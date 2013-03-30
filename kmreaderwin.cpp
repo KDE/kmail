@@ -93,7 +93,7 @@ using namespace KMail;
 using namespace MailCommon;
 
 //-----------------------------------------------------------------------------
-KMReaderWin::KMReaderWin(QWidget *aParent,
+KMReaderWin::KMReaderWin(KXMLGUIClient *guiClient, QWidget *aParent,
                          QWidget *mainWindow,
                          KActionCollection* actionCollection,
                          Qt::WindowFlags aFlags )
@@ -111,7 +111,7 @@ KMReaderWin::KMReaderWin(QWidget *aParent,
   createActions();
   QVBoxLayout * vlay = new QVBoxLayout( this );
   vlay->setMargin( 0 );
-  mViewer = new Viewer( this, mainWindow, mActionCollection );
+  mViewer = new Viewer( mActionCollection, guiClient, this, mainWindow );
   mViewer->setExternalWindow( true );
   mViewer->setAppName( "KMail" );
   connect( mViewer, SIGNAL(urlClicked(Akonadi::Item,KUrl)),

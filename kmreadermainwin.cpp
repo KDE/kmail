@@ -73,7 +73,7 @@ KMReaderMainWin::KMReaderMainWin( bool htmlOverride, bool htmlLoadExtOverride,
                                   char *name )
   : KMail::SecondaryWindow( name ? name : "readerwindow#" )
 {
-  mReaderWin = new KMReaderWin( this, this, actionCollection() );
+  mReaderWin = new KMReaderWin( this, this, this, actionCollection());
   //mReaderWin->setShowCompleteMessage( true );
   mReaderWin->setHtmlOverride( htmlOverride );
   mReaderWin->setHtmlLoadExtOverride( htmlLoadExtOverride );
@@ -86,7 +86,7 @@ KMReaderMainWin::KMReaderMainWin( bool htmlOverride, bool htmlLoadExtOverride,
 KMReaderMainWin::KMReaderMainWin( char *name )
   : KMail::SecondaryWindow( name ? name : "readerwindow#" )
 {
-  mReaderWin = new KMReaderWin( this, this, actionCollection() );
+  mReaderWin = new KMReaderWin( this, this, this, actionCollection());
   initKMReaderMainWin();
 }
 
@@ -95,7 +95,7 @@ KMReaderMainWin::KMReaderMainWin( char *name )
 KMReaderMainWin::KMReaderMainWin(KMime::Content* aMsgPart, bool aHTML, const QString & encoding, char *name )
   : KMail::SecondaryWindow( name ? name : "readerwindow#" )
 {
-  mReaderWin = new KMReaderWin( this, this, actionCollection() );
+  mReaderWin = new KMReaderWin( this, this, this, actionCollection() );
   mReaderWin->setOverrideEncoding( encoding );
   mReaderWin->setHtmlOverride( aHTML );
   mReaderWin->setMsgPart( aMsgPart );
@@ -114,7 +114,6 @@ void KMReaderMainWin::initKMReaderMainWin()
     menuBar()->hide();
     toolBar( "mainToolBar" )->hide();
   }
-  mReaderWin->setXmlGuiClient(this);
   connect( kmkernel, SIGNAL(configChanged()),
            this, SLOT(slotConfigChanged()) );
   connect( mReaderWin, SIGNAL(showStatusBarMessage(QString)),
