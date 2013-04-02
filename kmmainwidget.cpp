@@ -1114,7 +1114,7 @@ void KMMainWidget::createWidgets()
   // Create the reader window
   //
   if ( mReaderWindowActive ) {
-    mMsgView = new KMReaderWin(  mGUIClient, this, this, actionCollection(), 0 );
+    mMsgView = new KMReaderWin( this, this, actionCollection(), 0 );
     if ( mMsgActions ) {
       mMsgActions->setMessageView( mMsgView );
     }

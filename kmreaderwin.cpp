@@ -93,7 +93,7 @@ using namespace KMail;
 using namespace MailCommon;
 
 //-----------------------------------------------------------------------------
-KMReaderWin::KMReaderWin(KXMLGUIClient *guiClient, QWidget *aParent,
+KMReaderWin::KMReaderWin(QWidget *aParent,
                          QWidget *mainWindow,
                          KActionCollection* actionCollection,
                          Qt::WindowFlags aFlags )
@@ -111,7 +111,7 @@ KMReaderWin::KMReaderWin(KXMLGUIClient *guiClient, QWidget *aParent,
   createActions();
   QVBoxLayout * vlay = new QVBoxLayout( this );
   vlay->setMargin( 0 );
-  mViewer = new Viewer( mActionCollection, guiClient, this, mainWindow );
+  mViewer = new Viewer( this, mainWindow, mActionCollection );
   mViewer->setExternalWindow( true );
   mViewer->setAppName( "KMail" );
   connect( mViewer, SIGNAL(urlClicked(Akonadi::Item,KUrl)),
@@ -791,12 +791,6 @@ KAction *KMReaderWin::resetMessageDisplayFormatAction()
 {
     return mViewer->resetMessageDisplayFormatAction();
 }
-
-void KMReaderWin::setXmlGuiClient( KXMLGUIClient *guiClient )
-{
-    mViewer->setXmlGuiClient(guiClient);
-}
-
 
 #include "kmreaderwin.moc"
 
