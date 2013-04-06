@@ -628,7 +628,7 @@ void KMMainWidget::folderSelected( const Akonadi::Collection & col )
             showOfflinePage();
         else
             showResourceOfflinePage();
-	updateFolderMenu();
+        updateFolderMenu();
         return;
     }
   }
@@ -4682,7 +4682,7 @@ void KMMainWidget::showCollectionProperties( const QString &pageToShow )
     const Akonadi::AgentInstance agentInstance = Akonadi::AgentManager::self()->instance( mCurrentFolder->collection().resource() );
     bool isOnline = agentInstance.isOnline();
     if (!isOnline) {
-	  showCollectionPropertiesContinued( pageToShow, QPointer<KPIM::ProgressItem>() );
+          showCollectionPropertiesContinued( pageToShow, QPointer<KPIM::ProgressItem>() );
     } else {
       QPointer<KPIM::ProgressItem> progressItem( KPIM::ProgressManager::createProgressItem( i18n( "Retrieving folder properties" ) ) );
       progressItem->setUsesBusyIndicator( true );
@@ -4690,7 +4690,7 @@ void KMMainWidget::showCollectionProperties( const QString &pageToShow )
       Akonadi::CollectionAttributesSynchronizationJob *sync
           = new Akonadi::CollectionAttributesSynchronizationJob( mCurrentFolder->collection() );
       sync->setProperty( "collectionId", mCurrentFolder->collection().id() );
-      sync->setProperty( "pageToShow", pageToShow );	// note for dialog later
+      sync->setProperty( "pageToShow", pageToShow );        // note for dialog later
       sync->setProperty( "progressItem", QVariant::fromValue( progressItem ) );
       connect( sync, SIGNAL(result(KJob*)),
                this, SLOT(slotCollectionPropertiesContinued(KJob*)) );
@@ -4789,7 +4789,7 @@ void KMMainWidget::slotCollectionPropertiesFinished( KJob *job )
 
 
   const QString pageToShow = fetch->property( "pageToShow" ).toString();
-  if ( !pageToShow.isEmpty() ) {			// show a specific page
+  if ( !pageToShow.isEmpty() ) {                        // show a specific page
     dlg->setCurrentPage( pageToShow );
   }
   dlg->show();

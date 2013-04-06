@@ -537,7 +537,7 @@ private:
   QCheckBox     *mStripSignatureCheck;
   QCheckBox     *mQuoteSelectionOnlyCheck;
   QCheckBox     *mAutoRequestMDNCheck;
-  QCheckBox	*mShowRecentAddressesInComposer;
+  QCheckBox        *mShowRecentAddressesInComposer;
   QCheckBox     *mWordWrapCheck;
   KIntSpinBox   *mWrapColumnSpin;
   KIntSpinBox   *mAutoSave;
