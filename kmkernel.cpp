@@ -610,7 +610,6 @@ int KMKernel::openComposer(const QString &to, const QString &cc,
   KMime::Message::Ptr msg( new KMime::Message );
   MessageHelper::initHeader( msg, identityManager() );
   msg->contentType()->setCharset("utf-8");
-
   if ( !to.isEmpty() )
     msg->to()->fromUnicodeString( to, "utf-8" );
 
@@ -633,7 +632,7 @@ int KMKernel::openComposer(const QString &to, const QString &cc,
     else {
       TemplateParser::TemplateParser parser( msg, TemplateParser::TemplateParser::NewMessage );
       parser.setIdentityManager( KMKernel::self()->identityManager() );
-      parser.process( KMime::Message::Ptr() );
+      parser.process( msg );
     }
   }
   else if ( !body.isEmpty() ) {
@@ -643,7 +642,7 @@ int KMKernel::openComposer(const QString &to, const QString &cc,
   else {
     TemplateParser::TemplateParser parser( msg, TemplateParser::TemplateParser::NewMessage );
     parser.setIdentityManager( KMKernel::self()->identityManager() );
-    parser.process( KMime::Message::Ptr() );
+    parser.process( msg );
   }
 
   if (!inReplyTo.isEmpty()) {
