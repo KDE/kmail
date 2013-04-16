@@ -545,6 +545,7 @@ private:
   KUrlRequester *mEditorRequester;
   KIntSpinBox   *mMaximumRecipients;
   QCheckBox     *mImprovePlainTextOfHtmlMessage;
+  KIntNumInput  *mMaximumRecentAddress;
 #ifdef KDEPIM_ENTERPRISE_BUILD
   KComboBox     *mForwardTypeCombo;
   QCheckBox     *mRecipientCheck;

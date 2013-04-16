@@ -2422,6 +2422,23 @@ ComposerPageGeneralTab::ComposerPageGeneralTab( QWidget * parent )
   // recent addresses
   hlay = new QHBoxLayout(); // inherits spacing
   vlay->addLayout( hlay );
+
+  mMaximumRecentAddress = new KIntNumInput( this );
+  mMaximumRecentAddress->setSliderEnabled(false);
+  mMaximumRecentAddress->setMinimum(0);
+  mMaximumRecentAddress->setMaximum(999);
+  mMaximumRecentAddress->setSpecialValueText(i18n("No save"));
+  connect( mMaximumRecentAddress, SIGNAL(valueChanged(int)),
+           this, SLOT(slotEmitChanged()) );
+
+  label = new QLabel("Maximum recent address:");
+  hlay->addWidget(label);
+  hlay->addWidget(mMaximumRecentAddress);
+  hlay->addStretch( 1 );
+
+  hlay = new QHBoxLayout(); // inherits spacing
+  vlay->addLayout( hlay );
+
   QPushButton *recentAddressesBtn = new QPushButton( i18n( "Edit Recent Addresses..." ), this );
   connect( recentAddressesBtn, SIGNAL(clicked()),
            this, SLOT(slotConfigureRecentAddresses()) );
@@ -2505,6 +2522,7 @@ void ComposerPage::GeneralTab::doResetToDefaultsOther()
   mShowRecentAddressesInComposer->setChecked( showRecentAddress );
   mImprovePlainTextOfHtmlMessage->setChecked(improvePlainText);
 
+  mMaximumRecentAddress->setValue( 40 );
 }
 
 void ComposerPage::GeneralTab::doLoadFromGlobalSettings()
@@ -2536,6 +2554,7 @@ void ComposerPage::GeneralTab::doLoadFromGlobalSettings()
     mForwardTypeCombo->setCurrentIndex( 1 );
 #endif
 
+  mMaximumRecentAddress->setValue(RecentAddresses::self(  MessageComposer::MessageComposerSettings::self()->config() )->maxCount());
   // editor group:
   mExternalEditorCheck->setChecked( GlobalSettings::self()->useExternalEditor() );
   mEditorRequester->setText( GlobalSettings::self()->externalEditor() );
@@ -2566,6 +2585,8 @@ void ComposerPage::GeneralTab::save() {
   // editor group:
   GlobalSettings::self()->setUseExternalEditor( mExternalEditorCheck->isChecked() );
   GlobalSettings::self()->setExternalEditor( mEditorRequester->text() );
+
+  RecentAddresses::self(  MessageComposer::MessageComposerSettings::self()->config() )->setMaxCount( mMaximumRecentAddress->value() );
 
   MessageComposer::MessageComposerSettings::self()->requestSync();
 }
