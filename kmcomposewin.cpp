@@ -464,8 +464,6 @@ KMComposeWin::KMComposeWin( const KMime::Message::Ptr &aMsg, bool lastSignState,
   else
     disableHtml( Message::ComposerViewBase::LetUserConfirm );
 
-
-
   if ( GlobalSettings::self()->useExternalEditor() ) {
     editor->setUseExternalEditor( true );
     editor->setExternalEditorPath( GlobalSettings::self()->externalEditor() );
@@ -1751,6 +1749,7 @@ void KMComposeWin::setMessage( const KMime::Message::Ptr &newMsg, bool lastSignS
   mPreventFccOverwrite = ( !kmailFcc.isEmpty() && ident.fcc() != kmailFcc );
   QTimer::singleShot( 0, this, SLOT(forceAutoSaveMessage()) ); //Force autosaving to make sure this composer reappears if a crash happens before the autosave timer kicks in.
 
+  mComposerBase->editor()->startExternalEditor();
 }
 
 void KMComposeWin::setAutoSaveFileName(const QString& fileName)
