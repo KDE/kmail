@@ -2413,13 +2413,15 @@ ComposerPageGeneralTab::ComposerPageGeneralTab( QWidget * parent )
 
   hlay = new QHBoxLayout(); // inherits spacing
   vlay->addLayout( hlay );
+
+
   QPushButton *completionOrderBtn = new QPushButton( i18n( "Configure Completion Order..." ), this );
   connect( completionOrderBtn, SIGNAL(clicked()),
            this, SLOT(slotConfigureCompletionOrder()) );
   hlay->addWidget( completionOrderBtn );
   hlay->addItem( new QSpacerItem(0, 0) );
 
-  // recent addresses
+
   hlay = new QHBoxLayout(); // inherits spacing
   vlay->addLayout( hlay );
 
@@ -2434,10 +2436,6 @@ ComposerPageGeneralTab::ComposerPageGeneralTab( QWidget * parent )
   label = new QLabel("Maximum recent address:");
   hlay->addWidget(label);
   hlay->addWidget(mMaximumRecentAddress);
-  hlay->addStretch( 1 );
-
-  hlay = new QHBoxLayout(); // inherits spacing
-  vlay->addLayout( hlay );
 
   QPushButton *recentAddressesBtn = new QPushButton( i18n( "Edit Recent Addresses..." ), this );
   connect( recentAddressesBtn, SIGNAL(clicked()),
