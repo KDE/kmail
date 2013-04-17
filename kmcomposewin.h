@@ -66,6 +66,7 @@ class KRecentFilesAction;
 class SnippetWidget;
 class SelectSpecialChar;
 class AttachmentMissingWarning;
+class ExternalEditorWarning;
 
 namespace boost {
   template <typename T> class shared_ptr;
@@ -659,6 +660,7 @@ class KMComposeWin : public KMail::Composer
     PimCommon::TranslatorWidget *mTranslatorWidget;
     QPointer<KPIMTextEdit::SelectSpecialChar> mSelectSpecialChar;
     AttachmentMissingWarning *mAttachmentMissing;
+    ExternalEditorWarning *mExternalEditorWarning;
     QTimer *m_verifyMissingAttachment;
     QLabel *mSignatureStateIndicator;
     QLabel *mEncryptionStateIndicator;

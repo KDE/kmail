@@ -52,6 +52,7 @@
 #include "pimcommon/translator/translatorwidget.h"
 #include "attachmentmissingwarning.h"
 #include "createnewcontactjob.h"
+#include "externaleditorwarning.h"
 
 // KDEPIM includes
 #include <libkpgp/kpgpblock.h>
@@ -432,6 +433,9 @@ KMComposeWin::KMComposeWin( const KMime::Message::Ptr &aMsg, bool lastSignState,
   m_verifyMissingAttachment->start(1000*30);
   connect( m_verifyMissingAttachment, SIGNAL(timeout()), this, SLOT(slotVerifyMissingAttachmentTimeout()) );
   connect( attachmentController, SIGNAL(fileAttached()), mAttachmentMissing, SLOT(slotFileAttached()) );
+
+  mExternalEditorWarning = new ExternalEditorWarning(this);
+  v->addWidget(mExternalEditorWarning);
 
   readConfig();
   setupStatusBar(attachmentView->widget());
@@ -1294,7 +1298,8 @@ void KMComposeWin::setupActions( void )
 
   connect( mComposerBase->editor(), SIGNAL(textModeChanged(KRichTextEdit::Mode)),
            this, SLOT(slotTextModeChanged(KRichTextEdit::Mode)) );
-
+  connect( mComposerBase->editor(), SIGNAL(externalEditorClosed()), mExternalEditorWarning, SLOT(hide()));
+  connect( mComposerBase->editor(), SIGNAL(externalEditorStarted()), mExternalEditorWarning, SLOT(show()));
   //these are checkable!!!
   markupAction = new KToggleAction( i18n("Formatting (HTML)"), this );
   markupAction->setIconText( i18n("HTML") );
