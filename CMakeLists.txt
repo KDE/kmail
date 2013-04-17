@@ -272,12 +272,12 @@ if (NOT WINCE AND KDEPIM_BUILD_DESKTOP)
   install(FILES kmail.antispamrc kmail.antivirusrc  DESTINATION ${CONFIG_INSTALL_DIR})
   install(FILES tips  DESTINATION ${DATA_INSTALL_DIR}/kmail2)
   install(FILES
-    kmail_config_misc.desktop
-    kmail_config_appearance.desktop
-    kmail_config_identity.desktop
-    kmail_config_accounts.desktop
-    kmail_config_composer.desktop
-    kmail_config_security.desktop
+    data/kmail_config_misc.desktop
+    data/kmail_config_appearance.desktop
+    data/kmail_config_identity.desktop
+    data/kmail_config_accounts.desktop
+    data/kmail_config_composer.desktop
+    data/kmail_config_security.desktop
     DESTINATION ${SERVICES_INSTALL_DIR}
   )
   install(FILES
