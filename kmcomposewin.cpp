@@ -1348,6 +1348,14 @@ void KMComposeWin::setupActions( void )
   actionCollection()->addAction( "insert_special_character", action );
   connect( action, SIGNAL(triggered(bool)), this, SLOT(insertSpecialCharacter()) );
 
+  action = new KAction( i18n("Uppercase"), this );
+  actionCollection()->addAction( "change_to_uppercase", action );
+  connect( action, SIGNAL(triggered(bool)), this, SLOT(slotUpperCase()) );
+
+  action = new KAction( i18n("Lowercase"), this );
+  actionCollection()->addAction( "change_to_lowercase", action );
+  connect( action, SIGNAL(triggered(bool)), this, SLOT(slotLowerCase()) );
+
 
   mComposerBase->attachmentController()->createActions();
 
@@ -3463,4 +3471,22 @@ void KMComposeWin::slotVerifyMissingAttachmentTimeout()
 void KMComposeWin::addExtraCustomHeaders( const QMap<QByteArray, QString> &headers)
 {
     mExtraHeaders = headers;
+}
+
+void KMComposeWin::slotUpperCase()
+{
+    QTextCursor textCursor = mComposerBase->editor()->textCursor();
+    if (textCursor.hasSelection()) {
+        const QString newText = textCursor.selectedText().toUpper();
+        textCursor.insertText(newText);
+    }
+}
+
+void KMComposeWin::slotLowerCase()
+{
+    QTextCursor textCursor = mComposerBase->editor()->textCursor();
+    if (textCursor.hasSelection()) {
+        const QString newText = textCursor.selectedText().toLower();
+        textCursor.insertText(newText);
+    }
 }

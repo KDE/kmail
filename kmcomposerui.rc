@@ -1,5 +1,5 @@
 <!DOCTYPE kpartgui SYSTEM "kpartgui.dtd" >
-<kpartgui version="424" name="kmcomposer" >
+<kpartgui version="425" name="kmcomposer" >
  <MenuBar>
   <Menu noMerge="1" name="file" >
    <text>&amp;Message</text>
@@ -33,6 +33,9 @@
    <Separator/>
    <Action name="tools_quote"/>
    <Action name="tools_unquote"/>
+   <Separator/>
+   <Action name="change_to_uppercase"/>
+   <Action name="change_to_lowercase"/>
    <Separator/>
    <Action name="insert_special_character"/>
   </Menu>
