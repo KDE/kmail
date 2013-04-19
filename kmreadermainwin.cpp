@@ -361,6 +361,7 @@ void KMReaderMainWin::setupAccel()
 
   setStandardToolBarMenuEnabled(true);
   KStandardAction::configureToolbars(this, SLOT(slotEditToolbars()), actionCollection());
+  connect(  mReaderWin->viewer(), SIGNAL(moveMessageToTrash()), this, SLOT(slotTrashMsg()) );
 }
 
 //-----------------------------------------------------------------------------
