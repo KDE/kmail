@@ -507,6 +507,7 @@ class KMAIL_EXPORT KMMainWidget : public QWidget
     void showCollectionPropertiesContinued( const QString &pageToShow, QPointer<KPIM::ProgressItem> progressItem );
 
   private slots:
+    void slotMoveMessageToTrash();
     /**
      * Called when a "move to trash" operation is completed
      */

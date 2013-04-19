@@ -1122,6 +1122,8 @@ void KMMainWidget::createWidgets()
              this, SLOT(slotReplaceMsgByUnencryptedVersion()) );
     connect( mMsgView->viewer(), SIGNAL(popupMenu(Akonadi::Item,KUrl,KUrl,QPoint)),
              this, SLOT(slotMessagePopup(Akonadi::Item,KUrl,KUrl,QPoint)) );
+    connect( mMsgView->viewer(), SIGNAL(moveMessageToTrash()),
+             this, SLOT(slotMoveMessageToTrash()) );
   }
   else {
     if ( mMsgActions ) {
@@ -4939,5 +4941,12 @@ void KMMainWidget::addRecentFile(const KUrl& mUrl)
   KConfigGroup grp = mConfig->group(QLatin1String("Recent Files"));
   mOpenRecentAction->saveEntries(grp);
   grp.sync();
+}
 
+void KMMainWidget::slotMoveMessageToTrash()
+{
+    if (messageView() && messageView()->viewer()) {
+        KMTrashMsgCommand *command = new KMTrashMsgCommand( mCurrentFolder->collection(), messageView()->viewer()->messageItem(), -1 );
+        command->start();
+    }
 }
