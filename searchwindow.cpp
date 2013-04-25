@@ -395,6 +395,7 @@ void SearchWindow::createSearchModel()
   mLbxMatches->setColumnWidth( 4, GlobalSettings::self()->dateWidth() );
   mLbxMatches->setColumnWidth( 5, GlobalSettings::self()->folderWidth() );
   mLbxMatches->setColumnHidden( 6, true );
+  mLbxMatches->setColumnHidden( 7, true );
   mLbxMatches->header()->setSortIndicator( 2, Qt::DescendingOrder );
   mLbxMatches->header()->setStretchLastSection( false );
   mLbxMatches->header()->restoreState( mHeaderState );

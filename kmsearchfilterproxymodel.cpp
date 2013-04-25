@@ -50,11 +50,11 @@ bool KMSearchFilterProxyModel::lessThan( const QModelIndex &left, const QModelIn
 {
   if ( right.model() && left.model() && left.column() == KMSearchMessageModel::Date )  {
     if ( sourceModel() ) {
-      QDateTime leftData =
+      const QDateTime leftData =
         sourceModel()->data(
           left.sibling( left.row(), KMSearchMessageModel::DateNotTranslated ) ).toDateTime();
 
-      QDateTime rightData =
+      const QDateTime rightData =
         sourceModel()->data(
           right.sibling( right.row(), KMSearchMessageModel::DateNotTranslated ) ).toDateTime();
       return  leftData<rightData;
@@ -62,6 +62,21 @@ bool KMSearchFilterProxyModel::lessThan( const QModelIndex &left, const QModelIn
       return false;
     }
   }
+
+  if ( right.model() && left.model() && left.column() == KMSearchMessageModel::Size )  {
+    if ( sourceModel() ) {
+      const qint64 leftData =
+        sourceModel()->data(
+          left.sibling( left.row(), KMSearchMessageModel::SizeNotLocalized ) ).toLongLong();
+      const qint64 rightData =
+        sourceModel()->data(
+                  right.sibling( right.row(), KMSearchMessageModel::SizeNotLocalized ) ).toLongLong();
+      return  leftData<rightData;
+    } else {
+      return false;
+    }
+  }
+
 
   return QSortFilterProxyModel::lessThan( left, right );
 }

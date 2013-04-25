@@ -42,7 +42,8 @@ class KMSearchMessageModel : public Akonadi::MessageModel
       Receiver,
       Date,
       Size,
-      DateNotTranslated
+      DateNotTranslated,
+      SizeNotLocalized
     };
     explicit KMSearchMessageModel( QObject* parent = 0 );
     virtual ~KMSearchMessageModel();
