@@ -219,8 +219,7 @@ ConfigureDialog::ConfigureDialog( QWidget *parent, bool modal )
   : KCMultiDialog( parent )
 {
   setFaceType( List );
-  setButtons( Help | Default | Cancel | Apply | Ok | User1 );
-  setButtonGuiItem( User1, KStandardGuiItem::reset() );
+  setButtons( Help | Default | Cancel | Apply | Ok | Reset );
   setModal( modal );
   KWindowSystem::setIcons( winId(), qApp->windowIcon().pixmap( IconSize( KIconLoader::Desktop ), IconSize( KIconLoader::Desktop ) ), qApp->windowIcon().pixmap(IconSize( KIconLoader::Small ), IconSize( KIconLoader::Small ) ) );
   addModule( "kmail_config_identity" );
