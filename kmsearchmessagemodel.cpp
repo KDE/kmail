@@ -140,7 +140,7 @@ int KMSearchMessageModel::columnCount( const QModelIndex & parent ) const
     return 1;
 
   if ( !parent.isValid() )
-    return 7; // keep in sync with the column type enum
+    return 8; // keep in sync with the column type enum
 
   return 0;
 }
@@ -184,6 +184,8 @@ QVariant KMSearchMessageModel::data( const QModelIndex & index, int role ) const
           return i18nc( "@label No size available", "-" );
         else
           return KGlobal::locale()->formatByteSize( item.size() );
+      case SizeNotLocalized:
+        return item.size();
       case DateNotTranslated:
         return msg->date()->dateTime().dateTime();
       default:
@@ -204,6 +206,7 @@ QVariant KMSearchMessageModel::data( const QModelIndex & index, int role ) const
         return msg->to()->asUnicodeString();
       case Date:
         return msg->date()->dateTime().dateTime();
+      case SizeNotLocalized:
       case Size:
         return item.size();
       case DateNotTranslated:
