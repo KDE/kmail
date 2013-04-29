@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2011 Montel Laurent <montel@kde.org>
+ * Copyright (c) 2011, 2012, 2013 Montel Laurent <montel@kde.org>
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -30,6 +30,8 @@
 #include "tag.h"
 #include "kmkernel.h"
 
+#include <mailcommon/tag/addtagdialog.h>
+
 #include <KListWidgetSearchLine>
 
 #include <Nepomuk2/Resource>
@@ -42,80 +44,100 @@
 using namespace KMail;
 
 TagSelectDialog::TagSelectDialog( QWidget * parent, int numberOfSelectedMessages, const Akonadi::Item &selectedItem)
-  : KDialog( parent )
+    : KDialog( parent ),
+      mNumberOfSelectedMessages(numberOfSelectedMessages),
+      mSelectedItem(selectedItem)
 {
-  setCaption( i18n( "Select Tags" ) );
-  setButtons( Ok|Cancel );
-  setDefaultButton( Ok );
-  setModal( true );
-  
-  QWidget *mainWidget = new QWidget( this );
-  QGridLayout *mainLayout = new QGridLayout( mainWidget );
-  mainLayout->setSpacing( KDialog::spacingHint() );
-  mainLayout->setMargin( KDialog::marginHint() );
-  setMainWidget( mainWidget );
+    setCaption( i18n( "Select Tags" ) );
+    setButtons( User1|Ok|Cancel );
+    setButtonText(User1, i18n("Add new tag..."));
+    setDefaultButton( Ok );
+    setModal( true );
 
-  mListTag = new QListWidget( this );
-  KListWidgetSearchLine *listWidgetSearchLine = new KListWidgetSearchLine(this,mListTag);
-  listWidgetSearchLine->setClickMessage(i18n("Search tag"));
-  listWidgetSearchLine->setClearButtonShown(true);
+    QWidget *mainWidget = new QWidget( this );
+    QGridLayout *mainLayout = new QGridLayout( mainWidget );
+    mainLayout->setSpacing( KDialog::spacingHint() );
+    mainLayout->setMargin( KDialog::marginHint() );
+    setMainWidget( mainWidget );
 
-  mainLayout->addWidget(listWidgetSearchLine);
-  mainLayout->addWidget( mListTag );
-  
-  QList<MailCommon::Tag::Ptr> tagList;
-  foreach( const Nepomuk2::Tag &nepomukTag, Nepomuk2::Tag::allTags() ) {
-    tagList.append( MailCommon::Tag::fromNepomuk( nepomukTag ) );
-  }
-  qSort( tagList.begin(), tagList.end(), MailCommon::Tag::compare );
+    mListTag = new QListWidget( this );
+    KListWidgetSearchLine *listWidgetSearchLine = new KListWidgetSearchLine(this,mListTag);
+    listWidgetSearchLine->setClickMessage(i18n("Search tag"));
+    listWidgetSearchLine->setClearButtonShown(true);
 
-  Nepomuk2::Resource itemResource( selectedItem.url() );
+    mainLayout->addWidget(listWidgetSearchLine);
+    mainLayout->addWidget( mListTag );
 
-  foreach( const MailCommon::Tag::Ptr &tag, tagList ) {
-    if(tag->tagStatus)
-      continue;
-    QListWidgetItem *item = new QListWidgetItem(KIcon(tag->iconName), tag->tagName, mListTag );
-    item->setData(UrlTag, tag->nepomukResourceUri.toString());
-    item->setFlags( Qt::ItemIsUserCheckable | Qt::ItemIsEnabled | Qt::ItemIsSelectable );
-    item->setCheckState( Qt::Unchecked );
-    mListTag->addItem( item );
-
-    if ( numberOfSelectedMessages == 1 ) {
-      const bool hasTag = itemResource.tags().contains(  Nepomuk2::Tag( tag->tagName ) );
-      item->setCheckState( hasTag ? Qt::Checked : Qt::Unchecked );
+    createTagList();
+    connect(this, SIGNAL(user1Clicked()), SLOT(slotAddNewTag()));
+    KConfigGroup group( KMKernel::self()->config(), "TagSelectDialog" );
+    const QSize size = group.readEntry( "Size", QSize() );
+    if ( size.isValid() ) {
+        resize( size );
     } else {
-      item->setCheckState( Qt::Unchecked );
-    }    
-  }
-
-  KConfigGroup group( KMKernel::self()->config(), "TagSelectDialog" );
-  const QSize size = group.readEntry( "Size", QSize() );
-  if ( size.isValid() ) {
-    resize( size );
-  } else {
-    resize( 500, 300 );
-  }
+        resize( 500, 300 );
+    }
 
 }
 
 TagSelectDialog::~TagSelectDialog()
 {
-  KConfigGroup group( KMKernel::self()->config(), "TagSelectDialog" );
-  group.writeEntry( "Size", size() );
+    KConfigGroup group( KMKernel::self()->config(), "TagSelectDialog" );
+    group.writeEntry( "Size", size() );
+
+}
+
+void TagSelectDialog::slotAddNewTag()
+{
+    QPointer<MailCommon::AddTagDialog> dialog = new MailCommon::AddTagDialog(QList<KActionCollection*>(), this);
+    dialog->setTags(mTagList);
+    if ( dialog->exec() ) {
+        mListTag->clear();
+        mTagList.clear();
+        createTagList();
+    }
+    delete dialog;
+}
+
+void TagSelectDialog::createTagList()
+{
+    foreach( const Nepomuk2::Tag &nepomukTag, Nepomuk2::Tag::allTags() ) {
+        mTagList.append( MailCommon::Tag::fromNepomuk( nepomukTag ) );
+    }
+    qSort( mTagList.begin(), mTagList.end(), MailCommon::Tag::compare );
+
+    Nepomuk2::Resource itemResource( mSelectedItem.url() );
+
+    foreach( const MailCommon::Tag::Ptr &tag, mTagList ) {
+        if(tag->tagStatus)
+            continue;
+        QListWidgetItem *item = new QListWidgetItem(KIcon(tag->iconName), tag->tagName, mListTag );
+        item->setData(UrlTag, tag->nepomukResourceUri.toString());
+        item->setFlags( Qt::ItemIsUserCheckable | Qt::ItemIsEnabled | Qt::ItemIsSelectable );
+        item->setCheckState( Qt::Unchecked );
+        mListTag->addItem( item );
+
+        if ( mNumberOfSelectedMessages == 1 ) {
+            const bool hasTag = itemResource.tags().contains(  Nepomuk2::Tag( tag->tagName ) );
+            item->setCheckState( hasTag ? Qt::Checked : Qt::Unchecked );
+        } else {
+            item->setCheckState( Qt::Unchecked );
+        }
+    }
 
 }
 
 QList<QString> TagSelectDialog::selectedTag() const
 {
-  QList<QString> lst;
-  const int numberOfItems( mListTag->count() );
-  for ( int i = 0; i< numberOfItems;++i ) {
-    QListWidgetItem *item = mListTag->item( i );
-    if ( item->checkState() == Qt::Checked ) {
-      lst.append( item->data(UrlTag).toString() );
+    QList<QString> lst;
+    const int numberOfItems( mListTag->count() );
+    for ( int i = 0; i< numberOfItems;++i ) {
+        QListWidgetItem *item = mListTag->item( i );
+        if ( item->checkState() == Qt::Checked ) {
+            lst.append( item->data(UrlTag).toString() );
+        }
     }
-  }
-  return lst;
+    return lst;
 }
 
 #include "tagselectdialog.moc"

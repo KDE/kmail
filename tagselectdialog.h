@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2011 Montel Laurent <montel@kde.org>
+ * Copyright (c) 2011, 2012, 2013 Montel Laurent <montel@kde.org>
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -30,26 +30,30 @@
 #define TAGSELECTDIALOG_H
 
 #include <KDialog>
-
+#include <Akonadi/Item>
+#include "tag.h"
 class QListWidget;
 
-namespace Akonadi {
-class Item;
-}
 
 class TagSelectDialog : public KDialog
 {
-  Q_OBJECT
+    Q_OBJECT
 public:
-  explicit TagSelectDialog( QWidget * parent, int numberOfSelectedMessages, const Akonadi::Item &selectedItem );
-  ~TagSelectDialog();
-  QList<QString> selectedTag() const;
+    explicit TagSelectDialog( QWidget * parent, int numberOfSelectedMessages, const Akonadi::Item &selectedItem );
+    ~TagSelectDialog();
+    QList<QString> selectedTag() const;
+private Q_SLOTS:
+    void slotAddNewTag();
 private:
-  enum ItemType {
-      UrlTag = Qt::UserRole + 1
-  };
+    void createTagList();
+    enum ItemType {
+        UrlTag = Qt::UserRole + 1
+    };
+    int mNumberOfSelectedMessages;
+    Akonadi::Item mSelectedItem;
 
-  QListWidget *mListTag;
+    QList<MailCommon::Tag::Ptr> mTagList;
+    QListWidget *mListTag;
 };
 
 
