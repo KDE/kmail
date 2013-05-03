@@ -551,7 +551,7 @@ void KMComposeWin::addAttachmentsAndSend( const KUrl::List &urls, const QString 
 {
   kDebug() << "addAttachment and sending!";
   const int nbUrl = urls.count();
-  for( int i =0; i < nbUrl; ++i ) {
+  for ( int i =0; i < nbUrl; ++i ) {
     mComposerBase->addAttachmentUrlSync( urls[i], comment );
   }
 
@@ -2782,7 +2782,7 @@ void KMComposeWin::doDelayedSend( MessageSender::SendMethod method, MessageSende
 
   const int num = GlobalSettings::self()->customMessageHeadersCount();
   QMap<QByteArray, QString> customHeader;
-  for(int ix=0; ix<num; ++ix) {
+  for (int ix=0; ix<num; ++ix) {
     CustomMimeHeader customMimeHeader( QString::number(ix) );
     customMimeHeader.readConfig();
     customHeader.insert(customMimeHeader.custHeaderName().toLatin1(), customMimeHeader.custHeaderValue() );

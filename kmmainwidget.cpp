@@ -3125,7 +3125,7 @@ void KMMainWidget::getTransportMenu()
   QStringList::Iterator it;
   QStringList::Iterator end( availTransports.end() );
 
-  for(it = availTransports.begin(); it != end ; ++it)
+  for (it = availTransports.begin(); it != end ; ++it)
     mSendMenu->addAction((*it).replace('&', "&&"));
 }
 

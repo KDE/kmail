@@ -118,7 +118,7 @@ void
 UndoStack::msgDestroyed( const Akonadi::Item & /*msg*/)
 {
   /*
-   for(UndoInfo *info = mStack.first(); info; )
+   for (UndoInfo *info = mStack.first(); info; )
    {
       if (info->msgIdMD5 == msg->msgIdMD5())
       {

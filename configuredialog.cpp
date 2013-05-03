@@ -3104,7 +3104,7 @@ void ComposerPage::HeadersTab::doLoadOther()
   QTreeWidgetItem * item = 0;
 
   const int count = GlobalSettings::self()->customMessageHeadersCount();
-  for( int i = 0 ; i < count ; i++ ) {
+  for ( int i = 0 ; i < count ; i++ ) {
     KConfigGroup config( KMKernel::self()->config(),
                          QString("Mime #") + QString::number(i) );
     const QString name  = config.readEntry( "name" );
