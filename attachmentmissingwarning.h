@@ -1,5 +1,5 @@
 /*
-  Copyright (c) 2012 Montel Laurent <montel@kde.org>
+  Copyright (c) 2012, 2013 Montel Laurent <montel@kde.org>
   
   This program is free software; you can redistribute it and/or modify it
   under the terms of the GNU General Public License, version 2, as
@@ -17,21 +17,24 @@
 
 #ifndef ATTACHMENTMISSINGWARNING_H
 #define ATTACHMENTMISSINGWARNING_H
+
 #include <KMessageWidget>
 
 class AttachmentMissingWarning : public KMessageWidget
 {
-  Q_OBJECT
+    Q_OBJECT
 public:
-  explicit AttachmentMissingWarning(QWidget *parent = 0);
-  ~AttachmentMissingWarning();
+    explicit AttachmentMissingWarning(QWidget *parent = 0);
+    ~AttachmentMissingWarning();
+
 private Q_SLOTS:
-  void explicitlyClosed();
-  void slotAttachFile();
-  void slotFileAttached();
+    void explicitlyClosed();
+    void slotAttachFile();
+    void slotFileAttached();
+
 Q_SIGNALS:
-  void attachMissingFile();
-  void closeAttachMissingFile();
+    void attachMissingFile();
+    void closeAttachMissingFile();
 };
 
 #endif // ATTACHMENTMISSINGWARNING_H

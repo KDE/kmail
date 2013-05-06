@@ -26,61 +26,59 @@
 #include <QFile>
 
 IdentityEditVcardDialog::IdentityEditVcardDialog(QWidget *parent)
-  : KDialog(parent)
+    : KDialog(parent)
 {
-  setCaption( i18n( "Edit own vCard" ) );
-  setButtons( Ok|Cancel );
-  setDefaultButton( Ok );
-  setModal( true );
-  QWidget *mainWidget = new QWidget( this );
-  QHBoxLayout *mainLayout = new QHBoxLayout( mainWidget );
-  mainLayout->setSpacing( KDialog::spacingHint() );
-  mainLayout->setMargin( KDialog::marginHint() );
-  setMainWidget( mainWidget );
+    setCaption( i18n( "Edit own vCard" ) );
+    setButtons( Ok|Cancel );
+    setDefaultButton( Ok );
+    setModal( true );
+    QWidget *mainWidget = new QWidget( this );
+    QHBoxLayout *mainLayout = new QHBoxLayout( mainWidget );
+    mainLayout->setSpacing( KDialog::spacingHint() );
+    mainLayout->setMargin( KDialog::marginHint() );
+    setMainWidget( mainWidget );
 
-  mContactEditor = new Akonadi::ContactEditor( Akonadi::ContactEditor::CreateMode, Akonadi::ContactEditor::VCardMode, this );
-  mainLayout->addWidget(mContactEditor);
+    mContactEditor = new Akonadi::ContactEditor( Akonadi::ContactEditor::CreateMode, Akonadi::ContactEditor::VCardMode, this );
+    mainLayout->addWidget(mContactEditor);
 }
 
 IdentityEditVcardDialog::~IdentityEditVcardDialog()
 {
-
 }
 
-
-void IdentityEditVcardDialog::loadVcard( const QString& vcardFileName)
+void IdentityEditVcardDialog::loadVcard( const QString &vcardFileName)
 {
-  if (vcardFileName.isEmpty()) {
-    return;
-  }
-  mVcardFileName = vcardFileName;
-  QFile file( vcardFileName );
-
-  if ( file.open( QIODevice::ReadOnly ) ) {
-    const QByteArray data = file.readAll();
-    file.close();
-    if ( !data.isEmpty() ) {
-      KABC::VCardConverter converter;
-      KABC::Addressee addr = converter.parseVCard( data );
-      mContactEditor->setContactTemplate(addr);
+    if (vcardFileName.isEmpty()) {
+        return;
     }
-  }
+    mVcardFileName = vcardFileName;
+    QFile file( vcardFileName );
+
+    if ( file.open( QIODevice::ReadOnly ) ) {
+        const QByteArray data = file.readAll();
+        file.close();
+        if ( !data.isEmpty() ) {
+            KABC::VCardConverter converter;
+            KABC::Addressee addr = converter.parseVCard( data );
+            mContactEditor->setContactTemplate(addr);
+        }
+    }
 }
 
 QString IdentityEditVcardDialog::saveVcard() const
 {
-  const KABC::Addressee addr = mContactEditor->contact();
-  KABC::VCardConverter converter;
-  QFile file(mVcardFileName);
-  if ( file.open( QIODevice::WriteOnly |QIODevice::Text ) ) {
-    const QByteArray data = converter.exportVCard( addr, KABC::VCardConverter::v3_0 );
-    file.write( data );
-    file.flush();
-    file.close();
-  } else {
-      kDebug()<<"We can not open file: "<<mVcardFileName;
-  }
-  return mVcardFileName;
+    const KABC::Addressee addr = mContactEditor->contact();
+    KABC::VCardConverter converter;
+    QFile file(mVcardFileName);
+    if ( file.open( QIODevice::WriteOnly |QIODevice::Text ) ) {
+        const QByteArray data = converter.exportVCard( addr, KABC::VCardConverter::v3_0 );
+        file.write( data );
+        file.flush();
+        file.close();
+    } else {
+        kDebug()<<"We can not open file: "<<mVcardFileName;
+    }
+    return mVcardFileName;
 }
 
 #include "identityeditvcarddialog.moc"

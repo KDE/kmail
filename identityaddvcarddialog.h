@@ -1,5 +1,5 @@
 /*
-  Copyright (c) 2012 Montel Laurent <montel@kde.org>
+  Copyright (c) 2012, 2013 Montel Laurent <montel@kde.org>
   
   This program is free software; you can redistribute it and/or modify it
   under the terms of the GNU General Public License, version 2, as
@@ -22,23 +22,27 @@ class QButtonGroup;
 class KComboBox;
 
 namespace KPIMIdentities {
-  class IdentityManager;
+class IdentityManager;
 }
 
 class IdentityAddVcardDialog: public KDialog
 {
-  Q_OBJECT
+    Q_OBJECT
 public:
-  enum DuplicateMode { Empty, ExistingEntry };
-  explicit IdentityAddVcardDialog(KPIMIdentities::IdentityManager *manager, QWidget *parent = 0);
-  ~IdentityAddVcardDialog();
+    enum DuplicateMode {
+        Empty,
+        ExistingEntry
+    };
 
-  DuplicateMode duplicateMode() const;
-  QString duplicateVcardFromIdentity() const;
+    explicit IdentityAddVcardDialog(KPIMIdentities::IdentityManager *manager, QWidget *parent = 0);
+    ~IdentityAddVcardDialog();
+
+    DuplicateMode duplicateMode() const;
+    QString duplicateVcardFromIdentity() const;
 
 private:
-  QButtonGroup *mButtonGroup;
-  KComboBox *mComboBox;
+    QButtonGroup *mButtonGroup;
+    KComboBox *mComboBox;
 };
 
 #endif // IDENTITYADDVCARDDIALOG_H

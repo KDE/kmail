@@ -32,9 +32,8 @@
 #include <KDialog>
 #include <Akonadi/Item>
 #include "tag.h"
+
 class QListWidget;
-
-
 class TagSelectDialog : public KDialog
 {
     Q_OBJECT

@@ -26,23 +26,23 @@ class ContactEditor;
 
 class IdentityEditVcardDialog : public KDialog
 {
-  Q_OBJECT
+    Q_OBJECT
 public:
-  explicit IdentityEditVcardDialog(QWidget *parent = 0);
-  ~IdentityEditVcardDialog();
+    explicit IdentityEditVcardDialog(QWidget *parent = 0);
+    ~IdentityEditVcardDialog();
     /**
    * @brief loadVcard load vcard in a contact editor
    * @param vcardFileName
    */
-  void loadVcard(const QString& vcardFileName);
-  /**
+    void loadVcard(const QString &vcardFileName);
+    /**
    * @brief saveVcard
    * @return The file path for current vcard.
    */
-  QString saveVcard() const;
+    QString saveVcard() const;
 private:
-  QString mVcardFileName;
-  Akonadi::ContactEditor *mContactEditor;
+    QString mVcardFileName;
+    Akonadi::ContactEditor *mContactEditor;
 };
 
 #endif // IDENTITYEDITVCARDDIALOG_H

@@ -32,7 +32,7 @@ public:
     explicit AccountConfigOrderDialog(QWidget *parent);
     ~AccountConfigOrderDialog();
     enum Type {
-        IdentifierAccount = (Qt::UserRole+1)
+        IdentifierAccount = Qt::UserRole+1
     };
 private Q_SLOTS:
     void slotOk();

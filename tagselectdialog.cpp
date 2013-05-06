@@ -77,14 +77,12 @@ TagSelectDialog::TagSelectDialog( QWidget * parent, int numberOfSelectedMessages
     } else {
         resize( 500, 300 );
     }
-
 }
 
 TagSelectDialog::~TagSelectDialog()
 {
     KConfigGroup group( KMKernel::self()->config(), "TagSelectDialog" );
     group.writeEntry( "Size", size() );
-
 }
 
 void TagSelectDialog::slotAddNewTag()

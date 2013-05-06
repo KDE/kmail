@@ -1,5 +1,5 @@
 /*
-  Copyright (c) 2012 Montel Laurent <montel@kde.org>
+  Copyright (c) 2012, 2013 Montel Laurent <montel@kde.org>
   
   This program is free software; you can redistribute it and/or modify it
   under the terms of the GNU General Public License, version 2, as
@@ -23,42 +23,40 @@
 AttachmentMissingWarning::AttachmentMissingWarning(QWidget *parent)
     :KMessageWidget(parent)
 {
-  setVisible(false);
-  setCloseButtonVisible(true);
-  setMessageType(Information);
-  setText( i18n( "The message you have composed seems to refer to an attached file but you have not attached anything. Do you want to attach a file to your message?" ) );
-  setWordWrap(true);
+    setVisible(false);
+    setCloseButtonVisible(true);
+    setMessageType(Information);
+    setText( i18n( "The message you have composed seems to refer to an attached file but you have not attached anything. Do you want to attach a file to your message?" ) );
+    setWordWrap(true);
 
-  KAction *action = this->findChild<KAction *>(); // should give us the close action...
-  if ( action ) {
-    connect( action, SIGNAL(triggered(bool)), SLOT(explicitlyClosed()) );
-  }
+    KAction *action = this->findChild<KAction *>(); // should give us the close action...
+    if ( action ) {
+        connect( action, SIGNAL(triggered(bool)), SLOT(explicitlyClosed()) );
+    }
 
-  action = new KAction( KIcon(QLatin1String( "mail-attachment" )), i18n( "&Attach file" ), this );
-  connect( action, SIGNAL(triggered(bool)), SLOT(slotAttachFile()) );
-  addAction( action );
-
+    action = new KAction( KIcon(QLatin1String( "mail-attachment" )), i18n( "&Attach file" ), this );
+    connect( action, SIGNAL(triggered(bool)), SLOT(slotAttachFile()) );
+    addAction( action );
 }
 
 AttachmentMissingWarning::~AttachmentMissingWarning()
 {
-
 }
 
 void AttachmentMissingWarning::slotAttachFile()
 {
-  Q_EMIT attachMissingFile();
+    Q_EMIT attachMissingFile();
 }
 
 void AttachmentMissingWarning::slotFileAttached()
 {
-  setVisible(false);
-  Q_EMIT closeAttachMissingFile();
+    setVisible(false);
+    Q_EMIT closeAttachMissingFile();
 }
 
 void AttachmentMissingWarning::explicitlyClosed()
 {
-  Q_EMIT closeAttachMissingFile();
+    Q_EMIT closeAttachMissingFile();
 }
 
 #include "attachmentmissingwarning.moc"
