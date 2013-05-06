@@ -859,7 +859,7 @@ void KMMainWidget::layoutSplitters()
       splitter2Sizes << folderViewWidth << headerWidth;
     } else {
       splitter1Sizes << headerWidth << messageViewerWidth;
-      splitter2Sizes<< ftHeight + ffvHeight << messageViewerHeight;
+      splitter2Sizes << ftHeight + ffvHeight << messageViewerHeight;
     }
   }
 
