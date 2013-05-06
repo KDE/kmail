@@ -2267,7 +2267,7 @@ ComposerPageGeneralTab::ComposerPageGeneralTab( QWidget * parent )
 
   mReplyUsingHtml = new QCheckBox( TemplateParser::GlobalSettings::self()->replyUsingHtmlItem()->label(), this );
   mReplyUsingHtml->setToolTip(
-                 i18n( "When replying, only quote the message in the original format it was received "
+                 i18n( "When replying or forwarding, only quote the message in the original format it was received "
                        "or else, if unchecked, it will reply as plain text by default" ) );
   vlay->addWidget( mReplyUsingHtml );
   connect( mReplyUsingHtml, SIGNAL(stateChanged(int)),
