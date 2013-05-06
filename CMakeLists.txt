@@ -142,6 +142,10 @@ if (NOT WINCE AND KDEPIM_BUILD_DESKTOP)
   qt4_add_dbus_interfaces(kmailprivate_LIB_SRCS
     ${CMAKE_SOURCE_DIR}/archivemailagent/org.freedesktop.Akonadi.ArchiveMailAgent.xml
   )
+  qt4_add_dbus_interfaces(kmailprivate_LIB_SRCS
+    ${CMAKE_SOURCE_DIR}/sendlateragent/org.freedesktop.Akonadi.SendLaterAgent.xml
+  )
+
 
 
   kde4_add_ui_files(kmailprivate_LIB_SRCS
