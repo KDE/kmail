@@ -654,7 +654,7 @@ void KMMainWidget::folderSelected( const Akonadi::Collection & col )
 
 void KMMainWidget::slotShowSelectedFolderInPane()
 {
-  if ( mCurrentFolder ) {
+  if ( mCurrentFolder && mCurrentFolder->collection().isValid() ) {
     mMessagePane->setCurrentFolder( mCurrentFolder->collection(), false , mPreSelectionMode );
   }
 }
@@ -1733,7 +1733,7 @@ void KMMainWidget::slotEmptyFolder()
 //-----------------------------------------------------------------------------
 void KMMainWidget::slotArchiveFolder()
 {
-  if ( mCurrentFolder ) {
+  if ( mCurrentFolder && mCurrentFolder->collection().isValid() ) {
     KMail::ArchiveFolderDialog archiveDialog;
     archiveDialog.setFolder( mCurrentFolder->collection() );
     archiveDialog.exec();
@@ -1744,6 +1744,7 @@ void KMMainWidget::slotArchiveFolder()
 void KMMainWidget::slotRemoveFolder()
 {
   if ( !mCurrentFolder ) return;
+  if ( !mCurrentFolder->collection().isValid() ) return;
   if ( mCurrentFolder->isSystemFolder() ) return;
   if ( mCurrentFolder->isReadOnly() ) return;
 
@@ -2462,7 +2463,7 @@ void KMMainWidget::slotApplyFilters()
 
 void KMMainWidget::slotApplyFiltersOnFolder()
 {
-    if ( mCurrentFolder ) {
+    if ( mCurrentFolder && mCurrentFolder->collection().isValid() ) {
         Akonadi::ItemFetchJob *job = new Akonadi::ItemFetchJob( mCurrentFolder->collection(), this );
         connect( job, SIGNAL(result(KJob*)), this, SLOT(slotFetchItemsForFolderDone(KJob*)) );
     }
@@ -4144,7 +4145,7 @@ void KMMainWidget::slotAkonadiStandardActionUpdated()
     multiFolder = mFolderTreeWidget->selectedCollections().count() > 1;
   }
   if ( mCollectionProperties ) {
-      if ( mCurrentFolder ) {
+      if ( mCurrentFolder && mCurrentFolder->collection().isValid() ) {
         const Akonadi::AgentInstance instance =
             Akonadi::AgentManager::self()->instance( mCurrentFolder->collection().resource() );
 
