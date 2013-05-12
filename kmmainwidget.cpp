@@ -55,6 +55,7 @@
 #include "tagselectdialog.h"
 #include "archivemailagentinterface.h"
 #include "createnewcontactjob.h"
+#include "sendlateragentinterface.h"
 
 #include "pimcommon/acl/collectionaclpage.h"
 #include "mailcommon/collectiongeneralpage.h"
@@ -3276,6 +3277,12 @@ void KMMainWidget::setupActions()
     connect(action, SIGNAL(triggered(bool)), SLOT(slotConfigureAutomaticArchiving()));
   }
 
+  {
+    KAction *action = new KAction(i18n("&Configure send later agent..."), this);
+    actionCollection()->addAction("tools_configure_sendlater", action );
+    connect(action, SIGNAL(triggered(bool)), SLOT(slotConfigureSendLater()));
+  }
+
   // Disable the standard action delete key sortcut.
   KAction* const standardDelAction = akonadiStandardAction(  Akonadi::StandardActionManager::DeleteItems );
   standardDelAction->setShortcut( QKeySequence() );
@@ -4905,6 +4912,16 @@ void KMMainWidget::slotConfigureAutomaticArchiving()
   } else {
       KMessageBox::error(this,i18n("Archive Mail Agent was not registered."));
   }
+}
+
+void KMMainWidget::slotConfigureSendLater()
+{
+    OrgFreedesktopAkonadiSendLaterAgentInterface sendLaterInterface(QLatin1String("org.freedesktop.Akonadi.SendLaterAgent"), QLatin1String("/SendLaterAgent"),QDBusConnection::sessionBus(), this);
+    if (sendLaterInterface.isValid()) {
+        sendLaterInterface.showConfigureDialog( (qlonglong)winId() );
+    } else {
+        KMessageBox::error(this,i18n("Send Later Agent was not registered."));
+    }
 }
 
 void KMMainWidget::updatePaneTagComboBox()
