@@ -68,7 +68,6 @@ class KMComposerEditor : public Message::KMeditor
     void setHighlighterColors(KPIMTextEdit::EMailQuoteHighlighter * highlighter);
 
   private:
-
      KMComposeWin *mComposerWin;
 
 protected:

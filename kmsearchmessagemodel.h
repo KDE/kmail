@@ -46,12 +46,12 @@ class KMSearchMessageModel : public Akonadi::MessageModel
       SizeNotLocalized
     };
     explicit KMSearchMessageModel( QObject* parent = 0 );
-    virtual ~KMSearchMessageModel();
+    ~KMSearchMessageModel();
 
-    virtual int columnCount( const QModelIndex & parent = QModelIndex() ) const;
-    virtual QVariant data( const QModelIndex & index, int role = Qt::DisplayRole ) const;
+    int columnCount( const QModelIndex & parent = QModelIndex() ) const;
+    QVariant data( const QModelIndex & index, int role = Qt::DisplayRole ) const;
 
-    virtual QVariant headerData( int section, Qt::Orientation orientation, int role = Qt::DisplayRole ) const;
+    QVariant headerData( int section, Qt::Orientation orientation, int role = Qt::DisplayRole ) const;
 
 };
 

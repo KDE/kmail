@@ -92,7 +92,7 @@ namespace KMail {
 
   protected:
 #ifndef QT_NO_DRAGANDDROP
-    virtual void startDrag ( Qt::DropActions supportedActions );
+    void startDrag ( Qt::DropActions supportedActions );
 #endif
 
   private:

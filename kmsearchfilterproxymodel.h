@@ -40,7 +40,7 @@ public:
   explicit KMSearchFilterProxyModel( QObject *parent );
   ~KMSearchFilterProxyModel();
 protected:
-  virtual bool lessThan( const QModelIndex & left, const QModelIndex & right ) const;
+  bool lessThan( const QModelIndex & left, const QModelIndex & right ) const;
 };
 }
 
