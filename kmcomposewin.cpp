@@ -41,7 +41,7 @@
 #include "messageviewer/stl_util.h"
 #include "messageviewer/util.h"
 #include "messagecore/stringutil.h"
-#include "messagecore/attachmentcollector.h"
+#include "messagecore/attachment/attachmentcollector.h"
 #include "util.h"
 #include "snippetwidget.h"
 #include "templatesconfiguration_kfg.h"
@@ -81,7 +81,7 @@
 #include <messagecomposer/inserttextfilejob.h>
 #include <messagecomposer/composerlineedit.h>
 #include <messagecomposer/recipientseditor.h>
-#include <messagecore/attachmentpart.h>
+#include <messagecore/attachment/attachmentpart.h>
 #include "messagecore/globalsettings.h"
 #include <templateparser/templateparser.h>
 #include <templatesconfiguration.h>

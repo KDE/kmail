@@ -42,7 +42,7 @@
 #include <KLocale>
 #include <KGlobal>
 
-#include <messagecore/attachmentpart.h>
+#include <messagecore/attachment/attachmentpart.h>
 #include <boost/shared_ptr.hpp>
 using MessageCore::AttachmentPart;
 
