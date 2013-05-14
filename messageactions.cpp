@@ -245,6 +245,7 @@ void MessageActions::setCurrentMessage( const Akonadi::Item &msg )
 
   if ( !msg.isValid() ) {
     mVisibleItems.clear();
+    clearMailingListActions();
   }
 
   mMonitor->setItemMonitored( mCurrentItem, true );
@@ -354,15 +355,20 @@ void MessageActions::slotUpdateActionsFetchDone(KJob* job)
   }
 }
 
+void MessageActions::clearMailingListActions()
+{
+    mMailingListActionMenu->setEnabled( false );
+    mListFilterAction->setEnabled( false );
+    mListFilterAction->setText( i18n("Filter on Mailing-List...") );
+}
+
 void MessageActions::updateMailingListActions( const Akonadi::Item& messageItem )
 {
   KMime::Message::Ptr message = messageItem.payload<KMime::Message::Ptr>();
   const MessageCore::MailingList mailList = MessageCore::MailingList::detect( message );
 
   if ( mailList.features() == MessageCore::MailingList::None ) {
-    mMailingListActionMenu->setEnabled( false );
-    mListFilterAction->setEnabled( false );
-    mListFilterAction->setText( i18n("Filter on Mailing-List...") );
+      clearMailingListActions();
   } else {
     // A mailing list menu with only a title is pretty boring
     // so make sure theres at least some content
