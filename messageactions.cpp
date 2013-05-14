@@ -254,8 +254,7 @@ void MessageActions::setCurrentMessage( const Akonadi::Item &msg )
 
 void MessageActions::slotItemRemoved(const Akonadi::Item& item)
 {
-  if ( item == mCurrentItem )
-  {
+  if ( item == mCurrentItem ) {
     mCurrentItem = Akonadi::Item();
     updateActions();
   }
@@ -264,8 +263,7 @@ void MessageActions::slotItemRemoved(const Akonadi::Item& item)
 void MessageActions::slotItemModified( const Akonadi::Item &  item, const QSet< QByteArray > &  partIdentifiers )
 {
   Q_UNUSED( partIdentifiers );
-  if ( item == mCurrentItem )
-  {
+  if ( item == mCurrentItem ) {
     mCurrentItem = item;
     const int numberOfVisibleItems = mVisibleItems.count();
     for ( int i = 0; i < numberOfVisibleItems; ++i ) {
@@ -313,13 +311,10 @@ void MessageActions::updateActions()
   mReplyListAction->setEnabled( hasPayload );
   mNoQuoteReplyAction->setEnabled( hasPayload );
 
-  if ( Nepomuk2::ResourceManager::instance()->initialized() )
-  {
+  if ( Nepomuk2::ResourceManager::instance()->initialized() ) {
     mAnnotateAction->setEnabled( uniqItem );
     mAsynNepomukRetriever->requestResource( mCurrentItem.url() );
-  }
-  else
-  {
+  } else {
     mAnnotateAction->setEnabled( false );
   }
 
@@ -328,8 +323,7 @@ void MessageActions::updateActions()
   if ( mCurrentItem.hasPayload<KMime::Message::Ptr>() ) {
     if ( mCurrentItem.loadedPayloadParts().contains("RFC822") ) {
       updateMailingListActions( mCurrentItem );
-    } else
-    {
+    } else {
       Akonadi::ItemFetchJob *job = new Akonadi::ItemFetchJob( mCurrentItem );
       job->fetchScope().fetchAllAttributes();
       job->fetchScope().fetchFullPayload( true );
@@ -415,8 +409,7 @@ void MessageActions::updateMailingListActions( const Akonadi::Item& messageItem 
     QByteArray name;
     QString value;
     const QString lname = MailingList::name( message, name, value );
-    if ( !lname.isEmpty() )
-    {
+    if ( !lname.isEmpty() ) {
       mListFilterAction->setEnabled( true );
       mListFilterAction->setText( i18n( "Filter on Mailing-List %1...", lname ) );
     }
@@ -461,8 +454,7 @@ void MessageActions::setupForwardActions()
     mForwardAttachedAction->setShortcut(QKeySequence(Qt::SHIFT+Qt::Key_F));
     QObject::connect( mForwardActionMenu, SIGNAL(triggered(bool)),
                       mParent, SLOT(slotForwardInlineMsg()) );
-  }
-  else {
+  } else {
     mForwardActionMenu->insertAction( mRedirectAction, mForwardAttachedAction );
     mForwardActionMenu->insertAction( mRedirectAction, mForwardInlineAction );
     mForwardInlineAction->setShortcut(QKeySequence(Qt::Key_F));
@@ -479,8 +471,7 @@ void MessageActions::setupForwardingActionsList( KXMLGUIClient *guiClient )
   if ( GlobalSettings::self()->forwardingInlineByDefault() ) {
     forwardActionList.append( mForwardInlineAction );
     forwardActionList.append( mForwardAttachedAction );
-  }
-  else {
+  } else {
     forwardActionList.append( mForwardAttachedAction );
     forwardActionList.append( mForwardInlineAction );
   }
@@ -536,21 +527,18 @@ void MessageActions::slotMailingListFilter()
 
 void MessageActions::printMessage(bool preview)
 {
-  if ( mMessageView )
-  {
+  if ( mMessageView ) {
     bool result = false;
-    if(GlobalSettings::self()->printSelectedText()) {
+    if (GlobalSettings::self()->printSelectedText()) {
       result = mMessageView->printSelectedText(preview);
     }
-    if(!result) {
+    if (!result) {
       if(preview)
         mMessageView->viewer()->printPreview();
       else
         mMessageView->viewer()->print();
     }
-  }
-  else
-  {
+  } else {
     const bool useFixedFont = MessageViewer::GlobalSettings::self()->useFixedFont();
     const QString overrideEncoding = MessageCore::GlobalSettings::self()->overrideCharacterEncoding();
 
@@ -610,16 +598,15 @@ void MessageActions::addMailingListAction( const QString &item, const KUrl &url 
   KAction *act = new KAction( i18nc( "%1 is a 'Contact Owner' or similar action. %2 is a protocol normally web or email though could be irc/ftp or other url variant", "%1 (%2)",  item, protocol ) , this );
   mMailListActionList.append(act);
   const QVariant v(  url.url() );
-  act-> setData( v );
-  act-> setHelpText( prettyUrl );
+  act->setData( v );
+  act->setHelpText( prettyUrl );
   mMailingListActionMenu->addAction( act );
 }
 
 void MessageActions::editCurrentMessage()
 {
   KMCommand *command = 0;
-  if ( mCurrentItem.isValid() )
-  {
+  if ( mCurrentItem.isValid() ) {
     Akonadi::Collection col = mCurrentItem.parentCollection();
     // edit, unlike send again, removes the message from the folder
     // we only want that for templates and drafts folders
@@ -674,12 +661,10 @@ void MessageActions::addWebShortcutsMenu( KMenu *menu, const QString & text )
 
     filterData.setSearchFilteringOptions( KUriFilterData::RetrievePreferredSearchProvidersOnly );
 
-    if ( KUriFilter::self()->filterSearchUri( filterData, KUriFilter::NormalTextFilter ) )
-    {
+    if ( KUriFilter::self()->filterSearchUri( filterData, KUriFilter::NormalTextFilter ) ) {
         const QStringList searchProviders = filterData.preferredSearchProviders();
 
-        if ( !searchProviders.isEmpty() )
-        {
+        if ( !searchProviders.isEmpty() ) {
             KMenu *webShortcutsMenu = new KMenu( menu );
             webShortcutsMenu->setIcon( KIcon( "preferences-web-browser-shortcuts" ) );
 
@@ -688,8 +673,7 @@ void MessageActions::addWebShortcutsMenu( KMenu *menu, const QString & text )
 
             KAction *action = 0;
 
-            foreach( const QString &searchProvider, searchProviders )
-            {
+            foreach( const QString &searchProvider, searchProviders ) {
                 action = new KAction( searchProvider, webShortcutsMenu );
                 action->setIcon( KIcon( filterData.iconNameForPreferredSearchProvider( searchProvider ) ) );
                 action->setData( filterData.queryForPreferredSearchProvider( searchProvider ) );
@@ -713,11 +697,9 @@ void MessageActions::slotHandleWebShortcutAction()
 {
   KAction *action = qobject_cast<KAction*>( sender() );
 
-  if (action)
-  {
+  if (action) {
       KUriFilterData filterData( action->data().toString() );
-      if ( KUriFilter::self()->filterSearchUri( filterData, KUriFilter::WebShortcutFilter ) )
-      {
+      if ( KUriFilter::self()->filterSearchUri( filterData, KUriFilter::WebShortcutFilter ) ) {
           KToolInvocation::invokeBrowser( filterData.uri().url() );
       }
   }
@@ -725,7 +707,7 @@ void MessageActions::slotHandleWebShortcutAction()
 
 void MessageActions::slotConfigureWebShortcuts()
 {
- KToolInvocation::kdeinitExec( QLatin1String("kcmshell4"), QStringList() << QLatin1String("ebrowsing") );
+    KToolInvocation::kdeinitExec( QLatin1String("kcmshell4"), QStringList() << QLatin1String("ebrowsing") );
 }
 
 #include "messageactions.moc"
