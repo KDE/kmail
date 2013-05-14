@@ -540,6 +540,7 @@ void KMMainWidget::slotFolderChanged( const Akonadi::Collection& collection )
   folderSelected( collection );
   if(collection.cachePolicy().syncOnDemand())
       AgentManager::self()->synchronizeCollection( collection, false );
+  mMsgActions->setCurrentMessage( Akonadi::Item() );
   emit captionChangeRequest( MailCommon::Util::fullCollectionPath( collection ) );
 }
 
