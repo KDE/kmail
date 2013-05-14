@@ -218,6 +218,23 @@
         </property>
        </widget>
       </item>
+      <item>
+       <widget class="QLabel" name="label_2">
+        <property name="text">
+         <string>Whitelist:</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="PimCommon::SimpleStringListEditor" name="scamWhiteList" native="true">
+        <property name="minimumSize">
+         <size>
+          <width>10</width>
+          <height>20</height>
+         </size>
+        </property>
+       </widget>
+      </item>
      </layout>
     </widget>
    </item>
@@ -236,6 +253,13 @@
    </item>
   </layout>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>PimCommon::SimpleStringListEditor</class>
+   <extends>QWidget</extends>
+   <header>simplestringlisteditor.h</header>
+  </customwidget>
+ </customwidgets>
  <resources/>
  <connections/>
 </ui>

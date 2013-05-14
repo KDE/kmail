@@ -3448,6 +3448,9 @@ SecurityPageGeneralTab::SecurityPageGeneralTab( QWidget * parent )
 
   connect( mSGTab.mScamDetection, SIGNAL(toggled(bool)),
            SLOT(slotEmitChanged()) );
+
+  connect( mSGTab.scamWhiteList, SIGNAL(changed()),
+           SLOT(slotEmitChanged()) );
 }
 
 void SecurityPageGeneralTab::slotLinkClicked( const QString & link )
@@ -3478,6 +3481,7 @@ void SecurityPage::GeneralTab::doLoadOther()
   mSGTab.mNoMDNsWhenEncryptedCheck->setChecked( MessageViewer::GlobalSettings::self()->notSendWhenEncrypted() );
 
   mSGTab.mScamDetection->setChecked( MessageViewer::GlobalSettings::self()->scamDetectionEnabled());
+  mSGTab.scamWhiteList->setStringList( MessageViewer::GlobalSettings::self()->scamDetectionWhiteList() );
 }
 
 void SecurityPage::GeneralTab::save()
@@ -3503,6 +3507,7 @@ void SecurityPage::GeneralTab::save()
   MessageViewer::GlobalSettings::self()->setNotSendWhenEncrypted( mSGTab.mNoMDNsWhenEncryptedCheck->isChecked() );
   MessageViewer::GlobalSettings::self()->setAlwaysDecrypt( mSGTab.mAlwaysDecrypt->isChecked() );
   MessageViewer::GlobalSettings::self()->setScamDetectionEnabled( mSGTab.mScamDetection->isChecked() );
+  MessageViewer::GlobalSettings::self()->setScamDetectionWhiteList( mSGTab.scamWhiteList->stringList() );
 }
 
 
