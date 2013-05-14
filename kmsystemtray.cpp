@@ -98,17 +98,18 @@ KMSystemTray::KMSystemTray(QObject *parent)
 
 }
 
-void KMSystemTray::buildPopupMenu()
+bool KMSystemTray::buildPopupMenu()
 {
+  KMMainWidget * mainWidget = kmkernel->getKMMainWidget();
+  if ( !mainWidget ) {
+    return false;
+  }
+
   if ( !contextMenu() ) {
     setContextMenu( new KMenu() );
   }
 
   contextMenu()->clear();
-
-  KMMainWidget * mainWidget = kmkernel->getKMMainWidget();
-  if ( !mainWidget )
-    return;
 
   contextMenu()->addTitle(qApp->windowIcon(), i18n("KMail"));
   QAction * action;
@@ -131,10 +132,10 @@ void KMSystemTray::buildPopupMenu()
     contextMenu()->addAction( action );
   contextMenu()->addSeparator();
 
-
-
   if ( ( action = actionCollection()->action("file_quit") ) )
     contextMenu()->addAction( action );
+
+  return true;
 }
 
 KMSystemTray::~KMSystemTray()
@@ -245,10 +246,10 @@ void KMSystemTray::slotActivated()
     return ;
 
   KWindowInfo cur = KWindowSystem::windowInfo( mainWin->winId(), NET::WMDesktop );
-  
+
   int currentDesktop = KWindowSystem::currentDesktop();
   bool wasMinimized = cur.isMinimized();
-  
+
   if ( cur.valid() )
     mDesktopOfMainWin = cur.desktop();
 
@@ -257,9 +258,9 @@ void KMSystemTray::slotActivated()
 
   if ( mDesktopOfMainWin == NET::OnAllDesktops )
     KWindowSystem::setOnAllDesktops( mainWin->winId(), true );
-  
+
   KWindowSystem::activateWindow( mainWin->winId() );
-  
+
   if (wasMinimized )
     kmkernel->raise();
 }
@@ -268,7 +269,9 @@ void KMSystemTray::slotContextMenuAboutToShow()
 {
   // Rebuild popup menu before show to minimize race condition if
   // the base KMainWidget is closed.
-  buildPopupMenu();
+  if ( !buildPopupMenu() ) {
+    return;
+  }
 
   if ( mNewMessagesPopup != 0 ) {
     contextMenu()->removeAction( mNewMessagesPopup->menuAction() );
@@ -276,8 +279,8 @@ void KMSystemTray::slotContextMenuAboutToShow()
     mNewMessagesPopup = 0;
   }
   mNewMessagesPopup = new KMenu();
-  fillFoldersMenu( mNewMessagesPopup, KMKernel::self()->treeviewModelSelection() );
-  
+  fillFoldersMenu( mNewMessagesPopup, kmkernel->treeviewModelSelection() );
+
   connect( mNewMessagesPopup, SIGNAL(triggered(QAction*)), this,
            SLOT(slotSelectCollection(QAction*)) );
 
@@ -343,7 +346,7 @@ void KMSystemTray::hideKMail()
 void KMSystemTray::initListOfCollection()
 {
   mCount = 0;
-  const QAbstractItemModel *model = KMKernel::self()->entityTreeModel();
+  const QAbstractItemModel *model = kmkernel->entityTreeModel();
   if(model->rowCount() == 0) {
     QTimer::singleShot(1000,this,SLOT(initListOfCollection()));
     return;
@@ -400,7 +403,7 @@ bool KMSystemTray::hasUnreadMail() const
 void KMSystemTray::slotSelectCollection(QAction*act)
 {
   const Akonadi::Collection::Id id = act->data().value<Akonadi::Collection::Id>();
-  KMKernel::self()->selectCollectionFromId( id );
+  kmkernel->selectCollectionFromId( id );
   KMMainWidget * mainWidget = kmkernel->getKMMainWidget();
   if ( !mainWidget )
     return ;
