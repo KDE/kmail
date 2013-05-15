@@ -36,19 +36,17 @@ class AttachmentView;
 
 class AttachmentController : public Message::AttachmentControllerBase
 {
-  Q_OBJECT
+    Q_OBJECT
 
-  public:
+public:
     explicit AttachmentController( Message::AttachmentModel *model, AttachmentView *view, KMComposeWin *composer );
     ~AttachmentController();
 
-  public slots:
-
-     /// @reimp
+public slots:
+    /// @reimp
     void attachMyPublicKey();
 
-  private slots:
-
+private slots:
     void identityChanged();
     void actionsCreated();
     void addAttachmentItems( const Akonadi::Item::List &items );
@@ -57,7 +55,7 @@ class AttachmentController : public Message::AttachmentControllerBase
     void doubleClicked( const QModelIndex &itemClicked );
     void slotSelectAllAttachment();
 
-  private:
+private:
     KMComposeWin *mComposer;
     AttachmentView *mView;
 };

@@ -66,6 +66,7 @@ class AttachmentView : public QTreeView
 
   private Q_SLOTS:
     void slotShowHideAttchementList(bool);
+
   private:
     void saveHeaderState();
     void restoreHeaderState();
