@@ -47,6 +47,7 @@
 #include <Akonadi/EntityMimeTypeFilterModel>
 #include <KActionMenu>
 #include <KDebug>
+#include <KDialogButtonBox>
 #include <KIcon>
 #include <KIconLoader>
 #include <KLineEdit>
@@ -89,11 +90,6 @@ SearchWindow::SearchWindow( KMMainWidget *widget, const Akonadi::Collection &col
     mAkonadiStandardAction( 0 )
 {
   setCaption( i18n( "Find Messages" ) );
-  setButtons( User1 | Close );
-  setDefaultButton( User1 );
-  mStartSearchGuiItem = KGuiItem( i18nc( "@action:button Search for messages", "&Search" ), "edit-find" );
-  mStopSearchGuiItem = KStandardGuiItem::stop();
-  setButtonGuiItem( User1, mStartSearchGuiItem );
 
   KWindowSystem::setIcons( winId(), qApp->windowIcon().pixmap( IconSize( KIconLoader::Desktop ),
                                                                IconSize( KIconLoader::Desktop ) ),
@@ -105,6 +101,13 @@ SearchWindow::SearchWindow( KMMainWidget *widget, const Akonadi::Collection &col
   QWidget *searchWidget = new QWidget( this );
   setMainWidget( searchWidget );
   mUi.setupUi( searchWidget );
+
+  setButtons( None );
+  mStartSearchGuiItem = KGuiItem( i18nc( "@action:button Search for messages", "&Search" ), "edit-find" );
+  mStopSearchGuiItem = KStandardGuiItem::stop();
+  mSearchButton =  mUi.mButtonBox->addButton( mStartSearchGuiItem, QDialogButtonBox::ActionRole );
+  connect( mUi.mButtonBox, SIGNAL(rejected()), SLOT(slotClose()) );
+
   searchWidget->layout()->setMargin( 0 );
 
   mUi.mCbxFolders->setMustBeReadWrite( false );
@@ -204,15 +207,13 @@ SearchWindow::SearchWindow( KMMainWidget *widget, const Akonadi::Collection &col
   connect( mUi.mSearchResultOpenBtn, SIGNAL(clicked()),
            this, SLOT(slotViewSelectedMsg()) );
 
-  mUi.mStatusLbl->setText( i18nc( "@info:status finished searching.", "Ready." ) );
-
   const int mainWidth = GlobalSettings::self()->searchWidgetWidth();
   const int mainHeight = GlobalSettings::self()->searchWidgetHeight();
 
   if ( mainWidth || mainHeight )
     resize( mainWidth, mainHeight );
 
-  connect( this, SIGNAL(user1Clicked()), SLOT(slotSearch()) );
+  connect( mSearchButton, SIGNAL(clicked()), SLOT(slotSearch()) );
   connect( this, SIGNAL(finished()), this, SLOT(deleteLater()) );
   connect( this, SIGNAL(closeClicked()),this,SLOT(slotClose()) );
 
@@ -344,7 +345,7 @@ void SearchWindow::setEnabledSearchButton( bool )
   //Before when we selected a folder == "Local Folder" as that it was not a folder
   //search button was disable, and when we select "Search in all local folder"
   //Search button was never enabled :(
-  enableButton( User1, true );
+  mSearchButton->setEnabled( true );
 }
 
 void SearchWindow::updateCollectionStatistic(Akonadi::Collection::Id id,Akonadi::CollectionStatistics statistic)
@@ -380,7 +381,7 @@ void SearchWindow::activateFolder( const Akonadi::Collection &collection )
 void SearchWindow::slotSearch()
 {
   mLastFocus = focusWidget();
-  setButtonFocus( User1 );     // set focus so we don't miss key event
+  mSearchButton->setFocus();     // set focus so we don't miss key event
 
 
   if ( mUi.mSearchFolderEdt->text().isEmpty() ) {
@@ -490,6 +491,7 @@ void SearchWindow::searchDone( KJob* job )
       new Akonadi::CollectionModifyJob( mFolder, this );
       mSearchJob = 0;
 
+      mUi.mStatusLbl->setText( QString() );
       createSearchModel();
 
       if ( mLastFocus )
@@ -622,13 +624,13 @@ void SearchWindow::enableGUI()
   mUi.mChkbxSpecificFolders->setEnabled( !searching );
   mUi.mPatternEdit->setEnabled( !searching);
 
-  setButtonGuiItem( User1, searching ? mStopSearchGuiItem : mStartSearchGuiItem );
+  mSearchButton->setGuiItem( searching ? mStopSearchGuiItem : mStartSearchGuiItem );
   if ( searching ) {
-    disconnect( this, SIGNAL(user1clicked()), this, SLOT(slotSearch()) );
-    connect( this, SIGNAL(user1Clicked()), SLOT(slotStop()) );
+    disconnect( mSearchButton, SIGNAL(clicked()), this, SLOT(slotSearch()) );
+    connect( mSearchButton, SIGNAL(clicked()), SLOT(slotStop()) );
   } else {
-    disconnect( this, SIGNAL(user1Clicked()), this, SLOT(slotStop()) );
-    connect( this, SIGNAL(user1clicked()), SLOT(slotSearch()) );
+    disconnect( mSearchButton, SIGNAL(clicked()), this, SLOT(slotStop()) );
+    connect( mSearchButton, SIGNAL(clicked()), SLOT(slotSearch()) );
   }
 }
 
