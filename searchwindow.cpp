@@ -488,7 +488,6 @@ void SearchWindow::slotSearch()
 
   SearchPattern searchPattern( mSearchPattern );
   searchPattern.purify();
-  enableGUI();
 
   mTimer->start( 200 );
 
@@ -519,6 +518,7 @@ void SearchWindow::slotSearch()
   }
 
   connect( mSearchJob, SIGNAL(result(KJob*)), SLOT(searchDone(KJob*)) );
+  enableGUI();
 }
 
 void SearchWindow::searchDone( KJob* job )
