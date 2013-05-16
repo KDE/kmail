@@ -184,6 +184,8 @@ class SearchWindow: public KDialog, virtual public KXMLGUIClient
     // not owned by us
     KMMainWidget* mKMMainWidget;
     MailCommon::SearchPattern mSearchPattern;
+    KGuiItem mStartSearchGuiItem;
+    KGuiItem mStopSearchGuiItem;
 
     Akonadi::StandardMailActionManager *mAkonadiStandardAction;
 

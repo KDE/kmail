@@ -90,10 +90,11 @@ SearchWindow::SearchWindow( KMMainWidget *widget, const Akonadi::Collection &col
     mAkonadiStandardAction( 0 )
 {
   setCaption( i18n( "Find Messages" ) );
-  setButtons( User1 | User2 | Close );
+  setButtons( User1 | Close );
   setDefaultButton( User1 );
-  setButtonGuiItem( User1, KGuiItem( i18nc( "@action:button Search for messages", "&Search" ), "edit-find" ) );
-  setButtonGuiItem( User2, KStandardGuiItem::stop() );
+  mStartSearchGuiItem = KGuiItem( i18nc( "@action:button Search for messages", "&Search" ), "edit-find" );
+  mStopSearchGuiItem = KStandardGuiItem::stop();
+  setButtonGuiItem( User1, mStartSearchGuiItem );
 
   KWindowSystem::setIcons( winId(), qApp->windowIcon().pixmap( IconSize( KIconLoader::Desktop ),
                                                                IconSize( KIconLoader::Desktop ) ),
@@ -216,11 +217,7 @@ SearchWindow::SearchWindow( KMMainWidget *widget, const Akonadi::Collection &col
   if ( mainWidth || mainHeight )
     resize( mainWidth, mainHeight );
 
-  setButtonsOrientation( Qt::Vertical );
-  enableButton( User2, false );
-
   connect( this, SIGNAL(user1Clicked()), SLOT(slotSearch()) );
-  connect( this, SIGNAL(user2Clicked()), SLOT(slotStop()) );
   connect( this, SIGNAL(finished()), this, SLOT(deleteLater()) );
   connect( this, SIGNAL(closeClicked()),this,SLOT(slotClose()) );
 
@@ -394,8 +391,7 @@ void SearchWindow::slotSearch()
   if ( mUi.mSearchFolderEdt->text().isEmpty() ) {
     mUi.mSearchFolderEdt->setText( i18n( "Last Search" ) );
   }
-  enableButton( User1, false );
-  enableButton( User2, true );
+
   if ( mResultModel )
     mHeaderState = mUi.mLbxMatches->header()->saveState();
 
@@ -459,6 +455,7 @@ void SearchWindow::slotSearch()
 void SearchWindow::searchDone( KJob* job )
 {
   Q_ASSERT( job == mSearchJob );
+  QMetaObject::invokeMethod( this, "enableGUI", Qt::QueuedConnection );
   if ( job->error() ) {
     KMessageBox::sorry( this, i18n("Can not get search result. %1", job->errorString() ) );
     if ( mSearchJob ) {
@@ -499,8 +496,6 @@ void SearchWindow::searchDone( KJob* job )
 
       createSearchModel();
 
-      QTimer::singleShot( 0, this, SLOT(enableGUI()) );
-
       if ( mLastFocus )
         mLastFocus->setFocus();
 
@@ -522,7 +517,7 @@ void SearchWindow::slotStop()
     mSearchJob = 0;
   }
 
-  enableButton( User2, false );
+  enableGUI();
 }
 
 void SearchWindow::slotClose()
@@ -631,8 +626,14 @@ void SearchWindow::enableGUI()
   mUi.mChkbxSpecificFolders->setEnabled( !searching );
   mUi.mPatternEdit->setEnabled( !searching);
 
-  enableButton( User1, !searching );
-  enableButton( User2, searching );
+  setButtonGuiItem( User1, searching ? mStopSearchGuiItem : mStartSearchGuiItem );
+  if ( searching ) {
+    disconnect( this, SIGNAL(user1clicked()), this, SLOT(slotSearch()) );
+    connect( this, SIGNAL(user1Clicked()), SLOT(slotStop()) );
+  } else {
+    disconnect( this, SIGNAL(user1Clicked()), this, SLOT(slotStop()) );
+    connect( this, SIGNAL(user1clicked()), SLOT(slotSearch()) );
+  }
 }
 
 Akonadi::Item::List SearchWindow::selectedMessages() const
