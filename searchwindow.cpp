@@ -55,7 +55,6 @@
 #include <KSharedConfig>
 #include <KStandardAction>
 #include <KStandardGuiItem>
-#include <KStatusBar>
 #include <KWindowSystem>
 #include <KMessageBox>
 
@@ -205,11 +204,7 @@ SearchWindow::SearchWindow( KMMainWidget *widget, const Akonadi::Collection &col
   connect( mUi.mSearchResultOpenBtn, SIGNAL(clicked()),
            this, SLOT(slotViewSelectedMsg()) );
 
-  mUi.mStatusBar->insertPermanentItem( i18n( "AMiddleLengthText..." ), 0 );
-  mUi.mStatusBar->changeItem( i18nc( "@info:status finished searching.", "Ready." ), 0 );
-  mUi.mStatusBar->setItemAlignment( 0, Qt::AlignLeft | Qt::AlignVCenter );
-  mUi.mStatusBar->insertPermanentItem( QString(), 1, 1 );
-  mUi.mStatusBar->setItemAlignment( 1, Qt::AlignLeft | Qt::AlignVCenter );
+  mUi.mStatusLbl->setText( i18nc( "@info:status finished searching.", "Ready." ) );
 
   const int mainWidth = GlobalSettings::self()->searchWidgetWidth();
   const int mainHeight = GlobalSettings::self()->searchWidgetHeight();
@@ -358,7 +353,7 @@ void SearchWindow::updateCollectionStatistic(Akonadi::Collection::Id id,Akonadi:
   if ( id == mFolder.id() ) {
     genMsg = i18np( "%1 match", "%1 matches", statistic.count() );
   }
-  mUi.mStatusBar->changeItem( genMsg, 0 );
+  mUi.mStatusLbl->setText( genMsg );
 }
 
 void SearchWindow::keyPressEvent( QKeyEvent *event )
@@ -450,6 +445,7 @@ void SearchWindow::slotSearch()
 
   connect( mSearchJob, SIGNAL(result(KJob*)), SLOT(searchDone(KJob*)) );
   enableGUI();
+  mUi.mStatusLbl->setText( i18n( "Searching..." ) );
 }
 
 void SearchWindow::searchDone( KJob* job )

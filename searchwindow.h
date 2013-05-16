@@ -41,7 +41,6 @@ class KActionMenu;
 class KJob;
 class KLineEdit;
 class KMMainWidget;
-class KStatusBar;
 class KMSearchMessageModel;
 class QAbstractItemModel;
 class QModelIndex;

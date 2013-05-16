@@ -127,7 +127,11 @@
     </layout>
    </item>
    <item>
-    <widget class="KStatusBar" name="mStatusBar" native="true"/>
+    <widget class="QLabel" name="mStatusLbl">
+     <property name="text">
+      <string/>
+     </property>
+    </widget>
    </item>
   </layout>
  </widget>
@@ -158,12 +162,6 @@
    <class>Akonadi::EntityTreeView</class>
    <extends>QTreeView</extends>
    <header location="global">Akonadi/EntityTreeView</header>
-  </customwidget>
-  <customwidget>
-   <class>KStatusBar</class>
-   <extends>QWidget</extends>
-   <header location="global">KStatusBar</header>
-   <container>1</container>
   </customwidget>
  </customwidgets>
  <resources/>
