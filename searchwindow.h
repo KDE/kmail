@@ -170,7 +170,6 @@ class SearchWindow: public KDialog, virtual public KXMLGUIClient
     Qt::SortOrder mSortOrder;
     Akonadi::Collection mFolder;
     KJob *mSearchJob;
-    QTimer *mTimer;
 
     // GC'd by Qt
     QRadioButton *mChkbxAllFolders;

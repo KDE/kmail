@@ -84,7 +84,6 @@ SearchWindow::SearchWindow( KMMainWidget *widget, const Akonadi::Collection &col
     mSortColumn( 0 ),
     mSortOrder( Qt::AscendingOrder ),
     mSearchJob( 0 ),
-    mTimer( new QTimer( this ) ),
     mResultModel( 0 ),
     mLastFocus( 0 ),
     mKMMainWidget( widget ),
@@ -489,9 +488,6 @@ void SearchWindow::slotSearch()
   SearchPattern searchPattern( mSearchPattern );
   searchPattern.purify();
 
-  mTimer->start( 200 );
-
-
 #ifdef AKONADI_USE_STRIGI_SEARCH
   const QString query = searchPattern.asXesamQuery();
   const QString queryLanguage = "XESAM";
@@ -563,8 +559,6 @@ void SearchWindow::searchDone( KJob* job )
       mSearchJob = 0;
 
       createSearchModel();
-
-      mTimer->stop();
 
       QTimer::singleShot( 0, this, SLOT(enableGUI()) );
 
