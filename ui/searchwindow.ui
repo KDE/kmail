@@ -1,0 +1,204 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>SearchWindow</class>
+ <widget class="QWidget" name="SearchWindow">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>774</width>
+    <height>637</height>
+   </rect>
+  </property>
+  <layout class="QVBoxLayout" name="verticalLayout_2">
+   <item>
+    <widget class="QRadioButton" name="mChkbxAllFolders">
+     <property name="text">
+      <string>Search in &amp;all folders</string>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <layout class="QHBoxLayout" name="horizontalLayout">
+     <item>
+      <widget class="QRadioButton" name="mChkbxSpecificFolders">
+       <property name="text">
+        <string>Search &amp;only in:</string>
+       </property>
+       <property name="checked">
+        <bool>true</bool>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="MailCommon::FolderRequester" name="mCbxFolders" native="true"/>
+     </item>
+     <item>
+      <widget class="QCheckBox" name="mChkSubFolders">
+       <property name="text">
+        <string>&amp;Include sub-folders</string>
+       </property>
+       <property name="checked">
+        <bool>true</bool>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </item>
+   <item>
+    <widget class="QGroupBox" name="groupBox">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Preferred" vsizetype="Maximum">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+     <property name="title">
+      <string/>
+     </property>
+     <property name="flat">
+      <bool>true</bool>
+     </property>
+     <layout class="QVBoxLayout" name="verticalLayout">
+      <property name="margin">
+       <number>0</number>
+      </property>
+      <item>
+       <widget class="MailCommon::SearchPatternEdit" name="mPatternEdit" native="true"/>
+      </item>
+     </layout>
+    </widget>
+   </item>
+   <item>
+    <widget class="Akonadi::EntityTreeView" name="mLbxMatches">
+     <property name="contextMenuPolicy">
+      <enum>Qt::CustomContextMenu</enum>
+     </property>
+     <property name="alternatingRowColors">
+      <bool>true</bool>
+     </property>
+     <property name="selectionMode">
+      <enum>QAbstractItemView::ExtendedSelection</enum>
+     </property>
+     <property name="allColumnsShowFocus">
+      <bool>true</bool>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <layout class="QHBoxLayout" name="horizontalLayout_2">
+     <item>
+      <widget class="QLabel" name="mSearchFolderLbl">
+       <property name="text">
+        <string>Search folder &amp;name:</string>
+       </property>
+       <property name="buddy">
+        <cstring>mSearchFolderEdt</cstring>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="KLineEdit" name="mSearchFolderEdt">
+       <property name="showClearButton" stdset="0">
+        <bool>true</bool>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="KPushButton" name="mSearchFolderOpenBtn">
+       <property name="enabled">
+        <bool>false</bool>
+       </property>
+       <property name="text">
+        <string>Open &amp;Search Folder</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="KPushButton" name="mSearchResultOpenBtn">
+       <property name="enabled">
+        <bool>false</bool>
+       </property>
+       <property name="text">
+        <string>Open &amp;Message</string>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </item>
+   <item>
+    <widget class="KStatusBar" name="mStatusBar" native="true"/>
+   </item>
+  </layout>
+ </widget>
+ <customwidgets>
+  <customwidget>
+   <class>KLineEdit</class>
+   <extends>QLineEdit</extends>
+   <header>klineedit.h</header>
+  </customwidget>
+  <customwidget>
+   <class>KPushButton</class>
+   <extends>QPushButton</extends>
+   <header>kpushbutton.h</header>
+  </customwidget>
+  <customwidget>
+   <class>MailCommon::SearchPatternEdit</class>
+   <extends>QWidget</extends>
+   <header location="global">mailcommon/searchpatternedit.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>MailCommon::FolderRequester</class>
+   <extends>QWidget</extends>
+   <header location="global">mailcommon/folderrequester.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>Akonadi::EntityTreeView</class>
+   <extends>QTreeView</extends>
+   <header location="global">Akonadi/EntityTreeView</header>
+  </customwidget>
+  <customwidget>
+   <class>KStatusBar</class>
+   <extends>QWidget</extends>
+   <header location="global">KStatusBar</header>
+   <container>1</container>
+  </customwidget>
+ </customwidgets>
+ <resources/>
+ <connections>
+  <connection>
+   <sender>mChkbxSpecificFolders</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>mCbxFolders</receiver>
+   <slot>setEnabled(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>101</x>
+     <y>40</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>329</x>
+     <y>42</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>mChkbxSpecificFolders</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>mChkSubFolders</receiver>
+   <slot>setEnabled(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>78</x>
+     <y>43</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>544</x>
+     <y>47</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
+</ui>

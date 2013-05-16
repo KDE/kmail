@@ -156,6 +156,7 @@ if (NOT WINCE AND KDEPIM_BUILD_DESKTOP)
     ui/securitypagegeneraltab.ui
     ui/identitypage.ui
     ui/accountspagereceivingtab.ui
+    ui/searchwindow.ui
   )
 
   # KCFG files. The main kmail.kcfg is configured by CMake and put

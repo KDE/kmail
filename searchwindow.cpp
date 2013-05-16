@@ -103,45 +103,19 @@ SearchWindow::SearchWindow( KMMainWidget *widget, const Akonadi::Collection &col
   KSharedConfig::Ptr config = KMKernel::self()->config();
 
   QWidget *searchWidget = new QWidget( this );
-  QVBoxLayout *vbl = new QVBoxLayout( searchWidget );
-  vbl->setMargin( 0 );
+  setMainWidget( searchWidget );
+  mUi.setupUi( searchWidget );
+  searchWidget->layout()->setMargin( 0 );
 
-  QFrame *radioFrame = new QFrame( searchWidget );
-  QVBoxLayout *radioLayout = new QVBoxLayout( radioFrame );
-  mChkbxAllFolders = new QRadioButton( i18n( "Search in &all folders" ), searchWidget );
-
-  QHBoxLayout *hbl = new QHBoxLayout();
-
-  mChkbxSpecificFolders = new QRadioButton( i18n( "Search &only in:" ), searchWidget );
-  mChkbxSpecificFolders->setChecked( true );
-
-  mCbxFolders = new FolderRequester( searchWidget );
-  mCbxFolders->setMustBeReadWrite( false );
-  mCbxFolders->setNotAllowToCreateNewFolder( true );
-
-  mChkSubFolders = new QCheckBox( i18n( "I&nclude sub-folders" ), searchWidget );
-  mChkSubFolders->setChecked( true );
-
-  radioLayout->addWidget( mChkbxAllFolders );
-  hbl->addWidget( mChkbxSpecificFolders );
-  hbl->addWidget( mCbxFolders );
-  hbl->addWidget( mChkSubFolders );
-  radioLayout->addLayout( hbl );
-
-  QGroupBox *patternGroupBox = new QGroupBox( searchWidget );
-  QHBoxLayout *layout = new QHBoxLayout( patternGroupBox );
-  layout->setContentsMargins( 0, 0, 0, 0 );
-
-  mPatternEdit = new SearchPatternEdit( searchWidget );
-  layout->addWidget( mPatternEdit );
-  patternGroupBox->setFlat( true );
+  mUi.mCbxFolders->setMustBeReadWrite( false );
+  mUi.mCbxFolders->setNotAllowToCreateNewFolder( true );
 
   bool currentFolderIsSearchFolder = false;
 
   if ( !collection.hasAttribute<Akonadi::PersistentSearchAttribute>() ) {
     // it's not a search folder, make a new search
     mSearchPattern.append( SearchRule::createInstance( "Subject" ) );
-    mCbxFolders->setCollection( collection );
+    mUi.mCbxFolders->setCollection( collection );
   } else {
     // it's a search folder
     if ( collection.hasAttribute<Akonadi::SearchDescriptionAttribute>() ) {
@@ -152,11 +126,11 @@ SearchWindow::SearchWindow( KMMainWidget *widget, const Akonadi::Collection &col
 
       const Akonadi::Collection col = searchDescription->baseCollection();
       if ( col.isValid() ) {
-        mChkbxSpecificFolders->setChecked( true );
-        mCbxFolders->setCollection( col );
-        mChkSubFolders->setChecked( searchDescription->recursive() );
+        mUi.mChkbxSpecificFolders->setChecked( true );
+        mUi.mCbxFolders->setCollection( col );
+        mUi.mChkSubFolders->setChecked( searchDescription->recursive() );
       } else {
-        mChkbxAllFolders->setChecked( true );
+        mUi.mChkbxAllFolders->setChecked( true );
       }
     } else {
       // it's a search folder, but not one of ours, warn the user that we can't edit it
@@ -166,18 +140,13 @@ SearchWindow::SearchWindow( KMMainWidget *widget, const Akonadi::Collection &col
     }
   }
 
-  mPatternEdit->setSearchPattern( &mSearchPattern );
+  mUi.mPatternEdit->setSearchPattern( &mSearchPattern );
 
   // enable/disable widgets depending on radio buttons:
-  connect( mChkbxSpecificFolders, SIGNAL(toggled(bool)),
-           mCbxFolders, SLOT(setEnabled(bool)) );
-  connect( mChkbxSpecificFolders, SIGNAL(toggled(bool)),
-           mChkSubFolders, SLOT(setEnabled(bool)) );
-  connect( mChkbxAllFolders, SIGNAL(toggled(bool)),
+  connect( mUi.mChkbxAllFolders, SIGNAL(toggled(bool)),
            this, SLOT(setEnabledSearchButton(bool)) );
 
-  mLbxMatches = new Akonadi::EntityTreeView( mKMMainWidget->guiClient(), this );
-  mLbxMatches->setAlternatingRowColors( true );
+  mUi.mLbxMatches->setXmlGuiClient( mKMMainWidget->guiClient() );
 
   /*
     Default is to sort by date. TODO: Unfortunately this sorts *while*
@@ -192,74 +161,54 @@ SearchWindow::SearchWindow( KMMainWidget *widget, const Akonadi::Collection &col
     TODO: subclass QTreeWidgetItem and do proper (and performant)
     compare functions
   */
-  mLbxMatches->setSortingEnabled( true );
+  mUi.mLbxMatches->setSortingEnabled( true );
 #if 0 // port me!
-  mLbxMatches->sortItems( 2, Qt::DescendingOrder );
+  mUi.mLbxMatches->sortItems( 2, Qt::DescendingOrder );
 #else
   kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
 #endif
 
-  mLbxMatches->setAllColumnsShowFocus( true );
-  mLbxMatches->setSelectionMode( QAbstractItemView::ExtendedSelection );
-  mLbxMatches->setContextMenuPolicy( Qt::CustomContextMenu );
-
-  connect( mLbxMatches, SIGNAL(customContextMenuRequested(QPoint)),
+  connect( mUi.mLbxMatches, SIGNAL(customContextMenuRequested(QPoint)),
            this, SLOT(slotContextMenuRequested(QPoint)) );
-  connect( mLbxMatches, SIGNAL(clicked(Akonadi::Item)),
+  connect( mUi.mLbxMatches, SIGNAL(clicked(Akonadi::Item)),
            this, SLOT(slotShowMsg(Akonadi::Item)) );
-  connect( mLbxMatches, SIGNAL(doubleClicked(Akonadi::Item)),
+  connect( mUi.mLbxMatches, SIGNAL(doubleClicked(Akonadi::Item)),
            this, SLOT(slotViewMsg(Akonadi::Item)) );
-  connect( mLbxMatches, SIGNAL(currentChanged(Akonadi::Item)),
+  connect( mUi.mLbxMatches, SIGNAL(currentChanged(Akonadi::Item)),
            this, SLOT(slotCurrentChanged(Akonadi::Item)) );
 
   connect( KMKernel::self()->folderCollectionMonitor(), SIGNAL(collectionStatisticsChanged(Akonadi::Collection::Id,Akonadi::CollectionStatistics)), this, SLOT(updateCollectionStatistic(Akonadi::Collection::Id,Akonadi::CollectionStatistics)) );
 
-  QHBoxLayout *hbl2 = new QHBoxLayout();
-  mSearchFolderLbl = new QLabel( i18n( "Search folder &name:" ), searchWidget );
-  mSearchFolderEdt = new KLineEdit( searchWidget );
-  mSearchFolderEdt->setClearButtonShown( true );
-
   if ( currentFolderIsSearchFolder ) {
     mFolder = collection;
-    mSearchFolderEdt->setText( collection.name() );
+    mUi.mSearchFolderEdt->setText( collection.name() );
     Q_ASSERT ( !mResultModel );
     createSearchModel();
   } else {
-    mSearchFolderEdt->setText( i18n( "Last Search" ) );
+    mUi.mSearchFolderEdt->setText( i18n( "Last Search" ) );
     // find last search and reuse it if possible
     mFolder = CommonKernel->collectionFromId( GlobalSettings::lastSearchCollectionId() );
     // when the last folder got renamed, create a new one
-    if ( mFolder.isValid() && mFolder.name() != mSearchFolderEdt->text() ) {
+    if ( mFolder.isValid() && mFolder.name() != mUi.mSearchFolderEdt->text() ) {
       mFolder = Akonadi::Collection();
     }
   }
 
-  mSearchFolderLbl->setBuddy( mSearchFolderEdt );
-  mSearchFolderOpenBtn = new KPushButton( i18n( "Op&en Search Folder" ), searchWidget );
-  mSearchFolderOpenBtn->setEnabled( false );
-  connect( mSearchFolderEdt, SIGNAL(textChanged(QString)),
+  connect( mUi.mSearchFolderEdt, SIGNAL(textChanged(QString)),
            this, SLOT(scheduleRename(QString)) );
   connect( &mRenameTimer, SIGNAL(timeout()),
            this, SLOT(renameSearchFolder()) );
-  connect( mSearchFolderOpenBtn, SIGNAL(clicked()),
+  connect( mUi.mSearchFolderOpenBtn, SIGNAL(clicked()),
            this, SLOT(openSearchFolder()) );
 
-  mSearchResultOpenBtn = new KPushButton( i18n( "Open &Message" ), searchWidget );
-  mSearchResultOpenBtn->setEnabled( false );
-  connect( mSearchResultOpenBtn, SIGNAL(clicked()),
+  connect( mUi.mSearchResultOpenBtn, SIGNAL(clicked()),
            this, SLOT(slotViewSelectedMsg()) );
 
-  hbl2->addWidget( mSearchFolderLbl );
-  hbl2->addWidget( mSearchFolderEdt );
-  hbl2->addWidget( mSearchFolderOpenBtn );
-  hbl2->addWidget( mSearchResultOpenBtn );
-
-  mStatusBar = new KStatusBar(searchWidget);
-  mStatusBar->insertPermanentItem( i18n( "AMiddleLengthText..." ), 0 );
-  mStatusBar->changeItem( i18nc( "@info:status finished searching.", "Ready." ), 0 );
-  mStatusBar->setItemAlignment( 0, Qt::AlignLeft | Qt::AlignVCenter );
-  mStatusBar->insertPermanentItem( QString(), 1, 1 );
-  mStatusBar->setItemAlignment( 1, Qt::AlignLeft | Qt::AlignVCenter );
+  mUi.mStatusBar->insertPermanentItem( i18n( "AMiddleLengthText..." ), 0 );
+  mUi.mStatusBar->changeItem( i18nc( "@info:status finished searching.", "Ready." ), 0 );
+  mUi.mStatusBar->setItemAlignment( 0, Qt::AlignLeft | Qt::AlignVCenter );
+  mUi.mStatusBar->insertPermanentItem( QString(), 1, 1 );
+  mUi.mStatusBar->setItemAlignment( 1, Qt::AlignLeft | Qt::AlignVCenter );
 
   const int mainWidth = GlobalSettings::self()->searchWidgetWidth();
   const int mainHeight = GlobalSettings::self()->searchWidgetHeight();
@@ -267,18 +216,8 @@ SearchWindow::SearchWindow( KMMainWidget *widget, const Akonadi::Collection &col
   if ( mainWidth || mainHeight )
     resize( mainWidth, mainHeight );
 
-  setMainWidget( searchWidget );
   setButtonsOrientation( Qt::Vertical );
   enableButton( User2, false );
-
-  //Bring all the layouts together
-  vbl->addWidget( radioFrame );
-  vbl->addWidget( patternGroupBox );
-  vbl->addWidget( mLbxMatches );
-  vbl->addLayout( hbl2 );
-  vbl->addWidget( mStatusBar );
-
-  patternGroupBox->setSizePolicy( QSizePolicy::Preferred, QSizePolicy::Maximum );
 
   connect( this, SIGNAL(user1Clicked()), SLOT(slotSearch()) );
   connect( this, SIGNAL(user2Clicked()), SLOT(slotStop()) );
@@ -286,7 +225,7 @@ SearchWindow::SearchWindow( KMMainWidget *widget, const Akonadi::Collection &col
   connect( this, SIGNAL(closeClicked()),this,SLOT(slotClose()) );
 
   // give focus to the value field of the first search rule
-  RegExpLineEdit* r = mPatternEdit->findChild<RegExpLineEdit*>( "regExpLineEdit" );
+  RegExpLineEdit* r = mUi.mPatternEdit->findChild<RegExpLineEdit*>( "regExpLineEdit" );
   if ( r )
     r->setFocus();
   else
@@ -340,7 +279,7 @@ SearchWindow::SearchWindow( KMMainWidget *widget, const Akonadi::Collection &col
   actionCollection()->addAction( "search_clear_selection", mClearAction );
   connect( mClearAction, SIGNAL(triggered(bool)), SLOT(slotClearSelection()) );
 
-  connect( mCbxFolders, SIGNAL(folderChanged(Akonadi::Collection)),
+  connect( mUi.mCbxFolders, SIGNAL(folderChanged(Akonadi::Collection)),
            this, SLOT(slotFolderActivated()) );
 
   ac->addAssociatedWidget( this );
@@ -351,23 +290,23 @@ SearchWindow::SearchWindow( KMMainWidget *widget, const Akonadi::Collection &col
 SearchWindow::~SearchWindow()
 {
   if ( mResultModel ) {
-    if ( mLbxMatches->columnWidth( 0 ) > 0 ) {
-      GlobalSettings::self()->setCollectionWidth( mLbxMatches->columnWidth( 0 )  );
+    if ( mUi.mLbxMatches->columnWidth( 0 ) > 0 ) {
+      GlobalSettings::self()->setCollectionWidth( mUi.mLbxMatches->columnWidth( 0 )  );
     }
-    if ( mLbxMatches->columnWidth( 1 ) > 0 ) {
-      GlobalSettings::self()->setSubjectWidth( mLbxMatches->columnWidth( 1 )  );
+    if ( mUi.mLbxMatches->columnWidth( 1 ) > 0 ) {
+      GlobalSettings::self()->setSubjectWidth( mUi.mLbxMatches->columnWidth( 1 )  );
     }
-    if ( mLbxMatches->columnWidth( 2 ) > 0 ) {
-      GlobalSettings::self()->setSenderWidth( mLbxMatches->columnWidth( 2 ) );
+    if ( mUi.mLbxMatches->columnWidth( 2 ) > 0 ) {
+      GlobalSettings::self()->setSenderWidth( mUi.mLbxMatches->columnWidth( 2 ) );
     }
-    if ( mLbxMatches->columnWidth( 3 ) > 0 ) {
-      GlobalSettings::self()->setReceiverWidth( mLbxMatches->columnWidth( 3 ) );
+    if ( mUi.mLbxMatches->columnWidth( 3 ) > 0 ) {
+      GlobalSettings::self()->setReceiverWidth( mUi.mLbxMatches->columnWidth( 3 ) );
     }
-    if ( mLbxMatches->columnWidth( 4 ) > 0 ) {
-      GlobalSettings::self()->setDateWidth( mLbxMatches->columnWidth( 4 ) );
+    if ( mUi.mLbxMatches->columnWidth( 4 ) > 0 ) {
+      GlobalSettings::self()->setDateWidth( mUi.mLbxMatches->columnWidth( 4 ) );
     }
-    if ( mLbxMatches->columnWidth( 5 ) > 0 ) {
-      GlobalSettings::self()->setFolderWidth( mLbxMatches->columnWidth( 5 ) );
+    if ( mUi.mLbxMatches->columnWidth( 5 ) > 0 ) {
+      GlobalSettings::self()->setFolderWidth( mUi.mLbxMatches->columnWidth( 5 ) );
     }
     GlobalSettings::self()->setSearchWidgetWidth( width() );
     GlobalSettings::self()->setSearchWidgetHeight( height() );
@@ -385,23 +324,23 @@ void SearchWindow::createSearchModel()
   mResultModel->setCollection( mFolder );
   KMSearchFilterProxyModel *sortproxy = new KMSearchFilterProxyModel( mResultModel );
   sortproxy->setSourceModel( mResultModel );
-  mLbxMatches->setModel( sortproxy );
+  mUi.mLbxMatches->setModel( sortproxy );
 
-  mLbxMatches->setColumnWidth( 0, GlobalSettings::self()->collectionWidth() );
-  mLbxMatches->setColumnWidth( 1, GlobalSettings::self()->subjectWidth() );
-  mLbxMatches->setColumnWidth( 2, GlobalSettings::self()->senderWidth() );
-  mLbxMatches->setColumnWidth( 3, GlobalSettings::self()->receiverWidth() );
-  mLbxMatches->setColumnWidth( 4, GlobalSettings::self()->dateWidth() );
-  mLbxMatches->setColumnWidth( 5, GlobalSettings::self()->folderWidth() );
-  mLbxMatches->setColumnHidden( 6, true );
-  mLbxMatches->setColumnHidden( 7, true );
-  mLbxMatches->header()->setSortIndicator( 2, Qt::DescendingOrder );
-  mLbxMatches->header()->setStretchLastSection( false );
-  mLbxMatches->header()->restoreState( mHeaderState );
-  //mLbxMatches->header()->setResizeMode( 3, QHeaderView::Stretch );
+  mUi.mLbxMatches->setColumnWidth( 0, GlobalSettings::self()->collectionWidth() );
+  mUi.mLbxMatches->setColumnWidth( 1, GlobalSettings::self()->subjectWidth() );
+  mUi.mLbxMatches->setColumnWidth( 2, GlobalSettings::self()->senderWidth() );
+  mUi.mLbxMatches->setColumnWidth( 3, GlobalSettings::self()->receiverWidth() );
+  mUi.mLbxMatches->setColumnWidth( 4, GlobalSettings::self()->dateWidth() );
+  mUi.mLbxMatches->setColumnWidth( 5, GlobalSettings::self()->folderWidth() );
+  mUi.mLbxMatches->setColumnHidden( 6, true );
+  mUi.mLbxMatches->setColumnHidden( 7, true );
+  mUi.mLbxMatches->header()->setSortIndicator( 2, Qt::DescendingOrder );
+  mUi.mLbxMatches->header()->setStretchLastSection( false );
+  mUi.mLbxMatches->header()->restoreState( mHeaderState );
+  //mUi.mLbxMatches->header()->setResizeMode( 3, QHeaderView::Stretch );
   if(!mAkonadiStandardAction)
       mAkonadiStandardAction = new Akonadi::StandardMailActionManager( actionCollection(), this );
-  mAkonadiStandardAction->setItemSelectionModel( mLbxMatches->selectionModel() );
+  mAkonadiStandardAction->setItemSelectionModel( mUi.mLbxMatches->selectionModel() );
   mAkonadiStandardAction->setCollectionSelectionModel( mKMMainWidget->folderTreeView()->selectionModel() );
 
 }
@@ -422,7 +361,7 @@ void SearchWindow::updateCollectionStatistic(Akonadi::Collection::Id id,Akonadi:
   if ( id == mFolder.id() ) {
     genMsg = i18np( "%1 match", "%1 matches", statistic.count() );
   }
-  mStatusBar->changeItem( genMsg, 0 );
+  mUi.mStatusBar->changeItem( genMsg, 0 );
 }
 
 void SearchWindow::keyPressEvent( QKeyEvent *event )
@@ -437,13 +376,13 @@ void SearchWindow::keyPressEvent( QKeyEvent *event )
 
 void SearchWindow::slotFolderActivated()
 {
-  mChkbxSpecificFolders->setChecked( true );
+  mUi.mChkbxSpecificFolders->setChecked( true );
 }
 
 void SearchWindow::activateFolder( const Akonadi::Collection &collection )
 {
-  mChkbxSpecificFolders->setChecked( true );
-  mCbxFolders->setCollection( collection );
+  mUi.mChkbxSpecificFolders->setChecked( true );
+  mUi.mCbxFolders->setCollection( collection );
 }
 
 void SearchWindow::slotSearch()
@@ -452,19 +391,19 @@ void SearchWindow::slotSearch()
   setButtonFocus( User1 );     // set focus so we don't miss key event
 
 
-  if ( mSearchFolderEdt->text().isEmpty() ) {
-    mSearchFolderEdt->setText( i18n( "Last Search" ) );
+  if ( mUi.mSearchFolderEdt->text().isEmpty() ) {
+    mUi.mSearchFolderEdt->setText( i18n( "Last Search" ) );
   }
   enableButton( User1, false );
   enableButton( User2, true );
   if ( mResultModel )
-    mHeaderState = mLbxMatches->header()->saveState();
+    mHeaderState = mUi.mLbxMatches->header()->saveState();
 
-  mLbxMatches->setModel( 0 );
+  mUi.mLbxMatches->setModel( 0 );
 
-  mSortColumn = mLbxMatches->header()->sortIndicatorSection();
-  mSortOrder = mLbxMatches->header()->sortIndicatorOrder();
-  mLbxMatches->setSortingEnabled( false );
+  mSortColumn = mUi.mLbxMatches->header()->sortIndicatorSection();
+  mSortOrder = mUi.mLbxMatches->header()->sortIndicatorOrder();
+  mUi.mLbxMatches->setSortingEnabled( false );
 
   if ( mSearchJob ) {
     mSearchJob->kill( KJob::Quietly );
@@ -472,18 +411,18 @@ void SearchWindow::slotSearch()
     mSearchJob = 0;
   }
 
-  mSearchFolderEdt->setEnabled( false );
+  mUi.mSearchFolderEdt->setEnabled( false );
 
   KUrl::List urls;
-  if ( !mChkbxAllFolders->isChecked() ) {
-    const Akonadi::Collection col = mCbxFolders->collection();
+  if ( !mUi.mChkbxAllFolders->isChecked() ) {
+    const Akonadi::Collection col = mUi.mCbxFolders->collection();
     urls<< col.url( Akonadi::Collection::UrlShort );
-    if ( mChkSubFolders->isChecked() ) {
+    if ( mUi.mChkSubFolders->isChecked() ) {
       childCollectionsFromSelectedCollection( col, urls );
     }
   }
 
-  mPatternEdit->updateSearchPattern();
+  mUi.mPatternEdit->updateSearchPattern();
 
   SearchPattern searchPattern( mSearchPattern );
   searchPattern.purify();
@@ -500,12 +439,12 @@ void SearchWindow::slotSearch()
   qDebug() << query;
   if ( query.isEmpty() )
     return;
-  mSearchFolderOpenBtn->setEnabled( true );
+  mUi.mSearchFolderOpenBtn->setEnabled( true );
 
   if ( !mFolder.isValid() ) {
     // FIXME if another app created a virtual 'Last Search' folder without
     // out custom attributes it will result in problems
-    mSearchJob = new Akonadi::SearchCreateJob( mSearchFolderEdt->text(), query, this );
+    mSearchJob = new Akonadi::SearchCreateJob( mUi.mSearchFolderEdt->text(), query, this );
   } else {
     Akonadi::PersistentSearchAttribute *attribute = mFolder.attribute<Akonadi::PersistentSearchAttribute>();
     attribute->setQueryLanguage( queryLanguage );
@@ -548,13 +487,13 @@ void SearchWindow::searchDone( KJob* job )
       Q_ASSERT( !search.isEmpty() );
       Akonadi::SearchDescriptionAttribute *searchDescription = mFolder.attribute<Akonadi::SearchDescriptionAttribute>( Akonadi::Entity::AddIfMissing );
       searchDescription->setDescription( search );
-      if ( !mChkbxAllFolders->isChecked() ) {
-        const Akonadi::Collection collection = mCbxFolders->collection();
+      if ( !mUi.mChkbxAllFolders->isChecked() ) {
+        const Akonadi::Collection collection = mUi.mCbxFolders->collection();
         searchDescription->setBaseCollection( collection );
       } else {
         searchDescription->setBaseCollection( Akonadi::Collection() );
       }
-      searchDescription->setRecursive( mChkSubFolders->isChecked() );
+      searchDescription->setRecursive( mUi.mChkSubFolders->isChecked() );
       new Akonadi::CollectionModifyJob( mFolder, this );
       mSearchJob = 0;
 
@@ -568,10 +507,10 @@ void SearchWindow::searchDone( KJob* job )
       if ( mCloseRequested )
         close();
 
-      mLbxMatches->setSortingEnabled( true );
-      mLbxMatches->header()->setSortIndicator( mSortColumn, mSortOrder );
+      mUi.mLbxMatches->setSortingEnabled( true );
+      mUi.mLbxMatches->header()->setSortIndicator( mSortColumn, mSortOrder );
 
-      mSearchFolderEdt->setEnabled( true );
+      mUi.mSearchFolderEdt->setEnabled( true );
   }
 }
 
@@ -610,16 +549,16 @@ void SearchWindow::scheduleRename( const QString &text )
   if ( !text.isEmpty() ) {
     mRenameTimer.setSingleShot( true );
     mRenameTimer.start( 250 );
-    mSearchFolderOpenBtn->setEnabled( false );
+    mUi.mSearchFolderOpenBtn->setEnabled( false );
   } else {
     mRenameTimer.stop();
-    mSearchFolderOpenBtn->setEnabled( !text.isEmpty() );
+    mUi.mSearchFolderOpenBtn->setEnabled( !text.isEmpty() );
   }
 }
 
 void SearchWindow::renameSearchFolder()
 {
-  const QString name = mSearchFolderEdt->text();
+  const QString name = mUi.mSearchFolderEdt->text();
   if ( mFolder.isValid() ) {
     if ( mFolder.name() != name ) {
       mFolder.setName( name );
@@ -627,7 +566,7 @@ void SearchWindow::renameSearchFolder()
       connect( job, SIGNAL(result(KJob*)),
                this, SLOT(slotSearchFolderRenameDone(KJob*)) );
     }
-    mSearchFolderOpenBtn->setEnabled( true );
+    mUi.mSearchFolderOpenBtn->setEnabled( true );
   }
 }
 
@@ -677,7 +616,7 @@ bool SearchWindow::slotViewMsg( const Akonadi::Item &item )
 
 void SearchWindow::slotCurrentChanged( const Akonadi::Item &item )
 {
-  mSearchResultOpenBtn->setEnabled( item.isValid() );
+  mUi.mSearchResultOpenBtn->setEnabled( item.isValid() );
 }
 
 void SearchWindow::enableGUI()
@@ -686,11 +625,11 @@ void SearchWindow::enableGUI()
 
   enableButton( KDialog::Close, !searching );
 
-  mCbxFolders->setEnabled( !searching && !mChkbxAllFolders->isChecked() );
-  mChkSubFolders->setEnabled( !searching && !mChkbxAllFolders->isChecked() );
-  mChkbxAllFolders->setEnabled( !searching );
-  mChkbxSpecificFolders->setEnabled( !searching );
-  mPatternEdit->setEnabled( !searching);
+  mUi.mCbxFolders->setEnabled( !searching && !mUi.mChkbxAllFolders->isChecked() );
+  mUi.mChkSubFolders->setEnabled( !searching && !mUi.mChkbxAllFolders->isChecked() );
+  mUi.mChkbxAllFolders->setEnabled( !searching );
+  mUi.mChkbxSpecificFolders->setEnabled( !searching );
+  mUi.mPatternEdit->setEnabled( !searching);
 
   enableButton( User1, !searching );
   enableButton( User2, searching );
@@ -700,7 +639,7 @@ Akonadi::Item::List SearchWindow::selectedMessages() const
 {
   Akonadi::Item::List messages;
 
-  foreach ( const QModelIndex &index, mLbxMatches->selectionModel()->selectedRows() ) {
+  foreach ( const QModelIndex &index, mUi.mLbxMatches->selectionModel()->selectedRows() ) {
     const Akonadi::Item item = index.data( Akonadi::ItemModel::ItemRole ).value<Akonadi::Item>();
     if ( item.isValid() )
       messages.append( item );
@@ -711,7 +650,7 @@ Akonadi::Item::List SearchWindow::selectedMessages() const
 
 Akonadi::Item SearchWindow::selectedMessage() const
 {
-  return mLbxMatches->currentIndex().data( Akonadi::ItemModel::ItemRole ).value<Akonadi::Item>();
+  return mUi.mLbxMatches->currentIndex().data( Akonadi::ItemModel::ItemRole ).value<Akonadi::Item>();
 }
 
 void SearchWindow::updateContextMenuActions()
@@ -763,7 +702,7 @@ void SearchWindow::slotContextMenuRequested( const QPoint& )
 
 void SearchWindow::slotClearSelection()
 {
-  mLbxMatches->clearSelection();
+  mUi.mLbxMatches->clearSelection();
 }
 
 void SearchWindow::slotReplyToMsg()
@@ -827,13 +766,13 @@ void SearchWindow::addRulesToSearchPattern( const SearchPattern &pattern )
   }
 
   mSearchPattern = p;
-  mPatternEdit->setSearchPattern( &mSearchPattern );
+  mUi.mPatternEdit->setSearchPattern( &mSearchPattern );
 }
 
 void SearchWindow::setSearchPattern( const SearchPattern &pattern )
 {
   mSearchPattern = pattern;
-  mPatternEdit->setSearchPattern( &mSearchPattern );
+  mUi.mPatternEdit->setSearchPattern( &mSearchPattern );
 }
 
 
