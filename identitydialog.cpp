@@ -567,7 +567,7 @@ namespace KMail {
 
     connect( mTabWidget, SIGNAL(currentChanged(int)),
              SLOT(slotAboutToShow(int)) );
-    setHelp( QString(), "kmail" );
+    setHelp( "configure-identity", "kmail" );
   }
 
   IdentityDialog::~IdentityDialog() {
