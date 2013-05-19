@@ -4687,7 +4687,9 @@ void KMMainWidget::showCollectionProperties( const QString &pageToShow )
     return;
 
   if ( Solid::Networking::status() == Solid::Networking::Unconnected ) {
-    KMessageBox::information( this, i18n( "Network is unconnected, some infos from folder could not be updated." ) );
+    KMessageBox::information(
+      this,
+      i18n( "Network is unconnected. Folder information cannot be updated." ) );
     showCollectionPropertiesContinued( pageToShow, QPointer<KPIM::ProgressItem>() );
   } else {
     const Akonadi::AgentInstance agentInstance = Akonadi::AgentManager::self()->instance( mCurrentFolder->collection().resource() );

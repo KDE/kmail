@@ -207,7 +207,7 @@
       <item>
        <widget class="QLabel" name="label">
         <property name="text">
-         <string>KMail can analyse messages for suspected email scams by looking for common techniques used to deceive you</string>
+         <string>KMail can analyze messages for suspected email scams by looking for common techniques used to deceive you</string>
         </property>
        </widget>
       </item>
