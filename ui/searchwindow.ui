@@ -66,6 +66,9 @@
      <property name="selectionMode">
       <enum>QAbstractItemView::ExtendedSelection</enum>
      </property>
+     <property name="rootIsDecorated">
+      <bool>false</bool>
+     </property>
      <property name="allColumnsShowFocus">
       <bool>true</bool>
      </property>
