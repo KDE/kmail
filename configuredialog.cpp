@@ -64,7 +64,7 @@ using KPIM::RecentAddresses;
 #include "messageviewer/nodehelper.h"
 #include "messageviewer/widgets/configurewidget.h"
 #include "messageviewer/globalsettings.h"
-#include "messageviewer/invitationsettings.h"
+#include "messageviewer/widgets/invitationsettings.h"
 #include "messageviewer/header/customheadersettingwidget.h"
 #include "messagelist/core/settings.h"
 #include "messagelist/messagelistutil.h"

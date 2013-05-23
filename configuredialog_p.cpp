@@ -12,7 +12,6 @@
 #include "globalsettings.h"
 #include "configuredialoglistview.h"
 #include "kmkernel.h"
-#include <messageviewer/invitationsettings.h>
 
 // other kdenetwork headers: (none)
 
