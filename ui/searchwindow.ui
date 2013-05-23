@@ -127,11 +127,44 @@
     </layout>
    </item>
    <item>
-    <widget class="KStatusBar" name="mStatusBar" native="true"/>
+    <widget class="Line" name="line">
+     <property name="orientation">
+      <enum>Qt::Horizontal</enum>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <layout class="QHBoxLayout" name="horizontalLayout_3">
+     <item>
+      <widget class="QLabel" name="mStatusLbl">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+       <property name="text">
+        <string/>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="KDialogButtonBox" name="mButtonBox">
+       <property name="standardButtons">
+        <set>QDialogButtonBox::Close</set>
+       </property>
+      </widget>
+     </item>
+    </layout>
    </item>
   </layout>
  </widget>
  <customwidgets>
+  <customwidget>
+   <class>KDialogButtonBox</class>
+   <extends>QDialogButtonBox</extends>
+   <header>kdialogbuttonbox.h</header>
+  </customwidget>
   <customwidget>
    <class>KLineEdit</class>
    <extends>QLineEdit</extends>
@@ -158,12 +191,6 @@
    <class>Akonadi::EntityTreeView</class>
    <extends>QTreeView</extends>
    <header location="global">Akonadi/EntityTreeView</header>
-  </customwidget>
-  <customwidget>
-   <class>KStatusBar</class>
-   <extends>QWidget</extends>
-   <header location="global">KStatusBar</header>
-   <container>1</container>
   </customwidget>
  </customwidgets>
  <resources/>

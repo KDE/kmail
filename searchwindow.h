@@ -41,7 +41,6 @@ class KActionMenu;
 class KJob;
 class KLineEdit;
 class KMMainWidget;
-class KStatusBar;
 class KMSearchMessageModel;
 class QAbstractItemModel;
 class QModelIndex;
@@ -174,6 +173,10 @@ class SearchWindow: public KDialog, virtual public KXMLGUIClient
 
     KMSearchMessageModel *mResultModel;
     Ui_SearchWindow mUi;
+    KGuiItem mStartSearchGuiItem;
+    KGuiItem mStopSearchGuiItem;
+    KPushButton *mSearchButton;
+
     QWidget* mLastFocus; // to remember the position of the focus
     QAction *mReplyAction, *mReplyAllAction, *mReplyListAction, *mSaveAsAction,
       *mForwardInlineAction, *mForwardAttachedAction, *mPrintAction, *mClearAction,

@@ -47,6 +47,7 @@
 #include <Akonadi/EntityMimeTypeFilterModel>
 #include <KActionMenu>
 #include <KDebug>
+#include <KDialogButtonBox>
 #include <KIcon>
 #include <KIconLoader>
 #include <KLineEdit>
@@ -55,7 +56,6 @@
 #include <KSharedConfig>
 #include <KStandardAction>
 #include <KStandardGuiItem>
-#include <KStatusBar>
 #include <KWindowSystem>
 #include <KMessageBox>
 
@@ -90,10 +90,6 @@ SearchWindow::SearchWindow( KMMainWidget *widget, const Akonadi::Collection &col
     mAkonadiStandardAction( 0 )
 {
   setCaption( i18n( "Find Messages" ) );
-  setButtons( User1 | User2 | Close );
-  setDefaultButton( User1 );
-  setButtonGuiItem( User1, KGuiItem( i18nc( "@action:button Search for messages", "&Search" ), "edit-find" ) );
-  setButtonGuiItem( User2, KStandardGuiItem::stop() );
 
   KWindowSystem::setIcons( winId(), qApp->windowIcon().pixmap( IconSize( KIconLoader::Desktop ),
                                                                IconSize( KIconLoader::Desktop ) ),
@@ -105,6 +101,13 @@ SearchWindow::SearchWindow( KMMainWidget *widget, const Akonadi::Collection &col
   QWidget *searchWidget = new QWidget( this );
   setMainWidget( searchWidget );
   mUi.setupUi( searchWidget );
+
+  setButtons( None );
+  mStartSearchGuiItem = KGuiItem( i18nc( "@action:button Search for messages", "&Search" ), "edit-find" );
+  mStopSearchGuiItem = KStandardGuiItem::stop();
+  mSearchButton =  mUi.mButtonBox->addButton( mStartSearchGuiItem, QDialogButtonBox::ActionRole );
+  connect( mUi.mButtonBox, SIGNAL(rejected()), SLOT(slotClose()) );
+
   searchWidget->layout()->setMargin( 0 );
 
   mUi.mCbxFolders->setMustBeReadWrite( false );
@@ -204,23 +207,13 @@ SearchWindow::SearchWindow( KMMainWidget *widget, const Akonadi::Collection &col
   connect( mUi.mSearchResultOpenBtn, SIGNAL(clicked()),
            this, SLOT(slotViewSelectedMsg()) );
 
-  mUi.mStatusBar->insertPermanentItem( i18n( "AMiddleLengthText..." ), 0 );
-  mUi.mStatusBar->changeItem( i18nc( "@info:status finished searching.", "Ready." ), 0 );
-  mUi.mStatusBar->setItemAlignment( 0, Qt::AlignLeft | Qt::AlignVCenter );
-  mUi.mStatusBar->insertPermanentItem( QString(), 1, 1 );
-  mUi.mStatusBar->setItemAlignment( 1, Qt::AlignLeft | Qt::AlignVCenter );
-
   const int mainWidth = GlobalSettings::self()->searchWidgetWidth();
   const int mainHeight = GlobalSettings::self()->searchWidgetHeight();
 
   if ( mainWidth || mainHeight )
     resize( mainWidth, mainHeight );
 
-  setButtonsOrientation( Qt::Vertical );
-  enableButton( User2, false );
-
-  connect( this, SIGNAL(user1Clicked()), SLOT(slotSearch()) );
-  connect( this, SIGNAL(user2Clicked()), SLOT(slotStop()) );
+  connect( mSearchButton, SIGNAL(clicked()), SLOT(slotSearch()) );
   connect( this, SIGNAL(finished()), this, SLOT(deleteLater()) );
   connect( this, SIGNAL(closeClicked()),this,SLOT(slotClose()) );
 
@@ -352,7 +345,7 @@ void SearchWindow::setEnabledSearchButton( bool )
   //Before when we selected a folder == "Local Folder" as that it was not a folder
   //search button was disable, and when we select "Search in all local folder"
   //Search button was never enabled :(
-  enableButton( User1, true );
+  mSearchButton->setEnabled( true );
 }
 
 void SearchWindow::updateCollectionStatistic(Akonadi::Collection::Id id,Akonadi::CollectionStatistics statistic)
@@ -361,7 +354,7 @@ void SearchWindow::updateCollectionStatistic(Akonadi::Collection::Id id,Akonadi:
   if ( id == mFolder.id() ) {
     genMsg = i18np( "%1 match", "%1 matches", statistic.count() );
   }
-  mUi.mStatusBar->changeItem( genMsg, 0 );
+  mUi.mStatusLbl->setText( genMsg );
 }
 
 void SearchWindow::keyPressEvent( QKeyEvent *event )
@@ -388,14 +381,13 @@ void SearchWindow::activateFolder( const Akonadi::Collection &collection )
 void SearchWindow::slotSearch()
 {
   mLastFocus = focusWidget();
-  setButtonFocus( User1 );     // set focus so we don't miss key event
+  mSearchButton->setFocus();     // set focus so we don't miss key event
 
 
   if ( mUi.mSearchFolderEdt->text().isEmpty() ) {
     mUi.mSearchFolderEdt->setText( i18n( "Last Search" ) );
   }
-  enableButton( User1, false );
-  enableButton( User2, true );
+
   if ( mResultModel )
     mHeaderState = mUi.mLbxMatches->header()->saveState();
 
@@ -454,11 +446,13 @@ void SearchWindow::slotSearch()
 
   connect( mSearchJob, SIGNAL(result(KJob*)), SLOT(searchDone(KJob*)) );
   enableGUI();
+  mUi.mStatusLbl->setText( i18n( "Searching..." ) );
 }
 
 void SearchWindow::searchDone( KJob* job )
 {
   Q_ASSERT( job == mSearchJob );
+  QMetaObject::invokeMethod( this, "enableGUI", Qt::QueuedConnection );
   if ( job->error() ) {
     KMessageBox::sorry( this, i18n("Can not get search result. %1", job->errorString() ) );
     if ( mSearchJob ) {
@@ -497,9 +491,8 @@ void SearchWindow::searchDone( KJob* job )
       new Akonadi::CollectionModifyJob( mFolder, this );
       mSearchJob = 0;
 
+      mUi.mStatusLbl->setText( QString() );
       createSearchModel();
-
-      QTimer::singleShot( 0, this, SLOT(enableGUI()) );
 
       if ( mLastFocus )
         mLastFocus->setFocus();
@@ -522,7 +515,7 @@ void SearchWindow::slotStop()
     mSearchJob = 0;
   }
 
-  enableButton( User2, false );
+  enableGUI();
 }
 
 void SearchWindow::slotClose()
@@ -631,8 +624,14 @@ void SearchWindow::enableGUI()
   mUi.mChkbxSpecificFolders->setEnabled( !searching );
   mUi.mPatternEdit->setEnabled( !searching);
 
-  enableButton( User1, !searching );
-  enableButton( User2, searching );
+  mSearchButton->setGuiItem( searching ? mStopSearchGuiItem : mStartSearchGuiItem );
+  if ( searching ) {
+    disconnect( mSearchButton, SIGNAL(clicked()), this, SLOT(slotSearch()) );
+    connect( mSearchButton, SIGNAL(clicked()), SLOT(slotStop()) );
+  } else {
+    disconnect( mSearchButton, SIGNAL(clicked()), this, SLOT(slotStop()) );
+    connect( mSearchButton, SIGNAL(clicked()), SLOT(slotSearch()) );
+  }
 }
 
 Akonadi::Item::List SearchWindow::selectedMessages() const
