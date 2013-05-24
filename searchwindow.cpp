@@ -144,6 +144,8 @@ SearchWindow::SearchWindow( KMMainWidget *widget, const Akonadi::Collection &col
   }
 
   mUi.mPatternEdit->setSearchPattern( &mSearchPattern );
+  connect( mUi.mPatternEdit, SIGNAL(returnPressed()),
+           this, SLOT(slotSearch()) );
 
   // enable/disable widgets depending on radio buttons:
   connect( mUi.mChkbxAllFolders, SIGNAL(toggled(bool)),
@@ -494,9 +496,6 @@ void SearchWindow::searchDone( KJob* job )
       mUi.mStatusLbl->setText( QString() );
       createSearchModel();
 
-      if ( mLastFocus )
-        mLastFocus->setFocus();
-
       if ( mCloseRequested )
         close();
 
@@ -631,6 +630,11 @@ void SearchWindow::enableGUI()
   } else {
     disconnect( mSearchButton, SIGNAL(clicked()), this, SLOT(slotStop()) );
     connect( mSearchButton, SIGNAL(clicked()), SLOT(slotSearch()) );
+  }
+
+  if ( mLastFocus ) {
+    mLastFocus->setFocus();
+    mLastFocus = 0;
   }
 }
 
