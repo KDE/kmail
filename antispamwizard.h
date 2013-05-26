@@ -236,7 +236,7 @@ protected:
         SpamToolConfig readToolConfig( KConfigGroup & configGroup );
         SpamToolConfig createDummyConfig();
 
-        void mergeToolConfig( SpamToolConfig config );
+        void mergeToolConfig(const SpamToolConfig &config );
         void sortToolList();
     };
 

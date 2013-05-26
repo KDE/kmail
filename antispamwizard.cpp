@@ -829,7 +829,7 @@ AntiSpamWizard::SpamToolConfig AntiSpamWizard::ConfigReader::createDummyConfig()
 }
 
 
-void AntiSpamWizard::ConfigReader::mergeToolConfig( AntiSpamWizard::SpamToolConfig config )
+void AntiSpamWizard::ConfigReader::mergeToolConfig( const AntiSpamWizard::SpamToolConfig &config )
 {
     bool found = false;
     QList<SpamToolConfig>::Iterator end( mToolList.end() );
