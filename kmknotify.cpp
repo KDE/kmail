@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2011, 2012 Montel Laurent <montel@kde.org>
+ * Copyright (c) 2011, 2012, 2013 Montel Laurent <montel@kde.org>
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -40,32 +40,32 @@
 using namespace KMail;
 
 KMKnotify::KMKnotify( QWidget * parent )
-  :KDialog( parent ), m_changed( false )
+    :KDialog( parent ), m_changed( false )
 {
-  setCaption( i18n("Notification") );
-  setButtons( Ok|Cancel );
+    setCaption( i18n("Notification") );
+    setButtons( Ok|Cancel );
 
-  QWidget *page = new QWidget( this );
-  setMainWidget( page );
- 
-  QVBoxLayout *layout = new QVBoxLayout( page );
-  layout->setMargin( 0 );
-  m_comboNotify = new KComboBox( false );
-  m_comboNotify->setSizeAdjustPolicy( QComboBox::AdjustToContents );
+    QWidget *page = new QWidget( this );
+    setMainWidget( page );
 
-  QHBoxLayout *hbox = new QHBoxLayout();
-  layout->addLayout( hbox );
-  hbox->addWidget( m_comboNotify, 10 );
+    QVBoxLayout *layout = new QVBoxLayout( page );
+    layout->setMargin( 0 );
+    m_comboNotify = new KComboBox( false );
+    m_comboNotify->setSizeAdjustPolicy( QComboBox::AdjustToContents );
 
-  m_notifyWidget = new KNotifyConfigWidget( page );
-  layout->addWidget( m_notifyWidget );
-  m_comboNotify->setFocus();
-  
-  connect( m_comboNotify, SIGNAL(activated(int)),
-           SLOT(slotComboChanged(int)) );
-  connect( this, SIGNAL(okClicked()), SLOT(slotOk()) );
-  connect( m_notifyWidget ,SIGNAL(changed(bool)) , this , SLOT(slotConfigChanged(bool)));
-  initCombobox();
+    QHBoxLayout *hbox = new QHBoxLayout();
+    layout->addLayout( hbox );
+    hbox->addWidget( m_comboNotify, 10 );
+
+    m_notifyWidget = new KNotifyConfigWidget( page );
+    layout->addWidget( m_notifyWidget );
+    m_comboNotify->setFocus();
+
+    connect( m_comboNotify, SIGNAL(activated(int)),
+             SLOT(slotComboChanged(int)) );
+    connect( this, SIGNAL(okClicked()), SLOT(slotOk()) );
+    connect( m_notifyWidget ,SIGNAL(changed(bool)) , this , SLOT(slotConfigChanged(bool)));
+    initCombobox();
 }
 
 KMKnotify::~KMKnotify()
@@ -74,63 +74,63 @@ KMKnotify::~KMKnotify()
 
 void KMKnotify::slotConfigChanged( bool changed )
 {
-  m_changed = changed;
+    m_changed = changed;
 }
 
 void KMKnotify::slotComboChanged( int index )
 {
-  QString text( m_comboNotify->itemData(index).toString() );
-  if ( m_changed ) {
-    m_notifyWidget->save();
-    m_changed = false;
-  }
-  
-  m_notifyWidget->setApplication( text );
+    QString text( m_comboNotify->itemData(index).toString() );
+    if ( m_changed ) {
+        m_notifyWidget->save();
+        m_changed = false;
+    }
+
+    m_notifyWidget->setApplication( text );
 }
 
 void KMKnotify::initCombobox()
 {
 
-  QStringList lstNotify;
-  lstNotify<< QLatin1String( "kmail2/kmail2.notifyrc" );
-  lstNotify<< QLatin1String( "akonadi_maildispatcher_agent/akonadi_maildispatcher_agent.notifyrc" ); 
-  lstNotify<< QLatin1String( "akonadi_mailfilter_agent/akonadi_mailfilter_agent.notifyrc" );
-  lstNotify<< QLatin1String( "akonadi_archivemail_agent/akonadi_archivemail_agent.notifyrc" );
-  lstNotify<< QLatin1String( "akonadi_nepomuk_feeder/akonadi_nepomuk_feeder.notifyrc" );
-  lstNotify<< QLatin1String( "akonadi_sendlater_agent/akonadi_sendlater_agent.notifyrc" );
-   //TODO add other notifyrc here if necessary
+    QStringList lstNotify;
+    lstNotify<< QLatin1String( "kmail2/kmail2.notifyrc" );
+    lstNotify<< QLatin1String( "akonadi_maildispatcher_agent/akonadi_maildispatcher_agent.notifyrc" );
+    lstNotify<< QLatin1String( "akonadi_mailfilter_agent/akonadi_mailfilter_agent.notifyrc" );
+    lstNotify<< QLatin1String( "akonadi_archivemail_agent/akonadi_archivemail_agent.notifyrc" );
+    lstNotify<< QLatin1String( "akonadi_nepomuk_feeder/akonadi_nepomuk_feeder.notifyrc" );
+    lstNotify<< QLatin1String( "akonadi_sendlater_agent/akonadi_sendlater_agent.notifyrc" );
+    //TODO add other notifyrc here if necessary
 
-  Q_FOREACH( const QString& notify, lstNotify )
-  {
-    const QString fullPath = KStandardDirs::locate( "data", notify );
-    
-    if ( !fullPath.isEmpty() )
+    Q_FOREACH( const QString& notify, lstNotify )
     {
-      int slash = fullPath.lastIndexOf( QLatin1Char('/') ) - 1;
-      int slash2 = fullPath.lastIndexOf( QLatin1Char('/'), slash );
-      const QString appname= ( slash2 < 0 ) ? QString() :  fullPath.mid( slash2+1 , slash-slash2  );
-      if ( !appname.isEmpty() )
-      {
-        KConfig config(fullPath, KConfig::NoGlobals, "data" );
-        KConfigGroup globalConfig( &config, QString::fromLatin1("Global") );
-        const QString icon = globalConfig.readEntry(QString::fromLatin1("IconName"), QString::fromLatin1("misc"));
-        const QString description = globalConfig.readEntry( QString::fromLatin1("Comment"), appname );
-        m_comboNotify->addItem( SmallIcon( icon ), description, appname );
-      }
-    }
-  }
+        const QString fullPath = KStandardDirs::locate( "data", notify );
 
-  m_comboNotify->model()->sort(0);
-  if ( m_comboNotify->count() > 0 ) {
-    m_comboNotify->setCurrentIndex(0);
-    m_notifyWidget->setApplication( m_comboNotify->itemData( 0 ).toString() );
-  }
+        if ( !fullPath.isEmpty() )
+        {
+            const int slash = fullPath.lastIndexOf( QLatin1Char('/') ) - 1;
+            const int slash2 = fullPath.lastIndexOf( QLatin1Char('/'), slash );
+            const QString appname= ( slash2 < 0 ) ? QString() :  fullPath.mid( slash2+1 , slash-slash2  );
+            if ( !appname.isEmpty() )
+            {
+                KConfig config(fullPath, KConfig::NoGlobals, "data" );
+                KConfigGroup globalConfig( &config, QString::fromLatin1("Global") );
+                const QString icon = globalConfig.readEntry(QString::fromLatin1("IconName"), QString::fromLatin1("misc"));
+                const QString description = globalConfig.readEntry( QString::fromLatin1("Comment"), appname );
+                m_comboNotify->addItem( SmallIcon( icon ), description, appname );
+            }
+        }
+    }
+
+    m_comboNotify->model()->sort(0);
+    if ( m_comboNotify->count() > 0 ) {
+        m_comboNotify->setCurrentIndex(0);
+        m_notifyWidget->setApplication( m_comboNotify->itemData( 0 ).toString() );
+    }
 }
 
 void KMKnotify::slotOk()
 {
-  if ( m_changed )
-    m_notifyWidget->save();
+    if ( m_changed )
+        m_notifyWidget->save();
 }
 
 #include "kmknotify.moc"

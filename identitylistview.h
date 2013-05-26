@@ -43,13 +43,13 @@ class IdentityManager;
 
 namespace KMail {
 
-  class IdentityListView;
+class IdentityListView;
 
-  /** @short A QWidgetTreeItem for use in IdentityListView
+/** @short A QWidgetTreeItem for use in IdentityListView
    *  @author Marc Mutz <mutz@kde.org>
    **/
-  class IdentityListViewItem : public QTreeWidgetItem {
-  public:
+class IdentityListViewItem : public QTreeWidgetItem {
+public:
     IdentityListViewItem( IdentityListView *parent,
                           const KPIMIdentities::Identity &ident );
     IdentityListViewItem( IdentityListView *parent, QTreeWidgetItem *after,
@@ -59,45 +59,45 @@ namespace KMail {
     KPIMIdentities::Identity &identity() const;
     virtual void setIdentity( const KPIMIdentities::Identity &ident );
     void redisplay();
-  private:
+private:
     void init( const KPIMIdentities::Identity &ident );
 
-  protected:
+protected:
     uint mUOID;
-  };
+};
 
-  /** @short A QTreeWidget for KPIMIdentities::Identity
+/** @short A QTreeWidget for KPIMIdentities::Identity
     * @author Marc Mutz <mutz@kde.org>
     **/
-  class IdentityListView : public QTreeWidget {
+class IdentityListView : public QTreeWidget {
     Q_OBJECT
-  public:
+public:
     explicit IdentityListView( QWidget *parent = 0 );
     virtual ~IdentityListView() {}
 
-  public:
+public:
     void editItem( QTreeWidgetItem *item, int column = 0 );
     KPIMIdentities::IdentityManager *identityManager() const;
     void setIdentityManager( KPIMIdentities::IdentityManager* im );
 
-  protected slots:
+protected slots:
     void commitData( QWidget *editor );
 
-  public slots:
+public slots:
     void slotCustomContextMenuRequested( const QPoint& );
 
-  signals:
+signals:
     void contextMenu( KMail::IdentityListViewItem *, const QPoint& );
     void rename( KMail::IdentityListViewItem *, const QString& );
 
-  protected:
+protected:
 #ifndef QT_NO_DRAGANDDROP
     void startDrag ( Qt::DropActions supportedActions );
 #endif
 
-  private:
+private:
     KPIMIdentities::IdentityManager* mIdentityManager;
-  };
+};
 
 
 } // namespace KMail

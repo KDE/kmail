@@ -28,9 +28,9 @@ class QLabel;
 
 namespace KMail {
 
-  class XFaceConfigurator : public QWidget {
+class XFaceConfigurator : public QWidget {
     Q_OBJECT
-  public:
+public:
     explicit XFaceConfigurator( QWidget * parent=0 );
     ~XFaceConfigurator();
 
@@ -41,20 +41,20 @@ namespace KMail {
     QString xface() const;
     void setXFace( const QString & text );
 
-  private:
+private:
     void setXfaceFromFile( const KUrl &url );
 
-  private slots:
+private slots:
     void slotSelectFile();
     void slotSelectFromAddressbook();
     void slotDelayedSelectFromAddressbook( KJob* );
     void slotUpdateXFace();
 
-  private:
+private:
     QCheckBox     * mEnableCheck;
     KTextEdit     * mTextEdit;
     QLabel        * mXFaceLabel;
-  };
+};
 } // namespace KMail
 
 #endif // __KMAIL_XFACECONFIGURATOR_H__

@@ -31,15 +31,15 @@ StatusBarLabel::StatusBarLabel(QWidget * parent) :
 
 void StatusBarLabel::mouseReleaseEvent(QMouseEvent * event)
 {
-  emit clicked();
-  QLabel::mouseReleaseEvent( event );
+    emit clicked();
+    QLabel::mouseReleaseEvent( event );
 }
 
 void StatusBarLabel::setBackgroundColor(const QColor & color)
 {
-  // changing the palette doesn't work, seems to be overwriten by the
-  // statusbar again, stylesheets seems to work though
-  setStyleSheet( QString::fromLatin1("background-color: %1;" ).arg( color.name() ) );
+    // changing the palette doesn't work, seems to be overwriten by the
+    // statusbar again, stylesheets seems to work though
+    setStyleSheet( QString::fromLatin1("background-color: %1;" ).arg( color.name() ) );
 }
 
 #include "statusbarlabel.moc"

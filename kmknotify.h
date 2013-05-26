@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2011, 2012 Montel Laurent <montel@kde.org>
+ * Copyright (c) 2011, 2012, 2013 Montel Laurent <montel@kde.org>
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -36,23 +36,23 @@ class KNotifyConfigWidget;
 namespace KMail {
 class KMKnotify : public KDialog
 {
-  Q_OBJECT
+    Q_OBJECT
 public:
-  explicit KMKnotify( QWidget * parent );
-  ~KMKnotify();
+    explicit KMKnotify( QWidget * parent );
+    ~KMKnotify();
 
 private Q_SLOTS:
-  void slotComboChanged( int );
-  void slotOk();
-  void slotConfigChanged( bool changed );
-  
+    void slotComboChanged( int );
+    void slotOk();
+    void slotConfigChanged( bool changed );
+
 private:
-  void initCombobox();
-  
+    void initCombobox();
+
 private:
-  KComboBox* m_comboNotify;
-  KNotifyConfigWidget* m_notifyWidget;
-  bool m_changed;
+    KComboBox* m_comboNotify;
+    KNotifyConfigWidget* m_notifyWidget;
+    bool m_changed;
 };
 }
 

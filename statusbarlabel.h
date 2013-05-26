@@ -30,16 +30,16 @@ namespace KMail {
 */
 class StatusBarLabel : public QLabel
 {
-  Q_OBJECT
-  public:
+    Q_OBJECT
+public:
     explicit StatusBarLabel( QWidget *parent = 0 );
 
     void setBackgroundColor( const QColor &color );
 
-  signals:
+signals:
     void clicked();
 
-  protected:
+protected:
     void mouseReleaseEvent( QMouseEvent *event );
 };
 

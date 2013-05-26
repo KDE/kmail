@@ -43,12 +43,10 @@ class ArchiveFolderDialog : public KDialog
   Q_OBJECT
 
   public:
-
     explicit ArchiveFolderDialog( QWidget *parent = 0 );
     void setFolder( const Akonadi::Collection &defaultCollection );
 
   private slots:
-
     void slotFixFileExtension();
     void slotFolderChanged( const Akonadi::Collection& );
     void slotRecursiveCheckboxClicked();
