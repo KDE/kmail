@@ -37,16 +37,16 @@ namespace KMail {
 
 class AttachmentView : public QTreeView
 {
-  Q_OBJECT
+    Q_OBJECT
 
-  public:
+public:
     /// can't change model afterwards.
     explicit AttachmentView( Message::AttachmentModel *model, QWidget *parent = 0 );
     ~AttachmentView();
 
     QWidget *widget();
 
-  public slots:
+public slots:
     /// model sets these
     void setEncryptEnabled( bool enabled );
     void setSignEnabled( bool enabled );
@@ -54,7 +54,7 @@ class AttachmentView : public QTreeView
     void selectNewAttachment();
 
     void updateAttachmentLabel();
-  protected:
+protected:
     /** reimpl to avoid default drag cursor */
     void startDrag( Qt::DropActions supportedActions );
     /* reimpl */
@@ -64,18 +64,18 @@ class AttachmentView : public QTreeView
     /** reimpl to avoid drags from ourselves */
     void dragEnterEvent( QDragEnterEvent *event );
 
-  private Q_SLOTS:
+private Q_SLOTS:
     void slotShowHideAttchementList(bool);
 
-  private:
+private:
     void saveHeaderState();
     void restoreHeaderState();
 
-  signals:
+signals:
     void contextMenuRequested();
     void modified(bool);
 
-  private:
+private:
     class Private;
     Private *const d;
 };

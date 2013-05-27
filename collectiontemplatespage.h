@@ -44,9 +44,8 @@ public slots:
 private Q_SLOTS:
     void slotChanged();
 
-protected:
-    void init();
 private:
+    void init();
     QCheckBox* mCustom;
     TemplateParser::TemplatesConfiguration* mWidget;
     uint mIdentity;

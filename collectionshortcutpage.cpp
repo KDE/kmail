@@ -38,8 +38,8 @@ CollectionShortcutPage::CollectionShortcutPage(QWidget * parent) :
     CollectionPropertiesPage( parent ),
     mShortcutChanged( false )
 {
-  setObjectName( QLatin1String( "KMail::CollectionShortcutPage" ) );
-  setPageTitle( i18nc( "@title:tab Shortcut settings for a folder.", "Shortcut" ) );
+    setObjectName( QLatin1String( "KMail::CollectionShortcutPage" ) );
+    setPageTitle( i18nc( "@title:tab Shortcut settings for a folder.", "Shortcut" ) );
 }
 
 CollectionShortcutPage::~CollectionShortcutPage()
@@ -48,59 +48,58 @@ CollectionShortcutPage::~CollectionShortcutPage()
 
 void CollectionShortcutPage::init(const Akonadi::Collection & col)
 {
-  mFolder = FolderCollection::forCollection( col, false );
+    mFolder = FolderCollection::forCollection( col, false );
 
-  QVBoxLayout *topLayout = new QVBoxLayout( this );
-  topLayout->setSpacing( KDialog::spacingHint() );
+    QVBoxLayout *topLayout = new QVBoxLayout( this );
+    topLayout->setSpacing( KDialog::spacingHint() );
 
-  QLabel *label = new QLabel( i18n( "<qt>To choose a key or a combination "
-                                    "of keys which select the current folder, "
-                                    "click the button below and then press the key(s) "
-                                    "you wish to associate with this folder.</qt>" ), this );
-  label->setWordWrap(true);
-  topLayout->addWidget(label);
+    QLabel *label = new QLabel( i18n( "<qt>To choose a key or a combination "
+                                      "of keys which select the current folder, "
+                                      "click the button below and then press the key(s) "
+                                      "you wish to associate with this folder.</qt>" ), this );
+    label->setWordWrap(true);
+    topLayout->addWidget(label);
 
-  KHBox *hb = new KHBox( this );
+    KHBox *hb = new KHBox( this );
 
-  new QWidget(hb);
-  mKeySeqWidget = new KKeySequenceWidget( hb );
-  mKeySeqWidget->setObjectName( "FolderShortcutSelector" );
-  connect( mKeySeqWidget, SIGNAL(keySequenceChanged(QKeySequence)),
-           SLOT(slotShortcutChanged()) );
-  new QWidget(hb);
+    new QWidget(hb);
+    mKeySeqWidget = new KKeySequenceWidget( hb );
+    mKeySeqWidget->setObjectName( "FolderShortcutSelector" );
+    connect( mKeySeqWidget, SIGNAL(keySequenceChanged(QKeySequence)),
+             SLOT(slotShortcutChanged()) );
+    new QWidget(hb);
 
-  topLayout->addItem( new QSpacerItem( 0, 10 ));
-  topLayout->addWidget( hb );
-  topLayout->addStretch( 1 );
+    topLayout->addItem( new QSpacerItem( 0, 10 ));
+    topLayout->addWidget( hb );
+    topLayout->addStretch( 1 );
 
-  mKeySeqWidget->setCheckActionCollections( KMKernel::self()->getKMMainWidget()->actionCollections() );
+    mKeySeqWidget->setCheckActionCollections( KMKernel::self()->getKMMainWidget()->actionCollections() );
 }
 
 void CollectionShortcutPage::load( const Akonadi::Collection & col )
 {
-  init( col );
-  if ( mFolder ) {
-    mKeySeqWidget->setKeySequence( mFolder->shortcut().primary(),
-                                   KKeySequenceWidget::NoValidate );
-    mShortcutChanged = false;
-  }
+    init( col );
+    if ( mFolder ) {
+        mKeySeqWidget->setKeySequence( mFolder->shortcut().primary(),
+                                       KKeySequenceWidget::NoValidate );
+        mShortcutChanged = false;
+    }
 }
 
 void CollectionShortcutPage::save( Akonadi::Collection & col )
 {
-  if ( mFolder )
-  {
-    if ( mShortcutChanged ) {
-      mKeySeqWidget->applyStealShortcut();
-      mFolder->setShortcut( KShortcut( mKeySeqWidget->keySequence(), QKeySequence() ) );
-      KMKernel::self()->getKMMainWidget()->folderShortcutActionManager()->shortcutChanged( mFolder->collection() );
+    if ( mFolder ) {
+        if ( mShortcutChanged ) {
+            mKeySeqWidget->applyStealShortcut();
+            mFolder->setShortcut( KShortcut( mKeySeqWidget->keySequence(), QKeySequence() ) );
+            KMKernel::self()->getKMMainWidget()->folderShortcutActionManager()->shortcutChanged( mFolder->collection() );
+        }
     }
-  }
 }
 
 void CollectionShortcutPage::slotShortcutChanged()
 {
-  mShortcutChanged = true;
+    mShortcutChanged = true;
 }
 
 

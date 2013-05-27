@@ -41,44 +41,44 @@
 
 
 CollectionQuotaPage::CollectionQuotaPage( QWidget* parent )
-  : CollectionPropertiesPage( parent )
+    : CollectionPropertiesPage( parent )
 {
-  setObjectName( QLatin1String( "KMail::CollectionQuotaPage" ) );
-  setPageTitle( i18n("Quota") );
-  init();
+    setObjectName( QLatin1String( "KMail::CollectionQuotaPage" ) );
+    setPageTitle( i18n("Quota") );
+    init();
 }
 
 bool CollectionQuotaPage::canHandle( const Akonadi::Collection &collection ) const
 {
-  const bool hasQuotaAttribute = collection.hasAttribute<Akonadi::CollectionQuotaAttribute>();
-  if ( hasQuotaAttribute ) {
-    if ( collection.attribute<Akonadi::CollectionQuotaAttribute>()->maximumValue() == 0 )
-      return false;
-  }
-  return hasQuotaAttribute;
+    const bool hasQuotaAttribute = collection.hasAttribute<Akonadi::CollectionQuotaAttribute>();
+    if ( hasQuotaAttribute ) {
+        if ( collection.attribute<Akonadi::CollectionQuotaAttribute>()->maximumValue() == 0 )
+            return false;
+    }
+    return hasQuotaAttribute;
 }
 
 void CollectionQuotaPage::init()
 {
-  QVBoxLayout* topLayout = new QVBoxLayout( this );
-  mQuotaWidget = new QuotaWidget(this);
-  topLayout->addWidget(mQuotaWidget);
+    QVBoxLayout* topLayout = new QVBoxLayout( this );
+    mQuotaWidget = new QuotaWidget(this);
+    topLayout->addWidget(mQuotaWidget);
 }
 
 void CollectionQuotaPage::load( const Akonadi::Collection & col )
 {
-  if ( col.hasAttribute<Akonadi::CollectionQuotaAttribute>() ) {
-    const qint64 currentValue = col.attribute<Akonadi::CollectionQuotaAttribute>()->currentValue()/1024;
+    if ( col.hasAttribute<Akonadi::CollectionQuotaAttribute>() ) {
+        const qint64 currentValue = col.attribute<Akonadi::CollectionQuotaAttribute>()->currentValue()/1024;
 
-    const qint64 maximumValue = col.attribute<Akonadi::CollectionQuotaAttribute>()->maximumValue()/1024;
-    //Test over quota.
-    mQuotaWidget->setQuotaInfo( qMin(currentValue,maximumValue), maximumValue );
-  }
+        const qint64 maximumValue = col.attribute<Akonadi::CollectionQuotaAttribute>()->maximumValue()/1024;
+        //Test over quota.
+        mQuotaWidget->setQuotaInfo( qMin(currentValue,maximumValue), maximumValue );
+    }
 }
 
 void CollectionQuotaPage::save( Akonadi::Collection & )
 {
-  // nothing to do, we are read-only
+    // nothing to do, we are read-only
 }
 
 

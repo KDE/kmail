@@ -30,15 +30,15 @@
 // class for the composer only.  The reader can use KCodecAction directly anyway.
 class CodecAction: public KCodecAction
 {
-  Q_OBJECT
+    Q_OBJECT
 
-  public:
+public:
     enum Mode
     {
-      ComposerMode,         ///< Used in the composer.  Show a 'Default' menu entry,
-                            ///  which uses one of the preferred codecs.  Also show 'us-ascii'.
-      ReaderMode            ///< Used in the reader.  Show an 'Auto' entry for each language,
-                            ///  and detect any charset.
+        ComposerMode,         ///< Used in the composer.  Show a 'Default' menu entry,
+        ///  which uses one of the preferred codecs.  Also show 'us-ascii'.
+        ReaderMode            ///< Used in the reader.  Show an 'Auto' entry for each language,
+        ///  and detect any charset.
     };
 
     explicit CodecAction( Mode mode, QObject *parent = 0 );
@@ -52,7 +52,7 @@ class CodecAction: public KCodecAction
     */
     QList<QByteArray> mimeCharsets() const;
 
-  private:
+private:
     class Private;
     friend class Private;
     Private *const d;

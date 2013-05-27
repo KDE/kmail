@@ -28,7 +28,7 @@ class CodecManagerPrivate;
 
 class CodecManager
 {
-  public:
+public:
     /**
       Returns the CodecManager instance.
     */
@@ -45,7 +45,7 @@ class CodecManager
     */
     void updatePreferredCharsets();
 
-  private:
+private:
     friend class CodecManagerPrivate;
     CodecManagerPrivate *const d;
 

@@ -24,34 +24,35 @@
 class QCheckBox;
 class QLabel;
 namespace Akonadi {
-  class CollectionStatistics;
+class CollectionStatistics;
 }
 
 class CollectionMaintenancePage : public Akonadi::CollectionPropertiesPage
 {
-  Q_OBJECT
+    Q_OBJECT
 public:
-  explicit CollectionMaintenancePage( QWidget *parent = 0 );
+    explicit CollectionMaintenancePage( QWidget *parent = 0 );
 
-  void load( const Akonadi::Collection & col );
-  void save( Akonadi::Collection & col );
+    void load( const Akonadi::Collection & col );
+    void save( Akonadi::Collection & col );
+
 protected:
-  void init( const Akonadi::Collection&);
+    void init( const Akonadi::Collection&);
 
 protected slots:
-  void updateCollectionStatistic(Akonadi::Collection::Id, const Akonadi::CollectionStatistics& );
-  void slotReindexing();
+    void updateCollectionStatistic(Akonadi::Collection::Id, const Akonadi::CollectionStatistics& );
+    void slotReindexing();
 private:
-  void updateLabel( qint64 nbMail, qint64 nbUnreadMail, qint64 size );
+    void updateLabel( qint64 nbMail, qint64 nbUnreadMail, qint64 size );
 
 private:
-  Akonadi::Collection mCurrentCollection;
-  bool mIsNotAVirtualCollection;
-  QLabel *mFolderSizeLabel;
-  QLabel *mCollectionCount;
-  QLabel *mCollectionUnread;
-  QCheckBox *mIndexingEnabled;
-  QLabel *mLastIndexed;
+    Akonadi::Collection mCurrentCollection;
+    bool mIsNotAVirtualCollection;
+    QLabel *mFolderSizeLabel;
+    QLabel *mCollectionCount;
+    QLabel *mCollectionUnread;
+    QCheckBox *mIndexingEnabled;
+    QLabel *mLastIndexed;
 };
 
 AKONADI_COLLECTION_PROPERTIES_PAGE_FACTORY( CollectionMaintenancePageFactory, CollectionMaintenancePage )

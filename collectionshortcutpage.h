@@ -30,24 +30,22 @@ class KKeySequenceWidget;
 
 class CollectionShortcutPage : public Akonadi::CollectionPropertiesPage
 {
-  Q_OBJECT
+    Q_OBJECT
 public:
-  explicit CollectionShortcutPage( QWidget *parent = 0 );
-  ~CollectionShortcutPage();
+    explicit CollectionShortcutPage( QWidget *parent = 0 );
+    ~CollectionShortcutPage();
 
-  void load( const Akonadi::Collection & col );
-  void save( Akonadi::Collection & col );
-
-protected:
-  void init(const Akonadi::Collection &);
+    void load( const Akonadi::Collection & col );
+    void save( Akonadi::Collection & col );
 
 private slots:
-  void slotShortcutChanged();
+    void slotShortcutChanged();
 
 private:
-  QSharedPointer<MailCommon::FolderCollection> mFolder;
-  KKeySequenceWidget *mKeySeqWidget;
-  bool mShortcutChanged;
+    void init(const Akonadi::Collection &);
+    QSharedPointer<MailCommon::FolderCollection> mFolder;
+    KKeySequenceWidget *mKeySeqWidget;
+    bool mShortcutChanged;
 };
 
 AKONADI_COLLECTION_PROPERTIES_PAGE_FACTORY( CollectionShortcutPageFactory, CollectionShortcutPage )

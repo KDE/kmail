@@ -40,18 +40,18 @@ class QuotaWidget;
  */
 class CollectionQuotaPage : public Akonadi::CollectionPropertiesPage
 {
-  Q_OBJECT
+    Q_OBJECT
 
 public:
-  explicit CollectionQuotaPage( QWidget* parent = 0 );
-  void load( const Akonadi::Collection & col );
-  void save( Akonadi::Collection & col );
-  bool canHandle( const Akonadi::Collection &collection ) const;
+    explicit CollectionQuotaPage( QWidget* parent = 0 );
+    void load( const Akonadi::Collection & col );
+    void save( Akonadi::Collection & col );
+    bool canHandle( const Akonadi::Collection &collection ) const;
 protected:
-  void init();
+    void init();
 
 private:
-  QuotaWidget* mQuotaWidget;
+    QuotaWidget* mQuotaWidget;
 };
 
 AKONADI_COLLECTION_PROPERTIES_PAGE_FACTORY( CollectionQuotaPageFactory, CollectionQuotaPage )

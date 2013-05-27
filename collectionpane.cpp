@@ -29,7 +29,7 @@
 using namespace MailCommon;
 
 CollectionPane::CollectionPane( QAbstractItemModel *model, QItemSelectionModel *selectionModel, QWidget *parent )
-  :MessageList::Pane( model, selectionModel, parent )
+    :MessageList::Pane( model, selectionModel, parent )
 {
 }
 
@@ -39,11 +39,11 @@ CollectionPane::~CollectionPane()
 
 MessageList::StorageModel *CollectionPane::createStorageModel( QAbstractItemModel *model, QItemSelectionModel *selectionModel, QObject *parent )
 {
-  return new CollectionStorageModel( model, selectionModel, parent );
+    return new CollectionStorageModel( model, selectionModel, parent );
 }
 
 CollectionStorageModel::CollectionStorageModel( QAbstractItemModel *model, QItemSelectionModel *selectionModel, QObject *parent )
-  : MessageList::StorageModel( model, selectionModel, parent )
+    : MessageList::StorageModel( model, selectionModel, parent )
 {
 }
 
@@ -53,41 +53,39 @@ CollectionStorageModel::~CollectionStorageModel()
 
 bool CollectionStorageModel::isOutBoundFolder( const Akonadi::Collection& c ) const
 {
-  if ( c.hasAttribute<Akonadi::MessageFolderAttribute>()
-       && c.attribute<Akonadi::MessageFolderAttribute>()->isOutboundFolder() ) {
-    return true;
-  }
-  QSharedPointer<FolderCollection> fd = FolderCollection::forCollection( c, false );
-  if ( fd ) {
-    const QString folderString( QString::number( c.id() ) );
-    // default setting
-    const KPIMIdentities::Identity & identity =
-      kmkernel->identityManager()->identityForUoidOrDefault( fd->identity() );
-
-    bool isOnline = false;
-    if ( CommonKernel->isSystemFolderCollection(c) &&
-         !kmkernel->isImapFolder( c, isOnline ) ) {
-      // local system folders
-      if ( c == CommonKernel->inboxCollectionFolder() ||
-           c == CommonKernel->trashCollectionFolder() )
-        return false;
-      if ( c == CommonKernel->outboxCollectionFolder() ||
-           c == CommonKernel->sentCollectionFolder() ||
-           c == CommonKernel->templatesCollectionFolder() ||
-           c == CommonKernel->draftsCollectionFolder() )
+    if ( c.hasAttribute<Akonadi::MessageFolderAttribute>()
+         && c.attribute<Akonadi::MessageFolderAttribute>()->isOutboundFolder() ) {
         return true;
-    } else if ( identity.drafts() == folderString ||
-                identity.templates() == folderString ||
-                identity.fcc() == folderString )
-      // drafts, templates or sent of the identity
-      return true;
-    else
-      return false;
-  }
+    }
+    QSharedPointer<FolderCollection> fd = FolderCollection::forCollection( c, false );
+    if ( fd ) {
+        const QString folderString( QString::number( c.id() ) );
+        // default setting
+        const KPIMIdentities::Identity & identity =
+                kmkernel->identityManager()->identityForUoidOrDefault( fd->identity() );
 
-  return false;
+        bool isOnline = false;
+        if ( CommonKernel->isSystemFolderCollection(c) &&
+             !kmkernel->isImapFolder( c, isOnline ) ) {
+            // local system folders
+            if ( c == CommonKernel->inboxCollectionFolder() ||
+                 c == CommonKernel->trashCollectionFolder() )
+                return false;
+            if ( c == CommonKernel->outboxCollectionFolder() ||
+                 c == CommonKernel->sentCollectionFolder() ||
+                 c == CommonKernel->templatesCollectionFolder() ||
+                 c == CommonKernel->draftsCollectionFolder() )
+                return true;
+        } else if ( identity.drafts() == folderString ||
+                    identity.templates() == folderString ||
+                    identity.fcc() == folderString )
+            // drafts, templates or sent of the identity
+            return true;
+        else
+            return false;
+    }
+
+    return false;
 }
-
-
 
 #include "collectionpane.moc"

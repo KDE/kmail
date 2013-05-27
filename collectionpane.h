@@ -24,25 +24,25 @@
 
 class CollectionPane : public MessageList::Pane
 {
-  Q_OBJECT
+    Q_OBJECT
 public:
-  explicit CollectionPane( QAbstractItemModel *model, QItemSelectionModel *selectionModel, QWidget *parent = 0 );
-  ~CollectionPane();
+    explicit CollectionPane( QAbstractItemModel *model, QItemSelectionModel *selectionModel, QWidget *parent = 0 );
+    ~CollectionPane();
 
-  MessageList::StorageModel *createStorageModel( QAbstractItemModel *model, QItemSelectionModel *selectionModel, QObject *parent );
+    MessageList::StorageModel *createStorageModel( QAbstractItemModel *model, QItemSelectionModel *selectionModel, QObject *parent );
 };
 
 class CollectionStorageModel : public MessageList::StorageModel
 {
-  Q_OBJECT
+    Q_OBJECT
 
 public:
-  /**
+    /**
    * Create a StorageModel wrapping the specified folder.
    */
-  explicit CollectionStorageModel( QAbstractItemModel *model, QItemSelectionModel *selectionModel, QObject *parent = 0 );
-  ~CollectionStorageModel();
-  bool isOutBoundFolder( const Akonadi::Collection& c ) const;
+    explicit CollectionStorageModel( QAbstractItemModel *model, QItemSelectionModel *selectionModel, QObject *parent = 0 );
+    ~CollectionStorageModel();
+    bool isOutBoundFolder( const Akonadi::Collection& c ) const;
 };
 
 

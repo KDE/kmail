@@ -44,7 +44,7 @@ class QuotaWidget : public QWidget {
   Q_OBJECT
 public:
   explicit QuotaWidget( QWidget* parent);
-  virtual ~QuotaWidget() { }
+  ~QuotaWidget() { }
 
   void setQuotaInfo( qint64 currentValue, qint64 maxValue );
 

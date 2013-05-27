@@ -43,36 +43,36 @@
 #include <qprogressbar.h>
 
 QuotaWidget::QuotaWidget( QWidget* parent )
-  :QWidget( parent )
+    :QWidget( parent )
 {
-  QVBoxLayout *box = new QVBoxLayout( this );
-  QWidget *stuff = new QWidget( this );
-  QGridLayout* layout = new QGridLayout( stuff );
-  layout->setMargin( KDialog::marginHint() );
-  layout->setSpacing( KDialog::spacingHint() );
+    QVBoxLayout *box = new QVBoxLayout( this );
+    QWidget *stuff = new QWidget( this );
+    QGridLayout* layout = new QGridLayout( stuff );
+    layout->setMargin( KDialog::marginHint() );
+    layout->setSpacing( KDialog::spacingHint() );
 
-  QLabel *lab = new QLabel(i18n("Usage:"));
-  layout->addWidget( lab, 0, 0 );
+    QLabel *lab = new QLabel(i18n("Usage:"));
+    layout->addWidget( lab, 0, 0 );
 
-  mUsage = new QLabel;
-  layout->addWidget( mUsage, 0, 1 );
+    mUsage = new QLabel;
+    layout->addWidget( mUsage, 0, 1 );
 
 
-  QLabel *Status = new QLabel(i18n("Status:"));
-  layout->addWidget( Status, 1, 0 );
-  mProgressBar = new QProgressBar( stuff );
-  // xgettext: no-c-format
-  mProgressBar->setFormat(i18n("%p% full"));
-  layout->addWidget( mProgressBar, 1, 1 );
-  box->addWidget( stuff );
-  box->addStretch( 2 );
+    QLabel *Status = new QLabel(i18n("Status:"));
+    layout->addWidget( Status, 1, 0 );
+    mProgressBar = new QProgressBar( stuff );
+    // xgettext: no-c-format
+    mProgressBar->setFormat(i18n("%p% full"));
+    layout->addWidget( mProgressBar, 1, 1 );
+    box->addWidget( stuff );
+    box->addStretch( 2 );
 }
 
 void QuotaWidget::setQuotaInfo( qint64 current, qint64 maxValue )
 {
-  mProgressBar->setMaximum( maxValue );
-  mProgressBar->setValue( current );
-  mUsage->setText(i18n("%1 of %2 KiB used",current, maxValue));
+    mProgressBar->setMaximum( maxValue );
+    mProgressBar->setValue( current );
+    mUsage->setText(i18n("%1 of %2 KiB used",current, maxValue));
 }
 
 #include "collectionquotapage_p.moc"

@@ -107,9 +107,9 @@ using namespace MailCommon;
 
 namespace KMail {
 
-  IdentityDialog::IdentityDialog( QWidget * parent )
+IdentityDialog::IdentityDialog( QWidget * parent )
     : KDialog( parent )
-  {
+{
     setCaption( i18n("Edit Identity") );
 #ifndef KDEPIM_MOBILE_UI
     setButtons( Ok|Cancel|Help );
@@ -305,7 +305,7 @@ namespace KMail {
     glay->addWidget( mSMIMESigningKeyRequester, row, 1 );
 
     const Kleo::CryptoBackend::Protocol * smimeProtocol
-      = Kleo::CryptoBackendFactory::instance()->smime();
+            = Kleo::CryptoBackendFactory::instance()->smime();
 
     label->setEnabled( smimeProtocol );
     mSMIMESigningKeyRequester->setEnabled( smimeProtocol );
@@ -568,91 +568,91 @@ namespace KMail {
     connect( mTabWidget, SIGNAL(currentChanged(int)),
              SLOT(slotAboutToShow(int)) );
     setHelp( "configure-identity", "kmail" );
-  }
+}
 
-  IdentityDialog::~IdentityDialog() {
+IdentityDialog::~IdentityDialog() {
 #ifndef KCM_KPIMIDENTITIES_STANDALONE
     GlobalSettings::self()->setIdentityDialogSize( size() );
 #endif
-  }
+}
 
-  void IdentityDialog::slotAboutToShow( int index ) {
+void IdentityDialog::slotAboutToShow( int index ) {
     QWidget *w = mTabWidget->widget( index );
     if ( w == mCryptographyTab ) {
-      // set the configured email address as initial query of the key
-      // requesters:
-      const QString email = mEmailEdit->text().trimmed();
-      mPGPEncryptionKeyRequester->setInitialQuery( email );
-      mPGPSigningKeyRequester->setInitialQuery( email );
-      mSMIMEEncryptionKeyRequester->setInitialQuery( email );
-      mSMIMESigningKeyRequester->setInitialQuery( email );
+        // set the configured email address as initial query of the key
+        // requesters:
+        const QString email = mEmailEdit->text().trimmed();
+        mPGPEncryptionKeyRequester->setInitialQuery( email );
+        mPGPSigningKeyRequester->setInitialQuery( email );
+        mSMIMEEncryptionKeyRequester->setInitialQuery( email );
+        mSMIMESigningKeyRequester->setInitialQuery( email );
     }
-  }
+}
 
-  void IdentityDialog::slotCopyGlobal() {
+void IdentityDialog::slotCopyGlobal() {
 #ifndef KDEPIM_MOBILE_UI
     mWidget->loadFromGlobal();
 #endif
-  }
+}
 
-  namespace {
-    struct DoesntMatchEMailAddress {
-      explicit DoesntMatchEMailAddress( const QString & s )
+namespace {
+struct DoesntMatchEMailAddress {
+    explicit DoesntMatchEMailAddress( const QString & s )
         : email( s.trimmed().toLower() ) {}
-      bool operator()( const GpgME::Key & key ) const;
-    private:
-      bool checkForEmail( const char * email ) const;
-      static QString extractEmail( const char * email );
-      const QString email;
-    };
+    bool operator()( const GpgME::Key & key ) const;
+private:
+    bool checkForEmail( const char * email ) const;
+    static QString extractEmail( const char * email );
+    const QString email;
+};
 
-    bool DoesntMatchEMailAddress::operator()( const GpgME::Key & key ) const {
-      const std::vector<GpgME::UserID> uids = key.userIDs();
-      std::vector<GpgME::UserID>::const_iterator end = uids.end();
-      for ( std::vector<GpgME::UserID>::const_iterator it = uids.begin() ; it != end ; ++it )
+bool DoesntMatchEMailAddress::operator()( const GpgME::Key & key ) const {
+    const std::vector<GpgME::UserID> uids = key.userIDs();
+    std::vector<GpgME::UserID>::const_iterator end = uids.end();
+    for ( std::vector<GpgME::UserID>::const_iterator it = uids.begin() ; it != end ; ++it )
         if ( checkForEmail( it->email() ? it->email() : it->id() ) )
-          return false;
-      return true; // note the negation!
-    }
+            return false;
+    return true; // note the negation!
+}
 
-    bool DoesntMatchEMailAddress::checkForEmail( const char * e ) const {
-      const QString em = extractEmail( e );
-      return !em.isEmpty() && email.toLower() == em.toLower();
-    }
+bool DoesntMatchEMailAddress::checkForEmail( const char * e ) const {
+    const QString em = extractEmail( e );
+    return !em.isEmpty() && email.toLower() == em.toLower();
+}
 
-    QString DoesntMatchEMailAddress::extractEmail( const char * e ) {
-      if ( !e || !*e )
+QString DoesntMatchEMailAddress::extractEmail( const char * e ) {
+    if ( !e || !*e )
         return QString();
-      const QString em = QString::fromUtf8( e );
-      if ( e[0] == '<' )
+    const QString em = QString::fromUtf8( e );
+    if ( e[0] == '<' )
         return em.mid( 1, em.length() - 2 );
-      else
+    else
         return em;
-    }
-  }
+}
+}
 
-  void IdentityDialog::slotButtonClicked( int button )
-  {
+void IdentityDialog::slotButtonClicked( int button )
+{
     if ( button != KDialog::Ok ) {
-      KDialog::slotButtonClicked( button );
-      return;
+        KDialog::slotButtonClicked( button );
+        return;
     }
 
     const QStringList aliases = mAliasEdit->stringList();
     foreach ( const QString &alias, aliases ) {
-      if ( !KPIMUtils::isValidSimpleAddress( alias ) ) {
-        const QString errorMsg( KPIMUtils::simpleEmailAddressErrorMsg() );
-        KMessageBox::sorry( this, errorMsg, i18n( "Invalid Email Alias \"%1\"", alias ) );
-        return;
-      }
+        if ( !KPIMUtils::isValidSimpleAddress( alias ) ) {
+            const QString errorMsg( KPIMUtils::simpleEmailAddressErrorMsg() );
+            KMessageBox::sorry( this, errorMsg, i18n( "Invalid Email Alias \"%1\"", alias ) );
+            return;
+        }
     }
 
     // Validate email addresses
     const QString email = mEmailEdit->text().trimmed();
     if ( !KPIMUtils::isValidSimpleAddress( email ) ) {
-      QString errorMsg( KPIMUtils::simpleEmailAddressErrorMsg() );
-      KMessageBox::sorry( this, errorMsg, i18n("Invalid Email Address") );
-      return;
+        QString errorMsg( KPIMUtils::simpleEmailAddressErrorMsg() );
+        KMessageBox::sorry( this, errorMsg, i18n("Invalid Email Address") );
+        return;
     }
 
     // Check if the 'Reply to' and 'BCC' recipients are valid
@@ -661,97 +661,97 @@ namespace KMail {
     job->setProperty( "email", email );
     connect( job, SIGNAL(result(KJob*)), SLOT(slotDelayedButtonClicked(KJob*)) );
     job->start();
-  }
+}
 
-  void IdentityDialog::slotDelayedButtonClicked( KJob *job )
-  {
+void IdentityDialog::slotDelayedButtonClicked( KJob *job )
+{
     const AddressValidationJob *validationJob = qobject_cast<AddressValidationJob*>( job );
 
     // Abort if one of the recipient addresses is invalid
     if ( !validationJob->isValid() )
-      return;
+        return;
 
     const QString email = validationJob->property( "email" ).toString();
 
     const std::vector<GpgME::Key> &pgpSigningKeys =
-      mPGPSigningKeyRequester->keys();
+            mPGPSigningKeyRequester->keys();
     const std::vector<GpgME::Key> &pgpEncryptionKeys =
-      mPGPEncryptionKeyRequester->keys();
+            mPGPEncryptionKeyRequester->keys();
     const std::vector<GpgME::Key> &smimeSigningKeys =
-      mSMIMESigningKeyRequester->keys();
+            mSMIMESigningKeyRequester->keys();
     const std::vector<GpgME::Key> &smimeEncryptionKeys =
-      mSMIMEEncryptionKeyRequester->keys();
+            mSMIMEEncryptionKeyRequester->keys();
 
     QString msg;
     bool err = false;
     if ( std::find_if( pgpSigningKeys.begin(), pgpSigningKeys.end(),
                        DoesntMatchEMailAddress( email ) ) != pgpSigningKeys.end() ) {
-      msg = i18n("One of the configured OpenPGP signing keys does not contain "
-                 "any user ID with the configured email address for this "
-                 "identity (%1).\n"
-                 "This might result in warning messages on the receiving side "
-                 "when trying to verify signatures made with this configuration.", email);
-      err = true;
+        msg = i18n("One of the configured OpenPGP signing keys does not contain "
+                   "any user ID with the configured email address for this "
+                   "identity (%1).\n"
+                   "This might result in warning messages on the receiving side "
+                   "when trying to verify signatures made with this configuration.", email);
+        err = true;
     } else if ( std::find_if( pgpEncryptionKeys.begin(), pgpEncryptionKeys.end(),
                               DoesntMatchEMailAddress( email ) ) != pgpEncryptionKeys.end() ) {
-      msg = i18n("One of the configured OpenPGP encryption keys does not contain "
-                 "any user ID with the configured email address for this "
-                 "identity (%1).", email);
-      err = true;
+        msg = i18n("One of the configured OpenPGP encryption keys does not contain "
+                   "any user ID with the configured email address for this "
+                   "identity (%1).", email);
+        err = true;
     } else if ( std::find_if( smimeSigningKeys.begin(), smimeSigningKeys.end(),
                               DoesntMatchEMailAddress( email ) ) != smimeSigningKeys.end() ) {
-      msg = i18n("One of the configured S/MIME signing certificates does not contain "
-                 "the configured email address for this "
-                 "identity (%1).\n"
-                 "This might result in warning messages on the receiving side "
-                 "when trying to verify signatures made with this configuration.", email);
-      err = true;
+        msg = i18n("One of the configured S/MIME signing certificates does not contain "
+                   "the configured email address for this "
+                   "identity (%1).\n"
+                   "This might result in warning messages on the receiving side "
+                   "when trying to verify signatures made with this configuration.", email);
+        err = true;
     } else if ( std::find_if( smimeEncryptionKeys.begin(), smimeEncryptionKeys.end(),
                               DoesntMatchEMailAddress( email ) ) != smimeEncryptionKeys.end() ) {
-      msg = i18n("One of the configured S/MIME encryption certificates does not contain "
-                 "the configured email address for this "
-                 "identity (%1).", email);
-      err = true;
+        msg = i18n("One of the configured S/MIME encryption certificates does not contain "
+                   "the configured email address for this "
+                   "identity (%1).", email);
+        err = true;
     }
 
     if ( err ) {
-      if ( KMessageBox::warningContinueCancel( this, msg,
-                                               i18n("Email Address Not Found in Key/Certificates"),
-                                               KStandardGuiItem::cont(),
-                                               KStandardGuiItem::cancel(),
-                                               "warn_email_not_in_certificate" )
-           != KMessageBox::Continue) {
-        return;
-      }
+        if ( KMessageBox::warningContinueCancel( this, msg,
+                                                 i18n("Email Address Not Found in Key/Certificates"),
+                                                 KStandardGuiItem::cont(),
+                                                 KStandardGuiItem::cancel(),
+                                                 "warn_email_not_in_certificate" )
+             != KMessageBox::Continue) {
+            return;
+        }
     }
 
 
     if ( mSignatureConfigurator->isSignatureEnabled() &&
          mSignatureConfigurator->signatureType()==Signature::FromFile ) {
-      KUrl url( mSignatureConfigurator->fileURL() );
-      KFileItem signatureFile( KFileItem::Unknown, KFileItem::Unknown, url );
-      if ( !signatureFile.isFile() || !signatureFile.isReadable() || !signatureFile.isLocalFile() ) {
-        KMessageBox::error( this, i18n( "The signature file is not valid" ) );
-        return;
-      }
+        KUrl url( mSignatureConfigurator->fileURL() );
+        KFileItem signatureFile( KFileItem::Unknown, KFileItem::Unknown, url );
+        if ( !signatureFile.isFile() || !signatureFile.isReadable() || !signatureFile.isLocalFile() ) {
+            KMessageBox::error( this, i18n( "The signature file is not valid" ) );
+            return;
+        }
     }
 
     accept();
-  }
+}
 
-  bool IdentityDialog::checkFolderExists( const QString & folderID,
-                                          const QString & msg )
-  {
+bool IdentityDialog::checkFolderExists( const QString & folderID,
+                                        const QString & msg )
+{
     const Akonadi::Collection folder = CommonKernel->collectionFromId( folderID.toLongLong() );
     if ( !folder.isValid() ) {
-      KMessageBox::sorry( this, msg );
-      return false;
+        KMessageBox::sorry( this, msg );
+        return false;
     }
 
     return true;
-  }
+}
 
-  void IdentityDialog::setIdentity( KPIMIdentities::Identity & ident ) {
+void IdentityDialog::setIdentity( KPIMIdentities::Identity & ident ) {
 
     setCaption( i18n("Edit Identity \"%1\"", ident.identityName() ) );
 
@@ -768,7 +768,7 @@ namespace KMail {
     mSMIMEEncryptionKeyRequester->setFingerprint( ident.smimeEncryptionKey() );
 
     mPreferredCryptoMessageFormat->setCurrentIndex( format2cb(
-       Kleo::stringToCryptoMessageFormat( ident.preferredCryptoMessageFormat() ) ) );
+                                                        Kleo::stringToCryptoMessageFormat( ident.preferredCryptoMessageFormat() ) ) );
 
     // "Advanced" tab:
     mReplyToEdit->setText( ident.replyToAddr() );
@@ -779,7 +779,7 @@ namespace KMail {
     mTransportCheck->setChecked( transportId != -1 );
     mTransportCombo->setEnabled( transportId != -1 );
     if ( transport )
-      mTransportCombo->setCurrentTransport( transport->id() );
+        mTransportCombo->setCurrentTransport( transport->id() );
     mDictionaryCombo->setCurrentByDictionaryName( ident.dictionary() );
 
     mSentMailFolderCheck->setChecked(!ident.disabledFcc());
@@ -791,10 +791,10 @@ namespace KMail {
                                   "therefore, the default sent-mail folder "
                                   "will be used.",
                                   ident.identityName() ) ) ) {
-      mFccCombo->setCollection( CommonKernel->sentCollectionFolder() );
+        mFccCombo->setCollection( CommonKernel->sentCollectionFolder() );
     }
     else {
-      mFccCombo->setCollection( Akonadi::Collection( ident.fcc().toLongLong() ) );
+        mFccCombo->setCollection( Akonadi::Collection( ident.fcc().toLongLong() ) );
     }
     if ( ident.drafts().isEmpty() ||
          !checkFolderExists( ident.drafts(),
@@ -803,10 +803,10 @@ namespace KMail {
                                   "therefore, the default drafts folder "
                                   "will be used.",
                                   ident.identityName() ) ) ) {
-      mDraftsCombo->setCollection( CommonKernel->draftsCollectionFolder() );
+        mDraftsCombo->setCollection( CommonKernel->draftsCollectionFolder() );
     }
     else
-      mDraftsCombo->setCollection( Akonadi::Collection( ident.drafts().toLongLong() ) );
+        mDraftsCombo->setCollection( Akonadi::Collection( ident.drafts().toLongLong() ) );
 
     if ( ident.templates().isEmpty() ||
          !checkFolderExists( ident.templates(),
@@ -814,18 +814,18 @@ namespace KMail {
                                   "\"%1\" does not exist (anymore); "
                                   "therefore, the default templates folder "
                                   "will be used.", ident.identityName()) ) ) {
-      mTemplatesCombo->setCollection( CommonKernel->templatesCollectionFolder() );
+        mTemplatesCombo->setCollection( CommonKernel->templatesCollectionFolder() );
 
     }
     else
-      mTemplatesCombo->setCollection( Akonadi::Collection( ident.templates().toLongLong() ) );
+        mTemplatesCombo->setCollection( Akonadi::Collection( ident.templates().toLongLong() ) );
 
     mVcardFilename = ident.vCardFile();
 
     mAutoCorrectionLanguage->setLanguage(ident.autocorrectionLanguage());
     updateVcardButton();
     if(mVcardFilename.isEmpty()) {
-      mVcardFilename = KStandardDirs::locateLocal("appdata",ident.identityName() + QLatin1String(".vcf"));
+        mVcardFilename = KStandardDirs::locateLocal("appdata",ident.identityName() + QLatin1String(".vcf"));
     }
     mAttachMyVCard->setChecked(ident.attachVcard());
     // "Templates" tab:
@@ -844,9 +844,9 @@ namespace KMail {
     mXFaceConfigurator->setXFace( ident.xface() );
     mXFaceConfigurator->setXFaceEnabled( ident.isXFaceEnabled() );
 #endif
-  }
+}
 
-  void IdentityDialog::updateIdentity( KPIMIdentities::Identity & ident ) {
+void IdentityDialog::updateIdentity( KPIMIdentities::Identity & ident ) {
     // "General" tab:
     ident.setFullName( mNameEdit->text() );
     ident.setOrganization( mOrganizationEdit->text() );
@@ -859,7 +859,7 @@ namespace KMail {
     ident.setSMIMESigningKey( mSMIMESigningKeyRequester->fingerprint().toLatin1() );
     ident.setSMIMEEncryptionKey( mSMIMEEncryptionKeyRequester->fingerprint().toLatin1() );
     ident.setPreferredCryptoMessageFormat(
-       Kleo::cryptoMessageFormatToString(cb2format( mPreferredCryptoMessageFormat->currentIndex() ) ) );
+                Kleo::cryptoMessageFormatToString(cb2format( mPreferredCryptoMessageFormat->currentIndex() ) ) );
     // "Advanced" tab:
     ident.setReplyToAddr( mReplyToEdit->text() );
     ident.setBcc( mBccEdit->text() );
@@ -870,33 +870,33 @@ namespace KMail {
     ident.setDisabledFcc( !mSentMailFolderCheck->isChecked() );
     Akonadi::Collection collection = mFccCombo->collection();
     if ( collection.isValid() ) {
-      ident.setFcc( QString::number( collection.id() ) );
-      Akonadi::EntityDisplayAttribute *attribute =  collection.attribute<Akonadi::EntityDisplayAttribute>( Akonadi::Entity::AddIfMissing );
-      attribute->setIconName( QLatin1String( "mail-folder-sent" ) );
-      new Akonadi::CollectionModifyJob( collection );
+        ident.setFcc( QString::number( collection.id() ) );
+        Akonadi::EntityDisplayAttribute *attribute =  collection.attribute<Akonadi::EntityDisplayAttribute>( Akonadi::Entity::AddIfMissing );
+        attribute->setIconName( QLatin1String( "mail-folder-sent" ) );
+        new Akonadi::CollectionModifyJob( collection );
     }
     else
-      ident.setFcc( QString() );
+        ident.setFcc( QString() );
 
     collection = mDraftsCombo->collection();
     if ( collection.isValid() ) {
-      ident.setDrafts( QString::number( collection.id() ) );
-      Akonadi::EntityDisplayAttribute *attribute =  collection.attribute<Akonadi::EntityDisplayAttribute>( Akonadi::Entity::AddIfMissing );
-      attribute->setIconName( QLatin1String( "document-properties" ) );
-      new Akonadi::CollectionModifyJob( collection );
+        ident.setDrafts( QString::number( collection.id() ) );
+        Akonadi::EntityDisplayAttribute *attribute =  collection.attribute<Akonadi::EntityDisplayAttribute>( Akonadi::Entity::AddIfMissing );
+        attribute->setIconName( QLatin1String( "document-properties" ) );
+        new Akonadi::CollectionModifyJob( collection );
     }
     else
-      ident.setDrafts( QString() );
+        ident.setDrafts( QString() );
 
     collection = mTemplatesCombo->collection();
     if ( collection.isValid() ) {
-      ident.setTemplates( QString::number( collection.id() ) );
-      Akonadi::EntityDisplayAttribute *attribute =  collection.attribute<Akonadi::EntityDisplayAttribute>( Akonadi::Entity::AddIfMissing );
-      attribute->setIconName( QLatin1String( "document-new" ) );
-      new Akonadi::CollectionModifyJob( collection );
+        ident.setTemplates( QString::number( collection.id() ) );
+        Akonadi::EntityDisplayAttribute *attribute =  collection.attribute<Akonadi::EntityDisplayAttribute>( Akonadi::Entity::AddIfMissing );
+        attribute->setIconName( QLatin1String( "document-new" ) );
+        new Akonadi::CollectionModifyJob( collection );
     }
     else
-      ident.setTemplates( QString() );
+        ident.setTemplates( QString() );
     ident.setVCardFile(mVcardFilename);
     ident.setAutocorrectionLanguage(mAutoCorrectionLanguage->language());
     updateVcardButton();
@@ -920,58 +920,58 @@ namespace KMail {
     ident.setXFaceEnabled( mXFaceConfigurator->isXFaceEnabled() );
 #endif
 
-  }
-  void IdentityDialog::slotEditVcard()
-  {
-      if(QFile(mVcardFilename).exists()) {
-          editVcard(mVcardFilename);
-      } else {
-          if ( !MailCommon::Kernel::self()->kernelIsRegistered() ) {
-              return;
-          }
-          KPIMIdentities::IdentityManager *manager = KernelIf->identityManager();
+}
+void IdentityDialog::slotEditVcard()
+{
+    if(QFile(mVcardFilename).exists()) {
+        editVcard(mVcardFilename);
+    } else {
+        if ( !MailCommon::Kernel::self()->kernelIsRegistered() ) {
+            return;
+        }
+        KPIMIdentities::IdentityManager *manager = KernelIf->identityManager();
 
-          QPointer<IdentityAddVcardDialog> dlg = new IdentityAddVcardDialog(manager, this);
-          if(dlg->exec()) {
-              IdentityAddVcardDialog::DuplicateMode mode = dlg->duplicateMode();
-              switch(mode) {
-              case IdentityAddVcardDialog::Empty: {
-                  editVcard(mVcardFilename);
-                  break;
-              }
-              case IdentityAddVcardDialog::ExistingEntry: {
-                  KPIMIdentities::Identity ident = manager->modifyIdentityForName( dlg->duplicateVcardFromIdentity() );
-                  const QString filename = ident.vCardFile();
-                  if(!filename.isEmpty()) {
-                      QFile::copy(filename,mVcardFilename);
-                  }
-                  editVcard(mVcardFilename);
-                  break;
-              }
-              }
-          }
-          delete dlg;
-      }
-  }
+        QPointer<IdentityAddVcardDialog> dlg = new IdentityAddVcardDialog(manager, this);
+        if(dlg->exec()) {
+            IdentityAddVcardDialog::DuplicateMode mode = dlg->duplicateMode();
+            switch(mode) {
+            case IdentityAddVcardDialog::Empty: {
+                editVcard(mVcardFilename);
+                break;
+            }
+            case IdentityAddVcardDialog::ExistingEntry: {
+                KPIMIdentities::Identity ident = manager->modifyIdentityForName( dlg->duplicateVcardFromIdentity() );
+                const QString filename = ident.vCardFile();
+                if(!filename.isEmpty()) {
+                    QFile::copy(filename,mVcardFilename);
+                }
+                editVcard(mVcardFilename);
+                break;
+            }
+            }
+        }
+        delete dlg;
+    }
+}
 
-  void IdentityDialog::editVcard(const QString& filename)
-  {
+void IdentityDialog::editVcard(const QString& filename)
+{
     IdentityEditVcardDialog dlg(this);
     dlg.loadVcard(filename);
     if(dlg.exec()) {
-       mVcardFilename = dlg.saveVcard();
-       updateVcardButton();
+        mVcardFilename = dlg.saveVcard();
+        updateVcardButton();
     }
-  }
+}
 
-  void IdentityDialog::updateVcardButton()
-  {
+void IdentityDialog::updateVcardButton()
+{
     if(!QFile(mVcardFilename).exists()) {
-      mEditVCard->setText(i18n("Create..."));
+        mEditVCard->setText(i18n("Create..."));
     } else {
-      mEditVCard->setText(i18n("Edit..."));
+        mEditVCard->setText(i18n("Edit..."));
     }
-  }
+}
 
 }
 

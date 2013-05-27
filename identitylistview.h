@@ -59,10 +59,9 @@ public:
     KPIMIdentities::Identity &identity() const;
     virtual void setIdentity( const KPIMIdentities::Identity &ident );
     void redisplay();
+
 private:
     void init( const KPIMIdentities::Identity &ident );
-
-protected:
     uint mUOID;
 };
 

@@ -32,10 +32,10 @@
 
 class CodecAction::Private
 {
-  public:
+public:
     Private( CodecAction::Mode mod, CodecAction *qq )
-      : mode( mod )
-      , q( qq )
+        : mode( mod )
+        , q( qq )
     {
     }
 
@@ -46,50 +46,50 @@ class CodecAction::Private
 
 
 CodecAction::CodecAction( Mode mode, QObject *parent )
-  : KCodecAction( parent, mode == ReaderMode )
-  , d( new Private( mode, this ) )
+    : KCodecAction( parent, mode == ReaderMode )
+    , d( new Private( mode, this ) )
 {
-  if( mode == ComposerMode ) {
-    // Add 'us-ascii' entry.  We want it at the top, so remove then re-add everything.
-    // FIXME is there a better way?
-    QList<QAction*> oldActions = actions();
-    removeAllActions();
-    addAction( oldActions.takeFirst() ); // 'Default'
-    addAction( i18nc( "Encodings menu", "us-ascii" ) );
-    foreach( QAction *a, oldActions ) {
-      addAction( a );
+    if( mode == ComposerMode ) {
+        // Add 'us-ascii' entry.  We want it at the top, so remove then re-add everything.
+        // FIXME is there a better way?
+        QList<QAction*> oldActions = actions();
+        removeAllActions();
+        addAction( oldActions.takeFirst() ); // 'Default'
+        addAction( i18nc( "Encodings menu", "us-ascii" ) );
+        foreach( QAction *a, oldActions ) {
+            addAction( a );
+        }
+    } else if( mode == ReaderMode ) {
+        // Nothing to do.
     }
-  } else if( mode == ReaderMode ) {
-    // Nothing to do.
-  }
 
-  // Eye candy.
-  setIcon( KIcon( "accessories-character-map" ) );
-  setText( i18nc( "Menu item", "Encoding" ) );
+    // Eye candy.
+    setIcon( KIcon( "accessories-character-map" ) );
+    setText( i18nc( "Menu item", "Encoding" ) );
 }
 
 CodecAction::~CodecAction()
 {
-  delete d;
+    delete d;
 }
 
 QList<QByteArray> CodecAction::mimeCharsets() const
 {
-  QList<QByteArray> ret;
-  kDebug() << "current item" << currentItem() << currentText();
-  if( currentItem() == 0 ) {
-    // 'Default' selected: return the preferred charsets.
-    ret = CodecManager::self()->preferredCharsets();
-  } else if( currentItem() == 1 ) {
-    // 'us-ascii' selected.
-    ret << "us-ascii";
-  } else {
-    // Specific codec selected.
-    // ret << currentCodecName().toLatin1().toLower(); // FIXME in kdelibs: returns e.g. '&koi8-r'
-    ret << currentCodec()->name();
-    kDebug() << "current codec name" << ret.first();
-  }
-  return ret;
+    QList<QByteArray> ret;
+    kDebug() << "current item" << currentItem() << currentText();
+    if( currentItem() == 0 ) {
+        // 'Default' selected: return the preferred charsets.
+        ret = CodecManager::self()->preferredCharsets();
+    } else if( currentItem() == 1 ) {
+        // 'us-ascii' selected.
+        ret << "us-ascii";
+    } else {
+        // Specific codec selected.
+        // ret << currentCodecName().toLatin1().toLower(); // FIXME in kdelibs: returns e.g. '&koi8-r'
+        ret << currentCodec()->name();
+        kDebug() << "current codec name" << ret.first();
+    }
+    return ret;
 }
 
 #include "codecaction.moc"

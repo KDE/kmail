@@ -37,7 +37,7 @@
 class QCheckBox;
 
 namespace PimCommon {
-  class SimpleStringListEditor;
+class SimpleStringListEditor;
 }
 
 class KComboBox;
@@ -47,42 +47,42 @@ class KPushButton;
 class KTabWidget;
 
 namespace Kleo {
-  class EncryptionKeyRequester;
-  class SigningKeyRequester;
+class EncryptionKeyRequester;
+class SigningKeyRequester;
 }
 namespace KPIMIdentities {
-  class Identity;
-  class SignatureConfigurator;
+class Identity;
+class SignatureConfigurator;
 }
 namespace KMail {
-  class XFaceConfigurator;
+class XFaceConfigurator;
 }
 
 namespace MailCommon {
-  class FolderRequester;
+class FolderRequester;
 }
 namespace Sonnet {
-  class DictionaryComboBox;
+class DictionaryComboBox;
 }
 
 namespace MailTransport {
-  class TransportComboBox;
+class TransportComboBox;
 }
 
 namespace TemplateParser {
-  class TemplatesConfiguration;
+class TemplatesConfiguration;
 }
 
 namespace MessageComposer {
-  class ComposerAutoCorrectionLanguage;
+class ComposerAutoCorrectionLanguage;
 }
 
 
 namespace KMail {
 
-  class IdentityDialog : public KDialog {
+class IdentityDialog : public KDialog {
     Q_OBJECT
-  public:
+public:
     explicit IdentityDialog( QWidget * parent=0 );
     ~IdentityDialog();
 
@@ -90,7 +90,7 @@ namespace KMail {
 
     void updateIdentity( KPIMIdentities::Identity & ident );
 
-  protected slots:
+protected slots:
     void slotAboutToShow( int );
 
     /*! \reimp */
@@ -99,15 +99,17 @@ namespace KMail {
     // copy default templates to identity templates
     void slotCopyGlobal();
 
-  private slots:
+private slots:
     void slotDelayedButtonClicked( KJob* );
     void slotEditVcard();
-  private:
+
+private:
     bool checkFolderExists( const QString & folder, const QString & msg );
     bool validateAddresses( const QString & addresses );
     void updateVcardButton();
     void editVcard(const QString& filename);
-  protected:
+
+private:
     // "general" tab:
     KLineEdit                    *mNameEdit;
     KLineEdit                    *mOrganizationEdit;
@@ -145,7 +147,7 @@ namespace KMail {
     // "X-Face" tab:
     KMail::XFaceConfigurator *mXFaceConfigurator;
     KTabWidget *mTabWidget;
-  };
+};
 
 } // namespace KMail
 
