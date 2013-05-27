@@ -85,7 +85,6 @@ SearchWindow::SearchWindow( KMMainWidget *widget, const Akonadi::Collection &col
     mSortOrder( Qt::AscendingOrder ),
     mSearchJob( 0 ),
     mResultModel( 0 ),
-    mLastFocus( 0 ),
     mKMMainWidget( widget ),
     mAkonadiStandardAction( 0 )
 {
@@ -382,10 +381,6 @@ void SearchWindow::activateFolder( const Akonadi::Collection &collection )
 
 void SearchWindow::slotSearch()
 {
-  mLastFocus = focusWidget();
-  mSearchButton->setFocus();     // set focus so we don't miss key event
-
-
   if ( mUi.mSearchFolderEdt->text().isEmpty() ) {
     mUi.mSearchFolderEdt->setText( i18n( "Last Search" ) );
   }
@@ -615,14 +610,6 @@ void SearchWindow::enableGUI()
 {
   const bool searching = (mSearchJob != 0);
 
-  enableButton( KDialog::Close, !searching );
-
-  mUi.mCbxFolders->setEnabled( !searching && !mUi.mChkbxAllFolders->isChecked() );
-  mUi.mChkSubFolders->setEnabled( !searching && !mUi.mChkbxAllFolders->isChecked() );
-  mUi.mChkbxAllFolders->setEnabled( !searching );
-  mUi.mChkbxSpecificFolders->setEnabled( !searching );
-  mUi.mPatternEdit->setEnabled( !searching);
-
   mSearchButton->setGuiItem( searching ? mStopSearchGuiItem : mStartSearchGuiItem );
   if ( searching ) {
     disconnect( mSearchButton, SIGNAL(clicked()), this, SLOT(slotSearch()) );
@@ -630,11 +617,6 @@ void SearchWindow::enableGUI()
   } else {
     disconnect( mSearchButton, SIGNAL(clicked()), this, SLOT(slotStop()) );
     connect( mSearchButton, SIGNAL(clicked()), SLOT(slotSearch()) );
-  }
-
-  if ( mLastFocus ) {
-    mLastFocus->setFocus();
-    mLastFocus = 0;
   }
 }
 
