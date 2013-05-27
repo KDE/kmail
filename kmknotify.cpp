@@ -100,17 +100,14 @@ void KMKnotify::initCombobox()
     lstNotify<< QLatin1String( "akonadi_sendlater_agent/akonadi_sendlater_agent.notifyrc" );
     //TODO add other notifyrc here if necessary
 
-    Q_FOREACH( const QString& notify, lstNotify )
-    {
+    Q_FOREACH( const QString& notify, lstNotify ) {
         const QString fullPath = KStandardDirs::locate( "data", notify );
 
-        if ( !fullPath.isEmpty() )
-        {
+        if ( !fullPath.isEmpty() ) {
             const int slash = fullPath.lastIndexOf( QLatin1Char('/') ) - 1;
             const int slash2 = fullPath.lastIndexOf( QLatin1Char('/'), slash );
             const QString appname= ( slash2 < 0 ) ? QString() :  fullPath.mid( slash2+1 , slash-slash2  );
-            if ( !appname.isEmpty() )
-            {
+            if ( !appname.isEmpty() ) {
                 KConfig config(fullPath, KConfig::NoGlobals, "data" );
                 KConfigGroup globalConfig( &config, QString::fromLatin1("Global") );
                 const QString icon = globalConfig.readEntry(QString::fromLatin1("IconName"), QString::fromLatin1("misc"));

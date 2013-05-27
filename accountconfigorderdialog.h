@@ -34,6 +34,7 @@ public:
     enum Type {
         IdentifierAccount = Qt::UserRole+1
     };
+
 private Q_SLOTS:
     void slotOk();
     void slotMoveUp();
