@@ -129,10 +129,10 @@ void KMMainWin::displayStatusMsg( const QString& aText )
 {
   if ( !statusBar() || !mLittleProgress )
     return;
-  int statusWidth = statusBar()->width() - mLittleProgress->width()
+  const int statusWidth = statusBar()->width() - mLittleProgress->width()
                     - fontMetrics().maxWidth();
 
-  QString text = fontMetrics().elidedText( ' ' + aText, Qt::ElideRight,
+  const QString text = fontMetrics().elidedText( ' ' + aText, Qt::ElideRight,
                                            statusWidth );
 
   // ### FIXME: We should disable richtext/HTML (to avoid possible denial of service attacks),

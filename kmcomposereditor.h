@@ -30,9 +30,9 @@ class KMComposeWin;
 
 class KMComposerEditor : public Message::KMeditor
 {
-  Q_OBJECT
+    Q_OBJECT
 
-  public:
+public:
 
     /**
      * Constructs a KMComposerEditor object.
@@ -67,16 +67,16 @@ class KMComposerEditor : public Message::KMeditor
      */
     void setHighlighterColors(KPIMTextEdit::EMailQuoteHighlighter * highlighter);
 
-  private:
-     KMComposeWin *mComposerWin;
+private:
+    KMComposeWin *mComposerWin;
 
 protected:
 
-  bool canInsertFromMimeData( const QMimeData *source ) const;
-  void insertFromMimeData( const QMimeData *source );
+    bool canInsertFromMimeData( const QMimeData *source ) const;
+    void insertFromMimeData( const QMimeData *source );
 
 signals:
-  void insertSnippet();
+    void insertSnippet();
 
 };
 

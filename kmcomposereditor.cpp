@@ -49,9 +49,9 @@
 using namespace MailCommon;
 
 KMComposerEditor::KMComposerEditor( KMComposeWin *win,QWidget *parent)
- : Message::KMeditor(parent, "kmail2rc" ),mComposerWin(win)
+    : Message::KMeditor(parent, "kmail2rc" ),mComposerWin(win)
 {
-  setAutocorrection(KMKernel::self()->composerAutoCorrection());
+    setAutocorrection(KMKernel::self()->composerAutoCorrection());
 }
 
 KMComposerEditor::~KMComposerEditor()
@@ -60,87 +60,87 @@ KMComposerEditor::~KMComposerEditor()
 
 void KMComposerEditor::createActions( KActionCollection *actionCollection )
 {
-  KMeditor::createActions( actionCollection );
+    KMeditor::createActions( actionCollection );
 
-  KAction *pasteQuotation = new KAction( i18n("Pa&ste as Quotation"), this );
-  actionCollection->addAction("paste_quoted", pasteQuotation );
-  pasteQuotation->setShortcut(QKeySequence(Qt::CTRL+Qt::SHIFT+Qt::Key_O));
-  connect( pasteQuotation, SIGNAL(triggered(bool)), this, SLOT(slotPasteAsQuotation()) );
+    KAction *pasteQuotation = new KAction( i18n("Pa&ste as Quotation"), this );
+    actionCollection->addAction("paste_quoted", pasteQuotation );
+    pasteQuotation->setShortcut(QKeySequence(Qt::CTRL+Qt::SHIFT+Qt::Key_O));
+    connect( pasteQuotation, SIGNAL(triggered(bool)), this, SLOT(slotPasteAsQuotation()) );
 
-  KAction *addQuoteChars = new KAction( i18n("Add &Quote Characters"), this );
-  actionCollection->addAction( "tools_quote", addQuoteChars );
-  connect( addQuoteChars, SIGNAL(triggered(bool)), this, SLOT(slotAddQuotes()) );
+    KAction *addQuoteChars = new KAction( i18n("Add &Quote Characters"), this );
+    actionCollection->addAction( "tools_quote", addQuoteChars );
+    connect( addQuoteChars, SIGNAL(triggered(bool)), this, SLOT(slotAddQuotes()) );
 
-  KAction *remQuoteChars = new KAction( i18n("Re&move Quote Characters"), this );
-  actionCollection->addAction( "tools_unquote", remQuoteChars );
-  connect (remQuoteChars, SIGNAL(triggered(bool)), this, SLOT(slotRemoveQuotes()) );
+    KAction *remQuoteChars = new KAction( i18n("Re&move Quote Characters"), this );
+    actionCollection->addAction( "tools_unquote", remQuoteChars );
+    connect (remQuoteChars, SIGNAL(triggered(bool)), this, SLOT(slotRemoveQuotes()) );
 
-  KAction *pasteWithoutFormatting = new KAction( i18n("Paste Without Formatting"), this );
-  actionCollection->addAction( "paste_without_formatting", pasteWithoutFormatting );
-  pasteWithoutFormatting->setShortcut(QKeySequence(Qt::CTRL+Qt::SHIFT+Qt::Key_V));
-  connect (pasteWithoutFormatting, SIGNAL(triggered(bool)), this, SLOT(slotPasteWithoutFormatting()) );
+    KAction *pasteWithoutFormatting = new KAction( i18n("Paste Without Formatting"), this );
+    actionCollection->addAction( "paste_without_formatting", pasteWithoutFormatting );
+    pasteWithoutFormatting->setShortcut(QKeySequence(Qt::CTRL+Qt::SHIFT+Qt::Key_V));
+    connect (pasteWithoutFormatting, SIGNAL(triggered(bool)), this, SLOT(slotPasteWithoutFormatting()) );
 }
 
 void KMComposerEditor::setHighlighterColors(KPIMTextEdit::EMailQuoteHighlighter * highlighter)
 {
-  QColor color1 = KMail::Util::quoteL1Color();
-  QColor color2 = KMail::Util::quoteL2Color();
-  QColor color3 = KMail::Util::quoteL3Color();
-  QColor misspelled = KMail::Util::misspelledColor();
+    QColor color1 = KMail::Util::quoteL1Color();
+    QColor color2 = KMail::Util::quoteL2Color();
+    QColor color3 = KMail::Util::quoteL3Color();
+    QColor misspelled = KMail::Util::misspelledColor();
 
-  if ( !MessageCore::GlobalSettings::self()->useDefaultColors() ) {
-    color1 = MessageCore::GlobalSettings::self()->quotedText1();
-    color2 = MessageCore::GlobalSettings::self()->quotedText2();
-    color3 = MessageCore::GlobalSettings::self()->quotedText3();
-    misspelled = MessageCore::GlobalSettings::self()->misspelledColor();
-  }
+    if ( !MessageCore::GlobalSettings::self()->useDefaultColors() ) {
+        color1 = MessageCore::GlobalSettings::self()->quotedText1();
+        color2 = MessageCore::GlobalSettings::self()->quotedText2();
+        color3 = MessageCore::GlobalSettings::self()->quotedText3();
+        misspelled = MessageCore::GlobalSettings::self()->misspelledColor();
+    }
 
-  highlighter->setQuoteColor( Qt::black /* ignored anyway */,
-                              color1, color2, color3, misspelled );
+    highlighter->setQuoteColor( Qt::black /* ignored anyway */,
+                                color1, color2, color3, misspelled );
 }
 
 QString KMComposerEditor::smartQuote( const QString & msg )
 {
-  return mComposerWin->smartQuote( msg );
+    return mComposerWin->smartQuote( msg );
 }
 
 void KMComposerEditor::replaceUnknownChars( const QTextCodec *codec )
 {
-  QTextCursor cursor( document() );
-  cursor.beginEditBlock();
-  while ( !cursor.atEnd() ) {
-    cursor.movePosition( QTextCursor::NextCharacter, QTextCursor::KeepAnchor );
-    const QChar cur = cursor.selectedText().at( 0 );
-    if ( codec->canEncode( cur ) ) {
-       cursor.clearSelection();
-    } else {
-       cursor.insertText( "?" );
+    QTextCursor cursor( document() );
+    cursor.beginEditBlock();
+    while ( !cursor.atEnd() ) {
+        cursor.movePosition( QTextCursor::NextCharacter, QTextCursor::KeepAnchor );
+        const QChar cur = cursor.selectedText().at( 0 );
+        if ( codec->canEncode( cur ) ) {
+            cursor.clearSelection();
+        } else {
+            cursor.insertText( QLatin1String("?") );
+        }
     }
-  }
-  cursor.endEditBlock();
+    cursor.endEditBlock();
 }
 
 bool KMComposerEditor::canInsertFromMimeData( const QMimeData *source ) const
 {
-  if ( source->hasImage() && source->hasFormat( "image/png" ) )
-    return true;
-  if ( source->hasFormat( "text/x-kmail-textsnippet" ) )
-    return true;
-  if ( source->hasUrls() )
-    return true;
+    if ( source->hasImage() && source->hasFormat( "image/png" ) )
+        return true;
+    if ( source->hasFormat( "text/x-kmail-textsnippet" ) )
+        return true;
+    if ( source->hasUrls() )
+        return true;
 
-  return KPIMTextEdit::TextEdit::canInsertFromMimeData( source );
+    return KPIMTextEdit::TextEdit::canInsertFromMimeData( source );
 }
 
 void KMComposerEditor::insertFromMimeData( const QMimeData *source )
 {
-  if ( source->hasFormat( "text/x-kmail-textsnippet" ) ) {
-    emit insertSnippet();
-    return;
-  }
-  
-  if ( !mComposerWin->insertFromMimeData( source, false ) )
-    KPIMTextEdit::TextEdit::insertFromMimeData( source );
+    if ( source->hasFormat( "text/x-kmail-textsnippet" ) ) {
+        emit insertSnippet();
+        return;
+    }
+
+    if ( !mComposerWin->insertFromMimeData( source, false ) )
+        KPIMTextEdit::TextEdit::insertFromMimeData( source );
 }
 
 #include "kmcomposereditor.moc"

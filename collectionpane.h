@@ -35,7 +35,6 @@ public:
 class CollectionStorageModel : public MessageList::StorageModel
 {
     Q_OBJECT
-
 public:
     /**
    * Create a StorageModel wrapping the specified folder.

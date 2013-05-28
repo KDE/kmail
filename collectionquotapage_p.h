@@ -41,16 +41,16 @@ class QLabel;
 
 class QuotaWidget : public QWidget {
 
-  Q_OBJECT
+    Q_OBJECT
 public:
-  explicit QuotaWidget( QWidget* parent);
-  ~QuotaWidget() { }
+    explicit QuotaWidget( QWidget* parent);
+    ~QuotaWidget() { }
 
-  void setQuotaInfo( qint64 currentValue, qint64 maxValue );
+    void setQuotaInfo( qint64 currentValue, qint64 maxValue );
 
 private:
-  QProgressBar* mProgressBar;
-  QLabel *mUsage;
+    QProgressBar* mProgressBar;
+    QLabel *mUsage;
 };
 
 #endif /* COLLECTIONQUOTAPAGE_P_H */
