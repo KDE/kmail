@@ -131,7 +131,7 @@ void CollectionMaintenancePage::load(const Collection & col)
                 const Nepomuk2::Resource parentResource( url );
                 const QDateTime dt = parentResource.property( Soprano::Vocabulary::NAO::lastModified() ).toDateTime();
                 if(dt.isValid()) {
-                    mLastIndexed->setText(i18n("Folder was indexed: %1",KGlobal::locale()->formatDate(dt.date())));
+                    mLastIndexed->setText(i18n("Folder was indexed: %1",KGlobal::locale()->formatDateTime(dt)));
                 }
             }
         }
