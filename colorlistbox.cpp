@@ -92,8 +92,7 @@ void ColorListBox::dragEnterEvent( QDragEnterEvent *e )
     if (KColorMimeData::canDecode( e->mimeData() ) && isEnabled()) {
         mCurrentOnDragEnter = currentItem();
         e->setAccepted( true );
-    }
-    else {
+    } else {
         mCurrentOnDragEnter = 0L;
         e->setAccepted( false );
     }

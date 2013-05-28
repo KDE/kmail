@@ -54,6 +54,7 @@ public slots:
     void selectNewAttachment();
 
     void updateAttachmentLabel();
+
 protected:
     /** reimpl to avoid default drag cursor */
     void startDrag( Qt::DropActions supportedActions );

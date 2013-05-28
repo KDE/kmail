@@ -42,6 +42,7 @@ protected:
 protected slots:
     void updateCollectionStatistic(Akonadi::Collection::Id, const Akonadi::CollectionStatistics& );
     void slotReindexing();
+
 private:
     void updateLabel( qint64 nbMail, qint64 nbUnreadMail, qint64 size );
 

@@ -34,9 +34,12 @@ using MessageComposer::AliasesExpandJob;
 
 class AddressValidationJob::Private
 {
-  public:
+public:
     Private( AddressValidationJob *qq, const QString &emailAddresses, QWidget *parentWidget )
-      : q( qq ), mEmailAddresses( emailAddresses ), mIsValid( false ),  mParentWidget( parentWidget )
+        : q( qq ),
+          mEmailAddresses( emailAddresses ),
+          mIsValid( false ),
+          mParentWidget( parentWidget )
     {
     }
 
@@ -50,73 +53,72 @@ class AddressValidationJob::Private
 
 void AddressValidationJob::Private::slotAliasExpansionDone( KJob *job )
 {
-  mIsValid = true;
+    mIsValid = true;
 
-  if ( job->error() ) {
-    q->setError( job->error() );
-    q->setErrorText( job->errorText() );
-    mIsValid = false;
+    if ( job->error() ) {
+        q->setError( job->error() );
+        q->setErrorText( job->errorText() );
+        mIsValid = false;
+        q->emitResult();
+        return;
+    }
+
+    const AliasesExpandJob *expandJob = qobject_cast<AliasesExpandJob*>( job );
+    const QStringList emptyDistributionLists = expandJob->emptyDistributionLists();
+
+    QString brokenAddress;
+
+    const KPIMUtils::EmailParseResult errorCode = KPIMUtils::isValidAddressList( expandJob->addresses(), brokenAddress );
+    if ( !emptyDistributionLists.isEmpty() ) {
+        QString errorMsg;
+        const int numberOfDistributionList( emptyDistributionLists.count() );
+        QString listOfDistributionList;
+        for ( int i = 0; i < numberOfDistributionList; ++i ) {
+            if ( i != 0 )
+                listOfDistributionList.append( ", " );
+            listOfDistributionList.append( QString::fromLatin1( "\"%1\"" ).arg( emptyDistributionLists.at( i ) ) );
+        }
+        errorMsg = i18np( "Distribution list %2 is empty, it cannot be used.",
+                          "Distribution lists %2 are empty, they cannot be used.",
+                          numberOfDistributionList, listOfDistributionList );
+        KMessageBox::sorry( mParentWidget, errorMsg, i18n( "Invalid Email Address" ) );
+        mIsValid = false;
+    } else {
+        if ( !( errorCode == KPIMUtils::AddressOk ||
+                errorCode == KPIMUtils::AddressEmpty ) ) {
+            const QString errorMsg( "<qt><p><b>" + brokenAddress +
+                                    "</b></p><p>" +
+                                    KPIMUtils::emailParseResultToString( errorCode ) +
+                                    "</p></qt>" );
+            KMessageBox::sorry( mParentWidget, errorMsg, i18n( "Invalid Email Address" ) );
+            mIsValid = false;
+        }
+    }
+
     q->emitResult();
-    return;
-  }
-
-  const AliasesExpandJob *expandJob = qobject_cast<AliasesExpandJob*>( job );
-  const QStringList emptyDistributionLists = expandJob->emptyDistributionLists();
-
-  QString brokenAddress;
-
-  const KPIMUtils::EmailParseResult errorCode = KPIMUtils::isValidAddressList( expandJob->addresses(), brokenAddress );
-  if ( !emptyDistributionLists.isEmpty() ) {
-    QString errorMsg;
-    const int numberOfDistributionList( emptyDistributionLists.count() ); 
-    QString listOfDistributionList;
-    for ( int i = 0; i < numberOfDistributionList; ++i )
-    {
-      if ( i != 0 )
-        listOfDistributionList.append( ", " );
-      listOfDistributionList.append( QString::fromLatin1( "\"%1\"" ).arg( emptyDistributionLists.at( i ) ) );
-    }
-    errorMsg = i18np( "Distribution list %2 is empty, it cannot be used.",
-                      "Distribution lists %2 are empty, they cannot be used.",
-                      numberOfDistributionList, listOfDistributionList );
-    KMessageBox::sorry( mParentWidget, errorMsg, i18n( "Invalid Email Address" ) );
-    mIsValid = false;
-  } else {
-    if ( !( errorCode == KPIMUtils::AddressOk ||
-            errorCode == KPIMUtils::AddressEmpty ) ) {
-      const QString errorMsg( "<qt><p><b>" + brokenAddress +
-                              "</b></p><p>" +
-                              KPIMUtils::emailParseResultToString( errorCode ) +
-                              "</p></qt>" );
-      KMessageBox::sorry( mParentWidget, errorMsg, i18n( "Invalid Email Address" ) );
-      mIsValid = false;
-    }
-  }
-
-  q->emitResult();
 }
 
 AddressValidationJob::AddressValidationJob( const QString &emailAddresses, QWidget *parentWidget, QObject *parent )
-  : KJob( parent ), d( new Private( this, emailAddresses, parentWidget ) )
+    : KJob( parent ), d( new Private( this, emailAddresses, parentWidget ) )
 {
 }
 
 AddressValidationJob::~AddressValidationJob()
 {
-  delete d;
+    delete d;
 }
 
 void AddressValidationJob::start()
 {
-  AliasesExpandJob *job = new AliasesExpandJob( d->mEmailAddresses, MessageComposer::MessageComposerSettings::defaultDomain(), this );
-  connect( job, SIGNAL(result(KJob*)), SLOT(slotAliasExpansionDone(KJob*)) );
-  job->start();
+    AliasesExpandJob *job = new AliasesExpandJob( d->mEmailAddresses, MessageComposer::MessageComposerSettings::defaultDomain(), this );
+    connect( job, SIGNAL(result(KJob*)), SLOT(slotAliasExpansionDone(KJob*)) );
+    job->start();
 }
 
 
 bool AddressValidationJob::isValid() const
 {
-  return d->mIsValid;
+    return d->mIsValid;
 }
 
 #include "addressvalidationjob.moc"

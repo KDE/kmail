@@ -43,45 +43,45 @@ using namespace KMail;
 
 QString IdentityPage::helpAnchor() const
 {
-  return QString::fromLatin1( "configure-identity" );
+    return QString::fromLatin1( "configure-identity" );
 }
 
 IdentityPage::IdentityPage( const KComponentData &instance, QWidget *parent )
-  : ConfigModule( instance, parent ),
-    mIdentityDialog( 0 ),
-    mOldNumberOfIdentities( 0 ),
-    mIdentityManager( 0 )
+    : ConfigModule( instance, parent ),
+      mIdentityDialog( 0 ),
+      mOldNumberOfIdentities( 0 ),
+      mIdentityManager( 0 )
 {
-  if ( !MailCommon::Kernel::self()->kernelIsRegistered() ) {
-    return;
-  }
-  mIdentityManager = KernelIf->identityManager();
+    if ( !MailCommon::Kernel::self()->kernelIsRegistered() ) {
+        return;
+    }
+    mIdentityManager = KernelIf->identityManager();
 
-  mIPage.setupUi( this );
-  mIPage.mIdentityList->setIdentityManager( mIdentityManager );
+    mIPage.setupUi( this );
+    mIPage.mIdentityList->setIdentityManager( mIdentityManager );
 
-  connect( mIPage.mIdentityList, SIGNAL(itemSelectionChanged()),
-           SLOT(slotIdentitySelectionChanged()) );
-  connect( this, SIGNAL(changed(bool)),
-           SLOT(slotIdentitySelectionChanged()) );
-  connect( mIPage.mIdentityList, SIGNAL(rename(KMail::IdentityListViewItem*,QString)),
-           SLOT(slotRenameIdentity(KMail::IdentityListViewItem*,QString)) );
-  connect( mIPage.mIdentityList, SIGNAL(itemDoubleClicked(QTreeWidgetItem*,int)),
-           SLOT(slotModifyIdentity()) );
-  connect( mIPage.mIdentityList, SIGNAL(contextMenu(KMail::IdentityListViewItem*,QPoint)),
-           SLOT(slotContextMenu(KMail::IdentityListViewItem*,QPoint)) );
-  // ### connect dragged(...), ...
+    connect( mIPage.mIdentityList, SIGNAL(itemSelectionChanged()),
+             SLOT(slotIdentitySelectionChanged()) );
+    connect( this, SIGNAL(changed(bool)),
+             SLOT(slotIdentitySelectionChanged()) );
+    connect( mIPage.mIdentityList, SIGNAL(rename(KMail::IdentityListViewItem*,QString)),
+             SLOT(slotRenameIdentity(KMail::IdentityListViewItem*,QString)) );
+    connect( mIPage.mIdentityList, SIGNAL(itemDoubleClicked(QTreeWidgetItem*,int)),
+             SLOT(slotModifyIdentity()) );
+    connect( mIPage.mIdentityList, SIGNAL(contextMenu(KMail::IdentityListViewItem*,QPoint)),
+             SLOT(slotContextMenu(KMail::IdentityListViewItem*,QPoint)) );
+    // ### connect dragged(...), ...
 
-  connect( mIPage.mButtonAdd, SIGNAL(clicked()),
-           this, SLOT(slotNewIdentity()) );
-  connect( mIPage.mModifyButton, SIGNAL(clicked()),
-           this, SLOT(slotModifyIdentity()) );
-  connect( mIPage.mRenameButton, SIGNAL(clicked()),
-           this, SLOT(slotRenameIdentity()) );
-  connect( mIPage.mRemoveButton, SIGNAL(clicked()),
-           this, SLOT(slotRemoveIdentity()) );
-  connect( mIPage.mSetAsDefaultButton, SIGNAL(clicked()),
-           this, SLOT(slotSetAsDefault()) );
+    connect( mIPage.mButtonAdd, SIGNAL(clicked()),
+             this, SLOT(slotNewIdentity()) );
+    connect( mIPage.mModifyButton, SIGNAL(clicked()),
+             this, SLOT(slotModifyIdentity()) );
+    connect( mIPage.mRenameButton, SIGNAL(clicked()),
+             this, SLOT(slotRenameIdentity()) );
+    connect( mIPage.mRemoveButton, SIGNAL(clicked()),
+             this, SLOT(slotRemoveIdentity()) );
+    connect( mIPage.mSetAsDefaultButton, SIGNAL(clicked()),
+             this, SLOT(slotSetAsDefault()) );
 }
 
 IdentityPage::~IdentityPage()
@@ -90,256 +90,258 @@ IdentityPage::~IdentityPage()
 
 void IdentityPage::load()
 {
-  if ( !MailCommon::Kernel::self()->kernelIsRegistered() ) {
-    return;
-  }
-  mOldNumberOfIdentities = mIdentityManager->shadowIdentities().count();
-  // Fill the list:
-  mIPage.mIdentityList->clear();
-  QTreeWidgetItem *item = 0;
-  KPIMIdentities::IdentityManager::Iterator end( mIdentityManager->modifyEnd() );
+    if ( !MailCommon::Kernel::self()->kernelIsRegistered() ) {
+        return;
+    }
+    mOldNumberOfIdentities = mIdentityManager->shadowIdentities().count();
+    // Fill the list:
+    mIPage.mIdentityList->clear();
+    QTreeWidgetItem *item = 0;
+    KPIMIdentities::IdentityManager::Iterator end( mIdentityManager->modifyEnd() );
 
-  for ( KPIMIdentities::IdentityManager::Iterator it = mIdentityManager->modifyBegin(); it != end; ++it ) {
-    item = new IdentityListViewItem( mIPage.mIdentityList, item, *it );
-  }
-  if ( mIPage.mIdentityList->currentItem() ) {
-    mIPage.mIdentityList->currentItem()->setSelected( true );
-  }
+    for ( KPIMIdentities::IdentityManager::Iterator it = mIdentityManager->modifyBegin(); it != end; ++it ) {
+        item = new IdentityListViewItem( mIPage.mIdentityList, item, *it );
+    }
+    if ( mIPage.mIdentityList->currentItem() ) {
+        mIPage.mIdentityList->currentItem()->setSelected( true );
+    }
 }
 
 void IdentityPage::save()
 {
-  if ( !MailCommon::Kernel::self()->kernelIsRegistered() ) {
-    return;
-  }
-  mIdentityManager->sort();
-  mIdentityManager->commit();
+    if ( !MailCommon::Kernel::self()->kernelIsRegistered() ) {
+        return;
+    }
+    mIdentityManager->sort();
+    mIdentityManager->commit();
 
 #ifndef KCM_KPIMIDENTITIES_STANDALONE
-  if( mOldNumberOfIdentities < 2 && mIPage.mIdentityList->topLevelItemCount() > 1 ) {
-    // have more than one identity, so better show the combo in the
-    // composer now:
-    int showHeaders = GlobalSettings::self()->headers();
-    showHeaders |= KMail::Composer::HDR_IDENTITY;
-    GlobalSettings::self()->setHeaders( showHeaders );
-  }
-  // and now the reverse
-  if( mOldNumberOfIdentities > 1 && mIPage.mIdentityList->topLevelItemCount() < 2 ) {
-    // have only one identity, so remove the combo in the composer:
-    int showHeaders = GlobalSettings::self()->headers();
-    showHeaders &= ~KMail::Composer::HDR_IDENTITY;
-    GlobalSettings::self()->setHeaders( showHeaders );
-  }
+    if( mOldNumberOfIdentities < 2 && mIPage.mIdentityList->topLevelItemCount() > 1 ) {
+        // have more than one identity, so better show the combo in the
+        // composer now:
+        int showHeaders = GlobalSettings::self()->headers();
+        showHeaders |= KMail::Composer::HDR_IDENTITY;
+        GlobalSettings::self()->setHeaders( showHeaders );
+    }
+    // and now the reverse
+    if( mOldNumberOfIdentities > 1 && mIPage.mIdentityList->topLevelItemCount() < 2 ) {
+        // have only one identity, so remove the combo in the composer:
+        int showHeaders = GlobalSettings::self()->headers();
+        showHeaders &= ~KMail::Composer::HDR_IDENTITY;
+        GlobalSettings::self()->setHeaders( showHeaders );
+    }
 #endif
 }
 
 void IdentityPage::slotNewIdentity()
 {
-  Q_ASSERT( !mIdentityDialog );
+    Q_ASSERT( !mIdentityDialog );
 
-  MessageViewer::AutoQPointer<NewIdentityDialog> dialog( new NewIdentityDialog(
-      mIdentityManager, this ) );
-  dialog->setObjectName( "new" );
+    MessageViewer::AutoQPointer<NewIdentityDialog> dialog( new NewIdentityDialog(
+                                                               mIdentityManager, this ) );
+    dialog->setObjectName( "new" );
 
-  if ( dialog->exec() == QDialog::Accepted && dialog ) {
-    QString identityName = dialog->identityName().trimmed();
-    Q_ASSERT( !identityName.isEmpty() );
+    if ( dialog->exec() == QDialog::Accepted && dialog ) {
+        QString identityName = dialog->identityName().trimmed();
+        Q_ASSERT( !identityName.isEmpty() );
 
-    //
-    // Construct a new Identity:
-    //
-    switch ( dialog->duplicateMode() ) {
-    case NewIdentityDialog::ExistingEntry:
-      {
-        KPIMIdentities::Identity &dupThis = mIdentityManager->modifyIdentityForName( dialog->duplicateIdentity() );
-        mIdentityManager->newFromExisting( dupThis, identityName );
-        break;
-      }
-    case NewIdentityDialog::ControlCenter:
-      mIdentityManager->newFromControlCenter( identityName );
-      break;
-    case NewIdentityDialog::Empty:
-      mIdentityManager->newFromScratch( identityName );
-    default: ;
+        //
+        // Construct a new Identity:
+        //
+        switch ( dialog->duplicateMode() ) {
+        case NewIdentityDialog::ExistingEntry:
+        {
+            KPIMIdentities::Identity &dupThis = mIdentityManager->modifyIdentityForName( dialog->duplicateIdentity() );
+            mIdentityManager->newFromExisting( dupThis, identityName );
+            break;
+        }
+        case NewIdentityDialog::ControlCenter:
+            mIdentityManager->newFromControlCenter( identityName );
+            break;
+        case NewIdentityDialog::Empty:
+            mIdentityManager->newFromScratch( identityName );
+        default: ;
+        }
+
+        //
+        // Insert into listview:
+        //
+        KPIMIdentities::Identity &newIdent = mIdentityManager->modifyIdentityForName( identityName );
+        QTreeWidgetItem *item = 0;
+        if ( !mIPage.mIdentityList->selectedItems().isEmpty() ) {
+            item = mIPage.mIdentityList->selectedItems()[0];
+        }
+
+        QTreeWidgetItem * newItem = 0;
+        if ( item ) {
+            newItem = new IdentityListViewItem( mIPage.mIdentityList, mIPage.mIdentityList->itemAbove( item ), newIdent );
+        } else {
+            newItem = new IdentityListViewItem( mIPage.mIdentityList, newIdent );
+        }
+
+        mIPage.mIdentityList->selectionModel()->clearSelection();
+        if ( newItem ) {
+            newItem->setSelected( true );
+        }
+
+        slotModifyIdentity();
+        updateButtons();
     }
-
-    //
-    // Insert into listview:
-    //
-    KPIMIdentities::Identity &newIdent = mIdentityManager->modifyIdentityForName( identityName );
-    QTreeWidgetItem *item = 0;
-    if ( !mIPage.mIdentityList->selectedItems().isEmpty() ) {
-      item = mIPage.mIdentityList->selectedItems()[0];
-    }
-
-    QTreeWidgetItem * newItem = 0;
-    if ( item ) {
-      newItem = new IdentityListViewItem( mIPage.mIdentityList, mIPage.mIdentityList->itemAbove( item ), newIdent );
-    } else {
-      newItem = new IdentityListViewItem( mIPage.mIdentityList, newIdent );
-    }
-
-    mIPage.mIdentityList->selectionModel()->clearSelection();
-    if ( newItem ) {
-      newItem->setSelected( true );
-    }
-
-    slotModifyIdentity();
-    updateButtons();
-  }
 }
 
 void IdentityPage::slotModifyIdentity()
 {
-  Q_ASSERT( !mIdentityDialog );
+    Q_ASSERT( !mIdentityDialog );
 
-  IdentityListViewItem *item = 0;
-  if ( !mIPage.mIdentityList->selectedItems().isEmpty() ) {
-    item = dynamic_cast<IdentityListViewItem*>( mIPage.mIdentityList->selectedItems()[0] );
-  }
-  if ( !item ) {
-    return;
-  }
+    IdentityListViewItem *item = 0;
+    if ( !mIPage.mIdentityList->selectedItems().isEmpty() ) {
+        item = dynamic_cast<IdentityListViewItem*>( mIPage.mIdentityList->selectedItems().first() );
+    }
+    if ( !item ) {
+        return;
+    }
 
-  mIdentityDialog = new IdentityDialog( this );
-  mIdentityDialog->setIdentity( item->identity() );
+    mIdentityDialog = new IdentityDialog( this );
+    mIdentityDialog->setIdentity( item->identity() );
 
-  // Hmm, an unmodal dialog would be nicer, but a modal one is easier ;-)
-  if ( mIdentityDialog->exec() == QDialog::Accepted ) {
-    mIdentityDialog->updateIdentity( item->identity() );
-    item->redisplay();
-    save();
-  }
+    // Hmm, an unmodal dialog would be nicer, but a modal one is easier ;-)
+    if ( mIdentityDialog->exec() == QDialog::Accepted ) {
+        mIdentityDialog->updateIdentity( item->identity() );
+        item->redisplay();
+        save();
+    }
 
-  delete mIdentityDialog;
-  mIdentityDialog = 0;
+    delete mIdentityDialog;
+    mIdentityDialog = 0;
 }
 
 void IdentityPage::slotRemoveIdentity()
 {
-  Q_ASSERT( !mIdentityDialog );
+    Q_ASSERT( !mIdentityDialog );
 
-  if ( mIdentityManager->shadowIdentities().count() < 2 ) {
-    kFatal() << "Attempted to remove the last identity!";
-  }
-
-  IdentityListViewItem *item = 0;
-  if ( !mIPage.mIdentityList->selectedItems().isEmpty() ) {
-    item = dynamic_cast<IdentityListViewItem*>( mIPage.mIdentityList->selectedItems()[0] );
-  }
-  if ( !item ) {
-    return;
-  }
-
-  QString msg = i18n( "<qt>Do you really want to remove the identity named "
-                      "<b>%1</b>?</qt>", item->identity().identityName() );
-  if( KMessageBox::warningContinueCancel( this, msg, i18n("Remove Identity"),
-                                          KGuiItem(i18n("&Remove"),
-                                          "edit-delete") )
-      == KMessageBox::Continue ) {
-    if ( mIdentityManager->removeIdentity( item->identity().identityName() ) ) {
-      delete item;
-      if ( mIPage.mIdentityList->currentItem() ) {
-        mIPage.mIdentityList->currentItem()->setSelected( true );
-      }
-      refreshList();
-      updateButtons();
+    if ( mIdentityManager->shadowIdentities().count() < 2 ) {
+        kFatal() << "Attempted to remove the last identity!";
     }
-  }
+
+    IdentityListViewItem *item = 0;
+    if ( !mIPage.mIdentityList->selectedItems().isEmpty() ) {
+        item = dynamic_cast<IdentityListViewItem*>( mIPage.mIdentityList->selectedItems()[0] );
+    }
+    if ( !item ) {
+        return;
+    }
+
+    const QString msg = i18n( "<qt>Do you really want to remove the identity named "
+                        "<b>%1</b>?</qt>", item->identity().identityName() );
+    if( KMessageBox::warningContinueCancel( this, msg, i18n("Remove Identity"),
+                                            KGuiItem(i18n("&Remove"),
+                                                     "edit-delete") )
+            == KMessageBox::Continue ) {
+        if ( mIdentityManager->removeIdentity( item->identity().identityName() ) ) {
+            delete item;
+            if ( mIPage.mIdentityList->currentItem() ) {
+                mIPage.mIdentityList->currentItem()->setSelected( true );
+            }
+            refreshList();
+            updateButtons();
+        }
+    }
 }
 
 void IdentityPage::slotRenameIdentity()
 {
-  Q_ASSERT( !mIdentityDialog );
+    Q_ASSERT( !mIdentityDialog );
 
-  QTreeWidgetItem *item = 0;
+    QTreeWidgetItem *item = 0;
 
-  if ( !mIPage.mIdentityList->selectedItems().isEmpty() ) {
-    item = mIPage.mIdentityList->selectedItems()[0];
-  }
-  if ( !item ) return;
+    if ( !mIPage.mIdentityList->selectedItems().isEmpty() ) {
+        item = mIPage.mIdentityList->selectedItems().first();
+    }
+    if ( !item )
+        return;
 
-  mIPage.mIdentityList->editItem( item );
+    mIPage.mIdentityList->editItem( item );
 }
 
 void IdentityPage::slotRenameIdentity( KMail::IdentityListViewItem *item , const QString &text )
 {
-  if ( !item ) return;
+    if ( !item )
+        return;
 
-  const QString newName = text.trimmed();
-  if ( !newName.isEmpty() &&
-       !mIdentityManager->shadowIdentities().contains( newName ) ) {
-    KPIMIdentities::Identity &ident = item->identity();
-    ident.setIdentityName( newName );
-    save();
-  }
-  item->redisplay();
+    const QString newName = text.trimmed();
+    if ( !newName.isEmpty() &&
+         !mIdentityManager->shadowIdentities().contains( newName ) ) {
+        KPIMIdentities::Identity &ident = item->identity();
+        ident.setIdentityName( newName );
+        save();
+    }
+    item->redisplay();
 }
 
 void IdentityPage::slotContextMenu( IdentityListViewItem *item, const QPoint &pos )
 {
-  QMenu *menu = new QMenu( this );
-  menu->addAction( i18n( "Add..." ), this, SLOT(slotNewIdentity()) );
-  if ( item ) {
-    menu->addAction( i18n( "Modify..." ), this, SLOT(slotModifyIdentity()) );
-    menu->addAction( i18n( "Rename" ), this, SLOT(slotRenameIdentity()) );
-    if ( mIPage.mIdentityList->topLevelItemCount() > 1 ) {
-      menu->addAction( i18n( "Remove" ), this, SLOT(slotRemoveIdentity()) );
+    QMenu *menu = new QMenu( this );
+    menu->addAction( i18n( "Add..." ), this, SLOT(slotNewIdentity()) );
+    if ( item ) {
+        menu->addAction( i18n( "Modify..." ), this, SLOT(slotModifyIdentity()) );
+        menu->addAction( i18n( "Rename" ), this, SLOT(slotRenameIdentity()) );
+        if ( mIPage.mIdentityList->topLevelItemCount() > 1 ) {
+            menu->addAction( i18n( "Remove" ), this, SLOT(slotRemoveIdentity()) );
+        }
+        if ( !item->identity().isDefault() ) {
+            menu->addSeparator();
+            menu->addAction( i18n( "Set as Default" ), this, SLOT(slotSetAsDefault()) );
+        }
     }
-    if ( !item->identity().isDefault() ) {
-      menu->addSeparator();
-      menu->addAction( i18n( "Set as Default" ), this, SLOT(slotSetAsDefault()) );
-    }
-  }
-  menu->exec( pos );
-  delete menu;
+    menu->exec( pos );
+    delete menu;
 }
 
 
 void IdentityPage::slotSetAsDefault()
 {
-  Q_ASSERT( !mIdentityDialog );
+    Q_ASSERT( !mIdentityDialog );
 
-  IdentityListViewItem *item = 0;
-  if ( !mIPage.mIdentityList->selectedItems().isEmpty() ) {
-    item = dynamic_cast<IdentityListViewItem*>( mIPage.mIdentityList->selectedItems()[0] );
-  }
-  if ( !item ) {
-    return;
-  }
+    IdentityListViewItem *item = 0;
+    if ( !mIPage.mIdentityList->selectedItems().isEmpty() ) {
+        item = dynamic_cast<IdentityListViewItem*>( mIPage.mIdentityList->selectedItems().first() );
+    }
+    if ( !item ) {
+        return;
+    }
 
-  mIdentityManager->setAsDefault( item->identity().uoid() );
-  refreshList();
-  mIPage.mSetAsDefaultButton->setEnabled( false );
+    mIdentityManager->setAsDefault( item->identity().uoid() );
+    refreshList();
+    mIPage.mSetAsDefaultButton->setEnabled( false );
 }
 
 void IdentityPage::refreshList()
 {
-  const int numberOfTopLevel( mIPage.mIdentityList->topLevelItemCount() );
-  for ( int i = 0; i < numberOfTopLevel; ++i ) {
-    IdentityListViewItem *item = dynamic_cast<IdentityListViewItem*>( mIPage.mIdentityList->topLevelItem( i ) );
-    if ( item ) {
-      item->redisplay();
+    const int numberOfTopLevel( mIPage.mIdentityList->topLevelItemCount() );
+    for ( int i = 0; i < numberOfTopLevel; ++i ) {
+        IdentityListViewItem *item = dynamic_cast<IdentityListViewItem*>( mIPage.mIdentityList->topLevelItem( i ) );
+        if ( item ) {
+            item->redisplay();
+        }
     }
-  }
-  save();
+    save();
 }
 
 void IdentityPage::slotIdentitySelectionChanged()
 {
-  updateButtons();
+    updateButtons();
 }
 
 void IdentityPage::updateButtons()
 {
-  IdentityListViewItem *item = 0;
-  if ( !mIPage.mIdentityList->selectedItems().isEmpty() ) {
-    item = dynamic_cast<IdentityListViewItem*>( mIPage.mIdentityList->selectedItems()[0] );
-  }
-  mIPage.mRemoveButton->setEnabled( item && mIPage.mIdentityList->topLevelItemCount() > 1 );
-  mIPage.mModifyButton->setEnabled( item );
-  mIPage.mRenameButton->setEnabled( item );
-  mIPage.mSetAsDefaultButton->setEnabled( item && !item->identity().isDefault() );
+    IdentityListViewItem *item = 0;
+    if ( !mIPage.mIdentityList->selectedItems().isEmpty() ) {
+        item = dynamic_cast<IdentityListViewItem*>( mIPage.mIdentityList->selectedItems().first() );
+    }
+    mIPage.mRemoveButton->setEnabled( item && mIPage.mIdentityList->topLevelItemCount() > 1 );
+    mIPage.mModifyButton->setEnabled( item );
+    mIPage.mRenameButton->setEnabled( item );
+    mIPage.mSetAsDefaultButton->setEnabled( item && !item->identity().isDefault() );
 }
 
 #include "identitypage.moc"

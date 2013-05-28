@@ -41,8 +41,10 @@ public:
     explicit TagSelectDialog( QWidget * parent, int numberOfSelectedMessages, const Akonadi::Item &selectedItem );
     ~TagSelectDialog();
     QList<QString> selectedTag() const;
+
 private Q_SLOTS:
     void slotAddNewTag();
+
 private:
     void createTagList();
     enum ItemType {
