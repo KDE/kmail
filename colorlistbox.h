@@ -56,7 +56,6 @@ private slots:
 
 private:
     QTreeWidgetItem* mCurrentOnDragEnter;
-
 };
 
 #endif
