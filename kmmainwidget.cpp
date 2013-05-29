@@ -63,7 +63,7 @@
 #include "mailcommon/expirecollectionattribute.h"
 #include "mailcommon/filter/filtermanager.h"
 #include "mailcommon/filter/mailfilter.h"
-#include "mailcommon/favoritecollectionwidget.h"
+#include "mailcommon/widgets/favoritecollectionwidget.h"
 
 // Other PIM includes
 #include "kdepim-version.h"

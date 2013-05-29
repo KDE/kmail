@@ -78,7 +78,7 @@
 #include "mailcommon/filter/filteraction.h"
 #include "mailcommon/filter/filtermanager.h"
 #include "mailcommon/filter/mailfilter.h"
-#include "mailcommon/redirectdialog.h"
+#include "mailcommon/widgets/redirectdialog.h"
 #include "kmmainwidget.h"
 #include "undostack.h"
 #ifndef QT_NO_CURSOR
