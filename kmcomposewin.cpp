@@ -88,8 +88,8 @@
 #include "messagecore/nodehelper.h"
 #include <akonadi/kmime/messagestatus.h>
 #include "messagecore/messagehelpers.h"
-#include "mailcommon/folderrequester.h"
-#include "mailcommon/foldercollection.h"
+#include "mailcommon/folder/folderrequester.h"
+#include "mailcommon/folder/foldercollection.h"
 
 // LIBKDEPIM includes
 #include <libkdepim/nepomukwarning.h>

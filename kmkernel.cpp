@@ -21,7 +21,7 @@ using KPIM::RecentAddresses;
 #include "stringutil.h"
 #include "mailutil.h"
 #include "mailcommon/pop3settings.h"
-#include "mailcommon/foldertreeview.h"
+#include "mailcommon/folder/foldertreeview.h"
 #include "mailcommon/filter/kmfilterdialog.h"
 #include "pimcommon/pimutil.h"
 

@@ -45,7 +45,7 @@
 #include <kmime/kmime_message.h>
 #include <Akonadi/AgentInstance>
 #include <Akonadi/Collection>
-#include "mailcommon/foldercollection.h"
+#include "mailcommon/folder/foldercollection.h"
 class KUrl;
 
 class OrgKdeAkonadiImapSettingsInterface;

@@ -173,7 +173,7 @@
   <customwidget>
    <class>MailCommon::FolderRequester</class>
    <extends>QWidget</extends>
-   <header location="global">mailcommon/folderrequester.h</header>
+   <header location="global">mailcommon/folder/folderrequester.h</header>
    <container>1</container>
   </customwidget>
   <customwidget>

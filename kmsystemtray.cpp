@@ -25,7 +25,7 @@
 #include "globalsettings.h"
 #include "mailutil.h"
 #include "mailcommon/mailkernel.h"
-#include "mailcommon/foldertreeview.h"
+#include "mailcommon/folder/foldertreeview.h"
 
 #include <kiconloader.h>
 #include <kcolorscheme.h>
