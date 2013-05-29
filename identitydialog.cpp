@@ -39,7 +39,7 @@
 #ifndef KDEPIM_MOBILE_UI
 #include "xfaceconfigurator.h"
 #endif
-#include "simplestringlisteditor.h"
+#include "pimcommon/widgets/simplestringlisteditor.h"
 #include "folderrequester.h"
 #ifndef KCM_KPIMIDENTITIES_STANDALONE
 #include "globalsettings.h"
