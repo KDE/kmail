@@ -1298,8 +1298,8 @@ void KMComposeWin::setupActions( void )
 
   connect( mComposerBase->editor(), SIGNAL(textModeChanged(KRichTextEdit::Mode)),
            this, SLOT(slotTextModeChanged(KRichTextEdit::Mode)) );
-  connect( mComposerBase->editor(), SIGNAL(externalEditorClosed()), mExternalEditorWarning, SLOT(hide()));
-  connect( mComposerBase->editor(), SIGNAL(externalEditorStarted()), mExternalEditorWarning, SLOT(show()));
+  connect( mComposerBase->editor(), SIGNAL(externalEditorClosed()), this, SLOT(slotExternalEditorClosed()));
+  connect( mComposerBase->editor(), SIGNAL(externalEditorStarted()), this, SLOT(slotExternalEditorStarted()));
   //these are checkable!!!
   markupAction = new KToggleAction( i18n("Formatting (HTML)"), this );
   markupAction->setIconText( i18n("HTML") );
@@ -3490,3 +3490,16 @@ void KMComposeWin::slotLowerCase()
         textCursor.insertText(newText);
     }
 }
+
+void KMComposeWin::slotExternalEditorStarted()
+{
+    mComposerBase->identityCombo()->setEnabled(false);
+    mExternalEditorWarning->show();
+}
+
+void KMComposeWin::slotExternalEditorClosed()
+{
+    mComposerBase->identityCombo()->setEnabled(true);
+    mExternalEditorWarning->hide();
+}
+

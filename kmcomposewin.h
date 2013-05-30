@@ -446,6 +446,9 @@ class KMComposeWin : public KMail::Composer
     void slotUpperCase();
     void slotLowerCase();
 
+    void slotExternalEditorStarted();
+    void slotExternalEditorClosed();
+
 
   public: // kmcommand
     // FIXME we need to remove these, but they're pure virtual in Composer.
