@@ -377,6 +377,8 @@ KMComposeWin::KMComposeWin( const KMime::Message::Ptr &aMsg, bool lastSignState,
 
   mHeadersToEditorSplitter->addWidget( mSplitter );
   editor->setAcceptDrops( true );
+  connect(sigController, SIGNAL(signatureAdded()), mComposerBase->editor(), SLOT(startExternalEditor()));
+
   connect( mDictionaryCombo, SIGNAL(dictionaryChanged(QString)),
            this, SLOT(slotSpellCheckingLanguage(QString)) );
 
@@ -1045,7 +1047,6 @@ void KMComposeWin::slotDelayedApplyTemplate( KJob *job )
   }
   mComposerBase->updateTemplate( mMsg );
   updateSignature(uoid, uOldId);
-
 }
 
 void KMComposeWin::updateSignature(uint uoid, uint uOldId)
@@ -1737,6 +1738,8 @@ void KMComposeWin::setMessage( const KMime::Message::Ptr &newMsg, bool lastSignS
     } else {
       QTimer::singleShot( 0, mComposerBase->signatureController(), SLOT(appendSignature()) );
     }
+  } else {
+      mComposerBase->editor()->startExternalEditor();
   }
 
   setModified( isModified );
@@ -1744,8 +1747,6 @@ void KMComposeWin::setMessage( const KMime::Message::Ptr &newMsg, bool lastSignS
   // honor "keep reply in this folder" setting even when the identity is changed later on
   mPreventFccOverwrite = ( !kmailFcc.isEmpty() && ident.fcc() != kmailFcc );
   QTimer::singleShot( 0, this, SLOT(forceAutoSaveMessage()) ); //Force autosaving to make sure this composer reappears if a crash happens before the autosave timer kicks in.
-
-  mComposerBase->editor()->startExternalEditor();
 }
 
 void KMComposeWin::setAutoSaveFileName(const QString& fileName)
