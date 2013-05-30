@@ -177,7 +177,6 @@ class SearchWindow: public KDialog, virtual public KXMLGUIClient
     KGuiItem mStopSearchGuiItem;
     KPushButton *mSearchButton;
 
-    QWidget* mLastFocus; // to remember the position of the focus
     QAction *mReplyAction, *mReplyAllAction, *mReplyListAction, *mSaveAsAction,
       *mForwardInlineAction, *mForwardAttachedAction, *mPrintAction, *mClearAction,
       *mSaveAtchAction;
