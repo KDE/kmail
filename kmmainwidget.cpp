@@ -58,9 +58,9 @@
 #include "sendlateragentinterface.h"
 
 #include "pimcommon/acl/collectionaclpage.h"
-#include "mailcommon/collectiongeneralpage.h"
-#include "mailcommon/collectionexpirypage.h"
-#include "mailcommon/expirecollectionattribute.h"
+#include "mailcommon/collectionpage/collectiongeneralpage.h"
+#include "mailcommon/collectionpage/collectionexpirypage.h"
+#include "mailcommon/collectionpage/expirecollectionattribute.h"
 #include "mailcommon/filter/filtermanager.h"
 #include "mailcommon/filter/mailfilter.h"
 #include "mailcommon/widgets/favoritecollectionwidget.h"
