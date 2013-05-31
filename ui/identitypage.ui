@@ -111,7 +111,7 @@
   <customwidget>
    <class>KMail::IdentityListView</class>
    <extends>QWidget</extends>
-   <header>identitylistview.h</header>
+   <header>identity/identitylistview.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>

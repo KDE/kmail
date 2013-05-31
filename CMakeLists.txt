@@ -77,8 +77,8 @@ if (NOT WINCE AND KDEPIM_BUILD_DESKTOP)
      configuredialog/configuredialoglistview.cpp
      configuredialog/configuredialog.cpp
      configuredialog/configuredialog_p.cpp
-     identitylistview.cpp
-     identitydialog.cpp
+     identity/identitylistview.cpp
+     identity/identitydialog.cpp
      globalsettings.cpp
      snippetwidget.cpp
      kmreaderwin.cpp
@@ -110,15 +110,15 @@ if (NOT WINCE AND KDEPIM_BUILD_DESKTOP)
      tagactionmanager.cpp
      foldershortcutactionmanager.cpp
      addressvalidationjob.cpp
-     identitypage.cpp
-     newidentitydialog.cpp
+     identity/identitypage.cpp
+     identity/newidentitydialog.cpp
      searchdialog/kmsearchmessagemodel.cpp
      searchdialog/kmsearchfilterproxymodel.cpp
      kmknotify.cpp
      tagselectdialog.cpp
      configuredialog/accountconfigorderdialog.cpp
-     identityeditvcarddialog.cpp
-     identityaddvcarddialog.cpp
+     identity/identityeditvcarddialog.cpp
+     identity/identityaddvcarddialog.cpp
      attachmentmissingwarning.cpp
      createnewcontactjob.cpp
      externaleditorwarning.cpp

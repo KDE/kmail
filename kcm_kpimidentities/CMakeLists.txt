@@ -1,16 +1,16 @@
 ### Identity KCM, eventually to be moved out of KMail ###
 
-include_directories( ${CMAKE_CURRENT_SOURCE_DIR}/.. )
+include_directories( ${CMAKE_CURRENT_SOURCE_DIR}/.. ${CMAKE_CURRENT_SOURCE_DIR}/../identity )
 add_definitions( -DKCM_KPIMIDENTITIES_STANDALONE )
 set(kcm_identities_srcs
   kcm_kpimidentities.cpp
   ../addressvalidationjob.cpp
-  ../identitypage.cpp
-  ../identitydialog.cpp
-  ../identitylistview.cpp
-  ../newidentitydialog.cpp
-  ../identityeditvcarddialog.cpp
-  ../identityaddvcarddialog.cpp
+  ../identity/identitypage.cpp
+  ../identity/identitydialog.cpp
+  ../identity/identitylistview.cpp
+  ../identity/newidentitydialog.cpp
+  ../identity/identityeditvcarddialog.cpp
+  ../identity/identityaddvcarddialog.cpp
 )
 if (NOT WINCE)
 set(kcm_identities_srcs

@@ -26,7 +26,7 @@
 #include "configuredialog.h"
 #include "configuredialog_p.h"
 #include "ui_accountspagereceivingtab.h"
-#include "identitypage.h"
+#include "identity/identitypage.h"
 
 #include "globalsettings.h"
 #include "templatesconfiguration_kfg.h"
