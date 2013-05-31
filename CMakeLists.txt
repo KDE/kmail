@@ -64,13 +64,13 @@ if (NOT WINCE AND KDEPIM_BUILD_DESKTOP)
 
   set(kmailprivate_LIB_SRCS
      collectionpane.cpp
-     collectiontemplatespage.cpp
-     collectionmaintenancepage.cpp
-     collectionviewpage.cpp
-     collectionquotapage.cpp
-     collectionquotapage_p.cpp
-     collectionmailinglistpage.cpp
-     collectionshortcutpage.cpp
+     collectionpage/collectiontemplatespage.cpp
+     collectionpage/collectionmaintenancepage.cpp
+     collectionpage/collectionviewpage.cpp
+     collectionpage/collectionquotapage.cpp
+     collectionpage/collectionquotapage_p.cpp
+     collectionpage/collectionmailinglistpage.cpp
+     collectionpage/collectionshortcutpage.cpp
      colorlistbox.cpp
      kmmainwin.cpp
      configagentdelegate.cpp
