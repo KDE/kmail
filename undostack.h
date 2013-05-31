@@ -34,43 +34,43 @@ namespace KMail {
 class UndoInfo
 {
 public:
-  int          id;
-  Akonadi::Item::List items;
-  Akonadi::Collection srcFolder;
-  Akonadi::Collection destFolder;
+    int id;
+    Akonadi::Item::List items;
+    Akonadi::Collection srcFolder;
+    Akonadi::Collection destFolder;
 };
 
 class UndoStack : public QObject
 {
-  Q_OBJECT
+    Q_OBJECT
 
 public:
-  explicit UndoStack(int size);
-  ~UndoStack();
+    explicit UndoStack(int size);
+    ~UndoStack();
 
-  void clear();
-  int  size() const { return mStack.count(); }
-  int  newUndoAction( const Akonadi::Collection& srcFolder, const Akonadi::Collection & destFolder );
-  void addMsgToAction( int undoId, const Akonadi::Item &item );
-  void undo();
+    void clear();
+    int  size() const { return mStack.count(); }
+    int  newUndoAction( const Akonadi::Collection& srcFolder, const Akonadi::Collection & destFolder );
+    void addMsgToAction( int undoId, const Akonadi::Item &item );
+    void undo();
 
-  void pushSingleAction(const Akonadi::Item &item, const Akonadi::Collection&, const Akonadi::Collection& destFolder);
-  void folderDestroyed( const Akonadi::Collection &folder);
+    void pushSingleAction(const Akonadi::Item &item, const Akonadi::Collection&, const Akonadi::Collection& destFolder);
+    void folderDestroyed( const Akonadi::Collection &folder);
 
 public slots:
-  void msgDestroyed( const Akonadi::Item &msg);
+    void msgDestroyed( const Akonadi::Item &msg);
 
 protected slots:
-  void slotMoveResult(KJob*);
-  
+    void slotMoveResult(KJob*);
+
 protected:
-  QList<UndoInfo*> mStack;
-  int mSize;
-  int mLastId;
-  UndoInfo *mCachedInfo;
+    QList<UndoInfo*> mStack;
+    int mSize;
+    int mLastId;
+    UndoInfo *mCachedInfo;
 
 signals:
-   void undoStackChanged();
+    void undoStackChanged();
 };
 
 }

@@ -102,7 +102,6 @@ class MessageActions : public QObject
 
 
   signals:
-
     // This signal is emitted when a reply is triggered and the
     // action has finished.
     // This is useful for the stand-alone reader, it might want to close the window in

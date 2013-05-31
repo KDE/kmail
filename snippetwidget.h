@@ -37,6 +37,7 @@ public:
 protected:
     void contextMenuEvent( QContextMenuEvent* );
     void dropEvent( QDropEvent * );
+
 private:
     MailCommon::SnippetsManager *mSnippetsManager;
 };

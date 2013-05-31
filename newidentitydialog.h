@@ -31,32 +31,32 @@ class KLineEdit;
 class QButtonGroup;
 
 namespace KPIMIdentities {
-  class IdentityManager;
+class IdentityManager;
 }
 
 namespace KMail {
 
 class NewIdentityDialog : public KDialog
 {
-  Q_OBJECT
+    Q_OBJECT
 
 public:
-  enum DuplicateMode { Empty, ControlCenter, ExistingEntry };
+    enum DuplicateMode { Empty, ControlCenter, ExistingEntry };
 
-  explicit NewIdentityDialog( KPIMIdentities::IdentityManager *manager, QWidget *parent = 0 );
+    explicit NewIdentityDialog( KPIMIdentities::IdentityManager *manager, QWidget *parent = 0 );
 
-  QString identityName() const;
-  QString duplicateIdentity() const;
-  DuplicateMode duplicateMode() const;
+    QString identityName() const;
+    QString duplicateIdentity() const;
+    DuplicateMode duplicateMode() const;
 
 protected slots:
-  void slotEnableOK( const QString & );
+    void slotEnableOK( const QString & );
 
 private:
-  KLineEdit  *mLineEdit;
-  KComboBox  *mComboBox;
-  QButtonGroup *mButtonGroup;
-  KPIMIdentities::IdentityManager *mIdentityManager;
+    KLineEdit  *mLineEdit;
+    KComboBox  *mComboBox;
+    QButtonGroup *mButtonGroup;
+    KPIMIdentities::IdentityManager *mIdentityManager;
 };
 
 }
