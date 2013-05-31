@@ -97,7 +97,7 @@ void FolderShortcutActionManager::updateShortcutsForIndex( const QModelIndex &pa
                                                            int start, int end )
 {
     QAbstractItemModel *model = KernelIf->collectionModel();
-    for ( int i = start; i <= end; i++ ) {
+    for ( int i = start; i <= end; ++i) {
         if ( model->hasIndex( i, 0, parent ) ) {
             const QModelIndex child = model->index( i, 0, parent );
             Akonadi::Collection collection =

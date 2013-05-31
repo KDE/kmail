@@ -32,18 +32,18 @@
 
 class KMSearchMessageModel : public Akonadi::MessageModel
 {
-  Q_OBJECT
+    Q_OBJECT
 
-  public:
+public:
     enum Column {
-      Collection, 
-      Subject,
-      Sender,
-      Receiver,
-      Date,
-      Size,
-      DateNotTranslated,
-      SizeNotLocalized
+        Collection,
+        Subject,
+        Sender,
+        Receiver,
+        Date,
+        Size,
+        DateNotTranslated,
+        SizeNotLocalized
     };
     explicit KMSearchMessageModel( QObject* parent = 0 );
     ~KMSearchMessageModel();
