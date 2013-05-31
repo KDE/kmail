@@ -73,10 +73,10 @@ if (NOT WINCE AND KDEPIM_BUILD_DESKTOP)
      collectionpage/collectionshortcutpage.cpp
      colorlistbox.cpp
      kmmainwin.cpp
-     configagentdelegate.cpp
-     configuredialoglistview.cpp
-     configuredialog.cpp
-     configuredialog_p.cpp
+     configuredialog/configagentdelegate.cpp
+     configuredialog/configuredialoglistview.cpp
+     configuredialog/configuredialog.cpp
+     configuredialog/configuredialog_p.cpp
      identitylistview.cpp
      identitydialog.cpp
      globalsettings.cpp

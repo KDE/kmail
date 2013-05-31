@@ -15,7 +15,7 @@ using KPIM::BroadcastStatus;
 #include "kmmainwidget.h"
 #include "recentaddresses.h"
 using KPIM::RecentAddresses;
-#include "configuredialog.h"
+#include "configuredialog/configuredialog.h"
 #include "kmcommands.h"
 #include "kmsystemtray.h"
 #include "stringutil.h"

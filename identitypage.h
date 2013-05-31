@@ -26,7 +26,7 @@
 
 #include "kmail_export.h"
 
-#include "configmodule.h"
+#include "configuredialog/configmodule.h"
 #include "ui_identitypage.h"
 
 namespace KPIMIdentities {
