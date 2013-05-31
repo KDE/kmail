@@ -47,7 +47,7 @@
 #include "mailcommon/filter/filteractiondict.h"
 #include "mailcommon/filter/filtermanager.h"
 
-#include "pimcommon/pimutil.h"
+#include "pimcommon/util/pimutil.h"
 
 #include <Akonadi/AgentInstance>
 

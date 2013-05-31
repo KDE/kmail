@@ -36,6 +36,7 @@ include_directories(
   ${CMAKE_SOURCE_DIR}/mailcommon/tag
   ${CMAKE_SOURCE_DIR}/pimcommon
   ${CMAKE_BINARY_DIR}/pimcommon
+  ${CMAKE_SOURCE_DIR}/pimcommon/util/
   ${CMAKE_SOURCE_DIR}/korganizer
   ${GPGME_INCLUDES}
   ${Boost_INCLUDE_DIR}
