@@ -1371,6 +1371,7 @@ void KMComposeWin::setupActions( void )
   connect( action, SIGNAL(triggered(bool)), SLOT(slotSpellcheckConfig()) );
 
   mTranslateAction = new KToggleAction( i18n("&Translator"), this );
+  action->setShortcut( QKeySequence( Qt::CTRL + Qt::ALT + Qt::Key_T ) );
   actionCollection()->addAction( "translator", mTranslateAction );
   mTranslateAction->setChecked(false);
   connect(mTranslateAction, SIGNAL(triggered(bool)), mTranslatorWidget,SLOT(setVisible(bool)));
