@@ -40,7 +40,7 @@ using KPIM::RecentAddresses;
 #include <kwindowsystem.h>
 #include "mailserviceimpl.h"
 using KMail::MailServiceImpl;
-#include "jobscheduler.h"
+#include "job/jobscheduler.h"
 
 #include "messagecore/globalsettings.h"
 #include "messagelist/core/settings.h"

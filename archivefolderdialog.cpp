@@ -18,7 +18,7 @@
 */
 #include "archivefolderdialog.h"
 
-#include "mailcommon/backupjob.h"
+#include "mailcommon/job/backupjob.h"
 #include "kmkernel.h"
 #include "kmmainwidget.h"
 #include "folderrequester.h"
