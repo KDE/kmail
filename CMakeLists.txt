@@ -71,7 +71,7 @@ if (NOT WINCE AND KDEPIM_BUILD_DESKTOP)
      collectionpage/collectionquotapage_p.cpp
      collectionpage/collectionmailinglistpage.cpp
      collectionpage/collectionshortcutpage.cpp
-     colorlistbox.cpp
+     configuredialog/colorlistbox.cpp
      kmmainwin.cpp
      configuredialog/configagentdelegate.cpp
      configuredialog/configuredialoglistview.cpp
