@@ -116,7 +116,7 @@ if (NOT WINCE AND KDEPIM_BUILD_DESKTOP)
      kmsearchfilterproxymodel.cpp
      kmknotify.cpp
      tagselectdialog.cpp
-     accountconfigorderdialog.cpp
+     configuredialog/accountconfigorderdialog.cpp
      identityeditvcarddialog.cpp
      identityaddvcarddialog.cpp
      attachmentmissingwarning.cpp
