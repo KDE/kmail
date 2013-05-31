@@ -108,7 +108,7 @@ using KMail::MailServiceImpl;
 #include "util.h"
 #include "mailcommon/mailkernel.h"
 
-#include "searchdescriptionattribute.h"
+#include "searchdialog/searchdescriptionattribute.h"
 
 using namespace MailCommon;
 

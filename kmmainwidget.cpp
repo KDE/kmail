@@ -22,7 +22,7 @@
 // KMail includes
 #include "kmreadermainwin.h"
 #include "composer.h"
-#include "searchwindow.h"
+#include "searchdialog/searchwindow.h"
 #include "antispamwizard.h"
 #include "statusbarlabel.h"
 #include "undostack.h"

@@ -86,7 +86,7 @@ if (NOT WINCE AND KDEPIM_BUILD_DESKTOP)
      xfaceconfigurator.cpp
      undostack.cpp
      kmkernel.cpp
-     searchwindow.cpp
+     searchdialog/searchwindow.cpp
      kmcommands.cpp
      kmreadermainwin.cpp
      kmstartup.cpp
@@ -106,14 +106,14 @@ if (NOT WINCE AND KDEPIM_BUILD_DESKTOP)
      attachmentcontroller.cpp
      attachmentview.cpp
      archivefolderdialog.cpp
-     searchdescriptionattribute.cpp
+     searchdialog/searchdescriptionattribute.cpp
      tagactionmanager.cpp
      foldershortcutactionmanager.cpp
      addressvalidationjob.cpp
      identitypage.cpp
      newidentitydialog.cpp
-     kmsearchmessagemodel.cpp
-     kmsearchfilterproxymodel.cpp
+     searchdialog/kmsearchmessagemodel.cpp
+     searchdialog/kmsearchfilterproxymodel.cpp
      kmknotify.cpp
      tagselectdialog.cpp
      configuredialog/accountconfigorderdialog.cpp
