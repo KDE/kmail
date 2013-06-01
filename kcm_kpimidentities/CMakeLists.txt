@@ -15,7 +15,7 @@ set(kcm_identities_srcs
 if (NOT WINCE)
 set(kcm_identities_srcs
   ${kcm_identities_srcs}
-  ../xfaceconfigurator.cpp
+  ../identity/xfaceconfigurator.cpp
 )
 endif()
 
