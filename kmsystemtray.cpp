@@ -23,7 +23,7 @@
 #include "kmmainwidget.h"
 #include "foldercollection.h"
 #include "globalsettings.h"
-#include "mailutil.h"
+#include "util/mailutil.h"
 #include "mailcommon/mailkernel.h"
 #include "mailcommon/folder/foldertreeview.h"
 

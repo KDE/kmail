@@ -58,7 +58,7 @@
 #include <qwidget.h>
 #include <akonadi/collection.h>
 #include <Akonadi/Monitor>
-#include <mailutil.h>
+#include <util/mailutil.h>
 #include <asyncnepomukresourceretriever.h>
 #include <nepomuk2/resourcemanager.h>
 #include <Soprano/Vocabulary/NAO>

@@ -46,7 +46,7 @@
 #include "kmcommands.h"
 #include "collectionpane.h"
 #include "mailkernel.h"
-#include "mailutil.h"
+#include "util/mailutil.h"
 
 #include <unistd.h> // link()
 #include <kprogressdialog.h>

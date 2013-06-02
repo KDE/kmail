@@ -18,7 +18,7 @@
 #include "accountconfigorderdialog.h"
 #include "kmkernel.h"
 
-#include "mailcommon/mailutil.h"
+#include "mailcommon/util/mailutil.h"
 
 
 #include <KLocale>

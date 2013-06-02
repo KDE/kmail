@@ -87,7 +87,7 @@ using MessageComposer::MessageFactory;
 #include <stdio.h>
 #include <ctype.h>
 #include <string.h>
-#include <mailutil.h>
+#include <util/mailutil.h>
 
 using namespace KMail;
 using namespace MailCommon;

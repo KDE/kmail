@@ -26,7 +26,7 @@
  *  your version.
  */
 #include "kmsearchmessagemodel.h"
-#include "mailcommon/mailutil.h"
+#include "mailcommon/util/mailutil.h"
 #include "messagelist/messagelistutil.h"
 
 #include "messagecore/stringutil.h"

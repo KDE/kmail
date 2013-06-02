@@ -19,7 +19,7 @@ using KPIM::RecentAddresses;
 #include "kmcommands.h"
 #include "kmsystemtray.h"
 #include "stringutil.h"
-#include "mailutil.h"
+#include "util/mailutil.h"
 #include "mailcommon/pop3settings.h"
 #include "mailcommon/folder/foldertreeview.h"
 #include "mailcommon/filter/kmfilterdialog.h"

@@ -74,7 +74,7 @@ using KPIM::RecentAddresses;
 #include "templateparser/templatesconfiguration.h"
 #include "templateparser/customtemplates.h"
 #include "templateparser/globalsettings_base.h"
-#include "mailcommon/mailutil.h"
+#include "mailcommon/util/mailutil.h"
 #include "mailcommon/tag/tagwidget.h"
 #include "mailcommon/tag/tag.h"
 

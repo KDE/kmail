@@ -30,7 +30,7 @@
 #include "kmcomposewin.h"
 #include "kmkernel.h"
 #include "kmreadermainwin.h"
-#include "mailutil.h"
+#include "util/mailutil.h"
 
 #include <akonadi/itemfetchjob.h>
 #include <kabc/addressee.h>

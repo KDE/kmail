@@ -65,7 +65,7 @@
 #include <akonadi/itemcreatejob.h>
 
 #include "messagecore/messagehelpers.h"
-#include <mailutil.h>
+#include <util/mailutil.h>
 
 using namespace MailCommon;
 

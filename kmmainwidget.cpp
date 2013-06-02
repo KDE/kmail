@@ -33,7 +33,7 @@
 #include "folderselectiondialog.h"
 #include "foldertreewidget.h"
 #include "util.h"
-#include "mailutil.h"
+#include "util/mailutil.h"
 #include "mailkernel.h"
 #include "archivefolderdialog.h"
 #include "globalsettings.h"
