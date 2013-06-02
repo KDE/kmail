@@ -61,7 +61,7 @@ class SearchPatternEdit;
 
 namespace KMail {
 
-  /**
+/**
    * The SearchWindow class provides a dialog for triggering a search on
    * folders and storing that search as a search folder. It shows the search
    * results in a listview and allows triggering of operations such as printing
@@ -69,9 +69,9 @@ namespace KMail {
    */
 class SearchWindow: public KDialog, virtual public KXMLGUIClient
 {
-  Q_OBJECT
+    Q_OBJECT
 
-  public:
+public:
     /**
      * Creates a new search window.
      *
@@ -117,7 +117,7 @@ class SearchWindow: public KDialog, virtual public KXMLGUIClient
      */
     void addRulesToSearchPattern( const MailCommon::SearchPattern &pattern );
 
-  protected:
+protected:
     /** Reimplemented to react to Escape. */
     void keyPressEvent( QKeyEvent* );
 
@@ -125,12 +125,12 @@ class SearchWindow: public KDialog, virtual public KXMLGUIClient
     void closeEvent( QCloseEvent* );
 
     void createSearchModel();
-  
+
     void childCollectionsFromSelectedCollection( const Akonadi::Collection& collection, KUrl::List &list );
     void getChildren( const QAbstractItemModel *model, const QModelIndex &parentIndex, KUrl::List &list );
 
-  
-  private Q_SLOTS:
+
+private Q_SLOTS:
     void updateCollectionStatistic(Akonadi::Collection::Id,Akonadi::CollectionStatistics);
 
     void slotClose();
@@ -164,7 +164,7 @@ class SearchWindow: public KDialog, virtual public KXMLGUIClient
 
     void slotContextMenuRequested( const QPoint& );
 
-  private:
+private:
     bool mCloseRequested;
     int mSortColumn;
     Qt::SortOrder mSortOrder;
@@ -178,8 +178,8 @@ class SearchWindow: public KDialog, virtual public KXMLGUIClient
     KPushButton *mSearchButton;
 
     QAction *mReplyAction, *mReplyAllAction, *mReplyListAction, *mSaveAsAction,
-      *mForwardInlineAction, *mForwardAttachedAction, *mPrintAction, *mClearAction,
-      *mSaveAtchAction;
+    *mForwardInlineAction, *mForwardAttachedAction, *mPrintAction, *mClearAction,
+    *mSaveAtchAction;
     KActionMenu *mForwardActionMenu;
     QTimer mRenameTimer;
     QByteArray mHeaderState;
@@ -188,7 +188,6 @@ class SearchWindow: public KDialog, virtual public KXMLGUIClient
     MailCommon::SearchPattern mSearchPattern;
 
     Akonadi::StandardMailActionManager *mAkonadiStandardAction;
-
 };
 
 }

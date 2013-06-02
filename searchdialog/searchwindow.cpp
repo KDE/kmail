@@ -53,7 +53,6 @@
 #include <KLineEdit>
 #include <kmime/kmime_message.h>
 #include <KPushButton>
-#include <KSharedConfig>
 #include <KStandardAction>
 #include <KStandardGuiItem>
 #include <KWindowSystem>
@@ -94,8 +93,6 @@ SearchWindow::SearchWindow( KMMainWidget *widget, const Akonadi::Collection &col
                                                                IconSize( KIconLoader::Desktop ) ),
                            qApp->windowIcon().pixmap( IconSize( KIconLoader::Small ),
                                                       IconSize( KIconLoader::Small ) ) );
-
-  KSharedConfig::Ptr config = KMKernel::self()->config();
 
   QWidget *searchWidget = new QWidget( this );
   setMainWidget( searchWidget );
