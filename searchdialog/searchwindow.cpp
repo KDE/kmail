@@ -402,7 +402,7 @@ void SearchWindow::slotSearch()
     KUrl::List urls;
     if ( !mUi.mChkbxAllFolders->isChecked() ) {
         const Akonadi::Collection col = mUi.mCbxFolders->collection();
-        urls<< col.url( Akonadi::Collection::UrlShort );
+        urls << col.url( Akonadi::Collection::UrlShort );
         if ( mUi.mChkSubFolders->isChecked() ) {
             childCollectionsFromSelectedCollection( col, urls );
         }
@@ -455,7 +455,6 @@ void SearchWindow::searchDone( KJob* job )
     }
     else
     {
-
         if ( Akonadi::SearchCreateJob *searchJob = qobject_cast<Akonadi::SearchCreateJob*>( mSearchJob ) ) {
             mFolder = searchJob->createdCollection();
         } else if ( Akonadi::CollectionModifyJob *modifyJob = qobject_cast<Akonadi::CollectionModifyJob*>( mSearchJob ) ) {
@@ -579,7 +578,6 @@ bool SearchWindow::slotShowMsg( const Akonadi::Item &item )
         mKMMainWidget->slotMessageSelected( item );
         return true;
     }
-
     return false;
 }
 
@@ -594,7 +592,6 @@ bool SearchWindow::slotViewMsg( const Akonadi::Item &item )
         mKMMainWidget->slotMessageActivated( item );
         return true;
     }
-
     return false;
 }
 
