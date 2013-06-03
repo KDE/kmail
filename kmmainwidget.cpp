@@ -90,7 +90,7 @@
 #include "kmknotify.h"
 
 // LIBKDEPIM includes
-#include "progressmanager.h"
+#include "progresswidget/progressmanager.h"
 #include "broadcaststatus.h"
 
 // KDEPIMLIBS includes

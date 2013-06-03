@@ -131,7 +131,7 @@ using MailTransport::TransportManager;
 using MessageComposer::MessageFactory;
 
 
-#include "progressmanager.h"
+#include "progresswidget/progressmanager.h"
 using KPIM::ProgressManager;
 using KPIM::ProgressItem;
 #include <kmime/kmime_mdn.h>

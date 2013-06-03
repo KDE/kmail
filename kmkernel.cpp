@@ -60,7 +60,7 @@ using KMail::MailServiceImpl;
 
 #include <kmessagebox.h>
 #include <knotification.h>
-#include <progressmanager.h>
+#include <progresswidget/progressmanager.h>
 #include <kstandarddirs.h>
 #include <kconfig.h>
 #include <kpassivepopup.h>
