@@ -27,19 +27,19 @@
 
 class KMComposeWin;
 class QModelIndex;
-namespace Message {
+namespace MessageComposer {
 class AttachmentModel;
 }
 
 namespace KMail {
 class AttachmentView;
 
-class AttachmentController : public Message::AttachmentControllerBase
+class AttachmentController : public MessageComposer::AttachmentControllerBase
 {
     Q_OBJECT
 
 public:
-    explicit AttachmentController( Message::AttachmentModel *model, AttachmentView *view, KMComposeWin *composer );
+    explicit AttachmentController( MessageComposer::AttachmentModel *model, AttachmentView *view, KMComposeWin *composer );
     ~AttachmentController();
 
 public slots:

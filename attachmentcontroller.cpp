@@ -45,7 +45,7 @@ using namespace KPIM;
 using namespace MailCommon;
 using namespace MessageCore;
 
-AttachmentController::AttachmentController( Message::AttachmentModel *model, AttachmentView *view, KMComposeWin *composer )
+AttachmentController::AttachmentController( MessageComposer::AttachmentModel *model, AttachmentView *view, KMComposeWin *composer )
     : AttachmentControllerBase( model, composer, composer->actionCollection() )
 {
     mComposer = composer;
@@ -120,7 +120,7 @@ void AttachmentController::selectionChanged()
     AttachmentPart::List selectedParts;
     foreach( const QModelIndex &index, selectedRows ) {
         AttachmentPart::Ptr part = mView->model()->data(
-                    index, Message::AttachmentModel::AttachmentPartRole ).value<AttachmentPart::Ptr>();
+                    index, MessageComposer::AttachmentModel::AttachmentPartRole ).value<AttachmentPart::Ptr>();
         selectedParts.append( part );
     }
     setSelectedParts( selectedParts );
@@ -144,7 +144,7 @@ void AttachmentController::doubleClicked( const QModelIndex &itemClicked )
     const QModelIndex &properItemClickedIndex = mView->model()->index( itemClicked.row(), 0 );
     AttachmentPart::Ptr part = mView->model()->data(
                 properItemClickedIndex,
-                Message::AttachmentModel::AttachmentPartRole ).value<AttachmentPart::Ptr>();
+                MessageComposer::AttachmentModel::AttachmentPartRole ).value<AttachmentPart::Ptr>();
 
     // We can't edit encapsulated messages, but we can view them.
     if ( part->isMessageOrMessageCollection() ) {

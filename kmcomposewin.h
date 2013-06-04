@@ -88,7 +88,7 @@ namespace KIO {
   class Job;
 }
 
-namespace Message {
+namespace MessageComposer {
   class Composer;
 }
 
@@ -292,7 +292,7 @@ class KMComposeWin : public KMail::Composer
       * Disables the HTML mode, by hiding the HTML toolbar and unchecking the
       * "Formatting" action. Also, removes all rich-text formatting.
       */
-     void disableHtml( Message::ComposerViewBase::Confirmation confirmation );
+     void disableHtml( MessageComposer::ComposerViewBase::Confirmation confirmation );
     /**
      * Enables HTML mode, by showing the HTML toolbar and checking the
      * "Formatting" action
@@ -417,7 +417,7 @@ class KMComposeWin : public KMail::Composer
     
     //void slotEncryptChiasmusToggled( bool );
 
-    void slotSendFailed(const QString& msg , Message::ComposerViewBase::FailedType type);
+    void slotSendFailed(const QString& msg , MessageComposer::ComposerViewBase::FailedType type);
     void slotSendSuccessful();
 
     /**
@@ -550,7 +550,7 @@ class KMComposeWin : public KMail::Composer
      */
     void setSigning( bool sign, bool setByUser = false );
 
-    Message::ComposerViewBase::MissingAttachment userForgotAttachment();
+    MessageComposer::ComposerViewBase::MissingAttachment userForgotAttachment();
 
     /**
      * Decrypt an OpenPGP block or strip off the OpenPGP envelope of a text
@@ -570,7 +570,7 @@ class KMComposeWin : public KMail::Composer
     void doDelayedSend( MessageSender::SendMethod method, MessageSender::SaveIn saveIn );
 
     void changeCryptoAction();
-    void applyComposerSetting( Message::ComposerViewBase* mComposerBase );
+    void applyComposerSetting( MessageComposer::ComposerViewBase* mComposerBase );
     /**
      * Creates a simple composer that creates a KMime::Message out of the composer content.
      * Crypto handling is not done, therefore the name "simple".
@@ -578,7 +578,7 @@ class KMComposeWin : public KMail::Composer
      *
      * The caller takes ownership of the composer.
      */
-    Message::Composer* createSimpleComposer();
+    MessageComposer::Composer* createSimpleComposer();
 
     bool canSignEncryptAttachments() const {
       return cryptoMessageFormat() != Kleo::InlineOpenPGPFormat;
@@ -649,9 +649,9 @@ class KMComposeWin : public KMail::Composer
 
     //KToggleAction *mEncryptChiasmusAction;
 
-    Message::Composer *mDummyComposer;
+    MessageComposer::Composer *mDummyComposer;
     // used for auto saving, printing, etc. Not for sending, which happens in ComposerViewBase
-    QList< Message::Composer* > mMiscComposers;
+    QList< MessageComposer::Composer* > mMiscComposers;
 
     int mLabelWidth;
 
@@ -661,7 +661,7 @@ class KMComposeWin : public KMail::Composer
     QString mdbusObjectPath;
     static int s_composerNumber;
 
-    Message::ComposerViewBase* mComposerBase;
+    MessageComposer::ComposerViewBase* mComposerBase;
 
 
     SnippetWidget *mSnippetWidget;

@@ -278,7 +278,7 @@
       </entry>
       <entry name="AttachmentKeywords" type="StringList" key="attachment-keywords">
         <default code="true">
-        Message::Util::AttachmentKeywords()
+        MessageComposer::Util::AttachmentKeywords()
         </default>
       </entry>
       <entry name="AutosaveInterval" type="Int" key="autosave">

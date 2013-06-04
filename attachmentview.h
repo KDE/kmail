@@ -29,7 +29,7 @@
 
 class QContextMenuEvent;
 
-namespace Message {
+namespace MessageComposer {
 class AttachmentModel;
 }
 
@@ -41,7 +41,7 @@ class AttachmentView : public QTreeView
 
 public:
     /// can't change model afterwards.
-    explicit AttachmentView( Message::AttachmentModel *model, QWidget *parent = 0 );
+    explicit AttachmentView( MessageComposer::AttachmentModel *model, QWidget *parent = 0 );
     ~AttachmentView();
 
     QWidget *widget();

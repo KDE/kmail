@@ -706,7 +706,7 @@ bool KMReaderWin::printSelectedText(bool preview)
   const QString str = mViewer->selectedText();
   if(str.isEmpty())
     return false;
-  ::Message::Composer* composer = new ::Message::Composer;
+  ::MessageComposer::Composer* composer = new ::MessageComposer::Composer;
   composer->textPart()->setCleanPlainText(str);
   composer->textPart()->setWrappedPlainText(str);
   KMime::Message::Ptr messagePtr = message().payload<KMime::Message::Ptr>();
@@ -724,10 +724,10 @@ bool KMReaderWin::printSelectedText(bool preview)
 void KMReaderWin::slotPrintComposeResult( KJob *job )
 {
   const bool preview = job->property("preview").toBool();
-  Q_ASSERT( dynamic_cast< ::Message::Composer* >( job ) );
+  Q_ASSERT( dynamic_cast< ::MessageComposer::Composer* >( job ) );
 
-  ::Message::Composer* composer = dynamic_cast< ::Message::Composer* >( job );
-  if( composer->error() == ::Message::Composer::NoError ) {
+  ::MessageComposer::Composer* composer = dynamic_cast< ::MessageComposer::Composer* >( job );
+  if( composer->error() == ::MessageComposer::Composer::NoError ) {
 
     Q_ASSERT( composer->resultMessages().size() == 1 );
     Akonadi::Item printItem;
