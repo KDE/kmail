@@ -28,7 +28,7 @@
 class KAction;
 class KMComposeWin;
 
-class KMComposerEditor : public Message::KMeditor
+class KMComposerEditor : public MessageComposer::KMeditor
 {
     Q_OBJECT
 

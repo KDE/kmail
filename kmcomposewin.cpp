@@ -161,7 +161,7 @@ using Sonnet::DictionaryComboBox;
 using MailTransport::TransportManager;
 using MailTransport::Transport;
 using KPIM::RecentAddresses;
-using Message::KMeditor;
+using MessageComposer::KMeditor;
 
 KMail::Composer *KMail::makeComposer( const KMime::Message::Ptr &msg, bool lastSignState, bool lastEncryptState, Composer::TemplateContext context,
                                       uint identity, const QString & textSelection,
@@ -2979,7 +2979,7 @@ void KMComposeWin::slotToggleMarkup()
 }
 
 //-----------------------------------------------------------------------------
-void KMComposeWin::slotTextModeChanged( Message::KMeditor::Mode mode )
+void KMComposeWin::slotTextModeChanged( MessageComposer::KMeditor::Mode mode )
 {
   if ( mode == KMeditor::Plain )
     disableHtml( Message::ComposerViewBase::NoConfirmationNeeded ); // ### Can this happen at all?

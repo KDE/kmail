@@ -49,7 +49,7 @@
 using namespace MailCommon;
 
 KMComposerEditor::KMComposerEditor( KMComposeWin *win,QWidget *parent)
-    : Message::KMeditor(parent, "kmail2rc" ),mComposerWin(win)
+    : MessageComposer::KMeditor(parent, "kmail2rc" ),mComposerWin(win)
 {
     setAutocorrection(KMKernel::self()->composerAutoCorrection());
 }
