@@ -61,7 +61,7 @@
 
 #include "messagecomposer/autocorrection/composerautocorrectionlanguage.h"
 
-#include <libkdepim/addresseelineedit.h>
+#include <libkdepim/addressline/addresseelineedit.h>
 // libkleopatra:
 #include "libkleo/ui/keyrequester.h"
 #include "kleo/cryptobackendfactory.h"

@@ -92,7 +92,7 @@
 
 // LIBKDEPIM includes
 #include <libkdepim/nepomukwarning.h>
-#include <libkdepim/recentaddresses.h>
+#include <libkdepim/addressline/recentaddresses.h>
 
 // KDEPIMLIBS includes
 #include <akonadi/changerecorder.h>

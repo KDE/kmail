@@ -49,9 +49,9 @@
 
 #include "kmknotify.h"
 
-#include "recentaddresses.h"
+#include "addressline/recentaddresses.h"
 using KPIM::RecentAddresses;
-#include "completionordereditor.h"
+#include "addressline/completionordereditor.h"
 #include "messagelist/utils/aggregationcombobox.h"
 #include "messagelist/utils/aggregationconfigbutton.h"
 #include "messagelist/utils/themecombobox.h"
