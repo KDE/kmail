@@ -1186,11 +1186,11 @@ AppearancePageLayoutTab::AppearancePageLayoutTab( QWidget * parent )
   mFavoriteFoldersViewGroup->addButton( favoriteFoldersViewHiddenRadio, static_cast<int>( GlobalSettings::EnumFavoriteCollectionViewMode::HiddenMode ) );
   mFavoriteFoldersViewGroupBox->layout()->addWidget( favoriteFoldersViewHiddenRadio );
 
-  QRadioButton* favoriteFoldersViewIconsRadio = new QRadioButton( i18n( "As Icons" ), mFavoriteFoldersViewGroupBox );
+  QRadioButton* favoriteFoldersViewIconsRadio = new QRadioButton( i18n( "As icons" ), mFavoriteFoldersViewGroupBox );
   mFavoriteFoldersViewGroup->addButton( favoriteFoldersViewIconsRadio, static_cast<int>( GlobalSettings::EnumFavoriteCollectionViewMode::IconMode ) );
   mFavoriteFoldersViewGroupBox->layout()->addWidget( favoriteFoldersViewIconsRadio );
 
-  QRadioButton* favoriteFoldersViewListRadio = new QRadioButton( i18n( "As List" ), mFavoriteFoldersViewGroupBox );
+  QRadioButton* favoriteFoldersViewListRadio = new QRadioButton( i18n( "As list" ), mFavoriteFoldersViewGroupBox );
   mFavoriteFoldersViewGroup->addButton( favoriteFoldersViewListRadio,  static_cast<int>( GlobalSettings::EnumFavoriteCollectionViewMode::ListMode ) );
   mFavoriteFoldersViewGroupBox->layout()->addWidget( favoriteFoldersViewListRadio );
 
@@ -1311,7 +1311,7 @@ AppearancePageHeadersTab::AppearancePageHeadersTab( QWidget * parent )
   using MessageList::Utils::AggregationComboBox;
   mAggregationComboBox = new AggregationComboBox( group );
 
-  QLabel* aggregationLabel = new QLabel( i18n( "Default Aggregation:" ), group );
+  QLabel* aggregationLabel = new QLabel( i18n( "Default aggregation:" ), group );
   aggregationLabel->setBuddy( mAggregationComboBox );
 
   using MessageList::Utils::AggregationConfigButton;
@@ -1332,7 +1332,7 @@ AppearancePageHeadersTab::AppearancePageHeadersTab( QWidget * parent )
   using MessageList::Utils::ThemeComboBox;
   mThemeComboBox = new ThemeComboBox( group );
 
-  QLabel *themeLabel = new QLabel( i18n( "Default Theme:" ), group );
+  QLabel *themeLabel = new QLabel( i18n( "Default theme:" ), group );
   themeLabel->setBuddy( mThemeComboBox );
 
   using MessageList::Utils::ThemeConfigButton;

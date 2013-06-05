@@ -3279,7 +3279,7 @@ void KMMainWidget::setupActions()
   }
 
   {
-    KAction *action = new KAction(i18n("&Configure send later agent..."), this);
+    KAction *action = new KAction(i18n("Configure Send Later Agent..."), this);
     actionCollection()->addAction("tools_configure_sendlater", action );
     connect(action, SIGNAL(triggered(bool)), SLOT(slotConfigureSendLater()));
   }
