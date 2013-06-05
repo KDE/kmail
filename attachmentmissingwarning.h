@@ -35,6 +35,7 @@ private Q_SLOTS:
 Q_SIGNALS:
     void attachMissingFile();
     void closeAttachMissingFile();
+    void explicitClosedMissingAttachment();
 };
 
 #endif // ATTACHMENTMISSINGWARNING_H

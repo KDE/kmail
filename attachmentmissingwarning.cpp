@@ -50,13 +50,13 @@ void AttachmentMissingWarning::slotAttachFile()
 
 void AttachmentMissingWarning::slotFileAttached()
 {
-    setVisible(false);
+    animatedHide();
     Q_EMIT closeAttachMissingFile();
 }
 
 void AttachmentMissingWarning::explicitlyClosed()
 {
-    Q_EMIT closeAttachMissingFile();
+    Q_EMIT explicitClosedMissingAttachment();
 }
 
 #include "attachmentmissingwarning.moc"

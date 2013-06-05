@@ -440,6 +440,7 @@ class KMComposeWin : public KMail::Composer
 
     void slotAttachMissingFile();
     void slotCloseAttachMissingFile();
+    void slotExplicitClosedMissingAttachment();
     void slotVerifyMissingAttachmentTimeout();
     void slotCheckSendNow();
 

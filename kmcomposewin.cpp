@@ -429,9 +429,10 @@ KMComposeWin::KMComposeWin( const KMime::Message::Ptr &aMsg, bool lastSignState,
   mAttachmentMissing = new AttachmentMissingWarning(this);
   connect(mAttachmentMissing,SIGNAL(attachMissingFile()),this,SLOT(slotAttachMissingFile()));
   connect(mAttachmentMissing,SIGNAL(closeAttachMissingFile()),this,SLOT(slotCloseAttachMissingFile()));
+  connect(mAttachmentMissing,SIGNAL(explicitClosedMissingAttachment()), this, SLOT(slotExplicitClosedMissingAttachment()));
   v->addWidget(mAttachmentMissing);
   m_verifyMissingAttachment = new QTimer(this);
-  m_verifyMissingAttachment->start(1000*30);
+  m_verifyMissingAttachment->start(1000*5);
   connect( m_verifyMissingAttachment, SIGNAL(timeout()), this, SLOT(slotVerifyMissingAttachmentTimeout()) );
   connect( attachmentController, SIGNAL(fileAttached()), mAttachmentMissing, SLOT(slotFileAttached()) );
 
@@ -3455,21 +3456,27 @@ void KMComposeWin::slotAttachMissingFile()
 void KMComposeWin::slotCloseAttachMissingFile()
 {
   if(m_verifyMissingAttachment) {
-    m_verifyMissingAttachment->stop();
-    delete m_verifyMissingAttachment;
-    m_verifyMissingAttachment = 0;
+    m_verifyMissingAttachment->start();
   }
 }
 
 void KMComposeWin::slotVerifyMissingAttachmentTimeout()
 {
   if( mComposerBase->hasMissingAttachments( GlobalSettings::self()->attachmentKeywords() )) {
-    mAttachmentMissing->setVisible(true);
+    mAttachmentMissing->animatedShow();
   } else {
     m_verifyMissingAttachment->start();
   }
 }
 
+void KMComposeWin::slotExplicitClosedMissingAttachment()
+{
+  if(m_verifyMissingAttachment) {
+      m_verifyMissingAttachment->stop();
+      delete m_verifyMissingAttachment;
+      m_verifyMissingAttachment = 0;
+  }
+}
 
 void KMComposeWin::addExtraCustomHeaders( const QMap<QByteArray, QString> &headers)
 {
