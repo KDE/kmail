@@ -1303,10 +1303,10 @@ void KMComposeWin::setupActions( void )
   connect( mComposerBase->editor(), SIGNAL(externalEditorClosed()), this, SLOT(slotExternalEditorClosed()));
   connect( mComposerBase->editor(), SIGNAL(externalEditorStarted()), this, SLOT(slotExternalEditorStarted()));
   //these are checkable!!!
-  markupAction = new KToggleAction( i18n("Rich Text Formatting"), this );
+  markupAction = new KToggleAction( i18n("Rich Text Editing"), this );
   markupAction->setIcon( KIcon( "text-html" ) );
   markupAction->setIconText( i18n("Rich Text") );
-  markupAction->setToolTip( i18n( "Toggle Rich Text editing mode" ) );
+  markupAction->setToolTip( i18n( "Toggle rich text editing mode" ) );
   actionCollection()->addAction( "html", markupAction );
   connect( markupAction, SIGNAL(triggered(bool)), SLOT(slotToggleMarkup()) );
 
