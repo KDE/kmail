@@ -50,9 +50,9 @@
 #include "custommimeheader.h"
 #include <libkdepim/spellchecklineedit.h>
 #include "pimcommon/translator/translatorwidget.h"
-#include "attachmentmissingwarning.h"
+#include "warningwidgets/attachmentmissingwarning.h"
 #include "createnewcontactjob.h"
-#include "externaleditorwarning.h"
+#include "warningwidgets/externaleditorwarning.h"
 
 // KDEPIM includes
 #include <libkpgp/kpgpblock.h>

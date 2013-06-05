@@ -119,9 +119,9 @@ if (NOT WINCE AND KDEPIM_BUILD_DESKTOP)
      configuredialog/accountconfigorderdialog.cpp
      identity/identityeditvcarddialog.cpp
      identity/identityaddvcarddialog.cpp
-     attachmentmissingwarning.cpp
+     warningwidgets/attachmentmissingwarning.cpp
      createnewcontactjob.cpp
-     externaleditorwarning.cpp
+     warningwidgets/externaleditorwarning.cpp
   )
 
   # TODO PORT
