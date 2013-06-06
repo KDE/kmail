@@ -19,7 +19,7 @@
 
 #include "collectionpane.h"
 #include "kmkernel.h"
-#include "mailkernel.h"
+#include "kernel/mailkernel.h"
 
 #include "foldercollection.h"
 #include <kpimidentities/identitymanager.h>

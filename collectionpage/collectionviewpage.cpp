@@ -19,7 +19,7 @@
 
 #include "collectionviewpage.h"
 #include "kmkernel.h"
-#include "mailkernel.h"
+#include "kernel/mailkernel.h"
 
 #include <akonadi/collection.h>
 #include <akonadi/entitydisplayattribute.h>

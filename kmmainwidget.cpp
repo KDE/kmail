@@ -34,7 +34,7 @@
 #include "foldertreewidget.h"
 #include "util.h"
 #include "util/mailutil.h"
-#include "mailkernel.h"
+#include "kernel/mailkernel.h"
 #include "archivefolderdialog.h"
 #include "globalsettings.h"
 #include "foldertreeview.h"

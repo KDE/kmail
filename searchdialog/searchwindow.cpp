@@ -26,7 +26,7 @@
 #include "folderrequester.h"
 #include "kmcommands.h"
 #include "kmmainwidget.h"
-#include "mailcommon/mailkernel.h"
+#include "mailcommon/kernel/mailkernel.h"
 #include "mailcommon/searchpatternedit.h"
 #include "mailcommon/widgets/regexplineedit.h"
 #include "searchdescriptionattribute.h"

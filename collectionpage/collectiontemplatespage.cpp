@@ -19,7 +19,7 @@
 #include "collectiontemplatespage.h"
 
 #include "kmkernel.h"
-#include "mailkernel.h"
+#include "kernel/mailkernel.h"
 #include "foldercollection.h"
 #include "templateparser/templatesconfiguration.h"
 #include "templateparser/templatesconfiguration_kfg.h"

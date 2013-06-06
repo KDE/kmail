@@ -46,7 +46,7 @@
 #include "kmkernel.h"
 #endif
 
-#include "mailkernel.h"
+#include "kernel/mailkernel.h"
 
 #include "addressvalidationjob.h"
 #include "kleo_util.h"

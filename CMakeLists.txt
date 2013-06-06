@@ -34,6 +34,7 @@ include_directories(
   ${CMAKE_BINARY_DIR}/mailcommon
   ${CMAKE_SOURCE_DIR}/mailcommon/folder
   ${CMAKE_SOURCE_DIR}/mailcommon/tag
+  ${CMAKE_SOURCE_DIR}/mailcommon/kernel
   ${CMAKE_SOURCE_DIR}/pimcommon
   ${CMAKE_BINARY_DIR}/pimcommon
   ${CMAKE_SOURCE_DIR}/pimcommon/util/

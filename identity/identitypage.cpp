@@ -30,7 +30,7 @@
 #include "globalsettings.h"
 #endif
 
-#include <mailcommon/mailkernel.h>
+#include <mailcommon/kernel/mailkernel.h>
 #include <messageviewer/utils/autoqpointer.h>
 #include <kpimidentities/identity.h>
 #include <kpimidentities/identitymanager.h>

@@ -51,7 +51,7 @@
 #include "customtemplatesmenu.h"
 #include "messageactions.h"
 #include "util.h"
-#include "mailkernel.h"
+#include "kernel/mailkernel.h"
 #include "foldercollection.h"
 
 #include <KActionCollection>

@@ -21,7 +21,7 @@
 
 #include "collectionmailinglistpage.h"
 #include "kmkernel.h"
-#include "mailkernel.h"
+#include "kernel/mailkernel.h"
 #include "util/mailutil.h"
 #include "util.h"
 

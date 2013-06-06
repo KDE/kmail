@@ -106,7 +106,7 @@ using KMail::MailServiceImpl;
 #include "foldercollectionmonitor.h"
 #include "imapsettings.h"
 #include "util.h"
-#include "mailcommon/mailkernel.h"
+#include "mailcommon/kernel/mailkernel.h"
 
 #include "searchdialog/searchdescriptionattribute.h"
 

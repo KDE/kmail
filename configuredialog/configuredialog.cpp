@@ -35,7 +35,7 @@
 
 // other KMail headers:
 #include "kmkernel.h"
-#include "mailkernel.h"
+#include "kernel/mailkernel.h"
 #include "pimcommon/widgets/simplestringlisteditor.h"
 #include "colorlistbox.h"
 #include <kpimidentities/identitymanager.h>

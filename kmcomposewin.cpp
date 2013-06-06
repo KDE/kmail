@@ -46,7 +46,7 @@
 #include "snippetwidget.h"
 #include "templatesconfiguration_kfg.h"
 #include "foldercollectionmonitor.h"
-#include "mailkernel.h"
+#include "kernel/mailkernel.h"
 #include "custommimeheader.h"
 #include <libkdepim/spellchecklineedit.h>
 #include "pimcommon/translator/translatorwidget.h"

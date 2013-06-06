@@ -25,7 +25,7 @@
 #include "globalsettings.h"
 #include "kmmainwidget.h"
 #include "kmreadermainwin.h"
-#include "mailkernel.h"
+#include "kernel/mailkernel.h"
 
 #include "kdepim-version.h"
 #include <kpimutils/email.h>

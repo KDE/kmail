@@ -24,7 +24,7 @@
 #include "foldercollection.h"
 #include "globalsettings.h"
 #include "util/mailutil.h"
-#include "mailcommon/mailkernel.h"
+#include "mailcommon/kernel/mailkernel.h"
 #include "mailcommon/folder/foldertreeview.h"
 
 #include <kiconloader.h>
