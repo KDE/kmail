@@ -3,7 +3,7 @@
 #ifndef _KMKERNEL_H
 #define _KMKERNEL_H
 
-#include "mailinterfaces.h"
+#include "interfaces/mailinterfaces.h"
 
 #include <QList>
 #include <QObject>
