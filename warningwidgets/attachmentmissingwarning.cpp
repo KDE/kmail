@@ -24,19 +24,19 @@ AttachmentMissingWarning::AttachmentMissingWarning(QWidget *parent)
     :KMessageWidget(parent)
 {
     setVisible(false);
-    setCloseButtonVisible(true);
+    setCloseButtonVisible(false);
     setMessageType(Information);
     setText( i18n( "The message you have composed seems to refer to an attached file but you have not attached anything. Do you want to attach a file to your message?" ) );
     setWordWrap(true);
 
-    KAction *action = this->findChild<KAction *>(); // should give us the close action...
-    if ( action ) {
-        connect( action, SIGNAL(triggered(bool)), SLOT(explicitlyClosed()) );
-    }
-
-    action = new KAction( KIcon(QLatin1String( "mail-attachment" )), i18n( "&Attach file" ), this );
+    KAction *action = new KAction( KIcon(QLatin1String( "mail-attachment" )), i18n( "&Attach file" ), this );
     connect( action, SIGNAL(triggered(bool)), SLOT(slotAttachFile()) );
     addAction( action );
+
+    action = new KAction( KIcon(QLatin1String( "window-close" )), i18n( "&Remind me later" ), this );
+    connect( action, SIGNAL(triggered(bool)), SLOT(explicitlyClosed()) );
+    addAction( action );
+
 }
 
 AttachmentMissingWarning::~AttachmentMissingWarning()
@@ -56,6 +56,7 @@ void AttachmentMissingWarning::slotFileAttached()
 
 void AttachmentMissingWarning::explicitlyClosed()
 {
+    animatedHide();
     Q_EMIT explicitClosedMissingAttachment();
 }
 
