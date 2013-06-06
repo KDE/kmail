@@ -20,7 +20,7 @@
 #include "kmstartup.h"
 
 #include "kmkernel.h" //control center
-#include "messageviewer/kcursorsaver.h"
+#include "messageviewer/utils/kcursorsaver.h"
 
 #include <klocale.h>
 #include <kcomponentdata.h>

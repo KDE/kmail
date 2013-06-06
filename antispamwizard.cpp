@@ -30,7 +30,7 @@
 
 #include "antispamwizard.h"
 #ifndef QT_NO_CURSOR
-#include "messageviewer/kcursorsaver.h"
+#include "messageviewer/utils/kcursorsaver.h"
 #endif
 #include "kmkernel.h"
 #include "kmmainwin.h"
