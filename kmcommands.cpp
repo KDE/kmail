@@ -86,7 +86,7 @@
 #endif
 #include "messageviewer/objecttreeparser.h"
 #include "messageviewer/csshelper.h"
-#include "messageviewer/util.h"
+#include "messageviewer/utils/util.h"
 #include "messageviewer/mailsourceviewer.h"
 #include "messageviewer/viewer.h"
 #include "messageviewer/headerstrategy.h"
