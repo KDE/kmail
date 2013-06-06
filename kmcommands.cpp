@@ -100,7 +100,7 @@ using MessageViewer::EditorWatcher;
 #include "broadcaststatus.h"
 #include "globalsettings.h"
 #include "stringutil.h"
-#include "messageviewer/autoqpointer.h"
+#include "messageviewer/utils/autoqpointer.h"
 #include "messageviewer/globalsettings.h"
 #include "messagecore/globalsettings.h"
 

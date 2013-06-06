@@ -60,7 +60,7 @@ using KPIM::RecentAddresses;
 #include "messagecomposer/autocorrection/composerautocorrectionwidget.h"
 #include "messagecomposer/imagescaling/imagescalingwidget.h"
 
-#include "messageviewer/autoqpointer.h"
+#include "messageviewer/utils/autoqpointer.h"
 #include "messageviewer/nodehelper.h"
 #include "messageviewer/widgets/configurewidget.h"
 #include "messageviewer/globalsettings.h"

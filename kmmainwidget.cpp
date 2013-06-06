@@ -68,7 +68,7 @@
 // Other PIM includes
 #include "kdepim-version.h"
 
-#include "messageviewer/autoqpointer.h"
+#include "messageviewer/utils/autoqpointer.h"
 #include "messageviewer/globalsettings.h"
 #include "messageviewer/viewer.h"
 #include "messageviewer/attachmentstrategy.h"
