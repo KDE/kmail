@@ -41,8 +41,11 @@
 #include <KPushButton>
 #include <KInputDialog>
 
+#include <Sonnet/ConfigDialog>
+
 #include "kmkernel.h"
 #include "foldercollection.h"
+#include <QCheckBox>
 #include <QTextCodec>
 #include <QtCore/QMimeData>
 
@@ -142,5 +145,26 @@ void KMComposerEditor::insertFromMimeData( const QMimeData *source )
     if ( !mComposerWin->insertFromMimeData( source, false ) )
         KPIMTextEdit::TextEdit::insertFromMimeData( source );
 }
+
+void KMComposerEditor::showSpellConfigDialog( const QString & configFileName )
+{
+  KConfig config( configFileName );
+  Sonnet::ConfigDialog dialog( &config, this );
+  if ( !spellCheckingLanguage().isEmpty() ) {
+      dialog.setLanguage( spellCheckingLanguage() );
+  }
+  // Hackish way to hide the "Enable spell check by default" checkbox
+  // Our highlighter ignores this setting, so we should not expose its UI
+  QCheckBox *enabledByDefaultCB = dialog.findChild<QCheckBox *>( "m_checkerEnabledByDefaultCB" );
+  if ( enabledByDefaultCB ) {
+      enabledByDefaultCB->hide();
+  } else {
+      kWarning() << "Could not find any checkbox named 'm_checkerEnabledByDefaultCB'. Sonnet::ConfigDialog must have changed!";
+  }
+  if ( dialog.exec() ) {
+      setSpellCheckingLanguage( dialog.language() );
+  }
+}
+
 
 #include "kmcomposereditor.moc"

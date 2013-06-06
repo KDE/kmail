@@ -67,6 +67,11 @@ public:
      */
     void setHighlighterColors(KPIMTextEdit::EMailQuoteHighlighter * highlighter);
 
+    /**
+     * Static override because we want to hide part of the dialog UI
+     */
+    void showSpellConfigDialog( const QString &configFileName );
+
 private:
     KMComposeWin *mComposerWin;
 
