@@ -36,6 +36,7 @@
 #include <KLocale>
 #include <KConfig>
 #include <KStandardDirs>
+#include <KSeparator>
 
 using namespace KMail;
 
@@ -60,6 +61,8 @@ KMKnotify::KMKnotify( QWidget * parent )
     m_notifyWidget = new KNotifyConfigWidget( page );
     layout->addWidget( m_notifyWidget );
     m_comboNotify->setFocus();
+
+    layout->addWidget(new KSeparator);
 
     connect( m_comboNotify, SIGNAL(activated(int)),
              SLOT(slotComboChanged(int)) );
@@ -100,7 +103,7 @@ void KMKnotify::initCombobox()
     lstNotify<< QLatin1String( "akonadi_sendlater_agent/akonadi_sendlater_agent.notifyrc" );
     //TODO add other notifyrc here if necessary
 
-    Q_FOREACH( const QString& notify, lstNotify ) {
+    Q_FOREACH ( const QString& notify, lstNotify ) {
         const QString fullPath = KStandardDirs::locate( "data", notify );
 
         if ( !fullPath.isEmpty() ) {
