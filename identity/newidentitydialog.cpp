@@ -28,6 +28,7 @@
 #include <KComboBox>
 #include <KLineEdit>
 #include <KLocalizedString>
+#include <KSeparator>
 
 #include <QButtonGroup>
 #include <QHBoxLayout>
@@ -96,6 +97,7 @@ NewIdentityDialog::NewIdentityDialog( KPIMIdentities::IdentityManager* manager, 
     hlay->addWidget( label );
     hlay->addWidget( mComboBox, 1 );
 
+    vlay->addWidget(new KSeparator);
     vlay->addStretch( 1 ); // spacer
 
     // enable/disable combobox and label depending on the third radio
@@ -106,6 +108,7 @@ NewIdentityDialog::NewIdentityDialog( KPIMIdentities::IdentityManager* manager, 
              mComboBox, SLOT(setEnabled(bool)) );
 
     enableButtonOk( false ); // since line edit is empty
+    resize(400,180);
 }
 
 NewIdentityDialog::DuplicateMode NewIdentityDialog::duplicateMode() const
