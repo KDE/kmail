@@ -2638,18 +2638,18 @@ void KMComposeWin::printComposeResult( KJob *job, bool preview )
 }
 
 //----------------------------------------------------------------------------
-void KMComposeWin::doSend( MessageSender::SendMethod method,
-                           MessageSender::SaveIn saveIn )
+void KMComposeWin::doSend( MessageComposer::MessageSender::SendMethod method,
+                           MessageComposer::MessageSender::SaveIn saveIn )
 {
   // TODO integrate with MDA online status
-  if ( method == MessageSender::SendImmediate ) {
+  if ( method == MessageComposer::MessageSender::SendImmediate ) {
     if( !MessageComposer::Util::sendMailDispatcherIsOnline() ) {
-      method = MessageSender::SendLater;
+      method = MessageComposer::MessageSender::SendLater;
     }
   }
 
 
-  if ( saveIn == MessageSender::SaveInNone ) { // don't save as draft or template, send immediately
+  if ( saveIn == MessageComposer::MessageSender::SaveInNone ) { // don't save as draft or template, send immediately
     if ( KPIMUtils::firstEmailAddress( from() ).isEmpty() ) {
       if ( !( mShowHeaders & HDR_FROM ) ) {
         mShowHeaders |= HDR_FROM;
@@ -2718,7 +2718,7 @@ void KMComposeWin::doSend( MessageSender::SendMethod method,
 
     // we'll call send from within slotDoDelaySend
   } else {
-    if( saveIn == MessageSender::SaveInDrafts && mEncryptAction->isChecked() &&
+    if( saveIn == MessageComposer::MessageSender::SaveInDrafts && mEncryptAction->isChecked() &&
         !GlobalSettings::self()->neverEncryptDrafts() &&
         mComposerBase->to().isEmpty() && mComposerBase->cc().isEmpty() ) {
 
@@ -2748,8 +2748,8 @@ void KMComposeWin::slotDoDelayedSend( KJob *job )
   }
 
   // ... otherwise continue as usual
-  const MessageSender::SendMethod method = static_cast<MessageSender::SendMethod>( job->property( "method" ).toInt() );
-  const MessageSender::SaveIn saveIn = static_cast<MessageSender::SaveIn>( job->property( "saveIn" ).toInt() );
+  const MessageComposer::MessageSender::SendMethod method = static_cast<MessageComposer::MessageSender::SendMethod>( job->property( "method" ).toInt() );
+  const MessageComposer::MessageSender::SaveIn saveIn = static_cast<MessageComposer::MessageSender::SaveIn>( job->property( "saveIn" ).toInt() );
 
   doDelayedSend( method, saveIn );
 }
@@ -2770,7 +2770,7 @@ void KMComposeWin::applyComposerSetting( MessageComposer::ComposerViewBase* mCom
 }
 
 
-void KMComposeWin::doDelayedSend( MessageSender::SendMethod method, MessageSender::SaveIn saveIn )
+void KMComposeWin::doDelayedSend( MessageComposer::MessageSender::SendMethod method, MessageComposer::MessageSender::SaveIn saveIn )
 {
 #ifndef QT_NO_CURSOR
   MessageViewer::KCursorSaver busy( MessageViewer::KBusyPtr::busy() );
@@ -2782,7 +2782,7 @@ void KMComposeWin::doDelayedSend( MessageSender::SendMethod method, MessageSende
   bool encrypt = mEncryptAction->isChecked();
 
   mComposerBase->setCryptoOptions( sign, encrypt, cryptoMessageFormat(),
-                                   ( ( saveIn != MessageSender::SaveInNone && GlobalSettings::self()->neverEncryptDrafts() )
+                                   ( ( saveIn != MessageComposer::MessageSender::SaveInNone && GlobalSettings::self()->neverEncryptDrafts() )
                                     || mSigningAndEncryptionExplicitlyDisabled ) );
 
   const int num = GlobalSettings::self()->customMessageHeadersCount();
@@ -2811,7 +2811,7 @@ void KMComposeWin::slotSendLater()
   if ( !checkRecipientNumber() )
       return;
   if ( mComposerBase->editor()->checkExternalEditorFinished() ) {
-    doSend( MessageSender::SendLater );
+    doSend( MessageComposer::MessageSender::SendLater );
   }
 }
 
@@ -2819,7 +2819,7 @@ void KMComposeWin::slotSendLater()
 void KMComposeWin::slotSaveDraft()
 {
   if ( mComposerBase->editor()->checkExternalEditorFinished() ) {
-    doSend( MessageSender::SendLater, MessageSender::SaveInDrafts );
+    doSend( MessageComposer::MessageSender::SendLater, MessageComposer::MessageSender::SaveInDrafts );
   }
 }
 
@@ -2827,7 +2827,7 @@ void KMComposeWin::slotSaveDraft()
 void KMComposeWin::slotSaveTemplate()
 {
   if ( mComposerBase->editor()->checkExternalEditorFinished() ) {
-    doSend( MessageSender::SendLater, MessageSender::SaveInTemplates );
+    doSend( MessageComposer::MessageSender::SendLater, MessageComposer::MessageSender::SaveInTemplates );
   }
 }
 
@@ -2885,12 +2885,12 @@ void KMComposeWin::slotCheckSendNow()
                                               KGuiItem( i18n("Send &Later") ) );
 
     if ( rc == KMessageBox::Yes ) {
-      doSend( MessageSender::SendImmediate );
+      doSend( MessageComposer::MessageSender::SendImmediate );
     } else if ( rc == KMessageBox::No ) {
-      doSend( MessageSender::SendLater );
+      doSend( MessageComposer::MessageSender::SendLater );
     }
   } else {
-    doSend( MessageSender::SendImmediate );
+    doSend( MessageComposer::MessageSender::SendImmediate );
   }
 }
 

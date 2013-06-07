@@ -1228,7 +1228,7 @@ void KMKernel::init()
 
   the_undoStack     = new UndoStack(20);
 
-  the_msgSender = new AkonadiSender;
+  the_msgSender = new MessageComposer::AkonadiSender;
   readConfig();
   // filterMgr->dump();
 
@@ -1663,7 +1663,7 @@ QSharedPointer<FolderCollection> KMKernel::currentFolderCollection()
 
 // can't be inline, since KMSender isn't known to implement
 // KMail::MessageSender outside this .cpp file
-MessageSender * KMKernel::msgSender()
+MessageComposer::MessageSender * KMKernel::msgSender()
 {
   return the_msgSender;
 }

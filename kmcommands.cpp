@@ -1041,9 +1041,9 @@ KMCommand::Result KMRedirectCommand::execute()
   if ( !TransportManager::self()->showTransportCreationDialog( parentWidget(), TransportManager::IfNoTransportExists ) )
     return Failed;
 
-  const MessageSender::SendMethod method = (dlg->sendMode() == MailCommon::RedirectDialog::SendNow)
-                                             ? MessageSender::SendImmediate
-                                             : MessageSender::SendLater;
+  const MessageComposer::MessageSender::SendMethod method = (dlg->sendMode() == MailCommon::RedirectDialog::SendNow)
+                                             ? MessageComposer::MessageSender::SendImmediate
+                                             : MessageComposer::MessageSender::SendLater;
 
   const int identity = dlg->identity();
   int transportId = dlg->transportId();

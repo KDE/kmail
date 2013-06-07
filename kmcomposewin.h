@@ -565,10 +565,10 @@ class KMComposeWin : public KMail::Composer
     /**
      * Send the message.
      */
-    void doSend( MessageSender::SendMethod method=MessageSender::SendDefault,
-                 MessageSender::SaveIn saveIn = MessageSender::SaveInNone );
+    void doSend( MessageComposer::MessageSender::SendMethod method=MessageComposer::MessageSender::SendDefault,
+                 MessageComposer::MessageSender::SaveIn saveIn = MessageComposer::MessageSender::SaveInNone );
 
-    void doDelayedSend( MessageSender::SendMethod method, MessageSender::SaveIn saveIn );
+    void doDelayedSend( MessageComposer::MessageSender::SendMethod method, MessageComposer::MessageSender::SaveIn saveIn );
 
     void changeCryptoAction();
     void applyComposerSetting( MessageComposer::ComposerViewBase* mComposerBase );

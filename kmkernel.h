@@ -42,8 +42,8 @@ namespace KPIM {
   class ProgressItem;
 }
 
-class MessageSender;
 namespace MessageComposer {
+  class MessageSender;
   class ComposerAutoCorrection;
 }
 
@@ -60,7 +60,9 @@ namespace KPIM { class ProgressDialog; }
 using KMail::MailServiceImpl;
 using KMail::UndoStack;
 using KPIM::ProgressDialog;
+namespace MessageComposer {
 class AkonadiSender;
+}
 
 namespace KPIMIdentities {
   class Identity;
@@ -342,7 +344,7 @@ public:
   void setXmlGuiInstance( const KComponentData &instance ) { mXmlGuiInstance = instance; }
 
   UndoStack *undoStack() { return the_undoStack; }
-  MessageSender *msgSender();
+  MessageComposer::MessageSender *msgSender();
 
   /*reimp*/ void openFilterDialog(bool createDummyFilter = true);
   /*reimp*/ void createFilter(const QByteArray& field, const QString& value);
@@ -491,7 +493,7 @@ private:
 
   UndoStack *the_undoStack;
   mutable KPIMIdentities::IdentityManager *mIdentityManager;
-  AkonadiSender *the_msgSender;
+  MessageComposer::AkonadiSender *the_msgSender;
   /** previous KMail version. If different from current,
       the user has just updated. read from config */
   QString the_previousVersion;
