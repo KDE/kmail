@@ -29,7 +29,7 @@
 #include "messagecomposer/attachmentmodel.h"
 #include "attachmentview.h"
 #include "codecaction.h"
-#include <messagecomposer/emailaddressresolvejob.h>
+#include <messagecomposer/job/emailaddressresolvejob.h>
 #include "kleo_util.h"
 #include "kmcommands.h"
 #include "kmcomposereditor.h"
@@ -78,7 +78,7 @@
 #include <messagecomposersettings.h>
 #include <messagecomposer/messagehelper.h>
 #include <messagecomposer/signaturecontroller.h>
-#include <messagecomposer/inserttextfilejob.h>
+#include <messagecomposer/job/inserttextfilejob.h>
 #include <messagecomposer/composerlineedit.h>
 #include <messagecore/attachment/attachmentpart.h>
 #include "messagecore/globalsettings.h"

@@ -23,7 +23,7 @@
 #include "attachmentcontroller.h"
 
 #include "attachmentview.h"
-#include "attachmentfrompublickeyjob.h"
+#include "messagecomposer/job/attachmentfrompublickeyjob.h"
 #include "foldercollection.h"
 #include "globalsettings.h"
 #include "kmcommands.h"
