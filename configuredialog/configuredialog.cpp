@@ -152,7 +152,7 @@ using MailTransport::TransportManagementWidget;
 
 #include <nepomuk2/resourcemanager.h>
 
-#include <libkdepim/nepomukwarning.h>
+#include <libkdepim/widgets/nepomukwarning.h>
 using namespace MailCommon;
 using namespace KMail;
 namespace {

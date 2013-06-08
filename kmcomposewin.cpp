@@ -91,7 +91,7 @@
 #include "mailcommon/folder/foldercollection.h"
 
 // LIBKDEPIM includes
-#include <libkdepim/nepomukwarning.h>
+#include <libkdepim/widgets/nepomukwarning.h>
 #include <libkdepim/addressline/recentaddresses.h>
 
 // KDEPIMLIBS includes
