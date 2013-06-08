@@ -31,9 +31,6 @@ class AccountConfigOrderDialog : public KDialog
 public:
     explicit AccountConfigOrderDialog(QWidget *parent);
     ~AccountConfigOrderDialog();
-    enum Type {
-        IdentifierAccount = Qt::UserRole+1
-    };
 
 private Q_SLOTS:
     void slotOk();
@@ -42,6 +39,10 @@ private Q_SLOTS:
     void slotEnableControls();
 
 private:
+    enum Type {
+        IdentifierAccount = Qt::UserRole+1
+    };
+
     void writeConfig();
     void readConfig();
     void init();
