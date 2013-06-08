@@ -477,7 +477,7 @@ void KMReaderWin::slotMailtoAddAddrBook()
   const KUrl url = urlClicked();
   if( url.isEmpty() )
     return;
-  const QString emailString = KPIMUtils::decodeMailtoUrl( url ).toLower();
+  const QString emailString = KPIMUtils::decodeMailtoUrl( url );
 
   KPIM::AddEmailAddressJob *job = new KPIM::AddEmailAddressJob( emailString, mMainWindow, this );
   job->start();
