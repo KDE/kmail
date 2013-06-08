@@ -80,12 +80,13 @@ AccountConfigOrderDialog::AccountConfigOrderDialog(QWidget *parent)
     connect( mListAccount->model(), SIGNAL(rowsMoved(QModelIndex,int,int,QModelIndex,int)),SLOT(slotEnableControls()) );
 
     connect( this, SIGNAL(okClicked()), SLOT(slotOk()) );
+    readConfig();
     init();
 }
 
 AccountConfigOrderDialog::~AccountConfigOrderDialog()
 {
-
+    writeConfig();
 }
 
 void AccountConfigOrderDialog::slotMoveUp()
@@ -171,15 +172,38 @@ void AccountConfigOrderDialog::init()
 
 void AccountConfigOrderDialog::slotOk()
 {
+    KConfigGroup group( KMKernel::self()->config(), "AccountOrder" );
+
     QStringList order;
     const int numberOfItems(mListAccount->count());
     for (int i = 0; i<numberOfItems; ++i) {
-        order<<mListAccount->item(i)->data(AccountConfigOrderDialog::IdentifierAccount).toString();
+        order << mListAccount->item(i)->data(AccountConfigOrderDialog::IdentifierAccount).toString();
     }
-    KConfigGroup group( KMKernel::self()->config(), "AccountOrder" );
+
     group.writeEntry("order",order);
     group.sync();
+
     KDialog::accept();
 }
+
+void AccountConfigOrderDialog::readConfig()
+{
+    KConfigGroup accountConfigDialog( KMKernel::self()->config(), "AccountConfigOrderDialog" );
+    const QSize size = accountConfigDialog.readEntry( "Size", QSize() );
+    if ( size.isValid() ) {
+        resize( size );
+    } else {
+        resize( 600, 400 );
+    }
+}
+
+void AccountConfigOrderDialog::writeConfig()
+{
+    KConfigGroup accountConfigDialog( KMKernel::self()->config(), "AccountConfigOrderDialog" );
+    accountConfigDialog.writeEntry( "Size", size() );
+    accountConfigDialog.sync();
+}
+
+
 
 #include "accountconfigorderdialog.moc"

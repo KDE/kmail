@@ -42,6 +42,8 @@ private Q_SLOTS:
     void slotEnableControls();
   
 private:
+    void writeConfig();
+    void readConfig();
     void init();
     QListWidget *mListAccount;
     KPushButton *mUpButton;
