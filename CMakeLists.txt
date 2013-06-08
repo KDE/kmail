@@ -39,6 +39,7 @@ include_directories(
   ${CMAKE_BINARY_DIR}/pimcommon
   ${CMAKE_SOURCE_DIR}/pimcommon/util/
   ${CMAKE_SOURCE_DIR}/korganizer
+  ${CMAKE_SOURCE_DIR}/messagecomposer/utils/
   ${GPGME_INCLUDES}
   ${Boost_INCLUDE_DIR}
   ${CMAKE_CURRENT_BINARY_DIR}/../ontologies
