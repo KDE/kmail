@@ -40,7 +40,7 @@ private Q_SLOTS:
     void slotMoveUp();
     void slotMoveDown();
     void slotEnableControls();
-  
+
 private:
     void writeConfig();
     void readConfig();
