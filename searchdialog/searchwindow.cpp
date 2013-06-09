@@ -452,6 +452,7 @@ void SearchWindow::searchDone( KJob* job )
         if ( mSearchJob ) {
             mSearchJob = 0;
         }
+        enableGUI();
     }
     else
     {
