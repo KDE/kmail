@@ -167,7 +167,7 @@
   <customwidget>
    <class>MailCommon::SearchPatternEdit</class>
    <extends>QWidget</extends>
-   <header location="global">mailcommon/searchpatternedit.h</header>
+   <header location="global">mailcommon/search/searchpatternedit.h</header>
    <container>1</container>
   </customwidget>
   <customwidget>

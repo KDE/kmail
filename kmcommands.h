@@ -6,7 +6,7 @@
 #include "kmail_export.h"
 #include "messagecomposer/messagefactory.h"
 #include "messagelist/core/view.h"
-#include "searchpattern.h"
+#include "search/searchpattern.h"
 
 #include <akonadi/kmime/messagestatus.h>
 #include <kio/job.h>
