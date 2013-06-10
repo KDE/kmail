@@ -45,7 +45,7 @@
 
 // Other includes
 #include "kleo/enum.h"
-#include <composerviewbase.h>
+#include <composer/composerviewbase.h>
 
 class QByteArray;
 class QCheckBox;

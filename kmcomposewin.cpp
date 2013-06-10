@@ -71,7 +71,7 @@
 #include <messageviewer/nodehelper.h>
 #include "messageviewer/chiasmuskeyselector.h"
 #include <messageviewer/globalsettings.h>
-#include <messagecomposer/composer.h>
+#include <messagecomposer/composer/composer.h>
 #include <messagecomposer/globalpart.h>
 #include <messagecomposer/infopart.h>
 #include <messagecomposer/textpart.h>
@@ -79,7 +79,7 @@
 #include <messagecomposer/messagehelper.h>
 #include <messagecomposer/signaturecontroller.h>
 #include <messagecomposer/job/inserttextfilejob.h>
-#include <messagecomposer/composerlineedit.h>
+#include <messagecomposer/composer/composerlineedit.h>
 #include <messagecore/attachment/attachmentpart.h>
 #include "messagecore/globalsettings.h"
 #include <templateparser/templateparser.h>

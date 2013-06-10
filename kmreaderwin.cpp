@@ -54,7 +54,7 @@ using namespace MessageViewer;
 #include "messageviewer/attachmentstrategy.h"
 #include "messagecomposer/messagesender.h"
 #include "messagecomposer/messagefactory.h"
-#include "messagecomposer/composer.h"
+#include "messagecomposer/composer/composer.h"
 #include "messagecomposer/textpart.h"
 #include "messagecomposer/infopart.h"
 #include <KIO/JobUiDelegate>
