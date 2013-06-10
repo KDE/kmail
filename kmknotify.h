@@ -48,6 +48,8 @@ private Q_SLOTS:
 
 private:
     void initCombobox();
+    void writeConfig();
+    void readConfig();
 
 private:
     KComboBox* m_comboNotify;

@@ -27,6 +27,7 @@
  */
 
 #include "kmknotify.h"
+#include "kmkernel.h"
 
 #include <QLabel>
 #include <QVBoxLayout>
@@ -69,10 +70,12 @@ KMKnotify::KMKnotify( QWidget * parent )
     connect( this, SIGNAL(okClicked()), SLOT(slotOk()) );
     connect( m_notifyWidget ,SIGNAL(changed(bool)) , this , SLOT(slotConfigChanged(bool)));
     initCombobox();
+    readConfig();
 }
 
 KMKnotify::~KMKnotify()
 {
+    writeConfig();
 }
 
 void KMKnotify::slotConfigChanged( bool changed )
@@ -132,5 +135,24 @@ void KMKnotify::slotOk()
     if ( m_changed )
         m_notifyWidget->save();
 }
+
+void KMKnotify::readConfig()
+{
+    KConfigGroup notifyDialog( KMKernel::self()->config(), "KMKnotifyDialog" );
+    const QSize size = notifyDialog.readEntry( "Size", QSize() );
+    if ( size.isValid() ) {
+        resize( size );
+    } else {
+        resize( 600, 400 );
+    }
+}
+
+void KMKnotify::writeConfig()
+{
+    KConfigGroup notifyDialog( KMKernel::self()->config(), "KMKnotifyDialog" );
+    notifyDialog.writeEntry( "Size", size() );
+    notifyDialog.sync();
+}
+
 
 #include "kmknotify.moc"
