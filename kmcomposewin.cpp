@@ -48,7 +48,7 @@
 #include "foldercollectionmonitor.h"
 #include "kernel/mailkernel.h"
 #include "custommimeheader.h"
-#include <libkdepim/spellchecklineedit.h>
+#include <libkdepim/widgets/spellchecklineedit.h>
 #include "pimcommon/translator/translatorwidget.h"
 #include "warningwidgets/attachmentmissingwarning.h"
 #include "createnewcontactjob.h"
