@@ -1554,53 +1554,32 @@ AppearancePageReaderTab::AppearancePageReaderTab( QWidget * parent )
     QVBoxLayout *topLayout = new QVBoxLayout(this);
     topLayout->setSpacing( KDialog::spacingHint() );
     topLayout->setMargin( KDialog::marginHint() );
-    QGroupBox *box = new QGroupBox(i18n("General"));
-    topLayout->addWidget(box);
-
-    QVBoxLayout *vlay = new QVBoxLayout;
-    vlay->setSpacing( KDialog::spacingHint() );
-    vlay->setMargin( KDialog::marginHint() );
-    box->setLayout(vlay);
 
     // "Close message window after replying or forwarding" check box:
     populateCheckBox( mCloseAfterReplyOrForwardCheck = new QCheckBox( this ),
                       GlobalSettings::self()->closeAfterReplyOrForwardItem() );
     mCloseAfterReplyOrForwardCheck->setToolTip(
                 i18n( "Close the standalone message window after replying or forwarding the message" ) );
-    vlay->addWidget( mCloseAfterReplyOrForwardCheck );
+    topLayout->addWidget( mCloseAfterReplyOrForwardCheck );
     connect( mCloseAfterReplyOrForwardCheck, SIGNAL (stateChanged(int)),
              this, SLOT(slotEmitChanged()) );
 
     mViewerSettings = new MessageViewer::ConfigureWidget;
     connect( mViewerSettings, SIGNAL(settingsChanged()),
              this, SLOT(slotEmitChanged()) );
-    vlay->addWidget( mViewerSettings );
+    topLayout->addWidget( mViewerSettings );
 
-    box = new QGroupBox(i18n("Custom Headers Style"));
-    topLayout->addWidget(box);
-
-    mCustomHeaderSettings = new MessageViewer::CustomHeaderSettingWidget;
-    connect( mCustomHeaderSettings, SIGNAL (changed()), this, SLOT(slotEmitChanged()) );
-
-    vlay = new QVBoxLayout;
-    vlay->setSpacing( KDialog::spacingHint() );
-    vlay->setMargin( KDialog::marginHint() );
-    box->setLayout(vlay);
-    vlay->addWidget(mCustomHeaderSettings);
-
-    vlay->addStretch( 100 ); // spacer
+    topLayout->addStretch( 100 ); // spacer
 }
 
 void AppearancePage::ReaderTab::doResetToDefaultsOther()
 {
-    mCustomHeaderSettings->resetToDefault();
 }
 
 void AppearancePage::ReaderTab::doLoadOther()
 {
   loadWidget( mCloseAfterReplyOrForwardCheck, GlobalSettings::self()->closeAfterReplyOrForwardItem() );
   mViewerSettings->readConfig();
-  mCustomHeaderSettings->readConfig();
 }
 
 
@@ -1608,7 +1587,6 @@ void AppearancePage::ReaderTab::save()
 {
   saveCheckBox( mCloseAfterReplyOrForwardCheck, GlobalSettings::self()->closeAfterReplyOrForwardItem() );
   mViewerSettings->writeConfig();
-  mCustomHeaderSettings->writeConfig();
 }
 
 QString AppearancePage::SystemTrayTab::helpAnchor() const
