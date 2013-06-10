@@ -46,11 +46,11 @@ static const int s_delegatePaddingSize = 7;
 
 struct Icons {
     Icons()
-            : readyPixmap ( KIcon ( QLatin1String ( "user-online" ) ).pixmap ( QSize ( 16, 16 ) ) )
-            , syncPixmap ( KIcon ( QLatin1String ( "network-connect" ) ).pixmap ( QSize ( 16, 16 ) ) )
-            , errorPixmap ( KIcon ( QLatin1String ( "dialog-error" ) ).pixmap ( QSize ( 16, 16 ) ) )
-            , offlinePixmap ( KIcon ( QLatin1String ( "network-disconnect" ) ).pixmap ( QSize ( 16, 16 ) ) )
-            , checkMailIcon ( KIcon ( "mail-receive" ) ) {
+        : readyPixmap ( KIcon ( QLatin1String ( "user-online" ) ).pixmap ( QSize ( 16, 16 ) ) )
+        , syncPixmap ( KIcon ( QLatin1String ( "network-connect" ) ).pixmap ( QSize ( 16, 16 ) ) )
+        , errorPixmap ( KIcon ( QLatin1String ( "dialog-error" ) ).pixmap ( QSize ( 16, 16 ) ) )
+        , offlinePixmap ( KIcon ( QLatin1String ( "network-disconnect" ) ).pixmap ( QSize ( 16, 16 ) ) )
+        , checkMailIcon ( KIcon ( "mail-receive" ) ) {
     }
     QPixmap readyPixmap, syncPixmap, errorPixmap, offlinePixmap;
     KIcon checkMailIcon;
@@ -59,7 +59,7 @@ struct Icons {
 K_GLOBAL_STATIC ( Icons, s_icons )
 
 ConfigAgentDelegate::ConfigAgentDelegate ( QObject *parent )
-        : QStyledItemDelegate ( parent )
+    : QStyledItemDelegate ( parent )
 {
 }
 
@@ -104,18 +104,18 @@ QTextDocument* ConfigAgentDelegate::document ( const QStyleOptionViewItem &optio
     }
 
     const QString content = QString::fromLatin1 (
-                          "<html style=\"color:%1\">"
-                          "<body>"
-                          "<table>"
-                          "<tr>"
-                          "<td rowspan=\"2\"><img src=\"agent_icon\">&nbsp;&nbsp;</td>"
-                          "<td><b>%2</b></td>"
-                          "</tr>" ).arg ( textColor.name().toUpper() ).arg ( name )
-                      + QString::fromLatin1 (
-                          "<tr>"
-                          "<td><img src=\"status_icon\"/> %1 %2</td>"
-                          "</tr>" ).arg ( statusMessage ).arg ( status == 1 ? QString::fromLatin1( "(%1%)" ).arg ( progress ) : QLatin1String ( "" ) )
-                      + QLatin1String ( "</table></body></html>" );
+                "<html style=\"color:%1\">"
+                "<body>"
+                "<table>"
+                "<tr>"
+                "<td rowspan=\"2\"><img src=\"agent_icon\">&nbsp;&nbsp;</td>"
+                "<td><b>%2</b></td>"
+                "</tr>" ).arg ( textColor.name().toUpper() ).arg ( name )
+            + QString::fromLatin1 (
+                "<tr>"
+                "<td><img src=\"status_icon\"/> %1 %2</td>"
+                "</tr>" ).arg ( statusMessage ).arg ( status == 1 ? QString::fromLatin1( "(%1%)" ).arg ( progress ) : QLatin1String ( "" ) )
+            + QLatin1String ( "</table></body></html>" );
 
     document->setHtml ( content );
 
@@ -169,7 +169,7 @@ QSize ConfigAgentDelegate::sizeHint ( const QStyleOptionViewItem &option, const 
 
 QWidget  * ConfigAgentDelegate::createEditor ( QWidget *, const QStyleOptionViewItem  &, const QModelIndex & ) const
 {
-  return 0;
+    return 0;
 }
 
 bool ConfigAgentDelegate::editorEvent ( QEvent* event, QAbstractItemModel* model, const QStyleOptionViewItem& option, const QModelIndex& index )
@@ -215,7 +215,7 @@ void ConfigAgentDelegate::drawFocus ( QPainter *painter, const QStyleOptionViewI
         o.state |= QStyle::State_KeyboardFocusChange;
         QPalette::ColorGroup cg = ( option.state & QStyle::State_Enabled ) ? QPalette::Normal : QPalette::Disabled;
         o.backgroundColor = option.palette.color ( cg, ( option.state & QStyle::State_Selected )
-                            ? QPalette::Highlight : QPalette::Background );
+                                                   ? QPalette::Highlight : QPalette::Background );
         QApplication::style()->drawPrimitive ( QStyle::PE_FrameFocusRect, &o, painter );
     }
 }
@@ -227,7 +227,7 @@ QStyleOptionButton ConfigAgentDelegate::buttonOption ( const QStyleOptionViewIte
     QRect buttonRect = option.rect;
     int height = option.rect.height() / 2;
     int width = 22 + option.fontMetrics.width( label ) + 40; // icon size + label size + arrow and padding
-    buttonRect.setTop ( ( option.rect.height() / 2 ) - height / 2 ); // center the button vertically
+    buttonRect.setTop ( 0/*( option.rect.height() /2  ) - height / 2)*/ ); // center the button vertically
     buttonRect.setHeight ( height );
     buttonRect.setLeft ( option.rect.right() - width );
     buttonRect.setWidth ( width );
