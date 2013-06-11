@@ -35,7 +35,7 @@
 #include <kglobalsettings.h>
 
 // LIBKDEPIM includes
-#include <messagecomposer/kmeditor.h>
+#include <messagecomposer/composer/kmeditor.h>
 
 #include "messagecomposer/messagesender.h"
 

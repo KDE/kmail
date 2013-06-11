@@ -1,5 +1,5 @@
 /**
- * kmeditor.h
+ * composer/kmeditor.h
  *
  * Copyright (C)  2007  Laurent Montel <montel@kde.org>
  *
@@ -22,7 +22,7 @@
 #ifndef KMCOMPOSEREDITOR_H
 #define KMCOMPOSEREDITOR_H
 
-#include <messagecomposer/kmeditor.h>
+#include <messagecomposer/composer/kmeditor.h>
 #include <KJob>
 
 class KAction;
