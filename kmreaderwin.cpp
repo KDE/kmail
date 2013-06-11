@@ -33,7 +33,7 @@
 #include <libkdepim/job/openemailaddressjob.h>
 #include <libkdepim/broadcaststatus.h>
 #include "kmcommands.h"
-#include "mailcommon/sendmdnhandler.h"
+#include "mailcommon/mdn/sendmdnhandler.h"
 #include <QVBoxLayout>
 #include "messageviewer/headerstrategy.h"
 #include "messageviewer/headerstyle.h"
