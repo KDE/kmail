@@ -72,9 +72,9 @@
 #include "messageviewer/chiasmuskeyselector.h"
 #include <messageviewer/globalsettings.h>
 #include <messagecomposer/composer/composer.h>
-#include <messagecomposer/globalpart.h>
-#include <messagecomposer/infopart.h>
-#include <messagecomposer/textpart.h>
+#include <messagecomposer/part/globalpart.h>
+#include <messagecomposer/part/infopart.h>
+#include <messagecomposer/part/textpart.h>
 #include <messagecomposersettings.h>
 #include <messagecomposer/messagehelper.h>
 #include <messagecomposer/signaturecontroller.h>
