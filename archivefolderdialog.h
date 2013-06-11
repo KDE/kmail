@@ -28,11 +28,11 @@ class KUrl;
 
 namespace Akonadi
 {
-  class Collection;
+class Collection;
 }
 
 namespace MailCommon {
-  class FolderRequester;
+class FolderRequester;
 }
 
 namespace KMail
@@ -40,13 +40,13 @@ namespace KMail
 
 class ArchiveFolderDialog : public KDialog
 {
-  Q_OBJECT
+    Q_OBJECT
 
-  public:
+public:
     explicit ArchiveFolderDialog( QWidget *parent = 0 );
     void setFolder( const Akonadi::Collection &defaultCollection );
 
-  private slots:
+private slots:
     void slotFixFileExtension();
     void slotFolderChanged( const Akonadi::Collection& );
     void slotRecursiveCheckboxClicked();
@@ -54,7 +54,7 @@ class ArchiveFolderDialog : public KDialog
     void slotButtonClicked( int button );
     void slotUrlChanged(const QString&);
 
-  private:
+private:
     bool allowToDeleteFolders( const Akonadi::Collection &folder) const;
 
     QWidget *mParentWidget;
