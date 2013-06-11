@@ -46,14 +46,13 @@ using namespace MailCommon;
 using namespace MessageCore;
 
 AttachmentController::AttachmentController( MessageComposer::AttachmentModel *model, AttachmentView *view, KMComposeWin *composer )
-    : AttachmentControllerBase( model, composer, composer->actionCollection() )
+    : AttachmentControllerBase( model, composer, composer->actionCollection() ),
+      mComposer(composer),
+      mView(view)
 {
-    mComposer = composer;
-
     connect( composer, SIGNAL(identityChanged(KPIMIdentities::Identity)),
              this, SLOT(identityChanged()) );
 
-    mView = view;
     connect( view, SIGNAL(contextMenuRequested()), this, SLOT(showContextMenu()) );
     connect( view->selectionModel(), SIGNAL(selectionChanged(QItemSelection,QItemSelection)),
              this, SLOT(selectionChanged()) );
@@ -66,7 +65,6 @@ AttachmentController::AttachmentController( MessageComposer::AttachmentModel *mo
              SLOT(onShowAttachment(KMime::Content*,QByteArray)));
     connect( this, SIGNAL(selectedAllAttachment()), SLOT(slotSelectAllAttachment()));
     connect( model, SIGNAL(attachItemsRequester(Akonadi::Item::List)), this, SLOT(addAttachmentItems(Akonadi::Item::List)) );
-
 }
 
 AttachmentController::~AttachmentController()
