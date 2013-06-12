@@ -37,7 +37,7 @@
 #include <kdebug.h>
 #include <libkleo/kleo/cryptobackendfactory.h>
 
-#include <messagecomposer/attachmentmodel.h>
+#include <messagecomposer/attachment/attachmentmodel.h>
 #include <messagecore/attachment/attachmentpart.h>
 
 using namespace KMail;
