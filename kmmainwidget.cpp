@@ -91,7 +91,7 @@
 
 // LIBKDEPIM includes
 #include "progresswidget/progressmanager.h"
-#include "broadcaststatus.h"
+#include "misc/broadcaststatus.h"
 
 // KDEPIMLIBS includes
 #include <Akonadi/AgentManager>

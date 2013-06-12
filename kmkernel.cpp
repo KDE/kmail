@@ -3,7 +3,7 @@
 #include "kmkernel.h"
 
 #include "globalsettings.h"
-#include "broadcaststatus.h"
+#include "misc/broadcaststatus.h"
 using KPIM::BroadcastStatus;
 #include "kmstartup.h"
 #include "kmmainwin.h"

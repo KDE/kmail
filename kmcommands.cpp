@@ -97,7 +97,7 @@ using KMail::SecondaryWindow;
 #include "util.h"
 #include "messageviewer/editorwatcher.h"
 using MessageViewer::EditorWatcher;
-#include "broadcaststatus.h"
+#include "misc/broadcaststatus.h"
 #include "globalsettings.h"
 #include "stringutil.h"
 #include "messageviewer/utils/autoqpointer.h"

@@ -31,7 +31,7 @@
 #include <kpimutils/email.h>
 #include <libkdepim/job/addemailaddressjob.h>
 #include <libkdepim/job/openemailaddressjob.h>
-#include <libkdepim/broadcaststatus.h>
+#include <libkdepim/misc/broadcaststatus.h>
 #include "kmcommands.h"
 #include "mailcommon/mdn/sendmdnhandler.h"
 #include <QVBoxLayout>

@@ -23,7 +23,7 @@
 #include "kstatusbar.h"
 #include "progresswidget/progressdialog.h"
 #include "progresswidget/statusbarprogresswidget.h"
-#include "broadcaststatus.h"
+#include "misc/broadcaststatus.h"
 #include "util.h"
 #include "tagactionmanager.h"
 
