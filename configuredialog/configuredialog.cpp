@@ -2209,6 +2209,10 @@ ComposerPage::ComposerPage( const KComponentData &instance, QWidget *parent )
   mAutoImageResizeTab = new AutoImageResizeTab();
   addTab( mAutoImageResizeTab, i18n("Auto Resize Image") );
 
+  //
+  // "external editor" tab:
+  mExternalEditorTab = new ExternalEditorTab();
+  addTab( mExternalEditorTab, i18n("External Editor") );
 }
 
 QString ComposerPage::GeneralTab::helpAnchor() const
@@ -2222,9 +2226,7 @@ ComposerPageGeneralTab::ComposerPageGeneralTab( QWidget * parent )
   // tmp. vars:
   QVBoxLayout *vlay;
   QHBoxLayout *hlay;
-  QGroupBox   *group;
   QLabel      *label;
-  KHBox       *hbox;
 
   vlay = new QVBoxLayout( this );
   vlay->setSpacing( KDialog::spacingHint() );
@@ -2441,55 +2443,6 @@ ComposerPageGeneralTab::ComposerPageGeneralTab( QWidget * parent )
            this, SLOT(slotConfigureRecentAddresses()) );
   hlay->addWidget( recentAddressesBtn );
   hlay->addItem( new QSpacerItem(0, 0) );
-
-  // The "external editor" group:
-  group = new QGroupBox( i18n("External Editor"), this );
-  QLayout *layout = new QVBoxLayout( group );
-  group->layout()->setSpacing( KDialog::spacingHint() );
-
-  mExternalEditorCheck = new QCheckBox(
-           GlobalSettings::self()->useExternalEditorItem()->label(), group);
-  mExternalEditorCheck->setObjectName( "kcfg_UseExternalEditor" );
-  connect( mExternalEditorCheck, SIGNAL(toggled(bool)),
-           this, SLOT(slotEmitChanged()) );
-
-  hbox = new KHBox( group );
-  label = new QLabel( GlobalSettings::self()->externalEditorItem()->label(),
-                   hbox );
-  mEditorRequester = new KUrlRequester( hbox );
-  //Laurent 25/10/2011 fix #Bug 256655 - A "save changes?" dialog appears ALWAYS when leaving composer settings, even when unchanged.
-  //mEditorRequester->setObjectName( "kcfg_ExternalEditor" );
-  connect( mEditorRequester, SIGNAL(urlSelected(KUrl)),
-           this, SLOT(slotEmitChanged()) );
-  connect( mEditorRequester, SIGNAL(textChanged(QString)),
-           this, SLOT(slotEmitChanged()) );
-
-  hbox->setStretchFactor( mEditorRequester, 1 );
-  label->setBuddy( mEditorRequester );
-  label->setEnabled( false ); // since !mExternalEditorCheck->isChecked()
-  // ### FIXME: allow only executables (x-bit when available..)
-  mEditorRequester->setFilter( "application/x-executable "
-                               "application/x-shellscript "
-                               "application/x-desktop" );
-  mEditorRequester->setMode(KFile::File|KFile::ExistingOnly|KFile::LocalOnly);
-  mEditorRequester->setEnabled( false ); // !mExternalEditorCheck->isChecked()
-  connect( mExternalEditorCheck, SIGNAL(toggled(bool)),
-           label, SLOT(setEnabled(bool)) );
-  connect( mExternalEditorCheck, SIGNAL(toggled(bool)),
-           mEditorRequester, SLOT(setEnabled(bool)) );
-
-  label = new QLabel( i18n("<b>%f</b> will be replaced with the "
-                           "filename to edit.<br />"
-                           "<b>%w</b> will be replaced with the window id.<br />"
-                           "<b>%l</b> will be replaced with the line number."), group );
-  label->setEnabled( false ); // see above
-  connect( mExternalEditorCheck, SIGNAL(toggled(bool)),
-           label, SLOT(setEnabled(bool)) );
-  layout->addWidget( mExternalEditorCheck );
-  layout->addWidget( hbox );
-  layout->addWidget( label );
-
-  vlay->addWidget( group );
   vlay->addStretch( 100 );
 }
 
@@ -2552,9 +2505,6 @@ void ComposerPage::GeneralTab::doLoadFromGlobalSettings()
 #endif
 
   mMaximumRecentAddress->setValue(RecentAddresses::self(  MessageComposer::MessageComposerSettings::self()->config() )->maxCount());
-  // editor group:
-  mExternalEditorCheck->setChecked( GlobalSettings::self()->useExternalEditor() );
-  mEditorRequester->setText( GlobalSettings::self()->externalEditor() );
 }
 
 void ComposerPage::GeneralTab::save() {
@@ -2578,10 +2528,6 @@ void ComposerPage::GeneralTab::save() {
   GlobalSettings::self()->setRecipientThreshold( mRecipientSpin->value() );
   GlobalSettings::self()->setForwardingInlineByDefault( mForwardTypeCombo->currentIndex() == 0 );
 #endif
-
-  // editor group:
-  GlobalSettings::self()->setUseExternalEditor( mExternalEditorCheck->isChecked() );
-  GlobalSettings::self()->setExternalEditor( mEditorRequester->text() );
 
   RecentAddresses::self(  MessageComposer::MessageComposerSettings::self()->config() )->setMaxCount( mMaximumRecentAddress->value() );
 
@@ -2608,6 +2554,72 @@ void ComposerPage::GeneralTab::slotConfigureCompletionOrder()
   KLDAP::LdapClientSearch search;
   KPIM::CompletionOrderEditor editor( &search, this );
   editor.exec();
+}
+
+QString ComposerPage::ExternalEditorTab::helpAnchor() const
+{
+  return QString::fromLatin1("configure-composer-externaleditor");
+}
+
+ComposerPageExternalEditorTab::ComposerPageExternalEditorTab( QWidget * parent )
+  : ConfigModuleTab( parent )
+{
+  QVBoxLayout *layout = new QVBoxLayout( this );
+
+  mExternalEditorCheck = new QCheckBox(
+           GlobalSettings::self()->useExternalEditorItem()->label(), this);
+  mExternalEditorCheck->setObjectName( "kcfg_UseExternalEditor" );
+  connect( mExternalEditorCheck, SIGNAL(toggled(bool)),
+           this, SLOT(slotEmitChanged()) );
+
+  KHBox *hbox = new KHBox( this );
+  QLabel *label = new QLabel( GlobalSettings::self()->externalEditorItem()->label(),
+                   hbox );
+  mEditorRequester = new KUrlRequester( hbox );
+  //Laurent 25/10/2011 fix #Bug 256655 - A "save changes?" dialog appears ALWAYS when leaving composer settings, even when unchanged.
+  //mEditorRequester->setObjectName( "kcfg_ExternalEditor" );
+  connect( mEditorRequester, SIGNAL(urlSelected(KUrl)),
+           this, SLOT(slotEmitChanged()) );
+  connect( mEditorRequester, SIGNAL(textChanged(QString)),
+           this, SLOT(slotEmitChanged()) );
+
+  hbox->setStretchFactor( mEditorRequester, 1 );
+  label->setBuddy( mEditorRequester );
+  label->setEnabled( false ); // since !mExternalEditorCheck->isChecked()
+  // ### FIXME: allow only executables (x-bit when available..)
+  mEditorRequester->setFilter( "application/x-executable "
+                               "application/x-shellscript "
+                               "application/x-desktop" );
+  mEditorRequester->setMode(KFile::File|KFile::ExistingOnly|KFile::LocalOnly);
+  mEditorRequester->setEnabled( false ); // !mExternalEditorCheck->isChecked()
+  connect( mExternalEditorCheck, SIGNAL(toggled(bool)),
+           label, SLOT(setEnabled(bool)) );
+  connect( mExternalEditorCheck, SIGNAL(toggled(bool)),
+           mEditorRequester, SLOT(setEnabled(bool)) );
+
+  label = new QLabel( i18n("<b>%f</b> will be replaced with the "
+                           "filename to edit.<br />"
+                           "<b>%w</b> will be replaced with the window id.<br />"
+                           "<b>%l</b> will be replaced with the line number."), this );
+  label->setEnabled( false ); // see above
+  connect( mExternalEditorCheck, SIGNAL(toggled(bool)),
+           label, SLOT(setEnabled(bool)) );
+  layout->addWidget( mExternalEditorCheck );
+  layout->addWidget( hbox );
+  layout->addWidget( label );
+  layout->addStretch();
+}
+
+void ComposerPage::ExternalEditorTab::doLoadFromGlobalSettings()
+{
+  mExternalEditorCheck->setChecked( GlobalSettings::self()->useExternalEditor() );
+  mEditorRequester->setText( GlobalSettings::self()->externalEditor() );
+}
+
+void ComposerPage::ExternalEditorTab::save()
+{
+  GlobalSettings::self()->setUseExternalEditor( mExternalEditorCheck->isChecked() );
+  GlobalSettings::self()->setExternalEditor( mEditorRequester->text() );
 }
 
 QString ComposerPage::TemplatesTab::helpAnchor() const
