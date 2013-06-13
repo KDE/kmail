@@ -27,7 +27,7 @@
 #include "kmcommands.h"
 #include "customtemplatesmenu.h"
 
-#include "messagecore/annotationdialog.h"
+#include "messagecore/widgets/annotationdialog.h"
 #include "messagecore/globalsettings.h"
 #include "messagecore/mailinglist.h"
 #include "messagecore/messagehelpers.h"
