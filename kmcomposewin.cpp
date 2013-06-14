@@ -86,7 +86,7 @@
 #include <templatesconfiguration.h>
 #include "messagecore/nodehelper.h"
 #include <akonadi/kmime/messagestatus.h>
-#include "messagecore/messagehelpers.h"
+#include "messagecore/helpers/messagehelpers.h"
 #include "mailcommon/folder/folderrequester.h"
 #include "mailcommon/folder/foldercollection.h"
 

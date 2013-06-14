@@ -122,7 +122,7 @@ using MailTransport::TransportManager;
 #include "messageviewer/objecttreeemptysource.h"
 
 #include "messagecore/utils/stringutil.h"
-#include "messagecore/messagehelpers.h"
+#include "messagecore/helpers/messagehelpers.h"
 
 #include "messagecomposer/messagesender.h"
 #include "messagecomposer/messagehelper.h"

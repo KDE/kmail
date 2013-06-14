@@ -85,7 +85,7 @@
 
 #include "messagecore/globalsettings.h"
 #include "messagecore/mailinglist.h"
-#include "messagecore/messagehelpers.h"
+#include "messagecore/helpers/messagehelpers.h"
 
 #include "kmknotify.h"
 
