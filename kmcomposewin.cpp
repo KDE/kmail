@@ -84,7 +84,7 @@
 #include "messagecore/globalsettings.h"
 #include <templateparser/templateparser.h>
 #include <templatesconfiguration.h>
-#include "messagecore/nodehelper.h"
+#include "messagecore/helpers/nodehelper.h"
 #include <akonadi/kmime/messagestatus.h>
 #include "messagecore/helpers/messagehelpers.h"
 #include "mailcommon/folder/folderrequester.h"
