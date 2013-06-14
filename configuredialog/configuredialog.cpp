@@ -814,7 +814,7 @@ AppearancePageFontsTab::AppearancePageFontsTab( QWidget * parent )
   mFontLocationCombo->setEnabled( false ); // !mCustomFontCheck->isChecked()
 
   QStringList fontDescriptions;
-  for ( int i = 0 ; i < numFontNames ; i++ )
+  for ( int i = 0 ; i < numFontNames ; ++i )
     fontDescriptions << i18n( fontNames[i].displayName );
   mFontLocationCombo->addItems( fontDescriptions );
 
@@ -858,7 +858,7 @@ void AppearancePage::FontsTab::slotFontSelectorChanged( int index )
   if( mActiveFontIndex == 0 ) {
     mFont[0] = mFontChooser->font();
     // hardcode the family and size of "message body" dependant fonts:
-    for ( int i = 0 ; i < numFontNames ; i++ )
+    for ( int i = 0 ; i < numFontNames ; ++i )
       if ( !fontNames[i].enableFamilyAndSize ) {
         // ### shall we copy the font and set the save and re-set
         // {regular,italic,bold,bold italic} property or should we
@@ -893,7 +893,7 @@ void AppearancePage::FontsTab::doLoadOther()
   mFont[0] = KGlobalSettings::generalFont();
   QFont fixedFont = KGlobalSettings::fixedFont();
 
-  for ( int i = 0 ; i < numFontNames ; i++ ) {
+  for ( int i = 0 ; i < numFontNames ; ++i ) {
     const QString configName = fontNames[i].configName;
     if ( configName == QLatin1String( "MessageListFont" ) ||
          configName == QLatin1String( "UnreadMessageFont" ) ||
@@ -923,7 +923,7 @@ void AppearancePage::FontsTab::save()
   const bool customFonts = mCustomFontCheck->isChecked();
   MessageCore::GlobalSettings::self()->setUseDefaultFonts( !customFonts );
 
-  for ( int i = 0 ; i < numFontNames ; i++ ) {
+  for ( int i = 0 ; i < numFontNames ; ++i ) {
     const QString configName = fontNames[i].configName;
     if ( configName == QLatin1String( "MessageListFont" ) ||
          configName == QLatin1String( "UnreadMessageFont" ) ||
@@ -1001,7 +1001,7 @@ AppearancePageColorsTab::AppearancePageColorsTab( QWidget * parent )
   // color list box:
   mColorList = new ColorListBox( this );
   mColorList->setEnabled( false ); // since !mCustomColorCheck->isChecked()
-  for ( int i = 0 ; i < numColorNames ; i++ )
+  for ( int i = 0 ; i < numColorNames ; ++i )
     mColorList->addColor( i18n(colorNames[i].displayName) );
   vlay->addWidget( mColorList, 1 );
 
@@ -1082,7 +1082,7 @@ void AppearancePage::ColorsTab::loadColor( bool loadFromConfig )
     scheme.background().color() // reader background color
   };
 
-  for ( int i = 0 ; i < numColorNames ; i++ ) {
+  for ( int i = 0 ; i < numColorNames ; ++i ) {
     if ( loadFromConfig ) {
       const QString configName = colorNames[i].configName;
       if ( configName == QLatin1String( "UnreadMessageColor" ) ||
@@ -1118,7 +1118,7 @@ void AppearancePage::ColorsTab::save()
 
   KColorScheme scheme( QPalette::Active, KColorScheme::View );
 
-  for ( int i = 0 ; i < numColorNames ; i++ ) {
+  for ( int i = 0 ; i < numColorNames ; ++i ) {
     // Don't write color info when we use default colors, but write
     // if it's already there:
     const QString configName = colorNames[i].configName;
@@ -1357,7 +1357,7 @@ AppearancePageHeadersTab::AppearancePageHeadersTab( QWidget * parent )
   gvlay = new QVBoxLayout( mDateDisplay );
   gvlay->setSpacing( KDialog::spacingHint() );
 
-  for ( int i = 0 ; i < numDateDisplayConfig ; i++ ) {
+  for ( int i = 0 ; i < numDateDisplayConfig ; ++i ) {
     const char *label = dateDisplayConfig[i].displayName;
     QString buttonLabel;
     if ( QString(label).contains("%1") )
@@ -1502,7 +1502,7 @@ void AppearancePage::HeadersTab::setDateDisplay( int num, const QString & format
   if ( dateDisplay == DateFormatter::Custom )
     mCustomDateFormatEdit->setText( format );
 
-  for ( int i = 0 ; i < numDateDisplayConfig ; i++ )
+  for ( int i = 0 ; i < numDateDisplayConfig ; ++i )
     if ( dateDisplay == dateDisplayConfig[i].dateDisplay ) {
       mDateDisplay->setSelected( i );
       return;
@@ -3094,7 +3094,7 @@ void ComposerPage::HeadersTab::doLoadOther()
   QTreeWidgetItem * item = 0;
 
   const int count = GlobalSettings::self()->customMessageHeadersCount();
-  for ( int i = 0 ; i < count ; i++ ) {
+  for ( int i = 0 ; i < count ; ++i ) {
     KConfigGroup config( KMKernel::self()->config(),
                          QString("Mime #") + QString::number(i) );
     const QString name  = config.readEntry( "name" );

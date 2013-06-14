@@ -43,7 +43,7 @@ void ListView::resizeColums()
     const int w2 = w1 / c;
     const int w3 = w1 - (c-1)*w2;
 
-    for ( int i=0; i<c-1; i++ ) {
+    for ( int i=0; i<c-1; ++i ) {
         setColumnWidth( i, w2 );
     }
     setColumnWidth( c-1, w3 );

@@ -360,7 +360,7 @@ void KMReaderWin::displayAboutPage()
            "(compared to KMail %1, which is part of KDE Software Compilation %2):</p>\n",
            QString("1.13"), KDE::versionString() ); // prior KMail and KDE version
     featuresText += "<ul>\n";
-    for ( int i = 0 ; i < numKMailNewFeatures ; i++ )
+    for ( int i = 0 ; i < numKMailNewFeatures ; ++i )
       featuresText += "<li>" + i18n( kmailNewFeatures[i] ) + "</li>\n";
     featuresText += "</ul>\n";
     info = info.subs( featuresText );
@@ -385,7 +385,7 @@ void KMReaderWin::displayAboutPage()
            "Important changes</span> (compared to KMail %1):</p>\n",
        QString("1.13"));
     changesText += "<ul>\n";
-    for ( int i = 0 ; i < numKMailChanges ; i++ )
+    for ( int i = 0 ; i < numKMailChanges ; ++i )
       changesText += i18n("<li>%1</li>\n", i18n( kmailChanges[i] ) );
     changesText += "</ul>\n";
     info = info.subs( changesText );
