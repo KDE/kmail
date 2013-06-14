@@ -28,6 +28,7 @@
 #include "ui_customtemplates_base.h"
 #include "ui_miscpagemaintab.h"
 #include "ui_securitypagegeneraltab.h"
+#include "ui_securitypagemdntab.h"
 #include "ui_accountspagereceivingtab.h"
 #include "tag.h"
 class QPushButton;
@@ -776,14 +777,31 @@ private:
   //FIXME virtual void doResetToDefaultsOther();
 
 private:
-  QButtonGroup *mMDNGroup;
-  QButtonGroup *mOrigQuoteGroup;
   Ui_SecurityPageGeneralTab mSGTab;
 
 private slots:
     void slotLinkClicked( const QString & link );
 };
 
+class SecurityPageMDNTab : public ConfigModuleTab {
+  Q_OBJECT
+public:
+  explicit SecurityPageMDNTab( QWidget * parent=0 );
+  QString helpAnchor() const;
+
+  void save();
+
+private:
+  void doLoadOther();
+
+private:
+  QButtonGroup *mMDNGroup;
+  QButtonGroup *mOrigQuoteGroup;
+  Ui_SecurityPageMDNTab mUi;
+
+private slots:
+    void slotLinkClicked( const QString & link );
+};
 
 class SecurityPageComposerCryptoTab : public ConfigModuleTab {
   Q_OBJECT
@@ -859,6 +877,7 @@ public:
   QString helpAnchor() const;
 
   typedef SecurityPageGeneralTab GeneralTab;
+  typedef SecurityPageMDNTab MDNTab;
   typedef SecurityPageComposerCryptoTab ComposerCryptoTab;
   typedef SecurityPageWarningTab WarningTab;
   typedef SecurityPageSMimeTab SMimeTab;

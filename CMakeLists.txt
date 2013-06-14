@@ -158,6 +158,7 @@ if (NOT WINCE AND KDEPIM_BUILD_DESKTOP)
     ui/smimeconfiguration.ui
     ui/miscpagemaintab.ui
     ui/securitypagegeneraltab.ui
+    ui/securitypagemdntab.ui
     ui/identitypage.ui
     ui/accountspagereceivingtab.ui
     ui/searchwindow.ui

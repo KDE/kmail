@@ -3373,6 +3373,8 @@ SecurityPage::SecurityPage( const KComponentData &instance, QWidget *parent )
   mGeneralTab = new GeneralTab(); //  @TODO: rename
   addTab( mGeneralTab, i18n("Reading") );
 
+  addTab( new MDNTab(), i18n("Message Disposition Notifications") );
+
   //
   // "Composing" tab:
   //
@@ -3412,27 +3414,6 @@ SecurityPageGeneralTab::SecurityPageGeneralTab( QWidget * parent )
   connect( mSGTab.mAlwaysDecrypt, SIGNAL(stateChanged(int)),
            this, SLOT(slotEmitChanged()) );
 
-  // "ignore", "ask", "deny", "always send" radiobutton line:
-  mMDNGroup = new QButtonGroup( mSGTab.groupMessageDisp );
-  connect( mMDNGroup, SIGNAL(buttonClicked(int)),
-           this, SLOT(slotEmitChanged()) );
-  mMDNGroup->addButton( mSGTab.radioIgnore, 0 );
-  mMDNGroup->addButton( mSGTab.radioAsk, 1 );
-  mMDNGroup->addButton( mSGTab.radioDeny, 2 );
-  mMDNGroup->addButton( mSGTab.radioAlways, 3 );
-
-  // "Original Message quote" radiobutton line:
-  mOrigQuoteGroup = new QButtonGroup( mSGTab.groupMessageDisp );
-  connect( mOrigQuoteGroup, SIGNAL(buttonClicked(int)),
-           this, SLOT(slotEmitChanged()) );
-  mOrigQuoteGroup->addButton( mSGTab.radioNothing, 0 );
-  mOrigQuoteGroup->addButton( mSGTab.radioFull, 1 );
-  mOrigQuoteGroup->addButton( mSGTab.radioHeaders, 2 );
-
-  connect( mSGTab.mNoMDNsWhenEncryptedCheck, SIGNAL(toggled(bool)), SLOT(slotEmitChanged()) );
-  connect( mSGTab.labelWarning, SIGNAL(linkActivated(QString)),
-           SLOT(slotLinkClicked(QString)) );
-
   connect( mSGTab.mAutomaticallyImportAttachedKeysCheck, SIGNAL(toggled(bool)),
            SLOT(slotEmitChanged()) );
 
@@ -3449,8 +3430,6 @@ void SecurityPageGeneralTab::slotLinkClicked( const QString & link )
         QWhatsThis::showText( QCursor::pos(), mSGTab.mHtmlMailCheck->whatsThis() );
     else if (link == QLatin1String( "whatsthis2" ) )
         QWhatsThis::showText( QCursor::pos(), mSGTab.mExternalReferences->whatsThis() );
-    else if ( link == QLatin1String( "whatsthis3" ) )
-        QWhatsThis::showText( QCursor::pos(), mSGTab.radioIgnore->whatsThis() );
 }
 
 void SecurityPage::GeneralTab::doLoadOther()
@@ -3461,14 +3440,6 @@ void SecurityPage::GeneralTab::doLoadOther()
       MessageViewer::GlobalSettings::self()->autoImportKeys() );
 
   mSGTab.mAlwaysDecrypt->setChecked( MessageViewer::GlobalSettings::self()->alwaysDecrypt() );
-
-  int num = MessageViewer::GlobalSettings::self()->defaultPolicy();
-  if ( num < 0 || num >= mMDNGroup->buttons().count() ) num = 0;
-  mMDNGroup->button(num)->setChecked(true);
-  num = MessageViewer::GlobalSettings::self()->quoteMessage();
-  if ( num < 0 || num >= mOrigQuoteGroup->buttons().count() ) num = 0;
-  mOrigQuoteGroup->button(num)->setChecked(true);
-  mSGTab.mNoMDNsWhenEncryptedCheck->setChecked( MessageViewer::GlobalSettings::self()->notSendWhenEncrypted() );
 
   mSGTab.mScamDetection->setChecked( MessageViewer::GlobalSettings::self()->scamDetectionEnabled());
   mSGTab.scamWhiteList->setStringList( MessageViewer::GlobalSettings::self()->scamDetectionWhiteList() );
@@ -3492,14 +3463,66 @@ void SecurityPage::GeneralTab::save()
   MessageViewer::GlobalSettings::self()->setHtmlLoadExternal( mSGTab.mExternalReferences->isChecked() );
   MessageViewer::GlobalSettings::self()->setAutoImportKeys(
       mSGTab.mAutomaticallyImportAttachedKeysCheck->isChecked() );
-  MessageViewer::GlobalSettings::self()->setDefaultPolicy( mMDNGroup->checkedId() );
-  MessageViewer::GlobalSettings::self()->setQuoteMessage( mOrigQuoteGroup->checkedId() );
-  MessageViewer::GlobalSettings::self()->setNotSendWhenEncrypted( mSGTab.mNoMDNsWhenEncryptedCheck->isChecked() );
   MessageViewer::GlobalSettings::self()->setAlwaysDecrypt( mSGTab.mAlwaysDecrypt->isChecked() );
   MessageViewer::GlobalSettings::self()->setScamDetectionEnabled( mSGTab.mScamDetection->isChecked() );
   MessageViewer::GlobalSettings::self()->setScamDetectionWhiteList( mSGTab.scamWhiteList->stringList() );
 }
 
+QString SecurityPage::MDNTab::helpAnchor() const
+{
+  return QString::fromLatin1("configure-security-mdn");
+}
+
+SecurityPageMDNTab::SecurityPageMDNTab( QWidget * parent )
+  : ConfigModuleTab( parent )
+{
+  mUi.setupUi( this );
+
+  // "ignore", "ask", "deny", "always send" radiobuttons
+  mMDNGroup = new QButtonGroup( this );
+  connect( mMDNGroup, SIGNAL(buttonClicked(int)),
+           this, SLOT(slotEmitChanged()) );
+  mMDNGroup->addButton( mUi.radioIgnore, 0 );
+  mMDNGroup->addButton( mUi.radioAsk, 1 );
+  mMDNGroup->addButton( mUi.radioDeny, 2 );
+  mMDNGroup->addButton( mUi.radioAlways, 3 );
+
+  // "Original Message quote" radiobuttons
+  mOrigQuoteGroup = new QButtonGroup( this );
+  connect( mOrigQuoteGroup, SIGNAL(buttonClicked(int)),
+           this, SLOT(slotEmitChanged()) );
+  mOrigQuoteGroup->addButton( mUi.radioNothing, 0 );
+  mOrigQuoteGroup->addButton( mUi.radioFull, 1 );
+  mOrigQuoteGroup->addButton( mUi.radioHeaders, 2 );
+
+  connect( mUi.mNoMDNsWhenEncryptedCheck, SIGNAL(toggled(bool)), SLOT(slotEmitChanged()) );
+  connect( mUi.labelWarning, SIGNAL(linkActivated(QString)),
+           SLOT(slotLinkClicked(QString)) );
+}
+
+void SecurityPageMDNTab::slotLinkClicked( const QString & link )
+{
+    if ( link == QLatin1String( "whatsthis-mdn" ) )
+        QWhatsThis::showText( QCursor::pos(), mUi.radioIgnore->whatsThis() );
+}
+
+void SecurityPage::MDNTab::doLoadOther()
+{
+  int num = MessageViewer::GlobalSettings::self()->defaultPolicy();
+  if ( num < 0 || num >= mMDNGroup->buttons().count() ) num = 0;
+  mMDNGroup->button(num)->setChecked(true);
+  num = MessageViewer::GlobalSettings::self()->quoteMessage();
+  if ( num < 0 || num >= mOrigQuoteGroup->buttons().count() ) num = 0;
+  mOrigQuoteGroup->button(num)->setChecked(true);
+  mUi.mNoMDNsWhenEncryptedCheck->setChecked( MessageViewer::GlobalSettings::self()->notSendWhenEncrypted() );
+}
+
+void SecurityPage::MDNTab::save()
+{
+  MessageViewer::GlobalSettings::self()->setDefaultPolicy( mMDNGroup->checkedId() );
+  MessageViewer::GlobalSettings::self()->setQuoteMessage( mOrigQuoteGroup->checkedId() );
+  MessageViewer::GlobalSettings::self()->setNotSendWhenEncrypted( mUi.mNoMDNsWhenEncryptedCheck->isChecked() );
+}
 
 QString SecurityPage::ComposerCryptoTab::helpAnchor() const
 {
