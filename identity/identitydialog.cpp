@@ -50,7 +50,7 @@
 
 #include "addressvalidationjob.h"
 #include "kleo_util.h"
-#include "stringutil.h"
+#include "utils/stringutil.h"
 #ifndef KDEPIM_MOBILE_UI
 #include "templatesconfiguration.h"
 #endif

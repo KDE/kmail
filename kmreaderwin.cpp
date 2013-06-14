@@ -43,7 +43,7 @@
 #include "messageviewer/csshelper.h"
 using MessageViewer::CSSHelper;
 #include "util.h"
-#include "stringutil.h"
+#include "utils/stringutil.h"
 
 #include <kmime/kmime_mdn.h>
 

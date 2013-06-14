@@ -18,7 +18,7 @@ using KPIM::RecentAddresses;
 #include "configuredialog/configuredialog.h"
 #include "kmcommands.h"
 #include "kmsystemtray.h"
-#include "stringutil.h"
+#include "utils/stringutil.h"
 #include "util/mailutil.h"
 #include "mailcommon/pop3settings.h"
 #include "mailcommon/folder/foldertreeview.h"

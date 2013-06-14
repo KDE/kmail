@@ -29,7 +29,7 @@
 #include "mailcommon/util/mailutil.h"
 #include "messagelist/messagelistutil.h"
 
-#include "messagecore/stringutil.h"
+#include "messagecore/utils/stringutil.h"
 
 #include <nepomuk2/nmo.h>
 #include <Nepomuk2/Resource>
