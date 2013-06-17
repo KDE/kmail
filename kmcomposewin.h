@@ -37,7 +37,7 @@
 // LIBKDEPIM includes
 #include <messagecomposer/composer/kmeditor.h>
 
-#include "messagecomposer/messagesender.h"
+#include "messagecomposer/sender/messagesender.h"
 
 // KDEPIMLIBS includes
 #include <kmime/kmime_message.h>

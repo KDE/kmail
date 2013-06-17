@@ -34,7 +34,7 @@
 #include <KDebug>
 #include <KGlobal>
 #include <KLocale>
-#include <messagecomposersettings.h>
+#include <settings/messagecomposersettings.h>
 
 class CodecManagerPrivate
 {

@@ -39,7 +39,7 @@
 #include "kmkernel.h"
 
 #include "messagecore/utils/stringutil.h"
-#include "messagecomposer/messagehelper.h"
+#include "messagecomposer/helper/messagehelper.h"
 
 #include "templateparser/templateparser.h"
 

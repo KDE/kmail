@@ -78,8 +78,8 @@
 #include "messageviewer/utils/kcursorsaver.h"
 #endif
 
-#include "messagecomposer/messagesender.h"
-#include "messagecomposer/messagehelper.h"
+#include "messagecomposer/sender/messagesender.h"
+#include "messagecomposer/helper/messagehelper.h"
 
 #include "templateparser/templateparser.h"
 

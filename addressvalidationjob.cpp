@@ -24,7 +24,7 @@
 #include <messagecomposer/job/aliasesexpandjob.h>
 using MessageComposer::AliasesExpandJob;
 
-#include "messagecomposersettings.h"
+#include "settings/messagecomposersettings.h"
 
 #include <klocale.h>
 #include <kmessagebox.h>

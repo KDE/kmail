@@ -75,8 +75,8 @@
 #include <messagecomposer/part/globalpart.h>
 #include <messagecomposer/part/infopart.h>
 #include <messagecomposer/part/textpart.h>
-#include <messagecomposersettings.h>
-#include <messagecomposer/messagehelper.h>
+#include <settings/messagecomposersettings.h>
+#include <messagecomposer/helper/messagehelper.h>
 #include <messagecomposer/composer/signaturecontroller.h>
 #include <messagecomposer/job/inserttextfilejob.h>
 #include <messagecomposer/composer/composerlineedit.h>

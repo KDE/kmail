@@ -45,7 +45,7 @@
 #include <kaction.h>
 
 #include <QLabel>
-#include "messagecomposer/messagesender.h"
+#include "messagecomposer/sender/messagesender.h"
 
 
 #include "kmmainwin.moc"

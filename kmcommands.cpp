@@ -124,10 +124,10 @@ using MailTransport::TransportManager;
 #include "messagecore/utils/stringutil.h"
 #include "messagecore/helpers/messagehelpers.h"
 
-#include "messagecomposer/messagesender.h"
-#include "messagecomposer/messagehelper.h"
-#include "messagecomposer/messagecomposersettings.h"
-#include "messagecomposer/messagefactory.h"
+#include "messagecomposer/sender/messagesender.h"
+#include "messagecomposer/helper/messagehelper.h"
+#include "messagecomposer/settings/messagecomposersettings.h"
+#include "messagecomposer/helper/messagefactory.h"
 using MessageComposer::MessageFactory;
 
 

@@ -52,8 +52,8 @@ using namespace MessageViewer;
 #include <messagecore/globalsettings.h>
 
 #include "messageviewer/attachmentstrategy.h"
-#include "messagecomposer/messagesender.h"
-#include "messagecomposer/messagefactory.h"
+#include "messagecomposer/sender/messagesender.h"
+#include "messagecomposer/helper/messagefactory.h"
 #include "messagecomposer/composer/composer.h"
 #include "messagecomposer/part/textpart.h"
 #include "messagecomposer/part/infopart.h"

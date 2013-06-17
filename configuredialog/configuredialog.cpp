@@ -78,7 +78,7 @@ using KPIM::RecentAddresses;
 #include "mailcommon/tag/tagwidget.h"
 #include "mailcommon/tag/tag.h"
 
-#include "messagecomposer/messagecomposersettings.h"
+#include "messagecomposer/settings/messagecomposersettings.h"
 #include <soprano/nao.h>
 
 // other kdenetwork headers:

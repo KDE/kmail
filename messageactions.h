@@ -19,7 +19,7 @@
 #ifndef KMAIL_MESSAGEACTIONS_H
 #define KMAIL_MESSAGEACTIONS_H
 
-#include "messagecomposer/messagefactory.h"
+#include "messagecomposer/helper/messagefactory.h"
 #include <KUrl>
 
 #include <qobject.h>
