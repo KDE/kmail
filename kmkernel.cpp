@@ -42,7 +42,7 @@ using KPIM::RecentAddresses;
 using KMail::MailServiceImpl;
 #include "job/jobscheduler.h"
 
-#include "messagecore/globalsettings.h"
+#include "messagecore/settings/globalsettings.h"
 #include "messagelist/core/settings.h"
 #include "messagelist/messagelistutil.h"
 #include "messageviewer/globalsettings.h"

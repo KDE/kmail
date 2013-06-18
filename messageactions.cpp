@@ -28,7 +28,7 @@
 #include "customtemplatesmenu.h"
 
 #include "messagecore/widgets/annotationdialog.h"
-#include "messagecore/globalsettings.h"
+#include "messagecore/settings/globalsettings.h"
 #include "messagecore/mailinglist.h"
 #include "messagecore/helpers/messagehelpers.h"
 #include "messageviewer/csshelper.h"

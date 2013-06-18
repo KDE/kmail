@@ -30,7 +30,7 @@
 
 #include <kio/jobuidelegate.h>
 
-#include "messagecore/globalsettings.h"
+#include "messagecore/settings/globalsettings.h"
 
 #include <KPIMTextEdit/EMailQuoteHighlighter>
 

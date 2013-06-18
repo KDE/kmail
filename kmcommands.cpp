@@ -102,7 +102,7 @@ using MessageViewer::EditorWatcher;
 #include "utils/stringutil.h"
 #include "messageviewer/utils/autoqpointer.h"
 #include "messageviewer/globalsettings.h"
-#include "messagecore/globalsettings.h"
+#include "messagecore/settings/globalsettings.h"
 
 #include <kpimutils/kfileio.h>
 

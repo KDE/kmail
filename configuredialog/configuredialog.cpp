@@ -68,7 +68,7 @@ using KPIM::RecentAddresses;
 #include "messageviewer/header/customheadersettingwidget.h"
 #include "messagelist/core/settings.h"
 #include "messagelist/messagelistutil.h"
-#include "messagecore/globalsettings.h"
+#include "messagecore/settings/globalsettings.h"
 
 #include "templateparser/templatesconfiguration_kfg.h"
 #include "templateparser/templatesconfiguration.h"
