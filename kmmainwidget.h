@@ -620,8 +620,8 @@ private:
     bool mCheckMailInProgress;
     QTimer m_notificationTimer;
 
-    MailCommon::FolderSelectionDialog* mMoveOrCopyToDialog;
-    MailCommon::FolderSelectionDialog* mSelectFromAllFoldersDialog;
+    QPointer<MailCommon::FolderSelectionDialog> mMoveOrCopyToDialog;
+    QPointer<MailCommon::FolderSelectionDialog> mSelectFromAllFoldersDialog;
     KAction *mServerSideSubscription;
     KRecentFilesAction *mOpenRecentAction;
     QPointer<KSieveUi::ManageSieveScriptsDialog> mManageSieveDialog;

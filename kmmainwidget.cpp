@@ -230,9 +230,7 @@ K_GLOBAL_STATIC( KMMainWidget::PtrList, theMainWidgetList )
     mCurrentFolder( 0 ),
     mVacationIndicatorActive( false ),
     mGoToFirstUnreadMessageInSelectedFolder( false ),
-    mCheckMailInProgress( false ),
-    mMoveOrCopyToDialog( 0 ),
-    mSelectFromAllFoldersDialog( 0 )
+    mCheckMailInProgress( false )
 {
   // must be the first line of the constructor:
   mStartupDone = false;
@@ -1932,7 +1930,7 @@ void KMMainWidget::slotDeleteThread( bool confirmDelete )
 
 FolderSelectionDialog* KMMainWidget::moveOrCopyToDialog()
 {
-  if ( mMoveOrCopyToDialog == 0 ) {
+  if ( !mMoveOrCopyToDialog ) {
     FolderSelectionDialog::SelectionFolderOption options = FolderSelectionDialog::HideVirtualFolder;
     mMoveOrCopyToDialog = new FolderSelectionDialog( this, options );
     mMoveOrCopyToDialog->setModal( true );
@@ -1942,7 +1940,7 @@ FolderSelectionDialog* KMMainWidget::moveOrCopyToDialog()
 
 FolderSelectionDialog* KMMainWidget::selectFromAllFoldersDialog()
 {
-  if ( mSelectFromAllFoldersDialog == 0 ) {
+  if ( !mSelectFromAllFoldersDialog ) {
     FolderSelectionDialog::SelectionFolderOptions options = FolderSelectionDialog::None;
     options |= FolderSelectionDialog::NotAllowToCreateNewFolder;
 
@@ -1954,9 +1952,10 @@ FolderSelectionDialog* KMMainWidget::selectFromAllFoldersDialog()
 
 void KMMainWidget::slotMoveSelectedMessageToFolder()
 {
-  moveOrCopyToDialog()->setCaption(  i18n( "Move Messages to Folder" ) );
-  if ( moveOrCopyToDialog()->exec() && moveOrCopyToDialog() ) {
-    const Akonadi::Collection dest = moveOrCopyToDialog()->selectedCollection();
+  QPointer<MailCommon::FolderSelectionDialog> dialog( moveOrCopyToDialog() );
+  dialog->setCaption( i18n( "Move Messages to Folder" ) );
+  if ( dialog->exec() && dialog ) {
+    const Akonadi::Collection dest = dialog->selectedCollection();
     if ( dest.isValid() ) {
       moveSelectedMessagesToFolder( dest );
     }
@@ -2005,10 +2004,11 @@ void KMMainWidget::slotCopyMessagesCompleted( KMCommand *command )
 
 void KMMainWidget::slotCopySelectedMessagesToFolder()
 {
-  moveOrCopyToDialog()->setCaption( i18n( "Copy Messages to Folder" ) );
+  QPointer<MailCommon::FolderSelectionDialog> dialog( moveOrCopyToDialog() );
+  dialog->setCaption( i18n( "Copy Messages to Folder" ) );
 
-  if ( moveOrCopyToDialog()->exec() && moveOrCopyToDialog() ) {
-    const Akonadi::Collection dest = moveOrCopyToDialog()->selectedCollection();
+  if ( dialog->exec() && dialog ) {
+    const Akonadi::Collection dest = dialog->selectedCollection();
     if ( dest.isValid() ) {
       copySelectedMessagesToFolder( dest );
     }
@@ -2307,9 +2307,10 @@ void KMMainWidget::slotUndo()
 //-----------------------------------------------------------------------------
 void KMMainWidget::slotJumpToFolder()
 {
-  selectFromAllFoldersDialog()->setCaption( i18n( "Jump to Folder") );
-  if ( selectFromAllFoldersDialog()->exec() && selectFromAllFoldersDialog() ) {
-    Akonadi::Collection collection = selectFromAllFoldersDialog()->selectedCollection();
+  QPointer<MailCommon::FolderSelectionDialog> dialog( selectFromAllFoldersDialog() );
+  dialog->setCaption( i18n( "Jump to Folder") );
+  if ( dialog->exec() && dialog ) {
+    Akonadi::Collection collection = dialog->selectedCollection();
     if ( collection.isValid() ) {
       slotSelectCollectionFolder( collection );
     }
@@ -3723,9 +3724,10 @@ void KMMainWidget::slotAddFavoriteFolder()
 {
   if (!mFavoritesModel)
     return;
-  selectFromAllFoldersDialog()->setCaption( i18n("Add Favorite Folder") );
-  if ( selectFromAllFoldersDialog()->exec() && selectFromAllFoldersDialog() ) {
-    const Akonadi::Collection collection = selectFromAllFoldersDialog()->selectedCollection();
+  QPointer<MailCommon::FolderSelectionDialog> dialog( selectFromAllFoldersDialog() );
+  dialog->setCaption( i18n("Add Favorite Folder") );
+  if ( dialog->exec() && dialog ) {
+    const Akonadi::Collection collection = dialog->selectedCollection();
     if ( collection.isValid() ) {
       mFavoritesModel->addCollection( collection );
     }
