@@ -87,7 +87,7 @@
 #include "messageviewer/objecttreeparser.h"
 #include "messageviewer/csshelper.h"
 #include "messageviewer/utils/util.h"
-#include "messageviewer/mailsourceviewer.h"
+#include "messageviewer/viewer/mailsourceviewer.h"
 #include "messageviewer/viewer/viewer.h"
 #include "messageviewer/header/headerstrategy.h"
 #include "messageviewer/header/headerstyle.h"
