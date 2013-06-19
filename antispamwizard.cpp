@@ -51,7 +51,6 @@
 
 #include <Akonadi/AgentInstance>
 
-#include <kaction.h>
 #include <kdebug.h>
 #include <kdialog.h>
 #include <kiconloader.h>
