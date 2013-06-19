@@ -61,14 +61,14 @@
 #include "kleo/cryptobackendfactory.h"
 #include "kleo/exportjob.h"
 #include "kleo/specialjob.h"
-#include <messageviewer/objecttreeemptysource.h>
+#include <messageviewer/viewer/objecttreeemptysource.h>
 
 #ifndef QT_NO_CURSOR
 #include <messageviewer/utils/kcursorsaver.h>
 #endif
 
-#include <messageviewer/objecttreeparser.h>
-#include <messageviewer/nodehelper.h>
+#include <messageviewer/viewer/objecttreeparser.h>
+#include <messageviewer/viewer/nodehelper.h>
 #include "messageviewer/chiasmuskeyselector.h"
 #include <messageviewer/globalsettings.h>
 #include <messagecomposer/composer/composer.h>

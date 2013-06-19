@@ -61,7 +61,7 @@ using KPIM::RecentAddresses;
 #include "messagecomposer/imagescaling/imagescalingwidget.h"
 
 #include "messageviewer/utils/autoqpointer.h"
-#include "messageviewer/nodehelper.h"
+#include "messageviewer/viewer/nodehelper.h"
 #include "messageviewer/widgets/configurewidget.h"
 #include "messageviewer/globalsettings.h"
 #include "messageviewer/widgets/invitationsettings.h"

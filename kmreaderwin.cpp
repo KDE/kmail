@@ -37,7 +37,7 @@
 #include <QVBoxLayout>
 #include "messageviewer/header/headerstrategy.h"
 #include "messageviewer/header/headerstyle.h"
-#include "messageviewer/mailwebview.h"
+#include "messageviewer/viewer/mailwebview.h"
 #include "messageviewer/markmessagereadhandler.h"
 #include "messageviewer/globalsettings.h"
 #include "messageviewer/csshelper.h"
@@ -51,7 +51,7 @@ using MessageViewer::CSSHelper;
 using namespace MessageViewer;
 #include <messagecore/settings/globalsettings.h>
 
-#include "messageviewer/attachmentstrategy.h"
+#include "messageviewer/viewer/attachmentstrategy.h"
 #include "messagecomposer/sender/messagesender.h"
 #include "messagecomposer/helper/messagefactory.h"
 #include "messagecomposer/composer/composer.h"

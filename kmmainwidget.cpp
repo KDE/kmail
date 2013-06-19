@@ -71,7 +71,7 @@
 #include "messageviewer/utils/autoqpointer.h"
 #include "messageviewer/globalsettings.h"
 #include "messageviewer/viewer/viewer.h"
-#include "messageviewer/attachmentstrategy.h"
+#include "messageviewer/viewer/attachmentstrategy.h"
 #include "messageviewer/header/headerstrategy.h"
 #include "messageviewer/header/headerstyle.h"
 #ifndef QT_NO_CURSOR
