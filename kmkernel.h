@@ -17,7 +17,7 @@
 #include "globalsettings.h"
 #include <kcomponentdata.h>
 #include <akonadi/servermanager.h>
-#include "messageviewer/viewer.h"
+#include "messageviewer/viewer/viewer.h"
 
 #define kmkernel KMKernel::self()
 #define kmconfig KMKernel::config()

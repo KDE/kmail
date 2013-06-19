@@ -47,7 +47,7 @@ using MessageViewer::CSSHelper;
 
 #include <kmime/kmime_mdn.h>
 
-#include "messageviewer/viewer.h"
+#include "messageviewer/viewer/viewer.h"
 using namespace MessageViewer;
 #include <messagecore/settings/globalsettings.h>
 

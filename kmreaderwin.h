@@ -22,7 +22,7 @@
 
 #include <QWidget>
 #include <kurl.h>
-#include <messageviewer/viewer.h>
+#include <messageviewer/viewer/viewer.h>
 #include <messageviewer/interfaces/bodypart.h>
 #include <Akonadi/Item>
 class KActionCollection;

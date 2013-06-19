@@ -70,7 +70,7 @@
 
 #include "messageviewer/utils/autoqpointer.h"
 #include "messageviewer/globalsettings.h"
-#include "messageviewer/viewer.h"
+#include "messageviewer/viewer/viewer.h"
 #include "messageviewer/attachmentstrategy.h"
 #include "messageviewer/headerstrategy.h"
 #include "messageviewer/headerstyle.h"

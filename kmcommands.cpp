@@ -88,7 +88,7 @@
 #include "messageviewer/csshelper.h"
 #include "messageviewer/utils/util.h"
 #include "messageviewer/mailsourceviewer.h"
-#include "messageviewer/viewer.h"
+#include "messageviewer/viewer/viewer.h"
 #include "messageviewer/headerstrategy.h"
 #include "messageviewer/headerstyle.h"
 #include "kmreadermainwin.h"

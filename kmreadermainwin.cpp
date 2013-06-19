@@ -59,7 +59,7 @@
 #include <kpimutils/email.h>
 #include <kmime/kmime_message.h>
 
-#include <messageviewer/viewer.h>
+#include <messageviewer/viewer/viewer.h>
 #include <akonadi/item.h>
 #include <akonadi/itemcopyjob.h>
 #include <akonadi/itemcreatejob.h>
