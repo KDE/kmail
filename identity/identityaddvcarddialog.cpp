@@ -78,6 +78,7 @@ IdentityAddVcardDialog::IdentityAddVcardDialog(KPIMIdentities::IdentityManager *
              label, SLOT(setEnabled(bool)) );
     connect( radio, SIGNAL(toggled(bool)),
              mComboBox, SLOT(setEnabled(bool)) );
+    resize(350, 130);
 }
 
 IdentityAddVcardDialog::~IdentityAddVcardDialog()
