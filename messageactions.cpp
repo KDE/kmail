@@ -31,8 +31,8 @@
 #include "messagecore/settings/globalsettings.h"
 #include "messagecore/misc/mailinglist.h"
 #include "messagecore/helpers/messagehelpers.h"
-#include "messageviewer/csshelper.h"
-#include "messageviewer/globalsettings.h"
+#include "messageviewer/viewer/csshelper.h"
+#include "messageviewer/settings/globalsettings.h"
 
 #include <Nepomuk2/Resource>
 

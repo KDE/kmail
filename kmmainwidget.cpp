@@ -69,7 +69,7 @@
 #include "kdepim-version.h"
 
 #include "messageviewer/utils/autoqpointer.h"
-#include "messageviewer/globalsettings.h"
+#include "messageviewer/settings/globalsettings.h"
 #include "messageviewer/viewer/viewer.h"
 #include "messageviewer/viewer/attachmentstrategy.h"
 #include "messageviewer/header/headerstrategy.h"

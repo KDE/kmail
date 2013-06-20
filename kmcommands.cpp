@@ -85,7 +85,7 @@
 #include "messageviewer/utils/kcursorsaver.h"
 #endif
 #include "messageviewer/viewer/objecttreeparser.h"
-#include "messageviewer/csshelper.h"
+#include "messageviewer/viewer/csshelper.h"
 #include "messageviewer/utils/util.h"
 #include "messageviewer/viewer/mailsourceviewer.h"
 #include "messageviewer/viewer/viewer.h"
@@ -99,7 +99,7 @@ using KMail::SecondaryWindow;
 #include "globalsettings.h"
 #include "utils/stringutil.h"
 #include "messageviewer/utils/autoqpointer.h"
-#include "messageviewer/globalsettings.h"
+#include "messageviewer/settings/globalsettings.h"
 #include "messagecore/settings/globalsettings.h"
 
 #include <kpimutils/kfileio.h>
