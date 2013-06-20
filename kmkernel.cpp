@@ -176,13 +176,13 @@ KMKernel::KMKernel (QObject *parent, const char *name) :
   }
   // until here ================================================
 
-  mFolderCollectionMonitor = new FolderCollectionMonitor( this );
+  Akonadi::Session *session = new Akonadi::Session( "KMail Kernel ETM", this );
+
+  mFolderCollectionMonitor = new FolderCollectionMonitor( session, this );
 
   connect( mFolderCollectionMonitor->monitor(), SIGNAL(collectionMoved(Akonadi::Collection,Akonadi::Collection,Akonadi::Collection)), SLOT(slotCollectionMoved(Akonadi::Collection,Akonadi::Collection,Akonadi::Collection)) );
   connect( mFolderCollectionMonitor->monitor(), SIGNAL(collectionRemoved(Akonadi::Collection)), SLOT(slotCollectionRemoved(Akonadi::Collection)));
 
-  Akonadi::Session *session = new Akonadi::Session( "KMail Kernel ETM", this );
-  folderCollectionMonitor()->setSession( session );
   mEntityTreeModel = new Akonadi::EntityTreeModel( folderCollectionMonitor(), this );
   mEntityTreeModel->setIncludeUnsubscribed( false );
   mEntityTreeModel->setItemPopulationStrategy( Akonadi::EntityTreeModel::LazyPopulation );

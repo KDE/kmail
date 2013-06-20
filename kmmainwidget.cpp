@@ -1339,11 +1339,13 @@ void KMMainWidget::slotCollectionChanged( const Akonadi::Collection&collection, 
 
 void KMMainWidget::slotItemAdded( const Akonadi::Item &msg, const Akonadi::Collection &col )
 {
+
   if ( col.isValid() ) {
     if ( col == CommonKernel->outboxCollectionFolder() ) {
       startUpdateMessageActionsTimer();
     } else {
       if ( !CommonKernel->folderIsSentMailFolder(col ) ) {
+          qDebug()<<" KMMainWidget::slotItemAdded col:"<<col.id()<<" msg.id"<<msg.id();
           addInfoInNotification( col,msg.id() );
       }
     }
@@ -1353,6 +1355,7 @@ void KMMainWidget::slotItemAdded( const Akonadi::Item &msg, const Akonadi::Colle
 void KMMainWidget::slotItemRemoved( const Akonadi::Item & item)
 {
   if ( item.isValid() && item.parentCollection().isValid() && ( item.parentCollection() == CommonKernel->outboxCollectionFolder() ) ) {
+      qDebug()<<" KMMainWidget::slotItemRemoved: msg.id"<<item.id();
     startUpdateMessageActionsTimer();
   }
 }
@@ -1360,11 +1363,10 @@ void KMMainWidget::slotItemRemoved( const Akonadi::Item & item)
 void KMMainWidget::slotItemMoved( Akonadi::Item item, Akonadi::Collection from, Akonadi::Collection to )
 {
   if ( item.isValid() && ( ( from.id() == CommonKernel->outboxCollectionFolder().id() )
-                          || to.id() == CommonKernel->outboxCollectionFolder().id() ) )
-  {
+                          || to.id() == CommonKernel->outboxCollectionFolder().id() ) ) {
     startUpdateMessageActionsTimer();
-  }
-  else{
+  } else {
+      qDebug()<<" KMMainWidget::slotItemMoved( Akonadi::Item item, Akonadi::Collection from, Akonadi::Collection to ) from !"<<from.id()<<" to:"<<to.id()<<" item :"<<item.id();
     updateInfoInNotification( from, to, item.id() );
   }
 }
