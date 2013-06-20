@@ -104,7 +104,7 @@ void KMKnotify::initCombobox()
     lstNotify<< QLatin1String( "akonadi_archivemail_agent/akonadi_archivemail_agent.notifyrc" );
     lstNotify<< QLatin1String( "akonadi_nepomuk_feeder/akonadi_nepomuk_feeder.notifyrc" );
     lstNotify<< QLatin1String( "akonadi_sendlater_agent/akonadi_sendlater_agent.notifyrc" );
-    lstNotify<< QLatin1String( "akonadi_newmailnotify_agent/akonadi_newmailnotify_agent.notifyrc");
+    lstNotify<< QLatin1String( "akonadi_newmailnotifier_agent/akonadi_newmailnotifier_agent.notifyrc");
     //TODO add other notifyrc here if necessary
 
     Q_FOREACH ( const QString& notify, lstNotify ) {
