@@ -19,12 +19,14 @@
 
 #include <kpimidentities/identitymanager.h>
 
+#include <KComboBox>
+#include <KLocale>
+#include <KSeparator>
+
+#include <QButtonGroup>
 #include <QVBoxLayout>
 #include <QRadioButton>
 #include <QLabel>
-#include <KComboBox>
-#include <KLocale>
-#include <QButtonGroup>
 
 
 IdentityAddVcardDialog::IdentityAddVcardDialog(KPIMIdentities::IdentityManager *manager, QWidget *parent)
@@ -67,6 +69,7 @@ IdentityAddVcardDialog::IdentityAddVcardDialog(KPIMIdentities::IdentityManager *
     hlay->addWidget( label );
     hlay->addWidget( mComboBox, 1 );
 
+    vlay->addWidget(new KSeparator);
     vlay->addStretch( 1 ); // spacer
 
     // enable/disable combobox and label depending on the third radio
@@ -75,7 +78,6 @@ IdentityAddVcardDialog::IdentityAddVcardDialog(KPIMIdentities::IdentityManager *
              label, SLOT(setEnabled(bool)) );
     connect( radio, SIGNAL(toggled(bool)),
              mComboBox, SLOT(setEnabled(bool)) );
-
 }
 
 IdentityAddVcardDialog::~IdentityAddVcardDialog()
