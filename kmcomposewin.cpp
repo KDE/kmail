@@ -69,7 +69,7 @@
 
 #include <messageviewer/viewer/objecttreeparser.h>
 #include <messageviewer/viewer/nodehelper.h>
-#include "messageviewer/chiasmuskeyselector.h"
+//#include "messageviewer/chiasmuskeyselector.h"
 #include <messageviewer/globalsettings.h>
 #include <messagecomposer/composer/composer.h>
 #include <messagecomposer/part/globalpart.h>

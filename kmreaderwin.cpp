@@ -38,7 +38,7 @@
 #include "messageviewer/header/headerstrategy.h"
 #include "messageviewer/header/headerstyle.h"
 #include "messageviewer/viewer/mailwebview.h"
-#include "messageviewer/markmessagereadhandler.h"
+#include "messageviewer/utils/markmessagereadhandler.h"
 #include "messageviewer/globalsettings.h"
 #include "messageviewer/csshelper.h"
 using MessageViewer::CSSHelper;
