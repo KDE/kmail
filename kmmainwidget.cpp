@@ -1355,7 +1355,6 @@ void KMMainWidget::slotItemAdded( const Akonadi::Item &msg, const Akonadi::Colle
 void KMMainWidget::slotItemRemoved( const Akonadi::Item & item)
 {
   if ( item.isValid() && item.parentCollection().isValid() && ( item.parentCollection() == CommonKernel->outboxCollectionFolder() ) ) {
-      qDebug()<<" KMMainWidget::slotItemRemoved: msg.id"<<item.id();
     startUpdateMessageActionsTimer();
   }
 }
