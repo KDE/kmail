@@ -1360,13 +1360,12 @@ void KMMainWidget::slotItemRemoved( const Akonadi::Item & item)
   }
 }
 
-void KMMainWidget::slotItemMoved( Akonadi::Item item, Akonadi::Collection from, Akonadi::Collection to )
+void KMMainWidget::slotItemMoved( const Akonadi::Item &item, const Akonadi::Collection &from, const Akonadi::Collection &to )
 {
   if ( item.isValid() && ( ( from.id() == CommonKernel->outboxCollectionFolder().id() )
                           || to.id() == CommonKernel->outboxCollectionFolder().id() ) ) {
     startUpdateMessageActionsTimer();
   } else {
-      qDebug()<<" KMMainWidget::slotItemMoved( Akonadi::Item item, Akonadi::Collection from, Akonadi::Collection to ) from !"<<from.id()<<" to:"<<to.id()<<" item :"<<item.id();
     updateInfoInNotification( from, to, item.id() );
   }
 }

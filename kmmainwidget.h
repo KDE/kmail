@@ -419,7 +419,7 @@ class KMAIL_EXPORT KMMainWidget : public QWidget
     void slotShowExpiryProperties();
     void slotItemAdded( const Akonadi::Item &, const Akonadi::Collection& col);
     void slotItemRemoved( const Akonadi::Item & );
-    void slotItemMoved( Akonadi::Item item, Akonadi::Collection from, Akonadi::Collection to );
+    void slotItemMoved( const Akonadi::Item &item, const Akonadi::Collection &from, const Akonadi::Collection &to );
     void slotCollectionStatisticsChanged( const Akonadi::Collection::Id, const Akonadi::CollectionStatistics& );
 
     void slotAkonadiStandardActionUpdated();
