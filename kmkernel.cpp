@@ -1793,7 +1793,7 @@ void KMKernel::instanceStatusChanged( const Akonadi::AgentInstance &instance )
   }
 }
 
-void KMKernel::agentInstanceBroken( const Akonadi::AgentInstance& instance )
+void KMKernel::agentInstanceBroken( const Akonadi::AgentInstance &instance )
 {
   const QString summary = i18n( "Resource %1 is broken. This resource is now %2",  instance.name(), instance.isOnline() ? i18n( "online" ) : i18n( "offline" ) );
   if( xmlGuiInstance().isValid() ) {
@@ -1813,7 +1813,7 @@ void KMKernel::agentInstanceBroken( const Akonadi::AgentInstance& instance )
 
 }
 
-void KMKernel::slotProgressItemCompletedOrCanceled( KPIM::ProgressItem * item )
+void KMKernel::slotProgressItemCompletedOrCanceled( KPIM::ProgressItem *item )
 {
   const QString identifier = item->property( "AgentIdentifier" ).toString();
   const Akonadi::AgentInstance agent = Akonadi::AgentManager::self()->instance( identifier );
@@ -1855,7 +1855,7 @@ void KMKernel::stopAgentInstance()
   }
 }
 
-void KMKernel::slotCollectionRemoved(const Akonadi::Collection& col)
+void KMKernel::slotCollectionRemoved(const Akonadi::Collection &col)
 {
   KConfigGroup group( KMKernel::config(), MailCommon::FolderCollection::configGroupName( col ) );
   group.deleteGroup();
@@ -1923,7 +1923,7 @@ void KMKernel::createFilter(const QByteArray& field, const QString& value)
 }
 
 
-void KMKernel::checkFolderFromResources( const Akonadi::Collection::List& collectionList )
+void KMKernel::checkFolderFromResources( const Akonadi::Collection::List &collectionList )
 {
   const Akonadi::AgentInstance::List lst = MailCommon::Util::agentInstances();
   foreach( const Akonadi::AgentInstance& type, lst ) {
@@ -1970,7 +1970,7 @@ const QAbstractItemModel* KMKernel::treeviewModelSelection()
     return entityTreeModel();
 }
 
-void KMKernel::slotInstanceWarning(const Akonadi::AgentInstance&instance , const QString& message)
+void KMKernel::slotInstanceWarning(const Akonadi::AgentInstance &instance , const QString &message)
 {
   const QString summary = i18nc( "<source>: <error message>", "%1: %2", instance.name(), message );
   if( xmlGuiInstance().isValid() ) {
@@ -1989,7 +1989,7 @@ void KMKernel::slotInstanceWarning(const Akonadi::AgentInstance&instance , const
   }
 }
 
-void KMKernel::slotInstanceError(const Akonadi::AgentInstance& instance, const QString & message)
+void KMKernel::slotInstanceError(const Akonadi::AgentInstance &instance, const QString &message)
 {
   const QString summary = i18nc( "<source>: <error message>", "%1: %2", instance.name(), message );
   if( xmlGuiInstance().isValid() ) {
