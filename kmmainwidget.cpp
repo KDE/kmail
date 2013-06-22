@@ -617,11 +617,7 @@ void KMMainWidget::folderSelected( const Akonadi::Collection & col )
 
   mCurrentFolder = FolderCollection::forCollection( col );
 
-  if ( col.isValid() && folderIsAnImap
-#if 0 //PORT TO AKONADI
-       && ( !mMessageListView->isFolderOpen( mFolder ) )
-#endif
-       ) {
+  if ( col.isValid() && folderIsAnImap ) {
     if ( !isImapResourceOnline )
     {
         //mMessageListView->setCurrentFolder( 0 ); <-- useless in the new view: just do nothing
