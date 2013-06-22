@@ -1734,7 +1734,7 @@ void KMKernel::itemDispatchStarted()
       true );
 }
 
-void KMKernel::instanceStatusChanged( Akonadi::AgentInstance instance )
+void KMKernel::instanceStatusChanged( const Akonadi::AgentInstance &instance )
 {
   if (instance.identifier() == QLatin1String( "akonadi_mailfilter_agent" ) ) {
      // Creating a progress item twice is ok, it will simply return the already existing
