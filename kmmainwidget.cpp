@@ -434,91 +434,11 @@ void KMMainWidget::showNotifications()
   if ( !kmkernel->isOffline() && ( sendOnAll || (sendOnManual /*&& sendOnCheck*/ ) ) ) {
     slotSendQueued();
   }
-  if (  mCheckMail.isEmpty() )
-    return;
-
-  Akonadi::Collection::List collections;
-  QMap<Akonadi::Collection::Id, QList<Akonadi::Item::Id> >::const_iterator it = mCheckMail.constBegin();
-  QMap<Akonadi::Collection::Id, QList<Akonadi::Item::Id> >::const_iterator end = mCheckMail.constEnd();
-  while ( it != end ) {
-    Akonadi::Collection collection( it.key() );
-    if ( !it.value().isEmpty() )
-      collections << collection;
-    ++it;
-  }
-  if ( collections.isEmpty() )
-    return;
-
-  Akonadi::CollectionFetchJob *job = new Akonadi::CollectionFetchJob( collections, Akonadi::CollectionFetchJob::Base );
-  connect( job, SIGNAL(finished(KJob*)), this, SLOT(slotEndCheckFetchCollectionsDone(KJob*)) );
-}
-
-void KMMainWidget::slotEndCheckFetchCollectionsDone(KJob* job)
-{
-
-  // build summary for new mail message
-  bool showNotification = false;
-  QString summary;
-
-  if ( job && !job->error() ) {
-
-    Akonadi::CollectionFetchJob *colJob = static_cast<Akonadi::CollectionFetchJob *>(job);
-    Akonadi::Collection::List collections = colJob->collections();
-
-
-    Q_FOREACH( const Akonadi::Collection& collection, collections ) {
-      const QSharedPointer<FolderCollection> fd = FolderCollection::forCollection( collection,false );
-
-      if ( fd && !fd->ignoreNewMail() ) {
-        showNotification = true;
-        if ( GlobalSettings::self()->verboseNewMailNotification() ) {
-          const QString folderPath( MailCommon::Util::fullCollectionPath( collection ) );
-          const int numberOfMails = mCheckMail[ collection.id() ].count();
-          summary += "<br />" + i18np( "1 new message in %2",
-                                      "%1 new messages in %2",
-                                      numberOfMails, folderPath );
-        } else {
-          break;
-        }
-      }
-    }
-  }
-
   // update folder menus in case some mail got filtered to trash/current folder
   // and we can enable "empty trash/move all to trash" action etc.
   updateFolderMenu();
 
-  if ( !showNotification ) {
-    mCheckMail.clear();
-    return;
-  }
 
-  if ( GlobalSettings::self()->verboseNewMailNotification() ) {
-    summary = i18nc( "%1 is a list of the number of new messages per folder",
-                     "<b>New mail arrived</b><br />%1",
-                     summary );
-  } else {
-    summary = i18n( "New mail arrived" );
-  }
-
-  if ( kmkernel->xmlGuiInstance().isValid() ) {
-    KNotification::event( "new-mail-arrived",
-                          summary,
-                          QPixmap(),
-                          window(),
-                          KNotification::CloseOnTimeout,
-                          kmkernel->xmlGuiInstance() );
-  } else {
-    KNotification::event( "new-mail-arrived",
-                          summary,
-                          QPixmap(),
-                          window(),
-                          KNotification::CloseOnTimeout );
-  }
-
-  if ( GlobalSettings::self()->beepOnMail() ) {
-    KNotification::beep();
-  }
   mCheckMail.clear();
 }
 

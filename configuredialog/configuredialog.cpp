@@ -482,8 +482,10 @@ AccountsPageReceivingTab::AccountsPageReceivingTab( QWidget * parent )
   connect( mAccountsReceiving.mBeepNewMailCheck, SIGNAL(stateChanged(int)),
            this, SLOT(slotEmitChanged()) );
 
+  /*
   mAccountsReceiving.mVerboseNotificationCheck->setWhatsThis(
   GlobalSettings::self()->verboseNewMailNotificationItem()->whatsThis() );
+  */
   connect( mAccountsReceiving.mVerboseNotificationCheck, SIGNAL(stateChanged(int)),
            this, SLOT(slotEmitChanged()) );
 
@@ -674,19 +676,19 @@ void AccountsPage::ReceivingTab::slotEditNotifications()
 
 void AccountsPage::ReceivingTab::doLoadFromGlobalSettings()
 {
-  mAccountsReceiving.mVerboseNotificationCheck->setChecked( GlobalSettings::self()->verboseNewMailNotification() );
+  //mAccountsReceiving.mVerboseNotificationCheck->setChecked( GlobalSettings::self()->verboseNewMailNotification() );
 }
 
 void AccountsPage::ReceivingTab::doLoadOther()
 {
-  mAccountsReceiving.mBeepNewMailCheck->setChecked( GlobalSettings::self()->beepOnMail() );
+  //mAccountsReceiving.mBeepNewMailCheck->setChecked( GlobalSettings::self()->beepOnMail() );
 }
 
 void AccountsPage::ReceivingTab::save()
 {
   // Save Mail notification settings
-  GlobalSettings::self()->setBeepOnMail( mAccountsReceiving.mBeepNewMailCheck->isChecked() );
-  GlobalSettings::self()->setVerboseNewMailNotification( mAccountsReceiving.mVerboseNotificationCheck->isChecked() );
+  //GlobalSettings::self()->setBeepOnMail( mAccountsReceiving.mBeepNewMailCheck->isChecked() );
+  //GlobalSettings::self()->setVerboseNewMailNotification( mAccountsReceiving.mVerboseNotificationCheck->isChecked() );
 
   const QString resourceGroupPattern( "Resource %1" );
   QHashIterator<QString, QSharedPointer<RetrievalOptions> > it( mRetrievalHash );

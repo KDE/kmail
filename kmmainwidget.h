@@ -249,7 +249,6 @@ class KMAIL_EXPORT KMMainWidget : public QWidget
 
     void slotStartCheckMail();
     void slotEndCheckMail();
-    void slotEndCheckFetchCollectionsDone(KJob* job);
 
     void slotCollectionProperties();
     void slotRemoveDuplicates();
