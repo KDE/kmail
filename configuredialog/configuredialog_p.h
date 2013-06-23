@@ -48,6 +48,7 @@ class KTabWidget;
 class ListView;
 class ConfigureDialog;
 class KIntSpinBox;
+class OrgFreedesktopAkonadiNewMailNotifierInterface;
 namespace PimCommon {
   class SimpleStringListEditor;
 }
@@ -221,6 +222,7 @@ private:
 private:
   QString mSpecialMailCollectionIdentifier;
   Ui_AccountsPageReceivingTab mAccountsReceiving;
+  OrgFreedesktopAkonadiNewMailNotifierInterface *mNewMailNotifierInterface;
 };
 
 class KMAIL_EXPORT AccountsPage : public ConfigModuleWithTabs {
