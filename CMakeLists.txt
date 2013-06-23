@@ -150,6 +150,10 @@ if (NOT WINCE AND KDEPIM_BUILD_DESKTOP)
     ${CMAKE_SOURCE_DIR}/sendlateragent/org.freedesktop.Akonadi.SendLaterAgent.xml
   )
 
+  qt4_add_dbus_interfaces(kmailprivate_LIB_SRCS
+    ${CMAKE_SOURCE_DIR}/kmail/org.freedesktop.Akonadi.NewMailNotifier.xml
+  )
+
 
 
   kde4_add_ui_files(kmailprivate_LIB_SRCS

@@ -1,0 +1,24 @@
+<!DOCTYPE node PUBLIC "-//freedesktop//DTD D-BUS Object Introspection 1.0//EN" "http://www.freedesktop.org/standards/dbus/1.0/introspect.dtd">
+<node>
+  <interface name="org.freedesktop.Akonadi.NewMailNotifier">
+    <method name="setEnableNotifier" >
+      <arg type="b" direction="in"/>
+    </method>
+    <method name="enabledNotifier" >
+      <arg type="b" direction="out"/>
+    </method>
+    <method name="setVerboseMailNotification" >
+      <arg type="b" direction="in"/>
+    </method>
+    <method name="verboseMailNotification" >
+      <arg type="b" direction="out"/>
+    </method>
+    <method name="setBeepOnNewMails" >
+      <arg type="b" direction="in"/>
+    </method>
+    <method name="beepOnNewMails" >
+      <arg type="b" direction="out"/>
+    </method>
+    <method name="printDebug" />
+  </interface>
+</node>

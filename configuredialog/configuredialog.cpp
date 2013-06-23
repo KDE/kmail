@@ -49,6 +49,8 @@
 
 #include "kmknotify.h"
 
+#include "newmailnotifierinterface.h"
+
 #include "addressline/recentaddresses.h"
 using KPIM::RecentAddresses;
 #include "addressline/completionordereditor.h"
