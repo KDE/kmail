@@ -424,7 +424,7 @@ class KMAIL_EXPORT KMMainWidget : public QWidget
     void slotAkonadiStandardActionUpdated();
     void slotCollectionChanged( const Akonadi::Collection&, const QSet<QByteArray>& );
     void slotCreateNewTab( bool );
-    void slotShowNotification();
+    void slotUpdateActionsAfterMailChecking();
     void slotConfigureAutomaticArchiving();
     void slotExportData();
     void slotCreateAddressBookContact();
@@ -440,7 +440,7 @@ class KMAIL_EXPORT KMMainWidget : public QWidget
 
     void updateAllToTrashAction(int statistics);
 
-    void showNotifications();
+    void updateActionsAfterMailChecking();
 
     /** Get override character encoding. */
     QString overrideEncoding() const;
