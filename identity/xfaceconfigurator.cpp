@@ -200,23 +200,28 @@ namespace KMail {
     connect(mTextEdit, SIGNAL(textChanged()), this, SLOT(slotUpdateXFace()));
   }
 
-  XFaceConfigurator::~XFaceConfigurator() {
+  XFaceConfigurator::~XFaceConfigurator()
+  {
 
   }
 
-  bool XFaceConfigurator::isXFaceEnabled() const {
+  bool XFaceConfigurator::isXFaceEnabled() const
+  {
     return mEnableCheck->isChecked();
   }
 
-  void XFaceConfigurator::setXFaceEnabled( bool enable ) {
+  void XFaceConfigurator::setXFaceEnabled( bool enable )
+  {
     mEnableCheck->setChecked( enable );
   }
 
-  QString XFaceConfigurator::xface() const {
+  QString XFaceConfigurator::xface() const
+  {
     return mTextEdit->toPlainText();
   }
 
-  void XFaceConfigurator::setXFace( const QString & text ) {
+  void XFaceConfigurator::setXFace( const QString & text )
+  {
     mTextEdit->setText( text );
   }
 
@@ -291,9 +296,8 @@ namespace KMail {
     QString str = mTextEdit->toPlainText();
 
     if ( !str.isEmpty() ) {
-      if ( str.startsWith( QLatin1String("x-face:"), Qt::CaseInsensitive ) )
-      {
-        str = str.remove( "x-face:", Qt::CaseInsensitive );
+      if ( str.startsWith( QLatin1String("x-face:"), Qt::CaseInsensitive ) ) {
+        str = str.remove( QLatin1String("x-face:"), Qt::CaseInsensitive );
         mTextEdit->setText(str);
       }
       KXFace xf;

@@ -53,8 +53,8 @@ signals:
     void selectCollectionFolder( const Akonadi::Collection & col );
 
 private:
-    QWidget *mMainWidget;
     Akonadi::Collection mCollectionFolder;
+    QWidget *mMainWidget;
     QAction *mAction;
 };
 

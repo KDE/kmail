@@ -68,11 +68,10 @@ private: // methods
     void updateButtons();
 
 private: // data members
+    Ui_IdentityPage mIPage;
     KMail::IdentityDialog   *mIdentityDialog;
     int                      mOldNumberOfIdentities;
     KPIMIdentities::IdentityManager *mIdentityManager;
-
-    Ui_IdentityPage mIPage;
 };
 
 }

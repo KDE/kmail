@@ -70,7 +70,7 @@ KMSystemTray::KMSystemTray(QObject *parent)
     setToolTipTitle( i18n("KMail") );
     setToolTipIconByName( "kmail" );
     setIconByName( "kmail" );
-    mIcon = KIcon( "mail-unread-new" );
+    mIcon = KIcon( QLatin1String("mail-unread-new") );
 
     KMMainWidget * mainWidget = kmkernel->getKMMainWidget();
     if ( mainWidget ) {

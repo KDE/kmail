@@ -37,8 +37,8 @@ using namespace MailCommon;
 FolderShortcutCommand::FolderShortcutCommand( QWidget *mainwidget,
                                               const Akonadi::Collection&col  )
     : QObject( mainwidget ),
-      mMainWidget( mainwidget ),
       mCollectionFolder( col ),
+      mMainWidget( mainwidget ),
       mAction( 0 )
 {
     connect( this, SIGNAL(selectCollectionFolder(Akonadi::Collection)), mMainWidget, SLOT(slotSelectCollectionFolder(Akonadi::Collection)));
