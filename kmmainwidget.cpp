@@ -437,9 +437,6 @@ void KMMainWidget::showNotifications()
   // update folder menus in case some mail got filtered to trash/current folder
   // and we can enable "empty trash/move all to trash" action etc.
   updateFolderMenu();
-
-
-  mCheckMail.clear();
 }
 
 void KMMainWidget::slotCollectionFetched( int collectionId )
@@ -1259,11 +1256,6 @@ void KMMainWidget::slotItemAdded( const Akonadi::Item &msg, const Akonadi::Colle
   if ( col.isValid() ) {
     if ( col == CommonKernel->outboxCollectionFolder() ) {
       startUpdateMessageActionsTimer();
-    } else {
-      if ( !CommonKernel->folderIsSentMailFolder(col ) ) {
-          qDebug()<<" KMMainWidget::slotItemAdded col:"<<col.id()<<" msg.id"<<msg.id();
-          addInfoInNotification( col,msg.id() );
-      }
     }
   }
 }
@@ -1280,26 +1272,6 @@ void KMMainWidget::slotItemMoved( const Akonadi::Item &item, const Akonadi::Coll
   if ( item.isValid() && ( ( from.id() == CommonKernel->outboxCollectionFolder().id() )
                           || to.id() == CommonKernel->outboxCollectionFolder().id() ) ) {
     startUpdateMessageActionsTimer();
-  } else {
-    updateInfoInNotification( from, to, item.id() );
-  }
-}
-
-void KMMainWidget::updateInfoInNotification( const Akonadi::Collection& from, const Akonadi::Collection& to, Akonadi::Item::Id id )
-{
-  if ( mCheckMail.contains( from.id() ) ) {
-    QList<Akonadi::Item::Id> idListFrom = mCheckMail[ from.id() ];
-    if ( idListFrom.contains( id ) ) {
-      idListFrom.removeAll( id );
-      mCheckMail[ from.id() ] = idListFrom;
-      if ( mCheckMail[from.id()].isEmpty() )
-        mCheckMail.remove( from.id() );
-    }
-    if ( !excludeSpecialFolder( to ) ) {
-      QList<Akonadi::Item::Id> idListTo = mCheckMail[ to.id() ];
-      idListTo.append( id );
-      mCheckMail[ to.id() ]=idListTo;
-    }
   }
 }
 
@@ -1312,13 +1284,6 @@ bool KMMainWidget::excludeSpecialFolder( const Akonadi::Collection &collection )
        CommonKernel->draftsCollectionFolder() == collection )
     return true;
   return false;
-}
-
-void KMMainWidget::addInfoInNotification( const Akonadi::Collection &collection, Akonadi::Item::Id id)
-{
-  if ( excludeSpecialFolder( collection ) )
-    return;
-  mCheckMail[ collection.id() ].append( id );
 }
 
 //-------------------------------------------------------------------------

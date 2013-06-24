@@ -490,9 +490,6 @@ class KMAIL_EXPORT KMMainWidget : public QWidget
     MailCommon::FolderSelectionDialog* selectFromAllFoldersDialog();
 
 
-    void addInfoInNotification( const Akonadi::Collection&col, Akonadi::Item::Id id );
-    void updateInfoInNotification( const Akonadi::Collection& from, const Akonadi::Collection& to, Akonadi::Item::Id id );
-
     /**
      * Internal helper that applies the current settings so the
      * favorite folder view.
@@ -620,9 +617,6 @@ private:
     bool mVacationIndicatorActive;
     bool mGoToFirstUnreadMessageInSelectedFolder;
     MessageList::Core::PreSelectionMode mPreSelectionMode;
-
-    /// Used during mail check to remember how many mails there are in the folders
-    QMap<Akonadi::Collection::Id, QList<Akonadi::Item::Id> > mCheckMail;
 
     bool mCheckMailInProgress;
     QTimer m_notificationTimer;
