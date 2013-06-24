@@ -433,6 +433,9 @@ AccountsPageReceivingTab::AccountsPageReceivingTab( QWidget * parent )
   : ConfigModuleTab( parent )
 {
   mNewMailNotifierInterface = new OrgFreedesktopAkonadiNewMailNotifierInterface(QLatin1String("org.freedesktop.Akonadi.NewMailNotifierAgent"), QLatin1String("/NewMailNotifierAgent"), QDBusConnection::sessionBus(), this);
+  if (!mNewMailNotifierInterface->isValid()) {
+      kDebug()<<" org.freedesktop.Akonadi.NewMailNotifierAgent not found. Please verify your installation";
+  }
   mAccountsReceiving.setupUi( this );
 
   mAccountsReceiving.vlay->setSpacing( KDialog::spacingHint() );
