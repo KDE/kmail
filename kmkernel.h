@@ -484,6 +484,7 @@ private slots:
   void slotDeleteIdentity( uint identity);
   void slotInstanceRemoved(const Akonadi::AgentInstance&);
   void slotSystemNetworkStatusChanged( Solid::Networking::Status );
+  void slotCollectionChanged(const Akonadi::Collection &, const QSet<QByteArray> &set);
   
 private:
   void resourceGoOnLine();

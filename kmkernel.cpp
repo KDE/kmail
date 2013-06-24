@@ -194,6 +194,10 @@ KMKernel::KMKernel (QObject *parent, const char *name) :
   mCollectionModel->setDynamicSortFilter( true );
   mCollectionModel->setSortCaseSensitivity( Qt::CaseInsensitive );
 
+
+  connect( folderCollectionMonitor(), SIGNAL(collectionChanged(Akonadi::Collection,QSet<QByteArray>)),
+           SLOT(slotCollectionChanged(Akonadi::Collection,QSet<QByteArray>)) );
+
   connect( MailTransport::TransportManager::self(),
            SIGNAL(transportRemoved(int,QString)),
            SLOT(transportRemoved(int,QString)) );
@@ -2096,6 +2100,15 @@ void KMKernel::showFolder(const QString &collectionId)
     if (!collectionId.isEmpty()) {
         const Akonadi::Collection::Id id = collectionId.toLongLong();
         selectCollectionFromId(id);
+    }
+}
+
+void KMKernel::slotCollectionChanged(const Akonadi::Collection &, const QSet<QByteArray> &set)
+{
+    if(set.contains("newmailnotifierattribute")) {
+        if ( mSystemTray ) {
+            mSystemTray->updateSystemTray();
+        }
     }
 }
 
