@@ -495,7 +495,6 @@ class KMAIL_EXPORT KMMainWidget : public QWidget
      * favorite folder view.
      */
     void refreshFavoriteFoldersViewProperties();
-    bool excludeSpecialFolder( const Akonadi::Collection &collection );
 
     void openFilterDialog(const QByteArray &field, const QString &value);
 

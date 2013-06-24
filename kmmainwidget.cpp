@@ -1275,17 +1275,6 @@ void KMMainWidget::slotItemMoved( const Akonadi::Item &item, const Akonadi::Coll
   }
 }
 
-bool KMMainWidget::excludeSpecialFolder( const Akonadi::Collection &collection )
-{
-  if ( CommonKernel->outboxCollectionFolder() == collection ||
-       CommonKernel->sentCollectionFolder() == collection ||
-       CommonKernel->templatesCollectionFolder() == collection ||
-       CommonKernel->trashCollectionFolder() == collection ||
-       CommonKernel->draftsCollectionFolder() == collection )
-    return true;
-  return false;
-}
-
 //-------------------------------------------------------------------------
 void KMMainWidget::slotFocusQuickSearch()
 {
