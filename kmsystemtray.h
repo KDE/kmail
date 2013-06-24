@@ -63,16 +63,17 @@ private slots:
     void initListOfCollection();
     void slotCollectionStatisticsChanged( Akonadi::Collection::Id,const Akonadi::CollectionStatistics& );
 
-protected:
+private:
     bool mainWindowIsOnCurrentDesktop();
     bool buildPopupMenu();
     void updateCount();
     void fillFoldersMenu( QMenu *menu, const QAbstractItemModel *model, const QString& parentName = QString(), const QModelIndex& parentIndex = QModelIndex() );
     void unreadMail( const QAbstractItemModel *model, const QModelIndex& parentIndex = QModelIndex() );
-
     bool excludeFolder( const Akonadi::Collection& collection ) const;
+    bool ignoreNewMailInFolder(const Akonadi::Collection &collection);
 
 private:
+
     KIcon mIcon;
     int mDesktopOfMainWin;
 

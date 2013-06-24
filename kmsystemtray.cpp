@@ -6,7 +6,7 @@
     copyright            : (C) 2001 by Ryan Breen
     email                : ryan@porivo.com
 
-    Copyright (c) 2010, 2011, 2012 Montel Laurent <montel@kde.org>
+    Copyright (c) 2010, 2011, 2012, 2013 Montel Laurent <montel@kde.org>
  ***************************************************************************/
 
 /***************************************************************************
@@ -21,11 +21,11 @@
 
 #include "kmsystemtray.h"
 #include "kmmainwidget.h"
-#include "foldercollection.h"
 #include "globalsettings.h"
 #include "util/mailutil.h"
 #include "mailcommon/kernel/mailkernel.h"
 #include "mailcommon/folder/foldertreeview.h"
+#include "mailcommon/collectionpage/newmailnotifierattribute.h"
 
 #include <kiconloader.h>
 #include <kcolorscheme.h>
@@ -301,11 +301,10 @@ void KMSystemTray::fillFoldersMenu( QMenu *menu, const QAbstractItemModel *model
             Akonadi::CollectionStatistics statistics = collection.statistics();
             count = qMax( 0LL, statistics.unreadCount() );
             if ( count > 0 ) {
-                const QSharedPointer<FolderCollection> col = FolderCollection::forCollection( collection, false );
-                if ( col && !col->ignoreNewMail() ) {
-                    mCount += count;
-                } else { //Don't show menu entry when we exclude it with ignoreNewMail
+                if (ignoreNewMailInFolder(collection)) {
                     count = 0;
+                } else {
+                    mCount += count;
                 }
             }
         }
@@ -376,8 +375,7 @@ void KMSystemTray::unreadMail( const QAbstractItemModel *model, const QModelInde
             const qint64 count = qMax( 0LL, statistics.unreadCount() );
 
             if ( count > 0 ) {
-                const QSharedPointer<FolderCollection> col = FolderCollection::forCollection( collection, false );
-                if ( col && !col->ignoreNewMail() ) {
+                if (!ignoreNewMailInFolder(collection)) {
                     mCount += count;
                 }
             }
@@ -449,5 +447,16 @@ bool KMSystemTray::excludeFolder( const Akonadi::Collection& collection ) const
         return true;
     return false;
 }
+
+bool KMSystemTray::ignoreNewMailInFolder(const Akonadi::Collection &collection)
+{
+    if ( collection.hasAttribute<NewMailNotifierAttribute>() ) {
+        if (collection.attribute<NewMailNotifierAttribute>()->ignoreNewMail()) {
+            return true;
+        }
+    }
+    return false;
+}
+
 }
 #include "kmsystemtray.moc"
