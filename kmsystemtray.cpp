@@ -246,8 +246,8 @@ void KMSystemTray::slotActivated()
 
     KWindowInfo cur = KWindowSystem::windowInfo( mainWin->winId(), NET::WMDesktop );
 
-    int currentDesktop = KWindowSystem::currentDesktop();
-    bool wasMinimized = cur.isMinimized();
+    const int currentDesktop = KWindowSystem::currentDesktop();
+    const bool wasMinimized = cur.isMinimized();
 
     if ( cur.valid() )
         mDesktopOfMainWin = cur.desktop();
@@ -309,9 +309,9 @@ void KMSystemTray::fillFoldersMenu( QMenu *menu, const QAbstractItemModel *model
                 }
             }
         }
-        QString label = parentName.isEmpty() ? QLatin1String("") : QString(parentName + QLatin1String("->"));
+        QString label = parentName.isEmpty() ? QString() : QString(parentName + QLatin1String("->"));
         label += model->data( index ).toString();
-        label.replace( QLatin1String( "&" ), QLatin1String( "&&" ) );
+        label.replace( QLatin1Char( '&' ), QLatin1String( "&&" ) );
         if ( count > 0 ) {
             // insert an item
             QAction* action = menu->addAction( label );
