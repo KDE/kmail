@@ -197,7 +197,7 @@ void KMSystemTray::updateCount()
         // number doesn't fit into the available space
         float countFontSize = countFont.pointSizeF();
         QFontMetrics qfm( countFont );
-        int width = qfm.width( countString );
+        const int width = qfm.width( countString );
         if ( width > (overlaySize - 2) ) {
             countFontSize *= float( overlaySize - 2 ) / float( width );
             countFont.setPointSizeF( countFontSize );
