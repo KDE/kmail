@@ -674,6 +674,7 @@ void AccountsPage::ReceivingTab::slotRemoveSelectedAccount()
 void AccountsPage::ReceivingTab::slotEditNotifications()
 {
   KMKnotify notifyDlg( this );
+  notifyDlg.setCurrentNotification(QLatin1String("akonadi_newmailnotifier_agent"));
   notifyDlg.exec();
 }
 

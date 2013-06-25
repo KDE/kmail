@@ -41,6 +41,8 @@ public:
     explicit KMKnotify( QWidget * parent );
     ~KMKnotify();
 
+    void setCurrentNotification(const QString &name);
+
 private Q_SLOTS:
     void slotComboChanged( int );
     void slotOk();

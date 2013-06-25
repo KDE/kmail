@@ -94,6 +94,15 @@ void KMKnotify::slotComboChanged( int index )
     m_notifyWidget->setApplication( text );
 }
 
+void KMKnotify::setCurrentNotification(const QString &name)
+{
+    const int index = m_comboNotify->findData(name);
+    if (index>-1) {
+        m_comboNotify->setCurrentIndex(index);
+        slotComboChanged(index);
+    }
+}
+
 void KMKnotify::initCombobox()
 {
 
