@@ -54,7 +54,7 @@
 #include "collectionpage/collectionmailinglistpage.h"
 #include "tagselectdialog.h"
 #include "archivemailagentinterface.h"
-#include "createnewcontactjob.h"
+#include "job/createnewcontactjob.h"
 #include "sendlateragentinterface.h"
 
 #include "pimcommon/acl/collectionaclpage.h"

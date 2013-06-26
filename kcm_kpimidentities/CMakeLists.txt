@@ -4,7 +4,7 @@ include_directories( ${CMAKE_CURRENT_SOURCE_DIR}/.. ${CMAKE_CURRENT_SOURCE_DIR}/
 add_definitions( -DKCM_KPIMIDENTITIES_STANDALONE )
 set(kcm_identities_srcs
   kcm_kpimidentities.cpp
-  ../addressvalidationjob.cpp
+  ../job/addressvalidationjob.cpp
   ../identity/identitypage.cpp
   ../identity/identitydialog.cpp
   ../identity/identitylistview.cpp

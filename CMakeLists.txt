@@ -111,7 +111,7 @@ if (NOT WINCE AND KDEPIM_BUILD_DESKTOP)
      searchdialog/searchdescriptionattribute.cpp
      tagactionmanager.cpp
      foldershortcutactionmanager.cpp
-     addressvalidationjob.cpp
+     job/addressvalidationjob.cpp
      identity/identitypage.cpp
      identity/newidentitydialog.cpp
      searchdialog/kmsearchmessagemodel.cpp
@@ -122,7 +122,7 @@ if (NOT WINCE AND KDEPIM_BUILD_DESKTOP)
      identity/identityeditvcarddialog.cpp
      identity/identityaddvcarddialog.cpp
      warningwidgets/attachmentmissingwarning.cpp
-     createnewcontactjob.cpp
+     job/createnewcontactjob.cpp
      warningwidgets/externaleditorwarning.cpp
   )
 

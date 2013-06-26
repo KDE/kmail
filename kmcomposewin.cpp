@@ -24,7 +24,7 @@
 #include "kmcomposewin.h"
 
 // KMail includes
-#include "addressvalidationjob.h"
+#include "job/addressvalidationjob.h"
 #include "attachmentcontroller.h"
 #include "messagecomposer/attachment/attachmentmodel.h"
 #include "attachmentview.h"
@@ -51,7 +51,7 @@
 #include <libkdepim/widgets/spellchecklineedit.h>
 #include "pimcommon/translator/translatorwidget.h"
 #include "warningwidgets/attachmentmissingwarning.h"
-#include "createnewcontactjob.h"
+#include "job/createnewcontactjob.h"
 #include "warningwidgets/externaleditorwarning.h"
 
 // KDEPIM includes
