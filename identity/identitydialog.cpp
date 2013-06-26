@@ -48,7 +48,7 @@
 
 #include "kernel/mailkernel.h"
 
-#include "addressvalidationjob.h"
+#include "job/addressvalidationjob.h"
 #include "kleo_util.h"
 #include "utils/stringutil.h"
 #ifndef KDEPIM_MOBILE_UI
