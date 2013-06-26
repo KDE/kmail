@@ -322,7 +322,7 @@ K_GLOBAL_STATIC( KMMainWidget::PtrList, theMainWidgetList )
 
   if ( kmkernel->firstStart() ) {
     if (MailCommon::Util::foundMailer()) {
-      if (KMessageBox::questionYesNo(this,i18n("An other mailer was found on system. Do you want to import data from it?")) == KMessageBox::Yes) {
+      if (KMessageBox::questionYesNo(this,i18n("Another mailer was found on system. Do you want to import data from it?")) == KMessageBox::Yes) {
         const QString path = KStandardDirs::findExe( QLatin1String("importwizard" ) );
         if ( !QProcess::startDetached( path ) ) {
           KMessageBox::error( this, i18n( "Could not start the import wizard. "
