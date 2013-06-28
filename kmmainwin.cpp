@@ -106,23 +106,6 @@ KMMainWin::~KMMainWin()
 {
   saveMainWindowSettings( KMKernel::self()->config()->group( "Main Window") );
   KMKernel::self()->config()->sync();
-
-#if 0
-  if ( mReallyClose ) {
-    // Check if this was the last KMMainWin
-    uint not_withdrawn = 0;
-    foreach ( KMainWindow* window, KMainWindow::memberList() ) {
-      if ( !window->isHidden() && window->isTopLevel() &&
-           window != this && ::qobject_cast<KMMainWin *>( window ) )
-        not_withdrawn++;
-    }
-
-    if ( not_withdrawn == 0 ) {
-      kDebug() << "Closing last KMMainWin";
-      // In KDE <= 4.4 would would abort mail checks here, but we don't need to do that anymore.
-    }
-  }
-#endif
 }
 
 void KMMainWin::displayStatusMsg( const QString& aText )
@@ -136,7 +119,7 @@ void KMMainWin::displayStatusMsg( const QString& aText )
                                            statusWidth );
 
   // ### FIXME: We should disable richtext/HTML (to avoid possible denial of service attacks),
-  // but this code would double the size of the satus bar if the user hovers
+  // but this code would double the size of the status bar if the user hovers
   // over an <foo@bar.com>-style email address :-(
 //  text.replace("&", "&amp;");
 //  text.replace("<", "&lt;");
