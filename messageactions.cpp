@@ -267,7 +267,7 @@ void MessageActions::slotItemModified( const Akonadi::Item &  item, const QSet< 
     mCurrentItem = item;
     const int numberOfVisibleItems = mVisibleItems.count();
     for ( int i = 0; i < numberOfVisibleItems; ++i ) {
-      Akonadi::Item it = mVisibleItems[i];
+      Akonadi::Item it = mVisibleItems.at(i);
       if ( item == it ) {
         mVisibleItems[i] = item;
       }
