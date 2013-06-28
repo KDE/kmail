@@ -88,7 +88,7 @@ void UndoStack::addMsgToAction( int undoId, const Akonadi::Item &item )
 
 void UndoStack::undo()
 {
-    if ( mStack.count() > 0 )
+    if ( !mStack.isEmpty() )
     {
         UndoInfo *info = mStack.takeFirst();
         emit undoStackChanged();
