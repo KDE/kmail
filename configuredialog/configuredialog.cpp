@@ -183,7 +183,7 @@ namespace {
     box->layout()->setSpacing( KDialog::spacingHint() );
     const int numberChoices(e->choices().size());
     for (int i = 0; i < numberChoices; ++i) {
-      QRadioButton *button = new QRadioButton( e->choices()[i].label, box );
+      QRadioButton *button = new QRadioButton( e->choices().at(i).label, box );
       group->addButton( button, i );
       box->layout()->addWidget( button );
     }
