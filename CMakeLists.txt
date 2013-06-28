@@ -151,7 +151,7 @@ if (NOT WINCE AND KDEPIM_BUILD_DESKTOP)
   )
 
   qt4_add_dbus_interfaces(kmailprivate_LIB_SRCS
-    ${CMAKE_SOURCE_DIR}/kmail/org.freedesktop.Akonadi.NewMailNotifier.xml
+    ${CMAKE_SOURCE_DIR}/kmail/dbusinterface/org.freedesktop.Akonadi.NewMailNotifier.xml
   )
 
 
