@@ -1,2 +1,2 @@
-// DOXYGEN_REFERENCES = kdecore kdeui kio kparts kutils kde3support sonnet kresources kabc gpgme++ qgpgme kleo libkdepim
+// DOXYGEN_REFERENCES = kdecore kdeui kio kparts kutils sonnet kresources kabc gpgme++ qgpgme kleo libkdepim
 // DOXYGEN_SET_IGNORE_PREFIX = KM K
