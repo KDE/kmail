@@ -298,7 +298,7 @@ if (NOT WINCE AND KDEPIM_BUILD_DESKTOP)
     kmcomposerui.rc
     kmmainwin.rc
     kmreadermainwin.rc
-    kmail2.notifyrc
+    data/kmail2.notifyrc
     kmail_part.rc
     DESTINATION ${DATA_INSTALL_DIR}/kmail2
   )
