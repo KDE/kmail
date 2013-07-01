@@ -2816,7 +2816,7 @@ void KMComposeWin::slotSendLater()
       return;
   if ( mComposerBase->editor()->checkExternalEditorFinished() ) {
 #ifdef USE_SENDLATER_AGENT
-    const bool wasRegistered = SendLater::SendLaterUtil::sentLaterAgentWasRegistered();
+    const bool wasRegistered = (SendLater::SendLaterUtil::sentLaterAgentWasRegistered() && SendLater::SendLaterUtil::sentLaterAgentEnabled());
     if (wasRegistered) {
         SendLater::SendLaterInfo *info = 0;
         QPointer<SendLater::SendLaterDialog> dlg = new SendLater::SendLaterDialog(info, this);
@@ -2824,7 +2824,6 @@ void KMComposeWin::slotSendLater()
             info = dlg->info();
             const SendLater::SendLaterDialog::SendLaterAction action = dlg->action();
             delete dlg;
-            qDebug()<<" action "<<action;
             switch (action) {
             case SendLater::SendLaterDialog::Unknown:
                 qDebug()<<"Action unknown";
@@ -2841,10 +2840,10 @@ void KMComposeWin::slotSendLater()
             case SendLater::SendLaterDialog::SendDeliveryAtTime:
             {
                 mComposerBase->setSendLaterInfo(info);
-                if (info->isRecursive()) {
+                if (info->isRecurrence()) {
                     doSend( MessageComposer::MessageSender::SendLater, MessageComposer::MessageSender::SaveInTemplates );
-                } else {
-                    doSend( MessageComposer::MessageSender::SendLater );
+                } else { //TODO verify it.
+                    doSend( MessageComposer::MessageSender::SendLater, MessageComposer::MessageSender::SaveInTemplates );
                 }
                 break;
             }
