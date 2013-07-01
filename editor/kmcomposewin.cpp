@@ -55,6 +55,7 @@
 #include "warningwidgets/externaleditorwarning.h"
 
 #include "sendlateragent/sendlaterutil.h"
+#include "sendlateragent/sendlaterdialog.h"
 
 // KDEPIM includes
 #include <libkpgp/kpgpblock.h>
@@ -2804,7 +2805,7 @@ void KMComposeWin::doDelayedSend( MessageComposer::MessageSender::SendMethod met
   mComposerBase->setCustomHeader( customHeader );
   mComposerBase->send( method, saveIn );
 }
-
+//#define USE_SENDLATER_AGENT 1
 //----------------------------------------------------------------------------
 void KMComposeWin::slotSendLater()
 {
@@ -2813,8 +2814,25 @@ void KMComposeWin::slotSendLater()
   if ( !checkRecipientNumber() )
       return;
   if ( mComposerBase->editor()->checkExternalEditorFinished() ) {
+#ifdef USE_SENDLATER_AGENT
     const bool wasRegistered = SendLater::SendLaterUtil::sentLaterAgentWasRegistered();
-    doSend( MessageComposer::MessageSender::SendLater );
+    if (wasRegistered) {
+        SendLater::SendLaterInfo *info = 0;
+        QPointer<SendLater::SendLaterDialog> dlg = new SendLater::SendLaterDialog(info, this);
+        if (dlg->exec()) {
+            info = dlg->info();
+            SendLater::SendLaterDialog::SendLaterAction action = dlg->action();
+            qDebug()<<" action "<<action;
+            //For the moment sendlater
+            doSend( MessageComposer::MessageSender::SendLater );
+        }
+        delete dlg;
+    } else {
+        doSend( MessageComposer::MessageSender::SendLater );
+    }
+#else
+      doSend( MessageComposer::MessageSender::SendLater );
+#endif
   }
 }
 
