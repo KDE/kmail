@@ -54,6 +54,8 @@
 #include "job/createnewcontactjob.h"
 #include "warningwidgets/externaleditorwarning.h"
 
+#include "sendlateragent/sendlaterutil.h"
+
 // KDEPIM includes
 #include <libkpgp/kpgpblock.h>
 #include <libkleo/ui/progressdialog.h>
@@ -2811,6 +2813,7 @@ void KMComposeWin::slotSendLater()
   if ( !checkRecipientNumber() )
       return;
   if ( mComposerBase->editor()->checkExternalEditorFinished() ) {
+    const bool wasRegistered = SendLater::SendLaterUtil::sentLaterAgentWasRegistered();
     doSend( MessageComposer::MessageSender::SendLater );
   }
 }
