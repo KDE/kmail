@@ -99,8 +99,8 @@ if (NOT WINCE AND KDEPIM_BUILD_DESKTOP)
      composer.cpp
      antispamwizard.cpp
      secondarywindow.cpp
-     codecaction.cpp
-     codecmanager.cpp
+     editor/codecaction.cpp
+     editor/codecmanager.cpp
      util.cpp
      messageactions.cpp
      statusbarlabel.cpp
