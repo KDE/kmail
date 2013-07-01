@@ -2821,7 +2821,9 @@ void KMComposeWin::slotSendLater()
         QPointer<SendLater::SendLaterDialog> dlg = new SendLater::SendLaterDialog(info, this);
         if (dlg->exec()) {
             info = dlg->info();
-            SendLater::SendLaterDialog::SendLaterAction action = dlg->action();
+            const SendLater::SendLaterDialog::SendLaterAction action = dlg->action();
+            mComposerBase->setSendLaterAction(action);
+            mComposerBase->setSendLaterInfo(info);
             qDebug()<<" action "<<action;
             //For the moment sendlater
             doSend( MessageComposer::MessageSender::SendLater );
