@@ -2843,6 +2843,8 @@ void KMComposeWin::slotSendLater()
                 mComposerBase->setSendLaterInfo(info);
                 if (info->isRecursive()) {
                     doSend( MessageComposer::MessageSender::SendLater, MessageComposer::MessageSender::SaveInTemplates );
+                } else {
+                    doSend( MessageComposer::MessageSender::SendLater );
                 }
                 break;
             }
