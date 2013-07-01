@@ -56,6 +56,7 @@
 
 #include "sendlateragent/sendlaterutil.h"
 #include "sendlateragent/sendlaterdialog.h"
+#include "sendlateragent/sendlaterinfo.h"
 
 // KDEPIM includes
 #include <libkpgp/kpgpblock.h>
@@ -2822,13 +2823,33 @@ void KMComposeWin::slotSendLater()
         if (dlg->exec()) {
             info = dlg->info();
             const SendLater::SendLaterDialog::SendLaterAction action = dlg->action();
-            mComposerBase->setSendLaterAction(action);
-            mComposerBase->setSendLaterInfo(info);
+            delete dlg;
             qDebug()<<" action "<<action;
-            //For the moment sendlater
-            doSend( MessageComposer::MessageSender::SendLater );
+            switch (action) {
+            case SendLater::SendLaterDialog::Unknown:
+                qDebug()<<"Action unknown";
+                break;
+            case SendLater::SendLaterDialog::SendNow:
+                slotSendNow();
+                break;
+            case SendLater::SendLaterDialog::SendLater:
+                doSend( MessageComposer::MessageSender::SendLater );
+                break;
+            case SendLater::SendLaterDialog::Canceled:
+                return;
+                break;
+            case SendLater::SendLaterDialog::SendDeliveryAtTime:
+            {
+                mComposerBase->setSendLaterInfo(info);
+                if (info->isRecursive()) {
+                    doSend( MessageComposer::MessageSender::SendLater, MessageComposer::MessageSender::SaveInTemplates );
+                }
+                break;
+            }
+            }
+        } else {
+            delete dlg;
         }
-        delete dlg;
     } else {
         doSend( MessageComposer::MessageSender::SendLater );
     }
