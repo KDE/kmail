@@ -96,7 +96,7 @@ if (NOT WINCE AND KDEPIM_BUILD_DESKTOP)
      aboutdata.cpp
      mailserviceimpl.cpp
      editor/kmcomposereditor.cpp
-     composer.cpp
+     editor/composer.cpp
      antispamwizard.cpp
      secondarywindow.cpp
      editor/codecaction.cpp

@@ -41,7 +41,6 @@
 #include <kpimidentities/identitymanager.h>
 #include "folderrequester.h"
 #include "kmmainwidget.h"
-#include "composer.h"
 #include "accountconfigorderdialog.h"
 #include "util.h"
 

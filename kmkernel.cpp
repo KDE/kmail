@@ -7,7 +7,7 @@
 using KPIM::BroadcastStatus;
 #include "kmstartup.h"
 #include "kmmainwin.h"
-#include "composer.h"
+#include "editor/composer.h"
 #include "kmreadermainwin.h"
 #include "undostack.h"
 #include <kpimutils/kfileio.h>

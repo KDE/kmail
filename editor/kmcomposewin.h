@@ -24,7 +24,7 @@
 #define __KMComposeWin
 
 // KMail includes
-#include "composer.h"
+#include "editor/composer.h"
 #include "messagecomposer/recipient/recipientseditor.h"
 
 // Qt includes
