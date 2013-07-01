@@ -105,8 +105,8 @@ if (NOT WINCE AND KDEPIM_BUILD_DESKTOP)
      messageactions.cpp
      statusbarlabel.cpp
      editor/kmcomposewin.cpp
-     attachmentcontroller.cpp
-     attachmentview.cpp
+     editor/attachmentcontroller.cpp
+     editor/attachmentview.cpp
      archivefolderdialog.cpp
      searchdialog/searchdescriptionattribute.cpp
      tagactionmanager.cpp
