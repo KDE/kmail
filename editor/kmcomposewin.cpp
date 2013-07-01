@@ -32,7 +32,7 @@
 #include <messagecomposer/job/emailaddressresolvejob.h>
 #include "kleo_util.h"
 #include "kmcommands.h"
-#include "kmcomposereditor.h"
+#include "editor/kmcomposereditor.h"
 #include "kmkernel.h"
 #include "globalsettings.h"
 #include "kmmainwin.h"
@@ -43,7 +43,7 @@
 #include "messagecore/utils/stringutil.h"
 #include "messagecore/attachment/attachmentcollector.h"
 #include "util.h"
-#include "snippetwidget.h"
+#include "editor/snippetwidget.h"
 #include "templatesconfiguration_kfg.h"
 #include "foldercollectionmonitor.h"
 #include "kernel/mailkernel.h"

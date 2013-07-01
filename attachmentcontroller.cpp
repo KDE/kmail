@@ -27,7 +27,7 @@
 #include "foldercollection.h"
 #include "globalsettings.h"
 #include "kmcommands.h"
-#include "kmcomposewin.h"
+#include "editor/kmcomposewin.h"
 #include "kmkernel.h"
 #include "kmreadermainwin.h"
 #include "util/mailutil.h"

@@ -20,7 +20,7 @@
  */
 
 #include "kmcomposereditor.h"
-#include "kmcomposewin.h"
+#include "editor/kmcomposewin.h"
 #include "kmcommands.h"
 #include "util.h"
 

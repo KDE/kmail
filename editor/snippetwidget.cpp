@@ -13,7 +13,7 @@
 
 #include "snippetwidget.h"
 
-#include "kmcomposereditor.h"
+#include "editor/kmcomposereditor.h"
 
 #include <mailcommon/snippets/snippetsmanager.h>
 

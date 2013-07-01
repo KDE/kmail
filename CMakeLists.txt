@@ -8,7 +8,7 @@ if (NOT WINCE)
   set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} ${KDE4_DATA_DIR}/cmake/modules)
 
   qt4_generate_dbus_interface(kmkernel.h org.kde.kmail.kmail.xml OPTIONS -a)
-  qt4_generate_dbus_interface(kmcomposewin.h org.kde.kmail.mailcomposer.xml OPTIONS -a)
+  qt4_generate_dbus_interface(editor/kmcomposewin.h org.kde.kmail.mailcomposer.xml OPTIONS -a)
 
   add_custom_target(kmail_xml ALL
     DEPENDS ${CMAKE_CURRENT_BINARY_DIR}/org.kde.kmail.kmail.xml
@@ -82,7 +82,7 @@ if (NOT WINCE AND KDEPIM_BUILD_DESKTOP)
      identity/identitylistview.cpp
      identity/identitydialog.cpp
      globalsettings.cpp
-     snippetwidget.cpp
+     editor/snippetwidget.cpp
      kmreaderwin.cpp
      kmsystemtray.cpp
      identity/xfaceconfigurator.cpp
@@ -95,7 +95,7 @@ if (NOT WINCE AND KDEPIM_BUILD_DESKTOP)
      kmmainwidget.cpp
      aboutdata.cpp
      mailserviceimpl.cpp
-     kmcomposereditor.cpp
+     editor/kmcomposereditor.cpp
      composer.cpp
      antispamwizard.cpp
      secondarywindow.cpp
@@ -104,7 +104,7 @@ if (NOT WINCE AND KDEPIM_BUILD_DESKTOP)
      util.cpp
      messageactions.cpp
      statusbarlabel.cpp
-     kmcomposewin.cpp
+     editor/kmcomposewin.cpp
      attachmentcontroller.cpp
      attachmentview.cpp
      archivefolderdialog.cpp
@@ -127,9 +127,9 @@ if (NOT WINCE AND KDEPIM_BUILD_DESKTOP)
   )
 
   # TODO PORT
-  qt4_generate_dbus_interface(kmcomposewin.h org.kde.kmail.mailcomposer.xml OPTIONS -a)
+  qt4_generate_dbus_interface(editor/kmcomposewin.h org.kde.kmail.mailcomposer.xml OPTIONS -a)
   qt4_add_dbus_adaptor(kmailprivate_LIB_SRCS
-    ${CMAKE_BINARY_DIR}/kmail/org.kde.kmail.mailcomposer.xml kmcomposewin.h KMComposeWin
+    ${CMAKE_BINARY_DIR}/kmail/org.kde.kmail.mailcomposer.xml editor/kmcomposewin.h KMComposeWin
   )
 
   qt4_add_dbus_adaptor(kmailprivate_LIB_SRCS
