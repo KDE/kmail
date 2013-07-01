@@ -111,7 +111,8 @@ void insertLibraryCataloguesAndIcons() {
     "libkpimtextedit",
     "libkpimutils",
     "akonadicontact",
-    "kabc"
+    "kabc",
+    "akonadi_sendlater_agent"
 
   };
 
