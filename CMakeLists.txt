@@ -181,7 +181,7 @@ if (NOT WINCE AND KDEPIM_BUILD_DESKTOP)
 
   kde4_add_kcfg_files(kmailprivate_LIB_SRCS
     globalsettings_base.kcfgc
-    custommimeheader.kcfgc
+    editor/custommimeheader.kcfgc
   )
 
 
