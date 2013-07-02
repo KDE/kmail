@@ -2826,7 +2826,7 @@ void KMComposeWin::slotSendLater()
             delete dlg;
             switch (action) {
             case SendLater::SendLaterDialog::Unknown:
-                qDebug()<<"Action unknown";
+                kDebug()<<"Sendlater action \"Unknown\": Need to fix it.";
                 break;
             case SendLater::SendLaterDialog::SendNow:
                 slotSendNow();
