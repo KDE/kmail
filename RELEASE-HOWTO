@@ -1,7 +1,0 @@
-Just a little reminder of what to do when a release comes near:
-
-- Make sure everything important is backported
-- Add the new version numbers to bugzilla
-- Add bugfixes to the changelog at svn+ssh://tmcguire@svn.kde.org/home/kde/trunk/www/sites/www/announcements/changelogs
-- For major releases, make sure the feature plan is up-to-date
-- Make sure it doesn't crash at startup or similar catastrophes :)
