@@ -97,7 +97,7 @@ if (NOT WINCE AND KDEPIM_BUILD_DESKTOP)
      mailserviceimpl.cpp
      editor/kmcomposereditor.cpp
      editor/composer.cpp
-     antispamwizard.cpp
+     antispam-virus/antispamwizard.cpp
      secondarywindow.cpp
      editor/codecaction.cpp
      editor/codecmanager.cpp
@@ -284,7 +284,7 @@ if (NOT WINCE AND KDEPIM_BUILD_DESKTOP)
     ${CMAKE_CURRENT_BINARY_DIR}/kmail.kcfg
     DESTINATION ${KCFG_INSTALL_DIR}
   )
-  install(FILES kmail.antispamrc kmail.antivirusrc  DESTINATION ${CONFIG_INSTALL_DIR})
+  install(FILES antispam-virus/kmail.antispamrc antispam-virus/kmail.antivirusrc  DESTINATION ${CONFIG_INSTALL_DIR})
   install(FILES tips  DESTINATION ${DATA_INSTALL_DIR}/kmail2)
   install(FILES
     data/kmail_config_misc.desktop

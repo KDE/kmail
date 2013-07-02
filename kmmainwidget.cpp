@@ -23,7 +23,7 @@
 #include "kmreadermainwin.h"
 #include "editor/composer.h"
 #include "searchdialog/searchwindow.h"
-#include "antispamwizard.h"
+#include "antispam-virus/antispamwizard.h"
 #include "statusbarlabel.h"
 #include "undostack.h"
 #include "kmcommands.h"
