@@ -140,10 +140,20 @@ void AccountConfigOrderDialog::init()
                  !capabilities.contains( "Virtual" ) &&
                  !capabilities.contains( "MailTransport" ) )
             {
-                if (!instance.identifier().contains(POP3_RESOURCE_IDENTIFIER)) {
+                const QString identifier = instance.identifier();
+                if (!identifier.contains(POP3_RESOURCE_IDENTIFIER)) {
                     instanceList<<instance.identifier();
                     InstanceStruct instanceStruct;
                     instanceStruct.name = instance.name();
+                    if (identifier.startsWith(QLatin1String("akonadi_imap_resource"))) {
+                        instanceStruct.name += QLatin1String(" (IMAP)");
+                    } else if (identifier.startsWith(QLatin1String("akonadi_maildir_resource"))) {
+                        instanceStruct.name += QLatin1String(" (Maildir)");
+                    } else if (identifier.startsWith(QLatin1String("akonadi_mailbox_resource"))) {
+                        instanceStruct.name += QLatin1String(" (Mailbox)");
+                    } else if (identifier.startsWith(QLatin1String("akonadi_mixedmaildir_resource"))) {
+                        instanceStruct.name += QLatin1String(" (Mixedmaildir)");
+                    }
                     instanceStruct.icon = instance.type().icon();
                     mapInstance.insert(instance.identifier(),instanceStruct);
                 }
