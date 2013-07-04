@@ -109,7 +109,7 @@ if (NOT WINCE AND KDEPIM_BUILD_DESKTOP)
      editor/attachmentview.cpp
      archivefolderdialog.cpp
      searchdialog/searchdescriptionattribute.cpp
-     tagactionmanager.cpp
+     tag/tagactionmanager.cpp
      foldershortcutactionmanager.cpp
      job/addressvalidationjob.cpp
      identity/identitypage.cpp
@@ -117,7 +117,7 @@ if (NOT WINCE AND KDEPIM_BUILD_DESKTOP)
      searchdialog/kmsearchmessagemodel.cpp
      searchdialog/kmsearchfilterproxymodel.cpp
      kmknotify.cpp
-     tagselectdialog.cpp
+     tag/tagselectdialog.cpp
      configuredialog/accountconfigorderdialog.cpp
      identity/identityeditvcarddialog.cpp
      identity/identityaddvcarddialog.cpp

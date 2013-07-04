@@ -47,7 +47,7 @@
 #include <akonadi/entitydisplayattribute.h>
 #include <akonadi/changerecorder.h>
 #include "foldertreeview.h"
-#include "tagactionmanager.h"
+#include "tag/tagactionmanager.h"
 #include "foldershortcutactionmanager.h"
 
 #include <kglobal.h>

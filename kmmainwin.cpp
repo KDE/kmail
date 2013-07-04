@@ -25,7 +25,7 @@
 #include "progresswidget/statusbarprogresswidget.h"
 #include "misc/broadcaststatus.h"
 #include "util.h"
-#include "tagactionmanager.h"
+#include "tag/tagactionmanager.h"
 
 #include <QTimer>
 

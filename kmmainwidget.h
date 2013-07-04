@@ -440,8 +440,6 @@ class KMAIL_EXPORT KMMainWidget : public QWidget
 
     void updateAllToTrashAction(int statistics);
 
-    void updateActionsAfterMailChecking();
-
     /** Get override character encoding. */
     QString overrideEncoding() const;
 

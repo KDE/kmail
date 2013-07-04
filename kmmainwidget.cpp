@@ -38,7 +38,7 @@
 #include "archivefolderdialog.h"
 #include "globalsettings.h"
 #include "foldertreeview.h"
-#include "tagactionmanager.h"
+#include "tag/tagactionmanager.h"
 #include "foldershortcutactionmanager.h"
 #include "collectionpane.h"
 #if !defined(NDEBUG)
@@ -52,7 +52,7 @@
 #include "collectionpage/collectionshortcutpage.h"
 #include "collectionpage/collectionviewpage.h"
 #include "collectionpage/collectionmailinglistpage.h"
-#include "tagselectdialog.h"
+#include "tag/tagselectdialog.h"
 #include "archivemailagentinterface.h"
 #include "job/createnewcontactjob.h"
 #include "sendlateragentinterface.h"
@@ -417,13 +417,6 @@ void KMMainWidget::slotEndCheckMail()
 void KMMainWidget::slotUpdateActionsAfterMailChecking()
 {
   mCheckMailInProgress = false;
-  updateActionsAfterMailChecking();
-}
-
-void KMMainWidget::updateActionsAfterMailChecking()
-{
-  if ( mCheckMailInProgress  )
-    return;
   const bool sendOnAll =
     GlobalSettings::self()->sendOnCheck() == GlobalSettings::EnumSendOnCheck::SendOnAllChecks;
   const bool sendOnManual =
