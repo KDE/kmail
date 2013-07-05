@@ -229,8 +229,7 @@ K_GLOBAL_STATIC( KMMainWidget::PtrList, theMainWidgetList )
     mMsgActions( 0 ),
     mCurrentFolder( 0 ),
     mVacationIndicatorActive( false ),
-    mGoToFirstUnreadMessageInSelectedFolder( false ),
-    mCheckMailInProgress( false )
+    mGoToFirstUnreadMessageInSelectedFolder( false )
 {
   // must be the first line of the constructor:
   mStartupDone = false;
@@ -403,7 +402,6 @@ void KMMainWidget::destruct()
 
 void KMMainWidget::slotStartCheckMail()
 {
-  mCheckMailInProgress = true;
   if ( m_notificationTimer.isActive() )
     m_notificationTimer.stop();
 }
@@ -416,7 +414,6 @@ void KMMainWidget::slotEndCheckMail()
 
 void KMMainWidget::slotUpdateActionsAfterMailChecking()
 {
-  mCheckMailInProgress = false;
   const bool sendOnAll =
     GlobalSettings::self()->sendOnCheck() == GlobalSettings::EnumSendOnCheck::SendOnAllChecks;
   const bool sendOnManual =
