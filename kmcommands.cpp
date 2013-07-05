@@ -305,16 +305,6 @@ void KMCommand::transferSelectedMsgs()
 
   // TODO once the message list is based on ETM and we get the more advanced caching we need to make that check a bit more clever
   if ( !mFetchScope.isEmpty() ) {
-#if 0 //TODO port to akonadi
-    if ( thisMsg->parent() && !thisMsg->isComplete() &&
-         ( !mProgressDialog || !mProgressDialog->wasCancelled() ) )
-    {
-      totalSize += thisMsg->msgSizeServer();
-      // emitted when the message was transferred successfully
-      connect(job, SIGNAL(messageRetrieved(KMime::Message*)),
-              this, SLOT(slotMsgTransfered(KMime::Message*)));
-    }
-#endif
     complete = false;
     KMCommand::mCountJobs++;
     Akonadi::ItemFetchJob *fetch = new Akonadi::ItemFetchJob( mMsgList, this );
@@ -383,21 +373,6 @@ void KMCommand::slotJobFinished()
 
 void KMCommand::slotTransferCancelled()
 {
-#if 0 //TODO port to akonadi
-  // kill the pending jobs
-  QList<QPointer<KMFolder> >::Iterator fit;
-  for ( fit = mFolders.begin(); fit != mFolders.end(); ++fit ) {
-    if (!(*fit))
-      continue;
-    KMFolder *folder = *fit;
-    KMFolderImap *imapFolder = dynamic_cast<KMFolderImap*>(folder);
-    if (imapFolder && imapFolder->account()) {
-      imapFolder->account()->killAllJobs();
-    }
-  }
-#else
-    kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
-#endif
   KMCommand::mCountJobs = 0;
   mCountMsgs = 0;
   mRetrievedMsgs.clear();
