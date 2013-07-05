@@ -339,9 +339,9 @@ K_GLOBAL_STATIC( KMMainWidget::PtrList, theMainWidgetList )
   mStartupDone = true;
 
 
-  m_notificationTimer.setInterval( 3 * 1000 );
-  m_notificationTimer.setSingleShot( true );
-  connect( &m_notificationTimer, SIGNAL(timeout()), SLOT(slotUpdateActionsAfterMailChecking()) );
+  mCheckMailTimer.setInterval( 3 * 1000 );
+  mCheckMailTimer.setSingleShot( true );
+  connect( &mCheckMailTimer, SIGNAL(timeout()), SLOT(slotUpdateActionsAfterMailChecking()) );
 
 }
 
@@ -402,14 +402,14 @@ void KMMainWidget::destruct()
 
 void KMMainWidget::slotStartCheckMail()
 {
-  if ( m_notificationTimer.isActive() )
-    m_notificationTimer.stop();
+  if ( mCheckMailTimer.isActive() )
+    mCheckMailTimer.stop();
 }
 
 void KMMainWidget::slotEndCheckMail()
 {
-  if ( !m_notificationTimer.isActive() )
-    m_notificationTimer.start();
+  if ( !mCheckMailTimer.isActive() )
+    mCheckMailTimer.start();
 }
 
 void KMMainWidget::slotUpdateActionsAfterMailChecking()
