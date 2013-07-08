@@ -2806,7 +2806,7 @@ void KMComposeWin::doDelayedSend( MessageComposer::MessageSender::SendMethod met
   mComposerBase->setCustomHeader( customHeader );
   mComposerBase->send( method, saveIn );
 }
-#define USE_SENDLATER_AGENT 1
+
 //----------------------------------------------------------------------------
 void KMComposeWin::slotSendLater()
 {
@@ -2815,7 +2815,6 @@ void KMComposeWin::slotSendLater()
   if ( !checkRecipientNumber() )
       return;
   if ( mComposerBase->editor()->checkExternalEditorFinished() ) {
-#ifdef USE_SENDLATER_AGENT
     const bool wasRegistered = (SendLater::SendLaterUtil::sentLaterAgentWasRegistered() && SendLater::SendLaterUtil::sentLaterAgentEnabled());
     if (wasRegistered) {
         SendLater::SendLaterInfo *info = 0;
@@ -2848,9 +2847,6 @@ void KMComposeWin::slotSendLater()
     } else {
         doSend( MessageComposer::MessageSender::SendLater );
     }
-#else
-      doSend( MessageComposer::MessageSender::SendLater );
-#endif
   }
 }
 
