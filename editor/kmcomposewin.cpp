@@ -2828,9 +2828,6 @@ void KMComposeWin::slotSendLater()
             case SendLater::SendLaterDialog::Unknown:
                 kDebug()<<"Sendlater action \"Unknown\": Need to fix it.";
                 break;
-            case SendLater::SendLaterDialog::SendLater:
-                doSend( MessageComposer::MessageSender::SendLater );
-                break;
             case SendLater::SendLaterDialog::Canceled:
                 return;
                 break;
