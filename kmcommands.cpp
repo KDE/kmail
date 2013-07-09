@@ -1014,6 +1014,7 @@ KMCommand::Result KMRedirectCommand::execute()
   if ( !TransportManager::self()->showTransportCreationDialog( parentWidget(), TransportManager::IfNoTransportExists ) )
     return Failed;
 
+  //TODO use sendlateragent here too.
   const MessageComposer::MessageSender::SendMethod method = (dlg->sendMode() == MailCommon::RedirectDialog::SendNow)
                                              ? MessageComposer::MessageSender::SendImmediate
                                              : MessageComposer::MessageSender::SendLater;
