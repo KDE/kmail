@@ -49,6 +49,11 @@
         <whatsthis>This prevents the automatic expiry of old messages in a folder from deleting (or moving to an archive folder) the messages that are marked 'Important' or 'Action Item'</whatsthis>
         <default>true</default>
       </entry>
+      <entry name="AllowLocalFlags" type="Bool">
+        <label>Allow local flags in read-only folders</label>
+        <default>false</default>
+      </entry>
+
 
       <entry name="SendOnCheck"  type="Enum">
         <label>Send queued mail on mail check</label>
@@ -59,17 +64,6 @@
           <choice name="SendOnAllChecks"/>
         </choices>
         <default>DontSendOnCheck</default>
-      </entry>
-
-      <!-- <entry name="AutoLostFoundMove" type="Bool">
-        <label>Automatically move non-synced mails from folders with insufficient access rights</label>
-        <whatsthis>If there are new messages in a folder, which have not been uploaded to the server yet, but you do not have sufficient access rights on the folder now to upload them, these messages will automatically be moved into a lost and found folder.</whatsthis>
-        <default>false</default>
-      </entry> -->
-
-      <entry name="AllowLocalFlags" type="Bool">
-        <label>Allow local flags in read-only folders</label>
-        <default>false</default>
       </entry>
     </group>
 
@@ -115,9 +109,6 @@
       </entry>
       <entry name="CustomMessageHeadersCount" type="Int" key="mime-header-count">
         <label>Specifies the number of custom MIME header fields to be inserted in messages (for internal use only)</label>
-      </entry>
-      <entry name="FolderLoadingTimeout" type="Int" hidden="true">
-         <default>1000</default>
       </entry>
       <entry name="CloseToQuotaThreshold" type="Int">
         <label>The threshold for when to warn the user that a folder is nearing its quota limit.</label>
@@ -168,14 +159,6 @@
       </entry>
     </group>
 
-    <!-- <group name="Network">
-      <entry name="MaxConnectionsPerHost" type="Int">
-        <label>Maximal number of connections per host</label>
-        <whatsthis>This can be used to restrict the number of connections per host while checking for new mail. By default the number of connections is unlimited (0).</whatsthis>
-        <default>0</default>
-        <min>0</min>
-      </entry>
-    </group> -->
 
     <group name="UserInterface">
       <entry name="EnableFolderQuickSearch" type="Bool">
@@ -280,16 +263,16 @@
 
       <entry name="CustomTemplates" type="StringList" key="CustomTemplates" />
 
+
+      <entry name="FolderLoadingTimeout" type="Int" hidden="true">
+         <default>1000</default>
+      </entry>
+
       <entry name="ShowSnippetManager" type="Bool">
           <label>Show the Text Snippet Management and Insertion Panel in the composer.</label>
           <default>false</default>
       </entry>
       <entry name="SnippetSplitterPosition" type="IntList"/>
-
-      <entry name="ShowGnuPGAuditLogAfterSuccessfulSignEncrypt" type="Bool">
-          <label>Show the GnuPG Audit Log even after crypto operations that completed successfully.</label>
-          <default>false</default>
-      </entry>
 
       <entry name="CryptoShowEncryptionResult" type="Bool" key="crypto-show-encryption-result">
         <label>Show signed/encrypted text after composing</label>
