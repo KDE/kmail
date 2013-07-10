@@ -2,7 +2,7 @@
 
 #include "kmkernel.h"
 
-#include "globalsettings.h"
+#include "settings/globalsettings.h"
 #include "misc/broadcaststatus.h"
 using KPIM::BroadcastStatus;
 #include "kmstartup.h"

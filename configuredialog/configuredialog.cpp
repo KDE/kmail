@@ -28,7 +28,7 @@
 #include "ui_accountspagereceivingtab.h"
 #include "identity/identitypage.h"
 
-#include "globalsettings.h"
+#include "settings/globalsettings.h"
 #include "templatesconfiguration_kfg.h"
 #include "configuredialoglistview.h"
 #include "configagentdelegate.h"

@@ -22,7 +22,7 @@
 // filehtmlwriter.out in the current working directory
 #include "kmreaderwin.h"
 
-#include "globalsettings.h"
+#include "settings/globalsettings.h"
 #include "kmmainwidget.h"
 #include "kmreadermainwin.h"
 #include "kernel/mailkernel.h"

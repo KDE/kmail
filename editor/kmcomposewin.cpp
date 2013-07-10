@@ -34,7 +34,7 @@
 #include "kmcommands.h"
 #include "editor/kmcomposereditor.h"
 #include "kmkernel.h"
-#include "globalsettings.h"
+#include "settings/globalsettings.h"
 #include "kmmainwin.h"
 #include "kmmainwidget.h"
 #include "mailcomposeradaptor.h" // TODO port all D-Bus stuff...

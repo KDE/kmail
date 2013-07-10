@@ -42,7 +42,7 @@
 #include "pimcommon/widgets/simplestringlisteditor.h"
 #include "folderrequester.h"
 #ifndef KCM_KPIMIDENTITIES_STANDALONE
-#include "globalsettings.h"
+#include "settings/globalsettings.h"
 #include "kmkernel.h"
 #endif
 

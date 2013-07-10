@@ -22,7 +22,7 @@
 */
 
 
-#include "globalsettings.h"
+#include "settings/globalsettings.h"
 #include <QTimer>
 
 GlobalSettings *GlobalSettings::mSelf = 0;

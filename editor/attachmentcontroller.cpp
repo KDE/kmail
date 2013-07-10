@@ -25,7 +25,7 @@
 #include "attachmentview.h"
 #include "messagecomposer/job/attachmentfrompublickeyjob.h"
 #include "foldercollection.h"
-#include "globalsettings.h"
+#include "settings/globalsettings.h"
 #include "kmcommands.h"
 #include "editor/kmcomposewin.h"
 #include "kmkernel.h"

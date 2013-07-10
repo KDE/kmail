@@ -9,7 +9,7 @@
 #include "configuredialog_p.h"
 
 // other KMail headers:
-#include "globalsettings.h"
+#include "settings/globalsettings.h"
 #include "configuredialoglistview.h"
 #include "kmkernel.h"
 

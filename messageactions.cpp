@@ -18,7 +18,7 @@
 
 #include "messageactions.h"
 
-#include "globalsettings.h"
+#include "settings/globalsettings.h"
 #include "kmreaderwin.h"
 #include "kmkernel.h"
 #include "kernel/mailkernel.h"

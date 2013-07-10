@@ -81,7 +81,7 @@ if (NOT WINCE AND KDEPIM_BUILD_DESKTOP)
      configuredialog/configuredialog_p.cpp
      identity/identitylistview.cpp
      identity/identitydialog.cpp
-     globalsettings.cpp
+     settings/globalsettings.cpp
      editor/snippetwidget.cpp
      kmreaderwin.cpp
      kmsystemtray.cpp
@@ -177,10 +177,10 @@ if (NOT WINCE AND KDEPIM_BUILD_DESKTOP)
     set(WARN_TOOMANY_RECIPIENTS_DEFAULT false)
   endif()
 
-  configure_file(kmail.kcfg.cmake ${CMAKE_CURRENT_BINARY_DIR}/kmail.kcfg)
+  configure_file(settings/kmail.kcfg.cmake ${CMAKE_CURRENT_BINARY_DIR}/kmail.kcfg)
 
   kde4_add_kcfg_files(kmailprivate_LIB_SRCS
-    globalsettings_base.kcfgc
+    settings/globalsettings_base.kcfgc
     editor/custommimeheader.kcfgc
   )
 

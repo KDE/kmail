@@ -14,7 +14,7 @@
 #include <kurl.h>
 
 #include "kmail_export.h"
-#include "globalsettings.h"
+#include "settings/globalsettings.h"
 #include <kcomponentdata.h>
 #include <akonadi/servermanager.h>
 #include "messageviewer/viewer/viewer.h"

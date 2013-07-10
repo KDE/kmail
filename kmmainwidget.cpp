@@ -36,7 +36,7 @@
 #include "util/mailutil.h"
 #include "kernel/mailkernel.h"
 #include "archivefolderdialog.h"
-#include "globalsettings.h"
+#include "settings/globalsettings.h"
 #include "foldertreeview.h"
 #include "tag/tagactionmanager.h"
 #include "foldershortcutactionmanager.h"

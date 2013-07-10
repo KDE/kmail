@@ -27,7 +27,7 @@
 #include "newidentitydialog.h"
 #ifndef KCM_KPIMIDENTITIES_STANDALONE
 #include "kmkernel.h"
-#include "globalsettings.h"
+#include "settings/globalsettings.h"
 #endif
 
 #include <mailcommon/kernel/mailkernel.h>
