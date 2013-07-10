@@ -676,7 +676,7 @@ void AccountsPage::ReceivingTab::slotEditNotifications()
     if (interface.isValid()) {
         interface.call(QLatin1String("showConfigureDialog"), (qlonglong)winId());
     } else {
-        KMessageBox::error(this, i18n("New Mail Notifier Agent not registred. Please contact your administrator."));
+        KMessageBox::error(this, i18n("New Mail Notifier Agent not registered. Please contact your administrator."));
     }
 }
 
