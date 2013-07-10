@@ -675,6 +675,8 @@ void AccountsPage::ReceivingTab::slotEditNotifications()
     QDBusInterface interface( QLatin1String("org.freedesktop.Akonadi.Agent.akonadi_newmailnotifier_agent"), QLatin1String("/NewMailNotifierAgent") );
     if (interface.isValid()) {
         interface.call(QLatin1String("showConfigureDialog"), (qlonglong)winId());
+    } else {
+        KMessageBox::error(this, i18n("New Mail Notifier Agent not registred. Please contact your administrator."));
     }
 }
 
@@ -704,9 +706,6 @@ void AccountsPage::ReceivingTab::save()
     group.writeEntry( "OfflineOnShutdown", opts->OfflineOnShutdown);
     group.writeEntry( "CheckOnStartup", opts->CheckOnStartup);
   }
-
-
-
 }
 
 // *************************************************************
