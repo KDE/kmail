@@ -672,9 +672,10 @@ void AccountsPage::ReceivingTab::slotRemoveSelectedAccount()
 
 void AccountsPage::ReceivingTab::slotEditNotifications()
 {
-  KMKnotify notifyDlg( this );
-  notifyDlg.setCurrentNotification(QLatin1String("akonadi_newmailnotifier_agent"));
-  notifyDlg.exec();
+    QDBusInterface interface( QLatin1String("org.freedesktop.Akonadi.Agent.akonadi_newmailnotifier_agent"), QLatin1String("/NewMailNotifierAgent") );
+    if (interface.isValid()) {
+        interface.call(QLatin1String("showConfigureDialog"), (qlonglong)winId());
+    }
 }
 
 void AccountsPage::ReceivingTab::doLoadFromGlobalSettings()
