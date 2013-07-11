@@ -40,7 +40,7 @@
 #include "foldertreewidgetproxymodel.h"
 #include "mailcommon/pop3settings.h"
 #include "mailcommon/util/mailutil.h"
-#include "pimcommon/imapsettings.h"
+#include "pimcommon/imapresourcesettings.h"
 #include "mailcommon/kernel/mailkernel.h"
 #include "mailcommon/filter/mailfilter.h"
 #include "mailcommon/filter/filteraction.h"

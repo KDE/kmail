@@ -104,7 +104,7 @@ using KMail::MailServiceImpl;
 #include <kmailadaptor.h>
 #include "kmailinterface.h"
 #include "foldercollectionmonitor.h"
-#include "imapsettings.h"
+#include "imapresourcesettings.h"
 #include "util.h"
 #include "mailcommon/kernel/mailkernel.h"
 
