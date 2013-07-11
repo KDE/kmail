@@ -17,14 +17,37 @@
 
 #include "configureagentswidget.h"
 
+#include <KLocale>
+
+#include <QVBoxLayout>
+#include <QListWidget>
+
+
 ConfigureAgentsWidget::ConfigureAgentsWidget(QWidget *parent)
     : QWidget(parent)
 {
+    QVBoxLayout *lay = new QVBoxLayout;
+    mListWidget = new QListWidget;
+    setLayout(lay);
+    initialize();
 }
 
 ConfigureAgentsWidget::~ConfigureAgentsWidget()
 {
 
+}
+
+void ConfigureAgentsWidget::initialize()
+{
+    //TODO find a generic method.
+    createItem(QLatin1String("org...."), i18n("Send Later Agent"));
+    //TODO
+}
+
+void ConfigureAgentsWidget::createItem(const QString &interfaceName, const QString &name)
+{
+    QListWidgetItem *item = new QListWidgetItem(name, mListWidget);
+    item->setData(InterfaceName, interfaceName);
 }
 
 void ConfigureAgentsWidget::save()
@@ -39,7 +62,7 @@ QString ConfigureAgentsWidget::helpAnchor() const
 
 void ConfigureAgentsWidget::doLoadFromGlobalSettings()
 {
-       //TODO
+    //TODO
 }
 
 void ConfigureAgentsWidget::doResetToDefaultsOther()

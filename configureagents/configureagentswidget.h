@@ -38,6 +38,12 @@ Q_SIGNALS:
     void changed();
 
 private:
+    enum ItemData {
+        InterfaceName = Qt::UserRole + 1
+    };
+
+    void initialize();
+    void createItem(const QString &interfaceName, const QString &name);
     QListWidget *mListWidget;
 };
 
