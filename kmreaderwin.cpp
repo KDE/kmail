@@ -732,13 +732,11 @@ void KMReaderWin::slotPrintComposeResult( KJob *job )
     Q_ASSERT( composer->resultMessages().size() == 1 );
     Akonadi::Item printItem;
     printItem.setPayload<KMime::Message::Ptr>( composer->resultMessages().first() );
-    //FIXME
-    //const bool isHtml = ( mComposerBase->editor()->textMode() == KMeditor::Rich );
     const bool useFixedFont = MessageViewer::GlobalSettings::self()->useFixedFont();
     const QString overrideEncoding = MessageCore::GlobalSettings::self()->overrideCharacterEncoding();
 
     KMPrintCommand *command = new KMPrintCommand( this, printItem,0,
-                                             0, false, false,useFixedFont, overrideEncoding );
+                                             0, mViewer->htmlOverride(), mViewer->htmlLoadExternal() ,useFixedFont, overrideEncoding );
     command->setPrintPreview( preview );
     command->start();
   } else {

@@ -542,7 +542,7 @@ void MessageActions::printMessage(bool preview)
       new KMPrintCommand( mParent, message,
                           0,
                           0,
-                          false, false,
+                          mMessageView->viewer()->htmlOverride(), mMessageView->viewer()->htmlLoadExternal(),
                           useFixedFont, overrideEncoding );
     command->setPrintPreview(preview);
     command->start();
