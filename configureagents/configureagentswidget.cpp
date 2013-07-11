@@ -50,8 +50,16 @@ void ConfigureAgentsWidget::createItem(const QString &interfaceName, const QStri
     item->setData(InterfaceName, interfaceName);
 }
 
+void ConfigureAgentsWidget::changeAgentActiveState(bool enable, const QString &interfaceName)
+{
+    //Change status.
+}
+
 void ConfigureAgentsWidget::save()
 {
+    for (int i=0; i <mListWidget->count(); ++i) {
+
+    }
     //TODO
 }
 
@@ -63,11 +71,17 @@ QString ConfigureAgentsWidget::helpAnchor() const
 void ConfigureAgentsWidget::doLoadFromGlobalSettings()
 {
     //TODO
+    for (int i=0; i <mListWidget->count(); ++i) {
+        //Reload
+    }
 }
 
 void ConfigureAgentsWidget::doResetToDefaultsOther()
 {
     //TODO
+    for (int i=0; i <mListWidget->count(); ++i) {
+        //Reset to default
+    }
 }
 
 

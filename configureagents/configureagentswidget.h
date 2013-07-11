@@ -42,6 +42,7 @@ private:
         InterfaceName = Qt::UserRole + 1
     };
 
+    void changeAgentActiveState(bool enable, const QString &interfaceName);
     void initialize();
     void createItem(const QString &interfaceName, const QString &name);
     QListWidget *mListWidget;
