@@ -18,12 +18,12 @@
 #include "configureagentswidget.h"
 
 #include <KLocale>
+#include <KDebug>
 
 #include <QVBoxLayout>
 #include <QListWidget>
 #include <QDBusInterface>
 #include <QDBusReply>
-#include <QDebug>
 
 
 ConfigureAgentsWidget::ConfigureAgentsWidget(QWidget *parent)
@@ -67,13 +67,13 @@ bool ConfigureAgentsWidget::agentActivateState(const QString &interfaceName, con
         if (enabled.isValid()) {
             return enabled;
         } else {
-            qDebug()<<interfaceName << "doesn't have enabledAgent function";
+            kDebug()<<interfaceName << "doesn't have enabledAgent function";
             failed = true;
             return false;
         }
     } else {
         failed = true;
-        qDebug()<<interfaceName << "does not exist ";
+        kDebug()<<interfaceName << "does not exist ";
     }
     return false;
 }
@@ -84,7 +84,7 @@ void ConfigureAgentsWidget::changeAgentActiveState(bool enable, const QString &i
     if (interface.isValid()) {
         interface.call(QLatin1String("setEnableAgent"), enable);
     } else {
-        qDebug()<<interfaceName << "does not exist ";
+        kDebug()<<interfaceName << "does not exist ";
     }
 }
 
