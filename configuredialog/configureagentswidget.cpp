@@ -58,8 +58,9 @@ void ConfigureAgentsWidget::createItem(const QString &interfaceName, const QStri
     item->setData(PathName, path);
 }
 
-bool ConfigureAgentsWidget::agentActivateState(const QString &interfaceName, const QString &pathName)
+bool ConfigureAgentsWidget::agentActivateState(const QString &interfaceName, const QString &pathName, bool &failed)
 {
+    failed = false;
     QDBusInterface interface( QLatin1String("org.freedesktop.Akonadi.Agent.") + interfaceName, pathName );
     if (interface.isValid()) {
         QDBusReply<bool> enabled = interface.call(QLatin1String("enabledAgent"));
@@ -67,9 +68,11 @@ bool ConfigureAgentsWidget::agentActivateState(const QString &interfaceName, con
             return enabled;
         } else {
             qDebug()<<interfaceName << "doesn't have enabledAgent function";
+            failed = true;
             return false;
         }
     } else {
+        failed = true;
         qDebug()<<interfaceName << "does not exist ";
     }
     return false;
@@ -90,7 +93,8 @@ void ConfigureAgentsWidget::save()
     const int numberOfElement(mListWidget->count());
     for (int i=0; i <numberOfElement; ++i) {
         QListWidgetItem *item = mListWidget->item(i);
-        changeAgentActiveState((item->checkState() == Qt::Checked), item->data(InterfaceName).toString(), item->data(PathName).toString());
+        if (item->flags() & Qt::ItemIsEnabled)
+            changeAgentActiveState((item->checkState() == Qt::Checked), item->data(InterfaceName).toString(), item->data(PathName).toString());
     }
 }
 
@@ -104,8 +108,13 @@ void ConfigureAgentsWidget::doLoadFromGlobalSettings()
     const int numberOfElement(mListWidget->count());
     for (int i=0; i <numberOfElement; ++i) {
         QListWidgetItem *item = mListWidget->item(i);
-        const bool enabled = agentActivateState(item->data(InterfaceName).toString(), item->data(PathName).toString());
+        bool failed;
+        const bool enabled = agentActivateState(item->data(InterfaceName).toString(), item->data(PathName).toString(), failed);
         item->setCheckState(enabled ? Qt::Checked : Qt::Unchecked);
+        if (failed) {
+            item->setFlags(Qt::NoItemFlags);
+            item->setBackgroundColor(Qt::red);
+        }
     }
 }
 
@@ -114,7 +123,8 @@ void ConfigureAgentsWidget::doResetToDefaultsOther()
     const int numberOfElement(mListWidget->count());
     for (int i=0; i <numberOfElement; ++i) {
         QListWidgetItem *item = mListWidget->item(i);
-        item->setCheckState(Qt::Checked);
+        if (item->flags() & Qt::ItemIsEnabled)
+            item->setCheckState(Qt::Checked);
     }
 }
 

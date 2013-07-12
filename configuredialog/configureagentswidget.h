@@ -44,7 +44,7 @@ private:
     };
 
     void changeAgentActiveState(bool enable, const QString &interfaceName, const QString &pathName);
-    bool agentActivateState(const QString &interfaceName, const QString &pathName);
+    bool agentActivateState(const QString &interfaceName, const QString &pathName, bool &failed);
     void initialize();
     void createItem(const QString &interfaceName, const QString &path, const QString &name);
     QListWidget *mListWidget;
