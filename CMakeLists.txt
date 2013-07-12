@@ -124,7 +124,7 @@ if (NOT WINCE AND KDEPIM_BUILD_DESKTOP)
      warningwidgets/attachmentmissingwarning.cpp
      job/createnewcontactjob.cpp
      warningwidgets/externaleditorwarning.cpp
-     configureagents/configureagentswidget.cpp
+     configuredialog/configureagentswidget.cpp
   )
 
   # TODO PORT
