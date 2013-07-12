@@ -34,6 +34,7 @@ ConfigureAgentsWidget::ConfigureAgentsWidget(QWidget *parent)
     lay->addWidget(mListWidget);
     setLayout(lay);
     initialize();
+    connect(mListWidget, SIGNAL(itemChanged(QListWidgetItem*)), SIGNAL(changed()));
 }
 
 ConfigureAgentsWidget::~ConfigureAgentsWidget()
