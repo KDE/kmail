@@ -42,14 +42,16 @@ ConfigureAgentsWidget::~ConfigureAgentsWidget()
 
 void ConfigureAgentsWidget::initialize()
 {
-    //TODO find a generic method.
-    createItem(QLatin1String("org...."), QLatin1String(""), i18n("Send Later Agent"));
-    //TODO
+    createItem(QLatin1String("akonadi_sendlater_agent"), QLatin1String("/SendLaterAgent"), i18n("Send Later Agent"));
+    createItem(QLatin1String("akonadi_archivemail_agent"), QLatin1String("/ArchiveMailAgent"), i18n("Achive Mail Agent"));
+    createItem(QLatin1String("akonadi_newmailnotifier_agent"), QLatin1String("/NewMailNotifierAgent"), i18n("New Mail Notifier Agent"));
+    //Add more
 }
 
 void ConfigureAgentsWidget::createItem(const QString &interfaceName, const QString &path, const QString &name)
 {
     QListWidgetItem *item = new QListWidgetItem(name, mListWidget);
+    item->setFlags(Qt::ItemIsSelectable|Qt::ItemIsUserCheckable|Qt::ItemIsEnabled);
     item->setData(InterfaceName, interfaceName);
     item->setData(PathName, path);
 }
@@ -83,10 +85,11 @@ void ConfigureAgentsWidget::changeAgentActiveState(bool enable, const QString &i
 
 void ConfigureAgentsWidget::save()
 {
-    for (int i=0; i <mListWidget->count(); ++i) {
-
+    const int numberOfElement(mListWidget->count());
+    for (int i=0; i <numberOfElement; ++i) {
+        QListWidgetItem *item = mListWidget->item(i);
+        changeAgentActiveState((item->checkState() == Qt::Checked), item->data(InterfaceName).toString(), item->data(PathName).toString());
     }
-    //TODO
 }
 
 QString ConfigureAgentsWidget::helpAnchor() const
@@ -96,17 +99,20 @@ QString ConfigureAgentsWidget::helpAnchor() const
 
 void ConfigureAgentsWidget::doLoadFromGlobalSettings()
 {
-    //TODO
-    for (int i=0; i <mListWidget->count(); ++i) {
-        //Reload
+    const int numberOfElement(mListWidget->count());
+    for (int i=0; i <numberOfElement; ++i) {
+        QListWidgetItem *item = mListWidget->item(i);
+        const bool enabled = agentActivateState(item->data(InterfaceName).toString(), item->data(PathName).toString());
+        item->setCheckState(enabled ? Qt::Checked : Qt::Unchecked);
     }
 }
 
 void ConfigureAgentsWidget::doResetToDefaultsOther()
 {
-    //TODO
-    for (int i=0; i <mListWidget->count(); ++i) {
-        //Reset to default
+    const int numberOfElement(mListWidget->count());
+    for (int i=0; i <numberOfElement; ++i) {
+        QListWidgetItem *item = mListWidget->item(i);
+        item->setCheckState(Qt::Checked);
     }
 }
 
