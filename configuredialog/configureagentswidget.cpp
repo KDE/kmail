@@ -31,6 +31,7 @@ ConfigureAgentsWidget::ConfigureAgentsWidget(QWidget *parent)
 {
     QVBoxLayout *lay = new QVBoxLayout;
     mListWidget = new QListWidget;
+    lay->addWidget(mListWidget);
     setLayout(lay);
     initialize();
 }

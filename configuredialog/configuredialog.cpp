@@ -80,6 +80,7 @@ using KPIM::RecentAddresses;
 #include "mailcommon/tag/tag.h"
 
 #include "messagecomposer/settings/messagecomposersettings.h"
+#include "configureagentswidget.h"
 #include <soprano/nao.h>
 
 // other kdenetwork headers:
@@ -4080,6 +4081,9 @@ MiscPage::MiscPage( const KComponentData &instance, QWidget *parent )
 
   mProxyTab = new ProxyTab();
   addTab( mProxyTab, i18n("Proxy" ) );
+
+  mAgentSettingsTab = new MiscPageAgentSettingsTab();
+  addTab( mAgentSettingsTab, i18n("Agent Settings" ) );
 }
 
 QString MiscPage::FolderTab::helpAnchor() const
@@ -4165,6 +4169,31 @@ void MiscPage::FolderTab::save()
   GlobalSettings::self()->setPrintSelectedText(mMMTab.mPrintEmptySelectedText->isChecked());
 }
 
+MiscPageAgentSettingsTab::MiscPageAgentSettingsTab( QWidget* parent )
+  : ConfigModuleTab( parent )
+{
+  QHBoxLayout *l = new QHBoxLayout( this );
+  l->setContentsMargins( 0 , 0, 0, 0 );
+  mConfigureAgent = new ConfigureAgentsWidget;
+  l->addWidget( mConfigureAgent );
+
+  connect( mConfigureAgent, SIGNAL(changed()), this, SLOT(slotEmitChanged()) );
+}
+
+void MiscPageAgentSettingsTab::doLoadFromGlobalSettings()
+{
+  mConfigureAgent->doLoadFromGlobalSettings();
+}
+
+void MiscPageAgentSettingsTab::save()
+{
+  mConfigureAgent->save();
+}
+
+void MiscPageAgentSettingsTab::doResetToDefaultsOther()
+{
+  mConfigureAgent->doResetToDefaultsOther();
+}
 
 MiscPageInviteTab::MiscPageInviteTab( QWidget* parent )
   : ConfigModuleTab( parent )

@@ -49,6 +49,7 @@ class ListView;
 class ConfigureDialog;
 class KIntSpinBox;
 class OrgFreedesktopAkonadiNewMailNotifierInterface;
+class ConfigureAgentsWidget;
 namespace PimCommon {
   class SimpleStringListEditor;
 }
@@ -941,6 +942,21 @@ private:
 };
 
 
+class MiscPageAgentSettingsTab : public ConfigModuleTab  {
+  Q_OBJECT
+public:
+  explicit MiscPageAgentSettingsTab( QWidget * parent=0 );
+  void save();
+  void doResetToDefaultsOther();
+
+private:
+  void doLoadFromGlobalSettings();
+
+private:
+  ConfigureAgentsWidget *mConfigureAgent;
+};
+
+
 class KMAIL_EXPORT MiscPage : public ConfigModuleWithTabs {
   Q_OBJECT
 public:
@@ -954,6 +970,7 @@ private:
   FolderTab * mFolderTab;
   InviteTab * mInviteTab;
   ProxyTab * mProxyTab;
+  MiscPageAgentSettingsTab *mAgentSettingsTab;
 };
 
 #endif // _CONFIGURE_DIALOG_PRIVATE_H_
