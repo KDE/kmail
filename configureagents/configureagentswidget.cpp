@@ -21,6 +21,9 @@
 
 #include <QVBoxLayout>
 #include <QListWidget>
+#include <QDBusInterface>
+#include <QDBusReply>
+#include <QDebug>
 
 
 ConfigureAgentsWidget::ConfigureAgentsWidget(QWidget *parent)
@@ -40,19 +43,42 @@ ConfigureAgentsWidget::~ConfigureAgentsWidget()
 void ConfigureAgentsWidget::initialize()
 {
     //TODO find a generic method.
-    createItem(QLatin1String("org...."), i18n("Send Later Agent"));
+    createItem(QLatin1String("org...."), QLatin1String(""), i18n("Send Later Agent"));
     //TODO
 }
 
-void ConfigureAgentsWidget::createItem(const QString &interfaceName, const QString &name)
+void ConfigureAgentsWidget::createItem(const QString &interfaceName, const QString &path, const QString &name)
 {
     QListWidgetItem *item = new QListWidgetItem(name, mListWidget);
     item->setData(InterfaceName, interfaceName);
+    item->setData(PathName, path);
 }
 
-void ConfigureAgentsWidget::changeAgentActiveState(bool enable, const QString &interfaceName)
+bool ConfigureAgentsWidget::agentActivateState(const QString &interfaceName, const QString &pathName)
 {
-    //Change status.
+    QDBusInterface interface( QLatin1String("org.freedesktop.Akonadi.Agent.") + interfaceName, pathName );
+    if (interface.isValid()) {
+        QDBusReply<bool> enabled = interface.call(QLatin1String("enabledAgent"));
+        if (enabled.isValid()) {
+            return enabled;
+        } else {
+            qDebug()<<interfaceName << "doesn't have enabledAgent function";
+            return false;
+        }
+    } else {
+        qDebug()<<interfaceName << "does not exist ";
+    }
+    return false;
+}
+
+void ConfigureAgentsWidget::changeAgentActiveState(bool enable, const QString &interfaceName, const QString &pathName)
+{
+    QDBusInterface interface( QLatin1String("org.freedesktop.Akonadi.Agent.") + interfaceName, pathName );
+    if (interface.isValid()) {
+        interface.call(QLatin1String("setEnableAgent"), enable);
+    } else {
+        qDebug()<<interfaceName << "does not exist ";
+    }
 }
 
 void ConfigureAgentsWidget::save()

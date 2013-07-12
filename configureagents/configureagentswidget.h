@@ -39,12 +39,14 @@ Q_SIGNALS:
 
 private:
     enum ItemData {
-        InterfaceName = Qt::UserRole + 1
+        InterfaceName = Qt::UserRole + 1,
+        PathName = Qt::UserRole + 2
     };
 
-    void changeAgentActiveState(bool enable, const QString &interfaceName);
+    void changeAgentActiveState(bool enable, const QString &interfaceName, const QString &pathName);
+    bool agentActivateState(const QString &interfaceName, const QString &pathName);
     void initialize();
-    void createItem(const QString &interfaceName, const QString &name);
+    void createItem(const QString &interfaceName, const QString &path, const QString &name);
     QListWidget *mListWidget;
 };
 
