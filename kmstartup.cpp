@@ -20,29 +20,12 @@
 #include "kmstartup.h"
 
 #include "kmkernel.h" //control center
-#include "messageviewer/utils/kcursorsaver.h"
 
 #include <klocale.h>
-#include <kcomponentdata.h>
-#include <kconfig.h>
 #include <kstandarddirs.h>
-#include <kmessagebox.h>
 #include <kglobal.h>
 #include <kaboutdata.h>
 #include <kiconloader.h>
-#include <kconfiggroup.h>
-#include <kde_file.h>
-
-#include <QHostInfo>
-
-#include <errno.h>
-#include <sys/types.h>
-#include <sys/param.h>
-#include <signal.h>
-#include <stdio.h>
-#include <stdlib.h>
-#include <unistd.h>
-#include <qfile.h>
 
 #undef Status // stupid X headers
 
