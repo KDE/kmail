@@ -183,7 +183,7 @@ int KMSystemTray::mode() const
 void KMSystemTray::updateCount()
 {
     if (mCount == 0) {
-        setIconByName( "kmail" );
+        setIconByName( QLatin1String("kmail") );
         return;
     }
     if (mShowUnreadMail) {
@@ -225,7 +225,7 @@ void KMSystemTray::updateCount()
 
         setIconByPixmap( iconPixmap );
     } else {
-        setIconByName( "mail-unread-new" );
+        setIconByName( QLatin1String("mail-unread-new") );
     }
 }
 
@@ -290,7 +290,7 @@ void KMSystemTray::slotContextMenuAboutToShow()
     }
 }
 
-void KMSystemTray::fillFoldersMenu( QMenu *menu, const QAbstractItemModel *model, const QString& parentName, const QModelIndex& parentIndex )
+void KMSystemTray::fillFoldersMenu( QMenu *menu, const QAbstractItemModel *model, const QString &parentName, const QModelIndex &parentIndex )
 {
     const int rowCount = model->rowCount( parentIndex );
     for ( int row = 0; row < rowCount; ++row ) {
@@ -321,8 +321,6 @@ void KMSystemTray::fillFoldersMenu( QMenu *menu, const QAbstractItemModel *model
         }
     }
 }
-
-
 
 void KMSystemTray::hideKMail()
 {
@@ -396,7 +394,7 @@ bool KMSystemTray::hasUnreadMail() const
     return ( mCount != 0 );
 }
 
-void KMSystemTray::slotSelectCollection(QAction*act)
+void KMSystemTray::slotSelectCollection(QAction *act)
 {
     const Akonadi::Collection::Id id = act->data().value<Akonadi::Collection::Id>();
     kmkernel->selectCollectionFromId( id );
@@ -413,7 +411,7 @@ void KMSystemTray::updateSystemTray()
     initListOfCollection();
 }
 
-void KMSystemTray::slotCollectionStatisticsChanged( Akonadi::Collection::Id id,const Akonadi::CollectionStatistics& )
+void KMSystemTray::slotCollectionStatisticsChanged( Akonadi::Collection::Id id, const Akonadi::CollectionStatistics & )
 {
     //Exclude sent mail folder
 

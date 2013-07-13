@@ -65,15 +65,15 @@
 
 using namespace KMail;
 
-MessageActions::MessageActions( KActionCollection *ac, QWidget* parent ) :
-    QObject( parent ),
-    mParent( parent ),
-    mMessageView( 0 ),
-    mRedirectAction( 0 ),
-    mPrintPreviewAction( 0 ),
-    mAsynNepomukRetriever( new MessageCore::AsyncNepomukResourceRetriever( QVector<QUrl>() <<  Soprano::Vocabulary::NAO::annotation().toString()
-                                                                           << Soprano::Vocabulary::NAO::description().toString(), this ) ),
-    mCustomTemplatesMenu( 0 )
+MessageActions::MessageActions( KActionCollection *ac, QWidget *parent )
+    : QObject( parent ),
+      mParent( parent ),
+      mMessageView( 0 ),
+      mRedirectAction( 0 ),
+      mPrintPreviewAction( 0 ),
+      mAsynNepomukRetriever( new MessageCore::AsyncNepomukResourceRetriever( QVector<QUrl>() <<  Soprano::Vocabulary::NAO::annotation().toString()
+                                                                             << Soprano::Vocabulary::NAO::description().toString(), this ) ),
+      mCustomTemplatesMenu( 0 )
 {
   mReplyActionMenu = new KActionMenu( KIcon("mail-reply-sender"), i18nc("Message->","&Reply"), this );
   ac->addAction( "message_reply_menu", mReplyActionMenu );
