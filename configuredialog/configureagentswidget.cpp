@@ -45,7 +45,7 @@ ConfigureAgentsWidget::~ConfigureAgentsWidget()
 void ConfigureAgentsWidget::initialize()
 {
     createItem(QLatin1String("akonadi_sendlater_agent"), QLatin1String("/SendLaterAgent"), i18n("Send Later Agent"));
-    createItem(QLatin1String("akonadi_archivemail_agent"), QLatin1String("/ArchiveMailAgent"), i18n("Achive Mail Agent"));
+    createItem(QLatin1String("akonadi_archivemail_agent"), QLatin1String("/ArchiveMailAgent"), i18n("Archive Mail Agent"));
     createItem(QLatin1String("akonadi_newmailnotifier_agent"), QLatin1String("/NewMailNotifierAgent"), i18n("New Mail Notifier Agent"));
     //Add more
 }
