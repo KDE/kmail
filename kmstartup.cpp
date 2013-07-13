@@ -107,7 +107,6 @@ void insertLibraryCataloguesAndIcons() {
     "libakonadi_next",
     "libakonadi-kde",
     "libakonadi-kmime",
-    "akonadicontact",
     "libkpimtextedit",
     "libkpimutils",
     "akonadicontact",
