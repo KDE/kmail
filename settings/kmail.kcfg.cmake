@@ -138,10 +138,6 @@
         <label>Specifies the version of the application that was last used (for internal use only)</label>
         <default code="true">KDEPIM_VERSION</default>
       </entry>
-      <entry name="PrintSelectedText" type="Bool" key="print-selected-text">
-        <label>Only print selected text in viewer</label>
-	<default>false</default>
-      </entry>
       <entry key="ShowMenuBar" type="Bool">
         <default>true</default>
          <!-- label and whatsthis are already provided by KStandardAction::showMenubar -->

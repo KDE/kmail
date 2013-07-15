@@ -4251,12 +4251,12 @@ MiscPagePrintingTab::MiscPagePrintingTab( QWidget * parent )
 
 void MiscPagePrintingTab::doLoadFromGlobalSettings()
 {
-  mPrintingTab.mPrintEmptySelectedText->setChecked(GlobalSettings::self()->printSelectedText());
+  mPrintingTab.mPrintEmptySelectedText->setChecked(MessageViewer::GlobalSettings::self()->printSelectedText());
 }
 
 void MiscPagePrintingTab::save()
 {
-  GlobalSettings::self()->setPrintSelectedText(mPrintingTab.mPrintEmptySelectedText->isChecked());
+  MessageViewer::GlobalSettings::self()->setPrintSelectedText(mPrintingTab.mPrintEmptySelectedText->isChecked());
 }
 
 

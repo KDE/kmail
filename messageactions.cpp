@@ -529,7 +529,7 @@ void MessageActions::printMessage(bool preview)
 {
   bool result = false;
   if ( mMessageView ) {  
-    if (GlobalSettings::self()->printSelectedText()) {
+    if (MessageViewer::GlobalSettings::self()->printSelectedText()) {
       result = mMessageView->printSelectedText(preview);
     }
   }

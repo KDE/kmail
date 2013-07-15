@@ -220,6 +220,10 @@ Key=UnreadMessage,UnreadMessageColor
 Key=FlagMessage,ImportantMessageColor
 Key=ToActMessage,TodoMessageColor
 
+Id=4.12
+File=kmail2rc
+Group=General,Print
+Key=PrintSelectedText,PrintSelectedText
 
 #
 # Important notice:
