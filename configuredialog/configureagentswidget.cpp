@@ -21,7 +21,8 @@
 #include <KDebug>
 
 #include <QVBoxLayout>
-#include <QListWidget>
+#include <QTreeWidget>
+#include <QTreeWidgetItem>
 #include <QDBusInterface>
 #include <QDBusReply>
 
@@ -30,11 +31,17 @@ ConfigureAgentsWidget::ConfigureAgentsWidget(QWidget *parent)
     : QWidget(parent)
 {
     QVBoxLayout *lay = new QVBoxLayout;
-    mListWidget = new QListWidget;
-    lay->addWidget(mListWidget);
+    mTreeWidget = new QTreeWidget;
+    QStringList headers;
+    headers<<i18n("Activate")<<i18n("Agent Name");
+    mTreeWidget->setHeaderLabels(headers);
+    mTreeWidget->setSortingEnabled(true);
+    mTreeWidget->setRootIsDecorated(false);
+
+    lay->addWidget(mTreeWidget);
     setLayout(lay);
     initialize();
-    connect(mListWidget, SIGNAL(itemChanged(QListWidgetItem*)), SIGNAL(changed()));
+    connect(mTreeWidget, SIGNAL(itemChanged(QTreeWidgetItem*,int)), SIGNAL(changed()));
 }
 
 ConfigureAgentsWidget::~ConfigureAgentsWidget()
@@ -52,10 +59,11 @@ void ConfigureAgentsWidget::initialize()
 
 void ConfigureAgentsWidget::createItem(const QString &interfaceName, const QString &path, const QString &name)
 {
-    QListWidgetItem *item = new QListWidgetItem(name, mListWidget);
+    QTreeWidgetItem *item = new QTreeWidgetItem(mTreeWidget);
+    item->setText(AgentName, name);
     item->setFlags(Qt::ItemIsSelectable|Qt::ItemIsUserCheckable|Qt::ItemIsEnabled);
-    item->setData(InterfaceName, interfaceName);
-    item->setData(PathName, path);
+    item->setData(AgentName, InterfaceName, interfaceName);
+    item->setData(AgentName, PathName, path);
 }
 
 bool ConfigureAgentsWidget::agentActivateState(const QString &interfaceName, const QString &pathName, bool &failed)
@@ -90,11 +98,11 @@ void ConfigureAgentsWidget::changeAgentActiveState(bool enable, const QString &i
 
 void ConfigureAgentsWidget::save()
 {
-    const int numberOfElement(mListWidget->count());
+    const int numberOfElement(mTreeWidget->topLevelItemCount());
     for (int i=0; i <numberOfElement; ++i) {
-        QListWidgetItem *item = mListWidget->item(i);
+        QTreeWidgetItem *item = mTreeWidget->topLevelItem(i);
         if (item->flags() & Qt::ItemIsEnabled)
-            changeAgentActiveState((item->checkState() == Qt::Checked), item->data(InterfaceName).toString(), item->data(PathName).toString());
+            changeAgentActiveState((item->checkState(AgentState) == Qt::Checked), item->data(AgentName, InterfaceName).toString(), item->data(AgentName, PathName).toString());
     }
 }
 
@@ -105,26 +113,26 @@ QString ConfigureAgentsWidget::helpAnchor() const
 
 void ConfigureAgentsWidget::doLoadFromGlobalSettings()
 {
-    const int numberOfElement(mListWidget->count());
+    const int numberOfElement(mTreeWidget->topLevelItemCount());
     for (int i=0; i <numberOfElement; ++i) {
-        QListWidgetItem *item = mListWidget->item(i);
+        QTreeWidgetItem *item = mTreeWidget->topLevelItem(i);
         bool failed;
-        const bool enabled = agentActivateState(item->data(InterfaceName).toString(), item->data(PathName).toString(), failed);
-        item->setCheckState(enabled ? Qt::Checked : Qt::Unchecked);
+        const bool enabled = agentActivateState(item->data(AgentName, InterfaceName).toString(), item->data(AgentName, PathName).toString(), failed);
+        item->setCheckState(AgentState, enabled ? Qt::Checked : Qt::Unchecked);
         if (failed) {
             item->setFlags(Qt::NoItemFlags);
-            item->setBackgroundColor(Qt::red);
+            item->setBackgroundColor(AgentState, Qt::red);
         }
     }
 }
 
 void ConfigureAgentsWidget::doResetToDefaultsOther()
 {
-    const int numberOfElement(mListWidget->count());
+    const int numberOfElement(mTreeWidget->topLevelItemCount());
     for (int i=0; i <numberOfElement; ++i) {
-        QListWidgetItem *item = mListWidget->item(i);
+        QTreeWidgetItem *item = mTreeWidget->topLevelItem(i);
         if (item->flags() & Qt::ItemIsEnabled)
-            item->setCheckState(Qt::Checked);
+            item->setCheckState(AgentState, Qt::Checked);
     }
 }
 

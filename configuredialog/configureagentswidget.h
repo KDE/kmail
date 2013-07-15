@@ -20,7 +20,7 @@
 
 #include <QWidget>
 
-class QListWidget;
+class QTreeWidget;
 
 class ConfigureAgentsWidget : public QWidget
 {
@@ -38,6 +38,11 @@ Q_SIGNALS:
     void changed();
 
 private:
+    enum ConfigureAgentsColumn {
+        AgentState = 0,
+        AgentName
+    };
+
     enum ItemData {
         InterfaceName = Qt::UserRole + 1,
         PathName = Qt::UserRole + 2
@@ -47,7 +52,7 @@ private:
     bool agentActivateState(const QString &interfaceName, const QString &pathName, bool &failed);
     void initialize();
     void createItem(const QString &interfaceName, const QString &path, const QString &name);
-    QListWidget *mListWidget;
+    QTreeWidget *mTreeWidget;
 };
 
 #endif // CONFIGUREAGENTSWIDGET_H
