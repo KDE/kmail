@@ -46,7 +46,7 @@
 
 #include "foldertreewidget.h"
 
-#include "kmknotify.h"
+#include "dialog/kmknotify.h"
 
 #include "newmailnotifierinterface.h"
 

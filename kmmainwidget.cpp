@@ -35,7 +35,7 @@
 #include "util.h"
 #include "util/mailutil.h"
 #include "kernel/mailkernel.h"
-#include "archivefolderdialog.h"
+#include "dialog/archivefolderdialog.h"
 #include "settings/globalsettings.h"
 #include "foldertreeview.h"
 #include "tag/tagactionmanager.h"
@@ -87,7 +87,7 @@
 #include "messagecore/misc/mailinglist.h"
 #include "messagecore/helpers/messagehelpers.h"
 
-#include "kmknotify.h"
+#include "dialog/kmknotify.h"
 
 // LIBKDEPIM includes
 #include "progresswidget/progressmanager.h"
