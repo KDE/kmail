@@ -67,6 +67,7 @@ using KPIM::RecentAddresses;
 #include "messageviewer/settings/globalsettings.h"
 #include "messageviewer/widgets/invitationsettings.h"
 #include "messageviewer/header/customheadersettingwidget.h"
+#include "messageviewer/widgets/printingsettings.h"
 #include "messagelist/core/settings.h"
 #include "messagelist/messagelistutil.h"
 #include "messagecore/settings/globalsettings.h"
@@ -4244,22 +4245,22 @@ void MiscPage::ProxyTab::save()
 MiscPagePrintingTab::MiscPagePrintingTab( QWidget * parent )
   : ConfigModuleTab( parent )
 {
-  mPrintingTab.setupUi( this );
-  connect( mPrintingTab.mPrintEmptySelectedText, SIGNAL(toggled(bool)),
-           this, SLOT(slotEmitChanged()) );
+  mPrintingUi = new MessageViewer::PrintingSettings( this );
+  QHBoxLayout *l = new QHBoxLayout( this );
+  l->setContentsMargins( 0 , 0, 0, 0 );
+  l->addWidget( mPrintingUi );
+  connect( mPrintingUi, SIGNAL(changed()), this, SLOT(slotEmitChanged()) );
 }
 
 void MiscPagePrintingTab::doLoadFromGlobalSettings()
 {
-  mPrintingTab.mPrintEmptySelectedText->setChecked(MessageViewer::GlobalSettings::self()->printSelectedText());
+  mPrintingUi->doLoadFromGlobalSettings();
 }
 
 void MiscPagePrintingTab::save()
 {
-  MessageViewer::GlobalSettings::self()->setPrintSelectedText(mPrintingTab.mPrintEmptySelectedText->isChecked());
+  mPrintingUi->save();
 }
-
-
 
 //----------------------------
 #include "configuredialog.moc"

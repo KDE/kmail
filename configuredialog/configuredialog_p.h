@@ -73,6 +73,7 @@ namespace MessageList {
 namespace MessageViewer {
   class ConfigureWidget;
   class InvitationSettings;
+  class PrintingSettings;
 }
 
 namespace TemplateParser {
@@ -969,7 +970,7 @@ private:
   void doLoadFromGlobalSettings();
 
 private:
-  Ui_MiscPrintingTab mPrintingTab;
+  MessageViewer::PrintingSettings* mPrintingUi;
 };
 
 
