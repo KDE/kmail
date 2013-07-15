@@ -20,6 +20,7 @@
 #include "tagactionmanager.h"
 
 #include "messageactions.h"
+#include "messagecore/nepomukutil/asyncnepomukresourceretriever.h"
 
 #include "mailcommon/tag/addtagdialog.h"
 
@@ -73,6 +74,13 @@ TagActionManager::TagActionManager( QObject *parent, KActionCollection *actionCo
   connect(watcher, SIGNAL(resourceRemoved(QUrl,QList<QUrl>)),this, SLOT(resourceRemoved(QUrl,QList<QUrl>)));
   connect(watcher, SIGNAL(propertyChanged(Nepomuk2::Resource,Nepomuk2::Types::Property,QVariantList,QVariantList)),this,SLOT(propertyChanged(Nepomuk2::Resource)));
   watcher->start();
+
+  QVector<QUrl> properties;
+  properties << Soprano::Vocabulary::NAO::hasTag();
+
+  mAsyncNepomukRetriver = new MessageCore::AsyncNepomukResourceRetriever(properties, this);
+  connect(mAsyncNepomukRetriver, SIGNAL(resourceReceived(QUrl,Nepomuk2::Resource)),
+          this, SLOT(slotLoadedResourceForUpdateActionStates(QUrl,Nepomuk2::Resource)));
 }
 
 TagActionManager::~TagActionManager()
@@ -264,12 +272,7 @@ void TagActionManager::updateActionStates( int numberOfSelectedMessages,
   if ( numberOfSelectedMessages == 1 )
   {
     Q_ASSERT( selectedItem.isValid() );
-    Nepomuk2::Resource itemResource( selectedItem.url() );
-    for ( ; it != end; ++it ) {
-      const bool hasTag = itemResource.tags().contains( Nepomuk2::Tag( it.key() ) );
-      it.value()->setChecked( hasTag );
-      it.value()->setEnabled( true );
-    }
+    mAsyncNepomukRetriver->requestResource( selectedItem.url() );
   }
   else if ( numberOfSelectedMessages > 1 ) {
     for ( ; it != end; ++it ) {
@@ -285,6 +288,18 @@ void TagActionManager::updateActionStates( int numberOfSelectedMessages,
     }
   }
 }
+
+void TagActionManager::slotLoadedResourceForUpdateActionStates(const QUrl& uri, const Nepomuk2::Resource& res)
+{
+  QMap<QString,KToggleAction*>::const_iterator it = mTagActions.constBegin();
+  QMap<QString,KToggleAction*>::const_iterator end = mTagActions.constEnd();
+  for ( ; it != end; ++it ) {
+    const bool hasTag = res.tags().contains( Nepomuk2::Tag( it.key() ) );
+    it.value()->setChecked( hasTag );
+    it.value()->setEnabled( true );
+  }
+}
+
 
 void TagActionManager::tagsChanged()
 {
