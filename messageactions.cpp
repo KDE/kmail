@@ -544,11 +544,6 @@ void MessageActions::printMessage(bool preview)
                           0,
                           mMessageView->viewer()->htmlOverride(), mMessageView->viewer()->htmlLoadExternal(),
                           useFixedFont, overrideEncoding );
-    if (MessageViewer::GlobalSettings::self()->respectExpandCollapseSettings()) {
-        if (MessageViewer::GlobalSettings::self()->showExpandQuotesMark()) {
-            command->setLeverQuote(MessageViewer::GlobalSettings::self()->collapseQuoteLevelSpin());
-        }
-    }
     command->setPrintPreview(preview);
     command->start();
   }
