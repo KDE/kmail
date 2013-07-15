@@ -161,6 +161,13 @@ p, li { white-space: pre-wrap; }
        </property>
       </widget>
      </item>
+     <item row="8" column="0" colspan="2">
+      <widget class="QCheckBox" name="mEmptyTrashCheck">
+       <property name="text">
+        <string>Empty local &amp;trash folder on program exit</string>
+       </property>
+      </widget>
+     </item>
      <item row="7" column="0">
       <widget class="QLabel" name="mStartUpFolderLabel">
        <property name="sizePolicy">
@@ -171,20 +178,6 @@ p, li { white-space: pre-wrap; }
        </property>
        <property name="text">
         <string>Open this folder on &amp;startup:</string>
-       </property>
-      </widget>
-     </item>
-     <item row="8" column="0" colspan="2">
-      <widget class="QCheckBox" name="mEmptyTrashCheck">
-       <property name="text">
-        <string>Empty local &amp;trash folder on program exit</string>
-       </property>
-      </widget>
-     </item>
-     <item row="9" column="0">
-      <widget class="QCheckBox" name="mPrintEmptySelectedText">
-       <property name="text">
-        <string>Print only selected text</string>
        </property>
       </widget>
      </item>

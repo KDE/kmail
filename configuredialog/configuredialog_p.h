@@ -27,6 +27,7 @@
 #include "ui_smimeconfiguration.h"
 #include "ui_customtemplates_base.h"
 #include "ui_miscpagemaintab.h"
+#include "ui_miscprintingmaintab.h"
 #include "ui_securitypagegeneraltab.h"
 #include "ui_securitypagemdntab.h"
 #include "ui_accountspagereceivingtab.h"
@@ -905,7 +906,7 @@ public:
   explicit MiscPageFolderTab( QWidget * parent=0 );
 
   void save();
- QString helpAnchor() const;
+  QString helpAnchor() const;
 
 private:
   void doLoadFromGlobalSettings();
@@ -956,6 +957,19 @@ private:
   ConfigureAgentsWidget *mConfigureAgent;
 };
 
+class MiscPagePrintingTab : public ConfigModuleTab  {
+  Q_OBJECT
+public:
+  explicit MiscPagePrintingTab( QWidget * parent=0 );
+  void save();
+
+private:
+  void doLoadFromGlobalSettings();
+
+private:
+  Ui_MiscPrintingTab mPrintingTab;
+};
+
 
 class KMAIL_EXPORT MiscPage : public ConfigModuleWithTabs {
   Q_OBJECT
@@ -966,11 +980,13 @@ public:
   typedef MiscPageFolderTab FolderTab;
   typedef MiscPageInviteTab InviteTab;
   typedef MiscPageProxyTab ProxyTab;
+
 private:
   FolderTab * mFolderTab;
   InviteTab * mInviteTab;
   ProxyTab * mProxyTab;
   MiscPageAgentSettingsTab *mAgentSettingsTab;
+  MiscPagePrintingTab *mPrintingTab;
 };
 
 #endif // _CONFIGURE_DIALOG_PRIVATE_H_

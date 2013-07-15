@@ -4084,9 +4084,12 @@ MiscPage::MiscPage( const KComponentData &instance, QWidget *parent )
 
   mAgentSettingsTab = new MiscPageAgentSettingsTab();
   addTab( mAgentSettingsTab, i18n("Agent Settings" ) );
+
+  mPrintingTab = new MiscPagePrintingTab();
+  addTab( mPrintingTab, i18n("Printing" ) );
 }
 
-QString MiscPage::FolderTab::helpAnchor() const
+QString MiscPageFolderTab::helpAnchor() const
 {
   return QString::fromLatin1("Sconfigure-misc-folders");
 }
@@ -4122,8 +4125,6 @@ MiscPageFolderTab::MiscPageFolderTab( QWidget * parent )
            mMMTab.mDelayedMarkTime, SLOT(setEnabled(bool)));
   connect( mMMTab.mDelayedMarkAsRead, SIGNAL(toggled(bool)),
            this , SLOT(slotEmitChanged()) );
-  connect( mMMTab.mPrintEmptySelectedText, SIGNAL(toggled(bool)),
-           this, SLOT(slotEmitChanged()) );
   connect( mMMTab.mShowPopupAfterDnD, SIGNAL(stateChanged(int)),
            this, SLOT(slotEmitChanged()) );
   connect( mOnStartupOpenFolder, SIGNAL(folderChanged(Akonadi::Collection)),
@@ -4142,7 +4143,6 @@ void MiscPage::FolderTab::doLoadFromGlobalSettings()
   mMMTab.mDelayedMarkAsRead->setChecked( MessageViewer::GlobalSettings::self()->delayedMarkAsRead() );
   mMMTab.mDelayedMarkTime->setValue( MessageViewer::GlobalSettings::self()->delayedMarkTime() );
   mMMTab.mShowPopupAfterDnD->setChecked( GlobalSettings::self()->showPopupAfterDnD() );
-  mMMTab.mPrintEmptySelectedText->setChecked(GlobalSettings::self()->printSelectedText());
   doLoadOther();
 }
 
@@ -4166,7 +4166,6 @@ void MiscPage::FolderTab::save()
   GlobalSettings::self()->setShowPopupAfterDnD( mMMTab.mShowPopupAfterDnD->isChecked() );
   GlobalSettings::self()->setExcludeImportantMailFromExpiry(
         mMMTab.mExcludeImportantFromExpiry->isChecked() );
-  GlobalSettings::self()->setPrintSelectedText(mMMTab.mPrintEmptySelectedText->isChecked());
 }
 
 MiscPageAgentSettingsTab::MiscPageAgentSettingsTab( QWidget* parent )
@@ -4236,6 +4235,25 @@ void MiscPage::ProxyTab::save()
 {
   mProxyModule->save();
 }
+
+MiscPagePrintingTab::MiscPagePrintingTab( QWidget * parent )
+  : ConfigModuleTab( parent )
+{
+  mPrintingTab.setupUi( this );
+  connect( mPrintingTab.mPrintEmptySelectedText, SIGNAL(toggled(bool)),
+           this, SLOT(slotEmitChanged()) );
+}
+
+void MiscPagePrintingTab::doLoadFromGlobalSettings()
+{
+  mPrintingTab.mPrintEmptySelectedText->setChecked(GlobalSettings::self()->printSelectedText());
+}
+
+void MiscPagePrintingTab::save()
+{
+  GlobalSettings::self()->setPrintSelectedText(mPrintingTab.mPrintEmptySelectedText->isChecked());
+}
+
 
 
 //----------------------------
