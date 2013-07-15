@@ -45,6 +45,10 @@ namespace Akonadi {
   class Item;
 }
 
+namespace MessageCore {
+  class AsyncNepomukResourceRetriever;
+}
+
 namespace KMail {
 
   class MessageActions;
@@ -92,6 +96,8 @@ namespace KMail {
         * The state of the action depends on the number of selected messages, for example
         * all actions are disabled when no message is selected.
         *
+        * This funcion is async
+        *
         * @param selectedItem if exactly one item is selected, it should be passed here
         */
       void updateActionStates( int numberOfSelectedMessages,
@@ -118,6 +124,8 @@ namespace KMail {
       void resourceRemoved(const QUrl&,const QList<QUrl>&);
       void propertyChanged(const Nepomuk2::Resource&);
       void newTagActionClicked();
+
+      void slotLoadedResourceForUpdateActionStates(const QUrl& uri, const Nepomuk2::Resource& res);
 
     private:
       void createTagAction( const MailCommon::Tag::Ptr &tag, bool addToMenu );
@@ -146,6 +154,7 @@ namespace KMail {
       QList<MailCommon::Tag::Ptr> mTags;
 
       Nepomuk2::Query::QueryServiceClient *mTagQueryClient;
+      MessageCore::AsyncNepomukResourceRetriever *mAsyncNepomukRetriver;
 
       // Uri of a newly created tag
       QString mNewTagUri;
