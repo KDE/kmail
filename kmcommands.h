@@ -389,6 +389,7 @@ public:
   void setOverrideFont( const QFont& );
   void setAttachmentStrategy( const MessageViewer::AttachmentStrategy *strategy );
   void setPrintPreview( bool preview );
+  void setLeverQuote(int level);
 
 private:
   virtual Result execute();
@@ -398,6 +399,7 @@ private:
   const MessageViewer::AttachmentStrategy *mAttachmentStrategy;
   QFont mOverrideFont;
   QString mEncoding;
+  int mLeverQuote;
   bool mHtmlOverride;
   bool mHtmlLoadExtOverride;
   bool mUseFixedFont;

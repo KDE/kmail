@@ -737,6 +737,11 @@ void KMReaderWin::slotPrintComposeResult( KJob *job )
 
     KMPrintCommand *command = new KMPrintCommand( this, printItem,0,
                                              0, mViewer->htmlOverride(), mViewer->htmlLoadExternal() ,useFixedFont, overrideEncoding );
+    if (MessageViewer::GlobalSettings::self()->respectExpandCollapseSettings()) {
+        if (MessageViewer::GlobalSettings::self()->showExpandQuotesMark()) {
+            command->setLeverQuote(MessageViewer::GlobalSettings::self()->collapseQuoteLevelSpin());
+        }
+    }
     command->setPrintPreview( preview );
     command->start();
   } else {

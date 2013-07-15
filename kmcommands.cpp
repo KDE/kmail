@@ -1076,6 +1076,7 @@ KMPrintCommand::KMPrintCommand( QWidget *parent, const Akonadi::Item &msg,
     mHeaderStyle( headerStyle ), mHeaderStrategy( headerStrategy ),
     mAttachmentStrategy( 0 ),
     mEncoding( encoding ),
+    mLeverQuote( -1 ),
     mHtmlOverride( htmlOverride ),
     mHtmlLoadExtOverride( htmlLoadExtOverride ),
     mUseFixedFont( useFixedFont ),
@@ -1105,6 +1106,11 @@ void KMPrintCommand::setPrintPreview( bool preview )
   mPrintPreview = preview;
 }
 
+void KMPrintCommand::setLeverQuote(int level)
+{
+  mLeverQuote = level;
+}
+
 KMCommand::Result KMPrintCommand::execute()
 {
   // the window will be deleted after printout is performed, in KMReaderWin::slotPrintMsg()
@@ -1119,6 +1125,7 @@ KMCommand::Result KMPrintCommand::execute()
   printerWin->setOverrideEncoding( mEncoding );
   printerWin->cssHelper()->setPrintFont( mOverrideFont );
   printerWin->setDecryptMessageOverwrite( true );
+  printerWin->viewer()->setLevelQuote(mLeverQuote);
   if ( mAttachmentStrategy != 0 )
     printerWin->setAttachmentStrategy( mAttachmentStrategy );
   if(mPrintPreview)
