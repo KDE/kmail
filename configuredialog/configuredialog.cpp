@@ -4194,6 +4194,11 @@ void MiscPageAgentSettingsTab::doResetToDefaultsOther()
   mConfigureAgent->doResetToDefaultsOther();
 }
 
+QString MiscPageAgentSettingsTab::helpAnchor() const
+{
+  return mConfigureAgent->helpAnchor();
+}
+
 MiscPageInviteTab::MiscPageInviteTab( QWidget* parent )
   : ConfigModuleTab( parent )
 {

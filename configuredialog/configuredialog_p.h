@@ -950,6 +950,8 @@ public:
   void save();
   void doResetToDefaultsOther();
 
+  QString helpAnchor() const;
+
 private:
   void doLoadFromGlobalSettings();
 
