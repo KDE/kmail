@@ -238,10 +238,24 @@ TemplateParser::CustomTemplatesMenu* MessageActions::customTemplatesMenu() const
   return mCustomTemplatesMenu;
 }
 
-void MessageActions::setCurrentMessage( const Akonadi::Item &msg )
+void MessageActions::setCurrentMessage( const Akonadi::Item &msg, const Akonadi::Item::List &items )
 {
   mMonitor->setItemMonitored( mCurrentItem, false );
   mCurrentItem = msg;
+
+  if (!items.isEmpty()) {
+    Q_FOREACH( const Akonadi::Item& item, mVisibleItems ) {
+      mMonitor->setItemMonitored( item, false );
+    }
+    if (!msg.isValid()) {
+        mVisibleItems.clear();
+    } else {
+      mVisibleItems = items;
+      Q_FOREACH( const Akonadi::Item& item, items ) {
+        mMonitor->setItemMonitored( item, true );
+      }
+    }
+  }
 
   if ( !msg.isValid() ) {
     mVisibleItems.clear();
@@ -274,18 +288,6 @@ void MessageActions::slotItemModified( const Akonadi::Item &  item, const QSet< 
     }
     updateActions();
   }
-}
-
-void MessageActions::setSelectedVisibleItems( const Akonadi::Item::List &items )
-{
-  Q_FOREACH( const Akonadi::Item& item, mVisibleItems ) {
-    mMonitor->setItemMonitored( item, false );
-  }
-  mVisibleItems = items;
-  Q_FOREACH( const Akonadi::Item& item, items ) {
-    mMonitor->setItemMonitored( item, true );
-  }
-  updateActions();
 }
 
 void MessageActions::updateActions()

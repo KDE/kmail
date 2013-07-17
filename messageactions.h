@@ -76,8 +76,7 @@ class MessageActions : public QObject
      */
     void setupForwardingActionsList( KXMLGUIClient *guiClient );
 
-    void setCurrentMessage( const Akonadi::Item &item );
-    void setSelectedVisibleItems( const Akonadi::Item::List& items );
+    void setCurrentMessage(const Akonadi::Item &item , const Akonadi::Item::List &items = Akonadi::Item::List());
 
     KActionMenu* replyMenu() const { return mReplyActionMenu; }
     KAction* replyListAction() const { return mReplyListAction; }

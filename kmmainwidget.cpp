@@ -3820,9 +3820,7 @@ void KMMainWidget::updateMessageActions( bool fast )
        mMessagePane->getSelectionStats( selectedItems, selectedVisibleItems, &allSelectedBelongToSameThread )
      )
   {
-    mMsgActions->setCurrentMessage( mMessagePane->currentItem() );
-    mMsgActions->setSelectedVisibleItems( selectedVisibleItems );
-
+    mMsgActions->setCurrentMessage( mMessagePane->currentItem(), selectedVisibleItems );
   } else {
     mMsgActions->setCurrentMessage( Akonadi::Item() );
   }
