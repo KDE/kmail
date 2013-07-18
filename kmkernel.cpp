@@ -124,11 +124,10 @@ KMKernel::KMKernel (QObject *parent, const char *name) :
   mSystemNetworkStatus ( Solid::Networking::status() ), mSystemTray(0)
 {
   Akonadi::AttributeFactory::registerAttribute<Akonadi::SearchDescriptionAttribute>();
-  QDBusConnection::sessionBus().registerService("org.kde.kmail");
+  QDBusConnection::sessionBus().registerService(QLatin1String("org.kde.kmail"));
   migrateFromKMail1();
   kDebug() << "Starting up...";
 
-  setObjectName( name );
   mySelf = this;
   the_startingUp = true;
   the_firstInstance = true;
@@ -205,7 +204,7 @@ KMKernel::KMKernel (QObject *parent, const char *name) :
            SIGNAL(transportRenamed(int,QString,QString)),
            SLOT(transportRenamed(int,QString,QString)) );
 
-  QDBusConnection::sessionBus().connect(QString(), QLatin1String( "/MailDispatcherAgent" ), "org.freedesktop.Akonadi.MailDispatcherAgent", "itemDispatchStarted",this, SLOT(itemDispatchStarted()) );
+  QDBusConnection::sessionBus().connect(QString(), QLatin1String( "/MailDispatcherAgent" ), QLatin1String("org.freedesktop.Akonadi.MailDispatcherAgent"), QLatin1String("itemDispatchStarted"),this, SLOT(itemDispatchStarted()) );
   connect( Akonadi::AgentManager::self(), SIGNAL(instanceStatusChanged(Akonadi::AgentInstance)),
            this, SLOT(instanceStatusChanged(Akonadi::AgentInstance)) );
 
@@ -251,11 +250,11 @@ void KMKernel::migrateFromKMail1()
   // Akonadi migration
   // check if there is something to migrate at all
   bool needMigration = true;
-  KConfig oldKMailConfig( "kmailrc", KConfig::NoGlobals );
+  KConfig oldKMailConfig( QLatin1String("kmailrc"), KConfig::NoGlobals );
   if ( oldKMailConfig.hasGroup("General") ||
        ( oldKMailConfig.groupList().count() == 1 &&
-         oldKMailConfig.groupList().first() == "$Version" ) ) {
-    const QFileInfo oldDataDirFileInfo( KStandardDirs::locateLocal( "data", "kmail" ) );
+         oldKMailConfig.groupList().first() == QLatin1String("$Version") ) ) {
+    const QFileInfo oldDataDirFileInfo( KStandardDirs::locateLocal( "data", QLatin1String("kmail") ) );
     if ( !oldDataDirFileInfo.exists() || !oldDataDirFileInfo.isDir() ) {
       // neither config or data, the migrator cannot do anything useful anyways
       needMigration = false;
@@ -264,7 +263,7 @@ void KMKernel::migrateFromKMail1()
     needMigration = false;
   }
 
-  KConfig config( "kmail-migratorrc" );
+  KConfig config( QLatin1String("kmail-migratorrc") );
   KConfigGroup migrationCfg( &config, "Migration" );
   if ( needMigration ) {
     const bool enabled = migrationCfg.readEntry( "Enabled", false );
@@ -296,7 +295,7 @@ void KMKernel::migrateFromKMail1()
 
       kDebug() << "Performing Akonadi migration. Good luck!";
       KProcess proc;
-      QStringList args = QStringList() << "--interactive-on-change";
+      QStringList args = QStringList() << QLatin1String("--interactive-on-change");
       const QString path = KStandardDirs::findExe( QLatin1String("kmail-migrator" ) );
       proc.setProgram( path, args );
       proc.start();
@@ -343,7 +342,7 @@ Akonadi::EntityMimeTypeFilterModel * KMKernel::collectionModel() const
 void KMKernel::setupDBus()
 {
   (void) new KmailAdaptor( this );
-  QDBusConnection::sessionBus().registerObject( "/KMail", this );
+  QDBusConnection::sessionBus().registerObject( QLatin1String("/KMail"), this );
   mMailService = new MailServiceImpl();
 }
 
@@ -351,7 +350,7 @@ static KUrl makeAbsoluteUrl( const QString& str )
 {
     KUrl url( str );
     if ( url.protocol().isEmpty() ) {
-      const QString newUrl = KCmdLineArgs::cwd() + '/' + url.fileName();
+      const QString newUrl = KCmdLineArgs::cwd() + QLatin1Char('/') + url.fileName();
       return KUrl( newUrl );
     }
     else {
@@ -382,7 +381,7 @@ bool KMKernel::handleCommandLine( bool noArgsOpensReader )
      // via D-Bus which apparently executes the application with the original
      // command line arguments and those include "-session ..." if
      // kmail/kontact was restored by session management
-     if ( subj == "ession" ) {
+     if ( subj == QLatin1String("ession") ) {
        subj.clear();
        calledWithSession = true;
      }
@@ -461,18 +460,18 @@ bool KMKernel::handleCommandLine( bool noArgsOpensReader )
     {
       if ( args->arg(i).startsWith( QLatin1String( "mailto:" ), Qt::CaseInsensitive ) ) {
         QMap<QString, QString> values = MessageCore::StringUtil::parseMailtoUrl( args->url( i ) );
-        if ( !values.value( "to" ).isEmpty() )
-          to += values.value( "to" ) + ", ";
-        if ( !values.value( "cc" ).isEmpty() )
-          cc += values.value( "cc" ) + ", ";
-        if ( !values.value( "subject" ).isEmpty() )
-          subj = values.value( "subject" );
-        if ( !values.value( "body" ).isEmpty() )
-          body = values.value( "body" );
-        if ( !values.value( "in-reply-to" ).isEmpty() ) {
-          inReplyTo = values.value( "in-reply-to" );
+        if ( !values.value( QLatin1String("to") ).isEmpty() )
+          to += values.value( QLatin1String("to") ) + QLatin1String(", ");
+        if ( !values.value( QLatin1String("cc") ).isEmpty() )
+          cc += values.value( QLatin1String("cc") ) + QLatin1String(", ");
+        if ( !values.value( QLatin1String("subject") ).isEmpty() )
+          subj = values.value( QLatin1String("subject") );
+        if ( !values.value( QLatin1String("body") ).isEmpty() )
+          body = values.value(QLatin1String( "body") );
+        if ( !values.value( QLatin1String("in-reply-to") ).isEmpty() ) {
+          inReplyTo = values.value( QLatin1String("in-reply-to") );
         }
-        const QString attach = values.value( "attachment" );
+        const QString attach = values.value( QLatin1String("attachment") );
         if ( !attach.isEmpty() ) {
             attachURLs << makeAbsoluteUrl( attach );
         }
@@ -483,7 +482,7 @@ bool KMKernel::handleCommandLine( bool noArgsOpensReader )
         if (url.isValid() && !url.protocol().isEmpty())
           attachURLs += url;
         else
-          to += tmpArg + ", ";
+          to += tmpArg + QLatin1String(", ");
       }
       mailto = true;
     }
@@ -515,7 +514,7 @@ void KMKernel::checkMail () //might create a new reader but won't show!!
    if ( !kmkernel->askToGoOnline() )
     return;
 
-  const QString resourceGroupPattern( "Resource %1" );
+  const QString resourceGroupPattern( QLatin1String("Resource %1") );
 
   const Akonadi::AgentInstance::List lst = MailCommon::Util::agentInstances();
   foreach( Akonadi::AgentInstance type, lst ) {
@@ -650,7 +649,7 @@ int KMKernel::openComposer(const QString &to, const QString &cc,
   }
 
   if (!inReplyTo.isEmpty()) {
-      KMime::Headers::InReplyTo *header = new KMime::Headers::InReplyTo( msg.get(), inReplyTo.toUtf8(), "utf-8" );
+      KMime::Headers::InReplyTo *header = new KMime::Headers::InReplyTo( msg.get(), inReplyTo, "utf-8" );
       msg->setHeader( header );
   }
 
@@ -665,7 +664,7 @@ int KMKernel::openComposer(const QString &to, const QString &cc,
         continue;
       }
     }
-    cWin->addAttachment( (*it), "" );
+    cWin->addAttachment( (*it), QString() );
   }
   if (!replyTo.isEmpty()) {
       cWin->setCurrentReplyTo(replyTo);
@@ -681,7 +680,7 @@ int KMKernel::openComposer(const QString &to, const QString &cc,
                   const QString header = (*it).left( pos ).trimmed();
                   const QString value = (*it).mid( pos+1 ).trimmed();
                   if ( !header.isEmpty() && !value.isEmpty() ) {
-                      extraCustomHeaders.insert(header.toUtf8(), value.toUtf8());
+                      extraCustomHeaders.insert(header.toUtf8(), value);
                   }
               }
           }
@@ -740,9 +739,9 @@ int KMKernel::openComposer (const QString &to, const QString &cc,
   bool iCalAutoSend = false;
   bool noWordWrap = false;
   bool isICalInvitation = false;
-  KConfigGroup options( config(), "Groupware" );
+  //KConfigGroup options( config(), "Groupware" );
   if ( !attachData.isEmpty() ) {
-    isICalInvitation = attachName == "cal.ics" &&
+    isICalInvitation = (attachName ==QLatin1String("cal.ics")) &&
       attachType == "text" &&
       attachSubType == "calendar" &&
       attachParamAttr == "method";
@@ -755,7 +754,7 @@ int KMKernel::openComposer (const QString &to, const QString &cc,
       msg->setBody( attachData );
       context = KMail::Composer::NoTemplate;
       msg->contentType()->from7BitString(
-                           QString( "text/calendar; method=%1; "
+                           QString::fromLatin1("text/calendar; method=%1; "
                                     "charset=\"utf-8\"" ).
                            arg( attachParamValue ).toLatin1() );
 
@@ -765,12 +764,12 @@ int KMKernel::openComposer (const QString &to, const QString &cc,
       // Just do what we're told to do
       msgPart = new KMime::Content;
       msgPart->contentType()->setName( attachName, "utf-8" );
-      msgPart->contentTransferEncoding()->fromUnicodeString(attachCte, "utf-8" );
+      msgPart->contentTransferEncoding()->fromUnicodeString(QLatin1String(attachCte), "utf-8" );
       msgPart->setBody( attachData ); //TODO: check if was setBodyEncoded
       msgPart->contentType()->setMimeType( attachType + '/' +  attachSubType );
-      msgPart->contentDisposition()->setParameter( attachParamAttr, attachParamValue ); //TODO: Check if the content disposition parameter needs to be set!
+      msgPart->contentDisposition()->setParameter( QLatin1String(attachParamAttr), attachParamValue ); //TODO: Check if the content disposition parameter needs to be set!
        if( ! MessageViewer::GlobalSettings::self()->exchangeCompatibleInvitations() ) {
-        msgPart->contentDisposition()->fromUnicodeString(attachContDisp, "utf-8" );
+        msgPart->contentDisposition()->fromUnicodeString(QLatin1String(attachContDisp), "utf-8" );
       }
       if( !attachCharset.isEmpty() ) {
         // kDebug() << "Set attachCharset to" << attachCharset;
@@ -891,7 +890,7 @@ QDBusObjectPath KMKernel::newMessage( const QString &to,
   win->setCollectionForNewMessage(col);
   //Add the attachment if we have one
   if ( !attachURL.isEmpty() && attachURL.isValid() ) {
-    win->addAttachment( attachURL, "" );
+      win->addAttachment( attachURL, QString() );
   }
 
   //only show window when required
@@ -911,11 +910,11 @@ int KMKernel::viewMessage( const QString & messageFile )
 
 void KMKernel::raise()
 {
-  QDBusInterface iface( "org.kde.kmail", "/MainApplication",
-                        "org.kde.KUniqueApplication",
+  QDBusInterface iface( QLatin1String("org.kde.kmail"), QLatin1String("/MainApplication"),
+                        QLatin1String("org.kde.KUniqueApplication"),
                         QDBusConnection::sessionBus());
   QDBusReply<int> reply;
-  if ( !iface.isValid() || !( reply = iface.call( "newInstance" ) ).isValid() )
+  if ( !iface.isValid() || !( reply = iface.call( QLatin1String("newInstance") ) ).isValid() )
   {
     QDBusError err = iface.lastError();
     kError() << "Communication problem with KMail. "
@@ -1036,7 +1035,7 @@ void KMKernel::checkMailOnStartup()
   if ( !kmkernel->askToGoOnline() )
     return;
 
-  const QString resourceGroupPattern( "Resource %1" );
+  const QString resourceGroupPattern( QLatin1String("Resource %1") );
 
   const Akonadi::AgentInstance::List lst = MailCommon::Util::agentInstances();
   foreach( Akonadi::AgentInstance type, lst ) {
@@ -1165,10 +1164,10 @@ void KMKernel::recoverDeadLetters()
 {
   const QString pathName = localDataPath();
   QDir dir( pathName );
-  if ( !dir.exists( "autosave" ) )
+  if ( !dir.exists( QLatin1String("autosave") ) )
     return;
 
-  dir.cd( localDataPath() + "autosave" );
+  dir.cd( localDataPath() + QLatin1String("autosave") );
   const QFileInfoList autoSaveFiles = dir.entryInfoList();
   foreach( const QFileInfo &file, autoSaveFiles ) {
     // Disregard the '.' and '..' folders
@@ -1226,7 +1225,7 @@ void KMKernel::init()
   the_firstStart = GlobalSettings::self()->firstStart();
   GlobalSettings::self()->setFirstStart( false );
   the_previousVersion = GlobalSettings::self()->previousVersion();
-  GlobalSettings::self()->setPreviousVersion( KDEPIM_VERSION );
+  GlobalSettings::self()->setPreviousVersion( QLatin1String(KDEPIM_VERSION) );
 
   readConfig();
 
@@ -1276,7 +1275,7 @@ bool KMKernel::doSessionManagement()
     int n = 1;
     while (KMMainWin::canBeRestored(n)){
       //only restore main windows! (Matthias);
-      if (KMMainWin::classNameOfToplevel(n) == "KMMainWin")
+      if (KMMainWin::classNameOfToplevel(n) == QLatin1String("KMMainWin"))
         (new KMMainWin)->restoreDockedState(n);
       n++;
     }
@@ -1440,7 +1439,7 @@ void KMKernel::slotShowConfigurationDialog()
 
   if( !mConfigureDialog ) {
     mConfigureDialog = new ConfigureDialog( 0, false );
-    mConfigureDialog->setObjectName( "configure" );
+    mConfigureDialog->setObjectName( QLatin1String("configure") );
     connect( mConfigureDialog, SIGNAL(configChanged()),
              this, SLOT(slotConfigChanged()) );
   }
@@ -1466,7 +1465,7 @@ void KMKernel::slotConfigChanged()
 //static
 QString KMKernel::localDataPath()
 {
-  return KStandardDirs::locateLocal( "data", "kmail2/" );
+  return KStandardDirs::locateLocal( "data", QLatin1String("kmail2/") );
 }
 
 //-------------------------------------------------------------------------------
@@ -1526,7 +1525,7 @@ KSharedConfig::Ptr KMKernel::config()
   assert( mySelf );
   if ( !mySelf->mConfig )
   {
-    mySelf->mConfig = KSharedConfig::openConfig( "kmail2rc" );
+    mySelf->mConfig = KSharedConfig::openConfig( QLatin1String("kmail2rc") );
     // Check that all updates have been run on the config file:
     KMail::checkConfigUpdates();
     MessageList::Core::Settings::self()->setSharedConfig( mySelf->mConfig );
@@ -1801,14 +1800,14 @@ void KMKernel::agentInstanceBroken( const Akonadi::AgentInstance &instance )
 {
   const QString summary = i18n( "Resource %1 is broken. This resource is now %2",  instance.name(), instance.isOnline() ? i18n( "online" ) : i18n( "offline" ) );
   if( xmlGuiInstance().isValid() ) {
-    KNotification::event( "akonadi-resource-broken",
+    KNotification::event( QLatin1String("akonadi-resource-broken"),
                           summary,
                           QPixmap(),
                           0,
                           KNotification::CloseOnTimeout,
                           xmlGuiInstance() );
   } else {
-    KNotification::event( "akonadi-resource-broken",
+    KNotification::event( QLatin1String("akonadi-resource-broken"),
                           summary,
                           QPixmap(),
                           0,
@@ -1847,7 +1846,7 @@ bool KMKernel::isImapFolder( const Akonadi::Collection &col, bool &isOnline ) co
 
 void KMKernel::stopAgentInstance()
 {
-  const QString resourceGroupPattern( "Resource %1" );
+  const QString resourceGroupPattern( QLatin1String("Resource %1") );
 
   const Akonadi::AgentInstance::List lst = MailCommon::Util::agentInstances();
   foreach( Akonadi::AgentInstance type, lst ) {
@@ -1913,7 +1912,7 @@ void KMKernel::openFilterDialog(bool createDummyFilter)
 {
   if ( !mFilterEditDialog ) {
     mFilterEditDialog = new MailCommon::KMFilterDialog( getKMMainWidget()->actionCollections(), 0, createDummyFilter );
-    mFilterEditDialog->setObjectName( "filterdialog" );
+    mFilterEditDialog->setObjectName( QLatin1String("filterdialog") );
   }
   mFilterEditDialog->show();
   mFilterEditDialog->raise();
@@ -1978,14 +1977,14 @@ void KMKernel::slotInstanceWarning(const Akonadi::AgentInstance &instance , cons
 {
   const QString summary = i18nc( "<source>: <error message>", "%1: %2", instance.name(), message );
   if( xmlGuiInstance().isValid() ) {
-    KNotification::event( "akonadi-instance-warning",
+    KNotification::event( QLatin1String("akonadi-instance-warning"),
                           summary,
                           QPixmap(),
                           0,
                           KNotification::CloseOnTimeout,
                           xmlGuiInstance() );
   } else {
-    KNotification::event( "akonadi-instance-warning",
+    KNotification::event( QLatin1String("akonadi-instance-warning"),
                           summary,
                           QPixmap(),
                           0,
@@ -1997,14 +1996,14 @@ void KMKernel::slotInstanceError(const Akonadi::AgentInstance &instance, const Q
 {
   const QString summary = i18nc( "<source>: <error message>", "%1: %2", instance.name(), message );
   if( xmlGuiInstance().isValid() ) {
-    KNotification::event( "akonadi-instance-error",
+    KNotification::event( QLatin1String("akonadi-instance-error"),
                           summary,
                           QPixmap(),
                           0,
                           KNotification::CloseOnTimeout,
                           xmlGuiInstance() );
   } else {
-    KNotification::event( "akonadi-instance-error",
+    KNotification::event( QLatin1String("akonadi-instance-error"),
                           summary,
                           QPixmap(),
                           0,

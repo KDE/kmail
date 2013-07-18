@@ -54,8 +54,7 @@ namespace Akonadi {
   class EntityMimeTypeFilterModel;
 }
 
-#define POP3_RESOURCE_IDENTIFIER "akonadi_pop3_resource"
-#define MAILDISPATCHER_RESOURCE_IDENTIFIER "akonadi_maildispatcher_agent"
+#define MAILDISPATCHER_RESOURCE_IDENTIFIER QLatin1String("akonadi_maildispatcher_agent")
 namespace KMail
 {
     /**
