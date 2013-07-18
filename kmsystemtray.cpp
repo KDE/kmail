@@ -68,8 +68,8 @@ KMSystemTray::KMSystemTray(QObject *parent)
 {
     kDebug() << "Initting systray";
     setToolTipTitle( i18n("KMail") );
-    setToolTipIconByName( "kmail" );
-    setIconByName( "kmail" );
+    setToolTipIconByName( QLatin1String("kmail") );
+    setIconByName( QLatin1String("kmail") );
     mIcon = KIcon( QLatin1String("mail-unread-new") );
 
     KMMainWidget * mainWidget = kmkernel->getKMMainWidget();
@@ -113,9 +113,9 @@ bool KMSystemTray::buildPopupMenu()
 
     contextMenu()->addTitle(qApp->windowIcon(), i18n("KMail"));
     QAction * action;
-    if ( ( action = mainWidget->action("check_mail") ) )
+    if ( ( action = mainWidget->action(QLatin1String("check_mail")) ) )
         contextMenu()->addAction( action );
-    if ( ( action = mainWidget->action("check_mail_in") ) )
+    if ( ( action = mainWidget->action(QLatin1String("check_mail_in")) ) )
         contextMenu()->addAction( action );
 
     mSendQueued = mainWidget->sendQueuedAction();
@@ -123,16 +123,16 @@ bool KMSystemTray::buildPopupMenu()
     contextMenu()->addAction( mainWidget->sendQueueViaMenu() );
 
     contextMenu()->addSeparator();
-    if ( ( action = mainWidget->action("new_message") ) )
+    if ( ( action = mainWidget->action(QLatin1String("new_message")) ) )
         contextMenu()->addAction( action );
-    if ( ( action = mainWidget->action("kmail_configure_kmail") ) )
+    if ( ( action = mainWidget->action(QLatin1String("kmail_configure_kmail")) ) )
         contextMenu()->addAction( action );
     contextMenu()->addSeparator();
-    if ( (action = mainWidget->action("akonadi_work_offline") ) )
+    if ( (action = mainWidget->action(QLatin1String("akonadi_work_offline")) ) )
         contextMenu()->addAction( action );
     contextMenu()->addSeparator();
 
-    if ( ( action = actionCollection()->action("file_quit") ) )
+    if ( ( action = actionCollection()->action(QLatin1String("file_quit")) ) )
         contextMenu()->addAction( action );
 
     return true;

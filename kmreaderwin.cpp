@@ -113,7 +113,7 @@ KMReaderWin::KMReaderWin(QWidget *aParent,
   vlay->setMargin( 0 );
   mViewer = new Viewer( this, mainWindow, mActionCollection );
   mViewer->setExternalWindow( true );
-  mViewer->setAppName( "KMail" );
+  mViewer->setAppName( QLatin1String("KMail") );
   connect( mViewer, SIGNAL(urlClicked(Akonadi::Item,KUrl)),
            this, SLOT(slotUrlClicked(Akonadi::Item,KUrl)) );
   connect( mViewer, SIGNAL(requestConfigSync()), kmkernel, SLOT(slotRequestConfigSync()), Qt::QueuedConnection ); // happens anyway on shutdown, so we can skip it there with using a queued connection
@@ -145,74 +145,74 @@ void KMReaderWin::createActions()
   // Message Menu
   //
   // new message to
-  mMailToComposeAction = new KAction( KIcon( "mail-message-new" ),
+  mMailToComposeAction = new KAction( KIcon( QLatin1String("mail-message-new") ),
                                       i18n( "New Message To..." ), this );
-  ac->addAction("mail_new", mMailToComposeAction );
+  ac->addAction(QLatin1String("mail_new"), mMailToComposeAction );
   mMailToComposeAction->setShortcutConfigurable( false );
   connect( mMailToComposeAction, SIGNAL(triggered(bool)),
            SLOT(slotMailtoCompose()) );
 
   // reply to
-  mMailToReplyAction = new KAction( KIcon( "mail-reply-sender" ),
+  mMailToReplyAction = new KAction( KIcon( QLatin1String("mail-reply-sender") ),
                                     i18n( "Reply To..." ), this );
-  ac->addAction( "mailto_reply", mMailToReplyAction );
+  ac->addAction( QLatin1String("mailto_reply"), mMailToReplyAction );
   mMailToReplyAction->setShortcutConfigurable( false );
   connect( mMailToReplyAction, SIGNAL(triggered(bool)),
            SLOT(slotMailtoReply()) );
 
   // forward to
-  mMailToForwardAction = new KAction( KIcon( "mail-forward" ),
+  mMailToForwardAction = new KAction( KIcon( QLatin1String("mail-forward" )),
                                       i18n( "Forward To..." ), this );
   mMailToForwardAction->setShortcutConfigurable( false );
-  ac->addAction( "mailto_forward", mMailToForwardAction );
+  ac->addAction( QLatin1String("mailto_forward"), mMailToForwardAction );
   connect( mMailToForwardAction, SIGNAL(triggered(bool)),
            SLOT(slotMailtoForward()) );
 
 
   // add to addressbook
-  mAddAddrBookAction = new KAction( KIcon( "contact-new" ),
+  mAddAddrBookAction = new KAction( KIcon(QLatin1String( "contact-new") ),
                                     i18n( "Add to Address Book" ), this );
   mAddAddrBookAction->setShortcutConfigurable( false );
-  ac->addAction( "add_addr_book", mAddAddrBookAction );
+  ac->addAction( QLatin1String("add_addr_book"), mAddAddrBookAction );
   connect( mAddAddrBookAction, SIGNAL(triggered(bool)),
            SLOT(slotMailtoAddAddrBook()) );
 
   // open in addressbook
-  mOpenAddrBookAction = new KAction( KIcon( "view-pim-contacts" ),
+  mOpenAddrBookAction = new KAction( KIcon( QLatin1String("view-pim-contacts") ),
                                      i18n( "Open in Address Book" ), this );
   mOpenAddrBookAction->setShortcutConfigurable( false );
-  ac->addAction( "openin_addr_book", mOpenAddrBookAction );
+  ac->addAction( QLatin1String("openin_addr_book"), mOpenAddrBookAction );
   connect( mOpenAddrBookAction, SIGNAL(triggered(bool)),
            SLOT(slotMailtoOpenAddrBook()) );
   // bookmark message
-  mAddBookmarksAction = new KAction( KIcon( "bookmark-new" ), i18n( "Bookmark This Link" ), this );
+  mAddBookmarksAction = new KAction( KIcon( QLatin1String("bookmark-new") ), i18n( "Bookmark This Link" ), this );
   mAddBookmarksAction->setShortcutConfigurable( false );
-  ac->addAction( "add_bookmarks", mAddBookmarksAction );
+  ac->addAction( QLatin1String("add_bookmarks"), mAddBookmarksAction );
   connect( mAddBookmarksAction, SIGNAL(triggered(bool)),
            SLOT(slotAddBookmarks()) );
 
-  mEditContactAction = new KAction( KIcon( "view-pim-contacts" ),
+  mEditContactAction = new KAction( KIcon( QLatin1String("view-pim-contacts") ),
                                      i18n( "Edit contact..." ), this );
   mEditContactAction->setShortcutConfigurable( false );
-  ac->addAction( "edit_contact", mOpenAddrBookAction );
+  ac->addAction( QLatin1String("edit_contact"), mOpenAddrBookAction );
   connect( mEditContactAction, SIGNAL(triggered(bool)),
            SLOT(slotEditContact()) );
 
   // save URL as
   mUrlSaveAsAction = new KAction( i18n( "Save Link As..." ), this );
-  ac->addAction( "saveas_url", mUrlSaveAsAction );
+  ac->addAction( QLatin1String("saveas_url"), mUrlSaveAsAction );
   mUrlSaveAsAction->setShortcutConfigurable( false );
   connect( mUrlSaveAsAction, SIGNAL(triggered(bool)), SLOT(slotUrlSave()) );
 
   // find text
-  KAction *action = new KAction(KIcon("edit-find"), i18n("&Find in Message..."), this);
-  ac->addAction("find_in_messages", action );
+  KAction *action = new KAction(KIcon(QLatin1String("edit-find")), i18n("&Find in Message..."), this);
+  ac->addAction(QLatin1String("find_in_messages"), action );
   connect(action, SIGNAL(triggered(bool)), SLOT(slotFind()));
   action->setShortcut(KStandardShortcut::find());
 
   // save Image On Disk
   mImageUrlSaveAsAction = new KAction( i18n( "Save Image On Disk..." ), this );
-  ac->addAction( "saveas_imageurl", mImageUrlSaveAsAction );
+  ac->addAction( QLatin1String("saveas_imageurl"), mImageUrlSaveAsAction );
   mImageUrlSaveAsAction->setShortcutConfigurable( false );
   connect( mImageUrlSaveAsAction, SIGNAL(triggered(bool)), SLOT(slotSaveImageOnDisk()) );
 
@@ -294,7 +294,7 @@ QString KMReaderWin::newFeaturesMD5()
   for ( int i = 0 ; i < numKMailNewFeatures ; ++i )
     str += kmailNewFeatures[i];
   KMD5 md5( str );
-  return md5.base64Digest();
+  return QLatin1String(md5.base64Digest());
 }
 
 //-----------------------------------------------------------------------------
@@ -351,18 +351,18 @@ void KMReaderWin::displayAboutPage()
          "<p>We hope that you will enjoy KMail.</p>\n"
          "<p>Thank you,</p>\n"
          "<p style='margin-bottom: 0px'>&nbsp; &nbsp; The KMail Team</p>")
-           .subs( KDEPIM_VERSION )
-           .subs( "help:/kmail/index.html" );
+           .subs( QLatin1String(KDEPIM_VERSION) )
+           .subs( QLatin1String("help:/kmail/index.html") );
 
   if ( ( numKMailNewFeatures > 1 ) || ( numKMailNewFeatures == 1 && strlen(kmailNewFeatures[0]) > 0 ) ) {
     QString featuresText =
       i18n("<p>Some of the new features in this release of KMail include "
            "(compared to KMail %1, which is part of KDE Software Compilation %2):</p>\n",
-           QString("1.13"), KDE::versionString() ); // prior KMail and KDE version
-    featuresText += "<ul>\n";
+           QLatin1String("1.13"), QLatin1String(KDE::versionString()) ); // prior KMail and KDE version
+    featuresText += QLatin1String("<ul>\n");
     for ( int i = 0 ; i < numKMailNewFeatures ; ++i )
-      featuresText += "<li>" + i18n( kmailNewFeatures[i] ) + "</li>\n";
-    featuresText += "</ul>\n";
+      featuresText += QLatin1String("<li>") + i18n( kmailNewFeatures[i] ) + QLatin1String("</li>\n");
+    featuresText += QLatin1String("</ul>\n");
     info = info.subs( featuresText );
   }
   else
@@ -383,11 +383,11 @@ void KMReaderWin::displayAboutPage()
     QString changesText =
       i18n("<p><span style='font-size:125%; font-weight:bold;'>"
            "Important changes</span> (compared to KMail %1):</p>\n",
-       QString("1.13"));
-    changesText += "<ul>\n";
+       QLatin1String("1.13"));
+    changesText += QLatin1String("<ul>\n");
     for ( int i = 0 ; i < numKMailChanges ; ++i )
       changesText += i18n("<li>%1</li>\n", i18n( kmailChanges[i] ) );
-    changesText += "</ul>\n";
+    changesText += QLatin1String("</ul>\n");
     info = info.subs( changesText );
   }
   else
@@ -405,7 +405,7 @@ void KMReaderWin::slotFind()
 void KMReaderWin::slotCopySelectedText()
 {
   QString selection = mViewer->selectedText();
-  selection.replace( QChar::Nbsp, ' ' );
+  selection.replace( QChar::Nbsp, QLatin1Char(' ') );
   QApplication::clipboard()->setText( selection );
 }
 

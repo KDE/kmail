@@ -50,7 +50,7 @@ struct Icons {
         , syncPixmap ( KIcon ( QLatin1String ( "network-connect" ) ).pixmap ( QSize ( 16, 16 ) ) )
         , errorPixmap ( KIcon ( QLatin1String ( "dialog-error" ) ).pixmap ( QSize ( 16, 16 ) ) )
         , offlinePixmap ( KIcon ( QLatin1String ( "network-disconnect" ) ).pixmap ( QSize ( 16, 16 ) ) )
-        , checkMailIcon ( KIcon ( "mail-receive" ) ) {
+        , checkMailIcon ( KIcon ( QLatin1String ("mail-receive") ) ) {
     }
     QPixmap readyPixmap, syncPixmap, errorPixmap, offlinePixmap;
     KIcon checkMailIcon;

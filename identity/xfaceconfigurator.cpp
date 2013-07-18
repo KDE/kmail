@@ -77,7 +77,7 @@ namespace KMail {
     QPushButton * mFromAddrbkBtn;
 
     vlay = new QVBoxLayout( this );
-    vlay->setObjectName( "main layout" );
+    vlay->setObjectName( QLatin1String("main layout") );
     vlay->setSpacing( KDialog::spacingHint() );
     vlay->setMargin( 0 );
     hlay = new QHBoxLayout();

@@ -40,7 +40,6 @@ UndoStack::UndoStack(int size)
       mLastId(0),
       mCachedInfo(0)
 {
-    setObjectName( "undostack" );
 }
 
 UndoStack::~UndoStack()

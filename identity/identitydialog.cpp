@@ -139,7 +139,7 @@ IdentityDialog::IdentityDialog( QWidget * parent )
     vlay->setSpacing( spacingHint() );
     vlay->setMargin( 0 );
     mTabWidget = new KTabWidget( page );
-    mTabWidget->setObjectName( "config-identity-tab" );
+    mTabWidget->setObjectName( QLatin1String("config-identity-tab") );
     vlay->addWidget( mTabWidget );
 
     tab = new QWidget( mTabWidget );
@@ -372,7 +372,7 @@ IdentityDialog::IdentityDialog( QWidget * parent )
     // "Reply-To Address" line edit and label:
     ++row;
     mReplyToEdit = new KPIM::AddresseeLineEdit( tab, true );
-    mReplyToEdit->setObjectName( "mReplyToEdit" );
+    mReplyToEdit->setObjectName( QLatin1String("mReplyToEdit") );
     glay->addWidget( mReplyToEdit, row, 1 );
     label = new QLabel ( i18n("&Reply-To address:"), tab );
     label->setBuddy( mReplyToEdit );
@@ -395,7 +395,7 @@ IdentityDialog::IdentityDialog( QWidget * parent )
     // "CC addresses" line edit and label:
     ++row;
     mCcEdit = new KPIM::AddresseeLineEdit( tab, true );
-    mCcEdit->setObjectName( "mCcEdit" );
+    mCcEdit->setObjectName( QLatin1String("mCcEdit") );
     glay->addWidget( mCcEdit, row, 1 );
     label = new QLabel( i18n("&CC addresses:"), tab );
     label->setBuddy( mCcEdit );
@@ -415,7 +415,7 @@ IdentityDialog::IdentityDialog( QWidget * parent )
     // "BCC addresses" line edit and label:
     ++row;
     mBccEdit = new KPIM::AddresseeLineEdit( tab, true );
-    mBccEdit->setObjectName( "mBccEdit" );
+    mBccEdit->setObjectName( QLatin1String("mBccEdit") );
     glay->addWidget( mBccEdit, row, 1 );
     label = new QLabel( i18n("&BCC addresses:"), tab );
     label->setBuddy( mBccEdit );
@@ -512,7 +512,7 @@ IdentityDialog::IdentityDialog( QWidget * parent )
     tlay->addWidget( mCustom, Qt::AlignLeft );
 
 #ifndef KDEPIM_MOBILE_UI
-    mWidget = new TemplateParser::TemplatesConfiguration( tab, "identity-templates" );
+    mWidget = new TemplateParser::TemplatesConfiguration( tab, QLatin1String("identity-templates") );
     mWidget->setEnabled( false );
 
     // Move the help label outside of the templates configuration widget,
@@ -567,7 +567,7 @@ IdentityDialog::IdentityDialog( QWidget * parent )
 
     connect( mTabWidget, SIGNAL(currentChanged(int)),
              SLOT(slotAboutToShow(int)) );
-    setHelp( "configure-identity", "kmail" );
+    setHelp( QLatin1String("configure-identity"), QLatin1String("kmail") );
 }
 
 IdentityDialog::~IdentityDialog() {
@@ -719,7 +719,7 @@ void IdentityDialog::slotDelayedButtonClicked( KJob *job )
                                                  i18n("Email Address Not Found in Key/Certificates"),
                                                  KStandardGuiItem::cont(),
                                                  KStandardGuiItem::cancel(),
-                                                 "warn_email_not_in_certificate" )
+                                                 QLatin1String("warn_email_not_in_certificate") )
              != KMessageBox::Continue) {
             return;
         }
@@ -762,10 +762,10 @@ void IdentityDialog::setIdentity( KPIMIdentities::Identity & ident ) {
     mAliasEdit->setStringList( ident.emailAliases() );
 
     // "Cryptography" tab:
-    mPGPSigningKeyRequester->setFingerprint( ident.pgpSigningKey() );
-    mPGPEncryptionKeyRequester->setFingerprint( ident.pgpEncryptionKey() );
-    mSMIMESigningKeyRequester->setFingerprint( ident.smimeSigningKey() );
-    mSMIMEEncryptionKeyRequester->setFingerprint( ident.smimeEncryptionKey() );
+    mPGPSigningKeyRequester->setFingerprint( QLatin1String(ident.pgpSigningKey()) );
+    mPGPEncryptionKeyRequester->setFingerprint( QLatin1String(ident.pgpEncryptionKey()) );
+    mSMIMESigningKeyRequester->setFingerprint( QLatin1String(ident.smimeSigningKey()) );
+    mSMIMEEncryptionKeyRequester->setFingerprint( QLatin1String(ident.smimeEncryptionKey()) );
 
     mPreferredCryptoMessageFormat->setCurrentIndex( format2cb(
                                                         Kleo::stringToCryptoMessageFormat( ident.preferredCryptoMessageFormat() ) ) );
@@ -859,7 +859,7 @@ void IdentityDialog::updateIdentity( KPIMIdentities::Identity & ident ) {
     ident.setSMIMESigningKey( mSMIMESigningKeyRequester->fingerprint().toLatin1() );
     ident.setSMIMEEncryptionKey( mSMIMEEncryptionKeyRequester->fingerprint().toLatin1() );
     ident.setPreferredCryptoMessageFormat(
-                Kleo::cryptoMessageFormatToString(cb2format( mPreferredCryptoMessageFormat->currentIndex() ) ) );
+                QLatin1String(Kleo::cryptoMessageFormatToString(cb2format( mPreferredCryptoMessageFormat->currentIndex() ) )) );
     // "Advanced" tab:
     ident.setReplyToAddr( mReplyToEdit->text() );
     ident.setBcc( mBccEdit->text() );

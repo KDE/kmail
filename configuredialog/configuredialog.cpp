@@ -225,12 +225,12 @@ ConfigureDialog::ConfigureDialog( QWidget *parent, bool modal )
   setButtons( Help | Default | Cancel | Apply | Ok | Reset );
   setModal( modal );
   KWindowSystem::setIcons( winId(), qApp->windowIcon().pixmap( IconSize( KIconLoader::Desktop ), IconSize( KIconLoader::Desktop ) ), qApp->windowIcon().pixmap(IconSize( KIconLoader::Small ), IconSize( KIconLoader::Small ) ) );
-  addModule( "kmail_config_identity" );
-  addModule( "kmail_config_accounts" );
-  addModule( "kmail_config_appearance" );
-  addModule( "kmail_config_composer" );
-  addModule( "kmail_config_security" );
-  addModule( "kmail_config_misc" );
+  addModule( QLatin1String("kmail_config_identity") );
+  addModule( QLatin1String("kmail_config_accounts") );
+  addModule( QLatin1String("kmail_config_appearance") );
+  addModule( QLatin1String("kmail_config_composer") );
+  addModule( QLatin1String("kmail_config_security") );
+  addModule( QLatin1String("kmail_config_misc") );
 
   connect( this, SIGNAL(okClicked()), SLOT(slotOk()) );
   connect( this, SIGNAL(applyClicked()), SLOT(slotApply()) );
@@ -447,9 +447,9 @@ AccountsPageReceivingTab::AccountsPageReceivingTab( QWidget * parent )
   mAccountsReceiving.mAccountList->agentFilterProxyModel()->addMimeTypeFilter( QString::fromLatin1("message/news") );
 #endif
 
-  mAccountsReceiving.mAccountList->agentFilterProxyModel()->addCapabilityFilter( "Resource" ); // show only resources, no agents
-  mAccountsReceiving.mAccountList->agentFilterProxyModel()->excludeCapabilities( "MailTransport" );
-  mAccountsReceiving.mAccountList->agentFilterProxyModel()->excludeCapabilities( "Notes" );
+  mAccountsReceiving.mAccountList->agentFilterProxyModel()->addCapabilityFilter( QLatin1String("Resource") ); // show only resources, no agents
+  mAccountsReceiving.mAccountList->agentFilterProxyModel()->excludeCapabilities( QLatin1String("MailTransport") );
+  mAccountsReceiving.mAccountList->agentFilterProxyModel()->excludeCapabilities( QLatin1String("Notes") );
   mAccountsReceiving.mAccountList->view()->setSelectionMode( QAbstractItemView::SingleSelection );
 
   mAccountsReceiving.mFilterAccount->setProxy( mAccountsReceiving.mAccountList->agentFilterProxyModel() );
@@ -521,7 +521,7 @@ void AccountsPageReceivingTab::slotShowMailCheckMenu( const QString &ident, cons
   bool CheckOnStartup;
   if( !mRetrievalHash.contains( ident ) ) {
 
-    const QString resourceGroupPattern( "Resource %1" );
+    const QString resourceGroupPattern( QLatin1String("Resource %1") );
     KConfigGroup group( KMKernel::self()->config(), resourceGroupPattern.arg( ident ) );
 
     IncludeInManualChecks = group.readEntry( "IncludeInManualChecks", true );
@@ -619,10 +619,10 @@ void AccountsPage::ReceivingTab::slotAddAccount()
 {
   Akonadi::AgentTypeDialog dlg( this );
   Akonadi::AgentFilterProxyModel* filter = dlg.agentFilterProxyModel();
-  filter->addMimeTypeFilter( "message/rfc822" );
-  filter->addCapabilityFilter( "Resource" );
-  filter->excludeCapabilities( "MailTransport" );
-  filter->excludeCapabilities( "Notes" );
+  filter->addMimeTypeFilter( QLatin1String("message/rfc822") );
+  filter->addCapabilityFilter( QLatin1String("Resource") );
+  filter->excludeCapabilities( QLatin1String("MailTransport") );
+  filter->excludeCapabilities( QLatin1String("Notes") );
   if ( dlg.exec() ) {
     const Akonadi::AgentType agentType = dlg.agentType();
 
@@ -698,7 +698,7 @@ void AccountsPage::ReceivingTab::save()
   mNewMailNotifierInterface->setBeepOnNewMails( mAccountsReceiving.mBeepNewMailCheck->isChecked() );
   mNewMailNotifierInterface->setVerboseMailNotification( mAccountsReceiving.mVerboseNotificationCheck->isChecked() );
 
-  const QString resourceGroupPattern( "Resource %1" );
+  const QString resourceGroupPattern( QLatin1String("Resource %1") );
   QHashIterator<QString, QSharedPointer<RetrievalOptions> > it( mRetrievalHash );
   while( it.hasNext() ) {
     it.next();
@@ -835,7 +835,6 @@ AppearancePageFontsTab::AppearancePageFontsTab( QWidget * parent )
   vlay->addSpacing( KDialog::spacingHint() );
   mFontChooser = new KFontChooser( this, KFontChooser::DisplayFrame,
                                    QStringList(), 4 );
-  mFontChooser->setObjectName( "font" );
   mFontChooser->setEnabled( false ); // since !mCustomFontCheck->isChecked()
   vlay->addWidget( mFontChooser );
   connect ( mFontChooser, SIGNAL(fontSelected(QFont)),
@@ -901,7 +900,7 @@ void AppearancePage::FontsTab::doLoadOther()
   QFont fixedFont = KGlobalSettings::fixedFont();
 
   for ( int i = 0 ; i < numFontNames ; ++i ) {
-    const QString configName = fontNames[i].configName;
+    const QString configName = QLatin1String(fontNames[i].configName);
     if ( configName == QLatin1String( "MessageListFont" ) ||
          configName == QLatin1String( "UnreadMessageFont" ) ||
          configName == QLatin1String( "ImportantMessageFont" ) ||
@@ -931,7 +930,7 @@ void AppearancePage::FontsTab::save()
   MessageCore::GlobalSettings::self()->setUseDefaultFonts( !customFonts );
 
   for ( int i = 0 ; i < numFontNames ; ++i ) {
-    const QString configName = fontNames[i].configName;
+    const QString configName = QLatin1String(fontNames[i].configName);
     if ( configName == QLatin1String( "MessageListFont" ) ||
          configName == QLatin1String( "UnreadMessageFont" ) ||
          configName == QLatin1String( "ImportantMessageFont" ) ||
@@ -1091,7 +1090,7 @@ void AppearancePage::ColorsTab::loadColor( bool loadFromConfig )
 
   for ( int i = 0 ; i < numColorNames ; ++i ) {
     if ( loadFromConfig ) {
-      const QString configName = colorNames[i].configName;
+      const QString configName = QLatin1String(colorNames[i].configName);
       if ( configName == QLatin1String( "UnreadMessageColor" ) ||
            configName == QLatin1String( "ImportantMessageColor" ) ||
            configName == QLatin1String( "TodoMessageColor" ) ) {
@@ -1128,7 +1127,7 @@ void AppearancePage::ColorsTab::save()
   for ( int i = 0 ; i < numColorNames ; ++i ) {
     // Don't write color info when we use default colors, but write
     // if it's already there:
-    const QString configName = colorNames[i].configName;
+    const QString configName = QLatin1String(colorNames[i].configName);
     if ( configName == QLatin1String( "UnreadMessageColor" ) ||
          configName == QLatin1String( "ImportantMessageColor" ) ||
          configName == QLatin1String( "TodoMessageColor" ) ) {
@@ -1367,8 +1366,8 @@ AppearancePageHeadersTab::AppearancePageHeadersTab( QWidget * parent )
   for ( int i = 0 ; i < numDateDisplayConfig ; ++i ) {
     const char *label = dateDisplayConfig[i].displayName;
     QString buttonLabel;
-    if ( QString(label).contains("%1") )
-      buttonLabel = i18n( label, DateFormatter::formatCurrentDate( dateDisplayConfig[i].dateDisplay ) );
+    if ( QString::fromLatin1(label).contains(QLatin1String("%1")) )
+      buttonLabel = i18n( label, DateFormatter::formatCurrentDate( dateDisplayConfig[i].dateDisplay) );
     else
       buttonLabel = i18n( label );
     radio = new QRadioButton( buttonLabel, mDateDisplay );
@@ -1719,12 +1718,12 @@ AppearancePageMessageTagTab::AppearancePageMessageTagTab( QWidget * parent )
 
     mTagAddButton = new KPushButton( mTagsGroupBox );
     mTagAddButton->setToolTip( i18n("Add new tag") );
-    mTagAddButton->setIcon( KIcon( "list-add" ) );
+    mTagAddButton->setIcon( KIcon( QLatin1String("list-add") ) );
     addremovegrid->addWidget( mTagAddButton );
 
     mTagRemoveButton = new KPushButton( mTagsGroupBox );
     mTagRemoveButton->setToolTip( i18n("Remove selected tag") );
-    mTagRemoveButton->setIcon( KIcon( "list-remove" ) );
+    mTagRemoveButton->setIcon( KIcon( QLatin1String("list-remove") ) );
     addremovegrid->addWidget( mTagRemoveButton );
 
     //Up and down buttons
@@ -1733,13 +1732,13 @@ AppearancePageMessageTagTab::AppearancePageMessageTagTab( QWidget * parent )
 
     mTagUpButton = new KPushButton( mTagsGroupBox );
     mTagUpButton->setToolTip( i18n("Increase tag priority") );
-    mTagUpButton->setIcon( KIcon( "arrow-up" ) );
+    mTagUpButton->setIcon( KIcon( QLatin1String("arrow-up") ) );
     mTagUpButton->setAutoRepeat( true );
     updowngrid->addWidget( mTagUpButton );
 
     mTagDownButton = new KPushButton( mTagsGroupBox );
     mTagDownButton->setToolTip( i18n("Decrease tag priority") );
-    mTagDownButton->setIcon( KIcon( "arrow-down" ) );
+    mTagDownButton->setIcon( KIcon( QLatin1String("arrow-down") ) );
     mTagDownButton->setAutoRepeat( true );
     updowngrid->addWidget( mTagDownButton );
 
@@ -2283,7 +2282,6 @@ ComposerPageGeneralTab::ComposerPageGeneralTab( QWidget * parent )
 
   mAutoRequestMDNCheck = new QCheckBox(
            GlobalSettings::self()->requestMDNItem()->label(), this);
-  mAutoRequestMDNCheck->setObjectName( "requestMDN" );
   vlay->addWidget( mAutoRequestMDNCheck );
   connect( mAutoRequestMDNCheck, SIGNAL(stateChanged(int)),
            this, SLOT(slotEmitChanged()) );
@@ -2301,7 +2299,6 @@ ComposerPageGeneralTab::ComposerPageGeneralTab( QWidget * parent )
   vlay->addLayout( hlay );
   mWordWrapCheck = new QCheckBox(
            MessageComposer::MessageComposerSettings::self()->wordWrapItem()->label(), this);
-  mWordWrapCheck->setObjectName( "wordWrap" );
   hlay->addWidget( mWordWrapCheck );
   connect( mWordWrapCheck, SIGNAL(stateChanged(int)),
            this, SLOT(slotEmitChanged()) );
@@ -2336,7 +2333,7 @@ ComposerPageGeneralTab::ComposerPageGeneralTab( QWidget * parent )
   vlay->addLayout( hlay );
   mRecipientCheck = new QCheckBox(
            GlobalSettings::self()->tooManyRecipientsItem()->label(), this);
-  mRecipientCheck->setObjectName( "kcfg_TooManyRecipients" );
+  mRecipientCheck->setObjectName( QLatin1String("kcfg_TooManyRecipients") );
   hlay->addWidget( mRecipientCheck );
   connect( mRecipientCheck, SIGNAL(stateChanged(int)),
            this, SLOT(slotEmitChanged()) );
@@ -2348,7 +2345,7 @@ ComposerPageGeneralTab::ComposerPageGeneralTab( QWidget * parent )
 
   mRecipientSpin = new KIntSpinBox( 1/*min*/, 100/*max*/, 1/*step*/,
                                     5/*init*/, this );
-  mRecipientSpin->setObjectName( "kcfg_RecipientThreshold" );
+  mRecipientSpin->setObjectName( QLatin1String("kcfg_RecipientThreshold") );
   mRecipientSpin->setEnabled( false );
   connect( mRecipientSpin, SIGNAL(valueChanged(int)),
            this, SLOT(slotEmitChanged()) );
@@ -2369,7 +2366,7 @@ ComposerPageGeneralTab::ComposerPageGeneralTab( QWidget * parent )
   hlay = new QHBoxLayout(); // inherits spacing
   vlay->addLayout( hlay );
   mAutoSave = new KIntSpinBox( 0, 60, 1, 1, this );
-  mAutoSave->setObjectName( "kcfg_AutosaveInterval" );
+  mAutoSave->setObjectName( QLatin1String("kcfg_AutosaveInterval") );
   label = new QLabel( GlobalSettings::self()->autosaveIntervalItem()->label(), this );
   label->setBuddy( mAutoSave );
   hlay->addWidget( label );
@@ -2494,7 +2491,7 @@ void ComposerPage::GeneralTab::doLoadFromGlobalSettings()
 
 void ComposerPage::GeneralTab::save() {
   MessageComposer::MessageComposerSettings::self()->setAutoTextSignature(
-         mAutoAppSignFileCheck->isChecked() ? "auto" : "manual" );
+         mAutoAppSignFileCheck->isChecked() ? QLatin1String("auto") : QLatin1String("manual") );
   MessageComposer::MessageComposerSettings::self()->setPrependSignature( mTopQuoteCheck->isChecked() );
   MessageComposer::MessageComposerSettings::self()->setDashDashSignature( mDashDashCheck->isChecked() );
   TemplateParser::GlobalSettings::self()->setSmartQuote( mSmartQuoteCheck->isChecked() );
@@ -2553,7 +2550,7 @@ ComposerPageExternalEditorTab::ComposerPageExternalEditorTab( QWidget * parent )
 
   mExternalEditorCheck = new QCheckBox(
            GlobalSettings::self()->useExternalEditorItem()->label(), this);
-  mExternalEditorCheck->setObjectName( "kcfg_UseExternalEditor" );
+  mExternalEditorCheck->setObjectName( QLatin1String("kcfg_UseExternalEditor") );
   connect( mExternalEditorCheck, SIGNAL(toggled(bool)),
            this, SLOT(slotEmitChanged()) );
 
@@ -2572,9 +2569,9 @@ ComposerPageExternalEditorTab::ComposerPageExternalEditorTab( QWidget * parent )
   label->setBuddy( mEditorRequester );
   label->setEnabled( false ); // since !mExternalEditorCheck->isChecked()
   // ### FIXME: allow only executables (x-bit when available..)
-  mEditorRequester->setFilter( "application/x-executable "
+  mEditorRequester->setFilter( QLatin1String("application/x-executable "
                                "application/x-shellscript "
-                               "application/x-desktop" );
+                               "application/x-desktop") );
   mEditorRequester->setMode(KFile::File|KFile::ExistingOnly|KFile::LocalOnly);
   mEditorRequester->setEnabled( false ); // !mExternalEditorCheck->isChecked()
   connect( mExternalEditorCheck, SIGNAL(toggled(bool)),
@@ -2844,7 +2841,7 @@ void ComposerPage::CharsetTab::slotVerifyCharset( QString & charset )
 
   if ( charset.toLower() == QString::fromLatin1("locale") ) {
     charset =  QString::fromLatin1("%1 (locale)")
-      .arg( QString( kmkernel->networkCodec()->name() ).toLower() );
+      .arg( QString::fromLatin1(kmkernel->networkCodec()->name() ).toLower() );
     return;
   }
 
@@ -2899,7 +2896,7 @@ void ComposerPage::CharsetTab::save()
 
   for ( ; it != end ; ++it )
     if ( (*it).endsWith( QLatin1String("(locale)") ) )
-      (*it) = "locale";
+      (*it) = QLatin1String("locale");
   MessageComposer::MessageComposerSettings::setPreferredCharsets( charsetList );
   MessageComposer::MessageComposerSettings::setForceReplyCharset( mKeepReplyCharsetCheck->isChecked() );
 }
@@ -2937,7 +2934,7 @@ ComposerPageHeadersTab::ComposerPageHeadersTab( QWidget * parent )
   mMessageIdSuffixEdit->setClearButtonShown( true );
   // only ASCII letters, digits, plus, minus and dots are allowed
   QRegExpValidator *messageIdSuffixValidator =
-    new QRegExpValidator( QRegExp( "[a-zA-Z0-9+-]+(?:\\.[a-zA-Z0-9+-]+)*" ), this );
+    new QRegExpValidator( QRegExp( QLatin1String("[a-zA-Z0-9+-]+(?:\\.[a-zA-Z0-9+-]+)*") ), this );
   mMessageIdSuffixEdit->setValidator( messageIdSuffixValidator );
   label = new QLabel(i18n("Custom message-&id suffix:"), this );
   label->setBuddy( mMessageIdSuffixEdit );
@@ -2962,7 +2959,6 @@ ComposerPageHeadersTab::ComposerPageHeadersTab( QWidget * parent )
   glay->setRowStretch( 2, 1 );
   glay->setColumnStretch( 1, 1 );
   mHeaderList = new ListView( this );
-  mHeaderList->setObjectName( "tagList" );
   mHeaderList->setHeaderLabels( QStringList() << i18nc("@title:column Name of the mime header.","Name")
     << i18nc("@title:column Value of the mimeheader.","Value") );
   mHeaderList->setSortingEnabled( false );
@@ -3103,7 +3099,7 @@ void ComposerPage::HeadersTab::doLoadOther()
   const int count = GlobalSettings::self()->customMessageHeadersCount();
   for ( int i = 0 ; i < count ; ++i ) {
     KConfigGroup config( KMKernel::self()->config(),
-                         QString("Mime #") + QString::number(i) );
+                         QLatin1String("Mime #") + QString::number(i) );
     const QString name  = config.readEntry( "name" );
     const QString value = config.readEntry( "value" );
     if( !name.isEmpty() ) {
@@ -3458,7 +3454,7 @@ void SecurityPage::GeneralTab::save()
   {
     if (KMessageBox::warningContinueCancel(this, i18n("Changing the global "
       "HTML setting will override all folder specific values."), QString(),
-      KStandardGuiItem::cont(), KStandardGuiItem::cancel(), "htmlMailOverride") == KMessageBox::Continue)
+      KStandardGuiItem::cont(), KStandardGuiItem::cancel(), QLatin1String("htmlMailOverride")) == KMessageBox::Continue)
     {
       MessageViewer::GlobalSettings::self()->setHtmlMail( mSGTab.mHtmlMailCheck->isChecked() );
       foreach( const Akonadi::Collection &collection, kmkernel->allFolders() ) {
@@ -3739,7 +3735,7 @@ void SecurityPage::WarningTab::slotReenableAllWarningsClicked()
 void SecurityPage::WarningTab::slotConfigureGnupg()
 {
   QPointer<KCMultiDialog> dlg( new KCMultiDialog( this ) );
-  dlg->addModule( "kleopatra_config_gnupgsystem" );
+  dlg->addModule( QLatin1String("kleopatra_config_gnupgsystem") );
   dlg->exec();
   delete dlg;
 }
@@ -3824,7 +3820,7 @@ SecurityPageSMimeTab::SecurityPageSMimeTab( QWidget * parent )
   bgHTTPProxy->addButton( mWidget->honorHTTPProxyRB );
   bgHTTPProxy->addButton( mWidget->useCustomHTTPProxyRB );
 
-  QDBusConnection::sessionBus().connect(QString(), QString(), "org.kde.kleo.CryptoConfig", "changed",this, SLOT(load()) );
+  QDBusConnection::sessionBus().connect(QString(), QString(), QLatin1String("org.kde.kleo.CryptoConfig"), QLatin1String("changed"),this, SLOT(load()) );
 }
 
 SecurityPageSMimeTab::~SecurityPageSMimeTab()
@@ -3851,29 +3847,29 @@ struct SMIMECryptoConfigEntries {
     : mConfig( config ) {
 
     // Checkboxes
-    mCheckUsingOCSPConfigEntry = configEntry( "gpgsm", "Security", "enable-ocsp", Kleo::CryptoConfigEntry::ArgType_None, false );
-    mEnableOCSPsendingConfigEntry = configEntry( "dirmngr", "OCSP", "allow-ocsp", Kleo::CryptoConfigEntry::ArgType_None, false );
-    mDoNotCheckCertPolicyConfigEntry = configEntry( "gpgsm", "Security", "disable-policy-checks", Kleo::CryptoConfigEntry::ArgType_None, false );
-    mNeverConsultConfigEntry = configEntry( "gpgsm", "Security", "disable-crl-checks", Kleo::CryptoConfigEntry::ArgType_None, false );
-    mFetchMissingConfigEntry = configEntry( "gpgsm", "Security", "auto-issuer-key-retrieve", Kleo::CryptoConfigEntry::ArgType_None, false );
+    mCheckUsingOCSPConfigEntry = configEntry( QLatin1String("gpgsm"), QLatin1String("Security"), QLatin1String("enable-ocsp"), Kleo::CryptoConfigEntry::ArgType_None, false );
+    mEnableOCSPsendingConfigEntry = configEntry( QLatin1String("dirmngr"), QLatin1String("OCSP"), QLatin1String("allow-ocsp"), Kleo::CryptoConfigEntry::ArgType_None, false );
+    mDoNotCheckCertPolicyConfigEntry = configEntry( QLatin1String("gpgsm"), QLatin1String("Security"), QLatin1String("disable-policy-checks"), Kleo::CryptoConfigEntry::ArgType_None, false );
+    mNeverConsultConfigEntry = configEntry( QLatin1String("gpgsm"), QLatin1String("Security"), QLatin1String("disable-crl-checks"), Kleo::CryptoConfigEntry::ArgType_None, false );
+    mFetchMissingConfigEntry = configEntry( QLatin1String("gpgsm"), QLatin1String("Security"), QLatin1String("auto-issuer-key-retrieve"), Kleo::CryptoConfigEntry::ArgType_None, false );
     // dirmngr-0.9.0 options
-    mIgnoreServiceURLEntry = configEntry( "dirmngr", "OCSP", "ignore-ocsp-service-url", Kleo::CryptoConfigEntry::ArgType_None, false );
-    mIgnoreHTTPDPEntry = configEntry( "dirmngr", "HTTP", "ignore-http-dp", Kleo::CryptoConfigEntry::ArgType_None, false );
-    mDisableHTTPEntry = configEntry( "dirmngr", "HTTP", "disable-http", Kleo::CryptoConfigEntry::ArgType_None, false );
-    mHonorHTTPProxy = configEntry( "dirmngr", "HTTP", "honor-http-proxy", Kleo::CryptoConfigEntry::ArgType_None, false );
+    mIgnoreServiceURLEntry = configEntry( QLatin1String("dirmngr"), QLatin1String("OCSP"), QLatin1String("ignore-ocsp-service-url"), Kleo::CryptoConfigEntry::ArgType_None, false );
+    mIgnoreHTTPDPEntry = configEntry( QLatin1String("dirmngr"), QLatin1String("HTTP"), QLatin1String("ignore-http-dp"), Kleo::CryptoConfigEntry::ArgType_None, false );
+    mDisableHTTPEntry = configEntry(QLatin1String( "dirmngr"), QLatin1String("HTTP"), QLatin1String("disable-http"), Kleo::CryptoConfigEntry::ArgType_None, false );
+    mHonorHTTPProxy = configEntry( QLatin1String("dirmngr"), QLatin1String("HTTP"), QLatin1String("honor-http-proxy"), Kleo::CryptoConfigEntry::ArgType_None, false );
 
-    mIgnoreLDAPDPEntry = configEntry( "dirmngr", "LDAP", "ignore-ldap-dp", Kleo::CryptoConfigEntry::ArgType_None, false );
-    mDisableLDAPEntry = configEntry( "dirmngr", "LDAP", "disable-ldap", Kleo::CryptoConfigEntry::ArgType_None, false );
+    mIgnoreLDAPDPEntry = configEntry( QLatin1String("dirmngr"), QLatin1String("LDAP"), QLatin1String("ignore-ldap-dp"), Kleo::CryptoConfigEntry::ArgType_None, false );
+    mDisableLDAPEntry = configEntry( QLatin1String("dirmngr"), QLatin1String("LDAP"), QLatin1String("disable-ldap"), Kleo::CryptoConfigEntry::ArgType_None, false );
     // Other widgets
-    mOCSPResponderURLConfigEntry = configEntry( "dirmngr", "OCSP", "ocsp-responder", Kleo::CryptoConfigEntry::ArgType_String, false );
-    mOCSPResponderSignature = configEntry( "dirmngr", "OCSP", "ocsp-signer", Kleo::CryptoConfigEntry::ArgType_String, false );
-    mCustomHTTPProxy = configEntry( "dirmngr", "HTTP", "http-proxy", Kleo::CryptoConfigEntry::ArgType_String, false );
-    mCustomLDAPProxy = configEntry( "dirmngr", "LDAP", "ldap-proxy", Kleo::CryptoConfigEntry::ArgType_String, false );
+    mOCSPResponderURLConfigEntry = configEntry( QLatin1String("dirmngr"), QLatin1String("OCSP"), QLatin1String("ocsp-responder"), Kleo::CryptoConfigEntry::ArgType_String, false );
+    mOCSPResponderSignature = configEntry( QLatin1String("dirmngr"), QLatin1String("OCSP"), QLatin1String("ocsp-signer"), Kleo::CryptoConfigEntry::ArgType_String, false );
+    mCustomHTTPProxy = configEntry( QLatin1String("dirmngr"), QLatin1String("HTTP"), QLatin1String("http-proxy"), Kleo::CryptoConfigEntry::ArgType_String, false );
+    mCustomLDAPProxy = configEntry( QLatin1String("dirmngr"), QLatin1String("LDAP"), QLatin1String("ldap-proxy"), Kleo::CryptoConfigEntry::ArgType_String, false );
   }
 
-  Kleo::CryptoConfigEntry* configEntry( const char* componentName,
-                                        const char* groupName,
-                                        const char* entryName,
+  Kleo::CryptoConfigEntry* configEntry(const QString &componentName,
+                                        const QString &groupName,
+                                        const QString &entryName,
                                         int argType,
                                         bool isList );
 
@@ -4043,19 +4039,19 @@ void SecurityPage::SMimeTab::save()
   mConfig->sync( true );
 }
 
-Kleo::CryptoConfigEntry* SMIMECryptoConfigEntries::configEntry( const char* componentName,
-                                                                const char* groupName,
-                                                                const char* entryName,
+Kleo::CryptoConfigEntry* SMIMECryptoConfigEntries::configEntry( const QString &componentName,
+                                                                const QString &groupName,
+                                                                const QString &entryName,
                                                                 int /*Kleo::CryptoConfigEntry::ArgType*/ argType,
                                                                 bool isList )
 {
     Kleo::CryptoConfigEntry* entry = mConfig->entry( componentName, groupName, entryName );
     if ( !entry ) {
-        kWarning() << QString("Backend error: gpgconf doesn't seem to know the entry for %1/%2/%3" ).arg( componentName, groupName, entryName );
+        kWarning() << QString::fromLatin1("Backend error: gpgconf doesn't seem to know the entry for %1/%2/%3" ).arg( componentName, groupName, entryName );
         return 0;
     }
     if( entry->argType() != argType || entry->isList() != isList ) {
-        kWarning() << QString("Backend error: gpgconf has wrong type for %1/%2/%3: %4 %5" ).arg( componentName, groupName, entryName ).arg( entry->argType() ).arg( entry->isList() );
+        kWarning() << QString::fromLatin1("Backend error: gpgconf has wrong type for %1/%2/%3: %4 %5" ).arg( componentName, groupName, entryName ).arg( entry->argType() ).arg( entry->isList() );
         return 0;
     }
     return entry;
@@ -4229,7 +4225,7 @@ void MiscPage::InviteTab::doResetToDefaultsOther()
 MiscPageProxyTab::MiscPageProxyTab( QWidget* parent )
   : ConfigModuleTab( parent )
 {
-  KCModuleInfo proxyInfo("proxy.desktop");
+  KCModuleInfo proxyInfo(QLatin1String("proxy.desktop"));
   mProxyModule = new KCModuleProxy(proxyInfo, parent);
   QHBoxLayout *l = new QHBoxLayout( this );
   l->setContentsMargins( 0 , 0, 0, 0 );
