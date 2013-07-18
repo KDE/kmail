@@ -63,7 +63,7 @@ void CollectionTemplatesPage::init()
     connect(mCustom, SIGNAL(clicked(bool)), this, SLOT(slotChanged()));
     topItems->addWidget( mCustom, Qt::AlignLeft );
 
-    mWidget = new TemplateParser::TemplatesConfiguration( this, "folder-templates" );
+    mWidget = new TemplateParser::TemplatesConfiguration( this, QLatin1String("folder-templates") );
     connect(mWidget, SIGNAL(changed()), this, SLOT(slotChanged()));
     mWidget->setEnabled( false );
 

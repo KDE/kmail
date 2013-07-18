@@ -170,7 +170,7 @@ void CollectionMaintenancePage::slotReindexing()
 {
     //Be sure to remove collection resources before to reindex.
     Nepomuk2::removeResources( QList <QUrl>() << mCurrentCollection.url() );
-    QDBusInterface interfaceNepomukFeeder( "org.freedesktop.Akonadi.Agent.akonadi_nepomuk_feeder", "/" );
+    QDBusInterface interfaceNepomukFeeder( QLatin1String("org.freedesktop.Akonadi.Agent.akonadi_nepomuk_feeder"), QLatin1String("/") );
     if(interfaceNepomukFeeder.isValid()) {
         interfaceNepomukFeeder.asyncCall(QLatin1String("forceReindexCollection"),(qlonglong)mCurrentCollection.id());
     }

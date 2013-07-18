@@ -117,7 +117,7 @@ class KMAIL_EXPORT KMMainWidget : public QWidget
     QSharedPointer<MailCommon::FolderCollection> currentFolder() const;
 
     static void cleanup();
-    QAction *action( const char *name ) { return mActionCollection->action( name ); }
+    QAction *action( const QString &name ) { return mActionCollection->action( name ); }
     KActionMenu *filterMenu() const { return mFilterMenu; }
     KActionMenu *mailingListActionMenu() const { return mMsgActions->mailingListActionMenu(); }
     KAction *editAction() const { return mMsgActions->editAction(); }

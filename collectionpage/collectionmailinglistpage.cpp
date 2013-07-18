@@ -97,7 +97,7 @@ void CollectionMailingListPage::init(const Akonadi::Collection & col)
 
     QLabel *label = new QLabel( i18n("Mailing list description:"), mGroupWidget );
     groupLayout->addWidget( label, 4, 0 );
-    mMLId = new KSqueezedTextLabel( "", mGroupWidget );
+    mMLId = new KSqueezedTextLabel( QString(), mGroupWidget );
     mMLId->setTextElideMode( Qt::ElideRight );
     groupLayout->addWidget( mMLId, 4, 1, 1, 2 );
 
@@ -279,7 +279,7 @@ void CollectionMailingListPage::fillMLFromWidgets()
         if ( !(*it).startsWith(QLatin1String("http:")) && !(*it).startsWith(QLatin1String("https:")) &&
              !(*it).startsWith(QLatin1String("mailto:")) && ( (*it).contains(QLatin1Char('@')) ) ) {
             listChanged = true;
-            newList << "mailto:" + *it;
+            newList << QLatin1String("mailto:") + *it;
         }
         else {
             newList << *it;

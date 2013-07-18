@@ -55,13 +55,13 @@ KMMainWin::KMMainWin(QWidget *)
     : KXmlGuiWindow( 0 ),
       mReallyClose( false )
 {
-  setObjectName( "kmail-mainwindow#" );
+  setObjectName( QLatin1String("kmail-mainwindow#") );
   // Set this to be the group leader for all subdialogs - this means
   // modal subdialogs will only affect this dialog, not the other windows
   setAttribute( Qt::WA_GroupLeader );
 
-  KAction *action  = new KAction( KIcon("window-new"), i18n("New &Window"), this );
-  actionCollection()->addAction( "new_mail_client", action );
+  KAction *action  = new KAction( KIcon(QLatin1String("window-new")), i18n("New &Window"), this );
+  actionCollection()->addAction( QLatin1String("new_mail_client"), action );
   connect( action, SIGNAL(triggered(bool)), SLOT(slotNewMailReader()) );
 
   resize( 700, 500 ); // The default size
@@ -87,7 +87,7 @@ KMMainWin::KMMainWin(QWidget *)
 
 
   KStandardAction::quit( this, SLOT(slotQuit()), actionCollection() );
-  createGUI( "kmmainwin.rc" );
+  createGUI( QLatin1String("kmmainwin.rc") );
 
   //must be after createGUI, otherwise e.g toolbar settings are not loaded
   applyMainWindowSettings( KMKernel::self()->config()->group( "Main Window") );
@@ -115,7 +115,7 @@ void KMMainWin::displayStatusMsg( const QString& aText )
   const int statusWidth = statusBar()->width() - mLittleProgress->width()
                     - fontMetrics().maxWidth();
 
-  const QString text = fontMetrics().elidedText( ' ' + aText, Qt::ElideRight,
+  const QString text = fontMetrics().elidedText( QLatin1Char(' ') + aText, Qt::ElideRight,
                                            statusWidth );
 
   // ### FIXME: We should disable richtext/HTML (to avoid possible denial of service attacks),
@@ -139,7 +139,7 @@ void KMMainWin::slotToggleMenubar(bool dontShowWarning)
                 KMessageBox::information( this,
                                           i18n( "<qt>This will hide the menu bar completely."
                                                 " You can show it again by typing %1.</qt>", accel ),
-                                          "Hide menu bar", "HideMenuBarWarning" );
+                                          i18n("Hide menu bar"), QLatin1String("HideMenuBarWarning") );
             }
             menuBar()->hide();
         }
@@ -174,7 +174,7 @@ void KMMainWin::slotUpdateGui()
   mKMMainWidget->clearFilterActions();
   mKMMainWidget->tagActionManager()->clearActions();
 
-  createGUI("kmmainwin.rc");
+  createGUI(QLatin1String("kmmainwin.rc"));
   applyMainWindowSettings(KMKernel::self()->config()->group( "Main Window") );
 
   // plug dynamically created actions again
