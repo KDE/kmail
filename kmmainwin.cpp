@@ -139,7 +139,7 @@ void KMMainWin::slotToggleMenubar(bool dontShowWarning)
                 KMessageBox::information( this,
                                           i18n( "<qt>This will hide the menu bar completely."
                                                 " You can show it again by typing %1.</qt>", accel ),
-                                          "Hide menu bar", "HideMenuBarWarning" );
+                                          i18n("Hide menu bar"), "HideMenuBarWarning" );
             }
             menuBar()->hide();
         }
