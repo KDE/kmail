@@ -2417,7 +2417,7 @@ ComposerPageGeneralTab::ComposerPageGeneralTab( QWidget * parent )
   connect( mMaximumRecentAddress, SIGNAL(valueChanged(int)),
            this, SLOT(slotEmitChanged()) );
 
-  label = new QLabel("Maximum recent address:");
+  label = new QLabel(i18n("Maximum recent address:"));
   hlay->addWidget(label);
   hlay->addWidget(mMaximumRecentAddress);
 
