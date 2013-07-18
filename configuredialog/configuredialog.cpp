@@ -2889,8 +2889,6 @@ void ComposerPage::CharsetTab::doResetToDefaultsOther()
 
 void ComposerPage::CharsetTab::save()
 {
-  KConfigGroup composer( KMKernel::self()->config(), "Composer" );
-
   QStringList charsetList = mCharsetListEditor->stringList();
   QStringList::Iterator it = charsetList.begin();
   QStringList::Iterator end = charsetList.end();
