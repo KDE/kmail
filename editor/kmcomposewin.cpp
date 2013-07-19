@@ -2835,8 +2835,8 @@ void KMComposeWin::slotSendLater()
                 mComposerBase->setSendLaterInfo(info);
                 if (info->isRecurrence()) {
                     doSend( MessageComposer::MessageSender::SendLater, MessageComposer::MessageSender::SaveInTemplates );
-                } else { //TODO verify it.
-                    doSend( MessageComposer::MessageSender::SendLater, MessageComposer::MessageSender::SaveInTemplates );
+                } else {
+                    doSend( MessageComposer::MessageSender::SendLater, MessageComposer::MessageSender::SaveInDrafts );
                 }
                 break;
             }
