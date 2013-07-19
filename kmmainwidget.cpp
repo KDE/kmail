@@ -56,6 +56,7 @@
 #include "archivemailagentinterface.h"
 #include "job/createnewcontactjob.h"
 #include "sendlateragentinterface.h"
+#include "folderarchiveagentinterface.h"
 
 #include "pimcommon/acl/collectionaclpage.h"
 #include "mailcommon/collectionpage/collectiongeneralpage.h"
@@ -3146,6 +3147,13 @@ void KMMainWidget::setupActions()
     connect(action, SIGNAL(triggered(bool)), SLOT(slotConfigureSendLater()));
   }
 
+  {
+    KAction *action = new KAction(i18n("&Configure Folder Archive Agent..."), this);
+    actionCollection()->addAction(QLatin1String("tools_configure_folderarchiving"), action );
+    connect(action, SIGNAL(triggered(bool)), SLOT(slotConfigureFolderArchiving()));
+  }
+
+
   // Disable the standard action delete key sortcut.
   KAction* const standardDelAction = akonadiStandardAction(  Akonadi::StandardActionManager::DeleteItems );
   standardDelAction->setShortcut( QKeySequence() );
@@ -4788,6 +4796,16 @@ void KMMainWidget::slotConfigureSendLater()
     }
 }
 
+void KMMainWidget::slotConfigureFolderArchiving()
+{
+    OrgFreedesktopAkonadiFolderArchiveAgentInterface folderArchiveInterface(QLatin1String("org.freedesktop.Akonadi.FolderArchiveAgent"), QLatin1String("/FolderArchiveAgent"),QDBusConnection::sessionBus(), this);
+    if (folderArchiveInterface.isValid()) {
+        folderArchiveInterface.showConfigureDialog( (qlonglong)winId() );
+    } else {
+        KMessageBox::error(this,i18n("Archive Folder Agent was not registered."));
+    }
+}
+
 void KMMainWidget::updatePaneTagComboBox()
 {
   if (mMessagePane) {
@@ -4832,3 +4850,5 @@ void KMMainWidget::slotMoveMessageToTrash()
         command->start();
     }
 }
+
+

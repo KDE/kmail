@@ -430,6 +430,7 @@ class KMAIL_EXPORT KMMainWidget : public QWidget
     void slotCreateAddressBookContact();
     void slotOpenRecentMsg(const KUrl& url);
     void slotConfigureSendLater();
+    void slotConfigureFolderArchiving();
 
   private:
     void checkAkonadiServerManagerState();
