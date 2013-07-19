@@ -23,6 +23,7 @@
 class QTreeWidget;
 class QSplitter;
 class KTextBrowser;
+class QTreeWidgetItem;
 class ConfigureAgentsWidget : public QWidget
 {
     Q_OBJECT
@@ -34,6 +35,9 @@ public:
     QString helpAnchor() const;
     void doLoadFromGlobalSettings();
     void doResetToDefaultsOther();
+
+private Q_SLOTS:
+    void slotItemClicked(QTreeWidgetItem *item);
 
 Q_SIGNALS:
     void changed();
@@ -53,8 +57,9 @@ private:
     void changeAgentActiveState(bool enable, const QString &interfaceName, const QString &pathName);
     bool agentActivateState(const QString &interfaceName, const QString &pathName, bool &failed);
     void initialize();
-    QString description(const QString &desktopFile);
+    void addInfos(QTreeWidgetItem *item, const QString &desktopFile);
     void createItem(const QString &interfaceName, const QString &path, const QString &name);
+    QStringList mAgentPathList;
     QTreeWidget *mTreeWidget;
     QSplitter *mSplitter;
     KTextBrowser *mDescription;
