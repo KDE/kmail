@@ -21,7 +21,8 @@
 #include <QWidget>
 
 class QTreeWidget;
-
+class QSplitter;
+class KTextBrowser;
 class ConfigureAgentsWidget : public QWidget
 {
     Q_OBJECT
@@ -45,14 +46,18 @@ private:
 
     enum ItemData {
         InterfaceName = Qt::UserRole + 1,
-        PathName = Qt::UserRole + 2
+        PathName = Qt::UserRole + 2,
+        Description = Qt::UserRole + 3
     };
 
     void changeAgentActiveState(bool enable, const QString &interfaceName, const QString &pathName);
     bool agentActivateState(const QString &interfaceName, const QString &pathName, bool &failed);
     void initialize();
+    QString description(const QString &desktopFile);
     void createItem(const QString &interfaceName, const QString &path, const QString &name);
     QTreeWidget *mTreeWidget;
+    QSplitter *mSplitter;
+    KTextBrowser *mDescription;
 };
 
 #endif // CONFIGUREAGENTSWIDGET_H

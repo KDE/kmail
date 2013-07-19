@@ -19,18 +19,23 @@
 
 #include <KLocale>
 #include <KDebug>
+#include <KTextBrowser>
 
 #include <QVBoxLayout>
 #include <QTreeWidget>
 #include <QTreeWidgetItem>
 #include <QDBusInterface>
 #include <QDBusReply>
+#include <QSplitter>
 
 
 ConfigureAgentsWidget::ConfigureAgentsWidget(QWidget *parent)
     : QWidget(parent)
 {
-    QVBoxLayout *lay = new QVBoxLayout;
+    QHBoxLayout *lay = new QHBoxLayout;
+    mSplitter = new QSplitter;
+    lay->addWidget(mSplitter);
+
     mTreeWidget = new QTreeWidget;
     QStringList headers;
     headers<<i18n("Activate")<<i18n("Agent Name");
@@ -38,7 +43,11 @@ ConfigureAgentsWidget::ConfigureAgentsWidget(QWidget *parent)
     mTreeWidget->setSortingEnabled(true);
     mTreeWidget->setRootIsDecorated(false);
 
-    lay->addWidget(mTreeWidget);
+    mSplitter->addWidget(mTreeWidget);
+    mDescription = new KTextBrowser;
+    mDescription->setReadOnly(true);
+    mSplitter->addWidget(mDescription);
+
     setLayout(lay);
     initialize();
     connect(mTreeWidget, SIGNAL(itemChanged(QTreeWidgetItem*,int)), SIGNAL(changed()));
@@ -47,6 +56,12 @@ ConfigureAgentsWidget::ConfigureAgentsWidget(QWidget *parent)
 ConfigureAgentsWidget::~ConfigureAgentsWidget()
 {
 
+}
+
+QString ConfigureAgentsWidget::description(const QString &desktopFile)
+{
+    //TODO
+    return QString();
 }
 
 void ConfigureAgentsWidget::initialize()
@@ -65,6 +80,8 @@ void ConfigureAgentsWidget::createItem(const QString &interfaceName, const QStri
     item->setFlags(Qt::ItemIsSelectable|Qt::ItemIsUserCheckable|Qt::ItemIsEnabled);
     item->setData(AgentName, InterfaceName, interfaceName);
     item->setData(AgentName, PathName, path);
+    //TODO
+    item->setData(AgentName, Description, description(QString()));
 }
 
 bool ConfigureAgentsWidget::agentActivateState(const QString &interfaceName, const QString &pathName, bool &failed)
