@@ -2830,6 +2830,9 @@ void KMComposeWin::slotSendLater()
             case SendLater::SendLaterDialog::Canceled:
                 return;
                 break;
+            case SendLater::SendLaterDialog::PutInOutbox:
+                doSend( MessageComposer::MessageSender::SendLater );
+                break;
             case SendLater::SendLaterDialog::SendDeliveryAtTime:
             {
                 mComposerBase->setSendLaterInfo(info);
