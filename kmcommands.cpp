@@ -481,7 +481,7 @@ KMAddBookmarksCommand::KMAddBookmarksCommand( const KUrl &url, QWidget *parent )
 KMCommand::Result KMAddBookmarksCommand::execute()
 {
   const QString filename = KStandardDirs::locateLocal( "data", QString::fromLatin1("konqueror/bookmarks.xml") );
-  KBookmarkManager *bookManager = KBookmarkManager::managerForFile( filename, "konqueror" );
+  KBookmarkManager *bookManager = KBookmarkManager::managerForFile( filename, QLatin1String("konqueror") );
   KBookmarkGroup group = bookManager->root();
   group.addBookmark( mUrl.path(), KUrl( mUrl ) );
   if( bookManager->save() ) {
@@ -695,8 +695,8 @@ KMOpenMsgCommand::KMOpenMsgCommand( QWidget *parent, const KUrl & url,
 KMCommand::Result KMOpenMsgCommand::execute()
 {
   if ( mUrl.isEmpty() ) {
-    mUrl = KFileDialog::getOpenUrl( KUrl( "kfiledialog:///OpenMessage" ),
-                                    "message/rfc822 application/mbox",
+    mUrl = KFileDialog::getOpenUrl( KUrl( QLatin1String("kfiledialog:///OpenMessage") ),
+                                    QLatin1String("message/rfc822 application/mbox"),
                                     parentWidget(), i18n("Open Message") );
   }
   if ( mUrl.isEmpty() ) {
@@ -722,7 +722,7 @@ void KMOpenMsgCommand::slotDataArrived( KIO::Job *, const QByteArray & data )
   if ( data.isEmpty() )
     return;
 
-  mMsgString.append( data.data() );
+  mMsgString.append( QString::fromLatin1(data.data()) );
 }
 
 void KMOpenMsgCommand::slotResult( KJob *job )
@@ -736,7 +736,7 @@ void KMOpenMsgCommand::slotResult( KJob *job )
   else {
     int startOfMessage = 0;
     if ( mMsgString.startsWith( QLatin1String( "From " ) ) ) {
-      startOfMessage = mMsgString.indexOf( '\n' );
+      startOfMessage = mMsgString.indexOf( QLatin1Char('\n') );
       if ( startOfMessage == -1 ) {
         KMessageBox::sorry( parentWidget(),
                             i18n( "The file does not contain a message." ) );
@@ -755,7 +755,7 @@ void KMOpenMsgCommand::slotResult( KJob *job )
     }
     // check for multiple messages in the file
     bool multipleMessages = true;
-    int endOfMessage = mMsgString.indexOf( "\nFrom " );
+    int endOfMessage = mMsgString.indexOf( QLatin1String("\nFrom ") );
     if ( endOfMessage == -1 ) {
       endOfMessage = mMsgString.length();
       multipleMessages = false;
@@ -1007,7 +1007,7 @@ KMCommand::Result KMRedirectCommand::execute()
                                                           : MailCommon::RedirectDialog::SendLater;
 
   MessageViewer::AutoQPointer<MailCommon::RedirectDialog> dlg( new MailCommon::RedirectDialog( sendMode, parentWidget() ) );
-  dlg->setObjectName( "redirect" );
+  dlg->setObjectName( QLatin1String("redirect") );
   if ( dlg->exec() == QDialog::Rejected || !dlg ) {
     return Failed;
   }
@@ -1281,7 +1281,7 @@ KMCommand::Result KMFilterActionCommand::execute()
   const int msgCountToFilter = mMsgListId.count();
   ProgressItem* progressItem =
      ProgressManager::createProgressItem (
-         "filter"+ProgressManager::getUniqueID(),
+         QLatin1String("filter")+ProgressManager::getUniqueID(),
          i18n( "Filtering messages" ) );
   progressItem->setTotalItems( msgCountToFilter );
 
@@ -1440,7 +1440,7 @@ KMCommand::Result KMMoveCommand::execute()
   // TODO set SSL state according to source and destfolder connection?
   Q_ASSERT( !mProgressItem );
   mProgressItem =
-    ProgressManager::createProgressItem ("move"+ProgressManager::getUniqueID(),
+    ProgressManager::createProgressItem (QLatin1String("move")+ProgressManager::getUniqueID(),
          mDestFolder.isValid() ? i18n( "Moving messages" ) : i18n( "Deleting messages" ) );
   mProgressItem->setUsesBusyIndicator( true );
   connect( mProgressItem, SIGNAL(progressItemCanceled(KPIM::ProgressItem*)),

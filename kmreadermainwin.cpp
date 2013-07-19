@@ -107,12 +107,12 @@ void KMReaderMainWin::initKMReaderMainWin()
 {
   setCentralWidget( mReaderWin );
   setupAccel();
-  setupGUI( Keys | StatusBar | Create, "kmreadermainwin.rc" );
+  setupGUI( Keys | StatusBar | Create, QLatin1String("kmreadermainwin.rc") );
   mMsgActions->setupForwardingActionsList( this );
   applyMainWindowSettings( KMKernel::self()->config()->group( "Separate Reader Window" ) );
   if( ! mReaderWin->message().isValid() ) {
     menuBar()->hide();
-    toolBar( "mainToolBar" )->hide();
+    toolBar( QLatin1String("mainToolBar") )->hide();
   }
   connect( kmkernel, SIGNAL(configChanged()),
            this, SLOT(slotConfigChanged()) );
@@ -157,7 +157,7 @@ void KMReaderMainWin::showMessage( const QString & encoding, const Akonadi::Item
   mTrashAction->setEnabled( canChange );
 
   menuBar()->show();
-  toolBar( "mainToolBar" )->show();
+  toolBar( QLatin1String("mainToolBar") )->show();
 }
 
 void KMReaderMainWin::showMessage( const QString& encoding, KMime::Message::Ptr message )
@@ -180,7 +180,7 @@ void KMReaderMainWin::showMessage( const QString& encoding, KMime::Message::Ptr 
   mTrashAction->setEnabled( false );
 
   menuBar()->show();
-  toolBar( "mainToolBar" )->show();
+  toolBar( QLatin1String("mainToolBar") )->show();
 }
 
 
@@ -324,14 +324,14 @@ void KMReaderMainWin::setupAccel()
 
   //----- File Menu
 
-  mSaveAtmAction  = new KAction(KIcon("mail-attachment"), i18n("Save A&ttachments..."), actionCollection() );
+  mSaveAtmAction  = new KAction(KIcon(QLatin1String("mail-attachment")), i18n("Save A&ttachments..."), actionCollection() );
   connect( mSaveAtmAction, SIGNAL(triggered(bool)), mReaderWin->viewer(), SLOT(slotAttachmentSaveAll()) );
 
-  mTrashAction = new KAction( KIcon( "user-trash" ), i18n("&Move to Trash"), this );
+  mTrashAction = new KAction( KIcon( QLatin1String("user-trash") ), i18n("&Move to Trash"), this );
   mTrashAction->setIconText( i18nc( "@action:intoolbar Move to Trash", "Trash" ) );
   mTrashAction->setHelpText( i18n( "Move message to trashcan" ) );
   mTrashAction->setShortcut( QKeySequence( Qt::Key_Delete ) );
-  actionCollection()->addAction( "move_to_trash", mTrashAction );
+  actionCollection()->addAction( QLatin1String("move_to_trash"), mTrashAction );
   connect( mTrashAction, SIGNAL(triggered()), this, SLOT(slotTrashMsg()) );
 
   KAction *closeAction = KStandardAction::close( this, SLOT(close()), actionCollection() );
@@ -342,13 +342,13 @@ void KMReaderMainWin::setupAccel()
   //----- Message Menu
 
   mFontAction = new KFontAction( i18n("Select Font"), this );
-  actionCollection()->addAction( "text_font", mFontAction );
+  actionCollection()->addAction( QLatin1String("text_font"), mFontAction );
   mFontAction->setFont( mReaderWin->cssHelper()->bodyFont().family() );
   connect( mFontAction, SIGNAL(triggered(QString)),
            SLOT(slotFontAction(QString)) );
   mFontSizeAction = new KFontSizeAction( i18n( "Select Size" ), this );
   mFontSizeAction->setFontSize( mReaderWin->cssHelper()->bodyFont().pointSize() );
-  actionCollection()->addAction( "text_size", mFontSizeAction );
+  actionCollection()->addAction( QLatin1String("text_size"), mFontSizeAction );
   connect( mFontSizeAction, SIGNAL(fontSizeChanged(int)),
            SLOT(slotSizeAction(int)) );
 
@@ -371,7 +371,7 @@ KAction *KMReaderMainWin::copyActionMenu(QMenu *menu)
   if ( mainwin )
   {
     KActionMenu *action = new KActionMenu( menu );
-    action->setIcon( KIcon( "edit-copy") );
+    action->setIcon( KIcon( QLatin1String("edit-copy")) );
     action->setText( i18n("Copy Item To...") );
     mainwin->standardMailActionManager()->standardActionManager()->createActionFolderMenu( action->menu(), Akonadi::StandardActionManager::CopyItemToMenu );
     connect( action->menu(), SIGNAL(triggered(QAction*)), SLOT(slotCopyItem(QAction*)) );
@@ -413,7 +413,7 @@ void KMReaderMainWin::slotMessagePopup(const Akonadi::Item&aMsg , const KUrl&aUr
   mMsg = aMsg;
 
   const QString email =  KPIMUtils::firstEmailAddress( aUrl.path() ).toLower();
-  if ( aUrl.protocol() == "mailto" && !email.isEmpty()) {
+  if ( aUrl.protocol() == QLatin1String("mailto") && !email.isEmpty()) {
     Akonadi::ContactSearchJob *job = new Akonadi::ContactSearchJob( this );
     job->setLimit( 1 );
     job->setQuery( Akonadi::ContactSearchJob::Email, email, Akonadi::ContactSearchJob::ExactMatch );
@@ -604,7 +604,7 @@ void KMReaderMainWin::slotEditToolbars()
 
 void KMReaderMainWin::slotUpdateToolbars()
 {
-  createGUI("kmreadermainwin.rc");
+  createGUI(QLatin1String("kmreadermainwin.rc"));
   applyMainWindowSettings( KConfigGroup(KMKernel::self()->config(), "ReaderWindow") );
 }
 

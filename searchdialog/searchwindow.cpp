@@ -99,7 +99,7 @@ SearchWindow::SearchWindow( KMMainWidget *widget, const Akonadi::Collection &col
     mUi.setupUi( searchWidget );
 
     setButtons( None );
-    mStartSearchGuiItem = KGuiItem( i18nc( "@action:button Search for messages", "&Search" ), "edit-find" );
+    mStartSearchGuiItem = KGuiItem( i18nc( "@action:button Search for messages", "&Search" ), QLatin1String("edit-find") );
     mStopSearchGuiItem = KStandardGuiItem::stop();
     mSearchButton =  mUi.mButtonBox->addButton( mStartSearchGuiItem, QDialogButtonBox::ActionRole );
     connect( mUi.mButtonBox, SIGNAL(rejected()), SLOT(slotClose()) );
@@ -216,7 +216,7 @@ SearchWindow::SearchWindow( KMMainWidget *widget, const Akonadi::Collection &col
     connect( this, SIGNAL(closeClicked()),this,SLOT(slotClose()) );
 
     // give focus to the value field of the first search rule
-    RegExpLineEdit* r = mUi.mPatternEdit->findChild<RegExpLineEdit*>( "regExpLineEdit" );
+    RegExpLineEdit* r = mUi.mPatternEdit->findChild<RegExpLineEdit*>( QLatin1String("regExpLineEdit") );
     if ( r )
         r->setFocus();
     else
@@ -224,30 +224,30 @@ SearchWindow::SearchWindow( KMMainWidget *widget, const Akonadi::Collection &col
 
     //set up actions
     KActionCollection *ac = actionCollection();
-    mReplyAction = new KAction( KIcon( "mail-reply-sender" ), i18n( "&Reply..." ), this );
-    actionCollection()->addAction( "search_reply", mReplyAction );
+    mReplyAction = new KAction( KIcon( QLatin1String("mail-reply-sender") ), i18n( "&Reply..." ), this );
+    actionCollection()->addAction( QLatin1String("search_reply"), mReplyAction );
     connect( mReplyAction, SIGNAL(triggered(bool)), SLOT(slotReplyToMsg()) );
 
-    mReplyAllAction = new KAction( KIcon( "mail-reply-all" ), i18n( "Reply to &All..." ), this );
-    actionCollection()->addAction( "search_reply_all", mReplyAllAction );
+    mReplyAllAction = new KAction( KIcon( QLatin1String("mail-reply-all") ), i18n( "Reply to &All..." ), this );
+    actionCollection()->addAction( QLatin1String("search_reply_all"), mReplyAllAction );
     connect( mReplyAllAction, SIGNAL(triggered(bool)), SLOT(slotReplyAllToMsg()) );
 
-    mReplyListAction = new KAction( KIcon( "mail-reply-list" ), i18n( "Reply to Mailing-&List..." ), this );
-    actionCollection()->addAction( "search_reply_list", mReplyListAction );
+    mReplyListAction = new KAction( KIcon( QLatin1String("mail-reply-list") ), i18n( "Reply to Mailing-&List..." ), this );
+    actionCollection()->addAction(QLatin1String( "search_reply_list"), mReplyListAction );
     connect( mReplyListAction, SIGNAL(triggered(bool)), SLOT(slotReplyListToMsg()) );
 
-    mForwardActionMenu = new KActionMenu( KIcon( "mail-forward" ), i18nc( "Message->", "&Forward" ), this );
-    actionCollection()->addAction( "search_message_forward", mForwardActionMenu );
+    mForwardActionMenu = new KActionMenu( KIcon( QLatin1String("mail-forward") ), i18nc( "Message->", "&Forward" ), this );
+    actionCollection()->addAction( QLatin1String("search_message_forward"), mForwardActionMenu );
     connect( mForwardActionMenu, SIGNAL(triggered(bool)), this, SLOT(slotForwardMsg()) );
 
-    mForwardInlineAction = new KAction( KIcon( "mail-forward" ),
+    mForwardInlineAction = new KAction( KIcon( QLatin1String("mail-forward") ),
                                         i18nc( "@action:inmenu Forward message inline.", "&Inline..." ),
                                         this );
-    actionCollection()->addAction( "search_message_forward_inline", mForwardInlineAction );
+    actionCollection()->addAction( QLatin1String("search_message_forward_inline"), mForwardInlineAction );
     connect( mForwardInlineAction, SIGNAL(triggered(bool)), SLOT(slotForwardMsg()) );
 
-    mForwardAttachedAction = new KAction( KIcon( "mail-forward" ), i18nc( "Message->Forward->", "As &Attachment..." ), this );
-    actionCollection()->addAction( "search_message_forward_as_attachment", mForwardAttachedAction );
+    mForwardAttachedAction = new KAction( KIcon( QLatin1String("mail-forward") ), i18nc( "Message->Forward->", "As &Attachment..." ), this );
+    actionCollection()->addAction( QLatin1String("search_message_forward_as_attachment"), mForwardAttachedAction );
     connect( mForwardAttachedAction, SIGNAL(triggered(bool)), SLOT(slotForwardAttachedMsg()) );
 
     if ( GlobalSettings::self()->forwardingInlineByDefault() ) {
@@ -258,16 +258,16 @@ SearchWindow::SearchWindow( KMMainWidget *widget, const Akonadi::Collection &col
         mForwardActionMenu->addAction( mForwardInlineAction );
     }
 
-    mSaveAsAction = actionCollection()->addAction( KStandardAction::SaveAs, "search_file_save_as", this, SLOT(slotSaveMsg()) );
+    mSaveAsAction = actionCollection()->addAction( KStandardAction::SaveAs, QLatin1String("search_file_save_as"), this, SLOT(slotSaveMsg()) );
 
-    mSaveAtchAction = new KAction( KIcon( "mail-attachment" ), i18n( "Save Attachments..." ), this );
-    actionCollection()->addAction( "search_save_attachments", mSaveAtchAction );
+    mSaveAtchAction = new KAction( KIcon( QLatin1String("mail-attachment") ), i18n( "Save Attachments..." ), this );
+    actionCollection()->addAction( QLatin1String("search_save_attachments"), mSaveAtchAction );
     connect( mSaveAtchAction, SIGNAL(triggered(bool)), SLOT(slotSaveAttachments()) );
 
-    mPrintAction = actionCollection()->addAction( KStandardAction::Print, "search_print", this, SLOT(slotPrintMsg()) );
+    mPrintAction = actionCollection()->addAction( KStandardAction::Print, QLatin1String("search_print"), this, SLOT(slotPrintMsg()) );
 
     mClearAction = new KAction( i18n( "Clear Selection" ), this );
-    actionCollection()->addAction( "search_clear_selection", mClearAction );
+    actionCollection()->addAction( QLatin1String("search_clear_selection"), mClearAction );
     connect( mClearAction, SIGNAL(triggered(bool)), SLOT(slotClearSelection()) );
 
     connect( mUi.mCbxFolders, SIGNAL(folderChanged(Akonadi::Collection)),
@@ -415,10 +415,10 @@ void SearchWindow::slotSearch()
 
 #ifdef AKONADI_USE_STRIGI_SEARCH
     const QString query = searchPattern.asXesamQuery();
-    const QString queryLanguage = "XESAM";
+    const QString queryLanguage = QLatin1String("XESAM");
 #else
     const QString query = searchPattern.asSparqlQuery(urls);
-    const QString queryLanguage = "SPARQL";
+    const QString queryLanguage = QLatin1String("SPARQL");
 #endif
 
     qDebug() << queryLanguage;

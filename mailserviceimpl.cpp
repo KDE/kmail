@@ -48,7 +48,7 @@ namespace KMail {
 MailServiceImpl::MailServiceImpl()
 {
   new ServiceAdaptor( this );
-  QDBusConnection::sessionBus().registerObject( "/MailTransportService", this );
+  QDBusConnection::sessionBus().registerObject( QLatin1String("/MailTransportService"), this );
 }
 
 bool MailServiceImpl::sendMessage( const QString& from, const QString& to,
@@ -79,7 +79,7 @@ bool MailServiceImpl::sendMessage( const QString& from, const QString& to,
     attachUrls += KUrl( attachments[i] );
   }
 
-  cWin->addAttachmentsAndSend( attachUrls, "", 1 );//send now
+  cWin->addAttachmentsAndSend( attachUrls, QString(), 1 );//send now
   return true;
 }
 

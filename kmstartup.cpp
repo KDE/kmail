@@ -69,7 +69,7 @@ void checkConfigUpdates() {
     return;
 
   for ( int i = configUpdateLevel ; i < numUpdates ; ++i ) {
-    config->checkUpdate( updates[i], "kmail.upd" );
+    config->checkUpdate( QLatin1String(updates[i]), QLatin1String("kmail.upd") );
   }
   GlobalSettings::self()->setUpdateLevel( numUpdates );
 }
@@ -102,8 +102,8 @@ void insertLibraryCataloguesAndIcons() {
   KLocale * l = KGlobal::locale();
   KIconLoader * il = KIconLoader::global();
   for ( unsigned int i = 0 ; i < sizeof catalogs / sizeof *catalogs ; ++i ) {
-    l->insertCatalog( catalogs[i] );
-    il->addAppDir( catalogs[i] );
+    l->insertCatalog( QLatin1String(catalogs[i]) );
+    il->addAppDir( QLatin1String(catalogs[i]) );
   }
 
 }
