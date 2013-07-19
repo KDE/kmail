@@ -89,8 +89,8 @@ Akonadi::Item::Id KMail::Util::putRepliesInSameFolder( const Akonadi::Item& item
 void KMail::Util::launchAccountWizard( QWidget *w )
 {
   QStringList lst;
-  lst.append( "--type" );
-  lst.append( "message/rfc822" );
+  lst.append( QLatin1String("--type") );
+  lst.append( QLatin1String("message/rfc822") );
 
   const QString path = KStandardDirs::findExe( QLatin1String("accountwizard" ) );
   if( !QProcess::startDetached( path, lst ) )
@@ -110,13 +110,13 @@ bool KMail::Util::handleClickedURL( const KUrl &url, const QSharedPointer<MailCo
 
     QMap<QString, QString> fields =  MessageCore::StringUtil::parseMailtoUrl( url );
 
-    msg->to()->fromUnicodeString( fields.value( "to" ),"utf-8" );
-    if ( !fields.value( "subject" ).isEmpty() )
-      msg->subject()->fromUnicodeString( fields.value( "subject" ),"utf-8" );
-    if ( !fields.value( "body" ).isEmpty() )
-      msg->setBody( fields.value( "body" ).toUtf8() );
-    if ( !fields.value( "cc" ).isEmpty() )
-      msg->cc()->fromUnicodeString( fields.value( "cc" ),"utf-8" );
+    msg->to()->fromUnicodeString( fields.value( QLatin1String("to") ),"utf-8" );
+    if ( !fields.value( QLatin1String("subject") ).isEmpty() )
+      msg->subject()->fromUnicodeString( fields.value( QLatin1String("subject") ),"utf-8" );
+    if ( !fields.value( QLatin1String("body") ).isEmpty() )
+      msg->setBody( fields.value( QLatin1String("body") ).toUtf8() );
+    if ( !fields.value( QLatin1String("cc" )).isEmpty() )
+      msg->cc()->fromUnicodeString( fields.value( QLatin1String("cc") ),"utf-8" );
 
     if ( !folder.isNull() ) {
       TemplateParser::TemplateParser parser( msg, TemplateParser::TemplateParser::NewMessage );

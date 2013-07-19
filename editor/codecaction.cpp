@@ -64,7 +64,7 @@ CodecAction::CodecAction( Mode mode, QObject *parent )
     }
 
     // Eye candy.
-    setIcon( KIcon( "accessories-character-map" ) );
+    setIcon( KIcon( QLatin1String("accessories-character-map") ) );
     setText( i18nc( "Menu item", "Encoding" ) );
 }
 

@@ -294,7 +294,7 @@ private:
 class ASWizPage : public QWidget
 {
 public:
-    ASWizPage( QWidget *parent, const char *name,
+    ASWizPage(QWidget *parent, const QString &name,
                const QString *bannerName = 0);
 
 protected:
@@ -311,7 +311,7 @@ class ASWizInfoPage : public ASWizPage
 
 public:
     ASWizInfoPage( AntiSpamWizard::WizardMode mode,
-                   QWidget *parent, const char *name );
+                   QWidget *parent, const QString &name );
 
     void setScanProgressText( const QString &toolName );
     void addAvailableTool( const QString &visibleName );
@@ -336,7 +336,7 @@ class ASWizSpamRulesPage : public ASWizPage
     Q_OBJECT
 
 public:
-    ASWizSpamRulesPage( QWidget * parent, const char * name);
+    ASWizSpamRulesPage(QWidget * parent, const QString &name);
 
     bool markAsReadSelected() const;
     bool moveSpamSelected() const;
@@ -376,7 +376,7 @@ class ASWizVirusRulesPage : public ASWizPage
     Q_OBJECT
 
 public:
-    ASWizVirusRulesPage( QWidget * parent, const char * name );
+    ASWizVirusRulesPage(QWidget * parent, const QString &name );
 
     bool pipeRulesSelected() const;
     bool moveRulesSelected() const;
@@ -402,7 +402,7 @@ class ASWizSummaryPage : public ASWizPage
     Q_OBJECT
 
 public:
-    ASWizSummaryPage( QWidget * parent, const char * name );
+    ASWizSummaryPage( QWidget * parent, const QString &name );
 
     void setSummaryText( const QString & text );
 
