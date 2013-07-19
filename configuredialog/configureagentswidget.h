@@ -43,6 +43,9 @@ Q_SIGNALS:
     void changed();
 
 private:
+    void writeConfig();
+    void readConfig();
+
     enum ConfigureAgentsColumn {
         AgentState = 0,
         AgentName

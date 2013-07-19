@@ -23,6 +23,8 @@
 #include <KDesktopFile>
 #include <KDebug>
 #include <KTextBrowser>
+#include <KGlobal>
+#include <KConfigGroup>
 
 #include <QVBoxLayout>
 #include <QTreeWidget>
@@ -39,6 +41,7 @@ ConfigureAgentsWidget::ConfigureAgentsWidget(QWidget *parent)
 {
     QHBoxLayout *lay = new QHBoxLayout;
     mSplitter = new QSplitter;
+    mSplitter->setChildrenCollapsible(false);
     lay->addWidget(mSplitter);
 
     mTreeWidget = new QTreeWidget;
@@ -58,11 +61,26 @@ ConfigureAgentsWidget::ConfigureAgentsWidget(QWidget *parent)
     connect(mTreeWidget, SIGNAL(itemChanged(QTreeWidgetItem*,int)), SIGNAL(changed()));
     mAgentPathList = Akonadi::XdgBaseDirs::findAllResourceDirs( "data", QLatin1String( "akonadi/agents" ) );
     initialize();
+    readConfig();
 }
 
 ConfigureAgentsWidget::~ConfigureAgentsWidget()
 {
+    writeConfig();
+}
 
+void ConfigureAgentsWidget::readConfig()
+{
+    KConfigGroup group( KGlobal::config(), "ConfigureAgentsWidget" );
+    QList<int> size;
+    size << 400 << 100;
+    mSplitter->setSizes(group.readEntry( "splitter", size));
+}
+
+void ConfigureAgentsWidget::writeConfig()
+{
+    KConfigGroup group( KGlobal::config(), "ConfigureAgentsWidget" );
+    group.writeEntry( "splitter", mSplitter->sizes());
 }
 
 void ConfigureAgentsWidget::slotItemClicked(QTreeWidgetItem *item)
