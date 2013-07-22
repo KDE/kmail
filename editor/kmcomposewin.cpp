@@ -226,7 +226,7 @@ KMComposeWin::KMComposeWin( const KMime::Message::Ptr &aMsg, bool lastSignState,
   connect( mComposerBase, SIGNAL(modified(bool)), this, SLOT(setModified(bool)) );
 
   (void) new MailcomposerAdaptor( this );
-  mdbusObjectPath = "/Composer_" + QString::number( ++s_composerNumber );
+  mdbusObjectPath = QLatin1String("/Composer_") + QString::number( ++s_composerNumber );
   QDBusConnection::sessionBus().registerObject( mdbusObjectPath, this );
 
   MessageComposer::SignatureController* sigController = new MessageComposer::SignatureController( this );
@@ -239,7 +239,7 @@ KMComposeWin::KMComposeWin( const KMime::Message::Ptr &aMsg, bool lastSignState,
   mMainWidget = new QWidget( this );
   // splitter between the headers area and the actual editor
   mHeadersToEditorSplitter = new QSplitter( Qt::Vertical, mMainWidget );
-  mHeadersToEditorSplitter->setObjectName( "mHeadersToEditorSplitter" );
+  mHeadersToEditorSplitter->setObjectName( QLatin1String("mHeadersToEditorSplitter") );
   mHeadersToEditorSplitter->setChildrenCollapsible( false );
   mHeadersArea = new QWidget( mHeadersToEditorSplitter );
   mHeadersArea->setSizePolicy( mHeadersToEditorSplitter->sizePolicy().horizontalPolicy(),
@@ -285,11 +285,11 @@ KMComposeWin::KMComposeWin( const KMime::Message::Ptr &aMsg, bool lastSignState,
   mComposerBase->setTransportCombo( transport );
 
   mEdtFrom = new MessageComposer::ComposerLineEdit( false, mHeadersArea );
-  mEdtFrom->setObjectName( "fromLine" );
+  mEdtFrom->setObjectName( QLatin1String("fromLine") );
   mEdtFrom->setRecentAddressConfig( MessageComposer::MessageComposerSettings::self()->config() );
   mEdtFrom->setToolTip( i18n( "Set the \"From:\" email address for this message" ) );
   mEdtReplyTo = new MessageComposer::ComposerLineEdit( true, mHeadersArea );
-  mEdtReplyTo->setObjectName( "replyToLine" );
+  mEdtReplyTo->setObjectName( QLatin1String("replyToLine") );
   mEdtReplyTo->setRecentAddressConfig( MessageComposer::MessageComposerSettings::self()->config() );
   mEdtReplyTo->setToolTip( i18n( "Set the \"Reply-To:\" email address for this message" ) );
   connect( mEdtReplyTo, SIGNAL(completionModeChanged(KGlobalSettings::Completion)),
@@ -329,10 +329,10 @@ KMComposeWin::KMComposeWin( const KMime::Message::Ptr &aMsg, bool lastSignState,
   mFixedFontAction = 0;
   // the attachment view is separated from the editor by a splitter
   mSplitter = new QSplitter( Qt::Vertical, mMainWidget );
-  mSplitter->setObjectName( "mSplitter" );
+  mSplitter->setObjectName( QLatin1String("mSplitter") );
   mSplitter->setChildrenCollapsible( false );
   mSnippetSplitter = new QSplitter( Qt::Horizontal, mSplitter );
-  mSnippetSplitter->setObjectName( "mSnippetSplitter" );
+  mSnippetSplitter->setObjectName( QLatin1String("mSnippetSplitter") );
   mSnippetSplitter->setChildrenCollapsible( false );
   mSplitter->addWidget( mSnippetSplitter );
 
@@ -1022,7 +1022,7 @@ void KMComposeWin::applyTemplate( uint uoid, uint uOldId )
 
   if ( mMsg->headerByType( "X-KMail-Link-Message" ) ) {
     Akonadi::Item::List items;
-    foreach( const QString& serNumStr, mMsg->headerByType( "X-KMail-Link-Message" )->asUnicodeString().split( ',' ) )
+    foreach( const QString& serNumStr, mMsg->headerByType( "X-KMail-Link-Message" )->asUnicodeString().split( QLatin1Char(',') ) )
       items << Akonadi::Item( serNumStr.toLongLong() );
 
 
@@ -1100,7 +1100,7 @@ void KMComposeWin::getTransportMenu()
 
   const QList<Transport*> transports = TransportManager::self()->transports();
   foreach ( Transport *transport, transports ) {
-    const QString name = transport->name().replace( '&', "&&" );
+    const QString name = transport->name().replace( QLatin1Char('&'), QLatin1String("&&") );
     QAction *action1 = new QAction( name, mActNowMenu );
     QAction *action2 = new QAction( name, mActLaterMenu );
     action1->setData( transport->id() );
@@ -1117,39 +1117,39 @@ void KMComposeWin::setupActions( void )
 
   if ( MessageComposer::MessageComposerSettings::self()->sendImmediate() ) {
     //default = send now, alternative = queue
-    KAction *action = new KAction(KIcon("mail-send"), i18n("&Send Mail"), this);
-    actionCollection()->addAction("send_default", action );
+    KAction *action = new KAction(KIcon(QLatin1String("mail-send")), i18n("&Send Mail"), this);
+    actionCollection()->addAction(QLatin1String("send_default"), action );
     action->setShortcut( QKeySequence( Qt::CTRL + Qt::Key_Return ) );
     connect( action, SIGNAL(triggered(bool)), SLOT(slotSendNow()));
 
     // FIXME: change to mail_send_via icon when this exist.
-    actActionNowMenu = new KActionMenu( KIcon( "mail-send" ), i18n("&Send Mail Via"), this );
+    actActionNowMenu = new KActionMenu( KIcon( QLatin1String("mail-send") ), i18n("&Send Mail Via"), this );
     actActionNowMenu->setIconText( i18n( "Send" ) );
-    actionCollection()->addAction( "send_default_via", actActionNowMenu );
+    actionCollection()->addAction( QLatin1String("send_default_via"), actActionNowMenu );
 
-    action = new KAction( KIcon( "mail-queue" ), i18n("Send &Later"), this );
-    actionCollection()->addAction( "send_alternative", action );
+    action = new KAction( KIcon( QLatin1String("mail-queue") ), i18n("Send &Later"), this );
+    actionCollection()->addAction( QLatin1String("send_alternative"), action );
     connect( action, SIGNAL(triggered(bool)), SLOT(slotSendLater()) );
-    actActionLaterMenu = new KActionMenu( KIcon( "mail-queue" ), i18n("Send &Later Via"), this );
+    actActionLaterMenu = new KActionMenu( KIcon( QLatin1String("mail-queue") ), i18n("Send &Later Via"), this );
     actActionLaterMenu->setIconText( i18nc( "Queue the message for sending at a later date", "Queue" ) );
-    actionCollection()->addAction( "send_alternative_via", actActionLaterMenu );
+    actionCollection()->addAction( QLatin1String("send_alternative_via"), actActionLaterMenu );
 
   } else {
     //default = queue, alternative = send now
-    KAction *action = new KAction( KIcon( "mail-queue" ), i18n("Send &Later"), this );
-    actionCollection()->addAction( "send_default", action );
+    KAction *action = new KAction( KIcon( QLatin1String("mail-queue") ), i18n("Send &Later"), this );
+    actionCollection()->addAction( QLatin1String("send_default"), action );
     connect( action, SIGNAL(triggered(bool)), SLOT(slotSendLater()) );
     action->setShortcut( QKeySequence( Qt::CTRL + Qt::Key_Return ) );
-    actActionLaterMenu = new KActionMenu( KIcon( "mail-queue" ), i18n("Send &Later Via"), this );
-    actionCollection()->addAction( "send_default_via", actActionLaterMenu );
+    actActionLaterMenu = new KActionMenu( KIcon( QLatin1String("mail-queue") ), i18n("Send &Later Via"), this );
+    actionCollection()->addAction( QLatin1String("send_default_via"), actActionLaterMenu );
 
-    action = new KAction( KIcon( "mail-send" ), i18n("&Send Mail"), this );
-    actionCollection()->addAction( "send_alternative", action );
+    action = new KAction( KIcon( QLatin1String("mail-send") ), i18n("&Send Mail"), this );
+    actionCollection()->addAction( QLatin1String("send_alternative"), action );
     connect( action, SIGNAL(triggered(bool)), SLOT(slotSendNow()) );
 
     // FIXME: change to mail_send_via icon when this exits.
-    actActionNowMenu = new KActionMenu( KIcon( "mail-send" ), i18n("&Send Mail Via"), this );
-    actionCollection()->addAction( "send_alternative_via", actActionNowMenu );
+    actActionNowMenu = new KActionMenu( KIcon( QLatin1String("mail-send") ), i18n("&Send Mail Via"), this );
+    actionCollection()->addAction( QLatin1String("send_alternative_via"), actActionNowMenu );
 
   }
 
@@ -1175,61 +1175,61 @@ void KMComposeWin::setupActions( void )
   connect( mActLaterMenu, SIGNAL(aboutToShow()), this,
            SLOT(getTransportMenu()) );
 
-  KAction *action = new KAction( KIcon( "document-save" ), i18n("Save as &Draft"), this );
-  actionCollection()->addAction("save_in_drafts", action );
+  KAction *action = new KAction( KIcon( QLatin1String("document-save") ), i18n("Save as &Draft"), this );
+  actionCollection()->addAction(QLatin1String("save_in_drafts"), action );
   action->setHelpText(i18n("Save email in Draft folder"));
   action->setShortcut(QKeySequence(Qt::CTRL + Qt::Key_S));
   connect( action, SIGNAL(triggered(bool)), SLOT(slotSaveDraft()) );
 
-  action = new KAction( KIcon( "document-save" ), i18n("Save as &Template"), this );
+  action = new KAction( KIcon( QLatin1String("document-save") ), i18n("Save as &Template"), this );
   action->setHelpText(i18n("Save email in Template folder"));
-  actionCollection()->addAction( "save_in_templates", action );
+  actionCollection()->addAction( QLatin1String("save_in_templates"), action );
   connect( action, SIGNAL(triggered(bool)), SLOT(slotSaveTemplate()) );
 
-  action = new KAction( KIcon( "document-save" ), i18n("Save as &File"), this );
+  action = new KAction( KIcon( QLatin1String("document-save") ), i18n("Save as &File"), this );
   action->setHelpText(i18n("Save email as text or html file"));
-  actionCollection()->addAction( "save_as_file", action );
+  actionCollection()->addAction( QLatin1String("save_as_file"), action );
   connect( action, SIGNAL(triggered(bool)), SLOT(slotSaveAsFile()) );
 
   action = new KAction(KIcon( QLatin1String( "contact-new" ) ), i18n("New AddressBook Contact..."),this);
-  actionCollection()->addAction("kmail_new_addressbook_contact", action );
+  actionCollection()->addAction(QLatin1String("kmail_new_addressbook_contact"), action );
   connect(action, SIGNAL(triggered(bool)), this, SLOT(slotCreateAddressBookContact()));
 
 
 
-  action = new KAction(KIcon("document-open"), i18n("&Insert Text File..."), this);
-  actionCollection()->addAction("insert_file", action );
+  action = new KAction(KIcon(QLatin1String("document-open")), i18n("&Insert Text File..."), this);
+  actionCollection()->addAction(QLatin1String("insert_file"), action );
   connect(action, SIGNAL(triggered(bool)), SLOT(slotInsertFile()));
 
-  mRecentAction = new KRecentFilesAction( KIcon( "document-open" ),
+  mRecentAction = new KRecentFilesAction( KIcon( QLatin1String("document-open") ),
                                           i18n( "&Insert Recent Text File" ), this );
-  actionCollection()->addAction("insert_file_recent", mRecentAction );
+  actionCollection()->addAction(QLatin1String("insert_file_recent"), mRecentAction );
   connect(mRecentAction, SIGNAL(urlSelected(KUrl)),
           SLOT(slotInsertRecentFile(KUrl)));
   connect(mRecentAction, SIGNAL(recentListCleared()),
           SLOT(slotRecentListFileClear()));
   mRecentAction->loadEntries( KMKernel::self()->config()->group( QString() ) );
 
-  action = new KAction(KIcon("x-office-address-book"), i18n("&Address Book"), this);
+  action = new KAction(KIcon(QLatin1String("x-office-address-book")), i18n("&Address Book"), this);
   action->setHelpText(i18n("Open Address Book"));
-  actionCollection()->addAction("addressbook", action );
-  if (KStandardDirs::findExe("kaddressbook").isEmpty())
+  actionCollection()->addAction(QLatin1String("addressbook"), action );
+  if (KStandardDirs::findExe(QLatin1String("kaddressbook")).isEmpty())
      action->setEnabled(false);
   connect(action, SIGNAL(triggered(bool)), SLOT(slotAddrBook()));
-  action = new KAction(KIcon("mail-message-new"), i18n("&New Composer"), this);
-  actionCollection()->addAction("new_composer", action );
+  action = new KAction(KIcon(QLatin1String("mail-message-new")), i18n("&New Composer"), this);
+  actionCollection()->addAction(QLatin1String("new_composer"), action );
   connect(action, SIGNAL(triggered(bool)), SLOT(slotNewComposer()));
   action->setShortcuts( KStandardShortcut::shortcut( KStandardShortcut::New ) );
-  action = new KAction( KIcon( "window-new" ), i18n("New Main &Window"), this );
-  actionCollection()->addAction( "open_mailreader", action );
+  action = new KAction( KIcon( QLatin1String("window-new") ), i18n("New Main &Window"), this );
+  actionCollection()->addAction( QLatin1String("open_mailreader"), action );
   connect( action, SIGNAL(triggered(bool)), SLOT(slotNewMailReader()) );
 
   action = new KAction( i18n("Select &Recipients..."), this );
-  actionCollection()->addAction( "select_recipients", action );
+  actionCollection()->addAction( QLatin1String("select_recipients"), action );
   connect( action, SIGNAL(triggered(bool)),
            mComposerBase->recipientsEditor(), SLOT(selectRecipients()) );
   action = new KAction( i18n("Save &Distribution List..."), this );
-  actionCollection()->addAction( "save_distribution_list", action );
+  actionCollection()->addAction( QLatin1String("save_distribution_list"), action );
   connect( action, SIGNAL(triggered(bool)),
            mComposerBase->recipientsEditor(), SLOT(saveDistributionList()) );
 
@@ -1249,47 +1249,47 @@ void KMComposeWin::setupActions( void )
   mFindNextText = KStandardAction::findNext( mComposerBase->editor(), SLOT(slotFindNext()), actionCollection() );
 
   mReplaceText = KStandardAction::replace( mComposerBase->editor(), SLOT(slotReplace()), actionCollection() );
-  actionCollection()->addAction( KStandardAction::Spelling, "spellcheck",
+  actionCollection()->addAction( KStandardAction::Spelling, QLatin1String("spellcheck"),
                                  mComposerBase->editor(), SLOT(checkSpelling()) );
 
   action = new KAction( i18n("Paste as Attac&hment"), this );
-  actionCollection()->addAction( "paste_att", action );
+  actionCollection()->addAction( QLatin1String("paste_att"), action );
   connect( action, SIGNAL(triggered(bool)), SLOT(slotPasteAsAttachment()) );
 
   mCleanSpace = new KAction( i18n("Cl&ean Spaces"), this );
-  actionCollection()->addAction( "clean_spaces", mCleanSpace );
+  actionCollection()->addAction( QLatin1String("clean_spaces"), mCleanSpace );
   connect( mCleanSpace, SIGNAL(triggered(bool)), mComposerBase->signatureController(), SLOT(cleanSpace()) );
 
   mFixedFontAction = new KToggleAction( i18n("Use Fi&xed Font"), this );
-  actionCollection()->addAction( "toggle_fixedfont", mFixedFontAction );
+  actionCollection()->addAction( QLatin1String("toggle_fixedfont"), mFixedFontAction );
   connect( mFixedFontAction, SIGNAL(triggered(bool)), SLOT(slotUpdateFont()) );
   mFixedFontAction->setChecked( MessageViewer::GlobalSettings::self()->useFixedFont() );
 
   //these are checkable!!!
   mUrgentAction = new KToggleAction(
     i18nc("@action:inmenu Mark the email as urgent.","&Urgent"), this );
-  actionCollection()->addAction( "urgent", mUrgentAction );
+  actionCollection()->addAction( QLatin1String("urgent"), mUrgentAction );
   mRequestMDNAction = new KToggleAction( i18n("&Request Disposition Notification"), this );
-  actionCollection()->addAction("options_request_mdn", mRequestMDNAction );
+  actionCollection()->addAction(QLatin1String("options_request_mdn"), mRequestMDNAction );
   mRequestMDNAction->setChecked(GlobalSettings::self()->requestMDN());
   //----- Message-Encoding Submenu
   mCodecAction = new CodecAction( CodecAction::ComposerMode, this );
-  actionCollection()->addAction( "charsets", mCodecAction );
+  actionCollection()->addAction( QLatin1String("charsets"), mCodecAction );
   mWordWrapAction = new KToggleAction( i18n( "&Wordwrap" ), this );
-  actionCollection()->addAction( "wordwrap", mWordWrapAction );
+  actionCollection()->addAction( QLatin1String("wordwrap"), mWordWrapAction );
   mWordWrapAction->setChecked( MessageComposer::MessageComposerSettings::self()->wordWrap() );
   connect( mWordWrapAction, SIGNAL(toggled(bool)), SLOT(slotWordWrapToggled(bool)) );
 
   mSnippetAction = new KToggleAction( i18n("&Snippets"), this );
-  actionCollection()->addAction( "snippets", mSnippetAction );
+  actionCollection()->addAction( QLatin1String("snippets"), mSnippetAction );
   connect( mSnippetAction, SIGNAL(toggled(bool)),
            mSnippetWidget, SLOT(setVisible(bool)) );
   mSnippetAction->setChecked( GlobalSettings::self()->showSnippetManager() );
 
-  mAutoSpellCheckingAction = new KToggleAction( KIcon( "tools-check-spelling" ),
+  mAutoSpellCheckingAction = new KToggleAction( KIcon( QLatin1String("tools-check-spelling") ),
                                                 i18n("&Automatic Spellchecking"),
                                                 this );
-  actionCollection()->addAction( "options_auto_spellchecking", mAutoSpellCheckingAction );
+  actionCollection()->addAction( QLatin1String("options_auto_spellchecking"), mAutoSpellCheckingAction );
   const bool spellChecking = GlobalSettings::self()->autoSpellChecking();
   const bool useKmailEditor = !GlobalSettings::self()->useExternalEditor();
   const bool spellCheckingEnabled = useKmailEditor && spellChecking;
@@ -1308,60 +1308,60 @@ void KMComposeWin::setupActions( void )
   connect( mComposerBase->editor(), SIGNAL(externalEditorStarted()), this, SLOT(slotExternalEditorStarted()));
   //these are checkable!!!
   markupAction = new KToggleAction( i18n("Rich Text Editing"), this );
-  markupAction->setIcon( KIcon( "preferences-desktop-font" ) );
+  markupAction->setIcon( KIcon( QLatin1String("preferences-desktop-font" )) );
   markupAction->setIconText( i18n("Rich Text") );
   markupAction->setToolTip( i18n( "Toggle rich text editing mode" ) );
-  actionCollection()->addAction( "html", markupAction );
+  actionCollection()->addAction( QLatin1String("html"), markupAction );
   connect( markupAction, SIGNAL(triggered(bool)), SLOT(slotToggleMarkup()) );
 
   mAllFieldsAction = new KToggleAction( i18n("&All Fields"), this);
-  actionCollection()->addAction( "show_all_fields", mAllFieldsAction );
+  actionCollection()->addAction( QLatin1String("show_all_fields"), mAllFieldsAction );
   connect( mAllFieldsAction, SIGNAL(triggered(bool)), SLOT(slotView()));
   mIdentityAction = new KToggleAction(i18n("&Identity"), this);
-  actionCollection()->addAction("show_identity", mIdentityAction );
+  actionCollection()->addAction(QLatin1String("show_identity"), mIdentityAction );
   connect( mIdentityAction, SIGNAL(triggered(bool)), SLOT(slotView()));
   mDictionaryAction = new KToggleAction(i18n("&Dictionary"), this);
-  actionCollection()->addAction("show_dictionary", mDictionaryAction );
+  actionCollection()->addAction(QLatin1String("show_dictionary"), mDictionaryAction );
   connect( mDictionaryAction, SIGNAL(triggered(bool)), SLOT(slotView()));
   mFccAction = new KToggleAction(i18n("&Sent-Mail Folder"), this);
-  actionCollection()->addAction("show_fcc", mFccAction );
+  actionCollection()->addAction(QLatin1String("show_fcc"), mFccAction );
   connect( mFccAction, SIGNAL(triggered(bool)), SLOT(slotView()));
   mTransportAction = new KToggleAction(i18n("&Mail Transport"), this);
-  actionCollection()->addAction("show_transport", mTransportAction );
+  actionCollection()->addAction(QLatin1String("show_transport"), mTransportAction );
   connect( mTransportAction, SIGNAL(triggered(bool)), SLOT(slotView()));
   mFromAction = new KToggleAction(i18n("&From"), this);
-  actionCollection()->addAction("show_from", mFromAction );
+  actionCollection()->addAction(QLatin1String("show_from"), mFromAction );
   connect( mFromAction, SIGNAL(triggered(bool)), SLOT(slotView()));
   mReplyToAction = new KToggleAction(i18n("&Reply To"), this);
-  actionCollection()->addAction("show_reply_to", mReplyToAction );
+  actionCollection()->addAction(QLatin1String("show_reply_to"), mReplyToAction );
   connect( mReplyToAction, SIGNAL(triggered(bool)), SLOT(slotView()));
   mSubjectAction = new KToggleAction(
     i18nc("@action:inmenu Show the subject in the composer window.", "S&ubject"), this);
-  actionCollection()->addAction("show_subject", mSubjectAction );
+  actionCollection()->addAction(QLatin1String("show_subject"), mSubjectAction );
   connect(mSubjectAction, SIGNAL(triggered(bool)), SLOT(slotView()));
   //end of checkable
 
   action = new KAction( i18n("Append S&ignature"), this );
-  actionCollection()->addAction( "append_signature", action );
+  actionCollection()->addAction( QLatin1String("append_signature"), action );
   connect( action, SIGNAL(triggered(bool)), mComposerBase->signatureController(), SLOT(appendSignature()));
   action = new KAction( i18n("Pr&epend Signature"), this );
-  actionCollection()->addAction( "prepend_signature", action );
+  actionCollection()->addAction( QLatin1String("prepend_signature"), action );
   connect( action, SIGNAL(triggered(bool)), mComposerBase->signatureController(), SLOT(prependSignature()) );
   action = new KAction( i18n("Insert Signature At C&ursor Position"), this );
-  actionCollection()->addAction( "insert_signature_at_cursor_position", action );
+  actionCollection()->addAction( QLatin1String("insert_signature_at_cursor_position"), action );
   connect( action, SIGNAL(triggered(bool)), mComposerBase->signatureController(), SLOT(insertSignatureAtCursor()) );
 
 
   action = new KAction( i18n("Insert Special Character..."), this );
-  actionCollection()->addAction( "insert_special_character", action );
+  actionCollection()->addAction( QLatin1String("insert_special_character"), action );
   connect( action, SIGNAL(triggered(bool)), this, SLOT(insertSpecialCharacter()) );
 
   action = new KAction( i18n("Uppercase"), this );
-  actionCollection()->addAction( "change_to_uppercase", action );
+  actionCollection()->addAction( QLatin1String("change_to_uppercase"), action );
   connect( action, SIGNAL(triggered(bool)), this, SLOT(slotUpperCase()) );
 
   action = new KAction( i18n("Lowercase"), this );
-  actionCollection()->addAction( "change_to_lowercase", action );
+  actionCollection()->addAction( QLatin1String("change_to_lowercase"), action );
   connect( action, SIGNAL(triggered(bool)), this, SLOT(slotLowerCase()) );
 
 
@@ -1375,18 +1375,18 @@ void KMComposeWin::setupActions( void )
 
   action = new KAction( i18n("&Spellchecker..."), this );
   action->setIconText( i18n("Spellchecker") );
-  actionCollection()->addAction( "setup_spellchecker", action );
+  actionCollection()->addAction( QLatin1String("setup_spellchecker"), action );
   connect( action, SIGNAL(triggered(bool)), SLOT(slotSpellcheckConfig()) );
 
   mTranslateAction = new KToggleAction( i18n("&Translator"), this );
   action->setShortcut( QKeySequence( Qt::CTRL + Qt::ALT + Qt::Key_T ) );
-  actionCollection()->addAction( "translator", mTranslateAction );
+  actionCollection()->addAction( QLatin1String("translator"), mTranslateAction );
   mTranslateAction->setChecked(false);
   connect(mTranslateAction, SIGNAL(triggered(bool)), mTranslatorWidget,SLOT(setVisible(bool)));
 
   //Chiamus not supported in kmail2
 #if 0
-  if ( Kleo::CryptoBackendFactory::instance()->protocol( "Chiasmus" ) ) {
+  if ( Kleo::CryptoBackendFactory::instance()->protocol( QLatin1String("Chiasmus") ) ) {
     KToggleAction *a = new KToggleAction( KIcon( "chiasmus_chi" ), i18n("Encrypt Message with Chiasmus..."), this );
     actionCollection()->addAction( "encrypt_message_chiasmus", a );
     a->setCheckedState( KGuiItem( i18n( "Encrypt Message with Chiasmus..." ), "chiencrypted" ) );
@@ -1398,12 +1398,12 @@ void KMComposeWin::setupActions( void )
   }
 #endif
 
-  mEncryptAction = new KToggleAction(KIcon("document-encrypt"), i18n("&Encrypt Message"), this);
+  mEncryptAction = new KToggleAction(KIcon(QLatin1String("document-encrypt")), i18n("&Encrypt Message"), this);
   mEncryptAction->setIconText( i18n( "Encrypt" ) );
-  actionCollection()->addAction("encrypt_message", mEncryptAction );
-  mSignAction = new KToggleAction(KIcon("document-sign"), i18n("&Sign Message"), this);
+  actionCollection()->addAction(QLatin1String("encrypt_message"), mEncryptAction );
+  mSignAction = new KToggleAction(KIcon(QLatin1String("document-sign")), i18n("&Sign Message"), this);
   mSignAction->setIconText( i18n( "Sign" ) );
-  actionCollection()->addAction("sign_message", mSignAction );
+  actionCollection()->addAction(QLatin1String("sign_message"), mSignAction );
   const KPIMIdentities::Identity &ident =
     KMKernel::self()->identityManager()->identityForUoidOrDefault( mComposerBase->identityCombo()->currentIdentity() );
   // PENDING(marc): check the uses of this member and split it into
@@ -1427,22 +1427,22 @@ void KMComposeWin::setupActions( void )
   }
 
   mCryptoModuleAction = new KSelectAction(i18n("&Cryptographic Message Format"), this);
-  actionCollection()->addAction("options_select_crypto", mCryptoModuleAction );
+  actionCollection()->addAction(QLatin1String("options_select_crypto"), mCryptoModuleAction );
   connect(mCryptoModuleAction, SIGNAL(triggered(int)), SLOT(slotSelectCryptoModule()));
   mCryptoModuleAction->setItems( l );
   mCryptoModuleAction->setToolTip( i18n( "Select a cryptographic format for this message" ) );
 
   mComposerBase->editor()->createActions( actionCollection() );
 
-  createGUI( "kmcomposerui.rc" );
-  connect( toolBar( "htmlToolBar" )->toggleViewAction(),
+  createGUI( QLatin1String("kmcomposerui.rc") );
+  connect( toolBar( QLatin1String("htmlToolBar") )->toggleViewAction(),
            SIGNAL(toggled(bool)),
            SLOT(htmlToolBarVisibilityChanged(bool)) );
 
 
   // In Kontact, this entry would read "Configure Kontact", but bring
   // up KMail's config dialog. That's sensible, though, so fix the label.
-  QAction *configureAction = actionCollection()->action( "options_configure" );
+  QAction *configureAction = actionCollection()->action( QLatin1String("options_configure") );
   if ( configureAction ) {
     configureAction->setText( i18n("Configure KMail..." ) );
   }
@@ -1474,22 +1474,22 @@ void KMComposeWin::changeCryptoAction()
 void KMComposeWin::setupStatusBar( QWidget *w )
 {
   statusBar()->addWidget(w);
-  statusBar()->insertItem( "", 0, 1 );
+  statusBar()->insertItem( QString(), 0, 1 );
   statusBar()->setItemAlignment( 0, Qt::AlignLeft | Qt::AlignVCenter );
   statusBar()->insertPermanentItem( overwriteModeStr(), 4,0 );
 
-  statusBar()->insertPermanentItem( i18n(" Spellcheck: %1 ", QString( "     " )), 3, 0) ;
-  statusBar()->insertPermanentItem( i18n(" Column: %1 ", QString( "     " ) ), 2, 0 );
+  statusBar()->insertPermanentItem( i18n(" Spellcheck: %1 ", QLatin1String( "     " )), 3, 0) ;
+  statusBar()->insertPermanentItem( i18n(" Column: %1 ", QLatin1String( "     " ) ), 2, 0 );
   statusBar()->insertPermanentItem(
     i18nc("Shows the linenumber of the cursor position.", " Line: %1 "
-      , QString( "     " ) ), 1, 0 );
+      , QLatin1String( "     " ) ), 1, 0 );
 }
 
 //-----------------------------------------------------------------------------
 void KMComposeWin::setupEditor( void )
 {
   QFontMetrics fm( mBodyFont );
-  mComposerBase->editor()->setTabStopWidth( fm.width( QChar(' ') ) * 8 );
+  mComposerBase->editor()->setTabStopWidth( fm.width( QLatin1Char(' ') ) * 8 );
 
   slotWordWrapToggled( MessageComposer::MessageComposerSettings::self()->wordWrap() );
 
@@ -1662,9 +1662,9 @@ void KMComposeWin::setMessage( const KMime::Message::Ptr &newMsg, bool lastSignS
     if ( !xface.isEmpty() ) {
       int numNL = ( xface.length() - 1 ) / 70;
       for ( int i = numNL; i > 0; --i ) {
-        xface.insert( i * 70, "\n\t" );
+        xface.insert( i * 70, QLatin1String("\n\t") );
       }
-      mMsg->setHeader( new KMime::Headers::Generic( "X-Face", mMsg.get(), xface.toUtf8(), "utf-8" ) );
+      mMsg->setHeader( new KMime::Headers::Generic( "X-Face", mMsg.get(), xface, "utf-8" ) );
     }
   }
 
@@ -1863,7 +1863,7 @@ bool KMComposeWin::queryClose ()
     const int rc = KMessageBox::warningYesNoCancel( this,
                                                     i18n("Do you want to save the message for later or discard it?"),
                                                     i18n("Close Composer"),
-                                                    KGuiItem(savebut, "document-save", QString(), savetext),
+                                                    KGuiItem(savebut, QLatin1String("document-save"), QString(), savetext),
                                                     KStandardGuiItem::discard(),
                                                     KStandardGuiItem::cancel());
     if ( rc == KMessageBox::Cancel ) {
@@ -2014,7 +2014,7 @@ static QString selectCharset( KSelectAction *root, const QString &encoding )
 //-----------------------------------------------------------------------------
 void KMComposeWin::setCharset( const QByteArray &charset )
 {
-  const QString codecNameToSet = selectCharset( mCodecAction, charset );
+  const QString codecNameToSet = selectCharset( mCodecAction, QString::fromLatin1(charset) );
   if ( codecNameToSet.isEmpty() ) {
     kWarning() << "Could not find charset" << charset;
     setAutoCharset();
@@ -2026,7 +2026,7 @@ void KMComposeWin::setCharset( const QByteArray &charset )
 //-----------------------------------------------------------------------------
 void KMComposeWin::slotAddrBook()
 {
-  KRun::runCommand("kaddressbook", window());
+  KRun::runCommand(QLatin1String("kaddressbook"), window());
 }
 
 //-----------------------------------------------------------------------------
@@ -2039,7 +2039,7 @@ void KMComposeWin::slotInsertFile()
   mRecentAction->addUrl( u );
   // Prevent race condition updating list when multiple composers are open
   {
-    const QString encoding = MessageViewer::NodeHelper::encodingForName( u.fileEncoding() ).toLatin1();
+    const QString encoding = MessageViewer::NodeHelper::encodingForName( u.fileEncoding() );
     QStringList urls = GlobalSettings::self()->recentUrls();
     QStringList encodings = GlobalSettings::self()->recentEncodings();
     // Prevent config file from growing without bound
@@ -2129,10 +2129,10 @@ QString KMComposeWin::smartQuote( const QString & msg )
 bool KMComposeWin::insertFromMimeData( const QMimeData *source, bool forceAttachment )
 {
   // If this is a PNG image, either add it as an attachment or as an inline image
-  if ( source->hasImage() && source->hasFormat( "image/png" ) ) {
+  if ( source->hasImage() && source->hasFormat( QLatin1String("image/png") ) ) {
     // Get the image data before showing the dialog, since that processes events which can delete
     // the QMimeData object behind our back
-    const QByteArray imageData = source->data( "image/png" );
+    const QByteArray imageData = source->data( QLatin1String("image/png") );
     if ( imageData.isEmpty() ) {
        return true;
     }
@@ -2159,7 +2159,7 @@ bool KMComposeWin::insertFromMimeData( const QMimeData *source, bool forceAttach
     // Ask for the filename first.
     bool ok;
     const QString attName =
-      KInputDialog::getText( "KMail", i18n( "Name of the attachment:" ), QString(), &ok, this );
+      KInputDialog::getText( i18n("KMail"), i18n( "Name of the attachment:" ), QString(), &ok, this );
     if ( !ok ) {
       return true;
     }
@@ -2192,7 +2192,7 @@ bool KMComposeWin::insertFromMimeData( const QMimeData *source, bool forceAttach
     if ( items.isEmpty() && collections.isEmpty() ) {
       if ( allLocalURLs || forceAttachment ) {
         foreach( const KUrl &url, urlList ) {
-          addAttachment( url, "" );
+            addAttachment( url, QString() );
         }
       } else {
         KMenu p;
@@ -2202,11 +2202,11 @@ bool KMComposeWin::insertFromMimeData( const QMimeData *source, bool forceAttach
 
         if ( selectedAction == addAsTextAction ) {
           foreach( const KUrl &url, urlList ) {
-            mComposerBase->editor()->textCursor().insertText(url.url() + '\n');
+            mComposerBase->editor()->textCursor().insertText(url.url() + QLatin1Char('\n'));
           }
         } else if ( selectedAction == addAsAttachmentAction ) {
           foreach( const KUrl &url, urlList ) {
-            addAttachment( url, "" );
+              addAttachment( url, QString() );
           }
         }
       }
@@ -2239,7 +2239,7 @@ void KMComposeWin::slotPasteAsAttachment()
       i18n( "Name of the attachment:" ),
       QString(), &ok, this );
     if( ok ) {
-      mComposerBase->addAttachment( attName, attName, "utf-8", QApplication::clipboard()->text().toUtf8(), "text/plain" );
+      mComposerBase->addAttachment( attName, attName, QLatin1String("utf-8"), QApplication::clipboard()->text().toUtf8(), "text/plain" );
     }
     return;
   }
@@ -2304,9 +2304,9 @@ QString KMComposeWin::addQuotesToText( const QString &inputText ) const
 {
   QString answer( inputText );
   const QString indentStr = mComposerBase->editor()->quotePrefixName();
-  answer.replace( '\n', '\n' + indentStr );
+  answer.replace( QLatin1Char('\n'), QLatin1Char('\n') + indentStr );
   answer.prepend( indentStr );
-  answer += '\n';
+  answer += QLatin1Char('\n');
   return MessageCore::StringUtil::smartQuote( answer, MessageComposer::MessageComposerSettings::self()->lineWrapWidth() );
 }
 
@@ -2441,9 +2441,9 @@ void KMComposeWin::slotUpdWinTitle()
   // Remove characters that show badly in most window decorations:
   // newlines tend to become boxes.
   if ( s.isEmpty() ) {
-    setCaption( '(' + i18n("unnamed") + ')' );
+    setCaption( QLatin1Char('(') + i18n("unnamed") + QLatin1Char(')') );
   } else {
-    setCaption( s.replace( QChar('\n'), ' ' ) );
+    setCaption( s.replace( QLatin1Char('\n'), QLatin1Char(' ') ) );
   }
 }
 
@@ -2489,9 +2489,9 @@ void KMComposeWin::setEncryption( bool encrypt, bool setByUser )
   }
   // show the appropriate icon
   if ( encrypt ) {
-    mEncryptAction->setIcon( KIcon( "document-encrypt" ) );
+    mEncryptAction->setIcon( KIcon( QLatin1String("document-encrypt") ) );
   } else {
-    mEncryptAction->setIcon( KIcon( "document-decrypt" ) );
+    mEncryptAction->setIcon( KIcon( QLatin1String("document-decrypt") ) );
   }
 
   // mark the attachments for (no) encryption
@@ -2681,7 +2681,7 @@ void KMComposeWin::doSend( MessageComposer::MessageSender::SendMethod method,
                                              i18n("No To: specified"),
                                              KStandardGuiItem::yes(),
                                              KStandardGuiItem::no(),
-                                             ":kmail_no_to_field_specified" );
+                                             QLatin1String(":kmail_no_to_field_specified") );
         if ( rc == KMessageBox::No ) {
           return;
         }
@@ -2697,7 +2697,7 @@ void KMComposeWin::doSend( MessageComposer::MessageSender::SendMethod method,
                                     i18n("No Subject Specified"),
                                     KGuiItem(i18n("S&end as Is")),
                                     KGuiItem(i18n("&Specify the Subject")),
-                                    "no_subject_specified" );
+                                    QLatin1String("no_subject_specified") );
       if ( rc == KMessageBox::No ) {
         return;
       }
@@ -2963,12 +2963,12 @@ void KMComposeWin::enableHtml()
   }
 
   mComposerBase->editor()->enableRichTextMode();
-  if ( !toolBar( "htmlToolBar" )->isVisible() ) {
+  if ( !toolBar( QLatin1String("htmlToolBar") )->isVisible() ) {
     // Use singleshot, as we we might actually be called from a slot that wanted to disable the
     // toolbar (but the messagebox in disableHtml() prevented that and called us).
     // The toolbar can't correctly deal with being enabled right in a slot called from the "disabled"
     // signal, so wait one event loop run for that.
-    QTimer::singleShot( 0, toolBar( "htmlToolBar" ), SLOT(show()) );
+    QTimer::singleShot( 0, toolBar( QLatin1String("htmlToolBar") ), SLOT(show()) );
   }
   if ( !markupAction->isChecked() )
     markupAction->setChecked( true );
@@ -2987,7 +2987,7 @@ void KMComposeWin::disableHtml( MessageComposer::ComposerViewBase::Confirmation 
     int choice = KMessageBox::warningYesNoCancel( this, i18n( "Turning HTML mode off "
         "will cause the text to lose the formatting. Are you sure?" ),
         i18n( "Lose the formatting?" ), KGuiItem( i18n( "Lose Formatting" ) ), KGuiItem( i18n( "Add Markup Plain Text" ) ) , KStandardGuiItem::cancel(),
-              "LoseFormattingWarning" );
+              QLatin1String("LoseFormattingWarning") );
 
     switch(choice) {
     case KMessageBox::Cancel:
@@ -3006,9 +3006,9 @@ void KMComposeWin::disableHtml( MessageComposer::ComposerViewBase::Confirmation 
   mComposerBase->editor()->setActionsEnabled( false );
 
   slotUpdateFont();
-  if ( toolBar( "htmlToolBar" )->isVisible() ) {
+  if ( toolBar( QLatin1String("htmlToolBar") )->isVisible() ) {
     // See the comment in enableHtml() why we use a singleshot timer, similar situation here.
-    QTimer::singleShot( 0, toolBar( "htmlToolBar" ), SLOT(hide()) );
+    QTimer::singleShot( 0, toolBar( QLatin1String("htmlToolBar") ), SLOT(hide()) );
   }
   if ( markupAction->isChecked() )
     markupAction->setChecked( false );
@@ -3065,7 +3065,7 @@ void KMComposeWin::slotSpellCheckingStatus(const QString & status)
 
 void KMComposeWin::slotSpellcheckDoneClearStatus()
 {
-  statusBar()->changeItem("", 0);
+    statusBar()->changeItem(QString(), 0);
 }
 
 //-----------------------------------------------------------------------------
@@ -3114,7 +3114,7 @@ void KMComposeWin::slotIdentityChanged( uint uoid, bool initalChange )
     if ( !xface.isEmpty() ) {
       int numNL = ( xface.length() - 1 ) / 70;
       for ( int i = numNL; i > 0; --i ) {
-        xface.insert( i*70, "\n\t" );
+        xface.insert( i*70, QLatin1String("\n\t") );
       }
       KMime::Headers::Generic *header = new KMime::Headers::Generic( "X-Face", mMsg.get(), xface, "utf-8" );
       mMsg->setHeader( header );
@@ -3200,7 +3200,7 @@ void KMComposeWin::slotIdentityChanged( uint uoid, bool initalChange )
 //-----------------------------------------------------------------------------
 void KMComposeWin::slotSpellcheckConfig()
 {
-  static_cast<KMComposerEditor *>(mComposerBase->editor())->showSpellConfigDialog( "kmail2rc" );
+  static_cast<KMComposerEditor *>(mComposerBase->editor())->showSpellConfigDialog( QLatin1String("kmail2rc") );
 }
 
 //-----------------------------------------------------------------------------
@@ -3217,7 +3217,7 @@ void KMComposeWin::slotEditToolbars()
 
 void KMComposeWin::slotUpdateToolbars()
 {
-  createGUI( "kmcomposerui.rc" );
+  createGUI( QLatin1String("kmcomposerui.rc") );
   applyMainWindowSettings( KMKernel::self()->config()->group( "Composer") );
 }
 
@@ -3301,7 +3301,7 @@ void KMComposeWin::slotCursorPositionChanged()
   if ( mComposerBase->editor()->textCursor().charFormat().isAnchor() ) {
     const QString text = mComposerBase->editor()->currentLinkText();
     const QString url = mComposerBase->editor()->currentLinkUrl();
-    statusBar()->changeItem( text + " -> " + url, 0 );
+    statusBar()->changeItem( text + QLatin1String(" -> ") + url, 0 );
   }
   else {
     statusBar()->changeItem( QString(), 0 );

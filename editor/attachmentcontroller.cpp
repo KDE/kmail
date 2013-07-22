@@ -92,7 +92,7 @@ void AttachmentController::attachMyPublicKey()
 {
     const KPIMIdentities::Identity &identity = mComposer->identity();
     kDebug() << identity.identityName();
-    exportPublicKey( identity.pgpEncryptionKey() );
+    exportPublicKey( QString::fromLatin1(identity.pgpEncryptionKey()) );
 }
 
 void AttachmentController::actionsCreated()
@@ -127,7 +127,7 @@ void AttachmentController::selectionChanged()
 void AttachmentController::onShowAttachment( KMime::Content *content, const QByteArray &charset )
 {
     KMReaderMainWin *win =
-            new KMReaderMainWin( content, false, charset );
+            new KMReaderMainWin( content, false, QString::fromLatin1(charset) );
     win->show();
 }
 

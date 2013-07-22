@@ -18,10 +18,10 @@ int main(int argc,char **argv)
   KCmdLineArgs::init(argc, argv, &aboutData);
   KApplication app;
 
-  OrgKdeKmailKmailInterface kmailInterface( "org.kde.kmail", "/KMail", QDBusConnection::sessionBus());
-  kmailInterface.openComposer( "to 1","","","First test","simple openComp call",0);
+  OrgKdeKmailKmailInterface kmailInterface( QLatin1String("org.kde.kmail"), QLatin1String("/KMail"), QDBusConnection::sessionBus());
+  kmailInterface.openComposer( QLatin1String("to 1"),QString(),QString(),QLatin1String("First test"),QLatin1String("simple openComp call"),0);
 
-  QDBusReply<QDBusObjectPath> composerDbusPath =  kmailInterface.openComposer("to 2","","","Second test",  "DBUS ref call",0);
+  QDBusReply<QDBusObjectPath> composerDbusPath =  kmailInterface.openComposer(QLatin1String("to 2"),QString(),QString(),QLatin1String("Second test"), QLatin1String("DBUS ref call"),0);
 
   if ( !composerDbusPath.isValid() )
   {

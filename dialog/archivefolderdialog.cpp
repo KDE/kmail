@@ -53,7 +53,7 @@ static QString standardArchivePath( const QString &folderName )
 ArchiveFolderDialog::ArchiveFolderDialog( QWidget *parent )
     : KDialog( parent ), mParentWidget( parent )
 {
-    setObjectName( "archive_folder_dialog" );
+    setObjectName( QLatin1String("archive_folder_dialog") );
     setCaption( i18n( "Archive Folder" ) );
     setButtons( Ok|Cancel );
     setDefaultButton( Ok );
@@ -99,7 +99,7 @@ ArchiveFolderDialog::ArchiveFolderDialog( QWidget *parent )
     mainLayout->addWidget( fileNameLabel, row, 0 );
     mUrlRequester = new KUrlRequester( mainWidget );
     mUrlRequester->setMode( KFile::LocalOnly | KFile::File );
-    mUrlRequester->setFilter( "*.tar *.zip *.tar.gz *.tar.bz2" );
+    mUrlRequester->setFilter( QLatin1String("*.tar *.zip *.tar.gz *.tar.bz2") );
     fileNameLabel->setBuddy( mUrlRequester );
     connect( mUrlRequester, SIGNAL(urlSelected(KUrl)),
              this, SLOT(slotFixFileExtension()) );
@@ -214,7 +214,7 @@ void ArchiveFolderDialog::slotFixFileExtension()
     }
 
     // Now, we've got a filename without an extension, simply append the correct one
-    fileName += extensions[mFormatComboBox->currentIndex()];
+    fileName += QLatin1String(extensions[mFormatComboBox->currentIndex()]);
     mUrlRequester->setUrl( fileName );
 }
 

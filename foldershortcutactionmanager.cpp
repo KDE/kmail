@@ -129,7 +129,7 @@ void FolderShortcutActionManager::shortcutChanged( const Akonadi::Collection &co
     FolderShortcutCommand *command = new FolderShortcutCommand( mParent, col );
     mFolderShortcutCommands.insert( col.id(), command );
 
-    KIcon icon( "folder" );
+    KIcon icon( QLatin1String("folder") );
     if ( col.hasAttribute<Akonadi::EntityDisplayAttribute>() &&
          !col.attribute<Akonadi::EntityDisplayAttribute>()->iconName().isEmpty() ) {
         icon = KIcon( col.attribute<Akonadi::EntityDisplayAttribute>()->iconName() );
@@ -137,7 +137,7 @@ void FolderShortcutActionManager::shortcutChanged( const Akonadi::Collection &co
 
     const QString actionLabel = i18n( "Folder Shortcut %1", col.name() );
     QString actionName = i18n( "Folder Shortcut %1", QString::number( col.id() ) );
-    actionName.replace( ' ', '_' );
+    actionName.replace( QLatin1Char(' '), QLatin1Char('_') );
     KAction *action = mActionCollection->addAction( actionName );
     // The folder shortcut is set in the folder shortcut dialog.
     // The shortcut set in the shortcut dialog would not be saved back to
