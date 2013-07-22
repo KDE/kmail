@@ -136,7 +136,7 @@
       </entry>
       <entry name="PreviousVersion" type="String" key="previous-version">
         <label>Specifies the version of the application that was last used (for internal use only)</label>
-        <default code="true">KDEPIM_VERSION</default>
+        <default code="true">QLatin1String(KDEPIM_VERSION)</default>
       </entry>
       <entry key="ShowMenuBar" type="Bool">
         <default>true</default>

@@ -82,17 +82,17 @@ KMailPart::KMailPart(QWidget *parentWidget, QObject *parent, const QVariantList 
 
   kmkernel->setupDBus(); // Ok. We are ready for D-Bus requests.
   (void) new KmailpartAdaptor( this );
-  QDBusConnection::sessionBus().registerObject( "/KMailPart", this );
+  QDBusConnection::sessionBus().registerObject( QLatin1String("/KMailPart"), this );
 
   // create a canvas to insert our widget
   QWidget *canvas = new QWidget( parentWidget );
   canvas->setFocusPolicy(Qt::ClickFocus);
-  canvas->setObjectName( "canvas" );
+  canvas->setObjectName( QLatin1String("canvas") );
   setWidget(canvas);
-  KIconLoader::global()->addAppDir( "libkdepim" );
+  KIconLoader::global()->addAppDir( QLatin1String("libkdepim") );
   mainWidget = new KMMainWidget( canvas, this, actionCollection(),
                                  KGlobal::config() );
-  mainWidget->setObjectName( "partmainwidget" );
+  mainWidget->setObjectName( QLatin1String("partmainwidget") );
   QVBoxLayout *topLayout = new QVBoxLayout(canvas);
   topLayout->addWidget(mainWidget);
   topLayout->setMargin(0);
@@ -105,7 +105,7 @@ KMailPart::KMailPart(QWidget *parentWidget, QObject *parent, const QVariantList 
            this, SLOT(slotFolderChanged(Akonadi::Collection)) );
   connect( kmkernel->folderCollectionMonitor(), SIGNAL(collectionChanged(Akonadi::Collection,QSet<QByteArray>)),
            this, SLOT(slotCollectionChanged(Akonadi::Collection,QSet<QByteArray>)));
-  setXMLFile( "kmail_part.rc", true );
+  setXMLFile( QLatin1String("kmail_part.rc"), true );
 
   KSettings::Dispatcher::registerComponent( KMailFactory::componentData(), mKMailKernel, "slotConfigChanged" );
 }

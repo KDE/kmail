@@ -58,13 +58,13 @@ AccountConfigOrderDialog::AccountConfigOrderDialog(QWidget *parent)
 
     KVBox* upDownBox = new KVBox( page );
     mUpButton = new KPushButton( upDownBox );
-    mUpButton->setIcon( KIcon("go-up") );
+    mUpButton->setIcon( KIcon(QLatin1String("go-up")) );
     mUpButton->setToolTip( i18nc( "Move selected account up.", "Up" ) );
     mUpButton->setEnabled( false ); // b/c no item is selected yet
     mUpButton->setFocusPolicy( Qt::StrongFocus );
 
     mDownButton = new KPushButton( upDownBox );
-    mDownButton->setIcon( KIcon("go-down") );
+    mDownButton->setIcon( KIcon(QLatin1String("go-down")) );
     mDownButton->setToolTip( i18nc( "Move selected account down.", "Down" ) );
     mDownButton->setEnabled( false ); // b/c no item is selected yet
     mDownButton->setFocusPolicy( Qt::StrongFocus );
@@ -136,9 +136,9 @@ void AccountConfigOrderDialog::init()
     foreach ( const Akonadi::AgentInstance &instance, Akonadi::AgentManager::self()->instances() ) {
         const QStringList capabilities( instance.type().capabilities() );
         if ( instance.type().mimeTypes().contains( KMime::Message::mimeType() ) ) {
-            if ( capabilities.contains( "Resource" ) &&
-                 !capabilities.contains( "Virtual" ) &&
-                 !capabilities.contains( "MailTransport" ) )
+            if ( capabilities.contains( QLatin1String("Resource") ) &&
+                 !capabilities.contains( QLatin1String("Virtual") ) &&
+                 !capabilities.contains( QLatin1String("MailTransport") ) )
             {
                 const QString identifier = instance.identifier();
                 if (!identifier.contains(POP3_RESOURCE_IDENTIFIER)) {

@@ -29,7 +29,7 @@ extern "C"
   {
     KComponentData instance( "kcmkmail_config_identity" ); // keep in sync with kmail for now to reuse kmail translations until after the string freeze
     KMail::IdentityPage *page = new KMail::IdentityPage( instance, parent );
-    page->setObjectName( "kcm_kpimidentities" );
+    page->setObjectName( QLatin1String("kcm_kpimidentities") );
     return page;
   }
 }
