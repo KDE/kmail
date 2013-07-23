@@ -40,10 +40,11 @@
 // The type of async operation supported by KMCommand is retrieval
 // of messages from an IMAP server.
 
+#include "kmcommands.h"
+
 #include <Nepomuk2/Tag>
 #include <nepomuk2/resource.h>
 
-#include "kmcommands.h"
 #include "collectionpane.h"
 #include "kernel/mailkernel.h"
 #include "util/mailutil.h"
@@ -137,9 +138,6 @@ using namespace KMime;
 
 #include "kleo/cryptobackend.h"
 #include "kleo/cryptobackendfactory.h"
-
-#include <Nepomuk2/Tag>
-#include <nepomuk2/resource.h>
 
 #include <gpgme++/error.h>
 

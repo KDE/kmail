@@ -96,7 +96,7 @@ namespace KMail {
         * The state of the action depends on the number of selected messages, for example
         * all actions are disabled when no message is selected.
         *
-        * This funcion is async
+        * This function is async
         *
         * @param selectedItem if exactly one item is selected, it should be passed here
         */
