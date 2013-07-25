@@ -95,7 +95,8 @@ void insertLibraryCataloguesAndIcons() {
     "libkpimutils",
     "akonadicontact",
     "kabc",
-    "akonadi_sendlater_agent"
+    "akonadi_sendlater_agent",
+    "libgrantleetheme"
 
   };
 
