@@ -635,8 +635,8 @@ void KMMainWidget::layoutSplitters()
   // enabled
 
   const bool opaqueResize = KGlobalSettings::opaqueResize();
-  bool readerWindowAtSide = !mReaderWindowBelow && mReaderWindowActive;
-  bool readerWindowBelow = mReaderWindowBelow && mReaderWindowActive;
+  const bool readerWindowAtSide = !mReaderWindowBelow && mReaderWindowActive;
+  const bool readerWindowBelow = mReaderWindowBelow && mReaderWindowActive;
 
   mSplitter1 = new QSplitter( this );
   mSplitter2 = new QSplitter( mSplitter1 );
