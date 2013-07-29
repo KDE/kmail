@@ -2402,7 +2402,7 @@ ComposerPageGeneralTab::ComposerPageGeneralTab( QWidget * parent )
   connect( completionOrderBtn, SIGNAL(clicked()),
            this, SLOT(slotConfigureCompletionOrder()) );
   hlay->addWidget( completionOrderBtn );
-  hlay->addItem( new QSpacerItem(0, 0) );
+  hlay->addStretch();
 
 
   hlay = new QHBoxLayout(); // inherits spacing
@@ -2424,7 +2424,7 @@ ComposerPageGeneralTab::ComposerPageGeneralTab( QWidget * parent )
   connect( recentAddressesBtn, SIGNAL(clicked()),
            this, SLOT(slotConfigureRecentAddresses()) );
   hlay->addWidget( recentAddressesBtn );
-  hlay->addItem( new QSpacerItem(0, 0) );
+  hlay->addStretch();
   vlay->addStretch( 100 );
 }
 
