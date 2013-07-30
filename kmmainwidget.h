@@ -533,6 +533,7 @@ class KMAIL_EXPORT KMMainWidget : public QWidget
     void slotFetchItemsForFolderDone(KJob*job);
     void slotServerStateChanged(Akonadi::ServerManager::State state);
     void slotConfigureSubscriptionFinished(QDBusPendingCallWatcher* watcher);
+    void slotArchiveMails();
 private:
     // Message actions
     KAction *mDeleteAction, *mTrashThreadAction,
@@ -540,6 +541,7 @@ private:
       *mSendAgainAction, *mApplyAllFiltersAction,
       *mSaveAttachmentsAction, *mOpenAction,
       *mMoveMsgToFolderAction, *mCollectionProperties, *mSendQueued;
+    KAction *mArchiveAction;
     KActionMenu *mSendActionMenu;
     // Filter actions
     KActionMenu *mFilterMenu;
