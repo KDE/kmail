@@ -18,6 +18,7 @@
 #include "configureagentswidget.h"
 
 #include "sendlateragent/sendlaterutil.h"
+#include "folderarchiveagent/folderarchiveutil.h"
 #include <akonadi/private/xdgbasedirs_p.h>
 
 #include <KLocale>
@@ -163,6 +164,7 @@ void ConfigureAgentsWidget::save()
             changeAgentActiveState((item->checkState(AgentState) == Qt::Checked), item->data(AgentName, InterfaceName).toString(), item->data(AgentName, PathName).toString());
     }
     SendLater::SendLaterUtil::forceReparseConfiguration();
+    FolderArchive::FolderArchiveUtil::forceReparseConfiguration();
 }
 
 QString ConfigureAgentsWidget::helpAnchor() const
