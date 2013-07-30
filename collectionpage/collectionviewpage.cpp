@@ -59,7 +59,7 @@ void CollectionViewPage::init(const Akonadi::Collection & col)
 {
     mCurrentCollection = col;
     QSharedPointer<FolderCollection> fd = FolderCollection::forCollection( col, false );
-    mIsLocalSystemFolder = CommonKernel->isSystemFolderCollection( col ) || fd->isStructural() || Kernel::folderIsInbox( col );
+    mIsLocalSystemFolder = CommonKernel->isSystemFolderCollection( col ) || fd->isStructural() || Kernel::folderIsInbox( col, true );
 
     QVBoxLayout * topLayout = new QVBoxLayout( this );
     topLayout->setSpacing( KDialog::spacingHint() );
