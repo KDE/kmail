@@ -4858,5 +4858,10 @@ void KMMainWidget::slotMoveMessageToTrash()
 
 void KMMainWidget::slotArchiveMails()
 {
-    //TODO
+    OrgFreedesktopAkonadiFolderArchiveAgentInterface folderArchiveInterface(QLatin1String("org.freedesktop.Akonadi.FolderArchiveAgent"), QLatin1String("/FolderArchiveAgent"),QDBusConnection::sessionBus(), this);
+    if (folderArchiveInterface.isValid()) {
+        //TODO
+    } else {
+        KMessageBox::error(this,i18n("Archive Folder Agent was not registered."));
+    }
 }
