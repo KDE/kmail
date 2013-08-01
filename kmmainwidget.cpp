@@ -57,6 +57,7 @@
 #include "job/createnewcontactjob.h"
 #include "sendlateragentinterface.h"
 #include "folderarchiveagentinterface.h"
+#include "folderarchiveagent/folderarchiveutil.h"
 
 #include "pimcommon/acl/collectionaclpage.h"
 #include "mailcommon/collectionpage/collectiongeneralpage.h"
@@ -209,7 +210,6 @@ using MessageViewer::AttachmentStrategy;
 Q_DECLARE_METATYPE(KPIM::ProgressItem*)
 Q_DECLARE_METATYPE(Akonadi::Job*)
 Q_DECLARE_METATYPE(QPointer<KPIM::ProgressItem>)
-
 K_GLOBAL_STATIC( KMMainWidget::PtrList, theMainWidgetList )
 
 //-----------------------------------------------------------------------------
@@ -231,6 +231,7 @@ K_GLOBAL_STATIC( KMMainWidget::PtrList, theMainWidgetList )
     mVacationIndicatorActive( false ),
     mGoToFirstUnreadMessageInSelectedFolder( false )
 {
+  qDBusRegisterMetaType< QVector<qlonglong> >();
   // must be the first line of the constructor:
   mStartupDone = false;
   mWasEverShown = false;
@@ -3985,6 +3986,8 @@ void KMMainWidget::updateMessageActionsDelayed()
     actionList << messageActions()->editAction();
   }
   actionList << mSaveAttachmentsAction;
+  if (FolderArchive::FolderArchiveUtil::folderArchiveAgentEnabled())
+      actionList << mArchiveAction;
   mGUIClient->unplugActionList( QLatin1String( "messagelist_actionlist" ) );
   mGUIClient->plugActionList( QLatin1String( "messagelist_actionlist" ), actionList );
   mSendAgainAction->setEnabled( statusSendAgain );
@@ -4861,8 +4864,9 @@ void KMMainWidget::slotArchiveMails()
     OrgFreedesktopAkonadiFolderArchiveAgentInterface folderArchiveInterface(QLatin1String("org.freedesktop.Akonadi.FolderArchiveAgent"), QLatin1String("/FolderArchiveAgent"),QDBusConnection::sessionBus(), this);
     if (folderArchiveInterface.isValid()) {
         const QVector<qlonglong> selectedMessages = mMessagePane->selectionAsMessageItemListId();
-        folderArchiveInterface.archiveItems(selectedMessages, mCurrentFolder->collection().resource());
-        //TODO
+        if (mCurrentFolder) {
+            folderArchiveInterface.archiveItems(selectedMessages, mCurrentFolder->collection().resource());
+        }
     } else {
         KMessageBox::error(this,i18n("Archive Folder Agent was not registered."));
     }
