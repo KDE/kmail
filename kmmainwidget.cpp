@@ -231,7 +231,6 @@ K_GLOBAL_STATIC( KMMainWidget::PtrList, theMainWidgetList )
     mVacationIndicatorActive( false ),
     mGoToFirstUnreadMessageInSelectedFolder( false )
 {
-  qDBusRegisterMetaType< QVector<qlonglong> >();
   // must be the first line of the constructor:
   mStartupDone = false;
   mWasEverShown = false;
@@ -4863,9 +4862,14 @@ void KMMainWidget::slotArchiveMails()
 {
     OrgFreedesktopAkonadiFolderArchiveAgentInterface folderArchiveInterface(QLatin1String("org.freedesktop.Akonadi.FolderArchiveAgent"), QLatin1String("/FolderArchiveAgent"),QDBusConnection::sessionBus(), this);
     if (folderArchiveInterface.isValid()) {
-        const QVector<qlonglong> selectedMessages = mMessagePane->selectionAsMessageItemListId();
+        const QList<Akonadi::Item> selectedMessages = mMessagePane->selectionAsMessageItemList();
         if (mCurrentFolder) {
-            folderArchiveInterface.archiveItems(selectedMessages, mCurrentFolder->collection().resource());
+            QList<qlonglong> ids;
+            Q_FOREACH(const Akonadi::Item &item, selectedMessages) {
+                ids << item.id();
+            }
+
+            folderArchiveInterface.archiveItems(ids, mCurrentFolder->collection().resource());
         }
     } else {
         KMessageBox::error(this,i18n("Archive Folder Agent was not registered."));
