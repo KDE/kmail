@@ -4860,6 +4860,8 @@ void KMMainWidget::slotArchiveMails()
 {
     OrgFreedesktopAkonadiFolderArchiveAgentInterface folderArchiveInterface(QLatin1String("org.freedesktop.Akonadi.FolderArchiveAgent"), QLatin1String("/FolderArchiveAgent"),QDBusConnection::sessionBus(), this);
     if (folderArchiveInterface.isValid()) {
+        const QVector<qlonglong> selectedMessages = mMessagePane->selectionAsMessageItemListId();
+        folderArchiveInterface.archiveItems(selectedMessages, mCurrentFolder->collection().resource());
         //TODO
     } else {
         KMessageBox::error(this,i18n("Archive Folder Agent was not registered."));
