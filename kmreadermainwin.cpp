@@ -54,6 +54,8 @@
 #include "kernel/mailkernel.h"
 #include "foldercollection.h"
 
+#include "folderarchiveagent/folderarchiveutil.h"
+
 #include <KActionCollection>
 #include <akonadi/contact/contactsearchjob.h>
 #include <kpimutils/email.h>
@@ -557,6 +559,8 @@ void KMReaderMainWin::showMessagePopup(const Akonadi::Item&msg ,const KUrl&url,c
       menu->addAction( mMsgActions->printAction() );
       menu->addAction( mReaderWin->saveAsAction() );
       menu->addAction( mSaveAtmAction );
+      if (FolderArchive::FolderArchiveUtil::folderArchiveAgentEnabled())
+          menu->addAction( mMsgActions->archiveMailAction());
       if ( msg.isValid() ) {
         menu->addSeparator();
         menu->addAction( mMsgActions->createTodoAction() );

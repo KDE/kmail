@@ -93,6 +93,7 @@ class MessageActions : public QObject
     KAction* printAction() const { return mPrintAction; }
     KAction* printPreviewAction() const { return mPrintPreviewAction; }
     KAction* listFilterAction() const { return mListFilterAction; }
+    KAction *archiveMailAction() const { return mArchiveMailAction; }
 
     KActionMenu* mailingListActionMenu() const { return mMailingListActionMenu; }
     TemplateParser::CustomTemplatesMenu* customTemplatesMenu() const;
@@ -140,6 +141,7 @@ class MessageActions : public QObject
     void slotMailingListFilter();
     void slotHandleWebShortcutAction();
     void slotConfigureWebShortcuts();
+    void slotArchiveMail();
 
 
   private:
@@ -163,6 +165,7 @@ class MessageActions : public QObject
     MessageCore::AsyncNepomukResourceRetriever *mAsynNepomukRetriever;
     TemplateParser::CustomTemplatesMenu *mCustomTemplatesMenu;
     KAction *mListFilterAction;
+    KAction *mArchiveMailAction;
 };
 
 }
