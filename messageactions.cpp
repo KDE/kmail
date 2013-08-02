@@ -609,6 +609,7 @@ void MessageActions::editCurrentMessage()
   KMCommand *command = 0;
   if ( mCurrentItem.isValid() ) {
     Akonadi::Collection col = mCurrentItem.parentCollection();
+    qDebug()<<" mCurrentItem.parentCollection()"<<mCurrentItem.parentCollection();
     // edit, unlike send again, removes the message from the folder
     // we only want that for templates and drafts folders
     if ( col.isValid()
@@ -717,9 +718,7 @@ void MessageActions::slotArchiveMail()
       return;
     OrgFreedesktopAkonadiFolderArchiveAgentInterface folderArchiveInterface(QLatin1String("org.freedesktop.Akonadi.FolderArchiveAgent"), QLatin1String("/FolderArchiveAgent"),QDBusConnection::sessionBus(), this);
     if (folderArchiveInterface.isValid()) {
-        QList<qlonglong> ids;
-        ids << mCurrentItem.id();
-        folderArchiveInterface.archiveItems(ids, mCurrentItem.parentCollection().resource());
+        folderArchiveInterface.archiveItem(mCurrentItem.id());
     } else {
         qDebug()<< "Archive Folder Agent was not registered.";
     }
