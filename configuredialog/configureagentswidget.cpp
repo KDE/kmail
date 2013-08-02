@@ -99,7 +99,8 @@ void ConfigureAgentsWidget::addInfos(QTreeWidgetItem *item, const QString &deskt
 {
     KDesktopFile config(desktopFile);
     item->setText(AgentName, config.readName());
-    item->setData(AgentName, Description, config.readComment());
+    const QString descriptionStr = QLatin1String("<b>") + i18n("Description:") + QLatin1String("</b><br>") + config.readComment();
+    item->setData(AgentName, Description, descriptionStr);
 }
 
 void ConfigureAgentsWidget::initialize()
