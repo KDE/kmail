@@ -69,7 +69,7 @@ add_subdirectory(kcm_kpimidentities)
 if (NOT WINCE AND KDEPIM_BUILD_DESKTOP)
 
   set(kmailprivate_LIB_SRCS
-     collectionpane.cpp
+     widgets/collectionpane.cpp
      collectionpage/collectiontemplatespage.cpp
      collectionpage/collectionmaintenancepage.cpp
      collectionpage/collectionviewpage.cpp
@@ -107,7 +107,7 @@ if (NOT WINCE AND KDEPIM_BUILD_DESKTOP)
      editor/codecmanager.cpp
      util.cpp
      messageactions.cpp
-     statusbarlabel.cpp
+     widgets/statusbarlabel.cpp
      editor/kmcomposewin.cpp
      editor/attachmentcontroller.cpp
      editor/attachmentview.cpp

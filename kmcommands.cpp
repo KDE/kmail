@@ -45,7 +45,7 @@
 #include <Nepomuk2/Tag>
 #include <nepomuk2/resource.h>
 
-#include "collectionpane.h"
+#include "widgets/collectionpane.h"
 #include "kernel/mailkernel.h"
 #include "util/mailutil.h"
 

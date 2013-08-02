@@ -24,7 +24,7 @@
 #include "editor/composer.h"
 #include "searchdialog/searchwindow.h"
 #include "antispam-virus/antispamwizard.h"
-#include "statusbarlabel.h"
+#include "widgets/statusbarlabel.h"
 #include "undostack.h"
 #include "kmcommands.h"
 #include "kmmainwin.h"
@@ -40,7 +40,7 @@
 #include "foldertreeview.h"
 #include "tag/tagactionmanager.h"
 #include "foldershortcutactionmanager.h"
-#include "collectionpane.h"
+#include "widgets/collectionpane.h"
 #if !defined(NDEBUG)
     #include <ksieveui/debug/sievedebugdialog.h>
     using KSieveUi::SieveDebugDialog;
