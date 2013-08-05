@@ -54,7 +54,7 @@
 #include "kernel/mailkernel.h"
 #include "foldercollection.h"
 
-#include "folderarchiveagent/folderarchiveutil.h"
+#include "agents/folderarchiveagent/folderarchiveutil.h"
 
 #include <KActionCollection>
 #include <akonadi/contact/contactsearchjob.h>

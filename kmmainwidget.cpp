@@ -57,7 +57,7 @@
 #include "job/createnewcontactjob.h"
 #include "sendlateragentinterface.h"
 #include "folderarchiveagentinterface.h"
-#include "folderarchiveagent/folderarchiveutil.h"
+#include "agents/folderarchiveagent/folderarchiveutil.h"
 
 #include "pimcommon/acl/collectionaclpage.h"
 #include "mailcommon/collectionpage/collectiongeneralpage.h"

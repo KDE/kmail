@@ -17,8 +17,8 @@
 
 #include "configureagentswidget.h"
 
-#include "sendlateragent/sendlaterutil.h"
-#include "folderarchiveagent/folderarchiveutil.h"
+#include "agents/sendlateragent/sendlaterutil.h"
+#include "agents/folderarchiveagent/folderarchiveutil.h"
 #include <akonadi/private/xdgbasedirs_p.h>
 
 #include <KLocale>

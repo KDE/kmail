@@ -54,9 +54,9 @@
 #include "job/createnewcontactjob.h"
 #include "warningwidgets/externaleditorwarning.h"
 
-#include "sendlateragent/sendlaterutil.h"
-#include "sendlateragent/sendlaterdialog.h"
-#include "sendlateragent/sendlaterinfo.h"
+#include "agents/sendlateragent/sendlaterutil.h"
+#include "agents/sendlateragent/sendlaterdialog.h"
+#include "agents/sendlateragent/sendlaterinfo.h"
 
 // KDEPIM includes
 #include <libkpgp/kpgpblock.h>
