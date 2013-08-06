@@ -3987,7 +3987,7 @@ void KMMainWidget::updateMessageActionsDelayed()
     actionList << messageActions()->editAction();
   }
   actionList << mSaveAttachmentsAction;
-  if (FolderArchive::FolderArchiveUtil::folderArchiveAgentEnabled())
+  if (FolderArchive::FolderArchiveUtil::folderArchiveAgentEnabled() && mCurrentFolder && FolderArchive::FolderArchiveUtil::resourceSupportArchiving(mCurrentFolder->collection().resource()))
       actionList << mArchiveAction;
   mGUIClient->unplugActionList( QLatin1String( "messagelist_actionlist" ) );
   mGUIClient->plugActionList( QLatin1String( "messagelist_actionlist" ), actionList );
