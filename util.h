@@ -38,12 +38,8 @@
 #ifndef KMAILUTIL_H
 #define KMAILUTIL_H
 
-#include <stdlib.h>
 #include <QWidget>
-#include <kio/netaccess.h>
 #include <akonadi/item.h>
-#include <kmime/kmime_message.h>
-#include <Akonadi/AgentInstance>
 #include <Akonadi/Collection>
 #include "mailcommon/folder/foldercollection.h"
 class KUrl;

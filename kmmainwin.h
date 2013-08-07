@@ -21,7 +21,6 @@
 #define __KMMAINWIN
 
 #include <kxmlguiwindow.h>
-#include "qstring.h"
 
 class KMMainWidget;
 class KToggleAction;
