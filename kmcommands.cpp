@@ -723,6 +723,22 @@ void KMOpenMsgCommand::slotDataArrived( KIO::Job *, const QByteArray & data )
   mMsgString.append( QString::fromLatin1(data.data()) );
 }
 
+void KMOpenMsgCommand::doesNotContainMessage()
+{
+    KMessageBox::sorry( parentWidget(),
+                        i18n( "The file does not contain a message." ) );
+    setResult( Failed );
+    emit completed( this );
+    // Emulate closing of a secondary window so that KMail exits in case it
+    // was started with the --view command line option. Otherwise an
+    // invisible KMail would keep running.
+    SecondaryWindow *win = new SecondaryWindow();
+    win->close();
+    win->deleteLater();
+    deleteLater();
+
+}
+
 void KMOpenMsgCommand::slotResult( KJob *job )
 {
   if ( job->error() ) {
@@ -736,18 +752,8 @@ void KMOpenMsgCommand::slotResult( KJob *job )
     if ( mMsgString.startsWith( QLatin1String( "From " ) ) ) {
       startOfMessage = mMsgString.indexOf( QLatin1Char('\n') );
       if ( startOfMessage == -1 ) {
-        KMessageBox::sorry( parentWidget(),
-                            i18n( "The file does not contain a message." ) );
-        setResult( Failed );
-        emit completed( this );
-        // Emulate closing of a secondary window so that KMail exits in case it
-        // was started with the --view command line option. Otherwise an
-        // invisible KMail would keep running.
-        SecondaryWindow *win = new SecondaryWindow();
-        win->close();
-        win->deleteLater();
-        deleteLater();
-        return;
+          doesNotContainMessage();
+          return;
       }
       startOfMessage += 1; // the message starts after the '\n'
     }
@@ -762,17 +768,9 @@ void KMOpenMsgCommand::slotResult( KJob *job )
     msg->setContent( KMime::CRLFtoLF( mMsgString.mid( startOfMessage,endOfMessage - startOfMessage ).toUtf8() ) );
     msg->parse();
     if ( !msg->hasContent() ) {
-      KMessageBox::sorry( parentWidget(),
-                          i18n( "The file does not contain a message." ) );
-      delete msg; msg = 0;
-      setResult( Failed );
-      emit completed( this );
-      // Emulate closing of a secondary window (see above).
-      SecondaryWindow *win = new SecondaryWindow();
-      win->close();
-      win->deleteLater();
-      deleteLater();
-      return;
+        delete msg; msg = 0;
+        doesNotContainMessage();
+        return;
     }
     KMReaderMainWin *win = new KMReaderMainWin();
     KMime::Message::Ptr mMsg( msg );

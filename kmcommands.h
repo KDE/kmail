@@ -280,6 +280,7 @@ private slots:
   void slotResult( KJob *job );
 
 private:
+  void doesNotContainMessage();
   static const int MAX_CHUNK_SIZE = 64*1024;
   KUrl mUrl;
   QString mMsgString;
