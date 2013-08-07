@@ -56,10 +56,8 @@ namespace KMail {
   class UndoStack;
   class KMSystemTray;
 }
-namespace KPIM { class ProgressDialog; }
 using KMail::MailServiceImpl;
 using KMail::UndoStack;
-using KPIM::ProgressDialog;
 namespace MessageComposer {
 class AkonadiSender;
 }

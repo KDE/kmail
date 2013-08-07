@@ -23,12 +23,7 @@
 #include <kstatusnotifieritem.h>
 
 #include <QAction>
-#include <QMap>
-#include <QPointer>
-#include <QVector>
 #include <QAbstractItemModel>
-
-#include <time.h>
 
 class QPoint;
 class QMenu;
