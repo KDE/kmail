@@ -28,8 +28,8 @@
 
 using namespace MailCommon;
 
-CollectionPane::CollectionPane( QAbstractItemModel *model, QItemSelectionModel *selectionModel, QWidget *parent )
-    :MessageList::Pane( model, selectionModel, parent )
+CollectionPane::CollectionPane( bool restoreSession, QAbstractItemModel *model, QItemSelectionModel *selectionModel, QWidget *parent )
+    :MessageList::Pane( restoreSession, model, selectionModel, parent )
 {
 }
 

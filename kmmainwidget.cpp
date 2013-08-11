@@ -993,7 +993,7 @@ void KMMainWidget::createWidgets()
   connect( mFolderTreeWidget->folderTreeView(), SIGNAL(prefereCreateNewTab(bool)), this, SLOT(slotCreateNewTab(bool)) );
 
   mFolderTreeWidget->setSelectionMode( QAbstractItemView::ExtendedSelection );
-  mMessagePane = new CollectionPane( KMKernel::self()->entityTreeModel(),
+  mMessagePane = new CollectionPane( !GlobalSettings::self()->startSpecificFolderAtStartup(), KMKernel::self()->entityTreeModel(),
                                         mFolderTreeWidget->folderTreeView()->selectionModel(),
                                         this );
   connect( KMKernel::self()->entityTreeModel(), SIGNAL(collectionFetched(int)), this, SLOT(slotCollectionFetched(int)));

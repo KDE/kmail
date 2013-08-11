@@ -26,7 +26,7 @@ class CollectionPane : public MessageList::Pane
 {
     Q_OBJECT
 public:
-    explicit CollectionPane( QAbstractItemModel *model, QItemSelectionModel *selectionModel, QWidget *parent = 0 );
+    explicit CollectionPane( bool restoreSession, QAbstractItemModel *model, QItemSelectionModel *selectionModel, QWidget *parent = 0 );
     ~CollectionPane();
 
     MessageList::StorageModel *createStorageModel( QAbstractItemModel *model, QItemSelectionModel *selectionModel, QObject *parent );
