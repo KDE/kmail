@@ -931,6 +931,11 @@ void KMMainWidget::writeConfig(bool force)
       group.writeEntry( "HeaderState", mFolderTreeWidget->folderTreeView()->header()->saveState() );
       //Work around from startup folder
       group.deleteEntry( "Selection" );
+#if 0
+      if (!GlobalSettings::self()->startSpecificFolderAtStartup()) {
+          group.deleteEntry( "Current" );
+      }
+#endif
       group.sync();
     }
 
