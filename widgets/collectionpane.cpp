@@ -37,6 +37,11 @@ CollectionPane::~CollectionPane()
 {
 }
 
+void CollectionPane::writeConfig(bool /*restoreSession*/)
+{
+    MessageList::Pane::writeConfig(!GlobalSettings::self()->startSpecificFolderAtStartup());
+}
+
 MessageList::StorageModel *CollectionPane::createStorageModel( QAbstractItemModel *model, QItemSelectionModel *selectionModel, QObject *parent )
 {
     return new CollectionStorageModel( model, selectionModel, parent );

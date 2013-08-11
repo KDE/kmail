@@ -30,6 +30,7 @@ public:
     ~CollectionPane();
 
     MessageList::StorageModel *createStorageModel( QAbstractItemModel *model, QItemSelectionModel *selectionModel, QObject *parent );
+    void writeConfig(bool restoreSession);
 };
 
 class CollectionStorageModel : public MessageList::StorageModel
