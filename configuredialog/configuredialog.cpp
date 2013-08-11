@@ -4102,7 +4102,6 @@ MiscPageFolderTab::MiscPageFolderTab( QWidget * parent )
 
   mMMTab.gridLayout->setSpacing( KDialog::spacingHint() );
   mMMTab.gridLayout->setMargin( KDialog::marginHint() );
-  mMMTab.mStartUpFolderLabel->setBuddy( mMMTab.mOnStartupOpenFolder );
   mMMTab.mExcludeImportantFromExpiry->setWhatsThis(
       i18n( GlobalSettings::self()->excludeImportantMailFromExpiryItem()->whatsThis().toUtf8() ) );
 
@@ -4126,7 +4125,10 @@ MiscPageFolderTab::MiscPageFolderTab( QWidget * parent )
            this, SLOT(slotEmitChanged()) );
   connect( mMMTab.mEmptyTrashCheck, SIGNAL(stateChanged(int)),
            this, SLOT(slotEmitChanged()) );
-
+  connect( mMMTab.mStartUpFolderCheck, SIGNAL(toggled(bool)),
+           this, SLOT(slotEmitChanged()) );
+  connect( mMMTab.mStartUpFolderCheck, SIGNAL(toggled(bool)),
+           mOnStartupOpenFolder, SLOT(setEnabled(bool)) );
 }
 
 void MiscPage::FolderTab::doLoadFromGlobalSettings()
@@ -4138,6 +4140,8 @@ void MiscPage::FolderTab::doLoadFromGlobalSettings()
   mMMTab.mDelayedMarkAsRead->setChecked( MessageViewer::GlobalSettings::self()->delayedMarkAsRead() );
   mMMTab.mDelayedMarkTime->setValue( MessageViewer::GlobalSettings::self()->delayedMarkTime() );
   mMMTab.mShowPopupAfterDnD->setChecked( GlobalSettings::self()->showPopupAfterDnD() );
+  mMMTab.mStartUpFolderCheck->setChecked( GlobalSettings::self()->startSpecificFolderAtStartup() );
+  mOnStartupOpenFolder->setEnabled(GlobalSettings::self()->startSpecificFolderAtStartup());
   doLoadOther();
 }
 
@@ -4161,6 +4165,7 @@ void MiscPage::FolderTab::save()
   GlobalSettings::self()->setShowPopupAfterDnD( mMMTab.mShowPopupAfterDnD->isChecked() );
   GlobalSettings::self()->setExcludeImportantMailFromExpiry(
         mMMTab.mExcludeImportantFromExpiry->isChecked() );
+  GlobalSettings::self()->setStartSpecificFolderAtStartup(mMMTab.mStartUpFolderCheck->isChecked() );
 }
 
 MiscPageAgentSettingsTab::MiscPageAgentSettingsTab( QWidget* parent )

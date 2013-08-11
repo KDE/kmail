@@ -118,6 +118,10 @@
         <label>Empty the local trash folder on program exit</label>
         <default>false</default>
       </entry>
+      <entry name="StartSpecificFolderAtStartup" type="Bool" key="startSpecificFolderAtStatup">
+        <label>Allow to start specific folder</label>
+        <default>true</default>
+      </entry>
       <entry name="StartupFolder" type="LongLong" key="startupFolder">
         <label>Specify the folder to open when the program is started</label>
         <default>-1</default>

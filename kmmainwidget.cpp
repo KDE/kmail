@@ -355,9 +355,11 @@ void KMMainWidget::restoreCollectionFolderViewConfig(Akonadi::Collection::Id id)
   //Restore startup folder
 
   if (id == -1) {
-    Akonadi::Collection::Id startupFolder = GlobalSettings::self()->startupFolder();
-    if ( startupFolder > 0 )
-      saver->restoreCurrentItem( QString::fromLatin1("c%1").arg(startupFolder) );
+    if (GlobalSettings::self()->startSpecificFolderAtStartup()) {
+      Akonadi::Collection::Id startupFolder = GlobalSettings::self()->startupFolder();
+      if ( startupFolder > 0 )
+        saver->restoreCurrentItem( QString::fromLatin1("c%1").arg(startupFolder) );
+    }
   } else {
     saver->restoreCurrentItem( QString::fromLatin1("c%1").arg(id) );
   }
