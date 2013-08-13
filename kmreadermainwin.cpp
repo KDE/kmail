@@ -406,7 +406,7 @@ void KMReaderMainWin::slotCopyItem(QAction*action)
 void KMReaderMainWin::slotCopyResult( KJob * job )
 {
   if ( job->error() ) {
-    KMessageBox::sorry( this, i18n("Can not copy item. %1", job->errorString() ) );
+    KMessageBox::sorry( this, i18n("Cannot copy item. %1", job->errorString() ) );
   }
 }
 

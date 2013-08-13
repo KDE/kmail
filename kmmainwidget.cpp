@@ -4762,7 +4762,7 @@ void KMMainWidget::slotServerSideSubscription()
                     QLatin1String( "/" ), QLatin1String( "org.kde.Akonadi.Imap.Resource" ),
                     DBusConnectionPool::threadConnection(), this );
         if ( !iface.isValid() ) {
-            kDebug()<<"Can not create imap dbus interface";
+            kDebug()<<"Cannot create imap dbus interface";
             return;
         }
         QDBusPendingCall call = iface.asyncCall( QLatin1String( "configureSubscription" ), (qlonglong)winId() );
