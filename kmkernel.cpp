@@ -23,6 +23,7 @@ using KPIM::RecentAddresses;
 #include "mailcommon/pop3settings.h"
 #include "mailcommon/folder/foldertreeview.h"
 #include "mailcommon/filter/kmfilterdialog.h"
+#include "mailcommon/mailcommonsettings_base.h"
 #include "pimcommon/util/pimutil.h"
 
 // kdepim includes
@@ -1417,6 +1418,7 @@ void KMKernel::slotSyncConfig()
   MessageComposer::MessageComposerSettings::self()->writeConfig();
   TemplateParser::GlobalSettings::self()->writeConfig();
   MessageList::Core::Settings::self()->writeConfig();
+  MailCommon::MailCommonSettings::self()->writeConfig();
   GlobalSettings::self()->writeConfig();
   KMKernel::config()->sync();
 }
@@ -1538,7 +1540,8 @@ KSharedConfig::Ptr KMKernel::config()
     MessageCore::GlobalSettings::self()->readConfig();
     MessageViewer::GlobalSettings::self()->setSharedConfig( mySelf->mConfig );
     MessageViewer::GlobalSettings::self()->readConfig();
-
+    MailCommon::MailCommonSettings::self()->setSharedConfig( mySelf->mConfig );
+    MailCommon::MailCommonSettings::self()->readConfig();
   }
   return mySelf->mConfig;
 }

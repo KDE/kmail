@@ -79,6 +79,7 @@ using KPIM::RecentAddresses;
 #include "mailcommon/util/mailutil.h"
 #include "mailcommon/tag/tagwidget.h"
 #include "mailcommon/tag/tag.h"
+#include "mailcommon/mailcommonsettings_base.h"
 
 #include "messagecomposer/settings/messagecomposersettings.h"
 #include "configureagentswidget.h"
@@ -1189,15 +1190,15 @@ AppearancePageLayoutTab::AppearancePageLayoutTab( QWidget * parent )
            this, SLOT(slotEmitChanged()) );
 
   QRadioButton* favoriteFoldersViewHiddenRadio = new QRadioButton( i18n( "Never" ), mFavoriteFoldersViewGroupBox );
-  mFavoriteFoldersViewGroup->addButton( favoriteFoldersViewHiddenRadio, static_cast<int>( GlobalSettings::EnumFavoriteCollectionViewMode::HiddenMode ) );
+  mFavoriteFoldersViewGroup->addButton( favoriteFoldersViewHiddenRadio, static_cast<int>( MailCommon::MailCommonSettings::EnumFavoriteCollectionViewMode::HiddenMode ) );
   mFavoriteFoldersViewGroupBox->layout()->addWidget( favoriteFoldersViewHiddenRadio );
 
   QRadioButton* favoriteFoldersViewIconsRadio = new QRadioButton( i18n( "As icons" ), mFavoriteFoldersViewGroupBox );
-  mFavoriteFoldersViewGroup->addButton( favoriteFoldersViewIconsRadio, static_cast<int>( GlobalSettings::EnumFavoriteCollectionViewMode::IconMode ) );
+  mFavoriteFoldersViewGroup->addButton( favoriteFoldersViewIconsRadio, static_cast<int>( MailCommon::MailCommonSettings::EnumFavoriteCollectionViewMode::IconMode ) );
   mFavoriteFoldersViewGroupBox->layout()->addWidget( favoriteFoldersViewIconsRadio );
 
   QRadioButton* favoriteFoldersViewListRadio = new QRadioButton( i18n( "As list" ), mFavoriteFoldersViewGroupBox );
-  mFavoriteFoldersViewGroup->addButton( favoriteFoldersViewListRadio,  static_cast<int>( GlobalSettings::EnumFavoriteCollectionViewMode::ListMode ) );
+  mFavoriteFoldersViewGroup->addButton( favoriteFoldersViewListRadio,  static_cast<int>( MailCommon::MailCommonSettings::EnumFavoriteCollectionViewMode::ListMode ) );
   mFavoriteFoldersViewGroupBox->layout()->addWidget( favoriteFoldersViewListRadio );
 
   vlay->addWidget( mFavoriteFoldersViewGroupBox );
@@ -1237,7 +1238,7 @@ void AppearancePage::LayoutTab::doLoadOther()
 {
   loadWidget( mFolderListGroupBox, mFolderListGroup, GlobalSettings::self()->folderListItem() );
   loadWidget( mReaderWindowModeGroupBox, mReaderWindowModeGroup, GlobalSettings::self()->readerWindowModeItem() );
-  loadWidget( mFavoriteFoldersViewGroupBox, mFavoriteFoldersViewGroup, GlobalSettings::self()->favoriteCollectionViewModeItem() );
+  loadWidget( mFavoriteFoldersViewGroupBox, mFavoriteFoldersViewGroup, MailCommon::MailCommonSettings::self()->favoriteCollectionViewModeItem() );
   mFolderQuickSearchCB->setChecked( GlobalSettings::self()->enableFolderQuickSearch() );
   const int checkedFolderToolTipsPolicy = GlobalSettings::self()->toolTipDisplayPolicy();
   if ( checkedFolderToolTipsPolicy < mFolderToolTipsGroup->buttons().size() && checkedFolderToolTipsPolicy >= 0 )
@@ -1248,7 +1249,7 @@ void AppearancePage::LayoutTab::save()
 {
   saveButtonGroup( mFolderListGroup, GlobalSettings::self()->folderListItem() );
   saveButtonGroup( mReaderWindowModeGroup, GlobalSettings::self()->readerWindowModeItem() );
-  saveButtonGroup( mFavoriteFoldersViewGroup, GlobalSettings::self()->favoriteCollectionViewModeItem() );
+  saveButtonGroup( mFavoriteFoldersViewGroup, MailCommon::MailCommonSettings::self()->favoriteCollectionViewModeItem() );
   GlobalSettings::self()->setEnableFolderQuickSearch( mFolderQuickSearchCB->isChecked() );
   GlobalSettings::self()->setToolTipDisplayPolicy( mFolderToolTipsGroup->checkedId() );
 }

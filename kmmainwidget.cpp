@@ -66,6 +66,7 @@
 #include "mailcommon/filter/filtermanager.h"
 #include "mailcommon/filter/mailfilter.h"
 #include "mailcommon/widgets/favoritecollectionwidget.h"
+#include "mailcommon/mailcommonsettings_base.h"
 
 // Other PIM includes
 #include "kdepim-version.h"
@@ -580,7 +581,7 @@ void KMMainWidget::readPreConfig()
 
   mHtmlPref = MessageViewer::GlobalSettings::self()->htmlMail();
   mHtmlLoadExtPref = MessageViewer::GlobalSettings::self()->htmlLoadExternal();
-  mEnableFavoriteFolderView = ( GlobalSettings::self()->favoriteCollectionViewMode() != GlobalSettings::EnumFavoriteCollectionViewMode::HiddenMode );
+  mEnableFavoriteFolderView = ( MailCommon::MailCommonSettings::self()->favoriteCollectionViewMode() != MailCommon::MailCommonSettings::EnumFavoriteCollectionViewMode::HiddenMode );
   mEnableFolderQuickSearch = GlobalSettings::self()->enableFolderQuickSearch();
   updateHtmlMenuEntry();
 }
@@ -741,7 +742,7 @@ void KMMainWidget::layoutSplitters()
   int headerWidth = GlobalSettings::self()->searchAndHeaderWidth();
   int messageViewerHeight = GlobalSettings::self()->readerWindowHeight();
 
-  int ffvHeight = mFolderViewSplitter ? GlobalSettings::self()->favoriteCollectionViewHeight() : 0;
+  int ffvHeight = mFolderViewSplitter ? MailCommon::MailCommonSettings::self()->favoriteCollectionViewHeight() : 0;
 
   // If the message viewer was hidden before, make sure it is not zero height
   if ( messageViewerHeight < 10 && readerWindowBelow ) {
@@ -805,9 +806,9 @@ void KMMainWidget::layoutSplitters()
 void KMMainWidget::refreshFavoriteFoldersViewProperties()
 {
   if ( mFavoriteCollectionsView ) {
-    if ( GlobalSettings::self()->favoriteCollectionViewMode() == GlobalSettings::EnumFavoriteCollectionViewMode::IconMode )
+    if ( MailCommon::MailCommonSettings::self()->favoriteCollectionViewMode() == MailCommon::MailCommonSettings::EnumFavoriteCollectionViewMode::IconMode )
       mFavoriteCollectionsView->setViewMode( QListView::IconMode );
-    else if ( GlobalSettings::self()->favoriteCollectionViewMode() == GlobalSettings::EnumFavoriteCollectionViewMode::ListMode )
+    else if ( MailCommon::MailCommonSettings::self()->favoriteCollectionViewMode() == MailCommon::MailCommonSettings::EnumFavoriteCollectionViewMode::ListMode )
       mFavoriteCollectionsView->setViewMode( QListView::ListMode );
     else
       Q_ASSERT(false); // we should never get here in hidden mode
@@ -908,7 +909,7 @@ void KMMainWidget::writeConfig(bool force)
     GlobalSettings::self()->setSearchAndHeaderHeight( headersHeight );
     GlobalSettings::self()->setSearchAndHeaderWidth( mMessagePane->width() );
     if ( mFavoriteCollectionsView ) {
-      GlobalSettings::self()->setFavoriteCollectionViewHeight( mFavoriteCollectionsView->height() );
+      MailCommon::MailCommonSettings::self()->setFavoriteCollectionViewHeight( mFavoriteCollectionsView->height() );
       GlobalSettings::self()->setFolderTreeHeight( mFolderTreeWidget->height() );
       if ( !mLongFolderList ) {
         GlobalSettings::self()->setFolderViewHeight( mFolderViewSplitter->height() );
