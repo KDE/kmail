@@ -62,12 +62,14 @@ AccountConfigOrderDialog::AccountConfigOrderDialog(QWidget *parent)
     mUpButton->setToolTip( i18nc( "Move selected account up.", "Up" ) );
     mUpButton->setEnabled( false ); // b/c no item is selected yet
     mUpButton->setFocusPolicy( Qt::StrongFocus );
+    mUpButton->setAutoRepeat(true);
 
     mDownButton = new KPushButton( upDownBox );
     mDownButton->setIcon( KIcon(QLatin1String("go-down")) );
     mDownButton->setToolTip( i18nc( "Move selected account down.", "Down" ) );
     mDownButton->setEnabled( false ); // b/c no item is selected yet
     mDownButton->setFocusPolicy( Qt::StrongFocus );
+    mDownButton->setAutoRepeat(true);
 
     QWidget* spacer = new QWidget( upDownBox );
     upDownBox->setStretchFactor( spacer, 100 );
