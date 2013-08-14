@@ -814,6 +814,7 @@ void KMMainWidget::refreshFavoriteFoldersViewProperties()
       Q_ASSERT(false); // we should never get here in hidden mode
     mFavoriteCollectionsView->setDropActionMenuEnabled( kmkernel->showPopupAfterDnD() );
     mFavoriteCollectionsView->setWordWrap( true );
+    mFavoriteCollectionsView->updateMode();
   }
 }
 
