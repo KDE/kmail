@@ -57,8 +57,12 @@ SearchDebugWidget::SearchDebugWidget(const QString &query, QWidget *parent)
     mSearchButton = new QPushButton( i18n("Search") );
     connect( mSearchButton, SIGNAL(clicked()), this, SLOT(slotSearch()) );
     mProgressIndicator = new KPIMUtils::ProgressIndicatorWidget;
-    layout->addWidget( mProgressIndicator, 3, 0, Qt::AlignLeft );
-    layout->addWidget( mSearchButton, 3, 1, Qt::AlignRight );
+
+    mResultLabel = new QLabel;
+    layout->addWidget( mResultLabel, 3, 0, Qt::AlignLeft );
+
+    layout->addWidget( mProgressIndicator, 4, 0, Qt::AlignLeft );
+    layout->addWidget( mSearchButton, 4, 1, Qt::AlignRight );
     setLayout(layout);
 
     connect( mResultView, SIGNAL(activated(QModelIndex)), this, SLOT(slotFetchItem(QModelIndex)) );
@@ -154,6 +158,7 @@ void SearchDebugWidget::slotSearchFinished(KJob *job)
     mItemView->clear();
     mProgressIndicator->stop();
     mSearchButton->setEnabled(true);
+    mResultLabel->clear();
 
     if ( job->error() ) {
         KMessageBox::error( this, job->errorString() );
@@ -168,6 +173,7 @@ void SearchDebugWidget::slotSearchFinished(KJob *job)
     }
 
     mResultModel->setStringList( uidList );
+    mResultLabel->setText(i18np("1 message found", "%1 messages found", uidList.count()));
 }
 
 void SearchDebugWidget::slotFetchItem( const QModelIndex &index )

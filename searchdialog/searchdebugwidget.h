@@ -27,6 +27,7 @@ class KTextEdit;
 class KJob;
 class QModelIndex;
 class QPushButton;
+class QLabel;
 
 namespace KPIMUtils {
 class ProgressIndicatorWidget;
@@ -55,6 +56,7 @@ private:
     KTextEdit *mTextEdit;
     KPIMUtils::ProgressIndicatorWidget *mProgressIndicator;
     QPushButton *mSearchButton;
+    QLabel *mResultLabel;
 };
 
 #endif // SEARCHDEBUGWIDGET_H
