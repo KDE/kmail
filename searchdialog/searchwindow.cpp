@@ -421,25 +421,30 @@ void SearchWindow::slotSearch()
     SearchPattern searchPattern( mSearchPattern );
     searchPattern.purify();
 
+    MailCommon::SearchPattern::SparqlQueryError queryError = MailCommon::SearchPattern::NoError;
 #ifdef AKONADI_USE_STRIGI_SEARCH
     mQuery = searchPattern.asXesamQuery();
     const QString queryLanguage = QLatin1String("XESAM");
 #else
-    bool allIsEmpty = false;
-    mQuery = searchPattern.asSparqlQuery(allIsEmpty, urls);
+    queryError = searchPattern.asSparqlQuery(mQuery, urls);
     const QString queryLanguage = QLatin1String("SPARQL");
 #endif
 
-    qDebug() << queryLanguage;
-    qDebug() << mQuery;
     if ( mQuery.isEmpty() ) {
-        if (allIsEmpty) {
+        switch(queryError) {
+        case MailCommon::SearchPattern::NoError:
+            break;
+        case MailCommon::SearchPattern::MissingCheck:
+            KMessageBox::error(this, i18n("You forgot to define condition."), i18n("Search"));
+            break;
+        case MailCommon::SearchPattern::FolderEmptyOrNotIndexed:
             KMessageBox::information(this, i18n("All folders selected are empty or were not indexed."), i18n("Search"));
-        } else {
-            KMessageBox::error(this, i18n("Search query is empty. Please report bug about it."), i18n("Search"));
+            break;
         }
         return;
     }
+    qDebug() << queryLanguage;
+    qDebug() << mQuery;
     mUi.mSearchFolderOpenBtn->setEnabled( true );
 
     if ( !mFolder.isValid() ) {
