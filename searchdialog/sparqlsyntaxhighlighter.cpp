@@ -19,7 +19,8 @@
 #include "sparqlsyntaxhighlighter.h"
 #include <KDebug>
 
-Nepomuk2::SparqlSyntaxHighlighter::SparqlSyntaxHighlighter(QTextDocument* parent): QSyntaxHighlighter(parent)
+Nepomuk2::SparqlSyntaxHighlighter::SparqlSyntaxHighlighter(QTextDocument* parent)
+    : QSyntaxHighlighter(parent)
 {
     init();
 }
@@ -81,18 +82,14 @@ void Nepomuk2::SparqlSyntaxHighlighter::init()
 
 void Nepomuk2::SparqlSyntaxHighlighter::highlightBlock(const QString& text)
 {
-    //kDebug();
-    //int i=0;
     foreach (const Rule &rule, m_rules) {
         QRegExp expression(rule.pattern);
         int index = expression.indexIn(text);
         int length = 0;
         while (index >= 0 && ( length = expression.matchedLength() ) > 0 ) {
-            //kDebug() << "Setting " << i;
             setFormat(index, length, rule.format);
             index = expression.indexIn(text, index + length);
         }
-        //i++;
     }
 }
 

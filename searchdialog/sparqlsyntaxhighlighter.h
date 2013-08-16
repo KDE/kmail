@@ -31,7 +31,7 @@ class SparqlSyntaxHighlighter : public QSyntaxHighlighter
 public:
     SparqlSyntaxHighlighter(QTextDocument* parent);
 
-    virtual void highlightBlock(const QString& text);
+    void highlightBlock(const QString& text);
 
 private:
     void init();

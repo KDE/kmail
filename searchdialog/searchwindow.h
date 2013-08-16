@@ -178,7 +178,6 @@ private:
     KGuiItem mStartSearchGuiItem;
     KGuiItem mStopSearchGuiItem;
     KPushButton *mSearchButton;
-    QPushButton *mDebugButton;
 
     QAction *mReplyAction, *mReplyAllAction, *mReplyListAction, *mSaveAsAction,
     *mForwardInlineAction, *mForwardAttachedAction, *mPrintAction, *mClearAction,

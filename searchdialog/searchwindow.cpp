@@ -104,10 +104,10 @@ SearchWindow::SearchWindow( KMMainWidget *widget, const Akonadi::Collection &col
     mStopSearchGuiItem = KStandardGuiItem::stop();
     mSearchButton =  mUi.mButtonBox->addButton( mStartSearchGuiItem, QDialogButtonBox::ActionRole );
     connect( mUi.mButtonBox, SIGNAL(rejected()), SLOT(slotClose()) );
-
-    mDebugButton = mUi.mButtonBox->addButton( i18n("Debug query"), QDialogButtonBox::ActionRole );
-    connect(mDebugButton, SIGNAL(clicked(bool)), SLOT(slotDebugQuery()));
-
+#if !defined(NDEBUG)
+    QPushButton *debugButton = mUi.mButtonBox->addButton( i18n("Debug query"), QDialogButtonBox::ActionRole );
+    connect(debugButton, SIGNAL(clicked(bool)), SLOT(slotDebugQuery()));
+#endif
     searchWidget->layout()->setMargin( 0 );
 
     mUi.mCbxFolders->setMustBeReadWrite( false );
