@@ -406,6 +406,10 @@ void SearchWindow::slotSearch()
     KUrl::List urls;
     if ( !mUi.mChkbxAllFolders->isChecked() ) {
         const Akonadi::Collection col = mUi.mCbxFolders->collection();
+        if (!col.isValid()) {
+            KMessageBox::error(this, i18n("You did not selected a valid folder."), i18n("Search"));
+            return;
+        }
         urls << col.url( Akonadi::Collection::UrlShort );
         if ( mUi.mChkSubFolders->isChecked() ) {
             childCollectionsFromSelectedCollection( col, urls );
@@ -427,8 +431,10 @@ void SearchWindow::slotSearch()
 
     qDebug() << queryLanguage;
     qDebug() << mQuery;
-    if ( mQuery.isEmpty() )
+    if ( mQuery.isEmpty() ) {
+        KMessageBox::error(this, i18n("Search query is empty. Please report bug about it."), i18n("Search"));
         return;
+    }
     mUi.mSearchFolderOpenBtn->setEnabled( true );
 
     if ( !mFolder.isValid() ) {
