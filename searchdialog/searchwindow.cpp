@@ -425,14 +425,19 @@ void SearchWindow::slotSearch()
     mQuery = searchPattern.asXesamQuery();
     const QString queryLanguage = QLatin1String("XESAM");
 #else
-    mQuery = searchPattern.asSparqlQuery(urls);
+    bool allIsEmpty = false;
+    mQuery = searchPattern.asSparqlQuery(allIsEmpty, urls);
     const QString queryLanguage = QLatin1String("SPARQL");
 #endif
 
     qDebug() << queryLanguage;
     qDebug() << mQuery;
     if ( mQuery.isEmpty() ) {
-        KMessageBox::error(this, i18n("Search query is empty. Please report bug about it."), i18n("Search"));
+        if (allIsEmpty) {
+            KMessageBox::information(this, i18n("All folders selected are empty or were not indexed."), i18n("Search"));
+        } else {
+            KMessageBox::error(this, i18n("Search query is empty. Please report bug about it."), i18n("Search"));
+        }
         return;
     }
     mUi.mSearchFolderOpenBtn->setEnabled( true );
