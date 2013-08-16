@@ -24,6 +24,7 @@
 #include "searchwindow.h"
 
 #include "folderrequester.h"
+#include "searchdebugdialog.h"
 #include "kmcommands.h"
 #include "kmmainwidget.h"
 #include "mailcommon/kernel/mailkernel.h"
@@ -103,6 +104,9 @@ SearchWindow::SearchWindow( KMMainWidget *widget, const Akonadi::Collection &col
     mStopSearchGuiItem = KStandardGuiItem::stop();
     mSearchButton =  mUi.mButtonBox->addButton( mStartSearchGuiItem, QDialogButtonBox::ActionRole );
     connect( mUi.mButtonBox, SIGNAL(rejected()), SLOT(slotClose()) );
+
+    mDebugButton = mUi.mButtonBox->addButton( i18n("Debug query"), QDialogButtonBox::ActionRole );
+    connect(mDebugButton, SIGNAL(clicked(bool)), SLOT(slotDebugQuery()));
 
     searchWidget->layout()->setMargin( 0 );
 
@@ -414,27 +418,27 @@ void SearchWindow::slotSearch()
     searchPattern.purify();
 
 #ifdef AKONADI_USE_STRIGI_SEARCH
-    const QString query = searchPattern.asXesamQuery();
+    mQuery = searchPattern.asXesamQuery();
     const QString queryLanguage = QLatin1String("XESAM");
 #else
-    const QString query = searchPattern.asSparqlQuery(urls);
+    mQuery = searchPattern.asSparqlQuery(urls);
     const QString queryLanguage = QLatin1String("SPARQL");
 #endif
 
     qDebug() << queryLanguage;
-    qDebug() << query;
-    if ( query.isEmpty() )
+    qDebug() << mQuery;
+    if ( mQuery.isEmpty() )
         return;
     mUi.mSearchFolderOpenBtn->setEnabled( true );
 
     if ( !mFolder.isValid() ) {
         // FIXME if another app created a virtual 'Last Search' folder without
         // out custom attributes it will result in problems
-        mSearchJob = new Akonadi::SearchCreateJob( mUi.mSearchFolderEdt->text(), query, this );
+        mSearchJob = new Akonadi::SearchCreateJob( mUi.mSearchFolderEdt->text(), mQuery, this );
     } else {
         Akonadi::PersistentSearchAttribute *attribute = mFolder.attribute<Akonadi::PersistentSearchAttribute>();
         attribute->setQueryLanguage( queryLanguage );
-        attribute->setQueryString( query );
+        attribute->setQueryString( mQuery );
         mSearchJob = new Akonadi::CollectionModifyJob( mFolder, this );
     }
 
@@ -782,6 +786,12 @@ void SearchWindow::getChildren( const QAbstractItemModel *model,
     }
 }
 
+void SearchWindow::slotDebugQuery()
+{
+    QPointer<SearchDebugDialog> dlg = new SearchDebugDialog(mQuery, this);
+    dlg->exec();
+    delete dlg;
+}
 
 }
 

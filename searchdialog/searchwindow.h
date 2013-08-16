@@ -154,6 +154,7 @@ private Q_SLOTS:
     void slotSaveMsg();
     void slotSaveAttachments();
     void slotPrintMsg();
+    void slotDebugQuery();
 
     /** GUI cleanup after search */
     void searchDone( KJob* );
@@ -165,6 +166,7 @@ private Q_SLOTS:
     void slotContextMenuRequested( const QPoint& );
 
 private:
+    QString mQuery;
     bool mCloseRequested;
     int mSortColumn;
     Qt::SortOrder mSortOrder;
@@ -176,6 +178,7 @@ private:
     KGuiItem mStartSearchGuiItem;
     KGuiItem mStopSearchGuiItem;
     KPushButton *mSearchButton;
+    QPushButton *mDebugButton;
 
     QAction *mReplyAction, *mReplyAllAction, *mReplyListAction, *mSaveAsAction,
     *mForwardInlineAction, *mForwardAttachedAction, *mPrintAction, *mClearAction,

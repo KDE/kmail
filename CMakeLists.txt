@@ -129,6 +129,9 @@ if (NOT WINCE AND KDEPIM_BUILD_DESKTOP)
      job/createnewcontactjob.cpp
      warningwidgets/externaleditorwarning.cpp
      configuredialog/configureagentswidget.cpp
+     searchdialog/searchdebugdialog.cpp
+     searchdialog/sparqlsyntaxhighlighter.cpp
+     searchdialog/searchdebugwidget.cpp
   )
 
   # TODO PORT
