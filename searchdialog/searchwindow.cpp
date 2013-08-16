@@ -402,6 +402,10 @@ void SearchWindow::slotSearch()
     KUrl::List urls;
     if ( !mUi.mChkbxAllFolders->isChecked() ) {
         const Akonadi::Collection col = mUi.mCbxFolders->collection();
+        if (!col.isValid()) {
+            qDebug()<<"You did not selected a valid folder.";
+            return;
+        }        
         urls << col.url( Akonadi::Collection::UrlShort );
         if ( mUi.mChkSubFolders->isChecked() ) {
             childCollectionsFromSelectedCollection( col, urls );
@@ -417,14 +421,21 @@ void SearchWindow::slotSearch()
     const QString query = searchPattern.asXesamQuery();
     const QString queryLanguage = "XESAM";
 #else
-    const QString query = searchPattern.asSparqlQuery(urls);
+    bool allIsEmpty = false;
+    const QString query = searchPattern.asSparqlQuery(allIsEmpty, urls);
     const QString queryLanguage = "SPARQL";
 #endif
 
     qDebug() << queryLanguage;
     qDebug() << query;
-    if ( query.isEmpty() )
+    if ( query.isEmpty() ) {
+       if (allIsEmpty) {
+            qDebug()<<"All folders selected are empty or were not indexed.";
+        } else {
+            qDebug()<<"Search query is empty. Please report bug about it.";
+        }
         return;
+    }
     mUi.mSearchFolderOpenBtn->setEnabled( true );
 
     if ( !mFolder.isValid() ) {
