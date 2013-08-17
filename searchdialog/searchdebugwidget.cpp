@@ -84,8 +84,11 @@ QString SearchDebugWidget::queryStr() const
 void SearchDebugWidget::slotSearch()
 {
     const QString query = mTextEdit->toPlainText();
-    if (query.isEmpty())
+
+    if (query.isEmpty()) {
+        mResultLabel->setText(i18n("Query is empty."));
         return;
+    }
     mProgressIndicator->start();
     mSearchButton->setEnabled(false);
 
