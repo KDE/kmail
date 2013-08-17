@@ -468,7 +468,7 @@ void SearchWindow::searchDone( KJob* job )
     Q_ASSERT( job == mSearchJob );
     QMetaObject::invokeMethod( this, "enableGUI", Qt::QueuedConnection );
     if ( job->error() ) {
-        KMessageBox::sorry( this, i18n("Can not get search result. %1", job->errorString() ) );
+        KMessageBox::sorry( this, i18n("Cannot get search result. %1", job->errorString() ) );
         if ( mSearchJob ) {
             mSearchJob = 0;
         }

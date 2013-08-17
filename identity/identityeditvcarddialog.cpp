@@ -76,7 +76,7 @@ QString IdentityEditVcardDialog::saveVcard() const
         file.flush();
         file.close();
     } else {
-        kDebug()<<"We can not open file: "<<mVcardFileName;
+        kDebug()<<"We cannot open file: "<<mVcardFileName;
     }
     return mVcardFileName;
 }

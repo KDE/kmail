@@ -1991,7 +1991,7 @@ void AppearancePage::MessageTagTab::slotNameLineTextChanged( const QString
   const int count = mTagListBox->count();
   for ( int i=0; i < count; ++i ) {
     if(mTagListBox->item(i)->text() == aText) {
-      KMessageBox::error(this,i18n("We can not create tag. A tag with same name already exists."));
+      KMessageBox::error(this,i18n("We cannot create tag. A tag with same name already exists."));
       disconnect( mTagWidget->tagNameLineEdit(), SIGNAL(textChanged(QString)),
                this, SLOT(slotNameLineTextChanged(QString)) );
       mTagWidget->tagNameLineEdit()->setText(mTagListBox->currentItem()->text());
@@ -2028,7 +2028,7 @@ void AppearancePage::MessageTagTab::slotAddNewTag()
   const int count = mTagListBox->count();
   for ( int i=0; i < count; ++i ) {
     if(mTagListBox->item(i)->text() == newTagName) {
-      KMessageBox::error(this,i18n("We can not create tag. A tag with same name already exists."));
+      KMessageBox::error(this,i18n("We cannot create tag. A tag with same name already exists."));
       return;
     }
   }
