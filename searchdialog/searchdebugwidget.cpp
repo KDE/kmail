@@ -50,7 +50,7 @@ SearchDebugWidget::SearchDebugWidget(const QString &query, QWidget *parent)
     mItemView = new KTextBrowser;
     layout->addWidget( mTextEdit, 0, 0, 1, 2);
     layout->addWidget( new QLabel( i18n("UIDS:") ), 1, 0 );
-    layout->addWidget( new QLabel( i18n("Message:") ), 1, 1 );
+    layout->addWidget( new QLabel( i18n("Messages:") ), 1, 1 );
 
     layout->addWidget( mResultView, 2, 0, 1, 1 );
     layout->addWidget( mItemView, 2, 1, 1, 1 );

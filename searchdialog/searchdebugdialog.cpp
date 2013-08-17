@@ -19,7 +19,6 @@
 #include "searchdebugwidget.h"
 
 #include <KLocale>
-#include <KTextEdit>
 #include <KFileDialog>
 #include <KMessageBox>
 
