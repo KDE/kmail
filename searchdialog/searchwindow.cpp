@@ -407,7 +407,7 @@ void SearchWindow::slotSearch()
     if ( !mUi.mChkbxAllFolders->isChecked() ) {
         const Akonadi::Collection col = mUi.mCbxFolders->collection();
         if (!col.isValid()) {
-            KMessageBox::error(this, i18n("You did not selected a valid folder."), i18n("Search"));
+            KMessageBox::error(this, i18n("You did not selected a valid folder."), i18nc("@title:window", "Search"));
             return;
         }
         urls << col.url( Akonadi::Collection::UrlShort );
@@ -435,10 +435,10 @@ void SearchWindow::slotSearch()
         case MailCommon::SearchPattern::NoError:
             break;
         case MailCommon::SearchPattern::MissingCheck:
-            KMessageBox::error(this, i18n("You forgot to define condition."), i18n("Search"));
+            KMessageBox::error(this, i18n("You forgot to define condition."), i18nc("@title:window", "Search"));
             break;
         case MailCommon::SearchPattern::FolderEmptyOrNotIndexed:
-            KMessageBox::information(this, i18n("All folders selected are empty or were not indexed."), i18n("Search"));
+            KMessageBox::information(this, i18n("All folders selected are empty or were not indexed."), i18nc("@title:window", "Search"));
             break;
         }
         return;
