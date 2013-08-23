@@ -36,7 +36,6 @@ private:
     void writeConfig();
 
 private:
-    bool saveToFile( const QString &filename );
     SearchDebugWidget *mSearchDebugWidget;
 };
 

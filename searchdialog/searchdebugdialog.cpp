@@ -18,15 +18,9 @@
 #include "searchdebugdialog.h"
 #include "searchdebugwidget.h"
 
+#include "mailcommon/util/mailutil.h"
+
 #include <KLocale>
-#include <KFileDialog>
-#include <KMessageBox>
-
-#include <QFile>
-#include <QTextStream>
-#include <QPointer>
-
-#include <errno.h>
 
 SearchDebugDialog::SearchDebugDialog(const QString &query, QWidget *parent)
     : KDialog(parent)
@@ -65,36 +59,8 @@ void SearchDebugDialog::writeConfig()
 
 void SearchDebugDialog::slotSaveAs()
 {
-    KUrl url;
     const QString filter = i18n( "all files (*)" );
-    QPointer<KFileDialog> fdlg( new KFileDialog( url, filter, this) );
-
-    fdlg->setMode( KFile::File );
-    fdlg->setOperationMode( KFileDialog::Saving );
-    fdlg->setConfirmOverwrite(true);
-    if ( fdlg->exec() == QDialog::Accepted && fdlg ) {
-        const QString fileName = fdlg->selectedFile();
-        if ( !saveToFile( fileName ) ) {
-            KMessageBox::error( this,
-                                i18n( "Could not write the file %1:\n"
-                                      "\"%2\" is the detailed error description.",
-                                      fileName,
-                                      QString::fromLocal8Bit( strerror( errno ) ) ),
-                                i18n( "Sieve Editor Error" ) );
-        }
-    }
-    delete fdlg;
-}
-
-bool SearchDebugDialog::saveToFile( const QString &filename )
-{
-    QFile file( filename );
-    if ( !file.open( QIODevice::WriteOnly|QIODevice::Text ) )
-        return false;
-    QTextStream out(&file);
-    out.setCodec("UTF-8");
-    out << mSearchDebugWidget->queryStr();
-    return true;
+    MailCommon::Util::saveTextAs(mSearchDebugWidget->queryStr(), filter, this);
 }
 
 
