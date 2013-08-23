@@ -42,6 +42,7 @@ SearchDebugWidget::SearchDebugWidget(const QString &query, QWidget *parent)
     QGridLayout *layout = new QGridLayout;
 
     mTextEdit = new KTextEdit( this );
+
     mTextEdit->setAcceptRichText(false);
     indentQuery(query);
     new Nepomuk2::SparqlSyntaxHighlighter( mTextEdit->document() );
@@ -66,14 +67,21 @@ SearchDebugWidget::SearchDebugWidget(const QString &query, QWidget *parent)
     setLayout(layout);
 
     connect( mResultView, SIGNAL(activated(QModelIndex)), this, SLOT(slotFetchItem(QModelIndex)) );
-
+    connect(mTextEdit, SIGNAL(textChanged()), SLOT(slotUpdateSearchButton()));
     mResultModel = new QStringListModel( this );
     mResultView->setModel( mResultModel );
+
     slotSearch();
+    slotUpdateSearchButton();
 }
 
 SearchDebugWidget::~SearchDebugWidget()
 {
+}
+
+void SearchDebugWidget::slotUpdateSearchButton()
+{
+    mSearchButton->setEnabled(!mTextEdit->toPlainText().isEmpty());
 }
 
 QString SearchDebugWidget::queryStr() const

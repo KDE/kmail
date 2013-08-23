@@ -63,7 +63,6 @@ void SearchDebugDialog::writeConfig()
     group.writeEntry( "Size", size() );
 }
 
-
 void SearchDebugDialog::slotSaveAs()
 {
     KUrl url;

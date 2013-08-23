@@ -47,6 +47,7 @@ private Q_SLOTS:
     void slotFetchItem( const QModelIndex &index );
     void slotItemFetched(KJob*);
     void slotSearch();
+    void slotUpdateSearchButton();
 
 private:
     void indentQuery(QString query);
