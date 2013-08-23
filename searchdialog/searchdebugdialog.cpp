@@ -18,7 +18,7 @@
 #include "searchdebugdialog.h"
 #include "searchdebugwidget.h"
 
-#include "mailcommon/util/mailutil.h"
+#include "pimcommon/util/pimutil.h"
 
 #include <KLocale>
 
@@ -60,7 +60,7 @@ void SearchDebugDialog::writeConfig()
 void SearchDebugDialog::slotSaveAs()
 {
     const QString filter = i18n( "all files (*)" );
-    MailCommon::Util::saveTextAs(mSearchDebugWidget->queryStr(), filter, this);
+    PimCommon::Util::saveTextAs(mSearchDebugWidget->queryStr(), filter, this);
 }
 
 
