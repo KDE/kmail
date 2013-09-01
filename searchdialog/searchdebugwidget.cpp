@@ -35,6 +35,20 @@
 #include <QStringListModel>
 #include <QPushButton>
 
+SearchDebugListDelegate::SearchDebugListDelegate( QObject *parent )
+    : QStyledItemDelegate ( parent )
+{
+}
+
+SearchDebugListDelegate::~SearchDebugListDelegate()
+{
+}
+
+QWidget *SearchDebugListDelegate::createEditor ( QWidget *, const QStyleOptionViewItem  &, const QModelIndex & ) const
+{
+    return 0;
+}
+
 
 SearchDebugWidget::SearchDebugWidget(const QString &query, QWidget *parent)
     : QWidget(parent)
@@ -48,6 +62,7 @@ SearchDebugWidget::SearchDebugWidget(const QString &query, QWidget *parent)
     new Nepomuk2::SparqlSyntaxHighlighter( mTextEdit->document() );
 
     mResultView = new QListView;
+    mResultView->setItemDelegate(new SearchDebugListDelegate(this));
     mItemView = new KTextBrowser;
     layout->addWidget( mTextEdit, 0, 0, 1, 2);
     layout->addWidget( new QLabel( i18n("UIDS:") ), 1, 0 );

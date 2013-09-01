@@ -19,6 +19,7 @@
 #define SEARCHDEBUGWIDGET_H
 
 #include <QWidget>
+#include <QStyledItemDelegate>
 
 class QListView;
 class QStringListModel;
@@ -32,6 +33,15 @@ class QLabel;
 namespace KPIMUtils {
 class ProgressIndicatorWidget;
 }
+
+class SearchDebugListDelegate : public QStyledItemDelegate
+{
+public:
+    SearchDebugListDelegate(QObject *parent = 0);
+    ~SearchDebugListDelegate();
+    QWidget *createEditor( QWidget *, const QStyleOptionViewItem &, const QModelIndex & ) const;
+};
+
 
 class SearchDebugWidget : public QWidget
 {
