@@ -24,7 +24,9 @@
 #include "searchwindow.h"
 
 #include "folderrequester.h"
+#if !defined(NDEBUG)
 #include "debug/searchdebugdialog.h"
+#endif
 #include "kmcommands.h"
 #include "kmmainwidget.h"
 #include "mailcommon/kernel/mailkernel.h"
@@ -804,9 +806,11 @@ void SearchWindow::getChildren( const QAbstractItemModel *model,
 
 void SearchWindow::slotDebugQuery()
 {
+#if !defined(NDEBUG)
     QPointer<SearchDebugDialog> dlg = new SearchDebugDialog(mQuery, this);
     dlg->exec();
     delete dlg;
+#endif
 }
 
 }
