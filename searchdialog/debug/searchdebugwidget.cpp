@@ -121,7 +121,7 @@ void SearchDebugWidget::slotSearch()
 
 void SearchDebugWidget::indentQuery(QString query)
 {
-    query= query.simplified();
+    query = query.simplified();
     QString newQuery;
     int i = 0;
     int indent = 0;
@@ -131,7 +131,7 @@ void SearchDebugWidget::indentQuery(QString query)
         newQuery.append(query[i]);
         if (query[i] != QLatin1Char('"') && query[i] != QLatin1Char('<') && query[i] != QLatin1Char('\'')) {
             if (query[i] == QLatin1Char('{')) {
-                indent++;
+                ++indent;
                 newQuery.append(QLatin1Char('\n'));
                 newQuery.append(QString().fill(QLatin1Char(' '), indent*space));
             } else if (query[i] == QLatin1Char('.')) {
@@ -162,17 +162,17 @@ void SearchDebugWidget::indentQuery(QString query)
                 }
             }
         } else {
-            i++;
+            ++i;
             while(i < query.size()) {
                 if (query[i] == QLatin1Char('"') || query[i] == QLatin1Char('>') || query[i] == QLatin1Char('\'')) {
                     newQuery.append(query[i]);
                     break;
                 }
                 newQuery.append(query[i]);
-                i++;
+                ++i;
             }
         }
-        i++;
+        ++i;
     }
     mTextEdit->setPlainText( newQuery );
 }
