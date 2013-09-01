@@ -24,7 +24,7 @@
 #include "searchwindow.h"
 
 #include "folderrequester.h"
-#include "searchdebugdialog.h"
+#include "debug/searchdebugdialog.h"
 #include "kmcommands.h"
 #include "kmmainwidget.h"
 #include "mailcommon/kernel/mailkernel.h"
