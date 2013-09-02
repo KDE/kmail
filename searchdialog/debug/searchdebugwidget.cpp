@@ -44,11 +44,10 @@ SearchDebugListDelegate::~SearchDebugListDelegate()
 {
 }
 
-QWidget *SearchDebugListDelegate::createEditor ( QWidget *, const QStyleOptionViewItem  &, const QModelIndex & ) const
+QWidget *SearchDebugListDelegate::createEditor( QWidget *, const QStyleOptionViewItem  &, const QModelIndex & ) const
 {
     return 0;
 }
-
 
 SearchDebugWidget::SearchDebugWidget(const QString &query, QWidget *parent)
     : QWidget(parent)
@@ -176,7 +175,6 @@ void SearchDebugWidget::indentQuery(QString query)
     }
     mTextEdit->setPlainText( newQuery );
 }
-
 
 void SearchDebugWidget::slotSearchFinished(KJob *job)
 {

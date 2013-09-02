@@ -29,7 +29,7 @@ namespace Akonadi {
 
 class SearchDescriptionAttribute : public Akonadi::Attribute
 {
-  public:
+public:
     SearchDescriptionAttribute();
     QByteArray description() const ;
     void setDescription( const QByteArray& desc );
@@ -43,7 +43,7 @@ class SearchDescriptionAttribute : public Akonadi::Attribute
     QByteArray serialized() const;
     void deserialize( const QByteArray &data );
 
-  private:
+private:
     QByteArray mDescription;
     Akonadi::Collection mBaseCollection;
     bool mRecursive;

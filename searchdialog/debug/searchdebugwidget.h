@@ -42,7 +42,6 @@ public:
     QWidget *createEditor( QWidget *, const QStyleOptionViewItem &, const QModelIndex & ) const;
 };
 
-
 class SearchDebugWidget : public QWidget
 {
     Q_OBJECT
