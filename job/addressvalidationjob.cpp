@@ -115,7 +115,6 @@ void AddressValidationJob::start()
     job->start();
 }
 
-
 bool AddressValidationJob::isValid() const
 {
     return d->mIsValid;
