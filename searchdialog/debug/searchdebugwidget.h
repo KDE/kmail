@@ -29,6 +29,11 @@ class KJob;
 class QModelIndex;
 class QPushButton;
 class QLabel;
+class QPlainTextEdit;
+
+namespace PimCommon {
+class PlainTextEditFindBar;
+}
 
 namespace KPIMUtils {
 class ProgressIndicatorWidget;
@@ -57,16 +62,18 @@ private Q_SLOTS:
     void slotItemFetched(KJob*);
     void slotSearch();
     void slotUpdateSearchButton();
+    void slotFind();
 
 private:
     void indentQuery(QString query);
     QStringListModel *mResultModel;
     QListView *mResultView;
-    KTextBrowser *mItemView;
+    QPlainTextEdit *mItemView;
     KTextEdit *mTextEdit;
     KPIMUtils::ProgressIndicatorWidget *mProgressIndicator;
     QPushButton *mSearchButton;
     QLabel *mResultLabel;
+    PimCommon::PlainTextEditFindBar *mFindBar;
 };
 
 #endif // SEARCHDEBUGWIDGET_H

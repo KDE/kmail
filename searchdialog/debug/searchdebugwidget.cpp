@@ -18,22 +18,26 @@
 #include "searchdebugwidget.h"
 #include "sparqlsyntaxhighlighter.h"
 
+#include "pimcommon/widgets/plaintexteditfindbar.h"
+
 #include <KPIMUtils/ProgressIndicatorWidget>
 
 #include <akonadi/itemfetchjob.h>
 #include <akonadi/itemfetchscope.h>
 #include <akonadi/itemsearchjob.h>
 
-#include <KTextBrowser>
 #include <KTextEdit>
 #include <KMessageBox>
 #include <KLocale>
 
+#include <QPlainTextEdit>
 #include <QGridLayout>
+#include <QVBoxLayout>
 #include <QLabel>
 #include <QListView>
 #include <QStringListModel>
 #include <QPushButton>
+#include <QShortcut>
 
 SearchDebugListDelegate::SearchDebugListDelegate( QObject *parent )
     : QStyledItemDelegate ( parent )
@@ -62,13 +66,29 @@ SearchDebugWidget::SearchDebugWidget(const QString &query, QWidget *parent)
 
     mResultView = new QListView;
     mResultView->setItemDelegate(new SearchDebugListDelegate(this));
-    mItemView = new KTextBrowser;
+
+    QWidget *w = new QWidget;
+    QVBoxLayout *lay = new QVBoxLayout;
+    mItemView = new QPlainTextEdit;
+    mFindBar = new PimCommon::PlainTextEditFindBar( mItemView, this );
+    lay->addWidget(mItemView);
+    lay->addWidget(mFindBar);
+    lay->setMargin(0);
+    w->setLayout(lay);
+
+
+    QShortcut *shortcut = new QShortcut( this );
+    shortcut->setKey( Qt::Key_F+Qt::CTRL );
+    connect( shortcut, SIGNAL(activated()), SLOT(slotFind()) );
+    connect( mTextEdit, SIGNAL(findText()), SLOT(slotFind()) );
+
+
     layout->addWidget( mTextEdit, 0, 0, 1, 2);
-    layout->addWidget( new QLabel( i18n("UIDS:") ), 1, 0 );
+    layout->addWidget( new QLabel( i18n("Akonadi Id:") ), 1, 0 );
     layout->addWidget( new QLabel( i18n("Messages:") ), 1, 1 );
 
     layout->addWidget( mResultView, 2, 0, 1, 1 );
-    layout->addWidget( mItemView, 2, 1, 1, 1 );
+    layout->addWidget( w, 2, 1, 1, 1 );
     mSearchButton = new QPushButton( i18n("Search") );
     connect( mSearchButton, SIGNAL(clicked()), this, SLOT(slotSearch()) );
     mProgressIndicator = new KPIMUtils::ProgressIndicatorWidget;
@@ -226,6 +246,16 @@ void SearchDebugWidget::slotItemFetched( KJob *job )
         mItemView->setPlainText( QString::fromUtf8( item.payloadData() ) );
     }
 }
+
+void SearchDebugWidget::slotFind()
+{
+    if ( mTextEdit->textCursor().hasSelection() )
+        mFindBar->setText( mTextEdit->textCursor().selectedText() );
+    mTextEdit->moveCursor(QTextCursor::Start);
+    mFindBar->show();
+    mFindBar->focusAndSetCursor();
+}
+
 
 
 #include "searchdebugwidget.moc"
