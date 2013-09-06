@@ -100,6 +100,7 @@ SearchWindow::SearchWindow( KMMainWidget *widget, const Akonadi::Collection &col
     QWidget *searchWidget = new QWidget( this );
     setMainWidget( searchWidget );
     mUi.setupUi( searchWidget );
+    mUi.mPatternEdit->setPatternEditOptions(SearchPatternEdit::NotShowSize);
 
     setButtons( None );
     mStartSearchGuiItem = KGuiItem( i18nc( "@action:button Search for messages", "&Search" ), QLatin1String("edit-find") );
