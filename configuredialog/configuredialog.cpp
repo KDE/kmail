@@ -3536,7 +3536,6 @@ SecurityPageComposerCryptoTab::SecurityPageComposerCryptoTab( QWidget * parent )
 {
   mWidget = new Ui::ComposerCryptoConfiguration;
   mWidget->setupUi( this );
-  connect( mWidget->mAutoSignature, SIGNAL(toggled(bool)), this, SLOT(slotEmitChanged()) );
   connect( mWidget->mEncToSelf, SIGNAL(toggled(bool)), this, SLOT(slotEmitChanged()) );
   connect( mWidget->mShowEncryptionResult, SIGNAL(toggled(bool)), this, SLOT(slotEmitChanged()) );
   connect( mWidget->mShowKeyApprovalDlg, SIGNAL(toggled(bool)), this, SLOT(slotEmitChanged()) );
@@ -3554,8 +3553,6 @@ void SecurityPage::ComposerCryptoTab::doLoadOther()
 {
   // If you change default values, sync messagecomposer.cpp too
 
-  mWidget->mAutoSignature->setChecked( GlobalSettings::self()->pgpAutoSign() );
-
   mWidget->mEncToSelf->setChecked( MessageComposer::MessageComposerSettings::self()->cryptoEncryptToSelf() );
   mWidget->mShowEncryptionResult->setChecked( false ); //composer.readBoolEntry( "crypto-show-encryption-result", true ) );
   mWidget->mShowEncryptionResult->hide();
@@ -3570,8 +3567,6 @@ void SecurityPage::ComposerCryptoTab::doLoadOther()
 
 void SecurityPage::ComposerCryptoTab::save()
 {
-  GlobalSettings::self()->setPgpAutoSign( mWidget->mAutoSignature->isChecked() );
-
   MessageComposer::MessageComposerSettings::self()->setCryptoEncryptToSelf( mWidget->mEncToSelf->isChecked() );
   GlobalSettings::self()->setCryptoShowEncryptionResult( mWidget->mShowEncryptionResult->isChecked() );
   MessageComposer::MessageComposerSettings::self()->setCryptoShowKeysForApproval( mWidget->mShowKeyApprovalDlg->isChecked() );
@@ -3584,8 +3579,6 @@ void SecurityPage::ComposerCryptoTab::save()
 
 void SecurityPage::ComposerCryptoTab::doLoadFromGlobalSettings()
 {
-  mWidget->mAutoSignature->setChecked( GlobalSettings::self()->pgpAutoSign() );
-
   mWidget->mEncToSelf->setChecked( MessageComposer::MessageComposerSettings::self()->cryptoEncryptToSelf() );
   mWidget->mShowEncryptionResult->setChecked( GlobalSettings::self()->cryptoShowEncryptionResult() );
   mWidget->mShowKeyApprovalDlg->setChecked(MessageComposer::MessageComposerSettings::self()->cryptoShowKeysForApproval() );

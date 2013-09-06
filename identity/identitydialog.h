@@ -122,6 +122,7 @@ private:
     Kleo::SigningKeyRequester    *mSMIMESigningKeyRequester;
     Kleo::EncryptionKeyRequester *mSMIMEEncryptionKeyRequester;
     KComboBox                    *mPreferredCryptoMessageFormat;
+    QCheckBox *mAutoSign;
     // "advanced" tab:
     KLineEdit                        *mReplyToEdit;
     KLineEdit                        *mBccEdit;

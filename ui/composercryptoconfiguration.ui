@@ -1,135 +1,119 @@
-<ui version="4.0" stdsetdef="1" >
-  <class>ComposerCryptoConfiguration</class>
-  <widget class="QWidget" name="ComposerCryptoConfiguration" >
-    <property name="geometry" >
-      <rect>
-        <x>0</x>
-        <y>0</y>
-        <width>581</width>
-        <height>318</height>
-      </rect>
-    </property>
-    <layout class="QVBoxLayout" >
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>ComposerCryptoConfiguration</class>
+ <widget class="QWidget" name="ComposerCryptoConfiguration">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>581</width>
+    <height>318</height>
+   </rect>
+  </property>
+  <layout class="QVBoxLayout">
+   <item>
+    <widget class="QGroupBox" name="optionsGroup">
+     <property name="title">
+      <string>Encrypting</string>
+     </property>
+     <layout class="QVBoxLayout">
       <item>
-        <widget class="QGroupBox" name="optionsGroup_2" >
-          <property name="title" >
-            <string>Signing</string>
-          </property>
-          <layout class="QVBoxLayout" >
-            <item>
-              <widget class="QCheckBox" name="mAutoSignature" >
-                <property name="text" >
-                  <string>&amp;Automatically sign messages</string>
-                </property>
-                <property name="whatsThis" stdset="0" >
-                  <string>When this option is enabled, all messages you send will be signed by default; of course, it is still possible to disable signing for each message individually.</string>
-                </property>
-              </widget>
-            </item>
-          </layout>
-        </widget>
+       <widget class="QCheckBox" name="mEncToSelf">
+        <property name="whatsThis">
+         <string>When this option is enabled, the message/file will not only be encrypted with the receiver's public key, but also with your key. This will enable you to decrypt the message/file at a later time. This is generally a good idea.</string>
+        </property>
+        <property name="text">
+         <string>When encrypting emails, always also encr&amp;ypt to the certificate of my own identity</string>
+        </property>
+       </widget>
       </item>
       <item>
-        <widget class="QGroupBox" name="optionsGroup" >
-          <property name="title" >
-            <string>Encrypting</string>
-          </property>
-          <layout class="QVBoxLayout" >
-            <item>
-              <widget class="QCheckBox" name="mEncToSelf" >
-                <property name="text" >
-                  <string>When encrypting emails, always also encr&amp;ypt to the certificate of my own identity</string>
-                </property>
-                <property name="whatsThis" stdset="0" >
-                  <string>When this option is enabled, the message/file will not only be encrypted with the receiver's public key, but also with your key. This will enable you to decrypt the message/file at a later time. This is generally a good idea.</string>
-                </property>
-              </widget>
-            </item>
-            <item>
-              <widget class="QCheckBox" name="mShowEncryptionResult" >
-                <property name="text" >
-                  <string>Show s&amp;igned/encrypted text after composing</string>
-                </property>
-                <property name="whatsThis" stdset="0" >
-                  <string>When this option is enabled, the signed/encrypted text will be shown in a separate window, enabling you to know how it will look before it is sent. This is a good idea when you are verifying that your encryption system works.</string>
-                </property>
-              </widget>
-            </item>
-            <item>
-              <widget class="QCheckBox" name="mStoreEncrypted" >
-                <property name="text" >
-                  <string>Store sent messages encry&amp;pted</string>
-                </property>
-                <property name="checked" >
-                  <bool>false</bool>
-                </property>
-                <property name="toolTip" stdset="0" >
-                  <string>Check to store messages encrypted </string>
-                </property>
-                <property name="whatsThis" stdset="0" >
-                  <string>&lt;qt>
-&lt;h1>Store Messages Encrypted&lt;/h1>
+       <widget class="QCheckBox" name="mShowEncryptionResult">
+        <property name="whatsThis">
+         <string>When this option is enabled, the signed/encrypted text will be shown in a separate window, enabling you to know how it will look before it is sent. This is a good idea when you are verifying that your encryption system works.</string>
+        </property>
+        <property name="text">
+         <string>Show s&amp;igned/encrypted text after composing</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QCheckBox" name="mStoreEncrypted">
+        <property name="toolTip">
+         <string>Check to store messages encrypted </string>
+        </property>
+        <property name="whatsThis">
+         <string>&lt;qt&gt;
+&lt;h1&gt;Store Messages Encrypted&lt;/h1&gt;
 When this box is checked, sent messages are stored encrypted like they were sent. This is not recommended, as you will not be able to read the messages any longer if a necessary certificate expires.
-&lt;p>
+&lt;p&gt;
 However, there may be local rules that require you to turn this option on. When in doubt, check with your local administrator.
-&lt;/p>&lt;/qt></string>
-                </property>
-              </widget>
-            </item>
-            <item>
-              <widget class="QCheckBox" name="mShowKeyApprovalDlg" >
-                <property name="text" >
-                  <string>Always show the encryption keys &amp;for approval</string>
-                </property>
-                <property name="whatsThis" stdset="0" >
-                  <string>When this option is enabled, the application will always show you a list of public keys from which you can choose the one it will use for encryption. If it is off, the application will only show the dialog if it cannot find the right key or if there are several which could be used.</string>
-                </property>
-              </widget>
-            </item>
-            <item>
-              <widget class="QCheckBox" name="mAutoEncrypt" >
-                <property name="text" >
-                  <string>Automatically encrypt &amp;messages whenever possible</string>
-                </property>
-                <property name="whatsThis" stdset="0" >
-                  <string>When this option is enabled, every message you send will be encrypted whenever encryption is possible and desired; of course, it is still possible to disable the automatic encryption for each message individually.</string>
-                </property>
-              </widget>
-            </item>
-            <item>
-              <widget class="QCheckBox" name="mNeverEncryptWhenSavingInDrafts" >
-                <property name="text" >
-                  <string>Never sign/encrypt when sa&amp;ving as draft</string>
-                </property>
-              </widget>
-            </item>
-          </layout>
-        </widget>
+&lt;/p&gt;&lt;/qt&gt;</string>
+        </property>
+        <property name="text">
+         <string>Store sent messages encry&amp;pted</string>
+        </property>
+        <property name="checked">
+         <bool>false</bool>
+        </property>
+       </widget>
       </item>
       <item>
-        <spacer name="spacer22" >
-          <property name="sizeHint" >
-            <size>
-              <width>20</width>
-              <height>20</height>
-            </size>
-          </property>
-          <property name="sizeType" >
-            <enum>Expanding</enum>
-          </property>
-          <property name="orientation" >
-            <enum>Vertical</enum>
-          </property>
-        </spacer>
+       <widget class="QCheckBox" name="mShowKeyApprovalDlg">
+        <property name="whatsThis">
+         <string>When this option is enabled, the application will always show you a list of public keys from which you can choose the one it will use for encryption. If it is off, the application will only show the dialog if it cannot find the right key or if there are several which could be used.</string>
+        </property>
+        <property name="text">
+         <string>Always show the encryption keys &amp;for approval</string>
+        </property>
+       </widget>
       </item>
-    </layout>
-  </widget>
-  <tabstops>
-    <tabstop>mEncToSelf</tabstop>
-    <tabstop>mShowEncryptionResult</tabstop>
-    <tabstop>mStoreEncrypted</tabstop>
-    <tabstop>mShowKeyApprovalDlg</tabstop>
-    <tabstop>mAutoEncrypt</tabstop>
-    <tabstop>mNeverEncryptWhenSavingInDrafts</tabstop>
-  </tabstops>
+      <item>
+       <widget class="QCheckBox" name="mAutoEncrypt">
+        <property name="whatsThis">
+         <string>When this option is enabled, every message you send will be encrypted whenever encryption is possible and desired; of course, it is still possible to disable the automatic encryption for each message individually.</string>
+        </property>
+        <property name="text">
+         <string>Automatically encrypt &amp;messages whenever possible</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QCheckBox" name="mNeverEncryptWhenSavingInDrafts">
+        <property name="text">
+         <string>Never sign/encrypt when sa&amp;ving as draft</string>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </widget>
+   </item>
+   <item>
+    <spacer name="spacer22">
+     <property name="orientation">
+      <enum>Qt::Vertical</enum>
+     </property>
+     <property name="sizeType">
+      <enum>QSizePolicy::Expanding</enum>
+     </property>
+     <property name="sizeHint" stdset="0">
+      <size>
+       <width>20</width>
+       <height>20</height>
+      </size>
+     </property>
+    </spacer>
+   </item>
+  </layout>
+ </widget>
+ <tabstops>
+  <tabstop>mEncToSelf</tabstop>
+  <tabstop>mShowEncryptionResult</tabstop>
+  <tabstop>mStoreEncrypted</tabstop>
+  <tabstop>mShowKeyApprovalDlg</tabstop>
+  <tabstop>mAutoEncrypt</tabstop>
+  <tabstop>mNeverEncryptWhenSavingInDrafts</tabstop>
+ </tabstops>
+ <resources/>
+ <connections/>
 </ui>

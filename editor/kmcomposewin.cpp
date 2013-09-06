@@ -1412,7 +1412,7 @@ void KMComposeWin::setupActions( void )
   mLastIdentityHasEncryptionKey = !ident.pgpEncryptionKey().isEmpty() || !ident.smimeEncryptionKey().isEmpty();
 
   mLastEncryptActionState = false;
-  mLastSignActionState = GlobalSettings::self()->pgpAutoSign();
+  mLastSignActionState = ident.pgpAutoSign();
 
   changeCryptoAction();
 
@@ -1465,7 +1465,7 @@ void KMComposeWin::changeCryptoAction()
                               !ident.smimeSigningKey().isEmpty();
 
     setEncryption( false );
-    setSigning( ( canOpenPGPSign || canSMIMESign ) && GlobalSettings::self()->pgpAutoSign() );
+    setSigning( ( canOpenPGPSign || canSMIMESign ) && ident.pgpAutoSign() );
   }
 
 }
