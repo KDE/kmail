@@ -2955,9 +2955,10 @@ void KMMainWidget::showMessagePopup(const Akonadi::Item&msg ,const KUrl&url,cons
     menu->addAction( mMsgActions->printAction() );
     menu->addAction( mSaveAsAction );
     menu->addAction( mSaveAttachmentsAction );
+#if 0
     if (FolderArchive::FolderArchiveUtil::folderArchiveAgentEnabled())
         menu->addAction( mMsgActions->archiveMailAction());
-
+#endif
     menu->addSeparator();
     if ( parentCol.isValid() && CommonKernel->folderIsTrash(parentCol) ) {
       menu->addAction( mDeleteAction );
