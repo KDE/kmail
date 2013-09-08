@@ -4225,7 +4225,6 @@ MiscPageProxyTab::MiscPageProxyTab( QWidget* parent )
   KCModuleInfo proxyInfo(QLatin1String("proxy.desktop"));
   mProxyModule = new KCModuleProxy(proxyInfo, parent);
   QHBoxLayout *l = new QHBoxLayout( this );
-  l->setContentsMargins( 0 , 0, 0, 0 );
   l->addWidget( mProxyModule );
   connect(mProxyModule,SIGNAL(changed(bool)), this, SLOT(slotEmitChanged()));
 }
