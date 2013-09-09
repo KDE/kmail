@@ -477,7 +477,9 @@ void KMReaderMainWin::showMessagePopup(const Akonadi::Item&msg ,const KUrl&url,c
       } else {
         menu->addAction( mReaderWin->addAddrBookAction() );
       }
-
+      menu->addSeparator();
+      menu->addMenu(mReaderWin->viewHtmlOption());
+      menu->addSeparator();
       menu->addAction( mReaderWin->copyURLAction() );
       copyAdded = true;
       urlMenuAdded = true;

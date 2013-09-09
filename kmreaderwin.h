@@ -1,6 +1,7 @@
 /* -*- mode: C++; c-file-style: "gnu" -*-
   This file is part of KMail, the KDE mail client.
   Copyright (c) 1997 Markus Wuebben <markus.wuebben@kde.org>
+  Copyright (c) 2013 Laurent Montel <montel@kde.org>
 
   This program is free software; you can redistribute it and/or modify
   it under the terms of the GNU General Public License as published by
@@ -28,6 +29,7 @@
 class KActionCollection;
 class KAction;
 class KToggleAction;
+class KMenu;
 namespace MessageViewer {
   class HeaderStrategy;
   class HeaderStyle;
@@ -149,7 +151,9 @@ public:
   KAction *saveMessageDisplayFormatAction();
   KAction *resetMessageDisplayFormatAction();
 
-  KAction* editContactAction() const { return mEditContactAction; }
+  KAction *editContactAction() const { return mEditContactAction; }
+
+  KMenu *viewHtmlOption() const { return mViewHtmlOptions; }
 
   Akonadi::Item message() const;
 
@@ -199,20 +203,34 @@ public slots:
   void contactStored( const Akonadi::Item &item );
   void slotContactEditorError(const QString &error);
 
-protected:
+  void slotContactHtmlOptions();
 
+protected:
   KUrl urlClicked() const;
   KUrl imageUrlClicked() const;
 
 private:
   void createActions();
+  void updateHtmlActions();
+
 private:
   Akonadi::Item mSearchedContact;
   QWidget *mMainWindow;
   KActionCollection *mActionCollection;
 
-  KAction *mMailToComposeAction, *mMailToReplyAction, *mMailToForwardAction,
-    *mAddAddrBookAction, *mOpenAddrBookAction, *mUrlSaveAsAction, *mAddBookmarksAction,*mImageUrlSaveAsAction, *mEditContactAction;
+  KAction *mMailToComposeAction;
+  KAction *mMailToReplyAction;
+  KAction *mMailToForwardAction;
+  KAction *mAddAddrBookAction;
+  KAction *mOpenAddrBookAction;
+  KAction *mUrlSaveAsAction;
+  KAction *mAddBookmarksAction;
+  KAction *mImageUrlSaveAsAction;
+  KAction *mEditContactAction;
+  KAction *mViewAsHtml;
+  KAction *mLoadExternalReference;
+
+  KMenu *mViewHtmlOptions;
 
   MessageViewer::Viewer *mViewer;
 

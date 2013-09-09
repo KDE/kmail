@@ -31,6 +31,7 @@
 #include <kpimutils/email.h>
 #include <libkdepim/job/addemailaddressjob.h>
 #include <libkdepim/job/openemailaddressjob.h>
+#include <libkdepim/job/addemaildisplayjob.h>
 #include <libkdepim/misc/broadcaststatus.h>
 #include "kmcommands.h"
 #include "mailcommon/mdn/sendmdnhandler.h"
@@ -74,6 +75,7 @@ using MessageComposer::MessageFactory;
 #include <kservice.h>
 #include <KActionCollection>
 #include <KMessageBox>
+#include <KMenu>
 
 #include <QClipboard>
 
@@ -216,6 +218,19 @@ void KMReaderWin::createActions()
   mImageUrlSaveAsAction->setShortcutConfigurable( false );
   connect( mImageUrlSaveAsAction, SIGNAL(triggered(bool)), SLOT(slotSaveImageOnDisk()) );
 
+  // View html options
+  mViewHtmlOptions = new KMenu(i18n("Show HTML Format"));
+  mViewAsHtml = new KAction( i18n("Show HTML format when mail comes from this contact"), mViewHtmlOptions);
+  mViewAsHtml->setShortcutConfigurable( false );
+  connect( mViewAsHtml, SIGNAL(triggered(bool)), SLOT(slotContactHtmlOptions()));
+  mViewAsHtml->setCheckable(true);
+  mViewHtmlOptions->addAction(mViewAsHtml);
+
+  mLoadExternalReference = new KAction( i18n("Load external reference when mail comes for this contact"), mViewHtmlOptions);
+  mLoadExternalReference->setShortcutConfigurable( false );
+  connect(mLoadExternalReference, SIGNAL(triggered(bool)), SLOT(slotContactHtmlOptions()));
+  mLoadExternalReference->setCheckable(true);
+  mViewHtmlOptions->addAction(mLoadExternalReference);
 }
 
 void KMReaderWin::setUseFixedFont( bool useFixedFont )
@@ -533,7 +548,6 @@ void KMReaderWin::slotMailtoReply()
   command->start();
 }
 
-
 CSSHelper* KMReaderWin::cssHelper() const
 {
   return mViewer->cssHelper();
@@ -752,6 +766,30 @@ void KMReaderWin::slotPrintComposeResult( KJob *job )
 void KMReaderWin::setContactItem(const Akonadi::Item& contact)
 {
   mSearchedContact = contact;
+  updateHtmlActions();
+}
+
+void KMReaderWin::updateHtmlActions()
+{
+    if (mSearchedContact.isValid()) {
+        mLoadExternalReference->setChecked(false);
+        mViewAsHtml->setChecked(false);
+    } else {
+        //TODO
+    }
+}
+
+void KMReaderWin::slotContactHtmlOptions()
+{
+    const KUrl url = urlClicked();
+    if( url.isEmpty() )
+      return;
+    const QString emailString = KPIMUtils::decodeMailtoUrl( url ).toLower();
+
+    KPIM::AddEmailDiplayJob *job = new KPIM::AddEmailDiplayJob( emailString, mMainWindow, this );
+    job->setRemoteContent(mLoadExternalReference->isChecked());
+    job->setShowAsHTML(mViewAsHtml->isChecked());
+    job->start();
 }
 
 void KMReaderWin::slotEditContact()

@@ -2877,6 +2877,9 @@ void KMMainWidget::showMessagePopup(const Akonadi::Item&msg ,const KUrl&url,cons
       } else {
         menu->addAction( mMsgView->addAddrBookAction() );
       }
+      menu->addSeparator();
+      menu->addMenu(mMsgView->viewHtmlOption());
+      menu->addSeparator();
       menu->addAction( mMsgView->copyURLAction() );
       urlMenuAdded = true;
     } else if ( url.protocol() != QLatin1String( "attachment" ) ) {
