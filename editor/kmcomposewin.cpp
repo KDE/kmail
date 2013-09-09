@@ -2804,7 +2804,7 @@ void KMComposeWin::doDelayedSend( MessageComposer::MessageSender::SendMethod met
   }
 
   mComposerBase->setCustomHeader( customHeader );
-  mComposerBase->send( method, saveIn );
+  mComposerBase->send( method, saveIn, false );
 }
 
 //----------------------------------------------------------------------------
