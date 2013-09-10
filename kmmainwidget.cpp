@@ -2841,9 +2841,9 @@ void KMMainWidget::slotContactSearchJobForMessagePopupDone( KJob *job )
   const QList<Akonadi::Item> listContact = searchJob->items();
   const bool uniqueContactFound = (listContact.count() == 1);
   if (uniqueContactFound) {
-      mMsgView->setContactItem(listContact.first());
+      mMsgView->setContactItem(listContact.first(), searchJob->contacts().at(0));
   } else {
-      mMsgView->setContactItem(Akonadi::Item());
+      mMsgView->clearContactItem();
   }
   const Akonadi::Item msg = job->property( "msg" ).value<Akonadi::Item>();
   const QPoint aPoint = job->property( "point" ).toPoint();

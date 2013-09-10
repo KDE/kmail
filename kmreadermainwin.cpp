@@ -437,9 +437,9 @@ void KMReaderMainWin::slotContactSearchJobForMessagePopupDone( KJob *job )
   const QList<Akonadi::Item> listContact = searchJob->items();
   const bool uniqueContactFound = (listContact.count() == 1);
   if(uniqueContactFound) {
-      mReaderWin->setContactItem(listContact.first());
+      mReaderWin->setContactItem(listContact.first(), searchJob->contacts().at(0));
   } else {
-      mReaderWin->setContactItem(Akonadi::Item());
+      mReaderWin->clearContactItem();
   }
 
   const Akonadi::Item msg = job->property( "msg" ).value<Akonadi::Item>();

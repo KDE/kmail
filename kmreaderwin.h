@@ -26,6 +26,7 @@
 #include <messageviewer/viewer/viewer.h>
 #include <messageviewer/interfaces/bodypart.h>
 #include <Akonadi/Item>
+#include <KABC/Addressee>
 class KActionCollection;
 class KAction;
 class KToggleAction;
@@ -166,7 +167,8 @@ public:
 
   bool printSelectedText(bool preview);
 
-  void setContactItem(const Akonadi::Item& contact);
+  void setContactItem(const Akonadi::Item& contact, const KABC::Addressee &address);
+  void clearContactItem();
 
 signals:
   /** Emitted after parsing of a message to have it stored
@@ -214,6 +216,7 @@ private:
   void updateHtmlActions();
 
 private:
+  KABC::Addressee mSearchedAddress;
   Akonadi::Item mSearchedContact;
   QWidget *mMainWindow;
   KActionCollection *mActionCollection;

@@ -59,8 +59,6 @@ using namespace MessageViewer;
 #include "messagecomposer/part/textpart.h"
 #include "messagecomposer/part/infopart.h"
 
-#include <KABC/Addressee>
-
 #include <KIO/JobUiDelegate>
 using MessageComposer::MessageFactory;
 
@@ -766,36 +764,34 @@ void KMReaderWin::slotPrintComposeResult( KJob *job )
 
 }
 
-void KMReaderWin::setContactItem(const Akonadi::Item& contact)
+void KMReaderWin::clearContactItem()
+{
+    mSearchedContact = Akonadi::Item();
+    mSearchedAddress = KABC::Addressee();
+}
+
+void KMReaderWin::setContactItem(const Akonadi::Item& contact, const KABC::Addressee &address)
 {
   mSearchedContact = contact;
+  mSearchedAddress = address;
   updateHtmlActions();
 }
 
 void KMReaderWin::updateHtmlActions()
 {
-    if (mSearchedContact.isValid()) {
+    if (!mSearchedContact.isValid()) {
         mLoadExternalReference->setChecked(false);
         mViewAsHtml->setChecked(false);
     } else {
-        KABC::Addressee contact;
-        if ( mSearchedContact.hasPayload<KABC::Addressee>() ) {
-            contact = mSearchedContact.payload<KABC::Addressee>();
-            const QStringList customs = contact.customs();
-            Q_FOREACH ( const QString& custom, customs ) {
-                qDebug()<<" custom "<<custom;
-                if ( custom.contains(QLatin1String( "MailPreferedFormatting")) ) {
-                    const QString value = contact.custom( QLatin1String( "KADDRESSBOOK" ), QLatin1String( "MailPreferedFormatting" ) );
-                    mViewAsHtml->setChecked(value == QLatin1String( "HTML" ));
-                } else if ( custom.contains(QLatin1String( "MailAllowToRemoteContent")) ) {
-                    const QString value = contact.custom( QLatin1String( "KADDRESSBOOK" ), QLatin1String( "MailAllowToRemoteContent" ) );
-                    mLoadExternalReference->setChecked(( value == QLatin1String( "TRUE" ) ));
-                }
+        const QStringList customs = mSearchedAddress.customs();
+        Q_FOREACH ( const QString& custom, customs ) {
+            if ( custom.contains(QLatin1String( "MailPreferedFormatting")) ) {
+                const QString value = mSearchedAddress.custom( QLatin1String( "KADDRESSBOOK" ), QLatin1String( "MailPreferedFormatting" ) );
+                mViewAsHtml->setChecked(value == QLatin1String( "HTML" ));
+            } else if ( custom.contains(QLatin1String( "MailAllowToRemoteContent")) ) {
+                const QString value = mSearchedAddress.custom( QLatin1String( "KADDRESSBOOK" ), QLatin1String( "MailAllowToRemoteContent" ) );
+                mLoadExternalReference->setChecked(( value == QLatin1String( "TRUE" ) ));
             }
-        } else {
-            qDebug()<<" don't have hasPayload<KABC::Addressee>()";
-            mLoadExternalReference->setChecked(false);
-            mViewAsHtml->setChecked(false);
         }
     }
 }
