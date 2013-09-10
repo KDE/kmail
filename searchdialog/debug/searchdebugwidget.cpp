@@ -80,7 +80,10 @@ SearchDebugWidget::SearchDebugWidget(const QString &query, QWidget *parent)
     QShortcut *shortcut = new QShortcut( this );
     shortcut->setKey( Qt::Key_F+Qt::CTRL );
     connect( shortcut, SIGNAL(activated()), SLOT(slotFind()) );
-    connect( mTextEdit, SIGNAL(findText()), SLOT(slotFind()) );
+
+    shortcut = new QShortcut( this );
+    shortcut->setKey( Qt::CTRL+Qt::Key_Enter );
+    connect( shortcut, SIGNAL(activated()), SLOT(slotSearch()) );
 
 
     layout->addWidget( mTextEdit, 0, 0, 1, 2);
@@ -90,6 +93,7 @@ SearchDebugWidget::SearchDebugWidget(const QString &query, QWidget *parent)
     layout->addWidget( mResultView, 2, 0, 1, 1 );
     layout->addWidget( w, 2, 1, 1, 1 );
     mSearchButton = new QPushButton( i18n("Search") );
+    mSearchButton->setEnabled(false);
     connect( mSearchButton, SIGNAL(clicked()), this, SLOT(slotSearch()) );
     mProgressIndicator = new KPIMUtils::ProgressIndicatorWidget;
 
@@ -106,7 +110,6 @@ SearchDebugWidget::SearchDebugWidget(const QString &query, QWidget *parent)
     mResultView->setModel( mResultModel );
 
     slotSearch();
-    slotUpdateSearchButton();
 }
 
 SearchDebugWidget::~SearchDebugWidget()
@@ -129,6 +132,7 @@ void SearchDebugWidget::slotSearch()
 
     if (query.isEmpty()) {
         mResultLabel->setText(i18n("Query is empty."));
+        mSearchButton->setEnabled(false);
         return;
     }
     mProgressIndicator->start();
