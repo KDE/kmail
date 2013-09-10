@@ -58,6 +58,9 @@ using namespace MessageViewer;
 #include "messagecomposer/composer/composer.h"
 #include "messagecomposer/part/textpart.h"
 #include "messagecomposer/part/infopart.h"
+
+#include <KABC/Addressee>
+
 #include <KIO/JobUiDelegate>
 using MessageComposer::MessageFactory;
 
@@ -775,7 +778,25 @@ void KMReaderWin::updateHtmlActions()
         mLoadExternalReference->setChecked(false);
         mViewAsHtml->setChecked(false);
     } else {
-        //TODO
+        KABC::Addressee contact;
+        if ( mSearchedContact.hasPayload<KABC::Addressee>() ) {
+            contact = mSearchedContact.payload<KABC::Addressee>();
+            const QStringList customs = contact.customs();
+            Q_FOREACH ( const QString& custom, customs ) {
+                qDebug()<<" custom "<<custom;
+                if ( custom.contains(QLatin1String( "MailPreferedFormatting")) ) {
+                    const QString value = contact.custom( QLatin1String( "KADDRESSBOOK" ), QLatin1String( "MailPreferedFormatting" ) );
+                    mViewAsHtml->setChecked(value == QLatin1String( "HTML" ));
+                } else if ( custom.contains(QLatin1String( "MailAllowToRemoteContent")) ) {
+                    const QString value = contact.custom( QLatin1String( "KADDRESSBOOK" ), QLatin1String( "MailAllowToRemoteContent" ) );
+                    mLoadExternalReference->setChecked(( value == QLatin1String( "TRUE" ) ));
+                }
+            }
+        } else {
+            qDebug()<<" don't have hasPayload<KABC::Addressee>()";
+            mLoadExternalReference->setChecked(false);
+            mViewAsHtml->setChecked(false);
+        }
     }
 }
 
