@@ -768,6 +768,8 @@ void KMReaderWin::clearContactItem()
 {
     mSearchedContact = Akonadi::Item();
     mSearchedAddress = KABC::Addressee();
+    mLoadExternalReference->setChecked(false);
+    mViewAsHtml->setChecked(false);
 }
 
 void KMReaderWin::setContactItem(const Akonadi::Item& contact, const KABC::Addressee &address)
