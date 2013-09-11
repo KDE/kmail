@@ -44,27 +44,20 @@
 #include "mailcommon/folder/foldercollection.h"
 class KUrl;
 
-class OrgKdeAkonadiImapSettingsInterface;
-
-namespace Akonadi {
-  class EntityMimeTypeFilterModel;
-}
-
-#define MAILDISPATCHER_RESOURCE_IDENTIFIER QLatin1String("akonadi_maildispatcher_agent")
 namespace KMail
 {
-    /**
+/**
      * The Util namespace contains a collection of helper functions use in
      * various places.
      */
 namespace Util {
 
-    /** Test if all required settings are set.
+/** Test if all required settings are set.
       Reports problems to user via dialogs and returns false.
       Returns true if everything is Ok. */
-    bool checkTransport( QWidget *w );
+bool checkTransport( QWidget *w );
 
-    /**
+/**
      * Convert all sequences of "\r\n" (carriage return followed by a line
      * feed) to a single "\n" (line feed). The conversion happens in place.
      * Returns the length of the resulting string.
@@ -72,43 +65,43 @@ namespace Util {
      * @param strLen The length of the string to convert.
      * @return The new length of the converted string.
      */
-    size_t crlf2lf( char* str, const size_t strLen );
+size_t crlf2lf( char* str, const size_t strLen );
 
-    /**
+/**
      * Returns any mailing list post addresses set on the
      *  parent collection (the mail folder) of the item.
      */
-    KMime::Types::Mailbox::List mailingListsFromMessage( const Akonadi::Item& item );
+KMime::Types::Mailbox::List mailingListsFromMessage( const Akonadi::Item& item );
 
-    /**
+/**
      * Whether or not the mail item has the keep-reply-in-folder
      *  attribute set.
      */
-    Akonadi::Item::Id putRepliesInSameFolder( const Akonadi::Item& item );
+Akonadi::Item::Id putRepliesInSameFolder( const Akonadi::Item& item );
 
-    void launchAccountWizard( QWidget * );
+void launchAccountWizard( QWidget * );
 
-    /**
+/**
      * Handles a clicked URL, but only in case the viewer didn't handle it.
      * Currently only support mailto.
      */
-    bool handleClickedURL( const KUrl &url, const QSharedPointer<MailCommon::FolderCollection> &folder = QSharedPointer<MailCommon::FolderCollection>() );
+bool handleClickedURL( const KUrl &url, const QSharedPointer<MailCommon::FolderCollection> &folder = QSharedPointer<MailCommon::FolderCollection>() );
 
 
-    bool mailingListsHandleURL( const KUrl::List& lst,const QSharedPointer<MailCommon::FolderCollection> &folder );
+bool mailingListsHandleURL( const KUrl::List& lst,const QSharedPointer<MailCommon::FolderCollection> &folder );
 
-    bool mailingListPost( const QSharedPointer<MailCommon::FolderCollection> &fd );
-    bool mailingListSubscribe( const QSharedPointer<MailCommon::FolderCollection> &fd );
-    bool mailingListUnsubscribe( const QSharedPointer<MailCommon::FolderCollection> &fd );
-    bool mailingListArchives( const QSharedPointer<MailCommon::FolderCollection> &fd );
-    bool mailingListHelp( const QSharedPointer<MailCommon::FolderCollection> &fd );
+bool mailingListPost( const QSharedPointer<MailCommon::FolderCollection> &fd );
+bool mailingListSubscribe( const QSharedPointer<MailCommon::FolderCollection> &fd );
+bool mailingListUnsubscribe( const QSharedPointer<MailCommon::FolderCollection> &fd );
+bool mailingListArchives( const QSharedPointer<MailCommon::FolderCollection> &fd );
+bool mailingListHelp( const QSharedPointer<MailCommon::FolderCollection> &fd );
 
-    void lastEncryptAndSignState(bool &lastEncrypt, bool &lastSign, const KMime::Message::Ptr& msg);
+void lastEncryptAndSignState(bool &lastEncrypt, bool &lastSign, const KMime::Message::Ptr& msg);
 
-    QColor misspelledColor();
-    QColor quoteL1Color();
-    QColor quoteL2Color();
-    QColor quoteL3Color();
+QColor misspelledColor();
+QColor quoteL1Color();
+QColor quoteL2Color();
+QColor quoteL3Color();
 }
 }
 

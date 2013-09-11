@@ -48,8 +48,6 @@
 #include <KLocale>
 
 #include <KStandardDirs>
-#include <Akonadi/EntityTreeModel>
-#include <Akonadi/EntityMimeTypeFilterModel>
 
 #include <QProcess>
 #include <QModelIndex>
@@ -61,164 +59,164 @@ using namespace MailCommon;
 
 KMime::Types::Mailbox::List KMail::Util::mailingListsFromMessage( const Akonadi::Item& item )
 {
-  KMime::Types::Mailbox::List addresses;
-  // determine the mailing list posting address
-  Akonadi::Collection parentCollection = item.parentCollection();
-  if ( parentCollection.isValid() ) {
-    const QSharedPointer<FolderCollection> fd = FolderCollection::forCollection( parentCollection, false );
-    if ( fd->isMailingListEnabled() && !fd->mailingListPostAddress().isEmpty() ) {
-      addresses << MessageCore::StringUtil::mailboxFromUnicodeString( fd->mailingListPostAddress() );
+    KMime::Types::Mailbox::List addresses;
+    // determine the mailing list posting address
+    Akonadi::Collection parentCollection = item.parentCollection();
+    if ( parentCollection.isValid() ) {
+        const QSharedPointer<FolderCollection> fd = FolderCollection::forCollection( parentCollection, false );
+        if ( fd->isMailingListEnabled() && !fd->mailingListPostAddress().isEmpty() ) {
+            addresses << MessageCore::StringUtil::mailboxFromUnicodeString( fd->mailingListPostAddress() );
+        }
     }
-  }
 
-  return addresses;
+    return addresses;
 }
 
 Akonadi::Item::Id KMail::Util::putRepliesInSameFolder( const Akonadi::Item& item )
 {
-  Akonadi::Collection parentCollection = item.parentCollection();
-  if ( parentCollection.isValid() ) {
-    const QSharedPointer<FolderCollection> fd = FolderCollection::forCollection( parentCollection, false );
-    if( fd->putRepliesInSameFolder() ) {
-      return parentCollection.id();
+    Akonadi::Collection parentCollection = item.parentCollection();
+    if ( parentCollection.isValid() ) {
+        const QSharedPointer<FolderCollection> fd = FolderCollection::forCollection( parentCollection, false );
+        if( fd->putRepliesInSameFolder() ) {
+            return parentCollection.id();
+        }
     }
-  }
-  return -1;
+    return -1;
 }
 
 void KMail::Util::launchAccountWizard( QWidget *w )
 {
-  QStringList lst;
-  lst.append( QLatin1String("--type") );
-  lst.append( QLatin1String("message/rfc822") );
+    QStringList lst;
+    lst.append( QLatin1String("--type") );
+    lst.append( QLatin1String("message/rfc822") );
 
-  const QString path = KStandardDirs::findExe( QLatin1String("accountwizard" ) );
-  if( !QProcess::startDetached( path, lst ) )
-    KMessageBox::error( w, i18n( "Could not start the account wizard. "
-                                 "Please check your installation." ),
-                        i18n( "Unable to start account wizard" ) );
+    const QString path = KStandardDirs::findExe( QLatin1String("accountwizard" ) );
+    if( !QProcess::startDetached( path, lst ) )
+        KMessageBox::error( w, i18n( "Could not start the account wizard. "
+                                     "Please check your installation." ),
+                            i18n( "Unable to start account wizard" ) );
 
 }
 
 bool KMail::Util::handleClickedURL( const KUrl &url, const QSharedPointer<MailCommon::FolderCollection> &folder )
 {
-  if ( url.protocol() == QLatin1String( "mailto" ) ) {
-    KMime::Message::Ptr msg ( new KMime::Message );
-    uint identity = !folder.isNull() ? folder->identity() : 0;
-    MessageHelper::initHeader( msg, KMKernel::self()->identityManager(), identity );
-    msg->contentType()->setCharset("utf-8");
+    if ( url.protocol() == QLatin1String( "mailto" ) ) {
+        KMime::Message::Ptr msg ( new KMime::Message );
+        uint identity = !folder.isNull() ? folder->identity() : 0;
+        MessageHelper::initHeader( msg, KMKernel::self()->identityManager(), identity );
+        msg->contentType()->setCharset("utf-8");
 
-    QMap<QString, QString> fields =  MessageCore::StringUtil::parseMailtoUrl( url );
+        QMap<QString, QString> fields =  MessageCore::StringUtil::parseMailtoUrl( url );
 
-    msg->to()->fromUnicodeString( fields.value( QLatin1String("to") ),"utf-8" );
-    if ( !fields.value( QLatin1String("subject") ).isEmpty() )
-      msg->subject()->fromUnicodeString( fields.value( QLatin1String("subject") ),"utf-8" );
-    if ( !fields.value( QLatin1String("body") ).isEmpty() )
-      msg->setBody( fields.value( QLatin1String("body") ).toUtf8() );
-    if ( !fields.value( QLatin1String("cc" )).isEmpty() )
-      msg->cc()->fromUnicodeString( fields.value( QLatin1String("cc") ),"utf-8" );
+        msg->to()->fromUnicodeString( fields.value( QLatin1String("to") ),"utf-8" );
+        if ( !fields.value( QLatin1String("subject") ).isEmpty() )
+            msg->subject()->fromUnicodeString( fields.value( QLatin1String("subject") ),"utf-8" );
+        if ( !fields.value( QLatin1String("body") ).isEmpty() )
+            msg->setBody( fields.value( QLatin1String("body") ).toUtf8() );
+        if ( !fields.value( QLatin1String("cc" )).isEmpty() )
+            msg->cc()->fromUnicodeString( fields.value( QLatin1String("cc") ),"utf-8" );
 
-    if ( !folder.isNull() ) {
-      TemplateParser::TemplateParser parser( msg, TemplateParser::TemplateParser::NewMessage );
-      parser.setIdentityManager( KMKernel::self()->identityManager() );
-      parser.process( msg, folder->collection() );
+        if ( !folder.isNull() ) {
+            TemplateParser::TemplateParser parser( msg, TemplateParser::TemplateParser::NewMessage );
+            parser.setIdentityManager( KMKernel::self()->identityManager() );
+            parser.process( msg, folder->collection() );
+        }
+
+        KMail::Composer * win = KMail::makeComposer( msg, false, false, KMail::Composer::New, identity );
+        win->setFocusToSubject();
+        if ( !folder.isNull() ) {
+            win->setCollectionForNewMessage( folder->collection() );
+        }
+        win->show();
+        return true;
+    } else {
+        kWarning() << "Can't handle URL:" << url;
+        return false;
     }
-
-    KMail::Composer * win = KMail::makeComposer( msg, false, false, KMail::Composer::New, identity );
-    win->setFocusToSubject();
-    if ( !folder.isNull() ) {
-      win->setCollectionForNewMessage( folder->collection() );
-    }
-    win->show();
-    return true;
-  } else {
-    kWarning() << "Can't handle URL:" << url;
-    return false;
-  }
 }
 
 bool KMail::Util::mailingListsHandleURL( const KUrl::List& lst,const QSharedPointer<MailCommon::FolderCollection> &folder )
 {
-  const QString handler = ( folder->mailingList().handler() == MailingList::KMail )
-    ? QLatin1String( "mailto" ) : QLatin1String( "https" );
+    const QString handler = ( folder->mailingList().handler() == MailingList::KMail )
+            ? QLatin1String( "mailto" ) : QLatin1String( "https" );
 
-  KUrl urlToHandle;
-  KUrl::List::ConstIterator end( lst.constEnd() );
-  for ( KUrl::List::ConstIterator itr = lst.constBegin(); itr != end; ++itr ) {
-    if ( handler == (*itr).protocol() ) {
-      urlToHandle = *itr;
-      break;
+    KUrl urlToHandle;
+    KUrl::List::ConstIterator end( lst.constEnd() );
+    for ( KUrl::List::ConstIterator itr = lst.constBegin(); itr != end; ++itr ) {
+        if ( handler == (*itr).protocol() ) {
+            urlToHandle = *itr;
+            break;
+        }
     }
-  }
-  if ( urlToHandle.isEmpty() && !lst.empty() ) {
-    urlToHandle = lst.first();
-  }
+    if ( urlToHandle.isEmpty() && !lst.empty() ) {
+        urlToHandle = lst.first();
+    }
 
-  if ( !urlToHandle.isEmpty() ) {
-    return KMail::Util::handleClickedURL( urlToHandle, folder );
-  } else {
-    kWarning()<< "Can't handle url";
-    return false;
-  }
+    if ( !urlToHandle.isEmpty() ) {
+        return KMail::Util::handleClickedURL( urlToHandle, folder );
+    } else {
+        kWarning()<< "Can't handle url";
+        return false;
+    }
 }
 
 bool KMail::Util::mailingListPost( const QSharedPointer<MailCommon::FolderCollection> &fd )
 {
-  if ( fd )
-    return KMail::Util::mailingListsHandleURL( fd->mailingList().postUrls(),fd );
-  return false;
+    if ( fd )
+        return KMail::Util::mailingListsHandleURL( fd->mailingList().postUrls(),fd );
+    return false;
 }
 
 bool KMail::Util::mailingListSubscribe( const QSharedPointer<MailCommon::FolderCollection> &fd )
 {
-  if ( fd )
-    return KMail::Util::mailingListsHandleURL( fd->mailingList().subscribeUrls(),fd );
-  return false;
+    if ( fd )
+        return KMail::Util::mailingListsHandleURL( fd->mailingList().subscribeUrls(),fd );
+    return false;
 }
 
 bool KMail::Util::mailingListUnsubscribe( const QSharedPointer<MailCommon::FolderCollection> &fd )
 {
-  if ( fd )
-    return KMail::Util::mailingListsHandleURL( fd->mailingList().unsubscribeUrls(),fd );
-  return false;
+    if ( fd )
+        return KMail::Util::mailingListsHandleURL( fd->mailingList().unsubscribeUrls(),fd );
+    return false;
 }
 
 bool KMail::Util::mailingListArchives( const QSharedPointer<MailCommon::FolderCollection> &fd )
 {
-  if ( fd )
-    return KMail::Util::mailingListsHandleURL( fd->mailingList().archiveUrls(),fd );
-  return false;
+    if ( fd )
+        return KMail::Util::mailingListsHandleURL( fd->mailingList().archiveUrls(),fd );
+    return false;
 }
 
 bool KMail::Util::mailingListHelp( const QSharedPointer<MailCommon::FolderCollection> &fd )
 {
-  if ( fd )
-    return KMail::Util::mailingListsHandleURL( fd->mailingList().helpUrls(),fd );
-  return false;
+    if ( fd )
+        return KMail::Util::mailingListsHandleURL( fd->mailingList().helpUrls(),fd );
+    return false;
 }
 
 void KMail::Util::lastEncryptAndSignState(bool &lastEncrypt, bool &lastSign, const KMime::Message::Ptr& msg)
 {
-  lastSign = KMime::isSigned(msg.get());
-  lastEncrypt = KMime::isEncrypted(msg.get());
+    lastSign = KMime::isSigned(msg.get());
+    lastEncrypt = KMime::isEncrypted(msg.get());
 }
 
 QColor KMail::Util::misspelledColor()
 {
-  return QColor(Qt::red);
+    return QColor(Qt::red);
 }
 
 QColor KMail::Util::quoteL1Color()
 {
-  return QColor( 0x00, 0x80, 0x00 );
+    return QColor( 0x00, 0x80, 0x00 );
 }
 
 QColor KMail::Util::quoteL2Color()
 {
-  return QColor( 0x00, 0x70, 0x00 );
+    return QColor( 0x00, 0x70, 0x00 );
 }
 
 QColor KMail::Util::quoteL3Color()
 {
-  return QColor( 0x00, 0x60, 0x00 );
+    return QColor( 0x00, 0x60, 0x00 );
 }
