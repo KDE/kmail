@@ -42,7 +42,7 @@ SearchDebugDialog::~SearchDebugDialog()
 
 void SearchDebugDialog::readConfig()
 {
-    KConfigGroup group( KGlobal::config(), "SieveScriptParsingErrorDialog" );
+    KConfigGroup group( KGlobal::config(), "SearchDebugDialog" );
     const QSize sizeDialog = group.readEntry( "Size", QSize() );
     if ( sizeDialog.isValid() ) {
         resize( sizeDialog );
@@ -53,7 +53,7 @@ void SearchDebugDialog::readConfig()
 
 void SearchDebugDialog::writeConfig()
 {
-    KConfigGroup group( KGlobal::config(), "SieveScriptParsingErrorDialog" );
+    KConfigGroup group( KGlobal::config(), "SearchDebugDialog" );
     group.writeEntry( "Size", size() );
 }
 

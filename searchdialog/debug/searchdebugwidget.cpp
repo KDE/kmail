@@ -17,6 +17,7 @@
 
 #include "searchdebugwidget.h"
 #include "sparqlsyntaxhighlighter.h"
+#include "searchdebugnepomukshowdialog.h"
 
 #include "pimcommon/widgets/plaintexteditfindbar.h"
 
@@ -34,10 +35,42 @@
 #include <QGridLayout>
 #include <QVBoxLayout>
 #include <QLabel>
-#include <QListView>
 #include <QStringListModel>
 #include <QPushButton>
 #include <QShortcut>
+#include <QContextMenuEvent>
+#include <QMenu>
+#include <QPointer>
+
+SearchResultListView::SearchResultListView(QWidget *parent)
+    : QListView(parent)
+{
+
+}
+
+SearchResultListView::~SearchResultListView()
+{
+
+}
+
+void SearchResultListView::contextMenuEvent( QContextMenuEvent * event )
+{
+    const QModelIndex index = indexAt( event->pos() );
+    if (!index.isValid())
+        return;
+
+    QMenu *popup = new QMenu(this);
+    QAction *searchNepomukShow = new QAction(i18n("Search with nepomuk show..."), popup);
+    popup->addAction(searchNepomukShow);
+    QAction *act = popup->exec( event->globalPos() );
+    delete popup;
+    if (act == searchNepomukShow) {
+        const QString uid = index.data( Qt::DisplayRole ).toString();
+        QPointer<SearchDebugNepomukShowDialog> dlg = new SearchDebugNepomukShowDialog(uid, this);
+        dlg->exec();
+        delete dlg;
+    }
+}
 
 SearchDebugListDelegate::SearchDebugListDelegate( QObject *parent )
     : QStyledItemDelegate ( parent )
@@ -66,7 +99,7 @@ SearchDebugWidget::SearchDebugWidget(const QString &query, QWidget *parent)
     indentQuery(query);
     new Nepomuk2::SparqlSyntaxHighlighter( mTextEdit->document() );
 
-    mResultView = new QListView;
+    mResultView = new SearchResultListView;
     mResultView->setItemDelegate(new SearchDebugListDelegate(this));
 
     QWidget *w = new QWidget;
@@ -118,7 +151,7 @@ SearchDebugWidget::~SearchDebugWidget()
 {
 }
 
-bool SearchDebugWidget::eventFilter( QObject* watched, QEvent* event )
+bool SearchDebugWidget::eventFilter( QObject *watched, QEvent *event )
 {
     if( watched == mTextEdit && event->type() == QEvent::KeyPress ) {
         QKeyEvent* kev = static_cast<QKeyEvent*>(event);
@@ -131,7 +164,6 @@ bool SearchDebugWidget::eventFilter( QObject* watched, QEvent* event )
 
     return QWidget::eventFilter( watched, event );
 }
-
 
 void SearchDebugWidget::slotUpdateSearchButton()
 {

@@ -20,8 +20,8 @@
 
 #include <QWidget>
 #include <QStyledItemDelegate>
+#include <QListView>
 
-class QListView;
 class QStringListModel;
 class KTextBrowser;
 class KTextEdit;
@@ -30,6 +30,7 @@ class QModelIndex;
 class QPushButton;
 class QLabel;
 class QPlainTextEdit;
+class QContextMenuEvent;
 
 namespace PimCommon {
 class PlainTextEditFindBar;
@@ -38,6 +39,17 @@ class PlainTextEditFindBar;
 namespace KPIMUtils {
 class ProgressIndicatorWidget;
 }
+
+class SearchResultListView : public QListView
+{
+    Q_OBJECT
+public:
+    explicit SearchResultListView(QWidget *parent=0);
+    ~SearchResultListView();
+
+protected:
+    void contextMenuEvent( QContextMenuEvent *event );
+};
 
 class SearchDebugListDelegate : public QStyledItemDelegate
 {
@@ -71,7 +83,7 @@ private Q_SLOTS:
 private:
     void indentQuery(QString query);
     QStringListModel *mResultModel;
-    QListView *mResultView;
+    SearchResultListView *mResultView;
     QPlainTextEdit *mItemView;
     KTextEdit *mTextEdit;
     KPIMUtils::ProgressIndicatorWidget *mProgressIndicator;
