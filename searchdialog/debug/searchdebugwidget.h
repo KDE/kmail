@@ -63,6 +63,7 @@ private Q_SLOTS:
     void slotSearch();
     void slotUpdateSearchButton();
     void slotFind();
+    void slotReduceQuery();
 
 private:
     void indentQuery(QString query);
@@ -72,6 +73,7 @@ private:
     KTextEdit *mTextEdit;
     KPIMUtils::ProgressIndicatorWidget *mProgressIndicator;
     QPushButton *mSearchButton;
+    QPushButton *mReduceQuery;
     QLabel *mResultLabel;
     PimCommon::PlainTextEditFindBar *mFindBar;
 };

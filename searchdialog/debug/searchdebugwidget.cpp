@@ -92,6 +92,10 @@ SearchDebugWidget::SearchDebugWidget(const QString &query, QWidget *parent)
 
     layout->addWidget( mResultView, 2, 0, 1, 1 );
     layout->addWidget( w, 2, 1, 1, 1 );
+
+    mReduceQuery = new QPushButton( i18n("Reduce query") );
+    connect(mReduceQuery, SIGNAL(clicked()), SLOT(slotReduceQuery()));
+
     mSearchButton = new QPushButton( i18n("Search") );
     mSearchButton->setEnabled(false);
     connect( mSearchButton, SIGNAL(clicked()), this, SLOT(slotSearch()) );
@@ -102,6 +106,7 @@ SearchDebugWidget::SearchDebugWidget(const QString &query, QWidget *parent)
 
     layout->addWidget( mProgressIndicator, 4, 0, Qt::AlignLeft );
     layout->addWidget( mSearchButton, 4, 1, Qt::AlignRight );
+    layout->addWidget( mReduceQuery, 5, 1, Qt::AlignRight );
     setLayout(layout);
 
     connect( mResultView, SIGNAL(activated(QModelIndex)), this, SLOT(slotFetchItem(QModelIndex)) );
@@ -133,10 +138,12 @@ void SearchDebugWidget::slotSearch()
     if (query.isEmpty()) {
         mResultLabel->setText(i18n("Query is empty."));
         mSearchButton->setEnabled(false);
+        mReduceQuery->setEnabled(false);
         return;
     }
     mProgressIndicator->start();
     mSearchButton->setEnabled(false);
+    mReduceQuery->setEnabled(false);
 
     Akonadi::ItemSearchJob *job = new Akonadi::ItemSearchJob( query );
     connect( job, SIGNAL(result(KJob*)), this, SLOT(slotSearchFinished(KJob*)) );
@@ -200,12 +207,25 @@ void SearchDebugWidget::indentQuery(QString query)
     mTextEdit->setPlainText( newQuery );
 }
 
+void SearchDebugWidget::slotReduceQuery()
+{
+    QString query = mTextEdit->toPlainText();
+    QRegExp rx(QLatin1String("<[\\w]+://[\\w\\d-_.]+(/[\\d\\w/-._]+/)*([\\w\\d-._]+)#([\\w\\d]+)>"));
+    query.replace(rx,QLatin1String("\\2:\\3"));
+    query.replace( QLatin1String("rdf-schema:"), QLatin1String("rdfs:") );
+    query.replace( QLatin1String("22-rdf-syntax-ns:"), QLatin1String("rdf:") );
+    query.replace( QLatin1String("XMLSchema:"), QLatin1String("xsd:") );
+    query = query.simplified();
+    indentQuery(query);
+}
+
 void SearchDebugWidget::slotSearchFinished(KJob *job)
 {
     mResultModel->setStringList( QStringList() );
     mItemView->clear();
     mProgressIndicator->stop();
     mSearchButton->setEnabled(true);
+    mReduceQuery->setEnabled(true);
     mResultLabel->clear();
 
     if ( job->error() ) {
