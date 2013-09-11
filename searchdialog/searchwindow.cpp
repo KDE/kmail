@@ -825,9 +825,9 @@ void SearchWindow::slotDebugQuery()
 #endif
 }
 
-void SearchWindow::showWarningPattern(const QString &error)
+void SearchWindow::showWarningPattern(const QStringList &lstError)
 {
-    mSearchPatternWidget->setError(error);
+    mSearchPatternWidget->setError(lstError);
     mSearchPatternWidget->animatedShow();
 }
 
