@@ -56,6 +56,9 @@ public:
 
     QString queryStr() const;
 
+protected:
+    bool eventFilter( QObject* watched, QEvent* event );
+
 private Q_SLOTS:
     void slotSearchFinished(KJob*);
     void slotFetchItem( const QModelIndex &index );

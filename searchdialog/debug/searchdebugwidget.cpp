@@ -59,6 +59,8 @@ SearchDebugWidget::SearchDebugWidget(const QString &query, QWidget *parent)
     QGridLayout *layout = new QGridLayout;
 
     mTextEdit = new KTextEdit( this );
+    // we install an event filter to catch Ctrl+Return for quick query execution
+    mTextEdit->installEventFilter( this );
 
     mTextEdit->setAcceptRichText(false);
     indentQuery(query);
@@ -80,11 +82,6 @@ SearchDebugWidget::SearchDebugWidget(const QString &query, QWidget *parent)
     QShortcut *shortcut = new QShortcut( this );
     shortcut->setKey( Qt::Key_F+Qt::CTRL );
     connect( shortcut, SIGNAL(activated()), SLOT(slotFind()) );
-
-    shortcut = new QShortcut( this );
-    shortcut->setKey( Qt::CTRL+Qt::Key_Enter );
-    connect( shortcut, SIGNAL(activated()), SLOT(slotSearch()) );
-
 
     layout->addWidget( mTextEdit, 0, 0, 1, 2);
     layout->addWidget( new QLabel( i18n("Akonadi Id:") ), 1, 0 );
@@ -120,6 +117,21 @@ SearchDebugWidget::SearchDebugWidget(const QString &query, QWidget *parent)
 SearchDebugWidget::~SearchDebugWidget()
 {
 }
+
+bool SearchDebugWidget::eventFilter( QObject* watched, QEvent* event )
+{
+    if( watched == mTextEdit && event->type() == QEvent::KeyPress ) {
+        QKeyEvent* kev = static_cast<QKeyEvent*>(event);
+        if( kev->key() == Qt::Key_Return &&
+                kev->modifiers() == Qt::ControlModifier ) {
+            slotSearch();
+            return true;
+        }
+    }
+
+    return QWidget::eventFilter( watched, event );
+}
+
 
 void SearchDebugWidget::slotUpdateSearchButton()
 {
