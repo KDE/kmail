@@ -98,10 +98,20 @@ SearchWindow::SearchWindow( KMMainWidget *widget, const Akonadi::Collection &col
                              qApp->windowIcon().pixmap( IconSize( KIconLoader::Small ),
                                                         IconSize( KIconLoader::Small ) ) );
 
+    QWidget *topWidget = new QWidget;
+    QVBoxLayout *lay = new QVBoxLayout;
+    lay->setMargin(0);
+    topWidget->setLayout(lay);
+    mSearchPatternWidget = new SearchPatternWarning;
+    lay->addWidget(mSearchPatternWidget);
+    setMainWidget( topWidget );
+
     QWidget *searchWidget = new QWidget( this );
-    setMainWidget( searchWidget );
     mUi.setupUi( searchWidget );
     mUi.mPatternEdit->setPatternEditOptions(SearchPatternEdit::NotShowSize);
+
+    lay->addWidget(searchWidget);
+
 
     setButtons( None );
     mStartSearchGuiItem = KGuiItem( i18nc( "@action:button Search for messages", "&Search" ), QLatin1String("edit-find") );
@@ -813,6 +823,12 @@ void SearchWindow::slotDebugQuery()
     dlg->exec();
     delete dlg;
 #endif
+}
+
+void SearchWindow::showWarningPattern(const QString &error)
+{
+    mSearchPatternWidget->setError(error);
+    mSearchPatternWidget->animatedShow();
 }
 
 }

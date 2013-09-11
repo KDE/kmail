@@ -35,28 +35,20 @@
 class QCheckBox;
 class QCloseEvent;
 class QKeyEvent;
-class QLabel;
-class QRadioButton;
 class KActionMenu;
 class KJob;
-class KLineEdit;
 class KMMainWidget;
 class KMSearchMessageModel;
 class QAbstractItemModel;
 class QModelIndex;
 namespace Akonadi {
-class EntityTreeView;
+//class EntityTreeView;
 class ItemModel;
 class StandardMailActionManager;
 }
 
 namespace KMime {
 class Message;
-}
-
-namespace MailCommon {
-class FolderRequester;
-class SearchPatternEdit;
 }
 
 namespace KMail {
@@ -67,7 +59,8 @@ namespace KMail {
    * results in a listview and allows triggering of operations such as printing
    * or moving on them.
    */
-class SearchWindow: public KDialog, virtual public KXMLGUIClient
+class SearchPatternWarning;
+class SearchWindow: public KDialog, public KXMLGUIClient
 {
     Q_OBJECT
 
@@ -166,6 +159,8 @@ private Q_SLOTS:
     void slotContextMenuRequested( const QPoint& );
 
 private:
+    void showWarningPattern(const QString &error);
+
     QString mQuery;
     bool mCloseRequested;
     int mSortColumn;
@@ -188,6 +183,7 @@ private:
     // not owned by us
     KMMainWidget* mKMMainWidget;
     MailCommon::SearchPattern mSearchPattern;
+    SearchPatternWarning *mSearchPatternWidget;
 
     Akonadi::StandardMailActionManager *mAkonadiStandardAction;
 };
