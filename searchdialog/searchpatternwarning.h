@@ -28,6 +28,8 @@ class SearchPatternWarning : public KMessageWidget
 public:
     explicit SearchPatternWarning(QWidget *parent=0);
     ~SearchPatternWarning();
+
+    void setError(const QString &error);
 };
 }
 

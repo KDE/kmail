@@ -36,6 +36,7 @@
 #include "foldertreeview.h"
 #include "kmsearchmessagemodel.h"
 #include "kmsearchfilterproxymodel.h"
+#include "searchpatternwarning.h"
 
 #include <Akonadi/AttributeFactory>
 #include <Akonadi/CollectionModifyJob>

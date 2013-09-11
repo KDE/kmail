@@ -21,10 +21,19 @@ using namespace KMail;
 SearchPatternWarning::SearchPatternWarning(QWidget *parent)
     : KMessageWidget(parent)
 {
+    setVisible(false);
+    setCloseButtonVisible(false);
+    setMessageType(Error);
+    setWordWrap(true);
 }
 
 SearchPatternWarning::~SearchPatternWarning()
 {
+}
+
+void SearchPatternWarning::setError(const QString &error)
+{
+    //TODO
 }
 
 #include "searchpatternwarning.moc"
