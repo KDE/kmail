@@ -141,6 +141,10 @@ void SearchDebugWidget::slotSearch()
         mReduceQuery->setEnabled(false);
         return;
     }
+
+    mResultModel->setStringList( QStringList() );
+    mItemView->clear();
+    mResultLabel->clear();
     mProgressIndicator->start();
     mSearchButton->setEnabled(false);
     mReduceQuery->setEnabled(false);
@@ -221,12 +225,9 @@ void SearchDebugWidget::slotReduceQuery()
 
 void SearchDebugWidget::slotSearchFinished(KJob *job)
 {
-    mResultModel->setStringList( QStringList() );
-    mItemView->clear();
     mProgressIndicator->stop();
     mSearchButton->setEnabled(true);
     mReduceQuery->setEnabled(true);
-    mResultLabel->clear();
 
     if ( job->error() ) {
         KMessageBox::error( this, job->errorString() );
