@@ -107,6 +107,7 @@ SearchDebugWidget::SearchDebugWidget(const QString &query, QWidget *parent)
     QWidget *w = new QWidget;
     QVBoxLayout *lay = new QVBoxLayout;
     mItemView = new QPlainTextEdit;
+    mItemView->setReadOnly(true);
     mFindBar = new PimCommon::PlainTextEditFindBar( mItemView, this );
     lay->addWidget(mItemView);
     lay->addWidget(mFindBar);
