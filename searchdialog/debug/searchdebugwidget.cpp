@@ -19,6 +19,8 @@
 #include "sparqlsyntaxhighlighter.h"
 #include "searchdebugnepomukshowdialog.h"
 
+#include "util.h"
+
 #include "pimcommon/widgets/plaintexteditfindbar.h"
 
 #include <KPIMUtils/ProgressIndicatorWidget>
@@ -258,12 +260,7 @@ void SearchDebugWidget::indentQuery(QString query)
 void SearchDebugWidget::slotReduceQuery()
 {
     QString query = mTextEdit->toPlainText();
-    QRegExp rx(QLatin1String("<[\\w]+://[\\w\\d-_.]+(/[\\d\\w/-._]+/)*([\\w\\d-._]+)#([\\w\\d]+)>"));
-    query.replace(rx,QLatin1String("\\2:\\3"));
-    query.replace( QLatin1String("rdf-schema:"), QLatin1String("rdfs:") );
-    query.replace( QLatin1String("22-rdf-syntax-ns:"), QLatin1String("rdf:") );
-    query.replace( QLatin1String("XMLSchema:"), QLatin1String("xsd:") );
-    query = query.simplified();
+    KMail::Util::reduceQuery(query);
     indentQuery(query);
 }
 
