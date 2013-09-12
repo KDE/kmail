@@ -555,9 +555,11 @@ void SearchWindow::renameSearchFolder()
 {
     const QString name = mUi.mSearchFolderEdt->text();
     if ( mFolder.isValid() ) {
-        if ( mFolder.name() != name ) {
+        const QString oldFolderName = mFolder.name();
+        if ( oldFolderName != name ) {
             mFolder.setName( name );
             Akonadi::CollectionModifyJob *job = new Akonadi::CollectionModifyJob( mFolder, this );
+            job->setProperty("oldfoldername", oldFolderName);
             connect( job, SIGNAL(result(KJob*)),
                      this, SLOT(slotSearchFolderRenameDone(KJob*)) );
         }
@@ -573,6 +575,9 @@ void SearchWindow::slotSearchFolderRenameDone( KJob *job )
         KMessageBox::information( this, i18n( "There was a problem renaming your search folder. "
                                               "A common reason for this is that another search folder "
                                               "with the same name already exists." ) );
+        mUi.mSearchFolderEdt->blockSignals(true);
+        mUi.mSearchFolderEdt->setText(job->property("oldfoldername").toString());
+        mUi.mSearchFolderEdt->blockSignals(false);
     }
 }
 
