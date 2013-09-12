@@ -434,6 +434,7 @@ void SearchWindow::slotSearch()
         } else {
             qDebug()<<"Search query is empty. Please report bug about it.";
         }
+        mUi.mSearchFolderEdt->setEnabled( true );
         return;
     }
     mUi.mSearchFolderOpenBtn->setEnabled( true );
@@ -464,6 +465,7 @@ void SearchWindow::searchDone( KJob* job )
             mSearchJob = 0;
         }
         enableGUI();
+        mUi.mSearchFolderEdt->setEnabled( true );
     }
     else
     {
