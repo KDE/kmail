@@ -444,18 +444,16 @@ void SearchWindow::slotSearch()
     const QString queryLanguage = QLatin1String("SPARQL");
 #endif
 
-    if ( mQuery.isEmpty() ) {
-        switch(queryError) {
-        case MailCommon::SearchPattern::NoError:
-            break;
-        case MailCommon::SearchPattern::MissingCheck:
-            mSearchPatternWidget->showWarningPattern(QStringList()<<i18n("You forgot to define condition."));
-            break;
-        case MailCommon::SearchPattern::FolderEmptyOrNotIndexed:
-            mSearchPatternWidget->showWarningPattern(QStringList()<<i18n("All folders selected are empty or were not indexed."));
-            break;
-        }
+    switch(queryError) {
+    case MailCommon::SearchPattern::NoError:
+        break;
+    case MailCommon::SearchPattern::MissingCheck:
         mUi.mSearchFolderEdt->setEnabled( true );
+        mSearchPatternWidget->showWarningPattern(QStringList()<<i18n("You forgot to define condition."));
+        return;
+    case MailCommon::SearchPattern::FolderEmptyOrNotIndexed:
+        mUi.mSearchFolderEdt->setEnabled( true );
+        mSearchPatternWidget->showWarningPattern(QStringList()<<i18n("All folders selected are empty or were not indexed."));
         return;
     }
     mSearchPatternWidget->hideWarningPattern();
@@ -464,10 +462,12 @@ void SearchWindow::slotSearch()
     mUi.mSearchFolderOpenBtn->setEnabled( true );
 
     if ( !mFolder.isValid() ) {
+        qDebug()<<" create new folder";
         // FIXME if another app created a virtual 'Last Search' folder without
         // out custom attributes it will result in problems
         mSearchJob = new Akonadi::SearchCreateJob( mUi.mSearchFolderEdt->text(), mQuery, this );
     } else {
+        qDebug()<<" use existing folder";
         Akonadi::PersistentSearchAttribute *attribute = mFolder.attribute<Akonadi::PersistentSearchAttribute>();
         attribute->setQueryLanguage( queryLanguage );
         attribute->setQueryString( mQuery );
