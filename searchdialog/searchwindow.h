@@ -159,8 +159,6 @@ private Q_SLOTS:
     void slotContextMenuRequested( const QPoint& );
 
 private:
-    void showWarningPattern(const QStringList &lstError);
-
     QString mQuery;
     bool mCloseRequested;
     int mSortColumn;

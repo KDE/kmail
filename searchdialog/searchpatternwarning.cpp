@@ -24,8 +24,8 @@ SearchPatternWarning::SearchPatternWarning(QWidget *parent)
     : KMessageWidget(parent)
 {
     setVisible(false);
-    setCloseButtonVisible(false);
-    setMessageType(Error);
+    setCloseButtonVisible(true);
+    setMessageType(Information);
     setWordWrap(true);
 }
 
@@ -36,6 +36,18 @@ SearchPatternWarning::~SearchPatternWarning()
 void SearchPatternWarning::setError(const QStringList &lstError)
 {
     setText( i18n( "Nepomuk can not make search. Errors found: <ul><li>%1</li></ul>", lstError.join( QLatin1String( "</li><li>" ) ) ) );
+}
+
+void SearchPatternWarning::showWarningPattern(const QStringList &lstError)
+{
+    setError(lstError);
+    animatedShow();
+}
+
+void SearchPatternWarning::hideWarningPattern()
+{
+    setText(QString());
+    animatedHide();
 }
 
 #include "searchpatternwarning.moc"

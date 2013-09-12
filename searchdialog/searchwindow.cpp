@@ -449,14 +449,15 @@ void SearchWindow::slotSearch()
         case MailCommon::SearchPattern::NoError:
             break;
         case MailCommon::SearchPattern::MissingCheck:
-            KMessageBox::error(this, i18n("You forgot to define condition."), i18nc("@title:window", "Search"));
+            mSearchPatternWidget->showWarningPattern(QStringList()<<i18n("You forgot to define condition."));
             break;
         case MailCommon::SearchPattern::FolderEmptyOrNotIndexed:
-            KMessageBox::information(this, i18n("All folders selected are empty or were not indexed."), i18nc("@title:window", "Search"));
+            mSearchPatternWidget->showWarningPattern(QStringList()<<i18n("All folders selected are empty or were not indexed."));
             break;
         }
         return;
     }
+    mSearchPatternWidget->hideWarningPattern();
     qDebug() << queryLanguage;
     qDebug() << mQuery;
     mUi.mSearchFolderOpenBtn->setEnabled( true );
@@ -823,12 +824,6 @@ void SearchWindow::slotDebugQuery()
     dlg->exec();
     delete dlg;
 #endif
-}
-
-void SearchWindow::showWarningPattern(const QStringList &lstError)
-{
-    mSearchPatternWidget->setError(lstError);
-    mSearchPatternWidget->animatedShow();
 }
 
 }

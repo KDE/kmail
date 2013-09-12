@@ -29,6 +29,10 @@ public:
     explicit SearchPatternWarning(QWidget *parent=0);
     ~SearchPatternWarning();
 
+    void showWarningPattern(const QStringList &lstError);
+    void hideWarningPattern();
+
+private:
     void setError(const QStringList &lstError);
 };
 }
