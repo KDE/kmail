@@ -114,6 +114,7 @@ namespace Util {
     QColor quoteL1Color();
     QColor quoteL2Color();
     QColor quoteL3Color();
+    void reduceQuery(QString &query);
 }
 }
 
