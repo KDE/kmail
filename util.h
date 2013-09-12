@@ -98,10 +98,12 @@ bool mailingListHelp( const QSharedPointer<MailCommon::FolderCollection> &fd );
 
 void lastEncryptAndSignState(bool &lastEncrypt, bool &lastSign, const KMime::Message::Ptr& msg);
 
+<<<<<<< HEAD
 QColor misspelledColor();
 QColor quoteL1Color();
 QColor quoteL2Color();
 QColor quoteL3Color();
+void reduceQuery(QString &query);
 }
 }
 
