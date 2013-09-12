@@ -421,7 +421,7 @@ void SearchWindow::slotSearch()
     if ( !mUi.mChkbxAllFolders->isChecked() ) {
         const Akonadi::Collection col = mUi.mCbxFolders->collection();
         if (!col.isValid()) {
-            KMessageBox::error(this, i18n("You did not selected a valid folder."), i18nc("@title:window", "Search"));
+            mSearchPatternWidget->showWarningPattern(QStringList()<<i18n("You did not selected a valid folder."));
             return;
         }
         urls << col.url( Akonadi::Collection::UrlShort );
