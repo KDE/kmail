@@ -598,7 +598,7 @@ void SearchWindow::slotSearchFolderRenameDone( KJob *job )
         kWarning() << "Job failed:" << job->errorText();
         KMessageBox::information( this, i18n( "There was a problem renaming your search folder. "
                                               "A common reason for this is that another search folder "
-                                              "with the same name already exists." ) );
+                                              "with the same name already exists. Error returned \"%1\".", job->errorText() ) );
         mUi.mSearchFolderEdt->blockSignals(true);
         mUi.mSearchFolderEdt->setText(job->property("oldfoldername").toString());
         mUi.mSearchFolderEdt->blockSignals(false);
