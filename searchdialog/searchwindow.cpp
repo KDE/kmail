@@ -455,6 +455,7 @@ void SearchWindow::slotSearch()
             mSearchPatternWidget->showWarningPattern(QStringList()<<i18n("All folders selected are empty or were not indexed."));
             break;
         }
+        mUi.mSearchFolderEdt->setEnabled( true );
         return;
     }
     mSearchPatternWidget->hideWarningPattern();
@@ -488,6 +489,7 @@ void SearchWindow::searchDone( KJob* job )
             mSearchJob = 0;
         }
         enableGUI();
+        mUi.mSearchFolderEdt->setEnabled( true );
     }
     else
     {
