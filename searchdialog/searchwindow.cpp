@@ -65,10 +65,8 @@
 #include <QCheckBox>
 #include <QCloseEvent>
 #include <QCursor>
-#include <QHBoxLayout>
 #include <QHeaderView>
 #include <QKeyEvent>
-#include <QLabel>
 #include <QMenu>
 #include <QRadioButton>
 #include <QVBoxLayout>

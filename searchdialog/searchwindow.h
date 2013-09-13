@@ -32,7 +32,6 @@
 
 #include <QtCore/QTimer>
 
-class QCheckBox;
 class QCloseEvent;
 class QKeyEvent;
 class KActionMenu;
@@ -42,8 +41,6 @@ class KMSearchMessageModel;
 class QAbstractItemModel;
 class QModelIndex;
 namespace Akonadi {
-//class EntityTreeView;
-class ItemModel;
 class StandardMailActionManager;
 }
 
