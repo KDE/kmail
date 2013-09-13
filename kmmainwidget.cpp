@@ -4457,8 +4457,7 @@ void KMMainWidget::slotRequestFullSearchFromQuickSearch()
   if ( !searchString.isEmpty() )
     pattern.append( SearchRule::createInstance( "<message>", SearchRule::FuncContains, searchString ) );
   MessageStatus status = mMessagePane->currentFilterStatus();
-  if ( status.hasAttachment() )
-  {
+  if ( status.hasAttachment() ) {
     pattern.append( SearchRule::createInstance( "<message>", SearchRule::FuncHasAttachment ) );
     status.setHasAttachment( false );
   }
@@ -4467,7 +4466,7 @@ void KMMainWidget::slotRequestFullSearchFromQuickSearch()
     pattern.append( SearchRule::Ptr( new SearchRuleStatus( status ) ) );
   }
 
-  if ( pattern.size() > 0 )
+  if ( !pattern.isEmpty() )
     mSearchWin->addRulesToSearchPattern( pattern );
 }
 

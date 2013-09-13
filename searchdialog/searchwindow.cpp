@@ -789,13 +789,6 @@ void SearchWindow::addRulesToSearchPattern( const SearchPattern &pattern )
     mUi.mPatternEdit->setSearchPattern( &mSearchPattern );
 }
 
-void SearchWindow::setSearchPattern( const SearchPattern &pattern )
-{
-    mSearchPattern = pattern;
-    mUi.mPatternEdit->setSearchPattern( &mSearchPattern );
-}
-
-
 void SearchWindow::childCollectionsFromSelectedCollection( const Akonadi::Collection& collection, KUrl::List&lstUrlCollection )
 {  
     if ( collection.isValid() )  {

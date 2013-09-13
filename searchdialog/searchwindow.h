@@ -98,11 +98,6 @@ public:
     Akonadi::Item selectedMessage() const;
 
     /**
-     * Loads a search pattern into the search window, replacing the current one.
-     */
-    void setSearchPattern( const MailCommon::SearchPattern &pattern );
-
-    /**
      * Loads a search pattern into the search window, appending its rules to the current one.
      */
     void addRulesToSearchPattern( const MailCommon::SearchPattern &pattern );
