@@ -38,12 +38,8 @@
 #include "kmsearchfilterproxymodel.h"
 #include "searchpatternwarning.h"
 
-#include <Akonadi/AttributeFactory>
 #include <Akonadi/CollectionModifyJob>
-#include <Akonadi/CollectionStatisticsJob>
 #include <Akonadi/EntityTreeView>
-#include <Akonadi/ItemModel>
-#include <Akonadi/KMime/MessageModel>
 #include <akonadi/persistentsearchattribute.h>
 #include <Akonadi/SearchCreateJob>
 #include <Akonadi/ChangeRecorder>
@@ -56,7 +52,6 @@
 #include <KIconLoader>
 #include <KLineEdit>
 #include <kmime/kmime_message.h>
-#include <KPushButton>
 #include <KStandardAction>
 #include <KStandardGuiItem>
 #include <KWindowSystem>
@@ -70,9 +65,6 @@
 #include <QMenu>
 #include <QRadioButton>
 #include <QVBoxLayout>
-
-#include <assert.h>
-#include <stdlib.h>
 
 using namespace KPIM;
 using namespace MailCommon;
