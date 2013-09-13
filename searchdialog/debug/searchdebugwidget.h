@@ -23,7 +23,6 @@
 #include <QListView>
 
 class QStringListModel;
-class KTextBrowser;
 class KTextEdit;
 class KJob;
 class QModelIndex;

@@ -32,7 +32,6 @@
 #include <QWidget>
 #include <QPixmap>
 
-class KMailStatusBarExtension;
 class KMMainWidget;
 namespace KPIM { class StatusbarProgressWidget; }
 using KPIM::StatusbarProgressWidget;

@@ -25,7 +25,6 @@
 #include <QAction>
 #include <QAbstractItemModel>
 
-class QPoint;
 class QMenu;
 
 /**
