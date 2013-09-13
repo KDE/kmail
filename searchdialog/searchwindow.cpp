@@ -130,6 +130,7 @@ SearchWindow::SearchWindow( KMMainWidget *widget, const Akonadi::Collection &col
                 mUi.mChkSubFolders->setChecked( searchDescription->recursive() );
             } else {
                 mUi.mChkbxAllFolders->setChecked( true );
+                mUi.mChkSubFolders->setChecked( searchDescription->recursive() );
             }
         } else {
             // it's a search folder, but not one of ours, warn the user that we can't edit it
