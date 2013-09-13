@@ -448,6 +448,12 @@ void SearchWindow::slotSearch()
         mSearchPatternWidget->showWarningPattern(QStringList()<<i18n("All folders selected are empty or were not indexed."));
         mQuery.clear();
         return;
+    case MailCommon::SearchPattern::EmptyResult:
+        mUi.mSearchFolderEdt->setEnabled( true );
+        mQuery.clear();
+        mUi.mStatusLbl->setText( i18n("No message found.") );
+        createSearchModel();
+        return;
     }
     mSearchPatternWidget->hideWarningPattern();
     qDebug() << queryLanguage;
