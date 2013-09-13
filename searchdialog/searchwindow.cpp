@@ -441,10 +441,12 @@ void SearchWindow::slotSearch()
     case MailCommon::SearchPattern::MissingCheck:
         mUi.mSearchFolderEdt->setEnabled( true );
         mSearchPatternWidget->showWarningPattern(QStringList()<<i18n("You forgot to define condition."));
+        mQuery.clear();
         return;
     case MailCommon::SearchPattern::FolderEmptyOrNotIndexed:
         mUi.mSearchFolderEdt->setEnabled( true );
         mSearchPatternWidget->showWarningPattern(QStringList()<<i18n("All folders selected are empty or were not indexed."));
+        mQuery.clear();
         return;
     }
     mSearchPatternWidget->hideWarningPattern();
