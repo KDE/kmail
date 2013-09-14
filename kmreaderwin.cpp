@@ -232,6 +232,14 @@ void KMReaderWin::createActions()
   connect(mLoadExternalReference, SIGNAL(triggered(bool)), SLOT(slotContactHtmlOptions()));
   mLoadExternalReference->setCheckable(true);
   mViewHtmlOptions->addAction(mLoadExternalReference);
+
+
+  mShareImage = new KAction(i18n("Share image..."), this);
+  ac->addAction( QLatin1String("share_imageurl"), mShareImage );
+  mShareImage->setShortcutConfigurable( false );
+  connect(mShareImage, SIGNAL(triggered(bool)), SLOT(slotShareImage()));
+
+
 }
 
 void KMReaderWin::setUseFixedFont( bool useFixedFont )
@@ -538,7 +546,6 @@ void KMReaderWin::slotSaveImageOnDisk()
     return;
   KMCommand *command = new KMUrlSaveCommand( url, mMainWindow );
   command->start();
-
 }
 
 //-----------------------------------------------------------------------------
@@ -847,6 +854,14 @@ KAction *KMReaderWin::resetMessageDisplayFormatAction()
 {
     return mViewer->resetMessageDisplayFormatAction();
 }
+
+//-----------------------------------------------------------------------------
+void KMReaderWin::slotShareImage()
+{
+  KMCommand *command = new KMShareImageCommand( imageUrlClicked(), this);
+  command->start();
+}
+
 
 #include "kmreaderwin.moc"
 

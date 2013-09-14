@@ -561,5 +561,17 @@ private:
   virtual Result execute();
 };
 
+class KMAIL_EXPORT KMShareImageCommand : public KMCommand
+{
+    Q_OBJECT
+
+public:
+    explicit KMShareImageCommand(const KUrl &url, QWidget *parent);
+
+private:
+    virtual Result execute();
+    KUrl mUrl;
+};
+
 
 #endif /*KMCommands_h*/

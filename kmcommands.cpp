@@ -1551,4 +1551,25 @@ KMCommand::Result KMResendMessageCommand::execute()
 }
 
 
+KMShareImageCommand::KMShareImageCommand(const KUrl &url, QWidget *parent)
+    : KMCommand( parent ),
+      mUrl(url)
+{
+}
+
+KMCommand::Result KMShareImageCommand::execute()
+{
+    KMime::Message::Ptr msg( new KMime::Message );
+    uint id = 0;
+
+    MessageHelper::initHeader( msg, KMKernel::self()->identityManager(),id );
+    msg->contentType()->setCharset("utf-8");
+
+    KMail::Composer * win = KMail::makeComposer(msg, false, false,KMail::Composer::New, id);
+    win->setFocusToSubject();
+    win->addAttachment(mUrl, i18n("Image"));
+    win->show();
+    return OK;
+}
+
 #include "kmcommands.moc"

@@ -2892,6 +2892,7 @@ void KMMainWidget::showMessagePopup(const Akonadi::Item&msg ,const KUrl&url,cons
         menu->addSeparator();
         menu->addAction( mMsgView->copyImageLocation());
         menu->addAction( mMsgView->downloadImageToDiskAction());
+        menu->addAction( mMsgView->shareImage());
       }
       urlMenuAdded = true;
     }
@@ -2947,6 +2948,7 @@ void KMMainWidget::showMessagePopup(const Akonadi::Item&msg ,const KUrl&url,cons
         menu->addSeparator();
         menu->addAction( mMsgView->copyImageLocation());
         menu->addAction( mMsgView->downloadImageToDiskAction());
+        menu->addAction( mMsgView->shareImage());
         menu->addSeparator();
       }
       menu->addAction( mMsgView->viewSourceAction() );

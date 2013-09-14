@@ -155,6 +155,7 @@ public:
   KAction *editContactAction() const { return mEditContactAction; }
 
   KMenu *viewHtmlOption() const { return mViewHtmlOptions; }
+  KAction *shareImage() const { return mShareImage; }
 
   Akonadi::Item message() const;
 
@@ -206,6 +207,7 @@ public slots:
   void slotContactEditorError(const QString &error);
 
   void slotContactHtmlOptions();
+  void slotShareImage();
 
 protected:
   KUrl urlClicked() const;
@@ -232,6 +234,7 @@ private:
   KAction *mEditContactAction;
   KAction *mViewAsHtml;
   KAction *mLoadExternalReference;
+  KAction *mShareImage;
 
   KMenu *mViewHtmlOptions;
 
