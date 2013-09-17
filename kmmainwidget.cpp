@@ -1416,7 +1416,7 @@ void KMMainWidget::slotCompose()
       forceCursorPosition = parser.cursorPositionWasSet();
   }
   if (forceCursorPosition) {
-      win->setReplyFocus();
+      win->setFocusToEditor();
   }
   win->show();
 

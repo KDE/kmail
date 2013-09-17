@@ -110,13 +110,12 @@ class Composer : public KMail::SecondaryWindow
      */
   virtual void setFolder( const Akonadi::Collection& ) = 0;
 
-  public: // kmcommand
     /**
      * Sets the focus to the edit-widget and the cursor below the
      * "On ... you wrote" line when hasMessage is true.
      * Make sure you call this _after_ setMsg().
      */
-    virtual void setReplyFocus() = 0;
+    virtual void setFocusToEditor() = 0;
 
     /**
      * Sets the focus to the subject line edit. For use when creating a
@@ -130,9 +129,6 @@ class Composer : public KMail::SecondaryWindow
 
   public slots: // kmkernel, callback
     virtual void slotSendNow() = 0;
-
-
-  public slots: // kmkernel, callback
     /**
      * Switch wordWrap on/off
      */

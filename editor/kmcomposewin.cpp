@@ -3226,7 +3226,7 @@ void KMComposeWin::slotEditKeys()
                                KShortcutsEditor::LetterShortcutsDisallowed );
 }
 
-void KMComposeWin::setReplyFocus()
+void KMComposeWin::setFocusToEditor()
 {
   // The cursor position is already set by setMsg(), so we only need to set the
   // focus here.

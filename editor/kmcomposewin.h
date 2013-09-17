@@ -220,7 +220,7 @@ class KMComposeWin : public KMail::Composer
     /**
      * Sets the focus to the edit-widget.
      */
-     void setReplyFocus();
+     void setFocusToEditor();
 
     /**
      * Sets the focus to the subject line edit. For use when creating a

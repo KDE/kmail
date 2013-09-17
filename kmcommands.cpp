@@ -434,7 +434,7 @@ KMCommand::Result KMMailtoReplyCommand::execute()
     KMail::Util::lastEncryptAndSignState(lastEncrypt, lastSign, msg);
 
     KMail::Composer * win = KMail::makeComposer( rmsg, lastSign, lastEncrypt, KMail::Composer::Reply, 0, mSelection );
-    win->setReplyFocus();
+    win->setFocusToEditor();
     win->show();
 
     return OK;
@@ -832,7 +832,7 @@ KMCommand::Result KMReplyCommand::execute()
     MessageFactory::MessageReply reply = factory.createReply();
     KMail::Composer * win = KMail::makeComposer( KMime::Message::Ptr( reply.msg ), lastSign, lastEncrypt, replyContext( reply ), 0,
                                                  mSelection,mTemplate );
-    win->setReplyFocus();
+    win->setFocusToEditor();
     win->show();
 
     return OK;
