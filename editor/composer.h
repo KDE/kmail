@@ -116,7 +116,7 @@ class Composer : public KMail::SecondaryWindow
      * "On ... you wrote" line when hasMessage is true.
      * Make sure you call this _after_ setMsg().
      */
-    virtual void setReplyFocus( bool hasMessage=true ) = 0;
+    virtual void setReplyFocus() = 0;
 
     /**
      * Sets the focus to the subject line edit. For use when creating a
