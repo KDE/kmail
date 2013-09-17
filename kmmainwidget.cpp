@@ -1391,6 +1391,7 @@ void KMMainWidget::slotCompose()
   KMail::Composer * win;
   KMime::Message::Ptr msg( new KMime::Message() );
 
+  bool forceCursorPosition = false;
   if ( mCurrentFolder ) {
       MessageHelper::initHeader( msg, KMKernel::self()->identityManager(), mCurrentFolder->identity() );
       //Laurent: bug 289905
@@ -1405,14 +1406,18 @@ void KMMainWidget::slotCompose()
       parser.process( msg, mCurrentFolder->collection() );
       win = KMail::makeComposer( msg, false, false, KMail::Composer::New, mCurrentFolder->identity() );
       win->setCollectionForNewMessage( mCurrentFolder->collection() );
+      forceCursorPosition = parser.cursorPositionWasSet();
   } else {
       MessageHelper::initHeader( msg, KMKernel::self()->identityManager() );
       TemplateParser::TemplateParser parser( msg, TemplateParser::TemplateParser::NewMessage );
       parser.setIdentityManager( KMKernel::self()->identityManager() );
       parser.process( KMime::Message::Ptr(), Akonadi::Collection() );
       win = KMail::makeComposer( msg, false, false, KMail::Composer::New );
+      forceCursorPosition = parser.cursorPositionWasSet();
   }
-  win->setReplyFocus();
+  if (forceCursorPosition) {
+      win->setReplyFocus();
+  }
   win->show();
 
 }
