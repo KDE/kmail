@@ -1412,7 +1412,7 @@ void KMMainWidget::slotCompose()
       parser.process( KMime::Message::Ptr(), Akonadi::Collection() );
       win = KMail::makeComposer( msg, false, false, KMail::Composer::New );
   }
-
+  win->setReplyFocus();
   win->show();
 
 }
