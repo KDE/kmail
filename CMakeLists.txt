@@ -134,6 +134,7 @@ if (NOT WINCE AND KDEPIM_BUILD_DESKTOP)
      searchdialog/debug/searchdebugwidget.cpp 
      searchdialog/debug/searchdebugnepomukshowdialog.cpp
      searchdialog/searchpatternwarning.cpp
+     vacationmanager.cpp
   )
 
   # TODO PORT
