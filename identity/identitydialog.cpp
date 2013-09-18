@@ -967,8 +967,8 @@ void IdentityDialog::editVcard(const QString& filename)
     dlg.loadVcard(filename);
     if(dlg.exec()) {
         mVcardFilename = dlg.saveVcard();
-        updateVcardButton();
     }
+    updateVcardButton();
 }
 
 void IdentityDialog::updateVcardButton()

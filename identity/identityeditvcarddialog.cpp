@@ -21,6 +21,7 @@
 #include <KLocale>
 #include <Akonadi/Contact/ContactEditor>
 #include <KDebug>
+#include <KMessageBox>
 
 #include <QHBoxLayout>
 #include <QFile>
@@ -29,7 +30,8 @@ IdentityEditVcardDialog::IdentityEditVcardDialog(QWidget *parent)
     : KDialog(parent)
 {
     setCaption( i18n( "Edit own vCard" ) );
-    setButtons( Ok|Cancel );
+    setButtons( User1|Ok|Cancel );
+    setButtonText(User1, i18n("Delete current vcard"));
     setDefaultButton( Ok );
     setModal( true );
     QWidget *mainWidget = new QWidget( this );
@@ -40,10 +42,29 @@ IdentityEditVcardDialog::IdentityEditVcardDialog(QWidget *parent)
 
     mContactEditor = new Akonadi::ContactEditor( Akonadi::ContactEditor::CreateMode, Akonadi::ContactEditor::VCardMode, this );
     mainLayout->addWidget(mContactEditor);
+    connect(this, SIGNAL(user1Clicked()), this, SLOT(slotDeleteCurrentVCard()));
 }
 
 IdentityEditVcardDialog::~IdentityEditVcardDialog()
 {
+}
+
+void IdentityEditVcardDialog::slotDeleteCurrentVCard()
+{
+    if (KMessageBox::Yes == KMessageBox::questionYesNo(this, i18n("Are you sure to want to delete this vcard?"), i18n("Delete vcard"))) {
+        deleteCurrentVcard();
+        reject();
+    }
+}
+
+void IdentityEditVcardDialog::deleteCurrentVcard()
+{
+    if (!mVcardFileName.isEmpty()) {
+        QFile file(mVcardFileName);
+        if (!file.remove()) {
+            KMessageBox::error(this, i18n("We can not delete vcard file."), i18n("Delete vcard"));
+        }
+    }
 }
 
 void IdentityEditVcardDialog::loadVcard( const QString &vcardFileName)

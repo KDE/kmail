@@ -40,7 +40,12 @@ public:
    * @return The file path for current vcard.
    */
     QString saveVcard() const;
+
+private Q_SLOTS:
+    void slotDeleteCurrentVCard();
+
 private:
+    void deleteCurrentVcard();
     QString mVcardFileName;
     Akonadi::ContactEditor *mContactEditor;
 };
