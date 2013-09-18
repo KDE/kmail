@@ -2372,7 +2372,7 @@ void KMMainWidget::slotCheckVacation()
   delete mCheckVacation;
 
   mCheckVacation = new Vacation( this, true /* check only */ );
-  connect( mCheckVacation, SIGNAL(scriptActive(bool)), SLOT(updateVacationScriptStatus(bool)) );
+  connect( mCheckVacation, SIGNAL(scriptActive(bool,QString)), SLOT(updateVacationScriptStatus(bool,QString)) );
   connect( mCheckVacation, SIGNAL(requestEditVacation()), SLOT(slotEditVacation()) );
 }
 
@@ -2388,7 +2388,7 @@ void KMMainWidget::slotEditVacation()
   }
 
   mVacation = new Vacation( this );
-  connect( mVacation, SIGNAL(scriptActive(bool)), SLOT(updateVacationScriptStatus(bool)) );
+  connect( mVacation, SIGNAL(scriptActive(bool,QString)), SLOT(updateVacationScriptStatus(bool,QString)) );
   connect( mVacation, SIGNAL(requestEditVacation()), SLOT(slotEditVacation()) );
   if ( mVacation->isUsable() ) {
     connect( mVacation, SIGNAL(result(bool)), mVacation, SLOT(deleteLater()) );
@@ -4477,11 +4477,11 @@ void KMMainWidget::slotRequestFullSearchFromQuickSearch()
     mSearchWin->addRulesToSearchPattern( pattern );
 }
 
-void KMMainWidget::updateVacationScriptStatus( bool active )
+void KMMainWidget::updateVacationScriptStatus( bool active, const QString &serverName )
 {
   mVacationIndicatorActive = active;
   if ( active ) {
-    mVacationScriptIndicator->setText( i18n("Out of office reply active") );
+    mVacationScriptIndicator->setText( i18n("Out of office reply active on server \"%1\"", serverName) );
     mVacationScriptIndicator->setBackgroundColor( Qt::yellow );
     mVacationScriptIndicator->setCursor( QCursor( Qt::PointingHandCursor ) );
     mVacationScriptIndicator->show();

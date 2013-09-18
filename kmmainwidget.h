@@ -412,7 +412,7 @@ class KMAIL_EXPORT KMMainWidget : public QWidget
     */
     void showOfflinePage();
     void showResourceOfflinePage();
-    void updateVacationScriptStatus( bool active );
+    void updateVacationScriptStatus(bool active , const QString &serverName = QString());
 
 
     void slotShowExpiryProperties();
