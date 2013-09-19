@@ -92,6 +92,9 @@
 
 #include "dialog/kmknotify.h"
 
+#include "vacationmanager.h"
+
+
 // LIBKDEPIM includes
 #include "progresswidget/progressmanager.h"
 #include "misc/broadcaststatus.h"
@@ -137,7 +140,6 @@
 #include <kmime/kmime_message.h>
 #include <ksieveui/managesievescriptsdialog.h>
 #include <ksieveui/util.h>
-#include <ksieveui/vacation/vacation.h>
 
 // KDELIBS includes
 #include <kaboutdata.h>
@@ -205,7 +207,6 @@ using KPIM::BroadcastStatus;
 using KMail::SearchWindow;
 using KMail::AntiSpamWizard;
 using KMime::Types::AddrSpecList;
-using KSieveUi::Vacation;
 using MessageViewer::AttachmentStrategy;
 
 Q_DECLARE_METATYPE(KPIM::ProgressItem*)
@@ -250,6 +251,8 @@ K_GLOBAL_STATIC( KMMainWidget::PtrList, theMainWidgetList )
   mPreferHtmlLoadExtAction = 0;
   Akonadi::Control::widgetNeedsAkonadi( this );
   mFavoritesModel = 0;
+  mVacationManager = new KMail::VacationManager(this);
+
 
   // FIXME This should become a line separator as soon as the API
   // is extended in kdelibs.
@@ -2369,11 +2372,9 @@ void KMMainWidget::slotCheckVacation()
   if ( !kmkernel->askToGoOnline() )
     return;
 
-  delete mCheckVacation;
-
-  mCheckVacation = new Vacation( this, true /* check only */ );
-  connect( mCheckVacation, SIGNAL(scriptActive(bool,QString)), SLOT(updateVacationScriptStatus(bool,QString)) );
-  connect( mCheckVacation, SIGNAL(requestEditVacation()), SLOT(slotEditVacation()) );
+  mVacationManager->checkVacation();
+  connect(mVacationManager, SIGNAL(updateVacationScriptStatus(bool,QString)), SLOT(updateVacationScriptStatus(bool,QString)) );
+  connect(mVacationManager, SIGNAL(editVacation()), SLOT(slotEditVacation()) );
 }
 
 void KMMainWidget::slotEditVacation()
@@ -2382,26 +2383,7 @@ void KMMainWidget::slotEditVacation()
     return;
   }
 
-  if ( mVacation ) {
-    mVacation->showVacationDialog();
-    return;
-  }
-
-  mVacation = new Vacation( this );
-  connect( mVacation, SIGNAL(scriptActive(bool,QString)), SLOT(updateVacationScriptStatus(bool,QString)) );
-  connect( mVacation, SIGNAL(requestEditVacation()), SLOT(slotEditVacation()) );
-  if ( mVacation->isUsable() ) {
-    connect( mVacation, SIGNAL(result(bool)), mVacation, SLOT(deleteLater()) );
-  } else {
-    QString msg = i18n("KMail's Out of Office Reply functionality relies on "
-                      "server-side filtering. You have not yet configured an "
-                      "IMAP server for this.\n"
-                      "You can do this on the \"Filtering\" tab of the IMAP "
-                      "account configuration.");
-    KMessageBox::sorry( this, msg, i18n("No Server-Side Filtering Configured") );
-
-    delete mVacation; // QGuardedPtr sets itself to 0!
-  }
+  mVacationManager->slotEditVacation();
 }
 
 //-----------------------------------------------------------------------------

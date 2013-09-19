@@ -23,6 +23,7 @@
 
 #include <QWidget>
 
+using namespace KMail;
 
 VacationManager::VacationManager(QWidget *parent)
     : QObject(parent),
@@ -40,7 +41,7 @@ void VacationManager::checkVacation()
 
     mCheckVacation = new KSieveUi::Vacation( this, true /* check only */ );
     connect( mCheckVacation, SIGNAL(scriptActive(bool,QString)), SIGNAL(updateVacationScriptStatus(bool,QString)) );
-    connect( mCheckVacation, SIGNAL(requestEditVacation()), SLOT(slotEditVacation()) );
+    connect( mCheckVacation, SIGNAL(requestEditVacation()), SIGNAL(editVacation()) );
 }
 
 void VacationManager::slotEditVacation()
@@ -51,7 +52,7 @@ void VacationManager::slotEditVacation()
     }
 
     mVacation = new KSieveUi::Vacation( this );
-    connect( mVacation, SIGNAL(scriptActive(bool,QString)), SLOT(updateVacationScriptStatus(bool,QString)) );
+    connect( mVacation, SIGNAL(scriptActive(bool,QString)), SIGNAL(updateVacationScriptStatus(bool,QString)) );
     connect( mVacation, SIGNAL(requestEditVacation()), SLOT(slotEditVacation()) );
     if ( mVacation->isUsable() ) {
         connect( mVacation, SIGNAL(result(bool)), mVacation, SLOT(deleteLater()) );

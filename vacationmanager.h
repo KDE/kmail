@@ -25,6 +25,7 @@ namespace KSieveUi {
 class Vacation;
 }
 class QWidget;
+namespace KMail {
 class VacationManager : public QObject
 {
     Q_OBJECT
@@ -39,11 +40,13 @@ public Q_SLOTS:
 
 Q_SIGNALS:
     void updateVacationScriptStatus(bool, const QString&);
+    void editVacation();
 
 private:
     QPointer<KSieveUi::Vacation> mVacation;
     QPointer<KSieveUi::Vacation> mCheckVacation;
     QWidget *mWidget;
 };
+}
 
 #endif // VACATIONMANAGER_H

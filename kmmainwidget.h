@@ -66,6 +66,7 @@ namespace KMail {
   class StatusBarLabel;
   class TagActionManager;
   class FolderShortcutActionManager;
+  class VacationManager;
 }
 
 namespace KSieveUi {
@@ -588,8 +589,7 @@ private:
     QTimer *menutimer;
     QTimer *mShowBusySplashTimer;
 
-    QPointer<KSieveUi::Vacation> mVacation;
-    QPointer<KSieveUi::Vacation> mCheckVacation;
+    KMail::VacationManager *mVacationManager;
 #if !defined(NDEBUG)
     QPointer<KSieveUi::SieveDebugDialog> mSieveDebugDialog;
 #endif
