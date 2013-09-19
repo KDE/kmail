@@ -201,11 +201,9 @@ void AccountConfigOrderDialog::slotOk()
 void AccountConfigOrderDialog::readConfig()
 {
     KConfigGroup accountConfigDialog( KMKernel::self()->config(), "AccountConfigOrderDialog" );
-    const QSize size = accountConfigDialog.readEntry( "Size", QSize() );
+    const QSize size = accountConfigDialog.readEntry( "Size", QSize(600, 400) );
     if ( size.isValid() ) {
         resize( size );
-    } else {
-        resize( 600, 400 );
     }
 }
 

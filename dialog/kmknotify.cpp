@@ -149,11 +149,9 @@ void KMKnotify::slotOk()
 void KMKnotify::readConfig()
 {
     KConfigGroup notifyDialog( KMKernel::self()->config(), "KMKnotifyDialog" );
-    const QSize size = notifyDialog.readEntry( "Size", QSize() );
+    const QSize size = notifyDialog.readEntry( "Size", QSize(600, 400) );
     if ( size.isValid() ) {
         resize( size );
-    } else {
-        resize( 600, 400 );
     }
 }
 

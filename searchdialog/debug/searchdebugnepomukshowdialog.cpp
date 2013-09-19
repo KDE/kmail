@@ -69,11 +69,9 @@ void SearchDebugNepomukShowDialog::executeNepomukShow(const QString &nepomukId)
 void SearchDebugNepomukShowDialog::readConfig()
 {
     KConfigGroup group( KGlobal::config(), "SearchDebugNepomukShowDialog" );
-    const QSize sizeDialog = group.readEntry( "Size", QSize() );
+    const QSize sizeDialog = group.readEntry( "Size", QSize(800,600) );
     if ( sizeDialog.isValid() ) {
         resize( sizeDialog );
-    } else {
-        resize( 800,600);
     }
 }
 

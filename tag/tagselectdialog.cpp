@@ -72,11 +72,9 @@ TagSelectDialog::TagSelectDialog( QWidget * parent, int numberOfSelectedMessages
     connect(this, SIGNAL(user1Clicked()), SLOT(slotAddNewTag()));
 
     KConfigGroup group( KMKernel::self()->config(), "TagSelectDialog" );
-    const QSize size = group.readEntry( "Size", QSize() );
+    const QSize size = group.readEntry( "Size", QSize(500, 300) );
     if ( size.isValid() ) {
         resize( size );
-    } else {
-        resize( 500, 300 );
     }
 }
 
