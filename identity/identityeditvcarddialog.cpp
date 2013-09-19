@@ -26,12 +26,19 @@
 #include <QHBoxLayout>
 #include <QFile>
 
-IdentityEditVcardDialog::IdentityEditVcardDialog(QWidget *parent)
+IdentityEditVcardDialog::IdentityEditVcardDialog(const QString &fileName, QWidget *parent)
     : KDialog(parent)
 {
-    setCaption( i18n( "Edit own vCard" ) );
-    setButtons( User1|Ok|Cancel );
-    setButtonText(User1, i18n("Delete current vcard"));
+    if (QFile(fileName).exists()) {
+        setCaption( i18n( "Edit own vCard" ) );
+        setButtons( User1|Ok|Cancel );
+        setButtonText(User1, i18n("Delete current vcard"));
+        connect(this, SIGNAL(user1Clicked()), this, SLOT(slotDeleteCurrentVCard()));
+    } else {
+        setCaption( i18n("Create own vCard") );
+        setButtons( Ok|Cancel );
+    }
+
     setDefaultButton( Ok );
     setModal( true );
     QWidget *mainWidget = new QWidget( this );
@@ -42,7 +49,7 @@ IdentityEditVcardDialog::IdentityEditVcardDialog(QWidget *parent)
 
     mContactEditor = new Akonadi::ContactEditor( Akonadi::ContactEditor::CreateMode, Akonadi::ContactEditor::VCardMode, this );
     mainLayout->addWidget(mContactEditor);
-    connect(this, SIGNAL(user1Clicked()), this, SLOT(slotDeleteCurrentVCard()));
+    loadVcard(fileName);
 }
 
 IdentityEditVcardDialog::~IdentityEditVcardDialog()

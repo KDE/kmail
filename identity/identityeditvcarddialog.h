@@ -28,7 +28,7 @@ class IdentityEditVcardDialog : public KDialog
 {
     Q_OBJECT
 public:
-    explicit IdentityEditVcardDialog(QWidget *parent = 0);
+    explicit IdentityEditVcardDialog(const QString &fileName, QWidget *parent = 0);
     ~IdentityEditVcardDialog();
     /**
    * @brief loadVcard load vcard in a contact editor

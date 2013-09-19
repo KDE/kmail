@@ -961,10 +961,9 @@ void IdentityDialog::slotEditVcard()
     }
 }
 
-void IdentityDialog::editVcard(const QString& filename)
+void IdentityDialog::editVcard(const QString &filename)
 {
-    IdentityEditVcardDialog dlg(this);
-    dlg.loadVcard(filename);
+    IdentityEditVcardDialog dlg(filename, this);
     if(dlg.exec()) {
         mVcardFilename = dlg.saveVcard();
     }
