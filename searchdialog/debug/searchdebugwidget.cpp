@@ -21,7 +21,9 @@
 
 #include "util.h"
 
-#include "pimcommon/widgets/plaintexteditfindbar.h"
+#include "pimcommon/widgets/plaintexteditorwidget.h"
+#include "pimcommon/widgets/plaintexteditor.h"
+
 
 #include <KPIMUtils/ProgressIndicatorWidget>
 
@@ -104,27 +106,15 @@ SearchDebugWidget::SearchDebugWidget(const QString &query, QWidget *parent)
     mResultView = new SearchResultListView;
     mResultView->setItemDelegate(new SearchDebugListDelegate(this));
 
-    QWidget *w = new QWidget;
-    QVBoxLayout *lay = new QVBoxLayout;
-    mItemView = new QPlainTextEdit;
-    mItemView->setReadOnly(true);
-    mFindBar = new PimCommon::PlainTextEditFindBar( mItemView, this );
-    lay->addWidget(mItemView);
-    lay->addWidget(mFindBar);
-    lay->setMargin(0);
-    w->setLayout(lay);
-
-
-    QShortcut *shortcut = new QShortcut( this );
-    shortcut->setKey( Qt::Key_F+Qt::CTRL );
-    connect( shortcut, SIGNAL(activated()), SLOT(slotFind()) );
+    mItemView = new PimCommon::PlainTextEditorWidget;
+    mItemView->editor()->setReadOnly(true);
 
     layout->addWidget( mTextEdit, 0, 0, 1, 2);
     layout->addWidget( new QLabel( i18n("Akonadi Id:") ), 1, 0 );
     layout->addWidget( new QLabel( i18n("Messages:") ), 1, 1 );
 
     layout->addWidget( mResultView, 2, 0, 1, 1 );
-    layout->addWidget( w, 2, 1, 1, 1 );
+    layout->addWidget( mItemView, 2, 1, 1, 1 );
 
     mReduceQuery = new QPushButton( i18n("Reduce query") );
     connect(mReduceQuery, SIGNAL(clicked()), SLOT(slotReduceQuery()));
@@ -190,7 +180,7 @@ void SearchDebugWidget::slotSearch()
     }
 
     mResultModel->setStringList( QStringList() );
-    mItemView->clear();
+    mItemView->editor()->clear();
     mResultLabel->clear();
     mProgressIndicator->start();
     mSearchButton->setEnabled(false);
@@ -300,7 +290,7 @@ void SearchDebugWidget::slotFetchItem( const QModelIndex &index )
 
 void SearchDebugWidget::slotItemFetched( KJob *job )
 {
-    mItemView->clear();
+    mItemView->editor()->clear();
 
     if ( job->error() ) {
         KMessageBox::error( this, i18n("Error on fetching item") );
@@ -310,19 +300,9 @@ void SearchDebugWidget::slotItemFetched( KJob *job )
     Akonadi::ItemFetchJob *fetchJob = qobject_cast<Akonadi::ItemFetchJob*>( job );
     if ( !fetchJob->items().isEmpty() ) {
         const Akonadi::Item item = fetchJob->items().first();
-        mItemView->setPlainText( QString::fromUtf8( item.payloadData() ) );
+        mItemView->editor()->setPlainText( QString::fromUtf8( item.payloadData() ) );
     }
 }
-
-void SearchDebugWidget::slotFind()
-{
-    if ( mTextEdit->textCursor().hasSelection() )
-        mFindBar->setText( mTextEdit->textCursor().selectedText() );
-    mTextEdit->moveCursor(QTextCursor::Start);
-    mFindBar->show();
-    mFindBar->focusAndSetCursor();
-}
-
 
 
 #include "searchdebugwidget.moc"

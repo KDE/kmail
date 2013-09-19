@@ -32,7 +32,7 @@ class QPlainTextEdit;
 class QContextMenuEvent;
 
 namespace PimCommon {
-class PlainTextEditFindBar;
+class PlainTextEditorWidget;
 }
 
 namespace KPIMUtils {
@@ -76,20 +76,18 @@ private Q_SLOTS:
     void slotItemFetched(KJob*);
     void slotSearch();
     void slotUpdateSearchButton();
-    void slotFind();
     void slotReduceQuery();
 
 private:
     void indentQuery(QString query);
     QStringListModel *mResultModel;
     SearchResultListView *mResultView;
-    QPlainTextEdit *mItemView;
+    PimCommon::PlainTextEditorWidget *mItemView;
     KTextEdit *mTextEdit;
     KPIMUtils::ProgressIndicatorWidget *mProgressIndicator;
     QPushButton *mSearchButton;
     QPushButton *mReduceQuery;
     QLabel *mResultLabel;
-    PimCommon::PlainTextEditFindBar *mFindBar;
 };
 
 #endif // SEARCHDEBUGWIDGET_H
