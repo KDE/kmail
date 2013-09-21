@@ -53,7 +53,7 @@
     </widget>
    </item>
    <item>
-    <widget class="MailCommon::SearchPatternEdit" name="mPatternEdit" native="true"/>
+    <widget class="KMail::NepomukSearchPatternEdit" name="mPatternEdit" native="true"/>
    </item>
    <item>
     <widget class="Akonadi::EntityTreeView" name="mLbxMatches">
@@ -165,9 +165,9 @@
    <header>kpushbutton.h</header>
   </customwidget>
   <customwidget>
-   <class>MailCommon::SearchPatternEdit</class>
-   <extends>QWidget</extends>
-   <header location="global">mailcommon/search/searchpatternedit.h</header>
+   <class>KMail::NepomukSearchPatternEdit</class>
+   <extends>MailCommon::SearchPatternEdit</extends>
+   <header location="local">searchdialog/nepomuksearchpatternedit.h</header>
    <container>1</container>
   </customwidget>
   <customwidget>

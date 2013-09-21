@@ -98,11 +98,6 @@ SearchWindow::SearchWindow( KMMainWidget *widget, const Akonadi::Collection &col
 
     QWidget *searchWidget = new QWidget( this );
     mUi.setupUi( searchWidget );
-    SearchPatternEdit::SearchPatternEditOptions opts;
-    opts |= SearchPatternEdit::NotShowSize;
-    opts |= SearchPatternEdit::NotShowDate;
-    opts |= SearchPatternEdit::AbsoluteDate;
-    mUi.mPatternEdit->setPatternEditOptions(opts);
 
     lay->addWidget(searchWidget);
 
