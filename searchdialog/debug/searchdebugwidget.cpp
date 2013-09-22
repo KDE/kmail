@@ -21,8 +21,8 @@
 
 #include "util.h"
 
-#include "pimcommon/widgets/plaintexteditorwidget.h"
-#include "pimcommon/widgets/plaintexteditor.h"
+#include "pimcommon/plaintexteditor/plaintexteditorwidget.h"
+#include "pimcommon/plaintexteditor/plaintexteditor.h"
 
 
 #include <KPIMUtils/ProgressIndicatorWidget>
