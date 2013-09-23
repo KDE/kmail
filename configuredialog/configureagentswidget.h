@@ -22,7 +22,7 @@
 
 class QTreeWidget;
 class QSplitter;
-class KTextBrowser;
+class KTextEdit;
 class QTreeWidgetItem;
 class ConfigureAgentsWidget : public QWidget
 {
@@ -65,7 +65,7 @@ private:
     QStringList mAgentPathList;
     QTreeWidget *mTreeWidget;
     QSplitter *mSplitter;
-    KTextBrowser *mDescription;
+    KTextEdit *mDescription;
 };
 
 #endif // CONFIGUREAGENTSWIDGET_H

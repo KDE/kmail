@@ -24,7 +24,7 @@
 #include <KLocale>
 #include <KDesktopFile>
 #include <KDebug>
-#include <KTextBrowser>
+#include <KTextEdit>
 #include <KGlobal>
 #include <KConfigGroup>
 
@@ -54,7 +54,7 @@ ConfigureAgentsWidget::ConfigureAgentsWidget(QWidget *parent)
     mTreeWidget->setRootIsDecorated(false);
 
     mSplitter->addWidget(mTreeWidget);
-    mDescription = new KTextBrowser;
+    mDescription = new KTextEdit;
     mDescription->setReadOnly(true);
     mSplitter->addWidget(mDescription);
 
