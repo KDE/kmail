@@ -96,7 +96,6 @@ void insertLibraryCataloguesAndIcons() {
     "akonadicontact",
     "kabc",
     "akonadi_sendlater_agent",
-    "libgrantleetheme",
     "akonadi_folderagent_agent"
   };
 
