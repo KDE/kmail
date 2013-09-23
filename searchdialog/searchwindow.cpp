@@ -171,11 +171,6 @@ SearchWindow::SearchWindow( KMMainWidget *widget, const Akonadi::Collection &col
     compare functions
   */
     mUi.mLbxMatches->setSortingEnabled( true );
-#if 0 // port me!
-    mUi.mLbxMatches->sortItems( 2, Qt::DescendingOrder );
-#else
-    kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
-#endif
 
     connect( mUi.mLbxMatches, SIGNAL(customContextMenuRequested(QPoint)),
              this, SLOT(slotContextMenuRequested(QPoint)) );
@@ -447,6 +442,11 @@ void SearchWindow::slotSearch()
         mQuery.clear();
         mUi.mStatusLbl->setText( i18n("No message found.") );
         createSearchModel();
+        return;
+    case MailCommon::SearchPattern::NotEnoughCharacters:
+        mUi.mSearchFolderEdt->setEnabled( true );
+        mSearchPatternWidget->showWarningPattern(QStringList()<<i18n("Contains condition can not used with a number of characters inferior to 4."));
+        mQuery.clear();
         return;
     }
     mSearchPatternWidget->hideWarningPattern();
