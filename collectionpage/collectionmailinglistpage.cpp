@@ -39,6 +39,7 @@
 
 #include <KComboBox>
 #include <KDialog>
+#include <KLineEdit>
 #include <KEditListWidget>
 #include <KLocale>
 #include <KMessageBox>
@@ -132,6 +133,7 @@ void CollectionMailingListPage::init(const Akonadi::Collection & col)
     groupLayout->addWidget( handleButton, 6, 2 );
 
     mEditList = new KEditListWidget( mGroupWidget );
+    mEditList->lineEdit()->setClearButtonShown(true);
     connect(mEditList, SIGNAL(changed()),SLOT(slotConfigChanged()));
     groupLayout->addWidget( mEditList, 7, 0, 1, 4 );
 
