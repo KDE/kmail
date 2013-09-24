@@ -34,6 +34,8 @@
 #include <QDBusInterface>
 #include <QDBusReply>
 #include <QSplitter>
+#include <QPushButton>
+#include <QVBoxLayout>
 #include <QFile>
 #include <QDir>
 
@@ -54,14 +56,22 @@ ConfigureAgentsWidget::ConfigureAgentsWidget(QWidget *parent)
     mTreeWidget->setRootIsDecorated(false);
 
     mSplitter->addWidget(mTreeWidget);
+    QWidget *w = new QWidget;
+    QVBoxLayout *vbox = new QVBoxLayout;
     mDescription = new KTextEdit;
     mDescription->setReadOnly(true);
-    mSplitter->addWidget(mDescription);
+    vbox->addWidget(mDescription);
+    mConfigure = new QPushButton(i18n("Configure..."));
+    mConfigure->setEnabled(false);
+    vbox->addWidget(mConfigure);
+    w->setLayout(vbox);
+    mSplitter->addWidget(w);
 
     setLayout(lay);
     connect(mTreeWidget, SIGNAL(itemClicked(QTreeWidgetItem*,int)), SLOT(slotItemClicked(QTreeWidgetItem*)));
     connect(mTreeWidget, SIGNAL(currentItemChanged(QTreeWidgetItem*,QTreeWidgetItem*)), SLOT(slotItemClicked(QTreeWidgetItem*)));
     connect(mTreeWidget, SIGNAL(itemChanged(QTreeWidgetItem*,int)), SIGNAL(changed()));
+    connect(mConfigure, SIGNAL(clicked()), this, SLOT(slotConfigureAgent()));
     mAgentPathList = Akonadi::XdgBaseDirs::findAllResourceDirs( "data", QLatin1String( "akonadi/agents" ) );
     initialize();
     readConfig();
@@ -93,6 +103,7 @@ void ConfigureAgentsWidget::slotItemClicked(QTreeWidgetItem *item)
             mDescription->setText(item->data(AgentName, Description).toString());
         }
     }
+    mConfigure->setEnabled(item);
 }
 
 void ConfigureAgentsWidget::addInfos(QTreeWidgetItem *item, const QString &desktopFile)
@@ -155,6 +166,22 @@ void ConfigureAgentsWidget::changeAgentActiveState(bool enable, const QString &i
     } else {
         kDebug()<<interfaceName << "does not exist ";
     }
+}
+
+void ConfigureAgentsWidget::slotConfigureAgent()
+{
+    qDebug()<<"sssssssssssssssssssssssssssssssssssssssss";
+    QTreeWidgetItem *item = mTreeWidget->currentItem();
+    if (item) {
+        QDBusInterface interface( QLatin1String("org.freedesktop.Akonadi.Agent.") + item->data(AgentName, InterfaceName).toString(), item->data(AgentName, PathName).toString() );
+        qDebug()<<" item->data(AgentName, InterfaceName).toString()"<<item->data(AgentName, InterfaceName).toString()<<" item->data(AgentName, PathName).toString("<<item->data(AgentName, PathName).toString();
+        if (interface.isValid()) {
+            interface.call(QLatin1String("showConfigureDialog"), QLatin1String("0"));
+        } else {
+            qDebug()<<" interface does not exist ";
+        }
+    }
+
 }
 
 void ConfigureAgentsWidget::save()

@@ -24,6 +24,7 @@ class QTreeWidget;
 class QSplitter;
 class KTextEdit;
 class QTreeWidgetItem;
+class QPushButton;
 class ConfigureAgentsWidget : public QWidget
 {
     Q_OBJECT
@@ -38,6 +39,7 @@ public:
 
 private Q_SLOTS:
     void slotItemClicked(QTreeWidgetItem *item);
+    void slotConfigureAgent();
 
 Q_SIGNALS:
     void changed();
@@ -66,6 +68,7 @@ private:
     QTreeWidget *mTreeWidget;
     QSplitter *mSplitter;
     KTextEdit *mDescription;
+    QPushButton *mConfigure;
 };
 
 #endif // CONFIGUREAGENTSWIDGET_H
