@@ -69,6 +69,7 @@ void SnippetWidget::contextMenuEvent( QContextMenuEvent *event )
             popup.addAction( mSnippetsManager->addSnippetAction() );
             popup.addAction( mSnippetsManager->editSnippetAction() );
             popup.addAction( mSnippetsManager->deleteSnippetAction() );
+            popup.addAction( mSnippetsManager->insertSnippetAction() );
         }
         popup.addSeparator();
     } else {
