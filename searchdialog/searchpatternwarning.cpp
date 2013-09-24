@@ -35,7 +35,7 @@ SearchPatternWarning::~SearchPatternWarning()
 
 void SearchPatternWarning::setError(const QStringList &lstError)
 {
-    setText( i18n( "Nepomuk can not make search. Errors found: <ul><li>%1</li></ul>", lstError.join( QLatin1String( "</li><li>" ) ) ) );
+    setText( i18n( "Nepomuk cannot make search. Errors found: <ul><li>%1</li></ul>", lstError.join( QLatin1String( "</li><li>" ) ) ) );
 }
 
 void SearchPatternWarning::showWarningPattern(const QStringList &lstError)

@@ -445,7 +445,7 @@ void SearchWindow::slotSearch()
         return;
     case MailCommon::SearchPattern::NotEnoughCharacters:
         mUi.mSearchFolderEdt->setEnabled( true );
-        mSearchPatternWidget->showWarningPattern(QStringList()<<i18n("Contains condition can not used with a number of characters inferior to 4."));
+        mSearchPatternWidget->showWarningPattern(QStringList()<<i18n("Contains condition cannot be used with a number of characters inferior to 4."));
         mQuery.clear();
         return;
     }

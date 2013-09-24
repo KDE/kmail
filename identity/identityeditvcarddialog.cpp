@@ -70,7 +70,7 @@ void IdentityEditVcardDialog::deleteCurrentVcard()
         QFile file(mVcardFileName);
         if (file.exists()) {
             if (!file.remove()) {
-                KMessageBox::error(this, i18n("We can not delete vcard file."), i18n("Delete vcard"));
+                KMessageBox::error(this, i18n("We cannot delete vcard file."), i18n("Delete vcard"));
             }
         }
     }
