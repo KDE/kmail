@@ -170,18 +170,15 @@ void ConfigureAgentsWidget::changeAgentActiveState(bool enable, const QString &i
 
 void ConfigureAgentsWidget::slotConfigureAgent()
 {
-    qDebug()<<"sssssssssssssssssssssssssssssssssssssssss";
     QTreeWidgetItem *item = mTreeWidget->currentItem();
     if (item) {
         QDBusInterface interface( QLatin1String("org.freedesktop.Akonadi.Agent.") + item->data(AgentName, InterfaceName).toString(), item->data(AgentName, PathName).toString() );
-        qDebug()<<" item->data(AgentName, InterfaceName).toString()"<<item->data(AgentName, InterfaceName).toString()<<" item->data(AgentName, PathName).toString("<<item->data(AgentName, PathName).toString();
         if (interface.isValid()) {
-            interface.call(QLatin1String("showConfigureDialog"), QLatin1String("0"));
+            interface.call(QLatin1String("showConfigureDialog"), (qlonglong)winId());
         } else {
-            qDebug()<<" interface does not exist ";
+            kDebug()<<" interface does not exist ";
         }
     }
-
 }
 
 void ConfigureAgentsWidget::save()
