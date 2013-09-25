@@ -25,7 +25,7 @@
 #include "pimcommon/plaintexteditor/plaintexteditor.h"
 
 
-#include <KPIMUtils/ProgressIndicatorWidget>
+#include <KPIMUtils/ProgressIndicatorLabel>
 
 #include <akonadi/itemfetchjob.h>
 #include <akonadi/itemfetchscope.h>
@@ -122,7 +122,7 @@ SearchDebugWidget::SearchDebugWidget(const QString &query, QWidget *parent)
     mSearchButton = new QPushButton( i18n("Search") );
     mSearchButton->setEnabled(false);
     connect( mSearchButton, SIGNAL(clicked()), this, SLOT(slotSearch()) );
-    mProgressIndicator = new KPIMUtils::ProgressIndicatorWidget;
+    mProgressIndicator = new KPIMUtils::ProgressIndicatorLabel(i18n("Searching..."));
 
     mResultLabel = new QLabel;
     layout->addWidget( mResultLabel, 3, 0, Qt::AlignLeft );
@@ -196,7 +196,7 @@ void SearchDebugWidget::indentQuery(QString query)
     QString newQuery;
     int i = 0;
     int indent = 0;
-    int space = 4;
+    const int space = 4;
 
     while(i < query.size()) {
         newQuery.append(query[i]);
@@ -274,7 +274,11 @@ void SearchDebugWidget::slotSearchFinished(KJob *job)
     }
 
     mResultModel->setStringList( uidList );
-    mResultLabel->setText(i18np("1 message found", "%1 messages found", uidList.count()));
+    if (uidList.isEmpty()) {
+        mResultLabel->setText(i18n("No message found"));
+    } else {
+        mResultLabel->setText(i18np("1 message found", "%1 messages found", uidList.count()));
+    }
 }
 
 void SearchDebugWidget::slotFetchItem( const QModelIndex &index )

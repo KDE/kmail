@@ -36,7 +36,7 @@ class PlainTextEditorWidget;
 }
 
 namespace KPIMUtils {
-class ProgressIndicatorWidget;
+class ProgressIndicatorLabel;
 }
 
 class SearchResultListView : public QListView
@@ -84,7 +84,7 @@ private:
     SearchResultListView *mResultView;
     PimCommon::PlainTextEditorWidget *mItemView;
     KTextEdit *mTextEdit;
-    KPIMUtils::ProgressIndicatorWidget *mProgressIndicator;
+    KPIMUtils::ProgressIndicatorLabel *mProgressIndicator;
     QPushButton *mSearchButton;
     QPushButton *mReduceQuery;
     QLabel *mResultLabel;
