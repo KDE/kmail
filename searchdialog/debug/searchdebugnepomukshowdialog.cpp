@@ -18,6 +18,8 @@
 #include "searchdebugnepomukshowdialog.h"
 
 #include "pimcommon/util/pimutil.h"
+#include "pimcommon/plaintexteditor/plaintexteditorwidget.h"
+#include "pimcommon/plaintexteditor/plaintexteditor.h"
 
 #include <KLocale>
 #include <KTextEdit>
@@ -32,8 +34,8 @@ SearchDebugNepomukShowDialog::SearchDebugNepomukShowDialog(const QString &nepomu
     setButtons( Close | User1 );
     setButtonText(User1, i18n("Save As..."));
 
-    mResult = new KTextEdit;
-    mResult->setReadOnly(true);
+    mResult = new PimCommon::PlainTextEditorWidget;
+    mResult->editor()->setReadOnly(true);
     setMainWidget( mResult );
 
     connect(this, SIGNAL(user1Clicked()), this, SLOT(slotSaveAs()));
@@ -50,19 +52,19 @@ void SearchDebugNepomukShowDialog::executeNepomukShow(const QString &nepomukId)
 {
     const QString path = KStandardDirs::findExe( QLatin1String("nepomukshow") );
     if ( path.isEmpty() ) {
-        mResult->setPlainText(i18n("Sorry you don't have \"nepomukshow\" installed on your computer."));
+        mResult->editor()->setPlainText(i18n("Sorry you don't have \"nepomukshow\" installed on your computer."));
     } else {
         QStringList arguments;
         arguments << QString::fromLatin1("akonadi:?item=%1").arg(nepomukId);
         QProcess proc;
         proc.start(path, arguments);
         if (!proc.waitForFinished()) {
-            mResult->setPlainText(i18n("Sorry there is a problem with virtuoso."));
+            mResult->editor()->setPlainText(i18n("Sorry there is a problem with virtuoso."));
             return;
         }
         QByteArray result = proc.readAll();
         proc.close();
-        mResult->setPlainText(QString::fromUtf8(result));
+        mResult->editor()->setPlainText(QString::fromUtf8(result));
     }
 }
 
@@ -84,7 +86,7 @@ void SearchDebugNepomukShowDialog::writeConfig()
 void SearchDebugNepomukShowDialog::slotSaveAs()
 {
     const QString filter = i18n( "all files (*)" );
-    PimCommon::Util::saveTextAs(mResult->toPlainText(), filter, this);
+    PimCommon::Util::saveTextAs(mResult->editor()->toPlainText(), filter, this);
 }
 
 

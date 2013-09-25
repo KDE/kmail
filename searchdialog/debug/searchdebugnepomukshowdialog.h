@@ -21,6 +21,10 @@
 #include <KDialog>
 
 class KTextEdit;
+namespace PimCommon {
+class PlainTextEditorWidget;
+}
+
 class SearchDebugNepomukShowDialog : public KDialog
 {
     Q_OBJECT
@@ -37,7 +41,7 @@ private:
     void writeConfig();
 
 private:
-    KTextEdit *mResult;
+    PimCommon::PlainTextEditorWidget *mResult;
 };
 
 #endif // SEARCHDEBUGNEPOMUKSHOWDIALOG_H
