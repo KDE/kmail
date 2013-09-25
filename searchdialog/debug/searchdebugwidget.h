@@ -83,7 +83,7 @@ private:
     QStringListModel *mResultModel;
     SearchResultListView *mResultView;
     PimCommon::PlainTextEditorWidget *mItemView;
-    KTextEdit *mTextEdit;
+    PimCommon::PlainTextEditorWidget *mTextEdit;
     KPIMUtils::ProgressIndicatorLabel *mProgressIndicator;
     QPushButton *mSearchButton;
     QPushButton *mReduceQuery;

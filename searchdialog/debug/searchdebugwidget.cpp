@@ -95,13 +95,12 @@ SearchDebugWidget::SearchDebugWidget(const QString &query, QWidget *parent)
 {
     QGridLayout *layout = new QGridLayout;
 
-    mTextEdit = new KTextEdit( this );
+    mTextEdit = new PimCommon::PlainTextEditorWidget( this );
     // we install an event filter to catch Ctrl+Return for quick query execution
     mTextEdit->installEventFilter( this );
 
-    mTextEdit->setAcceptRichText(false);
     indentQuery(query);
-    new Nepomuk2::SparqlSyntaxHighlighter( mTextEdit->document() );
+    new Nepomuk2::SparqlSyntaxHighlighter( mTextEdit->editor()->document() );
 
     mResultView = new SearchResultListView;
     mResultView->setItemDelegate(new SearchDebugListDelegate(this));
@@ -133,7 +132,7 @@ SearchDebugWidget::SearchDebugWidget(const QString &query, QWidget *parent)
     setLayout(layout);
 
     connect( mResultView, SIGNAL(activated(QModelIndex)), this, SLOT(slotFetchItem(QModelIndex)) );
-    connect(mTextEdit, SIGNAL(textChanged()), SLOT(slotUpdateSearchButton()));
+    connect(mTextEdit->editor(), SIGNAL(textChanged()), SLOT(slotUpdateSearchButton()));
     mResultModel = new QStringListModel( this );
     mResultView->setModel( mResultModel );
 
@@ -160,17 +159,17 @@ bool SearchDebugWidget::eventFilter( QObject *watched, QEvent *event )
 
 void SearchDebugWidget::slotUpdateSearchButton()
 {
-    mSearchButton->setEnabled(!mTextEdit->toPlainText().isEmpty());
+    mSearchButton->setEnabled(!mTextEdit->editor()->toPlainText().isEmpty());
 }
 
 QString SearchDebugWidget::queryStr() const
 {
-    return mTextEdit->toPlainText();
+    return mTextEdit->editor()->toPlainText();
 }
 
 void SearchDebugWidget::slotSearch()
 {
-    const QString query = mTextEdit->toPlainText();
+    const QString query = mTextEdit->editor()->toPlainText();
 
     if (query.isEmpty()) {
         mResultLabel->setText(i18n("Query is empty."));
@@ -245,12 +244,12 @@ void SearchDebugWidget::indentQuery(QString query)
         }
         ++i;
     }
-    mTextEdit->setPlainText( newQuery );
+    mTextEdit->editor()->setPlainText( newQuery );
 }
 
 void SearchDebugWidget::slotReduceQuery()
 {
-    QString query = mTextEdit->toPlainText();
+    QString query = mTextEdit->editor()->toPlainText();
     KMail::Util::reduceQuery(query);
     indentQuery(query);
 }
