@@ -419,6 +419,7 @@ void SearchWindow::slotSearch()
         const Akonadi::Collection col = mUi.mCbxFolders->collection();
         if (!col.isValid()) {
             mSearchPatternWidget->showWarningPattern(QStringList()<<i18n("You did not selected a valid folder."));
+            mUi.mSearchFolderEdt->setEnabled( true );
             return;
         }
         urls << col.url( Akonadi::Collection::UrlShort );
@@ -428,6 +429,12 @@ void SearchWindow::slotSearch()
     } else if (mUi.mChkMultiFolders->isChecked()) {
         Q_FOREACH(const Akonadi::Collection &col, mCollectionId) {
             urls << col.url( Akonadi::Collection::UrlShort );
+        }
+        if (urls.isEmpty()) {
+            mUi.mSearchFolderEdt->setEnabled( true );
+            mSearchPatternWidget->showWarningPattern(QStringList()<<i18n("You forgot to select collections."));
+            mQuery.clear();
+            return;
         }
     }
 
