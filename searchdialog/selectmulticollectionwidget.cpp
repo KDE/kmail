@@ -72,14 +72,16 @@ SelectMultiCollectionWidget::~SelectMultiCollectionWidget()
 
 void SelectMultiCollectionWidget::slotCollectionsInserted(const QModelIndex &parent, int start, int end)
 {
-    for (int i = start; i <= end; ++i) {
-        const QModelIndex index = mCollectionModel->index(i, 0, parent);
-        if (!index.isValid()) {
-            continue;
+    if (!mListCollection.isEmpty()) {
+        for (int i = start; i <= end; ++i) {
+            const QModelIndex index = mCollectionModel->index(i, 0, parent);
+            if (!index.isValid()) {
+                continue;
+            }
+            const Akonadi::Collection collection = index.data(Akonadi::CollectionModel::CollectionRole).value<Akonadi::Collection>();
+            if (mListCollection.contains(collection.id()))
+                mSelectionModel->select(index, QItemSelectionModel::Select);
         }
-        const Akonadi::Collection collection = index.data(Akonadi::CollectionModel::CollectionRole).value<Akonadi::Collection>();
-        if (mListCollection.contains(collection.id()))
-            mSelectionModel->select(index, QItemSelectionModel::Select);
     }
     mCollectionView->expandAll();
 }
