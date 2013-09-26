@@ -56,7 +56,7 @@ SelectMultiCollectionWidget::SelectMultiCollectionWidget(const QList<Akonadi::Co
     searchLine->setPlaceholderText(i18n("Search..."));
     searchLine->setClearButtonShown(true);
     connect(searchLine, SIGNAL(textChanged(QString)),
-            this, SLOT(setCollectionFilter(QString)));
+            this, SLOT(slotSetCollectionFilter(QString)));
 
     vbox->addWidget(searchLine);
 
@@ -105,5 +105,13 @@ QList<Akonadi::Collection> SelectMultiCollectionWidget::selectedCollection(const
     }
     return lst;
 }
+
+void SelectMultiCollectionWidget::slotSetCollectionFilter(const QString &filter)
+{
+    mCollectionFilter->setSearchPattern(filter);
+    mCollectionView->expandAll();
+}
+
+
 
 #include "selectmulticollectionwidget.moc"

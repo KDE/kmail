@@ -39,6 +39,7 @@ public:
 
 private Q_SLOTS:
     void slotCollectionsInserted(const QModelIndex &parent, int start, int end);
+    void slotSetCollectionFilter(const QString &filter);
 
 private:
     QList<Akonadi::Collection::Id> mListCollection;
