@@ -17,16 +17,20 @@
 
 #include "selectmulticollectionwidget.h"
 
-#include <Akonadi/CollectionView>
-#include <Akonadi/CollectionModel>
 #include <Akonadi/RecursiveCollectionFilterProxyModel>
 #include <Akonadi/CollectionFilterProxyModel>
+
+#include <Akonadi/ChangeRecorder>
+#include <Akonadi/EntityTreeModel>
+#include <Akonadi/EntityRightsFilterModel>
+#include <KMime/Message>
 
 #include <KCheckableProxyModel>
 #include <KLineEdit>
 #include <KLocale>
 
 #include <QVBoxLayout>
+#include <QTreeView>
 
 SelectMultiCollectionWidget::SelectMultiCollectionWidget(const QList<Akonadi::Collection::Id> &selectedCollection, QWidget *parent)
     : QWidget(parent),
@@ -36,21 +40,37 @@ SelectMultiCollectionWidget::SelectMultiCollectionWidget(const QList<Akonadi::Co
     setLayout(vbox);
 
 
-    mCollectionModel = new Akonadi::CollectionModel(this);
-    connect(mCollectionModel, SIGNAL(rowsInserted(QModelIndex,int,int)),
+    // Create a new change recorder.
+    mChangeRecorder = new Akonadi::ChangeRecorder( this );
+    mChangeRecorder->setMimeTypeMonitored( KMime::Message::mimeType() );
+
+    mModel = new Akonadi::EntityTreeModel( mChangeRecorder, this );
+    // Set the model to show only collections, not items.
+    mModel->setItemPopulationStrategy( Akonadi::EntityTreeModel::NoItemPopulation );
+
+    Akonadi::CollectionFilterProxyModel *mimeTypeProxy = new Akonadi::CollectionFilterProxyModel( this );
+    mimeTypeProxy->setExcludeVirtualCollections( true );
+    mimeTypeProxy->addMimeTypeFilters( QStringList() << KMime::Message::mimeType() );
+    mimeTypeProxy->setSourceModel( mModel );
+
+
+
+    // Create the Check proxy model.
+    mSelectionModel = new QItemSelectionModel( mimeTypeProxy );
+    mCheckProxy = new KCheckableProxyModel( this );
+    mCheckProxy->setSelectionModel( mSelectionModel );
+    mCheckProxy->setSourceModel( mimeTypeProxy );
+
+    connect(mModel, SIGNAL(rowsInserted(QModelIndex,int,int)),
             this, SLOT(slotCollectionsInserted(QModelIndex,int,int)));
 
-    mSelectionModel = new QItemSelectionModel(mCollectionModel, this);
 
-    KCheckableProxyModel *checkableProxy = new KCheckableProxyModel(this);
-    checkableProxy->setSourceModel(mCollectionModel);
-    checkableProxy->setSelectionModel(mSelectionModel);
-
-    mCollectionFilter = new Akonadi::RecursiveCollectionFilterProxyModel(this);
-    mCollectionFilter->addContentMimeTypeInclusionFilter(QLatin1String("message/rfc822"));
-    mCollectionFilter->setSourceModel(checkableProxy);
+    mCollectionFilter = new Akonadi::EntityRightsFilterModel(this);
+    //mCollectionFilter->addContentMimeTypeInclusionFilter(QLatin1String("message/rfc822"));
+    mCollectionFilter->setSourceModel(mCheckProxy);
     mCollectionFilter->setDynamicSortFilter(true);
     mCollectionFilter->setFilterCaseSensitivity(Qt::CaseInsensitive);
+
 
     KLineEdit *searchLine = new KLineEdit(this);
     searchLine->setPlaceholderText(i18n("Search..."));
@@ -60,56 +80,63 @@ SelectMultiCollectionWidget::SelectMultiCollectionWidget(const QList<Akonadi::Co
 
     vbox->addWidget(searchLine);
 
-    mCollectionView = new Akonadi::CollectionView(this);
-    mCollectionView->setModel(mCollectionFilter);
-    mCollectionView->setAlternatingRowColors(true);
-    vbox->addWidget(mCollectionView);
+
+    mFolderView = new QTreeView;
+    mFolderView->setAlternatingRowColors(true);
+
+    vbox->addWidget(mFolderView);
 }
 
 SelectMultiCollectionWidget::~SelectMultiCollectionWidget()
 {
 }
 
-void SelectMultiCollectionWidget::slotCollectionsInserted(const QModelIndex &parent, int start, int end)
+void SelectMultiCollectionWidget::updateStatus(const QModelIndex &parent)
+{
+    const int nbCol = mCheckProxy->rowCount( parent );
+    for ( int i = 0; i < nbCol; ++i ) {
+        const QModelIndex child = mCheckProxy->index( i, 0, parent );
+
+        const Akonadi::Collection col =
+                mCheckProxy->data( child, Akonadi::EntityTreeModel::CollectionRole ).value<Akonadi::Collection>();
+
+        if (mListCollection.contains(col.id())) {
+            mCheckProxy->setData( child, Qt::Checked, Qt::CheckStateRole );
+        }
+        updateStatus( child );
+    }
+}
+
+void SelectMultiCollectionWidget::slotCollectionsInserted(const QModelIndex &, int, int)
 {
     if (!mListCollection.isEmpty()) {
-        for (int i = start; i <= end; ++i) {
-            const QModelIndex index = mCollectionModel->index(i, 0, parent);
-            if (!index.isValid()) {
-                continue;
-            }
-            const Akonadi::Collection collection = index.data(Akonadi::CollectionModel::CollectionRole).value<Akonadi::Collection>();
-            if (mListCollection.contains(collection.id()))
-                mSelectionModel->select(index, QItemSelectionModel::Select);
-        }
+        updateStatus(QModelIndex());
     }
-    mCollectionView->expandAll();
+    mFolderView->expandAll();
 }
 
 QList<Akonadi::Collection> SelectMultiCollectionWidget::selectedCollection(const QModelIndex &parent) const
 {
     QList<Akonadi::Collection> lst;
 
-    for (int i = 0; i < mCollectionModel->rowCount(parent); ++i) {
-        const QModelIndex index = mCollectionModel->index(i, 0, parent);
-        if (mCollectionModel->hasChildren(index)) {
-            lst.append(selectedCollection(index));
-        }
+    const int nbCol = mCheckProxy->rowCount( parent );
+    for ( int i = 0; i < nbCol; ++i ) {
+      const QModelIndex child = mCheckProxy->index( i, 0, parent );
 
-        const bool selected = mSelectionModel->isSelected(index);
-        if (selected) {
-            const Akonadi::Collection collection = index.data(Akonadi::CollectionModel::CollectionRole).value<Akonadi::Collection>();
-            lst << collection;
-        }
+      const Akonadi::Collection col =
+        mCheckProxy->data( child, Akonadi::EntityTreeModel::CollectionRole ).value<Akonadi::Collection>();
 
+      if (mCheckProxy->data( child, Qt::CheckStateRole ).value<int>())
+          lst << col;
+      lst << selectedCollection( child );
     }
     return lst;
 }
 
 void SelectMultiCollectionWidget::slotSetCollectionFilter(const QString &filter)
 {
-    mCollectionFilter->setSearchPattern(filter);
-    mCollectionView->expandAll();
+    mCollectionFilter->setFilterWildcard(filter);
+    mFolderView->expandAll();
 }
 
 

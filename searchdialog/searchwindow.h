@@ -40,6 +40,7 @@ class KMMainWidget;
 class KMSearchMessageModel;
 class QAbstractItemModel;
 class QModelIndex;
+class SelectMultiCollectionDialog;
 namespace Akonadi {
 class StandardMailActionManager;
 }
@@ -152,6 +153,7 @@ private Q_SLOTS:
     void slotSelectMultipleFolders();
 
 private:
+    QPointer<SelectMultiCollectionDialog> mSelectMultiCollectionDialog;
     QList<Akonadi::Collection> mCollectionId;
     QString mQuery;
     bool mCloseRequested;

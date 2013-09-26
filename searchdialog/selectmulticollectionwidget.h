@@ -23,10 +23,12 @@
 #include <QModelIndex>
 class QItemSelectionModel;
 namespace Akonadi {
-class CollectionModel;
-class CollectionView;
-class RecursiveCollectionFilterProxyModel;
+class EntityTreeModel;
+class ChangeRecorder;
+class EntityRightsFilterModel;
 }
+class QTreeView;
+class KCheckableProxyModel;
 
 class SelectMultiCollectionWidget : public QWidget
 {
@@ -42,11 +44,14 @@ private Q_SLOTS:
     void slotSetCollectionFilter(const QString &filter);
 
 private:
+    void updateStatus(const QModelIndex &parent);
     QList<Akonadi::Collection::Id> mListCollection;
+    QTreeView *mFolderView;
     QItemSelectionModel *mSelectionModel;
-    Akonadi::CollectionModel *mCollectionModel;
-    Akonadi::CollectionView *mCollectionView;
-    Akonadi::RecursiveCollectionFilterProxyModel *mCollectionFilter;
+    Akonadi::EntityTreeModel *mModel;
+    Akonadi::ChangeRecorder *mChangeRecorder;
+    KCheckableProxyModel *mCheckProxy;
+    Akonadi::EntityRightsFilterModel *mCollectionFilter;
 };
 
 #endif // SELECTMULTICOLLECTIONWIDGET_H

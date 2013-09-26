@@ -427,6 +427,10 @@ void SearchWindow::slotSearch()
             childCollectionsFromSelectedCollection( col, urls );
         }
     } else if (mUi.mChkMultiFolders->isChecked()) {
+        if (!mSelectMultiCollectionDialog) {
+            return;
+        }
+        mCollectionId = mSelectMultiCollectionDialog->selectedCollection();
         Q_FOREACH(const Akonadi::Collection &col, mCollectionId) {
             urls << col.url( Akonadi::Collection::UrlShort );
         }
@@ -852,15 +856,14 @@ void SearchWindow::slotDebugQuery()
 void SearchWindow::slotSelectMultipleFolders()
 {
     mUi.mChkMultiFolders->setChecked(true);
-    QList<Akonadi::Collection::Id> lst;
-    Q_FOREACH (const Akonadi::Collection &col, mCollectionId) {
-        lst << col.id();
+    if (!mSelectMultiCollectionDialog)  {
+        QList<Akonadi::Collection::Id> lst;
+        Q_FOREACH (const Akonadi::Collection &col, mCollectionId) {
+            lst << col.id();
+        }
+        mSelectMultiCollectionDialog = new SelectMultiCollectionDialog(lst, this);
     }
-    QPointer<SelectMultiCollectionDialog> dlg = new SelectMultiCollectionDialog(lst);
-    if (dlg->exec()) {
-        mCollectionId = dlg->selectedCollection();
-    }
-    delete dlg;
+    mSelectMultiCollectionDialog->show();
 }
 
 }
