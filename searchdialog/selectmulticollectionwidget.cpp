@@ -103,3 +103,5 @@ QList<Akonadi::Collection::Id> SelectMultiCollectionWidget::selectedCollection(c
     }
     return lst;
 }
+
+#include "selectmulticollectionwidget.moc"
