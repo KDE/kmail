@@ -28,7 +28,7 @@
 
 #include <QVBoxLayout>
 
-SelectMultiCollectionWidget::SelectMultiCollectionWidget(const QList<Akonadi::Entity::Id> &selectedCollection, QWidget *parent)
+SelectMultiCollectionWidget::SelectMultiCollectionWidget(const QList<Akonadi::Collection::Id> &selectedCollection, QWidget *parent)
     : QWidget(parent),
       mListCollection(selectedCollection)
 {
@@ -84,20 +84,20 @@ void SelectMultiCollectionWidget::slotCollectionsInserted(const QModelIndex &par
     mCollectionView->expandAll();
 }
 
-QList<Akonadi::Collection::Id> SelectMultiCollectionWidget::selectedCollection(const QModelIndex &parent) const
+QList<Akonadi::Collection> SelectMultiCollectionWidget::selectedCollection(const QModelIndex &parent) const
 {
-    QList<Akonadi::Collection::Id> lst;
+    QList<Akonadi::Collection> lst;
 
     for (int i = 0; i < mCollectionModel->rowCount(parent); ++i) {
         const QModelIndex index = mCollectionModel->index(i, 0, parent);
         if (mCollectionModel->hasChildren(index)) {
-            lst << selectedCollection(index);
+            lst.append(selectedCollection(index));
         }
 
         const bool selected = mSelectionModel->isSelected(index);
         if (selected) {
-            Akonadi::Collection collection = index.data(Akonadi::CollectionModel::CollectionRole).value<Akonadi::Collection>();
-            lst<<collection.id();
+            const Akonadi::Collection collection = index.data(Akonadi::CollectionModel::CollectionRole).value<Akonadi::Collection>();
+            lst << collection;
         }
 
     }

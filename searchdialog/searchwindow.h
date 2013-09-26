@@ -152,6 +152,7 @@ private Q_SLOTS:
     void slotSelectMultipleFolders();
 
 private:
+    QList<Akonadi::Collection> mCollectionId;
     QString mQuery;
     bool mCloseRequested;
     int mSortColumn;

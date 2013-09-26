@@ -26,10 +26,10 @@ class SelectMultiCollectionDialog : public KDialog
 {
     Q_OBJECT
 public:
-    explicit SelectMultiCollectionDialog(const QList<Akonadi::Entity::Id> &selectedCollection, QWidget *parent);
+    explicit SelectMultiCollectionDialog(const QList<Akonadi::Collection::Id> &selectedCollection, QWidget *parent = 0);
     ~SelectMultiCollectionDialog();
 
-    QList<Akonadi::Collection::Id> selectedCollection() const;
+    QList<Akonadi::Collection> selectedCollection() const;
 
 private:
     void writeConfig();

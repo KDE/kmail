@@ -35,13 +35,13 @@ public:
     explicit SelectMultiCollectionWidget(const QList<Akonadi::Collection::Id> &selectedCollection, QWidget *parent=0);
     ~SelectMultiCollectionWidget();
 
-    QList<Akonadi::Collection::Id> selectedCollection(const QModelIndex &parent = QModelIndex()) const;
+    QList<Akonadi::Collection> selectedCollection(const QModelIndex &parent = QModelIndex()) const;
 
 private Q_SLOTS:
     void slotCollectionsInserted(const QModelIndex &parent, int start, int end);
 
 private:
-    QList<Akonadi::Collection::Id> (mListCollection);
+    QList<Akonadi::Collection::Id> mListCollection;
     QItemSelectionModel *mSelectionModel;
     Akonadi::CollectionModel *mCollectionModel;
     Akonadi::CollectionView *mCollectionView;

@@ -38,12 +38,16 @@ public:
     bool recursive() const;
     void setRecursive( bool );
 
+    void setListCollection( const QList<Akonadi::Collection::Id> &col);
+    QList<Akonadi::Collection::Id> listCollection() const;
+
     QByteArray type() const;
     Attribute *clone() const;
     QByteArray serialized() const;
     void deserialize( const QByteArray &data );
 
 private:
+    QList<Akonadi::Collection::Id> mListCollection;
     QByteArray mDescription;
     Akonadi::Collection mBaseCollection;
     bool mRecursive;

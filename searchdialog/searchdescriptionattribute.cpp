@@ -48,6 +48,7 @@ QByteArray SearchDescriptionAttribute::serialized() const
     s << mBaseCollection.id();
     s << mRecursive;
     s << mDescription;
+    s << mListCollection;
     return ba;
 }
 
@@ -59,6 +60,7 @@ void SearchDescriptionAttribute::deserialize( const QByteArray &data )
     mBaseCollection = Akonadi::Collection( id );
     s >> mRecursive;
     s >> mDescription;
+    s >> mListCollection;
 }
 
 QByteArray SearchDescriptionAttribute::description() const
@@ -89,4 +91,14 @@ bool SearchDescriptionAttribute::recursive() const
 void SearchDescriptionAttribute::setRecursive( bool r )
 {
     mRecursive = r;
+}
+
+void SearchDescriptionAttribute::setListCollection( const QList<Akonadi::Collection::Id> &col)
+{
+    mListCollection = col;
+}
+
+QList<Akonadi::Collection::Id> SearchDescriptionAttribute::listCollection() const
+{
+    return mListCollection;
 }
