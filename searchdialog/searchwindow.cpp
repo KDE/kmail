@@ -180,6 +180,8 @@ SearchWindow::SearchWindow( KMMainWidget *widget, const Akonadi::Collection &col
              this, SLOT(slotViewMsg(Akonadi::Item)) );
     connect( mUi.mLbxMatches, SIGNAL(currentChanged(Akonadi::Item)),
              this, SLOT(slotCurrentChanged(Akonadi::Item)) );
+    connect( mUi.mChkMultiFolders, SIGNAL(clicked()),
+             this, SLOT(slotSelectMultipleFolders()));
 
     connect( KMKernel::self()->folderCollectionMonitor(), SIGNAL(collectionStatisticsChanged(Akonadi::Collection::Id,Akonadi::CollectionStatistics)), this, SLOT(updateCollectionStatistic(Akonadi::Collection::Id,Akonadi::CollectionStatistics)) );
 
@@ -817,6 +819,11 @@ void SearchWindow::slotDebugQuery()
     dlg->exec();
     delete dlg;
 #endif
+}
+
+void SearchWindow::slotSelectMultipleFolders()
+{
+    //TODO
 }
 
 }

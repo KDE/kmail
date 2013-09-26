@@ -149,6 +149,7 @@ private Q_SLOTS:
     void slotSearchFolderRenameDone( KJob* );
 
     void slotContextMenuRequested( const QPoint& );
+    void slotSelectMultipleFolders();
 
 private:
     QString mQuery;

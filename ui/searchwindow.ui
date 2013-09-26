@@ -10,15 +10,15 @@
     <height>637</height>
    </rect>
   </property>
-  <layout class="QVBoxLayout" name="verticalLayout">
-   <item>
+  <layout class="QGridLayout" name="gridLayout">
+   <item row="0" column="0">
     <widget class="QRadioButton" name="mChkbxAllFolders">
      <property name="text">
       <string>Search in &amp;all folders</string>
      </property>
     </widget>
    </item>
-   <item>
+   <item row="1" column="0">
     <layout class="QHBoxLayout" name="horizontalLayout">
      <item>
       <widget class="QRadioButton" name="mChkbxSpecificFolders">
@@ -45,17 +45,35 @@
      </item>
     </layout>
    </item>
-   <item>
+   <item row="2" column="0">
+    <layout class="QHBoxLayout" name="horizontalLayout_4">
+     <item>
+      <widget class="QRadioButton" name="mChkMultiFolders">
+       <property name="text">
+        <string>Select specific folders</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="selectMultipleFolders">
+       <property name="text">
+        <string>Select folders...</string>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </item>
+   <item row="3" column="0">
     <widget class="Line" name="line_2">
      <property name="orientation">
       <enum>Qt::Horizontal</enum>
      </property>
     </widget>
    </item>
-   <item>
+   <item row="4" column="0">
     <widget class="KMail::NepomukSearchPatternEdit" name="mPatternEdit" native="true"/>
    </item>
-   <item>
+   <item row="5" column="0">
     <widget class="Akonadi::EntityTreeView" name="mLbxMatches">
      <property name="contextMenuPolicy">
       <enum>Qt::CustomContextMenu</enum>
@@ -74,7 +92,7 @@
      </property>
     </widget>
    </item>
-   <item>
+   <item row="6" column="0">
     <layout class="QHBoxLayout" name="horizontalLayout_2">
      <item>
       <widget class="QLabel" name="mSearchFolderLbl">
@@ -115,14 +133,14 @@
      </item>
     </layout>
    </item>
-   <item>
+   <item row="7" column="0">
     <widget class="Line" name="line">
      <property name="orientation">
       <enum>Qt::Horizontal</enum>
      </property>
     </widget>
    </item>
-   <item>
+   <item row="8" column="0">
     <layout class="QHBoxLayout" name="horizontalLayout_3">
      <item>
       <widget class="QLabel" name="mStatusLbl">
@@ -150,25 +168,19 @@
  </widget>
  <customwidgets>
   <customwidget>
-   <class>KDialogButtonBox</class>
-   <extends>QDialogButtonBox</extends>
-   <header>kdialogbuttonbox.h</header>
-  </customwidget>
-  <customwidget>
    <class>KLineEdit</class>
    <extends>QLineEdit</extends>
    <header>klineedit.h</header>
   </customwidget>
   <customwidget>
+   <class>KDialogButtonBox</class>
+   <extends>QDialogButtonBox</extends>
+   <header>kdialogbuttonbox.h</header>
+  </customwidget>
+  <customwidget>
    <class>KPushButton</class>
    <extends>QPushButton</extends>
    <header>kpushbutton.h</header>
-  </customwidget>
-  <customwidget>
-   <class>KMail::NepomukSearchPatternEdit</class>
-   <extends>MailCommon::SearchPatternEdit</extends>
-   <header location="local">searchdialog/nepomuksearchpatternedit.h</header>
-   <container>1</container>
   </customwidget>
   <customwidget>
    <class>MailCommon::FolderRequester</class>
@@ -180,6 +192,12 @@
    <class>Akonadi::EntityTreeView</class>
    <extends>QTreeView</extends>
    <header location="global">Akonadi/EntityTreeView</header>
+  </customwidget>
+  <customwidget>
+   <class>KMail::NepomukSearchPatternEdit</class>
+   <extends>QWidget</extends>
+   <header>searchdialog/nepomuksearchpatternedit.h</header>
+   <container>1</container>
   </customwidget>
  </customwidgets>
  <resources/>
