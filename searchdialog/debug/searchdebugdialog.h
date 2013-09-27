@@ -30,6 +30,7 @@ public:
 
 private Q_SLOTS:
     void slotSaveAs();
+    void slotSearchInfoWithNepomuk();
 
 private:
     void readConfig();

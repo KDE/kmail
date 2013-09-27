@@ -17,27 +17,41 @@
 
 #include "searchdebugdialog.h"
 #include "searchdebugwidget.h"
+#include "searchdebugnepomukshowdialog.h"
 
 #include "pimcommon/util/pimutil.h"
 
 #include <KLocale>
 
+#include <QPointer>
+#include <QInputDialog>
+
 SearchDebugDialog::SearchDebugDialog(const QString &query, QWidget *parent)
     : KDialog(parent)
 {
     setCaption( i18n( "Search query debug" ) );
-    setButtons( Close | User1 );
+    setButtons( Close | User1 | User2 );
     setButtonText(User1, i18n("Save As..."));
+    setButtonText(User2, i18n("Search info with nepomukshow..."));
 
     mSearchDebugWidget = new SearchDebugWidget(query, this);
     setMainWidget( mSearchDebugWidget );
     connect(this, SIGNAL(user1Clicked()), this, SLOT(slotSaveAs()));
+    connect(this, SIGNAL(user2Clicked()), this, SLOT(slotSearchInfoWithNepomuk()));
     readConfig();
 }
 
 SearchDebugDialog::~SearchDebugDialog()
 {
     writeConfig();
+}
+
+void SearchDebugDialog::slotSearchInfoWithNepomuk()
+{
+    const QString nepomukId = QInputDialog::getText(this, i18n("Search with nepomukshow"), i18n("Nepomuk id:"));
+    QPointer<SearchDebugNepomukShowDialog> dlg = new SearchDebugNepomukShowDialog(nepomukId, this);
+    dlg->exec();
+    delete dlg;
 }
 
 void SearchDebugDialog::readConfig()

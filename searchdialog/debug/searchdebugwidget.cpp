@@ -69,7 +69,7 @@ void SearchResultListView::contextMenuEvent( QContextMenuEvent * event )
     QAction *act = popup->exec( event->globalPos() );
     delete popup;
     if (act == searchNepomukShow) {
-        const QString uid = index.data( Qt::DisplayRole ).toString();
+        const QString uid = QLatin1String("akonadi:?item=")  + index.data( Qt::DisplayRole ).toString();
         QPointer<SearchDebugNepomukShowDialog> dlg = new SearchDebugNepomukShowDialog(uid, this);
         dlg->exec();
         delete dlg;

@@ -26,19 +26,23 @@
 #include <KStandardDirs>
 
 #include <QProcess>
+#include <QInputDialog>
+#include <QPointer>
 
 SearchDebugNepomukShowDialog::SearchDebugNepomukShowDialog(const QString &nepomukId, QWidget *parent)
     : KDialog(parent)
 {
     setCaption( i18n( "Nepomuk show result" ) );
-    setButtons( Close | User1 );
+    setButtons( Close | User1 | User2 );
     setButtonText(User1, i18n("Save As..."));
+    setButtonText(User2, i18n("Search info with nepomukshow..."));
 
     mResult = new PimCommon::PlainTextEditorWidget;
     mResult->editor()->setReadOnly(true);
     setMainWidget( mResult );
 
     connect(this, SIGNAL(user1Clicked()), this, SLOT(slotSaveAs()));
+    connect(this, SIGNAL(user2Clicked()), this, SLOT(slotSearchInfoWithNepomuk()));
     readConfig();
     executeNepomukShow(nepomukId);
 }
@@ -48,6 +52,14 @@ SearchDebugNepomukShowDialog::~SearchDebugNepomukShowDialog()
     writeConfig();
 }
 
+void SearchDebugNepomukShowDialog::slotSearchInfoWithNepomuk()
+{
+    const QString nepomukId = QInputDialog::getText(this, i18n("Search with nepomukshow"), i18n("Nepomuk id:"));
+    QPointer<SearchDebugNepomukShowDialog> dlg = new SearchDebugNepomukShowDialog(nepomukId, this);
+    dlg->exec();
+    delete dlg;
+}
+
 void SearchDebugNepomukShowDialog::executeNepomukShow(const QString &nepomukId)
 {
     const QString path = KStandardDirs::findExe( QLatin1String("nepomukshow") );
@@ -55,7 +67,7 @@ void SearchDebugNepomukShowDialog::executeNepomukShow(const QString &nepomukId)
         mResult->editor()->setPlainText(i18n("Sorry you don't have \"nepomukshow\" installed on your computer."));
     } else {
         QStringList arguments;
-        arguments << QString::fromLatin1("akonadi:?item=%1").arg(nepomukId);
+        arguments << nepomukId;
         QProcess proc;
         proc.start(path, arguments);
         if (!proc.waitForFinished()) {
