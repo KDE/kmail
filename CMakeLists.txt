@@ -28,6 +28,7 @@ include_directories(
   ${CMAKE_SOURCE_DIR}/libkleo
   ${CMAKE_SOURCE_DIR}/messagelist
   ${CMAKE_SOURCE_DIR}/messageviewer
+  ${CMAKE_BINARY_DIR}/messageviewer
   ${CMAKE_SOURCE_DIR}/templateparser
   ${CMAKE_BINARY_DIR}/templateparser
   ${CMAKE_SOURCE_DIR}/messagecomposer

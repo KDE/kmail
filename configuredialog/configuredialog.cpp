@@ -68,6 +68,7 @@ using KPIM::RecentAddresses;
 #include "messageviewer/widgets/invitationsettings.h"
 #include "messageviewer/header/customheadersettingwidget.h"
 #include "messageviewer/widgets/printingsettings.h"
+#include "messageviewer/adblock/adblocksettingwidget.h"
 #include "messagelist/core/settings.h"
 #include "messagelist/messagelistutil.h"
 #include "messagecore/settings/globalsettings.h"
@@ -3394,6 +3395,9 @@ SecurityPage::SecurityPage( const KComponentData &instance, QWidget *parent )
   //
   mSMimeTab = new SMimeTab();
   addTab( mSMimeTab, i18n("S/MIME Validation") );
+
+  mSAdBlockTab = new SecurityPageAdBlockTab;
+  addTab( mSAdBlockTab, i18n("Ad block") );
 }
 
 QString SecurityPage::GeneralTab::helpAnchor() const
@@ -3468,6 +3472,43 @@ void SecurityPage::GeneralTab::save()
   MessageViewer::GlobalSettings::self()->setAlwaysDecrypt( mSGTab.mAlwaysDecrypt->isChecked() );
   MessageViewer::GlobalSettings::self()->setScamDetectionEnabled( mSGTab.mScamDetection->isChecked() );
   MessageViewer::GlobalSettings::self()->setScamDetectionWhiteList( mSGTab.scamWhiteList->stringList() );
+}
+
+//Adblock
+
+QString SecurityPageAdBlockTab::helpAnchor() const
+{
+    return QString();
+}
+
+SecurityPageAdBlockTab::SecurityPageAdBlockTab( QWidget * parent )
+  : ConfigModuleTab( parent )
+{
+    QHBoxLayout *lay = new QHBoxLayout;
+    lay->setMargin(0);
+
+    mWidget = new MessageViewer::AdBlockSettingWidget;
+    lay->addWidget(mWidget);
+    setLayout(lay);
+}
+
+SecurityPageAdBlockTab::~SecurityPageAdBlockTab()
+{
+}
+
+void SecurityPageAdBlockTab::save()
+{
+
+}
+
+void SecurityPageAdBlockTab::doLoadFromGlobalSettings()
+{
+
+}
+
+void SecurityPageAdBlockTab::doLoadOther()
+{
+
 }
 
 QString SecurityPage::MDNTab::helpAnchor() const

@@ -73,6 +73,7 @@ namespace MessageViewer {
   class ConfigureWidget;
   class InvitationSettings;
   class PrintingSettings;
+  class AdBlockSettingWidget;
 }
 
 namespace TemplateParser {
@@ -873,6 +874,26 @@ private:
   Kleo::CryptoConfig* mConfig;
 };
 
+class SecurityPageAdBlockTab : public ConfigModuleTab {
+  Q_OBJECT
+public:
+  explicit SecurityPageAdBlockTab( QWidget * parent=0 );
+  ~SecurityPageAdBlockTab();
+
+  QString helpAnchor() const;
+
+  void save();
+
+private:
+  void doLoadFromGlobalSettings();
+  void doLoadOther();
+  //FIXME virtual void doResetToDefaultsOther();
+
+private:
+  MessageViewer::AdBlockSettingWidget *mWidget;
+};
+
+
 class KMAIL_EXPORT SecurityPage : public ConfigModuleWithTabs {
   Q_OBJECT
 public:
@@ -891,6 +912,7 @@ private:
   ComposerCryptoTab *mComposerCryptoTab;
   WarningTab    *mWarningTab;
   SMimeTab      *mSMimeTab;
+  SecurityPageAdBlockTab *mSAdBlockTab;
 };
 
 
