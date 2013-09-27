@@ -83,6 +83,7 @@ SelectMultiCollectionWidget::SelectMultiCollectionWidget(const QList<Akonadi::Co
 
     mFolderView = new QTreeView;
     mFolderView->setAlternatingRowColors(true);
+    mFolderView->setModel(mCollectionFilter);
 
     vbox->addWidget(mFolderView);
 }
