@@ -32,9 +32,25 @@
 #include <QVBoxLayout>
 #include <QTreeView>
 
+SelectMultiCollectionWidget::SelectMultiCollectionWidget(QWidget *parent)
+    : QWidget(parent)
+{
+    initialize();
+}
+
+
 SelectMultiCollectionWidget::SelectMultiCollectionWidget(const QList<Akonadi::Collection::Id> &selectedCollection, QWidget *parent)
     : QWidget(parent),
       mListCollection(selectedCollection)
+{
+    initialize();
+}
+
+SelectMultiCollectionWidget::~SelectMultiCollectionWidget()
+{
+}
+
+void SelectMultiCollectionWidget::initialize()
 {
     QVBoxLayout *vbox = new QVBoxLayout;
     setLayout(vbox);
@@ -86,10 +102,6 @@ SelectMultiCollectionWidget::SelectMultiCollectionWidget(const QList<Akonadi::Co
     mFolderView->setModel(mCollectionFilter);
 
     vbox->addWidget(mFolderView);
-}
-
-SelectMultiCollectionWidget::~SelectMultiCollectionWidget()
-{
 }
 
 void SelectMultiCollectionWidget::updateStatus(const QModelIndex &parent)

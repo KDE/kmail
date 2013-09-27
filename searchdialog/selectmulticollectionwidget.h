@@ -35,6 +35,7 @@ class SelectMultiCollectionWidget : public QWidget
     Q_OBJECT
 public:
     explicit SelectMultiCollectionWidget(const QList<Akonadi::Collection::Id> &selectedCollection, QWidget *parent=0);
+    explicit SelectMultiCollectionWidget(QWidget *parent=0);
     ~SelectMultiCollectionWidget();
 
     QList<Akonadi::Collection> selectedCollection(const QModelIndex &parent = QModelIndex()) const;
@@ -44,6 +45,7 @@ private Q_SLOTS:
     void slotSetCollectionFilter(const QString &filter);
 
 private:
+    void initialize();
     void updateStatus(const QModelIndex &parent);
     QList<Akonadi::Collection::Id> mListCollection;
     QTreeView *mFolderView;
