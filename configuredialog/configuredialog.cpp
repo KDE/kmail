@@ -3498,12 +3498,12 @@ SecurityPageAdBlockTab::~SecurityPageAdBlockTab()
 
 void SecurityPageAdBlockTab::save()
 {
-
+    mWidget->save();
 }
 
 void SecurityPageAdBlockTab::doLoadFromGlobalSettings()
 {
-
+    mWidget->doLoadFromGlobalSettings();
 }
 
 void SecurityPageAdBlockTab::doLoadOther()
