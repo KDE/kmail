@@ -3489,6 +3489,7 @@ SecurityPageAdBlockTab::SecurityPageAdBlockTab( QWidget * parent )
 
     mWidget = new MessageViewer::AdBlockSettingWidget;
     lay->addWidget(mWidget);
+    connect(mWidget, SIGNAL(changed(bool)), SLOT(slotEmitChanged()));
     setLayout(lay);
 }
 
