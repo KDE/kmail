@@ -2880,6 +2880,10 @@ void KMMainWidget::showMessagePopup(const Akonadi::Item&msg ,const KUrl&url,cons
         menu->addAction( mMsgView->copyImageLocation());
         menu->addAction( mMsgView->downloadImageToDiskAction());
         menu->addAction( mMsgView->shareImage());
+        if (mMsgView->adblockEnabled()) {
+            menu->addSeparator();
+            menu->addAction( mMsgView->blockImage());
+        }
       }
       urlMenuAdded = true;
     }
@@ -2938,7 +2942,7 @@ void KMMainWidget::showMessagePopup(const Akonadi::Item&msg ,const KUrl&url,cons
         menu->addAction( mMsgView->shareImage());
         menu->addSeparator();
         if (mMsgView->adblockEnabled()) {
-            mMsgView->blockImage();
+            menu->addAction( mMsgView->blockImage() );
             menu->addSeparator();
         }
       }

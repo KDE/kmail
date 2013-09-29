@@ -496,6 +496,10 @@ void KMReaderMainWin::showMessagePopup(const Akonadi::Item&msg ,const KUrl&url,c
         menu->addAction( mReaderWin->copyImageLocation());
         menu->addAction(mReaderWin->downloadImageToDiskAction());
         menu->addAction(mReaderWin->shareImage());
+        if (mReaderWin->adblockEnabled()) {
+            menu->addSeparator();
+            menu->addAction( mReaderWin->blockImage());
+        }
       }
       urlMenuAdded = true;
     }
@@ -553,6 +557,10 @@ void KMReaderMainWin::showMessagePopup(const Akonadi::Item&msg ,const KUrl&url,c
         menu->addAction( mReaderWin->downloadImageToDiskAction());
         menu->addAction( mReaderWin->shareImage());
         menu->addSeparator();
+        if (mReaderWin->adblockEnabled()) {
+            menu->addAction( mReaderWin->blockImage());
+            menu->addSeparator();
+        }
       }
 
       menu->addAction( mReaderWin->viewSourceAction() );
