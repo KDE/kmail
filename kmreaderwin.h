@@ -151,6 +151,7 @@ public:
   KAction *saveAsAction();
   KAction *saveMessageDisplayFormatAction();
   KAction *resetMessageDisplayFormatAction();
+  KAction *blockImage();
 
   KAction *editContactAction() const { return mEditContactAction; }
 
@@ -170,6 +171,7 @@ public:
 
   void setContactItem(const Akonadi::Item& contact, const KABC::Addressee &address);
   void clearContactItem();
+  bool adblockEnabled() const;
 
 signals:
   /** Emitted after parsing of a message to have it stored

@@ -855,6 +855,16 @@ KAction *KMReaderWin::resetMessageDisplayFormatAction()
     return mViewer->resetMessageDisplayFormatAction();
 }
 
+KAction *KMReaderWin::blockImage()
+{
+    return mViewer->blockImage();
+}
+
+bool KMReaderWin::adblockEnabled() const
+{
+    return mViewer->adblockEnabled();
+}
+
 //-----------------------------------------------------------------------------
 void KMReaderWin::slotShareImage()
 {

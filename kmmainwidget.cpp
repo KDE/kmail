@@ -2937,6 +2937,10 @@ void KMMainWidget::showMessagePopup(const Akonadi::Item&msg ,const KUrl&url,cons
         menu->addAction( mMsgView->downloadImageToDiskAction());
         menu->addAction( mMsgView->shareImage());
         menu->addSeparator();
+        if (mMsgView->adblockEnabled()) {
+            mMsgView->blockImage();
+            menu->addSeparator();
+        }
       }
       menu->addAction( mMsgView->viewSourceAction() );
       menu->addAction( mMsgView->toggleFixFontAction() );
