@@ -865,6 +865,11 @@ bool KMReaderWin::adblockEnabled() const
     return mViewer->adblockEnabled();
 }
 
+KAction *KMReaderWin::openBlockableItems()
+{
+    return mViewer->openBlockableItems();
+}
+
 //-----------------------------------------------------------------------------
 void KMReaderWin::slotShareImage()
 {

@@ -2974,6 +2974,10 @@ void KMMainWidget::showMessagePopup(const Akonadi::Item&msg ,const KUrl&url,cons
         menu->addSeparator();
     }
     menu->addAction( mMsgActions->annotateAction() );
+    if (mMsgView && mMsgView->adblockEnabled()) {
+        menu->addSeparator();
+        menu->addAction( mMsgView->openBlockableItems());
+    }
   }
   KAcceleratorManager::manage(menu);
   menu->exec( aPoint, 0 );

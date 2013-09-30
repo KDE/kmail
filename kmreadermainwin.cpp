@@ -586,6 +586,10 @@ void KMReaderMainWin::showMessagePopup(const Akonadi::Item&msg ,const KUrl&url,c
       menu->addAction( mReaderWin->toggleFixFontAction() );
       menu->addAction( mReaderWin->toggleMimePartTreeAction() );
     }
+    if (mReaderWin->adblockEnabled()) {
+        menu->addSeparator();
+        menu->addAction( mReaderWin->openBlockableItems());
+    }
   }
   if (menu) {
     KAcceleratorManager::manage(menu);

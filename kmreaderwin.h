@@ -152,6 +152,7 @@ public:
   KAction *saveMessageDisplayFormatAction();
   KAction *resetMessageDisplayFormatAction();
   KAction *blockImage();
+  KAction *openBlockableItems();
 
   KAction *editContactAction() const { return mEditContactAction; }
 
