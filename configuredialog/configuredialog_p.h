@@ -887,7 +887,7 @@ public:
 private:
   void doLoadFromGlobalSettings();
   void doLoadOther();
-  //FIXME virtual void doResetToDefaultsOther();
+  void doResetToDefaultsOther();
 
 private:
   MessageViewer::AdBlockSettingWidget *mWidget;

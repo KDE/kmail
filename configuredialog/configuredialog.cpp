@@ -3512,6 +3512,12 @@ void SecurityPageAdBlockTab::doLoadOther()
 
 }
 
+void SecurityPageAdBlockTab::doResetToDefaultsOther()
+{
+  mWidget->doResetToDefaultsOther();
+}
+
+
 QString SecurityPage::MDNTab::helpAnchor() const
 {
   return QString::fromLatin1("configure-security-mdn");
