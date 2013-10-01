@@ -106,7 +106,7 @@ SearchDebugWidget::SearchDebugWidget(const QString &query, QWidget *parent)
     mResultView->setItemDelegate(new SearchDebugListDelegate(this));
 
     mItemView = new PimCommon::PlainTextEditorWidget;
-    mItemView->editor()->setReadOnly(true);
+    mItemView->setReadOnly(true);
 
     layout->addWidget( mTextEdit, 0, 0, 1, 2);
     layout->addWidget( new QLabel( i18n("Akonadi Id:") ), 1, 0 );

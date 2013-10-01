@@ -38,7 +38,7 @@ SearchDebugNepomukShowDialog::SearchDebugNepomukShowDialog(const QString &nepomu
     setButtonText(User2, i18n("Search info with nepomukshow..."));
 
     mResult = new PimCommon::PlainTextEditorWidget;
-    mResult->editor()->setReadOnly(true);
+    mResult->setReadOnly(true);
     setMainWidget( mResult );
 
     connect(this, SIGNAL(user1Clicked()), this, SLOT(slotSaveAs()));
