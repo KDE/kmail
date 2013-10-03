@@ -72,6 +72,7 @@ ConfigureAgentsWidget::ConfigureAgentsWidget(QWidget *parent)
     connect(mTreeWidget, SIGNAL(currentItemChanged(QTreeWidgetItem*,QTreeWidgetItem*)), SLOT(slotItemClicked(QTreeWidgetItem*)));
     connect(mTreeWidget, SIGNAL(itemChanged(QTreeWidgetItem*,int)), SIGNAL(changed()));
     connect(mConfigure, SIGNAL(clicked()), this, SLOT(slotConfigureAgent()));
+    connect(mTreeWidget, SIGNAL(itemDoubleClicked(QTreeWidgetItem*,int)), SLOT(slotConfigureAgent()));
     mAgentPathList = Akonadi::XdgBaseDirs::findAllResourceDirs( "data", QLatin1String( "akonadi/agents" ) );
     initialize();
     readConfig();
