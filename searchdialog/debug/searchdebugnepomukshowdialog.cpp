@@ -54,7 +54,13 @@ SearchDebugNepomukShowDialog::~SearchDebugNepomukShowDialog()
 
 void SearchDebugNepomukShowDialog::slotSearchInfoWithNepomuk()
 {
-    const QString nepomukId = QInputDialog::getText(this, i18n("Search with nepomukshow"), i18n("Nepomuk id:"));
+    QString defaultValue;
+    if (mResult->editor()->textCursor().hasSelection()) {
+        defaultValue = mResult->editor()->textCursor().selectedText().trimmed();
+    }
+    const QString nepomukId = QInputDialog::getText(this, i18n("Search with nepomukshow"), i18n("Nepomuk id:"), QLineEdit::Normal, defaultValue);
+    if (nepomukId.isEmpty())
+        return;
     QPointer<SearchDebugNepomukShowDialog> dlg = new SearchDebugNepomukShowDialog(nepomukId, this);
     dlg->exec();
     delete dlg;
