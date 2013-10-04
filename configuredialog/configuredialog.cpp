@@ -2814,6 +2814,7 @@ ComposerPageCharsetTab::ComposerPageCharsetTab( QWidget * parent )
     new PimCommon::SimpleStringListEditor( this, PimCommon::SimpleStringListEditor::All,
                                 i18n("A&dd..."), i18n("Remo&ve"),
                                 i18n("&Modify..."), i18n("Enter charset:") );
+  mCharsetListEditor->setUpDownAutoRepeat(true);
   connect( mCharsetListEditor, SIGNAL(changed()),
            this, SLOT(slotEmitChanged()) );
 
