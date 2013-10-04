@@ -139,7 +139,7 @@
 #include <kmime/kmime_header_parsing.h>
 #include <kmime/kmime_message.h>
 #include <ksieveui/managesievescriptsdialog.h>
-#include <ksieveui/util.h>
+#include <ksieveui/util/util.h>
 
 // KDELIBS includes
 #include <kaboutdata.h>
