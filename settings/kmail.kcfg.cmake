@@ -195,7 +195,7 @@
         <default>false</default>
       </entry>
        <entry name="TooManyRecipients" type="Bool" key="too-many-recipients">
-        <label>Warn if the number of recipients is larger than</label>
+        <label>Warn if the number of recipients is more than:</label>
         <default>${WARN_TOOMANY_RECIPIENTS_DEFAULT}</default>
         <whatsthis>If the number of recipients is larger than this value, KMail will warn and ask for a confirmation before sending the mail. The warning can be turned off.</whatsthis>
       </entry>

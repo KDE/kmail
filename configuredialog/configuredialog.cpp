@@ -2206,229 +2206,389 @@ QString ComposerPage::GeneralTab::helpAnchor() const
   return QString::fromLatin1("configure-composer-general");
 }
 
+
 ComposerPageGeneralTab::ComposerPageGeneralTab( QWidget * parent )
   : ConfigModuleTab( parent )
 {
-  // tmp. vars:
-  QVBoxLayout *vlay;
-  QHBoxLayout *hlay;
-  QLabel      *label;
+  // Temporary variables
+  QLabel *label;
+  QGroupBox *groupBox;
+  QVBoxLayout *groupVBoxLayout;
+  QGridLayout *groupGridLayout;
+  QString helpText;
+  int row;
 
-  vlay = new QVBoxLayout( this );
-  vlay->setSpacing( KDialog::spacingHint() );
-  vlay->setMargin( KDialog::marginHint() );
+  // Main layout
+  QHBoxLayout *hb1 = new QHBoxLayout();			// box with 2 columns
+  QVBoxLayout *vb1 = new QVBoxLayout();			// first with 2 groupboxes
+  QVBoxLayout *vb2 = new QVBoxLayout();			// second with 1 groupbox
 
-  // some check buttons...
+  // "Signature" group
+  groupBox = new QGroupBox( i18nc( "@title:group", "Signature" ) );
+  groupVBoxLayout = new QVBoxLayout();
+
+  // "Automatically insert signature" checkbox
   mAutoAppSignFileCheck = new QCheckBox(
            MessageComposer::MessageComposerSettings::self()->autoTextSignatureItem()->label(),
            this );
-  vlay->addWidget( mAutoAppSignFileCheck );
+
+  helpText = i18n( "Automatically insert the configured signature\n"
+                   "when starting to compose a message" );
+  mAutoAppSignFileCheck->setToolTip( helpText );
+  mAutoAppSignFileCheck->setWhatsThis( helpText );
+
   connect( mAutoAppSignFileCheck, SIGNAL(stateChanged(int)),
            this, SLOT(slotEmitChanged()) );
+  groupVBoxLayout->addWidget( mAutoAppSignFileCheck );
 
+  // "Insert signature above quoted text" checkbox
   mTopQuoteCheck = new QCheckBox(
                 MessageComposer::MessageComposerSettings::self()->prependSignatureItem()->label(), this );
   mTopQuoteCheck->setEnabled( false );
-  vlay->addWidget( mTopQuoteCheck);
+
+  helpText = i18n( "Insert the signature above any quoted text" );
+  mTopQuoteCheck->setToolTip( helpText );
+  mTopQuoteCheck->setWhatsThis( helpText );
+
   connect( mTopQuoteCheck, SIGNAL(stateChanged(int)),
            this, SLOT(slotEmitChanged()) );
   connect( mAutoAppSignFileCheck, SIGNAL(toggled(bool)),
            mTopQuoteCheck, SLOT(setEnabled(bool)) );
+  groupVBoxLayout->addWidget( mTopQuoteCheck );
+
+  // "Prepend separator to signature" checkbox
   mDashDashCheck = new QCheckBox(
                MessageComposer::MessageComposerSettings::self()->dashDashSignatureItem()->label(), this );
   mDashDashCheck->setEnabled( false );
-  vlay->addWidget( mDashDashCheck);
+
+  helpText = i18n( "Insert the RFC-compilant signature separator\n"
+                   "(two dashes and a space on a line) before the signature" );
+  mDashDashCheck->setToolTip( helpText );
+  mDashDashCheck->setWhatsThis( helpText );
+
   connect( mDashDashCheck, SIGNAL(stateChanged(int)),
            this, SLOT(slotEmitChanged()) );
   connect( mAutoAppSignFileCheck, SIGNAL(toggled(bool)),
            mDashDashCheck, SLOT(setEnabled(bool)) );
+  groupVBoxLayout->addWidget( mDashDashCheck);
 
-  mSmartQuoteCheck = new QCheckBox(
-           TemplateParser::GlobalSettings::self()->smartQuoteItem()->label(), this );
-  mSmartQuoteCheck->setToolTip(
-                 i18n( "When replying, add quote signs in front of all lines of the quoted text,\n"
-                       "even when the line was created by adding an additional linebreak while\n"
-                       "word-wrapping the text." ) );
-  vlay->addWidget( mSmartQuoteCheck );
-  connect( mSmartQuoteCheck, SIGNAL(stateChanged(int)),
-           this, SLOT(slotEmitChanged()) );
-
-  mReplyUsingHtml = new QCheckBox( TemplateParser::GlobalSettings::self()->replyUsingHtmlItem()->label(), this );
-  mReplyUsingHtml->setToolTip(
-                 i18n( "When replying or forwarding, only quote the message in the original format it was received "
-                       "or else, if unchecked, it will reply as plain text by default" ) );
-  vlay->addWidget( mReplyUsingHtml );
-  connect( mReplyUsingHtml, SIGNAL(stateChanged(int)),
-           this, SLOT(slotEmitChanged()) );
-
-
-  mImprovePlainTextOfHtmlMessage = new QCheckBox( MessageComposer::MessageComposerSettings::self()->improvePlainTextOfHtmlMessageItem()->label(), this );
-  vlay->addWidget( mImprovePlainTextOfHtmlMessage );
-  connect( mImprovePlainTextOfHtmlMessage, SIGNAL(stateChanged(int)),
-           this, SLOT(slotEmitChanged()) );
-
-  mQuoteSelectionOnlyCheck = new QCheckBox( MessageComposer::MessageComposerSettings::self()->quoteSelectionOnlyItem()->label(),
-                                            this );
-  mQuoteSelectionOnlyCheck->setToolTip(
-                 i18n( "When replying, only quote the selected text instead of the complete message "
-                       "when there is text selected in the message window." ) );
-  vlay->addWidget( mQuoteSelectionOnlyCheck );
-  connect( mQuoteSelectionOnlyCheck, SIGNAL(stateChanged(int)),
-           this, SLOT(slotEmitChanged()) );
-
+  // "Remove signature when replying" checkbox
   mStripSignatureCheck = new QCheckBox( TemplateParser::GlobalSettings::self()->stripSignatureItem()->label(),
                                         this );
-  vlay->addWidget( mStripSignatureCheck );
+
+  helpText = i18n( "When replying, do not quote any existing signature" );
+  mStripSignatureCheck->setToolTip( helpText );
+  mStripSignatureCheck->setWhatsThis( helpText );
+
   connect( mStripSignatureCheck, SIGNAL(stateChanged(int)),
            this, SLOT(slotEmitChanged()) );
+  groupVBoxLayout->addWidget( mStripSignatureCheck );
 
-  mAutoRequestMDNCheck = new QCheckBox(
-           GlobalSettings::self()->requestMDNItem()->label(), this);
-  vlay->addWidget( mAutoRequestMDNCheck );
-  connect( mAutoRequestMDNCheck, SIGNAL(stateChanged(int)),
+  groupBox->setLayout( groupVBoxLayout );
+  vb1->addWidget( groupBox );
+
+  // "Format" group
+  groupBox = new QGroupBox( i18nc( "@title:group", "Format" ) );
+  groupGridLayout = new QGridLayout();
+  row = 0;
+
+  // "Only quote selected text when replying" checkbox
+  mQuoteSelectionOnlyCheck = new QCheckBox( MessageComposer::MessageComposerSettings::self()->quoteSelectionOnlyItem()->label(),
+                                            this );
+  helpText = i18n( "When replying, only quote the selected text\n"
+                   "(instead of the complete message), if\n"
+                   "there is text selected in the message window." );
+  mQuoteSelectionOnlyCheck->setToolTip( helpText );
+  mQuoteSelectionOnlyCheck->setWhatsThis( helpText );
+
+  connect( mQuoteSelectionOnlyCheck, SIGNAL(stateChanged(int)),
            this, SLOT(slotEmitChanged()) );
+  groupGridLayout->addWidget( mQuoteSelectionOnlyCheck, row, 0, 1, -1 );
+  ++row;
 
-  mShowRecentAddressesInComposer = new QCheckBox(
-           MessageComposer::MessageComposerSettings::self()->showRecentAddressesInComposerItem()->label(),
-           this);
-  vlay->addWidget( mShowRecentAddressesInComposer );
-  connect( mShowRecentAddressesInComposer, SIGNAL(stateChanged(int)),
+  // "Use smart quoting" checkbox
+  mSmartQuoteCheck = new QCheckBox(
+           TemplateParser::GlobalSettings::self()->smartQuoteItem()->label(), this );
+  helpText = i18n( "When replying, add quote signs in front of all lines of the quoted text,\n"
+                   "even when the line was created by adding an additional line break while\n"
+                   "word-wrapping the text." );
+  mSmartQuoteCheck->setToolTip( helpText );
+  mSmartQuoteCheck->setWhatsThis( helpText );
+
+  connect( mSmartQuoteCheck, SIGNAL(stateChanged(int)),
            this, SLOT(slotEmitChanged()) );
+  groupGridLayout->addWidget( mSmartQuoteCheck, row, 0, 1, -1 );
+  ++row;
 
-  // a checkbox for "word wrap" and a spinbox for the column in
-  // which to wrap:
-  hlay = new QHBoxLayout(); // inherits spacing
-  vlay->addLayout( hlay );
+  // "Word wrap at column" checkbox/spinbox
   mWordWrapCheck = new QCheckBox(
            MessageComposer::MessageComposerSettings::self()->wordWrapItem()->label(), this);
-  hlay->addWidget( mWordWrapCheck );
-  connect( mWordWrapCheck, SIGNAL(stateChanged(int)),
-           this, SLOT(slotEmitChanged()) );
+
+  helpText = i18n( "Enable automatic word wrapping at the specified width" );
+  mWordWrapCheck->setToolTip( helpText );
+  mWordWrapCheck->setWhatsThis( helpText );
 
   mWrapColumnSpin = new KIntSpinBox( 30/*min*/, 78/*max*/, 1/*step*/,
            78/*init*/, this );
   mWrapColumnSpin->setEnabled( false ); // since !mWordWrapCheck->isChecked()
+
+  helpText = i18n( "Set the text width for automatic word wrapping" );
+  mWrapColumnSpin->setToolTip( helpText );
+  mWrapColumnSpin->setWhatsThis( helpText );
+
+  connect( mWordWrapCheck, SIGNAL(stateChanged(int)),
+           this, SLOT(slotEmitChanged()) );
   connect( mWrapColumnSpin, SIGNAL(valueChanged(int)),
            this, SLOT(slotEmitChanged()) );
-
-  hlay->addWidget( mWrapColumnSpin );
-  hlay->addStretch( 1 );
-  // only enable the spinbox if the checkbox is checked:
+  // only enable the spinbox if the checkbox is checked
   connect( mWordWrapCheck, SIGNAL(toggled(bool)),
            mWrapColumnSpin, SLOT(setEnabled(bool)) );
 
-  hlay = new QHBoxLayout();
-  vlay->addLayout( hlay );
+  groupGridLayout->addWidget( mWordWrapCheck, row, 0 );
+  groupGridLayout->addWidget( mWrapColumnSpin, row, 1 );
+  ++row;
 
-  label = new QLabel( MessageComposer::MessageComposerSettings::self()->maximumRecipientsItem()->label(), this );
-  hlay->addWidget( label );
+  // Spacing
+  groupGridLayout->setRowMinimumHeight( row, KDialog::spacingHint() );
+  ++row;
 
-  mMaximumRecipients = new KIntSpinBox( 0, 9999, 1, 1, this );
-  hlay->addWidget( mMaximumRecipients );
-  hlay->addStretch( 1 );
-  connect( mMaximumRecipients, SIGNAL(valueChanged(int)),
+  // "Reply/Forward using HTML if present" checkbox
+  mReplyUsingHtml = new QCheckBox( TemplateParser::GlobalSettings::self()->replyUsingHtmlItem()->label(), this );
+  helpText = i18n( "When replying or forwarding, quote the message\n"
+                   "in the original format it was received.\n"
+                   "If unchecked, the reply will be as plain text by default." );
+  mReplyUsingHtml->setToolTip( helpText );
+  mReplyUsingHtml->setWhatsThis( helpText );
+
+  connect( mReplyUsingHtml, SIGNAL(stateChanged(int)),
+           this, SLOT(slotEmitChanged()) );
+  groupGridLayout->addWidget( mReplyUsingHtml, row, 0, 1, -1 );
+  ++row;
+
+  // "Improve plain text of HTML" checkbox
+  mImprovePlainTextOfHtmlMessage = new QCheckBox( MessageComposer::MessageComposerSettings::self()->improvePlainTextOfHtmlMessageItem()->label(), this );
+
+  // For what is supported see http://www.grantlee.org/apidox/classGrantlee_1_1PlainTextMarkupBuilder.html
+  helpText = i18n( "Format the plain text part of a message from the HTML markup.\n"
+                   "Bold, italic and underlined text, lists, and external references\n"
+                   "are supported." );
+  mImprovePlainTextOfHtmlMessage->setToolTip( helpText );
+  mImprovePlainTextOfHtmlMessage->setWhatsThis( helpText );
+
+  connect( mImprovePlainTextOfHtmlMessage, SIGNAL(stateChanged(int)),
+           this, SLOT(slotEmitChanged()) );
+  groupGridLayout->addWidget( mImprovePlainTextOfHtmlMessage, row, 0, 1, -1 );
+  ++row;
+
+  // Spacing
+  groupGridLayout->setRowMinimumHeight( row, KDialog::spacingHint() );
+  ++row;
+
+  // "Autosave interval" spinbox
+  mAutoSave = new KIntSpinBox( 0, 60, 1, 1, this );
+  mAutoSave->setObjectName( QLatin1String("kcfg_AutosaveInterval") );
+  mAutoSave->setSpecialValueText( i18n("No autosave") );
+  mAutoSave->setSuffix( ki18ncp( "Interval suffix", " minute", " minutes" ) );
+
+  helpText = i18n( "Automatically save the message at this specified interval" );
+  mAutoSave->setToolTip( helpText );
+  mAutoSave->setWhatsThis( helpText );
+
+  label = new QLabel( GlobalSettings::self()->autosaveIntervalItem()->label(), this );
+  label->setBuddy( mAutoSave );
+
+  connect( mAutoSave, SIGNAL(valueChanged(int)),
            this, SLOT(slotEmitChanged()) );
 
+  groupGridLayout->addWidget( label, row, 0 );
+  groupGridLayout->addWidget( mAutoSave, row, 1 );
+  ++row;
+
 #ifdef KDEPIM_ENTERPRISE_BUILD
-  // a checkbox for "too many recipient warning" and a spinbox for the recipient threshold
-  hlay = new QHBoxLayout(); // inherits spacing
-  vlay->addLayout( hlay );
+  // "Default forwarding type" combobox
+  mForwardTypeCombo = new KComboBox( false, this );
+  mForwardTypeCombo->addItems( QStringList() << i18nc( "@item:inlistbox Inline mail forwarding",
+                                                       "Inline" )
+                                             << i18n( "As Attachment" ) );
+
+  helpText = i18n( "Set the default forwarded message format" );
+  mForwardTypeCombo->setToolTip( helpText );
+  mForwardTypeCombo->setWhatsThis( helpText );
+
+  label = new QLabel( i18n( "Default forwarding type:" ), this );
+  label->setBuddy( mForwardTypeCombo );
+
+  connect( mForwardTypeCombo, SIGNAL(activated(int)),
+           this, SLOT(slotEmitChanged()) );
+
+  groupGridLayout->addWidget( label, row, 0 );
+  groupGridLayout->addWidget( mForwardTypeCombo, row, 1 );
+  ++row;
+#endif
+
+  groupBox->setLayout( groupGridLayout );
+  vb1->addWidget( groupBox );
+
+  // "Recipients" group
+  groupBox = new QGroupBox( i18nc( "@title:group", "Recipients" ) );
+  groupGridLayout = new QGridLayout();
+  row = 0;
+
+  // "Automatically request MDNs" checkbox
+  mAutoRequestMDNCheck = new QCheckBox( GlobalSettings::self()->requestMDNItem()->label(),
+                                        this);
+
+  helpText = i18n( "By default, request a MDN whan starting to compose a message.\n"
+                   "You can select this on a per-message basis using \"Options - Request Disposition Notification\"" );
+  mAutoRequestMDNCheck->setToolTip( helpText );
+  mAutoRequestMDNCheck->setWhatsThis( helpText );
+
+  connect( mAutoRequestMDNCheck, SIGNAL(stateChanged(int)),
+           this, SLOT(slotEmitChanged()) );
+  groupGridLayout->addWidget( mAutoRequestMDNCheck, row, 0, 1, -1 );
+  ++row;
+
+  // Spacing
+  groupGridLayout->setRowMinimumHeight( row, KDialog::spacingHint() );
+  ++row;
+
+#ifdef KDEPIM_ENTERPRISE_BUILD
+  // "Warn if too many recipients" checkbox/spinbox
   mRecipientCheck = new QCheckBox(
            GlobalSettings::self()->tooManyRecipientsItem()->label(), this);
   mRecipientCheck->setObjectName( QLatin1String("kcfg_TooManyRecipients") );
-  hlay->addWidget( mRecipientCheck );
-  connect( mRecipientCheck, SIGNAL(stateChanged(int)),
-           this, SLOT(slotEmitChanged()) );
-
-  QString recipientCheckWhatsthis =
-      i18n( GlobalSettings::self()->tooManyRecipientsItem()->whatsThis().toUtf8() );
-  mRecipientCheck->setWhatsThis( recipientCheckWhatsthis );
+  helpText = i18n( GlobalSettings::self()->tooManyRecipientsItem()->whatsThis().toUtf8() );
+  mRecipientCheck->setWhatsThis( helpText );
   mRecipientCheck->setToolTip( i18n( "Warn if too many recipients are specified" ) );
 
   mRecipientSpin = new KIntSpinBox( 1/*min*/, 100/*max*/, 1/*step*/,
                                     5/*init*/, this );
   mRecipientSpin->setObjectName( QLatin1String("kcfg_RecipientThreshold") );
   mRecipientSpin->setEnabled( false );
+  helpText = i18n( GlobalSettings::self()->recipientThresholdItem()->whatsThis().toUtf8() );
+  mRecipientSpin->setWhatsThis( helpText );
+  mRecipientSpin->setToolTip( i18n( "Set the maximum number of recipients for the warning" ) );
+
+  connect( mRecipientCheck, SIGNAL(stateChanged(int)),
+           this, SLOT(slotEmitChanged()) );
   connect( mRecipientSpin, SIGNAL(valueChanged(int)),
            this, SLOT(slotEmitChanged()) );
-
-  QString recipientWhatsthis =
-      i18n( GlobalSettings::self()->recipientThresholdItem()->whatsThis().toUtf8() );
-  mRecipientSpin->setWhatsThis( recipientWhatsthis );
-  mRecipientSpin->setToolTip( i18n( "Warn if more than this many recipients are specified" ) );
-
-
-  hlay->addWidget( mRecipientSpin );
-  hlay->addStretch( 1 );
-  // only enable the spinbox if the checkbox is checked:
+  // only enable the spinbox if the checkbox is checked
   connect( mRecipientCheck, SIGNAL(toggled(bool)),
            mRecipientSpin, SLOT(setEnabled(bool)) );
+
+  groupGridLayout->addWidget( mRecipientCheck, row, 0, 1, 2);
+  groupGridLayout->addWidget( mRecipientSpin, row, 2 );
+  ++row;
 #endif
 
-  hlay = new QHBoxLayout(); // inherits spacing
-  vlay->addLayout( hlay );
-  mAutoSave = new KIntSpinBox( 0, 60, 1, 1, this );
-  mAutoSave->setObjectName( QLatin1String("kcfg_AutosaveInterval") );
-  label = new QLabel( GlobalSettings::self()->autosaveIntervalItem()->label(), this );
-  label->setBuddy( mAutoSave );
-  hlay->addWidget( label );
-  hlay->addWidget( mAutoSave );
-  mAutoSave->setSpecialValueText( i18n("No autosave") );
-  mAutoSave->setSuffix( i18n(" min") );
-  hlay->addStretch( 1 );
-  connect( mAutoSave, SIGNAL(valueChanged(int)),
+  // "Maximum Reply-to-All recipients" spinbox
+  mMaximumRecipients = new KIntSpinBox( 0, 9999, 1, 1, this );
+
+  helpText = i18n( "Only allow this many recipients to be specified for the message.\n"
+                   "This applies to doing a \"Reply to All\", entering recipients manually\n"
+                   "or using the \"Select...\" picker.  Setting this limit helps you to\n"
+                   "avoid accidentally sending a message to too many people.  Note,\n"
+                   "however, that it does not take account of distribution lists or\n"
+                   "mailing lists." );
+  mMaximumRecipients->setToolTip( helpText );
+  mMaximumRecipients->setWhatsThis( helpText );
+
+  label = new QLabel( MessageComposer::MessageComposerSettings::self()->maximumRecipientsItem()->label(), this );
+  label->setBuddy(mMaximumRecipients);
+
+  connect( mMaximumRecipients, SIGNAL(valueChanged(int)),
            this, SLOT(slotEmitChanged()) );
 
-#ifdef KDEPIM_ENTERPRISE_BUILD
-  hlay = new QHBoxLayout(); // inherits spacing
-  vlay->addLayout( hlay );
-  mForwardTypeCombo = new KComboBox( false, this );
-  label = new QLabel( i18n( "Default Forwarding Type:" ),
-                      this );
-  label->setBuddy( mForwardTypeCombo );
-  mForwardTypeCombo->addItems( QStringList() << i18nc( "@item:inlistbox Inline mail forwarding",
-                                                       "Inline" )
-                                             << i18n( "As Attachment" ) );
-  hlay->addWidget( label );
-  hlay->addWidget( mForwardTypeCombo );
-  hlay->addStretch( 1 );
-  connect( mForwardTypeCombo, SIGNAL(activated(int)),
+  groupGridLayout->addWidget( label, row, 0, 1, 2 );
+  groupGridLayout->addWidget( mMaximumRecipients, row, 2 );
+  ++row;
+
+  // Spacing
+  groupGridLayout->setRowMinimumHeight( row, KDialog::spacingHint() );
+  ++row;
+
+  // "Use recent addresses for autocompletion" checkbox
+  mShowRecentAddressesInComposer = new QCheckBox(
+           MessageComposer::MessageComposerSettings::self()->showRecentAddressesInComposerItem()->label(),
+           this);
+
+  helpText = i18n( "Remember recent addresses entered,\n"
+                   "and offer them for recipient completion" );
+  mShowRecentAddressesInComposer->setToolTip( helpText );
+  mShowRecentAddressesInComposer->setWhatsThis( helpText );
+
+  connect( mShowRecentAddressesInComposer, SIGNAL(stateChanged(int)),
            this, SLOT(slotEmitChanged()) );
-#endif
+  groupGridLayout->addWidget( mShowRecentAddressesInComposer, row, 0, 1, -1 );
+  ++row;
 
-  hlay = new QHBoxLayout(); // inherits spacing
-  vlay->addLayout( hlay );
-
-
-  QPushButton *completionOrderBtn = new QPushButton( i18n( "Configure Completion Order..." ), this );
-  connect( completionOrderBtn, SIGNAL(clicked()),
-           this, SLOT(slotConfigureCompletionOrder()) );
-  hlay->addWidget( completionOrderBtn );
-  hlay->addStretch();
-
-
-  hlay = new QHBoxLayout(); // inherits spacing
-  vlay->addLayout( hlay );
-
+  // "Maximum recent addresses retained" spinbox
   mMaximumRecentAddress = new KIntNumInput( this );
-  mMaximumRecentAddress->setSliderEnabled(false);
-  mMaximumRecentAddress->setMinimum(0);
-  mMaximumRecentAddress->setMaximum(999);
-  mMaximumRecentAddress->setSpecialValueText(i18n("No save"));
+  mMaximumRecentAddress->setSliderEnabled( false );
+  mMaximumRecentAddress->setMinimum( 0 );
+  mMaximumRecentAddress->setMaximum( 999 );
+  mMaximumRecentAddress->setSpecialValueText( i18nc( "No addresses are retained", "No save" ) );
+  mMaximumRecentAddress->setEnabled( false );
+
+  label = new QLabel( i18n( "Maximum recent addresses retained:" ) );
+  label->setBuddy( mMaximumRecentAddress );
+  label->setEnabled( false );
+
+  helpText = i18n( "The maximum number of recently entered addresses that will\n"
+                   "be remembered for completion" );
+  mMaximumRecentAddress->setToolTip( helpText );
+  mMaximumRecentAddress->setWhatsThis( helpText );
+
   connect( mMaximumRecentAddress, SIGNAL(valueChanged(int)),
            this, SLOT(slotEmitChanged()) );
+  connect( mShowRecentAddressesInComposer, SIGNAL(toggled(bool)),
+           mMaximumRecentAddress, SLOT(setEnabled(bool)) );
+  connect( mShowRecentAddressesInComposer, SIGNAL(toggled(bool)),
+           label, SLOT(setEnabled(bool)) );
 
-  label = new QLabel(i18n("Maximum recent address:"));
-  hlay->addWidget(label);
-  hlay->addWidget(mMaximumRecentAddress);
+  groupGridLayout->addWidget( label, row, 0, 1, 2 );
+  groupGridLayout->addWidget( mMaximumRecentAddress, row, 2 );
+  ++row;
 
+  // "Edit Recent Addresses" button
   QPushButton *recentAddressesBtn = new QPushButton( i18n( "Edit Recent Addresses..." ), this );
+  helpText = i18n( "Edit, add or remove recent addresses" );
+  recentAddressesBtn->setToolTip( helpText );
+  recentAddressesBtn->setWhatsThis( helpText );
+
   connect( recentAddressesBtn, SIGNAL(clicked()),
            this, SLOT(slotConfigureRecentAddresses()) );
-  hlay->addWidget( recentAddressesBtn );
-  hlay->addStretch();
-  vlay->addStretch( 100 );
+  groupGridLayout->addWidget( recentAddressesBtn, row, 1, 1, 2 );
+  ++row;
+
+  // Spacing
+  groupGridLayout->setRowMinimumHeight( row, KDialog::spacingHint() );
+  ++row;
+
+  // "Configure Completion Order" button
+  QPushButton *completionOrderBtn = new QPushButton( i18n( "Configure Completion Order..." ), this );
+  helpText = i18n( "Configure the order in which address books\n"
+                   "will be used when doing address completion" );
+  completionOrderBtn->setToolTip( helpText );
+  completionOrderBtn->setWhatsThis( helpText );
+
+  connect( completionOrderBtn, SIGNAL(clicked()),
+           this, SLOT(slotConfigureCompletionOrder()) );
+  groupGridLayout->addWidget( completionOrderBtn, row, 1, 1, 2 );
+
+  groupBox->setLayout( groupGridLayout );
+  vb2->addWidget( groupBox );
+
+  // Finish up main layout
+  vb1->addStretch( 1 );
+  vb2->addStretch( 1 );
+
+  hb1->addLayout( vb1 );
+  hb1->addLayout( vb2 );
+  setLayout( hb1 );
 }
+
 
 void ComposerPage::GeneralTab::doResetToDefaultsOther()
 {
