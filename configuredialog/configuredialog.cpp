@@ -2261,7 +2261,7 @@ ComposerPageGeneralTab::ComposerPageGeneralTab( QWidget * parent )
                MessageComposer::MessageComposerSettings::self()->dashDashSignatureItem()->label(), this );
   mDashDashCheck->setEnabled( false );
 
-  helpText = i18n( "Insert the RFC-compilant signature separator\n"
+  helpText = i18n( "Insert the RFC-compliant signature separator\n"
                    "(two dashes and a space on a line) before the signature" );
   mDashDashCheck->setToolTip( helpText );
   mDashDashCheck->setWhatsThis( helpText );
@@ -2438,7 +2438,7 @@ ComposerPageGeneralTab::ComposerPageGeneralTab( QWidget * parent )
   mAutoRequestMDNCheck = new QCheckBox( GlobalSettings::self()->requestMDNItem()->label(),
                                         this);
 
-  helpText = i18n( "By default, request a MDN whan starting to compose a message.\n"
+  helpText = i18n( "By default, request an MDN when starting to compose a message.\n"
                    "You can select this on a per-message basis using \"Options - Request Disposition Notification\"" );
   mAutoRequestMDNCheck->setToolTip( helpText );
   mAutoRequestMDNCheck->setWhatsThis( helpText );
