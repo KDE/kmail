@@ -225,7 +225,7 @@ void KMSystemTray::updateCount()
 
         setIconByPixmap( iconPixmap );
     } else {
-        setIconByName( QLatin1String("mail-unread-new") );
+        setIconByPixmap( mIcon );
     }
 }
 
