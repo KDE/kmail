@@ -43,7 +43,7 @@
 #include <kmessagebox.h>
 #include <kpimidentities/identity.h>
 #include <kpimidentities/identitymanager.h>
-#include <ktextedit.h>
+#include "pimcommon/plaintexteditor/plaintexteditor.h"
 #include <kurl.h>
 #include <messageviewer/header/kxface.h>
 
@@ -181,13 +181,12 @@ namespace KMail {
     page_vlay = new QVBoxLayout( page );
     page_vlay->setMargin( 0 );
     page_vlay->setSpacing( KDialog::spacingHint() );
-    mTextEdit = new KTextEdit( page );
+    mTextEdit = new PimCommon::PlainTextEditor( page );
     page_vlay->addWidget( mTextEdit );
     mTextEdit->setWhatsThis( i18n( "Use this field to enter an arbitrary X-Face string." ) );
     mTextEdit->setFont( KGlobalSettings::fixedFont() );
     mTextEdit->setWordWrapMode( QTextOption::WrapAnywhere);
-    mTextEdit->enableFindReplace(false);
-    mTextEdit->setAcceptRichText( false );
+    mTextEdit->addSearchSupport(false);
     label2 = new QLabel( i18n("Examples are available at <a "
             "href=\"http://ace.home.xs4all.nl/X-Faces/\">"
             "http://ace.home.xs4all.nl/X-Faces/</a>."), page );
@@ -222,7 +221,7 @@ namespace KMail {
 
   void XFaceConfigurator::setXFace( const QString & text )
   {
-    mTextEdit->setText( text );
+    mTextEdit->setPlainText( text );
   }
 
   void XFaceConfigurator::setXfaceFromFile( const KUrl &url )
@@ -230,7 +229,7 @@ namespace KMail {
     QString tmpFile;
     if (KIO::NetAccess::download( url, tmpFile, this )) {
       KXFace xf;
-      mTextEdit->setText( xf.fromImage( QImage( tmpFile ) ) );
+      mTextEdit->setPlainText( xf.fromImage( QImage( tmpFile ) ) );
       KIO::NetAccess::removeTempFile( tmpFile );
     } else {
       KMessageBox::error(this, KIO::NetAccess::lastErrorString() );
@@ -275,7 +274,7 @@ namespace KMail {
       const QImage photo = contact.photo().data();
       if ( !photo.isNull() ) {
         KXFace xf;
-        mTextEdit->setText( xf.fromImage( photo ) );
+        mTextEdit->setPlainText( xf.fromImage( photo ) );
       } else {
         KMessageBox::information( this, i18n("No picture set for your address book entry."), i18n("No Picture") );
       }
@@ -298,7 +297,7 @@ namespace KMail {
     if ( !str.isEmpty() ) {
       if ( str.startsWith( QLatin1String("x-face:"), Qt::CaseInsensitive ) ) {
         str = str.remove( QLatin1String("x-face:"), Qt::CaseInsensitive );
-        mTextEdit->setText(str);
+        mTextEdit->setPlainText(str);
       }
       KXFace xf;
       const QPixmap p = QPixmap::fromImage( xf.toImage(str) );
