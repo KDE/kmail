@@ -20,7 +20,6 @@
 
 #include <KDialog>
 
-class KTextEdit;
 namespace PimCommon {
 class PlainTextEditorWidget;
 }

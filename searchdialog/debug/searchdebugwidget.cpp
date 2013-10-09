@@ -31,7 +31,6 @@
 #include <akonadi/itemfetchscope.h>
 #include <akonadi/itemsearchjob.h>
 
-#include <KTextEdit>
 #include <KMessageBox>
 #include <KLocale>
 

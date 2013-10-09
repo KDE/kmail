@@ -22,7 +22,6 @@
 #include "pimcommon/plaintexteditor/plaintexteditor.h"
 
 #include <KLocale>
-#include <KTextEdit>
 #include <KStandardDirs>
 
 #include <QProcess>
