@@ -4456,6 +4456,12 @@ void MiscPagePrintingTab::doLoadFromGlobalSettings()
   mPrintingUi->doLoadFromGlobalSettings();
 }
 
+void MiscPagePrintingTab::doResetToDefaultsOther()
+{
+  mPrintingUi->doResetToDefaultsOther();
+}
+
+
 void MiscPagePrintingTab::save()
 {
   mPrintingUi->save();

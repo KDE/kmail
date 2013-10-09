@@ -986,6 +986,7 @@ class MiscPagePrintingTab : public ConfigModuleTab  {
 public:
   explicit MiscPagePrintingTab( QWidget * parent=0 );
   void save();
+  void doResetToDefaultsOther();
 
 private:
   void doLoadFromGlobalSettings();
