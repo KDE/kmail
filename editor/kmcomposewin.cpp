@@ -1255,9 +1255,9 @@ void KMComposeWin::setupActions( void )
   actionCollection()->addAction( QLatin1String("paste_att"), action );
   connect( action, SIGNAL(triggered(bool)), SLOT(slotPasteAsAttachment()) );
 
-  mCleanSpace = new KAction( i18n("Cl&ean Spaces"), this );
-  actionCollection()->addAction( QLatin1String("clean_spaces"), mCleanSpace );
-  connect( mCleanSpace, SIGNAL(triggered(bool)), mComposerBase->signatureController(), SLOT(cleanSpace()) );
+  action = new KAction( i18n("Cl&ean Spaces"), this );
+  actionCollection()->addAction( QLatin1String("clean_spaces"), action );
+  connect( action, SIGNAL(triggered(bool)), mComposerBase->signatureController(), SLOT(cleanSpace()) );
 
   mFixedFontAction = new KToggleAction( i18n("Use Fi&xed Font"), this );
   actionCollection()->addAction( QLatin1String("toggle_fixedfont"), mFixedFontAction );

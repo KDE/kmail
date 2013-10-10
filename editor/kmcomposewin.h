@@ -624,7 +624,6 @@ class KMComposeWin : public KMail::Composer
     uint mId;
     TemplateContext mContext;
 
-    KAction *mCleanSpace;
     KRecentFilesAction *mRecentAction;
 
     KToggleAction *mSignAction, *mEncryptAction, *mRequestMDNAction;
