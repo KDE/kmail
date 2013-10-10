@@ -89,6 +89,7 @@ namespace KIO {
 }
 
 namespace MessageComposer {
+  class ComposerLineEdit;
   class Composer;
 }
 
@@ -96,9 +97,6 @@ namespace KPIM {
   class SpellCheckLineEdit;
 }
 
-namespace MessageComposer {
-  class ComposerLineEdit;
-}
 namespace MailCommon {
   class FolderRequester;
 }
@@ -234,6 +232,10 @@ class KMComposeWin : public KMail::Composer
      void setCollectionForNewMessage( const Akonadi::Collection& folder);
 
      void addExtraCustomHeaders( const QMap<QByteArray, QString> &header);
+
+     KAction *lowerCaseAction() const { return mLowerCase; }
+     KAction *upperCaseAction() const { return mUpperCase; }
+
 
   private:
   /**
@@ -640,6 +642,9 @@ class KMComposeWin : public KMail::Composer
     KSelectAction *mCryptoModuleAction;
 
     KAction *mFindText, *mFindNextText, *mReplaceText, *mSelectAll;
+    KAction *mLowerCase;
+    KAction *mUpperCase;
+
   
     QSplitter *mHeadersToEditorSplitter;
     QWidget* mHeadersArea;

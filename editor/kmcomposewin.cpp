@@ -201,6 +201,12 @@ KMComposeWin::KMComposeWin( const KMime::Message::Ptr &aMsg, bool lastSignState,
     mDictionaryAction( 0 ), mSnippetAction( 0 ), mTranslateAction(0),
     mCodecAction( 0 ),
     mCryptoModuleAction( 0 ),
+    mFindText( 0 ),
+    mFindNextText( 0 ),
+    mReplaceText( 0 ),
+    mSelectAll( 0 ),
+    mLowerCase( 0 ),
+    mUpperCase( 0 ),
     //mEncryptChiasmusAction( 0 ),
     mDummyComposer( 0 ),
     mLabelWidth( 0 ),
@@ -1355,14 +1361,13 @@ void KMComposeWin::setupActions( void )
   actionCollection()->addAction( QLatin1String("insert_special_character"), action );
   connect( action, SIGNAL(triggered(bool)), this, SLOT(insertSpecialCharacter()) );
 
-  action = new KAction( i18n("Uppercase"), this );
-  actionCollection()->addAction( QLatin1String("change_to_uppercase"), action );
-  connect( action, SIGNAL(triggered(bool)), this, SLOT(slotUpperCase()) );
+  mUpperCase = new KAction( i18n("Uppercase"), this );
+  actionCollection()->addAction( QLatin1String("change_to_uppercase"), mUpperCase );
+  connect( mUpperCase, SIGNAL(triggered(bool)), this, SLOT(slotUpperCase()) );
 
-  action = new KAction( i18n("Lowercase"), this );
-  actionCollection()->addAction( QLatin1String("change_to_lowercase"), action );
-  connect( action, SIGNAL(triggered(bool)), this, SLOT(slotLowerCase()) );
-
+  mLowerCase = new KAction( i18n("Lowercase"), this );
+  actionCollection()->addAction( QLatin1String("change_to_lowercase"), mLowerCase );
+  connect( mLowerCase, SIGNAL(triggered(bool)), this, SLOT(slotLowerCase()) );
 
   mComposerBase->attachmentController()->createActions();
 
