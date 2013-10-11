@@ -60,6 +60,7 @@ ConfigureAgentsWidget::ConfigureAgentsWidget(QWidget *parent)
     QVBoxLayout *vbox = new QVBoxLayout;
     mDescription = new KTextEdit;
     mDescription->setReadOnly(true);
+    mDescription->enableFindReplace(false);
     vbox->addWidget(mDescription);
     mConfigure = new QPushButton(i18n("Configure..."));
     mConfigure->setEnabled(false);
