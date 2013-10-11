@@ -43,7 +43,7 @@
 #include <kmessagebox.h>
 #include <kpimidentities/identity.h>
 #include <kpimidentities/identitymanager.h>
-#include "pimcommon/plaintexteditor/plaintexteditor.h"
+#include "pimcommon/texteditor/plaintexteditor/plaintexteditor.h"
 #include <kurl.h>
 #include <messageviewer/header/kxface.h>
 
