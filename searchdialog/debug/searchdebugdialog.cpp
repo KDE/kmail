@@ -49,9 +49,11 @@ SearchDebugDialog::~SearchDebugDialog()
 void SearchDebugDialog::slotSearchInfoWithNepomuk()
 {
     const QString nepomukId = QInputDialog::getText(this, i18n("Search with nepomukshow"), i18n("Nepomuk id:"));
-    QPointer<SearchDebugNepomukShowDialog> dlg = new SearchDebugNepomukShowDialog(nepomukId, this);
-    dlg->exec();
-    delete dlg;
+    if (!nepomukId.isEmpty()) {
+        QPointer<SearchDebugNepomukShowDialog> dlg = new SearchDebugNepomukShowDialog(nepomukId, this);
+        dlg->exec();
+        delete dlg;
+    }
 }
 
 void SearchDebugDialog::readConfig()
