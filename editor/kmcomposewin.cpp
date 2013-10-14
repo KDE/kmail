@@ -150,6 +150,7 @@
 #include <QDir>
 #include <QMimeData>
 #include <QKeyEvent>
+#include <QTextDocumentWriter>
 
 // System includes
 #include <stdlib.h>
@@ -3461,24 +3462,27 @@ void KMComposeWin::slotSaveAsFile()
     dlg->setOperationMode(KFileDialog::Saving);
     dlg->setConfirmOverwrite(true);
     if(mComposerBase->editor()->textMode() == KMeditor::Rich ) {
-      dlg->setFilter( QString::fromLatin1("text/html text/plain") );
+      dlg->setFilter( QString::fromLatin1("text/html text/plain application/vnd.oasis.opendocument.text") );
     } else {
       dlg->setFilter( QString::fromLatin1("text/plain") );
     }
 
     if(dlg->exec()) {
-        QFile file( dlg->selectedUrl().path() );
-        if ( !file.open( QIODevice::WriteOnly| QIODevice::Text ) ) {
-          delete dlg;
-          return;
-        }
-        QTextStream out(&file);
-        if(dlg->currentFilter() == QString::fromLatin1("text/plain") ) {
-          out<<mComposerBase->editor()->toPlainText();
+        QTextDocumentWriter writer;
+        const QString filename = dlg->selectedUrl().path();
+        writer.setFileName(dlg->selectedUrl().path());
+        if (dlg->currentFilter() == QString::fromLatin1("text/plain") || filename.endsWith(QLatin1String(".txt"))) {
+            writer.setFormat("plaintext");
+        } else if (dlg->currentFilter() == QString::fromLatin1("text/html")|| filename.endsWith(QLatin1String(".html"))) {
+            writer.setFormat("HTML");
+        } else if (dlg->currentFilter() == QString::fromLatin1("application/vnd.oasis.opendocument.text") || filename.endsWith(QLatin1String(".odf"))) {
+            writer.setFormat("ODF");
         } else {
-          out<<mComposerBase->editor()->toHtml();
+            writer.setFormat("plaintext");
         }
-        file.close();
+        if (!writer.write(mComposerBase->editor()->document())) {
+            qDebug()<<" Error during writing";
+        }
     }
     delete dlg;
 }
