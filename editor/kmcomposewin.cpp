@@ -48,7 +48,7 @@
 #include "foldercollectionmonitor.h"
 #include "kernel/mailkernel.h"
 #include "custommimeheader.h"
-#include <libkdepim/widgets/spellchecklineedit.h>
+#include "messagecomposer/autocorrection/subjectlineeditwithautocorrection.h"
 #include "pimcommon/translator/translatorwidget.h"
 #include "warningwidgets/attachmentmissingwarning.h"
 #include "job/createnewcontactjob.h"
@@ -309,9 +309,10 @@ KMComposeWin::KMComposeWin( const KMime::Message::Ptr &aMsg, bool lastSignState,
   connect( recipientsEditor, SIGNAL(sizeHintChanged()), SLOT(recipientEditorSizeHintChanged()) );
   mComposerBase->setRecipientsEditor( recipientsEditor );
 
-  mEdtSubject = new KPIM::SpellCheckLineEdit( mHeadersArea, QLatin1String( "kmail2rc" ) );
+  mEdtSubject = new MessageComposer::SubjectLineEditWithAutoCorrection( mHeadersArea, QLatin1String( "kmail2rc" ) );
   mEdtSubject->setActivateLanguageMenu(false);
   mEdtSubject->setToolTip( i18n( "Set a subject for this message" ) );
+  mEdtSubject->setAutocorrection(KMKernel::self()->composerAutoCorrection());
   mLblIdentity = new QLabel( i18n("&Identity:"), mHeadersArea );
   mDictionaryLabel = new QLabel( i18n("&Dictionary:"), mHeadersArea );
   mLblFcc = new QLabel( i18n("&Sent-Mail folder:"), mHeadersArea );
@@ -2323,8 +2324,8 @@ void KMComposeWin::slotUndo()
     return;
   }
 
-  if (::qobject_cast<KPIM::SpellCheckLineEdit*>( fw )) {
-    static_cast<KPIM::SpellCheckLineEdit*>( fw )->undo();
+  if (::qobject_cast<MessageComposer::SubjectLineEditWithAutoCorrection*>( fw )) {
+    static_cast<MessageComposer::SubjectLineEditWithAutoCorrection*>( fw )->undo();
   }else if ( ::qobject_cast<KMComposerEditor*>( fw ) ) {
     static_cast<KTextEdit*>( fw )->undo();
   } else if (::qobject_cast<KLineEdit*>( fw )) {
@@ -2339,8 +2340,8 @@ void KMComposeWin::slotRedo()
     return;
   }
 
-  if (::qobject_cast<KPIM::SpellCheckLineEdit*>( fw )) {
-    static_cast<KPIM::SpellCheckLineEdit*>( fw )->redo();
+  if (::qobject_cast<MessageComposer::SubjectLineEditWithAutoCorrection*>( fw )) {
+    static_cast<MessageComposer::SubjectLineEditWithAutoCorrection*>( fw )->redo();
   } else if ( ::qobject_cast<KMComposerEditor*>( fw ) ) {
     static_cast<KTextEdit*>( fw )->redo();
   } else if (::qobject_cast<KLineEdit*>( fw )) {
@@ -2356,8 +2357,8 @@ void KMComposeWin::slotCut()
     return;
   }
 
-  if ( ::qobject_cast<KPIM::SpellCheckLineEdit*>( fw ) ) {
-    static_cast<KPIM::SpellCheckLineEdit*>( fw )->cut();
+  if ( ::qobject_cast<MessageComposer::SubjectLineEditWithAutoCorrection*>( fw ) ) {
+    static_cast<MessageComposer::SubjectLineEditWithAutoCorrection*>( fw )->cut();
   } else if ( ::qobject_cast<KMComposerEditor*>( fw ) ) {
     static_cast<KTextEdit*>(fw)->cut();
   } else if ( ::qobject_cast<KLineEdit*>( fw ) ) {
@@ -2373,8 +2374,8 @@ void KMComposeWin::slotCopy()
     return;
   }
 
-  if ( ::qobject_cast<KPIM::SpellCheckLineEdit*>( fw ) ) {
-    static_cast<KPIM::SpellCheckLineEdit*>( fw )->copy();
+  if ( ::qobject_cast<MessageComposer::SubjectLineEditWithAutoCorrection*>( fw ) ) {
+    static_cast<MessageComposer::SubjectLineEditWithAutoCorrection*>( fw )->copy();
   } else if ( ::qobject_cast<KMComposerEditor*>( fw ) ) {
     static_cast<KTextEdit*>(fw)->copy();
   } else if ( ::qobject_cast<KLineEdit*>( fw ) ) {
@@ -2389,8 +2390,8 @@ void KMComposeWin::slotPaste()
   if ( !fw ) {
     return;
   }
-  if ( ::qobject_cast<KPIM::SpellCheckLineEdit*>( fw ) ) {
-    static_cast<KPIM::SpellCheckLineEdit*>( fw )->paste();
+  if ( ::qobject_cast<MessageComposer::SubjectLineEditWithAutoCorrection*>( fw ) ) {
+    static_cast<MessageComposer::SubjectLineEditWithAutoCorrection*>( fw )->paste();
   } else if ( ::qobject_cast<KMComposerEditor*>( fw ) ) {
     static_cast<KTextEdit*>(fw)->paste();
   } else if ( ::qobject_cast<KLineEdit*>( fw ) ) {
@@ -2406,8 +2407,8 @@ void KMComposeWin::slotMarkAll()
     return;
   }
 
-  if (::qobject_cast<KPIM::SpellCheckLineEdit*>( fw )) {
-    static_cast<KPIM::SpellCheckLineEdit*>( fw )->selectAll();
+  if (::qobject_cast<MessageComposer::SubjectLineEditWithAutoCorrection*>( fw )) {
+    static_cast<MessageComposer::SubjectLineEditWithAutoCorrection*>( fw )->selectAll();
   } else if ( ::qobject_cast<KLineEdit*>( fw ) ) {
     static_cast<KLineEdit*>( fw )->selectAll();
   } else if (::qobject_cast<KMComposerEditor*>( fw )) {
@@ -3164,6 +3165,7 @@ void KMComposeWin::slotIdentityChanged( uint uoid, bool initalChange )
     applyTemplate( uoid, mId );
   } else {
     mComposerBase->identityChanged( ident, oldIdentity, false );
+    mEdtSubject->setAutocorrectionLanguage(ident.autocorrectionLanguage());
   }
 
 
