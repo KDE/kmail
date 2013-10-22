@@ -171,7 +171,7 @@ namespace KMail {
     label1->setAlignment( Qt::AlignVCenter );
     label1->setWordWrap( true );
     page_vlay->addWidget( label1 );
-
+    page_vlay->addStretch();
     widgetStack->setCurrentIndex( 0 ); // since sourceCombo->currentItem() == 0
 
     // page 1: input field for direct entering
