@@ -483,7 +483,6 @@ private slots:
   
 private:
   void resourceGoOnLine();
-  void migrateFromKMail1();
   void openReader( bool onlyCheck );
   QSharedPointer<MailCommon::FolderCollection> currentFolderCollection();
 
