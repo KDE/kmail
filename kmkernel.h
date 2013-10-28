@@ -462,9 +462,6 @@ signals:
   void startCheckMail();
   void endCheckMail();
 
-
-
-
 private slots:
   /** Updates identities when a transport has been deleted. */
   void transportRemoved( int id, const QString &name );
