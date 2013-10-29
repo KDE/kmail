@@ -126,12 +126,13 @@ void CollectionMaintenancePage::load(const Collection & col)
         if(!indexingWasEnabled)
             mLastIndexed->hide();
         else {
-            KUrl url = col.url( Akonadi::Collection::UrlShort );
+            const KUrl url = col.url( Akonadi::Collection::UrlShort );
             if(!url.isEmpty()) {
                 const Nepomuk2::Resource parentResource( url );
                 const QDateTime dt = parentResource.property( Soprano::Vocabulary::NAO::lastModified() ).toDateTime();
-                if(dt.isValid()) {
-                    mLastIndexed->setText(i18n("Folder was indexed: %1",KGlobal::locale()->formatDateTime(dt)));
+                KDateTime localTime(dt, KDateTime::LocalZone);
+                if(localTime.isValid()) {
+                    mLastIndexed->setText(i18n("Folder was indexed: %1",KGlobal::locale()->formatDateTime(localTime)));
                 }
             }
         }
