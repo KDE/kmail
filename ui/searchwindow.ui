@@ -50,7 +50,7 @@
      <item>
       <widget class="QRadioButton" name="mChkMultiFolders">
        <property name="text">
-        <string>Select specific folders</string>
+        <string>Select specific folders:</string>
        </property>
       </widget>
      </item>
@@ -181,14 +181,19 @@
  </widget>
  <customwidgets>
   <customwidget>
-   <class>KLineEdit</class>
-   <extends>QLineEdit</extends>
-   <header>klineedit.h</header>
+   <class>Akonadi::EntityTreeView</class>
+   <extends>QTreeView</extends>
+   <header>akonadi/entitytreeview.h</header>
   </customwidget>
   <customwidget>
    <class>KDialogButtonBox</class>
    <extends>QDialogButtonBox</extends>
    <header>kdialogbuttonbox.h</header>
+  </customwidget>
+  <customwidget>
+   <class>KLineEdit</class>
+   <extends>QLineEdit</extends>
+   <header>klineedit.h</header>
   </customwidget>
   <customwidget>
    <class>KPushButton</class>
@@ -200,11 +205,6 @@
    <extends>QWidget</extends>
    <header location="global">mailcommon/folder/folderrequester.h</header>
    <container>1</container>
-  </customwidget>
-  <customwidget>
-   <class>Akonadi::EntityTreeView</class>
-   <extends>QTreeView</extends>
-   <header location="global">Akonadi/EntityTreeView</header>
   </customwidget>
   <customwidget>
    <class>KMail::NepomukSearchPatternEdit</class>
