@@ -393,6 +393,7 @@ void SearchWindow::activateFolder( const Akonadi::Collection &collection )
 
 void SearchWindow::slotSearch()
 {
+    mSearchPatternWidget->hideWarningPattern();
     if ( mUi.mSearchFolderEdt->text().isEmpty() ) {
         mUi.mSearchFolderEdt->setText( i18n( "Last Search" ) );
     }
