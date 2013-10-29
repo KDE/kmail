@@ -79,7 +79,7 @@ namespace KMail {
       "toyohiro@ksmplus.com", 0 },
     { "Waldo Bastian", 0,
       "bastian@kde.org", 0 },
-    { "Ryan Breen", I18N_NOOP("system tray notification"),
+    { "Ryan Breen", I18N_NOOP("System tray notification"),
       "ryan@ryanbreen.com", 0 },
     { "Steven Brown", 0,
       "swbrown@ucsd.edu", 0 },
@@ -216,18 +216,18 @@ namespace KMail {
     { "Darío Andrés Rodríguez", 0, "andresbajotierra@gmail.com", 0 },
     { "Edwin Schepers", I18N_NOOP( "Improved HTML support" ), "yez@familieschepers.nl", 0 }, // composition of HTML messages
     { "Jakob Schr\303\266ter", 0, 0, 0 }, // implemented wish 28319 (X-Face support)
-    { "Jan Simonson", I18N_NOOP("beta testing of PGP 6 support"),
+    { "Jan Simonson", I18N_NOOP("Beta testing of PGP 6 support"),
       "jan@simonson.pp.se", 0 },
     { "Paul Sprakes", 0, 0, 0 }, // fix for bug:63619 (filter button in toolbar doesn't work), context menu clean up
     { "Jarosław Staniek", 0, "staniek@kde.org", 0 }, // MS Windows porting
     { "Will Stephenson", 0, 0, 0 }, // added IM status indicator
     { "Hasso Tepper", 0, 0, 0 }, // improve layout of recipients editor
     { "Frank Thieme", 0, "frank@fthieme.net", 0 },
-    { "Patrick S. Vogt", I18N_NOOP("timestamp for 'Transmission completed' status messages"),
+    { "Patrick S. Vogt", I18N_NOOP("Timestamp for 'Transmission completed' status messages"),
       "patrick.vogt@unibas.ch", 0 },
     { "Jan-Oliver Wagner", I18N_NOOP("\xC3\x84gypten and Kroupware project management"),
       "jan@intevation.de", 0 },
-    { "Wolfgang Westphal", I18N_NOOP("multiple encryption keys per address"),
+    { "Wolfgang Westphal", I18N_NOOP("Multiple encryption keys per address"),
       "wolfgang.westphal@gmx.de", 0 },
     { "Allen Winter", 0, "winter@kde.org", 0 },
     { "Urs Wolfer", 0, "uwolfer@kde.org", 0 },
