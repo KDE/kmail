@@ -462,9 +462,6 @@ signals:
   void startCheckMail();
   void endCheckMail();
 
-
-
-
 private slots:
   /** Updates identities when a transport has been deleted. */
   void transportRemoved( int id, const QString &name );
@@ -486,7 +483,6 @@ private slots:
   
 private:
   void resourceGoOnLine();
-  void migrateFromKMail1();
   void openReader( bool onlyCheck );
   QSharedPointer<MailCommon::FolderCollection> currentFolderCollection();
 
