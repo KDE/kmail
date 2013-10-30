@@ -2870,13 +2870,14 @@ void KMMainWidget::showMessagePopup(const Akonadi::Item&msg ,const KUrl&url,cons
       urlMenuAdded = true;
     } else if ( url.protocol() != QLatin1String( "attachment" ) ) {
       // popup on a not-mailto URL
-      if (mMsgView->isAShortUrl(url)) {
-         menu->addAction( mMsgView->expandShortUrlAction() );
-      }
       menu->addAction( mMsgView->urlOpenAction() );
       menu->addAction( mMsgView->addBookmarksAction() );
       menu->addAction( mMsgView->urlSaveAsAction() );
       menu->addAction( mMsgView->copyURLAction() );
+      if (mMsgView->isAShortUrl(url)) {
+         menu->addSeparator();
+         menu->addAction( mMsgView->expandShortUrlAction() );
+      }
       if (!imageUrl.isEmpty()) {
         menu->addSeparator();
         menu->addAction( mMsgView->copyImageLocation());
