@@ -153,6 +153,7 @@ public:
   KAction *resetMessageDisplayFormatAction();
   KAction *blockImage();
   KAction *openBlockableItems();
+  KAction *expandShortUrlAction();
 
   KAction *editContactAction() const { return mEditContactAction; }
 
@@ -173,6 +174,7 @@ public:
   void setContactItem(const Akonadi::Item& contact, const KABC::Addressee &address);
   void clearContactItem();
   bool adblockEnabled() const;
+  bool isAShortUrl(const KUrl &url) const;
 
 signals:
   /** Emitted after parsing of a message to have it stored

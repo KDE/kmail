@@ -2870,6 +2870,9 @@ void KMMainWidget::showMessagePopup(const Akonadi::Item&msg ,const KUrl&url,cons
       urlMenuAdded = true;
     } else if ( url.protocol() != QLatin1String( "attachment" ) ) {
       // popup on a not-mailto URL
+      if (mMsgView->isAShortUrl(url)) {
+         menu->addAction( mMsgView->expandShortUrlAction() );
+      }
       menu->addAction( mMsgView->urlOpenAction() );
       menu->addAction( mMsgView->addBookmarksAction() );
       menu->addAction( mMsgView->urlSaveAsAction() );

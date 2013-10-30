@@ -487,6 +487,9 @@ void KMReaderMainWin::showMessagePopup(const Akonadi::Item&msg ,const KUrl&url,c
       // popup on a not-mailto URL
       if(!menu)
         menu = new KMenu;
+      if (mReaderWin->isAShortUrl(url)) {
+         menu->addAction( mReaderWin->expandShortUrlAction() );
+      }
       menu->addAction( mReaderWin->urlOpenAction() );
       menu->addAction( mReaderWin->addBookmarksAction() );
       menu->addAction( mReaderWin->urlSaveAsAction() );
