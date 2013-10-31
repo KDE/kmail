@@ -4154,7 +4154,8 @@ void KMMainWidget::updateFolderMenu()
   actionlist.clear();
 
   const bool isASearchFolder = mCurrentFolder && mCurrentFolder->collection().resource() == QLatin1String( "akonadi_search_resource" );
-   mAkonadiStandardActionManager->action( Akonadi::StandardActionManager::DeleteCollections )->setText( isASearchFolder ? i18n("&Delete Search") : i18n("&Delete Folder") );
+  if (isASearchFolder)
+      mAkonadiStandardActionManager->action( Akonadi::StandardActionManager::DeleteCollections )->setText( i18n("&Delete Search") );
 
   mArchiveFolderAction->setEnabled( mCurrentFolder && !multiFolder && folderWithContent );
 
