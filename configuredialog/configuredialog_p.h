@@ -16,7 +16,6 @@
 #include <QSharedPointer>
 #include <QListWidgetItem>
 
-#include <kdialog.h>
 #include <kcmodule.h>
 #include <klocale.h>
 

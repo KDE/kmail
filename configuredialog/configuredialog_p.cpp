@@ -10,21 +10,13 @@
 
 // other KMail headers:
 #include "settings/globalsettings.h"
-#include "configuredialoglistview.h"
 #include "kmkernel.h"
-
-// other kdenetwork headers: (none)
 
 // other KDE headers:
 #include <kconfig.h>
-#include <kcombobox.h>
-#include <kstandarddirs.h>
 #include <ktabwidget.h>
 #include <klocale.h>
 #include <kdebug.h>
-#include <kconfiggroup.h>
-#include <kbuttongroup.h>
-#include <kpimidentities/identitymanager.h>
 
 // Qt headers:
 #include <QShowEvent>
