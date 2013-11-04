@@ -119,7 +119,6 @@ using MailTransport::TransportManagementWidget;
 #include <kfontrequester.h>
 #include <kicondialog.h>
 #include <kkeysequencewidget.h>
-#include <KIconButton>
 #include <KColorScheme>
 #include <KComboBox>
 #include <Nepomuk2/Tag>
@@ -131,8 +130,6 @@ using MailTransport::TransportManagementWidget;
 #include <QHBoxLayout>
 #include <QHideEvent>
 #include <QLabel>
-#include <QLayout>
-#include <QList>
 #include <QRadioButton>
 #include <QGroupBox>
 #include <QListWidget>
