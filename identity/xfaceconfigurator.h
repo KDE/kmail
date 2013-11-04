@@ -20,7 +20,6 @@
 #include <QWidget>
 
 class KJob;
-class KTextEdit;
 class KUrl;
 
 class QCheckBox;

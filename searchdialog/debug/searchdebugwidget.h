@@ -27,7 +27,6 @@ class KJob;
 class QModelIndex;
 class QPushButton;
 class QLabel;
-class QPlainTextEdit;
 class QContextMenuEvent;
 
 namespace PimCommon {
