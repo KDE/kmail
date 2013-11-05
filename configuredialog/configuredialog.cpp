@@ -1279,7 +1279,6 @@ AppearancePageHeadersTab::AppearancePageHeadersTab( QWidget * parent )
 {
     // tmp. vars:
     QGroupBox * group;
-    QRadioButton * radio;
 
     QVBoxLayout * vlay = new QVBoxLayout( this );
     vlay->setSpacing( KDialog::spacingHint() );
@@ -1369,7 +1368,7 @@ AppearancePageHeadersTab::AppearancePageHeadersTab( QWidget * parent )
             buttonLabel = i18n( label, DateFormatter::formatCurrentDate( dateDisplayConfig[i].dateDisplay) );
         else
             buttonLabel = i18n( label );
-        radio = new QRadioButton( buttonLabel, mDateDisplay );
+        QRadioButton *radio = new QRadioButton( buttonLabel, mDateDisplay );
         gvlay->addWidget( radio );
 
         if ( dateDisplayConfig[i].dateDisplay == DateFormatter::Custom ) {
