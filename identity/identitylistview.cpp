@@ -216,4 +216,3 @@ void IdentityListView::setIdentityManager(KPIMIdentities::IdentityManager* im)
 } // namespace KMail
 
 
-#include "identitylistview.moc"

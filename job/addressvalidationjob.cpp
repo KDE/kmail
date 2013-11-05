@@ -120,4 +120,4 @@ bool AddressValidationJob::isValid() const
     return d->mIsValid;
 }
 
-#include "addressvalidationjob.moc"
+#include "moc_addressvalidationjob.cpp"

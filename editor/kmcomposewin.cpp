@@ -160,7 +160,6 @@
 #include <boost/shared_ptr.hpp>
 
 // MOC
-#include "kmcomposewin.moc"
 
 using Sonnet::DictionaryComboBox;
 using MailTransport::TransportManager;

@@ -2035,4 +2035,3 @@ void KMKernel::slotCollectionChanged(const Akonadi::Collection &, const QSet<QBy
     }
 }
 
-#include "kmkernel.moc"

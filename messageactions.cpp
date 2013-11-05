@@ -725,4 +725,3 @@ void MessageActions::slotArchiveMail()
 
 }
 
-#include "messageactions.moc"

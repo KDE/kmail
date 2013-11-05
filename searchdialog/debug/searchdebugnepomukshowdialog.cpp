@@ -108,4 +108,3 @@ void SearchDebugNepomukShowDialog::slotSaveAs()
 
 
 
-#include "searchdebugnepomukshowdialog.moc"

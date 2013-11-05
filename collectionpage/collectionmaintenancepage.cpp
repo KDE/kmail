@@ -177,4 +177,3 @@ void CollectionMaintenancePage::slotReindexing()
     }
 }
 
-#include "collectionmaintenancepage.moc"

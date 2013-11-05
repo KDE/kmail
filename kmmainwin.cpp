@@ -48,7 +48,6 @@
 #include "messagecomposer/sender/messagesender.h"
 
 
-#include "kmmainwin.moc"
 
 
 KMMainWin::KMMainWin(QWidget *)

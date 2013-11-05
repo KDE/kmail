@@ -150,4 +150,3 @@ UndoStack::folderDestroyed( const Akonadi::Collection &folder)
 
 }
 
-#include "undostack.moc"

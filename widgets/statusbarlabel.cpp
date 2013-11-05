@@ -42,4 +42,3 @@ void StatusBarLabel::setBackgroundColor(const QColor & color)
     setStyleSheet( QString::fromLatin1("background-color: %1;" ).arg( color.name() ) );
 }
 
-#include "statusbarlabel.moc"

@@ -309,4 +309,3 @@ namespace KMail {
 
 } // namespace KMail
 
-#include "xfaceconfigurator.moc"

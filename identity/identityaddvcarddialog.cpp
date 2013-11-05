@@ -96,4 +96,3 @@ QString IdentityAddVcardDialog::duplicateVcardFromIdentity() const
     return mComboBox->currentText();
 }
 
-#include "identityaddvcarddialog.moc"

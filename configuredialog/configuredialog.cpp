@@ -4464,4 +4464,3 @@ void MiscPagePrintingTab::save()
 }
 
 //----------------------------
-#include "configuredialog.moc"

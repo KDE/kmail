@@ -1263,4 +1263,3 @@ void ASWizSummaryPage::setSummaryText( const QString & text )
 }
 
 
-#include "antispamwizard.moc"

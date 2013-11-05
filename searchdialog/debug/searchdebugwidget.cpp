@@ -307,4 +307,3 @@ void SearchDebugWidget::slotItemFetched( KJob *job )
 }
 
 
-#include "searchdebugwidget.moc"

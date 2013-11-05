@@ -147,4 +147,3 @@ QString NewIdentityDialog::duplicateIdentity() const
     return mComboBox->currentText();
 }
 
-#include "newidentitydialog.moc"

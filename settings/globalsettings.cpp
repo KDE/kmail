@@ -59,4 +59,3 @@ GlobalSettings::~GlobalSettings()
 {
 }
 
-#include "globalsettings.moc"

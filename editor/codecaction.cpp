@@ -92,4 +92,3 @@ QList<QByteArray> CodecAction::mimeCharsets() const
     return ret;
 }
 
-#include "codecaction.moc"

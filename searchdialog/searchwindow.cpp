@@ -869,4 +869,3 @@ void SearchWindow::slotSelectMultipleFolders()
 
 }
 
-#include "searchwindow.moc"

@@ -228,4 +228,3 @@ void ConfigureAgentsWidget::doResetToDefaultsOther()
 }
 
 
-#include "configureagentswidget.moc"

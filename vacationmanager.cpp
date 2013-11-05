@@ -69,4 +69,3 @@ void VacationManager::slotEditVacation()
 }
 
 
-#include "vacationmanager.moc"

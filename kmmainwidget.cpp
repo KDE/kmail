@@ -67,6 +67,7 @@
 #include "mailcommon/filter/mailfilter.h"
 #include "mailcommon/widgets/favoritecollectionwidget.h"
 #include "mailcommon/mailcommonsettings_base.h"
+#include "kmmainwidget.h"
 
 // Other PIM includes
 #include "kdepim-version.h"
@@ -197,7 +198,6 @@
 #include <errno.h> // ugh
 #include <akonadi/standardactionmanager.h>
 
-#include "kmmainwidget.moc"
 
 using namespace KMime;
 using namespace Akonadi;

@@ -887,6 +887,5 @@ KAction *KMReaderWin::expandShortUrlAction()
     return mViewer->expandShortUrlAction();
 }
 
-#include "kmreaderwin.moc"
 
 

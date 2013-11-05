@@ -153,4 +153,3 @@ void AttachmentController::doubleClicked( const QModelIndex &itemClicked )
     }
 }
 
-#include "attachmentcontroller.moc"

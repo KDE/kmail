@@ -104,4 +104,3 @@ void CollectionShortcutPage::slotShortcutChanged()
 
 
 
-#include "collectionshortcutpage.moc"

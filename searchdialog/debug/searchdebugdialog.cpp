@@ -78,4 +78,3 @@ void SearchDebugDialog::slotSaveAs()
 }
 
 
-#include "searchdebugdialog.moc"

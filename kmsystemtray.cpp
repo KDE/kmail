@@ -457,4 +457,3 @@ bool KMSystemTray::ignoreNewMailInFolder(const Akonadi::Collection &collection)
 }
 
 }
-#include "kmsystemtray.moc"

@@ -392,4 +392,3 @@ QList< QUrl > TagActionManager::checkedTags() const
     return checked;
 }
 
-#include "tagactionmanager.moc"

@@ -33,4 +33,3 @@ ExternalEditorWarning::~ExternalEditorWarning()
 {
 }
 
-#include "externaleditorwarning.moc"

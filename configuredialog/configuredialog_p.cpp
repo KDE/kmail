@@ -107,4 +107,3 @@ void ConfigModuleTab::slotEmitChanged( void )
 }
 
 
-#include "configuredialog_p.moc"

@@ -93,4 +93,3 @@ void Nepomuk2::SparqlSyntaxHighlighter::highlightBlock(const QString& text)
     }
 }
 
-#include "sparqlsyntaxhighlighter.moc"

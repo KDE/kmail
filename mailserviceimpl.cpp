@@ -29,7 +29,6 @@
  */
 
 #include "mailserviceimpl.h"
-#include "mailserviceimpl.moc"
 #include <serviceadaptor.h>
 #include "editor/composer.h"
 #include "kmkernel.h"

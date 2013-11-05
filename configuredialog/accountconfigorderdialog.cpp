@@ -216,4 +216,3 @@ void AccountConfigOrderDialog::writeConfig()
 
 
 
-#include "accountconfigorderdialog.moc"

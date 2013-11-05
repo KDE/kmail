@@ -344,4 +344,3 @@ void IdentityPage::updateButtons()
     mIPage.mSetAsDefaultButton->setEnabled( item && !item->identity().isDefault() );
 }
 
-#include "identitypage.moc"
