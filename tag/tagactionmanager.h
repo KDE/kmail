@@ -42,18 +42,18 @@ class QAction;
 class QSignalMapper;
 class KAction;
 namespace Akonadi {
-  class Item;
+class Item;
 }
 
 namespace MessageCore {
-  class AsyncNepomukResourceRetriever;
+class AsyncNepomukResourceRetriever;
 }
 
 namespace KMail {
 
-  class MessageActions;
+class MessageActions;
 
-  /**
+/**
     * Creates actions related to the existing Nepomuk tags and plugs them into the GUI.
     *
     * The tag manager reads all tags from Nepomuk and adds each to the action collection
@@ -63,12 +63,12 @@ namespace KMail {
     *
     * The actions are automatically updated when a Nepomuk tag changes.
     */
-  class KMAIL_EXPORT TagActionManager : public QObject
-  {
+class KMAIL_EXPORT TagActionManager : public QObject
+{
     Q_OBJECT
-    public:
+public:
 
-      /**
+    /**
         * Does not take ownership of the action collection, the GUI client or the message actions.
         * Does not yet create the actions.
         *
@@ -76,22 +76,22 @@ namespace KMail {
         * @param messageActions: Each action is added to the message status menu
         * @param guiClient: The action list with the toolbar action is plugged here
         */
-      TagActionManager( QObject *parent, KActionCollection *actionCollection,
-                        MessageActions *messageActions, KXMLGUIClient *guiClient );
+    TagActionManager( QObject *parent, KActionCollection *actionCollection,
+                      MessageActions *messageActions, KXMLGUIClient *guiClient );
 
-      ~TagActionManager();
+    ~TagActionManager();
 
-      /**
+    /**
         * Removes all actions from the GUI again
         */
-      void clearActions();
+    void clearActions();
 
-      /**
+    /**
         * Creates and plugs all tag actions
         */
-      void createActions();
+    void createActions();
 
-      /**
+    /**
         * Updates the state of the toggle actions of all tags.
         * The state of the action depends on the number of selected messages, for example
         * all actions are disabled when no message is selected.
@@ -100,65 +100,65 @@ namespace KMail {
         *
         * @param selectedItem if exactly one item is selected, it should be passed here
         */
-      void updateActionStates( int numberOfSelectedMessages,
-                               const Akonadi::Item &selectedItem );
+    void updateActionStates( int numberOfSelectedMessages,
+                             const Akonadi::Item &selectedItem );
 
 
-    Q_SIGNALS:
+Q_SIGNALS:
 
-      /**
+    /**
         * Emitted when one of the tagging actions was triggered. The user of this class
         * should connect to this signal and change the tags of the messages
         */
-      void tagActionTriggered( const QString &tagLabel );
-      /**
+    void tagActionTriggered( const QString &tagLabel );
+    /**
        * Emitted when we want to select more action
        */
-      void tagMoreActionClicked();
+    void tagMoreActionClicked();
 
-    private Q_SLOTS:
-      void newTagEntries(const QList<Nepomuk2::Query::Result>& results);
-      void finishedTagListing();
-      void tagsChanged();
-      void resourceCreated(const Nepomuk2::Resource&,const QList<QUrl>&);
-      void resourceRemoved(const QUrl&,const QList<QUrl>&);
-      void propertyChanged(const Nepomuk2::Resource&);
-      void newTagActionClicked();
+private Q_SLOTS:
+    void newTagEntries(const QList<Nepomuk2::Query::Result>& results);
+    void finishedTagListing();
+    void tagsChanged();
+    void resourceCreated(const Nepomuk2::Resource&,const QList<QUrl>&);
+    void resourceRemoved(const QUrl&,const QList<QUrl>&);
+    void propertyChanged(const Nepomuk2::Resource&);
+    void newTagActionClicked();
 
-      void slotLoadedResourceForUpdateActionStates(const QUrl& uri, const Nepomuk2::Resource& res);
+    void slotLoadedResourceForUpdateActionStates(const QUrl& uri, const Nepomuk2::Resource& res);
 
-    private:
-      void createTagAction( const MailCommon::Tag::Ptr &tag, bool addToMenu );
-      void createTagActions();
+private:
+    void createTagAction( const MailCommon::Tag::Ptr &tag, bool addToMenu );
+    void createTagActions();
 
-      QList<QUrl> checkedTags() const;
-      void checkTags( const QList<QUrl> &tags );
+    QList<QUrl> checkedTags() const;
+    void checkTags( const QList<QUrl> &tags );
 
-      KActionCollection *mActionCollection;
-      MessageActions *mMessageActions;
-      QSignalMapper *mMessageTagToggleMapper;
-      KXMLGUIClient *mGUIClient;
+    KActionCollection *mActionCollection;
+    MessageActions *mMessageActions;
+    QSignalMapper *mMessageTagToggleMapper;
+    KXMLGUIClient *mGUIClient;
 
-      QAction *mSeparatorMoreAction;
-      QAction *mSeparatorNewTagAction;
-      KAction *mMoreAction;
-      KAction *mNewTagAction;
-      // Maps the resource URI or a tag to the action of a tag.
-      // Contains all existing tags
-      QMap<QString,KToggleAction*> mTagActions;
+    QAction *mSeparatorMoreAction;
+    QAction *mSeparatorNewTagAction;
+    KAction *mMoreAction;
+    KAction *mNewTagAction;
+    // Maps the resource URI or a tag to the action of a tag.
+    // Contains all existing tags
+    QMap<QString,KToggleAction*> mTagActions;
 
-      // The actions of all tags that are in the toolbar
-      QList<QAction*> mToolbarActions;
+    // The actions of all tags that are in the toolbar
+    QList<QAction*> mToolbarActions;
 
-      // Cache of the tags to avoid expensive Nepomuk queries
-      QList<MailCommon::Tag::Ptr> mTags;
+    // Cache of the tags to avoid expensive Nepomuk queries
+    QList<MailCommon::Tag::Ptr> mTags;
 
-      Nepomuk2::Query::QueryServiceClient *mTagQueryClient;
-      MessageCore::AsyncNepomukResourceRetriever *mAsyncNepomukRetriver;
+    Nepomuk2::Query::QueryServiceClient *mTagQueryClient;
+    MessageCore::AsyncNepomukResourceRetriever *mAsyncNepomukRetriver;
 
-      // Uri of a newly created tag
-      QString mNewTagUri;
- };
+    // Uri of a newly created tag
+    QString mNewTagUri;
+};
 }
 
 #endif

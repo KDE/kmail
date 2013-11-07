@@ -29,34 +29,34 @@
 #include <boost/shared_ptr.hpp>
 
 namespace KMime {
-  class Content;
+class Content;
 }
 
 namespace KMail {
 
 class Composer : public KMail::SecondaryWindow
 {
-  Q_OBJECT
-  protected:
+    Q_OBJECT
+protected:
     Composer( const char *name=0 ) : KMail::SecondaryWindow( name ) {}
 
-  public:
+public:
     enum TemplateContext { New, Reply, ReplyToAll, Forward, NoTemplate };
     enum VisibleHeaderFlag {
-      HDR_FROM        = 0x01,
-      HDR_REPLY_TO    = 0x02,
-      HDR_SUBJECT     = 0x20,
-      HDR_NEWSGROUPS  = 0x40,
-      HDR_FOLLOWUP_TO = 0x80,
-      HDR_IDENTITY    = 0x100,
-      HDR_TRANSPORT   = 0x200,
-      HDR_FCC         = 0x400,
-      HDR_DICTIONARY  = 0x800,
-      HDR_ALL         = 0xfff
+        HDR_FROM        = 0x01,
+        HDR_REPLY_TO    = 0x02,
+        HDR_SUBJECT     = 0x20,
+        HDR_NEWSGROUPS  = 0x40,
+        HDR_FOLLOWUP_TO = 0x80,
+        HDR_IDENTITY    = 0x100,
+        HDR_TRANSPORT   = 0x200,
+        HDR_FCC         = 0x400,
+        HDR_DICTIONARY  = 0x800,
+        HDR_ALL         = 0xfff
     };
     typedef QFlags<VisibleHeaderFlag> VisibleHeaderFlags;
 
-  public: // mailserviceimpl
+public: // mailserviceimpl
     /**
      * From MailComposerIface
      */
@@ -65,22 +65,22 @@ class Composer : public KMail::SecondaryWindow
                                         const QString &comment, int how) = 0;
     virtual void addAttachment( const KUrl &url, const QString &comment ) = 0;
     virtual void addAttachment( const QString & name,
-                                     KMime::Headers::contentEncoding cte,
-                                     const QString& charset,
-                                     const QByteArray & data,
-                                     const QByteArray & mimeType ) = 0;
-  public: // kmcommand
+                                KMime::Headers::contentEncoding cte,
+                                const QString& charset,
+                                const QByteArray & data,
+                                const QByteArray & mimeType ) = 0;
+public: // kmcommand
     virtual QString dbusObjectPath() const = 0;
-  public: // kmkernel, kmcommands, callback
+public: // kmkernel, kmcommands, callback
     /**
      * Set the message the composer shall work with. This discards
      * previous messages without calling applyChanges() on them before.
      */
     virtual void setMessage( const KMime::Message::Ptr &newMsg,  bool lastSignState = false, bool lastEncryptState = false, bool mayAutoSign=true,
-                         bool allowDecryption=false, bool isModified=false ) = 0;
+                             bool allowDecryption=false, bool isModified=false ) = 0;
     virtual void setCurrentTransport( int transportId ) = 0;
 
-    virtual void setCurrentReplyTo(const QString& replyTo) = 0; 
+    virtual void setCurrentReplyTo(const QString& replyTo) = 0;
 
     virtual void setFcc( const QString &idString ) = 0;
     /**
@@ -103,12 +103,12 @@ class Composer : public KMail::SecondaryWindow
 
     virtual void addExtraCustomHeaders( const QMap<QByteArray, QString> &header) = 0;
 
-  public: // kmcommand
+public: // kmcommand
     /**
      * If this folder is set, the original message is inserted back after
      * canceling
      */
-  virtual void setFolder( const Akonadi::Collection& ) = 0;
+    virtual void setFolder( const Akonadi::Collection& ) = 0;
 
     /**
      * Sets the focus to the edit-widget and the cursor below the
@@ -123,21 +123,21 @@ class Composer : public KMail::SecondaryWindow
      */
     virtual void setFocusToSubject() = 0;
 
-  public: // callback
+public: // callback
     /** Disabled signing and encryption completely for this composer window. */
     virtual void setSigningAndEncryptionDisabled( bool v ) = 0;
 
-  public slots: // kmkernel, callback
+public slots: // kmkernel, callback
     virtual void slotSendNow() = 0;
     /**
      * Switch wordWrap on/off
      */
     virtual void slotWordWrapToggled( bool ) = 0;
     virtual void setModified( bool modified ) = 0;
-  public slots: // kmkernel
+public slots: // kmkernel
     virtual void autoSaveMessage(bool force = false ) = 0;
 
-  public: // kmkernel, attachmentlistview
+public: // kmkernel, attachmentlistview
     virtual void disableWordWrap() = 0;
 
     virtual void forceDisableHtml() = 0;
@@ -146,7 +146,7 @@ class Composer : public KMail::SecondaryWindow
 
     virtual void ignoreStickyFields() = 0;
 
-  public: // kmcommand
+public: // kmcommand
     /**
      * Add an attachment to the list.
      */
