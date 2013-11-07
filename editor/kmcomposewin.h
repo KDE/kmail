@@ -233,6 +233,7 @@ class KMComposeWin : public KMail::Composer
      KAction *lowerCaseAction() const { return mLowerCase; }
      KAction *upperCaseAction() const { return mUpperCase; }
 
+     KToggleAction *translateAction() const { return mTranslateAction; }
 
   private:
   /**

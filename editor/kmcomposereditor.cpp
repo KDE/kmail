@@ -40,6 +40,7 @@
 #include <KMenu>
 #include <KPushButton>
 #include <KInputDialog>
+#include <KToggleAction>
 
 #include <Sonnet/ConfigDialog>
 
@@ -177,6 +178,8 @@ void KMComposerEditor::mousePopupMenuImplementation(const QPoint& pos)
             changeCaseMenu->addAction(mComposerWin->lowerCaseAction());
             changeCaseMenu->addAction(mComposerWin->upperCaseAction());
             popup->addMenu(changeCaseMenu);
+            popup->addSeparator();
+            popup->addAction(mComposerWin->translateAction());
         }
         aboutToShowContextMenu(popup);
         popup->exec( pos );
