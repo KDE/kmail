@@ -614,17 +614,17 @@ KAction *KMReaderWin::copyImageLocation()
   return mViewer->copyImageLocation();
 }
 
-KAction *KMReaderWin::copyAction()
+KAction *KMReaderWin::copyAction() const
 {
   return mViewer->copyAction();
 }
 
-KAction *KMReaderWin::viewSourceAction()
+KAction *KMReaderWin::viewSourceAction() const
 {
   return mViewer->viewSourceAction();
 }
 
-KAction *KMReaderWin::saveAsAction()
+KAction *KMReaderWin::saveAsAction() const
 {
   return mViewer->saveAsAction();
 }
@@ -845,17 +845,17 @@ void KMReaderWin::contactStored( const Akonadi::Item &item )
   KPIM::BroadcastStatus::instance()->setStatusMsg( i18n( "Contact modified successfully" ) );
 }
 
-KAction *KMReaderWin::saveMessageDisplayFormatAction()
+KAction *KMReaderWin::saveMessageDisplayFormatAction() const
 {
     return mViewer->saveMessageDisplayFormatAction();
 }
 
-KAction *KMReaderWin::resetMessageDisplayFormatAction()
+KAction *KMReaderWin::resetMessageDisplayFormatAction() const
 {
     return mViewer->resetMessageDisplayFormatAction();
 }
 
-KAction *KMReaderWin::blockImage()
+KAction *KMReaderWin::blockImage() const
 {
     return mViewer->blockImage();
 }
@@ -865,7 +865,7 @@ bool KMReaderWin::adblockEnabled() const
     return mViewer->adblockEnabled();
 }
 
-KAction *KMReaderWin::openBlockableItems()
+KAction *KMReaderWin::openBlockableItems() const
 {
     return mViewer->openBlockableItems();
 }
@@ -882,7 +882,7 @@ bool KMReaderWin::isAShortUrl(const KUrl &url) const
     return mViewer->isAShortUrl(url);
 }
 
-KAction *KMReaderWin::expandShortUrlAction()
+KAction *KMReaderWin::expandShortUrlAction() const
 {
     return mViewer->expandShortUrlAction();
 }

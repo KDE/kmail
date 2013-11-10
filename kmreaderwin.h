@@ -130,30 +130,30 @@ public:
   void setUseFixedFont( bool useFixedFont );
   MessageViewer::Viewer *viewer() { return mViewer; }
   KToggleAction *toggleFixFontAction();
-  KAction *mailToComposeAction() { return mMailToComposeAction; }
-  KAction *mailToReplyAction() { return mMailToReplyAction; }
-  KAction *mailToForwardAction() { return mMailToForwardAction; }
-  KAction *addAddrBookAction() { return mAddAddrBookAction; }
-  KAction *openAddrBookAction() { return mOpenAddrBookAction; }
-  KAction *copyAction();
+  KAction *mailToComposeAction() const { return mMailToComposeAction; }
+  KAction *mailToReplyAction() const { return mMailToReplyAction; }
+  KAction *mailToForwardAction() const { return mMailToForwardAction; }
+  KAction *addAddrBookAction() const { return mAddAddrBookAction; }
+  KAction *openAddrBookAction() const { return mOpenAddrBookAction; }
+  KAction *copyAction() const;
   KAction *selectAllAction();
   KAction *copyURLAction();
   KAction *copyImageLocation();
   KAction *urlOpenAction();
-  KAction *urlSaveAsAction() { return mUrlSaveAsAction; }
-  KAction *addBookmarksAction() { return mAddBookmarksAction;}
+  KAction *urlSaveAsAction() const { return mUrlSaveAsAction; }
+  KAction *addBookmarksAction() const { return mAddBookmarksAction;}
   KAction *toggleMimePartTreeAction();
   KAction *speakTextAction();
   KAction* translateAction();
   KAction* downloadImageToDiskAction() const;
-  KAction *viewSourceAction();
+  KAction *viewSourceAction() const;
   KAction *findInMessageAction();
-  KAction *saveAsAction();
-  KAction *saveMessageDisplayFormatAction();
-  KAction *resetMessageDisplayFormatAction();
-  KAction *blockImage();
-  KAction *openBlockableItems();
-  KAction *expandShortUrlAction();
+  KAction *saveAsAction() const;
+  KAction *saveMessageDisplayFormatAction() const;
+  KAction *resetMessageDisplayFormatAction() const;
+  KAction *blockImage() const;
+  KAction *openBlockableItems() const;
+  KAction *expandShortUrlAction() const;
 
   KAction *editContactAction() const { return mEditContactAction; }
 
