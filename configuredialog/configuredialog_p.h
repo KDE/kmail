@@ -10,14 +10,10 @@
 #include "kmail_export.h"
 #include "configmodule.h"
 
-#include <QStringList>
-#include <QList>
-#include <QHash>
 #include <QSharedPointer>
 #include <QListWidgetItem>
 
 #include <kcmodule.h>
-#include <klocale.h>
 
 #include <akonadi/agentinstance.h>
 
@@ -34,7 +30,6 @@ class QPushButton;
 class QLabel;
 class QCheckBox;
 class QFont;
-class QPoint;
 class QGroupBox;
 class QSpinBox;
 class QListWidget;
