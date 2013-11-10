@@ -308,6 +308,9 @@ void KMail::Util::migrateFromKMail1()
             }
         }
     } else {
+        if (migrationCfg.hasKey("Enabled") && (migrationCfg.readEntry("Enabled", false) == false)) {
+            return;
+        }
         migrationCfg.writeEntry( "Enabled", false );
         migrationCfg.sync();
     }
