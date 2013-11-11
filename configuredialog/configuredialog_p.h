@@ -21,7 +21,6 @@
 #include "ui_warningconfiguration.h"
 #include "ui_smimeconfiguration.h"
 #include "ui_customtemplates_base.h"
-#include "ui_miscpagemaintab.h"
 #include "ui_securitypagegeneraltab.h"
 #include "ui_securitypagemdntab.h"
 #include "ui_accountspagereceivingtab.h"
@@ -43,7 +42,6 @@ class ListView;
 class ConfigureDialog;
 class KIntSpinBox;
 class OrgFreedesktopAkonadiNewMailNotifierInterface;
-class ConfigureAgentsWidget;
 namespace PimCommon {
 class SimpleStringListEditor;
 }
@@ -65,8 +63,6 @@ class ThemeComboBox;
 
 namespace MessageViewer {
 class ConfigureWidget;
-class InvitationSettings;
-class PrintingSettings;
 class AdBlockSettingWidget;
 }
 
@@ -910,102 +906,5 @@ private:
 };
 
 
-//
-//
-// MiscPage
-//
-//
-
-class MiscPageFolderTab : public ConfigModuleTab {
-    Q_OBJECT
-public:
-    explicit MiscPageFolderTab( QWidget * parent=0 );
-
-    void save();
-    QString helpAnchor() const;
-
-private:
-    void doLoadFromGlobalSettings();
-    void doLoadOther();
-    //FIXME virtual void doResetToDefaultsOther();
-
-private:
-    Ui_MiscMainTab mMMTab;
-    MailCommon::FolderRequester *mOnStartupOpenFolder;
-};
-
-class MiscPageInviteTab : public ConfigModuleTab  {
-    Q_OBJECT
-public:
-    explicit MiscPageInviteTab( QWidget * parent=0 );
-    void save();
-    void doResetToDefaultsOther();
-
-private:
-    void doLoadFromGlobalSettings();
-
-private:
-    MessageViewer::InvitationSettings *mInvitationUi;
-};
-
-
-class MiscPageProxyTab : public ConfigModuleTab  {
-    Q_OBJECT
-public:
-    explicit MiscPageProxyTab( QWidget * parent=0 );
-    void save();
-private:
-    KCModuleProxy *mProxyModule;
-};
-
-
-class MiscPageAgentSettingsTab : public ConfigModuleTab  {
-    Q_OBJECT
-public:
-    explicit MiscPageAgentSettingsTab( QWidget * parent=0 );
-    void save();
-    void doResetToDefaultsOther();
-
-    QString helpAnchor() const;
-
-private:
-    void doLoadFromGlobalSettings();
-
-private:
-    ConfigureAgentsWidget *mConfigureAgent;
-};
-
-class MiscPagePrintingTab : public ConfigModuleTab  {
-    Q_OBJECT
-public:
-    explicit MiscPagePrintingTab( QWidget * parent=0 );
-    void save();
-    void doResetToDefaultsOther();
-
-private:
-    void doLoadFromGlobalSettings();
-
-private:
-    MessageViewer::PrintingSettings* mPrintingUi;
-};
-
-
-class KMAIL_EXPORT MiscPage : public ConfigModuleWithTabs {
-    Q_OBJECT
-public:
-    explicit MiscPage( const KComponentData &instance, QWidget *parent=0 );
-    QString helpAnchor() const;
-
-    typedef MiscPageFolderTab FolderTab;
-    typedef MiscPageInviteTab InviteTab;
-    typedef MiscPageProxyTab ProxyTab;
-
-private:
-    FolderTab * mFolderTab;
-    InviteTab * mInviteTab;
-    ProxyTab * mProxyTab;
-    MiscPageAgentSettingsTab *mAgentSettingsTab;
-    MiscPagePrintingTab *mPrintingTab;
-};
 
 #endif // _CONFIGURE_DIALOG_PRIVATE_H_

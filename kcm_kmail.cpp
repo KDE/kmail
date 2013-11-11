@@ -23,6 +23,7 @@
 // This must be first
 #include "configuredialog/configuredialog.h"
 #include "configuredialog/configuredialog_p.h"
+#include "configuredialog/configuremiscpage.h"
 #include "identity/identitypage.h"
 #include <kcmodule.h>
 #include <kcomponentdata.h>
