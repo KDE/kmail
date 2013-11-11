@@ -40,7 +40,9 @@ class ComposerAutoCorrectionWidget;
 class ImageScalingWidget;
 }
 
-
+namespace PimCommon {
+class SimpleStringListEditor;
+}
 
 class ComposerPageGeneralTab : public ConfigModuleTab {
     Q_OBJECT

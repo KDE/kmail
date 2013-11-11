@@ -32,7 +32,6 @@
 #include "addressline/recentaddresses.h"
 #include <libkdepim/ldap/ldapclientsearch.h>
 #include "addressline/completionordereditor.h"
-
 using KPIM::RecentAddresses;
 
 
