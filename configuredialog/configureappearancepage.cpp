@@ -76,9 +76,7 @@ void checkLockDown( QWidget * w, const KConfigSkeletonItem *item ) {
     if ( item->isImmutable() ) {
         w->setEnabled( false );
         w->setToolTip( i18n( lockedDownWarning ) );
-    } else {
-        w->setToolTip( QString() );
-    }
+    } 
 }
 
 void populateButtonGroup( QGroupBox * box, QButtonGroup * group, int orientation,

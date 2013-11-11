@@ -26,11 +26,12 @@
 // my headers:
 #include "configuredialog.h"
 #include "configuredialog_p.h"
+
+#include <KWindowSystem>
+
 // other headers:
 #include <assert.h>
 #include <stdlib.h>
-
-#include <KWindowSystem>
 
 ConfigureDialog::ConfigureDialog( QWidget *parent, bool modal )
     : KCMultiDialog( parent )
