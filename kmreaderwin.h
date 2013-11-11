@@ -129,25 +129,25 @@ public:
   bool isFixedFont() const;
   void setUseFixedFont( bool useFixedFont );
   MessageViewer::Viewer *viewer() { return mViewer; }
-  KToggleAction *toggleFixFontAction();
+  KToggleAction *toggleFixFontAction() const;
   KAction *mailToComposeAction() const { return mMailToComposeAction; }
   KAction *mailToReplyAction() const { return mMailToReplyAction; }
   KAction *mailToForwardAction() const { return mMailToForwardAction; }
   KAction *addAddrBookAction() const { return mAddAddrBookAction; }
   KAction *openAddrBookAction() const { return mOpenAddrBookAction; }
   KAction *copyAction() const;
-  KAction *selectAllAction();
-  KAction *copyURLAction();
-  KAction *copyImageLocation();
-  KAction *urlOpenAction();
+  KAction *selectAllAction() const;
+  KAction *copyURLAction() const;
+  KAction *copyImageLocation() const;
+  KAction *urlOpenAction() const;
   KAction *urlSaveAsAction() const { return mUrlSaveAsAction; }
   KAction *addBookmarksAction() const { return mAddBookmarksAction;}
-  KAction *toggleMimePartTreeAction();
-  KAction *speakTextAction();
-  KAction* translateAction();
+  KAction *toggleMimePartTreeAction() const;
+  KAction *speakTextAction() const;
+  KAction* translateAction() const;
   KAction* downloadImageToDiskAction() const;
   KAction *viewSourceAction() const;
-  KAction *findInMessageAction();
+  KAction *findInMessageAction() const;
   KAction *saveAsAction() const;
   KAction *saveMessageDisplayFormatAction() const;
   KAction *resetMessageDisplayFormatAction() const;
@@ -244,7 +244,6 @@ private:
   KMenu *mViewHtmlOptions;
 
   MessageViewer::Viewer *mViewer;
-
 };
 
 
