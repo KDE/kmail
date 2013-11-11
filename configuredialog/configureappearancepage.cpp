@@ -210,13 +210,9 @@ AppearancePageFontsTab::AppearancePageFontsTab( QWidget * parent )
     : ConfigModuleTab( parent ), mActiveFontIndex( -1 )
 {
     assert( numFontNames == sizeof mFont / sizeof *mFont );
-    // tmp. vars:
-    QVBoxLayout *vlay;
-    QHBoxLayout *hlay;
-    QLabel      *label;
 
     // "Use custom fonts" checkbox, followed by <hr>
-    vlay = new QVBoxLayout( this );
+    QVBoxLayout *vlay = new QVBoxLayout( this );
     vlay->setSpacing( KDialog::spacingHint() );
     vlay->setMargin( KDialog::marginHint() );
     mCustomFontCheck = new QCheckBox( i18n("&Use custom fonts"), this );
@@ -226,7 +222,7 @@ AppearancePageFontsTab::AppearancePageFontsTab( QWidget * parent )
               this, SLOT(slotEmitChanged()) );
 
     // "font location" combo box and label:
-    hlay = new QHBoxLayout(); // inherites spacing
+    QHBoxLayout *hlay = new QHBoxLayout(); // inherites spacing
     vlay->addLayout( hlay );
     mFontLocationCombo = new KComboBox( this );
     mFontLocationCombo->setEditable( false );
@@ -237,7 +233,7 @@ AppearancePageFontsTab::AppearancePageFontsTab( QWidget * parent )
         fontDescriptions << i18n( fontNames[i].displayName );
     mFontLocationCombo->addItems( fontDescriptions );
 
-    label = new QLabel( i18n("Apply &to:"), this );
+    QLabel *label = new QLabel( i18n("Apply &to:"), this );
     label->setBuddy( mFontLocationCombo );
     label->setEnabled( false ); // since !mCustomFontCheck->isChecked()
     hlay->addWidget( label );
@@ -404,11 +400,8 @@ static const int numColorNames = sizeof colorNames / sizeof *colorNames;
 AppearancePageColorsTab::AppearancePageColorsTab( QWidget * parent )
     : ConfigModuleTab( parent )
 {
-    // tmp. vars:
-    QVBoxLayout *vlay;
-
     // "use custom colors" check box
-    vlay = new QVBoxLayout( this );
+    QVBoxLayout *vlay = new QVBoxLayout( this );
     vlay->setSpacing( KDialog::spacingHint() );
     vlay->setMargin( KDialog::marginHint() );
     mCustomColorCheck = new QCheckBox( i18n("&Use custom colors"), this );
