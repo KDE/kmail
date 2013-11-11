@@ -5,8 +5,6 @@
 #ifndef _CONFIGURE_DIALOG_PRIVATE_H_
 #define _CONFIGURE_DIALOG_PRIVATE_H_
 
-#include <config-enterprise.h>
-
 #include "kmail_export.h"
 #include "configmodule.h"
 

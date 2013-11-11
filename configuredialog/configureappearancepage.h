@@ -18,7 +18,6 @@
 #define CONFIGUREAPPEARANCEPAGE_H
 
 #include "kmail_export.h"
-#include <config-enterprise.h>
 #include "configuredialog_p.h"
 #include "tag.h"
 #include <QListWidgetItem>

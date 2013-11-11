@@ -19,7 +19,6 @@
 #define CONFIGUREACCOUNTPAGE_H
 
 #include "kmail_export.h"
-#include <config-enterprise.h>
 #include "configuredialog_p.h"
 #include "ui_accountspagereceivingtab.h"
 

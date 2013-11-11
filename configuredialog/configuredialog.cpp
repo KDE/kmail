@@ -20,7 +20,6 @@
  *
  */
 
-#include <config-enterprise.h>
 #include "settings/globalsettings.h"
 #include "kmkernel.h"
 // my headers:
