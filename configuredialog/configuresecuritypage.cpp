@@ -36,7 +36,6 @@
 #include <KMessageBox>
 #include <QWhatsThis>
 #include <QDBusConnection>
-#include <kascii.h>
 
 QString SecurityPage::helpAnchor() const
 {
