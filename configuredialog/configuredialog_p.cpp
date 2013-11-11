@@ -1,6 +1,3 @@
-#ifndef KDE_USE_FINAL
-#define QT_NO_CAST_ASCII
-#endif
 // configuredialog_p.cpp: classes internal to ConfigureDialog
 // see configuredialog.cpp for details.
 
@@ -10,13 +7,9 @@
 
 // other KMail headers:
 #include "settings/globalsettings.h"
-#include "kmkernel.h"
 
 // other KDE headers:
-#include <kconfig.h>
 #include <ktabwidget.h>
-#include <klocale.h>
-#include <kdebug.h>
 #include <KDialog>
 
 // Qt headers:
