@@ -41,50 +41,50 @@ class KSqueezedTextLabel;
 
 class CollectionMailingListPage : public Akonadi::CollectionPropertiesPage
 {
-  Q_OBJECT
+    Q_OBJECT
 public:
-  explicit CollectionMailingListPage( QWidget *parent = 0 );
-  ~CollectionMailingListPage();
+    explicit CollectionMailingListPage( QWidget *parent = 0 );
+    ~CollectionMailingListPage();
 
-  void load( const Akonadi::Collection & col );
-  void save( Akonadi::Collection & col );
+    void load( const Akonadi::Collection & col );
+    void save( Akonadi::Collection & col );
 
-  bool canHandle( const Akonadi::Collection & col ) const;
+    bool canHandle( const Akonadi::Collection & col ) const;
 
 protected:
-  void init(const Akonadi::Collection&);
+    void init(const Akonadi::Collection&);
 
 protected slots:
-  void slotFetchDone( KJob* job );
+    void slotFetchDone( KJob* job );
 
 private slots:
-  /*
+    /*
    * Detects mailing-list related stuff
    */
-  void slotDetectMailingList();
-  void slotInvokeHandler();
-  void slotMLHandling( int element );
-  void slotHoldsML( bool holdsML );
-  void slotAddressChanged( int addr );
-  void slotConfigChanged();
+    void slotDetectMailingList();
+    void slotInvokeHandler();
+    void slotMLHandling( int element );
+    void slotHoldsML( bool holdsML );
+    void slotAddressChanged( int addr );
+    void slotConfigChanged();
 
 private:
-  void fillMLFromWidgets();
-  void fillEditBox();
+    void fillMLFromWidgets();
+    void fillEditBox();
 
-  Akonadi::Collection mCurrentCollection;
-  QSharedPointer<MailCommon::FolderCollection> mFolder;
+    Akonadi::Collection mCurrentCollection;
+    QSharedPointer<MailCommon::FolderCollection> mFolder;
 
-  int           mLastItem;
-  MailingList   mMailingList;
-  QCheckBox    *mHoldsMailingList;
-  KComboBox    *mMLHandlerCombo;
-  QPushButton  *mDetectButton;
-  KComboBox    *mAddressCombo;
-  KEditListWidget *mEditList;
-  KSqueezedTextLabel *mMLId;
-  QWidget *mGroupWidget;
-  bool changed;
+    int           mLastItem;
+    MailingList   mMailingList;
+    QCheckBox    *mHoldsMailingList;
+    KComboBox    *mMLHandlerCombo;
+    QPushButton  *mDetectButton;
+    KComboBox    *mAddressCombo;
+    KEditListWidget *mEditList;
+    KSqueezedTextLabel *mMLId;
+    QWidget *mGroupWidget;
+    bool changed;
 };
 
 AKONADI_COLLECTION_PROPERTIES_PAGE_FACTORY( CollectionMailingListPageFactory, CollectionMailingListPage )
