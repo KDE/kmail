@@ -579,17 +579,17 @@ QString KMReaderWin::overrideEncoding() const
   return mViewer->overrideEncoding();
 }
 
-KToggleAction *KMReaderWin::toggleFixFontAction()
+KToggleAction *KMReaderWin::toggleFixFontAction() const
 {
   return mViewer->toggleFixFontAction();
 }
 
-KAction *KMReaderWin::toggleMimePartTreeAction()
+KAction *KMReaderWin::toggleMimePartTreeAction() const
 {
   return mViewer->toggleMimePartTreeAction();
 }
 
-KAction *KMReaderWin::selectAllAction()
+KAction *KMReaderWin::selectAllAction() const
 {
   return mViewer->selectAllAction();
 }
@@ -604,12 +604,12 @@ HeaderStyle * KMReaderWin::headerStyle() const
   return mViewer->headerStyle();
 }
 
-KAction *KMReaderWin::copyURLAction()
+KAction *KMReaderWin::copyURLAction() const
 {
   return mViewer->copyURLAction();
 }
 
-KAction *KMReaderWin::copyImageLocation()
+KAction *KMReaderWin::copyImageLocation() const
 {
   return mViewer->copyImageLocation();
 }
@@ -629,12 +629,12 @@ KAction *KMReaderWin::saveAsAction() const
   return mViewer->saveAsAction();
 }
 
-KAction *KMReaderWin::findInMessageAction()
+KAction *KMReaderWin::findInMessageAction() const
 {
   return mViewer->findInMessageAction();
 }
 
-KAction *KMReaderWin::urlOpenAction()
+KAction *KMReaderWin::urlOpenAction() const
 {
   return mViewer->urlOpenAction();
 }
@@ -643,7 +643,7 @@ void KMReaderWin::setPrinting(bool enable)
   mViewer->setPrinting( enable );
 }
 
-KAction* KMReaderWin::speakTextAction()
+KAction* KMReaderWin::speakTextAction() const
 {
   return mViewer->speakTextAction();
 }
@@ -653,7 +653,7 @@ KAction* KMReaderWin::downloadImageToDiskAction() const
   return mImageUrlSaveAsAction;
 }
 
-KAction* KMReaderWin::translateAction()
+KAction* KMReaderWin::translateAction() const
 {
   return mViewer->translateAction();
 }
