@@ -27,6 +27,7 @@
 #include "configuredialog/configuresecuritypage.h"
 #include "configuredialog/configurecomposerpage.h"
 #include "configuredialog/configureappearancepage.h"
+#include "configuredialog/configureaccountpage.h"
 #include "identity/identitypage.h"
 #include <kcmodule.h>
 #include <kcomponentdata.h>

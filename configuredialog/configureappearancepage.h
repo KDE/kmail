@@ -20,6 +20,7 @@
 #include "kmail_export.h"
 #include <config-enterprise.h>
 #include "configuredialog_p.h"
+#include "tag.h"
 
 class QCheckBox;
 class KComboBox;

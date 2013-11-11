@@ -19,9 +19,6 @@
 
 #include "ui_warningconfiguration.h"
 #include "ui_smimeconfiguration.h"
-#include "ui_customtemplates_base.h"
-#include "ui_accountspagereceivingtab.h"
-#include "tag.h"
 class QPushButton;
 class QLabel;
 class QCheckBox;
@@ -38,7 +35,6 @@ class KTabWidget;
 class ListView;
 class ConfigureDialog;
 class KIntSpinBox;
-class OrgFreedesktopAkonadiNewMailNotifierInterface;
 class KComboBox;
 class ColorListBox;
 class KCModuleProxy;
@@ -102,101 +98,6 @@ private:
     bool mWasInitialized;
 };
 
-
-//
-//
-// AccountsPage
-//
-//
-
-// subclasses: one class per tab:
-class AccountsPageSendingTab : public ConfigModuleTab {
-    Q_OBJECT
-public:
-    explicit AccountsPageSendingTab( QWidget * parent=0 );
-    virtual ~AccountsPageSendingTab();
-    QString helpAnchor() const;
-    void save();
-
-private:
-    void doLoadFromGlobalSettings();
-    void doLoadOther();
-    //FIXME virtual void doResetToDefaultsOther();
-
-private:
-    QCheckBox   *mConfirmSendCheck;
-    QCheckBox   *mCheckSpellingBeforeSending;
-    KComboBox   *mSendOnCheckCombo;
-    KComboBox   *mSendMethodCombo;
-    KLineEdit   *mDefaultDomainEdit;
-};
-
-
-class AccountsPageReceivingTab : public ConfigModuleTab {
-    Q_OBJECT
-public:
-    explicit AccountsPageReceivingTab( QWidget * parent=0 );
-    ~AccountsPageReceivingTab();
-    QString helpAnchor() const;
-    void save();
-
-signals:
-    void accountListChanged( const QStringList & );
-
-private slots:
-    void slotAccountSelected(const Akonadi::AgentInstance&);
-    void slotAddAccount();
-    void slotModifySelectedAccount();
-    void slotRemoveSelectedAccount();
-    void slotRestartSelectedAccount();
-    void slotEditNotifications();
-    void slotShowMailCheckMenu( const QString &, const QPoint & );
-    void slotCustomizeAccountOrder();
-    void slotIncludeInCheckChanged( bool checked );
-    void slotOfflineOnShutdownChanged( bool checked );
-    void slotCheckOnStatupChanged( bool checked );
-
-private:
-    void doLoadFromGlobalSettings();
-    void doLoadOther();
-
-    struct RetrievalOptions {
-        RetrievalOptions( bool manualCheck, bool offline, bool checkOnStartup )
-            : IncludeInManualChecks( manualCheck )
-            , OfflineOnShutdown( offline )
-            ,CheckOnStartup( checkOnStartup ) {}
-        bool IncludeInManualChecks;
-        bool OfflineOnShutdown;
-        bool CheckOnStartup;
-    };
-
-    QHash<QString, QSharedPointer<RetrievalOptions> > mRetrievalHash;
-    //FIXME virtual void doResetToDefaultsOther();
-
-private:
-    QString mSpecialMailCollectionIdentifier;
-    Ui_AccountsPageReceivingTab mAccountsReceiving;
-    OrgFreedesktopAkonadiNewMailNotifierInterface *mNewMailNotifierInterface;
-};
-
-class KMAIL_EXPORT AccountsPage : public ConfigModuleWithTabs {
-    Q_OBJECT
-public:
-    explicit AccountsPage( const KComponentData &instance, QWidget *parent=0 );
-    QString helpAnchor() const;
-
-
-    // hrmpf. moc doesn't like nested classes with slots/signals...:
-    typedef AccountsPageSendingTab SendingTab;
-    typedef AccountsPageReceivingTab ReceivingTab;
-
-signals:
-    void accountListChanged( const QStringList & );
-
-private:
-    SendingTab   *mSendingTab;
-    ReceivingTab *mReceivingTab;
-};
 
 
 #endif // _CONFIGURE_DIALOG_PRIVATE_H_

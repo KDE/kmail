@@ -52,6 +52,7 @@
 #include <KFontChooser>
 #include <KHBox>
 #include <KMessageBox>
+#include <KKeySequenceWidget>
 #include <Nepomuk2/Tag>
 #include <nepomuk2/resourcemanager.h>
 
