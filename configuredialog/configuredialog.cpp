@@ -21,93 +21,16 @@
  */
 
 #include <config-enterprise.h>
-
+#include "settings/globalsettings.h"
+#include "kmkernel.h"
 // my headers:
 #include "configuredialog.h"
 #include "configuredialog_p.h"
-#include "identity/identitypage.h"
-
-#include "settings/globalsettings.h"
-#include "configagentdelegate.h"
-
-// other KMail headers:
-#include "kmkernel.h"
-#include "kernel/mailkernel.h"
-#include "pimcommon/widgets/simplestringlisteditor.h"
-#include "colorlistbox.h"
-#include "folderrequester.h"
-#include "kmmainwidget.h"
-#include "util.h"
-
-
-#include "dialog/kmknotify.h"
-
-#include "newmailnotifierinterface.h"
-
-
-
-#include "messageviewer/utils/autoqpointer.h"
-#include "messageviewer/viewer/nodehelper.h"
-#include "messageviewer/widgets/configurewidget.h"
-#include "messageviewer/settings/globalsettings.h"
-#include "messageviewer/header/customheadersettingwidget.h"
-#include "messagecore/settings/globalsettings.h"
-
-#include "mailcommon/mailcommonsettings_base.h"
-
-#include "messagecomposer/settings/messagecomposersettings.h"
-#include <soprano/nao.h>
-
-// other kdenetwork headers:
-#include <kpimidentities/identity.h>
-
-// other KDE headers:
-#include <klineedit.h>
-#include <klocale.h>
-#include <kcharsets.h>
-#include <knuminput.h>
-#include <kfontchooser.h>
-#include <kmessagebox.h>
-#include <kurlrequester.h>
-#include <kseparator.h>
-#include <kiconloader.h>
-#include <kwindowsystem.h>
-#include <kcmultidialog.h>
-#include <knotifyconfigwidget.h>
-#include <kconfiggroup.h>
-#include <kbuttongroup.h>
-#include <kcolorcombo.h>
-#include <kfontrequester.h>
-#include <kicondialog.h>
-#include <kkeysequencewidget.h>
-#include <KColorScheme>
-#include <KComboBox>
-#include <KCModuleProxy>
-
-// Qt headers:
-#include <QCheckBox>
-#include <QGridLayout>
-#include <QHBoxLayout>
-#include <QHideEvent>
-#include <QLabel>
-#include <QRadioButton>
-#include <QGroupBox>
-#include <QListWidget>
-#include <QVBoxLayout>
-#include <QWhatsThis>
-#include <QDBusConnection>
-#include <QHostInfo>
-#include <QTextCodec>
-#include <QMenu>
-
 // other headers:
 #include <assert.h>
 #include <stdlib.h>
 
-
-
-using namespace MailCommon;
-using namespace KMail;
+#include <KWindowSystem>
 
 ConfigureDialog::ConfigureDialog( QWidget *parent, bool modal )
     : KCMultiDialog( parent )

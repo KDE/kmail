@@ -43,12 +43,15 @@ using KPIM::RecentAddresses;
 #include <KMessageBox>
 #include <KFile>
 #include <kascii.h>
+#include <KIntSpinBox>
+#include <KIntNumInput>
 
 #include <QLabel>
 #include <QGroupBox>
 #include <QVBoxLayout>
 #include <QGridLayout>
 #include <QTextCodec>
+#include <QCheckBox>
 
 QString ComposerPage::helpAnchor() const
 {

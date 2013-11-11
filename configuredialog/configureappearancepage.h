@@ -21,7 +21,9 @@
 #include <config-enterprise.h>
 #include "configuredialog_p.h"
 #include "tag.h"
+#include <QListWidgetItem>
 
+class QPushButton;
 class QCheckBox;
 class KComboBox;
 class KFontChooser;
@@ -31,6 +33,7 @@ class QGroupBox;
 class QSpinBox;
 class KButtonGroup;
 class KLineEdit;
+class QModelIndex;
 namespace MessageViewer {
 class ConfigureWidget;
 }
@@ -48,7 +51,6 @@ typedef QSharedPointer<Tag> TagPtr;
 }
 
 namespace MailCommon {
-class FolderRequester;
 class TagWidget;
 }
 

@@ -17,6 +17,7 @@
 #include <ktabwidget.h>
 #include <klocale.h>
 #include <kdebug.h>
+#include <KDialog>
 
 // Qt headers:
 #include <QShowEvent>

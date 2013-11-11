@@ -55,12 +55,15 @@
 #include <KKeySequenceWidget>
 #include <Nepomuk2/Tag>
 #include <nepomuk2/resourcemanager.h>
+#include <KLineEdit>
 
 #include <kmime/kmime_dateformatter.h>
 using KMime::DateFormatter;
 
 #include <QWhatsThis>
-
+#include <QButtonGroup>
+#include <QSpinBox>
+#include <QLabel>
 using namespace MailCommon;
 
 namespace {

@@ -10,35 +10,10 @@
 #include "kmail_export.h"
 #include "configmodule.h"
 
-#include <QSharedPointer>
-#include <QListWidgetItem>
-
 #include <kcmodule.h>
 
-#include <akonadi/agentinstance.h>
-
-#include "ui_warningconfiguration.h"
-#include "ui_smimeconfiguration.h"
-class QPushButton;
-class QLabel;
-class QCheckBox;
-class QFont;
-class QGroupBox;
-class QSpinBox;
-class QListWidget;
-
-class KLineEdit;
-class KButtonGroup;
-class KUrlRequester;
-class KFontChooser;
 class KTabWidget;
-class ListView;
 class ConfigureDialog;
-class KIntSpinBox;
-class KComboBox;
-class ColorListBox;
-class KCModuleProxy;
-class KIntNumInput;
 
 
 

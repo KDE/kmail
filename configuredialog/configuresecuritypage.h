@@ -24,6 +24,9 @@
 #include "ui_securitypagegeneraltab.h"
 #include "ui_securitypagemdntab.h"
 #include "ui_composercryptoconfiguration.h"
+#include "ui_warningconfiguration.h"
+#include "ui_smimeconfiguration.h"
+
 class QButtonGroup;
 namespace MessageViewer {
 class AdBlockSettingWidget;
