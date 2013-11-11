@@ -85,6 +85,7 @@ if (NOT WINCE AND KDEPIM_BUILD_DESKTOP)
      configuredialog/configuredialog.cpp
      configuredialog/configuredialog_p.cpp
      configuredialog/configuremiscpage.cpp
+     configuredialog/configuresecuritypage.cpp
      identity/identitylistview.cpp
      identity/identitydialog.cpp
      settings/globalsettings.cpp
