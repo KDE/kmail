@@ -16,6 +16,8 @@
 */
 
 #include "configurecomposerpage.h"
+#include "configuredialogutils.h"
+using namespace ConfigureDialogUtils;
 #include "kmkernel.h"
 #include "kmmainwidget.h"
 #include "messagecomposer/autocorrection/composerautocorrectionwidget.h"
@@ -669,13 +671,13 @@ ComposerPageExternalEditorTab::ComposerPageExternalEditorTab( QWidget * parent )
 
 void ComposerPage::ExternalEditorTab::doLoadFromGlobalSettings()
 {
-    mExternalEditorCheck->setChecked( GlobalSettings::self()->useExternalEditor() );
+    loadWidget(mExternalEditorCheck, GlobalSettings::self()->useExternalEditorItem() );
     mEditorRequester->setText( GlobalSettings::self()->externalEditor() );
 }
 
 void ComposerPage::ExternalEditorTab::save()
 {
-    GlobalSettings::self()->setUseExternalEditor( mExternalEditorCheck->isChecked() );
+    saveCheckBox(mExternalEditorCheck, GlobalSettings::self()->useExternalEditorItem() );
     GlobalSettings::self()->setExternalEditor( mEditorRequester->text() );
 }
 
