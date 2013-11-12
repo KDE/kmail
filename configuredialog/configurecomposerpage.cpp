@@ -971,14 +971,7 @@ QString ComposerPage::HeadersTab::helpAnchor() const
 ComposerPageHeadersTab::ComposerPageHeadersTab( QWidget * parent )
     : ConfigModuleTab( parent )
 {
-    // tmp. vars:
-    QVBoxLayout *vlay;
-    QHBoxLayout *hlay;
-    QGridLayout *glay;
-    QLabel      *label;
-    QPushButton *button;
-
-    vlay = new QVBoxLayout( this );
+    QVBoxLayout *vlay = new QVBoxLayout( this );
     vlay->setSpacing( KDialog::spacingHint() );
     vlay->setMargin( KDialog::marginHint() );
 
@@ -990,7 +983,7 @@ ComposerPageHeadersTab::ComposerPageHeadersTab( QWidget * parent )
     vlay->addWidget( mCreateOwnMessageIdCheck );
 
     // "Message-Id suffix" line edit and label:
-    hlay = new QHBoxLayout(); // inherits spacing
+    QHBoxLayout *hlay = new QHBoxLayout(); // inherits spacing
     vlay->addLayout( hlay );
     mMessageIdSuffixEdit = new KLineEdit( this );
     mMessageIdSuffixEdit->setClearButtonShown( true );
@@ -998,7 +991,7 @@ ComposerPageHeadersTab::ComposerPageHeadersTab( QWidget * parent )
     QRegExpValidator *messageIdSuffixValidator =
             new QRegExpValidator( QRegExp( QLatin1String("[a-zA-Z0-9+-]+(?:\\.[a-zA-Z0-9+-]+)*") ), this );
     mMessageIdSuffixEdit->setValidator( messageIdSuffixValidator );
-    label = new QLabel(i18n("Custom message-&id suffix:"), this );
+    QLabel *label = new QLabel(i18n("Custom message-&id suffix:"), this );
     label->setBuddy( mMessageIdSuffixEdit );
     label->setEnabled( false ); // since !mCreateOwnMessageIdCheck->isChecked()
     mMessageIdSuffixEdit->setEnabled( false );
@@ -1016,7 +1009,7 @@ ComposerPageHeadersTab::ComposerPageHeadersTab( QWidget * parent )
     vlay->addWidget( new QLabel( i18n("Define custom mime header fields:"), this) );
 
     // "custom header fields" listbox:
-    glay = new QGridLayout(); // inherits spacing
+    QGridLayout *glay = new QGridLayout(); // inherits spacing
     vlay->addLayout( glay );
     glay->setRowStretch( 2, 1 );
     glay->setColumnStretch( 1, 1 );
@@ -1031,7 +1024,7 @@ ComposerPageHeadersTab::ComposerPageHeadersTab( QWidget * parent )
     glay->addWidget( mHeaderList, 0, 0, 3, 2 );
 
     // "new" and "remove" buttons:
-    button = new QPushButton( i18nc("@action:button Add new mime header field.","Ne&w"), this );
+    QPushButton *button = new QPushButton( i18nc("@action:button Add new mime header field.","Ne&w"), this );
     connect( button, SIGNAL(clicked()), this, SLOT(slotNewMimeHeader()) );
     button->setAutoDefault( false );
     glay->addWidget( button, 0, 2 );
@@ -1234,12 +1227,9 @@ QString ComposerPage::AttachmentsTab::helpAnchor() const
 }
 
 ComposerPageAttachmentsTab::ComposerPageAttachmentsTab( QWidget * parent )
-    : ConfigModuleTab( parent ) {
-    // tmp. vars:
-    QVBoxLayout *vlay;
-    QLabel      *label;
-
-    vlay = new QVBoxLayout( this );
+    : ConfigModuleTab( parent )
+{
+    QVBoxLayout *vlay = new QVBoxLayout( this );
     vlay->setSpacing( KDialog::spacingHint() );
     vlay->setMargin( KDialog::marginHint() );
 
@@ -1267,7 +1257,7 @@ ComposerPageAttachmentsTab::ComposerPageAttachmentsTab( QWidget * parent )
 
 
     QHBoxLayout * layAttachment = new QHBoxLayout;
-    label = new QLabel( i18n("Warn when inserting attachments larger than:"), this );
+    QLabel *label = new QLabel( i18n("Warn when inserting attachments larger than:"), this );
     label->setAlignment( Qt::AlignLeft );
     layAttachment->addWidget(label);
 

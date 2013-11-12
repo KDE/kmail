@@ -678,7 +678,7 @@ AppearancePageHeadersTab::AppearancePageHeadersTab( QWidget * parent )
     : ConfigModuleTab( parent ),
       mCustomDateFormatEdit( 0 )
 {
-    QVBoxLayout * vlay = new QVBoxLayout( this );
+    QVBoxLayout *vlay = new QVBoxLayout( this );
     vlay->setSpacing( KDialog::spacingHint() );
     vlay->setMargin( KDialog::marginHint() );
 
