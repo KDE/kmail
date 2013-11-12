@@ -827,33 +827,31 @@ ComposerPageSubjectTab::ComposerPageSubjectTab( QWidget * parent )
 void ComposerPage::SubjectTab::doLoadFromGlobalSettings()
 {
     mReplyListEditor->setStringList( MessageComposer::MessageComposerSettings::self()->replyPrefixes() );
-    mReplaceReplyPrefixCheck->setChecked( MessageComposer::MessageComposerSettings::self()->replaceReplyPrefix() );
     mForwardListEditor->setStringList( MessageComposer::MessageComposerSettings::self()->forwardPrefixes() );
-    mReplaceForwardPrefixCheck->setChecked( MessageComposer::MessageComposerSettings::self()->replaceForwardPrefix() );
+    loadWidget(mReplaceForwardPrefixCheck, MessageComposer::MessageComposerSettings::self()->replaceForwardPrefixItem());
+    loadWidget(mReplaceReplyPrefixCheck, MessageComposer::MessageComposerSettings::self()->replaceReplyPrefixItem());
 }
 
 void ComposerPage::SubjectTab::save()
 {
     MessageComposer::MessageComposerSettings::self()->setReplyPrefixes( mReplyListEditor->stringList() );
     MessageComposer::MessageComposerSettings::self()->setForwardPrefixes( mForwardListEditor->stringList() );
-    MessageComposer::MessageComposerSettings::self()->setReplaceForwardPrefix( mReplaceForwardPrefixCheck->isChecked() );
-    MessageComposer::MessageComposerSettings::self()->setReplaceReplyPrefix( mReplaceReplyPrefixCheck->isChecked() );
+    saveCheckBox(mReplaceForwardPrefixCheck, MessageComposer::MessageComposerSettings::self()->replaceForwardPrefixItem());
+    saveCheckBox(mReplaceReplyPrefixCheck, MessageComposer::MessageComposerSettings::self()->replaceReplyPrefixItem());
 }
 
 void ComposerPage::SubjectTab::doResetToDefaultsOther()
 {
     const bool bUseDefaults = MessageComposer::MessageComposerSettings::self()->useDefaults( true );
     const QStringList messageReplyPrefixes = MessageComposer::MessageComposerSettings::replyPrefixes();
-    const bool useMessageReplyPrefixes = MessageComposer::MessageComposerSettings::replaceReplyPrefix();
 
     const QStringList messageForwardPrefixes = MessageComposer::MessageComposerSettings::forwardPrefixes();
-    const bool useMessageForwardPrefixes = MessageComposer::MessageComposerSettings::replaceForwardPrefix();
 
     MessageComposer::MessageComposerSettings::self()->useDefaults( bUseDefaults );
     mReplyListEditor->setStringList( messageReplyPrefixes );
-    mReplaceReplyPrefixCheck->setChecked( useMessageReplyPrefixes );
+    mReplaceReplyPrefixCheck->setChecked( MessageComposer::MessageComposerSettings::replaceReplyPrefix() );
     mForwardListEditor->setStringList( messageForwardPrefixes );
-    mReplaceForwardPrefixCheck->setChecked( useMessageForwardPrefixes );
+    mReplaceForwardPrefixCheck->setChecked( MessageComposer::MessageComposerSettings::replaceForwardPrefix() );
 }
 
 
@@ -944,11 +942,9 @@ void ComposerPage::CharsetTab::doLoadOther()
 void ComposerPage::CharsetTab::doResetToDefaultsOther()
 {
     const bool bUseDefaults = MessageComposer::MessageComposerSettings::self()->useDefaults( true );
-    const QStringList charsets = MessageComposer::MessageComposerSettings::preferredCharsets();
-    const bool keepReplyCharsetCheck = MessageComposer::MessageComposerSettings::forceReplyCharset();
+    mCharsetListEditor->setStringList( MessageComposer::MessageComposerSettings::preferredCharsets());
+    mKeepReplyCharsetCheck->setChecked( MessageComposer::MessageComposerSettings::forceReplyCharset() );
     MessageComposer::MessageComposerSettings::self()->useDefaults( bUseDefaults );
-    mCharsetListEditor->setStringList( charsets );
-    mKeepReplyCharsetCheck->setChecked( keepReplyCharsetCheck );
     slotEmitChanged();
 }
 
@@ -1313,7 +1309,7 @@ void ComposerPage::AttachmentsTab::doLoadFromGlobalSettings()
 void ComposerPage::AttachmentsTab::save()
 {
     saveCheckBox(mOutlookCompatibleCheck, MessageComposer::MessageComposerSettings::self()->outlookCompatibleAttachmentsItem());
-    loadWidget(mMissingAttachmentDetectionCheck, GlobalSettings::self()->showForgottenAttachmentWarningItem());
+    saveCheckBox(mMissingAttachmentDetectionCheck, GlobalSettings::self()->showForgottenAttachmentWarningItem());
     GlobalSettings::self()->setAttachmentKeywords(
                 mAttachWordsListEditor->stringList() );
 
