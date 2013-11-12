@@ -19,8 +19,10 @@
 
 #include <KLocale>
 #include <KDialog>
+#include <KUrlRequester>
 
 #include <QWidget>
+#include <QLineEdit>
 #include <QGroupBox>
 #include <QButtonGroup>
 #include <QCheckBox>
@@ -33,7 +35,8 @@ static const char * lockedDownWarning =
         I18N_NOOP("<qt><p>This setting has been fixed by your administrator.</p>"
                   "<p>If you think this is an error, please contact him.</p></qt>");
 
-void ConfigureDialogUtils::checkLockDown( QWidget * w, const KConfigSkeletonItem *item ) {
+void ConfigureDialogUtils::checkLockDown( QWidget * w, const KConfigSkeletonItem *item )
+{
     if ( item->isImmutable() ) {
         w->setEnabled( false );
         w->setToolTip( i18n( lockedDownWarning ) );
@@ -41,7 +44,8 @@ void ConfigureDialogUtils::checkLockDown( QWidget * w, const KConfigSkeletonItem
 }
 
 void ConfigureDialogUtils::populateButtonGroup( QGroupBox * box, QButtonGroup * group, int orientation,
-                          const KCoreConfigSkeleton::ItemEnum *e ) {
+                          const KCoreConfigSkeleton::ItemEnum *e )
+{
     box->setTitle( e->label() );
     if (orientation == Qt::Horizontal) {
         box->setLayout( new QHBoxLayout() );
@@ -57,27 +61,55 @@ void ConfigureDialogUtils::populateButtonGroup( QGroupBox * box, QButtonGroup * 
     }
 }
 
-void ConfigureDialogUtils::populateCheckBox( QCheckBox * b, const KCoreConfigSkeleton::ItemBool *e ) {
+void ConfigureDialogUtils::populateCheckBox( QCheckBox * b, const KCoreConfigSkeleton::ItemBool *e )
+{
     b->setText( e->label() );
 }
 
-void ConfigureDialogUtils::loadWidget( QCheckBox * b, const KCoreConfigSkeleton::ItemBool *e ) {
+
+void ConfigureDialogUtils::loadWidget( QLineEdit * b, const KCoreConfigSkeleton::ItemString *e )
+{
+    checkLockDown( b, e );
+    b->setText( e->value() );
+}
+
+void ConfigureDialogUtils::loadWidget( QCheckBox * b, const KCoreConfigSkeleton::ItemBool *e )
+{
     checkLockDown( b, e );
     b->setChecked( e->value() );
 }
 
 void ConfigureDialogUtils::loadWidget( QGroupBox * box, QButtonGroup * group,
-                 const KCoreConfigSkeleton::ItemEnum *e ) {
+                 const KCoreConfigSkeleton::ItemEnum *e )
+{
     Q_ASSERT( group->buttons().size() == e->choices().size() );
     checkLockDown( box, e );
     group->buttons()[e->value()]->setChecked( true );
 }
 
-void ConfigureDialogUtils::saveCheckBox( QCheckBox * b, KCoreConfigSkeleton::ItemBool *e ) {
+void ConfigureDialogUtils::saveCheckBox( QCheckBox * b, KCoreConfigSkeleton::ItemBool *e )
+{
     e->setValue( b->isChecked() );
 }
 
-void ConfigureDialogUtils::saveButtonGroup( QButtonGroup * group, KCoreConfigSkeleton::ItemEnum *e ) {
+void ConfigureDialogUtils::saveLineEdit( QLineEdit * b, KCoreConfigSkeleton::ItemString *e )
+{
+    e->setValue( b->text() );
+}
+
+void ConfigureDialogUtils::saveUrlRequester( KUrlRequester * b, KCoreConfigSkeleton::ItemString *e )
+{
+    e->setValue(b->text());
+}
+
+void ConfigureDialogUtils::loadWidget( KUrlRequester * b, const KCoreConfigSkeleton::ItemString *e )
+{
+    checkLockDown( b, e );
+    b->setText( e->value() );
+}
+
+void ConfigureDialogUtils::saveButtonGroup( QButtonGroup * group, KCoreConfigSkeleton::ItemEnum *e )
+{
     Q_ASSERT( group->buttons().size() == e->choices().size() );
     if ( group->checkedId() != -1 ) {
         e->setValue( group->checkedId() );

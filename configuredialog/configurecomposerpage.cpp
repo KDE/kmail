@@ -672,13 +672,13 @@ ComposerPageExternalEditorTab::ComposerPageExternalEditorTab( QWidget * parent )
 void ComposerPage::ExternalEditorTab::doLoadFromGlobalSettings()
 {
     loadWidget(mExternalEditorCheck, GlobalSettings::self()->useExternalEditorItem() );
-    mEditorRequester->setText( GlobalSettings::self()->externalEditor() );
+    loadWidget(mEditorRequester, GlobalSettings::self()->externalEditorItem() );
 }
 
 void ComposerPage::ExternalEditorTab::save()
 {
     saveCheckBox(mExternalEditorCheck, GlobalSettings::self()->useExternalEditorItem() );
-    GlobalSettings::self()->setExternalEditor( mEditorRequester->text() );
+    saveUrlRequester(mEditorRequester, GlobalSettings::self()->externalEditorItem() );
 }
 
 QString ComposerPage::TemplatesTab::helpAnchor() const

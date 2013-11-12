@@ -26,7 +26,9 @@ class QWidget;
 class QGroupBox;
 class QCheckBox;
 class QButtonGroup;
+class QLineEdit;
 class KConfigSkeletonItem;
+class KUrlRequester;
 
 namespace ConfigureDialogUtils {
 void checkLockDown( QWidget * w, const KConfigSkeletonItem *item );
@@ -34,8 +36,12 @@ void populateButtonGroup( QGroupBox * box, QButtonGroup * group, int orientation
 void populateCheckBox( QCheckBox * b, const KCoreConfigSkeleton::ItemBool *e );
 void loadWidget( QCheckBox * b, const KCoreConfigSkeleton::ItemBool *e );
 void loadWidget( QGroupBox * box, QButtonGroup * group, const KCoreConfigSkeleton::ItemEnum *e );
+void loadWidget( QLineEdit * b, const KCoreConfigSkeleton::ItemString *e );
+void loadWidget( KUrlRequester * b, const KCoreConfigSkeleton::ItemString *e );
 
 void saveCheckBox( QCheckBox * b, KCoreConfigSkeleton::ItemBool *e );
+void saveLineEdit( QLineEdit * b, KCoreConfigSkeleton::ItemString *e );
+void saveUrlRequester( KUrlRequester * b, KCoreConfigSkeleton::ItemString *e );
 
 void saveButtonGroup( QButtonGroup * group, KCoreConfigSkeleton::ItemEnum *e );
 }
