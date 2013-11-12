@@ -118,13 +118,13 @@ void SecurityPageGeneralTab::slotLinkClicked( const QString & link )
 void SecurityPage::GeneralTab::doLoadOther()
 {
     mSGTab.mHtmlMailCheck->setChecked( MessageViewer::GlobalSettings::self()->htmlMail() );
-    mSGTab.mExternalReferences->setChecked( MessageViewer::GlobalSettings::self()->htmlLoadExternal() );
+    loadWidget(mSGTab.mExternalReferences, MessageViewer::GlobalSettings::self()->htmlLoadExternalItem());
     mSGTab.mAutomaticallyImportAttachedKeysCheck->setChecked(
                 MessageViewer::GlobalSettings::self()->autoImportKeys() );
 
     mSGTab.mAlwaysDecrypt->setChecked( MessageViewer::GlobalSettings::self()->alwaysDecrypt() );
 
-    mSGTab.mScamDetection->setChecked( MessageViewer::GlobalSettings::self()->scamDetectionEnabled());
+    loadWidget(mSGTab.mScamDetection, MessageViewer::GlobalSettings::self()->scamDetectionEnabledItem());
     mSGTab.scamWhiteList->setStringList( MessageViewer::GlobalSettings::self()->scamDetectionWhiteList() );
 }
 
@@ -143,11 +143,12 @@ void SecurityPage::GeneralTab::save()
             }
         }
     }
-    MessageViewer::GlobalSettings::self()->setHtmlLoadExternal( mSGTab.mExternalReferences->isChecked() );
+    saveCheckBox(mSGTab.mExternalReferences, MessageViewer::GlobalSettings::self()->htmlLoadExternalItem());
+
     MessageViewer::GlobalSettings::self()->setAutoImportKeys(
                 mSGTab.mAutomaticallyImportAttachedKeysCheck->isChecked() );
     MessageViewer::GlobalSettings::self()->setAlwaysDecrypt( mSGTab.mAlwaysDecrypt->isChecked() );
-    MessageViewer::GlobalSettings::self()->setScamDetectionEnabled( mSGTab.mScamDetection->isChecked() );
+    saveCheckBox(mSGTab.mScamDetection, MessageViewer::GlobalSettings::self()->scamDetectionEnabledItem());
     MessageViewer::GlobalSettings::self()->setScamDetectionWhiteList( mSGTab.scamWhiteList->stringList() );
 }
 

@@ -581,7 +581,7 @@ void AppearancePage::LayoutTab::doLoadOther()
     loadWidget( mFolderListGroupBox, mFolderListGroup, GlobalSettings::self()->folderListItem() );
     loadWidget( mReaderWindowModeGroupBox, mReaderWindowModeGroup, GlobalSettings::self()->readerWindowModeItem() );
     loadWidget( mFavoriteFoldersViewGroupBox, mFavoriteFoldersViewGroup, MailCommon::MailCommonSettings::self()->favoriteCollectionViewModeItem() );
-    mFolderQuickSearchCB->setChecked( GlobalSettings::self()->enableFolderQuickSearch() );
+    loadWidget( mFolderQuickSearchCB, GlobalSettings::self()->enableFolderQuickSearchItem() );
     const int checkedFolderToolTipsPolicy = GlobalSettings::self()->toolTipDisplayPolicy();
     if ( checkedFolderToolTipsPolicy < mFolderToolTipsGroup->buttons().size() && checkedFolderToolTipsPolicy >= 0 )
         mFolderToolTipsGroup->buttons()[ checkedFolderToolTipsPolicy ]->setChecked( true );
@@ -592,7 +592,7 @@ void AppearancePage::LayoutTab::save()
     saveButtonGroup( mFolderListGroup, GlobalSettings::self()->folderListItem() );
     saveButtonGroup( mReaderWindowModeGroup, GlobalSettings::self()->readerWindowModeItem() );
     saveButtonGroup( mFavoriteFoldersViewGroup, MailCommon::MailCommonSettings::self()->favoriteCollectionViewModeItem() );
-    GlobalSettings::self()->setEnableFolderQuickSearch( mFolderQuickSearchCB->isChecked() );
+    saveCheckBox( mFolderQuickSearchCB, GlobalSettings::self()->enableFolderQuickSearchItem() );
     GlobalSettings::self()->setToolTipDisplayPolicy( mFolderToolTipsGroup->checkedId() );
 }
 
