@@ -131,29 +131,21 @@ QString ComposerPage::GeneralTab::helpAnchor() const
 ComposerPageGeneralTab::ComposerPageGeneralTab( QWidget * parent )
     : ConfigModuleTab( parent )
 {
-    // Temporary variables
-    QLabel *label;
-    QGroupBox *groupBox;
-    QVBoxLayout *groupVBoxLayout;
-    QGridLayout *groupGridLayout;
-    QString helpText;
-    int row;
-
     // Main layout
     QHBoxLayout *hb1 = new QHBoxLayout();			// box with 2 columns
     QVBoxLayout *vb1 = new QVBoxLayout();			// first with 2 groupboxes
     QVBoxLayout *vb2 = new QVBoxLayout();			// second with 1 groupbox
 
     // "Signature" group
-    groupBox = new QGroupBox( i18nc( "@title:group", "Signature" ) );
-    groupVBoxLayout = new QVBoxLayout();
+    QGroupBox *groupBox = new QGroupBox( i18nc( "@title:group", "Signature" ) );
+    QVBoxLayout *groupVBoxLayout = new QVBoxLayout();
 
     // "Automatically insert signature" checkbox
     mAutoAppSignFileCheck = new QCheckBox(
                 MessageComposer::MessageComposerSettings::self()->autoTextSignatureItem()->label(),
                 this );
 
-    helpText = i18n( "Automatically insert the configured signature\n"
+    QString helpText = i18n( "Automatically insert the configured signature\n"
                      "when starting to compose a message" );
     mAutoAppSignFileCheck->setToolTip( helpText );
     mAutoAppSignFileCheck->setWhatsThis( helpText );
@@ -210,8 +202,8 @@ ComposerPageGeneralTab::ComposerPageGeneralTab( QWidget * parent )
 
     // "Format" group
     groupBox = new QGroupBox( i18nc( "@title:group", "Format" ) );
-    groupGridLayout = new QGridLayout();
-    row = 0;
+    QGridLayout *groupGridLayout = new QGridLayout();
+    int row = 0;
 
     // "Only quote selected text when replying" checkbox
     mQuoteSelectionOnlyCheck = new QCheckBox( MessageComposer::MessageComposerSettings::self()->quoteSelectionOnlyItem()->label(),
@@ -315,7 +307,7 @@ ComposerPageGeneralTab::ComposerPageGeneralTab( QWidget * parent )
     mAutoSave->setToolTip( helpText );
     mAutoSave->setWhatsThis( helpText );
 
-    label = new QLabel( GlobalSettings::self()->autosaveIntervalItem()->label(), this );
+    QLabel *label = new QLabel( GlobalSettings::self()->autosaveIntervalItem()->label(), this );
     label->setBuddy( mAutoSave );
 
     connect( mAutoSave, SIGNAL(valueChanged(int)),
@@ -760,22 +752,16 @@ QString ComposerPage::SubjectTab::helpAnchor() const
 ComposerPageSubjectTab::ComposerPageSubjectTab( QWidget * parent )
     : ConfigModuleTab( parent )
 {
-    // tmp. vars:
-    QVBoxLayout *vlay;
-    QGroupBox   *group;
-    QLabel      *label;
-
-
-    vlay = new QVBoxLayout( this );
+    QVBoxLayout *vlay = new QVBoxLayout( this );
     vlay->setSpacing( KDialog::spacingHint() );
     vlay->setMargin( KDialog::marginHint() );
 
-    group = new QGroupBox( i18n("Repl&y Subject Prefixes"), this );
+    QGroupBox   *group = new QGroupBox( i18n("Repl&y Subject Prefixes"), this );
     QLayout *layout = new QVBoxLayout( group );
     group->layout()->setSpacing( KDialog::spacingHint() );
 
     // row 0: help text:
-    label = new QLabel( i18n("Recognize any sequence of the following prefixes\n"
+    QLabel *label = new QLabel( i18n("Recognize any sequence of the following prefixes\n"
                              "(entries are case-insensitive regular expressions):"), group );
     label->setWordWrap( true );
     label->setAlignment( Qt::AlignLeft );
@@ -877,15 +863,11 @@ QString ComposerPage::CharsetTab::helpAnchor() const
 ComposerPageCharsetTab::ComposerPageCharsetTab( QWidget * parent )
     : ConfigModuleTab( parent )
 {
-    // tmp. vars:
-    QVBoxLayout *vlay;
-    QLabel      *label;
-
-    vlay = new QVBoxLayout( this );
+    QVBoxLayout *vlay = new QVBoxLayout( this );
     vlay->setSpacing( KDialog::spacingHint() );
     vlay->setMargin( KDialog::marginHint() );
 
-    label = new QLabel( i18n("This list is checked for every outgoing message "
+    QLabel *label = new QLabel( i18n("This list is checked for every outgoing message "
                              "from the top to the bottom for a charset that "
                              "contains all required characters."), this );
     label->setWordWrap(true);

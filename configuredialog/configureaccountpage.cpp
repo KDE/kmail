@@ -86,12 +86,7 @@ QString AccountsPage::SendingTab::helpAnchor() const
 AccountsPageSendingTab::AccountsPageSendingTab( QWidget * parent )
     : ConfigModuleTab( parent )
 {
-    // temp. vars:
-    QVBoxLayout *vlay;
-    QGridLayout *glay;
-    QGroupBox   *group;
-
-    vlay = new QVBoxLayout( this );
+    QVBoxLayout *vlay = new QVBoxLayout( this );
     vlay->setSpacing( KDialog::spacingHint() );
     vlay->setMargin( KDialog::marginHint() );
     // label: zero stretch ### FIXME more
@@ -102,11 +97,11 @@ AccountsPageSendingTab::AccountsPageSendingTab( QWidget * parent )
     vlay->addWidget( tmw );
 
     // "Common options" groupbox:
-    group = new QGroupBox( i18n("Common Options"), this );
+    QGroupBox *group = new QGroupBox( i18n("Common Options"), this );
     vlay->addWidget(group);
 
     // a grid layout for the contents of the "common options" group box
-    glay = new QGridLayout();
+    QGridLayout *glay = new QGridLayout();
     group->setLayout( glay );
     glay->setSpacing( KDialog::spacingHint() );
     glay->setColumnStretch( 2, 10 );

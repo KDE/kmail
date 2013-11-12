@@ -313,7 +313,6 @@ void SecurityPage::ComposerCryptoTab::doLoadFromGlobalSettings()
 
 }
 
-
 QString SecurityPage::WarningTab::helpAnchor() const
 {
     return QString::fromLatin1("configure-security-warnings");
@@ -487,7 +486,6 @@ QString SecurityPage::SMimeTab::helpAnchor() const
 SecurityPageSMimeTab::SecurityPageSMimeTab( QWidget * parent )
     : ConfigModuleTab( parent )
 {
-
     mWidget = new Ui::SMimeConfiguration;
     mWidget->setupUi( this );
 

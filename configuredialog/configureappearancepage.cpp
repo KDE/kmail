@@ -560,10 +560,7 @@ QString AppearancePage::LayoutTab::helpAnchor() const
 AppearancePageLayoutTab::AppearancePageLayoutTab( QWidget * parent )
     : ConfigModuleTab( parent )
 {
-    // tmp. vars:
-    QVBoxLayout * vlay;
-
-    vlay = new QVBoxLayout( this );
+    QVBoxLayout *vlay = new QVBoxLayout( this );
     vlay->setSpacing( KDialog::spacingHint() );
     vlay->setMargin( KDialog::marginHint() );
 
@@ -681,15 +678,12 @@ AppearancePageHeadersTab::AppearancePageHeadersTab( QWidget * parent )
     : ConfigModuleTab( parent ),
       mCustomDateFormatEdit( 0 )
 {
-    // tmp. vars:
-    QGroupBox * group;
-
     QVBoxLayout * vlay = new QVBoxLayout( this );
     vlay->setSpacing( KDialog::spacingHint() );
     vlay->setMargin( KDialog::marginHint() );
 
     // "General Options" group:
-    group = new QGroupBox( i18nc( "General options for the message list.", "General" ), this );
+    QGroupBox *group = new QGroupBox( i18nc( "General options for the message list.", "General" ), this );
     //  group->layout()->setSpacing( KDialog::spacingHint() );
     QVBoxLayout *gvlay = new QVBoxLayout( group );
     gvlay->setSpacing( KDialog::spacingHint() );
