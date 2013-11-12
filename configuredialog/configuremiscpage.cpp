@@ -16,6 +16,8 @@
 */
 
 #include "configuremiscpage.h"
+#include "configuredialogutils.h"
+using namespace ConfigureDialogUtils;
 #include "configureagentswidget.h"
 #include "settings/globalsettings.h"
 
@@ -101,39 +103,39 @@ MiscPageFolderTab::MiscPageFolderTab( QWidget * parent )
 
 void MiscPage::FolderTab::doLoadFromGlobalSettings()
 {
-    mMMTab.mExcludeImportantFromExpiry->setChecked( GlobalSettings::self()->excludeImportantMailFromExpiry() );
+    loadWidget(mMMTab.mExcludeImportantFromExpiry, GlobalSettings::self()->excludeImportantMailFromExpiryItem());
     // default = "Loop in current folder"
     mMMTab.mLoopOnGotoUnread->setCurrentIndex( GlobalSettings::self()->loopOnGotoUnread() );
     mMMTab.mActionEnterFolder->setCurrentIndex( GlobalSettings::self()->actionEnterFolder() );
     mMMTab.mDelayedMarkAsRead->setChecked( MessageViewer::GlobalSettings::self()->delayedMarkAsRead() );
     mMMTab.mDelayedMarkTime->setValue( MessageViewer::GlobalSettings::self()->delayedMarkTime() );
-    mMMTab.mShowPopupAfterDnD->setChecked( GlobalSettings::self()->showPopupAfterDnD() );
-    mMMTab.mStartUpFolderCheck->setChecked( GlobalSettings::self()->startSpecificFolderAtStartup() );
+    loadWidget(mMMTab.mShowPopupAfterDnD, GlobalSettings::self()->showPopupAfterDnDItem());
+    loadWidget(mMMTab.mStartUpFolderCheck, GlobalSettings::self()->startSpecificFolderAtStartupItem());
     mOnStartupOpenFolder->setEnabled(GlobalSettings::self()->startSpecificFolderAtStartup());
     doLoadOther();
 }
 
 void MiscPage::FolderTab::doLoadOther()
 {
-    mMMTab.mEmptyTrashCheck->setChecked( GlobalSettings::self()->emptyTrashOnExit() );
+    loadWidget(mMMTab.mEmptyTrashCheck, GlobalSettings::self()->emptyTrashOnExitItem());
     mOnStartupOpenFolder->setCollection( Akonadi::Collection( GlobalSettings::self()->startupFolder() ) );
-    mMMTab.mEmptyFolderConfirmCheck->setChecked( GlobalSettings::self()->confirmBeforeEmpty() );
+    loadWidget(mMMTab.mEmptyFolderConfirmCheck, GlobalSettings::self()->confirmBeforeEmptyItem());
 }
 
 void MiscPage::FolderTab::save()
 {
-    GlobalSettings::self()->setEmptyTrashOnExit( mMMTab.mEmptyTrashCheck->isChecked() );
-    GlobalSettings::self()->setConfirmBeforeEmpty( mMMTab.mEmptyFolderConfirmCheck->isChecked() );
+    saveCheckBox(mMMTab.mEmptyTrashCheck, GlobalSettings::self()->emptyTrashOnExitItem());
+    saveCheckBox(mMMTab.mEmptyFolderConfirmCheck, GlobalSettings::self()->confirmBeforeEmptyItem());
     GlobalSettings::self()->setStartupFolder( mOnStartupOpenFolder->collection().id() );
 
     MessageViewer::GlobalSettings::self()->setDelayedMarkAsRead( mMMTab.mDelayedMarkAsRead->isChecked() );
     MessageViewer::GlobalSettings::self()->setDelayedMarkTime( mMMTab.mDelayedMarkTime->value() );
     GlobalSettings::self()->setActionEnterFolder( mMMTab.mActionEnterFolder->currentIndex() );
     GlobalSettings::self()->setLoopOnGotoUnread( mMMTab.mLoopOnGotoUnread->currentIndex() );
-    GlobalSettings::self()->setShowPopupAfterDnD( mMMTab.mShowPopupAfterDnD->isChecked() );
-    GlobalSettings::self()->setExcludeImportantMailFromExpiry(
-                mMMTab.mExcludeImportantFromExpiry->isChecked() );
-    GlobalSettings::self()->setStartSpecificFolderAtStartup(mMMTab.mStartUpFolderCheck->isChecked() );
+
+    saveCheckBox(mMMTab.mExcludeImportantFromExpiry, GlobalSettings::self()->excludeImportantMailFromExpiryItem());
+    saveCheckBox(mMMTab.mShowPopupAfterDnD, GlobalSettings::self()->showPopupAfterDnDItem());
+    saveCheckBox(mMMTab.mStartUpFolderCheck, GlobalSettings::self()->startSpecificFolderAtStartupItem());
 }
 
 MiscPageAgentSettingsTab::MiscPageAgentSettingsTab( QWidget* parent )

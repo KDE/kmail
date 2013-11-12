@@ -1301,10 +1301,8 @@ ComposerPageAttachmentsTab::ComposerPageAttachmentsTab( QWidget * parent )
 
 void ComposerPage::AttachmentsTab::doLoadFromGlobalSettings()
 {
-    mOutlookCompatibleCheck->setChecked(
-                MessageComposer::MessageComposerSettings::self()->outlookCompatibleAttachments() );
-    mMissingAttachmentDetectionCheck->setChecked(
-                GlobalSettings::self()->showForgottenAttachmentWarning() );
+    loadWidget(mOutlookCompatibleCheck, MessageComposer::MessageComposerSettings::self()->outlookCompatibleAttachmentsItem());
+    loadWidget(mMissingAttachmentDetectionCheck, GlobalSettings::self()->showForgottenAttachmentWarningItem());
 
     const QStringList attachWordsList = GlobalSettings::self()->attachmentKeywords();
     mAttachWordsListEditor->setStringList( attachWordsList );
@@ -1314,10 +1312,8 @@ void ComposerPage::AttachmentsTab::doLoadFromGlobalSettings()
 
 void ComposerPage::AttachmentsTab::save()
 {
-    MessageComposer::MessageComposerSettings::self()->setOutlookCompatibleAttachments(
-                mOutlookCompatibleCheck->isChecked() );
-    GlobalSettings::self()->setShowForgottenAttachmentWarning(
-                mMissingAttachmentDetectionCheck->isChecked() );
+    saveCheckBox(mOutlookCompatibleCheck, MessageComposer::MessageComposerSettings::self()->outlookCompatibleAttachmentsItem());
+    loadWidget(mMissingAttachmentDetectionCheck, GlobalSettings::self()->showForgottenAttachmentWarningItem());
     GlobalSettings::self()->setAttachmentKeywords(
                 mAttachWordsListEditor->stringList() );
 

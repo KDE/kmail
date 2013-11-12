@@ -16,6 +16,8 @@
 */
 
 #include "configuresecuritypage.h"
+#include "configuredialogutils.h"
+using namespace ConfigureDialogUtils;
 #include "messageviewer/settings/globalsettings.h"
 #include "messagecomposer/settings/messagecomposersettings.h"
 #include "messageviewer/adblock/adblocksettingwidget.h"
