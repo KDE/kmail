@@ -1038,17 +1038,17 @@ AppearancePageSystemTrayTab::AppearancePageSystemTrayTab( QWidget * parent )
 
 void AppearancePage::SystemTrayTab::doLoadFromGlobalSettings()
 {
-    mSystemTrayCheck->setChecked( GlobalSettings::self()->systemTrayEnabled() );
-    mSystemTrayShowUnreadMail->setChecked( GlobalSettings::self()->systemTrayShowUnread() );
+    loadWidget(mSystemTrayCheck, GlobalSettings::self()->systemTrayEnabledItem() );
+    loadWidget(mSystemTrayShowUnreadMail, GlobalSettings::self()->systemTrayShowUnreadItem() );
     mSystemTrayGroup->setSelected( GlobalSettings::self()->systemTrayPolicy() );
     mSystemTrayGroup->setEnabled( mSystemTrayCheck->isChecked() );
 }
 
 void AppearancePage::SystemTrayTab::save()
 {
-    GlobalSettings::self()->setSystemTrayEnabled( mSystemTrayCheck->isChecked() );
+    saveCheckBox(mSystemTrayCheck, GlobalSettings::self()->systemTrayEnabledItem() );
     GlobalSettings::self()->setSystemTrayPolicy( mSystemTrayGroup->selected() );
-    GlobalSettings::self()->setSystemTrayShowUnread( mSystemTrayShowUnreadMail->isChecked() );
+    saveCheckBox(mSystemTrayShowUnreadMail,GlobalSettings::self()->systemTrayShowUnreadItem());
     GlobalSettings::self()->writeConfig();
 }
 
