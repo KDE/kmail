@@ -16,6 +16,8 @@
 */
 
 #include "configureappearancepage.h"
+#include "configuredialogutils.h"
+using namespace ConfigureDialogUtils;
 #include "configuredialog/colorlistbox.h"
 #include "messagelist/utils/aggregationcombobox.h"
 #include "messagelist/utils/aggregationconfigbutton.h"
@@ -65,65 +67,6 @@ using KMime::DateFormatter;
 #include <QSpinBox>
 #include <QLabel>
 using namespace MailCommon;
-
-namespace {
-
-static const char * lockedDownWarning =
-        I18N_NOOP("<qt><p>This setting has been fixed by your administrator.</p>"
-                  "<p>If you think this is an error, please contact him.</p></qt>");
-
-void checkLockDown( QWidget * w, const KConfigSkeletonItem *item ) {
-    if ( item->isImmutable() ) {
-        w->setEnabled( false );
-        w->setToolTip( i18n( lockedDownWarning ) );
-    } 
-}
-
-void populateButtonGroup( QGroupBox * box, QButtonGroup * group, int orientation,
-                          const KCoreConfigSkeleton::ItemEnum *e ) {
-    box->setTitle( e->label() );
-    if (orientation == Qt::Horizontal) {
-        box->setLayout( new QHBoxLayout() );
-    } else {
-        box->setLayout( new QVBoxLayout() );
-    }
-    box->layout()->setSpacing( KDialog::spacingHint() );
-    const int numberChoices(e->choices().size());
-    for (int i = 0; i < numberChoices; ++i) {
-        QRadioButton *button = new QRadioButton( e->choices().at(i).label, box );
-        group->addButton( button, i );
-        box->layout()->addWidget( button );
-    }
-}
-
-void populateCheckBox( QCheckBox * b, const KCoreConfigSkeleton::ItemBool *e ) {
-    b->setText( e->label() );
-}
-
-void loadWidget( QCheckBox * b, const KCoreConfigSkeleton::ItemBool *e ) {
-    checkLockDown( b, e );
-    b->setChecked( e->value() );
-}
-
-void loadWidget( QGroupBox * box, QButtonGroup * group,
-                 const KCoreConfigSkeleton::ItemEnum *e ) {
-    Q_ASSERT( group->buttons().size() == e->choices().size() );
-    checkLockDown( box, e );
-    group->buttons()[e->value()]->setChecked( true );
-}
-
-void saveCheckBox( QCheckBox * b, KCoreConfigSkeleton::ItemBool *e ) {
-    e->setValue( b->isChecked() );
-}
-
-void saveButtonGroup( QButtonGroup * group, KCoreConfigSkeleton::ItemEnum *e ) {
-    Q_ASSERT( group->buttons().size() == e->choices().size() );
-    if ( group->checkedId() != -1 ) {
-        e->setValue( group->checkedId() );
-    }
-}
-}
-
 
 QString AppearancePage::helpAnchor() const
 {
