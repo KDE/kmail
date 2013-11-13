@@ -27,7 +27,6 @@
 #include <mailtransport/transportmanagementwidget.h>
 using MailTransport::TransportManagementWidget;
 #include "accountconfigorderdialog.h"
-#include <kpimidentities/identitymanager.h>
 #include "ui_accountspagereceivingtab.h"
 #include "mailcommon/util/mailutil.h"
 

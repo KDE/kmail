@@ -16,8 +16,8 @@
 */
 
 #include "configuremiscpage.h"
-#include "configuredialogutils.h"
-using namespace ConfigureDialogUtils;
+#include "pimcommon/widgets/configureimmutablewidgetutils.h"
+using namespace PimCommon::ConfigureImmutableWidgetUtils;
 #include "configureagentswidget.h"
 #include "settings/globalsettings.h"
 

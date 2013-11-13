@@ -16,8 +16,8 @@
 */
 
 #include "configurecomposerpage.h"
-#include "configuredialogutils.h"
-using namespace ConfigureDialogUtils;
+#include "pimcommon/widgets/configureimmutablewidgetutils.h"
+using namespace PimCommon::ConfigureImmutableWidgetUtils;
 #include "kmkernel.h"
 #include "kmmainwidget.h"
 #include "messagecomposer/autocorrection/composerautocorrectionwidget.h"
