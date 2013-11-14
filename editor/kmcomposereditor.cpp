@@ -41,6 +41,7 @@
 #include <KPushButton>
 #include <KInputDialog>
 #include <KToggleAction>
+#include <KActionMenu>
 
 #include <Sonnet/ConfigDialog>
 
@@ -174,10 +175,7 @@ void KMComposerEditor::mousePopupMenuImplementation(const QPoint& pos)
         QTextCursor cursor = textCursor();
         if (cursor.hasSelection()) {
             popup->addSeparator();
-            QMenu *changeCaseMenu = new QMenu(i18n("Change case..."), popup);
-            changeCaseMenu->addAction(mComposerWin->lowerCaseAction());
-            changeCaseMenu->addAction(mComposerWin->upperCaseAction());
-            popup->addMenu(changeCaseMenu);
+            popup->addAction(mComposerWin->changeCaseMenu());
         }
         popup->addSeparator();
         popup->addAction(mComposerWin->translateAction());

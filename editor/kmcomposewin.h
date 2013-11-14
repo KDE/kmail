@@ -67,6 +67,7 @@ class SnippetWidget;
 class SelectSpecialChar;
 class AttachmentMissingWarning;
 class ExternalEditorWarning;
+class KActionMenu;
 
 namespace boost {
   template <typename T> class shared_ptr;
@@ -230,10 +231,8 @@ class KMComposeWin : public KMail::Composer
 
      void addExtraCustomHeaders( const QMap<QByteArray, QString> &header);
 
-     KAction *lowerCaseAction() const { return mLowerCase; }
-     KAction *upperCaseAction() const { return mUpperCase; }
-
      KToggleAction *translateAction() const { return mTranslateAction; }
+     KActionMenu *changeCaseMenu() const { return mChangeCaseMenu; }
 
   private:
   /**
@@ -640,9 +639,6 @@ class KMComposeWin : public KMail::Composer
     KSelectAction *mCryptoModuleAction;
 
     KAction *mFindText, *mFindNextText, *mReplaceText, *mSelectAll;
-    KAction *mLowerCase;
-    KAction *mUpperCase;
-
   
     QSplitter *mHeadersToEditorSplitter;
     QWidget* mHeadersArea;
@@ -660,6 +656,7 @@ class KMComposeWin : public KMail::Composer
 
     QMenu *mActNowMenu;
     QMenu *mActLaterMenu;
+    KActionMenu *mChangeCaseMenu;
 
     QString mdbusObjectPath;
     static int s_composerNumber;
