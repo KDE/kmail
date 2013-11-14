@@ -796,14 +796,9 @@ void AppearancePage::HeadersTab::slotSelectDefaultTheme()
 void AppearancePage::HeadersTab::doLoadOther()
 {
     // "General Options":
-    mDisplayMessageToolTips->setChecked(
-                MessageList::Core::Settings::self()->messageToolTipEnabled() );
-
-    mHideTabBarWithSingleTab->setChecked(
-                MessageList::Core::Settings::self()->autoHideTabBarWithSingleTab() );
-
-    mTabsHaveCloseButton->setChecked(
-                MessageList::Core::Settings::self()->tabsHaveCloseButton() );
+    loadWidget(mDisplayMessageToolTips, MessageList::Core::Settings::self()->messageToolTipEnabledItem());
+    loadWidget(mHideTabBarWithSingleTab, MessageList::Core::Settings::self()->autoHideTabBarWithSingleTabItem() );
+    loadWidget(mTabsHaveCloseButton, MessageList::Core::Settings::self()->tabsHaveCloseButtonItem() );
 
     // "Aggregation":
     slotSelectDefaultAggregation();
@@ -818,15 +813,9 @@ void AppearancePage::HeadersTab::doLoadOther()
 
 void AppearancePage::HeadersTab::doLoadFromGlobalSettings()
 {
-    mDisplayMessageToolTips->setChecked(
-                MessageList::Core::Settings::self()->messageToolTipEnabled() );
-
-    mHideTabBarWithSingleTab->setChecked(
-                MessageList::Core::Settings::self()->autoHideTabBarWithSingleTab() );
-
-    mTabsHaveCloseButton->setChecked(
-                MessageList::Core::Settings::self()->tabsHaveCloseButton() );
-
+    loadWidget(mDisplayMessageToolTips, MessageList::Core::Settings::self()->messageToolTipEnabledItem());
+    loadWidget(mHideTabBarWithSingleTab, MessageList::Core::Settings::self()->autoHideTabBarWithSingleTabItem() );
+    loadWidget(mTabsHaveCloseButton, MessageList::Core::Settings::self()->tabsHaveCloseButtonItem() );
     // "Aggregation":
     slotSelectDefaultAggregation();
 
@@ -858,14 +847,9 @@ void AppearancePage::HeadersTab::setDateDisplay( int num, const QString & format
 
 void AppearancePage::HeadersTab::save()
 {
-    MessageList::Core::Settings::self()->
-            setMessageToolTipEnabled( mDisplayMessageToolTips->isChecked() );
-
-    MessageList::Core::Settings::self()->
-            setAutoHideTabBarWithSingleTab( mHideTabBarWithSingleTab->isChecked() );
-
-    MessageList::Core::Settings::self()->
-            setTabsHaveCloseButton( mTabsHaveCloseButton->isChecked() );
+    saveCheckBox(mDisplayMessageToolTips, MessageList::Core::Settings::self()->messageToolTipEnabledItem());
+    saveCheckBox(mHideTabBarWithSingleTab, MessageList::Core::Settings::self()->autoHideTabBarWithSingleTabItem() );
+    saveCheckBox(mTabsHaveCloseButton, MessageList::Core::Settings::self()->tabsHaveCloseButtonItem() );
 
     KMKernel::self()->savePaneSelection();
     // "Aggregation"
