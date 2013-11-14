@@ -51,7 +51,8 @@ using KMail::MailServiceImpl;
 #include "settings/messagecomposersettings.h"
 #include "messagecomposer/helper/messagehelper.h"
 #include "messagecomposer/settings/messagecomposersettings.h"
-#include "messagecomposer/autocorrection/composerautocorrection.h"
+#include "pimcommon/settings/pimcommonsettings.h"
+#include "pimcommon/autocorrection/composerautocorrection.h"
 
 #include "templateparser/templateparser.h"
 #include "templateparser/globalsettings_base.h"
@@ -148,7 +149,7 @@ KMKernel::KMKernel (QObject *parent, const char *name) :
   mJobScheduler = new JobScheduler( this );
   mXmlGuiInstance = KComponentData();
 
-  mAutoCorrection = new MessageComposer::ComposerAutoCorrection();
+  mAutoCorrection = new PimCommon::ComposerAutoCorrection();
   KMime::setFallbackCharEncoding( MessageCore::GlobalSettings::self()->fallbackCharacterEncoding() );
   KMime::setUseOutlookAttachmentEncoding( MessageComposer::MessageComposerSettings::self()->outlookCompatibleAttachments() );
 
@@ -1334,6 +1335,7 @@ void KMKernel::slotRequestConfigSync()
 
 void KMKernel::slotSyncConfig()
 {
+  PimCommon::PimCommonSettings::self()->writeConfig();
   MessageCore::GlobalSettings::self()->writeConfig();
   MessageViewer::GlobalSettings::self()->writeConfig();
   MessageComposer::MessageComposerSettings::self()->writeConfig();
@@ -1463,6 +1465,8 @@ KSharedConfig::Ptr KMKernel::config()
     MessageViewer::GlobalSettings::self()->readConfig();
     MailCommon::MailCommonSettings::self()->setSharedConfig( mySelf->mConfig );
     MailCommon::MailCommonSettings::self()->readConfig();
+    PimCommon::PimCommonSettings::self()->setSharedConfig( mySelf->mConfig );
+    PimCommon::PimCommonSettings::self()->readConfig();
   }
   return mySelf->mConfig;
 }
@@ -1991,7 +1995,7 @@ void KMKernel::makeResourceOnline(MessageViewer::Viewer::ResourceOnlineMode mode
   }
 }
 
-MessageComposer::ComposerAutoCorrection* KMKernel::composerAutoCorrection()
+PimCommon::ComposerAutoCorrection* KMKernel::composerAutoCorrection()
 {
   return mAutoCorrection;
 }

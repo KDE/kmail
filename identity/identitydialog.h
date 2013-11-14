@@ -73,7 +73,7 @@ namespace TemplateParser {
 class TemplatesConfiguration;
 }
 
-namespace MessageComposer {
+namespace PimCommon {
 class ComposerAutoCorrectionLanguage;
 }
 
@@ -137,7 +137,7 @@ private:
     QCheckBox                        *mAttachMyVCard;
     QString                          mVcardFilename;
     KPushButton                      *mEditVCard;
-    MessageComposer::ComposerAutoCorrectionLanguage *mAutoCorrectionLanguage;
+    PimCommon::ComposerAutoCorrectionLanguage *mAutoCorrectionLanguage;
 
     // "templates" tab:
     TemplateParser::TemplatesConfiguration *mWidget;
