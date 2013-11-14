@@ -24,6 +24,8 @@
 #include "configagentdelegate.h"
 #include "messagecomposer/settings/messagecomposersettings.h"
 #include "configuredialog/accountconfigorderdialog.h"
+#include "pimcommon/widgets/configureimmutablewidgetutils.h"
+using namespace PimCommon::ConfigureImmutableWidgetUtils;
 #include <mailtransport/transportmanagementwidget.h>
 using MailTransport::TransportManagementWidget;
 #include "accountconfigorderdialog.h"
@@ -175,8 +177,9 @@ void AccountsPage::SendingTab::doLoadFromGlobalSettings()
 void AccountsPage::SendingTab::doLoadOther()
 {
     mSendMethodCombo->setCurrentIndex( MessageComposer::MessageComposerSettings::self()->sendImmediate() ? 0 : 1 );
-    mConfirmSendCheck->setChecked( GlobalSettings::self()->confirmBeforeSend() );
-    mCheckSpellingBeforeSending->setChecked(GlobalSettings::self()->checkSpellingBeforeSend());
+    loadWidget(mConfirmSendCheck, GlobalSettings::self()->confirmBeforeSendItem() );
+    loadWidget(mCheckSpellingBeforeSending,GlobalSettings::self()->checkSpellingBeforeSendItem());
+
     QString defaultDomain = MessageComposer::MessageComposerSettings::defaultDomain();
     if( defaultDomain.isEmpty() ) {
         defaultDomain = QHostInfo::localHostName();
@@ -188,8 +191,8 @@ void AccountsPage::SendingTab::save()
 {
     GlobalSettings::self()->setSendOnCheck( mSendOnCheckCombo->currentIndex() );
     MessageComposer::MessageComposerSettings::self()->setDefaultDomain( mDefaultDomainEdit->text() );
-    GlobalSettings::self()->setConfirmBeforeSend( mConfirmSendCheck->isChecked() );
-    GlobalSettings::self()->setCheckSpellingBeforeSend(mCheckSpellingBeforeSending->isChecked());
+    saveCheckBox(mConfirmSendCheck, GlobalSettings::self()->confirmBeforeSendItem() );
+    saveCheckBox(mCheckSpellingBeforeSending,GlobalSettings::self()->checkSpellingBeforeSendItem());
     MessageComposer::MessageComposerSettings::self()->setSendImmediate( mSendMethodCombo->currentIndex() == 0 );
 }
 
@@ -411,8 +414,6 @@ void AccountsPage::ReceivingTab::slotModifySelectedAccount()
         instance.configure( this );
     }
 }
-
-
 
 void AccountsPage::ReceivingTab::slotRestartSelectedAccount()
 {
