@@ -826,16 +826,16 @@ ComposerPageSubjectTab::ComposerPageSubjectTab( QWidget * parent )
 
 void ComposerPage::SubjectTab::doLoadFromGlobalSettings()
 {
-    mReplyListEditor->setStringList( MessageComposer::MessageComposerSettings::self()->replyPrefixes() );
-    mForwardListEditor->setStringList( MessageComposer::MessageComposerSettings::self()->forwardPrefixes() );
+    loadWidget(mReplyListEditor, MessageComposer::MessageComposerSettings::self()->replyPrefixesItem() );
+    loadWidget(mForwardListEditor, MessageComposer::MessageComposerSettings::self()->forwardPrefixesItem() );
     loadWidget(mReplaceForwardPrefixCheck, MessageComposer::MessageComposerSettings::self()->replaceForwardPrefixItem());
     loadWidget(mReplaceReplyPrefixCheck, MessageComposer::MessageComposerSettings::self()->replaceReplyPrefixItem());
 }
 
 void ComposerPage::SubjectTab::save()
 {
-    MessageComposer::MessageComposerSettings::self()->setReplyPrefixes( mReplyListEditor->stringList() );
-    MessageComposer::MessageComposerSettings::self()->setForwardPrefixes( mForwardListEditor->stringList() );
+    saveSimpleStringListEditor(mReplyListEditor, MessageComposer::MessageComposerSettings::self()->replyPrefixesItem() );
+    saveSimpleStringListEditor(mForwardListEditor, MessageComposer::MessageComposerSettings::self()->forwardPrefixesItem() );
     saveCheckBox(mReplaceForwardPrefixCheck, MessageComposer::MessageComposerSettings::self()->replaceForwardPrefixItem());
     saveCheckBox(mReplaceReplyPrefixCheck, MessageComposer::MessageComposerSettings::self()->replaceReplyPrefixItem());
 }
@@ -843,15 +843,11 @@ void ComposerPage::SubjectTab::save()
 void ComposerPage::SubjectTab::doResetToDefaultsOther()
 {
     const bool bUseDefaults = MessageComposer::MessageComposerSettings::self()->useDefaults( true );
-    const QStringList messageReplyPrefixes = MessageComposer::MessageComposerSettings::replyPrefixes();
-
-    const QStringList messageForwardPrefixes = MessageComposer::MessageComposerSettings::forwardPrefixes();
-
+    loadWidget(mReplyListEditor, MessageComposer::MessageComposerSettings::self()->replyPrefixesItem() );
+    loadWidget(mForwardListEditor, MessageComposer::MessageComposerSettings::self()->forwardPrefixesItem() );
+    loadWidget(mReplaceForwardPrefixCheck, MessageComposer::MessageComposerSettings::self()->replaceForwardPrefixItem());
+    loadWidget(mReplaceReplyPrefixCheck, MessageComposer::MessageComposerSettings::self()->replaceReplyPrefixItem());
     MessageComposer::MessageComposerSettings::self()->useDefaults( bUseDefaults );
-    mReplyListEditor->setStringList( messageReplyPrefixes );
-    mReplaceReplyPrefixCheck->setChecked( MessageComposer::MessageComposerSettings::replaceReplyPrefix() );
-    mForwardListEditor->setStringList( messageForwardPrefixes );
-    mReplaceForwardPrefixCheck->setChecked( MessageComposer::MessageComposerSettings::replaceForwardPrefix() );
 }
 
 
