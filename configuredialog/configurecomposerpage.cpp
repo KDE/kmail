@@ -20,7 +20,7 @@
 using namespace PimCommon::ConfigureImmutableWidgetUtils;
 #include "kmkernel.h"
 #include "kmmainwidget.h"
-#include "pimcommon/autocorrection/composerautocorrectionwidget.h"
+#include "pimcommon/autocorrection/autocorrectionwidget.h"
 #include "messagecomposer/imagescaling/imagescalingwidget.h"
 #include "messagecomposer/settings/messagecomposersettings.h"
 #include "settings/globalsettings.h"
@@ -1335,7 +1335,7 @@ ComposerPageAutoCorrectionTab::ComposerPageAutoCorrectionTab(QWidget *parent)
     QVBoxLayout *vlay = new QVBoxLayout( this );
     vlay->setSpacing( 0 );
     vlay->setMargin( 0 );
-    autocorrectionWidget = new PimCommon::ComposerAutoCorrectionWidget(this);
+    autocorrectionWidget = new PimCommon::AutoCorrectionWidget(this);
     if(KMKernel::self())
         autocorrectionWidget->setAutoCorrection(KMKernel::self()->composerAutoCorrection());
     vlay->addWidget(autocorrectionWidget);

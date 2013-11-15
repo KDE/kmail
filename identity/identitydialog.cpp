@@ -59,7 +59,7 @@
 #include <kpimidentities/identity.h>
 #include <kpimidentities/signatureconfigurator.h>
 
-#include "pimcommon/autocorrection/composerautocorrectionlanguage.h"
+#include "pimcommon/autocorrection/autocorrectionlanguage.h"
 
 #include <libkdepim/addressline/addresseelineedit.h>
 // libkleopatra:
@@ -491,7 +491,7 @@ IdentityDialog::IdentityDialog( QWidget * parent )
 
 
     ++row;
-    mAutoCorrectionLanguage = new PimCommon::ComposerAutoCorrectionLanguage(tab);
+    mAutoCorrectionLanguage = new PimCommon::AutoCorrectionLanguage(tab);
     glay->addWidget( mAutoCorrectionLanguage, row, 1 );
     label = new QLabel( i18n("Autocorrection language:"), tab );
     label->setBuddy( mAutoCorrectionLanguage );

@@ -52,7 +52,7 @@ using KMail::MailServiceImpl;
 #include "messagecomposer/helper/messagehelper.h"
 #include "messagecomposer/settings/messagecomposersettings.h"
 #include "pimcommon/settings/pimcommonsettings.h"
-#include "pimcommon/autocorrection/composerautocorrection.h"
+#include "pimcommon/autocorrection/autocorrection.h"
 
 #include "templateparser/templateparser.h"
 #include "templateparser/globalsettings_base.h"
@@ -149,7 +149,7 @@ KMKernel::KMKernel (QObject *parent, const char *name) :
   mJobScheduler = new JobScheduler( this );
   mXmlGuiInstance = KComponentData();
 
-  mAutoCorrection = new PimCommon::ComposerAutoCorrection();
+  mAutoCorrection = new PimCommon::AutoCorrection();
   KMime::setFallbackCharEncoding( MessageCore::GlobalSettings::self()->fallbackCharacterEncoding() );
   KMime::setUseOutlookAttachmentEncoding( MessageComposer::MessageComposerSettings::self()->outlookCompatibleAttachments() );
 
@@ -1995,7 +1995,7 @@ void KMKernel::makeResourceOnline(MessageViewer::Viewer::ResourceOnlineMode mode
   }
 }
 
-PimCommon::ComposerAutoCorrection* KMKernel::composerAutoCorrection()
+PimCommon::AutoCorrection *KMKernel::composerAutoCorrection()
 {
   return mAutoCorrection;
 }
