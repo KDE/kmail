@@ -48,7 +48,7 @@
 #include "foldercollectionmonitor.h"
 #include "kernel/mailkernel.h"
 #include "custommimeheader.h"
-#include "pimcommon/autocorrection/subjectlineeditwithautocorrection.h"
+#include "pimcommon/autocorrection/widgets/subjectlineeditwithautocorrection.h"
 #include "pimcommon/translator/translatorwidget.h"
 #include "warningwidgets/attachmentmissingwarning.h"
 #include "job/createnewcontactjob.h"
