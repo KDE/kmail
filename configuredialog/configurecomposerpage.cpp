@@ -540,14 +540,16 @@ void ComposerPage::GeneralTab::doLoadFromGlobalSettings()
 
     mAutoAppSignFileCheck->setChecked(
                 MessageComposer::MessageComposerSettings::self()->autoTextSignature()==QLatin1String( "auto" ) );
-    mTopQuoteCheck->setChecked( MessageComposer::MessageComposerSettings::self()->prependSignature() );
-    mDashDashCheck->setChecked( MessageComposer::MessageComposerSettings::self()->dashDashSignature() );
-    mSmartQuoteCheck->setChecked( TemplateParser::GlobalSettings::self()->smartQuote() );
-    mQuoteSelectionOnlyCheck->setChecked( MessageComposer::MessageComposerSettings::self()->quoteSelectionOnly() );
-    mReplyUsingHtml->setChecked( TemplateParser::GlobalSettings::self()->replyUsingHtml() );
-    mStripSignatureCheck->setChecked( TemplateParser::GlobalSettings::self()->stripSignature() );
-    mAutoRequestMDNCheck->setChecked( GlobalSettings::self()->requestMDN() );
-    mWordWrapCheck->setChecked( MessageComposer::MessageComposerSettings::self()->wordWrap() );
+    loadWidget(mTopQuoteCheck, MessageComposer::MessageComposerSettings::self()->prependSignatureItem() );
+    loadWidget(mDashDashCheck, MessageComposer::MessageComposerSettings::self()->dashDashSignatureItem() );
+    loadWidget(mSmartQuoteCheck,TemplateParser::GlobalSettings::self()->smartQuoteItem() );
+    loadWidget(mQuoteSelectionOnlyCheck, MessageComposer::MessageComposerSettings::self()->quoteSelectionOnlyItem() );
+
+    loadWidget(mReplyUsingHtml, TemplateParser::GlobalSettings::self()->replyUsingHtmlItem() );
+    loadWidget(mStripSignatureCheck, TemplateParser::GlobalSettings::self()->stripSignatureItem() );
+    loadWidget(mAutoRequestMDNCheck, GlobalSettings::self()->requestMDNItem() );
+    loadWidget(mWordWrapCheck, MessageComposer::MessageComposerSettings::self()->wordWrapItem() );
+
     mWrapColumnSpin->setValue( MessageComposer::MessageComposerSettings::self()->lineWrapWidth() );
     mMaximumRecipients->setValue( MessageComposer::MessageComposerSettings::self()->maximumRecipients() );
     mAutoSave->setValue( GlobalSettings::self()->autosaveInterval() );
@@ -567,16 +569,20 @@ void ComposerPage::GeneralTab::doLoadFromGlobalSettings()
 }
 
 void ComposerPage::GeneralTab::save() {
+
+    saveCheckBox(mTopQuoteCheck, MessageComposer::MessageComposerSettings::self()->prependSignatureItem() );
+    saveCheckBox(mDashDashCheck, MessageComposer::MessageComposerSettings::self()->dashDashSignatureItem() );
+    saveCheckBox(mSmartQuoteCheck,TemplateParser::GlobalSettings::self()->smartQuoteItem() );
+    saveCheckBox(mQuoteSelectionOnlyCheck, MessageComposer::MessageComposerSettings::self()->quoteSelectionOnlyItem() );
+
+    saveCheckBox(mReplyUsingHtml, TemplateParser::GlobalSettings::self()->replyUsingHtmlItem() );
+    saveCheckBox(mStripSignatureCheck, TemplateParser::GlobalSettings::self()->stripSignatureItem() );
+    saveCheckBox(mAutoRequestMDNCheck, GlobalSettings::self()->requestMDNItem() );
+    saveCheckBox(mWordWrapCheck, MessageComposer::MessageComposerSettings::self()->wordWrapItem() );
+
+
     MessageComposer::MessageComposerSettings::self()->setAutoTextSignature(
                 mAutoAppSignFileCheck->isChecked() ? QLatin1String("auto") : QLatin1String("manual") );
-    MessageComposer::MessageComposerSettings::self()->setPrependSignature( mTopQuoteCheck->isChecked() );
-    MessageComposer::MessageComposerSettings::self()->setDashDashSignature( mDashDashCheck->isChecked() );
-    TemplateParser::GlobalSettings::self()->setSmartQuote( mSmartQuoteCheck->isChecked() );
-    MessageComposer::MessageComposerSettings::self()->setQuoteSelectionOnly( mQuoteSelectionOnlyCheck->isChecked() );
-    TemplateParser::GlobalSettings::self()->setReplyUsingHtml( mReplyUsingHtml->isChecked() );
-    TemplateParser::GlobalSettings::self()->setStripSignature( mStripSignatureCheck->isChecked() );
-    GlobalSettings::self()->setRequestMDN( mAutoRequestMDNCheck->isChecked() );
-    MessageComposer::MessageComposerSettings::self()->setWordWrap( mWordWrapCheck->isChecked() );
     MessageComposer::MessageComposerSettings::self()->setLineWrapWidth( mWrapColumnSpin->value() );
     MessageComposer::MessageComposerSettings::self()->setMaximumRecipients( mMaximumRecipients->value() );
     GlobalSettings::self()->setAutosaveInterval( mAutoSave->value() );
@@ -1295,9 +1301,7 @@ void ComposerPage::AttachmentsTab::doLoadFromGlobalSettings()
 {
     loadWidget(mOutlookCompatibleCheck, MessageComposer::MessageComposerSettings::self()->outlookCompatibleAttachmentsItem());
     loadWidget(mMissingAttachmentDetectionCheck, GlobalSettings::self()->showForgottenAttachmentWarningItem());
-
-    const QStringList attachWordsList = GlobalSettings::self()->attachmentKeywords();
-    mAttachWordsListEditor->setStringList( attachWordsList );
+    loadWidget(mAttachWordsListEditor, GlobalSettings::self()->attachmentKeywordsItem() );
     const int maximumAttachmentSize(MessageComposer::MessageComposerSettings::self()->maximumAttachmentSize());
     mMaximumAttachmentSize->setValue(maximumAttachmentSize == -1 ? -1 : MessageComposer::MessageComposerSettings::self()->maximumAttachmentSize()/1024);
 }
@@ -1306,8 +1310,7 @@ void ComposerPage::AttachmentsTab::save()
 {
     saveCheckBox(mOutlookCompatibleCheck, MessageComposer::MessageComposerSettings::self()->outlookCompatibleAttachmentsItem());
     saveCheckBox(mMissingAttachmentDetectionCheck, GlobalSettings::self()->showForgottenAttachmentWarningItem());
-    GlobalSettings::self()->setAttachmentKeywords(
-                mAttachWordsListEditor->stringList() );
+    saveSimpleStringListEditor(mAttachWordsListEditor, GlobalSettings::self()->attachmentKeywordsItem() );
 
     KMime::setUseOutlookAttachmentEncoding( mOutlookCompatibleCheck->isChecked() );
     const int maximumAttachmentSize(mMaximumAttachmentSize->value());
