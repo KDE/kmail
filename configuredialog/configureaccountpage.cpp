@@ -180,6 +180,7 @@ void AccountsPage::SendingTab::doLoadOther()
     loadWidget(mConfirmSendCheck, GlobalSettings::self()->confirmBeforeSendItem() );
     loadWidget(mCheckSpellingBeforeSending,GlobalSettings::self()->checkSpellingBeforeSendItem());
 
+    loadWidget(mDefaultDomainEdit, MessageComposer::MessageComposerSettings::self()->defaultDomainItem());
     QString defaultDomain = MessageComposer::MessageComposerSettings::defaultDomain();
     if( defaultDomain.isEmpty() ) {
         defaultDomain = QHostInfo::localHostName();
@@ -190,7 +191,7 @@ void AccountsPage::SendingTab::doLoadOther()
 void AccountsPage::SendingTab::save()
 {
     GlobalSettings::self()->setSendOnCheck( mSendOnCheckCombo->currentIndex() );
-    MessageComposer::MessageComposerSettings::self()->setDefaultDomain( mDefaultDomainEdit->text() );
+    saveLineEdit(mDefaultDomainEdit, MessageComposer::MessageComposerSettings::self()->defaultDomainItem());
     saveCheckBox(mConfirmSendCheck, GlobalSettings::self()->confirmBeforeSendItem() );
     saveCheckBox(mCheckSpellingBeforeSending,GlobalSettings::self()->checkSpellingBeforeSendItem());
     MessageComposer::MessageComposerSettings::self()->setSendImmediate( mSendMethodCombo->currentIndex() == 0 );
