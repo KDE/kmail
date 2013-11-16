@@ -32,7 +32,7 @@ IdentityEditVcardDialog::IdentityEditVcardDialog(const QString &fileName, QWidge
     if (QFile(fileName).exists()) {
         setCaption( i18n( "Edit own vCard" ) );
         setButtons( User1|Ok|Cancel );
-        setButtonText(User1, i18n("Delete current vcard"));
+        setButtonText(User1, i18n("Delete current vCard"));
         connect(this, SIGNAL(user1Clicked()), this, SLOT(slotDeleteCurrentVCard()));
     } else {
         setCaption( i18n("Create own vCard") );
@@ -58,7 +58,7 @@ IdentityEditVcardDialog::~IdentityEditVcardDialog()
 
 void IdentityEditVcardDialog::slotDeleteCurrentVCard()
 {
-    if (KMessageBox::Yes == KMessageBox::questionYesNo(this, i18n("Are you sure to want to delete this vcard?"), i18n("Delete vcard"))) {
+    if (KMessageBox::Yes == KMessageBox::questionYesNo(this, i18n("Are you sure to want to delete this vCard?"), i18n("Delete vCard"))) {
         deleteCurrentVcard();
         reject();
     }
@@ -70,7 +70,7 @@ void IdentityEditVcardDialog::deleteCurrentVcard()
         QFile file(mVcardFileName);
         if (file.exists()) {
             if (!file.remove()) {
-                KMessageBox::error(this, i18n("We cannot delete vcard file."), i18n("Delete vcard"));
+                KMessageBox::error(this, i18n("We cannot delete vCard file."), i18n("Delete vCard"));
             }
         }
     }
