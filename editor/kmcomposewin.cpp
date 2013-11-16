@@ -48,7 +48,7 @@
 #include "foldercollectionmonitor.h"
 #include "kernel/mailkernel.h"
 #include "custommimeheader.h"
-#include "pimcommon/autocorrection/widgets/subjectlineeditwithautocorrection.h"
+#include "pimcommon/autocorrection/widgets/lineeditwithautocorrection.h"
 #include "pimcommon/translator/translatorwidget.h"
 #include "warningwidgets/attachmentmissingwarning.h"
 #include "job/createnewcontactjob.h"
@@ -306,7 +306,7 @@ KMComposeWin::KMComposeWin( const KMime::Message::Ptr &aMsg, bool lastSignState,
   connect( recipientsEditor, SIGNAL(sizeHintChanged()), SLOT(recipientEditorSizeHintChanged()) );
   mComposerBase->setRecipientsEditor( recipientsEditor );
 
-  mEdtSubject = new PimCommon::SubjectLineEditWithAutoCorrection( mHeadersArea, QLatin1String( "kmail2rc" ) );
+  mEdtSubject = new PimCommon::LineEditWithAutoCorrection( mHeadersArea, QLatin1String( "kmail2rc" ) );
   mEdtSubject->setActivateLanguageMenu(false);
   mEdtSubject->setToolTip( i18n( "Set a subject for this message" ) );
   mEdtSubject->setAutocorrection(KMKernel::self()->composerAutoCorrection());
@@ -2324,8 +2324,8 @@ void KMComposeWin::slotUndo()
     return;
   }
 
-  if (::qobject_cast<PimCommon::SubjectLineEditWithAutoCorrection*>( fw )) {
-    static_cast<PimCommon::SubjectLineEditWithAutoCorrection*>( fw )->undo();
+  if (::qobject_cast<PimCommon::LineEditWithAutoCorrection*>( fw )) {
+    static_cast<PimCommon::LineEditWithAutoCorrection*>( fw )->undo();
   }else if ( ::qobject_cast<KMComposerEditor*>( fw ) ) {
     static_cast<KTextEdit*>( fw )->undo();
   } else if (::qobject_cast<KLineEdit*>( fw )) {
@@ -2340,8 +2340,8 @@ void KMComposeWin::slotRedo()
     return;
   }
 
-  if (::qobject_cast<PimCommon::SubjectLineEditWithAutoCorrection*>( fw )) {
-    static_cast<PimCommon::SubjectLineEditWithAutoCorrection*>( fw )->redo();
+  if (::qobject_cast<PimCommon::LineEditWithAutoCorrection*>( fw )) {
+    static_cast<PimCommon::LineEditWithAutoCorrection*>( fw )->redo();
   } else if ( ::qobject_cast<KMComposerEditor*>( fw ) ) {
     static_cast<KTextEdit*>( fw )->redo();
   } else if (::qobject_cast<KLineEdit*>( fw )) {
@@ -2357,8 +2357,8 @@ void KMComposeWin::slotCut()
     return;
   }
 
-  if ( ::qobject_cast<PimCommon::SubjectLineEditWithAutoCorrection*>( fw ) ) {
-    static_cast<PimCommon::SubjectLineEditWithAutoCorrection*>( fw )->cut();
+  if ( ::qobject_cast<PimCommon::LineEditWithAutoCorrection*>( fw ) ) {
+    static_cast<PimCommon::LineEditWithAutoCorrection*>( fw )->cut();
   } else if ( ::qobject_cast<KMComposerEditor*>( fw ) ) {
     static_cast<KTextEdit*>(fw)->cut();
   } else if ( ::qobject_cast<KLineEdit*>( fw ) ) {
@@ -2374,8 +2374,8 @@ void KMComposeWin::slotCopy()
     return;
   }
 
-  if ( ::qobject_cast<PimCommon::SubjectLineEditWithAutoCorrection*>( fw ) ) {
-    static_cast<PimCommon::SubjectLineEditWithAutoCorrection*>( fw )->copy();
+  if ( ::qobject_cast<PimCommon::LineEditWithAutoCorrection*>( fw ) ) {
+    static_cast<PimCommon::LineEditWithAutoCorrection*>( fw )->copy();
   } else if ( ::qobject_cast<KMComposerEditor*>( fw ) ) {
     static_cast<KTextEdit*>(fw)->copy();
   } else if ( ::qobject_cast<KLineEdit*>( fw ) ) {
@@ -2390,8 +2390,8 @@ void KMComposeWin::slotPaste()
   if ( !fw ) {
     return;
   }
-  if ( ::qobject_cast<PimCommon::SubjectLineEditWithAutoCorrection*>( fw ) ) {
-    static_cast<PimCommon::SubjectLineEditWithAutoCorrection*>( fw )->paste();
+  if ( ::qobject_cast<PimCommon::LineEditWithAutoCorrection*>( fw ) ) {
+    static_cast<PimCommon::LineEditWithAutoCorrection*>( fw )->paste();
   } else if ( ::qobject_cast<KMComposerEditor*>( fw ) ) {
     static_cast<KTextEdit*>(fw)->paste();
   } else if ( ::qobject_cast<KLineEdit*>( fw ) ) {
@@ -2407,8 +2407,8 @@ void KMComposeWin::slotMarkAll()
     return;
   }
 
-  if (::qobject_cast<PimCommon::SubjectLineEditWithAutoCorrection*>( fw )) {
-    static_cast<PimCommon::SubjectLineEditWithAutoCorrection*>( fw )->selectAll();
+  if (::qobject_cast<PimCommon::LineEditWithAutoCorrection*>( fw )) {
+    static_cast<PimCommon::LineEditWithAutoCorrection*>( fw )->selectAll();
   } else if ( ::qobject_cast<KLineEdit*>( fw ) ) {
     static_cast<KLineEdit*>( fw )->selectAll();
   } else if (::qobject_cast<KMComposerEditor*>( fw )) {

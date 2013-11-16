@@ -100,7 +100,7 @@ namespace MailCommon {
  
 namespace PimCommon {
   class TranslatorWidget;
-  class SubjectLineEditWithAutoCorrection;
+  class LineEditWithAutoCorrection;
 }
 
 //-----------------------------------------------------------------------------
@@ -600,7 +600,7 @@ class KMComposeWin : public KMail::Composer
     QWidget   *mMainWidget;
     Sonnet::DictionaryComboBox *mDictionaryCombo;
     MessageComposer::ComposerLineEdit *mEdtFrom, *mEdtReplyTo;
-    PimCommon::SubjectLineEditWithAutoCorrection *mEdtSubject;
+    PimCommon::LineEditWithAutoCorrection *mEdtSubject;
     QLabel    *mLblIdentity, *mLblTransport, *mLblFcc;
     QLabel    *mLblFrom, *mLblReplyTo;
     QLabel    *mLblSubject;
