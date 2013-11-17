@@ -33,6 +33,8 @@ public:
     Akonadi::Item selectedContact() const;
 
 private:
+    void readConfig();
+    void writeConfig();
     Akonadi::EmailAddressSelectionWidget *mEmailSelectionWidget;
 };
 

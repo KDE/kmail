@@ -16,6 +16,7 @@
 */
 
 #include "addemailtoexistingcontactdialog.h"
+#include "kmkernel.h"
 
 #include <Akonadi/Contact/EmailAddressSelectionWidget>
 #include <Akonadi/Session>
@@ -59,11 +60,28 @@ AddEmailToExistingContactDialog::AddEmailToExistingContactDialog(QWidget *parent
     mEmailSelectionWidget = new Akonadi::EmailAddressSelectionWidget(model, this);
     setMainWidget(mEmailSelectionWidget);
     mEmailSelectionWidget->view()->setSelectionMode(QAbstractItemView::SingleSelection);
+    readConfig();
 }
 
 AddEmailToExistingContactDialog::~AddEmailToExistingContactDialog()
 {
+    writeConfig();
+}
 
+void AddEmailToExistingContactDialog::readConfig()
+{
+    KConfigGroup notifyDialog( KMKernel::self()->config(), "AddEmailToExistingContactDialog" );
+    const QSize size = notifyDialog.readEntry( "Size", QSize(600, 400) );
+    if ( size.isValid() ) {
+        resize( size );
+    }
+}
+
+void AddEmailToExistingContactDialog::writeConfig()
+{
+    KConfigGroup notifyDialog( KMKernel::self()->config(), "AddEmailToExistingContactDialog" );
+    notifyDialog.writeEntry( "Size", size() );
+    notifyDialog.sync();
 }
 
 Akonadi::Item AddEmailToExistingContactDialog::selectedContact() const
