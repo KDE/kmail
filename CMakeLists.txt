@@ -118,6 +118,7 @@ if (NOT WINCE AND KDEPIM_BUILD_DESKTOP)
      editor/attachmentcontroller.cpp
      editor/attachmentview.cpp
      dialog/archivefolderdialog.cpp
+     dialog/addemailtoexistingcontactdialog.cpp
      searchdialog/searchdescriptionattribute.cpp
      tag/tagactionmanager.cpp
      foldershortcutactionmanager.cpp
@@ -133,6 +134,7 @@ if (NOT WINCE AND KDEPIM_BUILD_DESKTOP)
      identity/identityaddvcarddialog.cpp
      warningwidgets/attachmentmissingwarning.cpp
      job/createnewcontactjob.cpp
+     job/addemailtoexistingcontactjob.cpp
      warningwidgets/externaleditorwarning.cpp
      configuredialog/configureagentswidget.cpp
      searchdialog/debug/searchdebugdialog.cpp

@@ -476,6 +476,7 @@ void KMReaderMainWin::showMessagePopup(const Akonadi::Item&msg ,const KUrl&url,c
         }
       } else {
         menu->addAction( mReaderWin->addAddrBookAction() );
+        menu->addAction( mReaderWin->addToExistingContactAction() );
       }
       menu->addSeparator();
       menu->addMenu(mReaderWin->viewHtmlOption());

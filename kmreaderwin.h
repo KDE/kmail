@@ -160,6 +160,8 @@ public:
   KMenu *viewHtmlOption() const { return mViewHtmlOptions; }
   KAction *shareImage() const { return mShareImage; }
 
+  KAction *addToExistingContactAction() const { return mAddEmailToExistingContactAction; }
+
   Akonadi::Item message() const;
 
   QWidget* mainWindow() { return mMainWindow; }
@@ -213,6 +215,7 @@ public slots:
 
   void slotContactHtmlOptions();
   void slotShareImage();
+  void slotMailToAddToExistingContact();
 
 protected:
   KUrl urlClicked() const;
@@ -240,6 +243,7 @@ private:
   KAction *mViewAsHtml;
   KAction *mLoadExternalReference;
   KAction *mShareImage;
+  KAction *mAddEmailToExistingContactAction;
 
   KMenu *mViewHtmlOptions;
 

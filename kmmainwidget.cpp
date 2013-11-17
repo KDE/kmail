@@ -2862,6 +2862,7 @@ void KMMainWidget::showMessagePopup(const Akonadi::Item&msg ,const KUrl&url,cons
         }
       } else {
         menu->addAction( mMsgView->addAddrBookAction() );
+        menu->addAction( mMsgView->addToExistingContactAction() );
       }
       menu->addSeparator();
       menu->addMenu(mMsgView->viewHtmlOption());

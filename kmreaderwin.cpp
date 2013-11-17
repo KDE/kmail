@@ -26,6 +26,8 @@
 #include "kmmainwidget.h"
 #include "kmreadermainwin.h"
 #include "kernel/mailkernel.h"
+#include "dialog/addemailtoexistingcontactdialog.h"
+#include "job/addemailtoexistingcontactjob.h"
 
 #include "kdepim-version.h"
 #include <kpimutils/email.h>
@@ -109,7 +111,8 @@ KMReaderWin::KMReaderWin(QWidget *aParent,
     mAddAddrBookAction( 0 ),
     mOpenAddrBookAction( 0 ),
     mUrlSaveAsAction( 0 ),
-    mAddBookmarksAction( 0 )
+    mAddBookmarksAction( 0 ),
+    mAddEmailToExistingContactAction( 0 )
 {
   createActions();
   QVBoxLayout * vlay = new QVBoxLayout( this );
@@ -179,6 +182,14 @@ void KMReaderWin::createActions()
   ac->addAction( QLatin1String("add_addr_book"), mAddAddrBookAction );
   connect( mAddAddrBookAction, SIGNAL(triggered(bool)),
            SLOT(slotMailtoAddAddrBook()) );
+
+  mAddEmailToExistingContactAction = new KAction( KIcon(QLatin1String( "contact-new") ),
+                                    i18n( "Add to Existing Contact" ), this );
+  mAddEmailToExistingContactAction->setShortcutConfigurable( false );
+  ac->addAction( QLatin1String("add_to_existing_contact"), mAddAddrBookAction );
+  connect( mAddEmailToExistingContactAction, SIGNAL(triggered(bool)),
+           SLOT(slotMailToAddToExistingContact()) );
+
 
   // open in addressbook
   mOpenAddrBookAction = new KAction( KIcon( QLatin1String("view-pim-contacts") ),
@@ -505,6 +516,23 @@ void KMReaderWin::slotMailtoAddAddrBook()
 
   KPIM::AddEmailAddressJob *job = new KPIM::AddEmailAddressJob( emailString, mMainWindow, this );
   job->start();
+}
+
+void KMReaderWin::slotMailToAddToExistingContact()
+{
+    const KUrl url = urlClicked();
+    if( url.isEmpty() )
+      return;
+    const QString emailString = KPIMUtils::decodeMailtoUrl( url );
+    QPointer<AddEmailToExistingContactDialog> dlg = new AddEmailToExistingContactDialog(this);
+    if (dlg->exec()) {
+        Akonadi::Item item = dlg->selectedContact();
+        if (item.isValid()) {
+            AddEmailToExistingContactJob *job = new AddEmailToExistingContactJob(item, emailString, this);
+            job->start();
+        }
+    }
+    delete dlg;
 }
 
 //-----------------------------------------------------------------------------
