@@ -32,6 +32,9 @@ public:
 
     Akonadi::Item selectedContact() const;
 
+private slots:
+    void slotSelectionChanged();
+
 private:
     void readConfig();
     void writeConfig();
