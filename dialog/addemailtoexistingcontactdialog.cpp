@@ -70,8 +70,8 @@ AddEmailToExistingContactDialog::~AddEmailToExistingContactDialog()
 
 void AddEmailToExistingContactDialog::readConfig()
 {
-    KConfigGroup notifyDialog( KMKernel::self()->config(), "AddEmailToExistingContactDialog" );
-    const QSize size = notifyDialog.readEntry( "Size", QSize(600, 400) );
+    KConfigGroup group( KMKernel::self()->config(), "AddEmailToExistingContactDialog" );
+    const QSize size = group.readEntry( "Size", QSize(600, 400) );
     if ( size.isValid() ) {
         resize( size );
     }
@@ -79,9 +79,9 @@ void AddEmailToExistingContactDialog::readConfig()
 
 void AddEmailToExistingContactDialog::writeConfig()
 {
-    KConfigGroup notifyDialog( KMKernel::self()->config(), "AddEmailToExistingContactDialog" );
-    notifyDialog.writeEntry( "Size", size() );
-    notifyDialog.sync();
+    KConfigGroup group( KMKernel::self()->config(), "AddEmailToExistingContactDialog" );
+    group.writeEntry( "Size", size() );
+    group.sync();
 }
 
 Akonadi::Item AddEmailToExistingContactDialog::selectedContact() const
