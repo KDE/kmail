@@ -17,9 +17,14 @@
 
 #include "addemailtoexistingcontactjob.h"
 
+#include <libkdepim/misc/broadcaststatus.h>
+
+
 #include <Akonadi/ItemModifyJob>
 
 #include <KABC/Addressee>
+
+#include <KLocale>
 
 AddEmailToExistingContactJob::AddEmailToExistingContactJob(const Akonadi::Item &item, const QString &email, QObject *parent)
     : KJob(parent),
@@ -59,6 +64,8 @@ void AddEmailToExistingContactJob::slotAddEmailDone(KJob *job)
     if ( job->error() ) {
         setError( job->error() );
         setErrorText( job->errorText() );
+    } else {
+        KPIM::BroadcastStatus::instance()->setStatusMsg( i18n( "Email added successfully." ) );
     }
     Q_EMIT emitResult();
 }
