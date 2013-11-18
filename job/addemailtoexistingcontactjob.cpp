@@ -28,9 +28,10 @@
 
 AddEmailToExistingContactJob::AddEmailToExistingContactJob(const Akonadi::Item &item, const QString &email, QObject *parent)
     : KJob(parent),
-      mEmail(email),
       mItem(item)
 {
+    QString name;
+    KABC::Addressee::parseEmailAddress( email, name, mEmail );
 }
 
 AddEmailToExistingContactJob::~AddEmailToExistingContactJob()
