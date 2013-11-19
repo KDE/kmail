@@ -596,7 +596,7 @@ private:
     KActionCollection *mActionCollection;
     QAction *mToolbarActionSeparator;
     QVBoxLayout *mTopLayout;
-    bool mDestructed, mShowingOfflineScreen;
+    bool mDestructed;
     QList<QAction*> mFilterMenuActions;
     QList<QAction*> mFilterTBarActions;
     QList<KMMetaFilterActionCommand*> mFilterCommands;
