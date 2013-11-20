@@ -2691,7 +2691,7 @@ void KMMainWidget::slotDisplayCurrentMessage()
     slotMessageActivated( mMessagePane->currentItem() );
 }
 
-
+// Called by double-clicked or 'Enter' in the messagelist -> pop up reader window
 void KMMainWidget::slotMessageActivated( const Akonadi::Item &msg )
 {
   if ( !mCurrentFolder || !msg.isValid() )
@@ -2709,20 +2709,12 @@ void KMMainWidget::slotMessageActivated( const Akonadi::Item &msg )
     return;
   }
 
-  kDebug();
   // Try to fetch the mail, even in offline mode, it might be cached
-#if 0
-  bool isImapResourceOnline = false;
-  bool folderIsAnImap = KMKernel::self()->isImapFolder( mCurrentFolder->collection(), isImapResourceOnline );
-  if (folderIsAnImap && !isImapResourceOnline) {
-    return;
-  }
-#endif
   ItemFetchJob *itemFetchJob = MessageViewer::Viewer::createFetchJob( msg );
   connect( itemFetchJob, SIGNAL(itemsReceived(Akonadi::Item::List)),
            SLOT(slotItemsFetchedForActivation(Akonadi::Item::List)) );
   connect( itemFetchJob, SIGNAL(result(KJob*)),
-           SLOT(itemsFetchDone(KJob*)) );
+           SLOT(itemsFetchForActivationDone(KJob*)) );
 }
 
 void KMMainWidget::slotItemsFetchedForActivation( const Akonadi::Item::List &list )
@@ -2740,6 +2732,14 @@ void KMMainWidget::slotItemsFetchedForActivation( const Akonadi::Item::List &lis
   const Akonadi::Collection parentCollection = MailCommon::Util::parentCollectionFromItem(msg);
   win->showMessage( overrideEncoding(), msg, parentCollection );
   win->show();
+}
+
+void KMMainWidget::itemsFetchForActivationDone( KJob * job )
+{
+    if ( job->error() ) {
+      kDebug() << job->error() << job->errorString();
+      BroadcastStatus::instance()->setStatusMsg( job->errorString() );
+    }
 }
 
 void KMMainWidget::slotMessageStatusChangeRequest( const Akonadi::Item &item, const Akonadi::MessageStatus & set, const Akonadi::MessageStatus &clear )

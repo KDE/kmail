@@ -526,6 +526,7 @@ class KMAIL_EXPORT KMMainWidget : public QWidget
 
     void itemsReceived(const Akonadi::Item::List &list );
     void itemsFetchDone( KJob *job );
+    void itemsFetchForActivationDone( KJob *job );
 
     void slotCollectionPropertiesContinued( KJob* job );
     void slotCollectionPropertiesFinished( KJob *job );
