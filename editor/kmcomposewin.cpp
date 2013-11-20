@@ -1567,8 +1567,6 @@ void KMComposeWin::setCurrentReplyTo(const QString& replyTo)
 void KMComposeWin::setMessage( const KMime::Message::Ptr &newMsg, bool lastSignState, bool lastEncryptState, bool mayAutoSign,
                            bool allowDecryption, bool isModified )
 {
-  Q_UNUSED( lastEncryptState );
-  Q_UNUSED( allowDecryption );
   if ( !newMsg ) {
     kDebug() << "newMsg == 0!";
     return;
@@ -1576,6 +1574,9 @@ void KMComposeWin::setMessage( const KMime::Message::Ptr &newMsg, bool lastSignS
 
   if( lastSignState )
     mLastSignActionState = true;
+
+  if ( lastEncryptState )
+    mLastEncryptActionState = true;
 
   mComposerBase->setMessage( newMsg );
   mMsg = newMsg;
@@ -1716,6 +1717,7 @@ void KMComposeWin::setMessage( const KMime::Message::Ptr &newMsg, bool lastSignS
   msgContent->parse();
   MessageViewer::EmptySource emptySource;
   MessageViewer::ObjectTreeParser otp( &emptySource );//All default are ok
+  emptySource.setAllowDecryption( allowDecryption );
   otp.parseObjectTree( msgContent );
 
   bool shouldSetCharset = false;
