@@ -4477,7 +4477,8 @@ void KMMainWidget::slotMessageSelected(const Akonadi::Item &item)
       mShowBusySplashTimer->start( GlobalSettings::self()->folderLoadingTimeout() ); //TODO: check if we need a different timeout setting for this
 
       Akonadi::ItemFetchJob *itemFetchJob = MessageViewer::Viewer::createFetchJob( item );
-      itemFetchJob->setProperty( "_item", QVariant::fromValue(item) );
+      const QString resource = mCurrentFolder->collection().resource();
+      itemFetchJob->setProperty( "_resource", QVariant::fromValue(resource) );
       connect( itemFetchJob, SIGNAL(itemsReceived(Akonadi::Item::List)),
               SLOT(itemsReceived(Akonadi::Item::List)) );
       connect( itemFetchJob, SIGNAL(result(KJob*)), SLOT(itemsFetchDone(KJob*)) );
@@ -4531,8 +4532,8 @@ void KMMainWidget::itemsFetchDone( KJob *job )
     // So we show the "offline" page after checking the resource status.
     kDebug() << job->error() << job->errorString();
 
-    Akonadi::Item item = job->property("_item").value<Akonadi::Item>();
-    const Akonadi::AgentInstance agentInstance = Akonadi::AgentManager::self()->instance( item.parentCollection().resource() );
+    const QString resource = job->property("_resource").toString();
+    const Akonadi::AgentInstance agentInstance = Akonadi::AgentManager::self()->instance( resource );
     if ( !agentInstance.isOnline() ) {
       // The resource is offline
       if ( mMsgView ) {
@@ -4545,6 +4546,9 @@ void KMMainWidget::itemsFetchDone( KJob *job )
         showOfflinePage();
       else
         showResourceOfflinePage();
+    } else {
+      // Some other error
+      BroadcastStatus::instance()->setStatusMsg( job->errorString() );
     }
   }
 }
