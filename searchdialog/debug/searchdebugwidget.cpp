@@ -19,6 +19,7 @@
 #include "pimcommon/nepomukdebug/sparqlsyntaxhighlighter.h"
 #include "pimcommon/nepomukdebug/searchdebugnepomukshowdialog.h"
 #include "pimcommon/nepomukdebug/akonadiresultlistview.h"
+#include "pimcommon/nepomukdebug/nepomukdebugutils.h"
 #include "util.h"
 
 #include "pimcommon/texteditor/plaintexteditor/plaintexteditorwidget.h"
@@ -54,7 +55,7 @@ SearchDebugWidget::SearchDebugWidget(const QString &query, QWidget *parent)
     // we install an event filter to catch Ctrl+Return for quick query execution
     mTextEdit->installEventFilter( this );
 
-    indentQuery(query);
+    mTextEdit->editor()->setPlainText(PimCommon::NepomukDebugUtils::indentQuery(query));
     new PimCommon::SparqlSyntaxHighlighter( mTextEdit->editor()->document() );
 
     mResultView = new PimCommon::AkonadiResultListView;
@@ -143,69 +144,11 @@ void SearchDebugWidget::slotSearch()
     connect( job, SIGNAL(result(KJob*)), this, SLOT(slotSearchFinished(KJob*)) );
 }
 
-void SearchDebugWidget::indentQuery(QString query)
-{
-    query = query.simplified();
-    QString newQuery;
-    int i = 0;
-    int indent = 0;
-    const int space = 4;
-
-    while(i < query.size()) {
-        newQuery.append(query[i]);
-        if (query[i] != QLatin1Char('"') && query[i] != QLatin1Char('<') && query[i] != QLatin1Char('\'')) {
-            if (query[i] == QLatin1Char('{')) {
-                ++indent;
-                newQuery.append(QLatin1Char('\n'));
-                newQuery.append(QString().fill(QLatin1Char(' '), indent*space));
-            } else if (query[i] == QLatin1Char('.')) {
-                if(i+2<query.size()) {
-                    if(query[i+1] == QLatin1Char('}')||query[i+2] == QLatin1Char('}')) {
-                        newQuery.append(QLatin1Char('\n'));
-                        newQuery.append(QString().fill(QLatin1Char(' '), (indent-1)*space));
-                    } else {
-                        newQuery.append(QLatin1Char('\n'));
-                        newQuery.append(QString().fill(QLatin1Char(' '), indent*space));
-                    }
-                } else {
-                    newQuery.append(QLatin1Char('\n'));
-                    newQuery.append(QString().fill(QLatin1Char(' '), indent*space));
-                }
-            } else if (query[i] == QLatin1Char('}')) {
-                indent--;
-                if (i+2<query.size()) {
-                    if (query[i+2] == QLatin1Char('.')||query[i+1] == QLatin1Char('.')) {
-                        newQuery.append(QString().fill(QLatin1Char(' '), 1));
-                    } else {
-                        newQuery.append(QLatin1Char('\n'));
-                        newQuery.append(QString().fill(QLatin1Char(' '), indent*space));
-                    }
-                } else {
-                    newQuery.append(QLatin1Char('\n'));
-                    newQuery.append(QString().fill(QLatin1Char(' '), indent*space));
-                }
-            }
-        } else {
-            ++i;
-            while(i < query.size()) {
-                if (query[i] == QLatin1Char('"') || query[i] == QLatin1Char('>') || query[i] == QLatin1Char('\'')) {
-                    newQuery.append(query[i]);
-                    break;
-                }
-                newQuery.append(query[i]);
-                ++i;
-            }
-        }
-        ++i;
-    }
-    mTextEdit->editor()->setPlainText( newQuery );
-}
-
 void SearchDebugWidget::slotReduceQuery()
 {
     QString query = mTextEdit->editor()->toPlainText();
     KMail::Util::reduceQuery(query);
-    indentQuery(query);
+    mTextEdit->editor()->setPlainText(PimCommon::NepomukDebugUtils::indentQuery(query));
 }
 
 void SearchDebugWidget::slotSearchFinished(KJob *job)

@@ -59,7 +59,6 @@ private Q_SLOTS:
     void slotReduceQuery();
 
 private:
-    void indentQuery(QString query);
     QStringListModel *mResultModel;
     PimCommon::AkonadiResultListView *mResultView;
     PimCommon::PlainTextEditorWidget *mItemView;
