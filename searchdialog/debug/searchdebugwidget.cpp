@@ -18,7 +18,7 @@
 #include "searchdebugwidget.h"
 #include "pimcommon/nepomukdebug/sparqlsyntaxhighlighter.h"
 #include "pimcommon/nepomukdebug/searchdebugnepomukshowdialog.h"
-
+#include "pimcommon/nepomukdebug/akonadiresultlistview.h"
 #include "util.h"
 
 #include "pimcommon/texteditor/plaintexteditor/plaintexteditorwidget.h"
@@ -45,50 +45,6 @@
 #include <QMenu>
 #include <QPointer>
 
-SearchResultListView::SearchResultListView(QWidget *parent)
-    : QListView(parent)
-{
-
-}
-
-SearchResultListView::~SearchResultListView()
-{
-
-}
-
-void SearchResultListView::contextMenuEvent( QContextMenuEvent * event )
-{
-    const QModelIndex index = indexAt( event->pos() );
-    if (!index.isValid())
-        return;
-
-    QMenu *popup = new QMenu(this);
-    QAction *searchNepomukShow = new QAction(i18n("Search with nepomuk show..."), popup);
-    popup->addAction(searchNepomukShow);
-    QAction *act = popup->exec( event->globalPos() );
-    delete popup;
-    if (act == searchNepomukShow) {
-        const QString uid = QLatin1String("akonadi:?item=")  + index.data( Qt::DisplayRole ).toString();
-        QPointer<PimCommon::SearchDebugNepomukShowDialog> dlg = new PimCommon::SearchDebugNepomukShowDialog(uid, this);
-        dlg->exec();
-        delete dlg;
-    }
-}
-
-SearchDebugListDelegate::SearchDebugListDelegate( QObject *parent )
-    : QStyledItemDelegate ( parent )
-{
-}
-
-SearchDebugListDelegate::~SearchDebugListDelegate()
-{
-}
-
-QWidget *SearchDebugListDelegate::createEditor( QWidget *, const QStyleOptionViewItem  &, const QModelIndex & ) const
-{
-    return 0;
-}
-
 SearchDebugWidget::SearchDebugWidget(const QString &query, QWidget *parent)
     : QWidget(parent)
 {
@@ -101,8 +57,7 @@ SearchDebugWidget::SearchDebugWidget(const QString &query, QWidget *parent)
     indentQuery(query);
     new PimCommon::SparqlSyntaxHighlighter( mTextEdit->editor()->document() );
 
-    mResultView = new SearchResultListView;
-    mResultView->setItemDelegate(new SearchDebugListDelegate(this));
+    mResultView = new PimCommon::AkonadiResultListView;
 
     mItemView = new PimCommon::PlainTextEditorWidget;
     mItemView->setReadOnly(true);

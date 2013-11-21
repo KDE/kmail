@@ -31,30 +31,12 @@ class QContextMenuEvent;
 
 namespace PimCommon {
 class PlainTextEditorWidget;
+class AkonadiResultListView;
 }
 
 namespace KPIMUtils {
 class ProgressIndicatorLabel;
 }
-
-class SearchResultListView : public QListView
-{
-    Q_OBJECT
-public:
-    explicit SearchResultListView(QWidget *parent=0);
-    ~SearchResultListView();
-
-protected:
-    void contextMenuEvent( QContextMenuEvent *event );
-};
-
-class SearchDebugListDelegate : public QStyledItemDelegate
-{
-public:
-    SearchDebugListDelegate(QObject *parent = 0);
-    ~SearchDebugListDelegate();
-    QWidget *createEditor( QWidget *, const QStyleOptionViewItem &, const QModelIndex & ) const;
-};
 
 class SearchDebugWidget : public QWidget
 {
@@ -79,7 +61,7 @@ private Q_SLOTS:
 private:
     void indentQuery(QString query);
     QStringListModel *mResultModel;
-    SearchResultListView *mResultView;
+    PimCommon::AkonadiResultListView *mResultView;
     PimCommon::PlainTextEditorWidget *mItemView;
     PimCommon::PlainTextEditorWidget *mTextEdit;
     KPIMUtils::ProgressIndicatorLabel *mProgressIndicator;
