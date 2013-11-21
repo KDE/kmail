@@ -140,7 +140,6 @@ if (NOT WINCE AND KDEPIM_BUILD_DESKTOP)
      searchdialog/debug/searchdebugdialog.cpp
      searchdialog/debug/sparqlsyntaxhighlighter.cpp
      searchdialog/debug/searchdebugwidget.cpp 
-     searchdialog/debug/searchdebugnepomukshowdialog.cpp
      searchdialog/searchpatternwarning.cpp
      searchdialog/nepomuksearchpatternedit.cpp
      vacationmanager.cpp

@@ -17,7 +17,7 @@
 
 #include "searchdebugwidget.h"
 #include "sparqlsyntaxhighlighter.h"
-#include "searchdebugnepomukshowdialog.h"
+#include "pimcommon/nepomukdebug/searchdebugnepomukshowdialog.h"
 
 #include "util.h"
 
@@ -69,7 +69,7 @@ void SearchResultListView::contextMenuEvent( QContextMenuEvent * event )
     delete popup;
     if (act == searchNepomukShow) {
         const QString uid = QLatin1String("akonadi:?item=")  + index.data( Qt::DisplayRole ).toString();
-        QPointer<SearchDebugNepomukShowDialog> dlg = new SearchDebugNepomukShowDialog(uid, this);
+        QPointer<PimCommon::SearchDebugNepomukShowDialog> dlg = new PimCommon::SearchDebugNepomukShowDialog(uid, this);
         dlg->exec();
         delete dlg;
     }

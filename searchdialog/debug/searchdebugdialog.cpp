@@ -17,7 +17,7 @@
 
 #include "searchdebugdialog.h"
 #include "searchdebugwidget.h"
-#include "searchdebugnepomukshowdialog.h"
+#include "pimcommon/nepomukdebug/searchdebugnepomukshowdialog.h"
 
 #include "pimcommon/util/pimutil.h"
 
@@ -50,7 +50,7 @@ void SearchDebugDialog::slotSearchInfoWithNepomuk()
 {
     const QString nepomukId = QInputDialog::getText(this, i18n("Search with nepomukshow"), i18n("Nepomuk id:"));
     if (!nepomukId.isEmpty()) {
-        QPointer<SearchDebugNepomukShowDialog> dlg = new SearchDebugNepomukShowDialog(nepomukId, this);
+        QPointer<PimCommon::SearchDebugNepomukShowDialog> dlg = new PimCommon::SearchDebugNepomukShowDialog(nepomukId, this);
         dlg->exec();
         delete dlg;
     }
