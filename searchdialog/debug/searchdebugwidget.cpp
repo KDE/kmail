@@ -16,7 +16,7 @@
 */
 
 #include "searchdebugwidget.h"
-#include "sparqlsyntaxhighlighter.h"
+#include "pimcommon/nepomukdebug/sparqlsyntaxhighlighter.h"
 #include "pimcommon/nepomukdebug/searchdebugnepomukshowdialog.h"
 
 #include "util.h"
@@ -99,7 +99,7 @@ SearchDebugWidget::SearchDebugWidget(const QString &query, QWidget *parent)
     mTextEdit->installEventFilter( this );
 
     indentQuery(query);
-    new Nepomuk2::SparqlSyntaxHighlighter( mTextEdit->editor()->document() );
+    new PimCommon::SparqlSyntaxHighlighter( mTextEdit->editor()->document() );
 
     mResultView = new SearchResultListView;
     mResultView->setItemDelegate(new SearchDebugListDelegate(this));
