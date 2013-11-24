@@ -62,7 +62,8 @@ KMSystemTray::KMSystemTray(QObject *parent)
       mDesktopOfMainWin( 0 ),
       mMode( GlobalSettings::EnumSystemTrayPolicy::ShowOnUnread ),
       mCount( 0 ),
-      mShowUnreadMail( true ),
+      mShowUnreadMailCount( true ),
+      mIconNotificationsEnabled( true ),
       mNewMessagesPopup( 0 ),
       mSendQueued( 0 )
 {
@@ -142,11 +143,11 @@ KMSystemTray::~KMSystemTray()
 {
 }
 
-void KMSystemTray::setShowUnread(bool showUnread)
+void KMSystemTray::setShowUnreadCount(bool showUnreadCount)
 {
-    if (mShowUnreadMail == showUnread)
+    if (mShowUnreadMailCount == showUnreadCount)
         return;
-    mShowUnreadMail = showUnread;
+    mShowUnreadMailCount = showUnreadCount;
     updateSystemTray();
 }
 
@@ -182,11 +183,11 @@ int KMSystemTray::mode() const
  */
 void KMSystemTray::updateCount()
 {
-    if (mCount == 0) {
+    if (mCount == 0 || !mIconNotificationsEnabled) {
         setIconByName( QLatin1String("kmail") );
         return;
     }
-    if (mShowUnreadMail) {
+    if (mShowUnreadMailCount) {
         const int overlaySize = KIconLoader::SizeSmallMedium;
 
         const QString countString = QString::number( mCount );
@@ -229,6 +230,13 @@ void KMSystemTray::updateCount()
     }
 }
 
+void KMSystemTray::setSystrayIconNotificationsEnabled( bool enabled )
+{
+    if ( enabled != mIconNotificationsEnabled ) {
+        mIconNotificationsEnabled = enabled;
+        updateSystemTray();
+    }
+}
 
 /**
  * On left mouse click, switch focus to the first KMMainWidget.  On right
