@@ -537,6 +537,13 @@ void KMKernel::checkMail () //might create a new reader but won't show!!
   }
 }
 
+void KMKernel::setSystrayUnreadCountEnabled(bool enabled)
+{
+    GlobalSettings::self()->systemTrayShowUnreadItem()->setValue(enabled);
+    mSystemTray->setShowUnread(enabled);
+    GlobalSettings::self()->writeConfig();
+}
+
 QStringList KMKernel::accounts()
 {
   QStringList accountLst;
