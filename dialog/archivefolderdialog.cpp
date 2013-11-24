@@ -54,10 +54,10 @@ ArchiveFolderDialog::ArchiveFolderDialog( QWidget *parent )
     : KDialog( parent ), mParentWidget( parent )
 {
     setObjectName( QLatin1String("archive_folder_dialog") );
-    setCaption( i18n( "Archive Folder" ) );
+    setCaption( i18nc( "@title:window for archiving a folder", "Archive Folder" ) );
     setButtons( Ok|Cancel );
     setDefaultButton( Ok );
-    setButtonText(KDialog::Ok,i18n("Archive"));
+    setButtonText( KDialog::Ok, i18nc( "@action", "Archive" ) );
     setModal( true );
     QWidget *mainWidget = new QWidget( this );
     QGridLayout *mainLayout = new QGridLayout( mainWidget );

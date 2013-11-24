@@ -130,7 +130,7 @@ MessageActions::MessageActions( KActionCollection *ac, QWidget *parent )
   mKorganizerIsOnSystem = !KStandardDirs::findExe(QLatin1String("korganizer")).isEmpty();
   mCreateTodoAction->setEnabled( mKorganizerIsOnSystem );
 
-  mArchiveMailAction = new KAction(i18n("Archive"), this);
+  mArchiveMailAction = new KAction(i18nc("@action", "Archive"), this);
   ac->addAction(QLatin1String("archive_mail"), mArchiveMailAction );
   connect(mArchiveMailAction, SIGNAL(triggered(bool)), SLOT(slotArchiveMail()));
 

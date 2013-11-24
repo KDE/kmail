@@ -3705,7 +3705,7 @@ void KMMainWidget::setupActions()
              SLOT(slotMoveSelectedMessageToFolder()) );
   }
 
-  mArchiveAction = new KAction( i18n("Archive"), this);
+  mArchiveAction = new KAction( i18nc("@action", "Archive"), this);
   actionCollection()->addAction( QLatin1String("archive_mails"), mArchiveAction );
   connect( mArchiveAction, SIGNAL(triggered(bool)),
            SLOT(slotArchiveMails()) );
