@@ -47,7 +47,7 @@ public:
     /** destructor */
     ~KMSystemTray();
 
-    void setShowUnread(bool showUnread);
+    void setShowUnreadCount(bool showUnreadCount);
     void setMode(int mode);
     int mode() const;
 
@@ -80,7 +80,7 @@ private:
     int mMode;
     int mCount;
 
-    bool mShowUnreadMail;
+    bool mShowUnreadMailCount;
     QMenu *mNewMessagesPopup;
     QAction *mSendQueued;
 };

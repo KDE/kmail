@@ -62,7 +62,7 @@ KMSystemTray::KMSystemTray(QObject *parent)
       mDesktopOfMainWin( 0 ),
       mMode( GlobalSettings::EnumSystemTrayPolicy::ShowOnUnread ),
       mCount( 0 ),
-      mShowUnreadMail( true ),
+      mShowUnreadMailCount( true ),
       mNewMessagesPopup( 0 ),
       mSendQueued( 0 )
 {
@@ -142,11 +142,11 @@ KMSystemTray::~KMSystemTray()
 {
 }
 
-void KMSystemTray::setShowUnread(bool showUnread)
+void KMSystemTray::setShowUnreadCount(bool showUnreadCount)
 {
-    if (mShowUnreadMail == showUnread)
+    if (mShowUnreadMailCount == showUnreadCount)
         return;
-    mShowUnreadMail = showUnread;
+    mShowUnreadMailCount = showUnreadCount;
     updateSystemTray();
 }
 
@@ -186,7 +186,7 @@ void KMSystemTray::updateCount()
         setIconByName( "kmail" );
         return;
     }
-    if (mShowUnreadMail) {
+    if (mShowUnreadMailCount) {
         const int overlaySize = KIconLoader::SizeSmallMedium;
 
         const QString countString = QString::number( mCount );
