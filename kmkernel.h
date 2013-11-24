@@ -118,6 +118,8 @@ public Q_SLOTS:
   Q_SCRIPTABLE void checkMail();
   Q_SCRIPTABLE void openReader() { openReader( false ); }
 
+  Q_SCRIPTABLE void setSystrayUnreadCountEnabled(bool enabled);
+
   /**
    * Pauses all background jobs and does not
    * allow new background jobs to be started.
