@@ -48,6 +48,14 @@ public:
     ~KMSystemTray();
 
     void setShowUnreadCount(bool showUnreadCount);
+
+    /**
+     * Use this method to disable any systray icon changing.
+     * By default this is enabled and you'll see the "new e-mail" icon whenever there's
+     * new e-mail.
+     */
+    void setSystrayIconNotificationsEnabled(bool enable);
+
     void setMode(int mode);
     int mode() const;
 
@@ -81,6 +89,8 @@ private:
     int mCount;
 
     bool mShowUnreadMailCount;
+    bool mIconNotificationsEnabled;
+
     QMenu *mNewMessagesPopup;
     QAction *mSendQueued;
 };

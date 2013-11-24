@@ -63,6 +63,7 @@ KMSystemTray::KMSystemTray(QObject *parent)
       mMode( GlobalSettings::EnumSystemTrayPolicy::ShowOnUnread ),
       mCount( 0 ),
       mShowUnreadMailCount( true ),
+      mIconNotificationsEnabled( true ),
       mNewMessagesPopup( 0 ),
       mSendQueued( 0 )
 {
@@ -182,7 +183,7 @@ int KMSystemTray::mode() const
  */
 void KMSystemTray::updateCount()
 {
-    if (mCount == 0) {
+    if (mCount == 0 || !mIconNotificationsEnabled) {
         setIconByName( "kmail" );
         return;
     }
@@ -229,6 +230,13 @@ void KMSystemTray::updateCount()
     }
 }
 
+void KMSystemTray::setSystrayIconNotificationsEnabled( bool enabled )
+{
+    if ( enabled != mIconNotificationsEnabled ) {
+        mIconNotificationsEnabled = enabled;
+        updateSystemTray();
+    }
+}
 
 /**
  * On left mouse click, switch focus to the first KMMainWidget.  On right
