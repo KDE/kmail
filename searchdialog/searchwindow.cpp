@@ -862,7 +862,7 @@ void SearchWindow::slotSelectMultipleFolders()
         Q_FOREACH (const Akonadi::Collection &col, mCollectionId) {
             lst << col.id();
         }
-        mSelectMultiCollectionDialog = new MailCommon::SelectMultiCollectionDialog(lst, this);
+        mSelectMultiCollectionDialog = new MailCommon::SelectMultiCollectionDialog(KMime::Message::mimeType(), lst, this);
     }
     mSelectMultiCollectionDialog->show();
 }
