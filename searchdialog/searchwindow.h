@@ -41,7 +41,7 @@ class KMSearchMessageModel;
 class QAbstractItemModel;
 class QModelIndex;
 
-namespace MailCommon {
+namespace PimCommon {
 class SelectMultiCollectionDialog;
 }
 
@@ -157,7 +157,7 @@ private Q_SLOTS:
     void slotSelectMultipleFolders();
 
 private:
-    QPointer<MailCommon::SelectMultiCollectionDialog> mSelectMultiCollectionDialog;
+    QPointer<PimCommon::SelectMultiCollectionDialog> mSelectMultiCollectionDialog;
     QList<Akonadi::Collection> mCollectionId;
     QString mQuery;
     bool mCloseRequested;

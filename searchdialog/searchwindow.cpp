@@ -37,7 +37,7 @@
 #include "kmsearchmessagemodel.h"
 #include "kmsearchfilterproxymodel.h"
 #include "searchpatternwarning.h"
-#include "mailcommon/folderdialog/selectmulticollectiondialog.h"
+#include "pimcommon/folderdialog/selectmulticollectiondialog.h"
 
 #include <Akonadi/CollectionModifyJob>
 #include <Akonadi/EntityTreeView>
@@ -862,7 +862,7 @@ void SearchWindow::slotSelectMultipleFolders()
         Q_FOREACH (const Akonadi::Collection &col, mCollectionId) {
             lst << col.id();
         }
-        mSelectMultiCollectionDialog = new MailCommon::SelectMultiCollectionDialog(KMime::Message::mimeType(), lst, this);
+        mSelectMultiCollectionDialog = new PimCommon::SelectMultiCollectionDialog(KMime::Message::mimeType(), lst, this);
     }
     mSelectMultiCollectionDialog->show();
 }
