@@ -99,7 +99,7 @@ namespace MailCommon {
 }
  
 namespace PimCommon {
-  class TranslatorWidget;
+  class CustomToolsWidget;
   class LineEditWithAutoCorrection;
 }
 
@@ -448,6 +448,7 @@ class KMComposeWin : public KMail::Composer
 
     void slotExternalEditorStarted();
     void slotExternalEditorClosed();
+    void slotVisibleTranslatorTools(bool b);
 
 
   public: // kmcommand
@@ -665,7 +666,7 @@ class KMComposeWin : public KMail::Composer
 
 
     SnippetWidget *mSnippetWidget;
-    PimCommon::TranslatorWidget *mTranslatorWidget;
+    PimCommon::CustomToolsWidget *mCustomToolsWidget;
     QPointer<KPIMTextEdit::SelectSpecialChar> mSelectSpecialChar;
     AttachmentMissingWarning *mAttachmentMissing;
     ExternalEditorWarning *mExternalEditorWarning;
