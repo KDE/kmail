@@ -54,6 +54,8 @@
 #include "job/createnewcontactjob.h"
 #include "warningwidgets/externaleditorwarning.h"
 
+#include "pimcommon/util/editorutil.h"
+
 #include "agents/sendlateragent/sendlaterutil.h"
 #include "agents/sendlateragent/sendlaterdialog.h"
 #include "agents/sendlateragent/sendlaterinfo.h"
@@ -3531,19 +3533,13 @@ void KMComposeWin::addExtraCustomHeaders( const QMap<QByteArray, QString> &heade
 void KMComposeWin::slotUpperCase()
 {
     QTextCursor textCursor = mComposerBase->editor()->textCursor();
-    if (textCursor.hasSelection()) {
-        const QString newText = textCursor.selectedText().toUpper();
-        textCursor.insertText(newText);
-    }
+    PimCommon::EditorUtil::lowerCase(textCursor);
 }
 
 void KMComposeWin::slotLowerCase()
 {
     QTextCursor textCursor = mComposerBase->editor()->textCursor();
-    if (textCursor.hasSelection()) {
-        const QString newText = textCursor.selectedText().toLower();
-        textCursor.insertText(newText);
-    }
+    PimCommon::EditorUtil::upperCase(textCursor);
 }
 
 void KMComposeWin::slotExternalEditorStarted()
