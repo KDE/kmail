@@ -202,6 +202,7 @@ KMComposeWin::KMComposeWin( const KMime::Message::Ptr &aMsg, bool lastSignState,
     mIdentityAction( 0 ), mTransportAction( 0 ), mFccAction( 0 ),
     mWordWrapAction( 0 ), mFixedFontAction( 0 ), mAutoSpellCheckingAction( 0 ),
     mDictionaryAction( 0 ), mSnippetAction( 0 ), mTranslateAction(0),
+    mGenerateShortenUrl( 0 ),
     mCodecAction( 0 ),
     mCryptoModuleAction( 0 ),
     mFindText( 0 ),
@@ -423,7 +424,8 @@ KMComposeWin::KMComposeWin( const KMime::Message::Ptr &aMsg, bool lastSignState,
   mBtnDictionary->setFocusPolicy( Qt::NoFocus );
 
   mCustomToolsWidget = new PimCommon::CustomToolsWidget(this);
-  connect(mCustomToolsWidget,SIGNAL(translatorWasClosed()),this,SLOT(slotTranslatorWasClosed()));
+  connect(mCustomToolsWidget,SIGNAL(translatorWasClosed()),this,SLOT(slotCustomToolWasClosed()));
+  connect(mCustomToolsWidget,SIGNAL(shortUrlWasClosed()),this,SLOT(slotCustomToolWasClosed()));
   mSplitter->addWidget(mCustomToolsWidget);
 
   MessageComposer::AttachmentModel* attachmentModel = new MessageComposer::AttachmentModel( this );
@@ -1393,6 +1395,10 @@ void KMComposeWin::setupActions( void )
   mTranslateAction->setChecked(false);
   connect(mTranslateAction, SIGNAL(triggered(bool)), this,SLOT(slotVisibleTranslatorTools(bool)));
 
+  mGenerateShortenUrl = new KToggleAction( i18n("Generate Shorten Url"), this );
+  actionCollection()->addAction( QLatin1String("shorten_url"), mGenerateShortenUrl );
+  mGenerateShortenUrl->setChecked(false);
+  connect(mGenerateShortenUrl, SIGNAL(triggered(bool)), this,SLOT(slotVisibleShortUrlTools(bool)));
   //Chiamus not supported in kmail2
 #if 0
   if ( Kleo::CryptoBackendFactory::instance()->protocol( QLatin1String("Chiasmus") ) ) {
@@ -3438,9 +3444,10 @@ void KMComposeWin::slotFccFolderChanged(const Akonadi::Collection& collection)
   mComposerBase->setFcc( collection );
 }
 
-void KMComposeWin::slotTranslatorWasClosed()
+void KMComposeWin::slotCustomToolWasClosed()
 {
   mTranslateAction->setChecked(false);
+  mGenerateShortenUrl->setChecked(false);
 }
 
 void KMComposeWin::insertSpecialCharacter()
@@ -3559,6 +3566,18 @@ void KMComposeWin::slotVisibleTranslatorTools(bool b)
 {
     if (b) {
         mCustomToolsWidget->switchToTool(PimCommon::CustomToolsWidget::TranslatorTool);
+    } else {
+        slotCustomToolWasClosed();
+    }
+    mCustomToolsWidget->setVisible(b);
+}
+
+void KMComposeWin::slotVisibleShortUrlTools(bool b)
+{
+    if (b) {
+        mCustomToolsWidget->switchToTool(PimCommon::CustomToolsWidget::ShortUrlTool);
+    } else {
+        slotCustomToolWasClosed();
     }
     mCustomToolsWidget->setVisible(b);
 }

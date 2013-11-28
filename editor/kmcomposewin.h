@@ -233,6 +233,7 @@ class KMComposeWin : public KMail::Composer
 
      KToggleAction *translateAction() const { return mTranslateAction; }
      KActionMenu *changeCaseMenu() const { return mChangeCaseMenu; }
+     KToggleAction *generateShortenUrlAction() const { return mGenerateShortenUrl; }
 
   private:
   /**
@@ -328,7 +329,7 @@ class KMComposeWin : public KMail::Composer
     void slotPaste();
     void slotPasteAsAttachment();
     void slotMarkAll();
-    void slotTranslatorWasClosed();
+    void slotCustomToolWasClosed();
 
     void slotFolderRemoved( const Akonadi::Collection& );
     void slotLanguageChanged( const QString &language );
@@ -449,6 +450,7 @@ class KMComposeWin : public KMail::Composer
     void slotExternalEditorStarted();
     void slotExternalEditorClosed();
     void slotVisibleTranslatorTools(bool b);
+    void slotVisibleShortUrlTools(bool b);
 
 
   public: // kmcommand
@@ -633,6 +635,7 @@ class KMComposeWin : public KMail::Composer
     KToggleAction *mIdentityAction, *mTransportAction, *mFccAction;
     KToggleAction *mWordWrapAction, *mFixedFontAction, *mAutoSpellCheckingAction;
     KToggleAction *mDictionaryAction, *mSnippetAction, *mTranslateAction;
+    KToggleAction *mGenerateShortenUrl;
 
     KToggleAction *markupAction;
 
