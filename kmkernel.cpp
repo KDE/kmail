@@ -461,7 +461,9 @@ void KMKernel::checkMail () //might create a new reader but won't show!!
 
 void KMKernel::setSystrayIconNotificationsEnabled( bool enabled )
 {
-  mSystemTray->setSystrayIconNotificationsEnabled( enabled );
+  if ( mSystemTray ) {
+    mSystemTray->setSystrayIconNotificationsEnabled( enabled );
+  }
 }
 
 QStringList KMKernel::accounts()
