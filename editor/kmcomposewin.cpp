@@ -2213,13 +2213,13 @@ bool KMComposeWin::insertFromMimeData( const QMimeData *source, bool forceAttach
         }
       } else {
         KMenu p;
-        const QAction *addAsTextAction = p.addAction( i18np("Add URL into Message as &Text", "Add URLs into Message as &Text", urlList.size() ) );
+        const QAction *addAsTextAction = p.addAction( i18np("Add URL into Message", "Add URLs into Message", urlList.size() ) );
         const QAction *addAsAttachmentAction = p.addAction( i18np("Add File as &Attachment", "Add Files as &Attachment", urlList.size() ) );
         const QAction *selectedAction = p.exec( QCursor::pos() );
 
         if ( selectedAction == addAsTextAction ) {
           foreach( const KUrl &url, urlList ) {
-            mComposerBase->editor()->textCursor().insertText(url.url() + QLatin1Char('\n'));
+            mComposerBase->editor()->insertLink(url.url());
           }
         } else if ( selectedAction == addAsAttachmentAction ) {
           foreach( const KUrl &url, urlList ) {
