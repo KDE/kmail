@@ -1389,15 +1389,12 @@ void KMComposeWin::setupActions( void )
   actionCollection()->addAction( QLatin1String("setup_spellchecker"), action );
   connect( action, SIGNAL(triggered(bool)), SLOT(slotSpellcheckConfig()) );
 
-  mTranslateAction = new KToggleAction( i18n("&Translator"), this );
-  action->setShortcut( QKeySequence( Qt::CTRL + Qt::ALT + Qt::Key_T ) );
+  mTranslateAction = mCustomToolsWidget->action(PimCommon::CustomToolsWidget::TranslatorTool);
   actionCollection()->addAction( QLatin1String("translator"), mTranslateAction );
-  mTranslateAction->setChecked(false);
   connect(mTranslateAction, SIGNAL(triggered(bool)), this,SLOT(slotVisibleTranslatorTools(bool)));
 
-  mGenerateShortenUrl = new KToggleAction( i18n("Generate Shorten Url"), this );
+  mGenerateShortenUrl = mCustomToolsWidget->action(PimCommon::CustomToolsWidget::ShortUrlTool);
   actionCollection()->addAction( QLatin1String("shorten_url"), mGenerateShortenUrl );
-  mGenerateShortenUrl->setChecked(false);
   connect(mGenerateShortenUrl, SIGNAL(triggered(bool)), this,SLOT(slotVisibleShortUrlTools(bool)));
   //Chiamus not supported in kmail2
 #if 0
@@ -3566,6 +3563,7 @@ void KMComposeWin::slotVisibleTranslatorTools(bool b)
 {
     if (b) {
         mCustomToolsWidget->switchToTool(PimCommon::CustomToolsWidget::TranslatorTool);
+
     } else {
         slotCustomToolWasClosed();
     }
