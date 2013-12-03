@@ -424,8 +424,6 @@ KMComposeWin::KMComposeWin( const KMime::Message::Ptr &aMsg, bool lastSignState,
   mBtnDictionary->setFocusPolicy( Qt::NoFocus );
 
   mCustomToolsWidget = new PimCommon::CustomToolsWidget(this);
-  connect(mCustomToolsWidget,SIGNAL(translatorWasClosed()),this,SLOT(slotCustomToolWasClosed()));
-  connect(mCustomToolsWidget,SIGNAL(shortUrlWasClosed()),this,SLOT(slotCustomToolWasClosed()));
   mSplitter->addWidget(mCustomToolsWidget);
 
   MessageComposer::AttachmentModel* attachmentModel = new MessageComposer::AttachmentModel( this );
@@ -1391,11 +1389,9 @@ void KMComposeWin::setupActions( void )
 
   mTranslateAction = mCustomToolsWidget->action(PimCommon::CustomToolsWidget::TranslatorTool);
   actionCollection()->addAction( QLatin1String("translator"), mTranslateAction );
-  connect(mTranslateAction, SIGNAL(triggered(bool)), this,SLOT(slotVisibleTranslatorTools(bool)));
 
   mGenerateShortenUrl = mCustomToolsWidget->action(PimCommon::CustomToolsWidget::ShortUrlTool);
   actionCollection()->addAction( QLatin1String("shorten_url"), mGenerateShortenUrl );
-  connect(mGenerateShortenUrl, SIGNAL(triggered(bool)), this,SLOT(slotVisibleShortUrlTools(bool)));
   //Chiamus not supported in kmail2
 #if 0
   if ( Kleo::CryptoBackendFactory::instance()->protocol( QLatin1String("Chiasmus") ) ) {
@@ -3441,12 +3437,6 @@ void KMComposeWin::slotFccFolderChanged(const Akonadi::Collection& collection)
   mComposerBase->setFcc( collection );
 }
 
-void KMComposeWin::slotCustomToolWasClosed()
-{
-  mTranslateAction->setChecked(false);
-  mGenerateShortenUrl->setChecked(false);
-}
-
 void KMComposeWin::insertSpecialCharacter()
 {
   if(!mSelectSpecialChar) {
@@ -3557,25 +3547,4 @@ void KMComposeWin::slotExternalEditorClosed()
 {
     mComposerBase->identityCombo()->setEnabled(true);
     mExternalEditorWarning->hide();
-}
-
-void KMComposeWin::slotVisibleTranslatorTools(bool b)
-{
-    if (b) {
-        mCustomToolsWidget->switchToTool(PimCommon::CustomToolsWidget::TranslatorTool);
-
-    } else {
-        slotCustomToolWasClosed();
-    }
-    mCustomToolsWidget->setVisible(b);
-}
-
-void KMComposeWin::slotVisibleShortUrlTools(bool b)
-{
-    if (b) {
-        mCustomToolsWidget->switchToTool(PimCommon::CustomToolsWidget::ShortUrlTool);
-    } else {
-        slotCustomToolWasClosed();
-    }
-    mCustomToolsWidget->setVisible(b);
 }

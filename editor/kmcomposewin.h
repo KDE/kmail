@@ -329,8 +329,6 @@ class KMComposeWin : public KMail::Composer
     void slotPaste();
     void slotPasteAsAttachment();
     void slotMarkAll();
-    void slotCustomToolWasClosed();
-
     void slotFolderRemoved( const Akonadi::Collection& );
     void slotLanguageChanged( const QString &language );
     void slotFccFolderChanged(const Akonadi::Collection&);
@@ -449,9 +447,6 @@ class KMComposeWin : public KMail::Composer
 
     void slotExternalEditorStarted();
     void slotExternalEditorClosed();
-    void slotVisibleTranslatorTools(bool b);
-    void slotVisibleShortUrlTools(bool b);
-
 
   public: // kmcommand
     // FIXME we need to remove these, but they're pure virtual in Composer.
