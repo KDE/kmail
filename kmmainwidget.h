@@ -536,6 +536,7 @@ class KMAIL_EXPORT KMMainWidget : public QWidget
     void slotServerStateChanged(Akonadi::ServerManager::State state);
     void slotConfigureSubscriptionFinished(QDBusPendingCallWatcher* watcher);
     void slotArchiveMails();
+    void slotDebugNepomukMessage();
 private:
     // Message actions
     KAction *mDeleteAction, *mTrashThreadAction,

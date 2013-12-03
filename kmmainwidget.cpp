@@ -60,6 +60,7 @@
 #include "agents/folderarchiveagent/folderarchiveutil.h"
 
 #include "pimcommon/acl/collectionaclpage.h"
+#include "pimcommon/nepomukdebug/nepomukdebugdialog.h"
 #include "mailcommon/collectionpage/collectiongeneralpage.h"
 #include "mailcommon/collectionpage/collectionexpirypage.h"
 #include "mailcommon/collectionpage/expirecollectionattribute.h"
@@ -3088,6 +3089,11 @@ void KMMainWidget::setupActions()
     actionCollection()->addAction(QLatin1String("tools_debug_sieve"), action );
     connect(action, SIGNAL(triggered(bool)), SLOT(slotDebugSieve()));
   }
+  {
+    KAction *action = new KAction(i18n("Debug Nepomuk..."), this);
+    actionCollection()->addAction(QLatin1String("messages_debug_nepomuk"), action );
+    connect(action, SIGNAL(triggered(bool)), SLOT(slotDebugNepomukMessage()));
+  }
 #endif
 
   {
@@ -4881,4 +4887,17 @@ void KMMainWidget::slotArchiveMails()
     } else {
         KMessageBox::error(this,i18n("Archive Folder Agent was not registered."));
     }
+}
+
+void KMMainWidget::slotDebugNepomukMessage()
+{
+    const QList<Akonadi::Item> selectedMessages = mMessagePane->selectionAsMessageItemList();
+    QStringList uidList;
+    Q_FOREACH (const Akonadi::Item &item, selectedMessages) {
+        uidList << QString::number(item.id());
+    }
+
+    QPointer<PimCommon::NepomukDebugDialog> dlg = new PimCommon::NepomukDebugDialog(uidList, this);
+    dlg->exec();
+    delete dlg;
 }
