@@ -179,6 +179,7 @@ void KMComposerEditor::mousePopupMenuImplementation(const QPoint& pos)
         }
         popup->addSeparator();
         popup->addAction(mComposerWin->translateAction());
+        popup->addAction(mComposerWin->generateShortenUrlAction());
         aboutToShowContextMenu(popup);
         popup->exec( pos );
         delete popup;
