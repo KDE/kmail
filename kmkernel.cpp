@@ -120,7 +120,7 @@ static bool s_askingToGoOnline = false;
 /********************************************************************/
 /*                     Constructor and destructor                   */
 /********************************************************************/
-KMKernel::KMKernel (QObject *parent, const char *name) :
+KMKernel::KMKernel (QObject *parent) :
   QObject(parent),
   mIdentityManager(0), mConfigureDialog(0), mMailService(0),
   mSystemNetworkStatus ( Solid::Networking::status() ), mSystemTray(0)
