@@ -32,7 +32,6 @@
 #include <QGridLayout>
 #include <QLabel>
 #include <QCheckBox>
-#include <QGroupBox>
 #include <QPushButton>
 #include <QSpacerItem>
 #include <QVBoxLayout>

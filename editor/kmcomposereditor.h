@@ -23,7 +23,6 @@
 #define KMCOMPOSEREDITOR_H
 
 #include <messagecomposer/composer/kmeditor.h>
-#include <KJob>
 
 class KAction;
 class KMComposeWin;

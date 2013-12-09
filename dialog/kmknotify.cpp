@@ -29,7 +29,6 @@
 #include "kmknotify.h"
 #include "kmkernel.h"
 
-#include <QLabel>
 #include <QVBoxLayout>
 #include <QHBoxLayout>
 #include <KComboBox>

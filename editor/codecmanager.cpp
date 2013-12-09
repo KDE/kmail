@@ -30,7 +30,6 @@
 
 // KDE libs
 #include <kcodecaction.h>
-#include <KConfig>
 #include <KDebug>
 #include <KGlobal>
 #include <KLocale>

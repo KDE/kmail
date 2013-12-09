@@ -147,12 +147,8 @@
 
 // Qt includes
 #include <QClipboard>
-#include <QEvent>
 #include <QSplitter>
-#include <QUuid>
-#include <QDir>
 #include <QMimeData>
-#include <QKeyEvent>
 #include <QTextDocumentWriter>
 
 // System includes

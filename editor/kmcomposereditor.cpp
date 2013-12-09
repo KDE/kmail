@@ -37,11 +37,10 @@
 #include <KAction>
 #include <KActionCollection>
 #include <KLocale>
-#include <KMenu>
 #include <KPushButton>
-#include <KInputDialog>
-#include <KToggleAction>
+#include <KMenu>
 #include <KActionMenu>
+#include <KToggleAction>
 
 #include <Sonnet/ConfigDialog>
 

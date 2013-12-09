@@ -32,13 +32,10 @@
 
 #include <KAction>
 #include <KActionCollection>
-#include <KActionMenu>
-#include <KMenu>
 #include <KToggleAction>
 #include <KXMLGUIClient>
-#include <KMessageBox>
-#include <KDialog>
-#include <KLineEdit>
+#include <KActionMenu>
+#include <KMenu>
 
 #include <QSignalMapper>
 #include <QPointer>

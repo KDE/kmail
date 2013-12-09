@@ -21,7 +21,6 @@
 #define CODECMANAGER_H
 
 #include <QByteArray>
-#include <QObject>
 
 
 class CodecManagerPrivate;
