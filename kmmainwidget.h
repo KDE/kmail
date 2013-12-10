@@ -259,13 +259,13 @@ class KMAIL_EXPORT KMMainWidget : public QWidget
 
     void slotSelectCollectionFolder( const Akonadi::Collection & col );
 
+    void restoreCollectionFolderViewConfig();
   signals:
     void messagesTransfered( bool );
     void captionChangeRequest( const QString &caption );
     void recreateGui();
 
   protected:
-    void restoreCollectionFolderViewConfig(Akonadi::Collection::Id id = -1);
     void setupActions();
     void createWidgets();
     void deleteWidgets();

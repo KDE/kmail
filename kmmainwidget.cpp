@@ -67,6 +67,8 @@
 #include "mailcommon/filter/filtermanager.h"
 #include "mailcommon/filter/mailfilter.h"
 #include "mailcommon/widgets/favoritecollectionwidget.h"
+#include "mailcommon/folder/foldertreewidget.h"
+#include "mailcommon/folder/foldertreeview.h"
 #include "mailcommon/mailcommonsettings_base.h"
 #include "kmmainwidget.h"
 
@@ -321,6 +323,8 @@ K_GLOBAL_STATIC( KMMainWidget::PtrList, theMainWidgetList )
   if ( KSieveUi::Util::checkOutOfOfficeOnStartup() )
     QTimer::singleShot( 0, this, SLOT(slotCheckVacation()) );
 
+  connect( mFolderTreeWidget->folderTreeView()->model(), SIGNAL(modelReset()),
+           this, SLOT(restoreCollectionFolderViewConfig()) );
   restoreCollectionFolderViewConfig();
 
   if ( kmkernel->firstStart() ) {
@@ -349,7 +353,7 @@ K_GLOBAL_STATIC( KMMainWidget::PtrList, theMainWidgetList )
 
 }
 
-void KMMainWidget::restoreCollectionFolderViewConfig(Akonadi::Collection::Id id)
+void KMMainWidget::restoreCollectionFolderViewConfig()
 {
   ETMViewStateSaver *saver = new ETMViewStateSaver;
   saver->setView( mFolderTreeWidget->folderTreeView() );
@@ -357,6 +361,11 @@ void KMMainWidget::restoreCollectionFolderViewConfig(Akonadi::Collection::Id id)
   mFolderTreeWidget->restoreHeaderState( cfg.readEntry( "HeaderState", QByteArray() ) );
   saver->restoreState( cfg );
   //Restore startup folder
+
+  Akonadi::Collection::Id id = -1;
+  if (mCurrentFolder && mCurrentFolder->collection().isValid() ) {
+    id = mCurrentFolder->collection().id();
+  }
 
   if (id == -1) {
     if (GlobalSettings::self()->startSpecificFolderAtStartup()) {
@@ -811,11 +820,7 @@ void KMMainWidget::readConfig()
     if ( layoutChanged ) {
       deleteWidgets();
       createWidgets();
-      Akonadi::Collection::Id id = -1;
-      if (mCurrentFolder && mCurrentFolder->collection().isValid() ) {
-          id = mCurrentFolder->collection().id();
-      }
-      restoreCollectionFolderViewConfig(id);
+      restoreCollectionFolderViewConfig();
       emit recreateGui();
     } else if ( oldFolderQuickSearch != mEnableFolderQuickSearch ) {
       if ( mEnableFolderQuickSearch )
