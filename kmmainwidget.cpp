@@ -4034,7 +4034,6 @@ void KMMainWidget::slotAkonadiStandardActionUpdated()
 
         mCollectionProperties->setEnabled( !multiFolder &&
                                            !mCurrentFolder->isStructural() &&
-                                           !MailCommon::Util::isVirtualCollection( mCurrentFolder->collection() ) &&
                                            (instance.status()!=Akonadi::AgentInstance::Broken) );
       } else {
         mCollectionProperties->setEnabled(false);

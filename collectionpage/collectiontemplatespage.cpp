@@ -23,7 +23,6 @@
 #include "foldercollection.h"
 #include "templateparser/templatesconfiguration.h"
 #include "templateparser/templatesconfiguration_kfg.h"
-
 #include <akonadi/collection.h>
 
 #include <KLocale>
@@ -47,7 +46,8 @@ CollectionTemplatesPage::~CollectionTemplatesPage()
 
 bool CollectionTemplatesPage::canHandle( const Collection &collection ) const
 {
-    return ( !CommonKernel->isSystemFolderCollection( collection ) || CommonKernel->isMainFolderCollection( collection ) );
+    return ( !CommonKernel->isSystemFolderCollection( collection ) ||
+                                                                     CommonKernel->isMainFolderCollection( collection ) );
 }
 
 void CollectionTemplatesPage::init()

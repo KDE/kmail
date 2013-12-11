@@ -67,7 +67,8 @@ bool CollectionMailingListPage::canHandle( const Akonadi::Collection &col ) cons
 {
     QSharedPointer<FolderCollection> fd = FolderCollection::forCollection( col, false );
     return ( !CommonKernel->isSystemFolderCollection( col ) &&
-             !fd->isStructural() );
+             !fd->isStructural() &&
+             !MailCommon::Util::isVirtualCollection( col ) );
 }
 
 void CollectionMailingListPage::init(const Akonadi::Collection & col)
