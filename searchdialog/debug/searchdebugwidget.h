@@ -19,8 +19,6 @@
 #define SEARCHDEBUGWIDGET_H
 
 #include <QWidget>
-#include <QStyledItemDelegate>
-#include <QListView>
 
 class QStringListModel;
 class KJob;

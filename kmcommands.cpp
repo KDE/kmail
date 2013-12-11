@@ -142,7 +142,6 @@ using namespace KMime;
 
 #include <gpgme++/error.h>
 
-#include <QDBusConnection>
 #include <QByteArray>
 #include <QApplication>
 #include <QList>

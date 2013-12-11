@@ -35,16 +35,11 @@
 #include <KMessageBox>
 #include <KLocale>
 
-#include <QPlainTextEdit>
 #include <QGridLayout>
-#include <QVBoxLayout>
 #include <QLabel>
 #include <QStringListModel>
 #include <QPushButton>
 #include <QShortcut>
-#include <QContextMenuEvent>
-#include <QMenu>
-#include <QPointer>
 
 SearchDebugWidget::SearchDebugWidget(const QString &query, QWidget *parent)
     : QWidget(parent)

@@ -45,11 +45,10 @@ using namespace PimCommon::ConfigureImmutableWidgetUtils;
 
 #include "mailcommon/util/mailutil.h"
 
-
+#include <KIconButton>
 #include <KButtonGroup>
 #include <KLocale>
 #include <KColorScheme>
-#include <KIconButton>
 #include <KSeparator>
 #include <KFontChooser>
 #include <KHBox>
@@ -58,6 +57,7 @@ using namespace PimCommon::ConfigureImmutableWidgetUtils;
 #include <Nepomuk2/Tag>
 #include <nepomuk2/resourcemanager.h>
 #include <KLineEdit>
+#include <KDialog>
 
 #include <kmime/kmime_dateformatter.h>
 using KMime::DateFormatter;

@@ -52,7 +52,6 @@
 
 #include <QProcess>
 #include <QFileInfo>
-#include <QModelIndex>
 
 #include "foldercollection.h"
 

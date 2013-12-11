@@ -48,10 +48,8 @@
 #include <Akonadi/EntityMimeTypeFilterModel>
 #include <KActionMenu>
 #include <KDebug>
-#include <KDialogButtonBox>
 #include <KIcon>
 #include <KIconLoader>
-#include <KLineEdit>
 #include <kmime/kmime_message.h>
 #include <KStandardAction>
 #include <KStandardGuiItem>
@@ -64,7 +62,6 @@
 #include <QHeaderView>
 #include <QKeyEvent>
 #include <QMenu>
-#include <QRadioButton>
 #include <QVBoxLayout>
 
 using namespace KPIM;

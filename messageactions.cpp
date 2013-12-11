@@ -42,7 +42,6 @@
 #include <KAction>
 #include <KActionMenu>
 #include <KActionCollection>
-#include <KToggleAction>
 #include <KDebug>
 #include <KLocale>
 #include <KXMLGUIClient>

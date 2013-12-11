@@ -32,7 +32,6 @@
 
 #include <QListWidget>
 #include <QHBoxLayout>
-#include <QDebug>
 
 using namespace KMail;
 

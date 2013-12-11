@@ -26,18 +26,14 @@
 
 #include <KDebug>
 #include <KIcon>
-#include <KGlobal>
 #include <KLocale>
 #include <KIconLoader>
 
 #include <QUrl>
-#include <QAbstractTextDocumentLayout>
 #include <QApplication>
-#include <QHBoxLayout>
-#include <QTableView>
 #include <QPainter>
 #include <QTextDocument>
-#include <QMenu>
+#include <QMouseEvent>
 
 using Akonadi::AgentInstanceModel;
 using Akonadi::AgentInstance;

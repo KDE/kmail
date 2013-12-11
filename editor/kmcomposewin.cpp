@@ -2918,7 +2918,7 @@ void KMComposeWin::slotSendNow()
 void KMComposeWin::slotCheckSendNow()
 {
   if ( GlobalSettings::self()->confirmBeforeSend() ) {
-    int rc = KMessageBox::warningYesNoCancel( mMainWidget,
+    const int rc = KMessageBox::warningYesNoCancel( mMainWidget,
                                               i18n("About to send email..."),
                                               i18n("Send Confirmation"),
                                               KGuiItem( i18n("&Send Now") ),
