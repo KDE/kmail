@@ -421,6 +421,7 @@ KMComposeWin::KMComposeWin( const KMime::Message::Ptr &aMsg, bool lastSignState,
 
   mCustomToolsWidget = new PimCommon::CustomToolsWidget(this);
   mSplitter->addWidget(mCustomToolsWidget);
+  connect(mCustomToolsWidget, SIGNAL(insertShortUrl(QString)), this, SLOT(slotInsertShortUrl(QString)));
 
   MessageComposer::AttachmentModel* attachmentModel = new MessageComposer::AttachmentModel( this );
   KMail::AttachmentView *attachmentView = new KMail::AttachmentView( attachmentModel, mSplitter );
@@ -3543,4 +3544,9 @@ void KMComposeWin::slotExternalEditorClosed()
 {
     mComposerBase->identityCombo()->setEnabled(true);
     mExternalEditorWarning->hide();
+}
+
+void KMComposeWin::slotInsertShortUrl(const QString &url)
+{
+    mComposerBase->editor()->insertLink(url);
 }

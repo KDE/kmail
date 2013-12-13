@@ -448,7 +448,9 @@ class KMComposeWin : public KMail::Composer
     void slotExternalEditorStarted();
     void slotExternalEditorClosed();
 
-  public: // kmcommand
+    void slotInsertShortUrl(const QString &url);
+
+public: // kmcommand
     // FIXME we need to remove these, but they're pure virtual in Composer.
     void addAttach( KMime::Content *msgPart );
   
