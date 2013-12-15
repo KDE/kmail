@@ -17,6 +17,7 @@
 
 #include "vacationmanager.h"
 #include "ksieveui/vacation/vacation.h"
+#include "ksieveui/vacation/multiimapvacationdialog.h"
 
 #include <KMessageBox>
 #include <KLocale>
@@ -46,26 +47,15 @@ void VacationManager::checkVacation()
 
 void VacationManager::slotEditVacation()
 {
-    if ( mVacation ) {
-        mVacation->showVacationDialog();
+    if ( mMultiImapVacationDialog ) {
+        mMultiImapVacationDialog->show();
+        mMultiImapVacationDialog->raise();
+        mMultiImapVacationDialog->activateWindow();
         return;
     }
 
-    mVacation = new KSieveUi::Vacation( this );
-    connect( mVacation, SIGNAL(scriptActive(bool,QString)), SIGNAL(updateVacationScriptStatus(bool,QString)) );
-    connect( mVacation, SIGNAL(requestEditVacation()), SLOT(slotEditVacation()) );
-    if ( mVacation->isUsable() ) {
-        connect( mVacation, SIGNAL(result(bool)), mVacation, SLOT(deleteLater()) );
-    } else {
-        const QString msg = i18n("KMail's Out of Office Reply functionality relies on "
-                           "server-side filtering. You have not yet configured an "
-                           "IMAP server for this.\n"
-                           "You can do this on the \"Filtering\" tab of the IMAP "
-                           "account configuration.");
-        KMessageBox::sorry( mWidget, msg, i18n("No Server-Side Filtering Configured") );
-
-        delete mVacation; // QGuardedPtr sets itself to 0!
-    }
+    mMultiImapVacationDialog = new KSieveUi::MultiImapVacationDialog(i18n("Configure Vacation"), mWidget);
+    mMultiImapVacationDialog->show();
 }
 
 
