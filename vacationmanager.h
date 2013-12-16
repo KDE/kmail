@@ -22,7 +22,7 @@
 #include <QPointer>
 
 namespace KSieveUi {
-class Vacation;
+class MultiImapVacationManager;
 class MultiImapVacationDialog;
 }
 class QWidget;
@@ -45,7 +45,7 @@ Q_SIGNALS:
 
 private:
     QPointer<KSieveUi::MultiImapVacationDialog> mMultiImapVacationDialog;
-    QPointer<KSieveUi::Vacation> mCheckVacation;
+    QPointer<KSieveUi::MultiImapVacationManager> mCheckVacation;
     QWidget *mWidget;
 };
 }

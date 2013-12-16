@@ -16,7 +16,7 @@
 */
 
 #include "vacationmanager.h"
-#include "ksieveui/vacation/vacation.h"
+#include "ksieveui/vacation/multiimapvacationmanager.h"
 #include "ksieveui/vacation/multiimapvacationdialog.h"
 
 #include <KMessageBox>
@@ -40,9 +40,10 @@ void VacationManager::checkVacation()
 {
     delete mCheckVacation;
 
-    mCheckVacation = new KSieveUi::Vacation( this, true /* check only */ );
+    mCheckVacation = new KSieveUi::MultiImapVacationManager( this );
     connect( mCheckVacation, SIGNAL(scriptActive(bool,QString)), SIGNAL(updateVacationScriptStatus(bool,QString)) );
     connect( mCheckVacation, SIGNAL(requestEditVacation()), SIGNAL(editVacation()) );
+    mCheckVacation->checkVacation();
 }
 
 void VacationManager::slotEditVacation()
