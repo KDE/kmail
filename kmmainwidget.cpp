@@ -24,7 +24,7 @@
 #include "editor/composer.h"
 #include "searchdialog/searchwindow.h"
 #include "antispam-virus/antispamwizard.h"
-#include "widgets/statusbarlabel.h"
+#include "widgets/vacationscriptindicatorwidget.h"
 #include "undostack.h"
 #include "kmcommands.h"
 #include "kmmainwin.h"
@@ -317,7 +317,7 @@ K_GLOBAL_STATIC( KMMainWidget::PtrList, theMainWidgetList )
 
   KMainWindow *mainWin = dynamic_cast<KMainWindow*>(window());
   KStatusBar *sb =  mainWin ? mainWin->statusBar() : 0;
-  mVacationScriptIndicator = new KMail::StatusBarLabel( sb );
+  mVacationScriptIndicator = new KMail::VacationScriptIndicatorWidget( sb );
   mVacationScriptIndicator->hide();
   connect( mVacationScriptIndicator, SIGNAL(clicked()), SLOT(slotEditVacation()) );
   if ( KSieveUi::Util::checkOutOfOfficeOnStartup() )
@@ -4456,18 +4456,11 @@ void KMMainWidget::slotRequestFullSearchFromQuickSearch()
 
 void KMMainWidget::updateVacationScriptStatus( bool active, const QString &serverName )
 {
-  mVacationIndicatorActive = active;
-  if ( active ) {
-    mVacationScriptIndicator->setText( i18n("Out of office reply active on server \"%1\"", serverName) );
-    mVacationScriptIndicator->setBackgroundColor( Qt::yellow );
-    mVacationScriptIndicator->setCursor( QCursor( Qt::PointingHandCursor ) );
-    mVacationScriptIndicator->show();
-  } else {
-    mVacationScriptIndicator->hide();
-  }
+  mVacationScriptIndicator->setVacationScriptActive(active, serverName);
+  mVacationIndicatorActive = mVacationScriptIndicator->hasVacationScriptActive();
 }
 
-QLabel * KMMainWidget::vacationScriptIndicator() const
+QWidget * KMMainWidget::vacationScriptIndicator() const
 {
   return mVacationScriptIndicator;
 }

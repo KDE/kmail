@@ -113,7 +113,6 @@ if (NOT WINCE AND KDEPIM_BUILD_DESKTOP)
      editor/codecmanager.cpp
      util.cpp
      messageactions.cpp
-     widgets/statusbarlabel.cpp
      editor/kmcomposewin.cpp
      editor/attachmentcontroller.cpp
      editor/attachmentview.cpp
@@ -141,6 +140,7 @@ if (NOT WINCE AND KDEPIM_BUILD_DESKTOP)
      searchdialog/debug/searchdebugwidget.cpp 
      searchdialog/searchpatternwarning.cpp
      searchdialog/nepomuksearchpatternedit.cpp
+     widgets/vacationscriptindicatorwidget.cpp
   )
 
   # TODO PORT

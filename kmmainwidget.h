@@ -63,7 +63,7 @@ namespace KIO {
 
 namespace KMail {
   class SearchWindow;
-  class StatusBarLabel;
+  class VacationScriptIndicatorWidget;
   class TagActionManager;
   class FolderShortcutActionManager;
 }
@@ -134,7 +134,7 @@ class KMAIL_EXPORT KMMainWidget : public QWidget
     */
     static const PtrList *mainWidgetList();
 
-    QLabel* vacationScriptIndicator() const;
+    QWidget *vacationScriptIndicator() const;
     void updateVacationScriptStatus() { updateVacationScriptStatus( mVacationIndicatorActive ); }
 
     MailCommon::FolderTreeView *folderTreeView() const {
@@ -615,7 +615,7 @@ private:
 
     MailCommon::FolderTreeWidget *mFolderTreeWidget;
 
-    KMail::StatusBarLabel *mVacationScriptIndicator;
+    KMail::VacationScriptIndicatorWidget *mVacationScriptIndicator;
     bool mVacationIndicatorActive;
     bool mGoToFirstUnreadMessageInSelectedFolder;
     MessageList::Core::PreSelectionMode mPreSelectionMode;
