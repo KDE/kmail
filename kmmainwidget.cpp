@@ -96,7 +96,7 @@
 
 #include "dialog/kmknotify.h"
 
-#include "vacationmanager.h"
+#include "ksieveui/vacation/vacationmanager.h"
 
 
 // LIBKDEPIM includes
@@ -253,7 +253,7 @@ K_GLOBAL_STATIC( KMMainWidget::PtrList, theMainWidgetList )
   mPreferHtmlLoadExtAction = 0;
   Akonadi::Control::widgetNeedsAkonadi( this );
   mFavoritesModel = 0;
-  mVacationManager = new KMail::VacationManager(this);
+  mVacationManager = new KSieveUi::VacationManager(this);
 
 
   // FIXME This should become a line separator as soon as the API
