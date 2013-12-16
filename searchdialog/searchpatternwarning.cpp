@@ -17,7 +17,7 @@
 
 #include "searchpatternwarning.h"
 
-#include <KLocale>
+#include <KLocalizedString>
 
 using namespace KMail;
 SearchPatternWarning::SearchPatternWarning(QWidget *parent)

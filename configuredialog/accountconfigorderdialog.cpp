@@ -21,7 +21,7 @@
 #include "mailcommon/util/mailutil.h"
 
 
-#include <KLocale>
+#include <KLocalizedString>
 #include <KPushButton>
 #include <KVBox>
 

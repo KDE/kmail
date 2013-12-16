@@ -21,7 +21,8 @@
 
 #include "pimcommon/util/pimutil.h"
 
-#include <KLocale>
+#include <KLocalizedString>
+#include <KSharedConfig>
 
 #include <QPointer>
 #include <QInputDialog>

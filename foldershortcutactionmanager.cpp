@@ -28,7 +28,7 @@
 
 #include <KAction>
 #include <KActionCollection>
-#include <KLocale>
+#include <KLocalizedString>
 
 using namespace KMail;
 using namespace MailCommon;

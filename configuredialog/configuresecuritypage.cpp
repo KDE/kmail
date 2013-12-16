@@ -33,7 +33,7 @@ using namespace PimCommon::ConfigureImmutableWidgetUtils;
 #include "libkleo/ui/keyselectiondialog.h"
 #include "libkleo/ui/cryptoconfigdialog.h"
 
-#include <KLocale>
+#include <KLocalizedString>
 #include <KCMultiDialog>
 #include <KMessageBox>
 #include <QWhatsThis>

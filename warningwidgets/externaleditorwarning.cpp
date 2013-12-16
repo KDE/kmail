@@ -17,7 +17,7 @@
 
 #include "externaleditorwarning.h"
 
-#include <KLocale>
+#include <KLocalizedString>
 
 ExternalEditorWarning::ExternalEditorWarning(QWidget *parent)
     : KMessageWidget(parent)

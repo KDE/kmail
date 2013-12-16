@@ -32,7 +32,7 @@
 #include <kwindowsystem.h>
 #include <kdebug.h>
 #include <KMenu>
-#include <KLocale>
+#include <KLocalizedString>
 #include <KAction>
 #include <KActionMenu>
 #include <KActionCollection>

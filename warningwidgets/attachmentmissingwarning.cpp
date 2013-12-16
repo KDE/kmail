@@ -16,7 +16,7 @@
 */
 
 #include "attachmentmissingwarning.h"
-#include <KLocale>
+#include <KLocalizedString>
 #include <KAction>
 #include <KIcon>
 

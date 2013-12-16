@@ -33,7 +33,7 @@
 #include <Akonadi/AgentFilterProxyModel>
 #include <Akonadi/Contact/ContactEditorDialog>
 
-#include <KLocale>
+#include <KLocalizedString>
 #include <KMessageBox>
 
 CreateNewContactJob::CreateNewContactJob(QWidget *parentWidget, QObject *parent)

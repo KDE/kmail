@@ -28,7 +28,7 @@
 
 #include <KDialog>
 #include <KHBox>
-#include <KLocale>
+#include <KLocalizedString>
 #include <KKeySequenceWidget>
 
 using namespace MailCommon;

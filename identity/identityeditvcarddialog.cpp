@@ -18,7 +18,7 @@
 #include "identityeditvcarddialog.h"
 
 #include <KABC/VCardConverter>
-#include <KLocale>
+#include <KLocalizedString>
 #include <Akonadi/Contact/ContactEditor>
 #include <KDebug>
 #include <KMessageBox>

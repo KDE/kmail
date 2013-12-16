@@ -40,7 +40,7 @@ using MailTransport::TransportManagementWidget;
 #include <akonadi/agentinstancecreatejob.h>
 
 
-#include <KLocale>
+#include <KLocalizedString>
 #include <KMessageBox>
 #include <KComboBox>
 #include <KWindowSystem>

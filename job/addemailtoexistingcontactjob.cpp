@@ -24,7 +24,7 @@
 
 #include <KABC/Addressee>
 
-#include <KLocale>
+#include <KLocalizedString>
 
 AddEmailToExistingContactJob::AddEmailToExistingContactJob(const Akonadi::Item &item, const QString &email, QObject *parent)
     : KJob(parent),

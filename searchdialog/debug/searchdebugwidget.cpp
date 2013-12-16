@@ -33,7 +33,7 @@
 #include <akonadi/itemsearchjob.h>
 
 #include <KMessageBox>
-#include <KLocale>
+#include <KLocalizedString>
 
 #include <QGridLayout>
 #include <QLabel>

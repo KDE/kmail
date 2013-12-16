@@ -21,7 +21,7 @@
 #include "agents/folderarchiveagent/folderarchiveutil.h"
 #include <akonadi/private/xdgbasedirs_p.h>
 
-#include <KLocale>
+#include <KLocalizedString>
 #include <KDesktopFile>
 #include <KDebug>
 #include <KTextEdit>

@@ -28,7 +28,7 @@
 
 // KDE libs
 #include <KDebug>
-#include <KLocale>
+#include <KLocalizedString>
 
 class CodecAction::Private
 {

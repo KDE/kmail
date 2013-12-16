@@ -20,7 +20,7 @@
 #include <kpimidentities/identitymanager.h>
 
 #include <KComboBox>
-#include <KLocale>
+#include <KLocalizedString>
 #include <KSeparator>
 
 #include <QButtonGroup>

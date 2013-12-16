@@ -4,7 +4,7 @@
 
 #include "configuredialoglistview.h"
 
-#include <KLocale>
+#include <KLocalizedString>
 #include <KMenu>
 
 ListView::ListView( QWidget *parent )

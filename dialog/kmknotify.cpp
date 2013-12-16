@@ -33,7 +33,7 @@
 #include <QHBoxLayout>
 #include <KComboBox>
 #include <KNotifyConfigWidget>
-#include <KLocale>
+#include <KLocalizedString>
 #include <KConfig>
 #include <KStandardDirs>
 #include <KSeparator>

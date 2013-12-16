@@ -47,7 +47,7 @@ using namespace PimCommon::ConfigureImmutableWidgetUtils;
 
 #include <KIconButton>
 #include <KButtonGroup>
-#include <KLocale>
+#include <KLocalizedString>
 #include <KColorScheme>
 #include <KSeparator>
 #include <KFontChooser>

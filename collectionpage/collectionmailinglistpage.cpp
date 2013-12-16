@@ -40,7 +40,7 @@
 #include <KDialog>
 #include <KLineEdit>
 #include <KEditListWidget>
-#include <KLocale>
+#include <KLocalizedString>
 #include <KMessageBox>
 #include <KSqueezedTextLabel>
 

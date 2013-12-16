@@ -35,7 +35,7 @@
 
 #include "kmkernel.h"
 
-#include <KLocale>
+#include <KLocalizedString>
 #include <KDialog>
 
 #include <QLabel>

@@ -37,7 +37,7 @@ using namespace PimCommon::ConfigureImmutableWidgetUtils;
 using KPIM::RecentAddresses;
 
 
-#include <KLocale>
+#include <KLocalizedString>
 #include <KSeparator>
 #include <KCharsets>
 #include <KUrlRequester>

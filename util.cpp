@@ -45,7 +45,7 @@
 
 #include <kmime/kmime_message.h>
 #include <kmessagebox.h>
-#include <KLocale>
+#include <KLocalizedString>
 #include <KProcess>
 
 #include <KStandardDirs>

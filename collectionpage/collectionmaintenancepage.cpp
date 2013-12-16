@@ -36,7 +36,7 @@
 #include <QLabel>
 #include <KDialog>
 #include <QGroupBox>
-#include <KLocale>
+#include <KLocalizedString>
 #include <KPushButton>
 #include <QFormLayout>
 #include <kio/global.h>

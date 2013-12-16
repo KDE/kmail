@@ -36,7 +36,7 @@
 
 #include <KAction>
 #include <KActionCollection>
-#include <KLocale>
+#include <KLocalizedString>
 #include <KPushButton>
 #include <KMenu>
 #include <KActionMenu>

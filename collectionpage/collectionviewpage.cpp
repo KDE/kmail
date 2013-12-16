@@ -31,7 +31,7 @@
 #include <QLabel>
 #include <QCheckBox>
 #include <QVBoxLayout>
-#include <KLocale>
+#include <KLocalizedString>
 #include <KDialog>
 
 

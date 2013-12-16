@@ -39,8 +39,9 @@
 #include <KDebug>
 #include <KConfigGroup>
 #include <KIcon>
-#include <KLocale>
+#include <KLocalizedString>
 #include <KGlobal>
+#include <KLocale>
 
 #include <messagecore/attachment/attachmentpart.h>
 #include <boost/shared_ptr.hpp>

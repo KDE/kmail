@@ -27,7 +27,7 @@
 
 #include <KABC/Addressee>
 
-#include <KLocale>
+#include <KLocalizedString>
 
 #include <QTreeView>
 

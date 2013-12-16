@@ -43,7 +43,7 @@
 #include <KActionMenu>
 #include <KActionCollection>
 #include <KDebug>
-#include <KLocale>
+#include <KLocalizedString>
 #include <KXMLGUIClient>
 #include <KStandardDirs>
 #include <KRun>

@@ -28,7 +28,7 @@ using namespace PimCommon::ConfigureImmutableWidgetUtils;
 
 #include <KCModuleProxy>
 #include <KCModuleInfo>
-#include <KLocale>
+#include <KLocalizedString>
 using namespace MailCommon;
 QString MiscPage::helpAnchor() const
 {

@@ -40,7 +40,7 @@
 #endif
 
 #include <KDebug>
-#include <KLocale> // i18n
+#include <KLocalizedString> // i18n
 #include <KIconLoader> // SmallIcon
 
 #include <QDrag>
