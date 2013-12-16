@@ -18,6 +18,7 @@
 #include "vacationmanager.h"
 #include "ksieveui/vacation/multiimapvacationmanager.h"
 #include "ksieveui/vacation/multiimapvacationdialog.h"
+#include "ksieveui/vacation/vacationcreatescriptjob.h"
 
 #include <KMessageBox>
 #include <KLocale>
@@ -56,8 +57,25 @@ void VacationManager::slotEditVacation()
     }
 
     mMultiImapVacationDialog = new KSieveUi::MultiImapVacationDialog(mWidget);
+    connect( mMultiImapVacationDialog, SIGNAL(okClicked()), SLOT(slotDialogOk()) );
+    connect( mMultiImapVacationDialog, SIGNAL(cancelClicked()), SLOT(slotDialogCanceled()) );
     mMultiImapVacationDialog->setAttribute(Qt::WA_DeleteOnClose);
     mMultiImapVacationDialog->show();
 }
 
+void VacationManager::slotDialogCanceled()
+{
+    mMultiImapVacationDialog->delayedDestruct();
+    mMultiImapVacationDialog = 0;
+}
 
+void VacationManager::slotDialogOk()
+{
+    QList<KSieveUi::VacationCreateScriptJob *> listJob = mMultiImapVacationDialog->listCreateJob();
+    Q_FOREACH (KSieveUi::VacationCreateScriptJob *job, listJob) {
+        connect(job, SIGNAL(scriptActive(bool,QString)), SIGNAL(updateVacationScriptStatus(bool,QString)));
+        job->start();
+    }
+    mMultiImapVacationDialog->delayedDestruct();
+    mMultiImapVacationDialog = 0;
+}

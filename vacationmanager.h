@@ -43,6 +43,10 @@ Q_SIGNALS:
     void updateVacationScriptStatus(bool, const QString&);
     void editVacation();
 
+private slots:
+    void slotDialogCanceled();
+    void slotDialogOk();
+
 private:
     QPointer<KSieveUi::MultiImapVacationDialog> mMultiImapVacationDialog;
     QPointer<KSieveUi::MultiImapVacationManager> mCheckVacation;
