@@ -59,7 +59,6 @@ void VacationManager::slotEditVacation()
     mMultiImapVacationDialog = new KSieveUi::MultiImapVacationDialog(mWidget);
     connect( mMultiImapVacationDialog, SIGNAL(okClicked()), SLOT(slotDialogOk()) );
     connect( mMultiImapVacationDialog, SIGNAL(cancelClicked()), SLOT(slotDialogCanceled()) );
-    mMultiImapVacationDialog->setAttribute(Qt::WA_DeleteOnClose);
     mMultiImapVacationDialog->show();
 }
 
