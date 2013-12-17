@@ -319,7 +319,7 @@ K_GLOBAL_STATIC( KMMainWidget::PtrList, theMainWidgetList )
   KStatusBar *sb =  mainWin ? mainWin->statusBar() : 0;
   mVacationScriptIndicator = new KMail::VacationScriptIndicatorWidget( sb );
   mVacationScriptIndicator->hide();
-  connect( mVacationScriptIndicator, SIGNAL(clicked()), SLOT(slotEditVacation()) );
+  connect( mVacationScriptIndicator, SIGNAL(clicked(QString)), SLOT(slotEditVacation(QString)) );
   if ( KSieveUi::Util::checkOutOfOfficeOnStartup() )
     QTimer::singleShot( 0, this, SLOT(slotCheckVacation()) );
 
@@ -2347,13 +2347,13 @@ void KMMainWidget::slotCheckVacation()
   connect(mVacationManager, SIGNAL(editVacation()), SLOT(slotEditVacation()) );
 }
 
-void KMMainWidget::slotEditVacation()
+void KMMainWidget::slotEditVacation(const QString &serverName)
 {
   if ( !kmkernel->askToGoOnline() ) {
     return;
   }
 
-  mVacationManager->slotEditVacation();
+  mVacationManager->slotEditVacation(serverName);
 }
 
 //-----------------------------------------------------------------------------

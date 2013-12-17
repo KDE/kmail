@@ -24,7 +24,8 @@
 using namespace KMail;
 
 ServerLabel::ServerLabel(const QString &serverName, QWidget * parent)
-    : QLabel( parent )
+    : QLabel( parent ),
+      mServerName(serverName)
 {
     setToolTip(serverName);
     setPixmap(KIcon( QLatin1String("network-server") ).pixmap( 16, 16 ) );
@@ -38,7 +39,7 @@ ServerLabel::~ServerLabel()
 
 void ServerLabel::mouseReleaseEvent(QMouseEvent * event)
 {
-    Q_EMIT clicked();
+    Q_EMIT clicked(mServerName);
     QLabel::mouseReleaseEvent( event );
 }
 
@@ -96,12 +97,12 @@ void VacationScriptIndicatorWidget::createIndicator()
     mBoxLayout = new QHBoxLayout;
     mBoxLayout->setMargin(0);
     mBoxLayout->setSpacing(0);
-    mInfo = new VacationLabel(i18n("Out of office reply active on server"));
+    mInfo = new VacationLabel(i18np("Out of office reply active on server", "Out of office reply active on servers", mServerActive.count()));
     connect(mInfo, SIGNAL(clicked()), this, SIGNAL(clicked()));
     mBoxLayout->addWidget(mInfo);
     Q_FOREACH (const QString &server, mServerActive) {
         ServerLabel *lab = new ServerLabel(server);
-        connect(lab, SIGNAL(clicked()), this, SIGNAL(clicked()));
+        connect(lab, SIGNAL(clicked(QString)), this, SIGNAL(clicked(QString)));
         mBoxLayout->addWidget(lab);
     }
     setLayout(mBoxLayout);

@@ -225,7 +225,7 @@ class KMAIL_EXPORT KMMainWidget : public QWidget
 
 
     /** Trigger the dialog for editing out-of-office scripts.  */
-    void slotEditVacation();
+    void slotEditVacation(const QString &serverName = QString());
 
     /** Adds if not existing/removes if existing the tag identified by @p aLabel
         in all selected messages */

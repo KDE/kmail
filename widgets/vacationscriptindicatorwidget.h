@@ -31,10 +31,13 @@ public:
     ~ServerLabel();
 
 Q_SIGNALS:
-    void clicked();
+    void clicked(const QString &serverName);
 
 protected:
     void mouseReleaseEvent(QMouseEvent *event);
+
+private:
+    QString mServerName;
 };
 
 class VacationLabel : public QLabel
@@ -65,7 +68,7 @@ public:
     bool hasVacationScriptActive() const;
 
 Q_SIGNALS:
-    void clicked();
+    void clicked(const QString &serverName = QString());
 
 private:
     void createIndicator();
