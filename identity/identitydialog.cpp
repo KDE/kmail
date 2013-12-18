@@ -118,10 +118,6 @@ IdentityDialog::IdentityDialog( QWidget * parent )
 #endif
     setDefaultButton( Ok );
 
-#ifdef Q_OS_WINCE
-    setWindowState( Qt::WindowFullScreen );
-#endif
-
     // tmp. vars:
     QWidget * tab;
     QLabel  * label;

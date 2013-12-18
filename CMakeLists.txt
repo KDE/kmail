@@ -6,20 +6,16 @@ add_definitions( -DQT_NO_CAST_FROM_ASCII )
 add_definitions( -DQT_NO_CAST_TO_ASCII )
 
 
-if (NOT WINCE)
+set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} ${KDE4_DATA_DIR}/cmake/modules)
 
-  set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} ${KDE4_DATA_DIR}/cmake/modules)
+qt4_generate_dbus_interface(kmkernel.h org.kde.kmail.kmail.xml OPTIONS -a)
+qt4_generate_dbus_interface(editor/kmcomposewin.h org.kde.kmail.mailcomposer.xml OPTIONS -a)
 
-  qt4_generate_dbus_interface(kmkernel.h org.kde.kmail.kmail.xml OPTIONS -a)
-  qt4_generate_dbus_interface(editor/kmcomposewin.h org.kde.kmail.mailcomposer.xml OPTIONS -a)
-
-  add_custom_target(kmail_xml ALL
-    DEPENDS ${CMAKE_CURRENT_BINARY_DIR}/org.kde.kmail.kmail.xml
-    DEPENDS ${CMAKE_CURRENT_BINARY_DIR}/org.kde.kmail.mailcomposer.xml
-    COMMENT "Helper target for XML stuff. The Kontact plugin, KOrganizer and others depend on it."
-  )
-
-endif ()
+add_custom_target(kmail_xml ALL
+  DEPENDS ${CMAKE_CURRENT_BINARY_DIR}/org.kde.kmail.kmail.xml
+  DEPENDS ${CMAKE_CURRENT_BINARY_DIR}/org.kde.kmail.mailcomposer.xml
+  COMMENT "Helper target for XML stuff. The Kontact plugin, KOrganizer and others depend on it."
+)
 
 include_directories(
   ${CMAKE_SOURCE_DIR}/libkdepim
@@ -55,7 +51,7 @@ include_directories(
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${KDE4_ENABLE_EXCEPTIONS}")
 
 
-if (NOT WINCE AND KDEPIM_BUILD_DESKTOP)
+if (KDEPIM_BUILD_DESKTOP)
   add_subdirectory(about)
   add_subdirectory(pics)
   add_subdirectory(icons)
@@ -67,7 +63,7 @@ add_subdirectory(kcm_kpimidentities)
 
 ########### kmailprivate ###############
 
-if (NOT WINCE AND KDEPIM_BUILD_DESKTOP)
+if (KDEPIM_BUILD_DESKTOP)
 
   set(kmailprivate_LIB_SRCS
      widgets/collectionpane.cpp

@@ -11,20 +11,11 @@ set(kcm_identities_srcs
   ../identity/newidentitydialog.cpp
   ../identity/identityeditvcarddialog.cpp
   ../identity/identityaddvcarddialog.cpp
-)
-if (NOT WINCE)
-set(kcm_identities_srcs
-  ${kcm_identities_srcs}
   ../identity/xfaceconfigurator.cpp
 )
-endif()
 
 kde4_add_ui_files(kcm_identities_srcs ../ui/identitypage.ui)
-if (WINCE)
-  kde4_add_plugin(kcm_kpimidentities STATIC ${kcm_identities_srcs})
-else()
-  kde4_add_plugin(kcm_kpimidentities ${kcm_identities_srcs})
-endif()
+kde4_add_plugin(kcm_kpimidentities ${kcm_identities_srcs})
 target_link_libraries(kcm_kpimidentities
   ${KDEPIMLIBS_GPGMEPP_LIBS}
   ${KDEPIMLIBS_AKONADI_LIBS}
