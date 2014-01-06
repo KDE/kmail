@@ -3143,7 +3143,7 @@ void KMMainWidget::setupActions()
   }
 
   {
-    KAction *action = new KAction(i18n("Configure Send Later Agent..."), this);
+    KAction *action = new KAction(i18n("Send Later Preferences..."), this);
     actionCollection()->addAction(QLatin1String("tools_configure_sendlater"), action );
     connect(action, SIGNAL(triggered(bool)), SLOT(slotConfigureSendLater()));
   }
