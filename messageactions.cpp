@@ -33,7 +33,6 @@
 #include "messagecore/helpers/messagehelpers.h"
 #include "messageviewer/viewer/csshelper.h"
 #include "messageviewer/settings/globalsettings.h"
-#include "folderarchiveagentinterface.h"
 
 #include <Nepomuk2/Resource>
 
@@ -128,11 +127,6 @@ MessageActions::MessageActions( KActionCollection *ac, QWidget *parent )
            this, SLOT(slotCreateTodo()) );
   mKorganizerIsOnSystem = !KStandardDirs::findExe(QLatin1String("korganizer")).isEmpty();
   mCreateTodoAction->setEnabled( mKorganizerIsOnSystem );
-
-  mArchiveMailAction = new KAction(i18nc("@action", "Archive"), this);
-  ac->addAction(QLatin1String("archive_mail"), mArchiveMailAction );
-  connect(mArchiveMailAction, SIGNAL(triggered(bool)), SLOT(slotArchiveMail()));
-
 
   mStatusMenu = new KActionMenu ( i18n( "Mar&k Message" ), this );
   ac->addAction( QLatin1String("set_status"), mStatusMenu );
@@ -709,18 +703,5 @@ void MessageActions::slotHandleWebShortcutAction()
 void MessageActions::slotConfigureWebShortcuts()
 {
     KToolInvocation::kdeinitExec( QLatin1String("kcmshell4"), QStringList() << QLatin1String("ebrowsing") );
-}
-
-void MessageActions::slotArchiveMail()
-{
-    if ( !mCurrentItem.isValid() )
-      return;
-    OrgFreedesktopAkonadiFolderArchiveAgentInterface folderArchiveInterface(QLatin1String("org.freedesktop.Akonadi.FolderArchiveAgent"), QLatin1String("/FolderArchiveAgent"),QDBusConnection::sessionBus(), this);
-    if (folderArchiveInterface.isValid()) {
-        folderArchiveInterface.archiveItem(mCurrentItem.id());
-    } else {
-        qDebug()<< "Archive Folder Agent was not registered.";
-    }
-
 }
 

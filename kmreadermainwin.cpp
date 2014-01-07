@@ -576,10 +576,6 @@ void KMReaderMainWin::showMessagePopup(const Akonadi::Item&msg ,const KUrl&url,c
       menu->addAction( mMsgActions->printAction() );
       menu->addAction( mReaderWin->saveAsAction() );
       menu->addAction( mSaveAtmAction );
-#if 0
-      if (FolderArchive::FolderArchiveUtil::folderArchiveAgentEnabled())
-          menu->addAction( mMsgActions->archiveMailAction());
-#endif
       if ( msg.isValid() ) {
         menu->addSeparator();
         menu->addAction( mMsgActions->createTodoAction() );
