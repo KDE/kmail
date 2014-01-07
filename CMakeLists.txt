@@ -71,9 +71,7 @@ if (KDEPIM_BUILD_DESKTOP)
      folderarchive/folderarchivesettingpage.cpp
      folderarchive/folderarchiveutil.cpp
   )
-
-  set(kmailprivate_LIB_SRCS
-     widgets/collectionpane.cpp
+  set(kmailprivate_collectionpage_LIB_SRCS
      collectionpage/collectiontemplatespage.cpp
      collectionpage/collectionmaintenancepage.cpp
      collectionpage/collectionviewpage.cpp
@@ -81,8 +79,8 @@ if (KDEPIM_BUILD_DESKTOP)
      collectionpage/collectionquotapage_p.cpp
      collectionpage/collectionmailinglistpage.cpp
      collectionpage/collectionshortcutpage.cpp
-     configuredialog/colorlistbox.cpp
-     kmmainwin.cpp
+  )
+  set(kmailprivate_configuredialog_LIB_SRCS
      configuredialog/configagentdelegate.cpp
      configuredialog/configuredialoglistview.cpp
      configuredialog/configuredialog.cpp
@@ -92,6 +90,22 @@ if (KDEPIM_BUILD_DESKTOP)
      configuredialog/configurecomposerpage.cpp
      configuredialog/configureappearancepage.cpp
      configuredialog/configureaccountpage.cpp
+     configuredialog/colorlistbox.cpp
+     configuredialog/accountconfigorderdialog.cpp
+     configuredialog/configureagentswidget.cpp
+  )
+  set(kmailprivate_searchdialog_LIB_SRCS
+     searchdialog/kmsearchmessagemodel.cpp
+     searchdialog/kmsearchfilterproxymodel.cpp
+     searchdialog/debug/searchdebugdialog.cpp
+     searchdialog/debug/searchdebugwidget.cpp
+     searchdialog/searchpatternwarning.cpp
+     searchdialog/nepomuksearchpatternedit.cpp
+  )
+
+  set(kmailprivate_LIB_SRCS
+     widgets/collectionpane.cpp
+     kmmainwin.cpp
      identity/identitylistview.cpp
      identity/identitydialog.cpp
      settings/globalsettings.cpp
@@ -127,24 +141,19 @@ if (KDEPIM_BUILD_DESKTOP)
      job/addressvalidationjob.cpp
      identity/identitypage.cpp
      identity/newidentitydialog.cpp
-     searchdialog/kmsearchmessagemodel.cpp
-     searchdialog/kmsearchfilterproxymodel.cpp
      dialog/kmknotify.cpp
      tag/tagselectdialog.cpp
-     configuredialog/accountconfigorderdialog.cpp
      identity/identityeditvcarddialog.cpp
      identity/identityaddvcarddialog.cpp
      warningwidgets/attachmentmissingwarning.cpp
      job/createnewcontactjob.cpp
      job/addemailtoexistingcontactjob.cpp
      warningwidgets/externaleditorwarning.cpp
-     configuredialog/configureagentswidget.cpp
-     searchdialog/debug/searchdebugdialog.cpp
-     searchdialog/debug/searchdebugwidget.cpp 
-     searchdialog/searchpatternwarning.cpp
-     searchdialog/nepomuksearchpatternedit.cpp
      widgets/vacationscriptindicatorwidget.cpp
      ${kmailprivate_folderarchive_LIB_SRCS}
+     ${kmailprivate_collectionpage_LIB_SRCS}
+     ${kmailprivate_configuredialog_LIB_SRCS}
+     ${kmailprivate_searchdialog_LIB_SRCS}
   )
 
   # TODO PORT
