@@ -71,6 +71,9 @@ if (KDEPIM_BUILD_DESKTOP)
      folderarchive/folderarchivesettingpage.cpp
      folderarchive/folderarchiveutil.cpp
      folderarchive/folderarchivecache.cpp
+     folderarchive/folderarchiveagentcheckcollection.cpp
+     folderarchive/folderarchivemanager.cpp
+     folderarchive/folderarchiveagentjob.cpp
   )
   set(kmailprivate_collectionpage_LIB_SRCS
      collectionpage/collectiontemplatespage.cpp
