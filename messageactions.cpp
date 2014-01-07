@@ -33,7 +33,6 @@
 #include "messagecore/helpers/messagehelpers.h"
 #include "messageviewer/viewer/csshelper.h"
 #include "messageviewer/settings/globalsettings.h"
-#include "folderarchiveagentinterface.h"
 
 #include <Nepomuk2/Resource>
 
