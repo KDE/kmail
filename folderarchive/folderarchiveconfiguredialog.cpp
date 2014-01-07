@@ -52,7 +52,6 @@ FolderArchiveConfigureDialog::FolderArchiveConfigureDialog(QWidget *parent)
 FolderArchiveConfigureDialog::~FolderArchiveConfigureDialog()
 {
     writeConfig();
-    delete mAboutData;
 }
 
 void FolderArchiveConfigureDialog::initializeTab()

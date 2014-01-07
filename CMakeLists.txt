@@ -65,6 +65,13 @@ add_subdirectory(kcm_kpimidentities)
 
 if (KDEPIM_BUILD_DESKTOP)
 
+  set(kmailprivate_folderarchive_LIB_SRCS
+     folderarchive/folderarchiveaccountinfo.cpp
+     folderarchive/folderarchiveconfiguredialog.cpp
+     folderarchive/folderarchivesettingpage.cpp
+     folderarchive/folderarchiveutil.cpp
+  )
+
   set(kmailprivate_LIB_SRCS
      widgets/collectionpane.cpp
      collectionpage/collectiontemplatespage.cpp
@@ -137,6 +144,7 @@ if (KDEPIM_BUILD_DESKTOP)
      searchdialog/searchpatternwarning.cpp
      searchdialog/nepomuksearchpatternedit.cpp
      widgets/vacationscriptindicatorwidget.cpp
+     ${kmailprivate_folderarchive_LIB_SRCS}
   )
 
   # TODO PORT
