@@ -48,10 +48,10 @@ public:
 
     FolderArchiveCache *folderArchiveCache() const;
 
-    void debugCache();
+public Q_SLOTS:
+    void slotInstanceRemoved(const Akonadi::AgentInstance &instance);
 
 private Q_SLOTS:
-    void slotInstanceRemoved(const Akonadi::AgentInstance &instance);
     void slotFetchParentCollection(KJob* job);
     void slotFetchCollection(KJob *job);
 

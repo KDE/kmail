@@ -176,6 +176,7 @@ void FolderArchiveManager::load()
 
 void FolderArchiveManager::moveDone()
 {
+    /*
     const QPixmap pixmap = KIcon( QLatin1String("kmail") ).pixmap( KIconLoader::SizeSmall, KIconLoader::SizeSmall );
 
     KNotification::event( QLatin1String("folderarchivedone"),
@@ -184,11 +185,13 @@ void FolderArchiveManager::moveDone()
                           0,
                           KNotification::CloseOnTimeout,
                           KGlobal::mainComponent());
+                          */
     nextJob();
 }
 
 void FolderArchiveManager::moveFailed(const QString &msg)
 {
+    /*
     const QPixmap pixmap = KIcon( QLatin1String("kmail") ).pixmap( KIconLoader::SizeSmall, KIconLoader::SizeSmall );
 
     KNotification::event( QLatin1String("folderarchiveerror"),
@@ -197,6 +200,7 @@ void FolderArchiveManager::moveFailed(const QString &msg)
                           0,
                           KNotification::CloseOnTimeout,
                           KGlobal::mainComponent());
+                          */
     nextJob();
 }
 
@@ -214,10 +218,5 @@ void FolderArchiveManager::nextJob()
 FolderArchiveCache *FolderArchiveManager::folderArchiveCache() const
 {
     return mFolderArchiveCache;
-}
-
-void FolderArchiveManager::debugCache()
-{
-    mFolderArchiveCache->debugCache();
 }
 
