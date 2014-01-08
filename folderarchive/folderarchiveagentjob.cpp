@@ -100,17 +100,11 @@ void FolderArchiveAgentJob::sloMoveMailsToCollection(const Akonadi::Collection &
         lst.append(Akonadi::Item(i));
     }
 
+    //TODO use KMMoveCommand
+    /*
     Akonadi::ItemMoveJob *moveJob = new Akonadi::ItemMoveJob(lst, col);
     connect( moveJob, SIGNAL(result(KJob*)), this, SLOT(slotMoveMessages(KJob*)));
-}
-
-void FolderArchiveAgentJob::slotMoveMessages(KJob *job)
-{
-    if ( job->error() ) {
-        sendError(i18n("Cannot move messages. %1", job->errorString() ));
-        return;
-    }
-    mManager->moveDone();
+    */
 }
 
 void FolderArchiveAgentJob::sendError(const QString &error)
