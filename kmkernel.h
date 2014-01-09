@@ -74,6 +74,7 @@ class KMMainWin;
 class KMainWindow;
 class KMMainWidget;
 class ConfigureDialog;
+class FolderArchiveManager;
 
 namespace MailCommon {
   class Kernel;
@@ -429,6 +430,7 @@ public:
   PimCommon::AutoCorrection* composerAutoCorrection();
 
   void toggleSystemTray();
+  FolderArchiveManager *folderArchiveManager() const;
 
 protected:
   void agentInstanceBroken( const Akonadi::AgentInstance& instance );
@@ -535,6 +537,7 @@ private:
 
   QPointer<MailCommon::KMFilterDialog> mFilterEditDialog;
   PimCommon::AutoCorrection *mAutoCorrection;
+  FolderArchiveManager *mFolderArchiveManager;
 };
 
 #endif // _KMKERNEL_H

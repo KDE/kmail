@@ -25,6 +25,7 @@ using KPIM::RecentAddresses;
 #include "mailcommon/filter/kmfilterdialog.h"
 #include "mailcommon/mailcommonsettings_base.h"
 #include "pimcommon/util/pimutil.h"
+#include "folderarchive/folderarchivemanager.h"
 
 // kdepim includes
 #include "kdepim-version.h"
@@ -122,8 +123,11 @@ static bool s_askingToGoOnline = false;
 /********************************************************************/
 KMKernel::KMKernel (QObject *parent) :
   QObject(parent),
-  mIdentityManager(0), mConfigureDialog(0), mMailService(0),
-  mSystemNetworkStatus ( Solid::Networking::status() ), mSystemTray(0)
+  mIdentityManager(0),
+  mConfigureDialog(0),
+  mMailService(0),
+  mSystemNetworkStatus ( Solid::Networking::status() ),
+  mSystemTray(0)
 {
   Akonadi::AttributeFactory::registerAttribute<Akonadi::SearchDescriptionAttribute>();
   QDBusConnection::sessionBus().registerService(QLatin1String("org.kde.kmail"));
@@ -230,6 +234,7 @@ KMKernel::KMKernel (QObject *parent) :
   CommonKernel->registerKernelIf( this );
   CommonKernel->registerSettingsIf( this );
   CommonKernel->registerFilterIf( this );
+  mFolderArchiveManager = new FolderArchiveManager(this);
 }
 
 KMKernel::~KMKernel ()
@@ -2046,3 +2051,7 @@ void KMKernel::slotCollectionChanged(const Akonadi::Collection &, const QSet<QBy
     }
 }
 
+FolderArchiveManager *KMKernel::folderArchiveManager() const
+{
+    return mFolderArchiveManager;
+}

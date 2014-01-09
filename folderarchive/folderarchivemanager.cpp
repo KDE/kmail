@@ -43,6 +43,7 @@ FolderArchiveManager::FolderArchiveManager(QObject *parent)
     connect( Akonadi::AgentManager::self(), SIGNAL(instanceRemoved(Akonadi::AgentInstance)),
              this, SLOT(slotInstanceRemoved(Akonadi::AgentInstance)) );
              */
+    load();
 }
 
 FolderArchiveManager::~FolderArchiveManager()
