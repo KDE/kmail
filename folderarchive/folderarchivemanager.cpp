@@ -38,11 +38,6 @@ FolderArchiveManager::FolderArchiveManager(QObject *parent)
       mCurrentJob(0)
 {
     mFolderArchiveCache = new FolderArchiveCache(this);
-
-    /*
-    connect( Akonadi::AgentManager::self(), SIGNAL(instanceRemoved(Akonadi::AgentInstance)),
-             this, SLOT(slotInstanceRemoved(Akonadi::AgentInstance)) );
-             */
     load();
 }
 
@@ -54,7 +49,7 @@ FolderArchiveManager::~FolderArchiveManager()
     delete mCurrentJob;
 }
 
-void FolderArchiveManager::collectionRemoved(const Akonadi::Collection &collection)
+void FolderArchiveManager::slotCollectionRemoved(const Akonadi::Collection &collection)
 {
     mFolderArchiveCache->clearCacheWithContainsCollection(collection.id());
     Q_FOREACH (FolderArchiveAccountInfo *info, mListAccountInfo) {

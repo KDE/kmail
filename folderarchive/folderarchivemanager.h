@@ -49,6 +49,7 @@ public:
     FolderArchiveCache *folderArchiveCache() const;
 
 public Q_SLOTS:
+    void slotCollectionRemoved(const Akonadi::Collection &collection);
     void slotInstanceRemoved(const Akonadi::AgentInstance &instance);
 
 private Q_SLOTS:

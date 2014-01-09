@@ -1964,6 +1964,7 @@ void KMKernel::slotInstanceRemoved(const Akonadi::AgentInstance& instance)
   if(mResourceCryptoSettingCache.contains(identifier)) {
     mResourceCryptoSettingCache.remove(identifier);
   }
+  mFolderArchiveManager->slotInstanceRemoved(instance);
 }
 
 void KMKernel::savePaneSelection()
