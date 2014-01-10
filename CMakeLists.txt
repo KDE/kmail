@@ -261,7 +261,6 @@ if (KDEPIM_BUILD_DESKTOP)
     ${KDE4_KPRINTUTILS_LIBS}
     ${NEPOMUK_CORE_LIBRARY}
     sendlater
-    folderarchive
     ${AKONADI_COMMON_LIBRARIES}
   )
 
