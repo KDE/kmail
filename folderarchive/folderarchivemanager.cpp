@@ -51,11 +51,12 @@ FolderArchiveManager::~FolderArchiveManager()
 
 void FolderArchiveManager::slotCollectionRemoved(const Akonadi::Collection &collection)
 {
+    KConfig config(QLatin1String("foldermailarchiverc"));
     mFolderArchiveCache->clearCacheWithContainsCollection(collection.id());
     Q_FOREACH (FolderArchiveAccountInfo *info, mListAccountInfo) {
         if (info->archiveTopLevel() == collection.id()) {
             info->setArchiveTopLevel(-1);
-            KConfigGroup group = KGlobal::config()->group(FolderArchive::FolderArchiveUtil::groupConfigPattern() + info->instanceName());
+            KConfigGroup group = config.group(FolderArchive::FolderArchiveUtil::groupConfigPattern() + info->instanceName());
             info->writeConfig(group);
         }
     }
@@ -146,9 +147,10 @@ void FolderArchiveManager::slotInstanceRemoved(const Akonadi::AgentInstance &ins
 
 void FolderArchiveManager::removeInfo(const QString &instanceName)
 {
-    KConfigGroup group = KGlobal::config()->group(FolderArchive::FolderArchiveUtil::groupConfigPattern() + instanceName);
+    KConfig config(QLatin1String("foldermailarchiverc"));
+    KConfigGroup group = config.group(FolderArchive::FolderArchiveUtil::groupConfigPattern() + instanceName);
     group.deleteGroup();
-    KGlobal::config()->sync();
+    config.sync();
 }
 
 void FolderArchiveManager::load()
@@ -158,9 +160,10 @@ void FolderArchiveManager::load()
     //Be sure to clear cache.
     mFolderArchiveCache->clearCache();
 
-    const QStringList accountList = KGlobal::config()->groupList().filter( QRegExp( FolderArchive::FolderArchiveUtil::groupConfigPattern() ) );
+    KConfig config(QLatin1String("foldermailarchiverc"));
+    const QStringList accountList = config.groupList().filter( QRegExp( FolderArchive::FolderArchiveUtil::groupConfigPattern() ) );
     Q_FOREACH (const QString &account, accountList) {
-        KConfigGroup group = KGlobal::config()->group(account);
+        KConfigGroup group = config.group(account);
         FolderArchiveAccountInfo *info = new FolderArchiveAccountInfo(group);
         if (info->enabled()) {
             mListAccountInfo.append(info);
