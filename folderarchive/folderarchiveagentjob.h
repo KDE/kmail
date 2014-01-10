@@ -23,11 +23,12 @@
 class KJob;
 class FolderArchiveAccountInfo;
 class FolderArchiveManager;
+class KMMoveCommand;
 class FolderArchiveAgentJob : public QObject
 {
     Q_OBJECT
 public:
-    explicit FolderArchiveAgentJob(FolderArchiveManager *manager, FolderArchiveAccountInfo *info, const QList<qlonglong> &lstItem, QObject *parent=0);
+    explicit FolderArchiveAgentJob(FolderArchiveManager *manager, FolderArchiveAccountInfo *info, const QList<Akonadi::Item> &lstItem, QObject *parent=0);
     ~FolderArchiveAgentJob();
 
     void start();
@@ -37,11 +38,10 @@ private Q_SLOTS:
     void sloMoveMailsToCollection(const Akonadi::Collection &col);
     void slotCheckFailder(const QString &message);
     void slotCollectionIdFound(const Akonadi::Collection &col);    
-    void slotMoveMessages(KJob *job);
-
+    void slotMoveMessages(KMMoveCommand *);
 private:
     void sendError(const QString &error);
-    QList<qlonglong> mLstItem;
+    QList<Akonadi::Item> mLstItem;
     FolderArchiveManager *mManager;
     FolderArchiveAccountInfo *mInfo;
 };

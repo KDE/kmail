@@ -4874,7 +4874,7 @@ void KMMainWidget::slotMoveMessageToTrash()
 
 void KMMainWidget::slotArchiveMails()
 {
-    const QList<Akonadi::Item::Id> selectedMessages = mMessagePane->selectionAsListMessageId();
+    const QList<Akonadi::Item> selectedMessages = mMessagePane->selectionAsMessageItemList();
     KMKernel::self()->folderArchiveManager()->setArchiveItems(selectedMessages, mCurrentFolder->collection().resource());
 }
 

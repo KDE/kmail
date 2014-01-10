@@ -23,6 +23,7 @@
 namespace Akonadi {
 class AgentInstance;
 class Collection;
+class Item;
 }
 
 class FolderArchiveAccountInfo;
@@ -38,7 +39,7 @@ public:
     ~FolderArchiveManager();
 
     void load();
-    void setArchiveItems(const QList<qlonglong> &itemIds, const QString &instanceName);
+    void setArchiveItems(const QList<Akonadi::Item> &items, const QString &instanceName);
     void setArchiveItem(qlonglong itemId);
 
     void moveFailed(const QString &msg);

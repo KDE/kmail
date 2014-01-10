@@ -21,13 +21,15 @@
 #include "folderarchivemanager.h"
 #include "folderarchivecache.h"
 
+#include "kmcommands.h"
+
 #include <Akonadi/ItemMoveJob>
 #include <Akonadi/CollectionFetchJob>
 #include <Akonadi/ItemMoveJob>
 
 #include <KLocale>
 
-FolderArchiveAgentJob::FolderArchiveAgentJob(FolderArchiveManager *manager, FolderArchiveAccountInfo *info, const QList<qlonglong> &lstItem, QObject *parent)
+FolderArchiveAgentJob::FolderArchiveAgentJob(FolderArchiveManager *manager, FolderArchiveAccountInfo *info, const QList<Akonadi::Item> &lstItem, QObject *parent)
     : QObject(parent),
       mLstItem(lstItem),
       mManager(manager),
@@ -95,14 +97,9 @@ void FolderArchiveAgentJob::slotCollectionIdFound(const Akonadi::Collection &col
 
 void FolderArchiveAgentJob::sloMoveMailsToCollection(const Akonadi::Collection &col)
 {
-    Akonadi::Item::List lst;
-    Q_FOREACH (qlonglong i, mLstItem) {
-        lst.append(Akonadi::Item(i));
-    }
-
-    //TODO use KMMoveCommand
-    Akonadi::ItemMoveJob *moveJob = new Akonadi::ItemMoveJob(lst, col);
-    connect( moveJob, SIGNAL(result(KJob*)), this, SLOT(slotMoveMessages(KJob*)));
+    KMMoveCommand *command = new KMMoveCommand( col, mLstItem, -1 );
+    connect( command, SIGNAL(moveDone(KMMoveCommand*)), this, SLOT(slotMoveMessages(KMMoveCommand*)));
+    command->start();
 }
 
 void FolderArchiveAgentJob::sendError(const QString &error)
@@ -110,10 +107,10 @@ void FolderArchiveAgentJob::sendError(const QString &error)
     mManager->moveFailed(error);
 }
 
-void FolderArchiveAgentJob::slotMoveMessages(KJob *job)
+void FolderArchiveAgentJob::slotMoveMessages(KMMoveCommand *command)
 {
-    if ( job->error() ) {
-        sendError(i18n("Cannot move messages. %1", job->errorString() ));
+    if ( command->result() == KMCommand::Failed ) {
+        sendError(i18n("Cannot move messages."));
         return;
     }
     mManager->moveDone();
