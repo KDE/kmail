@@ -47,27 +47,27 @@ void FolderArchiveCache::clearCacheWithContainsCollection(Akonadi::Collection::I
 
 Akonadi::Collection::Id FolderArchiveCache::collectionId(FolderArchiveAccountInfo *info)
 {
-    qDebug()<<" Look at Cache ";
+    //qDebug()<<" Look at Cache ";
     if (mCache.contains(info->instanceName())) {
-        qDebug()<<"instance name : "<<info->instanceName();
+        //qDebug()<<"instance name : "<<info->instanceName();
         switch(info->folderArchiveType()) {
         case FolderArchiveAccountInfo::UniqueFolder: {
             qDebug()<<"FolderArchiveAccountInfo::UniqueFolder has cache "<<mCache.value(info->instanceName()).colId;
             return mCache.value(info->instanceName()).colId;
         }
         case FolderArchiveAccountInfo::FolderByMonths:
-            qDebug()<<"FolderArchiveAccountInfo::ByMonths has cache ?";
+            //qDebug()<<"FolderArchiveAccountInfo::ByMonths has cache ?";
             if (mCache.value(info->instanceName()).date.month() != QDate::currentDate().month()) {
-                qDebug()<<"need to remove current cache month is not good";
+                //qDebug()<<"need to remove current cache month is not good";
                 mCache.remove(info->instanceName());
                 return -1;
             } else {
                 return mCache.value(info->instanceName()).colId;
             }
         case FolderArchiveAccountInfo::FolderByYears:
-            qDebug()<<"FolderArchiveAccountInfo::ByYears has cache ?";
+            //qDebug()<<"FolderArchiveAccountInfo::ByYears has cache ?";
             if (mCache.value(info->instanceName()).date.year() != QDate::currentDate().year()) {
-                qDebug()<<"need to remove current cache year is not good";
+                //qDebug()<<"need to remove current cache year is not good";
                 mCache.remove(info->instanceName());
                 return -1;
             } else {
@@ -91,20 +91,6 @@ void FolderArchiveCache::addToCache(const QString &resourceName, Akonadi::Collec
         ArchiveCache cache;
         cache.colId = id;
         mCache.insert(resourceName, cache);
-    }
-}
-
-void FolderArchiveCache::debugCache()
-{
-    if (mCache.isEmpty()) {
-        qDebug()<<" Cache is empty";
-    } else {
-        QHashIterator<QString, ArchiveCache> i(mCache);
-        while (i.hasNext()) {
-            i.next();
-            qDebug()<<" resourceName :"<<i.key();
-            qDebug()<<" Creation at: "<<i.value().date.toString()<<" collection id:"<<i.value().colId;
-        }
     }
 }
 

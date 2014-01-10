@@ -52,8 +52,6 @@ public:
 
     void clearCache();
 
-    void debugCache();
-
 private:
     QHash<QString, ArchiveCache> mCache;
 };
