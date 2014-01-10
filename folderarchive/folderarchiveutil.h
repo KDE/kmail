@@ -22,7 +22,6 @@
 namespace FolderArchive {
 namespace FolderArchiveUtil
 {
-void forceReparseConfiguration();
 QString groupConfigPattern();
 bool resourceSupportArchiving(const QString &resource);
 }

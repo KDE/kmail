@@ -225,6 +225,10 @@ File=kmail2rc
 Group=General,Print
 Key=PrintSelectedText,PrintSelectedText
 
+
+Id=4.13
+File=akonadi_folderarchive_agentrc,foldermailarchiverc
+AllGroups
 #
 # Important notice:
 # If you add updates here, keep this text below them.

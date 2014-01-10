@@ -56,8 +56,9 @@
 #include "archivemailagentinterface.h"
 #include "job/createnewcontactjob.h"
 #include "sendlateragentinterface.h"
-#include "folderarchiveagentinterface.h"
-#include "agents/folderarchiveagent/folderarchiveutil.h"
+#include "folderarchive/folderarchiveutil.h"
+#include "folderarchive/folderarchivemanager.h"
+#include "folderarchive/folderarchiveconfiguredialog.h"
 
 #include "pimcommon/acl/collectionaclpage.h"
 #include "pimcommon/nepomukdebug/nepomukdebugdialog.h"
@@ -3983,7 +3984,7 @@ void KMMainWidget::updateMessageActionsDelayed()
     actionList << messageActions()->editAction();
   }
   actionList << mSaveAttachmentsAction;
-  if (FolderArchive::FolderArchiveUtil::folderArchiveAgentEnabled() && mCurrentFolder && FolderArchive::FolderArchiveUtil::resourceSupportArchiving(mCurrentFolder->collection().resource()))
+  if (mCurrentFolder && FolderArchive::FolderArchiveUtil::resourceSupportArchiving(mCurrentFolder->collection().resource()))
       actionList << mArchiveAction;
   mGUIClient->unplugActionList( QLatin1String( "messagelist_actionlist" ) );
   mGUIClient->plugActionList( QLatin1String( "messagelist_actionlist" ), actionList );
@@ -4819,12 +4820,11 @@ void KMMainWidget::slotConfigureSendLater()
 
 void KMMainWidget::slotConfigureFolderArchiving()
 {
-    OrgFreedesktopAkonadiFolderArchiveAgentInterface folderArchiveInterface(QLatin1String("org.freedesktop.Akonadi.FolderArchiveAgent"), QLatin1String("/FolderArchiveAgent"),QDBusConnection::sessionBus(), this);
-    if (folderArchiveInterface.isValid()) {
-        folderArchiveInterface.showConfigureDialog( (qlonglong)winId() );
-    } else {
-        KMessageBox::error(this,i18n("Archive Folder Agent was not registered."));
+    QPointer<FolderArchiveConfigureDialog> dlg = new FolderArchiveConfigureDialog(this);
+    if (dlg->exec()) {
+        KMKernel::self()->folderArchiveManager()->load();
     }
+    delete dlg;
 }
 
 void KMMainWidget::updatePaneTagComboBox()
@@ -4874,15 +4874,8 @@ void KMMainWidget::slotMoveMessageToTrash()
 
 void KMMainWidget::slotArchiveMails()
 {
-    OrgFreedesktopAkonadiFolderArchiveAgentInterface folderArchiveInterface(QLatin1String("org.freedesktop.Akonadi.FolderArchiveAgent"), QLatin1String("/FolderArchiveAgent"),QDBusConnection::sessionBus(), this);
-    if (folderArchiveInterface.isValid()) {
-        const QList<Akonadi::Item::Id> selectedMessages = mMessagePane->selectionAsListMessageId();
-        if (mCurrentFolder) {
-            folderArchiveInterface.archiveItems(selectedMessages, mCurrentFolder->collection().resource());
-        }
-    } else {
-        KMessageBox::error(this,i18n("Archive Folder Agent was not registered."));
-    }
+    const QList<Akonadi::Item::Id> selectedMessages = mMessagePane->selectionAsListMessageId();
+    KMKernel::self()->folderArchiveManager()->setArchiveItems(selectedMessages, mCurrentFolder->collection().resource());
 }
 
 void KMMainWidget::slotDebugNepomukMessage()

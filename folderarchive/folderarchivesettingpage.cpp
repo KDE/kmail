@@ -110,10 +110,10 @@ void FolderArchiveSettingPage::slotEnableChanged(bool enabled)
 
 void FolderArchiveSettingPage::loadSettings()
 {
-    KSharedConfig::Ptr config = KGlobal::config();
+    KConfig config(QLatin1String("foldermailarchiverc"));
     const QString groupName = FolderArchive::FolderArchiveUtil::groupConfigPattern() + mInstanceName;
-    if (config->hasGroup(groupName)) {
-        KConfigGroup grp = config->group(groupName);
+    if (config.hasGroup(groupName)) {
+        KConfigGroup grp = config.group(groupName);
         mInfo = new FolderArchiveAccountInfo(grp);
         mEnabled->setChecked(mInfo->enabled());
         mArchiveFolder->setCollection(Akonadi::Collection(mInfo->archiveTopLevel()));
@@ -127,8 +127,8 @@ void FolderArchiveSettingPage::loadSettings()
 
 void FolderArchiveSettingPage::writeSettings()
 {
-    KSharedConfig::Ptr config = KGlobal::config();
-    KConfigGroup grp = config->group(FolderArchive::FolderArchiveUtil::groupConfigPattern() + mInstanceName);
+    KConfig config(QLatin1String("foldermailarchiverc"));
+    KConfigGroup grp = config.group(FolderArchive::FolderArchiveUtil::groupConfigPattern() + mInstanceName);
     mInfo->setInstanceName(mInstanceName);
     if (mArchiveFolder->collection().isValid()) {
         mInfo->setEnabled(mEnabled->isChecked());

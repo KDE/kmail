@@ -189,14 +189,6 @@ if (KDEPIM_BUILD_DESKTOP)
   )
 
 
-  set_source_files_properties(${CMAKE_SOURCE_DIR}/agents/folderarchiveagent/org.freedesktop.Akonadi.FolderArchiveAgent.xml PROPERTIES INCLUDE "../mailcommon/dbusoperators.h")
-
-  qt4_add_dbus_interfaces(kmailprivate_LIB_SRCS
-    ${CMAKE_SOURCE_DIR}/agents/folderarchiveagent/org.freedesktop.Akonadi.FolderArchiveAgent.xml
-  )
-
-
-
   kde4_add_ui_files(kmailprivate_LIB_SRCS
     ui/composercryptoconfiguration.ui
     ui/warningconfiguration.ui
