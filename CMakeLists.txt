@@ -97,7 +97,9 @@ if (KDEPIM_BUILD_DESKTOP)
      configuredialog/colorlistbox.cpp
      configuredialog/accountconfigorderdialog.cpp
      configuredialog/configureagentswidget.cpp
+     configuredialog/configurestorageservicewidget.cpp
   )
+
   set(kmailprivate_searchdialog_LIB_SRCS
      searchdialog/kmsearchmessagemodel.cpp
      searchdialog/kmsearchfilterproxymodel.cpp
