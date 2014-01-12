@@ -16,8 +16,10 @@
 */
 
 #include "configurestorageservicewidget.h"
+#include "settings/globalsettings.h"
 #include "pimcommon/storageservice/settings/storageservicesettingswidget.h"
-
+#include "pimcommon/widgets/configureimmutablewidgetutils.h"
+using namespace PimCommon::ConfigureImmutableWidgetUtils;
 #include <KLocalizedString>
 
 #include <QVBoxLayout>
@@ -42,12 +44,14 @@ ConfigureStorageServiceWidget::~ConfigureStorageServiceWidget()
 
 }
 
-void ConfigureStorageServiceWidget::saveSettings()
+void ConfigureStorageServiceWidget::save()
 {
+    saveCheckBox(mActivateStorageService, GlobalSettings::self()->useStorageServiceItem());
     //TODO
 }
 
-void ConfigureStorageServiceWidget::loadSettings()
+void ConfigureStorageServiceWidget::doLoadFromGlobalSettings()
 {
+    loadWidget(mActivateStorageService, GlobalSettings::self()->useStorageServiceItem());
     //TODO
 }

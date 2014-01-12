@@ -30,13 +30,12 @@ public:
     explicit ConfigureStorageServiceWidget(QWidget *parent=0);
     ~ConfigureStorageServiceWidget();
 
-    void saveSettings();
-    void loadSettings();
+    void save();
+    void doLoadFromGlobalSettings();
 
 private:
     QCheckBox *mActivateStorageService;
     PimCommon::StorageServiceSettingsWidget *mStorageServiceWidget;
-
 };
 
 #endif // CONFIGURESTORAGESERVICEWIDGET_H
