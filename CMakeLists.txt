@@ -108,6 +108,9 @@ if (KDEPIM_BUILD_DESKTOP)
      searchdialog/searchpatternwarning.cpp
      searchdialog/nepomuksearchpatternedit.cpp
   )
+  set(kmailprivate_storageservice_LIB_SRCS
+     storageservice/storageservicesettingsjob.cpp
+  )
 
   set(kmailprivate_LIB_SRCS
      widgets/collectionpane.cpp
@@ -160,6 +163,7 @@ if (KDEPIM_BUILD_DESKTOP)
      ${kmailprivate_collectionpage_LIB_SRCS}
      ${kmailprivate_configuredialog_LIB_SRCS}
      ${kmailprivate_searchdialog_LIB_SRCS}
+     ${kmailprivate_storageservice_LIB_SRCS}
   )
 
   # TODO PORT
