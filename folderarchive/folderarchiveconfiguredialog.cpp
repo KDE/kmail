@@ -39,7 +39,7 @@ FolderArchiveConfigureDialog::FolderArchiveConfigureDialog(QWidget *parent)
     setCaption( i18n("Configure") );
     setWindowIcon( KIcon( QLatin1String("kmail") ) );
     setButtons( Help|Ok|Cancel );
-
+    setHelp(QLatin1String("archive-folder"), QLatin1String("kmail"));
     readConfig();
 
     mTabWidget = new QTabWidget;
