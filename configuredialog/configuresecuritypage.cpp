@@ -72,9 +72,10 @@ SecurityPage::SecurityPage( const KComponentData &instance, QWidget *parent )
     //
     mSMimeTab = new SMimeTab();
     addTab( mSMimeTab, i18n("S/MIME Validation") );
-
+#ifndef KDEPIM_NO_WEBKIT
     mSAdBlockTab = new SecurityPageAdBlockTab;
     addTab( mSAdBlockTab, i18n("Ad block") );
+#endif
 }
 
 QString SecurityPage::GeneralTab::helpAnchor() const
@@ -151,10 +152,12 @@ void SecurityPage::GeneralTab::save()
 
 //Adblock
 
+#ifndef KDEPIM_NO_WEBKIT
 QString SecurityPageAdBlockTab::helpAnchor() const
 {
     return QString();
 }
+
 
 SecurityPageAdBlockTab::SecurityPageAdBlockTab( QWidget * parent )
     : ConfigModuleTab( parent )
@@ -191,7 +194,7 @@ void SecurityPageAdBlockTab::doResetToDefaultsOther()
 {
     mWidget->doResetToDefaultsOther();
 }
-
+#endif
 
 QString SecurityPage::MDNTab::helpAnchor() const
 {
