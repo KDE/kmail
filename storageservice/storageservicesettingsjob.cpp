@@ -90,7 +90,7 @@ QString StorageServiceSettingsJob::hubicScope() const
     return QLatin1String("usage.r,account.r,credentials.r,links.wd");
 }
 
-QString StorageServiceSettingsJob::ubuntoOneTokenName() const
+QString StorageServiceSettingsJob::ubuntuOneTokenName() const
 {
     return QLatin1String("kmail");
 }

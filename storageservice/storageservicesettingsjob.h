@@ -42,7 +42,7 @@ public:
     QString oauth2RedirectUrl() const;
     QString ubuntuOneAttachmentVolume() const;
     QString hubicScope() const;
-    QString ubuntoOneTokenName() const;
+    QString ubuntuOneTokenName() const;
 };
 
 #endif // StorageServiceSettingsJob_H
