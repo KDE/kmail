@@ -22,9 +22,6 @@
 #define kmkernel KMKernel::self()
 #define kmconfig KMKernel::config()
 
-namespace MailCommon {
-  class KMFilterDialog;
-}
 
 class QAbstractItemModel;
 namespace Akonadi {
@@ -69,6 +66,15 @@ namespace KPIMIdentities {
   class Identity;
   class IdentityManager;
 }
+
+namespace MailCommon {
+  class Kernel;
+  class FolderCollection;
+  class FolderCollectionMonitor;
+  class JobScheduler;
+  class KMFilterDialog;
+}
+
 class KComponentData;
 class QTimer;
 class KMMainWin;
@@ -76,13 +82,6 @@ class KMainWindow;
 class KMMainWidget;
 class ConfigureDialog;
 class FolderArchiveManager;
-
-namespace MailCommon {
-  class Kernel;
-  class FolderCollection;
-  class FolderCollectionMonitor;
-  class JobScheduler;
-}
 
 /**
  * @short Central point of coordination in KMail
