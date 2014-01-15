@@ -47,6 +47,7 @@ namespace MessageComposer {
 }
 namespace PimCommon {
 class AutoCorrection;
+class StorageServiceManager;
 }
 
 /** The KMail namespace contains classes used for KMail.
@@ -431,6 +432,7 @@ public:
 
   void toggleSystemTray();
   FolderArchiveManager *folderArchiveManager() const;
+  PimCommon::StorageServiceManager *storageServiceManager() const;
 
 protected:
   void agentInstanceBroken( const Akonadi::AgentInstance& instance );
@@ -538,6 +540,7 @@ private:
   QPointer<MailCommon::KMFilterDialog> mFilterEditDialog;
   PimCommon::AutoCorrection *mAutoCorrection;
   FolderArchiveManager *mFolderArchiveManager;
+  PimCommon::StorageServiceManager *mStorageManager;
 };
 
 #endif // _KMKERNEL_H

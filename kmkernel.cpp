@@ -26,6 +26,7 @@ using KPIM::RecentAddresses;
 #include "mailcommon/mailcommonsettings_base.h"
 #include "pimcommon/util/pimutil.h"
 #include "folderarchive/folderarchivemanager.h"
+#include "pimcommon/storageservice/storageservicemanager.h"
 
 // kdepim includes
 #include "kdepim-version.h"
@@ -235,6 +236,7 @@ KMKernel::KMKernel (QObject *parent) :
   CommonKernel->registerSettingsIf( this );
   CommonKernel->registerFilterIf( this );
   mFolderArchiveManager = new FolderArchiveManager(this);
+  mStorageManager = new PimCommon::StorageServiceManager(this);
 }
 
 KMKernel::~KMKernel ()
@@ -2055,4 +2057,9 @@ void KMKernel::slotCollectionChanged(const Akonadi::Collection &, const QSet<QBy
 FolderArchiveManager *KMKernel::folderArchiveManager() const
 {
     return mFolderArchiveManager;
+}
+
+PimCommon::StorageServiceManager *KMKernel::storageServiceManager() const
+{
+    return mStorageManager;
 }
