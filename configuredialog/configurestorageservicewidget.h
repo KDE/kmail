@@ -20,6 +20,7 @@
 
 #include <QWidget>
 class QCheckBox;
+class QSpinBox;
 namespace PimCommon {
 class StorageServiceSettingsWidget;
 }
@@ -34,6 +35,7 @@ public:
     void doLoadFromGlobalSettings();
 
 private:
+    QSpinBox *mLimitAttachment;
     QCheckBox *mActivateStorageService;
     PimCommon::StorageServiceSettingsWidget *mStorageServiceWidget;
 };

@@ -25,6 +25,7 @@ using namespace PimCommon::ConfigureImmutableWidgetUtils;
 #include <QVBoxLayout>
 #include <QHBoxLayout>
 #include <QCheckBox>
+#include <QSpinBox>
 
 ConfigureStorageServiceWidget::ConfigureStorageServiceWidget(QWidget *parent)
     : QWidget(parent)
