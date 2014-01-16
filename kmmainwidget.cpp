@@ -3140,8 +3140,8 @@ void KMMainWidget::setupActions()
   }
 
   {
-    KAction *action = new KAction(i18n("Send Later Preferences..."), this);
-    actionCollection()->addAction(QLatin1String("tools_configure_sendlater"), action );
+    KAction *action = new KAction(i18n("Message Delayed..."), this);
+    actionCollection()->addAction(QLatin1String("message_delayed"), action );
     connect(action, SIGNAL(triggered(bool)), SLOT(slotConfigureSendLater()));
   }
 
