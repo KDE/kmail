@@ -124,7 +124,7 @@ void SecurityPage::GeneralTab::doLoadOther()
     loadWidget(mSGTab.mAlwaysDecrypt, MessageViewer::GlobalSettings::self()->alwaysDecryptItem() );
 
     loadWidget(mSGTab.mScamDetection, MessageViewer::GlobalSettings::self()->scamDetectionEnabledItem());
-    mSGTab.scamWhiteList->setStringList( MessageViewer::GlobalSettings::self()->scamDetectionWhiteList() );
+    loadWidget(mSGTab.scamWhiteList, MessageViewer::GlobalSettings::self()->scamDetectionWhiteListItem());
 }
 
 void SecurityPage::GeneralTab::save()
@@ -147,7 +147,7 @@ void SecurityPage::GeneralTab::save()
     saveCheckBox(mSGTab.mAutomaticallyImportAttachedKeysCheck, MessageViewer::GlobalSettings::self()->autoImportKeysItem() );
     saveCheckBox(mSGTab.mAlwaysDecrypt, MessageViewer::GlobalSettings::self()->alwaysDecryptItem() );
     saveCheckBox(mSGTab.mScamDetection, MessageViewer::GlobalSettings::self()->scamDetectionEnabledItem());
-    MessageViewer::GlobalSettings::self()->setScamDetectionWhiteList( mSGTab.scamWhiteList->stringList() );
+    saveSimpleStringListEditor(mSGTab.scamWhiteList, MessageViewer::GlobalSettings::self()->scamDetectionWhiteListItem());
 }
 
 //Adblock

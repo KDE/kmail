@@ -550,10 +550,10 @@ void ComposerPage::GeneralTab::doLoadFromGlobalSettings()
     loadWidget(mAutoRequestMDNCheck, GlobalSettings::self()->requestMDNItem() );
     loadWidget(mWordWrapCheck, MessageComposer::MessageComposerSettings::self()->wordWrapItem() );
 
-    mWrapColumnSpin->setValue( MessageComposer::MessageComposerSettings::self()->lineWrapWidth() );
-    mMaximumRecipients->setValue( MessageComposer::MessageComposerSettings::self()->maximumRecipients() );
+    loadWidget(mWrapColumnSpin, MessageComposer::MessageComposerSettings::self()->lineWrapWidthItem() );
+    loadWidget(mMaximumRecipients,  MessageComposer::MessageComposerSettings::self()->maximumRecipientsItem() );
     mAutoSave->setValue( GlobalSettings::self()->autosaveInterval() );
-    mShowRecentAddressesInComposer->setChecked( MessageComposer::MessageComposerSettings::self()->showRecentAddressesInComposer() );
+    loadWidget(mShowRecentAddressesInComposer, MessageComposer::MessageComposerSettings::self()->showRecentAddressesInComposerItem() );
     mImprovePlainTextOfHtmlMessage->setChecked(MessageComposer::MessageComposerSettings::self()->improvePlainTextOfHtmlMessage());
 
 #ifdef KDEPIM_ENTERPRISE_BUILD
@@ -583,8 +583,8 @@ void ComposerPage::GeneralTab::save() {
 
     MessageComposer::MessageComposerSettings::self()->setAutoTextSignature(
                 mAutoAppSignFileCheck->isChecked() ? QLatin1String("auto") : QLatin1String("manual") );
-    MessageComposer::MessageComposerSettings::self()->setLineWrapWidth( mWrapColumnSpin->value() );
-    MessageComposer::MessageComposerSettings::self()->setMaximumRecipients( mMaximumRecipients->value() );
+    saveKIntSpinBox(mWrapColumnSpin, MessageComposer::MessageComposerSettings::self()->lineWrapWidthItem() );
+    saveKIntSpinBox(mMaximumRecipients,  MessageComposer::MessageComposerSettings::self()->maximumRecipientsItem() );
     GlobalSettings::self()->setAutosaveInterval( mAutoSave->value() );
     MessageComposer::MessageComposerSettings::self()->setShowRecentAddressesInComposer( mShowRecentAddressesInComposer->isChecked() );
     MessageComposer::MessageComposerSettings::self()->setImprovePlainTextOfHtmlMessage( mImprovePlainTextOfHtmlMessage->isChecked() );
@@ -1344,7 +1344,6 @@ ComposerPageAutoCorrectionTab::ComposerPageAutoCorrectionTab(QWidget *parent)
     vlay->addWidget(autocorrectionWidget);
     setLayout(vlay);
     connect( autocorrectionWidget, SIGNAL(changed()), this, SLOT(slotEmitChanged()) );
-
 }
 
 QString ComposerPageAutoCorrectionTab::helpAnchor() const

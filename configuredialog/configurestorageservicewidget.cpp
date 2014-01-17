@@ -45,8 +45,6 @@ ConfigureStorageServiceWidget::ConfigureStorageServiceWidget(QWidget *parent)
     mStorageServiceWidget = new PimCommon::StorageServiceSettingsWidget;
     lay->addWidget(mStorageServiceWidget);
 
-
-
     setLayout(lay);
 }
 
