@@ -51,7 +51,7 @@ FolderArchiveManager::~FolderArchiveManager()
 
 void FolderArchiveManager::slotCollectionRemoved(const Akonadi::Collection &collection)
 {
-    KConfig config(QLatin1String("foldermailarchiverc"));
+    KConfig config(FolderArchive::FolderArchiveUtil::configFileName());
     mFolderArchiveCache->clearCacheWithContainsCollection(collection.id());
     Q_FOREACH (FolderArchiveAccountInfo *info, mListAccountInfo) {
         if (info->archiveTopLevel() == collection.id()) {
@@ -147,7 +147,7 @@ void FolderArchiveManager::slotInstanceRemoved(const Akonadi::AgentInstance &ins
 
 void FolderArchiveManager::removeInfo(const QString &instanceName)
 {
-    KConfig config(QLatin1String("foldermailarchiverc"));
+    KConfig config(FolderArchive::FolderArchiveUtil::configFileName());
     KConfigGroup group = config.group(FolderArchive::FolderArchiveUtil::groupConfigPattern() + instanceName);
     group.deleteGroup();
     config.sync();
@@ -160,7 +160,7 @@ void FolderArchiveManager::load()
     //Be sure to clear cache.
     mFolderArchiveCache->clearCache();
 
-    KConfig config(QLatin1String("foldermailarchiverc"));
+    KConfig config(FolderArchive::FolderArchiveUtil::configFileName());
     const QStringList accountList = config.groupList().filter( QRegExp( FolderArchive::FolderArchiveUtil::groupConfigPattern() ) );
     Q_FOREACH (const QString &account, accountList) {
         KConfigGroup group = config.group(account);

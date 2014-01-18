@@ -110,7 +110,7 @@ void FolderArchiveSettingPage::slotEnableChanged(bool enabled)
 
 void FolderArchiveSettingPage::loadSettings()
 {
-    KConfig config(QLatin1String("foldermailarchiverc"));
+    KConfig config(FolderArchive::FolderArchiveUtil::configFileName());
     const QString groupName = FolderArchive::FolderArchiveUtil::groupConfigPattern() + mInstanceName;
     if (config.hasGroup(groupName)) {
         KConfigGroup grp = config.group(groupName);
@@ -127,7 +127,7 @@ void FolderArchiveSettingPage::loadSettings()
 
 void FolderArchiveSettingPage::writeSettings()
 {
-    KConfig config(QLatin1String("foldermailarchiverc"));
+    KConfig config(FolderArchive::FolderArchiveUtil::configFileName());
     KConfigGroup grp = config.group(FolderArchive::FolderArchiveUtil::groupConfigPattern() + mInstanceName);
     mInfo->setInstanceName(mInstanceName);
     if (mArchiveFolder->collection().isValid()) {

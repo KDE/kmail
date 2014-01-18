@@ -27,9 +27,14 @@ QString FolderArchiveUtil::groupConfigPattern()
     return QLatin1String("FolderArchiveAccount ");
 }
 
+QString FolderArchiveUtil::configFileName()
+{
+    return QLatin1String(QLatin1String("foldermailarchiverc"));
+}
+
 bool FolderArchiveUtil::resourceSupportArchiving(const QString &resource)
 {
-    KConfig config(QLatin1String("foldermailarchiverc"));
+    KConfig config(FolderArchiveUtil::configFileName());
     if (config.hasGroup(groupConfigPattern() + resource)) {
         KConfigGroup grp = config.group(groupConfigPattern() + resource);
         if (grp.readEntry("enabled", false) && (grp.readEntry("topLevelCollectionId", -1) > 0) ) {

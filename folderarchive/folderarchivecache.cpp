@@ -77,7 +77,7 @@ Akonadi::Collection::Id FolderArchiveCache::collectionId(FolderArchiveAccountInf
         }
         return mCache.value(info->instanceName()).colId;
     }
-    qDebug()<<" Don't have cache for this instancename "<<info->instanceName();
+    //qDebug()<<" Don't have cache for this instancename "<<info->instanceName();
     return -1;
 }
 
