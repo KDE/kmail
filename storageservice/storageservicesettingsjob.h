@@ -43,6 +43,8 @@ public:
     QString ubuntuOneAttachmentVolume() const;
     QString hubicScope() const;
     QString ubuntuOneTokenName() const;
+    QString gdriveClientId() const;
+    QString gdriveClientSecret() const;
 };
 
 #endif // StorageServiceSettingsJob_H

@@ -94,3 +94,15 @@ QString StorageServiceSettingsJob::ubuntuOneTokenName() const
 {
     return QLatin1String("kmail");
 }
+
+QString StorageServiceSettingsJob::gdriveClientId() const
+{
+    //TODO
+    return QString();
+}
+
+QString StorageServiceSettingsJob::gdriveClientSecret() const
+{
+    //TODO
+    return QString();
+}
