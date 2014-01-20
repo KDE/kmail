@@ -111,17 +111,23 @@ if (KDEPIM_BUILD_DESKTOP)
   set(kmailprivate_storageservice_LIB_SRCS
      storageservice/storageservicesettingsjob.cpp
   )
+  set(kmailprivate_identity_LIB_SRCS
+     identity/identitylistview.cpp
+     identity/identitydialog.cpp
+     identity/xfaceconfigurator.cpp
+     identity/identitypage.cpp
+     identity/newidentitydialog.cpp
+     identity/identityeditvcarddialog.cpp
+     identity/identityaddvcarddialog.cpp
+  )
 
   set(kmailprivate_LIB_SRCS
      widgets/collectionpane.cpp
      kmmainwin.cpp
-     identity/identitylistview.cpp
-     identity/identitydialog.cpp
      settings/globalsettings.cpp
      editor/snippetwidget.cpp
      kmreaderwin.cpp
      kmsystemtray.cpp
-     identity/xfaceconfigurator.cpp
      undostack.cpp
      kmkernel.cpp
      searchdialog/searchwindow.cpp
@@ -148,12 +154,8 @@ if (KDEPIM_BUILD_DESKTOP)
      tag/tagactionmanager.cpp
      foldershortcutactionmanager.cpp
      job/addressvalidationjob.cpp
-     identity/identitypage.cpp
-     identity/newidentitydialog.cpp
      dialog/kmknotify.cpp
      tag/tagselectdialog.cpp
-     identity/identityeditvcarddialog.cpp
-     identity/identityaddvcarddialog.cpp
      warningwidgets/attachmentmissingwarning.cpp
      job/createnewcontactjob.cpp
      job/addemailtoexistingcontactjob.cpp
@@ -164,6 +166,7 @@ if (KDEPIM_BUILD_DESKTOP)
      ${kmailprivate_configuredialog_LIB_SRCS}
      ${kmailprivate_searchdialog_LIB_SRCS}
      ${kmailprivate_storageservice_LIB_SRCS}
+     ${kmailprivate_identity_LIB_SRCS}
   )
 
   # TODO PORT
