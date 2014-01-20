@@ -31,6 +31,7 @@ class KLineEdit;
 class ListView;
 class QPushButton;
 class QLabel;
+class ConfigureStorageServiceWidget;
 
 namespace TemplateParser {
 class CustomTemplates;
@@ -224,6 +225,7 @@ private:
     QCheckBox   *mMissingAttachmentDetectionCheck;
     PimCommon::SimpleStringListEditor *mAttachWordsListEditor;
     KIntNumInput *mMaximumAttachmentSize;
+    ConfigureStorageServiceWidget *mStorageServiceWidget;
 };
 
 class ComposerPageAutoCorrectionTab : public ConfigModuleTab {

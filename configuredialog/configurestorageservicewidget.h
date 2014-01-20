@@ -34,6 +34,9 @@ public:
     void save();
     void doLoadFromGlobalSettings();
 
+Q_SIGNALS:
+    void changed();
+
 private:
     QSpinBox *mLimitAttachment;
     QCheckBox *mActivateStorageService;

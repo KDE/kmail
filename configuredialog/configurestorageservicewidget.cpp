@@ -41,7 +41,8 @@ ConfigureStorageServiceWidget::ConfigureStorageServiceWidget(QWidget *parent)
     hbox->addWidget(mLimitAttachment);
     lay->addLayout(hbox);
     connect(mActivateStorageService, SIGNAL(toggled(bool)), mLimitAttachment, SLOT(setEnabled(bool)));
-
+    connect(mActivateStorageService, SIGNAL(toggled(bool)), this, SIGNAL(changed()));
+    connect(mLimitAttachment, SIGNAL(valueChanged(int)), this, SIGNAL(changed()));
     mStorageServiceWidget = new PimCommon::StorageServiceSettingsWidget;
     lay->addWidget(mStorageServiceWidget);
 

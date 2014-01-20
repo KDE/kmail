@@ -17,6 +17,7 @@
 
 #include "configurecomposerpage.h"
 #include "pimcommon/widgets/configureimmutablewidgetutils.h"
+#include "configurestorageservicewidget.h"
 using namespace PimCommon::ConfigureImmutableWidgetUtils;
 #include "kmkernel.h"
 #include "kmmainwidget.h"
@@ -1295,6 +1296,10 @@ ComposerPageAttachmentsTab::ComposerPageAttachmentsTab( QWidget * parent )
              label, SLOT(setEnabled(bool)) );
     connect( mMissingAttachmentDetectionCheck, SIGNAL(toggled(bool)),
              mAttachWordsListEditor, SLOT(setEnabled(bool)) );
+
+    mStorageServiceWidget = new ConfigureStorageServiceWidget;
+    vlay->addWidget(mStorageServiceWidget);
+    connect(mStorageServiceWidget, SIGNAL(changed()), this, SLOT(slotEmitChanged()));
 }
 
 void ComposerPage::AttachmentsTab::doLoadFromGlobalSettings()
@@ -1304,6 +1309,7 @@ void ComposerPage::AttachmentsTab::doLoadFromGlobalSettings()
     loadWidget(mAttachWordsListEditor, GlobalSettings::self()->attachmentKeywordsItem() );
     const int maximumAttachmentSize(MessageComposer::MessageComposerSettings::self()->maximumAttachmentSize());
     mMaximumAttachmentSize->setValue(maximumAttachmentSize == -1 ? -1 : MessageComposer::MessageComposerSettings::self()->maximumAttachmentSize()/1024);
+    mStorageServiceWidget->doLoadFromGlobalSettings();
 }
 
 void ComposerPage::AttachmentsTab::save()
@@ -1315,7 +1321,7 @@ void ComposerPage::AttachmentsTab::save()
     KMime::setUseOutlookAttachmentEncoding( mOutlookCompatibleCheck->isChecked() );
     const int maximumAttachmentSize(mMaximumAttachmentSize->value());
     MessageComposer::MessageComposerSettings::self()->setMaximumAttachmentSize(maximumAttachmentSize == -1 ? -1 : maximumAttachmentSize*1024);
-
+    mStorageServiceWidget->save();
 }
 
 void ComposerPageAttachmentsTab::slotOutlookCompatibleClicked()
