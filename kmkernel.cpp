@@ -27,6 +27,8 @@ using KPIM::RecentAddresses;
 #include "pimcommon/util/pimutil.h"
 #include "folderarchive/folderarchivemanager.h"
 #include "pimcommon/storageservice/storageservicemanager.h"
+#include "pimcommon/storageservice/storageservicejobconfig.h"
+#include "storageservice/storageservicesettingsjob.h"
 
 // kdepim includes
 #include "kdepim-version.h"
@@ -237,6 +239,9 @@ KMKernel::KMKernel (QObject *parent) :
   CommonKernel->registerFilterIf( this );
   mFolderArchiveManager = new FolderArchiveManager(this);
   mStorageManager = new PimCommon::StorageServiceManager(this);
+  StorageServiceSettingsJob *settingsJob = new StorageServiceSettingsJob(this);
+  PimCommon::StorageServiceJobConfig *configJob = PimCommon::StorageServiceJobConfig::self();
+  configJob->registerConfigIf(settingsJob);
 }
 
 KMKernel::~KMKernel ()
