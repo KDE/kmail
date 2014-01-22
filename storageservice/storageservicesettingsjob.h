@@ -45,7 +45,7 @@ public:
     QString ubuntuOneTokenName() const;
     QString gdriveClientId() const;
     QString gdriveClientSecret() const;
-    QString dropboxDefaultUploadFolder() const;
+    QString defaultUploadFolder() const;
 };
 
 #endif // StorageServiceSettingsJob_H

@@ -107,7 +107,7 @@ QString StorageServiceSettingsJob::gdriveClientSecret() const
     return QString();
 }
 
-QString StorageServiceSettingsJob::dropboxDefaultUploadFolder() const
+QString StorageServiceSettingsJob::defaultUploadFolder() const
 {
     return QLatin1String("KMail Attachment");
 }
