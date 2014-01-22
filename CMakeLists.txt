@@ -120,12 +120,21 @@ if (KDEPIM_BUILD_DESKTOP)
      identity/identityeditvcarddialog.cpp
      identity/identityaddvcarddialog.cpp
   )
+  set(kmailprivate_editor_LIB_SRCS
+     editor/snippetwidget.cpp
+     editor/kmcomposereditor.cpp
+     editor/composer.cpp
+     editor/codecaction.cpp
+     editor/codecmanager.cpp
+     editor/kmcomposewin.cpp
+     editor/attachmentcontroller.cpp
+     editor/attachmentview.cpp
+  )
 
   set(kmailprivate_LIB_SRCS
      widgets/collectionpane.cpp
      kmmainwin.cpp
      settings/globalsettings.cpp
-     editor/snippetwidget.cpp
      kmreaderwin.cpp
      kmsystemtray.cpp
      undostack.cpp
@@ -137,17 +146,10 @@ if (KDEPIM_BUILD_DESKTOP)
      kmmainwidget.cpp
      aboutdata.cpp
      mailserviceimpl.cpp
-     editor/kmcomposereditor.cpp
-     editor/composer.cpp
      antispam-virus/antispamwizard.cpp
      secondarywindow.cpp
-     editor/codecaction.cpp
-     editor/codecmanager.cpp
      util.cpp
      messageactions.cpp
-     editor/kmcomposewin.cpp
-     editor/attachmentcontroller.cpp
-     editor/attachmentview.cpp
      dialog/archivefolderdialog.cpp
      dialog/addemailtoexistingcontactdialog.cpp
      searchdialog/searchdescriptionattribute.cpp
@@ -167,6 +169,7 @@ if (KDEPIM_BUILD_DESKTOP)
      ${kmailprivate_searchdialog_LIB_SRCS}
      ${kmailprivate_storageservice_LIB_SRCS}
      ${kmailprivate_identity_LIB_SRCS}
+     ${kmailprivate_editor_LIB_SRCS}
   )
 
   # TODO PORT

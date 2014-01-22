@@ -3565,8 +3565,6 @@ void KMComposeWin::slotInsertShortUrl(const QString &url)
 void KMComposeWin::slotUploadFileDone(const QString &serviceName, const QString &fileName)
 {
     mProgressWidget->hide();
-    qDebug()<<" void KMComposeWin::slotUploadFileDone(const QString &serviceName, const QString &fileName)"<<fileName;
-    //TODO
 }
 
 void KMComposeWin::slotUploadFileFailed(const QString &serviceName, const QString &fileName)
@@ -3580,8 +3578,6 @@ void KMComposeWin::slotUploadFileProgress(const QString &serviceName, qint64 don
 {
     mProgressWidget->show();
     mProgressWidget->setProgressValue(done, total);
-    //TODO
-    qDebug()<<" done :"<<done<<" total "<<total;
 }
 
 void KMComposeWin::slotShareLinkDone(const QString &serviceName, const QString &link)
