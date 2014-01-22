@@ -1171,7 +1171,7 @@ void KMKernel::init()
 
   readConfig();
 
-  the_undoStack     = new UndoStack(20);
+  the_undoStack = new UndoStack(20);
 
   the_msgSender = new MessageComposer::AkonadiSender;
   readConfig();

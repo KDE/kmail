@@ -17,7 +17,6 @@ class KAction;
 class KFontAction;
 class KFontSizeAction;
 class KJob;
-template <typename T, typename S> class QMap;
 
 namespace KMail {
 class MessageActions;
@@ -91,7 +90,6 @@ private:
   KFontSizeAction *mFontSizeAction;
   KMail::MessageActions *mMsgActions;
   Akonadi::Collection mParentCollection;
-
 };
 
 #endif /*KMReaderMainWin_h*/

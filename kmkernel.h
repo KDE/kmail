@@ -350,7 +350,7 @@ public:
   const KComponentData &xmlGuiInstance() { return mXmlGuiInstance; }
   void setXmlGuiInstance( const KComponentData &instance ) { mXmlGuiInstance = instance; }
 
-  UndoStack *undoStack() { return the_undoStack; }
+  UndoStack *undoStack() const { return the_undoStack; }
   MessageComposer::MessageSender *msgSender();
 
   /*reimp*/ void openFilterDialog(bool createDummyFilter = true);
@@ -386,7 +386,7 @@ public:
    */
   bool haveSystemTrayApplet() const;
 
-  QTextCodec *networkCodec() { return netCodec; }
+  QTextCodec *networkCodec() const { return netCodec; }
 
   /** returns a reference to the first Mainwin or a temporary Mainwin */
   KMainWindow* mainWin();
