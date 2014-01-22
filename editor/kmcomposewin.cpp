@@ -57,6 +57,7 @@
 
 #include "pimcommon/util/editorutil.h"
 #include "pimcommon/storageservice/storageservicemanager.h"
+#include "pimcommon/storageservice/widgets/storageserviceprogresswidget.h"
 
 #include "agents/sendlateragent/sendlaterutil.h"
 #include "agents/sendlateragent/sendlaterdialog.h"
@@ -1485,7 +1486,10 @@ void KMComposeWin::changeCryptoAction()
 //-----------------------------------------------------------------------------
 void KMComposeWin::setupStatusBar( QWidget *w )
 {
+  mProgressWidget  = new PimCommon::StorageServiceProgressWidget;
+  mProgressWidget->hide();
   statusBar()->addWidget(w);
+  statusBar()->addWidget(mProgressWidget);
   statusBar()->insertItem( QString(), 0, 1 );
   statusBar()->setItemAlignment( 0, Qt::AlignLeft | Qt::AlignVCenter );
   statusBar()->insertPermanentItem( overwriteModeStr(), 4,0 );
@@ -3560,23 +3564,29 @@ void KMComposeWin::slotInsertShortUrl(const QString &url)
 
 void KMComposeWin::slotUploadFileDone(const QString &serviceName, const QString &fileName)
 {
+    mProgressWidget->hide();
     qDebug()<<" void KMComposeWin::slotUploadFileDone(const QString &serviceName, const QString &fileName)"<<fileName;
     //TODO
 }
 
 void KMComposeWin::slotUploadFileFailed(const QString &serviceName, const QString &fileName)
 {
+    mProgressWidget->hide();
     qDebug()<<" void KMComposeWin::slotUploadFileFailed(const QString &serviceName, const QString &fileName)"<<fileName;
     //TODO
 }
 
 void KMComposeWin::slotUploadFileProgress(const QString &serviceName, qint64 done, qint64 total)
 {
+    mProgressWidget->show();
+    mProgressWidget->setProgressValue(done, total);
     //TODO
     qDebug()<<" done :"<<done<<" total "<<total;
 }
 
 void KMComposeWin::slotShareLinkDone(const QString &serviceName, const QString &link)
 {
+    //Improve it.
+    mComposerBase->editor()->insertLink(link);
     qDebug()<<" link"<<link;
 }

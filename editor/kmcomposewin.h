@@ -101,6 +101,7 @@ namespace MailCommon {
 namespace PimCommon {
   class CustomToolsWidget;
   class LineEditWithAutoCorrection;
+  class StorageServiceProgressWidget;
 }
 
 //-----------------------------------------------------------------------------
@@ -686,6 +687,7 @@ public: // kmcommand
     bool mWasModified;
     Akonadi::Collection mCollectionForNewMessage;
     QMap<QByteArray, QString> mExtraHeaders;
+    PimCommon::StorageServiceProgressWidget *mProgressWidget;
 };
 
 #endif
