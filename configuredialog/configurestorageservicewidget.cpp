@@ -21,12 +21,17 @@
 #include "pimcommon/storageservice/settings/storageservicesettingswidget.h"
 #include "pimcommon/widgets/configureimmutablewidgetutils.h"
 using namespace PimCommon::ConfigureImmutableWidgetUtils;
+
 #include <KLocalizedString>
+#include <KStandardDirs>
+#include <KMessageBox>
 
 #include <QVBoxLayout>
 #include <QHBoxLayout>
 #include <QCheckBox>
 #include <QSpinBox>
+#include <QProcess>
+#include <QPushButton>
 
 ConfigureStorageServiceWidget::ConfigureStorageServiceWidget(QWidget *parent)
     : QWidget(parent)
@@ -47,12 +52,30 @@ ConfigureStorageServiceWidget::ConfigureStorageServiceWidget(QWidget *parent)
     mStorageServiceWidget = new PimCommon::StorageServiceSettingsWidget;
     connect(mStorageServiceWidget, SIGNAL(changed()), this, SIGNAL(changed()));
     lay->addWidget(mStorageServiceWidget);
+
+    hbox = new QHBoxLayout;
+    mManageStorageService = new QPushButton(i18n("Manage Storage Service"));
+    hbox->addWidget(mManageStorageService);
+    hbox->addStretch();
+    lay->addLayout(hbox);
+    if (KStandardDirs::findExe(QLatin1String("storageservicemanager")).isEmpty()) {
+        mManageStorageService->setEnabled(false);
+    } else {
+        connect(mManageStorageService, SIGNAL(clicked(bool)), this, SLOT(slotManageStorageService()));
+    }
     setLayout(lay);
 }
 
 ConfigureStorageServiceWidget::~ConfigureStorageServiceWidget()
 {
+}
 
+void ConfigureStorageServiceWidget::slotManageStorageService()
+{
+    if ( !QProcess::startDetached(QLatin1String("storageservicemanager") ) )
+        KMessageBox::error( this, i18n( "Could not start storage service manager; "
+                                        "please check your installation." ),
+                            i18n( "KMail Error" ) );
 }
 
 void ConfigureStorageServiceWidget::save()

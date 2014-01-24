@@ -21,6 +21,7 @@
 #include <QWidget>
 class QCheckBox;
 class QSpinBox;
+class QPushButton;
 namespace PimCommon {
 class StorageServiceSettingsWidget;
 }
@@ -37,10 +38,14 @@ public:
 Q_SIGNALS:
     void changed();
 
+private slots:
+    void slotManageStorageService();
+
 private:
     QSpinBox *mLimitAttachment;
     QCheckBox *mActivateStorageService;
     PimCommon::StorageServiceSettingsWidget *mStorageServiceWidget;
+    QPushButton *mManageStorageService;
 };
 
 #endif // CONFIGURESTORAGESERVICEWIDGET_H
