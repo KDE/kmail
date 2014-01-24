@@ -130,7 +130,15 @@ if (KDEPIM_BUILD_DESKTOP)
      editor/attachmentcontroller.cpp
      editor/attachmentview.cpp
   )
-
+  set(kmailprivate_warningwidgets_LIB_SRCS
+     warningwidgets/externaleditorwarning.cpp
+     warningwidgets/attachmentmissingwarning.cpp
+  )
+  set(kmailprivate_dialogs_LIB_SRCS
+     dialog/archivefolderdialog.cpp
+     dialog/addemailtoexistingcontactdialog.cpp
+     dialog/kmknotify.cpp
+  )
   set(kmailprivate_LIB_SRCS
      widgets/collectionpane.cpp
      kmmainwin.cpp
@@ -150,19 +158,16 @@ if (KDEPIM_BUILD_DESKTOP)
      secondarywindow.cpp
      util.cpp
      messageactions.cpp
-     dialog/archivefolderdialog.cpp
-     dialog/addemailtoexistingcontactdialog.cpp
      searchdialog/searchdescriptionattribute.cpp
      tag/tagactionmanager.cpp
      foldershortcutactionmanager.cpp
      job/addressvalidationjob.cpp
-     dialog/kmknotify.cpp
      tag/tagselectdialog.cpp
-     warningwidgets/attachmentmissingwarning.cpp
      job/createnewcontactjob.cpp
      job/addemailtoexistingcontactjob.cpp
-     warningwidgets/externaleditorwarning.cpp
      widgets/vacationscriptindicatorwidget.cpp
+     ${kmailprivate_dialogs_LIB_SRCS}
+     ${kmailprivate_warningwidgets_LIB_SRCS}
      ${kmailprivate_folderarchive_LIB_SRCS}
      ${kmailprivate_collectionpage_LIB_SRCS}
      ${kmailprivate_configuredialog_LIB_SRCS}
