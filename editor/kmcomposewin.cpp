@@ -3571,8 +3571,7 @@ void KMComposeWin::slotUploadFileFailed(const QString &serviceName, const QStrin
 {
     Q_UNUSED(serviceName);
     mProgressWidget->hide();
-    qDebug()<<" void KMComposeWin::slotUploadFileFailed(const QString &serviceName, const QString &fileName)"<<fileName;
-    //TODO
+    KMessageBox::error(this, i18n("An error occurred while sending the file."), i18n("Upload file"));
 }
 
 void KMComposeWin::slotUploadFileProgress(const QString &serviceName, qint64 done, qint64 total)
