@@ -3569,6 +3569,7 @@ void KMComposeWin::slotUploadFileDone(const QString &serviceName, const QString 
 
 void KMComposeWin::slotUploadFileFailed(const QString &serviceName, const QString &fileName)
 {
+    Q_UNUSED(serviceName);
     mProgressWidget->hide();
     qDebug()<<" void KMComposeWin::slotUploadFileFailed(const QString &serviceName, const QString &fileName)"<<fileName;
     //TODO
@@ -3576,6 +3577,7 @@ void KMComposeWin::slotUploadFileFailed(const QString &serviceName, const QStrin
 
 void KMComposeWin::slotUploadFileProgress(const QString &serviceName, qint64 done, qint64 total)
 {
+    Q_UNUSED(serviceName);
     mProgressWidget->show();
     mProgressWidget->setProgressValue(done, total);
 }
