@@ -3582,7 +3582,8 @@ void KMComposeWin::slotUploadFileProgress(const QString &serviceName, qint64 don
 
 void KMComposeWin::slotShareLinkDone(const QString &serviceName, const QString &link)
 {
-    //Improve it.
-    mComposerBase->editor()->insertLink(link);
-    qDebug()<<" link"<<link;
+    Q_UNUSED(serviceName);
+    const QString msg = i18n("I've linked 1 file to this email: %1", link);
+    //Use plain text for the moment.
+    mComposerBase->editor()->insertPlainText(msg);
 }
