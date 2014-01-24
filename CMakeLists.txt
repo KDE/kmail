@@ -107,6 +107,8 @@ if (KDEPIM_BUILD_DESKTOP)
      searchdialog/debug/searchdebugwidget.cpp
      searchdialog/searchpatternwarning.cpp
      searchdialog/nepomuksearchpatternedit.cpp
+     searchdialog/searchwindow.cpp
+     searchdialog/searchdescriptionattribute.cpp
   )
   set(kmailprivate_storageservice_LIB_SRCS
      storageservice/storageservicesettingsjob.cpp
@@ -147,7 +149,6 @@ if (KDEPIM_BUILD_DESKTOP)
      kmsystemtray.cpp
      undostack.cpp
      kmkernel.cpp
-     searchdialog/searchwindow.cpp
      kmcommands.cpp
      kmreadermainwin.cpp
      kmstartup.cpp
@@ -158,7 +159,6 @@ if (KDEPIM_BUILD_DESKTOP)
      secondarywindow.cpp
      util.cpp
      messageactions.cpp
-     searchdialog/searchdescriptionattribute.cpp
      tag/tagactionmanager.cpp
      foldershortcutactionmanager.cpp
      job/addressvalidationjob.cpp
