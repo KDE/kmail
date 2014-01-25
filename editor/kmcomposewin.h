@@ -454,7 +454,7 @@ class KMComposeWin : public KMail::Composer
     void slotUploadFileDone(const QString &serviceName, const QString &fileName);
 
     void slotUploadFileFailed(const QString &serviceName, const QString &fileName);
-    void slotUploadFileProgress(const QString &serviceName, qint64 done, qint64 total);
+    void slotuploadDownloadFileProgress(const QString &serviceName, qint64 done, qint64 total);
     void slotShareLinkDone(const QString &serviceName, const QString &fileName);
 
 public: // kmcommand

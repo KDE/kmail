@@ -498,7 +498,7 @@ KMComposeWin::KMComposeWin( const KMime::Message::Ptr &aMsg, bool lastSignState,
 
   connect(KMKernel::self()->storageServiceManager(), SIGNAL(uploadFileDone(QString,QString)), this, SLOT(slotUploadFileDone(QString,QString)));
   connect(KMKernel::self()->storageServiceManager(), SIGNAL(uploadFileFailed(QString,QString)), this, SLOT(slotUploadFileFailed(QString,QString)));
-  connect(KMKernel::self()->storageServiceManager(), SIGNAL(uploadFileProgress(QString,qint64,qint64)), this, SLOT(slotUploadFileProgress(QString,qint64,qint64)));
+  connect(KMKernel::self()->storageServiceManager(), SIGNAL(uploadDownloadFileProgress(QString,qint64,qint64)), this, SLOT(slotuploadDownloadFileProgress(QString,qint64,qint64)));
   connect(KMKernel::self()->storageServiceManager(), SIGNAL(shareLinkDone(QString,QString)), this, SLOT(slotShareLinkDone(QString,QString)));
 }
 
@@ -3574,7 +3574,7 @@ void KMComposeWin::slotUploadFileFailed(const QString &serviceName, const QStrin
     KMessageBox::error(this, i18n("An error occurred while sending the file."), i18n("Upload file"));
 }
 
-void KMComposeWin::slotUploadFileProgress(const QString &serviceName, qint64 done, qint64 total)
+void KMComposeWin::slotuploadDownloadFileProgress(const QString &serviceName, qint64 done, qint64 total)
 {
     Q_UNUSED(serviceName);
     mProgressWidget->show();
