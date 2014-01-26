@@ -418,11 +418,11 @@ void SearchWindow::slotSearch()
     SearchPattern searchPattern( mSearchPattern );
     searchPattern.purify();
 
+    bool allIsEmpty = false;
 #ifdef AKONADI_USE_STRIGI_SEARCH
     const QString query = searchPattern.asXesamQuery();
     const QString queryLanguage = "XESAM";
 #else
-    bool allIsEmpty = false;
     const QString query = searchPattern.asSparqlQuery(allIsEmpty, urls);
     const QString queryLanguage = "SPARQL";
 #endif
