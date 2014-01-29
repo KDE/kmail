@@ -163,3 +163,5 @@ void KMKnotify::writeConfig()
 }
 
 
+
+#include "moc_kmknotify.cpp"

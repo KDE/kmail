@@ -215,3 +215,5 @@ FolderArchiveCache *FolderArchiveManager::folderArchiveCache() const
     return mFolderArchiveCache;
 }
 
+
+#include "moc_folderarchivemanager.cpp"

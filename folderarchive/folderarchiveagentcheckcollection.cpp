@@ -129,3 +129,5 @@ void FolderArchiveAgentCheckCollection::slotCreateNewFolder(KJob *job)
     Q_EMIT collectionIdFound(createJob->collection());
 }
 
+
+#include "moc_folderarchiveagentcheckcollection.cpp"

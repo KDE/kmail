@@ -241,3 +241,5 @@ QVariant KMSearchMessageModel::headerData( int section, Qt::Orientation orientat
     return Akonadi::MessageModel::headerData( ( section-1 ), orientation, role );
 }
 
+
+#include "moc_kmsearchmessagemodel.cpp"

@@ -132,3 +132,5 @@ void ColorListBox::dropEvent( QDropEvent *e )
     }
 }
 
+
+#include "moc_colorlistbox.cpp"

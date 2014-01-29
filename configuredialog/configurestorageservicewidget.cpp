@@ -92,3 +92,5 @@ void ConfigureStorageServiceWidget::doLoadFromGlobalSettings()
     mStorageServiceWidget->setListService(KMKernel::self()->storageServiceManager()->listService(), PimCommon::StorageServiceAbstract::ShareLinkCapability);
     mLimitAttachment->setEnabled(mActivateStorageService->isChecked());
 }
+
+#include "moc_configurestorageservicewidget.cpp"

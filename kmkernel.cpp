@@ -2068,3 +2068,5 @@ PimCommon::StorageServiceManager *KMKernel::storageServiceManager() const
 {
     return mStorageManager;
 }
+
+#include "moc_kmkernel.cpp"

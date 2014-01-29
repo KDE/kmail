@@ -1445,3 +1445,5 @@ void AppearancePage::MessageTagTab::save()
 }
 
 
+
+#include "moc_configureappearancepage.cpp"

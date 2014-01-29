@@ -94,3 +94,5 @@ void FolderArchiveCache::addToCache(const QString &resourceName, Akonadi::Collec
     }
 }
 
+
+#include "moc_folderarchivecache.cpp"

@@ -137,3 +137,5 @@ QList<QString> TagSelectDialog::selectedTag() const
     return lst;
 }
 
+
+#include "moc_tagselectdialog.cpp"

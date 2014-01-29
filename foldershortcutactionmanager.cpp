@@ -151,3 +151,5 @@ void FolderShortcutActionManager::shortcutChanged( const Akonadi::Collection &co
     command->setAction( action ); // will be deleted along with the command
 }
 
+
+#include "moc_foldershortcutactionmanager.cpp"

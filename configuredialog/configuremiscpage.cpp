@@ -237,3 +237,5 @@ void MiscPagePrintingTab::save()
 }
 
 //----------------------------
+
+#include "moc_configuremiscpage.cpp"

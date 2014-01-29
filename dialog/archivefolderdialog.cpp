@@ -223,3 +223,5 @@ void ArchiveFolderDialog::slotUrlChanged(const QString &url)
     enableButtonOk(!url.isEmpty());
 }
 
+
+#include "moc_archivefolderdialog.cpp"

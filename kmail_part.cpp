@@ -167,3 +167,5 @@ QWidget* KMailPart::parentWidget() const
   return mParentWidget;
 }
 
+
+#include "moc_kmail_part.cpp"

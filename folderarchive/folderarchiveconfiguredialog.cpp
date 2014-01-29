@@ -105,3 +105,5 @@ void FolderArchiveConfigureDialog::writeConfig()
 }
 
 
+
+#include "moc_folderarchiveconfiguredialog.cpp"

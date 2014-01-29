@@ -60,3 +60,5 @@ void AttachmentMissingWarning::explicitlyClosed()
     Q_EMIT explicitClosedMissingAttachment();
 }
 
+
+#include "moc_attachmentmissingwarning.cpp"

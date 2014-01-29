@@ -111,3 +111,5 @@ QString IdentityEditVcardDialog::saveVcard() const
     return mVcardFileName;
 }
 
+
+#include "moc_identityeditvcarddialog.cpp"

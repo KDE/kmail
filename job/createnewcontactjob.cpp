@@ -138,3 +138,5 @@ void CreateNewContactJob::slotContactEditorError(const QString &error)
 }
 
 
+
+#include "moc_createnewcontactjob.cpp"

@@ -772,3 +772,5 @@ Kleo::CryptoConfigEntry* SMIMECryptoConfigEntries::configEntry( const QString &c
     }
     return entry;
 }
+
+#include "moc_configuresecuritypage.cpp"

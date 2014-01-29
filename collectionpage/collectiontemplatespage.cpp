@@ -134,3 +134,5 @@ void CollectionTemplatesPage::slotChanged()
     mChanged = true;
 }
 
+
+#include "moc_collectiontemplatespage.cpp"

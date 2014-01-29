@@ -1405,3 +1405,5 @@ void ComposerPageAutoImageResizeTab::doResetToDefaultsOther()
 {
     autoResizeWidget->resetToDefault();
 }
+
+#include "moc_configurecomposerpage.cpp"

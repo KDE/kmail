@@ -19,3 +19,5 @@
 #include "composer.h"
 
 
+
+#include "moc_composer.cpp"

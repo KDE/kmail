@@ -82,3 +82,5 @@ void CollectionQuotaPage::save( Akonadi::Collection & )
 }
 
 
+
+#include "moc_collectionquotapage.cpp"

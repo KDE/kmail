@@ -309,3 +309,5 @@ void XFaceConfigurator::slotUpdateXFace()
 
 } // namespace KMail
 
+
+#include "moc_xfaceconfigurator.cpp"

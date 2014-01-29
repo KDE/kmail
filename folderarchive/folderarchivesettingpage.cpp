@@ -142,3 +142,5 @@ void FolderArchiveSettingPage::writeSettings()
     mInfo->writeConfig(grp);
 }
 
+
+#include "moc_folderarchivesettingpage.cpp"

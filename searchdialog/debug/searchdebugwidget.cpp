@@ -200,3 +200,5 @@ void SearchDebugWidget::slotItemFetched( KJob *job )
 }
 
 
+
+#include "moc_searchdebugwidget.cpp"

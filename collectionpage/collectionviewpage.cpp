@@ -301,3 +301,5 @@ void CollectionViewPage::save( Akonadi::Collection & col )
 }
 
 
+
+#include "moc_collectionviewpage.cpp"

@@ -1573,3 +1573,5 @@ KMCommand::Result KMShareImageCommand::execute()
     return OK;
 }
 
+
+#include "moc_kmcommands.cpp"
