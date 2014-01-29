@@ -1486,7 +1486,7 @@ void KMComposeWin::changeCryptoAction()
 //-----------------------------------------------------------------------------
 void KMComposeWin::setupStatusBar( QWidget *w )
 {
-  mProgressWidget  = new PimCommon::StorageServiceProgressWidget;
+  mProgressWidget  = new PimCommon::StorageServiceProgressWidget(0);
   mProgressWidget->hide();
   statusBar()->addWidget(w);
   statusBar()->addWidget(mProgressWidget);
