@@ -94,5 +94,3 @@ namespace KMail {
 
 } // namespace KMail
 
-
-#include "moc_secondarywindow.cpp"

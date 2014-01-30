@@ -630,5 +630,3 @@ void KMReaderMainWin::slotUpdateToolbars()
 }
 
 
-
-#include "moc_kmreadermainwin.cpp"

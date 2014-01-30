@@ -917,5 +917,3 @@ KAction *KMReaderWin::expandShortUrlAction() const
 
 
 
-
-#include "moc_kmreaderwin.cpp"

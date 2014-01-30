@@ -229,5 +229,3 @@ void AttachmentView::slotShowHideAttchementList(bool show)
     }
 }
 
-
-#include "moc_attachmentview.cpp"

@@ -50,5 +50,3 @@ void SearchPatternWarning::hideWarningPattern()
     animatedHide();
 }
 
-
-#include "moc_searchpatternwarning.cpp"

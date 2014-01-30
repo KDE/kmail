@@ -186,5 +186,3 @@ void KMComposerEditor::mousePopupMenuImplementation(const QPoint& pos)
 }
 
 
-
-#include "moc_kmcomposereditor.cpp"

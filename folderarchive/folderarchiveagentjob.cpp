@@ -115,5 +115,3 @@ void FolderArchiveAgentJob::slotMoveMessages(KMMoveCommand *command)
     }
     mManager->moveDone();
 }
-
-#include "moc_folderarchiveagentjob.cpp"

@@ -60,5 +60,3 @@ void ListView::slotContextMenu(const QPoint& pos)
     delete menu;
 }
 
-
-#include "moc_configuredialoglistview.cpp"

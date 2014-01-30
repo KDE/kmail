@@ -116,5 +116,3 @@ bool MailServiceImpl::sendMessage( const QString& from, const QString& to,
 
 }//end namespace KMail
 
-
-#include "moc_mailserviceimpl.cpp"

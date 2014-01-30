@@ -705,5 +705,3 @@ void MessageActions::slotConfigureWebShortcuts()
     KToolInvocation::kdeinitExec( QLatin1String("kcmshell4"), QStringList() << QLatin1String("ebrowsing") );
 }
 
-
-#include "moc_messageactions.cpp"

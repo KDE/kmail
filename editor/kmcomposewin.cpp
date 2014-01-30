@@ -3586,5 +3586,3 @@ void KMComposeWin::slotShareLinkDone(const QString &serviceName, const QString &
     Q_UNUSED(serviceName);
     mComposerBase->editor()->insertShareLink(link);
 }
-
-#include "moc_kmcomposewin.cpp"

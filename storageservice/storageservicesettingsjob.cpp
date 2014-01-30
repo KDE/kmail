@@ -111,5 +111,3 @@ QString StorageServiceSettingsJob::defaultUploadFolder() const
 {
     return QLatin1String("KMail Attachment");
 }
-
-#include "moc_storageservicesettingsjob.cpp"

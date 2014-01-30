@@ -30,5 +30,3 @@ NepomukSearchPatternEdit::~NepomukSearchPatternEdit()
 
 }
 
-
-#include "moc_nepomuksearchpatternedit.cpp"

@@ -75,5 +75,3 @@ void QuotaWidget::setQuotaInfo( qint64 current, qint64 maxValue )
     mUsage->setText(i18n("%1 of %2 KiB used",current, maxValue));
 }
 
-
-#include "moc_collectionquotapage_p.cpp"

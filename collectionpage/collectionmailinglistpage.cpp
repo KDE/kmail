@@ -362,5 +362,3 @@ void CollectionMailingListPage::slotInvokeHandler()
     }
 }
 
-
-#include "moc_collectionmailinglistpage.cpp"

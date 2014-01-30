@@ -235,4 +235,3 @@ void KMMainWin::slotShowTipOnStart()
 {
   KTipDialog::showTip( this );
 }
-#include "moc_kmmainwin.cpp"

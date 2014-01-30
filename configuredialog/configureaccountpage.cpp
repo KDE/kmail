@@ -480,5 +480,3 @@ void AccountsPage::ReceivingTab::save()
     }
 }
 
-
-#include "moc_configureaccountpage.cpp"

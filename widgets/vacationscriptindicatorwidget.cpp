@@ -122,5 +122,3 @@ bool VacationScriptIndicatorWidget::hasVacationScriptActive() const
 {
     return !mServerActive.isEmpty();
 }
-
-#include "moc_vacationscriptindicatorwidget.cpp"

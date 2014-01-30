@@ -4890,5 +4890,3 @@ void KMMainWidget::slotDebugNepomukMessage()
     dlg->exec();
     delete dlg;
 }
-
-#include "moc_kmmainwidget.cpp"
