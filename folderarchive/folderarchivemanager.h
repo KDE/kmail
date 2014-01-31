@@ -27,7 +27,6 @@ class Item;
 }
 
 class FolderArchiveAccountInfo;
-class FolderArchiveKernel;
 class FolderArchiveAgentJob;
 class FolderArchiveCache;
 class KJob;
@@ -64,7 +63,6 @@ private:
     QQueue<FolderArchiveAgentJob*> mJobQueue;
     FolderArchiveAgentJob *mCurrentJob;
     QList<FolderArchiveAccountInfo*> mListAccountInfo;
-    FolderArchiveKernel *mFolderArchivelKernel;
     FolderArchiveCache *mFolderArchiveCache;
 };
 
