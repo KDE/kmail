@@ -426,7 +426,7 @@ Action=Popup
 
 [Event/folderarchivedone]
 Name=Archive Mails in Folder done
-Name[bs]=Završeno arhiviranje pošte
+Name[bs]=Arhiviranje mailova u folder gotovo
 Name[ca]=S'ha realitzat l'arxivat del correu a la carpeta
 Name[ca@valencia]=S'ha realitzat l'arxivat del correu a la carpeta
 Name[cs]=Archivace pošty ve složce byla dokončena
@@ -458,7 +458,7 @@ Action=None
 
 [Event/folderarchiveerror]
 Name=Folder Archive Error
-Name[bs]=Greška arhiviranja fascikle pošte
+Name[bs]=Greška arhiviranja foldera
 Name[ca]=Error en arxivar la carpeta
 Name[ca@valencia]=Error en arxivar la carpeta
 Name[da]=Fejl ved mappe-arkivering
