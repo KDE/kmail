@@ -103,8 +103,6 @@ if (KDEPIM_BUILD_DESKTOP)
   set(kmailprivate_searchdialog_LIB_SRCS
      searchdialog/kmsearchmessagemodel.cpp
      searchdialog/kmsearchfilterproxymodel.cpp
-     searchdialog/debug/searchdebugdialog.cpp
-     searchdialog/debug/searchdebugwidget.cpp
      searchdialog/searchpatternwarning.cpp
      searchdialog/nepomuksearchpatternedit.cpp
      searchdialog/searchwindow.cpp

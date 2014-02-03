@@ -144,7 +144,6 @@ private Q_SLOTS:
     void slotSaveMsg();
     void slotSaveAttachments();
     void slotPrintMsg();
-    void slotDebugQuery();
 
     /** GUI cleanup after search */
     void searchDone( KJob* );

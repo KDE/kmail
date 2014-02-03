@@ -24,9 +24,6 @@
 #include "searchwindow.h"
 
 #include "folderrequester.h"
-#if !defined(NDEBUG)
-#include "debug/searchdebugdialog.h"
-#endif
 #include "kmcommands.h"
 #include "kmmainwidget.h"
 #include "mailcommon/kernel/mailkernel.h"
@@ -105,10 +102,6 @@ SearchWindow::SearchWindow( KMMainWidget *widget, const Akonadi::Collection &col
     mStopSearchGuiItem = KStandardGuiItem::stop();
     mSearchButton =  mUi.mButtonBox->addButton( mStartSearchGuiItem, QDialogButtonBox::ActionRole );
     connect( mUi.mButtonBox, SIGNAL(rejected()), SLOT(slotClose()) );
-#if !defined(NDEBUG)
-    QPushButton *debugButton = mUi.mButtonBox->addButton( i18n("Debug query"), QDialogButtonBox::ActionRole );
-    connect(debugButton, SIGNAL(clicked(bool)), SLOT(slotDebugQuery()));
-#endif
     searchWidget->layout()->setMargin( 0 );
 
     mUi.mCbxFolders->setMustBeReadWrite( false );
@@ -850,16 +843,6 @@ void SearchWindow::getChildren( const QAbstractItemModel *model,
         if ( c.isValid() )
             list << c.url( Akonadi::Collection::UrlShort );
     }
-}
-
-void SearchWindow::slotDebugQuery()
-{
-//FIXME
-#if !defined(NDEBUG)
-//     QPointer<SearchDebugDialog> dlg = new SearchDebugDialog(mQuery, this);
-//     dlg->exec();
-//     delete dlg;
-#endif
 }
 
 void SearchWindow::slotSelectMultipleFolders()
