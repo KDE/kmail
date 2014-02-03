@@ -69,6 +69,7 @@ class AttachmentMissingWarning;
 class ExternalEditorWarning;
 class KActionMenu;
 
+
 namespace boost {
   template <typename T> class shared_ptr;
 }
@@ -102,6 +103,7 @@ namespace PimCommon {
   class CustomToolsWidget;
   class LineEditWithAutoCorrection;
   class StorageServiceProgressWidget;
+  class StorageServiceAbstract;
 }
 
 //-----------------------------------------------------------------------------
@@ -456,6 +458,8 @@ class KMComposeWin : public KMail::Composer
     void slotUploadFileFailed(const QString &serviceName, const QString &fileName);
     void slotuploadDownloadFileProgress(const QString &serviceName, qint64 done, qint64 total);
     void slotShareLinkDone(const QString &serviceName, const QString &fileName);
+
+    void slotUploadFileStart(PimCommon::StorageServiceAbstract *service);
 
 public: // kmcommand
     // FIXME we need to remove these, but they're pure virtual in Composer.

@@ -500,6 +500,7 @@ KMComposeWin::KMComposeWin( const KMime::Message::Ptr &aMsg, bool lastSignState,
   connect(KMKernel::self()->storageServiceManager(), SIGNAL(uploadFileFailed(QString,QString)), this, SLOT(slotUploadFileFailed(QString,QString)));
   connect(KMKernel::self()->storageServiceManager(), SIGNAL(uploadDownloadFileProgress(QString,qint64,qint64)), this, SLOT(slotuploadDownloadFileProgress(QString,qint64,qint64)));
   connect(KMKernel::self()->storageServiceManager(), SIGNAL(shareLinkDone(QString,QString)), this, SLOT(slotShareLinkDone(QString,QString)));
+  connect(KMKernel::self()->storageServiceManager(), SIGNAL(uploadFileStart(PimCommon::StorageServiceAbstract*)), this, SLOT(slotUploadFileStart(PimCommon::StorageServiceAbstract*)));
 }
 
 //-----------------------------------------------------------------------------
@@ -3577,7 +3578,6 @@ void KMComposeWin::slotUploadFileFailed(const QString &serviceName, const QStrin
 void KMComposeWin::slotuploadDownloadFileProgress(const QString &serviceName, qint64 done, qint64 total)
 {
     Q_UNUSED(serviceName);
-    mProgressWidget->show();
     mProgressWidget->setProgressValue(done, total);
 }
 
@@ -3585,4 +3585,12 @@ void KMComposeWin::slotShareLinkDone(const QString &serviceName, const QString &
 {
     Q_UNUSED(serviceName);
     mComposerBase->editor()->insertShareLink(link);
+}
+
+void KMComposeWin::slotUploadFileStart(PimCommon::StorageServiceAbstract *service)
+{
+    mProgressWidget->setProgressBarType(PimCommon::StorageServiceProgressWidget::UploadBar);
+    mProgressWidget->setService(service);
+    mProgressWidget->show();
+
 }
