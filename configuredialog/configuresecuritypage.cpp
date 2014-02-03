@@ -23,7 +23,6 @@ using namespace PimCommon::ConfigureImmutableWidgetUtils;
 #include "messageviewer/adblock/adblocksettingwidget.h"
 #include "mailcommon/folder/foldercollection.h"
 #include "settings/globalsettings.h"
-#include <libkdepim/widgets/nepomukwarning.h>
 
 #include "kmkernel.h"
 
@@ -438,14 +437,6 @@ void SecurityPage::WarningTab::save()
 void SecurityPage::WarningTab::slotReenableAllWarningsClicked()
 {
     KMessageBox::enableAllMessages();
-
-    //Nepomuk composer.
-    const QString groupName = KPIM::NepomukWarning::nepomukWarningGroupName();
-    if ( KMKernel::self()->config()->hasGroup( groupName ) ) {
-        KConfigGroup cfgGroup( KMKernel::self()->config(), groupName );
-        cfgGroup.deleteGroup();
-    }
-
     mWidget->enableAllWarningsPB->setEnabled( false );
 }
 
