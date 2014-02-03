@@ -159,7 +159,7 @@ private Q_SLOTS:
 private:
     QPointer<PimCommon::SelectMultiCollectionDialog> mSelectMultiCollectionDialog;
     QList<Akonadi::Collection> mCollectionId;
-    QString mQuery;
+    Akonadi::SearchQuery mQuery;
     bool mCloseRequested;
     int mSortColumn;
     Qt::SortOrder mSortOrder;

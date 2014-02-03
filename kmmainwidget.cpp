@@ -61,7 +61,6 @@
 #include "folderarchive/folderarchiveconfiguredialog.h"
 
 #include "pimcommon/acl/collectionaclpage.h"
-#include "pimcommon/nepomukdebug/nepomukdebugdialog.h"
 #include "mailcommon/collectionpage/collectiongeneralpage.h"
 #include "mailcommon/collectionpage/collectionexpirypage.h"
 #include "mailcommon/collectionpage/expirecollectionattribute.h"
@@ -177,7 +176,6 @@
 #include <kaction.h>
 #include <ktreewidgetsearchline.h>
 #include <Solid/Networking>
-#include <nepomuk2/resourcemanager.h>
 #include <KRecentFilesAction>
 
 // Qt includes
@@ -1258,25 +1256,6 @@ void KMMainWidget::slotFocusQuickSearch()
 //-------------------------------------------------------------------------
 bool KMMainWidget::slotSearch()
 {
-  // check if we can search at all, ie. Nepomuk is running and email indexing is enabled
-  if ( !Nepomuk2::ResourceManager::instance()->initialized() ) {
-    KMessageBox::information( this, i18n( "The Nepomuk semantic search service is not available. Searching is not possible without it. "
-                                          "You can enable it in \"System Settings\"." ), i18n( "Search Not Available" ) );
-    return false;
-  }
-
-  {
-    KConfig config( QLatin1String("akonadi_nepomuk_feederrc") );
-    KConfigGroup cfgGroup( &config, "akonadi_nepomuk_email_feeder" );
-    if ( !cfgGroup.readEntry( "Enabled", true ) ) {
-      KMessageBox::information( this, i18n( "You have disabled full text indexing of emails. Searching is not possible without that. "
-                                            "You can enable it in \"System Settings\". Note that searching will only be possible after "
-                                            "your emails have been fully indexed, which can take some time." ) );
-      return false;
-    }
-  }
-
-
   if (!mSearchWin)
   {
     mSearchWin = new SearchWindow(this, mCurrentFolder ? mCurrentFolder->collection() : Akonadi::Collection());
@@ -3094,11 +3073,6 @@ void KMMainWidget::setupActions()
     actionCollection()->addAction(QLatin1String("tools_debug_sieve"), action );
     connect(action, SIGNAL(triggered(bool)), SLOT(slotDebugSieve()));
   }
-  {
-    KAction *action = new KAction(i18n("Debug Nepomuk..."), this);
-    actionCollection()->addAction(QLatin1String("messages_debug_nepomuk"), action );
-    connect(action, SIGNAL(triggered(bool)), SLOT(slotDebugNepomukMessage()));
-  }
 #endif
 
   {
@@ -4876,17 +4850,4 @@ void KMMainWidget::slotArchiveMails()
 {
     const QList<Akonadi::Item> selectedMessages = mMessagePane->selectionAsMessageItemList();
     KMKernel::self()->folderArchiveManager()->setArchiveItems(selectedMessages, mCurrentFolder->collection().resource());
-}
-
-void KMMainWidget::slotDebugNepomukMessage()
-{
-    const QList<Akonadi::Item> selectedMessages = mMessagePane->selectionAsMessageItemList();
-    QStringList uidList;
-    Q_FOREACH (const Akonadi::Item &item, selectedMessages) {
-        uidList << QString::number(item.id());
-    }
-
-    QPointer<PimCommon::NepomukDebugDialog> dlg = new PimCommon::NepomukDebugDialog(uidList, this);
-    dlg->exec();
-    delete dlg;
 }

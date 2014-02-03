@@ -100,7 +100,6 @@
 #include "mailcommon/folder/foldercollection.h"
 
 // LIBKDEPIM includes
-#include <libkdepim/widgets/nepomukwarning.h>
 #include <libkdepim/addressline/recentaddresses.h>
 
 // KDEPIMLIBS includes
@@ -258,11 +257,6 @@ KMComposeWin::KMComposeWin( const KMime::Message::Ptr &aMsg, bool lastSignState,
 
 
   QVBoxLayout *v = new QVBoxLayout( mMainWidget );
-  if ( !KPIM::NepomukWarning::missingNepomukWarning( "kmail-composer" ) ) {
-    KPIM::NepomukWarning *nepomukWarning = new KPIM::NepomukWarning( "kmail-composer", this );
-    nepomukWarning->setMissingFeatures( QStringList() << i18n("Recipient auto-completion") << i18n("Distribution lists") << i18n("Per-contact crypto preferences") );
-    v->addWidget( nepomukWarning );
-  }
   v->setMargin(0);
   v->addWidget( mHeadersToEditorSplitter );
   KPIMIdentities::IdentityCombo* identity = new KPIMIdentities::IdentityCombo( kmkernel->identityManager(),
