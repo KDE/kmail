@@ -54,6 +54,7 @@ void FolderArchiveAgentCheckCollection::start()
 
 void FolderArchiveAgentCheckCollection::slotInitialCollectionFetchingDone(KJob *job)
 {
+#if 0
     if ( job->error() ) {
         qWarning() << job->errorString();
         Q_EMIT checkFailed(QString());
@@ -66,6 +67,7 @@ void FolderArchiveAgentCheckCollection::slotInitialCollectionFetchingDone(KJob *
     foreach ( const Akonadi::Collection &collection, fetchJob->collections() ) {
 
     }
+#endif
 }
 
 void FolderArchiveAgentCheckCollection::slotInitialCollectionFetchingFirstLevelDone(KJob *job)
