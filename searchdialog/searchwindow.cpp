@@ -37,6 +37,7 @@
 #include "pimcommon/folderdialog/selectmulticollectiondialog.h"
 
 #include <Akonadi/CollectionModifyJob>
+#include <Akonadi/CollectionFetchJob>
 #include <Akonadi/EntityTreeView>
 #include <akonadi/persistentsearchattribute.h>
 #include <Akonadi/SearchCreateJob>
@@ -383,6 +384,33 @@ void SearchWindow::activateFolder( const Akonadi::Collection &collection )
 
 void SearchWindow::slotSearch()
 {
+    if (mFolder.isValid()) {
+        doSearch();
+        return;
+    }
+    //We're going to try to create a new search folder, let's ensure first the name is not yet used.
+
+    //Fetch all search collecitons
+    Akonadi::CollectionFetchJob *fetchJob = new Akonadi::CollectionFetchJob(Akonadi::Collection(1), Akonadi::CollectionFetchJob::FirstLevel);
+    connect(fetchJob, SIGNAL(result(KJob*)), this, SLOT(slotSearchCollectionsFetched(KJob*)));
+}
+
+void SearchWindow::slotSearchCollectionsFetched(KJob *job)
+{
+    if (job->error()) {
+        kWarning() << job->errorString();
+    }
+    Akonadi::CollectionFetchJob *fetchJob = static_cast<Akonadi::CollectionFetchJob*>(job);
+    Q_FOREACH(const Akonadi::Collection &col, fetchJob->collections()) {
+        if (col.name() == mUi.mSearchFolderEdt->text()) {
+            mFolder = col;
+        }
+    }
+    doSearch();
+}
+
+void SearchWindow::doSearch()
+{
     mSearchPatternWidget->hideWarningPattern();
     if ( mUi.mSearchFolderEdt->text().isEmpty() ) {
         mUi.mSearchFolderEdt->setText( i18n( "Last Search" ) );
@@ -441,8 +469,6 @@ void SearchWindow::slotSearch()
 
     MailCommon::SearchPattern::SparqlQueryError queryError = MailCommon::SearchPattern::NoError;
     queryError = searchPattern.asAkonadiQuery(mQuery);
-    const QString queryLanguage = QLatin1String("akonadi");
-
     switch(queryError) {
     case MailCommon::SearchPattern::NoError:
         break;
@@ -469,14 +495,11 @@ void SearchWindow::slotSearch()
         return;
     }
     mSearchPatternWidget->hideWarningPattern();
-    qDebug() << queryLanguage;
-    qDebug() << mQuery.toJSON();
+    kDebug() << mQuery.toJSON();
     mUi.mSearchFolderOpenBtn->setEnabled( true );
 
     if ( !mFolder.isValid() ) {
-        qDebug()<<" create new folder";
-        // FIXME if another app created a virtual 'Last Search' folder without
-        // out custom attributes it will result in problems
+        kDebug()<<" create new folder " << mUi.mSearchFolderEdt->text();
         Akonadi::SearchCreateJob *searchJob = new Akonadi::SearchCreateJob( mUi.mSearchFolderEdt->text(), mQuery, this );
         searchJob->setSearchMimeTypes( QStringList() << QLatin1String("message/rfc822") );
         searchJob->setSearchCollections( searchCollections );
@@ -484,14 +507,15 @@ void SearchWindow::slotSearch()
         searchJob->setRemoteSearchEnabled( true );
         mSearchJob = searchJob;
     } else {
-        qDebug()<<" use existing folder";
-        Akonadi::PersistentSearchAttribute *attribute = mFolder.attribute<Akonadi::PersistentSearchAttribute>();
+        kDebug()<<" use existing folder " << mFolder.id();
+        Akonadi::PersistentSearchAttribute *attribute = new Akonadi::PersistentSearchAttribute();
         mFolder.setContentMimeTypes(QStringList() << QLatin1String("message/rfc822"));
-        attribute->setQueryLanguage( queryLanguage );
+        attribute->setQueryLanguage( QLatin1String("akonadi") );
         attribute->setQueryString( QString::fromLatin1(mQuery.toJSON()) );
         attribute->setQueryCollections( searchCollections );
         attribute->setRecursive( recursive );
         attribute->setRemoteSearchEnabled( true );
+        mFolder.addAttribute(attribute);
         mSearchJob = new Akonadi::CollectionModifyJob( mFolder, this );
     }
 
@@ -505,12 +529,14 @@ void SearchWindow::searchDone( KJob* job )
     Q_ASSERT( job == mSearchJob );
     QMetaObject::invokeMethod( this, "enableGUI", Qt::QueuedConnection );
     if ( job->error() ) {
+        kDebug() << job->errorString();
         KMessageBox::sorry( this, i18n("Cannot get search result. %1", job->errorString() ) );
         if ( mSearchJob ) {
             mSearchJob = 0;
         }
         enableGUI();
         mUi.mSearchFolderEdt->setEnabled( true );
+        mUi.mStatusLbl->setText( i18n("Search failed.") );
     }
     else
     {
@@ -550,7 +576,7 @@ void SearchWindow::searchDone( KJob* job )
         new Akonadi::CollectionModifyJob( mFolder, this );
         mSearchJob = 0;
 
-        mUi.mStatusLbl->setText( QString() );
+        mUi.mStatusLbl->setText( i18n("Search complete.") );
         createSearchModel();
 
         if ( mCloseRequested )
@@ -569,6 +595,7 @@ void SearchWindow::slotStop()
         mSearchJob->kill( KJob::Quietly );
         mSearchJob->deleteLater();
         mSearchJob = 0;
+        mUi.mStatusLbl->setText( i18n("Search stopped.") );
     }
 
     enableGUI();
