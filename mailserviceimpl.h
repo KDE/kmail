@@ -36,12 +36,12 @@ class QString;
 
 namespace KMail {
 
-  // This class implements the D-Bus interface
-  // libkdepim/interfaces/org.kde.mailtransport.service.xml
-  class MailServiceImpl : public QObject 
-  {
+// This class implements the D-Bus interface
+// libkdepim/interfaces/org.kde.mailtransport.service.xml
+class MailServiceImpl : public QObject
+{
     Q_OBJECT
-  public:
+public:
     MailServiceImpl();
     bool sendMessage( const QString& from, const QString& to,
                       const QString& cc, const QString& bcc,
@@ -53,7 +53,7 @@ namespace KMail {
                       const QString& subject, const QString& body,
                       const QByteArray& attachment );
 
-  };
+};
 }
 
 #endif

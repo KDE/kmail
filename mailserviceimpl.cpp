@@ -46,8 +46,8 @@ namespace KMail {
 
 MailServiceImpl::MailServiceImpl()
 {
-  new ServiceAdaptor( this );
-  QDBusConnection::sessionBus().registerObject( QLatin1String("/MailTransportService"), this );
+    new ServiceAdaptor( this );
+    QDBusConnection::sessionBus().registerObject( QLatin1String("/MailTransportService"), this );
 }
 
 bool MailServiceImpl::sendMessage( const QString& from, const QString& to,
@@ -55,31 +55,31 @@ bool MailServiceImpl::sendMessage( const QString& from, const QString& to,
                                    const QString& subject, const QString& body,
                                    const QStringList& attachments )
 {
-  if ( to.isEmpty() && cc.isEmpty() && bcc.isEmpty() )
-    return false;
+    if ( to.isEmpty() && cc.isEmpty() && bcc.isEmpty() )
+        return false;
 
-  KMime::Message::Ptr msg( new KMime::Message );
-  MessageHelper::initHeader( msg, KMKernel::self()->identityManager() );
+    KMime::Message::Ptr msg( new KMime::Message );
+    MessageHelper::initHeader( msg, KMKernel::self()->identityManager() );
 
-  msg->contentType()->setCharset( "utf-8" );
+    msg->contentType()->setCharset( "utf-8" );
 
-  if ( !from.isEmpty() )    msg->from()->fromUnicodeString( from, "utf-8" );
-  if ( !to.isEmpty() )      msg->to()->fromUnicodeString( to, "utf-8" );
-  if ( !cc.isEmpty() )      msg->cc()->fromUnicodeString( cc, "utf-8" );
-  if ( !bcc.isEmpty() )     msg->bcc()->fromUnicodeString( bcc, "utf-8" );
-  if ( !subject.isEmpty() ) msg->subject()->fromUnicodeString( subject, "utf-8" );
-  if ( !body.isEmpty() )    msg->setBody( body.toUtf8() );
+    if ( !from.isEmpty() )    msg->from()->fromUnicodeString( from, "utf-8" );
+    if ( !to.isEmpty() )      msg->to()->fromUnicodeString( to, "utf-8" );
+    if ( !cc.isEmpty() )      msg->cc()->fromUnicodeString( cc, "utf-8" );
+    if ( !bcc.isEmpty() )     msg->bcc()->fromUnicodeString( bcc, "utf-8" );
+    if ( !subject.isEmpty() ) msg->subject()->fromUnicodeString( subject, "utf-8" );
+    if ( !body.isEmpty() )    msg->setBody( body.toUtf8() );
 
-  KMail::Composer * cWin = KMail::makeComposer( msg );
+    KMail::Composer * cWin = KMail::makeComposer( msg );
 
-  KUrl::List attachUrls;
-  const int nbAttachments = attachments.count();
-  for ( int i = 0; i < nbAttachments; ++i ) {
-    attachUrls += KUrl( attachments[i] );
-  }
+    KUrl::List attachUrls;
+    const int nbAttachments = attachments.count();
+    for ( int i = 0; i < nbAttachments; ++i ) {
+        attachUrls += KUrl( attachments[i] );
+    }
 
-  cWin->addAttachmentsAndSend( attachUrls, QString(), 1 );//send now
-  return true;
+    cWin->addAttachmentsAndSend( attachUrls, QString(), 1 );//send now
+    return true;
 }
 
 
@@ -88,28 +88,28 @@ bool MailServiceImpl::sendMessage( const QString& from, const QString& to,
                                    const QString& subject, const QString& body,
                                    const QByteArray& attachment )
 {
-  if ( to.isEmpty() && cc.isEmpty() && bcc.isEmpty() )
-    return false;
+    if ( to.isEmpty() && cc.isEmpty() && bcc.isEmpty() )
+        return false;
 
-  KMime::Message::Ptr msg( new KMime::Message );
-  MessageHelper::initHeader( msg, KMKernel::self()->identityManager() );
+    KMime::Message::Ptr msg( new KMime::Message );
+    MessageHelper::initHeader( msg, KMKernel::self()->identityManager() );
 
-  msg->contentType()->setCharset( "utf-8" );
+    msg->contentType()->setCharset( "utf-8" );
 
-  if ( !from.isEmpty() )    msg->from()->fromUnicodeString( from, "utf-8" );
-  if ( !to.isEmpty() )      msg->to()->fromUnicodeString( to, "utf-8" );
-  if ( !cc.isEmpty() )      msg->cc()->fromUnicodeString( cc, "utf-8" );
-  if ( !bcc.isEmpty() )     msg->bcc()->fromUnicodeString( bcc, "utf-8" );
-  if ( !subject.isEmpty() ) msg->subject()->fromUnicodeString( subject, "utf-8" );
-  if ( !body.isEmpty() )    msg->setBody( body.toUtf8() );
+    if ( !from.isEmpty() )    msg->from()->fromUnicodeString( from, "utf-8" );
+    if ( !to.isEmpty() )      msg->to()->fromUnicodeString( to, "utf-8" );
+    if ( !cc.isEmpty() )      msg->cc()->fromUnicodeString( cc, "utf-8" );
+    if ( !bcc.isEmpty() )     msg->bcc()->fromUnicodeString( bcc, "utf-8" );
+    if ( !subject.isEmpty() ) msg->subject()->fromUnicodeString( subject, "utf-8" );
+    if ( !body.isEmpty() )    msg->setBody( body.toUtf8() );
 
-  KMime::Content *part = new KMime::Content;
-  part->contentTransferEncoding()->from7BitString( "base64" );
-  part->setBody( attachment ); //TODO: check it!
-  msg->addContent( part );
+    KMime::Content *part = new KMime::Content;
+    part->contentTransferEncoding()->from7BitString( "base64" );
+    part->setBody( attachment ); //TODO: check it!
+    msg->addContent( part );
 
-  KMail::makeComposer( msg, false, false );
-  return true;
+    KMail::makeComposer( msg, false, false );
+    return true;
 }
 
 
