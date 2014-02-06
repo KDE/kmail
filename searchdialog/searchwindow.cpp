@@ -390,7 +390,7 @@ void SearchWindow::slotSearch()
     }
     //We're going to try to create a new search folder, let's ensure first the name is not yet used.
 
-    //Fetch all search collecitons
+    //Fetch all search collections
     Akonadi::CollectionFetchJob *fetchJob = new Akonadi::CollectionFetchJob(Akonadi::Collection(1), Akonadi::CollectionFetchJob::FirstLevel);
     connect(fetchJob, SIGNAL(result(KJob*)), this, SLOT(slotSearchCollectionsFetched(KJob*)));
 }
