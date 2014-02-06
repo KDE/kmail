@@ -495,6 +495,7 @@ KMComposeWin::KMComposeWin( const KMime::Message::Ptr &aMsg, bool lastSignState,
   connect(KMKernel::self()->storageServiceManager(), SIGNAL(uploadDownloadFileProgress(QString,qint64,qint64)), this, SLOT(slotuploadDownloadFileProgress(QString,qint64,qint64)));
   connect(KMKernel::self()->storageServiceManager(), SIGNAL(shareLinkDone(QString,QString)), this, SLOT(slotShareLinkDone(QString,QString)));
   connect(KMKernel::self()->storageServiceManager(), SIGNAL(uploadFileStart(PimCommon::StorageServiceAbstract*)), this, SLOT(slotUploadFileStart(PimCommon::StorageServiceAbstract*)));
+  connect(KMKernel::self()->storageServiceManager(), SIGNAL(actionFailed(QString,QString)), this, SLOT(slotActionFailed(QString,QString)));
 }
 
 //-----------------------------------------------------------------------------
@@ -3587,4 +3588,10 @@ void KMComposeWin::slotUploadFileStart(PimCommon::StorageServiceAbstract *servic
     mProgressWidget->setService(service);
     mProgressWidget->show();
 
+}
+
+void KMComposeWin::slotActionFailed(const QString &serviceName, const QString &error)
+{
+    mProgressWidget->hide();
+    KMessageBox::error(this, i18n("%1 return an error '%2'", serviceName, error), i18n("Error"));
 }
