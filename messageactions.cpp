@@ -127,6 +127,7 @@ MessageActions::MessageActions( KActionCollection *ac, QWidget *parent )
              this, SLOT(slotCreateTodo()) );
     mKorganizerIsOnSystem = !KStandardDirs::findExe(QLatin1String("korganizer")).isEmpty();
     mCreateTodoAction->setEnabled( mKorganizerIsOnSystem );
+    mCreateTodoAction->setShortcut(Qt::CTRL + Qt::Key_T);
 
     mStatusMenu = new KActionMenu ( i18n( "Mar&k Message" ), this );
     ac->addAction( QLatin1String("set_status"), mStatusMenu );
