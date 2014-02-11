@@ -55,6 +55,9 @@
 #include "job/createnewcontactjob.h"
 #include "warningwidgets/externaleditorwarning.h"
 
+#include "libkdepim/progresswidget/progressdialog.h"
+#include "libkdepim/progresswidget/statusbarprogresswidget.h"
+
 #include "pimcommon/util/editorutil.h"
 #include "pimcommon/storageservice/storageservicemanager.h"
 #include "pimcommon/storageservice/widgets/storageserviceprogresswidget.h"
@@ -1482,10 +1485,13 @@ void KMComposeWin::changeCryptoAction()
 //-----------------------------------------------------------------------------
 void KMComposeWin::setupStatusBar( QWidget *w )
 {
-    mProgressWidget  = new PimCommon::StorageServiceProgressWidget(0);
-    mProgressWidget->hide();
+    KPIM::ProgressDialog *progressDialog = new KPIM::ProgressDialog( statusBar(), this );
+    progressDialog->hide();
+
+    KPIM::StatusbarProgressWidget *littleProgress = new KPIM::StatusbarProgressWidget( progressDialog, statusBar() );
+    littleProgress->show();
     statusBar()->addWidget(w);
-    statusBar()->addWidget(mProgressWidget);
+    //statusBar()->addWidget(mProgressWidget);
     statusBar()->insertItem( QString(), 0, 1 );
     statusBar()->setItemAlignment( 0, Qt::AlignLeft | Qt::AlignVCenter );
     statusBar()->insertPermanentItem( overwriteModeStr(), 4,0 );
@@ -3560,20 +3566,17 @@ void KMComposeWin::slotInsertShortUrl(const QString &url)
 
 void KMComposeWin::slotUploadFileDone(const QString &serviceName, const QString &fileName)
 {
-    mProgressWidget->hide();
 }
 
 void KMComposeWin::slotUploadFileFailed(const QString &serviceName, const QString &fileName)
 {
     Q_UNUSED(serviceName);
-    mProgressWidget->hide();
     KMessageBox::error(this, i18n("An error occurred while sending the file."), i18n("Upload file"));
 }
 
 void KMComposeWin::slotuploadDownloadFileProgress(const QString &serviceName, qint64 done, qint64 total)
 {
     Q_UNUSED(serviceName);
-    mProgressWidget->setProgressValue(done, total);
 }
 
 void KMComposeWin::slotShareLinkDone(const QString &serviceName, const QString &link)
@@ -3584,14 +3587,9 @@ void KMComposeWin::slotShareLinkDone(const QString &serviceName, const QString &
 
 void KMComposeWin::slotUploadFileStart(PimCommon::StorageServiceAbstract *service)
 {
-    mProgressWidget->setProgressBarType(PimCommon::StorageServiceProgressWidget::UploadBar);
-    mProgressWidget->setService(service);
-    mProgressWidget->show();
-
 }
 
 void KMComposeWin::slotActionFailed(const QString &serviceName, const QString &error)
 {
-    mProgressWidget->hide();
     KMessageBox::error(this, i18n("%1 return an error '%2'", serviceName, error), i18n("Error"));
 }

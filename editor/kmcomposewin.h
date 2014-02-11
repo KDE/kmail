@@ -102,7 +102,6 @@ class FolderRequester;
 namespace PimCommon {
 class CustomToolsWidget;
 class LineEditWithAutoCorrection;
-class StorageServiceProgressWidget;
 class StorageServiceAbstract;
 }
 
@@ -692,7 +691,6 @@ private:
     bool mWasModified;
     Akonadi::Collection mCollectionForNewMessage;
     QMap<QByteArray, QString> mExtraHeaders;
-    PimCommon::StorageServiceProgressWidget *mProgressWidget;
 };
 
 #endif
