@@ -67,8 +67,6 @@ if (KDEPIM_BUILD_DESKTOP)
 
   set(kmailprivate_folderarchive_LIB_SRCS
      folderarchive/folderarchiveaccountinfo.cpp
-     folderarchive/folderarchiveconfiguredialog.cpp
-     folderarchive/folderarchivesettingpage.cpp
      folderarchive/folderarchiveutil.cpp
      folderarchive/folderarchivecache.cpp
      folderarchive/folderarchiveagentcheckcollection.cpp

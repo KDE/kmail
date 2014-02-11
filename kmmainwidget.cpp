@@ -58,7 +58,6 @@
 #include "sendlateragentinterface.h"
 #include "folderarchive/folderarchiveutil.h"
 #include "folderarchive/folderarchivemanager.h"
-#include "folderarchive/folderarchiveconfiguredialog.h"
 
 #include "pimcommon/acl/collectionaclpage.h"
 #include "mailcommon/collectionpage/collectiongeneralpage.h"
@@ -3119,12 +3118,6 @@ void KMMainWidget::setupActions()
     connect(action, SIGNAL(triggered(bool)), SLOT(slotConfigureSendLater()));
   }
 
-  {
-    KAction *action = new KAction(i18n("&Configure Folder Archive Agent..."), this);
-    actionCollection()->addAction(QLatin1String("tools_configure_folderarchiving"), action );
-    connect(action, SIGNAL(triggered(bool)), SLOT(slotConfigureFolderArchiving()));
-  }
-
 
   // Disable the standard action delete key sortcut.
   KAction* const standardDelAction = akonadiStandardAction(  Akonadi::StandardActionManager::DeleteItems );
@@ -4791,15 +4784,6 @@ void KMMainWidget::slotConfigureSendLater()
     } else {
         KMessageBox::error(this,i18n("Send Later Agent was not registered."));
     }
-}
-
-void KMMainWidget::slotConfigureFolderArchiving()
-{
-    QPointer<FolderArchiveConfigureDialog> dlg = new FolderArchiveConfigureDialog(this);
-    if (dlg->exec()) {
-        KMKernel::self()->folderArchiveManager()->load();
-    }
-    delete dlg;
 }
 
 void KMMainWidget::updatePaneTagComboBox()
