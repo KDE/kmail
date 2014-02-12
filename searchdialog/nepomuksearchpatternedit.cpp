@@ -20,7 +20,7 @@
 using namespace KMail;
 NepomukSearchPatternEdit::NepomukSearchPatternEdit(QWidget *parent)
     : MailCommon::SearchPatternEdit(parent,
-                                    (MailCommon::SearchPatternEdit::SearchPatternEditOptions)(SearchPatternEdit::NotShowSize|SearchPatternEdit::NotShowDate|SearchPatternEdit::AbsoluteDate),
+                                    (MailCommon::SearchPatternEdit::SearchPatternEditOptions)(SearchPatternEdit::NotShowDate|SearchPatternEdit::AbsoluteDate),
                                     NepomukMode)
 {
 }
