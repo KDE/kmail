@@ -915,5 +915,10 @@ KAction *KMReaderWin::expandShortUrlAction() const
     return mViewer->expandShortUrlAction();
 }
 
+KAction *KMReaderWin::createTodoAction() const
+{
+    return mViewer->createTodoAction();
+}
+
 
 

@@ -154,6 +154,7 @@ public:
     KAction *blockImage() const;
     KAction *openBlockableItems() const;
     KAction *expandShortUrlAction() const;
+    KAction *createTodoAction() const;
 
     KAction *editContactAction() const { return mEditContactAction; }
 
