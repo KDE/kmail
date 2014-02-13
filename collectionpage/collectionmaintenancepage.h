@@ -41,7 +41,9 @@ protected:
 
 protected slots:
     void updateCollectionStatistic(Akonadi::Collection::Id, const Akonadi::CollectionStatistics& );
+#if 0
     void slotReindexing();
+#endif
 
 private:
     void updateLabel( qint64 nbMail, qint64 nbUnreadMail, qint64 size );
@@ -52,8 +54,10 @@ private:
     QLabel *mFolderSizeLabel;
     QLabel *mCollectionCount;
     QLabel *mCollectionUnread;
+#if 0
     QCheckBox *mIndexingEnabled;
     QLabel *mLastIndexed;
+#endif
 };
 
 AKONADI_COLLECTION_PROPERTIES_PAGE_FACTORY( CollectionMaintenancePageFactory, CollectionMaintenancePage )

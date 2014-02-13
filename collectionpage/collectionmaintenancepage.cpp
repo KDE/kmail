@@ -25,21 +25,25 @@
 #include <Akonadi/AgentManager>
 #include <Akonadi/ChangeRecorder>
 
+#if 0
 #include <Soprano/Vocabulary/NAO>
 #include <Nepomuk2/Variant>
 #include <Nepomuk2/ResourceManager>
 #include <nepomuk2/datamanagement.h>
+#endif
 
 #include <QDBusInterface>
 #include <QDBusConnectionInterface>
 
-#include <QLabel>
 #include <KDialog>
-#include <QGroupBox>
 #include <KLocalizedString>
 #include <KPushButton>
-#include <QFormLayout>
 #include <kio/global.h>
+#include <KLocale>
+
+#include <QGroupBox>
+#include <QLabel>
+#include <QFormLayout>
 #include <QCheckBox>
 #include <akonadi/indexpolicyattribute.h>
 
@@ -47,7 +51,10 @@ using namespace Akonadi;
 
 
 CollectionMaintenancePage::CollectionMaintenancePage(QWidget * parent) :
-    CollectionPropertiesPage( parent ), mIsNotAVirtualCollection( true ), mFolderSizeLabel(0), mCollectionCount(0)
+    CollectionPropertiesPage( parent ),
+    mIsNotAVirtualCollection( true ),
+    mFolderSizeLabel(0),
+    mCollectionCount(0)
 {
     setObjectName( QLatin1String( "KMail::CollectionMaintenancePage" ) );
     setPageTitle(  i18n("Maintenance") );
@@ -90,7 +97,7 @@ void CollectionMaintenancePage::init(const Akonadi::Collection & col)
     box->addRow( new QLabel( i18n("Unread messages:"), messagesGroup ), mCollectionUnread );
 
     topLayout->addWidget( messagesGroup );
-
+#if 0
     QGroupBox *indexingGroup = new QGroupBox( i18n( "Indexing" ), this );
     QVBoxLayout *indexingLayout = new QVBoxLayout( indexingGroup );
     mIndexingEnabled = new QCheckBox( i18n( "Enable Full Text Indexing" ) );
@@ -111,7 +118,7 @@ void CollectionMaintenancePage::init(const Akonadi::Collection & col)
     }
 
     topLayout->addWidget( indexingGroup );
-
+#endif
     topLayout->addStretch( 100 );
 }
 
@@ -120,6 +127,7 @@ void CollectionMaintenancePage::load(const Collection & col)
     init( col );
     if ( col.isValid() ) {
         updateLabel( col.statistics().count(), col.statistics().unreadCount(), col.statistics().size() );
+#if 0
         Akonadi::IndexPolicyAttribute *attr = col.attribute<Akonadi::IndexPolicyAttribute>();
         const bool indexingWasEnabled(!attr || attr->indexingEnabled());
         mIndexingEnabled->setChecked( indexingWasEnabled );
@@ -136,6 +144,7 @@ void CollectionMaintenancePage::load(const Collection & col)
                 }
             }
         }
+#endif
     }
 }
 
@@ -144,11 +153,11 @@ void CollectionMaintenancePage::updateLabel( qint64 nbMail, qint64 nbUnreadMail,
     mCollectionCount->setText( QString::number( qMax( 0LL, nbMail ) ) );
     mCollectionUnread->setText( QString::number( qMax( 0LL, nbUnreadMail ) ) );
     mFolderSizeLabel->setText( KGlobal::locale()->formatByteSize( qMax( 0LL, size ) ) );
-
 }
 
-void CollectionMaintenancePage::save(Collection &collection )
+void CollectionMaintenancePage::save(Collection &/*collection*/ )
 {
+#if 0
     if ( !collection.hasAttribute<Akonadi::IndexPolicyAttribute>() && mIndexingEnabled->isChecked() )
         return;
     Akonadi::IndexPolicyAttribute *attr = collection.attribute<Akonadi::IndexPolicyAttribute>( Akonadi::Collection::AddIfMissing );
@@ -158,6 +167,7 @@ void CollectionMaintenancePage::save(Collection &collection )
         attr->setIndexingEnabled( false );
         Nepomuk2::removeResources( QList <QUrl>() << collection.url() );
     }
+#endif
 }
 
 void CollectionMaintenancePage::updateCollectionStatistic(Akonadi::Collection::Id id, const Akonadi::CollectionStatistics& statistic)
@@ -167,6 +177,7 @@ void CollectionMaintenancePage::updateCollectionStatistic(Akonadi::Collection::I
     }
 }
 
+#if 0
 void CollectionMaintenancePage::slotReindexing()
 {
     //Be sure to remove collection resources before to reindex.
@@ -176,4 +187,4 @@ void CollectionMaintenancePage::slotReindexing()
         interfaceNepomukFeeder.asyncCall(QLatin1String("forceReindexCollection"),(qlonglong)mCurrentCollection.id());
     }
 }
-
+#endif
