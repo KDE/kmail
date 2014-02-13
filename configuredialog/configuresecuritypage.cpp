@@ -278,40 +278,37 @@ void SecurityPage::ComposerCryptoTab::doLoadOther()
 {
     // If you change default values, sync messagecomposer.cpp too
 
-    mWidget->mEncToSelf->setChecked( MessageComposer::MessageComposerSettings::self()->cryptoEncryptToSelf() );
+    loadWidget(mWidget->mEncToSelf, MessageComposer::MessageComposerSettings::self()->cryptoEncryptToSelfItem());
     mWidget->mShowEncryptionResult->setChecked( false ); //composer.readBoolEntry( "crypto-show-encryption-result", true ) );
     mWidget->mShowEncryptionResult->hide();
-    mWidget->mShowKeyApprovalDlg->setChecked( MessageComposer::MessageComposerSettings::self()->cryptoShowKeysForApproval() );
+    loadWidget(mWidget->mShowKeyApprovalDlg, MessageComposer::MessageComposerSettings::self()->cryptoShowKeysForApprovalItem() );
 
-    mWidget->mAutoEncrypt->setChecked( MessageComposer::MessageComposerSettings::self()->pgpAutoEncrypt() ) ;
-    mWidget->mNeverEncryptWhenSavingInDrafts->setChecked(
-                GlobalSettings::self()->neverEncryptDrafts() );
+    loadWidget(mWidget->mAutoEncrypt, MessageComposer::MessageComposerSettings::self()->pgpAutoEncryptItem() ) ;
+    loadWidget(mWidget->mNeverEncryptWhenSavingInDrafts,GlobalSettings::self()->neverEncryptDraftsItem() );
 
-    mWidget->mStoreEncrypted->setChecked( GlobalSettings::self()->cryptoStoreEncrypted() );
+    loadWidget(mWidget->mStoreEncrypted, GlobalSettings::self()->cryptoStoreEncryptedItem() );
 }
 
 void SecurityPage::ComposerCryptoTab::save()
 {
-    MessageComposer::MessageComposerSettings::self()->setCryptoEncryptToSelf( mWidget->mEncToSelf->isChecked() );
-    GlobalSettings::self()->setCryptoShowEncryptionResult( mWidget->mShowEncryptionResult->isChecked() );
-    MessageComposer::MessageComposerSettings::self()->setCryptoShowKeysForApproval( mWidget->mShowKeyApprovalDlg->isChecked() );
+    saveCheckBox(mWidget->mEncToSelf, MessageComposer::MessageComposerSettings::self()->cryptoEncryptToSelfItem());
+    saveCheckBox(mWidget->mShowEncryptionResult, GlobalSettings::self()->cryptoShowEncryptionResultItem() );
+    saveCheckBox(mWidget->mShowKeyApprovalDlg, MessageComposer::MessageComposerSettings::self()->cryptoShowKeysForApprovalItem() );
 
-    MessageComposer::MessageComposerSettings::self()->setPgpAutoEncrypt( mWidget->mAutoEncrypt->isChecked() );
-    GlobalSettings::self()->setNeverEncryptDrafts( mWidget->mNeverEncryptWhenSavingInDrafts->isChecked() );
-
-    GlobalSettings::self()->setCryptoStoreEncrypted( mWidget->mStoreEncrypted->isChecked() );
+    saveCheckBox(mWidget->mAutoEncrypt, MessageComposer::MessageComposerSettings::self()->pgpAutoEncryptItem() ) ;
+    saveCheckBox(mWidget->mNeverEncryptWhenSavingInDrafts,GlobalSettings::self()->neverEncryptDraftsItem() );
+    saveCheckBox(mWidget->mStoreEncrypted, GlobalSettings::self()->cryptoStoreEncryptedItem() );
 }
 
 void SecurityPage::ComposerCryptoTab::doLoadFromGlobalSettings()
 {
-    mWidget->mEncToSelf->setChecked( MessageComposer::MessageComposerSettings::self()->cryptoEncryptToSelf() );
-    mWidget->mShowEncryptionResult->setChecked( GlobalSettings::self()->cryptoShowEncryptionResult() );
-    mWidget->mShowKeyApprovalDlg->setChecked(MessageComposer::MessageComposerSettings::self()->cryptoShowKeysForApproval() );
+    loadWidget(mWidget->mEncToSelf, MessageComposer::MessageComposerSettings::self()->cryptoEncryptToSelfItem());
+    loadWidget(mWidget->mShowEncryptionResult, GlobalSettings::self()->cryptoShowEncryptionResultItem() );
+    loadWidget(mWidget->mShowKeyApprovalDlg, MessageComposer::MessageComposerSettings::self()->cryptoShowKeysForApprovalItem() );
 
-    mWidget->mAutoEncrypt->setChecked(MessageComposer::MessageComposerSettings::self()->pgpAutoEncrypt() );
-    mWidget->mNeverEncryptWhenSavingInDrafts->setChecked( GlobalSettings::self()->neverEncryptDrafts() );
-
-    mWidget->mStoreEncrypted->setChecked(GlobalSettings::self()->cryptoStoreEncrypted() );
+    loadWidget(mWidget->mAutoEncrypt, MessageComposer::MessageComposerSettings::self()->pgpAutoEncryptItem() ) ;
+    loadWidget(mWidget->mNeverEncryptWhenSavingInDrafts,GlobalSettings::self()->neverEncryptDraftsItem() );
+    loadWidget(mWidget->mStoreEncrypted, GlobalSettings::self()->cryptoStoreEncryptedItem() );
 
 }
 
@@ -345,10 +342,8 @@ SecurityPageWarningTab::~SecurityPageWarningTab()
 
 void SecurityPage::WarningTab::doLoadFromGlobalSettings()
 {
-    mWidget->warnUnencryptedCB->setChecked(
-                MessageComposer::MessageComposerSettings::self()->cryptoWarningUnencrypted() );
-    mWidget->mWarnUnsigned->setChecked(
-                MessageComposer::MessageComposerSettings::self()->cryptoWarningUnsigned() );
+    loadWidget(mWidget->warnUnencryptedCB, MessageComposer::MessageComposerSettings::self()->cryptoWarningUnencryptedItem() );
+    loadWidget(mWidget->mWarnUnsigned, MessageComposer::MessageComposerSettings::self()->cryptoWarningUnsignedItem() );
     mWidget->warnReceiverNotInCertificateCB->setChecked(
                 MessageComposer::MessageComposerSettings::self()->cryptoWarnRecvNotInCert() );
 
@@ -373,10 +368,8 @@ void SecurityPage::WarningTab::doLoadFromGlobalSettings()
 
 void SecurityPage::WarningTab::doLoadOther()
 {
-    mWidget->warnUnencryptedCB->setChecked(
-                MessageComposer::MessageComposerSettings::self()->cryptoWarningUnencrypted() );
-    mWidget->mWarnUnsigned->setChecked(
-                MessageComposer::MessageComposerSettings::self()->cryptoWarningUnsigned() );
+    loadWidget(mWidget->warnUnencryptedCB, MessageComposer::MessageComposerSettings::self()->cryptoWarningUnencryptedItem() );
+    loadWidget(mWidget->mWarnUnsigned, MessageComposer::MessageComposerSettings::self()->cryptoWarningUnsignedItem() );
     mWidget->warnReceiverNotInCertificateCB->setChecked(
                 MessageComposer::MessageComposerSettings::self()->cryptoWarnRecvNotInCert() );
 
@@ -410,12 +403,10 @@ void SecurityPage::WarningTab::doLoadOther()
 
 void SecurityPage::WarningTab::save()
 {
+    saveCheckBox(mWidget->warnUnencryptedCB, MessageComposer::MessageComposerSettings::self()->cryptoWarningUnencryptedItem() );
+    saveCheckBox(mWidget->mWarnUnsigned, MessageComposer::MessageComposerSettings::self()->cryptoWarningUnsignedItem() );
     MessageComposer::MessageComposerSettings::self()->setCryptoWarnRecvNotInCert(
                 mWidget->warnReceiverNotInCertificateCB->isChecked() );
-    MessageComposer::MessageComposerSettings::self()->setCryptoWarningUnencrypted(
-                mWidget->warnUnencryptedCB->isChecked() );
-    MessageComposer::MessageComposerSettings::self()->setCryptoWarningUnsigned(
-                mWidget->mWarnUnsigned->isChecked() );
 
     MessageComposer::MessageComposerSettings::self()->setCryptoWarnWhenNearExpire(
                 mWidget->warnGroupBox->isChecked() );
