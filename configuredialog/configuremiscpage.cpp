@@ -105,8 +105,8 @@ void MiscPage::FolderTab::doLoadFromGlobalSettings()
 {
     loadWidget(mMMTab.mExcludeImportantFromExpiry, GlobalSettings::self()->excludeImportantMailFromExpiryItem());
     // default = "Loop in current folder"
-    mMMTab.mLoopOnGotoUnread->setCurrentIndex( GlobalSettings::self()->loopOnGotoUnread() );
-    mMMTab.mActionEnterFolder->setCurrentIndex( GlobalSettings::self()->actionEnterFolder() );
+    loadWidget(mMMTab.mLoopOnGotoUnread, GlobalSettings::self()->loopOnGotoUnreadItem() );
+    loadWidget(mMMTab.mActionEnterFolder, GlobalSettings::self()->actionEnterFolderItem() );
     loadWidget(mMMTab.mDelayedMarkAsRead, MessageViewer::GlobalSettings::self()->delayedMarkAsReadItem() );
     loadWidget(mMMTab.mDelayedMarkTime, MessageViewer::GlobalSettings::self()->delayedMarkTimeItem());
     loadWidget(mMMTab.mShowPopupAfterDnD, GlobalSettings::self()->showPopupAfterDnDItem());
@@ -126,12 +126,12 @@ void MiscPage::FolderTab::save()
 {
     saveCheckBox(mMMTab.mEmptyTrashCheck, GlobalSettings::self()->emptyTrashOnExitItem());
     saveCheckBox(mMMTab.mEmptyFolderConfirmCheck, GlobalSettings::self()->confirmBeforeEmptyItem());
+    saveComboBox(mMMTab.mActionEnterFolder, GlobalSettings::self()->actionEnterFolderItem() );
     GlobalSettings::self()->setStartupFolder( mOnStartupOpenFolder->collection().id() );
 
     saveCheckBox(mMMTab.mDelayedMarkAsRead, MessageViewer::GlobalSettings::self()->delayedMarkAsReadItem() );
     saveKIntSpinBox(mMMTab.mDelayedMarkTime, MessageViewer::GlobalSettings::self()->delayedMarkTimeItem());
-    GlobalSettings::self()->setActionEnterFolder( mMMTab.mActionEnterFolder->currentIndex() );
-    GlobalSettings::self()->setLoopOnGotoUnread( mMMTab.mLoopOnGotoUnread->currentIndex() );
+    saveComboBox(mMMTab.mLoopOnGotoUnread, GlobalSettings::self()->loopOnGotoUnreadItem() );
 
     saveCheckBox(mMMTab.mExcludeImportantFromExpiry, GlobalSettings::self()->excludeImportantMailFromExpiryItem());
     saveCheckBox(mMMTab.mShowPopupAfterDnD, GlobalSettings::self()->showPopupAfterDnDItem());
