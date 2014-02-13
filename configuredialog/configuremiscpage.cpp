@@ -108,7 +108,7 @@ void MiscPage::FolderTab::doLoadFromGlobalSettings()
     mMMTab.mLoopOnGotoUnread->setCurrentIndex( GlobalSettings::self()->loopOnGotoUnread() );
     mMMTab.mActionEnterFolder->setCurrentIndex( GlobalSettings::self()->actionEnterFolder() );
     loadWidget(mMMTab.mDelayedMarkAsRead, MessageViewer::GlobalSettings::self()->delayedMarkAsReadItem() );
-    mMMTab.mDelayedMarkTime->setValue( MessageViewer::GlobalSettings::self()->delayedMarkTime() );
+    loadWidget(mMMTab.mDelayedMarkTime, MessageViewer::GlobalSettings::self()->delayedMarkTimeItem());
     loadWidget(mMMTab.mShowPopupAfterDnD, GlobalSettings::self()->showPopupAfterDnDItem());
     loadWidget(mMMTab.mStartUpFolderCheck, GlobalSettings::self()->startSpecificFolderAtStartupItem());
     mOnStartupOpenFolder->setEnabled(GlobalSettings::self()->startSpecificFolderAtStartup());
@@ -129,7 +129,7 @@ void MiscPage::FolderTab::save()
     GlobalSettings::self()->setStartupFolder( mOnStartupOpenFolder->collection().id() );
 
     saveCheckBox(mMMTab.mDelayedMarkAsRead, MessageViewer::GlobalSettings::self()->delayedMarkAsReadItem() );
-    MessageViewer::GlobalSettings::self()->setDelayedMarkTime( mMMTab.mDelayedMarkTime->value() );
+    saveKIntSpinBox(mMMTab.mDelayedMarkTime, MessageViewer::GlobalSettings::self()->delayedMarkTimeItem());
     GlobalSettings::self()->setActionEnterFolder( mMMTab.mActionEnterFolder->currentIndex() );
     GlobalSettings::self()->setLoopOnGotoUnread( mMMTab.mLoopOnGotoUnread->currentIndex() );
 

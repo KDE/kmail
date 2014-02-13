@@ -938,7 +938,7 @@ void ComposerPage::CharsetTab::doLoadOther()
         }
 
     mCharsetListEditor->setStringList( charsets );
-    mKeepReplyCharsetCheck->setChecked( MessageComposer::MessageComposerSettings::forceReplyCharset() );
+    loadWidget(mKeepReplyCharsetCheck, MessageComposer::MessageComposerSettings::self()->forceReplyCharsetItem());
 }
 
 
@@ -947,6 +947,8 @@ void ComposerPage::CharsetTab::doResetToDefaultsOther()
     const bool bUseDefaults = MessageComposer::MessageComposerSettings::self()->useDefaults( true );
     mCharsetListEditor->setStringList( MessageComposer::MessageComposerSettings::preferredCharsets());
     mKeepReplyCharsetCheck->setChecked( MessageComposer::MessageComposerSettings::forceReplyCharset() );
+    saveCheckBox(mKeepReplyCharsetCheck, MessageComposer::MessageComposerSettings::self()->forceReplyCharsetItem());
+
     MessageComposer::MessageComposerSettings::self()->useDefaults( bUseDefaults );
     slotEmitChanged();
 }
@@ -961,7 +963,7 @@ void ComposerPage::CharsetTab::save()
         if ( (*it).endsWith( QLatin1String("(locale)") ) )
             (*it) = QLatin1String("locale");
     MessageComposer::MessageComposerSettings::setPreferredCharsets( charsetList );
-    MessageComposer::MessageComposerSettings::setForceReplyCharset( mKeepReplyCharsetCheck->isChecked() );
+    saveCheckBox(mKeepReplyCharsetCheck, MessageComposer::MessageComposerSettings::self()->forceReplyCharsetItem());
 }
 
 QString ComposerPage::HeadersTab::helpAnchor() const
