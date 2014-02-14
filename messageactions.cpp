@@ -118,17 +118,6 @@ MessageActions::MessageActions( KActionCollection *ac, QWidget *parent )
     ac->addAction(QLatin1String("mlist_filter"), mListFilterAction );
     connect(mListFilterAction, SIGNAL(triggered(bool)), SLOT(slotMailingListFilter()));
 
-    mCreateTodoAction = new KAction( KIcon( QLatin1String("task-new") ), i18n( "Create To-do/Reminder..." ), this );
-    mCreateTodoAction->setIconText( i18n( "Create To-do" ) );
-    mCreateTodoAction->setHelpText( i18n( "Allows you to create a calendar to-do or reminder from this message" ) );
-    mCreateTodoAction->setWhatsThis( i18n( "This option starts the KOrganizer to-do editor with initial values taken from the currently selected message. Then you can edit the to-do to your liking before saving it to your calendar." ) );
-    ac->addAction( QLatin1String("create_todo"), mCreateTodoAction );
-    connect( mCreateTodoAction, SIGNAL(triggered(bool)),
-             this, SLOT(slotCreateTodo()) );
-    mKorganizerIsOnSystem = !KStandardDirs::findExe(QLatin1String("korganizer")).isEmpty();
-    mCreateTodoAction->setEnabled( mKorganizerIsOnSystem );
-    mCreateTodoAction->setShortcut(Qt::CTRL + Qt::Key_T);
-
     mStatusMenu = new KActionMenu ( i18n( "Mar&k Message" ), this );
     ac->addAction( QLatin1String("set_status"), mStatusMenu );
 
@@ -304,7 +293,6 @@ void MessageActions::updateActions()
 
     const bool multiVisible = mVisibleItems.count() > 0 || mCurrentItem.isValid();
     const bool uniqItem = ( itemValid||hasPayload ) && ( mVisibleItems.count()<=1 );
-    mCreateTodoAction->setEnabled( itemValid && ( mVisibleItems.count()<=1 ) && mKorganizerIsOnSystem);
     mReplyActionMenu->setEnabled( hasPayload );
     mReplyAction->setEnabled( hasPayload );
     mNoQuoteReplyAction->setEnabled( hasPayload );
@@ -428,14 +416,6 @@ void MessageActions::replyCommand(MessageComposer::ReplyStrategy strategy)
     connect( command, SIGNAL(completed(KMCommand*)),
              this, SIGNAL(replyActionFinished()) );
     command->start();
-}
-
-void MessageActions::slotCreateTodo()
-{
-    if ( !mCurrentItem.isValid() )
-        return;
-
-    MailCommon::Util::createTodoFromMail( mCurrentItem );
 }
 
 void MessageActions::setMessageView(KMReaderWin * msgView)

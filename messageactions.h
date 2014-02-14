@@ -80,7 +80,6 @@ public:
 
     KActionMenu* replyMenu() const { return mReplyActionMenu; }
     KAction* replyListAction() const { return mReplyListAction; }
-    KAction* createTodoAction() const { return mCreateTodoAction; }
     KAction* forwardInlineAction() const { return mForwardInlineAction; }
     KAction* forwardAttachedAction() const { return mForwardAttachedAction; }
     KAction* redirectAction() const { return mRedirectAction; }
@@ -131,7 +130,6 @@ private slots:
     void slotReplyListToMsg();
     void slotReplyAllToMsg();
     void slotNoQuoteReplyToMsg();
-    void slotCreateTodo();
     void slotRunUrl( QAction *urlAction );
     void slotPrintMsg();
     void slotPrintPreviewMsg();
@@ -153,7 +151,6 @@ private:
     KAction *mReplyAction, *mReplyAllAction, *mReplyAuthorAction,
     *mReplyListAction, *mNoQuoteReplyAction,
     *mForwardInlineAction, *mForwardAttachedAction, *mRedirectAction;
-    KAction *mCreateTodoAction;
     KActionMenu *mStatusMenu;
     KActionMenu *mForwardActionMenu;
     KActionMenu *mMailingListActionMenu;
