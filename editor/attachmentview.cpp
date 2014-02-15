@@ -53,7 +53,7 @@ class KMail::AttachmentView::Private
 {
 public:
     Private(AttachmentView *qq)
-        : q(qq)
+        : model(0), q(qq)
     {
         widget = new QWidget();
         QHBoxLayout *lay = new QHBoxLayout;
