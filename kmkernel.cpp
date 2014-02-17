@@ -1797,10 +1797,11 @@ void KMKernel::stopAgentInstance()
 
     const Akonadi::AgentInstance::List lst = MailCommon::Util::agentInstances();
     foreach( Akonadi::AgentInstance type, lst ) {
-        KConfigGroup group( KMKernel::config(), resourceGroupPattern.arg( type.identifier() ) );
+        const QString identifier = type.identifier();
+        KConfigGroup group( KMKernel::config(), resourceGroupPattern.arg( identifier ) );
 
-        // "false" is also hardcoded in ConfigureDialog, don't forget to change there.
-        if ( group.readEntry( "OfflineOnShutdown", false ) )
+        // Keep sync in ConfigureDialog, don't forget to change there.
+        if ( group.readEntry( "OfflineOnShutdown", identifier.startsWith(QLatin1String("akonadi_pop3_resource")) ? true : false ) )
             type.setIsOnline( false );
     }
 }

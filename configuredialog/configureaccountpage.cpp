@@ -292,14 +292,13 @@ void AccountsPageReceivingTab::slotShowMailCheckMenu( const QString &ident, cons
     bool OfflineOnShutdown;
     bool CheckOnStartup;
     if( !mRetrievalHash.contains( ident ) ) {
-
         const QString resourceGroupPattern( QLatin1String("Resource %1") );
         KConfigGroup group( KMKernel::self()->config(), resourceGroupPattern.arg( ident ) );
 
         IncludeInManualChecks = group.readEntry( "IncludeInManualChecks", true );
 
-        // "false" is also hardcoded in kmkernel, don't forget to change there.
-        OfflineOnShutdown = group.readEntry( "OfflineOnShutdown", false );
+        // Keep sync with kmkernel, don't forget to change there.
+        OfflineOnShutdown = group.readEntry( "OfflineOnShutdown", ident.startsWith(QLatin1String("akonadi_pop3_resource")) ? true : false );
 
         CheckOnStartup = group.readEntry( "CheckOnStartup", false );
         QSharedPointer<RetrievalOptions> opts( new RetrievalOptions( IncludeInManualChecks, OfflineOnShutdown, CheckOnStartup ) );
