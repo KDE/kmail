@@ -15,18 +15,18 @@
   51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
 */
 
-#ifndef NEPOMUKSEARCHPATTERNEDIT_H
-#define NEPOMUKSEARCHPATTERNEDIT_H
+#ifndef KMailSearchPatternEdit_H
+#define KMailSearchPatternEdit_H
 
 #include <mailcommon/search/searchpatternedit.h>
 
 namespace KMail {
-class NepomukSearchPatternEdit : public MailCommon::SearchPatternEdit
+class KMailSearchPatternEdit : public MailCommon::SearchPatternEdit
 {
     Q_OBJECT
 public:
-    explicit NepomukSearchPatternEdit(QWidget *parent=0);
-    ~NepomukSearchPatternEdit();
+    explicit KMailSearchPatternEdit(QWidget *parent=0);
+    ~KMailSearchPatternEdit();
 };
 }
-#endif // NEPOMUKSEARCHPATTERNEDIT_H
+#endif // KMailSearchPatternEdit_H

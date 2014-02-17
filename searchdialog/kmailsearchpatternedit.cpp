@@ -15,17 +15,17 @@
   51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
 */
 
-#include "nepomuksearchpatternedit.h"
+#include "kmailsearchpatternedit.h"
 
 using namespace KMail;
-NepomukSearchPatternEdit::NepomukSearchPatternEdit(QWidget *parent)
+KMailSearchPatternEdit::KMailSearchPatternEdit(QWidget *parent)
     : MailCommon::SearchPatternEdit(parent,
                                     (MailCommon::SearchPatternEdit::SearchPatternEditOptions)(SearchPatternEdit::NotShowDate|SearchPatternEdit::AbsoluteDate),
                                     NepomukMode)
 {
 }
 
-NepomukSearchPatternEdit::~NepomukSearchPatternEdit()
+KMailSearchPatternEdit::~KMailSearchPatternEdit()
 {
 
 }

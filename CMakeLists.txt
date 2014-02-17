@@ -102,7 +102,7 @@ if (KDEPIM_BUILD_DESKTOP)
      searchdialog/kmsearchmessagemodel.cpp
      searchdialog/kmsearchfilterproxymodel.cpp
      searchdialog/searchpatternwarning.cpp
-     searchdialog/nepomuksearchpatternedit.cpp
+     searchdialog/kmailsearchpatternedit.cpp
      searchdialog/searchwindow.cpp
      searchdialog/searchdescriptionattribute.cpp
   )
