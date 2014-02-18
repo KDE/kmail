@@ -36,7 +36,7 @@ Q_SIGNALS:
     void checkFailed(const QString &message);
 
 private Q_SLOTS:
-    void slotInitialCollectionFetchingDone(KJob*);
+    //void slotInitialCollectionFetchingDone(KJob*);
     void slotInitialCollectionFetchingFirstLevelDone(KJob *job);
     void slotCreateNewFolder(KJob*);
 

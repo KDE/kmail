@@ -41,17 +41,18 @@ void FolderArchiveAgentCheckCollection::start()
     Akonadi::Collection col(mInfo->archiveTopLevel());
 #if 0
     if (mInfo->keepExistingStructure()) {
-#else
-    if (0) {
-#endif
         Akonadi::CollectionFetchJob *job = new Akonadi::CollectionFetchJob(col, Akonadi::CollectionFetchJob::Recursive);
         connect(job, SIGNAL(result(KJob*)), this, SLOT(slotInitialCollectionFetchingDone(KJob*)) );
     } else {
+#endif
         Akonadi::CollectionFetchJob *job = new Akonadi::CollectionFetchJob(col, Akonadi::CollectionFetchJob::FirstLevel);
         connect(job, SIGNAL(result(KJob*)), this, SLOT(slotInitialCollectionFetchingFirstLevelDone(KJob*)) );
+#if 0
     }
+#endif
 }
 
+#if 0
 void FolderArchiveAgentCheckCollection::slotInitialCollectionFetchingDone(KJob *job)
 {
 #if 0
@@ -69,6 +70,7 @@ void FolderArchiveAgentCheckCollection::slotInitialCollectionFetchingDone(KJob *
     }
 #endif
 }
+#endif
 
 void FolderArchiveAgentCheckCollection::slotInitialCollectionFetchingFirstLevelDone(KJob *job)
 {
