@@ -25,57 +25,57 @@
 class KMMainWidget;
 class KToggleAction;
 namespace KPIM {
-   class StatusbarProgressWidget;
-   class ProgressDialog;
+class StatusbarProgressWidget;
+class ProgressDialog;
 }
 using KPIM::StatusbarProgressWidget;
 using KPIM::ProgressDialog;
 
 class KMMainWin : public KXmlGuiWindow
 {
-  Q_OBJECT
+    Q_OBJECT
 
 public:
-  // the main window needs to have a name since else restoring the window
-  // settings by kwin doesn't work
-  explicit KMMainWin(QWidget *parent = 0);
-  virtual ~KMMainWin();
-  KMMainWidget *mainKMWidget() const { return mKMMainWidget; }
-  StatusbarProgressWidget* progressWidget() const { return mLittleProgress; }
-  ProgressDialog* progressDialog() const { return mProgressDialog; }
+    // the main window needs to have a name since else restoring the window
+    // settings by kwin doesn't work
+    explicit KMMainWin(QWidget *parent = 0);
+    virtual ~KMMainWin();
+    KMMainWidget *mainKMWidget() const { return mKMMainWidget; }
+    StatusbarProgressWidget* progressWidget() const { return mLittleProgress; }
+    ProgressDialog* progressDialog() const { return mProgressDialog; }
 
-  /// Same as KMMainWin::restore(), except that it also restores the docked state,
-  /// which we have saved in saveProperties().
-  /// TODO: KDE5: Move to kdelibs, see http://reviewboard.kde.org/r/504
-  bool restoreDockedState( int number );
+    /// Same as KMMainWin::restore(), except that it also restores the docked state,
+    /// which we have saved in saveProperties().
+    /// TODO: KDE5: Move to kdelibs, see http://reviewboard.kde.org/r/504
+    bool restoreDockedState( int number );
 
 public slots:
-  void displayStatusMsg(const QString&);
-  void slotEditToolbars();
-  void slotUpdateGui();
-  void setupStatusBar();
+    void displayStatusMsg(const QString&);
+    void slotEditToolbars();
+    void slotUpdateGui();
+    void setupStatusBar();
 
 protected:
 
-  /// Reimplemented to save the docked state
-  void saveProperties( KConfigGroup & );
+    /// Reimplemented to save the docked state
+    void saveProperties( KConfigGroup & );
 
-  bool queryClose ();
+    bool queryClose ();
 
 protected slots:
-  void slotQuit();
-  void slotShowTipOnStart();
+    void slotQuit();
+    void slotShowTipOnStart();
 
 private slots:
-  void slotNewMailReader();
-  void slotToggleMenubar(bool dontShowWarning = false);
+    void slotNewMailReader();
+    void slotToggleMenubar(bool dontShowWarning = false);
 
 private:
-  KMMainWidget *mKMMainWidget;
-  StatusbarProgressWidget *mLittleProgress;
-  ProgressDialog *mProgressDialog;
-  KToggleAction *mHideMenuBarAction;
-  bool mReallyClose;
+    KMMainWidget *mKMMainWidget;
+    StatusbarProgressWidget *mLittleProgress;
+    ProgressDialog *mProgressDialog;
+    KToggleAction *mHideMenuBarAction;
+    bool mReallyClose;
 };
 
 #endif
