@@ -44,107 +44,107 @@
 class KMailApplication : public KontactInterface::PimUniqueApplication
 {
 public:
-  KMailApplication() : KontactInterface::PimUniqueApplication(),
-                       mDelayedInstanceCreation( false ),
-                       mEventLoopReached( false ) { }
-  virtual int newInstance();
-  void commitData(QSessionManager& sm);
-  void setEventLoopReached();
-  void delayedInstanceCreation();
+    KMailApplication() : KontactInterface::PimUniqueApplication(),
+        mDelayedInstanceCreation( false ),
+        mEventLoopReached( false ) { }
+    virtual int newInstance();
+    void commitData(QSessionManager& sm);
+    void setEventLoopReached();
+    void delayedInstanceCreation();
 protected:
-  bool mDelayedInstanceCreation;
-  bool mEventLoopReached;
+    bool mDelayedInstanceCreation;
+    bool mEventLoopReached;
 
 };
 
 void KMailApplication::commitData(QSessionManager& sm) {
-  kmkernel->dumpDeadLetters();
-  kmkernel->setShuttingDown( true ); // Prevent further dumpDeadLetters calls
-  KApplication::commitData( sm );
+    kmkernel->dumpDeadLetters();
+    kmkernel->setShuttingDown( true ); // Prevent further dumpDeadLetters calls
+    KApplication::commitData( sm );
 }
 
 void KMailApplication::setEventLoopReached() {
-  mEventLoopReached = true;
+    mEventLoopReached = true;
 }
 
 int KMailApplication::newInstance()
 {
-  kDebug();
+    kDebug();
 
-  // If the event loop hasn't been reached yet, the kernel is probably not
-  // fully initialized. Creating an instance would therefore fail, this is why
-  // that is delayed until delayedInstanceCreation() is called.
-  if ( !mEventLoopReached ) {
-    kDebug() << "Delaying instance creation.";
-    mDelayedInstanceCreation = true;
+    // If the event loop hasn't been reached yet, the kernel is probably not
+    // fully initialized. Creating an instance would therefore fail, this is why
+    // that is delayed until delayedInstanceCreation() is called.
+    if ( !mEventLoopReached ) {
+        kDebug() << "Delaying instance creation.";
+        mDelayedInstanceCreation = true;
+        return 0;
+    }
+
+    if (!kmkernel)
+        return 0;
+
+    if (!kmkernel->firstInstance() || !kapp->isSessionRestored())
+        kmkernel->handleCommandLine( true );
+    kmkernel->setFirstInstance(false);
     return 0;
-  }
-
-  if (!kmkernel)
-     return 0;
-
-  if (!kmkernel->firstInstance() || !kapp->isSessionRestored())
-    kmkernel->handleCommandLine( true );
-  kmkernel->setFirstInstance(false);
-  return 0;
 }
 
 void KMailApplication::delayedInstanceCreation() {
-  if ( mDelayedInstanceCreation )
-    newInstance();
+    if ( mDelayedInstanceCreation )
+        newInstance();
 }
 
 int main(int argc, char *argv[])
 {
-  // WABA: KMail is a KUniqueApplication. Unfortunately this makes debugging
-  // a bit harder: You should pass --nofork as commandline argument when using
-  // a debugger. In gdb you can do this by typing "set args --nofork" before
-  // typing "run".
+    // WABA: KMail is a KUniqueApplication. Unfortunately this makes debugging
+    // a bit harder: You should pass --nofork as commandline argument when using
+    // a debugger. In gdb you can do this by typing "set args --nofork" before
+    // typing "run".
 #if 0 // for testing KUniqueAppliaction on Windows
-  MessageBoxA(NULL,
-             QString("main() %1 pid=%2").arg(argv[0]).arg(getpid()).toLatin1(),
-             QString("main() \"%1\"").arg(argv[0]).toLatin1(), MB_OK|MB_ICONINFORMATION|MB_TASKMODAL);
+    MessageBoxA(NULL,
+                QString("main() %1 pid=%2").arg(argv[0]).arg(getpid()).toLatin1(),
+            QString("main() \"%1\"").arg(argv[0]).toLatin1(), MB_OK|MB_ICONINFORMATION|MB_TASKMODAL);
 #endif
-  KMail::AboutData about;
+    KMail::AboutData about;
 
-  KCmdLineArgs::setCwd(QDir::currentPath().toLocal8Bit());
-  KCmdLineArgs::init(argc, argv, &about);
-  KCmdLineArgs::addCmdLineOptions( kmail_options() ); // Add kmail options
-  if (!KMailApplication::start())
-     return 0;
+    KCmdLineArgs::setCwd(QDir::currentPath().toLocal8Bit());
+    KCmdLineArgs::init(argc, argv, &about);
+    KCmdLineArgs::addCmdLineOptions( kmail_options() ); // Add kmail options
+    if (!KMailApplication::start())
+        return 0;
 
-  KMailApplication app;
+    KMailApplication app;
 
-  // Qt doesn't treat the system tray as a window, and therefore Qt would quit
-  // the event loop when an error message is clicked away while KMail is in the
-  // tray.
-  // Rely on KGlobal::ref() and KGlobal::deref() instead, like we did in KDE3.
-  // See http://bugs.kde.org/show_bug.cgi?id=163479
-  QApplication::setQuitOnLastWindowClosed( false );
+    // Qt doesn't treat the system tray as a window, and therefore Qt would quit
+    // the event loop when an error message is clicked away while KMail is in the
+    // tray.
+    // Rely on KGlobal::ref() and KGlobal::deref() instead, like we did in KDE3.
+    // See http://bugs.kde.org/show_bug.cgi?id=163479
+    QApplication::setQuitOnLastWindowClosed( false );
 
-  // import i18n data and icons from libraries:
-  KMail::insertLibraryCataloguesAndIcons();
+    // import i18n data and icons from libraries:
+    KMail::insertLibraryCataloguesAndIcons();
 
-  //local, do the init
-  KMKernel kmailKernel;
-  kmailKernel.init();
+    //local, do the init
+    KMKernel kmailKernel;
+    kmailKernel.init();
 
-  // and session management
-  kmailKernel.doSessionManagement();
+    // and session management
+    kmailKernel.doSessionManagement();
 
-  // any dead letters?
-  kmailKernel.recoverDeadLetters();
+    // any dead letters?
+    kmailKernel.recoverDeadLetters();
 
-  kmkernel->setupDBus(); // Ok. We are ready for D-Bus requests.
-  kmkernel->setStartingUp( false ); // Starting up is finished
+    kmkernel->setupDBus(); // Ok. We are ready for D-Bus requests.
+    kmkernel->setStartingUp( false ); // Starting up is finished
 
-  //If the instance hasn't been created yet, do that now
-  app.setEventLoopReached();
-  app.delayedInstanceCreation();
+    //If the instance hasn't been created yet, do that now
+    app.setEventLoopReached();
+    app.delayedInstanceCreation();
 
-  // Go!
-  int ret = qApp->exec();
-  // clean up
-  kmailKernel.cleanup();
-  return ret;
+    // Go!
+    int ret = qApp->exec();
+    // clean up
+    kmailKernel.cleanup();
+    return ret;
 }
