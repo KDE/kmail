@@ -287,8 +287,8 @@ K_GLOBAL_STATIC( KMMainWidget::PtrList, theMainWidgetList )
   connect( kmkernel, SIGNAL(onlineStatusChanged(GlobalSettings::EnumNetworkState::type)),
            this, SLOT(slotUpdateOnlineStatus(GlobalSettings::EnumNetworkState::type)) );
 
-  connect( mTagActionManager, SIGNAL(tagActionTriggered(QString)),
-           this, SLOT(slotUpdateMessageTagList(QString)) );
+  connect( mTagActionManager, SIGNAL(tagActionTriggered(Akonadi::Tag)),
+           this, SLOT(slotUpdateMessageTagList(Akonadi::Tag)) );
 
   connect( mTagActionManager, SIGNAL(tagMoreActionClicked()),
            this, SLOT(slotSelectMoreMessageTagList()) );
@@ -2045,11 +2045,11 @@ void KMMainWidget::slotTrashThread()
 //
 // FIXME: The "selection" version of these functions is in MessageActions.
 //        We should probably move everything there....
-void KMMainWidget::toggleMessageSetTag( const QList<Akonadi::Item> &select, const QString &taglabel )
+void KMMainWidget::toggleMessageSetTag( const QList<Akonadi::Item> &select, const Akonadi::Tag &tag )
 {
   if ( select.isEmpty() )
     return;
-  KMCommand *command = new KMSetTagCommand( QList<QString>()<<taglabel,select, KMSetTagCommand::Toggle );
+  KMCommand *command = new KMSetTagCommand( Akonadi::Tag::List() << tag, select, KMSetTagCommand::Toggle );
   command->start();
 }
 
@@ -2062,7 +2062,7 @@ void KMMainWidget::slotSelectMoreMessageTagList()
 
   TagSelectDialog dlg( this, selectedMessages.count(), selectedMessages.first() );
   if ( dlg.exec() ) {
-    const QList<QString> lst = dlg.selectedTag();
+    const Akonadi::Tag::List lst = dlg.selectedTag();
 
     KMCommand *command = new KMSetTagCommand( lst, selectedMessages, KMSetTagCommand::CleanExistingAndAddNew );
     command->start();
@@ -2070,13 +2070,13 @@ void KMMainWidget::slotSelectMoreMessageTagList()
 }
 
 
-void KMMainWidget::slotUpdateMessageTagList( const QString &taglabel )
+void KMMainWidget::slotUpdateMessageTagList( const Akonadi::Tag &tag )
 {
   // Create a persistent set from the current thread.
   const QList<Akonadi::Item> selectedMessages = mMessagePane->selectionAsMessageItemList();
   if ( selectedMessages.isEmpty() )
     return;
-  toggleMessageSetTag( selectedMessages, taglabel );
+  toggleMessageSetTag( selectedMessages, tag );
 }
 
 void KMMainWidget::refreshMessageListSelection()
@@ -4021,8 +4021,7 @@ void KMMainWidget::slotAkonadiStandardActionUpdated()
                                                                                                             && !multiFolder
                                                                                                             && ( mCurrentFolder->collection().rights() & Collection::CanDeleteCollection )
                                                                                                             && !mCurrentFolder->isSystemFolder()
-                                                                                                            && folderWithContent
-                                                                                                            && mCurrentFolder->collection().resource() != QLatin1String("akonadi_nepomuktag_resource") );
+                                                                                                            && folderWithContent);
   }
 
   if ( mAkonadiStandardActionManager->action( Akonadi::StandardMailActionManager::MoveAllToTrash ) ) {

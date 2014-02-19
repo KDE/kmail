@@ -258,6 +258,7 @@ private slots:
     void slotRowsMoved( const QModelIndex &,
                         int sourcestart, int sourceEnd,
                         const QModelIndex &, int destinationRow );
+    void slotTagsFetched(KJob *job);
 
 private:
     void doLoadFromGlobalSettings();
@@ -282,7 +283,6 @@ private: // data
     /*Used to safely call slotRecordTagSettings when the selection in
     list box changes*/
     int mPreviousTag;
-    bool mNepomukActive;
 };
 
 class KMAIL_EXPORT AppearancePage : public ConfigModuleWithTabs {

@@ -25,16 +25,7 @@
 #include "tag.h"
 #include <QMap>
 
-namespace Nepomuk2
-{
-class Resource;
-namespace Query
-{
-class QueryServiceClient;
-class Result;
-}
-}
-
+class KJob;
 class KActionCollection;
 class KXMLGUIClient;
 class KToggleAction;
@@ -43,10 +34,8 @@ class QSignalMapper;
 class KAction;
 namespace Akonadi {
 class Item;
-}
-
-namespace MessageCore {
-class AsyncNepomukResourceRetriever;
+class Monitor;
+class Tag;
 }
 
 namespace KMail {
@@ -110,29 +99,25 @@ Q_SIGNALS:
         * Emitted when one of the tagging actions was triggered. The user of this class
         * should connect to this signal and change the tags of the messages
         */
-    void tagActionTriggered( const QString &tagLabel );
+    void tagActionTriggered( const Akonadi::Tag &tag );
     /**
        * Emitted when we want to select more action
        */
     void tagMoreActionClicked();
 
 private Q_SLOTS:
-    void newTagEntries(const QList<Nepomuk2::Query::Result>& results);
-    void finishedTagListing();
-    void tagsChanged();
-    void resourceCreated(const Nepomuk2::Resource&,const QList<QUrl>&);
-    void resourceRemoved(const QUrl&,const QList<QUrl>&);
-    void propertyChanged(const Nepomuk2::Resource&);
+    void finishedTagListing(KJob *job);
     void newTagActionClicked();
-
-    void slotLoadedResourceForUpdateActionStates(const QUrl& uri, const Nepomuk2::Resource& res);
+    void onSignalMapped(const QString &tag);
+    void onTagAdded(const Akonadi::Tag &);
+    void onTagRemoved(const Akonadi::Tag &);
+    void onTagChanged(const Akonadi::Tag &);
 
 private:
     void createTagAction( const MailCommon::Tag::Ptr &tag, bool addToMenu );
-    void createTagActions();
-
-    QList<QUrl> checkedTags() const;
-    void checkTags( const QList<QUrl> &tags );
+    void createTagActions( const QList<MailCommon::Tag::Ptr> &);
+    void checkTags(const QList<qint64>& tags);
+    QList<qint64> checkedTags() const;
 
     KActionCollection *mActionCollection;
     MessageActions *mMessageActions;
@@ -143,21 +128,20 @@ private:
     QAction *mSeparatorNewTagAction;
     KAction *mMoreAction;
     KAction *mNewTagAction;
-    // Maps the resource URI or a tag to the action of a tag.
+    // Maps the id of a tag to the action of a tag.
     // Contains all existing tags
-    QMap<QString,KToggleAction*> mTagActions;
+    QMap<qint64,KToggleAction*> mTagActions;
 
     // The actions of all tags that are in the toolbar
     QList<QAction*> mToolbarActions;
 
-    // Cache of the tags to avoid expensive Nepomuk queries
+    // A sorted list of all tags
     QList<MailCommon::Tag::Ptr> mTags;
 
-    Nepomuk2::Query::QueryServiceClient *mTagQueryClient;
-    MessageCore::AsyncNepomukResourceRetriever *mAsyncNepomukRetriver;
-
     // Uri of a newly created tag
-    QString mNewTagUri;
+    qint64 mNewTagId;
+    bool mTagFetchInProgress;
+    Akonadi::Monitor *mMonitor;
 };
 }
 
