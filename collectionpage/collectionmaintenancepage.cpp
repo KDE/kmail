@@ -91,7 +91,6 @@ void CollectionMaintenancePage::init(const Akonadi::Collection & col)
     box->addRow( new QLabel( i18n("Unread messages:"), messagesGroup ), mCollectionUnread );
 
     topLayout->addWidget( messagesGroup );
-#if 0
     QGroupBox *indexingGroup = new QGroupBox( i18n( "Indexing" ), this );
     QVBoxLayout *indexingLayout = new QVBoxLayout( indexingGroup );
     mIndexingEnabled = new QCheckBox( i18n( "Enable Full Text Indexing" ) );
@@ -106,7 +105,6 @@ void CollectionMaintenancePage::init(const Akonadi::Collection & col)
     connect(forceReindex,SIGNAL(clicked()),SLOT(slotReindexing()));
 
     topLayout->addWidget( indexingGroup );
-#endif
     topLayout->addStretch( 100 );
 }
 
