@@ -21,7 +21,7 @@ using namespace KMail;
 KMailSearchPatternEdit::KMailSearchPatternEdit(QWidget *parent)
     : MailCommon::SearchPatternEdit(parent,
                                     (MailCommon::SearchPatternEdit::SearchPatternEditOptions)(SearchPatternEdit::NotShowDate|SearchPatternEdit::AbsoluteDate),
-                                    NepomukMode)
+                                    BalooMode)
 {
 }
 
