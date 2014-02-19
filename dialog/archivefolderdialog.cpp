@@ -140,8 +140,7 @@ bool canRemoveFolder( const Akonadi::Collection& col )
             && !col.isVirtual()
             && ( col.rights() & Akonadi::Collection::CanDeleteCollection )
             && !folder->isStructural()
-            && !folder->isSystemFolder()
-            && ( col.resource() != QLatin1String( "akonadi_nepomuktag_resource" ) );
+            && !folder->isSystemFolder();
 }
 
 void ArchiveFolderDialog::slotRecursiveCheckboxClicked()

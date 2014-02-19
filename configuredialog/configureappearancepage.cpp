@@ -45,6 +45,14 @@ using namespace PimCommon::ConfigureImmutableWidgetUtils;
 
 #include "mailcommon/util/mailutil.h"
 
+#include <Akonadi/Tag>
+#include <Akonadi/TagFetchJob>
+#include <Akonadi/TagFetchScope>
+#include <Akonadi/TagDeleteJob>
+#include <Akonadi/TagCreateJob>
+#include <Akonadi/TagAttribute>
+#include <Akonadi/TagModifyJob>
+
 #include <KIconButton>
 #include <KButtonGroup>
 #include <KLocalizedString>
@@ -54,8 +62,6 @@ using namespace PimCommon::ConfigureImmutableWidgetUtils;
 #include <KHBox>
 #include <KMessageBox>
 #include <KKeySequenceWidget>
-#include <Nepomuk2/Tag>
-#include <nepomuk2/resourcemanager.h>
 #include <KLineEdit>
 #include <KDialog>
 
@@ -1018,124 +1024,114 @@ AppearancePageMessageTagTab::AppearancePageMessageTagTab( QWidget * parent )
     maingrid->setMargin( KDialog::marginHint() );
     maingrid->setSpacing( KDialog::spacingHint() );
 
-    mNepomukActive = Nepomuk2::ResourceManager::instance()->initialized();
-    if ( mNepomukActive ) {
 
-        //Lefthand side Listbox and friends
+    //Lefthand side Listbox and friends
 
-        //Groupbox frame
-        mTagsGroupBox = new QGroupBox( i18n("A&vailable Tags"), this );
-        maingrid->addWidget( mTagsGroupBox );
-        QVBoxLayout *tageditgrid = new QVBoxLayout( mTagsGroupBox );
-        tageditgrid->setMargin( KDialog::marginHint() );
-        tageditgrid->setSpacing( KDialog::spacingHint() );
-        tageditgrid->addSpacing( 2 * KDialog::spacingHint() );
+    //Groupbox frame
+    mTagsGroupBox = new QGroupBox( i18n("A&vailable Tags"), this );
+    maingrid->addWidget( mTagsGroupBox );
+    QVBoxLayout *tageditgrid = new QVBoxLayout( mTagsGroupBox );
+    tageditgrid->setMargin( KDialog::marginHint() );
+    tageditgrid->setSpacing( KDialog::spacingHint() );
+    tageditgrid->addSpacing( 2 * KDialog::spacingHint() );
 
-        //Listbox, add, remove row
-        QHBoxLayout *addremovegrid = new QHBoxLayout();
-        tageditgrid->addLayout( addremovegrid );
+    //Listbox, add, remove row
+    QHBoxLayout *addremovegrid = new QHBoxLayout();
+    tageditgrid->addLayout( addremovegrid );
 
-        mTagAddLineEdit = new KLineEdit( mTagsGroupBox );
-        mTagAddLineEdit->setTrapReturnKey( true );
-        addremovegrid->addWidget( mTagAddLineEdit );
+    mTagAddLineEdit = new KLineEdit( mTagsGroupBox );
+    mTagAddLineEdit->setTrapReturnKey( true );
+    addremovegrid->addWidget( mTagAddLineEdit );
 
-        mTagAddButton = new KPushButton( mTagsGroupBox );
-        mTagAddButton->setToolTip( i18n("Add new tag") );
-        mTagAddButton->setIcon( KIcon( QLatin1String("list-add") ) );
-        addremovegrid->addWidget( mTagAddButton );
+    mTagAddButton = new KPushButton( mTagsGroupBox );
+    mTagAddButton->setToolTip( i18n("Add new tag") );
+    mTagAddButton->setIcon( KIcon( QLatin1String("list-add") ) );
+    addremovegrid->addWidget( mTagAddButton );
 
-        mTagRemoveButton = new KPushButton( mTagsGroupBox );
-        mTagRemoveButton->setToolTip( i18n("Remove selected tag") );
-        mTagRemoveButton->setIcon( KIcon( QLatin1String("list-remove") ) );
-        addremovegrid->addWidget( mTagRemoveButton );
+    mTagRemoveButton = new KPushButton( mTagsGroupBox );
+    mTagRemoveButton->setToolTip( i18n("Remove selected tag") );
+    mTagRemoveButton->setIcon( KIcon( QLatin1String("list-remove") ) );
+    addremovegrid->addWidget( mTagRemoveButton );
 
-        //Up and down buttons
-        QHBoxLayout *updowngrid = new QHBoxLayout();
-        tageditgrid->addLayout( updowngrid );
+    //Up and down buttons
+    QHBoxLayout *updowngrid = new QHBoxLayout();
+    tageditgrid->addLayout( updowngrid );
 
-        mTagUpButton = new KPushButton( mTagsGroupBox );
-        mTagUpButton->setToolTip( i18n("Increase tag priority") );
-        mTagUpButton->setIcon( KIcon( QLatin1String("arrow-up") ) );
-        mTagUpButton->setAutoRepeat( true );
-        updowngrid->addWidget( mTagUpButton );
+    mTagUpButton = new KPushButton( mTagsGroupBox );
+    mTagUpButton->setToolTip( i18n("Increase tag priority") );
+    mTagUpButton->setIcon( KIcon( QLatin1String("arrow-up") ) );
+    mTagUpButton->setAutoRepeat( true );
+    updowngrid->addWidget( mTagUpButton );
 
-        mTagDownButton = new KPushButton( mTagsGroupBox );
-        mTagDownButton->setToolTip( i18n("Decrease tag priority") );
-        mTagDownButton->setIcon( KIcon( QLatin1String("arrow-down") ) );
-        mTagDownButton->setAutoRepeat( true );
-        updowngrid->addWidget( mTagDownButton );
+    mTagDownButton = new KPushButton( mTagsGroupBox );
+    mTagDownButton->setToolTip( i18n("Decrease tag priority") );
+    mTagDownButton->setIcon( KIcon( QLatin1String("arrow-down") ) );
+    mTagDownButton->setAutoRepeat( true );
+    updowngrid->addWidget( mTagDownButton );
 
-        //Listbox for tag names
-        QHBoxLayout *listboxgrid = new QHBoxLayout();
-        tageditgrid->addLayout( listboxgrid );
-        mTagListBox = new QListWidget( mTagsGroupBox );
-        mTagListBox->setDragDropMode(QAbstractItemView::InternalMove);
-        connect( mTagListBox->model(),SIGNAL(rowsMoved(QModelIndex,int,int,QModelIndex,int)),SLOT(slotRowsMoved(QModelIndex,int,int,QModelIndex,int)) );
+    //Listbox for tag names
+    QHBoxLayout *listboxgrid = new QHBoxLayout();
+    tageditgrid->addLayout( listboxgrid );
+    mTagListBox = new QListWidget( mTagsGroupBox );
+    mTagListBox->setDragDropMode(QAbstractItemView::InternalMove);
+    connect( mTagListBox->model(),SIGNAL(rowsMoved(QModelIndex,int,int,QModelIndex,int)),SLOT(slotRowsMoved(QModelIndex,int,int,QModelIndex,int)) );
 
-        mTagListBox->setMinimumWidth( 150 );
-        listboxgrid->addWidget( mTagListBox );
+    mTagListBox->setMinimumWidth( 150 );
+    listboxgrid->addWidget( mTagListBox );
 
-        //RHS for individual tag settings
+    //RHS for individual tag settings
 
-        //Extra VBoxLayout for stretchers around settings
-        QVBoxLayout *tagsettinggrid = new QVBoxLayout();
-        maingrid->addLayout( tagsettinggrid );
-        //tagsettinggrid->addStretch( 10 );
+    //Extra VBoxLayout for stretchers around settings
+    QVBoxLayout *tagsettinggrid = new QVBoxLayout();
+    maingrid->addLayout( tagsettinggrid );
+    //tagsettinggrid->addStretch( 10 );
 
-        //Groupbox frame
-        mTagSettingGroupBox = new QGroupBox( i18n("Ta&g Settings"),
-                                             this );
-        tagsettinggrid->addWidget( mTagSettingGroupBox );
-        QList<KActionCollection *> actionCollections;
-        if( kmkernel->getKMMainWidget() )
-            actionCollections = kmkernel->getKMMainWidget()->actionCollections();
+    //Groupbox frame
+    mTagSettingGroupBox = new QGroupBox( i18n("Ta&g Settings"),
+                                          this );
+    tagsettinggrid->addWidget( mTagSettingGroupBox );
+    QList<KActionCollection *> actionCollections;
+    if( kmkernel->getKMMainWidget() )
+        actionCollections = kmkernel->getKMMainWidget()->actionCollections();
 
-        QHBoxLayout *lay = new QHBoxLayout(mTagSettingGroupBox);
-        mTagWidget = new MailCommon::TagWidget(actionCollections,this);
-        lay->addWidget(mTagWidget);
+    QHBoxLayout *lay = new QHBoxLayout(mTagSettingGroupBox);
+    mTagWidget = new MailCommon::TagWidget(actionCollections,this);
+    lay->addWidget(mTagWidget);
 
-        connect(mTagWidget,SIGNAL(changed()),this, SLOT(slotEmitChangeCheck()));
+    connect(mTagWidget,SIGNAL(changed()),this, SLOT(slotEmitChangeCheck()));
 
-        //For enabling the add button in case box is non-empty
-        connect( mTagAddLineEdit, SIGNAL(textChanged(QString)),
-                 this, SLOT(slotAddLineTextChanged(QString)) );
+    //For enabling the add button in case box is non-empty
+    connect( mTagAddLineEdit, SIGNAL(textChanged(QString)),
+              this, SLOT(slotAddLineTextChanged(QString)) );
 
-        //For on-the-fly updating of tag name in editbox
-        connect( mTagWidget->tagNameLineEdit(), SIGNAL(textChanged(QString)),
-                 this, SLOT(slotNameLineTextChanged(QString)) );
+    //For on-the-fly updating of tag name in editbox
+    connect( mTagWidget->tagNameLineEdit(), SIGNAL(textChanged(QString)),
+              this, SLOT(slotNameLineTextChanged(QString)) );
 
-        connect( mTagWidget, SIGNAL(iconNameChanged(QString)), SLOT(slotIconNameChanged(QString)) );
+    connect( mTagWidget, SIGNAL(iconNameChanged(QString)), SLOT(slotIconNameChanged(QString)) );
 
-        connect(  mTagAddLineEdit, SIGNAL(returnPressed()),
-                  this, SLOT(slotAddNewTag()) );
+    connect(  mTagAddLineEdit, SIGNAL(returnPressed()),
+              this, SLOT(slotAddNewTag()) );
 
 
-        connect( mTagAddButton, SIGNAL(clicked()),
-                 this, SLOT(slotAddNewTag()) );
+    connect( mTagAddButton, SIGNAL(clicked()),
+              this, SLOT(slotAddNewTag()) );
 
-        connect( mTagRemoveButton, SIGNAL(clicked()),
-                 this, SLOT(slotRemoveTag()) );
+    connect( mTagRemoveButton, SIGNAL(clicked()),
+              this, SLOT(slotRemoveTag()) );
 
-        connect( mTagUpButton, SIGNAL(clicked()),
-                 this, SLOT(slotMoveTagUp()) );
+    connect( mTagUpButton, SIGNAL(clicked()),
+              this, SLOT(slotMoveTagUp()) );
 
-        connect( mTagDownButton, SIGNAL(clicked()),
-                 this, SLOT(slotMoveTagDown()) );
+    connect( mTagDownButton, SIGNAL(clicked()),
+              this, SLOT(slotMoveTagDown()) );
 
-        connect( mTagListBox, SIGNAL(currentItemChanged(QListWidgetItem*,QListWidgetItem*)),
-                 this, SLOT(slotSelectionChanged()) );
-        //Adjust widths for columns
-        maingrid->setStretchFactor( mTagsGroupBox, 1 );
-        maingrid->setStretchFactor( lay, 1 );
-        tagsettinggrid->addStretch( 10 );
-
-
-    } else {
-        QLabel *lab = new QLabel;
-        lab->setText( i18n( "The Nepomuk semantic search service is not available. We cannot configure tags. You can enable it in \"System Settings\"" ) );
-        lab->setWordWrap(true);
-        maingrid->addWidget( lab );
-    }
+    connect( mTagListBox, SIGNAL(currentItemChanged(QListWidgetItem*,QListWidgetItem*)),
+              this, SLOT(slotSelectionChanged()) );
+    //Adjust widths for columns
+    maingrid->setStretchFactor( mTagsGroupBox, 1 );
+    maingrid->setStretchFactor( lay, 1 );
+    tagsettinggrid->addStretch( 10 );
 }
 
 AppearancePageMessageTagTab::~AppearancePageMessageTagTab()
@@ -1239,12 +1235,10 @@ void AppearancePage::MessageTagTab::slotUpdateTagSettingWidgets( int aIndex )
     TagListWidgetItem *tagItem = static_cast<TagListWidgetItem*>( item );
     MailCommon::Tag::Ptr tmp_desc = tagItem->kmailTag();
 
-    mTagRemoveButton->setEnabled( !tmp_desc->tagStatus );
-
     disconnect( mTagWidget->tagNameLineEdit(), SIGNAL(textChanged(QString)),
                 this, SLOT(slotNameLineTextChanged(QString)) );
 
-    mTagWidget->tagNameLineEdit()->setEnabled(!tmp_desc->tagStatus);
+    mTagWidget->tagNameLineEdit()->setEnabled( !tmp_desc->isImmutable );
     mTagWidget->tagNameLineEdit()->setText( tmp_desc->tagName );
     connect( mTagWidget->tagNameLineEdit(), SIGNAL(textChanged(QString)),
              this, SLOT(slotNameLineTextChanged(QString)) );
@@ -1256,7 +1250,7 @@ void AppearancePage::MessageTagTab::slotUpdateTagSettingWidgets( int aIndex )
 
     mTagWidget->setTagTextFont(tmp_desc->textFont);
 
-    mTagWidget->iconButton()->setEnabled( !tmp_desc->tagStatus );
+    mTagWidget->iconButton()->setEnabled( !tmp_desc->isImmutable );
     mTagWidget->iconButton()->setIcon( tmp_desc->iconName );
 
     mTagWidget->keySequenceWidget()->setEnabled( true );
@@ -1283,8 +1277,11 @@ void AppearancePage::MessageTagTab::slotRemoveTag()
         QListWidgetItem * item = mTagListBox->takeItem( mTagListBox->currentRow() );
         TagListWidgetItem *tagItem = static_cast<TagListWidgetItem*>( item );
         MailCommon::Tag::Ptr tmp_desc = tagItem->kmailTag();
-        Nepomuk2::Tag nepomukTag( tmp_desc->nepomukResourceUri );
-        nepomukTag.remove();
+        if ( tmp_desc->tag().isValid() ) {
+          new Akonadi::TagDeleteJob(tmp_desc->tag());
+        } else {
+          kWarning() << "Can't remove tag with invalid akonadi tag";
+        }
         mPreviousTag = -1;
 
         //Before deleting the current item, make sure the selectionChanged signal
@@ -1355,13 +1352,11 @@ void AppearancePage::MessageTagTab::slotAddNewTag()
         }
     }
 
-
     const int tmp_priority = mTagListBox->count();
-    Nepomuk2::Tag nepomukTag( newTagName );
-    nepomukTag.setLabel( newTagName );
 
-    MailCommon::Tag::Ptr tag = MailCommon::Tag::fromNepomuk( nepomukTag );
+    MailCommon::Tag::Ptr tag( Tag::createDefaultTag( newTagName ) );
     tag->priority = tmp_priority;
+
     slotEmitChangeCheck();
     TagListWidgetItem *newItem = new TagListWidgetItem( KIcon( tag->iconName ), newTagName,  mTagListBox );
     newItem->setKMailTag( tag );
@@ -1372,13 +1367,24 @@ void AppearancePage::MessageTagTab::slotAddNewTag()
 
 void AppearancePage::MessageTagTab::doLoadFromGlobalSettings()
 {
-    if ( !mNepomukActive )
-        return;
-
     mTagListBox->clear();
+
+    Akonadi::TagFetchJob *fetchJob = new Akonadi::TagFetchJob(this);
+    fetchJob->fetchScope().fetchAttribute<Akonadi::TagAttribute>();
+    connect(fetchJob, SIGNAL(result(KJob*)), this, SLOT(slotTagsFetched(KJob*)));
+}
+
+void AppearancePage::MessageTagTab::slotTagsFetched(KJob *job)
+{
+    if (job->error()) {
+        kWarning() << "Failed to load tags " << job->errorString();
+        return;
+    }
+    Akonadi::TagFetchJob *fetchJob = static_cast<Akonadi::TagFetchJob*>(job);
+
     QList<MailCommon::TagPtr> msgTagList;
-    foreach( const Nepomuk2::Tag &nepomukTag, Nepomuk2::Tag::allTags() ) {
-        MailCommon::Tag::Ptr tag = MailCommon::Tag::fromNepomuk( nepomukTag );
+    foreach( const Akonadi::Tag &akonadiTag, fetchJob->tags() ) {
+        MailCommon::Tag::Ptr tag = MailCommon::Tag::fromAkonadi( akonadiTag );
         msgTagList.append( tag );
     }
 
@@ -1407,14 +1413,11 @@ void AppearancePage::MessageTagTab::doLoadFromGlobalSettings()
     foreach( const MailCommon::TagPtr &tag, msgTagList ) {
         mOriginalMsgTagList.append( MailCommon::TagPtr( new MailCommon::Tag( *tag ) ) );
     }
+
 }
 
 void AppearancePage::MessageTagTab::save()
 {
-    if ( !mNepomukActive ) {
-        return;
-    }
-
     const int currentRow = mTagListBox->currentRow();
     if ( currentRow < 0 ) {
         return;
@@ -1439,7 +1442,12 @@ void AppearancePage::MessageTagTab::save()
             tag->priority = i;
 
             MailCommon::Tag::SaveFlags saveFlags = mTagWidget->saveFlags();
-            tag->saveToNepomuk( saveFlags );
+            const Akonadi::Tag akonadiTag = tag->saveToAkonadi( saveFlags );
+            if (akonadiTag.isValid()) {
+                new Akonadi::TagModifyJob(akonadiTag);
+            } else {
+                new Akonadi::TagCreateJob(akonadiTag);
+            }
         }
     }
 }

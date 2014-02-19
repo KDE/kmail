@@ -18,6 +18,10 @@
 #include <akonadi/itemfetchscope.h>
 #include <akonadi/collection.h>
 
+namespace Akonadi {
+class Tag;
+}
+
 using Akonadi::MessageStatus;
 
 class KProgressDialog;
@@ -433,13 +437,19 @@ class KMAIL_EXPORT KMSetTagCommand : public KMCommand
 public:
     enum SetTagMode { AddIfNotExisting, Toggle, CleanExistingAndAddNew };
 
-    KMSetTagCommand( const QList<QString> &tagLabel, const QList<Akonadi::Item> &item,
+    KMSetTagCommand( const Akonadi::Tag::List &tags, const QList<Akonadi::Item> &item,
                      SetTagMode mode=AddIfNotExisting );
+
+protected slots:
+    void slotTagCreateDone( KJob * job );
+    void slotModifyItemDone( KJob * job );
 
 private:
     virtual Result execute();
+    void setTags();
 
-    QList<QString> mTagLabel;
+    Akonadi::Tag::List mTags;
+    Akonadi::Tag::List mCreatedTags;
     QList<Akonadi::Item> mItem;
     SetTagMode mMode;
 };

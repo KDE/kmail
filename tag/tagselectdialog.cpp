@@ -33,13 +33,13 @@
 #include <mailcommon/tag/addtagdialog.h>
 
 #include <KListWidgetSearchLine>
+#include <KLocalizedString>
 
-#include <Nepomuk2/Resource>
-#include <Nepomuk2/ResourceManager>
-#include <Nepomuk2/Tag>
 #include <QGridLayout>
 #include <QListWidget>
-#include <akonadi/item.h>
+#include <Akonadi/TagFetchJob>
+#include <Akonadi/TagFetchScope>
+#include <Akonadi/TagAttribute>
 
 using namespace KMail;
 
@@ -98,42 +98,51 @@ void TagSelectDialog::slotAddNewTag()
 
 void TagSelectDialog::createTagList()
 {
-    foreach( const Nepomuk2::Tag &nepomukTag, Nepomuk2::Tag::allTags() ) {
-        mTagList.append( MailCommon::Tag::fromNepomuk( nepomukTag ) );
+    Akonadi::TagFetchJob *fetchJob = new Akonadi::TagFetchJob(this);
+    fetchJob->fetchScope().fetchAttribute<Akonadi::TagAttribute>();
+    connect(fetchJob, SIGNAL(result(KJob*)), this, SLOT(slotTagsFetched(KJob*)));
+}
+
+void TagSelectDialog::slotTagsFetched(KJob *job)
+{
+    if (job->error()) {
+        kWarning() << "Failed to load tags " << job->errorString();
+        return;
     }
+    Akonadi::TagFetchJob *fetchJob = static_cast<Akonadi::TagFetchJob*>(job);
+
+    QList<MailCommon::Tag::Ptr> msgTagList;
+    foreach( const Akonadi::Tag &akonadiTag, fetchJob->tags() ) {
+        mTagList.append( MailCommon::Tag::fromAkonadi( akonadiTag ) );
+    }
+
     qSort( mTagList.begin(), mTagList.end(), MailCommon::Tag::compare );
 
-    Nepomuk2::Resource itemResource( mSelectedItem.url() );
-
     foreach( const MailCommon::Tag::Ptr &tag, mTagList ) {
-        if(tag->tagStatus)
-            continue;
         QListWidgetItem *item = new QListWidgetItem(KIcon(tag->iconName), tag->tagName, mListTag );
-        item->setData(UrlTag, tag->nepomukResourceUri.toString());
+        item->setData(UrlTag, tag->tag().url().url() );
         item->setFlags( Qt::ItemIsUserCheckable | Qt::ItemIsEnabled | Qt::ItemIsSelectable );
         item->setCheckState( Qt::Unchecked );
         mListTag->addItem( item );
 
         if ( mNumberOfSelectedMessages == 1 ) {
-            const bool hasTag = itemResource.tags().contains(  Nepomuk2::Tag( tag->tagName ) );
+            const bool hasTag = mSelectedItem.hasTag( tag->tag() );
             item->setCheckState( hasTag ? Qt::Checked : Qt::Unchecked );
         } else {
             item->setCheckState( Qt::Unchecked );
         }
     }
-
 }
 
-QList<QString> TagSelectDialog::selectedTag() const
+Akonadi::Tag::List TagSelectDialog::selectedTag() const
 {
-    QList<QString> lst;
+    Akonadi::Tag::List lst;
     const int numberOfItems( mListTag->count() );
     for ( int i = 0; i< numberOfItems;++i ) {
         QListWidgetItem *item = mListTag->item( i );
         if ( item->checkState() == Qt::Checked ) {
-            lst.append( item->data(UrlTag).toString() );
+            lst.append( Akonadi::Tag::fromUrl( item->data(UrlTag).toString() ) );
         }
     }
     return lst;
 }
-

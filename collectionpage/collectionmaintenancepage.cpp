@@ -25,18 +25,12 @@
 #include <Akonadi/AgentManager>
 #include <Akonadi/ChangeRecorder>
 
-#if 0
-#include <Soprano/Vocabulary/NAO>
-#include <Nepomuk2/Variant>
-#include <Nepomuk2/ResourceManager>
-#include <nepomuk2/datamanagement.h>
-#endif
-
 #include <QDBusInterface>
 #include <QDBusConnectionInterface>
 
 #include <KDialog>
 #include <KLocalizedString>
+#include <KLocale>
 #include <KPushButton>
 #include <kio/global.h>
 #include <KLocale>
@@ -109,13 +103,7 @@ void CollectionMaintenancePage::init(const Akonadi::Collection & col)
 
     KPushButton *forceReindex = new KPushButton(i18n("Force reindexing"));
     indexingLayout->addWidget( forceReindex );
-
-    if(!Nepomuk2::ResourceManager::instance()->initialized()) {
-        mLastIndexed->hide();
-        forceReindex->setEnabled(false);
-    } else {
-        connect(forceReindex,SIGNAL(clicked()),SLOT(slotReindexing()));
-    }
+    connect(forceReindex,SIGNAL(clicked()),SLOT(slotReindexing()));
 
     topLayout->addWidget( indexingGroup );
 #endif
@@ -127,25 +115,26 @@ void CollectionMaintenancePage::load(const Collection & col)
     init( col );
     if ( col.isValid() ) {
         updateLabel( col.statistics().count(), col.statistics().unreadCount(), col.statistics().size() );
-#if 0
         Akonadi::IndexPolicyAttribute *attr = col.attribute<Akonadi::IndexPolicyAttribute>();
         const bool indexingWasEnabled(!attr || attr->indexingEnabled());
         mIndexingEnabled->setChecked( indexingWasEnabled );
         if(!indexingWasEnabled)
             mLastIndexed->hide();
         else {
-            const KUrl url = col.url( Akonadi::Collection::UrlShort );
-            if(!url.isEmpty()) {
-                const Nepomuk2::Resource parentResource( url );
-                const QDateTime dt = parentResource.property( Soprano::Vocabulary::NAO::lastModified() ).toDateTime();
-                const KDateTime localTime(dt, KDateTime::LocalZone);
-                if(localTime.isValid()) {
-                    mLastIndexed->setText(i18n("Folder was indexed: %1",KGlobal::locale()->formatDateTime(localTime)));
+            QDBusInterface interfaceNepomukFeeder( QLatin1String("org.freedesktop.Akonadi.Agent.akonadi_baloo_indexer"), QLatin1String("/") );
+            if(interfaceNepomukFeeder.isValid()) {
+                if (!interfaceNepomukFeeder.callWithCallback(QLatin1String("indexedItems"), QList<QVariant>() << (qlonglong)mCurrentCollection.id(), this, SLOT(onIndexedItemsReceived(qint64)))) {
+                    kWarning() << "Failed to request indexed items";
                 }
             }
         }
-#endif
     }
+}
+
+void CollectionMaintenancePage::onIndexedItemsReceived(qint64 num)
+{
+    kDebug() << num;
+    mLastIndexed->setText(i18n("Indexed %1 items of this collection", num));
 }
 
 void CollectionMaintenancePage::updateLabel( qint64 nbMail, qint64 nbUnreadMail, qint64 size )
@@ -155,9 +144,8 @@ void CollectionMaintenancePage::updateLabel( qint64 nbMail, qint64 nbUnreadMail,
     mFolderSizeLabel->setText( KGlobal::locale()->formatByteSize( qMax( 0LL, size ) ) );
 }
 
-void CollectionMaintenancePage::save(Collection &/*collection*/ )
+void CollectionMaintenancePage::save(Collection &collection)
 {
-#if 0
     if ( !collection.hasAttribute<Akonadi::IndexPolicyAttribute>() && mIndexingEnabled->isChecked() )
         return;
     Akonadi::IndexPolicyAttribute *attr = collection.attribute<Akonadi::IndexPolicyAttribute>( Akonadi::Collection::AddIfMissing );
@@ -165,9 +153,7 @@ void CollectionMaintenancePage::save(Collection &/*collection*/ )
         attr->setIndexingEnabled( true );
     else {
         attr->setIndexingEnabled( false );
-        Nepomuk2::removeResources( QList <QUrl>() << collection.url() );
     }
-#endif
 }
 
 void CollectionMaintenancePage::updateCollectionStatistic(Akonadi::Collection::Id id, const Akonadi::CollectionStatistics& statistic)
@@ -177,14 +163,10 @@ void CollectionMaintenancePage::updateCollectionStatistic(Akonadi::Collection::I
     }
 }
 
-#if 0
 void CollectionMaintenancePage::slotReindexing()
 {
-    //Be sure to remove collection resources before to reindex.
-    Nepomuk2::removeResources( QList <QUrl>() << mCurrentCollection.url() );
-    QDBusInterface interfaceNepomukFeeder( QLatin1String("org.freedesktop.Akonadi.Agent.akonadi_nepomuk_feeder"), QLatin1String("/") );
+    QDBusInterface interfaceNepomukFeeder( QLatin1String("org.freedesktop.Akonadi.Agent.akonadi_baloo_indexer"), QLatin1String("/") );
     if(interfaceNepomukFeeder.isValid()) {
-        interfaceNepomukFeeder.asyncCall(QLatin1String("forceReindexCollection"),(qlonglong)mCurrentCollection.id());
+        interfaceNepomukFeeder.asyncCall(QLatin1String("reindexCollection"),(qlonglong)mCurrentCollection.id());
     }
 }
-#endif

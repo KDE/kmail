@@ -31,11 +31,6 @@
 
 #include "messagecore/utils/stringutil.h"
 
-#include <nepomuk2/nmo.h>
-#include <Nepomuk2/Resource>
-#include <Nepomuk2/Variant>
-
-
 #include <akonadi/itemfetchscope.h>
 #include <akonadi/monitor.h>
 #include <akonadi/session.h>
@@ -56,7 +51,7 @@ typedef boost::shared_ptr<KMime::Message> MessagePtr;
 KMSearchMessageModel::KMSearchMessageModel( QObject *parent )
     : Akonadi::MessageModel( parent )
 {
-    fetchScope().fetchPayloadPart( Akonadi::MessagePart::Envelope );
+    fetchScope().fetchFullPayload();
     fetchScope().setAncestorRetrieval( Akonadi::ItemFetchScope::All );
 }
 
@@ -107,7 +102,7 @@ QString toolTip( const Akonadi::Item& item )
                 "</td>"                                                      \
                 "</tr>" );
 
-    QString content = MessageList::Util::contentSummary( item.url() );
+    QString content = MessageList::Util::contentSummary( item );
 
     if ( textIsLeftToRight ) {
         tip += htmlCodeForStandardRow.arg( i18n( "From" ) ).arg( MessageCore::StringUtil::stripEmailAddr( msg->from()->asUnicodeString() ) );

@@ -43,9 +43,6 @@
 
 #include "kmcommands.h"
 
-#include <Nepomuk2/Tag>
-#include <nepomuk2/resource.h>
-
 #include "widgets/collectionpane.h"
 #include "kernel/mailkernel.h"
 #include "util/mailutil.h"
@@ -109,6 +106,8 @@ using KMail::SecondaryWindow;
 #include <akonadi/itemmovejob.h>
 #include <akonadi/itemcopyjob.h>
 #include <akonadi/itemdeletejob.h>
+#include <akonadi/tag.h>
+#include <akonadi/tagcreatejob.h>
 #include <mailtransport/transportattribute.h>
 #include <mailtransport/sentbehaviourattribute.h>
 
@@ -1201,65 +1200,97 @@ void KMSetStatusCommand::slotModifyItemDone( KJob * job )
     deleteLater();
 }
 
-KMSetTagCommand::KMSetTagCommand( const QList<QString> &tagLabel, const QList<Akonadi::Item> &item,
+KMSetTagCommand::KMSetTagCommand( const Akonadi::Tag::List &tags, const QList<Akonadi::Item> &item,
                                   SetTagMode mode )
-    : mTagLabel( tagLabel )
+    : mTags( tags )
     , mItem( item )
     , mMode( mode )
 {
+    setDeletesItself(true);
 }
 
 KMCommand::Result KMSetTagCommand::execute()
 {
-    QStringList tagSelectedlst;
-    Q_FOREACH( const Akonadi::Item& item, mItem ) {
-        Nepomuk2::Resource n_resource( item.url() );
-        QList<Nepomuk2::Tag> n_tag_list;
-        if ( mMode != CleanExistingAndAddNew ){
-            n_tag_list = n_resource.tags();
-        }
-
-        Q_FOREACH( const QString &tagLabel, mTagLabel ) {
-            const Nepomuk2::Tag n_tag( tagLabel );
-            const QString tagUri(n_tag.uri().toString());
-            if ( mMode == CleanExistingAndAddNew ) {
-                n_resource.addTag( n_tag );
-                if(!tagSelectedlst.contains(tagUri))
-                    tagSelectedlst<<tagUri;
-            } else {
-                const int tagPosition = n_tag_list.indexOf( tagLabel );
-                if ( tagPosition == -1 ) {
-                    n_resource.addTag( n_tag );
-                    if(!tagSelectedlst.contains(tagUri))
-                        tagSelectedlst<<tagUri;
-                } else if ( mMode == Toggle ) {
-                    const int numberOfTag( n_tag_list.count() );
-                    for (int i = 0; i < numberOfTag; ++i ) {
-                        if ( n_tag_list[i].uri() == tagLabel ) {
-                            n_tag_list.removeAt( i );
-                            break;
-                        }
-                    }
-                    n_resource.setTags( n_tag_list );
-                }
-            }
+    Q_FOREACH( const Akonadi::Tag &tag, mTags ) {
+        if ( !tag.isValid() ) {
+            Akonadi::TagCreateJob *createJob = new Akonadi::TagCreateJob(tag, this);
+            connect( createJob, SIGNAL(result(KJob*)), this, SLOT(slotModifyItemDone(KJob*)) );
+        } else {
+            mCreatedTags << tag;
         }
     }
 
-    if(!tagSelectedlst.isEmpty()) {
+    if ( mCreatedTags.size() == mTags.size() ) {
+        setTags();
+    }
+
+    return OK;
+}
+
+void KMSetTagCommand::slotTagCreateDone(KJob* job)
+{
+    if ( job && job->error() ) {
+        kWarning() << " Error trying to create tag:" << job->errorText();
+        deleteLater();
+        return;
+    }
+    Akonadi::TagCreateJob* createJob = static_cast<Akonadi::TagCreateJob*>(job);
+    mCreatedTags << createJob->tag();
+    if ( mCreatedTags.size() == mTags.size() ) {
+        setTags();
+    }
+}
+
+void KMSetTagCommand::setTags()
+{
+    QStringList tagUrlList;
+
+    Akonadi::Item::List itemsToModify;
+    Q_FOREACH( const Akonadi::Item& i, mItem ) {
+        Akonadi::Item item(i);
+        if ( mMode == CleanExistingAndAddNew ){
+          item.clearTags();
+        }
+
+        Q_FOREACH( const Akonadi::Tag &tag, mCreatedTags ) {
+            if ( mMode == KMSetTagCommand::Toggle ) {
+                if ( item.hasTag(tag) ) {
+                    item.clearTag(tag);
+                } else {
+                    item.setTag(tag);
+                }
+            } else {
+                item.setTag(tag);
+            }
+        }
+        itemsToModify << item;
+    }
+    Akonadi::ItemModifyJob *modifyJob = new Akonadi::ItemModifyJob( itemsToModify, this );
+    modifyJob->disableRevisionCheck();
+    modifyJob->setIgnorePayload( true );
+    connect( modifyJob, SIGNAL(result(KJob*)), this, SLOT(slotModifyItemDone(KJob*)) );
+
+    if(!mCreatedTags.isEmpty()) {
         KConfigGroup tag( KMKernel::self()->config(), "MessageListView" );
         const QString oldTagList = tag.readEntry("TagSelected");
         QStringList lst = oldTagList.split(QLatin1String(","));
-        Q_FOREACH(const QString& str,tagSelectedlst ) {
-            if(!lst.contains(str)) {
-                lst.append(str);
+        Q_FOREACH( const Akonadi::Tag &tag, mCreatedTags ) {
+            const QString url = tag.url().url();
+            if(!lst.contains(url)) {
+                lst.append(url);
             }
         }
         tag.writeEntry("TagSelected",lst);
         KMKernel::self()->updatePaneTagComboBox();
     }
+}
 
-    return OK;
+void KMSetTagCommand::slotModifyItemDone( KJob * job )
+{
+    if ( job && job->error() ) {
+        kWarning() << " Error trying to set item status:" << job->errorText();
+    }
+    deleteLater();
 }
 
 KMFilterActionCommand::KMFilterActionCommand( QWidget *parent,

@@ -31,6 +31,7 @@
 
 #include <KDialog>
 #include <Akonadi/Item>
+#include <Akonadi/Tag>
 #include "tag.h"
 
 class QListWidget;
@@ -40,10 +41,11 @@ class TagSelectDialog : public KDialog
 public:
     explicit TagSelectDialog( QWidget * parent, int numberOfSelectedMessages, const Akonadi::Item &selectedItem );
     ~TagSelectDialog();
-    QList<QString> selectedTag() const;
+    Akonadi::Tag::List selectedTag() const;
 
 private Q_SLOTS:
     void slotAddNewTag();
+    void slotTagsFetched(KJob*);
 
 private:
     void createTagList();

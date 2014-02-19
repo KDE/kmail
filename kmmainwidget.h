@@ -35,7 +35,12 @@
 #include <QPointer>
 #include <QTimer>
 #include <akonadi/kmime/standardmailactionmanager.h>
+#include <akonadi/tag.h>
 #include <messagelist/core/view.h>
+
+namespace Akonadi {
+class Tag;
+}
 
 namespace KMime {
   class Message;
@@ -229,7 +234,7 @@ class KMAIL_EXPORT KMMainWidget : public QWidget
 
     /** Adds if not existing/removes if existing the tag identified by @p aLabel
         in all selected messages */
-    void slotUpdateMessageTagList( const QString &aLabel );
+    void slotUpdateMessageTagList( const Akonadi::Tag &tag );
     void slotSelectMoreMessageTagList();
 
     /**
@@ -467,7 +472,7 @@ class KMAIL_EXPORT KMMainWidget : public QWidget
      * Toggles a tag for the messages referenced by the specified set.
      * The set parameter must not be null and the ownership is passed to this function.
      */
-    void toggleMessageSetTag( const QList<Akonadi::Item> &select, const QString &taglabel );
+    void toggleMessageSetTag( const QList<Akonadi::Item> &select, const Akonadi::Tag &tag );
     /**
      * This applies setMessageSetStatus() on the current thread.
      */

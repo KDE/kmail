@@ -34,8 +34,6 @@
 #include "messageviewer/viewer/csshelper.h"
 #include "messageviewer/settings/globalsettings.h"
 
-#include <Nepomuk2/Resource>
-
 #include <akonadi/itemfetchjob.h>
 #include <akonadi/kmime/messageparts.h>
 #include <KAction>
@@ -56,11 +54,9 @@
 #include <QVariant>
 #include <qwidget.h>
 #include <akonadi/collection.h>
+#include <akonadi/entityannotationsattribute.h>
 #include <Akonadi/Monitor>
 #include <util/mailutil.h>
-#include <nepomukutil/asyncnepomukresourceretriever.h>
-#include <nepomuk2/resourcemanager.h>
-#include <Soprano/Vocabulary/NAO>
 
 using namespace KMail;
 
@@ -70,8 +66,6 @@ MessageActions::MessageActions( KActionCollection *ac, QWidget *parent )
       mMessageView( 0 ),
       mRedirectAction( 0 ),
       mPrintPreviewAction( 0 ),
-      mAsynNepomukRetriever( new MessageCore::AsyncNepomukResourceRetriever( QVector<QUrl>() <<  Soprano::Vocabulary::NAO::annotation().toString()
-                                                                             << Soprano::Vocabulary::NAO::description().toString(), this ) ),
       mCustomTemplatesMenu( 0 )
 {
     mReplyActionMenu = new KActionMenu( KIcon(QLatin1String("mail-reply-sender")), i18nc("Message->","&Reply"), this );
@@ -193,10 +187,9 @@ MessageActions::MessageActions( KActionCollection *ac, QWidget *parent )
     mMonitor = new Akonadi::Monitor( this );
     //FIXME: Attachment fetching is not needed here, but on-demand loading is not supported ATM
     mMonitor->itemFetchScope().fetchPayloadPart( Akonadi::MessagePart::Header );
+    mMonitor->itemFetchScope().fetchAttribute<Akonadi::EntityAnnotationsAttribute>();
     connect( mMonitor, SIGNAL(itemChanged(Akonadi::Item,QSet<QByteArray>)), SLOT(slotItemModified(Akonadi::Item,QSet<QByteArray>)));
     connect( mMonitor, SIGNAL(itemRemoved(Akonadi::Item)), SLOT(slotItemRemoved(Akonadi::Item)));
-
-    connect( mAsynNepomukRetriever, SIGNAL(resourceReceived(QUrl,Nepomuk2::Resource)), SLOT(updateAnnotateAction(QUrl,Nepomuk2::Resource)) );
 
     mCustomTemplatesMenu = new TemplateParser::CustomTemplatesMenu( parent, ac );
 
@@ -301,12 +294,11 @@ void MessageActions::updateActions()
     mReplyListAction->setEnabled( hasPayload );
     mNoQuoteReplyAction->setEnabled( hasPayload );
 
-    if ( Nepomuk2::ResourceManager::instance()->initialized() ) {
-        mAnnotateAction->setEnabled( uniqItem );
-        mAsynNepomukRetriever->requestResource( mCurrentItem.url() );
-    } else {
-        mAnnotateAction->setEnabled( false );
-    }
+    mAnnotateAction->setEnabled( uniqItem );
+    if ( !mCurrentItem.hasAttribute<Akonadi::EntityAnnotationsAttribute>() )
+        mAnnotateAction->setText( i18n( "Add Note..." ) );
+    else
+        mAnnotateAction->setText( i18n( "Edit Note...") );
 
     mStatusMenu->setEnabled( multiVisible );
 
@@ -318,6 +310,7 @@ void MessageActions::updateActions()
             job->fetchScope().fetchAllAttributes();
             job->fetchScope().fetchFullPayload( true );
             job->fetchScope().fetchPayloadPart( Akonadi::MessagePart::Header );
+            job->fetchScope().fetchAttribute<Akonadi::EntityAnnotationsAttribute>();
             connect( job, SIGNAL(result(KJob*)), SLOT(slotUpdateActionsFetchDone(KJob*)) );
         }
     }
@@ -605,21 +598,9 @@ void MessageActions::annotateMessage()
     if ( !mCurrentItem.isValid() )
         return;
 
-    const QUrl url = mCurrentItem.url();
-    MessageCore::AnnotationEditDialog *dialog = new MessageCore::AnnotationEditDialog( url );
+    MessageCore::AnnotationEditDialog *dialog = new MessageCore::AnnotationEditDialog( mCurrentItem );
     dialog->setAttribute( Qt::WA_DeleteOnClose );
-    if ( dialog->exec() )
-        mAsynNepomukRetriever->requestResource( url );
-}
-
-void MessageActions::updateAnnotateAction( const QUrl &url, const Nepomuk2::Resource &resource )
-{
-    if( mCurrentItem.isValid() && mCurrentItem.url() == url ) {
-        if ( resource.description().isEmpty() )
-            mAnnotateAction->setText( i18n( "Add Note..." ) );
-        else
-            mAnnotateAction->setText( i18n( "Edit Note...") );
-    }
+    dialog->exec();
 }
 
 void MessageActions::addWebShortcutsMenu( KMenu *menu, const QString & text )
@@ -685,4 +666,3 @@ void MessageActions::slotConfigureWebShortcuts()
 {
     KToolInvocation::kdeinitExec( QLatin1String("kcmshell4"), QStringList() << QLatin1String("ebrowsing") );
 }
-
