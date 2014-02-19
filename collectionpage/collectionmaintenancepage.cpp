@@ -119,9 +119,9 @@ void CollectionMaintenancePage::load(const Collection & col)
         if(!indexingWasEnabled)
             mLastIndexed->hide();
         else {
-            QDBusInterface interfaceNepomukFeeder( QLatin1String("org.freedesktop.Akonadi.Agent.akonadi_baloo_indexer"), QLatin1String("/") );
-            if(interfaceNepomukFeeder.isValid()) {
-                if (!interfaceNepomukFeeder.callWithCallback(QLatin1String("indexedItems"), QList<QVariant>() << (qlonglong)mCurrentCollection.id(), this, SLOT(onIndexedItemsReceived(qint64)))) {
+            QDBusInterface interfaceBalooIndexer( QLatin1String("org.freedesktop.Akonadi.Agent.akonadi_baloo_indexer"), QLatin1String("/") );
+            if(interfaceBalooIndexer.isValid()) {
+                if (!interfaceBalooIndexer.callWithCallback(QLatin1String("indexedItems"), QList<QVariant>() << (qlonglong)mCurrentCollection.id(), this, SLOT(onIndexedItemsReceived(qint64)))) {
                     kWarning() << "Failed to request indexed items";
                 }
             }
@@ -163,8 +163,8 @@ void CollectionMaintenancePage::updateCollectionStatistic(Akonadi::Collection::I
 
 void CollectionMaintenancePage::slotReindexing()
 {
-    QDBusInterface interfaceNepomukFeeder( QLatin1String("org.freedesktop.Akonadi.Agent.akonadi_baloo_indexer"), QLatin1String("/") );
-    if(interfaceNepomukFeeder.isValid()) {
-        interfaceNepomukFeeder.asyncCall(QLatin1String("reindexCollection"),(qlonglong)mCurrentCollection.id());
+    QDBusInterface interfaceBalooIndexer( QLatin1String("org.freedesktop.Akonadi.Agent.akonadi_baloo_indexer"), QLatin1String("/") );
+    if(interfaceBalooIndexer.isValid()) {
+        interfaceBalooIndexer.asyncCall(QLatin1String("reindexCollection"),(qlonglong)mCurrentCollection.id());
     }
 }
