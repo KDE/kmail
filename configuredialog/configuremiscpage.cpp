@@ -130,7 +130,7 @@ void MiscPage::FolderTab::save()
     GlobalSettings::self()->setStartupFolder( mOnStartupOpenFolder->collection().id() );
 
     saveCheckBox(mMMTab.mDelayedMarkAsRead, MessageViewer::GlobalSettings::self()->delayedMarkAsReadItem() );
-    saveKIntSpinBox(mMMTab.mDelayedMarkTime, MessageViewer::GlobalSettings::self()->delayedMarkTimeItem());
+    saveSpinBox(mMMTab.mDelayedMarkTime, MessageViewer::GlobalSettings::self()->delayedMarkTimeItem());
     saveComboBox(mMMTab.mLoopOnGotoUnread, GlobalSettings::self()->loopOnGotoUnreadItem() );
 
     saveCheckBox(mMMTab.mExcludeImportantFromExpiry, GlobalSettings::self()->excludeImportantMailFromExpiryItem());

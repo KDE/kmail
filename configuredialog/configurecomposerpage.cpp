@@ -584,8 +584,8 @@ void ComposerPage::GeneralTab::save() {
 
     MessageComposer::MessageComposerSettings::self()->setAutoTextSignature(
                 mAutoAppSignFileCheck->isChecked() ? QLatin1String("auto") : QLatin1String("manual") );
-    saveKIntSpinBox(mWrapColumnSpin, MessageComposer::MessageComposerSettings::self()->lineWrapWidthItem() );
-    saveKIntSpinBox(mMaximumRecipients,  MessageComposer::MessageComposerSettings::self()->maximumRecipientsItem() );
+    saveSpinBox(mWrapColumnSpin, MessageComposer::MessageComposerSettings::self()->lineWrapWidthItem() );
+    saveSpinBox(mMaximumRecipients,  MessageComposer::MessageComposerSettings::self()->maximumRecipientsItem() );
     GlobalSettings::self()->setAutosaveInterval( mAutoSave->value() );
     MessageComposer::MessageComposerSettings::self()->setShowRecentAddressesInComposer( mShowRecentAddressesInComposer->isChecked() );
     MessageComposer::MessageComposerSettings::self()->setImprovePlainTextOfHtmlMessage( mImprovePlainTextOfHtmlMessage->isChecked() );
