@@ -18,6 +18,8 @@
 #include <kcomponentdata.h>
 #include <akonadi/servermanager.h>
 #include "messageviewer/viewer/viewer.h"
+#include "progresswidget/progressmanager.h"
+
 
 #define kmkernel KMKernel::self()
 #define kmconfig KMKernel::config()
@@ -35,9 +37,6 @@ namespace KIO {
 class Job;
 }
 
-namespace KPIM {
-class ProgressItem;
-}
 
 namespace MessageComposer {
 class MessageSender;
@@ -526,7 +525,7 @@ private:
     Solid::Networking::Status mSystemNetworkStatus;
 
     KMail::KMSystemTray* mSystemTray;
-    QHash<QString, bool> mResourceCryptoSettingCache;
+    QHash<QString, KPIM::ProgressItem::CryptoStatus> mResourceCryptoSettingCache;
     MailCommon::FolderCollectionMonitor *mFolderCollectionMonitor;
     Akonadi::EntityTreeModel *mEntityTreeModel;
     Akonadi::EntityMimeTypeFilterModel *mCollectionModel;

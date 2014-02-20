@@ -1691,7 +1691,7 @@ void KMKernel::instanceStatusChanged( const Akonadi::AgentInstance &instance )
         // item
         KPIM::ProgressItem *progress =  KPIM::ProgressManager::createProgressItem( 0, instance,
                                                                                    instance.identifier(), instance.name(), instance.statusMessage(),
-                                                                                   false, true );
+                                                                                   false, KPIM::ProgressItem::Encrypted );
         progress->setProperty( "AgentIdentifier", instance.identifier() );
         return;
     }
@@ -1708,23 +1708,26 @@ void KMKernel::instanceStatusChanged( const Akonadi::AgentInstance &instance )
                 mResourcesBeingChecked.append( identifier );
             }
 
-            bool useCrypto = false;
+            KPIM::ProgressItem::CryptoStatus cryptoStatus = KPIM::ProgressItem::Unencrypted;
             if(mResourceCryptoSettingCache.contains(identifier)) {
-                useCrypto = mResourceCryptoSettingCache.value(identifier);
+                cryptoStatus = mResourceCryptoSettingCache.value(identifier);
             } else {
                 if ( identifier.contains( IMAP_RESOURCE_IDENTIFIER ) ) {
                     OrgKdeAkonadiImapSettingsInterface *iface = PimCommon::Util::createImapSettingsInterface( identifier );
                     if ( iface->isValid() ) {
                         const QString imapSafety = iface->safety();
-                        useCrypto = ( imapSafety == QLatin1String( "SSL" ) || imapSafety == QLatin1String( "STARTTLS" ) );
-                        mResourceCryptoSettingCache.insert(identifier,useCrypto);
+                        if (( imapSafety == QLatin1String( "SSL" ) || imapSafety == QLatin1String( "STARTTLS" ) ))
+                            cryptoStatus = KPIM::ProgressItem::Encrypted;
+
+                        mResourceCryptoSettingCache.insert(identifier,cryptoStatus);
                     }
                     delete iface;
                 } else if ( identifier.contains( POP3_RESOURCE_IDENTIFIER ) ) {
                     OrgKdeAkonadiPOP3SettingsInterface *iface = MailCommon::Util::createPop3SettingsInterface( identifier );
                     if ( iface->isValid() ) {
-                        useCrypto = ( iface->useSSL() || iface->useTLS() );
-                        mResourceCryptoSettingCache.insert(identifier,useCrypto);
+                        if (( iface->useSSL() || iface->useTLS() ))
+                            cryptoStatus = KPIM::ProgressItem::Encrypted;
+                        mResourceCryptoSettingCache.insert(identifier, cryptoStatus);
                     }
                     delete iface;
                 }
@@ -1735,7 +1738,7 @@ void KMKernel::instanceStatusChanged( const Akonadi::AgentInstance &instance )
             // item
             KPIM::ProgressItem *progress =  KPIM::ProgressManager::createProgressItem( 0, instance,
                                                                                        instance.identifier(), instance.name(), instance.statusMessage(),
-                                                                                       true, useCrypto );
+                                                                                       true, cryptoStatus );
             progress->setProperty( "AgentIdentifier", instance.identifier() );
         } else if ( instance.status() == Akonadi::AgentInstance::Broken ) {
             agentInstanceBroken( instance );

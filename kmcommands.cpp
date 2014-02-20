@@ -1469,7 +1469,7 @@ KMCommand::Result KMMoveCommand::execute()
     Q_ASSERT( !mProgressItem );
     mProgressItem =
             ProgressManager::createProgressItem (QLatin1String("move")+ProgressManager::getUniqueID(),
-                                                 mDestFolder.isValid() ? i18n( "Moving messages" ) : i18n( "Deleting messages" ) );
+                                                 mDestFolder.isValid() ? i18n( "Moving messages" ) : i18n( "Deleting messages" ), QString(), true, KPIM::ProgressItem::Unknown );
     mProgressItem->setUsesBusyIndicator( true );
     connect( mProgressItem, SIGNAL(progressItemCanceled(KPIM::ProgressItem*)),
              this, SLOT(slotMoveCanceled()) );
