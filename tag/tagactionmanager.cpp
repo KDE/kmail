@@ -245,8 +245,7 @@ void TagActionManager::updateActionStates( int numberOfSelectedMessages,
     mNewTagId = -1;
     QMap<qint64,KToggleAction*>::const_iterator it = mTagActions.constBegin();
     QMap<qint64,KToggleAction*>::const_iterator end = mTagActions.constEnd();
-    if ( numberOfSelectedMessages >= 1 )
-    {
+    if ( numberOfSelectedMessages >= 1 ) {
         Q_ASSERT( selectedItem.isValid() );
         for ( ; it != end; ++it ) {
             //FIXME Not very performant tag label retrieval
@@ -268,8 +267,7 @@ void TagActionManager::updateActionStates( int numberOfSelectedMessages,
                 it.value()->setText( i18n("Toggle Message Tag %1", label ) );
             }
         }
-    }
-    else {
+    } else {
         for ( ; it != end; ++it ) {
             it.value()->setEnabled( false );
         }

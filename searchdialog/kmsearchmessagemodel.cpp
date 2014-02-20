@@ -215,8 +215,6 @@ QVariant KMSearchMessageModel::data( const QModelIndex & index, int role ) const
     return ItemModel::data( index, role );
 }
 
-
-
 QVariant KMSearchMessageModel::headerData( int section, Qt::Orientation orientation, int role ) const
 {
 
