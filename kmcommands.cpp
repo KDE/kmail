@@ -1310,7 +1310,7 @@ KMCommand::Result KMFilterActionCommand::execute()
     ProgressItem* progressItem =
             ProgressManager::createProgressItem (
                 QLatin1String("filter")+ProgressManager::getUniqueID(),
-                i18n( "Filtering messages" ) );
+                i18n( "Filtering messages" ), QString(),true, KPIM::ProgressItem::Unknown );
     progressItem->setTotalItems( msgCountToFilter );
 
     foreach ( const qlonglong &id, mMsgListId ) {
