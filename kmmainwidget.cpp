@@ -1382,8 +1382,7 @@ void KMMainWidget::slotCompose()
 // TODO: do we want the list sorted alphabetically?
 void KMMainWidget::slotShowNewFromTemplate()
 {
-    if ( mCurrentFolder )
-    {
+    if ( mCurrentFolder ) {
         const KPIMIdentities::Identity & ident =
                 kmkernel->identityManager()->identityForUoidOrDefault( mCurrentFolder->identity() );
         mTemplateFolder = CommonKernel->collectionFromId( ident.templates().toLongLong() );
