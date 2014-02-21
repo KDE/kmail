@@ -975,6 +975,8 @@ void KMMainWidget::createWidgets()
     mMessagePane = new CollectionPane( !GlobalSettings::self()->startSpecificFolderAtStartup(), KMKernel::self()->entityTreeModel(),
                                        mFolderTreeWidget->folderTreeView()->selectionModel(),
                                        this );
+    //If change change shortcut
+    mMessagePane->setQuickSearchClickMessage(i18nc("Show shortcut for focus quick search. Don't change it", "Search...<ALT+Q>"));
     connect( KMKernel::self()->entityTreeModel(), SIGNAL(collectionFetched(int)), this, SLOT(slotCollectionFetched(int)));
 
     mMessagePane->setXmlGuiClient( mGUIClient );
@@ -3653,7 +3655,9 @@ void KMMainWidget::setupActions()
     }
 
     {
+
         KAction *action = new KAction( i18n("Set Focus to Quick Search"), this );
+        //If change shortcut change Panel::setQuickSearchClickMessage(...) message
         action->setShortcut( QKeySequence( Qt::ALT + Qt::Key_Q ) );
         actionCollection()->addAction( QLatin1String("focus_to_quickseach"), action );
         connect( action, SIGNAL(triggered(bool)),
