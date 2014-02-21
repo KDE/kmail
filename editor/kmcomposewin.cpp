@@ -55,12 +55,12 @@
 #include "job/createnewcontactjob.h"
 #include "warningwidgets/externaleditorwarning.h"
 
-#include "libkdepim/progresswidget/progressdialog.h"
 #include "libkdepim/progresswidget/statusbarprogresswidget.h"
+#include "libkdepim/progresswidget/progressstatusbarwidget.h"
 
 #include "pimcommon/util/editorutil.h"
 #include "pimcommon/storageservice/storageservicemanager.h"
-#include "pimcommon/storageservice/widgets/storageserviceprogresswidget.h"
+#include "pimcommon/storageservice/storageserviceprogressmanager.h"
 
 #include "agents/sendlateragent/sendlaterutil.h"
 #include "agents/sendlateragent/sendlaterdialog.h"
@@ -1485,13 +1485,10 @@ void KMComposeWin::changeCryptoAction()
 //-----------------------------------------------------------------------------
 void KMComposeWin::setupStatusBar( QWidget *w )
 {
-    KPIM::ProgressDialog *progressDialog = new KPIM::ProgressDialog( statusBar(), this );
-    progressDialog->hide();
-
-    KPIM::StatusbarProgressWidget *littleProgress = new KPIM::StatusbarProgressWidget( progressDialog, statusBar() );
-    littleProgress->show();
+    KPIM::ProgressStatusBarWidget * progressStatusBarWidget = new KPIM::ProgressStatusBarWidget(statusBar(), this, PimCommon::StorageServiceProgressManager::progressTypeValue());
     statusBar()->addWidget(w);
-    //statusBar()->addWidget(mProgressWidget);
+    statusBar()->addWidget(progressStatusBarWidget->littleProgress());
+
     statusBar()->insertItem( QString(), 0, 1 );
     statusBar()->setItemAlignment( 0, Qt::AlignLeft | Qt::AlignVCenter );
     statusBar()->insertPermanentItem( overwriteModeStr(), 4,0 );

@@ -33,8 +33,6 @@
 #include <QPixmap>
 
 class KMMainWidget;
-namespace KPIM { class StatusbarProgressWidget; }
-using KPIM::StatusbarProgressWidget;
 
 class KMailPart: public KParts::ReadOnlyPart
 {
