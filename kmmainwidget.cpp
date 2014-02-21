@@ -4557,6 +4557,7 @@ void KMMainWidget::showCollectionProperties( const QString &pageToShow )
         } else {
             QPointer<KPIM::ProgressItem> progressItem( KPIM::ProgressManager::createProgressItem( i18n( "Retrieving folder properties" ) ) );
             progressItem->setUsesBusyIndicator( true );
+            progressItem->setCryptoStatus(KPIM::ProgressItem::Unknown);
 
             Akonadi::CollectionAttributesSynchronizationJob *sync
                     = new Akonadi::CollectionAttributesSynchronizationJob( mCurrentFolder->collection() );
@@ -4604,6 +4605,7 @@ void KMMainWidget::showCollectionPropertiesContinued( const QString &pageToShow,
     if ( !progressItem ) {
         progressItem = KPIM::ProgressManager::createProgressItem( i18n( "Retrieving folder properties" ) );
         progressItem->setUsesBusyIndicator( true );
+        progressItem->setCryptoStatus(KPIM::ProgressItem::Unknown);
         connect( progressItem, SIGNAL(progressItemCanceled(KPIM::ProgressItem*)),
                  KPIM::ProgressManager::instance(), SLOT(slotStandardCancelHandler(KPIM::ProgressItem*)) );
     }
@@ -4670,6 +4672,7 @@ void KMMainWidget::slotRemoveDuplicates()
 {
     KPIM::ProgressItem *item = KPIM::ProgressManager::createProgressItem( i18n( "Removing duplicates" ) );
     item->setUsesBusyIndicator( true );
+    item->setCryptoStatus(KPIM::ProgressItem::Unknown);
 
     QItemSelectionModel *selectionModel = mFolderTreeWidget->folderTreeView()->selectionModel();
     QModelIndexList indexes = selectionModel->selectedIndexes();
