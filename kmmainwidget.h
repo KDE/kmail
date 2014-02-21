@@ -46,7 +46,6 @@ namespace KMime {
 class Message;
 }
 class KUrl;
-class QLabel;
 class QVBoxLayout;
 class QSplitter;
 
