@@ -25,12 +25,8 @@
 class KMMainWidget;
 class KToggleAction;
 namespace KPIM {
-class StatusbarProgressWidget;
-class ProgressDialog;
+class ProgressStatusBarWidget;
 }
-using KPIM::StatusbarProgressWidget;
-using KPIM::ProgressDialog;
-
 class KMMainWin : public KXmlGuiWindow
 {
     Q_OBJECT
@@ -41,8 +37,6 @@ public:
     explicit KMMainWin(QWidget *parent = 0);
     virtual ~KMMainWin();
     KMMainWidget *mainKMWidget() const { return mKMMainWidget; }
-    StatusbarProgressWidget* progressWidget() const { return mLittleProgress; }
-    ProgressDialog* progressDialog() const { return mProgressDialog; }
 
     /// Same as KMMainWin::restore(), except that it also restores the docked state,
     /// which we have saved in saveProperties().
@@ -71,9 +65,8 @@ private slots:
     void slotToggleMenubar(bool dontShowWarning = false);
 
 private:
+    KPIM::ProgressStatusBarWidget *mProgressBar;
     KMMainWidget *mKMMainWidget;
-    StatusbarProgressWidget *mLittleProgress;
-    ProgressDialog *mProgressDialog;
     KToggleAction *mHideMenuBarAction;
     bool mReallyClose;
 };

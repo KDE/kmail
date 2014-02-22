@@ -21,8 +21,8 @@
 #include "kmmainwin.h"
 #include "kmmainwidget.h"
 #include "kstatusbar.h"
-#include "progresswidget/progressdialog.h"
-#include "progresswidget/statusbarprogresswidget.h"
+#include "libkdepim/progresswidget/progressstatusbarwidget.h"
+#include "libkdepim/progresswidget/statusbarprogresswidget.h"
 #include "misc/broadcaststatus.h"
 #include "util.h"
 #include "tag/tagactionmanager.h"
@@ -109,9 +109,9 @@ KMMainWin::~KMMainWin()
 
 void KMMainWin::displayStatusMsg( const QString& aText )
 {
-    if ( !statusBar() || !mLittleProgress )
+    if ( !statusBar() || !mProgressBar->littleProgress() )
         return;
-    const int statusWidth = statusBar()->width() - mLittleProgress->width()
+    const int statusWidth = statusBar()->width() - mProgressBar->littleProgress()->width()
             - fontMetrics().maxWidth();
 
     const QString text = fontMetrics().elidedText( QLatin1Char(' ') + aText, Qt::ElideRight,
@@ -184,18 +184,13 @@ void KMMainWin::slotUpdateGui()
 void KMMainWin::setupStatusBar()
 {
     /* Create a progress dialog and hide it. */
-    mProgressDialog = new KPIM::ProgressDialog( statusBar(), this );
-    mProgressDialog->hide();
-
-    mLittleProgress = new StatusbarProgressWidget( mProgressDialog, statusBar() );
-    mLittleProgress->show();
+    mProgressBar = new KPIM::ProgressStatusBarWidget( statusBar(), this);
 
     statusBar()->insertItem( i18n("Starting..."), 1, 4 );
     QTimer::singleShot( 2000, KPIM::BroadcastStatus::instance(), SLOT(reset()) );
     statusBar()->setItemAlignment( 1, Qt::AlignLeft | Qt::AlignVCenter );
     statusBar()->addPermanentWidget( mKMMainWidget->vacationScriptIndicator() );
-    statusBar()->addPermanentWidget( mLittleProgress );
-    mLittleProgress->show();
+    statusBar()->addPermanentWidget( mProgressBar->littleProgress() );
 }
 
 void KMMainWin::slotQuit()
