@@ -1487,7 +1487,6 @@ void KMComposeWin::setupStatusBar( QWidget *w )
 {
     KPIM::ProgressStatusBarWidget * progressStatusBarWidget = new KPIM::ProgressStatusBarWidget(statusBar(), this, PimCommon::StorageServiceProgressManager::progressTypeValue());
     statusBar()->addWidget(w);
-    statusBar()->addWidget(progressStatusBarWidget->littleProgress());
 
     statusBar()->insertItem( QString(), 0, 1 );
     statusBar()->setItemAlignment( 0, Qt::AlignLeft | Qt::AlignVCenter );
@@ -1498,6 +1497,7 @@ void KMComposeWin::setupStatusBar( QWidget *w )
     statusBar()->insertPermanentItem(
                 i18nc("Shows the linenumber of the cursor position.", " Line: %1 "
                       , QLatin1String( "     " ) ), 1, 0 );
+    statusBar()->addPermanentWidget(progressStatusBarWidget->littleProgress());
 }
 
 //-----------------------------------------------------------------------------
