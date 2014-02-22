@@ -45,7 +45,6 @@
 #include <kaction.h>
 
 #include <QLabel>
-#include "messagecomposer/sender/messagesender.h"
 
 
 
