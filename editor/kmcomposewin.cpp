@@ -3563,6 +3563,8 @@ void KMComposeWin::slotInsertShortUrl(const QString &url)
 
 void KMComposeWin::slotUploadFileDone(const QString &serviceName, const QString &fileName)
 {
+    Q_UNUSED(serviceName);
+    Q_UNUSED(fileName);
 }
 
 void KMComposeWin::slotUploadFileFailed(const QString &serviceName, const QString &fileName)
@@ -3584,6 +3586,7 @@ void KMComposeWin::slotShareLinkDone(const QString &serviceName, const QString &
 
 void KMComposeWin::slotUploadFileStart(PimCommon::StorageServiceAbstract *service)
 {
+    Q_UNUSED(service);
 }
 
 void KMComposeWin::slotActionFailed(const QString &serviceName, const QString &error)
