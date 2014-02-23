@@ -1441,7 +1441,10 @@ void AppearancePage::MessageTagTab::save()
             tag->priority = i;
 
             MailCommon::Tag::SaveFlags saveFlags = mTagWidget->saveFlags();
-            const Akonadi::Tag akonadiTag = tag->saveToAkonadi( saveFlags );
+            Akonadi::Tag akonadiTag = tag->saveToAkonadi( saveFlags );
+            if ((*tag).id()> 0) {
+                akonadiTag.setId((*tag).id());
+            }
             if (akonadiTag.isValid()) {
                 new Akonadi::TagModifyJob(akonadiTag);
             } else {
