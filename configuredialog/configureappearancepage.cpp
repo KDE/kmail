@@ -1432,12 +1432,15 @@ void AppearancePage::MessageTagTab::save()
     if ( !item ) {
         return;
     }
-
     slotRecordTagSettings( currentRow );
     const int numberOfMsgTagList = count;
     for ( int i=0; i < numberOfMsgTagList; ++i ) {
         TagListWidgetItem *tagItem = static_cast<TagListWidgetItem*>( mTagListBox->item(i) );
+#if 0
         if ( ( i>=mOriginalMsgTagList.count() ) || *(tagItem->kmailTag()) != *(mOriginalMsgTagList[i]) ) {
+#else
+        if (1) {
+#endif
             MailCommon::Tag::Ptr tag = tagItem->kmailTag();
             tag->priority = i;
 
