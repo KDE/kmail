@@ -455,7 +455,6 @@ private slots:
     void slotUploadFileDone(const QString &serviceName, const QString &fileName);
 
     void slotUploadFileFailed(const QString &serviceName, const QString &fileName);
-    void slotuploadDownloadFileProgress(const QString &serviceName, qint64 done, qint64 total);
     void slotShareLinkDone(const QString &serviceName, const QString &fileName);
 
     void slotUploadFileStart(PimCommon::StorageServiceAbstract *service);
@@ -691,6 +690,7 @@ private:
     bool mWasModified;
     Akonadi::Collection mCollectionForNewMessage;
     QMap<QByteArray, QString> mExtraHeaders;
+    int mNumProgressUploadFile;
 };
 
 #endif

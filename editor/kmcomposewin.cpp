@@ -218,7 +218,8 @@ KMComposeWin::KMComposeWin( const KMime::Message::Ptr &aMsg, bool lastSignState,
       mPreventFccOverwrite( false ),
       mCheckForForgottenAttachments( true ),
       mIgnoreStickyFields( false ),
-      mWasModified( false )
+      mWasModified( false ),
+      mNumProgressUploadFile(0)
 {
 
     mComposerBase = new MessageComposer::ComposerViewBase( this, this );
@@ -495,7 +496,6 @@ KMComposeWin::KMComposeWin( const KMime::Message::Ptr &aMsg, bool lastSignState,
 
     connect(KMKernel::self()->storageServiceManager(), SIGNAL(uploadFileDone(QString,QString)), this, SLOT(slotUploadFileDone(QString,QString)));
     connect(KMKernel::self()->storageServiceManager(), SIGNAL(uploadFileFailed(QString,QString)), this, SLOT(slotUploadFileFailed(QString,QString)));
-    connect(KMKernel::self()->storageServiceManager(), SIGNAL(uploadDownloadFileProgress(QString,qint64,qint64)), this, SLOT(slotuploadDownloadFileProgress(QString,qint64,qint64)));
     connect(KMKernel::self()->storageServiceManager(), SIGNAL(shareLinkDone(QString,QString)), this, SLOT(slotShareLinkDone(QString,QString)));
     connect(KMKernel::self()->storageServiceManager(), SIGNAL(uploadFileStart(PimCommon::StorageServiceAbstract*)), this, SLOT(slotUploadFileStart(PimCommon::StorageServiceAbstract*)));
     connect(KMKernel::self()->storageServiceManager(), SIGNAL(actionFailed(QString,QString)), this, SLOT(slotActionFailed(QString,QString)));
@@ -2662,6 +2662,10 @@ void KMComposeWin::printComposeResult( KJob *job, bool preview )
 void KMComposeWin::doSend( MessageComposer::MessageSender::SendMethod method,
                            MessageComposer::MessageSender::SaveIn saveIn )
 {
+    if (mNumProgressUploadFile > 0) {
+        KMessageBox::sorry( this, i18n("There is %1 upload file in progress.", mNumProgressUploadFile) );
+        return;
+    }
     // TODO integrate with MDA online status
     if ( method == MessageComposer::MessageSender::SendImmediate ) {
         if( !MessageComposer::Util::sendMailDispatcherIsOnline() ) {
@@ -3571,25 +3575,24 @@ void KMComposeWin::slotUploadFileFailed(const QString &serviceName, const QStrin
 {
     Q_UNUSED(serviceName);
     KMessageBox::error(this, i18n("An error occurred while sending the file."), i18n("Upload file"));
-}
-
-void KMComposeWin::slotuploadDownloadFileProgress(const QString &serviceName, qint64 done, qint64 total)
-{
-    Q_UNUSED(serviceName);
+    --mNumProgressUploadFile;
 }
 
 void KMComposeWin::slotShareLinkDone(const QString &serviceName, const QString &link)
 {
     Q_UNUSED(serviceName);
     mComposerBase->editor()->insertShareLink(link);
+    --mNumProgressUploadFile;
 }
 
 void KMComposeWin::slotUploadFileStart(PimCommon::StorageServiceAbstract *service)
 {
     Q_UNUSED(service);
+    ++mNumProgressUploadFile;
 }
 
 void KMComposeWin::slotActionFailed(const QString &serviceName, const QString &error)
 {
     KMessageBox::error(this, i18n("%1 return an error '%2'", serviceName, error), i18n("Error"));
+    --mNumProgressUploadFile;
 }
