@@ -1259,24 +1259,10 @@ ComposerPageAttachmentsTab::ComposerPageAttachmentsTab( QWidget * parent )
     vlay->addWidget( mMissingAttachmentDetectionCheck );
 
 
-    QHBoxLayout * layAttachment = new QHBoxLayout;
-    QLabel *label = new QLabel( i18n("Warn when inserting attachments larger than:"), this );
-    label->setAlignment( Qt::AlignLeft );
-    layAttachment->addWidget(label);
-
-    mMaximumAttachmentSize = new KIntNumInput( this );
-    mMaximumAttachmentSize->setRange( -1, 99999 );
-    mMaximumAttachmentSize->setSingleStep( 100 );
-    mMaximumAttachmentSize->setSuffix(i18nc("spinbox suffix: unit for kilobyte", " kB"));
-    connect( mMaximumAttachmentSize, SIGNAL(valueChanged(int)),
-             this, SLOT(slotEmitChanged()) );
-    mMaximumAttachmentSize->setSpecialValueText(i18n("No limit"));
-    layAttachment->addWidget(mMaximumAttachmentSize);
-    vlay->addLayout(layAttachment);
 
 
     // "Attachment key words" label and string list editor
-    label = new QLabel( i18n("Recognize any of the following key words as "
+    QLabel *label = new QLabel( i18n("Recognize any of the following key words as "
                              "intention to attach a file:"), this );
     label->setAlignment( Qt::AlignLeft );
     label->setWordWrap( true );
@@ -1298,6 +1284,22 @@ ComposerPageAttachmentsTab::ComposerPageAttachmentsTab( QWidget * parent )
              label, SLOT(setEnabled(bool)) );
     connect( mMissingAttachmentDetectionCheck, SIGNAL(toggled(bool)),
              mAttachWordsListEditor, SLOT(setEnabled(bool)) );
+
+
+    QHBoxLayout * layAttachment = new QHBoxLayout;
+    label = new QLabel( i18n("Offer to share for files larger than:"), this );
+    label->setAlignment( Qt::AlignLeft );
+    layAttachment->addWidget(label);
+
+    mMaximumAttachmentSize = new KIntNumInput( this );
+    mMaximumAttachmentSize->setRange( -1, 99999 );
+    mMaximumAttachmentSize->setSingleStep( 100 );
+    mMaximumAttachmentSize->setSuffix(i18nc("spinbox suffix: unit for kilobyte", " kB"));
+    connect( mMaximumAttachmentSize, SIGNAL(valueChanged(int)),
+             this, SLOT(slotEmitChanged()) );
+    mMaximumAttachmentSize->setSpecialValueText(i18n("No limit"));
+    layAttachment->addWidget(mMaximumAttachmentSize);
+    vlay->addLayout(layAttachment);
 
     mStorageServiceWidget = new ConfigureStorageServiceWidget;
     vlay->addWidget(mStorageServiceWidget);

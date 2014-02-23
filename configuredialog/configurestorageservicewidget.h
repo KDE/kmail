@@ -19,8 +19,6 @@
 #define CONFIGURESTORAGESERVICEWIDGET_H
 
 #include <QWidget>
-class QCheckBox;
-class QSpinBox;
 class QPushButton;
 namespace PimCommon {
 class StorageServiceSettingsWidget;
@@ -42,8 +40,6 @@ private slots:
     void slotManageStorageService();
 
 private:
-    QSpinBox *mLimitAttachment;
-    QCheckBox *mActivateStorageService;
     PimCommon::StorageServiceSettingsWidget *mStorageServiceWidget;
     QPushButton *mManageStorageService;
 };

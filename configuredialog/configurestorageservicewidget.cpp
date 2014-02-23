@@ -37,23 +37,11 @@ ConfigureStorageServiceWidget::ConfigureStorageServiceWidget(QWidget *parent)
     : QWidget(parent)
 {
     QVBoxLayout *lay = new QVBoxLayout;
-    QHBoxLayout *hbox = new QHBoxLayout;
-    mActivateStorageService = new QCheckBox(i18n("Offer to share for files larger than"));
-    hbox->addWidget(mActivateStorageService);
-    mLimitAttachment = new QSpinBox;
-    mLimitAttachment->setMinimum(0);
-    mLimitAttachment->setMaximum(9999);
-    mLimitAttachment->setSuffix(i18nc("mega bytes"," MB"));
-    hbox->addWidget(mLimitAttachment);
-    lay->addLayout(hbox);
-    connect(mActivateStorageService, SIGNAL(toggled(bool)), mLimitAttachment, SLOT(setEnabled(bool)));
-    connect(mActivateStorageService, SIGNAL(toggled(bool)), this, SIGNAL(changed()));
-    connect(mLimitAttachment, SIGNAL(valueChanged(int)), this, SIGNAL(changed()));
     mStorageServiceWidget = new PimCommon::StorageServiceSettingsWidget;
     connect(mStorageServiceWidget, SIGNAL(changed()), this, SIGNAL(changed()));
     lay->addWidget(mStorageServiceWidget);
 
-    hbox = new QHBoxLayout;
+    QHBoxLayout *hbox = new QHBoxLayout;
     mManageStorageService = new QPushButton(i18n("Manage Storage Service"));
     hbox->addWidget(mManageStorageService);
     hbox->addStretch();
@@ -80,17 +68,12 @@ void ConfigureStorageServiceWidget::slotManageStorageService()
 
 void ConfigureStorageServiceWidget::save()
 {
-    saveCheckBox(mActivateStorageService, GlobalSettings::self()->useStorageServiceItem());
-    saveSpinBox(mLimitAttachment, GlobalSettings::self()->storageServiceLimitItem());
     KMKernel::self()->storageServiceManager()->setListService(mStorageServiceWidget->listService());
 }
 
 void ConfigureStorageServiceWidget::doLoadFromGlobalSettings()
 {
-    loadWidget(mActivateStorageService, GlobalSettings::self()->useStorageServiceItem());
-    loadWidget(mLimitAttachment, GlobalSettings::self()->storageServiceLimitItem());
     QList<PimCommon::StorageServiceAbstract::Capability> lstCapabilities;
     lstCapabilities << PimCommon::StorageServiceAbstract::ShareLinkCapability;
     mStorageServiceWidget->setListService(KMKernel::self()->storageServiceManager()->listService(), lstCapabilities);
-    mLimitAttachment->setEnabled(mActivateStorageService->isChecked());
 }
