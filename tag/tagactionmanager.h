@@ -114,6 +114,7 @@ private Q_SLOTS:
     void onTagChanged(const Akonadi::Tag &);
 
 private:
+    void fillTagList();
     void createTagAction( const MailCommon::Tag::Ptr &tag, bool addToMenu );
     void createTagActions( const QList<MailCommon::Tag::Ptr> &);
     void checkTags(const QList<qint64>& tags);

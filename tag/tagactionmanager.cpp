@@ -295,13 +295,7 @@ void TagActionManager::onTagRemoved(const Akonadi::Tag &akonadiTag)
         }
     }
 
-    const QList<qint64> checked = checkedTags();
-
-    clearActions();
-    qSort( mTags.begin(), mTags.end(), MailCommon::Tag::compare );
-    createTagActions( mTags );
-
-    checkTags( checked );
+    fillTagList();
 }
 
 void TagActionManager::onTagChanged(const Akonadi::Tag& akonadiTag)
@@ -313,7 +307,11 @@ void TagActionManager::onTagChanged(const Akonadi::Tag& akonadiTag)
         }
     }
     mTags.append( MailCommon::Tag::fromAkonadi( akonadiTag ) );
+    fillTagList();
+}
 
+void TagActionManager::fillTagList()
+{
     const QList<qint64> checked = checkedTags();
 
     clearActions();
