@@ -143,5 +143,6 @@ Akonadi::Tag::List TagSelectDialog::selectedTag() const
             lst.append( Akonadi::Tag::fromUrl( item->data(UrlTag).toString() ) );
         }
     }
+    qDebug()<<" lst"<<lst;
     return lst;
 }

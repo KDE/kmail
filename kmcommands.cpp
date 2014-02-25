@@ -1243,8 +1243,6 @@ void KMSetTagCommand::slotTagCreateDone(KJob* job)
 
 void KMSetTagCommand::setTags()
 {
-    QStringList tagUrlList;
-
     Akonadi::Item::List itemsToModify;
     Q_FOREACH( const Akonadi::Item& i, mItem ) {
         Akonadi::Item item(i);
@@ -1252,16 +1250,16 @@ void KMSetTagCommand::setTags()
           item.clearTags();
         }
 
-        Q_FOREACH( const Akonadi::Tag &tag, mCreatedTags ) {
-            if ( mMode == KMSetTagCommand::Toggle ) {
+        if (mMode == KMSetTagCommand::Toggle) {
+            Q_FOREACH( const Akonadi::Tag &tag, mCreatedTags ) {
                 if ( item.hasTag(tag) ) {
                     item.clearTag(tag);
                 } else {
                     item.setTag(tag);
                 }
-            } else {
-                item.setTag(tag);
             }
+        } else {
+            item.setTags(mCreatedTags);
         }
         itemsToModify << item;
     }
