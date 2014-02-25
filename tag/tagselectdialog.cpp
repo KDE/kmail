@@ -111,7 +111,6 @@ void TagSelectDialog::slotTagsFetched(KJob *job)
     }
     Akonadi::TagFetchJob *fetchJob = static_cast<Akonadi::TagFetchJob*>(job);
 
-    QList<MailCommon::Tag::Ptr> msgTagList;
     foreach( const Akonadi::Tag &akonadiTag, fetchJob->tags() ) {
         mTagList.append( MailCommon::Tag::fromAkonadi( akonadiTag ) );
     }
