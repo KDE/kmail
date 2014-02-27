@@ -162,6 +162,8 @@ public:
     void clearViewer();
 
     void addRecentFile(const KUrl& mUrl);
+    void updateQuickSearchLineText();
+
 public slots:
     // Moving messages around
     /**
@@ -629,6 +631,7 @@ private:
     KAction *mServerSideSubscription;
     KRecentFilesAction *mOpenRecentAction;
     QPointer<KSieveUi::ManageSieveScriptsDialog> mManageSieveDialog;
+    KAction *mQuickSearchAction;
 };
 
 #endif

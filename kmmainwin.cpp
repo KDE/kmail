@@ -98,6 +98,8 @@ KMMainWin::KMMainWin(QWidget *)
 
     if ( kmkernel->firstInstance() )
         QTimer::singleShot( 200, this, SLOT(slotShowTipOnStart()) );
+
+    mKMMainWidget->updateQuickSearchLineText();
 }
 
 KMMainWin::~KMMainWin()

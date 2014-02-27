@@ -975,8 +975,6 @@ void KMMainWidget::createWidgets()
     mMessagePane = new CollectionPane( !GlobalSettings::self()->startSpecificFolderAtStartup(), KMKernel::self()->entityTreeModel(),
                                        mFolderTreeWidget->folderTreeView()->selectionModel(),
                                        this );
-    //If change change shortcut
-    mMessagePane->setQuickSearchClickMessage(i18nc("Show shortcut for focus quick search. Don't change it", "Search...<ALT+Q>"));
     connect( KMKernel::self()->entityTreeModel(), SIGNAL(collectionFetched(int)), this, SLOT(slotCollectionFetched(int)));
 
     mMessagePane->setXmlGuiClient( mGUIClient );
@@ -3655,13 +3653,13 @@ void KMMainWidget::setupActions()
     }
 
     {
-
-        KAction *action = new KAction( i18n("Set Focus to Quick Search"), this );
+        mQuickSearchAction = new KAction( i18n("Set Focus to Quick Search"), this );
         //If change shortcut change Panel::setQuickSearchClickMessage(...) message
-        action->setShortcut( QKeySequence( Qt::ALT + Qt::Key_Q ) );
-        actionCollection()->addAction( QLatin1String("focus_to_quickseach"), action );
-        connect( action, SIGNAL(triggered(bool)),
+        mQuickSearchAction->setShortcut( QKeySequence( Qt::ALT + Qt::Key_Q ) );
+        actionCollection()->addAction( QLatin1String("focus_to_quickseach"), mQuickSearchAction );
+        connect( mQuickSearchAction, SIGNAL(triggered(bool)),
                  SLOT(slotFocusQuickSearch()) );
+        updateQuickSearchLineText();
     }
     {
         KAction *action = new KAction( i18n( "Extend Selection to Previous Message" ), this );
@@ -4840,4 +4838,10 @@ void KMMainWidget::slotArchiveMails()
 {
     const QList<Akonadi::Item> selectedMessages = mMessagePane->selectionAsMessageItemList();
     KMKernel::self()->folderArchiveManager()->setArchiveItems(selectedMessages, mCurrentFolder->collection().resource());
+}
+
+void KMMainWidget::updateQuickSearchLineText()
+{
+    //If change change shortcut
+    mMessagePane->setQuickSearchClickMessage(i18nc("Show shortcut for focus quick search. Don't change it", "Search...<%1>",mQuickSearchAction->shortcut().toString()));
 }
