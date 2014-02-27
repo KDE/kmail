@@ -76,7 +76,7 @@ KMMainWin::KMMainWin(QWidget *)
     KStandardAction::configureToolbars( this, SLOT(slotEditToolbars()),
                                         actionCollection() );
 
-    KStandardAction::keyBindings( guiFactory(), SLOT(configureShortcuts()),
+    KStandardAction::keyBindings( this, SLOT(slotConfigureShortcuts()),
                                   actionCollection() );
 
     mHideMenuBarAction = KStandardAction::showMenubar( this, SLOT(slotToggleMenubar()), actionCollection() );
@@ -230,4 +230,11 @@ bool KMMainWin::queryClose()
 void KMMainWin::slotShowTipOnStart()
 {
     KTipDialog::showTip( this );
+}
+
+void KMMainWin::slotConfigureShortcuts()
+{
+    if (guiFactory()->configureShortcuts()) {
+        mKMMainWidget->updateQuickSearchLineText();
+    }
 }

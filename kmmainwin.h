@@ -62,7 +62,8 @@ protected slots:
 
 private slots:
     void slotNewMailReader();
-    void slotToggleMenubar(bool dontShowWarning = false);
+    void slotToggleMenubar(bool dontShowWarning = false);    
+    void slotConfigureShortcuts();
 
 private:
     KPIM::ProgressStatusBarWidget *mProgressBar;
