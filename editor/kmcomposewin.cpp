@@ -2663,7 +2663,9 @@ void KMComposeWin::doSend( MessageComposer::MessageSender::SendMethod method,
                            MessageComposer::MessageSender::SaveIn saveIn )
 {
     if (mNumProgressUploadFile > 0) {
-        KMessageBox::sorry( this, i18n("There is %1 upload file in progress.", mNumProgressUploadFile) );
+        KMessageBox::sorry( this, i18np( "There is %1 file upload in progress.",
+                                         "There are %1 file uploads in progress.",
+                                         mNumProgressUploadFile ) );
         return;
     }
     // TODO integrate with MDA online status
