@@ -63,6 +63,8 @@ using KMail::MailServiceImpl;
 #include "templateparser/templatesutil.h"
 
 #include "foldercollection.h"
+#include "editor/codecmanager.h"
+
 
 #include <kmessagebox.h>
 #include <knotification.h>
@@ -1402,6 +1404,7 @@ void KMKernel::slotShowConfigurationDialog()
 void KMKernel::slotConfigChanged()
 {
     readConfig();
+    CodecManager::self()->updatePreferredCharsets();
     emit configChanged();
 }
 
