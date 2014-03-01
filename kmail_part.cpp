@@ -120,6 +120,11 @@ KMailPart::~KMailPart()
     delete kmkernel;
 }
 
+void KMailPart::updateQuickSearchText()
+{
+    mainWidget->updateQuickSearchLineText();
+}
+
 bool KMailPart::openFile()
 {
     kDebug();

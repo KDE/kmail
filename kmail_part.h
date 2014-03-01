@@ -53,6 +53,7 @@ public Q_SLOTS:
 
     void slotFolderChanged( const Akonadi::Collection& );
 
+    void updateQuickSearchText();
 signals:
     void textChanged( const QString& );
     void iconChanged( const QPixmap& );
