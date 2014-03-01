@@ -51,6 +51,9 @@ ConfigureStorageServiceWidget::ConfigureStorageServiceWidget(QWidget *parent)
     } else {
         connect(mManageStorageService, SIGNAL(clicked(bool)), this, SLOT(slotManageStorageService()));
     }
+    QList<PimCommon::StorageServiceAbstract::Capability> lstCapabilities;
+    lstCapabilities << PimCommon::StorageServiceAbstract::ShareLinkCapability;
+    mStorageServiceWidget->setListService(KMKernel::self()->storageServiceManager()->listService(), lstCapabilities);
     setLayout(lay);
 }
 
@@ -73,7 +76,4 @@ void ConfigureStorageServiceWidget::save()
 
 void ConfigureStorageServiceWidget::doLoadFromGlobalSettings()
 {
-    QList<PimCommon::StorageServiceAbstract::Capability> lstCapabilities;
-    lstCapabilities << PimCommon::StorageServiceAbstract::ShareLinkCapability;
-    mStorageServiceWidget->setListService(KMKernel::self()->storageServiceManager()->listService(), lstCapabilities);
 }
