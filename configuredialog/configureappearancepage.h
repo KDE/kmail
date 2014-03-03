@@ -260,6 +260,7 @@ private slots:
                         const QModelIndex &, int destinationRow );
     void slotTagsFetched(KJob *job);
 
+    void slotDeleteTagJob(KJob *job);
 private:
     void doLoadFromGlobalSettings();
     void swapTagsInListBox( const int first, const int second );

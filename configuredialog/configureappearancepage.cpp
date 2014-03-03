@@ -1278,7 +1278,8 @@ void AppearancePage::MessageTagTab::slotRemoveTag()
         TagListWidgetItem *tagItem = static_cast<TagListWidgetItem*>( item );
         MailCommon::Tag::Ptr tmp_desc = tagItem->kmailTag();
         if ( tmp_desc->tag().isValid() ) {
-          new Akonadi::TagDeleteJob(tmp_desc->tag());
+          Akonadi::TagDeleteJob *job = new Akonadi::TagDeleteJob(tmp_desc->tag());
+          connect(job, SIGNAL(result(KJob*)), this, SLOT(slotDeleteTagJob(KJob*)));
         } else {
           kWarning() << "Can't remove tag with invalid akonadi tag";
         }
@@ -1296,6 +1297,13 @@ void AppearancePage::MessageTagTab::slotRemoveTag()
 
         slotSelectionChanged();
         slotEmitChangeCheck();
+    }
+}
+
+void AppearancePage::MessageTagTab::slotDeleteTagJob(KJob* job)
+{
+    if (job->error()) {
+        kWarning() << "Failed to delete tag " << job->errorString();
     }
 }
 
