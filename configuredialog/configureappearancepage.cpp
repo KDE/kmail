@@ -1338,7 +1338,7 @@ void AppearancePage::MessageTagTab::slotIconNameChanged( const QString &iconName
 
 void AppearancePage::MessageTagTab::slotAddLineTextChanged( const QString &aText )
 {
-    mTagAddButton->setEnabled( !aText.isEmpty() );
+    mTagAddButton->setEnabled( !aText.trimmed().isEmpty() );
 }
 
 void AppearancePage::MessageTagTab::slotAddNewTag()
