@@ -1272,7 +1272,7 @@ void AppearancePage::MessageTagTab::slotSelectionChanged()
 
 void AppearancePage::MessageTagTab::slotRemoveTag()
 {
-    int tmp_index = mTagListBox->currentRow();
+    const int tmp_index = mTagListBox->currentRow();
     if ( tmp_index >= 0 ) {
         if (KMessageBox::Yes == KMessageBox::questionYesNo(this,i18n("Do you want to remove tag \'%1\'?", mTagListBox->item(mTagListBox->currentRow())->text()))) {
             QListWidgetItem * item = mTagListBox->takeItem( mTagListBox->currentRow() );
@@ -1298,6 +1298,13 @@ void AppearancePage::MessageTagTab::slotRemoveTag()
             slotSelectionChanged();
             slotEmitChangeCheck();
         }
+    }
+}
+
+void AppearancePage::MessageTagTab::slotDeleteTagJob(KJob* job)
+{
+    if (job->error()) {
+        kWarning() << "Failed to delete tag " << job->errorString();
     }
 }
 
@@ -1340,7 +1347,7 @@ void AppearancePage::MessageTagTab::slotIconNameChanged( const QString &iconName
 
 void AppearancePage::MessageTagTab::slotAddLineTextChanged( const QString &aText )
 {
-    mTagAddButton->setEnabled( !aText.isEmpty() );
+    mTagAddButton->setEnabled( !aText.trimmed().isEmpty() );
 }
 
 void AppearancePage::MessageTagTab::slotAddNewTag()
