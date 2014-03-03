@@ -2920,6 +2920,7 @@ void KMMainWidget::showMessagePopup(const Akonadi::Item&msg ,const KUrl&url,cons
         }
         menu->addSeparator();
         menu->addAction( mMsgView->createTodoAction() );
+        menu->addAction( mMsgView->createEventAction() );
         menu->addSeparator();
         if (mMsgView) {
             menu->addAction( mMsgView->saveMessageDisplayFormatAction() );
