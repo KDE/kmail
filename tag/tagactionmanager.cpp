@@ -144,8 +144,7 @@ void TagActionManager::createTagAction( const MailCommon::Tag::Ptr &tag, bool ad
 void TagActionManager::createActions()
 {
     if ( mTagFetchInProgress )
-      return
-    clearActions();
+      return;
 
     if ( mTags.isEmpty() ) {
         mTagFetchInProgress = true;
@@ -153,6 +152,7 @@ void TagActionManager::createActions()
         fetchJob->fetchScope().fetchAttribute<Akonadi::TagAttribute>();
         connect(fetchJob, SIGNAL(result(KJob*)), this, SLOT(finishedTagListing(KJob*)));
     } else {
+        mTagFetchInProgress = false;
         createTagActions(mTags);
     }
 }
@@ -178,6 +178,7 @@ void TagActionManager::onSignalMapped(const QString& tag)
 
 void TagActionManager::createTagActions(const QList<MailCommon::Tag::Ptr> &tags)
 {
+    clearActions();
     //Use a mapper to understand which tag button is triggered
     mMessageTagToggleMapper = new QSignalMapper( this );
     connect( mMessageTagToggleMapper, SIGNAL(mapped(QString)),
