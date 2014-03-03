@@ -920,5 +920,10 @@ KAction *KMReaderWin::createTodoAction() const
     return mViewer->createTodoAction();
 }
 
+KAction *KMReaderWin::createEventAction() const
+{
+    return mViewer->createEventAction();
+}
+
 
 

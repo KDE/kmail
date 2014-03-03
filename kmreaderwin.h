@@ -155,6 +155,7 @@ public:
     KAction *openBlockableItems() const;
     KAction *expandShortUrlAction() const;
     KAction *createTodoAction() const;
+    KAction *createEventAction() const;
 
     KAction *editContactAction() const { return mEditContactAction; }
 
