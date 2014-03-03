@@ -1272,7 +1272,7 @@ void AppearancePage::MessageTagTab::slotSelectionChanged()
 
 void AppearancePage::MessageTagTab::slotRemoveTag()
 {
-    int tmp_index = mTagListBox->currentRow();
+    const int tmp_index = mTagListBox->currentRow();
     if ( tmp_index >= 0 ) {
         QListWidgetItem * item = mTagListBox->takeItem( mTagListBox->currentRow() );
         TagListWidgetItem *tagItem = static_cast<TagListWidgetItem*>( item );
