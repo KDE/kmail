@@ -121,7 +121,7 @@ protected:
 
 
 private Q_SLOTS:
-    void updateCollectionStatistic(Akonadi::Collection::Id,Akonadi::CollectionStatistics);
+    void updateCollectionStatistic(Akonadi::Collection::Id, const Akonadi::CollectionStatistics &);
 
     void slotClose();
     void slotSearch();

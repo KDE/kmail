@@ -352,7 +352,7 @@ void SearchWindow::setEnabledSearchButton( bool )
     mSearchButton->setEnabled( true );
 }
 
-void SearchWindow::updateCollectionStatistic(Akonadi::Collection::Id id,Akonadi::CollectionStatistics statistic)
+void SearchWindow::updateCollectionStatistic(Akonadi::Collection::Id id, const Akonadi::CollectionStatistics &statistic)
 {
     QString genMsg;
     if ( id == mFolder.id() ) {
