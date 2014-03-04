@@ -156,6 +156,11 @@
    <item row="8" column="0">
     <layout class="QHBoxLayout" name="horizontalLayout_3">
      <item>
+      <widget class="KPIMUtils::ProgressIndicatorWidget" name="mProgressIndicator">
+      </widget>
+     </item>
+
+     <item>
       <widget class="QLabel" name="mStatusLbl">
        <property name="sizePolicy">
         <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
@@ -206,6 +211,13 @@
    <header location="global">mailcommon/folder/folderrequester.h</header>
    <container>1</container>
   </customwidget>
+  <customwidget>
+   <class>KPIMUtils::ProgressIndicatorWidget</class>
+   <extends>QLabel</extends>
+   <header>kpimutils/progressindicatorwidget.h</header>
+   <container>1</container>
+  </customwidget>
+
   <customwidget>
    <class>KMail::KMailSearchPatternEdit</class>
    <extends>QWidget</extends>
