@@ -1,5 +1,5 @@
 <!DOCTYPE kpartgui>
-<kpartgui version="422" name="kmreadermainwin" >
+<kpartgui version="423" name="kmreadermainwin" >
  <MenuBar>
   <Menu noMerge="1" name="file" >
    <text>&amp;File</text>
@@ -65,6 +65,7 @@
    <Action name="set_status" />
    <Separator/>
    <Action name="create_todo"/>
+   <Action name="create_event"/>
   </Menu>
   <Menu noMerge="1" name="settings">
    <text>&amp;Settings</text>
