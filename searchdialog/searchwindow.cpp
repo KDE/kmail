@@ -352,7 +352,7 @@ void SearchWindow::setEnabledSearchButton( bool )
     mSearchButton->setEnabled( true );
 }
 
-void SearchWindow::updateCollectionStatistic(Akonadi::Collection::Id id,Akonadi::CollectionStatistics statistic)
+void SearchWindow::updateCollectionStatistic(Akonadi::Collection::Id id, const Akonadi::CollectionStatistics &statistic)
 {
     QString genMsg;
     if ( id == mFolder.id() ) {
@@ -520,6 +520,7 @@ void SearchWindow::doSearch()
     }
 
     connect( mSearchJob, SIGNAL(result(KJob*)), SLOT(searchDone(KJob*)) );
+    mUi.mProgressIndicator->start();
     enableGUI();
     mUi.mStatusLbl->setText( i18n( "Searching..." ) );
 }
@@ -528,6 +529,7 @@ void SearchWindow::searchDone( KJob* job )
 {
     Q_ASSERT( job == mSearchJob );
     QMetaObject::invokeMethod( this, "enableGUI", Qt::QueuedConnection );
+    mUi.mProgressIndicator->stop();
     if ( job->error() ) {
         kDebug() << job->errorString();
         KMessageBox::sorry( this, i18n("Cannot get search result. %1", job->errorString() ) );
@@ -591,6 +593,7 @@ void SearchWindow::searchDone( KJob* job )
 
 void SearchWindow::slotStop()
 {
+    mUi.mProgressIndicator->stop();
     if ( mSearchJob ) {
         mSearchJob->kill( KJob::Quietly );
         mSearchJob->deleteLater();
