@@ -116,10 +116,6 @@ protected:
 
     void createSearchModel();
 
-    void childCollectionsFromSelectedCollection( const Akonadi::Collection& collection, KUrl::List &list );
-    void getChildren( const QAbstractItemModel *model, const QModelIndex &parentIndex, KUrl::List &list );
-
-
 private Q_SLOTS:
     void updateCollectionStatistic(Akonadi::Collection::Id, const Akonadi::CollectionStatistics &);
 

@@ -849,32 +849,6 @@ void SearchWindow::addRulesToSearchPattern( const SearchPattern &pattern )
     mUi.mPatternEdit->setSearchPattern( &mSearchPattern );
 }
 
-// void SearchWindow::childCollectionsFromSelectedCollection( const Akonadi::Collection& collection, KUrl::List&lstUrlCollection )
-// {
-//     if ( collection.isValid() )  {
-//         QModelIndex idx = Akonadi::EntityTreeModel::modelIndexForCollection( KMKernel::self()->collectionModel(), collection );
-//         if ( idx.isValid() ) {
-//             getChildren( KMKernel::self()->collectionModel(), idx, lstUrlCollection );
-//         }
-//     }
-// }
-//
-void SearchWindow::getChildren( const QAbstractItemModel *model,
-                                const QModelIndex &parentIndex,
-                                KUrl::List &list )
-{
-    const int rowCount = model->rowCount( parentIndex );
-    for ( int row = 0; row < rowCount; ++row ) {
-        const QModelIndex index = model->index( row, 0, parentIndex );
-        if ( model->rowCount( index ) > 0 ) {
-            getChildren( model, index, list );
-        }
-        Akonadi::Collection c = model->data(index, Akonadi::EntityTreeModel::CollectionRole ).value<Akonadi::Collection>();
-        if ( c.isValid() )
-            list << c.url( Akonadi::Collection::UrlShort );
-    }
-}
-
 void SearchWindow::slotSelectMultipleFolders()
 {
     mUi.mChkMultiFolders->setChecked(true);
