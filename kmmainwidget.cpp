@@ -980,7 +980,6 @@ void KMMainWidget::createWidgets()
     mMessagePane->setXmlGuiClient( mGUIClient );
     connect( mMessagePane, SIGNAL(messageSelected(Akonadi::Item)),
              this, SLOT(slotMessageSelected(Akonadi::Item)) );
-    connect( mMessagePane, SIGNAL(fullSearchRequest()), this,SLOT(slotRequestFullSearchFromQuickSearch()) );
     connect( mMessagePane, SIGNAL(selectionChanged()),
              SLOT(startUpdateMessageActionsTimer()) );
     connect( mMessagePane, SIGNAL(currentTabChanged()), this, SLOT(refreshMessageListSelection()) );
