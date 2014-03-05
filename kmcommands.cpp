@@ -1222,6 +1222,8 @@ KMCommand::Result KMSetTagCommand::execute()
 
     if ( mCreatedTags.size() == mTags.size() ) {
         setTags();
+    } else {
+        deleteLater();
     }
 
     return OK;
@@ -1238,6 +1240,8 @@ void KMSetTagCommand::slotTagCreateDone(KJob* job)
     mCreatedTags << createJob->tag();
     if ( mCreatedTags.size() == mTags.size() ) {
         setTags();
+    } else {
+        deleteLater();
     }
 }
 
