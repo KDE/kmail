@@ -43,14 +43,14 @@ namespace KMail {
 class MessageActions;
 
 /**
-    * Creates actions related to the existing Nepomuk tags and plugs them into the GUI.
+    * Creates actions related to the existing Akonadi tags and plugs them into the GUI.
     *
-    * The tag manager reads all tags from Nepomuk and adds each to the action collection
+    * The tag manager reads all tags from Akonadi and adds each to the action collection
     * and to the message status menu.
     * For tags that should be in the toolbar, it plugs the action list
     * toolbar_messagetag_actions.
     *
-    * The actions are automatically updated when a Nepomuk tag changes.
+    * The actions are automatically updated when a Akonadi tag changes.
     */
 class KMAIL_EXPORT TagActionManager : public QObject
 {
