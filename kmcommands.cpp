@@ -1018,6 +1018,8 @@ KMCommand::Result KMRedirectCommand::execute()
     const int identity = dlg->identity();
     int transportId = dlg->transportId();
     const QString to = dlg->to();
+    const QString cc = dlg->cc();
+    const QString bcc = dlg->bcc();
     foreach( const Akonadi::Item &item, retrievedMsgs() ) {
         const KMime::Message::Ptr msg = MessageCore::Util::message( item );
         if ( !msg )
@@ -1043,7 +1045,7 @@ KMCommand::Result KMRedirectCommand::execute()
         if ( sentAttribute && ( sentAttribute->sentBehaviour() == MailTransport::SentBehaviourAttribute::MoveToCollection ) )
             fcc =  QString::number( sentAttribute->moveToCollection().id() );
 
-        const KMime::Message::Ptr newMsg = factory.createRedirect( to, transportId, fcc, identity );
+        const KMime::Message::Ptr newMsg = factory.createRedirect( to, cc, bcc, transportId, fcc, identity );
         if ( !newMsg )
             return Failed;
 
