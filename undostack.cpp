@@ -53,12 +53,23 @@ void UndoStack::clear()
     mStack.clear();
 }
 
+QString UndoStack::undoInfo() const
+{
+    if (!mStack.isEmpty()) {
+        UndoInfo *info = mStack.first();
+        return info->moveToTrash ? i18n("Move To Trash") : i18np("Move Message", "Move Messages", info->items.count());
+    } else {
+        return QString();
+    }
+}
+
 int UndoStack::newUndoAction( const Akonadi::Collection &srcFolder, const Akonadi::Collection &destFolder )
 {
     UndoInfo *info = new UndoInfo;
     info->id         = ++mLastId;
     info->srcFolder  = srcFolder;
     info->destFolder = destFolder;
+    info->moveToTrash = (destFolder == CommonKernel->trashCollectionFolder());
     if ((int) mStack.count() == mSize) {
         delete mStack.last();
         mStack.removeLast();

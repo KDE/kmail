@@ -4236,7 +4236,14 @@ QList<KActionCollection*> KMMainWidget::actionCollections() const {
 void KMMainWidget::slotUpdateUndo()
 {
     if ( actionCollection()->action( QLatin1String("kmail_undo") ) ) {
-        actionCollection()->action( QLatin1String("kmail_undo") )->setEnabled( kmkernel->undoStack()->size()>0 );
+        QAction *act = actionCollection()->action( QLatin1String("kmail_undo") );
+        act->setEnabled( kmkernel->undoStack()->size()>0 );
+        const QString infoStr = kmkernel->undoStack()->undoInfo();
+        if (infoStr.isEmpty()) {
+            act->setText(i18n("&Undo"));
+        } else {
+            act->setText(i18n("&Undo: \"%1\"", kmkernel->undoStack()->undoInfo()));
+        }
     }
 }
 

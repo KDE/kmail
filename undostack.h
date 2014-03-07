@@ -34,10 +34,17 @@ namespace KMail {
 class UndoInfo
 {
 public:
+    UndoInfo()
+        : id (-1),
+          moveToTrash(false)
+    {
+    }
+
     int id;
     Akonadi::Item::List items;
     Akonadi::Collection srcFolder;
     Akonadi::Collection destFolder;
+    bool moveToTrash;
 };
 
 class UndoStack : public QObject
@@ -57,6 +64,7 @@ public:
     void pushSingleAction(const Akonadi::Item &item, const Akonadi::Collection&, const Akonadi::Collection& destFolder);
     void folderDestroyed( const Akonadi::Collection &folder);
 
+    QString undoInfo() const;
 public slots:
     void msgDestroyed( const Akonadi::Item &msg);
 
