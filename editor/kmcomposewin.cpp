@@ -1368,12 +1368,18 @@ void KMComposeWin::setupActions( void )
     actionCollection()->addAction( QLatin1String("change_to_uppercase"), upperCase );
     connect( upperCase, SIGNAL(triggered(bool)), this, SLOT(slotUpperCase()) );
 
+    KAction *sentenceCase = new KAction( i18n("Sentence case"), this );
+    actionCollection()->addAction( QLatin1String("change_to_sentencecase"), sentenceCase );
+    connect( sentenceCase, SIGNAL(triggered(bool)), this, SLOT(slotSentenceCase()) );
+
+
     KAction *lowerCase = new KAction( i18n("Lowercase"), this );
     actionCollection()->addAction( QLatin1String("change_to_lowercase"), lowerCase );
     connect( lowerCase, SIGNAL(triggered(bool)), this, SLOT(slotLowerCase()) );
 
     mChangeCaseMenu = new KActionMenu(i18n("Change Case"), this);
     actionCollection()->addAction(QLatin1String("change_case_menu"), mChangeCaseMenu );
+    mChangeCaseMenu->addAction(sentenceCase);
     mChangeCaseMenu->addAction(upperCase);
     mChangeCaseMenu->addAction(lowerCase);
 
@@ -3536,6 +3542,12 @@ void KMComposeWin::slotExplicitClosedMissingAttachment()
 void KMComposeWin::addExtraCustomHeaders( const QMap<QByteArray, QString> &headers)
 {
     mExtraHeaders = headers;
+}
+
+void KMComposeWin::slotSentenceCase()
+{
+    QTextCursor textCursor = mComposerBase->editor()->textCursor();
+    PimCommon::EditorUtil::sentenceCase(textCursor);
 }
 
 void KMComposeWin::slotUpperCase()

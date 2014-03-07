@@ -446,6 +446,7 @@ private slots:
 
     void slotUpperCase();
     void slotLowerCase();
+    void slotSentenceCase();
 
     void slotExternalEditorStarted();
     void slotExternalEditorClosed();
