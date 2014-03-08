@@ -487,7 +487,6 @@ void SearchWindow::doSearch()
         mUi.mSearchFolderEdt->setEnabled( true );
         mQuery = Akonadi::SearchQuery();
         mUi.mStatusLbl->setText( i18n("No message found.") );
-        createSearchModel();
         return;
     case MailCommon::SearchPattern::NotEnoughCharacters:
         mUi.mSearchFolderEdt->setEnabled( true );
