@@ -486,7 +486,7 @@ void SearchWindow::doSearch()
     case MailCommon::SearchPattern::EmptyResult:
         mUi.mSearchFolderEdt->setEnabled( true );
         mQuery = Akonadi::SearchQuery();
-        mUi.mStatusLbl->setText( i18n("No message found.") );
+        mSearchPatternWidget->showWarningPattern(QStringList()<<i18n("You forgot to add conditions."));
         return;
     case MailCommon::SearchPattern::NotEnoughCharacters:
         mUi.mSearchFolderEdt->setEnabled( true );
