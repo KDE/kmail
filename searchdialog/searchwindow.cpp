@@ -448,6 +448,7 @@ void SearchWindow::doSearch()
         }
     } else if (mUi.mChkMultiFolders->isChecked()) {
         if (!mSelectMultiCollectionDialog) {
+            mSearchPatternWidget->showWarningPattern(QStringList()<<i18n("You forgot to select collections."));
             return;
         }
         mCollectionId = mSelectMultiCollectionDialog->selectedCollection();
