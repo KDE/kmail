@@ -20,7 +20,7 @@
 using namespace KMail;
 KMailSearchPatternEdit::KMailSearchPatternEdit(QWidget *parent)
     : MailCommon::SearchPatternEdit(parent,
-                                    (MailCommon::SearchPatternEdit::SearchPatternEditOptions)(SearchPatternEdit::NotShowDate|SearchPatternEdit::AbsoluteDate|SearchPatternEdit::NotShowTags),
+                                    (MailCommon::SearchPatternEdit::SearchPatternEditOptions)(/*SearchPatternEdit::NotShowDate|*/SearchPatternEdit::AbsoluteDate|SearchPatternEdit::NotShowTags),
                                     BalooMode)
 {
 }
