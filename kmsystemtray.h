@@ -64,6 +64,7 @@ private slots:
     void slotSelectCollection(QAction *act);
     void initListOfCollection();
     void slotCollectionStatisticsChanged( Akonadi::Collection::Id ,const Akonadi::CollectionStatistics &);
+    void slotGeneralPaletteChanged();
 
 private:
     bool mainWindowIsOnCurrentDesktop();
@@ -75,6 +76,7 @@ private:
     bool ignoreNewMailInFolder(const Akonadi::Collection &collection);
 
 private:
+    QColor mTextColor;
     KIcon mIcon;
     int mDesktopOfMainWin;
 
