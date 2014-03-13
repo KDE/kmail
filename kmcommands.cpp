@@ -303,7 +303,7 @@ void KMCommand::transferSelectedMsgs()
     // TODO once the message list is based on ETM and we get the more advanced caching we need to make that check a bit more clever
     if ( !mFetchScope.isEmpty() ) {
         complete = false;
-        KMCommand::mCountJobs++;
+        ++KMCommand::mCountJobs;
         Akonadi::ItemFetchJob *fetch = new Akonadi::ItemFetchJob( mMsgList, this );
         mFetchScope.fetchAttribute< MessageCore::MDNStateAttribute >();
         fetch->setFetchScope( mFetchScope );
