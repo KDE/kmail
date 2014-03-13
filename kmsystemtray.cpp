@@ -83,6 +83,7 @@ KMSystemTray::KMSystemTray(QObject *parent)
     }
 
 
+    connect( KGlobalSettings::self(), SIGNAL(kdisplayPaletteChanged()), this, SLOT(slotGeneralPaletteChanged()));
     connect( this, SIGNAL(activateRequested(bool,QPoint)),
              this, SLOT(slotActivated()) );
     connect( contextMenu(), SIGNAL(aboutToShow()),
@@ -176,6 +177,13 @@ int KMSystemTray::mode() const
     return mMode;
 }
 
+void KMSystemTray::slotGeneralPaletteChanged()
+{
+    const KColorScheme scheme( QPalette::Active, KColorScheme::View );
+    mTextColor = scheme.foreground( KColorScheme::LinkText ).color();
+}
+
+
 /**
  * Update the count of unread messages.  If there are unread messages,
  * overlay the count on top of a transparent version of the KMail icon.
@@ -210,10 +218,12 @@ void KMSystemTray::updateCount()
 
         QPainter p( &overlayPixmap );
         p.setFont( countFont );
-        KColorScheme scheme( QPalette::Active, KColorScheme::View );
+        if (!mTextColor.isValid()) {
+            slotGeneralPaletteChanged();
+        }
 
         p.setBrush( Qt::NoBrush );
-        p.setPen( scheme.foreground( KColorScheme::LinkText ).color() );
+        p.setPen( mTextColor );
         p.setOpacity( 1.0 );
         p.drawText( overlayPixmap.rect(),Qt::AlignCenter, countString );
         p.end();
