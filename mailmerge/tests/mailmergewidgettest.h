@@ -30,6 +30,7 @@ private Q_SLOTS:
     void shouldHaveDefaultValueOnCreation();
     void shouldEmitSourceModeChanged();
     void shouldDontEmitSourceModeChangedWhenIndexIsInvalid();
+    void shouldChangeStackedWidgetIndexWhenChangeComboboxIndex();
 };
 
 #endif // MAILMERGEWIDGETTEST_H

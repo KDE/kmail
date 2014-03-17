@@ -21,7 +21,7 @@
 #include <QWidget>
 
 class KComboBox;
-
+class QStackedWidget;
 class MailMergeWidget : public QWidget
 {
     Q_OBJECT
@@ -42,6 +42,7 @@ private slots:
 
 private:
     KComboBox *mSource;
+    QStackedWidget *mStackedWidget;
 };
 
 #endif // MAILMERGEWIDGET_H

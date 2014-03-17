@@ -19,6 +19,7 @@
 #include "../mailmergewidget.h"
 #include <qtest_kde.h>
 #include <KComboBox>
+#include <QStackedWidget>
 
 Q_DECLARE_METATYPE(MailMergeWidget::SourceType)
 MailMergeWidgetTest::MailMergeWidgetTest()
@@ -32,6 +33,11 @@ void MailMergeWidgetTest::shouldHaveDefaultValueOnCreation()
     KComboBox *source = qFindChild<KComboBox *>(&mailmerge, QLatin1String("source"));
     QVERIFY(source);
     QCOMPARE(source->currentIndex(), 0);
+
+    QStackedWidget *stackedwidget = qFindChild<QStackedWidget *>(&mailmerge, QLatin1String("stackedwidget"));
+    QVERIFY(stackedwidget);
+    QCOMPARE(stackedwidget->count(), 2);
+    QCOMPARE(stackedwidget->currentIndex(), 0);
 }
 
 void MailMergeWidgetTest::shouldEmitSourceModeChanged()
@@ -53,5 +59,20 @@ void MailMergeWidgetTest::shouldDontEmitSourceModeChangedWhenIndexIsInvalid()
     source->setCurrentIndex(-1);
     QCOMPARE(spy.count(), 0);
 }
+
+void MailMergeWidgetTest::shouldChangeStackedWidgetIndexWhenChangeComboboxIndex()
+{
+    MailMergeWidget mailmerge;
+    KComboBox *source = qFindChild<KComboBox *>(&mailmerge, QLatin1String("source"));
+    QCOMPARE(source->currentIndex(), 0);
+
+    QStackedWidget *stackedwidget = qFindChild<QStackedWidget *>(&mailmerge, QLatin1String("stackedwidget"));
+    QCOMPARE(stackedwidget->currentIndex(), 0);
+    source->setCurrentIndex(0);
+    QCOMPARE(stackedwidget->currentIndex(), 0);
+    source->setCurrentIndex(1);
+    QCOMPARE(stackedwidget->currentIndex(), 1);
+}
+
 
 QTEST_KDEMAIN( MailMergeWidgetTest, GUI )

@@ -23,7 +23,7 @@
 #include <QHBoxLayout>
 #include <QVBoxLayout>
 #include <QLabel>
-
+#include <QStackedWidget>
 
 MailMergeWidget::MailMergeWidget(QWidget *parent)
     : QWidget(parent)
@@ -45,6 +45,21 @@ MailMergeWidget::MailMergeWidget(QWidget *parent)
     connect(mSource, SIGNAL(activated(int)), this, SLOT(slotSourceChanged(int)));
 
     hbox->addWidget(mSource);
+
+    mStackedWidget = new QStackedWidget;
+    mStackedWidget->setObjectName(QLatin1String("stackedwidget"));
+    vbox->addWidget(mStackedWidget);
+
+    QWidget *addressBookWidget = new QWidget;
+    QVBoxLayout *addressBookWidgetLayout = new QVBoxLayout;
+    addressBookWidget->setLayout(addressBookWidgetLayout);
+    mStackedWidget->addWidget(addressBookWidget);
+
+    QWidget *csvWidget = new QWidget;
+    QVBoxLayout *csvWidgetLayout = new QVBoxLayout;
+    csvWidget->setLayout(csvWidgetLayout);
+    mStackedWidget->addWidget(csvWidget);
+
 }
 
 
@@ -57,5 +72,6 @@ void MailMergeWidget::slotSourceChanged(int index)
 {
     if (index != -1) {
         Q_EMIT sourceModeChanged(static_cast<SourceType>(mSource->itemData(index).toInt()));
+        mStackedWidget->setCurrentIndex(index);
     }
 }
