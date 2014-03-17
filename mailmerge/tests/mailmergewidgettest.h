@@ -28,6 +28,8 @@ public:
 
 private Q_SLOTS:
     void shouldHaveDefaultValueOnCreation();
+    void shouldEmitSourceModeChanged();
+    void shouldDontEmitSourceModeChangedWhenIndexIsInvalid();
 };
 
 #endif // MAILMERGEWIDGETTEST_H

@@ -34,6 +34,12 @@ public:
     explicit MailMergeWidget(QWidget *parent = 0);
     ~MailMergeWidget();
 
+Q_SIGNALS:
+    void sourceModeChanged(MailMergeWidget::SourceType);
+
+private slots:
+    void slotSourceChanged(int index);
+
 private:
     KComboBox *mSource;
 };

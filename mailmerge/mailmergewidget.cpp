@@ -41,6 +41,9 @@ MailMergeWidget::MailMergeWidget(QWidget *parent)
     mSource->setObjectName(QLatin1String("source"));
     mSource->addItem(i18n("Address Book"), AddressBook);
     mSource->addItem(i18n("CSV"), CSV);
+    connect(mSource, SIGNAL(currentIndexChanged(int)), this, SLOT(slotSourceChanged(int)));
+    connect(mSource, SIGNAL(activated(int)), this, SLOT(slotSourceChanged(int)));
+
     hbox->addWidget(mSource);
 }
 
@@ -48,4 +51,11 @@ MailMergeWidget::MailMergeWidget(QWidget *parent)
 MailMergeWidget::~MailMergeWidget()
 {
 
+}
+
+void MailMergeWidget::slotSourceChanged(int index)
+{
+    if (index != -1) {
+        Q_EMIT sourceModeChanged(static_cast<SourceType>(mSource->itemData(index).toInt()));
+    }
 }
