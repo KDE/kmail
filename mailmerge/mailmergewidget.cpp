@@ -17,9 +17,31 @@
 
 #include "mailmergewidget.h"
 
+#include <KLocalizedString>
+#include <KComboBox>
+
+#include <QHBoxLayout>
+#include <QVBoxLayout>
+#include <QLabel>
+
+
 MailMergeWidget::MailMergeWidget(QWidget *parent)
     : QWidget(parent)
 {
+    QVBoxLayout *vbox = new QVBoxLayout;
+    setLayout(vbox);
+
+    QHBoxLayout *hbox = new QHBoxLayout;
+    vbox->addLayout(hbox);
+
+    QLabel *lab = new QLabel(i18n("Source:"));
+    hbox->addWidget(lab);
+
+    mSource = new KComboBox;
+    mSource->setObjectName(QLatin1String("source"));
+    mSource->addItem(i18n("Address Book"), AddressBook);
+    mSource->addItem(i18n("CSV"), CSV);
+    hbox->addWidget(mSource);
 }
 
 

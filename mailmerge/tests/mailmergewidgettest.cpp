@@ -16,11 +16,20 @@
 */
 
 #include "mailmergewidgettest.h"
+#include "../mailmergewidget.h"
 #include <qtest_kde.h>
-
+#include <KComboBox>
 
 MailMergeWidgetTest::MailMergeWidgetTest()
 {
+}
+
+void MailMergeWidgetTest::shouldHaveDefaultValueOnCreation()
+{
+    MailMergeWidget mailmerge;
+    KComboBox *source = qFindChild<KComboBox *>(&mailmerge, QLatin1String("source"));
+    QVERIFY(source);
+    QCOMPARE(source->currentIndex(), 0);
 }
 
 QTEST_KDEMAIN( MailMergeWidgetTest, GUI )

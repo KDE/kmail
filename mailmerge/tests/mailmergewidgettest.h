@@ -27,6 +27,7 @@ public:
     MailMergeWidgetTest();
 
 private Q_SLOTS:
+    void shouldHaveDefaultValueOnCreation();
 };
 
 #endif // MAILMERGEWIDGETTEST_H

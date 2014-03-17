@@ -20,12 +20,22 @@
 
 #include <QWidget>
 
+class KComboBox;
+
 class MailMergeWidget : public QWidget
 {
     Q_OBJECT
 public:
+    enum SourceType {
+        AddressBook = 0,
+        CSV = 1
+    };
+
     explicit MailMergeWidget(QWidget *parent = 0);
     ~MailMergeWidget();
+
+private:
+    KComboBox *mSource;
 };
 
 #endif // MAILMERGEWIDGET_H
