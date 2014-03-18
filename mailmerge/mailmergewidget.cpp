@@ -17,6 +17,8 @@
 
 #include "mailmergewidget.h"
 
+#include <pimcommon/widgets/simplestringlisteditor.h>
+
 #include <KLocalizedString>
 #include <KComboBox>
 
@@ -59,7 +61,15 @@ MailMergeWidget::MailMergeWidget(QWidget *parent)
     QVBoxLayout *csvWidgetLayout = new QVBoxLayout;
     csvWidget->setLayout(csvWidgetLayout);
     mStackedWidget->addWidget(csvWidget);
+    PimCommon::SimpleStringListEditor::ButtonCode buttonCode =
+            static_cast<PimCommon::SimpleStringListEditor::ButtonCode>( PimCommon::SimpleStringListEditor::Add | PimCommon::SimpleStringListEditor::Remove | PimCommon::SimpleStringListEditor::Modify );
+    mAttachment =
+            new PimCommon::SimpleStringListEditor( this, buttonCode,
+                                                   i18n("A&dd..."), i18n("Re&move"),
+                                                   i18n("Mod&ify..."),
+                                                   i18n("Enter attachment url:") );
 
+    vbox->addWidget(mAttachment);
 }
 
 

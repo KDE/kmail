@@ -135,6 +135,7 @@ if (KDEPIM_BUILD_DESKTOP)
   )
   set(kmailprivate_mailmerge_LIB_SRCS
      mailmerge/mailmergewidget.cpp
+     mailmerge/attachmentlistwidget.cpp
   ) 
   set(kmailprivate_LIB_SRCS
      widgets/collectionpane.cpp

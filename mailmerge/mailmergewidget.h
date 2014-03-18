@@ -22,6 +22,9 @@
 
 class KComboBox;
 class QStackedWidget;
+namespace PimCommon {
+class SimpleStringListEditor;
+}
 class MailMergeWidget : public QWidget
 {
     Q_OBJECT
@@ -43,6 +46,7 @@ private slots:
 private:
     KComboBox *mSource;
     QStackedWidget *mStackedWidget;
+    PimCommon::SimpleStringListEditor *mAttachment;
 };
 
 #endif // MAILMERGEWIDGET_H
