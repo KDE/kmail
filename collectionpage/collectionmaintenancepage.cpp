@@ -99,11 +99,11 @@ void CollectionMaintenancePage::init(const Akonadi::Collection & col)
     mLastIndexed = new QLabel( i18n( "Still not indexed." ) );
 
     indexingLayout->addWidget( mLastIndexed );
-
+#if 0
     KPushButton *forceReindex = new KPushButton(i18n("Force reindexing"));
     indexingLayout->addWidget( forceReindex );
     connect(forceReindex,SIGNAL(clicked()),SLOT(slotReindexing()));
-
+#endif
     topLayout->addWidget( indexingGroup );
     topLayout->addStretch( 100 );
 }

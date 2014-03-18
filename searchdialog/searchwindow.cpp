@@ -504,7 +504,7 @@ void SearchWindow::doSearch()
         searchJob->setSearchMimeTypes( QStringList() << QLatin1String("message/rfc822") );
         searchJob->setSearchCollections( searchCollections );
         searchJob->setRecursive( recursive );
-        searchJob->setRemoteSearchEnabled( true );
+        searchJob->setRemoteSearchEnabled( false );
         mSearchJob = searchJob;
     } else {
         kDebug()<<" use existing folder " << mFolder.id();
@@ -514,7 +514,7 @@ void SearchWindow::doSearch()
         attribute->setQueryString( QString::fromLatin1(mQuery.toJSON()) );
         attribute->setQueryCollections( searchCollections );
         attribute->setRecursive( recursive );
-        attribute->setRemoteSearchEnabled( true );
+        attribute->setRemoteSearchEnabled( false );
         mFolder.addAttribute(attribute);
         mSearchJob = new Akonadi::CollectionModifyJob( mFolder, this );
     }
