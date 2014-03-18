@@ -17,6 +17,7 @@
 
 #include "mailmergewidgettest.h"
 #include "../mailmergewidget.h"
+#include "pimcommon/widgets/simplestringlisteditor.h"
 #include <qtest_kde.h>
 #include <KComboBox>
 #include <QStackedWidget>
@@ -38,6 +39,10 @@ void MailMergeWidgetTest::shouldHaveDefaultValueOnCreation()
     QVERIFY(stackedwidget);
     QCOMPARE(stackedwidget->count(), 2);
     QCOMPARE(stackedwidget->currentIndex(), 0);
+
+    PimCommon::SimpleStringListEditor *listEditor = qFindChild<PimCommon::SimpleStringListEditor *>(&mailmerge, QLatin1String("attachment-list"));
+    QVERIFY(listEditor);
+    QCOMPARE(listEditor->stringList().count(), 0);
 }
 
 void MailMergeWidgetTest::shouldEmitSourceModeChanged()

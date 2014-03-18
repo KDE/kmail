@@ -63,11 +63,10 @@ MailMergeWidget::MailMergeWidget(QWidget *parent)
     mStackedWidget->addWidget(csvWidget);
     PimCommon::SimpleStringListEditor::ButtonCode buttonCode =
             static_cast<PimCommon::SimpleStringListEditor::ButtonCode>( PimCommon::SimpleStringListEditor::Add | PimCommon::SimpleStringListEditor::Remove | PimCommon::SimpleStringListEditor::Modify );
-    mAttachment =
-            new AttachmentListWidget( this, buttonCode,
-                                      i18n("A&dd..."), i18n("Re&move"),
-                                      i18n("Mod&ify..."),
-                                      i18n("Enter attachment url:") );
+    mAttachment = new AttachmentListWidget( this, buttonCode,
+                                            i18n("A&dd..."), i18n("Re&move"),
+                                            i18n("Mod&ify..."));
+    mAttachment->setObjectName(QLatin1String("attachment-list"));
 
     vbox->addWidget(mAttachment);
 }
