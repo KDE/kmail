@@ -23,6 +23,7 @@
 class KComboBox;
 class QStackedWidget;
 class AttachmentListWidget;
+class KUrlRequester;
 class MailMergeWidget : public QWidget
 {
     Q_OBJECT
@@ -45,6 +46,7 @@ private:
     KComboBox *mSource;
     QStackedWidget *mStackedWidget;
     AttachmentListWidget *mAttachment;
+    KUrlRequester *mCvsUrlRequester;
 };
 
 #endif // MAILMERGEWIDGET_H

@@ -21,6 +21,7 @@
 
 #include <KLocalizedString>
 #include <KComboBox>
+#include <KUrlRequester>
 
 #include <QHBoxLayout>
 #include <QVBoxLayout>
@@ -54,12 +55,19 @@ MailMergeWidget::MailMergeWidget(QWidget *parent)
 
     QWidget *addressBookWidget = new QWidget;
     QVBoxLayout *addressBookWidgetLayout = new QVBoxLayout;
+    //TODO add addressbook select
     addressBookWidget->setLayout(addressBookWidgetLayout);
     mStackedWidget->addWidget(addressBookWidget);
 
     QWidget *csvWidget = new QWidget;
     QVBoxLayout *csvWidgetLayout = new QVBoxLayout;
     csvWidget->setLayout(csvWidgetLayout);
+
+    lab = new QLabel(i18n("Path:"));
+    csvWidgetLayout->addWidget(lab);
+    mCvsUrlRequester = new KUrlRequester;
+    csvWidgetLayout->addWidget(mCvsUrlRequester);
+
     mStackedWidget->addWidget(csvWidget);
     PimCommon::SimpleStringListEditor::ButtonCode buttonCode =
             static_cast<PimCommon::SimpleStringListEditor::ButtonCode>( PimCommon::SimpleStringListEditor::Add | PimCommon::SimpleStringListEditor::Remove | PimCommon::SimpleStringListEditor::Modify );
