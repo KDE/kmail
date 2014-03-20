@@ -44,8 +44,7 @@ public:
                                   ButtonCode buttons=Unsorted,
                                   const QString & addLabel=QString(),
                                   const QString & removeLabel=QString(),
-                                  const QString & modifyLabel=QString(),
-                                  const QString & addDialogLabel=QString());
+                                  const QString & modifyLabel=QString());
     ~AttachmentListWidget();
 
     void addNewEntry();
