@@ -69,6 +69,10 @@ MailMergeWidget::MailMergeWidget(QWidget *parent)
     csvWidgetLayout->addWidget(mCvsUrlRequester);
 
     mStackedWidget->addWidget(csvWidget);
+
+    lab = new QLabel(i18n("Attachment:"));
+    vbox->addWidget(lab);
+
     PimCommon::SimpleStringListEditor::ButtonCode buttonCode =
             static_cast<PimCommon::SimpleStringListEditor::ButtonCode>( PimCommon::SimpleStringListEditor::Add | PimCommon::SimpleStringListEditor::Remove | PimCommon::SimpleStringListEditor::Modify );
     mAttachment = new AttachmentListWidget( this, buttonCode,
@@ -77,6 +81,7 @@ MailMergeWidget::MailMergeWidget(QWidget *parent)
     mAttachment->setObjectName(QLatin1String("attachment-list"));
 
     vbox->addWidget(mAttachment);
+    vbox->addStretch();
 }
 
 
