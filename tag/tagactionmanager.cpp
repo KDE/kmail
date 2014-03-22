@@ -55,6 +55,7 @@ TagActionManager::TagActionManager( QObject *parent, KActionCollection *actionCo
       mSeparatorNewTagAction( 0 ),
       mMoreAction( 0 ),
       mNewTagAction( 0 ),
+      mNewTagId(-1),
       mTagFetchInProgress( false ),
       mMonitor(new Akonadi::Monitor(this))
 {
