@@ -867,7 +867,7 @@ void KMKernel::raise()
 
 }
 
-bool KMKernel::showMail( quint32 serialNumber, const QString& /* messageId */ )
+bool KMKernel::showMail(qint64 serialNumber)
 {
     KMMainWidget *mainWidget = 0;
 
