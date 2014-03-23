@@ -277,7 +277,7 @@ public Q_SLOTS:
                                              const QString & messageFile,
                                              const QString & attachURL );
 
-    Q_SCRIPTABLE bool showMail( quint32 serialNumber, const QString & messageId );
+    Q_SCRIPTABLE bool showMail( qint64 serialNumber );
 
     Q_SCRIPTABLE int viewMessage( const QString & messageFile );
 
