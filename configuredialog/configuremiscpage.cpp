@@ -48,7 +48,7 @@ MiscPage::MiscPage( const KComponentData &instance, QWidget *parent )
     addTab( mProxyTab, i18n("Proxy" ) );
 
     mAgentSettingsTab = new MiscPageAgentSettingsTab();
-    addTab( mAgentSettingsTab, i18n("Agent Settings" ) );
+    addTab( mAgentSettingsTab, i18n("Plugins Settings" ) );
 
     mPrintingTab = new MiscPagePrintingTab();
     addTab( mPrintingTab, i18n("Printing" ) );

@@ -49,7 +49,7 @@ ConfigureAgentsWidget::ConfigureAgentsWidget(QWidget *parent)
 
     mTreeWidget = new QTreeWidget;
     QStringList headers;
-    headers<<i18n("Activate")<<i18n("Agent Name");
+    headers<<i18n("Activate")<<i18n("Name");
     mTreeWidget->setHeaderLabels(headers);
     mTreeWidget->setSortingEnabled(true);
     mTreeWidget->setRootIsDecorated(false);
