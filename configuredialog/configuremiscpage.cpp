@@ -56,7 +56,7 @@ MiscPage::MiscPage( const KComponentData &instance, QWidget *parent )
 
 QString MiscPageFolderTab::helpAnchor() const
 {
-    return QString::fromLatin1("Sconfigure-misc-folders");
+    return QString::fromLatin1("configure-misc-folders");
 }
 
 MiscPageFolderTab::MiscPageFolderTab( QWidget * parent )

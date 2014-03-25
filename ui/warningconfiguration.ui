@@ -483,8 +483,8 @@ The recommended SPHINX setting is 14 days.
   <tabstop>mWarnEncrChainCertExpiresSB</tabstop>
   <tabstop>mWarnEncrRootCertExpiresSB</tabstop>
   <tabstop>gnupgButton</tabstop>
-  <tabstop>enableAllWarningsPB</tabstop>
   <tabstop>chiasmusButton</tabstop>
+  <tabstop>enableAllWarningsPB</tabstop>
  </tabstops>
  <resources/>
  <connections/>

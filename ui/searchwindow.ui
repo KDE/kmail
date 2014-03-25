@@ -156,10 +156,8 @@
    <item row="8" column="0">
     <layout class="QHBoxLayout" name="horizontalLayout_3">
      <item>
-      <widget class="KPIMUtils::ProgressIndicatorWidget" name="mProgressIndicator">
-      </widget>
+      <widget class="KPIMUtils::ProgressIndicatorWidget" name="mProgressIndicator"/>
      </item>
-
      <item>
       <widget class="QLabel" name="mStatusLbl">
        <property name="sizePolicy">
@@ -186,16 +184,6 @@
  </widget>
  <customwidgets>
   <customwidget>
-   <class>Akonadi::EntityTreeView</class>
-   <extends>QTreeView</extends>
-   <header>akonadi/entitytreeview.h</header>
-  </customwidget>
-  <customwidget>
-   <class>KDialogButtonBox</class>
-   <extends>QDialogButtonBox</extends>
-   <header>kdialogbuttonbox.h</header>
-  </customwidget>
-  <customwidget>
    <class>KLineEdit</class>
    <extends>QLineEdit</extends>
    <header>klineedit.h</header>
@@ -204,6 +192,16 @@
    <class>KPushButton</class>
    <extends>QPushButton</extends>
    <header>kpushbutton.h</header>
+  </customwidget>
+  <customwidget>
+   <class>Akonadi::EntityTreeView</class>
+   <extends>QTreeView</extends>
+   <header>akonadi/entitytreeview.h</header>
+  </customwidget>
+  <customwidget>
+   <class>KDialogButtonBox</class>
+   <extends>QDialogButtonBox</extends>
+   <header>kdialogbuttonbox.h</header>
   </customwidget>
   <customwidget>
    <class>MailCommon::FolderRequester</class>
@@ -217,7 +215,6 @@
    <header>kpimutils/progressindicatorwidget.h</header>
    <container>1</container>
   </customwidget>
-
   <customwidget>
    <class>KMail::KMailSearchPatternEdit</class>
    <extends>QWidget</extends>
@@ -225,6 +222,18 @@
    <container>1</container>
   </customwidget>
  </customwidgets>
+ <tabstops>
+  <tabstop>mChkbxAllFolders</tabstop>
+  <tabstop>mChkbxSpecificFolders</tabstop>
+  <tabstop>mChkSubFolders</tabstop>
+  <tabstop>mChkMultiFolders</tabstop>
+  <tabstop>selectMultipleFolders</tabstop>
+  <tabstop>mLbxMatches</tabstop>
+  <tabstop>mSearchFolderEdt</tabstop>
+  <tabstop>mSearchFolderOpenBtn</tabstop>
+  <tabstop>mSearchResultOpenBtn</tabstop>
+  <tabstop>mButtonBox</tabstop>
+ </tabstops>
  <resources/>
  <connections>
   <connection>
