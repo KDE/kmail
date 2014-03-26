@@ -602,7 +602,8 @@ int KMKernel::openComposer(const QString &to, const QString &cc,
     if (!to.isEmpty())
         cWin->setFocusToSubject();
     KUrl::List attachURLs = KUrl::List( attachmentPaths );
-    for ( KUrl::List::ConstIterator it = attachURLs.constBegin() ; it != attachURLs.constEnd() ; ++it ) {
+    KUrl::List::ConstIterator endAttachment(attachURLs.constEnd());
+    for ( KUrl::List::ConstIterator it = attachURLs.constBegin() ; it != endAttachment; ++it ) {
         if( KMimeType::findByUrl( *it )->name() == QLatin1String( "inode/directory" ) ) {
             if(KMessageBox::questionYesNo(0, i18n("Do you want to attach this folder \"%1\"?",(*it).prettyUrl()), i18n("Attach Folder")) == KMessageBox::No ) {
                 continue;
@@ -683,7 +684,6 @@ int KMKernel::openComposer (const QString &to, const QString &cc,
     bool iCalAutoSend = false;
     bool noWordWrap = false;
     bool isICalInvitation = false;
-    //KConfigGroup options( config(), "Groupware" );
     if ( !attachData.isEmpty() ) {
         isICalInvitation = (attachName ==QLatin1String("cal.ics")) &&
                 attachType == "text" &&
@@ -1221,7 +1221,7 @@ bool KMKernel::doSessionManagement()
             //only restore main windows! (Matthias);
             if (KMMainWin::classNameOfToplevel(n) == QLatin1String("KMMainWin"))
                 (new KMMainWin)->restoreDockedState(n);
-            n++;
+            ++n;
         }
         return true; // we were restored by SM
     }
