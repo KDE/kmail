@@ -47,6 +47,7 @@ public:
 
     AddressValidationJob *q;
     QString mEmailAddresses;
+    QString mDomainDefaultName;
     bool mIsValid;
     QWidget *mParentWidget;
 };
@@ -108,9 +109,14 @@ AddressValidationJob::~AddressValidationJob()
     delete d;
 }
 
+void AddressValidationJob::setDefaultDomain(const QString &domainName)
+{
+    d->mDomainDefaultName = domainName;
+}
+
 void AddressValidationJob::start()
 {
-    AliasesExpandJob *job = new AliasesExpandJob( d->mEmailAddresses, MessageComposer::MessageComposerSettings::defaultDomain(), this );
+    AliasesExpandJob *job = new AliasesExpandJob( d->mEmailAddresses, d->mDomainDefaultName, this );
     connect( job, SIGNAL(result(KJob*)), SLOT(slotAliasExpansionDone(KJob*)) );
     job->start();
 }

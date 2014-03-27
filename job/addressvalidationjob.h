@@ -37,7 +37,9 @@ class AddressValidationJob : public KJob
 
     bool isValid() const;
 
-  private:
+    void setDefaultDomain(const QString &domainName);
+
+private:
     //@cond PRIVATE
     class Private;
     Private* const d;
