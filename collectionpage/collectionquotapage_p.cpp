@@ -37,6 +37,7 @@
 
 #include <KLocalizedString>
 #include <KDialog>
+#include <KLocale>
 
 #include <QLabel>
 #include <qlayout.h>
@@ -72,6 +73,6 @@ void QuotaWidget::setQuotaInfo( qint64 current, qint64 maxValue )
 {
     mProgressBar->setMaximum( maxValue );
     mProgressBar->setValue( current );
-    mUsage->setText(i18n("%1 of %2 KiB used",current, maxValue));
+    mUsage->setText(i18n("%1 of %2 used", KGlobal::locale()->formatByteSize( qMax( 0LL, current ) ), KGlobal::locale()->formatByteSize( qMax( 0LL, maxValue ) ) ) );
 }
 
