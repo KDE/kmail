@@ -3589,6 +3589,7 @@ void KMComposeWin::slotUploadFileDone(const QString &serviceName, const QString 
 void KMComposeWin::slotUploadFileFailed(const QString &serviceName, const QString &fileName)
 {
     Q_UNUSED(serviceName);
+    Q_UNUSED(fileName);
     KMessageBox::error(this, i18n("An error occurred while sending the file."), i18n("Upload file"));
     --mNumProgressUploadFile;
 }
