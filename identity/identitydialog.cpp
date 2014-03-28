@@ -671,7 +671,7 @@ void IdentityDialog::slotButtonClicked( int button )
     // Validate email addresses
     const QString email = mEmailEdit->text().trimmed();
     if ( !KPIMUtils::isValidSimpleAddress( email ) ) {
-        QString errorMsg( KPIMUtils::simpleEmailAddressErrorMsg() );
+        const QString errorMsg( KPIMUtils::simpleEmailAddressErrorMsg() );
         KMessageBox::sorry( this, errorMsg, i18n("Invalid Email Address") );
         return;
     }
