@@ -2744,7 +2744,12 @@ void KMComposeWin::doSend( MessageComposer::MessageSender::SendMethod method,
         const QStringList recipients = QStringList() << mComposerBase->to().trimmed() << mComposerBase->cc().trimmed() << mComposerBase->bcc().trimmed();
 
         AddressValidationJob *job = new AddressValidationJob( recipients.join( QLatin1String( ", ") ), this, this );
-        job->setDefaultDomain(MessageComposer::MessageComposerSettings::defaultDomain());
+        const KPIMIdentities::Identity &ident = KMKernel::self()->identityManager()->identityForUoid( mComposerBase->identityCombo()->currentIdentity() );
+        QString defaultDomainName;
+        if ( !ident.isNull() ) {
+            defaultDomainName = ident.defaultDomainName();
+        }
+        job->setDefaultDomain(defaultDomainName);
         job->setProperty( "method", static_cast<int>( method ) );
         job->setProperty( "saveIn", static_cast<int>( saveIn ) );
         connect( job, SIGNAL(result(KJob*)), SLOT(slotDoDelayedSend(KJob*)) );

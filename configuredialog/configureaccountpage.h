@@ -47,7 +47,6 @@ private:
     QCheckBox   *mCheckSpellingBeforeSending;
     KComboBox   *mSendOnCheckCombo;
     KComboBox   *mSendMethodCombo;
-    KLineEdit   *mDefaultDomainEdit;
 };
 
 

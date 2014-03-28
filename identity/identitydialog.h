@@ -138,6 +138,7 @@ private:
     QString                          mVcardFilename;
     KPushButton                      *mEditVCard;
     PimCommon::AutoCorrectionLanguage *mAutoCorrectionLanguage;
+    KLineEdit                        *mDefaultDomainEdit;
 
     // "templates" tab:
     TemplateParser::TemplatesConfiguration *mWidget;

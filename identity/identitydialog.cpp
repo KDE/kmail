@@ -94,6 +94,7 @@ using MailTransport::TransportManager;
 #include <QVBoxLayout>
 #include <QGridLayout>
 #include <QFile>
+#include <QHostInfo>
 
 // other headers:
 #include <gpgme++/key.h>
@@ -496,6 +497,22 @@ IdentityDialog::IdentityDialog( QWidget * parent )
     label->setBuddy( mAutoCorrectionLanguage );
     glay->addWidget( label, row, 0 );
 
+    // "default domain" input field:
+    ++row;
+    mDefaultDomainEdit = new KLineEdit( tab );
+    glay->addWidget( mDefaultDomainEdit, row, 1 );
+    label = new QLabel( i18n("Defaul&t domain:"), tab );
+    label->setBuddy( mDefaultDomainEdit );
+    glay->addWidget( label, row, 0 );
+
+    // and now: add QWhatsThis:
+    msg = i18n( "<qt><p>The default domain is used to complete email "
+                "addresses that only consist of the user's name."
+                "</p></qt>" );
+    label->setWhatsThis( msg );
+    mDefaultDomainEdit->setWhatsThis( msg );
+
+
     ++row;
     glay->setRowStretch( row, 1 );
 
@@ -662,7 +679,8 @@ void IdentityDialog::slotButtonClicked( int button )
     // Check if the 'Reply to' and 'BCC' recipients are valid
     const QString recipients = mReplyToEdit->text().trimmed() + QLatin1String( ", " ) + mBccEdit->text().trimmed() + QLatin1String( ", " ) + mCcEdit->text().trimmed();
     AddressValidationJob *job = new AddressValidationJob( recipients, this, this );
-    job->setDefaultDomain(MessageComposer::MessageComposerSettings::defaultDomain());
+    //Use default Value
+    job->setDefaultDomain(mDefaultDomainEdit->text());
     job->setProperty( "email", email );
     connect( job, SIGNAL(result(KJob*)), SLOT(slotDelayedButtonClicked(KJob*)) );
     job->start();
@@ -834,6 +852,12 @@ void IdentityDialog::setIdentity( KPIMIdentities::Identity & ident ) {
         mVcardFilename = KStandardDirs::locateLocal("appdata",ident.identityName() + QLatin1String(".vcf"));
     }
     mAttachMyVCard->setChecked(ident.attachVcard());
+    QString defaultDomainName = ident.defaultDomainName();
+    if (defaultDomainName.isEmpty()) {
+        defaultDomainName = QHostInfo::localHostName();
+    }
+    mDefaultDomainEdit->setText(defaultDomainName);
+
     // "Templates" tab:
 #ifndef KDEPIM_MOBILE_UI
     uint identity = ident.uoid();
@@ -908,6 +932,8 @@ void IdentityDialog::updateIdentity( KPIMIdentities::Identity & ident ) {
     ident.setAutocorrectionLanguage(mAutoCorrectionLanguage->language());
     updateVcardButton();
     ident.setAttachVcard(mAttachMyVCard->isChecked());
+    //Add default ?
+    ident.setDefaultDomainName(mDefaultDomainEdit->text());
 
     // "Templates" tab:
 #ifndef KDEPIM_MOBILE_UI
