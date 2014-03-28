@@ -86,6 +86,7 @@ using MailTransport::TransportManager;
 #include <kcombobox.h>
 #include <ktabwidget.h>
 #include <KStandardDirs>
+#include <KIcon>
 #include <sonnet/dictionarycombobox.h>
 
 // Qt headers:
@@ -95,6 +96,7 @@ using MailTransport::TransportManager;
 #include <QGridLayout>
 #include <QFile>
 #include <QHostInfo>
+#include <QToolButton>
 
 // other headers:
 #include <gpgme++/key.h>
@@ -499,8 +501,15 @@ IdentityDialog::IdentityDialog( QWidget * parent )
 
     // "default domain" input field:
     ++row;
+    QHBoxLayout *hbox = new QHBoxLayout;
     mDefaultDomainEdit = new KLineEdit( tab );
-    glay->addWidget( mDefaultDomainEdit, row, 1 );
+    hbox->addWidget(mDefaultDomainEdit);
+    QToolButton *restoreDefaultDomainName = new QToolButton;
+    restoreDefaultDomainName->setIcon(KIcon(QLatin1String("view-refresh")));
+    restoreDefaultDomainName->setToolTip(i18n("Restore default domain name"));
+    hbox->addWidget(restoreDefaultDomainName);
+    connect(restoreDefaultDomainName, SIGNAL(clicked()), this, SLOT(slotRefreshDefaultDomainName()));
+    glay->addLayout(hbox, row, 1 );
     label = new QLabel( i18n("Defaul&t domain:"), tab );
     label->setBuddy( mDefaultDomainEdit );
     glay->addWidget( label, row, 0 );
@@ -650,6 +659,11 @@ QString DoesntMatchEMailAddress::extractEmail( const char * e ) {
     else
         return em;
 }
+}
+
+void IdentityDialog::slotRefreshDefaultDomainName()
+{
+    mDefaultDomainEdit->setText(QHostInfo::localHostName());
 }
 
 void IdentityDialog::slotButtonClicked( int button )

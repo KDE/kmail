@@ -102,7 +102,7 @@ protected slots:
 private slots:
     void slotDelayedButtonClicked( KJob* );
     void slotEditVcard();
-
+    void slotRefreshDefaultDomainName();
 private:
     bool checkFolderExists( const QString & folder, const QString & msg );
     bool validateAddresses( const QString & addresses );
