@@ -503,6 +503,7 @@ IdentityDialog::IdentityDialog( QWidget * parent )
     ++row;
     QHBoxLayout *hbox = new QHBoxLayout;
     mDefaultDomainEdit = new KLineEdit( tab );
+    mDefaultDomainEdit->setClearButtonShown(true);
     hbox->addWidget(mDefaultDomainEdit);
     QToolButton *restoreDefaultDomainName = new QToolButton;
     restoreDefaultDomainName->setIcon(KIcon(QLatin1String("view-refresh")));
