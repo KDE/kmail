@@ -136,9 +136,23 @@ if (KDEPIM_BUILD_DESKTOP)
   set(kmailprivate_mailmerge_LIB_SRCS
      mailmerge/mailmergewidget.cpp
      mailmerge/attachmentlistwidget.cpp
-  ) 
-  set(kmailprivate_LIB_SRCS
+  )
+
+  set(kmailprivate_job_LIB_SRCS
+     job/addressvalidationjob.cpp
+     job/createnewcontactjob.cpp
+     job/addemailtoexistingcontactjob.cpp
+  )
+ 
+  set(kmailprivate_widgets_LIB_SRCS
      widgets/collectionpane.cpp
+     widgets/vacationscriptindicatorwidget.cpp
+  )
+  set(kmailprivate_tag_LIB_SRCS
+     tag/tagactionmanager.cpp
+     tag/tagselectdialog.cpp
+  )
+  set(kmailprivate_LIB_SRCS
      kmmainwin.cpp
      settings/globalsettings.cpp
      kmreaderwin.cpp
@@ -155,13 +169,10 @@ if (KDEPIM_BUILD_DESKTOP)
      secondarywindow.cpp
      util.cpp
      messageactions.cpp
-     tag/tagactionmanager.cpp
      foldershortcutactionmanager.cpp
-     job/addressvalidationjob.cpp
-     tag/tagselectdialog.cpp
-     job/createnewcontactjob.cpp
-     job/addemailtoexistingcontactjob.cpp
-     widgets/vacationscriptindicatorwidget.cpp
+     ${kmailprivate_tag_LIB_SRCS}
+     ${kmailprivate_job_LIB_SRCS}
+     ${kmailprivate_widgets_LIB_SRCS}
      ${kmailprivate_mailmerge_LIB_SRCS}
      ${kmailprivate_dialogs_LIB_SRCS}
      ${kmailprivate_warningwidgets_LIB_SRCS}
