@@ -142,6 +142,7 @@ if (KDEPIM_BUILD_DESKTOP)
      job/addressvalidationjob.cpp
      job/createnewcontactjob.cpp
      job/addemailtoexistingcontactjob.cpp
+     job/createtaskjob.cpp
   )
  
   set(kmailprivate_widgets_LIB_SRCS
