@@ -190,7 +190,6 @@ KMKernel::KMKernel (QObject *parent) :
 
     mFolderCollectionMonitor = new FolderCollectionMonitor( session, this );
 
-    connect( mFolderCollectionMonitor->monitor(), SIGNAL(collectionMoved(Akonadi::Collection,Akonadi::Collection,Akonadi::Collection)), SLOT(slotCollectionMoved(Akonadi::Collection,Akonadi::Collection,Akonadi::Collection)) );
     connect( mFolderCollectionMonitor->monitor(), SIGNAL(collectionRemoved(Akonadi::Collection)), SLOT(slotCollectionRemoved(Akonadi::Collection)));
 
     mEntityTreeModel = new Akonadi::EntityTreeModel( folderCollectionMonitor(), this );
@@ -1825,11 +1824,6 @@ void KMKernel::slotCollectionRemoved(const Akonadi::Collection &col)
 void KMKernel::slotDeleteIdentity( uint identity)
 {
     TemplateParser::Util::deleteTemplate( QString::fromLatin1( "IDENTITY_%1" ).arg( identity ) );
-}
-
-void KMKernel::slotCollectionMoved( const Akonadi::Collection &collection, const Akonadi::Collection &source, const Akonadi::Collection &destination )
-{
-    //TODO add undo/redo move collection
 }
 
 bool KMKernel::showPopupAfterDnD()

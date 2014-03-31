@@ -484,7 +484,6 @@ private slots:
     void slotProgressItemCompletedOrCanceled( KPIM::ProgressItem * item);
     void slotInstanceError(const Akonadi::AgentInstance& instance, const QString & message);
     void slotInstanceWarning(const Akonadi::AgentInstance&instance, const QString& message);
-    void slotCollectionMoved( const Akonadi::Collection &collection, const Akonadi::Collection &source, const Akonadi::Collection &destination );
     void slotCollectionRemoved(const Akonadi::Collection& col);
     void slotDeleteIdentity( uint identity);
     void slotInstanceRemoved(const Akonadi::AgentInstance&);
