@@ -125,7 +125,6 @@ private Q_SLOTS:
     void scheduleRename( const QString& );
     void renameSearchFolder();
     void openSearchFolder();
-    void slotShowMsg( const Akonadi::Item& );
     void slotViewSelectedMsg();
     void slotViewMsg( const Akonadi::Item& );
     void slotCurrentChanged( const Akonadi::Item& );
