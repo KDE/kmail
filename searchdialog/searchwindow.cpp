@@ -673,13 +673,11 @@ void SearchWindow::openSearchFolder()
     slotClose();
 }
 
-bool SearchWindow::slotShowMsg( const Akonadi::Item &item )
+void SearchWindow::slotShowMsg( const Akonadi::Item &item )
 {
     if ( item.isValid() ) {
         mKMMainWidget->slotMessageSelected( item );
-        return true;
     }
-    return false;
 }
 
 void SearchWindow::slotViewSelectedMsg()
@@ -687,13 +685,11 @@ void SearchWindow::slotViewSelectedMsg()
     mKMMainWidget->slotMessageActivated( selectedMessage() );
 }
 
-bool SearchWindow::slotViewMsg( const Akonadi::Item &item )
+void SearchWindow::slotViewMsg( const Akonadi::Item &item )
 {
     if ( item.isValid() ) {
         mKMMainWidget->slotMessageActivated( item );
-        return true;
     }
-    return false;
 }
 
 void SearchWindow::slotCurrentChanged( const Akonadi::Item &item )
@@ -737,14 +733,15 @@ void SearchWindow::updateContextMenuActions()
 {
     const int count = selectedMessages().count();
     const bool singleActions = (count == 1);
+    const bool notEmpty = (count > 0);
 
     mReplyAction->setEnabled( singleActions );
     mReplyAllAction->setEnabled( singleActions );
     mReplyListAction->setEnabled( singleActions );
     mPrintAction->setEnabled( singleActions );
-    mSaveAtchAction->setEnabled( count > 0 );
-    mSaveAsAction->setEnabled( count > 0 );
-    mClearAction->setEnabled( count > 0 );
+    mSaveAtchAction->setEnabled( notEmpty );
+    mSaveAsAction->setEnabled( notEmpty );
+    mClearAction->setEnabled( notEmpty );
 }
 
 void SearchWindow::slotContextMenuRequested( const QPoint& )
