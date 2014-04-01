@@ -175,8 +175,6 @@ SearchWindow::SearchWindow( KMMainWidget *widget, const Akonadi::Collection &col
 
     connect( mUi.mLbxMatches, SIGNAL(customContextMenuRequested(QPoint)),
              this, SLOT(slotContextMenuRequested(QPoint)) );
-    connect( mUi.mLbxMatches, SIGNAL(clicked(Akonadi::Item)),
-             this, SLOT(slotShowMsg(Akonadi::Item)) );
     connect( mUi.mLbxMatches, SIGNAL(doubleClicked(Akonadi::Item)),
              this, SLOT(slotViewMsg(Akonadi::Item)) );
     connect( mUi.mLbxMatches, SIGNAL(currentChanged(Akonadi::Item)),
@@ -671,13 +669,6 @@ void SearchWindow::openSearchFolder()
     renameSearchFolder();
     mKMMainWidget->slotSelectCollectionFolder( mFolder );
     slotClose();
-}
-
-void SearchWindow::slotShowMsg( const Akonadi::Item &item )
-{
-    if ( item.isValid() ) {
-        mKMMainWidget->slotMessageSelected( item );
-    }
 }
 
 void SearchWindow::slotViewSelectedMsg()
