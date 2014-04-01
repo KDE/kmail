@@ -152,6 +152,7 @@ private Q_SLOTS:
 
     void slotSearchCollectionsFetched( KJob *job );
 
+    void slotJumpToFolder();
 private:
     void doSearch();
     QPointer<PimCommon::SelectMultiCollectionDialog> mSelectMultiCollectionDialog;
@@ -171,7 +172,7 @@ private:
 
     QAction *mReplyAction, *mReplyAllAction, *mReplyListAction, *mSaveAsAction,
     *mForwardInlineAction, *mForwardAttachedAction, *mPrintAction, *mClearAction,
-    *mSaveAtchAction;
+    *mSaveAtchAction, *mJumpToFolderAction;
     KActionMenu *mForwardActionMenu;
     QTimer mRenameTimer;
     QByteArray mHeaderState;

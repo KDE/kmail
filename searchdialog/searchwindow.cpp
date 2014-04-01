@@ -274,6 +274,11 @@ SearchWindow::SearchWindow( KMMainWidget *widget, const Akonadi::Collection &col
     actionCollection()->addAction( QLatin1String("search_clear_selection"), mClearAction );
     connect( mClearAction, SIGNAL(triggered(bool)), SLOT(slotClearSelection()) );
 
+    mJumpToFolderAction = new KAction( i18n( "Jump to original folder" ), this );
+    actionCollection()->addAction( QLatin1String("search_jump_folder"), mJumpToFolderAction );
+    connect( mJumpToFolderAction, SIGNAL(triggered(bool)), SLOT(slotJumpToFolder()) );
+
+
     connect( mUi.mCbxFolders, SIGNAL(folderChanged(Akonadi::Collection)),
              this, SLOT(slotFolderActivated()) );
 
@@ -726,6 +731,8 @@ void SearchWindow::updateContextMenuActions()
     const bool singleActions = (count == 1);
     const bool notEmpty = (count > 0);
 
+    mJumpToFolderAction->setEnabled( singleActions );
+
     mReplyAction->setEnabled( singleActions );
     mReplyAllAction->setEnabled( singleActions );
     mReplyListAction->setEnabled( singleActions );
@@ -748,6 +755,8 @@ void SearchWindow::slotContextMenuRequested( const QPoint& )
     menu->addAction( mReplyAllAction );
     menu->addAction( mReplyListAction );
     menu->addAction( mForwardActionMenu );
+    menu->addSeparator();
+    menu->addAction( mJumpToFolderAction );
     menu->addSeparator();
     KAction *act = mAkonadiStandardAction->createAction( Akonadi::StandardActionManager::CopyItems );
     mAkonadiStandardAction->setActionText( Akonadi::StandardActionManager::CopyItems, ki18np( "Copy Message", "Copy %1 Messages" ) );
@@ -848,6 +857,13 @@ void SearchWindow::slotSelectMultipleFolders()
         mSelectMultiCollectionDialog = new PimCommon::SelectMultiCollectionDialog(KMime::Message::mimeType(), lst, this);
     }
     mSelectMultiCollectionDialog->show();
+}
+
+void SearchWindow::slotJumpToFolder()
+{
+    if (selectedMessage().isValid()) {
+        mKMMainWidget->slotSelectCollectionFolder( selectedMessage().parentCollection() );
+    }
 }
 
 }
