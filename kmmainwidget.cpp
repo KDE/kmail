@@ -4432,6 +4432,21 @@ QWidget * KMMainWidget::vacationScriptIndicator() const
     return mVacationScriptIndicator;
 }
 
+void KMMainWidget::updateVacationScriptStatus()
+{
+    updateVacationScriptStatus( mVacationIndicatorActive );
+}
+
+KMail::TagActionManager *KMMainWidget::tagActionManager() const
+{
+    return mTagActionManager;
+}
+
+KMail::FolderShortcutActionManager *KMMainWidget::folderShortcutActionManager() const
+{
+    return mFolderShortcutActionManager;
+}
+
 void KMMainWidget::slotMessageSelected(const Akonadi::Item &item)
 {
     delete mShowBusySplashTimer;
