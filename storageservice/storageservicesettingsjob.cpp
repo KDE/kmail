@@ -80,19 +80,9 @@ QString StorageServiceSettingsJob::oauth2RedirectUrl() const
     return QLatin1String("https://bugs.kde.org/");
 }
 
-QString StorageServiceSettingsJob::ubuntuOneAttachmentVolume() const
-{
-    return QLatin1String("/~/KMail Attachments");
-}
-
 QString StorageServiceSettingsJob::hubicScope() const
 {
     return QLatin1String("usage.r,account.r,credentials.r,links.wd");
-}
-
-QString StorageServiceSettingsJob::ubuntuOneTokenName() const
-{
-    return QLatin1String("kmail");
 }
 
 QString StorageServiceSettingsJob::gdriveClientId() const
