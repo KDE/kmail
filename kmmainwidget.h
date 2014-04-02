@@ -139,7 +139,7 @@ public:
     static const PtrList *mainWidgetList();
 
     QWidget *vacationScriptIndicator() const;
-    void updateVacationScriptStatus() { updateVacationScriptStatus( mVacationIndicatorActive ); }
+    void updateVacationScriptStatus();
 
     MailCommon::FolderTreeView *folderTreeView() const {
         return mFolderTreeWidget->folderTreeView();
@@ -148,13 +148,9 @@ public:
     /** Returns the XML GUI client. */
     KXMLGUIClient* guiClient() const { return mGUIClient; }
 
-    KMail::TagActionManager *tagActionManager() const {
-        return mTagActionManager;
-    }
+    KMail::TagActionManager *tagActionManager() const;
 
-    KMail::FolderShortcutActionManager *folderShortcutActionManager() const {
-        return mFolderShortcutActionManager;
-    }
+    KMail::FolderShortcutActionManager *folderShortcutActionManager() const;
     void savePaneSelection();
 
     void updatePaneTagComboBox();
