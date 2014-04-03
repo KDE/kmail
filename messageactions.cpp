@@ -229,13 +229,13 @@ void MessageActions::setCurrentMessage( const Akonadi::Item &msg, const Akonadi:
         Q_FOREACH( const Akonadi::Item& item, mVisibleItems ) {
             mMonitor->setItemMonitored( item, false );
         }
-        if (!msg.isValid()) {
-            mVisibleItems.clear();
-        } else {
+        if (msg.isValid()) {
             mVisibleItems = items;
             Q_FOREACH( const Akonadi::Item& item, items ) {
                 mMonitor->setItemMonitored( item, true );
             }
+        } else {
+            mVisibleItems.clear();
         }
     }
 
