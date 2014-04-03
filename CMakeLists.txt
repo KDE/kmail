@@ -123,6 +123,7 @@ if (KDEPIM_BUILD_DESKTOP)
      editor/kmcomposewin.cpp
      editor/attachmentcontroller.cpp
      editor/attachmentview.cpp
+     editor/cryptostateindicatorwidget.cpp
   )
   set(kmailprivate_warningwidgets_LIB_SRCS
      warningwidgets/externaleditorwarning.cpp

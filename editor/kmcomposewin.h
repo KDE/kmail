@@ -68,6 +68,7 @@ class SelectSpecialChar;
 class AttachmentMissingWarning;
 class ExternalEditorWarning;
 class KActionMenu;
+class CryptoStateIndicatorWidget;
 
 
 namespace boost {
@@ -682,8 +683,6 @@ private:
     AttachmentMissingWarning *mAttachmentMissing;
     ExternalEditorWarning *mExternalEditorWarning;
     QTimer *m_verifyMissingAttachment;
-    QLabel *mSignatureStateIndicator;
-    QLabel *mEncryptionStateIndicator;
     MailCommon::FolderRequester *mFccFolder;
     bool mPreventFccOverwrite;
     bool mCheckForForgottenAttachments;
@@ -692,6 +691,7 @@ private:
     Akonadi::Collection mCollectionForNewMessage;
     QMap<QByteArray, QString> mExtraHeaders;
     int mNumProgressUploadFile;
+    CryptoStateIndicatorWidget *mCryptoStateIndicatorWidget;
 };
 
 #endif

@@ -85,6 +85,13 @@ However, there may be local rules that require you to turn this option on. When 
         </property>
        </widget>
       </item>
+      <item>
+       <widget class="QCheckBox" name="mShowEncSignIndicator">
+        <property name="text">
+         <string>Show sign/encrypt indicator in editor</string>
+        </property>
+       </widget>
+      </item>
      </layout>
     </widget>
    </item>

@@ -54,6 +54,7 @@
 #include "warningwidgets/attachmentmissingwarning.h"
 #include "job/createnewcontactjob.h"
 #include "warningwidgets/externaleditorwarning.h"
+#include "cryptostateindicatorwidget.h"
 
 #include "libkdepim/progresswidget/statusbarprogresswidget.h"
 #include "libkdepim/progresswidget/progressstatusbarwidget.h"
@@ -214,12 +215,12 @@ KMComposeWin::KMComposeWin( const KMime::Message::Ptr &aMsg, bool lastSignState,
       mLabelWidth( 0 ),
       mComposerBase( 0 ),
       mSelectSpecialChar( 0 ),
-      mSignatureStateIndicator( 0 ), mEncryptionStateIndicator( 0 ),
       mPreventFccOverwrite( false ),
       mCheckForForgottenAttachments( true ),
       mIgnoreStickyFields( false ),
       mWasModified( false ),
-      mNumProgressUploadFile(0)
+      mNumProgressUploadFile(0),
+      mCryptoStateIndicatorWidget(0)
 {
 
     mComposerBase = new MessageComposer::ComposerViewBase( this, this );
@@ -341,44 +342,16 @@ KMComposeWin::KMComposeWin( const KMime::Message::Ptr &aMsg, bool lastSignState,
     mSplitter->addWidget( mSnippetSplitter );
 
     QWidget *editorAndCryptoStateIndicators = new QWidget( mSplitter );
-    QVBoxLayout *vbox = new QVBoxLayout( editorAndCryptoStateIndicators );
+    mCryptoStateIndicatorWidget = new CryptoStateIndicatorWidget;
+
+    QVBoxLayout *vbox = new QVBoxLayout(editorAndCryptoStateIndicators);
     vbox->setMargin(0);
-    QHBoxLayout *hbox = new QHBoxLayout();
-    {
-        hbox->setMargin(0);
-        mSignatureStateIndicator = new QLabel( editorAndCryptoStateIndicators );
-        mSignatureStateIndicator->setAlignment( Qt::AlignHCenter );
-        hbox->addWidget( mSignatureStateIndicator );
-        // Get the colors for the label
-        QPalette p( mSignatureStateIndicator->palette() );
-        KColorScheme scheme( QPalette::Active, KColorScheme::View );
-        QColor defaultSignedColor =  // pgp signed
-                scheme.background( KColorScheme::PositiveBackground ).color();
-        QColor defaultEncryptedColor( 0x00, 0x80, 0xFF ); // light blue // pgp encrypted
-        QColor signedColor = defaultSignedColor;
-        QColor encryptedColor = defaultEncryptedColor;
-        if ( !MessageCore::GlobalSettings::self()->useDefaultColors() ) {
-            signedColor = MessageCore::GlobalSettings::self()->pgpSignedMessageColor();
-            encryptedColor = MessageCore::GlobalSettings::self()->pgpEncryptedMessageColor();
-        }
+    KMComposerEditor* editor = new KMComposerEditor( this, mCryptoStateIndicatorWidget );
 
-        p.setColor( QPalette::Window, signedColor );
-        mSignatureStateIndicator->setPalette( p );
-        mSignatureStateIndicator->setAutoFillBackground( true );
-
-        mEncryptionStateIndicator = new QLabel( editorAndCryptoStateIndicators );
-        mEncryptionStateIndicator->setAlignment( Qt::AlignHCenter );
-        hbox->addWidget( mEncryptionStateIndicator );
-        p.setColor( QPalette::Window, encryptedColor);
-        mEncryptionStateIndicator->setPalette( p );
-        mEncryptionStateIndicator->setAutoFillBackground( true );
-    }
-
-    KMComposerEditor* editor = new KMComposerEditor( this, editorAndCryptoStateIndicators );
     connect( editor, SIGNAL(textChanged()),
              this, SLOT(slotEditorTextChanged()) );
     mComposerBase->setEditor( editor );
-    vbox->addLayout( hbox );
+    vbox->addWidget( mCryptoStateIndicatorWidget );
     vbox->addWidget( editor );
 
     mSnippetSplitter->insertWidget( 0, editorAndCryptoStateIndicators );
@@ -3438,17 +3411,7 @@ void KMComposeWin::setMaximumHeaderSize()
 
 void KMComposeWin::slotUpdateSignatureAndEncrypionStateIndicators()
 {
-    const bool showIndicatorsAlways = false; // FIXME config option?
-    mSignatureStateIndicator->setText( mSignAction->isChecked() ?
-                                           i18n("Message will be signed") :
-                                           i18n("Message will not be signed") );
-    mEncryptionStateIndicator->setText( mEncryptAction->isChecked() ?
-                                            i18n("Message will be encrypted") :
-                                            i18n("Message will not be encrypted") );
-    if ( !showIndicatorsAlways ) {
-        mSignatureStateIndicator->setVisible( mSignAction->isChecked() );
-        mEncryptionStateIndicator->setVisible( mEncryptAction->isChecked() );
-    }
+    mCryptoStateIndicatorWidget->updateSignatureAndEncrypionStateIndicators(mSignAction->isChecked(), mEncryptAction->isChecked());
 }
 
 void KMComposeWin::slotLanguageChanged( const QString &language )

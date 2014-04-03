@@ -292,6 +292,10 @@
         QStringList()
         </default>
       </entry>
+      <entry name="ShowCryptoLabelIndicator" type="Bool">
+       <label>Show crypto label indicator</label>
+       <default>true</default>
+      </entry>
     </group>
 <!-- Composer -->
 

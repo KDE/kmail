@@ -267,6 +267,7 @@ SecurityPageComposerCryptoTab::SecurityPageComposerCryptoTab( QWidget * parent )
     connect( mWidget->mAutoEncrypt, SIGNAL(toggled(bool)), this, SLOT(slotEmitChanged()) );
     connect( mWidget->mNeverEncryptWhenSavingInDrafts, SIGNAL(toggled(bool)), this, SLOT(slotEmitChanged()) );
     connect( mWidget->mStoreEncrypted, SIGNAL(toggled(bool)), this, SLOT(slotEmitChanged()) );
+    connect( mWidget->mShowEncSignIndicator, SIGNAL(toggled(bool)), this, SLOT(slotEmitChanged()) );
 }
 
 SecurityPageComposerCryptoTab::~SecurityPageComposerCryptoTab()
@@ -287,6 +288,7 @@ void SecurityPage::ComposerCryptoTab::doLoadOther()
     loadWidget(mWidget->mNeverEncryptWhenSavingInDrafts,GlobalSettings::self()->neverEncryptDraftsItem() );
 
     loadWidget(mWidget->mStoreEncrypted, GlobalSettings::self()->cryptoStoreEncryptedItem() );
+    loadWidget(mWidget->mShowEncSignIndicator, GlobalSettings::self()->showCryptoLabelIndicatorItem() );
 }
 
 void SecurityPage::ComposerCryptoTab::save()
@@ -298,6 +300,7 @@ void SecurityPage::ComposerCryptoTab::save()
     saveCheckBox(mWidget->mAutoEncrypt, MessageComposer::MessageComposerSettings::self()->pgpAutoEncryptItem() ) ;
     saveCheckBox(mWidget->mNeverEncryptWhenSavingInDrafts,GlobalSettings::self()->neverEncryptDraftsItem() );
     saveCheckBox(mWidget->mStoreEncrypted, GlobalSettings::self()->cryptoStoreEncryptedItem() );
+    saveCheckBox(mWidget->mShowEncSignIndicator, GlobalSettings::self()->showCryptoLabelIndicatorItem() );
 }
 
 void SecurityPage::ComposerCryptoTab::doLoadFromGlobalSettings()
@@ -309,6 +312,7 @@ void SecurityPage::ComposerCryptoTab::doLoadFromGlobalSettings()
     loadWidget(mWidget->mAutoEncrypt, MessageComposer::MessageComposerSettings::self()->pgpAutoEncryptItem() ) ;
     loadWidget(mWidget->mNeverEncryptWhenSavingInDrafts,GlobalSettings::self()->neverEncryptDraftsItem() );
     loadWidget(mWidget->mStoreEncrypted, GlobalSettings::self()->cryptoStoreEncryptedItem() );
+    loadWidget(mWidget->mShowEncSignIndicator, GlobalSettings::self()->showCryptoLabelIndicatorItem() );
 
 }
 
