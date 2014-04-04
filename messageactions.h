@@ -36,7 +36,6 @@ class KMenu;
 
 namespace Akonadi {
   class Item;
-  class Monitor;
 }
 
 namespace TemplateParser {
@@ -148,7 +147,6 @@ class MessageActions : public QObject
     KActionMenu *mForwardActionMenu;
     KActionMenu *mMailingListActionMenu;
     KAction *mEditAction, *mAnnotateAction, *mPrintAction, *mPrintPreviewAction;
-    Akonadi::Monitor *mMonitor;
     TemplateParser::CustomTemplatesMenu *mCustomTemplatesMenu;
     KAction *mListFilterAction;
 };
