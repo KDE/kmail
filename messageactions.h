@@ -148,7 +148,6 @@ class MessageActions : public QObject
     KActionMenu *mForwardActionMenu;
     KActionMenu *mMailingListActionMenu;
     KAction *mEditAction, *mAnnotateAction, *mPrintAction, *mPrintPreviewAction;
-    bool mKorganizerIsOnSystem;
     Akonadi::Monitor *mMonitor;
     TemplateParser::CustomTemplatesMenu *mCustomTemplatesMenu;
     KAction *mListFilterAction;
