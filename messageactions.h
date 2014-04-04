@@ -35,12 +35,11 @@ class KMReaderWin;
 class KMenu;
 
 namespace Akonadi {
-  class Item;
-  class Monitor;
+class Item;
 }
 
 namespace TemplateParser {
-  class CustomTemplatesMenu;
+class CustomTemplatesMenu;
 }
 
 namespace KMail {
@@ -50,8 +49,8 @@ namespace KMail {
 */
 class MessageActions : public QObject
 {
-  Q_OBJECT
-  public:
+    Q_OBJECT
+public:
     explicit MessageActions( KActionCollection* ac, QWidget *parent );
     ~MessageActions();
     void setMessageView( KMReaderWin *msgView );
@@ -92,18 +91,18 @@ class MessageActions : public QObject
     void addWebShortcutsMenu( KMenu *menu, const QString & text );
 
 
-  signals:
+signals:
     // This signal is emitted when a reply is triggered and the
     // action has finished.
     // This is useful for the stand-alone reader, it might want to close the window in
     // that case.
     void replyActionFinished();
 
-  public slots:
+public slots:
     void editCurrentMessage();
     void annotateMessage();
 
-  private:
+private:
     void updateActions();
     void replyCommand(MessageComposer::ReplyStrategy strategy);
     void addMailingListAction( const QString &item, const KUrl &url );
@@ -113,7 +112,7 @@ class MessageActions : public QObject
     void clearMailingListActions();
 
 
-  private slots:
+private slots:
     void slotItemModified( const Akonadi::Item &  item, const QSet< QByteArray > &  partIdentifiers );
     void slotItemRemoved(const Akonadi::Item& item);
 
@@ -132,7 +131,7 @@ class MessageActions : public QObject
     void slotConfigureWebShortcuts();
 
 
-  private:
+private:
     QList<KAction*> mMailListActionList;
     QWidget *mParent;
     Akonadi::Item mCurrentItem;
@@ -141,14 +140,13 @@ class MessageActions : public QObject
 
     KActionMenu *mReplyActionMenu;
     KAction *mReplyAction, *mReplyAllAction, *mReplyAuthorAction,
-            *mReplyListAction, *mNoQuoteReplyAction,
-            *mForwardInlineAction, *mForwardAttachedAction, *mRedirectAction;
+    *mReplyListAction, *mNoQuoteReplyAction,
+    *mForwardInlineAction, *mForwardAttachedAction, *mRedirectAction;
     KAction *mCreateTodoAction;
     KActionMenu *mStatusMenu;
     KActionMenu *mForwardActionMenu;
     KActionMenu *mMailingListActionMenu;
     KAction *mEditAction, *mAnnotateAction, *mPrintAction, *mPrintPreviewAction;
-    Akonadi::Monitor *mMonitor;
     TemplateParser::CustomTemplatesMenu *mCustomTemplatesMenu;
     KAction *mListFilterAction;
 };

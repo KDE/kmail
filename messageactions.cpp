@@ -36,6 +36,7 @@
 
 #include <akonadi/itemfetchjob.h>
 #include <akonadi/kmime/messageparts.h>
+#include <Akonadi/ChangeRecorder>
 #include <KAction>
 #include <KActionMenu>
 #include <KActionCollection>
@@ -55,7 +56,6 @@
 #include <qwidget.h>
 #include <akonadi/collection.h>
 #include <akonadi/entityannotationsattribute.h>
-#include <Akonadi/Monitor>
 #include <util/mailutil.h>
 
 using namespace KMail;
@@ -184,12 +184,8 @@ MessageActions::MessageActions( KActionCollection *ac, QWidget *parent )
     ac->addAction( QLatin1String("mailing_list"), mMailingListActionMenu );
     mMailingListActionMenu->setEnabled(false);
 
-    mMonitor = new Akonadi::Monitor( this );
-    //FIXME: Attachment fetching is not needed here, but on-demand loading is not supported ATM
-    mMonitor->itemFetchScope().fetchPayloadPart( Akonadi::MessagePart::Header );
-    mMonitor->itemFetchScope().fetchAttribute<Akonadi::EntityAnnotationsAttribute>();
-    connect( mMonitor, SIGNAL(itemChanged(Akonadi::Item,QSet<QByteArray>)), SLOT(slotItemModified(Akonadi::Item,QSet<QByteArray>)));
-    connect( mMonitor, SIGNAL(itemRemoved(Akonadi::Item)), SLOT(slotItemRemoved(Akonadi::Item)));
+    connect( kmkernel->folderCollectionMonitor(), SIGNAL(itemChanged(Akonadi::Item,QSet<QByteArray>)), SLOT(slotItemModified(Akonadi::Item,QSet<QByteArray>)));
+    connect( kmkernel->folderCollectionMonitor(), SIGNAL(itemRemoved(Akonadi::Item)), SLOT(slotItemRemoved(Akonadi::Item)));
 
     mCustomTemplatesMenu = new TemplateParser::CustomTemplatesMenu( parent, ac );
 
@@ -222,18 +218,11 @@ TemplateParser::CustomTemplatesMenu* MessageActions::customTemplatesMenu() const
 
 void MessageActions::setCurrentMessage( const Akonadi::Item &msg, const Akonadi::Item::List &items )
 {
-    mMonitor->setItemMonitored( mCurrentItem, false );
     mCurrentItem = msg;
 
     if (!items.isEmpty()) {
-        Q_FOREACH( const Akonadi::Item& item, mVisibleItems ) {
-            mMonitor->setItemMonitored( item, false );
-        }
         if (msg.isValid()) {
             mVisibleItems = items;
-            Q_FOREACH( const Akonadi::Item& item, items ) {
-                mMonitor->setItemMonitored( item, true );
-            }
         } else {
             mVisibleItems.clear();
         }
@@ -244,7 +233,6 @@ void MessageActions::setCurrentMessage( const Akonadi::Item &msg, const Akonadi:
         clearMailingListActions();
     }
 
-    mMonitor->setItemMonitored( mCurrentItem, true );
     updateActions();
 }
 
