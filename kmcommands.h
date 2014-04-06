@@ -33,6 +33,7 @@ namespace MessageViewer {
 class HeaderStyle;
 class HeaderStrategy;
 class AttachmentStrategy;
+class Viewer;
 }
 
 namespace KIO { class Job; }
@@ -301,7 +302,7 @@ public:
       @param parent  The parent widget of the command used for message boxes.
       @param msg     The message of which the attachments should be saved.
    */
-    KMSaveAttachmentsCommand( QWidget *parent, const Akonadi::Item &msg  );
+    KMSaveAttachmentsCommand( QWidget *parent, const Akonadi::Item &msg, MessageViewer::Viewer *viewer  );
     /** Use this to save all attachments of the given messages.
       @param parent  The parent widget of the command used for message boxes.
       @param msgs    The messages of which the attachments should be saved.
@@ -310,6 +311,7 @@ public:
 
 private:
     virtual Result execute();
+    MessageViewer::Viewer *mViewer;
 };
 
 
