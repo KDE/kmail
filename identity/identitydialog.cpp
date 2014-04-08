@@ -203,7 +203,7 @@ IdentityDialog::IdentityDialog( QWidget * parent )
     KPIMUtils::EmailValidator* emailValidator = new KPIMUtils::EmailValidator( this );
     mEmailEdit->setValidator( emailValidator );
 
-    // "Email Aliases" stsring text edit and label:
+    // "Email Aliases" string text edit and label:
     ++row;
     mAliasEdit = new PimCommon::SimpleStringListEditor( tab );
     glay->addWidget( mAliasEdit, row, 1 );
@@ -379,6 +379,7 @@ IdentityDialog::IdentityDialog( QWidget * parent )
     // "Reply-To Address" line edit and label:
     ++row;
     mReplyToEdit = new KPIM::AddresseeLineEdit( tab, true );
+    mReplyToEdit->setClearButtonShown(true);
     mReplyToEdit->setObjectName( QLatin1String("mReplyToEdit") );
     glay->addWidget( mReplyToEdit, row, 1 );
     label = new QLabel ( i18n("&Reply-To address:"), tab );
@@ -402,6 +403,7 @@ IdentityDialog::IdentityDialog( QWidget * parent )
     // "CC addresses" line edit and label:
     ++row;
     mCcEdit = new KPIM::AddresseeLineEdit( tab, true );
+    mCcEdit->setClearButtonShown(true);
     mCcEdit->setObjectName( QLatin1String("mCcEdit") );
     glay->addWidget( mCcEdit, row, 1 );
     label = new QLabel( i18n("&CC addresses:"), tab );
@@ -422,6 +424,7 @@ IdentityDialog::IdentityDialog( QWidget * parent )
     // "BCC addresses" line edit and label:
     ++row;
     mBccEdit = new KPIM::AddresseeLineEdit( tab, true );
+    mBccEdit->setClearButtonShown(true);
     mBccEdit->setObjectName( QLatin1String("mBccEdit") );
     glay->addWidget( mBccEdit, row, 1 );
     label = new QLabel( i18n("&BCC addresses:"), tab );
