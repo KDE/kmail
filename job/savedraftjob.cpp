@@ -50,6 +50,8 @@ void SaveDraftJob::slotStoreDone(KJob *job)
 {
     if ( job->error() ) {
         qDebug()<<" job->errorString() : "<<job->errorString();
+        setError( job->error() );
+        setErrorText( job->errorText() );
     }
     emitResult();
 }
