@@ -53,6 +53,7 @@
 #include "pimcommon/widgets/customtoolswidget.h"
 #include "warningwidgets/attachmentmissingwarning.h"
 #include "job/createnewcontactjob.h"
+#include "job/savedraftjob.h"
 #include "warningwidgets/externaleditorwarning.h"
 #include "cryptostateindicatorwidget.h"
 
@@ -483,15 +484,8 @@ KMComposeWin::~KMComposeWin()
     // Note that when we save the message or sent it, mFolder is set back to 0.
     // So this for example kicks in when opening a draft and then closing the window.
     if ( mFolder.isValid() && mMsg && isModified() ) {
-        Akonadi::Item item;
-        item.setPayload( mMsg );
-        item.setMimeType( KMime::Message::mimeType() );
-        MessageStatus status;
-        status.setRead();
-        item.setFlags( status.statusFlags() );
-        new Akonadi::ItemCreateJob( item, mFolder );
-        // FIXME: listen to the result signal. The whole thing needs to be moved
-        //        out of the destructor for this
+        SaveDraftJob *saveDraftJob = new SaveDraftJob(mMsg, mFolder);
+        saveDraftJob->start();
     }
 
     delete mComposerBase;
