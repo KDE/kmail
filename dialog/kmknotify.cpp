@@ -112,7 +112,6 @@ void KMKnotify::initCombobox()
     lstNotify<< QLatin1String( "akonadi_archivemail_agent/akonadi_archivemail_agent.notifyrc" );
     lstNotify<< QLatin1String( "akonadi_sendlater_agent/akonadi_sendlater_agent.notifyrc" );
     lstNotify<< QLatin1String( "akonadi_newmailnotifier_agent/akonadi_newmailnotifier_agent.notifyrc" );
-    lstNotify<< QLatin1String( "akonadi_folderarchive_agent/akonadi_folderarchive_agent.notifyrc" );
     lstNotify<< QLatin1String( "messageviewer/messageviewer.notifyrc" );
     //TODO add other notifyrc here if necessary
 
