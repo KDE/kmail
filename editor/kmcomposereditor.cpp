@@ -149,22 +149,22 @@ void KMComposerEditor::insertFromMimeData( const QMimeData *source )
 
 void KMComposerEditor::showSpellConfigDialog( const QString & configFileName )
 {
-  KConfig config( configFileName );
-  Sonnet::ConfigDialog dialog( &config, this );
-  if ( !spellCheckingLanguage().isEmpty() ) {
-      dialog.setLanguage( spellCheckingLanguage() );
-  }
-  // Hackish way to hide the "Enable spell check by default" checkbox
-  // Our highlighter ignores this setting, so we should not expose its UI
-  QCheckBox *enabledByDefaultCB = dialog.findChild<QCheckBox *>( QLatin1String("m_checkerEnabledByDefaultCB") );
-  if ( enabledByDefaultCB ) {
-      enabledByDefaultCB->hide();
-  } else {
-      kWarning() << "Could not find any checkbox named 'm_checkerEnabledByDefaultCB'. Sonnet::ConfigDialog must have changed!";
-  }
-  if ( dialog.exec() ) {
-      setSpellCheckingLanguage( dialog.language() );
-  }
+    KConfig config( configFileName );
+    Sonnet::ConfigDialog dialog( &config, this );
+    if ( !spellCheckingLanguage().isEmpty() ) {
+        dialog.setLanguage( spellCheckingLanguage() );
+    }
+    // Hackish way to hide the "Enable spell check by default" checkbox
+    // Our highlighter ignores this setting, so we should not expose its UI
+    QCheckBox *enabledByDefaultCB = dialog.findChild<QCheckBox *>( QLatin1String("m_checkerEnabledByDefaultCB") );
+    if ( enabledByDefaultCB ) {
+        enabledByDefaultCB->hide();
+    } else {
+        kWarning() << "Could not find any checkbox named 'm_checkerEnabledByDefaultCB'. Sonnet::ConfigDialog must have changed!";
+    }
+    if ( dialog.exec() ) {
+        setSpellCheckingLanguage( dialog.language() );
+    }
 }
 
 void KMComposerEditor::mousePopupMenuImplementation(const QPoint& pos)
