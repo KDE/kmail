@@ -61,6 +61,10 @@ add_subdirectory(kcm_kpimidentities)
 
 if (KDEPIM_BUILD_DESKTOP)
 
+  set(kmailprivate_attributes_LIB_SRCS
+     attributes/taskattribute.cpp
+  )
+
   set(kmailprivate_folderarchive_LIB_SRCS
      folderarchive/folderarchiveaccountinfo.cpp
      folderarchive/folderarchiveutil.cpp
@@ -173,6 +177,7 @@ if (KDEPIM_BUILD_DESKTOP)
      util.cpp
      messageactions.cpp
      foldershortcutactionmanager.cpp
+     ${kmailprivate_attributes_LIB_SRCS}
      ${kmailprivate_tag_LIB_SRCS}
      ${kmailprivate_job_LIB_SRCS}
      ${kmailprivate_widgets_LIB_SRCS}
