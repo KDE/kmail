@@ -1750,7 +1750,7 @@ void KMKernel::instanceStatusChanged( const Akonadi::AgentInstance &instance )
 
 void KMKernel::agentInstanceBroken( const Akonadi::AgentInstance &instance )
 {
-    const QString summary = i18n( "Resource %1 is broken. This resource is now %2",  instance.name(), instance.isOnline() ? i18n( "online" ) : i18n( "offline" ) );
+    const QString summary = i18n( "Resource %1 is broken.",  instance.name() );
     if( xmlGuiInstance().isValid() ) {
         KNotification::event( QLatin1String("akonadi-resource-broken"),
                               summary,
