@@ -75,14 +75,16 @@ ConfigureDialog::~ConfigureDialog()
 void ConfigureDialog::slotApply()
 {
     slotApplyClicked();
-    KMKernel::self()->slotRequestConfigSync();
+    if (KMKernel::self())
+        KMKernel::self()->slotRequestConfigSync();
     emit configChanged();
 }
 
 void ConfigureDialog::slotOk()
 {
     slotOkClicked();
-    KMKernel::self()->slotRequestConfigSync();
+    if (KMKernel::self())
+        KMKernel::self()->slotRequestConfigSync();
     emit configChanged();
 }
 

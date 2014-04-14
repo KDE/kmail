@@ -293,7 +293,15 @@ void AccountsPageReceivingTab::slotShowMailCheckMenu( const QString &ident, cons
     bool CheckOnStartup;
     if( !mRetrievalHash.contains( ident ) ) {
         const QString resourceGroupPattern( QLatin1String("Resource %1") );
-        KConfigGroup group( KMKernel::self()->config(), resourceGroupPattern.arg( ident ) );
+
+        KConfigGroup group;
+        KConfig *conf = 0;
+        if (KMKernel::self()) {
+            group = KConfigGroup( KMKernel::self()->config(), resourceGroupPattern.arg( ident ) );
+        } else {
+            conf = new KConfig(QLatin1String("kmail2rc"));
+            group = KConfigGroup( conf, resourceGroupPattern.arg( ident ) );
+        }
 
         IncludeInManualChecks = group.readEntry( "IncludeInManualChecks", true );
 
@@ -303,6 +311,7 @@ void AccountsPageReceivingTab::slotShowMailCheckMenu( const QString &ident, cons
         CheckOnStartup = group.readEntry( "CheckOnStartup", false );
         QSharedPointer<RetrievalOptions> opts( new RetrievalOptions( IncludeInManualChecks, OfflineOnShutdown, CheckOnStartup ) );
         mRetrievalHash.insert( ident, opts );
+        delete conf;
     } else {
         QSharedPointer<RetrievalOptions> opts = mRetrievalHash.value( ident );
         IncludeInManualChecks = opts->IncludeInManualChecks;
@@ -471,11 +480,19 @@ void AccountsPage::ReceivingTab::save()
     QHashIterator<QString, QSharedPointer<RetrievalOptions> > it( mRetrievalHash );
     while( it.hasNext() ) {
         it.next();
-        KConfigGroup group( KMKernel::self()->config(), resourceGroupPattern.arg( it.key() ) );
+        KConfigGroup group;
+        KConfig *conf = 0;
+        if (KMKernel::self()) {
+            group = KConfigGroup( KMKernel::self()->config(), resourceGroupPattern.arg( it.key() ) );
+        } else {
+            conf = new KConfig(QLatin1String("kmail2rc"));
+            group = KConfigGroup( conf, resourceGroupPattern.arg( it.key() ) );
+        }
         QSharedPointer<RetrievalOptions> opts = it.value();
         group.writeEntry( "IncludeInManualChecks", opts->IncludeInManualChecks);
         group.writeEntry( "OfflineOnShutdown", opts->OfflineOnShutdown);
         group.writeEntry( "CheckOnStartup", opts->CheckOnStartup);
+        delete conf;
     }
 }
 

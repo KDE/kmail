@@ -135,9 +135,11 @@ void SecurityPage::GeneralTab::save()
                                                KStandardGuiItem::cont(), KStandardGuiItem::cancel(), QLatin1String("htmlMailOverride")) == KMessageBox::Continue)
         {
             saveCheckBox(mSGTab.mHtmlMailCheck, MessageViewer::GlobalSettings::self()->htmlMailItem());
-            foreach( const Akonadi::Collection &collection, kmkernel->allFolders() ) {
-                KConfigGroup config( KMKernel::self()->config(), MailCommon::FolderCollection::configGroupName(collection) );
-                config.writeEntry("htmlMailOverride", false);
+            if (kmkernel) {
+                foreach( const Akonadi::Collection &collection, kmkernel->allFolders() ) {
+                    KConfigGroup config( KMKernel::self()->config(), MailCommon::FolderCollection::configGroupName(collection) );
+                    config.writeEntry("htmlMailOverride", false);
+                }
             }
         }
     }
