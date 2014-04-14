@@ -19,7 +19,7 @@
 #include "kmkernel.h"
 
 #include "mailcommon/util/mailutil.h"
-
+#include "settings/globalsettings.h"
 
 #include <KLocalizedString>
 #include <KPushButton>
@@ -129,8 +129,7 @@ void AccountConfigOrderDialog::slotEnableControls()
 
 void AccountConfigOrderDialog::init()
 {
-    KConfigGroup group( KMKernel::self()->config(), "AccountOrder" );
-    const QStringList listOrderAccount = group.readEntry("order",QStringList());
+    const QStringList listOrderAccount = GlobalSettings::self()->order();
     QStringList instanceList;
 
     QMap<QString, InstanceStruct> mapInstance;
@@ -183,22 +182,21 @@ void AccountConfigOrderDialog::init()
 
 void AccountConfigOrderDialog::slotOk()
 {
-    KConfigGroup group( KMKernel::self()->config(), "AccountOrder" );
-
     QStringList order;
     const int numberOfItems(mListAccount->count());
     for (int i = 0; i<numberOfItems; ++i) {
         order << mListAccount->item(i)->data(AccountConfigOrderDialog::IdentifierAccount).toString();
     }
 
-    group.writeEntry("order",order);
-    group.sync();
-
+    GlobalSettings::self()->setOrder(order);
+    GlobalSettings::self()->writeConfig();
     KDialog::accept();
 }
 
 void AccountConfigOrderDialog::readConfig()
 {
+    if (!KMKernel::self())
+        return;
     KConfigGroup accountConfigDialog( KMKernel::self()->config(), "AccountConfigOrderDialog" );
     const QSize size = accountConfigDialog.readEntry( "Size", QSize(600, 400) );
     if ( size.isValid() ) {
@@ -208,6 +206,8 @@ void AccountConfigOrderDialog::readConfig()
 
 void AccountConfigOrderDialog::writeConfig()
 {
+    if (!KMKernel::self())
+        return;
     KConfigGroup accountConfigDialog( KMKernel::self()->config(), "AccountConfigOrderDialog" );
     accountConfigDialog.writeEntry( "Size", size() );
     accountConfigDialog.sync();
