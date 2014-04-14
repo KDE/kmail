@@ -248,58 +248,64 @@ void AppearancePage::FontsTab::slotFontSelectorChanged( int index )
 
 void AppearancePage::FontsTab::doLoadOther()
 {
-    KConfigGroup fonts( KMKernel::self()->config(), "Fonts" );
-    KConfigGroup messagelistFont( KMKernel::self()->config(), "MessageListView::Fonts" );
+    if (KMKernel::self()) {
+        KConfigGroup fonts( KMKernel::self()->config(), "Fonts" );
+        KConfigGroup messagelistFont( KMKernel::self()->config(), "MessageListView::Fonts" );
 
-    mFont[0] = KGlobalSettings::generalFont();
-    QFont fixedFont = KGlobalSettings::fixedFont();
+        mFont[0] = KGlobalSettings::generalFont();
+        QFont fixedFont = KGlobalSettings::fixedFont();
 
-    for ( int i = 0 ; i < numFontNames ; ++i ) {
-        const QString configName = QLatin1String(fontNames[i].configName);
-        if ( configName == QLatin1String( "MessageListFont" ) ||
-             configName == QLatin1String( "UnreadMessageFont" ) ||
-             configName == QLatin1String( "ImportantMessageFont" ) ||
-             configName == QLatin1String( "TodoMessageFont" ) ) {
-            mFont[i] = messagelistFont.readEntry( configName,
-                                                  (fontNames[i].onlyFixed) ? fixedFont : mFont[0] );
-        } else {
-            mFont[i] = fonts.readEntry( configName,
-                                        (fontNames[i].onlyFixed) ? fixedFont : mFont[0] );
+        for ( int i = 0 ; i < numFontNames ; ++i ) {
+            const QString configName = QLatin1String(fontNames[i].configName);
+            if ( configName == QLatin1String( "MessageListFont" ) ||
+                 configName == QLatin1String( "UnreadMessageFont" ) ||
+                 configName == QLatin1String( "ImportantMessageFont" ) ||
+                 configName == QLatin1String( "TodoMessageFont" ) ) {
+                mFont[i] = messagelistFont.readEntry( configName,
+                                                      (fontNames[i].onlyFixed) ? fixedFont : mFont[0] );
+            } else {
+                mFont[i] = fonts.readEntry( configName,
+                                            (fontNames[i].onlyFixed) ? fixedFont : mFont[0] );
+            }
         }
+        mCustomFontCheck->setChecked( !MessageCore::GlobalSettings::self()->useDefaultFonts() );
+        mFontLocationCombo->setCurrentIndex( 0 );
+        slotFontSelectorChanged( 0 );
+    } else {
+        setEnabled(false);
     }
-    mCustomFontCheck->setChecked( !MessageCore::GlobalSettings::self()->useDefaultFonts() );
-    mFontLocationCombo->setCurrentIndex( 0 );
-    slotFontSelectorChanged( 0 );
 }
 
 void AppearancePage::FontsTab::save()
 {
-    KConfigGroup fonts( KMKernel::self()->config(), "Fonts" );
-    KConfigGroup messagelistFont( KMKernel::self()->config(), "MessageListView::Fonts" );
+    if (KMKernel::self()) {
+        KConfigGroup fonts( KMKernel::self()->config(), "Fonts" );
+        KConfigGroup messagelistFont( KMKernel::self()->config(), "MessageListView::Fonts" );
 
-    // read the current font (might have been modified)
-    if ( mActiveFontIndex >= 0 )
-        mFont[ mActiveFontIndex ] = mFontChooser->font();
+        // read the current font (might have been modified)
+        if ( mActiveFontIndex >= 0 )
+            mFont[ mActiveFontIndex ] = mFontChooser->font();
 
-    const bool customFonts = mCustomFontCheck->isChecked();
-    MessageCore::GlobalSettings::self()->setUseDefaultFonts( !customFonts );
+        const bool customFonts = mCustomFontCheck->isChecked();
+        MessageCore::GlobalSettings::self()->setUseDefaultFonts( !customFonts );
 
-    for ( int i = 0 ; i < numFontNames ; ++i ) {
-        const QString configName = QLatin1String(fontNames[i].configName);
-        if ( configName == QLatin1String( "MessageListFont" ) ||
-             configName == QLatin1String( "UnreadMessageFont" ) ||
-             configName == QLatin1String( "ImportantMessageFont" ) ||
-             configName == QLatin1String( "TodoMessageFont" ) ) {
-            if ( customFonts || messagelistFont.hasKey( configName ) ) {
-                // Don't write font info when we use default fonts, but write
-                // if it's already there:
-                messagelistFont.writeEntry( configName, mFont[i] );
+        for ( int i = 0 ; i < numFontNames ; ++i ) {
+            const QString configName = QLatin1String(fontNames[i].configName);
+            if ( configName == QLatin1String( "MessageListFont" ) ||
+                 configName == QLatin1String( "UnreadMessageFont" ) ||
+                 configName == QLatin1String( "ImportantMessageFont" ) ||
+                 configName == QLatin1String( "TodoMessageFont" ) ) {
+                if ( customFonts || messagelistFont.hasKey( configName ) ) {
+                    // Don't write font info when we use default fonts, but write
+                    // if it's already there:
+                    messagelistFont.writeEntry( configName, mFont[i] );
+                }
+            } else {
+                if ( customFonts || fonts.hasKey( configName ) )
+                    // Don't write font info when we use default fonts, but write
+                    // if it's already there:
+                    fonts.writeEntry( configName, mFont[i] );
             }
-        } else {
-            if ( customFonts || fonts.hasKey( configName ) )
-                // Don't write font info when we use default fonts, but write
-                // if it's already there:
-                fonts.writeEntry( configName, mFont[i] );
         }
     }
 }
@@ -407,54 +413,58 @@ void AppearancePage::ColorsTab::doLoadOther()
 
 void AppearancePage::ColorsTab::loadColor( bool loadFromConfig )
 {
-    KColorScheme scheme( QPalette::Active, KColorScheme::View );
+    if (KMKernel::self()) {
+        KColorScheme scheme( QPalette::Active, KColorScheme::View );
 
-    KConfigGroup reader( KMKernel::self()->config(), "Reader" );
+        KConfigGroup reader( KMKernel::self()->config(), "Reader" );
 
-    KConfigGroup messageListView( KMKernel::self()->config(), "MessageListView::Colors" );
+        KConfigGroup messageListView( KMKernel::self()->config(), "MessageListView::Colors" );
 
-    KConfigGroup collectionFolderView( KMKernel::self()->config(), "CollectionFolderView" );
+        KConfigGroup collectionFolderView( KMKernel::self()->config(), "CollectionFolderView" );
 
-    static const QColor defaultColor[ numColorNames ] = {
-        KMail::Util::quoteL1Color(),
-        KMail::Util::quoteL2Color(),
-        KMail::Util::quoteL3Color(),
-        scheme.foreground( KColorScheme::LinkText ).color(), // link
-        scheme.foreground( KColorScheme::VisitedText ).color(),// visited link
-        scheme.foreground( KColorScheme::NegativeText ).color(), // misspelled words
-        MessageList::Util::unreadDefaultMessageColor(), // unread mgs
-        MessageList::Util::importantDefaultMessageColor(), // important msg
-        MessageList::Util::todoDefaultMessageColor(), // action item mgs
-        QColor( 0x00, 0x80, 0xFF ), // pgp encrypted
-        scheme.background( KColorScheme::PositiveBackground ).color(), // pgp ok, trusted key
-        QColor( 0xFF, 0xFF, 0x40 ), // pgp ok, untrusted key
-        QColor( 0xFF, 0xFF, 0x40 ), // pgp unchk
-        Qt::red, // pgp bad
-        QColor( 0xFF, 0x40, 0x40 ), // warning text color
-        MailCommon::Util::defaultQuotaColor(), // close to quota
-        Qt::lightGray, // colorbar plain bg
-        Qt::black,     // colorbar plain fg
-        Qt::black,     // colorbar html  bg
-        Qt::white,     // colorbar html  fg
-        scheme.foreground(KColorScheme::NegativeText).color(),  //Broken Account Color
-        scheme.background().color() // reader background color
-    };
+        static const QColor defaultColor[ numColorNames ] = {
+            KMail::Util::quoteL1Color(),
+            KMail::Util::quoteL2Color(),
+            KMail::Util::quoteL3Color(),
+            scheme.foreground( KColorScheme::LinkText ).color(), // link
+            scheme.foreground( KColorScheme::VisitedText ).color(),// visited link
+            scheme.foreground( KColorScheme::NegativeText ).color(), // misspelled words
+            MessageList::Util::unreadDefaultMessageColor(), // unread mgs
+            MessageList::Util::importantDefaultMessageColor(), // important msg
+            MessageList::Util::todoDefaultMessageColor(), // action item mgs
+            QColor( 0x00, 0x80, 0xFF ), // pgp encrypted
+            scheme.background( KColorScheme::PositiveBackground ).color(), // pgp ok, trusted key
+            QColor( 0xFF, 0xFF, 0x40 ), // pgp ok, untrusted key
+            QColor( 0xFF, 0xFF, 0x40 ), // pgp unchk
+            Qt::red, // pgp bad
+            QColor( 0xFF, 0x40, 0x40 ), // warning text color
+            MailCommon::Util::defaultQuotaColor(), // close to quota
+            Qt::lightGray, // colorbar plain bg
+            Qt::black,     // colorbar plain fg
+            Qt::black,     // colorbar html  bg
+            Qt::white,     // colorbar html  fg
+            scheme.foreground(KColorScheme::NegativeText).color(),  //Broken Account Color
+            scheme.background().color() // reader background color
+        };
 
-    for ( int i = 0 ; i < numColorNames ; ++i ) {
-        if ( loadFromConfig ) {
-            const QString configName = QLatin1String(colorNames[i].configName);
-            if ( configName == QLatin1String( "UnreadMessageColor" ) ||
-                 configName == QLatin1String( "ImportantMessageColor" ) ||
-                 configName == QLatin1String( "TodoMessageColor" ) ) {
-                mColorList->setColorSilently( i, messageListView.readEntry( configName, defaultColor[i] ) );
-            } else if( configName == QLatin1String("BrokenAccountColor")) {
-                mColorList->setColorSilently( i, collectionFolderView.readEntry(configName,defaultColor[i]));
+        for ( int i = 0 ; i < numColorNames ; ++i ) {
+            if ( loadFromConfig ) {
+                const QString configName = QLatin1String(colorNames[i].configName);
+                if ( configName == QLatin1String( "UnreadMessageColor" ) ||
+                     configName == QLatin1String( "ImportantMessageColor" ) ||
+                     configName == QLatin1String( "TodoMessageColor" ) ) {
+                    mColorList->setColorSilently( i, messageListView.readEntry( configName, defaultColor[i] ) );
+                } else if( configName == QLatin1String("BrokenAccountColor")) {
+                    mColorList->setColorSilently( i, collectionFolderView.readEntry(configName,defaultColor[i]));
+                } else {
+                    mColorList->setColorSilently( i, reader.readEntry( configName, defaultColor[i] ) );
+                }
             } else {
-                mColorList->setColorSilently( i, reader.readEntry( configName, defaultColor[i] ) );
+                mColorList->setColorSilently( i, defaultColor[i] );
             }
-        } else {
-            mColorList->setColorSilently( i, defaultColor[i] );
         }
+    } else {
+        setEnabled(false);
     }
 }
 
@@ -468,6 +478,8 @@ void AppearancePage::ColorsTab::doResetToDefaultsOther()
 
 void AppearancePage::ColorsTab::save()
 {
+    if (!KMKernel::self())
+        return;
     KConfigGroup reader( KMKernel::self()->config(), "Reader" );
     KConfigGroup messageListView( KMKernel::self()->config(), "MessageListView::Colors" );
     KConfigGroup collectionFolderView( KMKernel::self()->config(), "CollectionFolderView" );

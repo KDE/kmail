@@ -895,6 +895,7 @@ ComposerPageCharsetTab::ComposerPageCharsetTab( QWidget * parent )
 
     connect( mCharsetListEditor, SIGNAL(aboutToAdd(QString&)),
              this, SLOT(slotVerifyCharset(QString&)) );
+    setEnabled(kmkernel);
 }
 
 void ComposerPage::CharsetTab::slotVerifyCharset( QString & charset )
@@ -927,6 +928,8 @@ void ComposerPage::CharsetTab::slotVerifyCharset( QString & charset )
 
 void ComposerPage::CharsetTab::doLoadOther()
 {
+    if (!kmkernel)
+        return;
     QStringList charsets = MessageComposer::MessageComposerSettings::preferredCharsets();
     QStringList::Iterator end( charsets.end() );
     for ( QStringList::Iterator it = charsets.begin() ;
@@ -955,6 +958,8 @@ void ComposerPage::CharsetTab::doResetToDefaultsOther()
 
 void ComposerPage::CharsetTab::save()
 {
+    if (!kmkernel)
+        return;
     QStringList charsetList = mCharsetListEditor->stringList();
     QStringList::Iterator it = charsetList.begin();
     QStringList::Iterator end = charsetList.end();
