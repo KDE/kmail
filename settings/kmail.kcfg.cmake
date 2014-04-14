@@ -472,4 +472,8 @@
      <default>100</default>
    </entry>
  </group>
+ <group name="AccountOrder">
+   <entry name="order" type="StringList">
+   </entry>
+ </group>
 </kcfg>
