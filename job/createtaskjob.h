@@ -32,7 +32,12 @@ public:
     ~CreateTaskJob();
 
     void start();
+private slots:
+    void itemFetchJobDone(KJob *job);
+
 private:
+    void fetchItems();
+    Akonadi::Item::List mListItem;
     bool mRevertStatus;
 };
 

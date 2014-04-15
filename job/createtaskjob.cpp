@@ -20,10 +20,17 @@
 
 
 #include "createtaskjob.h"
+#include "attributes/taskattribute.h"
 #include <akonadi/kmime/messagestatus.h>
+
+#include <KLocalizedString>
+
+#include <Akonadi/ItemFetchJob>
+#include <Akonadi/ItemFetchScope>
 
 CreateTaskJob::CreateTaskJob(const Akonadi::Item::List &items, bool revert, QObject *parent)
     : KJob(parent),
+      mListItem(items),
       mRevertStatus(revert)
 {
 }
@@ -35,6 +42,23 @@ CreateTaskJob::~CreateTaskJob()
 
 void CreateTaskJob::start()
 {
-
+    if (mListItem.isEmpty()) {
+        Q_EMIT emitResult();
+        return;
+    }
+    fetchItems();
 }
 
+void CreateTaskJob::fetchItems()
+{
+    Akonadi::ItemFetchJob *job = new Akonadi::ItemFetchJob( mListItem, this );
+    job->fetchScope().fetchFullPayload( true );
+    job->fetchScope().setAncestorRetrieval( Akonadi::ItemFetchScope::Parent );
+    job->fetchScope().fetchAttribute<TaskAttribute>();
+    connect( job, SIGNAL(result(KJob*)), SLOT(itemFetchJobDone(KJob*)) );
+}
+
+void CreateTaskJob::itemFetchJobDone(KJob *job)
+{
+    //TODO
+}
