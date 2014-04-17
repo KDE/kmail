@@ -28,6 +28,8 @@
 #include <Akonadi/ItemFetchJob>
 #include <Akonadi/ItemFetchScope>
 
+#include <QDebug>
+
 CreateTaskJob::CreateTaskJob(const Akonadi::Item::List &items, bool revert, QObject *parent)
     : KJob(parent),
       mListItem(items),
@@ -60,5 +62,16 @@ void CreateTaskJob::fetchItems()
 
 void CreateTaskJob::itemFetchJobDone(KJob *job)
 {
+    if (job->error()) {
+        qDebug() << job->errorString();
+        Q_EMIT emitResult();
+        return;
+    }
+    Akonadi::ItemFetchJob *fetchjob = qobject_cast<Akonadi::ItemFetchJob *>(job);
+    const Akonadi::Item::List lst = fetchjob->items();
+    if (lst.isEmpty()) {
+        Q_EMIT emitResult();
+        return;
+    }
     //TODO
 }
