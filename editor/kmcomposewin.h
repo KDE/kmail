@@ -644,6 +644,9 @@ private:
     KToggleAction *mIdentityAction, *mTransportAction, *mFccAction;
     KToggleAction *mWordWrapAction, *mFixedFontAction, *mAutoSpellCheckingAction;
     KToggleAction *mDictionaryAction, *mSnippetAction, *mTranslateAction;
+    KAction *mAppendSignature;
+    KAction *mPrependSignature;
+    KAction *mInsertSignatureAtCursorPosition;
     KToggleAction *mGenerateShortenUrl;
 
     KToggleAction *markupAction;

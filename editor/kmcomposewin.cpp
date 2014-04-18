@@ -116,6 +116,7 @@
 #include <kpimidentities/identitymanager.h>
 #include <kpimidentities/identitycombo.h>
 #include <kpimidentities/identity.h>
+#include <kpimidentities/signature.h>
 #include <mailtransport/transportcombobox.h>
 #include <mailtransport/transportmanager.h>
 #include <mailtransport/transport.h>
@@ -164,8 +165,6 @@
 #include <memory>
 #include <boost/shared_ptr.hpp>
 
-// MOC
-
 using Sonnet::DictionaryComboBox;
 using MailTransport::TransportManager;
 using MailTransport::Transport;
@@ -204,6 +203,7 @@ KMComposeWin::KMComposeWin( const KMime::Message::Ptr &aMsg, bool lastSignState,
       mIdentityAction( 0 ), mTransportAction( 0 ), mFccAction( 0 ),
       mWordWrapAction( 0 ), mFixedFontAction( 0 ), mAutoSpellCheckingAction( 0 ),
       mDictionaryAction( 0 ), mSnippetAction( 0 ), mTranslateAction(0),
+      mAppendSignature( 0 ), mPrependSignature( 0 ), mInsertSignatureAtCursorPosition( 0 ),
       mGenerateShortenUrl( 0 ),
       mCodecAction( 0 ),
       mCryptoModuleAction( 0 ),
@@ -1316,15 +1316,17 @@ void KMComposeWin::setupActions( void )
     connect(mSubjectAction, SIGNAL(triggered(bool)), SLOT(slotView()));
     //end of checkable
 
-    action = new KAction( i18n("Append S&ignature"), this );
-    actionCollection()->addAction( QLatin1String("append_signature"), action );
-    connect( action, SIGNAL(triggered(bool)), mComposerBase->signatureController(), SLOT(appendSignature()));
-    action = new KAction( i18n("Pr&epend Signature"), this );
-    actionCollection()->addAction( QLatin1String("prepend_signature"), action );
-    connect( action, SIGNAL(triggered(bool)), mComposerBase->signatureController(), SLOT(prependSignature()) );
-    action = new KAction( i18n("Insert Signature At C&ursor Position"), this );
-    actionCollection()->addAction( QLatin1String("insert_signature_at_cursor_position"), action );
-    connect( action, SIGNAL(triggered(bool)), mComposerBase->signatureController(), SLOT(insertSignatureAtCursor()) );
+    mAppendSignature = new KAction( i18n("Append S&ignature"), this );
+    actionCollection()->addAction( QLatin1String("append_signature"), mAppendSignature );
+    connect( mAppendSignature, SIGNAL(triggered(bool)), mComposerBase->signatureController(), SLOT(appendSignature()));
+
+    mPrependSignature = new KAction( i18n("Pr&epend Signature"), this );
+    actionCollection()->addAction( QLatin1String("prepend_signature"), mPrependSignature );
+    connect( mPrependSignature, SIGNAL(triggered(bool)), mComposerBase->signatureController(), SLOT(prependSignature()) );
+
+    mInsertSignatureAtCursorPosition = new KAction( i18n("Insert Signature At C&ursor Position"), this );
+    actionCollection()->addAction( QLatin1String("insert_signature_at_cursor_position"), mInsertSignatureAtCursorPosition );
+    connect( mInsertSignatureAtCursorPosition, SIGNAL(triggered(bool)), mComposerBase->signatureController(), SLOT(insertSignatureAtCursor()) );
 
 
     action = new KAction( i18n("Insert Special Character..."), this );
@@ -3188,6 +3190,11 @@ void KMComposeWin::slotIdentityChanged( uint uoid, bool initalChange )
 
     mLastIdentityHasSigningKey = bNewIdentityHasSigningKey;
     mLastIdentityHasEncryptionKey = bNewIdentityHasEncryptionKey;
+    const KPIMIdentities::Signature sig = const_cast<KPIMIdentities::Identity&>( ident ).signature();
+    bool isEnabledSignature = sig.isEnabledSignature();
+    mAppendSignature->setEnabled(isEnabledSignature);
+    mPrependSignature->setEnabled(isEnabledSignature);
+    mInsertSignatureAtCursorPosition->setEnabled(isEnabledSignature);
 
     mId = uoid;
     changeCryptoAction();
