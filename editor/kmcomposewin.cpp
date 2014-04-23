@@ -438,9 +438,11 @@ KMComposeWin::KMComposeWin( const KMime::Message::Ptr &aMsg, bool lastSignState,
     connect(mAttachmentMissing, SIGNAL(explicitClosedMissingAttachment()), this, SLOT(slotExplicitClosedMissingAttachment()));
     v->addWidget(mAttachmentMissing);
 
-    m_verifyMissingAttachment = new QTimer(this);
-    m_verifyMissingAttachment->start(1000*5);
-    connect( m_verifyMissingAttachment, SIGNAL(timeout()), this, SLOT(slotVerifyMissingAttachmentTimeout()) );
+    if (GlobalSettings::self()->showForgottenAttachmentWarning()) {
+        m_verifyMissingAttachment = new QTimer(this);
+        m_verifyMissingAttachment->start(1000*5);
+        connect( m_verifyMissingAttachment, SIGNAL(timeout()), this, SLOT(slotVerifyMissingAttachmentTimeout()) );
+    }
     connect( attachmentController, SIGNAL(fileAttached()), mAttachmentMissing, SLOT(slotFileAttached()) );
 
     mExternalEditorWarning = new ExternalEditorWarning(this);
