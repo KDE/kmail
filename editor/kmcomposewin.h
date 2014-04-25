@@ -84,7 +84,7 @@ class Identity;
 }
 
 namespace KPIMTextEdit {
-class SelectSpecialChar;
+class SelectSpecialCharDialog;
 }
 
 namespace KIO {
@@ -682,7 +682,7 @@ private:
 
     SnippetWidget *mSnippetWidget;
     PimCommon::CustomToolsWidget *mCustomToolsWidget;
-    QPointer<KPIMTextEdit::SelectSpecialChar> mSelectSpecialChar;
+    QPointer<KPIMTextEdit::SelectSpecialCharDialog> mSelectSpecialChar;
     AttachmentMissingWarning *mAttachmentMissing;
     ExternalEditorWarning *mExternalEditorWarning;
     QTimer *m_verifyMissingAttachment;

@@ -24,6 +24,7 @@
 #include <KLocalizedString>
 #include <KPushButton>
 #include <KVBox>
+#include <KIcon>
 
 #include <AkonadiCore/AgentInstance>
 #include <AkonadiCore/AgentManager>

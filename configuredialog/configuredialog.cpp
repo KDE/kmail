@@ -27,6 +27,8 @@
 #include "configuredialog_p.h"
 
 #include <KWindowSystem>
+#include <KIconLoader>
+#include <KDialog>
 
 // other headers:
 #include <assert.h>
@@ -36,7 +38,7 @@ ConfigureDialog::ConfigureDialog( QWidget *parent, bool modal )
     : KCMultiDialog( parent )
 {
     setFaceType( List );
-    setButtons( Help | Default | Cancel | Apply | Ok | Reset );
+    //QT5 setButtons( Help | Default | Cancel | Apply | Ok | Reset );
     setModal( modal );
     KWindowSystem::setIcons( winId(), qApp->windowIcon().pixmap( IconSize( KIconLoader::Desktop ), IconSize( KIconLoader::Desktop ) ), qApp->windowIcon().pixmap(IconSize( KIconLoader::Small ), IconSize( KIconLoader::Small ) ) );
     addModule( QLatin1String("kmail_config_identity") );
@@ -65,7 +67,7 @@ void ConfigureDialog::hideEvent( QHideEvent *ev )
 {
     GlobalSettings::self()->setConfigureDialogWidth( width() );
     GlobalSettings::self()->setConfigureDialogHeight( height() );
-    KDialog::hideEvent( ev );
+    //QT5 KDialog::hideEvent( ev );
 }
 
 ConfigureDialog::~ConfigureDialog()

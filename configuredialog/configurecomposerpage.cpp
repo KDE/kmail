@@ -48,6 +48,8 @@ using KPIM::RecentAddresses;
 #include <kascii.h>
 #include <KIntSpinBox>
 #include <KIntNumInput>
+#include <KGlobal>
+#include <KDebug>
 
 #include <QLabel>
 #include <QGroupBox>

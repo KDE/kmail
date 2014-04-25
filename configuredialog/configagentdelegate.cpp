@@ -21,13 +21,14 @@
 
 #include "configagentdelegate.h"
 
-#include <Akonadi/AgentInstanceModel>
+#include <AkonadiCore/AgentInstanceModel>
 #include <AkonadiCore/AgentInstance>
 
 #include <KDebug>
 #include <KIcon>
 #include <KLocalizedString>
 #include <KIconLoader>
+#include <KGlobal>
 
 #include <QUrl>
 #include <QApplication>

@@ -32,7 +32,7 @@
 
 #include "collectionquotapage.h"
 #include "collectionquotapage_p.h"
-#include <akonadi/collectionquotaattribute.h>
+#include <AkonadiCore/collectionquotaattribute.h>
 #include <AkonadiCore/collection.h>
 
 #include <qlayout.h>

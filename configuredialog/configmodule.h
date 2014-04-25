@@ -27,12 +27,12 @@
 #include "kmail_export.h"
 
 #include <kcmodule.h>
-
+#include <KComponentData>
 class ConfigModule : public KCModule
 {
 public:
   explicit ConfigModule( const KComponentData &instance, QWidget *parent=0 )
-     : KCModule ( instance, parent )
+     : KCModule ( /*instance,*/ parent ) //QT5
      {}
   ~ConfigModule() {}
 

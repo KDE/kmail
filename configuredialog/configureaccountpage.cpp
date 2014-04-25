@@ -45,6 +45,7 @@ using MailTransport::TransportManagementWidget;
 #include <KComboBox>
 #include <KWindowSystem>
 #include <KLineEdit>
+#include <KDebug>
 
 #include <QVBoxLayout>
 #include <QGridLayout>
@@ -201,7 +202,7 @@ AccountsPageReceivingTab::AccountsPageReceivingTab( QWidget * parent )
     mAccountsReceiving.mAccountList->view()->setSelectionMode( QAbstractItemView::SingleSelection );
 
     mAccountsReceiving.mFilterAccount->setProxy( mAccountsReceiving.mAccountList->agentFilterProxyModel() );
-    mAccountsReceiving.mFilterAccount->lineEdit()->setTrapReturnKey( true );
+    //QT5 mAccountsReceiving.mFilterAccount->lineEdit()->setTrapReturnKey( true );
 
     KConfig specialMailCollection(QLatin1String("specialmailcollectionsrc"));
     if(specialMailCollection.hasGroup(QLatin1String("SpecialCollections"))) {

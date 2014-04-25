@@ -36,11 +36,11 @@
 #include "searchpatternwarning.h"
 #include "pimcommon/folderdialog/selectmulticollectiondialog.h"
 
-#include <Akonadi/CollectionModifyJob>
+#include <AkonadiCore/CollectionModifyJob>
 #include <AkonadiCore/CollectionFetchJob>
 #include <AkonadiWidgets/EntityTreeView>
-#include <akonadi/persistentsearchattribute.h>
-#include <Akonadi/SearchCreateJob>
+#include <AkonadiCore/persistentsearchattribute.h>
+#include <AkonadiCore/SearchCreateJob>
 #include <AkonadiCore/ChangeRecorder>
 #include <AkonadiWidgets/standardactionmanager.h>
 #include <AkonadiCore/EntityMimeTypeFilterModel>
@@ -228,15 +228,15 @@ SearchWindow::SearchWindow( KMMainWidget *widget, const Akonadi::Collection &col
 
     //set up actions
     KActionCollection *ac = actionCollection();
-    mReplyAction = new KAction( KIcon( QLatin1String("mail-reply-sender") ), i18n( "&Reply..." ), this );
+    mReplyAction = new QAction( KIcon( QLatin1String("mail-reply-sender") ), i18n( "&Reply..." ), this );
     actionCollection()->addAction( QLatin1String("search_reply"), mReplyAction );
     connect( mReplyAction, SIGNAL(triggered(bool)), SLOT(slotReplyToMsg()) );
 
-    mReplyAllAction = new KAction( KIcon( QLatin1String("mail-reply-all") ), i18n( "Reply to &All..." ), this );
+    mReplyAllAction = new QAction( KIcon( QLatin1String("mail-reply-all") ), i18n( "Reply to &All..." ), this );
     actionCollection()->addAction( QLatin1String("search_reply_all"), mReplyAllAction );
     connect( mReplyAllAction, SIGNAL(triggered(bool)), SLOT(slotReplyAllToMsg()) );
 
-    mReplyListAction = new KAction( KIcon( QLatin1String("mail-reply-list") ), i18n( "Reply to Mailing-&List..." ), this );
+    mReplyListAction = new QAction( KIcon( QLatin1String("mail-reply-list") ), i18n( "Reply to Mailing-&List..." ), this );
     actionCollection()->addAction(QLatin1String( "search_reply_list"), mReplyListAction );
     connect( mReplyListAction, SIGNAL(triggered(bool)), SLOT(slotReplyListToMsg()) );
 
@@ -244,13 +244,13 @@ SearchWindow::SearchWindow( KMMainWidget *widget, const Akonadi::Collection &col
     actionCollection()->addAction( QLatin1String("search_message_forward"), mForwardActionMenu );
     connect( mForwardActionMenu, SIGNAL(triggered(bool)), this, SLOT(slotForwardMsg()) );
 
-    mForwardInlineAction = new KAction( KIcon( QLatin1String("mail-forward") ),
+    mForwardInlineAction = new QAction( KIcon( QLatin1String("mail-forward") ),
                                         i18nc( "@action:inmenu Forward message inline.", "&Inline..." ),
                                         this );
     actionCollection()->addAction( QLatin1String("search_message_forward_inline"), mForwardInlineAction );
     connect( mForwardInlineAction, SIGNAL(triggered(bool)), SLOT(slotForwardMsg()) );
 
-    mForwardAttachedAction = new KAction( KIcon( QLatin1String("mail-forward") ), i18nc( "Message->Forward->", "As &Attachment..." ), this );
+    mForwardAttachedAction = new QAction( KIcon( QLatin1String("mail-forward") ), i18nc( "Message->Forward->", "As &Attachment..." ), this );
     actionCollection()->addAction( QLatin1String("search_message_forward_as_attachment"), mForwardAttachedAction );
     connect( mForwardAttachedAction, SIGNAL(triggered(bool)), SLOT(slotForwardAttachedMsg()) );
 
@@ -264,17 +264,17 @@ SearchWindow::SearchWindow( KMMainWidget *widget, const Akonadi::Collection &col
 
     mSaveAsAction = actionCollection()->addAction( KStandardAction::SaveAs, QLatin1String("search_file_save_as"), this, SLOT(slotSaveMsg()) );
 
-    mSaveAtchAction = new KAction( KIcon( QLatin1String("mail-attachment") ), i18n( "Save Attachments..." ), this );
+    mSaveAtchAction = new QAction( KIcon( QLatin1String("mail-attachment") ), i18n( "Save Attachments..." ), this );
     actionCollection()->addAction( QLatin1String("search_save_attachments"), mSaveAtchAction );
     connect( mSaveAtchAction, SIGNAL(triggered(bool)), SLOT(slotSaveAttachments()) );
 
     mPrintAction = actionCollection()->addAction( KStandardAction::Print, QLatin1String("search_print"), this, SLOT(slotPrintMsg()) );
 
-    mClearAction = new KAction( i18n( "Clear Selection" ), this );
+    mClearAction = new QAction( i18n( "Clear Selection" ), this );
     actionCollection()->addAction( QLatin1String("search_clear_selection"), mClearAction );
     connect( mClearAction, SIGNAL(triggered(bool)), SLOT(slotClearSelection()) );
 
-    mJumpToFolderAction = new KAction( i18n( "Jump to original folder" ), this );
+    mJumpToFolderAction = new QAction( i18n( "Jump to original folder" ), this );
     actionCollection()->addAction( QLatin1String("search_jump_folder"), mJumpToFolderAction );
     connect( mJumpToFolderAction, SIGNAL(triggered(bool)), SLOT(slotJumpToFolder()) );
 
@@ -758,7 +758,7 @@ void SearchWindow::slotContextMenuRequested( const QPoint& )
     menu->addSeparator();
     menu->addAction( mJumpToFolderAction );
     menu->addSeparator();
-    KAction *act = mAkonadiStandardAction->createAction( Akonadi::StandardActionManager::CopyItems );
+    QAction *act = mAkonadiStandardAction->createAction( Akonadi::StandardActionManager::CopyItems );
     mAkonadiStandardAction->setActionText( Akonadi::StandardActionManager::CopyItems, ki18np( "Copy Message", "Copy %1 Messages" ) );
     menu->addAction( act );
     act = mAkonadiStandardAction->createAction( Akonadi::StandardActionManager::CutItems );

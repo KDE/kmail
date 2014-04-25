@@ -45,13 +45,13 @@ using namespace PimCommon::ConfigureImmutableWidgetUtils;
 
 #include "mailcommon/util/mailutil.h"
 
-#include <Akonadi/Tag>
+#include <AkonadiCore/Tag>
 #include <AkonadiCore/TagFetchJob>
 #include <AkonadiCore/TagFetchScope>
-#include <Akonadi/TagDeleteJob>
-#include <Akonadi/TagCreateJob>
+#include <AkonadiCore/TagDeleteJob>
+#include <AkonadiCore/TagCreateJob>
 #include <AkonadiCore/TagAttribute>
-#include <Akonadi/TagModifyJob>
+#include <AkonadiCore/TagModifyJob>
 
 #include <KIconButton>
 #include <KButtonGroup>
@@ -64,6 +64,8 @@ using namespace PimCommon::ConfigureImmutableWidgetUtils;
 #include <KKeySequenceWidget>
 #include <KLineEdit>
 #include <KDialog>
+#include <KIcon>
+#include <KDebug>
 
 #include <kmime/kmime_dateformatter.h>
 using KMime::DateFormatter;

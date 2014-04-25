@@ -33,7 +33,7 @@
 #define __KMAIL_IDENTITYDIALOG_H__
 
 #include <kdialog.h>
-
+#include <AkonadiCore/Item>
 class QCheckBox;
 
 namespace PimCommon {
@@ -104,7 +104,7 @@ private slots:
     void slotEditVcard();
     void slotRefreshDefaultDomainName();
 private:
-    bool checkFolderExists( const QString & folder, const QString & msg );
+    bool checkFolderExists( const Akonadi::Item::Id & folder, const QString & msg );
     bool validateAddresses( const QString & addresses );
     void updateVcardButton();
     void editVcard(const QString& filename);

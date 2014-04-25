@@ -122,7 +122,7 @@
 #include <mailtransport/transport.h>
 #include <kmime/kmime_codecs.h>
 #include <kmime/kmime_message.h>
-#include <kpimtextedit/selectspecialchar.h>
+#include <kpimtextedit/selectspecialchardialog.h>
 
 
 // KDELIBS includes
@@ -3431,7 +3431,7 @@ void KMComposeWin::slotFccFolderChanged(const Akonadi::Collection& collection)
 void KMComposeWin::insertSpecialCharacter()
 {
     if(!mSelectSpecialChar) {
-        mSelectSpecialChar = new KPIMTextEdit::SelectSpecialChar(this);
+        mSelectSpecialChar = new KPIMTextEdit::SelectSpecialCharDialog(this);
         mSelectSpecialChar->setCaption(i18n("Insert Special Character"));
         mSelectSpecialChar->setOkButtonText(i18n("Insert"));
         connect(mSelectSpecialChar,SIGNAL(charSelected(QChar)),this,SLOT(charSelected(QChar)));

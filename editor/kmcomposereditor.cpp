@@ -64,7 +64,7 @@ KMComposerEditor::~KMComposerEditor()
 
 void KMComposerEditor::createActions( KActionCollection *actionCollection )
 {
-    KMeditor::createActions( actionCollection );
+    //QT5 KMeditor::createActions( actionCollection );
 
     KAction *pasteQuotation = new KAction( i18n("Pa&ste as Quotation"), this );
     actionCollection->addAction(QLatin1String("paste_quoted"), pasteQuotation );
@@ -149,6 +149,7 @@ void KMComposerEditor::insertFromMimeData( const QMimeData *source )
 
 void KMComposerEditor::showSpellConfigDialog( const QString & configFileName )
 {
+#if 0 //QT5
     KConfig config( configFileName );
     Sonnet::ConfigDialog dialog( &config, this );
     if ( !spellCheckingLanguage().isEmpty() ) {
@@ -165,6 +166,7 @@ void KMComposerEditor::showSpellConfigDialog( const QString & configFileName )
     if ( dialog.exec() ) {
         setSpellCheckingLanguage( dialog.language() );
     }
+#endif
 }
 
 void KMComposerEditor::mousePopupMenuImplementation(const QPoint& pos)
