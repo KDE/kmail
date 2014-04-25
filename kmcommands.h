@@ -14,9 +14,9 @@
 
 #include <QPointer>
 #include <QList>
-#include <akonadi/item.h>
-#include <akonadi/itemfetchscope.h>
-#include <akonadi/collection.h>
+#include <AkonadiCore/item.h>
+#include <AkonadiCore/itemfetchscope.h>
+#include <AkonadiCore/collection.h>
 
 namespace Akonadi {
 class Tag;

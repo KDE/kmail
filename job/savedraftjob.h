@@ -22,7 +22,7 @@
 #define SAVEDRAFTJOB_H
 
 #include <KJob>
-#include <Akonadi/Collection>
+#include <AkonadiCore/Collection>
 #include <KMime/KMimeMessage>
 
 class SaveDraftJob : public KJob

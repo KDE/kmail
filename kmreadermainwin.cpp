@@ -60,9 +60,9 @@
 #include <kmime/kmime_message.h>
 
 #include <messageviewer/viewer/viewer.h>
-#include <akonadi/item.h>
+#include <AkonadiCore/item.h>
 #include <akonadi/itemcopyjob.h>
-#include <akonadi/itemcreatejob.h>
+#include <AkonadiCore/itemcreatejob.h>
 
 #include "messagecore/helpers/messagehelpers.h"
 #include <util/mailutil.h>

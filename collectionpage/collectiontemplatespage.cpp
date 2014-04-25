@@ -23,7 +23,7 @@
 #include "foldercollection.h"
 #include "templateparser/templatesconfiguration.h"
 #include "templateparser/templatesconfiguration_kfg.h"
-#include <akonadi/collection.h>
+#include <AkonadiCore/collection.h>
 
 #include <KLocalizedString>
 #include <KPushButton>

@@ -21,7 +21,7 @@
 #define AKONADI_SEARCHDESCRIPTIONATTRIBUTE_H
 
 #include <Akonadi/Attribute>
-#include <Akonadi/Collection>
+#include <AkonadiCore/Collection>
 
 #include <QByteArray>
 

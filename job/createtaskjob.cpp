@@ -26,7 +26,7 @@
 #include <KLocalizedString>
 
 #include <Akonadi/ItemFetchJob>
-#include <Akonadi/ItemFetchScope>
+#include <AkonadiCore/ItemFetchScope>
 
 #include <QDebug>
 

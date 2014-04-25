@@ -21,7 +21,7 @@
 #ifndef CREATENEWCONTACTJOB_H
 #define CREATENEWCONTACTJOB_H
 
-#include <Akonadi/Item>
+#include <AkonadiCore/Item>
 #include <KJob>
 
 /**

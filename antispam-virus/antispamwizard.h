@@ -33,7 +33,7 @@
 #include <KSharedConfig>
 
 #include <QList>
-#include <akonadi/collection.h>
+#include <AkonadiCore/collection.h>
 
 class QLabel;
 class QTextEdit;

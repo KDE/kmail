@@ -22,7 +22,7 @@
 #define CREATETASKJOB_H
 
 #include <KJob>
-#include <Akonadi/Item>
+#include <AkonadiCore/Item>
 
 class CreateTaskJob : public KJob
 {

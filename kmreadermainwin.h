@@ -9,8 +9,8 @@
 #include <KMime/Message>
 
 #include <boost/scoped_ptr.hpp>
-#include <akonadi/item.h>
-#include <akonadi/collection.h>
+#include <AkonadiCore/item.h>
+#include <AkonadiCore/collection.h>
 #include <QModelIndex>
 class KMReaderWin;
 class KAction;

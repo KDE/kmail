@@ -20,7 +20,7 @@
 
 #include <KLocale>
 
-#include <Akonadi/CollectionFetchJob>
+#include <AkonadiCore/CollectionFetchJob>
 #include <Akonadi/CollectionCreateJob>
 #include <QDate>
 

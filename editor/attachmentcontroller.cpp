@@ -32,7 +32,7 @@
 #include "kmreadermainwin.h"
 #include "util/mailutil.h"
 
-#include <akonadi/itemfetchjob.h>
+#include <AkonadiCore/itemfetchjob.h>
 #include <kabc/addressee.h>
 #include <kdebug.h>
 #include <libkleo/kleo/cryptobackendfactory.h>

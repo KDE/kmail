@@ -21,9 +21,9 @@
 #include "kmkernel.h"
 
 #include <akonadi/collectionstatistics.h>
-#include <akonadi/collection.h>
+#include <AkonadiCore/collection.h>
 #include <Akonadi/AgentManager>
-#include <Akonadi/ChangeRecorder>
+#include <AkonadiCore/ChangeRecorder>
 
 #include <QDBusInterface>
 #include <QDBusConnectionInterface>

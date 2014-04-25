@@ -26,9 +26,9 @@
 #include <KABC/Addressee>
 #include <KABC/ContactGroup>
 
-#include <Akonadi/CollectionFetchJob>
+#include <AkonadiCore/CollectionFetchJob>
 #include <Akonadi/AgentInstanceCreateJob>
-#include <Akonadi/AgentTypeDialog>
+#include <AkonadiWidgets/AgentTypeDialog>
 #include <Akonadi/CollectionFetchScope>
 #include <Akonadi/AgentFilterProxyModel>
 #include <Akonadi/Contact/ContactEditorDialog>

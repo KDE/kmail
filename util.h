@@ -39,8 +39,8 @@
 #define KMAILUTIL_H
 
 #include <QWidget>
-#include <akonadi/item.h>
-#include <Akonadi/Collection>
+#include <AkonadiCore/item.h>
+#include <AkonadiCore/Collection>
 #include "mailcommon/folder/foldercollection.h"
 class KUrl;
 

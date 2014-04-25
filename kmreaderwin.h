@@ -25,7 +25,7 @@
 #include <kurl.h>
 #include <messageviewer/viewer/viewer.h>
 #include <messageviewer/interfaces/bodypart.h>
-#include <Akonadi/Item>
+#include <AkonadiCore/Item>
 #include <KABC/Addressee>
 class KActionCollection;
 class KAction;

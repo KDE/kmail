@@ -24,7 +24,7 @@
 
 #include <kurl.h>
 #include <kmime/kmime_message.h>
-#include <akonadi/collection.h>
+#include <AkonadiCore/collection.h>
 
 #include <boost/shared_ptr.hpp>
 

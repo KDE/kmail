@@ -20,7 +20,7 @@
 #include <libkdepim/misc/broadcaststatus.h>
 
 
-#include <Akonadi/ItemModifyJob>
+#include <AkonadiCore/ItemModifyJob>
 
 #include <KABC/Addressee>
 

@@ -43,9 +43,9 @@
 #include <ksettings/dispatcher.h>
 #include <kmailpartadaptor.h>
 #include <kicon.h>
-#include <akonadi/collection.h>
-#include <akonadi/entitydisplayattribute.h>
-#include <akonadi/changerecorder.h>
+#include <AkonadiCore/collection.h>
+#include <AkonadiCore/entitydisplayattribute.h>
+#include <AkonadiCore/changerecorder.h>
 #include "foldertreeview.h"
 #include "tag/tagactionmanager.h"
 #include "foldershortcutactionmanager.h"

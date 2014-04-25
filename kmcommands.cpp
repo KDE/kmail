@@ -66,8 +66,8 @@
 #include <kmime/kmime_message.h>
 
 #include <kpimidentities/identitymanager.h>
-#include <akonadi/itemmodifyjob.h>
-#include <akonadi/itemfetchjob.h>
+#include <AkonadiCore/itemmodifyjob.h>
+#include <AkonadiCore/itemfetchjob.h>
 
 
 #include "foldercollection.h"
@@ -105,7 +105,7 @@ using KMail::SecondaryWindow;
 
 #include <akonadi/itemmovejob.h>
 #include <akonadi/itemcopyjob.h>
-#include <akonadi/itemdeletejob.h>
+#include <AkonadiCore/itemdeletejob.h>
 #include <akonadi/tag.h>
 #include <akonadi/tagcreatejob.h>
 #include <mailtransport/transportattribute.h>

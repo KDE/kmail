@@ -24,7 +24,7 @@
 #include "folderrequester.h"
 #include "messageviewer/utils/util.h"
 
-#include <Akonadi/Collection>
+#include <AkonadiCore/Collection>
 
 #include <klocale.h>
 #include <kcombobox.h>

@@ -108,10 +108,10 @@
 #include <libkdepim/addressline/recentaddresses.h>
 
 // KDEPIMLIBS includes
-#include <akonadi/changerecorder.h>
-#include <akonadi/itemcreatejob.h>
-#include <akonadi/entitymimetypefiltermodel.h>
-#include <akonadi/itemfetchjob.h>
+#include <AkonadiCore/changerecorder.h>
+#include <AkonadiCore/itemcreatejob.h>
+#include <AkonadiCore/entitymimetypefiltermodel.h>
+#include <AkonadiCore/itemfetchjob.h>
 #include <kpimutils/email.h>
 #include <kpimidentities/identitymanager.h>
 #include <kpimidentities/identitycombo.h>

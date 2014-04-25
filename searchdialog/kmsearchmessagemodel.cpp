@@ -31,9 +31,9 @@
 
 #include "messagecore/utils/stringutil.h"
 
-#include <akonadi/itemfetchscope.h>
-#include <akonadi/monitor.h>
-#include <akonadi/session.h>
+#include <AkonadiCore/itemfetchscope.h>
+#include <AkonadiCore/monitor.h>
+#include <AkonadiCore/session.h>
 
 #include <akonadi/kmime/messageparts.h>
 #include <kmime/kmime_message.h>

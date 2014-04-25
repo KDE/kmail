@@ -37,13 +37,13 @@
 #include "pimcommon/folderdialog/selectmulticollectiondialog.h"
 
 #include <Akonadi/CollectionModifyJob>
-#include <Akonadi/CollectionFetchJob>
-#include <Akonadi/EntityTreeView>
+#include <AkonadiCore/CollectionFetchJob>
+#include <AkonadiWidgets/EntityTreeView>
 #include <akonadi/persistentsearchattribute.h>
 #include <Akonadi/SearchCreateJob>
-#include <Akonadi/ChangeRecorder>
-#include <akonadi/standardactionmanager.h>
-#include <Akonadi/EntityMimeTypeFilterModel>
+#include <AkonadiCore/ChangeRecorder>
+#include <AkonadiCore/standardactionmanager.h>
+#include <AkonadiCore/EntityMimeTypeFilterModel>
 #include <KActionMenu>
 #include <KDebug>
 #include <KIcon>

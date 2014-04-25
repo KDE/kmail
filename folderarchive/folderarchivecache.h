@@ -21,7 +21,7 @@
 #include <QObject>
 #include <QDateTime>
 #include <QHash>
-#include <Akonadi/Collection>
+#include <AkonadiCore/Collection>
 
 class FolderArchiveAccountInfo;
 

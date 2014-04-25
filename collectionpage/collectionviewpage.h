@@ -20,7 +20,7 @@
 #define COLLECTIONVIEWPAGE_H
 
 #include <akonadi/collectionpropertiespage.h>
-#include <akonadi/collection.h>
+#include <AkonadiCore/collection.h>
 class QCheckBox;
 class QLabel;
 class KComboBox;

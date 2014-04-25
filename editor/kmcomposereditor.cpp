@@ -26,7 +26,7 @@
 
 #include <kabc/addressee.h>
 #include <kmime/kmime_codecs.h>
-#include <akonadi/itemfetchjob.h>
+#include <AkonadiCore/itemfetchjob.h>
 
 #include <kio/jobuidelegate.h>
 

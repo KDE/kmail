@@ -21,7 +21,7 @@
 
 #include <QtCore/QByteArray>
 
-#include <Akonadi/Collection>
+#include <AkonadiCore/Collection>
 
 using namespace Akonadi;
 

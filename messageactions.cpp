@@ -34,9 +34,9 @@
 #include "messageviewer/viewer/csshelper.h"
 #include "messageviewer/settings/globalsettings.h"
 
-#include <akonadi/itemfetchjob.h>
+#include <AkonadiCore/itemfetchjob.h>
 #include <akonadi/kmime/messageparts.h>
-#include <Akonadi/ChangeRecorder>
+#include <AkonadiCore/ChangeRecorder>
 #include <KAction>
 #include <KActionMenu>
 #include <KActionCollection>
@@ -54,7 +54,7 @@
 
 #include <QVariant>
 #include <qwidget.h>
-#include <akonadi/collection.h>
+#include <AkonadiCore/collection.h>
 #include <akonadi/entityannotationsattribute.h>
 #include <util/mailutil.h>
 

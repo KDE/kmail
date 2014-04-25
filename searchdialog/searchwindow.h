@@ -25,8 +25,8 @@
 #include "mailcommon/search/searchpattern.h"
 #include "ui_searchwindow.h"
 
-#include <akonadi/collection.h>
-#include <akonadi/item.h>
+#include <AkonadiCore/collection.h>
+#include <AkonadiCore/item.h>
 #include <kdialog.h>
 #include <kxmlguiclient.h>
 

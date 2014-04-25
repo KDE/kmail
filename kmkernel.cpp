@@ -82,16 +82,16 @@ using KMail::MailServiceImpl;
 
 #include <kmime/kmime_message.h>
 #include <kmime/kmime_util.h>
-#include <Akonadi/Collection>
-#include <Akonadi/CollectionFetchJob>
-#include <Akonadi/ChangeRecorder>
-#include <Akonadi/ItemFetchScope>
+#include <AkonadiCore/Collection>
+#include <AkonadiCore/CollectionFetchJob>
+#include <AkonadiCore/ChangeRecorder>
+#include <AkonadiCore/ItemFetchScope>
 #include <Akonadi/AgentManager>
 #include <Akonadi/ItemFetchJob>
-#include <Akonadi/AttributeFactory>
-#include <Akonadi/Session>
-#include <Akonadi/EntityTreeModel>
-#include <akonadi/entitymimetypefiltermodel.h>
+#include <AkonadiCore/AttributeFactory>
+#include <AkonadiCore/Session>
+#include <AkonadiCore/EntityTreeModel>
+#include <AkonadiCore/entitymimetypefiltermodel.h>
 #include <Akonadi/CollectionStatisticsJob>
 
 #include <QDir>

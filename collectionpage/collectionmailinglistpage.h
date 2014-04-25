@@ -25,7 +25,7 @@
 #include "foldercollection.h"
 
 #include <akonadi/collectionpropertiespage.h>
-#include <akonadi/collection.h>
+#include <AkonadiCore/collection.h>
 
 
 class QCheckBox;

@@ -30,7 +30,7 @@
 #define TAGSELECTDIALOG_H
 
 #include <KDialog>
-#include <Akonadi/Item>
+#include <AkonadiCore/Item>
 #include <Akonadi/Tag>
 #include "tag.h"
 

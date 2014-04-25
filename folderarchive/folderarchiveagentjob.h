@@ -19,7 +19,7 @@
 #define FOLDERARCHIVEAGENTJOB_H
 
 #include <QObject>
-#include <Akonadi/Item>
+#include <AkonadiCore/Item>
 class KJob;
 class FolderArchiveAccountInfo;
 class FolderArchiveManager;

@@ -25,8 +25,8 @@
 #include "util/mailutil.h"
 #include "util.h"
 
-#include <akonadi/itemfetchjob.h>
-#include <akonadi/itemfetchscope.h>
+#include <AkonadiCore/itemfetchjob.h>
+#include <AkonadiCore/itemfetchscope.h>
 #include <akonadi/kmime/messageparts.h>
 
 #include <QGridLayout>

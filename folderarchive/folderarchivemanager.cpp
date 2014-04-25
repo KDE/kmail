@@ -23,8 +23,8 @@
 
 #include <Akonadi/AgentManager>
 #include <Akonadi/ItemFetchJob>
-#include <Akonadi/ItemFetchScope>
-#include <Akonadi/CollectionFetchJob>
+#include <AkonadiCore/ItemFetchScope>
+#include <AkonadiCore/CollectionFetchJob>
 
 #include <KSharedConfig>
 #include <KGlobal>

@@ -39,9 +39,9 @@
 
 #include <QPainter>
 
-#include <Akonadi/ChangeRecorder>
-#include <Akonadi/EntityTreeModel>
-#include <Akonadi/CollectionModel>
+#include <AkonadiCore/ChangeRecorder>
+#include <AkonadiCore/EntityTreeModel>
+#include <AkonadiCore/CollectionModel>
 
 using namespace MailCommon;
 

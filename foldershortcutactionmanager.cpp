@@ -21,10 +21,10 @@
 #include "foldercollection.h"
 #include "kernel/mailkernel.h"
 
-#include <Akonadi/ChangeRecorder>
-#include <Akonadi/EntityDisplayAttribute>
-#include <Akonadi/EntityTreeModel>
-#include <Akonadi/EntityMimeTypeFilterModel>
+#include <AkonadiCore/ChangeRecorder>
+#include <AkonadiCore/EntityDisplayAttribute>
+#include <AkonadiCore/EntityTreeModel>
+#include <AkonadiCore/EntityMimeTypeFilterModel>
 
 #include <KAction>
 #include <KActionCollection>

@@ -103,7 +103,7 @@ using MailTransport::TransportManager;
 #include <iterator>
 #include <algorithm>
 
-#include <akonadi/entitydisplayattribute.h>
+#include <AkonadiCore/entitydisplayattribute.h>
 #include <akonadi/collectionmodifyjob.h>
 
 

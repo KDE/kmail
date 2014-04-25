@@ -21,8 +21,8 @@
 #include "kmkernel.h"
 #include "kernel/mailkernel.h"
 
-#include <akonadi/collection.h>
-#include <akonadi/entitydisplayattribute.h>
+#include <AkonadiCore/collection.h>
+#include <AkonadiCore/entitydisplayattribute.h>
 #include <akonadi/kmime/messagefolderattribute.h>
 
 #include <QGroupBox>

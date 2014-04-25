@@ -19,7 +19,7 @@
 #define ADDEMAILTOEXISTINGCONTACTJOB_H
 
 #include <KJob>
-#include <Akonadi/Item>
+#include <AkonadiCore/Item>
 
 class AddEmailToExistingContactJob : public KJob
 {

@@ -18,7 +18,7 @@
 #ifndef KMSYSTEMTRAY_H
 #define KMSYSTEMTRAY_H
 
-#include <akonadi/collection.h>
+#include <AkonadiCore/collection.h>
 #include <kicon.h>
 #include <kstatusnotifieritem.h>
 

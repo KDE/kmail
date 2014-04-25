@@ -19,11 +19,11 @@
 #include "kmkernel.h"
 
 #include <Akonadi/Contact/EmailAddressSelectionWidget>
-#include <Akonadi/Session>
-#include <Akonadi/ItemFetchScope>
-#include <Akonadi/EntityDisplayAttribute>
+#include <AkonadiCore/Session>
+#include <AkonadiCore/ItemFetchScope>
+#include <AkonadiCore/EntityDisplayAttribute>
 #include <Akonadi/Contact/ContactsTreeModel>
-#include <Akonadi/ChangeRecorder>
+#include <AkonadiCore/ChangeRecorder>
 
 #include <KABC/Addressee>
 

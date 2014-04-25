@@ -104,29 +104,29 @@ using KSieveUi::SieveDebugDialog;
 
 // KDEPIMLIBS includes
 #include <Akonadi/AgentManager>
-#include <Akonadi/AttributeFactory>
-#include <akonadi/itemfetchjob.h>
+#include <AkonadiCore/AttributeFactory>
+#include <AkonadiCore/itemfetchjob.h>
 #include <akonadi/collectionattributessynchronizationjob.h>
-#include <akonadi/collectionfetchjob.h>
-#include <akonadi/collectionfetchscope.h>
+#include <AkonadiCore/collectionfetchjob.h>
+#include <AkonadiCore/collectionfetchscope.h>
 #include <akonadi/contact/contactsearchjob.h>
 #include <akonadi/collectionpropertiesdialog.h>
-#include <akonadi/entitydisplayattribute.h>
+#include <AkonadiCore/entitydisplayattribute.h>
 #include <akonadi/entitylistview.h>
 #include <akonadi/etmviewstatesaver.h>
-#include <akonadi/agentinstance.h>
-#include <akonadi/agenttype.h>
-#include <akonadi/changerecorder.h>
-#include <akonadi/session.h>
-#include <akonadi/entitytreemodel.h>
+#include <AkonadiCore/agentinstance.h>
+#include <AkonadiCore/agenttype.h>
+#include <AkonadiCore/changerecorder.h>
+#include <AkonadiCore/session.h>
+#include <AkonadiCore/entitytreemodel.h>
 #include <akonadi/favoritecollectionsmodel.h>
-#include <akonadi/itemfetchscope.h>
-#include <akonadi/itemmodifyjob.h>
+#include <AkonadiCore/itemfetchscope.h>
+#include <AkonadiCore/itemmodifyjob.h>
 #include <akonadi/control.h>
-#include <akonadi/collectiondialog.h>
+#include <AkonadiWidgets/collectiondialog.h>
 #include <akonadi/collectionstatistics.h>
 #include <akonadi/collectionstatisticsdelegate.h>
-#include <Akonadi/EntityMimeTypeFilterModel>
+#include <AkonadiCore/EntityMimeTypeFilterModel>
 #include <akonadi/kmime/messageflags.h>
 #include <akonadi/kmime/removeduplicatesjob.h>
 #include <akonadi/collectiondeletejob.h>
@@ -197,7 +197,7 @@ using KSieveUi::SieveDebugDialog;
 // System includes
 #include <assert.h>
 #include <errno.h> // ugh
-#include <akonadi/standardactionmanager.h>
+#include <AkonadiCore/standardactionmanager.h>
 
 
 using namespace KMime;

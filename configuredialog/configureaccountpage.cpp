@@ -34,10 +34,10 @@ using MailTransport::TransportManagementWidget;
 
 #include <akonadi/agentfilterproxymodel.h>
 #include <akonadi/agentinstancemodel.h>
-#include <akonadi/agenttype.h>
-#include <akonadi/agentmanager.h>
+#include <AkonadiCore/agenttype.h>
+#include <AkonadiCore/agentmanager.h>
 #include <akonadi/agenttypedialog.h>
-#include <akonadi/agentinstancecreatejob.h>
+#include <AkonadiCore/agentinstancecreatejob.h>
 
 
 #include <KLocalizedString>
