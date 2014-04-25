@@ -18,7 +18,7 @@
 
 #ifndef COLLECTIONTEMPLATESPAGE_H
 #define COLLECTIONTEMPLATESPAGE_H
-#include <akonadi/collectionpropertiespage.h>
+#include <AkonadiWidgets/collectionpropertiespage.h>
 
 class QCheckBox;
 namespace TemplateParser {

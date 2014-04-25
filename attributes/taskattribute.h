@@ -18,7 +18,7 @@
 #ifndef KMAIL_TASK_ATTRIBUTE_H
 #define KMAIL_TASK_ATTRIBUTE_H
 
-#include <Akonadi/Attribute>
+#include <AkonadiCore/Attribute>
 #include <AkonadiCore/Item>
 
 #include <KDateTime>

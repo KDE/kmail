@@ -28,7 +28,7 @@
 
 #include "configuredialog/configmodule.h"
 #include "ui_identitypage.h"
-
+#include <KComponentData>
 namespace KPIMIdentities {
 class IdentityManager;
 }

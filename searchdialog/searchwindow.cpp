@@ -42,7 +42,7 @@
 #include <akonadi/persistentsearchattribute.h>
 #include <Akonadi/SearchCreateJob>
 #include <AkonadiCore/ChangeRecorder>
-#include <AkonadiCore/standardactionmanager.h>
+#include <AkonadiWidgets/standardactionmanager.h>
 #include <AkonadiCore/EntityMimeTypeFilterModel>
 #include <KActionMenu>
 #include <KDebug>

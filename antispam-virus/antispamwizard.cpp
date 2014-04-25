@@ -49,7 +49,7 @@
 
 #include "pimcommon/util/pimutil.h"
 
-#include <Akonadi/AgentInstance>
+#include <AkonadiCore/AgentInstance>
 
 #include <kdebug.h>
 #include <kdialog.h>
@@ -166,7 +166,7 @@ void AntiSpamWizard::accept()
     // so we can avoid spam checks for viral messages
     if ( mMode == AntiVirus ) {
         if ( !mVirusToolsUsed ) {
-            KDialog::accept();
+            //QT5 KDialog::accept();
             return;
         }
         QList<SpamToolConfig>::const_iterator end( mToolList.constEnd() );
@@ -239,7 +239,7 @@ void AntiSpamWizard::accept()
         }
     } else { // AntiSpam mode
         if ( !mSpamToolsUsed ) {
-            KDialog::accept();
+            //QT5 KDialog::accept();
             return;
         }
         // TODO Existing filters with same name are replaced. This is hardcoded
@@ -463,7 +463,7 @@ void AntiSpamWizard::accept()
     if ( !filterList.isEmpty() )
         MailCommon::FilterManager::instance()->appendFilters( filterList, replaceExistingFilters );
 
-    KDialog::accept();
+    //QT5 KDialog::accept();
 }
 
 
@@ -581,10 +581,12 @@ void AntiSpamWizard::checkToolAvailability()
 
 void AntiSpamWizard::slotHelpClicked()
 {
+#if 0 //QT5
     if ( mMode == AntiSpam )
         KToolInvocation::invokeHelp( QLatin1String("the-anti-spam-wizard"), QLatin1String("kmail") );
     else
         KToolInvocation::invokeHelp( QLatin1String("the-anti-virus-wizard"), QLatin1String("kmail") );
+#endif
 }
 
 

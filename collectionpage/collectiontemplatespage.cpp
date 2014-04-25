@@ -27,6 +27,7 @@
 
 #include <KLocalizedString>
 #include <KPushButton>
+#include <KDialog>
 #include <QCheckBox>
 
 using namespace Akonadi;

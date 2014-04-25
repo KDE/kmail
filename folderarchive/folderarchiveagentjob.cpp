@@ -23,9 +23,9 @@
 
 #include "kmcommands.h"
 
-#include <Akonadi/ItemMoveJob>
+#include <AkonadiCore/ItemMoveJob>
 #include <AkonadiCore/CollectionFetchJob>
-#include <Akonadi/ItemMoveJob>
+#include <AkonadiCore/ItemMoveJob>
 
 #include <KLocale>
 

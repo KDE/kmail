@@ -32,11 +32,11 @@ using MailTransport::TransportManagementWidget;
 #include "ui_accountspagereceivingtab.h"
 #include "mailcommon/util/mailutil.h"
 
-#include <akonadi/agentfilterproxymodel.h>
-#include <akonadi/agentinstancemodel.h>
+#include <AkonadiCore/agentfilterproxymodel.h>
+#include <AkonadiCore/agentinstancemodel.h>
 #include <AkonadiCore/agenttype.h>
 #include <AkonadiCore/agentmanager.h>
-#include <akonadi/agenttypedialog.h>
+#include <AkonadiWidgets/agenttypedialog.h>
 #include <AkonadiCore/agentinstancecreatejob.h>
 
 

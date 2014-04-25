@@ -47,7 +47,7 @@
 #include <kmessagebox.h>
 #include <KLocalizedString>
 #include <KProcess>
-
+#include <KDebug>
 #include <KStandardDirs>
 
 #include <QProcess>

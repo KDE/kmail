@@ -18,7 +18,7 @@
 
 #ifndef COLLECTIONMAINTENANCEPAGE_H
 #define COLLECTIONMAINTENANCEPAGE_H
-#include <akonadi/collectionpropertiespage.h>
+#include <AkonadiWidgets/collectionpropertiespage.h>
 #include <AkonadiCore/collection.h>
 
 class QCheckBox;

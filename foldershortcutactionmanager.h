@@ -21,7 +21,7 @@
 
 #include "kmail_export.h"
 
-#include <Akonadi/Entity>
+#include <AkonadiCore/Entity>
 #include <AkonadiCore/Collection>
 
 #include <QMap>

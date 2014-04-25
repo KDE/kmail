@@ -104,7 +104,7 @@ using MailTransport::TransportManager;
 #include <algorithm>
 
 #include <AkonadiCore/entitydisplayattribute.h>
-#include <akonadi/collectionmodifyjob.h>
+#include <AkonadiCore/collectionmodifyjob.h>
 
 
 using namespace KPIM;

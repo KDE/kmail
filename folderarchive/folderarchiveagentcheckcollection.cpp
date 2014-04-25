@@ -21,7 +21,7 @@
 #include <KLocale>
 
 #include <AkonadiCore/CollectionFetchJob>
-#include <Akonadi/CollectionCreateJob>
+#include <AkonadiCore/CollectionCreateJob>
 #include <QDate>
 
 

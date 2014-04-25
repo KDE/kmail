@@ -31,14 +31,16 @@
 #include <KMenu>
 #include <KLocalizedString>
 #include <KJob>
-#include <Akonadi/Monitor>
+#include <KIcon>
+#include <AkonadiCore/Monitor>
+#include <KDebug>
 
 #include <QSignalMapper>
 #include <QPointer>
 
-#include <Akonadi/TagFetchJob>
-#include <Akonadi/TagFetchScope>
-#include <Akonadi/TagAttribute>
+#include <AkonadiCore/TagFetchJob>
+#include <AkonadiCore/TagFetchScope>
+#include <AkonadiCore/TagAttribute>
 
 using namespace KMail;
 
@@ -84,7 +86,7 @@ void TagActionManager::clearActions()
 
     //Remove the tag actions from the status menu and the action collection,
     //then delete them.
-    foreach( KAction *action, mTagActions ) {
+    foreach( KToggleAction *action, mTagActions ) {
         mMessageActions->messageStatusMenu()->removeAction( action );
 
         // This removes and deletes the action at the same time
@@ -119,7 +121,7 @@ void TagActionManager::createTagAction( const MailCommon::Tag::Ptr &tag, bool ad
     cleanName.replace(QLatin1Char('&'), QLatin1String("&&"));
     KToggleAction * const tagAction = new KToggleAction( KIcon( tag->iconName ),
                                                          cleanName, this );
-    tagAction->setShortcut( tag->shortcut );
+    //QT5 tagAction->setShortcut( tag->shortcut );
     tagAction->setIconText( tag->name() );
     tagAction->setChecked( tag->id() == mNewTagId );
 
@@ -130,7 +132,7 @@ void TagActionManager::createTagAction( const MailCommon::Tag::Ptr &tag, bool ad
     // The shortcut configuration is done in the config dialog.
     // The shortcut set in the shortcut dialog would not be saved back to
     // the tag descriptions correctly.
-    tagAction->setShortcutConfigurable( false );
+    //QT5 tagAction->setShortcutConfigurable( false );
     mMessageTagToggleMapper->setMapping( tagAction, QString::number(tag->tag().id()) );
 
     mTagActions.insert( tag->id(), tagAction );

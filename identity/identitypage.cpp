@@ -38,6 +38,7 @@
 #include <KDebug>
 #include <KMessageBox>
 #include <QMenu>
+#include <KLocalizedString>
 
 using namespace KMail;
 

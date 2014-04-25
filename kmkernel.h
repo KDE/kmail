@@ -16,7 +16,7 @@
 #include "kmail_export.h"
 #include "settings/globalsettings.h"
 #include <kcomponentdata.h>
-#include <akonadi/servermanager.h>
+#include <AkonadiCore/servermanager.h>
 #include "messageviewer/viewer/viewer.h"
 #include "progresswidget/progressmanager.h"
 

@@ -24,7 +24,7 @@
 #include "messagecore/misc/mailinglist.h"
 #include "foldercollection.h"
 
-#include <akonadi/collectionpropertiespage.h>
+#include <AkonadiWidgets/collectionpropertiespage.h>
 #include <AkonadiCore/collection.h>
 
 

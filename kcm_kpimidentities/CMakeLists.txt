@@ -14,15 +14,15 @@ set(kcm_identities_srcs
   ../identity/xfaceconfigurator.cpp
 )
 
-kde4_add_ui_files(kcm_identities_srcs ../ui/identitypage.ui)
-kde4_add_plugin(kcm_kpimidentities ${kcm_identities_srcs})
+qt5_wrap_ui(kcm_identities_srcs ../ui/identitypage.ui)
+add_library(kcm_kpimidentities MODULE ${kcm_identities_srcs})
 target_link_libraries(kcm_kpimidentities
   ${KDEPIMLIBS_GPGMEPP_LIBS}
-  ${KDEPIMLIBS_AKONADI_LIBS}
-  ${KDEPIMLIBS_KPIMIDENTITIES_LIBS}
-  ${KDEPIMLIBS_MAILTRANSPORT_LIBS}
-  ${KDE4_KCMUTILS_LIBS}
-  ${KDE4_KIO_LIBS}
+  KF5::AkonadiCore
+  KF5::PimIdentities
+  KF5::MailTransport
+  KF5::KCMUtils
+  KF5::KIOCore
   akonadi_next
   mailcommon
   messagecomposer

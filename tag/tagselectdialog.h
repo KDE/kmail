@@ -31,7 +31,7 @@
 
 #include <KDialog>
 #include <AkonadiCore/Item>
-#include <Akonadi/Tag>
+#include <AkonadiCore/Tag>
 #include "tag.h"
 
 class QListWidget;

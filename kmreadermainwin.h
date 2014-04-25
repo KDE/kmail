@@ -13,7 +13,7 @@
 #include <AkonadiCore/collection.h>
 #include <QModelIndex>
 class KMReaderWin;
-class KAction;
+class QAction;
 class KFontAction;
 class KFontSizeAction;
 class KJob;
@@ -80,12 +80,12 @@ private:
     Akonadi::Collection parentCollection() const;
     void initKMReaderMainWin();
     void setupAccel();
-    KAction *copyActionMenu(QMenu *menu);
+    QAction *copyActionMenu(QMenu *menu);
 
     KMReaderWin *mReaderWin;
     Akonadi::Item mMsg;
     // a few actions duplicated from kmmainwidget
-    KAction *mTrashAction, *mSaveAtmAction;
+    QAction *mTrashAction, *mSaveAtmAction;
     KFontAction *mFontAction;
     KFontSizeAction *mFontSizeAction;
     KMail::MessageActions *mMsgActions;

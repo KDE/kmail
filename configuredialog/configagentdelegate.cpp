@@ -22,7 +22,7 @@
 #include "configagentdelegate.h"
 
 #include <Akonadi/AgentInstanceModel>
-#include <Akonadi/AgentInstance>
+#include <AkonadiCore/AgentInstance>
 
 #include <KDebug>
 #include <KIcon>

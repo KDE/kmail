@@ -39,7 +39,7 @@ using KPIM::RecentAddresses;
 #include <mailtransport/transport.h>
 #include <mailtransport/transportmanager.h>
 #include <mailtransport/dispatcherinterface.h>
-#include <akonadi/servermanager.h>
+#include <AkonadiCore/servermanager.h>
 
 #include <kde_file.h>
 #include <kwindowsystem.h>
@@ -79,6 +79,7 @@ using KMail::MailServiceImpl;
 #include <kio/jobuidelegate.h>
 #include <kprocess.h>
 #include <KCrash>
+#include <KGlobal>
 
 #include <kmime/kmime_message.h>
 #include <kmime/kmime_util.h>
@@ -86,13 +87,13 @@ using KMail::MailServiceImpl;
 #include <AkonadiCore/CollectionFetchJob>
 #include <AkonadiCore/ChangeRecorder>
 #include <AkonadiCore/ItemFetchScope>
-#include <Akonadi/AgentManager>
-#include <Akonadi/ItemFetchJob>
+#include <AkonadiCore/AgentManager>
+#include <AkonadiCore/ItemFetchJob>
 #include <AkonadiCore/AttributeFactory>
 #include <AkonadiCore/Session>
 #include <AkonadiCore/EntityTreeModel>
 #include <AkonadiCore/entitymimetypefiltermodel.h>
-#include <Akonadi/CollectionStatisticsJob>
+#include <AkonadiCore/CollectionStatisticsJob>
 
 #include <QDir>
 #include <QWidget>
@@ -1750,6 +1751,7 @@ void KMKernel::instanceStatusChanged( const Akonadi::AgentInstance &instance )
 
 void KMKernel::agentInstanceBroken( const Akonadi::AgentInstance &instance )
 {
+#if 0 //QT5
     const QString summary = i18n( "Resource %1 is broken.",  instance.name() );
     if( xmlGuiInstance().isValid() ) {
         KNotification::event( QLatin1String("akonadi-resource-broken"),
@@ -1765,7 +1767,7 @@ void KMKernel::agentInstanceBroken( const Akonadi::AgentInstance &instance )
                               0,
                               KNotification::CloseOnTimeout );
     }
-
+#endif
 }
 
 void KMKernel::slotProgressItemCompletedOrCanceled( KPIM::ProgressItem *item )
@@ -1923,6 +1925,7 @@ const QAbstractItemModel* KMKernel::treeviewModelSelection()
 
 void KMKernel::slotInstanceWarning(const Akonadi::AgentInstance &instance , const QString &message)
 {
+#if 0 //QT5
     const QString summary = i18nc( "<source>: <error message>", "%1: %2", instance.name(), message );
     if( xmlGuiInstance().isValid() ) {
         KNotification::event( QLatin1String("akonadi-instance-warning"),
@@ -1938,10 +1941,12 @@ void KMKernel::slotInstanceWarning(const Akonadi::AgentInstance &instance , cons
                               0,
                               KNotification::CloseOnTimeout );
     }
+#endif
 }
 
 void KMKernel::slotInstanceError(const Akonadi::AgentInstance &instance, const QString &message)
 {
+#if 0 //QT5
     const QString summary = i18nc( "<source>: <error message>", "%1: %2", instance.name(), message );
     if( xmlGuiInstance().isValid() ) {
         KNotification::event( QLatin1String("akonadi-instance-error"),
@@ -1957,6 +1962,7 @@ void KMKernel::slotInstanceError(const Akonadi::AgentInstance &instance, const Q
                               0,
                               KNotification::CloseOnTimeout );
     }
+#endif
 }
 
 

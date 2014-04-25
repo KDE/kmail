@@ -46,11 +46,11 @@ using namespace PimCommon::ConfigureImmutableWidgetUtils;
 #include "mailcommon/util/mailutil.h"
 
 #include <Akonadi/Tag>
-#include <Akonadi/TagFetchJob>
-#include <Akonadi/TagFetchScope>
+#include <AkonadiCore/TagFetchJob>
+#include <AkonadiCore/TagFetchScope>
 #include <Akonadi/TagDeleteJob>
 #include <Akonadi/TagCreateJob>
-#include <Akonadi/TagAttribute>
+#include <AkonadiCore/TagAttribute>
 #include <Akonadi/TagModifyJob>
 
 #include <KIconButton>

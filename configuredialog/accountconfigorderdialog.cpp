@@ -25,8 +25,8 @@
 #include <KPushButton>
 #include <KVBox>
 
-#include <Akonadi/AgentInstance>
-#include <Akonadi/AgentManager>
+#include <AkonadiCore/AgentInstance>
+#include <AkonadiCore/AgentManager>
 
 #include <KMime/KMimeMessage>
 

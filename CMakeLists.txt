@@ -265,11 +265,12 @@ if (KDEPIM_BUILD_DESKTOP)
     mailcommon
     templateparser
     KF5::PimIdentities
-    ${KDEPIMLIBS_KONTACTINTERFACE_LIBS}
+    KF5::KontactInterface
+    KF5::KDELibs4Support
     ${KDE4_PHONON_LIBRARY}
-    ${KDE4_KNOTIFYCONFIG_LIBRARY}
+    KF5::NotifyConfig
     KF5::MailTransport
-    KF5::Imap
+    KF5::KImap
     ${KDE4_KPARTS_LIBRARY}
     ${KDEPIMLIBS_KRESOURCES_LIBS}
     KF5::KCMUtils
@@ -288,9 +289,7 @@ if (KDEPIM_BUILD_DESKTOP)
     akonadi_next
     ${QT_QTWEBKIT_LIBRARY}
     ${QT_QTSCRIPT_LIBRARY}
-    ${KDE4_KPRINTUTILS_LIBS}
     sendlater
-    ${AKONADI_COMMON_LIBRARIES}
   )
 
   set_target_properties(kmailprivate
@@ -329,7 +328,7 @@ if (KDEPIM_BUILD_DESKTOP)
   target_link_libraries(kmail
     
     
-    ${KDEPIMLIBS_KONTACTINTERFACE_LIBS}
+    KF5::KontactInterface
     kmailprivate
     kdepim
     ${QT_QTSCRIPT_LIBRARY}

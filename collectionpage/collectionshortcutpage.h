@@ -22,7 +22,7 @@
 
 #include "foldercollection.h"
 
-#include <akonadi/collectionpropertiespage.h>
+#include <AkonadiWidgets/collectionpropertiespage.h>
 
 template <typename T> class QSharedPointer;
 

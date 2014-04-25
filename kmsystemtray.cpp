@@ -33,7 +33,7 @@
 #include <kdebug.h>
 #include <KMenu>
 #include <KLocalizedString>
-#include <KAction>
+#include <QAction>
 #include <KActionMenu>
 #include <KActionCollection>
 
@@ -59,6 +59,7 @@ using namespace MailCommon;
 namespace KMail {
 KMSystemTray::KMSystemTray(QObject *parent)
     : KStatusNotifierItem( parent),
+      mIcon(QLatin1String("mail-unread-new")),
       mDesktopOfMainWin( 0 ),
       mMode( GlobalSettings::EnumSystemTrayPolicy::ShowOnUnread ),
       mCount( 0 ),
@@ -71,7 +72,6 @@ KMSystemTray::KMSystemTray(QObject *parent)
     setToolTipTitle( i18n("KMail") );
     setToolTipIconByName( QLatin1String("kmail") );
     setIconByName( QLatin1String("kmail") );
-    mIcon = KIcon( QLatin1String("mail-unread-new") );
 
     KMMainWidget * mainWidget = kmkernel->getKMMainWidget();
     if ( mainWidget ) {
@@ -113,7 +113,7 @@ bool KMSystemTray::buildPopupMenu()
 
     contextMenu()->clear();
 
-    contextMenu()->addTitle(qApp->windowIcon(), i18n("KMail"));
+    //QT5 contextMenu()->addTitle(qApp->windowIcon(), i18n("KMail"));
     QAction * action;
     if ( ( action = mainWidget->action(QLatin1String("check_mail")) ) )
         contextMenu()->addAction( action );
@@ -134,9 +134,10 @@ bool KMSystemTray::buildPopupMenu()
         contextMenu()->addAction( action );
     contextMenu()->addSeparator();
 
+#if 0 //QT5
     if ( ( action = actionCollection()->action(QLatin1String("file_quit")) ) )
         contextMenu()->addAction( action );
-
+#endif
     return true;
 }
 

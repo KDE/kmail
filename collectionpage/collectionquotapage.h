@@ -31,7 +31,7 @@
  */
 #ifndef COLLECTIONQUOTAPAGE_H
 #define COLLECTIONQUOTAPAGE_H
-#include <akonadi/collectionpropertiespage.h>
+#include <AkonadiWidgets/collectionpropertiespage.h>
 
 class QuotaWidget;
 

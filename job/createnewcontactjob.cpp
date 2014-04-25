@@ -27,10 +27,10 @@
 #include <KABC/ContactGroup>
 
 #include <AkonadiCore/CollectionFetchJob>
-#include <Akonadi/AgentInstanceCreateJob>
+#include <AkonadiCore/AgentInstanceCreateJob>
 #include <AkonadiWidgets/AgentTypeDialog>
-#include <Akonadi/CollectionFetchScope>
-#include <Akonadi/AgentFilterProxyModel>
+#include <AkonadiCore/CollectionFetchScope>
+#include <AkonadiCore/AgentFilterProxyModel>
 #include <Akonadi/Contact/ContactEditorDialog>
 
 #include <KLocalizedString>

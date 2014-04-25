@@ -34,12 +34,14 @@
 
 #include <KListWidgetSearchLine>
 #include <KLocalizedString>
+#include <KIcon>
+#include <KDebug>
 
 #include <QGridLayout>
 #include <QListWidget>
-#include <Akonadi/TagFetchJob>
-#include <Akonadi/TagFetchScope>
-#include <Akonadi/TagAttribute>
+#include <AkonadiCore/TagFetchJob>
+#include <AkonadiCore/TagFetchScope>
+#include <AkonadiCore/TagAttribute>
 
 using namespace KMail;
 
@@ -63,7 +65,7 @@ TagSelectDialog::TagSelectDialog( QWidget * parent, int numberOfSelectedMessages
     mListTag = new QListWidget( this );
     KListWidgetSearchLine *listWidgetSearchLine = new KListWidgetSearchLine(this,mListTag);
     listWidgetSearchLine->setClickMessage(i18n("Search tag"));
-    listWidgetSearchLine->setClearButtonShown(true);
+    //QT5 listWidgetSearchLine->setClearButtonShown(true);
 
     mainLayout->addWidget(listWidgetSearchLine);
     mainLayout->addWidget( mListTag );

@@ -20,9 +20,9 @@
 #include "util/mailutil.h"
 #include "kmkernel.h"
 
-#include <akonadi/collectionstatistics.h>
+#include <AkonadiCore/collectionstatistics.h>
 #include <AkonadiCore/collection.h>
-#include <Akonadi/AgentManager>
+#include <AkonadiCore/AgentManager>
 #include <AkonadiCore/ChangeRecorder>
 
 #include <QDBusInterface>
@@ -34,12 +34,14 @@
 #include <KPushButton>
 #include <kio/global.h>
 #include <KLocale>
+#include <KGlobal>
+#include <KDebug>
 
 #include <QGroupBox>
 #include <QLabel>
 #include <QFormLayout>
 #include <QCheckBox>
-#include <akonadi/indexpolicyattribute.h>
+#include <AkonadiCore/indexpolicyattribute.h>
 
 using namespace Akonadi;
 

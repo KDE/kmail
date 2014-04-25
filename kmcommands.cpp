@@ -103,11 +103,11 @@ using KMail::SecondaryWindow;
 
 #include <kpimutils/kfileio.h>
 
-#include <akonadi/itemmovejob.h>
-#include <akonadi/itemcopyjob.h>
+#include <AkonadiCore/itemmovejob.h>
+#include <AkonadiCore/itemcopyjob.h>
 #include <AkonadiCore/itemdeletejob.h>
-#include <akonadi/tag.h>
-#include <akonadi/tagcreatejob.h>
+#include <AkonadiCore/tag.h>
+#include <AkonadiCore/tagcreatejob.h>
 #include <mailtransport/transportattribute.h>
 #include <mailtransport/sentbehaviourattribute.h>
 
@@ -480,7 +480,7 @@ KMCommand::Result KMAddBookmarksCommand::execute()
     const QString filename = KStandardDirs::locateLocal( "data", QString::fromLatin1("konqueror/bookmarks.xml") );
     KBookmarkManager *bookManager = KBookmarkManager::managerForFile( filename, QLatin1String("konqueror") );
     KBookmarkGroup group = bookManager->root();
-    group.addBookmark( mUrl.path(), KUrl( mUrl ) );
+    //QT5 group.addBookmark( mUrl.path(), QUrl( mUrl ) );
     if( bookManager->save() ) {
         bookManager->emitChanged( group );
     }

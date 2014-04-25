@@ -196,7 +196,7 @@
   <customwidget>
    <class>Akonadi::EntityTreeView</class>
    <extends>QTreeView</extends>
-   <header>akonadi/entitytreeview.h</header>
+   <header>AkonadiWidgets/entitytreeview.h</header>
   </customwidget>
   <customwidget>
    <class>KDialogButtonBox</class>

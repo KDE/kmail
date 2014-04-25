@@ -37,6 +37,7 @@
 #include <KConfig>
 #include <KStandardDirs>
 #include <KSeparator>
+#include <KIconLoader>
 
 using namespace KMail;
 
@@ -123,11 +124,13 @@ void KMKnotify::initCombobox()
             const int slash2 = fullPath.lastIndexOf( QLatin1Char('/'), slash );
             const QString appname= ( slash2 < 0 ) ? QString() :  fullPath.mid( slash2+1 , slash-slash2  );
             if ( !appname.isEmpty() ) {
+#if 0 //QT5
                 KConfig config(fullPath, KConfig::NoGlobals, "data" );
                 KConfigGroup globalConfig( &config, QString::fromLatin1("Global") );
                 const QString icon = globalConfig.readEntry(QString::fromLatin1("IconName"), QString::fromLatin1("misc"));
                 const QString description = globalConfig.readEntry( QString::fromLatin1("Comment"), appname );
                 m_comboNotify->addItem( SmallIcon( icon ), description, appname );
+#endif
             }
         }
     }

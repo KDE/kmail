@@ -64,7 +64,7 @@ bool CollectionStorageModel::isOutBoundFolder( const Akonadi::Collection& c ) co
     }
     QSharedPointer<FolderCollection> fd = FolderCollection::forCollection( c, false );
     if ( fd ) {
-        const QString folderString( QString::number( c.id() ) );
+        const Akonadi::Item::Id folderId( c.id() );
         // default setting
         const KPIMIdentities::Identity & identity =
                 kmkernel->identityManager()->identityForUoidOrDefault( fd->identity() );
@@ -81,9 +81,9 @@ bool CollectionStorageModel::isOutBoundFolder( const Akonadi::Collection& c ) co
                  c == CommonKernel->templatesCollectionFolder() ||
                  c == CommonKernel->draftsCollectionFolder() )
                 return true;
-        } else if ( identity.drafts() == folderString ||
-                    identity.templates() == folderString ||
-                    identity.fcc() == folderString )
+        } else if ( identity.drafts() == folderId ||
+                    identity.templates() == folderId ||
+                    identity.fcc() == folderId )
             // drafts, templates or sent of the identity
             return true;
         else

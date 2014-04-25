@@ -20,7 +20,7 @@
 #ifndef AKONADI_SEARCHDESCRIPTIONATTRIBUTE_H
 #define AKONADI_SEARCHDESCRIPTIONATTRIBUTE_H
 
-#include <Akonadi/Attribute>
+#include <AkonadiCore/Attribute>
 #include <AkonadiCore/Collection>
 
 #include <QByteArray>

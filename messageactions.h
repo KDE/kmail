@@ -27,7 +27,7 @@
 class QWidget;
 class QAction;
 class KJob;
-class KAction;
+class QAction;
 class KActionMenu;
 class KActionCollection;
 class KXMLGUIClient;
@@ -70,20 +70,20 @@ public:
     void setCurrentMessage(const Akonadi::Item &item , const Akonadi::Item::List &items = Akonadi::Item::List());
 
     KActionMenu* replyMenu() const { return mReplyActionMenu; }
-    KAction* replyListAction() const { return mReplyListAction; }
-    KAction* createTodoAction() const { return mCreateTodoAction; }
-    KAction* forwardInlineAction() const { return mForwardInlineAction; }
-    KAction* forwardAttachedAction() const { return mForwardAttachedAction; }
-    KAction* redirectAction() const { return mRedirectAction; }
+    QAction * replyListAction() const { return mReplyListAction; }
+    QAction * createTodoAction() const { return mCreateTodoAction; }
+    QAction * forwardInlineAction() const { return mForwardInlineAction; }
+    QAction * forwardAttachedAction() const { return mForwardAttachedAction; }
+    QAction * redirectAction() const { return mRedirectAction; }
 
     KActionMenu* messageStatusMenu() const { return mStatusMenu; }
     KActionMenu *forwardMenu() const { return mForwardActionMenu; }
 
-    KAction* editAction() const { return mEditAction; }
-    KAction* annotateAction() const { return mAnnotateAction; }
-    KAction* printAction() const { return mPrintAction; }
-    KAction* printPreviewAction() const { return mPrintPreviewAction; }
-    KAction* listFilterAction() const { return mListFilterAction; }
+    QAction * editAction() const { return mEditAction; }
+    QAction * annotateAction() const { return mAnnotateAction; }
+    QAction * printAction() const { return mPrintAction; }
+    QAction * printPreviewAction() const { return mPrintPreviewAction; }
+    QAction * listFilterAction() const { return mListFilterAction; }
 
     KActionMenu* mailingListActionMenu() const { return mMailingListActionMenu; }
     TemplateParser::CustomTemplatesMenu* customTemplatesMenu() const;
@@ -132,23 +132,23 @@ private slots:
 
 
 private:
-    QList<KAction*> mMailListActionList;
+    QList<QAction *> mMailListActionList;
     QWidget *mParent;
     Akonadi::Item mCurrentItem;
     Akonadi::Item::List mVisibleItems;
     KMReaderWin *mMessageView;
 
     KActionMenu *mReplyActionMenu;
-    KAction *mReplyAction, *mReplyAllAction, *mReplyAuthorAction,
+    QAction *mReplyAction, *mReplyAllAction, *mReplyAuthorAction,
     *mReplyListAction, *mNoQuoteReplyAction,
     *mForwardInlineAction, *mForwardAttachedAction, *mRedirectAction;
-    KAction *mCreateTodoAction;
+    QAction *mCreateTodoAction;
     KActionMenu *mStatusMenu;
     KActionMenu *mForwardActionMenu;
     KActionMenu *mMailingListActionMenu;
-    KAction *mEditAction, *mAnnotateAction, *mPrintAction, *mPrintPreviewAction;
+    QAction *mEditAction, *mAnnotateAction, *mPrintAction, *mPrintPreviewAction;
     TemplateParser::CustomTemplatesMenu *mCustomTemplatesMenu;
-    KAction *mListFilterAction;
+    QAction *mListFilterAction;
 };
 
 }

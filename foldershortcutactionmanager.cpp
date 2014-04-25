@@ -26,9 +26,10 @@
 #include <AkonadiCore/EntityTreeModel>
 #include <AkonadiCore/EntityMimeTypeFilterModel>
 
-#include <KAction>
+#include <QAction>
 #include <KActionCollection>
 #include <KLocalizedString>
+#include <KIcon>
 
 using namespace KMail;
 using namespace MailCommon;
@@ -132,17 +133,17 @@ void FolderShortcutActionManager::shortcutChanged( const Akonadi::Collection &co
     KIcon icon( QLatin1String("folder") );
     if ( col.hasAttribute<Akonadi::EntityDisplayAttribute>() &&
          !col.attribute<Akonadi::EntityDisplayAttribute>()->iconName().isEmpty() ) {
-        icon = KIcon( col.attribute<Akonadi::EntityDisplayAttribute>()->iconName() );
+        //QT5 icon = KIcon( col.attribute<Akonadi::EntityDisplayAttribute>()->iconName() );
     }
 
     const QString actionLabel = i18n( "Folder Shortcut %1", col.name() );
     QString actionName = i18n( "Folder Shortcut %1", QString::number( col.id() ) );
     actionName.replace( QLatin1Char(' '), QLatin1Char('_') );
-    KAction *action = mActionCollection->addAction( actionName );
+    QAction *action = mActionCollection->addAction( actionName );
     // The folder shortcut is set in the folder shortcut dialog.
     // The shortcut set in the shortcut dialog would not be saved back to
     // the folder settings correctly.
-    action->setShortcutConfigurable( false );
+    //QT5 action->setShortcutConfigurable( false );
     action->setText( actionLabel );
     action->setShortcuts( shortcut );
     action->setIcon( icon );

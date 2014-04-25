@@ -24,7 +24,7 @@
 #include "kmmainwin.h"
 #include "kmkernel.h"
 #include <KJob>
-#include <akonadi/itemmovejob.h>
+#include <AkonadiCore/itemmovejob.h>
 
 #include <kmessagebox.h>
 #include <klocale.h>

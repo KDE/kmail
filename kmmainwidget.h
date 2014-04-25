@@ -35,7 +35,7 @@
 #include <QPointer>
 #include <QTimer>
 #include <akonadi/kmime/standardmailactionmanager.h>
-#include <akonadi/tag.h>
+#include <AkonadiCore/tag.h>
 #include <messagelist/core/view.h>
 
 namespace Akonadi {
@@ -50,7 +50,7 @@ class QVBoxLayout;
 class QSplitter;
 
 class QMenu;
-class KAction;
+class QAction;
 class KActionMenu;
 class KToggleAction;
 class KMMetaFilterActionCommand;
@@ -125,9 +125,9 @@ public:
     QAction *action( const QString &name ) { return mActionCollection->action( name ); }
     KActionMenu *filterMenu() const { return mFilterMenu; }
     KActionMenu *mailingListActionMenu() const { return mMsgActions->mailingListActionMenu(); }
-    KAction *editAction() const { return mMsgActions->editAction(); }
-    KAction *sendAgainAction() const { return mSendAgainAction; }
-    KAction *sendQueuedAction() const { return mSendQueued; }
+    QAction *editAction() const { return mMsgActions->editAction(); }
+    QAction *sendAgainAction() const { return mSendAgainAction; }
+    QAction *sendQueuedAction() const { return mSendQueued; }
     KActionMenu *sendQueueViaMenu() const { return mSendActionMenu; }
 
     KMail::MessageActions *messageActions() const { return mMsgActions; }
@@ -244,8 +244,8 @@ public slots:
     QList<KActionCollection*> actionCollections() const;
 
 
-    KAction *akonadiStandardAction( Akonadi::StandardActionManager::Type type );
-    KAction *akonadiStandardAction( Akonadi::StandardMailActionManager::Type type );
+    QAction *akonadiStandardAction( Akonadi::StandardActionManager::Type type );
+    QAction *akonadiStandardAction( Akonadi::StandardMailActionManager::Type type );
     Akonadi::StandardMailActionManager *standardMailActionManager() const { return mAkonadiStandardActionManager; }
 
     void refreshMessageListSelection();
@@ -539,25 +539,25 @@ private slots:
     void slotArchiveMails();
 private:
     // Message actions
-    KAction *mDeleteAction, *mTrashThreadAction,
+    QAction *mDeleteAction, *mTrashThreadAction,
     *mDeleteThreadAction, *mSaveAsAction, *mUseAction,
     *mSendAgainAction, *mApplyAllFiltersAction,
     *mSaveAttachmentsAction, *mOpenAction,
     *mMoveMsgToFolderAction, *mCollectionProperties, *mSendQueued;
-    KAction *mArchiveAction;
+    QAction *mArchiveAction;
     KActionMenu *mSendActionMenu;
     // Filter actions
     KActionMenu *mFilterMenu;
-    KAction *mExpireConfigAction;
-    KAction *mApplyFiltersOnFolder;
+    QAction *mExpireConfigAction;
+    QAction *mApplyFiltersOnFolder;
     // Custom template actions menu
     KActionMenu *mTemplateMenu;
 
     KActionMenu *mThreadStatusMenu, *mApplyFilterActionsMenu;
-    KAction *mCopyActionMenu;
-    KAction *mMoveActionMenu;
-    KAction *mMarkThreadAsReadAction;
-    KAction *mMarkThreadAsUnreadAction;
+    QAction *mCopyActionMenu;
+    QAction *mMoveActionMenu;
+    QAction *mMarkThreadAsReadAction;
+    QAction *mMarkThreadAsUnreadAction;
     KToggleAction *mToggleThreadImportantAction;
     KToggleAction *mToggleThreadToActAction;
 
@@ -582,7 +582,7 @@ private:
 
     QPointer<KMail::SearchWindow> mSearchWin;
 
-    KAction *mExpireFolderAction,
+    QAction *mExpireFolderAction,
     *mFolderMailingListPropertiesAction,
     *mShowFolderShortcutDialogAction,
     *mArchiveFolderAction, *mMessageNewList;
@@ -624,10 +624,10 @@ private:
 
     QPointer<MailCommon::FolderSelectionDialog> mMoveOrCopyToDialog;
     QPointer<MailCommon::FolderSelectionDialog> mSelectFromAllFoldersDialog;
-    KAction *mServerSideSubscription;
+    QAction *mServerSideSubscription;
     KRecentFilesAction *mOpenRecentAction;
     QPointer<KSieveUi::ManageSieveScriptsDialog> mManageSieveDialog;
-    KAction *mQuickSearchAction;
+    QAction *mQuickSearchAction;
 };
 
 #endif

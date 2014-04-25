@@ -37,7 +37,7 @@
 #include <AkonadiCore/itemfetchjob.h>
 #include <akonadi/kmime/messageparts.h>
 #include <AkonadiCore/ChangeRecorder>
-#include <KAction>
+#include <QAction>
 #include <KActionMenu>
 #include <KActionCollection>
 #include <KDebug>
@@ -51,11 +51,12 @@
 #include <KUriFilter>
 #include <KStringHandler>
 #include <KPrintPreview>
+#include <KIcon>
 
 #include <QVariant>
 #include <qwidget.h>
 #include <AkonadiCore/collection.h>
-#include <akonadi/entityannotationsattribute.h>
+#include <AkonadiCore/entityannotationsattribute.h>
 #include <util/mailutil.h>
 
 using namespace KMail;
@@ -73,42 +74,42 @@ MessageActions::MessageActions( KActionCollection *ac, QWidget *parent )
     connect( mReplyActionMenu, SIGNAL(triggered(bool)),
              this, SLOT(slotReplyToMsg()) );
 
-    mReplyAction = new KAction( KIcon(QLatin1String("mail-reply-sender")), i18n("&Reply..."), this );
+    mReplyAction = new QAction( KIcon(QLatin1String("mail-reply-sender")), i18n("&Reply..."), this );
     ac->addAction( QLatin1String("reply"), mReplyAction );
     mReplyAction->setShortcut(Qt::Key_R);
     connect( mReplyAction, SIGNAL(triggered(bool)),
              this, SLOT(slotReplyToMsg()) );
     mReplyActionMenu->addAction( mReplyAction );
 
-    mReplyAuthorAction = new KAction( KIcon(QLatin1String("mail-reply-sender")), i18n("Reply to A&uthor..."), this );
+    mReplyAuthorAction = new QAction( KIcon(QLatin1String("mail-reply-sender")), i18n("Reply to A&uthor..."), this );
     ac->addAction( QLatin1String("reply_author"), mReplyAuthorAction );
     mReplyAuthorAction->setShortcut(Qt::SHIFT+Qt::Key_A);
     connect( mReplyAuthorAction, SIGNAL(triggered(bool)),
              this, SLOT(slotReplyAuthorToMsg()) );
     mReplyActionMenu->addAction( mReplyAuthorAction );
 
-    mReplyAllAction = new KAction( KIcon(QLatin1String("mail-reply-all")), i18n("Reply to &All..."), this );
+    mReplyAllAction = new QAction( KIcon(QLatin1String("mail-reply-all")), i18n("Reply to &All..."), this );
     ac->addAction( QLatin1String("reply_all"), mReplyAllAction );
     mReplyAllAction->setShortcut( Qt::Key_A );
     connect( mReplyAllAction, SIGNAL(triggered(bool)),
              this, SLOT(slotReplyAllToMsg()) );
     mReplyActionMenu->addAction( mReplyAllAction );
 
-    mReplyListAction = new KAction( KIcon(QLatin1String("mail-reply-list")), i18n("Reply to Mailing-&List..."), this );
+    mReplyListAction = new QAction( KIcon(QLatin1String("mail-reply-list")), i18n("Reply to Mailing-&List..."), this );
     ac->addAction( QLatin1String("reply_list"), mReplyListAction );
     mReplyListAction->setShortcut( Qt::Key_L );
     connect( mReplyListAction, SIGNAL(triggered(bool)),
              this, SLOT(slotReplyListToMsg()) );
     mReplyActionMenu->addAction( mReplyListAction );
 
-    mNoQuoteReplyAction = new KAction( i18n("Reply Without &Quote..."), this );
+    mNoQuoteReplyAction = new QAction( i18n("Reply Without &Quote..."), this );
     ac->addAction(QLatin1String("noquotereply"), mNoQuoteReplyAction );
     mNoQuoteReplyAction->setShortcut( Qt::SHIFT+Qt::Key_R );
     connect( mNoQuoteReplyAction, SIGNAL(triggered(bool)),
              this, SLOT(slotNoQuoteReplyToMsg()) );
 
 
-    mListFilterAction = new KAction(i18n("Filter on Mailing-&List..."), this);
+    mListFilterAction = new QAction(i18n("Filter on Mailing-&List..."), this);
     ac->addAction(QLatin1String("mlist_filter"), mListFilterAction );
     connect(mListFilterAction, SIGNAL(triggered(bool)), SLOT(slotMailingListFilter()));
 
@@ -118,7 +119,7 @@ MessageActions::MessageActions( KActionCollection *ac, QWidget *parent )
 
     KMMainWidget* mainwin = kmkernel->getKMMainWidget();
     if ( mainwin ) {
-        KAction * action = mainwin->akonadiStandardAction( Akonadi::StandardMailActionManager::MarkMailAsRead );
+        QAction * action = mainwin->akonadiStandardAction( Akonadi::StandardMailActionManager::MarkMailAsRead );
         mStatusMenu->addAction( action );
 
         action = mainwin->akonadiStandardAction( Akonadi::StandardMailActionManager::MarkMailAsUnread );
@@ -133,13 +134,13 @@ MessageActions::MessageActions( KActionCollection *ac, QWidget *parent )
 
     }
 
-    mEditAction = new KAction( KIcon(QLatin1String("accessories-text-editor")), i18n("&Edit Message"), this );
+    mEditAction = new QAction( KIcon(QLatin1String("accessories-text-editor")), i18n("&Edit Message"), this );
     ac->addAction( QLatin1String("edit"), mEditAction );
     connect( mEditAction, SIGNAL(triggered(bool)),
              this, SLOT(editCurrentMessage()) );
     mEditAction->setShortcut( Qt::Key_T );
 
-    mAnnotateAction = new KAction( KIcon( QLatin1String("view-pim-notes") ), i18n( "Add Note..."), this );
+    mAnnotateAction = new QAction( KIcon( QLatin1String("view-pim-notes") ), i18n( "Add Note..."), this );
     ac->addAction( QLatin1String("annotate"), mAnnotateAction );
     connect( mAnnotateAction, SIGNAL(triggered(bool)),
              this, SLOT(annotateMessage()) );
@@ -151,7 +152,7 @@ MessageActions::MessageActions( KActionCollection *ac, QWidget *parent )
     mForwardActionMenu  = new KActionMenu(KIcon(QLatin1String("mail-forward")), i18nc("Message->","&Forward"), this);
     ac->addAction(QLatin1String("message_forward"), mForwardActionMenu );
 
-    mForwardAttachedAction = new KAction( KIcon(QLatin1String("mail-forward")),
+    mForwardAttachedAction = new QAction( KIcon(QLatin1String("mail-forward")),
                                           i18nc( "@action:inmenu Message->Forward->",
                                                  "As &Attachment..." ),
                                           this );
@@ -159,7 +160,7 @@ MessageActions::MessageActions( KActionCollection *ac, QWidget *parent )
              parent, SLOT(slotForwardAttachedMsg()) );
     ac->addAction( QLatin1String("message_forward_as_attachment"), mForwardAttachedAction );
 
-    mForwardInlineAction = new KAction( KIcon( QLatin1String("mail-forward") ),
+    mForwardInlineAction = new QAction( KIcon( QLatin1String("mail-forward") ),
                                         i18nc( "@action:inmenu Message->Forward->",
                                                "&Inline..." ),
                                         this );
@@ -169,7 +170,7 @@ MessageActions::MessageActions( KActionCollection *ac, QWidget *parent )
 
     setupForwardActions();
 
-    mRedirectAction  = new KAction(i18nc("Message->Forward->", "&Redirect..."), this );
+    mRedirectAction  = new QAction(i18nc("Message->Forward->", "&Redirect..."), this );
     ac->addAction( QLatin1String("message_forward_redirect"), mRedirectAction );
     connect( mRedirectAction, SIGNAL(triggered(bool)),
              parent, SLOT(slotRedirectMsg()) );
@@ -357,9 +358,10 @@ void MessageActions::updateMailingListActions( const Akonadi::Item& messageItem 
         mMailingListActionMenu->menu()->clear();
         qDeleteAll(mMailListActionList);
         mMailListActionList.clear();
+#if 0 //QT5
         if ( !listId.isEmpty() )
             mMailingListActionMenu->menu()->addTitle( listId );
-
+#endif
         if ( mailList.features() & MessageCore::MailingList::ArchivedAt )
             // IDEA: this may be something you want to copy - "Copy in submenu"?
             addMailingListActions( i18n( "Open Message in List Archive" ), mailList.archivedAtUrls() );
@@ -551,11 +553,11 @@ void MessageActions::addMailingListAction( const QString &item, const KUrl &url 
         protocol = i18n( "web" );
     }
     // item is a mailing list url description passed from the updateActions method above.
-    KAction *act = new KAction( i18nc( "%1 is a 'Contact Owner' or similar action. %2 is a protocol normally web or email though could be irc/ftp or other url variant", "%1 (%2)",  item, protocol ) , this );
+    QAction *act = new QAction( i18nc( "%1 is a 'Contact Owner' or similar action. %2 is a protocol normally web or email though could be irc/ftp or other url variant", "%1 (%2)",  item, protocol ) , this );
     mMailListActionList.append(act);
     const QVariant v(  url.url() );
     act->setData( v );
-    act->setHelpText( prettyUrl );
+    //QT5 act->setHelpText( prettyUrl );
     mMailingListActionMenu->addAction( act );
 }
 
@@ -616,10 +618,10 @@ void MessageActions::addWebShortcutsMenu( KMenu *menu, const QString & text )
             const QString squeezedText = KStringHandler::rsqueeze( searchText, 21 );
             webShortcutsMenu->setTitle( i18n( "Search for '%1' with", squeezedText ) );
 
-            KAction *action = 0;
+            QAction *action = 0;
 
             foreach( const QString &searchProvider, searchProviders ) {
-                action = new KAction( searchProvider, webShortcutsMenu );
+                action = new QAction( searchProvider, webShortcutsMenu );
                 action->setIcon( KIcon( filterData.iconNameForPreferredSearchProvider( searchProvider ) ) );
                 action->setData( filterData.queryForPreferredSearchProvider( searchProvider ) );
                 connect( action, SIGNAL(triggered()), this, SLOT(slotHandleWebShortcutAction()) );
@@ -628,7 +630,7 @@ void MessageActions::addWebShortcutsMenu( KMenu *menu, const QString & text )
 
             webShortcutsMenu->addSeparator();
 
-            action = new KAction( i18n( "Configure Web Shortcuts..." ), webShortcutsMenu );
+            action = new QAction( i18n( "Configure Web Shortcuts..." ), webShortcutsMenu );
             action->setIcon( KIcon( QLatin1String("configure") ) );
             connect( action, SIGNAL(triggered()), this, SLOT(slotConfigureWebShortcuts()) );
             webShortcutsMenu->addAction( action );
@@ -640,7 +642,7 @@ void MessageActions::addWebShortcutsMenu( KMenu *menu, const QString & text )
 
 void MessageActions::slotHandleWebShortcutAction()
 {
-    KAction *action = qobject_cast<KAction*>( sender() );
+    QAction *action = qobject_cast<QAction*>( sender() );
 
     if (action) {
         KUriFilterData filterData( action->data().toString() );

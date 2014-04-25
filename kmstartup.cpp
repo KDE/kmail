@@ -103,7 +103,7 @@ void insertLibraryCataloguesAndIcons() {
     KLocale * l = KGlobal::locale();
     KIconLoader * il = KIconLoader::global();
     for ( unsigned int i = 0 ; i < sizeof catalogs / sizeof *catalogs ; ++i ) {
-        l->insertCatalog( QLatin1String(catalogs[i]) );
+        //QT5 l->insertCatalog( QLatin1String(catalogs[i]) );
         il->addAppDir( QLatin1String(catalogs[i]) );
     }
 

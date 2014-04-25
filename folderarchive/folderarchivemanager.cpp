@@ -21,8 +21,8 @@
 #include "folderarchivecache.h"
 #include "folderarchiveutil.h"
 
-#include <Akonadi/AgentManager>
-#include <Akonadi/ItemFetchJob>
+#include <AkonadiCore/AgentManager>
+#include <AkonadiCore/ItemFetchJob>
 #include <AkonadiCore/ItemFetchScope>
 #include <AkonadiCore/CollectionFetchJob>
 
@@ -32,6 +32,7 @@
 #include <KIcon>
 #include <KLocale>
 #include <KIconLoader>
+#include <KDebug>
 
 FolderArchiveManager::FolderArchiveManager(QObject *parent)
     : QObject(parent),
@@ -175,6 +176,7 @@ void FolderArchiveManager::load()
 
 void FolderArchiveManager::moveDone()
 {
+#if 0 //QT5
     const QPixmap pixmap = KIcon( QLatin1String("kmail") ).pixmap( KIconLoader::SizeSmall, KIconLoader::SizeSmall );
 
     KNotification::event( QLatin1String("folderarchivedone"),
@@ -183,11 +185,13 @@ void FolderArchiveManager::moveDone()
                           0,
                           KNotification::CloseOnTimeout,
                           KGlobal::mainComponent());
+#endif
     nextJob();
 }
 
 void FolderArchiveManager::moveFailed(const QString &msg)
 {
+#if 0 //QT5
     const QPixmap pixmap = KIcon( QLatin1String("kmail") ).pixmap( KIconLoader::SizeSmall, KIconLoader::SizeSmall );
 
     KNotification::event( QLatin1String("folderarchiveerror"),
@@ -196,6 +200,7 @@ void FolderArchiveManager::moveFailed(const QString &msg)
                           0,
                           KNotification::CloseOnTimeout,
                           KGlobal::mainComponent());
+#endif
     nextJob();
 }
 

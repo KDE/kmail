@@ -61,7 +61,7 @@
 
 #include <messageviewer/viewer/viewer.h>
 #include <AkonadiCore/item.h>
-#include <akonadi/itemcopyjob.h>
+#include <AkonadiCore/itemcopyjob.h>
 #include <AkonadiCore/itemcreatejob.h>
 
 #include "messagecore/helpers/messagehelpers.h"
@@ -123,7 +123,8 @@ void KMReaderMainWin::initKMReaderMainWin()
 //-----------------------------------------------------------------------------
 KMReaderMainWin::~KMReaderMainWin()
 {
-    saveMainWindowSettings( KMKernel::self()->config()->group( "Separate Reader Window" ) );
+    KConfigGroup grp( KMKernel::self()->config()->group( "Separate Reader Window" ) );
+    saveMainWindowSettings( grp );
 }
 
 //-----------------------------------------------------------------------------
@@ -314,9 +315,10 @@ void KMReaderMainWin::slotConfigChanged()
 
 void KMReaderMainWin::setupAccel()
 {
+#if 0 //QT5
     if ( kmkernel->xmlGuiInstance().isValid() )
         setComponentData( kmkernel->xmlGuiInstance() );
-
+#endif
     mMsgActions = new KMail::MessageActions( actionCollection(), this );
     mMsgActions->setMessageView( mReaderWin );
     connect( mMsgActions, SIGNAL(replyActionFinished()),
@@ -324,17 +326,17 @@ void KMReaderMainWin::setupAccel()
 
     //----- File Menu
 
-    mSaveAtmAction  = new KAction(KIcon(QLatin1String("mail-attachment")), i18n("Save A&ttachments..."), actionCollection() );
+    mSaveAtmAction  = new QAction(KIcon(QLatin1String("mail-attachment")), i18n("Save A&ttachments..."), actionCollection() );
     connect( mSaveAtmAction, SIGNAL(triggered(bool)), mReaderWin->viewer(), SLOT(slotAttachmentSaveAll()) );
 
-    mTrashAction = new KAction( KIcon( QLatin1String("user-trash") ), i18n("&Move to Trash"), this );
+    mTrashAction = new QAction( KIcon( QLatin1String("user-trash") ), i18n("&Move to Trash"), this );
     mTrashAction->setIconText( i18nc( "@action:intoolbar Move to Trash", "Trash" ) );
-    mTrashAction->setHelpText( i18n( "Move message to trashcan" ) );
+    //QT5 mTrashAction->setHelpText( i18n( "Move message to trashcan" ) );
     mTrashAction->setShortcut( QKeySequence( Qt::Key_Delete ) );
     actionCollection()->addAction( QLatin1String("move_to_trash"), mTrashAction );
     connect( mTrashAction, SIGNAL(triggered()), this, SLOT(slotTrashMsg()) );
 
-    KAction *closeAction = KStandardAction::close( this, SLOT(close()), actionCollection() );
+    QAction *closeAction = KStandardAction::close( this, SLOT(close()), actionCollection() );
     KShortcut closeShortcut = KShortcut(closeAction->shortcuts());
     closeShortcut.setAlternate( QKeySequence(Qt::Key_Escape));
     closeAction->setShortcuts(closeShortcut);
@@ -365,7 +367,7 @@ void KMReaderMainWin::setupAccel()
 }
 
 //-----------------------------------------------------------------------------
-KAction *KMReaderMainWin::copyActionMenu(QMenu *menu)
+QAction *KMReaderMainWin::copyActionMenu(QMenu *menu)
 {
     KMMainWidget* mainwin = kmkernel->getKMMainWidget();
     if ( mainwin )
@@ -618,7 +620,8 @@ void KMReaderMainWin::slotSizeAction( int size )
 
 void KMReaderMainWin::slotEditToolbars()
 {
-    saveMainWindowSettings( KConfigGroup(KMKernel::self()->config(), "ReaderWindow") );
+    KConfigGroup grp(KMKernel::self()->config(), "ReaderWindow");
+    saveMainWindowSettings( grp);
     KEditToolBar dlg( guiFactory(), this );
     connect( &dlg, SIGNAL(newToolBarConfig()), SLOT(slotUpdateToolbars()) );
     dlg.exec();

@@ -33,7 +33,7 @@
 #include <QVBoxLayout>
 #include <KLocalizedString>
 #include <KDialog>
-
+#include <KIconButton>
 
 #include "messagelist/utils/aggregationcombobox.h"
 #include "messagelist/utils/aggregationconfigbutton.h"
