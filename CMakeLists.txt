@@ -44,7 +44,7 @@ include_directories(
   ${AKONADI_INCLUDE_DIR}
  )
 
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${KDE4_ENABLE_EXCEPTIONS}")
+kde_enable_exceptions()
 
 
 if (KDEPIM_BUILD_DESKTOP)
@@ -195,14 +195,14 @@ if (KDEPIM_BUILD_DESKTOP)
 
   # TODO PORT
   qt4_generate_dbus_interface(editor/kmcomposewin.h org.kde.kmail.mailcomposer.xml OPTIONS -a)
-  qt4_add_dbus_adaptor(kmailprivate_LIB_SRCS
+  qt5_add_dbus_adaptor(kmailprivate_LIB_SRCS
     ${CMAKE_BINARY_DIR}/kmail/org.kde.kmail.mailcomposer.xml editor/kmcomposewin.h KMComposeWin
   )
 
-  qt4_add_dbus_adaptor(kmailprivate_LIB_SRCS
+  qt5_add_dbus_adaptor(kmailprivate_LIB_SRCS
     ${CMAKE_BINARY_DIR}/kmail/org.kde.kmail.kmail.xml kmkernel.h KMKernel
   )
-  qt4_add_dbus_adaptor(kmailprivate_LIB_SRCS
+  qt5_add_dbus_adaptor(kmailprivate_LIB_SRCS
     ${CMAKE_SOURCE_DIR}/libkdepim/interfaces/org.kde.mailtransport.service.xml mailserviceimpl.h
     KMail::MailServiceImpl
   )
@@ -222,7 +222,7 @@ if (KDEPIM_BUILD_DESKTOP)
   )
 
 
-  kde4_add_ui_files(kmailprivate_LIB_SRCS
+  qt5_wrap_ui(kmailprivate_LIB_SRCS
     ui/composercryptoconfiguration.ui
     ui/warningconfiguration.ui
     ui/smimeconfiguration.ui
@@ -245,45 +245,45 @@ if (KDEPIM_BUILD_DESKTOP)
 
   configure_file(settings/kmail.kcfg.cmake ${CMAKE_CURRENT_BINARY_DIR}/kmail.kcfg)
 
-  kde4_add_kcfg_files(kmailprivate_LIB_SRCS
+  kconfig_add_kcfg_files(kmailprivate_LIB_SRCS
     settings/globalsettings_base.kcfgc
     editor/custommimeheader.kcfgc
   )
 
 
-  kde4_add_library(kmailprivate ${LIBRARY_TYPE} ${kmailprivate_LIB_SRCS})
+  add_library(kmailprivate ${LIBRARY_TYPE} ${kmailprivate_LIB_SRCS})
 
   target_link_libraries(kmailprivate
-    ${KDEPIMLIBS_KMBOX_LIBS}
-    ${KDEPIMLIBS_KMIME_LIBS}
-    ${KDEPIMLIBS_AKONADI_LIBS}
-    ${KDEPIMLIBS_AKONADI_KMIME_LIBS}
+    KF5::Mbox
+    KF5::KMime
+    KF5::AkonadiCore
+    KF5::AkonadiKMime
     messagecore
     messagecomposer
     messagelist
     pimcommon
     mailcommon
     templateparser
-    ${KDEPIMLIBS_KPIMIDENTITIES_LIBS}
+    KF5::PimIdentities
     ${KDEPIMLIBS_KONTACTINTERFACE_LIBS}
     ${KDE4_PHONON_LIBRARY}
     ${KDE4_KNOTIFYCONFIG_LIBRARY}
-    ${KDEPIMLIBS_MAILTRANSPORT_LIBS}
-    ${KDEPIMLIBS_KIMAP_LIBS}
+    KF5::MailTransport
+    KF5::Imap
     ${KDE4_KPARTS_LIBRARY}
     ${KDEPIMLIBS_KRESOURCES_LIBS}
-    ${KDE4_KCMUTILS_LIBS}
+    KF5::KCMUtils
     kleo
     ${QGPGME_LIBRARIES}
     ksieve
     ksieveui
     kpgp
     kdepim
-    ${KDE4_KIO_LIBS}
+    KF5::KIOCore
     ${KDE4_SOLID_LIBS}
-    ${KDEPIMLIBS_KABC_LIBS}
-    ${KDEPIMLIBS_KPIMUTILS_LIBS}
-    ${KDEPIMLIBS_KPIMTEXTEDIT_LIBS}
+    KF5::Abc
+    KF5::PimUtils
+    KF5::PimTextEdit
     messageviewer
     akonadi_next
     ${QT_QTWEBKIT_LIBRARY}
@@ -300,35 +300,35 @@ if (KDEPIM_BUILD_DESKTOP)
   ########### kcm_kmail ###############
 
   set(kcm_kmail_PART_SRCS kcm_kmail.cpp )
-  kde4_add_plugin(kcm_kmail ${kcm_kmail_PART_SRCS})
-  target_link_libraries(kcm_kmail ${KDE4_KDEUI_LIBS} kmailprivate )
+  add_library(kcm_kmail MODULE ${kcm_kmail_PART_SRCS})
+  target_link_libraries(kcm_kmail  kmailprivate )
 
   ########### kmailpart ###############
 
   set(kmailpart_PART_SRCS kmail_part.cpp )
   qt4_generate_dbus_interface(kmail_part.h org.kde.kmail.kmailpart.xml OPTIONS -a)
-  qt4_add_dbus_adaptor(kmailpart_PART_SRCS
+  qt5_add_dbus_adaptor(kmailpart_PART_SRCS
     ${CMAKE_BINARY_DIR}/kmail/org.kde.kmail.kmailpart.xml kmail_part.h KMailPart
   )
   qt4_add_dbus_interfaces(kmailpart_PART_SRCS ${CMAKE_BINARY_DIR}/kmail/org.kde.kmail.kmailpart.xml)
-  kde4_add_plugin(kmailpart ${kmailpart_PART_SRCS})
+  add_library(kmailpart MODULE ${kmailpart_PART_SRCS})
   target_link_libraries(kmailpart
-    ${KDE4_KDECORE_LIBS}
-    ${KDEPIMLIBS_AKONADI_LIBS}
+    
+    KF5::AkonadiCore
     kmailprivate
     mailcommon
     ${KDE4_KPARTS_LIBS}
-    ${KDE4_KCMUTILS_LIBS}
+    KF5::KCMUtils
   )
 
   ########### KMail executable ###############
 
   set(kmail_SRCS main.cpp)
   kde4_add_app_icon(kmail_SRCS "${CMAKE_CURRENT_SOURCE_DIR}/icons/hi*-apps-kmail.png")
-  kde4_add_executable(kmail ${kmail_SRCS})
+  add_executable(kmail ${kmail_SRCS})
   target_link_libraries(kmail
-    ${KDE4_KDEUI_LIBS}
-    ${KDE4_KDECORE_LIBS}
+    
+    
     ${KDEPIMLIBS_KONTACTINTERFACE_LIBS}
     kmailprivate
     kdepim
