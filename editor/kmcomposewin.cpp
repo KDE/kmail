@@ -151,6 +151,8 @@
 #include <KIO/JobUiDelegate>
 #include <KPrintPreview>
 #include <KFileDialog>
+#include <KAction>
+#include <KGlobal>
 
 // Qt includes
 #include <QClipboard>
@@ -164,6 +166,7 @@
 #include <fcntl.h>
 #include <memory>
 #include <boost/shared_ptr.hpp>
+#include <KHelpClient>
 
 using Sonnet::DictionaryComboBox;
 using MailTransport::TransportManager;
@@ -572,7 +575,7 @@ void KMComposeWin::readConfig( bool reload /* = false */ )
     const int currentTransport = GlobalSettings::self()->currentTransport().isEmpty() ? -1 : GlobalSettings::self()->currentTransport().toInt();
     mBtnDictionary->setChecked( GlobalSettings::self()->stickyDictionary() );
 
-    mEdtFrom->setCompletionMode( (KGlobalSettings::Completion)GlobalSettings::self()->completionMode() );
+    //QT5 mEdtFrom->setCompletionMode( (KGlobalSettings::Completion)GlobalSettings::self()->completionMode() );
     mComposerBase->recipientsEditor()->setCompletionMode( (KGlobalSettings::Completion)GlobalSettings::self()->completionMode() );
     mEdtReplyTo->setCompletionMode( (KGlobalSettings::Completion)GlobalSettings::self()->completionMode() );
 
@@ -632,7 +635,7 @@ void KMComposeWin::readConfig( bool reload /* = false */ )
     if ( mBtnFcc->isChecked() ) {
         fccName = GlobalSettings::self()->previousFcc();
     } else if ( !ident.fcc().isEmpty() ) {
-        fccName = ident.fcc();
+        //QT5 fccName = ident.fcc();
     }
     setFcc( fccName );
 }
@@ -1420,7 +1423,7 @@ void KMComposeWin::setupActions( void )
     mCryptoModuleAction->setItems( l );
     mCryptoModuleAction->setToolTip( i18n( "Select a cryptographic format for this message" ) );
 
-    mComposerBase->editor()->createActions( actionCollection() );
+    //QT5 mComposerBase->editor()->createActions( actionCollection() );
     actionCollection()->addAction( QLatin1String("shared_link"), KMKernel::self()->storageServiceManager()->menuShareLinkServices(this) );
 
     createGUI( QLatin1String("kmcomposerui.rc") );
@@ -1462,6 +1465,7 @@ void KMComposeWin::changeCryptoAction()
 //-----------------------------------------------------------------------------
 void KMComposeWin::setupStatusBar( QWidget *w )
 {
+#if 0 //QT5
     KPIM::ProgressStatusBarWidget * progressStatusBarWidget = new KPIM::ProgressStatusBarWidget(statusBar(), this, PimCommon::StorageServiceProgressManager::progressTypeValue());
     statusBar()->addWidget(w);
 
@@ -1475,6 +1479,7 @@ void KMComposeWin::setupStatusBar( QWidget *w )
                 i18nc("Shows the linenumber of the cursor position.", " Line: %1 "
                       , QLatin1String( "     " ) ), 1, 0 );
     statusBar()->addPermanentWidget(progressStatusBarWidget->littleProgress());
+#endif
 }
 
 //-----------------------------------------------------------------------------
@@ -1691,10 +1696,10 @@ void KMComposeWin::setMessage( const KMime::Message::Ptr &newMsg, bool lastSignS
     }
     if ( !mBtnFcc->isChecked() ) {
         if ( kmailFcc.isEmpty() ) {
-            setFcc( ident.fcc() );
+            //QT5 setFcc( ident.fcc() );
+        } else {
+            //QT5 setFcc( kmailFcc );
         }
-        else
-            setFcc( kmailFcc );
     }
 
     const bool stickyDictionary = mBtnDictionary->isChecked() && !mIgnoreStickyFields;
@@ -2953,7 +2958,7 @@ bool KMComposeWin::checkRecipientNumber() const
 //-----------------------------------------------------------------------------
 void KMComposeWin::slotHelp()
 {
-    KToolInvocation::invokeHelp();
+    //QT5 KHelpClient::invokeHelp();
 }
 
 //-----------------------------------------------------------------------------
@@ -3043,6 +3048,7 @@ void KMComposeWin::htmlToolBarVisibilityChanged( bool visible )
 //-----------------------------------------------------------------------------
 void KMComposeWin::slotAutoSpellCheckingToggled( bool on )
 {
+#if 0 //QT5
     mAutoSpellCheckingAction->setChecked( on );
     if ( on != mComposerBase->editor()->checkSpellingEnabled() )
         mComposerBase->editor()->setCheckSpellingEnabled( on );
@@ -3056,18 +3062,19 @@ void KMComposeWin::slotAutoSpellCheckingToggled( bool on )
     } else {
         temp = i18n( "Spellcheck: off" );
     }
-    statusBar()->changeItem( temp, 3 );
+#endif
+    //QT5 statusBar()->changeItem( temp, 3 );
 }
 
 void KMComposeWin::slotSpellCheckingStatus(const QString & status)
 {
-    statusBar()->changeItem( status, 0 );
+    //QT5 statusBar()->changeItem( status, 0 );
     QTimer::singleShot( 2000, this, SLOT(slotSpellcheckDoneClearStatus()) );
 }
 
 void KMComposeWin::slotSpellcheckDoneClearStatus()
 {
-    statusBar()->changeItem(QString(), 0);
+    //QT5 statusBar()->changeItem(QString(), 0);
 }
 
 //-----------------------------------------------------------------------------
@@ -3152,9 +3159,9 @@ void KMComposeWin::slotIdentityChanged( uint uoid, bool initalChange )
     }
     slotSpellCheckingLanguage( mDictionaryCombo->currentDictionary() );
     if ( !mBtnFcc->isChecked() && !mPreventFccOverwrite ) {
-        setFcc( ident.fcc() );
+        //QT5 setFcc( ident.fcc() );
     }
-
+#if 0 //QT5
     // if unmodified, apply new template, if one is set
     if ( !wasModified && !( ident.templates().isEmpty() && mCustomTemplate.isEmpty() ) &&
          !initalChange ) {
@@ -3163,7 +3170,7 @@ void KMComposeWin::slotIdentityChanged( uint uoid, bool initalChange )
         mComposerBase->identityChanged( ident, oldIdentity, false );
         mEdtSubject->setAutocorrectionLanguage(ident.autocorrectionLanguage());
     }
-
+#endif
 
     // disable certain actions if there is no PGP user identity set
     // for this profile
@@ -3214,7 +3221,8 @@ void KMComposeWin::slotSpellcheckConfig()
 //-----------------------------------------------------------------------------
 void KMComposeWin::slotEditToolbars()
 {
-    saveMainWindowSettings( KMKernel::self()->config()->group( "Composer") );
+    KConfigGroup grp( KMKernel::self()->config()->group( "Composer") );
+    saveMainWindowSettings( grp );
     KEditToolBar dlg( guiFactory(), this );
 
     connect( &dlg, SIGNAL(newToolBarConfig()),
@@ -3252,8 +3260,8 @@ void KMComposeWin::slotCompletionModeChanged( KGlobalSettings::Completion mode )
     GlobalSettings::self()->setCompletionMode( (int) mode );
 
     // sync all the lineedits to the same completion mode
-    mEdtFrom->setCompletionMode( mode );
-    mEdtReplyTo->setCompletionMode( mode );
+    //QT5 mEdtFrom->setCompletionMode( mode );
+    //QT5 mEdtReplyTo->setCompletionMode( mode );
     mComposerBase->recipientsEditor()->setCompletionMode( mode );
 }
 
@@ -3283,7 +3291,7 @@ void KMComposeWin::slotFolderRemoved( const Akonadi::Collection & col )
 void KMComposeWin::slotOverwriteModeChanged()
 {
     mComposerBase->editor()->setCursorWidth( mComposerBase->editor()->overwriteMode () ? 5 : 1 );
-    statusBar()->changeItem( overwriteModeStr(), 4 );
+    //QT5 statusBar()->changeItem( overwriteModeStr(), 4 );
 }
 
 QString KMComposeWin::overwriteModeStr() const
@@ -3299,18 +3307,18 @@ void KMComposeWin::slotCursorPositionChanged()
     line = mComposerBase->editor()->linePosition();
     col = mComposerBase->editor()->columnNumber();
     temp = i18nc("Shows the linenumber of the cursor position.", " Line: %1 ", line + 1 );
-    statusBar()->changeItem( temp, 1 );
+    //QT5 statusBar()->changeItem( temp, 1 );
     temp = i18n( " Column: %1 ", col + 1 );
-    statusBar()->changeItem( temp, 2 );
+    //QT5 statusBar()->changeItem( temp, 2 );
 
     // Show link target in status bar
     if ( mComposerBase->editor()->textCursor().charFormat().isAnchor() ) {
         const QString text = mComposerBase->editor()->currentLinkText();
         const QString url = mComposerBase->editor()->currentLinkUrl();
-        statusBar()->changeItem( text + QLatin1String(" -> ") + url, 0 );
+        //QT5 statusBar()->changeItem( text + QLatin1String(" -> ") + url, 0 );
     }
     else {
-        statusBar()->changeItem( QString(), 0 );
+        //QT5 statusBar()->changeItem( QString(), 0 );
     }
 }
 

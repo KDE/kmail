@@ -68,6 +68,7 @@
 #include <QVBoxLayout>
 #include <QCheckBox>
 #include <QListWidget>
+#include <KHelpClient>
 
 using namespace KMail;
 using namespace MailCommon;
@@ -583,9 +584,9 @@ void AntiSpamWizard::slotHelpClicked()
 {
 #if 0 //QT5
     if ( mMode == AntiSpam )
-        KToolInvocation::invokeHelp( QLatin1String("the-anti-spam-wizard"), QLatin1String("kmail") );
+        KHelpClient::invokeHelp( QLatin1String("the-anti-spam-wizard"), QLatin1String("kmail") );
     else
-        KToolInvocation::invokeHelp( QLatin1String("the-anti-virus-wizard"), QLatin1String("kmail") );
+        KHelpClient::invokeHelp( QLatin1String("the-anti-virus-wizard"), QLatin1String("kmail") );
 #endif
 }
 

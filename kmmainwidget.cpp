@@ -198,6 +198,7 @@ using KSieveUi::SieveDebugDialog;
 #include <assert.h>
 #include <errno.h> // ugh
 #include <AkonadiWidgets/standardactionmanager.h>
+#include <KHelpClient>
 
 
 using namespace KMime;
@@ -1274,7 +1275,7 @@ bool KMMainWidget::slotSearch()
 //-----------------------------------------------------------------------------
 void KMMainWidget::slotHelp()
 {
-    //QT5 KToolInvocation::invokeHelp();
+    //QT5 KHelpClient::invokeHelp();
 }
 
 
