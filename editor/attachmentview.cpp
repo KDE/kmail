@@ -35,6 +35,7 @@
 #include <QToolButton>
 #include <QHBoxLayout>
 #include <QLabel>
+#include <QDrag>
 
 #include <KDebug>
 #include <KConfigGroup>

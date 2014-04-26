@@ -248,7 +248,7 @@ KMComposeWin::KMComposeWin( const KMime::Message::Ptr &aMsg, bool lastSignState,
     mComposerBase->setSignatureController( sigController );
 
     if ( kmkernel->xmlGuiInstance().isValid() ) {
-        setComponentData( kmkernel->xmlGuiInstance() );
+        //QT5 setComponentData( kmkernel->xmlGuiInstance() );
     }
     mMainWidget = new QWidget( this );
     // splitter between the headers area and the actual editor
@@ -577,7 +577,7 @@ void KMComposeWin::readConfig( bool reload /* = false */ )
 
     //QT5 mEdtFrom->setCompletionMode( (KGlobalSettings::Completion)GlobalSettings::self()->completionMode() );
     mComposerBase->recipientsEditor()->setCompletionMode( (KGlobalSettings::Completion)GlobalSettings::self()->completionMode() );
-    mEdtReplyTo->setCompletionMode( (KGlobalSettings::Completion)GlobalSettings::self()->completionMode() );
+    //QT5 mEdtReplyTo->setCompletionMode( (KGlobalSettings::Completion)GlobalSettings::self()->completionMode() );
 
     if ( MessageCore::GlobalSettings::self()->useDefaultFonts() ) {
         mBodyFont = KGlobalSettings::generalFont();
@@ -634,7 +634,7 @@ void KMComposeWin::readConfig( bool reload /* = false */ )
     QString fccName;
     if ( mBtnFcc->isChecked() ) {
         fccName = GlobalSettings::self()->previousFcc();
-    } else if ( !ident.fcc().isEmpty() ) {
+    } else if ( ident.fcc() < 0 ) {
         //QT5 fccName = ident.fcc();
     }
     setFcc( fccName );
@@ -662,7 +662,8 @@ void KMComposeWin::writeConfig( void )
     GlobalSettings::self()->setComposerSize( size() );
     GlobalSettings::self()->setShowSnippetManager( mSnippetAction->isChecked() );
 
-    saveMainWindowSettings( KMKernel::self()->config()->group( "Composer" ) );
+    KConfigGroup grp( KMKernel::self()->config()->group( "Composer" ) );
+    saveMainWindowSettings( grp );
     if ( mSnippetAction->isChecked() )
         GlobalSettings::setSnippetSplitterPosition( mSnippetSplitter->sizes() );
 
@@ -965,7 +966,7 @@ void KMComposeWin::applyTemplate( uint uoid, uint uOldId )
     const KPIMIdentities::Identity &ident = kmkernel->identityManager()->identityForUoid( uoid );
     if ( ident.isNull() )
         return;
-    KMime::Headers::Generic *header = new KMime::Headers::Generic( "X-KMail-Templates", mMsg.get(), ident.templates(), "utf-8" );
+    KMime::Headers::Generic *header = new KMime::Headers::Generic( "X-KMail-Templates", mMsg.get(), QString::number(ident.templates()), "utf-8" );
     mMsg->setHeader( header );
 
     TemplateParser::TemplateParser::Mode mode;
@@ -1223,12 +1224,12 @@ void KMComposeWin::setupActions( void )
     KStandardAction::cut( this, SLOT(slotCut()), actionCollection() );
     KStandardAction::copy( this, SLOT(slotCopy()), actionCollection() );
     KStandardAction::pasteText( this, SLOT(slotPaste()), actionCollection() );
-    mSelectAll = KStandardAction::selectAll( this, SLOT(slotMarkAll()), actionCollection() );
+    //QT5 mSelectAll = KStandardAction::selectAll( this, SLOT(slotMarkAll()), actionCollection() );
 
-    mFindText = KStandardAction::find( mComposerBase->editor(), SLOT(slotFind()), actionCollection() );
-    mFindNextText = KStandardAction::findNext( mComposerBase->editor(), SLOT(slotFindNext()), actionCollection() );
+    //QT5 mFindText = KStandardAction::find( mComposerBase->editor(), SLOT(slotFind()), actionCollection() );
+    //QT5 mFindNextText = KStandardAction::findNext( mComposerBase->editor(), SLOT(slotFindNext()), actionCollection() );
 
-    mReplaceText = KStandardAction::replace( mComposerBase->editor(), SLOT(slotReplace()), actionCollection() );
+    //QT5 mReplaceText = KStandardAction::replace( mComposerBase->editor(), SLOT(slotReplace()), actionCollection() );
     actionCollection()->addAction( KStandardAction::Spelling, QLatin1String("spellcheck"),
                                    mComposerBase->editor(), SLOT(checkSpelling()) );
 
@@ -1769,7 +1770,7 @@ void KMComposeWin::setMessage( const KMime::Message::Ptr &newMsg, bool lastSignS
     setModified( isModified );
 
     // honor "keep reply in this folder" setting even when the identity is changed later on
-    mPreventFccOverwrite = ( !kmailFcc.isEmpty() && ident.fcc() != kmailFcc );
+    //QT5 mPreventFccOverwrite = ( !kmailFcc.isEmpty() && ident.fcc() != kmailFcc );
     QTimer::singleShot( 0, this, SLOT(forceAutoSaveMessage()) ); //Force autosaving to make sure this composer reappears if a crash happens before the autosave timer kicks in.
 }
 
