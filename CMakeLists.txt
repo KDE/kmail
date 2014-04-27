@@ -293,7 +293,7 @@ if (KDEPIM_BUILD_DESKTOP)
   )
 
   set_target_properties(kmailprivate
-    PROPERTIES VERSION ${GENERIC_LIB_VERSION} SOVERSION ${GENERIC_LIB_SOVERSION}
+    PROPERTIES VERSION ${KDEPIM_LIB_VERSION} SOVERSION ${KDEPIM_LIB_SOVERSION}
   )
 
   ########### kcm_kmail ###############
