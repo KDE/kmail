@@ -27,6 +27,7 @@
 
 #include "kmail_export.h"
 #include <kparts/part.h>
+#include <kparts/readonlypart.h>
 #include <AkonadiCore/collection.h>
 
 #include <QWidget>

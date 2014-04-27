@@ -52,7 +52,7 @@
 
 #include <kglobal.h>
 
-K_PLUGIN_FACTORY( KMailFactory, registerPlugin<KMailPart>(); )
+// QT5 K_PLUGIN_FACTORY( KMailFactory, registerPlugin<KMailPart>(); )
 K_EXPORT_PLUGIN( KMailFactory( KMail::AboutData() ) )
 
 using namespace KMail;
@@ -62,7 +62,7 @@ KMailPart::KMailPart(QWidget *parentWidget, QObject *parent, const QVariantList 
     mParentWidget( parentWidget )
 {
     kDebug() << "InstanceName:" << KGlobal::mainComponent().componentName();
-    setComponentData(KMailFactory::componentData());
+    //QT5 setComponentData(KMailFactory::componentData());
     kDebug() << "InstanceName:" << KGlobal::mainComponent().componentName();
 
     // import i18n data and icons from libraries:
@@ -72,7 +72,7 @@ KMailPart::KMailPart(QWidget *parentWidget, QObject *parent, const QVariantList 
     //local, do the init
     KMKernel *mKMailKernel = new KMKernel();
     mKMailKernel->init();
-    mKMailKernel->setXmlGuiInstance( KMailFactory::componentData() );
+    //QT5 mKMailKernel->setXmlGuiInstance( KMailFactory::componentData() );
 
     // and session management
     mKMailKernel->doSessionManagement();
@@ -107,7 +107,7 @@ KMailPart::KMailPart(QWidget *parentWidget, QObject *parent, const QVariantList 
              this, SLOT(slotCollectionChanged(Akonadi::Collection,QSet<QByteArray>)));
     setXMLFile( QLatin1String("kmail_part.rc"), true );
 
-    KSettings::Dispatcher::registerComponent( KMailFactory::componentData(), mKMailKernel, "slotConfigChanged" );
+    //QT5 KSettings::Dispatcher::registerComponent( KMailFactory::componentData(), mKMailKernel, "slotConfigChanged" );
 }
 
 KMailPart::~KMailPart()
