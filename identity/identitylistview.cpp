@@ -32,8 +32,8 @@
 
 #include "identitylistview.h"
 
-#include <kpimidentities/identitymanager.h>
-#include <kpimidentities/identity.h>
+#include <KPIMIdentities/identitymanager.h>
+#include <KPIMIdentities/identity.h>
 
 #ifndef KCM_KPIMIDENTITIES_STANDALONE
 #include "kmkernel.h"

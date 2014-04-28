@@ -10,7 +10,7 @@ using KPIM::BroadcastStatus;
 #include "editor/composer.h"
 #include "kmreadermainwin.h"
 #include "undostack.h"
-#include <kpimutils/kfileio.h>
+#include <KPIMUtils/kfileio.h>
 #include "kmreaderwin.h"
 #include "kmmainwidget.h"
 #include "addressline/recentaddresses.h"
@@ -34,11 +34,11 @@ using KPIM::RecentAddresses;
 #include "kdepim-version.h"
 
 // kdepimlibs includes
-#include <kpimidentities/identity.h>
-#include <kpimidentities/identitymanager.h>
-#include <mailtransport/transport.h>
-#include <mailtransport/transportmanager.h>
-#include <mailtransport/dispatcherinterface.h>
+#include <KPIMIdentities/identity.h>
+#include <KPIMIdentities/identitymanager.h>
+#include <MailTransport/transport.h>
+#include <MailTransport/transportmanager.h>
+#include <MailTransport/dispatcherinterface.h>
 #include <AkonadiCore/servermanager.h>
 
 #include <kde_file.h>
@@ -81,8 +81,8 @@ using KMail::MailServiceImpl;
 #include <KCrash>
 #include <KGlobal>
 
-#include <kmime/kmime_message.h>
-#include <kmime/kmime_util.h>
+#include <KMime/kmime_message.h>
+#include <KMime/kmime_util.h>
 #include <AkonadiCore/Collection>
 #include <AkonadiCore/CollectionFetchJob>
 #include <AkonadiCore/ChangeRecorder>

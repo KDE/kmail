@@ -49,7 +49,7 @@
 
 #include <unistd.h> // link()
 #include <kprogressdialog.h>
-#include <kpimutils/email.h>
+#include <KPIMUtils/email.h>
 #include <kdbusservicestarter.h>
 #include <kdebug.h>
 #include <kfiledialog.h>
@@ -63,9 +63,9 @@
 #include <kio/jobuidelegate.h>
 #include <kio/netaccess.h>
 
-#include <kmime/kmime_message.h>
+#include <KMime/kmime_message.h>
 
-#include <kpimidentities/identitymanager.h>
+#include <KPIMIdentities/identitymanager.h>
 #include <AkonadiCore/itemmodifyjob.h>
 #include <AkonadiCore/itemfetchjob.h>
 
@@ -101,19 +101,19 @@ using KMail::SecondaryWindow;
 #include "messageviewer/settings/globalsettings.h"
 #include "messagecore/settings/globalsettings.h"
 
-#include <kpimutils/kfileio.h>
+#include <KPIMUtils/kfileio.h>
 
 #include <AkonadiCore/itemmovejob.h>
 #include <AkonadiCore/itemcopyjob.h>
 #include <AkonadiCore/itemdeletejob.h>
 #include <AkonadiCore/tag.h>
 #include <AkonadiCore/tagcreatejob.h>
-#include <mailtransport/transportattribute.h>
-#include <mailtransport/sentbehaviourattribute.h>
+#include <MailTransport/transportattribute.h>
+#include <MailTransport/sentbehaviourattribute.h>
 
 #include <messagelist/pane.h>
 
-#include <mailtransport/transportmanager.h>
+#include <MailTransport/transportmanager.h>
 using MailTransport::TransportManager;
 
 
@@ -133,7 +133,7 @@ using MessageComposer::MessageFactory;
 #include "progresswidget/progressmanager.h"
 using KPIM::ProgressManager;
 using KPIM::ProgressItem;
-#include <kmime/kmime_mdn.h>
+#include <KMime/kmime_mdn.h>
 using namespace KMime;
 
 #include "kleo/cryptobackend.h"

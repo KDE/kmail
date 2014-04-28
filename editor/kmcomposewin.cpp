@@ -112,17 +112,17 @@
 #include <AkonadiCore/itemcreatejob.h>
 #include <AkonadiCore/entitymimetypefiltermodel.h>
 #include <AkonadiCore/itemfetchjob.h>
-#include <kpimutils/email.h>
-#include <kpimidentities/identitymanager.h>
-#include <kpimidentities/identitycombo.h>
-#include <kpimidentities/identity.h>
-#include <kpimidentities/signature.h>
-#include <mailtransport/transportcombobox.h>
-#include <mailtransport/transportmanager.h>
-#include <mailtransport/transport.h>
-#include <kmime/kmime_codecs.h>
-#include <kmime/kmime_message.h>
-#include <kpimtextedit/selectspecialchardialog.h>
+#include <KPIMUtils/email.h>
+#include <KPIMIdentities/identitymanager.h>
+#include <KPIMIdentities/identitycombo.h>
+#include <KPIMIdentities/identity.h>
+#include <KPIMIdentities/signature.h>
+#include <MailTransport/transportcombobox.h>
+#include <MailTransport/transportmanager.h>
+#include <MailTransport/transport.h>
+#include <KMime/kmime_codecs.h>
+#include <KMime/kmime_message.h>
+#include <KPIMTextEdit/selectspecialchardialog.h>
 
 
 // KDELIBS includes

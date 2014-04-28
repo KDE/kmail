@@ -30,7 +30,7 @@
 #include "job/addemailtoexistingcontactjob.h"
 
 #include "kdepim-version.h"
-#include <kpimutils/email.h>
+#include <KPIMUtils/email.h>
 #include <libkdepim/job/addemailaddressjob.h>
 #include <libkdepim/job/openemailaddressjob.h>
 #include <libkdepim/job/addemaildisplayjob.h>
@@ -48,7 +48,7 @@ using MessageViewer::CSSHelper;
 #include "util.h"
 #include "utils/stringutil.h"
 #include <KMD5>
-#include <kmime/kmime_mdn.h>
+#include <KMime/kmime_mdn.h>
 
 #include "messageviewer/viewer/viewer.h"
 using namespace MessageViewer;

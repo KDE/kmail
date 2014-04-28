@@ -56,8 +56,8 @@
 
 #include <KActionCollection>
 #include <akonadi/contact/contactsearchjob.h>
-#include <kpimutils/email.h>
-#include <kmime/kmime_message.h>
+#include <KPIMUtils/email.h>
+#include <KMime/kmime_message.h>
 
 #include <messageviewer/viewer/viewer.h>
 #include <AkonadiCore/item.h>

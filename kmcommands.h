@@ -10,7 +10,7 @@
 
 #include <akonadi/kmime/messagestatus.h>
 #include <kio/job.h>
-#include <kmime/kmime_message.h>
+#include <KMime/kmime_message.h>
 
 #include <QPointer>
 #include <QList>

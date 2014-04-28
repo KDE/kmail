@@ -48,7 +48,7 @@
 #include <KDebug>
 #include <KIcon>
 #include <KIconLoader>
-#include <kmime/kmime_message.h>
+#include <KMime/kmime_message.h>
 #include <KStandardAction>
 #include <KStandardGuiItem>
 #include <KWindowSystem>

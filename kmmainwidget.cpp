@@ -133,14 +133,14 @@ using KSieveUi::SieveDebugDialog;
 #include <AkonadiCore/dbusconnectionpool.h>
 #include <AkonadiCore/CachePolicy>
 
-#include <kpimidentities/identity.h>
-#include <kpimidentities/identitymanager.h>
-#include <kpimutils/email.h>
-#include <mailtransport/transportmanager.h>
-#include <mailtransport/transport.h>
-#include <kmime/kmime_mdn.h>
-#include <kmime/kmime_header_parsing.h>
-#include <kmime/kmime_message.h>
+#include <KPIMIdentities/identity.h>
+#include <KPIMIdentities/identitymanager.h>
+#include <KPIMUtils/email.h>
+#include <MailTransport/transportmanager.h>
+#include <MailTransport/transport.h>
+#include <KMime/kmime_mdn.h>
+#include <KMime/kmime_header_parsing.h>
+#include <KMime/kmime_message.h>
 #include <ksieveui/managesievescriptsdialog.h>
 #include <ksieveui/util/util.h>
 

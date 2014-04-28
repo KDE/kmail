@@ -32,8 +32,8 @@
 
 #include <mailcommon/kernel/mailkernel.h>
 #include <messageviewer/utils/autoqpointer.h>
-#include <kpimidentities/identity.h>
-#include <kpimidentities/identitymanager.h>
+#include <KPIMIdentities/identity.h>
+#include <KPIMIdentities/identitymanager.h>
 
 #include <KDebug>
 #include <KMessageBox>

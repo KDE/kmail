@@ -24,8 +24,8 @@
 #include "kmcommands.h"
 #include "util.h"
 
-#include <kabc/addressee.h>
-#include <kmime/kmime_codecs.h>
+#include <KABC/addressee.h>
+#include <KMime/kmime_codecs.h>
 #include <AkonadiCore/itemfetchjob.h>
 
 #include <kio/jobuidelegate.h>

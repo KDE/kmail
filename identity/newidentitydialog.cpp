@@ -23,7 +23,7 @@
 
 #include "newidentitydialog.h"
 
-#include <kpimidentities/identitymanager.h>
+#include <KPIMIdentities/identitymanager.h>
 
 #include <KComboBox>
 #include <KLineEdit>

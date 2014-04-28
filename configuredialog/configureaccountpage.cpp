@@ -26,7 +26,7 @@
 #include "configuredialog/accountconfigorderdialog.h"
 #include "pimcommon/widgets/configureimmutablewidgetutils.h"
 using namespace PimCommon::ConfigureImmutableWidgetUtils;
-#include <mailtransport/transportmanagementwidget.h>
+#include <MailTransport/transportmanagementwidget.h>
 using MailTransport::TransportManagementWidget;
 #include "accountconfigorderdialog.h"
 #include "ui_accountspagereceivingtab.h"

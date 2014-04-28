@@ -67,7 +67,7 @@ using namespace PimCommon::ConfigureImmutableWidgetUtils;
 #include <KIcon>
 #include <KDebug>
 
-#include <kmime/kmime_dateformatter.h>
+#include <KMime/kmime_dateformatter.h>
 using KMime::DateFormatter;
 
 #include <QWhatsThis>

@@ -17,7 +17,7 @@
 
 #include "identityaddvcarddialog.h"
 
-#include <kpimidentities/identitymanager.h>
+#include <KPIMIdentities/identitymanager.h>
 
 #include <KComboBox>
 #include <KLocalizedString>

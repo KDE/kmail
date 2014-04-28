@@ -36,7 +36,7 @@
 
 #include "messagecomposer/settings/messagecomposersettings.h"
 
-#include <kpimidentities/identitymanager.h>
+#include <KPIMIdentities/identitymanager.h>
 
 // other KMail headers:
 #ifndef KDEPIM_MOBILE_UI
@@ -59,8 +59,8 @@
 #endif
 #include "templatesconfiguration_kfg.h"
 // other kdepim headers:
-#include <kpimidentities/identity.h>
-#include <kpimidentities/signatureconfigurator.h>
+#include <KPIMIdentities/identity.h>
+#include <KPIMIdentities/signatureconfigurator.h>
 
 #include "pimcommon/autocorrection/autocorrectionlanguage.h"
 
@@ -69,11 +69,11 @@
 #include "libkleo/ui/keyrequester.h"
 #include "kleo/cryptobackendfactory.h"
 
-#include <kpimutils/email.h>
-#include <kpimutils/emailvalidator.h>
-#include <mailtransport/transport.h>
-#include <mailtransport/transportmanager.h>
-#include <mailtransport/transportcombobox.h>
+#include <KPIMUtils/email.h>
+#include <KPIMUtils/emailvalidator.h>
+#include <MailTransport/transport.h>
+#include <MailTransport/transportmanager.h>
+#include <MailTransport/transportcombobox.h>
 using MailTransport::TransportManager;
 
 // other KDE headers:
