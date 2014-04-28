@@ -24,7 +24,7 @@
 #include "foldercollection.h"
 #include <KPIMIdentities/identitymanager.h>
 #include <KPIMIdentities/identity.h>
-#include <akonadi/kmime/messagefolderattribute.h>
+#include <Akonadi/KMime/messagefolderattribute.h>
 
 using namespace MailCommon;
 

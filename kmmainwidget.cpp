@@ -127,8 +127,8 @@ using KSieveUi::SieveDebugDialog;
 #include <AkonadiCore/collectionstatistics.h>
 #include <AkonadiWidgets/collectionstatisticsdelegate.h>
 #include <AkonadiCore/EntityMimeTypeFilterModel>
-#include <akonadi/kmime/messageflags.h>
-#include <akonadi/kmime/removeduplicatesjob.h>
+#include <Akonadi/KMime/messageflags.h>
+#include <Akonadi/KMime/removeduplicatesjob.h>
 #include <AkonadiCore/collectiondeletejob.h>
 #include <AkonadiCore/dbusconnectionpool.h>
 #include <AkonadiCore/CachePolicy>

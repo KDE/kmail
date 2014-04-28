@@ -35,7 +35,7 @@
 #include "messageviewer/settings/globalsettings.h"
 
 #include <AkonadiCore/itemfetchjob.h>
-#include <akonadi/kmime/messageparts.h>
+#include <Akonadi/KMime/messageparts.h>
 #include <AkonadiCore/ChangeRecorder>
 #include <QAction>
 #include <KActionMenu>

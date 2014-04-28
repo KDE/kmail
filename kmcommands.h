@@ -8,7 +8,7 @@
 #include "messagelist/core/view.h"
 #include "search/searchpattern.h"
 
-#include <akonadi/kmime/messagestatus.h>
+#include <Akonadi/KMime/messagestatus.h>
 #include <kio/job.h>
 #include <KMime/kmime_message.h>
 

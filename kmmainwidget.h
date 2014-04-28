@@ -34,7 +34,7 @@
 
 #include <QPointer>
 #include <QTimer>
-#include <akonadi/kmime/standardmailactionmanager.h>
+#include <Akonadi/KMime/standardmailactionmanager.h>
 #include <AkonadiCore/tag.h>
 #include <messagelist/core/view.h>
 

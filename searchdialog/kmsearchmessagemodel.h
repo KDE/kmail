@@ -28,7 +28,7 @@
 #ifndef KMSEARCHMESSAGEMODEL_H
 #define KMSEARCHMESSAGEMODEL_H
 
-#include <akonadi/kmime/messagemodel.h>
+#include <Akonadi/KMime/messagemodel.h>
 
 class KMSearchMessageModel : public Akonadi::MessageModel
 {
