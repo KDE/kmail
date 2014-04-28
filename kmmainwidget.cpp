@@ -109,7 +109,7 @@ using KSieveUi::SieveDebugDialog;
 #include <AkonadiCore/collectionattributessynchronizationjob.h>
 #include <AkonadiCore/collectionfetchjob.h>
 #include <AkonadiCore/collectionfetchscope.h>
-#include <Akonadi/contact/contactsearchjob.h>
+#include <Akonadi/Contact/contactsearchjob.h>
 #include <AkonadiWidgets/collectionpropertiesdialog.h>
 #include <AkonadiCore/entitydisplayattribute.h>
 #include <AkonadiWidgets/entitylistview.h>
