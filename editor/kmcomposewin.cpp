@@ -2444,7 +2444,8 @@ void KMComposeWin::slotNewComposer()
     KMime::Message::Ptr msg( new KMime::Message );
 
     MessageHelper::initHeader( msg, KMKernel::self()->identityManager() );
-    win = new KMComposeWin( msg, false, false );
+    win = new KMComposeWin( msg, false, false, KMail::Composer::New );
+    win->setCollectionForNewMessage(mCollectionForNewMessage);
     win->show();
 }
 
