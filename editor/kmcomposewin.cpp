@@ -634,8 +634,8 @@ void KMComposeWin::readConfig( bool reload /* = false */ )
     QString fccName;
     if ( mBtnFcc->isChecked() ) {
         fccName = GlobalSettings::self()->previousFcc();
-    } else if ( ident.fcc() < 0 ) {
-        //QT5 fccName = ident.fcc();
+    } else if ( !ident.fcc().isEmpty()) {
+        fccName = ident.fcc();
     }
     setFcc( fccName );
 }
@@ -966,7 +966,7 @@ void KMComposeWin::applyTemplate( uint uoid, uint uOldId )
     const KPIMIdentities::Identity &ident = kmkernel->identityManager()->identityForUoid( uoid );
     if ( ident.isNull() )
         return;
-    KMime::Headers::Generic *header = new KMime::Headers::Generic( "X-KMail-Templates", mMsg.get(), QString::number(ident.templates()), "utf-8" );
+    KMime::Headers::Generic *header = new KMime::Headers::Generic( "X-KMail-Templates", mMsg.get(), ident.templates(), "utf-8" );
     mMsg->setHeader( header );
 
     TemplateParser::TemplateParser::Mode mode;

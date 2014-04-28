@@ -1385,7 +1385,7 @@ void KMMainWidget::slotShowNewFromTemplate()
     if ( mCurrentFolder ) {
         const KPIMIdentities::Identity & ident =
                 kmkernel->identityManager()->identityForUoidOrDefault( mCurrentFolder->identity() );
-        mTemplateFolder = CommonKernel->collectionFromId( ident.templates() );
+        mTemplateFolder = CommonKernel->collectionFromId( ident.templates().toLongLong() );
     }
 
     if ( !mTemplateFolder.isValid() ) {

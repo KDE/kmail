@@ -780,10 +780,10 @@ void IdentityDialog::slotDelayedButtonClicked( KJob *job )
     accept();
 }
 
-bool IdentityDialog::checkFolderExists( const Akonadi::Item::Id & folderID,
+bool IdentityDialog::checkFolderExists( const QString & folderID,
                                         const QString & msg )
 {
-    const Akonadi::Collection folder = CommonKernel->collectionFromId( folderID );
+    const Akonadi::Collection folder = CommonKernel->collectionFromId( folderID.toLongLong() );
     if ( !folder.isValid() ) {
         KMessageBox::sorry( this, msg );
         return false;
@@ -826,7 +826,7 @@ void IdentityDialog::setIdentity( KPIMIdentities::Identity & ident ) {
 
     mSentMailFolderCheck->setChecked(!ident.disabledFcc());
     mFccCombo->setEnabled(mSentMailFolderCheck->isChecked());
-    if ( ident.fcc()<0 ||
+    if ( ident.fcc().isEmpty() ||
          !checkFolderExists( ident.fcc(),
                              i18n("The custom sent-mail folder for identity "
                                   "\"%1\" does not exist (anymore); "
@@ -836,9 +836,9 @@ void IdentityDialog::setIdentity( KPIMIdentities::Identity & ident ) {
         mFccCombo->setCollection( CommonKernel->sentCollectionFolder() );
     }
     else {
-        mFccCombo->setCollection( Akonadi::Collection( ident.fcc() ) );
+        mFccCombo->setCollection( Akonadi::Collection( ident.fcc().toLongLong() ) );
     }
-    if ( ident.drafts()<0 ||
+    if ( ident.drafts().isEmpty() ||
          !checkFolderExists( ident.drafts(),
                              i18n("The custom drafts folder for identity "
                                   "\"%1\" does not exist (anymore); "
@@ -848,9 +848,9 @@ void IdentityDialog::setIdentity( KPIMIdentities::Identity & ident ) {
         mDraftsCombo->setCollection( CommonKernel->draftsCollectionFolder() );
     }
     else
-        mDraftsCombo->setCollection( Akonadi::Collection( ident.drafts() ) );
+        mDraftsCombo->setCollection( Akonadi::Collection( ident.drafts().toLongLong() ) );
 
-    if ( ident.templates() < 0 ||
+    if ( ident.templates().isEmpty() ||
          !checkFolderExists( ident.templates(),
                              i18n("The custom templates folder for identity "
                                   "\"%1\" does not exist (anymore); "
@@ -860,7 +860,7 @@ void IdentityDialog::setIdentity( KPIMIdentities::Identity & ident ) {
 
     }
     else
-        mTemplatesCombo->setCollection( Akonadi::Collection( ident.templates() ) );
+        mTemplatesCombo->setCollection( Akonadi::Collection( ident.templates().toLongLong() ) );
 
     mVcardFilename = ident.vCardFile();
 
@@ -919,33 +919,33 @@ void IdentityDialog::updateIdentity( KPIMIdentities::Identity & ident ) {
     ident.setDisabledFcc( !mSentMailFolderCheck->isChecked() );
     Akonadi::Collection collection = mFccCombo->collection();
     if ( collection.isValid() ) {
-        ident.setFcc( collection.id() );
+        ident.setFcc( QString::number(collection.id()) );
         Akonadi::EntityDisplayAttribute *attribute =  collection.attribute<Akonadi::EntityDisplayAttribute>( Akonadi::Entity::AddIfMissing );
         attribute->setIconName( QLatin1String( "mail-folder-sent" ) );
         new Akonadi::CollectionModifyJob( collection );
     }
     else
-        ident.setFcc( -1 );
+        ident.setFcc( QString() );
 
     collection = mDraftsCombo->collection();
     if ( collection.isValid() ) {
-        ident.setDrafts( collection.id()  );
+        ident.setDrafts( QString::number(collection.id())  );
         Akonadi::EntityDisplayAttribute *attribute =  collection.attribute<Akonadi::EntityDisplayAttribute>( Akonadi::Entity::AddIfMissing );
         attribute->setIconName( QLatin1String( "document-properties" ) );
         new Akonadi::CollectionModifyJob( collection );
     }
     else
-        ident.setDrafts( -1 );
+        ident.setDrafts( QString() );
 
     collection = mTemplatesCombo->collection();
     if ( collection.isValid() ) {
-        ident.setTemplates( collection.id() );
+        ident.setTemplates( QString::number(collection.id()) );
         Akonadi::EntityDisplayAttribute *attribute =  collection.attribute<Akonadi::EntityDisplayAttribute>( Akonadi::Entity::AddIfMissing );
         attribute->setIconName( QLatin1String( "document-new" ) );
         new Akonadi::CollectionModifyJob( collection );
     }
     else
-        ident.setTemplates( -1 );
+        ident.setTemplates( QString() );
     ident.setVCardFile(mVcardFilename);
     ident.setAutocorrectionLanguage(mAutoCorrectionLanguage->language());
     updateVcardButton();
