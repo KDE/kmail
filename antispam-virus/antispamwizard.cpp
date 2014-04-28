@@ -51,7 +51,7 @@
 
 #include <AkonadiCore/AgentInstance>
 
-#include <kdebug.h>
+#include <qdebug.h>
 #include <kdialog.h>
 #include <kiconloader.h>
 #include <klocale.h>
@@ -89,27 +89,27 @@ AntiSpamWizard::AntiSpamWizard( WizardMode mode,
 
 #ifndef NDEBUG
     if ( mMode == AntiSpam )
-        kDebug() << endl <<"Considered anti-spam tools:";
+        qDebug() << endl <<"Considered anti-spam tools:";
     else
-        kDebug() << endl <<"Considered anti-virus tools:";
+        qDebug() << endl <<"Considered anti-virus tools:";
     QList<SpamToolConfig>::ConstIterator end( mToolList.constEnd() );
     for ( QList<SpamToolConfig>::ConstIterator it = mToolList.constBegin();
           it != end; ++it ) {
-        kDebug() << "Predefined tool:" << (*it).getId();
-        kDebug() << "Config version:" << (*it).getVersion();
-        kDebug() << "Selection priority:" << (*it).getPrio();
-        kDebug() << "Displayed name:" << (*it).getVisibleName();
-        kDebug() << "Executable:" << (*it).getExecutable();
-        kDebug() << "WhatsThis URL:" << (*it).getWhatsThisText();
-        kDebug() << "Filter name:" << (*it).getFilterName();
-        kDebug() << "Detection command:" << (*it).getDetectCmd();
-        kDebug() << "Learn spam command:" << (*it).getSpamCmd();
-        kDebug() << "Learn ham command:" << (*it).getHamCmd();
-        kDebug() << "Detection header:" << (*it).getDetectionHeader();
-        kDebug() << "Detection pattern:" << (*it).getDetectionPattern();
-        kDebug() << "Use as RegExp:" << (*it).isUseRegExp();
-        kDebug() << "Supports Bayes Filter:" << (*it).useBayesFilter();
-        kDebug() << "Type:" << (*it).getType();
+        qDebug() << "Predefined tool:" << (*it).getId();
+        qDebug() << "Config version:" << (*it).getVersion();
+        qDebug() << "Selection priority:" << (*it).getPrio();
+        qDebug() << "Displayed name:" << (*it).getVisibleName();
+        qDebug() << "Executable:" << (*it).getExecutable();
+        qDebug() << "WhatsThis URL:" << (*it).getWhatsThisText();
+        qDebug() << "Filter name:" << (*it).getFilterName();
+        qDebug() << "Detection command:" << (*it).getDetectCmd();
+        qDebug() << "Learn spam command:" << (*it).getSpamCmd();
+        qDebug() << "Learn ham command:" << (*it).getHamCmd();
+        qDebug() << "Detection header:" << (*it).getDetectionHeader();
+        qDebug() << "Detection pattern:" << (*it).getDetectionPattern();
+        qDebug() << "Use as RegExp:" << (*it).isUseRegExp();
+        qDebug() << "Supports Bayes Filter:" << (*it).useBayesFilter();
+        qDebug() << "Type:" << (*it).getType();
     }
 #endif
 
@@ -149,13 +149,13 @@ AntiSpamWizard::AntiSpamWizard( WizardMode mode,
 void AntiSpamWizard::accept()
 {
     if ( mSpamRulesPage ) {
-        kDebug() << "Folder name for messages classified as spam is"
+        qDebug() << "Folder name for messages classified as spam is"
                  << mSpamRulesPage->selectedSpamCollectionId();
-        kDebug() << "Folder name for messages classified as unsure is"
+        qDebug() << "Folder name for messages classified as unsure is"
                  << mSpamRulesPage->selectedUnsureCollectionId();
     }
     if ( mVirusRulesPage ) {
-        kDebug() << "Folder name for viruses is"
+        qDebug() << "Folder name for viruses is"
                  << mVirusRulesPage->selectedFolderName();
     }
 
@@ -527,7 +527,7 @@ void AntiSpamWizard::checkToolAvailability()
         if ( (*it).isSpamTool() && (*it).isServerBased() ) {
             // check the configured account for pattern in <server>
             QString pattern = (*it).getServerPattern();
-            kDebug() << "Testing for server pattern:" << pattern;
+            qDebug() << "Testing for server pattern:" << pattern;
             const Akonadi::AgentInstance::List lst = MailCommon::Util::agentInstances();
             foreach( const Akonadi::AgentInstance& type, lst ) {
                 if ( type.status() == Akonadi::AgentInstance::Broken )
@@ -671,7 +671,7 @@ void AntiSpamWizard::slotBuildSummary()
 
 int AntiSpamWizard::checkForProgram( const QString &executable ) const
 {
-    kDebug() << "Testing for executable:" << executable;
+    qDebug() << "Testing for executable:" << executable;
     KProcess process;
     process.setShellCommand( executable );
     return process.execute ();
@@ -789,8 +789,8 @@ AntiSpamWizard::ConfigReader::readToolConfig( KConfigGroup & configGroup )
     const QString id = configGroup.readEntry( "Ident" );
     const int version = configGroup.readEntry( "Version", 0 );
 #ifndef NDEBUG
-    kDebug() << "Found predefined tool:" << id;
-    kDebug() << "With config version  :" << version;
+    qDebug() << "Found predefined tool:" << id;
+    qDebug() << "With config version  :" << version;
 #endif
     const int prio = configGroup.readEntry( "Priority", 1 );
     const QString name = configGroup.readEntry( "VisibleName" );
@@ -838,8 +838,8 @@ void AntiSpamWizard::ConfigReader::mergeToolConfig( const AntiSpamWizard::SpamTo
     for ( QList<SpamToolConfig>::Iterator it = mToolList.begin();
           it != end; ++it ) {
 #ifndef NDEBUG
-        kDebug() << "Check against tool:" << (*it).getId();
-        kDebug() << "Against version   :" << (*it).getVersion();
+        qDebug() << "Check against tool:" << (*it).getId();
+        qDebug() << "Against version   :" << (*it).getVersion();
 #endif
         if ( (*it).getId() == config.getId() )
         {
@@ -847,7 +847,7 @@ void AntiSpamWizard::ConfigReader::mergeToolConfig( const AntiSpamWizard::SpamTo
             if ( (*it).getVersion() < config.getVersion() )
             {
 #ifndef NDEBUG
-                kDebug() << "Replacing config ...";
+                qDebug() << "Replacing config ...";
 #endif
                 mToolList.erase( it );
                 mToolList.append( config );

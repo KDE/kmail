@@ -47,7 +47,7 @@
 #include <kmessagebox.h>
 #include <KLocalizedString>
 #include <KProcess>
-#include <KDebug>
+#include <QDebug>
 #include <KStandardDirs>
 
 #include <QProcess>
@@ -131,7 +131,7 @@ bool KMail::Util::handleClickedURL( const KUrl &url, const QSharedPointer<MailCo
         win->show();
         return true;
     } else {
-        kWarning() << "Can't handle URL:" << url;
+        qWarning() << "Can't handle URL:" << url;
         return false;
     }
 }
@@ -156,7 +156,7 @@ bool KMail::Util::mailingListsHandleURL( const KUrl::List& lst,const QSharedPoin
     if ( !urlToHandle.isEmpty() ) {
         return KMail::Util::handleClickedURL( urlToHandle, folder );
     } else {
-        kWarning()<< "Can't handle url";
+        qWarning()<< "Can't handle url";
         return false;
     }
 }
@@ -281,7 +281,7 @@ void KMail::Util::migrateFromKMail1()
                 return;
             }
 
-            kDebug() << "Performing Akonadi migration. Good luck!";
+            qDebug() << "Performing Akonadi migration. Good luck!";
             KProcess proc;
             QStringList args = QStringList() << QLatin1String("--interactive-on-change");
             const QString path = KStandardDirs::findExe( QLatin1String("kmail-migrator" ) );
@@ -292,14 +292,14 @@ void KMail::Util::migrateFromKMail1()
                 result = proc.waitForFinished( -1 );
             }
             if ( result && proc.exitCode() == 0 ) {
-                kDebug() << "Akonadi migration has been successful";
+                qDebug() << "Akonadi migration has been successful";
             } else {
                 // exit code 1 means it is already running, so we are probably called by a migrator instance
-                kError() << "Akonadi migration failed!";
-                kError() << "command was: " << proc.program();
-                kError() << "exit code: " << proc.exitCode();
-                kError() << "stdout: " << proc.readAllStandardOutput();
-                kError() << "stderr: " << proc.readAllStandardError();
+                qCritical() << "Akonadi migration failed!";
+                qCritical() << "command was: " << proc.program();
+                qCritical() << "exit code: " << proc.exitCode();
+                qCritical() << "stdout: " << proc.readAllStandardOutput();
+                qCritical() << "stderr: " << proc.readAllStandardError();
 
                 KMessageBox::error( 0, i18n("Migration to KMail 2 failed. In case you want to try again, run 'kmail-migrator --interactive' manually."),
                                     i18n( "Migration Failed" ) );

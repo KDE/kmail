@@ -75,7 +75,7 @@ using KMail::MailServiceImpl;
 #include <kapplication.h>
 #include <ksystemtrayicon.h>
 #include <kconfiggroup.h>
-#include <kdebug.h>
+#include <qdebug.h>
 #include <kio/jobuidelegate.h>
 #include <kprocess.h>
 #include <KCrash>
@@ -138,7 +138,7 @@ KMKernel::KMKernel (QObject *parent) :
     Akonadi::AttributeFactory::registerAttribute<Akonadi::SearchDescriptionAttribute>();
     QDBusConnection::sessionBus().registerService(QLatin1String("org.kde.kmail"));
     KMail::Util::migrateFromKMail1();
-    kDebug() << "Starting up...";
+    qDebug() << "Starting up...";
 
     mySelf = this;
     the_startingUp = true;
@@ -258,7 +258,7 @@ KMKernel::~KMKernel ()
 
     delete mAutoCorrection;
     mySelf = 0;
-    kDebug();
+    qDebug();
 }
 
 Akonadi::ChangeRecorder * KMKernel::folderCollectionMonitor() const
@@ -461,7 +461,7 @@ void KMKernel::checkMail () //might create a new reader but won't show!!
             if ( !type.isOnline() )
                 type.setIsOnline( true );
             if ( mResourcesBeingChecked.isEmpty() ) {
-                kDebug() << "Starting manual mail check";
+                qDebug() << "Starting manual mail check";
                 emit startCheckMail();
             }
 
@@ -495,7 +495,7 @@ QStringList KMKernel::accounts()
 
 void KMKernel::checkAccount( const QString &account ) //might create a new reader but won't show!!
 {
-    kDebug();
+    qDebug();
     if ( account.isEmpty() )
         checkMail();
     else {
@@ -503,7 +503,7 @@ void KMKernel::checkAccount( const QString &account ) //might create a new reade
         if ( agent.isValid() )
             agent.synchronize();
         else
-            kDebug() << "- account with name '" << account <<"' not found";
+            qDebug() << "- account with name '" << account <<"' not found";
     }
 }
 
@@ -511,7 +511,7 @@ void KMKernel::openReader( bool onlyCheck )
 {
     mWin = 0;
     KMainWindow *ktmw = 0;
-    kDebug();
+    qDebug();
 
     foreach ( KMainWindow *window, KMainWindow::memberList() )
     {
@@ -552,7 +552,7 @@ int KMKernel::openComposer(const QString &to, const QString &cc,
                            const QStringList &customHeaders,
                            const QString &replyTo, const QString &inReplyTo)
 {
-    kDebug();
+    qDebug();
     KMail::Composer::TemplateContext context = KMail::Composer::New;
     KMime::Message::Ptr msg( new KMime::Message );
     MessageHelper::initHeader( msg, identityManager() );
@@ -658,7 +658,7 @@ int KMKernel::openComposer (const QString &to, const QString &cc,
                             const QByteArray &attachCharset,
                             unsigned int identity )
 {
-    kDebug();
+    qDebug();
     KMail::Composer::TemplateContext context = KMail::Composer::New;
     KMime::Message::Ptr msg( new KMime::Message );
     KMime::Content *msgPart = 0;
@@ -716,7 +716,7 @@ int KMKernel::openComposer (const QString &to, const QString &cc,
                 msgPart->contentDisposition()->fromUnicodeString(QLatin1String(attachContDisp), "utf-8" );
             }
             if( !attachCharset.isEmpty() ) {
-                // kDebug() << "Set attachCharset to" << attachCharset;
+                // qDebug() << "Set attachCharset to" << attachCharset;
                 msgPart->contentType()->setCharset( attachCharset );
             }
             // Don't show the composer window if the automatic sending is checked
@@ -861,7 +861,7 @@ void KMKernel::raise()
     if ( !iface.isValid() || !( reply = iface.call( QLatin1String("newInstance") ) ).isValid() )
     {
         QDBusError err = iface.lastError();
-        kError() << "Communication problem with KMail. "
+        qCritical() << "Communication problem with KMail. "
                  << "Error message was:" << err.name() << ": \"" << err.message() << "\"";
     }
 
@@ -1120,7 +1120,7 @@ void KMKernel::recoverDeadLetters()
                 filename == QLatin1String( ".." )
                 || file.isDir() )
             continue;
-        kDebug() << "Opening autosave file:" << file.absoluteFilePath();
+        qDebug() << "Opening autosave file:" << file.absoluteFilePath();
         QFile autoSaveFile( file.absoluteFilePath() );
         if( autoSaveFile.open( QIODevice::ReadOnly ) ) {
             const KMime::Message::Ptr autoSaveMessage( new KMime::Message() );
@@ -1145,7 +1145,7 @@ void KMKernel::recoverDeadLetters()
 
 void  KMKernel::akonadiStateChanged( Akonadi::ServerManager::State state )
 {
-    kDebug() << "KMKernel has akonadi state changed to:" << int( state );
+    qDebug() << "KMKernel has akonadi state changed to:" << int( state );
 
     if( state == Akonadi::ServerManager::Running ) {
         CommonKernel->initFolders();
@@ -1190,7 +1190,7 @@ void KMKernel::init()
 
     KCrash::setEmergencySaveFunction( kmCrashHandler );
 
-    kDebug() << "KMail init with akonadi server state:" << int( Akonadi::ServerManager::state() );
+    qDebug() << "KMail init with akonadi server state:" << int( Akonadi::ServerManager::state() );
     if( Akonadi::ServerManager::state() == Akonadi::ServerManager::Running ) {
         CommonKernel->initFolders();
     }
@@ -1317,7 +1317,7 @@ void KMKernel::dumpDeadLetters()
             win->autoSaveMessage(true);
 
             while ( win->isComposing() ) {
-                kWarning() << "Danger, using an event loop, this should no longer be happening!";
+                qWarning() << "Danger, using an event loop, this should no longer be happening!";
                 qApp->processEvents();
             }
         }
@@ -1431,7 +1431,7 @@ void KMKernel::updateSystemTray()
 
 KPIMIdentities::IdentityManager * KMKernel::identityManager() {
     if ( !mIdentityManager ) {
-        kDebug();
+        qDebug();
         mIdentityManager = new KPIMIdentities::IdentityManager( false, this, "mIdentityManager" );
     }
     return mIdentityManager;
@@ -1702,7 +1702,7 @@ void KMKernel::instanceStatusChanged( const Akonadi::AgentInstance &instance )
         if ( instance.status() == Akonadi::AgentInstance::Running ) {
 
             if ( mResourcesBeingChecked.isEmpty() ) {
-                kDebug() << "A Resource started to synchronize, starting a mail check.";
+                qDebug() << "A Resource started to synchronize, starting a mail check.";
                 emit startCheckMail();
             }
 
@@ -1777,7 +1777,7 @@ void KMKernel::slotProgressItemCompletedOrCanceled( KPIM::ProgressItem *item )
     if ( agent.isValid() ) {
         mResourcesBeingChecked.removeAll( identifier );
         if ( mResourcesBeingChecked.isEmpty() ) {
-            kDebug() << "Last resource finished syncing, mail check done";
+            qDebug() << "Last resource finished syncing, mail check done";
             emit endCheckMail();
         }
     }
@@ -2035,7 +2035,7 @@ void KMKernel::toggleSystemTray()
             mSystemTray = new KMail::KMSystemTray(widget);
         } else if ( mSystemTray && !GlobalSettings::self()->systemTrayEnabled() ) {
             // Get rid of system tray on user's request
-            kDebug() << "deleting systray";
+            qDebug() << "deleting systray";
             delete mSystemTray;
             mSystemTray = 0;
         }

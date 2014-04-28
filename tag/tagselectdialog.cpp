@@ -35,7 +35,7 @@
 #include <KListWidgetSearchLine>
 #include <KLocalizedString>
 #include <KIcon>
-#include <KDebug>
+#include <QDebug>
 
 #include <QGridLayout>
 #include <QListWidget>
@@ -108,7 +108,7 @@ void TagSelectDialog::createTagList()
 void TagSelectDialog::slotTagsFetched(KJob *job)
 {
     if (job->error()) {
-        kWarning() << "Failed to load tags " << job->errorString();
+        qWarning() << "Failed to load tags " << job->errorString();
         return;
     }
     Akonadi::TagFetchJob *fetchJob = static_cast<Akonadi::TagFetchJob*>(job);

@@ -39,7 +39,7 @@
 #include <kxmlguifactory.h>
 #include <kstringhandler.h>
 #include <kstandardaction.h>
-#include <kdebug.h>
+#include <qdebug.h>
 #include <ktip.h>
 #include <kicon.h>
 #include <kaction.h>

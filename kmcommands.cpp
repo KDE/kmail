@@ -51,7 +51,7 @@
 #include <kprogressdialog.h>
 #include <KPIMUtils/email.h>
 #include <kdbusservicestarter.h>
-#include <kdebug.h>
+#include <qdebug.h>
 #include <kfiledialog.h>
 #include <klocale.h>
 #include <kmessagebox.h>
@@ -171,7 +171,7 @@ static void showJobError( KJob* job )
     if( kiojob && kiojob->ui() )
         kiojob->ui()->showErrorMessage();
     else
-        kWarning() << "There is no GUI delegate set for a kjob, and it failed with error:" << job->errorString();
+        qWarning() << "There is no GUI delegate set for a kjob, and it failed with error:" << job->errorString();
 }
 
 KMCommand::KMCommand( QWidget *parent )
@@ -205,7 +205,7 @@ KMCommand::~KMCommand()
 KMCommand::Result KMCommand::result() const
 {
     if ( mResult == Undefined ) {
-        kDebug() << "mResult is Undefined";
+        qDebug() << "mResult is Undefined";
     }
     return mResult;
 }
@@ -874,7 +874,7 @@ KMCommand::Result KMForwardCommand::createComposer(const Akonadi::Item& item)
     KMime::Message::Ptr fwdMsg = factory.createForward();
 
     uint id = msg->headerByType( "X-KMail-Identity" ) ?  msg->headerByType("X-KMail-Identity")->asUnicodeString().trimmed().toUInt() : 0;
-    kDebug() << "mail" << msg->encodedContent();
+    qDebug() << "mail" << msg->encodedContent();
     bool lastEncrypt = false;
     bool lastSign = false;
     KMail::Util::lastEncryptAndSignState(lastEncrypt, lastSign, msg);
@@ -1056,7 +1056,7 @@ KMCommand::Result KMRedirectCommand::execute()
 
 
         if ( !kmkernel->msgSender()->send( newMsg, method ) ) {
-            kDebug() << "KMRedirectCommand: could not redirect message (sending failed)";
+            qDebug() << "KMRedirectCommand: could not redirect message (sending failed)";
             return Failed; // error: couldn't send
         }
     }
@@ -1152,7 +1152,7 @@ KMCommand::Result KMSetStatusCommand::execute()
     Akonadi::Item::List itemsToModify;
     foreach( const Akonadi::Item &it, retrievedMsgs() ) {
         if ( mInvertMark ) {
-            //kDebug()<<" item ::"<<tmpItem;
+            //qDebug()<<" item ::"<<tmpItem;
             if ( it.isValid() ) {
                 bool myStatus;
                 MessageStatus itemStatus;
@@ -1197,7 +1197,7 @@ KMCommand::Result KMSetStatusCommand::execute()
 void KMSetStatusCommand::slotModifyItemDone( KJob * job )
 {
     if ( job && job->error() ) {
-        kWarning() << " Error trying to set item status:" << job->errorText();
+        qWarning() << " Error trying to set item status:" << job->errorText();
     }
     deleteLater();
 }
@@ -1234,7 +1234,7 @@ KMCommand::Result KMSetTagCommand::execute()
 void KMSetTagCommand::slotTagCreateDone(KJob* job)
 {
     if ( job && job->error() ) {
-        kWarning() << " Error trying to create tag:" << job->errorText();
+        qWarning() << " Error trying to create tag:" << job->errorText();
         deleteLater();
         return;
     }
@@ -1292,7 +1292,7 @@ void KMSetTagCommand::setTags()
 void KMSetTagCommand::slotModifyItemDone( KJob * job )
 {
     if ( job && job->error() ) {
-        kWarning() << " Error trying to set item status:" << job->errorText();
+        qWarning() << " Error trying to set item status:" << job->errorText();
     }
     deleteLater();
 }
@@ -1544,7 +1544,7 @@ KMCommand::Result KMSaveAttachmentsCommand::execute()
         if ( item.hasPayload<KMime::Message::Ptr>() ) {
             contentsToSave += MessageViewer::Util::extractAttachments( item.payload<KMime::Message::Ptr>().get() );
         } else {
-            kWarning() << "Retrieved item has no payload? Ignoring for saving the attachments";
+            qWarning() << "Retrieved item has no payload? Ignoring for saving the attachments";
         }
     }
     KUrl currentUrl;

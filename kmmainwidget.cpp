@@ -158,7 +158,7 @@ using KSieveUi::SieveDebugDialog;
 #include <kstandardshortcut.h>
 #include <kshortcutsdialog.h>
 #include <kcharsets.h>
-#include <kdebug.h>
+#include <qdebug.h>
 #include <kfiledialog.h>
 #include <ktip.h>
 #include <kstandarddirs.h>
@@ -1337,7 +1337,7 @@ void KMMainWidget::slotCheckOneAccount( QAction* item )
         }
         agent.synchronize();
     } else {
-        kDebug() << "account with identifier" << item->data().toString() << "not found";
+        qDebug() << "account with identifier" << item->data().toString() << "not found";
     }
 }
 
@@ -2160,7 +2160,7 @@ void KMMainWidget::slotCustomReplyToMsg( const QString &tmpl )
 
     const QString text = mMsgView ? mMsgView->copyText() : QString();
 
-    kDebug() << "Reply with template:" << tmpl;
+    qDebug() << "Reply with template:" << tmpl;
 
     KMCommand *command = new KMReplyCommand( this,
                                              msg,
@@ -2180,7 +2180,7 @@ void KMMainWidget::slotCustomReplyAllToMsg( const QString &tmpl )
 
     const QString text = mMsgView? mMsgView->copyText() : QString();
 
-    kDebug() << "Reply to All with template:" << tmpl;
+    qDebug() << "Reply to All with template:" << tmpl;
 
     KMCommand *command = new KMReplyCommand(this,
                                             msg,
@@ -2205,7 +2205,7 @@ void KMMainWidget::slotCustomForwardMsg( const QString &tmpl )
     if ( selectedMessages.isEmpty() )
         return;
 
-    kDebug() << "Forward with template:" << tmpl;
+    qDebug() << "Forward with template:" << tmpl;
     KMForwardCommand * command = new KMForwardCommand(
                 this, selectedMessages, mCurrentFolder->identity(), tmpl
                 );
@@ -2358,7 +2358,7 @@ void KMMainWidget::slotStartCertManager()
                                         "please check your installation." ),
                             i18n( "KMail Error" ) );
     else
-        kDebug() << "\nslotStartCertManager(): certificate manager started.";
+        qDebug() << "\nslotStartCertManager(): certificate manager started.";
 }
 
 //-----------------------------------------------------------------------------
@@ -2493,13 +2493,13 @@ void KMMainWidget::showResourceOfflinePage()
 //-----------------------------------------------------------------------------
 void KMMainWidget::slotReplaceMsgByUnencryptedVersion()
 {
-    kDebug();
+    qDebug();
     Akonadi::Item oldMsg = mMessagePane->currentItem();
     if ( oldMsg.isValid() ) {
 #if 0
-        kDebug() << "Old message found";
+        qDebug() << "Old message found";
         if ( oldMsg->hasUnencryptedMsg() ) {
-            kDebug() << "Extra unencrypted message found";
+            qDebug() << "Extra unencrypted message found";
             KMime::Message* newMsg = oldMsg->unencryptedMsg();
             // adjust the message id
             {
@@ -2523,7 +2523,7 @@ void KMMainWidget::slotReplaceMsgByUnencryptedVersion()
                 mMsgView->setIdOfLastViewedMessage( msgId );
             }
             // insert the unencrypted message
-            kDebug() << "Adding unencrypted message to folder";
+            qDebug() << "Adding unencrypted message to folder";
             mFolder->addMsg( newMsg );
             /* Figure out its index in the folder for selecting. This must be count()-1,
        * since we append. Be safe and do find, though, just in case. */
@@ -2541,21 +2541,21 @@ void KMMainWidget::slotReplaceMsgByUnencryptedVersion()
 #endif
             // remove the old one
             if ( idx != -1 ) {
-                kDebug() << "Deleting encrypted message";
+                qDebug() << "Deleting encrypted message";
                 mFolder->take( idx );
             }
 
-            kDebug() << "Updating message actions";
+            qDebug() << "Updating message actions";
             updateMessageActions();
 
-            kDebug() << "Done.";
+            qDebug() << "Done.";
         } else
-            kDebug() << "NO EXTRA UNENCRYPTED MESSAGE FOUND";
+            qDebug() << "NO EXTRA UNENCRYPTED MESSAGE FOUND";
 #else
-        kDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
+        qDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
 #endif
     } else
-        kDebug() << "PANIC: NO OLD MESSAGE FOUND";
+        qDebug() << "PANIC: NO OLD MESSAGE FOUND";
 }
 
 void KMMainWidget::slotFocusOnNextMessage()
@@ -2723,7 +2723,7 @@ void KMMainWidget::slotItemsFetchedForActivation( const Akonadi::Item::List &lis
 void KMMainWidget::itemsFetchForActivationDone( KJob * job )
 {
     if ( job->error() ) {
-        kDebug() << job->error() << job->errorString();
+        qDebug() << job->error() << job->errorString();
         BroadcastStatus::instance()->setStatusMsg( job->errorString() );
     }
 }
@@ -2844,7 +2844,7 @@ void KMMainWidget::showMessagePopup(const Akonadi::Item&msg ,const KUrl&url,cons
             }
             urlMenuAdded = true;
         }
-        kDebug() << "URL is:" << url;
+        qDebug() << "URL is:" << url;
     }
     const QString selectedText = mMsgView ? mMsgView->copyText() : QString();
     if ( mMsgView && !selectedText.isEmpty() ) {
@@ -4118,7 +4118,7 @@ void KMMainWidget::updateFolderMenu()
 
     QList< QAction* > actionlist;
     if ( mCurrentFolder && mCurrentFolder->collection().id() == CommonKernel->outboxCollectionFolder().id() && (mCurrentFolder->collection()).statistics().count() > 0) {
-        kDebug() << "Enabling send queued";
+        qDebug() << "Enabling send queued";
         mSendQueued->setEnabled(true);
         actionlist << mSendQueued;
     }
@@ -4524,7 +4524,7 @@ void KMMainWidget::itemsFetchDone( KJob *job )
         // Unfortunately job->error() is Job::Unknown in many cases.
         // (see JobPrivate::handleResponse in akonadi/job.cpp)
         // So we show the "offline" page after checking the resource status.
-        kDebug() << job->error() << job->errorString();
+        qDebug() << job->error() << job->errorString();
 
         const QString resource = job->property("_resource").toString();
         const Akonadi::AgentInstance agentInstance = Akonadi::AgentManager::self()->instance( resource );
@@ -4663,7 +4663,7 @@ void KMMainWidget::slotCollectionPropertiesFinished( KJob *job )
     Q_ASSERT( fetch );
     if ( fetch->collections().isEmpty() )
     {
-        kWarning() << "no collection";
+        qWarning() << "no collection";
         return;
     }
 
@@ -4761,7 +4761,7 @@ void KMMainWidget::slotServerSideSubscription()
                     QLatin1String( "/" ), QLatin1String( "org.kde.Akonadi.Imap.Resource" ),
                     DBusConnectionPool::threadConnection(), this );
         if ( !iface.isValid() ) {
-            kDebug()<<"Cannot create imap dbus interface";
+            qDebug()<<"Cannot create imap dbus interface";
             return;
         }
         QDBusPendingCall call = iface.asyncCall( QLatin1String( "configureSubscription" ), (qlonglong)winId() );

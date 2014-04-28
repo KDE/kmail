@@ -49,7 +49,7 @@ using KPIM::RecentAddresses;
 #include <KIntSpinBox>
 #include <KIntNumInput>
 #include <KGlobal>
-#include <KDebug>
+#include <QDebug>
 
 #include <QLabel>
 #include <QGroupBox>
@@ -1124,7 +1124,7 @@ void ComposerPage::HeadersTab::slotRemoveMimeHeader()
     // calling this w/o selection is a programming error:
     QTreeWidgetItem *item = mHeaderList->currentItem();
     if ( !item ) {
-        kDebug() << "=================================================="
+        qDebug() << "=================================================="
                  << "Error: Remove button was pressed although no custom header was selected\n"
                  << "==================================================\n";
         return;
@@ -1133,7 +1133,7 @@ void ComposerPage::HeadersTab::slotRemoveMimeHeader()
     QTreeWidgetItem *below = mHeaderList->itemBelow( item );
 
     if ( below ) {
-        kDebug() << "below";
+        qDebug() << "below";
         mHeaderList->setCurrentItem( below );
         delete item;
         item = 0;

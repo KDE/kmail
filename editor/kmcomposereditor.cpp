@@ -161,7 +161,7 @@ void KMComposerEditor::showSpellConfigDialog( const QString & configFileName )
     if ( enabledByDefaultCB ) {
         enabledByDefaultCB->hide();
     } else {
-        kWarning() << "Could not find any checkbox named 'm_checkerEnabledByDefaultCB'. Sonnet::ConfigDialog must have changed!";
+        qWarning() << "Could not find any checkbox named 'm_checkerEnabledByDefaultCB'. Sonnet::ConfigDialog must have changed!";
     }
     if ( dialog.exec() ) {
         setSpellCheckingLanguage( dialog.language() );

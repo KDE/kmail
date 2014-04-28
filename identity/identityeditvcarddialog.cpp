@@ -20,7 +20,7 @@
 #include <KABC/VCardConverter>
 #include <KLocalizedString>
 #include <Akonadi/Contact/ContactEditor>
-#include <KDebug>
+#include <QDebug>
 #include <KMessageBox>
 
 #include <QHBoxLayout>
@@ -106,7 +106,7 @@ QString IdentityEditVcardDialog::saveVcard() const
         file.flush();
         file.close();
     } else {
-        kDebug()<<"We cannot open file: "<<mVcardFileName;
+        qDebug()<<"We cannot open file: "<<mVcardFileName;
     }
     return mVcardFileName;
 }

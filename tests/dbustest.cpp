@@ -1,6 +1,6 @@
 
 
-#include <kdebug.h>
+#include <qdebug.h>
 #include <kapplication.h>
 #include <kcmdlineargs.h>
 
@@ -11,7 +11,7 @@
 
 int main(int argc,char **argv)
 {
-  kDebug() << "Test KMail D-Bus interface.";
+  qDebug() << "Test KMail D-Bus interface.";
 
   KAboutData aboutData( "testKMailDBUS", 0,
    ki18n("Test for KMail D-Bus interface"), "0.0" );
@@ -25,11 +25,11 @@ int main(int argc,char **argv)
 
   if ( !composerDbusPath.isValid() )
   {
-    kDebug()<<"We can't connect to kmail";
+    qDebug()<<"We can't connect to kmail";
     exit( 1 );
   }
 
-  kDebug() << "testDBus done.";
+  qDebug() << "testDBus done.";
 
   return 0;
 }

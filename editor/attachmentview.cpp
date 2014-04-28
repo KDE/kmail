@@ -37,7 +37,7 @@
 #include <QLabel>
 #include <QDrag>
 
-#include <KDebug>
+#include <QDebug>
 #include <KConfigGroup>
 #include <KIcon>
 #include <KLocalizedString>

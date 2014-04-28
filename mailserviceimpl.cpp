@@ -37,7 +37,7 @@
 #include "messagecomposer/helper/messagehelper.h"
 
 #include <kurl.h>
-#include <kdebug.h>
+#include <qdebug.h>
 
 #include <QDBusConnection>
 

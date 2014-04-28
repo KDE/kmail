@@ -32,7 +32,7 @@
 #include <KIcon>
 #include <KLocale>
 #include <KIconLoader>
-#include <KDebug>
+#include <QDebug>
 
 FolderArchiveManager::FolderArchiveManager(QObject *parent)
     : QObject(parent),
@@ -86,14 +86,14 @@ void FolderArchiveManager::slotFetchParentCollection(KJob *job)
 {
     if ( job->error() ) {
         moveFailed(i18n("Unable to fetch folder. Error reported: %1",job->errorString()));
-        kDebug()<<"Unable to fetch folder:"<<job->errorString();
+        qDebug()<<"Unable to fetch folder:"<<job->errorString();
         return;
     }
     const Akonadi::ItemFetchJob *fetchJob = qobject_cast<Akonadi::ItemFetchJob*>( job );
     const Akonadi::Item::List items = fetchJob->items();
     if (items.isEmpty()) {
         moveFailed(i18n("No folder returned."));
-        kDebug()<<"Fetch list is empty";
+        qDebug()<<"Fetch list is empty";
     } else {
         Akonadi::CollectionFetchJob* jobCol = new Akonadi::CollectionFetchJob( Akonadi::Collection(items.first().parentCollection().id()), Akonadi::CollectionFetchJob::Base, this );
         jobCol->setProperty("itemId", items.first().id());
@@ -105,13 +105,13 @@ void FolderArchiveManager::slotFetchCollection(KJob *job)
 {
     if ( job->error() ) {
         moveFailed(i18n("Unable to fetch parent folder. Error reported: %1", job->errorString()));
-        kDebug()<<"cannot fetch collection "<<job->errorString();
+        qDebug()<<"cannot fetch collection "<<job->errorString();
         return;
     }
     Akonadi::CollectionFetchJob* jobCol = qobject_cast<Akonadi::CollectionFetchJob*>(job);
     if (jobCol->collections().isEmpty()) {
         moveFailed(i18n("Unable to return list of folders."));
-        kDebug()<<"List of folder is empty";
+        qDebug()<<"List of folder is empty";
         return;
     }
 

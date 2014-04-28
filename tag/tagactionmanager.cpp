@@ -33,7 +33,7 @@
 #include <KJob>
 #include <KIcon>
 #include <AkonadiCore/Monitor>
-#include <KDebug>
+#include <QDebug>
 
 #include <QSignalMapper>
 #include <QPointer>
@@ -163,7 +163,7 @@ void TagActionManager::createActions()
 void TagActionManager::finishedTagListing(KJob *job)
 {
     if (job->error()) {
-        kWarning() << job->errorString();
+        qWarning() << job->errorString();
     }
     Akonadi::TagFetchJob *fetchJob = static_cast<Akonadi::TagFetchJob*>(job);
     foreach (const Akonadi::Tag &result, fetchJob->tags()) {

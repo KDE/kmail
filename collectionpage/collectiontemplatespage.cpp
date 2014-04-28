@@ -114,7 +114,7 @@ void CollectionTemplatesPage::save(Collection &)
 {
     if ( mChanged && !mCollectionId.isEmpty() ) {
         TemplateParser::Templates t(mCollectionId);
-        //kDebug() << "use custom templates for folder" << fid <<":" << mCustom->isChecked();
+        //qDebug() << "use custom templates for folder" << fid <<":" << mCustom->isChecked();
         t.setUseCustomTemplates(mCustom->isChecked());
         t.writeConfig();
 

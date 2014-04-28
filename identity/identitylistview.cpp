@@ -39,7 +39,7 @@
 #include "kmkernel.h"
 #endif
 
-#include <KDebug>
+#include <QDebug>
 #include <KLocalizedString> // i18n
 #include <KIconLoader> // SmallIcon
 
@@ -160,7 +160,7 @@ void IdentityListView::editItem( QTreeWidgetItem *item, int column )
 
 void IdentityListView::commitData( QWidget *editor )
 {
-    kDebug() << "after editing";
+    qDebug() << "after editing";
 
     if ( !selectedItems().isEmpty() ) {
 

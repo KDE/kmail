@@ -24,7 +24,7 @@
 #include "kmmainwidget.h"
 #include "kmail_options.h"
 
-#include <kdebug.h>
+#include <qdebug.h>
 #include <kmessagebox.h>
 #undef Status // stupid X headers
 
@@ -69,13 +69,13 @@ void KMailApplication::setEventLoopReached() {
 
 int KMailApplication::newInstance()
 {
-    kDebug();
+    qDebug();
 
     // If the event loop hasn't been reached yet, the kernel is probably not
     // fully initialized. Creating an instance would therefore fail, this is why
     // that is delayed until delayedInstanceCreation() is called.
     if ( !mEventLoopReached ) {
-        kDebug() << "Delaying instance creation.";
+        qDebug() << "Delaying instance creation.";
         mDelayedInstanceCreation = true;
         return 0;
     }

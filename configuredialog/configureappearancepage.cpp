@@ -65,7 +65,7 @@ using namespace PimCommon::ConfigureImmutableWidgetUtils;
 #include <KLineEdit>
 #include <KDialog>
 #include <KIcon>
-#include <KDebug>
+#include <QDebug>
 
 #include <KMime/kmime_dateformatter.h>
 using KMime::DateFormatter;
@@ -213,7 +213,7 @@ AppearancePageFontsTab::AppearancePageFontsTab( QWidget * parent )
 
 void AppearancePage::FontsTab::slotFontSelectorChanged( int index )
 {
-    kDebug() << "slotFontSelectorChanged() called";
+    qDebug() << "slotFontSelectorChanged() called";
     if( index < 0 || index >= mFontLocationCombo->count() )
         return; // Should never happen, but it is better to check.
 
@@ -1295,7 +1295,7 @@ void AppearancePage::MessageTagTab::slotRemoveTag()
             if ( tmp_desc->tag().isValid() ) {
                 new Akonadi::TagDeleteJob(tmp_desc->tag());
             } else {
-                kWarning() << "Can't remove tag with invalid akonadi tag";
+                qWarning() << "Can't remove tag with invalid akonadi tag";
             }
             mPreviousTag = -1;
 
@@ -1318,7 +1318,7 @@ void AppearancePage::MessageTagTab::slotRemoveTag()
 void AppearancePage::MessageTagTab::slotDeleteTagJob(KJob* job)
 {
     if (job->error()) {
-        kWarning() << "Failed to delete tag " << job->errorString();
+        qWarning() << "Failed to delete tag " << job->errorString();
     }
 }
 
@@ -1400,7 +1400,7 @@ void AppearancePage::MessageTagTab::doLoadFromGlobalSettings()
 void AppearancePage::MessageTagTab::slotTagsFetched(KJob *job)
 {
     if (job->error()) {
-        kWarning() << "Failed to load tags " << job->errorString();
+        qWarning() << "Failed to load tags " << job->errorString();
         return;
     }
     Akonadi::TagFetchJob *fetchJob = static_cast<Akonadi::TagFetchJob*>(job);

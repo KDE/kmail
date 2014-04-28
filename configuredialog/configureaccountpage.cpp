@@ -45,7 +45,7 @@ using MailTransport::TransportManagementWidget;
 #include <KComboBox>
 #include <KWindowSystem>
 #include <KLineEdit>
-#include <KDebug>
+#include <QDebug>
 
 #include <QVBoxLayout>
 #include <QGridLayout>
@@ -184,7 +184,7 @@ AccountsPageReceivingTab::AccountsPageReceivingTab( QWidget * parent )
 {
     mNewMailNotifierInterface = new OrgFreedesktopAkonadiNewMailNotifierInterface(QLatin1String("org.freedesktop.Akonadi.NewMailNotifierAgent"), QLatin1String("/NewMailNotifierAgent"), QDBusConnection::sessionBus(), this);
     if (!mNewMailNotifierInterface->isValid()) {
-        kDebug()<<" org.freedesktop.Akonadi.NewMailNotifierAgent not found. Please verify your installation";
+        qDebug()<<" org.freedesktop.Akonadi.NewMailNotifierAgent not found. Please verify your installation";
     }
     mAccountsReceiving.setupUi( this );
 

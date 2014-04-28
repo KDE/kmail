@@ -69,7 +69,7 @@ using MessageComposer::MessageFactory;
 #include <Akonadi/Contact/ContactEditorDialog>
 
 #include <kde_file.h>
-#include <kdebug.h>
+#include <qdebug.h>
 #include <klocale.h>
 #include <kaction.h>
 #include <kicon.h>
@@ -693,7 +693,7 @@ void KMReaderWin::clear(bool force )
 
 void KMReaderWin::setMessage( const Akonadi::Item &item, Viewer::UpdateMode updateMode)
 {
-    kDebug() << Q_FUNC_INFO << parentWidget();
+    qDebug() << Q_FUNC_INFO << parentWidget();
     mViewer->setMessageItem( item, updateMode );
 }
 
@@ -793,7 +793,7 @@ void KMReaderWin::slotPrintComposeResult( KJob *job )
         if ( static_cast<KIO::Job*>(job)->ui() ) {
             static_cast<KIO::Job*>(job)->ui()->showErrorMessage();
         } else {
-            kWarning() << "Composer for printing failed:" << composer->errorString();
+            qWarning() << "Composer for printing failed:" << composer->errorString();
         }
     }
 

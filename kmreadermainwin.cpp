@@ -37,7 +37,7 @@
 #include <kstandardaction.h>
 #include <ktoggleaction.h>
 #include <ktoolbar.h>
-#include <kdebug.h>
+#include <qdebug.h>
 #include <KFontAction>
 #include <KFontSizeAction>
 #include <kstatusbar.h>

@@ -81,7 +81,7 @@ using MailTransport::TransportManager;
 #include <kmessagebox.h>
 #include <kfileitem.h>
 #include <kurl.h>
-#include <kdebug.h>
+#include <qdebug.h>
 #include <kpushbutton.h>
 #include <kcombobox.h>
 #include <ktabwidget.h>
@@ -958,7 +958,7 @@ void IdentityDialog::updateIdentity( KPIMIdentities::Identity & ident ) {
     uint identity = ident.uoid();
     QString iid = TemplateParser::TemplatesConfiguration::configIdString( identity );
     TemplateParser::Templates t( iid );
-    kDebug() << "use custom templates for identity" << identity <<":" << mCustom->isChecked();
+    qDebug() << "use custom templates for identity" << identity <<":" << mCustom->isChecked();
     t.setUseCustomTemplates(mCustom->isChecked());
     t.writeConfig();
     mWidget->saveToIdentity( identity );

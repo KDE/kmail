@@ -27,7 +27,7 @@
 #include <QTextCodec>
 
 // KDE libs
-#include <KDebug>
+#include <QDebug>
 #include <KLocalizedString>
 #include <KIcon>
 
@@ -77,7 +77,7 @@ CodecAction::~CodecAction()
 QList<QByteArray> CodecAction::mimeCharsets() const
 {
     QList<QByteArray> ret;
-    kDebug() << "current item" << currentItem() << currentText();
+    qDebug() << "current item" << currentItem() << currentText();
     if( currentItem() == 0 ) {
         // 'Default' selected: return the preferred charsets.
         ret = CodecManager::self()->preferredCharsets();
@@ -88,7 +88,7 @@ QList<QByteArray> CodecAction::mimeCharsets() const
         // Specific codec selected.
         // ret << currentCodecName().toLatin1().toLower(); // FIXME in kdelibs: returns e.g. '&koi8-r'
         ret << currentCodec()->name();
-        kDebug() << "current codec name" << ret.first();
+        qDebug() << "current codec name" << ret.first();
     }
     return ret;
 }

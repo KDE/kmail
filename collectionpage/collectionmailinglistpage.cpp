@@ -43,7 +43,7 @@
 #include <KLocalizedString>
 #include <KMessageBox>
 #include <KSqueezedTextLabel>
-#include <KDebug>
+#include <QDebug>
 
 using namespace MailCommon;
 
@@ -198,7 +198,7 @@ void CollectionMailingListPage::slotDetectMailingList()
     if ( !mFolder )
         return; // in case the folder was just created
 
-    kDebug()<< "Detecting mailing list";
+    qDebug()<< "Detecting mailing list";
 
     // next try the 5 most recently added messages
     if ( !( mMailingList.features() & MailingList::Post ) ) {
@@ -311,7 +311,7 @@ void CollectionMailingListPage::fillMLFromWidgets()
         mMailingList.setHelpUrls( mEditList->items() );
         break;
     default:
-        kWarning()<<"Wrong entry in the mailing list entry combo!";
+        qWarning()<<"Wrong entry in the mailing list entry combo!";
     }
 }
 
@@ -335,7 +335,7 @@ void CollectionMailingListPage::fillEditBox()
         mEditList->insertStringList( mMailingList.helpUrls().toStringList() );
         break;
     default:
-        kWarning()<<"Wrong entry in the mailing list entry combo!";
+        qWarning()<<"Wrong entry in the mailing list entry combo!";
     }
 }
 
@@ -359,7 +359,7 @@ void CollectionMailingListPage::slotInvokeHandler()
         KMail::Util::mailingListHelp( mFolder );
         break;
     default:
-        kWarning()<<"Wrong entry in the mailing list entry combo!";
+        qWarning()<<"Wrong entry in the mailing list entry combo!";
     }
 }
 

@@ -40,7 +40,7 @@
 #include <QAction>
 #include <KActionMenu>
 #include <KActionCollection>
-#include <KDebug>
+#include <QDebug>
 #include <KLocalizedString>
 #include <KXMLGUIClient>
 #include <KStandardDirs>

@@ -35,7 +35,7 @@
 #include <kio/global.h>
 #include <KLocale>
 #include <KGlobal>
-#include <KDebug>
+#include <QDebug>
 
 #include <QGroupBox>
 #include <QLabel>
@@ -124,7 +124,7 @@ void CollectionMaintenancePage::load(const Collection & col)
             QDBusInterface interfaceBalooIndexer( QLatin1String("org.freedesktop.Akonadi.Agent.akonadi_baloo_indexer"), QLatin1String("/") );
             if(interfaceBalooIndexer.isValid()) {
                 if (!interfaceBalooIndexer.callWithCallback(QLatin1String("indexedItems"), QList<QVariant>() << (qlonglong)mCurrentCollection.id(), this, SLOT(onIndexedItemsReceived(qint64)))) {
-                    kWarning() << "Failed to request indexed items";
+                    qWarning() << "Failed to request indexed items";
                 }
             }
         }
@@ -133,7 +133,7 @@ void CollectionMaintenancePage::load(const Collection & col)
 
 void CollectionMaintenancePage::onIndexedItemsReceived(qint64 num)
 {
-    kDebug() << num;
+    qDebug() << num;
     mLastIndexed->setText(i18np("Indexed %1 item of this collection", "Indexed %1 items of this collection", num));
 }
 
