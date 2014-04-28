@@ -255,9 +255,9 @@ if (KDEPIM_BUILD_DESKTOP)
 
   target_link_libraries(kmailprivate
     KF5::Mbox
-    KF5::KMime
+    KF5::Mime
     KF5::AkonadiCore
-    KF5::AkonadiKMime
+    KF5::AkonadiMime
     messagecore
     messagecomposer
     messagelist
