@@ -270,7 +270,7 @@ if (KDEPIM_BUILD_DESKTOP)
     ${KDE4_PHONON_LIBRARY}
     KF5::NotifyConfig
     KF5::MailTransport
-    KF5::KImap
+    KF5::Imap
     ${KDE4_KPARTS_LIBRARY}
     ${KDEPIMLIBS_KRESOURCES_LIBS}
     KF5::KCMUtils
