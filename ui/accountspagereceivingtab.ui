@@ -168,7 +168,7 @@
   <customwidget>
    <class>Akonadi::AgentInstanceWidget</class>
    <extends>QWidget</extends>
-   <header location="global">akonadi/agentinstancewidget.h</header>
+   <header location="global">AkonadiWidgets/agentinstancewidget.h</header>
   </customwidget>
  </customwidgets>
  <resources/>
