@@ -362,10 +362,10 @@ if (KDEPIM_BUILD_DESKTOP)
     kmcomposerui.rc
     kmmainwin.rc
     kmreadermainwin.rc
-    data/kmail2.notifyrc
     kmail_part.rc
     DESTINATION ${DATA_INSTALL_DIR}/kmail2
   )
+  install( FILES data/kmail2.notifyrc DESTINATION ${KNOTIFYRC_INSTALL_DIR} )
   install(FILES data/dbusmail.desktop DESTINATION ${SERVICETYPES_INSTALL_DIR})
   install(TARGETS
     kmailpart
