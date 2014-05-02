@@ -207,17 +207,17 @@ if (KDEPIM_BUILD_DESKTOP)
     KMail::MailServiceImpl
   )
 
-  qt4_add_dbus_interfaces(kmailprivate_LIB_SRCS
+  qt5_add_dbus_interfaces(kmailprivate_LIB_SRCS
     ${CMAKE_BINARY_DIR}/kmail/org.kde.kmail.kmail.xml
   )
-  qt4_add_dbus_interfaces(kmailprivate_LIB_SRCS
+  qt5_add_dbus_interfaces(kmailprivate_LIB_SRCS
     ${CMAKE_SOURCE_DIR}/agents/archivemailagent/org.freedesktop.Akonadi.ArchiveMailAgent.xml
   )
-  qt4_add_dbus_interfaces(kmailprivate_LIB_SRCS
+  qt5_add_dbus_interfaces(kmailprivate_LIB_SRCS
     ${CMAKE_SOURCE_DIR}/agents/sendlateragent/org.freedesktop.Akonadi.SendLaterAgent.xml
   )
 
-  qt4_add_dbus_interfaces(kmailprivate_LIB_SRCS
+  qt5_add_dbus_interfaces(kmailprivate_LIB_SRCS
     ${CMAKE_SOURCE_DIR}/kmail/dbusinterface/org.freedesktop.Akonadi.NewMailNotifier.xml
   )
 
@@ -309,7 +309,7 @@ if (KDEPIM_BUILD_DESKTOP)
   qt5_add_dbus_adaptor(kmailpart_PART_SRCS
     ${CMAKE_BINARY_DIR}/kmail/org.kde.kmail.kmailpart.xml kmail_part.h KMailPart
   )
-  qt4_add_dbus_interfaces(kmailpart_PART_SRCS ${CMAKE_BINARY_DIR}/kmail/org.kde.kmail.kmailpart.xml)
+  qt5_add_dbus_interfaces(kmailpart_PART_SRCS ${CMAKE_BINARY_DIR}/kmail/org.kde.kmail.kmailpart.xml)
   add_library(kmailpart MODULE ${kmailpart_PART_SRCS})
   target_link_libraries(kmailpart
     
