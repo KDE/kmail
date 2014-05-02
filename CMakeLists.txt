@@ -267,12 +267,9 @@ if (KDEPIM_BUILD_DESKTOP)
     KF5::PimIdentities
     KF5::KontactInterface
     KF5::KDELibs4Support
-    ${KDE4_PHONON_LIBRARY}
     KF5::NotifyConfig
     KF5::MailTransport
     KF5::Imap
-    ${KDE4_KPARTS_LIBRARY}
-    ${KDEPIMLIBS_KRESOURCES_LIBS}
     KF5::KCMUtils
     kleo
     ${QGPGME_LIBRARIES}
@@ -281,7 +278,6 @@ if (KDEPIM_BUILD_DESKTOP)
     kpgp
     kdepim
     KF5::KIOCore
-    ${KDE4_SOLID_LIBS}
     KF5::Abc
     KF5::PimUtils
     KF5::PimTextEdit
