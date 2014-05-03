@@ -32,6 +32,7 @@
 #include <KIcon>
 #include <KLocale>
 #include <KIconLoader>
+#include <KComponentData>
 #include <QDebug>
 
 FolderArchiveManager::FolderArchiveManager(QObject *parent)
@@ -176,7 +177,6 @@ void FolderArchiveManager::load()
 
 void FolderArchiveManager::moveDone()
 {
-#if 0 //QT5
     const QPixmap pixmap = KIcon( QLatin1String("kmail") ).pixmap( KIconLoader::SizeSmall, KIconLoader::SizeSmall );
 
     KNotification::event( QLatin1String("folderarchivedone"),
@@ -184,14 +184,12 @@ void FolderArchiveManager::moveDone()
                           pixmap,
                           0,
                           KNotification::CloseOnTimeout,
-                          KGlobal::mainComponent());
-#endif
+                          KGlobal::mainComponent().componentName());
     nextJob();
 }
 
 void FolderArchiveManager::moveFailed(const QString &msg)
 {
-#if 0 //QT5
     const QPixmap pixmap = KIcon( QLatin1String("kmail") ).pixmap( KIconLoader::SizeSmall, KIconLoader::SizeSmall );
 
     KNotification::event( QLatin1String("folderarchiveerror"),
@@ -199,8 +197,7 @@ void FolderArchiveManager::moveFailed(const QString &msg)
                           pixmap,
                           0,
                           KNotification::CloseOnTimeout,
-                          KGlobal::mainComponent());
-#endif
+                          KGlobal::mainComponent().componentName());
     nextJob();
 }
 
