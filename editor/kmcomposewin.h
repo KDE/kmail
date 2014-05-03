@@ -654,7 +654,7 @@ private:
     CodecAction *mCodecAction;
     KSelectAction *mCryptoModuleAction;
 
-    KAction *mFindText, *mFindNextText, *mReplaceText, *mSelectAll;
+    QAction *mFindText, *mFindNextText, *mReplaceText, *mSelectAll;
 
     QSplitter *mHeadersToEditorSplitter;
     QWidget* mHeadersArea;

@@ -1224,12 +1224,12 @@ void KMComposeWin::setupActions( void )
     KStandardAction::cut( this, SLOT(slotCut()), actionCollection() );
     KStandardAction::copy( this, SLOT(slotCopy()), actionCollection() );
     KStandardAction::pasteText( this, SLOT(slotPaste()), actionCollection() );
-    //QT5 mSelectAll = KStandardAction::selectAll( this, SLOT(slotMarkAll()), actionCollection() );
+    mSelectAll = KStandardAction::selectAll( this, SLOT(slotMarkAll()), actionCollection() );
 
-    //QT5 mFindText = KStandardAction::find( mComposerBase->editor(), SLOT(slotFind()), actionCollection() );
-    //QT5 mFindNextText = KStandardAction::findNext( mComposerBase->editor(), SLOT(slotFindNext()), actionCollection() );
+    mFindText = KStandardAction::find( mComposerBase->editor(), SLOT(slotFind()), actionCollection() );
+    mFindNextText = KStandardAction::findNext( mComposerBase->editor(), SLOT(slotFindNext()), actionCollection() );
 
-    //QT5 mReplaceText = KStandardAction::replace( mComposerBase->editor(), SLOT(slotReplace()), actionCollection() );
+    mReplaceText = KStandardAction::replace( mComposerBase->editor(), SLOT(slotReplace()), actionCollection() );
     actionCollection()->addAction( KStandardAction::Spelling, QLatin1String("spellcheck"),
                                    mComposerBase->editor(), SLOT(checkSpelling()) );
 
@@ -1697,9 +1697,9 @@ void KMComposeWin::setMessage( const KMime::Message::Ptr &newMsg, bool lastSignS
     }
     if ( !mBtnFcc->isChecked() ) {
         if ( kmailFcc.isEmpty() ) {
-            //QT5 setFcc( ident.fcc() );
+            setFcc( ident.fcc() );
         } else {
-            //QT5 setFcc( kmailFcc );
+            setFcc( kmailFcc );
         }
     }
 
@@ -3161,9 +3161,8 @@ void KMComposeWin::slotIdentityChanged( uint uoid, bool initalChange )
     }
     slotSpellCheckingLanguage( mDictionaryCombo->currentDictionary() );
     if ( !mBtnFcc->isChecked() && !mPreventFccOverwrite ) {
-        //QT5 setFcc( ident.fcc() );
+        setFcc( ident.fcc() );
     }
-#if 0 //QT5
     // if unmodified, apply new template, if one is set
     if ( !wasModified && !( ident.templates().isEmpty() && mCustomTemplate.isEmpty() ) &&
          !initalChange ) {
@@ -3172,7 +3171,6 @@ void KMComposeWin::slotIdentityChanged( uint uoid, bool initalChange )
         mComposerBase->identityChanged( ident, oldIdentity, false );
         mEdtSubject->setAutocorrectionLanguage(ident.autocorrectionLanguage());
     }
-#endif
 
     // disable certain actions if there is no PGP user identity set
     // for this profile
