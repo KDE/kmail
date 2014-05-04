@@ -28,17 +28,17 @@ class CreateTaskJob : public KJob
 {
     Q_OBJECT
 public:    
-    explicit CreateTaskJob(const Akonadi::Item::List &items, bool revert, QObject *parent=0);
+    explicit CreateTaskJob(const Akonadi::Item::List &items, QObject *parent=0);
     ~CreateTaskJob();
 
     void start();
 private slots:
     void itemFetchJobDone(KJob *job);
 
+    void slotModifyItemDone(KJob *job);
 private:
     void fetchItems();
     Akonadi::Item::List mListItem;
-    bool mRevertStatus;
 };
 
 #endif // CREATETASKJOB_H

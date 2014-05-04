@@ -22,18 +22,17 @@
 #include "createtaskjob.h"
 #include "attributes/taskattribute.h"
 #include <akonadi/kmime/messagestatus.h>
-
 #include <KLocalizedString>
 
 #include <Akonadi/ItemFetchJob>
 #include <Akonadi/ItemFetchScope>
+#include <Akonadi/ItemModifyJob>
 
 #include <QDebug>
 
-CreateTaskJob::CreateTaskJob(const Akonadi::Item::List &items, bool revert, QObject *parent)
+CreateTaskJob::CreateTaskJob(const Akonadi::Item::List &items, QObject *parent)
     : KJob(parent),
-      mListItem(items),
-      mRevertStatus(revert)
+      mListItem(items)
 {
 }
 
@@ -73,5 +72,58 @@ void CreateTaskJob::itemFetchJobDone(KJob *job)
         Q_EMIT emitResult();
         return;
     }
+
+    bool parentStatus = false;
+    // Toggle actions on threads toggle the whole thread
+    // depending on the state of the parent.
+    const Akonadi::Item first = lst.first();
+    Akonadi::MessageStatus pStatus;
+    pStatus.setStatusFromFlags( first.flags() );
+    if ( pStatus & Akonadi::MessageStatus::statusToAct() )
+        parentStatus = true;
+    else
+        parentStatus = false;
+
+    Akonadi::Item::List itemsToModify;
+    foreach( const Akonadi::Item &it, lst ) {
+        //kDebug()<<" item ::"<<tmpItem;
+        if ( it.isValid() ) {
+            bool myStatus;
+            Akonadi::MessageStatus itemStatus;
+            itemStatus.setStatusFromFlags( it.flags() );
+            if ( itemStatus & Akonadi::MessageStatus::statusToAct() )
+                myStatus = true;
+            else
+                myStatus = false;
+            if ( myStatus != parentStatus )
+                continue;
+        }
+        Akonadi::Item item( it );
+        const Akonadi::Item::Flag flag = *(Akonadi::MessageStatus::statusToAct().statusFlags().begin());
+        if ( item.hasFlag( flag ) ) {
+            item.clearFlag( flag );
+            itemsToModify.push_back( item );
+        } else {
+            item.setFlag( flag );
+            itemsToModify.push_back( item );
+        }
+    }
+
+    if ( itemsToModify.isEmpty() ) {
+        slotModifyItemDone( 0 );
+    } else {
+        Akonadi::ItemModifyJob *modifyJob = new Akonadi::ItemModifyJob( itemsToModify, this );
+        modifyJob->disableRevisionCheck();
+        modifyJob->setIgnorePayload( true );
+        connect( modifyJob, SIGNAL(result(KJob*)), this, SLOT(slotModifyItemDone(KJob*)) );
+    }
+}
+
+void CreateTaskJob::slotModifyItemDone(KJob *job)
+{
     //TODO
+    if (job && job->error()) {
+        qDebug()<<" error "<<job->errorString();
+    }
+    deleteLater();
 }
