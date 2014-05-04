@@ -103,9 +103,14 @@ void CreateTaskJob::itemFetchJobDone(KJob *job)
         if ( item.hasFlag( flag ) ) {
             item.clearFlag( flag );
             itemsToModify.push_back( item );
+            if (item.hasAttribute<TaskAttribute>()) {
+                //Change todo as done.
+                item.removeAttribute<TaskAttribute>();
+            }
         } else {
             item.setFlag( flag );
             itemsToModify.push_back( item );
+            //TODO add TaskAttribute();
         }
     }
 
