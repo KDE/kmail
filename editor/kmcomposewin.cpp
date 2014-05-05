@@ -122,7 +122,7 @@
 #include <MailTransport/transport.h>
 #include <KMime/kmime_codecs.h>
 #include <KMime/kmime_message.h>
-#include <KPIMTextEdit/selectspecialchardialog.h>
+#include <kpimtextedit/selectspecialchardialog.h>
 
 
 // KDELIBS includes
