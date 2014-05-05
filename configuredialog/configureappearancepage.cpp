@@ -603,8 +603,8 @@ void AppearancePage::LayoutTab::doLoadOther()
     loadWidget( mFavoriteFoldersViewGroupBox, mFavoriteFoldersViewGroup, MailCommon::MailCommonSettings::self()->favoriteCollectionViewModeItem() );
     loadWidget( mFolderQuickSearchCB, GlobalSettings::self()->enableFolderQuickSearchItem() );
     const int checkedFolderToolTipsPolicy = GlobalSettings::self()->toolTipDisplayPolicy();
-    if ( checkedFolderToolTipsPolicy < mFolderToolTipsGroup->buttons().size() && checkedFolderToolTipsPolicy >= 0 )
-        mFolderToolTipsGroup->buttons()[ checkedFolderToolTipsPolicy ]->setChecked( true );
+    if ( checkedFolderToolTipsPolicy >= 0 )
+        mFolderToolTipsGroup->button(checkedFolderToolTipsPolicy)->setChecked( true );
 }
 
 void AppearancePage::LayoutTab::save()
