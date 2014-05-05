@@ -26,7 +26,7 @@
 #include <messageviewer/viewer/viewer.h>
 #include <messageviewer/interfaces/bodypart.h>
 #include <AkonadiCore/Item>
-#include <KABC/kabc/Addressee>
+#include <KABC/Addressee>
 class KActionCollection;
 class QAction;
 class KToggleAction;

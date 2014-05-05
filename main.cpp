@@ -18,7 +18,7 @@
  *
  */
 
-#include <KontactInterface/kontactinterface/pimuniqueapplication.h>
+#include <KontactInterface/pimuniqueapplication.h>
 #include <kglobal.h>
 #include "kmkernel.h" //control center
 #include "kmmainwidget.h"

@@ -40,8 +40,8 @@
 #include "messagecomposer/sender/messagesender.h"
 
 // KDEPIMLIBS includes
-#include <KMime/kmime_message.h>
-#include <KMime/kmime_headers.h>
+#include <kmime/kmime_message.h>
+#include <kmime/kmime_headers.h>
 
 // Other includes
 #include "kleo/enum.h"

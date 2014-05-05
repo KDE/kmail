@@ -23,7 +23,7 @@
 #include "secondarywindow.h"
 
 #include <kurl.h>
-#include <KMime/kmime_message.h>
+#include <kmime/kmime_message.h>
 #include <AkonadiCore/collection.h>
 
 #include <boost/shared_ptr.hpp>

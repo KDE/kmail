@@ -81,8 +81,8 @@ using KMail::MailServiceImpl;
 #include <KCrash>
 #include <KGlobal>
 
-#include <KMime/kmime_message.h>
-#include <KMime/kmime_util.h>
+#include <kmime/kmime_message.h>
+#include <kmime/kmime_headers.h>
 #include <AkonadiCore/Collection>
 #include <AkonadiCore/CollectionFetchJob>
 #include <AkonadiCore/ChangeRecorder>

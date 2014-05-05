@@ -139,8 +139,8 @@ using KSieveUi::SieveDebugDialog;
 #include <MailTransport/mailtransport/transportmanager.h>
 #include <MailTransport/mailtransport/transport.h>
 #include <KMime/kmime_mdn.h>
-#include <KMime/kmime_header_parsing.h>
-#include <KMime/kmime_message.h>
+#include <kmime/kmime_header_parsing.h>
+#include <kmime/kmime_message.h>
 #include <ksieveui/managesievescriptsdialog.h>
 #include <ksieveui/util/util.h>
 

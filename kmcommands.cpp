@@ -63,7 +63,7 @@
 #include <kio/jobuidelegate.h>
 #include <kio/netaccess.h>
 
-#include <KMime/kmime_message.h>
+#include <kmime/kmime_message.h>
 
 #include <KPIMIdentities/kpimidentities/identitymanager.h>
 #include <AkonadiCore/itemmodifyjob.h>
