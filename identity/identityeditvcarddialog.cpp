@@ -17,7 +17,7 @@
 
 #include "identityeditvcarddialog.h"
 
-#include <KABC/VCardConverter>
+#include <KABC/kabc/VCardConverter>
 #include <KLocalizedString>
 #include <Akonadi/Contact/ContactEditor>
 #include <QDebug>

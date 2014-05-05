@@ -25,7 +25,7 @@
 #include <Akonadi/Contact/ContactsTreeModel>
 #include <AkonadiCore/ChangeRecorder>
 
-#include <KABC/Addressee>
+#include <KABC/kabc/Addressee>
 
 #include <KLocalizedString>
 

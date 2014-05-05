@@ -22,7 +22,7 @@
 
 #include <AkonadiCore/ItemModifyJob>
 
-#include <KABC/Addressee>
+#include <KABC/kabc/Addressee>
 
 #include <KLocalizedString>
 

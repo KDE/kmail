@@ -23,8 +23,8 @@
 
 #include <libkdepim/misc/broadcaststatus.h>
 
-#include <KABC/Addressee>
-#include <KABC/ContactGroup>
+#include <KABC/kabc/Addressee>
+#include <KABC/kabc/ContactGroup>
 
 #include <AkonadiCore/CollectionFetchJob>
 #include <AkonadiCore/AgentInstanceCreateJob>
