@@ -112,7 +112,7 @@
 #include <AkonadiCore/itemcreatejob.h>
 #include <AkonadiCore/entitymimetypefiltermodel.h>
 #include <AkonadiCore/itemfetchjob.h>
-#include <KPIMUtils/email.h>
+#include <KPIMUtils/kpimutils/email.h>
 #include <KPIMIdentities/identitymanager.h>
 #include <KPIMIdentities/identitycombo.h>
 #include <KPIMIdentities/identity.h>

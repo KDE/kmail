@@ -29,7 +29,7 @@ using MessageComposer::AliasesExpandJob;
 #include <klocale.h>
 #include <kmessagebox.h>
 
-#include <KPIMUtils/Email>
+#include <KPIMUtils/kpimutils/Email>
 
 
 class AddressValidationJob::Private

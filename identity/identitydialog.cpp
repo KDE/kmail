@@ -69,8 +69,8 @@
 #include "libkleo/ui/keyrequester.h"
 #include "kleo/cryptobackendfactory.h"
 
-#include <KPIMUtils/email.h>
-#include <KPIMUtils/emailvalidator.h>
+#include <KPIMUtils/kpimutils/email.h>
+#include <KPIMUtils/kpimutils/emailvalidator.h>
 #include <MailTransport/transport.h>
 #include <MailTransport/transportmanager.h>
 #include <MailTransport/transportcombobox.h>

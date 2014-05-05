@@ -135,7 +135,7 @@ using KSieveUi::SieveDebugDialog;
 
 #include <KPIMIdentities/identity.h>
 #include <KPIMIdentities/identitymanager.h>
-#include <KPIMUtils/email.h>
+#include <KPIMUtils/kpimutils/email.h>
 #include <MailTransport/transportmanager.h>
 #include <MailTransport/transport.h>
 #include <KMime/kmime_mdn.h>

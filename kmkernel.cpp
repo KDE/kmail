@@ -10,7 +10,7 @@ using KPIM::BroadcastStatus;
 #include "editor/composer.h"
 #include "kmreadermainwin.h"
 #include "undostack.h"
-#include <KPIMUtils/kfileio.h>
+#include <KPIMUtils/kpimutils/kfileio.h>
 #include "kmreaderwin.h"
 #include "kmmainwidget.h"
 #include "addressline/recentaddresses.h"

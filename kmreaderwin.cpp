@@ -30,7 +30,7 @@
 #include "job/addemailtoexistingcontactjob.h"
 
 #include "kdepim-version.h"
-#include <KPIMUtils/email.h>
+#include <KPIMUtils/kpimutils/email.h>
 #include <libkdepim/job/addemailaddressjob.h>
 #include <libkdepim/job/openemailaddressjob.h>
 #include <libkdepim/job/addemaildisplayjob.h>

@@ -49,7 +49,7 @@
 
 #include <unistd.h> // link()
 #include <kprogressdialog.h>
-#include <KPIMUtils/email.h>
+#include <KPIMUtils/kpimutils/email.h>
 #include <kdbusservicestarter.h>
 #include <qdebug.h>
 #include <kfiledialog.h>
@@ -101,7 +101,7 @@ using KMail::SecondaryWindow;
 #include "messageviewer/settings/globalsettings.h"
 #include "messagecore/settings/globalsettings.h"
 
-#include <KPIMUtils/kfileio.h>
+#include <KPIMUtils/kpimutils/kfileio.h>
 
 #include <AkonadiCore/itemmovejob.h>
 #include <AkonadiCore/itemcopyjob.h>
