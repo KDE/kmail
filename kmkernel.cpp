@@ -34,11 +34,11 @@ using KPIM::RecentAddresses;
 #include "kdepim-version.h"
 
 // kdepimlibs includes
-#include <KPIMIdentities/identity.h>
-#include <KPIMIdentities/identitymanager.h>
-#include <MailTransport/transport.h>
-#include <MailTransport/transportmanager.h>
-#include <MailTransport/dispatcherinterface.h>
+#include <KPIMIdentities/kpimidentities/identity.h>
+#include <KPIMIdentities/kpimidentities/identitymanager.h>
+#include <MailTransport/mailtransport/transport.h>
+#include <MailTransport/mailtransport/transportmanager.h>
+#include <MailTransport/mailtransport/dispatcherinterface.h>
 #include <AkonadiCore/servermanager.h>
 
 #include <kde_file.h>

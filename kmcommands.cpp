@@ -65,7 +65,7 @@
 
 #include <KMime/kmime_message.h>
 
-#include <KPIMIdentities/identitymanager.h>
+#include <KPIMIdentities/kpimidentities/identitymanager.h>
 #include <AkonadiCore/itemmodifyjob.h>
 #include <AkonadiCore/itemfetchjob.h>
 
@@ -108,12 +108,12 @@ using KMail::SecondaryWindow;
 #include <AkonadiCore/itemdeletejob.h>
 #include <AkonadiCore/tag.h>
 #include <AkonadiCore/tagcreatejob.h>
-#include <MailTransport/transportattribute.h>
-#include <MailTransport/sentbehaviourattribute.h>
+#include <MailTransport/mailtransport/transportattribute.h>
+#include <MailTransport/mailtransport/sentbehaviourattribute.h>
 
 #include <messagelist/pane.h>
 
-#include <MailTransport/transportmanager.h>
+#include <MailTransport/mailtransport/transportmanager.h>
 using MailTransport::TransportManager;
 
 
