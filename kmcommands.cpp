@@ -133,7 +133,7 @@ using MessageComposer::MessageFactory;
 #include "progresswidget/progressmanager.h"
 using KPIM::ProgressManager;
 using KPIM::ProgressItem;
-#include <KMime/kmime_mdn.h>
+#include <kmime/kmime_mdn.h>
 using namespace KMime;
 
 #include "kleo/cryptobackend.h"

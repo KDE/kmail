@@ -120,7 +120,7 @@
 #include <MailTransport/mailtransport/transportcombobox.h>
 #include <MailTransport/mailtransport/transportmanager.h>
 #include <MailTransport/mailtransport/transport.h>
-#include <KMime/kmime_codecs.h>
+#include <kmime/kmime_codecs.h>
 #include <kmime/kmime_message.h>
 #include <kpimtextedit/selectspecialchardialog.h>
 
