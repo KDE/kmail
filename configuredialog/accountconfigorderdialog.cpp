@@ -190,7 +190,7 @@ void AccountConfigOrderDialog::slotOk()
     }
 
     GlobalSettings::self()->setOrder(order);
-    GlobalSettings::self()->writeConfig();
+    GlobalSettings::self()->save();
     KDialog::accept();
 }
 

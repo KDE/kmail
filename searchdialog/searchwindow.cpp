@@ -555,7 +555,7 @@ void SearchWindow::searchDone( KJob* job )
         Q_ASSERT( mFolder.hasAttribute<Akonadi::PersistentSearchAttribute>() );
 
         GlobalSettings::setLastSearchCollectionId( mFolder.id() );
-        GlobalSettings::self()->writeConfig();
+        GlobalSettings::self()->save();
         GlobalSettings::self()->requestSync();
 
         // store the kmail specific serialization of the search in an attribute on

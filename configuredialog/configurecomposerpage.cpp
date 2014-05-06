@@ -918,7 +918,7 @@ void ComposerPage::CharsetTab::slotVerifyCharset( QString & charset )
     }
 
     bool ok = false;
-    QTextCodec *codec = KGlobal::charsets()->codecForName( charset, ok );
+    QTextCodec *codec = KCharsets::charsets()->codecForName( charset, ok );
     if ( ok && codec ) {
         charset = QString::fromLatin1( codec->name() ).toLower();
         return;

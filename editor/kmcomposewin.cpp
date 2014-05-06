@@ -167,6 +167,7 @@
 #include <memory>
 #include <boost/shared_ptr.hpp>
 #include <KHelpClient>
+#include <KCharsets>
 
 using Sonnet::DictionaryComboBox;
 using MailTransport::TransportManager;
@@ -2001,9 +2002,9 @@ static QString selectCharset( KSelectAction *root, const QString &encoding )
         }
         else {
             const QString fixedActionText = MessageViewer::NodeHelper::fixEncoding( action->text() );
-            if ( KGlobal::charsets()->codecForName(
-                     KGlobal::charsets()->encodingForName( fixedActionText ) )
-                 == KGlobal::charsets()->codecForName( encoding ) ) {
+            if ( KCharsets::charsets()->codecForName(
+                     KCharsets::charsets()->encodingForName( fixedActionText ) )
+                 == KCharsets::charsets()->codecForName( encoding ) ) {
                 return action->text();
             }
         }

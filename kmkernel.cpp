@@ -1356,14 +1356,14 @@ void KMKernel::slotRequestConfigSync()
 
 void KMKernel::slotSyncConfig()
 {
-    PimCommon::PimCommonSettings::self()->writeConfig();
-    MessageCore::GlobalSettings::self()->writeConfig();
-    MessageViewer::GlobalSettings::self()->writeConfig();
-    MessageComposer::MessageComposerSettings::self()->writeConfig();
-    TemplateParser::GlobalSettings::self()->writeConfig();
-    MessageList::Core::Settings::self()->writeConfig();
-    MailCommon::MailCommonSettings::self()->writeConfig();
-    GlobalSettings::self()->writeConfig();
+    PimCommon::PimCommonSettings::self()->save();
+    MessageCore::GlobalSettings::self()->save();
+    MessageViewer::GlobalSettings::self()->save();
+    MessageComposer::MessageComposerSettings::self()->save();
+    TemplateParser::GlobalSettings::self()->save();
+    MessageList::Core::Settings::self()->save();
+    MailCommon::MailCommonSettings::self()->save();
+    GlobalSettings::self()->save();
     KMKernel::config()->sync();
 }
 

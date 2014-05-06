@@ -996,7 +996,7 @@ void AppearancePage::SystemTrayTab::save()
     saveCheckBox(mSystemTrayCheck, GlobalSettings::self()->systemTrayEnabledItem() );
     GlobalSettings::self()->setSystemTrayPolicy( mSystemTrayGroup->selected() );
     saveCheckBox(mSystemTrayShowUnreadMail,GlobalSettings::self()->systemTrayShowUnreadItem());
-    GlobalSettings::self()->writeConfig();
+    GlobalSettings::self()->save();
 }
 
 QString AppearancePage::MessageTagTab::helpAnchor() const
