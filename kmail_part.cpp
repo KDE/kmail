@@ -51,6 +51,7 @@
 #include "foldershortcutactionmanager.h"
 
 #include <kglobal.h>
+#include <KSharedConfig>
 
 // QT5 K_PLUGIN_FACTORY( KMailFactory, registerPlugin<KMailPart>(); )
 K_EXPORT_PLUGIN( KMailFactory( KMail::AboutData() ) )
@@ -91,7 +92,7 @@ KMailPart::KMailPart(QWidget *parentWidget, QObject *parent, const QVariantList 
     setWidget(canvas);
     KIconLoader::global()->addAppDir( QLatin1String("libkdepim") );
     mainWidget = new KMMainWidget( canvas, this, actionCollection(),
-                                   KGlobal::config() );
+                                   KSharedConfig::openConfig() );
     mainWidget->setObjectName( QLatin1String("partmainwidget") );
     QVBoxLayout *topLayout = new QVBoxLayout(canvas);
     topLayout->addWidget(mainWidget);

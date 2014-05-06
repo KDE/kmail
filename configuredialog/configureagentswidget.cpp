@@ -37,6 +37,7 @@
 #include <QVBoxLayout>
 #include <QFile>
 #include <QDir>
+#include <KSharedConfig>
 
 
 ConfigureAgentsWidget::ConfigureAgentsWidget(QWidget *parent)
@@ -85,7 +86,7 @@ ConfigureAgentsWidget::~ConfigureAgentsWidget()
 
 void ConfigureAgentsWidget::readConfig()
 {
-    KConfigGroup group( KGlobal::config(), "ConfigureAgentsWidget" );
+    KConfigGroup group( KSharedConfig::openConfig(), "ConfigureAgentsWidget" );
     QList<int> size;
     size << 400 << 100;
     mSplitter->setSizes(group.readEntry( "splitter", size));
@@ -93,7 +94,7 @@ void ConfigureAgentsWidget::readConfig()
 
 void ConfigureAgentsWidget::writeConfig()
 {
-    KConfigGroup group( KGlobal::config(), "ConfigureAgentsWidget" );
+    KConfigGroup group( KSharedConfig::openConfig(), "ConfigureAgentsWidget" );
     group.writeEntry( "splitter", mSplitter->sizes());
 }
 
