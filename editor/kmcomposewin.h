@@ -411,7 +411,7 @@ private slots:
     void setMaximumHeaderSize();
     void slotDoDelayedSend( KJob* );
 
-    void slotCompletionModeChanged( KGlobalSettings::Completion );
+    void slotCompletionModeChanged( KCompletion::CompletionMode );
     void slotConfigChanged();
 
     void slotPrintComposeResult( KJob *job );

@@ -300,14 +300,14 @@ KMComposeWin::KMComposeWin( const KMime::Message::Ptr &aMsg, bool lastSignState,
     mEdtReplyTo->setObjectName( QLatin1String("replyToLine") );
     mEdtReplyTo->setRecentAddressConfig( MessageComposer::MessageComposerSettings::self()->config() );
     mEdtReplyTo->setToolTip( i18n( "Set the \"Reply-To:\" email address for this message" ) );
-    connect( mEdtReplyTo, SIGNAL(completionModeChanged(KGlobalSettings::Completion)),
-             SLOT(slotCompletionModeChanged(KGlobalSettings::Completion)) );
+    connect( mEdtReplyTo, SIGNAL(completionModeChanged(KCompletion::Completion)),
+             SLOT(slotCompletionModeChanged(KCompletion::Completion)) );
 
     MessageComposer::RecipientsEditor* recipientsEditor = new MessageComposer::RecipientsEditor( mHeadersArea );
     recipientsEditor->setRecentAddressConfig( MessageComposer::MessageComposerSettings::self()->config() );
     connect( recipientsEditor,
-             SIGNAL(completionModeChanged(KGlobalSettings::Completion)),
-             SLOT(slotCompletionModeChanged(KGlobalSettings::Completion)) );
+             SIGNAL(completionModeChanged(KCompletion::Completion)),
+             SLOT(slotCompletionModeChanged(KCompletion::Completion)) );
     connect( recipientsEditor, SIGNAL(sizeHintChanged()), SLOT(recipientEditorSizeHintChanged()) );
     mComposerBase->setRecipientsEditor( recipientsEditor );
 
@@ -441,8 +441,8 @@ KMComposeWin::KMComposeWin( const KMime::Message::Ptr &aMsg, bool lastSignState,
     connect( kmkernel->identityManager(), SIGNAL(changed(uint)),
              SLOT(slotIdentityChanged(uint)) );
 
-    connect( mEdtFrom, SIGNAL(completionModeChanged(KGlobalSettings::Completion)),
-             SLOT(slotCompletionModeChanged(KGlobalSettings::Completion)) );
+    connect( mEdtFrom, SIGNAL(completionModeChanged(KCompletion::CompletionMode)),
+             SLOT(slotCompletionModeChanged(KCompletion::CompletionMode)) );
     connect( kmkernel->folderCollectionMonitor(), SIGNAL(collectionRemoved(Akonadi::Collection)),
              SLOT(slotFolderRemoved(Akonadi::Collection)) );
     connect( kmkernel, SIGNAL(configChanged()),
@@ -575,9 +575,9 @@ void KMComposeWin::readConfig( bool reload /* = false */ )
     const int currentTransport = GlobalSettings::self()->currentTransport().isEmpty() ? -1 : GlobalSettings::self()->currentTransport().toInt();
     mBtnDictionary->setChecked( GlobalSettings::self()->stickyDictionary() );
 
-    //QT5 mEdtFrom->setCompletionMode( (KGlobalSettings::Completion)GlobalSettings::self()->completionMode() );
-    mComposerBase->recipientsEditor()->setCompletionMode( (KGlobalSettings::Completion)GlobalSettings::self()->completionMode() );
-    //QT5 mEdtReplyTo->setCompletionMode( (KGlobalSettings::Completion)GlobalSettings::self()->completionMode() );
+    //QT5 mEdtFrom->setCompletionMode( (KCompletion::Completion)GlobalSettings::self()->completionMode() );
+    //QT5 mComposerBase->recipientsEditor()->setCompletionMode( (KCompletion::Completion)GlobalSettings::self()->completionMode() );
+    //QT5 mEdtReplyTo->setCompletionMode( (KCompletion::Completion)GlobalSettings::self()->completionMode() );
 
     if ( MessageCore::GlobalSettings::self()->useDefaultFonts() ) {
         mBodyFont = KGlobalSettings::generalFont();
@@ -3255,7 +3255,7 @@ void KMComposeWin::setFocusToSubject()
     mEdtSubject->setFocus();
 }
 
-void KMComposeWin::slotCompletionModeChanged( KGlobalSettings::Completion mode )
+void KMComposeWin::slotCompletionModeChanged( KCompletion::CompletionMode mode )
 {
     GlobalSettings::self()->setCompletionMode( (int) mode );
 
