@@ -1771,7 +1771,7 @@ void KMComposeWin::setMessage( const KMime::Message::Ptr &newMsg, bool lastSignS
     setModified( isModified );
 
     // honor "keep reply in this folder" setting even when the identity is changed later on
-    //QT5 mPreventFccOverwrite = ( !kmailFcc.isEmpty() && ident.fcc() != kmailFcc );
+    mPreventFccOverwrite = ( !kmailFcc.isEmpty() && ident.fcc() != kmailFcc );
     QTimer::singleShot( 0, this, SLOT(forceAutoSaveMessage()) ); //Force autosaving to make sure this composer reappears if a crash happens before the autosave timer kicks in.
 }
 
@@ -2961,7 +2961,7 @@ bool KMComposeWin::checkRecipientNumber() const
 //-----------------------------------------------------------------------------
 void KMComposeWin::slotHelp()
 {
-    //QT5 KHelpClient::invokeHelp();
+    KHelpClient::invokeHelp();
 }
 
 //-----------------------------------------------------------------------------
