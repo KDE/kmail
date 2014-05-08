@@ -1425,7 +1425,7 @@ void KMComposeWin::setupActions( void )
     mCryptoModuleAction->setItems( l );
     mCryptoModuleAction->setToolTip( i18n( "Select a cryptographic format for this message" ) );
 
-    //QT5 mComposerBase->editor()->createActions( actionCollection() );
+    actionCollection()->addActions(mComposerBase->editor()->createActions());
     actionCollection()->addAction( QLatin1String("shared_link"), KMKernel::self()->storageServiceManager()->menuShareLinkServices(this) );
 
     createGUI( QLatin1String("kmcomposerui.rc") );

@@ -49,6 +49,7 @@
 #include <QCheckBox>
 #include <QTextCodec>
 #include <QtCore/QMimeData>
+#include <QAction>
 
 using namespace MailCommon;
 
@@ -62,27 +63,32 @@ KMComposerEditor::~KMComposerEditor()
 {
 }
 
-void KMComposerEditor::createActions( KActionCollection *actionCollection )
+QList<QAction *> KMComposerEditor::createActions()
 {
-    //QT5 KMeditor::createActions( actionCollection );
+    QList<QAction *> lstAction = KMeditor::createActions();
 
-    KAction *pasteQuotation = new KAction( i18n("Pa&ste as Quotation"), this );
-    actionCollection->addAction(QLatin1String("paste_quoted"), pasteQuotation );
+    QAction *pasteQuotation = new QAction( i18n("Pa&ste as Quotation"), this );
+    pasteQuotation->setObjectName(QLatin1String("paste_quoted"));
     pasteQuotation->setShortcut(QKeySequence(Qt::CTRL+Qt::SHIFT+Qt::Key_O));
     connect( pasteQuotation, SIGNAL(triggered(bool)), this, SLOT(slotPasteAsQuotation()) );
+    lstAction.append(pasteQuotation);
 
-    KAction *addQuoteChars = new KAction( i18n("Add &Quote Characters"), this );
-    actionCollection->addAction( QLatin1String("tools_quote"), addQuoteChars );
+    QAction *addQuoteChars = new QAction( i18n("Add &Quote Characters"), this );
+    addQuoteChars->setObjectName(QLatin1String("tools_quote"));
     connect( addQuoteChars, SIGNAL(triggered(bool)), this, SLOT(slotAddQuotes()) );
+    lstAction.append(addQuoteChars);
 
-    KAction *remQuoteChars = new KAction( i18n("Re&move Quote Characters"), this );
-    actionCollection->addAction( QLatin1String("tools_unquote"), remQuoteChars );
+    QAction *remQuoteChars = new QAction( i18n("Re&move Quote Characters"), this );
+    remQuoteChars->setObjectName(QLatin1String("tools_unquote"));
     connect (remQuoteChars, SIGNAL(triggered(bool)), this, SLOT(slotRemoveQuotes()) );
+    lstAction.append(remQuoteChars);
 
-    KAction *pasteWithoutFormatting = new KAction( i18n("Paste Without Formatting"), this );
-    actionCollection->addAction( QLatin1String("paste_without_formatting"), pasteWithoutFormatting );
+    QAction *pasteWithoutFormatting = new QAction( i18n("Paste Without Formatting"), this );
+    pasteWithoutFormatting->setObjectName(QLatin1String("paste_without_formatting"));
     pasteWithoutFormatting->setShortcut(QKeySequence(Qt::CTRL+Qt::SHIFT+Qt::Key_V));
     connect (pasteWithoutFormatting, SIGNAL(triggered(bool)), this, SLOT(slotPasteWithoutFormatting()) );
+    lstAction.append(pasteWithoutFormatting);
+    return lstAction;
 }
 
 void KMComposerEditor::setHighlighterColors(KPIMTextEdit::EMailQuoteHighlighter * highlighter)

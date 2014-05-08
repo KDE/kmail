@@ -48,7 +48,7 @@ public:
      * - tools_quote
      * - tools_unquote
      */
-    void createActions( KActionCollection *actionCollection );
+    virtual QList<QAction *> createActions();
 
     /**
      * This replaces all characters not known to the specified codec with
