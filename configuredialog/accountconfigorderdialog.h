@@ -21,7 +21,7 @@
 #include <KDialog>
 
 class QListWidget;
-class KPushButton;
+class QPushButton;
 
 namespace KMail {
 
@@ -47,8 +47,8 @@ private:
     void readConfig();
     void init();
     QListWidget *mListAccount;
-    KPushButton *mUpButton;
-    KPushButton *mDownButton;
+    QPushButton *mUpButton;
+    QPushButton *mDownButton;
 };
 }
 

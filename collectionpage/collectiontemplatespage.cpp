@@ -26,7 +26,7 @@
 #include <AkonadiCore/collection.h>
 
 #include <KLocalizedString>
-#include <KPushButton>
+#include <QPushButton>
 #include <KDialog>
 #include <QCheckBox>
 
@@ -77,7 +77,7 @@ void CollectionTemplatesPage::init()
 
     QHBoxLayout *btns = new QHBoxLayout();
     btns->setSpacing( KDialog::spacingHint() );
-    KPushButton *copyGlobal = new KPushButton( i18n("&Copy Global Templates"), this );
+    QPushButton *copyGlobal = new QPushButton( i18n("&Copy Global Templates"), this );
     copyGlobal->setEnabled( false );
     btns->addWidget( copyGlobal );
     topLayout->addLayout( btns );

@@ -22,7 +22,7 @@
 #include "settings/globalsettings.h"
 
 #include <KLocalizedString>
-#include <KPushButton>
+#include <QPushButton>
 #include <KVBox>
 #include <KIcon>
 
@@ -57,14 +57,14 @@ AccountConfigOrderDialog::AccountConfigOrderDialog(QWidget *parent)
     vlay->addWidget(mListAccount);
 
     KVBox* upDownBox = new KVBox( page );
-    mUpButton = new KPushButton( upDownBox );
+    mUpButton = new QPushButton( upDownBox );
     mUpButton->setIcon( KIcon(QLatin1String("go-up")) );
     mUpButton->setToolTip( i18nc( "Move selected account up.", "Up" ) );
     mUpButton->setEnabled( false ); // b/c no item is selected yet
     mUpButton->setFocusPolicy( Qt::StrongFocus );
     mUpButton->setAutoRepeat(true);
 
-    mDownButton = new KPushButton( upDownBox );
+    mDownButton = new QPushButton( upDownBox );
     mDownButton->setIcon( KIcon(QLatin1String("go-down")) );
     mDownButton->setToolTip( i18nc( "Move selected account down.", "Down" ) );
     mDownButton->setEnabled( false ); // b/c no item is selected yet

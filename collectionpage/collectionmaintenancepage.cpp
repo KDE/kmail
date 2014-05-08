@@ -31,7 +31,7 @@
 #include <KDialog>
 #include <KLocalizedString>
 #include <KLocale>
-#include <KPushButton>
+#include <QPushButton>
 #include <kio/global.h>
 #include <KLocale>
 #include <KGlobal>
@@ -102,7 +102,7 @@ void CollectionMaintenancePage::init(const Akonadi::Collection & col)
 
     indexingLayout->addWidget( mLastIndexed );
 #if 0
-    KPushButton *forceReindex = new KPushButton(i18n("Force reindexing"));
+    QPushButton *forceReindex = new QPushButton(i18n("Force reindexing"));
     indexingLayout->addWidget( forceReindex );
     connect(forceReindex,SIGNAL(clicked()),SLOT(slotReindexing()));
 #endif

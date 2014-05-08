@@ -82,7 +82,7 @@ using MailTransport::TransportManager;
 #include <kfileitem.h>
 #include <kurl.h>
 #include <qdebug.h>
-#include <kpushbutton.h>
+#include <QPushButton>
 #include <kcombobox.h>
 #include <ktabwidget.h>
 #include <KStandardDirs>
@@ -490,7 +490,7 @@ IdentityDialog::IdentityDialog( QWidget * parent )
     ++row;
     mAttachMyVCard = new QCheckBox(i18n("Attach my vCard to message"), tab);
     glay->addWidget( mAttachMyVCard, row, 0 );
-    mEditVCard = new KPushButton(i18n("Create..."),tab);
+    mEditVCard = new QPushButton(i18n("Create..."),tab);
     connect(mEditVCard,SIGNAL(clicked()),SLOT(slotEditVcard()));
     glay->addWidget( mEditVCard, row, 1 );
 
@@ -559,7 +559,7 @@ IdentityDialog::IdentityDialog( QWidget * parent )
 
     QHBoxLayout *btns = new QHBoxLayout();
     btns->setSpacing( spacingHint() );
-    mCopyGlobal = new KPushButton( i18n("&Copy Global Templates"), tab );
+    mCopyGlobal = new QPushButton( i18n("&Copy Global Templates"), tab );
     mCopyGlobal->setEnabled( false );
     btns->addWidget( mCopyGlobal );
     vlay->addLayout( btns );

@@ -1057,12 +1057,12 @@ AppearancePageMessageTagTab::AppearancePageMessageTagTab( QWidget * parent )
     mTagAddLineEdit->setTrapReturnKey( true );
     addremovegrid->addWidget( mTagAddLineEdit );
 
-    mTagAddButton = new KPushButton( mTagsGroupBox );
+    mTagAddButton = new QPushButton( mTagsGroupBox );
     mTagAddButton->setToolTip( i18n("Add new tag") );
     mTagAddButton->setIcon( KIcon( QLatin1String("list-add") ) );
     addremovegrid->addWidget( mTagAddButton );
 
-    mTagRemoveButton = new KPushButton( mTagsGroupBox );
+    mTagRemoveButton = new QPushButton( mTagsGroupBox );
     mTagRemoveButton->setToolTip( i18n("Remove selected tag") );
     mTagRemoveButton->setIcon( KIcon( QLatin1String("list-remove") ) );
     addremovegrid->addWidget( mTagRemoveButton );
@@ -1071,13 +1071,13 @@ AppearancePageMessageTagTab::AppearancePageMessageTagTab( QWidget * parent )
     QHBoxLayout *updowngrid = new QHBoxLayout();
     tageditgrid->addLayout( updowngrid );
 
-    mTagUpButton = new KPushButton( mTagsGroupBox );
+    mTagUpButton = new QPushButton( mTagsGroupBox );
     mTagUpButton->setToolTip( i18n("Increase tag priority") );
     mTagUpButton->setIcon( KIcon( QLatin1String("arrow-up") ) );
     mTagUpButton->setAutoRepeat( true );
     updowngrid->addWidget( mTagUpButton );
 
-    mTagDownButton = new KPushButton( mTagsGroupBox );
+    mTagDownButton = new QPushButton( mTagsGroupBox );
     mTagDownButton->setToolTip( i18n("Decrease tag priority") );
     mTagDownButton->setIcon( KIcon( QLatin1String("arrow-down") ) );
     mTagDownButton->setAutoRepeat( true );

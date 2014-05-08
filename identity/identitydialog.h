@@ -43,7 +43,7 @@ class SimpleStringListEditor;
 class KComboBox;
 class KJob;
 class KLineEdit;
-class KPushButton;
+class QPushButton;
 class KTabWidget;
 
 namespace Kleo {
@@ -136,14 +136,14 @@ private:
     MailTransport::TransportComboBox *mTransportCombo;
     QCheckBox                        *mAttachMyVCard;
     QString                          mVcardFilename;
-    KPushButton                      *mEditVCard;
+    QPushButton                      *mEditVCard;
     PimCommon::AutoCorrectionLanguage *mAutoCorrectionLanguage;
     KLineEdit                        *mDefaultDomainEdit;
 
     // "templates" tab:
     TemplateParser::TemplatesConfiguration *mWidget;
     QCheckBox                    *mCustom;
-    KPushButton                  *mCopyGlobal;
+    QPushButton                  *mCopyGlobal;
     // "signature" tab:
     KPIMIdentities::SignatureConfigurator *mSignatureConfigurator;
     // "X-Face" tab:
