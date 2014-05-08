@@ -8,8 +8,8 @@ add_definitions( -DQT_NO_CAST_TO_ASCII )
 
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} ${KDE4_DATA_DIR}/cmake/modules)
 
-qt4_generate_dbus_interface(kmkernel.h org.kde.kmail.kmail.xml OPTIONS -a)
-qt4_generate_dbus_interface(editor/kmcomposewin.h org.kde.kmail.mailcomposer.xml OPTIONS -a)
+qt5_generate_dbus_interface(kmkernel.h org.kde.kmail.kmail.xml OPTIONS -a)
+qt5_generate_dbus_interface(editor/kmcomposewin.h org.kde.kmail.mailcomposer.xml OPTIONS -a)
 
 add_custom_target(kmail_xml ALL
   DEPENDS ${CMAKE_CURRENT_BINARY_DIR}/org.kde.kmail.kmail.xml
@@ -194,7 +194,7 @@ if (KDEPIM_BUILD_DESKTOP)
   )
 
   # TODO PORT
-  qt4_generate_dbus_interface(editor/kmcomposewin.h org.kde.kmail.mailcomposer.xml OPTIONS -a)
+  qt5_generate_dbus_interface(editor/kmcomposewin.h org.kde.kmail.mailcomposer.xml OPTIONS -a)
   qt5_add_dbus_adaptor(kmailprivate_LIB_SRCS
     ${CMAKE_BINARY_DIR}/kmail/org.kde.kmail.mailcomposer.xml editor/kmcomposewin.h KMComposeWin
   )
@@ -301,7 +301,7 @@ if (KDEPIM_BUILD_DESKTOP)
   ########### kmailpart ###############
 
   set(kmailpart_PART_SRCS kmail_part.cpp )
-  qt4_generate_dbus_interface(kmail_part.h org.kde.kmail.kmailpart.xml OPTIONS -a)
+  qt5_generate_dbus_interface(kmail_part.h org.kde.kmail.kmailpart.xml OPTIONS -a)
   qt5_add_dbus_adaptor(kmailpart_PART_SRCS
     ${CMAKE_BINARY_DIR}/kmail/org.kde.kmail.kmailpart.xml kmail_part.h KMailPart
   )
