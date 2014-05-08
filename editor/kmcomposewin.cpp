@@ -3261,8 +3261,8 @@ void KMComposeWin::slotCompletionModeChanged( KCompletion::CompletionMode mode )
     GlobalSettings::self()->setCompletionMode( (int) mode );
 
     // sync all the lineedits to the same completion mode
-    //QT5 mEdtFrom->setCompletionMode( mode );
-    //QT5 mEdtReplyTo->setCompletionMode( mode );
+    mEdtFrom->setCompletionMode( mode );
+    mEdtReplyTo->setCompletionMode( mode );
     mComposerBase->recipientsEditor()->setCompletionMode( mode );
 }
 
