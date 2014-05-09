@@ -141,7 +141,7 @@ void CollectionMaintenancePage::updateLabel( qint64 nbMail, qint64 nbUnreadMail,
 {
     mCollectionCount->setText( QString::number( qMax( 0LL, nbMail ) ) );
     mCollectionUnread->setText( QString::number( qMax( 0LL, nbUnreadMail ) ) );
-    mFolderSizeLabel->setText( KGlobal::locale()->formatByteSize( qMax( 0LL, size ) ) );
+    mFolderSizeLabel->setText( KLocale::global()->formatByteSize( qMax( 0LL, size ) ) );
 }
 
 void CollectionMaintenancePage::save(Collection &collection)

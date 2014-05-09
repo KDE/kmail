@@ -85,7 +85,7 @@ void CodecManager::updatePreferredCharsets()
         QByteArray charset = str.toLatin1().toLower();
 
         if( charset == "locale" ) {
-            charset = KGlobal::locale()->encoding().toLower();
+            charset = KLocale::global()->encoding().toLower();
 
             // Special case for Japanese:
             // (Introduction to i18n, 6.6 Limit of Locale technology):

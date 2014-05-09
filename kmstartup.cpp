@@ -26,6 +26,7 @@
 #include <kglobal.h>
 #include <K4AboutData>
 #include <kiconloader.h>
+#include <KLocale>
 
 #undef Status // stupid X headers
 
@@ -100,7 +101,7 @@ void insertLibraryCataloguesAndIcons() {
         "libkgapi"
     };
 
-    KLocale * l = KGlobal::locale();
+    KLocale * l = KLocale::global();
     KIconLoader * il = KIconLoader::global();
     for ( unsigned int i = 0 ; i < sizeof catalogs / sizeof *catalogs ; ++i ) {
         //QT5 l->insertCatalog( QLatin1String(catalogs[i]) );

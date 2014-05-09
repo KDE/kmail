@@ -191,7 +191,7 @@ void AttachmentView::updateAttachmentLabel()
     Q_FOREACH(MessageCore::AttachmentPart::Ptr part, list) {
         size += part->size();
     }
-    d->infoAttachment->setText(i18np("1 attachment (%2)", "%1 attachments (%2)",model()->rowCount(), KGlobal::locale()->formatByteSize(qMax( 0LL, size ))));
+    d->infoAttachment->setText(i18np("1 attachment (%2)", "%1 attachments (%2)",model()->rowCount(), KLocale::global()->formatByteSize(qMax( 0LL, size ))));
 }
 
 void AttachmentView::selectNewAttachment()

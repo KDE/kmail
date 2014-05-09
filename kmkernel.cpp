@@ -111,6 +111,7 @@ using KMail::MailServiceImpl;
 #include <kcmdlineargs.h>
 #include <kstartupinfo.h>
 #include <kmailadaptor.h>
+#include <KLocale>
 #include "kmailinterface.h"
 #include "foldercollectionmonitor.h"
 #include "imapresourcesettings.h"
@@ -164,7 +165,7 @@ KMKernel::KMKernel (QObject *parent) :
     KMime::setUseOutlookAttachmentEncoding( MessageComposer::MessageComposerSettings::self()->outlookCompatibleAttachments() );
 
     // cberzan: this crap moved to CodecManager ======================
-    netCodec = QTextCodec::codecForName( KGlobal::locale()->encoding() );
+    netCodec = QTextCodec::codecForName( KLocale::global()->encoding() );
 
     // In the case of Japan. Japanese locale name is "eucjp" but
     // The Japanese mail systems normally used "iso-2022-jp" of locale name.
@@ -183,7 +184,7 @@ KMKernel::KMKernel (QObject *parent) :
         netCodec = QTextCodec::codecForName("jis7");
         // QTextCodec *cdc = QTextCodec::codecForName("jis7");
         // QTextCodec::setCodecForLocale(cdc);
-        // KGlobal::locale()->setEncoding(cdc->mibEnum());
+        // KLocale::global()->setEncoding(cdc->mibEnum());
     }
     // until here ================================================
 
