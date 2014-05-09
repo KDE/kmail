@@ -24,7 +24,7 @@
 #include <klocale.h>
 #include <kstandarddirs.h>
 #include <kglobal.h>
-#include <kaboutdata.h>
+#include <K4AboutData>
 #include <kiconloader.h>
 
 #undef Status // stupid X headers

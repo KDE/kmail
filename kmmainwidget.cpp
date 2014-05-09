@@ -145,7 +145,7 @@ using KSieveUi::SieveDebugDialog;
 #include <ksieveui/util/util.h>
 
 // KDELIBS includes
-#include <kaboutdata.h>
+#include <K4AboutData>
 #include <kicon.h>
 #include <kwindowsystem.h>
 #include <krun.h>

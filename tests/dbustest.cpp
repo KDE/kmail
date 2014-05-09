@@ -13,7 +13,7 @@ int main(int argc,char **argv)
 {
   qDebug() << "Test KMail D-Bus interface.";
 
-  KAboutData aboutData( "testKMailDBUS", 0,
+  K4AboutData aboutData( "testKMailDBUS", 0,
    ki18n("Test for KMail D-Bus interface"), "0.0" );
   KCmdLineArgs::init(argc, argv, &aboutData);
   KApplication app;
