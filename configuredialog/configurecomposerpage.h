@@ -27,7 +27,7 @@ class KIntSpinBox;
 class KIntNumInput;
 class KComboBox;
 class KUrlRequester;
-class KLineEdit;
+class QLineEdit;
 class ListView;
 class QPushButton;
 class QLabel;
@@ -196,11 +196,11 @@ private:
 
 private:
     QCheckBox   *mCreateOwnMessageIdCheck;
-    KLineEdit   *mMessageIdSuffixEdit;
+    QLineEdit   *mMessageIdSuffixEdit;
     ListView    *mHeaderList;
     QPushButton *mRemoveHeaderButton;
-    KLineEdit   *mTagNameEdit;
-    KLineEdit   *mTagValueEdit;
+    QLineEdit   *mTagNameEdit;
+    QLineEdit   *mTagValueEdit;
     QLabel      *mTagNameLabel;
     QLabel      *mTagValueLabel;
 };

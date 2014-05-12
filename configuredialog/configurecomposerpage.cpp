@@ -995,8 +995,8 @@ ComposerPageHeadersTab::ComposerPageHeadersTab( QWidget * parent )
     // "Message-Id suffix" line edit and label:
     QHBoxLayout *hlay = new QHBoxLayout(); // inherits spacing
     vlay->addLayout( hlay );
-    mMessageIdSuffixEdit = new KLineEdit( this );
-    mMessageIdSuffixEdit->setClearButtonShown( true );
+    mMessageIdSuffixEdit = new QLineEdit( this );
+    mMessageIdSuffixEdit->setClearButtonEnabled( true );
     // only ASCII letters, digits, plus, minus and dots are allowed
     QRegExpValidator *messageIdSuffixValidator =
             new QRegExpValidator( QRegExp( QLatin1String("[a-zA-Z0-9+-]+(?:\\.[a-zA-Z0-9+-]+)*") ), this );
@@ -1045,8 +1045,8 @@ ComposerPageHeadersTab::ComposerPageHeadersTab( QWidget * parent )
     glay->addWidget( mRemoveHeaderButton, 1, 2 );
 
     // "name" and "value" line edits and labels:
-    mTagNameEdit = new KLineEdit( this );
-    mTagNameEdit->setClearButtonShown(true);
+    mTagNameEdit = new QLineEdit( this );
+    mTagNameEdit->setClearButtonEnabled(true);
     mTagNameEdit->setEnabled( false );
     mTagNameLabel = new QLabel( i18nc("@label:textbox Name of the mime header.","&Name:"), this );
     mTagNameLabel->setBuddy( mTagNameEdit );
@@ -1056,8 +1056,8 @@ ComposerPageHeadersTab::ComposerPageHeadersTab( QWidget * parent )
     connect( mTagNameEdit, SIGNAL(textChanged(QString)),
              this, SLOT(slotMimeHeaderNameChanged(QString)) );
 
-    mTagValueEdit = new KLineEdit( this );
-    mTagValueEdit->setClearButtonShown(true);
+    mTagValueEdit = new QLineEdit( this );
+    mTagValueEdit->setClearButtonEnabled(true);
     mTagValueEdit->setEnabled( false );
     mTagValueLabel = new QLabel( i18n("&Value:"), this );
     mTagValueLabel->setBuddy( mTagValueEdit );

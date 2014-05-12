@@ -44,7 +44,7 @@ using MailTransport::TransportManagementWidget;
 #include <KMessageBox>
 #include <KComboBox>
 #include <KWindowSystem>
-#include <KLineEdit>
+#include <QLineEdit>
 #include <QDebug>
 
 #include <QVBoxLayout>
