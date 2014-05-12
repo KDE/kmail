@@ -1275,7 +1275,7 @@ bool KMMainWidget::slotSearch()
 //-----------------------------------------------------------------------------
 void KMMainWidget::slotHelp()
 {
-    //QT5 KHelpClient::invokeHelp();
+    KHelpClient::invokeHelp();
 }
 
 
