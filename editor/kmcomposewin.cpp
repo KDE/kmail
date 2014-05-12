@@ -134,7 +134,7 @@
 #include <kdescendantsproxymodel.h>
 #include <kedittoolbar.h>
 #include <kinputdialog.h>
-#include <kmenu.h>
+#include <QMenu>
 #include <kmimetype.h>
 #include <kmessagebox.h>
 #include <krecentfilesaction.h>
@@ -1186,8 +1186,8 @@ void KMComposeWin::setupActions( void )
     mRecentAction = new KRecentFilesAction( KIcon( QLatin1String("document-open") ),
                                             i18n( "&Insert Recent Text File" ), this );
     actionCollection()->addAction(QLatin1String("insert_file_recent"), mRecentAction );
-    connect(mRecentAction, SIGNAL(urlSelected(KUrl)),
-            SLOT(slotInsertRecentFile(KUrl)));
+    connect(mRecentAction, SIGNAL(urlSelected(QUrl)),
+            SLOT(slotInsertRecentFile(QUrl)));
     connect(mRecentAction, SIGNAL(recentListCleared()),
             SLOT(slotRecentListFileClear()));
     mRecentAction->loadEntries( KMKernel::self()->config()->group( QString() ) );
@@ -2074,7 +2074,7 @@ void KMComposeWin::slotRecentListFileClear()
     mRecentAction->saveEntries( config->group( QString() ) );
 }
 //-----------------------------------------------------------------------------
-void KMComposeWin::slotInsertRecentFile( const KUrl &u )
+void KMComposeWin::slotInsertRecentFile( const QUrl &u )
 {
     if ( u.fileName().isEmpty() ) {
         return;
@@ -2084,7 +2084,7 @@ void KMComposeWin::slotInsertRecentFile( const KUrl &u )
     QString encoding;
     const QStringList urls = GlobalSettings::self()->recentUrls();
     const QStringList encodings = GlobalSettings::self()->recentEncodings();
-    const int index = urls.indexOf( u.prettyUrl() );
+    const int index = urls.indexOf( u.toDisplayString() );
     if ( index != -1 ) {
         encoding = encodings[ index ];
     } else {
@@ -2142,7 +2142,7 @@ bool KMComposeWin::insertFromMimeData( const QMimeData *source, bool forceAttach
                 QImage image = qvariant_cast<QImage>( source->imageData() );
                 QFileInfo fi( source->text() );
 
-                KMenu menu;
+                QMenu menu;
                 const QAction *addAsInlineImageAction = menu.addAction( i18n("Add as &Inline Image") );
                 /*const QAction *addAsAttachmentAction = */menu.addAction( i18n("Add as &Attachment") );
                 const QAction *selectedAction = menu.exec( QCursor::pos() );
@@ -2196,7 +2196,7 @@ bool KMComposeWin::insertFromMimeData( const QMimeData *source, bool forceAttach
                     addAttachment( url, QString() );
                 }
             } else {
-                KMenu p;
+                QMenu p;
                 const QAction *addAsTextAction = p.addAction( i18np("Add URL into Message", "Add URLs into Message", urlList.size() ) );
                 const QAction *addAsAttachmentAction = p.addAction( i18np("Add File as &Attachment", "Add Files as &Attachment", urlList.size() ) );
                 const QAction *selectedAction = p.exec( QCursor::pos() );

@@ -47,6 +47,8 @@
 #include "kleo/enum.h"
 #include <composer/composerviewbase.h>
 
+class QUrl;
+
 class QByteArray;
 class QCheckBox;
 class QGridLayout;
@@ -308,7 +310,7 @@ private slots:
     void slotPrint();
     void slotPrintPreview();
 
-    void slotInsertRecentFile( const KUrl & );
+    void slotInsertRecentFile( const QUrl & );
     void slotRecentListFileClear();
 
     void slotSendNowVia( QAction * );

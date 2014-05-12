@@ -5,7 +5,7 @@
 #include "configuredialoglistview.h"
 
 #include <KLocalizedString>
-#include <KMenu>
+#include <QMenu>
 
 ListView::ListView( QWidget *parent )
     : QTreeWidget( parent )
@@ -51,7 +51,7 @@ void ListView::resizeColums()
 
 void ListView::slotContextMenu(const QPoint& pos)
 {
-    KMenu *menu = new KMenu( this );
+    QMenu *menu = new QMenu( this );
     menu->addAction( i18n("Add"), this, SIGNAL(addHeader()));
     if (currentItem()) {
         menu->addAction( i18n("Remove"), this, SIGNAL(removeHeader()));

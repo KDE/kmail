@@ -19,7 +19,7 @@
 
 #include <kactioncollection.h>
 #include <klocale.h>
-#include <kmenu.h>
+#include <QMenu>
 
 #include <QContextMenuEvent>
 #include <QHeaderView>
@@ -54,13 +54,13 @@ SnippetWidget::~SnippetWidget()
 
 void SnippetWidget::contextMenuEvent( QContextMenuEvent *event )
 {
-    KMenu popup;
+    QMenu popup;
 
     const bool itemSelected = mSnippetsManager->selectionModel()->hasSelection();
 
     bool canAddSnippet = true;
     if ( itemSelected ) {
-        popup.addTitle( mSnippetsManager->selectedName() );
+        popup.setTitle( mSnippetsManager->selectedName() );
         if ( mSnippetsManager->snippetGroupSelected() ) {
             popup.addAction( mSnippetsManager->editSnippetGroupAction() );
             popup.addAction( mSnippetsManager->deleteSnippetGroupAction() );
@@ -73,7 +73,7 @@ void SnippetWidget::contextMenuEvent( QContextMenuEvent *event )
         }
         popup.addSeparator();
     } else {
-        popup.addTitle( i18n( "Text Snippets" ) );
+        popup.setTitle( i18n( "Text Snippets" ) );
     }
     if ( canAddSnippet ) {
         popup.addAction( mSnippetsManager->addSnippetAction() );

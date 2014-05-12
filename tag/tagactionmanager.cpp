@@ -28,7 +28,7 @@
 #include <KToggleAction>
 #include <KXMLGUIClient>
 #include <KActionMenu>
-#include <KMenu>
+#include <QMenu>
 #include <KLocalizedString>
 #include <KJob>
 #include <KIcon>
