@@ -65,7 +65,7 @@ TagSelectDialog::TagSelectDialog( QWidget * parent, int numberOfSelectedMessages
     mListTag = new QListWidget( this );
     KListWidgetSearchLine *listWidgetSearchLine = new KListWidgetSearchLine(this,mListTag);
     listWidgetSearchLine->setClickMessage(i18n("Search tag"));
-    //QT5 listWidgetSearchLine->setClearButtonShown(true);
+    listWidgetSearchLine->setClearButtonEnabled(true);
 
     mainLayout->addWidget(listWidgetSearchLine);
     mainLayout->addWidget( mListTag );
