@@ -29,11 +29,18 @@ public:
     explicit DisplayMessageFormatActionMenu(QObject *parent=0);
     ~DisplayMessageFormatActionMenu();
 
+    MessageViewer::Viewer::DisplayFormatMessage displayMessageFormat() const;
+    void setDisplayMessageFormat(MessageViewer::Viewer::DisplayFormatMessage displayMessageFormat);
+
 Q_SIGNALS:
     void changeDisplayMessageFormat(MessageViewer::Viewer::DisplayFormatMessage format);
 
 private slots:
     void slotChangeDisplayMessageFormat();
+
+private:
+    void updateMenu();
+    MessageViewer::Viewer::DisplayFormatMessage mDisplayMessageFormat;
 };
 
 #endif // DisplayMessageFormatActionMenu_H

@@ -28,6 +28,8 @@ public:
 private Q_SLOTS:
     void shouldHaveDefaultValue();
     void shouldEmitSignalWhenClickOnSubMenu();
+    void shouldSelectItemWhenChangeFormat();
+    void shouldDontEmitSignalWhenChangeFormat();
 };
 
 #endif // DISPLAYMESSAGEFORMATACTIONMENUTEST_H

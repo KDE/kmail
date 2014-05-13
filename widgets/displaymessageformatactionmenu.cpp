@@ -21,10 +21,12 @@
 #include <KAction>
 #include <KMenu>
 #include <KToggleAction>
+#include <QDebug>
 
 
 DisplayMessageFormatActionMenu::DisplayMessageFormatActionMenu(QObject *parent)
-    : KActionMenu(parent)
+    : KActionMenu(parent),
+      mDisplayMessageFormat(MessageViewer::Viewer::UseGlobalSetting)
 {
     setText(i18n("Message Default Format"));
     KMenu *subMenu = new KMenu;
@@ -49,10 +51,10 @@ DisplayMessageFormatActionMenu::DisplayMessageFormatActionMenu(QObject *parent)
     act = new KToggleAction(i18n("Use KMail global setting"), this);
     act->setObjectName(QLatin1String("use-global-setting-action"));
     act->setData(MessageViewer::Viewer::UseGlobalSetting);
-    act->setChecked(true);
     connect(act, SIGNAL(triggered(bool)), this, SLOT(slotChangeDisplayMessageFormat()));
     actionGroup->addAction(act);
     subMenu->addAction(act);
+    updateMenu();
 }
 
 
@@ -68,6 +70,29 @@ void DisplayMessageFormatActionMenu::slotChangeDisplayMessageFormat()
         if (act) {
             MessageViewer::Viewer::DisplayFormatMessage format = static_cast<MessageViewer::Viewer::DisplayFormatMessage>(act->data().toInt());
             emit changeDisplayMessageFormat(format);
+        }
+    }
+}
+MessageViewer::Viewer::DisplayFormatMessage DisplayMessageFormatActionMenu::displayMessageFormat() const
+{
+    return mDisplayMessageFormat;
+}
+
+void DisplayMessageFormatActionMenu::setDisplayMessageFormat(MessageViewer::Viewer::DisplayFormatMessage displayMessageFormat)
+{
+    if (mDisplayMessageFormat != displayMessageFormat) {
+        mDisplayMessageFormat = displayMessageFormat;
+        updateMenu();
+    }
+}
+
+void DisplayMessageFormatActionMenu::updateMenu()
+{
+    Q_FOREACH (QAction *act, menu()->actions()) {
+        MessageViewer::Viewer::DisplayFormatMessage format = static_cast<MessageViewer::Viewer::DisplayFormatMessage>(act->data().toInt());
+        if (format == mDisplayMessageFormat) {
+            act->setChecked(true);
+            break;
         }
     }
 }

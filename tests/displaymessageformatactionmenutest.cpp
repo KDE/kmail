@@ -21,6 +21,7 @@
 #include <qtestmouse.h>
 #include <KMenu>
 #include <KToggleAction>
+
 Q_DECLARE_METATYPE(MessageViewer::Viewer::DisplayFormatMessage)
 DisplayMessageFormatActionMenuTest::DisplayMessageFormatActionMenuTest()
 {
@@ -48,7 +49,23 @@ void DisplayMessageFormatActionMenuTest::shouldEmitSignalWhenClickOnSubMenu()
     QSignalSpy spy(&menu, SIGNAL(changeDisplayMessageFormat(MessageViewer::Viewer::DisplayFormatMessage)));
     prefereHtml->trigger();
     QCOMPARE(spy.count(), 1);
-    //QCOMPARE(spy.at(0).at(0).toInt(), int(MessageViewer::Viewer::Html));
+    QCOMPARE(spy.at(0).at(0).value<MessageViewer::Viewer::DisplayFormatMessage>(), MessageViewer::Viewer::Html);
+}
+
+void DisplayMessageFormatActionMenuTest::shouldSelectItemWhenChangeFormat()
+{
+    DisplayMessageFormatActionMenu menu;
+    menu.setDisplayMessageFormat(MessageViewer::Viewer::Text);
+    KToggleAction *prefereText = qFindChild<KToggleAction *>(&menu, QLatin1String("prefer-text-action"));
+    QCOMPARE(prefereText->isChecked(), true);
+}
+
+void DisplayMessageFormatActionMenuTest::shouldDontEmitSignalWhenChangeFormat()
+{
+    DisplayMessageFormatActionMenu menu;
+    QSignalSpy spy(&menu, SIGNAL(changeDisplayMessageFormat(MessageViewer::Viewer::DisplayFormatMessage)));
+    menu.setDisplayMessageFormat(MessageViewer::Viewer::Text);
+    QCOMPARE(spy.count(), 0);
 }
 
 QTEST_KDEMAIN(DisplayMessageFormatActionMenuTest, GUI)
