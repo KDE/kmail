@@ -574,7 +574,7 @@ private:
     bool          mLongFolderList;
     bool          mStartupDone;
     bool          mWasEverShown;
-    bool mHtmlPref, mHtmlLoadExtPref,
+    bool mHtmlGlobalSetting, mHtmlLoadExtGlobalSetting,
     mFolderHtmlPref, mFolderHtmlLoadExtPref,
     mReaderWindowActive, mReaderWindowBelow;
     bool mEnableFavoriteFolderView;

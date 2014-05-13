@@ -555,8 +555,9 @@ void KMMainWidget::readPreConfig()
     mReaderWindowActive = GlobalSettings::self()->readerWindowMode() != GlobalSettings::EnumReaderWindowMode::hide;
     mReaderWindowBelow = GlobalSettings::self()->readerWindowMode() == GlobalSettings::EnumReaderWindowMode::below;
 
-    mHtmlPref = MessageViewer::GlobalSettings::self()->htmlMail();
-    mHtmlLoadExtPref = MessageViewer::GlobalSettings::self()->htmlLoadExternal();
+    mHtmlGlobalSetting = MessageViewer::GlobalSettings::self()->htmlMail();
+    mHtmlLoadExtGlobalSetting = MessageViewer::GlobalSettings::self()->htmlLoadExternal();
+
     mEnableFavoriteFolderView = ( MailCommon::MailCommonSettings::self()->favoriteCollectionViewMode() != MailCommon::MailCommonSettings::EnumFavoriteCollectionViewMode::HiddenMode );
     mEnableFolderQuickSearch = GlobalSettings::self()->enableFolderQuickSearch();
     updateHtmlMenuEntry();
@@ -1678,7 +1679,7 @@ void KMMainWidget::slotExpireAll()
 //-----------------------------------------------------------------------------
 void KMMainWidget::slotOverrideHtml()
 {
-    if ( mHtmlPref == mFolderHtmlPref ) {
+    if ( mHtmlGlobalSetting == mFolderHtmlPref ) {
         int result = KMessageBox::warningContinueCancel( this,
                                                          // the warning text is taken from configuredialog.cpp:
                                                          i18n( "Use of HTML in mail will make you more vulnerable to "
@@ -1696,7 +1697,7 @@ void KMMainWidget::slotOverrideHtml()
     mFolderHtmlPref = !mFolderHtmlPref;
 
     //Update mPrefererHtmlLoadExtAction
-    mPreferHtmlLoadExtAction->setEnabled( mCurrentFolder && (mHtmlPref ? !mFolderHtmlPref : mFolderHtmlPref) ? true : false );
+    mPreferHtmlLoadExtAction->setEnabled( mCurrentFolder && (mHtmlGlobalSetting ? !mFolderHtmlPref : mFolderHtmlPref) ? true : false );
 
     if (mMsgView) {
         mMsgView->setHtmlOverride(mFolderHtmlPref);
@@ -1707,7 +1708,7 @@ void KMMainWidget::slotOverrideHtml()
 //-----------------------------------------------------------------------------
 void KMMainWidget::slotOverrideHtmlLoadExt()
 {
-    if ( mHtmlLoadExtPref == mFolderHtmlLoadExtPref ) {
+    if ( mHtmlLoadExtGlobalSetting == mFolderHtmlLoadExtPref ) {
         int result = KMessageBox::warningContinueCancel( this,
                                                          // the warning text is taken from configuredialog.cpp:
                                                          i18n( "Loading external references in html mail will make you more vulnerable to "
@@ -4092,9 +4093,9 @@ void KMMainWidget::updateHtmlMenuEntry()
         mPreferHtmlLoadExtAction->setEnabled( mFolderTreeWidget &&
                                               mFolderTreeWidget->folderTreeView()->currentFolder().isValid() &&
                                               !multiFolder &&
-                                              (mHtmlPref ? !mFolderHtmlPref : mFolderHtmlPref) ? true : false );
-        mPreferHtmlAction->setChecked( !multiFolder &&  ( mHtmlPref ? !mFolderHtmlPref : mFolderHtmlPref ) );
-        mPreferHtmlLoadExtAction->setChecked( !multiFolder &&  ( mHtmlLoadExtPref ? !mFolderHtmlLoadExtPref : mFolderHtmlLoadExtPref ) );
+                                              (mHtmlGlobalSetting ? !mFolderHtmlPref : mFolderHtmlPref) ? true : false );
+        mPreferHtmlAction->setChecked( !multiFolder &&  ( mHtmlGlobalSetting ? !mFolderHtmlPref : mFolderHtmlPref ) );
+        mPreferHtmlLoadExtAction->setChecked( !multiFolder &&  ( mHtmlLoadExtGlobalSetting ? !mFolderHtmlLoadExtPref : mFolderHtmlLoadExtPref ) );
     }
 }
 
