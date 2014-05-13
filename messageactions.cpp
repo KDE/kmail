@@ -358,10 +358,8 @@ void MessageActions::updateMailingListActions( const Akonadi::Item& messageItem 
         mMailingListActionMenu->menu()->clear();
         qDeleteAll(mMailListActionList);
         mMailListActionList.clear();
-#if 0 //QT5
         if ( !listId.isEmpty() )
-            mMailingListActionMenu->menu()->addTitle( listId );
-#endif
+            mMailingListActionMenu->menu()->setTitle( listId );
         if ( mailList.features() & MessageCore::MailingList::ArchivedAt )
             // IDEA: this may be something you want to copy - "Copy in submenu"?
             addMailingListActions( i18n( "Open Message in List Archive" ), mailList.archivedAtUrls() );
@@ -612,7 +610,7 @@ void MessageActions::addWebShortcutsMenu( KMenu *menu, const QString & text )
         const QStringList searchProviders = filterData.preferredSearchProviders();
 
         if ( !searchProviders.isEmpty() ) {
-            KMenu *webShortcutsMenu = new KMenu( menu );
+            QMenu *webShortcutsMenu = new QMenu( menu );
             webShortcutsMenu->setIcon( KIcon( QLatin1String("preferences-web-browser-shortcuts") ) );
 
             const QString squeezedText = KStringHandler::rsqueeze( searchText, 21 );
