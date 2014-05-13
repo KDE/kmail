@@ -11,3 +11,9 @@ qt5_add_dbus_interfaces(dbustest_SRCS ${CMAKE_BINARY_DIR}/kmail/org.kde.kmail.km
 add_executable(dbustest ${dbustest_SRCS})
 add_dependencies(dbustest kmail_xml)
 target_link_libraries(dbustest KF5::KIOCore KF5::KDELibs4Support)
+
+
+set( kmail_displaymenu_source displaymessageformatactionmenutest.cpp ../widgets/displaymessageformatactionmenu.cpp )
+kde4_add_unit_test( displaymessageformatactionmenutest ${kmail_displaymenu_source})
+target_link_libraries( displaymessageformatactionmenutest ${QT_QTTEST_LIBRARY} ${KDE4_KDEUI_LIBS} messageviewer)
+

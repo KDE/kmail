@@ -49,6 +49,7 @@ class KUrl;
 class QVBoxLayout;
 class QSplitter;
 
+class DisplayMessageFormatActionMenu;
 class QMenu;
 class QAction;
 class KActionMenu;
@@ -537,6 +538,8 @@ private slots:
     void slotServerStateChanged(Akonadi::ServerManager::State state);
     void slotConfigureSubscriptionFinished(QDBusPendingCallWatcher* watcher);
     void slotArchiveMails();
+    void slotChangeDisplayMessageFormat(MessageViewer::Viewer::DisplayFormatMessage format);
+
 private:
     // Message actions
     QAction *mDeleteAction, *mTrashThreadAction,
@@ -574,8 +577,8 @@ private:
     bool          mLongFolderList;
     bool          mStartupDone;
     bool          mWasEverShown;
-    bool mHtmlPref, mHtmlLoadExtPref,
-    mFolderHtmlPref, mFolderHtmlLoadExtPref,
+    bool mHtmlGlobalSetting, mHtmlLoadExtGlobalSetting,
+    mFolderHtmlPreference, mFolderHtmlLoadExtPreference,
     mReaderWindowActive, mReaderWindowBelow;
     bool mEnableFavoriteFolderView;
     bool mEnableFolderQuickSearch;
@@ -628,6 +631,8 @@ private:
     KRecentFilesAction *mOpenRecentAction;
     QPointer<KSieveUi::ManageSieveScriptsDialog> mManageSieveDialog;
     QAction *mQuickSearchAction;
+    DisplayMessageFormatActionMenu *mDisplayMessageFormatMenu;
+    MessageViewer::Viewer::DisplayFormatMessage mFolderDisplayFormatPreference;
 };
 
 #endif

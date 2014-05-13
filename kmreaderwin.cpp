@@ -467,6 +467,17 @@ bool KMReaderWin::htmlOverride() const
     return mViewer->htmlOverride();
 }
 
+MessageViewer::Viewer::DisplayFormatMessage KMReaderWin::displayFormatMessageOverwrite() const
+{
+    return mViewer->displayFormatMessageOverwrite();
+}
+
+void KMReaderWin::setDisplayFormatMessageOverwrite(MessageViewer::Viewer::DisplayFormatMessage format)
+{
+    mViewer->setDisplayFormatMessageOverwrite(format);
+}
+
+
 //-----------------------------------------------------------------------------
 void KMReaderWin::setHtmlLoadExtOverride( bool override )
 {

@@ -34,7 +34,6 @@ class KMenu;
 namespace MessageViewer {
 class HeaderStrategy;
 class HeaderStyle;
-class Viewer;
 class CSSHelper;
 class AttachmentStrategy;
 }
@@ -99,6 +98,9 @@ public:
     /** Override default html mail setting */
     bool htmlOverride() const;
     void setHtmlOverride( bool override );
+    MessageViewer::Viewer::DisplayFormatMessage displayFormatMessageOverwrite() const;
+    void setDisplayFormatMessageOverwrite(MessageViewer::Viewer::DisplayFormatMessage format);
+
 
     /** Override default load external references setting */
     bool htmlLoadExtOverride() const;
