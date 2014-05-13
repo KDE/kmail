@@ -18,17 +18,36 @@
 #include "displaymessageformatactionmenutest.h"
 #include "../widgets/displaymessageformatactionmenu.h"
 #include <qtest_kde.h>
+#include <qtestmouse.h>
 #include <KMenu>
-
+#include <KToggleAction>
+Q_DECLARE_METATYPE(MessageViewer::Viewer::DisplayFormatMessage)
 DisplayMessageFormatActionMenuTest::DisplayMessageFormatActionMenuTest()
 {
+    qRegisterMetaType<MessageViewer::Viewer::DisplayFormatMessage >();
 }
 
 void DisplayMessageFormatActionMenuTest::shouldHaveDefaultValue()
 {
     DisplayMessageFormatActionMenu menu;
     QVERIFY(menu.menu());
+    KToggleAction *prefereHtml = qFindChild<KToggleAction *>(&menu, QLatin1String("prefer-html-action"));
+    QVERIFY(prefereHtml);
+    KToggleAction *prefereText = qFindChild<KToggleAction *>(&menu, QLatin1String("prefer-text-action"));
+    QVERIFY(prefereText);
+    KToggleAction *useGlobalSetting = qFindChild<KToggleAction *>(&menu, QLatin1String("use-global-setting-action"));
+    QVERIFY(useGlobalSetting);
+    QCOMPARE(useGlobalSetting->isChecked(), true);
     QCOMPARE(menu.menu()->actions().count(), 3);
+}
+
+void DisplayMessageFormatActionMenuTest::shouldEmitSignalWhenClickOnSubMenu()
+{
+    DisplayMessageFormatActionMenu menu;
+    KToggleAction *prefereHtml = qFindChild<KToggleAction *>(&menu, QLatin1String("prefer-html-action"));
+    QSignalSpy spy(&menu, SIGNAL(changeDisplayMessageFormat(MessageViewer::Viewer::DisplayFormatMessage)));
+    prefereHtml->trigger();
+    QCOMPARE(spy.count(), 1);
 }
 
 QTEST_KDEMAIN(DisplayMessageFormatActionMenuTest, GUI)

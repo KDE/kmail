@@ -21,7 +21,7 @@
 #include <KAction>
 #include <KMenu>
 #include <KToggleAction>
-#include "messageviewer/viewer/viewer.h"
+
 
 DisplayMessageFormatActionMenu::DisplayMessageFormatActionMenu(QObject *parent)
     : KActionMenu(parent)
@@ -29,8 +29,11 @@ DisplayMessageFormatActionMenu::DisplayMessageFormatActionMenu(QObject *parent)
     setText(i18n("Message Default Format"));
     KMenu *subMenu = new KMenu;
     setMenu(subMenu);
+
     QActionGroup *actionGroup = new QActionGroup(this);
+
     KToggleAction *act = new KToggleAction(i18n("Prefer &HTML to Plain Text"), this);
+    act->setObjectName(QLatin1String("prefer-html-action"));
     act->setData(MessageViewer::Viewer::Html);
     actionGroup->addAction(act);
     subMenu->addAction(act);
@@ -38,12 +41,15 @@ DisplayMessageFormatActionMenu::DisplayMessageFormatActionMenu(QObject *parent)
 
     act = new KToggleAction(i18n("Prefer &Plain Text to HTML"), this);
     act->setData(MessageViewer::Viewer::Text);
+    act->setObjectName(QLatin1String("prefer-text-action"));
     actionGroup->addAction(act);
     subMenu->addAction(act);
     connect(act, SIGNAL(triggered(bool)), this, SLOT(slotChangeDisplayMessageFormat()));
 
     act = new KToggleAction(i18n("Use KMail global setting"), this);
+    act->setObjectName(QLatin1String("use-global-setting-action"));
     act->setData(MessageViewer::Viewer::UseGlobalSetting);
+    act->setChecked(true);
     connect(act, SIGNAL(triggered(bool)), this, SLOT(slotChangeDisplayMessageFormat()));
     actionGroup->addAction(act);
     subMenu->addAction(act);
@@ -60,7 +66,8 @@ void DisplayMessageFormatActionMenu::slotChangeDisplayMessageFormat()
     if (sender()) {
         KToggleAction *act = dynamic_cast<KToggleAction *>(sender());
         if (act) {
-
+            MessageViewer::Viewer::DisplayFormatMessage format = static_cast<MessageViewer::Viewer::DisplayFormatMessage>(act->data().toInt());
+            emit changeDisplayMessageFormat(format);
         }
     }
 }

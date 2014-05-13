@@ -27,6 +27,7 @@ public:
     DisplayMessageFormatActionMenuTest();
 private Q_SLOTS:
     void shouldHaveDefaultValue();
+    void shouldEmitSignalWhenClickOnSubMenu();
 };
 
 #endif // DISPLAYMESSAGEFORMATACTIONMENUTEST_H
