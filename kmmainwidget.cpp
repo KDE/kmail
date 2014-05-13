@@ -4886,5 +4886,9 @@ void KMMainWidget::updateQuickSearchLineText()
 void KMMainWidget::slotChangeDisplayMessageFormat(MessageViewer::Viewer::DisplayFormatMessage format)
 {
     mFolderDisplayFormatPreference = format;
+    if (mMsgView) {
+        mMsgView->setDisplayFormatMessageOverwrite(mFolderDisplayFormatPreference);
+        mMsgView->update( true );
+    }
     //TODO
 }
