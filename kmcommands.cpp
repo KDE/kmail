@@ -480,7 +480,7 @@ KMCommand::Result KMAddBookmarksCommand::execute()
     const QString filename = KStandardDirs::locateLocal( "data", QString::fromLatin1("konqueror/bookmarks.xml") );
     KBookmarkManager *bookManager = KBookmarkManager::managerForFile( filename, QLatin1String("konqueror") );
     KBookmarkGroup group = bookManager->root();
-    //QT5 group.addBookmark( mUrl.path(), QUrl( mUrl ) );
+    group.addBookmark( mUrl.path(), QUrl( mUrl ), QString() );
     if( bookManager->save() ) {
         bookManager->emitChanged( group );
     }

@@ -130,10 +130,10 @@ void FolderShortcutActionManager::shortcutChanged( const Akonadi::Collection &co
     FolderShortcutCommand *command = new FolderShortcutCommand( mParent, col );
     mFolderShortcutCommands.insert( col.id(), command );
 
-    KIcon icon( QLatin1String("folder") );
+    QIcon icon( QLatin1String("folder") );
     if ( col.hasAttribute<Akonadi::EntityDisplayAttribute>() &&
          !col.attribute<Akonadi::EntityDisplayAttribute>()->iconName().isEmpty() ) {
-        //QT5 icon = KIcon( col.attribute<Akonadi::EntityDisplayAttribute>()->iconName() );
+        icon = QIcon( col.attribute<Akonadi::EntityDisplayAttribute>()->iconName() );
     }
 
     const QString actionLabel = i18n( "Folder Shortcut %1", col.name() );

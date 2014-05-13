@@ -113,7 +113,7 @@ bool KMSystemTray::buildPopupMenu()
 
     contextMenu()->clear();
 
-    //QT5 contextMenu()->addTitle(qApp->windowIcon(), i18n("KMail"));
+    contextMenu()->setTitle(/*QT5 qApp->windowIcon(),*/ i18n("KMail"));
     QAction * action;
     if ( ( action = mainWidget->action(QLatin1String("check_mail")) ) )
         contextMenu()->addAction( action );
