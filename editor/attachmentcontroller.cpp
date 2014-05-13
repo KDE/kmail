@@ -127,7 +127,7 @@ void AttachmentController::selectionChanged()
 void AttachmentController::onShowAttachment( KMime::Content *content, const QByteArray &charset )
 {
     KMReaderMainWin *win =
-            new KMReaderMainWin( content, false, QString::fromLatin1(charset) );
+            new KMReaderMainWin( content, MessageViewer::Viewer::Text, QString::fromLatin1(charset) );
     win->show();
 }
 

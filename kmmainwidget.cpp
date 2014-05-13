@@ -233,6 +233,7 @@ KMMainWidget::KMMainWidget( QWidget *parent, KXMLGUIClient *aGUIClient,
     mCurrentFolder( 0 ),
     mVacationIndicatorActive( false ),
     mGoToFirstUnreadMessageInSelectedFolder( false ),
+    mDisplayMessageFormatMenu( 0 ),
     mFolderDisplayFormatPreference(MessageViewer::Viewer::UseGlobalSetting)
 {
     // must be the first line of the constructor:
@@ -240,7 +241,6 @@ KMMainWidget::KMMainWidget( QWidget *parent, KXMLGUIClient *aGUIClient,
     mWasEverShown = false;
     mReaderWindowActive = true;
     mReaderWindowBelow = true;
-    mFolderHtmlPreference = false;
     mFolderHtmlLoadExtPreference = false;
     mDestructed = false;
     mActionCollection = actionCollection;
@@ -249,7 +249,6 @@ KMMainWidget::KMMainWidget( QWidget *parent, KXMLGUIClient *aGUIClient,
     mConfig = config;
     mGUIClient = aGUIClient;
     mFolderTreeWidget = 0;
-    mPreferHtmlAction = 0;
     mPreferHtmlLoadExtAction = 0;
     Akonadi::Control::widgetNeedsAkonadi( this );
     mFavoritesModel = 0;
@@ -519,7 +518,7 @@ void KMMainWidget::folderSelected( const Akonadi::Collection & col )
     readFolderConfig();
     if (mMsgView)
     {
-        mMsgView->setHtmlOverride(mFolderHtmlPreference);
+        mMsgView->setDisplayFormatMessageOverwrite(mFolderDisplayFormatPreference);
         mMsgView->setHtmlLoadExtOverride(mFolderHtmlLoadExtPreference);
     }
 
@@ -562,7 +561,12 @@ void KMMainWidget::readPreConfig()
 
     mEnableFavoriteFolderView = ( MailCommon::MailCommonSettings::self()->favoriteCollectionViewMode() != MailCommon::MailCommonSettings::EnumFavoriteCollectionViewMode::HiddenMode );
     mEnableFolderQuickSearch = GlobalSettings::self()->enableFolderQuickSearch();
+    readFolderConfig();
     updateHtmlMenuEntry();
+    if (mMsgView) {
+        mMsgView->setDisplayFormatMessageOverwrite(mFolderDisplayFormatPreference);
+        mMsgView->update( true );
+    }
 }
 
 
@@ -571,16 +575,18 @@ void KMMainWidget::readFolderConfig()
 {
     if ( !mCurrentFolder || !mCurrentFolder->isValid() )
         return;
-
     KSharedConfig::Ptr config = KMKernel::self()->config();
     KConfigGroup group( config, MailCommon::FolderCollection::configGroupName( mCurrentFolder->collection() ) );
-    mFolderHtmlPreference =
-            group.readEntry( "htmlMailOverride", false );
-    if (group.hasKey("htmlLoadExternalOverride")) {
-        mFolderHtmlLoadExtPreference =
-                group.readEntry( "htmlLoadExternalOverride", false );
+    if (group.hasKey( "htmlMailOverride")) {
+        const bool useHtml = group.readEntry( "htmlMailOverride", false );
+        mFolderDisplayFormatPreference = useHtml ? MessageViewer::Viewer::Html : MessageViewer::Viewer::Text;
+        group.deleteEntry("htmlMailOverride");
+        group.sync();
+    } else {
+        mFolderDisplayFormatPreference = static_cast<MessageViewer::Viewer::DisplayFormatMessage>(group.readEntry( "displayFormatOverride", static_cast<int>(MessageViewer::Viewer::UseGlobalSetting)));
     }
-    //mFolderDisplayFormatPreference = static_cast<MessageViewer::Viewer::DisplayFormatMessage>(group.readEntry( "displayFormatOverride", static_cast<int>(MessageViewer::Viewer::UseGlobalSetting)));
+    mFolderHtmlLoadExtPreference =
+            group.readEntry( "htmlLoadExternalOverride", false );
 }
 
 
@@ -590,9 +596,11 @@ void KMMainWidget::writeFolderConfig()
     if ( mCurrentFolder && mCurrentFolder->isValid() ) {
         KSharedConfig::Ptr config = KMKernel::self()->config();
         KConfigGroup group( config, MailCommon::FolderCollection::configGroupName( mCurrentFolder->collection() ) );
-        group.writeEntry( "htmlMailOverride", mFolderHtmlPreference );
         group.writeEntry( "htmlLoadExternalOverride", mFolderHtmlLoadExtPreference );
-        //group.writeEntry( "displayFormatOverride", static_cast<int>(mFolderDisplayFormatPreference) );
+        if (mFolderDisplayFormatPreference == MessageViewer::Viewer::UseGlobalSetting)
+            group.deleteEntry("displayFormatOverride");
+        else
+            group.writeEntry( "displayFormatOverride", static_cast<int>(mFolderDisplayFormatPreference) );
     }
 }
 
@@ -1683,35 +1691,6 @@ void KMMainWidget::slotExpireAll()
 
 
 //-----------------------------------------------------------------------------
-void KMMainWidget::slotOverrideHtml()
-{
-    if ( mHtmlGlobalSetting == mFolderHtmlPreference ) {
-        int result = KMessageBox::warningContinueCancel( this,
-                                                         // the warning text is taken from configuredialog.cpp:
-                                                         i18n( "Use of HTML in mail will make you more vulnerable to "
-                                                               "\"spam\" and may increase the likelihood that your system will be "
-                                                               "compromised by other present and anticipated security exploits." ),
-                                                         i18n( "Security Warning" ),
-                                                         KGuiItem(i18n( "Use HTML" )),
-                                                         KStandardGuiItem::cancel(),
-                                                         QLatin1String("OverrideHtmlWarning"), 0);
-        if ( result == KMessageBox::Cancel ) {
-            mPreferHtmlAction->setChecked( false );
-            return;
-        }
-    }
-    mFolderHtmlPreference = !mFolderHtmlPreference;
-
-    //Update mPrefererHtmlLoadExtAction
-    mPreferHtmlLoadExtAction->setEnabled( mCurrentFolder && (mHtmlGlobalSetting ? !mFolderHtmlPreference : mFolderHtmlPreference) ? true : false );
-
-    if (mMsgView) {
-        mMsgView->setHtmlOverride(mFolderHtmlPreference);
-        mMsgView->update( true );
-    }
-}
-
-//-----------------------------------------------------------------------------
 void KMMainWidget::slotOverrideHtmlLoadExt()
 {
     if ( mHtmlLoadExtGlobalSetting == mFolderHtmlLoadExtPreference ) {
@@ -2715,7 +2694,7 @@ void KMMainWidget::slotItemsFetchedForActivation( const Akonadi::Item::List &lis
 
     const Item msg = list.first();
 
-    KMReaderMainWin *win = new KMReaderMainWin( mFolderHtmlPreference, mFolderHtmlLoadExtPreference );
+    KMReaderMainWin *win = new KMReaderMainWin( mFolderDisplayFormatPreference, mFolderHtmlLoadExtPreference );
     const bool useFixedFont = mMsgView ? mMsgView->isFixedFont() :
                                          MessageViewer::GlobalSettings::self()->useFixedFont();
     win->setUseFixedFont( useFixedFont );
@@ -3214,9 +3193,6 @@ void KMMainWidget::setupActions()
     connect(mDisplayMessageFormatMenu, SIGNAL(changeDisplayMessageFormat(MessageViewer::Viewer::DisplayFormatMessage)), this, SLOT(slotChangeDisplayMessageFormat(MessageViewer::Viewer::DisplayFormatMessage)));
     actionCollection()->addAction(QLatin1String("display_format_message"), mDisplayMessageFormatMenu );
 
-    mPreferHtmlAction = new KToggleAction(i18n("Prefer &HTML to Plain Text"), this);
-    actionCollection()->addAction(QLatin1String("prefer_html"), mPreferHtmlAction );
-    connect(mPreferHtmlAction, SIGNAL(triggered(bool)), SLOT(slotOverrideHtml()));
 
     mPreferHtmlLoadExtAction = new KToggleAction(i18n("Load E&xternal References"), this);
     actionCollection()->addAction(QLatin1String("prefer_html_external_refs"), mPreferHtmlLoadExtAction );
@@ -4091,7 +4067,7 @@ void KMMainWidget::slotAkonadiStandardActionUpdated()
 
 void KMMainWidget::updateHtmlMenuEntry()
 {
-    if (mPreferHtmlAction && mPreferHtmlLoadExtAction) {
+    if (mDisplayMessageFormatMenu && mPreferHtmlLoadExtAction) {
         bool multiFolder = false;
         if ( mFolderTreeWidget ) {
             multiFolder = mFolderTreeWidget->selectedCollections().count() > 1;
@@ -4101,15 +4077,17 @@ void KMMainWidget::updateHtmlMenuEntry()
                                      mFolderTreeWidget->folderTreeView()->currentFolder().isValid() &&
                                      !multiFolder );
 
-        mPreferHtmlAction->setEnabled( enabledAction );
         mDisplayMessageFormatMenu->setEnabled(enabledAction);
-
+#if 0
         mPreferHtmlLoadExtAction->setEnabled( mFolderTreeWidget &&
                                               mFolderTreeWidget->folderTreeView()->currentFolder().isValid() &&
                                               !multiFolder &&
                                               (mHtmlGlobalSetting ? !mFolderHtmlPreference : mFolderHtmlPreference) ? true : false );
 
         mPreferHtmlAction->setChecked( !multiFolder &&  ( mHtmlGlobalSetting ? !mFolderHtmlPreference : mFolderHtmlPreference ) );
+#endif
+        mDisplayMessageFormatMenu->setDisplayMessageFormat(mFolderDisplayFormatPreference);
+
         mPreferHtmlLoadExtAction->setChecked( !multiFolder &&  ( mHtmlLoadExtGlobalSetting ? !mFolderHtmlLoadExtPreference : mFolderHtmlLoadExtPreference ) );
     }
 }
@@ -4525,7 +4503,7 @@ void KMMainWidget::itemsReceived(const Akonadi::Item::List &list )
 
     mMsgView->setMessage( item );
     // reset HTML override to the folder setting
-    mMsgView->setHtmlOverride(mFolderHtmlPreference);
+    mMsgView->setDisplayFormatMessageOverwrite(mFolderDisplayFormatPreference);
     mMsgView->setHtmlLoadExtOverride(mFolderHtmlLoadExtPreference);
     mMsgView->setDecryptMessageOverwrite( false );
     mMsgActions->setCurrentMessage( item );
@@ -4885,10 +4863,30 @@ void KMMainWidget::updateQuickSearchLineText()
 
 void KMMainWidget::slotChangeDisplayMessageFormat(MessageViewer::Viewer::DisplayFormatMessage format)
 {
+#if 0
+    if ( mHtmlGlobalSetting == mFolderHtmlPreference ) {
+        int result = KMessageBox::warningContinueCancel( this,
+                                                         // the warning text is taken from configuredialog.cpp:
+                                                         i18n( "Use of HTML in mail will make you more vulnerable to "
+                                                               "\"spam\" and may increase the likelihood that your system will be "
+                                                               "compromised by other present and anticipated security exploits." ),
+                                                         i18n( "Security Warning" ),
+                                                         KGuiItem(i18n( "Use HTML" )),
+                                                         KStandardGuiItem::cancel(),
+                                                         QLatin1String("OverrideHtmlWarning"), 0);
+        if ( result == KMessageBox::Cancel ) {
+            mPreferHtmlAction->setChecked( false );
+            return;
+        }
+    }
+#endif
     mFolderDisplayFormatPreference = format;
+
+    //Update mPrefererHtmlLoadExtAction
+    //mPreferHtmlLoadExtAction->setEnabled( mCurrentFolder && (mHtmlGlobalSetting ? !mFolderHtmlPreference : mFolderHtmlPreference) ? true : false );
+
     if (mMsgView) {
         mMsgView->setDisplayFormatMessageOverwrite(mFolderDisplayFormatPreference);
         mMsgView->update( true );
     }
-    //TODO
 }

@@ -138,7 +138,9 @@ void SecurityPage::GeneralTab::save()
             if (kmkernel) {
                 foreach( const Akonadi::Collection &collection, kmkernel->allFolders() ) {
                     KConfigGroup config( KMKernel::self()->config(), MailCommon::FolderCollection::configGroupName(collection) );
-                    config.writeEntry("htmlMailOverride", false);
+                    //Old config
+                    config.deleteEntry("htmlMailOverride");
+                    config.deleteEntry("displayFormatOverride");
                 }
             }
         }

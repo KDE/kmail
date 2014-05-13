@@ -504,7 +504,7 @@ void MessageActions::printMessage(bool preview)
         KMPrintCommand *command =
                 new KMPrintCommand( mParent, message,
                                     mMessageView->viewer()->headerStyle(), mMessageView->viewer()->headerStrategy(),
-                                    mMessageView->viewer()->htmlOverride(), mMessageView->viewer()->htmlLoadExternal(),
+                                    mMessageView->viewer()->displayFormatMessageOverwrite(), mMessageView->viewer()->htmlLoadExternal(),
                                     useFixedFont, overrideEncoding );
         command->setPrintPreview(preview);
         command->start();

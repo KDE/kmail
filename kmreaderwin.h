@@ -207,7 +207,7 @@ public slots:
     void slotUrlSave();
     void slotAddBookmarks();
     void slotUrlClicked( const Akonadi::Item &,  const KUrl& );
-    void slotShowReader( KMime::Content* , bool, const QString& );
+    void slotShowReader(KMime::Content* , bool html, const QString& );
     void slotShowMessage( KMime::Message::Ptr message, const QString& encoding );
     void slotDeleteMessage( const Akonadi::Item& );
     void slotSaveImageOnDisk();

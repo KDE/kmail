@@ -7,6 +7,7 @@
 #include "messagecomposer/helper/messagefactory.h"
 #include "messagelist/core/view.h"
 #include "search/searchpattern.h"
+#include "messageviewer/viewer/viewer.h"
 
 #include <akonadi/kmime/messagestatus.h>
 #include <kio/job.h>
@@ -33,7 +34,6 @@ namespace MessageViewer {
 class HeaderStyle;
 class HeaderStrategy;
 class AttachmentStrategy;
-class Viewer;
 }
 
 namespace KIO { class Job; }
@@ -388,7 +388,7 @@ public:
     KMPrintCommand( QWidget *parent, const Akonadi::Item &msg,
                     MessageViewer::HeaderStyle *headerStyle = 0,
                     MessageViewer::HeaderStrategy *headerStrategy = 0,
-                    bool htmlOverride = false,
+                    MessageViewer::Viewer::DisplayFormatMessage format = MessageViewer::Viewer::UseGlobalSetting,
                     bool htmlLoadExtOverride = false,
                     bool useFixedFont = false,
                     const QString & encoding = QString() );
@@ -405,7 +405,7 @@ private:
     const MessageViewer::AttachmentStrategy *mAttachmentStrategy;
     QFont mOverrideFont;
     QString mEncoding;
-    bool mHtmlOverride;
+    MessageViewer::Viewer::DisplayFormatMessage mFormat;
     bool mHtmlLoadExtOverride;
     bool mUseFixedFont;
     bool mPrintPreview;

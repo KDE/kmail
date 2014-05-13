@@ -12,6 +12,7 @@
 #include <akonadi/item.h>
 #include <akonadi/collection.h>
 #include <QModelIndex>
+#include <messageviewer/viewer/viewer.h>
 class KMReaderWin;
 class KAction;
 class KFontAction;
@@ -33,9 +34,9 @@ class KMReaderMainWin : public KMail::SecondaryWindow
     Q_OBJECT
 
 public:
-    KMReaderMainWin( bool htmlOverride, bool htmlLoadExtOverride, char *name = 0 );
+    KMReaderMainWin( MessageViewer::Viewer::DisplayFormatMessage format, bool htmlLoadExtOverride, char *name = 0 );
     explicit KMReaderMainWin( char *name = 0 );
-    KMReaderMainWin( KMime::Content* aMsgPart, bool aHTML, const QString &encoding, char *name = 0 );
+    KMReaderMainWin( KMime::Content* aMsgPart, MessageViewer::Viewer::DisplayFormatMessage format, const QString &encoding, char *name = 0 );
     virtual ~KMReaderMainWin();
 
     void setUseFixedFont( bool useFixedFont );

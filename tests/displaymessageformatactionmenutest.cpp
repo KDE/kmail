@@ -55,9 +55,14 @@ void DisplayMessageFormatActionMenuTest::shouldEmitSignalWhenClickOnSubMenu()
 void DisplayMessageFormatActionMenuTest::shouldSelectItemWhenChangeFormat()
 {
     DisplayMessageFormatActionMenu menu;
+    KToggleAction *useGlobalSetting = qFindChild<KToggleAction *>(&menu, QLatin1String("use-global-setting-action"));
+    QCOMPARE(useGlobalSetting->isChecked(), true);
     menu.setDisplayMessageFormat(MessageViewer::Viewer::Text);
     KToggleAction *prefereText = qFindChild<KToggleAction *>(&menu, QLatin1String("prefer-text-action"));
     QCOMPARE(prefereText->isChecked(), true);
+    KToggleAction *prefereHtml = qFindChild<KToggleAction *>(&menu, QLatin1String("prefer-html-action"));
+    QCOMPARE(prefereHtml->isChecked(), false);
+    QCOMPARE(useGlobalSetting->isChecked(), false);
 }
 
 void DisplayMessageFormatActionMenuTest::shouldDontEmitSignalWhenChangeFormat()
