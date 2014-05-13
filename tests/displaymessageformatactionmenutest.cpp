@@ -48,6 +48,7 @@ void DisplayMessageFormatActionMenuTest::shouldEmitSignalWhenClickOnSubMenu()
     QSignalSpy spy(&menu, SIGNAL(changeDisplayMessageFormat(MessageViewer::Viewer::DisplayFormatMessage)));
     prefereHtml->trigger();
     QCOMPARE(spy.count(), 1);
+    //QCOMPARE(spy.at(0).at(0).toInt(), int(MessageViewer::Viewer::Html));
 }
 
 QTEST_KDEMAIN(DisplayMessageFormatActionMenuTest, GUI)
