@@ -576,9 +576,9 @@ void KMComposeWin::readConfig( bool reload /* = false */ )
     const int currentTransport = GlobalSettings::self()->currentTransport().isEmpty() ? -1 : GlobalSettings::self()->currentTransport().toInt();
     mBtnDictionary->setChecked( GlobalSettings::self()->stickyDictionary() );
 
-    //QT5 mEdtFrom->setCompletionMode( (KCompletion::Completion)GlobalSettings::self()->completionMode() );
-    //QT5 mComposerBase->recipientsEditor()->setCompletionMode( (KCompletion::Completion)GlobalSettings::self()->completionMode() );
-    //QT5 mEdtReplyTo->setCompletionMode( (KCompletion::Completion)GlobalSettings::self()->completionMode() );
+    mEdtFrom->setCompletionMode( (KCompletion::CompletionMode)GlobalSettings::self()->completionMode() );
+    mComposerBase->recipientsEditor()->setCompletionMode( (KCompletion::CompletionMode)GlobalSettings::self()->completionMode() );
+    mEdtReplyTo->setCompletionMode( (KCompletion::CompletionMode)GlobalSettings::self()->completionMode() );
 
     if ( MessageCore::GlobalSettings::self()->useDefaultFonts() ) {
         mBodyFont = KGlobalSettings::generalFont();
