@@ -19,13 +19,21 @@
 #define DisplayMessageFormatActionMenu_H
 
 #include <KActionMenu>
+#include "messageviewer/viewer/viewer.h"
 
+class KToggleAction;
 class DisplayMessageFormatActionMenu : public KActionMenu
 {
     Q_OBJECT
 public:
     explicit DisplayMessageFormatActionMenu(QObject *parent=0);
     ~DisplayMessageFormatActionMenu();
+
+Q_SIGNALS:
+    void changeDisplayMessageFormat(MessageViewer::Viewer::DisplayFormatMessage format);
+
+private slots:
+    void slotChangeDisplayMessageFormat();
 };
 
 #endif // DisplayMessageFormatActionMenu_H

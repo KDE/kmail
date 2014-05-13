@@ -16,11 +16,19 @@
 */
 
 #include "displaymessageformatactionmenutest.h"
-
+#include "../widgets/displaymessageformatactionmenu.h"
 #include <qtest_kde.h>
+#include <KMenu>
 
 DisplayMessageFormatActionMenuTest::DisplayMessageFormatActionMenuTest()
 {
+}
+
+void DisplayMessageFormatActionMenuTest::shouldHaveDefaultValue()
+{
+    DisplayMessageFormatActionMenu menu;
+    QVERIFY(menu.menu());
+    QCOMPARE(menu.menu()->actions().count(), 3);
 }
 
 QTEST_KDEMAIN(DisplayMessageFormatActionMenuTest, GUI)

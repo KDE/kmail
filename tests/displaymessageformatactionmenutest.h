@@ -25,6 +25,8 @@ class DisplayMessageFormatActionMenuTest : public QObject
     Q_OBJECT
 public:
     DisplayMessageFormatActionMenuTest();
+private Q_SLOTS:
+    void shouldHaveDefaultValue();
 };
 
 #endif // DISPLAYMESSAGEFORMATACTIONMENUTEST_H
