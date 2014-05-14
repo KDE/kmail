@@ -4861,9 +4861,8 @@ void KMMainWidget::updateQuickSearchLineText()
 
 void KMMainWidget::slotChangeDisplayMessageFormat(MessageViewer::Viewer::DisplayFormatMessage format)
 {
-#if 0
-    if ( mHtmlGlobalSetting == mFolderHtmlPreference ) {
-        int result = KMessageBox::warningContinueCancel( this,
+    if (format == MessageViewer::Viewer::Html) {
+        const int result = KMessageBox::warningContinueCancel( this,
                                                          // the warning text is taken from configuredialog.cpp:
                                                          i18n( "Use of HTML in mail will make you more vulnerable to "
                                                                "\"spam\" and may increase the likelihood that your system will be "
@@ -4873,15 +4872,15 @@ void KMMainWidget::slotChangeDisplayMessageFormat(MessageViewer::Viewer::Display
                                                          KStandardGuiItem::cancel(),
                                                          QLatin1String("OverrideHtmlWarning"), 0);
         if ( result == KMessageBox::Cancel ) {
-            mPreferHtmlAction->setChecked( false );
+            mDisplayMessageFormatMenu->setDisplayMessageFormat(MessageViewer::Viewer::Text);
             return;
         }
     }
-#endif
     mFolderDisplayFormatPreference = format;
 
     //Update mPrefererHtmlLoadExtAction
-    //mPreferHtmlLoadExtAction->setEnabled( mCurrentFolder && (mHtmlGlobalSetting ? !mFolderHtmlPreference : mFolderHtmlPreference) ? true : false );
+    const bool useHtml = (mFolderDisplayFormatPreference == MessageViewer::Viewer::Html || (mHtmlGlobalSetting && mFolderDisplayFormatPreference == MessageViewer::Viewer::UseGlobalSetting));
+    mPreferHtmlLoadExtAction->setEnabled( useHtml );
 
     if (mMsgView) {
         mMsgView->setDisplayFormatMessageOverwrite(mFolderDisplayFormatPreference);
