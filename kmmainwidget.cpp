@@ -4078,14 +4078,12 @@ void KMMainWidget::updateHtmlMenuEntry()
                                      !multiFolder );
 
         mDisplayMessageFormatMenu->setEnabled(enabledAction);
-#if 0
-        mPreferHtmlLoadExtAction->setEnabled( mFolderTreeWidget &&
-                                              mFolderTreeWidget->folderTreeView()->currentFolder().isValid() &&
-                                              !multiFolder &&
-                                              (mHtmlGlobalSetting ? !mFolderHtmlPreference : mFolderHtmlPreference) ? true : false );
+        const bool isEnabled = ( mFolderTreeWidget &&
+                           mFolderTreeWidget->folderTreeView()->currentFolder().isValid() &&
+                           !multiFolder);
+        const bool useHtml = (mFolderDisplayFormatPreference == MessageViewer::Viewer::Html || (mHtmlGlobalSetting && mFolderDisplayFormatPreference == MessageViewer::Viewer::UseGlobalSetting));
+        mPreferHtmlLoadExtAction->setEnabled( isEnabled && useHtml );
 
-        mPreferHtmlAction->setChecked( !multiFolder &&  ( mHtmlGlobalSetting ? !mFolderHtmlPreference : mFolderHtmlPreference ) );
-#endif
         mDisplayMessageFormatMenu->setDisplayMessageFormat(mFolderDisplayFormatPreference);
 
         mPreferHtmlLoadExtAction->setChecked( !multiFolder &&  ( mHtmlLoadExtGlobalSetting ? !mFolderHtmlLoadExtPreference : mFolderHtmlLoadExtPreference ) );
