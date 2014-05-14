@@ -87,7 +87,6 @@
 #include "messageviewer/viewer/csshelper.h"
 #include "messageviewer/utils/util.h"
 #include "messageviewer/viewer/mailsourceviewer.h"
-#include "messageviewer/viewer/viewer.h"
 #include "messageviewer/header/headerstrategy.h"
 #include "messageviewer/header/headerstyle.h"
 #include "kmreadermainwin.h"
@@ -1065,16 +1064,16 @@ KMCommand::Result KMRedirectCommand::execute()
 }
 
 
-KMPrintCommand::KMPrintCommand( QWidget *parent, const Akonadi::Item &msg,
+KMPrintCommand::KMPrintCommand(QWidget *parent, const Akonadi::Item &msg,
                                 MessageViewer::HeaderStyle *headerStyle,
                                 MessageViewer::HeaderStrategy *headerStrategy,
-                                bool htmlOverride, bool htmlLoadExtOverride,
+                                MessageViewer::Viewer::DisplayFormatMessage format, bool htmlLoadExtOverride,
                                 bool useFixedFont, const QString & encoding )
     : KMCommand( parent, msg ),
       mHeaderStyle( headerStyle ), mHeaderStrategy( headerStrategy ),
       mAttachmentStrategy( 0 ),
       mEncoding( encoding ),
-      mHtmlOverride( htmlOverride ),
+      mFormat( format ),
       mHtmlLoadExtOverride( htmlLoadExtOverride ),
       mUseFixedFont( useFixedFont ),
       mPrintPreview(false)
@@ -1111,7 +1110,7 @@ KMCommand::Result KMPrintCommand::execute()
     printerWin->readConfig();
     if ( mHeaderStyle != 0 && mHeaderStrategy != 0 )
         printerWin->setHeaderStyleAndStrategy( mHeaderStyle, mHeaderStrategy );
-    printerWin->setHtmlOverride( mHtmlOverride );
+    printerWin->setDisplayFormatMessageOverwrite( mFormat );
     printerWin->setHtmlLoadExtOverride( mHtmlLoadExtOverride );
     printerWin->setUseFixedFont( mUseFixedFont );
     printerWin->setOverrideEncoding( mEncoding );

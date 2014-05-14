@@ -887,7 +887,7 @@ bool KMKernel::showMail(qint64 serialNumber)
         job->fetchScope().fetchFullPayload();
         if ( job->exec() ) {
             if ( job->items().count() >= 1 ) {
-                KMReaderMainWin *win = new KMReaderMainWin( false, false );
+                KMReaderMainWin *win = new KMReaderMainWin( MessageViewer::Viewer::UseGlobalSetting, false );
                 win->showMessage( MessageCore::GlobalSettings::self()->overrideCharacterEncoding(),
                                   job->items().at( 0 ) );
                 win->show();

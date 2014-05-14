@@ -457,16 +457,6 @@ QString KMReaderWin::copyText() const
 }
 
 //-----------------------------------------------------------------------------
-void KMReaderWin::setHtmlOverride( bool override )
-{
-    mViewer->setHtmlOverride( override );
-}
-
-bool KMReaderWin::htmlOverride() const
-{
-    return mViewer->htmlOverride();
-}
-
 MessageViewer::Viewer::DisplayFormatMessage KMReaderWin::displayFormatMessageOverwrite() const
 {
     return mViewer->displayFormatMessageOverwrite();
@@ -741,9 +731,10 @@ void KMReaderWin::slotUrlClicked( const Akonadi::Item & item, const KUrl & url )
     KMail::Util::handleClickedURL( url );
 }
 
-void KMReaderWin::slotShowReader( KMime::Content* msgPart, bool htmlMail, const QString &encoding )
+void KMReaderWin::slotShowReader( KMime::Content* msgPart, bool html, const QString &encoding )
 {
-    KMReaderMainWin *win = new KMReaderMainWin( msgPart, htmlMail, encoding );
+    const MessageViewer::Viewer::DisplayFormatMessage format = html ? MessageViewer::Viewer::Html : MessageViewer::Viewer::Text;
+    KMReaderMainWin *win = new KMReaderMainWin( msgPart, format, encoding );
     win->show();
 }
 
@@ -797,7 +788,7 @@ void KMReaderWin::slotPrintComposeResult( KJob *job )
         const QString overrideEncoding = MessageCore::GlobalSettings::self()->overrideCharacterEncoding();
 
         KMPrintCommand *command = new KMPrintCommand( this, printItem, mViewer->headerStyle(), mViewer->headerStrategy()
-                                                      , mViewer->htmlOverride(), mViewer->htmlLoadExternal() ,useFixedFont, overrideEncoding );
+                                                      , mViewer->displayFormatMessageOverwrite(), mViewer->htmlLoadExternal() ,useFixedFont, overrideEncoding );
         command->setPrintPreview( preview );
         command->start();
     } else {

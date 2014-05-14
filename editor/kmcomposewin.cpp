@@ -2628,9 +2628,10 @@ void KMComposeWin::printComposeResult( KJob *job, bool preview )
         Q_ASSERT( composer->resultMessages().size() == 1 );
         Akonadi::Item printItem;
         printItem.setPayload<KMime::Message::Ptr>( composer->resultMessages().first() );
-        const bool isHtml = ( mComposerBase->editor()->textMode() == KMeditor::Rich );
+        const bool isHtml = mComposerBase->editor()->textMode() == KMeditor::Rich;
+        const MessageViewer::Viewer::DisplayFormatMessage format = isHtml ? MessageViewer::Viewer::Html : MessageViewer::Viewer::Text;
         KMPrintCommand *command = new KMPrintCommand( this, printItem,0,
-                                                      0, isHtml, isHtml );
+                                                      0, format, isHtml );
         command->setPrintPreview( preview );
         command->start();
     } else {

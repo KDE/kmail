@@ -311,7 +311,6 @@ protected slots:
     void slotEmptyFolder();
     void slotAddFavoriteFolder();
     void slotShowSelectedFolderInPane();
-    void slotOverrideHtml();
     void slotOverrideHtmlLoadExt();
     void slotMessageQueuedOrDrafted();
     void slotUseTemplate();
@@ -577,8 +576,7 @@ private:
     bool          mLongFolderList;
     bool          mStartupDone;
     bool          mWasEverShown;
-    bool mHtmlGlobalSetting, mHtmlLoadExtGlobalSetting,
-    mFolderHtmlPreference, mFolderHtmlLoadExtPreference,
+    bool mHtmlGlobalSetting, mHtmlLoadExtGlobalSetting, mFolderHtmlLoadExtPreference,
     mReaderWindowActive, mReaderWindowBelow;
     bool mEnableFavoriteFolderView;
     bool mEnableFolderQuickSearch;
@@ -589,7 +587,7 @@ private:
     *mFolderMailingListPropertiesAction,
     *mShowFolderShortcutDialogAction,
     *mArchiveFolderAction, *mMessageNewList;
-    KToggleAction *mPreferHtmlAction, *mPreferHtmlLoadExtAction;
+    KToggleAction *mPreferHtmlLoadExtAction;
 
     QTimer *menutimer;
     QTimer *mShowBusySplashTimer;

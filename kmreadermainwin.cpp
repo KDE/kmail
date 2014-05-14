@@ -69,13 +69,13 @@
 
 using namespace MailCommon;
 
-KMReaderMainWin::KMReaderMainWin( bool htmlOverride, bool htmlLoadExtOverride,
+KMReaderMainWin::KMReaderMainWin(MessageViewer::Viewer::DisplayFormatMessage format, bool htmlLoadExtOverride,
                                   char *name )
     : KMail::SecondaryWindow( name ? name : "readerwindow#" )
 {
     mReaderWin = new KMReaderWin( this, this, actionCollection());
     //mReaderWin->setShowCompleteMessage( true );
-    mReaderWin->setHtmlOverride( htmlOverride );
+    mReaderWin->setDisplayFormatMessageOverwrite( format );
     mReaderWin->setHtmlLoadExtOverride( htmlLoadExtOverride );
     mReaderWin->setDecryptMessageOverwrite( true );
     initKMReaderMainWin();
@@ -92,12 +92,12 @@ KMReaderMainWin::KMReaderMainWin( char *name )
 
 
 //-----------------------------------------------------------------------------
-KMReaderMainWin::KMReaderMainWin(KMime::Content* aMsgPart, bool aHTML, const QString & encoding, char *name )
+KMReaderMainWin::KMReaderMainWin(KMime::Content* aMsgPart, MessageViewer::Viewer::DisplayFormatMessage format, const QString & encoding, char *name )
     : KMail::SecondaryWindow( name ? name : "readerwindow#" )
 {
     mReaderWin = new KMReaderWin( this, this, actionCollection() );
     mReaderWin->setOverrideEncoding( encoding );
-    mReaderWin->setHtmlOverride( aHTML );
+    mReaderWin->setDisplayFormatMessageOverwrite( format );
     mReaderWin->setMsgPart( aMsgPart );
     initKMReaderMainWin();
 }
