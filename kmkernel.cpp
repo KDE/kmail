@@ -1477,19 +1477,19 @@ KSharedConfig::Ptr KMKernel::config()
         // Check that all updates have been run on the config file:
         KMail::checkConfigUpdates();
         MessageList::Core::Settings::self()->setSharedConfig( mySelf->mConfig );
-        MessageList::Core::Settings::self()->readConfig();
+        MessageList::Core::Settings::self()->load();
         TemplateParser::GlobalSettings::self()->setSharedConfig( mySelf->mConfig );
-        TemplateParser::GlobalSettings::self()->readConfig();
+        TemplateParser::GlobalSettings::self()->load();
         MessageComposer::MessageComposerSettings::self()->setSharedConfig( mySelf->mConfig );
-        MessageComposer::MessageComposerSettings::self()->readConfig();
+        MessageComposer::MessageComposerSettings::self()->load();
         MessageCore::GlobalSettings::self()->setSharedConfig( mySelf->mConfig );
-        MessageCore::GlobalSettings::self()->readConfig();
+        MessageCore::GlobalSettings::self()->load();
         MessageViewer::GlobalSettings::self()->setSharedConfig( mySelf->mConfig );
-        MessageViewer::GlobalSettings::self()->readConfig();
+        MessageViewer::GlobalSettings::self()->load();
         MailCommon::MailCommonSettings::self()->setSharedConfig( mySelf->mConfig );
-        MailCommon::MailCommonSettings::self()->readConfig();
+        MailCommon::MailCommonSettings::self()->load();
         PimCommon::PimCommonSettings::self()->setSharedConfig( mySelf->mConfig );
-        PimCommon::PimCommonSettings::self()->readConfig();
+        PimCommon::PimCommonSettings::self()->load();
     }
     return mySelf->mConfig;
 }
