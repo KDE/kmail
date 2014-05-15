@@ -46,7 +46,7 @@ using KPIM::RecentAddresses;
 #include <KMessageBox>
 #include <KFile>
 #include <kascii.h>
-#include <KIntSpinBox>
+#include <QSpinBox>
 #include <KIntNumInput>
 #include <KGlobal>
 #include <QDebug>
@@ -246,8 +246,11 @@ ComposerPageGeneralTab::ComposerPageGeneralTab( QWidget * parent )
     mWordWrapCheck->setToolTip( helpText );
     mWordWrapCheck->setWhatsThis( helpText );
 
-    mWrapColumnSpin = new KIntSpinBox( 30/*min*/, 78/*max*/, 1/*step*/,
-                                       78/*init*/, this );
+    mWrapColumnSpin = new QSpinBox(this );
+    mWrapColumnSpin->setMaximum(78/*max*/);
+    mWrapColumnSpin->setMinimum( 30/*min*/);
+    mWrapColumnSpin->setSingleStep(1/*step*/);
+    mWrapColumnSpin->setValue(78/*init*/);
     mWrapColumnSpin->setEnabled( false ); // since !mWordWrapCheck->isChecked()
 
     helpText = i18n( "Set the text width for automatic word wrapping" );
@@ -303,10 +306,14 @@ ComposerPageGeneralTab::ComposerPageGeneralTab( QWidget * parent )
     ++row;
 
     // "Autosave interval" spinbox
-    mAutoSave = new KIntSpinBox( 0, 60, 1, 1, this );
+    mAutoSave = new QSpinBox(this );
+    mAutoSave->setMaximum(60);
+    mAutoSave->setMinimum( 0);
+    mAutoSave->setSingleStep(1);
+    mAutoSave->setValue(1);
     mAutoSave->setObjectName( QLatin1String("kcfg_AutosaveInterval") );
     mAutoSave->setSpecialValueText( i18n("No autosave") );
-    mAutoSave->setSuffix( ki18ncp( "Interval suffix", " minute", " minutes" ) );
+    //QT5 mAutoSave->setSuffix( ki18ncp( "Interval suffix", " minute", " minutes" ) );
 
     helpText = i18n( "Automatically save the message at this specified interval" );
     mAutoSave->setToolTip( helpText );
@@ -379,8 +386,11 @@ ComposerPageGeneralTab::ComposerPageGeneralTab( QWidget * parent )
     mRecipientCheck->setWhatsThis( helpText );
     mRecipientCheck->setToolTip( i18n( "Warn if too many recipients are specified" ) );
 
-    mRecipientSpin = new KIntSpinBox( 1/*min*/, 100/*max*/, 1/*step*/,
-                                      5/*init*/, this );
+    mRecipientSpin = new QSpinBox(this );
+    mRecipientSpin->setMaximum(100/*max*/);
+    mRecipientSpin->setMinimum( 1/*min*/);
+    mRecipientSpin->setSingleStep(1/*step*/);
+    mRecipientSpin->setValue(5/*init*/);
     mRecipientSpin->setObjectName( QLatin1String("kcfg_RecipientThreshold") );
     mRecipientSpin->setEnabled( false );
     helpText = i18n( GlobalSettings::self()->recipientThresholdItem()->whatsThis().toUtf8() );
@@ -401,7 +411,11 @@ ComposerPageGeneralTab::ComposerPageGeneralTab( QWidget * parent )
 #endif
 
     // "Maximum Reply-to-All recipients" spinbox
-    mMaximumRecipients = new KIntSpinBox( 0, 9999, 1, 1, this );
+    mMaximumRecipients = new QSpinBox(this );
+    mMaximumRecipients->setMaximum(9999);
+    mMaximumRecipients->setMinimum( 0);
+    mMaximumRecipients->setSingleStep(1);
+    mMaximumRecipients->setValue(1);
 
     helpText = i18n( "Only allow this many recipients to be specified for the message.\n"
                      "This applies to doing a \"Reply to All\", entering recipients manually\n"

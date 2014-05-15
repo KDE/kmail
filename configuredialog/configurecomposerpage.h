@@ -23,7 +23,7 @@
 #include "configuredialog_p.h"
 #include "ui_customtemplates_base.h"
 class QCheckBox;
-class KIntSpinBox;
+class QSpinBox;
 class KIntNumInput;
 class KComboBox;
 class KUrlRequester;
@@ -74,15 +74,15 @@ private:
     QCheckBox     *mAutoRequestMDNCheck;
     QCheckBox        *mShowRecentAddressesInComposer;
     QCheckBox     *mWordWrapCheck;
-    KIntSpinBox   *mWrapColumnSpin;
-    KIntSpinBox   *mAutoSave;
-    KIntSpinBox   *mMaximumRecipients;
+    QSpinBox   *mWrapColumnSpin;
+    QSpinBox   *mAutoSave;
+    QSpinBox   *mMaximumRecipients;
     QCheckBox     *mImprovePlainTextOfHtmlMessage;
     KIntNumInput  *mMaximumRecentAddress;
 #ifdef KDEPIM_ENTERPRISE_BUILD
     KComboBox     *mForwardTypeCombo;
     QCheckBox     *mRecipientCheck;
-    KIntSpinBox   *mRecipientSpin;
+    QSpinBox   *mRecipientSpin;
 #endif
 };
 
