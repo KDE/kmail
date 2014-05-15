@@ -1173,7 +1173,7 @@ void KMMainWidget::updateMoveAction( bool hasUnreadMails, bool hasMails )
     actionCollection()->action( QLatin1String("go_next_unread_message") )->setEnabled( enable_goto_unread );
     actionCollection()->action( QLatin1String("go_prev_message") )->setEnabled( hasMails );
     actionCollection()->action( QLatin1String("go_prev_unread_message") )->setEnabled( enable_goto_unread );
-    if ( mAkonadiStandardActionManager->action( Akonadi::StandardMailActionManager::MarkAllMailAsRead ) ) {
+    if ( mAkonadiStandardActionManager && mAkonadiStandardActionManager->action( Akonadi::StandardMailActionManager::MarkAllMailAsRead ) ) {
         mAkonadiStandardActionManager->action( Akonadi::StandardMailActionManager::MarkAllMailAsRead )->setEnabled(hasUnreadMails);
     }
 }

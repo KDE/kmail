@@ -48,7 +48,7 @@ DisplayMessageFormatActionMenu::DisplayMessageFormatActionMenu(QObject *parent)
     subMenu->addAction(act);
     connect(act, SIGNAL(triggered(bool)), this, SLOT(slotChangeDisplayMessageFormat()));
 
-    act = new KToggleAction(i18n("Use KMail global setting"), this);
+    act = new KToggleAction(i18n("Use Global Setting"), this);
     act->setObjectName(QLatin1String("use-global-setting-action"));
     act->setData(MessageViewer::Viewer::UseGlobalSetting);
     connect(act, SIGNAL(triggered(bool)), this, SLOT(slotChangeDisplayMessageFormat()));
