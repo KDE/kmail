@@ -591,7 +591,7 @@ void MessageActions::annotateMessage()
     dialog->exec();
 }
 
-void MessageActions::addWebShortcutsMenu( KMenu *menu, const QString & text )
+void MessageActions::addWebShortcutsMenu( QMenu *menu, const QString & text )
 {
     if ( text.isEmpty() )
         return;

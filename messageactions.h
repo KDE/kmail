@@ -32,7 +32,7 @@ class KActionMenu;
 class KActionCollection;
 class KXMLGUIClient;
 class KMReaderWin;
-class KMenu;
+class QMenu;
 
 namespace Akonadi {
 class Item;
@@ -88,7 +88,7 @@ public:
     KActionMenu* mailingListActionMenu() const { return mMailingListActionMenu; }
     TemplateParser::CustomTemplatesMenu* customTemplatesMenu() const;
 
-    void addWebShortcutsMenu( KMenu *menu, const QString & text );
+    void addWebShortcutsMenu( QMenu *menu, const QString & text );
 
 
 signals:

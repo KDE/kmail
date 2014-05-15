@@ -38,7 +38,7 @@
           </widget>
          </item>
          <item>
-          <widget class="KPushButton" name="mModifyAccountButton">
+          <widget class="QPushButton" name="mModifyAccountButton">
            <property name="enabled">
             <bool>false</bool>
            </property>
@@ -48,7 +48,7 @@
           </widget>
          </item>
          <item>
-          <widget class="KPushButton" name="mRemoveAccountButton">
+          <widget class="QPushButton" name="mRemoveAccountButton">
            <property name="enabled">
             <bool>false</bool>
            </property>
@@ -65,7 +65,7 @@
           </widget>
          </item>
          <item>
-          <widget class="KPushButton" name="mRestartAccountButton">
+          <widget class="QPushButton" name="mRestartAccountButton">
            <property name="enabled">
             <bool>false</bool>
            </property>
@@ -159,11 +159,6 @@
    <class>KFilterProxySearchLine</class>
    <extends>QWidget</extends>
    <header>kfilterproxysearchline.h</header>
-  </customwidget>
-  <customwidget>
-   <class>KPushButton</class>
-   <extends>QPushButton</extends>
-   <header>kpushbutton.h</header>
   </customwidget>
   <customwidget>
    <class>Akonadi::AgentInstanceWidget</class>
