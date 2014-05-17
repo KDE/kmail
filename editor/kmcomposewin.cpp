@@ -223,7 +223,7 @@ KMComposeWin::KMComposeWin( const KMime::Message::Ptr &aMsg, bool lastSignState,
       mNumProgressUploadFile(0),
       mCryptoStateIndicatorWidget(0)
 {
-
+    m_verifyMissingAttachment = 0;
     mComposerBase = new MessageComposer::ComposerViewBase( this, this );
     mComposerBase->setIdentityManager( kmkernel->identityManager() );
 
