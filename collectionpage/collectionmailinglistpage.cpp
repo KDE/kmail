@@ -134,7 +134,7 @@ void CollectionMailingListPage::init(const Akonadi::Collection & col)
     groupLayout->addWidget( handleButton, 6, 2 );
 
     mEditList = new KEditListWidget( mGroupWidget );
-    //QT5 mEditList->lineEdit()->setClearButtonShown(true);
+    mEditList->lineEdit()->setClearButtonEnabled(true);
     connect(mEditList, SIGNAL(changed()),SLOT(slotConfigChanged()));
     groupLayout->addWidget( mEditList, 7, 0, 1, 4 );
 
