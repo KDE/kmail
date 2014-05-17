@@ -19,7 +19,7 @@
 #define KMSYSTEMTRAY_H
 
 #include <AkonadiCore/collection.h>
-#include <kicon.h>
+#include <qicon.h>
 #include <kstatusnotifieritem.h>
 
 #include <QAction>
@@ -77,7 +77,7 @@ private:
 
 private:
     QColor mTextColor;
-    KIcon mIcon;
+    QIcon mIcon;
     int mDesktopOfMainWin;
 
     int mMode;

@@ -59,7 +59,7 @@ using namespace MailCommon;
 namespace KMail {
 KMSystemTray::KMSystemTray(QObject *parent)
     : KStatusNotifierItem( parent),
-      mIcon(QLatin1String("mail-unread-new")),
+      mIcon(QIcon::fromTheme(QLatin1String("mail-unread-new"))),
       mDesktopOfMainWin( 0 ),
       mMode( GlobalSettings::EnumSystemTrayPolicy::ShowOnUnread ),
       mCount( 0 ),
@@ -108,7 +108,7 @@ bool KMSystemTray::buildPopupMenu()
     }
 
     if ( !contextMenu() ) {
-        setContextMenu( new KMenu() );
+        setContextMenu( new QMenu() );
     }
 
     contextMenu()->clear();
@@ -134,10 +134,12 @@ bool KMSystemTray::buildPopupMenu()
         contextMenu()->addAction( action );
     contextMenu()->addSeparator();
 
-#if 0 //QT5
-    if ( ( action = actionCollection()->action(QLatin1String("file_quit")) ) )
-        contextMenu()->addAction( action );
-#endif
+    Q_FOREACH( QAction *act, actionCollection() ) {
+       if (act->objectName() == QLatin1String("file_quit")) {
+           contextMenu()->addAction( act );
+           break;
+       }
+    }
     return true;
 }
 
