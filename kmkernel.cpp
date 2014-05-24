@@ -1891,7 +1891,7 @@ void KMKernel::checkFolderFromResources( const Akonadi::Collection::List &collec
                     if ( iface->trashCollection() == collectionId ) {
                         //Use default trash
                         iface->setTrashCollection( CommonKernel->trashCollectionFolder().id() );
-                        iface->writeConfig();
+                        iface->save();
                         break;
                     }
                 }
@@ -1906,7 +1906,7 @@ void KMKernel::checkFolderFromResources( const Akonadi::Collection::List &collec
                     if ( iface->targetCollection() == collectionId ) {
                         //Use default inbox
                         iface->setTargetCollection( CommonKernel->inboxCollectionFolder().id() );
-                        iface->writeConfig();
+                        iface->save();
                         break;
                     }
                 }
