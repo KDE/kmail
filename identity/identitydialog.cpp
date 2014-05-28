@@ -84,7 +84,7 @@ using MailTransport::TransportManager;
 #include <qdebug.h>
 #include <QPushButton>
 #include <kcombobox.h>
-#include <ktabwidget.h>
+#include <QTabWidget>
 #include <KStandardDirs>
 #include <KIcon>
 #include <sonnet/dictionarycombobox.h>
@@ -140,7 +140,7 @@ IdentityDialog::IdentityDialog( QWidget * parent )
     QVBoxLayout * vlay = new QVBoxLayout( page );
     vlay->setSpacing( spacingHint() );
     vlay->setMargin( 0 );
-    mTabWidget = new KTabWidget( page );
+    mTabWidget = new QTabWidget( page );
     mTabWidget->setObjectName( QLatin1String("config-identity-tab") );
     vlay->addWidget( mTabWidget );
 

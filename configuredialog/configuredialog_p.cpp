@@ -9,7 +9,7 @@
 #include "settings/globalsettings.h"
 
 // other KDE headers:
-#include <ktabwidget.h>
+#include <QTabWidget>
 #include <KDialog>
 
 // Qt headers:
@@ -26,7 +26,7 @@ ConfigModuleWithTabs::ConfigModuleWithTabs( const KComponentData &instance, QWid
     QVBoxLayout *vlay = new QVBoxLayout( this );
     vlay->setSpacing( KDialog::spacingHint() );
     vlay->setMargin( 0 );
-    mTabWidget = new KTabWidget( this );
+    mTabWidget = new QTabWidget( this );
     vlay->addWidget( mTabWidget );
 }
 

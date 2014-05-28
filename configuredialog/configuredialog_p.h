@@ -10,7 +10,7 @@
 
 #include <kcmodule.h>
 
-class KTabWidget;
+class QTabWidget;
 class ConfigureDialog;
 
 
@@ -67,7 +67,7 @@ protected:
     void addTab( ConfigModuleTab* tab, const QString & title );
 
 private:
-    KTabWidget *mTabWidget;
+    QTabWidget *mTabWidget;
     bool mWasInitialized;
 };
 

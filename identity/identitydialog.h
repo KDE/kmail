@@ -44,7 +44,7 @@ class KComboBox;
 class KJob;
 class KLineEdit;
 class QPushButton;
-class KTabWidget;
+class QTabWidget;
 
 namespace Kleo {
 class EncryptionKeyRequester;
@@ -148,7 +148,7 @@ private:
     KPIMIdentities::SignatureConfigurator *mSignatureConfigurator;
     // "X-Face" tab:
     KMail::XFaceConfigurator *mXFaceConfigurator;
-    KTabWidget *mTabWidget;
+    QTabWidget *mTabWidget;
 };
 
 } // namespace KMail
