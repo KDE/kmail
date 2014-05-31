@@ -223,7 +223,7 @@ if (KDEPIM_BUILD_DESKTOP)
   )
 
 
-  qt5_wrap_ui(kmailprivate_LIB_SRCS
+  ki18n_wrap_ui(kmailprivate_LIB_SRCS
     ui/composercryptoconfiguration.ui
     ui/warningconfiguration.ui
     ui/smimeconfiguration.ui
