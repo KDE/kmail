@@ -21,7 +21,7 @@
 
 #include "createtaskjob.h"
 #include "attributes/taskattribute.h"
-#include <Akonadi/KMime/messagestatus.h>
+#include <Akonadi/KMime/MessageStatus>
 
 #include <KLocalizedString>
 

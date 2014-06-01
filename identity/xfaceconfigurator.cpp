@@ -32,7 +32,7 @@
 
 #include "xfaceconfigurator.h"
 
-#include <Akonadi/Contact/contactsearchjob.h>
+#include <Akonadi/Contact/ContactSearchJob>
 #include <kcombobox.h>
 #include <kdialog.h>
 #include <kfiledialog.h>

@@ -35,7 +35,7 @@
 #include <AkonadiCore/monitor.h>
 #include <AkonadiCore/session.h>
 
-#include <Akonadi/KMime/messageparts.h>
+#include <Akonadi/KMime/MessageParts>
 #include <kmime/kmime_message.h>
 #include <boost/shared_ptr.hpp>
 typedef boost::shared_ptr<KMime::Message> MessagePtr;

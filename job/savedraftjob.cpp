@@ -19,7 +19,7 @@
 */
 
 #include "savedraftjob.h"
-#include <Akonadi/KMime/messagestatus.h>
+#include <Akonadi/KMime/MessageStatus>
 #include <AkonadiCore/Item>
 #include <AkonadiCore/ItemCreateJob>
 

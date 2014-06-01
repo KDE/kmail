@@ -23,7 +23,7 @@
 
 #include <AkonadiCore/collection.h>
 #include <AkonadiCore/entitydisplayattribute.h>
-#include <Akonadi/KMime/messagefolderattribute.h>
+#include <Akonadi/KMime/MessageFolderAttribute>
 
 #include <QGroupBox>
 #include <QHBoxLayout>

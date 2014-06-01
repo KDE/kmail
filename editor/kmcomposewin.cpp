@@ -99,7 +99,7 @@
 #include <templateparser/templateparser.h>
 #include <templatesconfiguration.h>
 #include "messagecore/helpers/nodehelper.h"
-#include <Akonadi/KMime/messagestatus.h>
+#include <Akonadi/KMime/MessageStatus>
 #include "messagecore/helpers/messagehelpers.h"
 #include "mailcommon/folder/folderrequester.h"
 #include "mailcommon/folder/foldercollection.h"

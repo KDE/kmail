@@ -110,7 +110,7 @@ using KSieveUi::SieveDebugDialog;
 #include <AkonadiCore/collectionattributessynchronizationjob.h>
 #include <AkonadiCore/collectionfetchjob.h>
 #include <AkonadiCore/collectionfetchscope.h>
-#include <Akonadi/Contact/contactsearchjob.h>
+#include <Akonadi/Contact/ContactSearchJob>
 #include <AkonadiWidgets/collectionpropertiesdialog.h>
 #include <AkonadiCore/entitydisplayattribute.h>
 #include <AkonadiWidgets/entitylistview.h>
@@ -128,8 +128,8 @@ using KSieveUi::SieveDebugDialog;
 #include <AkonadiCore/collectionstatistics.h>
 #include <AkonadiWidgets/collectionstatisticsdelegate.h>
 #include <AkonadiCore/EntityMimeTypeFilterModel>
-#include <Akonadi/KMime/messageflags.h>
-#include <Akonadi/KMime/removeduplicatesjob.h>
+#include <Akonadi/KMime/MessageFlags>
+#include <Akonadi/KMime/RemoveDuplicatesJob>
 #include <AkonadiCore/collectiondeletejob.h>
 #include <AkonadiCore/dbusconnectionpool.h>
 #include <AkonadiCore/CachePolicy>

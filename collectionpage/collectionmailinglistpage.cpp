@@ -27,7 +27,7 @@
 
 #include <AkonadiCore/itemfetchjob.h>
 #include <AkonadiCore/itemfetchscope.h>
-#include <Akonadi/KMime/messageparts.h>
+#include <Akonadi/KMime/MessageParts>
 
 #include <QGridLayout>
 #include <QLabel>

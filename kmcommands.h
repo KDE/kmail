@@ -9,7 +9,7 @@
 #include "search/searchpattern.h"
 #include "messageviewer/viewer/viewer.h"
 
-#include <Akonadi/KMime/messagestatus.h>
+#include <Akonadi/KMime/MessageStatus>
 #include <kio/job.h>
 #include <kmime/kmime_message.h>
 

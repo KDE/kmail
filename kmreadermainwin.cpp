@@ -55,7 +55,7 @@
 #include "foldercollection.h"
 
 #include <KActionCollection>
-#include <Akonadi/Contact/contactsearchjob.h>
+#include <Akonadi/Contact/ContactSearchJob>
 #include <KPIMUtils/kpimutils/email.h>
 #include <kmime/kmime_message.h>
 
