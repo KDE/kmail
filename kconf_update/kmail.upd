@@ -229,6 +229,12 @@ Key=PrintSelectedText,PrintSelectedText
 Id=4.13
 File=akonadi_folderarchive_agentrc,foldermailarchiverc
 AllGroups
+
+Id=4.13.2
+File=kmail2rc
+Group=GrantleeTheme
+Key=grantlee-theme-name,grantlee-mail-theme-name
+
 #
 # Important notice:
 # If you add updates here, keep this text below them.
