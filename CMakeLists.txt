@@ -284,8 +284,6 @@ if (KDEPIM_BUILD_DESKTOP)
     KF5::PimTextEdit
     messageviewer
     akonadi_next
-    ${QT_QTWEBKIT_LIBRARY}
-    ${QT_QTSCRIPT_LIBRARY}
     sendlater
   )
 
@@ -323,12 +321,9 @@ if (KDEPIM_BUILD_DESKTOP)
   kde4_add_app_icon(kmail_SRCS "${CMAKE_CURRENT_SOURCE_DIR}/icons/hi*-apps-kmail.png")
   add_executable(kmail ${kmail_SRCS})
   target_link_libraries(kmail
-    
-    
     KF5::KontactInterface
     kmailprivate
     kdepim
-    ${QT_QTSCRIPT_LIBRARY}
   )
 
 
