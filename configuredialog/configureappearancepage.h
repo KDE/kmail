@@ -289,7 +289,7 @@ private: // data
 class KMAIL_EXPORT AppearancePage : public ConfigModuleWithTabs {
     Q_OBJECT
 public:
-    explicit AppearancePage( const KComponentData &instance, QWidget *parent=0 );
+    explicit AppearancePage( QWidget *parent=0 );
 
     QString helpAnchor() const;
 

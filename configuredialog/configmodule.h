@@ -31,8 +31,8 @@
 class ConfigModule : public KCModule
 {
 public:
-  explicit ConfigModule( const KComponentData &instance, QWidget *parent=0 )
-     : KCModule ( /*instance,*/ parent ) //QT5
+  explicit ConfigModule( QWidget *parent=0 )
+     : KCModule ( parent ) //QT5
      {}
   ~ConfigModule() {}
 

@@ -54,7 +54,7 @@ private:
 class KMAIL_EXPORT ConfigModuleWithTabs : public ConfigModule {
     Q_OBJECT
 public:
-    explicit ConfigModuleWithTabs( const KComponentData &instance, QWidget *parent=0 );
+    explicit ConfigModuleWithTabs( QWidget *parent=0 );
     ~ConfigModuleWithTabs() {}
 
     // don't reimplement any of those methods

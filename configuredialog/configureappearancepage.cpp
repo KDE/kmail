@@ -81,8 +81,8 @@ QString AppearancePage::helpAnchor() const
     return QString::fromLatin1("configure-appearance");
 }
 
-AppearancePage::AppearancePage( const KComponentData &instance, QWidget *parent )
-    : ConfigModuleWithTabs( instance, parent )
+AppearancePage::AppearancePage( QWidget *parent )
+    : ConfigModuleWithTabs( parent )
 {
     //
     // "Fonts" tab:

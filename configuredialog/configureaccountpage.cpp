@@ -58,8 +58,8 @@ QString AccountsPage::helpAnchor() const
     return QString::fromLatin1("configure-accounts");
 }
 
-AccountsPage::AccountsPage( const KComponentData &instance, QWidget *parent )
-    : ConfigModuleWithTabs( instance, parent )
+AccountsPage::AccountsPage( QWidget *parent )
+    : ConfigModuleWithTabs( parent )
 {
     //
     // "Receiving" tab:

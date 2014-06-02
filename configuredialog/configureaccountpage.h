@@ -100,7 +100,7 @@ private:
 class KMAIL_EXPORT AccountsPage : public ConfigModuleWithTabs {
     Q_OBJECT
 public:
-    explicit AccountsPage( const KComponentData &instance, QWidget *parent=0 );
+    explicit AccountsPage( QWidget *parent=0 );
     QString helpAnchor() const;
 
 

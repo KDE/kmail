@@ -264,7 +264,7 @@ private:
 class KMAIL_EXPORT ComposerPage : public ConfigModuleWithTabs {
     Q_OBJECT
 public:
-    explicit ComposerPage( const KComponentData &instance, QWidget *parent=0 );
+    explicit ComposerPage( QWidget *parent=0 );
 
     QString helpAnchor() const;
 

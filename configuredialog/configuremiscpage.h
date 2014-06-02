@@ -109,7 +109,7 @@ private:
 class KMAIL_EXPORT MiscPage : public ConfigModuleWithTabs {
     Q_OBJECT
 public:
-    explicit MiscPage( const KComponentData &instance, QWidget *parent=0 );
+    explicit MiscPage( QWidget *parent=0 );
     QString helpAnchor() const;
 
     typedef MiscPageFolderTab FolderTab;

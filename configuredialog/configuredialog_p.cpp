@@ -20,8 +20,8 @@
 #include <assert.h>
 
 
-ConfigModuleWithTabs::ConfigModuleWithTabs( const KComponentData &instance, QWidget *parent )
-    : ConfigModule( instance, parent ), mWasInitialized( false )
+ConfigModuleWithTabs::ConfigModuleWithTabs( QWidget *parent )
+    : ConfigModule( parent ), mWasInitialized( false )
 {
     QVBoxLayout *vlay = new QVBoxLayout( this );
     vlay->setSpacing( KDialog::spacingHint() );

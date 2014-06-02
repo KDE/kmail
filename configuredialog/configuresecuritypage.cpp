@@ -45,8 +45,8 @@ QString SecurityPage::helpAnchor() const
     return QString::fromLatin1("configure-security");
 }
 
-SecurityPage::SecurityPage( const KComponentData &instance, QWidget *parent )
-    : ConfigModuleWithTabs( instance, parent )
+SecurityPage::SecurityPage( QWidget *parent )
+    : ConfigModuleWithTabs( parent )
 {
     //
     // "Reading" tab:

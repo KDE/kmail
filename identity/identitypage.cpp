@@ -47,8 +47,8 @@ QString IdentityPage::helpAnchor() const
     return QString::fromLatin1( "configure-identity" );
 }
 
-IdentityPage::IdentityPage( const KComponentData &instance, QWidget *parent )
-    : ConfigModule( instance, parent ),
+IdentityPage::IdentityPage( QWidget *parent )
+    : ConfigModule( parent ),
       mIdentityDialog( 0 ),
       mOldNumberOfIdentities( 0 ),
       mIdentityManager( 0 )

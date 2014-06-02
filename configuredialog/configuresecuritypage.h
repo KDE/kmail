@@ -163,7 +163,7 @@ private:
 class KMAIL_EXPORT SecurityPage : public ConfigModuleWithTabs {
     Q_OBJECT
 public:
-    explicit SecurityPage( const KComponentData &instance, QWidget *parent=0 );
+    explicit SecurityPage( QWidget *parent=0 );
 
     QString helpAnchor() const;
 

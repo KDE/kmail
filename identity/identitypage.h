@@ -41,7 +41,7 @@ class IdentityListViewItem;
 class KMAIL_EXPORT IdentityPage : public ConfigModule {
     Q_OBJECT
 public:
-    explicit IdentityPage( const KComponentData &instance, QWidget *parent = 0 );
+    explicit IdentityPage( QWidget *parent = 0 );
     ~IdentityPage();
 
     QString helpAnchor() const;
