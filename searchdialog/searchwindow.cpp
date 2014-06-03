@@ -513,7 +513,6 @@ void SearchWindow::doSearch()
         qDebug()<<" use existing folder " << mFolder.id();
         Akonadi::PersistentSearchAttribute *attribute = new Akonadi::PersistentSearchAttribute();
         mFolder.setContentMimeTypes(QStringList() << QLatin1String("message/rfc822"));
-        attribute->setQueryLanguage( QLatin1String("akonadi") );
         attribute->setQueryString( QString::fromLatin1(mQuery.toJSON()) );
         attribute->setQueryCollections( searchCollections );
         attribute->setRecursive( recursive );
