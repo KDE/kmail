@@ -798,9 +798,9 @@ void KMMainWidget::refreshFavoriteFoldersViewProperties()
 {
     if ( mFavoriteCollectionsView ) {
         if ( MailCommon::MailCommonSettings::self()->favoriteCollectionViewMode() == MailCommon::MailCommonSettings::EnumFavoriteCollectionViewMode::IconMode )
-            mFavoriteCollectionsView->setViewMode( QListView::IconMode );
+            mFavoriteCollectionsView->changeViewMode( QListView::IconMode );
         else if ( MailCommon::MailCommonSettings::self()->favoriteCollectionViewMode() == MailCommon::MailCommonSettings::EnumFavoriteCollectionViewMode::ListMode )
-            mFavoriteCollectionsView->setViewMode( QListView::ListMode );
+            mFavoriteCollectionsView->changeViewMode( QListView::ListMode );
         else
             Q_ASSERT(false); // we should never get here in hidden mode
         mFavoriteCollectionsView->setDropActionMenuEnabled( kmkernel->showPopupAfterDnD() );
