@@ -88,7 +88,7 @@ void CreateTaskJob::itemFetchJobDone(KJob *job)
 
     Akonadi::Item::List itemsToModify;
     foreach( const Akonadi::Item &it, lst ) {
-        //kDebug()<<" item ::"<<tmpItem;
+        //qDebug()<<" item ::"<<tmpItem;
         if ( it.isValid() ) {
             bool myStatus;
             Akonadi::MessageStatus itemStatus;
