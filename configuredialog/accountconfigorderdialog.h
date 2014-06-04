@@ -22,7 +22,7 @@
 
 class QListWidget;
 class KPushButton;
-
+class QCheckBox;
 namespace KMail {
 
 class AccountConfigOrderDialog : public KDialog
@@ -36,8 +36,8 @@ private Q_SLOTS:
     void slotOk();
     void slotMoveUp();
     void slotMoveDown();
-    void slotEnableControls();
-
+    void slotEnableControls();    
+    void slotEnableAccountOrder(bool state);
 private:
     enum Type {
         IdentifierAccount = Qt::UserRole+1
@@ -49,6 +49,7 @@ private:
     QListWidget *mListAccount;
     KPushButton *mUpButton;
     KPushButton *mDownButton;
+    QCheckBox *mEnableAccountOrder;
 };
 }
 

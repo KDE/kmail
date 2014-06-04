@@ -32,6 +32,7 @@
 
 #include <QListWidget>
 #include <QHBoxLayout>
+#include <QCheckBox>
 
 using namespace KMail;
 
@@ -50,7 +51,17 @@ AccountConfigOrderDialog::AccountConfigOrderDialog(QWidget *parent)
 
     QWidget *page = new QWidget( this );
     setMainWidget( page );
-    QHBoxLayout * vlay = new QHBoxLayout( page );
+
+    QVBoxLayout *vbox = new QVBoxLayout;
+    page->setLayout(vbox);
+
+    mEnableAccountOrder = new QCheckBox(i18n("Use custom order"));
+    connect(mEnableAccountOrder, SIGNAL(clicked(bool)), this, SLOT(slotEnableAccountOrder(bool)));
+    vbox->addWidget(mEnableAccountOrder);
+
+    QHBoxLayout * vlay = new QHBoxLayout;
+    vbox->addLayout(vlay);
+
     mListAccount = new QListWidget(this);
     mListAccount->setDragDropMode( QAbstractItemView::InternalMove );
     vlay->addWidget(mListAccount);
@@ -88,6 +99,15 @@ AccountConfigOrderDialog::AccountConfigOrderDialog(QWidget *parent)
 AccountConfigOrderDialog::~AccountConfigOrderDialog()
 {
     writeConfig();
+}
+
+void AccountConfigOrderDialog::slotEnableAccountOrder(bool state)
+{
+    mListAccount->setEnabled(state);
+    mUpButton->setEnabled(state);
+    mDownButton->setEnabled(state);
+    if (state)
+        slotEnableControls();
 }
 
 void AccountConfigOrderDialog::slotMoveUp()
