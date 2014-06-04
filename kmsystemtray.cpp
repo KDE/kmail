@@ -84,6 +84,8 @@ KMSystemTray::KMSystemTray(QObject *parent)
 
 
     connect( KGlobalSettings::self(), SIGNAL(kdisplayPaletteChanged()), this, SLOT(slotGeneralPaletteChanged()));
+    connect( KGlobalSettings::self(), SIGNAL(kdisplayFontChanged()), this,  SLOT(slotGeneralFontChanged()) );
+
     connect( this, SIGNAL(activateRequested(bool,QPoint)),
              this, SLOT(slotActivated()) );
     connect( contextMenu(), SIGNAL(aboutToShow()),
@@ -177,10 +179,16 @@ int KMSystemTray::mode() const
     return mMode;
 }
 
+void KMSystemTray::slotGeneralFontChanged()
+{
+    updateSystemTray();
+}
+
 void KMSystemTray::slotGeneralPaletteChanged()
 {
     const KColorScheme scheme( QPalette::Active, KColorScheme::View );
     mTextColor = scheme.foreground( KColorScheme::LinkText ).color();
+    updateSystemTray();
 }
 
 
