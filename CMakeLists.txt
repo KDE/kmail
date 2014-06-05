@@ -5,9 +5,6 @@ include(CheckIncludeFiles)
 add_definitions( -DQT_NO_CAST_FROM_ASCII )
 add_definitions( -DQT_NO_CAST_TO_ASCII )
 
-
-set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} ${KDE4_DATA_DIR}/cmake/modules)
-
 qt5_generate_dbus_interface(kmkernel.h org.kde.kmail.kmail.xml OPTIONS -a)
 qt5_generate_dbus_interface(editor/kmcomposewin.h org.kde.kmail.mailcomposer.xml OPTIONS -a)
 
@@ -310,7 +307,6 @@ if (KDEPIM_BUILD_DESKTOP)
     KF5::AkonadiCore
     kmailprivate
     mailcommon
-    ${KDE4_KPARTS_LIBS}
     KF5::KCMUtils
   )
 
