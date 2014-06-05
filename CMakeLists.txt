@@ -93,7 +93,6 @@ if (KDEPIM_BUILD_DESKTOP)
      configuredialog/configureappearancepage.cpp
      configuredialog/configureaccountpage.cpp
      configuredialog/colorlistbox.cpp
-     configuredialog/accountconfigorderdialog.cpp
      configuredialog/configureagentswidget.cpp
      configuredialog/configurestorageservicewidget.cpp
   )
