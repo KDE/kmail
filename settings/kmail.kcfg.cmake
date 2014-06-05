@@ -479,5 +479,8 @@
  <group name="AccountOrder">
    <entry name="order" type="StringList">
    </entry>
+   <entry name="EnableAccountOrder" type="Bool">
+    <default>true</default>
+   </entry>
  </group>
 </kcfg>

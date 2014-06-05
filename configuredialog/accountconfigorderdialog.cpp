@@ -198,6 +198,8 @@ void AccountConfigOrderDialog::init()
             mListAccount->addItem( item );
         }
     }
+    mEnableAccountOrder->setChecked(GlobalSettings::self()->enableAccountOrder());
+    slotEnableAccountOrder(GlobalSettings::self()->enableAccountOrder());
 }
 
 void AccountConfigOrderDialog::slotOk()
@@ -209,6 +211,7 @@ void AccountConfigOrderDialog::slotOk()
     }
 
     GlobalSettings::self()->setOrder(order);
+    GlobalSettings::self()->setEnableAccountOrder(mEnableAccountOrder->isChecked());
     GlobalSettings::self()->writeConfig();
     KDialog::accept();
 }
