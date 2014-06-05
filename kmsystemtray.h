@@ -65,6 +65,7 @@ private slots:
     void initListOfCollection();
     void slotCollectionStatisticsChanged( Akonadi::Collection::Id ,const Akonadi::CollectionStatistics &);
     void slotGeneralPaletteChanged();
+    void slotGeneralFontChanged();
 
 private:
     bool mainWindowIsOnCurrentDesktop();

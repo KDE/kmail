@@ -16,19 +16,17 @@
 */
 
 #include "configureaccountpage.h"
-#include "accountconfigorderdialog.h"
 #include "dialog/kmknotify.h"
 #include "newmailnotifierinterface.h"
 #include "kmkernel.h"
 #include "settings/globalsettings.h"
 #include "configagentdelegate.h"
 #include "messagecomposer/settings/messagecomposersettings.h"
-#include "configuredialog/accountconfigorderdialog.h"
+#include "mailcommon/folder/accountconfigorderdialog.h"
 #include "pimcommon/widgets/configureimmutablewidgetutils.h"
 using namespace PimCommon::ConfigureImmutableWidgetUtils;
 #include <MailTransport/mailtransport/transportmanagementwidget.h>
 using MailTransport::TransportManagementWidget;
-#include "accountconfigorderdialog.h"
 #include "ui_accountspagereceivingtab.h"
 #include "mailcommon/util/mailutil.h"
 
@@ -257,7 +255,7 @@ AccountsPageReceivingTab::~AccountsPageReceivingTab()
 
 void AccountsPageReceivingTab::slotCustomizeAccountOrder()
 {
-    KMail::AccountConfigOrderDialog dlg(this);
+    MailCommon::AccountConfigOrderDialog dlg(this);
     dlg.exec();
 }
 
