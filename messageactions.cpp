@@ -45,7 +45,7 @@
 #include <KXMLGUIClient>
 #include <KStandardDirs>
 #include <KRun>
-#include <KMenu>
+#include <QMenu>
 #include <KUriFilterData>
 #include <KToolInvocation>
 #include <KUriFilter>
