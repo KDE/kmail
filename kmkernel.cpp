@@ -927,6 +927,7 @@ void KMKernel::setAccountStatus(bool goOnline)
     foreach ( Akonadi::AgentInstance type, lst ) {
         const QString identifier( type.identifier() );
         if ( identifier.contains( IMAP_RESOURCE_IDENTIFIER ) ||
+             identifier.contains( KOLAB_RESOURCE_IDENTIFIER ) ||
              identifier.contains( POP3_RESOURCE_IDENTIFIER ) ||
              identifier.contains( QLatin1String("akonadi_maildispatcher_agent") ) ) {
             type.setIsOnline( goOnline );
@@ -1792,7 +1793,7 @@ bool KMKernel::isImapFolder( const Akonadi::Collection &col, bool &isOnline ) co
     const Akonadi::AgentInstance agentInstance = Akonadi::AgentManager::self()->instance( col.resource() );
     isOnline = agentInstance.isOnline();
 
-    return (agentInstance.type().identifier() == IMAP_RESOURCE_IDENTIFIER);
+    return (agentInstance.type().identifier() == IMAP_RESOURCE_IDENTIFIER || agentInstance.type().identifier() == KOLAB_RESOURCE_IDENTIFIER);
 }
 
 
