@@ -19,7 +19,7 @@
 #include "../widgets/displaymessageformatactionmenu.h"
 #include <qtest_kde.h>
 #include <qtestmouse.h>
-#include <KMenu>
+#include <QMenu>
 #include <KToggleAction>
 
 Q_DECLARE_METATYPE(MessageViewer::Viewer::DisplayFormatMessage)

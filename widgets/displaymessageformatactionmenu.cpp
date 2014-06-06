@@ -19,7 +19,7 @@
 
 #include <KLocalizedString>
 #include <KAction>
-#include <KMenu>
+#include <QMenu>
 #include <KToggleAction>
 #include <QDebug>
 
@@ -29,7 +29,7 @@ DisplayMessageFormatActionMenu::DisplayMessageFormatActionMenu(QObject *parent)
       mDisplayMessageFormat(MessageViewer::Viewer::UseGlobalSetting)
 {
     setText(i18n("Message Default Format"));
-    KMenu *subMenu = new KMenu;
+    QMenu *subMenu = new QMenu;
     setMenu(subMenu);
 
     QActionGroup *actionGroup = new QActionGroup(this);
