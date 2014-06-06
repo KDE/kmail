@@ -31,7 +31,7 @@
 #include <kcolorscheme.h>
 #include <kwindowsystem.h>
 #include <qdebug.h>
-#include <KMenu>
+#include <QMenu>
 #include <KLocalizedString>
 #include <QAction>
 #include <KActionMenu>
@@ -306,7 +306,7 @@ void KMSystemTray::slotContextMenuAboutToShow()
         delete mNewMessagesPopup;
         mNewMessagesPopup = 0;
     }
-    mNewMessagesPopup = new KMenu();
+    mNewMessagesPopup = new QMenu();
     fillFoldersMenu( mNewMessagesPopup, kmkernel->treeviewModelSelection() );
 
     connect( mNewMessagesPopup, SIGNAL(triggered(QAction*)), this,
