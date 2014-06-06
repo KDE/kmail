@@ -1715,7 +1715,7 @@ void KMKernel::instanceStatusChanged( const Akonadi::AgentInstance &instance )
             if(mResourceCryptoSettingCache.contains(identifier)) {
                 cryptoStatus = mResourceCryptoSettingCache.value(identifier);
             } else {
-                if ( identifier.contains( IMAP_RESOURCE_IDENTIFIER ) ) {
+                if ( identifier.contains( IMAP_RESOURCE_IDENTIFIER ) || identifier.contains( KOLAB_RESOURCE_IDENTIFIER ) ) {
                     OrgKdeAkonadiImapSettingsInterface *iface = PimCommon::Util::createImapSettingsInterface( identifier );
                     if ( iface->isValid() ) {
                         const QString imapSafety = iface->safety();
@@ -1881,7 +1881,7 @@ void KMKernel::checkFolderFromResources( const Akonadi::Collection::List &collec
     foreach( const Akonadi::AgentInstance& type, lst ) {
         if ( type.status() == Akonadi::AgentInstance::Broken )
             continue;
-        if ( type.identifier().contains( IMAP_RESOURCE_IDENTIFIER ) ) {
+        if ( type.identifier().contains( IMAP_RESOURCE_IDENTIFIER ) || type.identifier().contains( KOLAB_RESOURCE_IDENTIFIER ) ) {
             OrgKdeAkonadiImapSettingsInterface *iface = PimCommon::Util::createImapSettingsInterface( type.identifier() );
             if ( iface->isValid() ) {
                 foreach( const Akonadi::Collection& collection, collectionList ) {
