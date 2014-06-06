@@ -235,7 +235,8 @@ KMMainWidget::KMMainWidget( QWidget *parent, KXMLGUIClient *aGUIClient,
     mVacationIndicatorActive( false ),
     mGoToFirstUnreadMessageInSelectedFolder( false ),
     mDisplayMessageFormatMenu( 0 ),
-    mFolderDisplayFormatPreference(MessageViewer::Viewer::UseGlobalSetting)
+    mFolderDisplayFormatPreference(MessageViewer::Viewer::UseGlobalSetting),
+    mSearchMessages( 0 )
 {
     // must be the first line of the constructor:
     mStartupDone = false;
@@ -3131,12 +3132,11 @@ void KMMainWidget::setupActions()
     connect(mDeleteThreadAction, SIGNAL(triggered(bool)), SLOT(slotDeleteThread()));
     mDeleteThreadAction->setShortcut(QKeySequence(Qt::CTRL+Qt::SHIFT+Qt::Key_Delete));
 
-    {
-        QAction *action = new QAction(KIcon(QLatin1String("edit-find-mail")), i18n("&Find Messages..."), this);
-        actionCollection()->addAction(QLatin1String("search_messages"), action );
-        connect(action, SIGNAL(triggered(bool)), SLOT(slotRequestFullSearchFromQuickSearch()));
-        action->setShortcut(QKeySequence(Qt::Key_S));
-    }
+    mSearchMessages = new QAction(KIcon(QLatin1String("edit-find-mail")), i18n("&Find Messages..."), this);
+    actionCollection()->addAction(QLatin1String("search_messages"), mSearchMessages );
+    connect(mSearchMessages, SIGNAL(triggered(bool)), SLOT(slotRequestFullSearchFromQuickSearch()));
+    mSearchMessages->setShortcut(QKeySequence(Qt::Key_S));
+
     {
         QAction *action = new QAction(i18n("Select &All Messages"), this);
         actionCollection()->addAction(QLatin1String("mark_all_messages"), action );
@@ -4132,6 +4132,7 @@ void KMMainWidget::updateFolderMenu()
 
     mTrashThreadAction->setText(isInTrashFolder ?i18n("Delete T&hread"): i18n("M&ove Thread to Trash"));
 
+    mSearchMessages->setText( (mCurrentFolder->collection().resource() == QLatin1String( "akonadi_search_resource" )) ? i18n("Edit Search...") : i18n("&Find Messages...") );
 
 
     mExpireConfigAction->setEnabled( mCurrentFolder &&

@@ -631,6 +631,7 @@ private:
     QAction *mQuickSearchAction;
     DisplayMessageFormatActionMenu *mDisplayMessageFormatMenu;
     MessageViewer::Viewer::DisplayFormatMessage mFolderDisplayFormatPreference;
+    QAction *mSearchMessages;
 };
 
 #endif
