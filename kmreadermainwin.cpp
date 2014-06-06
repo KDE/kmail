@@ -44,8 +44,8 @@
 #include <KMessageBox>
 #include <KAcceleratorManager>
 #include "kmcommands.h"
-#include "kmenubar.h"
-#include "kmenu.h"
+#include <kmenubar.h>
+#include <qmenu.h>
 #include "kmmainwidget.h"
 #include "messageviewer/viewer/csshelper.h"
 #include "customtemplatesmenu.h"
@@ -452,7 +452,7 @@ void KMReaderMainWin::slotContactSearchJobForMessagePopupDone( KJob *job )
 
 void KMReaderMainWin::showMessagePopup(const Akonadi::Item&msg ,const KUrl&url,const KUrl &imageUrl,const QPoint& aPoint, bool contactAlreadyExists, bool uniqueContactFound)
 {
-    KMenu *menu = 0;
+    QMenu *menu = 0;
 
     bool urlMenuAdded = false;
     bool copyAdded = false;
@@ -460,7 +460,7 @@ void KMReaderMainWin::showMessagePopup(const Akonadi::Item&msg ,const KUrl&url,c
     if ( !url.isEmpty() ) {
         if ( url.protocol() == QLatin1String( "mailto" ) ) {
             // popup on a mailto URL
-            menu = new KMenu;
+            menu = new QMenu;
             menu->addAction( mReaderWin->mailToComposeAction() );
             if ( messageHasPayload ) {
                 menu->addAction( mReaderWin->mailToReplyAction() );
@@ -487,7 +487,7 @@ void KMReaderMainWin::showMessagePopup(const Akonadi::Item&msg ,const KUrl&url,c
         } else if( url.protocol() != QLatin1String( "attachment" ) ){
             // popup on a not-mailto URL
             if(!menu)
-                menu = new KMenu;
+                menu = new QMenu;
             menu->addAction( mReaderWin->urlOpenAction() );
             menu->addAction( mReaderWin->addBookmarksAction() );
             menu->addAction( mReaderWin->urlSaveAsAction() );
@@ -512,7 +512,7 @@ void KMReaderMainWin::showMessagePopup(const Akonadi::Item&msg ,const KUrl&url,c
     const QString selectedText(mReaderWin->copyText());
     if ( !selectedText.isEmpty() ) {
         if(!menu)
-            menu = new KMenu;
+            menu = new QMenu;
         if ( urlMenuAdded ) {
             menu->addSeparator();
         }
@@ -531,7 +531,7 @@ void KMReaderMainWin::showMessagePopup(const Akonadi::Item&msg ,const KUrl&url,c
         menu->addAction( mReaderWin->speakTextAction());
     } else if ( !urlMenuAdded ) {
         if(!menu)
-            menu = new KMenu;
+            menu = new QMenu;
 
         // popup somewhere else (i.e., not a URL) on the message
         if (messageHasPayload) {
