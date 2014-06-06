@@ -60,7 +60,7 @@ class CodecAction;
 class KMComposeWin;
 class KMComposerEditor;
 class KSelectAction;
-class KAction;
+class QAction;
 class KJob;
 class KToggleAction;
 class KUrl;
@@ -646,9 +646,9 @@ private:
     KToggleAction *mIdentityAction, *mTransportAction, *mFccAction;
     KToggleAction *mWordWrapAction, *mFixedFontAction, *mAutoSpellCheckingAction;
     KToggleAction *mDictionaryAction, *mSnippetAction, *mTranslateAction;
-    KAction *mAppendSignature;
-    KAction *mPrependSignature;
-    KAction *mInsertSignatureAtCursorPosition;
+    QAction *mAppendSignature;
+    QAction *mPrependSignature;
+    QAction *mInsertSignatureAtCursorPosition;
     KToggleAction *mGenerateShortenUrl;
 
     KToggleAction *markupAction;

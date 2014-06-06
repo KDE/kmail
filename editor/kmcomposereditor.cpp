@@ -34,7 +34,7 @@
 
 #include <KPIMTextEdit/EMailQuoteHighlighter>
 
-#include <KAction>
+#include <QAction>
 #include <KActionCollection>
 #include <KLocalizedString>
 #include <QPushButton>

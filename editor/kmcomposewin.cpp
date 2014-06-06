@@ -151,7 +151,7 @@
 #include <KIO/JobUiDelegate>
 #include <KPrintPreview>
 #include <KFileDialog>
-#include <KAction>
+#include <QAction>
 #include <KGlobal>
 
 // Qt includes
@@ -1099,7 +1099,7 @@ void KMComposeWin::setupActions( void )
 
     if ( MessageComposer::MessageComposerSettings::self()->sendImmediate() ) {
         //default = send now, alternative = queue
-        KAction *action = new KAction(KIcon(QLatin1String("mail-send")), i18n("&Send Mail"), this);
+        QAction *action = new QAction(KIcon(QLatin1String("mail-send")), i18n("&Send Mail"), this);
         actionCollection()->addAction(QLatin1String("send_default"), action );
         action->setShortcut( QKeySequence( Qt::CTRL + Qt::Key_Return ) );
         connect( action, SIGNAL(triggered(bool)), SLOT(slotSendNow()));
@@ -1109,7 +1109,7 @@ void KMComposeWin::setupActions( void )
         actActionNowMenu->setIconText( i18n( "Send" ) );
         actionCollection()->addAction( QLatin1String("send_default_via"), actActionNowMenu );
 
-        action = new KAction( KIcon( QLatin1String("mail-queue") ), i18n("Send &Later"), this );
+        action = new QAction( KIcon( QLatin1String("mail-queue") ), i18n("Send &Later"), this );
         actionCollection()->addAction( QLatin1String("send_alternative"), action );
         connect( action, SIGNAL(triggered(bool)), SLOT(slotSendLater()) );
         actActionLaterMenu = new KActionMenu( KIcon( QLatin1String("mail-queue") ), i18n("Send &Later Via"), this );
@@ -1118,14 +1118,14 @@ void KMComposeWin::setupActions( void )
 
     } else {
         //default = queue, alternative = send now
-        KAction *action = new KAction( KIcon( QLatin1String("mail-queue") ), i18n("Send &Later"), this );
+        QAction *action = new QAction( KIcon( QLatin1String("mail-queue") ), i18n("Send &Later"), this );
         actionCollection()->addAction( QLatin1String("send_default"), action );
         connect( action, SIGNAL(triggered(bool)), SLOT(slotSendLater()) );
         action->setShortcut( QKeySequence( Qt::CTRL + Qt::Key_Return ) );
         actActionLaterMenu = new KActionMenu( KIcon( QLatin1String("mail-queue") ), i18n("Send &Later Via"), this );
         actionCollection()->addAction( QLatin1String("send_default_via"), actActionLaterMenu );
 
-        action = new KAction( KIcon( QLatin1String("mail-send") ), i18n("&Send Mail"), this );
+        action = new QAction( KIcon( QLatin1String("mail-send") ), i18n("&Send Mail"), this );
         actionCollection()->addAction( QLatin1String("send_alternative"), action );
         connect( action, SIGNAL(triggered(bool)), SLOT(slotSendNow()) );
 
@@ -1157,29 +1157,29 @@ void KMComposeWin::setupActions( void )
     connect( mActLaterMenu, SIGNAL(aboutToShow()), this,
              SLOT(getTransportMenu()) );
 
-    KAction *action = new KAction( KIcon( QLatin1String("document-save") ), i18n("Save as &Draft"), this );
+    QAction *action = new QAction( KIcon( QLatin1String("document-save") ), i18n("Save as &Draft"), this );
     actionCollection()->addAction(QLatin1String("save_in_drafts"), action );
-    action->setHelpText(i18n("Save email in Draft folder"));
+    //action->setHelpText(i18n("Save email in Draft folder"));
     action->setShortcut(QKeySequence(Qt::CTRL + Qt::Key_S));
     connect( action, SIGNAL(triggered(bool)), SLOT(slotSaveDraft()) );
 
-    action = new KAction( KIcon( QLatin1String("document-save") ), i18n("Save as &Template"), this );
-    action->setHelpText(i18n("Save email in Template folder"));
+    action = new QAction( KIcon( QLatin1String("document-save") ), i18n("Save as &Template"), this );
+    //action->setHelpText(i18n("Save email in Template folder"));
     actionCollection()->addAction( QLatin1String("save_in_templates"), action );
     connect( action, SIGNAL(triggered(bool)), SLOT(slotSaveTemplate()) );
 
-    action = new KAction( KIcon( QLatin1String("document-save") ), i18n("Save as &File"), this );
-    action->setHelpText(i18n("Save email as text or html file"));
+    action = new QAction( KIcon( QLatin1String("document-save") ), i18n("Save as &File"), this );
+    //action->setHelpText(i18n("Save email as text or html file"));
     actionCollection()->addAction( QLatin1String("save_as_file"), action );
     connect( action, SIGNAL(triggered(bool)), SLOT(slotSaveAsFile()) );
 
-    action = new KAction(KIcon( QLatin1String( "contact-new" ) ), i18n("New AddressBook Contact..."),this);
+    action = new QAction(KIcon( QLatin1String( "contact-new" ) ), i18n("New AddressBook Contact..."),this);
     actionCollection()->addAction(QLatin1String("kmail_new_addressbook_contact"), action );
     connect(action, SIGNAL(triggered(bool)), this, SLOT(slotCreateAddressBookContact()));
 
 
 
-    action = new KAction(KIcon(QLatin1String("document-open")), i18n("&Insert Text File..."), this);
+    action = new QAction(KIcon(QLatin1String("document-open")), i18n("&Insert Text File..."), this);
     actionCollection()->addAction(QLatin1String("insert_file"), action );
     connect(action, SIGNAL(triggered(bool)), SLOT(slotInsertFile()));
 
@@ -1192,25 +1192,25 @@ void KMComposeWin::setupActions( void )
             SLOT(slotRecentListFileClear()));
     mRecentAction->loadEntries( KMKernel::self()->config()->group( QString() ) );
 
-    action = new KAction(KIcon(QLatin1String("x-office-address-book")), i18n("&Address Book"), this);
-    action->setHelpText(i18n("Open Address Book"));
+    action = new QAction(KIcon(QLatin1String("x-office-address-book")), i18n("&Address Book"), this);
+    //action->setHelpText(i18n("Open Address Book"));
     actionCollection()->addAction(QLatin1String("addressbook"), action );
     if (KStandardDirs::findExe(QLatin1String("kaddressbook")).isEmpty())
         action->setEnabled(false);
     connect(action, SIGNAL(triggered(bool)), SLOT(slotAddrBook()));
-    action = new KAction(KIcon(QLatin1String("mail-message-new")), i18n("&New Composer"), this);
+    action = new QAction(KIcon(QLatin1String("mail-message-new")), i18n("&New Composer"), this);
     actionCollection()->addAction(QLatin1String("new_composer"), action );
     connect(action, SIGNAL(triggered(bool)), SLOT(slotNewComposer()));
     action->setShortcuts( KStandardShortcut::shortcut( KStandardShortcut::New ) );
-    action = new KAction( KIcon( QLatin1String("window-new") ), i18n("New Main &Window"), this );
+    action = new QAction( KIcon( QLatin1String("window-new") ), i18n("New Main &Window"), this );
     actionCollection()->addAction( QLatin1String("open_mailreader"), action );
     connect( action, SIGNAL(triggered(bool)), SLOT(slotNewMailReader()) );
 
-    action = new KAction( i18n("Select &Recipients..."), this );
+    action = new QAction( i18n("Select &Recipients..."), this );
     actionCollection()->addAction( QLatin1String("select_recipients"), action );
     connect( action, SIGNAL(triggered(bool)),
              mComposerBase->recipientsEditor(), SLOT(selectRecipients()) );
-    action = new KAction( i18n("Save &Distribution List..."), this );
+    action = new QAction( i18n("Save &Distribution List..."), this );
     actionCollection()->addAction( QLatin1String("save_distribution_list"), action );
     connect( action, SIGNAL(triggered(bool)),
              mComposerBase->recipientsEditor(), SLOT(saveDistributionList()) );
@@ -1234,11 +1234,11 @@ void KMComposeWin::setupActions( void )
     actionCollection()->addAction( KStandardAction::Spelling, QLatin1String("spellcheck"),
                                    mComposerBase->editor(), SLOT(checkSpelling()) );
 
-    action = new KAction( i18n("Paste as Attac&hment"), this );
+    action = new QAction( i18n("Paste as Attac&hment"), this );
     actionCollection()->addAction( QLatin1String("paste_att"), action );
     connect( action, SIGNAL(triggered(bool)), SLOT(slotPasteAsAttachment()) );
 
-    action = new KAction( i18n("Cl&ean Spaces"), this );
+    action = new QAction( i18n("Cl&ean Spaces"), this );
     actionCollection()->addAction( QLatin1String("clean_spaces"), action );
     connect( action, SIGNAL(triggered(bool)), mComposerBase->signatureController(), SLOT(cleanSpace()) );
 
@@ -1323,33 +1323,33 @@ void KMComposeWin::setupActions( void )
     connect(mSubjectAction, SIGNAL(triggered(bool)), SLOT(slotView()));
     //end of checkable
 
-    mAppendSignature = new KAction( i18n("Append S&ignature"), this );
+    mAppendSignature = new QAction( i18n("Append S&ignature"), this );
     actionCollection()->addAction( QLatin1String("append_signature"), mAppendSignature );
     connect( mAppendSignature, SIGNAL(triggered(bool)), mComposerBase->signatureController(), SLOT(appendSignature()));
 
-    mPrependSignature = new KAction( i18n("Pr&epend Signature"), this );
+    mPrependSignature = new QAction( i18n("Pr&epend Signature"), this );
     actionCollection()->addAction( QLatin1String("prepend_signature"), mPrependSignature );
     connect( mPrependSignature, SIGNAL(triggered(bool)), mComposerBase->signatureController(), SLOT(prependSignature()) );
 
-    mInsertSignatureAtCursorPosition = new KAction( i18n("Insert Signature At C&ursor Position"), this );
+    mInsertSignatureAtCursorPosition = new QAction( i18n("Insert Signature At C&ursor Position"), this );
     actionCollection()->addAction( QLatin1String("insert_signature_at_cursor_position"), mInsertSignatureAtCursorPosition );
     connect( mInsertSignatureAtCursorPosition, SIGNAL(triggered(bool)), mComposerBase->signatureController(), SLOT(insertSignatureAtCursor()) );
 
 
-    action = new KAction( i18n("Insert Special Character..."), this );
+    action = new QAction( i18n("Insert Special Character..."), this );
     actionCollection()->addAction( QLatin1String("insert_special_character"), action );
     connect( action, SIGNAL(triggered(bool)), this, SLOT(insertSpecialCharacter()) );
 
-    KAction *upperCase = new KAction( i18n("Uppercase"), this );
+    QAction *upperCase = new QAction( i18n("Uppercase"), this );
     actionCollection()->addAction( QLatin1String("change_to_uppercase"), upperCase );
     connect( upperCase, SIGNAL(triggered(bool)), this, SLOT(slotUpperCase()) );
 
-    KAction *sentenceCase = new KAction( i18n("Sentence case"), this );
+    QAction *sentenceCase = new QAction( i18n("Sentence case"), this );
     actionCollection()->addAction( QLatin1String("change_to_sentencecase"), sentenceCase );
     connect( sentenceCase, SIGNAL(triggered(bool)), this, SLOT(slotSentenceCase()) );
 
 
-    KAction *lowerCase = new KAction( i18n("Lowercase"), this );
+    QAction *lowerCase = new QAction( i18n("Lowercase"), this );
     actionCollection()->addAction( QLatin1String("change_to_lowercase"), lowerCase );
     connect( lowerCase, SIGNAL(triggered(bool)), this, SLOT(slotLowerCase()) );
 
@@ -1367,7 +1367,7 @@ void KMComposeWin::setupActions( void )
     KStandardAction::configureToolbars( this, SLOT(slotEditToolbars()), actionCollection());
     KStandardAction::preferences( kmkernel, SLOT(slotShowConfigurationDialog()), actionCollection() );
 
-    action = new KAction( i18n("&Spellchecker..."), this );
+    action = new QAction( i18n("&Spellchecker..."), this );
     action->setIconText( i18n("Spellchecker") );
     actionCollection()->addAction( QLatin1String("setup_spellchecker"), action );
     connect( action, SIGNAL(triggered(bool)), SLOT(slotSpellcheckConfig()) );
