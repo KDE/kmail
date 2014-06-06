@@ -30,7 +30,7 @@
 class KActionCollection;
 class QAction;
 class KToggleAction;
-class KMenu;
+class QMenu;
 namespace MessageViewer {
 class HeaderStrategy;
 class HeaderStyle;
@@ -161,7 +161,7 @@ public:
 
     QAction *editContactAction() const { return mEditContactAction; }
 
-    KMenu *viewHtmlOption() const { return mViewHtmlOptions; }
+    QMenu *viewHtmlOption() const { return mViewHtmlOptions; }
     QAction *shareImage() const { return mShareImage; }
 
     QAction *addToExistingContactAction() const { return mAddEmailToExistingContactAction; }
@@ -249,7 +249,7 @@ private:
     QAction *mShareImage;
     QAction *mAddEmailToExistingContactAction;
 
-    KMenu *mViewHtmlOptions;
+    QMenu *mViewHtmlOptions;
 
     MessageViewer::Viewer *mViewer;
 };

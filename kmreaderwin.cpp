@@ -78,7 +78,7 @@ using MessageComposer::MessageFactory;
 #include <kservice.h>
 #include <KActionCollection>
 #include <KMessageBox>
-#include <KMenu>
+#include <QMenu>
 
 #include <QClipboard>
 
@@ -231,7 +231,7 @@ void KMReaderWin::createActions()
     connect( mImageUrlSaveAsAction, SIGNAL(triggered(bool)), SLOT(slotSaveImageOnDisk()) );
 
     // View html options
-    mViewHtmlOptions = new KMenu(i18n("Show HTML Format"));
+    mViewHtmlOptions = new QMenu(i18n("Show HTML Format"));
     mViewAsHtml = new QAction( i18n("Show HTML format when mail comes from this contact"), mViewHtmlOptions);
     //QT5 mViewAsHtml->setShortcutConfigurable( false );
     connect( mViewAsHtml, SIGNAL(triggered(bool)), SLOT(slotContactHtmlOptions()));
