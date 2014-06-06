@@ -113,7 +113,7 @@ It is recommended to leave this option turned on for maximum security.
        </widget>
       </item>
       <item row="1" column="1">
-       <widget class="KIntSpinBox" name="mWarnSignKeyExpiresSB">
+       <widget class="KPluralHandlingSpinBox" name="mWarnSignKeyExpiresSB">
         <property name="minimumSize">
          <size>
           <width>110</width>
@@ -143,7 +143,7 @@ The recommended SPHINX setting is 14 days.
        </widget>
       </item>
       <item row="1" column="2">
-       <widget class="KIntSpinBox" name="mWarnEncrKeyExpiresSB">
+       <widget class="KPluralHandlingSpinBox" name="mWarnEncrKeyExpiresSB">
         <property name="sizePolicy">
          <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
           <horstretch>0</horstretch>
@@ -179,7 +179,7 @@ The recommended SPHINX setting is 14 days.
        </widget>
       </item>
       <item row="2" column="2">
-       <widget class="KIntSpinBox" name="mWarnEncrChainCertExpiresSB">
+       <widget class="KPluralHandlingSpinBox" name="mWarnEncrChainCertExpiresSB">
         <property name="sizePolicy">
          <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
           <horstretch>0</horstretch>
@@ -215,7 +215,7 @@ The recommended SPHINX setting is 14 days.
        </widget>
       </item>
       <item row="2" column="1">
-       <widget class="KIntSpinBox" name="mWarnSignChainCertExpiresSB">
+       <widget class="KPluralHandlingSpinBox" name="mWarnSignChainCertExpiresSB">
         <property name="minimumSize">
          <size>
           <width>110</width>
@@ -245,7 +245,7 @@ The recommended SPHINX setting is 14 days.
        </widget>
       </item>
       <item row="3" column="1">
-       <widget class="KIntSpinBox" name="mWarnSignRootCertExpiresSB">
+       <widget class="KPluralHandlingSpinBox" name="mWarnSignRootCertExpiresSB">
         <property name="minimumSize">
          <size>
           <width>110</width>
@@ -275,7 +275,7 @@ The recommended SPHINX setting is 14 days.
        </widget>
       </item>
       <item row="3" column="2">
-       <widget class="KIntSpinBox" name="mWarnEncrRootCertExpiresSB">
+       <widget class="KPluralHandlingSpinBox" name="mWarnEncrRootCertExpiresSB">
         <property name="sizePolicy">
          <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
           <horstretch>0</horstretch>
@@ -466,9 +466,9 @@ The recommended SPHINX setting is 14 days.
  </widget>
  <customwidgets>
   <customwidget>
-   <class>KIntSpinBox</class>
+   <class>KPluralHandlingSpinBox</class>
    <extends>QSpinBox</extends>
-   <header>knuminput.h</header>
+   <header>KPluralHandlingSpinBox</header>
   </customwidget>
  </customwidgets>
  <tabstops>
