@@ -526,13 +526,13 @@ void AntiSpamWizard::checkToolAvailability()
         mInfoPage->setScanProgressText( text );
         if ( (*it).isSpamTool() && (*it).isServerBased() ) {
             // check the configured account for pattern in <server>
-            QString pattern = (*it).getServerPattern();
+            const QString pattern = (*it).getServerPattern();
             qDebug() << "Testing for server pattern:" << pattern;
             const Akonadi::AgentInstance::List lst = MailCommon::Util::agentInstances();
             foreach( const Akonadi::AgentInstance& type, lst ) {
                 if ( type.status() == Akonadi::AgentInstance::Broken )
                     continue;
-                if ( type.identifier().contains( IMAP_RESOURCE_IDENTIFIER ) ) {
+                if ( type.identifier().contains( IMAP_RESOURCE_IDENTIFIER ) || type.identifier().contains( KOLAB_RESOURCE_IDENTIFIER ) ) {
                     OrgKdeAkonadiImapSettingsInterface *iface = PimCommon::Util::createImapSettingsInterface( type.identifier() );
                     if ( iface->isValid() ) {
                         const QString host = iface->imapServer();

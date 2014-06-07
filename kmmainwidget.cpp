@@ -4132,7 +4132,7 @@ void KMMainWidget::updateFolderMenu()
 
     mTrashThreadAction->setText(isInTrashFolder ?i18n("Delete T&hread"): i18n("M&ove Thread to Trash"));
 
-    mSearchMessages->setText( (mCurrentFolder->collection().resource() == QLatin1String( "akonadi_search_resource" )) ? i18n("Edit Search...") : i18n("&Find Messages...") );
+    mSearchMessages->setText( (mCurrentFolder && mCurrentFolder->collection().resource() == QLatin1String( "akonadi_search_resource" )) ? i18n("Edit Search...") : i18n("&Find Messages...") );
 
 
     mExpireConfigAction->setEnabled( mCurrentFolder &&

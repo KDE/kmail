@@ -929,6 +929,7 @@ void KMKernel::setAccountStatus(bool goOnline)
     foreach ( Akonadi::AgentInstance type, lst ) {
         const QString identifier( type.identifier() );
         if ( identifier.contains( IMAP_RESOURCE_IDENTIFIER ) ||
+             identifier.contains( KOLAB_RESOURCE_IDENTIFIER ) ||
              identifier.contains( POP3_RESOURCE_IDENTIFIER ) ||
              identifier.contains( QLatin1String("akonadi_maildispatcher_agent") ) ) {
             type.setIsOnline( goOnline );
@@ -1716,7 +1717,7 @@ void KMKernel::instanceStatusChanged( const Akonadi::AgentInstance &instance )
             if(mResourceCryptoSettingCache.contains(identifier)) {
                 cryptoStatus = mResourceCryptoSettingCache.value(identifier);
             } else {
-                if ( identifier.contains( IMAP_RESOURCE_IDENTIFIER ) ) {
+                if ( identifier.contains( IMAP_RESOURCE_IDENTIFIER ) || identifier.contains( KOLAB_RESOURCE_IDENTIFIER ) ) {
                     OrgKdeAkonadiImapSettingsInterface *iface = PimCommon::Util::createImapSettingsInterface( identifier );
                     if ( iface->isValid() ) {
                         const QString imapSafety = iface->safety();
@@ -1795,7 +1796,7 @@ bool KMKernel::isImapFolder( const Akonadi::Collection &col, bool &isOnline ) co
     const Akonadi::AgentInstance agentInstance = Akonadi::AgentManager::self()->instance( col.resource() );
     isOnline = agentInstance.isOnline();
 
-    return (agentInstance.type().identifier() == IMAP_RESOURCE_IDENTIFIER);
+    return (agentInstance.type().identifier() == IMAP_RESOURCE_IDENTIFIER || agentInstance.type().identifier() == KOLAB_RESOURCE_IDENTIFIER);
 }
 
 
@@ -1883,7 +1884,7 @@ void KMKernel::checkFolderFromResources( const Akonadi::Collection::List &collec
     foreach( const Akonadi::AgentInstance& type, lst ) {
         if ( type.status() == Akonadi::AgentInstance::Broken )
             continue;
-        if ( type.identifier().contains( IMAP_RESOURCE_IDENTIFIER ) ) {
+        if ( type.identifier().contains( IMAP_RESOURCE_IDENTIFIER ) || type.identifier().contains( KOLAB_RESOURCE_IDENTIFIER ) ) {
             OrgKdeAkonadiImapSettingsInterface *iface = PimCommon::Util::createImapSettingsInterface( type.identifier() );
             if ( iface->isValid() ) {
                 foreach( const Akonadi::Collection& collection, collectionList ) {
