@@ -58,7 +58,7 @@ KMMainWin::KMMainWin(QWidget *)
     // modal subdialogs will only affect this dialog, not the other windows
     setAttribute( Qt::WA_GroupLeader );
 
-    QAction *action  = new QAction( KIcon(QLatin1String("window-new")), i18n("New &Window"), this );
+    QAction *action  = new QAction( QIcon::fromTheme(QLatin1String("window-new")), i18n("New &Window"), this );
     actionCollection()->addAction( QLatin1String("new_mail_client"), action );
     connect( action, SIGNAL(triggered(bool)), SLOT(slotNewMailReader()) );
 

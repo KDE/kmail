@@ -326,10 +326,10 @@ void KMReaderMainWin::setupAccel()
 
     //----- File Menu
 
-    mSaveAtmAction  = new QAction(KIcon(QLatin1String("mail-attachment")), i18n("Save A&ttachments..."), actionCollection() );
+    mSaveAtmAction  = new QAction(QIcon::fromTheme(QLatin1String("mail-attachment")), i18n("Save A&ttachments..."), actionCollection() );
     connect( mSaveAtmAction, SIGNAL(triggered(bool)), mReaderWin->viewer(), SLOT(slotAttachmentSaveAll()) );
 
-    mTrashAction = new QAction( KIcon( QLatin1String("user-trash") ), i18n("&Move to Trash"), this );
+    mTrashAction = new QAction( QIcon::fromTheme( QLatin1String("user-trash") ), i18n("&Move to Trash"), this );
     mTrashAction->setIconText( i18nc( "@action:intoolbar Move to Trash", "Trash" ) );
     //QT5 mTrashAction->setHelpText( i18n( "Move message to trashcan" ) );
     mTrashAction->setShortcut( QKeySequence( Qt::Key_Delete ) );
@@ -373,7 +373,7 @@ QAction *KMReaderMainWin::copyActionMenu(QMenu *menu)
     if ( mainwin )
     {
         KActionMenu *action = new KActionMenu( menu );
-        action->setIcon( KIcon( QLatin1String("edit-copy")) );
+        action->setIcon( QIcon::fromTheme( QLatin1String("edit-copy")) );
         action->setText( i18n("Copy Item To...") );
         mainwin->standardMailActionManager()->standardActionManager()->createActionFolderMenu( action->menu(), Akonadi::StandardActionManager::CopyItemToMenu );
         connect( action->menu(), SIGNAL(triggered(QAction*)), SLOT(slotCopyItem(QAction*)) );

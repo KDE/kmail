@@ -29,7 +29,7 @@
 // KDE libs
 #include <QDebug>
 #include <KLocalizedString>
-#include <KIcon>
+#include <QIcon>
 
 class CodecAction::Private
 {
@@ -65,7 +65,7 @@ CodecAction::CodecAction( Mode mode, QObject *parent )
     }
 
     // Eye candy.
-    setIcon( KIcon( QLatin1String("accessories-character-map") ) );
+    setIcon( QIcon::fromTheme( QLatin1String("accessories-character-map") ) );
     setText( i18nc( "Menu item", "Encoding" ) );
 }
 

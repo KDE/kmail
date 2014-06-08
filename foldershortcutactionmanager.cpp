@@ -29,7 +29,7 @@
 #include <QAction>
 #include <KActionCollection>
 #include <KLocalizedString>
-#include <KIcon>
+#include <QIcon>
 
 using namespace KMail;
 using namespace MailCommon;

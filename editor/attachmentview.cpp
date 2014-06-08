@@ -39,7 +39,7 @@
 
 #include <QDebug>
 #include <KConfigGroup>
-#include <KIcon>
+#include <QIcon>
 #include <KLocalizedString>
 #include <KGlobal>
 #include <KLocale>
@@ -62,7 +62,7 @@ public:
         widget->setLayout(lay);
         toolButton = new QToolButton;
         connect(toolButton,SIGNAL(toggled(bool)),q,SLOT(slotShowHideAttchementList(bool)));
-        toolButton->setIcon(KIcon(QLatin1String( "mail-attachment" )));
+        toolButton->setIcon(QIcon::fromTheme(QLatin1String( "mail-attachment" )));
         toolButton->setAutoRaise(true);
         toolButton->setCheckable(true);
         lay->addWidget(toolButton);

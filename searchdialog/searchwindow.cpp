@@ -46,7 +46,7 @@
 #include <AkonadiCore/EntityMimeTypeFilterModel>
 #include <KActionMenu>
 #include <QDebug>
-#include <KIcon>
+#include <QIcon>
 #include <KIconLoader>
 #include <kmime/kmime_message.h>
 #include <KStandardAction>
@@ -228,29 +228,29 @@ SearchWindow::SearchWindow( KMMainWidget *widget, const Akonadi::Collection &col
 
     //set up actions
     KActionCollection *ac = actionCollection();
-    mReplyAction = new QAction( KIcon( QLatin1String("mail-reply-sender") ), i18n( "&Reply..." ), this );
+    mReplyAction = new QAction( QIcon::fromTheme( QLatin1String("mail-reply-sender") ), i18n( "&Reply..." ), this );
     actionCollection()->addAction( QLatin1String("search_reply"), mReplyAction );
     connect( mReplyAction, SIGNAL(triggered(bool)), SLOT(slotReplyToMsg()) );
 
-    mReplyAllAction = new QAction( KIcon( QLatin1String("mail-reply-all") ), i18n( "Reply to &All..." ), this );
+    mReplyAllAction = new QAction( QIcon::fromTheme( QLatin1String("mail-reply-all") ), i18n( "Reply to &All..." ), this );
     actionCollection()->addAction( QLatin1String("search_reply_all"), mReplyAllAction );
     connect( mReplyAllAction, SIGNAL(triggered(bool)), SLOT(slotReplyAllToMsg()) );
 
-    mReplyListAction = new QAction( KIcon( QLatin1String("mail-reply-list") ), i18n( "Reply to Mailing-&List..." ), this );
+    mReplyListAction = new QAction( QIcon::fromTheme( QLatin1String("mail-reply-list") ), i18n( "Reply to Mailing-&List..." ), this );
     actionCollection()->addAction(QLatin1String( "search_reply_list"), mReplyListAction );
     connect( mReplyListAction, SIGNAL(triggered(bool)), SLOT(slotReplyListToMsg()) );
 
-    mForwardActionMenu = new KActionMenu( KIcon( QLatin1String("mail-forward") ), i18nc( "Message->", "&Forward" ), this );
+    mForwardActionMenu = new KActionMenu( QIcon::fromTheme( QLatin1String("mail-forward") ), i18nc( "Message->", "&Forward" ), this );
     actionCollection()->addAction( QLatin1String("search_message_forward"), mForwardActionMenu );
     connect( mForwardActionMenu, SIGNAL(triggered(bool)), this, SLOT(slotForwardMsg()) );
 
-    mForwardInlineAction = new QAction( KIcon( QLatin1String("mail-forward") ),
+    mForwardInlineAction = new QAction( QIcon::fromTheme( QLatin1String("mail-forward") ),
                                         i18nc( "@action:inmenu Forward message inline.", "&Inline..." ),
                                         this );
     actionCollection()->addAction( QLatin1String("search_message_forward_inline"), mForwardInlineAction );
     connect( mForwardInlineAction, SIGNAL(triggered(bool)), SLOT(slotForwardMsg()) );
 
-    mForwardAttachedAction = new QAction( KIcon( QLatin1String("mail-forward") ), i18nc( "Message->Forward->", "As &Attachment..." ), this );
+    mForwardAttachedAction = new QAction( QIcon::fromTheme( QLatin1String("mail-forward") ), i18nc( "Message->Forward->", "As &Attachment..." ), this );
     actionCollection()->addAction( QLatin1String("search_message_forward_as_attachment"), mForwardAttachedAction );
     connect( mForwardAttachedAction, SIGNAL(triggered(bool)), SLOT(slotForwardAttachedMsg()) );
 
@@ -264,7 +264,7 @@ SearchWindow::SearchWindow( KMMainWidget *widget, const Akonadi::Collection &col
 
     mSaveAsAction = actionCollection()->addAction( KStandardAction::SaveAs, QLatin1String("search_file_save_as"), this, SLOT(slotSaveMsg()) );
 
-    mSaveAtchAction = new QAction( KIcon( QLatin1String("mail-attachment") ), i18n( "Save Attachments..." ), this );
+    mSaveAtchAction = new QAction( QIcon::fromTheme( QLatin1String("mail-attachment") ), i18n( "Save Attachments..." ), this );
     actionCollection()->addAction( QLatin1String("search_save_attachments"), mSaveAtchAction );
     connect( mSaveAtchAction, SIGNAL(triggered(bool)), SLOT(slotSaveAttachments()) );
 

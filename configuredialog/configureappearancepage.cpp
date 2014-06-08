@@ -64,7 +64,7 @@ using namespace PimCommon::ConfigureImmutableWidgetUtils;
 #include <KKeySequenceWidget>
 #include <KLineEdit>
 #include <KDialog>
-#include <KIcon>
+#include <QIcon>
 #include <QDebug>
 
 #include <kmime/kmime_dateformatter.h>
@@ -1059,12 +1059,12 @@ AppearancePageMessageTagTab::AppearancePageMessageTagTab( QWidget * parent )
 
     mTagAddButton = new QPushButton( mTagsGroupBox );
     mTagAddButton->setToolTip( i18n("Add new tag") );
-    mTagAddButton->setIcon( KIcon( QLatin1String("list-add") ) );
+    mTagAddButton->setIcon( QIcon::fromTheme( QLatin1String("list-add") ) );
     addremovegrid->addWidget( mTagAddButton );
 
     mTagRemoveButton = new QPushButton( mTagsGroupBox );
     mTagRemoveButton->setToolTip( i18n("Remove selected tag") );
-    mTagRemoveButton->setIcon( KIcon( QLatin1String("list-remove") ) );
+    mTagRemoveButton->setIcon( QIcon::fromTheme( QLatin1String("list-remove") ) );
     addremovegrid->addWidget( mTagRemoveButton );
 
     //Up and down buttons
@@ -1073,13 +1073,13 @@ AppearancePageMessageTagTab::AppearancePageMessageTagTab( QWidget * parent )
 
     mTagUpButton = new QPushButton( mTagsGroupBox );
     mTagUpButton->setToolTip( i18n("Increase tag priority") );
-    mTagUpButton->setIcon( KIcon( QLatin1String("arrow-up") ) );
+    mTagUpButton->setIcon( QIcon::fromTheme( QLatin1String("arrow-up") ) );
     mTagUpButton->setAutoRepeat( true );
     updowngrid->addWidget( mTagUpButton );
 
     mTagDownButton = new QPushButton( mTagsGroupBox );
     mTagDownButton->setToolTip( i18n("Decrease tag priority") );
-    mTagDownButton->setIcon( KIcon( QLatin1String("arrow-down") ) );
+    mTagDownButton->setIcon( QIcon::fromTheme( QLatin1String("arrow-down") ) );
     mTagDownButton->setAutoRepeat( true );
     updowngrid->addWidget( mTagDownButton );
 
@@ -1356,7 +1356,7 @@ void AppearancePage::MessageTagTab::slotNameLineTextChanged( const QString
 
 void AppearancePage::MessageTagTab::slotIconNameChanged( const QString &iconName )
 {
-    mTagListBox->currentItem()->setIcon( KIcon( iconName ) );
+    mTagListBox->currentItem()->setIcon( QIcon::fromTheme( iconName ) );
 }
 
 void AppearancePage::MessageTagTab::slotAddLineTextChanged( const QString &aText )
@@ -1381,7 +1381,7 @@ void AppearancePage::MessageTagTab::slotAddNewTag()
     tag->priority = tmp_priority;
 
     slotEmitChangeCheck();
-    TagListWidgetItem *newItem = new TagListWidgetItem( KIcon( tag->iconName ), newTagName,  mTagListBox );
+    TagListWidgetItem *newItem = new TagListWidgetItem( QIcon::fromTheme( tag->iconName ), newTagName,  mTagListBox );
     newItem->setKMailTag( tag );
     mTagListBox->addItem( newItem );
     mTagListBox->setCurrentItem( newItem );
@@ -1414,7 +1414,7 @@ void AppearancePage::MessageTagTab::slotTagsFetched(KJob *job)
     qSort( msgTagList.begin(), msgTagList.end(), MailCommon::Tag::compare );
 
     foreach( const MailCommon::Tag::Ptr& tag, msgTagList ) {
-        TagListWidgetItem *newItem = new TagListWidgetItem( KIcon( tag->iconName ), tag->tagName, mTagListBox );
+        TagListWidgetItem *newItem = new TagListWidgetItem( QIcon::fromTheme( tag->iconName ), tag->tagName, mTagListBox );
         newItem->setKMailTag( tag );
         if ( tag->priority == -1 )
             tag->priority = mTagListBox->count() - 1;

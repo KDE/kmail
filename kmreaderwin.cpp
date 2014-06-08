@@ -151,7 +151,7 @@ void KMReaderWin::createActions()
     // Message Menu
     //
     // new message to
-    mMailToComposeAction = new QAction( KIcon( QLatin1String("mail-message-new") ),
+    mMailToComposeAction = new QAction( QIcon::fromTheme( QLatin1String("mail-message-new") ),
                                         i18n( "New Message To..." ), this );
     ac->addAction(QLatin1String("mail_new"), mMailToComposeAction );
     //QT5 mMailToComposeAction->setShortcutConfigurable( false );
@@ -159,7 +159,7 @@ void KMReaderWin::createActions()
              SLOT(slotMailtoCompose()) );
 
     // reply to
-    mMailToReplyAction = new QAction( KIcon( QLatin1String("mail-reply-sender") ),
+    mMailToReplyAction = new QAction( QIcon::fromTheme( QLatin1String("mail-reply-sender") ),
                                       i18n( "Reply To..." ), this );
     ac->addAction( QLatin1String("mailto_reply"), mMailToReplyAction );
     //QT5 mMailToReplyAction->setShortcutConfigurable( false );
@@ -167,7 +167,7 @@ void KMReaderWin::createActions()
              SLOT(slotMailtoReply()) );
 
     // forward to
-    mMailToForwardAction = new QAction( KIcon( QLatin1String("mail-forward" )),
+    mMailToForwardAction = new QAction( QIcon::fromTheme( QLatin1String("mail-forward" )),
                                         i18n( "Forward To..." ), this );
     //QT5 mMailToForwardAction->setShortcutConfigurable( false );
     ac->addAction( QLatin1String("mailto_forward"), mMailToForwardAction );
@@ -176,14 +176,14 @@ void KMReaderWin::createActions()
 
 
     // add to addressbook
-    mAddAddrBookAction = new QAction( KIcon(QLatin1String( "contact-new") ),
+    mAddAddrBookAction = new QAction( QIcon::fromTheme(QLatin1String( "contact-new") ),
                                       i18n( "Add to Address Book" ), this );
     //QT5 mAddAddrBookAction->setShortcutConfigurable( false );
     ac->addAction( QLatin1String("add_addr_book"), mAddAddrBookAction );
     connect( mAddAddrBookAction, SIGNAL(triggered(bool)),
              SLOT(slotMailtoAddAddrBook()) );
 
-    mAddEmailToExistingContactAction = new QAction( KIcon(QLatin1String( "contact-new") ),
+    mAddEmailToExistingContactAction = new QAction( QIcon::fromTheme(QLatin1String( "contact-new") ),
                                                     i18n( "Add to Existing Contact" ), this );
     //QT5 mAddEmailToExistingContactAction->setShortcutConfigurable( false );
     ac->addAction( QLatin1String("add_to_existing_contact"), mAddAddrBookAction );
@@ -192,20 +192,20 @@ void KMReaderWin::createActions()
 
 
     // open in addressbook
-    mOpenAddrBookAction = new QAction( KIcon( QLatin1String("view-pim-contacts") ),
+    mOpenAddrBookAction = new QAction( QIcon::fromTheme( QLatin1String("view-pim-contacts") ),
                                        i18n( "Open in Address Book" ), this );
     //QT5 mOpenAddrBookAction->setShortcutConfigurable( false );
     ac->addAction( QLatin1String("openin_addr_book"), mOpenAddrBookAction );
     connect( mOpenAddrBookAction, SIGNAL(triggered(bool)),
              SLOT(slotMailtoOpenAddrBook()) );
     // bookmark message
-    mAddBookmarksAction = new QAction( KIcon( QLatin1String("bookmark-new") ), i18n( "Bookmark This Link" ), this );
+    mAddBookmarksAction = new QAction( QIcon::fromTheme( QLatin1String("bookmark-new") ), i18n( "Bookmark This Link" ), this );
     //QT5 mAddBookmarksAction->setShortcutConfigurable( false );
     ac->addAction( QLatin1String("add_bookmarks"), mAddBookmarksAction );
     connect( mAddBookmarksAction, SIGNAL(triggered(bool)),
              SLOT(slotAddBookmarks()) );
 
-    mEditContactAction = new QAction( KIcon( QLatin1String("view-pim-contacts") ),
+    mEditContactAction = new QAction( QIcon::fromTheme( QLatin1String("view-pim-contacts") ),
                                       i18n( "Edit contact..." ), this );
     //QT5 mEditContactAction->setShortcutConfigurable( false );
     ac->addAction( QLatin1String("edit_contact"), mOpenAddrBookAction );
@@ -219,7 +219,7 @@ void KMReaderWin::createActions()
     connect( mUrlSaveAsAction, SIGNAL(triggered(bool)), SLOT(slotUrlSave()) );
 
     // find text
-    QAction *action = new QAction(KIcon(QLatin1String("edit-find")), i18n("&Find in Message..."), this);
+    QAction *action = new QAction(QIcon::fromTheme(QLatin1String("edit-find")), i18n("&Find in Message..."), this);
     ac->addAction(QLatin1String("find_in_messages"), action );
     connect(action, SIGNAL(triggered(bool)), SLOT(slotFind()));
     action->setShortcut(KStandardShortcut::find().first());
