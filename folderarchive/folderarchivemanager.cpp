@@ -29,7 +29,7 @@
 #include <KSharedConfig>
 #include <KGlobal>
 #include <KNotification>
-#include <KIcon>
+#include <QIcon>
 #include <KLocale>
 #include <KIconLoader>
 #include <KComponentData>
@@ -177,7 +177,7 @@ void FolderArchiveManager::load()
 
 void FolderArchiveManager::moveDone()
 {
-    const QPixmap pixmap = KIcon( QLatin1String("kmail") ).pixmap( KIconLoader::SizeSmall, KIconLoader::SizeSmall );
+    const QPixmap pixmap = QIcon::fromTheme( QLatin1String("kmail") ).pixmap( KIconLoader::SizeSmall, KIconLoader::SizeSmall );
 
     KNotification::event( QLatin1String("folderarchivedone"),
                           i18n("Messages archived"),
@@ -190,7 +190,7 @@ void FolderArchiveManager::moveDone()
 
 void FolderArchiveManager::moveFailed(const QString &msg)
 {
-    const QPixmap pixmap = KIcon( QLatin1String("kmail") ).pixmap( KIconLoader::SizeSmall, KIconLoader::SizeSmall );
+    const QPixmap pixmap = QIcon::fromTheme( QLatin1String("kmail") ).pixmap( KIconLoader::SizeSmall, KIconLoader::SizeSmall );
 
     KNotification::event( QLatin1String("folderarchiveerror"),
                           msg,

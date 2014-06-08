@@ -34,7 +34,7 @@
 
 #include <KListWidgetSearchLine>
 #include <KLocalizedString>
-#include <KIcon>
+#include <QIcon>
 #include <QDebug>
 
 #include <QGridLayout>
@@ -120,7 +120,7 @@ void TagSelectDialog::slotTagsFetched(KJob *job)
     qSort( mTagList.begin(), mTagList.end(), MailCommon::Tag::compare );
 
     foreach( const MailCommon::Tag::Ptr &tag, mTagList ) {
-        QListWidgetItem *item = new QListWidgetItem(KIcon(tag->iconName), tag->tagName, mListTag );
+        QListWidgetItem *item = new QListWidgetItem(QIcon::fromTheme(tag->iconName), tag->tagName, mListTag );
         item->setData(UrlTag, tag->tag().url().url() );
         item->setFlags( Qt::ItemIsUserCheckable | Qt::ItemIsEnabled | Qt::ItemIsSelectable );
         item->setCheckState( Qt::Unchecked );

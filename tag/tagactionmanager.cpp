@@ -31,7 +31,7 @@
 #include <QMenu>
 #include <KLocalizedString>
 #include <KJob>
-#include <KIcon>
+#include <QIcon>
 #include <AkonadiCore/Monitor>
 #include <QDebug>
 
@@ -119,7 +119,7 @@ void TagActionManager::createTagAction( const MailCommon::Tag::Ptr &tag, bool ad
 {
     QString cleanName( i18n("Message Tag %1", tag->tagName ) );
     cleanName.replace(QLatin1Char('&'), QLatin1String("&&"));
-    KToggleAction * const tagAction = new KToggleAction( KIcon( tag->iconName ),
+    KToggleAction * const tagAction = new KToggleAction( QIcon::fromTheme( tag->iconName ),
                                                          cleanName, this );
     //QT5 tagAction->setShortcut( tag->shortcut );
     tagAction->setIconText( tag->name() );

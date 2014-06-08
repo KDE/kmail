@@ -16,7 +16,7 @@
 */
 
 #include "vacationscriptindicatorwidget.h"
-#include <KIcon>
+#include <QIcon>
 #include <KLocalizedString>
 
 #include <QHBoxLayout>
@@ -28,7 +28,7 @@ ServerLabel::ServerLabel(const QString &serverName, QWidget * parent)
       mServerName(serverName)
 {
     setToolTip(serverName);
-    setPixmap(KIcon( QLatin1String("network-server") ).pixmap( 16, 16 ) );
+    setPixmap(QIcon::fromTheme( QLatin1String("network-server") ).pixmap( 16, 16 ) );
     setStyleSheet( QString::fromLatin1("background-color: %1;" ).arg( QColor(Qt::yellow).name() ) );
 }
 
