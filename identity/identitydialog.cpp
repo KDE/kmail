@@ -105,6 +105,7 @@ using MailTransport::TransportManager;
 
 #include <AkonadiCore/entitydisplayattribute.h>
 #include <AkonadiCore/collectionmodifyjob.h>
+#include <QStandardPaths>
 
 
 using namespace KPIM;
@@ -867,7 +868,7 @@ void IdentityDialog::setIdentity( KPIMIdentities::Identity & ident ) {
     mAutoCorrectionLanguage->setLanguage(ident.autocorrectionLanguage());
     updateVcardButton();
     if(mVcardFilename.isEmpty()) {
-        mVcardFilename = KStandardDirs::locateLocal("appdata",ident.identityName() + QLatin1String(".vcf"));
+        mVcardFilename = QStandardPaths::writableLocation(QStandardPaths::DataLocation) + ident.identityName() + QLatin1String("/.vcf");
     }
     mAttachMyVCard->setChecked(ident.attachVcard());
     QString defaultDomainName = ident.defaultDomainName();

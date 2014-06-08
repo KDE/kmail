@@ -200,6 +200,7 @@ using KSieveUi::SieveDebugDialog;
 #include <errno.h> // ugh
 #include <AkonadiWidgets/standardactionmanager.h>
 #include <KHelpClient>
+#include <QStandardPaths>
 
 
 using namespace KMime;
@@ -3020,7 +3021,7 @@ void KMMainWidget::setupActions()
         QAction *action = new QAction(QIcon::fromTheme(QLatin1String("x-office-address-book")), i18n("&Address Book"), this);
         actionCollection()->addAction(QLatin1String("addressbook"), action );
         connect(action, SIGNAL(triggered(bool)), SLOT(slotAddrBook()));
-        if (KStandardDirs::findExe(QLatin1String("kaddressbook")).isEmpty())
+        if (QStandardPaths::findExecutable(QLatin1String("kaddressbook")).isEmpty())
             action->setEnabled(false);
     }
 
@@ -3029,7 +3030,7 @@ void KMMainWidget::setupActions()
         actionCollection()->addAction(QLatin1String("tools_start_certman"), action );
         connect(action, SIGNAL(triggered(bool)), SLOT(slotStartCertManager()));
         // disable action if no certman binary is around
-        if (KStandardDirs::findExe(QLatin1String("kleopatra")).isEmpty())
+        if (QStandardPaths::findExecutable(QLatin1String("kleopatra")).isEmpty())
             action->setEnabled(false);
     }
     {
@@ -3041,7 +3042,7 @@ void KMMainWidget::setupActions()
         const bool usableKWatchGnupg = false;
 #else
         // disable action if no kwatchgnupg binary is around
-        bool usableKWatchGnupg = !KStandardDirs::findExe(QLatin1String("kwatchgnupg")).isEmpty();
+        bool usableKWatchGnupg = !QStandardPaths::findExecutable(QLatin1String("kwatchgnupg")).isEmpty();
 #endif
         action->setEnabled(usableKWatchGnupg);
     }
@@ -3049,7 +3050,7 @@ void KMMainWidget::setupActions()
         QAction *action = new QAction(QIcon::fromTheme(QLatin1String("document-import")), i18n("&Import Messages..."), this);
         actionCollection()->addAction(QLatin1String("import"), action );
         connect(action, SIGNAL(triggered(bool)), SLOT(slotImport()));
-        if (KStandardDirs::findExe(QLatin1String("kmailcvt")).isEmpty()) action->setEnabled(false);
+        if (QStandardPaths::findExecutable(QLatin1String("kmailcvt")).isEmpty()) action->setEnabled(false);
     }
 
 #if !defined(NDEBUG)

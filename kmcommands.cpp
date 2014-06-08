@@ -56,7 +56,7 @@
 #include <klocale.h>
 #include <kmessagebox.h>
 #include <kbookmarkmanager.h>
-#include <kstandarddirs.h>
+
 #include <ktemporaryfile.h>
 // KIO headers
 #include <kio/job.h>
@@ -147,6 +147,7 @@ using namespace KMime;
 #include <boost/bind.hpp>
 #include <algorithm>
 #include <memory>
+#include <QStandardPaths>
 
 
 using namespace MailCommon;
@@ -476,7 +477,7 @@ KMAddBookmarksCommand::KMAddBookmarksCommand( const KUrl &url, QWidget *parent )
 
 KMCommand::Result KMAddBookmarksCommand::execute()
 {
-    const QString filename = KStandardDirs::locateLocal( "data", QString::fromLatin1("konqueror/bookmarks.xml") );
+    const QString filename = QStandardPaths::writableLocation(QStandardPaths::GenericDataLocation) + QLatin1Char('/') + QString::fromLatin1("konqueror/bookmarks.xml") ;
     KBookmarkManager *bookManager = KBookmarkManager::managerForFile( filename, QLatin1String("konqueror") );
     KBookmarkGroup group = bookManager->root();
     group.addBookmark( mUrl.path(), QUrl( mUrl ), QString() );

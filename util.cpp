@@ -52,6 +52,7 @@
 
 #include <QProcess>
 #include <QFileInfo>
+#include <QStandardPaths>
 
 #include "foldercollection.h"
 
@@ -242,7 +243,7 @@ void KMail::Util::migrateFromKMail1()
     if ( oldKMailConfig.hasGroup("General") ||
          ( oldKMailConfig.groupList().count() == 1 &&
            oldKMailConfig.groupList().first() == QLatin1String("$Version") ) ) {
-        const QFileInfo oldDataDirFileInfo( KStandardDirs::locateLocal( "data", QLatin1String("kmail") ) );
+        const QFileInfo oldDataDirFileInfo( QStandardPaths::writableLocation(QStandardPaths::GenericDataLocation) + QLatin1String("/kmail") ) ;
         if ( !oldDataDirFileInfo.exists() || !oldDataDirFileInfo.isDir() ) {
             // neither config or data, the migrator cannot do anything useful anyways
             needMigration = false;

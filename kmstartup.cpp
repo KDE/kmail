@@ -22,7 +22,7 @@
 #include "kmkernel.h" //control center
 
 #include <klocale.h>
-#include <kstandarddirs.h>
+
 #include <kglobal.h>
 #include <K4AboutData>
 #include <kiconloader.h>

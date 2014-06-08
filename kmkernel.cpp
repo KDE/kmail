@@ -69,7 +69,7 @@ using KMail::MailServiceImpl;
 #include <kmessagebox.h>
 #include <knotification.h>
 #include <progresswidget/progressmanager.h>
-#include <kstandarddirs.h>
+
 #include <kconfig.h>
 #include <kpassivepopup.h>
 #include <kapplication.h>
@@ -112,6 +112,7 @@ using KMail::MailServiceImpl;
 #include <kstartupinfo.h>
 #include <kmailadaptor.h>
 #include <KLocale>
+#include <QStandardPaths>
 #include "kmailinterface.h"
 #include "foldercollectionmonitor.h"
 #include "imapresourcesettings.h"
@@ -1414,7 +1415,7 @@ void KMKernel::slotConfigChanged()
 //static
 QString KMKernel::localDataPath()
 {
-    return KStandardDirs::locateLocal( "data", QLatin1String("kmail2/") );
+    return QStandardPaths::writableLocation(QStandardPaths::GenericDataLocation) + QLatin1String("/kmail2/") ;
 }
 
 //-------------------------------------------------------------------------------

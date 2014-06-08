@@ -139,7 +139,7 @@
 #include <kmessagebox.h>
 #include <krecentfilesaction.h>
 #include <kshortcutsdialog.h>
-#include <kstandarddirs.h>
+
 #include <kstandardshortcut.h>
 #include <kstatusbar.h>
 #include <ktempdir.h>
@@ -168,6 +168,7 @@
 #include <boost/shared_ptr.hpp>
 #include <KHelpClient>
 #include <KCharsets>
+#include <QStandardPaths>
 
 using Sonnet::DictionaryComboBox;
 using MailTransport::TransportManager;
@@ -1195,7 +1196,7 @@ void KMComposeWin::setupActions( void )
     action = new QAction(QIcon::fromTheme(QLatin1String("x-office-address-book")), i18n("&Address Book"), this);
     //action->setHelpText(i18n("Open Address Book"));
     actionCollection()->addAction(QLatin1String("addressbook"), action );
-    if (KStandardDirs::findExe(QLatin1String("kaddressbook")).isEmpty())
+    if (QStandardPaths::findExecutable(QLatin1String("kaddressbook")).isEmpty())
         action->setEnabled(false);
     connect(action, SIGNAL(triggered(bool)), SLOT(slotAddrBook()));
     action = new QAction(QIcon::fromTheme(QLatin1String("mail-message-new")), i18n("&New Composer"), this);

@@ -38,6 +38,7 @@
 #include <KStandardDirs>
 #include <KSeparator>
 #include <KIconLoader>
+#include <QStandardPaths>
 
 using namespace KMail;
 
@@ -117,7 +118,7 @@ void KMKnotify::initCombobox()
     //TODO add other notifyrc here if necessary
 
     Q_FOREACH ( const QString& notify, lstNotify ) {
-        const QString fullPath = KStandardDirs::locate( "data", notify );
+        const QString fullPath = QStandardPaths::locate(QStandardPaths::GenericDataLocation, notify );
 
         if ( !fullPath.isEmpty() ) {
             const int slash = fullPath.lastIndexOf( QLatin1Char('/') ) - 1;
