@@ -961,7 +961,7 @@ void IdentityDialog::updateIdentity( KPIMIdentities::Identity & ident ) {
     TemplateParser::Templates t( iid );
     qDebug() << "use custom templates for identity" << identity <<":" << mCustom->isChecked();
     t.setUseCustomTemplates(mCustom->isChecked());
-    t.writeConfig();
+    t.save();
     mWidget->saveToIdentity( identity );
 #endif
 
