@@ -216,7 +216,7 @@ using MessageViewer::AttachmentStrategy;
 Q_DECLARE_METATYPE(KPIM::ProgressItem*)
 Q_DECLARE_METATYPE(Akonadi::Job*)
 Q_DECLARE_METATYPE(QPointer<KPIM::ProgressItem>)
-K_GLOBAL_STATIC( KMMainWidget::PtrList, theMainWidgetList )
+Q_GLOBAL_STATIC( KMMainWidget::PtrList, theMainWidgetList )
 
 //-----------------------------------------------------------------------------
 KMMainWidget::KMMainWidget( QWidget *parent, KXMLGUIClient *aGUIClient,

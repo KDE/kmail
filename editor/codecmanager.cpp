@@ -46,7 +46,7 @@ public:
 
 };
 
-K_GLOBAL_STATIC( CodecManagerPrivate, sInstance )
+Q_GLOBAL_STATIC( CodecManagerPrivate, sInstance )
 
 CodecManagerPrivate::CodecManagerPrivate()
     : instance( new CodecManager( this ) )

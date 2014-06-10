@@ -53,7 +53,7 @@ struct Icons {
     QIcon checkMailIcon;
 };
 
-K_GLOBAL_STATIC ( Icons, s_icons )
+Q_GLOBAL_STATIC ( Icons, s_icons )
 
 ConfigAgentDelegate::ConfigAgentDelegate ( QObject *parent )
     : QStyledItemDelegate ( parent )
