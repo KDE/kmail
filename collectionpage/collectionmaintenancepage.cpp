@@ -34,7 +34,6 @@
 #include <QPushButton>
 #include <kio/global.h>
 #include <KLocale>
-#include <KGlobal>
 #include <QDebug>
 
 #include <QGroupBox>

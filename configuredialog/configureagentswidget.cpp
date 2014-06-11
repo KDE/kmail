@@ -24,7 +24,6 @@
 #include <KDesktopFile>
 #include <QDebug>
 #include <KTextEdit>
-#include <KGlobal>
 #include <KConfigGroup>
 
 #include <QVBoxLayout>

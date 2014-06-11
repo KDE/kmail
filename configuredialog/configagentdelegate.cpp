@@ -28,7 +28,6 @@
 #include <QIcon>
 #include <KLocalizedString>
 #include <KIconLoader>
-#include <KGlobal>
 
 #include <QUrl>
 #include <QApplication>

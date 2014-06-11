@@ -152,7 +152,6 @@
 #include <KPrintPreview>
 #include <KFileDialog>
 #include <QAction>
-#include <KGlobal>
 
 // Qt includes
 #include <QClipboard>
