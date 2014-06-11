@@ -106,6 +106,7 @@ namespace PimCommon {
 class CustomToolsWidget;
 class LineEditWithAutoCorrection;
 class StorageServiceAbstract;
+class StorageServiceManager;
 }
 
 //-----------------------------------------------------------------------------
@@ -697,6 +698,7 @@ private:
     QMap<QByteArray, QString> mExtraHeaders;
     int mNumProgressUploadFile;
     CryptoStateIndicatorWidget *mCryptoStateIndicatorWidget;
+    PimCommon::StorageServiceManager *mStorageManager;
 };
 
 #endif
