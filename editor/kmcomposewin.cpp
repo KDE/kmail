@@ -221,7 +221,8 @@ KMComposeWin::KMComposeWin( const KMime::Message::Ptr &aMsg, bool lastSignState,
       mIgnoreStickyFields( false ),
       mWasModified( false ),
       mNumProgressUploadFile(0),
-      mCryptoStateIndicatorWidget(0)
+      mCryptoStateIndicatorWidget(0),
+      mStorageManager(new PimCommon::StorageServiceManager(this))
 {
     m_verifyMissingAttachment = 0;
     mComposerBase = new MessageComposer::ComposerViewBase( this, this );
@@ -470,11 +471,11 @@ KMComposeWin::KMComposeWin( const KMime::Message::Ptr &aMsg, bool lastSignState,
     mDummyComposer = new MessageComposer::Composer( this );
     mDummyComposer->globalPart()->setParentWidgetForGui( this );
 
-    connect(KMKernel::self()->storageServiceManager(), SIGNAL(uploadFileDone(QString,QString)), this, SLOT(slotUploadFileDone(QString,QString)));
-    connect(KMKernel::self()->storageServiceManager(), SIGNAL(uploadFileFailed(QString,QString)), this, SLOT(slotUploadFileFailed(QString,QString)));
-    connect(KMKernel::self()->storageServiceManager(), SIGNAL(shareLinkDone(QString,QString)), this, SLOT(slotShareLinkDone(QString,QString)));
-    connect(KMKernel::self()->storageServiceManager(), SIGNAL(uploadFileStart(PimCommon::StorageServiceAbstract*)), this, SLOT(slotUploadFileStart(PimCommon::StorageServiceAbstract*)));
-    connect(KMKernel::self()->storageServiceManager(), SIGNAL(actionFailed(QString,QString)), this, SLOT(slotActionFailed(QString,QString)));
+    connect(mStorageManager, SIGNAL(uploadFileDone(QString,QString)), this, SLOT(slotUploadFileDone(QString,QString)));
+    connect(mStorageManager, SIGNAL(uploadFileFailed(QString,QString)), this, SLOT(slotUploadFileFailed(QString,QString)));
+    connect(mStorageManager, SIGNAL(shareLinkDone(QString,QString)), this, SLOT(slotShareLinkDone(QString,QString)));
+    connect(mStorageManager, SIGNAL(uploadFileStart(PimCommon::StorageServiceAbstract*)), this, SLOT(slotUploadFileStart(PimCommon::StorageServiceAbstract*)));
+    connect(mStorageManager, SIGNAL(actionFailed(QString,QString)), this, SLOT(slotActionFailed(QString,QString)));
 }
 
 //-----------------------------------------------------------------------------
@@ -1421,7 +1422,7 @@ void KMComposeWin::setupActions( void )
     mCryptoModuleAction->setToolTip( i18n( "Select a cryptographic format for this message" ) );
 
     mComposerBase->editor()->createActions( actionCollection() );
-    actionCollection()->addAction( QLatin1String("shared_link"), KMKernel::self()->storageServiceManager()->menuShareLinkServices(this) );
+    actionCollection()->addAction( QLatin1String("shared_link"), mStorageManager->menuShareLinkServices(this) );
 
     createGUI( QLatin1String("kmcomposerui.rc") );
     connect( toolBar( QLatin1String("htmlToolBar") )->toggleViewAction(),
