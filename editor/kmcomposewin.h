@@ -103,6 +103,7 @@ namespace PimCommon {
 class CustomToolsWidget;
 class LineEditWithAutoCorrection;
 class StorageServiceAbstract;
+class StorageServiceManager;
 }
 
 //-----------------------------------------------------------------------------
@@ -694,6 +695,7 @@ private:
     Akonadi::Collection mCollectionForNewMessage;
     QMap<QByteArray, QString> mExtraHeaders;
     int mNumProgressUploadFile;
+    PimCommon::StorageServiceManager *mStorageManager;
 };
 
 #endif
