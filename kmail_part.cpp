@@ -42,7 +42,6 @@
 #include <qdebug.h>
 #include <ksettings/dispatcher.h>
 #include <kmailpartadaptor.h>
-#include <kicon.h>
 #include <AkonadiCore/collection.h>
 #include <AkonadiCore/entitydisplayattribute.h>
 #include <AkonadiCore/changerecorder.h>

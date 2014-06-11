@@ -72,7 +72,6 @@ using MessageComposer::MessageFactory;
 #include <qdebug.h>
 #include <klocale.h>
 #include <kaction.h>
-#include <kicon.h>
 #include <kcodecs.h>
 #include <ktoggleaction.h>
 #include <kservice.h>
