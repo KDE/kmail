@@ -36,13 +36,14 @@
 #include <qlabel.h>
 #include <qcheckbox.h>
 #include <QGridLayout>
+#include <QStandardPaths>
 
 using namespace KMail;
 using namespace MailCommon;
 
 static QString standardArchivePath( const QString &folderName )
 {
-    QString currentPath = KGlobalSettings::documentPath();
+    QString currentPath = QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation);
     QDir dir( currentPath );
     if( !dir.exists() )
         currentPath = QDir::homePath();
