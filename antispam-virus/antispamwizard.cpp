@@ -531,7 +531,7 @@ void AntiSpamWizard::checkToolAvailability()
             foreach( const Akonadi::AgentInstance& type, lst ) {
                 if ( type.status() == Akonadi::AgentInstance::Broken )
                     continue;
-                if ( type.identifier().contains( IMAP_RESOURCE_IDENTIFIER ) || type.identifier().contains( KOLAB_RESOURCE_IDENTIFIER ) ) {
+                if ( PimCommon::Util::isImapResource(type.identifier()) ) {
                     OrgKdeAkonadiImapSettingsInterface *iface = PimCommon::Util::createImapSettingsInterface( type.identifier() );
                     if ( iface->isValid() ) {
                         const QString host = iface->imapServer();
