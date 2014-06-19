@@ -127,8 +127,8 @@ private:
 
     QAction *mSeparatorMoreAction;
     QAction *mSeparatorNewTagAction;
-    KAction *mMoreAction;
-    KAction *mNewTagAction;
+    QAction *mMoreAction;
+    QAction *mNewTagAction;
     // Maps the id of a tag to the action of a tag.
     // Contains all existing tags
     QMap<qint64,KToggleAction*> mTagActions;

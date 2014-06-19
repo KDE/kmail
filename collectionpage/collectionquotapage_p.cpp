@@ -74,6 +74,6 @@ void QuotaWidget::setQuotaInfo( qint64 current, qint64 maxValue )
 {
     mProgressBar->setMaximum( maxValue );
     mProgressBar->setValue( current );
-    mUsage->setText(i18n("%1 of %2 used", KLocale::global()->formatByteSize( qMax( 0LL, current ) ), KGlobal::locale()->formatByteSize( qMax( 0LL, maxValue ) ) ) );
+    mUsage->setText(i18n("%1 of %2 used", KLocale::global()->formatByteSize( qMax( 0LL, current ) ), KLocale::global()->formatByteSize( qMax( 0LL, maxValue ) ) ) );
 }
 

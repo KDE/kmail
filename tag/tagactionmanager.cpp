@@ -217,7 +217,7 @@ void TagActionManager::createTagActions(const QList<MailCommon::Tag::Ptr> &tags)
     mMessageActions->messageStatusMenu()->menu()->addAction( mSeparatorNewTagAction );
 
     if (!mNewTagAction) {
-        mNewTagAction = new KAction( i18n( "Add new tag..." ), this );
+        mNewTagAction = new QAction( i18n( "Add new tag..." ), this );
         connect( mNewTagAction, SIGNAL(triggered(bool)),
                  this, SLOT(newTagActionClicked()) );
     }
@@ -231,7 +231,7 @@ void TagActionManager::createTagActions(const QList<MailCommon::Tag::Ptr> &tags)
         mMessageActions->messageStatusMenu()->menu()->addAction( mSeparatorMoreAction );
 
         if (!mMoreAction) {
-            mMoreAction = new KAction( i18n( "More..." ), this );
+            mMoreAction = new QAction( i18n( "More..." ), this );
             connect( mMoreAction, SIGNAL(triggered(bool)),
                      this, SIGNAL(tagMoreActionClicked()) );
         }
