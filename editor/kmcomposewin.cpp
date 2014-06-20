@@ -1786,6 +1786,16 @@ void KMComposeWin::setCustomTemplate( const QString& customTemplate )
     mCustomTemplate = customTemplate;
 }
 
+void KMComposeWin::setSigningAndEncryptionDisabled(bool v)
+{
+    mSigningAndEncryptionExplicitlyDisabled = v;
+}
+
+void KMComposeWin::setFolder(const Akonadi::Collection &aFolder)
+{
+    mFolder = aFolder;
+}
+
 //-----------------------------------------------------------------------------
 void KMComposeWin::setFcc( const QString &idString )
 {
@@ -2565,6 +2575,11 @@ void KMComposeWin::forceDisableHtml()
     disableHtml( MessageComposer::ComposerViewBase::NoConfirmationNeeded );
     markupAction->setEnabled( false );
     // FIXME: Remove the toggle toolbar action somehow
+}
+
+bool KMComposeWin::isComposing() const
+{
+    return mComposerBase && mComposerBase->isComposing();
 }
 
 void KMComposeWin::disableForgottenAttachmentsCheck()
