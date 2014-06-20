@@ -974,11 +974,8 @@ bool KMKernel::isOffline()
         return false;
 }
 
-void KMKernel::checkMailOnStartup()
+void KMKernel::verifyAccount()
 {
-    if ( !kmkernel->askToGoOnline() )
-        return;
-
     const QString resourceGroupPattern( QLatin1String("Resource %1") );
 
     const Akonadi::AgentInstance::List lst = MailCommon::Util::agentInstances();
@@ -995,6 +992,27 @@ void KMKernel::checkMailOnStartup()
             if ( !type.isOnline() )
                 type.setIsOnline( true );
         }
+    }
+}
+
+void KMKernel::slotCheckAccount(Akonadi::ServerManager::State state)
+{
+    if (state == Akonadi::ServerManager::Running) {
+        disconnect(Akonadi::ServerManager::self(), SIGNAL(stateChanged(Akonadi::ServerManager::State)));
+        verifyAccount();
+    }
+}
+
+void KMKernel::checkMailOnStartup()
+{
+    if ( !kmkernel->askToGoOnline() )
+        return;
+
+    if (Akonadi::ServerManager::state() != Akonadi::ServerManager::Running) {
+        connect(Akonadi::ServerManager::self(), SIGNAL(stateChanged(Akonadi::ServerManager::State)),
+                                       SLOT(slotCheckAccount(Akonadi::ServerManager::State)));
+    } else {
+        verifyAccount();
     }
 }
 

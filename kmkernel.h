@@ -490,7 +490,9 @@ private slots:
     void slotSystemNetworkStatusChanged( Solid::Networking::Status );
     void slotCollectionChanged(const Akonadi::Collection &, const QSet<QByteArray> &set);
 
+    void slotCheckAccount(Akonadi::ServerManager::State state);
 private:
+    void verifyAccount();
     void resourceGoOnLine();
     void openReader( bool onlyCheck );
     QSharedPointer<MailCommon::FolderCollection> currentFolderCollection();
