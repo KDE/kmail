@@ -287,6 +287,7 @@ KMComposeWin::KMComposeWin( const KMime::Message::Ptr &aMsg, bool lastSignState,
     MailTransport::TransportComboBox* transport = new MailTransport::TransportComboBox( mHeadersArea );
     transport->setToolTip( i18n( "Select the outgoing account to use for sending this message" ) );
     mComposerBase->setTransportCombo( transport );
+    connect(transport, SIGNAL(activated(int)), this, SLOT(slotTransportChanged()));
 
     mEdtFrom = new MessageComposer::ComposerLineEdit( false, mHeadersArea );
     mEdtFrom->setObjectName( QLatin1String("fromLine") );
@@ -3611,3 +3612,9 @@ void KMComposeWin::slotActionFailed(const QString &serviceName, const QString &e
     KMessageBox::error(this, i18n("%1 return an error '%2'", serviceName, error), i18n("Error"));
     --mNumProgressUploadFile;
 }
+
+void KMComposeWin::slotTransportChanged()
+{
+    mComposerBase->editor()->document()->setModified(true);
+}
+

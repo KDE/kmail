@@ -461,6 +461,7 @@ private slots:
     void slotUploadFileStart(PimCommon::StorageServiceAbstract *service);
 
     void slotActionFailed(const QString &serviceName, const QString &error);
+    void slotTransportChanged();
 public: // kmcommand
     // FIXME we need to remove these, but they're pure virtual in Composer.
     void addAttach( KMime::Content *msgPart );
