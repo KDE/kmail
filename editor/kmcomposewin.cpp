@@ -3459,6 +3459,7 @@ void KMComposeWin::slotLanguageChanged( const QString &language )
 void KMComposeWin::slotFccFolderChanged(const Akonadi::Collection& collection)
 {
     mComposerBase->setFcc( collection );
+    mComposerBase->editor()->document()->setModified(true);
 }
 
 void KMComposeWin::insertSpecialCharacter()
