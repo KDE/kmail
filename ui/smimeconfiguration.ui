@@ -69,7 +69,7 @@
         <item>
          <layout class="QVBoxLayout">
           <item>
-           <widget class="KLineEdit" name="OCSPResponderURL">
+           <widget class="QLineEdit" name="OCSPResponderURL">
             <property name="whatsThis">
              <string>Enter here the address of the server for online validation of certificates (OCSP responder). The URL is usually starting with http://.</string>
             </property>
@@ -195,7 +195,7 @@
           </widget>
          </item>
          <item row="1" column="1">
-          <widget class="KLineEdit" name="customHTTPProxy">
+          <widget class="QLineEdit" name="customHTTPProxy">
            <property name="whatsThis">
             <string>Enter here the location of your HTTP Proxy, which will be used for all HTTP requests relating to S/MIME. The syntax is host:port, for instance myproxy.nowhere.com:3128.</string>
            </property>
@@ -245,7 +245,7 @@
             </widget>
            </item>
            <item>
-            <widget class="KLineEdit" name="customLDAPProxy">
+            <widget class="QLineEdit" name="customLDAPProxy">
              <property name="whatsThis">
               <string>Entering a LDAP server here will make all LDAP requests go to that server first. More precisely, this setting overrides any specified host and port part in a LDAP URL and will also be used if host and port have been omitted from the URL. Other LDAP servers will be used only if the connection to the &quot;proxy&quot; failed.
 The syntax is &quot;HOST&quot; or &quot;HOST:PORT&quot;. If PORT is omitted, port 389 (standard LDAP port) is used.</string>
@@ -276,11 +276,6 @@ The syntax is &quot;HOST&quot; or &quot;HOST:PORT&quot;. If PORT is omitted, por
   </layout>
  </widget>
  <customwidgets>
-  <customwidget>
-   <class>KLineEdit</class>
-   <extends>QLineEdit</extends>
-   <header>klineedit.h</header>
-  </customwidget>
   <customwidget>
    <class>Kleo::KeyRequester</class>
    <extends></extends>
