@@ -197,7 +197,7 @@ public: // kmkernel, kmcommands, callback
     /**
       * Returns @c true while the message composing is in progress.
       */
-    bool isComposing() const { return mComposerBase && mComposerBase->isComposing(); }
+    bool isComposing() const;
 
     /**
       * Set the text selection the message is a response to.
@@ -210,15 +210,12 @@ public: // kmkernel, kmcommands, callback
     void setCustomTemplate( const QString& customTemplate );
 
     /** Disabled signing and encryption completely for this composer window. */
-    void setSigningAndEncryptionDisabled( bool v )
-    {
-        mSigningAndEncryptionExplicitlyDisabled = v;
-    }
+    void setSigningAndEncryptionDisabled( bool v );
     /**
      * If this folder is set, the original message is inserted back after
      * canceling
      */
-    void setFolder(const Akonadi::Collection &aFolder ) { mFolder = aFolder; }
+    void setFolder(const Akonadi::Collection &aFolder );
     /**
      * Sets the focus to the edit-widget.
      */
@@ -465,6 +462,7 @@ private slots:
     void slotUploadFileStart(PimCommon::StorageServiceAbstract *service);
 
     void slotActionFailed(const QString &serviceName, const QString &error);
+    void slotTransportChanged();
 public: // kmcommand
     // FIXME we need to remove these, but they're pure virtual in Composer.
     void addAttach( KMime::Content *msgPart );
