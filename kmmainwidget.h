@@ -431,7 +431,7 @@ protected slots:
     void slotConfigureAutomaticArchiving();
     void slotExportData();
     void slotCreateAddressBookContact();
-    void slotOpenRecentMsg(const KUrl& url);
+    void slotOpenRecentMsg(const QUrl& url);
     void slotConfigureSendLater();
 
 private:

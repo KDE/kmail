@@ -2968,7 +2968,7 @@ void KMMainWidget::setupActions()
     mOpenAction = KStandardAction::open( this, SLOT(slotOpenMsg()),
                                          actionCollection() );
 
-    mOpenRecentAction = KStandardAction::openRecent( this, SLOT(slotOpenRecentMsg(KUrl)),
+    mOpenRecentAction = KStandardAction::openRecent( this, SLOT(slotOpenRecentMsg(QUrl)),
                                                      actionCollection() );
     KConfigGroup grp = mConfig->group(QLatin1String("Recent Files"));
     mOpenRecentAction->loadEntries(grp);
@@ -4828,7 +4828,7 @@ void KMMainWidget::slotCreateAddressBookContact()
     job->start();
 }
 
-void KMMainWidget::slotOpenRecentMsg(const KUrl& url)
+void KMMainWidget::slotOpenRecentMsg(const QUrl& url)
 {
     KMOpenMsgCommand *openCommand = new KMOpenMsgCommand( this, url, overrideEncoding(), this );
     openCommand->start();
