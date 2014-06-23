@@ -143,7 +143,7 @@ void FolderShortcutActionManager::shortcutChanged( const Akonadi::Collection &co
     // The folder shortcut is set in the folder shortcut dialog.
     // The shortcut set in the shortcut dialog would not be saved back to
     // the folder settings correctly.
-    //QT5 action->setShortcutConfigurable( false );
+    mActionCollection->setShortcutsConfigurable( action, false );
     action->setText( actionLabel );
     action->setShortcuts( shortcut );
     action->setIcon( icon );

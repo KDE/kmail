@@ -121,7 +121,7 @@ void TagActionManager::createTagAction( const MailCommon::Tag::Ptr &tag, bool ad
     cleanName.replace(QLatin1Char('&'), QLatin1String("&&"));
     KToggleAction * const tagAction = new KToggleAction( QIcon::fromTheme( tag->iconName ),
                                                          cleanName, this );
-    //QT5 tagAction->setShortcut( tag->shortcut );
+    tagAction->setShortcut( QKeySequence(tag->shortcut) );
     tagAction->setIconText( tag->name() );
     tagAction->setChecked( tag->id() == mNewTagId );
 
@@ -132,7 +132,7 @@ void TagActionManager::createTagAction( const MailCommon::Tag::Ptr &tag, bool ad
     // The shortcut configuration is done in the config dialog.
     // The shortcut set in the shortcut dialog would not be saved back to
     // the tag descriptions correctly.
-    //QT5 tagAction->setShortcutConfigurable( false );
+    mActionCollection->setShortcutsConfigurable(tagAction, false );
     mMessageTagToggleMapper->setMapping( tagAction, QString::number(tag->tag().id()) );
 
     mTagActions.insert( tag->id(), tagAction );

@@ -153,7 +153,7 @@ void KMReaderWin::createActions()
     mMailToComposeAction = new QAction( QIcon::fromTheme( QLatin1String("mail-message-new") ),
                                         i18n( "New Message To..." ), this );
     ac->addAction(QLatin1String("mail_new"), mMailToComposeAction );
-    //QT5 mMailToComposeAction->setShortcutConfigurable( false );
+    ac->setShortcutsConfigurable( mMailToComposeAction, false );
     connect( mMailToComposeAction, SIGNAL(triggered(bool)),
              SLOT(slotMailtoCompose()) );
 
@@ -161,14 +161,14 @@ void KMReaderWin::createActions()
     mMailToReplyAction = new QAction( QIcon::fromTheme( QLatin1String("mail-reply-sender") ),
                                       i18n( "Reply To..." ), this );
     ac->addAction( QLatin1String("mailto_reply"), mMailToReplyAction );
-    //QT5 mMailToReplyAction->setShortcutConfigurable( false );
+    ac->setShortcutsConfigurable( mMailToReplyAction, false );
     connect( mMailToReplyAction, SIGNAL(triggered(bool)),
              SLOT(slotMailtoReply()) );
 
     // forward to
     mMailToForwardAction = new QAction( QIcon::fromTheme( QLatin1String("mail-forward" )),
                                         i18n( "Forward To..." ), this );
-    //QT5 mMailToForwardAction->setShortcutConfigurable( false );
+    ac->setShortcutsConfigurable( mMailToForwardAction, false );
     ac->addAction( QLatin1String("mailto_forward"), mMailToForwardAction );
     connect( mMailToForwardAction, SIGNAL(triggered(bool)),
              SLOT(slotMailtoForward()) );
@@ -177,14 +177,14 @@ void KMReaderWin::createActions()
     // add to addressbook
     mAddAddrBookAction = new QAction( QIcon::fromTheme(QLatin1String( "contact-new") ),
                                       i18n( "Add to Address Book" ), this );
-    //QT5 mAddAddrBookAction->setShortcutConfigurable( false );
+    ac->setShortcutsConfigurable( mAddAddrBookAction, false );
     ac->addAction( QLatin1String("add_addr_book"), mAddAddrBookAction );
     connect( mAddAddrBookAction, SIGNAL(triggered(bool)),
              SLOT(slotMailtoAddAddrBook()) );
 
     mAddEmailToExistingContactAction = new QAction( QIcon::fromTheme(QLatin1String( "contact-new") ),
                                                     i18n( "Add to Existing Contact" ), this );
-    //QT5 mAddEmailToExistingContactAction->setShortcutConfigurable( false );
+    ac->setShortcutsConfigurable( mAddEmailToExistingContactAction, false );
     ac->addAction( QLatin1String("add_to_existing_contact"), mAddAddrBookAction );
     connect( mAddEmailToExistingContactAction, SIGNAL(triggered(bool)),
              SLOT(slotMailToAddToExistingContact()) );
@@ -193,20 +193,20 @@ void KMReaderWin::createActions()
     // open in addressbook
     mOpenAddrBookAction = new QAction( QIcon::fromTheme( QLatin1String("view-pim-contacts") ),
                                        i18n( "Open in Address Book" ), this );
-    //QT5 mOpenAddrBookAction->setShortcutConfigurable( false );
+    ac->setShortcutsConfigurable( mOpenAddrBookAction, false );
     ac->addAction( QLatin1String("openin_addr_book"), mOpenAddrBookAction );
     connect( mOpenAddrBookAction, SIGNAL(triggered(bool)),
              SLOT(slotMailtoOpenAddrBook()) );
     // bookmark message
     mAddBookmarksAction = new QAction( QIcon::fromTheme( QLatin1String("bookmark-new") ), i18n( "Bookmark This Link" ), this );
-    //QT5 mAddBookmarksAction->setShortcutConfigurable( false );
+    ac->setShortcutsConfigurable( mAddBookmarksAction, false );
     ac->addAction( QLatin1String("add_bookmarks"), mAddBookmarksAction );
     connect( mAddBookmarksAction, SIGNAL(triggered(bool)),
              SLOT(slotAddBookmarks()) );
 
     mEditContactAction = new QAction( QIcon::fromTheme( QLatin1String("view-pim-contacts") ),
                                       i18n( "Edit contact..." ), this );
-    //QT5 mEditContactAction->setShortcutConfigurable( false );
+    ac->setShortcutsConfigurable( mEditContactAction, false );
     ac->addAction( QLatin1String("edit_contact"), mOpenAddrBookAction );
     connect( mEditContactAction, SIGNAL(triggered(bool)),
              SLOT(slotEditContact()) );
@@ -214,7 +214,7 @@ void KMReaderWin::createActions()
     // save URL as
     mUrlSaveAsAction = new QAction( i18n( "Save Link As..." ), this );
     ac->addAction( QLatin1String("saveas_url"), mUrlSaveAsAction );
-    //QT5 mUrlSaveAsAction->setShortcutConfigurable( false );
+    ac->setShortcutsConfigurable( mUrlSaveAsAction, false );
     connect( mUrlSaveAsAction, SIGNAL(triggered(bool)), SLOT(slotUrlSave()) );
 
     // find text
@@ -226,19 +226,19 @@ void KMReaderWin::createActions()
     // save Image On Disk
     mImageUrlSaveAsAction = new QAction( i18n( "Save Image On Disk..." ), this );
     ac->addAction( QLatin1String("saveas_imageurl"), mImageUrlSaveAsAction );
-    //QT5 mImageUrlSaveAsAction->setShortcutConfigurable( false );
+    ac->setShortcutsConfigurable(mImageUrlSaveAsAction, false );
     connect( mImageUrlSaveAsAction, SIGNAL(triggered(bool)), SLOT(slotSaveImageOnDisk()) );
 
     // View html options
     mViewHtmlOptions = new QMenu(i18n("Show HTML Format"));
     mViewAsHtml = new QAction( i18n("Show HTML format when mail comes from this contact"), mViewHtmlOptions);
-    //QT5 mViewAsHtml->setShortcutConfigurable( false );
+    ac->setShortcutsConfigurable( mViewAsHtml,false );
     connect( mViewAsHtml, SIGNAL(triggered(bool)), SLOT(slotContactHtmlOptions()));
     mViewAsHtml->setCheckable(true);
     mViewHtmlOptions->addAction(mViewAsHtml);
 
     mLoadExternalReference = new QAction( i18n("Load external reference when mail comes for this contact"), mViewHtmlOptions);
-    //QT5 mLoadExternalReference->setShortcutConfigurable( false );
+    ac->setShortcutsConfigurable( mLoadExternalReference, false );
     connect(mLoadExternalReference, SIGNAL(triggered(bool)), SLOT(slotContactHtmlOptions()));
     mLoadExternalReference->setCheckable(true);
     mViewHtmlOptions->addAction(mLoadExternalReference);
@@ -246,7 +246,7 @@ void KMReaderWin::createActions()
 
     mShareImage = new QAction(i18n("Share image..."), this);
     ac->addAction( QLatin1String("share_imageurl"), mShareImage );
-    //QT5 mShareImage->setShortcutConfigurable( false );
+    ac->setShortcutsConfigurable(mShareImage,false );
     connect(mShareImage, SIGNAL(triggered(bool)), SLOT(slotShareImage()));
 
 

@@ -4290,7 +4290,7 @@ void KMMainWidget::initializeFilterActions()
             // The shortcut configuration is done in the filter dialog.
             // The shortcut set in the shortcut dialog would not be saved back to
             // the filter settings correctly.
-            //QT5 filterAction->setShortcutConfigurable( false );
+            actionCollection()->setShortcutsConfigurable(filterAction, false );
             actionCollection()->addAction( normalizedName,
                                            filterAction );
             connect( filterAction, SIGNAL(triggered(bool)),

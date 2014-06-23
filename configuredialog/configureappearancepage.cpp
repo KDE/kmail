@@ -1268,7 +1268,7 @@ void AppearancePage::MessageTagTab::slotUpdateTagSettingWidgets( int aIndex )
     mTagWidget->iconButton()->setIcon( tmp_desc->iconName );
 
     mTagWidget->keySequenceWidget()->setEnabled( true );
-    mTagWidget->keySequenceWidget()->setKeySequence( tmp_desc->shortcut.primary(),
+    mTagWidget->keySequenceWidget()->setKeySequence( tmp_desc->shortcut,
                                                      KKeySequenceWidget::NoValidate );
 
     mTagWidget->inToolBarCheck()->setEnabled( true );
