@@ -1441,7 +1441,7 @@ void KMComposeWin::setupActions( void )
         configureAction->setText( i18n("Configure KMail..." ) );
     }
 
-    action = new KAction( i18n("Follow Up Mail..."), this );
+    action = new QAction( i18n("Follow Up Mail..."), this );
     actionCollection()->addAction( QLatin1String("follow_up_mail"), action );
     connect( action, SIGNAL(triggered(bool)), this, SLOT(slotFollowUpMail()) );
 }
