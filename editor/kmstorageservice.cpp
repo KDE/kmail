@@ -77,3 +77,8 @@ KActionMenu *KMStorageService::menuShareLinkServices() const
 {
     return mStorageManager->menuShareLinkServices(mParentWidget);
 }
+
+int KMStorageService::numProgressUpdateFile() const
+{
+    return mNumProgressUploadFile;
+}

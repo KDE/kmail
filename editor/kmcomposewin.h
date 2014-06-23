@@ -687,7 +687,6 @@ private:
     bool mWasModified;
     Akonadi::Collection mCollectionForNewMessage;
     QMap<QByteArray, QString> mExtraHeaders;
-    int mNumProgressUploadFile;
     CryptoStateIndicatorWidget *mCryptoStateIndicatorWidget;
     KMStorageService *mStorageService;
 };

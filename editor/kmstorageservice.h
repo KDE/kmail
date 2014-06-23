@@ -32,6 +32,7 @@ public:
     ~KMStorageService();
 
     KActionMenu *menuShareLinkServices() const;
+    int numProgressUpdateFile() const;
 
 Q_SIGNALS:
     void insertShareLink(const QString &link);

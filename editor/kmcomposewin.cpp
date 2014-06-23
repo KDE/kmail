@@ -2660,10 +2660,10 @@ void KMComposeWin::printComposeResult( KJob *job, bool preview )
 void KMComposeWin::doSend( MessageComposer::MessageSender::SendMethod method,
                            MessageComposer::MessageSender::SaveIn saveIn )
 {
-    if (mNumProgressUploadFile > 0) {
+    if ( mStorageService->numProgressUpdateFile() > 0) {
         KMessageBox::sorry( this, i18np( "There is %1 file upload in progress.",
                                          "There are %1 file uploads in progress.",
-                                         mNumProgressUploadFile ) );
+                                         mStorageService->numProgressUpdateFile() ) );
         return;
     }
     // TODO integrate with MDA online status
