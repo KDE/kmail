@@ -21,6 +21,7 @@
 #include <KLocalizedString>
 #include <KSharedConfig>
 #include <KDatePicker>
+#include <KGlobal>
 
 #include <QVBoxLayout>
 
