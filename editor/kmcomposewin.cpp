@@ -1437,6 +1437,10 @@ void KMComposeWin::setupActions( void )
     if ( configureAction ) {
         configureAction->setText( i18n("Configure KMail..." ) );
     }
+
+    action = new KAction( i18n("Follow Up Mail..."), this );
+    actionCollection()->addAction( QLatin1String("follow_up_mail"), action );
+    connect( action, SIGNAL(triggered(bool)), this, SLOT(slotFollowUpMail()) );
 }
 
 void KMComposeWin::changeCryptoAction()
@@ -3609,3 +3613,7 @@ void KMComposeWin::slotTransportChanged()
     mComposerBase->editor()->document()->setModified(true);
 }
 
+void KMComposeWin::slotFollowUpMail()
+{
+    //TODO
+}
