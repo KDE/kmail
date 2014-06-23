@@ -108,7 +108,7 @@ class LineEditWithAutoCorrection;
 class StorageServiceAbstract;
 class StorageServiceManager;
 }
-
+class KMStorageService;
 //-----------------------------------------------------------------------------
 class KMComposeWin : public KMail::Composer
 {
@@ -454,15 +454,10 @@ private slots:
 
     void slotInsertShortUrl(const QString &url);
 
-    void slotUploadFileDone(const QString &serviceName, const QString &fileName);
+    void slotShareLinkDone(const QString &fileName);
 
-    void slotUploadFileFailed(const QString &serviceName, const QString &fileName);
-    void slotShareLinkDone(const QString &serviceName, const QString &fileName);
-
-    void slotUploadFileStart(PimCommon::StorageServiceAbstract *service);
-
-    void slotActionFailed(const QString &serviceName, const QString &error);
     void slotTransportChanged();
+    void slotFollowUpMail();
 public: // kmcommand
     // FIXME we need to remove these, but they're pure virtual in Composer.
     void addAttach( KMime::Content *msgPart );
@@ -694,9 +689,8 @@ private:
     bool mWasModified;
     Akonadi::Collection mCollectionForNewMessage;
     QMap<QByteArray, QString> mExtraHeaders;
-    int mNumProgressUploadFile;
     CryptoStateIndicatorWidget *mCryptoStateIndicatorWidget;
-    PimCommon::StorageServiceManager *mStorageManager;
+    KMStorageService *mStorageService;
 };
 
 #endif
