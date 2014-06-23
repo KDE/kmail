@@ -62,6 +62,10 @@ if (KDEPIM_BUILD_DESKTOP)
      attributes/taskattribute.cpp
   )
 
+  set(kmailprivate_followupreminder_LIB_SRCS
+     followupreminder/followupreminderselectdatedialog.cpp
+  )
+
   set(kmailprivate_folderarchive_LIB_SRCS
      folderarchive/folderarchiveaccountinfo.cpp
      folderarchive/folderarchiveutil.cpp
@@ -189,6 +193,7 @@ if (KDEPIM_BUILD_DESKTOP)
      ${kmailprivate_storageservice_LIB_SRCS}
      ${kmailprivate_identity_LIB_SRCS}
      ${kmailprivate_editor_LIB_SRCS}
+     ${kmailprivate_followupreminder_LIB_SRCS}
   )
 
   # TODO PORT

@@ -58,6 +58,7 @@
 #include "cryptostateindicatorwidget.h"
 
 #include "editor/kmstorageservice.h"
+#include "followupreminder/followupreminderselectdatedialog.h"
 
 
 #include "libkdepim/progresswidget/statusbarprogresswidget.h"
@@ -3593,5 +3594,9 @@ void KMComposeWin::slotTransportChanged()
 
 void KMComposeWin::slotFollowUpMail()
 {
-    //TODO
+    QPointer<FollowUpReminderSelectDateDialog> dlg = new FollowUpReminderSelectDateDialog(this);
+    if (dlg->exec()) {
+        //TODO
+    }
+    delete dlg;
 }
