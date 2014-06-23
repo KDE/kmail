@@ -57,6 +57,9 @@
 #include "warningwidgets/externaleditorwarning.h"
 #include "cryptostateindicatorwidget.h"
 
+#include "editor/kmstorageservice.h"
+
+
 #include "libkdepim/progresswidget/statusbarprogresswidget.h"
 #include "libkdepim/progresswidget/progressstatusbarwidget.h"
 
@@ -220,9 +223,8 @@ KMComposeWin::KMComposeWin( const KMime::Message::Ptr &aMsg, bool lastSignState,
       mCheckForForgottenAttachments( true ),
       mIgnoreStickyFields( false ),
       mWasModified( false ),
-      mNumProgressUploadFile(0),
       mCryptoStateIndicatorWidget(0),
-      mStorageManager(new PimCommon::StorageServiceManager(this))
+      mStorageService(new KMStorageService(this, this))
 {
     m_verifyMissingAttachment = 0;
     mComposerBase = new MessageComposer::ComposerViewBase( this, this );
@@ -472,11 +474,7 @@ KMComposeWin::KMComposeWin( const KMime::Message::Ptr &aMsg, bool lastSignState,
     mDummyComposer = new MessageComposer::Composer( this );
     mDummyComposer->globalPart()->setParentWidgetForGui( this );
 
-    connect(mStorageManager, SIGNAL(uploadFileDone(QString,QString)), this, SLOT(slotUploadFileDone(QString,QString)));
-    connect(mStorageManager, SIGNAL(uploadFileFailed(QString,QString)), this, SLOT(slotUploadFileFailed(QString,QString)));
-    connect(mStorageManager, SIGNAL(shareLinkDone(QString,QString)), this, SLOT(slotShareLinkDone(QString,QString)));
-    connect(mStorageManager, SIGNAL(uploadFileStart(PimCommon::StorageServiceAbstract*)), this, SLOT(slotUploadFileStart(PimCommon::StorageServiceAbstract*)));
-    connect(mStorageManager, SIGNAL(actionFailed(QString,QString)), this, SLOT(slotActionFailed(QString,QString)));
+    connect(mStorageService, SIGNAL(insertShareLink(QString)), this, SLOT(slotShareLinkDone(QString)));
 }
 
 //-----------------------------------------------------------------------------
@@ -1423,7 +1421,7 @@ void KMComposeWin::setupActions( void )
     mCryptoModuleAction->setToolTip( i18n( "Select a cryptographic format for this message" ) );
 
     mComposerBase->editor()->createActions( actionCollection() );
-    actionCollection()->addAction( QLatin1String("shared_link"), mStorageManager->menuShareLinkServices(this) );
+    actionCollection()->addAction( QLatin1String("shared_link"), mStorageService->menuShareLinkServices() );
 
     createGUI( QLatin1String("kmcomposerui.rc") );
     connect( toolBar( QLatin1String("htmlToolBar") )->toggleViewAction(),
@@ -3575,37 +3573,9 @@ void KMComposeWin::slotInsertShortUrl(const QString &url)
     mComposerBase->editor()->insertLink(url);
 }
 
-void KMComposeWin::slotUploadFileDone(const QString &serviceName, const QString &fileName)
+void KMComposeWin::slotShareLinkDone(const QString &link)
 {
-    Q_UNUSED(serviceName);
-    Q_UNUSED(fileName);
-}
-
-void KMComposeWin::slotUploadFileFailed(const QString &serviceName, const QString &fileName)
-{
-    Q_UNUSED(serviceName);
-    Q_UNUSED(fileName);
-    KMessageBox::error(this, i18n("An error occurred while sending the file."), i18n("Upload file"));
-    --mNumProgressUploadFile;
-}
-
-void KMComposeWin::slotShareLinkDone(const QString &serviceName, const QString &link)
-{
-    Q_UNUSED(serviceName);
     mComposerBase->editor()->insertShareLink(link);
-    --mNumProgressUploadFile;
-}
-
-void KMComposeWin::slotUploadFileStart(PimCommon::StorageServiceAbstract *service)
-{
-    Q_UNUSED(service);
-    ++mNumProgressUploadFile;
-}
-
-void KMComposeWin::slotActionFailed(const QString &serviceName, const QString &error)
-{
-    KMessageBox::error(this, i18n("%1 return an error '%2'", serviceName, error), i18n("Error"));
-    --mNumProgressUploadFile;
 }
 
 void KMComposeWin::slotTransportChanged()
