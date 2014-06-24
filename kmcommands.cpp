@@ -148,6 +148,7 @@ using namespace KMime;
 #include <algorithm>
 #include <memory>
 #include <QStandardPaths>
+#include <QFontDatabase>
 
 
 using namespace MailCommon;
@@ -1081,7 +1082,7 @@ KMPrintCommand::KMPrintCommand(QWidget *parent, const Akonadi::Item &msg,
 {
     fetchScope().fetchFullPayload( true );
     if ( MessageCore::GlobalSettings::useDefaultFonts() )
-        mOverrideFont = KGlobalSettings::generalFont();
+        mOverrideFont = QFontDatabase::systemFont(QFontDatabase::GeneralFont);
     else {
         mOverrideFont = MessageCore::GlobalSettings::self()->printFont();
     }
