@@ -37,14 +37,14 @@ FollowUpReminderSelectDateDialog::FollowUpReminderSelectDateDialog(QWidget *pare
     mainLayout->setSpacing( KDialog::spacingHint() );
     mainLayout->setMargin( KDialog::marginHint() );
     mDatePicker = new KDatePicker;
-    //TODO add 1 day more
-    mDatePicker->setDate(QDate::currentDate());
+    QDate currentDate = QDate::currentDate();
+    currentDate = currentDate.addDays(1);
+    mDatePicker->setDate(currentDate);
     mainLayout->addWidget(mDatePicker);
 
     setMainWidget( mainWidget );
     readConfig();
 }
-
 
 FollowUpReminderSelectDateDialog::~FollowUpReminderSelectDateDialog()
 {
