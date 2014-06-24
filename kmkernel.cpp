@@ -79,7 +79,6 @@ using KMail::MailServiceImpl;
 #include <kio/jobuidelegate.h>
 #include <kprocess.h>
 #include <KCrash>
-#include <KGlobal>
 
 #include <kmime/kmime_message.h>
 #include <kmime/kmime_headers.h>

@@ -21,7 +21,6 @@
 #include <KAction>
 #include <QMenu>
 #include <KToggleAction>
-#include <QDebug>
 
 
 DisplayMessageFormatActionMenu::DisplayMessageFormatActionMenu(QObject *parent)

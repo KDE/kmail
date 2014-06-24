@@ -30,7 +30,6 @@
 
 // KDE libs
 #include <kcodecaction.h>
-#include <QDebug>
 #include <KLocale>
 #include <settings/messagecomposersettings.h>
 

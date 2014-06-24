@@ -23,13 +23,11 @@
 using namespace PimCommon::ConfigureImmutableWidgetUtils;
 
 #include <KLocalizedString>
-#include <KStandardDirs>
 #include <KMessageBox>
 
 #include <QVBoxLayout>
 #include <QHBoxLayout>
 #include <QCheckBox>
-#include <QSpinBox>
 #include <QProcess>
 #include <QPushButton>
 #include <QStandardPaths>

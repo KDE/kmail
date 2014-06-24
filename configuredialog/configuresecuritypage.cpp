@@ -38,7 +38,6 @@ using namespace PimCommon::ConfigureImmutableWidgetUtils;
 #include <QWhatsThis>
 #include <QDBusConnection>
 #include <QDebug>
-#include <KDialog>
 
 QString SecurityPage::helpAnchor() const
 {

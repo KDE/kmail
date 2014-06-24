@@ -85,7 +85,6 @@ using MailTransport::TransportManager;
 #include <QPushButton>
 #include <kcombobox.h>
 #include <QTabWidget>
-#include <KStandardDirs>
 #include <QIcon>
 #include <sonnet/dictionarycombobox.h>
 

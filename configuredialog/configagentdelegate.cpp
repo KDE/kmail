@@ -24,7 +24,6 @@
 #include <AkonadiCore/AgentInstanceModel>
 #include <AkonadiCore/AgentInstance>
 
-#include <QDebug>
 #include <QIcon>
 #include <KLocalizedString>
 #include <KIconLoader>

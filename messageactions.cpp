@@ -43,7 +43,6 @@
 #include <QDebug>
 #include <KLocalizedString>
 #include <KXMLGUIClient>
-#include <KStandardDirs>
 #include <KRun>
 #include <QMenu>
 #include <KUriFilterData>

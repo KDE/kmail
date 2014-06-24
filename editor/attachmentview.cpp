@@ -37,11 +37,9 @@
 #include <QLabel>
 #include <QDrag>
 
-#include <QDebug>
 #include <KConfigGroup>
 #include <QIcon>
 #include <KLocalizedString>
-#include <KGlobal>
 #include <KLocale>
 
 #include <messagecore/attachment/attachmentpart.h>

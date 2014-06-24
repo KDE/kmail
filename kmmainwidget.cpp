@@ -146,7 +146,6 @@ using KSieveUi::SieveDebugDialog;
 #include <ksieveui/util/util.h>
 
 // KDELIBS includes
-#include <K4AboutData>
 #include <kicon.h>
 #include <kwindowsystem.h>
 #include <krun.h>
@@ -181,13 +180,11 @@ using KSieveUi::SieveDebugDialog;
 // Qt includes
 #include <QByteArray>
 #include <QHeaderView>
-#include <QLabel>
 #include <QList>
 #include <QSplitter>
 #include <QVBoxLayout>
 #include <QShortcut>
 #include <QProcess>
-#include <QDBusMessage>
 #include <QDBusConnection>
 #include <QTextDocument>
 #include <QMenu>

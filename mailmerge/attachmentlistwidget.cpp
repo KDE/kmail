@@ -20,9 +20,9 @@
 #include <KLocalizedString>
 #include <KUrlRequester>
 
-#include <QHBoxLayout>
 #include <QLabel>
 #include <QPointer>
+#include <QVBoxLayout>
 
 AttachmentListWidget::AttachmentListWidget(QWidget * parent,
                                            ButtonCode buttons,

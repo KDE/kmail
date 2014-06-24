@@ -35,7 +35,6 @@
 #include <KNotifyConfigWidget>
 #include <KLocalizedString>
 #include <KConfig>
-#include <KStandardDirs>
 #include <KSeparator>
 #include <KIconLoader>
 #include <QStandardPaths>

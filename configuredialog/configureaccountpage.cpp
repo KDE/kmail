@@ -42,13 +42,11 @@ using MailTransport::TransportManagementWidget;
 #include <KMessageBox>
 #include <KComboBox>
 #include <KWindowSystem>
-#include <QLineEdit>
 #include <QDebug>
 
 #include <QVBoxLayout>
 #include <QGridLayout>
 #include <QGroupBox>
-#include <QHostInfo>
 #include <QMenu>
 
 QString AccountsPage::helpAnchor() const

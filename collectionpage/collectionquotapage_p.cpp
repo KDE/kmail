@@ -38,7 +38,6 @@
 #include <KLocalizedString>
 #include <KDialog>
 #include <KLocale>
-#include <KGlobal>
 
 #include <QLabel>
 #include <qlayout.h>

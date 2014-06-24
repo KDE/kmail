@@ -23,7 +23,6 @@
 #include "attributes/taskattribute.h"
 #include <Akonadi/KMime/MessageStatus>
 
-#include <KLocalizedString>
 
 #include <AkonadiCore/ItemFetchJob>
 #include <AkonadiCore/ItemFetchScope>

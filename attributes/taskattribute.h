@@ -21,7 +21,6 @@
 #include <AkonadiCore/Attribute>
 #include <AkonadiCore/Item>
 
-#include <KDateTime>
 class TaskAttribute : public Akonadi::Attribute
 {
 public:

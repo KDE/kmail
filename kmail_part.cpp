@@ -32,7 +32,6 @@
 #include "aboutdata.h"
 
 #include <QVBoxLayout>
-#include <QLabel>
 
 #include <kparts/statusbarextension.h>
 #include <kparts/mainwindow.h>
