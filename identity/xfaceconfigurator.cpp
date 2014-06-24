@@ -55,6 +55,7 @@
 #include <QVBoxLayout>
 
 // #include <assert.h>
+#include <QFontDatabase>
 using namespace KABC;
 using namespace KIO;
 using namespace KMail;
@@ -184,7 +185,7 @@ XFaceConfigurator::XFaceConfigurator( QWidget * parent )
     mTextEdit = new PimCommon::PlainTextEditor( page );
     page_vlay->addWidget( mTextEdit );
     mTextEdit->setWhatsThis( i18n( "Use this field to enter an arbitrary X-Face string." ) );
-    mTextEdit->setFont( KGlobalSettings::fixedFont() );
+    mTextEdit->setFont( QFontDatabase::systemFont(QFontDatabase::FixedFont) );
     mTextEdit->setWordWrapMode( QTextOption::WrapAnywhere);
     mTextEdit->setSearchSupport(false);
     label2 = new QLabel( i18n("Examples are available at <a "

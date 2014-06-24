@@ -172,6 +172,7 @@
 #include <KHelpClient>
 #include <KCharsets>
 #include <QStandardPaths>
+#include <QFontDatabase>
 
 using Sonnet::DictionaryComboBox;
 using MailTransport::TransportManager;
@@ -582,8 +583,8 @@ void KMComposeWin::readConfig( bool reload /* = false */ )
     mEdtReplyTo->setCompletionMode( (KCompletion::CompletionMode)GlobalSettings::self()->completionMode() );
 
     if ( MessageCore::GlobalSettings::self()->useDefaultFonts() ) {
-        mBodyFont = KGlobalSettings::generalFont();
-        mFixedFont = KGlobalSettings::fixedFont();
+        mBodyFont = QFontDatabase::systemFont(QFontDatabase::GeneralFont);
+        mFixedFont = QFontDatabase::systemFont(QFontDatabase::FixedFont);
     } else {
         mBodyFont = GlobalSettings::self()->composerFont();
         mFixedFont = MessageViewer::GlobalSettings::self()->fixedFont();

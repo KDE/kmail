@@ -74,6 +74,7 @@ using KMime::DateFormatter;
 #include <QButtonGroup>
 #include <QSpinBox>
 #include <QLabel>
+#include <QFontDatabase>
 using namespace MailCommon;
 
 QString AppearancePage::helpAnchor() const
@@ -254,8 +255,8 @@ void AppearancePage::FontsTab::doLoadOther()
         KConfigGroup fonts( KMKernel::self()->config(), "Fonts" );
         KConfigGroup messagelistFont( KMKernel::self()->config(), "MessageListView::Fonts" );
 
-        mFont[0] = KGlobalSettings::generalFont();
-        QFont fixedFont = KGlobalSettings::fixedFont();
+        mFont[0] = QFontDatabase::systemFont(QFontDatabase::GeneralFont);
+        QFont fixedFont = QFontDatabase::systemFont(QFontDatabase::FixedFont);
 
         for ( int i = 0 ; i < numFontNames ; ++i ) {
             const QString configName = QLatin1String(fontNames[i].configName);
