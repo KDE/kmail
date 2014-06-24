@@ -29,6 +29,8 @@ public:
 
     QDate selectedDate() const;
 
+    void accept();
+
 private:
     void readConfig();
     void writeConfig();
