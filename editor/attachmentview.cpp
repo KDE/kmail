@@ -46,6 +46,7 @@
 
 #include <messagecore/attachment/attachmentpart.h>
 #include <boost/shared_ptr.hpp>
+#include <KFormat>
 using MessageCore::AttachmentPart;
 
 using namespace KMail;
@@ -191,7 +192,7 @@ void AttachmentView::updateAttachmentLabel()
     Q_FOREACH(MessageCore::AttachmentPart::Ptr part, list) {
         size += part->size();
     }
-    d->infoAttachment->setText(i18np("1 attachment (%2)", "%1 attachments (%2)",model()->rowCount(), KLocale::global()->formatByteSize(qMax( 0LL, size ))));
+    d->infoAttachment->setText(i18np("1 attachment (%2)", "%1 attachments (%2)",model()->rowCount(), KFormat().formatByteSize(qMax( 0LL, size ))));
 }
 
 void AttachmentView::selectNewAttachment()

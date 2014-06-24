@@ -48,6 +48,7 @@ typedef boost::shared_ptr<KMime::Message> MessagePtr;
 #include <kglobal.h>
 #include <klocale.h>
 #include <KLocale>
+#include <KFormat>
 
 KMSearchMessageModel::KMSearchMessageModel( QObject *parent )
     : Akonadi::MessageModel( parent )
@@ -179,7 +180,7 @@ QVariant KMSearchMessageModel::data( const QModelIndex & index, int role ) const
             if ( item.size() == 0 )
                 return i18nc( "@label No size available", "-" );
             else
-                return KLocale::global()->formatByteSize( item.size() );
+                return KFormat().formatByteSize( item.size() );
         case SizeNotLocalized:
             return item.size();
         case DateNotTranslated:
