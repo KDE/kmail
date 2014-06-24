@@ -21,6 +21,7 @@
 #include <KLocalizedString>
 #include <KSharedConfig>
 #include <KDatePicker>
+#include <KMessageBox>
 #include <KGlobal>
 
 #include <QVBoxLayout>
@@ -38,14 +39,14 @@ FollowUpReminderSelectDateDialog::FollowUpReminderSelectDateDialog(QWidget *pare
     mainLayout->setSpacing( KDialog::spacingHint() );
     mainLayout->setMargin( KDialog::marginHint() );
     mDatePicker = new KDatePicker;
-    //TODO add 1 day more
-    mDatePicker->setDate(QDate::currentDate());
+    QDate currentDate = QDate::currentDate();
+    currentDate = currentDate.addDays(1);
+    mDatePicker->setDate(currentDate);
     mainLayout->addWidget(mDatePicker);
 
     setMainWidget( mainWidget );
     readConfig();
 }
-
 
 FollowUpReminderSelectDateDialog::~FollowUpReminderSelectDateDialog()
 {
@@ -70,4 +71,14 @@ void FollowUpReminderSelectDateDialog::writeConfig()
 QDate FollowUpReminderSelectDateDialog::selectedDate() const
 {
     return mDatePicker->date();
+}
+
+void FollowUpReminderSelectDateDialog::accept()
+{
+    const QDate date = selectedDate();
+    if (date < QDate::currentDate()) {
+        KMessageBox::error(this, i18n("The selected date must be greater than the current date."), i18n("Invalid date"));
+        return;
+    }
+    KDialog::accept();
 }
