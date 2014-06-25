@@ -137,7 +137,7 @@
 #include <qdebug.h>
 #include <kdescendantsproxymodel.h>
 #include <kedittoolbar.h>
-#include <kinputdialog.h>
+#include <qinputdialog.h>
 #include <QMenu>
 #include <kmimetype.h>
 #include <kmessagebox.h>
@@ -2176,7 +2176,7 @@ bool KMComposeWin::insertFromMimeData( const QMimeData *source, bool forceAttach
         // Ask for the filename first.
         bool ok;
         const QString attName =
-                KInputDialog::getText( i18n("KMail"), i18n( "Name of the attachment:" ), QString(), &ok, this );
+                QInputDialog::getText( this, i18n("KMail"), i18n( "Name of the attachment:" ), QLineEdit::Normal, QString(), &ok);
         if ( !ok ) {
             return true;
         }
@@ -2251,10 +2251,10 @@ void KMComposeWin::slotPasteAsAttachment()
         return;
     if( mimeData->hasText() ) {
         bool ok;
-        const QString attName = KInputDialog::getText(
+        const QString attName = QInputDialog::getText( this,
                     i18n( "Insert clipboard text as attachment" ),
-                    i18n( "Name of the attachment:" ),
-                    QString(), &ok, this );
+                    i18n( "Name of the attachment:" ), QLineEdit::Normal,
+                    QString(), &ok);
         if( ok ) {
             mComposerBase->addAttachment( attName, attName, QLatin1String("utf-8"), QApplication::clipboard()->text().toUtf8(), "text/plain" );
         }
