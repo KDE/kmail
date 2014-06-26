@@ -26,7 +26,6 @@
 #include "kmreadermainwin.h"
 #include "kmreaderwin.h"
 
-#include <kicon.h>
 #include <kactionmenu.h>
 #include <kedittoolbar.h>
 #include <klocale.h>

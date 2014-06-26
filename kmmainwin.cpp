@@ -41,7 +41,6 @@
 #include <kstandardaction.h>
 #include <qdebug.h>
 #include <ktip.h>
-#include <kicon.h>
 #include <kaction.h>
 
 #include <QLabel>
