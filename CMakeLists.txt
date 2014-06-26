@@ -41,7 +41,7 @@ include_directories(
   ${AKONADI_INCLUDE_DIR}
  )
 
-kde_enable_exceptions()
+
 
 
 if (KDEPIM_BUILD_DESKTOP)
