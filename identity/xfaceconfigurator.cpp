@@ -37,7 +37,6 @@
 #include <kdialog.h>
 #include <kfiledialog.h>
 #include <kglobalsettings.h>
-#include <kimageio.h>
 #include <kio/netaccess.h>
 #include <klocale.h>
 #include <kmessagebox.h>
@@ -56,6 +55,7 @@
 
 // #include <assert.h>
 #include <QFontDatabase>
+#include <QImageReader>
 using namespace KABC;
 using namespace KIO;
 using namespace KMail;
@@ -239,8 +239,11 @@ void XFaceConfigurator::setXfaceFromFile( const KUrl &url )
 
 void XFaceConfigurator::slotSelectFile()
 {
-    const QStringList mimeTypes = KImageIO::mimeTypes (KImageIO::Reading);
-    const QString filter = mimeTypes.join (QLatin1String(" "));
+    const QList<QByteArray> mimeTypes = QImageReader::supportedImageFormats();
+    QString filter;
+    Q_FOREACH ( const QByteArray &mime, mimeTypes) {
+        filter += QString::fromLatin1(mime);
+    }
     const KUrl url = KFileDialog::getOpenUrl( QString(), filter, this, QString() );
     if ( !url.isEmpty() )
         setXfaceFromFile( url );
