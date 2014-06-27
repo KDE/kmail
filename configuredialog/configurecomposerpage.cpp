@@ -48,6 +48,7 @@ using KPIM::RecentAddresses;
 #include <kascii.h>
 #include <QSpinBox>
 #include <KIntNumInput>
+#include <KPluralHandlingSpinBox>
 #include <QDebug>
 
 #include <QLabel>
@@ -305,14 +306,14 @@ ComposerPageGeneralTab::ComposerPageGeneralTab( QWidget * parent )
     ++row;
 
     // "Autosave interval" spinbox
-    mAutoSave = new QSpinBox(this );
+    mAutoSave = new KPluralHandlingSpinBox(this );
     mAutoSave->setMaximum(60);
     mAutoSave->setMinimum( 0);
     mAutoSave->setSingleStep(1);
     mAutoSave->setValue(1);
     mAutoSave->setObjectName( QLatin1String("kcfg_AutosaveInterval") );
     mAutoSave->setSpecialValueText( i18n("No autosave") );
-    //QT5 mAutoSave->setSuffix( ki18ncp( "Interval suffix", " minute", " minutes" ) );
+    mAutoSave->setSuffix( ki18ncp( "Interval suffix", " minute", " minutes" ) );
 
     helpText = i18n( "Automatically save the message at this specified interval" );
     mAutoSave->setToolTip( helpText );

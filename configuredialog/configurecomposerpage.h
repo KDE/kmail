@@ -32,7 +32,7 @@ class ListView;
 class QPushButton;
 class QLabel;
 class ConfigureStorageServiceWidget;
-
+class KPluralHandlingSpinBox;
 namespace TemplateParser {
 class CustomTemplates;
 class TemplatesConfiguration;
@@ -75,7 +75,7 @@ private:
     QCheckBox        *mShowRecentAddressesInComposer;
     QCheckBox     *mWordWrapCheck;
     QSpinBox   *mWrapColumnSpin;
-    QSpinBox   *mAutoSave;
+    KPluralHandlingSpinBox   *mAutoSave;
     QSpinBox   *mMaximumRecipients;
     QCheckBox     *mImprovePlainTextOfHtmlMessage;
     KIntNumInput  *mMaximumRecentAddress;
