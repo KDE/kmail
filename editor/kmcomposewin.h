@@ -586,9 +586,7 @@ private:
      */
     MessageComposer::Composer* createSimpleComposer();
 
-    bool canSignEncryptAttachments() const {
-        return cryptoMessageFormat() != Kleo::InlineOpenPGPFormat;
-    }
+    bool canSignEncryptAttachments() const;
 
     QString addQuotesToText( const QString &inputText ) const;
     // helper method for rethinkFields

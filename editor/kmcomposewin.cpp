@@ -681,6 +681,11 @@ MessageComposer::Composer* KMComposeWin::createSimpleComposer()
     return mComposerBase->createSimpleComposer();
 }
 
+bool KMComposeWin::canSignEncryptAttachments() const
+{
+    return cryptoMessageFormat() != Kleo::InlineOpenPGPFormat;
+}
+
 //-----------------------------------------------------------------------------
 void KMComposeWin::slotView( void )
 {
