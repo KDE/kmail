@@ -125,7 +125,7 @@
       </widget>
      </item>
      <item>
-      <widget class="KPushButton" name="mSearchFolderOpenBtn">
+      <widget class="QPushButton" name="mSearchFolderOpenBtn">
        <property name="enabled">
         <bool>false</bool>
        </property>
@@ -135,7 +135,7 @@
       </widget>
      </item>
      <item>
-      <widget class="KPushButton" name="mSearchResultOpenBtn">
+      <widget class="QPushButton" name="mSearchResultOpenBtn">
        <property name="enabled">
         <bool>false</bool>
        </property>
@@ -187,11 +187,6 @@
    <class>KLineEdit</class>
    <extends>QLineEdit</extends>
    <header>klineedit.h</header>
-  </customwidget>
-  <customwidget>
-   <class>KPushButton</class>
-   <extends>QPushButton</extends>
-   <header>kpushbutton.h</header>
   </customwidget>
   <customwidget>
    <class>Akonadi::EntityTreeView</class>

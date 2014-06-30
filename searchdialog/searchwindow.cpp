@@ -101,7 +101,7 @@ SearchWindow::SearchWindow( KMMainWidget *widget, const Akonadi::Collection &col
     setButtons( None );
     mStartSearchGuiItem = KGuiItem( i18nc( "@action:button Search for messages", "&Search" ), QLatin1String("edit-find") );
     mStopSearchGuiItem = KStandardGuiItem::stop();
-    mSearchButton =  mUi.mButtonBox->addButton( mStartSearchGuiItem, QDialogButtonBox::ActionRole );
+    //QT5 port to QDialogButtonBox mSearchButton =  mUi.mButtonBox->addButton( mStartSearchGuiItem, QDialogButtonBox::ActionRole );
     connect( mUi.mButtonBox, SIGNAL(rejected()), SLOT(slotClose()) );
     searchWidget->layout()->setMargin( 0 );
 
@@ -696,7 +696,7 @@ void SearchWindow::enableGUI()
 {
     const bool searching = (mSearchJob != 0);
 
-    mSearchButton->setGuiItem( searching ? mStopSearchGuiItem : mStartSearchGuiItem );
+    KGuiItem::assign(mSearchButton, searching ? mStopSearchGuiItem : mStartSearchGuiItem );
     if ( searching ) {
         disconnect( mSearchButton, SIGNAL(clicked()), this, SLOT(slotSearch()) );
         connect( mSearchButton, SIGNAL(clicked()), SLOT(slotStop()) );

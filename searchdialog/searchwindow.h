@@ -168,7 +168,7 @@ private:
     Ui_SearchWindow mUi;
     KGuiItem mStartSearchGuiItem;
     KGuiItem mStopSearchGuiItem;
-    KPushButton *mSearchButton;
+    QPushButton *mSearchButton;
 
     QAction *mReplyAction, *mReplyAllAction, *mReplyListAction, *mSaveAsAction,
     *mForwardInlineAction, *mForwardAttachedAction, *mPrintAction, *mClearAction,
