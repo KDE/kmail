@@ -31,7 +31,7 @@ class ConfigModule : public KCModule
 {
 public:
   explicit ConfigModule( QWidget *parent=0 )
-     : KCModule ( parent ) //QT5
+     : KCModule ( parent ) 
      {}
   ~ConfigModule() {}
 
