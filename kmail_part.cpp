@@ -51,7 +51,7 @@
 #include <kglobal.h>
 #include <KSharedConfig>
 
-// QT5 K_PLUGIN_FACTORY( KMailFactory, registerPlugin<KMailPart>(); )
+K_PLUGIN_FACTORY( KMailFactory, registerPlugin<KMailPart>(); )
 K_EXPORT_PLUGIN( KMailFactory( KMail::AboutData() ) )
 
 using namespace KMail;
@@ -170,4 +170,4 @@ QWidget* KMailPart::parentWidget() const
 {
     return mParentWidget;
 }
-
+#include "kmail_part.moc"
