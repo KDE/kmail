@@ -23,7 +23,7 @@
 
 #include "mailcommon/tag/addtagdialog.h"
 
-#include <KAction>
+#include <QAction>
 #include <KActionCollection>
 #include <KToggleAction>
 #include <KXMLGUIClient>

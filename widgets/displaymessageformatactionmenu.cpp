@@ -18,7 +18,7 @@
 #include "displaymessageformatactionmenu.h"
 
 #include <KLocalizedString>
-#include <KAction>
+#include <QAction>
 #include <QMenu>
 #include <KToggleAction>
 
