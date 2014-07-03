@@ -28,7 +28,7 @@
 
 #include <KWindowSystem>
 #include <KIconLoader>
-#include <KDialog>
+#include <QPushButton>
 
 // other headers:
 #include <assert.h>
@@ -38,7 +38,7 @@ ConfigureDialog::ConfigureDialog( QWidget *parent, bool modal )
     : KCMultiDialog( parent )
 {
     setFaceType( List );
-    //QT5 setButtons( Help | Default | Cancel | Apply | Ok | Reset );
+    setStandardButtons(QDialogButtonBox::Ok|QDialogButtonBox::Help|QDialogButtonBox::RestoreDefaults|QDialogButtonBox::Cancel|QDialogButtonBox::Apply|QDialogButtonBox::Reset);
     setModal( modal );
     KWindowSystem::setIcons( winId(), qApp->windowIcon().pixmap( IconSize( KIconLoader::Desktop ), IconSize( KIconLoader::Desktop ) ), qApp->windowIcon().pixmap(IconSize( KIconLoader::Small ), IconSize( KIconLoader::Small ) ) );
     addModule( QLatin1String("kmail_config_identity") );
@@ -48,8 +48,8 @@ ConfigureDialog::ConfigureDialog( QWidget *parent, bool modal )
     addModule( QLatin1String("kmail_config_security") );
     addModule( QLatin1String("kmail_config_misc") );
 
-    connect( this, SIGNAL(okClicked()), SLOT(slotOk()) );
-    connect( this, SIGNAL(applyClicked()), SLOT(slotApply()) );
+    connect( button(QDialogButtonBox::Ok), SIGNAL(clicked()), SLOT(slotOk()) );
+    connect( button(QDialogButtonBox::Apply), SIGNAL(clicked()), SLOT(slotApply()) );
 
     // We store the size of the dialog on hide, because otherwise
     // the KCMultiDialog starts with the size of the first kcm, not
@@ -67,7 +67,7 @@ void ConfigureDialog::hideEvent( QHideEvent *ev )
 {
     GlobalSettings::self()->setConfigureDialogWidth( width() );
     GlobalSettings::self()->setConfigureDialogHeight( height() );
-    //QT5 KDialog::hideEvent( ev );
+    KPageDialog::hideEvent( ev );
 }
 
 ConfigureDialog::~ConfigureDialog()

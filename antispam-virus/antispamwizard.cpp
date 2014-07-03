@@ -167,7 +167,7 @@ void AntiSpamWizard::accept()
     // so we can avoid spam checks for viral messages
     if ( mMode == AntiVirus ) {
         if ( !mVirusToolsUsed ) {
-            //QT5 KDialog::accept();
+            QDialog::accept();
             return;
         }
         QList<SpamToolConfig>::const_iterator end( mToolList.constEnd() );
@@ -240,7 +240,7 @@ void AntiSpamWizard::accept()
         }
     } else { // AntiSpam mode
         if ( !mSpamToolsUsed ) {
-            //QT5 KDialog::accept();
+            QDialog::accept();
             return;
         }
         // TODO Existing filters with same name are replaced. This is hardcoded
@@ -464,7 +464,7 @@ void AntiSpamWizard::accept()
     if ( !filterList.isEmpty() )
         MailCommon::FilterManager::instance()->appendFilters( filterList, replaceExistingFilters );
 
-    //QT5 KDialog::accept();
+    QDialog::accept();
 }
 
 
@@ -582,12 +582,10 @@ void AntiSpamWizard::checkToolAvailability()
 
 void AntiSpamWizard::slotHelpClicked()
 {
-#if 0 //QT5
     if ( mMode == AntiSpam )
         KHelpClient::invokeHelp( QLatin1String("the-anti-spam-wizard"), QLatin1String("kmail") );
     else
         KHelpClient::invokeHelp( QLatin1String("the-anti-virus-wizard"), QLatin1String("kmail") );
-#endif
 }
 
 
