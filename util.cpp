@@ -52,6 +52,7 @@
 
 #include <QProcess>
 #include <QFileInfo>
+#include <QAction>
 #include <QStandardPaths>
 
 #include "foldercollection.h"
@@ -313,5 +314,14 @@ void KMail::Util::migrateFromKMail1()
         }
         migrationCfg.writeEntry( "Enabled", false );
         migrationCfg.sync();
+    }
+}
+
+void KMail::Util::addQActionHelpText(QAction *action, const QString &text)
+{
+    action->setStatusTip(text);
+    action->setToolTip(text);
+    if (action->whatsThis().isEmpty()) {
+        action->setWhatsThis(text);
     }
 }

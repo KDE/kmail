@@ -104,6 +104,7 @@ QColor quoteL2Color();
 QColor quoteL3Color();
 void reduceQuery(QString &query);
 void migrateFromKMail1();
+void addQActionHelpText(QAction *action, const QString &text);
 }
 }
 

@@ -3121,7 +3121,7 @@ void KMMainWidget::setupActions()
     actionCollection()->addAction(QLatin1String("move_thread_to_trash"), mTrashThreadAction );
     mTrashThreadAction->setShortcut(QKeySequence(Qt::CTRL+Qt::Key_Delete));
     mTrashThreadAction->setIcon(QIcon::fromTheme(QLatin1String("user-trash")));
-    //QT5 mTrashThreadAction->setHelpText(i18n("Move thread to trashcan") );
+    KMail::Util::addQActionHelpText(mTrashThreadAction, i18n("Move thread to trashcan"));
     connect(mTrashThreadAction, SIGNAL(triggered(bool)), SLOT(slotTrashThread()));
 
     mDeleteThreadAction = new QAction(QIcon::fromTheme(QLatin1String("edit-delete")), i18n("Delete T&hread"), this);
@@ -3291,13 +3291,13 @@ void KMMainWidget::setupActions()
     mMarkThreadAsReadAction = new QAction(QIcon::fromTheme(QLatin1String("mail-mark-read")), i18n("Mark Thread as &Read"), this);
     actionCollection()->addAction(QLatin1String("thread_read"), mMarkThreadAsReadAction );
     connect(mMarkThreadAsReadAction, SIGNAL(triggered(bool)), SLOT(slotSetThreadStatusRead()));
-    //QT5 mMarkThreadAsReadAction->setHelpText(i18n("Mark all messages in the selected thread as read"));
+    KMail::Util::addQActionHelpText(mMarkThreadAsReadAction, i18n("Mark all messages in the selected thread as read"));
     mThreadStatusMenu->addAction( mMarkThreadAsReadAction );
 
     mMarkThreadAsUnreadAction = new QAction(QIcon::fromTheme(QLatin1String("mail-mark-unread")), i18n("Mark Thread as &Unread"), this);
     actionCollection()->addAction(QLatin1String("thread_unread"), mMarkThreadAsUnreadAction );
     connect(mMarkThreadAsUnreadAction, SIGNAL(triggered(bool)), SLOT(slotSetThreadStatusUnread()));
-    //QT5 mMarkThreadAsUnreadAction->setHelpText(i18n("Mark all messages in the selected thread as unread"));
+    KMail::Util::addQActionHelpText(mMarkThreadAsUnreadAction, i18n("Mark all messages in the selected thread as unread"));
     mThreadStatusMenu->addAction( mMarkThreadAsUnreadAction );
 
     mThreadStatusMenu->addSeparator();
@@ -3350,28 +3350,28 @@ void KMMainWidget::setupActions()
         QAction *action = new QAction(i18nc("View->","&Expand Thread / Group"), this);
         actionCollection()->addAction(QLatin1String("expand_thread"), action );
         action->setShortcut(QKeySequence(Qt::Key_Period));
-        //QT5 action->setHelpText(i18n("Expand the current thread or group"));
+        KMail::Util::addQActionHelpText(action, i18n("Expand the current thread or group"));
         connect(action, SIGNAL(triggered(bool)), SLOT(slotExpandThread()));
     }
     {
         QAction *action = new QAction(i18nc("View->","&Collapse Thread / Group"), this);
         actionCollection()->addAction(QLatin1String("collapse_thread"), action );
         action->setShortcut(QKeySequence(Qt::Key_Comma));
-        //QT5 action->setHelpText( i18n("Collapse the current thread or group"));
+        KMail::Util::addQActionHelpText(action, i18n("Collapse the current thread or group"));
         connect(action, SIGNAL(triggered(bool)), SLOT(slotCollapseThread()));
     }
     {
         QAction *action = new QAction(i18nc("View->","Ex&pand All Threads"), this);
         actionCollection()->addAction(QLatin1String("expand_all_threads"), action );
         action->setShortcut(QKeySequence(Qt::CTRL+Qt::Key_Period));
-        //QT5 action->setHelpText( i18n("Expand all threads in the current folder"));
+        KMail::Util::addQActionHelpText(action, i18n("Expand all threads in the current folder"));
         connect(action, SIGNAL(triggered(bool)), SLOT(slotExpandAllThreads()));
     }
     {
         QAction *action = new QAction(i18nc("View->","C&ollapse All Threads"), this);
         actionCollection()->addAction(QLatin1String("collapse_all_threads"), action );
         action->setShortcut(QKeySequence(Qt::CTRL+Qt::Key_Comma));
-        //QT5 action->setHelpText( i18n("Collapse all threads in the current folder"));
+        KMail::Util::addQActionHelpText(action, i18n("Collapse all threads in the current folder"));
         connect(action, SIGNAL(triggered(bool)), SLOT(slotCollapseAllThreads()));
     }
 
@@ -3388,7 +3388,7 @@ void KMMainWidget::setupActions()
         QAction *action = new QAction(i18n("&Next Message"), this);
         actionCollection()->addAction(QLatin1String("go_next_message"), action );
         action->setShortcuts(KShortcut( QLatin1String("N; Right") ));
-        //QT5 action->setHelpText(i18n("Go to the next message"));
+        KMail::Util::addQActionHelpText(action, i18n("Go to the next message"));
         connect(action, SIGNAL(triggered(bool)), SLOT(slotSelectNextMessage()));
     }
     {
@@ -3401,13 +3401,13 @@ void KMMainWidget::setupActions()
             action->setIcon( QIcon::fromTheme( QLatin1String("go-next") ) );
         }
         action->setIconText( i18nc( "@action:inmenu Goto next unread message", "Next" ) );
-        //QT5 action->setHelpText(i18n("Go to the next unread message"));
+        KMail::Util::addQActionHelpText(action, i18n("Go to the next unread message"));
         connect(action, SIGNAL(triggered(bool)), SLOT(slotSelectNextUnreadMessage()));
     }
     {
         QAction *action = new QAction(i18n("&Previous Message"), this);
         actionCollection()->addAction(QLatin1String("go_prev_message"), action );
-        //QT5 action->setHelpText(i18n("Go to the previous message"));
+        KMail::Util::addQActionHelpText(action, i18n("Go to the previous message"));
         action->setShortcuts(KShortcut( QLatin1String("P; Left") ));
         connect(action, SIGNAL(triggered(bool)), SLOT(slotSelectPreviousMessage()));
     }
@@ -3421,7 +3421,7 @@ void KMMainWidget::setupActions()
             action->setIcon( QIcon::fromTheme( QLatin1String("go-previous") ) );
         }
         action->setIconText( i18nc( "@action:inmenu Goto previous unread message.","Previous" ) );
-        //QT5 action->setHelpText(i18n("Go to the previous unread message"));
+        KMail::Util::addQActionHelpText(action, i18n("Go to the previous unread message"));
         connect(action, SIGNAL(triggered(bool)), SLOT(slotSelectPreviousUnreadMessage()));
     }
     {
@@ -3429,20 +3429,20 @@ void KMMainWidget::setupActions()
         actionCollection()->addAction(QLatin1String("go_next_unread_folder"), action );
         connect(action, SIGNAL(triggered(bool)), SLOT(slotNextUnreadFolder()));
         action->setShortcut(QKeySequence(Qt::ALT+Qt::Key_Plus));
-        //QT5 action->setHelpText(i18n("Go to the next folder with unread messages"));
+        KMail::Util::addQActionHelpText(action, i18n("Go to the next folder with unread messages"));
     }
     {
         QAction *action = new QAction(i18n("Previous Unread F&older"), this);
         actionCollection()->addAction(QLatin1String("go_prev_unread_folder"), action );
         action->setShortcut(QKeySequence(Qt::ALT+Qt::Key_Minus));
-        //QT5 action->setHelpText(i18n("Go to the previous folder with unread messages"));
+        KMail::Util::addQActionHelpText(action, i18n("Go to the previous folder with unread messages"));
         connect(action, SIGNAL(triggered(bool)), SLOT(slotPrevUnreadFolder()));
     }
     {
         QAction *action = new QAction(i18nc("Go->","Next Unread &Text"), this);
         actionCollection()->addAction(QLatin1String("go_next_unread_text"), action );
         action->setShortcut(QKeySequence(Qt::Key_Space));
-        //QT5 action->setHelpText(i18n("Go to the next unread text"));
+        KMail::Util::addQActionHelpText(action, i18n("Go to the next unread text"));
         action->setWhatsThis( i18n("Scroll down current message. "
                                    "If at end of current message, "
                                    "go to next unread message."));
@@ -3464,7 +3464,7 @@ void KMMainWidget::setupActions()
     {
         QAction *action = new QAction(QIcon::fromTheme(QLatin1String("kmail")), i18n("KMail &Introduction"), this);
         actionCollection()->addAction(QLatin1String("help_kmail_welcomepage"), action );
-        //QT5 action->setHelpText( i18n("Display KMail's Welcome Page") );
+        KMail::Util::addQActionHelpText(action, i18n("Display KMail's Welcome Page"));
         connect(action, SIGNAL(triggered(bool)), SLOT(slotIntro()));
     }
 

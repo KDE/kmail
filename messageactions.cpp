@@ -554,7 +554,7 @@ void MessageActions::addMailingListAction( const QString &item, const KUrl &url 
     mMailListActionList.append(act);
     const QVariant v(  url.url() );
     act->setData( v );
-    //QT5 act->setHelpText( prettyUrl );
+    KMail::Util::addQActionHelpText(act, prettyUrl);
     mMailingListActionMenu->addAction( act );
 }
 

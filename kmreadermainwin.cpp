@@ -330,7 +330,7 @@ void KMReaderMainWin::setupAccel()
 
     mTrashAction = new QAction( QIcon::fromTheme( QLatin1String("user-trash") ), i18n("&Move to Trash"), this );
     mTrashAction->setIconText( i18nc( "@action:intoolbar Move to Trash", "Trash" ) );
-    //QT5 mTrashAction->setHelpText( i18n( "Move message to trashcan" ) );
+    KMail::Util::addQActionHelpText(mTrashAction, i18n( "Move message to trashcan" ));
     mTrashAction->setShortcut( QKeySequence( Qt::Key_Delete ) );
     actionCollection()->addAction( QLatin1String("move_to_trash"), mTrashAction );
     connect( mTrashAction, SIGNAL(triggered()), this, SLOT(slotTrashMsg()) );

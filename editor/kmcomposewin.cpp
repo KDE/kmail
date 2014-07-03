@@ -1166,17 +1166,17 @@ void KMComposeWin::setupActions( void )
 
     QAction *action = new QAction( QIcon::fromTheme( QLatin1String("document-save") ), i18n("Save as &Draft"), this );
     actionCollection()->addAction(QLatin1String("save_in_drafts"), action );
-    //action->setHelpText(i18n("Save email in Draft folder"));
+    KMail::Util::addQActionHelpText(action, i18n("Save email in Draft folder"));
     action->setShortcut(QKeySequence(Qt::CTRL + Qt::Key_S));
     connect( action, SIGNAL(triggered(bool)), SLOT(slotSaveDraft()) );
 
     action = new QAction( QIcon::fromTheme( QLatin1String("document-save") ), i18n("Save as &Template"), this );
-    //action->setHelpText(i18n("Save email in Template folder"));
+    KMail::Util::addQActionHelpText(action, i18n("Save email in Template folder"));
     actionCollection()->addAction( QLatin1String("save_in_templates"), action );
     connect( action, SIGNAL(triggered(bool)), SLOT(slotSaveTemplate()) );
 
     action = new QAction( QIcon::fromTheme( QLatin1String("document-save") ), i18n("Save as &File"), this );
-    //action->setHelpText(i18n("Save email as text or html file"));
+    KMail::Util::addQActionHelpText(action, i18n("Save email as text or html file"));
     actionCollection()->addAction( QLatin1String("save_as_file"), action );
     connect( action, SIGNAL(triggered(bool)), SLOT(slotSaveAsFile()) );
 
@@ -1200,7 +1200,7 @@ void KMComposeWin::setupActions( void )
     mRecentAction->loadEntries( KMKernel::self()->config()->group( QString() ) );
 
     action = new QAction(QIcon::fromTheme(QLatin1String("x-office-address-book")), i18n("&Address Book"), this);
-    //action->setHelpText(i18n("Open Address Book"));
+    KMail::Util::addQActionHelpText(action, i18n("Open Address Book"));
     actionCollection()->addAction(QLatin1String("addressbook"), action );
     if (QStandardPaths::findExecutable(QLatin1String("kaddressbook")).isEmpty())
         action->setEnabled(false);
@@ -2834,7 +2834,7 @@ void KMComposeWin::doDelayedSend( MessageComposer::MessageSender::SendMethod met
     QMap<QByteArray, QString> customHeader;
     for (int ix=0; ix<num; ++ix) {
         CustomMimeHeader customMimeHeader( QString::number(ix) );
-        customMimeHeader.readConfig();
+        customMimeHeader.load();
         customHeader.insert(customMimeHeader.custHeaderName().toLatin1(), customMimeHeader.custHeaderValue() );
     }
 
