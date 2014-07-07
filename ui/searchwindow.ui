@@ -172,7 +172,7 @@
       </widget>
      </item>
      <item>
-      <widget class="KDialogButtonBox" name="mButtonBox">
+      <widget class="QDialogButtonBox" name="mButtonBox">
        <property name="standardButtons">
         <set>QDialogButtonBox::Close</set>
        </property>
@@ -192,11 +192,6 @@
    <class>Akonadi::EntityTreeView</class>
    <extends>QTreeView</extends>
    <header>AkonadiWidgets/entitytreeview.h</header>
-  </customwidget>
-  <customwidget>
-   <class>KDialogButtonBox</class>
-   <extends>QDialogButtonBox</extends>
-   <header>kdialogbuttonbox.h</header>
   </customwidget>
   <customwidget>
    <class>MailCommon::FolderRequester</class>
