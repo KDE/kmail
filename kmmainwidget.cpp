@@ -328,7 +328,7 @@ KMMainWidget::KMMainWidget( QWidget *parent, KXMLGUIClient *aGUIClient,
     if ( kmkernel->firstStart() ) {
         if (MailCommon::Util::foundMailer()) {
             if (KMessageBox::questionYesNo(this,i18n("Another mailer was found on system. Do you want to import data from it?")) == KMessageBox::Yes) {
-                const QString path = KStandardDirs::findExe( QLatin1String("importwizard" ) );
+                const QString path = QStandardPaths::findExecutable( QLatin1String("importwizard" ) );
                 if ( !QProcess::startDetached( path ) ) {
                     KMessageBox::error( this, i18n( "Could not start the import wizard. "
                                                     "Please check your installation." ),
@@ -4336,7 +4336,7 @@ void KMMainWidget::slotAccountWizard()
 
 void KMMainWidget::slotImportWizard()
 {
-    const QString path = KStandardDirs::findExe( QLatin1String("importwizard" ) );
+    const QString path = QStandardPaths::findExecutable( QLatin1String("importwizard" ) );
     if ( !QProcess::startDetached( path ) )
         KMessageBox::error( this, i18n( "Could not start the import wizard. "
                                         "Please check your installation." ),
@@ -4811,7 +4811,7 @@ void KMMainWidget::updatePaneTagComboBox()
 
 void KMMainWidget::slotExportData()
 {
-    const QString path = KStandardDirs::findExe( QLatin1String("pimsettingexporter" ) );
+    const QString path = QStandardPaths::findExecutable( QLatin1String("pimsettingexporter" ) );
     if ( !QProcess::startDetached( path ) )
         KMessageBox::error( this, i18n( "Could not start \"PIM Setting Exporter\" program. "
                                         "Please check your installation." ),

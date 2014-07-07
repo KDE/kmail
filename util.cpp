@@ -93,7 +93,7 @@ void KMail::Util::launchAccountWizard( QWidget *w )
     lst.append( QLatin1String("--type") );
     lst.append( QLatin1String("message/rfc822") );
 
-    const QString path = KStandardDirs::findExe( QLatin1String("accountwizard" ) );
+    const QString path = QStandardPaths::findExecutable( QLatin1String("accountwizard" ) );
     if( !QProcess::startDetached( path, lst ) )
         KMessageBox::error( w, i18n( "Could not start the account wizard. "
                                      "Please check your installation." ),
@@ -286,7 +286,7 @@ void KMail::Util::migrateFromKMail1()
             qDebug() << "Performing Akonadi migration. Good luck!";
             KProcess proc;
             QStringList args = QStringList() << QLatin1String("--interactive-on-change");
-            const QString path = KStandardDirs::findExe( QLatin1String("kmail-migrator" ) );
+            const QString path = QStandardPaths::findExecutable( QLatin1String("kmail-migrator" ) );
             proc.setProgram( path, args );
             proc.start();
             bool result = proc.waitForStarted();
