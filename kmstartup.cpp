@@ -100,7 +100,8 @@ void insertLibraryCataloguesAndIcons() {
         "akonadi_sendlater_agent",
         "akonadi_folderagent_agent",
         "akonadi_imap_resource",
-        "libkgapi"
+        "libkgapi",
+        "akonadi_followupreminder_agent"
     };
 
     KLocale * l = KGlobal::locale();
