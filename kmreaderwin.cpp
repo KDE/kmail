@@ -392,7 +392,7 @@ void KMReaderWin::displayAboutPage()
         QString featuresText =
                 i18n("<p>Some of the new features in this release of KMail include "
                      "(compared to KMail %1, which is part of KDE Software Compilation %2):</p>\n",
-                     QLatin1String("1.13"), QLatin1String("4.9.98"/*QT5 KDE::versionString()*/) ); // prior KMail and KDE version
+                     QLatin1String("1.13"), QLatin1String(KDEPIM_VERSION) ); // prior KMail and KDE version
         featuresText += QLatin1String("<ul>\n");
         for ( int i = 0 ; i < numKMailNewFeatures ; ++i )
             featuresText += QLatin1String("<li>") + i18n( kmailNewFeatures[i] ) + QLatin1String("</li>\n");
