@@ -14,6 +14,8 @@ target_link_libraries(dbustest KF5::KIOCore KF5::KDELibs4Support)
 
 
 set( kmail_displaymenu_source displaymessageformatactionmenutest.cpp ../widgets/displaymessageformatactionmenu.cpp )
-kde4_add_unit_test( displaymessageformatactionmenutest ${kmail_displaymenu_source})
+add_executable( displaymessageformatactionmenutest ${kmail_displaymenu_source} )
+add_test( displaymessageformatactionmenutest displaymessageformatactionmenutest )
+ecm_mark_as_test(kmail-displaymessageformatactionmenutest)
 target_link_libraries( displaymessageformatactionmenutest Qt5::Test  messageviewer)
 
