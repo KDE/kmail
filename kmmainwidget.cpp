@@ -160,7 +160,7 @@ using KSieveUi::SieveDebugDialog;
 #include <qdebug.h>
 #include <kfiledialog.h>
 #include <ktip.h>
-#include <kstandarddirs.h>
+
 #include <kstandardaction.h>
 #include <ktoggleaction.h>
 #include <knotification.h>
