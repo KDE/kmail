@@ -9,8 +9,6 @@ macro(add_kmail_unittest _source)
   target_link_libraries( ${_name}
     pimcommon
     Qt5::Test
-    
-    
     KF5::KIOCore
   )
 endmacro ()
@@ -21,9 +19,6 @@ add_kmail_unittest( mailmergewidgettest.cpp )
 set(mailmergewidget_gui_SRCS mailmergewidgettest_gui.cpp ../mailmergewidget.cpp ../attachmentlistwidget.cpp)
 add_executable(mailmergewidget_gui ${mailmergewidget_gui_SRCS})
 target_link_libraries(mailmergewidget_gui
-  
-  
-  
   KF5::KIOCore
   pimcommon
 )
