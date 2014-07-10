@@ -307,14 +307,14 @@ KMComposeWin::KMComposeWin( const KMime::Message::Ptr &aMsg, bool lastSignState,
     mEdtReplyTo->setObjectName( QLatin1String("replyToLine") );
     mEdtReplyTo->setRecentAddressConfig( MessageComposer::MessageComposerSettings::self()->config() );
     mEdtReplyTo->setToolTip( i18n( "Set the \"Reply-To:\" email address for this message" ) );
-    connect( mEdtReplyTo, SIGNAL(completionModeChanged(KCompletion::Completion)),
-             SLOT(slotCompletionModeChanged(KCompletion::Completion)) );
+    connect( mEdtReplyTo, SIGNAL(completionModeChanged(KCompletion::CompletionMode)),
+             SLOT(slotCompletionModeChanged(KCompletion::CompletionMode)) );
 
     MessageComposer::RecipientsEditor* recipientsEditor = new MessageComposer::RecipientsEditor( mHeadersArea );
     recipientsEditor->setRecentAddressConfig( MessageComposer::MessageComposerSettings::self()->config() );
     connect( recipientsEditor,
-             SIGNAL(completionModeChanged(KCompletion::Completion)),
-             SLOT(slotCompletionModeChanged(KCompletion::Completion)) );
+             SIGNAL(completionModeChanged(KCompletion::CompletionMode)),
+             SLOT(slotCompletionModeChanged(KCompletion::CompletionMode)) );
     connect( recipientsEditor, SIGNAL(sizeHintChanged()), SLOT(recipientEditorSizeHintChanged()) );
     mComposerBase->setRecipientsEditor( recipientsEditor );
 
