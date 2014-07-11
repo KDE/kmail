@@ -109,14 +109,16 @@ QString toolTip( const Akonadi::Item& item )
     if ( textIsLeftToRight ) {
         tip += htmlCodeForStandardRow.arg( i18n( "From" ) ).arg( MessageCore::StringUtil::stripEmailAddr( msg->from()->asUnicodeString() ) );
         tip += htmlCodeForStandardRow.arg( i18nc( "Receiver of the email", "To" ) ).arg( MessageCore::StringUtil::stripEmailAddr( msg->to()->asUnicodeString() ) );
-        tip += htmlCodeForStandardRow.arg( i18n( "Date" ) ).arg(  KLocale::global()->formatDateTime( msg->date()->dateTime().toLocalZone(), KLocale::FancyLongDate ) );
+        //Port to QDateTime QT5
+        tip += htmlCodeForStandardRow.arg( i18n( "Date" ) ).arg(  KLocale::global()->formatDateTime( msg->date()->dateTime()/*.toLocalZone()*/, KLocale::FancyLongDate ) );
         if ( !content.isEmpty() ) {
             tip += htmlCodeForStandardRow.arg( i18n( "Preview" ) ).arg( content.replace( QLatin1Char( '\n' ), QLatin1String( "<br>" ) ) );
         }
     } else {
         tip += htmlCodeForStandardRow.arg(  MessageCore::StringUtil::stripEmailAddr( msg->from()->asUnicodeString() ) ).arg( i18n( "From" ) );
         tip += htmlCodeForStandardRow.arg(  MessageCore::StringUtil::stripEmailAddr( msg->to()->asUnicodeString() ) ).arg( i18nc( "Receiver of the email", "To" ) );
-        tip += htmlCodeForStandardRow.arg(   KLocale::global()->formatDateTime( msg->date()->dateTime().toLocalZone(), KLocale::FancyLongDate ) ).arg( i18n( "Date" ) );
+        //Port to QDateTime QT5
+        tip += htmlCodeForStandardRow.arg(   KLocale::global()->formatDateTime( msg->date()->dateTime()/*.toLocalZone()*/, KLocale::FancyLongDate ) ).arg( i18n( "Date" ) );
         if ( !content.isEmpty() ) {
             tip += htmlCodeForStandardRow.arg( content.replace( QLatin1Char( '\n' ), QLatin1String( "<br>" ) ) ).arg( i18n( "Preview" ) );
         }
@@ -175,7 +177,8 @@ QVariant KMSearchMessageModel::data( const QModelIndex & index, int role ) const
         case Receiver:
             return msg->to()->asUnicodeString();
         case Date:
-            return KLocale::global()->formatDateTime( msg->date()->dateTime().toLocalZone(), KLocale::FancyLongDate );
+            //Port to QDateTime QT5
+            return KLocale::global()->formatDateTime( msg->date()->dateTime()/*.toLocalZone()*/, KLocale::FancyLongDate );
         case Size:
             if ( item.size() == 0 )
                 return i18nc( "@label No size available", "-" );
@@ -184,7 +187,7 @@ QVariant KMSearchMessageModel::data( const QModelIndex & index, int role ) const
         case SizeNotLocalized:
             return item.size();
         case DateNotTranslated:
-            return msg->date()->dateTime().dateTime();
+            return msg->date()->dateTime();
         default:
             return QVariant();
         }
@@ -202,12 +205,12 @@ QVariant KMSearchMessageModel::data( const QModelIndex & index, int role ) const
         case Receiver:
             return msg->to()->asUnicodeString();
         case Date:
-            return msg->date()->dateTime().dateTime();
+            return msg->date()->dateTime();
         case SizeNotLocalized:
         case Size:
             return item.size();
         case DateNotTranslated:
-            return msg->date()->dateTime().dateTime();
+            return msg->date()->dateTime();
         default:
             return QVariant();
         }
