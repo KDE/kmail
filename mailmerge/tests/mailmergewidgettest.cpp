@@ -18,10 +18,10 @@
 #include "mailmergewidgettest.h"
 #include "../mailmergewidget.h"
 #include "pimcommon/widgets/simplestringlisteditor.h"
-#include <qtest_kde.h>
+#include <qtest.h>
 #include <KComboBox>
 #include <QStackedWidget>
-
+#include <QSignalSpy>
 Q_DECLARE_METATYPE(MailMergeWidget::SourceType)
 MailMergeWidgetTest::MailMergeWidgetTest()
 {
@@ -80,4 +80,4 @@ void MailMergeWidgetTest::shouldChangeStackedWidgetIndexWhenChangeComboboxIndex(
 }
 
 
-QTEST_KDEMAIN( MailMergeWidgetTest, GUI )
+QTEST_MAIN( MailMergeWidgetTest )

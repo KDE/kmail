@@ -17,11 +17,11 @@
 
 #include "displaymessageformatactionmenutest.h"
 #include "../widgets/displaymessageformatactionmenu.h"
-#include <qtest_kde.h>
+#include <qtest.h>
 #include <qtestmouse.h>
 #include <QMenu>
 #include <KToggleAction>
-
+#include <QSignalSpy>
 Q_DECLARE_METATYPE(MessageViewer::Viewer::DisplayFormatMessage)
 DisplayMessageFormatActionMenuTest::DisplayMessageFormatActionMenuTest()
 {
@@ -73,4 +73,4 @@ void DisplayMessageFormatActionMenuTest::shouldDontEmitSignalWhenChangeFormat()
     QCOMPARE(spy.count(), 0);
 }
 
-QTEST_KDEMAIN(DisplayMessageFormatActionMenuTest, GUI)
+QTEST_MAIN(DisplayMessageFormatActionMenuTest)
