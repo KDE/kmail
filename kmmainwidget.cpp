@@ -3379,15 +3379,15 @@ void KMMainWidget::setupActions()
     QAction *dukeOfMonmoth = new QAction(i18n("&Display Message"), this);
     actionCollection()->addAction(QLatin1String("display_message"), dukeOfMonmoth );
     connect(dukeOfMonmoth, SIGNAL(triggered(bool)), SLOT(slotDisplayCurrentMessage()));
-    KShortcut shortcut = KShortcut(QKeySequence( Qt::Key_Enter ));
-    shortcut.setAlternate( QKeySequence( Qt::Key_Return ) );
-    dukeOfMonmoth->setShortcuts( shortcut );
+    QList<QKeySequence> shortcuts;
+    shortcuts << QKeySequence( Qt::Key_Enter ) << QKeySequence( Qt::Key_Return );
+    dukeOfMonmoth->setShortcuts( shortcuts );
 
     //----- Go Menu
     {
         QAction *action = new QAction(i18n("&Next Message"), this);
         actionCollection()->addAction(QLatin1String("go_next_message"), action );
-        action->setShortcuts(KShortcut( QLatin1String("N; Right") ));
+        action->setShortcut(QKeySequence( QLatin1String("N; Right") ));
         KMail::Util::addQActionHelpText(action, i18n("Go to the next message"));
         connect(action, SIGNAL(triggered(bool)), SLOT(slotSelectNextMessage()));
     }
@@ -3408,7 +3408,7 @@ void KMMainWidget::setupActions()
         QAction *action = new QAction(i18n("&Previous Message"), this);
         actionCollection()->addAction(QLatin1String("go_prev_message"), action );
         KMail::Util::addQActionHelpText(action, i18n("Go to the previous message"));
-        action->setShortcuts(KShortcut( QLatin1String("P; Left") ));
+        action->setShortcut(QKeySequence( QLatin1String("P; Left") ));
         connect(action, SIGNAL(triggered(bool)), SLOT(slotSelectPreviousMessage()));
     }
     {
