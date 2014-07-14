@@ -80,7 +80,7 @@ void CollectionShortcutPage::load( const Akonadi::Collection & col )
 {
     init( col );
     if ( mFolder ) {
-        mKeySeqWidget->setKeySequence( mFolder->shortcut().primary(),
+        mKeySeqWidget->setKeySequence( mFolder->shortcut(),
                                        KKeySequenceWidget::NoValidate );
         mShortcutChanged = false;
     }
@@ -91,7 +91,7 @@ void CollectionShortcutPage::save( Akonadi::Collection & col )
     if ( mFolder ) {
         if ( mShortcutChanged ) {
             mKeySeqWidget->applyStealShortcut();
-            mFolder->setShortcut( KShortcut( mKeySeqWidget->keySequence(), QKeySequence() ) );
+            mFolder->setShortcut( mKeySeqWidget->keySequence() );
             KMKernel::self()->getKMMainWidget()->folderShortcutActionManager()->shortcutChanged( mFolder->collection() );
         }
     }

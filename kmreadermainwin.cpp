@@ -336,9 +336,8 @@ void KMReaderMainWin::setupAccel()
     connect( mTrashAction, SIGNAL(triggered()), this, SLOT(slotTrashMsg()) );
 
     QAction *closeAction = KStandardAction::close( this, SLOT(close()), actionCollection() );
-    KShortcut closeShortcut = KShortcut(closeAction->shortcuts());
-    closeShortcut.setAlternate( QKeySequence(Qt::Key_Escape));
-    closeAction->setShortcuts(closeShortcut);
+    QList<QKeySequence> closeShortcut = closeAction->shortcuts();
+    closeAction->setShortcuts( closeShortcut << QKeySequence(Qt::Key_Escape));
 
     //----- Message Menu
 
