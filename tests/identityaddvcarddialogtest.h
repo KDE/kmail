@@ -28,6 +28,9 @@ public:
     identityaddvcarddialogtest();
 private Q_SLOTS:
     void shouldHaveDefaultValue();
+    void shouldEnabledUrlRequesterWhenSelectFromExistingVCard();
+    void shouldEnabledComboboxWhenSelectDuplicateVCard();
+
 };
 
 #endif // IDENTITYADDVCARDDIALOGTEST_H

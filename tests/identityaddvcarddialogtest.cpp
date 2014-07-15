@@ -42,6 +42,38 @@ void identityaddvcarddialogtest::shouldHaveDefaultValue()
     QButtonGroup *buttonGroup = qFindChild<QButtonGroup *>(&dlg, QLatin1String("buttongroup"));
     QVERIFY(buttonGroup);
     QCOMPARE(dlg.duplicateMode(), IdentityAddVcardDialog::Empty);
+
+    QVERIFY(buttonGroup->button(IdentityAddVcardDialog::Empty));
+    QVERIFY(buttonGroup->button(IdentityAddVcardDialog::ExistingEntry));
+    QVERIFY(buttonGroup->button(IdentityAddVcardDialog::FromExistingVCard));
+}
+
+void identityaddvcarddialogtest::shouldEnabledUrlRequesterWhenSelectFromExistingVCard()
+{
+    IdentityAddVcardDialog dlg(0,0);
+    QButtonGroup *buttonGroup = qFindChild<QButtonGroup *>(&dlg, QLatin1String("buttongroup"));
+    buttonGroup->button(IdentityAddVcardDialog::FromExistingVCard)->toggle();
+    QCOMPARE(dlg.duplicateMode(), IdentityAddVcardDialog::FromExistingVCard);
+
+    KComboBox *identityComboBox = qFindChild<KComboBox *>(&dlg, QLatin1String("identity_combobox"));
+    QCOMPARE(identityComboBox->isEnabled(), false);
+
+    KUrlRequester *urlRequester = qFindChild<KUrlRequester *>(&dlg, QLatin1String("kurlrequester_vcardpath"));
+    QCOMPARE(urlRequester->isEnabled(), true);
+}
+
+void identityaddvcarddialogtest::shouldEnabledComboboxWhenSelectDuplicateVCard()
+{
+    IdentityAddVcardDialog dlg(0,0);
+    QButtonGroup *buttonGroup = qFindChild<QButtonGroup *>(&dlg, QLatin1String("buttongroup"));
+    buttonGroup->button(IdentityAddVcardDialog::ExistingEntry)->toggle();
+    QCOMPARE(dlg.duplicateMode(), IdentityAddVcardDialog::ExistingEntry);
+
+    KComboBox *identityComboBox = qFindChild<KComboBox *>(&dlg, QLatin1String("identity_combobox"));
+    QCOMPARE(identityComboBox->isEnabled(), true);
+
+    KUrlRequester *urlRequester = qFindChild<KUrlRequester *>(&dlg, QLatin1String("kurlrequester_vcardpath"));
+    QCOMPARE(urlRequester->isEnabled(), false);
 }
 
 QTEST_KDEMAIN(identityaddvcarddialogtest, GUI)
