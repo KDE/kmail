@@ -999,6 +999,15 @@ void IdentityDialog::slotEditVcard()
                 editVcard(mVcardFilename);
                 break;
             }
+            case IdentityAddVcardDialog::FromExistingVCard: {
+                const QString filename = dlg->existingVCard().path();
+                if(!filename.isEmpty()) {
+                    mVcardFilename = filename;
+                }
+                qDebug()<<" filename "<<filename;
+                editVcard(mVcardFilename);
+                break;
+            }
             }
         }
         delete dlg;
