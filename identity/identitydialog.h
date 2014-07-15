@@ -103,6 +103,8 @@ private slots:
     void slotDelayedButtonClicked( KJob* );
     void slotEditVcard();
     void slotRefreshDefaultDomainName();
+    void slotVCardRemoved();
+
 private:
     bool checkFolderExists( const QString & folder, const QString & msg );
     bool validateAddresses( const QString & addresses );
