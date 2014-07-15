@@ -20,6 +20,7 @@ ecm_mark_as_test(kmail-displaymessageformatactionmenutest)
 target_link_libraries( displaymessageformatactionmenutest Qt5::Test  messageviewer)
 
 set( kmail_identityaddvcarddialog_source identityaddvcarddialogtest.cpp ../identity/identityaddvcarddialog.cpp )
-kde4_add_unit_test( identityaddvcarddialogtest ${kmail_identityaddvcarddialog_source})
-target_link_libraries( identityaddvcarddialogtest ${QT_QTTEST_LIBRARY} ${KDE4_KDEUI_LIBS} ${KDE4_KFILE_LIBS} kpimidentities)
+add_executable( identityaddvcarddialogtest  ${kmail_identityaddvcarddialog_source})
+ecm_mark_as_test(kmail-identityaddvcarddialogtest)
+target_link_libraries( identityaddvcarddialogtest Qt5::Test KF5::KDELibs4Support  KF5::PimIdentities )
 

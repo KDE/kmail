@@ -18,6 +18,7 @@
 #ifndef IDENTITYADDVCARDDIALOG_H
 #define IDENTITYADDVCARDDIALOG_H
 #include <KDialog>
+#include <KUrl>
 class QButtonGroup;
 class KComboBox;
 class KUrlRequester;
