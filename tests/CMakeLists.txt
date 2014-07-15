@@ -18,3 +18,7 @@ kde4_add_unit_test( displaymessageformatactionmenutest ${kmail_displaymenu_sourc
 target_link_libraries( displaymessageformatactionmenutest ${QT_QTTEST_LIBRARY} ${KDE4_KDEUI_LIBS} messageviewer)
 
 
+set( kmail_identityaddvcarddialog_source identityaddvcarddialogtest.cpp ../identity/identityaddvcarddialog.cpp )
+kde4_add_unit_test( identityaddvcarddialogtest ${kmail_identityaddvcarddialog_source})
+target_link_libraries( identityaddvcarddialogtest ${QT_QTTEST_LIBRARY} ${KDE4_KDEUI_LIBS} ${KDE4_KFILE_LIBS} kpimidentities)
+

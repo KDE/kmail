@@ -20,6 +20,7 @@
 #include <KDialog>
 class QButtonGroup;
 class KComboBox;
+class KUrlRequester;
 
 namespace KPIMIdentities {
 class IdentityManager;
@@ -31,7 +32,8 @@ class IdentityAddVcardDialog: public KDialog
 public:
     enum DuplicateMode {
         Empty,
-        ExistingEntry
+        ExistingEntry,
+        FromExistingVCard
     };
 
     explicit IdentityAddVcardDialog(KPIMIdentities::IdentityManager *manager, QWidget *parent = 0);
@@ -39,10 +41,12 @@ public:
 
     DuplicateMode duplicateMode() const;
     QString duplicateVcardFromIdentity() const;
+    KUrl existingVCard() const;
 
 private:
     QButtonGroup *mButtonGroup;
     KComboBox *mComboBox;
+    KUrlRequester *mVCardPath;
 };
 
 #endif // IDENTITYADDVCARDDIALOG_H

@@ -22,6 +22,7 @@
 #include <KComboBox>
 #include <KLocalizedString>
 #include <KSeparator>
+#include <KUrlRequester>
 
 #include <QButtonGroup>
 #include <QVBoxLayout>
@@ -30,7 +31,7 @@
 
 
 IdentityAddVcardDialog::IdentityAddVcardDialog(KPIMIdentities::IdentityManager *manager, QWidget *parent)
-    :KDialog(parent)
+    : KDialog(parent)
 {
     setCaption( i18n( "Create own vCard" ) );
     setButtons( Ok|Cancel );
@@ -43,6 +44,7 @@ IdentityAddVcardDialog::IdentityAddVcardDialog(KPIMIdentities::IdentityManager *
     setMainWidget( mainWidget );
 
     mButtonGroup = new QButtonGroup( this );
+    mButtonGroup->setObjectName(QLatin1String("buttongroup"));
 
     // row 1: radio button
     QRadioButton *radio = new QRadioButton( i18n("&With empty fields"), this );
@@ -51,19 +53,47 @@ IdentityAddVcardDialog::IdentityAddVcardDialog(KPIMIdentities::IdentityManager *
     mButtonGroup->addButton( radio, (int)Empty );
 
     // row 2: radio button
-    radio = new QRadioButton( i18n("&Duplicate existing vCard"), this );
-    vlay->addWidget( radio );
-    mButtonGroup->addButton( radio, (int)ExistingEntry );
+    QRadioButton *fromExistingVCard = new QRadioButton( i18n("&From existing vCard"), this );
+    vlay->addWidget( fromExistingVCard );
+    mButtonGroup->addButton( fromExistingVCard, (int)FromExistingVCard );
 
-    // row 3: combobox with existing identities and label
+    // row 3: KUrlRequester
     QHBoxLayout* hlay = new QHBoxLayout(); // inherits spacing
     vlay->addLayout( hlay );
+
+
+    mVCardPath = new KUrlRequester;
+    mVCardPath->setObjectName(QLatin1String("kurlrequester_vcardpath"));
+
+    mVCardPath->setMode(KFile::LocalOnly|KFile::File);
+    QLabel *label = new QLabel( i18n("&VCard path:"), this );
+    label->setBuddy( mVCardPath );
+    label->setEnabled( false );
+    mVCardPath->setEnabled( false );
+    hlay->addWidget( label );
+    hlay->addWidget( mVCardPath );
+
+    connect( fromExistingVCard, SIGNAL(toggled(bool)),
+             label, SLOT(setEnabled(bool)) );
+    connect( fromExistingVCard, SIGNAL(toggled(bool)),
+             mVCardPath, SLOT(setEnabled(bool)) );
+
+
+    // row 4: radio button
+    QRadioButton *duplicateExistingVCard = new QRadioButton( i18n("&Duplicate existing vCard"), this );
+    vlay->addWidget( duplicateExistingVCard );
+    mButtonGroup->addButton( duplicateExistingVCard, (int)ExistingEntry );
+
+    // row 5: combobox with existing identities and label
+    hlay = new QHBoxLayout(); // inherits spacing
+    vlay->addLayout( hlay );
     mComboBox = new KComboBox( this );
+    mComboBox->setObjectName(QLatin1String("identity_combobox"));
     mComboBox->setEditable( false );
 
-    mComboBox->addItems( manager->shadowIdentities() );
+    mComboBox->addItems( manager ? manager->shadowIdentities() : QStringList() );
     mComboBox->setEnabled( false );
-    QLabel *label = new QLabel( i18n("&Existing identities:"), this );
+    label = new QLabel( i18n("&Existing identities:"), this );
     label->setBuddy( mComboBox );
     label->setEnabled( false );
     hlay->addWidget( label );
@@ -74,9 +104,9 @@ IdentityAddVcardDialog::IdentityAddVcardDialog(KPIMIdentities::IdentityManager *
 
     // enable/disable combobox and label depending on the third radio
     // button's state:
-    connect( radio, SIGNAL(toggled(bool)),
+    connect( duplicateExistingVCard, SIGNAL(toggled(bool)),
              label, SLOT(setEnabled(bool)) );
-    connect( radio, SIGNAL(toggled(bool)),
+    connect( duplicateExistingVCard, SIGNAL(toggled(bool)),
              mComboBox, SLOT(setEnabled(bool)) );
     resize(350, 130);
 }
@@ -94,5 +124,10 @@ IdentityAddVcardDialog::DuplicateMode IdentityAddVcardDialog::duplicateMode() co
 QString IdentityAddVcardDialog::duplicateVcardFromIdentity() const
 {
     return mComboBox->currentText();
+}
+
+KUrl IdentityAddVcardDialog::existingVCard() const
+{
+    return mVCardPath->url();
 }
 
