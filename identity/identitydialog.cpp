@@ -982,7 +982,7 @@ void IdentityDialog::slotEditVcard()
         }
         KPIMIdentities::IdentityManager *manager = KernelIf->identityManager();
 
-        QPointer<IdentityAddVcardDialog> dlg = new IdentityAddVcardDialog(manager, this);
+        QPointer<IdentityAddVcardDialog> dlg = new IdentityAddVcardDialog(manager->shadowIdentities(), this);
         if(dlg->exec()) {
             IdentityAddVcardDialog::DuplicateMode mode = dlg->duplicateMode();
             switch(mode) {
