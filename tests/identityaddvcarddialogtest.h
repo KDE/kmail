@@ -26,11 +26,12 @@ class identityaddvcarddialogtest : public QObject
     Q_OBJECT
 public:
     identityaddvcarddialogtest();
+
 private Q_SLOTS:
     void shouldHaveDefaultValue();
     void shouldEnabledUrlRequesterWhenSelectFromExistingVCard();
     void shouldEnabledComboboxWhenSelectDuplicateVCard();
-
+    void shouldEnabledComboboxWhenSelectFromExistingVCardAndAfterDuplicateVCard();
 };
 
 #endif // IDENTITYADDVCARDDIALOGTEST_H
