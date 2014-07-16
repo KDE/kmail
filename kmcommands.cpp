@@ -505,7 +505,7 @@ KMCommand::Result KMUrlSaveCommand::execute()
     if ( KIO::NetAccess::exists( saveUrl, KIO::NetAccess::DestinationSide, parentWidget() ) )
     {
         if (KMessageBox::warningContinueCancel(0,
-                                               i18nc("@info", "File <filename>%1</filename> exists.<nl/>Do you want to replace it?",
+                                               xi18nc("@info", "File <filename>%1</filename> exists.<nl/>Do you want to replace it?",
                                                      saveUrl.pathOrUrl()), i18n("Save to File"), KGuiItem(i18n("&Replace")))
                 != KMessageBox::Continue)
             return Canceled;
