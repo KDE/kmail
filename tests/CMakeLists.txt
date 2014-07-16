@@ -22,5 +22,5 @@ target_link_libraries( displaymessageformatactionmenutest Qt5::Test  messageview
 set( kmail_identityaddvcarddialog_source identityaddvcarddialogtest.cpp ../identity/identityaddvcarddialog.cpp )
 add_executable( identityaddvcarddialogtest  ${kmail_identityaddvcarddialog_source})
 ecm_mark_as_test(kmail-identityaddvcarddialogtest)
-target_link_libraries( identityaddvcarddialogtest Qt5::Test KF5::KDELibs4Support  KF5::PimIdentities )
+target_link_libraries( identityaddvcarddialogtest Qt5::Test KF5::KDELibs4Support )
 

@@ -982,7 +982,7 @@ void IdentityDialog::slotEditVcard()
         }
         KPIMIdentities::IdentityManager *manager = KernelIf->identityManager();
 
-        QPointer<IdentityAddVcardDialog> dlg = new IdentityAddVcardDialog(manager, this);
+        QPointer<IdentityAddVcardDialog> dlg = new IdentityAddVcardDialog(manager->shadowIdentities(), this);
         if(dlg->exec()) {
             IdentityAddVcardDialog::DuplicateMode mode = dlg->duplicateMode();
             switch(mode) {
@@ -1004,7 +1004,6 @@ void IdentityDialog::slotEditVcard()
                 if(!filename.isEmpty()) {
                     mVcardFilename = filename;
                 }
-                qDebug()<<" filename "<<filename;
                 editVcard(mVcardFilename);
                 break;
             }
@@ -1016,16 +1015,23 @@ void IdentityDialog::slotEditVcard()
 
 void IdentityDialog::editVcard(const QString &filename)
 {
-    IdentityEditVcardDialog dlg(filename, this);
-    if(dlg.exec()) {
-        mVcardFilename = dlg.saveVcard();
+    QPointer<IdentityEditVcardDialog> dlg = new IdentityEditVcardDialog(filename, this);
+    connect(dlg, SIGNAL(vcardRemoved()), SLOT(slotVCardRemoved()));
+    if(dlg->exec()) {
+        mVcardFilename = dlg->saveVcard();
     }
     updateVcardButton();
+    delete dlg;
+}
+
+void IdentityDialog::slotVCardRemoved()
+{
+    mVcardFilename.clear();
 }
 
 void IdentityDialog::updateVcardButton()
 {
-    if(!QFile(mVcardFilename).exists()) {
+    if(mVcardFilename.isEmpty() || !QFile(mVcardFilename).exists()) {
         mEditVCard->setText(i18n("Create..."));
     } else {
         mEditVCard->setText(i18n("Edit..."));

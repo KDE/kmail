@@ -17,8 +17,6 @@
 
 #include "identityaddvcarddialog.h"
 
-#include <KPIMIdentities/kpimidentities/identitymanager.h>
-
 #include <KComboBox>
 #include <KLocalizedString>
 #include <KSeparator>
@@ -30,7 +28,7 @@
 #include <QLabel>
 
 
-IdentityAddVcardDialog::IdentityAddVcardDialog(KPIMIdentities::IdentityManager *manager, QWidget *parent)
+IdentityAddVcardDialog::IdentityAddVcardDialog(const QStringList &shadowIdentities, QWidget *parent)
     : KDialog(parent)
 {
     setCaption( i18n( "Create own vCard" ) );
@@ -91,7 +89,7 @@ IdentityAddVcardDialog::IdentityAddVcardDialog(KPIMIdentities::IdentityManager *
     mComboBox->setObjectName(QLatin1String("identity_combobox"));
     mComboBox->setEditable( false );
 
-    mComboBox->addItems( manager ? manager->shadowIdentities() : QStringList() );
+    mComboBox->addItems( shadowIdentities );
     mComboBox->setEnabled( false );
     label = new QLabel( i18n("&Existing identities:"), this );
     label->setBuddy( mComboBox );

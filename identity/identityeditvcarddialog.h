@@ -41,11 +41,14 @@ public:
    */
     QString saveVcard() const;
 
+Q_SIGNALS:
+    void vcardRemoved();
+
 private Q_SLOTS:
     void slotDeleteCurrentVCard();
 
 private:
-    void deleteCurrentVcard();
+    void deleteCurrentVcard(bool deleteOnDisk);
     QString mVcardFileName;
     Akonadi::ContactEditor *mContactEditor;
 };

@@ -58,21 +58,26 @@ IdentityEditVcardDialog::~IdentityEditVcardDialog()
 
 void IdentityEditVcardDialog::slotDeleteCurrentVCard()
 {
+    if (mVcardFileName.isEmpty())
+        return;
     if (KMessageBox::Yes == KMessageBox::questionYesNo(this, i18n("Are you sure to want to delete this vCard?"), i18n("Delete vCard"))) {
-        deleteCurrentVcard();
+        deleteCurrentVcard(true);
         reject();
     }
 }
 
-void IdentityEditVcardDialog::deleteCurrentVcard()
+void IdentityEditVcardDialog::deleteCurrentVcard(bool deleteOnDisk)
 {
     if (!mVcardFileName.isEmpty()) {
-        QFile file(mVcardFileName);
-        if (file.exists()) {
-            if (!file.remove()) {
-                KMessageBox::error(this, i18n("We cannot delete vCard file."), i18n("Delete vCard"));
+        if (deleteOnDisk) {
+            QFile file(mVcardFileName);
+            if (file.exists()) {
+                if (!file.remove()) {
+                    KMessageBox::error(this, i18n("We cannot delete vCard file."), i18n("Delete vCard"));
+                }
             }
         }
+        Q_EMIT vcardRemoved();
     }
 }
 
