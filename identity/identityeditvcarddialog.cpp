@@ -23,6 +23,7 @@
 #include <QDebug>
 #include <KMessageBox>
 #include <KStandardDirs>
+#include <KGlobal>
 
 #include <QHBoxLayout>
 #include <QFile>
