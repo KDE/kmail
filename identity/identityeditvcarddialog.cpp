@@ -22,6 +22,7 @@
 #include <Akonadi/Contact/ContactEditor>
 #include <KDebug>
 #include <KMessageBox>
+#include <KStandardDirs>
 
 #include <QHBoxLayout>
 #include <QFile>
@@ -61,7 +62,11 @@ void IdentityEditVcardDialog::slotDeleteCurrentVCard()
     if (mVcardFileName.isEmpty())
         return;
     if (KMessageBox::Yes == KMessageBox::questionYesNo(this, i18n("Are you sure to want to delete this vCard?"), i18n("Delete vCard"))) {
-        deleteCurrentVcard(true);
+        if(mVcardFileName.startsWith(KGlobal::dirs()->localkdedir())) {
+            deleteCurrentVcard(true);
+        } else {
+            deleteCurrentVcard(false);
+        }
         reject();
     }
 }
