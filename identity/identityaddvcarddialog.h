@@ -18,7 +18,7 @@
 #ifndef IDENTITYADDVCARDDIALOG_H
 #define IDENTITYADDVCARDDIALOG_H
 #include <KDialog>
-#include <KUrl>
+#include <QUrl>
 class QButtonGroup;
 class KComboBox;
 class KUrlRequester;
@@ -38,7 +38,7 @@ public:
 
     DuplicateMode duplicateMode() const;
     QString duplicateVcardFromIdentity() const;
-    KUrl existingVCard() const;
+    QUrl existingVCard() const;
 
 private:
     QButtonGroup *mButtonGroup;

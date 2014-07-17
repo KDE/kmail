@@ -126,7 +126,7 @@ QString IdentityAddVcardDialog::duplicateVcardFromIdentity() const
     return mComboBox->currentText();
 }
 
-KUrl IdentityAddVcardDialog::existingVCard() const
+QUrl IdentityAddVcardDialog::existingVCard() const
 {
     return mVCardPath->url();
 }

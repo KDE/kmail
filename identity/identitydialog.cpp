@@ -80,7 +80,7 @@ using MailTransport::TransportManager;
 #include <klocale.h>
 #include <kmessagebox.h>
 #include <kfileitem.h>
-#include <kurl.h>
+#include <qurl.h>
 #include <qdebug.h>
 #include <QPushButton>
 #include <kcombobox.h>
@@ -769,7 +769,7 @@ void IdentityDialog::slotDelayedButtonClicked( KJob *job )
 
     if ( mSignatureConfigurator->isSignatureEnabled() &&
          mSignatureConfigurator->signatureType()==Signature::FromFile ) {
-        KUrl url( mSignatureConfigurator->fileURL() );
+        QUrl url( mSignatureConfigurator->fileURL() );
         KFileItem signatureFile( KFileItem::Unknown, KFileItem::Unknown, url );
         if ( !signatureFile.isFile() || !signatureFile.isReadable() || !signatureFile.isLocalFile() ) {
             KMessageBox::error( this, i18n( "The signature file is not valid" ) );

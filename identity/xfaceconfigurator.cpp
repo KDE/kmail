@@ -225,7 +225,7 @@ void XFaceConfigurator::setXFace( const QString & text )
     mTextEdit->setPlainText( text );
 }
 
-void XFaceConfigurator::setXfaceFromFile( const KUrl &url )
+void XFaceConfigurator::setXfaceFromFile( const QUrl &url )
 {
     QString tmpFile;
     if (KIO::NetAccess::download( url, tmpFile, this )) {
@@ -244,7 +244,7 @@ void XFaceConfigurator::slotSelectFile()
     Q_FOREACH ( const QByteArray &mime, mimeTypes) {
         filter += QString::fromLatin1(mime);
     }
-    const KUrl url = KFileDialog::getOpenUrl( QString(), filter, this, QString() );
+    const QUrl url = KFileDialog::getOpenUrl( QString(), filter, this, QString() );
     if ( !url.isEmpty() )
         setXfaceFromFile( url );
 }
@@ -286,7 +286,7 @@ void XFaceConfigurator::slotDelayedSelectFromAddressbook( KJob *job )
     }
     else
     {
-        const KUrl url = contact.photo().url();
+        const QUrl url = contact.photo().url();
         if( !url.isEmpty() )
             setXfaceFromFile( url );
         else

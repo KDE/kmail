@@ -20,7 +20,7 @@
 #include <QWidget>
 
 class KJob;
-class KUrl;
+class QUrl;
 
 class QCheckBox;
 class QLabel;
@@ -43,7 +43,7 @@ public:
     void setXFace( const QString & text );
 
 private:
-    void setXfaceFromFile( const KUrl &url );
+    void setXfaceFromFile( const QUrl &url );
 
 private slots:
     void slotSelectFile();

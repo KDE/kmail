@@ -22,7 +22,7 @@
 #include <KUrlRequester>
 #include <QButtonGroup>
 
-#include <qtest_kde.h>
+#include <qtest.h>
 
 identityaddvcarddialogtest::identityaddvcarddialogtest()
 {
@@ -93,4 +93,4 @@ void identityaddvcarddialogtest::shouldEnabledComboboxWhenSelectFromExistingVCar
     QCOMPARE(urlRequester->isEnabled(), false);
 }
 
-QTEST_KDEMAIN(identityaddvcarddialogtest, GUI)
+QTEST_MAIN(identityaddvcarddialogtest)
