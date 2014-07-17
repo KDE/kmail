@@ -62,7 +62,7 @@ IdentityAddVcardDialog::IdentityAddVcardDialog(const QStringList &shadowIdentiti
 
     mVCardPath = new KUrlRequester;
     mVCardPath->setObjectName(QLatin1String("kurlrequester_vcardpath"));
-    const QString filter = i18n( "*.vcf|Vcard (*.vcf)\n*|all files (*)" );
+    const QString filter = i18n( "*.vcf|vCard (*.vcf)\n*|all files (*)" );
     mVCardPath->setFilter(filter);
 
     mVCardPath->setMode(KFile::LocalOnly|KFile::File);
