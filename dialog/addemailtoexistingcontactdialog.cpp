@@ -30,15 +30,14 @@
 #include <KLocalizedString>
 
 #include <QTreeView>
-
+#include <QDialogButtonBox>
+#include <QVBoxLayout>
+#include <QPushButton>
 
 AddEmailToExistingContactDialog::AddEmailToExistingContactDialog(QWidget *parent)
-    : KDialog(parent)
+    : QDialog(parent)
 {
-    setCaption( i18n( "Select Contact" ) );
-    setButtons( Ok|Cancel );
-    setDefaultButton( Ok );
-    setButtonText(KDialog::Ok, i18n("Select"));
+    setWindowTitle( i18n( "Select Contact" ) );
     setModal( true );
 
     Akonadi::Session *session = new Akonadi::Session( "AddEmailToExistingContactDialog", this );
@@ -58,11 +57,21 @@ AddEmailToExistingContactDialog::AddEmailToExistingContactDialog(QWidget *parent
     Akonadi::ContactsTreeModel *model = new Akonadi::ContactsTreeModel( changeRecorder, this );
 
     mEmailSelectionWidget = new Akonadi::EmailAddressSelectionWidget(model, this);
-    setMainWidget(mEmailSelectionWidget);
+    QVBoxLayout *mainLayout = new QVBoxLayout;
+    setLayout(mainLayout);
+    mainLayout->addWidget(mEmailSelectionWidget);
     mEmailSelectionWidget->view()->setSelectionMode(QAbstractItemView::SingleSelection);
     readConfig();
     connect(mEmailSelectionWidget->view()->selectionModel(), SIGNAL(selectionChanged(QItemSelection,QItemSelection)), this, SLOT(slotSelectionChanged()));
-    enableButtonOk(false);
+    QDialogButtonBox *buttonBox = new QDialogButtonBox(QDialogButtonBox::Ok|QDialogButtonBox::Cancel);
+    mOkButton = buttonBox->button(QDialogButtonBox::Ok);
+    mOkButton->setDefault(true);
+    mOkButton->setShortcut(Qt::CTRL | Qt::Key_Return);
+    connect(buttonBox, SIGNAL(accepted()), this, SLOT(accept()));
+    connect(buttonBox, SIGNAL(rejected()), this, SLOT(reject()));
+    mainLayout->addWidget(buttonBox);
+    mOkButton->setText(i18n("Select"));
+    mOkButton->setEnabled(false);
 }
 
 AddEmailToExistingContactDialog::~AddEmailToExistingContactDialog()
@@ -72,7 +81,7 @@ AddEmailToExistingContactDialog::~AddEmailToExistingContactDialog()
 
 void AddEmailToExistingContactDialog::slotSelectionChanged()
 {
-    enableButtonOk(!mEmailSelectionWidget->selectedAddresses().isEmpty());
+    mOkButton->setEnabled(!mEmailSelectionWidget->selectedAddresses().isEmpty());
 }
 
 void AddEmailToExistingContactDialog::readConfig()

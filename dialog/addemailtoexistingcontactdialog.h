@@ -18,12 +18,13 @@
 #ifndef ADDEMAILTOEXISTINGCONTACTDIALOG_H
 #define ADDEMAILTOEXISTINGCONTACTDIALOG_H
 
-#include <KDialog>
+#include <QDialog>
+class QPushButton;
 namespace Akonadi {
 class EmailAddressSelectionWidget;
 class Item;
 }
-class AddEmailToExistingContactDialog : public KDialog
+class AddEmailToExistingContactDialog : public QDialog
 {
     Q_OBJECT
 public:
@@ -39,6 +40,7 @@ private:
     void readConfig();
     void writeConfig();
     Akonadi::EmailAddressSelectionWidget *mEmailSelectionWidget;
+    QPushButton *mOkButton;
 };
 
 #endif // ADDEMAILTOEXISTINGCONTACTDIALOG_H
