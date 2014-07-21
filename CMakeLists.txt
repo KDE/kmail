@@ -36,6 +36,7 @@ include_directories(
   ${CMAKE_BINARY_DIR}/pimcommon
   ${CMAKE_SOURCE_DIR}/pimcommon/util/
   ${CMAKE_SOURCE_DIR}/messagecomposer/utils/
+  ${CMAKE_CURRENT_BINARY_DIR}
   ${GPGME_INCLUDES}
   ${Boost_INCLUDE_DIR}
   ${AKONADI_INCLUDE_DIR}
@@ -255,6 +256,7 @@ if (KDEPIM_BUILD_DESKTOP)
 
 
   add_library(kmailprivate ${LIBRARY_TYPE} ${kmailprivate_LIB_SRCS})
+generate_export_header(kmailprivate BASE_NAME kmail)
 
   target_link_libraries(kmailprivate
     KF5::Mbox
@@ -308,6 +310,7 @@ if (KDEPIM_BUILD_DESKTOP)
   )
   qt5_add_dbus_interfaces(kmailpart_PART_SRCS ${CMAKE_BINARY_DIR}/kmail/org.kde.kmail.kmailpart.xml)
   add_library(kmailpart MODULE ${kmailpart_PART_SRCS})
+
   target_link_libraries(kmailpart
     
     KF5::AkonadiCore

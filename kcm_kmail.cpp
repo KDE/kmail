@@ -37,7 +37,7 @@
 //----------------------------
 extern "C"
 {
-KDE_EXPORT KCModule *create_kmail_config_misc( QWidget *parent, const char* )
+Q_DECL_EXPORT KCModule *create_kmail_config_misc( QWidget *parent, const char* )
 {
     MiscPage *page = new MiscPage( parent );
     page->setObjectName( QLatin1String("kcmkmail_config_misc") );
@@ -47,7 +47,7 @@ KDE_EXPORT KCModule *create_kmail_config_misc( QWidget *parent, const char* )
 
 extern "C"
 {
-KDE_EXPORT KCModule *create_kmail_config_appearance( QWidget *parent, const char* )
+Q_DECL_EXPORT KCModule *create_kmail_config_appearance( QWidget *parent, const char* )
 {
     AppearancePage *page =
             new AppearancePage( parent );
@@ -58,7 +58,7 @@ KDE_EXPORT KCModule *create_kmail_config_appearance( QWidget *parent, const char
 
 extern "C"
 {
-KDE_EXPORT KCModule *create_kmail_config_composer( QWidget *parent, const char* )
+Q_DECL_EXPORT KCModule *create_kmail_config_composer( QWidget *parent, const char* )
 {
     ComposerPage *page = new ComposerPage( parent );
     page->setObjectName( QLatin1String("kcmkmail_config_composer") );
@@ -68,7 +68,7 @@ KDE_EXPORT KCModule *create_kmail_config_composer( QWidget *parent, const char* 
 
 extern "C"
 {
-KDE_EXPORT KCModule *create_kmail_config_identity( QWidget *parent, const char* )
+Q_DECL_EXPORT KCModule *create_kmail_config_identity( QWidget *parent, const char* )
 {
     KMail::IdentityPage *page = new KMail::IdentityPage( parent );
     page->setObjectName( QLatin1String("kcmkmail_config_identity") );
@@ -78,7 +78,7 @@ KDE_EXPORT KCModule *create_kmail_config_identity( QWidget *parent, const char* 
 
 extern "C"
 {
-KDE_EXPORT KCModule *create_kmail_config_accounts( QWidget *parent, const char* )
+Q_DECL_EXPORT KCModule *create_kmail_config_accounts( QWidget *parent, const char* )
 {
     AccountsPage *page = new AccountsPage( parent );
     page->setObjectName( QLatin1String("kcmkmail_config_accounts") );
@@ -88,7 +88,7 @@ KDE_EXPORT KCModule *create_kmail_config_accounts( QWidget *parent, const char* 
 
 extern "C"
 {
-KDE_EXPORT KCModule *create_kmail_config_security( QWidget *parent, const char* )
+Q_DECL_EXPORT KCModule *create_kmail_config_security( QWidget *parent, const char* )
 {
     SecurityPage *page = new SecurityPage( parent );
     page->setObjectName( QLatin1String("kcmkmail_config_security") );

@@ -23,9 +23,10 @@
 #include "identitypage.h"
 #include <kcomponentdata.h>
 
+
 extern "C"
 {
-KDE_EXPORT KCModule *create_kcm_kpimidentities( QWidget *parent, const char* )
+Q_DECL_EXPORT KCModule *create_kcm_kpimidentities( QWidget *parent, const char* )
 {
     KMail::IdentityPage *page = new KMail::IdentityPage( parent );
     page->setObjectName( QLatin1String("kcm_kpimidentities") );
