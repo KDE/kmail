@@ -22,7 +22,7 @@
 
 #include "colorlistbox.h"
 
-#include <KColorDialog>
+#include <QColorDialog>
 #include <KColorMimeData>
 
 #include <QDragEnterEvent>
@@ -81,7 +81,8 @@ void ColorListBox::newColor( const QModelIndex& index )
 
     if (index.isValid()) {
         QColor c = color( index.row() );
-        if (KColorDialog::getColor(c, this) != QDialog::Rejected) {
+        c = QColorDialog::getColor(c, this);
+        if ( c.isValid() ) {
             setColor( index.row(), c );
         }
     }
