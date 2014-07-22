@@ -236,6 +236,51 @@ public Q_SLOTS:
     /**
    * Opens a composer window and prefills it with different
    * message parts.
+   * @since 5.0
+   *
+   * @returns The id of composer if more are opened.
+   *
+   * @param to A comma separated list of To addresses.
+   * @param cc A comma separated list of CC addresses.
+   * @param bcc A comma separated list of BCC addresses.
+   * @param subject The message subject.
+   * @param body The message body.
+   * @param hidden Whether the composer window shall initially be hidden.
+   * @param attachName The name of the attachment.
+   * @param attachCte The content transfer encoding of the attachment.
+   * @param attachData The raw data of the attachment.
+   * @param attachType The mime type of the attachment.
+   * @param attachSubType The sub mime type of the attachment.
+   * @param attachParamAttr The parameter attribute of the attachment.
+   * @param attachParamValue The parameter value of the attachment.
+   * @param attachContDisp The content display type of the attachment.
+   * @param attachCharset The charset of the attachment.
+   * @param identity The identity identifier which will be used as sender identity.
+   * @param allowDefaultSend Overwrite automatic sending feature,
+   *                         to make sure a composer is opend
+   */
+    Q_SCRIPTABLE int openComposer( const QString & to,
+                                   const QString & cc,
+                                   const QString & bcc,
+                                   const QString & subject,
+                                   const QString & body,
+                                   bool hidden,
+                                   const QString & attachName,
+                                   const QByteArray & attachCte,
+                                   const QByteArray  &attachData,
+                                   const QByteArray & attachType,
+                                   const QByteArray & attachSubType,
+                                   const QByteArray & attachParamAttr,
+                                   const QString & attachParamValue,
+                                   const QByteArray & attachContDisp,
+                                   const QByteArray & attachCharset,
+                                   unsigned int identity,
+                                   bool allowDefaultSend );
+
+
+    /**
+   * Opens a composer window and prefills it with different
+   * message parts.
    *
    * @returns The DBus object path for the composer.
    *
