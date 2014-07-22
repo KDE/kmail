@@ -60,9 +60,9 @@ KMailPart::KMailPart(QWidget *parentWidget, QObject *parent, const QVariantList 
     KParts::ReadOnlyPart( parent ),
     mParentWidget( parentWidget )
 {
-    qDebug() << "InstanceName:" << KGlobal::mainComponent().componentName();
+    qDebug() << "InstanceName:" << KComponentData::mainComponent().componentName();
     //QT5 setComponentData(KMailFactory::componentData());
-    qDebug() << "InstanceName:" << KGlobal::mainComponent().componentName();
+    qDebug() << "InstanceName:" << KComponentData::mainComponent().componentName();
 
     // import i18n data and icons from libraries:
     KMail::insertLibraryCataloguesAndIcons();

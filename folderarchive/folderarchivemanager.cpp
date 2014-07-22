@@ -184,7 +184,7 @@ void FolderArchiveManager::moveDone()
                           pixmap,
                           0,
                           KNotification::CloseOnTimeout,
-                          KGlobal::mainComponent().componentName());
+                          KComponentData::mainComponent().componentName());
     nextJob();
 }
 
@@ -197,7 +197,7 @@ void FolderArchiveManager::moveFailed(const QString &msg)
                           pixmap,
                           0,
                           KNotification::CloseOnTimeout,
-                          KGlobal::mainComponent().componentName());
+                          KComponentData::mainComponent().componentName());
     nextJob();
 }
 
