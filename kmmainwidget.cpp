@@ -150,7 +150,7 @@ using KSieveUi::SieveDebugDialog;
 #include <krun.h>
 #include <kmessagebox.h>
 #include <kactionmenu.h>
-#include <kmenu.h>
+#include <QMenu>
 #include <kacceleratormanager.h>
 #include <kglobal.h>
 #include <kglobalsettings.h>
