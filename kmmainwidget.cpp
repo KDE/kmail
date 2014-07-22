@@ -1264,7 +1264,8 @@ void KMMainWidget::slotItemMoved( const Akonadi::Item &item, const Akonadi::Coll
 //-------------------------------------------------------------------------
 void KMMainWidget::slotFocusQuickSearch()
 {
-    mMessagePane->focusQuickSearch();
+    const QString text = mMsgView ? mMsgView->copyText() : QString();
+    mMessagePane->focusQuickSearch(text);
 }
 
 //-------------------------------------------------------------------------
