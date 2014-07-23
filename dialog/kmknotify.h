@@ -29,12 +29,12 @@
 #ifndef KMKNOTIFY_H
 #define KMKNOTIFY_H
 
-#include <KDialog>
+#include <QDialog>
 class KComboBox;
 class KNotifyConfigWidget;
 
 namespace KMail {
-class KMKnotify : public KDialog
+class KMKnotify : public QDialog
 {
     Q_OBJECT
 public:

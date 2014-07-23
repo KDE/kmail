@@ -38,17 +38,29 @@
 #include <KSeparator>
 #include <KIconLoader>
 #include <QStandardPaths>
+#include <QDialogButtonBox>
+#include <KConfigGroup>
+#include <QPushButton>
 
 using namespace KMail;
 
 KMKnotify::KMKnotify( QWidget * parent )
-    :KDialog( parent ), m_changed( false )
+    :QDialog( parent ), m_changed( false )
 {
-    setCaption( i18n("Notification") );
-    setButtons( Ok|Cancel );
+    setWindowTitle( i18n("Notification") );
+    QDialogButtonBox *buttonBox = new QDialogButtonBox(QDialogButtonBox::Ok|QDialogButtonBox::Cancel);
+    QWidget *mainWidget = new QWidget(this);
+    QVBoxLayout *mainLayout = new QVBoxLayout;
+    setLayout(mainLayout);
+    mainLayout->addWidget(mainWidget);
+    QPushButton *okButton = buttonBox->button(QDialogButtonBox::Ok);
+    okButton->setDefault(true);
+    okButton->setShortcut(Qt::CTRL | Qt::Key_Return);
+    connect(buttonBox, SIGNAL(accepted()), this, SLOT(accept()));
+    connect(buttonBox, SIGNAL(rejected()), this, SLOT(reject()));
 
     QWidget *page = new QWidget( this );
-    setMainWidget( page );
+    mainLayout->addWidget(page);
 
     QVBoxLayout *layout = new QVBoxLayout( page );
     layout->setMargin( 0 );
@@ -65,9 +77,10 @@ KMKnotify::KMKnotify( QWidget * parent )
 
     layout->addWidget(new KSeparator);
 
+    mainLayout->addWidget(buttonBox);
     connect( m_comboNotify, SIGNAL(activated(int)),
              SLOT(slotComboChanged(int)) );
-    connect( this, SIGNAL(okClicked()), SLOT(slotOk()) );
+    connect(okButton, SIGNAL(clicked()), SLOT(slotOk()) );
     connect( m_notifyWidget ,SIGNAL(changed(bool)) , this , SLOT(slotConfigChanged(bool)));
     initCombobox();
     readConfig();
