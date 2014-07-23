@@ -69,7 +69,7 @@
 #include <QCheckBox>
 #include <QListWidget>
 #include <KHelpClient>
-
+#include <QPushButton>
 using namespace KMail;
 using namespace MailCommon;
 
@@ -139,7 +139,7 @@ AntiSpamWizard::AntiSpamWizard( WizardMode mode,
                  this, SLOT(checkVirusRulesSelections()) );
     }
 
-    connect( this, SIGNAL(helpClicked()),
+    connect( button(QDialogButtonBox::Help), SIGNAL(clicked()),
              this, SLOT(slotHelpClicked()) );
 
     QTimer::singleShot( 0, this, SLOT(checkToolAvailability()) );
