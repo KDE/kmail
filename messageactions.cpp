@@ -474,7 +474,7 @@ void MessageActions::slotRunUrl( QAction *urlAction )
 {
     const QVariant q = urlAction->data();
     if ( q.type() == QVariant::String ) {
-        new KRun( KUrl( q.toString() ) , mParent );
+        new KRun( QUrl( q.toString() ) , mParent );
     }
 }
 
