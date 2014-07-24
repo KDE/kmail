@@ -47,7 +47,7 @@
 using MessageViewer::CSSHelper;
 #include "util.h"
 #include "utils/stringutil.h"
-#include <KMD5>
+#include <QCryptographicHash>
 #include <kmime/kmime_mdn.h>
 
 #include "messageviewer/viewer/viewer.h"
@@ -327,8 +327,9 @@ QString KMReaderWin::newFeaturesMD5()
         str += kmailChanges[i];
     for ( int i = 0 ; i < numKMailNewFeatures ; ++i )
         str += kmailNewFeatures[i];
-    KMD5 md5( str );
-    return QLatin1String(md5.base64Digest());
+    QCryptographicHash md5(QCryptographicHash::Md5);
+    md5.addData( str );
+    return QLatin1String(md5.result().toBase64());
 }
 
 //-----------------------------------------------------------------------------
