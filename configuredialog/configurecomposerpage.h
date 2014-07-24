@@ -24,7 +24,7 @@
 #include "ui_customtemplates_base.h"
 class QCheckBox;
 class QSpinBox;
-class KIntNumInput;
+class QSpinBox;
 class KComboBox;
 class KUrlRequester;
 class QLineEdit;
@@ -78,7 +78,7 @@ private:
     KPluralHandlingSpinBox   *mAutoSave;
     QSpinBox   *mMaximumRecipients;
     QCheckBox     *mImprovePlainTextOfHtmlMessage;
-    KIntNumInput  *mMaximumRecentAddress;
+    QSpinBox  *mMaximumRecentAddress;
 #ifdef KDEPIM_ENTERPRISE_BUILD
     KComboBox     *mForwardTypeCombo;
     QCheckBox     *mRecipientCheck;
@@ -224,7 +224,7 @@ private:
     QCheckBox   *mOutlookCompatibleCheck;
     QCheckBox   *mMissingAttachmentDetectionCheck;
     PimCommon::SimpleStringListEditor *mAttachWordsListEditor;
-    KIntNumInput *mMaximumAttachmentSize;
+    QSpinBox *mMaximumAttachmentSize;
     ConfigureStorageServiceWidget *mStorageServiceWidget;
 };
 

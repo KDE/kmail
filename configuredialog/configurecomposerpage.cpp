@@ -47,7 +47,7 @@ using KPIM::RecentAddresses;
 #include <KFile>
 #include <kascii.h>
 #include <QSpinBox>
-#include <KIntNumInput>
+#include <QSpinBox>
 #include <KPluralHandlingSpinBox>
 #include <QDebug>
 
@@ -456,8 +456,7 @@ ComposerPageGeneralTab::ComposerPageGeneralTab( QWidget * parent )
     ++row;
 
     // "Maximum recent addresses retained" spinbox
-    mMaximumRecentAddress = new KIntNumInput( this );
-    mMaximumRecentAddress->setSliderEnabled( false );
+    mMaximumRecentAddress = new QSpinBox( this );
     mMaximumRecentAddress->setMinimum( 0 );
     mMaximumRecentAddress->setMaximum( 999 );
     mMaximumRecentAddress->setSpecialValueText( i18nc( "No addresses are retained", "No save" ) );
@@ -1312,7 +1311,7 @@ ComposerPageAttachmentsTab::ComposerPageAttachmentsTab( QWidget * parent )
     label->setAlignment( Qt::AlignLeft );
     layAttachment->addWidget(label);
 
-    mMaximumAttachmentSize = new KIntNumInput( this );
+    mMaximumAttachmentSize = new QSpinBox( this );
     mMaximumAttachmentSize->setRange( -1, 99999 );
     mMaximumAttachmentSize->setSingleStep( 100 );
     mMaximumAttachmentSize->setSuffix(i18nc("spinbox suffix: unit for kilobyte", " kB"));
