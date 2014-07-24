@@ -116,7 +116,7 @@ void CollectionTemplatesPage::save(Collection &)
         TemplateParser::Templates t(mCollectionId);
         //qDebug() << "use custom templates for folder" << fid <<":" << mCustom->isChecked();
         t.setUseCustomTemplates(mCustom->isChecked());
-        t.writeConfig();
+        t.save();
 
         mWidget->saveToFolder(mCollectionId);
     }
