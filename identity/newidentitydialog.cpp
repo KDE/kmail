@@ -37,20 +37,34 @@
 #include <QVBoxLayout>
 
 #include <assert.h>
+#include <QDialogButtonBox>
+#include <KConfigGroup>
+#include <QPushButton>
 
 using namespace KMail;
 
 NewIdentityDialog::NewIdentityDialog( KPIMIdentities::IdentityManager* manager, QWidget *parent )
-    : KDialog( parent ),
+    : QDialog( parent ),
       mIdentityManager( manager )
 {
-    setCaption( i18n("New Identity") );
-    setButtons( Ok|Cancel|Help );
-    setHelp( QString::fromLatin1("configure-identity-newidentitydialog") );
+    setWindowTitle( i18n("New Identity") );
+    QDialogButtonBox *buttonBox = new QDialogButtonBox(QDialogButtonBox::Ok|QDialogButtonBox::Cancel|QDialogButtonBox::Help);
+    QWidget *mainWidget = new QWidget(this);
+    QVBoxLayout *mainLayout = new QVBoxLayout;
+    setLayout(mainLayout);
+    mainLayout->addWidget(mainWidget);
+    mOkButton = buttonBox->button(QDialogButtonBox::Ok);
+    mOkButton->setDefault(true);
+    mOkButton->setShortcut(Qt::CTRL | Qt::Key_Return);
+    connect(buttonBox, SIGNAL(accepted()), this, SLOT(accept()));
+    connect(buttonBox, SIGNAL(rejected()), this, SLOT(reject()));
+    
+    //PORT QT5 setHelp( QString::fromLatin1("configure-identity-newidentitydialog") );
     QWidget *page = new QWidget( this );
-    setMainWidget( page );
+    mainLayout->addWidget( page );
+    mainLayout->addWidget(buttonBox);
     QVBoxLayout * vlay = new QVBoxLayout( page );
-    vlay->setSpacing( spacingHint() );
+    //PORT QT5 vlay->setSpacing( spacingHint() );
     vlay->setMargin( 0 );
 
     // row 0: line edit with label
@@ -107,7 +121,8 @@ NewIdentityDialog::NewIdentityDialog( KPIMIdentities::IdentityManager* manager, 
     connect( radio, SIGNAL(toggled(bool)),
              mComboBox, SLOT(setEnabled(bool)) );
 
-    enableButtonOk( false ); // since line edit is empty
+    mOkButton->setEnabled( false ); // since line edit is empty
+    
     resize(400,180);
 }
 
@@ -126,15 +141,15 @@ void NewIdentityDialog::slotEnableOK( const QString & proposedIdentityName )
     const QString name = proposedIdentityName.trimmed();
     // name isn't empty
     if ( name.isEmpty() ) {
-        enableButtonOk( false );
+        mOkButton->setEnabled( false );
         return;
     }
     // or name doesn't yet exist.
     if ( !mIdentityManager->isUnique( name ) ) {
-        enableButtonOk( false );
+        mOkButton->setEnabled( false );
         return;
     }
-    enableButtonOk( true );
+    mOkButton->setEnabled( true );
 }
 
 QString NewIdentityDialog::identityName() const

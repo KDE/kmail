@@ -24,7 +24,7 @@
 #ifndef NEWIDENTITYDIALOG_H
 #define NEWIDENTITYDIALOG_H
 
-#include <KDialog>
+#include <QDialog>
 
 class KComboBox;
 class KLineEdit;
@@ -36,7 +36,7 @@ class IdentityManager;
 
 namespace KMail {
 
-class NewIdentityDialog : public KDialog
+class NewIdentityDialog : public QDialog
 {
     Q_OBJECT
 
@@ -57,6 +57,7 @@ private:
     KComboBox  *mComboBox;
     QButtonGroup *mButtonGroup;
     KPIMIdentities::IdentityManager *mIdentityManager;
+    QPushButton *mOkButton;
 };
 
 }
