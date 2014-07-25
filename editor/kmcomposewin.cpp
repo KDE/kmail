@@ -146,7 +146,7 @@
 
 #include <kstandardshortcut.h>
 #include <kstatusbar.h>
-#include <ktempdir.h>
+#include <QTemporaryDir>
 #include <ktoggleaction.h>
 #include <ktoolbar.h>
 #include <ktoolinvocation.h>
