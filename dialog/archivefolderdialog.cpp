@@ -37,6 +37,7 @@
 #include <qcheckbox.h>
 #include <QGridLayout>
 #include <QStandardPaths>
+#include <QMimeDatabase>
 
 using namespace KMail;
 using namespace MailCommon;
@@ -208,7 +209,8 @@ void ArchiveFolderDialog::slotFixFileExtension()
         fileName = standardArchivePath( mFolderRequester->hasCollection() ?
                                             mFolderRequester->collection().name() : QString() );
 
-    const QString extension = KMimeType::extractKnownExtension(fileName);
+    QMimeDatabase db;
+    const QString extension = db.suffixForFileName(fileName);
     if(!extension.isEmpty()) {
         fileName = fileName.left( fileName.length() - extension.length() - 1 );
     }
