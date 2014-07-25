@@ -176,7 +176,7 @@ KMKernel::KMKernel (QObject *parent) :
     // is the standard for Internet, and Shift-JIS is the encoding
     // for Windows and Macintosh.
     if ( netCodec->name().toLower() == "eucjp"
-     #if defined Q_WS_WIN || defined Q_WS_MACX
+     #if defined Q_OS_WIN || defined Q_OS_MACX
          || netCodec->name().toLower() == "shift-jis" // OK?
      #endif
          )
@@ -539,7 +539,7 @@ void KMKernel::openReader( bool onlyCheck )
     if ( activate ) {
         // Activate window - doing this instead of KWindowSystem::activateWindow(mWin->winId());
         // so that it also works when called from KMailApplication::newInstance()
-#if defined Q_WS_X11 && ! defined K_WS_QTONLY
+#if defined Q_OS_X11 && ! defined K_WS_QTONLY
         KStartupInfo::setNewStartupId( mWin, kapp->startupId() );
 #endif
     }
@@ -638,7 +638,7 @@ int KMKernel::openComposer(const QString &to, const QString &cc,
         cWin->show();
         // Activate window - doing this instead of KWindowSystem::activateWindow(cWin->winId());
         // so that it also works when called from KMailApplication::newInstance()
-#if defined Q_WS_X11 && ! defined K_WS_QTONLY
+#if defined Q_OS_X11 && ! defined K_WS_QTONLY
         KStartupInfo::setNewStartupId( cWin, kapp->startupId() );
 #endif
     }
@@ -744,7 +744,7 @@ int KMKernel::openComposer (const QString &to, const QString &cc,
         cWin->show();
         // Activate window - doing this instead of KWin::activateWindow(cWin->winId());
         // so that it also works when called from KMailApplication::newInstance()
-#if defined Q_WS_X11 && ! defined K_WS_QTONLY
+#if defined Q_OS_X11 && ! defined K_WS_QTONLY
         KStartupInfo::setNewStartupId( cWin, kapp->startupId() );
 #endif
     } else {
@@ -786,7 +786,7 @@ QDBusObjectPath KMKernel::openComposer( const QString &to, const QString &cc,
         cWin->show();
         // Activate window - doing this instead of KWindowSystem::activateWindow(cWin->winId());
         // so that it also works when called from KMailApplication::newInstance()
-#if defined Q_WS_X11 && ! defined K_WS_QTONLY
+#if defined Q_OS_X11 && ! defined K_WS_QTONLY
         KStartupInfo::setNewStartupId( cWin, kapp->startupId() );
 #endif
     } else {
