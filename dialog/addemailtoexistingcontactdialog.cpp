@@ -56,7 +56,7 @@ AddEmailToExistingContactDialog::AddEmailToExistingContactDialog(QWidget *parent
 
     Akonadi::ContactsTreeModel *model = new Akonadi::ContactsTreeModel( changeRecorder, this );
 
-    mEmailSelectionWidget = new Akonadi::EmailAddressSelectionWidget(model, this);
+    mEmailSelectionWidget = new Akonadi::EmailAddressSelectionWidget(false, model, this);
     QVBoxLayout *mainLayout = new QVBoxLayout;
     setLayout(mainLayout);
     mainLayout->addWidget(mEmailSelectionWidget);
