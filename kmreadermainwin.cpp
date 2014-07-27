@@ -43,7 +43,7 @@
 #include <KMessageBox>
 #include <KAcceleratorManager>
 #include "kmcommands.h"
-#include <kmenubar.h>
+#include <QMenuBar>
 #include <qmenu.h>
 #include "kmmainwidget.h"
 #include "messageviewer/viewer/csshelper.h"

@@ -29,7 +29,7 @@
 
 #include <QTimer>
 
-#include <KMenuBar>
+#include <QMenuBar>
 #include <KToggleAction>
 #include <kapplication.h>
 #include <klocale.h>
