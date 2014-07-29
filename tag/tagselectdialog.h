@@ -29,13 +29,13 @@
 #ifndef TAGSELECTDIALOG_H
 #define TAGSELECTDIALOG_H
 
-#include <KDialog>
+#include <QDialog>
 #include <AkonadiCore/Item>
 #include <AkonadiCore/Tag>
 #include "tag.h"
 
 class QListWidget;
-class TagSelectDialog : public KDialog
+class TagSelectDialog : public QDialog
 {
     Q_OBJECT
 public:

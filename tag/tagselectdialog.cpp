@@ -42,36 +42,50 @@
 #include <AkonadiCore/TagFetchJob>
 #include <AkonadiCore/TagFetchScope>
 #include <AkonadiCore/TagAttribute>
+#include <QDialogButtonBox>
+#include <KConfigGroup>
+#include <QPushButton>
+#include <QVBoxLayout>
 
 using namespace KMail;
 
 TagSelectDialog::TagSelectDialog( QWidget * parent, int numberOfSelectedMessages, const Akonadi::Item &selectedItem)
-    : KDialog( parent ),
+    : QDialog( parent ),
       mNumberOfSelectedMessages(numberOfSelectedMessages),
       mSelectedItem(selectedItem)
 {
-    setCaption( i18n( "Select Tags" ) );
-    setButtons( User1|Ok|Cancel );
-    setButtonText(User1, i18n("Add new tag..."));
-    setDefaultButton( Ok );
+    setWindowTitle( i18n( "Select Tags" ) );
+    QDialogButtonBox *buttonBox = new QDialogButtonBox(QDialogButtonBox::Ok|QDialogButtonBox::Cancel);
+
+    QVBoxLayout *mainLayout = new QVBoxLayout;
+    setLayout(mainLayout);
+    QPushButton *okButton = buttonBox->button(QDialogButtonBox::Ok);
+    okButton->setDefault(true);
+    okButton->setShortcut(Qt::CTRL | Qt::Key_Return);
+    QPushButton *user1Button = new QPushButton;
+    buttonBox->addButton(user1Button, QDialogButtonBox::ActionRole);
+    connect(buttonBox, SIGNAL(accepted()), this, SLOT(accept()));
+    connect(buttonBox, SIGNAL(rejected()), this, SLOT(reject()));
+    user1Button->setText(i18n("Addnewtag..."));
+    okButton->setDefault(true);
     setModal( true );
 
     QWidget *mainWidget = new QWidget( this );
-    QGridLayout *mainLayout = new QGridLayout( mainWidget );
-    mainLayout->setSpacing( KDialog::spacingHint() );
-    mainLayout->setMargin( KDialog::marginHint() );
-    setMainWidget( mainWidget );
+    mainLayout->addWidget(mainWidget);
+    mainLayout->addWidget(buttonBox);
 
+    QVBoxLayout *vbox = new QVBoxLayout;
+    mainWidget->setLayout(vbox);
     mListTag = new QListWidget( this );
     KListWidgetSearchLine *listWidgetSearchLine = new KListWidgetSearchLine(this,mListTag);
     listWidgetSearchLine->setPlaceholderText(i18n("Search tag"));
     listWidgetSearchLine->setClearButtonEnabled(true);
 
-    mainLayout->addWidget(listWidgetSearchLine);
-    mainLayout->addWidget( mListTag );
+    vbox->addWidget(listWidgetSearchLine);
+    vbox->addWidget( mListTag );
 
     createTagList();
-    connect(this, SIGNAL(user1Clicked()), SLOT(slotAddNewTag()));
+    connect(user1Button, SIGNAL(clicked()), SLOT(slotAddNewTag()));
 
     KConfigGroup group( KMKernel::self()->config(), "TagSelectDialog" );
     const QSize size = group.readEntry( "Size", QSize(500, 300) );
