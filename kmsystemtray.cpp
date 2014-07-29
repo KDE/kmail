@@ -36,7 +36,7 @@
 #include <QAction>
 #include <KActionMenu>
 #include <KActionCollection>
-
+#include <KGlobalSettings>
 #include <QPainter>
 
 #include <AkonadiCore/ChangeRecorder>

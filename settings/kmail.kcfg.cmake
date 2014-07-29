@@ -4,10 +4,11 @@
       xsi:schemaLocation="http://www.kde.org/standards/kcfg/1.0
       http://www.kde.org/standards/kcfg/1.0/kcfg.xsd" >
   <include>qtextcodec.h</include>
-  <include>kglobalsettings.h</include>
+  <include>QFontDatabase</include>
   <include>kcolorscheme.h</include>
   <include>editor/composer.h</include>
   <include>messagecomposer/utils/util.h</include>
+  <include>KGlobalSettings</include>
   <kcfgfile name="kmail2rc"/>
   <group name="Behaviour">
       <entry name="ActionEnterFolder"  type="Enum">
@@ -301,7 +302,7 @@
 
     <group name="Fonts">
       <entry name="ComposerFont" type="Font" key="composer-font">
-        <default code="true">KGlobalSettings::generalFont()</default>
+        <default code="true">QFontDatabase::systemFont(QFontDatabase::GeneralFont)</default>
       </entry>
     </group>
 
