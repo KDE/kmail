@@ -3562,13 +3562,13 @@ void KMComposeWin::slotSentenceCase()
 void KMComposeWin::slotUpperCase()
 {
     QTextCursor textCursor = mComposerBase->editor()->textCursor();
-    PimCommon::EditorUtil::lowerCase(textCursor);
+    PimCommon::EditorUtil::upperCase(textCursor);
 }
 
 void KMComposeWin::slotLowerCase()
 {
     QTextCursor textCursor = mComposerBase->editor()->textCursor();
-    PimCommon::EditorUtil::upperCase(textCursor);
+    PimCommon::EditorUtil::lowerCase(textCursor);
 }
 
 void KMComposeWin::slotExternalEditorStarted()

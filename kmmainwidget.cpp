@@ -4887,3 +4887,8 @@ void KMMainWidget::slotChangeDisplayMessageFormat(MessageViewer::Viewer::Display
         mMsgView->update( true );
     }
 }
+
+void KMMainWidget::populateMessageListStatusFilterCombo()
+{
+    mMessagePane->populateStatusFilterCombo();
+}
