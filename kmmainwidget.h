@@ -161,6 +161,7 @@ public:
     void addRecentFile(const KUrl& mUrl);
     void updateQuickSearchLineText();
 
+    void populateMessageListStatusFilterCombo();
 public slots:
     // Moving messages around
     /**
