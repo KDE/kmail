@@ -42,7 +42,7 @@ using KPIM::RecentAddresses;
 #include <KSeparator>
 #include <KCharsets>
 #include <KUrlRequester>
-#include <KHBox>
+#include <QHBoxLayout>
 #include <KMessageBox>
 #include <KFile>
 #include <kascii.h>
@@ -653,10 +653,13 @@ ComposerPageExternalEditorTab::ComposerPageExternalEditorTab( QWidget * parent )
     connect( mExternalEditorCheck, SIGNAL(toggled(bool)),
              this, SLOT(slotEmitChanged()) );
 
-    KHBox *hbox = new KHBox( this );
+    QWidget *hbox = new QWidget( this );
+    QHBoxLayout *hboxHBoxLayout = new QHBoxLayout(hbox);
+    hboxHBoxLayout->setMargin(0);
     QLabel *label = new QLabel( GlobalSettings::self()->externalEditorItem()->label(),
                                 hbox );
     mEditorRequester = new KUrlRequester( hbox );
+    hboxHBoxLayout->addWidget(mEditorRequester);
     //Laurent 25/10/2011 fix #Bug 256655 - A "save changes?" dialog appears ALWAYS when leaving composer settings, even when unchanged.
     //mEditorRequester->setObjectName( "kcfg_ExternalEditor" );
     connect( mEditorRequester, SIGNAL(urlSelected(QUrl)),
@@ -664,7 +667,7 @@ ComposerPageExternalEditorTab::ComposerPageExternalEditorTab( QWidget * parent )
     connect( mEditorRequester, SIGNAL(textChanged(QString)),
              this, SLOT(slotEmitChanged()) );
 
-    hbox->setStretchFactor( mEditorRequester, 1 );
+    hboxHBoxLayout->setStretchFactor( mEditorRequester, 1 );
     label->setBuddy( mEditorRequester );
     label->setEnabled( false ); // since !mExternalEditorCheck->isChecked()
     // ### FIXME: allow only executables (x-bit when available..)

@@ -27,7 +27,7 @@
 #include <QVBoxLayout>
 
 #include <KDialog>
-#include <KHBox>
+#include <QHBoxLayout>
 #include <KLocalizedString>
 #include <KKeySequenceWidget>
 
@@ -60,10 +60,13 @@ void CollectionShortcutPage::init(const Akonadi::Collection & col)
     label->setWordWrap(true);
     topLayout->addWidget(label);
 
-    KHBox *hb = new KHBox( this );
+    QWidget *hb = new QWidget( this );
+    QHBoxLayout *hbHBoxLayout = new QHBoxLayout(hb);
+    hbHBoxLayout->setMargin(0);
 
     new QWidget(hb);
     mKeySeqWidget = new KKeySequenceWidget( hb );
+    hbHBoxLayout->addWidget(mKeySeqWidget);
     mKeySeqWidget->setObjectName( QLatin1String("FolderShortcutSelector") );
     connect( mKeySeqWidget, SIGNAL(keySequenceChanged(QKeySequence)),
              SLOT(slotShortcutChanged()) );

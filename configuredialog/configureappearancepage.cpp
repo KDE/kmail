@@ -59,7 +59,7 @@ using namespace PimCommon::ConfigureImmutableWidgetUtils;
 #include <KColorScheme>
 #include <KSeparator>
 #include <KFontChooser>
-#include <KHBox>
+#include <QHBoxLayout>
 #include <KMessageBox>
 #include <KKeySequenceWidget>
 #include <KLineEdit>
@@ -734,12 +734,15 @@ AppearancePageHeadersTab::AppearancePageHeadersTab( QWidget * parent )
         gvlay->addWidget( radio );
 
         if ( dateDisplayConfig[i].dateDisplay == DateFormatter::Custom ) {
-            KHBox *hbox = new KHBox( mDateDisplay );
-            hbox->setSpacing( KDialog::spacingHint() );
+            QWidget *hbox = new QWidget( mDateDisplay );
+            QHBoxLayout *hboxHBoxLayout = new QHBoxLayout(hbox);
+            hboxHBoxLayout->setMargin(0);
+            hboxHBoxLayout->setSpacing( KDialog::spacingHint() );
 
             mCustomDateFormatEdit = new KLineEdit( hbox );
+            hboxHBoxLayout->addWidget(mCustomDateFormatEdit);
             mCustomDateFormatEdit->setEnabled( false );
-            hbox->setStretchFactor( mCustomDateFormatEdit, 1 );
+            hboxHBoxLayout->setStretchFactor( mCustomDateFormatEdit, 1 );
 
             connect( radio, SIGNAL(toggled(bool)),
                      mCustomDateFormatEdit, SLOT(setEnabled(bool)) );
