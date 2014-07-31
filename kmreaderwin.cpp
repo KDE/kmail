@@ -925,5 +925,7 @@ KAction *KMReaderWin::createEventAction() const
     return mViewer->createEventAction();
 }
 
-
-
+KAction *KMReaderWin::createNoteAction() const
+{
+    return mViewer->createNoteAction();
+}
