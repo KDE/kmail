@@ -156,6 +156,7 @@ public:
     KAction *expandShortUrlAction() const;
     KAction *createTodoAction() const;
     KAction *createEventAction() const;
+    KAction *createNoteAction() const;
 
     KAction *editContactAction() const { return mEditContactAction; }
 
