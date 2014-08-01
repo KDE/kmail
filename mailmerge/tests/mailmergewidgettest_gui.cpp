@@ -24,8 +24,7 @@
 
 int main (int argc, char **argv)
 {
-    KCmdLineArgs::init(argc, argv, "mailmergewidget_gui", 0, ki18n("MailMergeWidgetTest_Gui"),
-                       "1.0", ki18n("Test for mailmerge widget"));
+    KCmdLineArgs::init(argc, argv, "mailmergewidget_gui", 0, ki18n("MailMergeWidgetTest_Gui"), "1.0", ki18n("Test for mailmerge widget"));
 
     KApplication app;
 
