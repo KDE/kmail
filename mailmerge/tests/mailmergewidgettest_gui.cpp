@@ -18,15 +18,26 @@
 #include "kmail/mailmerge/mailmergewidget.h"
 
 #include <qdebug.h>
-#include <kapplication.h>
-#include <KCmdLineArgs>
+
+
 #include <KLocalizedString>
+#include <QApplication>
+#include <KAboutData>
+#include <QCommandLineParser>
 
 int main (int argc, char **argv)
 {
-    KCmdLineArgs::init(argc, argv, "mailmergewidget_gui", 0, ki18n("MailMergeWidgetTest_Gui"), "1.0", ki18n("Test for mailmerge widget"));
+    KAboutData aboutData( QLatin1String("mailmergewidget_gui"), i18n("MailMergeWidgetTest_Gui"), QLatin1String("1.0"));
+    aboutData.setShortDescription(i18n("Test for mailmerge widget"));
+    QApplication app(argc, argv);
+    QCommandLineParser parser;
+    KAboutData::setApplicationData(aboutData);
+    parser.addVersionOption();
+    parser.addHelpOption();
+    aboutData.setupCommandLine(&parser);
+    parser.process(app);
+    aboutData.processCommandLine(&parser);
 
-    KApplication app;
 
     MailMergeWidget *w = new MailMergeWidget();
     w->resize(800, 600);
