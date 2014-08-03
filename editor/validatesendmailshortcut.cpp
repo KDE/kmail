@@ -40,7 +40,7 @@ bool ValidateSendMailShortcut::validate()
     bool sendNow = false;
     bool configWasSaved = false;
     const int result = KMessageBox::questionYesNoCancel(mParent,
-                                                        i18n("This shortcut allows to send mail directly. Mail can be send accidentally. What do you want to do?"), i18n("Configure shortcut"),
+                                                        i18n("This shortcut allows to send mail directly. Mail can be sent accidentally. What do you want to do?"), i18n("Configure shortcut"),
                                                         KGuiItem(i18n("Remove Shortcut")),
                                                         KGuiItem(i18n("Ask Before Sending")),
                                                         KGuiItem(i18n("Sending Without Confirmation")) );

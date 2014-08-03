@@ -35,7 +35,6 @@
 #include <kio/global.h>
 #include <KLocale>
 #include <QDebug>
-
 #include <QGroupBox>
 #include <QLabel>
 #include <QFormLayout>
