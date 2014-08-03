@@ -25,7 +25,6 @@
 
 #include <Akonadi/ItemMoveJob>
 #include <Akonadi/CollectionFetchJob>
-#include <Akonadi/ItemMoveJob>
 
 #include <KLocale>
 

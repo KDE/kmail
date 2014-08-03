@@ -31,8 +31,6 @@ using namespace PimCommon::ConfigureImmutableWidgetUtils;
 
 #include "kmmainwidget.h"
 
-#include "foldertreewidget.h"
-
 #include "mailcommon/mailcommonsettings_base.h"
 
 #include "messageviewer/widgets/configurewidget.h"

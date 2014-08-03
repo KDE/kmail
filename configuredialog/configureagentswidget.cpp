@@ -34,7 +34,6 @@
 #include <QDBusReply>
 #include <QSplitter>
 #include <QPushButton>
-#include <QVBoxLayout>
 #include <QFile>
 #include <QDir>
 
