@@ -25,7 +25,7 @@ class FolderArchiveAccountInfo
 {
 public:
     FolderArchiveAccountInfo();
-    explicit FolderArchiveAccountInfo(const KConfigGroup &config);
+    FolderArchiveAccountInfo(const KConfigGroup &config);
     ~FolderArchiveAccountInfo();
 
     enum FolderArchiveType {
