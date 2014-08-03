@@ -44,7 +44,7 @@ FolderArchiveAgentJob::~FolderArchiveAgentJob()
 void FolderArchiveAgentJob::start()
 {
     if (!mInfo->isValid()) {
-        sendError(i18n("Archive folder not defined. Please verify settings for account", mInfo->instanceName() ));
+        sendError(i18n("Archive folder not defined. Please verify settings for account %1", mInfo->instanceName()));
         return;
     }
     if (mLstItem.isEmpty()) {
