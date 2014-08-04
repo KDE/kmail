@@ -296,6 +296,10 @@
        <label>Show crypto label indicator</label>
        <default>true</default>
       </entry>
+      <entry name="CheckSendDefaultShortcut" type="Bool">
+       <label>Validate Send Default Shortcut</label>
+       <default>false</default>
+      </entry>
     </group>
 <!-- Composer -->
 
