@@ -17,9 +17,9 @@
 
 #ifndef MAILMERGEDIALOG_H
 #define MAILMERGEDIALOG_H
-#include <KDialog>
+#include <QDialog>
 
-class MailMergeDialog : public KDialog
+class MailMergeDialog : public QDialog
 {
     Q_OBJECT
 public:

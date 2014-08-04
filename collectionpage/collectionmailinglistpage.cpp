@@ -37,7 +37,7 @@
 #include <QVBoxLayout>
 
 #include <KComboBox>
-#include <KDialog>
+#include <QDialog>
 #include <KLineEdit>
 #include <KEditListWidget>
 #include <KLocalizedString>
@@ -78,7 +78,7 @@ void CollectionMailingListPage::init(const Akonadi::Collection & col)
     mFolder = FolderCollection::forCollection( col, false );
 
     QVBoxLayout *topLayout = new QVBoxLayout( this );
-    topLayout->setSpacing( KDialog::spacingHint() );
+//TODO PORT QT5     topLayout->setSpacing( QDialog::spacingHint() );
 
     mHoldsMailingList = new QCheckBox( i18n("Folder holds a mailing list"), this );
     connect( mHoldsMailingList, SIGNAL(toggled(bool)),
@@ -88,7 +88,7 @@ void CollectionMailingListPage::init(const Akonadi::Collection & col)
 
     mGroupWidget = new QWidget( this );
     QGridLayout *groupLayout = new QGridLayout( mGroupWidget );
-    groupLayout->setSpacing( KDialog::spacingHint() );
+//TODO PORT QT5     groupLayout->setSpacing( QDialog::spacingHint() );
 
     mDetectButton = new QPushButton( i18n("Detect Automatically"), mGroupWidget );
     connect( mDetectButton, SIGNAL(pressed()),

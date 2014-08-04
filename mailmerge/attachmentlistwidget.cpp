@@ -23,6 +23,9 @@
 #include <QLabel>
 #include <QPointer>
 #include <QVBoxLayout>
+#include <QDialogButtonBox>
+#include <KConfigGroup>
+#include <QPushButton>
 
 AttachmentListWidget::AttachmentListWidget(QWidget * parent,
                                            ButtonCode buttons,
@@ -61,20 +64,30 @@ QString AttachmentListWidget::modifyEntry(const QString &text)
 
 
 SelectAttachmentDialog::SelectAttachmentDialog(QWidget *parent)
-    : KDialog(parent)
+    : QDialog(parent)
 {
-    setCaption(i18n("Attachment"));
-    setButtons(Ok|Cancel);
+    setWindowTitle(i18n("Attachment"));
+    QDialogButtonBox *buttonBox = new QDialogButtonBox(QDialogButtonBox::Ok|QDialogButtonBox::Cancel);
+    QWidget *mainWidget = new QWidget(this);
+    QVBoxLayout *mainLayout = new QVBoxLayout;
+    setLayout(mainLayout);
+    mainLayout->addWidget(mainWidget);
+    QPushButton *okButton = buttonBox->button(QDialogButtonBox::Ok);
+    okButton->setDefault(true);
+    okButton->setShortcut(Qt::CTRL | Qt::Key_Return);
+    connect(buttonBox, SIGNAL(accepted()), this, SLOT(accept()));
+    connect(buttonBox, SIGNAL(rejected()), this, SLOT(reject()));
 
-    QWidget *mainWidget = new QWidget;
+    QWidget *w = new QWidget;
     QVBoxLayout *vbox = new QVBoxLayout;
-    mainWidget->setLayout(vbox);
+    w->setLayout(vbox);
     QLabel *lab = new QLabel(i18n("Select attachment:"));
     vbox->addWidget(lab);
     mUrlRequester = new KUrlRequester;
     mUrlRequester->setMode(KFile::LocalOnly|KFile::ExistingOnly);
     vbox->addWidget(mUrlRequester);
-    setMainWidget(mainWidget);
+    mainLayout->addWidget(w);
+    mainLayout->addWidget(buttonBox);
 }
 
 SelectAttachmentDialog::~SelectAttachmentDialog()

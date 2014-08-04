@@ -19,10 +19,10 @@
 #define ATTACHMENTLISTWIDGET_H
 
 #include "pimcommon/widgets/simplestringlisteditor.h"
-#include <KDialog>
+#include <QDialog>
 
 class KUrlRequester;
-class SelectAttachmentDialog : public KDialog
+class SelectAttachmentDialog : public QDialog
 {
     Q_OBJECT
 public:
