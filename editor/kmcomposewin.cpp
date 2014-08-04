@@ -56,6 +56,7 @@
 #include "job/savedraftjob.h"
 #include "warningwidgets/externaleditorwarning.h"
 #include "cryptostateindicatorwidget.h"
+#include "validatesendmailshortcut.h"
 
 #include "editor/kmstorageservice.h"
 #include "followupreminder/followupreminderselectdatedialog.h"
@@ -2965,6 +2966,12 @@ void KMComposeWin::slotCheckSendNow()
             doSend( MessageComposer::MessageSender::SendLater );
         }
     } else {
+        if (!GlobalSettings::self()->checkSendDefaultShortcut()) {
+            ValidateSendMailShortcut validateShortcut(actionCollection(), this);
+            if (!validateShortcut.validate()) {
+                return;
+            }
+        }
         doSend( MessageComposer::MessageSender::SendImmediate );
     }
 }
