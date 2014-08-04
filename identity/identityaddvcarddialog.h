@@ -17,13 +17,13 @@
 
 #ifndef IDENTITYADDVCARDDIALOG_H
 #define IDENTITYADDVCARDDIALOG_H
-#include <KDialog>
+#include <QDialog>
 #include <QUrl>
 class QButtonGroup;
 class KComboBox;
 class KUrlRequester;
 
-class IdentityAddVcardDialog: public KDialog
+class IdentityAddVcardDialog: public QDialog
 {
     Q_OBJECT
 public:

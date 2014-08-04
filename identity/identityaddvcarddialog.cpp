@@ -26,20 +26,34 @@
 #include <QVBoxLayout>
 #include <QRadioButton>
 #include <QLabel>
+#include <QDialogButtonBox>
+#include <KConfigGroup>
+#include <QPushButton>
 
 
 IdentityAddVcardDialog::IdentityAddVcardDialog(const QStringList &shadowIdentities, QWidget *parent)
-    : KDialog(parent)
+    : QDialog(parent)
 {
-    setCaption( i18n( "Create own vCard" ) );
-    setButtons( Ok|Cancel );
-    setDefaultButton( Ok );
+    setWindowTitle( i18n( "Create own vCard" ) );
+    QDialogButtonBox *buttonBox = new QDialogButtonBox(QDialogButtonBox::Ok|QDialogButtonBox::Cancel);
+    QVBoxLayout *mainLayout = new QVBoxLayout;
+    setLayout(mainLayout);
+    QPushButton *okButton = buttonBox->button(QDialogButtonBox::Ok);
+    okButton->setDefault(true);
+    okButton->setShortcut(Qt::CTRL | Qt::Key_Return);
+    connect(buttonBox, SIGNAL(accepted()), this, SLOT(accept()));
+    connect(buttonBox, SIGNAL(rejected()), this, SLOT(reject()));
+    okButton->setDefault(true);
     setModal( true );
+
     QWidget *mainWidget = new QWidget( this );
+    mainLayout->addWidget(mainWidget);
+    mainLayout->addWidget(buttonBox);
+
     QVBoxLayout *vlay = new QVBoxLayout( mainWidget );
-    vlay->setSpacing( KDialog::spacingHint() );
-    vlay->setMargin( KDialog::marginHint() );
-    setMainWidget( mainWidget );
+//TODO PORT QT5     vlay->setSpacing( QDialog::spacingHint() );
+//TODO PORT QT5     vlay->setMargin( QDialog::marginHint() );
+//PORTING: Verify that widget was added to mainLayout     setMainWidget( mainWidget );
 
     mButtonGroup = new QButtonGroup( this );
     mButtonGroup->setObjectName(QLatin1String("buttongroup"));

@@ -1,11 +1,15 @@
 
 
 #include <qdebug.h>
-#include <kapplication.h>
-#include <kcmdlineargs.h>
+
+
+#include <QCoreApplication>
+#include <KAboutData>
+#include <KLocalizedString>
+#include <QCommandLineParser>
 
 #include "kmailinterface.h"
-#include "aboutdata.h"
+//#include "aboutdata.h"
 
 
 
@@ -13,10 +17,16 @@ int main(int argc,char **argv)
 {
   qDebug() << "Test KMail D-Bus interface.";
 
-  K4AboutData aboutData( "testKMailDBUS", 0,
-   ki18n("Test for KMail D-Bus interface"), "0.0" );
-  KCmdLineArgs::init(argc, argv, &aboutData);
-  KApplication app;
+  KAboutData aboutData( QLatin1String("testKMailDBUS"), i18n("Test for KMail D-Bus interface"), QLatin1String("0.0") );
+    QCoreApplication app(argc, argv);
+    QCommandLineParser parser;
+    KAboutData::setApplicationData(aboutData);
+    parser.addVersionOption();
+    parser.addHelpOption();
+    //PORTING SCRIPT: adapt aboutdata variable if necessary
+    aboutData.setupCommandLine(&parser);
+    parser.process(app);
+    aboutData.processCommandLine(&parser);
 
   OrgKdeKmailKmailInterface kmailInterface( QLatin1String("org.kde.kmail"), QLatin1String("/KMail"), QDBusConnection::sessionBus());
   kmailInterface.openComposer( QLatin1String("to 1"),QString(),QString(),QLatin1String("First test"),QLatin1String("simple openComp call"),0);
