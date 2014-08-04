@@ -4751,7 +4751,7 @@ void KMMainWidget::slotServerSideSubscription()
     if ( kmkernel->isImapFolder( mCurrentFolder->collection(), isImapOnline ) ) {
         QDBusInterface iface(
                     QLatin1String( "org.freedesktop.Akonadi.Resource.")+mCurrentFolder->collection().resource(),
-                    QLatin1String( "/" ), QLatin1String( "org.kde.Akonadi.Imap.Resource" ),
+                    QLatin1String( "/" ), QLatin1String( "org.kde.Akonadi.ImapResourceBase" ),
                     DBusConnectionPool::threadConnection(), this );
         if ( !iface.isValid() ) {
             kDebug()<<"Cannot create imap dbus interface";
@@ -4766,13 +4766,12 @@ void KMMainWidget::slotServerSideSubscription()
 void KMMainWidget::slotConfigureSubscriptionFinished(QDBusPendingCallWatcher* watcher)
 {
     QDBusPendingReply<int> reply = *watcher;
-    if ( !reply.isValid() ) {
-        return;
-    }
-    if (reply == -2 ){
-        KMessageBox::error(this,i18n("IMAP server not configured yet. Please configure the server in the IMAP account before setting up server-side subscription."));
-    } else if (reply == -1) {
-        KMessageBox::error(this,i18n("Log in failed, please configure the IMAP account before setting up server-side subscription."));
+    if ( reply.isValid() ) {
+        if (reply == -2 ){
+            KMessageBox::error(this,i18n("IMAP server not configured yet. Please configure the server in the IMAP account before setting up server-side subscription."));
+        } else if (reply == -1) {
+            KMessageBox::error(this,i18n("Log in failed, please configure the IMAP account before setting up server-side subscription."));
+        }
     }
     watcher->deleteLater();
 }
