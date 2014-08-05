@@ -84,7 +84,7 @@ QString toolTip( const Akonadi::Item& item )
                 "</div>"                                                       \
                 "</td>"                                                        \
                 "</tr>"
-                ).arg( txtColorName ).arg( bckColorName ).arg( Qt::escape( msg->subject()->asUnicodeString() ) ).arg( textDirection );
+                ).arg( txtColorName ).arg( bckColorName ).arg( msg->subject()->asUnicodeString().toHtmlEscaped() ).arg( textDirection );
 
     tip += QString::fromLatin1(
                 "<tr>"                                                              \

@@ -1516,7 +1516,7 @@ void KMMainWidget::slotExpireFolder()
 
     if ( GlobalSettings::self()->warnBeforeExpire() ) {
         const QString message = i18n( "<qt>Are you sure you want to expire the folder <b>%1</b>?</qt>",
-                                      Qt::escape( mCurrentFolder->name() ) );
+                                      mCurrentFolder->name().toHtmlEscaped() );
         if ( KMessageBox::warningContinueCancel( this, message, i18n( "Expire Folder" ),
                                                  KGuiItem( i18n( "&Expire" ) ) )
              != KMessageBox::Continue ) {
@@ -1542,7 +1542,7 @@ void KMMainWidget::slotEmptyFolder()
         const QString text = (isTrash) ?
                     i18n("Are you sure you want to empty the trash folder?") :
                     i18n("<qt>Are you sure you want to move all messages from "
-                         "folder <b>%1</b> to the trash?</qt>", Qt::escape( mCurrentFolder->name() ) );
+                         "folder <b>%1</b> to the trash?</qt>", mCurrentFolder->name().toHtmlEscaped() );
 
         if (KMessageBox::warningContinueCancel(this, text, title, KGuiItem( title, QLatin1String("user-trash")))
                 != KMessageBox::Continue) return;
@@ -1612,7 +1612,7 @@ void KMMainWidget::slotDelayedRemoveFolder( KJob *job )
         title = i18n("Delete Search");
         str = i18n("<qt>Are you sure you want to delete the search <b>%1</b>?<br />"
                    "Any messages it shows will still be available in their original folder.</qt>",
-                   Qt::escape( col.name() ) );
+                   col.name().toHtmlEscaped() );
         buttonLabel = i18nc("@action:button Delete search", "&Delete");
     } else {
         title = i18n("Delete Folder");
@@ -1622,14 +1622,14 @@ void KMMainWidget::slotDelayedRemoveFolder( KJob *job )
             if ( hasNotSubDirectory ) {
                 str = i18n("<qt>Are you sure you want to delete the empty folder "
                            "<b>%1</b>?</qt>",
-                           Qt::escape( col.name() ) );
+                           col.name().toHtmlEscaped() );
             } else {
                 str = xi18n("<qt>Are you sure you want to delete the empty folder "
                            "<resource>%1</resource> and all its subfolders? Those subfolders might "
                            "not be empty and their contents will be discarded as well. "
                            "<p><b>Beware</b> that discarded messages are not saved "
                            "into your Trash folder and are permanently deleted.</p></qt>",
-                           Qt::escape( col.name() ) );
+                           col.name().toHtmlEscaped() );
             }
         } else {
             if ( hasNotSubDirectory ) {
@@ -1637,13 +1637,13 @@ void KMMainWidget::slotDelayedRemoveFolder( KJob *job )
                            "<resource>%1</resource>, discarding its contents? "
                            "<p><b>Beware</b> that discarded messages are not saved "
                            "into your Trash folder and are permanently deleted.</p></qt>",
-                           Qt::escape( col.name() ) );
+                           col.name().toHtmlEscaped() );
             }else {
                 str = xi18n("<qt>Are you sure you want to delete the folder <resource>%1</resource> "
                            "and all its subfolders, discarding their contents? "
                            "<p><b>Beware</b> that discarded messages are not saved "
                            "into your Trash folder and are permanently deleted.</p></qt>",
-                           Qt::escape( col.name() ) );
+                           col.name().toHtmlEscaped() );
             }
         }
         buttonLabel = i18nc("@action:button Delete folder", "&Delete");
