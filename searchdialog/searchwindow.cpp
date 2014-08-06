@@ -217,9 +217,9 @@ SearchWindow::SearchWindow( KMMainWidget *widget, const Akonadi::Collection &col
     if ( mainWidth || mainHeight )
         resize( mainWidth, mainHeight );
 
-    connect( mSearchButton, SIGNAL(clicked()), SLOT(slotSearch()) );
-    connect( this, SIGNAL(finished()), this, SLOT(deleteLater()) );
-    connect( this, SIGNAL(closeClicked()),this,SLOT(slotClose()) );
+    connect(mSearchButton, &QPushButton::clicked, this, &SearchWindow::slotSearch);
+    connect(this, &SearchWindow::finished, this, &SearchWindow::deleteLater);
+    connect(this, &SearchWindow::closeClicked, this, &SearchWindow::slotClose);
 
     // give focus to the value field of the first search rule
     RegExpLineEdit* r = mUi.mPatternEdit->findChild<RegExpLineEdit*>( QLatin1String("regExpLineEdit") );
@@ -232,29 +232,29 @@ SearchWindow::SearchWindow( KMMainWidget *widget, const Akonadi::Collection &col
     KActionCollection *ac = actionCollection();
     mReplyAction = new QAction( QIcon::fromTheme( QLatin1String("mail-reply-sender") ), i18n( "&Reply..." ), this );
     actionCollection()->addAction( QLatin1String("search_reply"), mReplyAction );
-    connect( mReplyAction, SIGNAL(triggered(bool)), SLOT(slotReplyToMsg()) );
+    connect(mReplyAction, &QAction::triggered, this, &SearchWindow::slotReplyToMsg);
 
     mReplyAllAction = new QAction( QIcon::fromTheme( QLatin1String("mail-reply-all") ), i18n( "Reply to &All..." ), this );
     actionCollection()->addAction( QLatin1String("search_reply_all"), mReplyAllAction );
-    connect( mReplyAllAction, SIGNAL(triggered(bool)), SLOT(slotReplyAllToMsg()) );
+    connect(mReplyAllAction, &QAction::triggered, this, &SearchWindow::slotReplyAllToMsg);
 
     mReplyListAction = new QAction( QIcon::fromTheme( QLatin1String("mail-reply-list") ), i18n( "Reply to Mailing-&List..." ), this );
     actionCollection()->addAction(QLatin1String( "search_reply_list"), mReplyListAction );
-    connect( mReplyListAction, SIGNAL(triggered(bool)), SLOT(slotReplyListToMsg()) );
+    connect(mReplyListAction, &QAction::triggered, this, &SearchWindow::slotReplyListToMsg);
 
     mForwardActionMenu = new KActionMenu( QIcon::fromTheme( QLatin1String("mail-forward") ), i18nc( "Message->", "&Forward" ), this );
     actionCollection()->addAction( QLatin1String("search_message_forward"), mForwardActionMenu );
-    connect( mForwardActionMenu, SIGNAL(triggered(bool)), this, SLOT(slotForwardMsg()) );
+    connect(mForwardActionMenu, &KActionMenu::triggered, this, &SearchWindow::slotForwardMsg);
 
     mForwardInlineAction = new QAction( QIcon::fromTheme( QLatin1String("mail-forward") ),
                                         i18nc( "@action:inmenu Forward message inline.", "&Inline..." ),
                                         this );
     actionCollection()->addAction( QLatin1String("search_message_forward_inline"), mForwardInlineAction );
-    connect( mForwardInlineAction, SIGNAL(triggered(bool)), SLOT(slotForwardMsg()) );
+    connect(mForwardInlineAction, &QAction::triggered, this, &SearchWindow::slotForwardMsg);
 
     mForwardAttachedAction = new QAction( QIcon::fromTheme( QLatin1String("mail-forward") ), i18nc( "Message->Forward->", "As &Attachment..." ), this );
     actionCollection()->addAction( QLatin1String("search_message_forward_as_attachment"), mForwardAttachedAction );
-    connect( mForwardAttachedAction, SIGNAL(triggered(bool)), SLOT(slotForwardAttachedMsg()) );
+    connect(mForwardAttachedAction, &QAction::triggered, this, &SearchWindow::slotForwardAttachedMsg);
 
     if ( GlobalSettings::self()->forwardingInlineByDefault() ) {
         mForwardActionMenu->addAction( mForwardInlineAction );
@@ -268,17 +268,17 @@ SearchWindow::SearchWindow( KMMainWidget *widget, const Akonadi::Collection &col
 
     mSaveAtchAction = new QAction( QIcon::fromTheme( QLatin1String("mail-attachment") ), i18n( "Save Attachments..." ), this );
     actionCollection()->addAction( QLatin1String("search_save_attachments"), mSaveAtchAction );
-    connect( mSaveAtchAction, SIGNAL(triggered(bool)), SLOT(slotSaveAttachments()) );
+    connect(mSaveAtchAction, &QAction::triggered, this, &SearchWindow::slotSaveAttachments);
 
     mPrintAction = actionCollection()->addAction( KStandardAction::Print, QLatin1String("search_print"), this, SLOT(slotPrintMsg()) );
 
     mClearAction = new QAction( i18n( "Clear Selection" ), this );
     actionCollection()->addAction( QLatin1String("search_clear_selection"), mClearAction );
-    connect( mClearAction, SIGNAL(triggered(bool)), SLOT(slotClearSelection()) );
+    connect(mClearAction, &QAction::triggered, this, &SearchWindow::slotClearSelection);
 
     mJumpToFolderAction = new QAction( i18n( "Jump to original folder" ), this );
     actionCollection()->addAction( QLatin1String("search_jump_folder"), mJumpToFolderAction );
-    connect( mJumpToFolderAction, SIGNAL(triggered(bool)), SLOT(slotJumpToFolder()) );
+    connect(mJumpToFolderAction, &QAction::triggered, this, &SearchWindow::slotJumpToFolder);
 
 
     connect( mUi.mCbxFolders, SIGNAL(folderChanged(Akonadi::Collection)),
@@ -397,7 +397,7 @@ void SearchWindow::slotSearch()
 
     //Fetch all search collections
     Akonadi::CollectionFetchJob *fetchJob = new Akonadi::CollectionFetchJob(Akonadi::Collection(1), Akonadi::CollectionFetchJob::FirstLevel);
-    connect(fetchJob, SIGNAL(result(KJob*)), this, SLOT(slotSearchCollectionsFetched(KJob*)));
+    connect(fetchJob, &Akonadi::CollectionFetchJob::result, this, &SearchWindow::slotSearchCollectionsFetched);
 }
 
 void SearchWindow::slotSearchCollectionsFetched(KJob *job)
@@ -523,7 +523,7 @@ void SearchWindow::doSearch()
         mSearchJob = new Akonadi::CollectionModifyJob( mFolder, this );
     }
 
-    connect( mSearchJob, SIGNAL(result(KJob*)), SLOT(searchDone(KJob*)) );
+    connect(mSearchJob, &Akonadi::CollectionModifyJob::result, this, &SearchWindow::searchDone);
     mUi.mProgressIndicator->start();
     enableGUI();
     mUi.mStatusLbl->setText( i18n( "Searching..." ) );
@@ -701,10 +701,10 @@ void SearchWindow::enableGUI()
     KGuiItem::assign(mSearchButton, searching ? mStopSearchGuiItem : mStartSearchGuiItem );
     if ( searching ) {
         disconnect( mSearchButton, SIGNAL(clicked()), this, SLOT(slotSearch()) );
-        connect( mSearchButton, SIGNAL(clicked()), SLOT(slotStop()) );
+        connect(mSearchButton, &QPushButton::clicked, this, &SearchWindow::slotStop);
     } else {
         disconnect( mSearchButton, SIGNAL(clicked()), this, SLOT(slotStop()) );
-        connect( mSearchButton, SIGNAL(clicked()), SLOT(slotSearch()) );
+        connect(mSearchButton, &QPushButton::clicked, this, &SearchWindow::slotSearch);
     }
 }
 

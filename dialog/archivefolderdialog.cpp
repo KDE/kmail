@@ -76,7 +76,7 @@ ArchiveFolderDialog::ArchiveFolderDialog( QWidget *parent )
     mFolderRequester = new FolderRequester( mainWidget );
     mFolderRequester->setMustBeReadWrite( false );
     mFolderRequester->setNotAllowToCreateNewFolder( true );
-    connect( mFolderRequester, SIGNAL(folderChanged(Akonadi::Collection)), SLOT(slotFolderChanged(Akonadi::Collection)) );
+    connect(mFolderRequester, &FolderRequester::folderChanged, this, &ArchiveFolderDialog::slotFolderChanged);
     folderLabel->setBuddy( mFolderRequester );
     mainLayout->addWidget( mFolderRequester, row, 1 );
     row++;
@@ -116,7 +116,7 @@ ArchiveFolderDialog::ArchiveFolderDialog( QWidget *parent )
     row++;
 
     mRecursiveCheckBox = new QCheckBox( i18n( "Archive all subfolders" ), mainWidget );
-    connect( mRecursiveCheckBox, SIGNAL(clicked()), this, SLOT(slotRecursiveCheckboxClicked()) );
+    connect(mRecursiveCheckBox, &QCheckBox::clicked, this, &ArchiveFolderDialog::slotRecursiveCheckboxClicked);
     mainLayout->addWidget( mRecursiveCheckBox, row, 0, 1, 2, Qt::AlignLeft );
     mRecursiveCheckBox->setChecked( true );
     row++;

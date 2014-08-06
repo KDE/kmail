@@ -30,11 +30,11 @@ AttachmentMissingWarning::AttachmentMissingWarning(QWidget *parent)
     setWordWrap(true);
 
     QAction *action = new QAction( QIcon::fromTheme(QLatin1String( "mail-attachment" )), i18n( "&Attach file" ), this );
-    connect( action, SIGNAL(triggered(bool)), SLOT(slotAttachFile()) );
+    connect(action, &QAction::triggered, this, &AttachmentMissingWarning::slotAttachFile);
     addAction( action );
 
     action = new QAction( QIcon::fromTheme(QLatin1String( "window-close" )), i18n( "&Remind me later" ), this );
-    connect( action, SIGNAL(triggered(bool)), SLOT(explicitlyClosed()) );
+    connect(action, &QAction::triggered, this, &AttachmentMissingWarning::explicitlyClosed);
     addAction( action );
 
 }

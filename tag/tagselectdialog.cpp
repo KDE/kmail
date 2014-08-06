@@ -64,8 +64,8 @@ TagSelectDialog::TagSelectDialog( QWidget * parent, int numberOfSelectedMessages
     okButton->setShortcut(Qt::CTRL | Qt::Key_Return);
     QPushButton *user1Button = new QPushButton;
     buttonBox->addButton(user1Button, QDialogButtonBox::ActionRole);
-    connect(buttonBox, SIGNAL(accepted()), this, SLOT(accept()));
-    connect(buttonBox, SIGNAL(rejected()), this, SLOT(reject()));
+    connect(buttonBox, &QDialogButtonBox::accepted, this, &TagSelectDialog::accept);
+    connect(buttonBox, &QDialogButtonBox::rejected, this, &TagSelectDialog::reject);
     user1Button->setText(i18n("Addnewtag..."));
     okButton->setDefault(true);
     setModal( true );
@@ -85,7 +85,7 @@ TagSelectDialog::TagSelectDialog( QWidget * parent, int numberOfSelectedMessages
     vbox->addWidget( mListTag );
 
     createTagList();
-    connect(user1Button, SIGNAL(clicked()), SLOT(slotAddNewTag()));
+    connect(user1Button, &QPushButton::clicked, this, &TagSelectDialog::slotAddNewTag);
 
     KConfigGroup group( KMKernel::self()->config(), "TagSelectDialog" );
     const QSize size = group.readEntry( "Size", QSize(500, 300) );
@@ -116,7 +116,7 @@ void TagSelectDialog::createTagList()
 {
     Akonadi::TagFetchJob *fetchJob = new Akonadi::TagFetchJob(this);
     fetchJob->fetchScope().fetchAttribute<Akonadi::TagAttribute>();
-    connect(fetchJob, SIGNAL(result(KJob*)), this, SLOT(slotTagsFetched(KJob*)));
+    connect(fetchJob, &Akonadi::TagFetchJob::result, this, &TagSelectDialog::slotTagsFetched);
 }
 
 void TagSelectDialog::slotTagsFetched(KJob *job)

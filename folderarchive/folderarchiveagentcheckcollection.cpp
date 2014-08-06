@@ -42,11 +42,11 @@ void FolderArchiveAgentCheckCollection::start()
 #if 0
     if (mInfo->keepExistingStructure()) {
         Akonadi::CollectionFetchJob *job = new Akonadi::CollectionFetchJob(col, Akonadi::CollectionFetchJob::Recursive);
-        connect(job, SIGNAL(result(KJob*)), this, SLOT(slotInitialCollectionFetchingDone(KJob*)) );
+        connect(job, &Akonadi::CollectionFetchJob::result, this, &FolderArchiveAgentCheckCollection::slotInitialCollectionFetchingDone);
     } else {
 #endif
         Akonadi::CollectionFetchJob *job = new Akonadi::CollectionFetchJob(col, Akonadi::CollectionFetchJob::FirstLevel);
-        connect(job, SIGNAL(result(KJob*)), this, SLOT(slotInitialCollectionFetchingFirstLevelDone(KJob*)) );
+        connect(job, &Akonadi::CollectionFetchJob::result, this, &FolderArchiveAgentCheckCollection::slotInitialCollectionFetchingFirstLevelDone);
 #if 0
     }
 #endif
@@ -119,7 +119,7 @@ void FolderArchiveAgentCheckCollection::createNewFolder(const QString &name)
     collection.setContentMimeTypes( QStringList() << QLatin1String( "message/rfc822" ) );
 
     Akonadi::CollectionCreateJob *job = new Akonadi::CollectionCreateJob( collection );
-    connect( job, SIGNAL(result(KJob*)), this, SLOT(slotCreateNewFolder(KJob*)) );
+    connect(job, &Akonadi::CollectionCreateJob::result, this, &FolderArchiveAgentCheckCollection::slotCreateNewFolder);
 }
 
 void FolderArchiveAgentCheckCollection::slotCreateNewFolder(KJob *job)

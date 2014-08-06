@@ -65,9 +65,9 @@ TagActionManager::TagActionManager( QObject *parent, KActionCollection *actionCo
 
     mMonitor->setTypeMonitored(Akonadi::Monitor::Tags);
     mMonitor->tagFetchScope().fetchAttribute<Akonadi::TagAttribute>();
-    connect(mMonitor, SIGNAL(tagAdded(Akonadi::Tag)), this, SLOT(onTagAdded(Akonadi::Tag)));
-    connect(mMonitor, SIGNAL(tagRemoved(Akonadi::Tag)), this, SLOT(onTagRemoved(Akonadi::Tag)));
-    connect(mMonitor, SIGNAL(tagChanged(Akonadi::Tag)), this, SLOT(onTagChanged(Akonadi::Tag)));
+    connect(mMonitor, &Akonadi::Monitor::tagAdded, this, &TagActionManager::onTagAdded);
+    connect(mMonitor, &Akonadi::Monitor::tagRemoved, this, &TagActionManager::onTagRemoved);
+    connect(mMonitor, &Akonadi::Monitor::tagChanged, this, &TagActionManager::onTagChanged);
 }
 
 TagActionManager::~TagActionManager()
@@ -153,7 +153,7 @@ void TagActionManager::createActions()
         mTagFetchInProgress = true;
         Akonadi::TagFetchJob *fetchJob = new Akonadi::TagFetchJob(this);
         fetchJob->fetchScope().fetchAttribute<Akonadi::TagAttribute>();
-        connect(fetchJob, SIGNAL(result(KJob*)), this, SLOT(finishedTagListing(KJob*)));
+        connect(fetchJob, &Akonadi::TagFetchJob::result, this, &TagActionManager::finishedTagListing);
     } else {
         mTagFetchInProgress = false;
         createTagActions(mTags);
