@@ -2960,7 +2960,7 @@ void KMMainWidget::setupActions()
     mSaveAsAction = new QAction(QIcon::fromTheme(QLatin1String("document-save")), i18n("Save &As..."), this);
     actionCollection()->addAction(QLatin1String("file_save_as"), mSaveAsAction );
     connect(mSaveAsAction, SIGNAL(triggered(bool)), SLOT(slotSaveMsg()));
-    mSaveAsAction->setShortcut(KStandardShortcut::save().first());
+    actionCollection()->setDefaultShortcut(mSaveAsAction, KStandardShortcut::save().first());
 
     mOpenAction = KStandardAction::open( this, SLOT(slotOpenMsg()),
                                          actionCollection() );
@@ -2979,7 +2979,7 @@ void KMMainWidget::setupActions()
         QAction *action = new QAction(QIcon::fromTheme(QLatin1String("mail-receive")), i18n("Check &Mail"), this);
         actionCollection()->addAction(QLatin1String("check_mail"), action );
         connect(action, SIGNAL(triggered(bool)), SLOT(slotCheckMail()));
-        action->setShortcut(QKeySequence(Qt::CTRL+Qt::Key_L));
+        actionCollection()->setDefaultShortcut(action, QKeySequence(Qt::CTRL+Qt::Key_L));
     }
 
     KActionMenu *actActionMenu = new KActionMenu(QIcon::fromTheme(QLatin1String("mail-receive")), i18n("Check Mail In"), this);
@@ -3116,11 +3116,11 @@ void KMMainWidget::setupActions()
     mDeleteAction = new QAction(QIcon::fromTheme(QLatin1String("edit-delete")), i18nc("@action Hard delete, bypassing trash", "&Delete"), this);
     actionCollection()->addAction(QLatin1String("delete"), mDeleteAction );
     connect(mDeleteAction, SIGNAL(triggered(bool)), SLOT(slotDeleteMsg()));
-    mDeleteAction->setShortcut(QKeySequence(Qt::SHIFT+Qt::Key_Delete));
+    actionCollection()->setDefaultShortcut(mDeleteAction, QKeySequence(Qt::SHIFT+Qt::Key_Delete));
 
     mTrashThreadAction = new QAction(i18n("M&ove Thread to Trash"), this);
     actionCollection()->addAction(QLatin1String("move_thread_to_trash"), mTrashThreadAction );
-    mTrashThreadAction->setShortcut(QKeySequence(Qt::CTRL+Qt::Key_Delete));
+    actionCollection()->setDefaultShortcut(mTrashThreadAction,QKeySequence(Qt::CTRL+Qt::Key_Delete));
     mTrashThreadAction->setIcon(QIcon::fromTheme(QLatin1String("user-trash")));
     KMail::Util::addQActionHelpText(mTrashThreadAction, i18n("Move thread to trashcan"));
     connect(mTrashThreadAction, SIGNAL(triggered(bool)), SLOT(slotTrashThread()));
@@ -3128,18 +3128,18 @@ void KMMainWidget::setupActions()
     mDeleteThreadAction = new QAction(QIcon::fromTheme(QLatin1String("edit-delete")), i18n("Delete T&hread"), this);
     actionCollection()->addAction(QLatin1String("delete_thread"), mDeleteThreadAction );
     connect(mDeleteThreadAction, SIGNAL(triggered(bool)), SLOT(slotDeleteThread()));
-    mDeleteThreadAction->setShortcut(QKeySequence(Qt::CTRL+Qt::SHIFT+Qt::Key_Delete));
+    actionCollection()->setDefaultShortcut(mDeleteThreadAction,QKeySequence(Qt::CTRL+Qt::SHIFT+Qt::Key_Delete));
 
     mSearchMessages = new QAction(QIcon::fromTheme(QLatin1String("edit-find-mail")), i18n("&Find Messages..."), this);
     actionCollection()->addAction(QLatin1String("search_messages"), mSearchMessages );
     connect(mSearchMessages, SIGNAL(triggered(bool)), SLOT(slotRequestFullSearchFromQuickSearch()));
-    mSearchMessages->setShortcut(QKeySequence(Qt::Key_S));
+    actionCollection()->setDefaultShortcut(mSearchMessages,QKeySequence(Qt::Key_S));
 
     {
         QAction *action = new QAction(i18n("Select &All Messages"), this);
         actionCollection()->addAction(QLatin1String("mark_all_messages"), action );
         connect(action, SIGNAL(triggered(bool)), SLOT(slotMarkAll()));
-        action->setShortcut( QKeySequence( Qt::CTRL + Qt::Key_A ) );
+        actionCollection()->setDefaultShortcut(action, QKeySequence( Qt::CTRL + Qt::Key_A ) );
     }
 
     //----- Folder Menu
@@ -3199,15 +3199,15 @@ void KMMainWidget::setupActions()
 
     {
         QAction *action =  mAkonadiStandardActionManager->action( Akonadi::StandardActionManager::CopyCollections);
-        action->setShortcut(QKeySequence(Qt::SHIFT+Qt::CTRL+Qt::Key_C));
+        actionCollection()->setDefaultShortcut(action,QKeySequence(Qt::SHIFT+Qt::CTRL+Qt::Key_C));
     }
     {
         QAction *action = mAkonadiStandardActionManager->action( Akonadi::StandardActionManager::Paste);
-        action->setShortcut(QKeySequence(Qt::SHIFT+Qt::CTRL+Qt::Key_V));
+        actionCollection()->setDefaultShortcut(action,QKeySequence(Qt::SHIFT+Qt::CTRL+Qt::Key_V));
     }
     {
         QAction *action = mAkonadiStandardActionManager->action( Akonadi::StandardActionManager::CopyItems);
-        action->setShortcut(QKeySequence(Qt::ALT+Qt::CTRL+Qt::Key_C));
+        actionCollection()->setDefaultShortcut(action,QKeySequence(Qt::ALT+Qt::CTRL+Qt::Key_C));
     }
     {
         QAction *action = mAkonadiStandardActionManager->action( Akonadi::StandardActionManager::CutItems );
@@ -3248,7 +3248,7 @@ void KMMainWidget::setupActions()
     actionCollection()->addAction(QLatin1String("post_message"),  mMessageNewList);
     connect( mMessageNewList, SIGNAL(triggered(bool)),
              SLOT(slotPostToML()) );
-    mMessageNewList->setShortcut( QKeySequence( Qt::CTRL + Qt::SHIFT + Qt::Key_N ) );
+    actionCollection()->setDefaultShortcut(mMessageNewList, QKeySequence( Qt::CTRL + Qt::SHIFT + Qt::Key_N ) );
 
     mSendAgainAction = new QAction(i18n("Send A&gain..."), this);
     actionCollection()->addAction(QLatin1String("send_again"), mSendAgainAction );
@@ -3283,7 +3283,7 @@ void KMMainWidget::setupActions()
     mUseAction = new QAction( QIcon::fromTheme(QLatin1String("document-new")), i18n("New Message From &Template"), this );
     actionCollection()->addAction(QLatin1String("use_template"), mUseAction);
     connect(mUseAction, SIGNAL(triggered(bool)), SLOT(slotUseTemplate()));
-    mUseAction->setShortcut(QKeySequence(Qt::SHIFT + Qt::Key_N));
+    actionCollection()->setDefaultShortcut(mUseAction,QKeySequence(Qt::SHIFT + Qt::Key_N));
 
     //----- "Mark Thread" submenu
     mThreadStatusMenu = new KActionMenu(i18n("Mark &Thread"), this);
@@ -3342,7 +3342,7 @@ void KMMainWidget::setupActions()
     actionCollection()->addAction( QLatin1String("apply_filters"), mApplyAllFiltersAction );
     connect( mApplyAllFiltersAction, SIGNAL(triggered(bool)),
              SLOT(slotApplyFilters()) );
-    mApplyAllFiltersAction->setShortcut( QKeySequence( Qt::CTRL + Qt::Key_J ) );
+    actionCollection()->setDefaultShortcut(mApplyAllFiltersAction,QKeySequence( Qt::CTRL + Qt::Key_J ) );
 
     mApplyFilterActionsMenu = new KActionMenu( i18n( "A&pply Filter" ), this );
     actionCollection()->addAction( QLatin1String("apply_filter_actions"), mApplyFilterActionsMenu );
@@ -3350,7 +3350,7 @@ void KMMainWidget::setupActions()
     {
         QAction *action = new QAction(i18nc("View->","&Expand Thread / Group"), this);
         actionCollection()->addAction(QLatin1String("expand_thread"), action );
-        action->setShortcut(QKeySequence(Qt::Key_Period));
+        actionCollection()->setDefaultShortcut(action,QKeySequence(Qt::Key_Period));
         KMail::Util::addQActionHelpText(action, i18n("Expand the current thread or group"));
         connect(action, SIGNAL(triggered(bool)), SLOT(slotExpandThread()));
     }
