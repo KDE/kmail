@@ -334,6 +334,8 @@ generate_export_header(kmailprivate BASE_NAME kmail)
 
 
   add_subdirectory(mailmerge/tests/)
+  add_subdirectory(mailmerge/autotests/)
+
   ########### install files ###############
 
   install(TARGETS kmailprivate ${INSTALL_TARGETS_DEFAULT_ARGS} LIBRARY NAMELINK_SKIP)
