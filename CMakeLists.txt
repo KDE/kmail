@@ -291,7 +291,6 @@ generate_export_header(kmailprivate BASE_NAME kmail)
     messageviewer
     akonadi_next
     sendlater
-    KF5::KDELibs4Support
   )
 
   set_target_properties(kmailprivate
