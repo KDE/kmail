@@ -706,11 +706,10 @@ int KMKernel::openComposer (const QString &to, const QString &cc,
         } else {
             // Just do what we're told to do
             msgPart = new KMime::Content;
-            msgPart->contentType()->setName( attachName, "utf-8" );
             msgPart->contentTransferEncoding()->fromUnicodeString(QLatin1String(attachCte), "utf-8" );
             msgPart->setBody( attachData ); //TODO: check if was setBodyEncoded
             msgPart->contentType()->setMimeType( attachType + '/' +  attachSubType );
-            msgPart->contentDisposition()->setParameter( QLatin1String(attachParamAttr), attachParamValue ); //TODO: Check if the content disposition parameter needs to be set!
+            msgPart->contentType()->setParameter( QLatin1String(attachParamAttr), attachParamValue ); //TODO: Check if the content disposition parameter needs to be set!
             if( ! MessageViewer::GlobalSettings::self()->exchangeCompatibleInvitations() ) {
                 msgPart->contentDisposition()->fromUnicodeString(QLatin1String(attachContDisp), "utf-8" );
             }
@@ -718,6 +717,9 @@ int KMKernel::openComposer (const QString &to, const QString &cc,
                 // kDebug() << "Set attachCharset to" << attachCharset;
                 msgPart->contentType()->setCharset( attachCharset );
             }
+
+            msgPart->contentType()->setName( attachName, "utf-8" );
+            msgPart->assemble();
             // Don't show the composer window if the automatic sending is checked
             iCalAutoSend = MessageViewer::GlobalSettings::self()->automaticSending();
         }
