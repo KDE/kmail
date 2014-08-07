@@ -4672,7 +4672,7 @@ void KMMainWidget::slotCollectionPropertiesFinished( KJob *job )
                                             << QLatin1String( "KMail::CollectionMaintenancePage" );
 
     Akonadi::CollectionPropertiesDialog *dlg = new Akonadi::CollectionPropertiesDialog( collection, pages, this );
-    dlg->setCaption( i18nc( "@title:window", "Properties of Folder %1", collection.name() ) );
+    dlg->setWindowTitle( i18nc( "@title:window", "Properties of Folder %1", collection.name() ) );
 
 
     const QString pageToShow = fetch->property( "pageToShow" ).toString();
