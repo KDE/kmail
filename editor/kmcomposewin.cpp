@@ -140,7 +140,7 @@
 #include <kedittoolbar.h>
 #include <qinputdialog.h>
 #include <QMenu>
-#include <kmimetype.h>
+
 #include <kmessagebox.h>
 #include <krecentfilesaction.h>
 #include <kshortcutsdialog.h>
@@ -174,6 +174,8 @@
 #include <KCharsets>
 #include <QStandardPaths>
 #include <QFontDatabase>
+#include <QMimeDatabase>
+#include <QMimeType>
 
 using Sonnet::DictionaryComboBox;
 using MailTransport::TransportManager;
@@ -1992,14 +1994,15 @@ void KMComposeWin::addAttach( KMime::Content *msgPart )
 QString KMComposeWin::prettyMimeType( const QString &type )
 {
     const QString t = type.toLower();
-    const KMimeType::Ptr st = KMimeType::mimeType( t );
+    QMimeDatabase db;
+    const QMimeType st = db.mimeTypeForName( t );
 
-    if ( !st ) {
+    if ( st.isValid() ) {
         qWarning() <<"unknown mimetype" << t;
         return t;
     }
 
-    const QString pretty = !st->isDefault() ? st->comment() : t;
+    const QString pretty = !st.isDefault() ? st.comment() : t;
     if ( pretty.isEmpty() )
         return type;
     else
