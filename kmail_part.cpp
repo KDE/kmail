@@ -52,7 +52,6 @@
 #include <KSharedConfig>
 
 K_PLUGIN_FACTORY( KMailFactory, registerPlugin<KMailPart>(); )
-K_EXPORT_PLUGIN( KMailFactory( KMail::AboutData() ) )
 
 using namespace KMail;
 
