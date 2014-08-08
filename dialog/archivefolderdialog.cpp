@@ -30,7 +30,6 @@
 #include <kcombobox.h>
 #include <kurlrequester.h>
 #include <kmessagebox.h>
-#include <KMimeType>
 #include <KSeparator>
 
 #include <qlabel.h>
