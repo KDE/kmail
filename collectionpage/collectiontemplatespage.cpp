@@ -61,11 +61,11 @@ void CollectionTemplatesPage::init()
     topLayout->addLayout( topItems );
 
     mCustom = new QCheckBox( i18n("&Use custom message templates in this folder"), this );
-    connect(mCustom, SIGNAL(clicked(bool)), this, SLOT(slotChanged()));
+    connect(mCustom, &QCheckBox::clicked, this, &CollectionTemplatesPage::slotChanged);
     topItems->addWidget( mCustom, Qt::AlignLeft );
 
     mWidget = new TemplateParser::TemplatesConfiguration( this, QLatin1String("folder-templates") );
-    connect(mWidget, SIGNAL(changed()), this, SLOT(slotChanged()));
+    connect(mWidget, &TemplateParser::TemplatesConfiguration::changed, this, &CollectionTemplatesPage::slotChanged);
     mWidget->setEnabled( false );
 
     // Move the help label outside of the templates configuration widget,

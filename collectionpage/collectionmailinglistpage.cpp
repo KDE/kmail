@@ -83,7 +83,7 @@ void CollectionMailingListPage::init(const Akonadi::Collection & col)
     mHoldsMailingList = new QCheckBox( i18n("Folder holds a mailing list"), this );
     connect( mHoldsMailingList, SIGNAL(toggled(bool)),
              SLOT(slotHoldsML(bool)) );
-    connect( mHoldsMailingList, SIGNAL(toggled(bool)), SLOT(slotConfigChanged()) );
+    connect(mHoldsMailingList, &QCheckBox::toggled, this, &CollectionMailingListPage::slotConfigChanged);
     topLayout->addWidget( mHoldsMailingList );
 
     mGroupWidget = new QWidget( this );
@@ -135,7 +135,7 @@ void CollectionMailingListPage::init(const Akonadi::Collection & col)
 
     mEditList = new KEditListWidget( mGroupWidget );
     mEditList->lineEdit()->setClearButtonEnabled(true);
-    connect(mEditList, SIGNAL(changed()),SLOT(slotConfigChanged()));
+    connect(mEditList, &KEditListWidget::changed, this, &CollectionMailingListPage::slotConfigChanged);
     groupLayout->addWidget( mEditList, 7, 0, 1, 4 );
 
     QStringList el;
@@ -205,7 +205,7 @@ void CollectionMailingListPage::slotDetectMailingList()
         //FIXME not load all folder
         Akonadi::ItemFetchJob *job = new Akonadi::ItemFetchJob( mFolder->collection(), this );
         job->fetchScope().fetchPayloadPart( Akonadi::MessagePart::Header );
-        connect( job, SIGNAL(result(KJob*)), this, SLOT(slotFetchDone(KJob*)) );
+        connect(job, &Akonadi::ItemFetchJob::result, this, &CollectionMailingListPage::slotFetchDone);
         //Don't allow to reactive it
         mDetectButton->setEnabled( false );
     } else {

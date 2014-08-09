@@ -103,7 +103,7 @@ void CollectionMaintenancePage::init(const Akonadi::Collection & col)
 #if 0
     QPushButton *forceReindex = new QPushButton(i18n("Force reindexing"));
     indexingLayout->addWidget( forceReindex );
-    connect(forceReindex,SIGNAL(clicked()),SLOT(slotReindexing()));
+    connect(forceReindex, &QPushButton::clicked, this, &CollectionMaintenancePage::slotReindexing);
 #endif
     topLayout->addWidget( indexingGroup );
     topLayout->addStretch( 100 );
