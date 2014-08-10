@@ -111,7 +111,7 @@ MessageActions::MessageActions( KActionCollection *ac, QWidget *parent )
 
     mListFilterAction = new QAction(i18n("Filter on Mailing-&List..."), this);
     ac->addAction(QLatin1String("mlist_filter"), mListFilterAction );
-    connect(mListFilterAction, SIGNAL(triggered(bool)), SLOT(slotMailingListFilter()));
+    connect(mListFilterAction, &QAction::triggered, this, &MessageActions::slotMailingListFilter);
 
     mStatusMenu = new KActionMenu ( i18n( "Mar&k Message" ), this );
     ac->addAction( QLatin1String("set_status"), mStatusMenu );
@@ -196,7 +196,7 @@ MessageActions::MessageActions( KActionCollection *ac, QWidget *parent )
              parent, SLOT(slotCustomReplyAllToMsg(QString)) );
     connect( mCustomTemplatesMenu, SIGNAL(forwardTemplateSelected(QString)),
              parent, SLOT(slotCustomForwardMsg(QString)) );
-    connect( KMKernel::self(), SIGNAL(customTemplatesChanged()), mCustomTemplatesMenu, SLOT(update()) );
+    connect(KMKernel::self(), &KMKernel::customTemplatesChanged, mCustomTemplatesMenu, &TemplateParser::CustomTemplatesMenu::update);
 
     forwardMenu()->addSeparator();
     forwardMenu()->addAction( mCustomTemplatesMenu->forwardActionMenu() );
@@ -300,7 +300,7 @@ void MessageActions::updateActions()
             job->fetchScope().fetchFullPayload( true );
             job->fetchScope().fetchPayloadPart( Akonadi::MessagePart::Header );
             job->fetchScope().fetchAttribute<Akonadi::EntityAnnotationsAttribute>();
-            connect( job, SIGNAL(result(KJob*)), SLOT(slotUpdateActionsFetchDone(KJob*)) );
+            connect(job, &Akonadi::ItemFetchJob::result, this, &MessageActions::slotUpdateActionsFetchDone);
         }
     }
     mEditAction->setEnabled( uniqItem );
@@ -622,7 +622,7 @@ void MessageActions::addWebShortcutsMenu( QMenu *menu, const QString & text )
                 action = new QAction( searchProvider, webShortcutsMenu );
                 action->setIcon( QIcon::fromTheme( filterData.iconNameForPreferredSearchProvider( searchProvider ) ) );
                 action->setData( filterData.queryForPreferredSearchProvider( searchProvider ) );
-                connect( action, SIGNAL(triggered()), this, SLOT(slotHandleWebShortcutAction()) );
+                connect(action, &QAction::triggered, this, &MessageActions::slotHandleWebShortcutAction);
                 webShortcutsMenu->addAction( action );
             }
 
@@ -630,7 +630,7 @@ void MessageActions::addWebShortcutsMenu( QMenu *menu, const QString & text )
 
             action = new QAction( i18n( "Configure Web Shortcuts..." ), webShortcutsMenu );
             action->setIcon( QIcon::fromTheme( QLatin1String("configure") ) );
-            connect( action, SIGNAL(triggered()), this, SLOT(slotConfigureWebShortcuts()) );
+            connect(action, &QAction::triggered, this, &MessageActions::slotConfigureWebShortcuts);
             webShortcutsMenu->addAction( action );
 
             menu->addMenu(webShortcutsMenu);
