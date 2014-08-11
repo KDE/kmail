@@ -24,7 +24,7 @@
 
 #include <messagecomposer/composer/kmeditor.h>
 
-class KAction;
+class QAction;
 class KMComposeWin;
 
 class KMComposerEditor : public MessageComposer::KMeditor
