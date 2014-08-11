@@ -44,7 +44,7 @@ bool ValidateSendMailShortcut::validate()
                                                         KGuiItem(i18n("Remove Shortcut")),
                                                         KGuiItem(i18n("Ask Before Sending")),
                                                         KGuiItem(i18n("Sending Without Confirmation")) );
-    GlobalSettings::self()->setCheckSendDefaultShortcut(true);
+    GlobalSettings::self()->setCheckSendDefaultActionShortcut(true);
     if (result == KMessageBox::Yes) {
         QAction *act = mActionCollection->action( QLatin1String("send_default") );
         act->setShortcut(QKeySequence());
@@ -52,9 +52,9 @@ bool ValidateSendMailShortcut::validate()
         configWasSaved = true;
         sendNow = false;
     } else if (result == KMessageBox::No) {
-        GlobalSettings::self()->setConfirmBeforeSend(true);
+        GlobalSettings::self()->setConfirmBeforeSendWhenUseShortcut(true);
         GlobalSettings::self()->writeConfig();
-        sendNow = false;
+        sendNow = true;
     } else if (result == KMessageBox::Cancel) {
         sendNow = true;
     }
