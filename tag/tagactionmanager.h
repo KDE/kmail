@@ -31,7 +31,6 @@ class KXMLGUIClient;
 class KToggleAction;
 class QAction;
 class QSignalMapper;
-class KAction;
 namespace Akonadi {
 class Item;
 class Monitor;
