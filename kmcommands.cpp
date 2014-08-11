@@ -48,7 +48,7 @@
 #include "util/mailutil.h"
 
 #include <unistd.h> // link()
-#include <kprogressdialog.h>
+#include <QProgressDialog>
 #include <KPIMUtils/kpimutils/email.h>
 #include <kdbusservicestarter.h>
 #include <qdebug.h>
@@ -288,15 +288,15 @@ void KMCommand::transferSelectedMsgs()
     mRetrievedMsgs.clear();
     mCountMsgs = mMsgList.count();
     uint totalSize = 0;
-    // the KProgressDialog for the user-feedback. Only enable it if it's needed.
+    // the QProgressDialog for the user-feedback. Only enable it if it's needed.
     // For some commands like KMSetStatusCommand it's not needed. Note, that
-    // for some reason the KProgressDialog eats the MouseReleaseEvent (if a
+    // for some reason the QProgressDialog eats the MouseReleaseEvent (if a
     // command is executed after the MousePressEvent), cf. bug #71761.
     if ( mCountMsgs > 0 ) {
-        mProgressDialog = new KProgressDialog(mParent,
-                                              i18n("Please wait"),
-                                              i18np("Please wait while the message is transferred",
-                                                    "Please wait while the %1 messages are transferred", mMsgList.count()));
+        mProgressDialog = new QProgressDialog(mParent);
+        mProgressDialog.data()->setWindowTitle( i18n("Please wait"));
+
+        mProgressDialog.data()->setLabelText(i18np("Please wait while the message is transferred","Please wait while the %1 messages are transferred", mMsgList.count()));
         mProgressDialog.data()->setModal(true);
         mProgressDialog.data()->setMinimumDuration(1000);
     }
@@ -325,14 +325,14 @@ void KMCommand::transferSelectedMsgs()
         if ( mProgressDialog.data() ) {
             connect(mProgressDialog.data(), SIGNAL(cancelClicked()),
                     this, SLOT(slotTransferCancelled()));
-            mProgressDialog.data()->progressBar()->setMaximum(totalSize);
+            mProgressDialog.data()->setMaximum(totalSize);
         }
     }
 }
 
 void KMCommand::slotMsgTransfered(const Akonadi::Item::List& msgs)
 {
-    if ( mProgressDialog.data() && mProgressDialog.data()->wasCancelled() ) {
+    if ( mProgressDialog.data() && mProgressDialog.data()->wasCanceled() ) {
         emit messagesTransfered( Canceled );
         return;
     }
@@ -345,7 +345,7 @@ void KMCommand::slotJobFinished()
     // the job is finished (with / without error)
     KMCommand::mCountJobs--;
 
-    if ( mProgressDialog.data() && mProgressDialog.data()->wasCancelled() ) return;
+    if ( mProgressDialog.data() && mProgressDialog.data()->wasCanceled() ) return;
 
     if ( mCountMsgs > mRetrievedMsgs.count() )
     {

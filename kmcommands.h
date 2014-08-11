@@ -25,7 +25,7 @@ class Tag;
 
 using Akonadi::MessageStatus;
 
-class KProgressDialog;
+class QProgressDialog;
 class KMMainWidget;
 
 template <typename T> class QSharedPointer;
@@ -137,7 +137,7 @@ protected:
 
 private:
     // ProgressDialog for transferring messages
-    QWeakPointer<KProgressDialog> mProgressDialog;
+    QWeakPointer<QProgressDialog> mProgressDialog;
     //Currently only one async command allowed at a time
     static int mCountJobs;
     int mCountMsgs;
