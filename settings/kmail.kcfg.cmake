@@ -226,6 +226,9 @@
         <label>Confirm &amp;before send</label>
         <default>false</default>
       </entry>
+      <entry name="ConfirmBeforeSendWhenUseShortcut" type="Bool" key="confirm-before-send-when-use-shortcut">
+         <default>false</default>
+      </entry>
       <entry name="CheckSpellingBeforeSend" type="Bool" key="check-spelling-before-send">
       <label>Check spelling before send</label>
         <default>false</default>
@@ -296,7 +299,7 @@
        <label>Show crypto label indicator</label>
        <default>true</default>
       </entry>
-      <entry name="CheckSendDefaultShortcut" type="Bool">
+      <entry name="CheckSendDefaultActionShortcut" type="Bool">
        <label>Validate Send Default Shortcut</label>
        <default>false</default>
       </entry>

@@ -456,6 +456,7 @@ private slots:
 
     void slotTransportChanged();
     void slotFollowUpMail();
+    void slotSendNowByShortcut();
 public: // kmcommand
     // FIXME we need to remove these, but they're pure virtual in Composer.
     void addAttach( KMime::Content *msgPart );
@@ -477,6 +478,9 @@ public: // kmcommand
     void ignoreStickyFields();
 
 private:
+    void confirmBeforeSend();
+    void sendNow(bool shortcutUsed);
+
     void updateSignature(uint uoid, uint uOldId);
     Kleo::CryptoMessageFormat cryptoMessageFormat() const;
     QString overwriteModeStr() const;
@@ -687,6 +691,7 @@ private:
     QMap<QByteArray, QString> mExtraHeaders;
     CryptoStateIndicatorWidget *mCryptoStateIndicatorWidget;
     KMStorageService *mStorageService;
+    bool mSendNowByShortcutUsed;
 };
 
 #endif

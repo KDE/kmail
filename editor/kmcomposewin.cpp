@@ -226,7 +226,8 @@ KMComposeWin::KMComposeWin( const KMime::Message::Ptr &aMsg, bool lastSignState,
       mIgnoreStickyFields( false ),
       mWasModified( false ),
       mCryptoStateIndicatorWidget(0),
-      mStorageService(new KMStorageService(this, this))
+      mStorageService(new KMStorageService(this, this)),
+      mSendNowByShortcutUsed(false)
 {
     m_verifyMissingAttachment = 0;
     mComposerBase = new MessageComposer::ComposerViewBase( this, this );
@@ -1102,9 +1103,14 @@ void KMComposeWin::setupActions( void )
     if ( MessageComposer::MessageComposerSettings::self()->sendImmediate() ) {
         //default = send now, alternative = queue
         KAction *action = new KAction(KIcon(QLatin1String("mail-send")), i18n("&Send Mail"), this);
-        actionCollection()->addAction(QLatin1String("send_default"), action );
-        action->setShortcut( QKeySequence( Qt::CTRL + Qt::Key_Return ) );
+        actionCollection()->addAction(QLatin1String("send_mail_default"), action );
         connect( action, SIGNAL(triggered(bool)), SLOT(slotSendNow()));
+
+        action = new KAction(KIcon(QLatin1String("mail-send")), i18n("Send Mail Using Shortcut"), this);
+        actionCollection()->addAction(QLatin1String("send_mail"), action );
+        action->setShortcut( QKeySequence( Qt::CTRL + Qt::Key_Return ) );
+        connect( action, SIGNAL(triggered(bool)), SLOT(slotSendNowByShortcut()));
+
 
         // FIXME: change to mail_send_via icon when this exist.
         actActionNowMenu = new KActionMenu( KIcon( QLatin1String("mail-send") ), i18n("&Send Mail Via"), this );
@@ -1121,7 +1127,7 @@ void KMComposeWin::setupActions( void )
     } else {
         //default = queue, alternative = send now
         KAction *action = new KAction( KIcon( QLatin1String("mail-queue") ), i18n("Send &Later"), this );
-        actionCollection()->addAction( QLatin1String("send_default"), action );
+        actionCollection()->addAction( QLatin1String("send_mail"), action );
         connect( action, SIGNAL(triggered(bool)), SLOT(slotSendLater()) );
         action->setShortcut( QKeySequence( Qt::CTRL + Qt::Key_Return ) );
         actActionLaterMenu = new KActionMenu( KIcon( QLatin1String("mail-queue") ), i18n("Send &Later Via"), this );
@@ -2926,7 +2932,7 @@ void KMComposeWin::slotSendLaterVia( QAction *item )
 }
 
 //----------------------------------------------------------------------------
-void KMComposeWin::slotSendNow()
+void KMComposeWin::sendNow(bool shortcutUsed)
 {
     if ( !mComposerBase->editor()->checkExternalEditorFinished() ) {
         return;
@@ -2935,7 +2941,7 @@ void KMComposeWin::slotSendNow()
         return;
     if ( !checkRecipientNumber() )
         return;
-
+    mSendNowByShortcutUsed = shortcutUsed;
     if( GlobalSettings::self()->checkSpellingBeforeSend()) {
         mComposerBase->editor()->forceSpellChecking();
     } else {
@@ -2943,24 +2949,45 @@ void KMComposeWin::slotSendNow()
     }
 }
 
+void KMComposeWin::slotSendNowByShortcut()
+{
+    sendNow(true);
+}
+
+void KMComposeWin::slotSendNow()
+{
+    sendNow(false);
+}
+
+void KMComposeWin::confirmBeforeSend()
+{
+    const int rc = KMessageBox::warningYesNoCancel( mMainWidget,
+                                                    i18n("About to send email..."),
+                                                    i18n("Send Confirmation"),
+                                                    KGuiItem( i18n("&Send Now") ),
+                                                    KGuiItem( i18n("Send &Later") ) );
+
+    if ( rc == KMessageBox::Yes ) {
+        doSend( MessageComposer::MessageSender::SendImmediate );
+    } else if ( rc == KMessageBox::No ) {
+        doSend( MessageComposer::MessageSender::SendLater );
+    }
+}
+
 void KMComposeWin::slotCheckSendNow()
 {
     if ( GlobalSettings::self()->confirmBeforeSend() ) {
-        const int rc = KMessageBox::warningYesNoCancel( mMainWidget,
-                                                        i18n("About to send email..."),
-                                                        i18n("Send Confirmation"),
-                                                        KGuiItem( i18n("&Send Now") ),
-                                                        KGuiItem( i18n("Send &Later") ) );
-
-        if ( rc == KMessageBox::Yes ) {
-            doSend( MessageComposer::MessageSender::SendImmediate );
-        } else if ( rc == KMessageBox::No ) {
-            doSend( MessageComposer::MessageSender::SendLater );
-        }
+        confirmBeforeSend();
     } else {
-        if (!GlobalSettings::self()->checkSendDefaultShortcut()) {
-            ValidateSendMailShortcut validateShortcut(actionCollection(), this);
-            if (!validateShortcut.validate()) {
+        if (mSendNowByShortcutUsed) {
+            if (!GlobalSettings::self()->checkSendDefaultActionShortcut()) {
+                ValidateSendMailShortcut validateShortcut(actionCollection(), this);
+                if (!validateShortcut.validate()) {
+                    return;
+                }
+            }
+            if (GlobalSettings::self()->confirmBeforeSendWhenUseShortcut()) {
+                confirmBeforeSend();
                 return;
             }
         }
