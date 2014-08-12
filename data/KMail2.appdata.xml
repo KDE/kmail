@@ -1,0 +1,48 @@
+<?xml version="1.0" ?>
+<component type="desktop">
+  <id>KMail2.desktop</id>
+  <metadata_license>CC0-1.0</metadata_license>
+  <project_license>GPL-2.0+</project_license>
+  <name>KMail</name>
+  <description>
+    <p>
+      KMail is the email component of Kontact, the integrated personal information manager from KDE.
+    </p>
+    <p>Features:</p>
+    <ul>
+      <li>Supports the standard mail protocols IMAP, POP3 and SMTP.</li>
+      <li>Supports authentication via NTLM (Microsoft Windows) and GSSAPI (Kerberos)</li>
+      <li>Supports plain text and secure logins, using SSL and TLS.</li>
+      <li>Integration of international character sets and spell-checking (as-you-type and on demand)</li>
+      <li>Native support for inline OpenPGP, PGP/MIME, and S/MIME.</li>
+      <li>Reading and writing of HTML mail.</li>
+      <li>Ability to display plain text only from an HTML mail.</li>
+      <li>Allows you to receive and accept invitations.</li>
+      <li>Integration with popular spam checkers, e.g. SpamAssassin, Bogofilter, etc.</li>
+      <li>An optional spam probability meter can be displayed</li>
+      <li>Powerful search and filter abilities</li>
+      <li>Can import mail from many other clients</li>
+      <li>Searching in IMAP folders fully supported</li>
+      <li>Highly integrated with other Kontact components</li>
+      <li>Encrypted password saving in KWallet</li>
+      <li>Flagging and tagging of messages to aid sorting and recovery of information</li>
+      <li>Supports mailing list management features</li>
+      <li>Can replace text smilies with emoticons</li>
+      <li>Displays the sender's picture or avatar if present in the address book</li>
+      <li>Supports X-Face (b/w pictures in messages)</li>
+      <li>Compression of attachments</li>
+      <li>KMail supports Groupware functionality.</li>
+    </ul>
+  </description>
+  <url type="bugtracker">https://bugs.kde.org/enter_bug.cgi?format=guided&amp;product=kmail</url>
+  <url type="help">http://docs.kde.org/stable/en/kdepim/kmail/index.html</url>
+  <screenshots>
+    <screenshot type="default">
+      <image>http://kde.org/images/screenshots/kmail.png</image>
+    </screenshot>
+  </screenshots>
+  <project_group>KDE</project_group>
+  <provides>
+    <binary>kmail</binary>
+  </provides>
+</component>
