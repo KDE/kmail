@@ -347,6 +347,7 @@ generate_export_header(kmailprivate BASE_NAME kmail)
     ${CMAKE_CURRENT_BINARY_DIR}/kmail.kcfg
     DESTINATION ${KCFG_INSTALL_DIR}
   )
+  install(FILES data/KMail2.appdata.xml DESTINATION ${CMAKE_INSTALL_METAINFODIR})
   install(FILES antispam-virus/kmail.antispamrc antispam-virus/kmail.antivirusrc  DESTINATION ${CONFIG_INSTALL_DIR})
   install(FILES tips  DESTINATION ${DATA_INSTALL_DIR}/kmail2)
   install(FILES
