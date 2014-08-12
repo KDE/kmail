@@ -3382,7 +3382,7 @@ void KMMainWidget::setupActions()
     connect(dukeOfMonmoth, SIGNAL(triggered(bool)), SLOT(slotDisplayCurrentMessage()));
     QList<QKeySequence> shortcuts;
     shortcuts << QKeySequence( Qt::Key_Enter ) << QKeySequence( Qt::Key_Return );
-    dukeOfMonmoth->setShortcuts( shortcuts );
+    actionCollection()->setDefaultShortcuts(dukeOfMonmoth, shortcuts );
 
     //----- Go Menu
     {
