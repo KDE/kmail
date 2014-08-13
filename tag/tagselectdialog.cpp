@@ -66,7 +66,7 @@ TagSelectDialog::TagSelectDialog( QWidget * parent, int numberOfSelectedMessages
     buttonBox->addButton(user1Button, QDialogButtonBox::ActionRole);
     connect(buttonBox, &QDialogButtonBox::accepted, this, &TagSelectDialog::accept);
     connect(buttonBox, &QDialogButtonBox::rejected, this, &TagSelectDialog::reject);
-    user1Button->setText(i18n("Addnewtag..."));
+    user1Button->setText(i18n("Add New Tag..."));
     okButton->setDefault(true);
     setModal( true );
 
