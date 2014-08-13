@@ -37,7 +37,7 @@ using namespace PimCommon::ConfigureImmutableWidgetUtils;
 #include "addressline/completionordereditor.h"
 using KPIM::RecentAddresses;
 
-
+#include <KDialog>
 #include <KLocalizedString>
 #include <KSeparator>
 #include <KCharsets>
