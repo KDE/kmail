@@ -25,26 +25,37 @@
 #include <KGlobal>
 
 #include <QVBoxLayout>
+#include <KConfigGroup>
+#include <QDialogButtonBox>
+#include <QPushButton>
 
 FollowUpReminderSelectDateDialog::FollowUpReminderSelectDateDialog(QWidget *parent)
-    : KDialog(parent)
+    : QDialog(parent)
 {
-    setCaption( i18n( "Select Date" ) );
-    setButtons( Ok|Cancel );
-    setDefaultButton( Ok );
+    setWindowTitle( i18n( "Select Date" ) );
+    QDialogButtonBox *buttonBox = new QDialogButtonBox(QDialogButtonBox::Ok|QDialogButtonBox::Cancel);
+    QVBoxLayout *topLayout = new QVBoxLayout;
+    setLayout(topLayout);
+    QPushButton *okButton = buttonBox->button(QDialogButtonBox::Ok);
+    okButton->setDefault(true);
+    okButton->setShortcut(Qt::CTRL | Qt::Key_Return);
+    connect(buttonBox, SIGNAL(accepted()), this, SLOT(accept()));
+    connect(buttonBox, SIGNAL(rejected()), this, SLOT(reject()));
+    okButton->setDefault(true);
     setModal( true );
 
     QWidget *mainWidget = new QWidget( this );
+    topLayout->addWidget(mainWidget);
+    topLayout->addWidget(buttonBox);
     QVBoxLayout *mainLayout = new QVBoxLayout( mainWidget );
-    mainLayout->setSpacing( KDialog::spacingHint() );
-    mainLayout->setMargin( KDialog::marginHint() );
+//TODO PORT QT5     mainLayout->setSpacing( QDialog::spacingHint() );
+//TODO PORT QT5     mainLayout->setMargin( QDialog::marginHint() );
     mDatePicker = new KDatePicker;
     QDate currentDate = QDate::currentDate();
     currentDate = currentDate.addDays(1);
     mDatePicker->setDate(currentDate);
     mainLayout->addWidget(mDatePicker);
 
-    setMainWidget( mainWidget );
     readConfig();
 }
 
@@ -80,5 +91,5 @@ void FollowUpReminderSelectDateDialog::accept()
         KMessageBox::error(this, i18n("The selected date must be greater than the current date."), i18n("Invalid date"));
         return;
     }
-    KDialog::accept();
+    QDialog::accept();
 }

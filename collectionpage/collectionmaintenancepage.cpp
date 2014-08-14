@@ -28,7 +28,7 @@
 #include <QDBusInterface>
 #include <QDBusConnectionInterface>
 
-#include <KDialog>
+#include <QDialog>
 #include <KLocalizedString>
 #include <KLocale>
 #include <QPushButton>
@@ -41,6 +41,7 @@
 #include <QCheckBox>
 #include <AkonadiCore/indexpolicyattribute.h>
 #include <KFormat>
+#include <KConfigGroup>
 
 using namespace Akonadi;
 
@@ -60,11 +61,11 @@ void CollectionMaintenancePage::init(const Akonadi::Collection & col)
     mCurrentCollection = col;
 
     QVBoxLayout *topLayout = new QVBoxLayout( this );
-    topLayout->setSpacing( KDialog::spacingHint() );
-    topLayout->setMargin( KDialog::marginHint() );
+//TODO PORT QT5     topLayout->setSpacing( QDialog::spacingHint() );
+//TODO PORT QT5     topLayout->setMargin( QDialog::marginHint() );
     QGroupBox *filesGroup = new QGroupBox( i18n("Files"), this );
     QFormLayout *box = new QFormLayout( filesGroup );
-    box->setSpacing( KDialog::spacingHint() );
+//TODO PORT QT5     box->setSpacing( QDialog::spacingHint() );
     mIsNotAVirtualCollection = !MailCommon::Util::isVirtualCollection( col );
     connect( KMKernel::self()->folderCollectionMonitor(), SIGNAL(collectionStatisticsChanged(Akonadi::Collection::Id,Akonadi::CollectionStatistics)), this, SLOT(updateCollectionStatistic(Akonadi::Collection::Id,Akonadi::CollectionStatistics)) );
 
@@ -83,7 +84,7 @@ void CollectionMaintenancePage::init(const Akonadi::Collection & col)
 
     QGroupBox *messagesGroup = new QGroupBox( i18n("Messages"), this);
     box = new QFormLayout( messagesGroup );
-    box->setSpacing( KDialog::spacingHint() );
+//TODO PORT QT5     box->setSpacing( QDialog::spacingHint() );
 
     mCollectionCount = new QLabel( messagesGroup );
     box->addRow( new QLabel( i18n("Total messages:"), messagesGroup ), mCollectionCount );

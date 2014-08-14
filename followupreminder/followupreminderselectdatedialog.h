@@ -18,9 +18,10 @@
 #ifndef FOLLOWUPREMINDERSELECTDATEDIALOG_H
 #define FOLLOWUPREMINDERSELECTDATEDIALOG_H
 
-#include <KDialog>
+#include <QDialog>
+#include <KConfigGroup>
 class KDatePicker;
-class FollowUpReminderSelectDateDialog : public KDialog
+class FollowUpReminderSelectDateDialog : public QDialog
 {
     Q_OBJECT
 public:

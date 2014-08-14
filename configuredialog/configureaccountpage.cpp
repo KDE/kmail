@@ -48,6 +48,7 @@ using MailTransport::TransportManagementWidget;
 #include <QGridLayout>
 #include <QGroupBox>
 #include <QMenu>
+#include <KConfigGroup>
 
 QString AccountsPage::helpAnchor() const
 {
@@ -85,8 +86,8 @@ AccountsPageSendingTab::AccountsPageSendingTab( QWidget * parent )
     : ConfigModuleTab( parent )
 {
     QVBoxLayout *vlay = new QVBoxLayout( this );
-    vlay->setSpacing( KDialog::spacingHint() );
-    vlay->setMargin( KDialog::marginHint() );
+//TODO PORT QT5     vlay->setSpacing( QDialog::spacingHint() );
+//TODO PORT QT5     vlay->setMargin( QDialog::marginHint() );
     // label: zero stretch ### FIXME more
     vlay->addWidget( new QLabel( i18n("Outgoing accounts (add at least one):"), this ) );
 
@@ -101,7 +102,7 @@ AccountsPageSendingTab::AccountsPageSendingTab( QWidget * parent )
     // a grid layout for the contents of the "common options" group box
     QGridLayout *glay = new QGridLayout();
     group->setLayout( glay );
-    glay->setSpacing( KDialog::spacingHint() );
+//TODO PORT QT5     glay->setSpacing( QDialog::spacingHint() );
     glay->setColumnStretch( 2, 10 );
 
     // "confirm before send" check box:
@@ -184,8 +185,8 @@ AccountsPageReceivingTab::AccountsPageReceivingTab( QWidget * parent )
     }
     mAccountsReceiving.setupUi( this );
 
-    mAccountsReceiving.vlay->setSpacing( KDialog::spacingHint() );
-    mAccountsReceiving.vlay->setMargin( KDialog::marginHint() );
+//TODO PORT QT5     mAccountsReceiving.vlay->setSpacing( QDialog::spacingHint() );
+//TODO PORT QT5     mAccountsReceiving.vlay->setMargin( QDialog::marginHint() );
 
     mAccountsReceiving.mAccountList->agentFilterProxyModel()->addMimeTypeFilter( KMime::Message::mimeType() );
 #ifdef MERGE_KNODE_IN_KMAIL
@@ -228,8 +229,8 @@ AccountsPageReceivingTab::AccountsPageReceivingTab( QWidget * parent )
     connect( mAccountsReceiving.mRestartAccountButton, SIGNAL(clicked()),
              this, SLOT(slotRestartSelectedAccount()) );
 
-    mAccountsReceiving.group->layout()->setMargin( KDialog::marginHint() );
-    mAccountsReceiving.group->layout()->setSpacing( KDialog::spacingHint() );
+//TODO PORT QT5     mAccountsReceiving.group->layout()->setMargin( QDialog::marginHint() );
+//TODO PORT QT5     mAccountsReceiving.group->layout()->setSpacing( QDialog::spacingHint() );
 
     connect( mAccountsReceiving.mBeepNewMailCheck, SIGNAL(stateChanged(int)),
              this, SLOT(slotEmitChanged()) );
