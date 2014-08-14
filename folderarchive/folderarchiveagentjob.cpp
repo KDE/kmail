@@ -26,7 +26,7 @@
 #include <AkonadiCore/ItemMoveJob>
 #include <AkonadiCore/CollectionFetchJob>
 
-#include <KLocale>
+#include <KLocalizedString>
 
 FolderArchiveAgentJob::FolderArchiveAgentJob(FolderArchiveManager *manager, FolderArchiveAccountInfo *info, const QList<Akonadi::Item> &lstItem, QObject *parent)
     : QObject(parent),

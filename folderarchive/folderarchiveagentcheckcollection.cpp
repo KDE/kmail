@@ -18,7 +18,7 @@
 #include "folderarchiveagentcheckcollection.h"
 #include "folderarchiveaccountinfo.h"
 
-#include <KLocale>
+#include <KLocalizedString>
 
 #include <AkonadiCore/CollectionFetchJob>
 #include <AkonadiCore/CollectionCreateJob>

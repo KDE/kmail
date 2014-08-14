@@ -21,7 +21,6 @@
  */
 
 #include "identitypage.h"
-#include <kcomponentdata.h>
 
 
 extern "C"

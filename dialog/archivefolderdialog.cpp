@@ -26,7 +26,7 @@
 
 #include <AkonadiCore/Collection>
 
-#include <klocale.h>
+#include <KLocalizedString>
 #include <kcombobox.h>
 #include <kurlrequester.h>
 #include <kmessagebox.h>

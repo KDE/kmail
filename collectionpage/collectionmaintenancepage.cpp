@@ -29,11 +29,9 @@
 #include <QDBusConnectionInterface>
 
 #include <QDialog>
-#include <KLocalizedString>
-#include <KLocale>
 #include <QPushButton>
 #include <kio/global.h>
-#include <KLocale>
+#include <KLocalizedString>
 #include <QDebug>
 #include <QGroupBox>
 #include <QLabel>

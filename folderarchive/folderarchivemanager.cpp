@@ -27,12 +27,10 @@
 #include <AkonadiCore/CollectionFetchJob>
 
 #include <KSharedConfig>
-#include <KGlobal>
 #include <KNotification>
+#include <KLocalizedString>
 #include <QIcon>
-#include <KLocale>
 #include <KIconLoader>
-#include <KComponentData>
 #include <QDebug>
 
 FolderArchiveManager::FolderArchiveManager(QObject *parent)
@@ -184,7 +182,7 @@ void FolderArchiveManager::moveDone()
                           pixmap,
                           0,
                           KNotification::CloseOnTimeout,
-                          KComponentData::mainComponent().componentName());
+                          QLatin1String("kmail2"));
     nextJob();
 }
 
@@ -197,7 +195,7 @@ void FolderArchiveManager::moveFailed(const QString &msg)
                           pixmap,
                           0,
                           KNotification::CloseOnTimeout,
-                          KComponentData::mainComponent().componentName());
+                          QLatin1String("kmail2"));
     nextJob();
 }
 
