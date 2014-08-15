@@ -110,7 +110,7 @@ using KMail::MailServiceImpl;
 #include <kcmdlineargs.h>
 #include <kstartupinfo.h>
 #include <kmailadaptor.h>
-#include <KLocale>
+#include <KLocalizedString>
 #include <QStandardPaths>
 #include "kmailinterface.h"
 #include "foldercollectionmonitor.h"

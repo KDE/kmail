@@ -27,7 +27,7 @@
 #include <AkonadiCore/itemmovejob.h>
 
 #include <kmessagebox.h>
-#include <klocale.h>
+#include <KLocalizedString>
 #include <qdebug.h>
 
 #include <QList>

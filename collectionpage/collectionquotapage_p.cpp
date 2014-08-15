@@ -37,7 +37,7 @@
 
 #include <KLocalizedString>
 #include <KDialog>
-#include <KLocale>
+#include <KLocalizedString>
 
 #include <QLabel>
 #include <qlayout.h>

@@ -21,11 +21,11 @@
 
 #include "kmkernel.h" //control center
 
-#include <klocale.h>
+#include <KLocalizedString>
 
 #include <kglobal.h>
 #include <kiconloader.h>
-#include <KLocale>
+#include <KLocalizedString>
 
 #undef Status // stupid X headers
 

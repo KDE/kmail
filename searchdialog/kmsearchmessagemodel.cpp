@@ -46,8 +46,8 @@ typedef boost::shared_ptr<KMime::Message> MessagePtr;
 #include <QTextDocument>
 #include <qdebug.h>
 #include <kglobal.h>
-#include <klocale.h>
-#include <KLocale>
+#include <KLocalizedString>
+#include <KLocalizedString>
 #include <KFormat>
 
 KMSearchMessageModel::KMSearchMessageModel( QObject *parent )
