@@ -107,6 +107,7 @@ using KMail::MailServiceImpl;
 #include <stdlib.h>
 #include <assert.h>
 
+#include <KLocale>
 #include <kcmdlineargs.h>
 #include <kstartupinfo.h>
 #include <kmailadaptor.h>
