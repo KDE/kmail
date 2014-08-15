@@ -77,7 +77,7 @@
 using MailTransport::TransportManager;
 
 // other KDE headers:
-#include <klocale.h>
+#include <KLocalizedString>
 #include <kmessagebox.h>
 #include <kfileitem.h>
 #include <qurl.h>

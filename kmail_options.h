@@ -3,7 +3,7 @@
 #define KMAIL_OPTIONS_H
 
 #include <kcmdlineargs.h>
-#include <klocale.h>
+#include <KLocalizedString>
 
 static KCmdLineOptions kmail_options ()
 {

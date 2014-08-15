@@ -28,7 +28,7 @@
 
 #include <kactionmenu.h>
 #include <kedittoolbar.h>
-#include <klocale.h>
+#include <KLocalizedString>
 #include <kstandardshortcut.h>
 #include <kwindowsystem.h>
 #include <kaction.h>

@@ -18,7 +18,7 @@
 #include <mailcommon/snippets/snippetsmanager.h>
 
 #include <kactioncollection.h>
-#include <klocale.h>
+#include <KLocalizedString>
 #include <QMenu>
 
 #include <QContextMenuEvent>

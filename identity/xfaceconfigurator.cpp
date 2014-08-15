@@ -38,7 +38,7 @@
 #include <kfiledialog.h>
 #include <kglobalsettings.h>
 #include <kio/netaccess.h>
-#include <klocale.h>
+#include <KLocalizedString>
 #include <kmessagebox.h>
 #include <KPIMIdentities/kpimidentities/identity.h>
 #include <KPIMIdentities/kpimidentities/identitymanager.h>

@@ -33,7 +33,7 @@
 
 #include "kdepim-version.h"
 
-#include <klocale.h>
+#include <KLocalizedString>
 
 namespace KMail {
 

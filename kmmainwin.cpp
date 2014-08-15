@@ -32,7 +32,7 @@
 #include <QMenuBar>
 #include <KToggleAction>
 #include <kapplication.h>
-#include <klocale.h>
+#include <KLocalizedString>
 #include <kedittoolbar.h>
 #include <kconfig.h>
 #include <kmessagebox.h>

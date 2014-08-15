@@ -54,7 +54,7 @@
 #include <qdebug.h>
 #include <kdialog.h>
 #include <kiconloader.h>
-#include <klocale.h>
+#include <KLocalizedString>
 #include <KProcess>
 #include <ktoolinvocation.h>
 #include <kconfiggroup.h>

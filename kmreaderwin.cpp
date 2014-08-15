@@ -70,7 +70,7 @@ using MessageComposer::MessageFactory;
 
 #include <kde_file.h>
 #include <qdebug.h>
-#include <klocale.h>
+#include <KLocalizedString>
 #include <kaction.h>
 #include <kcodecs.h>
 #include <ktoggleaction.h>

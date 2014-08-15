@@ -26,7 +26,7 @@ using MessageComposer::AliasesExpandJob;
 
 #include "settings/messagecomposersettings.h"
 
-#include <klocale.h>
+#include <KLocalizedString>
 #include <kmessagebox.h>
 
 #include <KPIMUtils/Email>
