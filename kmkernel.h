@@ -245,7 +245,6 @@ public Q_SLOTS:
    * @param bcc A comma separated list of BCC addresses.
    * @param subject The message subject.
    * @param body The message body.
-   * @param hidden Whether the composer window shall initially be hidden.
    * @param attachName The name of the attachment.
    * @param attachCte The content transfer encoding of the attachment.
    * @param attachData The raw data of the attachment.
@@ -256,15 +255,12 @@ public Q_SLOTS:
    * @param attachContDisp The content display type of the attachment.
    * @param attachCharset The charset of the attachment.
    * @param identity The identity identifier which will be used as sender identity.
-   * @param allowDefaultSend Overwrite automatic sending feature,
-   *                         to make sure a composer is opend
    */
     Q_SCRIPTABLE int openComposer( const QString & to,
                                    const QString & cc,
                                    const QString & bcc,
                                    const QString & subject,
                                    const QString & body,
-                                   bool hidden,
                                    const QString & attachName,
                                    const QByteArray & attachCte,
                                    const QByteArray  &attachData,
@@ -274,8 +270,7 @@ public Q_SLOTS:
                                    const QString & attachParamValue,
                                    const QByteArray & attachContDisp,
                                    const QByteArray & attachCharset,
-                                   unsigned int identity,
-                                   bool allowDefaultSend );
+                                   unsigned int identity);
 
 
     /**
@@ -537,6 +532,26 @@ private slots:
 
     void slotCheckAccount(Akonadi::ServerManager::State state);
 private:
+    /*
+     * Fills a composer cWin
+     *
+     * @returns true if attached message is a valid iCal message
+    */
+    bool fillComposer (KMail::Composer *&cWin,
+        const QString &to, const QString &cc,
+        const QString &bcc, const QString &subject,
+        const QString &body,
+        const QString &attachName,
+        const QByteArray &attachCte,
+        const QByteArray &attachData,
+        const QByteArray &attachType,
+        const QByteArray &attachSubType,
+        const QByteArray &attachParamAttr,
+        const QString &attachParamValue,
+        const QByteArray &attachContDisp,
+        const QByteArray &attachCharset,
+        unsigned int identity);
+
     void verifyAccount();
     void resourceGoOnLine();
     void openReader( bool onlyCheck );
