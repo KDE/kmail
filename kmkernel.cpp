@@ -643,28 +643,6 @@ int KMKernel::openComposer(const QString &to, const QString &cc,
     return 1;
 }
 
-int KMKernel::openComposer(const QString &to, const QString &cc,
-                           const QString &bcc, const QString &subject,
-                           const QString &body, bool hidden,
-                           const QString &attachName,
-                           const QByteArray &attachCte,
-                           const QByteArray &attachData,
-                           const QByteArray &attachType,
-                           const QByteArray &attachSubType,
-                           const QByteArray &attachParamAttr,
-                           const QString &attachParamValue,
-                           const QByteArray &attachContDisp,
-                           const QByteArray &attachCharset,
-                           unsigned int identity)
-{
-    return openComposer(to, cc, bcc,
-                        subject, body, hidden,
-                        attachName, attachCte, attachData,
-                        attachType, attachSubType, attachParamAttr, attachParamValue,
-                        attachContDisp, attachCharset, identity, true);
-}
-
-
 int KMKernel::openComposer (const QString &to, const QString &cc,
                             const QString &bcc, const QString &subject,
                             const QString &body, bool hidden,
@@ -677,9 +655,9 @@ int KMKernel::openComposer (const QString &to, const QString &cc,
                             const QString &attachParamValue,
                             const QByteArray &attachContDisp,
                             const QByteArray &attachCharset,
-                            unsigned int identity,
-                            bool allowDefaultSend)
+                            unsigned int identity )
 {
+    kDebug();
     KMail::Composer::TemplateContext context = KMail::Composer::New;
     KMime::Message::Ptr msg( new KMime::Message );
     KMime::Content *msgPart = 0;
@@ -762,7 +740,7 @@ int KMKernel::openComposer (const QString &to, const QString &cc,
         cWin->disableForgottenAttachmentsCheck();
     }
 
-    if ( !hidden && !(allowDefaultSend && iCalAutoSend)  ) {
+    if ( !hidden && !iCalAutoSend ) {
         cWin->show();
         // Activate window - doing this instead of KWin::activateWindow(cWin->winId());
         // so that it also works when called from KMailApplication::newInstance()
