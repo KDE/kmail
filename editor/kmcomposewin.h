@@ -31,9 +31,6 @@
 #include <QFont>
 #include <QList>
 
-// KDE includes
-#include <kglobalsettings.h>
-
 // LIBKDEPIM includes
 #include <messagecomposer/composer/kmeditor.h>
 

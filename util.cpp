@@ -48,7 +48,6 @@
 #include <KLocalizedString>
 #include <KProcess>
 #include <QDebug>
-#include <KStandardDirs>
 
 #include <QProcess>
 #include <QFileInfo>

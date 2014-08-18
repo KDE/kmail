@@ -28,6 +28,7 @@
 #include "tag/tagactionmanager.h"
 
 #include <QTimer>
+#include <QAction>
 
 #include <QMenuBar>
 #include <KToggleAction>
@@ -41,7 +42,6 @@
 #include <kstandardaction.h>
 #include <qdebug.h>
 #include <ktip.h>
-#include <kaction.h>
 
 #include <QLabel>
 
