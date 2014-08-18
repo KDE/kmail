@@ -6,10 +6,13 @@
   <name>KMail</name>
   <name xml:lang="ca">KMail</name>
   <name xml:lang="cs">KMail</name>
+  <name xml:lang="en-GB">KMail</name>
   <name xml:lang="nds">KMail</name>
   <name xml:lang="nl">KMail</name>
   <name xml:lang="pl">KMail</name>
+  <name xml:lang="ro">KMail</name>
   <name xml:lang="sk">KMail</name>
+  <name xml:lang="sl">KMail</name>
   <name xml:lang="sv">Kmail</name>
   <name xml:lang="uk">KMail</name>
   <name xml:lang="x-test">xxKMailxx</name>
@@ -18,196 +21,245 @@
       KMail is the email component of Kontact, the integrated personal information manager from KDE.
     </p>
     <p xml:lang="ca">El KMail és el component de correu electrònic del Kontact, el gestor per a la informació personal integrat del KDE.</p>
+    <p xml:lang="en-GB">KMail is the email component of Kontact, the integrated personal information manager from KDE.</p>
     <p xml:lang="nds">KMail is de Nettpostkomponent vun Kontact, KDE sien inbuut Pleger för persöönlich Informatschonen</p>
     <p xml:lang="nl">KMail is de e-mail-component van Kontact, de geïntegreerde beheerder van persoonlijke informatie van KDE.</p>
     <p xml:lang="pl">KMail jest składnikiem pocztowym pakietu Kontact, programu do zarządzania informacjami osobistymi w KDE.</p>
+    <p xml:lang="sl">KMail je sestavni del paketa Kontact, ki omogoča delo z e-pošto.</p>
     <p xml:lang="sv">Kmail är e-postkomponenten i Kontact, den integrerade personliga informationshanteraren från KDE.</p>
     <p xml:lang="uk">KMail — компонент для роботи з електронною поштою комплексу програм Kontact, інтегрованого рішення для роботи з особистими даними у KDE.</p>
     <p xml:lang="x-test">xxKMail is the email component of Kontact, the integrated personal information manager from KDE.xx</p>
     <p>Features:</p>
     <p xml:lang="ca">Característiques:</p>
     <p xml:lang="cs">Vlastnosti:</p>
+    <p xml:lang="en-GB">Features:</p>
     <p xml:lang="nds">Markmalen:</p>
     <p xml:lang="nl">Mogelijkheden:</p>
     <p xml:lang="pl">Możliwości:</p>
+    <p xml:lang="ro">Caracteristici:</p>
     <p xml:lang="sk">Funkcie:</p>
+    <p xml:lang="sl">Zmožnosti:</p>
     <p xml:lang="sv">Funktioner:</p>
     <p xml:lang="uk">Можливості:</p>
     <p xml:lang="x-test">xxFeatures:xx</p>
     <ul>
       <li>Supports the standard mail protocols IMAP, POP3 and SMTP.</li>
       <li xml:lang="ca">Implementa els protocols de correu estàndards: IMAP, POP3 i SMTP</li>
+      <li xml:lang="en-GB">Supports the standard mail protocols IMAP, POP3 and SMTP.</li>
       <li xml:lang="nds">Ünnerstütt de Standard-Nettpostprotokollen IMAP, POP3 un SMTP.</li>
       <li xml:lang="nl">Ondersteunt de standaard e-mailprotocollen IMAP, POP3 en SMTP.</li>
       <li xml:lang="pl">Obsługa standardowych protokołów pocztowych IMAP, POP3 oraz SMTP.</li>
+      <li xml:lang="sl">Podpira standardne poštne protokole: IMAP, POP3 in SMTP.</li>
       <li xml:lang="sv">Stöder standardprotokollen för e-post IMAP, POP3 och SMTP.</li>
       <li xml:lang="uk">підтримка роботи зі стандартними протоколами обміну електронною поштою, IMAP, POP3 та SMTP.</li>
       <li xml:lang="x-test">xxSupports the standard mail protocols IMAP, POP3 and SMTP.xx</li>
       <li>Supports authentication via NTLM (Microsoft Windows) and GSSAPI (Kerberos)</li>
       <li xml:lang="ca">Implementa l'autenticació a través de NTLM (Microsoft Windows) i GSSAPI (Kerberos)</li>
+      <li xml:lang="en-GB">Supports authentication via NTLM (Microsoft Windows) and GSSAPI (Kerberos)</li>
       <li xml:lang="nds">Ünnerstütt de Identiteetprööv över NTLM (Windows) un GSSAPI (Kerberos).</li>
       <li xml:lang="nl">Ondersteunt authenticatie via NTLM (Microsoft Windows) en GSSAPI (Kerberos)</li>
       <li xml:lang="pl">Obsługa uwierzytelniania przez NTLM (Microsoft Windows) oraz GSSAPI (Kerberos)</li>
+      <li xml:lang="sl">Podpira overjanje preko NTLM (Microsoft Windows) in GSSAPI (Kerberos)</li>
       <li xml:lang="sv">Stöder behörighetskontroll via NTLM (Microsoft WIndows) och GSSAPI (Kerberos)</li>
       <li xml:lang="uk">підтримка можливостей розпізнавання за допомогою NTLM (Microsoft Windows) та GSSAPI (Kerberos);</li>
       <li xml:lang="x-test">xxSupports authentication via NTLM (Microsoft Windows) and GSSAPI (Kerberos)xx</li>
       <li>Supports plain text and secure logins, using SSL and TLS.</li>
       <li xml:lang="ca">Implementa accés en text pla i segur, usant SSL i TLS</li>
+      <li xml:lang="en-GB">Supports plain text and secure logins, using SSL and TLS.</li>
       <li xml:lang="nds">Ünnerstütt dat Anmellen mit Eenfachtext un mit seker SSL un TLS.</li>
       <li xml:lang="nl">Ondersteunt platte tekst en beveiligd aanmelden met SSL en TLS.</li>
       <li xml:lang="pl">Obsługa logowania przy użyciu zwykłego tekstu oraz bezpiecznego poprzez SSL i TLS.</li>
+      <li xml:lang="sl">Podpira prijavo z navadnim besedilom ali varno prijavo s pomočjo SSL in TLS.</li>
       <li xml:lang="sv">Stöder vanlig text och säkra inloggningar, genom att använda SSL och TLS.</li>
       <li xml:lang="uk">підтримка передавання реєстраційних даних звичайним текстом та шифрованими даними за допомогою SSL та TLS;</li>
       <li xml:lang="x-test">xxSupports plain text and secure logins, using SSL and TLS.xx</li>
       <li>Integration of international character sets and spell-checking (as-you-type and on demand)</li>
       <li xml:lang="ca">Integra els jocs de caràcters internacionals i la correcció ortogràfica (mentre escriviu i sota demanda)</li>
+      <li xml:lang="en-GB">Integration of international character sets and spell-checking (as-you-type and on demand)</li>
       <li xml:lang="nds">Inbuut internatschonaal Tekensetten un Schriefwiesprööv (bi't Tippen un op Anföddern)</li>
       <li xml:lang="nl">Integratie van internationale tekensets en spellingcontrole (terwijl-u-typt en op aanvraag)</li>
       <li xml:lang="pl">Integracja międzynarodowych zestawów znaków i sprawdzania pisowni (w trakcie pisania i na żądanie)</li>
+      <li xml:lang="sl">Podpira mednarodne nabore znakov in preverjanje črkovanja (med tipkanjem in na zahtevo)</li>
       <li xml:lang="sv">Integrering av internationella teckenuppsättningar och stavningskontroll (medan man skriver och på begäran)</li>
       <li xml:lang="uk">вбудована можливість роботи з даними у різних кодуваннях та перевірки правопису (інтерактивної та на вимогу);</li>
       <li xml:lang="x-test">xxIntegration of international character sets and spell-checking (as-you-type and on demand)xx</li>
       <li>Native support for inline OpenPGP, PGP/MIME, and S/MIME.</li>
       <li xml:lang="ca">Implementació nativa per a OpenPGP, PGP/MIME i S/MIME inclòs</li>
+      <li xml:lang="en-GB">Native support for inline OpenPGP, PGP/MIME, and S/MIME.</li>
       <li xml:lang="nds">Inbuut Ünnerstütten för OpenPGP, PGP/MIME un S/MIME</li>
       <li xml:lang="nl">Ingebouwde ondersteuning voor in-line OpenPGP, PGP/MIME en S/MIME.</li>
       <li xml:lang="pl">Bezpośrednia obsługa dla OpenPGP w treści, PGP/MIME oraz S/MIME.</li>
+      <li xml:lang="sl">Ima lastno podporo znotrajvrstičnim OpenPGP, PGP/MIME in S/MIME.</li>
       <li xml:lang="sv">Inbyggt stöd för OpenPGP, PGP/MIME, och S/MIME på plats.</li>
       <li xml:lang="uk">вбудована підтримка OpenPGP, PGP/MIME та S/MIME.</li>
       <li xml:lang="x-test">xxNative support for inline OpenPGP, PGP/MIME, and S/MIME.xx</li>
       <li>Reading and writing of HTML mail.</li>
       <li xml:lang="ca">Lectura i escriptura d'un correu HTML</li>
+      <li xml:lang="en-GB">Reading and writing of HTML mail.</li>
       <li xml:lang="nds">HTML-Nettbreven wiesen un schrieven.</li>
       <li xml:lang="nl">Lezen en schrijven van HTML-e-mail.</li>
       <li xml:lang="pl">Czytanie i pisanie wiadomości HTML.</li>
+      <li xml:lang="sl">Branje in zapisovanje e-pošte v obliki HTML.</li>
       <li xml:lang="sv">Läsa och skriva HTML-brev.</li>
       <li xml:lang="uk">можливість читання та створення повідомлень з використанням коду HTML;</li>
       <li xml:lang="x-test">xxReading and writing of HTML mail.xx</li>
       <li>Ability to display plain text only from an HTML mail.</li>
       <li xml:lang="ca">L'habilitat de mostrar en text pla un correu HTML</li>
+      <li xml:lang="en-GB">Ability to display plain text only from an HTML mail.</li>
       <li xml:lang="nds">Kann HTML-Nettbreven as Eenfachtext wiesen.</li>
       <li xml:lang="nl">Mogelijkheid om alleen platte tekst te tonen uit een HTML-e-mail.</li>
       <li xml:lang="pl">Możliwość wyświetlania zwykłego tekstu w wiadomości HTML.</li>
+      <li xml:lang="sl">Prikaz samo besedila iz e-pošte v obliki HTML.</li>
       <li xml:lang="sv">Möjlighet att bara visa vanlig text för ett HTML-brev.</li>
       <li xml:lang="uk">можливість перегляду лише текстової частини з повідомлень у форматі HTML;</li>
       <li xml:lang="x-test">xxAbility to display plain text only from an HTML mail.xx</li>
       <li>Allows you to receive and accept invitations.</li>
       <li xml:lang="ca">Permet rebre i acceptar invitacions</li>
+      <li xml:lang="en-GB">Allows you to receive and accept invitations.</li>
       <li xml:lang="nds">Inladen laat sik dor mit kriegen un ok annehmen</li>
       <li xml:lang="nl">Laat u uitnodigingen ontvangen en accepteren.</li>
       <li xml:lang="pl">Możliwość odbierania i przyjmowania zaproszeń.</li>
+      <li xml:lang="sl">Omogoča prejemanje in sprejemanje povabil.</li>
       <li xml:lang="sv">Låter dig ta emot och acceptera inbjudningar.</li>
       <li xml:lang="uk">можливість отримувати та приймати запрошення;</li>
       <li xml:lang="x-test">xxAllows you to receive and accept invitations.xx</li>
       <li>Integration with popular spam checkers, e.g. SpamAssassin, Bogofilter, etc.</li>
       <li xml:lang="ca">Integració amb els comprovadors de correu brossa més populars, p. ex., SpamAssassin, Bogofilter, etc.</li>
+      <li xml:lang="en-GB">Integration with popular spam checkers, e.g. SpamAssassin, Bogofilter, etc.</li>
       <li xml:lang="nds">Arbeidt mit faken bruukt Warven-Pröövprogrammen as SpamAssassin oder Bogofilter tosamen.</li>
       <li xml:lang="nl">Integratie met populaire spamcheckers, bijv. SpamAssassin, Bogofilter, etc.</li>
       <li xml:lang="pl">Integracja z powszechnymi programami wykrywającymi spam, np. SpamAssassin, Bogofilter, itp.</li>
+      <li xml:lang="sl">Podpira priljubljena orodja proti neželeni pošti, npr. SpamAssassin, Bogofilter, itd.</li>
       <li xml:lang="sv">Integrering med populära skräppostkontrollprogram, t.ex. SpamAssassin, Bogofilter, etc.</li>
       <li xml:lang="uk">інтеграція з популярними системами захисту від небажаної кореспонденції, зокрема SpamAssassin, Bogofilter тощо;</li>
       <li xml:lang="x-test">xxIntegration with popular spam checkers, e.g. SpamAssassin, Bogofilter, etc.xx</li>
       <li>An optional spam probability meter can be displayed</li>
       <li xml:lang="ca">Es pot mostrar un mesurador de la probabilitat que es tracti de correu brossa</li>
+      <li xml:lang="en-GB">An optional spam probability meter can be displayed</li>
       <li xml:lang="nds">Köörwies lett sik en Maat wiesen, wo wohrschienlich de Nettbreef Warven is</li>
       <li xml:lang="nl">Een optionele meter voor de waarschijnlijkheid van spam kan worden getoond</li>
       <li xml:lang="pl">Możliwość wyświetlania miernika prawdopodobieństwa, że to spam</li>
+      <li xml:lang="sl">Prikazuje lahko dodatni merilnik za verjetnost, da je pošta neželena</li>
       <li xml:lang="sv">En valfri sannolikhetsmätare för skräppost kan visas</li>
       <li xml:lang="uk">можливість показу оцінки ймовірності небажаності повідомлення;</li>
       <li xml:lang="x-test">xxAn optional spam probability meter can be displayedxx</li>
       <li>Powerful search and filter abilities</li>
       <li xml:lang="ca">Poderoses habilitats per a la cerca i filtratge</li>
+      <li xml:lang="en-GB">Powerful search and filter abilities</li>
       <li xml:lang="nds">Deegte Söök un Filtern</li>
       <li xml:lang="nl">Krachtige zoek- en filter-functies</li>
       <li xml:lang="pl">Zaawansowane możliwości wyszukiwania i filtrowania</li>
+      <li xml:lang="sl">Zmogljiv iskalnik in filtri</li>
       <li xml:lang="sv">Kraftfulla sök- och filtreringsmöjligheter</li>
       <li xml:lang="uk">потужні можливості з пошуку та фільтрування;</li>
       <li xml:lang="x-test">xxPowerful search and filter abilitiesxx</li>
       <li>Can import mail from many other clients</li>
       <li xml:lang="ca">Pot importar el correu des de molts altres clients</li>
+      <li xml:lang="en-GB">Can import mail from many other clients</li>
       <li xml:lang="nds">Kann Nettbreven ut en Barg anner Nettpostprogrammen importeren</li>
       <li xml:lang="nl">Kan e-mail importeren uit vele andere clients</li>
       <li xml:lang="pl">Możliwość importowania poczty z innych programów pocztowych</li>
+      <li xml:lang="sl">Lahko uvozi e-pošto iz drugih odjemalcev</li>
       <li xml:lang="sv">Kan importera brev från många andra program</li>
       <li xml:lang="uk">можливість імпортувати дані пошти з багатьох інших програм для роботи з електронною поштою;</li>
       <li xml:lang="x-test">xxCan import mail from many other clientsxx</li>
       <li>Searching in IMAP folders fully supported</li>
       <li xml:lang="ca">La cerca a les carpetes IMAP està totalment implementada</li>
+      <li xml:lang="en-GB">Searching in IMAP folders fully supported</li>
       <li xml:lang="nds">Söken binnen IMAP-Ornern warrt heel ünnerstütt</li>
       <li xml:lang="nl">Zoeken in IMAP mappen volledig ondersteund</li>
       <li xml:lang="pl">W pełni obsługiwane wyszukiwanie w katalogach IMAP</li>
+      <li xml:lang="sl">Polno podpira iskanje po mapah IMAP</li>
       <li xml:lang="sv">Fullständigt stöd för sökning i IMAP-korgar</li>
       <li xml:lang="uk">підтримка повноцінного пошуку у теках IMAP;</li>
       <li xml:lang="x-test">xxSearching in IMAP folders fully supportedxx</li>
       <li>Highly integrated with other Kontact components</li>
       <li xml:lang="ca">Altament integrat amb els altres components del Kontact</li>
+      <li xml:lang="en-GB">Highly integrated with other Kontact components</li>
       <li xml:lang="nds">Arbeidt drang mit anner Kontact-Komponenten tosamen</li>
       <li xml:lang="nl">Hoge integratie met andere componenten van Kontact</li>
       <li xml:lang="pl">Wysoce zintegrowane z innymi składnikami Kontact</li>
+      <li xml:lang="sl">Se zelo dobro vključi v druge sestavne dele paketa Kontact</li>
       <li xml:lang="sv">Helt integrerad med andra Kontact-komponenter</li>
       <li xml:lang="uk">високий рівень інтеграції з іншими компонентами Kontact;</li>
       <li xml:lang="x-test">xxHighly integrated with other Kontact componentsxx</li>
       <li>Encrypted password saving in KWallet</li>
       <li xml:lang="ca">Desa la contrasenya encriptada al KWallet</li>
+      <li xml:lang="en-GB">Encrypted password saving in KWallet</li>
       <li xml:lang="nds">Passwöör warrt verslötelt binnen KWallet wohrt</li>
       <li xml:lang="nl">Versleuteld opslaan van wachtwoorden in KWallet</li>
       <li xml:lang="pl">Szyfrowane zapisywanie haseł w KPortfelu</li>
+      <li xml:lang="sl">Šifrirano shranjevanje gesel v KWallet</li>
       <li xml:lang="sv">Krypterat lösenord sparas i plånboken</li>
       <li xml:lang="uk">зберігання зашифрованих реєстраційних даних за допомогою KWallet;</li>
       <li xml:lang="x-test">xxEncrypted password saving in KWalletxx</li>
       <li>Flagging and tagging of messages to aid sorting and recovery of information</li>
       <li xml:lang="ca">Marcar i etiquetar els missatges per ajudar a la classificació i recuperació de la informació</li>
+      <li xml:lang="en-GB">Flagging and tagging of messages to aid sorting and recovery of information</li>
       <li xml:lang="nds">Narichten laat sik markeren un dor laat sik Slötelwöör na tofögen; de Narichten laat sik denn beter sorteren un Informatschonen beter finnen</li>
       <li xml:lang="nl">Van vlaggen en tags voorzien van berichten om te helpen bij sorteren en opsporen van informatie</li>
       <li xml:lang="pl">Oflagowywanie i znaczenie wiadomości w celu wspomożenia ich szeregowania i uzyskiwania informacji</li>
+      <li xml:lang="sl">Označevanje sporočil, ki pomaga pri razvrščanju in obnovitvi podatkov</li>
       <li xml:lang="sv">Flaggning och etikettering av brev för att hjälpa till att sortera och återhämta information</li>
       <li xml:lang="uk">можливість додавання прапорців і міток до повідомлень з метою спрощення упорядковування та відновлення інформації;</li>
       <li xml:lang="x-test">xxFlagging and tagging of messages to aid sorting and recovery of informationxx</li>
       <li>Supports mailing list management features</li>
       <li xml:lang="ca">Implementa característiques per a la gestió de les llistes de correu</li>
+      <li xml:lang="en-GB">Supports mailing list management features</li>
       <li xml:lang="nds">Funkschonen för't Plegen vun Nettpostlisten sünd al inbuut</li>
       <li xml:lang="nl">Ondersteuning functies voor beheer van e-maillijsten</li>
       <li xml:lang="pl">Możliwość zarządzania listą dyskusyjną</li>
+      <li xml:lang="sl">Podpira upravljanje dopisnih seznamov</li>
       <li xml:lang="sv">Stöder funktioner för hantering av sändlistor</li>
       <li xml:lang="uk">підтримка можливостей з керування повідомленнями зі списків листування;</li>
       <li xml:lang="x-test">xxSupports mailing list management featuresxx</li>
       <li>Can replace text smilies with emoticons</li>
       <li xml:lang="ca">Pot substituir les cares de text amb emoticones</li>
+      <li xml:lang="en-GB">Can replace text smilies with emoticons</li>
       <li xml:lang="nds">Kann för Text-Snuten Biller insetten</li>
       <li xml:lang="nl">Kan tekst-smilies vervangen door emoticons</li>
       <li xml:lang="pl">Możliwość zastępowania uśmieszków tekstowych emotikonami</li>
+      <li xml:lang="sl">Lahko zamenja besedilne smeške z izraznimi ikonami</li>
       <li xml:lang="sv">Kan ersätta textsmilisar med ikoner</li>
       <li xml:lang="uk">можливість заміни текстових емоційок (смайликів) зображеннями;</li>
       <li xml:lang="x-test">xxCan replace text smilies with emoticonsxx</li>
       <li>Displays the sender's picture or avatar if present in the address book</li>
       <li xml:lang="ca">Mostra la imatge o avatar del remitent si està present a la llibreta d'adreces</li>
+      <li xml:lang="en-GB">Displays the sender's picture or avatar if present in the address book</li>
       <li xml:lang="nds">Wiest den Senner sien Bild oder Bildteken, wenn dat een binnen dat Adressbook gifft</li>
       <li xml:lang="nl">Toont het plaatje of avatar van de zender indien aanwezig in het adresboek</li>
       <li xml:lang="pl">Wyświetlanie zdjęcia nadawcy lub awatara, jeśli jest dostępny w książce adresowej</li>
+      <li xml:lang="sl">Prikaže sliko pošiljatelja ali podobo, če je prisotna v imeniku</li>
       <li xml:lang="sv">Visar avsändarens bild eller avatar om den finns i adressboken</li>
       <li xml:lang="uk">можливість показу знімка або аватара відправника, якщо його визначено у адресній книзі;</li>
       <li xml:lang="x-test">xxDisplays the sender's picture or avatar if present in the address bookxx</li>
       <li>Supports X-Face (b/w pictures in messages)</li>
       <li xml:lang="ca">Implementa X-Face (imatges en b/n als missatges)</li>
+      <li xml:lang="en-GB">Supports X-Face (b/w pictures in messages)</li>
       <li xml:lang="nds">Ünnerstütt X-Face (Swattwitt-Biller binnen Narichten)</li>
       <li xml:lang="nl">Ondersteunt X-Face (z/w plaatjes in berichten)</li>
       <li xml:lang="pl">Obsługa X-Face (zdjęcia czarno białe w wiadomościach)</li>
+      <li xml:lang="sl">Podpira X-Face (črno-bele slike v sporočilih)</li>
       <li xml:lang="sv">Stöder X-Face (svartvita bilder i brev)</li>
       <li xml:lang="uk">підтримка X-Face (чорно-білих зображень у повідомленнях);</li>
       <li xml:lang="x-test">xxSupports X-Face (b/w pictures in messages)xx</li>
       <li>Compression of attachments</li>
       <li xml:lang="ca">La compressió dels adjunts</li>
+      <li xml:lang="en-GB">Compression of attachments</li>
       <li xml:lang="nds">Komprimeren vun Bilagen</li>
       <li xml:lang="nl">Compressie van bijlagen</li>
       <li xml:lang="pl">Pakowanie załączników</li>
+      <li xml:lang="sl">Stiskanje prilog</li>
       <li xml:lang="sv">Komprimering av bilagor</li>
       <li xml:lang="uk">можливість стискання долучень безпосередньо з вікна програми;</li>
       <li xml:lang="x-test">xxCompression of attachmentsxx</li>
       <li>KMail supports Groupware functionality.</li>
       <li xml:lang="ca">El KMail implementa el treball en grup (groupware)</li>
+      <li xml:lang="en-GB">KMail supports Groupware functionality.</li>
       <li xml:lang="nds">KMail ünnerstütt Arbeitkoppel-Funkschonen.</li>
       <li xml:lang="nl">KMail ondersteunt de functionaliteit van Groupware.</li>
       <li xml:lang="pl">Obsługa funkcjonalności Groupware.</li>
+      <li xml:lang="sl">Podpira programe za skupinsko delo</li>
       <li xml:lang="sv">Kmail stöder grupprogramfunktioner.</li>
       <li xml:lang="uk">підтримка роботи у групах.</li>
       <li xml:lang="x-test">xxKMail supports Groupware functionality.xx</li>
