@@ -691,6 +691,7 @@ private:
     CryptoStateIndicatorWidget *mCryptoStateIndicatorWidget;
     KMStorageService *mStorageService;
     bool mSendNowByShortcutUsed;
+    QList<QLabel*> mStatusBarLabelList;
 };
 
 #endif

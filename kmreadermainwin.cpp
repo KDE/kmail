@@ -39,7 +39,7 @@
 #include <qdebug.h>
 #include <KFontAction>
 #include <KFontSizeAction>
-#include <kstatusbar.h>
+#include <QStatusBar>
 #include <KMessageBox>
 #include <KAcceleratorManager>
 #include "kmcommands.h"

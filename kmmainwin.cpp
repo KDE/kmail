@@ -20,7 +20,6 @@
 
 #include "kmmainwin.h"
 #include "kmmainwidget.h"
-#include "kstatusbar.h"
 #include "libkdepim/progresswidget/progressstatusbarwidget.h"
 #include "libkdepim/progresswidget/statusbarprogresswidget.h"
 #include "misc/broadcaststatus.h"
@@ -29,6 +28,7 @@
 
 #include <QTimer>
 #include <QAction>
+#include <QStatusBar>
 
 #include <QMenuBar>
 #include <KToggleAction>
@@ -125,9 +125,7 @@ void KMMainWin::displayStatusMsg( const QString& aText )
     //  text.replace("&", "&amp;");
     //  text.replace("<", "&lt;");
     //  text.replace(">", "&gt;");
-#if 0 //QT5
-    statusBar()->changeItem( text, 1 );
-#endif
+    mMessageLabel->setText(text);
 }
 
 void KMMainWin::slotToggleMenubar(bool dontShowWarning)
@@ -189,13 +187,14 @@ void KMMainWin::setupStatusBar()
 {
     /* Create a progress dialog and hide it. */
     mProgressBar = new KPIM::ProgressStatusBarWidget( statusBar(), this);
-#if 0 //QT5
-    statusBar()->insertItem( i18n("Starting..."), 1, 4 );
+    mMessageLabel = new QLabel(i18n("Starting..."));
+    mMessageLabel->setAlignment(Qt::AlignLeft | Qt::AlignVCenter);
+    statusBar()->insertWidget(1, mMessageLabel);
+
     QTimer::singleShot( 2000, KPIM::BroadcastStatus::instance(), SLOT(reset()) );
-    statusBar()->setItemAlignment( 1, Qt::AlignLeft | Qt::AlignVCenter );
+
     statusBar()->addPermanentWidget( mKMMainWidget->vacationScriptIndicator() );
     statusBar()->addPermanentWidget( mProgressBar->littleProgress() );
-#endif
 }
 
 void KMMainWin::slotQuit()

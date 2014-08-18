@@ -170,8 +170,8 @@ using KSieveUi::SieveDebugDialog;
 #include <ktoolinvocation.h>
 #include <kxmlguifactory.h>
 #include <kxmlguiclient.h>
-#include <kstatusbar.h>
-#include <kaction.h>
+#include <QStatusBar>
+#include <QAction>
 #include <ktreewidgetsearchline.h>
 #include <Solid/Networking>
 #include <KRecentFilesAction>

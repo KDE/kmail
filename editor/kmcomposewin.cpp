@@ -146,7 +146,7 @@
 #include <kshortcutsdialog.h>
 
 #include <kstandardshortcut.h>
-#include <kstatusbar.h>
+#include <qstatusbar.h>
 #include <QTemporaryDir>
 #include <ktoggleaction.h>
 #include <ktoolbar.h>
@@ -1487,20 +1487,37 @@ void KMComposeWin::changeCryptoAction()
 //-----------------------------------------------------------------------------
 void KMComposeWin::setupStatusBar( QWidget *w )
 {
-#if 0 //QT5
     KPIM::ProgressStatusBarWidget * progressStatusBarWidget = new KPIM::ProgressStatusBarWidget(statusBar(), this, PimCommon::StorageServiceProgressManager::progressTypeValue());
     statusBar()->addWidget(w);
+    QLabel *lab = new QLabel(this);
+    lab->setAlignment(Qt::AlignLeft | Qt::AlignVCenter );
+    statusBar()->addPermanentWidget(lab);
+    mStatusBarLabelList.append(lab);
 
+    lab = new QLabel(this);
+    lab->setText(i18nc("Shows the linenumber of the cursor position.", " Line: %1 "
+                      , QLatin1String( "     " ) ));
+    statusBar()->addPermanentWidget(lab);
+    mStatusBarLabelList.append(lab);
+    
+    lab = new QLabel(i18n(" Column: %1 ", QLatin1String( "     " ) ));
+    statusBar()->addPermanentWidget(lab);
+    mStatusBarLabelList.append(lab);
+    
+    lab = new QLabel(i18n(" Spellcheck: %1 ", QLatin1String( "     " )));
+    statusBar()->addPermanentWidget(lab);
+    mStatusBarLabelList.append(lab);
+    
+    lab = new QLabel(overwriteModeStr());
+    statusBar()->addPermanentWidget(lab);
+    mStatusBarLabelList.append(lab);
+
+    statusBar()->addPermanentWidget(progressStatusBarWidget->littleProgress());
+
+
+#if 0
     statusBar()->insertItem( QString(), 0, 1 );
     statusBar()->setItemAlignment( 0, Qt::AlignLeft | Qt::AlignVCenter );
-    statusBar()->insertPermanentItem( overwriteModeStr(), 4,0 );
-
-    statusBar()->insertPermanentItem( i18n(" Spellcheck: %1 ", QLatin1String( "     " )), 3, 0) ;
-    statusBar()->insertPermanentItem( i18n(" Column: %1 ", QLatin1String( "     " ) ), 2, 0 );
-    statusBar()->insertPermanentItem(
-                i18nc("Shows the linenumber of the cursor position.", " Line: %1 "
-                      , QLatin1String( "     " ) ), 1, 0 );
-    statusBar()->addPermanentWidget(progressStatusBarWidget->littleProgress());
 #endif
 }
 
@@ -3122,26 +3139,25 @@ void KMComposeWin::slotAutoSpellCheckingToggled( bool on )
     if ( on != mEdtSubject->checkSpellingEnabled() )
         mEdtSubject->setCheckSpellingEnabled( on );
 
-
+#endif
     QString temp;
     if ( on ) {
         temp = i18n( "Spellcheck: on" );
     } else {
         temp = i18n( "Spellcheck: off" );
     }
-#endif
-    //QT5 statusBar()->changeItem( temp, 3 );
+    mStatusBarLabelList.at(3)->setText(temp);
 }
 
 void KMComposeWin::slotSpellCheckingStatus(const QString & status)
 {
-    //QT5 statusBar()->changeItem( status, 0 );
+    mStatusBarLabelList.at(0)->setText(status);
     QTimer::singleShot( 2000, this, SLOT(slotSpellcheckDoneClearStatus()) );
 }
 
 void KMComposeWin::slotSpellcheckDoneClearStatus()
 {
-    //QT5 statusBar()->changeItem(QString(), 0);
+    mStatusBarLabelList.at(0)->clear();
 }
 
 //-----------------------------------------------------------------------------
@@ -3356,7 +3372,7 @@ void KMComposeWin::slotFolderRemoved( const Akonadi::Collection & col )
 void KMComposeWin::slotOverwriteModeChanged()
 {
     mComposerBase->editor()->setCursorWidth( mComposerBase->editor()->overwriteMode () ? 5 : 1 );
-    //QT5 statusBar()->changeItem( overwriteModeStr(), 4 );
+    mStatusBarLabelList.at(4)->setText(overwriteModeStr());
 }
 
 QString KMComposeWin::overwriteModeStr() const
@@ -3372,18 +3388,18 @@ void KMComposeWin::slotCursorPositionChanged()
     line = mComposerBase->editor()->linePosition();
     col = mComposerBase->editor()->columnNumber();
     temp = i18nc("Shows the linenumber of the cursor position.", " Line: %1 ", line + 1 );
-    //QT5 statusBar()->changeItem( temp, 1 );
+    mStatusBarLabelList.at(1)->setText(temp); 
     temp = i18n( " Column: %1 ", col + 1 );
-    //QT5 statusBar()->changeItem( temp, 2 );
+    mStatusBarLabelList.at(2)->setText(temp);
 
     // Show link target in status bar
     if ( mComposerBase->editor()->textCursor().charFormat().isAnchor() ) {
         const QString text = mComposerBase->editor()->currentLinkText();
         const QString url = mComposerBase->editor()->currentLinkUrl();
-        //QT5 statusBar()->changeItem( text + QLatin1String(" -> ") + url, 0 );
+        mStatusBarLabelList.at(0)->setText(text + QLatin1String(" -> ") + url);
     }
     else {
-        //QT5 statusBar()->changeItem( QString(), 0 );
+        mStatusBarLabelList.at(0)->clear();
     }
 }
 

@@ -24,6 +24,7 @@
 
 class KMMainWidget;
 class KToggleAction;
+class QLabel;
 namespace KPIM {
 class ProgressStatusBarWidget;
 }
@@ -70,6 +71,7 @@ private:
     KMMainWidget *mKMMainWidget;
     KToggleAction *mHideMenuBarAction;
     bool mReallyClose;
+    QLabel *mMessageLabel;
 };
 
 #endif
