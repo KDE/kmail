@@ -36,13 +36,14 @@
 #include "kmkernel.h"
 
 #include <KLocalizedString>
-#include <KDialog>
+#include <QDialog>
 #include <KLocalizedString>
 
 #include <QLabel>
 #include <qlayout.h>
 #include <qprogressbar.h>
 #include <KFormat>
+#include <KConfigGroup>
 
 QuotaWidget::QuotaWidget( QWidget* parent )
     :QWidget( parent )
@@ -50,8 +51,8 @@ QuotaWidget::QuotaWidget( QWidget* parent )
     QVBoxLayout *box = new QVBoxLayout( this );
     QWidget *stuff = new QWidget( this );
     QGridLayout* layout = new QGridLayout( stuff );
-    layout->setMargin( KDialog::marginHint() );
-    layout->setSpacing( KDialog::spacingHint() );
+//TODO PORT QT5     layout->setMargin( QDialog::marginHint() );
+//TODO PORT QT5     layout->setSpacing( QDialog::spacingHint() );
 
     QLabel *lab = new QLabel(i18n("Usage:"));
     layout->addWidget( lab, 0, 0 );

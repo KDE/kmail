@@ -35,10 +35,10 @@
 #include <KPIMIdentities/kpimidentities/identity.h>
 #include <KPIMIdentities/kpimidentities/identitymanager.h>
 
-#include <KDebug>
 #include <KMessageBox>
 #include <QMenu>
 #include <KLocalizedString>
+#include <QDebug>
 
 using namespace KMail;
 
@@ -221,7 +221,7 @@ void IdentityPage::slotRemoveIdentity()
     Q_ASSERT( !mIdentityDialog );
 
     if ( mIdentityManager->shadowIdentities().count() < 2 ) {
-        kFatal() << "Attempted to remove the last identity!";
+        qCritical() << "Attempted to remove the last identity!";
     }
 
     IdentityListViewItem *item = 0;

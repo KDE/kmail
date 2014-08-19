@@ -57,7 +57,6 @@
 #include <kmessagebox.h>
 #include <kbookmarkmanager.h>
 
-#include <ktemporaryfile.h>
 // KIO headers
 #include <kio/job.h>
 #include <kio/jobuidelegate.h>
