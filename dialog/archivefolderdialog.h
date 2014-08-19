@@ -19,13 +19,14 @@
 #ifndef ARCHIVEFOLDERDIALOG_H
 #define ARCHIVEFOLDERDIALOG_H
 
-#include <kdialog.h>
+#include <QDialog>
+#include <KConfigGroup>
 
 class QCheckBox;
 class KUrlRequester;
 class KComboBox;
 class KUrl;
-
+class QPushButton;
 namespace Akonadi
 {
 class Collection;
@@ -38,7 +39,7 @@ class FolderRequester;
 namespace KMail
 {
 
-class ArchiveFolderDialog : public KDialog
+class ArchiveFolderDialog : public QDialog
 {
     Q_OBJECT
 
@@ -50,8 +51,7 @@ private slots:
     void slotFixFileExtension();
     void slotFolderChanged( const Akonadi::Collection& );
     void slotRecursiveCheckboxClicked();
-    /** reimp */
-    void slotButtonClicked( int button );
+    void slotAccepted();
     void slotUrlChanged(const QString&);
 
 private:
@@ -63,6 +63,7 @@ private:
     MailCommon::FolderRequester *mFolderRequester;
     KComboBox *mFormatComboBox;
     KUrlRequester *mUrlRequester;
+    QPushButton *mOkButton;
 };
 
 }

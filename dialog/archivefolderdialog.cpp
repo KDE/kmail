@@ -37,6 +37,10 @@
 #include <QGridLayout>
 #include <QStandardPaths>
 #include <QMimeDatabase>
+#include <KConfigGroup>
+#include <QDialogButtonBox>
+#include <QPushButton>
+#include <QVBoxLayout>
 
 using namespace KMail;
 using namespace MailCommon;
@@ -52,19 +56,27 @@ static QString standardArchivePath( const QString &folderName )
 }
 
 ArchiveFolderDialog::ArchiveFolderDialog( QWidget *parent )
-    : KDialog( parent ), mParentWidget( parent )
+    : QDialog( parent ), mParentWidget( parent )
 {
     setObjectName( QLatin1String("archive_folder_dialog") );
-    setCaption( i18nc( "@title:window for archiving a folder", "Archive Folder" ) );
-    setButtons( Ok|Cancel );
-    setDefaultButton( Ok );
-    setButtonText( KDialog::Ok, i18nc( "@action", "Archive" ) );
+    setWindowTitle( i18nc( "@title:window for archiving a folder", "Archive Folder" ) );
+    QDialogButtonBox *buttonBox = new QDialogButtonBox(QDialogButtonBox::Ok|QDialogButtonBox::Cancel);
+    QVBoxLayout *topLayout = new QVBoxLayout;
+    setLayout(topLayout);
+    mOkButton = buttonBox->button(QDialogButtonBox::Ok);
+    mOkButton->setDefault(true);
+    mOkButton->setShortcut(Qt::CTRL | Qt::Key_Return);
+    connect(buttonBox, SIGNAL(accepted()), this, SLOT(accept()));
+    connect(buttonBox, SIGNAL(rejected()), this, SLOT(reject()));
+    mOkButton->setDefault(true);
+    mOkButton->setText(i18nc( "@action", "Archive" ));
     setModal( true );
     QWidget *mainWidget = new QWidget( this );
+    topLayout->addWidget(mainWidget);
+    topLayout->addWidget(buttonBox);
     QGridLayout *mainLayout = new QGridLayout( mainWidget );
-    mainLayout->setSpacing( KDialog::spacingHint() );
-    mainLayout->setMargin( KDialog::marginHint() );
-    setMainWidget( mainWidget );
+//TODO PORT QT5     mainLayout->setSpacing( QDialog::spacingHint() );
+//TODO PORT QT5     mainLayout->setMargin( QDialog::marginHint() );
 
     int row = 0;
 
@@ -166,17 +178,11 @@ void ArchiveFolderDialog::setFolder( const Akonadi::Collection &defaultCollectio
     mUrlRequester->setUrl( standardArchivePath( defaultCollection.name() ) );
     const QSharedPointer<FolderCollection> folder = FolderCollection::forCollection( defaultCollection, false );
     mDeleteCheckBox->setEnabled( allowToDeleteFolders( defaultCollection ) );
-    enableButtonOk( defaultCollection.isValid() && folder && !folder->isStructural() );
+    mOkButton->setEnabled( defaultCollection.isValid() && folder && !folder->isStructural() );
 }
 
-void ArchiveFolderDialog::slotButtonClicked( int button )
+void ArchiveFolderDialog::slotAccepted()
 {
-    if ( button == KDialog::Cancel ) {
-        reject();
-        return;
-    }
-    Q_ASSERT( button == KDialog::Ok );
-
     if ( !MessageViewer::Util::checkOverwrite( mUrlRequester->url(), this ) ) {
         return;
     }
@@ -221,6 +227,6 @@ void ArchiveFolderDialog::slotFixFileExtension()
 
 void ArchiveFolderDialog::slotUrlChanged(const QString &url)
 {
-    enableButtonOk(!url.isEmpty());
+    mOkButton->setEnabled(!url.isEmpty());
 }
 
