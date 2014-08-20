@@ -34,7 +34,7 @@
 
 #include <Akonadi/Contact/ContactSearchJob>
 #include <kcombobox.h>
-#include <kdialog.h>
+#include <QDialog>
 #include <kfiledialog.h>
 #include <kglobalsettings.h>
 #include <kio/netaccess.h>
@@ -56,6 +56,7 @@
 // #include <assert.h>
 #include <QFontDatabase>
 #include <QImageReader>
+#include <KConfigGroup>
 using namespace KABC;
 using namespace KIO;
 using namespace KMail;
@@ -79,7 +80,7 @@ XFaceConfigurator::XFaceConfigurator( QWidget * parent )
 
     vlay = new QVBoxLayout( this );
     vlay->setObjectName( QLatin1String("main layout") );
-    vlay->setSpacing( KDialog::spacingHint() );
+//TODO PORT QT5     vlay->setSpacing( QDialog::spacingHint() );
     vlay->setMargin( 0 );
     hlay = new QHBoxLayout();
     vlay->addLayout( hlay );
@@ -145,7 +146,7 @@ XFaceConfigurator::XFaceConfigurator( QWidget * parent )
     widgetStack->insertWidget( pageno, page ); // force sequential numbers (play safe)
     page_vlay = new QVBoxLayout( page );
     page_vlay->setMargin( 0 );
-    page_vlay->setSpacing( KDialog::spacingHint() );
+//TODO PORT QT5     page_vlay->setSpacing( QDialog::spacingHint() );
     hlay = new QHBoxLayout(); // inherits spacing ??? FIXME really?
     page_vlay->addLayout( hlay );
     mFromFileBtn = new QPushButton( i18n("Select File..."), page );
@@ -181,7 +182,7 @@ XFaceConfigurator::XFaceConfigurator( QWidget * parent )
     widgetStack->insertWidget( pageno,page );
     page_vlay = new QVBoxLayout( page );
     page_vlay->setMargin( 0 );
-    page_vlay->setSpacing( KDialog::spacingHint() );
+//TODO PORT QT5     page_vlay->setSpacing( QDialog::spacingHint() );
     mTextEdit = new PimCommon::PlainTextEditor( page );
     page_vlay->addWidget( mTextEdit );
     mTextEdit->setWhatsThis( i18n( "Use this field to enter an arbitrary X-Face string." ) );
