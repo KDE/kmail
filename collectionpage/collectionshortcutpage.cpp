@@ -26,10 +26,11 @@
 #include <QSpacerItem>
 #include <QVBoxLayout>
 
-#include <KDialog>
+#include <QDialog>
 #include <QHBoxLayout>
 #include <KLocalizedString>
 #include <KKeySequenceWidget>
+#include <KConfigGroup>
 
 using namespace MailCommon;
 
@@ -51,7 +52,7 @@ void CollectionShortcutPage::init(const Akonadi::Collection & col)
     mFolder = FolderCollection::forCollection( col, false );
 
     QVBoxLayout *topLayout = new QVBoxLayout( this );
-    topLayout->setSpacing( KDialog::spacingHint() );
+//TODO PORT QT5     topLayout->setSpacing( QDialog::spacingHint() );
 
     QLabel *label = new QLabel( i18n( "<qt>To choose a key or a combination "
                                       "of keys which select the current folder, "

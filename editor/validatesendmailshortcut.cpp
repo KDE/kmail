@@ -53,13 +53,13 @@ bool ValidateSendMailShortcut::validate()
         sendNow = false;
     } else if (result == KMessageBox::No) {
         GlobalSettings::self()->setConfirmBeforeSendWhenUseShortcut(true);
-        GlobalSettings::self()->writeConfig();
+        GlobalSettings::self()->save();
         sendNow = true;
     } else if (result == KMessageBox::Cancel) {
         sendNow = true;
     }
     if (!configWasSaved) {
-        GlobalSettings::self()->writeConfig();
+        GlobalSettings::self()->save();
     }
     return sendNow;
 }

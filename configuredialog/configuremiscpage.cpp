@@ -29,7 +29,8 @@ using namespace PimCommon::ConfigureImmutableWidgetUtils;
 #include <KCModuleProxy>
 #include <KCModuleInfo>
 #include <KLocalizedString>
-#include <KDialog>
+#include <QDialog>
+#include <KConfigGroup>
 
 using namespace MailCommon;
 QString MiscPage::helpAnchor() const
@@ -72,8 +73,8 @@ MiscPageFolderTab::MiscPageFolderTab( QWidget * parent )
     mOnStartupOpenFolder = new FolderRequester( mMMTab.mOnStartupOpenFolder );
     layout->addWidget( mOnStartupOpenFolder );
 
-    mMMTab.gridLayout->setSpacing( KDialog::spacingHint() );
-    mMMTab.gridLayout->setMargin( KDialog::marginHint() );
+//TODO PORT QT5     mMMTab.gridLayout->setSpacing( QDialog::spacingHint() );
+//TODO PORT QT5     mMMTab.gridLayout->setMargin( QDialog::marginHint() );
     mMMTab.mExcludeImportantFromExpiry->setWhatsThis(
                 i18n( GlobalSettings::self()->excludeImportantMailFromExpiryItem()->whatsThis().toUtf8() ) );
 

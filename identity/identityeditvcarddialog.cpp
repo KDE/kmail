@@ -27,27 +27,42 @@
 
 #include <QHBoxLayout>
 #include <QFile>
+#include <KConfigGroup>
+#include <QDialogButtonBox>
+#include <QPushButton>
+#include <QVBoxLayout>
 
 IdentityEditVcardDialog::IdentityEditVcardDialog(const QString &fileName, QWidget *parent)
-    : KDialog(parent)
+    : QDialog(parent)
 {
+    QDialogButtonBox *buttonBox = new QDialogButtonBox(QDialogButtonBox::Ok|QDialogButtonBox::Cancel);
+    QPushButton *okButton = buttonBox->button(QDialogButtonBox::Ok);
+    okButton->setDefault(true);
+    okButton->setShortcut(Qt::CTRL | Qt::Key_Return);
+    connect(buttonBox, SIGNAL(accepted()), this, SLOT(accept()));
+    connect(buttonBox, SIGNAL(rejected()), this, SLOT(reject()));
+    QVBoxLayout *topLayout = new QVBoxLayout;
+    setLayout(topLayout);
+
+        
     if (QFile(fileName).exists()) {
-        setCaption( i18n( "Edit own vCard" ) );
-        setButtons( User1|Ok|Cancel );
-        setButtonText(User1, i18n("Delete current vCard"));
-        connect(this, SIGNAL(user1Clicked()), this, SLOT(slotDeleteCurrentVCard()));
+        setWindowTitle( i18n( "Edit own vCard" ) );
+        QPushButton *user1Button = new QPushButton;
+        buttonBox->addButton(user1Button, QDialogButtonBox::ActionRole);
+        user1Button->setText(i18n("Delete current vCard"));
+        connect(user1Button, SIGNAL(clicked()), this, SLOT(slotDeleteCurrentVCard()));
     } else {
-        setCaption( i18n("Create own vCard") );
-        setButtons( Ok|Cancel );
+        setWindowTitle( i18n("Create own vCard") );
     }
 
-    setDefaultButton( Ok );
+    okButton->setDefault(true);
     setModal( true );
     QWidget *mainWidget = new QWidget( this );
+    topLayout->addWidget(mainWidget);
+    topLayout->addWidget(buttonBox);
     QHBoxLayout *mainLayout = new QHBoxLayout( mainWidget );
-    mainLayout->setSpacing( KDialog::spacingHint() );
-    mainLayout->setMargin( KDialog::marginHint() );
-    setMainWidget( mainWidget );
+//TODO PORT QT5     mainLayout->setSpacing( QDialog::spacingHint() );
+//TODO PORT QT5     mainLayout->setMargin( QDialog::marginHint() );
 
     mContactEditor = new Akonadi::ContactEditor( Akonadi::ContactEditor::CreateMode, Akonadi::ContactEditor::VCardMode, this );
     mainLayout->addWidget(mContactEditor);

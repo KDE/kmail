@@ -18,13 +18,13 @@
 #ifndef IDENTITYEDITVCARDDIALOG_H
 #define IDENTITYEDITVCARDDIALOG_H
 
-#include <KDialog>
+#include <QDialog>
 
 namespace Akonadi {
 class ContactEditor;
 }
 
-class IdentityEditVcardDialog : public KDialog
+class IdentityEditVcardDialog : public QDialog
 {
     Q_OBJECT
 public:

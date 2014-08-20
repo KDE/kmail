@@ -10,7 +10,7 @@
 
 // other KDE headers:
 #include <QTabWidget>
-#include <KDialog>
+#include <QDialog>
 
 // Qt headers:
 #include <QShowEvent>
@@ -18,13 +18,14 @@
 
 // Other headers:
 #include <assert.h>
+#include <KConfigGroup>
 
 
 ConfigModuleWithTabs::ConfigModuleWithTabs( QWidget *parent )
     : ConfigModule( parent ), mWasInitialized( false )
 {
     QVBoxLayout *vlay = new QVBoxLayout( this );
-    vlay->setSpacing( KDialog::spacingHint() );
+//TODO PORT QT5     vlay->setSpacing( QDialog::spacingHint() );
     vlay->setMargin( 0 );
     mTabWidget = new QTabWidget( this );
     vlay->addWidget( mTabWidget );
