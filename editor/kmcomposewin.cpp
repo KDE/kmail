@@ -1114,7 +1114,7 @@ void KMComposeWin::setupActions( void )
         actionCollection()->addAction(QLatin1String("send_mail_default"), action );
         connect( action, SIGNAL(triggered(bool)), SLOT(slotSendNow()));
 
-        action = new QAction(KIcon(QLatin1String("mail-send")), i18n("Send Mail Using Shortcut"), this);
+        action = new QAction(QIcon::fromTheme(QLatin1String("mail-send")), i18n("Send Mail Using Shortcut"), this);
         actionCollection()->addAction(QLatin1String("send_mail"), action );
         action->setShortcut( QKeySequence( Qt::CTRL + Qt::Key_Return ) );
         connect( action, SIGNAL(triggered(bool)), SLOT(slotSendNowByShortcut()));
