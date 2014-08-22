@@ -2359,7 +2359,7 @@ void KMMainWidget::slotStartWatchGnuPG()
 void KMMainWidget::slotConfigChanged()
 {
     readConfig();
-    mMsgActions->setupForwardActions();
+    mMsgActions->setupForwardActions(actionCollection());
     mMsgActions->setupForwardingActionsList( mGUIClient );
 }
 

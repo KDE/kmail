@@ -168,7 +168,7 @@ MessageActions::MessageActions( KActionCollection *ac, QWidget *parent )
              parent, SLOT(slotForwardInlineMsg()) );
     ac->addAction( QLatin1String("message_forward_inline"), mForwardInlineAction );
 
-    setupForwardActions();
+    setupForwardActions(ac);
 
     mRedirectAction  = new QAction(i18nc("Message->Forward->", "&Redirect..."), this );
     ac->addAction( QLatin1String("message_forward_redirect"), mRedirectAction );
@@ -404,7 +404,7 @@ void MessageActions::setMessageView(KMReaderWin * msgView)
     mMessageView = msgView;
 }
 
-void MessageActions::setupForwardActions()
+void MessageActions::setupForwardActions(KActionCollection *ac)
 {
     disconnect( mForwardActionMenu, SIGNAL(triggered(bool)), 0, 0 );
     mForwardActionMenu->removeAction( mForwardInlineAction );
@@ -413,15 +413,15 @@ void MessageActions::setupForwardActions()
     if ( GlobalSettings::self()->forwardingInlineByDefault() ) {
         mForwardActionMenu->insertAction( mRedirectAction, mForwardInlineAction );
         mForwardActionMenu->insertAction( mRedirectAction, mForwardAttachedAction );
-        mForwardInlineAction->setShortcut(QKeySequence(Qt::Key_F));
-        mForwardAttachedAction->setShortcut(QKeySequence(Qt::SHIFT+Qt::Key_F));
+        ac->setDefaultShortcut(mForwardInlineAction,QKeySequence(Qt::Key_F));
+        ac->setDefaultShortcut(mForwardAttachedAction,QKeySequence(Qt::SHIFT+Qt::Key_F));
         QObject::connect( mForwardActionMenu, SIGNAL(triggered(bool)),
                           mParent, SLOT(slotForwardInlineMsg()) );
     } else {
         mForwardActionMenu->insertAction( mRedirectAction, mForwardAttachedAction );
         mForwardActionMenu->insertAction( mRedirectAction, mForwardInlineAction );
-        mForwardInlineAction->setShortcut(QKeySequence(Qt::Key_F));
-        mForwardAttachedAction->setShortcut(QKeySequence(Qt::SHIFT+Qt::Key_F));
+        ac->setDefaultShortcut(mForwardInlineAction,QKeySequence(Qt::Key_F));
+        ac->setDefaultShortcut(mForwardAttachedAction,QKeySequence(Qt::SHIFT+Qt::Key_F));
         QObject::connect( mForwardActionMenu, SIGNAL(triggered(bool)),
                           mParent, SLOT(slotForwardAttachedMsg()) );
     }

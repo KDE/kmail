@@ -60,7 +60,7 @@ public:
      * preference whether to forward inline or as attachment by default into account.
      * This has to be called when that preference config has been changed.
      */
-    void setupForwardActions();
+    void setupForwardActions(KActionCollection *ac);
 
     /**
      * Sets up action list for forward menu.

@@ -308,7 +308,7 @@ void KMReaderMainWin::slotCustomForwardMsg( const QString &tmpl)
 void KMReaderMainWin::slotConfigChanged()
 {
     //readConfig();
-    mMsgActions->setupForwardActions();
+    mMsgActions->setupForwardActions(actionCollection());
     mMsgActions->setupForwardingActionsList( this );
 }
 
