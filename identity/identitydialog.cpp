@@ -867,7 +867,7 @@ void IdentityDialog::setIdentity( KPIMIdentities::Identity & ident ) {
     mAutoCorrectionLanguage->setLanguage(ident.autocorrectionLanguage());
     updateVcardButton();
     if(mVcardFilename.isEmpty()) {
-        mVcardFilename = QStandardPaths::writableLocation(QStandardPaths::DataLocation) + ident.identityName() + QLatin1String("/.vcf");
+        mVcardFilename = QStandardPaths::writableLocation(QStandardPaths::DataLocation) + QLatin1Char('/') + ident.identityName() + QLatin1String(".vcf");
     }
     mAttachMyVCard->setChecked(ident.attachVcard());
     QString defaultDomainName = ident.defaultDomainName();
