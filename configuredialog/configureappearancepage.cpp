@@ -528,7 +528,7 @@ AppearancePageLayoutTab::AppearancePageLayoutTab( QWidget * parent )
     // "folder list" radio buttons:
     populateButtonGroup( mFolderListGroupBox = new QGroupBox( this ),
                          mFolderListGroup = new QButtonGroup( this ),
-                         Qt::Horizontal, GlobalSettings::self()->folderListItem() );
+                         Qt::Vertical, GlobalSettings::self()->folderListItem() );
     vlay->addWidget( mFolderListGroupBox );
     connect( mFolderListGroup, SIGNAL (buttonClicked(int)),
              this, SLOT(slotEmitChanged()) );
@@ -543,7 +543,7 @@ AppearancePageLayoutTab::AppearancePageLayoutTab( QWidget * parent )
     // "favorite folders view mode" radio buttons:
     mFavoriteFoldersViewGroupBox = new QGroupBox( this );
     mFavoriteFoldersViewGroupBox->setTitle( i18n( "Show Favorite Folders View" ) );
-    mFavoriteFoldersViewGroupBox->setLayout( new QHBoxLayout() );
+    mFavoriteFoldersViewGroupBox->setLayout( new QVBoxLayout() );
     mFavoriteFoldersViewGroupBox->layout()->setSpacing( KDialog::spacingHint() );
     mFavoriteFoldersViewGroup = new QButtonGroup( this );
     connect( mFavoriteFoldersViewGroup, SIGNAL(buttonClicked(int)),
@@ -567,7 +567,7 @@ AppearancePageLayoutTab::AppearancePageLayoutTab( QWidget * parent )
     // "folder tooltips" radio buttons:
     mFolderToolTipsGroupBox = new QGroupBox( this );
     mFolderToolTipsGroupBox->setTitle( i18n( "Folder Tooltips" ) );
-    mFolderToolTipsGroupBox->setLayout( new QHBoxLayout() );
+    mFolderToolTipsGroupBox->setLayout( new QVBoxLayout() );
     mFolderToolTipsGroupBox->layout()->setSpacing( KDialog::spacingHint() );
     mFolderToolTipsGroup = new QButtonGroup( this );
     connect( mFolderToolTipsGroup, SIGNAL(buttonClicked(int)),
