@@ -1116,7 +1116,7 @@ void KMComposeWin::setupActions( void )
 
         action = new QAction(QIcon::fromTheme(QLatin1String("mail-send")), i18n("Send Mail Using Shortcut"), this);
         actionCollection()->addAction(QLatin1String("send_mail"), action );
-        action->setShortcut( QKeySequence( Qt::CTRL + Qt::Key_Return ) );
+        actionCollection()->setDefaultShortcut(action, QKeySequence( Qt::CTRL + Qt::Key_Return ) );
         connect( action, SIGNAL(triggered(bool)), SLOT(slotSendNowByShortcut()));
 
 
@@ -1137,7 +1137,7 @@ void KMComposeWin::setupActions( void )
         QAction *action = new QAction( QIcon::fromTheme( QLatin1String("mail-queue") ), i18n("Send &Later"), this );
         actionCollection()->addAction( QLatin1String("send_mail"), action );
         connect( action, SIGNAL(triggered(bool)), SLOT(slotSendLater()) );
-        action->setShortcut( QKeySequence( Qt::CTRL + Qt::Key_Return ) );
+        actionCollection()->setDefaultShortcut(action, QKeySequence( Qt::CTRL + Qt::Key_Return ) );
         actActionLaterMenu = new KActionMenu( QIcon::fromTheme( QLatin1String("mail-queue") ), i18n("Send &Later Via"), this );
         actionCollection()->addAction( QLatin1String("send_default_via"), actActionLaterMenu );
 
@@ -1176,7 +1176,7 @@ void KMComposeWin::setupActions( void )
     QAction *action = new QAction( QIcon::fromTheme( QLatin1String("document-save") ), i18n("Save as &Draft"), this );
     actionCollection()->addAction(QLatin1String("save_in_drafts"), action );
     KMail::Util::addQActionHelpText(action, i18n("Save email in Draft folder"));
-    action->setShortcut(QKeySequence(Qt::CTRL + Qt::Key_S));
+    actionCollection()->setDefaultShortcut(action, QKeySequence(Qt::CTRL + Qt::Key_S));
     connect( action, SIGNAL(triggered(bool)), SLOT(slotSaveDraft()) );
 
     action = new QAction( QIcon::fromTheme( QLatin1String("document-save") ), i18n("Save as &Template"), this );
