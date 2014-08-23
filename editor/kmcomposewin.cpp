@@ -1217,7 +1217,7 @@ void KMComposeWin::setupActions( void )
     action = new QAction(QIcon::fromTheme(QLatin1String("mail-message-new")), i18n("&New Composer"), this);
     actionCollection()->addAction(QLatin1String("new_composer"), action );
     connect(action, SIGNAL(triggered(bool)), SLOT(slotNewComposer()));
-    action->setShortcuts( KStandardShortcut::shortcut( KStandardShortcut::New ) );
+    actionCollection()->setDefaultShortcuts(action, KStandardShortcut::shortcut( KStandardShortcut::New ) );
     action = new QAction( QIcon::fromTheme( QLatin1String("window-new") ), i18n("New Main &Window"), this );
     actionCollection()->addAction( QLatin1String("open_mailreader"), action );
     connect( action, SIGNAL(triggered(bool)), SLOT(slotNewMailReader()) );

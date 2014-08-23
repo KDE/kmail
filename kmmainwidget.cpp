@@ -4292,7 +4292,7 @@ void KMMainWidget::initializeFilterActions()
                                            filterAction );
             connect( filterAction, SIGNAL(triggered(bool)),
                      filterCommand, SLOT(start()) );
-            filterAction->setShortcut( filter->shortcut() );
+            actionCollection()->setDefaultShortcut(filterAction, filter->shortcut() );
             if ( !addedSeparator ) {
                 QAction *a = mApplyFilterActionsMenu->menu()->addSeparator();
                 mFilterMenuActions.append( a );
