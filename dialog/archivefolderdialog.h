@@ -25,7 +25,6 @@
 class QCheckBox;
 class KUrlRequester;
 class KComboBox;
-class KUrl;
 class QPushButton;
 namespace Akonadi
 {
