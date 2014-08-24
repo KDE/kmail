@@ -4830,7 +4830,7 @@ void KMMainWidget::slotOpenRecentMsg(const QUrl& url)
     openCommand->start();
 }
 
-void KMMainWidget::addRecentFile(const KUrl& mUrl)
+void KMMainWidget::addRecentFile(const QUrl& mUrl)
 {
     mOpenRecentAction->addUrl(mUrl);
     KConfigGroup grp = mConfig->group(QLatin1String("Recent Files"));

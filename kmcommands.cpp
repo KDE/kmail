@@ -680,7 +680,7 @@ KMCommand::Result KMSaveMsgCommand::execute()
 
 //-----------------------------------------------------------------------------
 
-KMOpenMsgCommand::KMOpenMsgCommand( QWidget *parent, const KUrl & url,
+KMOpenMsgCommand::KMOpenMsgCommand( QWidget *parent, const QUrl & url,
                                     const QString & encoding, KMMainWidget *main )
     : KMCommand( parent ),
       mUrl( url ),
@@ -693,7 +693,7 @@ KMOpenMsgCommand::KMOpenMsgCommand( QWidget *parent, const KUrl & url,
 KMCommand::Result KMOpenMsgCommand::execute()
 {
     if ( mUrl.isEmpty() ) {
-        mUrl = KFileDialog::getOpenUrl( KUrl( QLatin1String("kfiledialog:///OpenMessage") ),
+        mUrl = KFileDialog::getOpenUrl( QUrl( QLatin1String("kfiledialog:///OpenMessage") ),
                                         QLatin1String("message/rfc822 application/mbox"),
                                         parentWidget(), i18n("Open Message") );
     }

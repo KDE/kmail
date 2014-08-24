@@ -158,7 +158,7 @@ public:
 
     void clearViewer();
 
-    void addRecentFile(const KUrl& mUrl);
+    void addRecentFile(const QUrl& mUrl);
     void updateQuickSearchLineText();
 
     void populateMessageListStatusFilterCombo();

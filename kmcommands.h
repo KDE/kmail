@@ -274,7 +274,7 @@ class KMAIL_EXPORT KMOpenMsgCommand : public KMCommand
     Q_OBJECT
 
 public:
-    explicit KMOpenMsgCommand(QWidget *parent, const KUrl & url = KUrl(),
+    explicit KMOpenMsgCommand(QWidget *parent, const QUrl & url = QUrl(),
                               const QString & encoding = QString() , KMMainWidget *main = 0);
 
 private:
@@ -287,7 +287,7 @@ private slots:
 private:
     void doesNotContainMessage();
     static const int MAX_CHUNK_SIZE = 64*1024;
-    KUrl mUrl;
+    QUrl mUrl;
     QString mMsgString;
     KIO::TransferJob *mJob;
     const QString mEncoding;
