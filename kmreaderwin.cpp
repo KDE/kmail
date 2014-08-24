@@ -71,7 +71,7 @@ using MessageComposer::MessageFactory;
 #include <kde_file.h>
 #include <qdebug.h>
 #include <KLocalizedString>
-#include <kaction.h>
+#include <QAction>
 #include <kcodecs.h>
 #include <ktoggleaction.h>
 #include <kservice.h>

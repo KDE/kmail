@@ -22,7 +22,7 @@
 #include <KMessageBox>
 #include <KActionCollection>
 #include <KLocalizedString>
-#include <kaction.h>
+#include <QAction>
 
 ValidateSendMailShortcut::ValidateSendMailShortcut(KActionCollection *actionCollection, QWidget *parent)
     : mParent(parent),

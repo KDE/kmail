@@ -31,7 +31,7 @@
 #include <KLocalizedString>
 #include <kstandardshortcut.h>
 #include <kwindowsystem.h>
-#include <kaction.h>
+#include <QAction>
 #include <kfontaction.h>
 #include <kstandardaction.h>
 #include <ktoggleaction.h>
