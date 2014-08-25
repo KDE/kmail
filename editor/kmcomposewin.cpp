@@ -176,6 +176,7 @@
 #include <QFontDatabase>
 #include <QMimeDatabase>
 #include <QMimeType>
+#include <KConfigGroup>
 
 using Sonnet::DictionaryComboBox;
 using MailTransport::TransportManager;
@@ -399,7 +400,7 @@ KMComposeWin::KMComposeWin( const KMime::Message::Ptr &aMsg, bool lastSignState,
     mBtnTransport->setWhatsThis( GlobalSettings::self()->stickyTransportItem()->whatsThis() );
     mBtnDictionary->setWhatsThis( GlobalSettings::self()->stickyDictionaryItem()->whatsThis() );
 
-    setCaption( i18n("Composer") );
+    setWindowTitle( i18n("Composer") );
     setMinimumSize( 200, 200 );
 
     mBtnIdentity->setFocusPolicy( Qt::NoFocus );
@@ -806,8 +807,8 @@ void KMComposeWin::rethinkFields( bool fromSlot )
 
     delete mGrid;
     mGrid = new QGridLayout( mHeadersArea );
-    mGrid->setSpacing( KDialog::spacingHint() );
-    mGrid->setMargin( KDialog::marginHint() / 2 );
+//TODO PORT QT5     mGrid->setSpacing( QDialog::spacingHint() );
+//TODO PORT QT5     mGrid->setMargin( QDialog::marginHint() / 2 );
     mGrid->setColumnStretch( 0, 1 );
     mGrid->setColumnStretch( 1, 100 );
     mGrid->setColumnStretch( 2, 1 );
@@ -2491,9 +2492,9 @@ void KMComposeWin::slotUpdWinTitle()
     // Remove characters that show badly in most window decorations:
     // newlines tend to become boxes.
     if ( s.isEmpty() ) {
-        setCaption( QLatin1Char('(') + i18n("unnamed") + QLatin1Char(')') );
+        setWindowTitle( QLatin1Char('(') + i18n("unnamed") + QLatin1Char(')') );
     } else {
-        setCaption( s.replace( QLatin1Char('\n'), QLatin1Char(' ') ) );
+        setWindowTitle( s.replace( QLatin1Char('\n'), QLatin1Char(' ') ) );
     }
 }
 
@@ -3480,7 +3481,7 @@ void KMComposeWin::slotEncryptChiasmusToggled( bool on )
                                                     keys, GlobalSettings::chiasmusKey(),
                                                     GlobalSettings::chiasmusOptions() );
 
-    if ( selectorDlg.exec() != KDialog::Accepted ) {
+    if ( selectorDlg.exec() != QDialog::Accepted ) {
         return;
     }
 
