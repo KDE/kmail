@@ -19,7 +19,6 @@
 #define FOLLOWUPREMINDERSELECTDATEDIALOG_H
 
 #include <QDialog>
-#include <KConfigGroup>
 class KDatePicker;
 class FollowUpReminderSelectDateDialog : public QDialog
 {

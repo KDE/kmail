@@ -22,7 +22,6 @@
 #include <KSharedConfig>
 #include <KDatePicker>
 #include <KMessageBox>
-#include <KGlobal>
 
 #include <QVBoxLayout>
 #include <KConfigGroup>
