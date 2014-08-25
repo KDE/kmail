@@ -36,7 +36,6 @@
 #include <kcombobox.h>
 #include <QDialog>
 #include <kfiledialog.h>
-#include <kglobalsettings.h>
 #include <kio/netaccess.h>
 #include <KLocalizedString>
 #include <kmessagebox.h>
