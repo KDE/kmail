@@ -120,7 +120,7 @@ void CollectionMailingListPage::init(const Akonadi::Collection & col)
     label->setBuddy( mAddressCombo );
     groupLayout->addWidget( mAddressCombo, 6, 1 );
 
-    //FIXME: if the mailing list actions have either KAction's or toolbar buttons
+    //FIXME: if the mailing list actions have either QAction's or toolbar buttons
     //       associated with them - remove this button since it's really silly
     //       here
     QPushButton *handleButton = new QPushButton( i18n( "Invoke Handler" ), mGroupWidget );

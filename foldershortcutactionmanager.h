@@ -44,7 +44,7 @@ public:
 
 public slots:
     void start();
-    /** Assign a KAction to the command which is used to trigger it. This
+    /** Assign a QAction to the command which is used to trigger it. This
     * action will be deleted along with the command, so you don't need to
     * keep track of it separately. */
     void setAction( QAction* );

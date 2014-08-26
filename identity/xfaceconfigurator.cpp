@@ -42,7 +42,6 @@
 #include <KPIMIdentities/kpimidentities/identity.h>
 #include <KPIMIdentities/kpimidentities/identitymanager.h>
 #include "pimcommon/texteditor/plaintexteditor/plaintexteditor.h"
-#include <kurl.h>
 #include <messageviewer/header/kxface.h>
 
 #include <QCheckBox>
