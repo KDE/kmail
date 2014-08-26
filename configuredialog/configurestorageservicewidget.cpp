@@ -48,7 +48,7 @@ ConfigureStorageServiceWidget::ConfigureStorageServiceWidget(QWidget *parent)
     if (QStandardPaths::findExecutable(QLatin1String("storageservicemanager")).isEmpty()) {
         mManageStorageService->setEnabled(false);
     } else {
-        connect(mManageStorageService, SIGNAL(clicked(bool)), this, SLOT(slotManageStorageService()));
+        connect(mManageStorageService, &QPushButton::clicked, this, &ConfigureStorageServiceWidget::slotManageStorageService);
     }
     QList<PimCommon::StorageServiceAbstract::Capability> lstCapabilities;
     lstCapabilities << PimCommon::StorageServiceAbstract::ShareLinkCapability;

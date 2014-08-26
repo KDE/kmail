@@ -41,7 +41,7 @@ GlobalSettings::GlobalSettings()
 {
   mConfigSyncTimer = new QTimer( this );
   mConfigSyncTimer->setSingleShot( true );
-  connect( mConfigSyncTimer, SIGNAL(timeout()), this, SLOT(slotSyncNow()) );
+  connect(mConfigSyncTimer, &QTimer::timeout, this, &GlobalSettings::slotSyncNow);
 }
 
 void GlobalSettings::requestSync()

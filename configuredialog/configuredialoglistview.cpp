@@ -15,7 +15,7 @@ ListView::ListView( QWidget *parent )
     setSelectionMode( QAbstractItemView::SingleSelection );
     setRootIsDecorated( false );
     setContextMenuPolicy( Qt::CustomContextMenu );
-    connect( this, SIGNAL(customContextMenuRequested(QPoint)), SLOT(slotContextMenu(QPoint)) );
+    connect(this, &ListView::customContextMenuRequested, this, &ListView::slotContextMenu);
 }
 
 
