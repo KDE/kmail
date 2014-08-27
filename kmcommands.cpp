@@ -307,8 +307,8 @@ void KMCommand::transferSelectedMsgs()
         Akonadi::ItemFetchJob *fetch = new Akonadi::ItemFetchJob( mMsgList, this );
         mFetchScope.fetchAttribute< MessageCore::MDNStateAttribute >();
         fetch->setFetchScope( mFetchScope );
-        connect( fetch, SIGNAL(itemsReceived(Akonadi::Item::List)), SLOT(slotMsgTransfered(Akonadi::Item::List)) );
-        connect( fetch, SIGNAL(result(KJob*)), SLOT(slotJobFinished()) );
+        connect(fetch, &Akonadi::ItemFetchJob::itemsReceived, this, &KMCommand::slotMsgTransfered);
+        connect(fetch, &Akonadi::ItemFetchJob::result, this, &KMCommand::slotJobFinished);
     } else {
         // no need to fetch anything
         if ( !mMsgList.isEmpty() )
@@ -510,7 +510,7 @@ KMCommand::Result KMUrlSaveCommand::execute()
             return Canceled;
     }
     KIO::Job *job = KIO::file_copy(mUrl, saveUrl, -1, KIO::Overwrite);
-    connect(job, SIGNAL(result(KJob*)), SLOT(slotUrlSaveResult(KJob*)));
+    connect(job, &KIO::Job::result, this, &KMUrlSaveCommand::slotUrlSaveResult);
     setEmitsCompletedItself( true );
     return OK;
 }
@@ -578,7 +578,7 @@ KMCommand::Result KMEditItemCommand::execute()
     if ( mDeleteFromSource ) {
         setDeletesItself( true );
         Akonadi::ItemDeleteJob *job = new Akonadi::ItemDeleteJob( item );
-        connect( job, SIGNAL(result(KJob*)), this, SLOT(slotDeleteItem(KJob*)) );
+        connect(job, &KIO::Job::result, this, &KMEditItemCommand::slotDeleteItem);
     }
     KMail::Composer *win = KMail::makeComposer();
     bool lastEncrypt = false;
@@ -1189,7 +1189,7 @@ KMCommand::Result KMSetStatusCommand::execute()
         Akonadi::ItemModifyJob *modifyJob = new Akonadi::ItemModifyJob( itemsToModify, this );
         modifyJob->disableRevisionCheck();
         modifyJob->setIgnorePayload( true );
-        connect( modifyJob, SIGNAL(result(KJob*)), this, SLOT(slotModifyItemDone(KJob*)) );
+        connect(modifyJob, &Akonadi::ItemModifyJob::result, this, &KMSetStatusCommand::slotModifyItemDone);
     }
     return OK;
 }
@@ -1216,7 +1216,7 @@ KMCommand::Result KMSetTagCommand::execute()
     Q_FOREACH( const Akonadi::Tag &tag, mTags ) {
         if ( !tag.isValid() ) {
             Akonadi::TagCreateJob *createJob = new Akonadi::TagCreateJob(tag, this);
-            connect( createJob, SIGNAL(result(KJob*)), this, SLOT(slotModifyItemDone(KJob*)) );
+            connect(createJob, &Akonadi::TagCreateJob::result, this, &KMSetTagCommand::slotModifyItemDone);
         } else {
             mCreatedTags << tag;
         }
@@ -1272,7 +1272,7 @@ void KMSetTagCommand::setTags()
     Akonadi::ItemModifyJob *modifyJob = new Akonadi::ItemModifyJob( itemsToModify, this );
     modifyJob->disableRevisionCheck();
     modifyJob->setIgnorePayload( true );
-    connect( modifyJob, SIGNAL(result(KJob*)), this, SLOT(slotModifyItemDone(KJob*)) );
+    connect(modifyJob, &Akonadi::ItemModifyJob::result, this, &KMSetTagCommand::slotModifyItemDone);
 
     if(!mCreatedTags.isEmpty()) {
         KConfigGroup tag( KMKernel::self()->config(), "MessageListView" );
@@ -1393,7 +1393,7 @@ KMCommand::Result KMCopyCommand::execute()
 
     QList<Akonadi::Item> listItem = retrievedMsgs();
     Akonadi::ItemCopyJob *job = new Akonadi::ItemCopyJob( listItem, Akonadi::Collection(mDestFolder.id()),this );
-    connect( job, SIGNAL(result(KJob*)), this, SLOT(slotCopyResult(KJob*)) );
+    connect(job, &KIO::Job::result, this, &KMCopyCommand::slotCopyResult);
 
     return OK;
 }
@@ -1444,7 +1444,7 @@ KMCommand::Result KMMoveCommand::execute()
     setDeletesItself( true );
     if ( mDestFolder.isValid() ) {
         Akonadi::ItemMoveJob *job = new Akonadi::ItemMoveJob( retrievedMsgs(), mDestFolder, this );
-        connect( job, SIGNAL(result(KJob*)), this, SLOT(slotMoveResult(KJob*)) );
+        connect(job, &KIO::Job::result, this, &KMMoveCommand::slotMoveResult);
 
         // group by source folder for undo
         Akonadi::Item::List items = retrievedMsgs();
@@ -1465,7 +1465,7 @@ KMCommand::Result KMMoveCommand::execute()
         const QList<Akonadi::Item> retrievedList = retrievedMsgs();
         if ( !retrievedList.isEmpty() ) {
             Akonadi::ItemDeleteJob *job = new Akonadi::ItemDeleteJob( retrievedList, this );
-            connect( job, SIGNAL(result(KJob*)), this, SLOT(slotMoveResult(KJob*)) );
+            connect(job, &KIO::Job::result, this, &KMMoveCommand::slotMoveResult);
         }
     }
 
