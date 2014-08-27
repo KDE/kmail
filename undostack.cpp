@@ -103,7 +103,7 @@ void UndoStack::undo()
         UndoInfo *info = mStack.takeFirst();
         emit undoStackChanged();
         Akonadi::ItemMoveJob * job = new Akonadi::ItemMoveJob( info->items, info->srcFolder, this );
-        connect( job, SIGNAL(result(KJob*)), this, SLOT(slotMoveResult(KJob*)) );
+        connect(job, &Akonadi::ItemMoveJob::result, this, &UndoStack::slotMoveResult);
         delete info;
     }
     else

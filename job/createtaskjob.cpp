@@ -57,7 +57,7 @@ void CreateTaskJob::fetchItems()
     job->fetchScope().fetchFullPayload( true );
     job->fetchScope().setAncestorRetrieval( Akonadi::ItemFetchScope::Parent );
     job->fetchScope().fetchAttribute<TaskAttribute>();
-    connect( job, SIGNAL(result(KJob*)), SLOT(itemFetchJobDone(KJob*)) );
+    connect(job, &Akonadi::ItemFetchJob::result, this, &CreateTaskJob::itemFetchJobDone);
 }
 
 void CreateTaskJob::itemFetchJobDone(KJob *job)
@@ -121,7 +121,7 @@ void CreateTaskJob::itemFetchJobDone(KJob *job)
         Akonadi::ItemModifyJob *modifyJob = new Akonadi::ItemModifyJob( itemsToModify, this );
         modifyJob->disableRevisionCheck();
         modifyJob->setIgnorePayload( true );
-        connect( modifyJob, SIGNAL(result(KJob*)), this, SLOT(slotModifyItemDone(KJob*)) );
+        connect(modifyJob, &Akonadi::ItemModifyJob::result, this, &CreateTaskJob::slotModifyItemDone);
     }
 }
 

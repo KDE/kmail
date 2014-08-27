@@ -80,8 +80,8 @@ KMKnotify::KMKnotify( QWidget * parent )
     mainLayout->addWidget(buttonBox);
     connect( m_comboNotify, SIGNAL(activated(int)),
              SLOT(slotComboChanged(int)) );
-    connect(okButton, SIGNAL(clicked()), SLOT(slotOk()) );
-    connect( m_notifyWidget ,SIGNAL(changed(bool)) , this , SLOT(slotConfigChanged(bool)));
+    connect(okButton, &QPushButton::clicked, this, &KMKnotify::slotOk);
+    connect(m_notifyWidget, &KNotifyConfigWidget::changed, this , &KMKnotify::slotConfigChanged);
     initCombobox();
     readConfig();
 }
