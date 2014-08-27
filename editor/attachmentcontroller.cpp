@@ -50,7 +50,7 @@ AttachmentController::AttachmentController( MessageComposer::AttachmentModel *mo
       mComposer(composer),
       mView(view)
 {
-    connect( composer, SIGNAL(identityChanged(KPIMIdentities::Identity)),
+    connect( composer, SIGNAL(identityChanged(KIdentityManagement::Identity)),
              this, SLOT(identityChanged()) );
 
     connect( view, SIGNAL(contextMenuRequested()), this, SLOT(showContextMenu()) );
@@ -78,7 +78,7 @@ void AttachmentController::slotSelectAllAttachment()
 
 void AttachmentController::identityChanged()
 {
-    const KPIMIdentities::Identity &identity = mComposer->identity();
+    const KIdentityManagement::Identity &identity = mComposer->identity();
 
     // "Attach public key" is only possible if OpenPGP support is available:
     enableAttachPublicKey( Kleo::CryptoBackendFactory::instance()->openpgp() );
@@ -90,7 +90,7 @@ void AttachmentController::identityChanged()
 
 void AttachmentController::attachMyPublicKey()
 {
-    const KPIMIdentities::Identity &identity = mComposer->identity();
+    const KIdentityManagement::Identity &identity = mComposer->identity();
     qDebug() << identity.identityName();
     exportPublicKey( QString::fromLatin1(identity.pgpEncryptionKey()) );
 }

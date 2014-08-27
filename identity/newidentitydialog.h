@@ -30,7 +30,7 @@ class KComboBox;
 class KLineEdit;
 class QButtonGroup;
 
-namespace KPIMIdentities {
+namespace KIdentityManagement {
 class IdentityManager;
 }
 
@@ -43,7 +43,7 @@ class NewIdentityDialog : public QDialog
 public:
     enum DuplicateMode { Empty, ControlCenter, ExistingEntry };
 
-    explicit NewIdentityDialog( KPIMIdentities::IdentityManager *manager, QWidget *parent = 0 );
+    explicit NewIdentityDialog( KIdentityManagement::IdentityManager *manager, QWidget *parent = 0 );
 
     QString identityName() const;
     QString duplicateIdentity() const;
@@ -56,7 +56,7 @@ private:
     KLineEdit  *mLineEdit;
     KComboBox  *mComboBox;
     QButtonGroup *mButtonGroup;
-    KPIMIdentities::IdentityManager *mIdentityManager;
+    KIdentityManagement::IdentityManager *mIdentityManager;
     QPushButton *mOkButton;
 };
 

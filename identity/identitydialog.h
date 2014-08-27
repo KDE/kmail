@@ -50,7 +50,7 @@ namespace Kleo {
 class EncryptionKeyRequester;
 class SigningKeyRequester;
 }
-namespace KPIMIdentities {
+namespace KIdentityManagement {
 class Identity;
 class SignatureConfigurator;
 }
@@ -86,9 +86,9 @@ public:
     explicit IdentityDialog( QWidget * parent=0 );
     ~IdentityDialog();
 
-    void setIdentity( /*_not_ const*/ KPIMIdentities::Identity & ident );
+    void setIdentity( /*_not_ const*/ KIdentityManagement::Identity & ident );
 
-    void updateIdentity( KPIMIdentities::Identity & ident );
+    void updateIdentity( KIdentityManagement::Identity & ident );
 
 protected slots:
     void slotAboutToShow( int );
@@ -147,7 +147,7 @@ private:
     QCheckBox                    *mCustom;
     QPushButton                  *mCopyGlobal;
     // "signature" tab:
-    KPIMIdentities::SignatureConfigurator *mSignatureConfigurator;
+    KIdentityManagement::SignatureConfigurator *mSignatureConfigurator;
     // "X-Face" tab:
     KMail::XFaceConfigurator *mXFaceConfigurator;
     QTabWidget *mTabWidget;

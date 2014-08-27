@@ -64,7 +64,7 @@
 
 #include <kmime/kmime_message.h>
 
-#include <KPIMIdentities/kpimidentities/identitymanager.h>
+#include <KIdentityManagement/kidentitymanagement/identitymanager.h>
 #include <AkonadiCore/itemmodifyjob.h>
 #include <AkonadiCore/itemfetchjob.h>
 

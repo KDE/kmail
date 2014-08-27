@@ -61,7 +61,7 @@ namespace MessageComposer {
 class AkonadiSender;
 }
 
-namespace KPIMIdentities {
+namespace KIdentityManagement {
 class Identity;
 class IdentityManager;
 }
@@ -396,7 +396,7 @@ public:
     /*reimp*/ void createFilter(const QByteArray& field, const QString& value);
 
     /** return the pointer to the identity manager */
-    /*reimp*/ KPIMIdentities::IdentityManager *identityManager();
+    /*reimp*/ KIdentityManagement::IdentityManager *identityManager();
 
     /*reimp*/ MailCommon::JobScheduler* jobScheduler() const { return mJobScheduler; }
 
@@ -558,7 +558,7 @@ private:
     QSharedPointer<MailCommon::FolderCollection> currentFolderCollection();
 
     UndoStack *the_undoStack;
-    mutable KPIMIdentities::IdentityManager *mIdentityManager;
+    mutable KIdentityManagement::IdentityManager *mIdentityManager;
     MessageComposer::AkonadiSender *the_msgSender;
     /** previous KMail version. If different from current,
       the user has just updated. read from config */

@@ -19,7 +19,7 @@ add_library(kcm_kpimidentities MODULE ${kcm_identities_srcs})
 target_link_libraries(kcm_kpimidentities
   ${KDEPIMLIBS_GPGMEPP_LIBS}
   KF5::AkonadiCore
-  KF5::PimIdentities
+  KF5::IdentityManagement
   KF5::MailTransport
   KF5::KCMUtils
   KF5::KIOCore

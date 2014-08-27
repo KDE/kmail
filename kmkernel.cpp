@@ -34,8 +34,8 @@ using KPIM::RecentAddresses;
 #include "kdepim-version.h"
 
 // kdepimlibs includes
-#include <KPIMIdentities/kpimidentities/identity.h>
-#include <KPIMIdentities/kpimidentities/identitymanager.h>
+#include <KIdentityManagement/kidentitymanagement/identity.h>
+#include <KIdentityManagement/kidentitymanagement/identitymanager.h>
 #include <MailTransport/mailtransport/transport.h>
 #include <MailTransport/mailtransport/transportmanager.h>
 #include <MailTransport/mailtransport/dispatcherinterface.h>
@@ -1507,10 +1507,10 @@ void KMKernel::updateSystemTray()
     }
 }
 
-KPIMIdentities::IdentityManager * KMKernel::identityManager() {
+KIdentityManagement::IdentityManager * KMKernel::identityManager() {
     if ( !mIdentityManager ) {
         qDebug();
-        mIdentityManager = new KPIMIdentities::IdentityManager( false, this, "mIdentityManager" );
+        mIdentityManager = new KIdentityManagement::IdentityManager( false, this, "mIdentityManager" );
     }
     return mIdentityManager;
 }
@@ -1705,9 +1705,9 @@ void KMKernel::transportRemoved(int id, const QString & name)
 
     // reset all identities using the deleted transport
     QStringList changedIdents;
-    KPIMIdentities::IdentityManager * im = identityManager();
-    KPIMIdentities::IdentityManager::Iterator end = im->modifyEnd();
-    for ( KPIMIdentities::IdentityManager::Iterator it = im->modifyBegin(); it != end; ++it ) {
+    KIdentityManagement::IdentityManager * im = identityManager();
+    KIdentityManagement::IdentityManager::Iterator end = im->modifyEnd();
+    for ( KIdentityManagement::IdentityManager::Iterator it = im->modifyBegin(); it != end; ++it ) {
         if ( name == (*it).transport() ) {
             (*it).setTransport( QString() );
             changedIdents += (*it).identityName();
@@ -1734,9 +1734,9 @@ void KMKernel::transportRenamed(int id, const QString & oldName, const QString &
     Q_UNUSED( id );
 
     QStringList changedIdents;
-    KPIMIdentities::IdentityManager * im = identityManager();
-    KPIMIdentities::IdentityManager::Iterator end = im->modifyEnd();
-    for ( KPIMIdentities::IdentityManager::Iterator it = im->modifyBegin(); it != end; ++it ) {
+    KIdentityManagement::IdentityManager * im = identityManager();
+    KIdentityManagement::IdentityManager::Iterator end = im->modifyEnd();
+    for ( KIdentityManagement::IdentityManager::Iterator it = im->modifyBegin(); it != end; ++it ) {
         if ( oldName == (*it).transport() ) {
             (*it).setTransport( newName );
             changedIdents << (*it).identityName();

@@ -78,7 +78,7 @@ namespace Sonnet {
 class DictionaryComboBox;
 }
 
-namespace KPIMIdentities {
+namespace KIdentityManagement {
 class Identity;
 }
 
@@ -155,7 +155,7 @@ public slots:
    */
 
 signals:
-    void identityChanged( const KPIMIdentities::Identity &identity );
+    void identityChanged( const KIdentityManagement::Identity &identity );
 
 
 public: // kmkernel, kmcommands, callback
@@ -460,7 +460,7 @@ public: // kmcommand
     // FIXME we need to remove these, but they're pure virtual in Composer.
     void addAttach( KMime::Content *msgPart );
 
-    const KPIMIdentities::Identity &identity() const;
+    const KIdentityManagement::Identity &identity() const;
 
     /** Don't check for forgotten attachments for a mail, eg. when sending out invitations. */
     void disableForgottenAttachmentsCheck();

@@ -32,8 +32,8 @@
 
 #include <mailcommon/kernel/mailkernel.h>
 #include <messageviewer/utils/autoqpointer.h>
-#include <KPIMIdentities/kpimidentities/identity.h>
-#include <KPIMIdentities/kpimidentities/identitymanager.h>
+#include <KIdentityManagement/kidentitymanagement/identity.h>
+#include <KIdentityManagement/kidentitymanagement/identitymanager.h>
 
 #include <KMessageBox>
 #include <QMenu>
@@ -98,9 +98,9 @@ void IdentityPage::load()
     // Fill the list:
     mIPage.mIdentityList->clear();
     QTreeWidgetItem *item = 0;
-    KPIMIdentities::IdentityManager::Iterator end( mIdentityManager->modifyEnd() );
+    KIdentityManagement::IdentityManager::Iterator end( mIdentityManager->modifyEnd() );
 
-    for ( KPIMIdentities::IdentityManager::Iterator it = mIdentityManager->modifyBegin(); it != end; ++it ) {
+    for ( KIdentityManagement::IdentityManager::Iterator it = mIdentityManager->modifyBegin(); it != end; ++it ) {
         item = new IdentityListViewItem( mIPage.mIdentityList, item, *it );
     }
     if ( mIPage.mIdentityList->currentItem() ) {
@@ -152,7 +152,7 @@ void IdentityPage::slotNewIdentity()
         switch ( dialog->duplicateMode() ) {
         case NewIdentityDialog::ExistingEntry:
         {
-            KPIMIdentities::Identity &dupThis = mIdentityManager->modifyIdentityForName( dialog->duplicateIdentity() );
+            KIdentityManagement::Identity &dupThis = mIdentityManager->modifyIdentityForName( dialog->duplicateIdentity() );
             mIdentityManager->newFromExisting( dupThis, identityName );
             break;
         }
@@ -167,7 +167,7 @@ void IdentityPage::slotNewIdentity()
         //
         // Insert into listview:
         //
-        KPIMIdentities::Identity &newIdent = mIdentityManager->modifyIdentityForName( identityName );
+        KIdentityManagement::Identity &newIdent = mIdentityManager->modifyIdentityForName( identityName );
         QTreeWidgetItem *item = 0;
         if ( !mIPage.mIdentityList->selectedItems().isEmpty() ) {
             item = mIPage.mIdentityList->selectedItems()[0];
@@ -272,7 +272,7 @@ void IdentityPage::slotRenameIdentity( KMail::IdentityListViewItem *item , const
     const QString newName = text.trimmed();
     if ( !newName.isEmpty() &&
          !mIdentityManager->shadowIdentities().contains( newName ) ) {
-        KPIMIdentities::Identity &ident = item->identity();
+        KIdentityManagement::Identity &ident = item->identity();
         ident.setIdentityName( newName );
         save();
     }

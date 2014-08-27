@@ -134,8 +134,8 @@ using KSieveUi::SieveDebugDialog;
 #include <AkonadiCore/dbusconnectionpool.h>
 #include <AkonadiCore/CachePolicy>
 
-#include <kpimidentities/identity.h>
-#include <kpimidentities/identitymanager.h>
+#include <kidentitymanagement/identity.h>
+#include <kidentitymanagement/identitymanager.h>
 #include <kpimutils/email.h>
 #include <mailtransport/transportmanager.h>
 #include <mailtransport/transport.h>
@@ -1397,7 +1397,7 @@ void KMMainWidget::slotCompose()
 void KMMainWidget::slotShowNewFromTemplate()
 {
     if ( mCurrentFolder ) {
-        const KPIMIdentities::Identity & ident =
+        const KIdentityManagement::Identity & ident =
                 kmkernel->identityManager()->identityForUoidOrDefault( mCurrentFolder->identity() );
         mTemplateFolder = CommonKernel->collectionFromId( ident.templates().toLongLong() );
     }

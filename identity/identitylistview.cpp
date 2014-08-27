@@ -32,8 +32,8 @@
 
 #include "identitylistview.h"
 
-#include <KPIMIdentities/kpimidentities/identitymanager.h>
-#include <KPIMIdentities/kpimidentities/identity.h>
+#include <KIdentityManagement/kidentitymanagement/identitymanager.h>
+#include <KIdentityManagement/kidentitymanagement/identity.h>
 
 #ifndef KCM_KPIMIDENTITIES_STANDALONE
 #include "kmkernel.h"
@@ -57,7 +57,7 @@ namespace KMail {
 //
 
 IdentityListViewItem::IdentityListViewItem( IdentityListView *parent,
-                                            const KPIMIdentities::Identity &ident )
+                                            const KIdentityManagement::Identity &ident )
     : QTreeWidgetItem( parent ), mUOID( ident.uoid() )
 {
     init( ident );
@@ -65,20 +65,20 @@ IdentityListViewItem::IdentityListViewItem( IdentityListView *parent,
 
 IdentityListViewItem::IdentityListViewItem( IdentityListView *parent,
                                             QTreeWidgetItem *after,
-                                            const KPIMIdentities::Identity &ident )
+                                            const KIdentityManagement::Identity &ident )
     : QTreeWidgetItem( parent, after ), mUOID( ident.uoid() )
 {
     init( ident );
 }
 
-KPIMIdentities::Identity & IdentityListViewItem::identity() const
+KIdentityManagement::Identity & IdentityListViewItem::identity() const
 {
-    KPIMIdentities::IdentityManager *im = qobject_cast<IdentityListView*>( treeWidget() )->identityManager();
+    KIdentityManagement::IdentityManager *im = qobject_cast<IdentityListView*>( treeWidget() )->identityManager();
     Q_ASSERT( im );
     return im->modifyIdentityForUoid( mUOID );
 }
 
-void IdentityListViewItem::setIdentity( const KPIMIdentities::Identity &ident )
+void IdentityListViewItem::setIdentity( const KIdentityManagement::Identity &ident )
 {
     mUOID = ident.uoid();
     init( ident );
@@ -89,7 +89,7 @@ void IdentityListViewItem::redisplay()
     init( identity() );
 }
 
-void IdentityListViewItem::init( const KPIMIdentities::Identity &ident )
+void IdentityListViewItem::init( const KIdentityManagement::Identity &ident )
 {
     if ( ident.isDefault() ) {
         // Add "(Default)" to the end of the default identity's name:
@@ -145,7 +145,7 @@ void IdentityListView::editItem( QTreeWidgetItem *item, int column )
     if ( column == 0 && item ) {
         IdentityListViewItem *lvItem = dynamic_cast<IdentityListViewItem*>( item );
         if ( lvItem ) {
-            KPIMIdentities::Identity& ident = lvItem->identity();
+            KIdentityManagement::Identity& ident = lvItem->identity();
             if ( ident.isDefault() ) {
                 lvItem->setText( 0, ident.identityName() );
             }
@@ -202,13 +202,13 @@ void IdentityListView::startDrag ( Qt::DropActions /*supportedActions*/ )
 }
 #endif
 
-KPIMIdentities::IdentityManager* IdentityListView::identityManager() const
+KIdentityManagement::IdentityManager* IdentityListView::identityManager() const
 {
     Q_ASSERT( mIdentityManager );
     return mIdentityManager;
 }
 
-void IdentityListView::setIdentityManager(KPIMIdentities::IdentityManager* im)
+void IdentityListView::setIdentityManager(KIdentityManagement::IdentityManager* im)
 {
     mIdentityManager = im;
 }

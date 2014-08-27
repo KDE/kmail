@@ -39,8 +39,8 @@
 #include <kio/netaccess.h>
 #include <KLocalizedString>
 #include <kmessagebox.h>
-#include <KPIMIdentities/kpimidentities/identity.h>
-#include <KPIMIdentities/kpimidentities/identitymanager.h>
+#include <KIdentityManagement/kidentitymanagement/identity.h>
+#include <KIdentityManagement/kidentitymanagement/identitymanager.h>
 #include "pimcommon/texteditor/plaintexteditor/plaintexteditor.h"
 #include <messageviewer/header/kxface.h>
 
@@ -250,7 +250,7 @@ void XFaceConfigurator::slotSelectFile()
 
 void XFaceConfigurator::slotSelectFromAddressbook()
 {
-    using namespace KPIMIdentities;
+    using namespace KIdentityManagement;
 
     IdentityManager manager( true );
     const Identity defaultIdentity = manager.defaultIdentity();

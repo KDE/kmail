@@ -118,10 +118,10 @@
 #include <AkonadiCore/entitymimetypefiltermodel.h>
 #include <AkonadiCore/itemfetchjob.h>
 #include <KPIMUtils/kpimutils/email.h>
-#include <KPIMIdentities/kpimidentities/identitymanager.h>
-#include <KPIMIdentities/kpimidentities/identitycombo.h>
-#include <KPIMIdentities/kpimidentities/identity.h>
-#include <KPIMIdentities/kpimidentities/signature.h>
+#include <KIdentityManagement/kidentitymanagement/identitymanager.h>
+#include <KIdentityManagement/kidentitymanagement/identitycombo.h>
+#include <KIdentityManagement/kidentitymanagement/identity.h>
+#include <KIdentityManagement/kidentitymanagement/signature.h>
 #include <MailTransport/mailtransport/transportcombobox.h>
 #include <MailTransport/mailtransport/transportmanager.h>
 #include <MailTransport/mailtransport/transport.h>
@@ -279,7 +279,7 @@ KMComposeWin::KMComposeWin( const KMime::Message::Ptr &aMsg, bool lastSignState,
     QVBoxLayout *v = new QVBoxLayout( mMainWidget );
     v->setMargin(0);
     v->addWidget( mHeadersToEditorSplitter );
-    KPIMIdentities::IdentityCombo* identity = new KPIMIdentities::IdentityCombo( kmkernel->identityManager(),
+    KIdentityManagement::IdentityCombo* identity = new KIdentityManagement::IdentityCombo( kmkernel->identityManager(),
                                                                                  mHeadersArea );
     identity->setToolTip( i18n( "Select an identity for this message" ) );
     mComposerBase->setIdentityCombo( identity );
@@ -621,7 +621,7 @@ void KMComposeWin::readConfig( bool reload /* = false */ )
 
     mComposerBase->identityCombo()->setCurrentIdentity( mId );
     qDebug() << mComposerBase->identityCombo()->currentIdentityName();
-    const KPIMIdentities::Identity & ident =
+    const KIdentityManagement::Identity & ident =
             kmkernel->identityManager()->identityForUoid( mId );
 
     if ( mBtnTransport->isChecked() && currentTransport != -1 ) {
@@ -976,7 +976,7 @@ void KMComposeWin::rethinkHeaderLine( int aValue, int aMask, int &aRow,
 //-----------------------------------------------------------------------------
 void KMComposeWin::applyTemplate( uint uoid, uint uOldId )
 {
-    const KPIMIdentities::Identity &ident = kmkernel->identityManager()->identityForUoid( uoid );
+    const KIdentityManagement::Identity &ident = kmkernel->identityManager()->identityForUoid( uoid );
     if ( ident.isNull() )
         return;
     KMime::Headers::Generic *header = new KMime::Headers::Generic( "X-KMail-Templates", mMsg.get(), ident.templates(), "utf-8" );
@@ -1056,8 +1056,8 @@ void KMComposeWin::slotDelayedApplyTemplate( KJob *job )
 
 void KMComposeWin::updateSignature(uint uoid, uint uOldId)
 {
-    const KPIMIdentities::Identity &ident = kmkernel->identityManager()->identityForUoid( uoid );
-    const KPIMIdentities::Identity &oldIdentity = kmkernel->identityManager()->identityForUoid( uOldId  );
+    const KIdentityManagement::Identity &ident = kmkernel->identityManager()->identityForUoid( uoid );
+    const KIdentityManagement::Identity &oldIdentity = kmkernel->identityManager()->identityForUoid( uOldId  );
     mComposerBase->identityChanged( ident, oldIdentity, true );
 }
 
@@ -1074,7 +1074,7 @@ void KMComposeWin::setQuotePrefix( uint uoid )
         // TODO port templates to ComposerViewBase
 
         if ( mCustomTemplate.isEmpty() ) {
-            const KPIMIdentities::Identity &identity = kmkernel->identityManager()->identityForUoidOrDefault( uoid );
+            const KIdentityManagement::Identity &identity = kmkernel->identityManager()->identityForUoidOrDefault( uoid );
             // Get quote prefix from template
             // ( custom templates don't specify custom quotes prefixes )
             TemplateParser::Templates quoteTemplate(
@@ -1414,7 +1414,7 @@ void KMComposeWin::setupActions( void )
     mSignAction = new KToggleAction(QIcon::fromTheme(QLatin1String("document-sign")), i18n("&Sign Message"), this);
     mSignAction->setIconText( i18n( "Sign" ) );
     actionCollection()->addAction(QLatin1String("sign_message"), mSignAction );
-    const KPIMIdentities::Identity &ident =
+    const KIdentityManagement::Identity &ident =
             KMKernel::self()->identityManager()->identityForUoidOrDefault( mComposerBase->identityCombo()->currentIdentity() );
     // PENDING(marc): check the uses of this member and split it into
     // smime/openpgp and or enc/sign, if necessary:
@@ -1465,7 +1465,7 @@ void KMComposeWin::setupActions( void )
 
 void KMComposeWin::changeCryptoAction()
 {
-    const KPIMIdentities::Identity &ident =
+    const KIdentityManagement::Identity &ident =
             KMKernel::self()->identityManager()->identityForUoidOrDefault( mComposerBase->identityCombo()->currentIdentity() );
     if ( !Kleo::CryptoBackendFactory::instance()->openpgp() && !Kleo::CryptoBackendFactory::instance()->smime() ) {
         // no crypto whatsoever
@@ -1617,7 +1617,7 @@ void KMComposeWin::setMessage( const KMime::Message::Ptr &newMsg, bool lastSignS
 
     mComposerBase->setMessage( newMsg );
     mMsg = newMsg;
-    KPIMIdentities::IdentityManager * im = KMKernel::self()->identityManager();
+    KIdentityManagement::IdentityManager * im = KMKernel::self()->identityManager();
 
     mEdtFrom->setText( mMsg->from()->asUnicodeString() );
     mEdtSubject->setText( mMsg->subject()->asUnicodeString() );
@@ -1666,7 +1666,7 @@ void KMComposeWin::setMessage( const KMime::Message::Ptr &newMsg, bool lastSignS
     // mId might have changed meanwhile, thus the save value
     slotIdentityChanged( idToApply, true /*initalChange*/ );
 
-    const KPIMIdentities::Identity &ident = im->identityForUoid( mComposerBase->identityCombo()->currentIdentity() );
+    const KIdentityManagement::Identity &ident = im->identityForUoid( mComposerBase->identityCombo()->currentIdentity() );
 
     const bool stickyTransport = mBtnTransport->isChecked() && !mIgnoreStickyFields;
     if( stickyTransport ) {
@@ -1994,7 +1994,7 @@ void KMComposeWin::slotSendSuccessful()
 }
 
 
-const KPIMIdentities::Identity &KMComposeWin::identity() const
+const KIdentityManagement::Identity &KMComposeWin::identity() const
 {
     return KMKernel::self()->identityManager()->identityForUoidOrDefault( mComposerBase->identityCombo()->currentIdentity() );
 }
@@ -2778,7 +2778,7 @@ void KMComposeWin::doSend( MessageComposer::MessageSender::SendMethod method,
         const QStringList recipients = QStringList() << mComposerBase->to().trimmed() << mComposerBase->cc().trimmed() << mComposerBase->bcc().trimmed();
 
         AddressValidationJob *job = new AddressValidationJob( recipients.join( QLatin1String( ", ") ), this, this );
-        const KPIMIdentities::Identity &ident = KMKernel::self()->identityManager()->identityForUoid( mComposerBase->identityCombo()->currentIdentity() );
+        const KIdentityManagement::Identity &ident = KMKernel::self()->identityManager()->identityForUoid( mComposerBase->identityCombo()->currentIdentity() );
         QString defaultDomainName;
         if ( !ident.isNull() ) {
             defaultDomainName = ident.defaultDomainName();
@@ -3169,7 +3169,7 @@ void KMComposeWin::slotIdentityChanged( uint uoid, bool initalChange )
         return;
     }
 
-    const KPIMIdentities::Identity &ident =
+    const KIdentityManagement::Identity &ident =
             KMKernel::self()->identityManager()->identityForUoid( uoid );
     if ( ident.isNull() ) {
         return;
@@ -3189,7 +3189,7 @@ void KMComposeWin::slotIdentityChanged( uint uoid, bool initalChange )
     }
 
     // remove BCC of old identity and add BCC of new identity (if they differ)
-    const KPIMIdentities::Identity &oldIdentity =
+    const KIdentityManagement::Identity &oldIdentity =
             KMKernel::self()->identityManager()->identityForUoidOrDefault( mId );
 
 
@@ -3281,7 +3281,7 @@ void KMComposeWin::slotIdentityChanged( uint uoid, bool initalChange )
 
     mLastIdentityHasSigningKey = bNewIdentityHasSigningKey;
     mLastIdentityHasEncryptionKey = bNewIdentityHasEncryptionKey;
-    const KPIMIdentities::Signature sig = const_cast<KPIMIdentities::Identity&>( ident ).signature();
+    const KIdentityManagement::Signature sig = const_cast<KIdentityManagement::Identity&>( ident ).signature();
     bool isEnabledSignature = sig.isEnabledSignature();
     mAppendSignature->setEnabled(isEnabledSignature);
     mPrependSignature->setEnabled(isEnabledSignature);

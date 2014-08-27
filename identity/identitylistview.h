@@ -36,7 +36,7 @@
 #include <QTreeWidget>
 #include <QTreeWidgetItem>
 
-namespace KPIMIdentities {
+namespace KIdentityManagement {
 class Identity;
 class IdentityManager;
 }
@@ -51,21 +51,21 @@ class IdentityListView;
 class IdentityListViewItem : public QTreeWidgetItem {
 public:
     IdentityListViewItem( IdentityListView *parent,
-                          const KPIMIdentities::Identity &ident );
+                          const KIdentityManagement::Identity &ident );
     IdentityListViewItem( IdentityListView *parent, QTreeWidgetItem *after,
-                          const KPIMIdentities::Identity &ident );
+                          const KIdentityManagement::Identity &ident );
 
     uint uoid() const { return mUOID; }
-    KPIMIdentities::Identity &identity() const;
-    virtual void setIdentity( const KPIMIdentities::Identity &ident );
+    KIdentityManagement::Identity &identity() const;
+    virtual void setIdentity( const KIdentityManagement::Identity &ident );
     void redisplay();
 
 private:
-    void init( const KPIMIdentities::Identity &ident );
+    void init( const KIdentityManagement::Identity &ident );
     uint mUOID;
 };
 
-/** @short A QTreeWidget for KPIMIdentities::Identity
+/** @short A QTreeWidget for KIdentityManagement::Identity
     * @author Marc Mutz <mutz@kde.org>
     **/
 class IdentityListView : public QTreeWidget {
@@ -76,8 +76,8 @@ public:
 
 public:
     void editItem( QTreeWidgetItem *item, int column = 0 );
-    KPIMIdentities::IdentityManager *identityManager() const;
-    void setIdentityManager( KPIMIdentities::IdentityManager* im );
+    KIdentityManagement::IdentityManager *identityManager() const;
+    void setIdentityManager( KIdentityManagement::IdentityManager* im );
 
 protected slots:
     void commitData( QWidget *editor );
@@ -95,7 +95,7 @@ protected:
 #endif
 
 private:
-    KPIMIdentities::IdentityManager* mIdentityManager;
+    KIdentityManagement::IdentityManager* mIdentityManager;
 };
 
 

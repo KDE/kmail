@@ -23,7 +23,7 @@
 
 #include "newidentitydialog.h"
 
-#include <KPIMIdentities/kpimidentities/identitymanager.h>
+#include <KIdentityManagement/kidentitymanagement/identitymanager.h>
 
 #include <KComboBox>
 #include <KLineEdit>
@@ -43,7 +43,7 @@
 
 using namespace KMail;
 
-NewIdentityDialog::NewIdentityDialog( KPIMIdentities::IdentityManager* manager, QWidget *parent )
+NewIdentityDialog::NewIdentityDialog( KIdentityManagement::IdentityManager* manager, QWidget *parent )
     : QDialog( parent ),
       mIdentityManager( manager )
 {

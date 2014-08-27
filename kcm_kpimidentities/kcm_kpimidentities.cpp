@@ -25,10 +25,10 @@
 
 extern "C"
 {
-Q_DECL_EXPORT KCModule *create_kcm_kpimidentities( QWidget *parent, const char* )
+Q_DECL_EXPORT KCModule *create_kcm_kidentitymanagement( QWidget *parent, const char* )
 {
     KMail::IdentityPage *page = new KMail::IdentityPage( parent );
-    page->setObjectName( QLatin1String("kcm_kpimidentities") );
+    page->setObjectName( QLatin1String("kcm_kidentitymanagement") );
     return page;
 }
 }

@@ -22,8 +22,8 @@
 #include "kernel/mailkernel.h"
 
 #include "foldercollection.h"
-#include <KPIMIdentities/kpimidentities/identitymanager.h>
-#include <KPIMIdentities/kpimidentities/identity.h>
+#include <KIdentityManagement/kidentitymanagement/identitymanager.h>
+#include <KIdentityManagement/kidentitymanagement/identity.h>
 #include <Akonadi/KMime/MessageFolderAttribute>
 
 using namespace MailCommon;
@@ -66,7 +66,7 @@ bool CollectionStorageModel::isOutBoundFolder( const Akonadi::Collection& c ) co
     if ( fd ) {
         const QString folderId( QString::number(c.id()) );
         // default setting
-        const KPIMIdentities::Identity & identity =
+        const KIdentityManagement::Identity & identity =
                 kmkernel->identityManager()->identityForUoidOrDefault( fd->identity() );
 
         bool isOnline = false;

@@ -36,7 +36,7 @@
 
 #include "messagecomposer/settings/messagecomposersettings.h"
 
-#include <KPIMIdentities/kpimidentities/identitymanager.h>
+#include <KIdentityManagement/kidentitymanagement/identitymanager.h>
 
 // other KMail headers:
 #ifndef KDEPIM_MOBILE_UI
@@ -59,8 +59,8 @@
 #endif
 #include "templatesconfiguration_kfg.h"
 // other kdepim headers:
-#include <KPIMIdentities/kpimidentities/identity.h>
-#include <KPIMIdentities/kpimidentities/signatureconfigurator.h>
+#include <KIdentityManagement/kidentitymanagement/identity.h>
+#include <KIdentityManagement/kidentitymanagement/signatureconfigurator.h>
 
 #include "pimcommon/autocorrection/autocorrectionlanguage.h"
 
@@ -580,7 +580,7 @@ IdentityDialog::IdentityDialog( QWidget * parent )
     //
     // Tab Widget: Signature
     //
-    mSignatureConfigurator = new KPIMIdentities::SignatureConfigurator( mTabWidget );
+    mSignatureConfigurator = new KIdentityManagement::SignatureConfigurator( mTabWidget );
     mSignatureConfigurator->layout()->setMargin( KDialog::marginHint() );
     mTabWidget->addTab( mSignatureConfigurator, i18n("Signature") );
 
@@ -792,7 +792,7 @@ bool IdentityDialog::checkFolderExists( const QString & folderID,
     return true;
 }
 
-void IdentityDialog::setIdentity( KPIMIdentities::Identity & ident ) {
+void IdentityDialog::setIdentity( KIdentityManagement::Identity & ident ) {
 
     setCaption( i18n("Edit Identity \"%1\"", ident.identityName() ) );
 
@@ -894,7 +894,7 @@ void IdentityDialog::setIdentity( KPIMIdentities::Identity & ident ) {
 #endif
 }
 
-void IdentityDialog::updateIdentity( KPIMIdentities::Identity & ident ) {
+void IdentityDialog::updateIdentity( KIdentityManagement::Identity & ident ) {
     // "General" tab:
     ident.setFullName( mNameEdit->text() );
     ident.setOrganization( mOrganizationEdit->text() );
@@ -980,7 +980,7 @@ void IdentityDialog::slotEditVcard()
         if ( !MailCommon::Kernel::self()->kernelIsRegistered() ) {
             return;
         }
-        KPIMIdentities::IdentityManager *manager = KernelIf->identityManager();
+        KIdentityManagement::IdentityManager *manager = KernelIf->identityManager();
 
         QPointer<IdentityAddVcardDialog> dlg = new IdentityAddVcardDialog(manager->shadowIdentities(), this);
         if(dlg->exec()) {
@@ -991,7 +991,7 @@ void IdentityDialog::slotEditVcard()
                 break;
             }
             case IdentityAddVcardDialog::ExistingEntry: {
-                KPIMIdentities::Identity ident = manager->modifyIdentityForName( dlg->duplicateVcardFromIdentity() );
+                KIdentityManagement::Identity ident = manager->modifyIdentityForName( dlg->duplicateVcardFromIdentity() );
                 const QString filename = ident.vCardFile();
                 if(!filename.isEmpty()) {
                     QFile::copy(filename,mVcardFilename);

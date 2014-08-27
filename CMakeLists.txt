@@ -271,7 +271,7 @@ generate_export_header(kmailprivate BASE_NAME kmail)
     pimcommon
     mailcommon
     templateparser
-    KF5::PimIdentities
+    KF5::IdentityManagement
     KF5::KontactInterface
     KF5::KDELibs4Support
     KF5::NotifyConfig
