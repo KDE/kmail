@@ -32,7 +32,7 @@
 #ifndef __KMAIL_IDENTITYDIALOG_H__
 #define __KMAIL_IDENTITYDIALOG_H__
 
-#include <kdialog.h>
+#include <QDialog>
 #include <AkonadiCore/Item>
 class QCheckBox;
 
@@ -80,7 +80,7 @@ class AutoCorrectionLanguage;
 
 namespace KMail {
 
-class IdentityDialog : public KDialog {
+class IdentityDialog : public QDialog {
     Q_OBJECT
 public:
     explicit IdentityDialog( QWidget * parent=0 );
@@ -93,13 +93,12 @@ public:
 protected slots:
     void slotAboutToShow( int );
 
-    /*! \reimp */
-    void slotButtonClicked( int button );
 
     // copy default templates to identity templates
     void slotCopyGlobal();
 
 private slots:
+    void slotAccepted();
     void slotDelayedButtonClicked( KJob* );
     void slotEditVcard();
     void slotRefreshDefaultDomainName();

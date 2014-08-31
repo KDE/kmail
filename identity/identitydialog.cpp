@@ -105,6 +105,8 @@ using MailTransport::TransportManager;
 #include <AkonadiCore/entitydisplayattribute.h>
 #include <AkonadiCore/collectionmodifyjob.h>
 #include <QStandardPaths>
+#include <KConfigGroup>
+#include <QDialogButtonBox>
 
 
 using namespace KPIM;
@@ -114,15 +116,25 @@ using namespace MailCommon;
 namespace KMail {
 
 IdentityDialog::IdentityDialog( QWidget * parent )
-    : KDialog( parent )
+    : QDialog( parent )
 {
-    setCaption( i18n("Edit Identity") );
+    setWindowTitle( i18n("Edit Identity") );
+    QDialogButtonBox *buttonBox = 0;
+    QVBoxLayout *mainLayout = new QVBoxLayout;
+    setLayout(mainLayout);
+
 #ifndef KDEPIM_MOBILE_UI
-    setButtons( Ok|Cancel|Help );
+    buttonBox = new QDialogButtonBox(QDialogButtonBox::Ok|QDialogButtonBox::Cancel|QDialogButtonBox::Help);
 #else
-    setButtons( Ok|Cancel );
+    buttonBox = new QDialogButtonBox(QDialogButtonBox::Ok|QDialogButtonBox::Cancel);
 #endif
-    setDefaultButton( Ok );
+    QPushButton *okButton = buttonBox->button(QDialogButtonBox::Ok);
+    okButton->setDefault(true);
+    okButton->setShortcut(Qt::CTRL | Qt::Key_Return);
+    connect(buttonBox, &QDialogButtonBox::accepted, this, &IdentityDialog::slotAccepted);
+    connect(buttonBox, &QDialogButtonBox::rejected, this, &IdentityDialog::reject);
+ 
+    okButton->setDefault(true);
 
     // tmp. vars:
     QWidget * tab;
@@ -136,9 +148,10 @@ IdentityDialog::IdentityDialog( QWidget * parent )
     //
     row = -1;
     QWidget *page = new QWidget( this );
-    setMainWidget( page );
+    mainLayout->addWidget(page);
+    mainLayout->addWidget(buttonBox);
     QVBoxLayout * vlay = new QVBoxLayout( page );
-    vlay->setSpacing( spacingHint() );
+    //QT5 port vlay->setSpacing( spacingHint() );
     vlay->setMargin( 0 );
     mTabWidget = new QTabWidget( page );
     mTabWidget->setObjectName( QLatin1String("config-identity-tab") );
@@ -147,8 +160,8 @@ IdentityDialog::IdentityDialog( QWidget * parent )
     tab = new QWidget( mTabWidget );
     mTabWidget->addTab( tab, i18nc("@title:tab General identity settings.","General") );
     glay = new QGridLayout( tab );
-    glay->setSpacing( spacingHint() );
-    glay->setMargin( marginHint() );
+    //QT5 port glay->setSpacing( spacingHint() );
+    //QT5 port glay->setMargin( marginHint() );
     glay->setRowStretch( 3, 1 );
     glay->setColumnStretch( 1, 1 );
 
@@ -230,8 +243,8 @@ IdentityDialog::IdentityDialog( QWidget * parent )
     mCryptographyTab = tab = new QWidget( mTabWidget );
     mTabWidget->addTab( tab, i18n("Cryptography") );
     glay = new QGridLayout( tab );
-    glay->setSpacing( spacingHint() );
-    glay->setMargin( marginHint() );
+    //QT5 port glay->setSpacing( spacingHint() );
+    //QT5 port glay->setMargin( marginHint() );
     glay->setColumnStretch( 1, 1 );
 
     // "OpenPGP Signature Key" requester and label:
@@ -371,8 +384,8 @@ IdentityDialog::IdentityDialog( QWidget * parent )
     tab = new QWidget( mTabWidget );
     mTabWidget->addTab( tab, i18nc("@title:tab Advanced identity settings.","Advanced") );
     glay = new QGridLayout( tab );
-    glay->setSpacing( spacingHint() );
-    glay->setMargin( marginHint() );
+    //QT5 port glay->setSpacing( spacingHint() );
+    //QT5 port glay->setMargin( marginHint() );
     // the last (empty) row takes all the remaining space
     glay->setColumnStretch( 1, 1 );
 
@@ -457,7 +470,7 @@ IdentityDialog::IdentityDialog( QWidget * parent )
     glay->addWidget( mFccCombo, row, 1 );
     mSentMailFolderCheck = new QCheckBox( i18n("Sent-mail &folder:"), tab );
     glay->addWidget( mSentMailFolderCheck, row, 0 );
-    connect(mSentMailFolderCheck,SIGNAL(toggled(bool)),mFccCombo,SLOT(setEnabled(bool)));
+    connect(mSentMailFolderCheck, &QCheckBox::toggled, mFccCombo, &MailCommon::FolderRequester::setEnabled);
 
     // "Drafts Folder" combo box and label:
     ++row;
@@ -491,7 +504,7 @@ IdentityDialog::IdentityDialog( QWidget * parent )
     mAttachMyVCard = new QCheckBox(i18n("Attach my vCard to message"), tab);
     glay->addWidget( mAttachMyVCard, row, 0 );
     mEditVCard = new QPushButton(i18n("Create..."),tab);
-    connect(mEditVCard,SIGNAL(clicked()),SLOT(slotEditVcard()));
+    connect(mEditVCard, &QPushButton::clicked, this, &IdentityDialog::slotEditVcard);
     glay->addWidget( mEditVCard, row, 1 );
 
 
@@ -512,7 +525,7 @@ IdentityDialog::IdentityDialog( QWidget * parent )
     restoreDefaultDomainName->setIcon(QIcon::fromTheme(QLatin1String("view-refresh")));
     restoreDefaultDomainName->setToolTip(i18n("Restore default domain name"));
     hbox->addWidget(restoreDefaultDomainName);
-    connect(restoreDefaultDomainName, SIGNAL(clicked()), this, SLOT(slotRefreshDefaultDomainName()));
+    connect(restoreDefaultDomainName, &QToolButton::clicked, this, &IdentityDialog::slotRefreshDefaultDomainName);
     glay->addLayout(hbox, row, 1 );
     label = new QLabel( i18n("Defaul&t domain:"), tab );
     label->setBuddy( mDefaultDomainEdit );
@@ -536,8 +549,8 @@ IdentityDialog::IdentityDialog( QWidget * parent )
     //
     tab = new QWidget( mTabWidget );
     vlay = new QVBoxLayout( tab );
-    vlay->setMargin( marginHint() );
-    vlay->setSpacing( spacingHint() );
+    //QT5 port vlay->setMargin( marginHint() );
+    //QT5 port vlay->setSpacing( spacingHint() );
 
     QHBoxLayout *tlay = new QHBoxLayout();
     vlay->addLayout( tlay );
@@ -558,7 +571,7 @@ IdentityDialog::IdentityDialog( QWidget * parent )
 #endif
 
     QHBoxLayout *btns = new QHBoxLayout();
-    btns->setSpacing( spacingHint() );
+    //QT5 port btns->setSpacing( spacingHint() );
     mCopyGlobal = new QPushButton( i18n("&Copy Global Templates"), tab );
     mCopyGlobal->setEnabled( false );
     btns->addWidget( mCopyGlobal );
@@ -581,7 +594,7 @@ IdentityDialog::IdentityDialog( QWidget * parent )
     // Tab Widget: Signature
     //
     mSignatureConfigurator = new KIdentityManagement::SignatureConfigurator( mTabWidget );
-    mSignatureConfigurator->layout()->setMargin( KDialog::marginHint() );
+//TODO PORT QT5     mSignatureConfigurator->layout()->setMargin( QDialog::marginHint() );
     mTabWidget->addTab( mSignatureConfigurator, i18n("Signature") );
 
     //
@@ -590,7 +603,7 @@ IdentityDialog::IdentityDialog( QWidget * parent )
 
 #ifndef KDEPIM_MOBILE_UI
     mXFaceConfigurator = new XFaceConfigurator( mTabWidget );
-    mXFaceConfigurator->layout()->setMargin( KDialog::marginHint() );
+//TODO PORT QT5     mXFaceConfigurator->layout()->setMargin( QDialog::marginHint() );
     mTabWidget->addTab( mXFaceConfigurator, i18n("Picture") );
 #endif
 
@@ -601,7 +614,7 @@ IdentityDialog::IdentityDialog( QWidget * parent )
 
     connect( mTabWidget, SIGNAL(currentChanged(int)),
              SLOT(slotAboutToShow(int)) );
-    setHelp( QLatin1String("configure-identity"), QLatin1String("kmail") );
+    //QT5 setHelp( QLatin1String("configure-identity"), QLatin1String("kmail") );
 }
 
 IdentityDialog::~IdentityDialog() {
@@ -670,13 +683,8 @@ void IdentityDialog::slotRefreshDefaultDomainName()
     mDefaultDomainEdit->setText(QHostInfo::localHostName());
 }
 
-void IdentityDialog::slotButtonClicked( int button )
+void IdentityDialog::slotAccepted()
 {
-    if ( button != KDialog::Ok ) {
-        KDialog::slotButtonClicked( button );
-        return;
-    }
-
     const QStringList aliases = mAliasEdit->stringList();
     foreach ( const QString &alias, aliases ) {
         if ( !KPIMUtils::isValidSimpleAddress( alias ) ) {
@@ -700,7 +708,7 @@ void IdentityDialog::slotButtonClicked( int button )
     //Use default Value
     job->setDefaultDomain(mDefaultDomainEdit->text());
     job->setProperty( "email", email );
-    connect( job, SIGNAL(result(KJob*)), SLOT(slotDelayedButtonClicked(KJob*)) );
+    connect(job, &AddressValidationJob::result, this, &IdentityDialog::slotDelayedButtonClicked);
     job->start();
 }
 
@@ -794,7 +802,7 @@ bool IdentityDialog::checkFolderExists( const QString & folderID,
 
 void IdentityDialog::setIdentity( KIdentityManagement::Identity & ident ) {
 
-    setCaption( i18n("Edit Identity \"%1\"", ident.identityName() ) );
+    setWindowTitle( i18n("Edit Identity \"%1\"", ident.identityName() ) );
 
     // "General" tab:
     mNameEdit->setText( ident.fullName() );
@@ -1016,7 +1024,7 @@ void IdentityDialog::slotEditVcard()
 void IdentityDialog::editVcard(const QString &filename)
 {
     QPointer<IdentityEditVcardDialog> dlg = new IdentityEditVcardDialog(filename, this);
-    connect(dlg, SIGNAL(vcardRemoved()), SLOT(slotVCardRemoved()));
+    connect(dlg.data(), &IdentityEditVcardDialog::vcardRemoved, this, &IdentityDialog::slotVCardRemoved);
     if(dlg->exec()) {
         mVcardFilename = dlg->saveVcard();
     }
