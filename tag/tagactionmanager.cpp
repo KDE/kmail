@@ -218,8 +218,7 @@ void TagActionManager::createTagActions(const QList<MailCommon::Tag::Ptr> &tags)
 
     if (!mNewTagAction) {
         mNewTagAction = new QAction( i18n( "Add new tag..." ), this );
-        connect( mNewTagAction, SIGNAL(triggered(bool)),
-                 this, SLOT(newTagActionClicked()) );
+        connect(mNewTagAction, &QAction::triggered, this, &TagActionManager::newTagActionClicked);
     }
     mMessageActions->messageStatusMenu()->menu()->addAction( mNewTagAction );
 
