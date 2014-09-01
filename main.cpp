@@ -113,6 +113,9 @@ int main(int argc, char *argv[])
     if (!KMailApplication::start())
         return 0;
 
+    // Migrate to xdg path
+    KMail::migrateConfig();
+
     KMailApplication app;
 
     // Qt doesn't treat the system tray as a window, and therefore Qt would quit

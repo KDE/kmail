@@ -63,6 +63,9 @@ KMailPart::KMailPart(QWidget *parentWidget, QObject *parent, const QVariantList 
     //QT5 setComponentData(KMailFactory::componentData());
     qDebug() << "InstanceName:" << KComponentData::mainComponent().componentName();
 
+    // Migrate to xdg path
+    KMail::migrateConfig();
+
     // import i18n data and icons from libraries:
     KMail::insertLibraryCataloguesAndIcons();
 

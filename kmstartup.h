@@ -29,6 +29,7 @@ KMAIL_EXPORT void kmcrashHandler( int sigId );
 namespace KMail {
 KMAIL_EXPORT void checkConfigUpdates();
 KMAIL_EXPORT void insertLibraryCataloguesAndIcons();
+KMAIL_EXPORT void migrateConfig();
 }
 
 #endif
