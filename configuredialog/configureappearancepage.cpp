@@ -750,6 +750,7 @@ AppearancePageHeadersTab::AppearancePageHeadersTab( QWidget * parent )
                         i18n( "<qt><a href=\"whatsthis1\">Custom format information...</a></qt>"), hbox );
             connect( formatHelp, SIGNAL(linkActivated(QString)),
                      SLOT(slotLinkClicked(QString)) );
+            hboxHBoxLayout->addWidget(formatHelp);
 
             mCustomDateWhatsThis =
                     i18n("<qt><p><strong>These expressions may be used for the date:"
