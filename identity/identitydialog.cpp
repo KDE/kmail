@@ -96,6 +96,8 @@ using MailTransport::TransportManager;
 #include <QFile>
 #include <QHostInfo>
 #include <QToolButton>
+#include <QFileInfo>
+#include <QDir>
 
 // other headers:
 #include <gpgme++/key.h>
@@ -876,6 +878,8 @@ void IdentityDialog::setIdentity( KIdentityManagement::Identity & ident ) {
     updateVcardButton();
     if(mVcardFilename.isEmpty()) {
         mVcardFilename = QStandardPaths::writableLocation(QStandardPaths::DataLocation) + QLatin1Char('/') + ident.identityName() + QLatin1String(".vcf");
+        QFileInfo fileInfo(mVcardFilename);
+        QDir().mkpath(fileInfo.absolutePath());
     }
     mAttachMyVCard->setChecked(ident.attachVcard());
     QString defaultDomainName = ident.defaultDomainName();
