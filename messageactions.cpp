@@ -70,43 +70,37 @@ MessageActions::MessageActions( KActionCollection *ac, QWidget *parent )
 {
     mReplyActionMenu = new KActionMenu( QIcon::fromTheme(QLatin1String("mail-reply-sender")), i18nc("Message->","&Reply"), this );
     ac->addAction( QLatin1String("message_reply_menu"), mReplyActionMenu );
-    connect( mReplyActionMenu, SIGNAL(triggered(bool)),
-             this, SLOT(slotReplyToMsg()) );
+    connect(mReplyActionMenu, &KActionMenu::triggered, this, &MessageActions::slotReplyToMsg);
 
     mReplyAction = new QAction( QIcon::fromTheme(QLatin1String("mail-reply-sender")), i18n("&Reply..."), this );
     ac->addAction( QLatin1String("reply"), mReplyAction );
     ac->setDefaultShortcut(mReplyAction,Qt::Key_R);
-    connect( mReplyAction, SIGNAL(triggered(bool)),
-             this, SLOT(slotReplyToMsg()) );
+    connect(mReplyAction, &QAction::triggered, this, &MessageActions::slotReplyToMsg);
     mReplyActionMenu->addAction( mReplyAction );
 
     mReplyAuthorAction = new QAction( QIcon::fromTheme(QLatin1String("mail-reply-sender")), i18n("Reply to A&uthor..."), this );
     ac->addAction( QLatin1String("reply_author"), mReplyAuthorAction );
     ac->setDefaultShortcut(mReplyAuthorAction,Qt::SHIFT+Qt::Key_A);
-    connect( mReplyAuthorAction, SIGNAL(triggered(bool)),
-             this, SLOT(slotReplyAuthorToMsg()) );
+    connect(mReplyAuthorAction, &QAction::triggered, this, &MessageActions::slotReplyAuthorToMsg);
     mReplyActionMenu->addAction( mReplyAuthorAction );
 
     mReplyAllAction = new QAction( QIcon::fromTheme(QLatin1String("mail-reply-all")), i18n("Reply to &All..."), this );
     ac->addAction( QLatin1String("reply_all"), mReplyAllAction );
     ac->setDefaultShortcut(mReplyAllAction, Qt::Key_A );
-    connect( mReplyAllAction, SIGNAL(triggered(bool)),
-             this, SLOT(slotReplyAllToMsg()) );
+    connect(mReplyAllAction, &QAction::triggered, this, &MessageActions::slotReplyAllToMsg);
     mReplyActionMenu->addAction( mReplyAllAction );
 
     mReplyListAction = new QAction( QIcon::fromTheme(QLatin1String("mail-reply-list")), i18n("Reply to Mailing-&List..."), this );
     ac->addAction( QLatin1String("reply_list"), mReplyListAction );
     
     ac->setDefaultShortcut(mReplyListAction, Qt::Key_L );
-    connect( mReplyListAction, SIGNAL(triggered(bool)),
-             this, SLOT(slotReplyListToMsg()) );
+    connect(mReplyListAction, &QAction::triggered, this, &MessageActions::slotReplyListToMsg);
     mReplyActionMenu->addAction( mReplyListAction );
 
     mNoQuoteReplyAction = new QAction( i18n("Reply Without &Quote..."), this );
     ac->addAction(QLatin1String("noquotereply"), mNoQuoteReplyAction );
     ac->setDefaultShortcut(mNoQuoteReplyAction, Qt::SHIFT+Qt::Key_R );
-    connect( mNoQuoteReplyAction, SIGNAL(triggered(bool)),
-             this, SLOT(slotNoQuoteReplyToMsg()) );
+    connect(mNoQuoteReplyAction, &QAction::triggered, this, &MessageActions::slotNoQuoteReplyToMsg);
 
 
     mListFilterAction = new QAction(i18n("Filter on Mailing-&List..."), this);
@@ -136,14 +130,12 @@ MessageActions::MessageActions( KActionCollection *ac, QWidget *parent )
 
     mEditAction = new QAction( QIcon::fromTheme(QLatin1String("accessories-text-editor")), i18n("&Edit Message"), this );
     ac->addAction( QLatin1String("edit"), mEditAction );
-    connect( mEditAction, SIGNAL(triggered(bool)),
-             this, SLOT(editCurrentMessage()) );
+    connect(mEditAction, &QAction::triggered, this, &MessageActions::editCurrentMessage);
     ac->setDefaultShortcut(mEditAction, Qt::Key_T );
 
     mAnnotateAction = new QAction( QIcon::fromTheme( QLatin1String("view-pim-notes") ), i18n( "Add Note..."), this );
     ac->addAction( QLatin1String("annotate"), mAnnotateAction );
-    connect( mAnnotateAction, SIGNAL(triggered(bool)),
-             this, SLOT(annotateMessage()) );
+    connect(mAnnotateAction, &QAction::triggered, this, &MessageActions::annotateMessage);
 
     mPrintAction = KStandardAction::print( this, SLOT(slotPrintMsg()), ac );
     if(KPrintPreview::isAvailable())
@@ -158,6 +150,7 @@ MessageActions::MessageActions( KActionCollection *ac, QWidget *parent )
                                           this );
     connect( mForwardAttachedAction, SIGNAL(triggered(bool)),
              parent, SLOT(slotForwardAttachedMsg()) );
+
     ac->addAction( QLatin1String("message_forward_as_attachment"), mForwardAttachedAction );
 
     mForwardInlineAction = new QAction( QIcon::fromTheme( QLatin1String("mail-forward") ),
@@ -166,6 +159,7 @@ MessageActions::MessageActions( KActionCollection *ac, QWidget *parent )
                                         this );
     connect( mForwardInlineAction, SIGNAL(triggered(bool)),
              parent, SLOT(slotForwardInlineMsg()) );
+
     ac->addAction( QLatin1String("message_forward_inline"), mForwardInlineAction );
 
     setupForwardActions(ac);
@@ -174,14 +168,14 @@ MessageActions::MessageActions( KActionCollection *ac, QWidget *parent )
     ac->addAction( QLatin1String("message_forward_redirect"), mRedirectAction );
     connect( mRedirectAction, SIGNAL(triggered(bool)),
              parent, SLOT(slotRedirectMsg()) );
+
     ac->setDefaultShortcut(mRedirectAction,QKeySequence( Qt::Key_E ) );
     mForwardActionMenu->addAction( mRedirectAction );
 
     //FIXME add QIcon::fromTheme("mail-list") as first arguement. Icon can be derived from
     // mail-reply-list icon by removing top layers off svg
     mMailingListActionMenu = new KActionMenu( i18nc( "Message->", "Mailing-&List" ), this );
-    connect( mMailingListActionMenu->menu(), SIGNAL(triggered(QAction*)),
-             this, SLOT(slotRunUrl(QAction*)) );
+    connect(mMailingListActionMenu->menu(), &QMenu::triggered, this, &MessageActions::slotRunUrl);
     ac->addAction( QLatin1String("mailing_list"), mMailingListActionMenu );
     mMailingListActionMenu->setEnabled(false);
 
