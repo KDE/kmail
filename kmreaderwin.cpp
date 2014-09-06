@@ -122,9 +122,9 @@ KMReaderWin::KMReaderWin(QWidget *aParent,
     connect( mViewer, SIGNAL(urlClicked(Akonadi::Item,KUrl)), this, SLOT(slotUrlClicked(Akonadi::Item,KUrl)) );
     connect( mViewer, SIGNAL(requestConfigSync()), kmkernel, SLOT(slotRequestConfigSync()), Qt::QueuedConnection ); // happens anyway on shutdown, so we can skip it there with using a queued connection
     connect( mViewer, SIGNAL(makeResourceOnline(MessageViewer::Viewer::ResourceOnlineMode)), kmkernel, SLOT(makeResourceOnline(MessageViewer::Viewer::ResourceOnlineMode)));
-    connect( mViewer, SIGNAL(showReader(KMime::Content*,bool,QString)), this, SLOT(slotShowReader(KMime::Content*,bool,QString)) );
-    connect( mViewer, SIGNAL(showMessage(KMime::Message::Ptr,QString)), this, SLOT(slotShowMessage(KMime::Message::Ptr,QString)) );
-    connect( mViewer, SIGNAL(showStatusBarMessage(QString)), this, SIGNAL(showStatusBarMessage(QString)) );
+    connect(mViewer, &MessageViewer::Viewer::showReader, this, &KMReaderWin::slotShowReader);
+    connect(mViewer, &MessageViewer::Viewer::showMessage, this, &KMReaderWin::slotShowMessage);
+    connect(mViewer, &MessageViewer::Viewer::showStatusBarMessage, this, &KMReaderWin::showStatusBarMessage);
     connect( mViewer, SIGNAL(deleteMessage(Akonadi::Item)), this, SLOT(slotDeleteMessage(Akonadi::Item)) );
 
     mViewer->addMessageLoadedHandler( new MessageViewer::MarkMessageReadHandler( this ) );
@@ -149,21 +149,21 @@ void KMReaderWin::createActions()
                                         i18n( "New Message To..." ), this );
     ac->addAction(QLatin1String("mail_new"), mMailToComposeAction );
     ac->setShortcutsConfigurable( mMailToComposeAction, false );
-    connect( mMailToComposeAction, SIGNAL(triggered(bool)), SLOT(slotMailtoCompose()) );
+    connect(mMailToComposeAction, &QAction::triggered, this, &KMReaderWin::slotMailtoCompose);
 
     // reply to
     mMailToReplyAction = new QAction( QIcon::fromTheme( QLatin1String("mail-reply-sender") ),
                                       i18n( "Reply To..." ), this );
     ac->addAction( QLatin1String("mailto_reply"), mMailToReplyAction );
     ac->setShortcutsConfigurable( mMailToReplyAction, false );
-    connect( mMailToReplyAction, SIGNAL(triggered(bool)), SLOT(slotMailtoReply()) );
+    connect(mMailToReplyAction, &QAction::triggered, this, &KMReaderWin::slotMailtoReply);
 
     // forward to
     mMailToForwardAction = new QAction( QIcon::fromTheme( QLatin1String("mail-forward" )),
                                         i18n( "Forward To..." ), this );
     ac->setShortcutsConfigurable( mMailToForwardAction, false );
     ac->addAction( QLatin1String("mailto_forward"), mMailToForwardAction );
-    connect( mMailToForwardAction, SIGNAL(triggered(bool)), SLOT(slotMailtoForward()) );
+    connect(mMailToForwardAction, &QAction::triggered, this, &KMReaderWin::slotMailtoForward);
 
 
     // add to addressbook
@@ -171,13 +171,13 @@ void KMReaderWin::createActions()
                                       i18n( "Add to Address Book" ), this );
     ac->setShortcutsConfigurable( mAddAddrBookAction, false );
     ac->addAction( QLatin1String("add_addr_book"), mAddAddrBookAction );
-    connect( mAddAddrBookAction, SIGNAL(triggered(bool)), SLOT(slotMailtoAddAddrBook()) );
+    connect(mAddAddrBookAction, &QAction::triggered, this, &KMReaderWin::slotMailtoAddAddrBook);
 
     mAddEmailToExistingContactAction = new QAction( QIcon::fromTheme(QLatin1String( "contact-new") ),
                                                     i18n( "Add to Existing Contact" ), this );
     ac->setShortcutsConfigurable( mAddEmailToExistingContactAction, false );
     ac->addAction( QLatin1String("add_to_existing_contact"), mAddAddrBookAction );
-    connect( mAddEmailToExistingContactAction, SIGNAL(triggered(bool)), SLOT(slotMailToAddToExistingContact()) );
+    connect(mAddEmailToExistingContactAction, &QAction::triggered, this, &KMReaderWin::slotMailToAddToExistingContact);
 
 
     // open in addressbook
@@ -185,48 +185,48 @@ void KMReaderWin::createActions()
                                        i18n( "Open in Address Book" ), this );
     ac->setShortcutsConfigurable( mOpenAddrBookAction, false );
     ac->addAction( QLatin1String("openin_addr_book"), mOpenAddrBookAction );
-    connect( mOpenAddrBookAction, SIGNAL(triggered(bool)), SLOT(slotMailtoOpenAddrBook()) );
+    connect(mOpenAddrBookAction, &QAction::triggered, this, &KMReaderWin::slotMailtoOpenAddrBook);
     // bookmark message
     mAddBookmarksAction = new QAction( QIcon::fromTheme( QLatin1String("bookmark-new") ), i18n( "Bookmark This Link" ), this );
     ac->setShortcutsConfigurable( mAddBookmarksAction, false );
     ac->addAction( QLatin1String("add_bookmarks"), mAddBookmarksAction );
-    connect( mAddBookmarksAction, SIGNAL(triggered(bool)),  SLOT(slotAddBookmarks()) );
+    connect(mAddBookmarksAction, &QAction::triggered, this, &KMReaderWin::slotAddBookmarks);
 
     mEditContactAction = new QAction( QIcon::fromTheme( QLatin1String("view-pim-contacts") ),
                                       i18n( "Edit contact..." ), this );
     ac->setShortcutsConfigurable( mEditContactAction, false );
     ac->addAction( QLatin1String("edit_contact"), mOpenAddrBookAction );
-    connect( mEditContactAction, SIGNAL(triggered(bool)), SLOT(slotEditContact()) );
+    connect(mEditContactAction, &QAction::triggered, this, &KMReaderWin::slotEditContact);
 
     // save URL as
     mUrlSaveAsAction = new QAction( i18n( "Save Link As..." ), this );
     ac->addAction( QLatin1String("saveas_url"), mUrlSaveAsAction );
     ac->setShortcutsConfigurable( mUrlSaveAsAction, false );
-    connect( mUrlSaveAsAction, SIGNAL(triggered(bool)), SLOT(slotUrlSave()) );
+    connect(mUrlSaveAsAction, &QAction::triggered, this, &KMReaderWin::slotUrlSave);
 
     // find text
     QAction *action = new QAction(QIcon::fromTheme(QLatin1String("edit-find")), i18n("&Find in Message..."), this);
     ac->addAction(QLatin1String("find_in_messages"), action );
-    connect(action, SIGNAL(triggered(bool)), SLOT(slotFind()));
+    connect(action, &QAction::triggered, this, &KMReaderWin::slotFind);
     action->setShortcut(KStandardShortcut::find().first());
 
     // save Image On Disk
     mImageUrlSaveAsAction = new QAction( i18n( "Save Image On Disk..." ), this );
     ac->addAction( QLatin1String("saveas_imageurl"), mImageUrlSaveAsAction );
     ac->setShortcutsConfigurable(mImageUrlSaveAsAction, false );
-    connect( mImageUrlSaveAsAction, SIGNAL(triggered(bool)), SLOT(slotSaveImageOnDisk()) );
+    connect(mImageUrlSaveAsAction, &QAction::triggered, this, &KMReaderWin::slotSaveImageOnDisk);
 
     // View html options
     mViewHtmlOptions = new QMenu(i18n("Show HTML Format"));
     mViewAsHtml = new QAction( i18n("Show HTML format when mail comes from this contact"), mViewHtmlOptions);
     ac->setShortcutsConfigurable( mViewAsHtml,false );
-    connect( mViewAsHtml, SIGNAL(triggered(bool)), SLOT(slotContactHtmlOptions()));
+    connect(mViewAsHtml, &QAction::triggered, this, &KMReaderWin::slotContactHtmlOptions);
     mViewAsHtml->setCheckable(true);
     mViewHtmlOptions->addAction(mViewAsHtml);
 
     mLoadExternalReference = new QAction( i18n("Load external reference when mail comes for this contact"), mViewHtmlOptions);
     ac->setShortcutsConfigurable( mLoadExternalReference, false );
-    connect(mLoadExternalReference, SIGNAL(triggered(bool)), SLOT(slotContactHtmlOptions()));
+    connect(mLoadExternalReference, &QAction::triggered, this, &KMReaderWin::slotContactHtmlOptions);
     mLoadExternalReference->setCheckable(true);
     mViewHtmlOptions->addAction(mLoadExternalReference);
 
@@ -234,7 +234,7 @@ void KMReaderWin::createActions()
     mShareImage = new QAction(i18n("Share image..."), this);
     ac->addAction( QLatin1String("share_imageurl"), mShareImage );
     ac->setShortcutsConfigurable(mShareImage,false );
-    connect(mShareImage, SIGNAL(triggered(bool)), SLOT(slotShareImage()));
+    connect(mShareImage, &QAction::triggered, this, &KMReaderWin::slotShareImage);
 
 
 }
@@ -754,7 +754,7 @@ bool KMReaderWin::printSelectedText(bool preview)
     composer->infoPart()->setCc(QStringList()<<messagePtr->cc()->asUnicodeString());
     composer->infoPart()->setSubject(messagePtr->subject()->asUnicodeString());
     composer->setProperty("preview",preview);
-    connect( composer, SIGNAL(result(KJob*)),  this, SLOT(slotPrintComposeResult(KJob*)) );
+    connect(composer, &::MessageComposer::Composer::result, this, &KMReaderWin::slotPrintComposeResult);
     composer->start();
     return true;
 }
@@ -840,8 +840,8 @@ void KMReaderWin::slotEditContact()
     if( mSearchedContact.isValid() ) {
         QPointer<Akonadi::ContactEditorDialog> dlg =
                 new Akonadi::ContactEditorDialog( Akonadi::ContactEditorDialog::EditMode, this );
-        connect( dlg, SIGNAL(contactStored(Akonadi::Item)),  this, SLOT(contactStored(Akonadi::Item)) );
-        connect( dlg, SIGNAL(error(QString)),  this, SLOT(slotContactEditorError(QString)) );
+        connect(dlg.data(), &Akonadi::ContactEditorDialog::contactStored, this, &KMReaderWin::contactStored);
+        connect(dlg.data(), &Akonadi::ContactEditorDialog::error, this, &KMReaderWin::slotContactEditorError);
         dlg->setContact( mSearchedContact );
         dlg->exec();
         delete dlg;
