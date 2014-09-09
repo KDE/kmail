@@ -342,7 +342,7 @@ generate_export_header(kmailprivate BASE_NAME kmail)
 
   install(TARGETS kmail ${INSTALL_TARGETS_DEFAULT_ARGS})
 
-  install(PROGRAMS data/KMail2.desktop data/kmail_view.desktop DESTINATION ${XDG_APPS_INSTALL_DIR})
+  install(PROGRAMS data/org.kde.kmail.desktop data/kmail_view.desktop DESTINATION ${XDG_APPS_INSTALL_DIR})
   install(FILES
     ${CMAKE_CURRENT_BINARY_DIR}/kmail.kcfg
     DESTINATION ${KCFG_INSTALL_DIR}
