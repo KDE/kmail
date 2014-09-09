@@ -279,7 +279,7 @@ generate_export_header(kmailprivate BASE_NAME kmail)
     KF5::Imap
     KF5::KCMUtils
     kleo
-    ${QGPGME_LIBRARIES}
+    KF5::QGpgme
     ksieve
     ksieveui
     kpgp
