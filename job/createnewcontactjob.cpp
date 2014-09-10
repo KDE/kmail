@@ -87,7 +87,7 @@ void CreateNewContactJob::slotCollectionsFetched(KJob*job)
 
             if ( agentType.isValid() ) {
                 Akonadi::AgentInstanceCreateJob *job = new Akonadi::AgentInstanceCreateJob( agentType, this );
-                connect( job, SIGNAL(result(KJob*)), SLOT(slotResourceCreationDone(KJob*)) );
+                connect(job, &Akonadi::AgentInstanceCreateJob::result, this, &CreateNewContactJob::slotResourceCreationDone);
                 job->configure( mParentWidget );
                 job->start();
                 return;
@@ -121,8 +121,8 @@ void CreateNewContactJob::slotResourceCreationDone(KJob* job)
 void CreateNewContactJob::createContact()
 {
     Akonadi::ContactEditorDialog dlg( Akonadi::ContactEditorDialog::CreateMode, mParentWidget );
-    connect(&dlg, SIGNAL(contactStored(Akonadi::Item)), this, SLOT(contactStored(Akonadi::Item)) );
-    connect(&dlg, SIGNAL(error(QString)), this, SLOT(slotContactEditorError(QString)) );
+    connect(&dlg, &Akonadi::ContactEditorDialog::contactStored, this, &CreateNewContactJob::contactStored);
+    connect(&dlg, &Akonadi::ContactEditorDialog::error, this, &CreateNewContactJob::slotContactEditorError);
     dlg.exec();
 }
 

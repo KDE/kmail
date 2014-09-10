@@ -82,17 +82,17 @@ AttachmentView::AttachmentView( MessageComposer::AttachmentModel *model, QWidget
     , d( new Private(this) )
 {
     d->model = model;
-    connect( model, SIGNAL(encryptEnabled(bool)), this, SLOT(setEncryptEnabled(bool)) );
-    connect( model, SIGNAL(signEnabled(bool)), this, SLOT(setSignEnabled(bool)) );
+    connect(model, &MessageComposer::AttachmentModel::encryptEnabled, this, &AttachmentView::setEncryptEnabled);
+    connect(model, &MessageComposer::AttachmentModel::signEnabled, this, &AttachmentView::setSignEnabled);
 
     QSortFilterProxyModel *sortModel = new QSortFilterProxyModel( this );
     sortModel->setSortCaseSensitivity( Qt::CaseInsensitive );
     sortModel->setSourceModel( model );
     setModel( sortModel );
-    connect( model, SIGNAL(rowsInserted(QModelIndex,int,int)), this, SLOT(hideIfEmpty()) );
-    connect( model, SIGNAL(rowsRemoved(QModelIndex,int,int)), this, SLOT(hideIfEmpty()) );
-    connect( model, SIGNAL(rowsRemoved(QModelIndex,int,int)), this, SLOT(selectNewAttachment()) );
-    connect( model, SIGNAL(dataChanged(QModelIndex,QModelIndex)), this, SLOT(updateAttachmentLabel()) );
+    connect(model, &MessageComposer::AttachmentModel::rowsInserted, this, &AttachmentView::hideIfEmpty);
+    connect(model, &MessageComposer::AttachmentModel::rowsRemoved, this, &AttachmentView::hideIfEmpty);
+    connect(model, &MessageComposer::AttachmentModel::rowsRemoved, this, &AttachmentView::selectNewAttachment);
+    connect(model, &MessageComposer::AttachmentModel::dataChanged, this, &AttachmentView::updateAttachmentLabel);
 
     setRootIsDecorated( false );
     setUniformRowHeights( true );

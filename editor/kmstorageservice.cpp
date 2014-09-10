@@ -28,11 +28,11 @@ KMStorageService::KMStorageService(QWidget *parentWidget, QObject *parent)
       mNumProgressUploadFile(0),
       mStorageManager(new PimCommon::StorageServiceManager(this))
 {
-    connect(mStorageManager, SIGNAL(uploadFileDone(QString,QString)), this, SLOT(slotUploadFileDone(QString,QString)));
-    connect(mStorageManager, SIGNAL(uploadFileFailed(QString,QString)), this, SLOT(slotUploadFileFailed(QString,QString)));
-    connect(mStorageManager, SIGNAL(shareLinkDone(QString,QString)), this, SLOT(slotShareLinkDone(QString,QString)));
-    connect(mStorageManager, SIGNAL(uploadFileStart(PimCommon::StorageServiceAbstract*)), this, SLOT(slotUploadFileStart(PimCommon::StorageServiceAbstract*)));
-    connect(mStorageManager, SIGNAL(actionFailed(QString,QString)), this, SLOT(slotActionFailed(QString,QString)));
+    connect(mStorageManager, &PimCommon::StorageServiceManager::uploadFileDone, this, &KMStorageService::slotUploadFileDone);
+    connect(mStorageManager, &PimCommon::StorageServiceManager::uploadFileFailed, this, &KMStorageService::slotUploadFileFailed);
+    connect(mStorageManager, &PimCommon::StorageServiceManager::shareLinkDone, this, &KMStorageService::slotShareLinkDone);
+    connect(mStorageManager, &PimCommon::StorageServiceManager::uploadFileStart, this, &KMStorageService::slotUploadFileStart);
+    connect(mStorageManager, &PimCommon::StorageServiceManager::actionFailed, this, &KMStorageService::slotActionFailed);
 }
 
 KMStorageService::~KMStorageService()
