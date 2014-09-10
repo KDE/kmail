@@ -61,28 +61,20 @@ IdentityPage::IdentityPage( QWidget *parent )
     mIPage.setupUi( this );
     mIPage.mIdentityList->setIdentityManager( mIdentityManager );
 
-    connect( mIPage.mIdentityList, SIGNAL(itemSelectionChanged()),
-             SLOT(slotIdentitySelectionChanged()) );
+    connect( mIPage.mIdentityList, SIGNAL(itemSelectionChanged()), SLOT(slotIdentitySelectionChanged()) );
     connect( this, SIGNAL(changed(bool)),
              SLOT(slotIdentitySelectionChanged()) );
-    connect( mIPage.mIdentityList, SIGNAL(rename(KMail::IdentityListViewItem*,QString)),
-             SLOT(slotRenameIdentity(KMail::IdentityListViewItem*,QString)) );
-    connect( mIPage.mIdentityList, SIGNAL(itemDoubleClicked(QTreeWidgetItem*,int)),
-             SLOT(slotModifyIdentity()) );
-    connect( mIPage.mIdentityList, SIGNAL(contextMenu(KMail::IdentityListViewItem*,QPoint)),
-             SLOT(slotContextMenu(KMail::IdentityListViewItem*,QPoint)) );
+    connect( mIPage.mIdentityList, SIGNAL(rename(KMail::IdentityListViewItem*,QString)),  SLOT(slotRenameIdentity(KMail::IdentityListViewItem*,QString)) );
+    connect( mIPage.mIdentityList, SIGNAL(itemDoubleClicked(QTreeWidgetItem*,int)),  SLOT(slotModifyIdentity()) );
+    connect( mIPage.mIdentityList, SIGNAL(contextMenu(KMail::IdentityListViewItem*,QPoint)), SLOT(slotContextMenu(KMail::IdentityListViewItem*,QPoint)) );
     // ### connect dragged(...), ...
 
-    connect( mIPage.mButtonAdd, SIGNAL(clicked()),
-             this, SLOT(slotNewIdentity()) );
-    connect( mIPage.mModifyButton, SIGNAL(clicked()),
-             this, SLOT(slotModifyIdentity()) );
+    connect(mIPage.mButtonAdd, &QPushButton::clicked, this, &IdentityPage::slotNewIdentity);
+    connect(mIPage.mModifyButton, &QPushButton::clicked, this, &IdentityPage::slotModifyIdentity);
     connect( mIPage.mRenameButton, SIGNAL(clicked()),
              this, SLOT(slotRenameIdentity()) );
-    connect( mIPage.mRemoveButton, SIGNAL(clicked()),
-             this, SLOT(slotRemoveIdentity()) );
-    connect( mIPage.mSetAsDefaultButton, SIGNAL(clicked()),
-             this, SLOT(slotSetAsDefault()) );
+    connect(mIPage.mRemoveButton, &QPushButton::clicked, this, &IdentityPage::slotRemoveIdentity);
+    connect(mIPage.mSetAsDefaultButton, &QPushButton::clicked, this, &IdentityPage::slotSetAsDefault);
 }
 
 IdentityPage::~IdentityPage()

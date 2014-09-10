@@ -113,10 +113,8 @@ void KMReaderMainWin::initKMReaderMainWin()
         menuBar()->hide();
         toolBar( QLatin1String("mainToolBar") )->hide();
     }
-    connect( kmkernel, SIGNAL(configChanged()),
-             this, SLOT(slotConfigChanged()) );
-    connect( mReaderWin, SIGNAL(showStatusBarMessage(QString)),
-             statusBar(), SLOT(showMessage(QString)) );
+    connect( kmkernel, SIGNAL(configChanged()), this, SLOT(slotConfigChanged()) );
+    connect( mReaderWin, SIGNAL(showStatusBarMessage(QString)), statusBar(), SLOT(showMessage(QString)) );
 }
 
 //-----------------------------------------------------------------------------
@@ -225,8 +223,7 @@ void KMReaderMainWin::slotForwardInlineMsg()
     } else {
         command = new KMForwardCommand( this, mReaderWin->message() );
     }
-    connect( command, SIGNAL(completed(KMCommand*)),
-             this, SLOT(slotReplyOrForwardFinished()) );
+    connect(command, &KMTrashMsgCommand::completed, this, &KMReaderMainWin::slotReplyOrForwardFinished);
     command->start();
 }
 
@@ -247,8 +244,7 @@ void KMReaderMainWin::slotForwardAttachedMsg()
     else
         command = new KMForwardAttachedCommand( this, mReaderWin->message() );
 
-    connect( command, SIGNAL(completed(KMCommand*)),
-             this, SLOT(slotReplyOrForwardFinished()) );
+    connect(command, &KMTrashMsgCommand::completed, this, &KMReaderMainWin::slotReplyOrForwardFinished);
     command->start();
 }
 
@@ -257,8 +253,7 @@ void KMReaderMainWin::slotRedirectMsg()
 {
     if ( !mReaderWin->message().hasPayload<KMime::Message::Ptr>() ) return;
     KMCommand *command = new KMRedirectCommand( this, mReaderWin->message() );
-    connect( command, SIGNAL(completed(KMCommand*)),
-             this, SLOT(slotReplyOrForwardFinished()) );
+    connect(command, &KMTrashMsgCommand::completed, this, &KMReaderMainWin::slotReplyOrForwardFinished);
     command->start();
 }
 
@@ -271,8 +266,7 @@ void KMReaderMainWin::slotCustomReplyToMsg( const QString &tmpl )
                                              MessageComposer::ReplySmart,
                                              mReaderWin->copyText(),
                                              false, tmpl );
-    connect( command, SIGNAL(completed(KMCommand*)),
-             this, SLOT(slotReplyOrForwardFinished()) );
+    connect(command, &KMTrashMsgCommand::completed, this, &KMReaderMainWin::slotReplyOrForwardFinished);
     command->start();
 }
 
@@ -285,8 +279,7 @@ void KMReaderMainWin::slotCustomReplyAllToMsg( const QString &tmpl )
                                              MessageComposer::ReplyAll,
                                              mReaderWin->copyText(),
                                              false, tmpl );
-    connect( command, SIGNAL(completed(KMCommand*)),
-             this, SLOT(slotReplyOrForwardFinished()) );
+    connect(command, &KMTrashMsgCommand::completed, this, &KMReaderMainWin::slotReplyOrForwardFinished);
 
     command->start();
 }
@@ -298,8 +291,7 @@ void KMReaderMainWin::slotCustomForwardMsg( const QString &tmpl)
     KMCommand *command = new KMForwardCommand( this,
                                                mReaderWin->message(),
                                                0, tmpl );
-    connect( command, SIGNAL(completed(KMCommand*)),
-             this, SLOT(slotReplyOrForwardFinished()) );
+    connect(command, &KMTrashMsgCommand::completed, this, &KMReaderMainWin::slotReplyOrForwardFinished);
 
     command->start();
 }
@@ -320,8 +312,7 @@ void KMReaderMainWin::setupAccel()
 #endif
     mMsgActions = new KMail::MessageActions( actionCollection(), this );
     mMsgActions->setMessageView( mReaderWin );
-    connect( mMsgActions, SIGNAL(replyActionFinished()),
-             this, SLOT(slotReplyOrForwardFinished()) );
+    connect(mMsgActions, &KMail::MessageActions::replyActionFinished, this, &KMReaderMainWin::slotReplyOrForwardFinished);
 
     //----- File Menu
 
@@ -333,7 +324,7 @@ void KMReaderMainWin::setupAccel()
     KMail::Util::addQActionHelpText(mTrashAction, i18n( "Move message to trashcan" ));
     mTrashAction->setShortcut( QKeySequence( Qt::Key_Delete ) );
     actionCollection()->addAction( QLatin1String("move_to_trash"), mTrashAction );
-    connect( mTrashAction, SIGNAL(triggered()), this, SLOT(slotTrashMsg()) );
+    connect(mTrashAction, &QAction::triggered, this, &KMReaderMainWin::slotTrashMsg);
 
     QAction *closeAction = KStandardAction::close( this, SLOT(close()), actionCollection() );
     QList<QKeySequence> closeShortcut = closeAction->shortcuts();
@@ -349,15 +340,12 @@ void KMReaderMainWin::setupAccel()
     mFontSizeAction = new KFontSizeAction( i18n( "Select Size" ), this );
     mFontSizeAction->setFontSize( mReaderWin->cssHelper()->bodyFont().pointSize() );
     actionCollection()->addAction( QLatin1String("text_size"), mFontSizeAction );
-    connect( mFontSizeAction, SIGNAL(fontSizeChanged(int)),
-             SLOT(slotSizeAction(int)) );
+    connect(mFontSizeAction, &KFontSizeAction::fontSizeChanged, this, &KMReaderMainWin::slotSizeAction);
 
 
-    connect( mReaderWin->viewer(), SIGNAL(popupMenu(Akonadi::Item,KUrl,KUrl,QPoint)),
-             this, SLOT(slotMessagePopup(Akonadi::Item,KUrl,KUrl,QPoint)) );
+    connect( mReaderWin->viewer(), SIGNAL(popupMenu(Akonadi::Item,KUrl,KUrl,QPoint)), this, SLOT(slotMessagePopup(Akonadi::Item,KUrl,KUrl,QPoint)) );
 
-    connect( mReaderWin->viewer(), SIGNAL(itemRemoved()),
-             this, SLOT(close()) );
+    connect( mReaderWin->viewer(), SIGNAL(itemRemoved()), this, SLOT(close()) );
 
     setStandardToolBarMenuEnabled(true);
     KStandardAction::configureToolbars(this, SLOT(slotEditToolbars()), actionCollection());
@@ -391,12 +379,12 @@ void KMReaderMainWin::slotCopyItem(QAction*action)
 
         if ( mMsg.isValid() ) {
             Akonadi::ItemCopyJob *job = new Akonadi::ItemCopyJob( mMsg, collection,this );
-            connect( job, SIGNAL(result(KJob*)), this, SLOT(slotCopyResult(KJob*)) );
+            connect(job, &Akonadi::ItemCopyJob::result, this, &KMReaderMainWin::slotCopyResult);
         }
         else
         {
             Akonadi::ItemCreateJob *job = new Akonadi::ItemCreateJob( mMsg, collection, this );
-            connect( job, SIGNAL(result(KJob*)), this, SLOT(slotCopyResult(KJob*)) );
+            connect(job, &Akonadi::ItemCopyJob::result, this, &KMReaderMainWin::slotCopyResult);
         }
     }
 }
@@ -421,7 +409,7 @@ void KMReaderMainWin::slotMessagePopup(const Akonadi::Item&aMsg , const KUrl&aUr
         job->setProperty( "point", aPoint );
         job->setProperty( "imageUrl", imageUrl );
         job->setProperty( "url", aUrl );
-        connect( job, SIGNAL(result(KJob*)), SLOT(slotContactSearchJobForMessagePopupDone(KJob*)) );
+        connect(job, &Akonadi::ItemCopyJob::result, this, &KMReaderMainWin::slotContactSearchJobForMessagePopupDone);
     } else {
         showMessagePopup(mMsg, aUrl, imageUrl, aPoint, false, false);
     }
@@ -621,7 +609,7 @@ void KMReaderMainWin::slotEditToolbars()
     KConfigGroup grp(KMKernel::self()->config(), "ReaderWindow");
     saveMainWindowSettings( grp);
     KEditToolBar dlg( guiFactory(), this );
-    connect( &dlg, SIGNAL(newToolBarConfig()), SLOT(slotUpdateToolbars()) );
+    connect(&dlg, &KEditToolBar::newToolBarConfig, this, &KMReaderMainWin::slotUpdateToolbars);
     dlg.exec();
 }
 
