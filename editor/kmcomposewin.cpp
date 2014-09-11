@@ -3525,7 +3525,7 @@ void KMComposeWin::insertSpecialCharacter()
         mSelectSpecialChar = new KPIMTextEdit::SelectSpecialCharDialog(this);
         mSelectSpecialChar->setWindowTitle(i18n("Insert Special Character"));
         mSelectSpecialChar->setOkButtonText(i18n("Insert"));
-        connect(mSelectSpecialChar,SIGNAL(charSelected(QChar)),this,SLOT(charSelected(QChar)));
+        connect(mSelectSpecialChar.data(), &KPIMTextEdit::SelectSpecialCharDialog::charSelected, this, &KMComposeWin::charSelected);
     }
     mSelectSpecialChar->show();
 }
