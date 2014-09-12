@@ -30,6 +30,8 @@ public:
 private Q_SLOTS:
     void explicitlyClosed();
     void slotAttachFile();
+
+public Q_SLOTS:
     void slotFileAttached();
 
 Q_SIGNALS:

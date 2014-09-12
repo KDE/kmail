@@ -48,8 +48,8 @@ ConfigureDialog::ConfigureDialog( QWidget *parent, bool modal )
     addModule( QLatin1String("kmail_config_security") );
     addModule( QLatin1String("kmail_config_misc") );
 
-    connect( button(QDialogButtonBox::Ok), SIGNAL(clicked()), SLOT(slotOk()) );
-    connect( button(QDialogButtonBox::Apply), SIGNAL(clicked()), SLOT(slotApply()) );
+    connect(button(QDialogButtonBox::Ok), &QPushButton::clicked, this, &ConfigureDialog::slotOk);
+    connect(button(QDialogButtonBox::Apply), &QPushButton::clicked, this, &ConfigureDialog::slotApply);
 
     // We store the size of the dialog on hide, because otherwise
     // the KCMultiDialog starts with the size of the first kcm, not

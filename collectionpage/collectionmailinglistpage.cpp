@@ -81,8 +81,7 @@ void CollectionMailingListPage::init(const Akonadi::Collection & col)
 //TODO PORT QT5     topLayout->setSpacing( QDialog::spacingHint() );
 
     mHoldsMailingList = new QCheckBox( i18n("Folder holds a mailing list"), this );
-    connect( mHoldsMailingList, SIGNAL(toggled(bool)),
-             SLOT(slotHoldsML(bool)) );
+    connect(mHoldsMailingList, &QCheckBox::toggled, this, &CollectionMailingListPage::slotHoldsML);
     connect(mHoldsMailingList, &QCheckBox::toggled, this, &CollectionMailingListPage::slotConfigChanged);
     topLayout->addWidget( mHoldsMailingList );
 
@@ -91,8 +90,7 @@ void CollectionMailingListPage::init(const Akonadi::Collection & col)
 //TODO PORT QT5     groupLayout->setSpacing( QDialog::spacingHint() );
 
     mDetectButton = new QPushButton( i18n("Detect Automatically"), mGroupWidget );
-    connect( mDetectButton, SIGNAL(pressed()),
-             SLOT(slotDetectMailingList()) );
+    connect(mDetectButton, &QPushButton::pressed, this, &CollectionMailingListPage::slotDetectMailingList);
     groupLayout->addWidget( mDetectButton, 2, 1 );
 
     groupLayout->addItem( new QSpacerItem( 0, 10 ), 3, 0 );
@@ -110,8 +108,7 @@ void CollectionMailingListPage::init(const Akonadi::Collection & col)
     mMLHandlerCombo->addItem( i18n("KMail"), MailingList::KMail );
     mMLHandlerCombo->addItem( i18n("Browser"), MailingList::Browser );
     groupLayout->addWidget( mMLHandlerCombo, 5, 1, 1, 2 );
-    connect( mMLHandlerCombo, SIGNAL(activated(int)),
-             SLOT(slotMLHandling(int)) );
+    connect(mMLHandlerCombo, static_cast<void (KComboBox::*)(int)>(&KComboBox::activated), this, &CollectionMailingListPage::slotMLHandling);
     label->setBuddy( mMLHandlerCombo );
 
     label = new QLabel( i18n("Address type:"), mGroupWidget );
@@ -125,8 +122,7 @@ void CollectionMailingListPage::init(const Akonadi::Collection & col)
     //       here
     QPushButton *handleButton = new QPushButton( i18n( "Invoke Handler" ), mGroupWidget );
     if (mFolder) {
-        connect( handleButton, SIGNAL(clicked()),
-                 SLOT(slotInvokeHandler()) );
+        connect(handleButton, &QPushButton::clicked, this, &CollectionMailingListPage::slotInvokeHandler);
     } else {
         handleButton->setEnabled( false );
     }
@@ -148,8 +144,7 @@ void CollectionMailingListPage::init(const Akonadi::Collection & col)
        << i18n( "List Archives" )
        << i18n( "List Help" );
     mAddressCombo->addItems( el );
-    connect( mAddressCombo, SIGNAL(activated(int)),
-             SLOT(slotAddressChanged(int)) );
+    connect(mAddressCombo, static_cast<void (KComboBox::*)(int)>(&KComboBox::activated), this, &CollectionMailingListPage::slotAddressChanged);
 
     topLayout->addWidget( mGroupWidget );
     mGroupWidget->setEnabled( false );

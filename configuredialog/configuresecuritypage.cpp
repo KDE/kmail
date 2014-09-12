@@ -88,24 +88,17 @@ SecurityPageGeneralTab::SecurityPageGeneralTab( QWidget * parent )
 {
     mSGTab.setupUi( this );
 
-    connect( mSGTab.mHtmlMailCheck, SIGNAL(stateChanged(int)),
-             this, SLOT(slotEmitChanged()) );
-    connect( mSGTab.mExternalReferences, SIGNAL(stateChanged(int)),
-             this, SLOT(slotEmitChanged()) );
-    connect(mSGTab.labelWarnHTML, SIGNAL(linkActivated(QString)),
-            SLOT(slotLinkClicked(QString)));
+    connect(mSGTab.mHtmlMailCheck, &QCheckBox::stateChanged, this, &SecurityPageGeneralTab::slotEmitChanged);
+    connect(mSGTab.mExternalReferences, &QCheckBox::stateChanged, this, &SecurityPageGeneralTab::slotEmitChanged);
+    connect(mSGTab.labelWarnHTML, SIGNAL(linkActivated(QString)), SLOT(slotLinkClicked(QString)));
 
-    connect( mSGTab.mAlwaysDecrypt, SIGNAL(stateChanged(int)),
-             this, SLOT(slotEmitChanged()) );
+    connect(mSGTab.mAlwaysDecrypt, &QCheckBox::stateChanged, this, &SecurityPageGeneralTab::slotEmitChanged);
 
-    connect( mSGTab.mAutomaticallyImportAttachedKeysCheck, SIGNAL(toggled(bool)),
-             SLOT(slotEmitChanged()) );
+    connect( mSGTab.mAutomaticallyImportAttachedKeysCheck, SIGNAL(toggled(bool)), SLOT(slotEmitChanged()) );
 
-    connect( mSGTab.mScamDetection, SIGNAL(toggled(bool)),
-             SLOT(slotEmitChanged()) );
+    connect( mSGTab.mScamDetection, SIGNAL(toggled(bool)), SLOT(slotEmitChanged()) );
 
-    connect( mSGTab.scamWhiteList, SIGNAL(changed()),
-             SLOT(slotEmitChanged()) );
+    connect( mSGTab.scamWhiteList, SIGNAL(changed()), SLOT(slotEmitChanged()) );
 }
 
 void SecurityPageGeneralTab::slotLinkClicked( const QString & link )
@@ -212,8 +205,7 @@ SecurityPageMDNTab::SecurityPageMDNTab( QWidget * parent )
 
     // "ignore", "ask", "deny", "always send" radiobuttons
     mMDNGroup = new QButtonGroup( this );
-    connect( mMDNGroup, SIGNAL(buttonClicked(int)),
-             this, SLOT(slotEmitChanged()) );
+    connect(mMDNGroup, static_cast<void (QButtonGroup::*)(int)>(&QButtonGroup::buttonClicked), this, &SecurityPageMDNTab::slotEmitChanged);
     mMDNGroup->addButton( mUi.radioIgnore, 0 );
     mMDNGroup->addButton( mUi.radioAsk, 1 );
     mMDNGroup->addButton( mUi.radioDeny, 2 );
@@ -221,15 +213,13 @@ SecurityPageMDNTab::SecurityPageMDNTab( QWidget * parent )
 
     // "Original Message quote" radiobuttons
     mOrigQuoteGroup = new QButtonGroup( this );
-    connect( mOrigQuoteGroup, SIGNAL(buttonClicked(int)),
-             this, SLOT(slotEmitChanged()) );
+    connect(mOrigQuoteGroup, static_cast<void (QButtonGroup::*)(int)>(&QButtonGroup::buttonClicked), this, &SecurityPageMDNTab::slotEmitChanged);
     mOrigQuoteGroup->addButton( mUi.radioNothing, 0 );
     mOrigQuoteGroup->addButton( mUi.radioFull, 1 );
     mOrigQuoteGroup->addButton( mUi.radioHeaders, 2 );
 
     connect( mUi.mNoMDNsWhenEncryptedCheck, SIGNAL(toggled(bool)), SLOT(slotEmitChanged()) );
-    connect( mUi.labelWarning, SIGNAL(linkActivated(QString)),
-             SLOT(slotLinkClicked(QString)) );
+    connect( mUi.labelWarning, SIGNAL(linkActivated(QString)), SLOT(slotLinkClicked(QString)) );
 }
 
 void SecurityPageMDNTab::slotLinkClicked( const QString & link )
@@ -266,13 +256,13 @@ SecurityPageComposerCryptoTab::SecurityPageComposerCryptoTab( QWidget * parent )
 {
     mWidget = new Ui::ComposerCryptoConfiguration;
     mWidget->setupUi( this );
-    connect( mWidget->mEncToSelf, SIGNAL(toggled(bool)), this, SLOT(slotEmitChanged()) );
-    connect( mWidget->mShowEncryptionResult, SIGNAL(toggled(bool)), this, SLOT(slotEmitChanged()) );
-    connect( mWidget->mShowKeyApprovalDlg, SIGNAL(toggled(bool)), this, SLOT(slotEmitChanged()) );
-    connect( mWidget->mAutoEncrypt, SIGNAL(toggled(bool)), this, SLOT(slotEmitChanged()) );
-    connect( mWidget->mNeverEncryptWhenSavingInDrafts, SIGNAL(toggled(bool)), this, SLOT(slotEmitChanged()) );
-    connect( mWidget->mStoreEncrypted, SIGNAL(toggled(bool)), this, SLOT(slotEmitChanged()) );
-    connect( mWidget->mShowEncSignIndicator, SIGNAL(toggled(bool)), this, SLOT(slotEmitChanged()) );
+    connect(mWidget->mEncToSelf, &QCheckBox::toggled, this, &SecurityPageComposerCryptoTab::slotEmitChanged);
+    connect(mWidget->mShowEncryptionResult, &QCheckBox::toggled, this, &SecurityPageComposerCryptoTab::slotEmitChanged);
+    connect(mWidget->mShowKeyApprovalDlg, &QCheckBox::toggled, this, &SecurityPageComposerCryptoTab::slotEmitChanged);
+    connect(mWidget->mAutoEncrypt, &QCheckBox::toggled, this, &SecurityPageComposerCryptoTab::slotEmitChanged);
+    connect(mWidget->mNeverEncryptWhenSavingInDrafts, &QCheckBox::toggled, this, &SecurityPageComposerCryptoTab::slotEmitChanged);
+    connect(mWidget->mStoreEncrypted, &QCheckBox::toggled, this, &SecurityPageComposerCryptoTab::slotEmitChanged);
+    connect(mWidget->mShowEncSignIndicator, &QCheckBox::toggled, this, &SecurityPageComposerCryptoTab::slotEmitChanged);
 }
 
 SecurityPageComposerCryptoTab::~SecurityPageComposerCryptoTab()
@@ -334,14 +324,14 @@ SecurityPageWarningTab::SecurityPageWarningTab( QWidget * parent )
 
     mWidget->chiasmusButton->hide();
 
-    connect( mWidget->warnGroupBox, SIGNAL(toggled(bool)), SLOT(slotEmitChanged()) );
-    connect( mWidget->mWarnUnsigned, SIGNAL(toggled(bool)), SLOT(slotEmitChanged()) );
-    connect( mWidget->warnUnencryptedCB, SIGNAL(toggled(bool)), SLOT(slotEmitChanged()) );
-    connect( mWidget->warnReceiverNotInCertificateCB, SIGNAL(toggled(bool)), SLOT(slotEmitChanged()) );
+    connect(mWidget->warnGroupBox, &QGroupBox::toggled, this, &SecurityPageWarningTab::slotEmitChanged);
+    connect(mWidget->mWarnUnsigned, &QCheckBox::toggled, this, &SecurityPageWarningTab::slotEmitChanged);
+    connect(mWidget->warnUnencryptedCB, &QCheckBox::toggled, this, &SecurityPageWarningTab::slotEmitChanged);
+    connect(mWidget->warnReceiverNotInCertificateCB, &QCheckBox::toggled, this, &SecurityPageWarningTab::slotEmitChanged);
 
-    connect( mWidget->gnupgButton, SIGNAL(clicked()), SLOT(slotConfigureGnupg()) );
+    connect(mWidget->gnupgButton, &QPushButton::clicked, this, &SecurityPageWarningTab::slotConfigureGnupg);
     //connect( mWidget->chiasmusButton, SIGNAL(clicked()), SLOT(slotConfigureChiasmus()) );
-    connect( mWidget->enableAllWarningsPB, SIGNAL(clicked()), SLOT(slotReenableAllWarningsClicked()) );
+    connect(mWidget->enableAllWarningsPB, &QPushButton::clicked, this, &SecurityPageWarningTab::slotReenableAllWarningsClicked);
 }
 
 SecurityPageWarningTab::~SecurityPageWarningTab()
@@ -480,28 +470,26 @@ SecurityPageSMimeTab::SecurityPageSMimeTab( QWidget * parent )
 
     mConfig = Kleo::CryptoBackendFactory::instance()->config();
 
-    connect( mWidget->CRLRB, SIGNAL(toggled(bool)), this, SLOT(slotEmitChanged()) );
-    connect( mWidget->OCSPRB, SIGNAL(toggled(bool)), this, SLOT(slotEmitChanged()) );
-    connect( mWidget->OCSPResponderURL, SIGNAL(textChanged(QString)), this, SLOT(slotEmitChanged()) );
-    connect( mWidget->OCSPResponderSignature, SIGNAL(changed()), this, SLOT(slotEmitChanged()) );
-    connect( mWidget->doNotCheckCertPolicyCB, SIGNAL(toggled(bool)), this, SLOT(slotEmitChanged()) );
-    connect( mWidget->neverConsultCB, SIGNAL(toggled(bool)), this, SLOT(slotEmitChanged()) );
-    connect( mWidget->fetchMissingCB, SIGNAL(toggled(bool)), this, SLOT(slotEmitChanged()) );
+    connect(mWidget->CRLRB, &QRadioButton::toggled, this, &SecurityPageSMimeTab::slotEmitChanged);
+    connect(mWidget->OCSPRB, &QRadioButton::toggled, this, &SecurityPageSMimeTab::slotEmitChanged);
+    connect(mWidget->OCSPResponderURL, &QLineEdit::textChanged, this, &SecurityPageSMimeTab::slotEmitChanged);
+    connect(mWidget->OCSPResponderSignature, &Kleo::KeyRequester::changed, this, &SecurityPageSMimeTab::slotEmitChanged);
+    connect(mWidget->doNotCheckCertPolicyCB, &QCheckBox::toggled, this, &SecurityPageSMimeTab::slotEmitChanged);
+    connect(mWidget->neverConsultCB, &QCheckBox::toggled, this, &SecurityPageSMimeTab::slotEmitChanged);
+    connect(mWidget->fetchMissingCB, &QCheckBox::toggled, this, &SecurityPageSMimeTab::slotEmitChanged);
 
-    connect( mWidget->ignoreServiceURLCB, SIGNAL(toggled(bool)), this, SLOT(slotEmitChanged()) );
-    connect( mWidget->ignoreHTTPDPCB, SIGNAL(toggled(bool)), this, SLOT(slotEmitChanged()) );
-    connect( mWidget->disableHTTPCB, SIGNAL(toggled(bool)), this, SLOT(slotEmitChanged()) );
-    connect( mWidget->honorHTTPProxyRB, SIGNAL(toggled(bool)), this, SLOT(slotEmitChanged()) );
-    connect( mWidget->useCustomHTTPProxyRB, SIGNAL(toggled(bool)), this, SLOT(slotEmitChanged()) );
-    connect( mWidget->customHTTPProxy, SIGNAL(textChanged(QString)), this, SLOT(slotEmitChanged()) );
-    connect( mWidget->ignoreLDAPDPCB, SIGNAL(toggled(bool)), this, SLOT(slotEmitChanged()) );
-    connect( mWidget->disableLDAPCB, SIGNAL(toggled(bool)), this, SLOT(slotEmitChanged()) );
-    connect( mWidget->customLDAPProxy, SIGNAL(textChanged(QString)), this, SLOT(slotEmitChanged()) );
+    connect(mWidget->ignoreServiceURLCB, &QCheckBox::toggled, this, &SecurityPageSMimeTab::slotEmitChanged);
+    connect(mWidget->ignoreHTTPDPCB, &QCheckBox::toggled, this, &SecurityPageSMimeTab::slotEmitChanged);
+    connect(mWidget->disableHTTPCB, &QCheckBox::toggled, this, &SecurityPageSMimeTab::slotEmitChanged);
+    connect(mWidget->honorHTTPProxyRB, &QRadioButton::toggled, this, &SecurityPageSMimeTab::slotEmitChanged);
+    connect(mWidget->useCustomHTTPProxyRB, &QRadioButton::toggled, this, &SecurityPageSMimeTab::slotEmitChanged);
+    connect(mWidget->customHTTPProxy, &QLineEdit::textChanged, this, &SecurityPageSMimeTab::slotEmitChanged);
+    connect(mWidget->ignoreLDAPDPCB, &QCheckBox::toggled, this, &SecurityPageSMimeTab::slotEmitChanged);
+    connect(mWidget->disableLDAPCB, &QCheckBox::toggled, this, &SecurityPageSMimeTab::slotEmitChanged);
+    connect(mWidget->customLDAPProxy, &QLineEdit::textChanged, this, &SecurityPageSMimeTab::slotEmitChanged);
 
-    connect( mWidget->disableHTTPCB, SIGNAL(toggled(bool)),
-             this, SLOT(slotUpdateHTTPActions()) );
-    connect( mWidget->ignoreHTTPDPCB, SIGNAL(toggled(bool)),
-             this, SLOT(slotUpdateHTTPActions()) );
+    connect(mWidget->disableHTTPCB, &QCheckBox::toggled, this, &SecurityPageSMimeTab::slotUpdateHTTPActions);
+    connect(mWidget->ignoreHTTPDPCB, &QCheckBox::toggled, this, &SecurityPageSMimeTab::slotUpdateHTTPActions);
 
     // Button-group for exclusive radiobuttons
     QButtonGroup* bgHTTPProxy = new QButtonGroup( this );

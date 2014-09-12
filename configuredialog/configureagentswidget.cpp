@@ -67,11 +67,11 @@ ConfigureAgentsWidget::ConfigureAgentsWidget(QWidget *parent)
     mSplitter->addWidget(w);
 
     setLayout(lay);
-    connect(mTreeWidget, SIGNAL(itemClicked(QTreeWidgetItem*,int)), SLOT(slotItemClicked(QTreeWidgetItem*)));
-    connect(mTreeWidget, SIGNAL(currentItemChanged(QTreeWidgetItem*,QTreeWidgetItem*)), SLOT(slotItemClicked(QTreeWidgetItem*)));
-    connect(mTreeWidget, SIGNAL(itemChanged(QTreeWidgetItem*,int)), SIGNAL(changed()));
-    connect(mConfigure, SIGNAL(clicked()), this, SLOT(slotConfigureAgent()));
-    connect(mTreeWidget, SIGNAL(itemDoubleClicked(QTreeWidgetItem*,int)), SLOT(slotConfigureAgent()));
+    connect(mTreeWidget, &QTreeWidget::itemClicked, this, &ConfigureAgentsWidget::slotItemClicked);
+    connect(mTreeWidget, &QTreeWidget::currentItemChanged, this, &ConfigureAgentsWidget::slotItemClicked);
+    connect(mTreeWidget, &QTreeWidget::itemChanged, this, &ConfigureAgentsWidget::changed);
+    connect(mConfigure, &QPushButton::clicked, this, &ConfigureAgentsWidget::slotConfigureAgent);
+    connect(mTreeWidget, &QTreeWidget::itemDoubleClicked, this, &ConfigureAgentsWidget::slotConfigureAgent);
     mAgentPathList = Akonadi::XdgBaseDirs::findAllResourceDirs( "data", QLatin1String( "akonadi/agents" ) );
     initialize();
     readConfig();

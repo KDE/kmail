@@ -78,30 +78,18 @@ MiscPageFolderTab::MiscPageFolderTab( QWidget * parent )
     mMMTab.mExcludeImportantFromExpiry->setWhatsThis(
                 i18n( GlobalSettings::self()->excludeImportantMailFromExpiryItem()->whatsThis().toUtf8() ) );
 
-    connect( mMMTab.mEmptyFolderConfirmCheck, SIGNAL(stateChanged(int)),
-             this, SLOT(slotEmitChanged()) );
-    connect( mMMTab.mExcludeImportantFromExpiry, SIGNAL(stateChanged(int)),
-             this, SLOT(slotEmitChanged()) );
-    connect( mMMTab.mLoopOnGotoUnread, SIGNAL(activated(int)),
-             this, SLOT(slotEmitChanged()) );
-    connect( mMMTab.mActionEnterFolder, SIGNAL(activated(int)),
-             this, SLOT(slotEmitChanged()) );
-    connect( mMMTab.mDelayedMarkTime, SIGNAL(valueChanged(int)),
-             this, SLOT(slotEmitChanged()) );
-    connect( mMMTab.mDelayedMarkAsRead, SIGNAL(toggled(bool)),
-             mMMTab.mDelayedMarkTime, SLOT(setEnabled(bool)));
-    connect( mMMTab.mDelayedMarkAsRead, SIGNAL(toggled(bool)),
-             this , SLOT(slotEmitChanged()) );
-    connect( mMMTab.mShowPopupAfterDnD, SIGNAL(stateChanged(int)),
-             this, SLOT(slotEmitChanged()) );
-    connect( mOnStartupOpenFolder, SIGNAL(folderChanged(Akonadi::Collection)),
-             this, SLOT(slotEmitChanged()) );
-    connect( mMMTab.mEmptyTrashCheck, SIGNAL(stateChanged(int)),
-             this, SLOT(slotEmitChanged()) );
-    connect( mMMTab.mStartUpFolderCheck, SIGNAL(toggled(bool)),
-             this, SLOT(slotEmitChanged()) );
-    connect( mMMTab.mStartUpFolderCheck, SIGNAL(toggled(bool)),
-             mOnStartupOpenFolder, SLOT(setEnabled(bool)) );
+    connect(mMMTab.mEmptyFolderConfirmCheck, &QCheckBox::stateChanged, this, &MiscPageFolderTab::slotEmitChanged);
+    connect(mMMTab.mExcludeImportantFromExpiry, &QCheckBox::stateChanged, this, &MiscPageFolderTab::slotEmitChanged);
+    connect(mMMTab.mLoopOnGotoUnread, static_cast<void (KComboBox::*)(int)>(&KComboBox::activated), this, &MiscPageFolderTab::slotEmitChanged);
+    connect(mMMTab.mActionEnterFolder, static_cast<void (KComboBox::*)(int)>(&KComboBox::activated), this, &MiscPageFolderTab::slotEmitChanged);
+    connect(mMMTab.mDelayedMarkTime, static_cast<void (QSpinBox::*)(int)>(&QSpinBox::valueChanged), this, &MiscPageFolderTab::slotEmitChanged);
+    connect( mMMTab.mDelayedMarkAsRead, SIGNAL(toggled(bool)), mMMTab.mDelayedMarkTime, SLOT(setEnabled(bool)));
+    connect( mMMTab.mDelayedMarkAsRead, SIGNAL(toggled(bool)), this , SLOT(slotEmitChanged()) );
+    connect(mMMTab.mShowPopupAfterDnD, &QCheckBox::stateChanged, this, &MiscPageFolderTab::slotEmitChanged);
+    connect(mOnStartupOpenFolder, &MailCommon::FolderRequester::folderChanged, this, &MiscPageFolderTab::slotEmitChanged);
+    connect(mMMTab.mEmptyTrashCheck, &QCheckBox::stateChanged, this, &MiscPageFolderTab::slotEmitChanged);
+    connect(mMMTab.mStartUpFolderCheck, &QCheckBox::toggled, this, &MiscPageFolderTab::slotEmitChanged);
+    connect(mMMTab.mStartUpFolderCheck, &QCheckBox::toggled, mOnStartupOpenFolder, &MailCommon::FolderRequester::setEnabled);
 }
 
 void MiscPage::FolderTab::doLoadFromGlobalSettings()
@@ -149,7 +137,7 @@ MiscPageAgentSettingsTab::MiscPageAgentSettingsTab( QWidget* parent )
     mConfigureAgent = new ConfigureAgentsWidget;
     l->addWidget( mConfigureAgent );
 
-    connect( mConfigureAgent, SIGNAL(changed()), this, SLOT(slotEmitChanged()) );
+    connect(mConfigureAgent, &ConfigureAgentsWidget::changed, this, &MiscPageAgentSettingsTab::slotEmitChanged);
 }
 
 void MiscPageAgentSettingsTab::doLoadFromGlobalSettings()
@@ -179,7 +167,7 @@ MiscPageInviteTab::MiscPageInviteTab( QWidget* parent )
     QHBoxLayout *l = new QHBoxLayout( this );
     l->setContentsMargins( 0 , 0, 0, 0 );
     l->addWidget( mInvitationUi );
-    connect( mInvitationUi, SIGNAL(changed()), this, SLOT(slotEmitChanged()) );
+    connect(mInvitationUi, &MessageViewer::InvitationSettings::changed, this, &MiscPageInviteTab::slotEmitChanged);
 }
 
 void MiscPage::InviteTab::doLoadFromGlobalSettings()
@@ -220,7 +208,7 @@ MiscPagePrintingTab::MiscPagePrintingTab( QWidget * parent )
     QHBoxLayout *l = new QHBoxLayout( this );
     l->setContentsMargins( 0 , 0, 0, 0 );
     l->addWidget( mPrintingUi );
-    connect( mPrintingUi, SIGNAL(changed()), this, SLOT(slotEmitChanged()) );
+    connect(mPrintingUi, &MessageViewer::PrintingSettings::changed, this, &MiscPagePrintingTab::slotEmitChanged);
 }
 
 void MiscPagePrintingTab::doLoadFromGlobalSettings()

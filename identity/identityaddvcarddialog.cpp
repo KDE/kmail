@@ -41,8 +41,8 @@ IdentityAddVcardDialog::IdentityAddVcardDialog(const QStringList &shadowIdentiti
     QPushButton *okButton = buttonBox->button(QDialogButtonBox::Ok);
     okButton->setDefault(true);
     okButton->setShortcut(Qt::CTRL | Qt::Key_Return);
-    connect(buttonBox, SIGNAL(accepted()), this, SLOT(accept()));
-    connect(buttonBox, SIGNAL(rejected()), this, SLOT(reject()));
+    connect(buttonBox, &QDialogButtonBox::accepted, this, &IdentityAddVcardDialog::accept);
+    connect(buttonBox, &QDialogButtonBox::rejected, this, &IdentityAddVcardDialog::reject);
     okButton->setDefault(true);
     setModal( true );
 
@@ -87,10 +87,8 @@ IdentityAddVcardDialog::IdentityAddVcardDialog(const QStringList &shadowIdentiti
     hlay->addWidget( label );
     hlay->addWidget( mVCardPath );
 
-    connect( fromExistingVCard, SIGNAL(toggled(bool)),
-             label, SLOT(setEnabled(bool)) );
-    connect( fromExistingVCard, SIGNAL(toggled(bool)),
-             mVCardPath, SLOT(setEnabled(bool)) );
+    connect(fromExistingVCard, &QRadioButton::toggled, label, &QLabel::setEnabled);
+    connect(fromExistingVCard, &QRadioButton::toggled, mVCardPath, &KUrlRequester::setEnabled);
 
 
     // row 4: radio button
@@ -118,10 +116,8 @@ IdentityAddVcardDialog::IdentityAddVcardDialog(const QStringList &shadowIdentiti
 
     // enable/disable combobox and label depending on the third radio
     // button's state:
-    connect( duplicateExistingVCard, SIGNAL(toggled(bool)),
-             label, SLOT(setEnabled(bool)) );
-    connect( duplicateExistingVCard, SIGNAL(toggled(bool)),
-             mComboBox, SLOT(setEnabled(bool)) );
+    connect(duplicateExistingVCard, &QRadioButton::toggled, label, &QLabel::setEnabled);
+    connect(duplicateExistingVCard, &QRadioButton::toggled, mComboBox, &KComboBox::setEnabled);
     resize(350, 130);
 }
 

@@ -241,11 +241,9 @@ KMComposeWin::KMComposeWin( const KMime::Message::Ptr &aMsg, bool lastSignState,
     mComposerBase = new MessageComposer::ComposerViewBase( this, this );
     mComposerBase->setIdentityManager( kmkernel->identityManager() );
 
-    connect( mComposerBase, SIGNAL(disableHtml(MessageComposer::ComposerViewBase::Confirmation)),
-             this, SLOT(disableHtml(MessageComposer::ComposerViewBase::Confirmation)) );
+    connect(mComposerBase, &MessageComposer::ComposerViewBase::disableHtml, this, &KMComposeWin::disableHtml);
 
-    connect( mComposerBase, SIGNAL(enableHtml()),
-             this, SLOT(enableHtml()) );
+    connect(mComposerBase, &MessageComposer::ComposerViewBase::enableHtml, this, &KMComposeWin::enableHtml);
     connect(mComposerBase, &MessageComposer::ComposerViewBase::failed, this, &KMComposeWin::slotSendFailed);
     connect(mComposerBase, &MessageComposer::ComposerViewBase::sentSuccessfully, this, &KMComposeWin::slotSendSuccessful);
     connect(mComposerBase, &MessageComposer::ComposerViewBase::modified, this, &KMComposeWin::setModified);
@@ -296,8 +294,7 @@ KMComposeWin::KMComposeWin( const KMime::Message::Ptr &aMsg, bool lastSignState,
 
 
     mFccFolder->setToolTip( i18n( "Select the sent-mail folder where a copy of this message will be saved" ) );
-    connect( mFccFolder, SIGNAL(folderChanged(Akonadi::Collection)),
-             this, SLOT(slotFccFolderChanged(Akonadi::Collection)) );
+    connect(mFccFolder, &MailCommon::FolderRequester::folderChanged, this, &KMComposeWin::slotFccFolderChanged);
 
     MailTransport::TransportComboBox* transport = new MailTransport::TransportComboBox( mHeadersArea );
     transport->setToolTip( i18n( "Select the outgoing account to use for sending this message" ) );
@@ -312,8 +309,7 @@ KMComposeWin::KMComposeWin( const KMime::Message::Ptr &aMsg, bool lastSignState,
     mEdtReplyTo->setObjectName( QLatin1String("replyToLine") );
     mEdtReplyTo->setRecentAddressConfig( MessageComposer::MessageComposerSettings::self()->config() );
     mEdtReplyTo->setToolTip( i18n( "Set the \"Reply-To:\" email address for this message" ) );
-    connect( mEdtReplyTo, SIGNAL(completionModeChanged(KCompletion::CompletionMode)),
-             SLOT(slotCompletionModeChanged(KCompletion::CompletionMode)) );
+    connect(mEdtReplyTo, &MessageComposer::ComposerLineEdit::completionModeChanged, this, &KMComposeWin::slotCompletionModeChanged);
 
     MessageComposer::RecipientsEditor* recipientsEditor = new MessageComposer::RecipientsEditor( mHeadersArea );
     recipientsEditor->setRecentAddressConfig( MessageComposer::MessageComposerSettings::self()->config() );
@@ -364,8 +360,7 @@ KMComposeWin::KMComposeWin( const KMime::Message::Ptr &aMsg, bool lastSignState,
     vbox->setMargin(0);
     KMComposerEditor* editor = new KMComposerEditor( this, mCryptoStateIndicatorWidget );
 
-    connect( editor, SIGNAL(textChanged()),
-             this, SLOT(slotEditorTextChanged()) );
+    connect(editor, &KMComposerEditor::textChanged, this, &KMComposeWin::slotEditorTextChanged);
     mComposerBase->setEditor( editor );
     vbox->addWidget( mCryptoStateIndicatorWidget );
     vbox->addWidget( editor );
@@ -378,15 +373,11 @@ KMComposeWin::KMComposeWin( const KMime::Message::Ptr &aMsg, bool lastSignState,
     editor->setAcceptDrops( true );
     connect(sigController, SIGNAL(signatureAdded()), mComposerBase->editor(), SLOT(startExternalEditor()));
 
-    connect( mDictionaryCombo, SIGNAL(dictionaryChanged(QString)),
-             this, SLOT(slotSpellCheckingLanguage(QString)) );
+    connect(mDictionaryCombo, &Sonnet::DictionaryComboBox::dictionaryChanged, this, &KMComposeWin::slotSpellCheckingLanguage);
 
-    connect( editor, SIGNAL(languageChanged(QString)),
-             this, SLOT(slotLanguageChanged(QString)) );
-    connect( editor, SIGNAL(spellCheckStatus(QString)),
-             this, SLOT(slotSpellCheckingStatus(QString)) );
-    connect( editor, SIGNAL(insertModeChanged()),
-             this, SLOT(slotOverwriteModeChanged()) );
+    connect(editor, &KMComposerEditor::languageChanged, this, &KMComposeWin::slotLanguageChanged);
+    connect(editor, &KMComposerEditor::spellCheckStatus, this, &KMComposeWin::slotSpellCheckingStatus);
+    connect(editor, &KMComposerEditor::insertModeChanged, this, &KMComposeWin::slotOverwriteModeChanged);
     connect(editor, &KMComposerEditor::spellCheckingFinished, this, &KMComposeWin::slotCheckSendNow);
     mSnippetWidget = new SnippetWidget( editor, actionCollection(), mSnippetSplitter );
     mSnippetWidget->setVisible( GlobalSettings::self()->showSnippetManager() );
@@ -432,7 +423,7 @@ KMComposeWin::KMComposeWin( const KMime::Message::Ptr &aMsg, bool lastSignState,
         m_verifyMissingAttachment->start(1000*5);
         connect(m_verifyMissingAttachment, &QTimer::timeout, this, &KMComposeWin::slotVerifyMissingAttachmentTimeout);
     }
-    connect( attachmentController, SIGNAL(fileAttached()), mAttachmentMissing, SLOT(slotFileAttached()) );
+    connect(attachmentController, &KMail::AttachmentController::fileAttached, mAttachmentMissing, &AttachmentMissingWarning::slotFileAttached);
 
     mExternalEditorWarning = new ExternalEditorWarning(this);
     v->addWidget(mExternalEditorWarning);
@@ -446,19 +437,15 @@ KMComposeWin::KMComposeWin( const KMime::Message::Ptr &aMsg, bool lastSignState,
 
     applyMainWindowSettings( KMKernel::self()->config()->group( "Composer") );
 
-    connect( mEdtSubject, SIGNAL(textChanged()),
-             SLOT(slotUpdWinTitle()) );
+    connect(mEdtSubject, &PimCommon::LineEditWithAutoCorrection::textChanged, this, &KMComposeWin::slotUpdWinTitle);
     connect( identity, SIGNAL(identityChanged(uint)),
              SLOT(slotIdentityChanged(uint)) );
     connect( kmkernel->identityManager(), SIGNAL(changed(uint)),
              SLOT(slotIdentityChanged(uint)) );
 
-    connect( mEdtFrom, SIGNAL(completionModeChanged(KCompletion::CompletionMode)),
-             SLOT(slotCompletionModeChanged(KCompletion::CompletionMode)) );
-    connect( kmkernel->folderCollectionMonitor(), SIGNAL(collectionRemoved(Akonadi::Collection)),
-             SLOT(slotFolderRemoved(Akonadi::Collection)) );
-    connect( kmkernel, SIGNAL(configChanged()),
-             this, SLOT(slotConfigChanged()) );
+    connect(mEdtFrom, &MessageComposer::ComposerLineEdit::completionModeChanged, this, &KMComposeWin::slotCompletionModeChanged);
+    connect( kmkernel->folderCollectionMonitor(), SIGNAL(collectionRemoved(Akonadi::Collection)), SLOT(slotFolderRemoved(Akonadi::Collection)) );
+    connect( kmkernel, SIGNAL(configChanged()), this, SLOT(slotConfigChanged()) );
 
     mMainWidget->resize( 480, 510 );
     setCentralWidget( mMainWidget );
