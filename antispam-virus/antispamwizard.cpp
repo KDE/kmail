@@ -122,26 +122,22 @@ AntiSpamWizard::AntiSpamWizard( WizardMode mode,
                              isAntiSpam
                              ? i18n( "Welcome to the KMail Anti-Spam Wizard" )
                              : i18n( "Welcome to the KMail Anti-Virus Wizard" ) );
-    connect( mInfoPage, SIGNAL(selectionChanged()),
-             this, SLOT(checkProgramsSelections()) );
+    connect(mInfoPage, &ASWizInfoPage::selectionChanged, this, &AntiSpamWizard::checkProgramsSelections);
 
     if ( isAntiSpam ) {
         mSpamRulesPage = new ASWizSpamRulesPage( 0, QString() );
         mSpamRulesPageItem = addPage( mSpamRulesPage, i18n( "Options to fine-tune the handling of spam messages" ));
-        connect( mSpamRulesPage, SIGNAL(selectionChanged()),
-                 this, SLOT(slotBuildSummary()) );
+        connect(mSpamRulesPage, &ASWizSpamRulesPage::selectionChanged, this, &AntiSpamWizard::slotBuildSummary);
 
         mSummaryPage = new ASWizSummaryPage( 0, QString() );
         mSummaryPageItem = addPage( mSummaryPage, i18n( "Summary of changes to be made by this wizard" ) );
     } else {
         mVirusRulesPage = new ASWizVirusRulesPage( 0, QString() );
         mVirusRulesPageItem = addPage( mVirusRulesPage, i18n( "Options to fine-tune the handling of virus messages" ));
-        connect( mVirusRulesPage, SIGNAL(selectionChanged()),
-                 this, SLOT(checkVirusRulesSelections()) );
+        connect(mVirusRulesPage, &ASWizVirusRulesPage::selectionChanged, this, &AntiSpamWizard::checkVirusRulesSelections);
     }
 
-    connect( button(QDialogButtonBox::Help), SIGNAL(clicked()),
-             this, SLOT(slotHelpClicked()) );
+    connect(button(QDialogButtonBox::Help), &QPushButton::clicked, this, &AntiSpamWizard::slotHelpClicked);
 
     QTimer::singleShot( 0, this, SLOT(checkToolAvailability()) );
 }
@@ -1064,6 +1060,7 @@ ASWizSpamRulesPage::ASWizSpamRulesPage( QWidget * parent, const QString &name)
     connect( mFolderReqForUnsureFolder, SIGNAL(folderChanged(Akonadi::Collection)),
              this, SLOT(processSelectionChange(Akonadi::Collection)) );
 
+
     mMarkRules->setChecked( true );
     mMoveSpamRules->setChecked( true );
 }
@@ -1204,14 +1201,10 @@ ASWizVirusRulesPage::ASWizVirusRulesPage( QWidget * parent, const QString & name
     mFolderTree->disableContextMenuAndExtraColumn();
     grid->addWidget( mFolderTree, 3, 0 );
 
-    connect( mPipeRules, SIGNAL(clicked()),
-             this, SLOT(processSelectionChange()) );
-    connect( mMoveRules, SIGNAL(clicked()),
-             this, SLOT(processSelectionChange()) );
-    connect( mMarkRules, SIGNAL(clicked()),
-             this, SLOT(processSelectionChange()) );
-    connect( mMoveRules, SIGNAL(toggled(bool)),
-             mMarkRules, SLOT(setEnabled(bool)) );
+    connect(mPipeRules, &QCheckBox::clicked, this, &ASWizVirusRulesPage::processSelectionChange);
+    connect(mMoveRules, &QCheckBox::clicked, this, &ASWizVirusRulesPage::processSelectionChange);
+    connect(mMarkRules, &QCheckBox::clicked, this, &ASWizVirusRulesPage::processSelectionChange);
+    connect(mMoveRules, &QCheckBox::toggled, mMarkRules, &QCheckBox::setEnabled);
 
 }
 

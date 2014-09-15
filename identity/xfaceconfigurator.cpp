@@ -124,16 +124,11 @@ XFaceConfigurator::XFaceConfigurator( QWidget * parent )
     QStackedWidget * widgetStack = new QStackedWidget( this );
     widgetStack->setEnabled( false ); // since !mEnableCheck->isChecked()
     vlay->addWidget( widgetStack, 1 );
-    connect( sourceCombo, SIGNAL(highlighted(int)),
-             widgetStack, SLOT(setCurrentIndex(int)) );
-    connect( sourceCombo, SIGNAL(activated(int)),
-             widgetStack, SLOT(setCurrentIndex(int)) );
-    connect( mEnableCheck, SIGNAL(toggled(bool)),
-             sourceCombo, SLOT(setEnabled(bool)) );
-    connect( mEnableCheck, SIGNAL(toggled(bool)),
-             widgetStack, SLOT(setEnabled(bool)) );
-    connect( mEnableCheck, SIGNAL(toggled(bool)),
-             label, SLOT(setEnabled(bool)) );
+    connect(sourceCombo, static_cast<void (KComboBox::*)(int)>(&KComboBox::highlighted), widgetStack, &QStackedWidget::setCurrentIndex);
+    connect(sourceCombo, static_cast<void (KComboBox::*)(int)>(&KComboBox::activated), widgetStack, &QStackedWidget::setCurrentIndex);
+    connect(mEnableCheck, &QCheckBox::toggled, sourceCombo, &KComboBox::setEnabled);
+    connect(mEnableCheck, &QCheckBox::toggled, widgetStack, &QStackedWidget::setEnabled);
+    connect(mEnableCheck, &QCheckBox::toggled, label, &QLabel::setEnabled);
     // The focus might be still in the widget that is disabled
     connect( mEnableCheck, SIGNAL(clicked()),
              mEnableCheck, SLOT(setFocus()) );
@@ -196,7 +191,7 @@ XFaceConfigurator::XFaceConfigurator( QWidget * parent )
     page_vlay->addWidget( label2 );
 
 
-    connect(mTextEdit, SIGNAL(textChanged()), this, SLOT(slotUpdateXFace()));
+    connect(mTextEdit, &PimCommon::PlainTextEditor::textChanged, this, &XFaceConfigurator::slotUpdateXFace);
 }
 
 XFaceConfigurator::~XFaceConfigurator()
@@ -259,7 +254,7 @@ void XFaceConfigurator::slotSelectFromAddressbook()
     Akonadi::ContactSearchJob *job = new Akonadi::ContactSearchJob( this );
     job->setLimit( 1 );
     job->setQuery( Akonadi::ContactSearchJob::Email, email, Akonadi::ContactSearchJob::ExactMatch );
-    connect( job, SIGNAL(result(KJob*)), SLOT(slotDelayedSelectFromAddressbook(KJob*)) );
+    connect(job, &Akonadi::ContactSearchJob::result, this, &XFaceConfigurator::slotDelayedSelectFromAddressbook);
 }
 
 void XFaceConfigurator::slotDelayedSelectFromAddressbook( KJob *job )
