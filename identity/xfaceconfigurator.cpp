@@ -133,6 +133,7 @@ XFaceConfigurator::XFaceConfigurator( QWidget * parent )
     connect( mEnableCheck, SIGNAL(clicked()),
              mEnableCheck, SLOT(setFocus()) );
 
+
     int pageno = 0;
     // page 0: create X-Face from image file or address book entry
     page = new QWidget( widgetStack );
@@ -149,16 +150,14 @@ XFaceConfigurator::XFaceConfigurator( QWidget * parent )
                      "A light background helps improve the result." ) );
     mFromFileBtn->setAutoDefault( false );
     page_vlay->addWidget( mFromFileBtn, 1 );
-    connect( mFromFileBtn, SIGNAL(released()),
-             this, SLOT(slotSelectFile()) );
+    connect(mFromFileBtn, &QPushButton::released, this, &XFaceConfigurator::slotSelectFile);
     mFromAddrbkBtn = new QPushButton( i18n("Set From Address Book"), page );
     mFromAddrbkBtn->setWhatsThis(
                 i18n( "You can use a scaled-down version of the picture "
                       "you have set in your address book entry." ) );
     mFromAddrbkBtn->setAutoDefault( false );
     page_vlay->addWidget( mFromAddrbkBtn, 1 );
-    connect( mFromAddrbkBtn, SIGNAL(released()),
-             this, SLOT(slotSelectFromAddressbook()) );
+    connect(mFromAddrbkBtn, &QPushButton::released, this, &XFaceConfigurator::slotSelectFromAddressbook);
     label1 = new QLabel( i18n("<qt>KMail can send a small (48x48 pixels), low-quality, "
                               "monochrome picture with every message. "
                               "For example, this could be a picture of you or a glyph. "

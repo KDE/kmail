@@ -136,8 +136,7 @@ IdentityListView::IdentityListView( QWidget *parent )
     setColumnWidth( 0, 175 );
 
     setContextMenuPolicy( Qt::CustomContextMenu );
-    connect( this, SIGNAL(customContextMenuRequested(QPoint)),
-             this, SLOT(slotCustomContextMenuRequested(QPoint)) );
+    connect(this, &IdentityListView::customContextMenuRequested, this, &IdentityListView::slotCustomContextMenuRequested);
 }
 
 void IdentityListView::editItem( QTreeWidgetItem *item, int column )
