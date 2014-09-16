@@ -39,6 +39,7 @@
 #include <assert.h>
 #include <QDialogButtonBox>
 #include <KConfigGroup>
+#include <KHelpClient>
 #include <QPushButton>
 
 using namespace KMail;
@@ -56,10 +57,10 @@ NewIdentityDialog::NewIdentityDialog( KIdentityManagement::IdentityManager* mana
     mOkButton = buttonBox->button(QDialogButtonBox::Ok);
     mOkButton->setDefault(true);
     mOkButton->setShortcut(Qt::CTRL | Qt::Key_Return);
-    connect(buttonBox, SIGNAL(accepted()), this, SLOT(accept()));
-    connect(buttonBox, SIGNAL(rejected()), this, SLOT(reject()));
-    
-    //PORT QT5 setHelp( QString::fromLatin1("configure-identity-newidentitydialog") );
+    connect(buttonBox, &QDialogButtonBox::accepted, this, &NewIdentityDialog::accept);
+    connect(buttonBox, &QDialogButtonBox::rejected, this, &NewIdentityDialog::reject);
+    connect(buttonBox->button(QDialogButtonBox::Help), SIGNAL(clicked()), this, SLOT(slotHelp()));
+
     QWidget *page = new QWidget( this );
     mainLayout->addWidget( page );
     mainLayout->addWidget(buttonBox);
@@ -125,6 +126,12 @@ NewIdentityDialog::NewIdentityDialog( KIdentityManagement::IdentityManager* mana
     
     resize(400,180);
 }
+
+void NewIdentityDialog::slotHelp()
+{
+    KHelpClient::invokeHelp(QString::fromLatin1("configure-identity-newidentitydialog"), QLatin1String("kmail"));
+}
+
 
 NewIdentityDialog::DuplicateMode NewIdentityDialog::duplicateMode() const
 {

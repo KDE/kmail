@@ -87,6 +87,7 @@ using MailTransport::TransportManager;
 #include <QTabWidget>
 #include <QIcon>
 #include <sonnet/dictionarycombobox.h>
+#include <KHelpClient>
 
 // Qt headers:
 #include <QLabel>
@@ -127,6 +128,7 @@ IdentityDialog::IdentityDialog( QWidget * parent )
 
 #ifndef KDEPIM_MOBILE_UI
     buttonBox = new QDialogButtonBox(QDialogButtonBox::Ok|QDialogButtonBox::Cancel|QDialogButtonBox::Help);
+    connect(buttonBox->button(QDialogButtonBox::Help), SIGNAL(clicked()), this, SLOT(slotHelp()));
 #else
     buttonBox = new QDialogButtonBox(QDialogButtonBox::Ok|QDialogButtonBox::Cancel);
 #endif
@@ -499,8 +501,7 @@ IdentityDialog::IdentityDialog( QWidget * parent )
     mTransportCombo = new TransportComboBox( tab );
     mTransportCombo->setEnabled( false ); // since !mTransportCheck->isChecked()
     glay->addWidget( mTransportCombo, row, 1 );
-    connect( mTransportCheck, SIGNAL(toggled(bool)),
-             mTransportCombo, SLOT(setEnabled(bool)) );
+    connect( mTransportCheck, SIGNAL(toggled(bool)),mTransportCombo, SLOT(setEnabled(bool)) );
 
     ++row;
     mAttachMyVCard = new QCheckBox(i18n("Attach my vCard to message"), tab);
@@ -579,13 +580,10 @@ IdentityDialog::IdentityDialog( QWidget * parent )
     btns->addWidget( mCopyGlobal );
     vlay->addLayout( btns );
 #ifndef KDEPIM_MOBILE_UI
-    connect( mCustom, SIGNAL(toggled(bool)),
-             mWidget, SLOT(setEnabled(bool)) );
+    connect( mCustom, SIGNAL(toggled(bool)), mWidget, SLOT(setEnabled(bool)) );
 #endif
-    connect( mCustom, SIGNAL(toggled(bool)),
-             mCopyGlobal, SLOT(setEnabled(bool)) );
-    connect( mCopyGlobal, SIGNAL(clicked()),
-             this, SLOT(slotCopyGlobal()) );
+    connect( mCustom, SIGNAL(toggled(bool)), mCopyGlobal, SLOT(setEnabled(bool)) );
+    connect( mCopyGlobal, SIGNAL(clicked()), this, SLOT(slotCopyGlobal()) );
 #ifdef KDEPIM_MOBILE_UI
     tab->hide(); // not yet mobile ready
 #else
@@ -614,15 +612,18 @@ IdentityDialog::IdentityDialog( QWidget * parent )
 #endif
     mNameEdit->setFocus();
 
-    connect( mTabWidget, SIGNAL(currentChanged(int)),
-             SLOT(slotAboutToShow(int)) );
-    //QT5 setHelp( QLatin1String("configure-identity"), QLatin1String("kmail") );
+    connect( mTabWidget, SIGNAL(currentChanged(int)),  SLOT(slotAboutToShow(int)) );
 }
 
 IdentityDialog::~IdentityDialog() {
 #ifndef KCM_KPIMIDENTITIES_STANDALONE
     GlobalSettings::self()->setIdentityDialogSize( size() );
 #endif
+}
+
+void IdentityDialog::slotHelp()
+{
+    KHelpClient::invokeHelp(QLatin1String("configure-identity"), QLatin1String("kmail") );
 }
 
 void IdentityDialog::slotAboutToShow( int index ) {

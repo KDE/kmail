@@ -103,7 +103,7 @@ private slots:
     void slotEditVcard();
     void slotRefreshDefaultDomainName();
     void slotVCardRemoved();
-
+    void slotHelp();
 private:
     bool checkFolderExists( const QString & folder, const QString & msg );
     bool validateAddresses( const QString & addresses );

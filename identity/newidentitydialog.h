@@ -52,6 +52,8 @@ public:
 protected slots:
     void slotEnableOK( const QString & );
 
+private slots:
+    void slotHelp();
 private:
     KLineEdit  *mLineEdit;
     KComboBox  *mComboBox;
