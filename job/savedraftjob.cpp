@@ -43,7 +43,7 @@ void SaveDraftJob::start()
     status.setRead();
     item.setFlags( status.statusFlags() );
     Akonadi::ItemCreateJob *createJob = new Akonadi::ItemCreateJob( item, mCollection );
-    connect( createJob, SIGNAL(result(KJob*)), SLOT(slotStoreDone(KJob*)) );
+    connect(createJob, &Akonadi::ItemCreateJob::result, this, &SaveDraftJob::slotStoreDone);
 }
 
 void SaveDraftJob::slotStoreDone(KJob *job)
