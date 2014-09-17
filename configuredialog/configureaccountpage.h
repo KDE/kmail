@@ -24,7 +24,6 @@
 
 class QCheckBox;
 class KComboBox;
-class QLineEdit;
 class OrgFreedesktopAkonadiNewMailNotifierInterface;
 
 

@@ -102,8 +102,6 @@ class FolderRequester;
 namespace PimCommon {
 class CustomToolsWidget;
 class LineEditWithAutoCorrection;
-class StorageServiceAbstract;
-class StorageServiceManager;
 }
 class KMStorageService;
 //-----------------------------------------------------------------------------
