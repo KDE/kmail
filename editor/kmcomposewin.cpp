@@ -858,21 +858,15 @@ void KMComposeWin::rethinkFields( bool fromSlot )
     mGrid->addWidget( mComposerBase->recipientsEditor(), row, 0, 1, 3 );
     ++row;
     if ( showHeaders & HDR_REPLY_TO ) {
-        connect( mEdtReplyTo, SIGNAL(focusDown()), mComposerBase->recipientsEditor(),
-                 SLOT(setFocusTop()) );
-        connect( mComposerBase->recipientsEditor(), SIGNAL(focusUp()), mEdtReplyTo,
-                 SLOT(setFocus()) );
+        connect( mEdtReplyTo, SIGNAL(focusDown()), mComposerBase->recipientsEditor(), SLOT(setFocusTop()) );
+        connect( mComposerBase->recipientsEditor(), SIGNAL(focusUp()), mEdtReplyTo, SLOT(setFocus()) );
     } else {
-        connect( mEdtFrom, SIGNAL(focusDown()), mComposerBase->recipientsEditor(),
-                 SLOT(setFocusTop()) );
-        connect( mComposerBase->recipientsEditor(), SIGNAL(focusUp()), mEdtFrom,
-                 SLOT(setFocus()) );
+        connect( mEdtFrom, SIGNAL(focusDown()), mComposerBase->recipientsEditor(), SLOT(setFocusTop()) );
+        connect( mComposerBase->recipientsEditor(), SIGNAL(focusUp()), mEdtFrom, SLOT(setFocus()) );
     }
 
-    connect( mComposerBase->recipientsEditor(), SIGNAL(focusDown()), mEdtSubject,
-             SLOT(setFocus()) );
-    connect( mEdtSubject, SIGNAL(focusUp()), mComposerBase->recipientsEditor(),
-             SLOT(setFocusBottom()) );
+    connect( mComposerBase->recipientsEditor(), SIGNAL(focusDown()), mEdtSubject, SLOT(setFocus()) );
+    connect( mEdtSubject, SIGNAL(focusUp()), mComposerBase->recipientsEditor(), SLOT(setFocusBottom()) );
 
     prevFocus = mComposerBase->recipientsEditor();
 
@@ -1143,23 +1137,17 @@ void KMComposeWin::setupActions( void )
     actActionNowMenu->setDelayed( true );
     actActionLaterMenu->setDelayed( true );
 
-    connect( actActionNowMenu, SIGNAL(triggered(bool)), this,
-             SLOT(slotSendNow()) );
-    connect( actActionLaterMenu, SIGNAL(triggered(bool)), this,
-             SLOT(slotSendLater()) );
+    connect(actActionNowMenu, &KActionMenu::triggered, this, &KMComposeWin::slotSendNow);
+    connect(actActionLaterMenu, &KActionMenu::triggered, this, &KMComposeWin::slotSendLater);
 
     mActNowMenu = actActionNowMenu->menu();
     mActLaterMenu = actActionLaterMenu->menu();
 
-    connect( mActNowMenu, SIGNAL(triggered(QAction*)), this,
-             SLOT(slotSendNowVia(QAction*)) );
-    connect( mActNowMenu, SIGNAL(aboutToShow()), this,
-             SLOT(getTransportMenu()) );
+    connect(mActNowMenu, &QMenu::triggered, this, &KMComposeWin::slotSendNowVia);
+    connect(mActNowMenu, &QMenu::aboutToShow, this, &KMComposeWin::getTransportMenu);
 
-    connect( mActLaterMenu, SIGNAL(triggered(QAction*)), this,
-             SLOT(slotSendLaterVia(QAction*)) );
-    connect( mActLaterMenu, SIGNAL(aboutToShow()), this,
-             SLOT(getTransportMenu()) );
+    connect(mActLaterMenu, &QMenu::triggered, this, &KMComposeWin::slotSendLaterVia);
+    connect(mActLaterMenu, &QMenu::aboutToShow, this, &KMComposeWin::getTransportMenu);
 
     QAction *action = new QAction( QIcon::fromTheme( QLatin1String("document-save") ), i18n("Save as &Draft"), this );
     actionCollection()->addAction(QLatin1String("save_in_drafts"), action );
@@ -1190,10 +1178,8 @@ void KMComposeWin::setupActions( void )
     mRecentAction = new KRecentFilesAction( QIcon::fromTheme( QLatin1String("document-open") ),
                                             i18n( "&Insert Recent Text File" ), this );
     actionCollection()->addAction(QLatin1String("insert_file_recent"), mRecentAction );
-    connect(mRecentAction, SIGNAL(urlSelected(QUrl)),
-            SLOT(slotInsertRecentFile(QUrl)));
-    connect(mRecentAction, SIGNAL(recentListCleared()),
-            SLOT(slotRecentListFileClear()));
+    connect(mRecentAction, &KRecentFilesAction::urlSelected, this, &KMComposeWin::slotInsertRecentFile);
+    connect(mRecentAction, &KRecentFilesAction::recentListCleared, this, &KMComposeWin::slotRecentListFileClear);
     mRecentAction->loadEntries( KMKernel::self()->config()->group( QString() ) );
 
     action = new QAction(QIcon::fromTheme(QLatin1String("x-office-address-book")), i18n("&Address Book"), this);
@@ -1268,8 +1254,7 @@ void KMComposeWin::setupActions( void )
 
     mSnippetAction = new KToggleAction( i18n("&Snippets"), this );
     actionCollection()->addAction( QLatin1String("snippets"), mSnippetAction );
-    connect( mSnippetAction, SIGNAL(toggled(bool)),
-             mSnippetWidget, SLOT(setVisible(bool)) );
+    connect(mSnippetAction, &KToggleAction::toggled, mSnippetWidget, &SnippetWidget::setVisible);
     mSnippetAction->setChecked( GlobalSettings::self()->showSnippetManager() );
 
     mAutoSpellCheckingAction = new KToggleAction( QIcon::fromTheme( QLatin1String("tools-check-spelling") ),
@@ -1283,13 +1268,10 @@ void KMComposeWin::setupActions( void )
 
     mAutoSpellCheckingAction->setChecked( spellCheckingEnabled );
     slotAutoSpellCheckingToggled( spellCheckingEnabled );
-    connect( mAutoSpellCheckingAction, SIGNAL(toggled(bool)),
-             this, SLOT(slotAutoSpellCheckingToggled(bool)) );
-    connect( mComposerBase->editor(), SIGNAL(checkSpellingChanged(bool)),
-             this, SLOT(slotAutoSpellCheckingToggled(bool)) );
+    connect(mAutoSpellCheckingAction, &KToggleAction::toggled, this, &KMComposeWin::slotAutoSpellCheckingToggled);
+    connect( mComposerBase->editor(), SIGNAL(checkSpellingChanged(bool)), this, SLOT(slotAutoSpellCheckingToggled(bool)) );
 
-    connect( mComposerBase->editor(), SIGNAL(textModeChanged(KRichTextEdit::Mode)),
-             this, SLOT(slotTextModeChanged(KRichTextEdit::Mode)) );
+    connect( mComposerBase->editor(), SIGNAL(textModeChanged(KRichTextEdit::Mode)), this, SLOT(slotTextModeChanged(KRichTextEdit::Mode)) );
     connect( mComposerBase->editor(), SIGNAL(externalEditorClosed()), this, SLOT(slotExternalEditorClosed()));
     connect( mComposerBase->editor(), SIGNAL(externalEditorStarted()), this, SLOT(slotExternalEditorStarted()));
     //these are checkable!!!
