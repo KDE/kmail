@@ -705,10 +705,10 @@ void SearchWindow::enableGUI()
 
     KGuiItem::assign(mSearchButton, searching ? mStopSearchGuiItem : mStartSearchGuiItem );
     if ( searching ) {
-        disconnect( mSearchButton, SIGNAL(clicked()), this, SLOT(slotSearch()) );
+        disconnect(mSearchButton, &QPushButton::clicked, this, &SearchWindow::slotSearch);
         connect(mSearchButton, &QPushButton::clicked, this, &SearchWindow::slotStop);
     } else {
-        disconnect( mSearchButton, SIGNAL(clicked()), this, SLOT(slotStop()) );
+        disconnect(mSearchButton, &QPushButton::clicked, this, &SearchWindow::slotStop);
         connect(mSearchButton, &QPushButton::clicked, this, &SearchWindow::slotSearch);
     }
 }

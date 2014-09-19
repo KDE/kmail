@@ -128,7 +128,7 @@ IdentityDialog::IdentityDialog( QWidget * parent )
 
 #ifndef KDEPIM_MOBILE_UI
     buttonBox = new QDialogButtonBox(QDialogButtonBox::Ok|QDialogButtonBox::Cancel|QDialogButtonBox::Help);
-    connect(buttonBox->button(QDialogButtonBox::Help), SIGNAL(clicked()), this, SLOT(slotHelp()));
+    connect(buttonBox->button(QDialogButtonBox::Help), &QPushButton::clicked, this, &IdentityDialog::slotHelp);
 #else
     buttonBox = new QDialogButtonBox(QDialogButtonBox::Ok|QDialogButtonBox::Cancel);
 #endif
@@ -501,7 +501,7 @@ IdentityDialog::IdentityDialog( QWidget * parent )
     mTransportCombo = new TransportComboBox( tab );
     mTransportCombo->setEnabled( false ); // since !mTransportCheck->isChecked()
     glay->addWidget( mTransportCombo, row, 1 );
-    connect( mTransportCheck, SIGNAL(toggled(bool)),mTransportCombo, SLOT(setEnabled(bool)) );
+    connect(mTransportCheck, &QCheckBox::toggled, mTransportCombo, &MailTransport::TransportComboBox::setEnabled);
 
     ++row;
     mAttachMyVCard = new QCheckBox(i18n("Attach my vCard to message"), tab);
@@ -580,10 +580,10 @@ IdentityDialog::IdentityDialog( QWidget * parent )
     btns->addWidget( mCopyGlobal );
     vlay->addLayout( btns );
 #ifndef KDEPIM_MOBILE_UI
-    connect( mCustom, SIGNAL(toggled(bool)), mWidget, SLOT(setEnabled(bool)) );
+    connect(mCustom, &QCheckBox::toggled, mWidget, &TemplateParser::TemplatesConfiguration::setEnabled);
 #endif
-    connect( mCustom, SIGNAL(toggled(bool)), mCopyGlobal, SLOT(setEnabled(bool)) );
-    connect( mCopyGlobal, SIGNAL(clicked()), this, SLOT(slotCopyGlobal()) );
+    connect(mCustom, &QCheckBox::toggled, mCopyGlobal, &QPushButton::setEnabled);
+    connect(mCopyGlobal, &QPushButton::clicked, this, &IdentityDialog::slotCopyGlobal);
 #ifdef KDEPIM_MOBILE_UI
     tab->hide(); // not yet mobile ready
 #else
@@ -612,7 +612,7 @@ IdentityDialog::IdentityDialog( QWidget * parent )
 #endif
     mNameEdit->setFocus();
 
-    connect( mTabWidget, SIGNAL(currentChanged(int)),  SLOT(slotAboutToShow(int)) );
+    connect(mTabWidget, &QTabWidget::currentChanged, this, &IdentityDialog::slotAboutToShow);
 }
 
 IdentityDialog::~IdentityDialog() {
