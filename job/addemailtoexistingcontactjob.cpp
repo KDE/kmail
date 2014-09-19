@@ -71,4 +71,4 @@ void AddEmailToExistingContactJob::slotAddEmailDone(KJob *job)
     Q_EMIT emitResult();
 }
 
-#include "moc_addemailtoexistingcontactjob.cpp"
+
