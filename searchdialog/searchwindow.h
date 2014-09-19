@@ -27,9 +27,9 @@
 
 #include <AkonadiCore/collection.h>
 #include <AkonadiCore/item.h>
-#include <kdialog.h>
+#include <QDialog>
 #include <kxmlguiclient.h>
-
+#include <KGuiItem>
 #include <QtCore/QTimer>
 
 class QCloseEvent;
@@ -60,7 +60,7 @@ namespace KMail {
    * or moving on them.
    */
 class SearchPatternWarning;
-class SearchWindow: public KDialog, public KXMLGUIClient
+class SearchWindow: public QDialog, public KXMLGUIClient
 {
     Q_OBJECT
 

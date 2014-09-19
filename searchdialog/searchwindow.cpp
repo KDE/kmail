@@ -61,6 +61,9 @@
 #include <QKeyEvent>
 #include <QMenu>
 #include <QVBoxLayout>
+#include <KConfigGroup>
+#include <QDialogButtonBox>
+#include <QPushButton>
 
 using namespace KPIM;
 using namespace MailCommon;
@@ -68,7 +71,7 @@ using namespace MailCommon;
 namespace KMail {
 
 SearchWindow::SearchWindow( KMMainWidget *widget, const Akonadi::Collection &collection )
-    : KDialog( 0 ),
+    : QDialog( 0 ),
       mCloseRequested( false ),
       mSortColumn( 0 ),
       mSortOrder( Qt::AscendingOrder ),
@@ -77,12 +80,15 @@ SearchWindow::SearchWindow( KMMainWidget *widget, const Akonadi::Collection &col
       mKMMainWidget( widget ),
       mAkonadiStandardAction( 0 )
 {
-    setCaption( i18n( "Find Messages" ) );
+    setWindowTitle( i18n( "Find Messages" ) );
 
     KWindowSystem::setIcons( winId(), qApp->windowIcon().pixmap( IconSize( KIconLoader::Desktop ),
                                                                  IconSize( KIconLoader::Desktop ) ),
                              qApp->windowIcon().pixmap( IconSize( KIconLoader::Small ),
                                                         IconSize( KIconLoader::Small ) ) );
+
+    QVBoxLayout *mainLayout = new QVBoxLayout;
+    setLayout(mainLayout);
 
     QWidget *topWidget = new QWidget;
     QVBoxLayout *lay = new QVBoxLayout;
@@ -90,7 +96,7 @@ SearchWindow::SearchWindow( KMMainWidget *widget, const Akonadi::Collection &col
     topWidget->setLayout(lay);
     mSearchPatternWidget = new SearchPatternWarning;
     lay->addWidget(mSearchPatternWidget);
-    setMainWidget( topWidget );
+    mainLayout->addWidget(topWidget);
 
     QWidget *searchWidget = new QWidget( this );
     mUi.setupUi( searchWidget );
@@ -98,7 +104,6 @@ SearchWindow::SearchWindow( KMMainWidget *widget, const Akonadi::Collection &col
     lay->addWidget(searchWidget);
 
 
-    setButtons( None );
     mStartSearchGuiItem = KGuiItem( i18nc( "@action:button Search for messages", "&Search" ), QLatin1String("edit-find") );
     mStopSearchGuiItem = KStandardGuiItem::stop();
     mSearchButton = new QPushButton;
@@ -219,7 +224,7 @@ SearchWindow::SearchWindow( KMMainWidget *widget, const Akonadi::Collection &col
 
     connect(mSearchButton, &QPushButton::clicked, this, &SearchWindow::slotSearch);
     connect(this, &SearchWindow::finished, this, &SearchWindow::deleteLater);
-    connect(this, &SearchWindow::closeClicked, this, &SearchWindow::slotClose);
+    connect(mUi.mButtonBox->button(QDialogButtonBox::Close), &QPushButton::clicked, this, &SearchWindow::slotClose);
 
     // give focus to the value field of the first search rule
     RegExpLineEdit* r = mUi.mPatternEdit->findChild<RegExpLineEdit*>( QLatin1String("regExpLineEdit") );
@@ -373,7 +378,7 @@ void SearchWindow::keyPressEvent( QKeyEvent *event )
         return;
     }
 
-    KDialog::keyPressEvent( event );
+    QDialog::keyPressEvent( event );
 }
 
 void SearchWindow::slotFolderActivated()
@@ -623,7 +628,7 @@ void SearchWindow::closeEvent( QCloseEvent *event )
         mSearchJob = 0;
         QTimer::singleShot( 0, this, SLOT(slotClose()) );
     } else {
-        KDialog::closeEvent( event );
+        QDialog::closeEvent( event );
     }
 }
 
