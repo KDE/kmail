@@ -6,6 +6,7 @@
   <name>KMail</name>
   <name xml:lang="ca">KMail</name>
   <name xml:lang="cs">KMail</name>
+  <name xml:lang="de">KMail</name>
   <name xml:lang="en-GB">KMail</name>
   <name xml:lang="es">KMail</name>
   <name xml:lang="fr">KMail</name>
@@ -64,6 +65,7 @@
     <ul>
       <li>Supports the standard mail protocols IMAP, POP3 and SMTP.</li>
       <li xml:lang="ca">Implementa els protocols de correu estàndards: IMAP, POP3 i SMTP</li>
+      <li xml:lang="de">Unterstützt die E-Mail-Standardprotokoll IMAP, POP3 und SMTP.</li>
       <li xml:lang="en-GB">Supports the standard mail protocols IMAP, POP3 and SMTP.</li>
       <li xml:lang="es">Implementa los protocolos de correo estándar: IMAP, POP3 y SMTP.</li>
       <li xml:lang="fr">Prise en charge des protocoles standards de messagerie IMAP, POP3 et SMTP.</li>
@@ -149,6 +151,7 @@
       <li xml:lang="x-test">xxNative support for inline OpenPGP, PGP/MIME, and S/MIME.xx</li>
       <li>Reading and writing of HTML mail.</li>
       <li xml:lang="ca">Lectura i escriptura d'un correu HTML</li>
+      <li xml:lang="de">Lesen und Schreiben von HTML-E-Mails.</li>
       <li xml:lang="en-GB">Reading and writing of HTML mail.</li>
       <li xml:lang="es">Lectura y escritura de correo HTML.</li>
       <li xml:lang="fr">Lecture et écriture de courrier électronique en HTML.</li>
@@ -404,6 +407,7 @@
       <li xml:lang="x-test">xxSupports X-Face (b/w pictures in messages)xx</li>
       <li>Compression of attachments</li>
       <li xml:lang="ca">La compressió dels adjunts</li>
+      <li xml:lang="de">Komprimierung von Anhängen</li>
       <li xml:lang="en-GB">Compression of attachments</li>
       <li xml:lang="es">Compresión de adjuntos</li>
       <li xml:lang="fr">Compression des pièces jointes</li>
@@ -421,6 +425,7 @@
       <li xml:lang="x-test">xxCompression of attachmentsxx</li>
       <li>KMail supports Groupware functionality.</li>
       <li xml:lang="ca">El KMail implementa el treball en grup (groupware)</li>
+      <li xml:lang="de">KMail unterstützt Groupware-Funktionalität.</li>
       <li xml:lang="en-GB">KMail supports Groupware functionality.</li>
       <li xml:lang="es">KMail implementa la funcionalidad de colaboración.</li>
       <li xml:lang="fr">Fonctionnalités de logiciel de groupe de travail.</li>
