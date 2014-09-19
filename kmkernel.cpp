@@ -1829,23 +1829,12 @@ void KMKernel::instanceStatusChanged( const Akonadi::AgentInstance &instance )
 
 void KMKernel::agentInstanceBroken( const Akonadi::AgentInstance &instance )
 {
-#if 0 //QT5
     const QString summary = i18n( "Resource %1 is broken.",  instance.name() );
-    if( xmlGuiInstance().isValid() ) {
-        KNotification::event( QLatin1String("akonadi-resource-broken"),
-                              summary,
-                              QPixmap(),
-                              0,
-                              KNotification::CloseOnTimeout,
-                              xmlGuiInstance() );
-    } else {
-        KNotification::event( QLatin1String("akonadi-resource-broken"),
+    KNotification::event( QLatin1String("akonadi-resource-broken"),
                               summary,
                               QPixmap(),
                               0,
                               KNotification::CloseOnTimeout );
-    }
-#endif
 }
 
 void KMKernel::slotProgressItemCompletedOrCanceled( KPIM::ProgressItem *item )
@@ -2003,44 +1992,22 @@ const QAbstractItemModel* KMKernel::treeviewModelSelection()
 
 void KMKernel::slotInstanceWarning(const Akonadi::AgentInstance &instance , const QString &message)
 {
-#if 0 //QT5
     const QString summary = i18nc( "<source>: <error message>", "%1: %2", instance.name(), message );
-    if( xmlGuiInstance().isValid() ) {
-        KNotification::event( QLatin1String("akonadi-instance-warning"),
-                              summary,
-                              QPixmap(),
-                              0,
-                              KNotification::CloseOnTimeout,
-                              xmlGuiInstance() );
-    } else {
-        KNotification::event( QLatin1String("akonadi-instance-warning"),
+    KNotification::event( QLatin1String("akonadi-instance-warning"),
                               summary,
                               QPixmap(),
                               0,
                               KNotification::CloseOnTimeout );
-    }
-#endif
 }
 
 void KMKernel::slotInstanceError(const Akonadi::AgentInstance &instance, const QString &message)
 {
-#if 0 //QT5
     const QString summary = i18nc( "<source>: <error message>", "%1: %2", instance.name(), message );
-    if( xmlGuiInstance().isValid() ) {
-        KNotification::event( QLatin1String("akonadi-instance-error"),
-                              summary,
-                              QPixmap(),
-                              0,
-                              KNotification::CloseOnTimeout,
-                              xmlGuiInstance() );
-    } else {
-        KNotification::event( QLatin1String("akonadi-instance-error"),
+    KNotification::event( QLatin1String("akonadi-instance-error"),
                               summary,
                               QPixmap(),
                               0,
                               KNotification::CloseOnTimeout );
-    }
-#endif
 }
 
 
