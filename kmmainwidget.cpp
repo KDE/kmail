@@ -3096,7 +3096,7 @@ void KMMainWidget::setupActions()
     }
 
     {
-        QAction *action = new QAction(i18n("Message Delayed..."), this);
+        QAction *action = new QAction(i18n("Delayed Messages..."), this);
         actionCollection()->addAction(QLatin1String("message_delayed"), action );
         connect(action, &QAction::triggered, this, &KMMainWidget::slotConfigureSendLater);
     }
