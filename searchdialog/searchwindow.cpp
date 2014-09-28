@@ -156,12 +156,10 @@ SearchWindow::SearchWindow( KMMainWidget *widget, const Akonadi::Collection &col
     }
 
     mUi.mPatternEdit->setSearchPattern( &mSearchPattern );
-    connect( mUi.mPatternEdit, SIGNAL(returnPressed()),
-             this, SLOT(slotSearch()) );
+    connect(mUi.mPatternEdit, &KMail::KMailSearchPatternEdit::returnPressed, this, &SearchWindow::slotSearch);
 
     // enable/disable widgets depending on radio buttons:
-    connect( mUi.mChkbxAllFolders, SIGNAL(toggled(bool)),
-             this, SLOT(setEnabledSearchButton(bool)) );
+    connect(mUi.mChkbxAllFolders, &QRadioButton::toggled, this, &SearchWindow::setEnabledSearchButton);
 
     mUi.mLbxMatches->setXmlGuiClient( mKMMainWidget->guiClient() );
 
@@ -180,14 +178,12 @@ SearchWindow::SearchWindow( KMMainWidget *widget, const Akonadi::Collection &col
   */
     mUi.mLbxMatches->setSortingEnabled( true );
 
-    connect( mUi.mLbxMatches, SIGNAL(customContextMenuRequested(QPoint)),
-             this, SLOT(slotContextMenuRequested(QPoint)) );
+    connect(mUi.mLbxMatches, &Akonadi::EntityTreeView::customContextMenuRequested, this, &SearchWindow::slotContextMenuRequested);
     connect( mUi.mLbxMatches, SIGNAL(doubleClicked(Akonadi::Item)),
              this, SLOT(slotViewMsg(Akonadi::Item)) );
     connect( mUi.mLbxMatches, SIGNAL(currentChanged(Akonadi::Item)),
              this, SLOT(slotCurrentChanged(Akonadi::Item)) );
-    connect( mUi.selectMultipleFolders, SIGNAL(clicked()),
-             this, SLOT(slotSelectMultipleFolders()));
+    connect(mUi.selectMultipleFolders, &QPushButton::clicked, this, &SearchWindow::slotSelectMultipleFolders);
 
     connect( KMKernel::self()->folderCollectionMonitor(), SIGNAL(collectionStatisticsChanged(Akonadi::Collection::Id,Akonadi::CollectionStatistics)), this, SLOT(updateCollectionStatistic(Akonadi::Collection::Id,Akonadi::CollectionStatistics)) );
 
@@ -206,15 +202,11 @@ SearchWindow::SearchWindow( KMMainWidget *widget, const Akonadi::Collection &col
         }
     }
 
-    connect( mUi.mSearchFolderEdt, SIGNAL(textChanged(QString)),
-             this, SLOT(scheduleRename(QString)) );
-    connect( &mRenameTimer, SIGNAL(timeout()),
-             this, SLOT(renameSearchFolder()) );
-    connect( mUi.mSearchFolderOpenBtn, SIGNAL(clicked()),
-             this, SLOT(openSearchFolder()) );
+    connect(mUi.mSearchFolderEdt, &KLineEdit::textChanged, this, &SearchWindow::scheduleRename);
+    connect(&mRenameTimer, &QTimer::timeout, this, &SearchWindow::renameSearchFolder);
+    connect(mUi.mSearchFolderOpenBtn, &QPushButton::clicked, this, &SearchWindow::openSearchFolder);
 
-    connect( mUi.mSearchResultOpenBtn, SIGNAL(clicked()),
-             this, SLOT(slotViewSelectedMsg()) );
+    connect(mUi.mSearchResultOpenBtn, &QPushButton::clicked, this, &SearchWindow::slotViewSelectedMsg);
 
     const int mainWidth = GlobalSettings::self()->searchWidgetWidth();
     const int mainHeight = GlobalSettings::self()->searchWidgetHeight();
@@ -286,8 +278,7 @@ SearchWindow::SearchWindow( KMMainWidget *widget, const Akonadi::Collection &col
     connect(mJumpToFolderAction, &QAction::triggered, this, &SearchWindow::slotJumpToFolder);
 
 
-    connect( mUi.mCbxFolders, SIGNAL(folderChanged(Akonadi::Collection)),
-             this, SLOT(slotFolderActivated()) );
+    connect(mUi.mCbxFolders, &MailCommon::FolderRequester::folderChanged, this, &SearchWindow::slotFolderActivated);
 
     ac->addAssociatedWidget( this );
     foreach ( QAction* action, ac->actions() )
@@ -653,8 +644,7 @@ void SearchWindow::renameSearchFolder()
             mFolder.setName( name );
             Akonadi::CollectionModifyJob *job = new Akonadi::CollectionModifyJob( mFolder, this );
             job->setProperty("oldfoldername", oldFolderName);
-            connect( job, SIGNAL(result(KJob*)),
-                     this, SLOT(slotSearchFolderRenameDone(KJob*)) );
+            connect(job, &Akonadi::CollectionModifyJob::result, this, &SearchWindow::slotSearchFolderRenameDone);
         }
         mUi.mSearchFolderOpenBtn->setEnabled( true );
     }
