@@ -148,8 +148,7 @@ MessageActions::MessageActions( KActionCollection *ac, QWidget *parent )
                                           i18nc( "@action:inmenu Message->Forward->",
                                                  "As &Attachment..." ),
                                           this );
-    connect( mForwardAttachedAction, SIGNAL(triggered(bool)),
-             parent, SLOT(slotForwardAttachedMsg()) );
+    connect( mForwardAttachedAction, SIGNAL(triggered(bool)), parent, SLOT(slotForwardAttachedMsg()) );
 
     ac->addAction( QLatin1String("message_forward_as_attachment"), mForwardAttachedAction );
 
@@ -157,8 +156,7 @@ MessageActions::MessageActions( KActionCollection *ac, QWidget *parent )
                                         i18nc( "@action:inmenu Message->Forward->",
                                                "&Inline..." ),
                                         this );
-    connect( mForwardInlineAction, SIGNAL(triggered(bool)),
-             parent, SLOT(slotForwardInlineMsg()) );
+    connect( mForwardInlineAction, SIGNAL(triggered(bool)), parent, SLOT(slotForwardInlineMsg()) );
 
     ac->addAction( QLatin1String("message_forward_inline"), mForwardInlineAction );
 
@@ -166,8 +164,7 @@ MessageActions::MessageActions( KActionCollection *ac, QWidget *parent )
 
     mRedirectAction  = new QAction(i18nc("Message->Forward->", "&Redirect..."), this );
     ac->addAction( QLatin1String("message_forward_redirect"), mRedirectAction );
-    connect( mRedirectAction, SIGNAL(triggered(bool)),
-             parent, SLOT(slotRedirectMsg()) );
+    connect( mRedirectAction, SIGNAL(triggered(bool)), parent, SLOT(slotRedirectMsg()) );
 
     ac->setDefaultShortcut(mRedirectAction,QKeySequence( Qt::Key_E ) );
     mForwardActionMenu->addAction( mRedirectAction );
@@ -184,12 +181,9 @@ MessageActions::MessageActions( KActionCollection *ac, QWidget *parent )
 
     mCustomTemplatesMenu = new TemplateParser::CustomTemplatesMenu( parent, ac );
 
-    connect( mCustomTemplatesMenu, SIGNAL(replyTemplateSelected(QString)),
-             parent, SLOT(slotCustomReplyToMsg(QString)) );
-    connect( mCustomTemplatesMenu, SIGNAL(replyAllTemplateSelected(QString)),
-             parent, SLOT(slotCustomReplyAllToMsg(QString)) );
-    connect( mCustomTemplatesMenu, SIGNAL(forwardTemplateSelected(QString)),
-             parent, SLOT(slotCustomForwardMsg(QString)) );
+    connect( mCustomTemplatesMenu, SIGNAL(replyTemplateSelected(QString)), parent, SLOT(slotCustomReplyToMsg(QString)) );
+    connect( mCustomTemplatesMenu, SIGNAL(replyAllTemplateSelected(QString)), parent, SLOT(slotCustomReplyAllToMsg(QString)) );
+    connect( mCustomTemplatesMenu, SIGNAL(forwardTemplateSelected(QString)), parent, SLOT(slotCustomForwardMsg(QString)) );
     connect(KMKernel::self(), &KMKernel::customTemplatesChanged, mCustomTemplatesMenu, &TemplateParser::CustomTemplatesMenu::update);
 
     forwardMenu()->addSeparator();
@@ -388,8 +382,7 @@ void MessageActions::replyCommand(MessageComposer::ReplyStrategy strategy)
 
     const QString text = mMessageView ? mMessageView->copyText() : QString();
     KMCommand *command = new KMReplyCommand( mParent, mCurrentItem, strategy, text );
-    connect( command, SIGNAL(completed(KMCommand*)),
-             this, SIGNAL(replyActionFinished()) );
+    connect(command, &KMCommand::completed, this, &MessageActions::replyActionFinished);
     command->start();
 }
 
