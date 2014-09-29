@@ -42,6 +42,7 @@
 #include <KIdentityManagement/kidentitymanagement/identity.h>
 #include <KIdentityManagement/kidentitymanagement/identitymanager.h>
 #include "pimcommon/texteditor/plaintexteditor/plaintexteditor.h"
+#include "pimcommon/texteditor/plaintexteditor/plaintexteditorwidget.h"
 #include <messageviewer/header/kxface.h>
 
 #include <QCheckBox>
@@ -175,12 +176,12 @@ XFaceConfigurator::XFaceConfigurator( QWidget * parent )
     page_vlay = new QVBoxLayout( page );
     page_vlay->setMargin( 0 );
 //TODO PORT QT5     page_vlay->setSpacing( QDialog::spacingHint() );
-    mTextEdit = new PimCommon::PlainTextEditor( page );
+    mTextEdit = new PimCommon::PlainTextEditorWidget( page );
     page_vlay->addWidget( mTextEdit );
-    mTextEdit->setWhatsThis( i18n( "Use this field to enter an arbitrary X-Face string." ) );
-    mTextEdit->setFont( QFontDatabase::systemFont(QFontDatabase::FixedFont) );
-    mTextEdit->setWordWrapMode( QTextOption::WrapAnywhere);
-    mTextEdit->setSearchSupport(false);
+    mTextEdit->editor()->setWhatsThis( i18n( "Use this field to enter an arbitrary X-Face string." ) );
+    mTextEdit->editor()->setFont( QFontDatabase::systemFont(QFontDatabase::FixedFont) );
+    mTextEdit->editor()->setWordWrapMode( QTextOption::WrapAnywhere);
+    mTextEdit->editor()->setSearchSupport(false);
     label2 = new QLabel( i18n("Examples are available at <a "
                               "href=\"http://ace.home.xs4all.nl/X-Faces/\">"
                               "http://ace.home.xs4all.nl/X-Faces/</a>."), page );
@@ -190,7 +191,7 @@ XFaceConfigurator::XFaceConfigurator( QWidget * parent )
     page_vlay->addWidget( label2 );
 
 
-    connect(mTextEdit, &PimCommon::PlainTextEditor::textChanged, this, &XFaceConfigurator::slotUpdateXFace);
+    connect(mTextEdit->editor(), &PimCommon::PlainTextEditor::textChanged, this, &XFaceConfigurator::slotUpdateXFace);
 }
 
 XFaceConfigurator::~XFaceConfigurator()
@@ -210,12 +211,12 @@ void XFaceConfigurator::setXFaceEnabled( bool enable )
 
 QString XFaceConfigurator::xface() const
 {
-    return mTextEdit->toPlainText();
+    return mTextEdit->editor()->toPlainText();
 }
 
 void XFaceConfigurator::setXFace( const QString & text )
 {
-    mTextEdit->setPlainText( text );
+    mTextEdit->editor()->setPlainText( text );
 }
 
 void XFaceConfigurator::setXfaceFromFile( const QUrl &url )
@@ -223,7 +224,7 @@ void XFaceConfigurator::setXfaceFromFile( const QUrl &url )
     QString tmpFile;
     if (KIO::NetAccess::download( url, tmpFile, this )) {
         KXFace xf;
-        mTextEdit->setPlainText( xf.fromImage( QImage( tmpFile ) ) );
+        mTextEdit->editor()->setPlainText( xf.fromImage( QImage( tmpFile ) ) );
         KIO::NetAccess::removeTempFile( tmpFile );
     } else {
         KMessageBox::error(this, KIO::NetAccess::lastErrorString() );
@@ -271,7 +272,7 @@ void XFaceConfigurator::slotDelayedSelectFromAddressbook( KJob *job )
         const QImage photo = contact.photo().data();
         if ( !photo.isNull() ) {
             KXFace xf;
-            mTextEdit->setPlainText( xf.fromImage( photo ) );
+            mTextEdit->editor()->setPlainText( xf.fromImage( photo ) );
         } else {
             KMessageBox::information( this, i18n("No picture set for your address book entry."), i18n("No Picture") );
         }
@@ -289,12 +290,12 @@ void XFaceConfigurator::slotDelayedSelectFromAddressbook( KJob *job )
 
 void XFaceConfigurator::slotUpdateXFace()
 {
-    QString str = mTextEdit->toPlainText();
+    QString str = mTextEdit->editor()->toPlainText();
 
     if ( !str.isEmpty() ) {
         if ( str.startsWith( QLatin1String("x-face:"), Qt::CaseInsensitive ) ) {
             str = str.remove( QLatin1String("x-face:"), Qt::CaseInsensitive );
-            mTextEdit->setPlainText(str);
+            mTextEdit->editor()->setPlainText(str);
         }
         KXFace xf;
         const QPixmap p = QPixmap::fromImage( xf.toImage(str) );
