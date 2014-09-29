@@ -103,8 +103,7 @@ ArchiveFolderDialog::ArchiveFolderDialog( QWidget *parent )
     mFormatComboBox->addItem( i18n( "BZ2-Compressed Tar Archive (.tar.bz2)" ) );
     mFormatComboBox->addItem( i18n( "GZ-Compressed Tar Archive (.tar.gz)" ) );
     mFormatComboBox->setCurrentIndex( 2 );
-    connect( mFormatComboBox, SIGNAL(activated(int)),
-             this, SLOT(slotFixFileExtension()) );
+    connect(mFormatComboBox, static_cast<void (KComboBox::*)(int)>(&KComboBox::activated), this, &ArchiveFolderDialog::slotFixFileExtension);
     mainLayout->addWidget( mFormatComboBox, row, 1 );
     row++;
 
@@ -114,10 +113,8 @@ ArchiveFolderDialog::ArchiveFolderDialog( QWidget *parent )
     mUrlRequester->setMode( KFile::LocalOnly | KFile::File );
     mUrlRequester->setFilter( QLatin1String("*.tar *.zip *.tar.gz *.tar.bz2") );
     fileNameLabel->setBuddy( mUrlRequester );
-    connect( mUrlRequester, SIGNAL(urlSelected(QUrl)),
-             this, SLOT(slotFixFileExtension()) );
-    connect( mUrlRequester, SIGNAL(textChanged(QString)),
-             this, SLOT(slotUrlChanged(QString)) );
+    connect(mUrlRequester, &KUrlRequester::urlSelected, this, &ArchiveFolderDialog::slotFixFileExtension);
+    connect(mUrlRequester, &KUrlRequester::textChanged, this, &ArchiveFolderDialog::slotUrlChanged);
     mainLayout->addWidget( mUrlRequester, row, 1 );
     row++;
 

@@ -59,11 +59,10 @@ AttachmentController::AttachmentController( MessageComposer::AttachmentModel *mo
     connect( view, SIGNAL(doubleClicked(QModelIndex)),
              this, SLOT(doubleClicked(QModelIndex)) );
 
-    connect( this, SIGNAL(refreshSelection()), SLOT(selectionChanged()));
+    connect(this, &AttachmentController::refreshSelection, this, &AttachmentController::selectionChanged);
 
-    connect( this, SIGNAL(showAttachment(KMime::Content*,QByteArray)),
-             SLOT(onShowAttachment(KMime::Content*,QByteArray)));
-    connect( this, SIGNAL(selectedAllAttachment()), SLOT(slotSelectAllAttachment()));
+    connect(this, &AttachmentController::showAttachment, this, &AttachmentController::onShowAttachment);
+    connect(this, &AttachmentController::selectedAllAttachment, this, &AttachmentController::slotSelectAllAttachment);
     connect( model, SIGNAL(attachItemsRequester(Akonadi::Item::List)), this, SLOT(addAttachmentItems(Akonadi::Item::List)) );
 }
 
@@ -109,7 +108,7 @@ void AttachmentController::addAttachmentItems( const Akonadi::Item::List &items 
     Akonadi::ItemFetchJob *itemFetchJob = new Akonadi::ItemFetchJob( items, this );
     itemFetchJob->fetchScope().fetchFullPayload( true );
     itemFetchJob->fetchScope().setAncestorRetrieval( Akonadi::ItemFetchScope::Parent );
-    connect( itemFetchJob, SIGNAL(result(KJob*)), mComposer, SLOT(slotFetchJob(KJob*)) );
+    connect(itemFetchJob, &Akonadi::ItemFetchJob::result, mComposer, &KMComposeWin::slotFetchJob);
 }
 
 void AttachmentController::selectionChanged()
