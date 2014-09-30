@@ -25,7 +25,7 @@ ExternalEditorWarning::ExternalEditorWarning(QWidget *parent)
     setVisible(false);
     setCloseButtonVisible(false);
     setMessageType(Information);
-    setText( i18n( "External editor was started." ) );
+    setText(i18n("External editor was started."));
     setWordWrap(true);
 }
 

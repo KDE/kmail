@@ -28,5 +28,4 @@ public:
     ~ExternalEditorWarning();
 };
 
-
 #endif // EXTERNALEDITORWARNING_H
