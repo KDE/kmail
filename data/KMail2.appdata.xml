@@ -11,6 +11,7 @@
   <name xml:lang="es">KMail</name>
   <name xml:lang="fr">KMail</name>
   <name xml:lang="hu">KMail</name>
+  <name xml:lang="lt">KMail</name>
   <name xml:lang="nb">KMail</name>
   <name xml:lang="nds">KMail</name>
   <name xml:lang="nl">KMail</name>
@@ -32,6 +33,7 @@
     <p xml:lang="es">KMail es el componente de correo de Kontact, el gestor de información personal integrado de KDE.</p>
     <p xml:lang="fr">KMail est le composant pour le courrier électronique de la suite Kontact, le gestionnaire d'informations personnelles de KDE.</p>
     <p xml:lang="hu">A KMail a Kontact, a KDE integrált információkezelő alkalmazásának e-mail programja.</p>
+    <p xml:lang="lt">KMail yra Kontact, KDE integruotos asmeninės informacijos tvarkyklės, pašto komponentas.</p>
     <p xml:lang="nb">KMail er e-postkomponenten i Kontact, KDEs integrerte personlige informasjonsbehandler.</p>
     <p xml:lang="nds">KMail is de Nettpostkomponent vun Kontact, KDE sien inbuut Pleger för persöönlich Informatschonen</p>
     <p xml:lang="nl">KMail is de e-mail-component van Kontact, de geïntegreerde beheerder van persoonlijke informatie van KDE.</p>
@@ -50,6 +52,7 @@
     <p xml:lang="es">Características:</p>
     <p xml:lang="fr">Fonctionnalités :</p>
     <p xml:lang="hu">Szolgáltatások:</p>
+    <p xml:lang="lt">Galimybės:</p>
     <p xml:lang="nb">Egenskaper:</p>
     <p xml:lang="nds">Markmalen:</p>
     <p xml:lang="nl">Mogelijkheden:</p>
@@ -70,6 +73,7 @@
       <li xml:lang="es">Implementa los protocolos de correo estándar: IMAP, POP3 y SMTP.</li>
       <li xml:lang="fr">Prise en charge des protocoles standards de messagerie IMAP, POP3 et SMTP.</li>
       <li xml:lang="hu">Standard levelező protokollok (IMAP, POP3, SMTP) támogatása.</li>
+      <li xml:lang="lt">Palaiko standartinius pašto protokolus tokius, kaip IMAP, POP3 ir SMTP.</li>
       <li xml:lang="nb">Støtter standard e-post-protokollene IMAP, POP3 og SMTP.</li>
       <li xml:lang="nds">Ünnerstütt de Standard-Nettpostprotokollen IMAP, POP3 un SMTP.</li>
       <li xml:lang="nl">Ondersteunt de standaard e-mailprotocollen IMAP, POP3 en SMTP.</li>
@@ -83,8 +87,9 @@
       <li xml:lang="x-test">xxSupports the standard mail protocols IMAP, POP3 and SMTP.xx</li>
       <li>Supports authentication via NTLM (Microsoft Windows) and GSSAPI (Kerberos)</li>
       <li xml:lang="ca">Implementa l'autenticació a través de NTLM (Microsoft Windows) i GSSAPI (Kerberos)</li>
+      <li xml:lang="de">Unterstützt Authentifizierung mit NTLM (Microsoft Windows) und GSSAPI (Kerberos)</li>
       <li xml:lang="en-GB">Supports authentication via NTLM (Microsoft Windows) and GSSAPI (Kerberos)</li>
-      <li xml:lang="es">Implementa autenticación mediante NTLM (Microsoft Windows)  y GSSAPI (Kerberos)</li>
+      <li xml:lang="es">Implementa autenticación mediante NTLM (Microsoft Windows) y GSSAPI (Kerberos)</li>
       <li xml:lang="fr">Prise en charge de l'authentification NTLM (Microsoft Windows) et GSSAPI (Kerberos)</li>
       <li xml:lang="hu">NTLM (Microsoft Windows) és GSSAPI (Kerberos) hitelesítés támogatása</li>
       <li xml:lang="nb">Støtter autentisering via NTLM (Microsoft Windows) og GSSAPI (Kerberos)</li>
@@ -100,6 +105,7 @@
       <li xml:lang="x-test">xxSupports authentication via NTLM (Microsoft Windows) and GSSAPI (Kerberos)xx</li>
       <li>Supports plain text and secure logins, using SSL and TLS.</li>
       <li xml:lang="ca">Implementa accés en text pla i segur, usant SSL i TLS</li>
+      <li xml:lang="de">Unterstützt einfachen Text und sichere Anmeldung durch SSL und TLS.</li>
       <li xml:lang="en-GB">Supports plain text and secure logins, using SSL and TLS.</li>
       <li xml:lang="es">Implementa texto sin formato y accesos al sistema seguros usando SSL y TLS.</li>
       <li xml:lang="fr">Prise en charge des identifications en texte clair ou sécurisées par SSL ou TLS.</li>
@@ -156,6 +162,7 @@
       <li xml:lang="es">Lectura y escritura de correo HTML.</li>
       <li xml:lang="fr">Lecture et écriture de courrier électronique en HTML.</li>
       <li xml:lang="hu">HTML levelek írása és olvasása.</li>
+      <li xml:lang="lt">HTML laiškų skaitymas ir rašymas.</li>
       <li xml:lang="nb">Lese og skrive HTML e-post.</li>
       <li xml:lang="nds">HTML-Nettbreven wiesen un schrieven.</li>
       <li xml:lang="nl">Lezen en schrijven van HTML-e-mail.</li>
@@ -190,6 +197,7 @@
       <li xml:lang="es">Le permite aceptar y recibir invitaciones.</li>
       <li xml:lang="fr">Permet de recevoir et accepter des invitations.</li>
       <li xml:lang="hu">Meghívok fogadása és elfogadása.</li>
+      <li xml:lang="lt">Leidžia siųsti ir gauti pakvietimus.</li>
       <li xml:lang="nb">Kan motta og akseptere invitasjoner.</li>
       <li xml:lang="nds">Inladen laat sik dor mit kriegen un ok annehmen</li>
       <li xml:lang="nl">Laat u uitnodigingen ontvangen en accepteren.</li>
@@ -241,6 +249,7 @@
       <li xml:lang="es">Poderosas capacidades de búsqueda y filtrado</li>
       <li xml:lang="fr">Capacités de recherche et filtrage puissants</li>
       <li xml:lang="hu">Hatékony keresési és szűrési képességek</li>
+      <li xml:lang="lt">Galingos paieškos ir filtravimo galimybės</li>
       <li xml:lang="nb">Slagkraftig søk- og filter-muligheter</li>
       <li xml:lang="nds">Deegte Söök un Filtern</li>
       <li xml:lang="nl">Krachtige zoek- en filter-functies</li>
@@ -254,10 +263,12 @@
       <li xml:lang="x-test">xxPowerful search and filter abilitiesxx</li>
       <li>Can import mail from many other clients</li>
       <li xml:lang="ca">Pot importar el correu des de molts altres clients</li>
+      <li xml:lang="de">E-Mails können von vielen anderen Programmen importiert werden</li>
       <li xml:lang="en-GB">Can import mail from many other clients</li>
       <li xml:lang="es">Puede importar correo de otros clientes</li>
       <li xml:lang="fr">Peut importer les messages de nombreux autres clients</li>
       <li xml:lang="hu">Levelek importálása számos más kliensből</li>
+      <li xml:lang="lt">Gali importuoti paštą iš kitų programų</li>
       <li xml:lang="nb">Kan importere e-post fra mange andre klienter</li>
       <li xml:lang="nds">Kann Nettbreven ut en Barg anner Nettpostprogrammen importeren</li>
       <li xml:lang="nl">Kan e-mail importeren uit vele andere clients</li>
@@ -271,6 +282,7 @@
       <li xml:lang="x-test">xxCan import mail from many other clientsxx</li>
       <li>Searching in IMAP folders fully supported</li>
       <li xml:lang="ca">La cerca a les carpetes IMAP està totalment implementada</li>
+      <li xml:lang="de">Suche in IMAP-Ordnern wird vollständig unterstützt</li>
       <li xml:lang="en-GB">Searching in IMAP folders fully supported</li>
       <li xml:lang="es">La búsqueda de carpetas IMAP esta completamente implementada</li>
       <li xml:lang="fr">Recherche des dossiers IMAP complètement prise en charge</li>
@@ -305,6 +317,7 @@
       <li xml:lang="x-test">xxHighly integrated with other Kontact componentsxx</li>
       <li>Encrypted password saving in KWallet</li>
       <li xml:lang="ca">Desa la contrasenya encriptada al KWallet</li>
+      <li xml:lang="de">Verschlüsselte Speicherung von Passwörtern in KWallet</li>
       <li xml:lang="en-GB">Encrypted password saving in KWallet</li>
       <li xml:lang="es">Almacenamiento de contraseñas cifradas en KWallet</li>
       <li xml:lang="fr">Enregistrement des mots de passe chiffré dans KWallet</li>
@@ -356,6 +369,7 @@
       <li xml:lang="x-test">xxSupports mailing list management featuresxx</li>
       <li>Can replace text smilies with emoticons</li>
       <li xml:lang="ca">Pot substituir les cares de text amb emoticones</li>
+      <li xml:lang="de">Kann Text-Smileys durch Emoticons ersetzen</li>
       <li xml:lang="en-GB">Can replace text smilies with emoticons</li>
       <li xml:lang="es">Puede remplazar sonrisas de texto por emoticonos</li>
       <li xml:lang="fr">Peut remplacer les smileys par des émoticônes</li>
@@ -412,6 +426,7 @@
       <li xml:lang="es">Compresión de adjuntos</li>
       <li xml:lang="fr">Compression des pièces jointes</li>
       <li xml:lang="hu">Mellékletek tömörítése</li>
+      <li xml:lang="lt">Priedų spaudimas</li>
       <li xml:lang="nb">Komprimerer vedlegg        </li>
       <li xml:lang="nds">Komprimeren vun Bilagen</li>
       <li xml:lang="nl">Compressie van bijlagen</li>
@@ -430,6 +445,7 @@
       <li xml:lang="es">KMail implementa la funcionalidad de colaboración.</li>
       <li xml:lang="fr">Fonctionnalités de logiciel de groupe de travail.</li>
       <li xml:lang="hu">A KMail támogatja a csoportmunka funkciókat is.</li>
+      <li xml:lang="lt">KMail palaiko Groupware galimybes.</li>
       <li xml:lang="nb">KMail støtter Gruppevarefunksjonalitet.</li>
       <li xml:lang="nds">KMail ünnerstütt Arbeitkoppel-Funkschonen.</li>
       <li xml:lang="nl">KMail ondersteunt de functionaliteit van Groupware.</li>
