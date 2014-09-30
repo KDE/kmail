@@ -87,8 +87,7 @@ KMSystemTray::KMSystemTray(QObject *parent)
     connect(KGlobalSettings::self(), &KGlobalSettings::kdisplayPaletteChanged, this, &KMSystemTray::slotGeneralPaletteChanged);
     connect(KGlobalSettings::self(), &KGlobalSettings::kdisplayFontChanged, this, &KMSystemTray::slotGeneralFontChanged);
 
-    connect( this, SIGNAL(activateRequested(bool,QPoint)),
-             this, SLOT(slotActivated()) );
+    connect(this, &KMSystemTray::activateRequested, this, &KMSystemTray::slotActivated);
     connect( contextMenu(), SIGNAL(aboutToShow()),
              this, SLOT(slotContextMenuAboutToShow()) );
 
@@ -310,8 +309,7 @@ void KMSystemTray::slotContextMenuAboutToShow()
     mNewMessagesPopup = new QMenu();
     fillFoldersMenu( mNewMessagesPopup, kmkernel->treeviewModelSelection() );
 
-    connect( mNewMessagesPopup, SIGNAL(triggered(QAction*)), this,
-             SLOT(slotSelectCollection(QAction*)) );
+    connect(mNewMessagesPopup, &QMenu::triggered, this, &KMSystemTray::slotSelectCollection);
 
 
     if ( mCount > 0 ) {

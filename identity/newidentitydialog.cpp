@@ -59,7 +59,7 @@ NewIdentityDialog::NewIdentityDialog( KIdentityManagement::IdentityManager* mana
     mOkButton->setShortcut(Qt::CTRL | Qt::Key_Return);
     connect(buttonBox, &QDialogButtonBox::accepted, this, &NewIdentityDialog::accept);
     connect(buttonBox, &QDialogButtonBox::rejected, this, &NewIdentityDialog::reject);
-    connect(buttonBox->button(QDialogButtonBox::Help), SIGNAL(clicked()), this, SLOT(slotHelp()));
+    connect(buttonBox->button(QDialogButtonBox::Help), &QPushButton::clicked, this, &NewIdentityDialog::slotHelp);
 
     QWidget *page = new QWidget( this );
     mainLayout->addWidget( page );
@@ -78,8 +78,7 @@ NewIdentityDialog::NewIdentityDialog( KIdentityManagement::IdentityManager* mana
     l->setBuddy( mLineEdit );
     hlay->addWidget( l );
     hlay->addWidget( mLineEdit, 1 );
-    connect( mLineEdit, SIGNAL(textChanged(QString)),
-             this, SLOT(slotEnableOK(QString)) );
+    connect(mLineEdit, &KLineEdit::textChanged, this, &NewIdentityDialog::slotEnableOK);
 
     mButtonGroup = new QButtonGroup( page );
 
@@ -117,10 +116,8 @@ NewIdentityDialog::NewIdentityDialog( KIdentityManagement::IdentityManager* mana
 
     // enable/disable combobox and label depending on the third radio
     // button's state:
-    connect( radio, SIGNAL(toggled(bool)),
-             label, SLOT(setEnabled(bool)) );
-    connect( radio, SIGNAL(toggled(bool)),
-             mComboBox, SLOT(setEnabled(bool)) );
+    connect(radio, &QRadioButton::toggled, label, &QLabel::setEnabled);
+    connect(radio, &QRadioButton::toggled, mComboBox, &KComboBox::setEnabled);
 
     mOkButton->setEnabled( false ); // since line edit is empty
     

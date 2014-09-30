@@ -70,23 +70,23 @@ QList<QAction *> KMComposerEditor::createActions()
     QAction *pasteQuotation = new QAction( i18n("Pa&ste as Quotation"), this );
     pasteQuotation->setObjectName(QLatin1String("paste_quoted"));
     pasteQuotation->setShortcut(QKeySequence(Qt::CTRL+Qt::SHIFT+Qt::Key_O));
-    connect( pasteQuotation, SIGNAL(triggered(bool)), this, SLOT(slotPasteAsQuotation()) );
+    connect(pasteQuotation, &QAction::triggered, this, &KMComposerEditor::slotPasteAsQuotation);
     lstAction.append(pasteQuotation);
 
     QAction *addQuoteChars = new QAction( i18n("Add &Quote Characters"), this );
     addQuoteChars->setObjectName(QLatin1String("tools_quote"));
-    connect( addQuoteChars, SIGNAL(triggered(bool)), this, SLOT(slotAddQuotes()) );
+    connect(addQuoteChars, &QAction::triggered, this, &KMComposerEditor::slotAddQuotes);
     lstAction.append(addQuoteChars);
 
     QAction *remQuoteChars = new QAction( i18n("Re&move Quote Characters"), this );
     remQuoteChars->setObjectName(QLatin1String("tools_unquote"));
-    connect (remQuoteChars, SIGNAL(triggered(bool)), this, SLOT(slotRemoveQuotes()) );
+    connect(remQuoteChars, &QAction::triggered, this, &KMComposerEditor::slotRemoveQuotes);
     lstAction.append(remQuoteChars);
 
     QAction *pasteWithoutFormatting = new QAction( i18n("Paste Without Formatting"), this );
     pasteWithoutFormatting->setObjectName(QLatin1String("paste_without_formatting"));
     pasteWithoutFormatting->setShortcut(QKeySequence(Qt::CTRL+Qt::SHIFT+Qt::Key_V));
-    connect (pasteWithoutFormatting, SIGNAL(triggered(bool)), this, SLOT(slotPasteWithoutFormatting()) );
+    connect(pasteWithoutFormatting, &QAction::triggered, this, &KMComposerEditor::slotPasteWithoutFormatting);
     lstAction.append(pasteWithoutFormatting);
     return lstAction;
 }

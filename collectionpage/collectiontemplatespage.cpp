@@ -83,13 +83,10 @@ void CollectionTemplatesPage::init()
     btns->addWidget( copyGlobal );
     topLayout->addLayout( btns );
 
-    connect( mCustom, SIGNAL(toggled(bool)),
-             mWidget, SLOT(setEnabled(bool)) );
-    connect( mCustom, SIGNAL(toggled(bool)),
-             copyGlobal, SLOT(setEnabled(bool)) );
+    connect(mCustom, &QCheckBox::toggled, mWidget, &TemplateParser::TemplatesConfiguration::setEnabled);
+    connect(mCustom, &QCheckBox::toggled, copyGlobal, &QPushButton::setEnabled);
 
-    connect( copyGlobal, SIGNAL(clicked()),
-             this, SLOT(slotCopyGlobal()) );
+    connect(copyGlobal, &QPushButton::clicked, this, &CollectionTemplatesPage::slotCopyGlobal);
 }
 
 

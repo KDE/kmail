@@ -335,8 +335,7 @@ void KMReaderMainWin::setupAccel()
     mFontAction = new KFontAction( i18n("Select Font"), this );
     actionCollection()->addAction( QLatin1String("text_font"), mFontAction );
     mFontAction->setFont( mReaderWin->cssHelper()->bodyFont().family() );
-    connect( mFontAction, SIGNAL(triggered(QString)),
-             SLOT(slotFontAction(QString)) );
+    connect(mFontAction, static_cast<void (KFontAction::*)(const QString &)>(&KFontAction::triggered), this, &KMReaderMainWin::slotFontAction);
     mFontSizeAction = new KFontSizeAction( i18n( "Select Size" ), this );
     mFontSizeAction->setFontSize( mReaderWin->cssHelper()->bodyFont().pointSize() );
     actionCollection()->addAction( QLatin1String("text_size"), mFontSizeAction );

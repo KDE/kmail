@@ -210,25 +210,17 @@ KMKernel::KMKernel (QObject *parent) :
     connect( folderCollectionMonitor(), SIGNAL(collectionChanged(Akonadi::Collection,QSet<QByteArray>)),
              SLOT(slotCollectionChanged(Akonadi::Collection,QSet<QByteArray>)) );
 
-    connect( MailTransport::TransportManager::self(),
-             SIGNAL(transportRemoved(int,QString)),
-             SLOT(transportRemoved(int,QString)) );
-    connect( MailTransport::TransportManager::self(),
-             SIGNAL(transportRenamed(int,QString,QString)),
-             SLOT(transportRenamed(int,QString,QString)) );
+    connect(MailTransport::TransportManager::self(), &MailTransport::TransportManager::transportRemoved, this, &KMKernel::transportRemoved);
+    connect(MailTransport::TransportManager::self(), &MailTransport::TransportManager::transportRenamed, this, &KMKernel::transportRenamed);
 
     QDBusConnection::sessionBus().connect(QString(), QLatin1String( "/MailDispatcherAgent" ), QLatin1String("org.freedesktop.Akonadi.MailDispatcherAgent"), QLatin1String("itemDispatchStarted"),this, SLOT(itemDispatchStarted()) );
-    connect( Akonadi::AgentManager::self(), SIGNAL(instanceStatusChanged(Akonadi::AgentInstance)),
-             this, SLOT(instanceStatusChanged(Akonadi::AgentInstance)) );
+    connect(Akonadi::AgentManager::self(), &Akonadi::AgentManager::instanceStatusChanged, this, &KMKernel::instanceStatusChanged);
 
-    connect( Akonadi::AgentManager::self(), SIGNAL(instanceError(Akonadi::AgentInstance,QString)),
-             this, SLOT(slotInstanceError(Akonadi::AgentInstance,QString)) );
+    connect(Akonadi::AgentManager::self(), &Akonadi::AgentManager::instanceError, this, &KMKernel::slotInstanceError);
 
-    connect( Akonadi::AgentManager::self(), SIGNAL(instanceWarning(Akonadi::AgentInstance,QString)),
-             SLOT(slotInstanceWarning(Akonadi::AgentInstance,QString)) );
+    connect(Akonadi::AgentManager::self(), &Akonadi::AgentManager::instanceWarning, this, &KMKernel::slotInstanceWarning);
 
-    connect( Akonadi::AgentManager::self(), SIGNAL(instanceRemoved(Akonadi::AgentInstance)),
-             this, SLOT(slotInstanceRemoved(Akonadi::AgentInstance)) );
+    connect(Akonadi::AgentManager::self(), &Akonadi::AgentManager::instanceRemoved, this, &KMKernel::slotInstanceRemoved);
 
     connect ( Solid::Networking::notifier(), SIGNAL(statusChanged(Solid::Networking::Status)),
               this, SLOT(slotSystemNetworkStatusChanged(Solid::Networking::Status)) );
@@ -1069,8 +1061,7 @@ void KMKernel::checkMailOnStartup()
         return;
 
     if (Akonadi::ServerManager::state() != Akonadi::ServerManager::Running) {
-        connect(Akonadi::ServerManager::self(), SIGNAL(stateChanged(Akonadi::ServerManager::State)),
-                                       SLOT(slotCheckAccount(Akonadi::ServerManager::State)));
+        connect(Akonadi::ServerManager::self(), &Akonadi::ServerManager::stateChanged, this, &KMKernel::slotCheckAccount);
     } else {
         verifyAccount();
     }
@@ -1259,7 +1250,7 @@ void KMKernel::init()
 
     mBackgroundTasksTimer = new QTimer( this );
     mBackgroundTasksTimer->setSingleShot( true );
-    connect( mBackgroundTasksTimer, SIGNAL(timeout()), this, SLOT(slotRunBackgroundTasks()) );
+    connect(mBackgroundTasksTimer, &QTimer::timeout, this, &KMKernel::slotRunBackgroundTasks);
 #ifdef DEBUG_SCHEDULER // for debugging, see jobscheduler.h
     mBackgroundTasksTimer->start( 10000 ); // 10s, singleshot
 #else
@@ -1273,7 +1264,7 @@ void KMKernel::init()
         CommonKernel->initFolders();
     }
 
-    connect( Akonadi::ServerManager::self(), SIGNAL(stateChanged(Akonadi::ServerManager::State)), this, SLOT(akonadiStateChanged(Akonadi::ServerManager::State)) );
+    connect(Akonadi::ServerManager::self(), &Akonadi::ServerManager::stateChanged, this, &KMKernel::akonadiStateChanged);
     connect( folderCollectionMonitor(), SIGNAL(itemRemoved(Akonadi::Item)), the_undoStack, SLOT(msgDestroyed(Akonadi::Item)) );
 
 
@@ -1464,8 +1455,7 @@ void KMKernel::slotShowConfigurationDialog()
     if( !mConfigureDialog ) {
         mConfigureDialog = new ConfigureDialog( 0, false );
         mConfigureDialog->setObjectName( QLatin1String("configure") );
-        connect( mConfigureDialog, SIGNAL(configChanged()),
-                 this, SLOT(slotConfigChanged()) );
+        connect(mConfigureDialog, &ConfigureDialog::configChanged, this, &KMKernel::slotConfigChanged);
     }
 
     // Save all current settings.

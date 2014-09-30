@@ -51,7 +51,7 @@ void AddEmailToExistingContactJob::start()
             address.setEmails(emails);
             mItem.setPayload<KABC::Addressee>(address);
             Akonadi::ItemModifyJob *job = new Akonadi::ItemModifyJob( mItem );
-            connect( job, SIGNAL(result(KJob*)), SLOT(slotAddEmailDone(KJob*)) );
+            connect(job, &Akonadi::ItemModifyJob::result, this, &AddEmailToExistingContactJob::slotAddEmailDone);
         }
     } else {
         qDebug()<<" not a KABC::Addressee item ";
