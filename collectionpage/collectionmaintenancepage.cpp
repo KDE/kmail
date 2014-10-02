@@ -132,7 +132,11 @@ void CollectionMaintenancePage::load(const Collection & col)
 void CollectionMaintenancePage::onIndexedItemsReceived(qint64 num)
 {
     qDebug() << num;
-    mLastIndexed->setText(i18np("Indexed %1 item of this collection", "Indexed %1 items of this collection", num));
+    if (num == 0) {
+       mLastIndexed->clear();
+    } else {
+       mLastIndexed->setText(i18np("Indexed %1 item of this collection", "Indexed %1 items of this collection", num));
+    }
 }
 
 void CollectionMaintenancePage::updateLabel( qint64 nbMail, qint64 nbUnreadMail, qint64 size )
