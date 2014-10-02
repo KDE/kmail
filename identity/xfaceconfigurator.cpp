@@ -56,6 +56,7 @@
 #include <QFontDatabase>
 #include <QImageReader>
 #include <KConfigGroup>
+#include <QFileDialog>
 using namespace KABC;
 using namespace KIO;
 using namespace KMail;
@@ -238,7 +239,7 @@ void XFaceConfigurator::slotSelectFile()
     Q_FOREACH ( const QByteArray &mime, mimeTypes) {
         filter += QString::fromLatin1(mime);
     }
-    const QUrl url = KFileDialog::getOpenUrl( QString(), filter, this, QString() );
+    const QUrl url = QFileDialog::getOpenFileUrl(this, QString() , QString(), filter);
     if ( !url.isEmpty() )
         setXfaceFromFile( url );
 }
