@@ -33,7 +33,7 @@
 #include "secondarywindow.h"
 #include "kmkernel.h"
 
-#include <kglobal.h>
+#include <QApplication>
 #include <KLocalizedString>
 
 #include <QCloseEvent>
@@ -79,7 +79,7 @@ void SecondaryWindow::closeEvent( QCloseEvent * e )
 
 void SecondaryWindow::setCaption( const QString &userCaption )
 {
-    QString caption = KGlobal::caption();
+    QString caption = QGuiApplication::applicationDisplayName();
     QString captionString = userCaption.isEmpty() ? caption : userCaption;
     if ( !userCaption.isEmpty() ) {
         // Add the application name if:
