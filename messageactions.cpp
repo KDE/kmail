@@ -27,7 +27,7 @@
 #include "kmcommands.h"
 #include "customtemplatesmenu.h"
 
-#include "messagecore/widgets/annotationdialog.h"
+#include "pimcommon/widgets/annotationdialog.h"
 #include "messagecore/settings/globalsettings.h"
 #include "messagecore/misc/mailinglist.h"
 #include "messagecore/helpers/messagehelpers.h"
@@ -573,7 +573,7 @@ void MessageActions::annotateMessage()
     if ( !mCurrentItem.isValid() )
         return;
 
-    MessageCore::AnnotationEditDialog *dialog = new MessageCore::AnnotationEditDialog( mCurrentItem );
+    PimCommon::AnnotationEditDialog *dialog = new PimCommon::AnnotationEditDialog( mCurrentItem );
     dialog->setAttribute( Qt::WA_DeleteOnClose );
     dialog->exec();
 }
