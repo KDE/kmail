@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>633</width>
+    <width>739</width>
     <height>401</height>
    </rect>
   </property>
@@ -25,6 +25,9 @@
      <layout class="QVBoxLayout" name="verticalLayout">
       <item>
        <widget class="QLabel" name="labelWarnHTML">
+        <property name="contextMenuPolicy">
+         <enum>Qt::NoContextMenu</enum>
+        </property>
         <property name="text">
          <string>&lt;b&gt;WARNING:&lt;/b&gt; Allowing HTML in email may increase the risk that your system will be compromised by present and anticipated security exploits. &lt;a href=&quot;whatsthis1&quot;&gt;More about HTML mails...&lt;/a&gt; &lt;a href=&quot;whatsthis2&quot;&gt;More about external references...&lt;/a&gt;</string>
         </property>
@@ -93,7 +96,7 @@
        </widget>
       </item>
       <item>
-       <widget class="PimCommon::SimpleStringListEditor" name="scamWhiteList"/>
+       <widget class="PimCommon::SimpleStringListEditor" name="scamWhiteList" native="true"/>
       </item>
      </layout>
     </widget>
