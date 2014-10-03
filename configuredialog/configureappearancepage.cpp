@@ -745,6 +745,7 @@ AppearancePageHeadersTab::AppearancePageHeadersTab( QWidget * parent )
 
             QLabel *formatHelp = new QLabel(
                         i18n( "<qt><a href=\"whatsthis1\">Custom format information...</a></qt>"), hbox );
+            formatHelp->setContextMenuPolicy(Qt::NoContextMenu);
             connect( formatHelp, SIGNAL(linkActivated(QString)),
                      SLOT(slotLinkClicked(QString)) );
 
