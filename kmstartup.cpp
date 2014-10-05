@@ -26,7 +26,6 @@
 #include <kdelibs4configmigrator.h>
 #include <kglobal.h>
 #include <kiconloader.h>
-#include <KLocalizedString>
 
 #undef Status // stupid X headers
 

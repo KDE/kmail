@@ -47,7 +47,6 @@ using KPIM::RecentAddresses;
 #include <KFile>
 #include <kascii.h>
 #include <QSpinBox>
-#include <QSpinBox>
 #include <KPluralHandlingSpinBox>
 #include <QDebug>
 

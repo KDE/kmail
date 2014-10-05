@@ -186,7 +186,6 @@ using KSieveUi::SieveDebugDialog;
 #include <QProcess>
 #include <QDBusConnection>
 #include <QTextDocument>
-#include <QMenu>
 #include <QtDBus/QDBusInterface>
 #include <QtDBus/QDBusReply>
 #include <QDBusPendingCallWatcher>

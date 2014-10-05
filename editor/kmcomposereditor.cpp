@@ -49,7 +49,6 @@
 #include <QCheckBox>
 #include <QTextCodec>
 #include <QtCore/QMimeData>
-#include <QAction>
 
 using namespace MailCommon;
 
