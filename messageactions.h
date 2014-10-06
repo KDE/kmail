@@ -80,7 +80,6 @@ public:
     KActionMenu *forwardMenu() const { return mForwardActionMenu; }
 
     KAction* editAction() const { return mEditAction; }
-    KAction* annotateAction() const { return mAnnotateAction; }
     KAction* printAction() const { return mPrintAction; }
     KAction* printPreviewAction() const { return mPrintPreviewAction; }
     KAction* listFilterAction() const { return mListFilterAction; }
@@ -100,7 +99,6 @@ signals:
 
 public slots:
     void editCurrentMessage();
-    void annotateMessage();
 
 private:
     void updateActions();
@@ -146,7 +144,7 @@ private:
     KActionMenu *mStatusMenu;
     KActionMenu *mForwardActionMenu;
     KActionMenu *mMailingListActionMenu;
-    KAction *mEditAction, *mAnnotateAction, *mPrintAction, *mPrintPreviewAction;
+    KAction *mEditAction, *mPrintAction, *mPrintPreviewAction;
     TemplateParser::CustomTemplatesMenu *mCustomTemplatesMenu;
     KAction *mListFilterAction;
 };

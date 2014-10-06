@@ -27,7 +27,6 @@
 #include "kmcommands.h"
 #include "customtemplatesmenu.h"
 
-#include "messagecore/widgets/annotationdialog.h"
 #include "messagecore/settings/globalsettings.h"
 #include "messagecore/misc/mailinglist.h"
 #include "messagecore/helpers/messagehelpers.h"
@@ -55,7 +54,6 @@
 #include <QVariant>
 #include <qwidget.h>
 #include <akonadi/collection.h>
-#include <akonadi/entityannotationsattribute.h>
 #include <util/mailutil.h>
 
 using namespace KMail;
@@ -138,11 +136,6 @@ MessageActions::MessageActions( KActionCollection *ac, QWidget *parent )
     connect( mEditAction, SIGNAL(triggered(bool)),
              this, SLOT(editCurrentMessage()) );
     mEditAction->setShortcut( Qt::Key_T );
-
-    mAnnotateAction = new KAction( KIcon( QLatin1String("view-pim-notes") ), i18n( "Add Note..."), this );
-    ac->addAction( QLatin1String("annotate"), mAnnotateAction );
-    connect( mAnnotateAction, SIGNAL(triggered(bool)),
-             this, SLOT(annotateMessage()) );
 
     mPrintAction = KStandardAction::print( this, SLOT(slotPrintMsg()), ac );
     if(KPrintPreview::isAvailable())
@@ -282,12 +275,6 @@ void MessageActions::updateActions()
     mReplyListAction->setEnabled( hasPayload );
     mNoQuoteReplyAction->setEnabled( hasPayload );
 
-    mAnnotateAction->setEnabled( uniqItem );
-    if ( !mCurrentItem.hasAttribute<Akonadi::EntityAnnotationsAttribute>() )
-        mAnnotateAction->setText( i18n( "Add Note..." ) );
-    else
-        mAnnotateAction->setText( i18n( "Edit Note...") );
-
     mStatusMenu->setEnabled( multiVisible );
 
     if ( mCurrentItem.hasPayload<KMime::Message::Ptr>() ) {
@@ -298,7 +285,6 @@ void MessageActions::updateActions()
             job->fetchScope().fetchAllAttributes();
             job->fetchScope().fetchFullPayload( true );
             job->fetchScope().fetchPayloadPart( Akonadi::MessagePart::Header );
-            job->fetchScope().fetchAttribute<Akonadi::EntityAnnotationsAttribute>();
             connect( job, SIGNAL(result(KJob*)), SLOT(slotUpdateActionsFetchDone(KJob*)) );
         }
     }
@@ -579,16 +565,6 @@ void MessageActions::editCurrentMessage()
         command = new KMEditMessageCommand( mParent, mCurrentItem.payload<KMime::Message::Ptr>() );
         command->start();
     }
-}
-
-void MessageActions::annotateMessage()
-{
-    if ( !mCurrentItem.isValid() )
-        return;
-
-    MessageCore::AnnotationEditDialog *dialog = new MessageCore::AnnotationEditDialog( mCurrentItem );
-    dialog->setAttribute( Qt::WA_DeleteOnClose );
-    dialog->exec();
 }
 
 void MessageActions::addWebShortcutsMenu( KMenu *menu, const QString & text )
