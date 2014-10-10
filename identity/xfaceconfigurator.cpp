@@ -35,7 +35,6 @@
 #include <Akonadi/Contact/ContactSearchJob>
 #include <kcombobox.h>
 #include <QDialog>
-#include <kfiledialog.h>
 #include <kio/netaccess.h>
 #include <KLocalizedString>
 #include <kmessagebox.h>

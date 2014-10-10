@@ -158,7 +158,6 @@ using KSieveUi::SieveDebugDialog;
 #include <kshortcutsdialog.h>
 #include <kcharsets.h>
 #include <qdebug.h>
-#include <kfiledialog.h>
 #include <ktip.h>
 
 #include <kstandardaction.h>
