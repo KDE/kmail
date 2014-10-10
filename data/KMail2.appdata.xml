@@ -29,6 +29,7 @@
       KMail is the email component of Kontact, the integrated personal information manager from KDE.
     </p>
     <p xml:lang="ca">El KMail és el component de correu electrònic del Kontact, el gestor per a la informació personal integrat del KDE.</p>
+    <p xml:lang="de">KMail ist die E-Mail-Komponente von Kontact, der integrierten persönlichen Informationsverwaltung für KDE.</p>
     <p xml:lang="en-GB">KMail is the email component of Kontact, the integrated personal information manager from KDE.</p>
     <p xml:lang="es">KMail es el componente de correo de Kontact, el gestor de información personal integrado de KDE.</p>
     <p xml:lang="fr">KMail est le composant pour le courrier électronique de la suite Kontact, le gestionnaire d'informations personnelles de KDE.</p>
@@ -48,6 +49,7 @@
     <p>Features:</p>
     <p xml:lang="ca">Característiques:</p>
     <p xml:lang="cs">Vlastnosti:</p>
+    <p xml:lang="de">Funktionen:</p>
     <p xml:lang="en-GB">Features:</p>
     <p xml:lang="es">Características:</p>
     <p xml:lang="fr">Fonctionnalités :</p>
@@ -123,6 +125,7 @@
       <li xml:lang="x-test">xxSupports plain text and secure logins, using SSL and TLS.xx</li>
       <li>Integration of international character sets and spell-checking (as-you-type and on demand)</li>
       <li xml:lang="ca">Integra els jocs de caràcters internacionals i la correcció ortogràfica (mentre escriviu i sota demanda)</li>
+      <li xml:lang="de">Integration von internationalen Zeichensätzen und einer Rechtschreibprüfung bei der Eingabe oder auf Anforderung</li>
       <li xml:lang="en-GB">Integration of international character sets and spell-checking (as-you-type and on demand)</li>
       <li xml:lang="es">Integración de juegos de caracteres internacionales y corrección ortográfica (mientras teclea o bajo demanda)</li>
       <li xml:lang="fr">Intégration des ensembles de caractères et correcteurs orthographiques internationaux (pendant la saisie et à la demande)</li>
@@ -353,6 +356,7 @@
       <li xml:lang="x-test">xxFlagging and tagging of messages to aid sorting and recovery of informationxx</li>
       <li>Supports mailing list management features</li>
       <li xml:lang="ca">Implementa característiques per a la gestió de les llistes de correu</li>
+      <li xml:lang="de">Unterstützt die Verwaltung von Mailinglisten</li>
       <li xml:lang="en-GB">Supports mailing list management features</li>
       <li xml:lang="es">Implementa características de gestión de listas de correo</li>
       <li xml:lang="fr">Fonctions de gestion de listes de diffusion</li>
