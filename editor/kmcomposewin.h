@@ -102,6 +102,7 @@ class FolderRequester;
 namespace PimCommon {
 class CustomToolsWidget;
 class LineEditWithAutoCorrection;
+class SplitterCollapser;
 }
 class KMStorageService;
 //-----------------------------------------------------------------------------
@@ -454,6 +455,7 @@ private slots:
     void slotTransportChanged();
     void slotFollowUpMail();
     void slotSendNowByShortcut();
+    void slotSnippetWidgetVisibilityChanged(bool b);
 public: // kmcommand
     // FIXME we need to remove these, but they're pure virtual in Composer.
     void addAttach( KMime::Content *msgPart );
@@ -690,6 +692,7 @@ private:
     KMStorageService *mStorageService;
     bool mSendNowByShortcutUsed;
     QList<QLabel*> mStatusBarLabelList;
+    PimCommon::SplitterCollapser *mSnippetSplitterCollapser;
 };
 
 #endif
