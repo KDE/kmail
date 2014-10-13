@@ -169,6 +169,7 @@
 #include <fcntl.h>
 #include <memory>
 #include <boost/shared_ptr.hpp>
+#include <widgets/splittercollapser.h>
 
 using Sonnet::DictionaryComboBox;
 using MailTransport::TransportManager;
@@ -346,7 +347,6 @@ KMComposeWin::KMComposeWin( const KMime::Message::Ptr &aMsg, bool lastSignState,
     mSplitter->setChildrenCollapsible( false );
     mSnippetSplitter = new QSplitter( Qt::Horizontal, mSplitter );
     mSnippetSplitter->setObjectName( QLatin1String("mSnippetSplitter") );
-    mSnippetSplitter->setChildrenCollapsible( false );
     mSplitter->addWidget( mSnippetSplitter );
 
     QWidget *editorAndCryptoStateIndicators = new QWidget( mSplitter );
@@ -384,6 +384,7 @@ KMComposeWin::KMComposeWin( const KMime::Message::Ptr &aMsg, bool lastSignState,
     mSnippetWidget->setVisible( GlobalSettings::self()->showSnippetManager() );
     mSnippetSplitter->addWidget( mSnippetWidget );
     mSnippetSplitter->setCollapsible( 0, false );
+    new PimCommon::SplitterCollapser(mSnippetSplitter, mSnippetWidget, this);
 
     mSplitter->setOpaqueResize( true );
 
