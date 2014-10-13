@@ -80,7 +80,7 @@ IdentityAddVcardDialog::IdentityAddVcardDialog(const QStringList &shadowIdentiti
     mVCardPath->setFilter(filter);
 
     mVCardPath->setMode(KFile::LocalOnly|KFile::File);
-    QLabel *label = new QLabel( i18n("&VCard path:"), this );
+    QLabel *label = new QLabel( i18n("&vCard path:"), this );
     label->setBuddy( mVCardPath );
     label->setEnabled( false );
     mVCardPath->setEnabled( false );
