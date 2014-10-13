@@ -2890,7 +2890,8 @@ void KMMainWidget::showMessagePopup(const Akonadi::Item&msg ,const KUrl&url,cons
             menu->addAction( mMsgView->toggleMimePartTreeAction() );
         }
         menu->addSeparator();
-        menu->addAction( mMsgActions->printPreviewAction() );
+        if (mMsgActions->printPreviewAction())
+            menu->addAction( mMsgActions->printPreviewAction() );
         menu->addAction( mMsgActions->printAction() );
         menu->addAction( mSaveAsAction );
         menu->addAction( mSaveAttachmentsAction );
