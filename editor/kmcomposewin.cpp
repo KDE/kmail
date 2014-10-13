@@ -384,7 +384,8 @@ KMComposeWin::KMComposeWin( const KMime::Message::Ptr &aMsg, bool lastSignState,
     mSnippetWidget->setVisible( GlobalSettings::self()->showSnippetManager() );
     mSnippetSplitter->addWidget( mSnippetWidget );
     mSnippetSplitter->setCollapsible( 0, false );
-    new PimCommon::SplitterCollapser(mSnippetSplitter, mSnippetWidget, this);
+    mSnippetSplitterCollapser = new PimCommon::SplitterCollapser(mSnippetSplitter, mSnippetWidget, this);
+    mSnippetSplitterCollapser->setVisible( GlobalSettings::self()->showSnippetManager() );
 
     mSplitter->setOpaqueResize( true );
 
@@ -1273,8 +1274,7 @@ void KMComposeWin::setupActions( void )
 
     mSnippetAction = new KToggleAction( i18n("&Snippets"), this );
     actionCollection()->addAction( QLatin1String("snippets"), mSnippetAction );
-    connect( mSnippetAction, SIGNAL(toggled(bool)),
-             mSnippetWidget, SLOT(setVisible(bool)) );
+    connect( mSnippetAction, SIGNAL(toggled(bool)), this, SLOT(slotSnippetWidgetVisibilityChanged(bool)));
     mSnippetAction->setChecked( GlobalSettings::self()->showSnippetManager() );
 
     mAutoSpellCheckingAction = new KToggleAction( KIcon( QLatin1String("tools-check-spelling") ),
@@ -3631,4 +3631,10 @@ void KMComposeWin::slotFollowUpMail()
         //TODO
     }
     delete dlg;
+}
+
+void KMComposeWin::slotSnippetWidgetVisibilityChanged(bool b)
+{
+    mSnippetWidget->setVisible(b);
+    mSnippetSplitterCollapser->setVisible(b);
 }

@@ -105,6 +105,7 @@ class CustomToolsWidget;
 class LineEditWithAutoCorrection;
 class StorageServiceAbstract;
 class StorageServiceManager;
+class SplitterCollapser;
 }
 class KMStorageService;
 //-----------------------------------------------------------------------------
@@ -457,6 +458,7 @@ private slots:
     void slotTransportChanged();
     void slotFollowUpMail();
     void slotSendNowByShortcut();
+    void slotSnippetWidgetVisibilityChanged(bool b);
 public: // kmcommand
     // FIXME we need to remove these, but they're pure virtual in Composer.
     void addAttach( KMime::Content *msgPart );
@@ -692,6 +694,7 @@ private:
     CryptoStateIndicatorWidget *mCryptoStateIndicatorWidget;
     KMStorageService *mStorageService;
     bool mSendNowByShortcutUsed;
+    PimCommon::SplitterCollapser *mSnippetSplitterCollapser;
 };
 
 #endif
