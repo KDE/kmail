@@ -393,7 +393,7 @@
       <li>Displays the sender's picture or avatar if present in the address book</li>
       <li xml:lang="ca">Mostra la imatge o avatar del remitent si està present a la llibreta d'adreces</li>
       <li xml:lang="en-GB">Displays the sender's picture or avatar if present in the address book</li>
-      <li xml:lang="es">Muestra la imagen del remitente o su avatar en la libreta de direcciones</li>
+      <li xml:lang="es">Muestra la imagen del remitente o su avatar si está presente en la libreta de direcciones</li>
       <li xml:lang="fr">Affiche une photo ou un avatar de l'expéditeur s'il sont disponibles dans le carnet d'adresse</li>
       <li xml:lang="hu">A küldő képének megjelenítése, ha a címjegyzékben megtalálható</li>
       <li xml:lang="nb">Viser avsenders bilde eller avatar hvis det finnes i adresseboka</li>
