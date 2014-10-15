@@ -62,11 +62,6 @@ signals:
     void accountListChanged( const QStringList & );
 
 private slots:
-    void slotAccountSelected(const Akonadi::AgentInstance&);
-    void slotAddAccount();
-    void slotModifySelectedAccount();
-    void slotRemoveSelectedAccount();
-    void slotRestartSelectedAccount();
     void slotEditNotifications();
     void slotShowMailCheckMenu( const QString &, const QPoint & );
     void slotCustomizeAccountOrder();
@@ -92,7 +87,6 @@ private:
     //FIXME virtual void doResetToDefaultsOther();
 
 private:
-    QString mSpecialMailCollectionIdentifier;
     Ui_AccountsPageReceivingTab mAccountsReceiving;
     OrgFreedesktopAkonadiNewMailNotifierInterface *mNewMailNotifierInterface;
 };

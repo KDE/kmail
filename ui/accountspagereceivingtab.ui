@@ -14,82 +14,8 @@
    <item>
     <layout class="QVBoxLayout" name="vlay">
      <item>
-      <widget class="QLabel" name="label">
-       <property name="text">
-        <string>Incoming accounts (add at least one):</string>
-       </property>
+      <widget class="PimCommon::ManageAccountWidget" name="mAccountsReceiving">
       </widget>
-     </item>
-     <item>
-      <widget class="KFilterProxySearchLine" name="mFilterAccount"/>
-     </item>
-     <item>
-      <layout class="QHBoxLayout" name="hlay">
-       <item>
-        <widget class="Akonadi::AgentInstanceWidget" name="mAccountList" native="true"/>
-       </item>
-       <item>
-        <layout class="QVBoxLayout" name="btn_vlay">
-         <item>
-          <widget class="QPushButton" name="mAddAccountButton">
-           <property name="text">
-            <string>A&amp;dd...</string>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="KPushButton" name="mModifyAccountButton">
-           <property name="enabled">
-            <bool>false</bool>
-           </property>
-           <property name="text">
-            <string>&amp;Modify...</string>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="KPushButton" name="mRemoveAccountButton">
-           <property name="enabled">
-            <bool>false</bool>
-           </property>
-           <property name="text">
-            <string>R&amp;emove</string>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="Line" name="line">
-           <property name="orientation">
-            <enum>Qt::Horizontal</enum>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="KPushButton" name="mRestartAccountButton">
-           <property name="enabled">
-            <bool>false</bool>
-           </property>
-           <property name="text">
-            <string>Restart</string>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <spacer name="verticalSpacer">
-           <property name="orientation">
-            <enum>Qt::Vertical</enum>
-           </property>
-           <property name="sizeHint" stdset="0">
-            <size>
-             <width>20</width>
-             <height>40</height>
-            </size>
-           </property>
-          </spacer>
-         </item>
-        </layout>
-       </item>
-      </layout>
      </item>
      <item>
       <widget class="QPushButton" name="customizeAccountOrder">
@@ -156,19 +82,9 @@
  <layoutdefault spacing="6" margin="0"/>
  <customwidgets>
   <customwidget>
-   <class>KFilterProxySearchLine</class>
+   <class>PimCommon::ManageAccountWidget</class>
    <extends>QWidget</extends>
-   <header>kfilterproxysearchline.h</header>
-  </customwidget>
-  <customwidget>
-   <class>KPushButton</class>
-   <extends>QPushButton</extends>
-   <header>kpushbutton.h</header>
-  </customwidget>
-  <customwidget>
-   <class>Akonadi::AgentInstanceWidget</class>
-   <extends>QWidget</extends>
-   <header location="global">akonadi/agentinstancewidget.h</header>
+   <header>pimcommon/widgets/manageaccountwidget.h</header>
   </customwidget>
  </customwidgets>
  <resources/>
