@@ -49,6 +49,7 @@ using MailTransport::TransportManagementWidget;
 #include <QGroupBox>
 #include <QMenu>
 #include <KConfigGroup>
+#include <QLabel>
 
 QString AccountsPage::helpAnchor() const
 {
@@ -188,46 +189,18 @@ AccountsPageReceivingTab::AccountsPageReceivingTab( QWidget * parent )
 //TODO PORT QT5     mAccountsReceiving.vlay->setSpacing( QDialog::spacingHint() );
 //TODO PORT QT5     mAccountsReceiving.vlay->setMargin( QDialog::marginHint() );
 
-    mAccountsReceiving.mAccountList->agentFilterProxyModel()->addMimeTypeFilter( KMime::Message::mimeType() );
-#ifdef MERGE_KNODE_IN_KMAIL
-    mAccountsReceiving.mAccountList->agentFilterProxyModel()->addMimeTypeFilter( QString::fromLatin1("message/news") );
-#endif
-
-    mAccountsReceiving.mAccountList->agentFilterProxyModel()->addCapabilityFilter( QLatin1String("Resource") ); // show only resources, no agents
-    mAccountsReceiving.mAccountList->agentFilterProxyModel()->excludeCapabilities( QLatin1String("MailTransport") );
-    mAccountsReceiving.mAccountList->agentFilterProxyModel()->excludeCapabilities( QLatin1String("Notes") );
-    mAccountsReceiving.mAccountList->view()->setSelectionMode( QAbstractItemView::SingleSelection );
-
-    mAccountsReceiving.mFilterAccount->setProxy( mAccountsReceiving.mAccountList->agentFilterProxyModel() );
-    //QT5 mAccountsReceiving.mFilterAccount->lineEdit()->setTrapReturnKey( true );
+    mAccountsReceiving.mAccountsReceiving->setMimeTypeFilter(QStringList() << KMime::Message::mimeType() );
+    mAccountsReceiving.mAccountsReceiving->setCapabilityFilter(QStringList() << QLatin1String("Resource"));
+    mAccountsReceiving.mAccountsReceiving->setExcludeCapabilities(QStringList() << QLatin1String("MailTransport") << QLatin1String("Notes"));
 
     KConfig specialMailCollection(QLatin1String("specialmailcollectionsrc"));
     if(specialMailCollection.hasGroup(QLatin1String("SpecialCollections"))) {
         KConfigGroup grp = specialMailCollection.group(QLatin1String("SpecialCollections"));
-        mSpecialMailCollectionIdentifier = grp.readEntry(QLatin1String("DefaultResourceId"));
+        mAccountsReceiving.mAccountsReceiving->setSpecialCollectionIdentifier(grp.readEntry(QLatin1String("DefaultResourceId")));
     }
-
-    ConfigAgentDelegate *configDelegate = new ConfigAgentDelegate( mAccountsReceiving.mAccountList->view() );
-    mAccountsReceiving.mAccountList->view()->setItemDelegate( configDelegate );
+    ConfigAgentDelegate *configDelegate = new ConfigAgentDelegate( mAccountsReceiving.mAccountsReceiving->view() );
+    mAccountsReceiving.mAccountsReceiving->setItemDelegate(configDelegate);
     connect( configDelegate, SIGNAL(optionsClicked(QString,QPoint)), this, SLOT(slotShowMailCheckMenu(QString,QPoint)) );
-
-    connect( mAccountsReceiving.mAccountList, SIGNAL(clicked(Akonadi::AgentInstance)),
-             SLOT(slotAccountSelected(Akonadi::AgentInstance)) );
-    connect( mAccountsReceiving.mAccountList, SIGNAL(doubleClicked(Akonadi::AgentInstance)),
-             this, SLOT(slotModifySelectedAccount()) );
-
-    mAccountsReceiving.hlay->insertWidget(0, mAccountsReceiving.mAccountList);
-
-    connect( mAccountsReceiving.mAddAccountButton, SIGNAL(clicked()),
-             this, SLOT(slotAddAccount()) );
-
-    connect( mAccountsReceiving.mModifyAccountButton, SIGNAL(clicked()),
-             this, SLOT(slotModifySelectedAccount()) );
-
-    connect( mAccountsReceiving.mRemoveAccountButton, SIGNAL(clicked()),
-             this, SLOT(slotRemoveSelectedAccount()) );
-    connect( mAccountsReceiving.mRestartAccountButton, SIGNAL(clicked()),
-             this, SLOT(slotRestartSelectedAccount()) );
 
 //TODO PORT QT5     mAccountsReceiving.group->layout()->setMargin( QDialog::marginHint() );
 //TODO PORT QT5     mAccountsReceiving.group->layout()->setSpacing( QDialog::spacingHint() );
@@ -241,9 +214,6 @@ AccountsPageReceivingTab::AccountsPageReceivingTab( QWidget * parent )
     connect( mAccountsReceiving.mOtherNewMailActionsButton, SIGNAL(clicked()),
              this, SLOT(slotEditNotifications()) );
     connect( mAccountsReceiving.customizeAccountOrder,SIGNAL(clicked()),this,SLOT(slotCustomizeAccountOrder()));
-
-    slotAccountSelected( mAccountsReceiving.mAccountList->currentAgentInstance() );
-
 }
 
 AccountsPageReceivingTab::~AccountsPageReceivingTab()
@@ -320,7 +290,7 @@ void AccountsPageReceivingTab::slotShowMailCheckMenu( const QString &ident, cons
 
     connect( checkOnStartup, SIGNAL(toggled(bool)), this, SLOT(slotCheckOnStatupChanged(bool)) );
 
-    menu->exec(  mAccountsReceiving.mAccountList->view()->mapToGlobal( pos ) );
+    menu->exec(  mAccountsReceiving.mAccountsReceiving->view()->mapToGlobal( pos ) );
     delete menu;
 }
 
@@ -353,75 +323,6 @@ void AccountsPageReceivingTab::slotOfflineOnShutdownChanged( bool checked )
     QSharedPointer<RetrievalOptions> opts = mRetrievalHash.value( ident );
     opts->OfflineOnShutdown = checked;
     slotEmitChanged();
-}
-
-void AccountsPage::ReceivingTab::slotAccountSelected(const Akonadi::AgentInstance& current)
-{
-    if ( !current.isValid() ) {
-        mAccountsReceiving.mModifyAccountButton->setEnabled( false );
-        mAccountsReceiving.mRemoveAccountButton->setEnabled( false );
-        mAccountsReceiving.mRestartAccountButton->setEnabled( false );
-    } else {
-        mAccountsReceiving.mModifyAccountButton->setEnabled( !current.type().capabilities().contains( QLatin1String( "NoConfig" ) ) );
-        mAccountsReceiving.mRemoveAccountButton->setEnabled( mSpecialMailCollectionIdentifier != current.identifier() );
-        // Restarting an agent is not possible if it's in Running status... (see AgentProcessInstance::restartWhenIdle)
-        mAccountsReceiving.mRestartAccountButton->setEnabled( ( current.status() != 1 ) );
-    }
-}
-
-void AccountsPage::ReceivingTab::slotAddAccount()
-{
-    Akonadi::AgentTypeDialog dlg( this );
-    Akonadi::AgentFilterProxyModel* filter = dlg.agentFilterProxyModel();
-    filter->addMimeTypeFilter( QLatin1String("message/rfc822") );
-    filter->addCapabilityFilter( QLatin1String("Resource") );
-    filter->excludeCapabilities( QLatin1String("MailTransport") );
-    filter->excludeCapabilities( QLatin1String("Notes") );
-    if ( dlg.exec() ) {
-        const Akonadi::AgentType agentType = dlg.agentType();
-
-        if ( agentType.isValid() ) {
-
-            Akonadi::AgentInstanceCreateJob *job = new Akonadi::AgentInstanceCreateJob( agentType, this );
-            job->configure( this );
-            job->start();
-        }
-    }
-}
-
-void AccountsPage::ReceivingTab::slotModifySelectedAccount()
-{
-    Akonadi::AgentInstance instance = mAccountsReceiving.mAccountList->currentAgentInstance();
-    if ( instance.isValid() ) {
-        KWindowSystem::allowExternalProcessWindowActivation();
-        instance.configure( this );
-    }
-}
-
-void AccountsPage::ReceivingTab::slotRestartSelectedAccount()
-{
-    const Akonadi::AgentInstance instance =  mAccountsReceiving.mAccountList->currentAgentInstance();
-    if ( instance.isValid() ) {
-        instance.restart();
-    }
-}
-
-void AccountsPage::ReceivingTab::slotRemoveSelectedAccount()
-{
-    const Akonadi::AgentInstance instance =  mAccountsReceiving.mAccountList->currentAgentInstance();
-
-    int rc = KMessageBox::questionYesNo( this,
-                                         i18n("Do you want to remove account '%1'?", instance.name()),
-                                         i18n("Remove account?"));
-    if ( rc == KMessageBox::No ) {
-        return;
-    }
-
-    if ( instance.isValid() )
-        Akonadi::AgentManager::self()->removeInstance( instance );
-
-    slotAccountSelected( mAccountsReceiving.mAccountList->currentAgentInstance() );
-
 }
 
 void AccountsPage::ReceivingTab::slotEditNotifications()
