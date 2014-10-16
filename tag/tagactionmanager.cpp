@@ -117,7 +117,7 @@ void TagActionManager::clearActions()
 
 void TagActionManager::createTagAction( const MailCommon::Tag::Ptr &tag, bool addToMenu )
 {
-    QString cleanName( i18n("Message Tag %1", tag->tagName ) );
+    QString cleanName( i18n("Message Tag: %1", tag->tagName ) );
     cleanName.replace(QLatin1Char('&'), QLatin1String("&&"));
     KToggleAction * const tagAction = new KToggleAction( QIcon::fromTheme( tag->iconName ),
                                                          cleanName, this );
@@ -264,10 +264,10 @@ void TagActionManager::updateActionStates( int numberOfSelectedMessages,
             if (numberOfSelectedMessages == 1) {
                 const bool hasTag = selectedItem.hasTag(Akonadi::Tag(it.key()));
                 it.value()->setChecked( hasTag );
-                it.value()->setText( i18n("Message Tag %1", label ) );
+                it.value()->setText( i18n("Message Tag: %1", label ) );
             } else {
                 it.value()->setChecked( false );
-                it.value()->setText( i18n("Toggle Message Tag %1", label ) );
+                it.value()->setText( i18n("Toggle Message Tag: %1", label ) );
             }
         }
     } else {
