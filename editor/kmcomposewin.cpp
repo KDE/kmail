@@ -1212,9 +1212,6 @@ void KMComposeWin::setupActions( void )
     actionCollection()->addAction(QLatin1String("new_composer"), action );
     connect(action, SIGNAL(triggered(bool)), SLOT(slotNewComposer()));
     action->setShortcuts( KStandardShortcut::shortcut( KStandardShortcut::New ) );
-    action = new KAction( KIcon( QLatin1String("window-new") ), i18n("New Main &Window"), this );
-    actionCollection()->addAction( QLatin1String("open_mailreader"), action );
-    connect( action, SIGNAL(triggered(bool)), SLOT(slotNewMailReader()) );
 
     action = new KAction( i18n("Select &Recipients..."), this );
     actionCollection()->addAction( QLatin1String("select_recipients"), action );
@@ -2448,13 +2445,6 @@ void KMComposeWin::slotNewComposer()
     win = new KMComposeWin( msg, false, false, KMail::Composer::New );
     win->setCollectionForNewMessage(mCollectionForNewMessage);
     win->show();
-}
-
-//-----------------------------------------------------------------------------
-void KMComposeWin::slotNewMailReader()
-{
-    KMMainWin *kmmwin = new KMMainWin( 0 );
-    kmmwin->show();
 }
 
 //-----------------------------------------------------------------------------

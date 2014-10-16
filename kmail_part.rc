@@ -2,7 +2,7 @@
      the same menu entries at the same place in KMail and Kontact  -->
 
 <!DOCTYPE kpartgui>
-<kpartgui version="499" name="kmmainwin" >
+<kpartgui version="500" name="kmmainwin" >
  <MenuBar>
   <Menu noMerge="1" name="file" >
    <text>&amp;File</text>
@@ -12,8 +12,6 @@
      <Action name="new_from_template" />
      <Separator/>
      <Action name="akonadi_collection_create" />
-     <Separator/>
-     <Action name="new_mail_client" />
      <Separator/>
      <Action name="kmail_new_addressbook_contact" />
    </Menu>

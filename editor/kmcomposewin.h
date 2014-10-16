@@ -321,7 +321,6 @@ private slots:
     void slotSaveDraft();
     void slotSaveTemplate();
     void slotNewComposer();
-    void slotNewMailReader();
     void slotClose();
     void slotHelp();
     void slotUndo();

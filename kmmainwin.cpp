@@ -58,10 +58,6 @@ KMMainWin::KMMainWin(QWidget *)
     // modal subdialogs will only affect this dialog, not the other windows
     setAttribute( Qt::WA_GroupLeader );
 
-    KAction *action  = new KAction( KIcon(QLatin1String("window-new")), i18n("New &Window"), this );
-    actionCollection()->addAction( QLatin1String("new_mail_client"), action );
-    connect( action, SIGNAL(triggered(bool)), SLOT(slotNewMailReader()) );
-
     resize( 700, 500 ); // The default size
 
     mKMMainWidget = new KMMainWidget( this, this, actionCollection() );
@@ -146,18 +142,6 @@ void KMMainWin::slotToggleMenubar(bool dontShowWarning)
         GlobalSettings::self()->setShowMenuBar( mHideMenuBarAction->isChecked() );
     }
 }
-
-
-//-----------------------------------------------------------------------------
-void KMMainWin::slotNewMailReader()
-{
-    KMMainWin *d;
-
-    d = new KMMainWin();
-    d->show();
-    d->resize( d->size() );
-}
-
 
 void KMMainWin::slotEditToolbars()
 {

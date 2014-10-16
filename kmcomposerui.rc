@@ -1,10 +1,9 @@
 <!DOCTYPE kpartgui SYSTEM "kpartgui.dtd" >
-<kpartgui version="430" name="kmcomposer" >
+<kpartgui version="431" name="kmcomposer" >
  <MenuBar>
   <Menu noMerge="1" name="file" >
    <text>&amp;Message</text>
    <Action name="new_composer" />
-   <Action name="open_mailreader" />
    <Separator/>
    <Action name="kmail_new_addressbook_contact" />
    <Separator/>
