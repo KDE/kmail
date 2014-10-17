@@ -24,3 +24,10 @@ add_executable( identityaddvcarddialogtest  ${kmail_identityaddvcarddialog_sourc
 ecm_mark_as_test(kmail-identityaddvcarddialogtest)
 target_link_libraries( identityaddvcarddialogtest Qt5::Test Qt5::Widgets KF5::Completion KF5::KIOWidgets KF5::I18n)
 
+set( kmail_followupreminderselectdatedialog_source followupreminderselectdatedialogtest.cpp ../followupreminder/followupreminderselectdatedialog.cpp )
+add_executable( followupreminderselectdatedialogtest ${kmail_followupreminderselectdatedialog_source})
+ecm_mark_as_test(kmail-followupreminderselectdatedialogtest)
+target_link_libraries( followupreminderselectdatedialogtest Qt5::Test KF5::KIOWidgets KF5::I18n  )
+
+
+

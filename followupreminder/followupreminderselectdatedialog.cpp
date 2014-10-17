@@ -50,6 +50,7 @@ FollowUpReminderSelectDateDialog::FollowUpReminderSelectDateDialog(QWidget *pare
 //TODO PORT QT5     mainLayout->setSpacing( QDialog::spacingHint() );
 //TODO PORT QT5     mainLayout->setMargin( QDialog::marginHint() );
     mDatePicker = new KDatePicker;
+    mDatePicker->setObjectName(QLatin1String("datepicker"));
     QDate currentDate = QDate::currentDate();
     currentDate = currentDate.addDays(1);
     mDatePicker->setDate(currentDate);

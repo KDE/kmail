@@ -1427,8 +1427,9 @@ void KMComposeWin::setupActions( void )
         configureAction->setText( i18n("Configure KMail..." ) );
     }
 
-    action = new QAction( i18n("Follow Up Mail..."), this );
-    actionCollection()->addAction( QLatin1String("follow_up_mail"), action );
+
+    KToggleAction *followUpToggelAction = new KToggleAction( i18n("Follow Up Mail..."), this );
+    actionCollection()->addAction( QLatin1String("follow_up_mail"), followUpToggelAction );
     connect(action, &QAction::triggered, this, &KMComposeWin::slotFollowUpMail);
 }
 
@@ -3614,13 +3615,17 @@ void KMComposeWin::slotTransportChanged()
     mComposerBase->editor()->document()->setModified(true);
 }
 
-void KMComposeWin::slotFollowUpMail()
+void KMComposeWin::slotFollowUpMail(bool toggled)
 {
-    QPointer<FollowUpReminderSelectDateDialog> dlg = new FollowUpReminderSelectDateDialog(this);
-    if (dlg->exec()) {
-        //TODO
+    if (toggled) {
+        QPointer<FollowUpReminderSelectDateDialog> dlg = new FollowUpReminderSelectDateDialog(this);
+        if (dlg->exec()) {
+            mFollowUpDate = dlg->selectedDate();
+        }
+        delete dlg;
+    } else {
+        mFollowUpDate = QDate();
     }
-    delete dlg;
 }
 
 void KMComposeWin::slotSnippetWidgetVisibilityChanged(bool b)
