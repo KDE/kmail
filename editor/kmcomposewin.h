@@ -455,7 +455,7 @@ private slots:
     void slotShareLinkDone(const QString &fileName);
 
     void slotTransportChanged();
-    void slotFollowUpMail();
+    void slotFollowUpMail(bool toggled);
     void slotSendNowByShortcut();
     void slotSnippetWidgetVisibilityChanged(bool b);
 public: // kmcommand
@@ -673,6 +673,7 @@ private:
 
     QString mdbusObjectPath;
     static int s_composerNumber;
+    QDate mFollowUpDate;
 
     MessageComposer::ComposerViewBase* mComposerBase;
 
