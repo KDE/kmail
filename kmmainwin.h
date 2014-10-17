@@ -62,7 +62,6 @@ protected slots:
     void slotShowTipOnStart();
 
 private slots:
-    void slotNewMailReader();
     void slotToggleMenubar(bool dontShowWarning = false);    
     void slotConfigureShortcuts();
 
