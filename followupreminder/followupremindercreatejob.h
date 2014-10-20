@@ -21,6 +21,7 @@
 #include <QObject>
 #include <QDate>
 #include <AkonadiCore/Item>
+#include "agents/followupreminderagent/followupreminderinfo.h"
 
 class FollowupReminderCreateJob : public QObject
 {
@@ -37,12 +38,11 @@ public:
 
     void setTo(const QString &to);
 
-    void setFollowUpReminderDate(const QDateTime &followUpReminderDate);
-
     void setSubject(const QString &subject);
 
+    void start();
 private:
-    QDate mDate;
+    FollowUpReminder::FollowUpReminderInfo *mInfo;
 };
 
 

@@ -292,6 +292,7 @@ generate_export_header(kmailprivate BASE_NAME kmail)
     messageviewer
     akonadi_next
     sendlater
+    followupreminder
   )
 
   set_target_properties(kmailprivate
