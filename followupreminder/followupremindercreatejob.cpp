@@ -16,7 +16,7 @@
 */
 
 #include "followupremindercreatejob.h"
-
+#include "agents/followupreminderagent/followupreminderutil.h"
 
 FollowupReminderCreateJob::FollowupReminderCreateJob(QObject *parent)
     : QObject(parent),
@@ -58,7 +58,8 @@ void FollowupReminderCreateJob::setSubject(const QString &subject)
 void FollowupReminderCreateJob::start()
 {
     if (mInfo->isValid()) {
-
+        FollowUpReminder::FollowUpReminderUtil::writeFollowupReminderInfo(mInfo, true);
+        //TODO Create task
     } else {
         qDebug()<<"FollowupReminderCreateJob info not valid ";
         deleteLater();
