@@ -67,6 +67,7 @@ if (KDEPIM_BUILD_DESKTOP)
 
   set(kmailprivate_followupreminder_LIB_SRCS
      followupreminder/followupreminderselectdatedialog.cpp
+     followupreminder/followupremindercreatejob.cpp
   )
 
   set(kmailprivate_folderarchive_LIB_SRCS
