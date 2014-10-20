@@ -299,6 +299,7 @@ if (KDEPIM_BUILD_DESKTOP)
     ${KDE4_KPRINTUTILS_LIBS}
     sendlater
     ${AKONADI_COMMON_LIBRARIES}
+    followupreminder
   )
 
   set_target_properties(kmailprivate

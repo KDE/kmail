@@ -19,44 +19,51 @@
 
 
 FollowupReminderCreateJob::FollowupReminderCreateJob(QObject *parent)
-    : QObject(parent)
+    : QObject(parent),
+      mInfo(new FollowUpReminder::FollowUpReminderInfo)
 {
 
 }
 
 FollowupReminderCreateJob::~FollowupReminderCreateJob()
 {
-
+    delete mInfo;
 }
 
 void FollowupReminderCreateJob::setFollowUpReminderDate(const QDate &date)
 {
-
+    mInfo->setFollowUpReminderDate(date);
 }
 
 void FollowupReminderCreateJob::setOriginalMessageItemId(Akonadi::Entity::Id value)
 {
-
+    mInfo->setOriginalMessageItemId(value);
 }
 
 void FollowupReminderCreateJob::setMessageId(const QString &messageId)
 {
-
+    mInfo->setMessageId(messageId);
 }
 
 void FollowupReminderCreateJob::setTo(const QString &to)
 {
-
-}
-
-void FollowupReminderCreateJob::setFollowUpReminderDate(const QDateTime &followUpReminderDate)
-{
-
+    mInfo->setTo(to);
 }
 
 void FollowupReminderCreateJob::setSubject(const QString &subject)
 {
+    mInfo->setSubject(subject);
+}
 
+void FollowupReminderCreateJob::start()
+{
+    if (mInfo->isValid()) {
+
+    } else {
+        qDebug()<<"FollowupReminderCreateJob info not valid ";
+        deleteLater();
+        return;
+    }
 }
 
 
