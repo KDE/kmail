@@ -60,6 +60,7 @@
 
 #include "editor/kmstorageservice.h"
 #include "followupreminder/followupreminderselectdatedialog.h"
+#include "agents/followupreminderagent/followupreminderutil.h"
 
 
 #include "libkdepim/progresswidget/statusbarprogresswidget.h"
@@ -1451,6 +1452,7 @@ void KMComposeWin::setupActions( void )
     KToggleAction *followUpToggelAction = new KToggleAction( i18n("Follow Up Mail..."), this );
     actionCollection()->addAction( QLatin1String("follow_up_mail"), followUpToggelAction );
     connect( followUpToggelAction, SIGNAL(triggered(bool)), this, SLOT(slotFollowUpMail(bool)) );
+    followUpToggelAction->setEnabled(FollowUpReminder::FollowUpReminderUtil::followupReminderAgentEnabled());
 }
 
 void KMComposeWin::changeCryptoAction()
