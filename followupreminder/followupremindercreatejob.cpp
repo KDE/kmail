@@ -58,7 +58,7 @@ void FollowupReminderCreateJob::setSubject(const QString &subject)
 void FollowupReminderCreateJob::start()
 {
     if (mInfo->isValid()) {
-        FollowUpReminder::FollowUpReminderUtil::writeFollowupReminderInfo(mInfo, true);
+        FollowUpReminder::FollowUpReminderUtil::writeFollowupReminderInfo(FollowUpReminder::FollowUpReminderUtil::defaultConfig(), mInfo, true);
         //TODO Create task
     } else {
         qDebug()<<"FollowupReminderCreateJob info not valid ";
