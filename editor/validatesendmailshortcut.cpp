@@ -60,6 +60,8 @@ bool ValidateSendMailShortcut::validate()
         GlobalSettings::self()->save();
         sendNow = true;
     } else if (result == KMessageBox::Cancel) {
+        GlobalSettings::self()->setConfirmBeforeSendWhenUseShortcut(false);
+        GlobalSettings::self()->writeConfig();
         sendNow = true;
     }
     if (!configWasSaved) {
