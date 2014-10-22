@@ -46,10 +46,14 @@ bool ValidateSendMailShortcut::validate()
                                                         KGuiItem(i18n("Sending Without Confirmation")) );
     GlobalSettings::self()->setCheckSendDefaultActionShortcut(true);
     if (result == KMessageBox::Yes) {
-        QAction *act = mActionCollection->action( QLatin1String("send_default") );
-        act->setShortcut(QKeySequence());
-        mActionCollection->writeSettings();
-        configWasSaved = true;
+        QAction *act = mActionCollection->action( QLatin1String("send_mail") );
+        if (act) {
+            act->setShortcut(QKeySequence());
+            mActionCollection->writeSettings();
+            configWasSaved = true;
+        } else {
+            qDebug()<<"Unable to find action named \"send_mail\"";
+        }
         sendNow = false;
     } else if (result == KMessageBox::No) {
         GlobalSettings::self()->setConfirmBeforeSendWhenUseShortcut(true);
