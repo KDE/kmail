@@ -17,6 +17,7 @@
 
 #include "validatesendmailshortcut.h"
 
+#include "libkdepim/widgets/pimmessagebox.h"
 #include "settings/globalsettings.h"
 
 #include <KMessageBox>
@@ -38,34 +39,34 @@ ValidateSendMailShortcut::~ValidateSendMailShortcut()
 bool ValidateSendMailShortcut::validate()
 {
     bool sendNow = false;
-    bool configWasSaved = false;
-    const int result = KMessageBox::questionYesNoCancel(mParent,
-                                                        i18n("This shortcut allows to send mail directly. Mail can be sent accidentally. What do you want to do?"), i18n("Configure shortcut"),
-                                                        KGuiItem(i18n("Remove Shortcut")),
-                                                        KGuiItem(i18n("Ask Before Sending")),
-                                                        KGuiItem(i18n("Sending Without Confirmation")) );
-    GlobalSettings::self()->setCheckSendDefaultActionShortcut(true);
+    const int result = PIMMessageBox::fourBtnMsgBox(mParent,
+                                                    QMessageBox::Question,
+                                                    i18n("This shortcut allows to send mail directly. Mail can be send accidentally. What do you want to do?"),
+                                                    i18n("Configure shortcut"),
+                                                    i18n("Remove Shortcut"),
+                                                    i18n("Ask Before Sending"),
+                                                    i18n("Sending Without Confirmation"));
     if (result == KMessageBox::Yes) {
         QAction *act = mActionCollection->action( QLatin1String("send_mail") );
         if (act) {
             act->setShortcut(QKeySequence());
             mActionCollection->writeSettings();
-            configWasSaved = true;
         } else {
             qDebug()<<"Unable to find action named \"send_mail\"";
         }
+        GlobalSettings::self()->setCheckSendDefaultActionShortcut(true);
         sendNow = false;
     } else if (result == KMessageBox::No) {
         GlobalSettings::self()->setConfirmBeforeSendWhenUseShortcut(true);
-        GlobalSettings::self()->save();
+        GlobalSettings::self()->setCheckSendDefaultActionShortcut(true);
+        sendNow = true;
+    } else if (result == KMessageBox::Ok) {
+        GlobalSettings::self()->setConfirmBeforeSendWhenUseShortcut(false);
+        GlobalSettings::self()->setCheckSendDefaultActionShortcut(true);
         sendNow = true;
     } else if (result == KMessageBox::Cancel) {
-        GlobalSettings::self()->setConfirmBeforeSendWhenUseShortcut(false);
-        GlobalSettings::self()->writeConfig();
-        sendNow = true;
+        return false;
     }
-    if (!configWasSaved) {
-        GlobalSettings::self()->save();
-    }
+    GlobalSettings::self()->save();
     return sendNow;
 }
