@@ -54,19 +54,17 @@ bool ValidateSendMailShortcut::validate()
         } else {
             qDebug()<<"Unable to find action named \"send_mail\"";
         }
-        GlobalSettings::self()->setCheckSendDefaultActionShortcut(true);
         sendNow = false;
     } else if (result == KMessageBox::No) {
         GlobalSettings::self()->setConfirmBeforeSendWhenUseShortcut(true);
-        GlobalSettings::self()->setCheckSendDefaultActionShortcut(true);
         sendNow = true;
     } else if (result == KMessageBox::Ok) {
         GlobalSettings::self()->setConfirmBeforeSendWhenUseShortcut(false);
-        GlobalSettings::self()->setCheckSendDefaultActionShortcut(true);
         sendNow = true;
     } else if (result == KMessageBox::Cancel) {
         return false;
     }
+    GlobalSettings::self()->setCheckSendDefaultActionShortcut(true);
     GlobalSettings::self()->writeConfig();
     return sendNow;
 }
