@@ -76,7 +76,7 @@ QDate FollowUpReminderSelectDateDialog::selectedDate() const
 void FollowUpReminderSelectDateDialog::accept()
 {
     const QDate date = selectedDate();
-    if (date < QDate::currentDate()) {
+    if (date <= QDate::currentDate()) {
         KMessageBox::error(this, i18n("The selected date must be greater than the current date."), i18n("Invalid date"));
         return;
     }
