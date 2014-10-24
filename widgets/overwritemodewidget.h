@@ -15,30 +15,35 @@
   51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
 */
 
-#ifndef FOLLOWUPREMINDERSELECTDATEDIALOG_H
-#define FOLLOWUPREMINDERSELECTDATEDIALOG_H
+#ifndef OVERWRITEMODEWIDGET_H
+#define OVERWRITEMODEWIDGET_H
 
-#include <QDialog>
-#include <AkonadiCore/Collection>
-namespace Akonadi {
-class CollectionComboBox;
-}
-class KDateComboBox;
-class FollowUpReminderSelectDateDialog : public QDialog
+#include <QLabel>
+
+
+class OverwriteModeWidget : public QLabel
 {
     Q_OBJECT
 public:
-    explicit FollowUpReminderSelectDateDialog(QWidget *parent=0);
-    ~FollowUpReminderSelectDateDialog();
+    explicit OverwriteModeWidget(QWidget *parent = 0);
+    ~OverwriteModeWidget();
 
-    QDate selectedDate() const;
+    void setOverwriteMode(bool state);
 
-    void accept();
+    bool overwriteMode() const;
 
-    Akonadi::Collection collection() const;
+Q_SIGNALS:
+    void overwriteModeChanged(bool state);
+
+protected:
+    void mousePressEvent(QMouseEvent *ev);
+
 private:
-    KDateComboBox *mDateComboBox;
-    Akonadi::CollectionComboBox *mCollectionCombobox;
+    void updateLabel();
+    bool mOverwriteMode;
 };
 
-#endif // FOLLOWUPREMINDERSELECTDATEDIALOG_H
+
+
+#endif // OVERWRITEMODEWIDGET_H
+

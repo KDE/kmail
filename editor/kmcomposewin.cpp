@@ -110,6 +110,8 @@
 #include "mailcommon/folder/folderrequester.h"
 #include "mailcommon/folder/foldercollection.h"
 
+#include "widgets/overwritemodewidget.h"
+
 // LIBKDEPIM includes
 #include <libkdepim/addressline/recentaddresses.h>
 
@@ -237,7 +239,9 @@ KMComposeWin::KMComposeWin( const KMime::Message::Ptr &aMsg, bool lastSignState,
       mWasModified( false ),
       mCryptoStateIndicatorWidget(0),
       mStorageService(new KMStorageService(this, this)),
-      mSendNowByShortcutUsed(false)
+      mSendNowByShortcutUsed(false),
+      mFollowUpToggleAction(0),
+      mOverwriteModeWidget(0)
 {
     m_verifyMissingAttachment = 0;
     mComposerBase = new MessageComposer::ComposerViewBase( this, this );
@@ -1415,6 +1419,11 @@ void KMComposeWin::setupActions( void )
     actionCollection()->addActions(mComposerBase->editor()->createActions());
     actionCollection()->addAction( QLatin1String("shared_link"), mStorageService->menuShareLinkServices() );
 
+    mFollowUpToggleAction = new KToggleAction( i18n("Follow Up Mail..."), this );
+    actionCollection()->addAction( QLatin1String("follow_up_mail"), mFollowUpToggleAction );
+    connect( mFollowUpToggleAction, SIGNAL(triggered(bool)), this, SLOT(slotFollowUpMail(bool)) );
+    mFollowUpToggleAction->setEnabled(FollowUpReminder::FollowUpReminderUtil::followupReminderAgentEnabled());
+
     createGUI( QLatin1String("kmcomposerui.rc") );
     connect( toolBar( QLatin1String("htmlToolBar") )->toggleViewAction(),
              SIGNAL(toggled(bool)),
@@ -1429,10 +1438,6 @@ void KMComposeWin::setupActions( void )
     }
 
 
-    KToggleAction *followUpToggelAction = new KToggleAction( i18n("Follow Up Mail..."), this );
-    actionCollection()->addAction( QLatin1String("follow_up_mail"), followUpToggelAction );
-    connect(followUpToggelAction, &QAction::triggered, this, &KMComposeWin::slotFollowUpMail);
-    followUpToggelAction->setEnabled(FollowUpReminder::FollowUpReminderUtil::followupReminderAgentEnabled());
 }
 
 void KMComposeWin::changeCryptoAction()
@@ -1480,17 +1485,26 @@ void KMComposeWin::setupStatusBar( QWidget *w )
     lab = new QLabel(i18n(" Spellcheck: %1 ", QLatin1String( "     " )));
     statusBar()->addPermanentWidget(lab);
     mStatusBarLabelList.append(lab);
-    
+   #if 0 
     lab = new QLabel(overwriteModeStr());
     statusBar()->addPermanentWidget(lab);
     mStatusBarLabelList.append(lab);
-
     statusBar()->addPermanentWidget(progressStatusBarWidget->littleProgress());
+#endif
 
-
-#if 0
+#if 0 //PORT QT5
     statusBar()->insertItem( QString(), 0, 1 );
     statusBar()->setItemAlignment( 0, Qt::AlignLeft | Qt::AlignVCenter );
+    mOverwriteModeWidget = new OverwriteModeWidget(this);
+    statusBar()->addPermanentWidget(mOverwriteModeWidget,0 );
+    connect(mOverwriteModeWidget, SIGNAL(overwriteModeChanged(bool)), this, SLOT(slotOverwriteModeWasChanged(bool)));
+
+    statusBar()->insertPermanentItem( i18n(" Spellcheck: %1 ", QLatin1String( "     " )), 3, 0) ;
+    statusBar()->insertPermanentItem( i18n(" Column: %1 ", QLatin1String( "     " ) ), 2, 0 );
+    statusBar()->insertPermanentItem(
+                i18nc("Shows the linenumber of the cursor position.", " Line: %1 "
+                      , QLatin1String( "     " ) ), 1, 0 );
+    statusBar()->addPermanentWidget(progressStatusBarWidget->littleProgress());
 #endif
 }
 
@@ -3337,13 +3351,9 @@ void KMComposeWin::slotFolderRemoved( const Akonadi::Collection & col )
 
 void KMComposeWin::slotOverwriteModeChanged()
 {
-    mComposerBase->editor()->setCursorWidth( mComposerBase->editor()->overwriteMode () ? 5 : 1 );
-    mStatusBarLabelList.at(4)->setText(overwriteModeStr());
-}
-
-QString KMComposeWin::overwriteModeStr() const
-{
-    return mComposerBase->editor()->overwriteMode () ? i18n("OVR") : i18n ("INS");
+    const bool overwriteMode = mComposerBase->editor()->overwriteMode ();
+    mComposerBase->editor()->setCursorWidth( overwriteMode ? 5 : 1 );
+    mOverwriteModeWidget->setOverwriteMode(overwriteMode);
 }
 
 void KMComposeWin::slotCursorPositionChanged()
@@ -3623,10 +3633,14 @@ void KMComposeWin::slotFollowUpMail(bool toggled)
         QPointer<FollowUpReminderSelectDateDialog> dlg = new FollowUpReminderSelectDateDialog(this);
         if (dlg->exec()) {
             mFollowUpDate = dlg->selectedDate();
+            mFollowUpCollection = dlg->collection();
+        } else {
+            mFollowUpToggleAction->setChecked(false);
         }
         delete dlg;
     } else {
         mFollowUpDate = QDate();
+        mFollowUpCollection = Akonadi::Collection();
     }
 }
 
@@ -3634,4 +3648,10 @@ void KMComposeWin::slotSnippetWidgetVisibilityChanged(bool b)
 {
     mSnippetWidget->setVisible(b);
     mSnippetSplitterCollapser->setVisible(b);
+}
+
+void KMComposeWin::slotOverwriteModeWasChanged(bool state)
+{
+    mComposerBase->editor()->setCursorWidth( state ? 5 : 1 );
+    mComposerBase->editor()->setOverwriteMode (state);
 }
