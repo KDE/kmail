@@ -17,6 +17,9 @@
 
 #include "followupremindercreatejob.h"
 #include "agents/followupreminderagent/followupreminderutil.h"
+#include <KCalCore/Todo>
+#include <KLocalizedString>
+#include <akonadi/itemcreatejob.h>
 
 FollowupReminderCreateJob::FollowupReminderCreateJob(QObject *parent)
     : QObject(parent),
@@ -58,8 +61,15 @@ void FollowupReminderCreateJob::setSubject(const QString &subject)
 void FollowupReminderCreateJob::start()
 {
     if (mInfo->isValid()) {
-        //TODO Create task
-        FollowUpReminder::FollowUpReminderUtil::writeFollowupReminderInfo(FollowUpReminder::FollowUpReminderUtil::defaultConfig(), mInfo, true);
+        KCalCore::Todo::Ptr todo( new KCalCore::Todo );
+        todo->setSummary(i18n("Wait answer from \"%1\" send to \"%2\"").arg(mInfo->subject()).arg(mInfo->to()));
+        Akonadi::Item newTodoItem;
+        newTodoItem.setMimeType( KCalCore::Todo::todoMimeType() );
+        newTodoItem.setPayload<KCalCore::Todo::Ptr>( todo );
+
+        //Port collection Akonadi::ItemCreateJob *createJob = new Akonadi::ItemCreateJob(newTodoItem, mCollection);
+        //Port collection connect(createJob, SIGNAL(result(KJob*)), this, SLOT(slotCreateNewTodo(KJob*)));
+
     } else {
         qDebug()<<"FollowupReminderCreateJob info not valid ";
         deleteLater();
@@ -67,5 +77,13 @@ void FollowupReminderCreateJob::start()
     }
 }
 
-
-
+void FollowupReminderCreateJob::slotCreateNewTodo(KJob *job)
+{
+    if ( job->error() ) {
+        qDebug() << "Error during create new Todo "<<job->errorString();
+    } else {
+        Akonadi::ItemCreateJob *createJob = qobject_cast<Akonadi::ItemCreateJob *>(job);
+        mInfo->setTodoId(createJob->item().id());
+    }
+    FollowUpReminder::FollowUpReminderUtil::writeFollowupReminderInfo(FollowUpReminder::FollowUpReminderUtil::defaultConfig(), mInfo, true);
+}

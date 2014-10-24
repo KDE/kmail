@@ -41,6 +41,9 @@ public:
     void setSubject(const QString &subject);
 
     void start();
+
+private Q_SLOTS:
+    void slotCreateNewTodo(KJob *job);
 private:
     FollowUpReminder::FollowUpReminderInfo *mInfo;
 };
