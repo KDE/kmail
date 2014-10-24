@@ -17,7 +17,7 @@
 
 #include "followupreminderselectdatedialogtest.h"
 #include "../followupreminder/followupreminderselectdatedialog.h"
-#include <KDatePicker>
+#include <KDateComboBox>
 #include <qtest_kde.h>
 #include <Akonadi/CollectionComboBox>
 
@@ -36,13 +36,13 @@ FollowupReminderSelectDateDialogTest::~FollowupReminderSelectDateDialogTest()
 void FollowupReminderSelectDateDialogTest::shouldHaveDefaultValue()
 {
     FollowUpReminderSelectDateDialog dlg;
-    KDatePicker *datepicker = qFindChild<KDatePicker *>(&dlg, QLatin1String("datepicker"));
-    QVERIFY(datepicker);
+    KDateComboBox *datecombobox = qFindChild<KDateComboBox *>(&dlg, QLatin1String("datecombobox"));
+    QVERIFY(datecombobox);
 
     Akonadi::CollectionComboBox *combobox = qFindChild<Akonadi::CollectionComboBox *>(&dlg, QLatin1String("collectioncombobox"));
     QVERIFY(combobox);
     QDate currentDate = QDate::currentDate();
-    QCOMPARE(datepicker->date(), currentDate.addDays(1));
+    QCOMPARE(datecombobox->date(), currentDate.addDays(1));
 }
 
 QTEST_KDEMAIN(FollowupReminderSelectDateDialogTest, GUI)

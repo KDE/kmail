@@ -30,6 +30,7 @@
 #include <QVBoxLayout>
 #include <QFormLayout>
 #include <QLabel>
+#include <kdatecombobox.h>
 
 
 FollowUpReminderSelectDateDialog::FollowUpReminderSelectDateDialog(QWidget *parent)
@@ -47,16 +48,17 @@ FollowUpReminderSelectDateDialog::FollowUpReminderSelectDateDialog(QWidget *pare
     QFormLayout *formLayout = new QFormLayout;
     mainLayout->addLayout(formLayout);
 
-    mDatePicker = new KDatePicker;
-    mDatePicker->setObjectName(QLatin1String("datepicker"));
+    mDateComboBox = new KDateComboBox;
+    mDateComboBox->setObjectName(QLatin1String("datecombobox"));
 
     QDate currentDate = QDate::currentDate();
     currentDate = currentDate.addDays(1);
-    mDatePicker->setDate(currentDate);
+    mDateComboBox->setDate(currentDate);
 
-    formLayout->addRow(i18n("Date:"), mDatePicker);
+    formLayout->addRow(i18n("Date:"), mDateComboBox);
 
     mCollectionCombobox = new Akonadi::CollectionComboBox;
+    mCollectionCombobox->setMinimumWidth(250);
     mCollectionCombobox->setAccessRightsFilter(Akonadi::Collection::CanCreateItem);
     mCollectionCombobox->setMimeTypeFilter( QStringList() << KCalCore::Todo::todoMimeType() );
     mCollectionCombobox->setObjectName(QLatin1String("collectioncombobox"));
@@ -64,32 +66,16 @@ FollowUpReminderSelectDateDialog::FollowUpReminderSelectDateDialog(QWidget *pare
     formLayout->addRow(i18n("Store ToDo in:"), mCollectionCombobox);
 
     setMainWidget( mainWidget );
-    readConfig();
 }
 
 FollowUpReminderSelectDateDialog::~FollowUpReminderSelectDateDialog()
 {
-    writeConfig();
 }
 
-void FollowUpReminderSelectDateDialog::readConfig()
-{
-    KConfigGroup group( KGlobal::config(), "FollowUpReminderSelectDateDialog" );
-    const QSize sizeDialog = group.readEntry( "Size", QSize(800,600) );
-    if ( sizeDialog.isValid() ) {
-        resize( sizeDialog );
-    }
-}
-
-void FollowUpReminderSelectDateDialog::writeConfig()
-{
-    KConfigGroup group( KGlobal::config(), "FollowUpReminderSelectDateDialog" );
-    group.writeEntry( "Size", size() );
-}
 
 QDate FollowUpReminderSelectDateDialog::selectedDate() const
 {
-    return mDatePicker->date();
+    return mDateComboBox->date();
 }
 
 Akonadi::Collection FollowUpReminderSelectDateDialog::collection() const

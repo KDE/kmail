@@ -23,7 +23,7 @@
 namespace Akonadi {
 class CollectionComboBox;
 }
-class KDatePicker;
+class KDateComboBox;
 class FollowUpReminderSelectDateDialog : public KDialog
 {
     Q_OBJECT
@@ -37,9 +37,7 @@ public:
 
     Akonadi::Collection collection() const;
 private:
-    void readConfig();
-    void writeConfig();
-    KDatePicker *mDatePicker;
+    KDateComboBox *mDateComboBox;
     Akonadi::CollectionComboBox *mCollectionCombobox;
 };
 
