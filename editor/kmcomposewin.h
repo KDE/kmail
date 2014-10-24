@@ -69,7 +69,7 @@ class AttachmentMissingWarning;
 class ExternalEditorWarning;
 class KActionMenu;
 class CryptoStateIndicatorWidget;
-
+class OverwriteModeWidget;
 
 namespace boost {
 template <typename T> class shared_ptr;
@@ -458,6 +458,7 @@ private slots:
     void slotFollowUpMail(bool toggled);
     void slotSendNowByShortcut();
     void slotSnippetWidgetVisibilityChanged(bool b);
+    void slotOverwriteModeWasChanged(bool state);
 public: // kmcommand
     // FIXME we need to remove these, but they're pure virtual in Composer.
     void addAttach( KMime::Content *msgPart );
@@ -484,7 +485,6 @@ private:
 
     void updateSignature(uint uoid, uint uOldId);
     Kleo::CryptoMessageFormat cryptoMessageFormat() const;
-    QString overwriteModeStr() const;
     void printComposeResult( KJob *job, bool preview );
     void printComposer(bool preview);
     /**
@@ -696,6 +696,8 @@ private:
     KMStorageService *mStorageService;
     bool mSendNowByShortcutUsed;
     PimCommon::SplitterCollapser *mSnippetSplitterCollapser;
+    KToggleAction *mFollowUpToggleAction;
+    OverwriteModeWidget *mOverwriteModeWidget;
 };
 
 #endif
