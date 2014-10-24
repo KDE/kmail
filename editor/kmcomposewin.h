@@ -674,6 +674,7 @@ private:
     QString mdbusObjectPath;
     static int s_composerNumber;
     QDate mFollowUpDate;
+    Akonadi::Collection mFollowUpCollection;
 
     MessageComposer::ComposerViewBase* mComposerBase;
 

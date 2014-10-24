@@ -3623,10 +3623,12 @@ void KMComposeWin::slotFollowUpMail(bool toggled)
         QPointer<FollowUpReminderSelectDateDialog> dlg = new FollowUpReminderSelectDateDialog(this);
         if (dlg->exec()) {
             mFollowUpDate = dlg->selectedDate();
+            mFollowUpCollection = dlg->collection();
         }
         delete dlg;
     } else {
         mFollowUpDate = QDate();
+        mFollowUpCollection = Akonadi::Collection();
     }
 }
 
