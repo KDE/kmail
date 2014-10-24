@@ -1435,6 +1435,11 @@ void KMComposeWin::setupActions( void )
     mComposerBase->editor()->createActions( actionCollection() );
     actionCollection()->addAction( QLatin1String("shared_link"), mStorageService->menuShareLinkServices() );
 
+    KToggleAction *followUpToggelAction = new KToggleAction( i18n("Follow Up Mail..."), this );
+    actionCollection()->addAction( QLatin1String("follow_up_mail"), followUpToggelAction );
+    connect( followUpToggelAction, SIGNAL(triggered(bool)), this, SLOT(slotFollowUpMail(bool)) );
+    followUpToggelAction->setEnabled(FollowUpReminder::FollowUpReminderUtil::followupReminderAgentEnabled());
+
     createGUI( QLatin1String("kmcomposerui.rc") );
     connect( toolBar( QLatin1String("htmlToolBar") )->toggleViewAction(),
              SIGNAL(toggled(bool)),
@@ -1449,10 +1454,6 @@ void KMComposeWin::setupActions( void )
     }
 
 
-    KToggleAction *followUpToggelAction = new KToggleAction( i18n("Follow Up Mail..."), this );
-    actionCollection()->addAction( QLatin1String("follow_up_mail"), followUpToggelAction );
-    connect( followUpToggelAction, SIGNAL(triggered(bool)), this, SLOT(slotFollowUpMail(bool)) );
-    followUpToggelAction->setEnabled(FollowUpReminder::FollowUpReminderUtil::followupReminderAgentEnabled());
 }
 
 void KMComposeWin::changeCryptoAction()
