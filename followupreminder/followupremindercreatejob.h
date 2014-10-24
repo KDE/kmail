@@ -21,6 +21,7 @@
 #include <QObject>
 #include <QDate>
 #include <Akonadi/Item>
+#include <Akonadi/Collection>
 #include "agents/followupreminderagent/followupreminderinfo.h"
 
 class FollowupReminderCreateJob : public QObject
@@ -40,12 +41,17 @@ public:
 
     void setSubject(const QString &subject);
 
+    void setCollectionToDo(const Akonadi::Collection &collection);
+
     void start();
 
 private Q_SLOTS:
     void slotCreateNewTodo(KJob *job);
 private:
+    void writeFollowupReminderInfo();
+    Akonadi::Collection mCollection;
     FollowUpReminder::FollowUpReminderInfo *mInfo;
+
 };
 
 

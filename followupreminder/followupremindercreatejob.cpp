@@ -58,18 +58,26 @@ void FollowupReminderCreateJob::setSubject(const QString &subject)
     mInfo->setSubject(subject);
 }
 
+void FollowupReminderCreateJob::setCollectionToDo(const Akonadi::Collection &collection)
+{
+    mCollection = collection;
+}
+
 void FollowupReminderCreateJob::start()
 {
     if (mInfo->isValid()) {
-        KCalCore::Todo::Ptr todo( new KCalCore::Todo );
-        todo->setSummary(i18n("Wait answer from \"%1\" send to \"%2\"").arg(mInfo->subject()).arg(mInfo->to()));
-        Akonadi::Item newTodoItem;
-        newTodoItem.setMimeType( KCalCore::Todo::todoMimeType() );
-        newTodoItem.setPayload<KCalCore::Todo::Ptr>( todo );
+        if (mCollection.isValid()) {
+            KCalCore::Todo::Ptr todo( new KCalCore::Todo );
+            todo->setSummary(i18n("Wait answer from \"%1\" send to \"%2\"").arg(mInfo->subject()).arg(mInfo->to()));
+            Akonadi::Item newTodoItem;
+            newTodoItem.setMimeType( KCalCore::Todo::todoMimeType() );
+            newTodoItem.setPayload<KCalCore::Todo::Ptr>( todo );
 
-        //Port collection Akonadi::ItemCreateJob *createJob = new Akonadi::ItemCreateJob(newTodoItem, mCollection);
-        //Port collection connect(createJob, SIGNAL(result(KJob*)), this, SLOT(slotCreateNewTodo(KJob*)));
-
+            Akonadi::ItemCreateJob *createJob = new Akonadi::ItemCreateJob(newTodoItem, mCollection);
+            connect(createJob, SIGNAL(result(KJob*)), this, SLOT(slotCreateNewTodo(KJob*)));
+        } else {
+            writeFollowupReminderInfo();
+        }
     } else {
         qDebug()<<"FollowupReminderCreateJob info not valid ";
         deleteLater();
@@ -85,5 +93,11 @@ void FollowupReminderCreateJob::slotCreateNewTodo(KJob *job)
         Akonadi::ItemCreateJob *createJob = qobject_cast<Akonadi::ItemCreateJob *>(job);
         mInfo->setTodoId(createJob->item().id());
     }
+    writeFollowupReminderInfo();
+}
+
+void FollowupReminderCreateJob::writeFollowupReminderInfo()
+{
     FollowUpReminder::FollowUpReminderUtil::writeFollowupReminderInfo(FollowUpReminder::FollowUpReminderUtil::defaultConfig(), mInfo, true);
+    deleteLater();
 }
