@@ -25,5 +25,6 @@ target_link_libraries( identityaddvcarddialogtest ${QT_QTTEST_LIBRARY} ${KDE4_KD
 
 set( kmail_followupreminderselectdatedialog_source followupreminderselectdatedialogtest.cpp ../followupreminder/followupreminderselectdatedialog.cpp )
 kde4_add_unit_test( followupreminderselectdatedialogtest ${kmail_followupreminderselectdatedialog_source})
-target_link_libraries( followupreminderselectdatedialogtest ${QT_QTTEST_LIBRARY} ${KDE4_KDEUI_LIBS} )
+target_link_libraries( followupreminderselectdatedialogtest ${QT_QTTEST_LIBRARY} ${KDE4_KDEUI_LIBS} ${KDEPIMLIBS_AKONADI_LIBS} ${KDEPIMLIBS_AKONADI_CALENDAR_LIBS}  ${KDEPIMLIBS_KCALCORE_LIBS})
+
 

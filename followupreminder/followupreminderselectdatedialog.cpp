@@ -23,7 +23,14 @@
 #include <KDatePicker>
 #include <KMessageBox>
 
+#include <akonadi/collectioncombobox.h>
+
+#include <KCalCore/Todo>
+
 #include <QVBoxLayout>
+#include <QFormLayout>
+#include <QLabel>
+
 
 FollowUpReminderSelectDateDialog::FollowUpReminderSelectDateDialog(QWidget *parent)
     : KDialog(parent)
@@ -37,12 +44,24 @@ FollowUpReminderSelectDateDialog::FollowUpReminderSelectDateDialog(QWidget *pare
     QVBoxLayout *mainLayout = new QVBoxLayout( mainWidget );
     mainLayout->setSpacing( KDialog::spacingHint() );
     mainLayout->setMargin( KDialog::marginHint() );
+    QFormLayout *formLayout = new QFormLayout;
+    mainLayout->addLayout(formLayout);
+
     mDatePicker = new KDatePicker;
     mDatePicker->setObjectName(QLatin1String("datepicker"));
+
     QDate currentDate = QDate::currentDate();
     currentDate = currentDate.addDays(1);
     mDatePicker->setDate(currentDate);
-    mainLayout->addWidget(mDatePicker);
+
+    formLayout->addRow(i18n("Date:"), mDatePicker);
+
+    mCollectionCombobox = new Akonadi::CollectionComboBox;
+    mCollectionCombobox->setAccessRightsFilter(Akonadi::Collection::CanCreateItem);
+    mCollectionCombobox->setMimeTypeFilter( QStringList() << KCalCore::Todo::todoMimeType() );
+    mCollectionCombobox->setObjectName(QLatin1String("collectioncombobox"));
+
+    formLayout->addRow(i18n("Store ToDo in:"), mCollectionCombobox);
 
     setMainWidget( mainWidget );
     readConfig();
@@ -71,6 +90,11 @@ void FollowUpReminderSelectDateDialog::writeConfig()
 QDate FollowUpReminderSelectDateDialog::selectedDate() const
 {
     return mDatePicker->date();
+}
+
+Akonadi::Collection FollowUpReminderSelectDateDialog::collection() const
+{
+    return mCollectionCombobox->currentCollection();
 }
 
 void FollowUpReminderSelectDateDialog::accept()

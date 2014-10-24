@@ -19,6 +19,10 @@
 #define FOLLOWUPREMINDERSELECTDATEDIALOG_H
 
 #include <KDialog>
+#include <Akonadi/Collection>
+namespace Akonadi {
+class CollectionComboBox;
+}
 class KDatePicker;
 class FollowUpReminderSelectDateDialog : public KDialog
 {
@@ -31,10 +35,12 @@ public:
 
     void accept();
 
+    Akonadi::Collection collection() const;
 private:
     void readConfig();
     void writeConfig();
     KDatePicker *mDatePicker;
+    Akonadi::CollectionComboBox *mCollectionCombobox;
 };
 
 #endif // FOLLOWUPREMINDERSELECTDATEDIALOG_H
