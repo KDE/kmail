@@ -1485,27 +1485,13 @@ void KMComposeWin::setupStatusBar( QWidget *w )
     lab = new QLabel(i18n(" Spellcheck: %1 ", QLatin1String( "     " )));
     statusBar()->addPermanentWidget(lab);
     mStatusBarLabelList.append(lab);
-   #if 0 
-    lab = new QLabel(overwriteModeStr());
-    statusBar()->addPermanentWidget(lab);
-    mStatusBarLabelList.append(lab);
-    statusBar()->addPermanentWidget(progressStatusBarWidget->littleProgress());
-#endif
-
-#if 0 //PORT QT5
-    statusBar()->insertItem( QString(), 0, 1 );
-    statusBar()->setItemAlignment( 0, Qt::AlignLeft | Qt::AlignVCenter );
     mOverwriteModeWidget = new OverwriteModeWidget(this);
+    
     statusBar()->addPermanentWidget(mOverwriteModeWidget,0 );
     connect(mOverwriteModeWidget, SIGNAL(overwriteModeChanged(bool)), this, SLOT(slotOverwriteModeWasChanged(bool)));
 
-    statusBar()->insertPermanentItem( i18n(" Spellcheck: %1 ", QLatin1String( "     " )), 3, 0) ;
-    statusBar()->insertPermanentItem( i18n(" Column: %1 ", QLatin1String( "     " ) ), 2, 0 );
-    statusBar()->insertPermanentItem(
-                i18nc("Shows the linenumber of the cursor position.", " Line: %1 "
-                      , QLatin1String( "     " ) ), 1, 0 );
     statusBar()->addPermanentWidget(progressStatusBarWidget->littleProgress());
-#endif
+
 }
 
 //-----------------------------------------------------------------------------
