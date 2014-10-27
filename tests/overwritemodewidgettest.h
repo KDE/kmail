@@ -33,6 +33,7 @@ private Q_SLOTS:
     void shouldEmitSignalWhenChangeState();
     void shouldNotEmitSignalWhenWeDontChangeState();
     void shouldEmitSignalWhenClickOnLabel();
+    void shouldChangeTestWhenStateChanged();
 
 };
 

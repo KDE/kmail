@@ -43,6 +43,7 @@ void OverwriteModeWidgetTest::shouldChangeState()
     OverwriteModeWidget widget;
     widget.setOverwriteMode(true);
     QVERIFY(widget.overwriteMode());
+    QVERIFY(!widget.text().isEmpty());
 
     widget.setOverwriteMode(true);
     QVERIFY(widget.overwriteMode());
@@ -88,6 +89,21 @@ void OverwriteModeWidgetTest::shouldEmitSignalWhenClickOnLabel()
     QTest::mouseClick(&widget, Qt::LeftButton);
     QCOMPARE(spy.count(), 2);
 
+}
+
+void OverwriteModeWidgetTest::shouldChangeTestWhenStateChanged()
+{
+    OverwriteModeWidget widget;
+    const QString initialText = widget.text();
+    widget.setOverwriteMode(true);
+    const QString newText = widget.text();
+    QVERIFY(initialText!=newText);
+
+    widget.setOverwriteMode(false);
+    QCOMPARE(widget.text(), initialText);
+
+    widget.setOverwriteMode(true);
+    QCOMPARE(widget.text(), newText);
 }
 
 
