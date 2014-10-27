@@ -60,6 +60,7 @@
 
 #include "editor/kmstorageservice.h"
 #include "followupreminder/followupreminderselectdatedialog.h"
+#include "followupreminder/followupremindercreatejob.h"
 #include "agents/followupreminderagent/followupreminderutil.h"
 
 
@@ -1974,11 +1975,23 @@ void KMComposeWin::slotSendFailed( const QString& msg,MessageComposer::ComposerV
 void KMComposeWin::slotSendSuccessful()
 {
     setModified( false );
+    addFollowupReminder();
     mComposerBase->cleanupAutoSave();
     mFolder = Akonadi::Collection(); // see dtor
     close();
 }
 
+void KMComposeWin::addFollowupReminder()
+{
+    if (mFollowUpDate.isValid()) {
+        FollowupReminderCreateJob *job = new FollowupReminderCreateJob;
+        job->setSubject(subject());
+        job->setTo(replyTo());
+        job->setFollowUpReminderDate(mFollowUpDate);
+        job->setCollectionToDo(mFollowUpCollection);
+        job->start();
+    }
+}
 
 const KPIMIdentities::Identity &KMComposeWin::identity() const
 {

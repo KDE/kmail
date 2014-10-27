@@ -480,6 +480,7 @@ public: // kmcommand
     void ignoreStickyFields();
 
 private:
+    void addFollowupReminder();
     void confirmBeforeSend();
     void sendNow(bool shortcutUsed);
 
