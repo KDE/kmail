@@ -35,52 +35,57 @@ StatusBarLabelToggledStateTest::~StatusBarLabelToggledStateTest()
 void StatusBarLabelToggledStateTest::shouldHasDefaultValue()
 {
     StatusBarLabelToggledState widget;
-    QVERIFY(!widget.overwriteMode());
+    widget.setStateString(QLatin1String("toggle"), QLatin1String("untoggle"));
+    QVERIFY(!widget.toggleMode());
 }
 
 void StatusBarLabelToggledStateTest::shouldChangeState()
 {
     StatusBarLabelToggledState widget;
-    widget.setOverwriteMode(true);
-    QVERIFY(widget.overwriteMode());
+    widget.setStateString(QLatin1String("toggle"), QLatin1String("untoggle"));
+    widget.setToggleMode(true);
+    QVERIFY(widget.toggleMode());
     QVERIFY(!widget.text().isEmpty());
 
-    widget.setOverwriteMode(true);
-    QVERIFY(widget.overwriteMode());
+    widget.setToggleMode(true);
+    QVERIFY(widget.toggleMode());
 
-    widget.setOverwriteMode(false);
-    QVERIFY(!widget.overwriteMode());
+    widget.setToggleMode(false);
+    QVERIFY(!widget.toggleMode());
 }
 
 void StatusBarLabelToggledStateTest::shouldEmitSignalWhenChangeState()
 {
     StatusBarLabelToggledState widget;
-    QSignalSpy spy(&widget, SIGNAL(overwriteModeChanged(bool)));
-    widget.setOverwriteMode(true);
+    widget.setStateString(QLatin1String("toggle"), QLatin1String("untoggle"));
+    QSignalSpy spy(&widget, SIGNAL(toggleModeChanged(bool)));
+    widget.setToggleMode(true);
     QCOMPARE(spy.count(), 1);
 
-    widget.setOverwriteMode(false);
+    widget.setToggleMode(false);
     QCOMPARE(spy.count(), 2);
 }
 
 void StatusBarLabelToggledStateTest::shouldNotEmitSignalWhenWeDontChangeState()
 {
     StatusBarLabelToggledState widget;
-    QSignalSpy spy(&widget, SIGNAL(overwriteModeChanged(bool)));
-    widget.setOverwriteMode(false);
+    widget.setStateString(QLatin1String("toggle"), QLatin1String("untoggle"));
+    QSignalSpy spy(&widget, SIGNAL(toggleModeChanged(bool)));
+    widget.setToggleMode(false);
     QCOMPARE(spy.count(), 0);
 
-    widget.setOverwriteMode(true);
+    widget.setToggleMode(true);
     QCOMPARE(spy.count(), 1);
 
-    widget.setOverwriteMode(true);
+    widget.setToggleMode(true);
     QCOMPARE(spy.count(), 1);
 }
 
 void StatusBarLabelToggledStateTest::shouldEmitSignalWhenClickOnLabel()
 {
     StatusBarLabelToggledState widget;
-    QSignalSpy spy(&widget, SIGNAL(overwriteModeChanged(bool)));
+    widget.setStateString(QLatin1String("toggle"), QLatin1String("untoggle"));
+    QSignalSpy spy(&widget, SIGNAL(toggleModeChanged(bool)));
     widget.show();
     QTest::qWaitForWindowShown(&widget);
     QTest::mouseClick(&widget, Qt::LeftButton);
@@ -94,15 +99,16 @@ void StatusBarLabelToggledStateTest::shouldEmitSignalWhenClickOnLabel()
 void StatusBarLabelToggledStateTest::shouldChangeTestWhenStateChanged()
 {
     StatusBarLabelToggledState widget;
+    widget.setStateString(QLatin1String("toggle"), QLatin1String("untoggle"));
     const QString initialText = widget.text();
-    widget.setOverwriteMode(true);
+    widget.setToggleMode(true);
     const QString newText = widget.text();
     QVERIFY(initialText!=newText);
 
-    widget.setOverwriteMode(false);
+    widget.setToggleMode(false);
     QCOMPARE(widget.text(), initialText);
 
-    widget.setOverwriteMode(true);
+    widget.setToggleMode(true);
     QCOMPARE(widget.text(), newText);
 }
 

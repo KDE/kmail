@@ -21,9 +21,8 @@
 
 StatusBarLabelToggledState::StatusBarLabelToggledState(QWidget *parent)
     : QLabel(parent),
-      mOverwriteMode(false)
+      mToggleMode(false)
 {
-    updateLabel();
 }
 
 StatusBarLabelToggledState::~StatusBarLabelToggledState()
@@ -31,32 +30,38 @@ StatusBarLabelToggledState::~StatusBarLabelToggledState()
 
 }
 
-
-void StatusBarLabelToggledState::setOverwriteMode(bool state)
+void StatusBarLabelToggledState::setStateString(const QString &toggled, const QString &untoggled)
 {
-    if (mOverwriteMode != state) {
-        mOverwriteMode = state;
-        Q_EMIT overwriteModeChanged(mOverwriteMode);
+    mToggled = toggled;
+    mUnToggled = untoggled;
+    updateLabel();
+}
+
+void StatusBarLabelToggledState::setToggleMode(bool state)
+{
+    if (mToggleMode != state) {
+        mToggleMode = state;
+        Q_EMIT toggleModeChanged(mToggleMode);
         updateLabel();
     }
 }
 
-bool StatusBarLabelToggledState::overwriteMode() const
+bool StatusBarLabelToggledState::toggleMode() const
 {
-    return mOverwriteMode;
+    return mToggleMode;
 }
 
 void StatusBarLabelToggledState::updateLabel()
 {
-    if (mOverwriteMode) {
-        setText(i18n("OVR"));
+    if (mToggleMode) {
+        setText(mToggled);
     } else {
-        setText(i18n("INS"));
+        setText(mUnToggled);
     }
 }
 
 void StatusBarLabelToggledState::mousePressEvent(QMouseEvent *ev)
 {
     Q_UNUSED(ev);
-    setOverwriteMode(!mOverwriteMode);
+    setToggleMode(!mToggleMode);
 }

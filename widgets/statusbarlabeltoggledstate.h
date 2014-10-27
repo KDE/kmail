@@ -28,19 +28,22 @@ public:
     explicit StatusBarLabelToggledState(QWidget *parent = 0);
     ~StatusBarLabelToggledState();
 
-    void setOverwriteMode(bool state);
+    void setToggleMode(bool state);
 
-    bool overwriteMode() const;
+    bool toggleMode() const;
 
+    void setStateString(const QString &toggled, const QString &untoggled);
 Q_SIGNALS:
-    void overwriteModeChanged(bool state);
+    void toggleModeChanged(bool state);
 
 protected:
     void mousePressEvent(QMouseEvent *ev);
 
 private:
     void updateLabel();
-    bool mOverwriteMode;
+    QString mToggled;
+    QString mUnToggled;
+    bool mToggleMode;
 };
 
 
