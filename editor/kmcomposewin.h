@@ -698,6 +698,7 @@ private:
     PimCommon::SplitterCollapser *mSnippetSplitterCollapser;
     KToggleAction *mFollowUpToggleAction;
     StatusBarLabelToggledState *mStatusBarLabelToggledOverrideMode;
+    StatusBarLabelToggledState *mStatusBarLabelSpellCheckingChangeMode;
 };
 
 #endif
