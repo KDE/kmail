@@ -31,8 +31,8 @@ target_link_libraries( followupreminderselectdatedialogtest Qt5::Test KF5::KIOWi
 
 
 
-set( kmail_overwritewidget_source overwritemodewidgettest.cpp ../widgets/overwritemodewidget.cpp )
-add_executable(overwritemodewidgettest ${kmail_overwritewidget_source})
-ecm_mark_as_test(kmail-overwritemodewidgettest)
-target_link_libraries( overwritemodewidgettest Qt5::Test KF5::KIOWidgets KF5::I18n)
+set( kmail_statusbarlabeltoggledstate_source statusbarlabeltoggledstatetest.cpp ../widgets/statusbarlabeltoggledstate.cpp )
+add_executable(statusbarlabeltoggledstatetest ${kmail_statusbarlabeltoggledstate_source})
+ecm_mark_as_test(kmail-statusbarlabeltoggledstatetest)
+target_link_libraries( statusbarlabeltoggledstatetest Qt5::Test KF5::KIOWidgets KF5::I18n)
 

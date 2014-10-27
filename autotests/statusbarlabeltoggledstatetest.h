@@ -15,17 +15,17 @@
   51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
 */
 
-#ifndef OVERWRITEMODEWIDGETTEST_H
-#define OVERWRITEMODEWIDGETTEST_H
+#ifndef StatusBarLabelToggledStateTEST_H
+#define StatusBarLabelToggledStateTEST_H
 
 #include <QObject>
 
-class OverwriteModeWidgetTest : public QObject
+class StatusBarLabelToggledStateTest : public QObject
 {
     Q_OBJECT
 public:
-    explicit OverwriteModeWidgetTest(QObject *parent = 0);
-    ~OverwriteModeWidgetTest();
+    explicit StatusBarLabelToggledStateTest(QObject *parent = 0);
+    ~StatusBarLabelToggledStateTest();
 
 private Q_SLOTS:
     void shouldHasDefaultValue();
@@ -33,10 +33,11 @@ private Q_SLOTS:
     void shouldEmitSignalWhenChangeState();
     void shouldNotEmitSignalWhenWeDontChangeState();
     void shouldEmitSignalWhenClickOnLabel();
+    void shouldChangeTestWhenStateChanged();
 
 };
 
 
 
-#endif // OVERWRITEMODEWIDGETTEST_H
+#endif // StatusBarLabelToggledStateTEST_H
 

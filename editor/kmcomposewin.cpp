@@ -110,7 +110,7 @@
 #include "mailcommon/folder/folderrequester.h"
 #include "mailcommon/folder/foldercollection.h"
 
-#include "widgets/overwritemodewidget.h"
+#include "widgets/statusbarlabeltoggledstate.h"
 
 // LIBKDEPIM includes
 #include <libkdepim/addressline/recentaddresses.h>
@@ -241,7 +241,8 @@ KMComposeWin::KMComposeWin( const KMime::Message::Ptr &aMsg, bool lastSignState,
       mStorageService(new KMStorageService(this, this)),
       mSendNowByShortcutUsed(false),
       mFollowUpToggleAction(0),
-      mOverwriteModeWidget(0)
+      mStatusBarLabelToggledOverrideMode(0),
+      mStatusBarLabelSpellCheckingChangeMode(0)
 {
     m_verifyMissingAttachment = 0;
     mComposerBase = new MessageComposer::ComposerViewBase( this, this );
@@ -1482,13 +1483,16 @@ void KMComposeWin::setupStatusBar( QWidget *w )
     statusBar()->addPermanentWidget(lab);
     mStatusBarLabelList.append(lab);
     
-    lab = new QLabel(i18n(" Spellcheck: %1 ", QLatin1String( "     " )));
-    statusBar()->addPermanentWidget(lab);
-    mStatusBarLabelList.append(lab);
-    mOverwriteModeWidget = new OverwriteModeWidget(this);
+    mStatusBarLabelToggledOverrideMode = new StatusBarLabelToggledState(this);
+    mStatusBarLabelToggledOverrideMode->setStateString(i18n("OVR"), i18n("INS"));
+    statusBar()->addPermanentWidget(mStatusBarLabelToggledOverrideMode,0 );
+    connect(mStatusBarLabelToggledOverrideMode, SIGNAL(toggleModeChanged(bool)), this, SLOT(slotOverwriteModeWasChanged(bool)));
     
-    statusBar()->addPermanentWidget(mOverwriteModeWidget,0 );
-    connect(mOverwriteModeWidget, SIGNAL(overwriteModeChanged(bool)), this, SLOT(slotOverwriteModeWasChanged(bool)));
+    mStatusBarLabelSpellCheckingChangeMode = new StatusBarLabelToggledState(this);
+    mStatusBarLabelSpellCheckingChangeMode->setStateString(i18n( "Spellcheck: on" ), i18n( "Spellcheck: off" ));
+    statusBar()->addPermanentWidget(mStatusBarLabelSpellCheckingChangeMode, 0 );
+    connect(mStatusBarLabelSpellCheckingChangeMode, SIGNAL(toggleModeChanged(bool)), this, SLOT(slotAutoSpellCheckingToggled(bool)));
+
 
     statusBar()->addPermanentWidget(progressStatusBarWidget->littleProgress());
 
@@ -3104,15 +3108,8 @@ void KMComposeWin::slotAutoSpellCheckingToggled( bool on )
         mComposerBase->editor()->setCheckSpellingEnabled( on );
     if ( on != mEdtSubject->checkSpellingEnabled() )
         mEdtSubject->setCheckSpellingEnabled( on );
-
 #endif
-    QString temp;
-    if ( on ) {
-        temp = i18n( "Spellcheck: on" );
-    } else {
-        temp = i18n( "Spellcheck: off" );
-    }
-    mStatusBarLabelList.at(3)->setText(temp);
+    mStatusBarLabelSpellCheckingChangeMode->setToggleMode(on);
 }
 
 void KMComposeWin::slotSpellCheckingStatus(const QString & status)
@@ -3339,7 +3336,7 @@ void KMComposeWin::slotOverwriteModeChanged()
 {
     const bool overwriteMode = mComposerBase->editor()->overwriteMode ();
     mComposerBase->editor()->setCursorWidth( overwriteMode ? 5 : 1 );
-    mOverwriteModeWidget->setOverwriteMode(overwriteMode);
+    mStatusBarLabelToggledOverrideMode->setToggleMode(overwriteMode);
 }
 
 void KMComposeWin::slotCursorPositionChanged()

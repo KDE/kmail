@@ -15,48 +15,53 @@
   51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
 */
 
-#include "overwritemodewidget.h"
+#include "statusbarlabeltoggledstate.h"
 #include <KLocalizedString>
 #include <QDebug>
 
-OverwriteModeWidget::OverwriteModeWidget(QWidget *parent)
+StatusBarLabelToggledState::StatusBarLabelToggledState(QWidget *parent)
     : QLabel(parent),
-      mOverwriteMode(false)
+      mToggleMode(false)
 {
+}
+
+StatusBarLabelToggledState::~StatusBarLabelToggledState()
+{
+
+}
+
+void StatusBarLabelToggledState::setStateString(const QString &toggled, const QString &untoggled)
+{
+    mToggled = toggled;
+    mUnToggled = untoggled;
     updateLabel();
 }
 
-OverwriteModeWidget::~OverwriteModeWidget()
+void StatusBarLabelToggledState::setToggleMode(bool state)
 {
-
-}
-
-
-void OverwriteModeWidget::setOverwriteMode(bool state)
-{
-    if (mOverwriteMode != state) {
-        mOverwriteMode = state;
-        Q_EMIT overwriteModeChanged(mOverwriteMode);
+    if (mToggleMode != state) {
+        mToggleMode = state;
+        Q_EMIT toggleModeChanged(mToggleMode);
         updateLabel();
     }
 }
 
-bool OverwriteModeWidget::overwriteMode() const
+bool StatusBarLabelToggledState::toggleMode() const
 {
-    return mOverwriteMode;
+    return mToggleMode;
 }
 
-void OverwriteModeWidget::updateLabel()
+void StatusBarLabelToggledState::updateLabel()
 {
-    if (mOverwriteMode) {
-        setText(i18n("OVR"));
+    if (mToggleMode) {
+        setText(mToggled);
     } else {
-        setText(i18n("INS"));
+        setText(mUnToggled);
     }
 }
 
-void OverwriteModeWidget::mousePressEvent(QMouseEvent *ev)
+void StatusBarLabelToggledState::mousePressEvent(QMouseEvent *ev)
 {
     Q_UNUSED(ev);
-    setOverwriteMode(!mOverwriteMode);
+    setToggleMode(!mToggleMode);
 }
