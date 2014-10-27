@@ -49,6 +49,7 @@ FollowUpReminderSelectDateDialog::FollowUpReminderSelectDateDialog(QWidget *pare
     mainLayout->addLayout(formLayout);
 
     mDateComboBox = new KDateComboBox;
+    mDateComboBox->setMinimumDate(QDate::currentDate());
     mDateComboBox->setObjectName(QLatin1String("datecombobox"));
 
     QDate currentDate = QDate::currentDate();
