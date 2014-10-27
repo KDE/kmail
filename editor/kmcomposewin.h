@@ -417,7 +417,7 @@ private slots:
     //void slotEncryptChiasmusToggled( bool );
 
     void slotSendFailed(const QString& msg , MessageComposer::ComposerViewBase::FailedType type);
-    void slotSendSuccessful();
+    void slotSendSuccessful(const QString &messageId);
 
     /**
      *  toggle automatic spellchecking
@@ -480,7 +480,7 @@ public: // kmcommand
     void ignoreStickyFields();
 
 private:
-    void addFollowupReminder();
+    void addFollowupReminder(const QString &messageId);
     void confirmBeforeSend();
     void sendNow(bool shortcutUsed);
 

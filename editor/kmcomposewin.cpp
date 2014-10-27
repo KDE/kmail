@@ -247,7 +247,7 @@ KMComposeWin::KMComposeWin( const KMime::Message::Ptr &aMsg, bool lastSignState,
     connect( mComposerBase, SIGNAL(enableHtml()),
              this, SLOT(enableHtml()) );
     connect( mComposerBase, SIGNAL(failed(QString,MessageComposer::ComposerViewBase::FailedType)), this, SLOT(slotSendFailed(QString,MessageComposer::ComposerViewBase::FailedType)) );
-    connect( mComposerBase, SIGNAL(sentSuccessfully()), this, SLOT(slotSendSuccessful()) );
+    connect( mComposerBase, SIGNAL(sentSuccessfully(QString)), this, SLOT(slotSendSuccessful(QString)) );
     connect( mComposerBase, SIGNAL(modified(bool)), this, SLOT(setModified(bool)) );
 
     (void) new MailcomposerAdaptor( this );
@@ -1972,21 +1972,23 @@ void KMComposeWin::slotSendFailed( const QString& msg,MessageComposer::ComposerV
                         (type == MessageComposer::ComposerViewBase::AutoSave) ? i18n( "Autosave Message Failed" ) : i18n( "Sending Message Failed" ) );
 }
 
-void KMComposeWin::slotSendSuccessful()
+void KMComposeWin::slotSendSuccessful(const QString &messageId)
 {
     setModified( false );
-    addFollowupReminder();
+    addFollowupReminder(messageId);
     mComposerBase->cleanupAutoSave();
     mFolder = Akonadi::Collection(); // see dtor
     close();
 }
 
-void KMComposeWin::addFollowupReminder()
+void KMComposeWin::addFollowupReminder(const QString &messageId)
 {
     if (mFollowUpDate.isValid()) {
         FollowupReminderCreateJob *job = new FollowupReminderCreateJob;
         job->setSubject(subject());
+        job->setMessageId(messageId);
         job->setTo(replyTo());
+        qDebug()<<" replyTo()"<<replyTo() << "message Id "<<messageId<<" subvjedct "<<subject();
         job->setFollowUpReminderDate(mFollowUpDate);
         job->setCollectionToDo(mFollowUpCollection);
         job->start();
