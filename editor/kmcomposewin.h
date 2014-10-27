@@ -69,7 +69,7 @@ class AttachmentMissingWarning;
 class ExternalEditorWarning;
 class KActionMenu;
 class CryptoStateIndicatorWidget;
-class OverwriteModeWidget;
+class StatusBarLabelToggledState;
 
 namespace boost {
 template <typename T> class shared_ptr;
@@ -697,7 +697,7 @@ private:
     bool mSendNowByShortcutUsed;
     PimCommon::SplitterCollapser *mSnippetSplitterCollapser;
     KToggleAction *mFollowUpToggleAction;
-    OverwriteModeWidget *mOverwriteModeWidget;
+    StatusBarLabelToggledState *mStatusBarLabelToggledState;
 };
 
 #endif

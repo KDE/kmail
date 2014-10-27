@@ -15,24 +15,24 @@
   51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
 */
 
-#include "overwritemodewidget.h"
+#include "statusbarlabeltoggledstate.h"
 #include <KLocalizedString>
 #include <QDebug>
 
-OverwriteModeWidget::OverwriteModeWidget(QWidget *parent)
+StatusBarLabelToggledState::StatusBarLabelToggledState(QWidget *parent)
     : QLabel(parent),
       mOverwriteMode(false)
 {
     updateLabel();
 }
 
-OverwriteModeWidget::~OverwriteModeWidget()
+StatusBarLabelToggledState::~StatusBarLabelToggledState()
 {
 
 }
 
 
-void OverwriteModeWidget::setOverwriteMode(bool state)
+void StatusBarLabelToggledState::setOverwriteMode(bool state)
 {
     if (mOverwriteMode != state) {
         mOverwriteMode = state;
@@ -41,12 +41,12 @@ void OverwriteModeWidget::setOverwriteMode(bool state)
     }
 }
 
-bool OverwriteModeWidget::overwriteMode() const
+bool StatusBarLabelToggledState::overwriteMode() const
 {
     return mOverwriteMode;
 }
 
-void OverwriteModeWidget::updateLabel()
+void StatusBarLabelToggledState::updateLabel()
 {
     if (mOverwriteMode) {
         setText(i18n("OVR"));
@@ -55,7 +55,7 @@ void OverwriteModeWidget::updateLabel()
     }
 }
 
-void OverwriteModeWidget::mousePressEvent(QMouseEvent *ev)
+void StatusBarLabelToggledState::mousePressEvent(QMouseEvent *ev)
 {
     Q_UNUSED(ev);
     setOverwriteMode(!mOverwriteMode);

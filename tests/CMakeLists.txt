@@ -28,7 +28,7 @@ kde4_add_unit_test( followupreminderselectdatedialogtest ${kmail_followupreminde
 target_link_libraries( followupreminderselectdatedialogtest ${QT_QTTEST_LIBRARY} ${KDE4_KDEUI_LIBS} ${KDEPIMLIBS_AKONADI_LIBS} ${KDEPIMLIBS_AKONADI_CALENDAR_LIBS}  ${KDEPIMLIBS_KCALCORE_LIBS})
 
 
-set( kmail_overwritewidget_source overwritemodewidgettest.cpp ../widgets/overwritemodewidget.cpp )
-kde4_add_unit_test( overwritemodewidgettest ${kmail_overwritewidget_source})
-target_link_libraries( overwritemodewidgettest ${QT_QTTEST_LIBRARY} ${KDE4_KDEUI_LIBS})
+set( kmail_statusbarlabeltoggledstate_source statusbarlabeltoggledstatetest.cpp ../widgets/statusbarlabeltoggledstate.cpp )
+kde4_add_unit_test( statusbarlabeltoggledstatetest ${kmail_statusbarlabeltoggledstate_source})
+target_link_libraries( statusbarlabeltoggledstatetest ${QT_QTTEST_LIBRARY} ${KDE4_KDEUI_LIBS})
 

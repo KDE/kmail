@@ -15,29 +15,35 @@
   51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
 */
 
-#ifndef OVERWRITEMODEWIDGETTEST_H
-#define OVERWRITEMODEWIDGETTEST_H
+#ifndef STATUSBARLABELTOGGLEDSTATE_H
+#define STATUSBARLABELTOGGLEDSTATE_H
 
-#include <QObject>
+#include <QLabel>
 
-class OverwriteModeWidgetTest : public QObject
+
+class StatusBarLabelToggledState : public QLabel
 {
     Q_OBJECT
 public:
-    explicit OverwriteModeWidgetTest(QObject *parent = 0);
-    ~OverwriteModeWidgetTest();
+    explicit StatusBarLabelToggledState(QWidget *parent = 0);
+    ~StatusBarLabelToggledState();
 
-private Q_SLOTS:
-    void shouldHasDefaultValue();
-    void shouldChangeState();
-    void shouldEmitSignalWhenChangeState();
-    void shouldNotEmitSignalWhenWeDontChangeState();
-    void shouldEmitSignalWhenClickOnLabel();
-    void shouldChangeTestWhenStateChanged();
+    void setOverwriteMode(bool state);
 
+    bool overwriteMode() const;
+
+Q_SIGNALS:
+    void overwriteModeChanged(bool state);
+
+protected:
+    void mousePressEvent(QMouseEvent *ev);
+
+private:
+    void updateLabel();
+    bool mOverwriteMode;
 };
 
 
 
-#endif // OVERWRITEMODEWIDGETTEST_H
+#endif // STATUSBARLABELTOGGLEDSTATE_H
 

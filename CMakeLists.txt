@@ -161,7 +161,7 @@ if (KDEPIM_BUILD_DESKTOP)
      widgets/collectionpane.cpp
      widgets/vacationscriptindicatorwidget.cpp
      widgets/displaymessageformatactionmenu.cpp
-     widgets/overwritemodewidget.cpp
+     widgets/statusbarlabeltoggledstate.cpp
   )
   set(kmailprivate_tag_LIB_SRCS
      tag/tagactionmanager.cpp

@@ -15,32 +15,32 @@
   51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
 */
 
-#include "overwritemodewidgettest.h"
-#include "../widgets/overwritemodewidget.h"
+#include "statusbarlabeltoggledstatetest.h"
+#include "../widgets/statusbarlabeltoggledstate.h"
 #include <qtest_kde.h>
 #include <qtestmouse.h>
 #include <QSignalSpy>
 
-OverwriteModeWidgetTest::OverwriteModeWidgetTest(QObject *parent)
+StatusBarLabelToggledStateTest::StatusBarLabelToggledStateTest(QObject *parent)
     : QObject(parent)
 {
 
 }
 
-OverwriteModeWidgetTest::~OverwriteModeWidgetTest()
+StatusBarLabelToggledStateTest::~StatusBarLabelToggledStateTest()
 {
 
 }
 
-void OverwriteModeWidgetTest::shouldHasDefaultValue()
+void StatusBarLabelToggledStateTest::shouldHasDefaultValue()
 {
-    OverwriteModeWidget widget;
+    StatusBarLabelToggledState widget;
     QVERIFY(!widget.overwriteMode());
 }
 
-void OverwriteModeWidgetTest::shouldChangeState()
+void StatusBarLabelToggledStateTest::shouldChangeState()
 {
-    OverwriteModeWidget widget;
+    StatusBarLabelToggledState widget;
     widget.setOverwriteMode(true);
     QVERIFY(widget.overwriteMode());
     QVERIFY(!widget.text().isEmpty());
@@ -52,9 +52,9 @@ void OverwriteModeWidgetTest::shouldChangeState()
     QVERIFY(!widget.overwriteMode());
 }
 
-void OverwriteModeWidgetTest::shouldEmitSignalWhenChangeState()
+void StatusBarLabelToggledStateTest::shouldEmitSignalWhenChangeState()
 {
-    OverwriteModeWidget widget;
+    StatusBarLabelToggledState widget;
     QSignalSpy spy(&widget, SIGNAL(overwriteModeChanged(bool)));
     widget.setOverwriteMode(true);
     QCOMPARE(spy.count(), 1);
@@ -63,9 +63,9 @@ void OverwriteModeWidgetTest::shouldEmitSignalWhenChangeState()
     QCOMPARE(spy.count(), 2);
 }
 
-void OverwriteModeWidgetTest::shouldNotEmitSignalWhenWeDontChangeState()
+void StatusBarLabelToggledStateTest::shouldNotEmitSignalWhenWeDontChangeState()
 {
-    OverwriteModeWidget widget;
+    StatusBarLabelToggledState widget;
     QSignalSpy spy(&widget, SIGNAL(overwriteModeChanged(bool)));
     widget.setOverwriteMode(false);
     QCOMPARE(spy.count(), 0);
@@ -77,9 +77,9 @@ void OverwriteModeWidgetTest::shouldNotEmitSignalWhenWeDontChangeState()
     QCOMPARE(spy.count(), 1);
 }
 
-void OverwriteModeWidgetTest::shouldEmitSignalWhenClickOnLabel()
+void StatusBarLabelToggledStateTest::shouldEmitSignalWhenClickOnLabel()
 {
-    OverwriteModeWidget widget;
+    StatusBarLabelToggledState widget;
     QSignalSpy spy(&widget, SIGNAL(overwriteModeChanged(bool)));
     widget.show();
     QTest::qWaitForWindowShown(&widget);
@@ -91,9 +91,9 @@ void OverwriteModeWidgetTest::shouldEmitSignalWhenClickOnLabel()
 
 }
 
-void OverwriteModeWidgetTest::shouldChangeTestWhenStateChanged()
+void StatusBarLabelToggledStateTest::shouldChangeTestWhenStateChanged()
 {
-    OverwriteModeWidget widget;
+    StatusBarLabelToggledState widget;
     const QString initialText = widget.text();
     widget.setOverwriteMode(true);
     const QString newText = widget.text();
@@ -108,4 +108,4 @@ void OverwriteModeWidgetTest::shouldChangeTestWhenStateChanged()
 
 
 
-QTEST_KDEMAIN(OverwriteModeWidgetTest, GUI)
+QTEST_KDEMAIN(StatusBarLabelToggledStateTest, GUI)

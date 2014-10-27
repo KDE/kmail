@@ -110,7 +110,7 @@
 #include "mailcommon/folder/folderrequester.h"
 #include "mailcommon/folder/foldercollection.h"
 
-#include "widgets/overwritemodewidget.h"
+#include "widgets/statusbarlabeltoggledstate.h"
 
 // LIBKDEPIM includes
 #include <libkdepim/addressline/recentaddresses.h>
@@ -233,7 +233,7 @@ KMComposeWin::KMComposeWin( const KMime::Message::Ptr &aMsg, bool lastSignState,
       mStorageService(new KMStorageService(this, this)),
       mSendNowByShortcutUsed(false),
       mFollowUpToggleAction(0),
-      mOverwriteModeWidget(0)
+      mStatusBarLabelToggledState(0)
 {
     m_verifyMissingAttachment = 0;
     mComposerBase = new MessageComposer::ComposerViewBase( this, this );
@@ -1490,9 +1490,9 @@ void KMComposeWin::setupStatusBar( QWidget *w )
 
     statusBar()->insertItem( QString(), 0, 1 );
     statusBar()->setItemAlignment( 0, Qt::AlignLeft | Qt::AlignVCenter );
-    mOverwriteModeWidget = new OverwriteModeWidget(this);
-    statusBar()->addPermanentWidget(mOverwriteModeWidget,0 );
-    connect(mOverwriteModeWidget, SIGNAL(overwriteModeChanged(bool)), this, SLOT(slotOverwriteModeWasChanged(bool)));
+    mStatusBarLabelToggledState = new StatusBarLabelToggledState(this);
+    statusBar()->addPermanentWidget(mStatusBarLabelToggledState,0 );
+    connect(mStatusBarLabelToggledState, SIGNAL(overwriteModeChanged(bool)), this, SLOT(slotOverwriteModeWasChanged(bool)));
 
     statusBar()->insertPermanentItem( i18n(" Spellcheck: %1 ", QLatin1String( "     " )), 3, 0) ;
     statusBar()->insertPermanentItem( i18n(" Column: %1 ", QLatin1String( "     " ) ), 2, 0 );
@@ -3346,7 +3346,7 @@ void KMComposeWin::slotOverwriteModeChanged()
 {
     const bool overwriteMode = mComposerBase->editor()->overwriteMode ();
     mComposerBase->editor()->setCursorWidth( overwriteMode ? 5 : 1 );
-    mOverwriteModeWidget->setOverwriteMode(overwriteMode);
+    mStatusBarLabelToggledState->setOverwriteMode(overwriteMode);
 }
 
 void KMComposeWin::slotCursorPositionChanged()
