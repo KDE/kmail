@@ -233,7 +233,7 @@ KMComposeWin::KMComposeWin( const KMime::Message::Ptr &aMsg, bool lastSignState,
       mStorageService(new KMStorageService(this, this)),
       mSendNowByShortcutUsed(false),
       mFollowUpToggleAction(0),
-      mStatusBarLabelToggledState(0)
+      mStatusBarLabelToggledOverrideMode(0)
 {
     m_verifyMissingAttachment = 0;
     mComposerBase = new MessageComposer::ComposerViewBase( this, this );
@@ -1490,10 +1490,10 @@ void KMComposeWin::setupStatusBar( QWidget *w )
 
     statusBar()->insertItem( QString(), 0, 1 );
     statusBar()->setItemAlignment( 0, Qt::AlignLeft | Qt::AlignVCenter );
-    mStatusBarLabelToggledState = new StatusBarLabelToggledState(this);
-    mStatusBarLabelToggledState->setStateString(i18n("OVR"), i18n("INS"));
-    statusBar()->addPermanentWidget(mStatusBarLabelToggledState,0 );
-    connect(mStatusBarLabelToggledState, SIGNAL(toggleModeChanged(bool)), this, SLOT(slotOverwriteModeWasChanged(bool)));
+    mStatusBarLabelToggledOverrideMode = new StatusBarLabelToggledState(this);
+    mStatusBarLabelToggledOverrideMode->setStateString(i18n("OVR"), i18n("INS"));
+    statusBar()->addPermanentWidget(mStatusBarLabelToggledOverrideMode,0 );
+    connect(mStatusBarLabelToggledOverrideMode, SIGNAL(toggleModeChanged(bool)), this, SLOT(slotOverwriteModeWasChanged(bool)));
 
     statusBar()->insertPermanentItem( i18n(" Spellcheck: %1 ", QLatin1String( "     " )), 3, 0) ;
     statusBar()->insertPermanentItem( i18n(" Column: %1 ", QLatin1String( "     " ) ), 2, 0 );
@@ -3347,7 +3347,7 @@ void KMComposeWin::slotOverwriteModeChanged()
 {
     const bool overwriteMode = mComposerBase->editor()->overwriteMode ();
     mComposerBase->editor()->setCursorWidth( overwriteMode ? 5 : 1 );
-    mStatusBarLabelToggledState->setToggleMode(overwriteMode);
+    mStatusBarLabelToggledOverrideMode->setToggleMode(overwriteMode);
 }
 
 void KMComposeWin::slotCursorPositionChanged()

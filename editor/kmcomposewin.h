@@ -697,7 +697,7 @@ private:
     bool mSendNowByShortcutUsed;
     PimCommon::SplitterCollapser *mSnippetSplitterCollapser;
     KToggleAction *mFollowUpToggleAction;
-    StatusBarLabelToggledState *mStatusBarLabelToggledState;
+    StatusBarLabelToggledState *mStatusBarLabelToggledOverrideMode;
 };
 
 #endif
