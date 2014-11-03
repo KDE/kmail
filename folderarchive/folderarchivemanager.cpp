@@ -215,3 +215,8 @@ FolderArchiveCache *FolderArchiveManager::folderArchiveCache() const
     return mFolderArchiveCache;
 }
 
+void FolderArchiveManager::reloadConfig()
+{
+    load();
+}
+

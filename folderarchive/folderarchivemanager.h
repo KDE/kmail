@@ -47,6 +47,7 @@ public:
     void collectionRemoved(const Akonadi::Collection &collection);
 
     FolderArchiveCache *folderArchiveCache() const;
+    void reloadConfig();
 
 public Q_SLOTS:
     void slotCollectionRemoved(const Akonadi::Collection &collection);

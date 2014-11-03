@@ -285,6 +285,8 @@ public Q_SLOTS:
 
     Q_SCRIPTABLE void showFolder(const QString &collectionId);
 
+    Q_SCRIPTABLE void reloadFolderArchiveConfig();
+
     /**
  * End of D-Bus callable stuff
  */
