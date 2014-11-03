@@ -347,6 +347,7 @@ if (KDEPIM_BUILD_DESKTOP)
 
 
   add_subdirectory(mailmerge/tests/)
+  add_subdirectory(folderarchive/autotests/)
   ########### install files ###############
 
   install(TARGETS kmailprivate ${INSTALL_TARGETS_DEFAULT_ARGS} LIBRARY NAMELINK_SKIP)
