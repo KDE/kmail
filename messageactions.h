@@ -90,6 +90,7 @@ public:
 
     void addWebShortcutsMenu( QMenu *menu, const QString & text );
 
+    QAction *debugBalooAction() const { return mDebugBalooAction; }
 
 signals:
     // This signal is emitted when a reply is triggered and the
@@ -129,7 +130,7 @@ private slots:
     void slotMailingListFilter();
     void slotHandleWebShortcutAction();
     void slotConfigureWebShortcuts();
-
+    void slotDebugBaloo();
 
 private:
     QList<QAction *> mMailListActionList;
@@ -149,6 +150,7 @@ private:
     QAction *mEditAction, *mAnnotateAction, *mPrintAction, *mPrintPreviewAction;
     TemplateParser::CustomTemplatesMenu *mCustomTemplatesMenu;
     QAction *mListFilterAction;
+    QAction *mDebugBalooAction;
 };
 
 }
