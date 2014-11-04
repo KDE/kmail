@@ -54,6 +54,8 @@ public:
     void writeConfig(KConfigGroup &config );
     void readConfig(const KConfigGroup &config);
 
+    bool operator==( const FolderArchiveAccountInfo& other ) const;
+
 private:
     FolderArchiveAccountInfo::FolderArchiveType mArchiveType;
     Akonadi::Collection::Id mArchiveTopLevelCollectionId;

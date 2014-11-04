@@ -42,7 +42,7 @@ FolderArchiveAccountInfo::~FolderArchiveAccountInfo()
 
 bool FolderArchiveAccountInfo::isValid() const
 {
-    return (mArchiveTopLevelCollectionId > -1);
+    return (mArchiveTopLevelCollectionId > -1) && (!mInstanceName.isEmpty());
 }
 
 void FolderArchiveAccountInfo::setFolderArchiveType(FolderArchiveAccountInfo::FolderArchiveType type)
@@ -115,4 +115,13 @@ void FolderArchiveAccountInfo::writeConfig(KConfigGroup &config )
     config.writeEntry(QLatin1String("folderArchiveType"), (int)mArchiveType);
     config.writeEntry(QLatin1String("enabled"), mEnabled);
     config.writeEntry("keepExistingStructure", mKeepExistingStructure);
+}
+
+bool FolderArchiveAccountInfo::operator==( const FolderArchiveAccountInfo& other ) const
+{
+    return (mInstanceName == other.instanceName())
+            && (mArchiveTopLevelCollectionId == other.archiveTopLevel())
+            && (mArchiveType == other.folderArchiveType())
+            && (mEnabled == other.enabled())
+            && (mKeepExistingStructure == other.keepExistingStructure());
 }

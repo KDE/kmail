@@ -2092,6 +2092,11 @@ void KMKernel::showFolder(const QString &collectionId)
     }
 }
 
+void KMKernel::reloadFolderArchiveConfig()
+{
+    mFolderArchiveManager->reloadConfig();
+}
+
 void KMKernel::slotCollectionChanged(const Akonadi::Collection &, const QSet<QByteArray> &set)
 {
     if(set.contains("newmailnotifierattribute")) {
