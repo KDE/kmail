@@ -64,7 +64,7 @@ void FolderArchiveAccountInfoTest::shouldRestoreFromSettings()
     info.setEnabled(true);
     info.setKeepExistingStructure(true);
 
-    KConfigGroup grp(KGlobal::config(), "testsettings");
+    KConfigGroup grp(KSharedConfig::openConfig(), "testsettings");
     info.writeConfig(grp);
 
     FolderArchiveAccountInfo restoreInfo(grp);
