@@ -18,8 +18,8 @@
 #include "folderarchiveaccountinfotest.h"
 #include "../folderarchiveaccountinfo.h"
 #include <KGlobal>
-#include <Akonadi/Collection>
-#include <qtest_kde.h>
+#include <AkonadiCore/Collection>
+#include <qtest.h>
 
 
 FolderArchiveAccountInfoTest::FolderArchiveAccountInfoTest(QObject *parent)
@@ -71,4 +71,4 @@ void FolderArchiveAccountInfoTest::shouldRestoreFromSettings()
     QCOMPARE(info, restoreInfo);
 }
 
-QTEST_KDEMAIN(FolderArchiveAccountInfoTest, NoGUI)
+QTEST_MAIN(FolderArchiveAccountInfoTest)
