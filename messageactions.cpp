@@ -34,6 +34,8 @@
 #include "messageviewer/viewer/csshelper.h"
 #include "messageviewer/settings/globalsettings.h"
 
+#include "pimcommon/baloodebug/baloodebugdialog.h"
+
 #include <akonadi/itemfetchjob.h>
 #include <akonadi/kmime/messageparts.h>
 #include <Akonadi/ChangeRecorder>
@@ -66,7 +68,8 @@ MessageActions::MessageActions( KActionCollection *ac, QWidget *parent )
       mMessageView( 0 ),
       mRedirectAction( 0 ),
       mPrintPreviewAction( 0 ),
-      mCustomTemplatesMenu( 0 )
+      mCustomTemplatesMenu( 0 ),
+      mDebugBalooAction(0)
 {
     mReplyActionMenu = new KActionMenu( KIcon(QLatin1String("mail-reply-sender")), i18nc("Message->","&Reply"), this );
     ac->addAction( QLatin1String("message_reply_menu"), mReplyActionMenu );
@@ -202,6 +205,11 @@ MessageActions::MessageActions( KActionCollection *ac, QWidget *parent )
     replyMenu()->addSeparator();
     replyMenu()->addAction( mCustomTemplatesMenu->replyActionMenu() );
     replyMenu()->addAction( mCustomTemplatesMenu->replyAllActionMenu() );
+
+    //Don't translate it. Shown only when we set env variable KDEPIM_BALOO_DEBUG
+    mDebugBalooAction = new QAction(QLatin1String("Debug Baloo..."), this);
+    connect( mDebugBalooAction, SIGNAL(triggered(bool)), this, SLOT(slotDebugBaloo()) );
+
 
     updateActions();
 }
@@ -653,4 +661,15 @@ void MessageActions::slotHandleWebShortcutAction()
 void MessageActions::slotConfigureWebShortcuts()
 {
     KToolInvocation::kdeinitExec( QLatin1String("kcmshell4"), QStringList() << QLatin1String("ebrowsing") );
+}
+
+void MessageActions::slotDebugBaloo()
+{
+    if ( !mCurrentItem.isValid() )
+        return;
+    QPointer<PimCommon::BalooDebugDialog> dlg = new PimCommon::BalooDebugDialog;
+    dlg->setAkonadiId(mCurrentItem.id());
+    dlg->setAttribute( Qt::WA_DeleteOnClose );
+    dlg->setSearchType(PimCommon::BalooDebugSearchPathComboBox::Emails);
+    dlg->show();
 }

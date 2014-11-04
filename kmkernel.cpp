@@ -132,8 +132,12 @@ KMKernel::KMKernel (QObject *parent) :
     mConfigureDialog(0),
     mMailService(0),
     mSystemNetworkStatus ( Solid::Networking::status() ),
-    mSystemTray(0)
+    mSystemTray(0),
+    mDebugBaloo(false)
 {
+    if (!qgetenv("KDEPIM_BALOO_DEBUG").isEmpty()) {
+        mDebugBaloo = true;
+    }
     Akonadi::AttributeFactory::registerAttribute<Akonadi::SearchDescriptionAttribute>();
     QDBusConnection::sessionBus().registerService(QLatin1String("org.kde.kmail"));
     KMail::Util::migrateFromKMail1();
@@ -2093,4 +2097,9 @@ FolderArchiveManager *KMKernel::folderArchiveManager() const
 PimCommon::StorageServiceManager *KMKernel::storageServiceManager() const
 {
     return mStorageManager;
+}
+
+bool KMKernel::allowToDebugBalooSupport() const
+{
+    return mDebugBaloo;
 }

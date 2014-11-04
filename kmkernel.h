@@ -434,6 +434,8 @@ public:
     FolderArchiveManager *folderArchiveManager() const;
     PimCommon::StorageServiceManager *storageServiceManager() const;
 
+    bool allowToDebugBalooSupport() const;
+
 protected:
     void agentInstanceBroken( const Akonadi::AgentInstance& instance );
 
@@ -542,6 +544,7 @@ private:
     PimCommon::AutoCorrection *mAutoCorrection;
     FolderArchiveManager *mFolderArchiveManager;
     PimCommon::StorageServiceManager *mStorageManager;
+    bool mDebugBaloo;
 };
 
 #endif // _KMKERNEL_H
