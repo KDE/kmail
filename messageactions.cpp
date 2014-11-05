@@ -647,7 +647,7 @@ void MessageActions::slotHandleWebShortcutAction()
 
 void MessageActions::slotConfigureWebShortcuts()
 {
-    KToolInvocation::kdeinitExec( QLatin1String("kcmshell4"), QStringList() << QLatin1String("ebrowsing") );
+    KToolInvocation::kdeinitExec( QLatin1String("kcmshell5"), QStringList() << QLatin1String("ebrowsing") );
 }
 
 void MessageActions::slotDebugBaloo()
