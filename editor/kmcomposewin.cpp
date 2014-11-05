@@ -1988,7 +1988,6 @@ void KMComposeWin::addFollowupReminder(const QString &messageId)
         job->setSubject(subject());
         job->setMessageId(messageId);
         job->setTo(replyTo());
-        qDebug()<<" replyTo()"<<replyTo() << "message Id "<<messageId<<" subvjedct "<<subject();
         job->setFollowUpReminderDate(mFollowUpDate);
         job->setCollectionToDo(mFollowUpCollection);
         job->start();
