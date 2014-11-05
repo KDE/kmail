@@ -607,6 +607,7 @@ private:
     inline bool encryptToSelf();
 
 private:
+    int validateLineWrapWidth();
     QWidget   *mMainWidget;
     Sonnet::DictionaryComboBox *mDictionaryCombo;
     MessageComposer::ComposerLineEdit *mEdtFrom, *mEdtReplyTo;

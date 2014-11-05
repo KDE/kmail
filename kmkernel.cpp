@@ -150,7 +150,6 @@ KMKernel::KMKernel (QObject *parent) :
     the_msgSender = 0;
     mFilterEditDialog = 0;
     mWin = 0;
-    mWrapCol = 80;
     // make sure that we check for config updates before doing anything else
     KMKernel::config();
     // this shares the kmailrc parsing too (via KSharedConfig), and reads values from it
@@ -1193,12 +1192,10 @@ void KMKernel::init()
     the_previousVersion = GlobalSettings::self()->previousVersion();
     GlobalSettings::self()->setPreviousVersion( QLatin1String(KDEPIM_VERSION) );
 
-    readConfig();
 
     the_undoStack = new UndoStack(20);
 
     the_msgSender = new MessageComposer::AkonadiSender;
-    readConfig();
     // filterMgr->dump();
 
     mBackgroundTasksTimer = new QTimer( this );
@@ -1219,19 +1216,7 @@ void KMKernel::init()
 
     connect( Akonadi::ServerManager::self(), SIGNAL(stateChanged(Akonadi::ServerManager::State)), this, SLOT(akonadiStateChanged(Akonadi::ServerManager::State)) );
     connect( folderCollectionMonitor(), SIGNAL(itemRemoved(Akonadi::Item)), the_undoStack, SLOT(msgDestroyed(Akonadi::Item)) );
-
-
 }
-
-void KMKernel::readConfig()
-{
-    mWrapCol = MessageComposer::MessageComposerSettings::self()->lineWrapWidth();
-    if ((mWrapCol == 0) || (mWrapCol > 78))
-        mWrapCol = 78;
-    else if (mWrapCol < 30)
-        mWrapCol = 30;
-}
-
 
 bool KMKernel::doSessionManagement()
 {
@@ -1425,7 +1410,6 @@ void KMKernel::slotShowConfigurationDialog()
 
 void KMKernel::slotConfigChanged()
 {
-    readConfig();
     CodecManager::self()->updatePreferredCharsets();
     emit configChanged();
 }

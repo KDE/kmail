@@ -316,7 +316,6 @@ public:
 
     void init();
     void setupDBus();
-    void readConfig();
 
     /*reimp*/ Akonadi::ChangeRecorder *folderCollectionMonitor() const;
 
@@ -364,8 +363,6 @@ public:
 
     /** Expire all folders, used for the gui action */
     void expireAllFoldersNow();
-
-    int wrapCol() const { return mWrapCol;}
 
     bool firstStart() const { return the_firstStart; }
     QString previousVersion() const { return the_previousVersion; }
@@ -531,8 +528,6 @@ private:
 
     /// List of Akonadi resources that are currently being checked.
     QList<QString> mResourcesBeingChecked;
-
-    int mWrapCol;
 
     QPointer<MailCommon::KMFilterDialog> mFilterEditDialog;
     PimCommon::AutoCorrection *mAutoCorrection;
