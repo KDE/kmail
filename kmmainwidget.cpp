@@ -131,7 +131,7 @@ using KSieveUi::SieveDebugDialog;
 #include <Akonadi/KMime/MessageFlags>
 #include <Akonadi/KMime/RemoveDuplicatesJob>
 #include <AkonadiCore/collectiondeletejob.h>
-#include <AkonadiCore/dbusconnectionpool.h>
+#include <kdbusconnectionpool.h>
 #include <AkonadiCore/CachePolicy>
 
 #include <kidentitymanagement/identity.h>
@@ -4752,7 +4752,7 @@ void KMMainWidget::slotServerSideSubscription()
         QDBusInterface iface(
                     QLatin1String( "org.freedesktop.Akonadi.Resource.")+mCurrentFolder->collection().resource(),
                     QLatin1String( "/" ), QLatin1String( "org.kde.Akonadi.ImapResourceBase" ),
-                    DBusConnectionPool::threadConnection(), this );
+                    KDBusConnectionPool::threadConnection(), this );
         if ( !iface.isValid() ) {
             qDebug()<<"Cannot create imap dbus interface";
             return;
