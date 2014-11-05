@@ -3484,6 +3484,7 @@ void KMMainWidget::setupActions()
 
     {
         QAction *action = new QAction(QIcon::fromTheme(QLatin1String("configure")), i18n("&Configure KMail..."), this);
+        action->setMenuRole( QAction::PreferencesRole ); // this one should move to the application menu on OS X
         actionCollection()->addAction(QLatin1String("kmail_configure_kmail"), action );
         connect(action, SIGNAL(triggered(bool)), kmkernel, SLOT(slotShowConfigurationDialog()));
     }
