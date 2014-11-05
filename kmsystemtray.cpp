@@ -105,7 +105,7 @@ KMSystemTray::KMSystemTray(QObject *parent)
 bool KMSystemTray::buildPopupMenu()
 {
     KMMainWidget * mainWidget = kmkernel->getKMMainWidget();
-    if ( !mainWidget ) {
+    if ( !mainWidget || kmkernel->shuttingDown() ) {
         return false;
     }
 

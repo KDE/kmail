@@ -356,7 +356,6 @@ public:
 
     void init();
     void setupDBus();
-    void readConfig();
 
     /*reimp*/ Akonadi::ChangeRecorder *folderCollectionMonitor() const;
 
@@ -405,14 +404,8 @@ public:
     /** Expire all folders, used for the gui action */
     void expireAllFoldersNow();
 
-    int wrapCol() const { return mWrapCol;}
-
     bool firstStart() const { return the_firstStart; }
-    /** Mark first start as done */
-    void firstStartDone() { the_firstStart = false; }
     QString previousVersion() const { return the_previousVersion; }
-    bool startingUp() const { return the_startingUp; }
-    void setStartingUp (bool flag) { the_startingUp = flag; }
     bool shuttingDown() const { return the_shuttingDown; }
     void setShuttingDown(bool flag) { the_shuttingDown = flag; }
 
@@ -569,8 +562,6 @@ private:
     QString the_previousVersion;
     /** is this the first start?  read from config */
     bool the_firstStart;
-    /** are we starting up? set in main.cpp directly before kapp->exec() */
-    bool the_startingUp;
     /** are we going down? set from here */
     bool the_shuttingDown;
     /** true unles kmail is closed by session management */
@@ -597,8 +588,6 @@ private:
 
     /// List of Akonadi resources that are currently being checked.
     QList<QString> mResourcesBeingChecked;
-
-    int mWrapCol;
 
     QPointer<MailCommon::KMFilterDialog> mFilterEditDialog;
     PimCommon::AutoCorrection *mAutoCorrection;

@@ -1978,7 +1978,6 @@ void KMComposeWin::addFollowupReminder(const QString &messageId)
         job->setSubject(subject());
         job->setMessageId(messageId);
         job->setTo(replyTo());
-        qDebug()<<" replyTo()"<<replyTo() << "message Id "<<messageId<<" subvjedct "<<subject();
         job->setFollowUpReminderDate(mFollowUpDate);
         job->setCollectionToDo(mFollowUpCollection);
         job->start();
@@ -2586,9 +2585,19 @@ void KMComposeWin::setSigning( bool sign, bool setByUser )
 void KMComposeWin::slotWordWrapToggled( bool on )
 {
     if ( on )
-        mComposerBase->editor()->enableWordWrap( MessageComposer::MessageComposerSettings::self()->lineWrapWidth() );
+        mComposerBase->editor()->enableWordWrap( validateLineWrapWidth() );
     else
         disableWordWrap();
+}
+
+int KMComposeWin::validateLineWrapWidth()
+{
+    int lineWrap = MessageComposer::MessageComposerSettings::self()->lineWrapWidth();
+    if ((lineWrap == 0) || (lineWrap > 78))
+        lineWrap = 78;
+    else if (lineWrap < 30)
+        lineWrap = 30;
+    return lineWrap;
 }
 
 //-----------------------------------------------------------------------------
