@@ -136,7 +136,6 @@ int main(int argc, char *argv[])
     kmailKernel.recoverDeadLetters();
 
     kmkernel->setupDBus(); // Ok. We are ready for D-Bus requests.
-    kmkernel->setStartingUp( false ); // Starting up is finished
 
     //If the instance hasn't been created yet, do that now
     app.setEventLoopReached();

@@ -144,7 +144,6 @@ KMKernel::KMKernel (QObject *parent) :
     kDebug() << "Starting up...";
 
     mySelf = this;
-    the_startingUp = true;
     the_firstInstance = true;
 
     the_undoStack = 0;
