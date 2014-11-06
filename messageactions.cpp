@@ -658,5 +658,6 @@ void MessageActions::slotDebugBaloo()
     dlg->setAkonadiId(mCurrentItem.id());
     dlg->setAttribute( Qt::WA_DeleteOnClose );
     dlg->setSearchType(PimCommon::BalooDebugSearchPathComboBox::Emails);
+    dlg->doSearch();
     dlg->show();
 }
