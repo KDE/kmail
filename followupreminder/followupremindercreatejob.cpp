@@ -74,7 +74,7 @@ void FollowupReminderCreateJob::start()
             newTodoItem.setPayload<KCalCore::Todo::Ptr>( todo );
 
             Akonadi::ItemCreateJob *createJob = new Akonadi::ItemCreateJob(newTodoItem, mCollection);
-            connect(createJob, SIGNAL(result(KJob*)), this, SLOT(slotCreateNewTodo(KJob*)));
+            connect(createJob, &Akonadi::ItemCreateJob::result, this, &FollowupReminderCreateJob::slotCreateNewTodo);
         } else {
             writeFollowupReminderInfo();
         }

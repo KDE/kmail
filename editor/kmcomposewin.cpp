@@ -321,9 +321,7 @@ KMComposeWin::KMComposeWin( const KMime::Message::Ptr &aMsg, bool lastSignState,
 
     MessageComposer::RecipientsEditor* recipientsEditor = new MessageComposer::RecipientsEditor( mHeadersArea );
     recipientsEditor->setRecentAddressConfig( MessageComposer::MessageComposerSettings::self()->config() );
-    connect( recipientsEditor,
-             SIGNAL(completionModeChanged(KCompletion::CompletionMode)),
-             SLOT(slotCompletionModeChanged(KCompletion::CompletionMode)) );
+    connect(recipientsEditor, &MessageComposer::RecipientsEditor::completionModeChanged, this, &KMComposeWin::slotCompletionModeChanged);
     connect(recipientsEditor, &MessageComposer::RecipientsEditor::sizeHintChanged, this, &KMComposeWin::recipientEditorSizeHintChanged);
     mComposerBase->setRecipientsEditor( recipientsEditor );
 
@@ -1402,10 +1400,8 @@ void KMComposeWin::setupActions( void )
 
     changeCryptoAction();
 
-    connect( mEncryptAction, SIGNAL(triggered(bool)),
-             SLOT(slotEncryptToggled(bool)) );
-    connect( mSignAction, SIGNAL(triggered(bool)),
-             SLOT(slotSignToggled(bool)) );
+    connect(mEncryptAction, &KToggleAction::triggered, this, &KMComposeWin::slotEncryptToggled);
+    connect(mSignAction, &KToggleAction::triggered, this, &KMComposeWin::slotSignToggled);
 
     QStringList l;
     for ( int i=0 ; i<numCryptoMessageFormats ; ++i ) {
@@ -1423,12 +1419,11 @@ void KMComposeWin::setupActions( void )
 
     mFollowUpToggleAction = new KToggleAction( i18n("Follow Up Mail..."), this );
     actionCollection()->addAction( QLatin1String("follow_up_mail"), mFollowUpToggleAction );
-    connect( mFollowUpToggleAction, SIGNAL(triggered(bool)), this, SLOT(slotFollowUpMail(bool)) );
+    connect(mFollowUpToggleAction, &KToggleAction::triggered, this, &KMComposeWin::slotFollowUpMail);
     mFollowUpToggleAction->setEnabled(FollowUpReminder::FollowUpReminderUtil::followupReminderAgentEnabled());
 
     createGUI( QLatin1String("kmcomposerui.rc") );
-    connect( toolBar( QLatin1String("htmlToolBar") )->toggleViewAction(),
-             SIGNAL(toggled(bool)),
+    connect( toolBar( QLatin1String("htmlToolBar") )->toggleViewAction(), SIGNAL(toggled(bool)),
              SLOT(htmlToolBarVisibilityChanged(bool)) );
 
 
@@ -1487,12 +1482,12 @@ void KMComposeWin::setupStatusBar( QWidget *w )
     mStatusBarLabelToggledOverrideMode = new StatusBarLabelToggledState(this);
     mStatusBarLabelToggledOverrideMode->setStateString(i18n("OVR"), i18n("INS"));
     statusBar()->addPermanentWidget(mStatusBarLabelToggledOverrideMode,0 );
-    connect(mStatusBarLabelToggledOverrideMode, SIGNAL(toggleModeChanged(bool)), this, SLOT(slotOverwriteModeWasChanged(bool)));
+    connect(mStatusBarLabelToggledOverrideMode, &StatusBarLabelToggledState::toggleModeChanged, this, &KMComposeWin::slotOverwriteModeWasChanged);
     
     mStatusBarLabelSpellCheckingChangeMode = new StatusBarLabelToggledState(this);
     mStatusBarLabelSpellCheckingChangeMode->setStateString(i18n( "Spellcheck: on" ), i18n( "Spellcheck: off" ));
     statusBar()->addPermanentWidget(mStatusBarLabelSpellCheckingChangeMode, 0 );
-    connect(mStatusBarLabelSpellCheckingChangeMode, SIGNAL(toggleModeChanged(bool)), this, SLOT(slotAutoSpellCheckingToggled(bool)));
+    connect(mStatusBarLabelSpellCheckingChangeMode, &StatusBarLabelToggledState::toggleModeChanged, this, &KMComposeWin::slotAutoSpellCheckingToggled);
 
 
     statusBar()->addPermanentWidget(progressStatusBarWidget->littleProgress());
@@ -2652,8 +2647,7 @@ void KMComposeWin::printComposer(bool preview)
     MessageComposer::Composer* composer = createSimpleComposer();
     mMiscComposers.append( composer );
     composer->setProperty("preview",preview);
-    connect( composer, SIGNAL(result(KJob*)),
-             this, SLOT(slotPrintComposeResult(KJob*)) );
+    connect(composer, &MessageComposer::Composer::result, this, &KMComposeWin::slotPrintComposeResult);
     composer->start();
 }
 
@@ -3293,8 +3287,7 @@ void KMComposeWin::slotEditToolbars()
     saveMainWindowSettings( grp );
     KEditToolBar dlg( guiFactory(), this );
 
-    connect( &dlg, SIGNAL(newToolBarConfig()),
-             SLOT(slotUpdateToolbars()) );
+    connect(&dlg, &KEditToolBar::newToolBarConfig, this, &KMComposeWin::slotUpdateToolbars);
 
     dlg.exec();
 }
