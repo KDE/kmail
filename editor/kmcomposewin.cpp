@@ -2315,8 +2315,8 @@ void KMComposeWin::slotFetchJob(KJob*job)
     } else {
         foreach ( const Akonadi::Item &item, items ) {
             QString attachmentName = QLatin1String( "attachment" );
-            if ( item.hasPayload<KABC::Addressee>() ) {
-                const KABC::Addressee contact = item.payload<KABC::Addressee>();
+            if ( item.hasPayload<KContacts::Addressee>() ) {
+                const KContacts::Addressee contact = item.payload<KContacts::Addressee>();
                 attachmentName = contact.realName() + QLatin1String( ".vcf" );
                 //Workaround about broken kaddressbook fields.
                 QByteArray data = item.payloadData();

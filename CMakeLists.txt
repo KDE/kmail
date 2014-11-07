@@ -287,7 +287,7 @@ generate_export_header(kmailprivate BASE_NAME kmail)
     kpgp
     kdepim
     KF5::KIOCore
-    KF5::Abc
+    KF5::Contacts
     KF5::PimUtils
     KF5::PimTextEdit
     messageviewer

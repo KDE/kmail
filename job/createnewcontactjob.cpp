@@ -23,8 +23,8 @@
 
 #include <libkdepim/misc/broadcaststatus.h>
 
-#include <KABC/Addressee>
-#include <KABC/ContactGroup>
+#include <KContacts/Addressee>
+#include <KContacts/ContactGroup>
 
 #include <AkonadiCore/CollectionFetchJob>
 #include <AkonadiCore/AgentInstanceCreateJob>
@@ -52,7 +52,7 @@ void CreateNewContactJob::start()
             new Akonadi::CollectionFetchJob( Akonadi::Collection::root(),
                                              Akonadi::CollectionFetchJob::Recursive );
 
-    addressBookJob->fetchScope().setContentMimeTypes( QStringList() << KABC::Addressee::mimeType() );
+    addressBookJob->fetchScope().setContentMimeTypes( QStringList() << KContacts::Addressee::mimeType() );
     connect( addressBookJob, SIGNAL(result(KJob*)), SLOT(slotCollectionsFetched(KJob*)) );
 }
 
@@ -78,8 +78,8 @@ void CreateNewContactJob::slotCollectionsFetched(KJob*job)
     if ( canCreateItemCollections.isEmpty() ) {
         Akonadi::AgentTypeDialog dlg( mParentWidget );
         dlg.setWindowTitle( i18n("Add to Address Book") );
-        dlg.agentFilterProxyModel()->addMimeTypeFilter(KABC::Addressee::mimeType());
-        dlg.agentFilterProxyModel()->addMimeTypeFilter(KABC::ContactGroup::mimeType());
+        dlg.agentFilterProxyModel()->addMimeTypeFilter(KContacts::Addressee::mimeType());
+        dlg.agentFilterProxyModel()->addMimeTypeFilter(KContacts::ContactGroup::mimeType());
         dlg.agentFilterProxyModel()->addCapabilityFilter( QLatin1String( "Resource" ) );
 
         if ( dlg.exec() ) {

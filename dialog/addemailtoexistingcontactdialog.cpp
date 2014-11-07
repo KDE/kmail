@@ -25,7 +25,7 @@
 #include <Akonadi/Contact/ContactsTreeModel>
 #include <AkonadiCore/ChangeRecorder>
 
-#include <KABC/Addressee>
+#include <KContacts/Addressee>
 
 #include <KLocalizedString>
 
@@ -52,7 +52,7 @@ AddEmailToExistingContactDialog::AddEmailToExistingContactDialog(QWidget *parent
     changeRecorder->setItemFetchScope( scope );
     changeRecorder->setCollectionMonitored( Akonadi::Collection::root() );
     //Just select address no group
-    changeRecorder->setMimeTypeMonitored( KABC::Addressee::mimeType(), true );
+    changeRecorder->setMimeTypeMonitored( KContacts::Addressee::mimeType(), true );
 
     Akonadi::ContactsTreeModel *model = new Akonadi::ContactsTreeModel( changeRecorder, this );
 

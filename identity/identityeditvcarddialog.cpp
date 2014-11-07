@@ -17,7 +17,7 @@
 
 #include "identityeditvcarddialog.h"
 
-#include <KABC/VCardConverter>
+#include <KContacts/VCardConverter>
 #include <KLocalizedString>
 #include <Akonadi/Contact/ContactEditor>
 #include <QDebug>
@@ -114,8 +114,8 @@ void IdentityEditVcardDialog::loadVcard( const QString &vcardFileName)
         const QByteArray data = file.readAll();
         file.close();
         if ( !data.isEmpty() ) {
-            KABC::VCardConverter converter;
-            KABC::Addressee addr = converter.parseVCard( data );
+            KContacts::VCardConverter converter;
+            KContacts::Addressee addr = converter.parseVCard( data );
             mContactEditor->setContactTemplate(addr);
         }
     }
@@ -123,11 +123,11 @@ void IdentityEditVcardDialog::loadVcard( const QString &vcardFileName)
 
 QString IdentityEditVcardDialog::saveVcard() const
 {
-    const KABC::Addressee addr = mContactEditor->contact();
-    KABC::VCardConverter converter;
+    const KContacts::Addressee addr = mContactEditor->contact();
+    KContacts::VCardConverter converter;
     QFile file(mVcardFileName);
     if ( file.open( QIODevice::WriteOnly |QIODevice::Text ) ) {
-        const QByteArray data = converter.exportVCard( addr, KABC::VCardConverter::v3_0 );
+        const QByteArray data = converter.exportVCard( addr, KContacts::VCardConverter::v3_0 );
         file.write( data );
         file.flush();
         file.close();

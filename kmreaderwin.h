@@ -26,7 +26,7 @@
 #include <messageviewer/viewer/viewer.h>
 #include <messageviewer/interfaces/bodypart.h>
 #include <AkonadiCore/Item>
-#include <KABC/Addressee>
+#include <KContacts/Addressee>
 class KActionCollection;
 class QAction;
 class KToggleAction;
@@ -177,7 +177,7 @@ public:
 
     bool printSelectedText(bool preview);
 
-    void setContactItem(const Akonadi::Item& contact, const KABC::Addressee &address);
+    void setContactItem(const Akonadi::Item& contact, const KContacts::Addressee &address);
     void clearContactItem();
     bool adblockEnabled() const;
     bool isAShortUrl(const KUrl &url) const;
@@ -230,7 +230,7 @@ private:
     void updateHtmlActions();
 
 private:
-    KABC::Addressee mSearchedAddress;
+    KContacts::Addressee mSearchedAddress;
     Akonadi::Item mSearchedContact;
     QWidget *mMainWindow;
     KActionCollection *mActionCollection;

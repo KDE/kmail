@@ -33,7 +33,7 @@
 #include "util/mailutil.h"
 
 #include <AkonadiCore/itemfetchjob.h>
-#include <kabc/addressee.h>
+#include <kcontacts/addressee.h>
 #include <qdebug.h>
 #include <libkleo/kleo/cryptobackendfactory.h>
 

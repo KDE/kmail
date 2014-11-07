@@ -56,7 +56,7 @@
 #include <QImageReader>
 #include <KConfigGroup>
 #include <QFileDialog>
-using namespace KABC;
+using namespace KContacts;
 using namespace KIO;
 using namespace KMail;
 using namespace MessageViewer;

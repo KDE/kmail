@@ -22,7 +22,7 @@
 
 #include <AkonadiCore/ItemModifyJob>
 
-#include <KABC/Addressee>
+#include <KContacts/Addressee>
 
 #include <KLocalizedString>
 
@@ -31,7 +31,7 @@ AddEmailToExistingContactJob::AddEmailToExistingContactJob(const Akonadi::Item &
       mItem(item)
 {
     QString name;
-    KABC::Addressee::parseEmailAddress( email, name, mEmail );
+    KContacts::Addressee::parseEmailAddress( email, name, mEmail );
 }
 
 AddEmailToExistingContactJob::~AddEmailToExistingContactJob()
@@ -41,20 +41,20 @@ AddEmailToExistingContactJob::~AddEmailToExistingContactJob()
 
 void AddEmailToExistingContactJob::start()
 {
-    if (mItem.hasPayload<KABC::Addressee>()) {
-        KABC::Addressee address = mItem.payload<KABC::Addressee>();
+    if (mItem.hasPayload<KContacts::Addressee>()) {
+        KContacts::Addressee address = mItem.payload<KContacts::Addressee>();
         QStringList emails = address.emails();
         if (emails.contains(mEmail)) {
             Q_EMIT emitResult();
         } else {
             emails.append(mEmail);
             address.setEmails(emails);
-            mItem.setPayload<KABC::Addressee>(address);
+            mItem.setPayload<KContacts::Addressee>(address);
             Akonadi::ItemModifyJob *job = new Akonadi::ItemModifyJob( mItem );
             connect(job, &Akonadi::ItemModifyJob::result, this, &AddEmailToExistingContactJob::slotAddEmailDone);
         }
     } else {
-        qDebug()<<" not a KABC::Addressee item ";
+        qDebug()<<" not a KContacts::Addressee item ";
         //TODO add error
         Q_EMIT emitResult();
     }
