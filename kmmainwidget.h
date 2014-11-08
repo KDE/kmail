@@ -257,9 +257,6 @@ public slots:
 
     void slotCollectionProperties();
     void slotRemoveDuplicates();
-    void slotRemoveDuplicatesDone( KJob* );
-    void slotRemoveDuplicatesCanceled( KPIM::ProgressItem* );
-    void slotRemoveDuplicatesUpdate( KJob *, const QString& );
 
     void slotSelectCollectionFolder( const Akonadi::Collection & col );
 

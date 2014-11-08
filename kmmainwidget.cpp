@@ -199,6 +199,7 @@ using KSieveUi::SieveDebugDialog;
 #include <assert.h>
 #include <errno.h> // ugh
 #include <akonadi/standardactionmanager.h>
+#include <job/removeduplicatemailjob.h>
 
 
 using namespace KMime;
@@ -4692,62 +4693,9 @@ void KMMainWidget::slotCollectionPropertiesFinished( KJob *job )
 
 void KMMainWidget::slotRemoveDuplicates()
 {
-    KPIM::ProgressItem *item = KPIM::ProgressManager::createProgressItem( i18n( "Removing duplicates" ) );
-    item->setUsesBusyIndicator( true );
-    item->setCryptoStatus(KPIM::ProgressItem::Unknown);
-
-    QItemSelectionModel *selectionModel = mFolderTreeWidget->folderTreeView()->selectionModel();
-    QModelIndexList indexes = selectionModel->selectedIndexes();
-    Akonadi::Collection::List collections;
-
-    Q_FOREACH (const QModelIndex &index, indexes) {
-        Akonadi::Collection collection = index.data(Akonadi::EntityTreeModel::CollectionRole).value<Akonadi::Collection>();
-        if ( collection.isValid() ) {
-            collections << collection;
-        }
-    }
-
-    Akonadi::RemoveDuplicatesJob *job = new RemoveDuplicatesJob( collections, this );
-    job->setProperty( "ProgressItem", QVariant::fromValue ( item ) );
-    item->setProperty( "RemoveDuplicatesJob", QVariant::fromValue( qobject_cast<Akonadi::Job*>( job ) ) );
-    connect( job, SIGNAL(finished(KJob*)), this, SLOT(slotRemoveDuplicatesDone(KJob*)) );
-    connect( job, SIGNAL(description(KJob*,QString,QPair<QString,QString>,QPair<QString,QString>)), this, SLOT(slotRemoveDuplicatesUpdate(KJob*,QString)) );
-    connect( item, SIGNAL(progressItemCanceled(KPIM::ProgressItem*)), this, SLOT(slotRemoveDuplicatesCanceled(KPIM::ProgressItem*)) );
+    RemoveDuplicateMailJob *job = new RemoveDuplicateMailJob(mFolderTreeWidget->folderTreeView()->selectionModel(), this, this);
+    job->start();
 }
-
-void KMMainWidget::slotRemoveDuplicatesDone( KJob *job )
-{
-    if ( job->error() && job->error() != KJob::KilledJobError ) {
-        KMessageBox::error( this, job->errorText(), i18n( "Error while removing duplicates" ) );
-    }
-
-    KPIM::ProgressItem *item = job->property( "ProgressItem" ).value<KPIM::ProgressItem*>();
-    if ( item ) {
-        item->setComplete();
-        item->setStatus( i18n( "Done" ) );
-        item = 0;
-    }
-}
-
-void KMMainWidget::slotRemoveDuplicatesCanceled( KPIM::ProgressItem *item )
-{
-    Akonadi::Job *job = item->property( "RemoveDuplicatesJob" ).value<Akonadi::Job*>();
-    if ( job ) {
-        job->kill( KJob::Quietly );
-    }
-
-    item->setComplete();
-    item = 0;
-}
-
-void KMMainWidget::slotRemoveDuplicatesUpdate( KJob* job, const QString& description )
-{
-    KPIM::ProgressItem *item = job->property( "ProgressItem" ).value<KPIM::ProgressItem*>();
-    if ( item ) {
-        item->setStatus( description );
-    }
-}
-
 
 void KMMainWidget::slotServerSideSubscription()
 {
