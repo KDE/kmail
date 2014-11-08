@@ -1223,14 +1223,10 @@ void KMMainWidget::slotCollectionChanged( const Akonadi::Collection&collection, 
             mCurrentFolder->setCollection( collection );
         }
     } else if ( set.contains( "ENTITYDISPLAY" ) || set.contains( "NAME" ) ) {
-
-        QIcon icon = KIcon( QLatin1String( "folder" ) );
-        QString text;
-
         const QModelIndex idx = Akonadi::EntityTreeModel::modelIndexForCollection( KMKernel::self()->collectionModel(), collection );
         if ( idx.isValid() ) {
-            text = idx.data().toString();
-            icon = idx.data( Qt::DecorationRole ).value<QIcon>();
+            const QString text = idx.data().toString();
+            const QIcon icon = idx.data( Qt::DecorationRole ).value<QIcon>();
             mMessagePane->updateTabIconText( collection, text,icon );
         }
     }
@@ -1239,7 +1235,7 @@ void KMMainWidget::slotCollectionChanged( const Akonadi::Collection&collection, 
 
 void KMMainWidget::slotItemAdded( const Akonadi::Item &msg, const Akonadi::Collection &col )
 {
-
+    Q_UNUSED(msg);
     if ( col.isValid() ) {
         if ( col == CommonKernel->outboxCollectionFolder() ) {
             startUpdateMessageActionsTimer();
