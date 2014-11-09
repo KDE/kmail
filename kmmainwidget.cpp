@@ -195,6 +195,7 @@ using KSieveUi::SieveDebugDialog;
 #include <AkonadiWidgets/standardactionmanager.h>
 #include <KHelpClient>
 #include <QStandardPaths>
+#include <job/removeduplicatemailjob.h>
 
 
 using namespace KMime;
@@ -1217,14 +1218,10 @@ void KMMainWidget::slotCollectionChanged( const Akonadi::Collection&collection, 
             mCurrentFolder->setCollection( collection );
         }
     } else if ( set.contains( "ENTITYDISPLAY" ) || set.contains( "NAME" ) ) {
-
-        QIcon icon = QIcon::fromTheme( QLatin1String( "folder" ) );
-        QString text;
-
         const QModelIndex idx = Akonadi::EntityTreeModel::modelIndexForCollection( KMKernel::self()->collectionModel(), collection );
         if ( idx.isValid() ) {
-            text = idx.data().toString();
-            icon = idx.data( Qt::DecorationRole ).value<QIcon>();
+            const QString text = idx.data().toString();
+            const QIcon icon = idx.data( Qt::DecorationRole ).value<QIcon>();
             mMessagePane->updateTabIconText( collection, text,icon );
         }
     }
@@ -1233,7 +1230,7 @@ void KMMainWidget::slotCollectionChanged( const Akonadi::Collection&collection, 
 
 void KMMainWidget::slotItemAdded( const Akonadi::Item &msg, const Akonadi::Collection &col )
 {
-
+    Q_UNUSED(msg);
     if ( col.isValid() ) {
         if ( col == CommonKernel->outboxCollectionFolder() ) {
             startUpdateMessageActionsTimer();
@@ -4687,62 +4684,9 @@ void KMMainWidget::slotCollectionPropertiesFinished( KJob *job )
 
 void KMMainWidget::slotRemoveDuplicates()
 {
-    KPIM::ProgressItem *item = KPIM::ProgressManager::createProgressItem( i18n( "Removing duplicates" ) );
-    item->setUsesBusyIndicator( true );
-    item->setCryptoStatus(KPIM::ProgressItem::Unknown);
-
-    QItemSelectionModel *selectionModel = mFolderTreeWidget->folderTreeView()->selectionModel();
-    QModelIndexList indexes = selectionModel->selectedIndexes();
-    Akonadi::Collection::List collections;
-
-    Q_FOREACH (const QModelIndex &index, indexes) {
-        Akonadi::Collection collection = index.data(Akonadi::EntityTreeModel::CollectionRole).value<Akonadi::Collection>();
-        if ( collection.isValid() ) {
-            collections << collection;
-        }
-    }
-
-    Akonadi::RemoveDuplicatesJob *job = new RemoveDuplicatesJob( collections, this );
-    job->setProperty( "ProgressItem", QVariant::fromValue ( item ) );
-    item->setProperty( "RemoveDuplicatesJob", QVariant::fromValue( qobject_cast<Akonadi::Job*>( job ) ) );
-    connect(job, &Akonadi::RemoveDuplicatesJob::finished, this, &KMMainWidget::slotRemoveDuplicatesDone);
-    connect(job, &Akonadi::RemoveDuplicatesJob::description, this, &KMMainWidget::slotRemoveDuplicatesUpdate);
-    connect(item, &KPIM::ProgressItem::progressItemCanceled, this, &KMMainWidget::slotRemoveDuplicatesCanceled);
+    RemoveDuplicateMailJob *job = new RemoveDuplicateMailJob(mFolderTreeWidget->folderTreeView()->selectionModel(), this, this);
+    job->start();
 }
-
-void KMMainWidget::slotRemoveDuplicatesDone( KJob *job )
-{
-    if ( job->error() && job->error() != KJob::KilledJobError ) {
-        KMessageBox::error( this, job->errorText(), i18n( "Error while removing duplicates" ) );
-    }
-
-    KPIM::ProgressItem *item = job->property( "ProgressItem" ).value<KPIM::ProgressItem*>();
-    if ( item ) {
-        item->setComplete();
-        item->setStatus( i18n( "Done" ) );
-        item = 0;
-    }
-}
-
-void KMMainWidget::slotRemoveDuplicatesCanceled( KPIM::ProgressItem *item )
-{
-    Akonadi::Job *job = item->property( "RemoveDuplicatesJob" ).value<Akonadi::Job*>();
-    if ( job ) {
-        job->kill( KJob::Quietly );
-    }
-
-    item->setComplete();
-    item = 0;
-}
-
-void KMMainWidget::slotRemoveDuplicatesUpdate( KJob* job, const QString& description )
-{
-    KPIM::ProgressItem *item = job->property( "ProgressItem" ).value<KPIM::ProgressItem*>();
-    if ( item ) {
-        item->setStatus( description );
-    }
-}
-
 
 void KMMainWidget::slotServerSideSubscription()
 {

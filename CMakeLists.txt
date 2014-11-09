@@ -154,6 +154,7 @@ if (KDEPIM_BUILD_DESKTOP)
      job/addemailtoexistingcontactjob.cpp
      job/createtaskjob.cpp
      job/savedraftjob.cpp
+     job/removeduplicatemailjob.cpp
   )
  
   set(kmailprivate_widgets_LIB_SRCS
