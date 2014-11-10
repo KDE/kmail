@@ -10,7 +10,6 @@ using KPIM::BroadcastStatus;
 #include "editor/composer.h"
 #include "kmreadermainwin.h"
 #include "undostack.h"
-#include <KPIMUtils/kpimutils/kfileio.h>
 #include "kmreaderwin.h"
 #include "kmmainwidget.h"
 #include "addressline/recentaddresses.h"
@@ -567,12 +566,18 @@ int KMKernel::openComposer(const QString &to, const QString &cc,
 
     KUrl messageUrl = KUrl( messageFile );
     if ( !messageUrl.isEmpty() && messageUrl.isLocalFile() ) {
-        const QByteArray str = KPIMUtils::kFileToByteArray( messageUrl.toLocalFile(), true, false );
+        QFile f(messageUrl.toLocalFile());
+        QByteArray str;
+        if (!f.open(QIODevice::ReadOnly)) {
+            qWarning() << "Failed to load message: " << f.errorString();
+        } else {
+            str = f.readAll();
+            f.close();
+        }
         if( !str.isEmpty() ) {
             context = KMail::Composer::NoTemplate;
             msg->setBody( QString::fromLocal8Bit( str.data(), str.size() ).toUtf8() );
-        }
-        else {
+        } else {
             TemplateParser::TemplateParser parser( msg, TemplateParser::TemplateParser::NewMessage );
             parser.setIdentityManager( KMKernel::self()->identityManager() );
             parser.process( msg );

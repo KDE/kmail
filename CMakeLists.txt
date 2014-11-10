@@ -289,7 +289,6 @@ generate_export_header(kmailprivate BASE_NAME kmail)
     kdepim
     KF5::KIOCore
     KF5::Contacts
-    KF5::PimUtils
     KF5::PimTextEdit
     messageviewer
     akonadi_next

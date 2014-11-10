@@ -98,8 +98,6 @@ using KMail::SecondaryWindow;
 #include "messageviewer/settings/globalsettings.h"
 #include "messagecore/settings/globalsettings.h"
 
-#include <KPIMUtils/kpimutils/kfileio.h>
-
 #include <AkonadiCore/itemmovejob.h>
 #include <AkonadiCore/itemcopyjob.h>
 #include <AkonadiCore/itemdeletejob.h>
