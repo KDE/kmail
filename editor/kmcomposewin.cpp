@@ -388,7 +388,7 @@ KMComposeWin::KMComposeWin( const KMime::Message::Ptr &aMsg, bool lastSignState,
     mSnippetWidget->setVisible( GlobalSettings::self()->showSnippetManager() );
     mSnippetSplitter->addWidget( mSnippetWidget );
     mSnippetSplitter->setCollapsible( 0, false );
-    mSnippetSplitterCollapser = new PimCommon::SplitterCollapser(mSnippetSplitter, mSnippetWidget, this);
+    mSnippetSplitterCollapser = new PimCommon::SplitterCollapser(mSnippetWidget, mSnippetSplitter);
     mSnippetSplitterCollapser->setVisible( GlobalSettings::self()->showSnippetManager() );
 
     mSplitter->setOpaqueResize( true );
