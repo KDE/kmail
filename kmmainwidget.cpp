@@ -2680,18 +2680,22 @@ void KMMainWidget::slotMessageActivated( const Akonadi::Item &msg )
     }
 
     // Try to fetch the mail, even in offline mode, it might be cached
-    ItemFetchJob *itemFetchJob = MessageViewer::Viewer::createFetchJob( msg );
-    connect( itemFetchJob, SIGNAL(itemsReceived(Akonadi::Item::List)),
-             SLOT(slotItemsFetchedForActivation(Akonadi::Item::List)) );
-    connect( itemFetchJob, SIGNAL(result(KJob*)),
-             SLOT(itemsFetchForActivationDone(KJob*)) );
+    KMFetchMessageCommand *cmd = new KMFetchMessageCommand(this, msg);
+    connect(cmd, SIGNAL(completed(KMCommand*)),
+            this, SLOT(slotItemsFetchedForActivation(KMCommand*)));
+    cmd->start();
 }
 
-void KMMainWidget::slotItemsFetchedForActivation( const Akonadi::Item::List &list )
+void KMMainWidget::slotItemsFetchedForActivation( KMCommand *command )
 {
-    Q_ASSERT( list.size() == 1 );
+    KMCommand::Result result = command->result();
+    if (result != KMCommand::OK) {
+        kDebug() << "Result:" << result;
+        return;
+    }
 
-    const Item msg = list.first();
+    KMFetchMessageCommand *fetchCmd = qobject_cast<KMFetchMessageCommand*>(command);
+    const Item msg = fetchCmd->item();
 
     KMReaderMainWin *win = new KMReaderMainWin( mFolderDisplayFormatPreference, mFolderHtmlLoadExtPreference );
     const bool useFixedFont = mMsgView ? mMsgView->isFixedFont() :
@@ -2702,14 +2706,6 @@ void KMMainWidget::slotItemsFetchedForActivation( const Akonadi::Item::List &lis
     const Akonadi::Collection parentCollection = MailCommon::Util::parentCollectionFromItem(msg);
     win->showMessage( overrideEncoding(), msg, parentCollection );
     win->show();
-}
-
-void KMMainWidget::itemsFetchForActivationDone( KJob * job )
-{
-    if ( job->error() ) {
-        kDebug() << job->error() << job->errorString();
-        BroadcastStatus::instance()->setStatusMsg( job->errorString() );
-    }
 }
 
 void KMMainWidget::slotMessageStatusChangeRequest( const Akonadi::Item &item, const Akonadi::MessageStatus & set, const Akonadi::MessageStatus &clear )

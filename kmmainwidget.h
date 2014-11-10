@@ -203,7 +203,7 @@ public slots:
     */
     void slotMessageSelected( const Akonadi::Item & );
 
-    void slotItemsFetchedForActivation( const Akonadi::Item::List &list );
+    void slotItemsFetchedForActivation( KMCommand* command );
     void slotMessageStatusChangeRequest(  const Akonadi::Item &, const Akonadi::MessageStatus &, const Akonadi::MessageStatus & );
 
 
@@ -525,7 +525,6 @@ private slots:
 
     void itemsReceived(const Akonadi::Item::List &list );
     void itemsFetchDone( KJob *job );
-    void itemsFetchForActivationDone( KJob *job );
 
     void slotCollectionPropertiesContinued( KJob* job );
     void slotCollectionPropertiesFinished( KJob *job );

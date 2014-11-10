@@ -272,6 +272,11 @@ void KMCommand::slotPostTransfer( KMCommand::Result result )
         deleteLater();
 }
 
+Akonadi::ItemFetchJob *KMCommand::createFetchJob( const Akonadi::Item::List &items )
+{
+    return new Akonadi::ItemFetchJob( items, this );
+}
+
 void KMCommand::transferSelectedMsgs()
 {
     // make sure no other transfer is active
@@ -303,7 +308,7 @@ void KMCommand::transferSelectedMsgs()
     if ( !mFetchScope.isEmpty() ) {
         complete = false;
         ++KMCommand::mCountJobs;
-        Akonadi::ItemFetchJob *fetch = new Akonadi::ItemFetchJob( mMsgList, this );
+        Akonadi::ItemFetchJob *fetch = createFetchJob( mMsgList );
         mFetchScope.fetchAttribute< MessageCore::MDNStateAttribute >();
         fetch->setFetchScope( mFetchScope );
         connect( fetch, SIGNAL(itemsReceived(Akonadi::Item::List)), SLOT(slotMsgTransfered(Akonadi::Item::List)) );
@@ -1614,3 +1619,33 @@ KMCommand::Result KMShareImageCommand::execute()
     return OK;
 }
 
+KMFetchMessageCommand::KMFetchMessageCommand( QWidget *parent, const Akonadi::Item &item )
+    : KMCommand( parent, item )
+{
+    // Workaround KMCommand::transferSelectedMsgs() expecting non-empty fetchscope
+    fetchScope().fetchFullPayload(true);
+}
+
+Akonadi::ItemFetchJob *KMFetchMessageCommand::createFetchJob( const Akonadi::Item::List &items )
+{
+    Q_ASSERT( items.size() == 1 );
+    Akonadi::ItemFetchJob *fetch = MessageViewer::Viewer::createFetchJob( items.first() );
+    fetchScope() = fetch->fetchScope();
+    return fetch;
+}
+
+KMCommand::Result KMFetchMessageCommand::execute()
+{
+    Akonadi::Item item = retrievedMessage();
+    if ( !item.isValid() || !item.hasPayload<KMime::Message::Ptr>() ) {
+        return Failed;
+    }
+
+    mItem = item;
+    return OK;
+}
+
+Akonadi::Item KMFetchMessageCommand::item() const
+{
+    return mItem;
+}

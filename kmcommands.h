@@ -80,6 +80,8 @@ signals:
     void completed( KMCommand *command );
 
 protected:
+    virtual Akonadi::ItemFetchJob* createFetchJob( const Akonadi::Item::List &items );
+
     /** Allows to configure how much data should be retrieved of the messages. */
     Akonadi::ItemFetchScope& fetchScope() { return mFetchScope; }
 
@@ -583,6 +585,21 @@ public:
 private:
     virtual Result execute();
     KUrl mUrl;
+};
+
+class KMAIL_EXPORT KMFetchMessageCommand : public KMCommand
+{
+    Q_OBJECT
+public:
+    explicit KMFetchMessageCommand( QWidget *parent, const Akonadi::Item &item );
+
+    Akonadi::Item item() const;
+
+private:
+    Akonadi::ItemFetchJob *createFetchJob( const Akonadi::Item::List &items );
+    Result execute();
+
+    Akonadi::Item mItem;
 };
 
 
