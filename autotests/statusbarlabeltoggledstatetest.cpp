@@ -87,7 +87,7 @@ void StatusBarLabelToggledStateTest::shouldEmitSignalWhenClickOnLabel()
     widget.setStateString(QLatin1String("toggle"), QLatin1String("untoggle"));
     QSignalSpy spy(&widget, SIGNAL(toggleModeChanged(bool)));
     widget.show();
-    QTest::qWaitForWindowShown(&widget);
+    QTest::qWaitForWindowExposed(&widget);
     QTest::mouseClick(&widget, Qt::LeftButton);
     QCOMPARE(spy.count(), 1);
 
