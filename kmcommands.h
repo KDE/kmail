@@ -186,7 +186,7 @@ public:
     explicit KMMailtoComposeCommand(const KUrl &url, const Akonadi::Item &msg = Akonadi::Item());
 
 private:
-    virtual Result execute();
+    Result execute() Q_DECL_OVERRIDE;
 
     KUrl mUrl;
     Akonadi::Item mMessage;
@@ -201,7 +201,7 @@ public:
                          const Akonadi::Item &msg, const QString &selection);
 
 private:
-    virtual Result execute();
+    Result execute() Q_DECL_OVERRIDE;
 
     KUrl mUrl;
     QString mSelection;
@@ -215,8 +215,7 @@ public:
     KMMailtoForwardCommand(QWidget *parent, const KUrl &url, const Akonadi::Item &msg);
 
 private:
-    virtual Result execute();
-
+    Result execute() Q_DECL_OVERRIDE;
     KUrl mUrl;
 };
 
@@ -228,7 +227,7 @@ public:
     KMAddBookmarksCommand(const KUrl &url, QWidget *parent);
 
 private:
-    virtual Result execute();
+    Result execute() Q_DECL_OVERRIDE;
 
     KUrl mUrl;
 };
@@ -244,7 +243,7 @@ private slots:
     void slotUrlSaveResult(KJob *job);
 
 private:
-    virtual Result execute();
+    Result execute() Q_DECL_OVERRIDE;
 
     KUrl mUrl;
 };
@@ -259,7 +258,7 @@ public:
 private slots:
     void slotDeleteItem(KJob *job);
 private:
-    virtual Result execute();
+    Result execute() Q_DECL_OVERRIDE;
     bool mDeleteFromSource;
 };
 
@@ -270,7 +269,7 @@ class KMAIL_EXPORT KMEditMessageCommand : public KMCommand
 public:
     explicit KMEditMessageCommand(QWidget *parent, const KMime::Message::Ptr &msg);
 private:
-    virtual Result execute();
+    Result execute() Q_DECL_OVERRIDE;
     KMime::Message::Ptr mMessage;
 };
 
@@ -282,7 +281,7 @@ public:
     KMUseTemplateCommand(QWidget *parent, const Akonadi::Item &msg);
 
 private:
-    virtual Result execute();
+    Result execute() Q_DECL_OVERRIDE;
 };
 
 class KMAIL_EXPORT KMSaveMsgCommand : public KMCommand
@@ -293,7 +292,7 @@ public:
     KMSaveMsgCommand(QWidget *parent, const QList<Akonadi::Item> &msgList);
 
 private:
-    virtual Result execute();
+    Result execute() Q_DECL_OVERRIDE;
 
 };
 
@@ -306,7 +305,7 @@ public:
                               const QString &encoding = QString() , KMMainWidget *main = 0);
 
 private:
-    virtual Result execute();
+    Result execute() Q_DECL_OVERRIDE;
 
 private slots:
     void slotDataArrived(KIO::Job *job, const QByteArray &data);
@@ -338,7 +337,7 @@ public:
     KMSaveAttachmentsCommand(QWidget *parent, const QList<Akonadi::Item> &msgs);
 
 private:
-    virtual Result execute();
+    Result execute() Q_DECL_OVERRIDE;
     MessageViewer::Viewer *mViewer;
 };
 
@@ -350,7 +349,7 @@ public:
                    MessageComposer::ReplyStrategy replyStrategy,
                    const QString &selection = QString(), bool noquote = false, const QString &templateName = QString());
 private:
-    virtual Result execute();
+    Result execute() Q_DECL_OVERRIDE;
 
 private:
     QString mSelection;
@@ -371,7 +370,7 @@ public:
 
 private:
     KMCommand::Result createComposer(const Akonadi::Item &item);
-    virtual Result execute();
+    Result execute() Q_DECL_OVERRIDE;
 
 private:
     uint mIdentity;
@@ -389,7 +388,7 @@ public:
                              uint identity = 0, KMail::Composer *win = 0);
 
 private:
-    virtual Result execute();
+    Result execute() Q_DECL_OVERRIDE;
 
     uint mIdentity;
     QPointer<KMail::Composer> mWin;
@@ -404,7 +403,7 @@ public:
     KMRedirectCommand(QWidget *parent, const QList<Akonadi::Item> &msgList);
 
 private:
-    virtual Result execute();
+    Result execute() Q_DECL_OVERRIDE;
 };
 
 class KMAIL_EXPORT KMPrintCommand : public KMCommand
@@ -425,7 +424,7 @@ public:
     void setPrintPreview(bool preview);
 
 private:
-    virtual Result execute();
+    Result execute() Q_DECL_OVERRIDE;
 
     MessageViewer::HeaderStyle *mHeaderStyle;
     MessageViewer::HeaderStrategy *mHeaderStrategy;
@@ -451,7 +450,7 @@ protected slots:
     void slotModifyItemDone(KJob *job);
 
 private:
-    virtual Result execute();
+    Result execute() Q_DECL_OVERRIDE;
     MessageStatus mStatus;
     bool mInvertMark;
 };
@@ -474,7 +473,7 @@ protected slots:
     void slotModifyItemDone(KJob *job);
 
 private:
-    virtual Result execute();
+    Result execute() Q_DECL_OVERRIDE;
     void setTags();
 
     Akonadi::Tag::List mTags;
@@ -494,7 +493,7 @@ public:
                           const QVector<qlonglong> &msgListId, const QString &filterId);
 
 private:
-    virtual Result execute();
+    Result execute() Q_DECL_OVERRIDE;
     QVector<qlonglong> mMsgListId;
     QString mFilterId;
 };
@@ -522,7 +521,7 @@ public:
     KMMailingListFilterCommand(QWidget *parent, const Akonadi::Item &msg);
 
 private:
-    virtual Result execute();
+    Result execute() Q_DECL_OVERRIDE;
 };
 
 class KMAIL_EXPORT KMCopyCommand : public KMCommand
@@ -536,7 +535,7 @@ public:
 protected slots:
     void slotCopyResult(KJob *job);
 private:
-    virtual Result execute();
+    Result execute() Q_DECL_OVERRIDE;
 
     Akonadi::Collection mDestFolder;
 };
@@ -575,7 +574,7 @@ signals:
     void moveDone(KMMoveCommand *);
 
 private:
-    virtual Result execute();
+    Result execute() Q_DECL_OVERRIDE;
     void completeMove(Result result);
 
     Akonadi::Collection mDestFolder;
@@ -604,7 +603,7 @@ public:
     explicit KMResendMessageCommand(QWidget *parent, const Akonadi::Item &msg = Akonadi::Item());
 
 private:
-    virtual Result execute();
+    Result execute() Q_DECL_OVERRIDE;
 };
 
 class KMAIL_EXPORT KMShareImageCommand : public KMCommand
@@ -615,7 +614,7 @@ public:
     explicit KMShareImageCommand(const KUrl &url, QWidget *parent);
 
 private:
-    virtual Result execute();
+    Result execute() Q_DECL_OVERRIDE;
     KUrl mUrl;
 };
 
@@ -629,7 +628,7 @@ public:
 
 private:
     Akonadi::ItemFetchJob *createFetchJob(const Akonadi::Item::List &items);
-    Result execute();
+    Result execute() Q_DECL_OVERRIDE;
 
     Akonadi::Item mItem;
 };
