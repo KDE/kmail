@@ -15,7 +15,6 @@
   51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
 */
 
-
 #include "followupreminderselectdatedialog.h"
 
 #include <KLocalizedString>
@@ -35,12 +34,11 @@
 #include <QLabel>
 #include <kdatecombobox.h>
 
-
 FollowUpReminderSelectDateDialog::FollowUpReminderSelectDateDialog(QWidget *parent)
     : QDialog(parent)
 {
-    setWindowTitle( i18n( "Select Date" ) );
-    QDialogButtonBox *buttonBox = new QDialogButtonBox(QDialogButtonBox::Ok|QDialogButtonBox::Cancel);
+    setWindowTitle(i18n("Select Date"));
+    QDialogButtonBox *buttonBox = new QDialogButtonBox(QDialogButtonBox::Ok | QDialogButtonBox::Cancel);
     QVBoxLayout *topLayout = new QVBoxLayout;
     setLayout(topLayout);
     QPushButton *okButton = buttonBox->button(QDialogButtonBox::Ok);
@@ -49,12 +47,12 @@ FollowUpReminderSelectDateDialog::FollowUpReminderSelectDateDialog(QWidget *pare
     connect(buttonBox, &QDialogButtonBox::accepted, this, &FollowUpReminderSelectDateDialog::accept);
     connect(buttonBox, &QDialogButtonBox::rejected, this, &FollowUpReminderSelectDateDialog::reject);
     okButton->setDefault(true);
-    setModal( true );
+    setModal(true);
 
-    QWidget *mainWidget = new QWidget( this );
+    QWidget *mainWidget = new QWidget(this);
     topLayout->addWidget(mainWidget);
     topLayout->addWidget(buttonBox);
-    QVBoxLayout *mainLayout = new QVBoxLayout( mainWidget );
+    QVBoxLayout *mainLayout = new QVBoxLayout(mainWidget);
 //TODO PORT QT5     mainLayout->setSpacing( QDialog::spacingHint() );
 //TODO PORT QT5     mainLayout->setMargin( QDialog::marginHint() );
     QFormLayout *formLayout = new QFormLayout;
@@ -73,7 +71,7 @@ FollowUpReminderSelectDateDialog::FollowUpReminderSelectDateDialog(QWidget *pare
     mCollectionCombobox = new Akonadi::CollectionComboBox;
     mCollectionCombobox->setMinimumWidth(250);
     mCollectionCombobox->setAccessRightsFilter(Akonadi::Collection::CanCreateItem);
-    mCollectionCombobox->setMimeTypeFilter( QStringList() << KCalCore::Todo::todoMimeType() );
+    mCollectionCombobox->setMimeTypeFilter(QStringList() << KCalCore::Todo::todoMimeType());
     mCollectionCombobox->setObjectName(QLatin1String("collectioncombobox"));
 
     formLayout->addRow(i18n("Store ToDo in:"), mCollectionCombobox);
@@ -83,7 +81,6 @@ FollowUpReminderSelectDateDialog::FollowUpReminderSelectDateDialog(QWidget *pare
 FollowUpReminderSelectDateDialog::~FollowUpReminderSelectDateDialog()
 {
 }
-
 
 QDate FollowUpReminderSelectDateDialog::selectedDate() const
 {

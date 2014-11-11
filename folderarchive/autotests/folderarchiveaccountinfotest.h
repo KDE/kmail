@@ -20,7 +20,6 @@
 
 #include <QObject>
 
-
 class FolderArchiveAccountInfoTest : public QObject
 {
     Q_OBJECT
@@ -33,8 +32,6 @@ private Q_SLOTS:
     void shouldBeValid();
     void shouldRestoreFromSettings();
 };
-
-
 
 #endif // FOLDERARCHIVEACCOUNTINFOTEST_H
 

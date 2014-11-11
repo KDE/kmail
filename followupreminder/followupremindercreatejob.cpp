@@ -67,11 +67,11 @@ void FollowupReminderCreateJob::start()
 {
     if (mInfo->isValid()) {
         if (mCollection.isValid()) {
-            KCalCore::Todo::Ptr todo( new KCalCore::Todo );
+            KCalCore::Todo::Ptr todo(new KCalCore::Todo);
             todo->setSummary(i18n("Wait answer from \"%1\" send to \"%2\"").arg(mInfo->subject()).arg(mInfo->to()));
             Akonadi::Item newTodoItem;
-            newTodoItem.setMimeType( KCalCore::Todo::todoMimeType() );
-            newTodoItem.setPayload<KCalCore::Todo::Ptr>( todo );
+            newTodoItem.setMimeType(KCalCore::Todo::todoMimeType());
+            newTodoItem.setPayload<KCalCore::Todo::Ptr>(todo);
 
             Akonadi::ItemCreateJob *createJob = new Akonadi::ItemCreateJob(newTodoItem, mCollection);
             connect(createJob, &Akonadi::ItemCreateJob::result, this, &FollowupReminderCreateJob::slotCreateNewTodo);
@@ -79,7 +79,7 @@ void FollowupReminderCreateJob::start()
             writeFollowupReminderInfo();
         }
     } else {
-        qDebug()<<"FollowupReminderCreateJob info not valid ";
+        qDebug() << "FollowupReminderCreateJob info not valid ";
         deleteLater();
         return;
     }
@@ -87,8 +87,8 @@ void FollowupReminderCreateJob::start()
 
 void FollowupReminderCreateJob::slotCreateNewTodo(KJob *job)
 {
-    if ( job->error() ) {
-        qDebug() << "Error during create new Todo "<<job->errorString();
+    if (job->error()) {
+        qDebug() << "Error during create new Todo " << job->errorString();
     } else {
         Akonadi::ItemCreateJob *createJob = qobject_cast<Akonadi::ItemCreateJob *>(job);
         mInfo->setTodoId(createJob->item().id());

@@ -31,13 +31,15 @@ class KXMLGUIClient;
 class KToggleAction;
 class QAction;
 class QSignalMapper;
-namespace Akonadi {
+namespace Akonadi
+{
 class Item;
 class Monitor;
 class Tag;
 }
 
-namespace KMail {
+namespace KMail
+{
 
 class MessageActions;
 
@@ -64,8 +66,8 @@ public:
         * @param messageActions: Each action is added to the message status menu
         * @param guiClient: The action list with the toolbar action is plugged here
         */
-    TagActionManager( QObject *parent, KActionCollection *actionCollection,
-                      MessageActions *messageActions, KXMLGUIClient *guiClient );
+    TagActionManager(QObject *parent, KActionCollection *actionCollection,
+                     MessageActions *messageActions, KXMLGUIClient *guiClient);
 
     ~TagActionManager();
 
@@ -88,9 +90,8 @@ public:
         *
         * @param selectedItem if exactly one item is selected, it should be passed here
         */
-    void updateActionStates( int numberOfSelectedMessages,
-                             const Akonadi::Item &selectedItem );
-
+    void updateActionStates(int numberOfSelectedMessages,
+                            const Akonadi::Item &selectedItem);
 
 Q_SIGNALS:
 
@@ -98,7 +99,7 @@ Q_SIGNALS:
         * Emitted when one of the tagging actions was triggered. The user of this class
         * should connect to this signal and change the tags of the messages
         */
-    void tagActionTriggered( const Akonadi::Tag &tag );
+    void tagActionTriggered(const Akonadi::Tag &tag);
     /**
        * Emitted when we want to select more action
        */
@@ -114,9 +115,9 @@ private Q_SLOTS:
 
 private:
     void fillTagList();
-    void createTagAction( const MailCommon::Tag::Ptr &tag, bool addToMenu );
-    void createTagActions( const QList<MailCommon::Tag::Ptr> &);
-    void checkTags(const QList<qint64>& tags);
+    void createTagAction(const MailCommon::Tag::Ptr &tag, bool addToMenu);
+    void createTagActions(const QList<MailCommon::Tag::Ptr> &);
+    void checkTags(const QList<qint64> &tags);
     QList<qint64> checkedTags() const;
 
     KActionCollection *mActionCollection;
@@ -130,10 +131,10 @@ private:
     QAction *mNewTagAction;
     // Maps the id of a tag to the action of a tag.
     // Contains all existing tags
-    QMap<qint64,KToggleAction*> mTagActions;
+    QMap<qint64, KToggleAction *> mTagActions;
 
     // The actions of all tags that are in the toolbar
-    QList<QAction*> mToolbarActions;
+    QList<QAction *> mToolbarActions;
 
     // A sorted list of all tags
     QList<MailCommon::Tag::Ptr> mTags;

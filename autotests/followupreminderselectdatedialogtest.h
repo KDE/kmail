@@ -20,18 +20,15 @@
 
 #include <QObject>
 
-
 class FollowupReminderSelectDateDialogTest : public QObject
 {
     Q_OBJECT
 public:
-    explicit FollowupReminderSelectDateDialogTest(QObject *parent=0);
+    explicit FollowupReminderSelectDateDialogTest(QObject *parent = 0);
     ~FollowupReminderSelectDateDialogTest();
 private Q_SLOTS:
     void shouldHaveDefaultValue();
 };
-
-
 
 #endif // FOLLOWUPREMINDERSELECTDATEDIALOGTEST_H
 

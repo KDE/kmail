@@ -44,11 +44,11 @@
 
 using namespace KMail;
 
-KMKnotify::KMKnotify( QWidget * parent )
-    :QDialog( parent ), m_changed( false )
+KMKnotify::KMKnotify(QWidget *parent)
+    : QDialog(parent), m_changed(false)
 {
-    setWindowTitle( i18n("Notification") );
-    QDialogButtonBox *buttonBox = new QDialogButtonBox(QDialogButtonBox::Ok|QDialogButtonBox::Cancel);
+    setWindowTitle(i18n("Notification"));
+    QDialogButtonBox *buttonBox = new QDialogButtonBox(QDialogButtonBox::Ok | QDialogButtonBox::Cancel);
     QWidget *mainWidget = new QWidget(this);
     QVBoxLayout *mainLayout = new QVBoxLayout;
     setLayout(mainLayout);
@@ -59,20 +59,20 @@ KMKnotify::KMKnotify( QWidget * parent )
     connect(buttonBox, &QDialogButtonBox::accepted, this, &KMKnotify::accept);
     connect(buttonBox, &QDialogButtonBox::rejected, this, &KMKnotify::reject);
 
-    QWidget *page = new QWidget( this );
+    QWidget *page = new QWidget(this);
     mainLayout->addWidget(page);
 
-    QVBoxLayout *layout = new QVBoxLayout( page );
-    layout->setMargin( 0 );
-    m_comboNotify = new KComboBox( false );
-    m_comboNotify->setSizeAdjustPolicy( QComboBox::AdjustToContents );
+    QVBoxLayout *layout = new QVBoxLayout(page);
+    layout->setMargin(0);
+    m_comboNotify = new KComboBox(false);
+    m_comboNotify->setSizeAdjustPolicy(QComboBox::AdjustToContents);
 
     QHBoxLayout *hbox = new QHBoxLayout();
-    layout->addLayout( hbox );
-    hbox->addWidget( m_comboNotify, 10 );
+    layout->addLayout(hbox);
+    hbox->addWidget(m_comboNotify, 10);
 
-    m_notifyWidget = new KNotifyConfigWidget( page );
-    layout->addWidget( m_notifyWidget );
+    m_notifyWidget = new KNotifyConfigWidget(page);
+    layout->addWidget(m_notifyWidget);
     m_comboNotify->setFocus();
 
     layout->addWidget(new KSeparator);
@@ -90,25 +90,25 @@ KMKnotify::~KMKnotify()
     writeConfig();
 }
 
-void KMKnotify::slotConfigChanged( bool changed )
+void KMKnotify::slotConfigChanged(bool changed)
 {
     m_changed = changed;
 }
 
-void KMKnotify::slotComboChanged( int index )
+void KMKnotify::slotComboChanged(int index)
 {
-    QString text( m_comboNotify->itemData(index).toString() );
-    if ( m_changed ) {
+    QString text(m_comboNotify->itemData(index).toString());
+    if (m_changed) {
         m_notifyWidget->save();
         m_changed = false;
     }
-    m_notifyWidget->setApplication( text );
+    m_notifyWidget->setApplication(text);
 }
 
 void KMKnotify::setCurrentNotification(const QString &name)
 {
     const int index = m_comboNotify->findData(name);
-    if (index>-1) {
+    if (index > -1) {
         m_comboNotify->setCurrentIndex(index);
         slotComboChanged(index);
     }
@@ -118,60 +118,60 @@ void KMKnotify::initCombobox()
 {
 
     QStringList lstNotify;
-    lstNotify<< QLatin1String( "kmail2.notifyrc" );
-    lstNotify<< QLatin1String( "akonadi_maildispatcher_agent.notifyrc" );
-    lstNotify<< QLatin1String( "akonadi_mailfilter_agent.notifyrc" );
-    lstNotify<< QLatin1String( "akonadi_archivemail_agent.notifyrc" );
-    lstNotify<< QLatin1String( "akonadi_sendlater_agent.notifyrc" );
-    lstNotify<< QLatin1String( "akonadi_newmailnotifier_agent.notifyrc" );
-    lstNotify<< QLatin1String( "akonadi_followupreminder_agent.notifyrc" );
-    lstNotify<< QLatin1String( "messageviewer.notifyrc" );
+    lstNotify << QLatin1String("kmail2.notifyrc");
+    lstNotify << QLatin1String("akonadi_maildispatcher_agent.notifyrc");
+    lstNotify << QLatin1String("akonadi_mailfilter_agent.notifyrc");
+    lstNotify << QLatin1String("akonadi_archivemail_agent.notifyrc");
+    lstNotify << QLatin1String("akonadi_sendlater_agent.notifyrc");
+    lstNotify << QLatin1String("akonadi_newmailnotifier_agent.notifyrc");
+    lstNotify << QLatin1String("akonadi_followupreminder_agent.notifyrc");
+    lstNotify << QLatin1String("messageviewer.notifyrc");
     //TODO add other notifyrc here if necessary
 
-    Q_FOREACH ( const QString& notify, lstNotify ) {
-        const QString fullPath = QStandardPaths::locate(QStandardPaths::GenericDataLocation, QLatin1String("knotifications5/") + notify );
+    Q_FOREACH (const QString &notify, lstNotify) {
+        const QString fullPath = QStandardPaths::locate(QStandardPaths::GenericDataLocation, QLatin1String("knotifications5/") + notify);
 
-        if ( !fullPath.isEmpty() ) {
-            const int slash = fullPath.lastIndexOf( QLatin1Char('/') );
-            QString appname= fullPath.right(fullPath.length() - slash-1);
+        if (!fullPath.isEmpty()) {
+            const int slash = fullPath.lastIndexOf(QLatin1Char('/'));
+            QString appname = fullPath.right(fullPath.length() - slash - 1);
             appname.remove(QLatin1String(".notifyrc"));
-            if ( !appname.isEmpty() ) {
-                KConfig config(fullPath, KConfig::NoGlobals, QStandardPaths::DataLocation );
-                KConfigGroup globalConfig( &config, QString::fromLatin1("Global") );
+            if (!appname.isEmpty()) {
+                KConfig config(fullPath, KConfig::NoGlobals, QStandardPaths::DataLocation);
+                KConfigGroup globalConfig(&config, QString::fromLatin1("Global"));
                 const QString icon = globalConfig.readEntry(QString::fromLatin1("IconName"), QString::fromLatin1("misc"));
-                const QString description = globalConfig.readEntry( QString::fromLatin1("Comment"), appname );
-                m_comboNotify->addItem( SmallIcon( icon ), description, appname );
+                const QString description = globalConfig.readEntry(QString::fromLatin1("Comment"), appname);
+                m_comboNotify->addItem(SmallIcon(icon), description, appname);
             }
         }
     }
 
     m_comboNotify->model()->sort(0);
-    if ( m_comboNotify->count() > 0 ) {
+    if (m_comboNotify->count() > 0) {
         m_comboNotify->setCurrentIndex(0);
-        m_notifyWidget->setApplication( m_comboNotify->itemData( 0 ).toString() );
+        m_notifyWidget->setApplication(m_comboNotify->itemData(0).toString());
     }
 }
 
 void KMKnotify::slotOk()
 {
-    if ( m_changed )
+    if (m_changed) {
         m_notifyWidget->save();
+    }
 }
 
 void KMKnotify::readConfig()
 {
-    KConfigGroup notifyDialog( KMKernel::self()->config(), "KMKnotifyDialog" );
-    const QSize size = notifyDialog.readEntry( "Size", QSize(600, 400) );
-    if ( size.isValid() ) {
-        resize( size );
+    KConfigGroup notifyDialog(KMKernel::self()->config(), "KMKnotifyDialog");
+    const QSize size = notifyDialog.readEntry("Size", QSize(600, 400));
+    if (size.isValid()) {
+        resize(size);
     }
 }
 
 void KMKnotify::writeConfig()
 {
-    KConfigGroup notifyDialog( KMKernel::self()->config(), "KMKnotifyDialog" );
-    notifyDialog.writeEntry( "Size", size() );
+    KConfigGroup notifyDialog(KMKernel::self()->config(), "KMKnotifyDialog");
+    notifyDialog.writeEntry("Size", size());
     notifyDialog.sync();
 }
-
 

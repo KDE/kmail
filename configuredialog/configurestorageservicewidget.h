@@ -20,14 +20,15 @@
 
 #include <QWidget>
 class QPushButton;
-namespace PimCommon {
+namespace PimCommon
+{
 class StorageServiceSettingsWidget;
 }
 class ConfigureStorageServiceWidget : public QWidget
 {
     Q_OBJECT
 public:
-    explicit ConfigureStorageServiceWidget(QWidget *parent=0);
+    explicit ConfigureStorageServiceWidget(QWidget *parent = 0);
     ~ConfigureStorageServiceWidget();
 
     void save();

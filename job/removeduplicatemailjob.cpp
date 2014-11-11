@@ -26,8 +26,8 @@
 #include <AkonadiCore/EntityTreeModel>
 
 #include <QItemSelectionModel>
-Q_DECLARE_METATYPE(KPIM::ProgressItem*)
-Q_DECLARE_METATYPE(Akonadi::Job*)
+Q_DECLARE_METATYPE(KPIM::ProgressItem *)
+Q_DECLARE_METATYPE(Akonadi::Job *)
 
 RemoveDuplicateMailJob::RemoveDuplicateMailJob(QItemSelectionModel *selectionModel, QWidget *widget, QObject *parent)
     : QObject(parent),
@@ -44,8 +44,8 @@ RemoveDuplicateMailJob::~RemoveDuplicateMailJob()
 
 void RemoveDuplicateMailJob::start()
 {
-    KPIM::ProgressItem *item = KPIM::ProgressManager::createProgressItem( i18n( "Removing duplicates" ) );
-    item->setUsesBusyIndicator( true );
+    KPIM::ProgressItem *item = KPIM::ProgressManager::createProgressItem(i18n("Removing duplicates"));
+    item->setUsesBusyIndicator(true);
     item->setCryptoStatus(KPIM::ProgressItem::Unknown);
 
     QModelIndexList indexes = mSelectionModel->selectedIndexes();
@@ -53,38 +53,38 @@ void RemoveDuplicateMailJob::start()
 
     Q_FOREACH (const QModelIndex &index, indexes) {
         const Akonadi::Collection collection = index.data(Akonadi::EntityTreeModel::CollectionRole).value<Akonadi::Collection>();
-        if ( collection.isValid() ) {
+        if (collection.isValid()) {
             collections << collection;
         }
     }
 
-    Akonadi::RemoveDuplicatesJob *job = new Akonadi::RemoveDuplicatesJob( collections, this );
-    job->setProperty( "ProgressItem", QVariant::fromValue ( item ) );
-    item->setProperty( "RemoveDuplicatesJob", QVariant::fromValue( qobject_cast<Akonadi::Job*>( job ) ) );
-    connect( job, SIGNAL(finished(KJob*)), this, SLOT(slotRemoveDuplicatesDone(KJob*)) );
-    connect( job, SIGNAL(description(KJob*,QString,QPair<QString,QString>,QPair<QString,QString>)), this, SLOT(slotRemoveDuplicatesUpdate(KJob*,QString)) );
-    connect( item, SIGNAL(progressItemCanceled(KPIM::ProgressItem*)), this, SLOT(slotRemoveDuplicatesCanceled(KPIM::ProgressItem*)) );
+    Akonadi::RemoveDuplicatesJob *job = new Akonadi::RemoveDuplicatesJob(collections, this);
+    job->setProperty("ProgressItem", QVariant::fromValue(item));
+    item->setProperty("RemoveDuplicatesJob", QVariant::fromValue(qobject_cast<Akonadi::Job *>(job)));
+    connect(job, SIGNAL(finished(KJob*)), this, SLOT(slotRemoveDuplicatesDone(KJob*)));
+    connect(job, SIGNAL(description(KJob*,QString,QPair<QString,QString>,QPair<QString,QString>)), this, SLOT(slotRemoveDuplicatesUpdate(KJob*,QString)));
+    connect(item, SIGNAL(progressItemCanceled(KPIM::ProgressItem*)), this, SLOT(slotRemoveDuplicatesCanceled(KPIM::ProgressItem*)));
 }
 
-void RemoveDuplicateMailJob::slotRemoveDuplicatesDone( KJob *job )
+void RemoveDuplicateMailJob::slotRemoveDuplicatesDone(KJob *job)
 {
-    KPIM::ProgressItem *item = job->property( "ProgressItem" ).value<KPIM::ProgressItem*>();
-    if ( item ) {
+    KPIM::ProgressItem *item = job->property("ProgressItem").value<KPIM::ProgressItem *>();
+    if (item) {
         item->setComplete();
-        item->setStatus( i18n( "Done" ) );
+        item->setStatus(i18n("Done"));
         item = 0;
     }
-    if ( job->error() && job->error() != KJob::KilledJobError ) {
-        KMessageBox::error( mParent, job->errorText(), i18n( "Error while removing duplicates" ) );
+    if (job->error() && job->error() != KJob::KilledJobError) {
+        KMessageBox::error(mParent, job->errorText(), i18n("Error while removing duplicates"));
     }
     deleteLater();
 }
 
-void RemoveDuplicateMailJob::slotRemoveDuplicatesCanceled( KPIM::ProgressItem *item )
+void RemoveDuplicateMailJob::slotRemoveDuplicatesCanceled(KPIM::ProgressItem *item)
 {
-    Akonadi::Job *job = item->property( "RemoveDuplicatesJob" ).value<Akonadi::Job*>();
-    if ( job ) {
-        job->kill( KJob::Quietly );
+    Akonadi::Job *job = item->property("RemoveDuplicatesJob").value<Akonadi::Job *>();
+    if (job) {
+        job->kill(KJob::Quietly);
     }
 
     item->setComplete();
@@ -92,10 +92,10 @@ void RemoveDuplicateMailJob::slotRemoveDuplicatesCanceled( KPIM::ProgressItem *i
     deleteLater();
 }
 
-void RemoveDuplicateMailJob::slotRemoveDuplicatesUpdate( KJob* job, const QString& description )
+void RemoveDuplicateMailJob::slotRemoveDuplicatesUpdate(KJob *job, const QString &description)
 {
-    KPIM::ProgressItem *item = job->property( "ProgressItem" ).value<KPIM::ProgressItem*>();
-    if ( item ) {
-        item->setStatus( description );
+    KPIM::ProgressItem *item = job->property("ProgressItem").value<KPIM::ProgressItem *>();
+    if (item) {
+        item->setStatus(description);
     }
 }

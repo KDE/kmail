@@ -33,7 +33,7 @@ StatusBarLabelToggledState::~StatusBarLabelToggledState()
 void StatusBarLabelToggledState::setStateString(const QString &toggled, const QString &untoggled)
 {
     if (toggled.isEmpty() || untoggled.isEmpty()) {
-        qWarning() <<" State string is empty. Need to fix it";
+        qWarning() << " State string is empty. Need to fix it";
     }
     mToggled = toggled;
     mUnToggled = untoggled;

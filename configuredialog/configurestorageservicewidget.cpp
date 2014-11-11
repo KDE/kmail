@@ -66,16 +66,17 @@ ConfigureStorageServiceWidget::~ConfigureStorageServiceWidget()
 
 void ConfigureStorageServiceWidget::slotManageStorageService()
 {
-    if ( !QProcess::startDetached(QLatin1String("storageservicemanager") ) )
-        KMessageBox::error( this, i18n( "Could not start storage service manager; "
-                                        "please check your installation." ),
-                            i18n( "KMail Error" ) );
+    if (!QProcess::startDetached(QLatin1String("storageservicemanager")))
+        KMessageBox::error(this, i18n("Could not start storage service manager; "
+                                      "please check your installation."),
+                           i18n("KMail Error"));
 }
 
 void ConfigureStorageServiceWidget::save()
 {
-    if (KMKernel::self() && KMKernel::self()->storageServiceManager())
+    if (KMKernel::self() && KMKernel::self()->storageServiceManager()) {
         KMKernel::self()->storageServiceManager()->setListService(mStorageServiceWidget->listService());
+    }
 }
 
 void ConfigureStorageServiceWidget::doLoadFromGlobalSettings()

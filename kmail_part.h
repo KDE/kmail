@@ -44,20 +44,23 @@ public:
     KMailPart(QWidget *parentWidget, QObject *parent, const QVariantList &);
     virtual ~KMailPart();
 
-    QWidget* parentWidget() const;
+    QWidget *parentWidget() const;
 
 public Q_SLOTS:
-    Q_SCRIPTABLE void save() { /*TODO*/ }
+    Q_SCRIPTABLE void save()
+    {
+        /*TODO*/
+    }
     Q_SCRIPTABLE void exit();
     void updateEditMenu() {}
-    void slotCollectionChanged( const Akonadi::Collection &collection, const QSet<QByteArray> &attributeNames );
+    void slotCollectionChanged(const Akonadi::Collection &collection, const QSet<QByteArray> &attributeNames);
 
-    void slotFolderChanged( const Akonadi::Collection& );
+    void slotFolderChanged(const Akonadi::Collection &);
 
     void updateQuickSearchText();
 signals:
-    void textChanged( const QString& );
-    void iconChanged( const QPixmap& );
+    void textChanged(const QString &);
+    void iconChanged(const QPixmap &);
 
 protected:
     virtual bool openFile();

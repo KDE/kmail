@@ -35,10 +35,12 @@
 #include "kmail_export.h"
 #include <k4aboutdata.h>
 
-namespace KMail {
+namespace KMail
+{
 
-class KMAIL_EXPORT AboutData : public K4AboutData {
-  public:
+class KMAIL_EXPORT AboutData : public K4AboutData
+{
+public:
     AboutData();
     ~AboutData();
 };

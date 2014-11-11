@@ -32,7 +32,6 @@
 
 #include "collectionquotapage_p.h"
 
-
 #include "kmkernel.h"
 
 #include <KLocalizedString>
@@ -44,36 +43,35 @@
 #include <KFormat>
 #include <KConfigGroup>
 
-QuotaWidget::QuotaWidget( QWidget* parent )
-    :QWidget( parent )
+QuotaWidget::QuotaWidget(QWidget *parent)
+    : QWidget(parent)
 {
-    QVBoxLayout *box = new QVBoxLayout( this );
-    QWidget *stuff = new QWidget( this );
-    QGridLayout* layout = new QGridLayout( stuff );
+    QVBoxLayout *box = new QVBoxLayout(this);
+    QWidget *stuff = new QWidget(this);
+    QGridLayout *layout = new QGridLayout(stuff);
 //TODO PORT QT5     layout->setMargin( QDialog::marginHint() );
 //TODO PORT QT5     layout->setSpacing( QDialog::spacingHint() );
 
     QLabel *lab = new QLabel(i18n("Usage:"));
-    layout->addWidget( lab, 0, 0 );
+    layout->addWidget(lab, 0, 0);
 
     mUsage = new QLabel;
-    layout->addWidget( mUsage, 0, 1 );
-
+    layout->addWidget(mUsage, 0, 1);
 
     QLabel *Status = new QLabel(i18n("Status:"));
-    layout->addWidget( Status, 1, 0 );
-    mProgressBar = new QProgressBar( stuff );
+    layout->addWidget(Status, 1, 0);
+    mProgressBar = new QProgressBar(stuff);
     // xgettext: no-c-format
     mProgressBar->setFormat(i18n("%p% full"));
-    layout->addWidget( mProgressBar, 1, 1 );
-    box->addWidget( stuff );
-    box->addStretch( 2 );
+    layout->addWidget(mProgressBar, 1, 1);
+    box->addWidget(stuff);
+    box->addStretch(2);
 }
 
-void QuotaWidget::setQuotaInfo( qint64 current, qint64 maxValue )
+void QuotaWidget::setQuotaInfo(qint64 current, qint64 maxValue)
 {
-    mProgressBar->setMaximum( maxValue );
-    mProgressBar->setValue( current );
-    mUsage->setText(i18n("%1 of %2 used", KFormat().formatByteSize( qMax( 0LL, current ) ), KFormat().formatByteSize( qMax( 0LL, maxValue ) ) ) );
+    mProgressBar->setMaximum(maxValue);
+    mProgressBar->setValue(current);
+    mUsage->setText(i18n("%1 of %2 used", KFormat().formatByteSize(qMax(0LL, current)), KFormat().formatByteSize(qMax(0LL, maxValue))));
 }
 

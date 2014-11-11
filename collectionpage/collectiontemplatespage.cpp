@@ -34,11 +34,11 @@
 using namespace Akonadi;
 using namespace MailCommon;
 
-CollectionTemplatesPage::CollectionTemplatesPage(QWidget * parent) :
-    CollectionPropertiesPage( parent ), mChanged(false)
+CollectionTemplatesPage::CollectionTemplatesPage(QWidget *parent) :
+    CollectionPropertiesPage(parent), mChanged(false)
 {
-    setObjectName( QLatin1String( "KMail::CollectionTemplatesPage" ) );
-    setPageTitle( i18n( "Templates" ) );
+    setObjectName(QLatin1String("KMail::CollectionTemplatesPage"));
+    setPageTitle(i18n("Templates"));
     init();
 }
 
@@ -46,42 +46,42 @@ CollectionTemplatesPage::~CollectionTemplatesPage()
 {
 }
 
-bool CollectionTemplatesPage::canHandle( const Collection &collection ) const
+bool CollectionTemplatesPage::canHandle(const Collection &collection) const
 {
-    return ( !CommonKernel->isSystemFolderCollection( collection ) ||
-                                                                     CommonKernel->isMainFolderCollection( collection ) );
+    return (!CommonKernel->isSystemFolderCollection(collection) ||
+            CommonKernel->isMainFolderCollection(collection));
 }
 
 void CollectionTemplatesPage::init()
 {
-    QVBoxLayout *topLayout = new QVBoxLayout( this );
+    QVBoxLayout *topLayout = new QVBoxLayout(this);
 //TODO PORT QT5     topLayout->setMargin( QDialog::marginHint() );
 //TODO PORT QT5     topLayout->setSpacing( QDialog::spacingHint() );
 
     QHBoxLayout *topItems = new QHBoxLayout;
-    topLayout->addLayout( topItems );
+    topLayout->addLayout(topItems);
 
-    mCustom = new QCheckBox( i18n("&Use custom message templates in this folder"), this );
+    mCustom = new QCheckBox(i18n("&Use custom message templates in this folder"), this);
     connect(mCustom, &QCheckBox::clicked, this, &CollectionTemplatesPage::slotChanged);
-    topItems->addWidget( mCustom, Qt::AlignLeft );
+    topItems->addWidget(mCustom, Qt::AlignLeft);
 
-    mWidget = new TemplateParser::TemplatesConfiguration( this, QLatin1String("folder-templates") );
+    mWidget = new TemplateParser::TemplatesConfiguration(this, QLatin1String("folder-templates"));
     connect(mWidget, &TemplateParser::TemplatesConfiguration::changed, this, &CollectionTemplatesPage::slotChanged);
-    mWidget->setEnabled( false );
+    mWidget->setEnabled(false);
 
     // Move the help label outside of the templates configuration widget,
     // so that the help can be read even if the widget is not enabled.
-    topItems->addStretch( 9 );
-    topItems->addWidget( mWidget->helpLabel(), Qt::AlignRight );
+    topItems->addStretch(9);
+    topItems->addWidget(mWidget->helpLabel(), Qt::AlignRight);
 
-    topLayout->addWidget( mWidget );
+    topLayout->addWidget(mWidget);
 
     QHBoxLayout *btns = new QHBoxLayout();
 //TODO PORT QT5     btns->setSpacing( QDialog::spacingHint() );
-    QPushButton *copyGlobal = new QPushButton( i18n("&Copy Global Templates"), this );
-    copyGlobal->setEnabled( false );
-    btns->addWidget( copyGlobal );
-    topLayout->addLayout( btns );
+    QPushButton *copyGlobal = new QPushButton(i18n("&Copy Global Templates"), this);
+    copyGlobal->setEnabled(false);
+    btns->addWidget(copyGlobal);
+    topLayout->addLayout(btns);
 
     connect(mCustom, &QCheckBox::toggled, mWidget, &TemplateParser::TemplatesConfiguration::setEnabled);
     connect(mCustom, &QCheckBox::toggled, copyGlobal, &QPushButton::setEnabled);
@@ -89,28 +89,28 @@ void CollectionTemplatesPage::init()
     connect(copyGlobal, &QPushButton::clicked, this, &CollectionTemplatesPage::slotCopyGlobal);
 }
 
-
-void CollectionTemplatesPage::load(const Collection & col)
+void CollectionTemplatesPage::load(const Collection &col)
 {
-    const QSharedPointer<FolderCollection> fd = FolderCollection::forCollection( col, false );
-    if ( !fd )
+    const QSharedPointer<FolderCollection> fd = FolderCollection::forCollection(col, false);
+    if (!fd) {
         return;
+    }
 
-    mCollectionId = QString::number( col.id() );
+    mCollectionId = QString::number(col.id());
 
-    TemplateParser::Templates t( mCollectionId );
+    TemplateParser::Templates t(mCollectionId);
 
     mCustom->setChecked(t.useCustomTemplates());
 
     mIdentity = fd->identity();
 
-    mWidget->loadFromFolder( mCollectionId, mIdentity );
+    mWidget->loadFromFolder(mCollectionId, mIdentity);
     mChanged = false;
 }
 
 void CollectionTemplatesPage::save(Collection &)
 {
-    if ( mChanged && !mCollectionId.isEmpty() ) {
+    if (mChanged && !mCollectionId.isEmpty()) {
         TemplateParser::Templates t(mCollectionId);
         //qDebug() << "use custom templates for folder" << fid <<":" << mCustom->isChecked();
         t.setUseCustomTemplates(mCustom->isChecked());
@@ -120,9 +120,10 @@ void CollectionTemplatesPage::save(Collection &)
     }
 }
 
-void CollectionTemplatesPage::slotCopyGlobal() {
-    if ( mIdentity ) {
-        mWidget->loadFromIdentity( mIdentity );
+void CollectionTemplatesPage::slotCopyGlobal()
+{
+    if (mIdentity) {
+        mWidget->loadFromIdentity(mIdentity);
     } else {
         mWidget->loadFromGlobal();
     }

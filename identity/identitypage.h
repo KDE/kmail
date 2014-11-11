@@ -28,19 +28,22 @@
 
 #include "configuredialog/configmodule.h"
 #include "ui_identitypage.h"
-namespace KIdentityManagement {
+namespace KIdentityManagement
+{
 class IdentityManager;
 }
 
-namespace KMail {
+namespace KMail
+{
 class IdentityDialog;
 class IdentityListView;
 class IdentityListViewItem;
 
-class KMAIL_EXPORT IdentityPage : public ConfigModule {
+class KMAIL_EXPORT IdentityPage : public ConfigModule
+{
     Q_OBJECT
 public:
-    explicit IdentityPage( QWidget *parent = 0 );
+    explicit IdentityPage(QWidget *parent = 0);
     ~IdentityPage();
 
     QString helpAnchor() const;
@@ -57,8 +60,8 @@ private slots:
     void slotRenameIdentity();
     /** connected to @p mIdentityList's renamed() signal. Validates the
       new name and sets it in the KIdentityManagement::IdentityManager */
-    void slotRenameIdentity( KMail::IdentityListViewItem *, const QString & );
-    void slotContextMenu( KMail::IdentityListViewItem *, const QPoint & );
+    void slotRenameIdentity(KMail::IdentityListViewItem *, const QString &);
+    void slotContextMenu(KMail::IdentityListViewItem *, const QPoint &);
     void slotSetAsDefault();
     void slotIdentitySelectionChanged();
 

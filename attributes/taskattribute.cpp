@@ -17,7 +17,6 @@
 
 #include "taskattribute.h"
 
-
 #include <QByteArray>
 
 TaskAttribute::TaskAttribute()
@@ -32,16 +31,16 @@ TaskAttribute::~TaskAttribute()
 
 }
 
-TaskAttribute* TaskAttribute::clone() const
+TaskAttribute *TaskAttribute::clone() const
 {
     TaskAttribute *attr = new TaskAttribute();
     attr->setTaskId(taskId());
     return attr;
 }
 
-void TaskAttribute::deserialize(const QByteArray& data)
+void TaskAttribute::deserialize(const QByteArray &data)
 {
-    QDataStream s( data );
+    QDataStream s(data);
     s >> mId;
 }
 
@@ -58,7 +57,7 @@ Akonadi::Entity::Id TaskAttribute::taskId() const
 QByteArray TaskAttribute::serialized() const
 {
     QByteArray result;
-    QDataStream s( &result, QIODevice::WriteOnly );
+    QDataStream s(&result, QIODevice::WriteOnly);
     s << mId;
     return result;
 }
@@ -67,5 +66,4 @@ QByteArray TaskAttribute::type() const
 {
     return "TaskAttribute";
 }
-
 

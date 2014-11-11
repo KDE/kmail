@@ -36,68 +36,74 @@
 #include <QTreeWidget>
 #include <QTreeWidgetItem>
 
-namespace KIdentityManagement {
+namespace KIdentityManagement
+{
 class Identity;
 class IdentityManager;
 }
 
-namespace KMail {
+namespace KMail
+{
 
 class IdentityListView;
 
 /** @short A QWidgetTreeItem for use in IdentityListView
    *  @author Marc Mutz <mutz@kde.org>
    **/
-class IdentityListViewItem : public QTreeWidgetItem {
+class IdentityListViewItem : public QTreeWidgetItem
+{
 public:
-    IdentityListViewItem( IdentityListView *parent,
-                          const KIdentityManagement::Identity &ident );
-    IdentityListViewItem( IdentityListView *parent, QTreeWidgetItem *after,
-                          const KIdentityManagement::Identity &ident );
+    IdentityListViewItem(IdentityListView *parent,
+                         const KIdentityManagement::Identity &ident);
+    IdentityListViewItem(IdentityListView *parent, QTreeWidgetItem *after,
+                         const KIdentityManagement::Identity &ident);
 
-    uint uoid() const { return mUOID; }
+    uint uoid() const
+    {
+        return mUOID;
+    }
     KIdentityManagement::Identity &identity() const;
-    virtual void setIdentity( const KIdentityManagement::Identity &ident );
+    virtual void setIdentity(const KIdentityManagement::Identity &ident);
     void redisplay();
 
 private:
-    void init( const KIdentityManagement::Identity &ident );
+    void init(const KIdentityManagement::Identity &ident);
     uint mUOID;
 };
 
 /** @short A QTreeWidget for KIdentityManagement::Identity
     * @author Marc Mutz <mutz@kde.org>
     **/
-class IdentityListView : public QTreeWidget {
+class IdentityListView : public QTreeWidget
+{
     Q_OBJECT
 public:
-    explicit IdentityListView( QWidget *parent = 0 );
+    explicit IdentityListView(QWidget *parent = 0);
     virtual ~IdentityListView() {}
 
 public:
-    void editItem( QTreeWidgetItem *item, int column = 0 );
+    void editItem(QTreeWidgetItem *item, int column = 0);
     KIdentityManagement::IdentityManager *identityManager() const;
-    void setIdentityManager( KIdentityManagement::IdentityManager* im );
+    void setIdentityManager(KIdentityManagement::IdentityManager *im);
 
 protected slots:
-    void commitData( QWidget *editor );
+    void commitData(QWidget *editor);
 
 public slots:
-    void slotCustomContextMenuRequested( const QPoint& );
+    void slotCustomContextMenuRequested(const QPoint &);
 
 signals:
-    void contextMenu( KMail::IdentityListViewItem *, const QPoint& );
-    void rename( KMail::IdentityListViewItem *, const QString& );
+    void contextMenu(KMail::IdentityListViewItem *, const QPoint &);
+    void rename(KMail::IdentityListViewItem *, const QString &);
 
 protected:
 #ifndef QT_NO_DRAGANDDROP
-    void startDrag ( Qt::DropActions supportedActions );
+    void startDrag(Qt::DropActions supportedActions);
 #endif
 
 private:
-    KIdentityManagement::IdentityManager* mIdentityManager;
+    KIdentityManagement::IdentityManager *mIdentityManager;
 };
-
 
 } // namespace KMail
 

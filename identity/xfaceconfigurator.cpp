@@ -61,135 +61,134 @@ using namespace KIO;
 using namespace KMail;
 using namespace MessageViewer;
 
-namespace KMail {
+namespace KMail
+{
 
-XFaceConfigurator::XFaceConfigurator( QWidget * parent )
-    : QWidget( parent )
+XFaceConfigurator::XFaceConfigurator(QWidget *parent)
+    : QWidget(parent)
 {
     // tmp. vars:
-    QLabel * label;
-    QLabel * label1;
-    QLabel * label2;
-    QWidget * page;
-    QVBoxLayout * vlay;
-    QHBoxLayout * hlay;
-    QVBoxLayout * page_vlay;
-    QPushButton * mFromFileBtn;
-    QPushButton * mFromAddrbkBtn;
+    QLabel *label;
+    QLabel *label1;
+    QLabel *label2;
+    QWidget *page;
+    QVBoxLayout *vlay;
+    QHBoxLayout *hlay;
+    QVBoxLayout *page_vlay;
+    QPushButton *mFromFileBtn;
+    QPushButton *mFromAddrbkBtn;
 
-    vlay = new QVBoxLayout( this );
-    vlay->setObjectName( QLatin1String("main layout") );
+    vlay = new QVBoxLayout(this);
+    vlay->setObjectName(QLatin1String("main layout"));
 //TODO PORT QT5     vlay->setSpacing( QDialog::spacingHint() );
-    vlay->setMargin( 0 );
+    vlay->setMargin(0);
     hlay = new QHBoxLayout();
-    vlay->addLayout( hlay );
+    vlay->addLayout(hlay);
 
     // "enable X-Face" checkbox:
-    mEnableCheck = new QCheckBox( i18n("&Send picture with every message"), this );
+    mEnableCheck = new QCheckBox(i18n("&Send picture with every message"), this);
     mEnableCheck->setWhatsThis(
-                i18n( "Check this box if you want KMail to add a so-called X-Face header to messages "
-                      "written with this identity. An X-Face is a small (48x48 pixels) black and "
-                      "white image that some mail clients are able to display." ) );
-    hlay->addWidget( mEnableCheck, Qt::AlignLeft | Qt::AlignVCenter );
+        i18n("Check this box if you want KMail to add a so-called X-Face header to messages "
+             "written with this identity. An X-Face is a small (48x48 pixels) black and "
+             "white image that some mail clients are able to display."));
+    hlay->addWidget(mEnableCheck, Qt::AlignLeft | Qt::AlignVCenter);
 
-    mXFaceLabel = new QLabel( this );
+    mXFaceLabel = new QLabel(this);
     mXFaceLabel->setWhatsThis(
-                i18n( "This is a preview of the picture selected/entered below." ) );
+        i18n("This is a preview of the picture selected/entered below."));
     mXFaceLabel->setFixedSize(48, 48);
-    mXFaceLabel->setFrameShape( QFrame::Box );
-    hlay->addWidget( mXFaceLabel );
+    mXFaceLabel->setFrameShape(QFrame::Box);
+    hlay->addWidget(mXFaceLabel);
 
     //     label1 = new QLabel( "X-Face:", this );
     //     vlay->addWidget( label1 );
 
     // "obtain X-Face from" combo and label:
     hlay = new QHBoxLayout(); // inherits spacing
-    vlay->addLayout( hlay );
-    KComboBox *sourceCombo = new KComboBox( this );
-    sourceCombo->setEditable( false );
+    vlay->addLayout(hlay);
+    KComboBox *sourceCombo = new KComboBox(this);
+    sourceCombo->setEditable(false);
     sourceCombo->setWhatsThis(
-                i18n("Click on the widgets below to obtain help on the input methods."));
-    sourceCombo->setEnabled( false ); // since !mEnableCheck->isChecked()
-    sourceCombo->addItems( QStringList()
-                           << i18nc( "continuation of \"obtain picture from\"",
-                                     "External Source" )
-                           << i18nc( "continuation of \"obtain picture from\"",
-                                     "Input Field Below" ) );
-    label = new QLabel( i18n("Obtain pic&ture from:"), this );
-    label->setBuddy( sourceCombo );
-    label->setEnabled( false ); // since !mEnableCheck->isChecked()
-    hlay->addWidget( label );
-    hlay->addWidget( sourceCombo, 1 );
+        i18n("Click on the widgets below to obtain help on the input methods."));
+    sourceCombo->setEnabled(false);   // since !mEnableCheck->isChecked()
+    sourceCombo->addItems(QStringList()
+                          << i18nc("continuation of \"obtain picture from\"",
+                                   "External Source")
+                          << i18nc("continuation of \"obtain picture from\"",
+                                   "Input Field Below"));
+    label = new QLabel(i18n("Obtain pic&ture from:"), this);
+    label->setBuddy(sourceCombo);
+    label->setEnabled(false);   // since !mEnableCheck->isChecked()
+    hlay->addWidget(label);
+    hlay->addWidget(sourceCombo, 1);
 
     // widget stack that is controlled by the source combo:
-    QStackedWidget * widgetStack = new QStackedWidget( this );
-    widgetStack->setEnabled( false ); // since !mEnableCheck->isChecked()
-    vlay->addWidget( widgetStack, 1 );
+    QStackedWidget *widgetStack = new QStackedWidget(this);
+    widgetStack->setEnabled(false);   // since !mEnableCheck->isChecked()
+    vlay->addWidget(widgetStack, 1);
     connect(sourceCombo, static_cast<void (KComboBox::*)(int)>(&KComboBox::highlighted), widgetStack, &QStackedWidget::setCurrentIndex);
     connect(sourceCombo, static_cast<void (KComboBox::*)(int)>(&KComboBox::activated), widgetStack, &QStackedWidget::setCurrentIndex);
     connect(mEnableCheck, &QCheckBox::toggled, sourceCombo, &KComboBox::setEnabled);
     connect(mEnableCheck, &QCheckBox::toggled, widgetStack, &QStackedWidget::setEnabled);
     connect(mEnableCheck, &QCheckBox::toggled, label, &QLabel::setEnabled);
     // The focus might be still in the widget that is disabled
-    connect( mEnableCheck, SIGNAL(clicked()),
-             mEnableCheck, SLOT(setFocus()) );
-
+    connect(mEnableCheck, SIGNAL(clicked()),
+            mEnableCheck, SLOT(setFocus()));
 
     int pageno = 0;
     // page 0: create X-Face from image file or address book entry
-    page = new QWidget( widgetStack );
-    widgetStack->insertWidget( pageno, page ); // force sequential numbers (play safe)
-    page_vlay = new QVBoxLayout( page );
-    page_vlay->setMargin( 0 );
+    page = new QWidget(widgetStack);
+    widgetStack->insertWidget(pageno, page);   // force sequential numbers (play safe)
+    page_vlay = new QVBoxLayout(page);
+    page_vlay->setMargin(0);
 //TODO PORT QT5     page_vlay->setSpacing( QDialog::spacingHint() );
     hlay = new QHBoxLayout(); // inherits spacing ??? FIXME really?
-    page_vlay->addLayout( hlay );
-    mFromFileBtn = new QPushButton( i18n("Select File..."), page );
+    page_vlay->addLayout(hlay);
+    mFromFileBtn = new QPushButton(i18n("Select File..."), page);
     mFromFileBtn->setWhatsThis(
-                i18n("Use this to select an image file to create the picture from. "
-                     "The image should be of high contrast and nearly quadratic shape. "
-                     "A light background helps improve the result." ) );
-    mFromFileBtn->setAutoDefault( false );
-    page_vlay->addWidget( mFromFileBtn, 1 );
+        i18n("Use this to select an image file to create the picture from. "
+             "The image should be of high contrast and nearly quadratic shape. "
+             "A light background helps improve the result."));
+    mFromFileBtn->setAutoDefault(false);
+    page_vlay->addWidget(mFromFileBtn, 1);
     connect(mFromFileBtn, &QPushButton::released, this, &XFaceConfigurator::slotSelectFile);
-    mFromAddrbkBtn = new QPushButton( i18n("Set From Address Book"), page );
+    mFromAddrbkBtn = new QPushButton(i18n("Set From Address Book"), page);
     mFromAddrbkBtn->setWhatsThis(
-                i18n( "You can use a scaled-down version of the picture "
-                      "you have set in your address book entry." ) );
-    mFromAddrbkBtn->setAutoDefault( false );
-    page_vlay->addWidget( mFromAddrbkBtn, 1 );
+        i18n("You can use a scaled-down version of the picture "
+             "you have set in your address book entry."));
+    mFromAddrbkBtn->setAutoDefault(false);
+    page_vlay->addWidget(mFromAddrbkBtn, 1);
     connect(mFromAddrbkBtn, &QPushButton::released, this, &XFaceConfigurator::slotSelectFromAddressbook);
-    label1 = new QLabel( i18n("<qt>KMail can send a small (48x48 pixels), low-quality, "
-                              "monochrome picture with every message. "
-                              "For example, this could be a picture of you or a glyph. "
-                              "It is shown in the recipient's mail client (if supported).</qt>" ), page );
-    label1->setAlignment( Qt::AlignVCenter );
-    label1->setWordWrap( true );
-    page_vlay->addWidget( label1 );
+    label1 = new QLabel(i18n("<qt>KMail can send a small (48x48 pixels), low-quality, "
+                             "monochrome picture with every message. "
+                             "For example, this could be a picture of you or a glyph. "
+                             "It is shown in the recipient's mail client (if supported).</qt>"), page);
+    label1->setAlignment(Qt::AlignVCenter);
+    label1->setWordWrap(true);
+    page_vlay->addWidget(label1);
     page_vlay->addStretch();
-    widgetStack->setCurrentIndex( 0 ); // since sourceCombo->currentItem() == 0
+    widgetStack->setCurrentIndex(0);   // since sourceCombo->currentItem() == 0
 
     // page 1: input field for direct entering
     ++pageno;
-    page = new QWidget( widgetStack );
-    widgetStack->insertWidget( pageno,page );
-    page_vlay = new QVBoxLayout( page );
-    page_vlay->setMargin( 0 );
+    page = new QWidget(widgetStack);
+    widgetStack->insertWidget(pageno, page);
+    page_vlay = new QVBoxLayout(page);
+    page_vlay->setMargin(0);
 //TODO PORT QT5     page_vlay->setSpacing( QDialog::spacingHint() );
-    mTextEdit = new PimCommon::PlainTextEditorWidget( page );
-    page_vlay->addWidget( mTextEdit );
-    mTextEdit->editor()->setWhatsThis( i18n( "Use this field to enter an arbitrary X-Face string." ) );
-    mTextEdit->editor()->setFont( QFontDatabase::systemFont(QFontDatabase::FixedFont) );
-    mTextEdit->editor()->setWordWrapMode( QTextOption::WrapAnywhere);
+    mTextEdit = new PimCommon::PlainTextEditorWidget(page);
+    page_vlay->addWidget(mTextEdit);
+    mTextEdit->editor()->setWhatsThis(i18n("Use this field to enter an arbitrary X-Face string."));
+    mTextEdit->editor()->setFont(QFontDatabase::systemFont(QFontDatabase::FixedFont));
+    mTextEdit->editor()->setWordWrapMode(QTextOption::WrapAnywhere);
     mTextEdit->editor()->setSearchSupport(false);
-    label2 = new QLabel( i18n("Examples are available at <a "
-                              "href=\"http://ace.home.xs4all.nl/X-Faces/\">"
-                              "http://ace.home.xs4all.nl/X-Faces/</a>."), page );
+    label2 = new QLabel(i18n("Examples are available at <a "
+                             "href=\"http://ace.home.xs4all.nl/X-Faces/\">"
+                             "http://ace.home.xs4all.nl/X-Faces/</a>."), page);
     label2->setOpenExternalLinks(true);
     label2->setTextInteractionFlags(Qt::TextBrowserInteraction);
 
-    page_vlay->addWidget( label2 );
-
+    page_vlay->addWidget(label2);
 
     connect(mTextEdit->editor(), &PimCommon::PlainTextEditor::textChanged, this, &XFaceConfigurator::slotUpdateXFace);
 }
@@ -204,9 +203,9 @@ bool XFaceConfigurator::isXFaceEnabled() const
     return mEnableCheck->isChecked();
 }
 
-void XFaceConfigurator::setXFaceEnabled( bool enable )
+void XFaceConfigurator::setXFaceEnabled(bool enable)
 {
-    mEnableCheck->setChecked( enable );
+    mEnableCheck->setChecked(enable);
 }
 
 QString XFaceConfigurator::xface() const
@@ -214,20 +213,20 @@ QString XFaceConfigurator::xface() const
     return mTextEdit->editor()->toPlainText();
 }
 
-void XFaceConfigurator::setXFace( const QString & text )
+void XFaceConfigurator::setXFace(const QString &text)
 {
-    mTextEdit->editor()->setPlainText( text );
+    mTextEdit->editor()->setPlainText(text);
 }
 
-void XFaceConfigurator::setXfaceFromFile( const QUrl &url )
+void XFaceConfigurator::setXfaceFromFile(const QUrl &url)
 {
     QString tmpFile;
-    if (KIO::NetAccess::download( url, tmpFile, this )) {
+    if (KIO::NetAccess::download(url, tmpFile, this)) {
         KXFace xf;
-        mTextEdit->editor()->setPlainText( xf.fromImage( QImage( tmpFile ) ) );
-        KIO::NetAccess::removeTempFile( tmpFile );
+        mTextEdit->editor()->setPlainText(xf.fromImage(QImage(tmpFile)));
+        KIO::NetAccess::removeTempFile(tmpFile);
     } else {
-        KMessageBox::error(this, KIO::NetAccess::lastErrorString() );
+        KMessageBox::error(this, KIO::NetAccess::lastErrorString());
     }
 }
 
@@ -235,56 +234,55 @@ void XFaceConfigurator::slotSelectFile()
 {
     const QList<QByteArray> mimeTypes = QImageReader::supportedImageFormats();
     QString filter;
-    Q_FOREACH ( const QByteArray &mime, mimeTypes) {
+    Q_FOREACH (const QByteArray &mime, mimeTypes) {
         filter += QString::fromLatin1(mime);
     }
     const QUrl url = QFileDialog::getOpenFileUrl(this, QString() , QString(), filter);
-    if ( !url.isEmpty() )
-        setXfaceFromFile( url );
+    if (!url.isEmpty()) {
+        setXfaceFromFile(url);
+    }
 }
 
 void XFaceConfigurator::slotSelectFromAddressbook()
 {
     using namespace KIdentityManagement;
 
-    IdentityManager manager( true );
+    IdentityManager manager(true);
     const Identity defaultIdentity = manager.defaultIdentity();
     const QString email = defaultIdentity.primaryEmailAddress().toLower();
 
-    Akonadi::ContactSearchJob *job = new Akonadi::ContactSearchJob( this );
-    job->setLimit( 1 );
-    job->setQuery( Akonadi::ContactSearchJob::Email, email, Akonadi::ContactSearchJob::ExactMatch );
+    Akonadi::ContactSearchJob *job = new Akonadi::ContactSearchJob(this);
+    job->setLimit(1);
+    job->setQuery(Akonadi::ContactSearchJob::Email, email, Akonadi::ContactSearchJob::ExactMatch);
     connect(job, &Akonadi::ContactSearchJob::result, this, &XFaceConfigurator::slotDelayedSelectFromAddressbook);
 }
 
-void XFaceConfigurator::slotDelayedSelectFromAddressbook( KJob *job )
+void XFaceConfigurator::slotDelayedSelectFromAddressbook(KJob *job)
 {
-    const Akonadi::ContactSearchJob *searchJob = qobject_cast<Akonadi::ContactSearchJob*>( job );
+    const Akonadi::ContactSearchJob *searchJob = qobject_cast<Akonadi::ContactSearchJob *>(job);
 
-    if ( searchJob->contacts().isEmpty() ) {
-        KMessageBox::information( this, i18n("You do not have your own contact defined in the address book."), i18n("No Picture") );
+    if (searchJob->contacts().isEmpty()) {
+        KMessageBox::information(this, i18n("You do not have your own contact defined in the address book."), i18n("No Picture"));
         return;
     }
 
     const Addressee contact = searchJob->contacts().first();
-    if ( contact.photo().isIntern() )
-    {
+    if (contact.photo().isIntern()) {
         const QImage photo = contact.photo().data();
-        if ( !photo.isNull() ) {
+        if (!photo.isNull()) {
             KXFace xf;
-            mTextEdit->editor()->setPlainText( xf.fromImage( photo ) );
+            mTextEdit->editor()->setPlainText(xf.fromImage(photo));
         } else {
-            KMessageBox::information( this, i18n("No picture set for your address book entry."), i18n("No Picture") );
+            KMessageBox::information(this, i18n("No picture set for your address book entry."), i18n("No Picture"));
         }
 
-    }
-    else
-    {
+    } else {
         const QUrl url = contact.photo().url();
-        if( !url.isEmpty() )
-            setXfaceFromFile( url );
-        else
-            KMessageBox::information( this, i18n("No picture set for your address book entry."), i18n("No Picture") );
+        if (!url.isEmpty()) {
+            setXfaceFromFile(url);
+        } else {
+            KMessageBox::information(this, i18n("No picture set for your address book entry."), i18n("No Picture"));
+        }
     }
 }
 
@@ -292,14 +290,14 @@ void XFaceConfigurator::slotUpdateXFace()
 {
     QString str = mTextEdit->editor()->toPlainText();
 
-    if ( !str.isEmpty() ) {
-        if ( str.startsWith( QLatin1String("x-face:"), Qt::CaseInsensitive ) ) {
-            str = str.remove( QLatin1String("x-face:"), Qt::CaseInsensitive );
+    if (!str.isEmpty()) {
+        if (str.startsWith(QLatin1String("x-face:"), Qt::CaseInsensitive)) {
+            str = str.remove(QLatin1String("x-face:"), Qt::CaseInsensitive);
             mTextEdit->editor()->setPlainText(str);
         }
         KXFace xf;
-        const QPixmap p = QPixmap::fromImage( xf.toImage(str) );
-        mXFaceLabel->setPixmap( p );
+        const QPixmap p = QPixmap::fromImage(xf.toImage(str));
+        mXFaceLabel->setPixmap(p);
     } else {
         mXFaceLabel->clear();
     }

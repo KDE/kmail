@@ -25,26 +25,27 @@
 
 #include <QByteArray>
 
-namespace Akonadi {
+namespace Akonadi
+{
 
 class SearchDescriptionAttribute : public Akonadi::Attribute
 {
 public:
     SearchDescriptionAttribute();
     QByteArray description() const ;
-    void setDescription( const QByteArray& desc );
+    void setDescription(const QByteArray &desc);
     Akonadi::Collection baseCollection() const;
-    void setBaseCollection( const Akonadi::Collection & );
+    void setBaseCollection(const Akonadi::Collection &);
     bool recursive() const;
-    void setRecursive( bool );
+    void setRecursive(bool);
 
-    void setListCollection( const QList<Akonadi::Collection::Id> &col);
+    void setListCollection(const QList<Akonadi::Collection::Id> &col);
     QList<Akonadi::Collection::Id> listCollection() const;
 
     QByteArray type() const;
     Attribute *clone() const;
     QByteArray serialized() const;
-    void deserialize( const QByteArray &data );
+    void deserialize(const QByteArray &data);
 
 private:
     QList<Akonadi::Collection::Id> mListCollection;

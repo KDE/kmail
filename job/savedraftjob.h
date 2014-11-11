@@ -29,7 +29,7 @@ class SaveDraftJob : public KJob
 {
     Q_OBJECT
 public:
-    explicit SaveDraftJob(const KMime::Message::Ptr &msg, const Akonadi::Collection &col, QObject *parent=0);
+    explicit SaveDraftJob(const KMime::Message::Ptr &msg, const Akonadi::Collection &col, QObject *parent = 0);
     ~SaveDraftJob();
 
     void start();

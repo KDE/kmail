@@ -40,19 +40,19 @@ bool ValidateSendMailShortcut::validate()
 {
     bool sendNow = false;
     const int result = PIMMessageBox::fourBtnMsgBox(mParent,
-                                                    QMessageBox::Question,
-                                                    i18n("This shortcut allows to send mail directly. Mail can be send accidentally. What do you want to do?"),
-                                                    i18n("Configure shortcut"),
-                                                    i18n("Remove Shortcut"),
-                                                    i18n("Ask Before Sending"),
-                                                    i18n("Sending Without Confirmation"));
+                       QMessageBox::Question,
+                       i18n("This shortcut allows to send mail directly. Mail can be send accidentally. What do you want to do?"),
+                       i18n("Configure shortcut"),
+                       i18n("Remove Shortcut"),
+                       i18n("Ask Before Sending"),
+                       i18n("Sending Without Confirmation"));
     if (result == KMessageBox::Yes) {
-        QAction *act = mActionCollection->action( QLatin1String("send_mail") );
+        QAction *act = mActionCollection->action(QLatin1String("send_mail"));
         if (act) {
             act->setShortcut(QKeySequence());
             mActionCollection->writeSettings();
         } else {
-            qDebug()<<"Unable to find action named \"send_mail\"";
+            qDebug() << "Unable to find action named \"send_mail\"";
         }
         sendNow = false;
     } else if (result == KMessageBox::No) {

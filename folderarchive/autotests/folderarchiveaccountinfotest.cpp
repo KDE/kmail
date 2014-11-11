@@ -21,7 +21,6 @@
 #include <AkonadiCore/Collection>
 #include <qtest.h>
 
-
 FolderArchiveAccountInfoTest::FolderArchiveAccountInfoTest(QObject *parent)
     : QObject(parent)
 {

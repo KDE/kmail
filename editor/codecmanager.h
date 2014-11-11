@@ -22,7 +22,6 @@
 
 #include <QByteArray>
 
-
 class CodecManagerPrivate;
 
 class CodecManager
@@ -49,7 +48,7 @@ private:
     CodecManagerPrivate *const d;
 
     // Singleton.  The only instance lives in sInstance->instance
-    explicit CodecManager( CodecManagerPrivate *dd );
+    explicit CodecManager(CodecManagerPrivate *dd);
     //~CodecManager();
 };
 

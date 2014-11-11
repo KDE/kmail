@@ -33,25 +33,30 @@ class QPushButton;
 class QLabel;
 class ConfigureStorageServiceWidget;
 class KPluralHandlingSpinBox;
-namespace TemplateParser {
+namespace TemplateParser
+{
 class CustomTemplates;
 class TemplatesConfiguration;
 }
-namespace PimCommon {
+namespace PimCommon
+{
 class AutoCorrectionWidget;
 }
-namespace MessageComposer {
+namespace MessageComposer
+{
 class ImageScalingWidget;
 }
 
-namespace PimCommon {
+namespace PimCommon
+{
 class SimpleStringListEditor;
 }
 
-class ComposerPageGeneralTab : public ConfigModuleTab {
+class ComposerPageGeneralTab : public ConfigModuleTab
+{
     Q_OBJECT
 public:
-    explicit ComposerPageGeneralTab( QWidget * parent=0 );
+    explicit ComposerPageGeneralTab(QWidget *parent = 0);
     QString helpAnchor() const;
 
     void save();
@@ -86,10 +91,11 @@ private:
 #endif
 };
 
-class ComposerPageExternalEditorTab : public ConfigModuleTab {
+class ComposerPageExternalEditorTab : public ConfigModuleTab
+{
     Q_OBJECT
 public:
-    explicit ComposerPageExternalEditorTab( QWidget * parent = 0 );
+    explicit ComposerPageExternalEditorTab(QWidget *parent = 0);
     QString helpAnchor() const;
 
     void save();
@@ -102,10 +108,11 @@ private:
     KUrlRequester *mEditorRequester;
 };
 
-class ComposerPageTemplatesTab : public ConfigModuleTab {
+class ComposerPageTemplatesTab : public ConfigModuleTab
+{
     Q_OBJECT
 public:
-    explicit ComposerPageTemplatesTab( QWidget * parent = 0 );
+    explicit ComposerPageTemplatesTab(QWidget *parent = 0);
     QString helpAnchor() const;
 
     void save();
@@ -116,13 +123,14 @@ private:
     void doLoadFromGlobalSettings();
     void doResetToDefaultsOther();
 private:
-    TemplateParser::TemplatesConfiguration* mWidget;
+    TemplateParser::TemplatesConfiguration *mWidget;
 };
 
-class ComposerPageCustomTemplatesTab : public ConfigModuleTab {
+class ComposerPageCustomTemplatesTab : public ConfigModuleTab
+{
     Q_OBJECT
 public:
-    explicit ComposerPageCustomTemplatesTab( QWidget * parent = 0 );
+    explicit ComposerPageCustomTemplatesTab(QWidget *parent = 0);
     QString helpAnchor() const;
 
     void save();
@@ -131,13 +139,14 @@ private:
     void doLoadFromGlobalSettings();
 
 private:
-    TemplateParser::CustomTemplates* mWidget;
+    TemplateParser::CustomTemplates *mWidget;
 };
 
-class ComposerPageSubjectTab : public ConfigModuleTab {
+class ComposerPageSubjectTab : public ConfigModuleTab
+{
     Q_OBJECT
 public:
-    explicit ComposerPageSubjectTab( QWidget * parent = 0 );
+    explicit ComposerPageSubjectTab(QWidget *parent = 0);
     QString helpAnchor() const;
 
     void save();
@@ -153,16 +162,17 @@ private:
     QCheckBox              *mReplaceForwardPrefixCheck;
 };
 
-class ComposerPageCharsetTab : public ConfigModuleTab {
+class ComposerPageCharsetTab : public ConfigModuleTab
+{
     Q_OBJECT
 public:
-    explicit ComposerPageCharsetTab( QWidget * parent=0 );
+    explicit ComposerPageCharsetTab(QWidget *parent = 0);
     QString helpAnchor() const;
 
     void save();
 
 private slots:
-    void slotVerifyCharset(QString&);
+    void slotVerifyCharset(QString &);
 
 private:
     //virtual void doLoadFromGlobalSettings();
@@ -174,18 +184,19 @@ private:
     QCheckBox              *mKeepReplyCharsetCheck;
 };
 
-class ComposerPageHeadersTab : public ConfigModuleTab {
+class ComposerPageHeadersTab : public ConfigModuleTab
+{
     Q_OBJECT
 public:
-    explicit ComposerPageHeadersTab( QWidget * parent=0 );
+    explicit ComposerPageHeadersTab(QWidget *parent = 0);
     QString helpAnchor() const;
 
     void save();
 
 private slots:
     void slotMimeHeaderSelectionChanged();
-    void slotMimeHeaderNameChanged( const QString & );
-    void slotMimeHeaderValueChanged( const QString & );
+    void slotMimeHeaderNameChanged(const QString &);
+    void slotMimeHeaderValueChanged(const QString &);
     void slotNewMimeHeader();
     void slotRemoveMimeHeader();
 
@@ -205,10 +216,11 @@ private:
     QLabel      *mTagValueLabel;
 };
 
-class ComposerPageAttachmentsTab : public ConfigModuleTab {
+class ComposerPageAttachmentsTab : public ConfigModuleTab
+{
     Q_OBJECT
 public:
-    explicit ComposerPageAttachmentsTab( QWidget * parent=0 );
+    explicit ComposerPageAttachmentsTab(QWidget *parent = 0);
     QString helpAnchor() const;
 
     void save();
@@ -228,10 +240,11 @@ private:
     ConfigureStorageServiceWidget *mStorageServiceWidget;
 };
 
-class ComposerPageAutoCorrectionTab : public ConfigModuleTab {
+class ComposerPageAutoCorrectionTab : public ConfigModuleTab
+{
     Q_OBJECT
 public:
-    explicit ComposerPageAutoCorrectionTab( QWidget * parent=0 );
+    explicit ComposerPageAutoCorrectionTab(QWidget *parent = 0);
     QString helpAnchor() const;
 
     void save();
@@ -244,10 +257,11 @@ private:
     PimCommon::AutoCorrectionWidget *autocorrectionWidget;
 };
 
-class ComposerPageAutoImageResizeTab : public ConfigModuleTab {
+class ComposerPageAutoImageResizeTab : public ConfigModuleTab
+{
     Q_OBJECT
 public:
-    explicit ComposerPageAutoImageResizeTab( QWidget * parent=0 );
+    explicit ComposerPageAutoImageResizeTab(QWidget *parent = 0);
     QString helpAnchor() const;
 
     void save();
@@ -260,11 +274,11 @@ private:
     MessageComposer::ImageScalingWidget *autoResizeWidget;
 };
 
-
-class KMAIL_EXPORT ComposerPage : public ConfigModuleWithTabs {
+class KMAIL_EXPORT ComposerPage : public ConfigModuleWithTabs
+{
     Q_OBJECT
 public:
-    explicit ComposerPage( QWidget *parent=0 );
+    explicit ComposerPage(QWidget *parent = 0);
 
     QString helpAnchor() const;
 

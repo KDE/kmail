@@ -49,13 +49,13 @@
 
 using namespace KMail;
 
-TagSelectDialog::TagSelectDialog( QWidget * parent, int numberOfSelectedMessages, const Akonadi::Item &selectedItem)
-    : QDialog( parent ),
+TagSelectDialog::TagSelectDialog(QWidget *parent, int numberOfSelectedMessages, const Akonadi::Item &selectedItem)
+    : QDialog(parent),
       mNumberOfSelectedMessages(numberOfSelectedMessages),
       mSelectedItem(selectedItem)
 {
-    setWindowTitle( i18n( "Select Tags" ) );
-    QDialogButtonBox *buttonBox = new QDialogButtonBox(QDialogButtonBox::Ok|QDialogButtonBox::Cancel);
+    setWindowTitle(i18n("Select Tags"));
+    QDialogButtonBox *buttonBox = new QDialogButtonBox(QDialogButtonBox::Ok | QDialogButtonBox::Cancel);
 
     QVBoxLayout *mainLayout = new QVBoxLayout;
     setLayout(mainLayout);
@@ -68,43 +68,43 @@ TagSelectDialog::TagSelectDialog( QWidget * parent, int numberOfSelectedMessages
     connect(buttonBox, &QDialogButtonBox::rejected, this, &TagSelectDialog::reject);
     user1Button->setText(i18n("Add New Tag..."));
     okButton->setDefault(true);
-    setModal( true );
+    setModal(true);
 
-    QWidget *mainWidget = new QWidget( this );
+    QWidget *mainWidget = new QWidget(this);
     mainLayout->addWidget(mainWidget);
     mainLayout->addWidget(buttonBox);
 
     QVBoxLayout *vbox = new QVBoxLayout;
     mainWidget->setLayout(vbox);
-    mListTag = new QListWidget( this );
-    KListWidgetSearchLine *listWidgetSearchLine = new KListWidgetSearchLine(this,mListTag);
+    mListTag = new QListWidget(this);
+    KListWidgetSearchLine *listWidgetSearchLine = new KListWidgetSearchLine(this, mListTag);
     listWidgetSearchLine->setPlaceholderText(i18n("Search tag"));
     listWidgetSearchLine->setClearButtonEnabled(true);
 
     vbox->addWidget(listWidgetSearchLine);
-    vbox->addWidget( mListTag );
+    vbox->addWidget(mListTag);
 
     createTagList();
     connect(user1Button, &QPushButton::clicked, this, &TagSelectDialog::slotAddNewTag);
 
-    KConfigGroup group( KMKernel::self()->config(), "TagSelectDialog" );
-    const QSize size = group.readEntry( "Size", QSize(500, 300) );
-    if ( size.isValid() ) {
-        resize( size );
+    KConfigGroup group(KMKernel::self()->config(), "TagSelectDialog");
+    const QSize size = group.readEntry("Size", QSize(500, 300));
+    if (size.isValid()) {
+        resize(size);
     }
 }
 
 TagSelectDialog::~TagSelectDialog()
 {
-    KConfigGroup group( KMKernel::self()->config(), "TagSelectDialog" );
-    group.writeEntry( "Size", size() );
+    KConfigGroup group(KMKernel::self()->config(), "TagSelectDialog");
+    group.writeEntry("Size", size());
 }
 
 void TagSelectDialog::slotAddNewTag()
 {
-    QPointer<MailCommon::AddTagDialog> dialog = new MailCommon::AddTagDialog(QList<KActionCollection*>(), this);
+    QPointer<MailCommon::AddTagDialog> dialog = new MailCommon::AddTagDialog(QList<KActionCollection *>(), this);
     dialog->setTags(mTagList);
-    if ( dialog->exec() ) {
+    if (dialog->exec()) {
         mListTag->clear();
         mTagList.clear();
         createTagList();
@@ -125,26 +125,26 @@ void TagSelectDialog::slotTagsFetched(KJob *job)
         qWarning() << "Failed to load tags " << job->errorString();
         return;
     }
-    Akonadi::TagFetchJob *fetchJob = static_cast<Akonadi::TagFetchJob*>(job);
+    Akonadi::TagFetchJob *fetchJob = static_cast<Akonadi::TagFetchJob *>(job);
 
-    foreach( const Akonadi::Tag &akonadiTag, fetchJob->tags() ) {
-        mTagList.append( MailCommon::Tag::fromAkonadi( akonadiTag ) );
+    foreach (const Akonadi::Tag &akonadiTag, fetchJob->tags()) {
+        mTagList.append(MailCommon::Tag::fromAkonadi(akonadiTag));
     }
 
-    qSort( mTagList.begin(), mTagList.end(), MailCommon::Tag::compare );
+    qSort(mTagList.begin(), mTagList.end(), MailCommon::Tag::compare);
 
-    foreach( const MailCommon::Tag::Ptr &tag, mTagList ) {
-        QListWidgetItem *item = new QListWidgetItem(QIcon::fromTheme(tag->iconName), tag->tagName, mListTag );
-        item->setData(UrlTag, tag->tag().url().url() );
-        item->setFlags( Qt::ItemIsUserCheckable | Qt::ItemIsEnabled | Qt::ItemIsSelectable );
-        item->setCheckState( Qt::Unchecked );
-        mListTag->addItem( item );
+    foreach (const MailCommon::Tag::Ptr &tag, mTagList) {
+        QListWidgetItem *item = new QListWidgetItem(QIcon::fromTheme(tag->iconName), tag->tagName, mListTag);
+        item->setData(UrlTag, tag->tag().url().url());
+        item->setFlags(Qt::ItemIsUserCheckable | Qt::ItemIsEnabled | Qt::ItemIsSelectable);
+        item->setCheckState(Qt::Unchecked);
+        mListTag->addItem(item);
 
-        if ( mNumberOfSelectedMessages == 1 ) {
-            const bool hasTag = mSelectedItem.hasTag( tag->tag() );
-            item->setCheckState( hasTag ? Qt::Checked : Qt::Unchecked );
+        if (mNumberOfSelectedMessages == 1) {
+            const bool hasTag = mSelectedItem.hasTag(tag->tag());
+            item->setCheckState(hasTag ? Qt::Checked : Qt::Unchecked);
         } else {
-            item->setCheckState( Qt::Unchecked );
+            item->setCheckState(Qt::Unchecked);
         }
     }
 }
@@ -152,13 +152,13 @@ void TagSelectDialog::slotTagsFetched(KJob *job)
 Akonadi::Tag::List TagSelectDialog::selectedTag() const
 {
     Akonadi::Tag::List lst;
-    const int numberOfItems( mListTag->count() );
-    for ( int i = 0; i< numberOfItems;++i ) {
-        QListWidgetItem *item = mListTag->item( i );
-        if ( item->checkState() == Qt::Checked ) {
-            lst.append( Akonadi::Tag::fromUrl( item->data(UrlTag).toString() ) );
+    const int numberOfItems(mListTag->count());
+    for (int i = 0; i < numberOfItems; ++i) {
+        QListWidgetItem *item = mListTag->item(i);
+        if (item->checkState() == Qt::Checked) {
+            lst.append(Akonadi::Tag::fromUrl(item->data(UrlTag).toString()));
         }
     }
-    qDebug()<<" lst"<<lst;
+    qDebug() << " lst" << lst;
     return lst;
 }

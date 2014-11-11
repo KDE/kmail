@@ -51,10 +51,10 @@ public:
     void start();
 
 private Q_SLOTS:
-    void slotCollectionsFetched(KJob*);
-    void slotResourceCreationDone(KJob* job);
+    void slotCollectionsFetched(KJob *);
+    void slotResourceCreationDone(KJob *job);
     void slotContactEditorError(const QString &error);
-    void contactStored( const Akonadi::Item &item );
+    void contactStored(const Akonadi::Item &item);
 
 private:
     void createContact();

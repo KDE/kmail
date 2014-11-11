@@ -26,8 +26,8 @@
 MailMergeDialog::MailMergeDialog(QWidget *parent)
     : QDialog(parent)
 {
-    setWindowTitle( i18n("Mail Merge") );
-    QDialogButtonBox *buttonBox = new QDialogButtonBox(QDialogButtonBox::Ok|QDialogButtonBox::Cancel);
+    setWindowTitle(i18n("Mail Merge"));
+    QDialogButtonBox *buttonBox = new QDialogButtonBox(QDialogButtonBox::Ok | QDialogButtonBox::Cancel);
     QWidget *mainWidget = new QWidget(this);
     QVBoxLayout *mainLayout = new QVBoxLayout;
     setLayout(mainLayout);
@@ -39,7 +39,6 @@ MailMergeDialog::MailMergeDialog(QWidget *parent)
     connect(buttonBox, &QDialogButtonBox::rejected, this, &MailMergeDialog::reject);
     mainLayout->addWidget(buttonBox);
 }
-
 
 MailMergeDialog::~MailMergeDialog()
 {

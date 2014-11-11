@@ -27,7 +27,6 @@
 #include <AkonadiWidgets/collectionpropertiespage.h>
 #include <AkonadiCore/collection.h>
 
-
 class QCheckBox;
 class QPushButton;
 
@@ -38,34 +37,33 @@ class KJob;
 class KEditListWidget;
 class KSqueezedTextLabel;
 
-
 class CollectionMailingListPage : public Akonadi::CollectionPropertiesPage
 {
     Q_OBJECT
 public:
-    explicit CollectionMailingListPage( QWidget *parent = 0 );
+    explicit CollectionMailingListPage(QWidget *parent = 0);
     ~CollectionMailingListPage();
 
-    void load( const Akonadi::Collection & col );
-    void save( Akonadi::Collection & col );
+    void load(const Akonadi::Collection &col);
+    void save(Akonadi::Collection &col);
 
-    bool canHandle( const Akonadi::Collection & col ) const;
+    bool canHandle(const Akonadi::Collection &col) const;
 
 protected:
-    void init(const Akonadi::Collection&);
+    void init(const Akonadi::Collection &);
 
 protected slots:
-    void slotFetchDone( KJob* job );
+    void slotFetchDone(KJob *job);
 
 private slots:
     /*
-   * Detects mailing-list related stuff
-   */
+    * Detects mailing-list related stuff
+    */
     void slotDetectMailingList();
     void slotInvokeHandler();
-    void slotMLHandling( int element );
-    void slotHoldsML( bool holdsML );
-    void slotAddressChanged( int addr );
+    void slotMLHandling(int element);
+    void slotHoldsML(bool holdsML);
+    void slotAddressChanged(int addr);
     void slotConfigChanged();
 
 private:
@@ -87,6 +85,6 @@ private:
     bool changed;
 };
 
-AKONADI_COLLECTION_PROPERTIES_PAGE_FACTORY( CollectionMailingListPageFactory, CollectionMailingListPage )
+AKONADI_COLLECTION_PROPERTIES_PAGE_FACTORY(CollectionMailingListPageFactory, CollectionMailingListPage)
 
 #endif /* COLLECTIONMAILINGLISTPAGE_H */

@@ -79,5 +79,4 @@ void MailMergeWidgetTest::shouldChangeStackedWidgetIndexWhenChangeComboboxIndex(
     QCOMPARE(stackedwidget->currentIndex(), 1);
 }
 
-
-QTEST_MAIN( MailMergeWidgetTest )
+QTEST_MAIN(MailMergeWidgetTest)

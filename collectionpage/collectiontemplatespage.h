@@ -21,7 +21,8 @@
 #include <AkonadiWidgets/collectionpropertiespage.h>
 
 class QCheckBox;
-namespace TemplateParser {
+namespace TemplateParser
+{
 class TemplatesConfiguration;
 }
 
@@ -31,12 +32,12 @@ class CollectionTemplatesPage : public Akonadi::CollectionPropertiesPage
 {
     Q_OBJECT
 public:
-    explicit CollectionTemplatesPage( QWidget *parent = 0 );
+    explicit CollectionTemplatesPage(QWidget *parent = 0);
     ~CollectionTemplatesPage();
 
-    void load( const Akonadi::Collection & col );
-    void save( Akonadi::Collection & col );
-    bool canHandle( const Akonadi::Collection &collection ) const;
+    void load(const Akonadi::Collection &col);
+    void save(Akonadi::Collection &col);
+    bool canHandle(const Akonadi::Collection &collection) const;
 
 public slots:
     void slotCopyGlobal();
@@ -46,15 +47,15 @@ private Q_SLOTS:
 
 private:
     void init();
-    QCheckBox* mCustom;
-    TemplateParser::TemplatesConfiguration* mWidget;
+    QCheckBox *mCustom;
+    TemplateParser::TemplatesConfiguration *mWidget;
     uint mIdentity;
     QString mCollectionId;
     bool mIsLocalSystemFolder;
     bool mChanged;
 };
 
-AKONADI_COLLECTION_PROPERTIES_PAGE_FACTORY( CollectionTemplatesPageFactory, CollectionTemplatesPage )
+AKONADI_COLLECTION_PROPERTIES_PAGE_FACTORY(CollectionTemplatesPageFactory, CollectionTemplatesPage)
 
 #endif /* COLLECTIONTEMPLATESPAGE_H */
 

@@ -20,7 +20,8 @@
 
 #include <QObject>
 #include <QQueue>
-namespace Akonadi {
+namespace Akonadi
+{
 class AgentInstance;
 class Collection;
 class Item;
@@ -34,7 +35,7 @@ class FolderArchiveManager : public QObject
 {
     Q_OBJECT
 public:
-    explicit FolderArchiveManager(QObject *parent=0);
+    explicit FolderArchiveManager(QObject *parent = 0);
     ~FolderArchiveManager();
 
     void load();
@@ -54,16 +55,16 @@ public Q_SLOTS:
     void slotInstanceRemoved(const Akonadi::AgentInstance &instance);
 
 private Q_SLOTS:
-    void slotFetchParentCollection(KJob* job);
+    void slotFetchParentCollection(KJob *job);
     void slotFetchCollection(KJob *job);
 
 private:
     FolderArchiveAccountInfo *infoFromInstanceName(const QString &instanceName) const;
     void nextJob();
     void removeInfo(const QString &instanceName);
-    QQueue<FolderArchiveAgentJob*> mJobQueue;
+    QQueue<FolderArchiveAgentJob *> mJobQueue;
     FolderArchiveAgentJob *mCurrentJob;
-    QList<FolderArchiveAccountInfo*> mListAccountInfo;
+    QList<FolderArchiveAccountInfo *> mListAccountInfo;
     FolderArchiveCache *mFolderArchiveCache;
 };
 

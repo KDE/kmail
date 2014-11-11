@@ -37,7 +37,6 @@
 #include <QDir>
 #include <KSharedConfig>
 
-
 ConfigureAgentsWidget::ConfigureAgentsWidget(QWidget *parent)
     : QWidget(parent)
 {
@@ -48,7 +47,7 @@ ConfigureAgentsWidget::ConfigureAgentsWidget(QWidget *parent)
 
     mTreeWidget = new QTreeWidget;
     QStringList headers;
-    headers<<i18n("Activate")<<i18n("Name");
+    headers << i18n("Activate") << i18n("Name");
     mTreeWidget->setHeaderLabels(headers);
     mTreeWidget->setSortingEnabled(true);
     mTreeWidget->setRootIsDecorated(false);
@@ -72,7 +71,7 @@ ConfigureAgentsWidget::ConfigureAgentsWidget(QWidget *parent)
     connect(mTreeWidget, &QTreeWidget::itemChanged, this, &ConfigureAgentsWidget::changed);
     connect(mConfigure, &QPushButton::clicked, this, &ConfigureAgentsWidget::slotConfigureAgent);
     connect(mTreeWidget, &QTreeWidget::itemDoubleClicked, this, &ConfigureAgentsWidget::slotConfigureAgent);
-    mAgentPathList = Akonadi::XdgBaseDirs::findAllResourceDirs( "data", QLatin1String( "akonadi/agents" ) );
+    mAgentPathList = Akonadi::XdgBaseDirs::findAllResourceDirs("data", QLatin1String("akonadi/agents"));
     initialize();
     readConfig();
 }
@@ -84,16 +83,16 @@ ConfigureAgentsWidget::~ConfigureAgentsWidget()
 
 void ConfigureAgentsWidget::readConfig()
 {
-    KConfigGroup group( KSharedConfig::openConfig(), "ConfigureAgentsWidget" );
+    KConfigGroup group(KSharedConfig::openConfig(), "ConfigureAgentsWidget");
     QList<int> size;
     size << 400 << 100;
-    mSplitter->setSizes(group.readEntry( "splitter", size));
+    mSplitter->setSizes(group.readEntry("splitter", size));
 }
 
 void ConfigureAgentsWidget::writeConfig()
 {
-    KConfigGroup group( KSharedConfig::openConfig(), "ConfigureAgentsWidget" );
-    group.writeEntry( "splitter", mSplitter->sizes());
+    KConfigGroup group(KSharedConfig::openConfig(), "ConfigureAgentsWidget");
+    group.writeEntry("splitter", mSplitter->sizes());
 }
 
 void ConfigureAgentsWidget::slotItemClicked(QTreeWidgetItem *item)
@@ -125,11 +124,11 @@ void ConfigureAgentsWidget::initialize()
 
 void ConfigureAgentsWidget::createItem(const QString &interfaceName, const QString &path, const QString &desktopFileName)
 {
-    Q_FOREACH(const QString &agentPath, mAgentPathList) {
-        QFile file (agentPath + QDir::separator() + desktopFileName);
+    Q_FOREACH (const QString &agentPath, mAgentPathList) {
+        QFile file(agentPath + QDir::separator() + desktopFileName);
         if (file.exists()) {
             QTreeWidgetItem *item = new QTreeWidgetItem(mTreeWidget);
-            item->setFlags(Qt::ItemIsSelectable|Qt::ItemIsUserCheckable|Qt::ItemIsEnabled);
+            item->setFlags(Qt::ItemIsSelectable | Qt::ItemIsUserCheckable | Qt::ItemIsEnabled);
             item->setData(AgentName, InterfaceName, interfaceName);
             item->setData(AgentName, PathName, path);
             addInfos(item, file.fileName());
@@ -140,30 +139,30 @@ void ConfigureAgentsWidget::createItem(const QString &interfaceName, const QStri
 bool ConfigureAgentsWidget::agentActivateState(const QString &interfaceName, const QString &pathName, bool &failed)
 {
     failed = false;
-    QDBusInterface interface( QLatin1String("org.freedesktop.Akonadi.Agent.") + interfaceName, pathName );
+    QDBusInterface interface(QLatin1String("org.freedesktop.Akonadi.Agent.") + interfaceName, pathName);
     if (interface.isValid()) {
         QDBusReply<bool> enabled = interface.call(QLatin1String("enabledAgent"));
         if (enabled.isValid()) {
             return enabled;
         } else {
-            qDebug()<<interfaceName << "doesn't have enabledAgent function";
+            qDebug() << interfaceName << "doesn't have enabledAgent function";
             failed = true;
             return false;
         }
     } else {
         failed = true;
-        qDebug()<<interfaceName << "does not exist ";
+        qDebug() << interfaceName << "does not exist ";
     }
     return false;
 }
 
 void ConfigureAgentsWidget::changeAgentActiveState(bool enable, const QString &interfaceName, const QString &pathName)
 {
-    QDBusInterface interface( QLatin1String("org.freedesktop.Akonadi.Agent.") + interfaceName, pathName );
+    QDBusInterface interface(QLatin1String("org.freedesktop.Akonadi.Agent.") + interfaceName, pathName);
     if (interface.isValid()) {
         interface.call(QLatin1String("setEnableAgent"), enable);
     } else {
-        qDebug()<<interfaceName << "does not exist ";
+        qDebug() << interfaceName << "does not exist ";
     }
 }
 
@@ -171,11 +170,11 @@ void ConfigureAgentsWidget::slotConfigureAgent()
 {
     QTreeWidgetItem *item = mTreeWidget->currentItem();
     if (item) {
-        QDBusInterface interface( QLatin1String("org.freedesktop.Akonadi.Agent.") + item->data(AgentName, InterfaceName).toString(), item->data(AgentName, PathName).toString() );
+        QDBusInterface interface(QLatin1String("org.freedesktop.Akonadi.Agent.") + item->data(AgentName, InterfaceName).toString(), item->data(AgentName, PathName).toString());
         if (interface.isValid()) {
             interface.call(QLatin1String("showConfigureDialog"), (qlonglong)winId());
         } else {
-            qDebug()<<" interface does not exist ";
+            qDebug() << " interface does not exist ";
         }
     }
 }
@@ -183,10 +182,11 @@ void ConfigureAgentsWidget::slotConfigureAgent()
 void ConfigureAgentsWidget::save()
 {
     const int numberOfElement(mTreeWidget->topLevelItemCount());
-    for (int i=0; i <numberOfElement; ++i) {
+    for (int i = 0; i < numberOfElement; ++i) {
         QTreeWidgetItem *item = mTreeWidget->topLevelItem(i);
-        if (item->flags() & Qt::ItemIsEnabled)
+        if (item->flags() & Qt::ItemIsEnabled) {
             changeAgentActiveState((item->checkState(AgentState) == Qt::Checked), item->data(AgentName, InterfaceName).toString(), item->data(AgentName, PathName).toString());
+        }
     }
     SendLater::SendLaterUtil::forceReparseConfiguration();
 }
@@ -199,7 +199,7 @@ QString ConfigureAgentsWidget::helpAnchor() const
 void ConfigureAgentsWidget::doLoadFromGlobalSettings()
 {
     const int numberOfElement(mTreeWidget->topLevelItemCount());
-    for (int i=0; i <numberOfElement; ++i) {
+    for (int i = 0; i < numberOfElement; ++i) {
         QTreeWidgetItem *item = mTreeWidget->topLevelItem(i);
         bool failed;
         const bool enabled = agentActivateState(item->data(AgentName, InterfaceName).toString(), item->data(AgentName, PathName).toString(), failed);
@@ -214,11 +214,11 @@ void ConfigureAgentsWidget::doLoadFromGlobalSettings()
 void ConfigureAgentsWidget::doResetToDefaultsOther()
 {
     const int numberOfElement(mTreeWidget->topLevelItemCount());
-    for (int i=0; i <numberOfElement; ++i) {
+    for (int i = 0; i < numberOfElement; ++i) {
         QTreeWidgetItem *item = mTreeWidget->topLevelItem(i);
-        if (item->flags() & Qt::ItemIsEnabled)
+        if (item->flags() & Qt::ItemIsEnabled) {
             item->setCheckState(AgentState, Qt::Checked);
+        }
     }
 }
-
 

@@ -23,7 +23,8 @@
 
 class QCheckBox;
 class QLabel;
-namespace Akonadi {
+namespace Akonadi
+{
 class CollectionStatistics;
 }
 
@@ -31,23 +32,23 @@ class CollectionMaintenancePage : public Akonadi::CollectionPropertiesPage
 {
     Q_OBJECT
 public:
-    explicit CollectionMaintenancePage( QWidget *parent = 0 );
+    explicit CollectionMaintenancePage(QWidget *parent = 0);
 
-    void load( const Akonadi::Collection & col );
-    void save( Akonadi::Collection & col );
+    void load(const Akonadi::Collection &col);
+    void save(Akonadi::Collection &col);
 
 protected:
-    void init( const Akonadi::Collection&);
+    void init(const Akonadi::Collection &);
 
 protected slots:
-    void updateCollectionStatistic(Akonadi::Collection::Id, const Akonadi::CollectionStatistics& );
+    void updateCollectionStatistic(Akonadi::Collection::Id, const Akonadi::CollectionStatistics &);
     void slotReindexing();
 
 private slots:
-    void onIndexedItemsReceived( qint64 num );
+    void onIndexedItemsReceived(qint64 num);
 
 private:
-    void updateLabel( qint64 nbMail, qint64 nbUnreadMail, qint64 size );
+    void updateLabel(qint64 nbMail, qint64 nbUnreadMail, qint64 size);
 
 private:
     Akonadi::Collection mCurrentCollection;
@@ -59,7 +60,7 @@ private:
     QLabel *mLastIndexed;
 };
 
-AKONADI_COLLECTION_PROPERTIES_PAGE_FACTORY( CollectionMaintenancePageFactory, CollectionMaintenancePage )
+AKONADI_COLLECTION_PROPERTIES_PAGE_FACTORY(CollectionMaintenancePageFactory, CollectionMaintenancePage)
 
 #endif /* COLLECTIONMAINTENANCEPAGE_H */
 

@@ -30,11 +30,13 @@ class KComboBox;
 class KLineEdit;
 class QButtonGroup;
 
-namespace KIdentityManagement {
+namespace KIdentityManagement
+{
 class IdentityManager;
 }
 
-namespace KMail {
+namespace KMail
+{
 
 class NewIdentityDialog : public QDialog
 {
@@ -43,14 +45,14 @@ class NewIdentityDialog : public QDialog
 public:
     enum DuplicateMode { Empty, ControlCenter, ExistingEntry };
 
-    explicit NewIdentityDialog( KIdentityManagement::IdentityManager *manager, QWidget *parent = 0 );
+    explicit NewIdentityDialog(KIdentityManagement::IdentityManager *manager, QWidget *parent = 0);
 
     QString identityName() const;
     QString duplicateIdentity() const;
     DuplicateMode duplicateMode() const;
 
 protected slots:
-    void slotEnableOK( const QString & );
+    void slotEnableOK(const QString &);
 
 private slots:
     void slotHelp();

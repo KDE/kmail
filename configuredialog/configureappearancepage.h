@@ -33,35 +33,41 @@ class QSpinBox;
 class KButtonGroup;
 class KLineEdit;
 class QModelIndex;
-namespace MessageViewer {
+namespace MessageViewer
+{
 class ConfigureWidget;
 }
 
-namespace MessageList {
-namespace Utils {
+namespace MessageList
+{
+namespace Utils
+{
 class AggregationComboBox;
 class ThemeComboBox;
 }
 }
 
-namespace MailCommon {
+namespace MailCommon
+{
 class Tag;
 typedef QSharedPointer<Tag> TagPtr;
 }
 
-namespace MailCommon {
+namespace MailCommon
+{
 class TagWidget;
 }
 
-class AppearancePageFontsTab : public ConfigModuleTab {
+class AppearancePageFontsTab : public ConfigModuleTab
+{
     Q_OBJECT
 public:
-    explicit AppearancePageFontsTab( QWidget * parent=0 );
+    explicit AppearancePageFontsTab(QWidget *parent = 0);
     QString helpAnchor() const;
     void save();
 
 private slots:
-    void slotFontSelectorChanged( int );
+    void slotFontSelectorChanged(int);
 
 private:
     //virtual void doLoadFromGlobalSettings();
@@ -78,10 +84,11 @@ private:
     QFont        mFont[12];
 };
 
-class AppearancePageColorsTab : public ConfigModuleTab {
+class AppearancePageColorsTab : public ConfigModuleTab
+{
     Q_OBJECT
 public:
-    explicit AppearancePageColorsTab( QWidget * parent=0 );
+    explicit AppearancePageColorsTab(QWidget *parent = 0);
     QString helpAnchor() const;
     void save();
 
@@ -89,7 +96,7 @@ private:
     //virtual void doLoadFromGlobalSettings();
     void doLoadOther();
     void doResetToDefaultsOther();
-    void loadColor( bool loadFromConfig );
+    void loadColor(bool loadFromConfig);
 
 private:
     QCheckBox    *mCustomColorCheck;
@@ -98,10 +105,11 @@ private:
     QSpinBox     *mCloseToQuotaThreshold;
 };
 
-class AppearancePageLayoutTab : public ConfigModuleTab {
+class AppearancePageLayoutTab : public ConfigModuleTab
+{
     Q_OBJECT
 public:
-    explicit AppearancePageLayoutTab( QWidget * parent=0 );
+    explicit AppearancePageLayoutTab(QWidget *parent = 0);
     QString helpAnchor() const;
 
     void save();
@@ -123,10 +131,11 @@ private: // data
     QGroupBox     *mFavoriteFoldersViewGroupBox;
 };
 
-class AppearancePageHeadersTab : public ConfigModuleTab {
+class AppearancePageHeadersTab : public ConfigModuleTab
+{
     Q_OBJECT
 public:
-    explicit AppearancePageHeadersTab( QWidget * parent=0 );
+    explicit AppearancePageHeadersTab(QWidget *parent = 0);
 
     QString helpAnchor() const;
 
@@ -136,7 +145,7 @@ private: // methods
     void doLoadFromGlobalSettings();
     void doLoadOther();
     // virtual void doResetToDefaultsOther();
-    void setDateDisplay( int id, const QString & format );
+    void setDateDisplay(int id, const QString &format);
 
 private: // data
     QCheckBox    *mDisplayMessageToolTips;
@@ -149,15 +158,16 @@ private: // data
     QString       mCustomDateWhatsThis;
 
 private slots:
-    void slotLinkClicked( const QString & link );
+    void slotLinkClicked(const QString &link);
     void slotSelectDefaultAggregation();
     void slotSelectDefaultTheme();
 };
 
-class AppearancePageReaderTab : public ConfigModuleTab {
+class AppearancePageReaderTab : public ConfigModuleTab
+{
     Q_OBJECT
 public:
-    explicit AppearancePageReaderTab( QWidget * parent=0 );
+    explicit AppearancePageReaderTab(QWidget *parent = 0);
 
     QString helpAnchor() const;
 
@@ -172,11 +182,11 @@ private: // data
     MessageViewer::ConfigureWidget *mViewerSettings;
 };
 
-
-class AppearancePageSystemTrayTab : public ConfigModuleTab {
+class AppearancePageSystemTrayTab : public ConfigModuleTab
+{
     Q_OBJECT
 public:
-    explicit AppearancePageSystemTrayTab( QWidget * parent=0 );
+    explicit AppearancePageSystemTrayTab(QWidget *parent = 0);
 
     QString helpAnchor() const;
 
@@ -191,15 +201,14 @@ private: // data
     KButtonGroup *mSystemTrayGroup;
 };
 
-
 class TagListWidgetItem : public QListWidgetItem
 {
 public:
-    explicit TagListWidgetItem( QListWidget *parent = 0);
-    explicit TagListWidgetItem( const QIcon & icon, const QString & text, QListWidget * parent = 0);
+    explicit TagListWidgetItem(QListWidget *parent = 0);
+    explicit TagListWidgetItem(const QIcon &icon, const QString &text, QListWidget *parent = 0);
 
     ~TagListWidgetItem();
-    void setKMailTag( const MailCommon::Tag::Ptr& tag );
+    void setKMailTag(const MailCommon::Tag::Ptr &tag);
     MailCommon::Tag::Ptr kmailTag() const;
 private:
     MailCommon::Tag::Ptr mTag;
@@ -207,10 +216,11 @@ private:
 
 /**Configuration tab in the appearance page for modifying the available set of
 +message tags*/
-class AppearancePageMessageTagTab : public ConfigModuleTab {
+class AppearancePageMessageTagTab : public ConfigModuleTab
+{
     Q_OBJECT
 public:
-    explicit AppearancePageMessageTagTab( QWidget * parent=0);
+    explicit AppearancePageMessageTagTab(QWidget *parent = 0);
     ~AppearancePageMessageTagTab();
 
     QString helpAnchor() const;
@@ -219,10 +229,10 @@ public:
 
 public slots:
     /**Enables/disables Add button according to whether @p aText is empty.
-  Connected to signal of the line edit widget for adding tags
-  @param aText String to change add button according to
-  */
-    void slotAddLineTextChanged( const QString &aText );
+    Connected to signal of the line edit widget for adding tags
+    @param aText String to change add button according to
+    */
+    void slotAddLineTextChanged(const QString &aText);
     /**Creates a generic tag with the visible name from the line edit widget for
     adding tags. Adds it to the end of the list and selects. Empties the line
     edit widget*/
@@ -230,47 +240,47 @@ public slots:
     /**Removes the currently selected text in the list box.*/
     void slotRemoveTag();
     /**Increases the currently selected tag's priority and handles related visual
-  changes*/
+    changes*/
     void slotMoveTagUp();
     /**Decreases the currently selected tag's priority and handles related visual
-  changes*/
+    changes*/
     void slotMoveTagDown();
 
 private slots:
     /*Handles necessary processing when the selection in the edit box changes.
-  Records the unselected tag's information, and applies visual changes
-  necessary depending on the description of the new tag. Private since doesn't
-  change the selection of the edit box itself*/
+    Records the unselected tag's information, and applies visual changes
+    necessary depending on the description of the new tag. Private since doesn't
+    change the selection of the edit box itself*/
     void slotSelectionChanged();
     /*This slot is necessary so that apply button is not activated when we are
-  only applying visual changes after selecting a new tag in the list box*/
+    only applying visual changes after selecting a new tag in the list box*/
     void slotEmitChangeCheck();
     /*Transfers the tag settings from the widgets to the internal data structures.
-  Private since passing a wrong parameter modifies another tag's data*/
-    void slotRecordTagSettings( int aIndex );
+    Private since passing a wrong parameter modifies another tag's data*/
+    void slotRecordTagSettings(int aIndex);
     /*Transfers the tag settings from the internal data structures to the widgets.
-  Private since passing a wrong parameter visualizes another tag's data*/
-    void slotUpdateTagSettingWidgets( int aIndex );
+    Private since passing a wrong parameter visualizes another tag's data*/
+    void slotUpdateTagSettingWidgets(int aIndex);
     /*Transfers changes in the tag name edit box to the list box for tags. Private
-  since calling externally decouples the name in the list box from name edit box*/
-    void slotNameLineTextChanged( const QString & );
-    void slotIconNameChanged( const QString &iconName );
-    void slotRowsMoved( const QModelIndex &,
-                        int sourcestart, int sourceEnd,
-                        const QModelIndex &, int destinationRow );
+    since calling externally decouples the name in the list box from name edit box*/
+    void slotNameLineTextChanged(const QString &);
+    void slotIconNameChanged(const QString &iconName);
+    void slotRowsMoved(const QModelIndex &,
+                       int sourcestart, int sourceEnd,
+                       const QModelIndex &, int destinationRow);
     void slotTagsFetched(KJob *job);
 
     void slotDeleteTagJob(KJob *job);
 private:
     void doLoadFromGlobalSettings();
-    void swapTagsInListBox( const int first, const int second );
+    void swapTagsInListBox(const int first, const int second);
     void updateButtons();
 
 private: // data
 
     KLineEdit *mTagAddLineEdit;
     QPushButton *mTagAddButton, *mTagRemoveButton,
-    *mTagUpButton, *mTagDownButton;
+                *mTagUpButton, *mTagDownButton;
 
     QListWidget *mTagListBox;
 
@@ -286,10 +296,11 @@ private: // data
     int mPreviousTag;
 };
 
-class KMAIL_EXPORT AppearancePage : public ConfigModuleWithTabs {
+class KMAIL_EXPORT AppearancePage : public ConfigModuleWithTabs
+{
     Q_OBJECT
 public:
-    explicit AppearancePage( QWidget *parent=0 );
+    explicit AppearancePage(QWidget *parent = 0);
 
     QString helpAnchor() const;
 
@@ -311,7 +322,5 @@ private:
     SystemTrayTab *mSystemTrayTab;
     MessageTagTab *mMessageTagTab;
 };
-
-
 
 #endif // CONFIGUREAPPEARANCEPAGE_H

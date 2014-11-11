@@ -6,21 +6,22 @@
 
 #include <QTreeWidget>
 
-class ListView : public QTreeWidget {
+class ListView : public QTreeWidget
+{
     Q_OBJECT
 public:
-    explicit ListView( QWidget *parent=0 );
+    explicit ListView(QWidget *parent = 0);
 
 Q_SIGNALS:
     void addHeader();
     void removeHeader();
 
 protected:
-    void resizeEvent( QResizeEvent *e );
-    void showEvent( QShowEvent *e );
+    void resizeEvent(QResizeEvent *e);
+    void showEvent(QShowEvent *e);
 
 private Q_SLOTS:
-    void slotContextMenu(const QPoint& pos);
+    void slotContextMenu(const QPoint &pos);
 
 private:
     void resizeColums();

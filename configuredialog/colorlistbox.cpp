@@ -31,102 +31,99 @@
 #include <QDropEvent>
 #include <QHeaderView>
 
-ColorListBox::ColorListBox( QWidget *parent )
-    : QTreeWidget( parent ), mCurrentOnDragEnter( 0L )
+ColorListBox::ColorListBox(QWidget *parent)
+    : QTreeWidget(parent), mCurrentOnDragEnter(0L)
 {
-    setColumnCount( 1 );
-    setRootIsDecorated( false );
+    setColumnCount(1);
+    setRootIsDecorated(false);
     header()->hide();
 
     connect(this, &ColorListBox::doubleClicked, this, &ColorListBox::newColor);
-    setAcceptDrops( true );
+    setAcceptDrops(true);
 }
 
-void ColorListBox::addColor( const QString& text, const QColor& color )
+void ColorListBox::addColor(const QString &text, const QColor &color)
 {
-    QTreeWidgetItem *item = new QTreeWidgetItem( QStringList() << text );
-    item->setData( 0, Qt::DecorationRole, color );
-    addTopLevelItem( item );
+    QTreeWidgetItem *item = new QTreeWidgetItem(QStringList() << text);
+    item->setData(0, Qt::DecorationRole, color);
+    addTopLevelItem(item);
 }
 
-void ColorListBox::setColorSilently( int index, const QColor &color )
+void ColorListBox::setColorSilently(int index, const QColor &color)
 {
     if (index < model()->rowCount()) {
-        topLevelItem( index )->setData( 0, Qt::DecorationRole, color );
+        topLevelItem(index)->setData(0, Qt::DecorationRole, color);
     }
 }
 
-void ColorListBox::setColor( int index, const QColor &color )
+void ColorListBox::setColor(int index, const QColor &color)
 {
     if (index < model()->rowCount()) {
-        topLevelItem( index )->setData( 0, Qt::DecorationRole, color );
+        topLevelItem(index)->setData(0, Qt::DecorationRole, color);
         emit changed();
     }
 }
 
-QColor ColorListBox::color( int index ) const
+QColor ColorListBox::color(int index) const
 {
     if (index < model()->rowCount()) {
-        return topLevelItem( index )->data( 0, Qt::DecorationRole ).value<QColor>();
+        return topLevelItem(index)->data(0, Qt::DecorationRole).value<QColor>();
     } else {
         return Qt::black;
     }
 }
 
-void ColorListBox::newColor( const QModelIndex& index )
+void ColorListBox::newColor(const QModelIndex &index)
 {
-    if ( !isEnabled() ) {
+    if (!isEnabled()) {
         return;
     }
 
     if (index.isValid()) {
-        QColor c = color( index.row() );
+        QColor c = color(index.row());
         c = QColorDialog::getColor(c, this);
-        if ( c.isValid() ) {
-            setColor( index.row(), c );
+        if (c.isValid()) {
+            setColor(index.row(), c);
         }
     }
 }
 
-void ColorListBox::dragEnterEvent( QDragEnterEvent *e )
+void ColorListBox::dragEnterEvent(QDragEnterEvent *e)
 {
-    if (KColorMimeData::canDecode( e->mimeData() ) && isEnabled()) {
+    if (KColorMimeData::canDecode(e->mimeData()) && isEnabled()) {
         mCurrentOnDragEnter = currentItem();
-        e->setAccepted( true );
+        e->setAccepted(true);
     } else {
         mCurrentOnDragEnter = 0L;
-        e->setAccepted( false );
+        e->setAccepted(false);
     }
 }
 
-
-void ColorListBox::dragLeaveEvent( QDragLeaveEvent * )
+void ColorListBox::dragLeaveEvent(QDragLeaveEvent *)
 {
     if (mCurrentOnDragEnter) {
-        setCurrentItem( mCurrentOnDragEnter );
+        setCurrentItem(mCurrentOnDragEnter);
         mCurrentOnDragEnter = 0L;
     }
 }
 
-
-void ColorListBox::dragMoveEvent( QDragMoveEvent *e )
+void ColorListBox::dragMoveEvent(QDragMoveEvent *e)
 {
-    if (KColorMimeData::canDecode( e->mimeData() ) && isEnabled()) {
-        QTreeWidgetItem *item = itemAt( e->pos() );
-        if ( item ) {
-            setCurrentItem( item );
+    if (KColorMimeData::canDecode(e->mimeData()) && isEnabled()) {
+        QTreeWidgetItem *item = itemAt(e->pos());
+        if (item) {
+            setCurrentItem(item);
         }
     }
 }
 
-
-void ColorListBox::dropEvent( QDropEvent *e )
+void ColorListBox::dropEvent(QDropEvent *e)
 {
-    QColor color = KColorMimeData::fromMimeData( e->mimeData() );
+    QColor color = KColorMimeData::fromMimeData(e->mimeData());
     if (color.isValid()) {
         QTreeWidgetItem *item = currentItem();
-        if ( item ) {
-            item->setData( 0, Qt::DecorationRole, color );
+        if (item) {
+            item->setData(0, Qt::DecorationRole, color);
             emit changed();
         }
         mCurrentOnDragEnter = 0L;

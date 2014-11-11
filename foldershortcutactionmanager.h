@@ -32,14 +32,15 @@ class QAction;
 
 class KActionCollection;
 
-namespace KMail {
+namespace KMail
+{
 
 class FolderShortcutCommand : public QObject
 {
     Q_OBJECT
 
 public:
-    FolderShortcutCommand( QWidget* mainwidget, const Akonadi::Collection & col );
+    FolderShortcutCommand(QWidget *mainwidget, const Akonadi::Collection &col);
     ~FolderShortcutCommand();
 
 public slots:
@@ -47,10 +48,10 @@ public slots:
     /** Assign a QAction to the command which is used to trigger it. This
     * action will be deleted along with the command, so you don't need to
     * keep track of it separately. */
-    void setAction( QAction* );
+    void setAction(QAction *);
 
 signals:
-    void selectCollectionFolder( const Akonadi::Collection & col );
+    void selectCollectionFolder(const Akonadi::Collection &col);
 
 private:
     Akonadi::Collection mCollectionFolder;
@@ -63,7 +64,7 @@ class KMAIL_EXPORT FolderShortcutActionManager : public QObject
     Q_OBJECT
 
 public:
-    explicit FolderShortcutActionManager( QWidget *parent, KActionCollection *actionCollection );
+    explicit FolderShortcutActionManager(QWidget *parent, KActionCollection *actionCollection);
     void createActions();
 
 public slots:
@@ -72,19 +73,19 @@ public slots:
        * Updates the shortcut action for this collection. Call this when a shortcut was
        * added, removed or changed.
        */
-    void shortcutChanged( const Akonadi::Collection &collection );
+    void shortcutChanged(const Akonadi::Collection &collection);
 
 private slots:
     /**
        * Removes the shortcut actions associated with a folder.
        */
-    void slotCollectionRemoved( const Akonadi::Collection &collection );
+    void slotCollectionRemoved(const Akonadi::Collection &collection);
 
-    void slotRowsInserted( const QModelIndex &parent, int start, int end );
+    void slotRowsInserted(const QModelIndex &parent, int start, int end);
 
 private:
-    void updateShortcutsForIndex( const QModelIndex &parent, int start, int end );
-    QMap< Akonadi::Entity::Id, FolderShortcutCommand* > mFolderShortcutCommands;
+    void updateShortcutsForIndex(const QModelIndex &parent, int start, int end);
+    QMap< Akonadi::Entity::Id, FolderShortcutCommand * > mFolderShortcutCommands;
     KActionCollection *mActionCollection;
     QWidget *mParent;
 };

@@ -21,7 +21,6 @@
 #include <KDateComboBox>
 #include <AkonadiWidgets/CollectionComboBox>
 
-
 FollowupReminderSelectDateDialogTest::FollowupReminderSelectDateDialogTest(QObject *parent)
     : QObject(parent)
 {

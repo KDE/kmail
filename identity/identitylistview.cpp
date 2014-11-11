@@ -48,7 +48,8 @@
 #include <QLineEdit>
 #include <QMimeData>
 
-namespace KMail {
+namespace KMail
+{
 
 //
 //
@@ -56,58 +57,58 @@ namespace KMail {
 //
 //
 
-IdentityListViewItem::IdentityListViewItem( IdentityListView *parent,
-                                            const KIdentityManagement::Identity &ident )
-    : QTreeWidgetItem( parent ), mUOID( ident.uoid() )
+IdentityListViewItem::IdentityListViewItem(IdentityListView *parent,
+        const KIdentityManagement::Identity &ident)
+    : QTreeWidgetItem(parent), mUOID(ident.uoid())
 {
-    init( ident );
+    init(ident);
 }
 
-IdentityListViewItem::IdentityListViewItem( IdentityListView *parent,
-                                            QTreeWidgetItem *after,
-                                            const KIdentityManagement::Identity &ident )
-    : QTreeWidgetItem( parent, after ), mUOID( ident.uoid() )
+IdentityListViewItem::IdentityListViewItem(IdentityListView *parent,
+        QTreeWidgetItem *after,
+        const KIdentityManagement::Identity &ident)
+    : QTreeWidgetItem(parent, after), mUOID(ident.uoid())
 {
-    init( ident );
+    init(ident);
 }
 
-KIdentityManagement::Identity & IdentityListViewItem::identity() const
+KIdentityManagement::Identity &IdentityListViewItem::identity() const
 {
-    KIdentityManagement::IdentityManager *im = qobject_cast<IdentityListView*>( treeWidget() )->identityManager();
-    Q_ASSERT( im );
-    return im->modifyIdentityForUoid( mUOID );
+    KIdentityManagement::IdentityManager *im = qobject_cast<IdentityListView *>(treeWidget())->identityManager();
+    Q_ASSERT(im);
+    return im->modifyIdentityForUoid(mUOID);
 }
 
-void IdentityListViewItem::setIdentity( const KIdentityManagement::Identity &ident )
+void IdentityListViewItem::setIdentity(const KIdentityManagement::Identity &ident)
 {
     mUOID = ident.uoid();
-    init( ident );
+    init(ident);
 }
 
 void IdentityListViewItem::redisplay()
 {
-    init( identity() );
+    init(identity());
 }
 
-void IdentityListViewItem::init( const KIdentityManagement::Identity &ident )
+void IdentityListViewItem::init(const KIdentityManagement::Identity &ident)
 {
-    if ( ident.isDefault() ) {
+    if (ident.isDefault()) {
         // Add "(Default)" to the end of the default identity's name:
-        setText( 0, i18nc( "%1: identity name. Used in the config "
-                           "dialog, section Identity, to indicate the "
-                           "default identity", "%1 (Default)",
-                           ident.identityName() ) );
+        setText(0, i18nc("%1: identity name. Used in the config "
+                         "dialog, section Identity, to indicate the "
+                         "default identity", "%1 (Default)",
+                         ident.identityName()));
         QFont fontItem(font(0));
         fontItem.setBold(true);
-        setFont(0,fontItem);
+        setFont(0, fontItem);
     } else {
         QFont fontItem(font(0));
         fontItem.setBold(false);
-        setFont(0,fontItem);
+        setFont(0, fontItem);
 
-        setText( 0, ident.identityName() );
+        setText(0, ident.identityName());
     }
-    setText( 1, ident.fullEmailAddr() );
+    setText(1, ident.fullEmailAddr());
 }
 
 //
@@ -116,102 +117,102 @@ void IdentityListViewItem::init( const KIdentityManagement::Identity &ident )
 //
 //
 
-IdentityListView::IdentityListView( QWidget *parent )
-    : QTreeWidget( parent ),
-      mIdentityManager( 0 )
+IdentityListView::IdentityListView(QWidget *parent)
+    : QTreeWidget(parent),
+      mIdentityManager(0)
 {
 #ifndef QT_NO_DRAGANDDROP
-    setDragEnabled( true );
-    setAcceptDrops( true );
+    setDragEnabled(true);
+    setAcceptDrops(true);
 #endif
-    setHeaderLabels( QStringList() << i18n( "Identity Name" ) << i18n( "Email Address" ) );
-    setRootIsDecorated( false );
-    header()->setMovable( false );
-    header()->setResizeMode( QHeaderView::ResizeToContents );
-    setAllColumnsShowFocus( true );
-    setAlternatingRowColors( true );
-    setSortingEnabled( true );
-    sortByColumn( 0, Qt::AscendingOrder );
-    setSelectionMode( SingleSelection ); // ### Extended would be nicer...
-    setColumnWidth( 0, 175 );
+    setHeaderLabels(QStringList() << i18n("Identity Name") << i18n("Email Address"));
+    setRootIsDecorated(false);
+    header()->setMovable(false);
+    header()->setResizeMode(QHeaderView::ResizeToContents);
+    setAllColumnsShowFocus(true);
+    setAlternatingRowColors(true);
+    setSortingEnabled(true);
+    sortByColumn(0, Qt::AscendingOrder);
+    setSelectionMode(SingleSelection);   // ### Extended would be nicer...
+    setColumnWidth(0, 175);
 
-    setContextMenuPolicy( Qt::CustomContextMenu );
+    setContextMenuPolicy(Qt::CustomContextMenu);
     connect(this, &IdentityListView::customContextMenuRequested, this, &IdentityListView::slotCustomContextMenuRequested);
 }
 
-void IdentityListView::editItem( QTreeWidgetItem *item, int column )
+void IdentityListView::editItem(QTreeWidgetItem *item, int column)
 {
-    if ( column == 0 && item ) {
-        IdentityListViewItem *lvItem = dynamic_cast<IdentityListViewItem*>( item );
-        if ( lvItem ) {
-            KIdentityManagement::Identity& ident = lvItem->identity();
-            if ( ident.isDefault() ) {
-                lvItem->setText( 0, ident.identityName() );
+    if (column == 0 && item) {
+        IdentityListViewItem *lvItem = dynamic_cast<IdentityListViewItem *>(item);
+        if (lvItem) {
+            KIdentityManagement::Identity &ident = lvItem->identity();
+            if (ident.isDefault()) {
+                lvItem->setText(0, ident.identityName());
             }
         }
 
         Qt::ItemFlags oldFlags = item->flags();
-        item->setFlags( oldFlags | Qt::ItemIsEditable );
-        QTreeWidget::editItem( item, 0 );
-        item->setFlags( oldFlags );
+        item->setFlags(oldFlags | Qt::ItemIsEditable);
+        QTreeWidget::editItem(item, 0);
+        item->setFlags(oldFlags);
     }
 }
 
-void IdentityListView::commitData( QWidget *editor )
+void IdentityListView::commitData(QWidget *editor)
 {
     qDebug() << "after editing";
 
-    if ( !selectedItems().isEmpty() ) {
+    if (!selectedItems().isEmpty()) {
 
-        QLineEdit *edit = dynamic_cast<QLineEdit*>( editor ); // krazy:exclude=qclasses
-        if ( edit ) {
-            IdentityListViewItem *item = dynamic_cast<IdentityListViewItem*>( selectedItems()[0] );
+        QLineEdit *edit = dynamic_cast<QLineEdit *>(editor);  // krazy:exclude=qclasses
+        if (edit) {
+            IdentityListViewItem *item = dynamic_cast<IdentityListViewItem *>(selectedItems()[0]);
             const QString text = edit->text();
-            emit rename( item, text );
+            emit rename(item, text);
         }
     }
 }
 
-void IdentityListView::slotCustomContextMenuRequested( const QPoint &pos )
+void IdentityListView::slotCustomContextMenuRequested(const QPoint &pos)
 {
-    QTreeWidgetItem *item = itemAt( pos );
-    if ( item ) {
-        IdentityListViewItem *lvItem = dynamic_cast<IdentityListViewItem*>( item );
-        if ( lvItem ) {
-            emit contextMenu( lvItem, viewport()->mapToGlobal( pos ) );
+    QTreeWidgetItem *item = itemAt(pos);
+    if (item) {
+        IdentityListViewItem *lvItem = dynamic_cast<IdentityListViewItem *>(item);
+        if (lvItem) {
+            emit contextMenu(lvItem, viewport()->mapToGlobal(pos));
         }
     } else {
-        emit contextMenu( 0, viewport()->mapToGlobal( pos ) );
+        emit contextMenu(0, viewport()->mapToGlobal(pos));
     }
 }
 
 #ifndef QT_NO_DRAGANDDROP
-void IdentityListView::startDrag ( Qt::DropActions /*supportedActions*/ )
+void IdentityListView::startDrag(Qt::DropActions /*supportedActions*/)
 {
-    IdentityListViewItem * item = dynamic_cast<IdentityListViewItem*>( currentItem() );
-    if ( !item )
+    IdentityListViewItem *item = dynamic_cast<IdentityListViewItem *>(currentItem());
+    if (!item) {
         return;
+    }
 
-    QDrag *drag = new QDrag( viewport() );
+    QDrag *drag = new QDrag(viewport());
     QMimeData *md = new QMimeData;
-    drag->setMimeData( md );
-    item->identity().populateMimeData( md );
-    drag->setPixmap( SmallIcon(QLatin1String("user-identity")) );
+    drag->setMimeData(md);
+    item->identity().populateMimeData(md);
+    drag->setPixmap(SmallIcon(QLatin1String("user-identity")));
     drag->start();
 }
 #endif
 
-KIdentityManagement::IdentityManager* IdentityListView::identityManager() const
+KIdentityManagement::IdentityManager *IdentityListView::identityManager() const
 {
-    Q_ASSERT( mIdentityManager );
+    Q_ASSERT(mIdentityManager);
     return mIdentityManager;
 }
 
-void IdentityListView::setIdentityManager(KIdentityManagement::IdentityManager* im)
+void IdentityListView::setIdentityManager(KIdentityManagement::IdentityManager *im)
 {
     mIdentityManager = im;
 }
 
 } // namespace KMail
-
 

@@ -36,7 +36,8 @@
 #include <AkonadiCore/Item>
 class QCheckBox;
 
-namespace PimCommon {
+namespace PimCommon
+{
 class SimpleStringListEditor;
 }
 
@@ -46,69 +47,77 @@ class KLineEdit;
 class QPushButton;
 class QTabWidget;
 
-namespace Kleo {
+namespace Kleo
+{
 class EncryptionKeyRequester;
 class SigningKeyRequester;
 }
-namespace KIdentityManagement {
+namespace KIdentityManagement
+{
 class Identity;
 class SignatureConfigurator;
 }
-namespace KMail {
+namespace KMail
+{
 class XFaceConfigurator;
 }
 
-namespace MailCommon {
+namespace MailCommon
+{
 class FolderRequester;
 }
-namespace Sonnet {
+namespace Sonnet
+{
 class DictionaryComboBox;
 }
 
-namespace MailTransport {
+namespace MailTransport
+{
 class TransportComboBox;
 }
 
-namespace TemplateParser {
+namespace TemplateParser
+{
 class TemplatesConfiguration;
 }
 
-namespace PimCommon {
+namespace PimCommon
+{
 class AutoCorrectionLanguage;
 }
 
+namespace KMail
+{
 
-namespace KMail {
-
-class IdentityDialog : public QDialog {
+class IdentityDialog : public QDialog
+{
     Q_OBJECT
 public:
-    explicit IdentityDialog( QWidget * parent=0 );
+    explicit IdentityDialog(QWidget *parent = 0);
     ~IdentityDialog();
 
-    void setIdentity( /*_not_ const*/ KIdentityManagement::Identity & ident );
+    void setIdentity(/*_not_ const*/ KIdentityManagement::Identity &ident);
 
-    void updateIdentity( KIdentityManagement::Identity & ident );
+    void updateIdentity(KIdentityManagement::Identity &ident);
 
 protected slots:
-    void slotAboutToShow( int );
-
+    void slotAboutToShow(int);
 
     // copy default templates to identity templates
     void slotCopyGlobal();
 
 private slots:
     void slotAccepted();
-    void slotDelayedButtonClicked( KJob* );
+    void slotDelayedButtonClicked(KJob *);
     void slotEditVcard();
     void slotRefreshDefaultDomainName();
     void slotVCardRemoved();
     void slotHelp();
 private:
-    bool checkFolderExists( const QString & folder, const QString & msg );
-    bool validateAddresses( const QString & addresses );
+    bool checkFolderExists(const QString &folder, const QString &msg);
+    bool validateAddresses(const QString &addresses);
     void updateVcardButton();
-    void editVcard(const QString& filename);
+    void editVcard(const QString &filename);
 
 private:
     // "general" tab:

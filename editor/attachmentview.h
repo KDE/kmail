@@ -29,11 +29,13 @@
 
 class QContextMenuEvent;
 
-namespace MessageComposer {
+namespace MessageComposer
+{
 class AttachmentModel;
 }
 
-namespace KMail {
+namespace KMail
+{
 
 class AttachmentView : public QTreeView
 {
@@ -41,15 +43,15 @@ class AttachmentView : public QTreeView
 
 public:
     /// can't change model afterwards.
-    explicit AttachmentView( MessageComposer::AttachmentModel *model, QWidget *parent = 0 );
+    explicit AttachmentView(MessageComposer::AttachmentModel *model, QWidget *parent = 0);
     ~AttachmentView();
 
     QWidget *widget();
 
 public slots:
     /// model sets these
-    void setEncryptEnabled( bool enabled );
-    void setSignEnabled( bool enabled );
+    void setEncryptEnabled(bool enabled);
+    void setSignEnabled(bool enabled);
     void hideIfEmpty();
     void selectNewAttachment();
 
@@ -57,13 +59,13 @@ public slots:
 
 protected:
     /** reimpl to avoid default drag cursor */
-    void startDrag( Qt::DropActions supportedActions );
+    void startDrag(Qt::DropActions supportedActions);
     /* reimpl */
-    void contextMenuEvent( QContextMenuEvent *event );
+    void contextMenuEvent(QContextMenuEvent *event);
     /* reimpl */
-    void keyPressEvent( QKeyEvent *event );
+    void keyPressEvent(QKeyEvent *event);
     /** reimpl to avoid drags from ourselves */
-    void dragEnterEvent( QDragEnterEvent *event );
+    void dragEnterEvent(QDragEnterEvent *event);
 
 private Q_SLOTS:
     void slotShowHideAttchementList(bool);

@@ -45,10 +45,10 @@ class KMailApplication : public KontactInterface::PimUniqueApplication
 {
 public:
     KMailApplication() : KontactInterface::PimUniqueApplication(),
-        mDelayedInstanceCreation( false ),
-        mEventLoopReached( false ) { }
+        mDelayedInstanceCreation(false),
+        mEventLoopReached(false) { }
     virtual int newInstance();
-    void commitData(QSessionManager& sm);
+    void commitData(QSessionManager &sm);
     void setEventLoopReached();
     void delayedInstanceCreation();
 protected:
@@ -57,13 +57,15 @@ protected:
 
 };
 
-void KMailApplication::commitData(QSessionManager& sm) {
+void KMailApplication::commitData(QSessionManager &sm)
+{
     kmkernel->dumpDeadLetters();
-    kmkernel->setShuttingDown( true ); // Prevent further dumpDeadLetters calls
-    KApplication::commitData( sm );
+    kmkernel->setShuttingDown(true);   // Prevent further dumpDeadLetters calls
+    KApplication::commitData(sm);
 }
 
-void KMailApplication::setEventLoopReached() {
+void KMailApplication::setEventLoopReached()
+{
     mEventLoopReached = true;
 }
 
@@ -74,24 +76,28 @@ int KMailApplication::newInstance()
     // If the event loop hasn't been reached yet, the kernel is probably not
     // fully initialized. Creating an instance would therefore fail, this is why
     // that is delayed until delayedInstanceCreation() is called.
-    if ( !mEventLoopReached ) {
+    if (!mEventLoopReached) {
         qDebug() << "Delaying instance creation.";
         mDelayedInstanceCreation = true;
         return 0;
     }
 
-    if (!kmkernel)
+    if (!kmkernel) {
         return 0;
+    }
 
-    if (!kmkernel->firstInstance() || !kapp->isSessionRestored())
-        kmkernel->handleCommandLine( true );
+    if (!kmkernel->firstInstance() || !kapp->isSessionRestored()) {
+        kmkernel->handleCommandLine(true);
+    }
     kmkernel->setFirstInstance(false);
     return 0;
 }
 
-void KMailApplication::delayedInstanceCreation() {
-    if ( mDelayedInstanceCreation )
+void KMailApplication::delayedInstanceCreation()
+{
+    if (mDelayedInstanceCreation) {
         newInstance();
+    }
 }
 
 int main(int argc, char *argv[])
@@ -103,15 +109,16 @@ int main(int argc, char *argv[])
 #if 0 // for testing KUniqueAppliaction on Windows
     MessageBoxA(NULL,
                 QString("main() %1 pid=%2").arg(argv[0]).arg(getpid()).toLatin1(),
-            QString("main() \"%1\"").arg(argv[0]).toLatin1(), MB_OK|MB_ICONINFORMATION|MB_TASKMODAL);
+                QString("main() \"%1\"").arg(argv[0]).toLatin1(), MB_OK | MB_ICONINFORMATION | MB_TASKMODAL);
 #endif
     KMail::AboutData about;
 
     KCmdLineArgs::setCwd(QDir::currentPath().toLocal8Bit());
     KCmdLineArgs::init(argc, argv, &about);
-    KCmdLineArgs::addCmdLineOptions( kmail_options() ); // Add kmail options
-    if (!KMailApplication::start())
+    KCmdLineArgs::addCmdLineOptions(kmail_options());   // Add kmail options
+    if (!KMailApplication::start()) {
         return 0;
+    }
 
     // Migrate to xdg path
     KMail::migrateConfig();
@@ -123,7 +130,7 @@ int main(int argc, char *argv[])
     // tray.
     // Rely on KGlobal::ref() and KGlobal::deref() instead, like we did in KDE3.
     // See http://bugs.kde.org/show_bug.cgi?id=163479
-    QApplication::setQuitOnLastWindowClosed( false );
+    QApplication::setQuitOnLastWindowClosed(false);
 
     // import i18n data and icons from libraries:
     KMail::insertLibraryCataloguesAndIcons();

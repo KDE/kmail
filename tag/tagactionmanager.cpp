@@ -46,19 +46,19 @@ using namespace KMail;
 
 static int s_numberMaxTag = 10;
 
-TagActionManager::TagActionManager( QObject *parent, KActionCollection *actionCollection,
-                                    MessageActions *messageActions, KXMLGUIClient *guiClient )
-    : QObject( parent ),
-      mActionCollection( actionCollection ),
-      mMessageActions( messageActions ),
-      mMessageTagToggleMapper( 0 ),
-      mGUIClient( guiClient ),
-      mSeparatorMoreAction( 0 ),
-      mSeparatorNewTagAction( 0 ),
-      mMoreAction( 0 ),
-      mNewTagAction( 0 ),
+TagActionManager::TagActionManager(QObject *parent, KActionCollection *actionCollection,
+                                   MessageActions *messageActions, KXMLGUIClient *guiClient)
+    : QObject(parent),
+      mActionCollection(actionCollection),
+      mMessageActions(messageActions),
+      mMessageTagToggleMapper(0),
+      mGUIClient(guiClient),
+      mSeparatorMoreAction(0),
+      mSeparatorNewTagAction(0),
+      mMoreAction(0),
+      mNewTagAction(0),
       mNewTagId(-1),
-      mTagFetchInProgress( false ),
+      mTagFetchInProgress(false),
       mMonitor(new Akonadi::Monitor(this))
 {
     mMessageActions->messageStatusMenu()->menu()->addSeparator();
@@ -77,79 +77,80 @@ TagActionManager::~TagActionManager()
 void TagActionManager::clearActions()
 {
     //Remove the tag actions from the toolbar
-    if ( !mToolbarActions.isEmpty() ) {
-        if ( mGUIClient->factory() ) {
-            mGUIClient->unplugActionList( QLatin1String("toolbar_messagetag_actions") );
+    if (!mToolbarActions.isEmpty()) {
+        if (mGUIClient->factory()) {
+            mGUIClient->unplugActionList(QLatin1String("toolbar_messagetag_actions"));
         }
         mToolbarActions.clear();
     }
 
     //Remove the tag actions from the status menu and the action collection,
     //then delete them.
-    foreach( KToggleAction *action, mTagActions ) {
-        mMessageActions->messageStatusMenu()->removeAction( action );
+    foreach (KToggleAction *action, mTagActions) {
+        mMessageActions->messageStatusMenu()->removeAction(action);
 
         // This removes and deletes the action at the same time
-        mActionCollection->removeAction( action );
+        mActionCollection->removeAction(action);
     }
 
-    if ( mSeparatorMoreAction ) {
-        mMessageActions->messageStatusMenu()->removeAction( mSeparatorMoreAction );
+    if (mSeparatorMoreAction) {
+        mMessageActions->messageStatusMenu()->removeAction(mSeparatorMoreAction);
     }
 
-    if ( mSeparatorNewTagAction ) {
-        mMessageActions->messageStatusMenu()->removeAction( mSeparatorNewTagAction );
+    if (mSeparatorNewTagAction) {
+        mMessageActions->messageStatusMenu()->removeAction(mSeparatorNewTagAction);
     }
 
-    if ( mNewTagAction ) {
-        mMessageActions->messageStatusMenu()->removeAction( mNewTagAction );
+    if (mNewTagAction) {
+        mMessageActions->messageStatusMenu()->removeAction(mNewTagAction);
     }
 
-    if ( mMoreAction ) {
-        mMessageActions->messageStatusMenu()->removeAction( mMoreAction );
+    if (mMoreAction) {
+        mMessageActions->messageStatusMenu()->removeAction(mMoreAction);
     }
-
 
     mTagActions.clear();
     delete mMessageTagToggleMapper;
     mMessageTagToggleMapper = 0;
 }
 
-void TagActionManager::createTagAction( const MailCommon::Tag::Ptr &tag, bool addToMenu )
+void TagActionManager::createTagAction(const MailCommon::Tag::Ptr &tag, bool addToMenu)
 {
-    QString cleanName( i18n("Message Tag: %1", tag->tagName ) );
+    QString cleanName(i18n("Message Tag: %1", tag->tagName));
     cleanName.replace(QLatin1Char('&'), QLatin1String("&&"));
-    KToggleAction * const tagAction = new KToggleAction( QIcon::fromTheme( tag->iconName ),
-                                                         cleanName, this );
-    tagAction->setShortcut( QKeySequence(tag->shortcut) );
-    tagAction->setIconText( tag->name() );
-    tagAction->setChecked( tag->id() == mNewTagId );
+    KToggleAction *const tagAction = new KToggleAction(QIcon::fromTheme(tag->iconName),
+            cleanName, this);
+    tagAction->setShortcut(QKeySequence(tag->shortcut));
+    tagAction->setIconText(tag->name());
+    tagAction->setChecked(tag->id() == mNewTagId);
 
-    mActionCollection->addAction( tag->name(), tagAction );
-    connect( tagAction, SIGNAL(triggered(bool)),
-             mMessageTagToggleMapper, SLOT(map()) );
+    mActionCollection->addAction(tag->name(), tagAction);
+    connect(tagAction, SIGNAL(triggered(bool)),
+            mMessageTagToggleMapper, SLOT(map()));
 
     // The shortcut configuration is done in the config dialog.
     // The shortcut set in the shortcut dialog would not be saved back to
     // the tag descriptions correctly.
-    mActionCollection->setShortcutsConfigurable(tagAction, false );
-    mMessageTagToggleMapper->setMapping( tagAction, QString::number(tag->tag().id()) );
+    mActionCollection->setShortcutsConfigurable(tagAction, false);
+    mMessageTagToggleMapper->setMapping(tagAction, QString::number(tag->tag().id()));
 
-    mTagActions.insert( tag->id(), tagAction );
-    if ( addToMenu )
-        mMessageActions->messageStatusMenu()->menu()->addAction( tagAction );
+    mTagActions.insert(tag->id(), tagAction);
+    if (addToMenu) {
+        mMessageActions->messageStatusMenu()->menu()->addAction(tagAction);
+    }
 
-    if ( tag->inToolbar ) {
-        mToolbarActions.append( tagAction );
+    if (tag->inToolbar) {
+        mToolbarActions.append(tagAction);
     }
 }
 
 void TagActionManager::createActions()
 {
-    if ( mTagFetchInProgress )
-      return;
+    if (mTagFetchInProgress) {
+        return;
+    }
 
-    if ( mTags.isEmpty() ) {
+    if (mTags.isEmpty()) {
         mTagFetchInProgress = true;
         Akonadi::TagFetchJob *fetchJob = new Akonadi::TagFetchJob(this);
         fetchJob->fetchScope().fetchAttribute<Akonadi::TagAttribute>();
@@ -165,92 +166,89 @@ void TagActionManager::finishedTagListing(KJob *job)
     if (job->error()) {
         qWarning() << job->errorString();
     }
-    Akonadi::TagFetchJob *fetchJob = static_cast<Akonadi::TagFetchJob*>(job);
+    Akonadi::TagFetchJob *fetchJob = static_cast<Akonadi::TagFetchJob *>(job);
     foreach (const Akonadi::Tag &result, fetchJob->tags()) {
-        mTags.append( MailCommon::Tag::fromAkonadi( result ) );
+        mTags.append(MailCommon::Tag::fromAkonadi(result));
     }
     mTagFetchInProgress = false;
-    qSort( mTags.begin(), mTags.end(), MailCommon::Tag::compare );
+    qSort(mTags.begin(), mTags.end(), MailCommon::Tag::compare);
     createTagActions(mTags);
 }
 
-void TagActionManager::onSignalMapped(const QString& tag)
+void TagActionManager::onSignalMapped(const QString &tag)
 {
-    emit tagActionTriggered( Akonadi::Tag( tag.toLongLong() ) );
+    emit tagActionTriggered(Akonadi::Tag(tag.toLongLong()));
 }
 
 void TagActionManager::createTagActions(const QList<MailCommon::Tag::Ptr> &tags)
 {
     clearActions();
     //Use a mapper to understand which tag button is triggered
-    mMessageTagToggleMapper = new QSignalMapper( this );
-    connect( mMessageTagToggleMapper, SIGNAL(mapped(QString)),
-             this, SLOT(onSignalMapped(QString)) );
+    mMessageTagToggleMapper = new QSignalMapper(this);
+    connect(mMessageTagToggleMapper, SIGNAL(mapped(QString)),
+            this, SLOT(onSignalMapped(QString)));
 
     // Create a action for each tag and plug it into various places
     int i = 0;
     bool needToAddMoreAction = false;
     const int numberOfTag(tags.size());
     //It is assumed the tags are sorted
-    foreach( const MailCommon::Tag::Ptr &tag, tags ) {
-        if ( i< s_numberMaxTag )
-            createTagAction( tag,true );
-        else
-        {
-            if ( tag->inToolbar || !tag->shortcut.isEmpty() ) {
-                createTagAction( tag, false );
+    foreach (const MailCommon::Tag::Ptr &tag, tags) {
+        if (i < s_numberMaxTag) {
+            createTagAction(tag, true);
+        } else {
+            if (tag->inToolbar || !tag->shortcut.isEmpty()) {
+                createTagAction(tag, false);
             }
 
-            if ( i == s_numberMaxTag && i < numberOfTag )
-            {
+            if (i == s_numberMaxTag && i < numberOfTag) {
                 needToAddMoreAction = true;
             }
         }
         ++i;
     }
 
-
-    if(!mSeparatorNewTagAction) {
-        mSeparatorNewTagAction = new QAction( this );
-        mSeparatorNewTagAction->setSeparator( true );
+    if (!mSeparatorNewTagAction) {
+        mSeparatorNewTagAction = new QAction(this);
+        mSeparatorNewTagAction->setSeparator(true);
     }
-    mMessageActions->messageStatusMenu()->menu()->addAction( mSeparatorNewTagAction );
+    mMessageActions->messageStatusMenu()->menu()->addAction(mSeparatorNewTagAction);
 
     if (!mNewTagAction) {
-        mNewTagAction = new QAction( i18n( "Add new tag..." ), this );
+        mNewTagAction = new QAction(i18n("Add new tag..."), this);
         connect(mNewTagAction, &QAction::triggered, this, &TagActionManager::newTagActionClicked);
     }
-    mMessageActions->messageStatusMenu()->menu()->addAction( mNewTagAction );
+    mMessageActions->messageStatusMenu()->menu()->addAction(mNewTagAction);
 
     if (needToAddMoreAction) {
-        if(!mSeparatorMoreAction) {
-            mSeparatorMoreAction = new QAction( this );
-            mSeparatorMoreAction->setSeparator( true );
+        if (!mSeparatorMoreAction) {
+            mSeparatorMoreAction = new QAction(this);
+            mSeparatorMoreAction->setSeparator(true);
         }
-        mMessageActions->messageStatusMenu()->menu()->addAction( mSeparatorMoreAction );
+        mMessageActions->messageStatusMenu()->menu()->addAction(mSeparatorMoreAction);
 
         if (!mMoreAction) {
-            mMoreAction = new QAction( i18n( "More..." ), this );
-            connect( mMoreAction, SIGNAL(triggered(bool)),
-                     this, SIGNAL(tagMoreActionClicked()) );
+            mMoreAction = new QAction(i18n("More..."), this);
+            connect(mMoreAction, SIGNAL(triggered(bool)),
+                    this, SIGNAL(tagMoreActionClicked()));
         }
-        mMessageActions->messageStatusMenu()->menu()->addAction( mMoreAction );
+        mMessageActions->messageStatusMenu()->menu()->addAction(mMoreAction);
     }
 
-    if ( !mToolbarActions.isEmpty() && mGUIClient->factory() ) {
-        mGUIClient->plugActionList( QLatin1String("toolbar_messagetag_actions"), mToolbarActions );
+    if (!mToolbarActions.isEmpty() && mGUIClient->factory()) {
+        mGUIClient->plugActionList(QLatin1String("toolbar_messagetag_actions"), mToolbarActions);
     }
 }
 
-void TagActionManager::updateActionStates( int numberOfSelectedMessages,
-                                           const Akonadi::Item &selectedItem )
+void TagActionManager::updateActionStates(int numberOfSelectedMessages,
+        const Akonadi::Item &selectedItem)
 {
     mNewTagId = -1;
-    QMap<qint64,KToggleAction*>::const_iterator it = mTagActions.constBegin();
-    QMap<qint64,KToggleAction*>::const_iterator end = mTagActions.constEnd();
-    if ( numberOfSelectedMessages >= 1 ) {
-        Q_ASSERT( selectedItem.isValid() );
-        for ( ; it != end; ++it ) {
+    QMap<qint64, KToggleAction *>::const_iterator it = mTagActions.constBegin();
+    QMap<qint64, KToggleAction *>::const_iterator end = mTagActions.constEnd();
+    if (numberOfSelectedMessages >= 1) {
+        Q_ASSERT(selectedItem.isValid());
+        for (; it != end; ++it) {
             //FIXME Not very performant tag label retrieval
             QString label(QLatin1String("not found"));
             foreach (const MailCommon::Tag::Ptr &tag, mTags) {
@@ -260,19 +258,19 @@ void TagActionManager::updateActionStates( int numberOfSelectedMessages,
                 }
             }
 
-            it.value()->setEnabled( true );
+            it.value()->setEnabled(true);
             if (numberOfSelectedMessages == 1) {
                 const bool hasTag = selectedItem.hasTag(Akonadi::Tag(it.key()));
-                it.value()->setChecked( hasTag );
-                it.value()->setText( i18n("Message Tag: %1", label ) );
+                it.value()->setChecked(hasTag);
+                it.value()->setText(i18n("Message Tag: %1", label));
             } else {
-                it.value()->setChecked( false );
-                it.value()->setText( i18n("Toggle Message Tag: %1", label ) );
+                it.value()->setChecked(false);
+                it.value()->setText(i18n("Toggle Message Tag: %1", label));
             }
         }
     } else {
-        for ( ; it != end; ++it ) {
-            it.value()->setEnabled( false );
+        for (; it != end; ++it) {
+            it.value()->setEnabled(false);
         }
     }
 }
@@ -282,17 +280,17 @@ void TagActionManager::onTagAdded(const Akonadi::Tag &akonadiTag)
     const QList<qint64> checked = checkedTags();
 
     clearActions();
-    mTags.append( MailCommon::Tag::fromAkonadi( akonadiTag ) );
-    qSort( mTags.begin(), mTags.end(), MailCommon::Tag::compare );
+    mTags.append(MailCommon::Tag::fromAkonadi(akonadiTag));
+    qSort(mTags.begin(), mTags.end(), MailCommon::Tag::compare);
     createTagActions(mTags);
 
-    checkTags( checked );
+    checkTags(checked);
 }
 
 void TagActionManager::onTagRemoved(const Akonadi::Tag &akonadiTag)
 {
-    foreach( const MailCommon::Tag::Ptr &tag, mTags ) {
-        if(tag->id() == akonadiTag.id()) {
+    foreach (const MailCommon::Tag::Ptr &tag, mTags) {
+        if (tag->id() == akonadiTag.id()) {
             mTags.removeAll(tag);
             break;
         }
@@ -301,15 +299,15 @@ void TagActionManager::onTagRemoved(const Akonadi::Tag &akonadiTag)
     fillTagList();
 }
 
-void TagActionManager::onTagChanged(const Akonadi::Tag& akonadiTag)
+void TagActionManager::onTagChanged(const Akonadi::Tag &akonadiTag)
 {
-    foreach( const MailCommon::Tag::Ptr &tag, mTags ) {
-        if(tag->id() == akonadiTag.id()) {
+    foreach (const MailCommon::Tag::Ptr &tag, mTags) {
+        if (tag->id() == akonadiTag.id()) {
             mTags.removeAll(tag);
             break;
         }
     }
-    mTags.append( MailCommon::Tag::fromAkonadi( akonadiTag ) );
+    mTags.append(MailCommon::Tag::fromAkonadi(akonadiTag));
     fillTagList();
 }
 
@@ -318,40 +316,40 @@ void TagActionManager::fillTagList()
     const QList<qint64> checked = checkedTags();
 
     clearActions();
-    qSort( mTags.begin(), mTags.end(), MailCommon::Tag::compare );
-    createTagActions( mTags );
+    qSort(mTags.begin(), mTags.end(), MailCommon::Tag::compare);
+    createTagActions(mTags);
 
-    checkTags( checked );
+    checkTags(checked);
 }
 
 void TagActionManager::newTagActionClicked()
 {
-    QPointer<MailCommon::AddTagDialog> dialog = new MailCommon::AddTagDialog(QList<KActionCollection*>() << mActionCollection, 0);
+    QPointer<MailCommon::AddTagDialog> dialog = new MailCommon::AddTagDialog(QList<KActionCollection *>() << mActionCollection, 0);
     dialog->setTags(mTags);
-    if ( dialog->exec() == QDialog::Accepted ) {
+    if (dialog->exec() == QDialog::Accepted) {
         mNewTagId = dialog->tag().id();
         // Assign tag to all selected items right away
-        emit tagActionTriggered( dialog->tag() );
+        emit tagActionTriggered(dialog->tag());
     }
     delete dialog;
 }
 
-void TagActionManager::checkTags(const QList<qint64>& tags)
+void TagActionManager::checkTags(const QList<qint64> &tags)
 {
-    foreach( const qint64 &id, tags ) {
-        if ( mTagActions.contains(id) ) {
-            mTagActions[id]->setChecked( true );
+    foreach (const qint64 &id, tags) {
+        if (mTagActions.contains(id)) {
+            mTagActions[id]->setChecked(true);
         }
     }
 }
 
 QList<qint64> TagActionManager::checkedTags() const
 {
-    QMap<qint64,KToggleAction*>::const_iterator it = mTagActions.constBegin();
-    QMap<qint64,KToggleAction*>::const_iterator end = mTagActions.constEnd();
+    QMap<qint64, KToggleAction *>::const_iterator it = mTagActions.constBegin();
+    QMap<qint64, KToggleAction *>::const_iterator end = mTagActions.constEnd();
     QList<qint64> checked;
-    for ( ; it != end; ++it ) {
-        if ( it.value()->isChecked() ) {
+    for (; it != end; ++it) {
+        if (it.value()->isChecked()) {
             checked << it.key();
         }
     }

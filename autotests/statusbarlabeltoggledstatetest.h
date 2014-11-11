@@ -37,7 +37,5 @@ private Q_SLOTS:
 
 };
 
-
-
 #endif // StatusBarLabelToggledStateTEST_H
 

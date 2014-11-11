@@ -19,7 +19,6 @@
 
 #include <libkdepim/misc/broadcaststatus.h>
 
-
 #include <AkonadiCore/ItemModifyJob>
 
 #include <KContacts/Addressee>
@@ -31,7 +30,7 @@ AddEmailToExistingContactJob::AddEmailToExistingContactJob(const Akonadi::Item &
       mItem(item)
 {
     QString name;
-    KContacts::Addressee::parseEmailAddress( email, name, mEmail );
+    KContacts::Addressee::parseEmailAddress(email, name, mEmail);
 }
 
 AddEmailToExistingContactJob::~AddEmailToExistingContactJob()
@@ -50,11 +49,11 @@ void AddEmailToExistingContactJob::start()
             emails.append(mEmail);
             address.setEmails(emails);
             mItem.setPayload<KContacts::Addressee>(address);
-            Akonadi::ItemModifyJob *job = new Akonadi::ItemModifyJob( mItem );
+            Akonadi::ItemModifyJob *job = new Akonadi::ItemModifyJob(mItem);
             connect(job, &Akonadi::ItemModifyJob::result, this, &AddEmailToExistingContactJob::slotAddEmailDone);
         }
     } else {
-        qDebug()<<" not a KContacts::Addressee item ";
+        qDebug() << " not a KContacts::Addressee item ";
         //TODO add error
         Q_EMIT emitResult();
     }
@@ -62,13 +61,12 @@ void AddEmailToExistingContactJob::start()
 
 void AddEmailToExistingContactJob::slotAddEmailDone(KJob *job)
 {
-    if ( job->error() ) {
-        setError( job->error() );
-        setErrorText( job->errorText() );
+    if (job->error()) {
+        setError(job->error());
+        setErrorText(job->errorText());
     } else {
-        KPIM::BroadcastStatus::instance()->setStatusMsg( i18n( "Email added successfully." ) );
+        KPIM::BroadcastStatus::instance()->setStatusMsg(i18n("Email added successfully."));
     }
     Q_EMIT emitResult();
 }
-
 

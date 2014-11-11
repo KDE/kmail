@@ -27,10 +27,10 @@
 
 class AddressValidationJob : public KJob
 {
-  Q_OBJECT
+    Q_OBJECT
 
-  public:
-    explicit AddressValidationJob( const QString &emailAddresses, QWidget *parentWidget, QObject *parent = 0 );
+public:
+    explicit AddressValidationJob(const QString &emailAddresses, QWidget *parentWidget, QObject *parent = 0);
     ~AddressValidationJob();
 
     void start();
@@ -42,9 +42,9 @@ class AddressValidationJob : public KJob
 private:
     //@cond PRIVATE
     class Private;
-    Private* const d;
+    Private *const d;
 
-    Q_PRIVATE_SLOT( d, void slotAliasExpansionDone( KJob* ) )
+    Q_PRIVATE_SLOT(d, void slotAliasExpansionDone(KJob *))
     //@endcond
 };
 

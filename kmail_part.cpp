@@ -51,13 +51,13 @@
 #include <kglobal.h>
 #include <KSharedConfig>
 
-K_PLUGIN_FACTORY( KMailFactory, registerPlugin<KMailPart>(); )
+K_PLUGIN_FACTORY(KMailFactory, registerPlugin<KMailPart>();)
 
 using namespace KMail;
 
 KMailPart::KMailPart(QWidget *parentWidget, QObject *parent, const QVariantList &) :
-    KParts::ReadOnlyPart( parent ),
-    mParentWidget( parentWidget )
+    KParts::ReadOnlyPart(parent),
+    mParentWidget(parentWidget)
 {
     qDebug() << "InstanceName:" << KComponentData::mainComponent().componentName();
     //QT5 setComponentData(KMailFactory::componentData());
@@ -68,7 +68,6 @@ KMailPart::KMailPart(QWidget *parentWidget, QObject *parent, const QVariantList 
 
     // import i18n data and icons from libraries:
     KMail::insertLibraryCataloguesAndIcons();
-
 
     //local, do the init
     KMKernel *mKMailKernel = new KMKernel();
@@ -82,31 +81,31 @@ KMailPart::KMailPart(QWidget *parentWidget, QObject *parent, const QVariantList 
     mKMailKernel->recoverDeadLetters();
 
     kmkernel->setupDBus(); // Ok. We are ready for D-Bus requests.
-    (void) new KmailpartAdaptor( this );
-    QDBusConnection::sessionBus().registerObject( QLatin1String("/KMailPart"), this );
+    (void) new KmailpartAdaptor(this);
+    QDBusConnection::sessionBus().registerObject(QLatin1String("/KMailPart"), this);
 
     // create a canvas to insert our widget
-    QWidget *canvas = new QWidget( parentWidget );
+    QWidget *canvas = new QWidget(parentWidget);
     canvas->setFocusPolicy(Qt::ClickFocus);
-    canvas->setObjectName( QLatin1String("canvas") );
+    canvas->setObjectName(QLatin1String("canvas"));
     setWidget(canvas);
-    KIconLoader::global()->addAppDir( QLatin1String("libkdepim") );
-    mainWidget = new KMMainWidget( canvas, this, actionCollection(),
-                                   KSharedConfig::openConfig() );
-    mainWidget->setObjectName( QLatin1String("partmainwidget") );
+    KIconLoader::global()->addAppDir(QLatin1String("libkdepim"));
+    mainWidget = new KMMainWidget(canvas, this, actionCollection(),
+                                  KSharedConfig::openConfig());
+    mainWidget->setObjectName(QLatin1String("partmainwidget"));
     QVBoxLayout *topLayout = new QVBoxLayout(canvas);
     topLayout->addWidget(mainWidget);
     topLayout->setMargin(0);
     mainWidget->setFocusPolicy(Qt::ClickFocus);
     KParts::StatusBarExtension *statusBar  = new KParts::StatusBarExtension(this);
-    statusBar->addStatusBarItem( mainWidget->vacationScriptIndicator(), 2, false );
+    statusBar->addStatusBarItem(mainWidget->vacationScriptIndicator(), 2, false);
 
     // Get to know when the user clicked on a folder in the KMail part and update the headerWidget of Kontact
-    connect( mainWidget->folderTreeView(), SIGNAL(currentChanged(Akonadi::Collection)),
-             this, SLOT(slotFolderChanged(Akonadi::Collection)) );
-    connect( kmkernel->folderCollectionMonitor(), SIGNAL(collectionChanged(Akonadi::Collection,QSet<QByteArray>)),
-             this, SLOT(slotCollectionChanged(Akonadi::Collection,QSet<QByteArray>)));
-    setXMLFile( QLatin1String("kmail_part.rc"), true );
+    connect(mainWidget->folderTreeView(), SIGNAL(currentChanged(Akonadi::Collection)),
+            this, SLOT(slotFolderChanged(Akonadi::Collection)));
+    connect(kmkernel->folderCollectionMonitor(), SIGNAL(collectionChanged(Akonadi::Collection,QSet<QByteArray>)),
+            this, SLOT(slotCollectionChanged(Akonadi::Collection,QSet<QByteArray>)));
+    setXMLFile(QLatin1String("kmail_part.rc"), true);
 
     //QT5 KSettings::Dispatcher::registerComponent( KMailFactory::componentData(), mKMailKernel, "slotConfigChanged" );
 }
@@ -134,21 +133,22 @@ bool KMailPart::openFile()
     return true;
 }
 
-void KMailPart::slotFolderChanged( const Akonadi::Collection &col )
+void KMailPart::slotFolderChanged(const Akonadi::Collection &col)
 {
     //Don't know which code use it
-    if ( col.isValid() ) {
-        emit textChanged( col.name() );
-        if ( col.hasAttribute<Akonadi::EntityDisplayAttribute>() &&
-             !col.attribute<Akonadi::EntityDisplayAttribute>()->iconName().isEmpty() ) {
-            emit iconChanged( col.attribute<Akonadi::EntityDisplayAttribute>()->icon().pixmap( 22, 22 ) );
+    if (col.isValid()) {
+        emit textChanged(col.name());
+        if (col.hasAttribute<Akonadi::EntityDisplayAttribute>() &&
+                !col.attribute<Akonadi::EntityDisplayAttribute>()->iconName().isEmpty()) {
+            emit iconChanged(col.attribute<Akonadi::EntityDisplayAttribute>()->icon().pixmap(22, 22));
         }
     }
 }
-void KMailPart::slotCollectionChanged( const Akonadi::Collection &collection, const QSet<QByteArray> &attributeNames )
+void KMailPart::slotCollectionChanged(const Akonadi::Collection &collection, const QSet<QByteArray> &attributeNames)
 {
-    if( attributeNames.contains("ENTITYDISPLAY")|| attributeNames.contains( "NAME" ) )
+    if (attributeNames.contains("ENTITYDISPLAY") || attributeNames.contains("NAME")) {
         slotFolderChanged(collection);
+    }
 }
 
 //-----------------------------------------------------------------------------
@@ -169,7 +169,7 @@ void KMailPart::exit()
     delete this;
 }
 
-QWidget* KMailPart::parentWidget() const
+QWidget *KMailPart::parentWidget() const
 {
     return mParentWidget;
 }

@@ -18,11 +18,9 @@
 
 */
 
-
 #include "createtaskjob.h"
 #include "attributes/taskattribute.h"
 #include <Akonadi/KMime/MessageStatus>
-
 
 #include <AkonadiCore/ItemFetchJob>
 #include <AkonadiCore/ItemFetchScope>
@@ -53,9 +51,9 @@ void CreateTaskJob::start()
 
 void CreateTaskJob::fetchItems()
 {
-    Akonadi::ItemFetchJob *job = new Akonadi::ItemFetchJob( mListItem, this );
-    job->fetchScope().fetchFullPayload( true );
-    job->fetchScope().setAncestorRetrieval( Akonadi::ItemFetchScope::Parent );
+    Akonadi::ItemFetchJob *job = new Akonadi::ItemFetchJob(mListItem, this);
+    job->fetchScope().fetchFullPayload(true);
+    job->fetchScope().setAncestorRetrieval(Akonadi::ItemFetchScope::Parent);
     job->fetchScope().fetchAttribute<TaskAttribute>();
     connect(job, &Akonadi::ItemFetchJob::result, this, &CreateTaskJob::itemFetchJobDone);
 }
@@ -79,48 +77,51 @@ void CreateTaskJob::itemFetchJobDone(KJob *job)
     // depending on the state of the parent.
     const Akonadi::Item first = lst.first();
     Akonadi::MessageStatus pStatus;
-    pStatus.setStatusFromFlags( first.flags() );
-    if ( pStatus & Akonadi::MessageStatus::statusToAct() )
+    pStatus.setStatusFromFlags(first.flags());
+    if (pStatus & Akonadi::MessageStatus::statusToAct()) {
         parentStatus = true;
-    else
+    } else {
         parentStatus = false;
+    }
 
     Akonadi::Item::List itemsToModify;
-    foreach( const Akonadi::Item &it, lst ) {
+    foreach (const Akonadi::Item &it, lst) {
         //qDebug()<<" item ::"<<tmpItem;
-        if ( it.isValid() ) {
+        if (it.isValid()) {
             bool myStatus;
             Akonadi::MessageStatus itemStatus;
-            itemStatus.setStatusFromFlags( it.flags() );
-            if ( itemStatus & Akonadi::MessageStatus::statusToAct() )
+            itemStatus.setStatusFromFlags(it.flags());
+            if (itemStatus & Akonadi::MessageStatus::statusToAct()) {
                 myStatus = true;
-            else
+            } else {
                 myStatus = false;
-            if ( myStatus != parentStatus )
+            }
+            if (myStatus != parentStatus) {
                 continue;
+            }
         }
-        Akonadi::Item item( it );
+        Akonadi::Item item(it);
         const Akonadi::Item::Flag flag = *(Akonadi::MessageStatus::statusToAct().statusFlags().begin());
-        if ( item.hasFlag( flag ) ) {
-            item.clearFlag( flag );
-            itemsToModify.push_back( item );
+        if (item.hasFlag(flag)) {
+            item.clearFlag(flag);
+            itemsToModify.push_back(item);
             if (item.hasAttribute<TaskAttribute>()) {
                 //Change todo as done.
                 item.removeAttribute<TaskAttribute>();
             }
         } else {
-            item.setFlag( flag );
-            itemsToModify.push_back( item );
+            item.setFlag(flag);
+            itemsToModify.push_back(item);
             //TODO add TaskAttribute();
         }
     }
 
-    if ( itemsToModify.isEmpty() ) {
-        slotModifyItemDone( 0 );
+    if (itemsToModify.isEmpty()) {
+        slotModifyItemDone(0);
     } else {
-        Akonadi::ItemModifyJob *modifyJob = new Akonadi::ItemModifyJob( itemsToModify, this );
+        Akonadi::ItemModifyJob *modifyJob = new Akonadi::ItemModifyJob(itemsToModify, this);
         modifyJob->disableRevisionCheck();
-        modifyJob->setIgnorePayload( true );
+        modifyJob->setIgnorePayload(true);
         connect(modifyJob, &Akonadi::ItemModifyJob::result, this, &CreateTaskJob::slotModifyItemDone);
     }
 }
@@ -129,7 +130,7 @@ void CreateTaskJob::slotModifyItemDone(KJob *job)
 {
     //TODO
     if (job && job->error()) {
-        qDebug()<<" error "<<job->errorString();
+        qDebug() << " error " << job->errorString();
     }
     deleteLater();
 }

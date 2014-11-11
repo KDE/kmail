@@ -25,8 +25,7 @@
 
 class FolderArchiveAccountInfo;
 
-struct ArchiveCache
-{
+struct ArchiveCache {
     ArchiveCache()
         : date(QDate::currentDate()),
           colId(-1)

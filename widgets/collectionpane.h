@@ -26,10 +26,10 @@ class CollectionPane : public MessageList::Pane
 {
     Q_OBJECT
 public:
-    explicit CollectionPane( bool restoreSession, QAbstractItemModel *model, QItemSelectionModel *selectionModel, QWidget *parent = 0 );
+    explicit CollectionPane(bool restoreSession, QAbstractItemModel *model, QItemSelectionModel *selectionModel, QWidget *parent = 0);
     ~CollectionPane();
 
-    MessageList::StorageModel *createStorageModel( QAbstractItemModel *model, QItemSelectionModel *selectionModel, QObject *parent );
+    MessageList::StorageModel *createStorageModel(QAbstractItemModel *model, QItemSelectionModel *selectionModel, QObject *parent);
     void writeConfig(bool restoreSession);
 };
 
@@ -38,14 +38,12 @@ class CollectionStorageModel : public MessageList::StorageModel
     Q_OBJECT
 public:
     /**
-   * Create a StorageModel wrapping the specified folder.
-   */
-    explicit CollectionStorageModel( QAbstractItemModel *model, QItemSelectionModel *selectionModel, QObject *parent = 0 );
+    * Create a StorageModel wrapping the specified folder.
+    */
+    explicit CollectionStorageModel(QAbstractItemModel *model, QItemSelectionModel *selectionModel, QObject *parent = 0);
     ~CollectionStorageModel();
-    bool isOutBoundFolder( const Akonadi::Collection& c ) const;
+    bool isOutBoundFolder(const Akonadi::Collection &c) const;
 };
-
-
 
 #endif /* COLLECTIONPANE_H */
 

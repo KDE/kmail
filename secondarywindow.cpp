@@ -29,7 +29,6 @@
     your version.
 */
 
-
 #include "secondarywindow.h"
 #include "kmkernel.h"
 
@@ -38,53 +37,53 @@
 
 #include <QCloseEvent>
 
-namespace KMail {
+namespace KMail
+{
 
 //---------------------------------------------------------------------------
-SecondaryWindow::SecondaryWindow( const char * name )
-    : KXmlGuiWindow( 0 )
+SecondaryWindow::SecondaryWindow(const char *name)
+    : KXmlGuiWindow(0)
 {
-    setObjectName( QLatin1String(name) );
+    setObjectName(QLatin1String(name));
     // Set this to be the group leader for all subdialogs - this means
     // modal subdialogs will only affect this window, not the other windows
-    setAttribute( Qt::WA_GroupLeader );
+    setAttribute(Qt::WA_GroupLeader);
 }
-
 
 //---------------------------------------------------------------------------
 SecondaryWindow::~SecondaryWindow()
 {
 }
 
-
 //---------------------------------------------------------------------------
-void SecondaryWindow::closeEvent( QCloseEvent * e )
+void SecondaryWindow::closeEvent(QCloseEvent *e)
 {
     // if there's a system tray applet then just do what needs to be done if a
     // window is closed.
-    if ( kmkernel->haveSystemTrayApplet() ) {
+    if (kmkernel->haveSystemTrayApplet()) {
         // BEGIN of code borrowed from KMainWindow::closeEvent
         // Save settings if auto-save is enabled, and settings have changed
-        if ( settingsDirty() && autoSaveSettings() )
+        if (settingsDirty() && autoSaveSettings()) {
             saveAutoSaveSettings();
+        }
 
-        if ( !queryClose() ) {
+        if (!queryClose()) {
             e->ignore();
         }
         // END of code borrowed from KMainWindow::closeEvent
     } else {
-        KMainWindow::closeEvent( e );
+        KMainWindow::closeEvent(e);
     }
 }
 
-void SecondaryWindow::setCaption( const QString &userCaption )
+void SecondaryWindow::setCaption(const QString &userCaption)
 {
     QString caption = QGuiApplication::applicationDisplayName();
     QString captionString = userCaption.isEmpty() ? caption : userCaption;
-    if ( !userCaption.isEmpty() ) {
+    if (!userCaption.isEmpty()) {
         // Add the application name if:
         // User asked for it, it's not a duplication  and the app name (caption()) is not empty
-        if ( !caption.isEmpty() ) {
+        if (!caption.isEmpty()) {
             captionString += i18nc("Document/application separator in titlebar", " – ") + caption;
         }
     }

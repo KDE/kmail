@@ -36,7 +36,7 @@ public:
     /**
      * Constructs a KMComposerEditor object.
      */
-    explicit KMComposerEditor( KMComposeWin *win,QWidget *parent = 0 );
+    explicit KMComposerEditor(KMComposeWin *win, QWidget *parent = 0);
 
     ~KMComposerEditor();
 
@@ -54,32 +54,32 @@ public:
      * This replaces all characters not known to the specified codec with
      * questionmarks. HTML formatting is preserved.
      */
-    void replaceUnknownChars( const QTextCodec *codec );
+    void replaceUnknownChars(const QTextCodec *codec);
 
     /**
      * Reimplemented from KMEditor.
      */
-    QString smartQuote( const QString & msg );
+    QString smartQuote(const QString &msg);
 
     /**
      * Reimplemented from KMEditor.
      */
-    void setHighlighterColors(KPIMTextEdit::EMailQuoteHighlighter * highlighter);
+    void setHighlighterColors(KPIMTextEdit::EMailQuoteHighlighter *highlighter);
 
     /**
      * Static override because we want to hide part of the dialog UI
      */
-    void showSpellConfigDialog( const QString &configFileName );
+    void showSpellConfigDialog(const QString &configFileName);
 
 private:
     KMComposeWin *mComposerWin;
 
 protected:
-    bool canInsertFromMimeData( const QMimeData *source ) const;
-    void insertFromMimeData( const QMimeData *source );
+    bool canInsertFromMimeData(const QMimeData *source) const;
+    void insertFromMimeData(const QMimeData *source);
 
 protected slots:
-    void mousePopupMenuImplementation(const QPoint& pos);
+    void mousePopupMenuImplementation(const QPoint &pos);
 
 signals:
     void insertSnippet();

@@ -22,7 +22,6 @@
 #include <QMenu>
 #include <KToggleAction>
 
-
 DisplayMessageFormatActionMenu::DisplayMessageFormatActionMenu(QObject *parent)
     : KActionMenu(parent),
       mDisplayMessageFormat(MessageViewer::Viewer::UseGlobalSetting)
@@ -55,7 +54,6 @@ DisplayMessageFormatActionMenu::DisplayMessageFormatActionMenu(QObject *parent)
     subMenu->addAction(act);
     updateMenu();
 }
-
 
 DisplayMessageFormatActionMenu::~DisplayMessageFormatActionMenu()
 {

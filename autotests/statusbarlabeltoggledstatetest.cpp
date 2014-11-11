@@ -103,7 +103,7 @@ void StatusBarLabelToggledStateTest::shouldChangeTestWhenStateChanged()
     const QString initialText = widget.text();
     widget.setToggleMode(true);
     const QString newText = widget.text();
-    QVERIFY(initialText!=newText);
+    QVERIFY(initialText != newText);
 
     widget.setToggleMode(false);
     QCOMPARE(widget.text(), initialText);
@@ -111,7 +111,5 @@ void StatusBarLabelToggledStateTest::shouldChangeTestWhenStateChanged()
     widget.setToggleMode(true);
     QCOMPARE(widget.text(), newText);
 }
-
-
 
 QTEST_MAIN(StatusBarLabelToggledStateTest)

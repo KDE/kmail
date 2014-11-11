@@ -31,24 +31,24 @@ class ConfigureDialog : public KCMultiDialog
     Q_OBJECT
 
 public:
-    explicit ConfigureDialog( QWidget *parent=0, bool modal=true );
+    explicit ConfigureDialog(QWidget *parent = 0, bool modal = true);
     ~ConfigureDialog();
 
 signals:
     void configChanged();
 
 protected:
-    void hideEvent( QHideEvent *i );
+    void hideEvent(QHideEvent *i);
 
 protected slots:
     /** @reimplemented
-   * Saves the GlobalSettings stuff before passing on to KCMultiDialog.
-   */
+    * Saves the GlobalSettings stuff before passing on to KCMultiDialog.
+    */
     void slotApply();
 
     /** @reimplemented
-   * Saves the GlobalSettings stuff before passing on to KCMultiDialog.
-   */
+    * Saves the GlobalSettings stuff before passing on to KCMultiDialog.
+    */
     void slotOk();
 };
 

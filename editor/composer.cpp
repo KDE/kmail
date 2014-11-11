@@ -18,4 +18,3 @@
 */
 #include "composer.h"
 
-

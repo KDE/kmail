@@ -20,7 +20,8 @@
 
 #include <QDialog>
 #include <AkonadiCore/Collection>
-namespace Akonadi {
+namespace Akonadi
+{
 class CollectionComboBox;
 }
 class KDateComboBox;
@@ -28,7 +29,7 @@ class FollowUpReminderSelectDateDialog : public QDialog
 {
     Q_OBJECT
 public:
-    explicit FollowUpReminderSelectDateDialog(QWidget *parent=0);
+    explicit FollowUpReminderSelectDateDialog(QWidget *parent = 0);
     ~FollowUpReminderSelectDateDialog();
 
     QDate selectedDate() const;

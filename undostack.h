@@ -28,14 +28,15 @@
 #include <AkonadiCore/item.h>
 class KJob;
 
-namespace KMail {
+namespace KMail
+{
 
 /** A class for storing Undo information. */
 class UndoInfo
 {
 public:
     UndoInfo()
-        : id (-1),
+        : id(-1),
           moveToTrash(false)
     {
     }
@@ -56,23 +57,26 @@ public:
     ~UndoStack();
 
     void clear();
-    int  size() const { return mStack.count(); }
-    int  newUndoAction( const Akonadi::Collection& srcFolder, const Akonadi::Collection & destFolder );
-    void addMsgToAction( int undoId, const Akonadi::Item &item );
+    int  size() const
+    {
+        return mStack.count();
+    }
+    int  newUndoAction(const Akonadi::Collection &srcFolder, const Akonadi::Collection &destFolder);
+    void addMsgToAction(int undoId, const Akonadi::Item &item);
     void undo();
 
-    void pushSingleAction(const Akonadi::Item &item, const Akonadi::Collection&, const Akonadi::Collection& destFolder);
-    void folderDestroyed( const Akonadi::Collection &folder);
+    void pushSingleAction(const Akonadi::Item &item, const Akonadi::Collection &, const Akonadi::Collection &destFolder);
+    void folderDestroyed(const Akonadi::Collection &folder);
 
     QString undoInfo() const;
 public slots:
-    void msgDestroyed( const Akonadi::Item &msg);
+    void msgDestroyed(const Akonadi::Item &msg);
 
 protected slots:
-    void slotMoveResult(KJob*);
+    void slotMoveResult(KJob *);
 
 protected:
-    QList<UndoInfo*> mStack;
+    QList<UndoInfo *> mStack;
     int mSize;
     int mLastId;
     UndoInfo *mCachedInfo;

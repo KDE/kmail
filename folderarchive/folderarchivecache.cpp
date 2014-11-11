@@ -36,7 +36,7 @@ void FolderArchiveCache::clearCache()
 void FolderArchiveCache::clearCacheWithContainsCollection(Akonadi::Collection::Id id)
 {
     QHash<QString, ArchiveCache>::iterator i = mCache.begin();
-    while (i!=mCache.end()) {
+    while (i != mCache.end()) {
         if (i.value().colId == id) {
             i = mCache.erase(i);
         } else {
@@ -50,9 +50,9 @@ Akonadi::Collection::Id FolderArchiveCache::collectionId(FolderArchiveAccountInf
     //qDebug()<<" Look at Cache ";
     if (mCache.contains(info->instanceName())) {
         //qDebug()<<"instance name : "<<info->instanceName();
-        switch(info->folderArchiveType()) {
+        switch (info->folderArchiveType()) {
         case FolderArchiveAccountInfo::UniqueFolder: {
-            qDebug()<<"FolderArchiveAccountInfo::UniqueFolder has cache "<<mCache.value(info->instanceName()).colId;
+            qDebug() << "FolderArchiveAccountInfo::UniqueFolder has cache " << mCache.value(info->instanceName()).colId;
             return mCache.value(info->instanceName()).colId;
         }
         case FolderArchiveAccountInfo::FolderByMonths:

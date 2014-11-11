@@ -48,56 +48,55 @@ CreateNewContactJob::~CreateNewContactJob()
 
 void CreateNewContactJob::start()
 {
-    Akonadi::CollectionFetchJob * const addressBookJob =
-            new Akonadi::CollectionFetchJob( Akonadi::Collection::root(),
-                                             Akonadi::CollectionFetchJob::Recursive );
+    Akonadi::CollectionFetchJob *const addressBookJob =
+        new Akonadi::CollectionFetchJob(Akonadi::Collection::root(),
+                                        Akonadi::CollectionFetchJob::Recursive);
 
-    addressBookJob->fetchScope().setContentMimeTypes( QStringList() << KContacts::Addressee::mimeType() );
-    connect( addressBookJob, SIGNAL(result(KJob*)), SLOT(slotCollectionsFetched(KJob*)) );
+    addressBookJob->fetchScope().setContentMimeTypes(QStringList() << KContacts::Addressee::mimeType());
+    connect(addressBookJob, SIGNAL(result(KJob*)), SLOT(slotCollectionsFetched(KJob*)));
 }
 
-
-void CreateNewContactJob::slotCollectionsFetched(KJob*job)
+void CreateNewContactJob::slotCollectionsFetched(KJob *job)
 {
-    if ( job->error() ) {
-        setError( job->error() );
-        setErrorText( job->errorText() );
+    if (job->error()) {
+        setError(job->error());
+        setErrorText(job->errorText());
         emitResult();
         return;
     }
 
-    const Akonadi::CollectionFetchJob *addressBookJob = qobject_cast<Akonadi::CollectionFetchJob*>( job );
+    const Akonadi::CollectionFetchJob *addressBookJob = qobject_cast<Akonadi::CollectionFetchJob *>(job);
 
     Akonadi::Collection::List canCreateItemCollections ;
 
-    foreach ( const Akonadi::Collection &collection, addressBookJob->collections() ) {
-        if ( Akonadi::Collection::CanCreateItem & collection.rights() ) {
+    foreach (const Akonadi::Collection &collection, addressBookJob->collections()) {
+        if (Akonadi::Collection::CanCreateItem & collection.rights()) {
             canCreateItemCollections.append(collection);
         }
     }
-    if ( canCreateItemCollections.isEmpty() ) {
-        Akonadi::AgentTypeDialog dlg( mParentWidget );
-        dlg.setWindowTitle( i18n("Add to Address Book") );
+    if (canCreateItemCollections.isEmpty()) {
+        Akonadi::AgentTypeDialog dlg(mParentWidget);
+        dlg.setWindowTitle(i18n("Add to Address Book"));
         dlg.agentFilterProxyModel()->addMimeTypeFilter(KContacts::Addressee::mimeType());
         dlg.agentFilterProxyModel()->addMimeTypeFilter(KContacts::ContactGroup::mimeType());
-        dlg.agentFilterProxyModel()->addCapabilityFilter( QLatin1String( "Resource" ) );
+        dlg.agentFilterProxyModel()->addCapabilityFilter(QLatin1String("Resource"));
 
-        if ( dlg.exec() ) {
+        if (dlg.exec()) {
             const Akonadi::AgentType agentType = dlg.agentType();
 
-            if ( agentType.isValid() ) {
-                Akonadi::AgentInstanceCreateJob *job = new Akonadi::AgentInstanceCreateJob( agentType, this );
+            if (agentType.isValid()) {
+                Akonadi::AgentInstanceCreateJob *job = new Akonadi::AgentInstanceCreateJob(agentType, this);
                 connect(job, &Akonadi::AgentInstanceCreateJob::result, this, &CreateNewContactJob::slotResourceCreationDone);
-                job->configure( mParentWidget );
+                job->configure(mParentWidget);
                 job->start();
                 return;
             } else { //if agent is not valid => return error and finish job
-                setError( UserDefinedError );
+                setError(UserDefinedError);
                 emitResult();
                 return;
             }
         } else { //dialog canceled => return error and finish job
-            setError( UserDefinedError );
+            setError(UserDefinedError);
             emitResult();
             return;
         }
@@ -106,11 +105,11 @@ void CreateNewContactJob::slotCollectionsFetched(KJob*job)
     emitResult();
 }
 
-void CreateNewContactJob::slotResourceCreationDone(KJob* job)
+void CreateNewContactJob::slotResourceCreationDone(KJob *job)
 {
-    if ( job->error() ) {
-        setError( job->error() );
-        setErrorText( job->errorText() );
+    if (job->error()) {
+        setError(job->error());
+        setErrorText(job->errorText());
         emitResult();
         return;
     }
@@ -120,21 +119,20 @@ void CreateNewContactJob::slotResourceCreationDone(KJob* job)
 
 void CreateNewContactJob::createContact()
 {
-    Akonadi::ContactEditorDialog dlg( Akonadi::ContactEditorDialog::CreateMode, mParentWidget );
+    Akonadi::ContactEditorDialog dlg(Akonadi::ContactEditorDialog::CreateMode, mParentWidget);
     connect(&dlg, &Akonadi::ContactEditorDialog::contactStored, this, &CreateNewContactJob::contactStored);
     connect(&dlg, &Akonadi::ContactEditorDialog::error, this, &CreateNewContactJob::slotContactEditorError);
     dlg.exec();
 }
 
-void CreateNewContactJob::contactStored( const Akonadi::Item &item )
+void CreateNewContactJob::contactStored(const Akonadi::Item &item)
 {
-    Q_UNUSED( item );
-    KPIM::BroadcastStatus::instance()->setStatusMsg( i18n( "Contact created successfully" ) );
+    Q_UNUSED(item);
+    KPIM::BroadcastStatus::instance()->setStatusMsg(i18n("Contact created successfully"));
 }
 
 void CreateNewContactJob::slotContactEditorError(const QString &error)
 {
     KMessageBox::error(mParentWidget, i18n("Contact cannot be stored: %1", error), i18n("Failed to store contact"));
 }
-
 

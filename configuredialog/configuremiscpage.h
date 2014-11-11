@@ -22,20 +22,23 @@
 #include "ui_miscpagemaintab.h"
 #include "configuredialog_p.h"
 
-namespace MailCommon {
+namespace MailCommon
+{
 class FolderRequester;
 }
-namespace MessageViewer {
+namespace MessageViewer
+{
 class InvitationSettings;
 class PrintingSettings;
 }
 class KCModuleProxy;
 class ConfigureAgentsWidget;
 
-class MiscPageFolderTab : public ConfigModuleTab {
+class MiscPageFolderTab : public ConfigModuleTab
+{
     Q_OBJECT
 public:
-    explicit MiscPageFolderTab( QWidget * parent=0 );
+    explicit MiscPageFolderTab(QWidget *parent = 0);
 
     void save();
     QString helpAnchor() const;
@@ -50,10 +53,11 @@ private:
     MailCommon::FolderRequester *mOnStartupOpenFolder;
 };
 
-class MiscPageInviteTab : public ConfigModuleTab  {
+class MiscPageInviteTab : public ConfigModuleTab
+{
     Q_OBJECT
 public:
-    explicit MiscPageInviteTab( QWidget * parent=0 );
+    explicit MiscPageInviteTab(QWidget *parent = 0);
     void save();
     void doResetToDefaultsOther();
 
@@ -64,21 +68,21 @@ private:
     MessageViewer::InvitationSettings *mInvitationUi;
 };
 
-
-class MiscPageProxyTab : public ConfigModuleTab  {
+class MiscPageProxyTab : public ConfigModuleTab
+{
     Q_OBJECT
 public:
-    explicit MiscPageProxyTab( QWidget * parent=0 );
+    explicit MiscPageProxyTab(QWidget *parent = 0);
     void save();
 private:
     KCModuleProxy *mProxyModule;
 };
 
-
-class MiscPageAgentSettingsTab : public ConfigModuleTab  {
+class MiscPageAgentSettingsTab : public ConfigModuleTab
+{
     Q_OBJECT
 public:
-    explicit MiscPageAgentSettingsTab( QWidget * parent=0 );
+    explicit MiscPageAgentSettingsTab(QWidget *parent = 0);
     void save();
     void doResetToDefaultsOther();
 
@@ -91,10 +95,11 @@ private:
     ConfigureAgentsWidget *mConfigureAgent;
 };
 
-class MiscPagePrintingTab : public ConfigModuleTab  {
+class MiscPagePrintingTab : public ConfigModuleTab
+{
     Q_OBJECT
 public:
-    explicit MiscPagePrintingTab( QWidget * parent=0 );
+    explicit MiscPagePrintingTab(QWidget *parent = 0);
     void save();
     void doResetToDefaultsOther();
 
@@ -102,14 +107,14 @@ private:
     void doLoadFromGlobalSettings();
 
 private:
-    MessageViewer::PrintingSettings* mPrintingUi;
+    MessageViewer::PrintingSettings *mPrintingUi;
 };
 
-
-class KMAIL_EXPORT MiscPage : public ConfigModuleWithTabs {
+class KMAIL_EXPORT MiscPage : public ConfigModuleWithTabs
+{
     Q_OBJECT
 public:
-    explicit MiscPage( QWidget *parent=0 );
+    explicit MiscPage(QWidget *parent = 0);
     QString helpAnchor() const;
 
     typedef MiscPageFolderTab FolderTab;
@@ -117,9 +122,9 @@ public:
     typedef MiscPageProxyTab ProxyTab;
 
 private:
-    FolderTab * mFolderTab;
-    InviteTab * mInviteTab;
-    ProxyTab * mProxyTab;
+    FolderTab *mFolderTab;
+    InviteTab *mInviteTab;
+    ProxyTab *mProxyTab;
     MiscPageAgentSettingsTab *mAgentSettingsTab;
     MiscPagePrintingTab *mPrintingTab;
 };

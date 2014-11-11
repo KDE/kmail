@@ -34,7 +34,8 @@ class QByteArray;
 class QString;
 #include <QObject>
 
-namespace KMail {
+namespace KMail
+{
 
 // This class implements the D-Bus interface
 // libkdepim/interfaces/org.kde.mailtransport.service.xml
@@ -43,15 +44,15 @@ class MailServiceImpl : public QObject
     Q_OBJECT
 public:
     MailServiceImpl();
-    bool sendMessage( const QString& from, const QString& to,
-                      const QString& cc, const QString& bcc,
-                      const QString& subject, const QString& body,
-                      const QStringList& attachments );
+    bool sendMessage(const QString &from, const QString &to,
+                     const QString &cc, const QString &bcc,
+                     const QString &subject, const QString &body,
+                     const QStringList &attachments);
 
-    bool sendMessage( const QString& from, const QString& to,
-                      const QString& cc, const QString& bcc,
-                      const QString& subject, const QString& body,
-                      const QByteArray& attachment );
+    bool sendMessage(const QString &from, const QString &to,
+                     const QString &cc, const QString &bcc,
+                     const QString &subject, const QString &body,
+                     const QByteArray &attachment);
 
 };
 }

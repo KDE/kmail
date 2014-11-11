@@ -33,14 +33,15 @@
 
 class QModelIndex;
 
-namespace KMail {
+namespace KMail
+{
 class KMSearchFilterProxyModel : public QSortFilterProxyModel
 {
 public:
-    explicit KMSearchFilterProxyModel( QObject *parent );
+    explicit KMSearchFilterProxyModel(QObject *parent);
     ~KMSearchFilterProxyModel();
 protected:
-    bool lessThan( const QModelIndex & left, const QModelIndex & right ) const;
+    bool lessThan(const QModelIndex &left, const QModelIndex &right) const;
 };
 }
 

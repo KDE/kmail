@@ -44,12 +44,12 @@
 
 using namespace KMail;
 
-NewIdentityDialog::NewIdentityDialog( KIdentityManagement::IdentityManager* manager, QWidget *parent )
-    : QDialog( parent ),
-      mIdentityManager( manager )
+NewIdentityDialog::NewIdentityDialog(KIdentityManagement::IdentityManager *manager, QWidget *parent)
+    : QDialog(parent),
+      mIdentityManager(manager)
 {
-    setWindowTitle( i18n("New Identity") );
-    QDialogButtonBox *buttonBox = new QDialogButtonBox(QDialogButtonBox::Ok|QDialogButtonBox::Cancel|QDialogButtonBox::Help);
+    setWindowTitle(i18n("New Identity"));
+    QDialogButtonBox *buttonBox = new QDialogButtonBox(QDialogButtonBox::Ok | QDialogButtonBox::Cancel | QDialogButtonBox::Help);
     QWidget *mainWidget = new QWidget(this);
     QVBoxLayout *mainLayout = new QVBoxLayout;
     setLayout(mainLayout);
@@ -61,67 +61,67 @@ NewIdentityDialog::NewIdentityDialog( KIdentityManagement::IdentityManager* mana
     connect(buttonBox, &QDialogButtonBox::rejected, this, &NewIdentityDialog::reject);
     connect(buttonBox->button(QDialogButtonBox::Help), &QPushButton::clicked, this, &NewIdentityDialog::slotHelp);
 
-    QWidget *page = new QWidget( this );
-    mainLayout->addWidget( page );
+    QWidget *page = new QWidget(this);
+    mainLayout->addWidget(page);
     mainLayout->addWidget(buttonBox);
-    QVBoxLayout * vlay = new QVBoxLayout( page );
+    QVBoxLayout *vlay = new QVBoxLayout(page);
     //PORT QT5 vlay->setSpacing( spacingHint() );
-    vlay->setMargin( 0 );
+    vlay->setMargin(0);
 
     // row 0: line edit with label
-    QHBoxLayout * hlay = new QHBoxLayout(); // inherits spacing
-    vlay->addLayout( hlay );
-    mLineEdit = new KLineEdit( page );
+    QHBoxLayout *hlay = new QHBoxLayout();  // inherits spacing
+    vlay->addLayout(hlay);
+    mLineEdit = new KLineEdit(page);
     mLineEdit->setFocus();
-    mLineEdit->setClearButtonShown( true );
-    QLabel *l = new QLabel( i18n("&New identity:"), page );
-    l->setBuddy( mLineEdit );
-    hlay->addWidget( l );
-    hlay->addWidget( mLineEdit, 1 );
+    mLineEdit->setClearButtonShown(true);
+    QLabel *l = new QLabel(i18n("&New identity:"), page);
+    l->setBuddy(mLineEdit);
+    hlay->addWidget(l);
+    hlay->addWidget(mLineEdit, 1);
     connect(mLineEdit, &KLineEdit::textChanged, this, &NewIdentityDialog::slotEnableOK);
 
-    mButtonGroup = new QButtonGroup( page );
+    mButtonGroup = new QButtonGroup(page);
 
     // row 1: radio button
-    QRadioButton *radio = new QRadioButton( i18n("&With empty fields"), page );
-    radio->setChecked( true );
-    vlay->addWidget( radio );
-    mButtonGroup->addButton( radio, (int)Empty );
+    QRadioButton *radio = new QRadioButton(i18n("&With empty fields"), page);
+    radio->setChecked(true);
+    vlay->addWidget(radio);
+    mButtonGroup->addButton(radio, (int)Empty);
 
     // row 2: radio button
-    radio = new QRadioButton( i18n("&Use System Settings values"), page );
-    vlay->addWidget( radio );
-    mButtonGroup->addButton( radio, (int)ControlCenter );
+    radio = new QRadioButton(i18n("&Use System Settings values"), page);
+    vlay->addWidget(radio);
+    mButtonGroup->addButton(radio, (int)ControlCenter);
 
     // row 3: radio button
-    radio = new QRadioButton( i18n("&Duplicate existing identity"), page );
-    vlay->addWidget( radio );
-    mButtonGroup->addButton( radio, (int)ExistingEntry );
+    radio = new QRadioButton(i18n("&Duplicate existing identity"), page);
+    vlay->addWidget(radio);
+    mButtonGroup->addButton(radio, (int)ExistingEntry);
 
     // row 4: combobox with existing identities and label
     hlay = new QHBoxLayout(); // inherits spacing
-    vlay->addLayout( hlay );
-    mComboBox = new KComboBox( page );
-    mComboBox->setEditable( false );
-    mComboBox->addItems( manager->shadowIdentities() );
-    mComboBox->setEnabled( false );
-    QLabel *label = new QLabel( i18n("&Existing identities:"), page );
-    label->setBuddy( mComboBox );
-    label->setEnabled( false );
-    hlay->addWidget( label );
-    hlay->addWidget( mComboBox, 1 );
+    vlay->addLayout(hlay);
+    mComboBox = new KComboBox(page);
+    mComboBox->setEditable(false);
+    mComboBox->addItems(manager->shadowIdentities());
+    mComboBox->setEnabled(false);
+    QLabel *label = new QLabel(i18n("&Existing identities:"), page);
+    label->setBuddy(mComboBox);
+    label->setEnabled(false);
+    hlay->addWidget(label);
+    hlay->addWidget(mComboBox, 1);
 
     vlay->addWidget(new KSeparator);
-    vlay->addStretch( 1 ); // spacer
+    vlay->addStretch(1);   // spacer
 
     // enable/disable combobox and label depending on the third radio
     // button's state:
     connect(radio, &QRadioButton::toggled, label, &QLabel::setEnabled);
     connect(radio, &QRadioButton::toggled, mComboBox, &KComboBox::setEnabled);
 
-    mOkButton->setEnabled( false ); // since line edit is empty
-    
-    resize(400,180);
+    mOkButton->setEnabled(false);   // since line edit is empty
+
+    resize(400, 180);
 }
 
 void NewIdentityDialog::slotHelp()
@@ -129,31 +129,30 @@ void NewIdentityDialog::slotHelp()
     KHelpClient::invokeHelp(QString::fromLatin1("configure-identity-newidentitydialog"), QLatin1String("kmail"));
 }
 
-
 NewIdentityDialog::DuplicateMode NewIdentityDialog::duplicateMode() const
 {
     const int id = mButtonGroup->checkedId();
-    assert( id == (int)Empty
-            || id == (int)ControlCenter
-            || id == (int)ExistingEntry );
-    return static_cast<DuplicateMode>( id );
+    assert(id == (int)Empty
+           || id == (int)ControlCenter
+           || id == (int)ExistingEntry);
+    return static_cast<DuplicateMode>(id);
 }
 
-void NewIdentityDialog::slotEnableOK( const QString & proposedIdentityName )
+void NewIdentityDialog::slotEnableOK(const QString &proposedIdentityName)
 {
     // OK button is disabled if
     const QString name = proposedIdentityName.trimmed();
     // name isn't empty
-    if ( name.isEmpty() ) {
-        mOkButton->setEnabled( false );
+    if (name.isEmpty()) {
+        mOkButton->setEnabled(false);
         return;
     }
     // or name doesn't yet exist.
-    if ( !mIdentityManager->isUnique( name ) ) {
-        mOkButton->setEnabled( false );
+    if (!mIdentityManager->isUnique(name)) {
+        mOkButton->setEnabled(false);
         return;
     }
-    mOkButton->setEnabled( true );
+    mOkButton->setEnabled(true);
 }
 
 QString NewIdentityDialog::identityName() const

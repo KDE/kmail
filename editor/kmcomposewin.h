@@ -70,36 +70,44 @@ class KActionMenu;
 class CryptoStateIndicatorWidget;
 class StatusBarLabelToggledState;
 
-namespace boost {
+namespace boost
+{
 template <typename T> class shared_ptr;
 }
 
-namespace Sonnet {
+namespace Sonnet
+{
 class DictionaryComboBox;
 }
 
-namespace KIdentityManagement {
+namespace KIdentityManagement
+{
 class Identity;
 }
 
-namespace KPIMTextEdit {
+namespace KPIMTextEdit
+{
 class SelectSpecialCharDialog;
 }
 
-namespace KIO {
+namespace KIO
+{
 class Job;
 }
 
-namespace MessageComposer {
+namespace MessageComposer
+{
 class ComposerLineEdit;
 class Composer;
 }
 
-namespace MailCommon {
+namespace MailCommon
+{
 class FolderRequester;
 }
 
-namespace PimCommon {
+namespace PimCommon
+{
 class CustomToolsWidget;
 class LineEditWithAutoCorrection;
 class SplitterCollapser;
@@ -115,64 +123,63 @@ class KMComposeWin : public KMail::Composer
 
 private: // mailserviceimpl, kmkernel, kmcommands, callback, kmmainwidget
     explicit KMComposeWin(const KMime::Message::Ptr &msg, bool lastSignState, bool lastEncryptState, TemplateContext context = NoTemplate,
-                          uint identity = 0, const QString & textSelection = QString(),
-                          const QString & customTemplate = QString() );
+                          uint identity = 0, const QString &textSelection = QString(),
+                          const QString &customTemplate = QString());
     ~KMComposeWin();
 
 public:
-    static Composer *create( const KMime::Message::Ptr &msg, bool lastSignState, bool lastEncryptState, TemplateContext context = NoTemplate,
-                             uint identity = 0, const QString & textSelection = QString(),
-                             const QString & customTemplate = QString() );
+    static Composer *create(const KMime::Message::Ptr &msg, bool lastSignState, bool lastEncryptState, TemplateContext context = NoTemplate,
+                            uint identity = 0, const QString &textSelection = QString(),
+                            const QString &customTemplate = QString());
 
     QString dbusObjectPath() const;
-    QString smartQuote( const QString & msg );
+    QString smartQuote(const QString &msg);
 
     /**
-   * Start of D-Bus callable stuff. The D-Bus methods need to be public slots,
-   * otherwise they can't be accessed.
-   */
+    * Start of D-Bus callable stuff. The D-Bus methods need to be public slots,
+    * otherwise they can't be accessed.
+    */
     // TODO clean-up dbus stuff; make the adaptor a friend; etc.
 public slots:
 
-    Q_SCRIPTABLE void send( int how );
+    Q_SCRIPTABLE void send(int how);
 
-    Q_SCRIPTABLE void addAttachmentsAndSend( const KUrl::List & urls,
-                                             const QString & comment,
-                                             int how );
+    Q_SCRIPTABLE void addAttachmentsAndSend(const KUrl::List &urls,
+                                            const QString &comment,
+                                            int how);
 
-    Q_SCRIPTABLE void addAttachment( const KUrl & url,
-                                     const QString & comment );
+    Q_SCRIPTABLE void addAttachment(const KUrl &url,
+                                    const QString &comment);
 
-    Q_SCRIPTABLE void addAttachment( const QString & name,
-                                     KMime::Headers::contentEncoding cte,
-                                     const QString& charset,
-                                     const QByteArray & data,
-                                     const QByteArray & mimeType );
+    Q_SCRIPTABLE void addAttachment(const QString &name,
+                                    KMime::Headers::contentEncoding cte,
+                                    const QString &charset,
+                                    const QByteArray &data,
+                                    const QByteArray &mimeType);
 
     /**
-   * End of D-Bus callable stuff
-   */
+    * End of D-Bus callable stuff
+    */
 
 signals:
-    void identityChanged( const KIdentityManagement::Identity &identity );
-
+    void identityChanged(const KIdentityManagement::Identity &identity);
 
 public: // kmkernel, kmcommands, callback
     /**
      * Set the message the composer shall work with. This discards
      * previous messages without calling applyChanges() on them before.
      */
-    void setMessage( const KMime::Message::Ptr &newMsg, bool lastSignState = false, bool lastEncryptState = false,
-                     bool mayAutoSign=true, bool allowDecryption=false, bool isModified=false );
+    void setMessage(const KMime::Message::Ptr &newMsg, bool lastSignState = false, bool lastEncryptState = false,
+                    bool mayAutoSign = true, bool allowDecryption = false, bool isModified = false);
 
-    void setCurrentTransport( int transportId );
+    void setCurrentTransport(int transportId);
 
     /**
      * Use the given folder as sent-mail folder if the given folder exists.
      * Else show an error message and use the default sent-mail folder as
      * sent-mail folder.
      */
-    void setFcc( const QString &idString );
+    void setFcc(const QString &idString);
 
     /**
       * Disables word wrap completely. No wrapping at all will occur, not even
@@ -198,20 +205,20 @@ public: // kmkernel, kmcommands, callback
     /**
       * Set the text selection the message is a response to.
       */
-    void setTextSelection( const QString& selection );
+    void setTextSelection(const QString &selection);
 
     /**
       * Set custom template to be used for the message.
       */
-    void setCustomTemplate( const QString& customTemplate );
+    void setCustomTemplate(const QString &customTemplate);
 
     /** Disabled signing and encryption completely for this composer window. */
-    void setSigningAndEncryptionDisabled( bool v );
+    void setSigningAndEncryptionDisabled(bool v);
     /**
      * If this folder is set, the original message is inserted back after
      * canceling
      */
-    void setFolder(const Akonadi::Collection &aFolder );
+    void setFolder(const Akonadi::Collection &aFolder);
     /**
      * Sets the focus to the edit-widget.
      */
@@ -223,75 +230,83 @@ public: // kmkernel, kmcommands, callback
      */
     void setFocusToSubject();
 
-    bool insertFromMimeData( const QMimeData *source, bool forceAttachment = false );
+    bool insertFromMimeData(const QMimeData *source, bool forceAttachment = false);
 
-    void setCurrentReplyTo(const QString&);
-    void setCollectionForNewMessage( const Akonadi::Collection& folder);
+    void setCurrentReplyTo(const QString &);
+    void setCollectionForNewMessage(const Akonadi::Collection &folder);
 
-    void addExtraCustomHeaders( const QMap<QByteArray, QString> &header);
+    void addExtraCustomHeaders(const QMap<QByteArray, QString> &header);
 
-    KToggleAction *translateAction() const { return mTranslateAction; }
-    KActionMenu *changeCaseMenu() const { return mChangeCaseMenu; }
-    KToggleAction *generateShortenUrlAction() const { return mGenerateShortenUrl; }
+    KToggleAction *translateAction() const
+    {
+        return mTranslateAction;
+    }
+    KActionMenu *changeCaseMenu() const
+    {
+        return mChangeCaseMenu;
+    }
+    KToggleAction *generateShortenUrlAction() const
+    {
+        return mGenerateShortenUrl;
+    }
 
 private:
     /**
-   * Write settings to app's config file.
-   */
-    void writeConfig( void );
-
+    * Write settings to app's config file.
+    */
+    void writeConfig(void);
 
     /**
      * Returns message of the composer. To apply the user changes to the
      * message, call applyChanges() first.
      */
-    KMime::Message::Ptr msg() const { return mMsg; }
+    KMime::Message::Ptr msg() const
+    {
+        return mMsg;
+    }
     /**
      * Returns true if the message was modified by the user.
      */
     bool isModified() const;
     bool isComposerModified() const;
-    void changeModifiedState( bool modified );
-
-
+    void changeModifiedState(bool modified);
 
     /**
      * determines whether inline signing/encryption is selected
      */
     bool inlineSigningEncryptionSelected();
 
-
     /**
       * Tries to find the given mimetype @p type in the KDE Mimetype registry.
       * If found, returns its localized description, otherwise the @p type
       * in lowercase.
       */
-    static QString prettyMimeType( const QString &type );
+    static QString prettyMimeType(const QString &type);
 
 public slots: // kmkernel, callback
     void slotSendNow();
     /**
      * Switch wordWrap on/off
      */
-    void slotWordWrapToggled( bool );
+    void slotWordWrapToggled(bool);
 
     void slotToggleMarkup();
-    void slotTextModeChanged( KRichTextEdit::Mode );
-    void htmlToolBarVisibilityChanged( bool visible );
+    void slotTextModeChanged(KRichTextEdit::Mode);
+    void htmlToolBarVisibilityChanged(bool visible);
     void slotSpellcheckDoneClearStatus();
     void autoSaveMessage(bool force = false);
     /**
      * Set whether the message should be treated as modified or not.
      */
-    void setModified( bool modified );
-    void slotFetchJob(KJob*);
+    void setModified(bool modified);
+    void slotFetchJob(KJob *);
 
 private slots:
     /**
       * Disables the HTML mode, by hiding the HTML toolbar and unchecking the
       * "Formatting" action. Also, removes all rich-text formatting.
       */
-    void disableHtml( MessageComposer::ComposerViewBase::Confirmation confirmation );
+    void disableHtml(MessageComposer::ComposerViewBase::Confirmation confirmation);
     /**
      * Enables HTML mode, by showing the HTML toolbar and checking the
      * "Formatting" action
@@ -304,12 +319,12 @@ private slots:
     void slotPrint();
     void slotPrintPreview();
 
-    void slotInsertRecentFile( const QUrl & );
+    void slotInsertRecentFile(const QUrl &);
     void slotRecentListFileClear();
 
-    void slotSendNowVia( QAction * );
+    void slotSendNowVia(QAction *);
     void slotSendLater();
-    void slotSendLaterVia( QAction * );
+    void slotSendLaterVia(QAction *);
     void getTransportMenu();
 
     /**
@@ -327,9 +342,9 @@ private slots:
     void slotPaste();
     void slotPasteAsAttachment();
     void slotMarkAll();
-    void slotFolderRemoved( const Akonadi::Collection& );
-    void slotLanguageChanged( const QString &language );
-    void slotFccFolderChanged(const Akonadi::Collection&);
+    void slotFolderRemoved(const Akonadi::Collection &);
+    void slotLanguageChanged(const QString &language);
+    void slotFccFolderChanged(const Akonadi::Collection &);
     void slotEditorTextChanged();
     void slotOverwriteModeChanged();
     /**
@@ -356,7 +371,7 @@ private slots:
      * Change crypto plugin to be used for signing/encrypting messages,
      * or switch to built-in OpenPGP code.
      */
-    void slotSelectCryptoModule( bool init = false );
+    void slotSelectCryptoModule(bool init = false);
 
     /**
      * XML-GUI stuff
@@ -368,7 +383,7 @@ private slots:
     /**
      * Read settings from app's config file.
      */
-    void readConfig( bool reload = false );
+    void readConfig(bool reload = false);
 
     /**
      * Change window title to given string.
@@ -379,12 +394,12 @@ private slots:
      * Switch the icon to lock or unlock respectivly.
      * Change states of all encrypt check boxes in the attachments listview
      */
-    void slotEncryptToggled( bool );
+    void slotEncryptToggled(bool);
 
     /**
      * Change states of all sign check boxes in the attachments listview
      */
-    void slotSignToggled( bool );
+    void slotSignToggled(bool);
 
     void slotView();
 
@@ -394,43 +409,43 @@ private slots:
      *                     this function from setMsg(), because there, the message already has the
      *                     template, and we want to avoid calling the template parser unnecessarily.
      */
-    void slotIdentityChanged( uint uoid, bool initalChange = false );
+    void slotIdentityChanged(uint uoid, bool initalChange = false);
 
     void slotCursorPositionChanged();
 
-    void slotSpellCheckingStatus( const QString & status );
+    void slotSpellCheckingStatus(const QString &status);
 
-    void slotDelayedApplyTemplate( KJob* );
+    void slotDelayedApplyTemplate(KJob *);
 
     void recipientEditorSizeHintChanged();
     void setMaximumHeaderSize();
-    void slotDoDelayedSend( KJob* );
+    void slotDoDelayedSend(KJob *);
 
-    void slotCompletionModeChanged( KCompletion::CompletionMode );
+    void slotCompletionModeChanged(KCompletion::CompletionMode);
     void slotConfigChanged();
 
-    void slotPrintComposeResult( KJob *job );
-    
+    void slotPrintComposeResult(KJob *job);
+
     //void slotEncryptChiasmusToggled( bool );
 
-    void slotSendFailed(const QString& msg , MessageComposer::ComposerViewBase::FailedType type);
+    void slotSendFailed(const QString &msg , MessageComposer::ComposerViewBase::FailedType type);
     void slotSendSuccessful(const QString &messageId);
 
     /**
      *  toggle automatic spellchecking
      */
-    void slotAutoSpellCheckingToggled( bool );
+    void slotAutoSpellCheckingToggled(bool);
 
     /**
      * Updates the visibility and text of the signature and encryption state indicators.
      */
     void slotUpdateSignatureAndEncrypionStateIndicators();
 
-    virtual void setAutoSaveFileName( const QString& fileName );
-    void slotSpellCheckingLanguage(const QString& language);
+    virtual void setAutoSaveFileName(const QString &fileName);
+    void slotSpellCheckingLanguage(const QString &language);
     void forceAutoSaveMessage();
     void insertSpecialCharacter();
-    void charSelected(const QChar& c);
+    void charSelected(const QChar &c);
     void slotSaveAsFile();
     void slotCreateAddressBookContact();
 
@@ -458,7 +473,7 @@ private slots:
     void slotOverwriteModeWasChanged(bool state);
 public: // kmcommand
     // FIXME we need to remove these, but they're pure virtual in Composer.
-    void addAttach( KMime::Content *msgPart );
+    void addAttach(KMime::Content *msgPart);
 
     const KIdentityManagement::Identity &identity() const;
 
@@ -483,30 +498,29 @@ private:
 
     void updateSignature(uint uoid, uint uOldId);
     Kleo::CryptoMessageFormat cryptoMessageFormat() const;
-    void printComposeResult( KJob *job, bool preview );
+    void printComposeResult(KJob *job, bool preview);
     void printComposer(bool preview);
     /**
      * Install grid management and header fields. If fields exist that
      * should not be there they are removed. Those that are needed are
      * created if necessary.
      */
-    void rethinkFields( bool fromslot=false );
+    void rethinkFields(bool fromslot = false);
 
     /**
       Connect signals for moving focus by arrow keys. Returns next edit.
     */
-    QWidget *connectFocusMoving( QWidget *prev, QWidget *next );
+    QWidget *connectFocusMoving(QWidget *prev, QWidget *next);
 
     /**
      * Show or hide header lines
      */
-    void rethinkHeaderLine( int aValue, int aMask, int &aRow,
-                            QLabel *aLbl, QWidget *aEdt,
-                            QPushButton *aBtn = 0 );
+    void rethinkHeaderLine(int aValue, int aMask, int &aRow,
+                           QLabel *aLbl, QWidget *aEdt,
+                           QPushButton *aBtn = 0);
 
-    void rethinkHeaderLine( int value, int mask, int &row,
-                            QLabel *lbl, QWidget *cbx, QCheckBox *chk ); // krazy:exclude=qclasses
-
+    void rethinkHeaderLine(int value, int mask, int &row,
+                           QLabel *lbl, QWidget *cbx, QCheckBox *chk);  // krazy:exclude=qclasses
 
     /**
      * Apply template to new or unmodified message.
@@ -516,7 +530,7 @@ private:
     /**
      * Set the quote prefix according to identity.
      */
-    void setQuotePrefix( uint uoid );
+    void setQuotePrefix(uint uoid);
 
     /**
      * Checks how many recipients are and warns if there are too many.
@@ -539,7 +553,7 @@ private:
     QString from() const;
     QString replyTo() const;
 
-    void setCharset( const QByteArray &charset );
+    void setCharset(const QByteArray &charset);
     void setAutoCharset();
 
     /**
@@ -551,13 +565,13 @@ private:
      * Turn encryption on/off. If setByUser is true then a message box is shown
      * in case encryption isn't possible.
      */
-    void setEncryption( bool encrypt, bool setByUser = false );
+    void setEncryption(bool encrypt, bool setByUser = false);
 
     /**
      * Turn signing on/off. If setByUser is true then a message box is shown
      * in case signing isn't possible.
      */
-    void setSigning( bool sign, bool setByUser = false );
+    void setSigning(bool sign, bool setByUser = false);
 
     MessageComposer::ComposerViewBase::MissingAttachment userForgotAttachment();
 
@@ -568,18 +582,18 @@ private:
      * This function is for example used to restore the unencrypted/unsigned
      * message text for editting.
      */
-    static void decryptOrStripOffCleartextSignature( QByteArray & );
+    static void decryptOrStripOffCleartextSignature(QByteArray &);
 
     /**
      * Send the message.
      */
-    void doSend( MessageComposer::MessageSender::SendMethod method=MessageComposer::MessageSender::SendDefault,
-                 MessageComposer::MessageSender::SaveIn saveIn = MessageComposer::MessageSender::SaveInNone );
+    void doSend(MessageComposer::MessageSender::SendMethod method = MessageComposer::MessageSender::SendDefault,
+                MessageComposer::MessageSender::SaveIn saveIn = MessageComposer::MessageSender::SaveInNone);
 
-    void doDelayedSend( MessageComposer::MessageSender::SendMethod method, MessageComposer::MessageSender::SaveIn saveIn );
+    void doDelayedSend(MessageComposer::MessageSender::SendMethod method, MessageComposer::MessageSender::SaveIn saveIn);
 
     void changeCryptoAction();
-    void applyComposerSetting( MessageComposer::ComposerViewBase* mComposerBase );
+    void applyComposerSetting(MessageComposer::ComposerViewBase *mComposerBase);
     /**
      * Creates a simple composer that creates a KMime::Message out of the composer content.
      * Crypto handling is not done, therefore the name "simple".
@@ -587,19 +601,18 @@ private:
      *
      * The caller takes ownership of the composer.
      */
-    MessageComposer::Composer* createSimpleComposer();
+    MessageComposer::Composer *createSimpleComposer();
 
     bool canSignEncryptAttachments() const;
 
-    QString addQuotesToText( const QString &inputText ) const;
+    QString addQuotesToText(const QString &inputText) const;
     // helper method for rethinkFields
-    int calcColumnWidth( int which, long allShowing, int width ) const;
-
+    int calcColumnWidth(int which, long allShowing, int width) const;
 
     /** Initialize header fields. Should be called on new messages
       if they are not set manually. E.g. before composing. Calling
       of setAutomaticFields(), see below, is still required. */
-    void initHeader( KMime::Message *message, uint identity=0 );
+    void initHeader(KMime::Message *message, uint identity = 0);
 
     inline bool encryptToSelf();
 
@@ -653,7 +666,7 @@ private:
     QAction *mFindText, *mFindNextText, *mReplaceText, *mSelectAll;
 
     QSplitter *mHeadersToEditorSplitter;
-    QWidget* mHeadersArea;
+    QWidget *mHeadersArea;
     QSplitter *mSplitter;
     QSplitter *mSnippetSplitter;
     QByteArray mOriginalPreferredCharset;
@@ -662,7 +675,7 @@ private:
 
     MessageComposer::Composer *mDummyComposer;
     // used for auto saving, printing, etc. Not for sending, which happens in ComposerViewBase
-    QList< MessageComposer::Composer* > mMiscComposers;
+    QList< MessageComposer::Composer * > mMiscComposers;
 
     int mLabelWidth;
 
@@ -675,8 +688,7 @@ private:
     QDate mFollowUpDate;
     Akonadi::Collection mFollowUpCollection;
 
-    MessageComposer::ComposerViewBase* mComposerBase;
-
+    MessageComposer::ComposerViewBase *mComposerBase;
 
     SnippetWidget *mSnippetWidget;
     PimCommon::CustomToolsWidget *mCustomToolsWidget;
@@ -694,7 +706,7 @@ private:
     CryptoStateIndicatorWidget *mCryptoStateIndicatorWidget;
     KMStorageService *mStorageService;
     bool mSendNowByShortcutUsed;
-    QList<QLabel*> mStatusBarLabelList;
+    QList<QLabel *> mStatusBarLabelList;
     PimCommon::SplitterCollapser *mSnippetSplitterCollapser;
     KToggleAction *mFollowUpToggleAction;
     StatusBarLabelToggledState *mStatusBarLabelToggledOverrideMode;

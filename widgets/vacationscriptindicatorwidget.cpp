@@ -23,14 +23,14 @@
 
 using namespace KMail;
 
-ServerLabel::ServerLabel(const QString &serverName, QWidget * parent)
-    : QLabel( parent ),
+ServerLabel::ServerLabel(const QString &serverName, QWidget *parent)
+    : QLabel(parent),
       mServerName(serverName)
 {
     setToolTip(serverName);
-    setPixmap(QIcon::fromTheme( QLatin1String("network-server") ).pixmap( 16, 16 ) );
-    setStyleSheet( QString::fromLatin1("background-color: %1;" ).arg( QColor(Qt::yellow).name() ) );
-    setContentsMargins( 2, 0, 4, 0 );
+    setPixmap(QIcon::fromTheme(QLatin1String("network-server")).pixmap(16, 16));
+    setStyleSheet(QString::fromLatin1("background-color: %1;").arg(QColor(Qt::yellow).name()));
+    setContentsMargins(2, 0, 4, 0);
 }
 
 ServerLabel::~ServerLabel()
@@ -38,21 +38,20 @@ ServerLabel::~ServerLabel()
 
 }
 
-void ServerLabel::mouseReleaseEvent(QMouseEvent * event)
+void ServerLabel::mouseReleaseEvent(QMouseEvent *event)
 {
     Q_EMIT clicked(mServerName);
-    QLabel::mouseReleaseEvent( event );
+    QLabel::mouseReleaseEvent(event);
 }
 
-
-VacationLabel::VacationLabel(const QString &text, QWidget * parent)
-    : QLabel( text, parent )
+VacationLabel::VacationLabel(const QString &text, QWidget *parent)
+    : QLabel(text, parent)
 {
     // changing the palette doesn't work, seems to be overwriten by the
     // statusbar again, stylesheets seems to work though
-    setStyleSheet( QString::fromLatin1("background-color: %1; color: %2;" ).arg( QColor(Qt::yellow).name(), QColor(Qt::black).name() ) );
-    setContentsMargins( 4, 0, 2, 0 );
-    setCursor( QCursor( Qt::PointingHandCursor ) );
+    setStyleSheet(QString::fromLatin1("background-color: %1; color: %2;").arg(QColor(Qt::yellow).name(), QColor(Qt::black).name()));
+    setContentsMargins(4, 0, 2, 0);
+    setCursor(QCursor(Qt::PointingHandCursor));
 }
 
 VacationLabel::~VacationLabel()
@@ -60,10 +59,10 @@ VacationLabel::~VacationLabel()
 
 }
 
-void VacationLabel::mouseReleaseEvent(QMouseEvent * event)
+void VacationLabel::mouseReleaseEvent(QMouseEvent *event)
 {
     Q_EMIT clicked();
-    QLabel::mouseReleaseEvent( event );
+    QLabel::mouseReleaseEvent(event);
 }
 
 VacationScriptIndicatorWidget::VacationScriptIndicatorWidget(QWidget *parent)

@@ -27,11 +27,11 @@
 #include <KConfigGroup>
 #include <QPushButton>
 
-AttachmentListWidget::AttachmentListWidget(QWidget * parent,
-                                           ButtonCode buttons,
-                                           const QString & addLabel,
-                                           const QString & removeLabel,
-                                           const QString & modifyLabel)
+AttachmentListWidget::AttachmentListWidget(QWidget *parent,
+        ButtonCode buttons,
+        const QString &addLabel,
+        const QString &removeLabel,
+        const QString &modifyLabel)
     : PimCommon::SimpleStringListEditor(parent, buttons, addLabel, removeLabel, modifyLabel, QString())
 {
 }
@@ -62,12 +62,11 @@ QString AttachmentListWidget::modifyEntry(const QString &text)
     return attachmentPath;
 }
 
-
 SelectAttachmentDialog::SelectAttachmentDialog(QWidget *parent)
     : QDialog(parent)
 {
     setWindowTitle(i18n("Attachment"));
-    QDialogButtonBox *buttonBox = new QDialogButtonBox(QDialogButtonBox::Ok|QDialogButtonBox::Cancel);
+    QDialogButtonBox *buttonBox = new QDialogButtonBox(QDialogButtonBox::Ok | QDialogButtonBox::Cancel);
     QWidget *mainWidget = new QWidget(this);
     QVBoxLayout *mainLayout = new QVBoxLayout;
     setLayout(mainLayout);
@@ -84,7 +83,7 @@ SelectAttachmentDialog::SelectAttachmentDialog(QWidget *parent)
     QLabel *lab = new QLabel(i18n("Select attachment:"));
     vbox->addWidget(lab);
     mUrlRequester = new KUrlRequester;
-    mUrlRequester->setMode(KFile::LocalOnly|KFile::ExistingOnly);
+    mUrlRequester->setMode(KFile::LocalOnly | KFile::ExistingOnly);
     vbox->addWidget(mUrlRequester);
     mainLayout->addWidget(w);
     mainLayout->addWidget(buttonBox);

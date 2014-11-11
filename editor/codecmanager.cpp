@@ -44,10 +44,10 @@ public:
 
 };
 
-Q_GLOBAL_STATIC( CodecManagerPrivate, sInstance )
+Q_GLOBAL_STATIC(CodecManagerPrivate, sInstance)
 
 CodecManagerPrivate::CodecManagerPrivate()
-    : instance( new CodecManager( this ) )
+    : instance(new CodecManager(this))
 {
     instance->updatePreferredCharsets();
 }
@@ -57,15 +57,13 @@ CodecManagerPrivate::~CodecManagerPrivate()
     delete instance;
 }
 
-
-
-CodecManager::CodecManager( CodecManagerPrivate *dd )
-    : d( dd )
+CodecManager::CodecManager(CodecManagerPrivate *dd)
+    : d(dd)
 {
 }
 
 // static
-CodecManager* CodecManager::self()
+CodecManager *CodecManager::self()
 {
     return sInstance->instance;
 }
@@ -79,10 +77,10 @@ void CodecManager::updatePreferredCharsets()
 {
     const QStringList prefCharsets = MessageComposer::MessageComposerSettings::self()->preferredCharsets();
     d->preferredCharsets.clear();
-    foreach( const QString &str, prefCharsets ) {
+    foreach (const QString &str, prefCharsets) {
         QByteArray charset = str.toLatin1().toLower();
 
-        if( charset == "locale" ) {
+        if (charset == "locale") {
             charset = KLocale::global()->encoding().toLower();
 
             // Special case for Japanese:
@@ -90,15 +88,15 @@ void CodecManager::updatePreferredCharsets()
             // EUC-JP is the de-facto standard for UNIX systems, ISO 2022-JP
             // is the standard for Internet, and Shift-JIS is the encoding
             // for Windows and Macintosh.
-            if( charset == "jisx0208.1983-0" ||
+            if (charset == "jisx0208.1983-0" ||
                     charset == "eucjp" ||
-                    charset == "shift-jis" ) {
+                    charset == "shift-jis") {
                 charset = "iso-2022-jp";
                 // TODO wtf is "jis7"?
             }
 
             // Special case for Korean:
-            if( charset == "ksc5601.1987-0" ) {
+            if (charset == "ksc5601.1987-0") {
                 charset = "euc-kr";
             }
         }

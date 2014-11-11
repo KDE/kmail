@@ -26,11 +26,12 @@ class QLabel;
 class KComboBox;
 class KIconButton;
 
-
 template <typename T> class QSharedPointer;
 
-namespace MessageList {
-namespace Utils {
+namespace MessageList
+{
+namespace Utils
+{
 class AggregationComboBox;
 class ThemeComboBox;
 }
@@ -40,21 +41,21 @@ class CollectionViewPage : public Akonadi::CollectionPropertiesPage
 {
     Q_OBJECT
 public:
-    explicit CollectionViewPage( QWidget *parent = 0 );
+    explicit CollectionViewPage(QWidget *parent = 0);
     ~CollectionViewPage();
 
-    void load( const Akonadi::Collection & col );
-    void save( Akonadi::Collection & col );
+    void load(const Akonadi::Collection &col);
+    void save(Akonadi::Collection &col);
 
 public slots:
-    void slotChangeIcon( const QString & icon );
+    void slotChangeIcon(const QString &icon);
     void slotAggregationCheckboxChanged();
     void slotThemeCheckboxChanged();
     void slotSelectFolderAggregation();
     void slotSelectFolderTheme();
 
 private:
-    void init(const Akonadi::Collection&);
+    void init(const Akonadi::Collection &);
     bool mIsLocalSystemFolder;
     QCheckBox   *mIconsCheckBox;
     QLabel      *mNormalIconLabel;
@@ -70,7 +71,7 @@ private:
     int mShowSenderReceiverValue;
 };
 
-AKONADI_COLLECTION_PROPERTIES_PAGE_FACTORY( CollectionViewPageFactory, CollectionViewPage )
+AKONADI_COLLECTION_PROPERTIES_PAGE_FACTORY(CollectionViewPageFactory, CollectionViewPage)
 
 #endif /* COLLECTIONVIEWPAGE_H */
 

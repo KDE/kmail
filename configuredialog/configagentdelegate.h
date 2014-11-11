@@ -36,21 +36,21 @@ class ConfigAgentDelegate : public QStyledItemDelegate
 {
     Q_OBJECT
 public:
-    explicit ConfigAgentDelegate ( QObject *parent = 0 );
+    explicit ConfigAgentDelegate(QObject *parent = 0);
 
-    void paint ( QPainter *painter, const QStyleOptionViewItem &option, const QModelIndex &index ) const;
-    QSize sizeHint ( const QStyleOptionViewItem &option, const QModelIndex &index ) const;
-    bool editorEvent ( QEvent* event, QAbstractItemModel* model, const QStyleOptionViewItem& option, const QModelIndex& index );
-    QWidget  *createEditor ( QWidget * parent, const QStyleOptionViewItem  & option, const QModelIndex & index ) const;
+    void paint(QPainter *painter, const QStyleOptionViewItem &option, const QModelIndex &index) const;
+    QSize sizeHint(const QStyleOptionViewItem &option, const QModelIndex &index) const;
+    bool editorEvent(QEvent *event, QAbstractItemModel *model, const QStyleOptionViewItem &option, const QModelIndex &index);
+    QWidget  *createEditor(QWidget *parent, const QStyleOptionViewItem   &option, const QModelIndex &index) const;
 
 signals:
-    void optionsClicked ( const QString &, const QPoint & );
+    void optionsClicked(const QString &, const QPoint &);
 
 private:
-    void drawFocus ( QPainter*, const QStyleOptionViewItem&, const QRect& ) const;
-    QTextDocument* document ( const QStyleOptionViewItem &option, const QModelIndex &index ) const;
+    void drawFocus(QPainter *, const QStyleOptionViewItem &, const QRect &) const;
+    QTextDocument *document(const QStyleOptionViewItem &option, const QModelIndex &index) const;
 
-    QStyleOptionButton buttonOption ( const QStyleOptionViewItem &option ) const;
+    QStyleOptionButton buttonOption(const QStyleOptionViewItem &option) const;
 };
 
 #endif // CONFIGAGENTDELEGATE_H

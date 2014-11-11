@@ -34,19 +34,19 @@
 #include <assert.h>
 #include <stdlib.h>
 
-ConfigureDialog::ConfigureDialog( QWidget *parent, bool modal )
-    : KCMultiDialog( parent )
+ConfigureDialog::ConfigureDialog(QWidget *parent, bool modal)
+    : KCMultiDialog(parent)
 {
-    setFaceType( List );
-    setStandardButtons(QDialogButtonBox::Ok|QDialogButtonBox::Help|QDialogButtonBox::RestoreDefaults|QDialogButtonBox::Cancel|QDialogButtonBox::Apply|QDialogButtonBox::Reset);
-    setModal( modal );
-    KWindowSystem::setIcons( winId(), qApp->windowIcon().pixmap( IconSize( KIconLoader::Desktop ), IconSize( KIconLoader::Desktop ) ), qApp->windowIcon().pixmap(IconSize( KIconLoader::Small ), IconSize( KIconLoader::Small ) ) );
-    addModule( QLatin1String("kmail_config_identity") );
-    addModule( QLatin1String("kmail_config_accounts") );
-    addModule( QLatin1String("kmail_config_appearance") );
-    addModule( QLatin1String("kmail_config_composer") );
-    addModule( QLatin1String("kmail_config_security") );
-    addModule( QLatin1String("kmail_config_misc") );
+    setFaceType(List);
+    setStandardButtons(QDialogButtonBox::Ok | QDialogButtonBox::Help | QDialogButtonBox::RestoreDefaults | QDialogButtonBox::Cancel | QDialogButtonBox::Apply | QDialogButtonBox::Reset);
+    setModal(modal);
+    KWindowSystem::setIcons(winId(), qApp->windowIcon().pixmap(IconSize(KIconLoader::Desktop), IconSize(KIconLoader::Desktop)), qApp->windowIcon().pixmap(IconSize(KIconLoader::Small), IconSize(KIconLoader::Small)));
+    addModule(QLatin1String("kmail_config_identity"));
+    addModule(QLatin1String("kmail_config_accounts"));
+    addModule(QLatin1String("kmail_config_appearance"));
+    addModule(QLatin1String("kmail_config_composer"));
+    addModule(QLatin1String("kmail_config_security"));
+    addModule(QLatin1String("kmail_config_misc"));
 
     connect(button(QDialogButtonBox::Ok), &QPushButton::clicked, this, &ConfigureDialog::slotOk);
     connect(button(QDialogButtonBox::Apply), &QPushButton::clicked, this, &ConfigureDialog::slotApply);
@@ -57,17 +57,17 @@ ConfigureDialog::ConfigureDialog( QWidget *parent, bool modal )
     // the largest kcm the size is kept.
     const int width = GlobalSettings::self()->configureDialogWidth();
     const int height = GlobalSettings::self()->configureDialogHeight();
-    if ( width != 0 && height != 0 ) {
-        resize( width, height );
+    if (width != 0 && height != 0) {
+        resize(width, height);
     }
 
 }
 
-void ConfigureDialog::hideEvent( QHideEvent *ev )
+void ConfigureDialog::hideEvent(QHideEvent *ev)
 {
-    GlobalSettings::self()->setConfigureDialogWidth( width() );
-    GlobalSettings::self()->setConfigureDialogHeight( height() );
-    KPageDialog::hideEvent( ev );
+    GlobalSettings::self()->setConfigureDialogWidth(width());
+    GlobalSettings::self()->setConfigureDialogHeight(height());
+    KPageDialog::hideEvent(ev);
 }
 
 ConfigureDialog::~ConfigureDialog()
@@ -77,16 +77,18 @@ ConfigureDialog::~ConfigureDialog()
 void ConfigureDialog::slotApply()
 {
     slotApplyClicked();
-    if (KMKernel::self())
+    if (KMKernel::self()) {
         KMKernel::self()->slotRequestConfigSync();
+    }
     emit configChanged();
 }
 
 void ConfigureDialog::slotOk()
 {
     slotOkClicked();
-    if (KMKernel::self())
+    if (KMKernel::self()) {
         KMKernel::self()->slotRequestConfigSync();
+    }
     emit configChanged();
 }
 

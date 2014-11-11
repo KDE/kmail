@@ -32,7 +32,8 @@
 
 #include <QList>
 
-namespace KMail {
+namespace KMail
+{
 
 UndoStack::UndoStack(int size)
     : QObject(0),
@@ -49,7 +50,7 @@ UndoStack::~UndoStack()
 
 void UndoStack::clear()
 {
-    qDeleteAll( mStack );
+    qDeleteAll(mStack);
     mStack.clear();
 }
 
@@ -63,7 +64,7 @@ QString UndoStack::undoInfo() const
     }
 }
 
-int UndoStack::newUndoAction( const Akonadi::Collection &srcFolder, const Akonadi::Collection &destFolder )
+int UndoStack::newUndoAction(const Akonadi::Collection &srcFolder, const Akonadi::Collection &destFolder)
 {
     UndoInfo *info = new UndoInfo;
     info->id         = ++mLastId;
@@ -74,17 +75,17 @@ int UndoStack::newUndoAction( const Akonadi::Collection &srcFolder, const Akonad
         delete mStack.last();
         mStack.removeLast();
     }
-    mStack.prepend( info );
+    mStack.prepend(info);
     emit undoStackChanged();
     return info->id;
 }
 
-void UndoStack::addMsgToAction( int undoId, const Akonadi::Item &item )
+void UndoStack::addMsgToAction(int undoId, const Akonadi::Item &item)
 {
-    if ( !mCachedInfo || mCachedInfo->id != undoId ) {
-        QList<UndoInfo*>::const_iterator itr = mStack.constBegin();
-        while ( itr != mStack.constEnd() ) {
-            if ( (*itr)->id == undoId ) {
+    if (!mCachedInfo || mCachedInfo->id != undoId) {
+        QList<UndoInfo *>::const_iterator itr = mStack.constBegin();
+        while (itr != mStack.constEnd()) {
+            if ((*itr)->id == undoId) {
                 mCachedInfo = (*itr);
                 break;
             }
@@ -92,44 +93,42 @@ void UndoStack::addMsgToAction( int undoId, const Akonadi::Item &item )
         }
     }
 
-    Q_ASSERT( mCachedInfo );
-    mCachedInfo->items.append( item );
+    Q_ASSERT(mCachedInfo);
+    mCachedInfo->items.append(item);
 }
 
 void UndoStack::undo()
 {
-    if ( !mStack.isEmpty() )
-    {
+    if (!mStack.isEmpty()) {
         UndoInfo *info = mStack.takeFirst();
         emit undoStackChanged();
-        Akonadi::ItemMoveJob * job = new Akonadi::ItemMoveJob( info->items, info->srcFolder, this );
+        Akonadi::ItemMoveJob *job = new Akonadi::ItemMoveJob(info->items, info->srcFolder, this);
         connect(job, &Akonadi::ItemMoveJob::result, this, &UndoStack::slotMoveResult);
         delete info;
-    }
-    else
-    {
+    } else {
         // Sorry.. stack is empty..
-        KMessageBox::sorry( kmkernel->mainWin(), i18n("There is nothing to undo."));
+        KMessageBox::sorry(kmkernel->mainWin(), i18n("There is nothing to undo."));
     }
 }
 
-void UndoStack::slotMoveResult( KJob *job )
+void UndoStack::slotMoveResult(KJob *job)
 {
-    if ( job->error() )
-        KMessageBox::sorry( kmkernel->mainWin(), i18n("Cannot move message. %1", job->errorString() ) );
+    if (job->error()) {
+        KMessageBox::sorry(kmkernel->mainWin(), i18n("Cannot move message. %1", job->errorString()));
+    }
 }
 
 void UndoStack::pushSingleAction(const Akonadi::Item &item, const Akonadi::Collection &folder, const Akonadi::Collection &destFolder)
 {
-    int id = newUndoAction( folder, destFolder );
-    addMsgToAction( id, item );
+    int id = newUndoAction(folder, destFolder);
+    addMsgToAction(id, item);
 }
 
-void UndoStack::msgDestroyed( const Akonadi::Item & /*msg*/)
+void UndoStack::msgDestroyed(const Akonadi::Item & /*msg*/)
 {
     /*
-   for (UndoInfo *info = mStack.first(); info; )
-   {
+    for (UndoInfo *info = mStack.first(); info; )
+    {
       if (info->msgIdMD5 == msg->msgIdMD5())
       {
          mStack.removeRef( info );
@@ -137,24 +136,24 @@ void UndoStack::msgDestroyed( const Akonadi::Item & /*msg*/)
       }
       else
          info = mStack.next();
-   }
-  */
+    }
+    */
 }
 
 void
-UndoStack::folderDestroyed( const Akonadi::Collection &folder)
+UndoStack::folderDestroyed(const Akonadi::Collection &folder)
 {
-    QList<UndoInfo*>::iterator it = mStack.begin();
-    while ( it != mStack.end() ) {
+    QList<UndoInfo *>::iterator it = mStack.begin();
+    while (it != mStack.end()) {
         UndoInfo *info = *it;
-        if ( info &&
-             ( (info->srcFolder == folder) ||
-               (info->destFolder == folder) ) ) {
+        if (info &&
+                ((info->srcFolder == folder) ||
+                 (info->destFolder == folder))) {
             delete info;
-            it = mStack.erase( it );
-        }
-        else
+            it = mStack.erase(it);
+        } else {
             ++it;
+        }
     }
     emit undoStackChanged();
 }

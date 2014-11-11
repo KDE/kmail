@@ -28,7 +28,7 @@ class FollowupReminderCreateJob : public QObject
 {
     Q_OBJECT
 public:
-    explicit FollowupReminderCreateJob(QObject *parent=0);
+    explicit FollowupReminderCreateJob(QObject *parent = 0);
     ~FollowupReminderCreateJob();
 
     void setFollowUpReminderDate(const QDate &date);
@@ -53,8 +53,6 @@ private:
     FollowUpReminder::FollowUpReminderInfo *mInfo;
 
 };
-
-
 
 #endif // FOLLOWUPREMINDERCREATEJOB_H
 

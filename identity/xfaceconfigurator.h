@@ -24,40 +24,41 @@ class QUrl;
 
 class QCheckBox;
 class QLabel;
-namespace PimCommon {
+namespace PimCommon
+{
 class PlainTextEditorWidget;
 }
-namespace KMail {
+namespace KMail
+{
 
-class XFaceConfigurator : public QWidget {
+class XFaceConfigurator : public QWidget
+{
     Q_OBJECT
 public:
-    explicit XFaceConfigurator( QWidget * parent=0 );
+    explicit XFaceConfigurator(QWidget *parent = 0);
     ~XFaceConfigurator();
 
     bool isXFaceEnabled() const;
-    void setXFaceEnabled( bool enable );
-
+    void setXFaceEnabled(bool enable);
 
     QString xface() const;
-    void setXFace( const QString & text );
+    void setXFace(const QString &text);
 
 private:
-    void setXfaceFromFile( const QUrl &url );
+    void setXfaceFromFile(const QUrl &url);
 
 private slots:
     void slotSelectFile();
     void slotSelectFromAddressbook();
-    void slotDelayedSelectFromAddressbook( KJob* );
+    void slotDelayedSelectFromAddressbook(KJob *);
     void slotUpdateXFace();
 
 private:
-    QCheckBox     * mEnableCheck;
-    PimCommon::PlainTextEditorWidget     * mTextEdit;
-    QLabel        * mXFaceLabel;
+    QCheckBox      *mEnableCheck;
+    PimCommon::PlainTextEditorWidget      *mTextEdit;
+    QLabel         *mXFaceLabel;
 };
 } // namespace KMail
 
 #endif // __KMAIL_XFACECONFIGURATOR_H__
-
 

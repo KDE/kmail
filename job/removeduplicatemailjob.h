@@ -19,10 +19,11 @@
 #define REMOVEDUPLICATEMAILJOB_H
 
 #include <QObject>
-//fix it. Remove this include. 
+//fix it. Remove this include.
 #include "kmmainwidget.h"
 class QItemSelectionModel;
-namespace KPIM {
+namespace KPIM
+{
 class ProgressItem;
 }
 class KJob;

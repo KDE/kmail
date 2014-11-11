@@ -26,12 +26,12 @@ class QCheckBox;
 class KComboBox;
 class OrgFreedesktopAkonadiNewMailNotifierInterface;
 
-
 // subclasses: one class per tab:
-class AccountsPageSendingTab : public ConfigModuleTab {
+class AccountsPageSendingTab : public ConfigModuleTab
+{
     Q_OBJECT
 public:
-    explicit AccountsPageSendingTab( QWidget * parent=0 );
+    explicit AccountsPageSendingTab(QWidget *parent = 0);
     virtual ~AccountsPageSendingTab();
     QString helpAnchor() const;
     void save();
@@ -48,35 +48,35 @@ private:
     KComboBox   *mSendMethodCombo;
 };
 
-
-class AccountsPageReceivingTab : public ConfigModuleTab {
+class AccountsPageReceivingTab : public ConfigModuleTab
+{
     Q_OBJECT
 public:
-    explicit AccountsPageReceivingTab( QWidget * parent=0 );
+    explicit AccountsPageReceivingTab(QWidget *parent = 0);
     ~AccountsPageReceivingTab();
     QString helpAnchor() const;
     void save();
 
 signals:
-    void accountListChanged( const QStringList & );
+    void accountListChanged(const QStringList &);
 
 private slots:
     void slotEditNotifications();
-    void slotShowMailCheckMenu( const QString &, const QPoint & );
+    void slotShowMailCheckMenu(const QString &, const QPoint &);
     void slotCustomizeAccountOrder();
-    void slotIncludeInCheckChanged( bool checked );
-    void slotOfflineOnShutdownChanged( bool checked );
-    void slotCheckOnStatupChanged( bool checked );
+    void slotIncludeInCheckChanged(bool checked);
+    void slotOfflineOnShutdownChanged(bool checked);
+    void slotCheckOnStatupChanged(bool checked);
 
 private:
     void doLoadFromGlobalSettings();
     void doLoadOther();
 
     struct RetrievalOptions {
-        RetrievalOptions( bool manualCheck, bool offline, bool checkOnStartup )
-            : IncludeInManualChecks( manualCheck )
-            , OfflineOnShutdown( offline )
-            ,CheckOnStartup( checkOnStartup ) {}
+        RetrievalOptions(bool manualCheck, bool offline, bool checkOnStartup)
+            : IncludeInManualChecks(manualCheck)
+            , OfflineOnShutdown(offline)
+            , CheckOnStartup(checkOnStartup) {}
         bool IncludeInManualChecks;
         bool OfflineOnShutdown;
         bool CheckOnStartup;
@@ -90,24 +90,23 @@ private:
     OrgFreedesktopAkonadiNewMailNotifierInterface *mNewMailNotifierInterface;
 };
 
-class KMAIL_EXPORT AccountsPage : public ConfigModuleWithTabs {
+class KMAIL_EXPORT AccountsPage : public ConfigModuleWithTabs
+{
     Q_OBJECT
 public:
-    explicit AccountsPage( QWidget *parent=0 );
+    explicit AccountsPage(QWidget *parent = 0);
     QString helpAnchor() const;
-
 
     // hrmpf. moc doesn't like nested classes with slots/signals...:
     typedef AccountsPageSendingTab SendingTab;
     typedef AccountsPageReceivingTab ReceivingTab;
 
 signals:
-    void accountListChanged( const QStringList & );
+    void accountListChanged(const QStringList &);
 
 private:
     SendingTab   *mSendingTab;
     ReceivingTab *mReceivingTab;
 };
-
 
 #endif // CONFIGUREACCOUNTPAGE_H

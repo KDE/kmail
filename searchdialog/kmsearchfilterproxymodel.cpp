@@ -33,47 +33,46 @@
 
 using namespace KMail;
 
-KMSearchFilterProxyModel::KMSearchFilterProxyModel( QObject *parent )
-    :QSortFilterProxyModel( parent )
+KMSearchFilterProxyModel::KMSearchFilterProxyModel(QObject *parent)
+    : QSortFilterProxyModel(parent)
 {
-    setDynamicSortFilter( true );
-    setFilterCaseSensitivity ( Qt::CaseInsensitive );
+    setDynamicSortFilter(true);
+    setFilterCaseSensitivity(Qt::CaseInsensitive);
 }
 
 KMSearchFilterProxyModel::~KMSearchFilterProxyModel()
 {
 }
 
-
-bool KMSearchFilterProxyModel::lessThan( const QModelIndex &left, const QModelIndex &right ) const
+bool KMSearchFilterProxyModel::lessThan(const QModelIndex &left, const QModelIndex &right) const
 {
-    if ( right.model() && left.model() && left.column() == KMSearchMessageModel::Date )  {
-        if ( sourceModel() ) {
+    if (right.model() && left.model() && left.column() == KMSearchMessageModel::Date)  {
+        if (sourceModel()) {
             const QDateTime leftData =
-                    sourceModel()->data(
-                        left.sibling( left.row(), KMSearchMessageModel::DateNotTranslated ) ).toDateTime();
+                sourceModel()->data(
+                    left.sibling(left.row(), KMSearchMessageModel::DateNotTranslated)).toDateTime();
 
             const QDateTime rightData =
-                    sourceModel()->data(
-                        right.sibling( right.row(), KMSearchMessageModel::DateNotTranslated ) ).toDateTime();
-            return  leftData<rightData;
+                sourceModel()->data(
+                    right.sibling(right.row(), KMSearchMessageModel::DateNotTranslated)).toDateTime();
+            return  leftData < rightData;
         } else {
             return false;
         }
     }
 
-    if ( right.model() && left.model() && left.column() == KMSearchMessageModel::Size )  {
-        if ( sourceModel() ) {
+    if (right.model() && left.model() && left.column() == KMSearchMessageModel::Size)  {
+        if (sourceModel()) {
             const qint64 leftData =
-                    sourceModel()->data(
-                        left.sibling( left.row(), KMSearchMessageModel::SizeNotLocalized ) ).toLongLong();
+                sourceModel()->data(
+                    left.sibling(left.row(), KMSearchMessageModel::SizeNotLocalized)).toLongLong();
             const qint64 rightData =
-                    sourceModel()->data(
-                        right.sibling( right.row(), KMSearchMessageModel::SizeNotLocalized ) ).toLongLong();
-            return  leftData<rightData;
+                sourceModel()->data(
+                    right.sibling(right.row(), KMSearchMessageModel::SizeNotLocalized)).toLongLong();
+            return  leftData < rightData;
         } else {
             return false;
         }
     }
-    return QSortFilterProxyModel::lessThan( left, right );
+    return QSortFilterProxyModel::lessThan(left, right);
 }

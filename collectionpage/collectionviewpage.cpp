@@ -16,7 +16,6 @@
   51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
 */
 
-
 #include "collectionviewpage.h"
 #include "kmkernel.h"
 #include "kernel/mailkernel.h"
@@ -45,67 +44,67 @@
 
 using namespace MailCommon;
 
-CollectionViewPage::CollectionViewPage(QWidget * parent) :
-    CollectionPropertiesPage( parent ), mIsLocalSystemFolder(false)
+CollectionViewPage::CollectionViewPage(QWidget *parent) :
+    CollectionPropertiesPage(parent), mIsLocalSystemFolder(false)
 {
-    setObjectName( QLatin1String( "KMail::CollectionViewPage" ) );
-    setPageTitle( i18nc( "@title:tab View settings for a folder.", "View" ) );
+    setObjectName(QLatin1String("KMail::CollectionViewPage"));
+    setPageTitle(i18nc("@title:tab View settings for a folder.", "View"));
 }
 
 CollectionViewPage::~CollectionViewPage()
 {
 }
 
-void CollectionViewPage::init(const Akonadi::Collection & col)
+void CollectionViewPage::init(const Akonadi::Collection &col)
 {
     mCurrentCollection = col;
-    QSharedPointer<FolderCollection> fd = FolderCollection::forCollection( col, false );
-    mIsLocalSystemFolder = CommonKernel->isSystemFolderCollection( col ) || fd->isStructural() || Kernel::folderIsInbox( col, true );
+    QSharedPointer<FolderCollection> fd = FolderCollection::forCollection(col, false);
+    mIsLocalSystemFolder = CommonKernel->isSystemFolderCollection(col) || fd->isStructural() || Kernel::folderIsInbox(col, true);
 
-    QVBoxLayout * topLayout = new QVBoxLayout( this );
+    QVBoxLayout *topLayout = new QVBoxLayout(this);
 //TODO PORT QT5     topLayout->setSpacing( QDialog::spacingHint() );
 //TODO PORT QT5     topLayout->setMargin( QDialog::marginHint() );
     // Musn't be able to edit details for non-resource, system folder.
-    if ( !mIsLocalSystemFolder ) {
+    if (!mIsLocalSystemFolder) {
         // icons
-        mIconsCheckBox = new QCheckBox( i18n( "Use custom &icons"), this );
-        mIconsCheckBox->setChecked( false );
+        mIconsCheckBox = new QCheckBox(i18n("Use custom &icons"), this);
+        mIconsCheckBox->setChecked(false);
 
-        mNormalIconLabel = new QLabel( i18nc( "Icon used for folders with no unread messages.", "&Normal:" ), this );
-        mNormalIconLabel->setEnabled( false );
+        mNormalIconLabel = new QLabel(i18nc("Icon used for folders with no unread messages.", "&Normal:"), this);
+        mNormalIconLabel->setEnabled(false);
 
-        mNormalIconButton = new KIconButton( this );
-        mNormalIconLabel->setBuddy( mNormalIconButton );
-        mNormalIconButton->setIconType( KIconLoader::NoGroup, KIconLoader::Place, false );
-        mNormalIconButton->setIconSize( 16 );
-        mNormalIconButton->setStrictIconSize( true );
-        mNormalIconButton->setFixedSize( 28, 28 );
+        mNormalIconButton = new KIconButton(this);
+        mNormalIconLabel->setBuddy(mNormalIconButton);
+        mNormalIconButton->setIconType(KIconLoader::NoGroup, KIconLoader::Place, false);
+        mNormalIconButton->setIconSize(16);
+        mNormalIconButton->setStrictIconSize(true);
+        mNormalIconButton->setFixedSize(28, 28);
         // Can't use iconset here.
-        mNormalIconButton->setIcon( QLatin1String("folder") );
-        mNormalIconButton->setEnabled( false );
+        mNormalIconButton->setIcon(QLatin1String("folder"));
+        mNormalIconButton->setEnabled(false);
 
-        mUnreadIconLabel = new QLabel( i18nc( "Icon used for folders which do have unread messages.", "&Unread:" ), this );
-        mUnreadIconLabel->setEnabled( false );
+        mUnreadIconLabel = new QLabel(i18nc("Icon used for folders which do have unread messages.", "&Unread:"), this);
+        mUnreadIconLabel->setEnabled(false);
 
-        mUnreadIconButton = new KIconButton( this );
-        mUnreadIconLabel->setBuddy( mUnreadIconButton );
-        mUnreadIconButton->setIconType( KIconLoader::NoGroup, KIconLoader::Place, false );
-        mUnreadIconButton->setIconSize( 16 );
-        mUnreadIconButton->setStrictIconSize( true );
-        mUnreadIconButton->setFixedSize( 28, 28 );
+        mUnreadIconButton = new KIconButton(this);
+        mUnreadIconLabel->setBuddy(mUnreadIconButton);
+        mUnreadIconButton->setIconType(KIconLoader::NoGroup, KIconLoader::Place, false);
+        mUnreadIconButton->setIconSize(16);
+        mUnreadIconButton->setStrictIconSize(true);
+        mUnreadIconButton->setFixedSize(28, 28);
         // Can't use iconset here.
-        mUnreadIconButton->setIcon( QLatin1String("folder-open") );
-        mUnreadIconButton->setEnabled( false );
+        mUnreadIconButton->setIcon(QLatin1String("folder-open"));
+        mUnreadIconButton->setEnabled(false);
 
-        QHBoxLayout * iconHLayout = new QHBoxLayout();
-        iconHLayout->addWidget( mIconsCheckBox );
-        iconHLayout->addStretch( 2 );
-        iconHLayout->addWidget( mNormalIconLabel );
-        iconHLayout->addWidget( mNormalIconButton );
-        iconHLayout->addWidget( mUnreadIconLabel );
-        iconHLayout->addWidget( mUnreadIconButton );
-        iconHLayout->addStretch( 1 );
-        topLayout->addLayout( iconHLayout );
+        QHBoxLayout *iconHLayout = new QHBoxLayout();
+        iconHLayout->addWidget(mIconsCheckBox);
+        iconHLayout->addStretch(2);
+        iconHLayout->addWidget(mNormalIconLabel);
+        iconHLayout->addWidget(mNormalIconButton);
+        iconHLayout->addWidget(mUnreadIconLabel);
+        iconHLayout->addWidget(mUnreadIconButton);
+        iconHLayout->addStretch(1);
+        topLayout->addLayout(iconHLayout);
 
         connect(mIconsCheckBox, &QCheckBox::toggled, mNormalIconLabel, &QLabel::setEnabled);
         connect(mIconsCheckBox, &QCheckBox::toggled, mNormalIconButton, &KIconButton::setEnabled);
@@ -116,139 +115,138 @@ void CollectionViewPage::init(const Akonadi::Collection & col)
     }
 
     // sender or receiver column
-    const QString senderReceiverColumnTip = i18n( "Show Sender/Receiver Column in List of Messages" );
+    const QString senderReceiverColumnTip = i18n("Show Sender/Receiver Column in List of Messages");
 
-    QLabel * senderReceiverColumnLabel = new QLabel( i18n( "Sho&w column:" ), this );
-    mShowSenderReceiverComboBox = new KComboBox( this );
-    mShowSenderReceiverComboBox->setToolTip( senderReceiverColumnTip );
-    senderReceiverColumnLabel->setBuddy( mShowSenderReceiverComboBox );
-    mShowSenderReceiverComboBox->insertItem( 0, i18nc( "@item:inlistbox Show default value.", "Default" ) );
-    mShowSenderReceiverComboBox->insertItem( 1, i18nc( "@item:inlistbox Show sender.", "Sender" ) );
-    mShowSenderReceiverComboBox->insertItem( 2, i18nc( "@item:inlistbox Show receiver.", "Receiver" ) );
+    QLabel *senderReceiverColumnLabel = new QLabel(i18n("Sho&w column:"), this);
+    mShowSenderReceiverComboBox = new KComboBox(this);
+    mShowSenderReceiverComboBox->setToolTip(senderReceiverColumnTip);
+    senderReceiverColumnLabel->setBuddy(mShowSenderReceiverComboBox);
+    mShowSenderReceiverComboBox->insertItem(0, i18nc("@item:inlistbox Show default value.", "Default"));
+    mShowSenderReceiverComboBox->insertItem(1, i18nc("@item:inlistbox Show sender.", "Sender"));
+    mShowSenderReceiverComboBox->insertItem(2, i18nc("@item:inlistbox Show receiver.", "Receiver"));
 
-    QHBoxLayout * senderReceiverColumnHLayout = new QHBoxLayout();
-    senderReceiverColumnHLayout->addWidget( senderReceiverColumnLabel );
-    senderReceiverColumnHLayout->addWidget( mShowSenderReceiverComboBox );
-    topLayout->addLayout( senderReceiverColumnHLayout );
+    QHBoxLayout *senderReceiverColumnHLayout = new QHBoxLayout();
+    senderReceiverColumnHLayout->addWidget(senderReceiverColumnLabel);
+    senderReceiverColumnHLayout->addWidget(mShowSenderReceiverComboBox);
+    topLayout->addLayout(senderReceiverColumnHLayout);
 
     // message list
-    QGroupBox * messageListGroup = new QGroupBox( i18n( "Message List" ), this );
-    QVBoxLayout * messageListGroupLayout = new QVBoxLayout( messageListGroup );
+    QGroupBox *messageListGroup = new QGroupBox(i18n("Message List"), this);
+    QVBoxLayout *messageListGroupLayout = new QVBoxLayout(messageListGroup);
 //TODO PORT QT5     messageListGroupLayout->setSpacing( QDialog::spacingHint() );
 //TODO PORT QT5     messageListGroupLayout->setMargin( QDialog::marginHint() );
-    topLayout->addWidget( messageListGroup );
+    topLayout->addWidget(messageListGroup);
 
     // message list aggregation
-    mUseDefaultAggregationCheckBox = new QCheckBox( i18n( "Use default aggregation" ), messageListGroup );
-    messageListGroupLayout->addWidget( mUseDefaultAggregationCheckBox );
+    mUseDefaultAggregationCheckBox = new QCheckBox(i18n("Use default aggregation"), messageListGroup);
+    messageListGroupLayout->addWidget(mUseDefaultAggregationCheckBox);
     connect(mUseDefaultAggregationCheckBox, &QCheckBox::stateChanged, this, &CollectionViewPage::slotAggregationCheckboxChanged);
 
-    mAggregationComboBox = new MessageList::Utils::AggregationComboBox( messageListGroup );
+    mAggregationComboBox = new MessageList::Utils::AggregationComboBox(messageListGroup);
 
-    QLabel * aggregationLabel = new QLabel( i18n( "Aggregation" ), messageListGroup );
-    aggregationLabel->setBuddy( mAggregationComboBox );
+    QLabel *aggregationLabel = new QLabel(i18n("Aggregation"), messageListGroup);
+    aggregationLabel->setBuddy(mAggregationComboBox);
 
     using MessageList::Utils::AggregationConfigButton;
-    AggregationConfigButton * aggregationConfigButton = new AggregationConfigButton( messageListGroup, mAggregationComboBox );
+    AggregationConfigButton *aggregationConfigButton = new AggregationConfigButton(messageListGroup, mAggregationComboBox);
     // Make sure any changes made in the aggregations configure dialog are reflected in the combo.
     connect(aggregationConfigButton, &AggregationConfigButton::configureDialogCompleted, this, &CollectionViewPage::slotSelectFolderAggregation);
 
-    QHBoxLayout * aggregationLayout = new QHBoxLayout();
-    aggregationLayout->addWidget( aggregationLabel, 1 );
-    aggregationLayout->addWidget( mAggregationComboBox, 1 );
-    aggregationLayout->addWidget( aggregationConfigButton, 0 );
-    messageListGroupLayout->addLayout( aggregationLayout );
+    QHBoxLayout *aggregationLayout = new QHBoxLayout();
+    aggregationLayout->addWidget(aggregationLabel, 1);
+    aggregationLayout->addWidget(mAggregationComboBox, 1);
+    aggregationLayout->addWidget(aggregationConfigButton, 0);
+    messageListGroupLayout->addLayout(aggregationLayout);
 
     // message list theme
-    mUseDefaultThemeCheckBox = new QCheckBox( i18n( "Use default theme" ), messageListGroup );
-    messageListGroupLayout->addWidget( mUseDefaultThemeCheckBox );
+    mUseDefaultThemeCheckBox = new QCheckBox(i18n("Use default theme"), messageListGroup);
+    messageListGroupLayout->addWidget(mUseDefaultThemeCheckBox);
     connect(mUseDefaultThemeCheckBox, &QCheckBox::stateChanged, this, &CollectionViewPage::slotThemeCheckboxChanged);
 
-    mThemeComboBox = new MessageList::Utils::ThemeComboBox( messageListGroup );
+    mThemeComboBox = new MessageList::Utils::ThemeComboBox(messageListGroup);
 
-    QLabel * themeLabel = new QLabel( i18n( "Theme" ), messageListGroup );
-    themeLabel->setBuddy( mThemeComboBox );
+    QLabel *themeLabel = new QLabel(i18n("Theme"), messageListGroup);
+    themeLabel->setBuddy(mThemeComboBox);
 
     using MessageList::Utils::ThemeConfigButton;
-    ThemeConfigButton * themeConfigButton = new ThemeConfigButton( messageListGroup, mThemeComboBox );
+    ThemeConfigButton *themeConfigButton = new ThemeConfigButton(messageListGroup, mThemeComboBox);
     // Make sure any changes made in the themes configure dialog are reflected in the combo.
     connect(themeConfigButton, &ThemeConfigButton::configureDialogCompleted, this, &CollectionViewPage::slotSelectFolderTheme);
 
-    QHBoxLayout * themeLayout = new QHBoxLayout();
-    themeLayout->addWidget( themeLabel, 1 );
-    themeLayout->addWidget( mThemeComboBox, 1 );
-    themeLayout->addWidget( themeConfigButton, 0 );
-    messageListGroupLayout->addLayout( themeLayout );
+    QHBoxLayout *themeLayout = new QHBoxLayout();
+    themeLayout->addWidget(themeLabel, 1);
+    themeLayout->addWidget(mThemeComboBox, 1);
+    themeLayout->addWidget(themeConfigButton, 0);
+    messageListGroupLayout->addLayout(themeLayout);
 
-    topLayout->addStretch( 100 );
+    topLayout->addStretch(100);
 }
 
-
-void CollectionViewPage::slotChangeIcon( const QString & icon )
+void CollectionViewPage::slotChangeIcon(const QString &icon)
 {
-    mUnreadIconButton->setIcon( icon );
+    mUnreadIconButton->setIcon(icon);
 }
 
 void CollectionViewPage::slotAggregationCheckboxChanged()
 {
-    mAggregationComboBox->setEnabled( !mUseDefaultAggregationCheckBox->isChecked() );
+    mAggregationComboBox->setEnabled(!mUseDefaultAggregationCheckBox->isChecked());
 }
 
 void CollectionViewPage::slotThemeCheckboxChanged()
 {
-    mThemeComboBox->setEnabled( !mUseDefaultThemeCheckBox->isChecked() );
+    mThemeComboBox->setEnabled(!mUseDefaultThemeCheckBox->isChecked());
 }
 
 void CollectionViewPage::slotSelectFolderAggregation()
 {
     bool usesPrivateAggregation = false;
-    mAggregationComboBox->readStorageModelConfig(mCurrentCollection, usesPrivateAggregation );
-    mUseDefaultAggregationCheckBox->setChecked( !usesPrivateAggregation );
+    mAggregationComboBox->readStorageModelConfig(mCurrentCollection, usesPrivateAggregation);
+    mUseDefaultAggregationCheckBox->setChecked(!usesPrivateAggregation);
 }
 
 void CollectionViewPage::slotSelectFolderTheme()
 {
     bool usesPrivateTheme = false;
-    mThemeComboBox->readStorageModelConfig( mCurrentCollection, usesPrivateTheme );
-    mUseDefaultThemeCheckBox->setChecked( !usesPrivateTheme );
+    mThemeComboBox->readStorageModelConfig(mCurrentCollection, usesPrivateTheme);
+    mUseDefaultThemeCheckBox->setChecked(!usesPrivateTheme);
 }
 
-void CollectionViewPage::load( const Akonadi::Collection & col )
+void CollectionViewPage::load(const Akonadi::Collection &col)
 {
-    init( col );
-    if ( !mIsLocalSystemFolder ) {
+    init(col);
+    if (!mIsLocalSystemFolder) {
         QString iconName;
         QString unreadIconName;
         bool iconWasEmpty = false;
-        if ( col.hasAttribute<Akonadi::EntityDisplayAttribute>() ) {
+        if (col.hasAttribute<Akonadi::EntityDisplayAttribute>()) {
             iconName = col.attribute<Akonadi::EntityDisplayAttribute>()->iconName();
             unreadIconName = col.attribute<Akonadi::EntityDisplayAttribute>()->activeIconName();
         }
 
-        if ( iconName.isEmpty() ) {
-            iconName = QLatin1String( "folder" );
+        if (iconName.isEmpty()) {
+            iconName = QLatin1String("folder");
             iconWasEmpty = true;
         }
-        mNormalIconButton->setIcon( iconName );
+        mNormalIconButton->setIcon(iconName);
 
-        if ( unreadIconName.isEmpty() ) {
-            mUnreadIconButton->setIcon( iconName );
-        }
-        else {
-            mUnreadIconButton->setIcon( unreadIconName );
+        if (unreadIconName.isEmpty()) {
+            mUnreadIconButton->setIcon(iconName);
+        } else {
+            mUnreadIconButton->setIcon(unreadIconName);
         }
 
-        mIconsCheckBox->setChecked( !iconWasEmpty );
+        mIconsCheckBox->setChecked(!iconWasEmpty);
     }
 
-    if ( col.hasAttribute<Akonadi::MessageFolderAttribute>() ) {
+    if (col.hasAttribute<Akonadi::MessageFolderAttribute>()) {
         const bool outboundFolder = col.attribute<Akonadi::MessageFolderAttribute>()->isOutboundFolder();
-        if ( outboundFolder )
-            mShowSenderReceiverComboBox->setCurrentIndex( 2 );
-        else
-            mShowSenderReceiverComboBox->setCurrentIndex( 1 );
+        if (outboundFolder) {
+            mShowSenderReceiverComboBox->setCurrentIndex(2);
+        } else {
+            mShowSenderReceiverComboBox->setCurrentIndex(1);
+        }
     } else {
-        mShowSenderReceiverComboBox->setCurrentIndex( 0 );
+        mShowSenderReceiverComboBox->setCurrentIndex(0);
     }
     mShowSenderReceiverValue = mShowSenderReceiverComboBox->currentIndex();
 
@@ -259,37 +257,35 @@ void CollectionViewPage::load( const Akonadi::Collection & col )
     slotSelectFolderTheme();
 }
 
-void CollectionViewPage::save( Akonadi::Collection & col )
+void CollectionViewPage::save(Akonadi::Collection &col)
 {
-    if ( !mIsLocalSystemFolder ) {
-        if ( mIconsCheckBox->isChecked() ) {
-            col.attribute<Akonadi::EntityDisplayAttribute>( Akonadi::Collection::AddIfMissing )->setIconName( mNormalIconButton->icon() );
-            col.attribute<Akonadi::EntityDisplayAttribute>( Akonadi::Collection::AddIfMissing )->setActiveIconName( mUnreadIconButton->icon() );
-        }
-        else if ( col.hasAttribute<Akonadi::EntityDisplayAttribute>() ) {
-            col.attribute<Akonadi::EntityDisplayAttribute>()->setIconName( QString() );
-            col.attribute<Akonadi::EntityDisplayAttribute>()->setActiveIconName( QString() );
+    if (!mIsLocalSystemFolder) {
+        if (mIconsCheckBox->isChecked()) {
+            col.attribute<Akonadi::EntityDisplayAttribute>(Akonadi::Collection::AddIfMissing)->setIconName(mNormalIconButton->icon());
+            col.attribute<Akonadi::EntityDisplayAttribute>(Akonadi::Collection::AddIfMissing)->setActiveIconName(mUnreadIconButton->icon());
+        } else if (col.hasAttribute<Akonadi::EntityDisplayAttribute>()) {
+            col.attribute<Akonadi::EntityDisplayAttribute>()->setIconName(QString());
+            col.attribute<Akonadi::EntityDisplayAttribute>()->setActiveIconName(QString());
         }
     }
 
     const int currentIndex = mShowSenderReceiverComboBox->currentIndex();
-    if ( mShowSenderReceiverValue != currentIndex ) {
-        if ( currentIndex == 1 ) {
-            Akonadi::MessageFolderAttribute *messageFolder  = col.attribute<Akonadi::MessageFolderAttribute>( Akonadi::Entity::AddIfMissing );
-            messageFolder->setOutboundFolder( false );
-        } else if ( currentIndex == 2 ) {
-            Akonadi::MessageFolderAttribute *messageFolder  = col.attribute<Akonadi::MessageFolderAttribute>( Akonadi::Entity::AddIfMissing );
-            messageFolder->setOutboundFolder( true );
+    if (mShowSenderReceiverValue != currentIndex) {
+        if (currentIndex == 1) {
+            Akonadi::MessageFolderAttribute *messageFolder  = col.attribute<Akonadi::MessageFolderAttribute>(Akonadi::Entity::AddIfMissing);
+            messageFolder->setOutboundFolder(false);
+        } else if (currentIndex == 2) {
+            Akonadi::MessageFolderAttribute *messageFolder  = col.attribute<Akonadi::MessageFolderAttribute>(Akonadi::Entity::AddIfMissing);
+            messageFolder->setOutboundFolder(true);
         } else {
             col.removeAttribute<Akonadi::MessageFolderAttribute>();
         }
     }
     // message list theme
     const bool usePrivateTheme = !mUseDefaultThemeCheckBox->isChecked();
-    mThemeComboBox->writeStorageModelConfig( mCurrentCollection, usePrivateTheme );
+    mThemeComboBox->writeStorageModelConfig(mCurrentCollection, usePrivateTheme);
     // message list aggregation
     const bool usePrivateAggregation = !mUseDefaultAggregationCheckBox->isChecked();
-    mAggregationComboBox->writeStorageModelConfig( mCurrentCollection, usePrivateAggregation );
+    mAggregationComboBox->writeStorageModelConfig(mCurrentCollection, usePrivateAggregation);
 }
-
 

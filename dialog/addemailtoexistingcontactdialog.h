@@ -20,7 +20,8 @@
 
 #include <QDialog>
 class QPushButton;
-namespace Akonadi {
+namespace Akonadi
+{
 class EmailAddressSelectionWidget;
 class Item;
 }

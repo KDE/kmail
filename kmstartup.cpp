@@ -16,7 +16,6 @@
     Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
 */
 
-
 #include "kmstartup.h"
 
 #include "kmkernel.h" //control center
@@ -29,7 +28,8 @@
 
 #undef Status // stupid X headers
 
-namespace KMail {
+namespace KMail
+{
 
 void migrateConfig()
 {
@@ -40,9 +40,9 @@ void migrateConfig()
     migrate.migrate();
 }
 
-
-void checkConfigUpdates() {
-    static const char * const updates[] = {
+void checkConfigUpdates()
+{
+    static const char *const updates[] = {
         "9",
         "3.1-update-identities",
         "3.1-use-identity-uoids",
@@ -72,22 +72,24 @@ void checkConfigUpdates() {
         "4.13",
         "4.13.2"
     };
-    static const int numUpdates = sizeof updates / sizeof *updates;
+    static const int numUpdates = sizeof updates / sizeof * updates;
     // Warning: do not remove entries in the above array, or the update-level check below will break
 
     KSharedConfig::Ptr config = KMKernel::self()->config();
     const int configUpdateLevel = GlobalSettings::self()->updateLevel();
-    if ( configUpdateLevel == numUpdates ) // Optimize for the common case that everything is OK
+    if (configUpdateLevel == numUpdates) { // Optimize for the common case that everything is OK
         return;
-
-    for ( int i = configUpdateLevel ; i < numUpdates ; ++i ) {
-        config->checkUpdate( QLatin1String(updates[i]), QLatin1String("kmail.upd") );
     }
-    GlobalSettings::self()->setUpdateLevel( numUpdates );
+
+    for (int i = configUpdateLevel ; i < numUpdates ; ++i) {
+        config->checkUpdate(QLatin1String(updates[i]), QLatin1String("kmail.upd"));
+    }
+    GlobalSettings::self()->setUpdateLevel(numUpdates);
 }
 
-void insertLibraryCataloguesAndIcons() {
-    static const char * const catalogs[] = {
+void insertLibraryCataloguesAndIcons()
+{
+    static const char *const catalogs[] = {
         "libkdepim",
         "libksieve",
         "libkleopatra",
@@ -114,10 +116,10 @@ void insertLibraryCataloguesAndIcons() {
         "akonadi_followupreminder_agent"
     };
 
-    KLocale * l = KLocale::global();
-    KIconLoader * il = KIconLoader::global();
-    for ( unsigned int i = 0 ; i < sizeof catalogs / sizeof *catalogs ; ++i ) {
-        il->addAppDir( QLatin1String(catalogs[i]) );
+    KLocale *l = KLocale::global();
+    KIconLoader *il = KIconLoader::global();
+    for (unsigned int i = 0 ; i < sizeof catalogs / sizeof * catalogs ; ++i) {
+        il->addAppDir(QLatin1String(catalogs[i]));
     }
 
 }

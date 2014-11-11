@@ -27,8 +27,8 @@
 class CreateTaskJob : public KJob
 {
     Q_OBJECT
-public:    
-    explicit CreateTaskJob(const Akonadi::Item::List &items, QObject *parent=0);
+public:
+    explicit CreateTaskJob(const Akonadi::Item::List &items, QObject *parent = 0);
     ~CreateTaskJob();
 
     void start();

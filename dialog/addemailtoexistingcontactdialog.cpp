@@ -37,24 +37,24 @@
 AddEmailToExistingContactDialog::AddEmailToExistingContactDialog(QWidget *parent)
     : QDialog(parent)
 {
-    setWindowTitle( i18n( "Select Contact" ) );
-    setModal( true );
+    setWindowTitle(i18n("Select Contact"));
+    setModal(true);
 
-    Akonadi::Session *session = new Akonadi::Session( "AddEmailToExistingContactDialog", this );
+    Akonadi::Session *session = new Akonadi::Session("AddEmailToExistingContactDialog", this);
 
     Akonadi::ItemFetchScope scope;
-    scope.fetchFullPayload( true );
+    scope.fetchFullPayload(true);
     scope.fetchAttribute<Akonadi::EntityDisplayAttribute>();
 
-    Akonadi::ChangeRecorder *changeRecorder = new Akonadi::ChangeRecorder( this );
-    changeRecorder->setSession( session );
-    changeRecorder->fetchCollection( true );
-    changeRecorder->setItemFetchScope( scope );
-    changeRecorder->setCollectionMonitored( Akonadi::Collection::root() );
+    Akonadi::ChangeRecorder *changeRecorder = new Akonadi::ChangeRecorder(this);
+    changeRecorder->setSession(session);
+    changeRecorder->fetchCollection(true);
+    changeRecorder->setItemFetchScope(scope);
+    changeRecorder->setCollectionMonitored(Akonadi::Collection::root());
     //Just select address no group
-    changeRecorder->setMimeTypeMonitored( KContacts::Addressee::mimeType(), true );
+    changeRecorder->setMimeTypeMonitored(KContacts::Addressee::mimeType(), true);
 
-    Akonadi::ContactsTreeModel *model = new Akonadi::ContactsTreeModel( changeRecorder, this );
+    Akonadi::ContactsTreeModel *model = new Akonadi::ContactsTreeModel(changeRecorder, this);
 
     mEmailSelectionWidget = new Akonadi::EmailAddressSelectionWidget(false, model, this);
     QVBoxLayout *mainLayout = new QVBoxLayout;
@@ -63,7 +63,7 @@ AddEmailToExistingContactDialog::AddEmailToExistingContactDialog(QWidget *parent
     mEmailSelectionWidget->view()->setSelectionMode(QAbstractItemView::SingleSelection);
     readConfig();
     connect(mEmailSelectionWidget->view()->selectionModel(), SIGNAL(selectionChanged(QItemSelection,QItemSelection)), this, SLOT(slotSelectionChanged()));
-    QDialogButtonBox *buttonBox = new QDialogButtonBox(QDialogButtonBox::Ok|QDialogButtonBox::Cancel);
+    QDialogButtonBox *buttonBox = new QDialogButtonBox(QDialogButtonBox::Ok | QDialogButtonBox::Cancel);
     mOkButton = buttonBox->button(QDialogButtonBox::Ok);
     mOkButton->setDefault(true);
     mOkButton->setShortcut(Qt::CTRL | Qt::Key_Return);
@@ -86,17 +86,17 @@ void AddEmailToExistingContactDialog::slotSelectionChanged()
 
 void AddEmailToExistingContactDialog::readConfig()
 {
-    KConfigGroup group( KMKernel::self()->config(), "AddEmailToExistingContactDialog" );
-    const QSize size = group.readEntry( "Size", QSize(600, 400) );
-    if ( size.isValid() ) {
-        resize( size );
+    KConfigGroup group(KMKernel::self()->config(), "AddEmailToExistingContactDialog");
+    const QSize size = group.readEntry("Size", QSize(600, 400));
+    if (size.isValid()) {
+        resize(size);
     }
 }
 
 void AddEmailToExistingContactDialog::writeConfig()
 {
-    KConfigGroup group( KMKernel::self()->config(), "AddEmailToExistingContactDialog" );
-    group.writeEntry( "Size", size() );
+    KConfigGroup group(KMKernel::self()->config(), "AddEmailToExistingContactDialog");
+    group.writeEntry("Size", size());
     group.sync();
 }
 
@@ -109,5 +109,4 @@ Akonadi::Item AddEmailToExistingContactDialog::selectedContact() const
     }
     return item;
 }
-
 

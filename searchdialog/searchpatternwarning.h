@@ -15,18 +15,18 @@
   51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
 */
 
-
 #ifndef SEARCHPATTERNWARNING_H
 #define SEARCHPATTERNWARNING_H
 
 #include <KMessageWidget>
 
-namespace KMail {
+namespace KMail
+{
 class SearchPatternWarning : public KMessageWidget
 {
     Q_OBJECT
 public:
-    explicit SearchPatternWarning(QWidget *parent=0);
+    explicit SearchPatternWarning(QWidget *parent = 0);
     ~SearchPatternWarning();
 
     void showWarningPattern(const QStringList &lstError);

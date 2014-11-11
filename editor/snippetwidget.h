@@ -16,7 +16,8 @@
 
 #include <QTreeView>
 
-namespace MailCommon {
+namespace MailCommon
+{
 class SnippetsManager;
 }
 
@@ -31,12 +32,12 @@ class QContextMenuEvent;
 class SnippetWidget : public QTreeView
 {
 public:
-    explicit SnippetWidget( KMComposerEditor *editor, KActionCollection *actionCollection, QWidget *parent = 0 );
+    explicit SnippetWidget(KMComposerEditor *editor, KActionCollection *actionCollection, QWidget *parent = 0);
     ~SnippetWidget();
 
 protected:
-    void contextMenuEvent( QContextMenuEvent* );
-    void dropEvent( QDropEvent * );
+    void contextMenuEvent(QContextMenuEvent *);
+    void dropEvent(QDropEvent *);
 
 private:
     MailCommon::SnippetsManager *mSnippetsManager;

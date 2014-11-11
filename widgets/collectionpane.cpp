@@ -16,7 +16,6 @@
   51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
 */
 
-
 #include "collectionpane.h"
 #include "kmkernel.h"
 #include "kernel/mailkernel.h"
@@ -28,8 +27,8 @@
 
 using namespace MailCommon;
 
-CollectionPane::CollectionPane( bool restoreSession, QAbstractItemModel *model, QItemSelectionModel *selectionModel, QWidget *parent )
-    :MessageList::Pane( restoreSession, model, selectionModel, parent )
+CollectionPane::CollectionPane(bool restoreSession, QAbstractItemModel *model, QItemSelectionModel *selectionModel, QWidget *parent)
+    : MessageList::Pane(restoreSession, model, selectionModel, parent)
 {
 }
 
@@ -42,13 +41,13 @@ void CollectionPane::writeConfig(bool /*restoreSession*/)
     MessageList::Pane::writeConfig(!GlobalSettings::self()->startSpecificFolderAtStartup());
 }
 
-MessageList::StorageModel *CollectionPane::createStorageModel( QAbstractItemModel *model, QItemSelectionModel *selectionModel, QObject *parent )
+MessageList::StorageModel *CollectionPane::createStorageModel(QAbstractItemModel *model, QItemSelectionModel *selectionModel, QObject *parent)
 {
-    return new CollectionStorageModel( model, selectionModel, parent );
+    return new CollectionStorageModel(model, selectionModel, parent);
 }
 
-CollectionStorageModel::CollectionStorageModel( QAbstractItemModel *model, QItemSelectionModel *selectionModel, QObject *parent )
-    : MessageList::StorageModel( model, selectionModel, parent )
+CollectionStorageModel::CollectionStorageModel(QAbstractItemModel *model, QItemSelectionModel *selectionModel, QObject *parent)
+    : MessageList::StorageModel(model, selectionModel, parent)
 {
 }
 
@@ -56,38 +55,42 @@ CollectionStorageModel::~CollectionStorageModel()
 {
 }
 
-bool CollectionStorageModel::isOutBoundFolder( const Akonadi::Collection& c ) const
+bool CollectionStorageModel::isOutBoundFolder(const Akonadi::Collection &c) const
 {
-    if ( c.hasAttribute<Akonadi::MessageFolderAttribute>()
-         && c.attribute<Akonadi::MessageFolderAttribute>()->isOutboundFolder() ) {
+    if (c.hasAttribute<Akonadi::MessageFolderAttribute>()
+            && c.attribute<Akonadi::MessageFolderAttribute>()->isOutboundFolder()) {
         return true;
     }
-    QSharedPointer<FolderCollection> fd = FolderCollection::forCollection( c, false );
-    if ( fd ) {
-        const QString folderId( QString::number(c.id()) );
+    QSharedPointer<FolderCollection> fd = FolderCollection::forCollection(c, false);
+    if (fd) {
+        const QString folderId(QString::number(c.id()));
         // default setting
-        const KIdentityManagement::Identity & identity =
-                kmkernel->identityManager()->identityForUoidOrDefault( fd->identity() );
+        const KIdentityManagement::Identity &identity =
+            kmkernel->identityManager()->identityForUoidOrDefault(fd->identity());
 
         bool isOnline = false;
-        if ( CommonKernel->isSystemFolderCollection(c) &&
-             !kmkernel->isImapFolder( c, isOnline ) ) {
+        if (CommonKernel->isSystemFolderCollection(c) &&
+                !kmkernel->isImapFolder(c, isOnline)) {
             // local system folders
-            if ( c == CommonKernel->inboxCollectionFolder() ||
-                 c == CommonKernel->trashCollectionFolder() )
+            if (c == CommonKernel->inboxCollectionFolder() ||
+                    c == CommonKernel->trashCollectionFolder()) {
                 return false;
-            if ( c == CommonKernel->outboxCollectionFolder() ||
-                 c == CommonKernel->sentCollectionFolder() ||
-                 c == CommonKernel->templatesCollectionFolder() ||
-                 c == CommonKernel->draftsCollectionFolder() )
+            }
+            if (c == CommonKernel->outboxCollectionFolder() ||
+                    c == CommonKernel->sentCollectionFolder() ||
+                    c == CommonKernel->templatesCollectionFolder() ||
+                    c == CommonKernel->draftsCollectionFolder()) {
                 return true;
-        } else if ( identity.drafts() == folderId ||
-                    identity.templates() == folderId ||
-                    identity.fcc() == folderId )
+            }
+        } else if (identity.drafts() == folderId ||
+                   identity.templates() == folderId ||
+                   identity.fcc() == folderId)
             // drafts, templates or sent of the identity
+        {
             return true;
-        else
+        } else {
             return false;
+        }
     }
 
     return false;

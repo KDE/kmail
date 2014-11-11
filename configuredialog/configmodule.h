@@ -30,17 +30,17 @@
 class ConfigModule : public KCModule
 {
 public:
-  explicit ConfigModule( QWidget *parent=0 )
-     : KCModule ( parent ) 
-     {}
-  ~ConfigModule() {}
+    explicit ConfigModule(QWidget *parent = 0)
+        : KCModule(parent)
+    {}
+    ~ConfigModule() {}
 
-  virtual void load() = 0;
-  virtual void save() = 0;
-  virtual void defaults() {}
+    virtual void load() = 0;
+    virtual void save() = 0;
+    virtual void defaults() {}
 
-  /** Should return the help anchor for this page or tab */
-  virtual QString helpAnchor() const = 0;
+    /** Should return the help anchor for this page or tab */
+    virtual QString helpAnchor() const = 0;
 };
 
 #endif

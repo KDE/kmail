@@ -20,7 +20,6 @@
 
 #include <QLabel>
 
-
 class StatusBarLabelToggledState : public QLabel
 {
     Q_OBJECT
@@ -45,8 +44,6 @@ private:
     QString mUnToggled;
     bool mToggleMode;
 };
-
-
 
 #endif // STATUSBARLABELTOGGLEDSTATE_H
 

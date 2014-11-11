@@ -39,13 +39,13 @@ class TagSelectDialog : public QDialog
 {
     Q_OBJECT
 public:
-    explicit TagSelectDialog( QWidget * parent, int numberOfSelectedMessages, const Akonadi::Item &selectedItem );
+    explicit TagSelectDialog(QWidget *parent, int numberOfSelectedMessages, const Akonadi::Item &selectedItem);
     ~TagSelectDialog();
     Akonadi::Tag::List selectedTag() const;
 
 private Q_SLOTS:
     void slotAddNewTag();
-    void slotTagsFetched(KJob*);
+    void slotTagsFetched(KJob *);
 
 private:
     void createTagList();
@@ -58,7 +58,6 @@ private:
     QList<MailCommon::Tag::Ptr> mTagList;
     QListWidget *mListTag;
 };
-
 
 #endif /* TAGSELECTDIALOG_H */
 

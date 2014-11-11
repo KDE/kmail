@@ -45,25 +45,25 @@ using namespace KPIM;
 using namespace MailCommon;
 using namespace MessageCore;
 
-AttachmentController::AttachmentController( MessageComposer::AttachmentModel *model, AttachmentView *view, KMComposeWin *composer )
-    : AttachmentControllerBase( model, composer, composer->actionCollection() ),
+AttachmentController::AttachmentController(MessageComposer::AttachmentModel *model, AttachmentView *view, KMComposeWin *composer)
+    : AttachmentControllerBase(model, composer, composer->actionCollection()),
       mComposer(composer),
       mView(view)
 {
-    connect( composer, SIGNAL(identityChanged(KIdentityManagement::Identity)),
-             this, SLOT(identityChanged()) );
+    connect(composer, SIGNAL(identityChanged(KIdentityManagement::Identity)),
+            this, SLOT(identityChanged()));
 
-    connect( view, SIGNAL(contextMenuRequested()), this, SLOT(showContextMenu()) );
-    connect( view->selectionModel(), SIGNAL(selectionChanged(QItemSelection,QItemSelection)),
-             this, SLOT(selectionChanged()) );
-    connect( view, SIGNAL(doubleClicked(QModelIndex)),
-             this, SLOT(doubleClicked(QModelIndex)) );
+    connect(view, SIGNAL(contextMenuRequested()), this, SLOT(showContextMenu()));
+    connect(view->selectionModel(), SIGNAL(selectionChanged(QItemSelection,QItemSelection)),
+            this, SLOT(selectionChanged()));
+    connect(view, SIGNAL(doubleClicked(QModelIndex)),
+            this, SLOT(doubleClicked(QModelIndex)));
 
     connect(this, &AttachmentController::refreshSelection, this, &AttachmentController::selectionChanged);
 
     connect(this, &AttachmentController::showAttachment, this, &AttachmentController::onShowAttachment);
     connect(this, &AttachmentController::selectedAllAttachment, this, &AttachmentController::slotSelectAllAttachment);
-    connect( model, SIGNAL(attachItemsRequester(Akonadi::Item::List)), this, SLOT(addAttachmentItems(Akonadi::Item::List)) );
+    connect(model, SIGNAL(attachItemsRequester(Akonadi::Item::List)), this, SLOT(addAttachmentItems(Akonadi::Item::List)));
 }
 
 AttachmentController::~AttachmentController()
@@ -80,18 +80,18 @@ void AttachmentController::identityChanged()
     const KIdentityManagement::Identity &identity = mComposer->identity();
 
     // "Attach public key" is only possible if OpenPGP support is available:
-    enableAttachPublicKey( Kleo::CryptoBackendFactory::instance()->openpgp() );
+    enableAttachPublicKey(Kleo::CryptoBackendFactory::instance()->openpgp());
 
     // "Attach my public key" is only possible if OpenPGP support is
     // available and the user specified his key for the current identity:
-    enableAttachMyPublicKey( Kleo::CryptoBackendFactory::instance()->openpgp() && !identity.pgpEncryptionKey().isEmpty() );
+    enableAttachMyPublicKey(Kleo::CryptoBackendFactory::instance()->openpgp() && !identity.pgpEncryptionKey().isEmpty());
 }
 
 void AttachmentController::attachMyPublicKey()
 {
     const KIdentityManagement::Identity &identity = mComposer->identity();
     qDebug() << identity.identityName();
-    exportPublicKey( QString::fromLatin1(identity.pgpEncryptionKey()) );
+    exportPublicKey(QString::fromLatin1(identity.pgpEncryptionKey()));
 }
 
 void AttachmentController::actionsCreated()
@@ -103,11 +103,11 @@ void AttachmentController::actionsCreated()
     selectionChanged();
 }
 
-void AttachmentController::addAttachmentItems( const Akonadi::Item::List &items )
+void AttachmentController::addAttachmentItems(const Akonadi::Item::List &items)
 {
-    Akonadi::ItemFetchJob *itemFetchJob = new Akonadi::ItemFetchJob( items, this );
-    itemFetchJob->fetchScope().fetchFullPayload( true );
-    itemFetchJob->fetchScope().setAncestorRetrieval( Akonadi::ItemFetchScope::Parent );
+    Akonadi::ItemFetchJob *itemFetchJob = new Akonadi::ItemFetchJob(items, this);
+    itemFetchJob->fetchScope().fetchFullPayload(true);
+    itemFetchJob->fetchScope().setAncestorRetrieval(Akonadi::ItemFetchScope::Parent);
     connect(itemFetchJob, &Akonadi::ItemFetchJob::result, mComposer, &KMComposeWin::slotFetchJob);
 }
 
@@ -115,40 +115,39 @@ void AttachmentController::selectionChanged()
 {
     const QModelIndexList selectedRows = mView->selectionModel()->selectedRows();
     AttachmentPart::List selectedParts;
-    foreach( const QModelIndex &index, selectedRows ) {
+    foreach (const QModelIndex &index, selectedRows) {
         AttachmentPart::Ptr part = mView->model()->data(
-                    index, MessageComposer::AttachmentModel::AttachmentPartRole ).value<AttachmentPart::Ptr>();
-        selectedParts.append( part );
+                                       index, MessageComposer::AttachmentModel::AttachmentPartRole).value<AttachmentPart::Ptr>();
+        selectedParts.append(part);
     }
-    setSelectedParts( selectedParts );
+    setSelectedParts(selectedParts);
 }
 
-void AttachmentController::onShowAttachment( KMime::Content *content, const QByteArray &charset )
+void AttachmentController::onShowAttachment(KMime::Content *content, const QByteArray &charset)
 {
     KMReaderMainWin *win =
-            new KMReaderMainWin( content, MessageViewer::Viewer::Text, QString::fromLatin1(charset) );
+        new KMReaderMainWin(content, MessageViewer::Viewer::Text, QString::fromLatin1(charset));
     win->show();
 }
 
-void AttachmentController::doubleClicked( const QModelIndex &itemClicked )
+void AttachmentController::doubleClicked(const QModelIndex &itemClicked)
 {
-    if ( !itemClicked.isValid() ) {
+    if (!itemClicked.isValid()) {
         qDebug() << "Received an invalid item clicked index";
         return;
     }
     // The itemClicked index will contain the column information. But we want to retrieve
     // the AttachmentPart, so we must recreate the QModelIndex without the column information
-    const QModelIndex &properItemClickedIndex = mView->model()->index( itemClicked.row(), 0 );
+    const QModelIndex &properItemClickedIndex = mView->model()->index(itemClicked.row(), 0);
     AttachmentPart::Ptr part = mView->model()->data(
-                properItemClickedIndex,
-                MessageComposer::AttachmentModel::AttachmentPartRole ).value<AttachmentPart::Ptr>();
+                                   properItemClickedIndex,
+                                   MessageComposer::AttachmentModel::AttachmentPartRole).value<AttachmentPart::Ptr>();
 
     // We can't edit encapsulated messages, but we can view them.
-    if ( part->isMessageOrMessageCollection() ) {
-        viewAttachment( part );
-    }
-    else {
-        editAttachment( part );
+    if (part->isMessageOrMessageCollection()) {
+        viewAttachment(part);
+    } else {
+        editAttachment(part);
     }
 }
 

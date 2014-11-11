@@ -31,13 +31,13 @@ class KActionCollection;
 class QAction;
 class KToggleAction;
 class QMenu;
-namespace MessageViewer {
+namespace MessageViewer
+{
 class HeaderStrategy;
 class HeaderStyle;
 class CSSHelper;
 class AttachmentStrategy;
 }
-
 
 class KJob;
 
@@ -46,46 +46,47 @@ class KJob;
    used for reading or viewing messages.
 */
 
-class KMReaderWin: public QWidget {
+class KMReaderWin: public QWidget
+{
     Q_OBJECT
 
 public:
-    explicit KMReaderWin( QWidget *parent, QWidget *mainWindow,
-                          KActionCollection *actionCollection, Qt::WindowFlags f = 0 );
+    explicit KMReaderWin(QWidget *parent, QWidget *mainWindow,
+                         KActionCollection *actionCollection, Qt::WindowFlags f = 0);
     virtual ~KMReaderWin();
 
     /** Read settings from app's config file. */
     void readConfig();
 
-    MessageViewer::HeaderStyle * headerStyle() const;
+    MessageViewer::HeaderStyle *headerStyle() const;
 
     /** Set the header style and strategy. We only want them to be set
       together. */
-    void setHeaderStyleAndStrategy( MessageViewer::HeaderStyle * style,
-                                    MessageViewer::HeaderStrategy * strategy );
+    void setHeaderStyleAndStrategy(MessageViewer::HeaderStyle *style,
+                                   MessageViewer::HeaderStrategy *strategy);
     /** Getthe message header strategy. */
-    const MessageViewer::HeaderStrategy * headerStrategy() const;
+    const MessageViewer::HeaderStrategy *headerStrategy() const;
 
     /** Get/set the message attachment strategy. */
-    const MessageViewer::AttachmentStrategy * attachmentStrategy() const;
+    const MessageViewer::AttachmentStrategy *attachmentStrategy() const;
 
-    void setAttachmentStrategy( const MessageViewer::AttachmentStrategy * strategy );
+    void setAttachmentStrategy(const MessageViewer::AttachmentStrategy *strategy);
 
     /** Get selected override character encoding.
       @return The encoding selected by the user or an empty string if auto-detection
       is selected. */
     QString overrideEncoding() const;
     /** Set the override character encoding. */
-    void setOverrideEncoding( const QString & encoding );
-    virtual void setPrinting(bool enable );
+    void setOverrideEncoding(const QString &encoding);
+    virtual void setPrinting(bool enable);
 
-    void setMessage( const Akonadi::Item& item, MessageViewer::Viewer::UpdateMode updateMode = MessageViewer::Viewer::Delayed);
+    void setMessage(const Akonadi::Item &item, MessageViewer::Viewer::UpdateMode updateMode = MessageViewer::Viewer::Delayed);
 
-    void setMessage( KMime::Message::Ptr message );
+    void setMessage(KMime::Message::Ptr message);
 
     /** Instead of settings a message to be shown sets a message part
       to be shown */
-    void setMsgPart( KMime::Content* aMsgPart );
+    void setMsgPart(KMime::Content *aMsgPart);
 
     /** Clear the reader and discard the current message. */
     void clear(bool force = false);
@@ -97,14 +98,13 @@ public:
 
     /** Override default html mail setting */
     bool htmlOverride() const;
-    void setHtmlOverride( bool override );
+    void setHtmlOverride(bool override);
     MessageViewer::Viewer::DisplayFormatMessage displayFormatMessageOverwrite() const;
     void setDisplayFormatMessageOverwrite(MessageViewer::Viewer::DisplayFormatMessage format);
 
-
     /** Override default load external references setting */
     bool htmlLoadExtOverride() const;
-    void setHtmlLoadExtOverride( bool override );
+    void setHtmlLoadExtOverride(bool override);
 
     /** Is html mail to be supported? Takes into account override */
     bool htmlMail() const;
@@ -116,7 +116,7 @@ public:
     static QString newFeaturesMD5();
 
     /** Display a generic HTML splash page instead of a message */
-    void displaySplashPage( const QString &info );
+    void displaySplashPage(const QString &info);
 
     /** Display the about page instead of a message */
     void displayAboutPage();
@@ -129,25 +129,49 @@ public:
     void displayResourceOfflinePage();
 
     bool isFixedFont() const;
-    void setUseFixedFont( bool useFixedFont );
-    MessageViewer::Viewer *viewer() { return mViewer; }
+    void setUseFixedFont(bool useFixedFont);
+    MessageViewer::Viewer *viewer()
+    {
+        return mViewer;
+    }
     KToggleAction *toggleFixFontAction() const;
-    QAction *mailToComposeAction() const { return mMailToComposeAction; }
-    QAction *mailToReplyAction() const { return mMailToReplyAction; }
-    QAction *mailToForwardAction() const { return mMailToForwardAction; }
-    QAction *addAddrBookAction() const { return mAddAddrBookAction; }
-    QAction *openAddrBookAction() const { return mOpenAddrBookAction; }
+    QAction *mailToComposeAction() const
+    {
+        return mMailToComposeAction;
+    }
+    QAction *mailToReplyAction() const
+    {
+        return mMailToReplyAction;
+    }
+    QAction *mailToForwardAction() const
+    {
+        return mMailToForwardAction;
+    }
+    QAction *addAddrBookAction() const
+    {
+        return mAddAddrBookAction;
+    }
+    QAction *openAddrBookAction() const
+    {
+        return mOpenAddrBookAction;
+    }
     QAction *copyAction() const;
     QAction *selectAllAction() const;
     QAction *copyURLAction() const;
     QAction *copyImageLocation() const;
     QAction *urlOpenAction() const;
-    QAction *urlSaveAsAction() const { return mUrlSaveAsAction; }
-    QAction *addBookmarksAction() const { return mAddBookmarksAction;}
+    QAction *urlSaveAsAction() const
+    {
+        return mUrlSaveAsAction;
+    }
+    QAction *addBookmarksAction() const
+    {
+        return mAddBookmarksAction;
+    }
     QAction *toggleMimePartTreeAction() const;
     QAction *speakTextAction() const;
-    QAction * translateAction() const;
-    QAction * downloadImageToDiskAction() const;
+    QAction *translateAction() const;
+    QAction *downloadImageToDiskAction() const;
     QAction *viewSourceAction() const;
     QAction *findInMessageAction() const;
     QAction *saveAsAction() const;
@@ -159,25 +183,40 @@ public:
     QAction *createTodoAction() const;
     QAction *createEventAction() const;
 
-    QAction *editContactAction() const { return mEditContactAction; }
+    QAction *editContactAction() const
+    {
+        return mEditContactAction;
+    }
 
-    QMenu *viewHtmlOption() const { return mViewHtmlOptions; }
-    QAction *shareImage() const { return mShareImage; }
+    QMenu *viewHtmlOption() const
+    {
+        return mViewHtmlOptions;
+    }
+    QAction *shareImage() const
+    {
+        return mShareImage;
+    }
 
-    QAction *addToExistingContactAction() const { return mAddEmailToExistingContactAction; }
+    QAction *addToExistingContactAction() const
+    {
+        return mAddEmailToExistingContactAction;
+    }
 
     Akonadi::Item message() const;
 
-    QWidget* mainWindow() { return mMainWindow; }
+    QWidget *mainWindow()
+    {
+        return mMainWindow;
+    }
 
     /** Enforce message decryption. */
-    void setDecryptMessageOverwrite( bool overwrite = true );
+    void setDecryptMessageOverwrite(bool overwrite = true);
 
-    MessageViewer::CSSHelper* cssHelper() const;
+    MessageViewer::CSSHelper *cssHelper() const;
 
     bool printSelectedText(bool preview);
 
-    void setContactItem(const Akonadi::Item& contact, const KContacts::Addressee &address);
+    void setContactItem(const Akonadi::Item &contact, const KContacts::Addressee &address);
     void clearContactItem();
     bool adblockEnabled() const;
     bool isAShortUrl(const KUrl &url) const;
@@ -187,7 +226,7 @@ signals:
       in unencrypted state in it's folder. */
     void replaceMsgByUnencryptedVersion();
 
-    void showStatusBarMessage( const QString &message );
+    void showStatusBarMessage(const QString &message);
 
 public slots:
     /** Force update even if message is the same */
@@ -206,15 +245,15 @@ public slots:
     /** Save the page to a file */
     void slotUrlSave();
     void slotAddBookmarks();
-    void slotUrlClicked( const Akonadi::Item &,  const KUrl& );
-    void slotShowReader(KMime::Content* , bool html, const QString& );
-    void slotShowMessage( KMime::Message::Ptr message, const QString& encoding );
-    void slotDeleteMessage( const Akonadi::Item& );
+    void slotUrlClicked(const Akonadi::Item &,  const KUrl &);
+    void slotShowReader(KMime::Content *, bool html, const QString &);
+    void slotShowMessage(KMime::Message::Ptr message, const QString &encoding);
+    void slotDeleteMessage(const Akonadi::Item &);
     void slotSaveImageOnDisk();
 
-    void slotPrintComposeResult( KJob *job );
+    void slotPrintComposeResult(KJob *job);
     void slotEditContact();
-    void contactStored( const Akonadi::Item &item );
+    void contactStored(const Akonadi::Item &item);
     void slotContactEditorError(const QString &error);
 
     void slotContactHtmlOptions();
@@ -253,7 +292,6 @@ private:
 
     MessageViewer::Viewer *mViewer;
 };
-
 
 #endif
 

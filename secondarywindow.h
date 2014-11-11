@@ -35,7 +35,8 @@
 
 class QCloseEvent;
 
-namespace KMail {
+namespace KMail
+{
 
 /**
    *  Window class for secondary KMail window like the composer window and
@@ -46,7 +47,7 @@ class SecondaryWindow : public KXmlGuiWindow
     Q_OBJECT
 
 public:
-    explicit SecondaryWindow( const char * name = 0 );
+    explicit SecondaryWindow(const char *name = 0);
     ~SecondaryWindow();
     using KMainWindow::setCaption;
 public Q_SLOTS:
@@ -55,7 +56,7 @@ public Q_SLOTS:
      * @brief setCaption
      * @param caption
      */
-    virtual void setCaption( const QString &caption);
+    virtual void setCaption(const QString &caption);
 
 protected:
     /**
@@ -63,7 +64,7 @@ protected:
      *  last _visible_ secondary window is closed in case a system tray applet
      *  exists.
      */
-    virtual void closeEvent( QCloseEvent * );
+    virtual void closeEvent(QCloseEvent *);
 };
 
 } // namespace KMail

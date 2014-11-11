@@ -34,68 +34,67 @@
 
 using namespace MailCommon;
 
-
-CollectionShortcutPage::CollectionShortcutPage(QWidget * parent) :
-    CollectionPropertiesPage( parent ),
-    mShortcutChanged( false )
+CollectionShortcutPage::CollectionShortcutPage(QWidget *parent) :
+    CollectionPropertiesPage(parent),
+    mShortcutChanged(false)
 {
-    setObjectName( QLatin1String( "KMail::CollectionShortcutPage" ) );
-    setPageTitle( i18nc( "@title:tab Shortcut settings for a folder.", "Shortcut" ) );
+    setObjectName(QLatin1String("KMail::CollectionShortcutPage"));
+    setPageTitle(i18nc("@title:tab Shortcut settings for a folder.", "Shortcut"));
 }
 
 CollectionShortcutPage::~CollectionShortcutPage()
 {
 }
 
-void CollectionShortcutPage::init(const Akonadi::Collection & col)
+void CollectionShortcutPage::init(const Akonadi::Collection &col)
 {
-    mFolder = FolderCollection::forCollection( col, false );
+    mFolder = FolderCollection::forCollection(col, false);
 
-    QVBoxLayout *topLayout = new QVBoxLayout( this );
+    QVBoxLayout *topLayout = new QVBoxLayout(this);
 //TODO PORT QT5     topLayout->setSpacing( QDialog::spacingHint() );
 
-    QLabel *label = new QLabel( i18n( "<qt>To choose a key or a combination "
-                                      "of keys which select the current folder, "
-                                      "click the button below and then press the key(s) "
-                                      "you wish to associate with this folder.</qt>" ), this );
+    QLabel *label = new QLabel(i18n("<qt>To choose a key or a combination "
+                                    "of keys which select the current folder, "
+                                    "click the button below and then press the key(s) "
+                                    "you wish to associate with this folder.</qt>"), this);
     label->setWordWrap(true);
     topLayout->addWidget(label);
 
-    QWidget *hb = new QWidget( this );
+    QWidget *hb = new QWidget(this);
     QHBoxLayout *hbHBoxLayout = new QHBoxLayout(hb);
     hbHBoxLayout->setMargin(0);
 
     new QWidget(hb);
-    mKeySeqWidget = new KKeySequenceWidget( hb );
+    mKeySeqWidget = new KKeySequenceWidget(hb);
     hbHBoxLayout->addWidget(mKeySeqWidget);
-    mKeySeqWidget->setObjectName( QLatin1String("FolderShortcutSelector") );
+    mKeySeqWidget->setObjectName(QLatin1String("FolderShortcutSelector"));
     connect(mKeySeqWidget, &KKeySequenceWidget::keySequenceChanged, this, &CollectionShortcutPage::slotShortcutChanged);
     new QWidget(hb);
 
-    topLayout->addItem( new QSpacerItem( 0, 10 ));
-    topLayout->addWidget( hb );
-    topLayout->addStretch( 1 );
+    topLayout->addItem(new QSpacerItem(0, 10));
+    topLayout->addWidget(hb);
+    topLayout->addStretch(1);
 
-    mKeySeqWidget->setCheckActionCollections( KMKernel::self()->getKMMainWidget()->actionCollections() );
+    mKeySeqWidget->setCheckActionCollections(KMKernel::self()->getKMMainWidget()->actionCollections());
 }
 
-void CollectionShortcutPage::load( const Akonadi::Collection & col )
+void CollectionShortcutPage::load(const Akonadi::Collection &col)
 {
-    init( col );
-    if ( mFolder ) {
-        mKeySeqWidget->setKeySequence( mFolder->shortcut(),
-                                       KKeySequenceWidget::NoValidate );
+    init(col);
+    if (mFolder) {
+        mKeySeqWidget->setKeySequence(mFolder->shortcut(),
+                                      KKeySequenceWidget::NoValidate);
         mShortcutChanged = false;
     }
 }
 
-void CollectionShortcutPage::save( Akonadi::Collection & col )
+void CollectionShortcutPage::save(Akonadi::Collection &col)
 {
-    if ( mFolder ) {
-        if ( mShortcutChanged ) {
+    if (mFolder) {
+        if (mShortcutChanged) {
             mKeySeqWidget->applyStealShortcut();
-            mFolder->setShortcut( mKeySeqWidget->keySequence() );
-            KMKernel::self()->getKMMainWidget()->folderShortcutActionManager()->shortcutChanged( mFolder->collection() );
+            mFolder->setShortcut(mKeySeqWidget->keySequence());
+            KMKernel::self()->getKMMainWidget()->folderShortcutActionManager()->shortcutChanged(mFolder->collection());
         }
     }
 }
@@ -104,6 +103,4 @@ void CollectionShortcutPage::slotShortcutChanged()
 {
     mShortcutChanged = true;
 }
-
-
 

@@ -15,7 +15,6 @@
   51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
 */
 
-
 #ifndef CONFIGURESECURITYPAGE_H
 #define CONFIGURESECURITYPAGE_H
 
@@ -28,14 +27,16 @@
 #include "ui_smimeconfiguration.h"
 
 class QButtonGroup;
-namespace MessageViewer {
+namespace MessageViewer
+{
 class AdBlockSettingWidget;
 }
 
-class SecurityPageGeneralTab : public ConfigModuleTab {
+class SecurityPageGeneralTab : public ConfigModuleTab
+{
     Q_OBJECT
 public:
-    explicit SecurityPageGeneralTab( QWidget * parent=0 );
+    explicit SecurityPageGeneralTab(QWidget *parent = 0);
     QString helpAnchor() const;
 
     void save();
@@ -49,13 +50,14 @@ private:
     Ui_SecurityPageGeneralTab mSGTab;
 
 private slots:
-    void slotLinkClicked( const QString & link );
+    void slotLinkClicked(const QString &link);
 };
 
-class SecurityPageMDNTab : public ConfigModuleTab {
+class SecurityPageMDNTab : public ConfigModuleTab
+{
     Q_OBJECT
 public:
-    explicit SecurityPageMDNTab( QWidget * parent=0 );
+    explicit SecurityPageMDNTab(QWidget *parent = 0);
     QString helpAnchor() const;
 
     void save();
@@ -69,13 +71,14 @@ private:
     Ui_SecurityPageMDNTab mUi;
 
 private slots:
-    void slotLinkClicked( const QString & link );
+    void slotLinkClicked(const QString &link);
 };
 
-class SecurityPageComposerCryptoTab : public ConfigModuleTab {
+class SecurityPageComposerCryptoTab : public ConfigModuleTab
+{
     Q_OBJECT
 public:
-    explicit SecurityPageComposerCryptoTab( QWidget * parent=0 );
+    explicit SecurityPageComposerCryptoTab(QWidget *parent = 0);
     ~SecurityPageComposerCryptoTab();
 
     QString helpAnchor() const;
@@ -88,13 +91,14 @@ private:
     //FIXME virtual void doResetToDefaultsOther();
 
 private:
-    Ui::ComposerCryptoConfiguration* mWidget;
+    Ui::ComposerCryptoConfiguration *mWidget;
 };
 
-class SecurityPageWarningTab : public ConfigModuleTab {
+class SecurityPageWarningTab : public ConfigModuleTab
+{
     Q_OBJECT
 public:
-    explicit SecurityPageWarningTab( QWidget * parent=0 );
+    explicit SecurityPageWarningTab(QWidget *parent = 0);
     ~SecurityPageWarningTab();
 
     QString helpAnchor() const;
@@ -112,13 +116,14 @@ private:
     //FIXME virtual void doResetToDefaultsOther();
 
 private:
-    Ui::WarningConfiguration* mWidget;
+    Ui::WarningConfiguration *mWidget;
 };
 
-class SecurityPageSMimeTab : public ConfigModuleTab {
+class SecurityPageSMimeTab : public ConfigModuleTab
+{
     Q_OBJECT
 public:
-    explicit SecurityPageSMimeTab( QWidget * parent=0 );
+    explicit SecurityPageSMimeTab(QWidget *parent = 0);
     ~SecurityPageSMimeTab();
 
     QString helpAnchor() const;
@@ -134,15 +139,16 @@ private:
     //FIXME virtual void doResetToDefaultsOther();
 
 private:
-    Ui::SMimeConfiguration* mWidget;
-    Kleo::CryptoConfig* mConfig;
+    Ui::SMimeConfiguration *mWidget;
+    Kleo::CryptoConfig *mConfig;
 };
 
 #ifndef KDEPIM_NO_WEBKIT
-class SecurityPageAdBlockTab : public ConfigModuleTab {
+class SecurityPageAdBlockTab : public ConfigModuleTab
+{
     Q_OBJECT
 public:
-    explicit SecurityPageAdBlockTab( QWidget * parent=0 );
+    explicit SecurityPageAdBlockTab(QWidget *parent = 0);
     ~SecurityPageAdBlockTab();
 
     QString helpAnchor() const;
@@ -159,11 +165,11 @@ private:
 };
 #endif
 
-
-class KMAIL_EXPORT SecurityPage : public ConfigModuleWithTabs {
+class KMAIL_EXPORT SecurityPage : public ConfigModuleWithTabs
+{
     Q_OBJECT
 public:
-    explicit SecurityPage( QWidget *parent=0 );
+    explicit SecurityPage(QWidget *parent = 0);
 
     QString helpAnchor() const;
 
@@ -182,7 +188,5 @@ private:
     SecurityPageAdBlockTab *mSAdBlockTab;
 #endif
 };
-
-
 
 #endif // CONFIGURESECURITYPAGE_H

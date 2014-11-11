@@ -38,7 +38,7 @@ Q_SIGNALS:
 private Q_SLOTS:
     //void slotInitialCollectionFetchingDone(KJob*);
     void slotInitialCollectionFetchingFirstLevelDone(KJob *job);
-    void slotCreateNewFolder(KJob*);
+    void slotCreateNewFolder(KJob *);
 
 private:
     void createNewFolder(const QString &name);

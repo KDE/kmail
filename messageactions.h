@@ -34,15 +34,18 @@ class KXMLGUIClient;
 class KMReaderWin;
 class QMenu;
 
-namespace Akonadi {
+namespace Akonadi
+{
 class Item;
 }
 
-namespace TemplateParser {
+namespace TemplateParser
+{
 class CustomTemplatesMenu;
 }
 
-namespace KMail {
+namespace KMail
+{
 
 /**
   Manages common actions that can be performed on one or more messages.
@@ -51,9 +54,9 @@ class MessageActions : public QObject
 {
     Q_OBJECT
 public:
-    explicit MessageActions( KActionCollection* ac, QWidget *parent );
+    explicit MessageActions(KActionCollection *ac, QWidget *parent);
     ~MessageActions();
-    void setMessageView( KMReaderWin *msgView );
+    void setMessageView(KMReaderWin *msgView);
 
     /**
      * This function adds or updates the actions of the forward action menu, taking the
@@ -65,32 +68,77 @@ public:
     /**
      * Sets up action list for forward menu.
      */
-    void setupForwardingActionsList( KXMLGUIClient *guiClient );
+    void setupForwardingActionsList(KXMLGUIClient *guiClient);
 
     void setCurrentMessage(const Akonadi::Item &item , const Akonadi::Item::List &items = Akonadi::Item::List());
 
-    KActionMenu* replyMenu() const { return mReplyActionMenu; }
-    QAction * replyListAction() const { return mReplyListAction; }
-    QAction * createTodoAction() const { return mCreateTodoAction; }
-    QAction * forwardInlineAction() const { return mForwardInlineAction; }
-    QAction * forwardAttachedAction() const { return mForwardAttachedAction; }
-    QAction * redirectAction() const { return mRedirectAction; }
+    KActionMenu *replyMenu() const
+    {
+        return mReplyActionMenu;
+    }
+    QAction *replyListAction() const
+    {
+        return mReplyListAction;
+    }
+    QAction *createTodoAction() const
+    {
+        return mCreateTodoAction;
+    }
+    QAction *forwardInlineAction() const
+    {
+        return mForwardInlineAction;
+    }
+    QAction *forwardAttachedAction() const
+    {
+        return mForwardAttachedAction;
+    }
+    QAction *redirectAction() const
+    {
+        return mRedirectAction;
+    }
 
-    KActionMenu* messageStatusMenu() const { return mStatusMenu; }
-    KActionMenu *forwardMenu() const { return mForwardActionMenu; }
+    KActionMenu *messageStatusMenu() const
+    {
+        return mStatusMenu;
+    }
+    KActionMenu *forwardMenu() const
+    {
+        return mForwardActionMenu;
+    }
 
-    QAction * editAction() const { return mEditAction; }
-    QAction * annotateAction() const { return mAnnotateAction; }
-    QAction * printAction() const { return mPrintAction; }
-    QAction * printPreviewAction() const { return mPrintPreviewAction; }
-    QAction * listFilterAction() const { return mListFilterAction; }
+    QAction *editAction() const
+    {
+        return mEditAction;
+    }
+    QAction *annotateAction() const
+    {
+        return mAnnotateAction;
+    }
+    QAction *printAction() const
+    {
+        return mPrintAction;
+    }
+    QAction *printPreviewAction() const
+    {
+        return mPrintPreviewAction;
+    }
+    QAction *listFilterAction() const
+    {
+        return mListFilterAction;
+    }
 
-    KActionMenu* mailingListActionMenu() const { return mMailingListActionMenu; }
-    TemplateParser::CustomTemplatesMenu* customTemplatesMenu() const;
+    KActionMenu *mailingListActionMenu() const
+    {
+        return mMailingListActionMenu;
+    }
+    TemplateParser::CustomTemplatesMenu *customTemplatesMenu() const;
 
-    void addWebShortcutsMenu( QMenu *menu, const QString & text );
+    void addWebShortcutsMenu(QMenu *menu, const QString &text);
 
-    QAction *debugBalooAction() const { return mDebugBalooAction; }
+    QAction *debugBalooAction() const
+    {
+        return mDebugBalooAction;
+    }
 
 signals:
     // This signal is emitted when a reply is triggered and the
@@ -106,27 +154,26 @@ public slots:
 private:
     void updateActions();
     void replyCommand(MessageComposer::ReplyStrategy strategy);
-    void addMailingListAction( const QString &item, const KUrl &url );
-    void addMailingListActions( const QString &item, const KUrl::List &list );
-    void updateMailingListActions( const Akonadi::Item& messageItem );
+    void addMailingListAction(const QString &item, const KUrl &url);
+    void addMailingListActions(const QString &item, const KUrl::List &list);
+    void updateMailingListActions(const Akonadi::Item &messageItem);
     void printMessage(bool preview);
     void clearMailingListActions();
 
-
 private slots:
-    void slotItemModified( const Akonadi::Item &  item, const QSet< QByteArray > &  partIdentifiers );
-    void slotItemRemoved(const Akonadi::Item& item);
+    void slotItemModified(const Akonadi::Item   &item, const QSet< QByteArray >   &partIdentifiers);
+    void slotItemRemoved(const Akonadi::Item &item);
 
     void slotReplyToMsg();
     void slotReplyAuthorToMsg();
     void slotReplyListToMsg();
     void slotReplyAllToMsg();
     void slotNoQuoteReplyToMsg();
-    void slotRunUrl( QAction *urlAction );
+    void slotRunUrl(QAction *urlAction);
     void slotPrintMsg();
     void slotPrintPreviewMsg();
 
-    void slotUpdateActionsFetchDone( KJob* job );
+    void slotUpdateActionsFetchDone(KJob *job);
     void slotMailingListFilter();
     void slotHandleWebShortcutAction();
     void slotConfigureWebShortcuts();
@@ -141,8 +188,8 @@ private:
 
     KActionMenu *mReplyActionMenu;
     QAction *mReplyAction, *mReplyAllAction, *mReplyAuthorAction,
-    *mReplyListAction, *mNoQuoteReplyAction,
-    *mForwardInlineAction, *mForwardAttachedAction, *mRedirectAction;
+            *mReplyListAction, *mNoQuoteReplyAction,
+            *mForwardInlineAction, *mForwardAttachedAction, *mRedirectAction;
     QAction *mCreateTodoAction;
     KActionMenu *mStatusMenu;
     KActionMenu *mForwardActionMenu;

@@ -37,61 +37,61 @@
 //----------------------------
 extern "C"
 {
-Q_DECL_EXPORT KCModule *create_kmail_config_misc( QWidget *parent, const char* )
-{
-    MiscPage *page = new MiscPage( parent );
-    page->setObjectName( QLatin1String("kcmkmail_config_misc") );
-    return page;
-}
-}
-
-extern "C"
-{
-Q_DECL_EXPORT KCModule *create_kmail_config_appearance( QWidget *parent, const char* )
-{
-    AppearancePage *page =
-            new AppearancePage( parent );
-    page->setObjectName( QLatin1String("kcmkmail_config_appearance") );
-    return page;
-}
+    Q_DECL_EXPORT KCModule *create_kmail_config_misc(QWidget *parent, const char *)
+    {
+        MiscPage *page = new MiscPage(parent);
+        page->setObjectName(QLatin1String("kcmkmail_config_misc"));
+        return page;
+    }
 }
 
 extern "C"
 {
-Q_DECL_EXPORT KCModule *create_kmail_config_composer( QWidget *parent, const char* )
-{
-    ComposerPage *page = new ComposerPage( parent );
-    page->setObjectName( QLatin1String("kcmkmail_config_composer") );
-    return page;
-}
-}
-
-extern "C"
-{
-Q_DECL_EXPORT KCModule *create_kmail_config_identity( QWidget *parent, const char* )
-{
-    KMail::IdentityPage *page = new KMail::IdentityPage( parent );
-    page->setObjectName( QLatin1String("kcmkmail_config_identity") );
-    return page;
-}
+    Q_DECL_EXPORT KCModule *create_kmail_config_appearance(QWidget *parent, const char *)
+    {
+        AppearancePage *page =
+            new AppearancePage(parent);
+        page->setObjectName(QLatin1String("kcmkmail_config_appearance"));
+        return page;
+    }
 }
 
 extern "C"
 {
-Q_DECL_EXPORT KCModule *create_kmail_config_accounts( QWidget *parent, const char* )
-{
-    AccountsPage *page = new AccountsPage( parent );
-    page->setObjectName( QLatin1String("kcmkmail_config_accounts") );
-    return page;
-}
+    Q_DECL_EXPORT KCModule *create_kmail_config_composer(QWidget *parent, const char *)
+    {
+        ComposerPage *page = new ComposerPage(parent);
+        page->setObjectName(QLatin1String("kcmkmail_config_composer"));
+        return page;
+    }
 }
 
 extern "C"
 {
-Q_DECL_EXPORT KCModule *create_kmail_config_security( QWidget *parent, const char* )
-{
-    SecurityPage *page = new SecurityPage( parent );
-    page->setObjectName( QLatin1String("kcmkmail_config_security") );
-    return page;
+    Q_DECL_EXPORT KCModule *create_kmail_config_identity(QWidget *parent, const char *)
+    {
+        KMail::IdentityPage *page = new KMail::IdentityPage(parent);
+        page->setObjectName(QLatin1String("kcmkmail_config_identity"));
+        return page;
+    }
 }
+
+extern "C"
+{
+    Q_DECL_EXPORT KCModule *create_kmail_config_accounts(QWidget *parent, const char *)
+    {
+        AccountsPage *page = new AccountsPage(parent);
+        page->setObjectName(QLatin1String("kcmkmail_config_accounts"));
+        return page;
+    }
+}
+
+extern "C"
+{
+    Q_DECL_EXPORT KCModule *create_kmail_config_security(QWidget *parent, const char *)
+    {
+        SecurityPage *page = new SecurityPage(parent);
+        page->setObjectName(QLatin1String("kcmkmail_config_security"));
+        return page;
+    }
 }

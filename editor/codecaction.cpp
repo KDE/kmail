@@ -34,9 +34,9 @@
 class CodecAction::Private
 {
 public:
-    Private( CodecAction::Mode mod, CodecAction *qq )
-        : mode( mod )
-        , q( qq )
+    Private(CodecAction::Mode mod, CodecAction *qq)
+        : mode(mod)
+        , q(qq)
     {
     }
 
@@ -44,29 +44,27 @@ public:
     CodecAction *const q;
 };
 
-
-
-CodecAction::CodecAction( Mode mode, QObject *parent )
-    : KCodecAction( parent, mode == ReaderMode )
-    , d( new Private( mode, this ) )
+CodecAction::CodecAction(Mode mode, QObject *parent)
+    : KCodecAction(parent, mode == ReaderMode)
+    , d(new Private(mode, this))
 {
-    if( mode == ComposerMode ) {
+    if (mode == ComposerMode) {
         // Add 'us-ascii' entry.  We want it at the top, so remove then re-add everything.
         // FIXME is there a better way?
-        QList<QAction*> oldActions = actions();
+        QList<QAction *> oldActions = actions();
         removeAllActions();
-        addAction( oldActions.takeFirst() ); // 'Default'
-        addAction( i18nc( "Encodings menu", "us-ascii" ) );
-        foreach( QAction *a, oldActions ) {
-            addAction( a );
+        addAction(oldActions.takeFirst());   // 'Default'
+        addAction(i18nc("Encodings menu", "us-ascii"));
+        foreach (QAction *a, oldActions) {
+            addAction(a);
         }
-    } else if( mode == ReaderMode ) {
+    } else if (mode == ReaderMode) {
         // Nothing to do.
     }
 
     // Eye candy.
-    setIcon( QIcon::fromTheme( QLatin1String("accessories-character-map") ) );
-    setText( i18nc( "Menu item", "Encoding" ) );
+    setIcon(QIcon::fromTheme(QLatin1String("accessories-character-map")));
+    setText(i18nc("Menu item", "Encoding"));
 }
 
 CodecAction::~CodecAction()
@@ -78,10 +76,10 @@ QList<QByteArray> CodecAction::mimeCharsets() const
 {
     QList<QByteArray> ret;
     qDebug() << "current item" << currentItem() << currentText();
-    if( currentItem() == 0 ) {
+    if (currentItem() == 0) {
         // 'Default' selected: return the preferred charsets.
         ret = CodecManager::self()->preferredCharsets();
-    } else if( currentItem() == 1 ) {
+    } else if (currentItem() == 1) {
         // 'us-ascii' selected.
         ret << "us-ascii";
     } else {

@@ -37,21 +37,21 @@ SaveDraftJob::~SaveDraftJob()
 void SaveDraftJob::start()
 {
     Akonadi::Item item;
-    item.setPayload( mMsg );
-    item.setMimeType( KMime::Message::mimeType() );
+    item.setPayload(mMsg);
+    item.setMimeType(KMime::Message::mimeType());
     Akonadi::MessageStatus status;
     status.setRead();
-    item.setFlags( status.statusFlags() );
-    Akonadi::ItemCreateJob *createJob = new Akonadi::ItemCreateJob( item, mCollection );
+    item.setFlags(status.statusFlags());
+    Akonadi::ItemCreateJob *createJob = new Akonadi::ItemCreateJob(item, mCollection);
     connect(createJob, &Akonadi::ItemCreateJob::result, this, &SaveDraftJob::slotStoreDone);
 }
 
 void SaveDraftJob::slotStoreDone(KJob *job)
 {
-    if ( job->error() ) {
-        qDebug()<<" job->errorString() : "<<job->errorString();
-        setError( job->error() );
-        setErrorText( job->errorText() );
+    if (job->error()) {
+        qDebug() << " job->errorString() : " << job->errorString();
+        setError(job->error());
+        setErrorText(job->errorText());
     }
     emitResult();
 }

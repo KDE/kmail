@@ -29,11 +29,11 @@ public:
 
     QByteArray type() const;
 
-    TaskAttribute* clone() const;
+    TaskAttribute *clone() const;
 
     QByteArray serialized() const;
 
-    void deserialize( const QByteArray &data );
+    void deserialize(const QByteArray &data);
 
     void setTaskId(Akonadi::Item::Id id);
     Akonadi::Item::Id taskId() const;

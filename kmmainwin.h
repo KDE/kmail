@@ -25,7 +25,8 @@
 class KMMainWidget;
 class KToggleAction;
 class QLabel;
-namespace KPIM {
+namespace KPIM
+{
 class ProgressStatusBarWidget;
 }
 class KMMainWin : public KXmlGuiWindow
@@ -37,15 +38,18 @@ public:
     // settings by kwin doesn't work
     explicit KMMainWin(QWidget *parent = 0);
     virtual ~KMMainWin();
-    KMMainWidget *mainKMWidget() const { return mKMMainWidget; }
+    KMMainWidget *mainKMWidget() const
+    {
+        return mKMMainWidget;
+    }
 
     /// Same as KMMainWin::restore(), except that it also restores the docked state,
     /// which we have saved in saveProperties().
     /// TODO: KDE5: Move to kdelibs, see http://reviewboard.kde.org/r/504
-    bool restoreDockedState( int number );
+    bool restoreDockedState(int number);
 
 public slots:
-    void displayStatusMsg(const QString&);
+    void displayStatusMsg(const QString &);
     void slotEditToolbars();
     void slotUpdateGui();
     void setupStatusBar();
@@ -53,16 +57,16 @@ public slots:
 protected:
 
     /// Reimplemented to save the docked state
-    void saveProperties( KConfigGroup & );
+    void saveProperties(KConfigGroup &);
 
-    bool queryClose ();
+    bool queryClose();
 
 protected slots:
     void slotQuit();
     void slotShowTipOnStart();
 
 private slots:
-    void slotToggleMenubar(bool dontShowWarning = false);    
+    void slotToggleMenubar(bool dontShowWarning = false);
     void slotConfigureShortcuts();
 
 private:

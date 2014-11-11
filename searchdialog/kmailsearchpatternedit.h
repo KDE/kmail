@@ -20,12 +20,13 @@
 
 #include <mailcommon/search/searchpatternedit.h>
 
-namespace KMail {
+namespace KMail
+{
 class KMailSearchPatternEdit : public MailCommon::SearchPatternEdit
 {
     Q_OBJECT
 public:
-    explicit KMailSearchPatternEdit(QWidget *parent=0);
+    explicit KMailSearchPatternEdit(QWidget *parent = 0);
     ~KMailSearchPatternEdit();
 };
 }

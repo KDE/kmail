@@ -32,37 +32,36 @@ CryptoStateIndicatorWidget::CryptoStateIndicatorWidget(QWidget *parent)
     QHBoxLayout *hbox = new QHBoxLayout;
     setLayout(hbox);
     hbox->setMargin(0);
-    mSignatureStateIndicator = new QLabel( this );
-    mSignatureStateIndicator->setAlignment( Qt::AlignHCenter );
-    hbox->addWidget( mSignatureStateIndicator );
+    mSignatureStateIndicator = new QLabel(this);
+    mSignatureStateIndicator->setAlignment(Qt::AlignHCenter);
+    hbox->addWidget(mSignatureStateIndicator);
 
     // Get the colors for the label
-    QPalette p( mSignatureStateIndicator->palette() );
-    KColorScheme scheme( QPalette::Active, KColorScheme::View );
+    QPalette p(mSignatureStateIndicator->palette());
+    KColorScheme scheme(QPalette::Active, KColorScheme::View);
     const QColor defaultSignedColor =  // pgp signed
-            scheme.background( KColorScheme::PositiveBackground ).color();
-    const QColor defaultEncryptedColor( 0x00, 0x80, 0xFF ); // light blue // pgp encrypted
+        scheme.background(KColorScheme::PositiveBackground).color();
+    const QColor defaultEncryptedColor(0x00, 0x80, 0xFF);   // light blue // pgp encrypted
 
     QColor signedColor = defaultSignedColor;
     QColor encryptedColor = defaultEncryptedColor;
-    if ( !MessageCore::GlobalSettings::self()->useDefaultColors() ) {
+    if (!MessageCore::GlobalSettings::self()->useDefaultColors()) {
         signedColor = MessageCore::GlobalSettings::self()->pgpSignedMessageColor();
         encryptedColor = MessageCore::GlobalSettings::self()->pgpEncryptedMessageColor();
     }
 
-    p.setColor( QPalette::Window, signedColor );
-    mSignatureStateIndicator->setPalette( p );
-    mSignatureStateIndicator->setAutoFillBackground( true );
+    p.setColor(QPalette::Window, signedColor);
+    mSignatureStateIndicator->setPalette(p);
+    mSignatureStateIndicator->setAutoFillBackground(true);
 
-    mEncryptionStateIndicator = new QLabel( this );
-    mEncryptionStateIndicator->setAlignment( Qt::AlignHCenter );
-    hbox->addWidget( mEncryptionStateIndicator );
-    p.setColor( QPalette::Window, encryptedColor);
-    mEncryptionStateIndicator->setPalette( p );
-    mEncryptionStateIndicator->setAutoFillBackground( true );
+    mEncryptionStateIndicator = new QLabel(this);
+    mEncryptionStateIndicator->setAlignment(Qt::AlignHCenter);
+    hbox->addWidget(mEncryptionStateIndicator);
+    p.setColor(QPalette::Window, encryptedColor);
+    mEncryptionStateIndicator->setPalette(p);
+    mEncryptionStateIndicator->setAutoFillBackground(true);
     mShowAlwaysIndicator = GlobalSettings::self()->showCryptoLabelIndicator();
 }
-
 
 CryptoStateIndicatorWidget::~CryptoStateIndicatorWidget()
 {
@@ -70,17 +69,17 @@ CryptoStateIndicatorWidget::~CryptoStateIndicatorWidget()
 
 void CryptoStateIndicatorWidget::updateSignatureAndEncrypionStateIndicators(bool isSign, bool isEncrypted)
 {
-    mSignatureStateIndicator->setText( isSign ?
-                                           i18n("Message will be signed") :
-                                           i18n("Message will not be signed") );
-    mEncryptionStateIndicator->setText( isEncrypted ?
-                                            i18n("Message will be encrypted") :
-                                            i18n("Message will not be encrypted") );
-    if ( mShowAlwaysIndicator ) {
-        mSignatureStateIndicator->setVisible( isSign );
-        mEncryptionStateIndicator->setVisible( isEncrypted );
+    mSignatureStateIndicator->setText(isSign ?
+                                      i18n("Message will be signed") :
+                                      i18n("Message will not be signed"));
+    mEncryptionStateIndicator->setText(isEncrypted ?
+                                       i18n("Message will be encrypted") :
+                                       i18n("Message will not be encrypted"));
+    if (mShowAlwaysIndicator) {
+        mSignatureStateIndicator->setVisible(isSign);
+        mEncryptionStateIndicator->setVisible(isEncrypted);
     } else {
-        mSignatureStateIndicator->setVisible( false );
-        mEncryptionStateIndicator->setVisible( false );
+        mSignatureStateIndicator->setVisible(false);
+        mEncryptionStateIndicator->setVisible(false);
     }
 }

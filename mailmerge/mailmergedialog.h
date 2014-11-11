@@ -23,7 +23,7 @@ class MailMergeDialog : public QDialog
 {
     Q_OBJECT
 public:
-    explicit MailMergeDialog(QWidget *parent=0);
+    explicit MailMergeDialog(QWidget *parent = 0);
     ~MailMergeDialog();
 };
 

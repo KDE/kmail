@@ -33,15 +33,14 @@ class CodecAction: public KCodecAction
     Q_OBJECT
 
 public:
-    enum Mode
-    {
+    enum Mode {
         ComposerMode,         ///< Used in the composer.  Show a 'Default' menu entry,
         ///  which uses one of the preferred codecs.  Also show 'us-ascii'.
         ReaderMode            ///< Used in the reader.  Show an 'Auto' entry for each language,
         ///  and detect any charset.
     };
 
-    explicit CodecAction( Mode mode, QObject *parent = 0 );
+    explicit CodecAction(Mode mode, QObject *parent = 0);
     ~CodecAction();
 
     /**

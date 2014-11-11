@@ -31,7 +31,8 @@ namespace Akonadi
 class Collection;
 }
 
-namespace MailCommon {
+namespace MailCommon
+{
 class FolderRequester;
 }
 
@@ -43,18 +44,18 @@ class ArchiveFolderDialog : public QDialog
     Q_OBJECT
 
 public:
-    explicit ArchiveFolderDialog( QWidget *parent = 0 );
-    void setFolder( const Akonadi::Collection &defaultCollection );
+    explicit ArchiveFolderDialog(QWidget *parent = 0);
+    void setFolder(const Akonadi::Collection &defaultCollection);
 
 private slots:
     void slotFixFileExtension();
-    void slotFolderChanged( const Akonadi::Collection& );
+    void slotFolderChanged(const Akonadi::Collection &);
     void slotRecursiveCheckboxClicked();
     void slotAccepted();
-    void slotUrlChanged(const QString&);
+    void slotUrlChanged(const QString &);
 
 private:
-    bool allowToDeleteFolders( const Akonadi::Collection &folder) const;
+    bool allowToDeleteFolders(const Akonadi::Collection &folder) const;
 
     QWidget *mParentWidget;
     QCheckBox *mDeleteCheckBox;

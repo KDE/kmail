@@ -104,24 +104,25 @@ void FolderArchiveAccountInfo::readConfig(const KConfigGroup &config)
     mKeepExistingStructure = config.readEntry("keepExistingStructure", false);
 }
 
-void FolderArchiveAccountInfo::writeConfig(KConfigGroup &config )
+void FolderArchiveAccountInfo::writeConfig(KConfigGroup &config)
 {
     config.writeEntry(QLatin1String("instanceName"), mInstanceName);
-    if (mArchiveTopLevelCollectionId>-1)
+    if (mArchiveTopLevelCollectionId > -1) {
         config.writeEntry(QLatin1String("topLevelCollectionId"), mArchiveTopLevelCollectionId);
-    else
+    } else {
         config.deleteEntry(QLatin1String("topLevelCollectionId"));
+    }
 
     config.writeEntry(QLatin1String("folderArchiveType"), (int)mArchiveType);
     config.writeEntry(QLatin1String("enabled"), mEnabled);
     config.writeEntry("keepExistingStructure", mKeepExistingStructure);
 }
 
-bool FolderArchiveAccountInfo::operator==( const FolderArchiveAccountInfo& other ) const
+bool FolderArchiveAccountInfo::operator==(const FolderArchiveAccountInfo &other) const
 {
     return (mInstanceName == other.instanceName())
-            && (mArchiveTopLevelCollectionId == other.archiveTopLevel())
-            && (mArchiveType == other.folderArchiveType())
-            && (mEnabled == other.enabled())
-            && (mKeepExistingStructure == other.keepExistingStructure());
+           && (mArchiveTopLevelCollectionId == other.archiveTopLevel())
+           && (mArchiveType == other.folderArchiveType())
+           && (mEnabled == other.enabled())
+           && (mKeepExistingStructure == other.keepExistingStructure());
 }

@@ -19,7 +19,8 @@
 #define KMSTORAGESERVICE_H
 
 #include <QObject>
-namespace PimCommon {
+namespace PimCommon
+{
 class StorageServiceManager;
 class StorageServiceAbstract;
 }
@@ -28,7 +29,7 @@ class KMStorageService : public QObject
 {
     Q_OBJECT
 public:
-    explicit KMStorageService(QWidget *parentWidget, QObject *parent=0);
+    explicit KMStorageService(QWidget *parentWidget, QObject *parent = 0);
     ~KMStorageService();
 
     KActionMenu *menuShareLinkServices() const;

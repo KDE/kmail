@@ -32,11 +32,11 @@ class CollectionShortcutPage : public Akonadi::CollectionPropertiesPage
 {
     Q_OBJECT
 public:
-    explicit CollectionShortcutPage( QWidget *parent = 0 );
+    explicit CollectionShortcutPage(QWidget *parent = 0);
     ~CollectionShortcutPage();
 
-    void load( const Akonadi::Collection & col );
-    void save( Akonadi::Collection & col );
+    void load(const Akonadi::Collection &col);
+    void save(Akonadi::Collection &col);
 
 private slots:
     void slotShortcutChanged();
@@ -48,6 +48,6 @@ private:
     bool mShortcutChanged;
 };
 
-AKONADI_COLLECTION_PROPERTIES_PAGE_FACTORY( CollectionShortcutPageFactory, CollectionShortcutPage )
+AKONADI_COLLECTION_PROPERTIES_PAGE_FACTORY(CollectionShortcutPageFactory, CollectionShortcutPage)
 
 #endif /* COLLECTIONSHORTCUTPAGE_H */
