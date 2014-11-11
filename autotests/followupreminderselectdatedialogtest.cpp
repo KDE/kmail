@@ -35,10 +35,10 @@ FollowupReminderSelectDateDialogTest::~FollowupReminderSelectDateDialogTest()
 void FollowupReminderSelectDateDialogTest::shouldHaveDefaultValue()
 {
     FollowUpReminderSelectDateDialog dlg;
-    KDateComboBox *datecombobox = qFindChild<KDateComboBox *>(&dlg, QLatin1String("datecombobox"));
+    KDateComboBox *datecombobox = dlg.findChild<KDateComboBox *>(QLatin1String("datecombobox"));
     QVERIFY(datecombobox);
 
-    Akonadi::CollectionComboBox *combobox = qFindChild<Akonadi::CollectionComboBox *>(&dlg, QLatin1String("collectioncombobox"));
+    Akonadi::CollectionComboBox *combobox = dlg.findChild<Akonadi::CollectionComboBox *>(QLatin1String("collectioncombobox"));
     QVERIFY(combobox);
     QDate currentDate = QDate::currentDate();
     QCOMPARE(datecombobox->date(), currentDate.addDays(1));
