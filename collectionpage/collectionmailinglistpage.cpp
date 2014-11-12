@@ -158,7 +158,7 @@ void CollectionMailingListPage::load(const Akonadi::Collection &col)
 
     mMLId->setText((mMailingList.id().isEmpty() ? i18n("Not available") : mMailingList.id()));
     mMLHandlerCombo->setCurrentIndex(mMailingList.handler());
-    mEditList->insertStringList(mMailingList.postUrls().toStringList());
+    mEditList->insertStringList(QUrl::toStringList(mMailingList.postUrls()));
 
     mAddressCombo->setCurrentIndex(mLastItem);
     mHoldsMailingList->setChecked(mFolder && mFolder->isMailingListEnabled());
@@ -291,19 +291,19 @@ void CollectionMailingListPage::fillMLFromWidgets()
     //mMailingList.setHandler( static_cast<MailingList::Handler>( mMLHandlerCombo->currentIndex() ) );
     switch (mLastItem) {
     case 0:
-        mMailingList.setPostUrls(mEditList->items());
+        mMailingList.setPostUrls(QUrl::fromStringList(mEditList->items()));
         break;
     case 1:
-        mMailingList.setSubscribeUrls(mEditList->items());
+        mMailingList.setSubscribeUrls(QUrl::fromStringList(mEditList->items()));
         break;
     case 2:
-        mMailingList.setUnsubscribeUrls(mEditList->items());
+        mMailingList.setUnsubscribeUrls(QUrl::fromStringList(mEditList->items()));
         break;
     case 3:
-        mMailingList.setArchiveUrls(mEditList->items());
+        mMailingList.setArchiveUrls(QUrl::fromStringList(mEditList->items()));
         break;
     case 4:
-        mMailingList.setHelpUrls(mEditList->items());
+        mMailingList.setHelpUrls(QUrl::fromStringList(mEditList->items()));
         break;
     default:
         qWarning() << "Wrong entry in the mailing list entry combo!";
@@ -315,19 +315,19 @@ void CollectionMailingListPage::fillEditBox()
     mEditList->clear();
     switch (mAddressCombo->currentIndex()) {
     case 0:
-        mEditList->insertStringList(mMailingList.postUrls().toStringList());
+        mEditList->insertStringList(QUrl::toStringList(mMailingList.postUrls()));
         break;
     case 1:
-        mEditList->insertStringList(mMailingList.subscribeUrls().toStringList());
+        mEditList->insertStringList(QUrl::toStringList(mMailingList.subscribeUrls()));
         break;
     case 2:
-        mEditList->insertStringList(mMailingList.unsubscribeUrls().toStringList());
+        mEditList->insertStringList(QUrl::toStringList(mMailingList.unsubscribeUrls()));
         break;
     case 3:
-        mEditList->insertStringList(mMailingList.archiveUrls().toStringList());
+        mEditList->insertStringList(QUrl::toStringList(mMailingList.archiveUrls()));
         break;
     case 4:
-        mEditList->insertStringList(mMailingList.helpUrls().toStringList());
+        mEditList->insertStringList(QUrl::toStringList(mMailingList.helpUrls()));
         break;
     default:
         qWarning() << "Wrong entry in the mailing list entry combo!";

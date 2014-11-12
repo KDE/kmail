@@ -17,9 +17,9 @@
 
 #include "folderarchiveaccountinfotest.h"
 #include "../folderarchiveaccountinfo.h"
-#include <KGlobal>
 #include <AkonadiCore/Collection>
 #include <qtest.h>
+#include <KSharedConfig>
 
 FolderArchiveAccountInfoTest::FolderArchiveAccountInfoTest(QObject *parent)
     : QObject(parent)

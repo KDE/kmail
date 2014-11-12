@@ -42,7 +42,7 @@
 #include <AkonadiCore/item.h>
 #include <AkonadiCore/Collection>
 #include "mailcommon/folder/foldercollection.h"
-class KUrl;
+#include <KUrl>
 
 namespace KMail
 {
