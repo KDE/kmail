@@ -20,7 +20,7 @@
 #define KMAIL_MESSAGEACTIONS_H
 
 #include "messagecomposer/helper/messagefactory.h"
-#include <KUrl>
+#include <QUrl>
 
 #include <qobject.h>
 
@@ -154,8 +154,8 @@ public slots:
 private:
     void updateActions();
     void replyCommand(MessageComposer::ReplyStrategy strategy);
-    void addMailingListAction(const QString &item, const KUrl &url);
-    void addMailingListActions(const QString &item, const KUrl::List &list);
+    void addMailingListAction(const QString &item, const QUrl &url);
+    void addMailingListActions(const QString &item, const QList<QUrl> &list);
     void updateMailingListActions(const Akonadi::Item &messageItem);
     void printMessage(bool preview);
     void clearMailingListActions();

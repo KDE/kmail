@@ -538,9 +538,9 @@ void MessageActions::slotPrintMsg()
  * "Contact Owner (email)" -> KRun( "mailto:bob@arthouseflowers.example.com" )
  * "Contact Owner (web)" -> KRun( "http://arthouseflowers.example.com/contact-owner.php" )
  */
-void MessageActions::addMailingListActions(const QString &item, const KUrl::List &list)
+void MessageActions::addMailingListActions(const QString &item, const QList<QUrl> &list)
 {
-    foreach (const KUrl &url, list) {
+    foreach (const QUrl &url, list) {
         addMailingListAction(item, url);
     }
 }
@@ -549,10 +549,10 @@ void MessageActions::addMailingListActions(const QString &item, const KUrl::List
  * This adds a action to mMailingListActionMenu mapping the identifier item to
  * the url. See addMailingListActions above.
  */
-void MessageActions::addMailingListAction(const QString &item, const KUrl &url)
+void MessageActions::addMailingListAction(const QString &item, const QUrl &url)
 {
-    QString protocol = url.protocol().toLower();
-    QString prettyUrl = url.prettyUrl();
+    QString protocol = url.scheme().toLower();
+    QString prettyUrl = url.toDisplayString();
     if (protocol == QLatin1String("mailto")) {
         protocol = i18n("email");
         prettyUrl.remove(0, 7);   // length( "mailto:" )
@@ -562,7 +562,7 @@ void MessageActions::addMailingListAction(const QString &item, const KUrl &url)
     // item is a mailing list url description passed from the updateActions method above.
     QAction *act = new QAction(i18nc("%1 is a 'Contact Owner' or similar action. %2 is a protocol normally web or email though could be irc/ftp or other url variant", "%1 (%2)",  item, protocol) , this);
     mMailListActionList.append(act);
-    const QVariant v(url.url());
+    const QVariant v(url);
     act->setData(v);
     KMail::Util::addQActionHelpText(act, prettyUrl);
     mMailingListActionMenu->addAction(act);
