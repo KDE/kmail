@@ -139,15 +139,15 @@ bool KMail::Util::handleClickedURL(const KUrl &url, const QSharedPointer<MailCom
     }
 }
 
-bool KMail::Util::mailingListsHandleURL(const KUrl::List &lst, const QSharedPointer<MailCommon::FolderCollection> &folder)
+bool KMail::Util::mailingListsHandleURL(const QList<QUrl> &lst, const QSharedPointer<MailCommon::FolderCollection> &folder)
 {
     const QString handler = (folder->mailingList().handler() == MailingList::KMail)
                             ? QLatin1String("mailto") : QLatin1String("https");
 
-    KUrl urlToHandle;
-    KUrl::List::ConstIterator end(lst.constEnd());
-    for (KUrl::List::ConstIterator itr = lst.constBegin(); itr != end; ++itr) {
-        if (handler == (*itr).protocol()) {
+    QUrl urlToHandle;
+    QList<QUrl>::ConstIterator end(lst.constEnd());
+    for (QList<QUrl>::ConstIterator itr = lst.constBegin(); itr != end; ++itr) {
+        if (handler == (*itr).scheme()) {
             urlToHandle = *itr;
             break;
         }

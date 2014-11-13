@@ -88,7 +88,7 @@ void launchAccountWizard(QWidget *);
      */
 bool handleClickedURL(const KUrl &url, const QSharedPointer<MailCommon::FolderCollection> &folder = QSharedPointer<MailCommon::FolderCollection>());
 
-bool mailingListsHandleURL(const KUrl::List &lst, const QSharedPointer<MailCommon::FolderCollection> &folder);
+bool mailingListsHandleURL(const QList<QUrl> &lst, const QSharedPointer<MailCommon::FolderCollection> &folder);
 
 bool mailingListPost(const QSharedPointer<MailCommon::FolderCollection> &fd);
 bool mailingListSubscribe(const QSharedPointer<MailCommon::FolderCollection> &fd);
