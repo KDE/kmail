@@ -897,7 +897,7 @@ void KMReaderWin::slotShareImage()
     command->start();
 }
 
-bool KMReaderWin::isAShortUrl(const KUrl &url) const
+bool KMReaderWin::isAShortUrl(const QUrl &url) const
 {
     return mViewer->isAShortUrl(url);
 }

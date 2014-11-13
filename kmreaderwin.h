@@ -219,7 +219,7 @@ public:
     void setContactItem(const Akonadi::Item &contact, const KContacts::Addressee &address);
     void clearContactItem();
     bool adblockEnabled() const;
-    bool isAShortUrl(const KUrl &url) const;
+    bool isAShortUrl(const QUrl &url) const;
 
 signals:
     /** Emitted after parsing of a message to have it stored
