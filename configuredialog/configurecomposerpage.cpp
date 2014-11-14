@@ -60,7 +60,7 @@ using KPIM::RecentAddresses;
 
 QString ComposerPage::helpAnchor() const
 {
-    return QString::fromLatin1("configure-composer");
+    return QStringLiteral("configure-composer");
 }
 
 ComposerPage::ComposerPage(QWidget *parent)
@@ -130,7 +130,7 @@ ComposerPage::ComposerPage(QWidget *parent)
 
 QString ComposerPage::GeneralTab::helpAnchor() const
 {
-    return QString::fromLatin1("configure-composer-general");
+    return QStringLiteral("configure-composer-general");
 }
 
 ComposerPageGeneralTab::ComposerPageGeneralTab(QWidget *parent)
@@ -640,7 +640,7 @@ void ComposerPage::GeneralTab::slotConfigureCompletionOrder()
 
 QString ComposerPage::ExternalEditorTab::helpAnchor() const
 {
-    return QString::fromLatin1("configure-composer-externaleditor");
+    return QStringLiteral("configure-composer-externaleditor");
 }
 
 ComposerPageExternalEditorTab::ComposerPageExternalEditorTab(QWidget *parent)
@@ -709,7 +709,7 @@ void ComposerPage::ExternalEditorTab::save()
 
 QString ComposerPage::TemplatesTab::helpAnchor() const
 {
-    return QString::fromLatin1("configure-composer-templates");
+    return QStringLiteral("configure-composer-templates");
 }
 
 ComposerPageTemplatesTab::ComposerPageTemplatesTab(QWidget *parent)
@@ -743,7 +743,7 @@ void ComposerPage::TemplatesTab::doResetToDefaultsOther()
 
 QString ComposerPage::CustomTemplatesTab::helpAnchor() const
 {
-    return QString::fromLatin1("configure-composer-custom-templates");
+    return QStringLiteral("configure-composer-custom-templates");
 }
 
 ComposerPageCustomTemplatesTab::ComposerPageCustomTemplatesTab(QWidget *parent)
@@ -775,7 +775,7 @@ void ComposerPage::CustomTemplatesTab::save()
 
 QString ComposerPage::SubjectTab::helpAnchor() const
 {
-    return QString::fromLatin1("configure-composer-subject");
+    return QStringLiteral("configure-composer-subject");
 }
 
 ComposerPageSubjectTab::ComposerPageSubjectTab(QWidget *parent)
@@ -878,7 +878,7 @@ void ComposerPage::SubjectTab::doResetToDefaultsOther()
 
 QString ComposerPage::CharsetTab::helpAnchor() const
 {
-    return QString::fromLatin1("configure-composer-charset");
+    return QStringLiteral("configure-composer-charset");
 }
 
 ComposerPageCharsetTab::ComposerPageCharsetTab(QWidget *parent)
@@ -1249,7 +1249,7 @@ void ComposerPage::HeadersTab::doResetToDefaultsOther()
 
 QString ComposerPage::AttachmentsTab::helpAnchor() const
 {
-    return QString::fromLatin1("configure-composer-attachments");
+    return QStringLiteral("configure-composer-attachments");
 }
 
 ComposerPageAttachmentsTab::ComposerPageAttachmentsTab(QWidget *parent)
@@ -1378,7 +1378,7 @@ ComposerPageAutoCorrectionTab::ComposerPageAutoCorrectionTab(QWidget *parent)
 
 QString ComposerPageAutoCorrectionTab::helpAnchor() const
 {
-    return QString::fromLatin1("configure-autocorrection");
+    return QStringLiteral("configure-autocorrection");
 }
 
 void ComposerPageAutoCorrectionTab::save()
@@ -1411,7 +1411,7 @@ ComposerPageAutoImageResizeTab::ComposerPageAutoImageResizeTab(QWidget *parent)
 
 QString ComposerPageAutoImageResizeTab::helpAnchor() const
 {
-    return QString::fromLatin1("configure-image-resize");
+    return QStringLiteral("configure-image-resize");
 }
 
 void ComposerPageAutoImageResizeTab::save()

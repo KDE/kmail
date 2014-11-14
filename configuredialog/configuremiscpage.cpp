@@ -35,7 +35,7 @@ using namespace PimCommon::ConfigureImmutableWidgetUtils;
 using namespace MailCommon;
 QString MiscPage::helpAnchor() const
 {
-    return QString::fromLatin1("configure-misc");
+    return QStringLiteral("configure-misc");
 }
 
 MiscPage::MiscPage(QWidget *parent)
@@ -59,7 +59,7 @@ MiscPage::MiscPage(QWidget *parent)
 
 QString MiscPageFolderTab::helpAnchor() const
 {
-    return QString::fromLatin1("configure-misc-folders");
+    return QStringLiteral("configure-misc-folders");
 }
 
 MiscPageFolderTab::MiscPageFolderTab(QWidget *parent)

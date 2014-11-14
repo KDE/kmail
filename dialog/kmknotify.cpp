@@ -137,9 +137,9 @@ void KMKnotify::initCombobox()
             appname.remove(QLatin1String(".notifyrc"));
             if (!appname.isEmpty()) {
                 KConfig config(fullPath, KConfig::NoGlobals, QStandardPaths::DataLocation);
-                KConfigGroup globalConfig(&config, QString::fromLatin1("Global"));
-                const QString icon = globalConfig.readEntry(QString::fromLatin1("IconName"), QString::fromLatin1("misc"));
-                const QString description = globalConfig.readEntry(QString::fromLatin1("Comment"), appname);
+                KConfigGroup globalConfig(&config, QStringLiteral("Global"));
+                const QString icon = globalConfig.readEntry(QStringLiteral("IconName"), QStringLiteral("misc"));
+                const QString description = globalConfig.readEntry(QStringLiteral("Comment"), appname);
                 m_comboNotify->addItem(SmallIcon(icon), description, appname);
             }
         }

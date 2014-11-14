@@ -44,7 +44,7 @@ using namespace KMail;
 
 QString IdentityPage::helpAnchor() const
 {
-    return QString::fromLatin1("configure-identity");
+    return QStringLiteral("configure-identity");
 }
 
 IdentityPage::IdentityPage(QWidget *parent)

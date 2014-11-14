@@ -52,7 +52,7 @@ using MailTransport::TransportManagementWidget;
 
 QString AccountsPage::helpAnchor() const
 {
-    return QString::fromLatin1("configure-accounts");
+    return QStringLiteral("configure-accounts");
 }
 
 AccountsPage::AccountsPage(QWidget *parent)
@@ -79,7 +79,7 @@ AccountsPageSendingTab::~AccountsPageSendingTab()
 
 QString AccountsPage::SendingTab::helpAnchor() const
 {
-    return QString::fromLatin1("configure-accounts-sending");
+    return QStringLiteral("configure-accounts-sending");
 }
 
 AccountsPageSendingTab::AccountsPageSendingTab(QWidget *parent)
@@ -173,7 +173,7 @@ void AccountsPage::SendingTab::save()
 
 QString AccountsPage::ReceivingTab::helpAnchor() const
 {
-    return QString::fromLatin1("configure-accounts-receiving");
+    return QStringLiteral("configure-accounts-receiving");
 }
 
 AccountsPageReceivingTab::AccountsPageReceivingTab(QWidget *parent)

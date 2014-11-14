@@ -41,7 +41,7 @@ using namespace PimCommon::ConfigureImmutableWidgetUtils;
 
 QString SecurityPage::helpAnchor() const
 {
-    return QString::fromLatin1("configure-security");
+    return QStringLiteral("configure-security");
 }
 
 SecurityPage::SecurityPage(QWidget *parent)
@@ -80,7 +80,7 @@ SecurityPage::SecurityPage(QWidget *parent)
 
 QString SecurityPage::GeneralTab::helpAnchor() const
 {
-    return QString::fromLatin1("configure-security-reading");
+    return QStringLiteral("configure-security-reading");
 }
 
 SecurityPageGeneralTab::SecurityPageGeneralTab(QWidget *parent)
@@ -193,7 +193,7 @@ void SecurityPageAdBlockTab::doResetToDefaultsOther()
 
 QString SecurityPage::MDNTab::helpAnchor() const
 {
-    return QString::fromLatin1("configure-security-mdn");
+    return QStringLiteral("configure-security-mdn");
 }
 
 SecurityPageMDNTab::SecurityPageMDNTab(QWidget *parent)
@@ -251,7 +251,7 @@ void SecurityPage::MDNTab::save()
 
 QString SecurityPage::ComposerCryptoTab::helpAnchor() const
 {
-    return QString::fromLatin1("configure-security-composing");
+    return QStringLiteral("configure-security-composing");
 }
 
 SecurityPageComposerCryptoTab::SecurityPageComposerCryptoTab(QWidget *parent)
@@ -316,7 +316,7 @@ void SecurityPage::ComposerCryptoTab::doLoadFromGlobalSettings()
 
 QString SecurityPage::WarningTab::helpAnchor() const
 {
-    return QString::fromLatin1("configure-security-warnings");
+    return QStringLiteral("configure-security-warnings");
 }
 
 SecurityPageWarningTab::SecurityPageWarningTab(QWidget *parent)
@@ -450,7 +450,7 @@ void SecurityPage::WarningTab::slotConfigureChiasmus()
 
 QString SecurityPage::SMimeTab::helpAnchor() const
 {
-    return QString::fromLatin1("configure-security-smime-validation");
+    return QStringLiteral("configure-security-smime-validation");
 }
 
 SecurityPageSMimeTab::SecurityPageSMimeTab(QWidget *parent)
@@ -743,11 +743,11 @@ Kleo::CryptoConfigEntry *SMIMECryptoConfigEntries::configEntry(const QString &co
 {
     Kleo::CryptoConfigEntry *entry = mConfig->entry(componentName, groupName, entryName);
     if (!entry) {
-        qWarning() << QString::fromLatin1("Backend error: gpgconf doesn't seem to know the entry for %1/%2/%3").arg(componentName, groupName, entryName);
+        qWarning() << QStringLiteral("Backend error: gpgconf doesn't seem to know the entry for %1/%2/%3").arg(componentName, groupName, entryName);
         return 0;
     }
     if (entry->argType() != argType || entry->isList() != isList) {
-        qWarning() << QString::fromLatin1("Backend error: gpgconf has wrong type for %1/%2/%3: %4 %5").arg(componentName, groupName, entryName).arg(entry->argType()).arg(entry->isList());
+        qWarning() << QStringLiteral("Backend error: gpgconf has wrong type for %1/%2/%3: %4 %5").arg(componentName, groupName, entryName).arg(entry->argType()).arg(entry->isList());
         return 0;
     }
     return entry;
