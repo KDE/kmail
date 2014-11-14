@@ -438,7 +438,6 @@ private slots:
     void slotCreateAddressBookContact();
 
     void slotAttachMissingFile();
-    void slotCloseAttachMissingFile();
     void slotExplicitClosedMissingAttachment();
     void slotVerifyMissingAttachmentTimeout();
     void slotCheckSendNow();
