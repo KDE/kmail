@@ -275,12 +275,12 @@ void KMKernel::setupDBus()
     mMailService = new MailServiceImpl();
 }
 
-static KUrl makeAbsoluteUrl(const QString &str)
+static QUrl makeAbsoluteUrl(const QString &str)
 {
-    KUrl url(str);
-    if (url.protocol().isEmpty()) {
+    QUrl url(str);
+    if (url.scheme().isEmpty()) {
         const QString newUrl = KCmdLineArgs::cwd() + QLatin1Char('/') + url.fileName();
-        return KUrl(newUrl);
+        return QUrl::fromLocalFile(newUrl);
     } else {
         return url;
     }
@@ -290,7 +290,7 @@ bool KMKernel::handleCommandLine(bool noArgsOpensReader)
 {
     QString to, cc, bcc, subj, body, inReplyTo, replyTo;
     QStringList customHeaders;
-    KUrl messageFile;
+    QUrl messageFile;
     KUrl::List attachURLs;
     bool mailto = false;
     bool checkMail = false;
@@ -368,9 +368,9 @@ bool KMKernel::handleCommandLine(bool noArgsOpensReader)
         viewOnly = true;
         const QString filename =
             args->getOption("view");
-        messageFile = KUrl(filename);
+        messageFile = QUrl::fromLocalFile(filename);
         if (!messageFile.isValid()) {
-            messageFile = KUrl();
+            messageFile = QUrl();
             messageFile.setPath(filename);
         }
     }
@@ -930,7 +930,7 @@ QDBusObjectPath KMKernel::newMessage(const QString &to,
 
 int KMKernel::viewMessage(const QString &messageFile)
 {
-    KMOpenMsgCommand *openCommand = new KMOpenMsgCommand(0, KUrl(messageFile));
+    KMOpenMsgCommand *openCommand = new KMOpenMsgCommand(0, QUrl::fromLocalFile(messageFile));
 
     openCommand->start();
     return 1;
