@@ -77,7 +77,7 @@ using namespace MailCommon;
 
 QString AppearancePage::helpAnchor() const
 {
-    return QString::fromLatin1("configure-appearance");
+    return QStringLiteral("configure-appearance");
 }
 
 AppearancePage::AppearancePage(QWidget *parent)
@@ -129,7 +129,7 @@ AppearancePage::AppearancePage(QWidget *parent)
 
 QString AppearancePage::FontsTab::helpAnchor() const
 {
-    return QString::fromLatin1("configure-appearance-fonts");
+    return QStringLiteral("configure-appearance-fonts");
 }
 
 static const struct {
@@ -321,7 +321,7 @@ void AppearancePage::FontsTab::doResetToDefaultsOther()
 
 QString AppearancePage::ColorsTab::helpAnchor() const
 {
-    return QString::fromLatin1("configure-appearance-colors");
+    return QStringLiteral("configure-appearance-colors");
 }
 
 static const struct {
@@ -524,7 +524,7 @@ void AppearancePage::ColorsTab::save()
 
 QString AppearancePage::LayoutTab::helpAnchor() const
 {
-    return QString::fromLatin1("configure-appearance-layout");
+    return QStringLiteral("configure-appearance-layout");
 }
 
 AppearancePageLayoutTab::AppearancePageLayoutTab(QWidget *parent)
@@ -628,7 +628,7 @@ void AppearancePage::LayoutTab::save()
 
 QString AppearancePage::HeadersTab::helpAnchor() const
 {
-    return QString::fromLatin1("configure-appearance-headers");
+    return QStringLiteral("configure-appearance-headers");
 }
 
 static const struct {
@@ -906,7 +906,7 @@ void AppearancePage::HeadersTab::save()
 
 QString AppearancePage::ReaderTab::helpAnchor() const
 {
-    return QString::fromLatin1("configure-appearance-reader");
+    return QStringLiteral("configure-appearance-reader");
 }
 
 AppearancePageReaderTab::AppearancePageReaderTab(QWidget *parent)
@@ -951,7 +951,7 @@ void AppearancePage::ReaderTab::save()
 
 QString AppearancePage::SystemTrayTab::helpAnchor() const
 {
-    return QString::fromLatin1("configure-appearance-systemtray");
+    return QStringLiteral("configure-appearance-systemtray");
 }
 
 AppearancePageSystemTrayTab::AppearancePageSystemTrayTab(QWidget *parent)
@@ -1011,7 +1011,7 @@ void AppearancePage::SystemTrayTab::save()
 
 QString AppearancePage::MessageTagTab::helpAnchor() const
 {
-    return QString::fromLatin1("configure-appearance-messagetag");
+    return QStringLiteral("configure-appearance-messagetag");
 }
 
 TagListWidgetItem::TagListWidgetItem(QListWidget *parent)

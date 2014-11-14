@@ -364,11 +364,11 @@ void KMMainWidget::restoreCollectionFolderViewConfig()
         if (GlobalSettings::self()->startSpecificFolderAtStartup()) {
             Akonadi::Collection::Id startupFolder = GlobalSettings::self()->startupFolder();
             if (startupFolder > 0) {
-                saver->restoreCurrentItem(QString::fromLatin1("c%1").arg(startupFolder));
+                saver->restoreCurrentItem(QStringLiteral("c%1").arg(startupFolder));
             }
         }
     } else {
-        saver->restoreCurrentItem(QString::fromLatin1("c%1").arg(id));
+        saver->restoreCurrentItem(QStringLiteral("c%1").arg(id));
     }
 }
 
@@ -4281,7 +4281,7 @@ void KMMainWidget::initializeFilterActions()
 
     foreach (MailFilter *filter, MailCommon::FilterManager::instance()->filters()) {
         if (!filter->isEmpty() && filter->configureShortcut() && filter->isEnabled()) {
-            QString filterName = QString::fromLatin1("Filter %1").arg(filter->name());
+            QString filterName = QStringLiteral("Filter %1").arg(filter->name());
             QString normalizedName = filterName.replace(QLatin1Char(' '), QLatin1Char('_'));
             if (action(normalizedName)) {
                 continue;
