@@ -694,6 +694,7 @@ KMOpenMsgCommand::KMOpenMsgCommand(QWidget *parent, const QUrl &url,
       mEncoding(encoding),
       mMainWidget(main)
 {
+    qDebug()<<"url :"<<url;
 }
 
 KMCommand::Result KMOpenMsgCommand::execute()
@@ -751,9 +752,14 @@ void KMOpenMsgCommand::slotResult(KJob *job)
     if (job->error()) {
         // handle errors
         showJobError(job);
-        setResult(Failed);
-        emit completed(this);
+        setResult( Failed );
+        emit completed( this );
     } else {
+        if (mMsgString.isEmpty()) {
+            qDebug()<<" Message not found. There is a problem";
+            doesNotContainMessage();
+            return;
+        }
         int startOfMessage = 0;
         if (mMsgString.startsWith(QLatin1String("From "))) {
             startOfMessage = mMsgString.indexOf(QLatin1Char('\n'));
