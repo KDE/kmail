@@ -44,10 +44,10 @@ public:
     explicit CollectionViewPage(QWidget *parent = 0);
     ~CollectionViewPage();
 
-    void load(const Akonadi::Collection &col);
-    void save(Akonadi::Collection &col);
+    void load(const Akonadi::Collection &col) Q_DECL_OVERRIDE;
+    void save(Akonadi::Collection &col) Q_DECL_OVERRIDE;
 
-public slots:
+private slots:
     void slotChangeIcon(const QString &icon);
     void slotAggregationCheckboxChanged();
     void slotThemeCheckboxChanged();

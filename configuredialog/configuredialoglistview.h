@@ -17,8 +17,8 @@ Q_SIGNALS:
     void removeHeader();
 
 protected:
-    void resizeEvent(QResizeEvent *e);
-    void showEvent(QShowEvent *e);
+    void resizeEvent(QResizeEvent *e) Q_DECL_OVERRIDE;
+    void showEvent(QShowEvent *e) Q_DECL_OVERRIDE;
 
 private Q_SLOTS:
     void slotContextMenu(const QPoint &pos);

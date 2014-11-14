@@ -117,8 +117,6 @@ public:
 
     void save();
 
-private slots:
-
 private:
     void doLoadFromGlobalSettings();
     void doResetToDefaultsOther();

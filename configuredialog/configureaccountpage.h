@@ -34,11 +34,11 @@ public:
     explicit AccountsPageSendingTab(QWidget *parent = 0);
     virtual ~AccountsPageSendingTab();
     QString helpAnchor() const;
-    void save();
+    void save() Q_DECL_OVERRIDE;
 
 private:
-    void doLoadFromGlobalSettings();
-    void doLoadOther();
+    void doLoadFromGlobalSettings() Q_DECL_OVERRIDE;
+    void doLoadOther() Q_DECL_OVERRIDE;
     //FIXME virtual void doResetToDefaultsOther();
 
 private:

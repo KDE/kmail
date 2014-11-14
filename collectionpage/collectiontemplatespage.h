@@ -35,11 +35,11 @@ public:
     explicit CollectionTemplatesPage(QWidget *parent = 0);
     ~CollectionTemplatesPage();
 
-    void load(const Akonadi::Collection &col);
-    void save(Akonadi::Collection &col);
-    bool canHandle(const Akonadi::Collection &collection) const;
+    void load(const Akonadi::Collection &col) Q_DECL_OVERRIDE;
+    void save(Akonadi::Collection &col) Q_DECL_OVERRIDE;
+    bool canHandle(const Akonadi::Collection &collection) const Q_DECL_OVERRIDE;
 
-public slots:
+private slots:
     void slotCopyGlobal();
 
 private Q_SLOTS:

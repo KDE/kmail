@@ -314,7 +314,7 @@ static const about_data credits[] = {
     { "Sergio Luis Martins", 0, "iamsergio@gmail.com", 0 },
     { "Jeffrey McGee", 0, 0, 0 }, // fix for bug:64251
     { "Thomas Moenicke", 0, "tm@php-qt.org", 0 },
-    { "Dirk M\303\274ller", 0, 0, 0 }, // KUrl() fixes and qt_cast optimizations
+    { "Dirk M\303\274ller", 0, 0, 0 }, // QUrl() fixes and qt_cast optimizations
     { "Torgny Nyblom", 0, "nyblom@kde.org", 0 },
     { "OpenUsability", I18N_NOOP("Usability tests and improvements"), 0, "http://www.openusability.org" },
     { "Mario Teijeiro Otero", 0, 0, 0 }, // various vendor annotations fixes

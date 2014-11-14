@@ -40,11 +40,9 @@ public:
 protected:
     void init(const Akonadi::Collection &);
 
-protected slots:
+private slots:
     void updateCollectionStatistic(Akonadi::Collection::Id, const Akonadi::CollectionStatistics &);
     void slotReindexing();
-
-private slots:
     void onIndexedItemsReceived(qint64 num);
 
 private:
