@@ -198,7 +198,7 @@ void IdentityListView::startDrag(Qt::DropActions /*supportedActions*/)
     QMimeData *md = new QMimeData;
     drag->setMimeData(md);
     item->identity().populateMimeData(md);
-    drag->setPixmap(SmallIcon(QLatin1String("user-identity")));
+    drag->setPixmap(SmallIcon(QStringLiteral("user-identity")));
     drag->start();
 }
 #endif

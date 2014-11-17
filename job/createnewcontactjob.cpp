@@ -79,7 +79,7 @@ void CreateNewContactJob::slotCollectionsFetched(KJob *job)
         dlg.setWindowTitle(i18n("Add to Address Book"));
         dlg.agentFilterProxyModel()->addMimeTypeFilter(KContacts::Addressee::mimeType());
         dlg.agentFilterProxyModel()->addMimeTypeFilter(KContacts::ContactGroup::mimeType());
-        dlg.agentFilterProxyModel()->addCapabilityFilter(QLatin1String("Resource"));
+        dlg.agentFilterProxyModel()->addCapabilityFilter(QStringLiteral("Resource"));
 
         if (dlg.exec()) {
             const Akonadi::AgentType agentType = dlg.agentType();

@@ -132,7 +132,7 @@ void IdentityPage::slotNewIdentity()
 
     MessageViewer::AutoQPointer<NewIdentityDialog> dialog(new NewIdentityDialog(
                 mIdentityManager, this));
-    dialog->setObjectName(QLatin1String("new"));
+    dialog->setObjectName(QStringLiteral("new"));
 
     if (dialog->exec() == QDialog::Accepted && dialog) {
         QString identityName = dialog->identityName().trimmed();
@@ -227,7 +227,7 @@ void IdentityPage::slotRemoveIdentity()
                              "<b>%1</b>?</qt>", item->identity().identityName());
     if (KMessageBox::warningContinueCancel(this, msg, i18n("Remove Identity"),
                                            KGuiItem(i18n("&Remove"),
-                                                   QLatin1String("edit-delete")))
+                                                   QStringLiteral("edit-delete")))
             == KMessageBox::Continue) {
         if (mIdentityManager->removeIdentity(item->identity().identityName())) {
             delete item;

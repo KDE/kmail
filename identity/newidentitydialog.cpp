@@ -126,7 +126,7 @@ NewIdentityDialog::NewIdentityDialog(KIdentityManagement::IdentityManager *manag
 
 void NewIdentityDialog::slotHelp()
 {
-    KHelpClient::invokeHelp(QString::fromLatin1("configure-identity-newidentitydialog"), QLatin1String("kmail"));
+    KHelpClient::invokeHelp(QString::fromLatin1("configure-identity-newidentitydialog"), QStringLiteral("kmail"));
 }
 
 NewIdentityDialog::DuplicateMode NewIdentityDialog::duplicateMode() const
