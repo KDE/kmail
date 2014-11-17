@@ -424,7 +424,7 @@ KMComposeWin::KMComposeWin(const KMime::Message::Ptr &aMsg, bool lastSignState, 
     if (GlobalSettings::self()->showForgottenAttachmentWarning()) {
         m_verifyMissingAttachment = new QTimer(this);
         m_verifyMissingAttachment->setSingleShot(true);
-        m_verifyMissingAttachment->setInterval(1000*5);
+        m_verifyMissingAttachment->setInterval(1000 * 5);
         connect(m_verifyMissingAttachment, &QTimer::timeout, this, &KMComposeWin::slotVerifyMissingAttachmentTimeout);
     }
     connect(attachmentController, &KMail::AttachmentController::fileAttached, mAttachmentMissing, &AttachmentMissingWarning::slotFileAttached);
@@ -510,10 +510,10 @@ QString KMComposeWin::dbusObjectPath() const
 void KMComposeWin::slotEditorTextChanged()
 {
     const bool textIsNotEmpty = !mComposerBase->editor()->document()->isEmpty();
-    mFindText->setEnabled( textIsNotEmpty );
-    mFindNextText->setEnabled( textIsNotEmpty );
-    mReplaceText->setEnabled( textIsNotEmpty );
-    mSelectAll->setEnabled( textIsNotEmpty );
+    mFindText->setEnabled(textIsNotEmpty);
+    mFindNextText->setEnabled(textIsNotEmpty);
+    mReplaceText->setEnabled(textIsNotEmpty);
+    mSelectAll->setEnabled(textIsNotEmpty);
     if (m_verifyMissingAttachment && !m_verifyMissingAttachment->isActive()) {
         m_verifyMissingAttachment->start();
     }
