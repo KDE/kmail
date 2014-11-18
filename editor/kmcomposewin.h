@@ -53,6 +53,7 @@ class QLabel;
 class QPushButton;
 class QSplitter;
 
+class KSplitterCollapserButton;
 class CodecAction;
 class KMComposeWin;
 class KMComposerEditor;
@@ -110,7 +111,6 @@ namespace PimCommon
 {
 class CustomToolsWidget;
 class LineEditWithAutoCorrection;
-class SplitterCollapser;
 }
 class KMStorageService;
 //-----------------------------------------------------------------------------
@@ -706,7 +706,7 @@ private:
     KMStorageService *mStorageService;
     bool mSendNowByShortcutUsed;
     QList<QLabel *> mStatusBarLabelList;
-    PimCommon::SplitterCollapser *mSnippetSplitterCollapser;
+    KSplitterCollapserButton *mSnippetSplitterCollapser;
     KToggleAction *mFollowUpToggleAction;
     StatusBarLabelToggledState *mStatusBarLabelToggledOverrideMode;
     StatusBarLabelToggledState *mStatusBarLabelSpellCheckingChangeMode;

@@ -179,7 +179,7 @@
 #include <QMimeDatabase>
 #include <QMimeType>
 #include <KConfigGroup>
-#include <widgets/splittercollapser.h>
+#include <KSplitterCollapserButton>
 
 using Sonnet::DictionaryComboBox;
 using MailTransport::TransportManager;
@@ -385,7 +385,7 @@ KMComposeWin::KMComposeWin(const KMime::Message::Ptr &aMsg, bool lastSignState, 
     mSnippetWidget->setVisible(GlobalSettings::self()->showSnippetManager());
     mSnippetSplitter->addWidget(mSnippetWidget);
     mSnippetSplitter->setCollapsible(0, false);
-    mSnippetSplitterCollapser = new PimCommon::SplitterCollapser(mSnippetWidget, mSnippetSplitter);
+    mSnippetSplitterCollapser = new KSplitterCollapserButton(mSnippetWidget, mSnippetSplitter);
     mSnippetSplitterCollapser->setVisible(GlobalSettings::self()->showSnippetManager());
 
     mSplitter->setOpaqueResize(true);
