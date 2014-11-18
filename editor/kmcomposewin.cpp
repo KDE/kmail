@@ -226,6 +226,7 @@ KMComposeWin::KMComposeWin( const KMime::Message::Ptr &aMsg, bool lastSignState,
       mLabelWidth( 0 ),
       mComposerBase( 0 ),
       mSelectSpecialChar( 0 ),
+      m_verifyMissingAttachment( 0 ),
       mPreventFccOverwrite( false ),
       mCheckForForgottenAttachments( true ),
       mIgnoreStickyFields( false ),
@@ -237,7 +238,6 @@ KMComposeWin::KMComposeWin( const KMime::Message::Ptr &aMsg, bool lastSignState,
       mStatusBarLabelToggledOverrideMode(0),
       mStatusBarLabelSpellCheckingChangeMode(0)
 {
-    m_verifyMissingAttachment = 0;
     mComposerBase = new MessageComposer::ComposerViewBase( this, this );
     mComposerBase->setIdentityManager( kmkernel->identityManager() );
 
