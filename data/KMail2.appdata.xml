@@ -12,6 +12,7 @@
   <name xml:lang="fi">KMail</name>
   <name xml:lang="fr">KMail</name>
   <name xml:lang="hu">KMail</name>
+  <name xml:lang="it">KMail</name>
   <name xml:lang="lt">KMail</name>
   <name xml:lang="nb">KMail</name>
   <name xml:lang="nds">KMail</name>
@@ -57,6 +58,7 @@
     <p xml:lang="fi">Ominaisuudet:</p>
     <p xml:lang="fr">Fonctionnalités :</p>
     <p xml:lang="hu">Szolgáltatások:</p>
+    <p xml:lang="it">Funzionalità:</p>
     <p xml:lang="lt">Galimybės:</p>
     <p xml:lang="nb">Egenskaper:</p>
     <p xml:lang="nds">Markmalen:</p>
@@ -79,6 +81,7 @@
       <li xml:lang="fi">Tukee standardeja sähköpostiyhteyskäytäntöjä IMAP, POP3 ja SMTP.</li>
       <li xml:lang="fr">Prise en charge des protocoles standards de messagerie IMAP, POP3 et SMTP.</li>
       <li xml:lang="hu">Standard levelező protokollok (IMAP, POP3, SMTP) támogatása.</li>
+      <li xml:lang="it">Supporta i protocolli di posta standard IMAP, POP3 e SMTP.</li>
       <li xml:lang="lt">Palaiko standartinius pašto protokolus tokius, kaip IMAP, POP3 ir SMTP.</li>
       <li xml:lang="nb">Støtter standard e-post-protokollene IMAP, POP3 og SMTP.</li>
       <li xml:lang="nds">Ünnerstütt de Standard-Nettpostprotokollen IMAP, POP3 un SMTP.</li>
@@ -99,6 +102,7 @@
       <li xml:lang="fi">Tukee tunnistautumista NTLM:llä (Microsoft Windows) ja GSSAPIlla (Kerberos)</li>
       <li xml:lang="fr">Prise en charge de l'authentification NTLM (Microsoft Windows) et GSSAPI (Kerberos)</li>
       <li xml:lang="hu">NTLM (Microsoft Windows) és GSSAPI (Kerberos) hitelesítés támogatása</li>
+      <li xml:lang="it">Supporta l'autenticazione tramite NTLM (Microsoft Windows) e GSSAPI (Kerberos)</li>
       <li xml:lang="nb">Støtter autentisering via NTLM (Microsoft Windows) og GSSAPI (Kerberos)</li>
       <li xml:lang="nds">Ünnerstütt de Identiteetprööv över NTLM (Windows) un GSSAPI (Kerberos).</li>
       <li xml:lang="nl">Ondersteunt authenticatie via NTLM (Microsoft Windows) en GSSAPI (Kerberos)</li>
@@ -118,6 +122,7 @@
       <li xml:lang="fi">Tukee salaamatonta ja salattua kirjautumista (SSL:llä ja TLS:llä).</li>
       <li xml:lang="fr">Prise en charge des identifications en texte clair ou sécurisées par SSL ou TLS.</li>
       <li xml:lang="hu">Sima szöveges és biztonságos bejelentkezés támogatása SSL és TLS használatával.</li>
+      <li xml:lang="it">Supporta testo semplice e login sicuri tramite SSL e TLS.</li>
       <li xml:lang="nb">Støtter innlogging med ren tekst og sikker innlogging med SSL og TLS.</li>
       <li xml:lang="nds">Ünnerstütt dat Anmellen mit Eenfachtext un mit seker SSL un TLS.</li>
       <li xml:lang="nl">Ondersteunt platte tekst en beveiligd aanmelden met SSL en TLS.</li>
@@ -155,6 +160,7 @@
       <li xml:lang="fi">Tukee natiivisti sisällytettyä OpenPGP:tä, PGP/MIMEä ja S/MIMEä.</li>
       <li xml:lang="fr">Prise en charge intégrée du chiffrement en ligne OpenPGP, PGP/MIME, et S/MIME.</li>
       <li xml:lang="hu">Natív támogatás beágyazott OpenPGP-hez, PGP/MIME-hoz és S/MIME-hoz.</li>
+      <li xml:lang="it">Supporto nativo per OpenPGP in linea, PGP/MIME e S/MIME.</li>
       <li xml:lang="nb">Innebygget støtte for OpenPGP, PGP/MIME og S/MIME.</li>
       <li xml:lang="nds">Inbuut Ünnerstütten för OpenPGP, PGP/MIME un S/MIME</li>
       <li xml:lang="nl">Ingebouwde ondersteuning voor in-line OpenPGP, PGP/MIME en S/MIME.</li>
@@ -174,6 +180,7 @@
       <li xml:lang="fi">Lukee ja kirjoittaa HTML-sähköpostiviestejä.</li>
       <li xml:lang="fr">Lecture et écriture de courrier électronique en HTML.</li>
       <li xml:lang="hu">HTML levelek írása és olvasása.</li>
+      <li xml:lang="it">Lettura e scrittura di messaggi in HTML.</li>
       <li xml:lang="lt">HTML laiškų skaitymas ir rašymas.</li>
       <li xml:lang="nb">Lese og skrive HTML e-post.</li>
       <li xml:lang="nds">HTML-Nettbreven wiesen un schrieven.</li>
@@ -193,6 +200,7 @@
       <li xml:lang="fi">Osaa näyttää HTML-viesteistä raakatekstin.</li>
       <li xml:lang="fr">Possibilité d'afficher un courrier électronique HTML en texte seul.</li>
       <li xml:lang="hu">Sima szöveg megjelenítése HTML levélből.</li>
+      <li xml:lang="it">Capacità di mostrare il solo testo semplice da un messaggio in formato HTML.</li>
       <li xml:lang="nb">Kan vise bare ren tekst når posten er HTML.</li>
       <li xml:lang="nds">Kann HTML-Nettbreven as Eenfachtext wiesen.</li>
       <li xml:lang="nl">Mogelijkheid om alleen platte tekst te tonen uit een HTML-e-mail.</li>
@@ -211,6 +219,7 @@
       <li xml:lang="fi">Mahdollistaa kutsujen vastaanottamisen ja hyväksymisen.</li>
       <li xml:lang="fr">Permet de recevoir et accepter des invitations.</li>
       <li xml:lang="hu">Meghívok fogadása és elfogadása.</li>
+      <li xml:lang="it">Permette di ricevere e accettare inviti.</li>
       <li xml:lang="lt">Leidžia siųsti ir gauti pakvietimus.</li>
       <li xml:lang="nb">Kan motta og akseptere invitasjoner.</li>
       <li xml:lang="nds">Inladen laat sik dor mit kriegen un ok annehmen</li>
