@@ -1320,6 +1320,16 @@ bool KMKernel::doSessionManagement()
     return false;  // no, we were not restored
 }
 
+bool KMKernel::firstInstance() const
+{
+    return the_firstInstance;
+}
+
+void KMKernel::setFirstInstance(bool value)
+{
+    the_firstInstance = value;
+}
+
 void KMKernel::closeAllKMailWindows()
 {
     QList<KMainWindow *> windowsToDelete;
