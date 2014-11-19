@@ -103,7 +103,7 @@ void VacationScriptIndicatorWidget::createIndicator()
     mBoxLayout->addWidget(mInfo);
     Q_FOREACH (const QString &server, mServerActive) {
         ServerLabel *lab = new ServerLabel(server);
-        connect(lab, SIGNAL(clicked(QString)), this, SIGNAL(clicked(QString)));
+        connect(lab, &ServerLabel::clicked, this, &VacationScriptIndicatorWidget::clicked);
         mBoxLayout->addWidget(lab);
     }
     setLayout(mBoxLayout);

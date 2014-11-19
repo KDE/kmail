@@ -151,7 +151,6 @@ using KSieveUi::SieveDebugDialog;
 #include <kactionmenu.h>
 #include <QMenu>
 #include <kacceleratormanager.h>
-#include <kglobal.h>
 #include <kglobalsettings.h>
 #include <kstandardshortcut.h>
 #include <kshortcutsdialog.h>
