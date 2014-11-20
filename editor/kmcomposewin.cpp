@@ -230,14 +230,15 @@ KMComposeWin::KMComposeWin(const KMime::Message::Ptr &aMsg, bool lastSignState, 
       mReplaceText(0),
       mSelectAll(0),
       //mEncryptChiasmusAction( 0 ),
-      mDummyComposer(0),
-      mLabelWidth(0),
-      mComposerBase(0),
-      mSelectSpecialChar(0),
-      mPreventFccOverwrite(false),
-      mCheckForForgottenAttachments(true),
-      mIgnoreStickyFields(false),
-      mWasModified(false),
+      mDummyComposer( 0 ),
+      mLabelWidth( 0 ),
+      mComposerBase( 0 ),
+      mSelectSpecialChar( 0 ),
+      m_verifyMissingAttachment( 0 ),
+      mPreventFccOverwrite( false ),
+      mCheckForForgottenAttachments( true ),
+      mIgnoreStickyFields( false ),
+      mWasModified( false ),
       mCryptoStateIndicatorWidget(0),
       mStorageService(new KMStorageService(this, this)),
       mSendNowByShortcutUsed(false),
@@ -245,7 +246,6 @@ KMComposeWin::KMComposeWin(const KMime::Message::Ptr &aMsg, bool lastSignState, 
       mStatusBarLabelToggledOverrideMode(0),
       mStatusBarLabelSpellCheckingChangeMode(0)
 {
-    m_verifyMissingAttachment = 0;
     mComposerBase = new MessageComposer::ComposerViewBase(this, this);
     mComposerBase->setIdentityManager(kmkernel->identityManager());
 
