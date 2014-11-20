@@ -53,9 +53,7 @@ using KSieveUi::SieveDebugDialog;
 #include "collectionpage/collectionviewpage.h"
 #include "collectionpage/collectionmailinglistpage.h"
 #include "tag/tagselectdialog.h"
-#include "archivemailagentinterface.h"
 #include "job/createnewcontactjob.h"
-#include "sendlateragentinterface.h"
 #include "folderarchive/folderarchiveutil.h"
 #include "folderarchive/folderarchivemanager.h"
 
@@ -97,7 +95,7 @@ using KSieveUi::SieveDebugDialog;
 #include "widgets/displaymessageformatactionmenu.h"
 
 #include "ksieveui/vacation/vacationmanager.h"
-
+#include "kmconfigureagent.h"
 
 // LIBKDEPIM includes
 #include "progresswidget/progressmanager.h"
@@ -238,6 +236,7 @@ KMMainWidget::KMMainWidget( QWidget *parent, KXMLGUIClient *aGUIClient,
     mFolderDisplayFormatPreference(MessageViewer::Viewer::UseGlobalSetting),
     mSearchMessages( 0 )
 {
+    mConfigAgent = new KMConfigureAgent(this, this);
     // must be the first line of the constructor:
     mStartupDone = false;
     mWasEverShown = false;
@@ -3093,13 +3092,13 @@ void KMMainWidget::setupActions()
     {
         KAction *action = new KAction(i18n("&Configure Automatic Archiving..."), this);
         actionCollection()->addAction(QLatin1String("tools_automatic_archiving"), action );
-        connect(action, SIGNAL(triggered(bool)), SLOT(slotConfigureAutomaticArchiving()));
+        connect(action, SIGNAL(triggered(bool)), mConfigAgent, SLOT(slotConfigureAutomaticArchiving()));
     }
 
     {
         KAction *action = new KAction(i18n("Delayed Messages..."), this);
         actionCollection()->addAction(QLatin1String("message_delayed"), action );
-        connect(action, SIGNAL(triggered(bool)), SLOT(slotConfigureSendLater()));
+        connect(action, SIGNAL(triggered(bool)), mConfigAgent, SLOT(slotConfigureSendLater()));
     }
 
 
@@ -4726,26 +4725,6 @@ void KMMainWidget::savePaneSelection()
 {
     if (mMessagePane) {
         mMessagePane->saveCurrentSelection();
-    }
-}
-
-void KMMainWidget::slotConfigureAutomaticArchiving()
-{
-    OrgFreedesktopAkonadiArchiveMailAgentInterface archiveMailInterface(QLatin1String("org.freedesktop.Akonadi.ArchiveMailAgent"), QLatin1String("/ArchiveMailAgent"),QDBusConnection::sessionBus(), this);
-    if (archiveMailInterface.isValid()) {
-        archiveMailInterface.showConfigureDialog( (qlonglong)winId() );
-    } else {
-        KMessageBox::error(this,i18n("Archive Mail Agent was not registered."));
-    }
-}
-
-void KMMainWidget::slotConfigureSendLater()
-{
-    OrgFreedesktopAkonadiSendLaterAgentInterface sendLaterInterface(QLatin1String("org.freedesktop.Akonadi.SendLaterAgent"), QLatin1String("/SendLaterAgent"),QDBusConnection::sessionBus(), this);
-    if (sendLaterInterface.isValid()) {
-        sendLaterInterface.showConfigureDialog( (qlonglong)winId() );
-    } else {
-        KMessageBox::error(this,i18n("Send Later Agent was not registered."));
     }
 }
 

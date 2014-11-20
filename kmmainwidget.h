@@ -48,7 +48,7 @@ class Message;
 class KUrl;
 class QVBoxLayout;
 class QSplitter;
-
+class KMConfigureAgent;
 class DisplayMessageFormatActionMenu;
 class QMenu;
 class KAction;
@@ -426,11 +426,9 @@ protected slots:
     void slotCollectionChanged( const Akonadi::Collection&, const QSet<QByteArray>& );
     void slotCreateNewTab( bool );
     void slotUpdateActionsAfterMailChecking();
-    void slotConfigureAutomaticArchiving();
     void slotExportData();
     void slotCreateAddressBookContact();
     void slotOpenRecentMsg(const KUrl& url);
-    void slotConfigureSendLater();
 
 private:
     void checkAkonadiServerManagerState();
@@ -629,6 +627,7 @@ private:
     DisplayMessageFormatActionMenu *mDisplayMessageFormatMenu;
     MessageViewer::Viewer::DisplayFormatMessage mFolderDisplayFormatPreference;
     KAction *mSearchMessages;
+    KMConfigureAgent *mConfigAgent;
 };
 
 #endif
