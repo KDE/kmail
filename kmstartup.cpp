@@ -34,7 +34,7 @@ namespace KMail
 void migrateConfig()
 {
     Kdelibs4ConfigMigrator migrate(QLatin1String("kmail"));
-    migrate.setConfigFiles(QStringList() << QLatin1String("kmail2rc") << QLatin1String("kmail2.notifyrc"));
+    migrate.setConfigFiles(QStringList() << QLatin1String("kmail2rc") << QLatin1String("kmail2.notifyrc") << QLatin1String("kmailsnippetrc"));
     migrate.setUiFiles(QStringList() << QLatin1String("kmail_part.rc") << QLatin1String("kmcomposerui.rc") <<  QLatin1String("kmmainwin.rc") <<  QLatin1String("kmreadermainwin.rc"));
     //TODO migrate autosave too
     migrate.migrate();
