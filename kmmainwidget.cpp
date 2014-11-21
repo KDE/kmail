@@ -601,8 +601,8 @@ void KMMainWidget::writeFolderConfig()
 void KMMainWidget::layoutSplitters()
 {
     // This function can only be called when the old splitters are already deleted
-    Q_ASSERT( !mSplitter1 );
-    Q_ASSERT( !mSplitter2 );
+    Q_ASSERT(!mSplitter1);
+    Q_ASSERT(!mSplitter2);
 
     // For some reason, this is necessary here so that the copy action still
     // works after changing the folder layout.
@@ -3117,10 +3117,9 @@ void KMMainWidget::setupActions()
 
     {
         QAction *action = new QAction(i18n("Followup Reminder Messages..."), this);
-        actionCollection()->addAction(QLatin1String("followup_reminder_messages"), action );
+        actionCollection()->addAction(QLatin1String("followup_reminder_messages"), action);
         connect(action, &QAction::triggered, mConfigAgent, &KMConfigureAgent::slotConfigureFollowupReminder);
     }
-
 
     // Disable the standard action delete key sortcut.
     QAction *const standardDelAction = akonadiStandardAction(Akonadi::StandardActionManager::DeleteItems);

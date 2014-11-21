@@ -40,30 +40,30 @@ KMConfigureAgent::~KMConfigureAgent()
 
 void KMConfigureAgent::slotConfigureAutomaticArchiving()
 {
-    OrgFreedesktopAkonadiArchiveMailAgentInterface archiveMailInterface(QLatin1String("org.freedesktop.Akonadi.ArchiveMailAgent"), QLatin1String("/ArchiveMailAgent"),QDBusConnection::sessionBus(), this);
+    OrgFreedesktopAkonadiArchiveMailAgentInterface archiveMailInterface(QLatin1String("org.freedesktop.Akonadi.ArchiveMailAgent"), QLatin1String("/ArchiveMailAgent"), QDBusConnection::sessionBus(), this);
     if (archiveMailInterface.isValid()) {
-        archiveMailInterface.showConfigureDialog( (qlonglong)mParentWidget->winId() );
+        archiveMailInterface.showConfigureDialog((qlonglong)mParentWidget->winId());
     } else {
-        KMessageBox::error(mParentWidget,i18n("Archive Mail Agent was not registered."));
+        KMessageBox::error(mParentWidget, i18n("Archive Mail Agent was not registered."));
     }
 }
 
 void KMConfigureAgent::slotConfigureSendLater()
 {
-    OrgFreedesktopAkonadiSendLaterAgentInterface sendLaterInterface(QLatin1String("org.freedesktop.Akonadi.SendLaterAgent"), QLatin1String("/SendLaterAgent"),QDBusConnection::sessionBus(), this);
+    OrgFreedesktopAkonadiSendLaterAgentInterface sendLaterInterface(QLatin1String("org.freedesktop.Akonadi.SendLaterAgent"), QLatin1String("/SendLaterAgent"), QDBusConnection::sessionBus(), this);
     if (sendLaterInterface.isValid()) {
-        sendLaterInterface.showConfigureDialog( (qlonglong)mParentWidget->winId() );
+        sendLaterInterface.showConfigureDialog((qlonglong)mParentWidget->winId());
     } else {
-        KMessageBox::error(mParentWidget,i18n("Send Later Agent was not registered."));
+        KMessageBox::error(mParentWidget, i18n("Send Later Agent was not registered."));
     }
 }
 
 void KMConfigureAgent::slotConfigureFollowupReminder()
 {
-    OrgFreedesktopAkonadiFollowUpReminderAgentInterface followUpInterface(QLatin1String("org.freedesktop.Akonadi.FollowUpReminder"), QLatin1String("/FollowUpReminder"),QDBusConnection::sessionBus(), this);
+    OrgFreedesktopAkonadiFollowUpReminderAgentInterface followUpInterface(QLatin1String("org.freedesktop.Akonadi.FollowUpReminder"), QLatin1String("/FollowUpReminder"), QDBusConnection::sessionBus(), this);
     if (followUpInterface.isValid()) {
-        followUpInterface.showConfigureDialog( (qlonglong)mParentWidget->winId() );
+        followUpInterface.showConfigureDialog((qlonglong)mParentWidget->winId());
     } else {
-        KMessageBox::error(mParentWidget,i18n("Followup Reminder Agent was not registered."));
+        KMessageBox::error(mParentWidget, i18n("Followup Reminder Agent was not registered."));
     }
 }
