@@ -60,7 +60,7 @@ void KMConfigureAgent::slotConfigureSendLater()
 
 void KMConfigureAgent::slotConfigureFollowupReminder()
 {
-    OrgFreedesktopAkonadiFollowUpReminderAgentInterface followUpInterface(QLatin1String("org.freedesktop.Akonadi.FollowUpReminderAgent"), QLatin1String("/FollowUpReminder"),QDBusConnection::sessionBus(), this);
+    OrgFreedesktopAkonadiFollowUpReminderAgentInterface followUpInterface(QLatin1String("org.freedesktop.Akonadi.FollowUpReminder"), QLatin1String("/FollowUpReminder"),QDBusConnection::sessionBus(), this);
     if (followUpInterface.isValid()) {
         followUpInterface.showConfigureDialog( (qlonglong)mParentWidget->winId() );
     } else {

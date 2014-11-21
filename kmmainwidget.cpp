@@ -3101,6 +3101,12 @@ void KMMainWidget::setupActions()
         connect(action, SIGNAL(triggered(bool)), mConfigAgent, SLOT(slotConfigureSendLater()));
     }
 
+    {
+        KAction *action = new KAction(i18n("Followup Reminder Messages..."), this);
+        actionCollection()->addAction(QLatin1String("followup_reminder_messages"), action );
+        connect(action, SIGNAL(triggered(bool)), mConfigAgent, SLOT(slotConfigureFollowupReminder()));
+    }
+
 
     // Disable the standard action delete key sortcut.
     KAction* const standardDelAction = akonadiStandardAction(  Akonadi::StandardActionManager::DeleteItems );
