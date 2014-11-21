@@ -30,7 +30,7 @@ public:
 public Q_SLOTS:
     void slotConfigureSendLater();
     void slotConfigureAutomaticArchiving();
-
+    void slotConfigureFollowupReminder();
 private:
     QWidget *mParentWidget;
 };

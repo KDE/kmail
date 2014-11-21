@@ -231,6 +231,10 @@ if (KDEPIM_BUILD_DESKTOP)
     ${CMAKE_SOURCE_DIR}/kmail/dbusinterface/org.freedesktop.Akonadi.NewMailNotifier.xml
   )
 
+  qt4_add_dbus_interfaces(kmailprivate_LIB_SRCS
+    ${CMAKE_SOURCE_DIR}/agents/followupreminderagent/org.freedesktop.Akonadi.FollowUpReminder.xml
+  )
+
 
   ki18n_wrap_ui(kmailprivate_LIB_SRCS
     ui/composercryptoconfiguration.ui

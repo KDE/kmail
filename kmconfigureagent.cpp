@@ -21,6 +21,7 @@
 
 #include "archivemailagentinterface.h"
 #include "sendlateragentinterface.h"
+#include "followupreminderinterface.h"
 
 #include <QtDBus/QDBusInterface>
 #include <QtDBus/QDBusReply>
@@ -54,5 +55,15 @@ void KMConfigureAgent::slotConfigureSendLater()
         sendLaterInterface.showConfigureDialog( (qlonglong)mParentWidget->winId() );
     } else {
         KMessageBox::error(mParentWidget,i18n("Send Later Agent was not registered."));
+    }
+}
+
+void KMConfigureAgent::slotConfigureFollowupReminder()
+{
+    OrgFreedesktopAkonadiFollowUpReminderAgentInterface followUpInterface(QLatin1String("org.freedesktop.Akonadi.FollowUpReminder"), QLatin1String("/FollowUpReminder"),QDBusConnection::sessionBus(), this);
+    if (followUpInterface.isValid()) {
+        followUpInterface.showConfigureDialog( (qlonglong)mParentWidget->winId() );
+    } else {
+        KMessageBox::error(mParentWidget,i18n("Followup Reminder Agent was not registered."));
     }
 }
