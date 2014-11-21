@@ -194,7 +194,6 @@ using KSieveUi::SieveDebugDialog;
 #include <QDBusPendingCallWatcher>
 
 // System includes
-#include <assert.h>
 #include <errno.h> // ugh
 #include <akonadi/standardactionmanager.h>
 #include <job/removeduplicatemailjob.h>
@@ -609,8 +608,8 @@ void KMMainWidget::writeFolderConfig()
 void KMMainWidget::layoutSplitters()
 {
     // This function can only be called when the old splitters are already deleted
-    assert( !mSplitter1 );
-    assert( !mSplitter2 );
+    Q_ASSERT( !mSplitter1 );
+    Q_ASSERT( !mSplitter2 );
 
     // For some reason, this is necessary here so that the copy action still
     // works after changing the folder layout.
