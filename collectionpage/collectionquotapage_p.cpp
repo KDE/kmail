@@ -49,8 +49,6 @@ QuotaWidget::QuotaWidget(QWidget *parent)
     QVBoxLayout *box = new QVBoxLayout(this);
     QWidget *stuff = new QWidget(this);
     QGridLayout *layout = new QGridLayout(stuff);
-//TODO PORT QT5     layout->setMargin( QDialog::marginHint() );
-//TODO PORT QT5     layout->setSpacing( QDialog::spacingHint() );
 
     QLabel *lab = new QLabel(i18n("Usage:"));
     layout->addWidget(lab, 0, 0);

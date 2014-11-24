@@ -51,7 +51,6 @@ void CollectionShortcutPage::init(const Akonadi::Collection &col)
     mFolder = FolderCollection::forCollection(col, false);
 
     QVBoxLayout *topLayout = new QVBoxLayout(this);
-//TODO PORT QT5     topLayout->setSpacing( QDialog::spacingHint() );
 
     QLabel *label = new QLabel(i18n("<qt>To choose a key or a combination "
                                     "of keys which select the current folder, "

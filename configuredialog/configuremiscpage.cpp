@@ -73,8 +73,6 @@ MiscPageFolderTab::MiscPageFolderTab(QWidget *parent)
     mOnStartupOpenFolder = new FolderRequester(mMMTab.mOnStartupOpenFolder);
     layout->addWidget(mOnStartupOpenFolder);
 
-//TODO PORT QT5     mMMTab.gridLayout->setSpacing( QDialog::spacingHint() );
-//TODO PORT QT5     mMMTab.gridLayout->setMargin( QDialog::marginHint() );
     mMMTab.mExcludeImportantFromExpiry->setWhatsThis(
         i18n(GlobalSettings::self()->excludeImportantMailFromExpiryItem()->whatsThis().toUtf8()));
 

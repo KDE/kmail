@@ -23,7 +23,6 @@ ConfigModuleWithTabs::ConfigModuleWithTabs(QWidget *parent)
     : ConfigModule(parent), mWasInitialized(false)
 {
     QVBoxLayout *vlay = new QVBoxLayout(this);
-//TODO PORT QT5     vlay->setSpacing( QDialog::spacingHint() );
     vlay->setMargin(0);
     mTabWidget = new QTabWidget(this);
     vlay->addWidget(mTabWidget);

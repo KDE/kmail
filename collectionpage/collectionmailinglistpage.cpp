@@ -76,7 +76,6 @@ void CollectionMailingListPage::init(const Akonadi::Collection &col)
     mFolder = FolderCollection::forCollection(col, false);
 
     QVBoxLayout *topLayout = new QVBoxLayout(this);
-//TODO PORT QT5     topLayout->setSpacing( QDialog::spacingHint() );
 
     mHoldsMailingList = new QCheckBox(i18n("Folder holds a mailing list"), this);
     connect(mHoldsMailingList, &QCheckBox::toggled, this, &CollectionMailingListPage::slotHoldsML);
@@ -85,7 +84,6 @@ void CollectionMailingListPage::init(const Akonadi::Collection &col)
 
     mGroupWidget = new QWidget(this);
     QGridLayout *groupLayout = new QGridLayout(mGroupWidget);
-//TODO PORT QT5     groupLayout->setSpacing( QDialog::spacingHint() );
 
     mDetectButton = new QPushButton(i18n("Detect Automatically"), mGroupWidget);
     connect(mDetectButton, &QPushButton::pressed, this, &CollectionMailingListPage::slotDetectMailingList);

@@ -55,8 +55,6 @@ bool CollectionTemplatesPage::canHandle(const Collection &collection) const
 void CollectionTemplatesPage::init()
 {
     QVBoxLayout *topLayout = new QVBoxLayout(this);
-//TODO PORT QT5     topLayout->setMargin( QDialog::marginHint() );
-//TODO PORT QT5     topLayout->setSpacing( QDialog::spacingHint() );
 
     QHBoxLayout *topItems = new QHBoxLayout;
     topLayout->addLayout(topItems);
@@ -77,7 +75,6 @@ void CollectionTemplatesPage::init()
     topLayout->addWidget(mWidget);
 
     QHBoxLayout *btns = new QHBoxLayout();
-//TODO PORT QT5     btns->setSpacing( QDialog::spacingHint() );
     QPushButton *copyGlobal = new QPushButton(i18n("&Copy Global Templates"), this);
     copyGlobal->setEnabled(false);
     btns->addWidget(copyGlobal);

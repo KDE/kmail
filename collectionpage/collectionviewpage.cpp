@@ -62,8 +62,6 @@ void CollectionViewPage::init(const Akonadi::Collection &col)
     mIsLocalSystemFolder = CommonKernel->isSystemFolderCollection(col) || fd->isStructural() || Kernel::folderIsInbox(col, true);
 
     QVBoxLayout *topLayout = new QVBoxLayout(this);
-//TODO PORT QT5     topLayout->setSpacing( QDialog::spacingHint() );
-//TODO PORT QT5     topLayout->setMargin( QDialog::marginHint() );
     // Musn't be able to edit details for non-resource, system folder.
     if (!mIsLocalSystemFolder) {
         // icons
@@ -133,8 +131,6 @@ void CollectionViewPage::init(const Akonadi::Collection &col)
     // message list
     QGroupBox *messageListGroup = new QGroupBox(i18n("Message List"), this);
     QVBoxLayout *messageListGroupLayout = new QVBoxLayout(messageListGroup);
-//TODO PORT QT5     messageListGroupLayout->setSpacing( QDialog::spacingHint() );
-//TODO PORT QT5     messageListGroupLayout->setMargin( QDialog::marginHint() );
     topLayout->addWidget(messageListGroup);
 
     // message list aggregation

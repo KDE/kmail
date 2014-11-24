@@ -86,8 +86,6 @@ AccountsPageSendingTab::AccountsPageSendingTab(QWidget *parent)
     : ConfigModuleTab(parent)
 {
     QVBoxLayout *vlay = new QVBoxLayout(this);
-//TODO PORT QT5     vlay->setSpacing( QDialog::spacingHint() );
-//TODO PORT QT5     vlay->setMargin( QDialog::marginHint() );
     // label: zero stretch ### FIXME more
     vlay->addWidget(new QLabel(i18n("Outgoing accounts (add at least one):"), this));
 
@@ -102,7 +100,6 @@ AccountsPageSendingTab::AccountsPageSendingTab(QWidget *parent)
     // a grid layout for the contents of the "common options" group box
     QGridLayout *glay = new QGridLayout();
     group->setLayout(glay);
-//TODO PORT QT5     glay->setSpacing( QDialog::spacingHint() );
     glay->setColumnStretch(2, 10);
 
     // "confirm before send" check box:
@@ -185,8 +182,6 @@ AccountsPageReceivingTab::AccountsPageReceivingTab(QWidget *parent)
     }
     mAccountsReceiving.setupUi(this);
 
-//TODO PORT QT5     mAccountsReceiving.vlay->setSpacing( QDialog::spacingHint() );
-//TODO PORT QT5     mAccountsReceiving.vlay->setMargin( QDialog::marginHint() );
 
     mAccountsReceiving.mAccountsReceiving->setMimeTypeFilter(QStringList() << KMime::Message::mimeType());
     mAccountsReceiving.mAccountsReceiving->setCapabilityFilter(QStringList() << QLatin1String("Resource"));
@@ -200,9 +195,6 @@ AccountsPageReceivingTab::AccountsPageReceivingTab(QWidget *parent)
     ConfigAgentDelegate *configDelegate = new ConfigAgentDelegate(mAccountsReceiving.mAccountsReceiving->view());
     mAccountsReceiving.mAccountsReceiving->setItemDelegate(configDelegate);
     connect(configDelegate, SIGNAL(optionsClicked(QString,QPoint)), this, SLOT(slotShowMailCheckMenu(QString,QPoint)));
-
-//TODO PORT QT5     mAccountsReceiving.group->layout()->setMargin( QDialog::marginHint() );
-//TODO PORT QT5     mAccountsReceiving.group->layout()->setSpacing( QDialog::spacingHint() );
 
     connect(mAccountsReceiving.mBeepNewMailCheck, SIGNAL(stateChanged(int)),
             this, SLOT(slotEmitChanged()));
