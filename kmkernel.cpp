@@ -600,11 +600,11 @@ int KMKernel::openComposer(const QString &to, const QString &cc,
     if (!to.isEmpty()) {
         cWin->setFocusToSubject();
     }
-    KUrl::List attachURLs = KUrl::List(attachmentPaths);
-    KUrl::List::ConstIterator endAttachment(attachURLs.constEnd());
-    for (KUrl::List::ConstIterator it = attachURLs.constBegin() ; it != endAttachment; ++it) {
+    QList<QUrl> attachURLs = QUrl::fromStringList(attachmentPaths);
+    QList<QUrl>::ConstIterator endAttachment(attachURLs.constEnd());
+    for (QList<QUrl>::ConstIterator it = attachURLs.constBegin() ; it != endAttachment; ++it) {
         if (KMimeType::findByUrl(*it)->name() == QLatin1String("inode/directory")) {
-            if (KMessageBox::questionYesNo(0, i18n("Do you want to attach this folder \"%1\"?", (*it).prettyUrl()), i18n("Attach Folder")) == KMessageBox::No) {
+            if (KMessageBox::questionYesNo(0, i18n("Do you want to attach this folder \"%1\"?", (*it).toDisplayString()), i18n("Attach Folder")) == KMessageBox::No) {
                 continue;
             }
         }
@@ -1430,15 +1430,15 @@ void KMKernel::dumpDeadLetters()
 void KMKernel::action(bool mailto, bool check, const QString &to,
                       const QString &cc, const QString &bcc,
                       const QString &subj, const QString &body,
-                      const KUrl &messageFile,
-                      const KUrl::List &attachURLs,
+                      const QUrl &messageFile,
+                      const QList<QUrl> &attachURLs,
                       const QStringList &customHeaders,
                       const QString &replyTo,
                       const QString &inReplyTo)
 {
     if (mailto) {
         openComposer(to, cc, bcc, subj, body, 0,
-                     messageFile.pathOrUrl(), attachURLs.toStringList(),
+                     messageFile.toDisplayString(), QUrl::toStringList(attachURLs),
                      customHeaders, replyTo, inReplyTo);
     } else {
         openReader(check);

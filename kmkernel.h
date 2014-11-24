@@ -385,7 +385,7 @@ public:
     void setFirstInstance(bool value);
     void action(bool mailto, bool check, const QString &to, const QString &cc,
                 const QString &bcc, const QString &subj, const QString &body,
-                const KUrl &messageFile, const KUrl::List &attach,
+                const QUrl &messageFile, const QList<QUrl> &attach,
                 const QStringList &customHeaders , const QString &replyTo, const QString &inReplyTo);
 
     bool isImapFolder(const Akonadi::Collection &, bool &isOnline) const;
