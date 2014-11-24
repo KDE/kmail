@@ -144,7 +144,7 @@ public slots:
 
     Q_SCRIPTABLE void send(int how);
 
-    Q_SCRIPTABLE void addAttachmentsAndSend(const KUrl::List &urls,
+    Q_SCRIPTABLE void addAttachmentsAndSend(const QList<QUrl> &urls,
                                             const QString &comment,
                                             int how);
 

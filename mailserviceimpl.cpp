@@ -85,10 +85,10 @@ bool MailServiceImpl::sendMessage(const QString &from, const QString &to,
 
     KMail::Composer *cWin = KMail::makeComposer(msg);
 
-    KUrl::List attachUrls;
+    QList<QUrl> attachUrls;
     const int nbAttachments = attachments.count();
     for (int i = 0; i < nbAttachments; ++i) {
-        attachUrls += KUrl(attachments[i]);
+        attachUrls += QUrl::fromLocalFile(attachments[i]);
     }
 
     cWin->addAttachmentsAndSend(attachUrls, QString(), 1);  //send now

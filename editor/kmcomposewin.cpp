@@ -536,7 +536,7 @@ void KMComposeWin::send(int how)
 }
 
 //-----------------------------------------------------------------------------
-void KMComposeWin::addAttachmentsAndSend(const KUrl::List &urls, const QString &comment, int how)
+void KMComposeWin::addAttachmentsAndSend(const QList<QUrl> &urls, const QString &comment, int how)
 {
     qDebug() << "addAttachment and sending!";
     const int nbUrl = urls.count();

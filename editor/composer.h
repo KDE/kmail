@@ -61,7 +61,7 @@ public: // mailserviceimpl
      * From MailComposerIface
      */
     virtual void send(int how) = 0;
-    virtual void addAttachmentsAndSend(const KUrl::List &urls,
+    virtual void addAttachmentsAndSend(const QList<QUrl> &urls,
                                        const QString &comment, int how) = 0;
     virtual void addAttachment(const QUrl &url, const QString &comment) = 0;
     virtual void addAttachment(const QString &name,
