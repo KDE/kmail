@@ -65,7 +65,6 @@ NewIdentityDialog::NewIdentityDialog(KIdentityManagement::IdentityManager *manag
     mainLayout->addWidget(page);
     mainLayout->addWidget(buttonBox);
     QVBoxLayout *vlay = new QVBoxLayout(page);
-    //PORT QT5 vlay->setSpacing( spacingHint() );
     vlay->setMargin(0);
 
     // row 0: line edit with label

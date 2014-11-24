@@ -59,8 +59,6 @@ IdentityEditVcardDialog::IdentityEditVcardDialog(const QString &fileName, QWidge
     topLayout->addWidget(mainWidget);
     topLayout->addWidget(buttonBox);
     QHBoxLayout *mainLayout = new QHBoxLayout(mainWidget);
-//TODO PORT QT5     mainLayout->setSpacing( QDialog::spacingHint() );
-//TODO PORT QT5     mainLayout->setMargin( QDialog::marginHint() );
 
     mContactEditor = new Akonadi::ContactEditor(Akonadi::ContactEditor::CreateMode, Akonadi::ContactEditor::VCardMode, this);
     mainLayout->addWidget(mContactEditor);

@@ -50,9 +50,6 @@ IdentityAddVcardDialog::IdentityAddVcardDialog(const QStringList &shadowIdentiti
     mainLayout->addWidget(buttonBox);
 
     QVBoxLayout *vlay = new QVBoxLayout(mainWidget);
-//TODO PORT QT5     vlay->setSpacing( QDialog::spacingHint() );
-//TODO PORT QT5     vlay->setMargin( QDialog::marginHint() );
-//PORTING: Verify that widget was added to mainLayout     setMainWidget( mainWidget );
 
     mButtonGroup = new QButtonGroup(this);
     mButtonGroup->setObjectName(QLatin1String("buttongroup"));

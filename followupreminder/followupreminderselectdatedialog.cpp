@@ -53,8 +53,6 @@ FollowUpReminderSelectDateDialog::FollowUpReminderSelectDateDialog(QWidget *pare
     topLayout->addWidget(mainWidget);
     topLayout->addWidget(buttonBox);
     QVBoxLayout *mainLayout = new QVBoxLayout(mainWidget);
-//TODO PORT QT5     mainLayout->setSpacing( QDialog::spacingHint() );
-//TODO PORT QT5     mainLayout->setMargin( QDialog::marginHint() );
     QFormLayout *formLayout = new QFormLayout;
     mainLayout->addLayout(formLayout);
 
