@@ -11,7 +11,7 @@
 #include <QDBusObjectPath>
 #include <Solid/Networking>
 
-#include <kurl.h>
+#include <qurl.h>
 
 #include "kmail_export.h"
 #include "settings/globalsettings.h"

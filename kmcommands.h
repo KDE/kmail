@@ -18,7 +18,7 @@
 #include <AkonadiCore/item.h>
 #include <AkonadiCore/itemfetchscope.h>
 #include <AkonadiCore/collection.h>
-#include <KUrl>
+#include <QUrl>
 namespace Akonadi
 {
 class Tag;
@@ -188,7 +188,7 @@ public:
 private:
     Result execute() Q_DECL_OVERRIDE;
 
-    KUrl mUrl;
+    QUrl mUrl;
     Akonadi::Item mMessage;
 };
 
@@ -611,11 +611,11 @@ class KMAIL_EXPORT KMShareImageCommand : public KMCommand
     Q_OBJECT
 
 public:
-    explicit KMShareImageCommand(const KUrl &url, QWidget *parent);
+    explicit KMShareImageCommand(const QUrl &url, QWidget *parent);
 
 private:
     Result execute() Q_DECL_OVERRIDE;
-    KUrl mUrl;
+    QUrl mUrl;
 };
 
 class KMAIL_EXPORT KMFetchMessageCommand : public KMCommand

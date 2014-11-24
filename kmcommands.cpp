@@ -501,7 +501,7 @@ KMCommand::Result KMUrlSaveCommand::execute()
     if (mUrl.isEmpty()) {
         return OK;
     }
-    const KUrl saveUrl = KFileDialog::getSaveUrl(mUrl.fileName(), QString(),
+    const QUrl saveUrl = KFileDialog::getSaveUrl(mUrl.fileName(), QString(),
                          parentWidget());
     if (saveUrl.isEmpty()) {
         return Canceled;
@@ -509,7 +509,7 @@ KMCommand::Result KMUrlSaveCommand::execute()
     if (KIO::NetAccess::exists(saveUrl, KIO::NetAccess::DestinationSide, parentWidget())) {
         if (KMessageBox::warningContinueCancel(0,
                                                xi18nc("@info", "File <filename>%1</filename> exists.<nl/>Do you want to replace it?",
-                                                       saveUrl.pathOrUrl()), i18n("Save to File"), KGuiItem(i18n("&Replace")))
+                                                       saveUrl.toDisplayString()), i18n("Save to File"), KGuiItem(i18n("&Replace")))
                 != KMessageBox::Continue) {
             return Canceled;
         }
@@ -1616,7 +1616,7 @@ KMCommand::Result KMResendMessageCommand::execute()
     return OK;
 }
 
-KMShareImageCommand::KMShareImageCommand(const KUrl &url, QWidget *parent)
+KMShareImageCommand::KMShareImageCommand(const QUrl &url, QWidget *parent)
     : KMCommand(parent),
       mUrl(url)
 {
