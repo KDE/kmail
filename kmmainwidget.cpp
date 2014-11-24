@@ -2748,7 +2748,7 @@ void KMMainWidget::slotMessagePopup(const Akonadi::Item &msg , const KUrl &aUrl,
     updateMessageMenu();
 
     const QString email =  KPIMUtils::firstEmailAddress(aUrl.path()).toLower();
-    if (aUrl.protocol() == QLatin1String("mailto") && !email.isEmpty()) {
+    if (aUrl.scheme() == QLatin1String("mailto") && !email.isEmpty()) {
         Akonadi::ContactSearchJob *job = new Akonadi::ContactSearchJob(this);
         job->setLimit(1);
         job->setQuery(Akonadi::ContactSearchJob::Email, email, Akonadi::ContactSearchJob::ExactMatch);
@@ -2789,7 +2789,7 @@ void KMMainWidget::showMessagePopup(const Akonadi::Item &msg , const KUrl &url, 
     bool urlMenuAdded = false;
 
     if (!url.isEmpty()) {
-        if (url.protocol() == QLatin1String("mailto")) {
+        if (url.scheme() == QLatin1String("mailto")) {
             // popup on a mailto URL
             menu->addAction(mMsgView->mailToComposeAction());
             menu->addAction(mMsgView->mailToReplyAction());
@@ -2812,7 +2812,7 @@ void KMMainWidget::showMessagePopup(const Akonadi::Item &msg , const KUrl &url, 
             menu->addSeparator();
             menu->addAction(mMsgView->copyURLAction());
             urlMenuAdded = true;
-        } else if (url.protocol() != QLatin1String("attachment")) {
+        } else if (url.scheme() != QLatin1String("attachment")) {
             // popup on a not-mailto URL
             menu->addAction(mMsgView->urlOpenAction());
             menu->addAction(mMsgView->addBookmarksAction());

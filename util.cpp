@@ -101,7 +101,7 @@ void KMail::Util::launchAccountWizard(QWidget *w)
 
 bool KMail::Util::handleClickedURL(const KUrl &url, const QSharedPointer<MailCommon::FolderCollection> &folder)
 {
-    if (url.protocol() == QLatin1String("mailto")) {
+    if (url.scheme() == QLatin1String("mailto")) {
         KMime::Message::Ptr msg(new KMime::Message);
         uint identity = !folder.isNull() ? folder->identity() : 0;
         MessageHelper::initHeader(msg, KMKernel::self()->identityManager(), identity);
