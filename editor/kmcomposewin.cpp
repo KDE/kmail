@@ -548,7 +548,7 @@ void KMComposeWin::addAttachmentsAndSend(const KUrl::List &urls, const QString &
 }
 
 //-----------------------------------------------------------------------------
-void KMComposeWin::addAttachment(const KUrl &url, const QString &comment)
+void KMComposeWin::addAttachment(const QUrl &url, const QString &comment)
 {
     mComposerBase->addAttachment(url, comment);
 }

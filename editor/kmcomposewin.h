@@ -148,7 +148,7 @@ public slots:
                                             const QString &comment,
                                             int how);
 
-    Q_SCRIPTABLE void addAttachment(const KUrl &url,
+    Q_SCRIPTABLE void addAttachment(const QUrl &url,
                                     const QString &comment);
 
     Q_SCRIPTABLE void addAttachment(const QString &name,

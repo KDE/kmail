@@ -63,7 +63,7 @@ public: // mailserviceimpl
     virtual void send(int how) = 0;
     virtual void addAttachmentsAndSend(const KUrl::List &urls,
                                        const QString &comment, int how) = 0;
-    virtual void addAttachment(const KUrl &url, const QString &comment) = 0;
+    virtual void addAttachment(const QUrl &url, const QString &comment) = 0;
     virtual void addAttachment(const QString &name,
                                KMime::Headers::contentEncoding cte,
                                const QString &charset,
