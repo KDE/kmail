@@ -2213,14 +2213,14 @@ bool KMComposeWin::insertFromMimeData(const QMimeData *source, bool forceAttachm
     }
 
     // If this is a URL list, add those files as attachments or text
-    const KUrl::List urlList = KUrl::List::fromMimeData(source);
+    const QList<QUrl> urlList = source->urls();
     if (!urlList.isEmpty()) {
         //Search if it's message items.
         Akonadi::Item::List items;
         Akonadi::Collection::List collections;
         bool allLocalURLs = true;
 
-        foreach (const KUrl &url, urlList) {
+        foreach (const QUrl &url, urlList) {
             if (!url.isLocalFile()) {
                 allLocalURLs = false;
             }
@@ -2237,7 +2237,7 @@ bool KMComposeWin::insertFromMimeData(const QMimeData *source, bool forceAttachm
 
         if (items.isEmpty() && collections.isEmpty()) {
             if (allLocalURLs || forceAttachment) {
-                foreach (const KUrl &url, urlList) {
+                foreach (const QUrl &url, urlList) {
                     addAttachment(url, QString());
                 }
             } else {
@@ -2247,11 +2247,11 @@ bool KMComposeWin::insertFromMimeData(const QMimeData *source, bool forceAttachm
                 const QAction *selectedAction = p.exec(QCursor::pos());
 
                 if (selectedAction == addAsTextAction) {
-                    foreach (const KUrl &url, urlList) {
-                        mComposerBase->editor()->insertLink(url.url());
+                    foreach (const QUrl &url, urlList) {
+                        mComposerBase->editor()->insertLink(url.toDisplayString());
                     }
                 } else if (selectedAction == addAsAttachmentAction) {
-                    foreach (const KUrl &url, urlList) {
+                    foreach (const QUrl &url, urlList) {
                         addAttachment(url, QString());
                     }
                 }
