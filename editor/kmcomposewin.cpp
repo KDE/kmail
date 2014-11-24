@@ -3139,7 +3139,6 @@ void KMComposeWin::htmlToolBarVisibilityChanged(bool visible)
 //-----------------------------------------------------------------------------
 void KMComposeWin::slotAutoSpellCheckingToggled(bool on)
 {
-#if 0 //QT5
     mAutoSpellCheckingAction->setChecked(on);
     if (on != mComposerBase->editor()->checkSpellingEnabled()) {
         mComposerBase->editor()->setCheckSpellingEnabled(on);
@@ -3147,7 +3146,6 @@ void KMComposeWin::slotAutoSpellCheckingToggled(bool on)
     if (on != mEdtSubject->checkSpellingEnabled()) {
         mEdtSubject->setCheckSpellingEnabled(on);
     }
-#endif
     mStatusBarLabelSpellCheckingChangeMode->setToggleMode(on);
 }
 
