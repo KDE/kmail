@@ -183,7 +183,7 @@ class KMAIL_EXPORT KMMailtoComposeCommand : public KMCommand
     Q_OBJECT
 
 public:
-    explicit KMMailtoComposeCommand(const KUrl &url, const Akonadi::Item &msg = Akonadi::Item());
+    explicit KMMailtoComposeCommand(const QUrl &url, const Akonadi::Item &msg = Akonadi::Item());
 
 private:
     Result execute() Q_DECL_OVERRIDE;
@@ -197,13 +197,13 @@ class KMAIL_EXPORT KMMailtoReplyCommand : public KMCommand
     Q_OBJECT
 
 public:
-    KMMailtoReplyCommand(QWidget *parent, const KUrl &url,
+    KMMailtoReplyCommand(QWidget *parent, const QUrl &url,
                          const Akonadi::Item &msg, const QString &selection);
 
 private:
     Result execute() Q_DECL_OVERRIDE;
 
-    KUrl mUrl;
+    QUrl mUrl;
     QString mSelection;
 };
 
@@ -212,11 +212,11 @@ class KMAIL_EXPORT KMMailtoForwardCommand : public KMCommand
     Q_OBJECT
 
 public:
-    KMMailtoForwardCommand(QWidget *parent, const KUrl &url, const Akonadi::Item &msg);
+    KMMailtoForwardCommand(QWidget *parent, const QUrl &url, const Akonadi::Item &msg);
 
 private:
     Result execute() Q_DECL_OVERRIDE;
-    KUrl mUrl;
+    QUrl mUrl;
 };
 
 class KMAIL_EXPORT KMAddBookmarksCommand : public KMCommand
@@ -224,12 +224,12 @@ class KMAIL_EXPORT KMAddBookmarksCommand : public KMCommand
     Q_OBJECT
 
 public:
-    KMAddBookmarksCommand(const KUrl &url, QWidget *parent);
+    KMAddBookmarksCommand(const QUrl &url, QWidget *parent);
 
 private:
     Result execute() Q_DECL_OVERRIDE;
 
-    KUrl mUrl;
+    QUrl mUrl;
 };
 
 class KMAIL_EXPORT KMUrlSaveCommand : public KMCommand
@@ -237,7 +237,7 @@ class KMAIL_EXPORT KMUrlSaveCommand : public KMCommand
     Q_OBJECT
 
 public:
-    KMUrlSaveCommand(const KUrl &url, QWidget *parent);
+    KMUrlSaveCommand(const QUrl &url, QWidget *parent);
 
 private slots:
     void slotUrlSaveResult(KJob *job);
@@ -245,7 +245,7 @@ private slots:
 private:
     Result execute() Q_DECL_OVERRIDE;
 
-    KUrl mUrl;
+    QUrl mUrl;
 };
 
 class KMAIL_EXPORT KMEditItemCommand : public KMCommand

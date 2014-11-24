@@ -379,7 +379,7 @@ void KMCommand::slotTransferCancelled()
     emit messagesTransfered(Canceled);
 }
 
-KMMailtoComposeCommand::KMMailtoComposeCommand(const KUrl &url,
+KMMailtoComposeCommand::KMMailtoComposeCommand(const QUrl &url,
         const Akonadi::Item &msg)
     : mUrl(url), mMessage(msg)
 {
@@ -406,7 +406,7 @@ KMCommand::Result KMMailtoComposeCommand::execute()
 }
 
 KMMailtoReplyCommand::KMMailtoReplyCommand(QWidget *parent,
-        const KUrl &url, const Akonadi::Item &msg, const QString &selection)
+        const QUrl &url, const Akonadi::Item &msg, const QString &selection)
     : KMCommand(parent, msg), mUrl(url), mSelection(selection)
 {
     fetchScope().fetchFullPayload(true);
@@ -441,7 +441,7 @@ KMCommand::Result KMMailtoReplyCommand::execute()
 }
 
 KMMailtoForwardCommand::KMMailtoForwardCommand(QWidget *parent,
-        const KUrl &url, const Akonadi::Item &msg)
+        const QUrl &url, const Akonadi::Item &msg)
     : KMCommand(parent, msg), mUrl(url)
 {
     fetchScope().fetchFullPayload(true);
@@ -471,7 +471,7 @@ KMCommand::Result KMMailtoForwardCommand::execute()
     return OK;
 }
 
-KMAddBookmarksCommand::KMAddBookmarksCommand(const KUrl &url, QWidget *parent)
+KMAddBookmarksCommand::KMAddBookmarksCommand(const QUrl &url, QWidget *parent)
     : KMCommand(parent), mUrl(url)
 {
 }
@@ -491,7 +491,7 @@ KMCommand::Result KMAddBookmarksCommand::execute()
     return OK;
 }
 
-KMUrlSaveCommand::KMUrlSaveCommand(const KUrl &url, QWidget *parent)
+KMUrlSaveCommand::KMUrlSaveCommand(const QUrl &url, QWidget *parent)
     : KMCommand(parent), mUrl(url)
 {
 }
