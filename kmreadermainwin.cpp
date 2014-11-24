@@ -356,13 +356,13 @@ void KMReaderMainWin::setupAccel()
     actionCollection()->addAction(QLatin1String("text_size"), mFontSizeAction);
     connect(mFontSizeAction, &KFontSizeAction::fontSizeChanged, this, &KMReaderMainWin::slotSizeAction);
 
-    connect(mReaderWin->viewer(), SIGNAL(popupMenu(Akonadi::Item,KUrl,KUrl,QPoint)), this, SLOT(slotMessagePopup(Akonadi::Item,KUrl,KUrl,QPoint)));
+    connect(mReaderWin->viewer(), &MessageViewer::Viewer::popupMenu, this, &KMReaderMainWin::slotMessagePopup);
 
-    connect(mReaderWin->viewer(), SIGNAL(itemRemoved()), this, SLOT(close()));
+    connect(mReaderWin->viewer(), &MessageViewer::Viewer::itemRemoved, this, &QWidget::close);
 
     setStandardToolBarMenuEnabled(true);
     KStandardAction::configureToolbars(this, SLOT(slotEditToolbars()), actionCollection());
-    connect(mReaderWin->viewer(), SIGNAL(moveMessageToTrash()), this, SLOT(slotTrashMsg()));
+    connect(mReaderWin->viewer(), &MessageViewer::Viewer::moveMessageToTrash, this, &KMReaderMainWin::slotTrashMsg);
 }
 
 //-----------------------------------------------------------------------------

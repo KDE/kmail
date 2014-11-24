@@ -975,9 +975,9 @@ void KMMainWidget::createWidgets()
 
     connect(mFolderTreeWidget->folderTreeView(), SIGNAL(currentChanged(Akonadi::Collection)), this, SLOT(slotFolderChanged(Akonadi::Collection)));
 
-    connect(mFolderTreeWidget->folderTreeView()->selectionModel(), SIGNAL(selectionChanged(QItemSelection,QItemSelection)), this, SLOT(updateFolderMenu()));
+    connect(mFolderTreeWidget->folderTreeView()->selectionModel(), &QItemSelectionModel::selectionChanged, this, &KMMainWidget::updateFolderMenu);
 
-    connect(mFolderTreeWidget->folderTreeView(), SIGNAL(prefereCreateNewTab(bool)), this, SLOT(slotCreateNewTab(bool)));
+    connect(mFolderTreeWidget->folderTreeView(), &FolderTreeView::prefereCreateNewTab, this, &KMMainWidget::slotCreateNewTab);
 
     mFolderTreeWidget->setSelectionMode(QAbstractItemView::ExtendedSelection);
     mMessagePane = new CollectionPane(!GlobalSettings::self()->startSpecificFolderAtStartup(), KMKernel::self()->entityTreeModel(),
@@ -986,15 +986,15 @@ void KMMainWidget::createWidgets()
     connect(KMKernel::self()->entityTreeModel(), &Akonadi::EntityTreeModel::collectionFetched, this, &KMMainWidget::slotCollectionFetched);
 
     mMessagePane->setXmlGuiClient(mGUIClient);
-    connect(mMessagePane, SIGNAL(messageSelected(Akonadi::Item)),
-            this, SLOT(slotMessageSelected(Akonadi::Item)));
-    connect(mMessagePane, SIGNAL(selectionChanged()),
-            SLOT(startUpdateMessageActionsTimer()));
+    connect(mMessagePane, &MessageList::Pane::messageSelected,
+            this, &KMMainWidget::slotMessageSelected);
+    connect(mMessagePane, &MessageList::Pane::selectionChanged,
+            this, &KMMainWidget::startUpdateMessageActionsTimer);
     connect(mMessagePane, &CollectionPane::currentTabChanged, this, &KMMainWidget::refreshMessageListSelection);
-    connect(mMessagePane, SIGNAL(messageActivated(Akonadi::Item)),
-            this, SLOT(slotMessageActivated(Akonadi::Item)));
-    connect(mMessagePane, SIGNAL(messageStatusChangeRequest(Akonadi::Item,Akonadi::MessageStatus,Akonadi::MessageStatus)),
-            SLOT(slotMessageStatusChangeRequest(Akonadi::Item,Akonadi::MessageStatus,Akonadi::MessageStatus)));
+    connect(mMessagePane, &MessageList::Pane::messageActivated,
+            this, &KMMainWidget::slotMessageActivated);
+    connect(mMessagePane, &MessageList::Pane::messageStatusChangeRequest,
+            this, &KMMainWidget::slotMessageStatusChangeRequest);
 
     connect(mMessagePane, SIGNAL(statusMessage(QString)),
             BroadcastStatus::instance(), SLOT(setStatusMsg(QString)));
@@ -1007,12 +1007,12 @@ void KMMainWidget::createWidgets()
         if (mMsgActions) {
             mMsgActions->setMessageView(mMsgView);
         }
-        connect(mMsgView->viewer(), SIGNAL(replaceMsgByUnencryptedVersion()),
-                this, SLOT(slotReplaceMsgByUnencryptedVersion()));
-        connect(mMsgView->viewer(), SIGNAL(popupMenu(Akonadi::Item,KUrl,KUrl,QPoint)),
-                this, SLOT(slotMessagePopup(Akonadi::Item,KUrl,KUrl,QPoint)));
-        connect(mMsgView->viewer(), SIGNAL(moveMessageToTrash()),
-                this, SLOT(slotMoveMessageToTrash()));
+        connect(mMsgView->viewer(), &MessageViewer::Viewer::replaceMsgByUnencryptedVersion,
+                this, &KMMainWidget::slotReplaceMsgByUnencryptedVersion);
+        connect(mMsgView->viewer(), &MessageViewer::Viewer::popupMenu,
+                this, &KMMainWidget::slotMessagePopup);
+        connect(mMsgView->viewer(), &MessageViewer::Viewer::moveMessageToTrash,
+                this, &KMMainWidget::slotMoveMessageToTrash);
     } else {
         if (mMsgActions) {
             mMsgActions->setMessageView(0);
