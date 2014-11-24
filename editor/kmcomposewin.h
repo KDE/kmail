@@ -61,7 +61,7 @@ class KSelectAction;
 class QAction;
 class KJob;
 class KToggleAction;
-class KUrl;
+class QUrl;
 class KRecentFilesAction;
 class SnippetWidget;
 class SelectSpecialChar;

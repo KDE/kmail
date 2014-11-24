@@ -22,7 +22,7 @@
 
 #include "secondarywindow.h"
 
-#include <kurl.h>
+#include <qurl.h>
 #include <kmime/kmime_message.h>
 #include <AkonadiCore/collection.h>
 
