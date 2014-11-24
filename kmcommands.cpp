@@ -225,8 +225,8 @@ int KMCommand::mCountJobs = 0;
 
 void KMCommand::start()
 {
-    connect(this, SIGNAL(messagesTransfered(KMCommand::Result)),
-            this, SLOT(slotPostTransfer(KMCommand::Result)));
+    connect(this, &KMCommand::messagesTransfered,
+            this, &KMCommand::slotPostTransfer);
 
     if (mMsgList.isEmpty()) {
         emit messagesTransfered(OK);
@@ -255,8 +255,8 @@ void KMCommand::start()
 
 void KMCommand::slotPostTransfer(KMCommand::Result result)
 {
-    disconnect(this, SIGNAL(messagesTransfered(KMCommand::Result)),
-               this, SLOT(slotPostTransfer(KMCommand::Result)));
+    disconnect(this, &KMCommand::messagesTransfered,
+               this, &KMCommand::slotPostTransfer);
     if (result == OK) {
         result = execute();
     }
@@ -714,10 +714,10 @@ KMCommand::Result KMOpenMsgCommand::execute()
 
     setDeletesItself(true);
     mJob = KIO::get(mUrl, KIO::NoReload, KIO::HideProgressInfo);
-    connect(mJob, SIGNAL(data(KIO::Job*,QByteArray)),
-            this, SLOT(slotDataArrived(KIO::Job*,QByteArray)));
-    connect(mJob, SIGNAL(result(KJob*)),
-            SLOT(slotResult(KJob*)));
+    connect(mJob, &KIO::TransferJob::data,
+            this, &KMOpenMsgCommand::slotDataArrived);
+    connect(mJob, &KJob::result,
+            this, &KMOpenMsgCommand::slotResult);
     setEmitsCompletedItself(true);
     return OK;
 }

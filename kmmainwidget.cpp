@@ -279,11 +279,11 @@ KMMainWidget::KMMainWidget(QWidget *parent, KXMLGUIClient *aGUIClient,
     connect(kmkernel, SIGNAL(onlineStatusChanged(GlobalSettings::EnumNetworkState::type)),
             this, SLOT(slotUpdateOnlineStatus(GlobalSettings::EnumNetworkState::type)));
 
-    connect(mTagActionManager, SIGNAL(tagActionTriggered(Akonadi::Tag)),
-            this, SLOT(slotUpdateMessageTagList(Akonadi::Tag)));
+    connect(mTagActionManager, &KMail::TagActionManager::tagActionTriggered,
+            this, &KMMainWidget::slotUpdateMessageTagList);
 
-    connect(mTagActionManager, SIGNAL(tagMoreActionClicked()),
-            this, SLOT(slotSelectMoreMessageTagList()));
+    connect(mTagActionManager, &KMail::TagActionManager::tagMoreActionClicked,
+            this, &KMMainWidget::slotSelectMoreMessageTagList);
 
     kmkernel->toggleSystemTray();
 
@@ -607,8 +607,8 @@ void KMMainWidget::layoutSplitters()
     // For some reason, this is necessary here so that the copy action still
     // works after changing the folder layout.
     if (mMsgView)
-        disconnect(mMsgView->copyAction(), SIGNAL(triggered(bool)),
-                   mMsgView, SLOT(slotCopySelectedText()));
+        disconnect(mMsgView->copyAction(), &QAction::triggered,
+                   mMsgView, &KMReaderWin::slotCopySelectedText);
 
     // If long folder list is enabled, the splitters are:
     // Splitter 1: FolderView vs (HeaderAndSearch vs MessageViewer)
@@ -782,8 +782,8 @@ void KMMainWidget::layoutSplitters()
 
     // Make the copy action work, see disconnect comment above
     if (mMsgView)
-        connect(mMsgView->copyAction(), SIGNAL(triggered(bool)),
-                mMsgView, SLOT(slotCopySelectedText()));
+        connect(mMsgView->copyAction(), &QAction::triggered,
+                mMsgView, &KMReaderWin::slotCopySelectedText);
 }
 
 //-----------------------------------------------------------------------------
@@ -867,10 +867,10 @@ void KMMainWidget::readConfig()
     updateFileMenu();
     kmkernel->toggleSystemTray();
 
-    connect(Akonadi::AgentManager::self(), SIGNAL(instanceAdded(Akonadi::AgentInstance)),
-            this, SLOT(updateFileMenu()));
-    connect(Akonadi::AgentManager::self(), SIGNAL(instanceRemoved(Akonadi::AgentInstance)),
-            this, SLOT(updateFileMenu()));
+    connect(Akonadi::AgentManager::self(), &AgentManager::instanceAdded,
+            this, &KMMainWidget::updateFileMenu);
+    connect(Akonadi::AgentManager::self(), &AgentManager::instanceRemoved,
+            this, &KMMainWidget::updateFileMenu);
 }
 
 //-----------------------------------------------------------------------------
