@@ -118,7 +118,8 @@ void insertLibraryCataloguesAndIcons()
 
     KLocale *l = KLocale::global();
     KIconLoader *il = KIconLoader::global();
-    for (unsigned int i = 0 ; i < sizeof catalogs / sizeof * catalogs ; ++i) {
+    unsigned int catalogSize = (sizeof catalogs / sizeof *catalogs);
+    for (unsigned int i = 0 ; i < catalogSize ; ++i) {
         il->addAppDir(QLatin1String(catalogs[i]));
     }
 
