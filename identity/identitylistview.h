@@ -87,7 +87,7 @@ public:
     void setIdentityManager(KIdentityManagement::IdentityManager *im);
 
 protected slots:
-    void commitData(QWidget *editor);
+    void commitData(QWidget *editor) Q_DECL_OVERRIDE;
 
 public slots:
     void slotCustomContextMenuRequested(const QPoint &);
@@ -98,7 +98,7 @@ signals:
 
 protected:
 #ifndef QT_NO_DRAGANDDROP
-    void startDrag(Qt::DropActions supportedActions);
+    void startDrag(Qt::DropActions supportedActions) Q_DECL_OVERRIDE;
 #endif
 
 private:

@@ -46,10 +46,10 @@ public:
     explicit IdentityPage(QWidget *parent = 0);
     ~IdentityPage();
 
-    QString helpAnchor() const;
+    QString helpAnchor() const Q_DECL_OVERRIDE;
 
-    void load();
-    void save();
+    void load() Q_DECL_OVERRIDE;
+    void save() Q_DECL_OVERRIDE;
 
 private slots:
     void slotNewIdentity();
