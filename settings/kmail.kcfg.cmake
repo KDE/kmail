@@ -18,7 +18,6 @@
           <choice name="SelectLastSelected"/>
           <choice name="SelectNewest"/>
           <choice name="SelectOldest"/>
-          <choice name="SelectNone"/>
         </choices>
         <default>SelectLastSelected</default>
       </entry>

@@ -126,11 +126,6 @@ p, li { white-space: pre-wrap; }
          <string>Jump to Oldest Message</string>
         </property>
        </item>
-       <item>
-        <property name="text">
-         <string>Do Nothing</string>
-        </property>
-       </item>
       </widget>
      </item>
      <item row="4" column="0">
