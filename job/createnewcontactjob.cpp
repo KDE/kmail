@@ -53,7 +53,7 @@ void CreateNewContactJob::start()
                                         Akonadi::CollectionFetchJob::Recursive);
 
     addressBookJob->fetchScope().setContentMimeTypes(QStringList() << KContacts::Addressee::mimeType());
-    connect(addressBookJob, SIGNAL(result(KJob*)), SLOT(slotCollectionsFetched(KJob*)));
+    connect(addressBookJob, &KJob::result, this, &CreateNewContactJob::slotCollectionsFetched);
 }
 
 void CreateNewContactJob::slotCollectionsFetched(KJob *job)

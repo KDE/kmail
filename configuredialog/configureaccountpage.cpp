@@ -194,17 +194,17 @@ AccountsPageReceivingTab::AccountsPageReceivingTab(QWidget *parent)
     }
     ConfigAgentDelegate *configDelegate = new ConfigAgentDelegate(mAccountsReceiving.mAccountsReceiving->view());
     mAccountsReceiving.mAccountsReceiving->setItemDelegate(configDelegate);
-    connect(configDelegate, SIGNAL(optionsClicked(QString,QPoint)), this, SLOT(slotShowMailCheckMenu(QString,QPoint)));
+    connect(configDelegate, &ConfigAgentDelegate::optionsClicked, this, &AccountsPageReceivingTab::slotShowMailCheckMenu);
 
-    connect(mAccountsReceiving.mBeepNewMailCheck, SIGNAL(stateChanged(int)),
-            this, SLOT(slotEmitChanged()));
+    connect(mAccountsReceiving.mBeepNewMailCheck, &QCheckBox::stateChanged,
+            this, &ConfigModuleTab::slotEmitChanged);
 
-    connect(mAccountsReceiving.mVerboseNotificationCheck, SIGNAL(stateChanged(int)),
-            this, SLOT(slotEmitChanged()));
+    connect(mAccountsReceiving.mVerboseNotificationCheck, &QCheckBox::stateChanged,
+            this, &ConfigModuleTab::slotEmitChanged);
 
-    connect(mAccountsReceiving.mOtherNewMailActionsButton, SIGNAL(clicked()),
-            this, SLOT(slotEditNotifications()));
-    connect(mAccountsReceiving.customizeAccountOrder, SIGNAL(clicked()), this, SLOT(slotCustomizeAccountOrder()));
+    connect(mAccountsReceiving.mOtherNewMailActionsButton, &QAbstractButton::clicked,
+            this, &AccountsPageReceivingTab::slotEditNotifications);
+    connect(mAccountsReceiving.customizeAccountOrder, &QAbstractButton::clicked, this, &AccountsPageReceivingTab::slotCustomizeAccountOrder);
 }
 
 AccountsPageReceivingTab::~AccountsPageReceivingTab()

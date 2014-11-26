@@ -62,7 +62,7 @@ AddEmailToExistingContactDialog::AddEmailToExistingContactDialog(QWidget *parent
     mainLayout->addWidget(mEmailSelectionWidget);
     mEmailSelectionWidget->view()->setSelectionMode(QAbstractItemView::SingleSelection);
     readConfig();
-    connect(mEmailSelectionWidget->view()->selectionModel(), SIGNAL(selectionChanged(QItemSelection,QItemSelection)), this, SLOT(slotSelectionChanged()));
+    connect(mEmailSelectionWidget->view()->selectionModel(), &QItemSelectionModel::selectionChanged, this, &AddEmailToExistingContactDialog::slotSelectionChanged);
     QDialogButtonBox *buttonBox = new QDialogButtonBox(QDialogButtonBox::Ok | QDialogButtonBox::Cancel);
     mOkButton = buttonBox->button(QDialogButtonBox::Ok);
     mOkButton->setDefault(true);

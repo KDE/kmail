@@ -87,8 +87,8 @@ KMSystemTray::KMSystemTray(QObject *parent)
     connect(KGlobalSettings::self(), &KGlobalSettings::kdisplayFontChanged, this, &KMSystemTray::slotGeneralFontChanged);
 
     connect(this, &KMSystemTray::activateRequested, this, &KMSystemTray::slotActivated);
-    connect(contextMenu(), SIGNAL(aboutToShow()),
-            this, SLOT(slotContextMenuAboutToShow()));
+    connect(contextMenu(), &QMenu::aboutToShow,
+            this, &KMSystemTray::slotContextMenuAboutToShow);
 
     connect(kmkernel->folderCollectionMonitor(), SIGNAL(collectionStatisticsChanged(Akonadi::Collection::Id,Akonadi::CollectionStatistics)), SLOT(slotCollectionStatisticsChanged(Akonadi::Collection::Id,Akonadi::CollectionStatistics)));
 

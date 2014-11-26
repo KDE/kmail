@@ -1318,11 +1318,11 @@ void KMComposeWin::setupActions(void)
 
     mAppendSignature = new QAction(i18n("Append S&ignature"), this);
     actionCollection()->addAction(QLatin1String("append_signature"), mAppendSignature);
-    connect(mAppendSignature, SIGNAL(triggered(bool)), mComposerBase->signatureController(), SLOT(appendSignature()));
+    connect(mAppendSignature, &QAction::triggered, mComposerBase->signatureController(), &MessageComposer::SignatureController::appendSignature);
 
     mPrependSignature = new QAction(i18n("Pr&epend Signature"), this);
     actionCollection()->addAction(QLatin1String("prepend_signature"), mPrependSignature);
-    connect(mPrependSignature, SIGNAL(triggered(bool)), mComposerBase->signatureController(), SLOT(prependSignature()));
+    connect(mPrependSignature, &QAction::triggered, mComposerBase->signatureController(), &MessageComposer::SignatureController::prependSignature);
 
     mInsertSignatureAtCursorPosition = new QAction(i18n("Insert Signature At C&ursor Position"), this);
     actionCollection()->addAction(QLatin1String("insert_signature_at_cursor_position"), mInsertSignatureAtCursorPosition);

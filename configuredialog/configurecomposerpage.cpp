@@ -155,8 +155,8 @@ ComposerPageGeneralTab::ComposerPageGeneralTab(QWidget *parent)
     mAutoAppSignFileCheck->setToolTip(helpText);
     mAutoAppSignFileCheck->setWhatsThis(helpText);
 
-    connect(mAutoAppSignFileCheck, SIGNAL(stateChanged(int)),
-            this, SLOT(slotEmitChanged()));
+    connect(mAutoAppSignFileCheck, &QCheckBox::stateChanged,
+            this, &ConfigModuleTab::slotEmitChanged);
     groupVBoxLayout->addWidget(mAutoAppSignFileCheck);
 
     // "Insert signature above quoted text" checkbox
@@ -168,10 +168,10 @@ ComposerPageGeneralTab::ComposerPageGeneralTab(QWidget *parent)
     mTopQuoteCheck->setToolTip(helpText);
     mTopQuoteCheck->setWhatsThis(helpText);
 
-    connect(mTopQuoteCheck, SIGNAL(stateChanged(int)),
-            this, SLOT(slotEmitChanged()));
-    connect(mAutoAppSignFileCheck, SIGNAL(toggled(bool)),
-            mTopQuoteCheck, SLOT(setEnabled(bool)));
+    connect(mTopQuoteCheck, &QCheckBox::stateChanged,
+            this, &ConfigModuleTab::slotEmitChanged);
+    connect(mAutoAppSignFileCheck, &QAbstractButton::toggled,
+            mTopQuoteCheck, &QWidget::setEnabled);
     groupVBoxLayout->addWidget(mTopQuoteCheck);
 
     // "Prepend separator to signature" checkbox
@@ -198,8 +198,8 @@ ComposerPageGeneralTab::ComposerPageGeneralTab(QWidget *parent)
     mStripSignatureCheck->setToolTip(helpText);
     mStripSignatureCheck->setWhatsThis(helpText);
 
-    connect(mStripSignatureCheck, SIGNAL(stateChanged(int)),
-            this, SLOT(slotEmitChanged()));
+    connect(mStripSignatureCheck, &QCheckBox::stateChanged,
+            this, &ConfigModuleTab::slotEmitChanged);
     groupVBoxLayout->addWidget(mStripSignatureCheck);
 
     groupBox->setLayout(groupVBoxLayout);
@@ -219,8 +219,8 @@ ComposerPageGeneralTab::ComposerPageGeneralTab(QWidget *parent)
     mQuoteSelectionOnlyCheck->setToolTip(helpText);
     mQuoteSelectionOnlyCheck->setWhatsThis(helpText);
 
-    connect(mQuoteSelectionOnlyCheck, SIGNAL(stateChanged(int)),
-            this, SLOT(slotEmitChanged()));
+    connect(mQuoteSelectionOnlyCheck, &QCheckBox::stateChanged,
+            this, &ConfigModuleTab::slotEmitChanged);
     groupGridLayout->addWidget(mQuoteSelectionOnlyCheck, row, 0, 1, -1);
     ++row;
 
@@ -233,8 +233,8 @@ ComposerPageGeneralTab::ComposerPageGeneralTab(QWidget *parent)
     mSmartQuoteCheck->setToolTip(helpText);
     mSmartQuoteCheck->setWhatsThis(helpText);
 
-    connect(mSmartQuoteCheck, SIGNAL(stateChanged(int)),
-            this, SLOT(slotEmitChanged()));
+    connect(mSmartQuoteCheck, &QCheckBox::stateChanged,
+            this, &ConfigModuleTab::slotEmitChanged);
     groupGridLayout->addWidget(mSmartQuoteCheck, row, 0, 1, -1);
     ++row;
 
@@ -281,8 +281,8 @@ ComposerPageGeneralTab::ComposerPageGeneralTab(QWidget *parent)
     mReplyUsingHtml->setToolTip(helpText);
     mReplyUsingHtml->setWhatsThis(helpText);
 
-    connect(mReplyUsingHtml, SIGNAL(stateChanged(int)),
-            this, SLOT(slotEmitChanged()));
+    connect(mReplyUsingHtml, &QCheckBox::stateChanged,
+            this, &ConfigModuleTab::slotEmitChanged);
     groupGridLayout->addWidget(mReplyUsingHtml, row, 0, 1, -1);
     ++row;
 
@@ -1266,10 +1266,10 @@ ComposerPageAttachmentsTab::ComposerPageAttachmentsTab(QWidget *parent)
     mOutlookCompatibleCheck->setToolTip(i18n(
                                             "Turn this option on to make Outlook(tm) understand attachment names "
                                             "containing non-English characters"));
-    connect(mOutlookCompatibleCheck, SIGNAL(stateChanged(int)),
-            this, SLOT(slotEmitChanged()));
-    connect(mOutlookCompatibleCheck, SIGNAL(clicked()),
-            this, SLOT(slotOutlookCompatibleClicked()));
+    connect(mOutlookCompatibleCheck, &QCheckBox::stateChanged,
+            this, &ConfigModuleTab::slotEmitChanged);
+    connect(mOutlookCompatibleCheck, &QAbstractButton::clicked,
+            this, &ComposerPageAttachmentsTab::slotOutlookCompatibleClicked);
     vlay->addWidget(mOutlookCompatibleCheck);
     vlay->addSpacing(5);
 
@@ -1277,8 +1277,8 @@ ComposerPageAttachmentsTab::ComposerPageAttachmentsTab(QWidget *parent)
     mMissingAttachmentDetectionCheck =
         new QCheckBox(i18n("E&nable detection of missing attachments"), this);
     mMissingAttachmentDetectionCheck->setChecked(true);
-    connect(mMissingAttachmentDetectionCheck, SIGNAL(stateChanged(int)),
-            this, SLOT(slotEmitChanged()));
+    connect(mMissingAttachmentDetectionCheck, &QCheckBox::stateChanged,
+            this, &ConfigModuleTab::slotEmitChanged);
     vlay->addWidget(mMissingAttachmentDetectionCheck);
 
     // "Attachment key words" label and string list editor

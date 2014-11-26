@@ -53,11 +53,11 @@ AttachmentController::AttachmentController(MessageComposer::AttachmentModel *mod
     connect(composer, SIGNAL(identityChanged(KIdentityManagement::Identity)),
             this, SLOT(identityChanged()));
 
-    connect(view, SIGNAL(contextMenuRequested()), this, SLOT(showContextMenu()));
-    connect(view->selectionModel(), SIGNAL(selectionChanged(QItemSelection,QItemSelection)),
-            this, SLOT(selectionChanged()));
-    connect(view, SIGNAL(doubleClicked(QModelIndex)),
-            this, SLOT(doubleClicked(QModelIndex)));
+    connect(view, &AttachmentView::contextMenuRequested, this, &AttachmentControllerBase::showContextMenu);
+    connect(view->selectionModel(), &QItemSelectionModel::selectionChanged,
+            this, &AttachmentController::selectionChanged);
+    connect(view, &QAbstractItemView::doubleClicked,
+            this, &AttachmentController::doubleClicked);
 
     connect(this, &AttachmentController::refreshSelection, this, &AttachmentController::selectionChanged);
 
