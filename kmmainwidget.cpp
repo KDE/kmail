@@ -53,9 +53,7 @@ using KSieveUi::SieveDebugDialog;
 #include "collectionpage/collectionviewpage.h"
 #include "collectionpage/collectionmailinglistpage.h"
 #include "tag/tagselectdialog.h"
-#include "archivemailagentinterface.h"
 #include "job/createnewcontactjob.h"
-#include "sendlateragentinterface.h"
 #include "folderarchive/folderarchiveutil.h"
 #include "folderarchive/folderarchivemanager.h"
 
@@ -97,7 +95,7 @@ using KSieveUi::SieveDebugDialog;
 #include "widgets/displaymessageformatactionmenu.h"
 
 #include "ksieveui/vacation/vacationmanager.h"
-
+#include "kmconfigureagent.h"
 
 // LIBKDEPIM includes
 #include "progresswidget/progressmanager.h"
@@ -196,7 +194,6 @@ using KSieveUi::SieveDebugDialog;
 #include <QDBusPendingCallWatcher>
 
 // System includes
-#include <assert.h>
 #include <errno.h> // ugh
 #include <akonadi/standardactionmanager.h>
 #include <job/removeduplicatemailjob.h>
@@ -238,6 +235,7 @@ KMMainWidget::KMMainWidget( QWidget *parent, KXMLGUIClient *aGUIClient,
     mFolderDisplayFormatPreference(MessageViewer::Viewer::UseGlobalSetting),
     mSearchMessages( 0 )
 {
+    mConfigAgent = new KMConfigureAgent(this, this);
     // must be the first line of the constructor:
     mStartupDone = false;
     mWasEverShown = false;
@@ -611,8 +609,8 @@ void KMMainWidget::writeFolderConfig()
 void KMMainWidget::layoutSplitters()
 {
     // This function can only be called when the old splitters are already deleted
-    assert( !mSplitter1 );
-    assert( !mSplitter2 );
+    Q_ASSERT( !mSplitter1 );
+    Q_ASSERT( !mSplitter2 );
 
     // For some reason, this is necessary here so that the copy action still
     // works after changing the folder layout.
@@ -3094,13 +3092,19 @@ void KMMainWidget::setupActions()
     {
         KAction *action = new KAction(i18n("&Configure Automatic Archiving..."), this);
         actionCollection()->addAction(QLatin1String("tools_automatic_archiving"), action );
-        connect(action, SIGNAL(triggered(bool)), SLOT(slotConfigureAutomaticArchiving()));
+        connect(action, SIGNAL(triggered(bool)), mConfigAgent, SLOT(slotConfigureAutomaticArchiving()));
     }
 
     {
         KAction *action = new KAction(i18n("Delayed Messages..."), this);
         actionCollection()->addAction(QLatin1String("message_delayed"), action );
-        connect(action, SIGNAL(triggered(bool)), SLOT(slotConfigureSendLater()));
+        connect(action, SIGNAL(triggered(bool)), mConfigAgent, SLOT(slotConfigureSendLater()));
+    }
+
+    {
+        KAction *action = new KAction(i18n("Followup Reminder Messages..."), this);
+        actionCollection()->addAction(QLatin1String("followup_reminder_messages"), action );
+        connect(action, SIGNAL(triggered(bool)), mConfigAgent, SLOT(slotConfigureFollowupReminder()));
     }
 
 
@@ -4727,26 +4731,6 @@ void KMMainWidget::savePaneSelection()
 {
     if (mMessagePane) {
         mMessagePane->saveCurrentSelection();
-    }
-}
-
-void KMMainWidget::slotConfigureAutomaticArchiving()
-{
-    OrgFreedesktopAkonadiArchiveMailAgentInterface archiveMailInterface(QLatin1String("org.freedesktop.Akonadi.ArchiveMailAgent"), QLatin1String("/ArchiveMailAgent"),QDBusConnection::sessionBus(), this);
-    if (archiveMailInterface.isValid()) {
-        archiveMailInterface.showConfigureDialog( (qlonglong)winId() );
-    } else {
-        KMessageBox::error(this,i18n("Archive Mail Agent was not registered."));
-    }
-}
-
-void KMMainWidget::slotConfigureSendLater()
-{
-    OrgFreedesktopAkonadiSendLaterAgentInterface sendLaterInterface(QLatin1String("org.freedesktop.Akonadi.SendLaterAgent"), QLatin1String("/SendLaterAgent"),QDBusConnection::sessionBus(), this);
-    if (sendLaterInterface.isValid()) {
-        sendLaterInterface.showConfigureDialog( (qlonglong)winId() );
-    } else {
-        KMessageBox::error(this,i18n("Send Later Agent was not registered."));
     }
 }
 

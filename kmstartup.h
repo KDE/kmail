@@ -20,12 +20,6 @@
 
 #include "kmail_export.h"
 
-extern "C" {
-KMAIL_EXPORT void kmsetSignalHandler( void (*handler)(int) );
-KMAIL_EXPORT void kmsignalHandler( int sigId );
-KMAIL_EXPORT void kmcrashHandler( int sigId );
-}
-
 namespace KMail {
 KMAIL_EXPORT void checkConfigUpdates();
 KMAIL_EXPORT void insertLibraryCataloguesAndIcons();

@@ -223,16 +223,6 @@ QColor KMail::Util::quoteL3Color()
 }
 
 
-void KMail::Util::reduceQuery(QString &query)
-{
-    QRegExp rx(QLatin1String("<[\\w]+://[\\w\\d-_.]+(/[\\d\\w/-._]+/)*([\\w\\d-._]+)#([\\w\\d]+)>"));
-    query.replace(rx,QLatin1String("\\2:\\3"));
-    query.replace( QLatin1String("rdf-schema:"), QLatin1String("rdfs:") );
-    query.replace( QLatin1String("22-rdf-syntax-ns:"), QLatin1String("rdf:") );
-    query.replace( QLatin1String("XMLSchema:"), QLatin1String("xsd:") );
-    query = query.simplified();
-}
-
 void KMail::Util::migrateFromKMail1()
 {
     // Akonadi migration

@@ -186,6 +186,7 @@ if (KDEPIM_BUILD_DESKTOP)
      util.cpp
      messageactions.cpp
      foldershortcutactionmanager.cpp
+     kmconfigureagent.cpp
      ${kmailprivate_attributes_LIB_SRCS}
      ${kmailprivate_tag_LIB_SRCS}
      ${kmailprivate_job_LIB_SRCS}
@@ -229,6 +230,10 @@ if (KDEPIM_BUILD_DESKTOP)
 
   qt4_add_dbus_interfaces(kmailprivate_LIB_SRCS
     ${CMAKE_SOURCE_DIR}/kmail/dbusinterface/org.freedesktop.Akonadi.NewMailNotifier.xml
+  )
+
+  qt4_add_dbus_interfaces(kmailprivate_LIB_SRCS
+    ${CMAKE_SOURCE_DIR}/agents/followupreminderagent/org.freedesktop.Akonadi.FollowUpReminder.xml
   )
 
 
