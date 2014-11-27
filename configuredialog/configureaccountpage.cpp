@@ -182,7 +182,6 @@ AccountsPageReceivingTab::AccountsPageReceivingTab(QWidget *parent)
     }
     mAccountsReceiving.setupUi(this);
 
-
     mAccountsReceiving.mAccountsReceiving->setMimeTypeFilter(QStringList() << KMime::Message::mimeType());
     mAccountsReceiving.mAccountsReceiving->setCapabilityFilter(QStringList() << QLatin1String("Resource"));
     mAccountsReceiving.mAccountsReceiving->setExcludeCapabilities(QStringList() << QLatin1String("MailTransport") << QLatin1String("Notes"));
