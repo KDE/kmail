@@ -36,7 +36,7 @@ Q_SIGNALS:
     void toggleModeChanged(bool state);
 
 protected:
-    void mousePressEvent(QMouseEvent *ev);
+    void mousePressEvent(QMouseEvent *ev) Q_DECL_OVERRIDE;
 
 private:
     void updateLabel();

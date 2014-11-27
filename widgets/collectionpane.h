@@ -29,8 +29,8 @@ public:
     explicit CollectionPane(bool restoreSession, QAbstractItemModel *model, QItemSelectionModel *selectionModel, QWidget *parent = 0);
     ~CollectionPane();
 
-    MessageList::StorageModel *createStorageModel(QAbstractItemModel *model, QItemSelectionModel *selectionModel, QObject *parent);
-    void writeConfig(bool restoreSession);
+    MessageList::StorageModel *createStorageModel(QAbstractItemModel *model, QItemSelectionModel *selectionModel, QObject *parent) Q_DECL_OVERRIDE;
+    void writeConfig(bool restoreSession) Q_DECL_OVERRIDE;
 };
 
 class CollectionStorageModel : public MessageList::StorageModel
@@ -42,7 +42,7 @@ public:
     */
     explicit CollectionStorageModel(QAbstractItemModel *model, QItemSelectionModel *selectionModel, QObject *parent = 0);
     ~CollectionStorageModel();
-    bool isOutBoundFolder(const Akonadi::Collection &c) const;
+    bool isOutBoundFolder(const Akonadi::Collection &c) const Q_DECL_OVERRIDE;
 };
 
 #endif /* COLLECTIONPANE_H */

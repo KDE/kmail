@@ -42,10 +42,10 @@ public:
     void setListCollection(const QList<Akonadi::Collection::Id> &col);
     QList<Akonadi::Collection::Id> listCollection() const;
 
-    QByteArray type() const;
-    Attribute *clone() const;
-    QByteArray serialized() const;
-    void deserialize(const QByteArray &data);
+    QByteArray type() const Q_DECL_OVERRIDE;
+    Attribute *clone() const Q_DECL_OVERRIDE;
+    QByteArray serialized() const Q_DECL_OVERRIDE;
+    void deserialize(const QByteArray &data) Q_DECL_OVERRIDE;
 
 private:
     QList<Akonadi::Collection::Id> mListCollection;

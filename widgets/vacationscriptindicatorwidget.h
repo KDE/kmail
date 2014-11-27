@@ -35,7 +35,7 @@ Q_SIGNALS:
     void clicked(const QString &serverName);
 
 protected:
-    void mouseReleaseEvent(QMouseEvent *event);
+    void mouseReleaseEvent(QMouseEvent *event) Q_DECL_OVERRIDE;
 
 private:
     QString mServerName;
@@ -52,7 +52,7 @@ Q_SIGNALS:
     void clicked();
 
 protected:
-    void mouseReleaseEvent(QMouseEvent *event);
+    void mouseReleaseEvent(QMouseEvent *event) Q_DECL_OVERRIDE;
 };
 
 class VacationScriptIndicatorWidget : public QWidget
