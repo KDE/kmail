@@ -2385,7 +2385,7 @@ void KMMainWidget::slotSaveMsg()
 //-----------------------------------------------------------------------------
 void KMMainWidget::slotOpenMsg()
 {
-    KMOpenMsgCommand *openCommand = new KMOpenMsgCommand(this, KUrl(), overrideEncoding(), this);
+    KMOpenMsgCommand *openCommand = new KMOpenMsgCommand(this, QUrl(), overrideEncoding(), this);
 
     openCommand->start();
 }
