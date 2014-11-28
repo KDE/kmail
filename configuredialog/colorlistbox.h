@@ -49,7 +49,7 @@ protected:
     void dragEnterEvent(QDragEnterEvent *e);
     void dragLeaveEvent(QDragLeaveEvent *e);
     void dragMoveEvent(QDragMoveEvent *e);
-    void dropEvent(QDropEvent *e);
+    void dropEvent(QDropEvent *e) Q_DECL_OVERRIDE;
 
 private slots:
     void newColor(const QModelIndex &index);
