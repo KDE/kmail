@@ -48,7 +48,6 @@
 #include "tag/tagactionmanager.h"
 #include "foldershortcutactionmanager.h"
 
-#include <kglobal.h>
 #include <KSharedConfig>
 
 K_PLUGIN_FACTORY(KMailFactory, registerPlugin<KMailPart>();)
