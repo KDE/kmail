@@ -23,8 +23,9 @@
 #include <Akonadi/Item>
 #include <Akonadi/Collection>
 #include "agents/followupreminderagent/followupreminderinfo.h"
+#include <KJob>
 
-class FollowupReminderCreateJob : public QObject
+class FollowupReminderCreateJob : public KJob
 {
     Q_OBJECT
 public:
