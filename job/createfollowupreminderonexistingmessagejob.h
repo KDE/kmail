@@ -44,8 +44,8 @@ public:
     bool canStart() const;
 
 private Q_SLOTS:
-    void itemFetchJobDone(KJob *job);
-
+    void itemFetchJobDone(KJob *job);    
+    void slotReminderDone(KJob *job);
 private:
     void doStart();
     Akonadi::Collection mCollection;

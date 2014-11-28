@@ -16,7 +16,7 @@
 */
 
 #include "createfollowupreminderonexistingmessagejob.h"
-
+#include "../followupreminder/followupremindercreatejob.h"
 #include <akonadi/itemfetchjob.h>
 #include <Akonadi/ItemFetchScope>
 #include <KMime/Message>
@@ -65,9 +65,47 @@ void CreateFollowupReminderOnExistingMessageJob::itemFetchJobDone(KJob* job)
         return;
     }
     KMime::Message::Ptr msg =  mMessageItem.payload<KMime::Message::Ptr>();
-    //TODO create followupreminderjob
+    if (msg) {
+        FollowupReminderCreateJob *reminderJob = new FollowupReminderCreateJob(this);
+        KMime::Headers::MessageID *messageID = msg->messageID(false);
+        if (messageID) {
+            const QString messageIdStr = messageID->asUnicodeString();
+            reminderJob->setMessageId(messageIdStr);
+        } else {
+            qDebug()<<" missing messageId";
+            delete reminderJob;
+            deleteLater();
+            return;
+        }
 
+        reminderJob->setFollowUpReminderDate(mDate);
+        reminderJob->setCollectionToDo(mCollection);
+        reminderJob->setOriginalMessageItemId(mMessageItem.id());
+        KMime::Headers::To *to = msg->to(false);
+        if (to) {
+            reminderJob->setTo(to->asUnicodeString());
+        }
+        KMime::Headers::Subject *subject = msg->subject(false);
+        if (subject) {
+            reminderJob->setSubject(subject->asUnicodeString());
+        }
+
+        connect(reminderJob,SIGNAL(result(KJob*)), this, SLOT(slotReminderDone(KJob*)));
+        reminderJob->start();
+    } else {
+        qDebug()<<" no message found";
+        deleteLater();
+    }
 }
+
+void CreateFollowupReminderOnExistingMessageJob::slotReminderDone(KJob* job)
+{
+    if ( job->error() ) {
+        qDebug()<<"CreateFollowupReminderOnExistingMessageJob::slotReminderDone  :"<<job->errorString();
+    }
+    deleteLater();
+}
+
 
 Akonadi::Collection CreateFollowupReminderOnExistingMessageJob::collection() const
 {

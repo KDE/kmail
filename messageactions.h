@@ -84,6 +84,7 @@ public:
     KAction* printAction() const { return mPrintAction; }
     KAction* printPreviewAction() const { return mPrintPreviewAction; }
     KAction* listFilterAction() const { return mListFilterAction; }
+    KAction* addFollowupReminderAction() const { return mAddFollowupReminderAction; }
 
     KActionMenu* mailingListActionMenu() const { return mMailingListActionMenu; }
     TemplateParser::CustomTemplatesMenu* customTemplatesMenu() const;
@@ -132,6 +133,7 @@ private slots:
     void slotConfigureWebShortcuts();
     void slotDebugBaloo();
 
+    void slotAddFollowupReminder();
 private:
     QList<KAction*> mMailListActionList;
     QWidget *mParent;
@@ -150,6 +152,7 @@ private:
     KAction *mEditAction, *mAnnotateAction, *mPrintAction, *mPrintPreviewAction;
     TemplateParser::CustomTemplatesMenu *mCustomTemplatesMenu;
     KAction *mListFilterAction;
+    KAction *mAddFollowupReminderAction;
     QAction *mDebugBalooAction;
 };
 

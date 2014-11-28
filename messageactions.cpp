@@ -36,6 +36,9 @@
 
 #include "pimcommon/baloodebug/baloodebugdialog.h"
 
+#include "followupreminder/followupreminderselectdatedialog.h"
+#include "job/createfollowupreminderonexistingmessagejob.h"
+
 #include <akonadi/itemfetchjob.h>
 #include <akonadi/kmime/messageparts.h>
 #include <Akonadi/ChangeRecorder>
@@ -69,6 +72,7 @@ MessageActions::MessageActions( KActionCollection *ac, QWidget *parent )
       mRedirectAction( 0 ),
       mPrintPreviewAction( 0 ),
       mCustomTemplatesMenu( 0 ),
+      mAddFollowupReminderAction( 0 ),
       mDebugBalooAction(0)
 {
     mReplyActionMenu = new KActionMenu( KIcon(QLatin1String("mail-reply-sender")), i18nc("Message->","&Reply"), this );
@@ -210,6 +214,9 @@ MessageActions::MessageActions( KActionCollection *ac, QWidget *parent )
     mDebugBalooAction = new QAction(QLatin1String("Debug Baloo..."), this);
     connect( mDebugBalooAction, SIGNAL(triggered(bool)), this, SLOT(slotDebugBaloo()) );
 
+    mAddFollowupReminderAction = new KAction(i18n("Add Followup Reminder..."), this );
+    ac->addAction( QLatin1String("message_followup_reminder"), mAddFollowupReminderAction );
+    connect( mAddFollowupReminderAction, SIGNAL(triggered(bool)),this, SLOT(slotAddFollowupReminder()) );
 
     updateActions();
 }
@@ -673,4 +680,21 @@ void MessageActions::slotDebugBaloo()
     dlg->setSearchType(PimCommon::BalooDebugSearchPathComboBox::Emails);
     dlg->doSearch();
     dlg->show();
+}
+
+void MessageActions::slotAddFollowupReminder()
+{
+    if (!mCurrentItem.isValid() )
+        return;
+
+    QPointer<FollowUpReminderSelectDateDialog> dlg = new FollowUpReminderSelectDateDialog;
+    if (dlg->exec()) {
+        const QDate date = dlg->selectedDate();
+        CreateFollowupReminderOnExistingMessageJob *job = new CreateFollowupReminderOnExistingMessageJob(this);
+        job->setDate(date);
+        job->setCollection(dlg->collection());
+        job->setMessageItem(mCurrentItem);
+        job->start();
+    }
+    delete dlg;
 }

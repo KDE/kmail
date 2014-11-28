@@ -33,7 +33,7 @@ kde4_add_unit_test( statusbarlabeltoggledstatetest ${kmail_statusbarlabeltoggled
 target_link_libraries( statusbarlabeltoggledstatetest ${QT_QTTEST_LIBRARY} ${KDE4_KDEUI_LIBS})
 
 
-set( kmail_createfollowupreminderonexistingmessagejobtest_source createfollowupreminderonexistingmessagejobtest.cpp ../job/createfollowupreminderonexistingmessagejob.cpp )
+set( kmail_createfollowupreminderonexistingmessagejobtest_source createfollowupreminderonexistingmessagejobtest.cpp ../job/createfollowupreminderonexistingmessagejob.cpp ../followupreminder/followupremindercreatejob.cpp)
 kde4_add_unit_test( createfollowupreminderonexistingmessagejobtest ${kmail_createfollowupreminderonexistingmessagejobtest_source})
-target_link_libraries( createfollowupreminderonexistingmessagejobtest ${QT_QTTEST_LIBRARY} ${KDE4_KDEUI_LIBS} ${KDEPIMLIBS_AKONADI_LIBS})
+target_link_libraries( createfollowupreminderonexistingmessagejobtest ${QT_QTTEST_LIBRARY} ${KDE4_KDEUI_LIBS} ${KDEPIMLIBS_AKONADI_LIBS} ${KDEPIMLIBS_KCALCORE_LIBS} followupreminder)
 
