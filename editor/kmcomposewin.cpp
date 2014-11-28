@@ -3532,7 +3532,7 @@ void KMComposeWin::charSelected(const QChar &c)
 
 void KMComposeWin::slotSaveAsFile()
 {
-    QPointer<KFileDialog> dlg = new KFileDialog(KUrl(), QString(), this);
+    QPointer<KFileDialog> dlg = new KFileDialog(QUrl(), QString(), this);
     dlg->setOperationMode(KFileDialog::Saving);
     dlg->setConfirmOverwrite(true);
     if (mComposerBase->editor()->textMode() == KMeditor::Rich) {

@@ -563,7 +563,7 @@ int KMKernel::openComposer(const QString &to, const QString &cc,
         msg->subject()->fromUnicodeString(subject, "utf-8");
     }
 
-    KUrl messageUrl = KUrl(messageFile);
+    QUrl messageUrl = QUrl::fromLocalFile(messageFile);
     if (!messageUrl.isEmpty() && messageUrl.isLocalFile()) {
         QFile f(messageUrl.toLocalFile());
         QByteArray str;
@@ -883,7 +883,7 @@ QDBusObjectPath KMKernel::newMessage(const QString &to,
                                      const QString & /*messageFile*/,
                                      const QString &_attachURL)
 {
-    KUrl attachURL(_attachURL);
+    QUrl attachURL = QUrl::fromLocalFile(_attachURL);
     KMime::Message::Ptr msg(new KMime::Message);
     QSharedPointer<FolderCollection> folder;
     uint id = 0;
