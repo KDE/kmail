@@ -22,7 +22,7 @@
 #include <AkonadiCore/ItemCreateJob>
 
 FollowupReminderCreateJob::FollowupReminderCreateJob(QObject *parent)
-    : QObject(parent),
+    : KJob(parent),
       mInfo(new FollowUpReminder::FollowUpReminderInfo)
 {
 
@@ -79,8 +79,8 @@ void FollowupReminderCreateJob::start()
             writeFollowupReminderInfo();
         }
     } else {
-        qDebug() << "FollowupReminderCreateJob info not valid ";
-        deleteLater();
+        qDebug()<<"FollowupReminderCreateJob info not valid ";
+        Q_EMIT emitResult();
         return;
     }
 }
@@ -99,5 +99,5 @@ void FollowupReminderCreateJob::slotCreateNewTodo(KJob *job)
 void FollowupReminderCreateJob::writeFollowupReminderInfo()
 {
     FollowUpReminder::FollowUpReminderUtil::writeFollowupReminderInfo(FollowUpReminder::FollowUpReminderUtil::defaultConfig(), mInfo, true);
-    deleteLater();
+    Q_EMIT emitResult();
 }

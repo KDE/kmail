@@ -15,45 +15,42 @@
   51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
 */
 
-#ifndef FOLLOWUPREMINDERCREATEJOB_H
-#define FOLLOWUPREMINDERCREATEJOB_H
+#ifndef CREATEFOLLOWUPREMINDERONEXISTINGMESSAGEJOB_H
+#define CREATEFOLLOWUPREMINDERONEXISTINGMESSAGEJOB_H
 
 #include <QObject>
+#include <AkonadiCore/Collection>
 #include <QDate>
 #include <AkonadiCore/Item>
-#include <AkonadiCore/Collection>
-#include "agents/followupreminderagent/followupreminderinfo.h"
-#include <KJob>
 
-class FollowupReminderCreateJob : public KJob
+class CreateFollowupReminderOnExistingMessageJob : public QObject
 {
     Q_OBJECT
 public:
-    explicit FollowupReminderCreateJob(QObject *parent = 0);
-    ~FollowupReminderCreateJob();
-
-    void setFollowUpReminderDate(const QDate &date);
-
-    void setOriginalMessageItemId(Akonadi::Item::Id value);
-
-    void setMessageId(const QString &messageId);
-
-    void setTo(const QString &to);
-
-    void setSubject(const QString &subject);
-
-    void setCollectionToDo(const Akonadi::Collection &collection);
+    explicit CreateFollowupReminderOnExistingMessageJob(QObject *parent=0);
+    ~CreateFollowupReminderOnExistingMessageJob();
 
     void start();
 
-private Q_SLOTS:
-    void slotCreateNewTodo(KJob *job);
-private:
-    void writeFollowupReminderInfo();
-    Akonadi::Collection mCollection;
-    FollowUpReminder::FollowUpReminderInfo *mInfo;
+    Akonadi::Collection collection() const;
+    void setCollection(const Akonadi::Collection &collection);
 
+    QDate date() const;
+    void setDate(const QDate &date);
+
+    Akonadi::Item messageItem() const;
+    void setMessageItem(const Akonadi::Item &messageItem);
+
+    bool canStart() const;
+
+private Q_SLOTS:
+    void itemFetchJobDone(KJob *job);    
+    void slotReminderDone(KJob *job);
+private:
+    void doStart();
+    Akonadi::Collection mCollection;
+    Akonadi::Item mMessageItem;
+    QDate mDate;
 };
 
-#endif // FOLLOWUPREMINDERCREATEJOB_H
-
+#endif // CREATEFOLLOWUPREMINDERONEXISTINGMESSAGEJOB_H

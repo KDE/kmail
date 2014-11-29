@@ -155,6 +155,7 @@ if (KDEPIM_BUILD_DESKTOP)
      job/createtaskjob.cpp
      job/savedraftjob.cpp
      job/removeduplicatemailjob.cpp
+     job/createfollowupreminderonexistingmessagejob.cpp
   )
  
   set(kmailprivate_widgets_LIB_SRCS

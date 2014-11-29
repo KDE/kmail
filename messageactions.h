@@ -139,6 +139,8 @@ public:
     {
         return mDebugBalooAction;
     }
+    QAction* addFollowupReminderAction() const { return mAddFollowupReminderAction; }
+
 
 signals:
     // This signal is emitted when a reply is triggered and the
@@ -179,6 +181,7 @@ private slots:
     void slotConfigureWebShortcuts();
     void slotDebugBaloo();
 
+    void slotAddFollowupReminder();
 private:
     QList<QAction *> mMailListActionList;
     QWidget *mParent;
@@ -197,6 +200,7 @@ private:
     QAction *mEditAction, *mAnnotateAction, *mPrintAction, *mPrintPreviewAction;
     TemplateParser::CustomTemplatesMenu *mCustomTemplatesMenu;
     QAction *mListFilterAction;
+    QAction *mAddFollowupReminderAction;
     QAction *mDebugBalooAction;
 };
 
