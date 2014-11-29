@@ -79,7 +79,7 @@ void FollowupReminderCreateJob::start()
             writeFollowupReminderInfo();
         }
     } else {
-        qDebug()<<"FollowupReminderCreateJob info not valid ";
+        qDebug() << "FollowupReminderCreateJob info not valid ";
         Q_EMIT emitResult();
         return;
     }

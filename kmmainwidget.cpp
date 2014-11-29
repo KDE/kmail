@@ -2924,7 +2924,7 @@ void KMMainWidget::showMessagePopup(const Akonadi::Item &msg , const KUrl &url, 
             menu->addSeparator();
             menu->addAction(mMsgView->openBlockableItems());
         }
-        menu->addAction( mMsgActions->addFollowupReminderAction() );
+        menu->addAction(mMsgActions->addFollowupReminderAction());
         if (kmkernel->allowToDebugBalooSupport()) {
             menu->addSeparator();
             menu->addAction(mMsgActions->debugBalooAction());

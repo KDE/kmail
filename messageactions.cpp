@@ -203,9 +203,9 @@ MessageActions::MessageActions(KActionCollection *ac, QWidget *parent)
     mDebugBalooAction = new QAction(QLatin1String("Debug Baloo..."), this);
     connect(mDebugBalooAction, SIGNAL(triggered(bool)), this, SLOT(slotDebugBaloo()));
 
-    mAddFollowupReminderAction = new QAction(i18n("Add Followup Reminder..."), this );
-    ac->addAction( QLatin1String("message_followup_reminder"), mAddFollowupReminderAction );
-    connect( mAddFollowupReminderAction, SIGNAL(triggered(bool)),this, SLOT(slotAddFollowupReminder()) );
+    mAddFollowupReminderAction = new QAction(i18n("Add Followup Reminder..."), this);
+    ac->addAction(QLatin1String("message_followup_reminder"), mAddFollowupReminderAction);
+    connect(mAddFollowupReminderAction, SIGNAL(triggered(bool)), this, SLOT(slotAddFollowupReminder()));
 
     updateActions();
 }
@@ -692,8 +692,9 @@ void MessageActions::slotDebugBaloo()
 
 void MessageActions::slotAddFollowupReminder()
 {
-    if (!mCurrentItem.isValid() )
+    if (!mCurrentItem.isValid()) {
         return;
+    }
 
     QPointer<FollowUpReminderSelectDateDialog> dlg = new FollowUpReminderSelectDateDialog;
     if (dlg->exec()) {

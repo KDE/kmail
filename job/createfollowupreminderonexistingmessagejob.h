@@ -27,7 +27,7 @@ class CreateFollowupReminderOnExistingMessageJob : public QObject
 {
     Q_OBJECT
 public:
-    explicit CreateFollowupReminderOnExistingMessageJob(QObject *parent=0);
+    explicit CreateFollowupReminderOnExistingMessageJob(QObject *parent = 0);
     ~CreateFollowupReminderOnExistingMessageJob();
 
     void start();
@@ -44,7 +44,7 @@ public:
     bool canStart() const;
 
 private Q_SLOTS:
-    void itemFetchJobDone(KJob *job);    
+    void itemFetchJobDone(KJob *job);
     void slotReminderDone(KJob *job);
 private:
     void doStart();

@@ -37,30 +37,30 @@ void CreateFollowupReminderOnExistingMessageJob::start()
     if (canStart()) {
         doStart();
     } else {
-        qDebug()<<" job can not started";
+        qDebug() << " job can not started";
         deleteLater();
     }
 }
 
 void CreateFollowupReminderOnExistingMessageJob::doStart()
 {
-    Akonadi::ItemFetchJob *job = new Akonadi::ItemFetchJob( mMessageItem , this );
-    job->fetchScope().fetchFullPayload( true );
-    connect( job, SIGNAL(result(KJob*)), SLOT(itemFetchJobDone(KJob*)) );
+    Akonadi::ItemFetchJob *job = new Akonadi::ItemFetchJob(mMessageItem , this);
+    job->fetchScope().fetchFullPayload(true);
+    connect(job, SIGNAL(result(KJob*)), SLOT(itemFetchJobDone(KJob*)));
 }
 
-void CreateFollowupReminderOnExistingMessageJob::itemFetchJobDone(KJob* job)
+void CreateFollowupReminderOnExistingMessageJob::itemFetchJobDone(KJob *job)
 {
     Akonadi::ItemFetchJob *fetchJob = qobject_cast<Akonadi::ItemFetchJob *>(job);
-    if ( fetchJob->items().count() == 1 ) {
+    if (fetchJob->items().count() == 1) {
         mMessageItem = fetchJob->items().first();
     } else {
-        qDebug()<<" CreateFollowupReminderOnExistingMessageJob Error during fetch: "<<job->errorString();
+        qDebug() << " CreateFollowupReminderOnExistingMessageJob Error during fetch: " << job->errorString();
         deleteLater();
         return;
     }
-    if ( !mMessageItem.hasPayload<KMime::Message::Ptr>() ) {
-        qDebug()<<" item has not payload";
+    if (!mMessageItem.hasPayload<KMime::Message::Ptr>()) {
+        qDebug() << " item has not payload";
         deleteLater();
         return;
     }
@@ -72,7 +72,7 @@ void CreateFollowupReminderOnExistingMessageJob::itemFetchJobDone(KJob* job)
             const QString messageIdStr = messageID->asUnicodeString();
             reminderJob->setMessageId(messageIdStr);
         } else {
-            qDebug()<<" missing messageId";
+            qDebug() << " missing messageId";
             delete reminderJob;
             deleteLater();
             return;
@@ -90,22 +90,21 @@ void CreateFollowupReminderOnExistingMessageJob::itemFetchJobDone(KJob* job)
             reminderJob->setSubject(subject->asUnicodeString());
         }
 
-        connect(reminderJob,SIGNAL(result(KJob*)), this, SLOT(slotReminderDone(KJob*)));
+        connect(reminderJob, SIGNAL(result(KJob*)), this, SLOT(slotReminderDone(KJob*)));
         reminderJob->start();
     } else {
-        qDebug()<<" no message found";
+        qDebug() << " no message found";
         deleteLater();
     }
 }
 
-void CreateFollowupReminderOnExistingMessageJob::slotReminderDone(KJob* job)
+void CreateFollowupReminderOnExistingMessageJob::slotReminderDone(KJob *job)
 {
-    if ( job->error() ) {
-        qDebug()<<"CreateFollowupReminderOnExistingMessageJob::slotReminderDone  :"<<job->errorString();
+    if (job->error()) {
+        qDebug() << "CreateFollowupReminderOnExistingMessageJob::slotReminderDone  :" << job->errorString();
     }
     deleteLater();
 }
-
 
 Akonadi::Collection CreateFollowupReminderOnExistingMessageJob::collection() const
 {
@@ -140,7 +139,4 @@ bool CreateFollowupReminderOnExistingMessageJob::canStart() const
 {
     return mMessageItem.isValid() && mCollection.isValid() && mDate.isValid();
 }
-
-
-
 

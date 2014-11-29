@@ -139,8 +139,10 @@ public:
     {
         return mDebugBalooAction;
     }
-    QAction* addFollowupReminderAction() const { return mAddFollowupReminderAction; }
-
+    QAction *addFollowupReminderAction() const
+    {
+        return mAddFollowupReminderAction;
+    }
 
 signals:
     // This signal is emitted when a reply is triggered and the
