@@ -63,7 +63,7 @@ protected:
     /* reimpl */
     void contextMenuEvent(QContextMenuEvent *event);
     /* reimpl */
-    void keyPressEvent(QKeyEvent *event);
+    void keyPressEvent(QKeyEvent *event) Q_DECL_OVERRIDE;
     /** reimpl to avoid drags from ourselves */
     void dragEnterEvent(QDragEnterEvent *event);
 
