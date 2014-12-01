@@ -23,6 +23,11 @@
 #include <foldercollection.h>
 
 #include <progresswidget/progressmanager.h>
+
+namespace Akonadi {
+class CollectionPropertiesDialog;
+}
+
 class KJob;
 class KMMainWidget;
 class ManageShowCollectionProperties : public QObject
@@ -47,6 +52,7 @@ private:
     void showCollectionPropertiesContinued(const QString &pageToShow, QPointer<KPIM::ProgressItem> progressItem);
 
 private:
+    QHash<Akonadi::Collection::Id, QPointer<Akonadi::CollectionPropertiesDialog> > mHashDialogBox;
     KMMainWidget *mMainWidget;
 };
 

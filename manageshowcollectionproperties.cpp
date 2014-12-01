@@ -70,9 +70,14 @@ void ManageShowCollectionProperties::showCollectionProperties( const QString &pa
 {
     if ( !mMainWidget->currentFolder() )
         return;
-
+    if (mHashDialogBox.contains(mMainWidget->currentFolder()->collection().id())) {
+        if (mHashDialogBox.value(mMainWidget->currentFolder()->collection().id())) {
+            mHashDialogBox.value(mMainWidget->currentFolder()->collection().id())->activateWindow();
+            mHashDialogBox.value(mMainWidget->currentFolder()->collection().id())->raise();
+            return;
+        }
+    }
     if ( Solid::Networking::status() == Solid::Networking::Unconnected ) {
-
         KMessageBox::information(
                     mMainWidget,
                     i18n( "Network is unconnected. Folder information cannot be updated." ) );
@@ -185,7 +190,7 @@ void ManageShowCollectionProperties::slotCollectionPropertiesFinished( KJob *job
                                             << QLatin1String( "KMail::CollectionShortcutPage" )
                                             << QLatin1String( "KMail::CollectionMaintenancePage" );
 
-    Akonadi::CollectionPropertiesDialog *dlg = new Akonadi::CollectionPropertiesDialog( collection, pages, mMainWidget );
+    QPointer<Akonadi::CollectionPropertiesDialog> dlg = new Akonadi::CollectionPropertiesDialog( collection, pages, mMainWidget );
     dlg->setCaption( i18nc( "@title:window", "Properties of Folder %1", collection.name() ) );
 
 
@@ -194,4 +199,5 @@ void ManageShowCollectionProperties::slotCollectionPropertiesFinished( KJob *job
         dlg->setCurrentPage( pageToShow );
     }
     dlg->show();
+    mHashDialogBox.insert(collection.id(), dlg);
 }

@@ -3164,7 +3164,7 @@ void KMMainWidget::setupActions()
     // slotExpireFolder() and FolderViewItem::slotShowExpiryProperties().
     mExpireFolderAction = new KAction(i18n("&Expiration Settings"), this);
     actionCollection()->addAction(QLatin1String("expire"), mExpireFolderAction );
-    connect(mExpireFolderAction, SIGNAL(triggered(bool)), mManageShowCollectionProperties, SLOT(slotExpireFolder()));
+    connect(mExpireFolderAction, SIGNAL(triggered(bool)), this, SLOT(slotExpireFolder()));
 
 
     mAkonadiStandardActionManager->interceptAction( Akonadi::StandardMailActionManager::MoveToTrash );
@@ -3486,7 +3486,7 @@ void KMMainWidget::setupActions()
     {
         mExpireConfigAction = new KAction( i18n( "Expire..." ), this );
         actionCollection()->addAction( QLatin1String("expire_settings"),mExpireConfigAction );
-        connect( mExpireConfigAction, SIGNAL(triggered(bool)), this, SLOT(slotShowExpiryProperties()) );
+        connect( mExpireConfigAction, SIGNAL(triggered(bool)), mManageShowCollectionProperties, SLOT(slotShowExpiryProperties()) );
     }
 
     {
