@@ -46,9 +46,9 @@ signals:
     void changed();
 
 protected:
-    void dragEnterEvent(QDragEnterEvent *e);
-    void dragLeaveEvent(QDragLeaveEvent *e);
-    void dragMoveEvent(QDragMoveEvent *e);
+    void dragEnterEvent(QDragEnterEvent *e) Q_DECL_OVERRIDE;
+    void dragLeaveEvent(QDragLeaveEvent *e) Q_DECL_OVERRIDE;
+    void dragMoveEvent(QDragMoveEvent *e) Q_DECL_OVERRIDE;
     void dropEvent(QDropEvent *e) Q_DECL_OVERRIDE;
 
 private slots:

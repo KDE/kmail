@@ -36,8 +36,8 @@ public:
     ~SnippetWidget();
 
 protected:
-    void contextMenuEvent(QContextMenuEvent *);
-    void dropEvent(QDropEvent *);
+    void contextMenuEvent(QContextMenuEvent *) Q_DECL_OVERRIDE;
+    void dropEvent(QDropEvent *) Q_DECL_OVERRIDE;
 
 private:
     MailCommon::SnippetsManager *mSnippetsManager;
