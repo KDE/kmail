@@ -22,7 +22,6 @@
 #include <QSharedPointer>
 #include <foldercollection.h>
 class QDBusPendingCallWatcher;
-
 class ManageServerSideSubscriptionJob : public QObject
 {
     Q_OBJECT

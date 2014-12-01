@@ -61,7 +61,7 @@ class CollectionPane;
 class KMCommand;
 class KMMoveCommand;
 class KRecentFilesAction;
-class QDBusPendingCallWatcher;
+class ManageShowCollectionProperties;
 template <typename T, typename S> class QMap;
 
 namespace KIO
@@ -295,7 +295,6 @@ public slots:
     void slotStartCheckMail();
     void slotEndCheckMail();
 
-    void slotCollectionProperties();
     void slotRemoveDuplicates();
 
     void slotSelectCollectionFolder(const Akonadi::Collection &col);
@@ -341,8 +340,6 @@ protected slots:
     void slotImport();
     void slotCompose();
     void slotPostToML();
-    void slotFolderMailingListProperties();
-    void slotShowFolderShortcutDialog();
     void slotExpireFolder();
     void slotExpireAll();
     void slotArchiveFolder();
@@ -457,7 +454,6 @@ protected slots:
     void showResourceOfflinePage();
     void updateVacationScriptStatus(bool active , const QString &serverName = QString());
 
-    void slotShowExpiryProperties();
     void slotItemAdded(const Akonadi::Item &, const Akonadi::Collection &col);
     void slotItemRemoved(const Akonadi::Item &);
     void slotItemMoved(const Akonadi::Item &item, const Akonadi::Collection &from, const Akonadi::Collection &to);
@@ -536,8 +532,6 @@ private:
 
     void showMessagePopup(const Akonadi::Item &msg , const KUrl &aUrl, const KUrl &imageUrl, const QPoint &aPoint, bool contactAlreadyExists, bool uniqueContactFound);
 
-    void showCollectionProperties(const QString &pageToShow);
-    void showCollectionPropertiesContinued(const QString &pageToShow, QPointer<KPIM::ProgressItem> progressItem);
 
 private slots:
     void slotMoveMessageToTrash();
@@ -563,8 +557,6 @@ private slots:
     void itemsReceived(const Akonadi::Item::List &list);
     void itemsFetchDone(KJob *job);
 
-    void slotCollectionPropertiesContinued(KJob *job);
-    void slotCollectionPropertiesFinished(KJob *job);
     void slotDeletionCollectionResult(KJob *job);
     void slotServerSideSubscription();
     void slotFetchItemsForFolderDone(KJob *job);
@@ -666,6 +658,7 @@ private:
     MessageViewer::Viewer::DisplayFormatMessage mFolderDisplayFormatPreference;
     QAction *mSearchMessages;
     KMConfigureAgent *mConfigAgent;
+    ManageShowCollectionProperties *mManageShowCollectionProperties;
 };
 
 #endif
