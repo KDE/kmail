@@ -41,6 +41,7 @@
 #include "tag/tagactionmanager.h"
 #include "foldershortcutactionmanager.h"
 #include "widgets/collectionpane.h"
+#include "manageshowcollectionproperties.h"
 #if !defined(NDEBUG)
 #include <ksieveui/debug/sievedebugdialog.h>
 using KSieveUi::SieveDebugDialog;
@@ -234,7 +235,8 @@ KMMainWidget::KMMainWidget( QWidget *parent, KXMLGUIClient *aGUIClient,
     mGoToFirstUnreadMessageInSelectedFolder( false ),
     mDisplayMessageFormatMenu( 0 ),
     mFolderDisplayFormatPreference(MessageViewer::Viewer::UseGlobalSetting),
-    mSearchMessages( 0 )
+    mSearchMessages( 0 ),
+    mManageShowCollectionProperties(new ManageShowCollectionProperties(this, this))
 {
     mConfigAgent = new KMConfigureAgent(this, this);
     // must be the first line of the constructor:
@@ -1132,7 +1134,7 @@ void KMMainWidget::createWidgets()
     }
 
     mAkonadiStandardActionManager->interceptAction( Akonadi::StandardActionManager::CollectionProperties );
-    connect( mAkonadiStandardActionManager->action( Akonadi::StandardActionManager::CollectionProperties ), SIGNAL(triggered(bool)), this, SLOT(slotCollectionProperties()) );
+    connect( mAkonadiStandardActionManager->action( Akonadi::StandardActionManager::CollectionProperties ), SIGNAL(triggered(bool)), mManageShowCollectionProperties, SLOT(slotCollectionProperties()) );
 
 
     //
@@ -1474,18 +1476,6 @@ void KMMainWidget::slotPostToML()
         }
     }
     slotCompose();
-}
-
-//-----------------------------------------------------------------------------
-void KMMainWidget::slotFolderMailingListProperties()
-{
-    showCollectionProperties( QLatin1String( "KMail::CollectionMailingListPage" ) );
-}
-
-//-----------------------------------------------------------------------------
-void KMMainWidget::slotShowFolderShortcutDialog()
-{
-    showCollectionProperties( QLatin1String( "KMail::CollectionShortcutPage" ) );
 }
 
 //-----------------------------------------------------------------------------
@@ -3152,12 +3142,12 @@ void KMMainWidget::setupActions()
 
     mFolderMailingListPropertiesAction = new KAction(i18n("&Mailing List Management..."), this);
     actionCollection()->addAction(QLatin1String("folder_mailinglist_properties"), mFolderMailingListPropertiesAction );
-    connect(mFolderMailingListPropertiesAction, SIGNAL(triggered(bool)), SLOT(slotFolderMailingListProperties()));
+    connect(mFolderMailingListPropertiesAction, SIGNAL(triggered(bool)), mManageShowCollectionProperties, SLOT(slotFolderMailingListProperties()));
     // mFolderMailingListPropertiesAction->setIcon(KIcon("document-properties-mailing-list"));
 
     mShowFolderShortcutDialogAction = new KAction(KIcon(QLatin1String("configure-shortcuts")), i18n("&Assign Shortcut..."), this);
     actionCollection()->addAction(QLatin1String("folder_shortcut_command"), mShowFolderShortcutDialogAction );
-    connect( mShowFolderShortcutDialogAction, SIGNAL(triggered(bool)),
+    connect( mShowFolderShortcutDialogAction, SIGNAL(triggered(bool)), mManageShowCollectionProperties,
              SLOT(slotShowFolderShortcutDialog()) );
 
     // FIXME: this action is not currently enabled in the rc file, but even if
@@ -3174,7 +3164,7 @@ void KMMainWidget::setupActions()
     // slotExpireFolder() and FolderViewItem::slotShowExpiryProperties().
     mExpireFolderAction = new KAction(i18n("&Expiration Settings"), this);
     actionCollection()->addAction(QLatin1String("expire"), mExpireFolderAction );
-    connect(mExpireFolderAction, SIGNAL(triggered(bool)), SLOT(slotExpireFolder()));
+    connect(mExpireFolderAction, SIGNAL(triggered(bool)), mManageShowCollectionProperties, SLOT(slotExpireFolder()));
 
 
     mAkonadiStandardActionManager->interceptAction( Akonadi::StandardMailActionManager::MoveToTrash );
@@ -3703,11 +3693,6 @@ void KMMainWidget::slotEditNotifications()
 {
     KMail::KMKnotify notifyDlg( this );
     notifyDlg.exec();
-}
-
-void KMMainWidget::slotShowExpiryProperties()
-{
-    showCollectionProperties( QLatin1String( "MailCommon::CollectionExpiryPage" ) );
 }
 
 //-----------------------------------------------------------------------------
@@ -4553,140 +4538,6 @@ KAction *KMMainWidget::akonadiStandardAction( Akonadi::StandardActionManager::Ty
 KAction *KMMainWidget::akonadiStandardAction( Akonadi::StandardMailActionManager::Type type )
 {
     return mAkonadiStandardActionManager->action( type );
-}
-
-void KMMainWidget::slotCollectionProperties()
-{
-    showCollectionProperties( QString() );
-}
-
-void KMMainWidget::showCollectionProperties( const QString &pageToShow )
-{
-    if ( !mCurrentFolder )
-        return;
-
-    if ( Solid::Networking::status() == Solid::Networking::Unconnected ) {
-        KMessageBox::information(
-                    this,
-                    i18n( "Network is unconnected. Folder information cannot be updated." ) );
-        showCollectionPropertiesContinued( pageToShow, QPointer<KPIM::ProgressItem>() );
-    } else {
-        const Akonadi::AgentInstance agentInstance = Akonadi::AgentManager::self()->instance( mCurrentFolder->collection().resource() );
-        bool isOnline = agentInstance.isOnline();
-        if (!isOnline) {
-            showCollectionPropertiesContinued( pageToShow, QPointer<KPIM::ProgressItem>() );
-        } else {
-            QPointer<KPIM::ProgressItem> progressItem( KPIM::ProgressManager::createProgressItem( i18n( "Retrieving folder properties" ) ) );
-            progressItem->setUsesBusyIndicator( true );
-            progressItem->setCryptoStatus(KPIM::ProgressItem::Unknown);
-
-            Akonadi::CollectionAttributesSynchronizationJob *sync
-                    = new Akonadi::CollectionAttributesSynchronizationJob( mCurrentFolder->collection() );
-            sync->setProperty( "collectionId", mCurrentFolder->collection().id() );
-            sync->setProperty( "pageToShow", pageToShow );        // note for dialog later
-            sync->setProperty( "progressItem", QVariant::fromValue( progressItem ) );
-            connect( sync, SIGNAL(result(KJob*)),
-                     this, SLOT(slotCollectionPropertiesContinued(KJob*)) );
-            connect( progressItem, SIGNAL(progressItemCanceled(KPIM::ProgressItem*)),
-                     sync, SLOT(kill()) );
-            connect( progressItem, SIGNAL(progressItemCanceled(KPIM::ProgressItem*)),
-                     KPIM::ProgressManager::instance(), SLOT(slotStandardCancelHandler(KPIM::ProgressItem*)) );
-            sync->start();
-        }
-    }
-}
-
-void KMMainWidget::slotCollectionPropertiesContinued( KJob* job )
-{
-    QString pageToShow;
-    QPointer<KPIM::ProgressItem> progressItem;
-
-    if ( job ) {
-        Akonadi::CollectionAttributesSynchronizationJob *sync
-                = dynamic_cast<Akonadi::CollectionAttributesSynchronizationJob *>( job );
-        Q_ASSERT( sync );
-        if ( sync->property( "collectionId" ) != mCurrentFolder->collection().id() )
-            return;
-        pageToShow = sync->property( "pageToShow" ).toString();
-        progressItem = sync->property( "progressItem" ).value< QPointer<KPIM::ProgressItem> >();
-        if ( progressItem ) {
-            disconnect( progressItem, SIGNAL(progressItemCanceled(KPIM::ProgressItem*)),
-                        sync, SLOT(kill()) );
-        } else {
-            // progressItem does not exist anymore, operation has been canceled
-            return;
-        }
-    }
-
-    showCollectionPropertiesContinued( pageToShow, progressItem );
-}
-
-void KMMainWidget::showCollectionPropertiesContinued( const QString &pageToShow, QPointer<KPIM::ProgressItem> progressItem )
-{
-    if ( !progressItem ) {
-        progressItem = KPIM::ProgressManager::createProgressItem( i18n( "Retrieving folder properties" ) );
-        progressItem->setUsesBusyIndicator( true );
-        progressItem->setCryptoStatus(KPIM::ProgressItem::Unknown);
-        connect( progressItem, SIGNAL(progressItemCanceled(KPIM::ProgressItem*)),
-                 KPIM::ProgressManager::instance(), SLOT(slotStandardCancelHandler(KPIM::ProgressItem*)) );
-    }
-
-    Akonadi::CollectionFetchJob *fetch = new Akonadi::CollectionFetchJob( mCurrentFolder->collection(),
-                                                                          Akonadi::CollectionFetchJob::Base );
-    connect( progressItem, SIGNAL(progressItemCanceled(KPIM::ProgressItem*)), fetch, SLOT(kill()) );
-    fetch->fetchScope().setIncludeStatistics( true );
-    fetch->setProperty( "pageToShow", pageToShow );
-    fetch->setProperty( "progressItem", QVariant::fromValue( progressItem ) );
-    connect( fetch, SIGNAL(result(KJob*)),
-             this, SLOT(slotCollectionPropertiesFinished(KJob*)) );
-    connect( progressItem, SIGNAL(progressItemCanceled(KPIM::ProgressItem*)),
-             fetch, SLOT(kill()) );
-}
-
-void KMMainWidget::slotCollectionPropertiesFinished( KJob *job )
-{
-    if ( !job )
-        return;
-
-    QPointer<KPIM::ProgressItem> progressItem = job->property( "progressItem" ).value< QPointer<KPIM::ProgressItem> >();
-    // progressItem does not exist anymore, operation has been canceled
-    if ( !progressItem ) {
-        return;
-    }
-
-    progressItem->setComplete();
-    progressItem->setStatus( i18n( "Done" ) );
-
-    Akonadi::CollectionFetchJob *fetch = dynamic_cast<Akonadi::CollectionFetchJob *>( job );
-    Q_ASSERT( fetch );
-    if ( fetch->collections().isEmpty() )
-    {
-        kWarning() << "no collection";
-        return;
-    }
-
-    const Akonadi::Collection collection = fetch->collections().first();
-
-    const QStringList pages = QStringList() << QLatin1String( "MailCommon::CollectionGeneralPage" )
-                                            << QLatin1String( "KMail::CollectionViewPage" )
-                                            << QLatin1String( "Akonadi::CachePolicyPage" )
-                                            << QLatin1String( "KMail::CollectionTemplatesPage" )
-                                            << QLatin1String( "MailCommon::CollectionExpiryPage" )
-                                            << QLatin1String( "PimCommon::CollectionAclPage" )
-                                            << QLatin1String( "KMail::CollectionMailingListPage" )
-                                            << QLatin1String( "KMail::CollectionQuotaPage" )
-                                            << QLatin1String( "KMail::CollectionShortcutPage" )
-                                            << QLatin1String( "KMail::CollectionMaintenancePage" );
-
-    Akonadi::CollectionPropertiesDialog *dlg = new Akonadi::CollectionPropertiesDialog( collection, pages, this );
-    dlg->setCaption( i18nc( "@title:window", "Properties of Folder %1", collection.name() ) );
-
-
-    const QString pageToShow = fetch->property( "pageToShow" ).toString();
-    if ( !pageToShow.isEmpty() ) {                        // show a specific page
-        dlg->setCurrentPage( pageToShow );
-    }
-    dlg->show();
 }
 
 void KMMainWidget::slotRemoveDuplicates()

@@ -158,6 +158,7 @@ if (KDEPIM_BUILD_DESKTOP)
      job/removeduplicatemailjob.cpp
      job/createfollowupreminderonexistingmessagejob.cpp
      job/manageserversidesubscriptionjob.cpp
+     job/manageserversidesubscriptionjob.cpp
   )
  
   set(kmailprivate_widgets_LIB_SRCS
@@ -189,6 +190,7 @@ if (KDEPIM_BUILD_DESKTOP)
      messageactions.cpp
      foldershortcutactionmanager.cpp
      kmconfigureagent.cpp
+     manageshowcollectionproperties.cpp
      ${kmailprivate_attributes_LIB_SRCS}
      ${kmailprivate_tag_LIB_SRCS}
      ${kmailprivate_job_LIB_SRCS}
