@@ -196,6 +196,7 @@ using KSieveUi::SieveDebugDialog;
 // System includes
 #include <errno.h> // ugh
 #include <akonadi/standardactionmanager.h>
+#include <job/manageserversidesubscriptionjob.h>
 #include <job/removeduplicatemailjob.h>
 
 
@@ -4698,33 +4699,10 @@ void KMMainWidget::slotServerSideSubscription()
 {
     if ( !mCurrentFolder )
         return;
-    bool isImapOnline = false;
-    if ( kmkernel->isImapFolder( mCurrentFolder->collection(), isImapOnline ) ) {
-        QDBusInterface iface(
-                    QLatin1String( "org.freedesktop.Akonadi.Resource.")+mCurrentFolder->collection().resource(),
-                    QLatin1String( "/" ), QLatin1String( "org.kde.Akonadi.ImapResourceBase" ),
-                    DBusConnectionPool::threadConnection(), this );
-        if ( !iface.isValid() ) {
-            kDebug()<<"Cannot create imap dbus interface";
-            return;
-        }
-        QDBusPendingCall call = iface.asyncCall( QLatin1String( "configureSubscription" ), (qlonglong)winId() );
-        QDBusPendingCallWatcher *watcher = new QDBusPendingCallWatcher(call, this);
-        connect(watcher, SIGNAL(finished(QDBusPendingCallWatcher*)), this, SLOT(slotConfigureSubscriptionFinished(QDBusPendingCallWatcher*)));
-    }
-}
-
-void KMMainWidget::slotConfigureSubscriptionFinished(QDBusPendingCallWatcher* watcher)
-{
-    QDBusPendingReply<int> reply = *watcher;
-    if ( reply.isValid() ) {
-        if (reply == -2 ){
-            KMessageBox::error(this,i18n("IMAP server not configured yet. Please configure the server in the IMAP account before setting up server-side subscription."));
-        } else if (reply == -1) {
-            KMessageBox::error(this,i18n("Log in failed, please configure the IMAP account before setting up server-side subscription."));
-        }
-    }
-    watcher->deleteLater();
+    ManageServerSideSubscriptionJob *job = new ManageServerSideSubscriptionJob(this);
+    job->setCurrentFolder(mCurrentFolder);
+    job->setParentWidget(this);
+    job->start();
 }
 
 void KMMainWidget::savePaneSelection()

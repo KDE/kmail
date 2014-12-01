@@ -530,7 +530,6 @@ private slots:
     void slotServerSideSubscription();
     void slotFetchItemsForFolderDone(KJob*job);
     void slotServerStateChanged(Akonadi::ServerManager::State state);
-    void slotConfigureSubscriptionFinished(QDBusPendingCallWatcher* watcher);
     void slotArchiveMails();
     void slotChangeDisplayMessageFormat(MessageViewer::Viewer::DisplayFormatMessage format);
 
