@@ -39,35 +39,35 @@ ManageServerSideSubscriptionJob::~ManageServerSideSubscriptionJob()
 void ManageServerSideSubscriptionJob::start()
 {
     if (!mCurrentFolder) {
-        qDebug()<<" currentFolder not defined";
+        qDebug() << " currentFolder not defined";
         deleteLater();
         return;
     }
     bool isImapOnline = false;
-    if ( kmkernel->isImapFolder( mCurrentFolder->collection(), isImapOnline ) ) {
+    if (kmkernel->isImapFolder(mCurrentFolder->collection(), isImapOnline)) {
         QDBusInterface iface(
-                    QLatin1String( "org.freedesktop.Akonadi.Resource.")+mCurrentFolder->collection().resource(),
-                    QLatin1String( "/" ), QLatin1String( "org.kde.Akonadi.ImapResourceBase" ),
-                    KDBusConnectionPool::threadConnection(), this );
-        if ( !iface.isValid() ) {
-            qDebug()<<"Cannot create imap dbus interface";
+            QLatin1String("org.freedesktop.Akonadi.Resource.") + mCurrentFolder->collection().resource(),
+            QLatin1String("/"), QLatin1String("org.kde.Akonadi.ImapResourceBase"),
+            KDBusConnectionPool::threadConnection(), this);
+        if (!iface.isValid()) {
+            qDebug() << "Cannot create imap dbus interface";
             deleteLater();
             return;
         }
-        QDBusPendingCall call = iface.asyncCall( QLatin1String( "configureSubscription" ), (qlonglong)mParentWidget->winId() );
+        QDBusPendingCall call = iface.asyncCall(QLatin1String("configureSubscription"), (qlonglong)mParentWidget->winId());
         QDBusPendingCallWatcher *watcher = new QDBusPendingCallWatcher(call, this);
         connect(watcher, SIGNAL(finished(QDBusPendingCallWatcher*)), this, SLOT(slotConfigureSubscriptionFinished(QDBusPendingCallWatcher*)));
     }
 }
 
-void ManageServerSideSubscriptionJob::slotConfigureSubscriptionFinished(QDBusPendingCallWatcher* watcher)
+void ManageServerSideSubscriptionJob::slotConfigureSubscriptionFinished(QDBusPendingCallWatcher *watcher)
 {
     QDBusPendingReply<int> reply = *watcher;
-    if ( reply.isValid() ) {
-        if (reply == -2 ){
-            KMessageBox::error(mParentWidget,i18n("IMAP server not configured yet. Please configure the server in the IMAP account before setting up server-side subscription."));
+    if (reply.isValid()) {
+        if (reply == -2) {
+            KMessageBox::error(mParentWidget, i18n("IMAP server not configured yet. Please configure the server in the IMAP account before setting up server-side subscription."));
         } else if (reply == -1) {
-            KMessageBox::error(mParentWidget,i18n("Log in failed, please configure the IMAP account before setting up server-side subscription."));
+            KMessageBox::error(mParentWidget, i18n("Log in failed, please configure the IMAP account before setting up server-side subscription."));
         }
     }
     watcher->deleteLater();
@@ -84,5 +84,4 @@ void ManageServerSideSubscriptionJob::setCurrentFolder(const QSharedPointer<Mail
 {
     mCurrentFolder = currentFolder;
 }
-
 

@@ -26,7 +26,7 @@ class ManageServerSideSubscriptionJob : public QObject
 {
     Q_OBJECT
 public:
-    explicit ManageServerSideSubscriptionJob(QObject *parent=0);
+    explicit ManageServerSideSubscriptionJob(QObject *parent = 0);
 
     ~ManageServerSideSubscriptionJob();
 
