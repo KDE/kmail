@@ -29,7 +29,7 @@ class FollowupReminderCreateJob : public KJob
 {
     Q_OBJECT
 public:
-    explicit FollowupReminderCreateJob(QObject *parent = 0);
+    explicit FollowupReminderCreateJob(QObject *parent = Q_NULLPTR);
     ~FollowupReminderCreateJob();
 
     void setFollowUpReminderDate(const QDate &date);

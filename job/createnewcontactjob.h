@@ -38,7 +38,7 @@ public:
      * @param parentWidget The widget that will be used as parent for dialog.
      * @param parent The parent object
      */
-    explicit CreateNewContactJob(QWidget *parentWidget, QObject *parent = 0);
+    explicit CreateNewContactJob(QWidget *parentWidget, QObject *parent = Q_NULLPTR);
 
     /**
      * Destroys the new contact job

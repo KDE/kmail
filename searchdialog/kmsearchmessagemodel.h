@@ -45,7 +45,7 @@ public:
         DateNotTranslated,
         SizeNotLocalized
     };
-    explicit KMSearchMessageModel(QObject *parent = 0);
+    explicit KMSearchMessageModel(QObject *parent = Q_NULLPTR);
     ~KMSearchMessageModel();
 
     int columnCount(const QModelIndex &parent = QModelIndex()) const Q_DECL_OVERRIDE;

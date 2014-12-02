@@ -40,7 +40,7 @@ public:
     /**
     * Create a StorageModel wrapping the specified folder.
     */
-    explicit CollectionStorageModel(QAbstractItemModel *model, QItemSelectionModel *selectionModel, QObject *parent = 0);
+    explicit CollectionStorageModel(QAbstractItemModel *model, QItemSelectionModel *selectionModel, QObject *parent = Q_NULLPTR);
     ~CollectionStorageModel();
     bool isOutBoundFolder(const Akonadi::Collection &c) const Q_DECL_OVERRIDE;
 };

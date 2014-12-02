@@ -24,7 +24,7 @@ class KMConfigureAgent : public QObject
 {
     Q_OBJECT
 public:
-    explicit KMConfigureAgent(QWidget *parentWidget, QObject *parent = 0);
+    explicit KMConfigureAgent(QWidget *parentWidget, QObject *parent = Q_NULLPTR);
     ~KMConfigureAgent();
 
 public Q_SLOTS:

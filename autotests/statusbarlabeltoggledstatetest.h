@@ -24,7 +24,7 @@ class StatusBarLabelToggledStateTest : public QObject
 {
     Q_OBJECT
 public:
-    explicit StatusBarLabelToggledStateTest(QObject *parent = 0);
+    explicit StatusBarLabelToggledStateTest(QObject *parent = Q_NULLPTR);
     ~StatusBarLabelToggledStateTest();
 
 private Q_SLOTS:

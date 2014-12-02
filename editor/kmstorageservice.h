@@ -29,7 +29,7 @@ class KMStorageService : public QObject
 {
     Q_OBJECT
 public:
-    explicit KMStorageService(QWidget *parentWidget, QObject *parent = 0);
+    explicit KMStorageService(QWidget *parentWidget, QObject *parent = Q_NULLPTR);
     ~KMStorageService();
 
     KActionMenu *menuShareLinkServices() const;

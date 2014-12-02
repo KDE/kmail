@@ -113,7 +113,7 @@ class KMAIL_EXPORT KMKernel : public QObject, public MailCommon::IKernel, public
     Q_CLASSINFO("D-Bus Interface", "org.kde.kmail.kmail")
 
 public:
-    explicit KMKernel(QObject *parent = 0);
+    explicit KMKernel(QObject *parent = Q_NULLPTR);
     ~KMKernel();
 
     /**
