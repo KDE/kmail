@@ -64,7 +64,7 @@ protected:
      *  last _visible_ secondary window is closed in case a system tray applet
      *  exists.
      */
-    virtual void closeEvent(QCloseEvent *) Q_DECL_OVERRIDE;
+    void closeEvent(QCloseEvent *) Q_DECL_OVERRIDE;
 };
 
 } // namespace KMail

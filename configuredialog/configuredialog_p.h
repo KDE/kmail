@@ -62,7 +62,7 @@ public:
     virtual void defaults();
 
 protected:
-    virtual void showEvent(QShowEvent *event) Q_DECL_OVERRIDE;
+    void showEvent(QShowEvent *event) Q_DECL_OVERRIDE;
     void addTab(ConfigModuleTab *tab, const QString &title);
 
 private:
