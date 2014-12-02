@@ -70,10 +70,12 @@ void ManageShowCollectionProperties::showCollectionProperties( const QString &pa
 {
     if ( !mMainWidget->currentFolder() )
         return;
-    if (mHashDialogBox.contains(mMainWidget->currentFolder()->collection().id())) {
-        if (mHashDialogBox.value(mMainWidget->currentFolder()->collection().id())) {
-            mHashDialogBox.value(mMainWidget->currentFolder()->collection().id())->activateWindow();
-            mHashDialogBox.value(mMainWidget->currentFolder()->collection().id())->raise();
+    Akonadi::Collection::Id id = mMainWidget->currentFolder()->collection().id();
+    if (mHashDialogBox.contains(id)) {
+        QPointer<Akonadi::CollectionPropertiesDialog> dlg = mHashDialogBox.value(id);
+        if (dlg) {
+            dlg->activateWindow();
+            dlg->raise();
             return;
         }
     }
@@ -94,7 +96,7 @@ void ManageShowCollectionProperties::showCollectionProperties( const QString &pa
 
             Akonadi::CollectionAttributesSynchronizationJob *sync
                     = new Akonadi::CollectionAttributesSynchronizationJob( mMainWidget->currentFolder()->collection() );
-            sync->setProperty( "collectionId", mMainWidget->currentFolder()->collection().id() );
+            sync->setProperty( "collectionId", id );
             sync->setProperty( "pageToShow", pageToShow );        // note for dialog later
             sync->setProperty( "progressItem", QVariant::fromValue( progressItem ) );
             connect( sync, SIGNAL(result(KJob*)),
