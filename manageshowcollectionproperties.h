@@ -24,7 +24,8 @@
 
 #include <progresswidget/progressmanager.h>
 
-namespace Akonadi {
+namespace Akonadi
+{
 class CollectionPropertiesDialog;
 }
 

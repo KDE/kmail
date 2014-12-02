@@ -3494,7 +3494,7 @@ void KMMainWidget::setupActions()
     {
         mExpireConfigAction = new QAction(i18n("Expire..."), this);
         actionCollection()->addAction(QLatin1String("expire_settings"), mExpireConfigAction);
-        connect( mExpireConfigAction, SIGNAL(triggered(bool)), mManageShowCollectionProperties, SLOT(slotShowExpiryProperties()) );
+        connect(mExpireConfigAction, SIGNAL(triggered(bool)), mManageShowCollectionProperties, SLOT(slotShowExpiryProperties()));
     }
 
     {

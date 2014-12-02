@@ -77,7 +77,7 @@ void ManageShowCollectionProperties::showCollectionProperties(const QString &pag
             return;
         }
     }
-    if ( Solid::Networking::status() == Solid::Networking::Unconnected ) {
+    if (Solid::Networking::status() == Solid::Networking::Unconnected) {
         KMessageBox::information(
             mMainWidget,
             i18n("Network is unconnected. Folder information cannot be updated."));
@@ -180,24 +180,23 @@ void ManageShowCollectionProperties::slotCollectionPropertiesFinished(KJob *job)
 
     const Akonadi::Collection collection = fetch->collections().first();
 
-    const QStringList pages = QStringList() << QLatin1String( "MailCommon::CollectionGeneralPage" )
-                                            << QLatin1String( "KMail::CollectionViewPage" )
-                                            << QLatin1String( "Akonadi::CachePolicyPage" )
-                                            << QLatin1String( "KMail::CollectionTemplatesPage" )
-                                            << QLatin1String( "MailCommon::CollectionExpiryPage" )
-                                            << QLatin1String( "PimCommon::CollectionAclPage" )
-                                            << QLatin1String( "KMail::CollectionMailingListPage" )
-                                            << QLatin1String( "KMail::CollectionQuotaPage" )
-                                            << QLatin1String( "KMail::CollectionShortcutPage" )
-                                            << QLatin1String( "KMail::CollectionMaintenancePage" );
+    const QStringList pages = QStringList() << QLatin1String("MailCommon::CollectionGeneralPage")
+                              << QLatin1String("KMail::CollectionViewPage")
+                              << QLatin1String("Akonadi::CachePolicyPage")
+                              << QLatin1String("KMail::CollectionTemplatesPage")
+                              << QLatin1String("MailCommon::CollectionExpiryPage")
+                              << QLatin1String("PimCommon::CollectionAclPage")
+                              << QLatin1String("KMail::CollectionMailingListPage")
+                              << QLatin1String("KMail::CollectionQuotaPage")
+                              << QLatin1String("KMail::CollectionShortcutPage")
+                              << QLatin1String("KMail::CollectionMaintenancePage");
 
-    QPointer<Akonadi::CollectionPropertiesDialog> dlg = new Akonadi::CollectionPropertiesDialog( collection, pages, mMainWidget );
-    dlg->setWindowTitle( i18nc( "@title:window", "Properties of Folder %1", collection.name() ) );
+    QPointer<Akonadi::CollectionPropertiesDialog> dlg = new Akonadi::CollectionPropertiesDialog(collection, pages, mMainWidget);
+    dlg->setWindowTitle(i18nc("@title:window", "Properties of Folder %1", collection.name()));
 
-
-    const QString pageToShow = fetch->property( "pageToShow" ).toString();
-    if ( !pageToShow.isEmpty() ) {                        // show a specific page
-        dlg->setCurrentPage( pageToShow );
+    const QString pageToShow = fetch->property("pageToShow").toString();
+    if (!pageToShow.isEmpty()) {                          // show a specific page
+        dlg->setCurrentPage(pageToShow);
     }
     dlg->show();
     mHashDialogBox.insert(collection.id(), dlg);
