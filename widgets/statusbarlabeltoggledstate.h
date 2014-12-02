@@ -24,7 +24,7 @@ class StatusBarLabelToggledState : public QLabel
 {
     Q_OBJECT
 public:
-    explicit StatusBarLabelToggledState(QWidget *parent = 0);
+    explicit StatusBarLabelToggledState(QWidget *parent = Q_NULLPTR);
     ~StatusBarLabelToggledState();
 
     void setToggleMode(bool state);

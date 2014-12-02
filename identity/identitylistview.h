@@ -78,7 +78,7 @@ class IdentityListView : public QTreeWidget
 {
     Q_OBJECT
 public:
-    explicit IdentityListView(QWidget *parent = 0);
+    explicit IdentityListView(QWidget *parent = Q_NULLPTR);
     virtual ~IdentityListView() {}
 
 public:

@@ -10,7 +10,7 @@ class ListView : public QTreeWidget
 {
     Q_OBJECT
 public:
-    explicit ListView(QWidget *parent = 0);
+    explicit ListView(QWidget *parent = Q_NULLPTR);
 
 Q_SIGNALS:
     void addHeader();

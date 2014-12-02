@@ -29,7 +29,7 @@ class FollowUpReminderSelectDateDialog : public QDialog
 {
     Q_OBJECT
 public:
-    explicit FollowUpReminderSelectDateDialog(QWidget *parent = 0);
+    explicit FollowUpReminderSelectDateDialog(QWidget *parent = Q_NULLPTR);
     ~FollowUpReminderSelectDateDialog();
 
     QDate selectedDate() const;

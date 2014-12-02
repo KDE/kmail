@@ -93,7 +93,7 @@ class IdentityDialog : public QDialog
 {
     Q_OBJECT
 public:
-    explicit IdentityDialog(QWidget *parent = 0);
+    explicit IdentityDialog(QWidget *parent = Q_NULLPTR);
     ~IdentityDialog();
 
     void setIdentity(/*_not_ const*/ KIdentityManagement::Identity &ident);

@@ -32,7 +32,7 @@ class CollectionMaintenancePage : public Akonadi::CollectionPropertiesPage
 {
     Q_OBJECT
 public:
-    explicit CollectionMaintenancePage(QWidget *parent = 0);
+    explicit CollectionMaintenancePage(QWidget *parent = Q_NULLPTR);
 
     void load(const Akonadi::Collection &col);
     void save(Akonadi::Collection &col);

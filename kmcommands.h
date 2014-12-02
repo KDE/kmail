@@ -66,7 +66,7 @@ public:
     enum Result { Undefined, OK, Canceled, Failed };
 
     // Trival constructor, don't retrieve any messages
-    explicit KMCommand(QWidget *parent = 0);
+    explicit KMCommand(QWidget *parent = Q_NULLPTR);
     KMCommand(QWidget *parent, const Akonadi::Item &);
     // Retrieve all messages in msgList when start is called.
     KMCommand(QWidget *parent, const QList<Akonadi::Item> &msgList);

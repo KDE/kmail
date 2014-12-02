@@ -36,7 +36,7 @@ public:
     /**
      * Constructs a KMComposerEditor object.
      */
-    explicit KMComposerEditor(KMComposeWin *win, QWidget *parent = 0);
+    explicit KMComposerEditor(KMComposeWin *win, QWidget *parent = Q_NULLPTR);
 
     ~KMComposerEditor();
 

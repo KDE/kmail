@@ -38,7 +38,7 @@ class MiscPageFolderTab : public ConfigModuleTab
 {
     Q_OBJECT
 public:
-    explicit MiscPageFolderTab(QWidget *parent = 0);
+    explicit MiscPageFolderTab(QWidget *parent = Q_NULLPTR);
 
     void save();
     QString helpAnchor() const;
@@ -57,7 +57,7 @@ class MiscPageInviteTab : public ConfigModuleTab
 {
     Q_OBJECT
 public:
-    explicit MiscPageInviteTab(QWidget *parent = 0);
+    explicit MiscPageInviteTab(QWidget *parent = Q_NULLPTR);
     void save();
     void doResetToDefaultsOther();
 
@@ -72,7 +72,7 @@ class MiscPageProxyTab : public ConfigModuleTab
 {
     Q_OBJECT
 public:
-    explicit MiscPageProxyTab(QWidget *parent = 0);
+    explicit MiscPageProxyTab(QWidget *parent = Q_NULLPTR);
     void save();
 private:
     KCModuleProxy *mProxyModule;
@@ -82,7 +82,7 @@ class MiscPageAgentSettingsTab : public ConfigModuleTab
 {
     Q_OBJECT
 public:
-    explicit MiscPageAgentSettingsTab(QWidget *parent = 0);
+    explicit MiscPageAgentSettingsTab(QWidget *parent = Q_NULLPTR);
     void save();
     void doResetToDefaultsOther();
 
@@ -99,7 +99,7 @@ class MiscPagePrintingTab : public ConfigModuleTab
 {
     Q_OBJECT
 public:
-    explicit MiscPagePrintingTab(QWidget *parent = 0);
+    explicit MiscPagePrintingTab(QWidget *parent = Q_NULLPTR);
     void save();
     void doResetToDefaultsOther();
 
@@ -114,7 +114,7 @@ class KMAIL_EXPORT MiscPage : public ConfigModuleWithTabs
 {
     Q_OBJECT
 public:
-    explicit MiscPage(QWidget *parent = 0);
+    explicit MiscPage(QWidget *parent = Q_NULLPTR);
     QString helpAnchor() const;
 
     typedef MiscPageFolderTab FolderTab;

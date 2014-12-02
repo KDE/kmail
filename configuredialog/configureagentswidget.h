@@ -29,7 +29,7 @@ class ConfigureAgentsWidget : public QWidget
 {
     Q_OBJECT
 public:
-    explicit ConfigureAgentsWidget(QWidget *parent = 0);
+    explicit ConfigureAgentsWidget(QWidget *parent = Q_NULLPTR);
     ~ConfigureAgentsWidget();
 
     void save();

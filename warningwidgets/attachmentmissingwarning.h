@@ -24,7 +24,7 @@ class AttachmentMissingWarning : public KMessageWidget
 {
     Q_OBJECT
 public:
-    explicit AttachmentMissingWarning(QWidget *parent = 0);
+    explicit AttachmentMissingWarning(QWidget *parent = Q_NULLPTR);
     ~AttachmentMissingWarning();
 
 private Q_SLOTS:

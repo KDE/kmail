@@ -62,7 +62,7 @@ class AppearancePageFontsTab : public ConfigModuleTab
 {
     Q_OBJECT
 public:
-    explicit AppearancePageFontsTab(QWidget *parent = 0);
+    explicit AppearancePageFontsTab(QWidget *parent = Q_NULLPTR);
     QString helpAnchor() const;
     void save();
 
@@ -88,7 +88,7 @@ class AppearancePageColorsTab : public ConfigModuleTab
 {
     Q_OBJECT
 public:
-    explicit AppearancePageColorsTab(QWidget *parent = 0);
+    explicit AppearancePageColorsTab(QWidget *parent = Q_NULLPTR);
     QString helpAnchor() const;
     void save();
 
@@ -109,7 +109,7 @@ class AppearancePageLayoutTab : public ConfigModuleTab
 {
     Q_OBJECT
 public:
-    explicit AppearancePageLayoutTab(QWidget *parent = 0);
+    explicit AppearancePageLayoutTab(QWidget *parent = Q_NULLPTR);
     QString helpAnchor() const;
 
     void save();
@@ -135,7 +135,7 @@ class AppearancePageHeadersTab : public ConfigModuleTab
 {
     Q_OBJECT
 public:
-    explicit AppearancePageHeadersTab(QWidget *parent = 0);
+    explicit AppearancePageHeadersTab(QWidget *parent = Q_NULLPTR);
 
     QString helpAnchor() const;
 
@@ -167,7 +167,7 @@ class AppearancePageReaderTab : public ConfigModuleTab
 {
     Q_OBJECT
 public:
-    explicit AppearancePageReaderTab(QWidget *parent = 0);
+    explicit AppearancePageReaderTab(QWidget *parent = Q_NULLPTR);
 
     QString helpAnchor() const;
 
@@ -186,7 +186,7 @@ class AppearancePageSystemTrayTab : public ConfigModuleTab
 {
     Q_OBJECT
 public:
-    explicit AppearancePageSystemTrayTab(QWidget *parent = 0);
+    explicit AppearancePageSystemTrayTab(QWidget *parent = Q_NULLPTR);
 
     QString helpAnchor() const;
 
@@ -220,7 +220,7 @@ class AppearancePageMessageTagTab : public ConfigModuleTab
 {
     Q_OBJECT
 public:
-    explicit AppearancePageMessageTagTab(QWidget *parent = 0);
+    explicit AppearancePageMessageTagTab(QWidget *parent = Q_NULLPTR);
     ~AppearancePageMessageTagTab();
 
     QString helpAnchor() const;
@@ -300,7 +300,7 @@ class KMAIL_EXPORT AppearancePage : public ConfigModuleWithTabs
 {
     Q_OBJECT
 public:
-    explicit AppearancePage(QWidget *parent = 0);
+    explicit AppearancePage(QWidget *parent = Q_NULLPTR);
 
     QString helpAnchor() const;
 

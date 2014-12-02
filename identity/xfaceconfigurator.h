@@ -35,7 +35,7 @@ class XFaceConfigurator : public QWidget
 {
     Q_OBJECT
 public:
-    explicit XFaceConfigurator(QWidget *parent = 0);
+    explicit XFaceConfigurator(QWidget *parent = Q_NULLPTR);
     ~XFaceConfigurator();
 
     bool isXFaceEnabled() const;

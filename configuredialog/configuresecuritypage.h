@@ -36,7 +36,7 @@ class SecurityPageGeneralTab : public ConfigModuleTab
 {
     Q_OBJECT
 public:
-    explicit SecurityPageGeneralTab(QWidget *parent = 0);
+    explicit SecurityPageGeneralTab(QWidget *parent = Q_NULLPTR);
     QString helpAnchor() const;
 
     void save();
@@ -57,7 +57,7 @@ class SecurityPageMDNTab : public ConfigModuleTab
 {
     Q_OBJECT
 public:
-    explicit SecurityPageMDNTab(QWidget *parent = 0);
+    explicit SecurityPageMDNTab(QWidget *parent = Q_NULLPTR);
     QString helpAnchor() const;
 
     void save();
@@ -78,7 +78,7 @@ class SecurityPageComposerCryptoTab : public ConfigModuleTab
 {
     Q_OBJECT
 public:
-    explicit SecurityPageComposerCryptoTab(QWidget *parent = 0);
+    explicit SecurityPageComposerCryptoTab(QWidget *parent = Q_NULLPTR);
     ~SecurityPageComposerCryptoTab();
 
     QString helpAnchor() const;
@@ -98,7 +98,7 @@ class SecurityPageWarningTab : public ConfigModuleTab
 {
     Q_OBJECT
 public:
-    explicit SecurityPageWarningTab(QWidget *parent = 0);
+    explicit SecurityPageWarningTab(QWidget *parent = Q_NULLPTR);
     ~SecurityPageWarningTab();
 
     QString helpAnchor() const;
@@ -123,7 +123,7 @@ class SecurityPageSMimeTab : public ConfigModuleTab
 {
     Q_OBJECT
 public:
-    explicit SecurityPageSMimeTab(QWidget *parent = 0);
+    explicit SecurityPageSMimeTab(QWidget *parent = Q_NULLPTR);
     ~SecurityPageSMimeTab();
 
     QString helpAnchor() const;
@@ -148,7 +148,7 @@ class SecurityPageAdBlockTab : public ConfigModuleTab
 {
     Q_OBJECT
 public:
-    explicit SecurityPageAdBlockTab(QWidget *parent = 0);
+    explicit SecurityPageAdBlockTab(QWidget *parent = Q_NULLPTR);
     ~SecurityPageAdBlockTab();
 
     QString helpAnchor() const;
@@ -169,7 +169,7 @@ class KMAIL_EXPORT SecurityPage : public ConfigModuleWithTabs
 {
     Q_OBJECT
 public:
-    explicit SecurityPage(QWidget *parent = 0);
+    explicit SecurityPage(QWidget *parent = Q_NULLPTR);
 
     QString helpAnchor() const;
 

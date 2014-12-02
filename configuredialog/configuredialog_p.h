@@ -18,7 +18,7 @@ class ConfigModuleTab : public QWidget
 {
     Q_OBJECT
 public:
-    explicit ConfigModuleTab(QWidget *parent = 0)
+    explicit ConfigModuleTab(QWidget *parent = Q_NULLPTR)
         : QWidget(parent),
           mEmitChanges(true)
     {}
@@ -53,7 +53,7 @@ class KMAIL_EXPORT ConfigModuleWithTabs : public ConfigModule
 {
     Q_OBJECT
 public:
-    explicit ConfigModuleWithTabs(QWidget *parent = 0);
+    explicit ConfigModuleWithTabs(QWidget *parent = Q_NULLPTR);
     ~ConfigModuleWithTabs() {}
 
     // don't reimplement any of those methods

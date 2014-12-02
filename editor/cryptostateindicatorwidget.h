@@ -25,7 +25,7 @@ class CryptoStateIndicatorWidget : public QWidget
 {
     Q_OBJECT
 public:
-    explicit CryptoStateIndicatorWidget(QWidget *parent = 0);
+    explicit CryptoStateIndicatorWidget(QWidget *parent = Q_NULLPTR);
     ~CryptoStateIndicatorWidget();
 
     void updateSignatureAndEncrypionStateIndicators(bool isSign, bool isEncrypted);

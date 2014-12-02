@@ -45,7 +45,7 @@ class NewIdentityDialog : public QDialog
 public:
     enum DuplicateMode { Empty, ControlCenter, ExistingEntry };
 
-    explicit NewIdentityDialog(KIdentityManagement::IdentityManager *manager, QWidget *parent = 0);
+    explicit NewIdentityDialog(KIdentityManagement::IdentityManager *manager, QWidget *parent = Q_NULLPTR);
 
     QString identityName() const;
     QString duplicateIdentity() const;

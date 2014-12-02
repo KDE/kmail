@@ -36,7 +36,7 @@ class KMMainWin : public KXmlGuiWindow
 public:
     // the main window needs to have a name since else restoring the window
     // settings by kwin doesn't work
-    explicit KMMainWin(QWidget *parent = 0);
+    explicit KMMainWin(QWidget *parent = Q_NULLPTR);
     virtual ~KMMainWin();
     KMMainWidget *mainKMWidget() const
     {

@@ -29,7 +29,7 @@ class IdentityEditVcardDialog : public QDialog
 {
     Q_OBJECT
 public:
-    explicit IdentityEditVcardDialog(const QString &fileName, QWidget *parent = 0);
+    explicit IdentityEditVcardDialog(const QString &fileName, QWidget *parent = Q_NULLPTR);
     ~IdentityEditVcardDialog();
     /**
     * @brief loadVcard load vcard in a contact editor
