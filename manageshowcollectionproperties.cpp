@@ -79,14 +79,15 @@ void ManageShowCollectionProperties::showCollectionProperties(const QString &pag
     if (!mMainWidget->currentFolder()) {
         return;
     }
-    Akonadi::Collection::Id id = mMainWidget->currentFolder()->collection().id();
-    if (mHashDialogBox.contains(id)) {
-        QPointer<Akonadi::CollectionPropertiesDialog> dlg = mHashDialogBox.value(id);
-        if (dlg) {
-            dlg->activateWindow();
-            dlg->raise();
-            return;
+    const Akonadi::Collection::Id id = mMainWidget->currentFolder()->collection().id();
+    QPointer<Akonadi::CollectionPropertiesDialog> dlg = mHashDialogBox.value(id);
+    if (dlg) {
+        if (!pageToShow.isEmpty()) {
+            dlg->setCurrentPage(pageToShow);
         }
+        dlg->activateWindow();
+        dlg->raise();
+        return;
     }
     if (Solid::Networking::status() == Solid::Networking::Unconnected) {
         KMessageBox::information(
