@@ -1592,7 +1592,6 @@ void KMMainWidget::slotDelayedRemoveFolder( KJob *job )
 
     const Akonadi::Collection::Id id = fetchJob->property( "collectionId" ).toLongLong();
     Akonadi::Collection col = MailCommon::Util::updatedCollection(CommonKernel->collectionFromId( id ));
-    QDir dir;
     QString str;
     QString title;
     QString buttonLabel;
