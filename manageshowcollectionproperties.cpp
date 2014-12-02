@@ -37,6 +37,16 @@ ManageShowCollectionProperties::ManageShowCollectionProperties(KMMainWidget *mai
     : QObject(parent),
       mMainWidget(mainWidget)
 {
+    mPages = QStringList() << QLatin1String( "MailCommon::CollectionGeneralPage" )
+                                            << QLatin1String( "KMail::CollectionViewPage" )
+                                            << QLatin1String( "Akonadi::CachePolicyPage" )
+                                            << QLatin1String( "KMail::CollectionTemplatesPage" )
+                                            << QLatin1String( "MailCommon::CollectionExpiryPage" )
+                                            << QLatin1String( "PimCommon::CollectionAclPage" )
+                                            << QLatin1String( "KMail::CollectionMailingListPage" )
+                                            << QLatin1String( "KMail::CollectionQuotaPage" )
+                                            << QLatin1String( "KMail::CollectionShortcutPage" )
+                                            << QLatin1String( "KMail::CollectionMaintenancePage" );
 
 }
 
@@ -181,18 +191,7 @@ void ManageShowCollectionProperties::slotCollectionPropertiesFinished( KJob *job
 
     const Akonadi::Collection collection = fetch->collections().first();
 
-    const QStringList pages = QStringList() << QLatin1String( "MailCommon::CollectionGeneralPage" )
-                                            << QLatin1String( "KMail::CollectionViewPage" )
-                                            << QLatin1String( "Akonadi::CachePolicyPage" )
-                                            << QLatin1String( "KMail::CollectionTemplatesPage" )
-                                            << QLatin1String( "MailCommon::CollectionExpiryPage" )
-                                            << QLatin1String( "PimCommon::CollectionAclPage" )
-                                            << QLatin1String( "KMail::CollectionMailingListPage" )
-                                            << QLatin1String( "KMail::CollectionQuotaPage" )
-                                            << QLatin1String( "KMail::CollectionShortcutPage" )
-                                            << QLatin1String( "KMail::CollectionMaintenancePage" );
-
-    QPointer<Akonadi::CollectionPropertiesDialog> dlg = new Akonadi::CollectionPropertiesDialog( collection, pages, mMainWidget );
+    QPointer<Akonadi::CollectionPropertiesDialog> dlg = new Akonadi::CollectionPropertiesDialog( collection, mPages, mMainWidget );
     dlg->setCaption( i18nc( "@title:window", "Properties of Folder %1", collection.name() ) );
 
 

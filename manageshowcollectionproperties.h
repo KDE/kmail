@@ -53,6 +53,7 @@ private:
 
 private:
     QHash<Akonadi::Collection::Id, QPointer<Akonadi::CollectionPropertiesDialog> > mHashDialogBox;
+    QStringList mPages;
     KMMainWidget *mMainWidget;
 };
 
