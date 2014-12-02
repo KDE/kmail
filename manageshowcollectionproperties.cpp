@@ -83,6 +83,9 @@ void ManageShowCollectionProperties::showCollectionProperties( const QString &pa
     const Akonadi::Collection::Id id = mMainWidget->currentFolder()->collection().id();
     QPointer<Akonadi::CollectionPropertiesDialog> dlg = mHashDialogBox.value(id);
     if (dlg) {
+        if ( !pageToShow.isEmpty() ) {
+            dlg->setCurrentPage( pageToShow );
+        }
         dlg->activateWindow();
         dlg->raise();
         return;
