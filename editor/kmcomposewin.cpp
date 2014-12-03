@@ -1971,8 +1971,10 @@ void KMComposeWin::slotSendFailed( const QString& msg,MessageComposer::ComposerV
 {
     //   setModified( false );
     setEnabled( true );
-    KMessageBox::sorry( mMainWidget, msg,
-                        (type == MessageComposer::ComposerViewBase::AutoSave) ? i18n( "Autosave Message Failed" ) : i18n( "Sending Message Failed" ) );
+    if (!msg.isEmpty()) {
+        KMessageBox::sorry( mMainWidget, msg,
+                            (type == MessageComposer::ComposerViewBase::AutoSave) ? i18n( "Autosave Message Failed" ) : i18n( "Sending Message Failed" ) );
+    }
 }
 
 void KMComposeWin::slotSendSuccessful(const QString &messageId)
