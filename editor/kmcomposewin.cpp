@@ -1960,9 +1960,11 @@ bool KMComposeWin::encryptToSelf()
 void KMComposeWin::slotSendFailed(const QString &msg, MessageComposer::ComposerViewBase::FailedType type)
 {
     //   setModified( false );
-    setEnabled(true);
-    KMessageBox::sorry(mMainWidget, msg,
-                       (type == MessageComposer::ComposerViewBase::AutoSave) ? i18n("Autosave Message Failed") : i18n("Sending Message Failed"));
+    setEnabled( true );
+    if (!msg.isEmpty()) {
+        KMessageBox::sorry( mMainWidget, msg,
+                            (type == MessageComposer::ComposerViewBase::AutoSave) ? i18n( "Autosave Message Failed" ) : i18n( "Sending Message Failed" ) );
+    }
 }
 
 void KMComposeWin::slotSendSuccessful(const QString &messageId)
