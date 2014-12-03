@@ -35,6 +35,9 @@ public Q_SLOTS:
     void slotStartWatchGnuPG();
     void slotImportWizard();
     void slotExportData();
+    void slotAddrBook();
+    void slotImport();
+    void slotAccountWizard();
 private:
     QWidget *mParentWidget;
 };

@@ -146,7 +146,6 @@ using KSieveUi::SieveDebugDialog;
 
 // KDELIBS includes
 #include <kwindowsystem.h>
-#include <krun.h>
 #include <kmessagebox.h>
 #include <kactionmenu.h>
 #include <QMenu>
@@ -1287,18 +1286,6 @@ void KMMainWidget::slotManageSieveScripts()
 
     mManageSieveDialog = new KSieveUi::ManageSieveScriptsDialog(this);
     mManageSieveDialog->show();
-}
-
-//-----------------------------------------------------------------------------
-void KMMainWidget::slotAddrBook()
-{
-    KRun::runCommand(QLatin1String("kaddressbook"), window());
-}
-
-//-----------------------------------------------------------------------------
-void KMMainWidget::slotImport()
-{
-    KRun::runCommand(QLatin1String("kmailcvt"), window());
 }
 
 //-----------------------------------------------------------------------------
@@ -2989,7 +2976,7 @@ void KMMainWidget::setupActions()
     if (parent()->inherits("KMMainWin")) {
         QAction *action = new QAction(QIcon::fromTheme(QLatin1String("x-office-address-book")), i18n("&Address Book"), this);
         actionCollection()->addAction(QLatin1String("addressbook"), action);
-        connect(action, &QAction::triggered, this, &KMMainWidget::slotAddrBook);
+        connect(action, &QAction::triggered, mLaunchExternalComponent, &KMLaunchExternalComponent::slotAddrBook);
         if (QStandardPaths::findExecutable(QLatin1String("kaddressbook")).isEmpty()) {
             action->setEnabled(false);
         }
@@ -3020,7 +3007,7 @@ void KMMainWidget::setupActions()
     {
         QAction *action = new QAction(QIcon::fromTheme(QLatin1String("document-import")), i18n("&Import Messages..."), this);
         actionCollection()->addAction(QLatin1String("import"), action);
-        connect(action, &QAction::triggered, this, &KMMainWidget::slotImport);
+        connect(action, &QAction::triggered, mLaunchExternalComponent, &KMLaunchExternalComponent::slotImport);
         if (QStandardPaths::findExecutable(QLatin1String("kmailcvt")).isEmpty()) {
             action->setEnabled(false);
         }
@@ -3052,7 +3039,7 @@ void KMMainWidget::setupActions()
     {
         QAction *action = new QAction(i18n("&Account Wizard..."), this);
         actionCollection()->addAction(QLatin1String("accountWizard"), action);
-        connect(action, &QAction::triggered, this, &KMMainWidget::slotAccountWizard);
+        connect(action, &QAction::triggered, mLaunchExternalComponent, &KMLaunchExternalComponent::slotAccountWizard);
     }
     {
         QAction *action = new QAction(i18n("&Import Wizard..."), this);
@@ -4301,11 +4288,6 @@ void KMMainWidget::slotAntiVirusWizard()
 {
     AntiSpamWizard wiz(AntiSpamWizard::AntiVirus, this);
     wiz.exec();
-}
-//-----------------------------------------------------------------------------
-void KMMainWidget::slotAccountWizard()
-{
-    KMail::Util::launchAccountWizard(this);
 }
 
 //-----------------------------------------------------------------------------
