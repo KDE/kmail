@@ -294,8 +294,6 @@ protected slots:
     void slotHelp();
     void slotFilter();
     void slotManageSieveScripts();
-    void slotAddrBook();
-    void slotImport();
     void slotCompose();
     void slotPostToML();
     void slotExpireFolder();
@@ -349,7 +347,6 @@ protected slots:
     void slotAntiSpamWizard();
     void slotAntiVirusWizard();
     void slotFilterLogViewer();
-    void slotAccountWizard();
 
     /** Message navigation */
     void slotSelectNextMessage();

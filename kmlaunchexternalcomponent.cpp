@@ -19,7 +19,9 @@
 #include <KMessageBox>
 #include <KLocalizedString>
 #include <KStandardDirs>
+#include <KRun>
 
+#include "util.h"
 #include "archivemailagentinterface.h"
 #include "sendlateragentinterface.h"
 #include "followupreminderinterface.h"
@@ -105,4 +107,19 @@ void KMLaunchExternalComponent::slotExportData()
         KMessageBox::error( mParentWidget, i18n( "Could not start \"PIM Setting Exporter\" program. "
                                         "Please check your installation." ),
                             i18n( "Unable to start \"PIM Setting Exporter\" program" ) );
+}
+
+void KMLaunchExternalComponent::slotAddrBook()
+{
+    KRun::runCommand(QLatin1String("kaddressbook"), mParentWidget->window());
+}
+
+void KMLaunchExternalComponent::slotImport()
+{
+    KRun::runCommand(QLatin1String("kmailcvt"), mParentWidget->window());
+}
+
+void KMLaunchExternalComponent::slotAccountWizard()
+{
+    KMail::Util::launchAccountWizard( mParentWidget );
 }
