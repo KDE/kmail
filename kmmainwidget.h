@@ -48,7 +48,7 @@ class Message;
 class KUrl;
 class QVBoxLayout;
 class QSplitter;
-class KMConfigureAgent;
+class KMLaunchExternalComponent;
 class DisplayMessageFormatActionMenu;
 class QMenu;
 class KAction;
@@ -321,8 +321,6 @@ protected slots:
     void slotResendMsg();
     void slotCheckVacation();
     void slotDebugSieve();
-    void slotStartCertManager();
-    void slotStartWatchGnuPG();
     void slotApplyFilters();
     void slotApplyFiltersOnFolder();
     void slotExpandThread();
@@ -352,7 +350,6 @@ protected slots:
     void slotAntiVirusWizard();
     void slotFilterLogViewer();
     void slotAccountWizard();
-    void slotImportWizard();
 
     /** Message navigation */
     void slotSelectNextMessage();
@@ -422,7 +419,6 @@ protected slots:
     void slotCollectionChanged( const Akonadi::Collection&, const QSet<QByteArray>& );
     void slotCreateNewTab( bool );
     void slotUpdateActionsAfterMailChecking();
-    void slotExportData();
     void slotCreateAddressBookContact();
     void slotOpenRecentMsg(const KUrl& url);
 
@@ -618,7 +614,7 @@ private:
     DisplayMessageFormatActionMenu *mDisplayMessageFormatMenu;
     MessageViewer::Viewer::DisplayFormatMessage mFolderDisplayFormatPreference;
     KAction *mSearchMessages;
-    KMConfigureAgent *mConfigAgent;
+    KMLaunchExternalComponent *mLaunchExternalComponent;
     ManageShowCollectionProperties *mManageShowCollectionProperties;
 };
 

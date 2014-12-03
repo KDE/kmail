@@ -189,7 +189,7 @@ if (KDEPIM_BUILD_DESKTOP)
      util.cpp
      messageactions.cpp
      foldershortcutactionmanager.cpp
-     kmconfigureagent.cpp
+     kmlaunchexternalcomponent.cpp
      manageshowcollectionproperties.cpp
      ${kmailprivate_attributes_LIB_SRCS}
      ${kmailprivate_tag_LIB_SRCS}

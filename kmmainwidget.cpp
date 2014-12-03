@@ -96,7 +96,7 @@ using KSieveUi::SieveDebugDialog;
 #include "widgets/displaymessageformatactionmenu.h"
 
 #include "ksieveui/vacation/vacationmanager.h"
-#include "kmconfigureagent.h"
+#include "kmlaunchexternalcomponent.h"
 
 // LIBKDEPIM includes
 #include "progresswidget/progressmanager.h"
@@ -230,7 +230,7 @@ KMMainWidget::KMMainWidget( QWidget *parent, KXMLGUIClient *aGUIClient,
     mSearchMessages( 0 ),
     mManageShowCollectionProperties(new ManageShowCollectionProperties(this, this))
 {
-    mConfigAgent = new KMConfigureAgent(this, this);
+    mLaunchExternalComponent = new KMLaunchExternalComponent(this, this);
     // must be the first line of the constructor:
     mStartupDone = false;
     mWasEverShown = false;
@@ -1477,7 +1477,6 @@ void KMMainWidget::slotExpireFolder()
         return;
     bool mustDeleteExpirationAttribute = false;
     MailCommon::ExpireCollectionAttribute *attr = MailCommon::ExpireCollectionAttribute::expirationCollectionAttribute( mCurrentFolder->collection(), mustDeleteExpirationAttribute );
-    ;
     bool canBeExpired = true;
     if ( !attr->isAutoExpire() ) {
         canBeExpired = false;
@@ -2315,26 +2314,6 @@ void KMMainWidget::slotDebugSieve()
 }
 
 //-----------------------------------------------------------------------------
-void KMMainWidget::slotStartCertManager()
-{
-    if ( !QProcess::startDetached(QLatin1String("kleopatra") ) )
-        KMessageBox::error( this, i18n( "Could not start certificate manager; "
-                                        "please check your installation." ),
-                            i18n( "KMail Error" ) );
-    else
-        kDebug() << "\nslotStartCertManager(): certificate manager started.";
-}
-
-//-----------------------------------------------------------------------------
-void KMMainWidget::slotStartWatchGnuPG()
-{
-    if ( !QProcess::startDetached(QLatin1String("kwatchgnupg")) )
-        KMessageBox::error( this, i18n( "Could not start GnuPG LogViewer (kwatchgnupg); "
-                                        "please check your installation." ),
-                            i18n( "KMail Error" ) );
-}
-
-//-----------------------------------------------------------------------------
 void KMMainWidget::slotConfigChanged()
 {
     readConfig();
@@ -3006,7 +2985,7 @@ void KMMainWidget::setupActions()
     {
         KAction *action = new KAction(KIcon(QLatin1String("pgp-keys")), i18n("Certificate Manager"), this);
         actionCollection()->addAction(QLatin1String("tools_start_certman"), action );
-        connect(action, SIGNAL(triggered(bool)), SLOT(slotStartCertManager()));
+        connect(action, SIGNAL(triggered(bool)), mLaunchExternalComponent, SLOT(slotStartCertManager()));
         // disable action if no certman binary is around
         if (KStandardDirs::findExe(QLatin1String("kleopatra")).isEmpty())
             action->setEnabled(false);
@@ -3014,7 +2993,7 @@ void KMMainWidget::setupActions()
     {
         KAction *action = new KAction(KIcon(QLatin1String("pgp-keys")), i18n("GnuPG Log Viewer"), this);
         actionCollection()->addAction(QLatin1String("tools_start_kwatchgnupg"), action );
-        connect(action, SIGNAL(triggered(bool)), SLOT(slotStartWatchGnuPG()));
+        connect(action, SIGNAL(triggered(bool)), mLaunchExternalComponent, SLOT(slotStartWatchGnuPG()));
 #ifdef Q_OS_WIN32
         // not ported yet, underlying infrastructure missing on Windows
         const bool usableKWatchGnupg = false;
@@ -3062,7 +3041,7 @@ void KMMainWidget::setupActions()
     {
         KAction *action = new KAction( i18n("&Import Wizard..."), this );
         actionCollection()->addAction( QLatin1String("importWizard"), action );
-        connect( action, SIGNAL(triggered(bool)), SLOT(slotImportWizard()) );
+        connect( action, SIGNAL(triggered(bool)), mLaunchExternalComponent, SLOT(slotImportWizard()) );
     }
     if ( KSieveUi::Util::allowOutOfOfficeSettings() )
     {
@@ -3074,19 +3053,19 @@ void KMMainWidget::setupActions()
     {
         KAction *action = new KAction(i18n("&Configure Automatic Archiving..."), this);
         actionCollection()->addAction(QLatin1String("tools_automatic_archiving"), action );
-        connect(action, SIGNAL(triggered(bool)), mConfigAgent, SLOT(slotConfigureAutomaticArchiving()));
+        connect(action, SIGNAL(triggered(bool)), mLaunchExternalComponent, SLOT(slotConfigureAutomaticArchiving()));
     }
 
     {
         KAction *action = new KAction(i18n("Delayed Messages..."), this);
         actionCollection()->addAction(QLatin1String("message_delayed"), action );
-        connect(action, SIGNAL(triggered(bool)), mConfigAgent, SLOT(slotConfigureSendLater()));
+        connect(action, SIGNAL(triggered(bool)), mLaunchExternalComponent, SLOT(slotConfigureSendLater()));
     }
 
     {
         KAction *action = new KAction(i18n("Followup Reminder Messages..."), this);
         actionCollection()->addAction(QLatin1String("followup_reminder_messages"), action );
-        connect(action, SIGNAL(triggered(bool)), mConfigAgent, SLOT(slotConfigureFollowupReminder()));
+        connect(action, SIGNAL(triggered(bool)), mLaunchExternalComponent, SLOT(slotConfigureFollowupReminder()));
     }
 
 
@@ -3504,7 +3483,7 @@ void KMMainWidget::setupActions()
     {
         KAction *action = new KAction(KIcon(QLatin1String("kmail")), i18n("&Export KMail Data..."), this);
         actionCollection()->addAction(QLatin1String("kmail_export_data"), action );
-        connect(action, SIGNAL(triggered(bool)), this, SLOT(slotExportData()));
+        connect(action, SIGNAL(triggered(bool)), mLaunchExternalComponent, SLOT(slotExportData()));
     }
 
     {
@@ -4318,15 +4297,6 @@ void KMMainWidget::slotAccountWizard()
     KMail::Util::launchAccountWizard( this );
 }
 
-void KMMainWidget::slotImportWizard()
-{
-    const QString path = KStandardDirs::findExe( QLatin1String("importwizard" ) );
-    if ( !QProcess::startDetached( path ) )
-        KMessageBox::error( this, i18n( "Could not start the import wizard. "
-                                        "Please check your installation." ),
-                            i18n( "Unable to start import wizard" ) );
-}
-
 //-----------------------------------------------------------------------------
 void KMMainWidget::slotFilterLogViewer()
 {
@@ -4559,16 +4529,6 @@ void KMMainWidget::updatePaneTagComboBox()
     if (mMessagePane) {
         mMessagePane->updateTagComboBox();
     }
-}
-
-
-void KMMainWidget::slotExportData()
-{
-    const QString path = KStandardDirs::findExe( QLatin1String("pimsettingexporter" ) );
-    if ( !QProcess::startDetached( path ) )
-        KMessageBox::error( this, i18n( "Could not start \"PIM Setting Exporter\" program. "
-                                        "Please check your installation." ),
-                            i18n( "Unable to start \"PIM Setting Exporter\" program" ) );
 }
 
 void KMMainWidget::slotCreateAddressBookContact()
