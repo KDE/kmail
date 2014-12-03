@@ -190,12 +190,7 @@ using KSieveUi::SieveDebugDialog;
 #include <QDBusConnection>
 #include <QTextDocument>
 #include <QMenu>
-#include <QtDBus/QDBusInterface>
-#include <QtDBus/QDBusReply>
-#include <QDBusPendingCallWatcher>
 
-// System includes
-#include <errno.h> // ugh
 #include <akonadi/standardactionmanager.h>
 #include <job/manageserversidesubscriptionjob.h>
 #include <job/removeduplicatemailjob.h>
@@ -211,9 +206,6 @@ using KMail::AntiSpamWizard;
 using KMime::Types::AddrSpecList;
 using MessageViewer::AttachmentStrategy;
 
-Q_DECLARE_METATYPE(KPIM::ProgressItem*)
-Q_DECLARE_METATYPE(Akonadi::Job*)
-Q_DECLARE_METATYPE(QPointer<KPIM::ProgressItem>)
 K_GLOBAL_STATIC( KMMainWidget::PtrList, theMainWidgetList )
 
 //-----------------------------------------------------------------------------
