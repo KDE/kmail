@@ -18,7 +18,7 @@
 #include "kmlaunchexternalcomponent.h"
 #include <KMessageBox>
 #include <KLocalizedString>
-#include <KStandardDirs>
+
 
 #include "archivemailagentinterface.h"
 #include "sendlateragentinterface.h"
@@ -28,6 +28,7 @@
 #include <QtDBus/QDBusReply>
 #include <QProcess>
 #include <QDebug>
+#include <QStandardPaths>
 
 KMLaunchExternalComponent::KMLaunchExternalComponent(QWidget *parentWidget, QObject *parent)
     : QObject(parent),
@@ -73,36 +74,37 @@ void KMLaunchExternalComponent::slotConfigureFollowupReminder()
 
 void KMLaunchExternalComponent::slotStartCertManager()
 {
-    if ( !QProcess::startDetached(QLatin1String("kleopatra") ) )
-        KMessageBox::error( mParentWidget, i18n( "Could not start certificate manager; "
-                                        "please check your installation." ),
-                            i18n( "KMail Error" ) );
-    else
+    if (!QProcess::startDetached(QLatin1String("kleopatra")))
+        KMessageBox::error(mParentWidget, i18n("Could not start certificate manager; "
+                                               "please check your installation."),
+                           i18n("KMail Error"));
+    else {
         qDebug() << "slotStartCertManager(): certificate manager started.";
+    }
 }
 
 void KMLaunchExternalComponent::slotStartWatchGnuPG()
 {
-    if ( !QProcess::startDetached(QLatin1String("kwatchgnupg")) )
-        KMessageBox::error( mParentWidget, i18n( "Could not start GnuPG LogViewer (kwatchgnupg); "
-                                        "please check your installation." ),
-                            i18n( "KMail Error" ) );
+    if (!QProcess::startDetached(QLatin1String("kwatchgnupg")))
+        KMessageBox::error(mParentWidget, i18n("Could not start GnuPG LogViewer (kwatchgnupg); "
+                                               "please check your installation."),
+                           i18n("KMail Error"));
 }
 
 void KMLaunchExternalComponent::slotImportWizard()
 {
-    const QString path = KStandardDirs::findExe( QLatin1String("importwizard" ) );
-    if ( !QProcess::startDetached( path ) )
-        KMessageBox::error( mParentWidget, i18n( "Could not start the import wizard. "
-                                        "Please check your installation." ),
-                            i18n( "Unable to start import wizard" ) );
+    const QString path = QStandardPaths::findExecutable(QLatin1String("importwizard"));
+    if (!QProcess::startDetached(path))
+        KMessageBox::error(mParentWidget, i18n("Could not start the import wizard. "
+                                               "Please check your installation."),
+                           i18n("Unable to start import wizard"));
 }
 
 void KMLaunchExternalComponent::slotExportData()
 {
-    const QString path = KStandardDirs::findExe( QLatin1String("pimsettingexporter" ) );
-    if ( !QProcess::startDetached( path ) )
-        KMessageBox::error( mParentWidget, i18n( "Could not start \"PIM Setting Exporter\" program. "
-                                        "Please check your installation." ),
-                            i18n( "Unable to start \"PIM Setting Exporter\" program" ) );
+    const QString path = QStandardPaths::findExecutable(QLatin1String("pimsettingexporter"));
+    if (!QProcess::startDetached(path))
+        KMessageBox::error(mParentWidget, i18n("Could not start \"PIM Setting Exporter\" program. "
+                                               "Please check your installation."),
+                           i18n("Unable to start \"PIM Setting Exporter\" program"));
 }
