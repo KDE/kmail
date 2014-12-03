@@ -15,9 +15,10 @@
   51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
 */
 
-#include "kmconfigureagent.h"
+#include "kmlaunchexternalcomponent.h"
 #include <KMessageBox>
 #include <KLocalizedString>
+#include <KStandardDirs>
 
 #include "archivemailagentinterface.h"
 #include "sendlateragentinterface.h"
@@ -25,20 +26,22 @@
 
 #include <QtDBus/QDBusInterface>
 #include <QtDBus/QDBusReply>
+#include <QProcess>
+#include <QDebug>
 
-KMConfigureAgent::KMConfigureAgent(QWidget *parentWidget, QObject *parent)
+KMLaunchExternalComponent::KMLaunchExternalComponent(QWidget *parentWidget, QObject *parent)
     : QObject(parent),
       mParentWidget(parentWidget)
 {
 
 }
 
-KMConfigureAgent::~KMConfigureAgent()
+KMLaunchExternalComponent::~KMLaunchExternalComponent()
 {
 
 }
 
-void KMConfigureAgent::slotConfigureAutomaticArchiving()
+void KMLaunchExternalComponent::slotConfigureAutomaticArchiving()
 {
     OrgFreedesktopAkonadiArchiveMailAgentInterface archiveMailInterface(QLatin1String("org.freedesktop.Akonadi.ArchiveMailAgent"), QLatin1String("/ArchiveMailAgent"), QDBusConnection::sessionBus(), this);
     if (archiveMailInterface.isValid()) {
@@ -48,7 +51,7 @@ void KMConfigureAgent::slotConfigureAutomaticArchiving()
     }
 }
 
-void KMConfigureAgent::slotConfigureSendLater()
+void KMLaunchExternalComponent::slotConfigureSendLater()
 {
     OrgFreedesktopAkonadiSendLaterAgentInterface sendLaterInterface(QLatin1String("org.freedesktop.Akonadi.SendLaterAgent"), QLatin1String("/SendLaterAgent"), QDBusConnection::sessionBus(), this);
     if (sendLaterInterface.isValid()) {
@@ -58,7 +61,7 @@ void KMConfigureAgent::slotConfigureSendLater()
     }
 }
 
-void KMConfigureAgent::slotConfigureFollowupReminder()
+void KMLaunchExternalComponent::slotConfigureFollowupReminder()
 {
     OrgFreedesktopAkonadiFollowUpReminderAgentInterface followUpInterface(QLatin1String("org.freedesktop.Akonadi.FollowUpReminder"), QLatin1String("/FollowUpReminder"), QDBusConnection::sessionBus(), this);
     if (followUpInterface.isValid()) {
@@ -66,4 +69,40 @@ void KMConfigureAgent::slotConfigureFollowupReminder()
     } else {
         KMessageBox::error(mParentWidget, i18n("Followup Reminder Agent was not registered."));
     }
+}
+
+void KMLaunchExternalComponent::slotStartCertManager()
+{
+    if ( !QProcess::startDetached(QLatin1String("kleopatra") ) )
+        KMessageBox::error( mParentWidget, i18n( "Could not start certificate manager; "
+                                        "please check your installation." ),
+                            i18n( "KMail Error" ) );
+    else
+        qDebug() << "slotStartCertManager(): certificate manager started.";
+}
+
+void KMLaunchExternalComponent::slotStartWatchGnuPG()
+{
+    if ( !QProcess::startDetached(QLatin1String("kwatchgnupg")) )
+        KMessageBox::error( mParentWidget, i18n( "Could not start GnuPG LogViewer (kwatchgnupg); "
+                                        "please check your installation." ),
+                            i18n( "KMail Error" ) );
+}
+
+void KMLaunchExternalComponent::slotImportWizard()
+{
+    const QString path = KStandardDirs::findExe( QLatin1String("importwizard" ) );
+    if ( !QProcess::startDetached( path ) )
+        KMessageBox::error( mParentWidget, i18n( "Could not start the import wizard. "
+                                        "Please check your installation." ),
+                            i18n( "Unable to start import wizard" ) );
+}
+
+void KMLaunchExternalComponent::slotExportData()
+{
+    const QString path = KStandardDirs::findExe( QLatin1String("pimsettingexporter" ) );
+    if ( !QProcess::startDetached( path ) )
+        KMessageBox::error( mParentWidget, i18n( "Could not start \"PIM Setting Exporter\" program. "
+                                        "Please check your installation." ),
+                            i18n( "Unable to start \"PIM Setting Exporter\" program" ) );
 }

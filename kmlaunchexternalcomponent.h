@@ -15,24 +15,28 @@
   51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
 */
 
-#ifndef KMCONFIGUREAGENT_H
-#define KMCONFIGUREAGENT_H
+#ifndef KMLAUNCHEXTERNALCOMPONENT_H
+#define KMLAUNCHEXTERNALCOMPONENT_H
 
 #include <QObject>
 
-class KMConfigureAgent : public QObject
+class KMLaunchExternalComponent : public QObject
 {
     Q_OBJECT
 public:
-    explicit KMConfigureAgent(QWidget *parentWidget, QObject *parent = Q_NULLPTR);
-    ~KMConfigureAgent();
+    explicit KMLaunchExternalComponent(QWidget *parentWidget, QObject *parent = Q_NULLPTR);
+    ~KMLaunchExternalComponent();
 
 public Q_SLOTS:
     void slotConfigureSendLater();
     void slotConfigureAutomaticArchiving();
     void slotConfigureFollowupReminder();
+    void slotStartCertManager();
+    void slotStartWatchGnuPG();
+    void slotImportWizard();
+    void slotExportData();
 private:
     QWidget *mParentWidget;
 };
 
-#endif // KMCONFIGUREAGENT_H
+#endif // KMLAUNCHEXTERNALCOMPONENT_H
