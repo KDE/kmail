@@ -27,13 +27,13 @@ public:
     TaskAttribute();
     ~TaskAttribute();
 
-    QByteArray type() const;
+    QByteArray type() const Q_DECL_OVERRIDE;
 
-    TaskAttribute *clone() const;
+    TaskAttribute *clone() const Q_DECL_OVERRIDE;
 
-    QByteArray serialized() const;
+    QByteArray serialized() const Q_DECL_OVERRIDE;
 
-    void deserialize(const QByteArray &data);
+    void deserialize(const QByteArray &data) Q_DECL_OVERRIDE;
 
     void setTaskId(Akonadi::Item::Id id);
     Akonadi::Item::Id taskId() const;
