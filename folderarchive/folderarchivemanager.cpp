@@ -35,7 +35,7 @@
 
 FolderArchiveManager::FolderArchiveManager(QObject *parent)
     : QObject(parent),
-      mCurrentJob(0)
+      mCurrentJob(Q_NULLPTR)
 {
     mFolderArchiveCache = new FolderArchiveCache(this);
     load();
