@@ -25,7 +25,6 @@
 #include "util.h"
 
 #include <kcontacts/addressee.h>
-#include <kmime/kmime_codecs.h>
 #include <AkonadiCore/itemfetchjob.h>
 
 #include <kio/jobuidelegate.h>

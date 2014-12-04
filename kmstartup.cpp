@@ -106,7 +106,6 @@ void insertLibraryCataloguesAndIcons()
         "libakonadi-kde",
         "libakonadi-kmime",
         "libkpimtextedit",
-        "libkpimutils",
         "akonadicontact",
         "kabc",
         "akonadi_sendlater_agent",

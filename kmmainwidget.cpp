@@ -135,7 +135,7 @@ using KSieveUi::SieveDebugDialog;
 
 #include <kidentitymanagement/identity.h>
 #include <kidentitymanagement/identitymanager.h>
-#include <kpimutils/email.h>
+#include <KEmailAddress>
 #include <mailtransport/transportmanager.h>
 #include <mailtransport/transport.h>
 #include <kmime/kmime_mdn.h>
@@ -2695,7 +2695,7 @@ void KMMainWidget::slotMessagePopup(const Akonadi::Item &msg , const KUrl &aUrl,
 {
     updateMessageMenu();
 
-    const QString email =  KPIMUtils::firstEmailAddress(aUrl.path()).toLower();
+    const QString email =  KEmailAddress::firstEmailAddress(aUrl.path()).toLower();
     if (aUrl.scheme() == QLatin1String("mailto") && !email.isEmpty()) {
         Akonadi::ContactSearchJob *job = new Akonadi::ContactSearchJob(this);
         job->setLimit(1);

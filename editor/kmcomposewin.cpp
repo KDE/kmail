@@ -120,7 +120,6 @@
 #include <AkonadiCore/itemcreatejob.h>
 #include <AkonadiCore/entitymimetypefiltermodel.h>
 #include <AkonadiCore/itemfetchjob.h>
-#include <KPIMUtils/kpimutils/email.h>
 #include <KIdentityManagement/kidentitymanagement/identitymanager.h>
 #include <KIdentityManagement/kidentitymanagement/identitycombo.h>
 #include <KIdentityManagement/kidentitymanagement/identity.h>
@@ -128,7 +127,6 @@
 #include <MailTransport/mailtransport/transportcombobox.h>
 #include <MailTransport/mailtransport/transportmanager.h>
 #include <MailTransport/mailtransport/transport.h>
-#include <kmime/kmime_codecs.h>
 #include <kmime/kmime_message.h>
 #include <kpimtextedit/selectspecialchardialog.h>
 
@@ -159,6 +157,7 @@
 #include <KPrintPreview>
 #include <KFileDialog>
 #include <QAction>
+#include <KEmailAddress>
 
 // Qt includes
 #include <QClipboard>
@@ -2721,7 +2720,7 @@ void KMComposeWin::doSend(MessageComposer::MessageSender::SendMethod method,
     }
 
     if (saveIn == MessageComposer::MessageSender::SaveInNone) {   // don't save as draft or template, send immediately
-        if (KPIMUtils::firstEmailAddress(from()).isEmpty()) {
+        if (KEmailAddress::firstEmailAddress(from()).isEmpty()) {
             if (!(mShowHeaders & HDR_FROM)) {
                 mShowHeaders |= HDR_FROM;
                 rethinkFields(false);
@@ -3182,7 +3181,7 @@ void KMComposeWin::slotIdentityChanged(uint uoid, bool initalChange)
     }
 
     // make sure the From field is shown if it does not contain a valid email address
-    if (KPIMUtils::firstEmailAddress(from()).isEmpty()) {
+    if (KEmailAddress::firstEmailAddress(from()).isEmpty()) {
         mShowHeaders |= HDR_FROM;
     }
     if (mEdtReplyTo) {

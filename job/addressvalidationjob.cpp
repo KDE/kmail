@@ -29,7 +29,7 @@ using MessageComposer::AliasesExpandJob;
 #include <KLocalizedString>
 #include <kmessagebox.h>
 
-#include <KPIMUtils/Email>
+#include <KEmailAddress>
 
 class AddressValidationJob::Private
 {
@@ -68,7 +68,7 @@ void AddressValidationJob::Private::slotAliasExpansionDone(KJob *job)
 
     QString brokenAddress;
 
-    const KPIMUtils::EmailParseResult errorCode = KPIMUtils::isValidAddressList(expandJob->addresses(), brokenAddress);
+    const KEmailAddress::EmailParseResult errorCode = KEmailAddress::isValidAddressList(expandJob->addresses(), brokenAddress);
     if (!emptyDistributionLists.isEmpty()) {
         QString errorMsg;
         const int numberOfDistributionList(emptyDistributionLists.count());
@@ -85,11 +85,11 @@ void AddressValidationJob::Private::slotAliasExpansionDone(KJob *job)
         KMessageBox::sorry(mParentWidget, errorMsg, i18n("Invalid Email Address"));
         mIsValid = false;
     } else {
-        if (!(errorCode == KPIMUtils::AddressOk ||
-                errorCode == KPIMUtils::AddressEmpty)) {
+        if (!(errorCode == KEmailAddress::AddressOk ||
+                errorCode == KEmailAddress::AddressEmpty)) {
             const QString errorMsg(QLatin1String("<qt><p><b>") + brokenAddress +
                                    QLatin1String("</b></p><p>") +
-                                   KPIMUtils::emailParseResultToString(errorCode) +
+                                   KEmailAddress::emailParseResultToString(errorCode) +
                                    QLatin1String("</p></qt>"));
             KMessageBox::sorry(mParentWidget, errorMsg, i18n("Invalid Email Address"));
             mIsValid = false;

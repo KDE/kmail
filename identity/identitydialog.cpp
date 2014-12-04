@@ -69,7 +69,7 @@
 #include "libkleo/ui/keyrequester.h"
 #include "kleo/cryptobackendfactory.h"
 
-#include <KPIMUtils/kpimutils/email.h>
+#include <KEmailAddress>
 #include <libkdepim/misc/emailvalidator.h>
 #include <MailTransport/mailtransport/transport.h>
 #include <MailTransport/mailtransport/transportmanager.h>
@@ -692,8 +692,8 @@ void IdentityDialog::slotAccepted()
 {
     const QStringList aliases = mAliasEdit->stringList();
     foreach (const QString &alias, aliases) {
-        if (!KPIMUtils::isValidSimpleAddress(alias)) {
-            const QString errorMsg(KPIMUtils::simpleEmailAddressErrorMsg());
+        if (!KEmailAddress::isValidSimpleAddress(alias)) {
+            const QString errorMsg(KEmailAddress::simpleEmailAddressErrorMsg());
             KMessageBox::sorry(this, errorMsg, i18n("Invalid Email Alias \"%1\"", alias));
             return;
         }
@@ -701,8 +701,8 @@ void IdentityDialog::slotAccepted()
 
     // Validate email addresses
     const QString email = mEmailEdit->text().trimmed();
-    if (!KPIMUtils::isValidSimpleAddress(email)) {
-        const QString errorMsg(KPIMUtils::simpleEmailAddressErrorMsg());
+    if (!KEmailAddress::isValidSimpleAddress(email)) {
+        const QString errorMsg(KEmailAddress::simpleEmailAddressErrorMsg());
         KMessageBox::sorry(this, errorMsg, i18n("Invalid Email Address"));
         return;
     }

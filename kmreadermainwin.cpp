@@ -55,7 +55,7 @@
 
 #include <KActionCollection>
 #include <Akonadi/Contact/ContactSearchJob>
-#include <KPIMUtils/kpimutils/email.h>
+#include <KEmailAddress>
 #include <kmime/kmime_message.h>
 
 #include <messageviewer/viewer/viewer.h>
@@ -409,7 +409,7 @@ void KMReaderMainWin::slotMessagePopup(const Akonadi::Item &aMsg , const KUrl &a
 {
     mMsg = aMsg;
 
-    const QString email =  KPIMUtils::firstEmailAddress(aUrl.path()).toLower();
+    const QString email =  KEmailAddress::firstEmailAddress(aUrl.path()).toLower();
     if (aUrl.scheme() == QLatin1String("mailto") && !email.isEmpty()) {
         Akonadi::ContactSearchJob *job = new Akonadi::ContactSearchJob(this);
         job->setLimit(1);

@@ -30,7 +30,7 @@
 #include "job/addemailtoexistingcontactjob.h"
 
 #include "kdepim-version.h"
-#include <KPIMUtils/kpimutils/email.h>
+#include <KEmailAddress>
 #include <libkdepim/job/addemailaddressjob.h>
 #include <libkdepim/job/openemailaddressjob.h>
 #include <libkdepim/job/addemaildisplayjob.h>
@@ -499,7 +499,7 @@ void KMReaderWin::slotMailtoAddAddrBook()
     if (url.isEmpty()) {
         return;
     }
-    const QString emailString = KPIMUtils::decodeMailtoUrl(url);
+    const QString emailString = KEmailAddress::decodeMailtoUrl(url);
 
     KPIM::AddEmailAddressJob *job = new KPIM::AddEmailAddressJob(emailString, mMainWindow, this);
     job->start();
@@ -511,7 +511,7 @@ void KMReaderWin::slotMailToAddToExistingContact()
     if (url.isEmpty()) {
         return;
     }
-    const QString emailString = KPIMUtils::decodeMailtoUrl(url);
+    const QString emailString = KEmailAddress::decodeMailtoUrl(url);
     QPointer<AddEmailToExistingContactDialog> dlg = new AddEmailToExistingContactDialog(this);
     if (dlg->exec()) {
         Akonadi::Item item = dlg->selectedContact();
@@ -530,7 +530,7 @@ void KMReaderWin::slotMailtoOpenAddrBook()
     if (url.isEmpty()) {
         return;
     }
-    const QString emailString = KPIMUtils::decodeMailtoUrl(url).toLower();
+    const QString emailString = KEmailAddress::decodeMailtoUrl(url).toLower();
 
     KPIM::OpenEmailAddressJob *job = new KPIM::OpenEmailAddressJob(emailString, mMainWindow, this);
     job->start();
@@ -832,7 +832,7 @@ void KMReaderWin::slotContactHtmlOptions()
     if (url.isEmpty()) {
         return;
     }
-    const QString emailString = KPIMUtils::decodeMailtoUrl(url).toLower();
+    const QString emailString = KEmailAddress::decodeMailtoUrl(url).toLower();
 
     KPIM::AddEmailDiplayJob *job = new KPIM::AddEmailDiplayJob(emailString, mMainWindow, this);
     job->setRemoteContent(mLoadExternalReference->isChecked());
