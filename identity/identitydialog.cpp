@@ -70,7 +70,7 @@
 #include "kleo/cryptobackendfactory.h"
 
 #include <KPIMUtils/kpimutils/email.h>
-#include <KPIMUtils/kpimutils/emailvalidator.h>
+#include <libkdepim/misc/emailvalidator.h>
 #include <MailTransport/mailtransport/transport.h>
 #include <MailTransport/mailtransport/transportmanager.h>
 #include <MailTransport/mailtransport/transportcombobox.h>
@@ -217,7 +217,7 @@ IdentityDialog::IdentityDialog(QWidget *parent)
     label->setWhatsThis(msg);
     mEmailEdit->setWhatsThis(msg);
 
-    KPIMUtils::EmailValidator *emailValidator = new KPIMUtils::EmailValidator(this);
+    KPIM::EmailValidator* emailValidator = new KPIM::EmailValidator(this);
     mEmailEdit->setValidator(emailValidator);
 
     // "Email Aliases" string text edit and label:
