@@ -122,5 +122,5 @@ void KMLaunchExternalComponent::slotImport()
 
 void KMLaunchExternalComponent::slotAccountWizard()
 {
-    KMail::Util::launchAccountWizard( mParentWidget );
+    KMail::Util::launchAccountWizard(mParentWidget);
 }
