@@ -69,12 +69,12 @@ using namespace KMail;
 MessageActions::MessageActions(KActionCollection *ac, QWidget *parent)
     : QObject(parent),
       mParent(parent),
-      mMessageView(0),
-      mRedirectAction(0),
-      mPrintPreviewAction(0),
-      mCustomTemplatesMenu(0),
-      mAddFollowupReminderAction(0),
-      mDebugBalooAction(0)
+      mMessageView(Q_NULLPTR),
+      mRedirectAction(Q_NULLPTR),
+      mPrintPreviewAction(Q_NULLPTR),
+      mCustomTemplatesMenu(Q_NULLPTR),
+      mAddFollowupReminderAction(Q_NULLPTR),
+      mDebugBalooAction(Q_NULLPTR)
 {
     mReplyActionMenu = new KActionMenu(QIcon::fromTheme(QLatin1String("mail-reply-sender")), i18nc("Message->", "&Reply"), this);
     ac->addAction(QLatin1String("message_reply_menu"), mReplyActionMenu);

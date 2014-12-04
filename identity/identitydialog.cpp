@@ -217,7 +217,7 @@ IdentityDialog::IdentityDialog(QWidget *parent)
     label->setWhatsThis(msg);
     mEmailEdit->setWhatsThis(msg);
 
-    KPIM::EmailValidator* emailValidator = new KPIM::EmailValidator(this);
+    KPIM::EmailValidator *emailValidator = new KPIM::EmailValidator(this);
     mEmailEdit->setValidator(emailValidator);
 
     // "Email Aliases" string text edit and label:
