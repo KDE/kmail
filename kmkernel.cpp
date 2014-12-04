@@ -242,7 +242,7 @@ KMKernel::KMKernel (QObject *parent) :
     CommonKernel->registerFilterIf( this );
     mFolderArchiveManager = new FolderArchiveManager(this);
     mStorageManager = new PimCommon::StorageServiceManager(this);
-    StorageServiceSettingsJob *settingsJob = new StorageServiceSettingsJob(this);
+    StorageServiceSettingsJob *settingsJob = new StorageServiceSettingsJob;
     PimCommon::StorageServiceJobConfig *configJob = PimCommon::StorageServiceJobConfig::self();
     configJob->registerConfigIf(settingsJob);
 }
