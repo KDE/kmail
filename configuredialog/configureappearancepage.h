@@ -204,8 +204,8 @@ private: // data
 class TagListWidgetItem : public QListWidgetItem
 {
 public:
-    explicit TagListWidgetItem(QListWidget *parent = 0);
-    explicit TagListWidgetItem(const QIcon &icon, const QString &text, QListWidget *parent = 0);
+    explicit TagListWidgetItem(QListWidget *parent = Q_NULLPTR);
+    explicit TagListWidgetItem(const QIcon &icon, const QString &text, QListWidget *parent = Q_NULLPTR);
 
     ~TagListWidgetItem();
     void setKMailTag(const MailCommon::Tag::Ptr &tag);

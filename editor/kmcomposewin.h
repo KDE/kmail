@@ -558,7 +558,7 @@ private:
     /**
      * Ask for confirmation if the message was changed before close.
      */
-    virtual bool queryClose();
+    bool queryClose() Q_DECL_OVERRIDE;
 
     /**
      * Turn encryption on/off. If setByUser is true then a message box is shown

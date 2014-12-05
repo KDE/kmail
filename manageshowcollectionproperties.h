@@ -35,7 +35,7 @@ class ManageShowCollectionProperties : public QObject
 {
     Q_OBJECT
 public:
-    explicit ManageShowCollectionProperties(KMMainWidget *mainWidget, QObject *parent = 0);
+    explicit ManageShowCollectionProperties(KMMainWidget *mainWidget, QObject *parent = Q_NULLPTR);
     ~ManageShowCollectionProperties();
 
 public slots:

@@ -59,7 +59,7 @@ protected:
     /// Reimplemented to save the docked state
     void saveProperties(KConfigGroup &);
 
-    bool queryClose();
+    bool queryClose() Q_DECL_OVERRIDE;
 
 protected slots:
     void slotQuit();
