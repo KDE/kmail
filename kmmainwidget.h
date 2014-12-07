@@ -342,8 +342,8 @@ protected slots:
     void slotExpireAll();
     void slotArchiveFolder();
     void slotRemoveFolder();
-    void slotDelayedRemoveFolder(KJob *);
     void slotEmptyFolder();
+    void slotClearCurrentFolder();
     void slotAddFavoriteFolder();
     void slotShowSelectedFolderInPane();
     void slotOverrideHtmlLoadExt();
@@ -549,7 +549,6 @@ private slots:
     void itemsReceived(const Akonadi::Item::List &list);
     void itemsFetchDone(KJob *job);
 
-    void slotDeletionCollectionResult(KJob *job);
     void slotServerSideSubscription();
     void slotFetchItemsForFolderDone(KJob *job);
     void slotServerStateChanged(Akonadi::ServerManager::State state);

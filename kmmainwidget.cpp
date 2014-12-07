@@ -129,7 +129,6 @@ using KSieveUi::SieveDebugDialog;
 #include <AkonadiCore/EntityMimeTypeFilterModel>
 #include <Akonadi/KMime/MessageFlags>
 #include <Akonadi/KMime/RemoveDuplicatesJob>
-#include <AkonadiCore/collectiondeletejob.h>
 #include <kdbusconnectionpool.h>
 #include <AkonadiCore/CachePolicy>
 
@@ -191,6 +190,7 @@ using KSieveUi::SieveDebugDialog;
 
 #include <job/manageserversidesubscriptionjob.h>
 #include <job/removeduplicatemailjob.h>
+#include <job/removecollectionjob.h>
 
 using namespace KMime;
 using namespace Akonadi;
@@ -245,8 +245,6 @@ KMMainWidget::KMMainWidget(QWidget *parent, KXMLGUIClient *aGUIClient,
     mFavoritesModel = 0;
     mVacationManager = new KSieveUi::VacationManager(this);
 
-    // FIXME This should become a line separator as soon as the API
-    // is extended in kdelibs.
     mToolbarActionSeparator = new QAction(this);
     mToolbarActionSeparator->setSeparator(true);
 
@@ -1557,86 +1555,16 @@ void KMMainWidget::slotRemoveFolder()
         return;
     }
 
-    Akonadi::CollectionFetchJob *job = new Akonadi::CollectionFetchJob(mCurrentFolder->collection(), CollectionFetchJob::FirstLevel, this);
-    job->fetchScope().setContentMimeTypes(QStringList() << KMime::Message::mimeType());
-    job->setProperty("collectionId", mCurrentFolder->collection().id());
-    connect(job, &Akonadi::CollectionFetchJob::result, this, &KMMainWidget::slotDelayedRemoveFolder);
+    RemoveCollectionJob *job = new RemoveCollectionJob(this);
+    connect(job, SIGNAL(clearCurrentFolder()), this, SLOT(slotClearCurrentFolder()));
+    job->setMainWidget(this);
+    job->setCurrentFolder(mCurrentFolder->collection());
+    job->start();
 }
 
-void KMMainWidget::slotDelayedRemoveFolder(KJob *job)
+void KMMainWidget::slotClearCurrentFolder()
 {
-    const Akonadi::CollectionFetchJob *fetchJob = qobject_cast<Akonadi::CollectionFetchJob *>(job);
-    Akonadi::Collection::List listOfCollection = fetchJob->collections();
-    const bool hasNotSubDirectory = listOfCollection.isEmpty();
-
-    const Akonadi::Collection::Id id = fetchJob->property("collectionId").toLongLong();
-    Akonadi::Collection col = MailCommon::Util::updatedCollection(CommonKernel->collectionFromId(id));
-    QString str;
-    QString title;
-    QString buttonLabel;
-    if (col.resource() == QLatin1String("akonadi_search_resource")) {
-        title = i18n("Delete Search");
-        str = i18n("<qt>Are you sure you want to delete the search <b>%1</b>?<br />"
-                   "Any messages it shows will still be available in their original folder.</qt>",
-                   col.name().toHtmlEscaped());
-        buttonLabel = i18nc("@action:button Delete search", "&Delete");
-    } else {
-        title = i18n("Delete Folder");
-
-        if (col.statistics().count() == 0) {
-            if (hasNotSubDirectory) {
-                str = i18n("<qt>Are you sure you want to delete the empty folder "
-                           "<b>%1</b>?</qt>",
-                           col.name().toHtmlEscaped());
-            } else {
-                str = xi18n("<qt>Are you sure you want to delete the empty folder "
-                            "<resource>%1</resource> and all its subfolders? Those subfolders might "
-                            "not be empty and their contents will be discarded as well. "
-                            "<p><b>Beware</b> that discarded messages are not saved "
-                            "into your Trash folder and are permanently deleted.</p></qt>",
-                            col.name().toHtmlEscaped());
-            }
-        } else {
-            if (hasNotSubDirectory) {
-                str = xi18n("<qt>Are you sure you want to delete the folder "
-                            "<resource>%1</resource>, discarding its contents? "
-                            "<p><b>Beware</b> that discarded messages are not saved "
-                            "into your Trash folder and are permanently deleted.</p></qt>",
-                            col.name().toHtmlEscaped());
-            } else {
-                str = xi18n("<qt>Are you sure you want to delete the folder <resource>%1</resource> "
-                            "and all its subfolders, discarding their contents? "
-                            "<p><b>Beware</b> that discarded messages are not saved "
-                            "into your Trash folder and are permanently deleted.</p></qt>",
-                            col.name().toHtmlEscaped());
-            }
-        }
-        buttonLabel = i18nc("@action:button Delete folder", "&Delete");
-    }
-
-    if (KMessageBox::warningContinueCancel(this, str, title,
-                                           KGuiItem(buttonLabel, QLatin1String("edit-delete")),
-                                           KStandardGuiItem::cancel(), QString(),
-                                           KMessageBox::Notify | KMessageBox::Dangerous)
-            == KMessageBox::Continue) {
-        kmkernel->checkFolderFromResources(listOfCollection << col);
-
-        if (col.id() == mCurrentFolder->collection().id()) {
-            mCurrentFolder.clear();
-        }
-
-        Akonadi::CollectionDeleteJob *job = new Akonadi::CollectionDeleteJob(col);
-        connect(job, &Akonadi::CollectionDeleteJob::result, this, &KMMainWidget::slotDeletionCollectionResult);
-    }
-}
-
-void KMMainWidget::slotDeletionCollectionResult(KJob *job)
-{
-    if (job) {
-        if (Util::showJobErrorMessage(job)) {
-            return;
-        }
-    }
+    mCurrentFolder.clear();
 }
 
 //-----------------------------------------------------------------------------
