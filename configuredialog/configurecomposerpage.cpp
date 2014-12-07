@@ -24,6 +24,7 @@ using namespace PimCommon::ConfigureImmutableWidgetUtils;
 #include "pimcommon/autocorrection/autocorrectionwidget.h"
 #include "messagecomposer/imagescaling/imagescalingwidget.h"
 #include "messagecomposer/settings/messagecomposersettings.h"
+#include "messagecore/settings/globalsettings.h"
 #include "settings/globalsettings.h"
 #include "configuredialog/configuredialoglistview.h"
 #include "pimcommon/widgets/simplestringlisteditor.h"
@@ -1329,9 +1330,9 @@ void ComposerPage::AttachmentsTab::doLoadFromGlobalSettings()
 {
     loadWidget(mOutlookCompatibleCheck, MessageComposer::MessageComposerSettings::self()->outlookCompatibleAttachmentsItem());
     loadWidget(mMissingAttachmentDetectionCheck, GlobalSettings::self()->showForgottenAttachmentWarningItem());
-    loadWidget(mAttachWordsListEditor, GlobalSettings::self()->attachmentKeywordsItem());
-    const int maximumAttachmentSize(MessageComposer::MessageComposerSettings::self()->maximumAttachmentSize());
-    mMaximumAttachmentSize->setValue(maximumAttachmentSize == -1 ? -1 : MessageComposer::MessageComposerSettings::self()->maximumAttachmentSize() / 1024);
+    loadWidget(mAttachWordsListEditor, GlobalSettings::self()->attachmentKeywordsItem() );
+    const int maximumAttachmentSize(MessageCore::GlobalSettings::self()->maximumAttachmentSize());
+    mMaximumAttachmentSize->setValue(maximumAttachmentSize == -1 ? -1 : MessageCore::GlobalSettings::self()->maximumAttachmentSize()/1024);
     mStorageServiceWidget->doLoadFromGlobalSettings();
 }
 
@@ -1343,7 +1344,7 @@ void ComposerPage::AttachmentsTab::save()
 
     KMime::setUseOutlookAttachmentEncoding(mOutlookCompatibleCheck->isChecked());
     const int maximumAttachmentSize(mMaximumAttachmentSize->value());
-    MessageComposer::MessageComposerSettings::self()->setMaximumAttachmentSize(maximumAttachmentSize == -1 ? -1 : maximumAttachmentSize * 1024);
+    MessageCore::GlobalSettings::self()->setMaximumAttachmentSize(maximumAttachmentSize == -1 ? -1 : maximumAttachmentSize*1024);
     mStorageServiceWidget->save();
 }
 
