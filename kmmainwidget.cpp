@@ -106,7 +106,6 @@ using KSieveUi::SieveDebugDialog;
 #include <Akonadi/AgentManager>
 #include <Akonadi/AttributeFactory>
 #include <akonadi/itemfetchjob.h>
-#include <akonadi/collectionattributessynchronizationjob.h>
 #include <akonadi/collectionfetchjob.h>
 #include <akonadi/collectionfetchscope.h>
 #include <akonadi/contact/contactsearchjob.h>
@@ -248,9 +247,6 @@ KMMainWidget::KMMainWidget( QWidget *parent, KXMLGUIClient *aGUIClient,
     mFavoritesModel = 0;
     mVacationManager = new KSieveUi::VacationManager(this);
 
-
-    // FIXME This should become a line separator as soon as the API
-    // is extended in kdelibs.
     mToolbarActionSeparator = new QAction( this );
     mToolbarActionSeparator->setSeparator( true );
 
