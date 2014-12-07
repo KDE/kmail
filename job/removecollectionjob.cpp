@@ -18,7 +18,6 @@
 #include "removecollectionjob.h"
 #include <Akonadi/CollectionFetchJob>
 #include <Akonadi/CollectionDeleteJob>
-#include <Akonadi/CollectionFetchJob>
 #include <KLocalizedString>
 #include <KMessageBox>
 #include <KGuiItem>

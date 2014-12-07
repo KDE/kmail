@@ -106,7 +106,6 @@ using KSieveUi::SieveDebugDialog;
 #include <Akonadi/AgentManager>
 #include <Akonadi/AttributeFactory>
 #include <akonadi/itemfetchjob.h>
-#include <akonadi/collectionfetchjob.h>
 #include <akonadi/collectionfetchscope.h>
 #include <akonadi/contact/contactsearchjob.h>
 #include <akonadi/collectionpropertiesdialog.h>
@@ -128,7 +127,6 @@ using KSieveUi::SieveDebugDialog;
 #include <Akonadi/EntityMimeTypeFilterModel>
 #include <akonadi/kmime/messageflags.h>
 #include <akonadi/kmime/removeduplicatesjob.h>
-#include <akonadi/collectiondeletejob.h>
 #include <akonadi/dbusconnectionpool.h>
 #include <Akonadi/CachePolicy>
 
