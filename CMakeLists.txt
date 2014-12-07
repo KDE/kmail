@@ -159,6 +159,7 @@ if (KDEPIM_BUILD_DESKTOP)
      job/createfollowupreminderonexistingmessagejob.cpp
      job/manageserversidesubscriptionjob.cpp
      job/manageserversidesubscriptionjob.cpp
+     job/removecollectionjob.cpp
   )
  
   set(kmailprivate_widgets_LIB_SRCS
