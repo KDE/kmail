@@ -305,7 +305,7 @@ KMMainWidget::KMMainWidget(QWidget *parent, KXMLGUIClient *aGUIClient,
     QStatusBar *sb =  mainWin ? mainWin->statusBar() : 0;
     mVacationScriptIndicator = new KMail::VacationScriptIndicatorWidget(sb);
     mVacationScriptIndicator->hide();
-    connect(mVacationScriptIndicator, SIGNAL(clicked(QString)), SLOT(slotEditVacation(QString)));
+    connect(mVacationScriptIndicator, &KMail::VacationScriptIndicatorWidget::clicked, this, &KMMainWidget::slotEditVacation);
     if (KSieveUi::Util::checkOutOfOfficeOnStartup()) {
         QTimer::singleShot(0, this, SLOT(slotCheckVacation()));
     }

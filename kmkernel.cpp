@@ -191,7 +191,7 @@ KMKernel::KMKernel(QObject *parent) :
 
     mFolderCollectionMonitor = new FolderCollectionMonitor(session, this);
 
-    connect(mFolderCollectionMonitor->monitor(), SIGNAL(collectionRemoved(Akonadi::Collection)), SLOT(slotCollectionRemoved(Akonadi::Collection)));
+    connect(mFolderCollectionMonitor->monitor(), &Akonadi::Monitor::collectionRemoved, this, &KMKernel::slotCollectionRemoved);
 
     mEntityTreeModel = new Akonadi::EntityTreeModel(folderCollectionMonitor(), this);
     mEntityTreeModel->setIncludeUnsubscribed(false);

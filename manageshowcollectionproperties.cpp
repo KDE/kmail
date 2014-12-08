@@ -109,8 +109,8 @@ void ManageShowCollectionProperties::showCollectionProperties(const QString &pag
             sync->setProperty("collectionId", id);
             sync->setProperty("pageToShow", pageToShow);          // note for dialog later
             sync->setProperty("progressItem", QVariant::fromValue(progressItem));
-            connect(sync, SIGNAL(result(KJob*)),
-                    this, SLOT(slotCollectionPropertiesContinued(KJob*)));
+            connect(sync, &KJob::result,
+                    this, &ManageShowCollectionProperties::slotCollectionPropertiesContinued);
             connect(progressItem, SIGNAL(progressItemCanceled(KPIM::ProgressItem*)),
                     sync, SLOT(kill()));
             connect(progressItem, SIGNAL(progressItemCanceled(KPIM::ProgressItem*)),
