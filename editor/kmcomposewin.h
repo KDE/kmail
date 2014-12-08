@@ -426,8 +426,6 @@ private slots:
 
     void slotPrintComposeResult(KJob *job);
 
-    //void slotEncryptChiasmusToggled( bool );
-
     void slotSendFailed(const QString &msg , MessageComposer::ComposerViewBase::FailedType type);
     void slotSendSuccessful(const QString &messageId);
 

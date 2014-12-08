@@ -96,7 +96,7 @@ using MessageComposer::MessageFactory;
 using namespace KMail;
 using namespace MailCommon;
 
-//-----------------------------------------------------------------------------
+
 KMReaderWin::KMReaderWin(QWidget *aParent,
                          QWidget *mainWindow,
                          KActionCollection *actionCollection,
@@ -245,12 +245,11 @@ bool KMReaderWin::isFixedFont() const
     return mViewer->isFixedFont();
 }
 
-//-----------------------------------------------------------------------------
+
 KMReaderWin::~KMReaderWin()
 {
 }
 
-//-----------------------------------------------------------------------------
 void KMReaderWin::readConfig(void)
 {
     mViewer->readConfig();
@@ -266,13 +265,12 @@ void KMReaderWin::setHeaderStyleAndStrategy(HeaderStyle *style,
 {
     mViewer->setHeaderStyleAndStrategy(style, strategy);
 }
-//-----------------------------------------------------------------------------
 void KMReaderWin::setOverrideEncoding(const QString &encoding)
 {
     mViewer->setOverrideEncoding(encoding);
 }
 
-//-----------------------------------------------------------------------------
+
 void KMReaderWin::clearCache()
 {
     clear();
@@ -301,7 +299,7 @@ static const char *const kmailNewFeatures[] = {
 static const int numKMailNewFeatures =
     sizeof kmailNewFeatures / sizeof * kmailNewFeatures;
 
-//-----------------------------------------------------------------------------
+
 //static
 QString KMReaderWin::newFeaturesMD5()
 {
@@ -317,7 +315,6 @@ QString KMReaderWin::newFeaturesMD5()
     return QLatin1String(md5.result().toBase64());
 }
 
-//-----------------------------------------------------------------------------
 void KMReaderWin::displaySplashPage(const QString &info)
 {
     mViewer->displaySplashPage(info);
@@ -349,7 +346,6 @@ void KMReaderWin::displayResourceOfflinePage()
     displaySplashPage(info);
 }
 
-//-----------------------------------------------------------------------------
 void KMReaderWin::displayAboutPage()
 {
     KLocalizedString info =
@@ -417,12 +413,12 @@ void KMReaderWin::displayAboutPage()
     displaySplashPage(info.toString());
 }
 
-//-----------------------------------------------------------------------------
+
 void KMReaderWin::slotFind()
 {
     mViewer->slotFind();
 }
-//-----------------------------------------------------------------------------
+
 void KMReaderWin::slotCopySelectedText()
 {
     QString selection = mViewer->selectedText();
@@ -430,19 +426,18 @@ void KMReaderWin::slotCopySelectedText()
     QApplication::clipboard()->setText(selection);
 }
 
-//-----------------------------------------------------------------------------
 void KMReaderWin::setMsgPart(KMime::Content *aMsgPart)
 {
     mViewer->setMessagePart(aMsgPart);
 }
 
-//-----------------------------------------------------------------------------
+
 QString KMReaderWin::copyText() const
 {
     return mViewer->selectedText();
 }
 
-//-----------------------------------------------------------------------------
+
 MessageViewer::Viewer::DisplayFormatMessage KMReaderWin::displayFormatMessageOverwrite() const
 {
     return mViewer->displayFormatMessageOverwrite();
@@ -453,38 +448,37 @@ void KMReaderWin::setDisplayFormatMessageOverwrite(MessageViewer::Viewer::Displa
     mViewer->setDisplayFormatMessageOverwrite(format);
 }
 
-//-----------------------------------------------------------------------------
 void KMReaderWin::setHtmlLoadExtOverride(bool override)
 {
     mViewer->setHtmlLoadExtOverride(override);
 }
 
-//-----------------------------------------------------------------------------
+
 bool KMReaderWin::htmlMail() const
 {
     return mViewer->htmlMail();
 }
 
-//-----------------------------------------------------------------------------
+
 bool KMReaderWin::htmlLoadExternal()
 {
     return mViewer->htmlLoadExternal();
 }
 
-//-----------------------------------------------------------------------------
+
 Akonadi::Item KMReaderWin::message() const
 {
     return mViewer->messageItem();
 }
 
-//-----------------------------------------------------------------------------
+
 void KMReaderWin::slotMailtoCompose()
 {
     KMCommand *command = new KMMailtoComposeCommand(urlClicked(), message());
     command->start();
 }
 
-//-----------------------------------------------------------------------------
+
 void KMReaderWin::slotMailtoForward()
 {
     KMCommand *command = new KMMailtoForwardCommand(mMainWindow, urlClicked(),
@@ -492,7 +486,7 @@ void KMReaderWin::slotMailtoForward()
     command->start();
 }
 
-//-----------------------------------------------------------------------------
+
 void KMReaderWin::slotMailtoAddAddrBook()
 {
     const KUrl url = urlClicked();
@@ -523,7 +517,7 @@ void KMReaderWin::slotMailToAddToExistingContact()
     delete dlg;
 }
 
-//-----------------------------------------------------------------------------
+
 void KMReaderWin::slotMailtoOpenAddrBook()
 {
     const KUrl url = urlClicked();
@@ -536,7 +530,7 @@ void KMReaderWin::slotMailtoOpenAddrBook()
     job->start();
 }
 
-//-----------------------------------------------------------------------------
+
 void KMReaderWin::slotAddBookmarks()
 {
     const KUrl url = urlClicked();
@@ -547,7 +541,7 @@ void KMReaderWin::slotAddBookmarks()
     command->start();
 }
 
-//-----------------------------------------------------------------------------
+
 void KMReaderWin::slotUrlSave()
 {
     const KUrl url = urlClicked();
@@ -568,7 +562,7 @@ void KMReaderWin::slotSaveImageOnDisk()
     command->start();
 }
 
-//-----------------------------------------------------------------------------
+
 void KMReaderWin::slotMailtoReply()
 {
     KMCommand *command = new KMMailtoReplyCommand(mMainWindow, urlClicked(),
@@ -890,7 +884,7 @@ QAction *KMReaderWin::openBlockableItems() const
     return mViewer->openBlockableItems();
 }
 
-//-----------------------------------------------------------------------------
+
 void KMReaderWin::slotShareImage()
 {
     KMCommand *command = new KMShareImageCommand(imageUrlClicked(), this);

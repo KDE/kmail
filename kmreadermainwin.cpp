@@ -80,7 +80,6 @@ KMReaderMainWin::KMReaderMainWin(MessageViewer::Viewer::DisplayFormatMessage for
     initKMReaderMainWin();
 }
 
-//-----------------------------------------------------------------------------
 KMReaderMainWin::KMReaderMainWin(char *name)
     : KMail::SecondaryWindow(name ? name : "readerwindow#")
 {
@@ -88,7 +87,6 @@ KMReaderMainWin::KMReaderMainWin(char *name)
     initKMReaderMainWin();
 }
 
-//-----------------------------------------------------------------------------
 KMReaderMainWin::KMReaderMainWin(KMime::Content *aMsgPart, MessageViewer::Viewer::DisplayFormatMessage format, const QString &encoding, char *name)
     : KMail::SecondaryWindow(name ? name : "readerwindow#")
 {
@@ -99,7 +97,7 @@ KMReaderMainWin::KMReaderMainWin(KMime::Content *aMsgPart, MessageViewer::Viewer
     initKMReaderMainWin();
 }
 
-//-----------------------------------------------------------------------------
+
 void KMReaderMainWin::initKMReaderMainWin()
 {
     setCentralWidget(mReaderWin);
@@ -115,14 +113,13 @@ void KMReaderMainWin::initKMReaderMainWin()
     connect(mReaderWin, SIGNAL(showStatusBarMessage(QString)), statusBar(), SLOT(showMessage(QString)));
 }
 
-//-----------------------------------------------------------------------------
+
 KMReaderMainWin::~KMReaderMainWin()
 {
     KConfigGroup grp(KMKernel::self()->config()->group("Separate Reader Window"));
     saveMainWindowSettings(grp);
 }
 
-//-----------------------------------------------------------------------------
 void KMReaderMainWin::setUseFixedFont(bool useFixedFont)
 {
     mReaderWin->setUseFixedFont(useFixedFont);
@@ -196,7 +193,7 @@ Akonadi::Collection KMReaderMainWin::parentCollection() const
     }
 }
 
-//-----------------------------------------------------------------------------
+
 void KMReaderMainWin::slotTrashMsg()
 {
     if (!mMsg.isValid()) {
@@ -207,7 +204,7 @@ void KMReaderMainWin::slotTrashMsg()
     close();
 }
 
-//-----------------------------------------------------------------------------
+
 void KMReaderMainWin::slotForwardInlineMsg()
 {
     if (!mReaderWin->message().hasPayload<KMime::Message::Ptr>()) {
@@ -230,7 +227,7 @@ void KMReaderMainWin::slotForwardInlineMsg()
     command->start();
 }
 
-//-----------------------------------------------------------------------------
+
 void KMReaderMainWin::slotForwardAttachedMsg()
 {
     if (!mReaderWin->message().hasPayload<KMime::Message::Ptr>()) {
@@ -254,7 +251,7 @@ void KMReaderMainWin::slotForwardAttachedMsg()
     command->start();
 }
 
-//-----------------------------------------------------------------------------
+
 void KMReaderMainWin::slotRedirectMsg()
 {
     if (!mReaderWin->message().hasPayload<KMime::Message::Ptr>()) {
@@ -265,7 +262,6 @@ void KMReaderMainWin::slotRedirectMsg()
     command->start();
 }
 
-//-----------------------------------------------------------------------------
 void KMReaderMainWin::slotCustomReplyToMsg(const QString &tmpl)
 {
     if (!mReaderWin->message().hasPayload<KMime::Message::Ptr>()) {
@@ -280,7 +276,6 @@ void KMReaderMainWin::slotCustomReplyToMsg(const QString &tmpl)
     command->start();
 }
 
-//-----------------------------------------------------------------------------
 void KMReaderMainWin::slotCustomReplyAllToMsg(const QString &tmpl)
 {
     if (!mReaderWin->message().hasPayload<KMime::Message::Ptr>()) {
@@ -296,7 +291,6 @@ void KMReaderMainWin::slotCustomReplyAllToMsg(const QString &tmpl)
     command->start();
 }
 
-//-----------------------------------------------------------------------------
 void KMReaderMainWin::slotCustomForwardMsg(const QString &tmpl)
 {
     if (!mReaderWin->message().hasPayload<KMime::Message::Ptr>()) {
@@ -310,7 +304,7 @@ void KMReaderMainWin::slotCustomForwardMsg(const QString &tmpl)
     command->start();
 }
 
-//-----------------------------------------------------------------------------
+
 void KMReaderMainWin::slotConfigChanged()
 {
     //readConfig();
@@ -365,7 +359,6 @@ void KMReaderMainWin::setupAccel()
     connect(mReaderWin->viewer(), &MessageViewer::Viewer::moveMessageToTrash, this, &KMReaderMainWin::slotTrashMsg);
 }
 
-//-----------------------------------------------------------------------------
 QAction *KMReaderMainWin::copyActionMenu(QMenu *menu)
 {
     KMMainWidget *mainwin = kmkernel->getKMMainWidget();
