@@ -3468,7 +3468,7 @@ void KMComposeWin::slotCreateAddressBookContact()
 
 void KMComposeWin::slotAttachMissingFile()
 {
-    mComposerBase->attachmentController()->showAddAttachmentDialog();
+    mComposerBase->attachmentController()->showAddAttachmentFileDialog();
 }
 
 void KMComposeWin::slotVerifyMissingAttachmentTimeout()
