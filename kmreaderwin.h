@@ -221,14 +221,14 @@ public:
     bool adblockEnabled() const;
     bool isAShortUrl(const QUrl &url) const;
 
-signals:
+Q_SIGNALS:
     /** Emitted after parsing of a message to have it stored
       in unencrypted state in it's folder. */
     void replaceMsgByUnencryptedVersion();
 
     void showStatusBarMessage(const QString &message);
 
-public slots:
+public Q_SLOTS:
     /** Force update even if message is the same */
     void clearCache();
 

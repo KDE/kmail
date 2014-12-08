@@ -38,13 +38,13 @@ public:
     explicit ManageShowCollectionProperties(KMMainWidget *mainWidget, QObject *parent = Q_NULLPTR);
     ~ManageShowCollectionProperties();
 
-public slots:
+public Q_SLOTS:
     void slotFolderMailingListProperties();
     void slotShowFolderShortcutDialog();
     void slotShowExpiryProperties();
     void slotCollectionProperties();
 
-private slots:
+private Q_SLOTS:
     void slotCollectionPropertiesContinued(KJob *job);
     void slotCollectionPropertiesFinished(KJob *job);
 

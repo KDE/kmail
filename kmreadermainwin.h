@@ -56,7 +56,7 @@ public:
     void showMessage(const QString &encoding, KMime::Message::Ptr message);
     void showMessagePopup(const Akonadi::Item &msg , const KUrl &aUrl, const KUrl &imageUrl, const QPoint &aPoint, bool contactAlreadyExists, bool uniqueContactFound);
 
-private slots:
+private Q_SLOTS:
     void slotMessagePopup(const Akonadi::Item &, const KUrl &, const KUrl &imageUrl, const QPoint &);
     void slotContactSearchJobForMessagePopupDone(KJob *);
     void slotTrashMsg();

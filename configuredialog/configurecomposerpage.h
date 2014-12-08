@@ -60,7 +60,7 @@ public:
     QString helpAnchor() const;
 
     void save();
-protected slots:
+protected Q_SLOTS:
     void slotConfigureRecentAddresses();
     void slotConfigureCompletionOrder();
 
@@ -169,7 +169,7 @@ public:
 
     void save();
 
-private slots:
+private Q_SLOTS:
     void slotVerifyCharset(QString &);
 
 private:
@@ -191,7 +191,7 @@ public:
 
     void save();
 
-private slots:
+private Q_SLOTS:
     void slotMimeHeaderSelectionChanged();
     void slotMimeHeaderNameChanged(const QString &);
     void slotMimeHeaderValueChanged(const QString &);
@@ -223,7 +223,7 @@ public:
 
     void save();
 
-private slots:
+private Q_SLOTS:
     void slotOutlookCompatibleClicked();
 
 private:

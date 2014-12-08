@@ -100,13 +100,13 @@ public:
 
     void updateIdentity(KIdentityManagement::Identity &ident);
 
-protected slots:
+protected Q_SLOTS:
     void slotAboutToShow(int);
 
     // copy default templates to identity templates
     void slotCopyGlobal();
 
-private slots:
+private Q_SLOTS:
     void slotAccepted();
     void slotDelayedButtonClicked(KJob *);
     void slotEditVcard();

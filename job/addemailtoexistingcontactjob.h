@@ -30,7 +30,7 @@ public:
 
     void start();
 
-private slots:
+private Q_SLOTS:
     void slotAddEmailDone(KJob *job);
 
 private:

@@ -314,7 +314,7 @@ protected:
     /** Evaluate the settings made and create the appropriate filter rules. */
     void accept();
 
-protected slots:
+protected Q_SLOTS:
     /** Modify the status of the wizard to reflect the selection of spam tools. */
     void checkProgramsSelections();
     /** Modify the status of the wizard to reflect the selected functionality. */
@@ -386,10 +386,10 @@ public:
     void addAvailableTool(const QString &visibleName);
     bool isProgramSelected(const QString &visibleName) const;
 
-private slots:
+private Q_SLOTS:
     void processSelectionChange();
 
-signals:
+Q_SIGNALS:
     void selectionChanged();
 
 private:
@@ -424,11 +424,11 @@ protected:
     Akonadi::Collection selectedSpamCollection() const;
     Akonadi::Collection selectedUnsureCollection() const;
 
-private slots:
+private Q_SLOTS:
     void processSelectionChange();
     void processSelectionChange(const Akonadi::Collection &);
 
-signals:
+Q_SIGNALS:
     void selectionChanged();
 
 private:
@@ -453,9 +453,9 @@ public:
 
     QString selectedFolderName() const;
 
-private slots:
+private Q_SLOTS:
     void processSelectionChange();
-signals:
+Q_SIGNALS:
     void selectionChanged();
 
 private:

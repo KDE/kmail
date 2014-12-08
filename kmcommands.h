@@ -78,11 +78,11 @@ public:
     */
     Result result() const;
 
-public slots:
+public Q_SLOTS:
     // Retrieve messages then calls execute
     void start();
 
-signals:
+Q_SIGNALS:
 
     /// @param result The status of the command.
     void messagesTransfered(KMCommand::Result result);
@@ -151,7 +151,7 @@ private:
     *  this is a necessary preparation for e.g. forwarding */
     void transferSelectedMsgs();
 
-private slots:
+private Q_SLOTS:
     void slotPostTransfer(KMCommand::Result result);
     /** the msg has been transferred */
     void slotMsgTransfered(const Akonadi::Item::List &msgs);
@@ -239,7 +239,7 @@ class KMAIL_EXPORT KMUrlSaveCommand : public KMCommand
 public:
     KMUrlSaveCommand(const QUrl &url, QWidget *parent);
 
-private slots:
+private Q_SLOTS:
     void slotUrlSaveResult(KJob *job);
 
 private:
@@ -255,7 +255,7 @@ class KMAIL_EXPORT KMEditItemCommand : public KMCommand
 public:
     explicit KMEditItemCommand(QWidget *parent, const Akonadi::Item &msg, bool deleteFromSource = true);
     ~KMEditItemCommand();
-private slots:
+private Q_SLOTS:
     void slotDeleteItem(KJob *job);
 private:
     Result execute() Q_DECL_OVERRIDE;
@@ -307,7 +307,7 @@ public:
 private:
     Result execute() Q_DECL_OVERRIDE;
 
-private slots:
+private Q_SLOTS:
     void slotDataArrived(KIO::Job *job, const QByteArray &data);
     void slotResult(KJob *job);
 
@@ -446,7 +446,7 @@ public:
     KMSetStatusCommand(const MessageStatus &status, const Akonadi::Item::List &items,
                        bool invert = false);
 
-protected slots:
+protected Q_SLOTS:
     void slotModifyItemDone(KJob *job);
 
 private:
@@ -468,7 +468,7 @@ public:
     KMSetTagCommand(const Akonadi::Tag::List &tags, const QList<Akonadi::Item> &item,
                     SetTagMode mode = AddIfNotExisting);
 
-protected slots:
+protected Q_SLOTS:
     void slotTagCreateDone(KJob *job);
     void slotModifyItemDone(KJob *job);
 
@@ -505,7 +505,7 @@ class KMAIL_EXPORT KMMetaFilterActionCommand : public QObject
 public:
     KMMetaFilterActionCommand(const QString &filterId, KMMainWidget *main);
 
-public slots:
+public Q_SLOTS:
     void start();
 
 private:
@@ -532,7 +532,7 @@ public:
     KMCopyCommand(const Akonadi::Collection &destFolder, const QList<Akonadi::Item> &msgList);
     KMCopyCommand(const Akonadi::Collection &destFolder, const Akonadi::Item &msg);
 
-protected slots:
+protected Q_SLOTS:
     void slotCopyResult(KJob *job);
 private:
     Result execute() Q_DECL_OVERRIDE;
@@ -561,7 +561,7 @@ public:
         return mRef;
     }
 
-public slots:
+public Q_SLOTS:
     void slotMoveCanceled();
     void slotMoveResult(KJob *job);
 protected:
@@ -570,7 +570,7 @@ protected:
         mDestFolder = folder;
     }
 
-signals:
+Q_SIGNALS:
     void moveDone(KMMoveCommand *);
 
 private:

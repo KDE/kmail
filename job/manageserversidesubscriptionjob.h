@@ -35,7 +35,7 @@ public:
 
     void setParentWidget(QWidget *parentWidget);
 
-private slots:
+private Q_SLOTS:
     void slotConfigureSubscriptionFinished(QDBusPendingCallWatcher *watcher);
 private:
     QSharedPointer<MailCommon::FolderCollection> mCurrentFolder;

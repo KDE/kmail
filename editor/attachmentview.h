@@ -48,7 +48,7 @@ public:
 
     QWidget *widget();
 
-public slots:
+public Q_SLOTS:
     /// model sets these
     void setEncryptEnabled(bool enabled);
     void setSignEnabled(bool enabled);
@@ -74,7 +74,7 @@ private:
     void saveHeaderState();
     void restoreHeaderState();
 
-signals:
+Q_SIGNALS:
     void contextMenuRequested();
     void modified(bool);
 

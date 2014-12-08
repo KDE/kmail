@@ -42,7 +42,7 @@ public:
     void setColorSilently(int index, const QColor &color);
     QColor color(int index) const;
 
-signals:
+Q_SIGNALS:
     void changed();
 
 protected:
@@ -51,7 +51,7 @@ protected:
     void dragMoveEvent(QDragMoveEvent *e) Q_DECL_OVERRIDE;
     void dropEvent(QDropEvent *e) Q_DECL_OVERRIDE;
 
-private slots:
+private Q_SLOTS:
     void newColor(const QModelIndex &index);
 
 private:

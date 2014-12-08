@@ -57,10 +57,10 @@ public:
     QString helpAnchor() const;
     void save();
 
-signals:
+Q_SIGNALS:
     void accountListChanged(const QStringList &);
 
-private slots:
+private Q_SLOTS:
     void slotEditNotifications();
     void slotShowMailCheckMenu(const QString &, const QPoint &);
     void slotCustomizeAccountOrder();
@@ -101,7 +101,7 @@ public:
     typedef AccountsPageSendingTab SendingTab;
     typedef AccountsPageReceivingTab ReceivingTab;
 
-signals:
+Q_SIGNALS:
     void accountListChanged(const QStringList &);
 
 private:

@@ -47,7 +47,7 @@ public:
     explicit ArchiveFolderDialog(QWidget *parent = Q_NULLPTR);
     void setFolder(const Akonadi::Collection &defaultCollection);
 
-private slots:
+private Q_SLOTS:
     void slotFixFileExtension();
     void slotFolderChanged(const Akonadi::Collection &);
     void slotRecursiveCheckboxClicked();

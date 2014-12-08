@@ -51,10 +51,10 @@ public:
     QString duplicateIdentity() const;
     DuplicateMode duplicateMode() const;
 
-protected slots:
+protected Q_SLOTS:
     void slotEnableOK(const QString &);
 
-private slots:
+private Q_SLOTS:
     void slotHelp();
 private:
     KLineEdit  *mLineEdit;

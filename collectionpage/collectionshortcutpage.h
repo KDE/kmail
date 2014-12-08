@@ -38,7 +38,7 @@ public:
     void load(const Akonadi::Collection &col) Q_DECL_OVERRIDE;
     void save(Akonadi::Collection &col) Q_DECL_OVERRIDE;
 
-private slots:
+private Q_SLOTS:
     void slotShortcutChanged();
 
 private:

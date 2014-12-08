@@ -38,7 +38,7 @@ public:
 Q_SIGNALS:
     void clearCurrentFolder();
 
-private slots:
+private Q_SLOTS:
     void slotDelayedRemoveFolder(KJob *job);
     void slotDeletionCollectionResult(KJob *job);
 

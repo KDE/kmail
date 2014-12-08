@@ -43,7 +43,7 @@ public:
     bool editorEvent(QEvent *event, QAbstractItemModel *model, const QStyleOptionViewItem &option, const QModelIndex &index) Q_DECL_OVERRIDE;
     QWidget  *createEditor(QWidget *parent, const QStyleOptionViewItem   &option, const QModelIndex &index) const Q_DECL_OVERRIDE;
 
-signals:
+Q_SIGNALS:
     void optionsClicked(const QString &, const QPoint &);
 
 private:

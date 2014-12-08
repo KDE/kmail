@@ -43,14 +43,14 @@ public:
     FolderShortcutCommand(QWidget *mainwidget, const Akonadi::Collection &col);
     ~FolderShortcutCommand();
 
-public slots:
+public Q_SLOTS:
     void start();
     /** Assign a QAction to the command which is used to trigger it. This
     * action will be deleted along with the command, so you don't need to
     * keep track of it separately. */
     void setAction(QAction *);
 
-signals:
+Q_SIGNALS:
     void selectCollectionFolder(const Akonadi::Collection &col);
 
 private:
@@ -67,7 +67,7 @@ public:
     explicit FolderShortcutActionManager(QWidget *parent, KActionCollection *actionCollection);
     void createActions();
 
-public slots:
+public Q_SLOTS:
 
     /**
        * Updates the shortcut action for this collection. Call this when a shortcut was
@@ -75,7 +75,7 @@ public slots:
        */
     void shortcutChanged(const Akonadi::Collection &collection);
 
-private slots:
+private Q_SLOTS:
     /**
        * Removes the shortcut actions associated with a folder.
        */

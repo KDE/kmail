@@ -44,11 +44,11 @@ public:
     explicit AttachmentController(MessageComposer::AttachmentModel *model, AttachmentView *view, KMComposeWin *composer);
     ~AttachmentController();
 
-public slots:
+public Q_SLOTS:
     /// @reimp
     void attachMyPublicKey();
 
-private slots:
+private Q_SLOTS:
     void identityChanged();
     void actionsCreated();
     void addAttachmentItems(const Akonadi::Item::List &items);

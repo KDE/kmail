@@ -52,10 +52,10 @@ public:
 protected:
     void init(const Akonadi::Collection &);
 
-protected slots:
+protected Q_SLOTS:
     void slotFetchDone(KJob *job);
 
-private slots:
+private Q_SLOTS:
     /*
     * Detects mailing-list related stuff
     */

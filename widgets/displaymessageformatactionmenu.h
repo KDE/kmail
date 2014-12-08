@@ -34,7 +34,7 @@ public:
 Q_SIGNALS:
     void changeDisplayMessageFormat(MessageViewer::Viewer::DisplayFormatMessage format);
 
-private slots:
+private Q_SLOTS:
     void slotChangeDisplayMessageFormat();
 
 private:

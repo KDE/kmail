@@ -34,13 +34,13 @@ public:
     explicit ConfigureDialog(QWidget *parent = Q_NULLPTR, bool modal = true);
     ~ConfigureDialog();
 
-signals:
+Q_SIGNALS:
     void configChanged();
 
 protected:
     void hideEvent(QHideEvent *i) Q_DECL_OVERRIDE;
 
-protected slots:
+protected Q_SLOTS:
     /** @reimplemented
     * Saves the GlobalSettings stuff before passing on to KCMultiDialog.
     */

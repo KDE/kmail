@@ -504,7 +504,7 @@ public:
 protected:
     void agentInstanceBroken(const Akonadi::AgentInstance &instance);
 
-public slots:
+public Q_SLOTS:
 
     /*reimp*/ void updateSystemTray();
 
@@ -532,7 +532,7 @@ public slots:
 
     void slotConfigChanged();
 
-signals:
+Q_SIGNALS:
     void configChanged();
     void onlineStatusChanged(GlobalSettings::EnumNetworkState::type);
     void customTemplatesChanged();
@@ -540,7 +540,7 @@ signals:
     void startCheckMail();
     void endCheckMail();
 
-private slots:
+private Q_SLOTS:
     /** Updates identities when a transport has been deleted. */
     void transportRemoved(int id, const QString &name);
     /** Updates identities when a transport has been renamed. */

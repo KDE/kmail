@@ -51,7 +51,7 @@ public:
     void load() Q_DECL_OVERRIDE;
     void save() Q_DECL_OVERRIDE;
 
-private slots:
+private Q_SLOTS:
     void slotNewIdentity();
     void slotModifyIdentity();
     void slotRemoveIdentity();

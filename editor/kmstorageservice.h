@@ -38,7 +38,7 @@ public:
 Q_SIGNALS:
     void insertShareLink(const QString &link);
 
-private slots:
+private Q_SLOTS:
     void slotUploadFileDone(const QString &serviceName, const QString &fileName);
     void slotUploadFileFailed(const QString &serviceName, const QString &fileName);
     void slotShareLinkDone(const QString &serviceName, const QString &link);

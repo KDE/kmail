@@ -33,7 +33,7 @@ public:
     ~SaveDraftJob();
 
     void start();
-private slots:
+private Q_SLOTS:
     void slotStoreDone(KJob *job);
 private:
     KMime::Message::Ptr mMsg;

@@ -78,10 +78,10 @@ protected:
     bool canInsertFromMimeData(const QMimeData *source) const;
     void insertFromMimeData(const QMimeData *source);
 
-protected slots:
+protected Q_SLOTS:
     void mousePopupMenuImplementation(const QPoint &pos);
 
-signals:
+Q_SIGNALS:
     void insertSnippet();
 
 };

@@ -66,7 +66,7 @@ public:
     QString helpAnchor() const;
     void save();
 
-private slots:
+private Q_SLOTS:
     void slotFontSelectorChanged(int);
 
 private:
@@ -157,7 +157,7 @@ private: // data
     KLineEdit    *mCustomDateFormatEdit;
     QString       mCustomDateWhatsThis;
 
-private slots:
+private Q_SLOTS:
     void slotLinkClicked(const QString &link);
     void slotSelectDefaultAggregation();
     void slotSelectDefaultTheme();
@@ -227,7 +227,7 @@ public:
 
     void save();
 
-public slots:
+public Q_SLOTS:
     /**Enables/disables Add button according to whether @p aText is empty.
     Connected to signal of the line edit widget for adding tags
     @param aText String to change add button according to
@@ -246,7 +246,7 @@ public slots:
     changes*/
     void slotMoveTagDown();
 
-private slots:
+private Q_SLOTS:
     /*Handles necessary processing when the selection in the edit box changes.
     Records the unselected tag's information, and applies visual changes
     necessary depending on the description of the new tag. Private since doesn't

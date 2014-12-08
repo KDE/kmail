@@ -144,14 +144,14 @@ public:
         return mAddFollowupReminderAction;
     }
 
-signals:
+Q_SIGNALS:
     // This signal is emitted when a reply is triggered and the
     // action has finished.
     // This is useful for the stand-alone reader, it might want to close the window in
     // that case.
     void replyActionFinished();
 
-public slots:
+public Q_SLOTS:
     void editCurrentMessage();
     void annotateMessage();
 
@@ -164,7 +164,7 @@ private:
     void printMessage(bool preview);
     void clearMailingListActions();
 
-private slots:
+private Q_SLOTS:
     void slotItemModified(const Akonadi::Item   &item, const QSet< QByteArray >   &partIdentifiers);
     void slotItemRemoved(const Akonadi::Item &item);
 

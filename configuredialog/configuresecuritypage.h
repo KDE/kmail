@@ -49,7 +49,7 @@ private:
 private:
     Ui_SecurityPageGeneralTab mSGTab;
 
-private slots:
+private Q_SLOTS:
     void slotLinkClicked(const QString &link);
 };
 
@@ -70,7 +70,7 @@ private:
     QButtonGroup *mOrigQuoteGroup;
     Ui_SecurityPageMDNTab mUi;
 
-private slots:
+private Q_SLOTS:
     void slotLinkClicked(const QString &link);
 };
 
@@ -130,7 +130,7 @@ public:
 
     void save();
 
-private slots:
+private Q_SLOTS:
     void slotUpdateHTTPActions();
 
 private:

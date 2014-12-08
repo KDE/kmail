@@ -25,10 +25,10 @@ public:
     ~ConfigModuleTab() {}
     virtual void save() = 0;
     void defaults();
-signals:
+Q_SIGNALS:
     // forwarded to the ConfigModule
     void changed(bool);
-public slots:
+public Q_SLOTS:
     void slotEmitChanged();
     void load();
 protected:

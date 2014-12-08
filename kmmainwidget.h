@@ -202,7 +202,7 @@ public:
     void updateQuickSearchLineText();
 
     void populateMessageListStatusFilterCombo();
-public slots:
+public Q_SLOTS:
     // Moving messages around
     /**
      * This will ask for a destination folder and move the currently selected
@@ -300,7 +300,7 @@ public slots:
     void slotSelectCollectionFolder(const Akonadi::Collection &col);
 
     void restoreCollectionFolderViewConfig();
-signals:
+Q_SIGNALS:
     void messagesTransfered(bool);
     void captionChangeRequest(const QString &caption);
     void recreateGui();
@@ -328,7 +328,7 @@ protected:
     */
     KSharedConfig::Ptr config();
 
-protected slots:
+protected Q_SLOTS:
     void updateFileMenu();
     void slotCheckOneAccount(QAction *);
     void getAccountMenu();
@@ -525,7 +525,7 @@ private:
 
     void showMessagePopup(const Akonadi::Item &msg , const KUrl &aUrl, const KUrl &imageUrl, const QPoint &aPoint, bool contactAlreadyExists, bool uniqueContactFound);
 
-private slots:
+private Q_SLOTS:
     void slotMoveMessageToTrash();
     /**
      * Called when a "move to trash" operation is completed

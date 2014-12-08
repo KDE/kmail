@@ -34,7 +34,7 @@ public:
 
     Akonadi::Item selectedContact() const;
 
-private slots:
+private Q_SLOTS:
     void slotSelectionChanged();
 
 private:

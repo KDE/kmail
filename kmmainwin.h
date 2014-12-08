@@ -48,7 +48,7 @@ public:
     /// TODO: KDE5: Move to kdelibs, see http://reviewboard.kde.org/r/504
     bool restoreDockedState(int number);
 
-public slots:
+public Q_SLOTS:
     void displayStatusMsg(const QString &);
     void slotEditToolbars();
     void slotUpdateGui();
@@ -61,11 +61,11 @@ protected:
 
     bool queryClose() Q_DECL_OVERRIDE;
 
-protected slots:
+protected Q_SLOTS:
     void slotQuit();
     void slotShowTipOnStart();
 
-private slots:
+private Q_SLOTS:
     void slotToggleMenubar(bool dontShowWarning = false);
     void slotConfigureShortcuts();
 

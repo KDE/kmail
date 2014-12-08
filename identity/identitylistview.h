@@ -86,13 +86,13 @@ public:
     KIdentityManagement::IdentityManager *identityManager() const;
     void setIdentityManager(KIdentityManagement::IdentityManager *im);
 
-protected slots:
+protected Q_SLOTS:
     void commitData(QWidget *editor) Q_DECL_OVERRIDE;
 
-public slots:
+public Q_SLOTS:
     void slotCustomContextMenuRequested(const QPoint &);
 
-signals:
+Q_SIGNALS:
     void contextMenu(KMail::IdentityListViewItem *, const QPoint &);
     void rename(KMail::IdentityListViewItem *, const QString &);
 

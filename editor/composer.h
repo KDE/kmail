@@ -127,14 +127,14 @@ public: // callback
     /** Disabled signing and encryption completely for this composer window. */
     virtual void setSigningAndEncryptionDisabled(bool v) = 0;
 
-public slots: // kmkernel, callback
+public Q_SLOTS: // kmkernel, callback
     virtual void slotSendNow() = 0;
     /**
      * Switch wordWrap on/off
      */
     virtual void slotWordWrapToggled(bool) = 0;
     virtual void setModified(bool modified) = 0;
-public slots: // kmkernel
+public Q_SLOTS: // kmkernel
     virtual void autoSaveMessage(bool force = false) = 0;
 
 public: // kmkernel, attachmentlistview

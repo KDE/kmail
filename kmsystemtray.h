@@ -59,7 +59,7 @@ public:
 
     void updateSystemTray();
 
-private slots:
+private Q_SLOTS:
     void slotActivated();
     void slotContextMenuAboutToShow();
     void slotSelectCollection(QAction *act);

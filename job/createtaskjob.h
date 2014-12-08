@@ -32,7 +32,7 @@ public:
     ~CreateTaskJob();
 
     void start();
-private slots:
+private Q_SLOTS:
     void itemFetchJobDone(KJob *job);
 
     void slotModifyItemDone(KJob *job);

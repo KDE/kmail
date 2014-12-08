@@ -140,7 +140,7 @@ public:
     * otherwise they can't be accessed.
     */
     // TODO clean-up dbus stuff; make the adaptor a friend; etc.
-public slots:
+public Q_SLOTS:
 
     Q_SCRIPTABLE void send(int how);
 
@@ -161,7 +161,7 @@ public slots:
     * End of D-Bus callable stuff
     */
 
-signals:
+Q_SIGNALS:
     void identityChanged(const KIdentityManagement::Identity &identity);
 
 public: // kmkernel, kmcommands, callback
@@ -283,7 +283,7 @@ private:
       */
     static QString prettyMimeType(const QString &type);
 
-public slots: // kmkernel, callback
+public Q_SLOTS: // kmkernel, callback
     void slotSendNow();
     /**
      * Switch wordWrap on/off
@@ -301,7 +301,7 @@ public slots: // kmkernel, callback
     void setModified(bool modified);
     void slotFetchJob(KJob *);
 
-private slots:
+private Q_SLOTS:
     /**
       * Disables the HTML mode, by hiding the HTML toolbar and unchecking the
       * "Formatting" action. Also, removes all rich-text formatting.

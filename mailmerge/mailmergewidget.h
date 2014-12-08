@@ -39,7 +39,7 @@ public:
 Q_SIGNALS:
     void sourceModeChanged(MailMergeWidget::SourceType);
 
-private slots:
+private Q_SLOTS:
     void slotSourceChanged(int index);
 
 private:
