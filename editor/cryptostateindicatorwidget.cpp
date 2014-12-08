@@ -34,6 +34,7 @@ CryptoStateIndicatorWidget::CryptoStateIndicatorWidget(QWidget *parent)
     setLayout(hbox);
     hbox->setMargin(0);
     mSignatureStateIndicator = new QLabel( this );
+    mSignatureStateIndicator->setObjectName(QLatin1String("signatureindicator"));
     mSignatureStateIndicator->setAlignment( Qt::AlignHCenter );
     hbox->addWidget( mSignatureStateIndicator );
 
@@ -56,6 +57,7 @@ CryptoStateIndicatorWidget::CryptoStateIndicatorWidget(QWidget *parent)
     mSignatureStateIndicator->setAutoFillBackground( true );
 
     mEncryptionStateIndicator = new QLabel( this );
+    mEncryptionStateIndicator->setObjectName(QLatin1String("encryptionindicator"));
     mEncryptionStateIndicator->setAlignment( Qt::AlignHCenter );
     hbox->addWidget( mEncryptionStateIndicator );
     p.setColor( QPalette::Window, encryptedColor);
