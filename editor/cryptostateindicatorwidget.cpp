@@ -17,7 +17,6 @@
 
 #include "cryptostateindicatorwidget.h"
 #include "messagecore/settings/globalsettings.h"
-#include "settings/globalsettings.h"
 
 #include <KColorScheme>
 #include <KLocalizedString>
@@ -27,7 +26,9 @@
 
 CryptoStateIndicatorWidget::CryptoStateIndicatorWidget(QWidget *parent)
     : QWidget(parent),
-      mShowAlwaysIndicator(true)
+      mShowAlwaysIndicator(true),
+      mIsSign(false),
+      mIsEncrypted(false)
 {
     QHBoxLayout *hbox = new QHBoxLayout;
     setLayout(hbox);
@@ -60,7 +61,6 @@ CryptoStateIndicatorWidget::CryptoStateIndicatorWidget(QWidget *parent)
     p.setColor( QPalette::Window, encryptedColor);
     mEncryptionStateIndicator->setPalette( p );
     mEncryptionStateIndicator->setAutoFillBackground( true );
-    mShowAlwaysIndicator = GlobalSettings::self()->showCryptoLabelIndicator();
 }
 
 
@@ -68,19 +68,34 @@ CryptoStateIndicatorWidget::~CryptoStateIndicatorWidget()
 {
 }
 
+void CryptoStateIndicatorWidget::setShowAlwaysIndicator(bool status)
+{
+    if (mShowAlwaysIndicator != status) {
+        mShowAlwaysIndicator = status;
+        updateShowAlwaysIndicator();
+    }
+}
+
+void CryptoStateIndicatorWidget::updateShowAlwaysIndicator()
+{
+    if ( mShowAlwaysIndicator ) {
+        mSignatureStateIndicator->setVisible( mIsSign );
+        mEncryptionStateIndicator->setVisible( mIsEncrypted );
+    } else {
+        mSignatureStateIndicator->setVisible( false );
+        mEncryptionStateIndicator->setVisible( false );
+    }
+}
+
 void CryptoStateIndicatorWidget::updateSignatureAndEncrypionStateIndicators(bool isSign, bool isEncrypted)
 {
+    mIsEncrypted = isEncrypted;
+    mIsSign = isSign;
     mSignatureStateIndicator->setText( isSign ?
                                            i18n("Message will be signed") :
                                            i18n("Message will not be signed") );
     mEncryptionStateIndicator->setText( isEncrypted ?
                                             i18n("Message will be encrypted") :
                                             i18n("Message will not be encrypted") );
-    if ( mShowAlwaysIndicator ) {
-        mSignatureStateIndicator->setVisible( isSign );
-        mEncryptionStateIndicator->setVisible( isEncrypted );
-    } else {
-        mSignatureStateIndicator->setVisible( false );
-        mEncryptionStateIndicator->setVisible( false );
-    }
+    updateShowAlwaysIndicator();
 }

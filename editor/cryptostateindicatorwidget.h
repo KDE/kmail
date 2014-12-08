@@ -30,10 +30,15 @@ public:
 
     void updateSignatureAndEncrypionStateIndicators(bool isSign, bool isEncrypted);
 
+    void setShowAlwaysIndicator(bool status);
+
 private:
+    void updateShowAlwaysIndicator();
     QLabel *mSignatureStateIndicator;
     QLabel *mEncryptionStateIndicator;
     bool mShowAlwaysIndicator;
+    bool mIsSign;
+    bool mIsEncrypted;
 };
 
 #endif // CRYPTOSTATEINDICATORWIDGET_H
