@@ -217,11 +217,6 @@
         <default>true</default>
       </entry>
 
-      <entry name="ChiasmusKey" type="String" key="chiasmus-key">
-      </entry>
-      <entry name="ChiasmusOptions" type="String" key="chiasmus-options">
-      </entry>
-
       <entry name="ConfirmBeforeSend" type="Bool" key="confirm-before-send">
         <label>Confirm &amp;before send</label>
         <default>false</default>
