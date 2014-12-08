@@ -353,6 +353,7 @@ KMComposeWin::KMComposeWin(const KMime::Message::Ptr &aMsg, bool lastSignState, 
 
     QWidget *editorAndCryptoStateIndicators = new QWidget(mSplitter);
     mCryptoStateIndicatorWidget = new CryptoStateIndicatorWidget;
+    mCryptoStateIndicatorWidget->setShowAlwaysIndicator(GlobalSettings::self()->showCryptoLabelIndicator());
 
     QVBoxLayout *vbox = new QVBoxLayout(editorAndCryptoStateIndicators);
     vbox->setMargin(0);
@@ -3424,7 +3425,7 @@ void KMComposeWin::slotCreateAddressBookContact()
 
 void KMComposeWin::slotAttachMissingFile()
 {
-    mComposerBase->attachmentController()->showAddAttachmentDialog();
+    mComposerBase->attachmentController()->showAddAttachmentFileDialog();
 }
 
 void KMComposeWin::slotVerifyMissingAttachmentTimeout()
