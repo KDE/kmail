@@ -50,14 +50,14 @@ void FolderArchiveAccountInfoTest::shouldBeValid()
     QVERIFY(!info.isValid());
     info.setArchiveTopLevel(Akonadi::Collection(42).id());
     QVERIFY(!info.isValid());
-    info.setInstanceName(QLatin1String("FOO"));
+    info.setInstanceName(QStringLiteral("FOO"));
     QVERIFY(info.isValid());
 }
 
 void FolderArchiveAccountInfoTest::shouldRestoreFromSettings()
 {
     FolderArchiveAccountInfo info;
-    info.setInstanceName(QLatin1String("FOO1"));
+    info.setInstanceName(QStringLiteral("FOO1"));
     info.setArchiveTopLevel(Akonadi::Collection(42).id());
     info.setFolderArchiveType(FolderArchiveAccountInfo::FolderByMonths);
     info.setEnabled(true);

@@ -24,12 +24,12 @@ using namespace FolderArchive;
 
 QString FolderArchiveUtil::groupConfigPattern()
 {
-    return QLatin1String("FolderArchiveAccount ");
+    return QStringLiteral("FolderArchiveAccount ");
 }
 
 QString FolderArchiveUtil::configFileName()
 {
-    return QLatin1String("foldermailarchiverc");
+    return QStringLiteral("foldermailarchiverc");
 }
 
 bool FolderArchiveUtil::resourceSupportArchiving(const QString &resource)

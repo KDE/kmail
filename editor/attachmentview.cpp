@@ -60,7 +60,7 @@ public:
         widget->setLayout(lay);
         toolButton = new QToolButton;
         connect(toolButton, SIGNAL(toggled(bool)), q, SLOT(slotShowHideAttchementList(bool)));
-        toolButton->setIcon(QIcon::fromTheme(QLatin1String("mail-attachment")));
+        toolButton->setIcon(QIcon::fromTheme(QStringLiteral("mail-attachment")));
         toolButton->setAutoRaise(true);
         toolButton->setCheckable(true);
         lay->addWidget(toolButton);

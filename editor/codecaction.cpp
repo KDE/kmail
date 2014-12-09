@@ -63,7 +63,7 @@ CodecAction::CodecAction(Mode mode, QObject *parent)
     }
 
     // Eye candy.
-    setIcon(QIcon::fromTheme(QLatin1String("accessories-character-map")));
+    setIcon(QIcon::fromTheme(QStringLiteral("accessories-character-map")));
     setText(i18nc("Menu item", "Encoding"));
 }
 

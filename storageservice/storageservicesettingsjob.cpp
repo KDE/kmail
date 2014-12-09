@@ -34,54 +34,54 @@ StorageServiceSettingsJob::~StorageServiceSettingsJob()
 QString StorageServiceSettingsJob::youSendItApiKey() const
 {
     //TODO customize it
-    return QLatin1String("fnab8fkgwrka7v6zs2ycd34a");
+    return QStringLiteral("fnab8fkgwrka7v6zs2ycd34a");
 }
 
 QString StorageServiceSettingsJob::dropboxOauthConsumerKey() const
 {
     //TODO customize it
-    return QLatin1String("e40dvomckrm48ci");
+    return QStringLiteral("e40dvomckrm48ci");
 }
 
 QString StorageServiceSettingsJob::dropboxOauthSignature() const
 {
     //TODO customize it
-    return QLatin1String("0icikya464lny9g&");
+    return QStringLiteral("0icikya464lny9g&");
 }
 
 QString StorageServiceSettingsJob::boxClientId() const
 {
-    return QLatin1String("o4sn4e0dvz50pd3ps6ao3qxehvqv8dyo");
+    return QStringLiteral("o4sn4e0dvz50pd3ps6ao3qxehvqv8dyo");
 }
 
 QString StorageServiceSettingsJob::boxClientSecret() const
 {
-    return QLatin1String("wLdaOgrblYzi1Y6WN437wStvqighmSJt");
+    return QStringLiteral("wLdaOgrblYzi1Y6WN437wStvqighmSJt");
 }
 
 QString StorageServiceSettingsJob::hubicClientId() const
 {
-    return QLatin1String("api_hubic_zBKQ6UDUj2vDT7ciDsgjmXA78OVDnzJi");
+    return QStringLiteral("api_hubic_zBKQ6UDUj2vDT7ciDsgjmXA78OVDnzJi");
 }
 
 QString StorageServiceSettingsJob::hubicClientSecret() const
 {
-    return QLatin1String("pkChgk2sRrrCEoVHmYYCglEI9E2Y2833Te5Vn8n2J6qPdxLU6K8NPUvzo1mEhyzf");
+    return QStringLiteral("pkChgk2sRrrCEoVHmYYCglEI9E2Y2833Te5Vn8n2J6qPdxLU6K8NPUvzo1mEhyzf");
 }
 
 QString StorageServiceSettingsJob::dropboxRootPath() const
 {
-    return QLatin1String("dropbox");
+    return QStringLiteral("dropbox");
 }
 
 QString StorageServiceSettingsJob::oauth2RedirectUrl() const
 {
-    return QLatin1String("https://bugs.kde.org/");
+    return QStringLiteral("https://bugs.kde.org/");
 }
 
 QString StorageServiceSettingsJob::hubicScope() const
 {
-    return QLatin1String("usage.r,account.r,credentials.r,links.wd");
+    return QStringLiteral("usage.r,account.r,credentials.r,links.wd");
 }
 
 QString StorageServiceSettingsJob::gdriveClientId() const
@@ -98,5 +98,5 @@ QString StorageServiceSettingsJob::gdriveClientSecret() const
 
 QString StorageServiceSettingsJob::defaultUploadFolder() const
 {
-    return QString(); //QLatin1String("KMail Attachment");
+    return QString(); //QStringLiteral("KMail Attachment");
 }

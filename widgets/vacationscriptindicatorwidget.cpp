@@ -28,7 +28,7 @@ ServerLabel::ServerLabel(const QString &serverName, QWidget *parent)
       mServerName(serverName)
 {
     setToolTip(serverName);
-    setPixmap(QIcon::fromTheme(QLatin1String("network-server")).pixmap(16, 16));
+    setPixmap(QIcon::fromTheme(QStringLiteral("network-server")).pixmap(16, 16));
     setStyleSheet(QString::fromLatin1("background-color: %1;").arg(QColor(Qt::yellow).name()));
     setContentsMargins(2, 0, 4, 0);
 }
