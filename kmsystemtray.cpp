@@ -42,6 +42,7 @@
 #include <AkonadiCore/EntityTreeModel>
 #include <AkonadiCore/CollectionModel>
 #include <QFontDatabase>
+#include <AkonadiCore/EntityMimeTypeFilterModel>
 
 using namespace MailCommon;
 
@@ -380,7 +381,7 @@ void KMSystemTray::hideKMail()
 void KMSystemTray::initListOfCollection()
 {
     mCount = 0;
-    const QAbstractItemModel *model = kmkernel->entityTreeModel();
+    const QAbstractItemModel *model = kmkernel->collectionModel();
     if (model->rowCount() == 0) {
         QTimer::singleShot(1000, this, SLOT(initListOfCollection()));
         return;
