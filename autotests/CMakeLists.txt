@@ -42,3 +42,10 @@ add_executable( createfollowupreminderonexistingmessagejobtest ${kmail_createfol
 ecm_mark_as_test(kmail_createfollowupreminderonexistingmessagejobtest)
 target_link_libraries( createfollowupreminderonexistingmessagejobtest Qt5::Test Qt5::Widgets KF5::AkonadiCore KF5::CalendarCore KF5::Mime followupreminder)
 
+
+set( kmail_cryptostateindicatorwidgettest_source cryptostateindicatorwidgettest.cpp ../editor/cryptostateindicatorwidget.cpp)
+add_executable( cryptostateindicatorwidgettest ${kmail_cryptostateindicatorwidgettest_source})
+add_test(cryptostateindicatorwidgettest cryptostateindicatorwidgettest)
+ecm_mark_as_test(cryptostateindicatorwidgettest)
+target_link_libraries( cryptostateindicatorwidgettest Qt5::Test  messagecore)
+
