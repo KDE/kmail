@@ -17,7 +17,7 @@
 
 #include "cryptostateindicatorwidgettest.h"
 #include "editor/cryptostateindicatorwidget.h"
-#include <qtest_kde.h>
+#include <qtest.h>
 #include <QLabel>
 CryptoStateIndicatorWidgetTest::CryptoStateIndicatorWidgetTest(QObject *parent) : QObject(parent)
 {
@@ -83,4 +83,4 @@ void CryptoStateIndicatorWidgetTest::shouldVisibleWhenChangeStatus()
     QVERIFY(!encryption->isVisible());
 }
 
-QTEST_KDEMAIN(CryptoStateIndicatorWidgetTest, GUI)
+QTEST_MAIN(CryptoStateIndicatorWidgetTest)
