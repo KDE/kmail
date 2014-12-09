@@ -97,7 +97,6 @@ KMReaderMainWin::KMReaderMainWin(KMime::Content *aMsgPart, MessageViewer::Viewer
     initKMReaderMainWin();
 }
 
-
 void KMReaderMainWin::initKMReaderMainWin()
 {
     setCentralWidget(mReaderWin);
@@ -112,7 +111,6 @@ void KMReaderMainWin::initKMReaderMainWin()
     connect(kmkernel, SIGNAL(configChanged()), this, SLOT(slotConfigChanged()));
     connect(mReaderWin, SIGNAL(showStatusBarMessage(QString)), statusBar(), SLOT(showMessage(QString)));
 }
-
 
 KMReaderMainWin::~KMReaderMainWin()
 {
@@ -193,7 +191,6 @@ Akonadi::Collection KMReaderMainWin::parentCollection() const
     }
 }
 
-
 void KMReaderMainWin::slotTrashMsg()
 {
     if (!mMsg.isValid()) {
@@ -203,7 +200,6 @@ void KMReaderMainWin::slotTrashMsg()
     command->start();
     close();
 }
-
 
 void KMReaderMainWin::slotForwardInlineMsg()
 {
@@ -227,7 +223,6 @@ void KMReaderMainWin::slotForwardInlineMsg()
     command->start();
 }
 
-
 void KMReaderMainWin::slotForwardAttachedMsg()
 {
     if (!mReaderWin->message().hasPayload<KMime::Message::Ptr>()) {
@@ -250,7 +245,6 @@ void KMReaderMainWin::slotForwardAttachedMsg()
     connect(command, &KMTrashMsgCommand::completed, this, &KMReaderMainWin::slotReplyOrForwardFinished);
     command->start();
 }
-
 
 void KMReaderMainWin::slotRedirectMsg()
 {
@@ -303,7 +297,6 @@ void KMReaderMainWin::slotCustomForwardMsg(const QString &tmpl)
 
     command->start();
 }
-
 
 void KMReaderMainWin::slotConfigChanged()
 {

@@ -477,7 +477,6 @@ KMComposeWin::KMComposeWin(const KMime::Message::Ptr &aMsg, bool lastSignState, 
     connect(mStorageService, &KMStorageService::insertShareLink, this, &KMComposeWin::slotShareLinkDone);
 }
 
-
 KMComposeWin::~KMComposeWin()
 {
     writeConfig();
@@ -1065,7 +1064,6 @@ void KMComposeWin::setQuotePrefix(uint uoid)
             mMsg->from()->asUnicodeString()));
 }
 
-
 void KMComposeWin::getTransportMenu()
 {
     mActNowMenu->clear();
@@ -1479,18 +1477,15 @@ void KMComposeWin::setupEditor(void)
     slotCursorPositionChanged();
 }
 
-
 QString KMComposeWin::subject() const
 {
     return MessageComposer::Util::cleanedUpHeaderString(mEdtSubject->toPlainText());
 }
 
-
 QString KMComposeWin::from() const
 {
     return MessageComposer::Util::cleanedUpHeaderString(mEdtFrom->text());
 }
-
 
 QString KMComposeWin::replyTo() const
 {
@@ -1809,7 +1804,6 @@ bool KMComposeWin::isComposerModified() const
             mEdtSubject->document()->isModified());
 }
 
-
 bool KMComposeWin::isModified() const
 {
     return mWasModified || isComposerModified();
@@ -1881,7 +1875,6 @@ bool KMComposeWin::queryClose()
     }
     return true;
 }
-
 
 MessageComposer::ComposerViewBase::MissingAttachment KMComposeWin::userForgotAttachment()
 {
@@ -1973,7 +1966,6 @@ void KMComposeWin::addAttach(KMime::Content *msgPart)
     setModified(true);
 }
 
-
 QString KMComposeWin::prettyMimeType(const QString &type)
 {
     const QString t = type.toLower();
@@ -2032,12 +2024,10 @@ void KMComposeWin::setCharset(const QByteArray &charset)
     }
 }
 
-
 void KMComposeWin::slotAddrBook()
 {
     KRun::runCommand(QLatin1String("kaddressbook"), window());
 }
-
 
 void KMComposeWin::slotInsertFile()
 {
@@ -2117,7 +2107,6 @@ void KMComposeWin::slotSelectCryptoModule(bool init)
     mComposerBase->attachmentModel()->setEncryptEnabled(canSignEncryptAttachments());
     mComposerBase->attachmentModel()->setSignEnabled(canSignEncryptAttachments());
 }
-
 
 void KMComposeWin::slotUpdateFont()
 {
@@ -2323,7 +2312,6 @@ QString KMComposeWin::addQuotesToText(const QString &inputText) const
     return MessageCore::StringUtil::smartQuote(answer, MessageComposer::MessageComposerSettings::self()->lineWrapWidth());
 }
 
-
 void KMComposeWin::slotUndo()
 {
     QWidget *fw = focusWidget();
@@ -2356,7 +2344,6 @@ void KMComposeWin::slotRedo()
     }
 }
 
-
 void KMComposeWin::slotCut()
 {
     QWidget *fw = focusWidget();
@@ -2372,7 +2359,6 @@ void KMComposeWin::slotCut()
         static_cast<KLineEdit *>(fw)->cut();
     }
 }
-
 
 void KMComposeWin::slotCopy()
 {
@@ -2390,7 +2376,6 @@ void KMComposeWin::slotCopy()
     }
 }
 
-
 void KMComposeWin::slotPaste()
 {
     QWidget *const fw = focusWidget();
@@ -2405,7 +2390,6 @@ void KMComposeWin::slotPaste()
         static_cast<KLineEdit *>(fw)->paste();
     }
 }
-
 
 void KMComposeWin::slotMarkAll()
 {
@@ -2423,12 +2407,10 @@ void KMComposeWin::slotMarkAll()
     }
 }
 
-
 void KMComposeWin::slotClose()
 {
     close();
 }
-
 
 void KMComposeWin::slotNewComposer()
 {
@@ -2440,7 +2422,6 @@ void KMComposeWin::slotNewComposer()
     win->setCollectionForNewMessage(mCollectionForNewMessage);
     win->show();
 }
-
 
 void KMComposeWin::slotUpdWinTitle()
 {
@@ -2570,12 +2551,10 @@ int KMComposeWin::validateLineWrapWidth()
     return lineWrap;
 }
 
-
 void KMComposeWin::disableWordWrap()
 {
     mComposerBase->editor()->disableWordWrap();
 }
-
 
 void KMComposeWin::forceDisableHtml()
 {
@@ -2834,7 +2813,6 @@ void KMComposeWin::doDelayedSend(MessageComposer::MessageSender::SendMethod meth
     mComposerBase->send(method, saveIn, false);
 }
 
-
 void KMComposeWin::slotSendLater()
 {
     if (!TransportManager::self()->showTransportCreationDialog(this, TransportManager::IfNoTransportExists)) {
@@ -2881,14 +2859,12 @@ void KMComposeWin::slotSendLater()
     }
 }
 
-
 void KMComposeWin::slotSaveDraft()
 {
     if (mComposerBase->editor()->checkExternalEditorFinished()) {
         doSend(MessageComposer::MessageSender::SendLater, MessageComposer::MessageSender::SaveInDrafts);
     }
 }
-
 
 void KMComposeWin::slotSaveTemplate()
 {
@@ -2916,7 +2892,6 @@ void KMComposeWin::slotSendLaterVia(QAction *item)
         slotSendLater();
     }
 }
-
 
 void KMComposeWin::sendNow(bool shortcutUsed)
 {
@@ -2983,7 +2958,6 @@ void KMComposeWin::slotCheckSendNow()
     }
 }
 
-
 bool KMComposeWin::checkRecipientNumber() const
 {
     const int thresHold = GlobalSettings::self()->recipientThreshold();
@@ -2999,12 +2973,10 @@ bool KMComposeWin::checkRecipientNumber() const
     return true;
 }
 
-
 void KMComposeWin::slotHelp()
 {
     KHelpClient::invokeHelp();
 }
-
 
 void KMComposeWin::enableHtml()
 {
@@ -3063,7 +3035,6 @@ void KMComposeWin::disableHtml(MessageComposer::ComposerViewBase::Confirmation c
         markupAction->setChecked(false);
     }
 }
-
 
 void KMComposeWin::slotToggleMarkup()
 {
@@ -3241,12 +3212,10 @@ void KMComposeWin::slotIdentityChanged(uint uoid, bool initalChange)
     setModified(wasModified);
 }
 
-
 void KMComposeWin::slotSpellcheckConfig()
 {
     static_cast<KMComposerEditor *>(mComposerBase->editor())->showSpellConfigDialog(QLatin1String("kmail2rc"));
 }
-
 
 void KMComposeWin::slotEditToolbars()
 {

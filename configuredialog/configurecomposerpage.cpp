@@ -1330,9 +1330,9 @@ void ComposerPage::AttachmentsTab::doLoadFromGlobalSettings()
 {
     loadWidget(mOutlookCompatibleCheck, MessageComposer::MessageComposerSettings::self()->outlookCompatibleAttachmentsItem());
     loadWidget(mMissingAttachmentDetectionCheck, GlobalSettings::self()->showForgottenAttachmentWarningItem());
-    loadWidget(mAttachWordsListEditor, GlobalSettings::self()->attachmentKeywordsItem() );
+    loadWidget(mAttachWordsListEditor, GlobalSettings::self()->attachmentKeywordsItem());
     const int maximumAttachmentSize(MessageCore::GlobalSettings::self()->maximumAttachmentSize());
-    mMaximumAttachmentSize->setValue(maximumAttachmentSize == -1 ? -1 : MessageCore::GlobalSettings::self()->maximumAttachmentSize()/1024);
+    mMaximumAttachmentSize->setValue(maximumAttachmentSize == -1 ? -1 : MessageCore::GlobalSettings::self()->maximumAttachmentSize() / 1024);
     mStorageServiceWidget->doLoadFromGlobalSettings();
 }
 
@@ -1344,7 +1344,7 @@ void ComposerPage::AttachmentsTab::save()
 
     KMime::setUseOutlookAttachmentEncoding(mOutlookCompatibleCheck->isChecked());
     const int maximumAttachmentSize(mMaximumAttachmentSize->value());
-    MessageCore::GlobalSettings::self()->setMaximumAttachmentSize(maximumAttachmentSize == -1 ? -1 : maximumAttachmentSize*1024);
+    MessageCore::GlobalSettings::self()->setMaximumAttachmentSize(maximumAttachmentSize == -1 ? -1 : maximumAttachmentSize * 1024);
     mStorageServiceWidget->save();
 }
 

@@ -79,12 +79,12 @@ void CryptoStateIndicatorWidget::setShowAlwaysIndicator(bool status)
 
 void CryptoStateIndicatorWidget::updateShowAlwaysIndicator()
 {
-    if ( mShowAlwaysIndicator ) {
-        mSignatureStateIndicator->setVisible( mIsSign );
-        mEncryptionStateIndicator->setVisible( mIsEncrypted );
+    if (mShowAlwaysIndicator) {
+        mSignatureStateIndicator->setVisible(mIsSign);
+        mEncryptionStateIndicator->setVisible(mIsEncrypted);
     } else {
-        mSignatureStateIndicator->setVisible( false );
-        mEncryptionStateIndicator->setVisible( false );
+        mSignatureStateIndicator->setVisible(false);
+        mEncryptionStateIndicator->setVisible(false);
     }
 }
 

@@ -96,7 +96,6 @@ using MessageComposer::MessageFactory;
 using namespace KMail;
 using namespace MailCommon;
 
-
 KMReaderWin::KMReaderWin(QWidget *aParent,
                          QWidget *mainWindow,
                          KActionCollection *actionCollection,
@@ -245,7 +244,6 @@ bool KMReaderWin::isFixedFont() const
     return mViewer->isFixedFont();
 }
 
-
 KMReaderWin::~KMReaderWin()
 {
 }
@@ -269,7 +267,6 @@ void KMReaderWin::setOverrideEncoding(const QString &encoding)
 {
     mViewer->setOverrideEncoding(encoding);
 }
-
 
 void KMReaderWin::clearCache()
 {
@@ -298,7 +295,6 @@ static const char *const kmailNewFeatures[] = {
 };
 static const int numKMailNewFeatures =
     sizeof kmailNewFeatures / sizeof * kmailNewFeatures;
-
 
 //static
 QString KMReaderWin::newFeaturesMD5()
@@ -413,7 +409,6 @@ void KMReaderWin::displayAboutPage()
     displaySplashPage(info.toString());
 }
 
-
 void KMReaderWin::slotFind()
 {
     mViewer->slotFind();
@@ -431,12 +426,10 @@ void KMReaderWin::setMsgPart(KMime::Content *aMsgPart)
     mViewer->setMessagePart(aMsgPart);
 }
 
-
 QString KMReaderWin::copyText() const
 {
     return mViewer->selectedText();
 }
-
 
 MessageViewer::Viewer::DisplayFormatMessage KMReaderWin::displayFormatMessageOverwrite() const
 {
@@ -453,24 +446,20 @@ void KMReaderWin::setHtmlLoadExtOverride(bool override)
     mViewer->setHtmlLoadExtOverride(override);
 }
 
-
 bool KMReaderWin::htmlMail() const
 {
     return mViewer->htmlMail();
 }
-
 
 bool KMReaderWin::htmlLoadExternal()
 {
     return mViewer->htmlLoadExternal();
 }
 
-
 Akonadi::Item KMReaderWin::message() const
 {
     return mViewer->messageItem();
 }
-
 
 void KMReaderWin::slotMailtoCompose()
 {
@@ -478,14 +467,12 @@ void KMReaderWin::slotMailtoCompose()
     command->start();
 }
 
-
 void KMReaderWin::slotMailtoForward()
 {
     KMCommand *command = new KMMailtoForwardCommand(mMainWindow, urlClicked(),
             message());
     command->start();
 }
-
 
 void KMReaderWin::slotMailtoAddAddrBook()
 {
@@ -517,7 +504,6 @@ void KMReaderWin::slotMailToAddToExistingContact()
     delete dlg;
 }
 
-
 void KMReaderWin::slotMailtoOpenAddrBook()
 {
     const KUrl url = urlClicked();
@@ -530,7 +516,6 @@ void KMReaderWin::slotMailtoOpenAddrBook()
     job->start();
 }
 
-
 void KMReaderWin::slotAddBookmarks()
 {
     const KUrl url = urlClicked();
@@ -540,7 +525,6 @@ void KMReaderWin::slotAddBookmarks()
     KMCommand *command = new KMAddBookmarksCommand(url, this);
     command->start();
 }
-
 
 void KMReaderWin::slotUrlSave()
 {
@@ -561,7 +545,6 @@ void KMReaderWin::slotSaveImageOnDisk()
     KMCommand *command = new KMUrlSaveCommand(url, mMainWindow);
     command->start();
 }
-
 
 void KMReaderWin::slotMailtoReply()
 {
@@ -883,7 +866,6 @@ QAction *KMReaderWin::openBlockableItems() const
 {
     return mViewer->openBlockableItems();
 }
-
 
 void KMReaderWin::slotShareImage()
 {
