@@ -3118,7 +3118,7 @@ void KMMainWidget::setupActions()
         action->setIconText(i18nc("@action:intoolbar New Empty Message", "New"));
         connect(action, &QAction::triggered, this, &KMMainWidget::slotCompose);
         // do not set a New shortcut if kmail is a component
-        if (!kmkernel->xmlGuiInstance().isValid()) {
+        if (!kmkernel->xmlGuiInstanceName().isEmpty()) {
             action->setShortcut(KStandardShortcut::openNew().first());
         }
     }

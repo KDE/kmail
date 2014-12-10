@@ -158,7 +158,7 @@ KMKernel::KMKernel(QObject *parent) :
     GlobalSettings::self();
 
     mJobScheduler = new JobScheduler(this);
-    mXmlGuiInstance = KComponentData();
+    mXmlGuiInstance = QLatin1String("kmail");
 
     mAutoCorrection = new PimCommon::AutoCorrection();
     KMime::setFallbackCharEncoding(MessageCore::GlobalSettings::self()->fallbackCharacterEncoding());

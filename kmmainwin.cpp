@@ -60,11 +60,9 @@ KMMainWin::KMMainWin(QWidget *)
     connect(mKMMainWidget, SIGNAL(recreateGui()), this, SLOT(slotUpdateGui()));
     setCentralWidget(mKMMainWidget);
     setupStatusBar();
-#if 0 //QT5
-    if (kmkernel->xmlGuiInstance().isValid()) {
-        setComponentData(kmkernel->xmlGuiInstance());
+    if (!kmkernel->xmlGuiInstanceName().isEmpty()) {
+        setComponentName(kmkernel->xmlGuiInstanceName(), i18n("kmail"));
     }
-#endif
     setStandardToolBarMenuEnabled(true);
 
     KStandardAction::configureToolbars(this, SLOT(slotEditToolbars()),

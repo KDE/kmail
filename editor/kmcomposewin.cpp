@@ -260,8 +260,8 @@ KMComposeWin::KMComposeWin(const KMime::Message::Ptr &aMsg, bool lastSignState, 
     connect(sigController, &MessageComposer::SignatureController::enableHtml, this, &KMComposeWin::enableHtml);
     mComposerBase->setSignatureController(sigController);
 
-    if (kmkernel->xmlGuiInstance().isValid()) {
-        //QT5 setComponentData( kmkernel->xmlGuiInstance() );
+    if (!kmkernel->xmlGuiInstanceName().isEmpty()) {
+        setComponentName( kmkernel->xmlGuiInstanceName(), i18n("KMail2") );
     }
     mMainWidget = new QWidget(this);
     // splitter between the headers area and the actual editor

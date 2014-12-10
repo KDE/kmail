@@ -393,11 +393,11 @@ public:
     //sets online status for akonadi accounts. true for online, false for offline
     void setAccountStatus(bool);
 
-    const KComponentData &xmlGuiInstance()
+    const QString xmlGuiInstanceName() const
     {
         return mXmlGuiInstance;
     }
-    void setXmlGuiInstance(const KComponentData &instance)
+    void setXmlGuiInstanceName(const QString &instance)
     {
         mXmlGuiInstance = instance;
     }
@@ -600,7 +600,7 @@ private:
 
     KSharedConfig::Ptr mConfig;
     QTextCodec *netCodec;
-    KComponentData mXmlGuiInstance;
+    QString mXmlGuiInstance;
     ConfigureDialog *mConfigureDialog;
 
     QTimer *mBackgroundTasksTimer;

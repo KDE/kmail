@@ -307,11 +307,9 @@ void KMReaderMainWin::slotConfigChanged()
 
 void KMReaderMainWin::setupAccel()
 {
-#if 0 //QT5
-    if (kmkernel->xmlGuiInstance().isValid()) {
-        setComponentData(kmkernel->xmlGuiInstance());
+    if (!kmkernel->xmlGuiInstanceName().isEmpty()) {
+        setComponentName(kmkernel->xmlGuiInstanceName(), i18n("name"));
     }
-#endif
     mMsgActions = new KMail::MessageActions(actionCollection(), this);
     mMsgActions->setMessageView(mReaderWin);
     connect(mMsgActions, &KMail::MessageActions::replyActionFinished, this, &KMReaderMainWin::slotReplyOrForwardFinished);

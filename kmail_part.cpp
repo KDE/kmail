@@ -71,7 +71,7 @@ KMailPart::KMailPart(QWidget *parentWidget, QObject *parent, const QVariantList 
     //local, do the init
     KMKernel *mKMailKernel = new KMKernel();
     mKMailKernel->init();
-    //QT5 mKMailKernel->setXmlGuiInstance( KMailFactory::componentData() );
+    mKMailKernel->setXmlGuiInstanceName( QLatin1String("kmail") );
 
     // and session management
     mKMailKernel->doSessionManagement();
