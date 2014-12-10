@@ -33,7 +33,8 @@ SearchDescriptionAttribute::SearchDescriptionAttribute()
 
 QByteArray SearchDescriptionAttribute::type() const
 {
-    return "kmailsearchdescription";
+    static const QByteArray sType( "kmailsearchdescription" );
+    return sType;
 }
 
 Akonadi::Attribute* SearchDescriptionAttribute::clone() const
