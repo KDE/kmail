@@ -79,7 +79,7 @@ void SecondaryWindow::closeEvent( QCloseEvent * e )
 
 void SecondaryWindow::setCaption( const QString &userCaption )
 {
-    QString caption = KGlobal::caption();
+    const QString caption = KGlobal::caption();
     QString captionString = userCaption.isEmpty() ? caption : userCaption;
     if ( !userCaption.isEmpty() ) {
         // Add the application name if:

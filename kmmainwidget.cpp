@@ -420,7 +420,7 @@ void KMMainWidget::slotUpdateActionsAfterMailChecking()
             GlobalSettings::self()->sendOnCheck() == GlobalSettings::EnumSendOnCheck::SendOnAllChecks;
     const bool sendOnManual =
             GlobalSettings::self()->sendOnCheck() == GlobalSettings::EnumSendOnCheck::SendOnManualChecks;
-    if ( !kmkernel->isOffline() && ( sendOnAll || (sendOnManual /*&& sendOnCheck*/ ) ) ) {
+    if ( !kmkernel->isOffline() && ( sendOnAll || sendOnManual ) ) {
         slotSendQueued();
     }
     // update folder menus in case some mail got filtered to trash/current folder
