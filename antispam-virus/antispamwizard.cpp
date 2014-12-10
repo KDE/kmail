@@ -880,8 +880,6 @@ ASWizPage::ASWizPage(QWidget *parent, const QString &name,
         banner = *bannerName;
     }
     mLayout = new QHBoxLayout(this);
-//TODO PORT QT5     mLayout->setSpacing( QDialog::spacingHint() );
-//TODO PORT QT5     mLayout->setMargin( QDialog::marginHint() );
 
     QVBoxLayout *sideLayout = new QVBoxLayout();
     mLayout->addItem(sideLayout);
@@ -1007,7 +1005,6 @@ ASWizSpamRulesPage::ASWizSpamRulesPage(QWidget *parent, const QString &name)
 
     QHBoxLayout *hLayout1 = new QHBoxLayout();
     layout->addItem(hLayout1);
-//TODO PORT QT5     hLayout1->addSpacing( QDialog::spacingHint() * 3 );
     hLayout1->addWidget(mFolderReqForSpamFolder);
 
     mMoveUnsureRules = new QCheckBox(i18n("Move &probable spam to:"), this);
@@ -1025,7 +1022,6 @@ ASWizSpamRulesPage::ASWizSpamRulesPage(QWidget *parent, const QString &name)
 
     QHBoxLayout *hLayout2 = new QHBoxLayout();
     layout->addItem(hLayout2);
-//TODO PORT QT5     hLayout2->addSpacing( QDialog::spacingHint() * 3 );
     hLayout2->addWidget(mFolderReqForUnsureFolder);
 
     layout->addStretch();

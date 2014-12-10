@@ -80,7 +80,6 @@ XFaceConfigurator::XFaceConfigurator(QWidget *parent)
 
     vlay = new QVBoxLayout(this);
     vlay->setObjectName(QLatin1String("main layout"));
-//TODO PORT QT5     vlay->setSpacing( QDialog::spacingHint() );
     vlay->setMargin(0);
     hlay = new QHBoxLayout();
     vlay->addLayout(hlay);
@@ -141,7 +140,6 @@ XFaceConfigurator::XFaceConfigurator(QWidget *parent)
     widgetStack->insertWidget(pageno, page);   // force sequential numbers (play safe)
     page_vlay = new QVBoxLayout(page);
     page_vlay->setMargin(0);
-//TODO PORT QT5     page_vlay->setSpacing( QDialog::spacingHint() );
     hlay = new QHBoxLayout(); // inherits spacing ??? FIXME really?
     page_vlay->addLayout(hlay);
     mFromFileBtn = new QPushButton(i18n("Select File..."), page);
@@ -175,7 +173,6 @@ XFaceConfigurator::XFaceConfigurator(QWidget *parent)
     widgetStack->insertWidget(pageno, page);
     page_vlay = new QVBoxLayout(page);
     page_vlay->setMargin(0);
-//TODO PORT QT5     page_vlay->setSpacing( QDialog::spacingHint() );
     mTextEdit = new PimCommon::PlainTextEditorWidget(page);
     page_vlay->addWidget(mTextEdit);
     mTextEdit->editor()->setWhatsThis(i18n("Use this field to enter an arbitrary X-Face string."));

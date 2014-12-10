@@ -271,7 +271,6 @@ ComposerPageGeneralTab::ComposerPageGeneralTab(QWidget *parent)
     ++row;
 
     // Spacing
-//TODO PORT QT5     groupGridLayout->setRowMinimumHeight( row, QDialog::spacingHint() );
     ++row;
 
     // "Reply/Forward using HTML if present" checkbox
@@ -303,7 +302,6 @@ ComposerPageGeneralTab::ComposerPageGeneralTab(QWidget *parent)
     ++row;
 
     // Spacing
-//TODO PORT QT5     groupGridLayout->setRowMinimumHeight( row, QDialog::spacingHint() );
     ++row;
 
     // "Autosave interval" spinbox
@@ -375,7 +373,6 @@ ComposerPageGeneralTab::ComposerPageGeneralTab(QWidget *parent)
     ++row;
 
     // Spacing
-//TODO PORT QT5     groupGridLayout->setRowMinimumHeight( row, QDialog::spacingHint() );
     ++row;
 
 #ifdef KDEPIM_ENTERPRISE_BUILD
@@ -438,7 +435,6 @@ ComposerPageGeneralTab::ComposerPageGeneralTab(QWidget *parent)
     ++row;
 
     // Spacing
-//TODO PORT QT5     groupGridLayout->setRowMinimumHeight( row, QDialog::spacingHint() );
     ++row;
 
     // "Use recent addresses for autocompletion" checkbox
@@ -495,7 +491,6 @@ ComposerPageGeneralTab::ComposerPageGeneralTab(QWidget *parent)
     ++row;
 
     // Spacing
-//TODO PORT QT5     groupGridLayout->setRowMinimumHeight( row, QDialog::spacingHint() );
     ++row;
 
     // "Configure Completion Order" button
@@ -718,7 +713,6 @@ ComposerPageTemplatesTab::ComposerPageTemplatesTab(QWidget *parent)
 {
     QVBoxLayout *vlay = new QVBoxLayout(this);
     vlay->setMargin(0);
-//TODO PORT QT5     vlay->setSpacing( QDialog::spacingHint() );
 
     mWidget = new TemplateParser::TemplatesConfiguration(this);
     vlay->addWidget(mWidget);
@@ -752,7 +746,6 @@ ComposerPageCustomTemplatesTab::ComposerPageCustomTemplatesTab(QWidget *parent)
 {
     QVBoxLayout *vlay = new QVBoxLayout(this);
     vlay->setMargin(0);
-//TODO PORT QT5     vlay->setSpacing( QDialog::spacingHint() );
 
     mWidget = new TemplateParser::CustomTemplates(kmkernel->getKMMainWidget() ? kmkernel->getKMMainWidget()->actionCollections() : QList<KActionCollection *>(), this);
     vlay->addWidget(mWidget);
@@ -783,12 +776,9 @@ ComposerPageSubjectTab::ComposerPageSubjectTab(QWidget *parent)
     : ConfigModuleTab(parent)
 {
     QVBoxLayout *vlay = new QVBoxLayout(this);
-//TODO PORT QT5     vlay->setSpacing( QDialog::spacingHint() );
-//TODO PORT QT5     vlay->setMargin( QDialog::marginHint() );
 
     QGroupBox   *group = new QGroupBox(i18n("Repl&y Subject Prefixes"), this);
     QLayout *layout = new QVBoxLayout(group);
-//TODO PORT QT5     group->layout()->setSpacing( QDialog::spacingHint() );
 
     // row 0: help text:
     QLabel *label = new QLabel(i18n("Recognize any sequence of the following prefixes\n"
@@ -821,7 +811,6 @@ ComposerPageSubjectTab::ComposerPageSubjectTab(QWidget *parent)
 
     group = new QGroupBox(i18n("For&ward Subject Prefixes"), this);
     layout = new QVBoxLayout(group);
-//TODO PORT QT5     group->layout()->setSpacing( QDialog::marginHint() );
 
     // row 0: help text:
     label = new QLabel(i18n("Recognize any sequence of the following prefixes\n"
@@ -886,8 +875,6 @@ ComposerPageCharsetTab::ComposerPageCharsetTab(QWidget *parent)
     : ConfigModuleTab(parent)
 {
     QVBoxLayout *vlay = new QVBoxLayout(this);
-//TODO PORT QT5     vlay->setSpacing( QDialog::spacingHint() );
-//TODO PORT QT5     vlay->setMargin( QDialog::marginHint() );
 
     QLabel *label = new QLabel(i18n("This list is checked for every outgoing message "
                                     "from the top to the bottom for a charset that "
@@ -1003,8 +990,6 @@ ComposerPageHeadersTab::ComposerPageHeadersTab(QWidget *parent)
     : ConfigModuleTab(parent)
 {
     QVBoxLayout *vlay = new QVBoxLayout(this);
-//TODO PORT QT5     vlay->setSpacing( QDialog::spacingHint() );
-//TODO PORT QT5     vlay->setMargin( QDialog::marginHint() );
 
     // "Use custom Message-Id suffix" checkbox:
     mCreateOwnMessageIdCheck =
@@ -1257,8 +1242,6 @@ ComposerPageAttachmentsTab::ComposerPageAttachmentsTab(QWidget *parent)
     : ConfigModuleTab(parent)
 {
     QVBoxLayout *vlay = new QVBoxLayout(this);
-//TODO PORT QT5     vlay->setSpacing( QDialog::spacingHint() );
-//TODO PORT QT5     vlay->setMargin( QDialog::marginHint() );
 
     // "Outlook compatible attachment naming" check box
     mOutlookCompatibleCheck =

@@ -155,7 +155,6 @@ IdentityDialog::IdentityDialog(QWidget *parent)
     mainLayout->addWidget(page);
     mainLayout->addWidget(buttonBox);
     QVBoxLayout *vlay = new QVBoxLayout(page);
-    //QT5 port vlay->setSpacing( spacingHint() );
     vlay->setMargin(0);
     mTabWidget = new QTabWidget(page);
     mTabWidget->setObjectName(QLatin1String("config-identity-tab"));
@@ -164,8 +163,6 @@ IdentityDialog::IdentityDialog(QWidget *parent)
     tab = new QWidget(mTabWidget);
     mTabWidget->addTab(tab, i18nc("@title:tab General identity settings.", "General"));
     glay = new QGridLayout(tab);
-    //QT5 port glay->setSpacing( spacingHint() );
-    //QT5 port glay->setMargin( marginHint() );
     glay->setRowStretch(3, 1);
     glay->setColumnStretch(1, 1);
 
@@ -247,8 +244,6 @@ IdentityDialog::IdentityDialog(QWidget *parent)
     mCryptographyTab = tab = new QWidget(mTabWidget);
     mTabWidget->addTab(tab, i18n("Cryptography"));
     glay = new QGridLayout(tab);
-    //QT5 port glay->setSpacing( spacingHint() );
-    //QT5 port glay->setMargin( marginHint() );
     glay->setColumnStretch(1, 1);
 
     // "OpenPGP Signature Key" requester and label:
@@ -385,8 +380,6 @@ IdentityDialog::IdentityDialog(QWidget *parent)
     tab = new QWidget(mTabWidget);
     mTabWidget->addTab(tab, i18nc("@title:tab Advanced identity settings.", "Advanced"));
     glay = new QGridLayout(tab);
-    //QT5 port glay->setSpacing( spacingHint() );
-    //QT5 port glay->setMargin( marginHint() );
     // the last (empty) row takes all the remaining space
     glay->setColumnStretch(1, 1);
 
@@ -544,8 +537,6 @@ IdentityDialog::IdentityDialog(QWidget *parent)
     //
     tab = new QWidget(mTabWidget);
     vlay = new QVBoxLayout(tab);
-    //QT5 port vlay->setMargin( marginHint() );
-    //QT5 port vlay->setSpacing( spacingHint() );
 
     QHBoxLayout *tlay = new QHBoxLayout();
     vlay->addLayout(tlay);
@@ -566,7 +557,6 @@ IdentityDialog::IdentityDialog(QWidget *parent)
 #endif
 
     QHBoxLayout *btns = new QHBoxLayout();
-    //QT5 port btns->setSpacing( spacingHint() );
     mCopyGlobal = new QPushButton(i18n("&Copy Global Templates"), tab);
     mCopyGlobal->setEnabled(false);
     btns->addWidget(mCopyGlobal);
@@ -586,7 +576,6 @@ IdentityDialog::IdentityDialog(QWidget *parent)
     // Tab Widget: Signature
     //
     mSignatureConfigurator = new KIdentityManagement::SignatureConfigurator(mTabWidget);
-//TODO PORT QT5     mSignatureConfigurator->layout()->setMargin( QDialog::marginHint() );
     mTabWidget->addTab(mSignatureConfigurator, i18n("Signature"));
 
     //
@@ -595,7 +584,6 @@ IdentityDialog::IdentityDialog(QWidget *parent)
 
 #ifndef KDEPIM_MOBILE_UI
     mXFaceConfigurator = new XFaceConfigurator(mTabWidget);
-//TODO PORT QT5     mXFaceConfigurator->layout()->setMargin( QDialog::marginHint() );
     mTabWidget->addTab(mXFaceConfigurator, i18n("Picture"));
 #endif
 

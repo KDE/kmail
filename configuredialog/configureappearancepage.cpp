@@ -160,8 +160,6 @@ AppearancePageFontsTab::AppearancePageFontsTab(QWidget *parent)
 
     // "Use custom fonts" checkbox, followed by <hr>
     QVBoxLayout *vlay = new QVBoxLayout(this);
-//TODO PORT QT5     vlay->setSpacing( QDialog::spacingHint() );
-//TODO PORT QT5     vlay->setMargin( QDialog::marginHint() );
     mCustomFontCheck = new QCheckBox(i18n("&Use custom fonts"), this);
     vlay->addWidget(mCustomFontCheck);
     vlay->addWidget(new KSeparator(Qt::Horizontal, this));
@@ -188,7 +186,6 @@ AppearancePageFontsTab::AppearancePageFontsTab(QWidget *parent)
 
     hlay->addWidget(mFontLocationCombo);
     hlay->addStretch(10);
-//TODO PORT QT5     vlay->addSpacing( QDialog::spacingHint() );
     mFontChooser = new KFontChooser(this, KFontChooser::DisplayFrame,
                                     QStringList(), 4);
     mFontChooser->setEnabled(false);   // since !mCustomFontCheck->isChecked()
@@ -358,8 +355,6 @@ AppearancePageColorsTab::AppearancePageColorsTab(QWidget *parent)
 {
     // "use custom colors" check box
     QVBoxLayout *vlay = new QVBoxLayout(this);
-//TODO PORT QT5     vlay->setSpacing( QDialog::spacingHint() );
-//TODO PORT QT5     vlay->setMargin( QDialog::marginHint() );
     mCustomColorCheck = new QCheckBox(i18n("&Use custom colors"), this);
     vlay->addWidget(mCustomColorCheck);
     connect(mCustomColorCheck, SIGNAL(stateChanged(int)),
@@ -531,8 +526,6 @@ AppearancePageLayoutTab::AppearancePageLayoutTab(QWidget *parent)
     : ConfigModuleTab(parent)
 {
     QVBoxLayout *vlay = new QVBoxLayout(this);
-//TODO PORT QT5     vlay->setSpacing( QDialog::spacingHint() );
-//TODO PORT QT5     vlay->setMargin( QDialog::marginHint() );
 
     // "folder list" radio buttons:
     populateButtonGroup(mFolderListGroupBox = new QGroupBox(this),
@@ -547,7 +540,6 @@ AppearancePageLayoutTab::AppearancePageLayoutTab(QWidget *parent)
     connect(mFolderQuickSearchCB, SIGNAL(toggled(bool)), SLOT(slotEmitChanged()));
     folderCBHLayout->addWidget(mFolderQuickSearchCB);
     vlay->addLayout(folderCBHLayout);
-//TODO PORT QT5     vlay->addSpacing( QDialog::spacingHint() );   // space before next box
 
     // "favorite folders view mode" radio buttons:
     mFavoriteFoldersViewGroupBox = new QGroupBox(this);
@@ -575,7 +567,6 @@ AppearancePageLayoutTab::AppearancePageLayoutTab(QWidget *parent)
     mFolderToolTipsGroupBox = new QGroupBox(this);
     mFolderToolTipsGroupBox->setTitle(i18n("Folder Tooltips"));
     mFolderToolTipsGroupBox->setLayout(new QVBoxLayout());
-//TODO PORT QT5     mFolderToolTipsGroupBox->layout()->setSpacing( QDialog::spacingHint() );
     mFolderToolTipsGroup = new QButtonGroup(this);
     connect(mFolderToolTipsGroup, SIGNAL(buttonClicked(int)),
             this, SLOT(slotEmitChanged()));
@@ -648,14 +639,10 @@ AppearancePageHeadersTab::AppearancePageHeadersTab(QWidget *parent)
       mCustomDateFormatEdit(0)
 {
     QVBoxLayout *vlay = new QVBoxLayout(this);
-//TODO PORT QT5     vlay->setSpacing( QDialog::spacingHint() );
-//TODO PORT QT5     vlay->setMargin( QDialog::marginHint() );
 
     // "General Options" group:
     QGroupBox *group = new QGroupBox(i18nc("General options for the message list.", "General"), this);
-//TODO PORT QT5     //  group->layout()->setSpacing( QDialog::spacingHint() );
     QVBoxLayout *gvlay = new QVBoxLayout(group);
-//TODO PORT QT5     gvlay->setSpacing( QDialog::spacingHint() );
 
     mDisplayMessageToolTips = new QCheckBox(
         MessageList::Core::Settings::self()->messageToolTipEnabledItem()->label(), group);
@@ -726,7 +713,6 @@ AppearancePageHeadersTab::AppearancePageHeadersTab(QWidget *parent)
     mDateDisplay = new KButtonGroup(this);
     mDateDisplay->setTitle(i18n("Date Display"));
     gvlay = new QVBoxLayout(mDateDisplay);
-//TODO PORT QT5     gvlay->setSpacing( QDialog::spacingHint() );
 
     for (int i = 0 ; i < numDateDisplayConfig ; ++i) {
         const char *label = dateDisplayConfig[i].displayName;
@@ -743,7 +729,6 @@ AppearancePageHeadersTab::AppearancePageHeadersTab(QWidget *parent)
             QWidget *hbox = new QWidget(mDateDisplay);
             QHBoxLayout *hboxHBoxLayout = new QHBoxLayout(hbox);
             hboxHBoxLayout->setMargin(0);
-//TODO PORT QT5             hboxHBoxLayout->setSpacing( QDialog::spacingHint() );
 
             mCustomDateFormatEdit = new KLineEdit(hbox);
             hboxHBoxLayout->addWidget(mCustomDateFormatEdit);
@@ -913,8 +898,6 @@ AppearancePageReaderTab::AppearancePageReaderTab(QWidget *parent)
     : ConfigModuleTab(parent)
 {
     QVBoxLayout *topLayout = new QVBoxLayout(this);
-//TODO PORT QT5     topLayout->setSpacing( QDialog::spacingHint() );
-//TODO PORT QT5     topLayout->setMargin( QDialog::marginHint() );
 
     // "Close message window after replying or forwarding" check box:
     populateCheckBox(mCloseAfterReplyOrForwardCheck = new QCheckBox(this),
@@ -958,8 +941,6 @@ AppearancePageSystemTrayTab::AppearancePageSystemTrayTab(QWidget *parent)
     : ConfigModuleTab(parent)
 {
     QVBoxLayout *vlay = new QVBoxLayout(this);
-//TODO PORT QT5     vlay->setSpacing( QDialog::spacingHint() );
-//TODO PORT QT5     vlay->setMargin( QDialog::marginHint() );
 
     // "Enable system tray applet" check box
     mSystemTrayCheck = new QCheckBox(i18n("Enable system tray icon"), this);
@@ -979,7 +960,6 @@ AppearancePageSystemTrayTab::AppearancePageSystemTrayTab(QWidget *parent)
     mSystemTrayGroup = new KButtonGroup(this);
     mSystemTrayGroup->setTitle(i18n("System Tray Mode"));
     QVBoxLayout *gvlay = new QVBoxLayout(mSystemTrayGroup);
-//TODO PORT QT5     gvlay->setSpacing( QDialog::spacingHint() );
 
     connect(mSystemTrayGroup, SIGNAL(clicked(int)),
             this, SLOT(slotEmitChanged()));
@@ -1043,8 +1023,6 @@ AppearancePageMessageTagTab::AppearancePageMessageTagTab(QWidget *parent)
 {
     mPreviousTag = -1;
     QHBoxLayout *maingrid = new QHBoxLayout(this);
-//TODO PORT QT5     maingrid->setMargin( QDialog::marginHint() );
-//TODO PORT QT5     maingrid->setSpacing( QDialog::spacingHint() );
 
     //Lefthand side Listbox and friends
 
@@ -1052,9 +1030,6 @@ AppearancePageMessageTagTab::AppearancePageMessageTagTab(QWidget *parent)
     mTagsGroupBox = new QGroupBox(i18n("A&vailable Tags"), this);
     maingrid->addWidget(mTagsGroupBox);
     QVBoxLayout *tageditgrid = new QVBoxLayout(mTagsGroupBox);
-//TODO PORT QT5     tageditgrid->setMargin( QDialog::marginHint() );
-//TODO PORT QT5     tageditgrid->setSpacing( QDialog::spacingHint() );
-//TODO PORT QT5     tageditgrid->addSpacing( 2 * QDialog::spacingHint() );
 
     //Listbox, add, remove row
     QHBoxLayout *addremovegrid = new QHBoxLayout();
