@@ -32,7 +32,7 @@ SearchDescriptionAttribute::SearchDescriptionAttribute()
 
 QByteArray SearchDescriptionAttribute::type() const
 {
-    static const QByteArray sType( "kmailsearchdescription" );
+    static const QByteArray sType("kmailsearchdescription");
     return sType;
 }
 

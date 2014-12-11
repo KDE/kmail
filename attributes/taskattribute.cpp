@@ -64,7 +64,7 @@ QByteArray TaskAttribute::serialized() const
 
 QByteArray TaskAttribute::type() const
 {
-    static const QByteArray sType( "TaskAttribute" );
+    static const QByteArray sType("TaskAttribute");
     return sType;
 }
 
