@@ -715,7 +715,6 @@ void KMComposeWin::slotView(void)
     } else if (act == mDictionaryAction) {
         id = HDR_DICTIONARY;
     } else {
-        id = 0;
         qDebug() << "Something is wrong (Oh, yeah?)";
         return;
     }
