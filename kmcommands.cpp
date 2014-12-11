@@ -1273,16 +1273,6 @@ void KMSetTagCommand::setTags()
     connect( modifyJob, SIGNAL(result(KJob*)), this, SLOT(slotModifyItemDone(KJob*)) );
 
     if(!mCreatedTags.isEmpty()) {
-        KConfigGroup tag( KMKernel::self()->config(), "MessageListView" );
-        const QString oldTagList = tag.readEntry("TagSelected");
-        QStringList lst = oldTagList.split(QLatin1String(","));
-        Q_FOREACH( const Akonadi::Tag &tag, mCreatedTags ) {
-            const QString url = tag.url().url();
-            if(!lst.contains(url)) {
-                lst.append(url);
-            }
-        }
-        tag.writeEntry("TagSelected",lst);
         KMKernel::self()->updatePaneTagComboBox();
     }
 }
