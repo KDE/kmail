@@ -1445,7 +1445,7 @@ void KMMainWidget::slotExpireFolder()
         return;
     }
     bool mustDeleteExpirationAttribute = false;
-    MailCommon::ExpireCollectionAttribute *attr = MailCommon::ExpireCollectionAttribute::expirationCollectionAttribute(mCurrentFolder->collection(), mustDeleteExpirationAttribute);
+    MailCommon::ExpireCollectionAttribute *attr = MailCommon::Util::expirationCollectionAttribute(mCurrentFolder->collection(), mustDeleteExpirationAttribute);
     bool canBeExpired = true;
     if (!attr->isAutoExpire()) {
         canBeExpired = false;
