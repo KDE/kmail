@@ -612,6 +612,7 @@ private:
     KAction *mSearchMessages;
     KMLaunchExternalComponent *mLaunchExternalComponent;
     ManageShowCollectionProperties *mManageShowCollectionProperties;
+    KAction *mShowIntroductionAction;
 };
 
 #endif

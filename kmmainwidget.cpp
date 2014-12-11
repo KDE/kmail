@@ -224,7 +224,8 @@ KMMainWidget::KMMainWidget( QWidget *parent, KXMLGUIClient *aGUIClient,
     mDisplayMessageFormatMenu( 0 ),
     mFolderDisplayFormatPreference(MessageViewer::Viewer::UseGlobalSetting),
     mSearchMessages( 0 ),
-    mManageShowCollectionProperties(new ManageShowCollectionProperties(this, this))
+    mManageShowCollectionProperties(new ManageShowCollectionProperties(this, this)),
+    mShowIntroductionAction( 0 )
 {
     mLaunchExternalComponent = new KMLaunchExternalComponent(this, this);
     // must be the first line of the constructor:
@@ -1009,11 +1010,15 @@ void KMMainWidget::createWidgets()
                  this, SLOT(slotMessagePopup(Akonadi::Item,KUrl,KUrl,QPoint)) );
         connect( mMsgView->viewer(), SIGNAL(moveMessageToTrash()),
                  this, SLOT(slotMoveMessageToTrash()) );
+        if (mShowIntroductionAction)
+            mShowIntroductionAction->setEnabled(true);
     }
     else {
         if ( mMsgActions ) {
             mMsgActions->setMessageView( 0 );
         }
+        if (mShowIntroductionAction)
+            mShowIntroductionAction->setEnabled(false);
     }
 
     //
@@ -3337,10 +3342,11 @@ void KMMainWidget::setupActions()
         connect(action, SIGNAL(triggered(bool)), SLOT(slotManageSieveScripts()));
     }
     {
-        KAction *action = new KAction(KIcon(QLatin1String("kmail")), i18n("KMail &Introduction"), this);
-        actionCollection()->addAction(QLatin1String("help_kmail_welcomepage"), action );
-        action->setHelpText( i18n("Display KMail's Welcome Page") );
-        connect(action, SIGNAL(triggered(bool)), SLOT(slotIntro()));
+        mShowIntroductionAction = new KAction(KIcon(QLatin1String("kmail")), i18n("KMail &Introduction"), this);
+        actionCollection()->addAction(QLatin1String("help_kmail_welcomepage"), mShowIntroductionAction );
+        mShowIntroductionAction->setHelpText( i18n("Display KMail's Welcome Page") );
+        connect(mShowIntroductionAction, SIGNAL(triggered(bool)), SLOT(slotIntro()));
+        mShowIntroductionAction->setEnabled(mMsgView != 0);
     }
 
     // ----- Standard Actions
