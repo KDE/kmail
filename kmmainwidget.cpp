@@ -223,7 +223,8 @@ KMMainWidget::KMMainWidget(QWidget *parent, KXMLGUIClient *aGUIClient,
     mDisplayMessageFormatMenu(0),
     mFolderDisplayFormatPreference(MessageViewer::Viewer::UseGlobalSetting),
     mSearchMessages(0),
-    mManageShowCollectionProperties(new ManageShowCollectionProperties(this, this))
+    mManageShowCollectionProperties(new ManageShowCollectionProperties(this, this)),
+    mShowIntroductionAction(0)
 {
     mLaunchExternalComponent = new KMLaunchExternalComponent(this, this);
     // must be the first line of the constructor:
@@ -1007,10 +1008,14 @@ void KMMainWidget::createWidgets()
                 this, &KMMainWidget::slotMessagePopup);
         connect(mMsgView->viewer(), &MessageViewer::Viewer::moveMessageToTrash,
                 this, &KMMainWidget::slotMoveMessageToTrash);
+        if (mShowIntroductionAction)
+            mShowIntroductionAction->setEnabled(true);
     } else {
         if (mMsgActions) {
             mMsgActions->setMessageView(0);
         }
+        if (mShowIntroductionAction)
+            mShowIntroductionAction->setEnabled(false);
     }
 
     //
@@ -3352,10 +3357,11 @@ void KMMainWidget::setupActions()
         connect(action, &QAction::triggered, this, &KMMainWidget::slotManageSieveScripts);
     }
     {
-        QAction *action = new QAction(QIcon::fromTheme(QLatin1String("kmail")), i18n("KMail &Introduction"), this);
-        actionCollection()->addAction(QLatin1String("help_kmail_welcomepage"), action);
-        KMail::Util::addQActionHelpText(action, i18n("Display KMail's Welcome Page"));
-        connect(action, &QAction::triggered, this, &KMMainWidget::slotIntro);
+        mShowIntroductionAction = new QAction(QIcon::fromTheme(QLatin1String("kmail")), i18n("KMail &Introduction"), this);
+        actionCollection()->addAction(QLatin1String("help_kmail_welcomepage"), mShowIntroductionAction );
+        KMail::Util::addQActionHelpText(mShowIntroductionAction, i18n("Display KMail's Welcome Page"));
+        connect(mShowIntroductionAction, &QAction::triggered, this, &KMMainWidget::slotIntro);
+        mShowIntroductionAction->setEnabled(mMsgView != 0);
     }
 
     // ----- Standard Actions
@@ -4337,12 +4343,14 @@ void KMMainWidget::slotMessageSelected(const Akonadi::Item &item)
             connect(mShowBusySplashTimer, &QTimer::timeout, this, &KMMainWidget::slotShowBusySplash);
             mShowBusySplashTimer->start(GlobalSettings::self()->folderLoadingTimeout());   //TODO: check if we need a different timeout setting for this
 
-            Akonadi::ItemFetchJob *itemFetchJob = MessageViewer::Viewer::createFetchJob(item);
-            const QString resource = mCurrentFolder->collection().resource();
-            itemFetchJob->setProperty("_resource", QVariant::fromValue(resource));
-            connect(itemFetchJob, SIGNAL(itemsReceived(Akonadi::Item::List)),
-                    SLOT(itemsReceived(Akonadi::Item::List)));
-            connect(itemFetchJob, &Akonadi::ItemFetchJob::result, this, &KMMainWidget::itemsFetchDone);
+            Akonadi::ItemFetchJob *itemFetchJob = MessageViewer::Viewer::createFetchJob( item );
+            if (mCurrentFolder) {
+                const QString resource = mCurrentFolder->collection().resource();
+                itemFetchJob->setProperty( "_resource", QVariant::fromValue(resource) );
+                connect( itemFetchJob, SIGNAL(itemsReceived(Akonadi::Item::List)),
+                         SLOT(itemsReceived(Akonadi::Item::List)) );
+                connect(itemFetchJob, &Akonadi::ItemFetchJob::result, this, &KMMainWidget::itemsFetchDone);
+            }
         }
     }
 }

@@ -650,6 +650,7 @@ private:
     QAction *mSearchMessages;
     KMLaunchExternalComponent *mLaunchExternalComponent;
     ManageShowCollectionProperties *mManageShowCollectionProperties;
+    QAction *mShowIntroductionAction;
 };
 
 #endif
