@@ -1128,7 +1128,6 @@ ASWizVirusRulesPage::ASWizVirusRulesPage(QWidget *parent, const QString &name)
 {
     QGridLayout *grid = new QGridLayout();
     mLayout->addItem(grid);
-//TODO PORT QT5     grid->setSpacing( QDialog::spacingHint() );
 
     mPipeRules = new QCheckBox(i18n("Check messages using the anti-virus tools"), this);
     mPipeRules->setWhatsThis(

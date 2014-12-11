@@ -792,8 +792,6 @@ void KMComposeWin::rethinkFields(bool fromSlot)
 
     delete mGrid;
     mGrid = new QGridLayout(mHeadersArea);
-//TODO PORT QT5     mGrid->setSpacing( QDialog::spacingHint() );
-//TODO PORT QT5     mGrid->setMargin( QDialog::marginHint() / 2 );
     mGrid->setColumnStretch(0, 1);
     mGrid->setColumnStretch(1, 100);
     mGrid->setColumnStretch(2, 1);
