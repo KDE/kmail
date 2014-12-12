@@ -153,7 +153,7 @@ using KSieveUi::SieveDebugDialog;
 #include <kstandardshortcut.h>
 #include <kshortcutsdialog.h>
 #include <kcharsets.h>
-#include <qdebug.h>
+#include "kmail_debug.h"
 #include <ktip.h>
 
 #include <kstandardaction.h>
@@ -1316,7 +1316,7 @@ void KMMainWidget::slotCheckOneAccount(QAction *item)
         }
         agent.synchronize();
     } else {
-        qDebug() << "account with identifier" << item->data().toString() << "not found";
+        qCDebug(KMAIL_LOG) << "account with identifier" << item->data().toString() << "not found";
     }
 }
 
@@ -2049,7 +2049,7 @@ void KMMainWidget::slotCustomReplyToMsg(const QString &tmpl)
 
     const QString text = mMsgView ? mMsgView->copyText() : QString();
 
-    qDebug() << "Reply with template:" << tmpl;
+    qCDebug(KMAIL_LOG) << "Reply with template:" << tmpl;
 
     KMCommand *command = new KMReplyCommand(this,
                                             msg,
@@ -2069,7 +2069,7 @@ void KMMainWidget::slotCustomReplyAllToMsg(const QString &tmpl)
 
     const QString text = mMsgView ? mMsgView->copyText() : QString();
 
-    qDebug() << "Reply to All with template:" << tmpl;
+    qCDebug(KMAIL_LOG) << "Reply to All with template:" << tmpl;
 
     KMCommand *command = new KMReplyCommand(this,
                                             msg,
@@ -2094,7 +2094,7 @@ void KMMainWidget::slotCustomForwardMsg(const QString &tmpl)
         return;
     }
 
-    qDebug() << "Forward with template:" << tmpl;
+    qCDebug(KMAIL_LOG) << "Forward with template:" << tmpl;
     KMForwardCommand *command = new KMForwardCommand(
         this, selectedMessages, mCurrentFolder->identity(), tmpl
     );
@@ -2370,13 +2370,13 @@ void KMMainWidget::showResourceOfflinePage()
 //-----------------------------------------------------------------------------
 void KMMainWidget::slotReplaceMsgByUnencryptedVersion()
 {
-    qDebug();
+    qCDebug(KMAIL_LOG);
     Akonadi::Item oldMsg = mMessagePane->currentItem();
     if (oldMsg.isValid()) {
 #if 0
-        qDebug() << "Old message found";
+        qCDebug(KMAIL_LOG) << "Old message found";
         if (oldMsg->hasUnencryptedMsg()) {
-            qDebug() << "Extra unencrypted message found";
+            qCDebug(KMAIL_LOG) << "Extra unencrypted message found";
             KMime::Message *newMsg = oldMsg->unencryptedMsg();
             // adjust the message id
             {
@@ -2400,7 +2400,7 @@ void KMMainWidget::slotReplaceMsgByUnencryptedVersion()
                 mMsgView->setIdOfLastViewedMessage(msgId);
             }
             // insert the unencrypted message
-            qDebug() << "Adding unencrypted message to folder";
+            qCDebug(KMAIL_LOG) << "Adding unencrypted message to folder";
             mFolder->addMsg(newMsg);
             /* Figure out its index in the folder for selecting. This must be count()-1,
             * since we append. Be safe and do find, though, just in case. */
@@ -2418,22 +2418,22 @@ void KMMainWidget::slotReplaceMsgByUnencryptedVersion()
 #endif
             // remove the old one
             if (idx != -1) {
-                qDebug() << "Deleting encrypted message";
+                qCDebug(KMAIL_LOG) << "Deleting encrypted message";
                 mFolder->take(idx);
             }
 
-            qDebug() << "Updating message actions";
+            qCDebug(KMAIL_LOG) << "Updating message actions";
             updateMessageActions();
 
-            qDebug() << "Done.";
+            qCDebug(KMAIL_LOG) << "Done.";
         } else {
-            qDebug() << "NO EXTRA UNENCRYPTED MESSAGE FOUND";
+            qCDebug(KMAIL_LOG) << "NO EXTRA UNENCRYPTED MESSAGE FOUND";
         }
 #else
-        qDebug() << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
+        qCDebug(KMAIL_LOG) << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
 #endif
     } else {
-        qDebug() << "PANIC: NO OLD MESSAGE FOUND";
+        qCDebug(KMAIL_LOG) << "PANIC: NO OLD MESSAGE FOUND";
     }
 }
 
@@ -2582,7 +2582,7 @@ void KMMainWidget::slotItemsFetchedForActivation(KMCommand *command)
 {
     KMCommand::Result result = command->result();
     if (result != KMCommand::OK) {
-        qDebug() << "Result:" << result;
+        qCDebug(KMAIL_LOG) << "Result:" << result;
         return;
     }
 
@@ -2714,7 +2714,7 @@ void KMMainWidget::showMessagePopup(const Akonadi::Item &msg , const KUrl &url, 
             }
             urlMenuAdded = true;
         }
-        qDebug() << "URL is:" << url;
+        qCDebug(KMAIL_LOG) << "URL is:" << url;
     }
     const QString selectedText = mMsgView ? mMsgView->copyText() : QString();
     if (mMsgView && !selectedText.isEmpty()) {
@@ -3995,7 +3995,7 @@ void KMMainWidget::updateFolderMenu()
 
     QList< QAction * > actionlist;
     if (mCurrentFolder && mCurrentFolder->collection().id() == CommonKernel->outboxCollectionFolder().id() && (mCurrentFolder->collection()).statistics().count() > 0) {
-        qDebug() << "Enabling send queued";
+        qCDebug(KMAIL_LOG) << "Enabling send queued";
         mSendQueued->setEnabled(true);
         actionlist << mSendQueued;
     }
@@ -4400,7 +4400,7 @@ void KMMainWidget::itemsFetchDone(KJob *job)
         // Unfortunately job->error() is Job::Unknown in many cases.
         // (see JobPrivate::handleResponse in akonadi/job.cpp)
         // So we show the "offline" page after checking the resource status.
-        qDebug() << job->error() << job->errorString();
+        qCDebug(KMAIL_LOG) << job->error() << job->errorString();
 
         const QString resource = job->property("_resource").toString();
         const Akonadi::AgentInstance agentInstance = Akonadi::AgentManager::self()->instance(resource);

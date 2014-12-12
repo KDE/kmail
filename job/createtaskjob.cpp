@@ -27,7 +27,7 @@
 
 #include <AkonadiCore/ItemModifyJob>
 
-#include <QDebug>
+#include "kmail_debug.h"
 
 CreateTaskJob::CreateTaskJob(const Akonadi::Item::List &items, QObject *parent)
     : KJob(parent),
@@ -61,7 +61,7 @@ void CreateTaskJob::fetchItems()
 void CreateTaskJob::itemFetchJobDone(KJob *job)
 {
     if (job->error()) {
-        qDebug() << job->errorString();
+        qCDebug(KMAIL_LOG) << job->errorString();
         Q_EMIT emitResult();
         return;
     }
@@ -86,7 +86,7 @@ void CreateTaskJob::itemFetchJobDone(KJob *job)
 
     Akonadi::Item::List itemsToModify;
     foreach (const Akonadi::Item &it, lst) {
-        //qDebug()<<" item ::"<<tmpItem;
+        //qCDebug(KMAIL_LOG)<<" item ::"<<tmpItem;
         if (it.isValid()) {
             bool myStatus;
             Akonadi::MessageStatus itemStatus;
@@ -130,7 +130,7 @@ void CreateTaskJob::slotModifyItemDone(KJob *job)
 {
     //TODO
     if (job && job->error()) {
-        qDebug() << " error " << job->errorString();
+        qCDebug(KMAIL_LOG) << " error " << job->errorString();
     }
     deleteLater();
 }

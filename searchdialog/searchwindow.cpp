@@ -45,7 +45,7 @@
 #include <AkonadiWidgets/standardactionmanager.h>
 #include <AkonadiCore/EntityMimeTypeFilterModel>
 #include <KActionMenu>
-#include <QDebug>
+#include "kmail_debug.h"
 #include <QIcon>
 #include <KIconLoader>
 #include <kmime/kmime_message.h>
@@ -150,7 +150,7 @@ SearchWindow::SearchWindow(KMMainWidget *widget, const Akonadi::Collection &coll
         } else {
             // it's a search folder, but not one of ours, warn the user that we can't edit it
             // FIXME show results, but disable edit GUI
-            qWarning() << "This search was not created with KMail. It cannot be edited within it.";
+            qCWarning(KMAIL_LOG) << "This search was not created with KMail. It cannot be edited within it.";
             mSearchPattern.clear();
         }
     }
@@ -224,7 +224,7 @@ SearchWindow::SearchWindow(KMMainWidget *widget, const Akonadi::Collection &coll
     if (r) {
         r->setFocus();
     } else {
-        qDebug() << "SearchWindow: regExpLineEdit not found";
+        qCDebug(KMAIL_LOG) << "SearchWindow: regExpLineEdit not found";
     }
 
     //set up actions
@@ -401,7 +401,7 @@ void SearchWindow::slotSearch()
 void SearchWindow::slotSearchCollectionsFetched(KJob *job)
 {
     if (job->error()) {
-        qWarning() << job->errorString();
+        qCWarning(KMAIL_LOG) << job->errorString();
     }
     Akonadi::CollectionFetchJob *fetchJob = static_cast<Akonadi::CollectionFetchJob *>(job);
     Q_FOREACH (const Akonadi::Collection &col, fetchJob->collections()) {
@@ -499,11 +499,11 @@ void SearchWindow::doSearch()
         return;
     }
     mSearchPatternWidget->hideWarningPattern();
-    qDebug() << mQuery.toJSON();
+    qCDebug(KMAIL_LOG) << mQuery.toJSON();
     mUi.mSearchFolderOpenBtn->setEnabled(true);
 
     if (!mFolder.isValid()) {
-        qDebug() << " create new folder " << mUi.mSearchFolderEdt->text();
+        qCDebug(KMAIL_LOG) << " create new folder " << mUi.mSearchFolderEdt->text();
         Akonadi::SearchCreateJob *searchJob = new Akonadi::SearchCreateJob(mUi.mSearchFolderEdt->text(), mQuery, this);
         searchJob->setSearchMimeTypes(QStringList() << QLatin1String("message/rfc822"));
         searchJob->setSearchCollections(searchCollections);
@@ -511,7 +511,7 @@ void SearchWindow::doSearch()
         searchJob->setRemoteSearchEnabled(false);
         mSearchJob = searchJob;
     } else {
-        qDebug() << " use existing folder " << mFolder.id();
+        qCDebug(KMAIL_LOG) << " use existing folder " << mFolder.id();
         Akonadi::PersistentSearchAttribute *attribute = new Akonadi::PersistentSearchAttribute();
         mFolder.setContentMimeTypes(QStringList() << QLatin1String("message/rfc822"));
         attribute->setQueryString(QString::fromLatin1(mQuery.toJSON()));
@@ -534,7 +534,7 @@ void SearchWindow::searchDone(KJob *job)
     QMetaObject::invokeMethod(this, "enableGUI", Qt::QueuedConnection);
     mUi.mProgressIndicator->stop();
     if (job->error()) {
-        qDebug() << job->errorString();
+        qCDebug(KMAIL_LOG) << job->errorString();
         KMessageBox::sorry(this, i18n("Cannot get search result. %1", job->errorString()));
         if (mSearchJob) {
             mSearchJob = 0;
@@ -656,7 +656,7 @@ void SearchWindow::slotSearchFolderRenameDone(KJob *job)
 {
     Q_ASSERT(job);
     if (job->error()) {
-        qWarning() << "Job failed:" << job->errorText();
+        qCWarning(KMAIL_LOG) << "Job failed:" << job->errorText();
         KMessageBox::information(this, i18n("There was a problem renaming your search folder. "
                                             "A common reason for this is that another search folder "
                                             "with the same name already exists. Error returned \"%1\".", job->errorText()));

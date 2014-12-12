@@ -21,7 +21,7 @@
 #include <KMessageBox>
 #include <AkonadiCore/CollectionAttributesSynchronizationJob>
 #include <Solid/Networking>
-
+#include "kmail_debug.h"
 #include <AkonadiCore/CollectionFetchJob>
 #include <AkonadiWidgets/CollectionPropertiesDialog>
 #include <AkonadiCore/CollectionFetchScope>
@@ -186,7 +186,7 @@ void ManageShowCollectionProperties::slotCollectionPropertiesFinished(KJob *job)
     Akonadi::CollectionFetchJob *fetch = dynamic_cast<Akonadi::CollectionFetchJob *>(job);
     Q_ASSERT(fetch);
     if (fetch->collections().isEmpty()) {
-        qWarning() << "no collection";
+        qCWarning(KMAIL_LOG) << "no collection";
         return;
     }
 

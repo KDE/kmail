@@ -16,6 +16,7 @@
 */
 
 #include "manageserversidesubscriptionjob.h"
+#include "kmail_debug.h"
 #include <KLocalizedString>
 #include <QDBusInterface>
 #include <QDBusPendingCall>
@@ -39,7 +40,7 @@ ManageServerSideSubscriptionJob::~ManageServerSideSubscriptionJob()
 void ManageServerSideSubscriptionJob::start()
 {
     if (!mCurrentFolder) {
-        qDebug() << " currentFolder not defined";
+        qCDebug(KMAIL_LOG) << " currentFolder not defined";
         deleteLater();
         return;
     }
@@ -50,7 +51,7 @@ void ManageServerSideSubscriptionJob::start()
             QLatin1String("/"), QLatin1String("org.kde.Akonadi.ImapResourceBase"),
             KDBusConnectionPool::threadConnection(), this);
         if (!iface.isValid()) {
-            qDebug() << "Cannot create imap dbus interface";
+            qCDebug(KMAIL_LOG) << "Cannot create imap dbus interface";
             deleteLater();
             return;
         }

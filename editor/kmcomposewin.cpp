@@ -134,7 +134,7 @@
 #include <kactionmenu.h>
 #include <kapplication.h>
 #include <kcharsets.h>
-#include <qdebug.h>
+#include "kmail_debug.h"
 #include <kdescendantsproxymodel.h>
 #include <kedittoolbar.h>
 #include <qinputdialog.h>
@@ -532,7 +532,7 @@ void KMComposeWin::send(int how)
 
 void KMComposeWin::addAttachmentsAndSend(const QList<QUrl> &urls, const QString &comment, int how)
 {
-    qDebug() << "addAttachment and sending!";
+    qCDebug(KMAIL_LOG) << "addAttachment and sending!";
     const int nbUrl = urls.count();
     for (int i = 0; i < nbUrl; ++i) {
         mComposerBase->addAttachmentUrlSync(urls[i], comment);
@@ -605,7 +605,7 @@ void KMComposeWin::readConfig(bool reload /* = false */)
     }
 
     mComposerBase->identityCombo()->setCurrentIdentity(mId);
-    qDebug() << mComposerBase->identityCombo()->currentIdentityName();
+    qCDebug(KMAIL_LOG) << mComposerBase->identityCombo()->currentIdentityName();
     const KIdentityManagement::Identity &ident =
         kmkernel->identityManager()->identityForUoid(mId);
 
@@ -715,7 +715,7 @@ void KMComposeWin::slotView(void)
     } else if (act == mDictionaryAction) {
         id = HDR_DICTIONARY;
     } else {
-        qDebug() << "Something is wrong (Oh, yeah?)";
+        qCDebug(KMAIL_LOG) << "Something is wrong (Oh, yeah?)";
         return;
     }
 
@@ -797,7 +797,7 @@ void KMComposeWin::rethinkFields(bool fromSlot)
     mGrid->setRowStretch(mNumHeaders + 1, 100);
 
     row = 0;
-    qDebug();
+    qCDebug(KMAIL_LOG);
 
     mLabelWidth = mComposerBase->recipientsEditor()->setFirstColumnWidth(0);
     mLabelWidth = calcColumnWidth(HDR_IDENTITY, showHeaders, mLabelWidth);
@@ -1536,7 +1536,7 @@ void KMComposeWin::setMessage(const KMime::Message::Ptr &newMsg, bool lastSignSt
                               bool allowDecryption, bool isModified)
 {
     if (!newMsg) {
-        qDebug() << "newMsg == 0!";
+        qCDebug(KMAIL_LOG) << "newMsg == 0!";
         return;
     }
 
@@ -1867,7 +1867,7 @@ bool KMComposeWin::queryClose()
     mComposerBase->cleanupAutoSave();
 
     if (!mMiscComposers.isEmpty()) {
-        qWarning() << "Tried to close while composer was active";
+        qCWarning(KMAIL_LOG) << "Tried to close while composer was active";
         return false;
     }
     return true;
@@ -1970,7 +1970,7 @@ QString KMComposeWin::prettyMimeType(const QString &type)
     const QMimeType st = db.mimeTypeForName(t);
 
     if (st.isValid()) {
-        qWarning() << "unknown mimetype" << t;
+        qCWarning(KMAIL_LOG) << "unknown mimetype" << t;
         return t;
     }
 
@@ -2014,7 +2014,7 @@ void KMComposeWin::setCharset(const QByteArray &charset)
 {
     const QString codecNameToSet = selectCharset(mCodecAction, QString::fromLatin1(charset));
     if (codecNameToSet.isEmpty()) {
-        qWarning() << "Could not find charset" << charset;
+        qCWarning(KMAIL_LOG) << "Could not find charset" << charset;
         setAutoCharset();
     } else {
         mCodecAction->setCurrentCodec(codecNameToSet);
@@ -2084,7 +2084,7 @@ void KMComposeWin::slotInsertRecentFile(const QUrl &u)
     if (index != -1) {
         encoding = encodings[ index ];
     } else {
-        qDebug() << " encoding not found so we can't insert text"; //see InsertTextFileJob
+        qCDebug(KMAIL_LOG) << " encoding not found so we can't insert text"; //see InsertTextFileJob
         return;
     }
 
@@ -2107,7 +2107,7 @@ void KMComposeWin::slotSelectCryptoModule(bool init)
 
 void KMComposeWin::slotUpdateFont()
 {
-    qDebug();
+    qCDebug(KMAIL_LOG);
     if (!mFixedFontAction) {
         return;
     }
@@ -2247,7 +2247,7 @@ void KMComposeWin::slotFetchJob(KJob *job)
         if (static_cast<KIO::Job *>(job)->ui()) {
             static_cast<KIO::Job *>(job)->ui()->showErrorMessage();
         } else {
-            qDebug() << " job->errorString() :" << job->errorString();
+            qCDebug(KMAIL_LOG) << " job->errorString() :" << job->errorString();
         }
         return;
     }
@@ -2629,7 +2629,7 @@ void KMComposeWin::printComposeResult(KJob *job, bool preview)
         if (static_cast<KIO::Job *>(job)->ui()) {
             static_cast<KIO::Job *>(job)->ui()->showErrorMessage();
         } else {
-            qWarning() << "Composer for printing failed:" << composer->errorString();
+            qCWarning(KMAIL_LOG) << "Composer for printing failed:" << composer->errorString();
         }
     }
 
@@ -2829,7 +2829,7 @@ void KMComposeWin::slotSendLater()
                 delete dlg;
                 switch (action) {
                 case SendLater::SendLaterDialog::Unknown:
-                    qDebug() << "Sendlater action \"Unknown\": Need to fix it.";
+                    qCDebug(KMAIL_LOG) << "Sendlater action \"Unknown\": Need to fix it.";
                     break;
                 case SendLater::SendLaterDialog::Canceled:
                     return;
@@ -3082,7 +3082,7 @@ void KMComposeWin::slotSpellcheckDoneClearStatus()
 void KMComposeWin::slotIdentityChanged(uint uoid, bool initalChange)
 {
     if (mMsg == 0) {
-        qDebug() << "Trying to change identity but mMsg == 0!";
+        qCDebug(KMAIL_LOG) << "Trying to change identity but mMsg == 0!";
         return;
     }
 
@@ -3273,11 +3273,11 @@ void KMComposeWin::slotConfigChanged()
  */
 void KMComposeWin::slotFolderRemoved(const Akonadi::Collection &col)
 {
-    qDebug() << "you killed me.";
+    qCDebug(KMAIL_LOG) << "you killed me.";
     // TODO: need to handle templates here?
     if ((mFolder.isValid()) && (col.id() == mFolder.id())) {
         mFolder = CommonKernel->draftsCollectionFolder();
-        qDebug() << "restoring drafts to" << mFolder.id();
+        qCDebug(KMAIL_LOG) << "restoring drafts to" << mFolder.id();
     }
 }
 
@@ -3377,7 +3377,7 @@ void KMComposeWin::slotSaveAsFile()
             writer.setFormat("plaintext");
         }
         if (!writer.write(mComposerBase->editor()->document())) {
-            qDebug() << " Error during writing";
+            qCDebug(KMAIL_LOG) << " Error during writing";
         }
     }
     delete dlg;

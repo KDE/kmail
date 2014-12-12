@@ -172,6 +172,7 @@ if (KDEPIM_BUILD_DESKTOP)
      tag/tagselectdialog.cpp
   )
   set(kmailprivate_LIB_SRCS
+     kmail_debug.cpp
      kmmainwin.cpp
      settings/globalsettings.cpp
      kmreaderwin.cpp
@@ -318,7 +319,7 @@ generate_export_header(kmailprivate BASE_NAME kmail)
 
   ########### kmailpart ###############
 
-  set(kmailpart_PART_SRCS kmail_part.cpp )
+  set(kmailpart_PART_SRCS kmail_part.cpp kmail_debug.cpp)
   qt5_generate_dbus_interface(kmail_part.h org.kde.kmail.kmailpart.xml OPTIONS -a)
   qt5_add_dbus_adaptor(kmailpart_PART_SRCS
     ${CMAKE_BINARY_DIR}/kmail/org.kde.kmail.kmailpart.xml kmail_part.h KMailPart
@@ -336,7 +337,7 @@ generate_export_header(kmailprivate BASE_NAME kmail)
 
   ########### KMail executable ###############
 
-  set(kmail_SRCS main.cpp)
+  set(kmail_SRCS main.cpp kmail_debug.cpp)
   kde4_add_app_icon(kmail_SRCS "${CMAKE_CURRENT_SOURCE_DIR}/icons/hi*-apps-kmail.png")
   add_executable(kmail ${kmail_SRCS})
   target_link_libraries(kmail

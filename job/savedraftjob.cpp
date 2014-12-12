@@ -22,7 +22,7 @@
 #include <Akonadi/KMime/MessageStatus>
 #include <AkonadiCore/Item>
 #include <AkonadiCore/ItemCreateJob>
-
+#include "kmail_debug.h"
 SaveDraftJob::SaveDraftJob(const KMime::Message::Ptr &msg, const Akonadi::Collection &col, QObject *parent)
     : KJob(parent),
       mMsg(msg),
@@ -49,7 +49,7 @@ void SaveDraftJob::start()
 void SaveDraftJob::slotStoreDone(KJob *job)
 {
     if (job->error()) {
-        qDebug() << " job->errorString() : " << job->errorString();
+        qCDebug(KMAIL_LOG) << " job->errorString() : " << job->errorString();
         setError(job->error());
         setErrorText(job->errorText());
     }

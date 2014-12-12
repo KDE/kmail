@@ -17,7 +17,7 @@
 
 #include "statusbarlabeltoggledstate.h"
 #include <KLocalizedString>
-#include <QDebug>
+#include "kmail_debug.h"
 
 StatusBarLabelToggledState::StatusBarLabelToggledState(QWidget *parent)
     : QLabel(parent),
@@ -33,7 +33,7 @@ StatusBarLabelToggledState::~StatusBarLabelToggledState()
 void StatusBarLabelToggledState::setStateString(const QString &toggled, const QString &untoggled)
 {
     if (toggled.isEmpty() || untoggled.isEmpty()) {
-        qWarning() << " State string is empty. Need to fix it";
+        qCWarning(KMAIL_LOG) << " State string is empty. Need to fix it";
     }
     mToggled = toggled;
     mUnToggled = untoggled;

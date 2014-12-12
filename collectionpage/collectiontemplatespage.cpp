@@ -109,7 +109,7 @@ void CollectionTemplatesPage::save(Collection &)
 {
     if (mChanged && !mCollectionId.isEmpty()) {
         TemplateParser::Templates t(mCollectionId);
-        //qDebug() << "use custom templates for folder" << fid <<":" << mCustom->isChecked();
+        //qCDebug(KMAIL_LOG) << "use custom templates for folder" << fid <<":" << mCustom->isChecked();
         t.setUseCustomTemplates(mCustom->isChecked());
         t.save();
 

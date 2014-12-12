@@ -1,7 +1,7 @@
 /**
  * kmcomposereditor.cpp
  *
- * Copyright (C)  2007-2013 Laurent Montel <montel@kde.org>
+ * Copyright (C)  2007-2014 Laurent Montel <montel@kde.org>
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -20,6 +20,7 @@
  */
 
 #include "kmcomposereditor.h"
+#include "kmail_debug.h"
 #include "editor/kmcomposewin.h"
 #include "kmcommands.h"
 #include "util.h"
@@ -169,7 +170,7 @@ void KMComposerEditor::showSpellConfigDialog(const QString &configFileName)
     if (enabledByDefaultCB) {
         enabledByDefaultCB->hide();
     } else {
-        qWarning() << "Could not find any checkbox named 'm_checkerEnabledByDefaultCB'. Sonnet::ConfigDialog must have changed!";
+        qCWarning(KMAIL_LOG) << "Could not find any checkbox named 'm_checkerEnabledByDefaultCB'. Sonnet::ConfigDialog must have changed!";
     }
     if (dialog.exec()) {
         setSpellCheckingLanguage(dialog.language());

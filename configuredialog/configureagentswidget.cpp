@@ -22,7 +22,7 @@
 
 #include <KLocalizedString>
 #include <KDesktopFile>
-#include <QDebug>
+#include "kmail_debug.h"
 #include <KTextEdit>
 #include <KConfigGroup>
 
@@ -145,13 +145,13 @@ bool ConfigureAgentsWidget::agentActivateState(const QString &interfaceName, con
         if (enabled.isValid()) {
             return enabled;
         } else {
-            qDebug() << interfaceName << "doesn't have enabledAgent function";
+            qCDebug(KMAIL_LOG) << interfaceName << "doesn't have enabledAgent function";
             failed = true;
             return false;
         }
     } else {
         failed = true;
-        qDebug() << interfaceName << "does not exist ";
+        qCDebug(KMAIL_LOG) << interfaceName << "does not exist ";
     }
     return false;
 }
@@ -162,7 +162,7 @@ void ConfigureAgentsWidget::changeAgentActiveState(bool enable, const QString &i
     if (interface.isValid()) {
         interface.call(QLatin1String("setEnableAgent"), enable);
     } else {
-        qDebug() << interfaceName << "does not exist ";
+        qCDebug(KMAIL_LOG) << interfaceName << "does not exist ";
     }
 }
 
@@ -174,7 +174,7 @@ void ConfigureAgentsWidget::slotConfigureAgent()
         if (interface.isValid()) {
             interface.call(QLatin1String("showConfigureDialog"), (qlonglong)winId());
         } else {
-            qDebug() << " interface does not exist ";
+            qCDebug(KMAIL_LOG) << " interface does not exist ";
         }
     }
 }

@@ -35,7 +35,7 @@
 #include <KListWidgetSearchLine>
 #include <KLocalizedString>
 #include <QIcon>
-#include <QDebug>
+#include "kmail_debug.h"
 
 #include <QGridLayout>
 #include <QListWidget>
@@ -122,7 +122,7 @@ void TagSelectDialog::createTagList()
 void TagSelectDialog::slotTagsFetched(KJob *job)
 {
     if (job->error()) {
-        qWarning() << "Failed to load tags " << job->errorString();
+        qCWarning(KMAIL_LOG) << "Failed to load tags " << job->errorString();
         return;
     }
     Akonadi::TagFetchJob *fetchJob = static_cast<Akonadi::TagFetchJob *>(job);
@@ -159,6 +159,6 @@ Akonadi::Tag::List TagSelectDialog::selectedTag() const
             lst.append(Akonadi::Tag::fromUrl(item->data(UrlTag).toString()));
         }
     }
-    qDebug() << " lst" << lst;
+    qCDebug(KMAIL_LOG) << " lst" << lst;
     return lst;
 }

@@ -51,7 +51,7 @@
 #include <QProgressDialog>
 #include <KEmailAddress>
 #include <kdbusservicestarter.h>
-#include <qdebug.h>
+#include "kmail_debug.h"
 #include <kfiledialog.h>
 #include <KLocalizedString>
 #include <kmessagebox.h>
@@ -165,7 +165,7 @@ static void showJobError(KJob *job)
     if (kiojob && kiojob->ui()) {
         kiojob->ui()->showErrorMessage();
     } else {
-        qWarning() << "There is no GUI delegate set for a kjob, and it failed with error:" << job->errorString();
+        qCWarning(KMAIL_LOG) << "There is no GUI delegate set for a kjob, and it failed with error:" << job->errorString();
     }
 }
 
@@ -198,7 +198,7 @@ KMCommand::~KMCommand()
 KMCommand::Result KMCommand::result() const
 {
     if (mResult == Undefined) {
-        qDebug() << "mResult is Undefined";
+        qCDebug(KMAIL_LOG) << "mResult is Undefined";
     }
     return mResult;
 }
@@ -694,7 +694,7 @@ KMOpenMsgCommand::KMOpenMsgCommand(QWidget *parent, const QUrl &url,
       mEncoding(encoding),
       mMainWidget(main)
 {
-    qDebug() << "url :" << url;
+    qCDebug(KMAIL_LOG) << "url :" << url;
 }
 
 KMCommand::Result KMOpenMsgCommand::execute()
@@ -756,7 +756,7 @@ void KMOpenMsgCommand::slotResult(KJob *job)
         emit completed(this);
     } else {
         if (mMsgString.isEmpty()) {
-            qDebug() << " Message not found. There is a problem";
+            qCDebug(KMAIL_LOG) << " Message not found. There is a problem";
             doesNotContainMessage();
             return;
         }
@@ -890,7 +890,7 @@ KMCommand::Result KMForwardCommand::createComposer(const Akonadi::Item &item)
     KMime::Message::Ptr fwdMsg = factory.createForward();
 
     uint id = msg->headerByType("X-KMail-Identity") ?  msg->headerByType("X-KMail-Identity")->asUnicodeString().trimmed().toUInt() : 0;
-    qDebug() << "mail" << msg->encodedContent();
+    qCDebug(KMAIL_LOG) << "mail" << msg->encodedContent();
     bool lastEncrypt = false;
     bool lastSign = false;
     KMail::Util::lastEncryptAndSignState(lastEncrypt, lastSign, msg);
@@ -1078,7 +1078,7 @@ KMCommand::Result KMRedirectCommand::execute()
         }
 
         if (!kmkernel->msgSender()->send(newMsg, method)) {
-            qDebug() << "KMRedirectCommand: could not redirect message (sending failed)";
+            qCDebug(KMAIL_LOG) << "KMRedirectCommand: could not redirect message (sending failed)";
             return Failed; // error: couldn't send
         }
     }
@@ -1175,7 +1175,7 @@ KMCommand::Result KMSetStatusCommand::execute()
     Akonadi::Item::List itemsToModify;
     foreach (const Akonadi::Item &it, retrievedMsgs()) {
         if (mInvertMark) {
-            //qDebug()<<" item ::"<<tmpItem;
+            //qCDebug(KMAIL_LOG)<<" item ::"<<tmpItem;
             if (it.isValid()) {
                 bool myStatus;
                 MessageStatus itemStatus;
@@ -1222,7 +1222,7 @@ KMCommand::Result KMSetStatusCommand::execute()
 void KMSetStatusCommand::slotModifyItemDone(KJob *job)
 {
     if (job && job->error()) {
-        qWarning() << " Error trying to set item status:" << job->errorText();
+        qCWarning(KMAIL_LOG) << " Error trying to set item status:" << job->errorText();
     }
     deleteLater();
 }
@@ -1259,7 +1259,7 @@ KMCommand::Result KMSetTagCommand::execute()
 void KMSetTagCommand::slotTagCreateDone(KJob *job)
 {
     if (job && job->error()) {
-        qWarning() << " Error trying to create tag:" << job->errorText();
+        qCWarning(KMAIL_LOG) << " Error trying to create tag:" << job->errorText();
         deleteLater();
         return;
     }
@@ -1317,7 +1317,7 @@ void KMSetTagCommand::setTags()
 void KMSetTagCommand::slotModifyItemDone(KJob *job)
 {
     if (job && job->error()) {
-        qWarning() << " Error trying to set item status:" << job->errorText();
+        qCWarning(KMAIL_LOG) << " Error trying to set item status:" << job->errorText();
     }
     deleteLater();
 }
@@ -1566,7 +1566,7 @@ KMCommand::Result KMSaveAttachmentsCommand::execute()
         if (item.hasPayload<KMime::Message::Ptr>()) {
             contentsToSave += MessageViewer::Util::extractAttachments(item.payload<KMime::Message::Ptr>().get());
         } else {
-            qWarning() << "Retrieved item has no payload? Ignoring for saving the attachments";
+            qCWarning(KMAIL_LOG) << "Retrieved item has no payload? Ignoring for saving the attachments";
         }
     }
     KUrl currentUrl;

@@ -47,7 +47,7 @@
 #include <kmessagebox.h>
 #include <KLocalizedString>
 #include <KProcess>
-#include <QDebug>
+#include "kmail_debug.h"
 
 #include <QProcess>
 #include <QFileInfo>
@@ -134,7 +134,7 @@ bool KMail::Util::handleClickedURL(const KUrl &url, const QSharedPointer<MailCom
         win->show();
         return true;
     } else {
-        qWarning() << "Can't handle URL:" << url;
+        qCWarning(KMAIL_LOG) << "Can't handle URL:" << url;
         return false;
     }
 }
@@ -159,7 +159,7 @@ bool KMail::Util::mailingListsHandleURL(const QList<QUrl> &lst, const QSharedPoi
     if (!urlToHandle.isEmpty()) {
         return KMail::Util::handleClickedURL(urlToHandle, folder);
     } else {
-        qWarning() << "Can't handle url";
+        qCWarning(KMAIL_LOG) << "Can't handle url";
         return false;
     }
 }

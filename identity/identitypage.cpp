@@ -38,7 +38,7 @@
 #include <KMessageBox>
 #include <QMenu>
 #include <KLocalizedString>
-#include <QDebug>
+#include "kmail_debug.h"
 
 using namespace KMail;
 

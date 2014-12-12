@@ -39,7 +39,7 @@
 #include "kmkernel.h"
 #endif
 
-#include <QDebug>
+#include "kmail_debug.h"
 #include <KLocalizedString> // i18n
 #include <KIconLoader> // SmallIcon
 
@@ -160,7 +160,7 @@ void IdentityListView::editItem(QTreeWidgetItem *item, int column)
 
 void IdentityListView::commitData(QWidget *editor)
 {
-    qDebug() << "after editing";
+    qCDebug(KMAIL_LOG) << "after editing";
 
     if (!selectedItems().isEmpty()) {
 

@@ -46,7 +46,7 @@
 #include <AkonadiCore/ItemFetchJob>
 #include <KActionMenu>
 #include <KActionCollection>
-#include <QDebug>
+#include "kmail_debug.h"
 #include <KLocalizedString>
 #include <KXMLGUIClient>
 #include <KRun>
@@ -582,7 +582,7 @@ void MessageActions::editCurrentMessage()
     KMCommand *command = 0;
     if (mCurrentItem.isValid()) {
         Akonadi::Collection col = mCurrentItem.parentCollection();
-        qDebug() << " mCurrentItem.parentCollection()" << mCurrentItem.parentCollection();
+        qCDebug(KMAIL_LOG) << " mCurrentItem.parentCollection()" << mCurrentItem.parentCollection();
         // edit, unlike send again, removes the message from the folder
         // we only want that for templates and drafts folders
         if (col.isValid()

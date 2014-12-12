@@ -16,7 +16,7 @@
 */
 
 #include "validatesendmailshortcut.h"
-
+#include "kmail_debug.h"
 #include "libkdepim/widgets/pimmessagebox.h"
 #include "settings/globalsettings.h"
 
@@ -52,7 +52,7 @@ bool ValidateSendMailShortcut::validate()
             act->setShortcut(QKeySequence());
             mActionCollection->writeSettings();
         } else {
-            qDebug() << "Unable to find action named \"send_mail\"";
+            qCDebug(KMAIL_LOG) << "Unable to find action named \"send_mail\"";
         }
         sendNow = false;
     } else if (result == KMessageBox::No) {

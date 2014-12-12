@@ -38,7 +38,7 @@
 #include <kpluginfactory.h>
 #include <kpluginloader.h>
 #include <kiconloader.h>
-#include <qdebug.h>
+#include "kmail_debug.h"
 #include <ksettings/dispatcher.h>
 #include <kmailpartadaptor.h>
 #include <AkonadiCore/collection.h>
@@ -58,9 +58,9 @@ KMailPart::KMailPart(QWidget *parentWidget, QObject *parent, const QVariantList 
     KParts::ReadOnlyPart(parent),
     mParentWidget(parentWidget)
 {
-    qDebug() << "InstanceName:" << KComponentData::mainComponent().componentName();
+    qCDebug(KMAIL_LOG) << "InstanceName:" << KComponentData::mainComponent().componentName();
     //QT5 setComponentData(KMailFactory::componentData());
-    qDebug() << "InstanceName:" << KComponentData::mainComponent().componentName();
+    qCDebug(KMAIL_LOG) << "InstanceName:" << KComponentData::mainComponent().componentName();
 
     // Migrate to xdg path
     KMail::migrateConfig();
@@ -111,7 +111,7 @@ KMailPart::KMailPart(QWidget *parentWidget, QObject *parent, const QVariantList 
 
 KMailPart::~KMailPart()
 {
-    qDebug() << "Closing last KMMainWin: stopping mail check";
+    qCDebug(KMAIL_LOG) << "Closing last KMMainWin: stopping mail check";
     // Running KIO jobs prevent kapp from exiting, so we need to kill them
     // if they are only about checking mail (not important stuff like moving messages)
     mainWidget->destruct();
@@ -126,7 +126,7 @@ void KMailPart::updateQuickSearchText()
 
 bool KMailPart::openFile()
 {
-    qDebug();
+    qCDebug(KMAIL_LOG);
 
     mainWidget->show();
     return true;
@@ -154,7 +154,7 @@ void KMailPart::slotCollectionChanged(const Akonadi::Collection &collection, con
 
 void KMailPart::guiActivateEvent(KParts::GUIActivateEvent *e)
 {
-    qDebug();
+    qCDebug(KMAIL_LOG);
     KParts::ReadOnlyPart::guiActivateEvent(e);
     mainWidget->initializeFilterActions();
     mainWidget->tagActionManager()->createActions();

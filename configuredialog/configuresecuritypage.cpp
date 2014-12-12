@@ -37,7 +37,7 @@ using namespace PimCommon::ConfigureImmutableWidgetUtils;
 #include <KMessageBox>
 #include <QWhatsThis>
 #include <QDBusConnection>
-#include <QDebug>
+#include "kmail_debug.h"
 
 QString SecurityPage::helpAnchor() const
 {
@@ -436,13 +436,13 @@ void SecurityPage::WarningTab::slotConfigureChiasmus()
                     delete dlg;
                     break;
                 } else {
-                    qWarning() << "Found Chiasmus backend, but there doesn't seem to be a config object available from it.";
+                    qCWarning(KMAIL_LOG) << "Found Chiasmus backend, but there doesn't seem to be a config object available from it.";
                 }
             else {
-                qDebug() << "Skipping" << b->name() << "backend (not \"Chiasmus\")";
+                qCDebug(KMAIL_LOG) << "Skipping" << b->name() << "backend (not \"Chiasmus\")";
             }
     else {
-        qDebug() << "Kleo::CryptoBackendFactory::instance() returned NULL!";
+        qCDebug(KMAIL_LOG) << "Kleo::CryptoBackendFactory::instance() returned NULL!";
     }
 }
 #endif
@@ -743,11 +743,11 @@ Kleo::CryptoConfigEntry *SMIMECryptoConfigEntries::configEntry(const QString &co
 {
     Kleo::CryptoConfigEntry *entry = mConfig->entry(componentName, groupName, entryName);
     if (!entry) {
-        qWarning() << QStringLiteral("Backend error: gpgconf doesn't seem to know the entry for %1/%2/%3").arg(componentName, groupName, entryName);
+        qCWarning(KMAIL_LOG) << QStringLiteral("Backend error: gpgconf doesn't seem to know the entry for %1/%2/%3").arg(componentName, groupName, entryName);
         return 0;
     }
     if (entry->argType() != argType || entry->isList() != isList) {
-        qWarning() << QStringLiteral("Backend error: gpgconf has wrong type for %1/%2/%3: %4 %5").arg(componentName, groupName, entryName).arg(entry->argType()).arg(entry->isList());
+        qCWarning(KMAIL_LOG) << QStringLiteral("Backend error: gpgconf has wrong type for %1/%2/%3: %4 %5").arg(componentName, groupName, entryName).arg(entry->argType()).arg(entry->isList());
         return 0;
     }
     return entry;

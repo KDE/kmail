@@ -34,7 +34,7 @@
 
 #include <AkonadiCore/itemfetchjob.h>
 #include <kcontacts/addressee.h>
-#include <qdebug.h>
+#include "kmail_debug.h"
 #include <libkleo/kleo/cryptobackendfactory.h>
 
 #include <messagecomposer/attachment/attachmentmodel.h>
@@ -90,7 +90,7 @@ void AttachmentController::identityChanged()
 void AttachmentController::attachMyPublicKey()
 {
     const KIdentityManagement::Identity &identity = mComposer->identity();
-    qDebug() << identity.identityName();
+    qCDebug(KMAIL_LOG) << identity.identityName();
     exportPublicKey(QString::fromLatin1(identity.pgpEncryptionKey()));
 }
 
@@ -133,7 +133,7 @@ void AttachmentController::onShowAttachment(KMime::Content *content, const QByte
 void AttachmentController::doubleClicked(const QModelIndex &itemClicked)
 {
     if (!itemClicked.isValid()) {
-        qDebug() << "Received an invalid item clicked index";
+        qCDebug(KMAIL_LOG) << "Received an invalid item clicked index";
         return;
     }
     // The itemClicked index will contain the column information. But we want to retrieve

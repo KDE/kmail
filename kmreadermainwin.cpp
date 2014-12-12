@@ -36,7 +36,7 @@
 #include <kstandardaction.h>
 #include <ktoggleaction.h>
 #include <ktoolbar.h>
-#include <qdebug.h>
+#include "kmail_debug.h"
 #include <KFontAction>
 #include <KFontSizeAction>
 #include <QStatusBar>

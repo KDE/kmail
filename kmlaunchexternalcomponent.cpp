@@ -28,7 +28,7 @@
 #include <QtDBus/QDBusInterface>
 #include <QtDBus/QDBusReply>
 #include <QProcess>
-#include <QDebug>
+#include "kmail_debug.h"
 #include <QStandardPaths>
 
 KMLaunchExternalComponent::KMLaunchExternalComponent(QWidget *parentWidget, QObject *parent)
@@ -80,7 +80,7 @@ void KMLaunchExternalComponent::slotStartCertManager()
                                                "please check your installation."),
                            i18n("KMail Error"));
     else {
-        qDebug() << "slotStartCertManager(): certificate manager started.";
+        qCDebug(KMAIL_LOG) << "slotStartCertManager(): certificate manager started.";
     }
 }
 

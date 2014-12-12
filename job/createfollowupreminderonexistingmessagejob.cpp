@@ -16,6 +16,7 @@
 */
 
 #include "createfollowupreminderonexistingmessagejob.h"
+#include "kmail_debug.h"
 #include "../followupreminder/followupremindercreatejob.h"
 #include <AkonadiCore/ItemFetchJob>
 #include <AkonadiCore/ItemFetchScope>
@@ -37,7 +38,7 @@ void CreateFollowupReminderOnExistingMessageJob::start()
     if (canStart()) {
         doStart();
     } else {
-        qDebug() << " job can not started";
+        qCDebug(KMAIL_LOG) << " job can not started";
         deleteLater();
     }
 }
@@ -55,12 +56,12 @@ void CreateFollowupReminderOnExistingMessageJob::itemFetchJobDone(KJob *job)
     if (fetchJob->items().count() == 1) {
         mMessageItem = fetchJob->items().first();
     } else {
-        qDebug() << " CreateFollowupReminderOnExistingMessageJob Error during fetch: " << job->errorString();
+        qCDebug(KMAIL_LOG) << " CreateFollowupReminderOnExistingMessageJob Error during fetch: " << job->errorString();
         deleteLater();
         return;
     }
     if (!mMessageItem.hasPayload<KMime::Message::Ptr>()) {
-        qDebug() << " item has not payload";
+        qCDebug(KMAIL_LOG) << " item has not payload";
         deleteLater();
         return;
     }
@@ -72,7 +73,7 @@ void CreateFollowupReminderOnExistingMessageJob::itemFetchJobDone(KJob *job)
             const QString messageIdStr = messageID->asUnicodeString();
             reminderJob->setMessageId(messageIdStr);
         } else {
-            qDebug() << " missing messageId";
+            qCDebug(KMAIL_LOG) << " missing messageId";
             delete reminderJob;
             deleteLater();
             return;
@@ -93,7 +94,7 @@ void CreateFollowupReminderOnExistingMessageJob::itemFetchJobDone(KJob *job)
         connect(reminderJob, SIGNAL(result(KJob*)), this, SLOT(slotReminderDone(KJob*)));
         reminderJob->start();
     } else {
-        qDebug() << " no message found";
+        qCDebug(KMAIL_LOG) << " no message found";
         deleteLater();
     }
 }
@@ -101,7 +102,7 @@ void CreateFollowupReminderOnExistingMessageJob::itemFetchJobDone(KJob *job)
 void CreateFollowupReminderOnExistingMessageJob::slotReminderDone(KJob *job)
 {
     if (job->error()) {
-        qDebug() << "CreateFollowupReminderOnExistingMessageJob::slotReminderDone  :" << job->errorString();
+        qCDebug(KMAIL_LOG) << "CreateFollowupReminderOnExistingMessageJob::slotReminderDone  :" << job->errorString();
     }
     deleteLater();
 }

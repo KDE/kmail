@@ -44,7 +44,7 @@ typedef boost::shared_ptr<KMime::Message> MessagePtr;
 #include <QApplication>
 #include <QPalette>
 #include <QTextDocument>
-#include <qdebug.h>
+#include "kmail_debug.h"
 #include <kglobal.h>
 #include <KLocalizedString>
 #include <KFormat>

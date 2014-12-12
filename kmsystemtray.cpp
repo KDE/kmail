@@ -29,7 +29,7 @@
 #include <kiconloader.h>
 #include <kcolorscheme.h>
 #include <kwindowsystem.h>
-#include <qdebug.h>
+#include "kmail_debug.h"
 #include <QMenu>
 #include <KLocalizedString>
 #include <QAction>
@@ -70,7 +70,7 @@ KMSystemTray::KMSystemTray(QObject *parent)
       mNewMessagesPopup(0),
       mSendQueued(0)
 {
-    qDebug() << "Initting systray";
+    qCDebug(KMAIL_LOG) << "Initting systray";
     setToolTipTitle(i18n("KMail"));
     setToolTipIconByName(QLatin1String("kmail"));
     setIconByName(QLatin1String("kmail"));
@@ -169,7 +169,7 @@ void KMSystemTray::setMode(int newMode)
         return;
     }
 
-    qDebug() << "Setting systray mMode to" << newMode;
+    qCDebug(KMAIL_LOG) << "Setting systray mMode to" << newMode;
     mMode = newMode;
 
     switch (mMode) {
@@ -180,7 +180,7 @@ void KMSystemTray::setMode(int newMode)
         setStatus(mCount > 0 ? KStatusNotifierItem::Active : KStatusNotifierItem::Passive);
         break;
     default:
-        qDebug() << "Unknown systray mode" << mMode;
+        qCDebug(KMAIL_LOG) << "Unknown systray mode" << mMode;
     }
 }
 
@@ -396,7 +396,7 @@ void KMSystemTray::initListOfCollection()
         }
     }
 
-    //qDebug()<<" mCount :"<<mCount;
+    //qCDebug(KMAIL_LOG)<<" mCount :"<<mCount;
     updateCount();
 }
 

@@ -20,7 +20,7 @@
 #include <KContacts/VCardConverter>
 #include <KLocalizedString>
 #include <Akonadi/Contact/ContactEditor>
-#include <QDebug>
+#include "kmail_debug.h"
 #include <KMessageBox>
 #include <QStandardPaths>
 
@@ -129,7 +129,7 @@ QString IdentityEditVcardDialog::saveVcard() const
         file.flush();
         file.close();
     } else {
-        qDebug() << "We cannot open file: " << mVcardFileName;
+        qCDebug(KMAIL_LOG) << "We cannot open file: " << mVcardFileName;
     }
     return mVcardFileName;
 }

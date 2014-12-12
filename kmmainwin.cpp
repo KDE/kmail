@@ -40,7 +40,7 @@
 #include <kxmlguifactory.h>
 #include <kstringhandler.h>
 #include <kstandardaction.h>
-#include <qdebug.h>
+#include "kmail_debug.h"
 #include <ktip.h>
 
 #include <QLabel>

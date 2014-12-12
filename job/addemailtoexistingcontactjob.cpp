@@ -16,7 +16,7 @@
 */
 
 #include "addemailtoexistingcontactjob.h"
-
+#include "kmail_debug.h"
 #include <libkdepim/misc/broadcaststatus.h>
 
 #include <AkonadiCore/ItemModifyJob>
@@ -53,7 +53,7 @@ void AddEmailToExistingContactJob::start()
             connect(job, &Akonadi::ItemModifyJob::result, this, &AddEmailToExistingContactJob::slotAddEmailDone);
         }
     } else {
-        qDebug() << " not a KContacts::Addressee item ";
+        qCDebug(KMAIL_LOG) << " not a KContacts::Addressee item ";
         //TODO add error
         Q_EMIT emitResult();
     }

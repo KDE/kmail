@@ -16,6 +16,7 @@
 */
 
 #include "folderarchiveagentcheckcollection.h"
+#include "kmail_debug.h"
 #include "folderarchiveaccountinfo.h"
 
 #include <KLocalizedString>
@@ -56,7 +57,7 @@ void FolderArchiveAgentCheckCollection::slotInitialCollectionFetchingDone(KJob *
 {
 #if 0
     if (job->error()) {
-        qWarning() << job->errorString();
+        qCWarning(KMAIL_LOG) << job->errorString();
         Q_EMIT checkFailed(QString());
         return;
     }
@@ -74,7 +75,7 @@ void FolderArchiveAgentCheckCollection::slotInitialCollectionFetchingDone(KJob *
 void FolderArchiveAgentCheckCollection::slotInitialCollectionFetchingFirstLevelDone(KJob *job)
 {
     if (job->error()) {
-        qWarning() << job->errorString();
+        qCWarning(KMAIL_LOG) << job->errorString();
         Q_EMIT checkFailed(i18n("Cannot fetch collection. %1", job->errorString()));
         return;
     }
@@ -124,7 +125,7 @@ void FolderArchiveAgentCheckCollection::createNewFolder(const QString &name)
 void FolderArchiveAgentCheckCollection::slotCreateNewFolder(KJob *job)
 {
     if (job->error()) {
-        qWarning() << job->errorString();
+        qCWarning(KMAIL_LOG) << job->errorString();
         Q_EMIT checkFailed(i18n("Unable to create folder. %1", job->errorString()));
         return;
     }

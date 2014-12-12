@@ -28,7 +28,7 @@
 
 #include <kmessagebox.h>
 #include <KLocalizedString>
-#include <qdebug.h>
+#include "kmail_debug.h"
 
 #include <QList>
 

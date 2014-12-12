@@ -16,6 +16,7 @@
 */
 
 #include "followupremindercreatejob.h"
+#include "kmail_debug.h"
 #include "agents/followupreminderagent/followupreminderutil.h"
 #include <KCalCore/Todo>
 #include <KLocalizedString>
@@ -79,7 +80,7 @@ void FollowupReminderCreateJob::start()
             writeFollowupReminderInfo();
         }
     } else {
-        qDebug() << "FollowupReminderCreateJob info not valid ";
+        qCDebug(KMAIL_LOG) << "FollowupReminderCreateJob info not valid ";
         Q_EMIT emitResult();
         return;
     }
@@ -88,7 +89,7 @@ void FollowupReminderCreateJob::start()
 void FollowupReminderCreateJob::slotCreateNewTodo(KJob *job)
 {
     if (job->error()) {
-        qDebug() << "Error during create new Todo " << job->errorString();
+        qCDebug(KMAIL_LOG) << "Error during create new Todo " << job->errorString();
     } else {
         Akonadi::ItemCreateJob *createJob = qobject_cast<Akonadi::ItemCreateJob *>(job);
         mInfo->setTodoId(createJob->item().id());

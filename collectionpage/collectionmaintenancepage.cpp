@@ -32,7 +32,7 @@
 #include <QPushButton>
 #include <kio/global.h>
 #include <KLocalizedString>
-#include <QDebug>
+#include "kmail_debug.h"
 #include <QGroupBox>
 #include <QLabel>
 #include <QFormLayout>
@@ -117,7 +117,7 @@ void CollectionMaintenancePage::load(const Collection &col)
             QDBusInterface interfaceBalooIndexer(QLatin1String("org.freedesktop.Akonadi.Agent.akonadi_baloo_indexer"), QLatin1String("/"));
             if (interfaceBalooIndexer.isValid()) {
                 if (!interfaceBalooIndexer.callWithCallback(QLatin1String("indexedItems"), QList<QVariant>() << (qlonglong)mCurrentCollection.id(), this, SLOT(onIndexedItemsReceived(qint64)))) {
-                    qWarning() << "Failed to request indexed items";
+                    qCWarning(KMAIL_LOG) << "Failed to request indexed items";
                 }
             }
         }
@@ -126,7 +126,7 @@ void CollectionMaintenancePage::load(const Collection &col)
 
 void CollectionMaintenancePage::onIndexedItemsReceived(qint64 num)
 {
-    qDebug() << num;
+    qCDebug(KMAIL_LOG) << num;
     if (num == 0) {
         mLastIndexed->clear();
     } else {
