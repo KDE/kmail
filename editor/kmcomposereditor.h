@@ -48,7 +48,7 @@ public:
      * - tools_quote
      * - tools_unquote
      */
-    virtual QList<QAction *> createActions();
+    QList<QAction *> createActions() Q_DECL_OVERRIDE;
 
     /**
      * This replaces all characters not known to the specified codec with
@@ -59,12 +59,12 @@ public:
     /**
      * Reimplemented from KMEditor.
      */
-    QString smartQuote(const QString &msg);
+    QString smartQuote(const QString &msg) Q_DECL_OVERRIDE;
 
     /**
      * Reimplemented from KMEditor.
      */
-    void setHighlighterColors(KPIMTextEdit::EMailQuoteHighlighter *highlighter);
+    void setHighlighterColors(KPIMTextEdit::EMailQuoteHighlighter *highlighter) Q_DECL_OVERRIDE;
 
     /**
      * Static override because we want to hide part of the dialog UI
