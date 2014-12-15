@@ -28,16 +28,6 @@
        </widget>
       </item>
       <item>
-       <widget class="QCheckBox" name="mShowEncryptionResult">
-        <property name="whatsThis">
-         <string>When this option is enabled, the signed/encrypted text will be shown in a separate window, enabling you to know how it will look before it is sent. This is a good idea when you are verifying that your encryption system works.</string>
-        </property>
-        <property name="text">
-         <string>Show s&amp;igned/encrypted text after composing</string>
-        </property>
-       </widget>
-      </item>
-      <item>
        <widget class="QCheckBox" name="mStoreEncrypted">
         <property name="toolTip">
          <string>Check to store messages encrypted </string>

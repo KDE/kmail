@@ -270,10 +270,6 @@
       </entry>
       <entry name="SnippetSplitterPosition" type="IntList"/>
 
-      <entry name="CryptoShowEncryptionResult" type="Bool" key="crypto-show-encryption-result">
-        <label>Show signed/encrypted text after composing</label>
-        <default>true</default>
-      </entry>
       <entry name="CryptoStoreEncrypted" type="Bool" key="crypto-store-encrypted">
         <label>When check, sent messages will be stored in the encrypted form</label>
         <default>true</default>
