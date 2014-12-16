@@ -422,10 +422,6 @@ private slots:
      */
     void slotAutoSpellCheckingToggled( bool );
 
-    /**
-     * Updates the visibility and text of the signature and encryption state indicators.
-     */
-    void slotUpdateSignatureAndEncrypionStateIndicators();
 
     virtual void setAutoSaveFileName( const QString& fileName );
     void slotSpellCheckingLanguage(const QString& language);
@@ -477,6 +473,11 @@ public: // kmcommand
     void ignoreStickyFields();
 
 private:
+    /**
+     * Updates the visibility and text of the signature and encryption state indicators.
+     */
+    void updateSignatureAndEncryptionStateIndicators();
+
     void addFollowupReminder(const QString &messageId);
     void confirmBeforeSend();
     void sendNow(bool shortcutUsed);

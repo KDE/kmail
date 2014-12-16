@@ -442,7 +442,7 @@ KMComposeWin::KMComposeWin( const KMime::Message::Ptr &aMsg, bool lastSignState,
     setupActions();
     setupEditor();
     rethinkFields();
-    slotUpdateSignatureAndEncrypionStateIndicators();
+    updateSignatureAndEncryptionStateIndicators();
 
     applyMainWindowSettings( KMKernel::self()->config()->group( "Composer") );
 
@@ -802,7 +802,7 @@ void KMComposeWin::rethinkFields( bool fromSlot )
 
     for ( mask=1, mNumHeaders=0; mask<=showHeaders; mask<<=1 ) {
         if ( ( showHeaders & mask ) != 0 ) {
-            mNumHeaders++;
+            ++mNumHeaders;
         }
     }
 
@@ -1703,7 +1703,7 @@ void KMComposeWin::setMessage( const KMime::Message::Ptr &newMsg, bool lastSignS
         setEncryption( mLastEncryptActionState );
         setSigning( ( canOpenPGPSign || canSMIMESign ) && mLastSignActionState );
     }
-    slotUpdateSignatureAndEncrypionStateIndicators();
+    updateSignatureAndEncryptionStateIndicators();
 
     QString kmailFcc;
     if ( mMsg->headerByType( "X-KMail-Fcc" ) ) {
@@ -2484,7 +2484,7 @@ void KMComposeWin::slotUpdWinTitle()
 void KMComposeWin::slotEncryptToggled( bool on )
 {
     setEncryption( on, true );
-    slotUpdateSignatureAndEncrypionStateIndicators();
+    updateSignatureAndEncryptionStateIndicators();
 }
 
 
@@ -2518,7 +2518,7 @@ void KMComposeWin::setEncryption( bool encrypt, bool setByUser )
     // make sure the mEncryptAction is in the right state
     mEncryptAction->setChecked( encrypt );
     if(!setByUser) {
-        slotUpdateSignatureAndEncrypionStateIndicators();
+        updateSignatureAndEncryptionStateIndicators();
     }
     // show the appropriate icon
     if ( encrypt ) {
@@ -2537,7 +2537,7 @@ void KMComposeWin::setEncryption( bool encrypt, bool setByUser )
 void KMComposeWin::slotSignToggled( bool on )
 {
     setSigning( on, true );
-    slotUpdateSignatureAndEncrypionStateIndicators();
+    updateSignatureAndEncryptionStateIndicators();
 }
 
 
@@ -2572,7 +2572,7 @@ void KMComposeWin::setSigning( bool sign, bool setByUser )
     mSignAction->setChecked( sign );
 
     if(!setByUser) {
-        slotUpdateSignatureAndEncrypionStateIndicators();
+        updateSignatureAndEncryptionStateIndicators();
     }
     // mark the attachments for (no) signing
     if ( canSignEncryptAttachments() ) {
@@ -3395,7 +3395,7 @@ void KMComposeWin::setMaximumHeaderSize()
     mHeadersArea->setMaximumHeight( mHeadersArea->sizeHint().height() );
 }
 
-void KMComposeWin::slotUpdateSignatureAndEncrypionStateIndicators()
+void KMComposeWin::updateSignatureAndEncryptionStateIndicators()
 {
     mCryptoStateIndicatorWidget->updateSignatureAndEncrypionStateIndicators(mSignAction->isChecked(), mEncryptAction->isChecked());
 }
