@@ -325,10 +325,10 @@ KMMainWidget::KMMainWidget( QWidget *parent, KXMLGUIClient *aGUIClient,
                                         i18n( "Unable to start import wizard" ) );
                 }
             } else {
-                KMail::Util::launchAccountWizard( this );
+                mLaunchExternalComponent->slotAccountWizard();
             }
         } else {
-            KMail::Util::launchAccountWizard( this );
+            mLaunchExternalComponent->slotAccountWizard();
         }
     }
     // must be the last line of the constructor:

@@ -85,20 +85,6 @@ Akonadi::Item::Id KMail::Util::putRepliesInSameFolder( const Akonadi::Item& item
     return -1;
 }
 
-void KMail::Util::launchAccountWizard( QWidget *w )
-{
-    QStringList lst;
-    lst.append( QLatin1String("--type") );
-    lst.append( QLatin1String("message/rfc822") );
-
-    const QString path = KStandardDirs::findExe( QLatin1String("accountwizard" ) );
-    if( !QProcess::startDetached( path, lst ) )
-        KMessageBox::error( w, i18n( "Could not start the account wizard. "
-                                     "Please check your installation." ),
-                            i18n( "Unable to start account wizard" ) );
-
-}
-
 bool KMail::Util::handleClickedURL( const KUrl &url, const QSharedPointer<MailCommon::FolderCollection> &folder )
 {
     if ( url.protocol() == QLatin1String( "mailto" ) ) {

@@ -121,5 +121,13 @@ void KMLaunchExternalComponent::slotImport()
 
 void KMLaunchExternalComponent::slotAccountWizard()
 {
-    KMail::Util::launchAccountWizard( mParentWidget );
+    QStringList lst;
+    lst.append( QLatin1String("--type") );
+    lst.append( QLatin1String("message/rfc822") );
+
+    const QString path = KStandardDirs::findExe( QLatin1String("accountwizard" ) );
+    if( !QProcess::startDetached( path, lst ) )
+        KMessageBox::error( mParentWidget, i18n( "Could not start the account wizard. "
+                                     "Please check your installation." ),
+                            i18n( "Unable to start account wizard" ) );
 }
