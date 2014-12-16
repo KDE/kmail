@@ -410,30 +410,6 @@ The recommended SPHINX setting is 14 days.
    </item>
    <item>
     <layout class="QHBoxLayout">
-     <item>
-      <spacer name="horizontalSpacer2">
-       <property name="orientation">
-        <enum>Qt::Horizontal</enum>
-       </property>
-       <property name="sizeHint" stdset="0">
-        <size>
-         <width>40</width>
-         <height>20</height>
-        </size>
-       </property>
-      </spacer>
-     </item>
-     <item>
-      <widget class="QPushButton" name="chiasmusButton">
-       <property name="text">
-        <string>Chiasmus Settings...</string>
-       </property>
-      </widget>
-     </item>
-    </layout>
-   </item>
-   <item>
-    <layout class="QHBoxLayout">
      <property name="margin">
       <number>0</number>
      </property>
@@ -483,7 +459,6 @@ The recommended SPHINX setting is 14 days.
   <tabstop>mWarnEncrChainCertExpiresSB</tabstop>
   <tabstop>mWarnEncrRootCertExpiresSB</tabstop>
   <tabstop>gnupgButton</tabstop>
-  <tabstop>chiasmusButton</tabstop>
   <tabstop>enableAllWarningsPB</tabstop>
  </tabstops>
  <resources/>

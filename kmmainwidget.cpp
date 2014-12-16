@@ -324,10 +324,10 @@ KMMainWidget::KMMainWidget(QWidget *parent, KXMLGUIClient *aGUIClient,
                                        i18n("Unable to start import wizard"));
                 }
             } else {
-                KMail::Util::launchAccountWizard(this);
+                mLaunchExternalComponent->slotAccountWizard();
             }
         } else {
-            KMail::Util::launchAccountWizard(this);
+            mLaunchExternalComponent->slotAccountWizard();
         }
     }
     // must be the last line of the constructor:
@@ -1008,14 +1008,16 @@ void KMMainWidget::createWidgets()
                 this, &KMMainWidget::slotMessagePopup);
         connect(mMsgView->viewer(), &MessageViewer::Viewer::moveMessageToTrash,
                 this, &KMMainWidget::slotMoveMessageToTrash);
-        if (mShowIntroductionAction)
+        if (mShowIntroductionAction) {
             mShowIntroductionAction->setEnabled(true);
+        }
     } else {
         if (mMsgActions) {
             mMsgActions->setMessageView(0);
         }
-        if (mShowIntroductionAction)
+        if (mShowIntroductionAction) {
             mShowIntroductionAction->setEnabled(false);
+        }
     }
 
     //
@@ -3358,7 +3360,7 @@ void KMMainWidget::setupActions()
     }
     {
         mShowIntroductionAction = new QAction(QIcon::fromTheme(QLatin1String("kmail")), i18n("KMail &Introduction"), this);
-        actionCollection()->addAction(QLatin1String("help_kmail_welcomepage"), mShowIntroductionAction );
+        actionCollection()->addAction(QLatin1String("help_kmail_welcomepage"), mShowIntroductionAction);
         KMail::Util::addQActionHelpText(mShowIntroductionAction, i18n("Display KMail's Welcome Page"));
         connect(mShowIntroductionAction, &QAction::triggered, this, &KMMainWidget::slotIntro);
         mShowIntroductionAction->setEnabled(mMsgView != 0);
@@ -4343,12 +4345,12 @@ void KMMainWidget::slotMessageSelected(const Akonadi::Item &item)
             connect(mShowBusySplashTimer, &QTimer::timeout, this, &KMMainWidget::slotShowBusySplash);
             mShowBusySplashTimer->start(GlobalSettings::self()->folderLoadingTimeout());   //TODO: check if we need a different timeout setting for this
 
-            Akonadi::ItemFetchJob *itemFetchJob = MessageViewer::Viewer::createFetchJob( item );
+            Akonadi::ItemFetchJob *itemFetchJob = MessageViewer::Viewer::createFetchJob(item);
             if (mCurrentFolder) {
                 const QString resource = mCurrentFolder->collection().resource();
-                itemFetchJob->setProperty( "_resource", QVariant::fromValue(resource) );
-                connect( itemFetchJob, SIGNAL(itemsReceived(Akonadi::Item::List)),
-                         SLOT(itemsReceived(Akonadi::Item::List)) );
+                itemFetchJob->setProperty("_resource", QVariant::fromValue(resource));
+                connect(itemFetchJob, SIGNAL(itemsReceived(Akonadi::Item::List)),
+                        SLOT(itemsReceived(Akonadi::Item::List)));
                 connect(itemFetchJob, &Akonadi::ItemFetchJob::result, this, &KMMainWidget::itemsFetchDone);
             }
         }

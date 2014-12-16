@@ -1129,8 +1129,8 @@ void ComposerPage::HeadersTab::slotRemoveMimeHeader()
     QTreeWidgetItem *item = mHeaderList->currentItem();
     if (!item) {
         qCDebug(KMAIL_LOG) << "=================================================="
-                 << "Error: Remove button was pressed although no custom header was selected\n"
-                 << "==================================================\n";
+                           << "Error: Remove button was pressed although no custom header was selected\n"
+                           << "==================================================\n";
         return;
     }
 

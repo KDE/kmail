@@ -320,15 +320,12 @@ SecurityPageWarningTab::SecurityPageWarningTab(QWidget *parent)
     mWidget = new Ui::WarningConfiguration;
     mWidget->setupUi(this);
 
-    mWidget->chiasmusButton->hide();
-
     connect(mWidget->warnGroupBox, &QGroupBox::toggled, this, &SecurityPageWarningTab::slotEmitChanged);
     connect(mWidget->mWarnUnsigned, &QCheckBox::toggled, this, &SecurityPageWarningTab::slotEmitChanged);
     connect(mWidget->warnUnencryptedCB, &QCheckBox::toggled, this, &SecurityPageWarningTab::slotEmitChanged);
     connect(mWidget->warnReceiverNotInCertificateCB, &QCheckBox::toggled, this, &SecurityPageWarningTab::slotEmitChanged);
 
     connect(mWidget->gnupgButton, &QPushButton::clicked, this, &SecurityPageWarningTab::slotConfigureGnupg);
-    //connect( mWidget->chiasmusButton, SIGNAL(clicked()), SLOT(slotConfigureChiasmus()) );
     connect(mWidget->enableAllWarningsPB, &QPushButton::clicked, this, &SecurityPageWarningTab::slotReenableAllWarningsClicked);
 }
 
@@ -416,32 +413,6 @@ void SecurityPage::WarningTab::slotConfigureGnupg()
     dlg->exec();
     delete dlg;
 }
-
-#if 0
-void SecurityPage::WarningTab::slotConfigureChiasmus()
-{
-    using namespace Kleo;
-    // Find Chiasmus backend:
-    if (const CryptoBackendFactory *const bf = Kleo::CryptoBackendFactory::instance())
-        for (unsigned int i = 0 ; const CryptoBackend *const b = bf->backend(i) ; ++i)
-            if (b->name() == QLatin1String("Chiasmus"))
-                if (CryptoConfig *const c = b->config()) {
-                    QPointer<CryptoConfigDialog> dlg(new CryptoConfigDialog(c, this));
-                    dlg->exec();
-                    delete dlg;
-                    break;
-                } else {
-                    qCWarning(KMAIL_LOG) << "Found Chiasmus backend, but there doesn't seem to be a config object available from it.";
-                }
-            else {
-                qCDebug(KMAIL_LOG) << "Skipping" << b->name() << "backend (not \"Chiasmus\")";
-            }
-    else {
-        qCDebug(KMAIL_LOG) << "Kleo::CryptoBackendFactory::instance() returned NULL!";
-    }
-}
-#endif
-////
 
 QString SecurityPage::SMimeTab::helpAnchor() const
 {

@@ -80,8 +80,6 @@ KMime::Types::Mailbox::List mailingListsFromMessage(const Akonadi::Item &item);
      */
 Akonadi::Item::Id putRepliesInSameFolder(const Akonadi::Item &item);
 
-void launchAccountWizard(QWidget *);
-
 /**
      * Handles a clicked URL, but only in case the viewer didn't handle it.
      * Currently only support mailto.

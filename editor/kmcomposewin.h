@@ -668,8 +668,6 @@ private:
     QSplitter *mSnippetSplitter;
     QByteArray mOriginalPreferredCharset;
 
-    //KToggleAction *mEncryptChiasmusAction;
-
     MessageComposer::Composer *mDummyComposer;
     // used for auto saving, printing, etc. Not for sending, which happens in ComposerViewBase
     QList< MessageComposer::Composer * > mMiscComposers;

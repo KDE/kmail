@@ -535,7 +535,7 @@ void KMComposeWin::addAttachmentsAndSend(const QList<QUrl> &urls, const QString 
     qCDebug(KMAIL_LOG) << "addAttachment and sending!";
     const int nbUrl = urls.count();
     for (int i = 0; i < nbUrl; ++i) {
-        mComposerBase->addAttachment(urls[i], comment,true);
+        mComposerBase->addAttachment(urls[i], comment, true);
     }
 
     send(how);
