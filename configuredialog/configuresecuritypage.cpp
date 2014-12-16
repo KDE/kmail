@@ -327,7 +327,6 @@ SecurityPageWarningTab::SecurityPageWarningTab( QWidget * parent )
     mWidget = new Ui::WarningConfiguration;
     mWidget->setupUi( this );
 
-    mWidget->chiasmusButton->hide();
 
     connect( mWidget->warnGroupBox, SIGNAL(toggled(bool)), SLOT(slotEmitChanged()) );
     connect( mWidget->mWarnUnsigned, SIGNAL(toggled(bool)), SLOT(slotEmitChanged()) );
@@ -335,7 +334,6 @@ SecurityPageWarningTab::SecurityPageWarningTab( QWidget * parent )
     connect( mWidget->warnReceiverNotInCertificateCB, SIGNAL(toggled(bool)), SLOT(slotEmitChanged()) );
 
     connect( mWidget->gnupgButton, SIGNAL(clicked()), SLOT(slotConfigureGnupg()) );
-    //connect( mWidget->chiasmusButton, SIGNAL(clicked()), SLOT(slotConfigureChiasmus()) );
     connect( mWidget->enableAllWarningsPB, SIGNAL(clicked()), SLOT(slotReenableAllWarningsClicked()) );
 }
 
@@ -423,30 +421,6 @@ void SecurityPage::WarningTab::slotConfigureGnupg()
     dlg->exec();
     delete dlg;
 }
-
-#if 0
-void SecurityPage::WarningTab::slotConfigureChiasmus()
-{
-    using namespace Kleo;
-    // Find Chiasmus backend:
-    if ( const CryptoBackendFactory * const bf = Kleo::CryptoBackendFactory::instance() )
-        for ( unsigned int i = 0 ; const CryptoBackend * const b = bf->backend( i ) ; ++i )
-            if ( b->name() == QLatin1String( "Chiasmus" ) )
-                if ( CryptoConfig * const c = b->config() ) {
-                    QPointer<CryptoConfigDialog> dlg( new CryptoConfigDialog( c, this ) );
-                    dlg->exec();
-                    delete dlg;
-                    break;
-                } else {
-                    kWarning() << "Found Chiasmus backend, but there doesn't seem to be a config object available from it.";
-                }
-            else
-                kDebug() << "Skipping" << b->name() << "backend (not \"Chiasmus\")";
-    else
-        kDebug() << "Kleo::CryptoBackendFactory::instance() returned NULL!";
-}
-#endif
-////
 
 QString SecurityPage::SMimeTab::helpAnchor() const
 {

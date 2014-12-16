@@ -104,7 +104,6 @@ public:
 private Q_SLOTS:
     void slotReenableAllWarningsClicked();
     void slotConfigureGnupg();
-    //void slotConfigureChiasmus();
 
 private:
     void doLoadFromGlobalSettings();
