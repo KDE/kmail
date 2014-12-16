@@ -474,16 +474,16 @@ public:
     void stopAgentInstance();
 
     //ISettings
-    /*reimp*/ bool showPopupAfterDnD();
+    /*reimp*/ bool showPopupAfterDnD() Q_DECL_OVERRIDE;
 
-    /*reimp*/ bool excludeImportantMailFromExpiry();
+    /*reimp*/ bool excludeImportantMailFromExpiry() Q_DECL_OVERRIDE;
 
-    /*reimp*/ qreal closeToQuotaThreshold();
+    /*reimp*/ qreal closeToQuotaThreshold() Q_DECL_OVERRIDE;
 
-    /*reimp*/ Akonadi::Collection::Id lastSelectedFolder();
-    /*reimp*/ void setLastSelectedFolder(const Akonadi::Collection::Id  &col);
+    /*reimp*/ Akonadi::Collection::Id lastSelectedFolder() Q_DECL_OVERRIDE;
+    /*reimp*/ void setLastSelectedFolder(const Akonadi::Collection::Id  &col) Q_DECL_OVERRIDE;
 
-    /*reimp*/ QStringList customTemplates();
+    /*reimp*/ QStringList customTemplates() Q_DECL_OVERRIDE;
 
     void checkFolderFromResources(const Akonadi::Collection::List &collectionList);
 
