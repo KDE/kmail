@@ -260,7 +260,6 @@ SecurityPageComposerCryptoTab::SecurityPageComposerCryptoTab(QWidget *parent)
     mWidget = new Ui::ComposerCryptoConfiguration;
     mWidget->setupUi(this);
     connect(mWidget->mEncToSelf, &QCheckBox::toggled, this, &SecurityPageComposerCryptoTab::slotEmitChanged);
-    connect(mWidget->mShowEncryptionResult, &QCheckBox::toggled, this, &SecurityPageComposerCryptoTab::slotEmitChanged);
     connect(mWidget->mShowKeyApprovalDlg, &QCheckBox::toggled, this, &SecurityPageComposerCryptoTab::slotEmitChanged);
     connect(mWidget->mAutoEncrypt, &QCheckBox::toggled, this, &SecurityPageComposerCryptoTab::slotEmitChanged);
     connect(mWidget->mNeverEncryptWhenSavingInDrafts, &QCheckBox::toggled, this, &SecurityPageComposerCryptoTab::slotEmitChanged);
@@ -278,8 +277,6 @@ void SecurityPage::ComposerCryptoTab::doLoadOther()
     // If you change default values, sync messagecomposer.cpp too
 
     loadWidget(mWidget->mEncToSelf, MessageComposer::MessageComposerSettings::self()->cryptoEncryptToSelfItem());
-    mWidget->mShowEncryptionResult->setChecked(false);   //composer.readBoolEntry( "crypto-show-encryption-result", true ) );
-    mWidget->mShowEncryptionResult->hide();
     loadWidget(mWidget->mShowKeyApprovalDlg, MessageComposer::MessageComposerSettings::self()->cryptoShowKeysForApprovalItem());
 
     loadWidget(mWidget->mAutoEncrypt, MessageComposer::MessageComposerSettings::self()->pgpAutoEncryptItem()) ;
@@ -292,7 +289,6 @@ void SecurityPage::ComposerCryptoTab::doLoadOther()
 void SecurityPage::ComposerCryptoTab::save()
 {
     saveCheckBox(mWidget->mEncToSelf, MessageComposer::MessageComposerSettings::self()->cryptoEncryptToSelfItem());
-    saveCheckBox(mWidget->mShowEncryptionResult, GlobalSettings::self()->cryptoShowEncryptionResultItem());
     saveCheckBox(mWidget->mShowKeyApprovalDlg, MessageComposer::MessageComposerSettings::self()->cryptoShowKeysForApprovalItem());
 
     saveCheckBox(mWidget->mAutoEncrypt, MessageComposer::MessageComposerSettings::self()->pgpAutoEncryptItem()) ;
@@ -304,7 +300,6 @@ void SecurityPage::ComposerCryptoTab::save()
 void SecurityPage::ComposerCryptoTab::doLoadFromGlobalSettings()
 {
     loadWidget(mWidget->mEncToSelf, MessageComposer::MessageComposerSettings::self()->cryptoEncryptToSelfItem());
-    loadWidget(mWidget->mShowEncryptionResult, GlobalSettings::self()->cryptoShowEncryptionResultItem());
     loadWidget(mWidget->mShowKeyApprovalDlg, MessageComposer::MessageComposerSettings::self()->cryptoShowKeysForApprovalItem());
 
     loadWidget(mWidget->mAutoEncrypt, MessageComposer::MessageComposerSettings::self()->pgpAutoEncryptItem()) ;
