@@ -44,10 +44,10 @@ public:
     explicit CollectionMailingListPage(QWidget *parent = Q_NULLPTR);
     ~CollectionMailingListPage();
 
-    void load(const Akonadi::Collection &col);
-    void save(Akonadi::Collection &col);
+    void load(const Akonadi::Collection &col) Q_DECL_OVERRIDE;
+    void save(Akonadi::Collection &col) Q_DECL_OVERRIDE;
 
-    bool canHandle(const Akonadi::Collection &col) const;
+    bool canHandle(const Akonadi::Collection &col) const Q_DECL_OVERRIDE;
 
 protected:
     void init(const Akonadi::Collection &);
