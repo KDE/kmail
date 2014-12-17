@@ -434,7 +434,6 @@ private Q_SLOTS:
      */
     void slotAutoSpellCheckingToggled(bool);
 
-
     virtual void setAutoSaveFileName(const QString &fileName);
     void slotSpellCheckingLanguage(const QString &language);
     void forceAutoSaveMessage();
