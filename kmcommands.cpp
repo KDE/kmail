@@ -56,7 +56,7 @@
 #include <KLocalizedString>
 #include <kmessagebox.h>
 #include <kbookmarkmanager.h>
-
+#include <QFileDialog>
 // KIO headers
 #include <kio/job.h>
 #include <kio/jobuidelegate.h>
@@ -501,8 +501,7 @@ KMCommand::Result KMUrlSaveCommand::execute()
     if (mUrl.isEmpty()) {
         return OK;
     }
-    const QUrl saveUrl = KFileDialog::getSaveUrl(mUrl.fileName(), QString(),
-                         parentWidget());
+    const QUrl saveUrl = QFileDialog::getSaveFileUrl(parentWidget(), QString(), mUrl.fileName());
     if (saveUrl.isEmpty()) {
         return Canceled;
     }
