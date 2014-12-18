@@ -24,7 +24,7 @@
 #include <Akonadi/Entity>
 #include <Akonadi/Collection>
 
-#include <QMap>
+#include <QHash>
 #include <QModelIndex>
 #include <QObject>
 
@@ -84,7 +84,7 @@ private slots:
 
 private:
     void updateShortcutsForIndex( const QModelIndex &parent, int start, int end );
-    QMap< Akonadi::Entity::Id, FolderShortcutCommand* > mFolderShortcutCommands;
+    QHash< Akonadi::Entity::Id, FolderShortcutCommand* > mFolderShortcutCommands;
     KActionCollection *mActionCollection;
     QWidget *mParent;
 };
