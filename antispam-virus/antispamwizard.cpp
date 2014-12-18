@@ -42,8 +42,8 @@
 #include "pimcommon/imapresourcesettings.h"
 #include "mailcommon/kernel/mailkernel.h"
 #include "mailcommon/filter/mailfilter.h"
-#include "mailcommon/filter/filteraction.h"
-#include "mailcommon/filter/filteractiondict.h"
+#include "mailcommon/filter/filteractions/filteraction.h"
+#include "mailcommon/filter/filteractions/filteractiondict.h"
 #include "mailcommon/filter/filtermanager.h"
 
 #include "pimcommon/util/pimutil.h"

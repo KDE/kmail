@@ -72,7 +72,7 @@
 
 #include "messagecore/misc/mailinglist.h"
 #include "editor/composer.h"
-#include "mailcommon/filter/filteraction.h"
+#include "mailcommon/filter/filteractions/filteraction.h"
 #include "mailcommon/filter/filtermanager.h"
 #include "mailcommon/filter/mailfilter.h"
 #include "mailcommon/widgets/redirectdialog.h"
