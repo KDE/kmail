@@ -34,7 +34,7 @@ public:
 
     QDate selectedDate() const;
 
-    void accept();
+    void accept() Q_DECL_OVERRIDE;
 
     Akonadi::Collection collection() const;
 private:
