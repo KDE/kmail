@@ -31,7 +31,7 @@ public:
     explicit CreateTaskJob(const Akonadi::Item::List &items, QObject *parent = Q_NULLPTR);
     ~CreateTaskJob();
 
-    void start();
+    void start() Q_DECL_OVERRIDE;
 private Q_SLOTS:
     void itemFetchJobDone(KJob *job);
 

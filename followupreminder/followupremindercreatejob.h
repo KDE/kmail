@@ -44,7 +44,7 @@ public:
 
     void setCollectionToDo(const Akonadi::Collection &collection);
 
-    void start();
+    void start() Q_DECL_OVERRIDE;
 
 private Q_SLOTS:
     void slotCreateNewTodo(KJob *job);

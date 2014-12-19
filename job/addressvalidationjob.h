@@ -33,7 +33,7 @@ public:
     explicit AddressValidationJob(const QString &emailAddresses, QWidget *parentWidget, QObject *parent = Q_NULLPTR);
     ~AddressValidationJob();
 
-    void start();
+    void start() Q_DECL_OVERRIDE;
 
     bool isValid() const;
 
