@@ -26,7 +26,7 @@ class RemoveCollectionJob : public QObject
 {
     Q_OBJECT
 public:
-    explicit RemoveCollectionJob(QObject *parent = 0);
+    explicit RemoveCollectionJob(QObject *parent = Q_NULLPTR);
     ~RemoveCollectionJob();
 
     void setMainWidget(KMMainWidget *mainWidget);
