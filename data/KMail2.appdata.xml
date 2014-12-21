@@ -117,7 +117,7 @@
       <li xml:lang="uk">підтримка можливостей розпізнавання за допомогою NTLM (Microsoft Windows) та GSSAPI (Kerberos);</li>
       <li xml:lang="x-test">xxSupports authentication via NTLM (Microsoft Windows) and GSSAPI (Kerberos)xx</li>
       <li>Supports plain text and secure logins, using SSL and TLS.</li>
-      <li xml:lang="ca">Implementa accés en text pla i segur, usant SSL i TLS</li>
+      <li xml:lang="ca">Implementa accés en text net i segur, usant SSL i TLS</li>
       <li xml:lang="de">Unterstützt einfachen Text und sichere Anmeldung durch SSL und TLS.</li>
       <li xml:lang="en-GB">Supports plain text and secure logins, using SSL and TLS.</li>
       <li xml:lang="es">Implementa texto sin formato y accesos al sistema seguros usando SSL y TLS.</li>
@@ -197,7 +197,7 @@
       <li xml:lang="uk">можливість читання та створення повідомлень з використанням коду HTML;</li>
       <li xml:lang="x-test">xxReading and writing of HTML mail.xx</li>
       <li>Ability to display plain text only from an HTML mail.</li>
-      <li xml:lang="ca">L'habilitat de mostrar en text pla un correu HTML</li>
+      <li xml:lang="ca">L'habilitat de mostrar en text net un correu HTML</li>
       <li xml:lang="en-GB">Ability to display plain text only from an HTML mail.</li>
       <li xml:lang="es">Capacidad para mostrar solo el texto sin formato de un correo HTML.</li>
       <li xml:lang="fi">Osaa näyttää HTML-viesteistä raakatekstin.</li>
