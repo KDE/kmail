@@ -24,7 +24,7 @@
 #include "util/mailutil.h"
 #include "mailcommon/kernel/mailkernel.h"
 #include "mailcommon/folder/foldertreeview.h"
-#include "mailcommon/collectionpage/newmailnotifierattribute.h"
+#include <AkonadiCore/NewMailNotifierAttribute>
 
 #include <kiconloader.h>
 #include <kcolorscheme.h>
@@ -491,8 +491,8 @@ bool KMSystemTray::excludeFolder(const Akonadi::Collection &collection) const
 
 bool KMSystemTray::ignoreNewMailInFolder(const Akonadi::Collection &collection)
 {
-    if (collection.hasAttribute<NewMailNotifierAttribute>()) {
-        if (collection.attribute<NewMailNotifierAttribute>()->ignoreNewMail()) {
+    if (collection.hasAttribute<Akonadi::NewMailNotifierAttribute>()) {
+        if (collection.attribute<Akonadi::NewMailNotifierAttribute>()->ignoreNewMail()) {
             return true;
         }
     }
