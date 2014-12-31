@@ -1684,13 +1684,13 @@ void KMComposeWin::setMessage(const KMime::Message::Ptr &newMsg, bool lastSignSt
     const bool stickyDictionary = mBtnDictionary->isChecked() && !mIgnoreStickyFields;
     if (!stickyDictionary) {
         QString dictionary;
-        if ( mMsg->headerByType( "X-KMail-Dictionary" ) ) {
-            dictionary = mMsg->headerByType( "X-KMail-Dictionary" )->asUnicodeString();
+        if (mMsg->headerByType("X-KMail-Dictionary")) {
+            dictionary = mMsg->headerByType("X-KMail-Dictionary")->asUnicodeString();
         } else {
             dictionary = ident.dictionary();
         }
 
-        mComposerBase->dictionary()->setCurrentByDictionaryName( dictionary );
+        mComposerBase->dictionary()->setCurrentByDictionaryName(dictionary);
     }
 
     mEdtReplyTo->setText(mMsg->replyTo()->asUnicodeString());
@@ -3335,7 +3335,7 @@ void KMComposeWin::updateSignatureAndEncryptionStateIndicators()
 
 void KMComposeWin::slotLanguageChanged(const QString &language)
 {
-    mComposerBase->dictionary()->setCurrentByDictionary( language );
+    mComposerBase->dictionary()->setCurrentByDictionary(language);
 }
 
 void KMComposeWin::slotFccFolderChanged(const Akonadi::Collection &collection)
