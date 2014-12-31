@@ -75,10 +75,6 @@ namespace boost {
 template <typename T> class shared_ptr;
 }
 
-namespace Sonnet {
-class DictionaryComboBox;
-}
-
 namespace KPIMIdentities {
 class Identity;
 }
@@ -607,7 +603,6 @@ private:
 private:
     int validateLineWrapWidth();
     QWidget   *mMainWidget;
-    Sonnet::DictionaryComboBox *mDictionaryCombo;
     MessageComposer::ComposerLineEdit *mEdtFrom, *mEdtReplyTo;
     PimCommon::LineEditWithAutoCorrection *mEdtSubject;
     QLabel    *mLblIdentity, *mLblTransport, *mLblFcc;
