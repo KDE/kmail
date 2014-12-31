@@ -1719,7 +1719,14 @@ void KMComposeWin::setMessage( const KMime::Message::Ptr &newMsg, bool lastSignS
 
     const bool stickyDictionary = mBtnDictionary->isChecked() && !mIgnoreStickyFields;
     if ( !stickyDictionary ) {
-        mDictionaryCombo->setCurrentByDictionaryName( ident.dictionary() );
+        QString dictionary;
+        if ( mMsg->headerByType( "X-KMail-Dictionary" ) ) {
+            dictionary = mMsg->headerByType( "X-KMail-Dictionary" )->asUnicodeString();
+        } else {
+            dictionary = ident.dictionary();
+        }
+
+        mDictionaryCombo->setCurrentByDictionaryName( dictionary );
     }
 
     mEdtReplyTo->setText( mMsg->replyTo()->asUnicodeString() );
