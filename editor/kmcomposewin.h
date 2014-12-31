@@ -602,6 +602,10 @@ private:
 
 private:
     int validateLineWrapWidth();
+    Akonadi::Collection mCollectionForNewMessage;
+    QMap<QByteArray, QString> mExtraHeaders;
+
+
     QWidget   *mMainWidget;
     MessageComposer::ComposerLineEdit *mEdtFrom, *mEdtReplyTo;
     PimCommon::LineEditWithAutoCorrection *mEdtSubject;
@@ -683,8 +687,6 @@ private:
     bool mCheckForForgottenAttachments;
     bool mIgnoreStickyFields;
     bool mWasModified;
-    Akonadi::Collection mCollectionForNewMessage;
-    QMap<QByteArray, QString> mExtraHeaders;
     CryptoStateIndicatorWidget *mCryptoStateIndicatorWidget;
     KMStorageService *mStorageService;
     bool mSendNowByShortcutUsed;
