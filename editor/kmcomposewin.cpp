@@ -287,8 +287,9 @@ KMComposeWin::KMComposeWin(const KMime::Message::Ptr &aMsg, bool lastSignState, 
     sigController->setIdentityCombo(identity);
     sigController->suspend(); // we have to do identity change tracking ourselves due to the template code
 
-    mDictionaryCombo = new DictionaryComboBox(mHeadersArea);
-    mDictionaryCombo->setToolTip(i18n("Select the dictionary to use when spell-checking this message"));
+    Sonnet::DictionaryComboBox *dictionaryCombo = new DictionaryComboBox(mHeadersArea);
+    dictionaryCombo->setToolTip(i18n("Select the dictionary to use when spell-checking this message"));
+    mComposerBase->setDictionary(dictionaryCombo);
 
     mFccFolder = new MailCommon::FolderRequester(mHeadersArea);
     mFccFolder->setNotAllowToCreateNewFolder(true);
@@ -372,7 +373,7 @@ KMComposeWin::KMComposeWin(const KMime::Message::Ptr &aMsg, bool lastSignState, 
     editor->setAcceptDrops(true);
     connect(sigController, SIGNAL(signatureAdded()), mComposerBase->editor(), SLOT(startExternalEditor()));
 
-    connect(mDictionaryCombo, &Sonnet::DictionaryComboBox::dictionaryChanged, this, &KMComposeWin::slotSpellCheckingLanguage);
+    connect(dictionaryCombo, &Sonnet::DictionaryComboBox::dictionaryChanged, this, &KMComposeWin::slotSpellCheckingLanguage);
 
     connect(editor, &KMComposerEditor::languageChanged, this, &KMComposeWin::slotLanguageChanged);
     connect(editor, &KMComposerEditor::spellCheckStatus, this, &KMComposeWin::slotSpellCheckingStatus);
@@ -619,9 +620,9 @@ void KMComposeWin::readConfig(bool reload /* = false */)
     mComposerBase->setAutoSaveInterval(GlobalSettings::self()->autosaveInterval() * 1000 * 60);
 
     if (mBtnDictionary->isChecked()) {
-        mDictionaryCombo->setCurrentByDictionaryName(GlobalSettings::self()->previousDictionary());
+        mComposerBase->dictionary()->setCurrentByDictionaryName(GlobalSettings::self()->previousDictionary());
     } else {
-        mDictionaryCombo->setCurrentByDictionaryName(ident.dictionary());
+        mComposerBase->dictionary()->setCurrentByDictionaryName(ident.dictionary());
     }
 
     QString fccName;
@@ -645,7 +646,7 @@ void KMComposeWin::writeConfig(void)
         GlobalSettings::self()->setPreviousIdentity(mComposerBase->identityCombo()->currentIdentity());
     }
     GlobalSettings::self()->setPreviousFcc(QString::number(mFccFolder->collection().id()));
-    GlobalSettings::self()->setPreviousDictionary(mDictionaryCombo->currentDictionaryName());
+    GlobalSettings::self()->setPreviousDictionary(mComposerBase->dictionary()->currentDictionaryName());
     GlobalSettings::self()->setAutoSpellChecking(
         mAutoSpellCheckingAction->isChecked());
     MessageViewer::GlobalSettings::self()->setUseFixedFont(mFixedFontAction->isChecked());
@@ -822,7 +823,7 @@ void KMComposeWin::rethinkFields(bool fromSlot)
         mDictionaryAction->setChecked(abs(mShowHeaders)&HDR_DICTIONARY);
     }
     rethinkHeaderLine(showHeaders, HDR_DICTIONARY, row, mDictionaryLabel,
-                      mDictionaryCombo, mBtnDictionary);
+                      mComposerBase->dictionary(), mBtnDictionary);
 
     if (!fromSlot) {
         mFccAction->setChecked(abs(mShowHeaders)&HDR_FCC);
@@ -1682,7 +1683,14 @@ void KMComposeWin::setMessage(const KMime::Message::Ptr &newMsg, bool lastSignSt
 
     const bool stickyDictionary = mBtnDictionary->isChecked() && !mIgnoreStickyFields;
     if (!stickyDictionary) {
-        mDictionaryCombo->setCurrentByDictionaryName(ident.dictionary());
+        QString dictionary;
+        if ( mMsg->headerByType( "X-KMail-Dictionary" ) ) {
+            dictionary = mMsg->headerByType( "X-KMail-Dictionary" )->asUnicodeString();
+        } else {
+            dictionary = ident.dictionary();
+        }
+
+        mComposerBase->dictionary()->setCurrentByDictionaryName( dictionary );
     }
 
     mEdtReplyTo->setText(mMsg->replyTo()->asUnicodeString());
@@ -3154,9 +3162,9 @@ void KMComposeWin::slotIdentityChanged(uint uoid, bool initalChange)
     mFccFolder->setEnabled(!fccIsDisabled);
 
     if (!mBtnDictionary->isChecked() && !mIgnoreStickyFields) {
-        mDictionaryCombo->setCurrentByDictionaryName(ident.dictionary());
+        mComposerBase->dictionary()->setCurrentByDictionaryName(ident.dictionary());
     }
-    slotSpellCheckingLanguage(mDictionaryCombo->currentDictionary());
+    slotSpellCheckingLanguage(mComposerBase->dictionary()->currentDictionary());
     if (!mBtnFcc->isChecked() && !mPreventFccOverwrite) {
         setFcc(ident.fcc());
     }
@@ -3327,7 +3335,7 @@ void KMComposeWin::updateSignatureAndEncryptionStateIndicators()
 
 void KMComposeWin::slotLanguageChanged(const QString &language)
 {
-    mDictionaryCombo->setCurrentByDictionary(language);
+    mComposerBase->dictionary()->setCurrentByDictionary( language );
 }
 
 void KMComposeWin::slotFccFolderChanged(const Akonadi::Collection &collection)

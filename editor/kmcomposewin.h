@@ -616,7 +616,6 @@ private:
 private:
     int validateLineWrapWidth();
     QWidget   *mMainWidget;
-    Sonnet::DictionaryComboBox *mDictionaryCombo;
     MessageComposer::ComposerLineEdit *mEdtFrom, *mEdtReplyTo;
     PimCommon::LineEditWithAutoCorrection *mEdtSubject;
     QLabel    *mLblIdentity, *mLblTransport, *mLblFcc;
