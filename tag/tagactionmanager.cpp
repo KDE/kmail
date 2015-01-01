@@ -1,5 +1,5 @@
 /* Copyright 2010 Thomas McGuire <mcguire@kde.org>
-   Copyright 2011-2012-2013 Laurent Montel <montel@kde.org>
+   Copyright 2011-2015 Laurent Montel <montel@kde.org>
 
    This program is free software; you can redistribute it and/or
    modify it under the terms of the GNU General Public License as
