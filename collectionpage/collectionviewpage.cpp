@@ -1,6 +1,6 @@
 /* -*- mode: C++; c-file-style: "gnu" -*-
   This file is part of KMail, the KDE mail client.
-  Copyright (c) 2009 Montel Laurent <montel@kde.org>
+  Copyright (c) 2009-2015 Montel Laurent <montel@kde.org>
 
   KMail is free software; you can redistribute it and/or modify it
   under the terms of the GNU General Public License, version 2, as
