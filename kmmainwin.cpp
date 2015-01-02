@@ -61,6 +61,8 @@ KMMainWin::KMMainWin(QWidget *)
     setCentralWidget(mKMMainWidget);
     setupStatusBar();
     if (!kmkernel->xmlGuiInstanceName().isEmpty()) {
+#pragma "port QT5"
+
         //QT5 setComponentName(kmkernel->xmlGuiInstanceName(), i18n("kmail"));
     }
     setStandardToolBarMenuEnabled(true);

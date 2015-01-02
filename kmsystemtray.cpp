@@ -114,6 +114,7 @@ bool KMSystemTray::buildPopupMenu()
     }
 
     contextMenu()->clear();
+#pragma "port QT5"
 
     contextMenu()->setTitle(/*QT5 qApp->windowIcon(),*/ i18n("KMail"));
     QAction *action;

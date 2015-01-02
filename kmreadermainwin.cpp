@@ -308,6 +308,8 @@ void KMReaderMainWin::slotConfigChanged()
 void KMReaderMainWin::setupAccel()
 {
     if (!kmkernel->xmlGuiInstanceName().isEmpty()) {
+#pragma "port QT5"
+
         //QT5 setComponentName(kmkernel->xmlGuiInstanceName(), i18n("name"));
     }
     mMsgActions = new KMail::MessageActions(actionCollection(), this);

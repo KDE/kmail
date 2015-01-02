@@ -158,6 +158,8 @@ void KMComposerEditor::insertFromMimeData(const QMimeData *source)
 
 void KMComposerEditor::showSpellConfigDialog(const QString &configFileName)
 {
+#pragma "port QT5"
+
     //TODO QT5 configFileName
     KConfig config(configFileName);
     Sonnet::ConfigDialog dialog(this);
