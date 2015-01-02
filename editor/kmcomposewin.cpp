@@ -1682,15 +1682,15 @@ void KMComposeWin::setMessage(const KMime::Message::Ptr &newMsg, bool lastSignSt
     }
 
     const bool stickyDictionary = mBtnDictionary->isChecked() && !mIgnoreStickyFields;
-    if (!stickyDictionary) {
-        QString dictionary;
-        if (mMsg->headerByType("X-KMail-Dictionary")) {
-            dictionary = mMsg->headerByType("X-KMail-Dictionary")->asUnicodeString();
+    if ( !stickyDictionary ) {
+        if ( mMsg->headerByType( "X-KMail-Dictionary" ) ) {
+            const QString dictionary = mMsg->headerByType( "X-KMail-Dictionary" )->asUnicodeString();
+            if (!dictionary.isEmpty()) {
+                mComposerBase->dictionary()->setCurrentByDictionary( dictionary );
+            }
         } else {
-            dictionary = ident.dictionary();
+            mComposerBase->dictionary()->setCurrentByDictionaryName( ident.dictionary() );
         }
-
-        mComposerBase->dictionary()->setCurrentByDictionaryName(dictionary);
     }
 
     mEdtReplyTo->setText(mMsg->replyTo()->asUnicodeString());
