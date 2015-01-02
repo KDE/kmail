@@ -618,7 +618,6 @@ private:
     Akonadi::Collection mCollectionForNewMessage;
     QMap<QByteArray, QString> mExtraHeaders;
 
-
     QWidget   *mMainWidget;
     MessageComposer::ComposerLineEdit *mEdtFrom, *mEdtReplyTo;
     PimCommon::LineEditWithAutoCorrection *mEdtSubject;
