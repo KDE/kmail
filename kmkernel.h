@@ -44,7 +44,6 @@ class MessageSender;
 namespace PimCommon {
 class AutoCorrection;
 class StorageServiceManager;
-class ImapResourceManager;
 }
 
 /** The KMail namespace contains classes used for KMail.
@@ -427,7 +426,6 @@ public:
     void toggleSystemTray();
     FolderArchiveManager *folderArchiveManager() const;
     PimCommon::StorageServiceManager *storageServiceManager() const;
-    PimCommon::ImapResourceManager *imapResourceManager() const;
 
     bool allowToDebugBalooSupport() const;
 
@@ -535,7 +533,6 @@ private:
     PimCommon::AutoCorrection *mAutoCorrection;
     FolderArchiveManager *mFolderArchiveManager;
     PimCommon::StorageServiceManager *mStorageManager;
-    PimCommon::ImapResourceManager *mImapResourceManager;
     bool mDebugBaloo;
 };
 
