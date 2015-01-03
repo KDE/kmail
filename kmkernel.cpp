@@ -114,6 +114,7 @@ using KMail::MailServiceImpl;
 #include "foldercollectionmonitor.h"
 #include "imapresourcesettings.h"
 #include "util.h"
+#include "pimcommon/util/imapresourcemanager.h"
 #include "mailcommon/kernel/mailkernel.h"
 
 #include "searchdialog/searchdescriptionattribute.h"
@@ -143,6 +144,7 @@ KMKernel::KMKernel (QObject *parent) :
     KMail::Util::migrateFromKMail1();
     kDebug() << "Starting up...";
 
+    mImapResourceManager = new PimCommon::ImapResourceManager(this);
     mySelf = this;
     the_firstInstance = true;
 
@@ -2080,6 +2082,11 @@ FolderArchiveManager *KMKernel::folderArchiveManager() const
 PimCommon::StorageServiceManager *KMKernel::storageServiceManager() const
 {
     return mStorageManager;
+}
+
+PimCommon::ImapResourceManager *KMKernel::imapResourceManager() const
+{
+    return mImapResourceManager;
 }
 
 bool KMKernel::allowToDebugBalooSupport() const
