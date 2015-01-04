@@ -63,8 +63,7 @@ AccountsPage::AccountsPage(QWidget *parent)
     //
     mReceivingTab = new ReceivingTab();
     addTab(mReceivingTab, i18nc("@title:tab Tab page where the user configures accounts to receive mail", "Receiving"));
-    connect(mReceivingTab, SIGNAL(accountListChanged(QStringList)),
-            this, SIGNAL(accountListChanged(QStringList)));
+    connect(mReceivingTab, &ReceivingTab::accountListChanged, this, &AccountsPage::accountListChanged);
 
     //
     // "Sending" tab:
@@ -105,13 +104,11 @@ AccountsPageSendingTab::AccountsPageSendingTab(QWidget *parent)
     // "confirm before send" check box:
     mConfirmSendCheck = new QCheckBox(i18n("Confirm &before send"), group);
     glay->addWidget(mConfirmSendCheck, 0, 0, 1, 2);
-    connect(mConfirmSendCheck, SIGNAL(stateChanged(int)),
-            this, SLOT(slotEmitChanged()));
+    connect(mConfirmSendCheck, &QCheckBox::stateChanged, this, &AccountsPageSendingTab::slotEmitChanged);
 
     mCheckSpellingBeforeSending = new QCheckBox(i18n("Check spelling before sending"), group);
     glay->addWidget(mCheckSpellingBeforeSending, 1, 0, 1, 2);
-    connect(mCheckSpellingBeforeSending, SIGNAL(stateChanged(int)),
-            this, SLOT(slotEmitChanged()));
+    connect(mCheckSpellingBeforeSending, &QCheckBox::stateChanged, this, &AccountsPageSendingTab::slotEmitChanged);
 
     // "send on check" combo:
     mSendOnCheckCombo = new KComboBox(group);
@@ -121,8 +118,7 @@ AccountsPageSendingTab::AccountsPageSendingTab(QWidget *parent)
                                 << i18n("On Manual Mail Checks")
                                 << i18n("On All Mail Checks"));
     glay->addWidget(mSendOnCheckCombo, 2, 1);
-    connect(mSendOnCheckCombo, SIGNAL(activated(int)),
-            this, SLOT(slotEmitChanged()));
+    connect(mSendOnCheckCombo, static_cast<void (KComboBox::*)(int)>(&KComboBox::activated), this, &AccountsPageSendingTab::slotEmitChanged);
 
     // "default send method" combo:
     mSendMethodCombo = new KComboBox(group);
@@ -131,8 +127,7 @@ AccountsPageSendingTab::AccountsPageSendingTab(QWidget *parent)
                                << i18n("Send Now")
                                << i18n("Send Later"));
     glay->addWidget(mSendMethodCombo, 3, 1);
-    connect(mSendMethodCombo, SIGNAL(activated(int)),
-            this, SLOT(slotEmitChanged()));
+    connect(mSendMethodCombo, static_cast<void (KComboBox::*)(int)>(&KComboBox::activated), this, &AccountsPageSendingTab::slotEmitChanged);
 
     // labels:
     QLabel *l =  new QLabel(i18n("Send &messages in outbox folder:"), group);
@@ -195,14 +190,11 @@ AccountsPageReceivingTab::AccountsPageReceivingTab(QWidget *parent)
     mAccountsReceiving.mAccountsReceiving->setItemDelegate(configDelegate);
     connect(configDelegate, &ConfigAgentDelegate::optionsClicked, this, &AccountsPageReceivingTab::slotShowMailCheckMenu);
 
-    connect(mAccountsReceiving.mBeepNewMailCheck, &QCheckBox::stateChanged,
-            this, &ConfigModuleTab::slotEmitChanged);
+    connect(mAccountsReceiving.mBeepNewMailCheck, &QCheckBox::stateChanged, this, &ConfigModuleTab::slotEmitChanged);
 
-    connect(mAccountsReceiving.mVerboseNotificationCheck, &QCheckBox::stateChanged,
-            this, &ConfigModuleTab::slotEmitChanged);
+    connect(mAccountsReceiving.mVerboseNotificationCheck, &QCheckBox::stateChanged, this, &ConfigModuleTab::slotEmitChanged);
 
-    connect(mAccountsReceiving.mOtherNewMailActionsButton, &QAbstractButton::clicked,
-            this, &AccountsPageReceivingTab::slotEditNotifications);
+    connect(mAccountsReceiving.mOtherNewMailActionsButton, &QAbstractButton::clicked, this, &AccountsPageReceivingTab::slotEditNotifications);
     connect(mAccountsReceiving.customizeAccountOrder, &QAbstractButton::clicked, this, &AccountsPageReceivingTab::slotCustomizeAccountOrder);
 }
 
@@ -259,7 +251,7 @@ void AccountsPageReceivingTab::slotShowMailCheckMenu(const QString &ident, const
         manualMailCheck->setChecked(IncludeInManualChecks);
         manualMailCheck->setData(ident);
         menu->addAction(manualMailCheck);
-        connect(manualMailCheck, SIGNAL(toggled(bool)), this, SLOT(slotIncludeInCheckChanged(bool)));
+        connect(manualMailCheck, &QAction::toggled, this, &AccountsPageReceivingTab::slotIncludeInCheckChanged);
     }
 
     if (!MailCommon::Util::isLocalCollection(ident)) {
@@ -268,7 +260,7 @@ void AccountsPageReceivingTab::slotShowMailCheckMenu(const QString &ident, const
         switchOffline->setChecked(OfflineOnShutdown);
         switchOffline->setData(ident);
         menu->addAction(switchOffline);
-        connect(switchOffline, SIGNAL(toggled(bool)), this, SLOT(slotOfflineOnShutdownChanged(bool)));
+        connect(switchOffline, &QAction::toggled, this, &AccountsPageReceivingTab::slotOfflineOnShutdownChanged);
     }
 
     QAction *checkOnStartup = new QAction(i18n("Check mail on startup"), menu);
@@ -277,7 +269,7 @@ void AccountsPageReceivingTab::slotShowMailCheckMenu(const QString &ident, const
     checkOnStartup->setData(ident);
     menu->addAction(checkOnStartup);
 
-    connect(checkOnStartup, SIGNAL(toggled(bool)), this, SLOT(slotCheckOnStatupChanged(bool)));
+    connect(checkOnStartup, &QAction::toggled, this, &AccountsPageReceivingTab::slotCheckOnStatupChanged);
 
     menu->exec(mAccountsReceiving.mAccountsReceiving->view()->mapToGlobal(pos));
     delete menu;
