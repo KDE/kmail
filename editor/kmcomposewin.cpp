@@ -261,7 +261,7 @@ KMComposeWin::KMComposeWin(const KMime::Message::Ptr &aMsg, bool lastSignState, 
     mComposerBase->setSignatureController(sigController);
 
     if (!kmkernel->xmlGuiInstanceName().isEmpty()) {
-#pragma "port QT5"
+#pragma message("port QT5")
 
         //QT5 setComponentName(kmkernel->xmlGuiInstanceName(), i18n("KMail2"));
     }

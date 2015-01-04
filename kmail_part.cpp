@@ -59,7 +59,7 @@ KMailPart::KMailPart(QWidget *parentWidget, QObject *parent, const QVariantList 
     mParentWidget(parentWidget)
 {
     qCDebug(KMAIL_LOG) << "InstanceName:" << KComponentData::mainComponent().componentName();
-#pragma "port QT5"
+#pragma message("port QT5")
 
     //QT5 setComponentData(KMailFactory::componentData());
     qCDebug(KMAIL_LOG) << "InstanceName:" << KComponentData::mainComponent().componentName();
@@ -107,7 +107,7 @@ KMailPart::KMailPart(QWidget *parentWidget, QObject *parent, const QVariantList 
     connect(kmkernel->folderCollectionMonitor(), SIGNAL(collectionChanged(Akonadi::Collection,QSet<QByteArray>)),
             this, SLOT(slotCollectionChanged(Akonadi::Collection,QSet<QByteArray>)));
     setXMLFile(QLatin1String("kmail_part.rc"), true);
-#pragma "port QT5"
+#pragma message("port QT5")
 
     //QT5 KSettings::Dispatcher::registerComponent( KMailFactory::componentData(), mKMailKernel, "slotConfigChanged" );
 }
