@@ -38,6 +38,9 @@ public Q_SLOTS:
     void slotAddrBook();
     void slotImport();
     void slotAccountWizard();
+    void slotFilterLogViewer();
+    void slotAntiVirusWizard();
+    void slotAntiSpamWizard();
 private:
     QWidget *mParentWidget;
 };

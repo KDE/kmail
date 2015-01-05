@@ -344,9 +344,6 @@ protected slots:
     void slotShowStartupFolder();
     /** Show tip-of-the-day, forced */
     void slotShowTip();
-    void slotAntiSpamWizard();
-    void slotAntiVirusWizard();
-    void slotFilterLogViewer();
 
     /** Message navigation */
     void slotSelectNextMessage();

@@ -2934,17 +2934,17 @@ void KMMainWidget::setupActions()
     {
         KAction *action = new KAction(i18n("Filter &Log Viewer..."), this);
         actionCollection()->addAction(QLatin1String("filter_log_viewer"), action );
-        connect(action, SIGNAL(triggered(bool)), SLOT(slotFilterLogViewer()));
+        connect(action, SIGNAL(triggered(bool)), mLaunchExternalComponent, SLOT(slotFilterLogViewer()));
     }
     {
         KAction *action = new KAction(i18n("&Anti-Spam Wizard..."), this);
         actionCollection()->addAction(QLatin1String("antiSpamWizard"), action );
-        connect(action, SIGNAL(triggered(bool)), SLOT(slotAntiSpamWizard()));
+        connect(action, SIGNAL(triggered(bool)), mLaunchExternalComponent, SLOT(slotAntiSpamWizard()));
     }
     {
         KAction *action = new KAction(i18n("&Anti-Virus Wizard..."), this);
         actionCollection()->addAction(QLatin1String("antiVirusWizard"), action );
-        connect(action, SIGNAL(triggered(bool)), SLOT(slotAntiVirusWizard()));
+        connect(action, SIGNAL(triggered(bool)), mLaunchExternalComponent, SLOT(slotAntiVirusWizard()));
     }
     {
         KAction *action = new KAction( i18n("&Account Wizard..."), this );
@@ -4190,26 +4190,6 @@ void KMMainWidget::initializeFilterActions()
 
     // Our filters have changed, now enable/disable them
     updateMessageActions();
-}
-
-//-----------------------------------------------------------------------------
-void KMMainWidget::slotAntiSpamWizard()
-{
-    AntiSpamWizard wiz( AntiSpamWizard::AntiSpam, this );
-    wiz.exec();
-}
-
-//-----------------------------------------------------------------------------
-void KMMainWidget::slotAntiVirusWizard()
-{
-    AntiSpamWizard wiz( AntiSpamWizard::AntiVirus, this);
-    wiz.exec();
-}
-
-//-----------------------------------------------------------------------------
-void KMMainWidget::slotFilterLogViewer()
-{
-    MailCommon::FilterManager::instance()->showFilterLogDialog( (qlonglong)winId() );
 }
 
 //-----------------------------------------------------------------------------

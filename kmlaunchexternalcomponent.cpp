@@ -25,11 +25,13 @@
 #include "archivemailagentinterface.h"
 #include "sendlateragentinterface.h"
 #include "followupreminderinterface.h"
+#include "mailcommon/filter/filtermanager.h"
 
 #include <QtDBus/QDBusInterface>
 #include <QtDBus/QDBusReply>
 #include <QProcess>
 #include <QDebug>
+#include <antispam-virus/antispamwizard.h>
 
 KMLaunchExternalComponent::KMLaunchExternalComponent(QWidget *parentWidget, QObject *parent)
     : QObject(parent),
@@ -130,4 +132,21 @@ void KMLaunchExternalComponent::slotAccountWizard()
         KMessageBox::error( mParentWidget, i18n( "Could not start the account wizard. "
                                      "Please check your installation." ),
                             i18n( "Unable to start account wizard" ) );
+}
+
+void KMLaunchExternalComponent::slotAntiSpamWizard()
+{
+    KMail::AntiSpamWizard wiz( KMail::AntiSpamWizard::AntiSpam, mParentWidget );
+    wiz.exec();
+}
+
+void KMLaunchExternalComponent::slotAntiVirusWizard()
+{
+    KMail::AntiSpamWizard wiz( KMail::AntiSpamWizard::AntiVirus, mParentWidget);
+    wiz.exec();
+}
+
+void KMLaunchExternalComponent::slotFilterLogViewer()
+{
+    MailCommon::FilterManager::instance()->showFilterLogDialog( (qlonglong)mParentWidget->winId() );
 }
