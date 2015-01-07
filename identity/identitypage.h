@@ -1,4 +1,4 @@
-/*   -*- mode: C++; c-file-style: "gnu" -*-
+/*   
  *   kmail: KDE mail client
  *   Copyright (C) 2000 Espen Sand, espen@kde.org
  *   Copyright (C) 2001-2003 Marc Mutz, mutz@kde.org

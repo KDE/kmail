@@ -1,4 +1,4 @@
-/*  -*- mode: C++; c-file-style: "gnu" -*- */
+/*   */
 
 #include "kmkernel.h"
 

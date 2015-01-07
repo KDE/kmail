@@ -1,4 +1,4 @@
-/*   -*- mode: C++; c-file-style: "gnu" -*-
+/*   
  *   kmail: KDE mail client
  */
 #ifndef configuredialoglistview_h

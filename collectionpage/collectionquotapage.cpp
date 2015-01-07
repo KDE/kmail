@@ -1,4 +1,4 @@
-// -*- mode: C++; c-file-style: "gnu" -*-
+// 
 /**
  *
  * Copyright (c) 2006 Till Adam <adam@kde.org>

@@ -1,4 +1,4 @@
-// -*- mode: C++; c-file-style: "gnu" -*-
+// 
 
 #ifndef KMCommands_h
 #define KMCommands_h

@@ -1,4 +1,4 @@
-/*  -*- mode: C++; c-file-style: "gnu" -*-
+/*  
     identitydialog.cpp
 
     This file is part of KMail, the KDE mail client.

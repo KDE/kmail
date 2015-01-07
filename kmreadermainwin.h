@@ -1,4 +1,4 @@
-// -*- mode: C++; c-file-style: "gnu" -*-
+// 
 
 #ifndef KMReaderMainWin_h
 #define KMReaderMainWin_h
