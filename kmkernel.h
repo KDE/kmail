@@ -1,4 +1,4 @@
-// 
+//
 
 #ifndef _KMKERNEL_H
 #define _KMKERNEL_H

@@ -1,4 +1,4 @@
-// 
+//
 /**
  *
  * Copyright (c) 2006 Till Adam <adam@kde.org>

@@ -1,4 +1,4 @@
-/*  
+/*
     secondarywindow.h
 
     This file is part of KMail, the KDE mail client.

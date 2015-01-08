@@ -1,4 +1,4 @@
-/*   
+/*
  *   kmail: KDE mail client
  */
 

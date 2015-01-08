@@ -1,4 +1,4 @@
-/* 
+/*
   This file is part of KMail, the KDE mail client.
   Copyright (c) 2002 Don Sanders <sanders@kde.org>
 

@@ -1,4 +1,4 @@
-/*  
+/*
 
     This file is part of KMail.
     Copyright (c) 2002-2003 Don Sanders <sanders@kde.org>,

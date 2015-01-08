@@ -1,4 +1,4 @@
-// 
+//
 
 #ifndef KMReaderMainWin_h
 #define KMReaderMainWin_h

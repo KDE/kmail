@@ -1,4 +1,4 @@
-/* 
+/*
  * kmail: KDE mail client
  * Copyright (c) 1996-1998 Stefan Taferner <taferner@kde.org>
  *
