@@ -377,14 +377,13 @@ ComposerPageGeneralTab::ComposerPageGeneralTab(QWidget *parent)
 
     // "Use Baloo seach in composer" checkbox
     mShowBalooSearchAddressesInComposer = new QCheckBox(
-                MessageComposer::MessageComposerSettings::self()->showBalooSearchInComposerItem()->label(),
-                this);
+        MessageComposer::MessageComposerSettings::self()->showBalooSearchInComposerItem()->label(),
+        this);
 
-    connect( mShowBalooSearchAddressesInComposer, SIGNAL(stateChanged(int)),
-             this, SLOT(slotEmitChanged()) );
-    groupGridLayout->addWidget( mShowBalooSearchAddressesInComposer, row, 0, 1, -1 );
+    connect(mShowBalooSearchAddressesInComposer, SIGNAL(stateChanged(int)),
+            this, SLOT(slotEmitChanged()));
+    groupGridLayout->addWidget(mShowBalooSearchAddressesInComposer, row, 0, 1, -1);
     ++row;
-
 
 #ifdef KDEPIM_ENTERPRISE_BUILD
     // "Warn if too many recipients" checkbox/spinbox
@@ -541,16 +540,16 @@ void ComposerPage::GeneralTab::doResetToDefaultsOther()
     const int maximumRecipient = MessageComposer::MessageComposerSettings::self()->maximumRecipients();
     const bool improvePlainText = MessageComposer::MessageComposerSettings::self()->improvePlainTextOfHtmlMessage();
     const bool showBalooSearchInComposer = MessageComposer::MessageComposerSettings::self()->showBalooSearchInComposer();
-    MessageComposer::MessageComposerSettings::self()->useDefaults( bUseDefaults );
+    MessageComposer::MessageComposerSettings::self()->useDefaults(bUseDefaults);
 
-    mAutoAppSignFileCheck->setChecked( autoAppSignFile );
-    mTopQuoteCheck->setChecked( topQuoteCheck );
-    mDashDashCheck->setChecked( dashDashSignature );
-    mQuoteSelectionOnlyCheck->setChecked( smartQuoteCheck );
-    mWordWrapCheck->setChecked( wordWrap );
-    mWrapColumnSpin->setValue( wrapColumn );
-    mMaximumRecipients->setValue( maximumRecipient );
-    mShowRecentAddressesInComposer->setChecked( showRecentAddress );
+    mAutoAppSignFileCheck->setChecked(autoAppSignFile);
+    mTopQuoteCheck->setChecked(topQuoteCheck);
+    mDashDashCheck->setChecked(dashDashSignature);
+    mQuoteSelectionOnlyCheck->setChecked(smartQuoteCheck);
+    mWordWrapCheck->setChecked(wordWrap);
+    mWrapColumnSpin->setValue(wrapColumn);
+    mMaximumRecipients->setValue(maximumRecipient);
+    mShowRecentAddressesInComposer->setChecked(showRecentAddress);
     mShowBalooSearchAddressesInComposer->setChecked(showBalooSearchInComposer);
     mImprovePlainTextOfHtmlMessage->setChecked(improvePlainText);
 
@@ -562,22 +561,22 @@ void ComposerPage::GeneralTab::doLoadFromGlobalSettings()
     // various check boxes:
 
     mAutoAppSignFileCheck->setChecked(
-                MessageComposer::MessageComposerSettings::self()->autoTextSignature()==QLatin1String( "auto" ) );
-    loadWidget(mTopQuoteCheck, MessageComposer::MessageComposerSettings::self()->prependSignatureItem() );
-    loadWidget(mDashDashCheck, MessageComposer::MessageComposerSettings::self()->dashDashSignatureItem() );
-    loadWidget(mSmartQuoteCheck,TemplateParser::GlobalSettings::self()->smartQuoteItem() );
-    loadWidget(mQuoteSelectionOnlyCheck, MessageComposer::MessageComposerSettings::self()->quoteSelectionOnlyItem() );
+        MessageComposer::MessageComposerSettings::self()->autoTextSignature() == QLatin1String("auto"));
+    loadWidget(mTopQuoteCheck, MessageComposer::MessageComposerSettings::self()->prependSignatureItem());
+    loadWidget(mDashDashCheck, MessageComposer::MessageComposerSettings::self()->dashDashSignatureItem());
+    loadWidget(mSmartQuoteCheck, TemplateParser::GlobalSettings::self()->smartQuoteItem());
+    loadWidget(mQuoteSelectionOnlyCheck, MessageComposer::MessageComposerSettings::self()->quoteSelectionOnlyItem());
 
-    loadWidget(mReplyUsingHtml, TemplateParser::GlobalSettings::self()->replyUsingHtmlItem() );
-    loadWidget(mStripSignatureCheck, TemplateParser::GlobalSettings::self()->stripSignatureItem() );
-    loadWidget(mAutoRequestMDNCheck, GlobalSettings::self()->requestMDNItem() );
-    loadWidget(mWordWrapCheck, MessageComposer::MessageComposerSettings::self()->wordWrapItem() );
+    loadWidget(mReplyUsingHtml, TemplateParser::GlobalSettings::self()->replyUsingHtmlItem());
+    loadWidget(mStripSignatureCheck, TemplateParser::GlobalSettings::self()->stripSignatureItem());
+    loadWidget(mAutoRequestMDNCheck, GlobalSettings::self()->requestMDNItem());
+    loadWidget(mWordWrapCheck, MessageComposer::MessageComposerSettings::self()->wordWrapItem());
 
-    loadWidget(mWrapColumnSpin, MessageComposer::MessageComposerSettings::self()->lineWrapWidthItem() );
-    loadWidget(mMaximumRecipients,  MessageComposer::MessageComposerSettings::self()->maximumRecipientsItem() );
-    mAutoSave->setValue( GlobalSettings::self()->autosaveInterval() );
-    loadWidget(mShowRecentAddressesInComposer, MessageComposer::MessageComposerSettings::self()->showRecentAddressesInComposerItem() );
-    loadWidget(mShowBalooSearchAddressesInComposer, MessageComposer::MessageComposerSettings::self()->showBalooSearchInComposerItem() );
+    loadWidget(mWrapColumnSpin, MessageComposer::MessageComposerSettings::self()->lineWrapWidthItem());
+    loadWidget(mMaximumRecipients,  MessageComposer::MessageComposerSettings::self()->maximumRecipientsItem());
+    mAutoSave->setValue(GlobalSettings::self()->autosaveInterval());
+    loadWidget(mShowRecentAddressesInComposer, MessageComposer::MessageComposerSettings::self()->showRecentAddressesInComposerItem());
+    loadWidget(mShowBalooSearchAddressesInComposer, MessageComposer::MessageComposerSettings::self()->showBalooSearchInComposerItem());
     mImprovePlainTextOfHtmlMessage->setChecked(MessageComposer::MessageComposerSettings::self()->improvePlainTextOfHtmlMessage());
 
 #ifdef KDEPIM_ENTERPRISE_BUILD
@@ -607,13 +606,13 @@ void ComposerPage::GeneralTab::save()
     saveCheckBox(mWordWrapCheck, MessageComposer::MessageComposerSettings::self()->wordWrapItem());
 
     MessageComposer::MessageComposerSettings::self()->setAutoTextSignature(
-                mAutoAppSignFileCheck->isChecked() ? QLatin1String("auto") : QLatin1String("manual") );
-    saveSpinBox(mWrapColumnSpin, MessageComposer::MessageComposerSettings::self()->lineWrapWidthItem() );
-    saveSpinBox(mMaximumRecipients,  MessageComposer::MessageComposerSettings::self()->maximumRecipientsItem() );
-    GlobalSettings::self()->setAutosaveInterval( mAutoSave->value() );
-    MessageComposer::MessageComposerSettings::self()->setShowRecentAddressesInComposer( mShowRecentAddressesInComposer->isChecked() );
-    MessageComposer::MessageComposerSettings::self()->setShowBalooSearchInComposer( mShowBalooSearchAddressesInComposer->isChecked() );
-    MessageComposer::MessageComposerSettings::self()->setImprovePlainTextOfHtmlMessage( mImprovePlainTextOfHtmlMessage->isChecked() );
+        mAutoAppSignFileCheck->isChecked() ? QLatin1String("auto") : QLatin1String("manual"));
+    saveSpinBox(mWrapColumnSpin, MessageComposer::MessageComposerSettings::self()->lineWrapWidthItem());
+    saveSpinBox(mMaximumRecipients,  MessageComposer::MessageComposerSettings::self()->maximumRecipientsItem());
+    GlobalSettings::self()->setAutosaveInterval(mAutoSave->value());
+    MessageComposer::MessageComposerSettings::self()->setShowRecentAddressesInComposer(mShowRecentAddressesInComposer->isChecked());
+    MessageComposer::MessageComposerSettings::self()->setShowBalooSearchInComposer(mShowBalooSearchAddressesInComposer->isChecked());
+    MessageComposer::MessageComposerSettings::self()->setImprovePlainTextOfHtmlMessage(mImprovePlainTextOfHtmlMessage->isChecked());
 #ifdef KDEPIM_ENTERPRISE_BUILD
     GlobalSettings::self()->setTooManyRecipients(mRecipientCheck->isChecked());
     GlobalSettings::self()->setRecipientThreshold(mRecipientSpin->value());
