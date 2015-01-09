@@ -69,6 +69,7 @@ private:
     void doResetToDefaultsOther();
 
 private:
+    QCheckBox     *mShowBalooSearchAddressesInComposer;
     QCheckBox     *mAutoAppSignFileCheck;
     QCheckBox     *mTopQuoteCheck;
     QCheckBox     *mDashDashCheck;
