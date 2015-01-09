@@ -32,7 +32,7 @@
 #include <QHeaderView>
 
 ColorListBox::ColorListBox(QWidget *parent)
-    : QTreeWidget(parent), mCurrentOnDragEnter(0L)
+    : QTreeWidget(parent), mCurrentOnDragEnter(Q_NULLPTR)
 {
     setColumnCount(1);
     setRootIsDecorated(false);
@@ -94,7 +94,7 @@ void ColorListBox::dragEnterEvent(QDragEnterEvent *e)
         mCurrentOnDragEnter = currentItem();
         e->setAccepted(true);
     } else {
-        mCurrentOnDragEnter = 0L;
+        mCurrentOnDragEnter = Q_NULLPTR;
         e->setAccepted(false);
     }
 }
@@ -103,7 +103,7 @@ void ColorListBox::dragLeaveEvent(QDragLeaveEvent *)
 {
     if (mCurrentOnDragEnter) {
         setCurrentItem(mCurrentOnDragEnter);
-        mCurrentOnDragEnter = 0L;
+        mCurrentOnDragEnter = Q_NULLPTR;
     }
 }
 
@@ -126,7 +126,7 @@ void ColorListBox::dropEvent(QDropEvent *e)
             item->setData(0, Qt::DecorationRole, color);
             emit changed();
         }
-        mCurrentOnDragEnter = 0L;
+        mCurrentOnDragEnter = Q_NULLPTR;
     }
 }
 
