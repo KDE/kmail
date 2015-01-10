@@ -57,7 +57,7 @@
 #include "warningwidgets/externaleditorwarning.h"
 #include "cryptostateindicatorwidget.h"
 #include "validatesendmailshortcut.h"
-
+#include "job/saveasfilejob.h"
 #include "editor/kmstorageservice.h"
 #include "followupreminder/followupreminderselectdatedialog.h"
 #include "followupreminder/followupremindercreatejob.h"
@@ -3440,33 +3440,12 @@ void KMComposeWin::charSelected(const QChar& c)
 
 void KMComposeWin::slotSaveAsFile()
 {
-    QPointer<KFileDialog> dlg = new KFileDialog(KUrl(),QString(),this);
-    dlg->setOperationMode(KFileDialog::Saving);
-    dlg->setConfirmOverwrite(true);
-    if(mComposerBase->editor()->textMode() == KMeditor::Rich ) {
-        dlg->setFilter( QString::fromLatin1("text/html text/plain application/vnd.oasis.opendocument.text") );
-    } else {
-        dlg->setFilter( QString::fromLatin1("text/plain") );
-    }
-
-    if(dlg->exec()) {
-        QTextDocumentWriter writer;
-        const QString filename = dlg->selectedUrl().path();
-        writer.setFileName(dlg->selectedUrl().path());
-        if (dlg->currentFilter() == QString::fromLatin1("text/plain") || filename.endsWith(QLatin1String(".txt"))) {
-            writer.setFormat("plaintext");
-        } else if (dlg->currentFilter() == QString::fromLatin1("text/html")|| filename.endsWith(QLatin1String(".html"))) {
-            writer.setFormat("HTML");
-        } else if (dlg->currentFilter() == QString::fromLatin1("application/vnd.oasis.opendocument.text") || filename.endsWith(QLatin1String(".odf"))) {
-            writer.setFormat("ODF");
-        } else {
-            writer.setFormat("plaintext");
-        }
-        if (!writer.write(mComposerBase->editor()->document())) {
-            qDebug()<<" Error during writing";
-        }
-    }
-    delete dlg;
+    SaveAsFileJob *job = new SaveAsFileJob(this);
+    job->setParentWidget(this);
+    job->setHtmlMode(mComposerBase->editor()->textMode() == KMeditor::Rich);
+    job->setEditor(mComposerBase->editor());
+    job->start();
+    //not necessary to delete it. It done in SaveAsFileJob
 }
 
 void KMComposeWin::slotCreateAddressBookContact()

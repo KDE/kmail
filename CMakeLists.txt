@@ -160,6 +160,7 @@ if (KDEPIM_BUILD_DESKTOP)
      job/manageserversidesubscriptionjob.cpp
      job/manageserversidesubscriptionjob.cpp
      job/removecollectionjob.cpp
+     job/saveasfilejob.cpp
   )
  
   set(kmailprivate_widgets_LIB_SRCS
