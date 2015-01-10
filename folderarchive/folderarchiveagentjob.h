@@ -41,7 +41,7 @@ private Q_SLOTS:
     void slotMoveMessages(KMMoveCommand *);
 private:
     void sendError(const QString &error);
-    QList<Akonadi::Item> mLstItem;
+    QList<Akonadi::Item> mListItem;
     FolderArchiveManager *mManager;
     FolderArchiveAccountInfo *mInfo;
 };

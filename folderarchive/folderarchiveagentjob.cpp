@@ -31,7 +31,7 @@
 
 FolderArchiveAgentJob::FolderArchiveAgentJob(FolderArchiveManager *manager, FolderArchiveAccountInfo *info, const QList<Akonadi::Item> &lstItem, QObject *parent)
     : QObject(parent),
-      mLstItem(lstItem),
+      mListItem(lstItem),
       mManager(manager),
       mInfo(info)
 {
@@ -47,7 +47,7 @@ void FolderArchiveAgentJob::start()
         sendError(i18n("Archive folder not defined. Please verify settings for account", mInfo->instanceName() ));
         return;
     }
-    if (mLstItem.isEmpty()) {
+    if (mListItem.isEmpty()) {
         sendError(i18n("No messages selected."));
         return;
     }
@@ -97,7 +97,7 @@ void FolderArchiveAgentJob::slotCollectionIdFound(const Akonadi::Collection &col
 
 void FolderArchiveAgentJob::sloMoveMailsToCollection(const Akonadi::Collection &col)
 {
-    KMMoveCommand *command = new KMMoveCommand( col, mLstItem, -1 );
+    KMMoveCommand *command = new KMMoveCommand( col, mListItem, -1 );
     connect( command, SIGNAL(moveDone(KMMoveCommand*)), this, SLOT(slotMoveMessages(KMMoveCommand*)));
     command->start();
 }
