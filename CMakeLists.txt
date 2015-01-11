@@ -353,18 +353,18 @@ generate_export_header(kmailprivate BASE_NAME kmail)
   add_subdirectory(folderarchive/autotests/)
   ########### install files ###############
 
-  install(TARGETS kmailprivate ${INSTALL_TARGETS_DEFAULT_ARGS} LIBRARY NAMELINK_SKIP)
+  install(TARGETS kmailprivate ${KDE_INSTALL_TARGETS_DEFAULT_ARGS} LIBRARY NAMELINK_SKIP)
 
-  install(TARGETS kmail ${INSTALL_TARGETS_DEFAULT_ARGS})
+  install(TARGETS kmail ${KDE_INSTALL_TARGETS_DEFAULT_ARGS})
 
-  install(PROGRAMS data/org.kde.kmail.desktop data/kmail_view.desktop DESTINATION ${XDG_APPS_INSTALL_DIR})
+  install(PROGRAMS data/org.kde.kmail.desktop data/kmail_view.desktop DESTINATION ${KDE_INSTALL_APPDIR})
   install(FILES
     ${CMAKE_CURRENT_BINARY_DIR}/kmail.kcfg
-    DESTINATION ${KCFG_INSTALL_DIR}
+    DESTINATION ${KDE_INSTALL_KCFGDIR}
   )
-  install(FILES data/KMail2.appdata.xml DESTINATION ${CMAKE_INSTALL_METAINFODIR})
-  install(FILES antispam-virus/kmail.antispamrc antispam-virus/kmail.antivirusrc  DESTINATION ${CONFIG_INSTALL_DIR})
-  install(FILES tips  DESTINATION ${DATA_INSTALL_DIR}/kmail2)
+  install(FILES data/KMail2.appdata.xml DESTINATION ${KDE_INSTALL_METAINFODIR})
+  install(FILES antispam-virus/kmail.antispamrc antispam-virus/kmail.antivirusrc  DESTINATION ${KDE_INSTALL_CONFDIR})
+  install(FILES tips  DESTINATION ${KDE_INSTALL_DATADIR}/kmail2)
   install(FILES
     data/kmail_config_misc.desktop
     data/kmail_config_appearance.desktop
@@ -372,30 +372,30 @@ generate_export_header(kmailprivate BASE_NAME kmail)
     data/kmail_config_accounts.desktop
     data/kmail_config_composer.desktop
     data/kmail_config_security.desktop
-    DESTINATION ${SERVICES_INSTALL_DIR}
+    DESTINATION ${KDE_INSTALL_KSERVICES5DIR}
   )
   install(FILES
     kmcomposerui.rc
     kmmainwin.rc
     kmreadermainwin.rc
     kmail_part.rc
-    DESTINATION ${KXMLGUI_INSTALL_DIR}/kmail2
+    DESTINATION ${KDE_INSTALL_KXMLGUI5DIR}/kmail2
   )
-  install( FILES data/kmail2.notifyrc DESTINATION ${KNOTIFYRC_INSTALL_DIR} )
-  install(FILES data/dbusmail.desktop DESTINATION ${SERVICETYPES_INSTALL_DIR})
+  install( FILES data/kmail2.notifyrc DESTINATION ${KDE_INSTALL_KNOTIFY5RCDIR} )
+  install(FILES data/dbusmail.desktop DESTINATION ${KDE_INSTALL_KSERVICETYPES5DIR})
   install(TARGETS
     kmailpart
     kcm_kmail
-    DESTINATION ${PLUGIN_INSTALL_DIR}
+    DESTINATION ${KDE_INSTALL_PLUGINDIR}
   )
   install(FILES
     ${CMAKE_BINARY_DIR}/kmail/org.kde.kmail.kmailpart.xml
     ${CMAKE_BINARY_DIR}/kmail/org.kde.kmail.kmail.xml
-    DESTINATION ${DBUS_INTERFACES_INSTALL_DIR}
+    DESTINATION ${KDE_INSTALL_DBUSINTERFACEDIR}
   )
 
   install( FILES data/kmail_addattachmentservicemenu.desktop DESTINATION
-    ${SERVICES_INSTALL_DIR}/ServiceMenus)
+    ${KDE_INSTALL_KSERVICES5DIR}/ServiceMenus)
 
 endif ()
   

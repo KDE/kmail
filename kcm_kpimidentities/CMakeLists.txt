@@ -34,5 +34,5 @@ target_link_libraries(kcm_kpimidentities
   kdepim
 )
 
-install(FILES kcm_kpimidentities.desktop DESTINATION ${SERVICES_INSTALL_DIR})
-install(TARGETS kcm_kpimidentities DESTINATION ${PLUGIN_INSTALL_DIR})
+install(FILES kcm_kpimidentities.desktop DESTINATION ${KDE_INSTALL_KSERVICES5DIR})
+install(TARGETS kcm_kpimidentities DESTINATION ${KDE_INSTALL_PLUGINDIR})

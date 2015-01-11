@@ -1,4 +1,4 @@
-install( FILES kmail.upd  DESTINATION ${KCONF_UPDATE_INSTALL_DIR})
+install( FILES kmail.upd  DESTINATION ${KDE_INSTALL_KCONFUPDATEDIR})
 install(PROGRAMS 
   upgrade-transport.pl
   kmail-pgpidentity.pl
@@ -19,6 +19,6 @@ install(PROGRAMS
   kmail-3.4.1-update-status-filters.pl
   kmail-3.5-trigger-flag-migration.pl
   kmail-4.0-misc.pl 
-DESTINATION ${KCONF_UPDATE_INSTALL_DIR})
+DESTINATION ${KDE_INSTALL_KCONFUPDATEDIR})
 
 
