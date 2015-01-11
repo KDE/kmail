@@ -105,7 +105,6 @@ However, there may be local rules that require you to turn this option on. When 
  </widget>
  <tabstops>
   <tabstop>mEncToSelf</tabstop>
-  <tabstop>mShowEncryptionResult</tabstop>
   <tabstop>mStoreEncrypted</tabstop>
   <tabstop>mShowKeyApprovalDlg</tabstop>
   <tabstop>mAutoEncrypt</tabstop>
