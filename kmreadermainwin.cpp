@@ -553,9 +553,10 @@ void KMReaderMainWin::showMessagePopup(const Akonadi::Item &msg , const KUrl &ur
                 }
             }
 
-            menu->addAction(mReaderWin->viewSourceAction());
-            menu->addAction(mReaderWin->toggleFixFontAction());
-            menu->addAction(mReaderWin->toggleMimePartTreeAction());
+            menu->addAction( mReaderWin->viewSourceAction() );
+            menu->addAction( mReaderWin->toggleFixFontAction() );
+            if (!mReaderWin->mimePartTreeIsEmpty())
+                menu->addAction( mReaderWin->toggleMimePartTreeAction() );
             menu->addSeparator();
             if (mMsgActions->printPreviewAction()) {
                 menu->addAction(mMsgActions->printPreviewAction());
@@ -572,14 +573,16 @@ void KMReaderMainWin::showMessagePopup(const Akonadi::Item &msg , const KUrl &ur
                 menu->addAction(mReaderWin->resetMessageDisplayFormatAction());
             }
         } else {
-            menu->addAction(mReaderWin->toggleFixFontAction());
-            menu->addAction(mReaderWin->toggleMimePartTreeAction());
+            menu->addAction( mReaderWin->toggleFixFontAction() );
+            if (!mReaderWin->mimePartTreeIsEmpty())
+                menu->addAction( mReaderWin->toggleMimePartTreeAction() );
         }
         if (mReaderWin->adblockEnabled()) {
             menu->addSeparator();
             menu->addAction(mReaderWin->openBlockableItems());
         }
-        menu->addAction(mMsgActions->addFollowupReminderAction());
+        if (msg.isValid())
+            menu->addAction( mMsgActions->addFollowupReminderAction() );
         if (kmkernel->allowToDebugBalooSupport()) {
             menu->addSeparator();
             menu->addAction(mMsgActions->debugBalooAction());

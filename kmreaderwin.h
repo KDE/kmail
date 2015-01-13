@@ -221,6 +221,7 @@ public:
     bool adblockEnabled() const;
     bool isAShortUrl(const QUrl &url) const;
 
+    bool mimePartTreeIsEmpty() const;
 Q_SIGNALS:
     /** Emitted after parsing of a message to have it stored
       in unencrypted state in it's folder. */

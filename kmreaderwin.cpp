@@ -581,6 +581,11 @@ KToggleAction *KMReaderWin::toggleFixFontAction() const
     return mViewer->toggleFixFontAction();
 }
 
+bool KMReaderWin::mimePartTreeIsEmpty() const
+{
+    return mViewer->mimePartTreeIsEmpty();
+}
+
 QAction *KMReaderWin::toggleMimePartTreeAction() const
 {
     return mViewer->toggleMimePartTreeAction();
