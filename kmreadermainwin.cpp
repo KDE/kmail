@@ -567,7 +567,8 @@ void KMReaderMainWin::showMessagePopup(const Akonadi::Item&msg ,const KUrl&url,c
 
             menu->addAction( mReaderWin->viewSourceAction() );
             menu->addAction( mReaderWin->toggleFixFontAction() );
-            menu->addAction( mReaderWin->toggleMimePartTreeAction() );
+            if (!mReaderWin->mimePartTreeIsEmpty())
+                menu->addAction( mReaderWin->toggleMimePartTreeAction() );
             menu->addSeparator();
             if (mMsgActions->printPreviewAction())
                 menu->addAction( mMsgActions->printPreviewAction() );
@@ -584,7 +585,8 @@ void KMReaderMainWin::showMessagePopup(const Akonadi::Item&msg ,const KUrl&url,c
             }
         } else {
             menu->addAction( mReaderWin->toggleFixFontAction() );
-            menu->addAction( mReaderWin->toggleMimePartTreeAction() );
+            if (!mReaderWin->mimePartTreeIsEmpty())
+                menu->addAction( mReaderWin->toggleMimePartTreeAction() );
         }
         if (mReaderWin->adblockEnabled()) {
             menu->addSeparator();
