@@ -2334,7 +2334,7 @@ void KMComposeWin::slotFetchJob(KJob*job)
                 //Workaround about broken kaddressbook fields.
                 QByteArray data = item.payloadData();
                 MessageComposer::Util::adaptVcard(data);
-                addAttachment( attachmentName, KMime::Headers::CEbase64, QString(), data, item.mimeType().toLatin1() );
+                addAttachment( attachmentName, KMime::Headers::CEbase64, QString(), data, "text/x-vcard" );
             } else if ( item.hasPayload<KABC::ContactGroup>() ) {
                 const KABC::ContactGroup group = item.payload<KABC::ContactGroup>();
                 attachmentName = group.name() + QLatin1String( ".vcf" );
@@ -2342,8 +2342,6 @@ void KMComposeWin::slotFetchJob(KJob*job)
                 expandJob->setProperty("groupName", attachmentName);
                 connect( expandJob, SIGNAL(result(KJob*)), this, SLOT(slotExpandGroupResult(KJob*)) );
                 expandJob->start();
-
-                //TODO contact group
             } else {
                 addAttachment( attachmentName, KMime::Headers::CEbase64, QString(), item.payloadData(), item.mimeType().toLatin1() );
             }
