@@ -2294,13 +2294,13 @@ void KMComposeWin::slotFetchJob(KJob *job)
                 //Workaround about broken kaddressbook fields.
                 QByteArray data = item.payloadData();
                 MessageComposer::Util::adaptVcard(data);
-                addAttachment( attachmentName, KMime::Headers::CEbase64, QString(), data, "text/x-vcard" );
-            } else if ( item.hasPayload<KContacts::ContactGroup>() ) {
+                addAttachment(attachmentName, KMime::Headers::CEbase64, QString(), data, "text/x-vcard");
+            } else if (item.hasPayload<KContacts::ContactGroup>()) {
                 const KContacts::ContactGroup group = item.payload<KContacts::ContactGroup>();
-                attachmentName = group.name() + QLatin1String( ".vcf" );
-                Akonadi::ContactGroupExpandJob *expandJob = new Akonadi::ContactGroupExpandJob( group, this );
+                attachmentName = group.name() + QLatin1String(".vcf");
+                Akonadi::ContactGroupExpandJob *expandJob = new Akonadi::ContactGroupExpandJob(group, this);
                 expandJob->setProperty("groupName", attachmentName);
-                connect( expandJob, SIGNAL(result(KJob*)), this, SLOT(slotExpandGroupResult(KJob*)) );
+                connect(expandJob, SIGNAL(result(KJob*)), this, SLOT(slotExpandGroupResult(KJob*)));
                 expandJob->start();
             } else {
                 addAttachment(attachmentName, KMime::Headers::CEbase64, QString(), item.payloadData(), item.mimeType().toLatin1());
@@ -2311,20 +2311,19 @@ void KMComposeWin::slotFetchJob(KJob *job)
 
 void KMComposeWin::slotExpandGroupResult(KJob *job)
 {
-    Akonadi::ContactGroupExpandJob *expandJob = qobject_cast<Akonadi::ContactGroupExpandJob*>( job );
-    Q_ASSERT( expandJob );
+    Akonadi::ContactGroupExpandJob *expandJob = qobject_cast<Akonadi::ContactGroupExpandJob *>(job);
+    Q_ASSERT(expandJob);
 
     const QString attachmentName = expandJob->property("groupName").toString();
     const QByteArray mimeType = "text/x-vcard";
     KContacts::VCardConverter converter;
     const QByteArray groupData = converter.createVCards(expandJob->contacts());
     if (!groupData.isEmpty()) {
-        addAttachment( attachmentName, KMime::Headers::CEbase64, QString(), groupData, mimeType );
+        addAttachment(attachmentName, KMime::Headers::CEbase64, QString(), groupData, mimeType);
     }
 }
 
-
-QString KMComposeWin::addQuotesToText( const QString &inputText ) const
+QString KMComposeWin::addQuotesToText(const QString &inputText) const
 {
     QString answer(inputText);
     const QString indentStr = mComposerBase->editor()->quotePrefixName();

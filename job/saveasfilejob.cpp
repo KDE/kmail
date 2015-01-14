@@ -43,22 +43,22 @@ SaveAsFileJob::~SaveAsFileJob()
 
 void SaveAsFileJob::start()
 {
-    QPointer<KFileDialog> dlg = new KFileDialog(QUrl(),QString(),mParentWidget);
+    QPointer<KFileDialog> dlg = new KFileDialog(QUrl(), QString(), mParentWidget);
     dlg->setOperationMode(KFileDialog::Saving);
     dlg->setConfirmOverwrite(true);
-    if( mHtmlMode ) {
-        dlg->setFilter( QString::fromLatin1("text/html text/plain application/vnd.oasis.opendocument.text") );
+    if (mHtmlMode) {
+        dlg->setFilter(QString::fromLatin1("text/html text/plain application/vnd.oasis.opendocument.text"));
     } else {
-        dlg->setFilter( QString::fromLatin1("text/plain") );
+        dlg->setFilter(QString::fromLatin1("text/plain"));
     }
 
-    if(dlg->exec()) {
+    if (dlg->exec()) {
         QTextDocumentWriter writer;
         const QString filename = dlg->selectedUrl().path();
         writer.setFileName(dlg->selectedUrl().path());
         if (dlg->currentFilter() == QString::fromLatin1("text/plain") || filename.endsWith(QLatin1String(".txt"))) {
             writer.setFormat("plaintext");
-        } else if (dlg->currentFilter() == QString::fromLatin1("text/html")|| filename.endsWith(QLatin1String(".html"))) {
+        } else if (dlg->currentFilter() == QString::fromLatin1("text/html") || filename.endsWith(QLatin1String(".html"))) {
             writer.setFormat("HTML");
         } else if (dlg->currentFilter() == QString::fromLatin1("application/vnd.oasis.opendocument.text") || filename.endsWith(QLatin1String(".odf"))) {
             writer.setFormat("ODF");
@@ -66,7 +66,7 @@ void SaveAsFileJob::start()
             writer.setFormat("plaintext");
         }
         if (!writer.write(mEditor->document())) {
-            qCDebug(KMAIL_LOG)<<" Error during writing";
+            qCDebug(KMAIL_LOG) << " Error during writing";
         }
     }
     delete dlg;
@@ -87,7 +87,4 @@ void SaveAsFileJob::setParentWidget(QWidget *parentWidget)
 {
     mParentWidget = parentWidget;
 }
-
-
-
 

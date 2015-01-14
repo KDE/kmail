@@ -21,7 +21,8 @@
 #define SAVEASFILEJOB_H
 
 #include <QObject>
-namespace MessageComposer {
+namespace MessageComposer
+{
 class KMeditor;
 }
 class SaveAsFileJob : public QObject
