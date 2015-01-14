@@ -70,6 +70,9 @@
 #include "pimcommon/storageservice/storageservicemanager.h"
 #include "pimcommon/storageservice/storageserviceprogressmanager.h"
 
+#include "messagecomposer/utils/util.h"
+
+#include <kcontacts/vcardconverter.h>
 #include "agents/sendlateragent/sendlaterutil.h"
 #include "agents/sendlateragent/sendlaterdialog.h"
 #include "agents/sendlateragent/sendlaterinfo.h"
@@ -178,6 +181,7 @@
 #include <QMimeType>
 #include <KConfigGroup>
 #include <KSplitterCollapserButton>
+#include <Akonadi/Contact/ContactGroupExpandJob>
 
 using Sonnet::DictionaryComboBox;
 using MailTransport::TransportManager;
@@ -2289,19 +2293,15 @@ void KMComposeWin::slotFetchJob(KJob *job)
                 attachmentName = contact.realName() + QLatin1String(".vcf");
                 //Workaround about broken kaddressbook fields.
                 QByteArray data = item.payloadData();
-                data.replace("X-messaging/aim-All", ("X-AIM"));
-                data.replace("X-messaging/icq-All", ("X-ICQ"));
-                data.replace("X-messaging/xmpp-All", ("X-JABBER"));
-                data.replace("X-messaging/msn-All", ("X-MSN"));
-                data.replace("X-messaging/yahoo-All", ("X-YAHOO"));
-                data.replace("X-messaging/gadu-All", ("X-GADUGADU"));
-                data.replace("X-messaging/skype-All", ("X-SKYPE"));
-                data.replace("X-messaging/groupwise-All", ("X-GROUPWISE"));
-                data.replace(("X-messaging/sms-All"), ("X-SMS"));
-                data.replace(("X-messaging/meanwhile-All"), ("X-MEANWHILE"));
-                data.replace(("X-messaging/irc-All"), ("X-IRC"));
-                data.replace(("X-messaging/googletalk-All"), ("X-GTALK"));
-                addAttachment(attachmentName, KMime::Headers::CEbase64, QString(), data, item.mimeType().toLatin1());
+                MessageComposer::Util::adaptVcard(data);
+                addAttachment( attachmentName, KMime::Headers::CEbase64, QString(), data, "text/x-vcard" );
+            } else if ( item.hasPayload<KContacts::ContactGroup>() ) {
+                const KContacts::ContactGroup group = item.payload<KContacts::ContactGroup>();
+                attachmentName = group.name() + QLatin1String( ".vcf" );
+                Akonadi::ContactGroupExpandJob *expandJob = new Akonadi::ContactGroupExpandJob( group, this );
+                expandJob->setProperty("groupName", attachmentName);
+                connect( expandJob, SIGNAL(result(KJob*)), this, SLOT(slotExpandGroupResult(KJob*)) );
+                expandJob->start();
             } else {
                 addAttachment(attachmentName, KMime::Headers::CEbase64, QString(), item.payloadData(), item.mimeType().toLatin1());
             }
@@ -2309,7 +2309,22 @@ void KMComposeWin::slotFetchJob(KJob *job)
     }
 }
 
-QString KMComposeWin::addQuotesToText(const QString &inputText) const
+void KMComposeWin::slotExpandGroupResult(KJob *job)
+{
+    Akonadi::ContactGroupExpandJob *expandJob = qobject_cast<Akonadi::ContactGroupExpandJob*>( job );
+    Q_ASSERT( expandJob );
+
+    const QString attachmentName = expandJob->property("groupName").toString();
+    const QByteArray mimeType = "text/x-vcard";
+    KContacts::VCardConverter converter;
+    const QByteArray groupData = converter.createVCards(expandJob->contacts());
+    if (!groupData.isEmpty()) {
+        addAttachment( attachmentName, KMime::Headers::CEbase64, QString(), groupData, mimeType );
+    }
+}
+
+
+QString KMComposeWin::addQuotesToText( const QString &inputText ) const
 {
     QString answer(inputText);
     const QString indentStr = mComposerBase->editor()->quotePrefixName();
