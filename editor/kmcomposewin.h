@@ -448,6 +448,7 @@ private slots:
     void slotSendNowByShortcut();
     void slotSnippetWidgetVisibilityChanged(bool b);
     void slotOverwriteModeWasChanged(bool state);
+    void slotExpandGroupResult(KJob *job);
 public: // kmcommand
     // FIXME we need to remove these, but they're pure virtual in Composer.
     void addAttach( KMime::Content *msgPart );

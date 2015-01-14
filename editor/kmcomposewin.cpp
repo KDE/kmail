@@ -73,6 +73,7 @@
 
 #include "messagecomposer/utils/util.h"
 
+#include <kabc/vcardconverter.h>
 #include "agents/sendlateragent/sendlaterutil.h"
 #include "agents/sendlateragent/sendlaterdialog.h"
 #include "agents/sendlateragent/sendlaterinfo.h"
@@ -175,6 +176,7 @@
 #include <memory>
 #include <boost/shared_ptr.hpp>
 #include <widgets/splittercollapser.h>
+#include <Akonadi/Contact/ContactGroupExpandJob>
 
 using Sonnet::DictionaryComboBox;
 using MailTransport::TransportManager;
@@ -2333,12 +2335,36 @@ void KMComposeWin::slotFetchJob(KJob*job)
                 QByteArray data = item.payloadData();
                 MessageComposer::Util::adaptVcard(data);
                 addAttachment( attachmentName, KMime::Headers::CEbase64, QString(), data, item.mimeType().toLatin1() );
+            } else if ( item.hasPayload<KABC::ContactGroup>() ) {
+                const KABC::ContactGroup group = item.payload<KABC::ContactGroup>();
+                attachmentName = group.name() + QLatin1String( ".vcf" );
+                Akonadi::ContactGroupExpandJob *expandJob = new Akonadi::ContactGroupExpandJob( group, this );
+                expandJob->setProperty("groupName", attachmentName);
+                connect( expandJob, SIGNAL(result(KJob*)), this, SLOT(slotExpandGroupResult(KJob*)) );
+                expandJob->start();
+
+                //TODO contact group
             } else {
                 addAttachment( attachmentName, KMime::Headers::CEbase64, QString(), item.payloadData(), item.mimeType().toLatin1() );
             }
         }
     }
 }
+
+void KMComposeWin::slotExpandGroupResult(KJob *job)
+{
+    Akonadi::ContactGroupExpandJob *expandJob = qobject_cast<Akonadi::ContactGroupExpandJob*>( job );
+    Q_ASSERT( expandJob );
+
+    const QString attachmentName = expandJob->property("groupName").toString();
+    const QByteArray mimeType = "text/x-vcard";
+    KABC::VCardConverter converter;
+    const QByteArray groupData = converter.createVCards(expandJob->contacts());
+    if (!groupData.isEmpty()) {
+        addAttachment( attachmentName, KMime::Headers::CEbase64, QString(), groupData, mimeType );
+    }
+}
+
 
 QString KMComposeWin::addQuotesToText( const QString &inputText ) const
 {
