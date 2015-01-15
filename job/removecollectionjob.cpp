@@ -70,7 +70,7 @@ void RemoveCollectionJob::slotDelayedRemoveFolder(KJob *job)
         title = i18n("Delete Search");
         str = i18n("<qt>Are you sure you want to delete the search <b>%1</b>?<br />"
                    "Any messages it shows will still be available in their original folder.</qt>",
-                   Qt::escape(col.name()));
+                   col.name().toHtmlEscaped());
         buttonLabel = i18nc("@action:button Delete search", "&Delete");
     } else {
         title = i18n("Delete Folder");
@@ -79,14 +79,14 @@ void RemoveCollectionJob::slotDelayedRemoveFolder(KJob *job)
             if (hasNotSubDirectory) {
                 str = i18n("<qt>Are you sure you want to delete the empty folder "
                            "<b>%1</b>?</qt>",
-                           Qt::escape(col.name()));
+                           col.name().toHtmlEscaped());
             } else {
                 str = i18n("<qt>Are you sure you want to delete the empty folder "
                            "<resource>%1</resource> and all its subfolders? Those subfolders might "
                            "not be empty and their contents will be discarded as well. "
                            "<p><b>Beware</b> that discarded messages are not saved "
                            "into your Trash folder and are permanently deleted.</p></qt>",
-                           Qt::escape(col.name()));
+                           col.name().toHtmlEscaped());
             }
         } else {
             if (hasNotSubDirectory) {
@@ -94,13 +94,13 @@ void RemoveCollectionJob::slotDelayedRemoveFolder(KJob *job)
                            "<resource>%1</resource>, discarding its contents? "
                            "<p><b>Beware</b> that discarded messages are not saved "
                            "into your Trash folder and are permanently deleted.</p></qt>",
-                           Qt::escape(col.name()));
+                           col.name().toHtmlEscaped());
             } else {
                 str = i18n("<qt>Are you sure you want to delete the folder <resource>%1</resource> "
                            "and all its subfolders, discarding their contents? "
                            "<p><b>Beware</b> that discarded messages are not saved "
                            "into your Trash folder and are permanently deleted.</p></qt>",
-                           Qt::escape(col.name()));
+                           col.name().toHtmlEscaped());
             }
         }
         buttonLabel = i18nc("@action:button Delete folder", "&Delete");
