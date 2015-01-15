@@ -29,7 +29,7 @@ class SaveAsFileJob : public QObject
 {
     Q_OBJECT
 public:
-    explicit SaveAsFileJob(QObject *parent = 0);
+    explicit SaveAsFileJob(QObject *parent = Q_NULLPTR);
     ~SaveAsFileJob();
     void start();
 
