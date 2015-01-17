@@ -51,7 +51,9 @@ if (KDEPIM_BUILD_DESKTOP)
   add_subdirectory(pics)
   add_subdirectory(icons)
   add_subdirectory(avscripts)
-  add_subdirectory(autotests)
+  if (BUILD_TESTING)
+     add_subdirectory(autotests)
+  endif()
   add_subdirectory(kconf_update)
 endif()
 add_subdirectory(kcm_kpimidentities)
@@ -349,8 +351,10 @@ generate_export_header(kmailprivate BASE_NAME kmail)
 
 
   add_subdirectory(mailmerge/tests/)
-  add_subdirectory(mailmerge/autotests/)
-  add_subdirectory(folderarchive/autotests/)
+  if (BUILD_TESTING)
+     add_subdirectory(mailmerge/autotests/)
+     add_subdirectory(folderarchive/autotests/)
+  endif()
   ########### install files ###############
 
   install(TARGETS kmailprivate ${KDE_INSTALL_TARGETS_DEFAULT_ARGS} LIBRARY NAMELINK_SKIP)
