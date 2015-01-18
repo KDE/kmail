@@ -314,7 +314,7 @@ protected:
     void moveSelectedMessagesToFolder(const Akonadi::Collection &dest);
     void copySelectedMessagesToFolder(const Akonadi::Collection &dest);
 
-    virtual void showEvent(QShowEvent *event);
+    void showEvent(QShowEvent *event) Q_DECL_OVERRIDE;
 
     KActionCollection *actionCollection() const
     {
