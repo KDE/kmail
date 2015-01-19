@@ -4003,8 +4003,9 @@ void KMMainWidget::updateFolderMenu()
 
     bool isInTrashFolder = (mCurrentFolder && CommonKernel->folderIsTrash(mCurrentFolder->collection()));
     akonadiStandardAction( Akonadi::StandardMailActionManager::MoveToTrash )->setText( isInTrashFolder ? i18nc("@action Hard delete, bypassing trash", "&Delete"): i18n("&Move to Trash") );
-
+    akonadiStandardAction( Akonadi::StandardMailActionManager::MoveToTrash )->setIcon( isInTrashFolder ? KIcon(QLatin1String("edit-delete"))  : KIcon(QLatin1String("user-trash") ));
     mTrashThreadAction->setText(isInTrashFolder ?i18n("Delete T&hread"): i18n("M&ove Thread to Trash"));
+    mTrashThreadAction->setIcon(isInTrashFolder ? KIcon(QLatin1String("edit-delete") ) : KIcon(QLatin1String("user-trash") ) );
 
     mSearchMessages->setText( (mCurrentFolder && mCurrentFolder->collection().resource() == QLatin1String( "akonadi_search_resource" )) ? i18n("Edit Search...") : i18n("&Find Messages...") );
 
