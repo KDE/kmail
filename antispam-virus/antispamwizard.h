@@ -294,8 +294,7 @@ private:
 class ASWizPage : public QWidget
 {
 public:
-    ASWizPage(QWidget *parent, const QString &name,
-               const QString *bannerName = 0);
+    ASWizPage(QWidget *parent, const QString &name);
 
 protected:
     QBoxLayout *mLayout;

@@ -883,14 +883,11 @@ void AntiSpamWizard::ConfigReader::sortToolList()
 
 
 //---------------------------------------------------------------------------
-ASWizPage::ASWizPage( QWidget * parent, const QString & name,
-                      const QString *bannerName )
+ASWizPage::ASWizPage( QWidget * parent, const QString & name)
     : QWidget( parent )
 {
     setObjectName( name );
-    QString banner = QLatin1String("kmwizard.png");
-    if ( bannerName && !bannerName->isEmpty() )
-        banner = *bannerName;
+    const QString banner = QLatin1String("kmwizard.png");
     mLayout = new QHBoxLayout( this );
     mLayout->setSpacing( KDialog::spacingHint() );
     mLayout->setMargin( KDialog::marginHint() );
