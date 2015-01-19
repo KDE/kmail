@@ -581,10 +581,7 @@ void AntiSpamWizard::checkToolAvailability()
 
 void AntiSpamWizard::slotHelpClicked()
 {
-    if ( mMode == AntiSpam )
-        KToolInvocation::invokeHelp( QLatin1String("the-anti-spam-wizard"), QLatin1String("kmail") );
-    else
-        KToolInvocation::invokeHelp( QLatin1String("the-anti-virus-wizard"), QLatin1String("kmail") );
+    KToolInvocation::invokeHelp( (mMode == AntiSpam) ? QLatin1String("the-anti-spam-wizard") : QLatin1String("the-anti-virus-wizard") , QLatin1String("kmail") );
 }
 
 
