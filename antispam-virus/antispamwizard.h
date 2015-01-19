@@ -36,7 +36,6 @@
 #include <AkonadiCore/collection.h>
 
 class QLabel;
-class QTextEdit;
 class QCheckBox;
 class QBoxLayout;
 class QListWidget;
@@ -364,13 +363,10 @@ private:
 class ASWizPage : public QWidget
 {
 public:
-    ASWizPage(QWidget *parent, const QString &name,
-              const QString *bannerName = 0);
+    ASWizPage(QWidget *parent, const QString &name);
 
 protected:
     QBoxLayout *mLayout;
-private:
-    QLabel *mBannerLabel;
 };
 
 //---------------------------------------------------------------------------
@@ -393,7 +389,6 @@ Q_SIGNALS:
     void selectionChanged();
 
 private:
-    QTextEdit *mIntroText;
     QLabel *mScanProgressText;
     QLabel *mSelectionHint;
     QListWidget *mToolsList;
