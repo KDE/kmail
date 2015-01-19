@@ -896,14 +896,14 @@ ASWizPage::ASWizPage( QWidget * parent, const QString & name)
     mLayout->addItem( sideLayout );
     mLayout->addItem( new QSpacerItem( 5, 5, QSizePolicy::Minimum, QSizePolicy::Expanding ) );
 
-    mBannerLabel = new QLabel( this );
-    mBannerLabel->setPixmap( UserIcon(banner) );
-    mBannerLabel->setScaledContents( false );
-    mBannerLabel->setFrameShape( QFrame::StyledPanel );
-    mBannerLabel->setFrameShadow( QFrame::Sunken );
-    mBannerLabel->setSizePolicy( QSizePolicy::Fixed, QSizePolicy::Fixed );
+    QLabel *bannerLabel = new QLabel( this );
+    bannerLabel->setPixmap( UserIcon(banner) );
+    bannerLabel->setScaledContents( false );
+    bannerLabel->setFrameShape( QFrame::StyledPanel );
+    bannerLabel->setFrameShadow( QFrame::Sunken );
+    bannerLabel->setSizePolicy( QSizePolicy::Fixed, QSizePolicy::Fixed );
 
-    sideLayout->addWidget( mBannerLabel );
+    sideLayout->addWidget( bannerLabel );
     sideLayout->addItem( new QSpacerItem( 5, 5, QSizePolicy::Minimum, QSizePolicy::Expanding ) );
 }
 
@@ -916,8 +916,8 @@ ASWizInfoPage::ASWizInfoPage(AntiSpamWizard::WizardMode mode,
     QBoxLayout * layout = new QVBoxLayout();
     mLayout->addItem( layout );
 
-    mIntroText = new QTextEdit( this );
-    mIntroText->setText(
+    QTextEdit *introText = new QTextEdit( this );
+    introText->setText(
                 ( mode == AntiSpamWizard::AntiSpam )
                 ? i18n(
                       "The wizard will search for any tools to do spam detection\n"
@@ -938,9 +938,9 @@ ASWizInfoPage::ASWizInfoPage(AntiSpamWizard::WizardMode mode,
                       "deleting the filter rules created by the wizard to get "
                       "back to the former behavior.</p>"
                       ) );
-    mIntroText->setReadOnly( true );
-    mIntroText->setSizePolicy( QSizePolicy( QSizePolicy::Expanding,  QSizePolicy::Expanding ) );
-    layout->addWidget( mIntroText );
+    introText->setReadOnly( true );
+    introText->setSizePolicy( QSizePolicy( QSizePolicy::Expanding,  QSizePolicy::Expanding ) );
+    layout->addWidget( introText );
 
     mScanProgressText = new QLabel( this );
     mScanProgressText->clear();

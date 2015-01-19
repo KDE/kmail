@@ -298,8 +298,6 @@ public:
 
 protected:
     QBoxLayout *mLayout;
-private:
-    QLabel *mBannerLabel;
 };
 
 
@@ -323,7 +321,6 @@ signals:
     void selectionChanged();
 
 private:
-    QTextEdit *mIntroText;
     QLabel *mScanProgressText;
     QLabel *mSelectionHint;
     QListWidget *mToolsList;
