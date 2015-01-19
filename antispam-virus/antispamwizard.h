@@ -36,7 +36,6 @@
 #include <akonadi/collection.h>
 
 class QLabel;
-class QTextEdit;
 class QCheckBox;
 class QBoxLayout;
 class QListWidget;
