@@ -62,7 +62,7 @@
 #include "followupreminder/followupreminderselectdatedialog.h"
 #include "followupreminder/followupremindercreatejob.h"
 #include "agents/followupreminderagent/followupreminderutil.h"
-
+#include "pimcommon/util/vcardutil.h"
 
 #include "libkdepim/progresswidget/statusbarprogresswidget.h"
 #include "libkdepim/progresswidget/progressstatusbarwidget.h"
@@ -2333,7 +2333,8 @@ void KMComposeWin::slotFetchJob(KJob*job)
                 attachmentName = contact.realName() + QLatin1String( ".vcf" );
                 //Workaround about broken kaddressbook fields.
                 QByteArray data = item.payloadData();
-                MessageComposer::Util::adaptVcard(data);
+                PimCommon::VCardUtil vcardUtil;
+                vcardUtil.adaptVcard(data);
                 addAttachment( attachmentName, KMime::Headers::CEbase64, QString(), data, "text/x-vcard" );
             } else if ( item.hasPayload<KABC::ContactGroup>() ) {
                 const KABC::ContactGroup group = item.payload<KABC::ContactGroup>();
