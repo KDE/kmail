@@ -4002,8 +4002,11 @@ void KMMainWidget::updateFolderMenu()
     mArchiveFolderAction->setEnabled( mCurrentFolder && !multiFolder && folderWithContent );
 
     bool isInTrashFolder = (mCurrentFolder && CommonKernel->folderIsTrash(mCurrentFolder->collection()));
-    akonadiStandardAction( Akonadi::StandardMailActionManager::MoveToTrash )->setText( isInTrashFolder ? i18nc("@action Hard delete, bypassing trash", "&Delete"): i18n("&Move to Trash") );
-    akonadiStandardAction( Akonadi::StandardMailActionManager::MoveToTrash )->setIcon( isInTrashFolder ? KIcon(QLatin1String("edit-delete"))  : KIcon(QLatin1String("user-trash") ));
+    KAction *moveToTrash = akonadiStandardAction( Akonadi::StandardMailActionManager::MoveToTrash );
+    moveToTrash->setText( isInTrashFolder ? i18nc("@action Hard delete, bypassing trash", "&Delete"): i18n("&Move to Trash") );
+    moveToTrash->setIcon( isInTrashFolder ? KIcon(QLatin1String("edit-delete"))  : KIcon(QLatin1String("user-trash") ));
+    //Use same text as in Text property. Change it in kf5
+    moveToTrash->setToolTip( isInTrashFolder ? i18nc("@action Hard delete, bypassing trash", "&Delete"): i18n("&Move to Trash") );
     mTrashThreadAction->setText(isInTrashFolder ?i18n("Delete T&hread"): i18n("M&ove Thread to Trash"));
     mTrashThreadAction->setIcon(isInTrashFolder ? KIcon(QLatin1String("edit-delete") ) : KIcon(QLatin1String("user-trash") ) );
 
