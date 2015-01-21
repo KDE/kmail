@@ -4016,8 +4016,11 @@ void KMMainWidget::updateFolderMenu()
     mArchiveFolderAction->setEnabled(mCurrentFolder && !multiFolder && folderWithContent);
 
     bool isInTrashFolder = (mCurrentFolder && CommonKernel->folderIsTrash(mCurrentFolder->collection()));
+    QAction *moveToTrash = akonadiStandardAction( Akonadi::StandardMailActionManager::MoveToTrash );
     akonadiStandardAction(Akonadi::StandardMailActionManager::MoveToTrash)->setText(isInTrashFolder ? i18nc("@action Hard delete, bypassing trash", "&Delete") : i18n("&Move to Trash"));
     akonadiStandardAction( Akonadi::StandardMailActionManager::MoveToTrash )->setIcon( isInTrashFolder ? QIcon::fromTheme(QLatin1String("edit-delete"))  : QIcon::fromTheme(QLatin1String("user-trash") ));
+    //Use same text as in Text property. Change it in kf5
+    moveToTrash->setToolTip( isInTrashFolder ? i18nc("@action Hard delete, bypassing trash", "&Delete"): i18n("&Move to Trash") );
 
     mTrashThreadAction->setIcon(isInTrashFolder ? QIcon::fromTheme(QLatin1String("edit-delete") ) : QIcon::fromTheme(QLatin1String("user-trash") ) );
     mTrashThreadAction->setText(isInTrashFolder ? i18n("Delete T&hread") : i18n("M&ove Thread to Trash"));
