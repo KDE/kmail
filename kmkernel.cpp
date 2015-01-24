@@ -986,6 +986,7 @@ void KMKernel::setAccountStatus(bool goOnline)
         const QString identifier( type.identifier() );
         if ( identifier.contains( IMAP_RESOURCE_IDENTIFIER ) ||
              identifier.contains( POP3_RESOURCE_IDENTIFIER ) ||
+             identifier.contains( KOLAB_RESOURCE_IDENTIFIER ) ||
              identifier.contains( QLatin1String("akonadi_maildispatcher_agent") ) ) {
             type.setIsOnline( goOnline );
         }
