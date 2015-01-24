@@ -1773,7 +1773,7 @@ void KMKernel::instanceStatusChanged( const Akonadi::AgentInstance &instance )
             if(mResourceCryptoSettingCache.contains(identifier)) {
                 cryptoStatus = mResourceCryptoSettingCache.value(identifier);
             } else {
-                if ( identifier.contains( IMAP_RESOURCE_IDENTIFIER ) ) {
+                if ( identifier.contains( IMAP_RESOURCE_IDENTIFIER ) || identifier.contains( KOLAB_RESOURCE_IDENTIFIER )) {
                     OrgKdeAkonadiImapSettingsInterface *iface = PimCommon::Util::createImapSettingsInterface( identifier );
                     if ( iface->isValid() ) {
                         const QString imapSafety = iface->safety();
