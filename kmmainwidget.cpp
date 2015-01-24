@@ -4752,7 +4752,7 @@ void KMMainWidget::slotServerSideSubscription()
     if ( kmkernel->isImapFolder( mCurrentFolder->collection(), isImapOnline ) ) {
         QDBusInterface iface(
                     QLatin1String( "org.freedesktop.Akonadi.Resource.")+mCurrentFolder->collection().resource(),
-                    QLatin1String( "/" ), QLatin1String( "org.kde.Akonadi.Imap.Resource" ),
+                    QLatin1String( "/" ), QLatin1String( "org.kde.Akonadi.ImapResourceBase" ),
                     DBusConnectionPool::threadConnection(), this );
         if ( !iface.isValid() ) {
             kDebug()<<"Cannot create imap dbus interface";

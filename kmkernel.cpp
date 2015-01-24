@@ -1851,7 +1851,7 @@ bool KMKernel::isImapFolder( const Akonadi::Collection &col, bool &isOnline ) co
     const Akonadi::AgentInstance agentInstance = Akonadi::AgentManager::self()->instance( col.resource() );
     isOnline = agentInstance.isOnline();
 
-    return (agentInstance.type().identifier() == IMAP_RESOURCE_IDENTIFIER);
+    return ((agentInstance.type().identifier() == IMAP_RESOURCE_IDENTIFIER) || (agentInstance.type().identifier() == KOLAB_RESOURCE_IDENTIFIER));
 }
 
 
