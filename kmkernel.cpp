@@ -1939,7 +1939,7 @@ void KMKernel::checkFolderFromResources( const Akonadi::Collection::List &collec
     foreach( const Akonadi::AgentInstance& type, lst ) {
         if ( type.status() == Akonadi::AgentInstance::Broken )
             continue;
-        if ( type.identifier().contains( IMAP_RESOURCE_IDENTIFIER ) ) {
+        if ( type.identifier().contains( IMAP_RESOURCE_IDENTIFIER ) || type.identifier().contains( KOLAB_RESOURCE_IDENTIFIER ) ) {
             OrgKdeAkonadiImapSettingsInterface *iface = PimCommon::Util::createImapSettingsInterface( type.identifier() );
             if ( iface->isValid() ) {
                 foreach( const Akonadi::Collection& collection, collectionList ) {
