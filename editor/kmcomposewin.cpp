@@ -2356,11 +2356,10 @@ void KMComposeWin::slotExpandGroupResult(KJob *job)
     Q_ASSERT( expandJob );
 
     const QString attachmentName = expandJob->property("groupName").toString();
-    const QByteArray mimeType = "text/x-vcard";
     KABC::VCardConverter converter;
     const QByteArray groupData = converter.exportVCards(expandJob->contacts(), KABC::VCardConverter::v3_0);
     if (!groupData.isEmpty()) {
-        addAttachment( attachmentName, KMime::Headers::CEbase64, QString(), groupData, mimeType );
+        addAttachment( attachmentName, KMime::Headers::CEbase64, QString(), groupData, "text/x-vcard" );
     }
 }
 
