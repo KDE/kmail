@@ -1009,13 +1009,13 @@ void KMKernel::stopNetworkJobs()
 void KMKernel::setAccountStatus(bool goOnline)
 {
     const Akonadi::AgentInstance::List lst = MailCommon::Util::agentInstances(false);
-    foreach ( Akonadi::AgentInstance type, lst ) {
-        const QString identifier( type.identifier() );
-        if ( PimCommon::Util::isImapResource(identifier) ||
-             identifier.contains( POP3_RESOURCE_IDENTIFIER ) ||
-             identifier.contains( QLatin1String("akonadi_maildispatcher_agent") ) ||
-             type.type().capabilities().contains(QLatin1String("NeedsNetwork")) ) {
-            type.setIsOnline( goOnline );
+    foreach (Akonadi::AgentInstance type, lst) {
+        const QString identifier(type.identifier());
+        if (PimCommon::Util::isImapResource(identifier) ||
+                identifier.contains(POP3_RESOURCE_IDENTIFIER) ||
+                identifier.contains(QLatin1String("akonadi_maildispatcher_agent")) ||
+                type.type().capabilities().contains(QLatin1String("NeedsNetwork"))) {
+            type.setIsOnline(goOnline);
         }
     }
     if (goOnline &&  MessageComposer::MessageComposerSettings::self()->sendImmediate()) {
