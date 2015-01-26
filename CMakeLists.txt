@@ -139,6 +139,9 @@ if (KDEPIM_BUILD_DESKTOP)
      warningwidgets/externaleditorwarning.cpp
      warningwidgets/attachmentmissingwarning.cpp
   )
+  set(kmailprivate_editor_potentialphishingemail_SRCS
+     editor/potentialphishingemail/potentialphisingemailwarning.cpp
+  )
   set(kmailprivate_dialogs_LIB_SRCS
      dialog/archivefolderdialog.cpp
      dialog/addemailtoexistingcontactdialog.cpp
@@ -208,6 +211,7 @@ if (KDEPIM_BUILD_DESKTOP)
      ${kmailprivate_identity_LIB_SRCS}
      ${kmailprivate_editor_LIB_SRCS}
      ${kmailprivate_followupreminder_LIB_SRCS}
+     ${kmailprivate_editor_potentialphishingemail_SRCS}
   )
 
   # TODO PORT
@@ -360,6 +364,7 @@ if (KDEPIM_BUILD_DESKTOP)
 
   add_subdirectory(mailmerge/tests/)
   add_subdirectory(folderarchive/autotests/)
+  add_subdirectory(editor/potentialphishingemail/autotests)
   ########### install files ###############
 
   install(TARGETS kmailprivate ${INSTALL_TARGETS_DEFAULT_ARGS} LIBRARY NAMELINK_SKIP)

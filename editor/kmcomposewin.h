@@ -70,6 +70,7 @@ class ExternalEditorWarning;
 class KActionMenu;
 class CryptoStateIndicatorWidget;
 class StatusBarLabelToggledState;
+class PotentialPhisingEmailWarning;
 
 namespace boost {
 template <typename T> class shared_ptr;
@@ -695,6 +696,7 @@ private:
     KToggleAction *mFollowUpToggleAction;
     StatusBarLabelToggledState *mStatusBarLabelToggledOverrideMode;
     StatusBarLabelToggledState *mStatusBarLabelSpellCheckingChangeMode;
+    PotentialPhisingEmailWarning *mPotentialPhishingEmailWarning;
 };
 
 #endif
