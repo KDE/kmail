@@ -1909,8 +1909,9 @@ void KMComposeWin::forceAutoSaveMessage()
 
 void KMComposeWin::autoSaveMessage(bool force)
 {
-    if (isComposerModified() || force) {
-        applyComposerSetting(mComposerBase);
+    if ( isComposerModified() || force ) {
+        applyComposerSetting( mComposerBase );
+        mComposerBase->saveMailSettings();
         mComposerBase->autoSaveMessage();
         if (!force) {
             mWasModified = true;
@@ -2317,11 +2318,10 @@ void KMComposeWin::slotExpandGroupResult(KJob *job)
     Q_ASSERT(expandJob);
 
     const QString attachmentName = expandJob->property("groupName").toString();
-    const QByteArray mimeType = "text/x-vcard";
     KContacts::VCardConverter converter;
     const QByteArray groupData = converter.exportVCards(expandJob->contacts(), KContacts::VCardConverter::v3_0);
     if (!groupData.isEmpty()) {
-        addAttachment(attachmentName, KMime::Headers::CEbase64, QString(), groupData, mimeType);
+        addAttachment(attachmentName, KMime::Headers::CEbase64, QString(), groupData, "text/x-vcard");
     }
 }
 
