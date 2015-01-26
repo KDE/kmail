@@ -1948,6 +1948,7 @@ void KMComposeWin::autoSaveMessage(bool force)
 {
     if ( isComposerModified() || force ) {
         applyComposerSetting( mComposerBase );
+        mComposerBase->saveMailSettings();
         mComposerBase->autoSaveMessage();
         if ( !force ) {
             mWasModified = true;
