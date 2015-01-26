@@ -348,7 +348,9 @@ bool KMKernel::handleCommandLine(bool noArgsOpensReader)
         for (QStringList::ConstIterator it = attachList.constBegin();
                 it != end; ++it) {
             if (!(*it).isEmpty()) {
-                attachURLs.append(makeAbsoluteUrl(*it));
+                if ((*it) != QLatin1String("--")) {
+                   attachURLs.append(makeAbsoluteUrl(*it));
+                }
             }
         }
     }
