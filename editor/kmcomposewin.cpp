@@ -705,7 +705,7 @@ bool KMComposeWin::canSignEncryptAttachments() const
 }
 
 
-void KMComposeWin::slotView( void )
+void KMComposeWin::slotUpdateView( void )
 {
     if ( !mDone ) {
         return; // otherwise called from rethinkFields during the construction
@@ -1317,29 +1317,29 @@ void KMComposeWin::setupActions( void )
 
     mAllFieldsAction = new KToggleAction( i18n("&All Fields"), this);
     actionCollection()->addAction( QLatin1String("show_all_fields"), mAllFieldsAction );
-    connect( mAllFieldsAction, SIGNAL(triggered(bool)), SLOT(slotView()));
+    connect( mAllFieldsAction, SIGNAL(triggered(bool)), SLOT(slotUpdateView()));
     mIdentityAction = new KToggleAction(i18n("&Identity"), this);
     actionCollection()->addAction(QLatin1String("show_identity"), mIdentityAction );
-    connect( mIdentityAction, SIGNAL(triggered(bool)), SLOT(slotView()));
+    connect( mIdentityAction, SIGNAL(triggered(bool)), SLOT(slotUpdateView()));
     mDictionaryAction = new KToggleAction(i18n("&Dictionary"), this);
     actionCollection()->addAction(QLatin1String("show_dictionary"), mDictionaryAction );
-    connect( mDictionaryAction, SIGNAL(triggered(bool)), SLOT(slotView()));
+    connect( mDictionaryAction, SIGNAL(triggered(bool)), SLOT(slotUpdateView()));
     mFccAction = new KToggleAction(i18n("&Sent-Mail Folder"), this);
     actionCollection()->addAction(QLatin1String("show_fcc"), mFccAction );
-    connect( mFccAction, SIGNAL(triggered(bool)), SLOT(slotView()));
+    connect( mFccAction, SIGNAL(triggered(bool)), SLOT(slotUpdateView()));
     mTransportAction = new KToggleAction(i18n("&Mail Transport"), this);
     actionCollection()->addAction(QLatin1String("show_transport"), mTransportAction );
-    connect( mTransportAction, SIGNAL(triggered(bool)), SLOT(slotView()));
+    connect( mTransportAction, SIGNAL(triggered(bool)), SLOT(slotUpdateView()));
     mFromAction = new KToggleAction(i18n("&From"), this);
     actionCollection()->addAction(QLatin1String("show_from"), mFromAction );
-    connect( mFromAction, SIGNAL(triggered(bool)), SLOT(slotView()));
+    connect( mFromAction, SIGNAL(triggered(bool)), SLOT(slotUpdateView()));
     mReplyToAction = new KToggleAction(i18n("&Reply To"), this);
     actionCollection()->addAction(QLatin1String("show_reply_to"), mReplyToAction );
-    connect( mReplyToAction, SIGNAL(triggered(bool)), SLOT(slotView()));
+    connect( mReplyToAction, SIGNAL(triggered(bool)), SLOT(slotUpdateView()));
     mSubjectAction = new KToggleAction(
                 i18nc("@action:inmenu Show the subject in the composer window.", "S&ubject"), this);
     actionCollection()->addAction(QLatin1String("show_subject"), mSubjectAction );
-    connect(mSubjectAction, SIGNAL(triggered(bool)), SLOT(slotView()));
+    connect(mSubjectAction, SIGNAL(triggered(bool)), SLOT(slotUpdateView()));
     //end of checkable
 
     mAppendSignature = new KAction( i18n("Append S&ignature"), this );

@@ -385,7 +385,7 @@ private slots:
      */
     void slotSignToggled( bool );
 
-    void slotView();
+    void slotUpdateView();
 
     /**
      * Update composer field to reflect new identity
