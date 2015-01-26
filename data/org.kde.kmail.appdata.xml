@@ -4,6 +4,7 @@
   <metadata_license>CC0-1.0</metadata_license>
   <project_license>GPL-2.0+</project_license>
   <name>KMail</name>
+  <name xml:lang="en-GB">KMail</name>
   <name xml:lang="nl">KMail</name>
   <name xml:lang="pl">KMail</name>
   <name xml:lang="pt">KMail</name>
@@ -12,10 +13,12 @@
   <name xml:lang="sv">Kmail</name>
   <name xml:lang="uk">KMail</name>
   <name xml:lang="x-test">xxKMailxx</name>
+  <name xml:lang="zh-CN">KMail</name>
   <description>
     <p>
       KMail is the email component of Kontact, the integrated personal information manager from KDE.
     </p>
+    <p xml:lang="en-GB">KMail is the email component of Kontact, the integrated personal information manager from KDE.</p>
     <p xml:lang="nl">KMail is de e-mailcomponent van Kontact, de geïntegreerde persoonlijke informatiebeheerder uit KDE.</p>
     <p xml:lang="pl">KMail jest składnikiem pocztowym pakietu Kontact, programu do zarządzania informacjami osobistymi w KDE.</p>
     <p xml:lang="pt">O KMail é o componente de e-mail do Kontact, o gestor de informações pessoais do KDE.</p>
@@ -25,6 +28,7 @@
     <p xml:lang="uk">KMail — компонент для роботи з електронною поштою комплексу програм Kontact, інтегрованого рішення для роботи з особистими даними у KDE.</p>
     <p xml:lang="x-test">xxKMail is the email component of Kontact, the integrated personal information manager from KDE.xx</p>
     <p>Features:</p>
+    <p xml:lang="en-GB">Features:</p>
     <p xml:lang="nl">Mogelijkheden:</p>
     <p xml:lang="pl">Możliwości:</p>
     <p xml:lang="pt">Funcionalidades:</p>
@@ -33,8 +37,10 @@
     <p xml:lang="sv">Funktioner:</p>
     <p xml:lang="uk">Можливості:</p>
     <p xml:lang="x-test">xxFeatures:xx</p>
+    <p xml:lang="zh-CN">功能：</p>
     <ul>
       <li>Supports the standard mail protocols IMAP, POP3 and SMTP.</li>
+      <li xml:lang="en-GB">Supports the standard mail protocols IMAP, POP3 and SMTP.</li>
       <li xml:lang="nl">Ondersteunt de standaard e-mailprotocollen IMAP, POP3 and SMTP.</li>
       <li xml:lang="pl">Obsługa standardowych protokołów pocztowych IMAP, POP3 oraz SMTP.</li>
       <li xml:lang="pt">Suporta os protocolos-padrão de correio electrónico IMAP, POP3 e SMTP.</li>
@@ -44,6 +50,7 @@
       <li xml:lang="uk">підтримка роботи зі стандартними протоколами обміну електронною поштою, IMAP, POP3 та SMTP.</li>
       <li xml:lang="x-test">xxSupports the standard mail protocols IMAP, POP3 and SMTP.xx</li>
       <li>Supports authentication via NTLM (Microsoft Windows) and GSSAPI (Kerberos)</li>
+      <li xml:lang="en-GB">Supports authentication via NTLM (Microsoft Windows) and GSSAPI (Kerberos)</li>
       <li xml:lang="nl">Ondersteunt authenticatie via NTLM (Microsoft Windows) en GSSAPI (Kerberos)</li>
       <li xml:lang="pl">Obsługa uwierzytelniania przez NTLM (Microsoft Windows) oraz GSSAPI (Kerberos)</li>
       <li xml:lang="pt">Suporta a autenticação por NTLM (Microsoft Windows) e por GSSAPI (Kerberos)</li>
@@ -53,6 +60,7 @@
       <li xml:lang="uk">підтримка можливостей розпізнавання за допомогою NTLM (Microsoft Windows) та GSSAPI (Kerberos);</li>
       <li xml:lang="x-test">xxSupports authentication via NTLM (Microsoft Windows) and GSSAPI (Kerberos)xx</li>
       <li>Supports plain text and secure logins, using SSL and TLS.</li>
+      <li xml:lang="en-GB">Supports plain text and secure logins, using SSL and TLS.</li>
       <li xml:lang="nl">Ondersteunt platte tekst en veilig aanmelden met SSL en TLS.</li>
       <li xml:lang="pl">Obsługa logowania przy użyciu zwykłego tekstu oraz bezpiecznego poprzez SSL i TLS.</li>
       <li xml:lang="pt">Suporta a autenticação por texto simples e segura, usando o SSL e o TLS.</li>
@@ -62,6 +70,7 @@
       <li xml:lang="uk">підтримка передавання реєстраційних даних звичайним текстом та шифрованими даними за допомогою SSL та TLS;</li>
       <li xml:lang="x-test">xxSupports plain text and secure logins, using SSL and TLS.xx</li>
       <li>Integration of international character sets and spell-checking (as-you-type and on demand)</li>
+      <li xml:lang="en-GB">Integration of international character sets and spell-checking (as-you-type and on demand)</li>
       <li xml:lang="nl">Integratie van internationale tekensets en spellingcontrole (terwijl-u-typt en op aanvraag)</li>
       <li xml:lang="pl">Integracja międzynarodowych zestawów znaków i sprawdzania pisowni (w trakcie pisania i na żądanie)</li>
       <li xml:lang="pt">Integração dos conjuntos de caracteres internacionais e a verificação ortográfica (à medida que escreve ou a pedido)</li>
@@ -71,6 +80,7 @@
       <li xml:lang="uk">вбудована можливість роботи з даними у різних кодуваннях та перевірки правопису (інтерактивної та на вимогу);</li>
       <li xml:lang="x-test">xxIntegration of international character sets and spell-checking (as-you-type and on demand)xx</li>
       <li>Native support for inline OpenPGP, PGP/MIME, and S/MIME.</li>
+      <li xml:lang="en-GB">Native support for inline OpenPGP, PGP/MIME, and S/MIME.</li>
       <li xml:lang="nl">Ingebouwde ondersteuning voor inline OpenPGP, PGP/MIME en S/MIME.</li>
       <li xml:lang="pl">Bezpośrednia obsługa dla OpenPGP w treści, PGP/MIME oraz S/MIME.</li>
       <li xml:lang="pt">Suporte nativo e incorporado para o OpenPGP, PGP/MIME e S/MIME.</li>
@@ -80,6 +90,7 @@
       <li xml:lang="uk">вбудована підтримка OpenPGP, PGP/MIME та S/MIME.</li>
       <li xml:lang="x-test">xxNative support for inline OpenPGP, PGP/MIME, and S/MIME.xx</li>
       <li>Reading and writing of HTML mail.</li>
+      <li xml:lang="en-GB">Reading and writing of HTML mail.</li>
       <li xml:lang="nl">Lezen en schrijven van HTML-e-mail.</li>
       <li xml:lang="pl">Czytanie i pisanie wiadomości HTML.</li>
       <li xml:lang="pt">Leitura e escrita de mensagens em HTML.</li>
@@ -89,6 +100,7 @@
       <li xml:lang="uk">можливість читання та створення повідомлень з використанням коду HTML;</li>
       <li xml:lang="x-test">xxReading and writing of HTML mail.xx</li>
       <li>Ability to display plain text only from an HTML mail.</li>
+      <li xml:lang="en-GB">Ability to display plain text only from an HTML mail.</li>
       <li xml:lang="nl">Mogelijkheid om alleen gewone tekst te laten zien uit een HTML-e-mail.</li>
       <li xml:lang="pl">Możliwość wyświetlania zwykłego tekstu w wiadomości HTML.</li>
       <li xml:lang="pt">Capacidade de apresentar apenas o texto simples de uma mensagem em HTML.</li>
@@ -98,6 +110,7 @@
       <li xml:lang="uk">можливість перегляду лише текстової частини з повідомлень у форматі HTML;</li>
       <li xml:lang="x-test">xxAbility to display plain text only from an HTML mail.xx</li>
       <li>Allows you to receive and accept invitations.</li>
+      <li xml:lang="en-GB">Allows you to receive and accept invitations.</li>
       <li xml:lang="nl">Stelt u in staat uitnodigingen te ontvangen en accepteren.</li>
       <li xml:lang="pl">Możliwość odbierania i przyjmowania zaproszeń.</li>
       <li xml:lang="pt">Permite-lhe receber e aceitar convites.</li>
@@ -107,6 +120,7 @@
       <li xml:lang="uk">можливість отримувати та приймати запрошення;</li>
       <li xml:lang="x-test">xxAllows you to receive and accept invitations.xx</li>
       <li>Integration with popular spam checkers, e.g. SpamAssassin, Bogofilter, etc.</li>
+      <li xml:lang="en-GB">Integration with popular spam checkers, e.g. SpamAssassin, Bogofilter, etc.</li>
       <li xml:lang="nl">Integratie met populaire spamcheckers, bijv. SpamAssassin, Bogofilter, etc.</li>
       <li xml:lang="pl">Integracja z powszechnymi programami wykrywającymi spam, np. SpamAssassin, Bogofilter, itp.</li>
       <li xml:lang="pt">Integração com as verificações de lixo electrónico, p.ex. SpamAssassin, Bogofilter, etc.</li>
@@ -116,6 +130,7 @@
       <li xml:lang="uk">інтеграція з популярними системами захисту від небажаної кореспонденції, зокрема SpamAssassin, Bogofilter тощо;</li>
       <li xml:lang="x-test">xxIntegration with popular spam checkers, e.g. SpamAssassin, Bogofilter, etc.xx</li>
       <li>An optional spam probability meter can be displayed</li>
+      <li xml:lang="en-GB">An optional spam probability meter can be displayed</li>
       <li xml:lang="nl">Een optionele waarschijnlijkheidsmeter voor spam kan getoond worden</li>
       <li xml:lang="pl">Możliwość wyświetlania miernika prawdopodobieństwa, że to spam</li>
       <li xml:lang="pt">Pode ser apresentado um medidor de probabilidades de lixo electrónico</li>
@@ -125,6 +140,7 @@
       <li xml:lang="uk">можливість показу оцінки ймовірності небажаності повідомлення;</li>
       <li xml:lang="x-test">xxAn optional spam probability meter can be displayedxx</li>
       <li>Powerful search and filter abilities</li>
+      <li xml:lang="en-GB">Powerful search and filter abilities</li>
       <li xml:lang="nl">Krachtige zoek en filter mogelijkheden</li>
       <li xml:lang="pl">Zaawansowane możliwości wyszukiwania i filtrowania</li>
       <li xml:lang="pt">Capacidades poderosas de pesquisa e filtragem</li>
@@ -134,6 +150,7 @@
       <li xml:lang="uk">потужні можливості з пошуку та фільтрування;</li>
       <li xml:lang="x-test">xxPowerful search and filter abilitiesxx</li>
       <li>Can import mail from many other clients</li>
+      <li xml:lang="en-GB">Can import mail from many other clients</li>
       <li xml:lang="nl">Kan e-mail importeren uit vele andere clients</li>
       <li xml:lang="pl">Możliwość importowania poczty z innych programów pocztowych</li>
       <li xml:lang="pt">Poderá importar o correio a partir de muitos outros clientes</li>
@@ -143,6 +160,7 @@
       <li xml:lang="uk">можливість імпортувати дані пошти з багатьох інших програм для роботи з електронною поштою;</li>
       <li xml:lang="x-test">xxCan import mail from many other clientsxx</li>
       <li>Searching in IMAP folders fully supported</li>
+      <li xml:lang="en-GB">Searching in IMAP folders fully supported</li>
       <li xml:lang="nl">In IMAP-mappen zoeken wordt volledig ondersteund</li>
       <li xml:lang="pl">W pełni obsługiwane wyszukiwanie w katalogach IMAP</li>
       <li xml:lang="pt">A pesquisa nas pastas de IMAP é totalmente suportada</li>
@@ -152,6 +170,7 @@
       <li xml:lang="uk">підтримка повноцінного пошуку у теках IMAP;</li>
       <li xml:lang="x-test">xxSearching in IMAP folders fully supportedxx</li>
       <li>Highly integrated with other Kontact components</li>
+      <li xml:lang="en-GB">Highly integrated with other Kontact components</li>
       <li xml:lang="nl">Hoge graad van integratie met andere componenten van Kontact</li>
       <li xml:lang="pl">Wysoce zintegrowane z innymi składnikami Kontact</li>
       <li xml:lang="pt">Altamente integrado com os outros componentes do Kontact</li>
@@ -161,6 +180,7 @@
       <li xml:lang="uk">високий рівень інтеграції з іншими компонентами Kontact;</li>
       <li xml:lang="x-test">xxHighly integrated with other Kontact componentsxx</li>
       <li>Encrypted password saving in KWallet</li>
+      <li xml:lang="en-GB">Encrypted password saving in KWallet</li>
       <li xml:lang="nl">Opslaan van versleuteld wachtwoord in KWallet</li>
       <li xml:lang="pl">Szyfrowane zapisywanie haseł w KPortfelu</li>
       <li xml:lang="pt">Gravação das senhas encriptadas na KWallet</li>
@@ -170,6 +190,7 @@
       <li xml:lang="uk">зберігання зашифрованих реєстраційних даних за допомогою KWallet;</li>
       <li xml:lang="x-test">xxEncrypted password saving in KWalletxx</li>
       <li>Flagging and tagging of messages to aid sorting and recovery of information</li>
+      <li xml:lang="en-GB">Flagging and tagging of messages to aid sorting and recovery of information</li>
       <li xml:lang="nl">Vlaggen en tags aanbrengen bij berichten om te helpen bij sorteren en herstel van informatie</li>
       <li xml:lang="pl">Oflagowywanie i znaczenie wiadomości w celu wspomożenia ich szeregowania i uzyskiwania informacji</li>
       <li xml:lang="pt">Marcação e classificação de mensagens para ajudar a ordenar e a recuperar informações</li>
@@ -179,6 +200,7 @@
       <li xml:lang="uk">можливість додавання прапорців і міток до повідомлень з метою спрощення упорядковування та відновлення інформації;</li>
       <li xml:lang="x-test">xxFlagging and tagging of messages to aid sorting and recovery of informationxx</li>
       <li>Supports mailing list management features</li>
+      <li xml:lang="en-GB">Supports mailing list management features</li>
       <li xml:lang="nl">Ondersteunt functies voor discussielijstbeheer</li>
       <li xml:lang="pl">Możliwość zarządzania listą dyskusyjną</li>
       <li xml:lang="pt">Suporta funcionalidades de gestão de listas de correio</li>
@@ -188,6 +210,7 @@
       <li xml:lang="uk">підтримка можливостей з керування повідомленнями зі списків листування;</li>
       <li xml:lang="x-test">xxSupports mailing list management featuresxx</li>
       <li>Can replace text smilies with emoticons</li>
+      <li xml:lang="en-GB">Can replace text smilies with emoticons</li>
       <li xml:lang="nl">Kan smilies in de tekst vervangen door emoticons</li>
       <li xml:lang="pl">Możliwość zastępowania uśmieszków tekstowych emotikonami</li>
       <li xml:lang="pt">Pode substituir ícones emotivos de texto por gráficos</li>
@@ -197,6 +220,7 @@
       <li xml:lang="uk">можливість заміни текстових емоційок (смайликів) зображеннями;</li>
       <li xml:lang="x-test">xxCan replace text smilies with emoticonsxx</li>
       <li>Displays the sender's picture or avatar if present in the address book</li>
+      <li xml:lang="en-GB">Displays the sender's picture or avatar if present in the address book</li>
       <li xml:lang="nl">Toont de foto of avatar van de afzender indien aanwezig in het adresboek</li>
       <li xml:lang="pl">Wyświetlanie zdjęcia nadawcy lub awatara, jeśli jest dostępny w książce adresowej</li>
       <li xml:lang="pt">Mostra a imagem ou avatar do remetente, caso esteja presente no livro de endereços</li>
@@ -206,6 +230,7 @@
       <li xml:lang="uk">можливість показу знімка або аватара відправника, якщо його визначено у адресній книзі;</li>
       <li xml:lang="x-test">xxDisplays the sender's picture or avatar if present in the address bookxx</li>
       <li>Supports X-Face (b/w pictures in messages)</li>
+      <li xml:lang="en-GB">Supports X-Face (b/w pictures in messages)</li>
       <li xml:lang="nl">Ondersteunt X-Face (z/w plaatjes in berichten)</li>
       <li xml:lang="pl">Obsługa X-Face (zdjęcia czarno białe w wiadomościach)</li>
       <li xml:lang="pt">Suporta o X-Face (imagens a p/b nas mensagens)</li>
@@ -215,6 +240,7 @@
       <li xml:lang="uk">підтримка X-Face (чорно-білих зображень у повідомленнях);</li>
       <li xml:lang="x-test">xxSupports X-Face (b/w pictures in messages)xx</li>
       <li>Compression of attachments</li>
+      <li xml:lang="en-GB">Compression of attachments</li>
       <li xml:lang="nl">Compressie van bijlagen</li>
       <li xml:lang="pl">Pakowanie załączników</li>
       <li xml:lang="pt">Compressão dos anexos</li>
@@ -224,6 +250,7 @@
       <li xml:lang="uk">можливість стискання долучень безпосередньо з вікна програми;</li>
       <li xml:lang="x-test">xxCompression of attachmentsxx</li>
       <li>KMail supports Groupware functionality.</li>
+      <li xml:lang="en-GB">KMail supports Groupware functionality.</li>
       <li xml:lang="nl">KMail ondersteunt Groupware functionaliteit.</li>
       <li xml:lang="pl">Obsługa funkcjonalności Groupware.</li>
       <li xml:lang="pt">O KMail suporta as funcionalidades de trabalho em grupo.</li>
