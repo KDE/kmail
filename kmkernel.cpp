@@ -366,7 +366,9 @@ bool KMKernel::handleCommandLine( bool noArgsOpensReader )
         for ( QStringList::ConstIterator it = attachList.constBegin();
               it != end; ++it ) {
             if ( !(*it).isEmpty() ) {
-                attachURLs.append( makeAbsoluteUrl( *it ) );
+                if ((*it) != QLatin1String("--")) {
+                    attachURLs.append( makeAbsoluteUrl( *it ) );
+                }
             }
         }
     }
@@ -553,7 +555,6 @@ int KMKernel::openComposer(const QString &to, const QString &cc,
                            const QStringList &customHeaders,
                            const QString &replyTo, const QString &inReplyTo)
 {
-    kDebug();
     KMail::Composer::TemplateContext context = KMail::Composer::New;
     KMime::Message::Ptr msg( new KMime::Message );
     MessageHelper::initHeader( msg, identityManager() );
@@ -659,7 +660,6 @@ int KMKernel::openComposer (const QString &to, const QString &cc,
                             const QByteArray &attachCharset,
                             unsigned int identity )
 {
-    kDebug();
     KMail::Composer::TemplateContext context = KMail::Composer::New;
     KMime::Message::Ptr msg( new KMime::Message );
     KMime::Content *msgPart = 0;
