@@ -22,6 +22,7 @@
 #include "../potentialphishingemailjob.h"
 #include <qtest.h>
 #include <QStringList>
+#include <QSignalSpy>
 
 PotentialPhishingEmailJobTest::PotentialPhishingEmailJobTest(QObject *parent)
     : QObject(parent)
@@ -58,6 +59,24 @@ void PotentialPhishingEmailJobTest::shouldReturnPotentialPhishingEmails()
     QVERIFY(job->start());
     QCOMPARE(job->potentialPhisingEmails().isEmpty(), !hasPotentialPhishing);
 
+}
+
+void PotentialPhishingEmailJobTest::shouldEmitSignal()
+{
+    PotentialPhishingEmailJob *job = new PotentialPhishingEmailJob;
+    QSignalSpy spy(job, SIGNAL(potentialPhisingEmailsFound(QStringList)));
+    job->setEmails((QStringList() << QLatin1String("\"bla@kde.org\" <foo@kde.org>")));
+    job->start();
+    QCOMPARE(spy.count(), 1);
+}
+
+void PotentialPhishingEmailJobTest::shouldNotEmitSignalWhenPotentialPhishingNotFound()
+{
+    PotentialPhishingEmailJob *job = new PotentialPhishingEmailJob;
+    QSignalSpy spy(job, SIGNAL(potentialPhisingEmailsFound(QStringList)));
+    job->setEmails((QStringList() << QLatin1String("<foo@kde.org>")));
+    job->start();
+    QCOMPARE(spy.count(), 0);
 }
 
 QTEST_MAIN(PotentialPhishingEmailJobTest)

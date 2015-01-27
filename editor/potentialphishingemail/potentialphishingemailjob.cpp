@@ -59,8 +59,9 @@ bool PotentialPhishingEmailJob::start()
             }
         }
     }
-
-    Q_EMIT potentialPhisingEmailsFound(mPotentialPhisingEmails);
+    if (!mPotentialPhisingEmails.isEmpty()) {
+        Q_EMIT potentialPhisingEmailsFound(mPotentialPhisingEmails);
+    }
     deleteLater();
     return true;
 }
