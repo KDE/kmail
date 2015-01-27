@@ -434,6 +434,7 @@ KMComposeWin::KMComposeWin( const KMime::Message::Ptr &aMsg, bool lastSignState,
     v->addWidget(mAttachmentMissing);
 
     mPotentialPhishingEmailWarning = new PotentialPhishingEmailWarning(this);
+    connect(mPotentialPhishingEmailWarning, SIGNAL(sendNow()), this, SLOT(slotCheckSendNowStep2()));
     v->addWidget(mPotentialPhishingEmailWarning);
 
     if (GlobalSettings::self()->showForgottenAttachmentWarning()) {
@@ -3050,6 +3051,10 @@ void KMComposeWin::slotCheckSendNowStep2()
 void KMComposeWin::slotCheckSendNow()
 {
     PotentialPhishingEmailJob *job = new PotentialPhishingEmailJob(this);
+    KConfigGroup group( KGlobal::config(), "PotentialPhishing");
+    const QStringList whiteList = group.readEntry("whiteList", QStringList());
+    qDebug()<<" whiteList"<<whiteList;
+    job->setEmailWhiteList(whiteList);
     QStringList lst;
     lst << mComposerBase->to();
     if (!mComposerBase->cc().isEmpty())

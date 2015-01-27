@@ -45,20 +45,26 @@ void PotentialPhishingEmailJobTest::shouldNotStartIfNoEmails()
 void PotentialPhishingEmailJobTest::shouldReturnPotentialPhishingEmails_data()
 {
     QTest::addColumn<QStringList>("listEmails");
+    QTest::addColumn<QStringList>("whiteListEmail");
     QTest::addColumn<bool>("hasPotentialPhishing");
-    QTest::newRow("NoPotentialPhishing") <<  (QStringList() << QLatin1String("foo@kde.org")) << false;
-    QTest::newRow("HasPotentialPhishing") <<  (QStringList() << QLatin1String("\"bla@kde.org\" <foo@kde.org>")) << true;
+    QTest::newRow("NoPotentialPhishing") <<  (QStringList() << QLatin1String("foo@kde.org")) << QStringList() << false;
+    QTest::newRow("HasPotentialPhishing") <<  (QStringList() << QLatin1String("\"bla@kde.org\" <foo@kde.org>")) << QStringList() << true;
+    const QString email = QLatin1String("\"bla@kde.org\" <foo@kde.org>");
+    QTest::newRow("EmailInWhiteList") <<  (QStringList() << email) << (QStringList() << email) << false;
+    QTest::newRow("NotAllEmailInWhiteList") <<  (QStringList() << email << QLatin1String("\"c@kde.org\" <dd@kde.org>")) << (QStringList() << email) << true;
 }
 
 void PotentialPhishingEmailJobTest::shouldReturnPotentialPhishingEmails()
 {
     QFETCH( QStringList, listEmails );
+    QFETCH( QStringList,whiteListEmail );
     QFETCH( bool, hasPotentialPhishing );
+
     PotentialPhishingEmailJob *job = new PotentialPhishingEmailJob;
+    job->setEmailWhiteList(whiteListEmail);
     job->setEmails(listEmails);
     QVERIFY(job->start());
     QCOMPARE(job->potentialPhisingEmails().isEmpty(), !hasPotentialPhishing);
-
 }
 
 void PotentialPhishingEmailJobTest::shouldEmitSignal()

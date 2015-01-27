@@ -22,13 +22,23 @@
 #define POTENTIALPHISHINGDETAILDIALOG_H
 
 #include <KDialog>
-
+class QListWidget;
 class PotentialPhishingDetailDialog : public KDialog
 {
     Q_OBJECT
 public:
     explicit PotentialPhishingDetailDialog(QWidget *parent=0);
     ~PotentialPhishingDetailDialog();
+
+    void fillList(const QStringList &lst);
+
+private slots:
+    void slotSave();
+
+private:
+    void readConfig();
+    void writeConfig();
+    QListWidget *mListWidget;
 };
 
 #endif // POTENTIALPHISHINGDETAILDIALOG_H

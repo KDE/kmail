@@ -31,7 +31,9 @@ public:
     explicit PotentialPhishingEmailJob(QObject *parent = 0);
     ~PotentialPhishingEmailJob();
 
+    void setEmailWhiteList(const QStringList &emails);
     void setEmails(const QStringList &emails);
+
     QStringList potentialPhisingEmails() const;
     bool start();
 
@@ -41,6 +43,7 @@ Q_SIGNALS:
 private:
     QStringList mEmails;
     QStringList mPotentialPhisingEmails;
+    QStringList mEmailWhiteList;
 };
 
 #endif // POTENTIALPHISHINGEMAILJOB_H

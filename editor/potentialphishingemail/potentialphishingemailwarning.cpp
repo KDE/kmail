@@ -20,7 +20,11 @@
 
 
 #include "potentialphishingemailwarning.h"
+#include "potentialphishingdetaildialog.h"
+#include <KAction>
+#include <KIcon>
 #include <KLocalizedString>
+#include <QPointer>
 
 PotentialPhishingEmailWarning::PotentialPhishingEmailWarning(QWidget *parent)
     : KMessageWidget(parent)
@@ -34,6 +38,10 @@ PotentialPhishingEmailWarning::PotentialPhishingEmailWarning(QWidget *parent)
     setText(QLatin1String("Some address mail seems a potential phishing email <a href=\"phishingdetails\">(Details...)</a>"));
 
     connect(this, SIGNAL(linkActivated(QString)), SLOT(slotShowDetails(QString)));
+    //Add i18n in kf5
+    KAction *action = new KAction(QLatin1String( "Send Now" ), this );
+    connect( action, SIGNAL(triggered(bool)), SIGNAL(sendNow()) );
+    addAction( action );
 }
 
 PotentialPhishingEmailWarning::~PotentialPhishingEmailWarning()
@@ -44,7 +52,10 @@ PotentialPhishingEmailWarning::~PotentialPhishingEmailWarning()
 void PotentialPhishingEmailWarning::slotShowDetails(const QString &link)
 {
     if (link == QLatin1String("phishingdetails")) {
-        Q_EMIT showDetails();
+        QPointer<PotentialPhishingDetailDialog> dlg = new PotentialPhishingDetailDialog(this);
+        dlg->fillList(mPotentialPhishingEmails);
+        dlg->exec();
+        delete dlg;
     }
 }
 

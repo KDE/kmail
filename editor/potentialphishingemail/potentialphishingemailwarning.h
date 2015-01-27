@@ -31,8 +31,9 @@ public:
     ~PotentialPhishingEmailWarning();
 
     void setPotentialPhisingEmail(const QStringList &lst);
+
 Q_SIGNALS:
-    void showDetails();
+    void sendNow();
 
 private slots:
     void slotShowDetails(const QString &link);
