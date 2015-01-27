@@ -3069,7 +3069,7 @@ void KMComposeWin::slotPotentialPhishingEmailsFound(const QStringList &list)
     if (list.isEmpty()) {
         slotCheckSendNowStep2();
     } else {
-        //mPotentialPhishingEmailWarning->setWarningText();
+        mPotentialPhishingEmailWarning->setPotentialPhisingEmail(list);
     }
 #endif
 }
