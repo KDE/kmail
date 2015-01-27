@@ -19,7 +19,7 @@
 */
 
 #include "potentialphishingemailjob.h"
-#include <KPIMUtils/Email>
+#include <KEmailAddress>
 #include <QDebug>
 PotentialPhishingEmailJob::PotentialPhishingEmailJob(QObject *parent)
     : QObject(parent)
@@ -51,7 +51,7 @@ bool PotentialPhishingEmailJob::start()
     }
     Q_FOREACH(const QString &addr, mEmails) {
         QString tname, temail;
-        KPIMUtils::extractEmailAddressAndName( addr, temail, tname );  // ignore return value
+        KEmailAddress::extractEmailAddressAndName( addr, temail, tname );  // ignore return value
                                                                        // which is always false
         if (tname.contains(QLatin1String("@"))) { //Potential address
             if (temail != tname) {

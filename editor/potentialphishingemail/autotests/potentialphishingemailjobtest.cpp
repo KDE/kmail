@@ -20,7 +20,7 @@
 
 #include "potentialphishingemailjobtest.h"
 #include "../potentialphishingemailjob.h"
-#include <qtest_kde.h>
+#include <qtest.h>
 #include <QStringList>
 
 PotentialPhishingEmailJobTest::PotentialPhishingEmailJobTest(QObject *parent)
@@ -60,4 +60,4 @@ void PotentialPhishingEmailJobTest::shouldReturnPotentialPhishingEmails()
 
 }
 
-QTEST_KDEMAIN(PotentialPhishingEmailJobTest, NoGUI)
+QTEST_MAIN(PotentialPhishingEmailJobTest)
