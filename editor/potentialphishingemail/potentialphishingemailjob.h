@@ -36,7 +36,7 @@ public:
     bool start();
 
 Q_SIGNALS:
-    void potentialPhisingEmailsFound(const QStringList &emails);
+    void potentialPhishingEmailsFound(const QStringList &emails);
 
 private:
     QStringList mEmails;

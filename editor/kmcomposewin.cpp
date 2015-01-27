@@ -178,6 +178,7 @@
 #include <boost/shared_ptr.hpp>
 #include <widgets/splittercollapser.h>
 #include <Akonadi/Contact/ContactGroupExpandJob>
+#include <editor/potentialphishingemail/potentialphishingemailjob.h>
 
 using Sonnet::DictionaryComboBox;
 using MailTransport::TransportManager;
@@ -3025,7 +3026,7 @@ void KMComposeWin::confirmBeforeSend()
     }
 }
 
-void KMComposeWin::slotCheckSendNow()
+void KMComposeWin::slotCheckSendNowStep2()
 {
     if ( GlobalSettings::self()->confirmBeforeSend() ) {
         confirmBeforeSend();
@@ -3046,6 +3047,32 @@ void KMComposeWin::slotCheckSendNow()
     }
 }
 
+void KMComposeWin::slotCheckSendNow()
+{
+    PotentialPhishingEmailJob *job = new PotentialPhishingEmailJob(this);
+    QStringList lst;
+    lst << mComposerBase->to();
+    if (!mComposerBase->cc().isEmpty())
+        lst << mComposerBase->cc().split(QLatin1Char(','));
+    if (!mComposerBase->bcc().isEmpty())
+        lst << mComposerBase->bcc().split(QLatin1Char(','));
+    job->setEmails(lst);
+    connect(job, SIGNAL(potentialPhishingEmailsFound(QStringList)), this, SLOT(slotPotentialPhishingEmailsFound(QStringList)));
+    job->start();
+}
+
+void KMComposeWin::slotPotentialPhishingEmailsFound(const QStringList &list)
+{
+#if 1
+    slotCheckSendNowStep2();
+#else
+    if (list.isEmpty()) {
+        slotCheckSendNowStep2();
+    } else {
+        //mPotentialPhishingEmailWarning->setWarningText();
+    }
+#endif
+}
 
 bool KMComposeWin::checkRecipientNumber() const
 {

@@ -20,6 +20,7 @@
 
 
 #include "potentialphishingemailwarning.h"
+#include <KLocalizedString>
 
 PotentialPhishingEmailWarning::PotentialPhishingEmailWarning(QWidget *parent)
     : KMessageWidget(parent)
@@ -28,6 +29,11 @@ PotentialPhishingEmailWarning::PotentialPhishingEmailWarning(QWidget *parent)
     setCloseButtonVisible(true);
     setMessageType(Warning);
     setWordWrap(true);
+
+    //Add i18n in kf5
+    setText(QLatin1String("Some address mail seems a potential phishing email <a href=\"phishingdetails\">(Details...)</a>"));
+
+    connect(this, SIGNAL(linkActivated(QString)), SLOT(slotShowDetails(QString)));
 }
 
 PotentialPhishingEmailWarning::~PotentialPhishingEmailWarning()
@@ -35,7 +41,17 @@ PotentialPhishingEmailWarning::~PotentialPhishingEmailWarning()
 
 }
 
-void PotentialPhishingEmailWarning::setWarningText(const QString &text)
+void PotentialPhishingEmailWarning::slotShowDetails(const QString &link)
 {
-    animatedShow();
+    if (link == QLatin1String("phishingdetails")) {
+        Q_EMIT showDetails();
+    }
+}
+
+void PotentialPhishingEmailWarning::setPotentialPhisingEmail(const QStringList &lst)
+{
+     mPotentialPhishingEmails = lst;
+     if (!mPotentialPhishingEmails.isEmpty()) {
+         animatedShow();
+     }
 }

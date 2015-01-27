@@ -30,7 +30,14 @@ public:
     explicit PotentialPhishingEmailWarning(QWidget *parent = 0);
     ~PotentialPhishingEmailWarning();
 
-    void setWarningText(const QString &text);
+    void setPotentialPhisingEmail(const QStringList &lst);
+Q_SIGNALS:
+    void showDetails();
+
+private slots:
+    void slotShowDetails(const QString &link);
+private:
+    QStringList mPotentialPhishingEmails;
 };
 
 #endif // POTENTIALPHISHINGEMAILWARNING_H

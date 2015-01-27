@@ -64,19 +64,11 @@ void PotentialPhishingEmailJobTest::shouldReturnPotentialPhishingEmails()
 void PotentialPhishingEmailJobTest::shouldEmitSignal()
 {
     PotentialPhishingEmailJob *job = new PotentialPhishingEmailJob;
-    QSignalSpy spy(job, SIGNAL(potentialPhisingEmailsFound(QStringList)));
+    QSignalSpy spy(job, SIGNAL(potentialPhishingEmailsFound(QStringList)));
     job->setEmails((QStringList() << QLatin1String("\"bla@kde.org\" <foo@kde.org>")));
     job->start();
     QCOMPARE(spy.count(), 1);
 }
 
-void PotentialPhishingEmailJobTest::shouldNotEmitSignalWhenPotentialPhishingNotFound()
-{
-    PotentialPhishingEmailJob *job = new PotentialPhishingEmailJob;
-    QSignalSpy spy(job, SIGNAL(potentialPhisingEmailsFound(QStringList)));
-    job->setEmails((QStringList() << QLatin1String("<foo@kde.org>")));
-    job->start();
-    QCOMPARE(spy.count(), 0);
-}
 
 QTEST_KDEMAIN(PotentialPhishingEmailJobTest, NoGUI)

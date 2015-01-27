@@ -18,23 +18,18 @@
 
 */
 
-#ifndef POTENTIALPHISHINGEMAILJOBTEST_H
-#define POTENTIALPHISHINGEMAILJOBTEST_H
+#include "potentialphishingdetaildialog.h"
 
-#include <QObject>
+#include <KLocalizedString>
 
-class PotentialPhishingEmailJobTest : public QObject
+PotentialPhishingDetailDialog::PotentialPhishingDetailDialog(QWidget *parent)
+    : KDialog(parent)
 {
-    Q_OBJECT
-public:
-    explicit PotentialPhishingEmailJobTest(QObject *parent = 0);
-    ~PotentialPhishingEmailJobTest();
 
-private Q_SLOTS:
-    void shouldNotStartIfNoEmails();
-    void shouldReturnPotentialPhishingEmails_data();
-    void shouldReturnPotentialPhishingEmails();
-    void shouldEmitSignal();
-};
+}
 
-#endif // POTENTIALPHISHINGEMAILJOBTEST_H
+PotentialPhishingDetailDialog::~PotentialPhishingDetailDialog()
+{
+
+}
+
