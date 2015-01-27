@@ -18,19 +18,19 @@
 
 */
 
-#ifndef POTENTIALPHISINGEMAILWARNING_H
-#define POTENTIALPHISINGEMAILWARNING_H
+#ifndef POTENTIALPHISHINGEMAILWARNING_H
+#define POTENTIALPHISHINGEMAILWARNING_H
 
 #include <KMessageWidget>
 
-class PotentialPhisingEmailWarning : public KMessageWidget
+class PotentialPhishingEmailWarning : public KMessageWidget
 {
     Q_OBJECT
 public:
-    explicit PotentialPhisingEmailWarning(QWidget *parent = 0);
-    ~PotentialPhisingEmailWarning();
+    explicit PotentialPhishingEmailWarning(QWidget *parent = 0);
+    ~PotentialPhishingEmailWarning();
 
     void setWarningText(const QString &text);
 };
 
-#endif // POTENTIALPHISINGEMAILWARNING_H
+#endif // POTENTIALPHISHINGEMAILWARNING_H

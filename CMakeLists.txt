@@ -140,7 +140,8 @@ if (KDEPIM_BUILD_DESKTOP)
      warningwidgets/attachmentmissingwarning.cpp
   )
   set(kmailprivate_editor_potentialphishingemail_SRCS
-     editor/potentialphishingemail/potentialphisingemailwarning.cpp
+     editor/potentialphishingemail/potentialphishingemailwarning.cpp
+     editor/potentialphishingemail/potentialphishingemailjob.cpp
   )
   set(kmailprivate_dialogs_LIB_SRCS
      dialog/archivefolderdialog.cpp

@@ -19,9 +19,9 @@
 */
 
 
-#include "potentialphisingemailwarning.h"
+#include "potentialphishingemailwarning.h"
 
-PotentialPhisingEmailWarning::PotentialPhisingEmailWarning(QWidget *parent)
+PotentialPhishingEmailWarning::PotentialPhishingEmailWarning(QWidget *parent)
     : KMessageWidget(parent)
 {
     setVisible(false);
@@ -30,12 +30,12 @@ PotentialPhisingEmailWarning::PotentialPhisingEmailWarning(QWidget *parent)
     setWordWrap(true);
 }
 
-PotentialPhisingEmailWarning::~PotentialPhisingEmailWarning()
+PotentialPhishingEmailWarning::~PotentialPhishingEmailWarning()
 {
 
 }
 
-void PotentialPhisingEmailWarning::setWarningText(const QString &text)
+void PotentialPhishingEmailWarning::setWarningText(const QString &text)
 {
     animatedShow();
 }
