@@ -70,6 +70,7 @@ class ExternalEditorWarning;
 class KActionMenu;
 class CryptoStateIndicatorWidget;
 class StatusBarLabelToggledState;
+class PotentialPhisingEmailWarning;
 
 namespace boost
 {
@@ -401,7 +402,7 @@ private Q_SLOTS:
      */
     void slotSignToggled(bool);
 
-    void slotView();
+    void slotUpdateView();
 
     /**
      * Update composer field to reflect new identity
@@ -707,6 +708,7 @@ private:
     KToggleAction *mFollowUpToggleAction;
     StatusBarLabelToggledState *mStatusBarLabelToggledOverrideMode;
     StatusBarLabelToggledState *mStatusBarLabelSpellCheckingChangeMode;
+    PotentialPhisingEmailWarning *mPotentialPhishingEmailWarning;
 };
 
 #endif

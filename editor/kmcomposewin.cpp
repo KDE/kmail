@@ -63,6 +63,7 @@
 #include "followupreminder/followupremindercreatejob.h"
 #include "agents/followupreminderagent/followupreminderutil.h"
 #include "pimcommon/util/vcardutil.h"
+#include "editor/potentialphishingemail/potentialphisingemailwarning.h"
 
 #include "libkdepim/progresswidget/statusbarprogresswidget.h"
 #include "libkdepim/progresswidget/progressstatusbarwidget.h"
@@ -426,6 +427,9 @@ KMComposeWin::KMComposeWin(const KMime::Message::Ptr &aMsg, bool lastSignState, 
     connect(mAttachmentMissing, &AttachmentMissingWarning::explicitClosedMissingAttachment, this, &KMComposeWin::slotExplicitClosedMissingAttachment);
     v->addWidget(mAttachmentMissing);
 
+    mPotentialPhishingEmailWarning = new PotentialPhisingEmailWarning(this);
+    v->addWidget(mPotentialPhishingEmailWarning);
+
     if (GlobalSettings::self()->showForgottenAttachmentWarning()) {
         m_verifyMissingAttachment = new QTimer(this);
         m_verifyMissingAttachment->setSingleShot(true);
@@ -691,7 +695,7 @@ bool KMComposeWin::canSignEncryptAttachments() const
     return cryptoMessageFormat() != Kleo::InlineOpenPGPFormat;
 }
 
-void KMComposeWin::slotView(void)
+void KMComposeWin::slotUpdateView( void )
 {
     if (!mDone) {
         return; // otherwise called from rethinkFields during the construction
@@ -1281,29 +1285,29 @@ void KMComposeWin::setupActions(void)
 
     mAllFieldsAction = new KToggleAction(i18n("&All Fields"), this);
     actionCollection()->addAction(QLatin1String("show_all_fields"), mAllFieldsAction);
-    connect(mAllFieldsAction, &KToggleAction::triggered, this, &KMComposeWin::slotView);
+    connect(mAllFieldsAction, &KToggleAction::triggered, this, &KMComposeWin::slotUpdateView);
     mIdentityAction = new KToggleAction(i18n("&Identity"), this);
     actionCollection()->addAction(QLatin1String("show_identity"), mIdentityAction);
-    connect(mIdentityAction, &KToggleAction::triggered, this, &KMComposeWin::slotView);
+    connect(mIdentityAction, &KToggleAction::triggered, this, &KMComposeWin::slotUpdateView);
     mDictionaryAction = new KToggleAction(i18n("&Dictionary"), this);
     actionCollection()->addAction(QLatin1String("show_dictionary"), mDictionaryAction);
-    connect(mDictionaryAction, &KToggleAction::triggered, this, &KMComposeWin::slotView);
+    connect(mDictionaryAction, &KToggleAction::triggered, this, &KMComposeWin::slotUpdateView);
     mFccAction = new KToggleAction(i18n("&Sent-Mail Folder"), this);
     actionCollection()->addAction(QLatin1String("show_fcc"), mFccAction);
-    connect(mFccAction, &KToggleAction::triggered, this, &KMComposeWin::slotView);
+    connect(mFccAction, &KToggleAction::triggered, this, &KMComposeWin::slotUpdateView);
     mTransportAction = new KToggleAction(i18n("&Mail Transport"), this);
     actionCollection()->addAction(QLatin1String("show_transport"), mTransportAction);
-    connect(mTransportAction, &KToggleAction::triggered, this, &KMComposeWin::slotView);
+    connect(mTransportAction, &KToggleAction::triggered, this, &KMComposeWin::slotUpdateView);
     mFromAction = new KToggleAction(i18n("&From"), this);
     actionCollection()->addAction(QLatin1String("show_from"), mFromAction);
-    connect(mFromAction, &KToggleAction::triggered, this, &KMComposeWin::slotView);
+    connect(mFromAction, &KToggleAction::triggered, this, &KMComposeWin::slotUpdateView);
     mReplyToAction = new KToggleAction(i18n("&Reply To"), this);
     actionCollection()->addAction(QLatin1String("show_reply_to"), mReplyToAction);
-    connect(mReplyToAction, &KToggleAction::triggered, this, &KMComposeWin::slotView);
+    connect(mReplyToAction, &KToggleAction::triggered, this, &KMComposeWin::slotUpdateView);
     mSubjectAction = new KToggleAction(
         i18nc("@action:inmenu Show the subject in the composer window.", "S&ubject"), this);
     actionCollection()->addAction(QLatin1String("show_subject"), mSubjectAction);
-    connect(mSubjectAction, &KToggleAction::triggered, this, &KMComposeWin::slotView);
+    connect(mSubjectAction, &KToggleAction::triggered, this, &KMComposeWin::slotUpdateView);
     //end of checkable
 
     mAppendSignature = new QAction(i18n("Append S&ignature"), this);
