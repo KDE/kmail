@@ -34,6 +34,8 @@ private Q_SLOTS:
     void shouldNotStartIfNoEmails();
     void shouldReturnPotentialPhishingEmails_data();
     void shouldReturnPotentialPhishingEmails();
+    void shouldEmitSignal();
+    void shouldNotEmitSignalWhenPotentialPhishingNotFound();
 };
 
 #endif // POTENTIALPHISHINGEMAILJOBTEST_H
