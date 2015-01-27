@@ -63,7 +63,7 @@
 #include "followupreminder/followupremindercreatejob.h"
 #include "agents/followupreminderagent/followupreminderutil.h"
 #include "pimcommon/util/vcardutil.h"
-#include "editor/potentialphishingemail/potentialphisingemailwarning.h"
+#include "editor/potentialphishingemail/potentialphishingemailwarning.h"
 
 #include "libkdepim/progresswidget/statusbarprogresswidget.h"
 #include "libkdepim/progresswidget/progressstatusbarwidget.h"
@@ -427,7 +427,7 @@ KMComposeWin::KMComposeWin(const KMime::Message::Ptr &aMsg, bool lastSignState, 
     connect(mAttachmentMissing, &AttachmentMissingWarning::explicitClosedMissingAttachment, this, &KMComposeWin::slotExplicitClosedMissingAttachment);
     v->addWidget(mAttachmentMissing);
 
-    mPotentialPhishingEmailWarning = new PotentialPhisingEmailWarning(this);
+    mPotentialPhishingEmailWarning = new PotentialPhishingEmailWarning(this);
     v->addWidget(mPotentialPhishingEmailWarning);
 
     if (GlobalSettings::self()->showForgottenAttachmentWarning()) {
