@@ -27,7 +27,7 @@ class PotentialPhishingDetailDialogTest : public QObject
 {
     Q_OBJECT
 public:
-    explicit PotentialPhishingDetailDialogTest(QObject *parent = 0);
+    explicit PotentialPhishingDetailDialogTest(QObject *parent = Q_NULLPTR);
     ~PotentialPhishingDetailDialogTest();
 private Q_SLOTS:
     void shouldHaveDefaultValue();
