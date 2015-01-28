@@ -52,6 +52,7 @@ void PotentialPhishingEmailJobTest::shouldReturnPotentialPhishingEmails_data()
     const QString email = QLatin1String("\"bla@kde.org\" <foo@kde.org>");
     QTest::newRow("EmailInWhiteList") <<  (QStringList() << email) << (QStringList() << email) << false;
     QTest::newRow("NotAllEmailInWhiteList") <<  (QStringList() << email << QLatin1String("\"c@kde.org\" <dd@kde.org>")) << (QStringList() << email) << true;
+    QTest::newRow("EmailInWhiteListWithSpace") <<  (QStringList() << QLatin1String(" \"bla@kde.org\" <foo@kde.org> ")) << (QStringList() << email) << false;
 }
 
 void PotentialPhishingEmailJobTest::shouldReturnPotentialPhishingEmails()
