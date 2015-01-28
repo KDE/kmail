@@ -89,15 +89,18 @@ void PotentialPhishingDetailDialog::slotSave()
 {
     KConfigGroup group( KGlobal::config(), "PotentialPhishing");
     QStringList potentialPhishing = group.readEntry("whiteList", QStringList());
+    bool emailsAdded = false;
     for (int i=0; i < mListWidget->count(); ++i) {
         QListWidgetItem *item = mListWidget->item(i);
         if (item->checkState() == Qt::Checked) {
             QString email = item->text();
             if (!potentialPhishing.contains(email)) {
                 potentialPhishing << email;
+                emailsAdded = true;
             }
         }
     }
-    group.writeEntry( "whiteList", potentialPhishing);
+    if (emailsAdded)
+        group.writeEntry( "whiteList", potentialPhishing);
     accept();
 }
