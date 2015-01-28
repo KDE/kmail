@@ -154,7 +154,6 @@ if (KDEPIM_BUILD_DESKTOP)
      tag/tagactionmanager.cpp
      foldershortcutactionmanager.cpp
      job/addressvalidationjob.cpp
-     tag/tagselectdialog.cpp
      job/createnewcontactjob.cpp
      job/addemailtoexistingcontactjob.cpp
      widgets/vacationscriptindicatorwidget.cpp

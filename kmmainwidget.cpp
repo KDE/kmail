@@ -52,7 +52,6 @@ using KSieveUi::SieveDebugDialog;
 #include "collectionpage/collectionshortcutpage.h"
 #include "collectionpage/collectionviewpage.h"
 #include "collectionpage/collectionmailinglistpage.h"
-#include "tag/tagselectdialog.h"
 #include "archivemailagentinterface.h"
 #include "job/createnewcontactjob.h"
 #include "sendlateragentinterface.h"
@@ -132,6 +131,7 @@ using KSieveUi::SieveDebugDialog;
 #include <akonadi/collectiondeletejob.h>
 #include <akonadi/dbusconnectionpool.h>
 #include <Akonadi/CachePolicy>
+#include <Akonadi/TagSelectionDialog>
 
 #include <kpimidentities/identity.h>
 #include <kpimidentities/identitymanager.h>
@@ -2058,9 +2058,12 @@ void KMMainWidget::slotSelectMoreMessageTagList()
     if ( selectedMessages.isEmpty() )
         return;
 
-    TagSelectDialog dlg( this, selectedMessages.count(), selectedMessages.first() );
+    TagSelectionDialog dlg(this);
+    if (selectedMessages.count() == 1) {
+        dlg.setSelection(selectedMessages.first().tags());
+    }
     if ( dlg.exec() ) {
-        const Akonadi::Tag::List lst = dlg.selectedTag();
+        const Akonadi::Tag::List lst = dlg.selection();
 
         KMCommand *command = new KMSetTagCommand( lst, selectedMessages, KMSetTagCommand::CleanExistingAndAddNew );
         command->start();
