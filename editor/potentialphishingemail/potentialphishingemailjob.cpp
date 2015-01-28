@@ -54,10 +54,10 @@ bool PotentialPhishingEmailJob::start()
         deleteLater();
         return false;
     }
-    Q_FOREACH(const QString &addr, mEmails) {
+    Q_FOREACH (const QString &addr, mEmails) {
         if (!mEmailWhiteList.contains(addr.trimmed())) {
             QString tname, temail;
-            KEmailAddress::extractEmailAddressAndName( addr, temail, tname );  // ignore return value
+            KEmailAddress::extractEmailAddressAndName(addr, temail, tname);    // ignore return value
             // which is always false
             if (tname.contains(QLatin1String("@"))) { //Potential address
                 if (temail != tname) {

@@ -18,7 +18,6 @@
 
 */
 
-
 #include "potentialphishingemailwarning.h"
 #include "potentialphishingdetaildialog.h"
 #include <QAction>
@@ -36,9 +35,9 @@ PotentialPhishingEmailWarning::PotentialPhishingEmailWarning(QWidget *parent)
     setText(i18n("Some address mail seems a potential phishing email <a href=\"phishingdetails\">(Details...)</a>"));
 
     connect(this, SIGNAL(linkActivated(QString)), SLOT(slotShowDetails(QString)));
-    QAction *action = new QAction(i18n( "Send Now" ), this );
-    connect( action, SIGNAL(triggered(bool)), SIGNAL(sendNow()) );
-    addAction( action );
+    QAction *action = new QAction(i18n("Send Now"), this);
+    connect(action, SIGNAL(triggered(bool)), SIGNAL(sendNow()));
+    addAction(action);
 }
 
 PotentialPhishingEmailWarning::~PotentialPhishingEmailWarning()
@@ -58,8 +57,8 @@ void PotentialPhishingEmailWarning::slotShowDetails(const QString &link)
 
 void PotentialPhishingEmailWarning::setPotentialPhisingEmail(const QStringList &lst)
 {
-     mPotentialPhishingEmails = lst;
-     if (!mPotentialPhishingEmails.isEmpty()) {
-         animatedShow();
-     }
+    mPotentialPhishingEmails = lst;
+    if (!mPotentialPhishingEmails.isEmpty()) {
+        animatedShow();
+    }
 }

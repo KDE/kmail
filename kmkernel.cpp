@@ -349,7 +349,7 @@ bool KMKernel::handleCommandLine(bool noArgsOpensReader)
                 it != end; ++it) {
             if (!(*it).isEmpty()) {
                 if ((*it) != QLatin1String("--")) {
-                   attachURLs.append(makeAbsoluteUrl(*it));
+                    attachURLs.append(makeAbsoluteUrl(*it));
                 }
             }
         }

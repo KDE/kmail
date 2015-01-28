@@ -25,17 +25,16 @@
 #include <QLabel>
 #include <QListWidget>
 
-
 PotentialPhishingDetailDialog::PotentialPhishingDetailDialog(QWidget *parent)
     : KDialog(parent)
 {
-    setCaption( i18n( "Details" ) );
-    setButtons( Ok|Cancel );
-    setDefaultButton( Ok );
+    setCaption(i18n("Details"));
+    setButtons(Ok | Cancel);
+    setDefaultButton(Ok);
 
-    setModal( true );
-    QWidget *mainWidget = new QWidget( this );
-    QVBoxLayout *mainLayout = new QVBoxLayout( mainWidget );
+    setModal(true);
+    QWidget *mainWidget = new QWidget(this);
+    QVBoxLayout *mainLayout = new QVBoxLayout(mainWidget);
     QLabel *lab = new QLabel(i18n("Select email to put in whitelist:"));
     lab->setObjectName(QLatin1String("label"));
     mainLayout->addWidget(lab);
@@ -58,7 +57,7 @@ void PotentialPhishingDetailDialog::fillList(const QStringList &lst)
 {
     mListWidget->clear();
     QStringList emailsAdded;
-    Q_FOREACH(const QString & mail, lst) {
+    Q_FOREACH (const QString &mail, lst) {
         if (!emailsAdded.contains(mail)) {
             QListWidgetItem *item = new QListWidgetItem(mListWidget);
             item->setCheckState(Qt::Unchecked);
@@ -70,25 +69,25 @@ void PotentialPhishingDetailDialog::fillList(const QStringList &lst)
 
 void PotentialPhishingDetailDialog::readConfig()
 {
-    KConfigGroup group( KSharedConfig::openConfig(), "PotentialPhishingDetailDialog" );
-    const QSize sizeDialog = group.readEntry( "Size", QSize(800,600) );
-    if ( sizeDialog.isValid() ) {
-        resize( sizeDialog );
+    KConfigGroup group(KSharedConfig::openConfig(), "PotentialPhishingDetailDialog");
+    const QSize sizeDialog = group.readEntry("Size", QSize(800, 600));
+    if (sizeDialog.isValid()) {
+        resize(sizeDialog);
     }
 }
 
 void PotentialPhishingDetailDialog::writeConfig()
 {
-    KConfigGroup group( KSharedConfig::openConfig(), "PotentialPhishingDetailDialog" );
-    group.writeEntry( "Size", size() );
+    KConfigGroup group(KSharedConfig::openConfig(), "PotentialPhishingDetailDialog");
+    group.writeEntry("Size", size());
 }
 
 void PotentialPhishingDetailDialog::slotSave()
 {
-    KConfigGroup group( KSharedConfig::openConfig(), "PotentialPhishing");
+    KConfigGroup group(KSharedConfig::openConfig(), "PotentialPhishing");
     QStringList potentialPhishing = group.readEntry("whiteList", QStringList());
     bool emailsAdded = false;
-    for (int i=0; i < mListWidget->count(); ++i) {
+    for (int i = 0; i < mListWidget->count(); ++i) {
         QListWidgetItem *item = mListWidget->item(i);
         if (item->checkState() == Qt::Checked) {
             QString email = item->text();
@@ -98,7 +97,8 @@ void PotentialPhishingDetailDialog::slotSave()
             }
         }
     }
-    if (emailsAdded)
-        group.writeEntry( "whiteList", potentialPhishing);
+    if (emailsAdded) {
+        group.writeEntry("whiteList", potentialPhishing);
+    }
     accept();
 }

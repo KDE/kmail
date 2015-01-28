@@ -697,7 +697,7 @@ bool KMComposeWin::canSignEncryptAttachments() const
     return cryptoMessageFormat() != Kleo::InlineOpenPGPFormat;
 }
 
-void KMComposeWin::slotUpdateView( void )
+void KMComposeWin::slotUpdateView(void)
 {
     if (!mDone) {
         return; // otherwise called from rethinkFields during the construction
@@ -1915,8 +1915,8 @@ void KMComposeWin::forceAutoSaveMessage()
 
 void KMComposeWin::autoSaveMessage(bool force)
 {
-    if ( isComposerModified() || force ) {
-        applyComposerSetting( mComposerBase );
+    if (isComposerModified() || force) {
+        applyComposerSetting(mComposerBase);
         mComposerBase->saveMailSettings();
         mComposerBase->autoSaveMessage();
         if (!force) {
@@ -2990,15 +2990,17 @@ void KMComposeWin::slotCheckSendNowStep2()
 void KMComposeWin::slotCheckSendNow()
 {
     PotentialPhishingEmailJob *job = new PotentialPhishingEmailJob(this);
-    KConfigGroup group( KSharedConfig::openConfig(), "PotentialPhishing");
+    KConfigGroup group(KSharedConfig::openConfig(), "PotentialPhishing");
     const QStringList whiteList = group.readEntry("whiteList", QStringList());
     job->setEmailWhiteList(whiteList);
     QStringList lst;
     lst << mComposerBase->to();
-    if (!mComposerBase->cc().isEmpty())
+    if (!mComposerBase->cc().isEmpty()) {
         lst << mComposerBase->cc().split(QLatin1Char(','));
-    if (!mComposerBase->bcc().isEmpty())
+    }
+    if (!mComposerBase->bcc().isEmpty()) {
         lst << mComposerBase->bcc().split(QLatin1Char(','));
+    }
     job->setEmails(lst);
     connect(job, SIGNAL(potentialPhishingEmailsFound(QStringList)), this, SLOT(slotPotentialPhishingEmailsFound(QStringList)));
     job->start();

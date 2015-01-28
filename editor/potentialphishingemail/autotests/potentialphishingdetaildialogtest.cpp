@@ -84,7 +84,7 @@ void PotentialPhishingDetailDialogTest::shouldNotAddDuplicateEntries()
     lst << QLatin1String("blo");
     lst << QLatin1String("blo");
     dlg.fillList(lst);
-    QCOMPARE(listWidget->count(), (lst.count()-1));
+    QCOMPARE(listWidget->count(), (lst.count() - 1));
 
 }
 
