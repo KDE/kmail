@@ -32,6 +32,11 @@ PotentialPhishingEmailJob::~PotentialPhishingEmailJob()
 
 }
 
+void PotentialPhishingEmailJob::setEmailWhiteList(const QStringList &emails)
+{
+    mEmailWhiteList = emails;
+}
+
 void PotentialPhishingEmailJob::setEmails(const QStringList &emails)
 {
     mEmails = emails;
@@ -50,18 +55,18 @@ bool PotentialPhishingEmailJob::start()
         return false;
     }
     Q_FOREACH(const QString &addr, mEmails) {
-        QString tname, temail;
-        KEmailAddress::extractEmailAddressAndName( addr, temail, tname );  // ignore return value
-                                                                       // which is always false
-        if (tname.contains(QLatin1String("@"))) { //Potential address
-            if (temail != tname) {
-                mPotentialPhisingEmails.append(addr);
+        if (!mEmailWhiteList.contains(addr.trimmed())) {
+            QString tname, temail;
+            KEmailAddress::extractEmailAddressAndName( addr, temail, tname );  // ignore return value
+            // which is always false
+            if (tname.contains(QLatin1String("@"))) { //Potential address
+                if (temail != tname) {
+                    mPotentialPhisingEmails.append(addr);
+                }
             }
         }
     }
-    if (!mPotentialPhisingEmails.isEmpty()) {
-        Q_EMIT potentialPhisingEmailsFound(mPotentialPhisingEmails);
-    }
+    Q_EMIT potentialPhishingEmailsFound(mPotentialPhisingEmails);
     deleteLater();
     return true;
 }

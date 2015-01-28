@@ -20,6 +20,10 @@
 
 
 #include "potentialphishingemailwarning.h"
+#include "potentialphishingdetaildialog.h"
+#include <QAction>
+#include <KLocalizedString>
+#include <QPointer>
 
 PotentialPhishingEmailWarning::PotentialPhishingEmailWarning(QWidget *parent)
     : KMessageWidget(parent)
@@ -28,6 +32,13 @@ PotentialPhishingEmailWarning::PotentialPhishingEmailWarning(QWidget *parent)
     setCloseButtonVisible(true);
     setMessageType(Warning);
     setWordWrap(true);
+
+    setText(i18n("Some address mail seems a potential phishing email <a href=\"phishingdetails\">(Details...)</a>"));
+
+    connect(this, SIGNAL(linkActivated(QString)), SLOT(slotShowDetails(QString)));
+    QAction *action = new QAction(i18n( "Send Now" ), this );
+    connect( action, SIGNAL(triggered(bool)), SIGNAL(sendNow()) );
+    addAction( action );
 }
 
 PotentialPhishingEmailWarning::~PotentialPhishingEmailWarning()
@@ -35,7 +46,20 @@ PotentialPhishingEmailWarning::~PotentialPhishingEmailWarning()
 
 }
 
-void PotentialPhishingEmailWarning::setWarningText(const QString &text)
+void PotentialPhishingEmailWarning::slotShowDetails(const QString &link)
 {
-    animatedShow();
+    if (link == QLatin1String("phishingdetails")) {
+        QPointer<PotentialPhishingDetailDialog> dlg = new PotentialPhishingDetailDialog(this);
+        dlg->fillList(mPotentialPhishingEmails);
+        dlg->exec();
+        delete dlg;
+    }
+}
+
+void PotentialPhishingEmailWarning::setPotentialPhisingEmail(const QStringList &lst)
+{
+     mPotentialPhishingEmails = lst;
+     if (!mPotentialPhishingEmails.isEmpty()) {
+         animatedShow();
+     }
 }

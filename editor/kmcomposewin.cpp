@@ -184,6 +184,7 @@
 #include <KConfigGroup>
 #include <KSplitterCollapserButton>
 #include <Akonadi/Contact/ContactGroupExpandJob>
+#include <editor/potentialphishingemail/potentialphishingemailjob.h>
 
 using Sonnet::DictionaryComboBox;
 using MailTransport::TransportManager;
@@ -428,6 +429,7 @@ KMComposeWin::KMComposeWin(const KMime::Message::Ptr &aMsg, bool lastSignState, 
     v->addWidget(mAttachmentMissing);
 
     mPotentialPhishingEmailWarning = new PotentialPhishingEmailWarning(this);
+    connect(mPotentialPhishingEmailWarning, SIGNAL(sendNow()), this, SLOT(slotCheckSendNowStep2()));
     v->addWidget(mPotentialPhishingEmailWarning);
 
     if (GlobalSettings::self()->showForgottenAttachmentWarning()) {
@@ -2964,7 +2966,7 @@ void KMComposeWin::confirmBeforeSend()
     }
 }
 
-void KMComposeWin::slotCheckSendNow()
+void KMComposeWin::slotCheckSendNowStep2()
 {
     if (GlobalSettings::self()->confirmBeforeSend()) {
         confirmBeforeSend();
@@ -2983,6 +2985,37 @@ void KMComposeWin::slotCheckSendNow()
         }
         doSend(MessageComposer::MessageSender::SendImmediate);
     }
+}
+
+void KMComposeWin::slotCheckSendNow()
+{
+    PotentialPhishingEmailJob *job = new PotentialPhishingEmailJob(this);
+    KConfigGroup group( KSharedConfig::openConfig(), "PotentialPhishing");
+    const QStringList whiteList = group.readEntry("whiteList", QStringList());
+    qDebug()<<" whiteList"<<whiteList;
+    job->setEmailWhiteList(whiteList);
+    QStringList lst;
+    lst << mComposerBase->to();
+    if (!mComposerBase->cc().isEmpty())
+        lst << mComposerBase->cc().split(QLatin1Char(','));
+    if (!mComposerBase->bcc().isEmpty())
+        lst << mComposerBase->bcc().split(QLatin1Char(','));
+    job->setEmails(lst);
+    connect(job, SIGNAL(potentialPhishingEmailsFound(QStringList)), this, SLOT(slotPotentialPhishingEmailsFound(QStringList)));
+    job->start();
+}
+
+void KMComposeWin::slotPotentialPhishingEmailsFound(const QStringList &list)
+{
+#if 1
+    slotCheckSendNowStep2();
+#else
+    if (list.isEmpty()) {
+        slotCheckSendNowStep2();
+    } else {
+        mPotentialPhishingEmailWarning->setPotentialPhisingEmail(list);
+    }
+#endif
 }
 
 bool KMComposeWin::checkRecipientNumber() const

@@ -18,32 +18,27 @@
 
 */
 
-#ifndef POTENTIALPHISHINGEMAILJOB_H
-#define POTENTIALPHISHINGEMAILJOB_H
+#ifndef POTENTIALPHISHINGDETAILDIALOG_H
+#define POTENTIALPHISHINGDETAILDIALOG_H
 
-#include <QObject>
-#include <QStringList>
-
-class PotentialPhishingEmailJob : public QObject
+#include <KDialog>
+class QListWidget;
+class PotentialPhishingDetailDialog : public KDialog
 {
     Q_OBJECT
 public:
-    explicit PotentialPhishingEmailJob(QObject *parent = 0);
-    ~PotentialPhishingEmailJob();
+    explicit PotentialPhishingDetailDialog(QWidget *parent=0);
+    ~PotentialPhishingDetailDialog();
 
-    void setEmailWhiteList(const QStringList &emails);
-    void setEmails(const QStringList &emails);
+    void fillList(const QStringList &lst);
 
-    QStringList potentialPhisingEmails() const;
-    bool start();
-
-Q_SIGNALS:
-    void potentialPhishingEmailsFound(const QStringList &emails);
+private slots:
+    void slotSave();
 
 private:
-    QStringList mEmails;
-    QStringList mPotentialPhisingEmails;
-    QStringList mEmailWhiteList;
+    void readConfig();
+    void writeConfig();
+    QListWidget *mListWidget;
 };
 
-#endif // POTENTIALPHISHINGEMAILJOB_H
+#endif // POTENTIALPHISHINGDETAILDIALOG_H
