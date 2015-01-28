@@ -32,7 +32,7 @@ public:
 
     void fillList(const QStringList &lst);
 
-private slots:
+private Q_SLOTS:
     void slotSave();
 
 private:

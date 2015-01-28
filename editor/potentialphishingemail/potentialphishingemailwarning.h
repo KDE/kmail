@@ -35,7 +35,7 @@ public:
 Q_SIGNALS:
     void sendNow();
 
-private slots:
+private Q_SLOTS:
     void slotShowDetails(const QString &link);
 private:
     QStringList mPotentialPhishingEmails;
