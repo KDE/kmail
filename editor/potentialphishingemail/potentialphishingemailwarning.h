@@ -27,7 +27,7 @@ class PotentialPhishingEmailWarning : public KMessageWidget
 {
     Q_OBJECT
 public:
-    explicit PotentialPhishingEmailWarning(QWidget *parent = 0);
+    explicit PotentialPhishingEmailWarning(QWidget *parent = Q_NULLPTR);
     ~PotentialPhishingEmailWarning();
 
     void setPotentialPhisingEmail(const QStringList &lst);
