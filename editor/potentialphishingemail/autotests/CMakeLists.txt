@@ -8,7 +8,9 @@ target_link_libraries( kmail_potentialphishingemailjobtest Qt5::Test  KF5::Codec
 
 
 set( kmail_potentialphishingdetaildialogtest_SRCS potentialphishingdetaildialogtest.cpp ../potentialphishingdetaildialog.cpp )
-kde4_add_unit_test( kmail_potentialphishingdetaildialogtest ${kmail_potentialphishingdetaildialogtest_SRCS})
-target_link_libraries( kmail_potentialphishingdetaildialogtest ${QT_QTTEST_LIBRARY} ${KDE4_KDEUI_LIBS} )
+add_executable( kmail_potentialphishingdetaildialogtest ${kmail_potentialphishingdetaildialogtest_SRCS})
+add_test(kmail_potentialphishingdetaildialogtest kmail_potentialphishingdetaildialogtest)
+ecm_mark_as_test(kmail_potentialphishingdetaildialogtest)
+target_link_libraries( kmail_potentialphishingdetaildialogtest Qt5::Test KF5::KDELibs4Support )
 
 

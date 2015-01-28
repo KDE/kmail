@@ -22,7 +22,7 @@
 #include "../potentialphishingdetaildialog.h"
 #include <QLabel>
 #include <QListWidget>
-#include <qtest_kde.h>
+#include <qtest.h>
 
 PotentialPhishingDetailDialogTest::PotentialPhishingDetailDialogTest(QObject *parent)
     : QObject(parent)
@@ -88,4 +88,4 @@ void PotentialPhishingDetailDialogTest::shouldNotAddDuplicateEntries()
 
 }
 
-QTEST_KDEMAIN(PotentialPhishingDetailDialogTest, GUI)
+QTEST_MAIN(PotentialPhishingDetailDialogTest)
