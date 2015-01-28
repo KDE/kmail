@@ -21,9 +21,9 @@
 #ifndef POTENTIALPHISHINGDETAILDIALOG_H
 #define POTENTIALPHISHINGDETAILDIALOG_H
 
-#include <KDialog>
+#include <QDialog>
 class QListWidget;
-class PotentialPhishingDetailDialog : public KDialog
+class PotentialPhishingDetailDialog : public QDialog
 {
     Q_OBJECT
 public:

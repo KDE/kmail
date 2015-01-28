@@ -24,14 +24,25 @@
 #include <qboxlayout.h>
 #include <QLabel>
 #include <QListWidget>
+#include <KConfigGroup>
+#include <QDialogButtonBox>
+#include <QPushButton>
+#include <QVBoxLayout>
 
 PotentialPhishingDetailDialog::PotentialPhishingDetailDialog(QWidget *parent)
-    : KDialog(parent)
+    : QDialog(parent)
 {
-    setCaption(i18n("Details"));
-    setButtons(Ok | Cancel);
-    setDefaultButton(Ok);
+    setWindowTitle(i18n("Details"));
+    QDialogButtonBox *buttonBox = new QDialogButtonBox(QDialogButtonBox::Ok|QDialogButtonBox::Cancel);
+    QPushButton *okButton = buttonBox->button(QDialogButtonBox::Ok);
+    okButton->setDefault(true);
+    okButton->setShortcut(Qt::CTRL | Qt::Key_Return);
+    connect(buttonBox, SIGNAL(rejected()), this, SLOT(reject()));
+    okButton->setDefault(true);
 
+    QVBoxLayout *topLayout = new QVBoxLayout;
+    setLayout(topLayout);
+    
     setModal(true);
     QWidget *mainWidget = new QWidget(this);
     QVBoxLayout *mainLayout = new QVBoxLayout(mainWidget);
@@ -43,8 +54,10 @@ PotentialPhishingDetailDialog::PotentialPhishingDetailDialog(QWidget *parent)
     mListWidget->setObjectName(QLatin1String("list_widget"));
     mainLayout->addWidget(mListWidget);
 
-    connect(this, SIGNAL(okClicked()), this, SLOT(slotSave()));
-    setMainWidget(mainWidget);
+    mainLayout->addWidget(buttonBox);
+
+    connect(okButton, SIGNAL(clicked()), this, SLOT(slotSave()));
+    topLayout->addWidget(mainWidget);
     readConfig();
 }
 
@@ -102,3 +115,4 @@ void PotentialPhishingDetailDialog::slotSave()
     }
     accept();
 }
+
