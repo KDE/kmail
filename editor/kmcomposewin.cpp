@@ -2992,7 +2992,6 @@ void KMComposeWin::slotCheckSendNow()
     PotentialPhishingEmailJob *job = new PotentialPhishingEmailJob(this);
     KConfigGroup group( KSharedConfig::openConfig(), "PotentialPhishing");
     const QStringList whiteList = group.readEntry("whiteList", QStringList());
-    qDebug()<<" whiteList"<<whiteList;
     job->setEmailWhiteList(whiteList);
     QStringList lst;
     lst << mComposerBase->to();
@@ -3007,15 +3006,11 @@ void KMComposeWin::slotCheckSendNow()
 
 void KMComposeWin::slotPotentialPhishingEmailsFound(const QStringList &list)
 {
-#if 1
-    slotCheckSendNowStep2();
-#else
     if (list.isEmpty()) {
         slotCheckSendNowStep2();
     } else {
         mPotentialPhishingEmailWarning->setPotentialPhisingEmail(list);
     }
-#endif
 }
 
 bool KMComposeWin::checkRecipientNumber() const
