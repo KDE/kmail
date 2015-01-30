@@ -33,7 +33,7 @@ PotentialPhishingDetailDialog::PotentialPhishingDetailDialog(QWidget *parent)
     : QDialog(parent)
 {
     setWindowTitle(i18n("Details"));
-    QDialogButtonBox *buttonBox = new QDialogButtonBox(QDialogButtonBox::Ok|QDialogButtonBox::Cancel);
+    QDialogButtonBox *buttonBox = new QDialogButtonBox(QDialogButtonBox::Ok | QDialogButtonBox::Cancel);
     QPushButton *okButton = buttonBox->button(QDialogButtonBox::Ok);
     okButton->setDefault(true);
     okButton->setShortcut(Qt::CTRL | Qt::Key_Return);
@@ -42,7 +42,7 @@ PotentialPhishingDetailDialog::PotentialPhishingDetailDialog(QWidget *parent)
 
     QVBoxLayout *topLayout = new QVBoxLayout;
     setLayout(topLayout);
-    
+
     setModal(true);
     QWidget *mainWidget = new QWidget(this);
     QVBoxLayout *mainLayout = new QVBoxLayout(mainWidget);
