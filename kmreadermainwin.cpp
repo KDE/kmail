@@ -162,7 +162,7 @@ void KMReaderMainWin::showMessage(const QString &encoding, KMime::Message::Ptr m
 
     item.setPayload<KMime::Message::Ptr>(message);
     Akonadi::MessageFlags::copyMessageFlags(*message, item);
-    item.setMimeType( KMime::Message::mimeType() );
+    item.setMimeType(KMime::Message::mimeType());
 
     mMsg = item;
     mMsgActions->setCurrentMessage(item);
