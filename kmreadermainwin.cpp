@@ -62,6 +62,7 @@
 #include <AkonadiCore/item.h>
 #include <AkonadiCore/itemcopyjob.h>
 #include <AkonadiCore/itemcreatejob.h>
+#include <Akonadi/KMime/MessageFlags>
 
 #include "messagecore/helpers/messagehelpers.h"
 #include <util/mailutil.h>
@@ -160,7 +161,8 @@ void KMReaderMainWin::showMessage(const QString &encoding, KMime::Message::Ptr m
     Akonadi::Item item;
 
     item.setPayload<KMime::Message::Ptr>(message);
-    item.setMimeType(KMime::Message::mimeType());
+    Akonadi::MessageFlags::copyMessageFlags(*message, item);
+    item.setMimeType( KMime::Message::mimeType() );
 
     mMsg = item;
     mMsgActions->setCurrentMessage(item);
