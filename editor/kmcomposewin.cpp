@@ -123,6 +123,7 @@
 #include <akonadi/changerecorder.h>
 #include <akonadi/itemcreatejob.h>
 #include <akonadi/entitymimetypefiltermodel.h>
+#include <akonadi/kmime/messageflags.h>
 #include <akonadi/itemfetchjob.h>
 #include <kpimutils/email.h>
 #include <kpimidentities/identitymanager.h>
@@ -2706,6 +2707,7 @@ void KMComposeWin::printComposeResult( KJob *job, bool preview )
         Q_ASSERT( composer->resultMessages().size() == 1 );
         Akonadi::Item printItem;
         printItem.setPayload<KMime::Message::Ptr>( composer->resultMessages().first() );
+        Akonadi::MessageFlags::copyMessageFlags(*(composer->resultMessages().first()), printItem);
         const bool isHtml = mComposerBase->editor()->textMode() == KMeditor::Rich;
         const MessageViewer::Viewer::DisplayFormatMessage format = isHtml ? MessageViewer::Viewer::Html : MessageViewer::Viewer::Text;
         KMPrintCommand *command = new KMPrintCommand( this, printItem,0,
