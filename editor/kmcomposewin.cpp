@@ -3530,19 +3530,22 @@ void KMComposeWin::addExtraCustomHeaders( const QMap<QByteArray, QString> &heade
 void KMComposeWin::slotSentenceCase()
 {
     QTextCursor textCursor = mComposerBase->editor()->textCursor();
-    PimCommon::EditorUtil::sentenceCase(textCursor);
+    PimCommon::EditorUtil editorUtil;
+    editorUtil.sentenceCase(textCursor);
 }
 
 void KMComposeWin::slotUpperCase()
 {
+    PimCommon::EditorUtil editorUtil;
     QTextCursor textCursor = mComposerBase->editor()->textCursor();
-    PimCommon::EditorUtil::upperCase(textCursor);
+    editorUtil.upperCase(textCursor);
 }
 
 void KMComposeWin::slotLowerCase()
 {
     QTextCursor textCursor = mComposerBase->editor()->textCursor();
-    PimCommon::EditorUtil::lowerCase(textCursor);
+    PimCommon::EditorUtil editorUtil;
+    editorUtil.lowerCase(textCursor);
 }
 
 void KMComposeWin::slotExternalEditorStarted()
