@@ -1931,13 +1931,11 @@ void KMComposeWin::autoSaveMessage(bool force)
 
 bool KMComposeWin::encryptToSelf()
 {
-    // return !Kpgp::Module::getKpgp() || Kpgp::Module::getKpgp()->encryptToSelf();
     return MessageComposer::MessageComposerSettings::self()->cryptoEncryptToSelf();
 }
 
 void KMComposeWin::slotSendFailed(const QString &msg, MessageComposer::ComposerViewBase::FailedType type)
 {
-    //   setModified( false );
     setEnabled(true);
     if (!msg.isEmpty()) {
         KMessageBox::sorry(mMainWidget, msg,
@@ -3459,19 +3457,22 @@ void KMComposeWin::addExtraCustomHeaders(const QMap<QByteArray, QString> &header
 void KMComposeWin::slotSentenceCase()
 {
     QTextCursor textCursor = mComposerBase->editor()->textCursor();
-    PimCommon::EditorUtil::sentenceCase(textCursor);
+    PimCommon::EditorUtil editorUtil;
+    editorUtil.sentenceCase(textCursor);
 }
 
 void KMComposeWin::slotUpperCase()
 {
+    PimCommon::EditorUtil editorUtil;
     QTextCursor textCursor = mComposerBase->editor()->textCursor();
-    PimCommon::EditorUtil::upperCase(textCursor);
+    editorUtil.upperCase(textCursor);
 }
 
 void KMComposeWin::slotLowerCase()
 {
     QTextCursor textCursor = mComposerBase->editor()->textCursor();
-    PimCommon::EditorUtil::lowerCase(textCursor);
+    PimCommon::EditorUtil editorUtil;
+    editorUtil.lowerCase(textCursor);
 }
 
 void KMComposeWin::slotExternalEditorStarted()
