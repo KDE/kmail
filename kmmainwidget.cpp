@@ -2282,7 +2282,7 @@ void KMMainWidget::slotSaveAttachments()
     // Avoid re-downloading in the common case that only one message is selected, and the message
     // is also displayed in the viewer. For this, create a dummy item without a parent collection / item id,
     // so that KMCommand doesn't download it.
-    KMSaveAttachmentsCommand *saveCommand = 0;
+    KMSaveAttachmentsCommand *saveCommand = Q_NULLPTR;
     if (mMsgView && selectedMessages.size() == 1 &&
             mMsgView->message().hasPayload<KMime::Message::Ptr>() &&
             selectedMessages.first().id() == mMsgView->message().id()) {
