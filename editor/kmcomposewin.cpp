@@ -1968,7 +1968,6 @@ void KMComposeWin::autoSaveMessage(bool force)
 
 bool KMComposeWin::encryptToSelf()
 {
-    // return !Kpgp::Module::getKpgp() || Kpgp::Module::getKpgp()->encryptToSelf();
     return MessageComposer::MessageComposerSettings::self()->cryptoEncryptToSelf();
 }
 
@@ -1976,7 +1975,6 @@ bool KMComposeWin::encryptToSelf()
 
 void KMComposeWin::slotSendFailed( const QString& msg,MessageComposer::ComposerViewBase::FailedType type)
 {
-    //   setModified( false );
     setEnabled( true );
     if (!msg.isEmpty()) {
         KMessageBox::sorry( mMainWidget, msg,
