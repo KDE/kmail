@@ -36,6 +36,7 @@ PotentialPhishingEmailWarning::PotentialPhishingEmailWarning(QWidget *parent)
 
     connect(this, SIGNAL(linkActivated(QString)), SLOT(slotShowDetails(QString)));
     QAction *action = new QAction(i18n("Send Now"), this);
+    action->setObjectName(QLatin1String("sendnow"));
     connect(action, &QAction::triggered, this, &PotentialPhishingEmailWarning::sendNow);
     addAction(action);
 }

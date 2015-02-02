@@ -14,3 +14,7 @@ ecm_mark_as_test(kmail_potentialphishingdetaildialogtest)
 target_link_libraries( kmail_potentialphishingdetaildialogtest Qt5::Test KF5::KDELibs4Support )
 
 
+set( kmail_potentialphishingemailwarningtest_SRCS potentialphishingemailwarningtest.cpp ../potentialphishingemailwarning.cpp ../potentialphishingdetaildialog.cpp)
+kde4_add_unit_test( kmail_potentialphishingemailwarningtest ${kmail_potentialphishingemailwarningtest_SRCS})
+target_link_libraries( kmail_potentialphishingemailwarningtest ${QT_QTTEST_LIBRARY} ${KDE4_KDEUI_LIBS} )
+
