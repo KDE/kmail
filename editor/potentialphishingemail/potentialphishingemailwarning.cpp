@@ -39,7 +39,8 @@ PotentialPhishingEmailWarning::PotentialPhishingEmailWarning(QWidget *parent)
 
     connect(this, SIGNAL(linkActivated(QString)), SLOT(slotShowDetails(QString)));
     //Add i18n in kf5
-    KAction *action = new KAction(QLatin1String( "Send Now" ), this );
+    QAction *action = new QAction(QLatin1String( "Send Now" ), this );
+    action->setObjectName(QLatin1String("sendnow"));
     connect( action, SIGNAL(triggered(bool)), SIGNAL(sendNow()) );
     addAction( action );
 }

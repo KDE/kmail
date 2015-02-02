@@ -10,3 +10,7 @@ kde4_add_unit_test( kmail_potentialphishingdetaildialogtest ${kmail_potentialphi
 target_link_libraries( kmail_potentialphishingdetaildialogtest ${QT_QTTEST_LIBRARY} ${KDE4_KDEUI_LIBS} )
 
 
+set( kmail_potentialphishingemailwarningtest_SRCS potentialphishingemailwarningtest.cpp ../potentialphishingemailwarning.cpp ../potentialphishingdetaildialog.cpp)
+kde4_add_unit_test( kmail_potentialphishingemailwarningtest ${kmail_potentialphishingemailwarningtest_SRCS})
+target_link_libraries( kmail_potentialphishingemailwarningtest ${QT_QTTEST_LIBRARY} ${KDE4_KDEUI_LIBS} )
+
