@@ -31,7 +31,7 @@
  */
 
 #include "collectionquotapage.h"
-#include "collectionquotapage_p.h"
+#include "collectionquotawidget.h"
 #include <AkonadiCore/collectionquotaattribute.h>
 #include <AkonadiCore/collection.h>
 
@@ -61,7 +61,7 @@ bool CollectionQuotaPage::canHandle(const Akonadi::Collection &collection) const
 void CollectionQuotaPage::init()
 {
     QVBoxLayout *topLayout = new QVBoxLayout(this);
-    mQuotaWidget = new QuotaWidget(this);
+    mQuotaWidget = new CollectionQuotaWidget(this);
     topLayout->addWidget(mQuotaWidget);
 }
 

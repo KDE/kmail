@@ -1,8 +1,7 @@
 /**
+ * folderdialogquotatab_p.h
  *
  * Copyright (c) 2006 Till Adam <adam@kde.org>
- *
- * Copyright (c) 2012 Laurent Montel <montel@kde.or>
  *
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -30,46 +29,26 @@
  *  your version.
  */
 
-#include "collectionquotapage_p.h"
+#ifndef COLLECTIONQUOTAPAGE_P_H
+#define COLLECTIONQUOTAWIDGET_H
 
-#include "kmkernel.h"
+#include <QWidget>
 
-#include <KLocalizedString>
-#include <QDialog>
+class QProgressBar;
+class QLabel;
 
-#include <QLabel>
-#include <qlayout.h>
-#include <qprogressbar.h>
-#include <KFormat>
-#include <KConfigGroup>
+class CollectionQuotaWidget : public QWidget {
 
-QuotaWidget::QuotaWidget(QWidget *parent)
-    : QWidget(parent)
-{
-    QVBoxLayout *box = new QVBoxLayout(this);
-    QWidget *stuff = new QWidget(this);
-    QGridLayout *layout = new QGridLayout(stuff);
+    Q_OBJECT
+public:
+    explicit CollectionQuotaWidget( QWidget* parent);
+    ~CollectionQuotaWidget() { }
 
-    QLabel *lab = new QLabel(i18n("Usage:"));
-    layout->addWidget(lab, 0, 0);
+    void setQuotaInfo(qint64 currentValue, qint64 maxValue);
 
-    mUsage = new QLabel;
-    layout->addWidget(mUsage, 0, 1);
+private:
+    QProgressBar *mProgressBar;
+    QLabel *mUsage;
+};
 
-    QLabel *Status = new QLabel(i18n("Status:"));
-    layout->addWidget(Status, 1, 0);
-    mProgressBar = new QProgressBar(stuff);
-    // xgettext: no-c-format
-    mProgressBar->setFormat(i18n("%p% full"));
-    layout->addWidget(mProgressBar, 1, 1);
-    box->addWidget(stuff);
-    box->addStretch(2);
-}
-
-void QuotaWidget::setQuotaInfo(qint64 current, qint64 maxValue)
-{
-    mProgressBar->setMaximum(maxValue);
-    mProgressBar->setValue(current);
-    mUsage->setText(i18n("%1 of %2 used", KFormat().formatByteSize(qMax(0LL, current)), KFormat().formatByteSize(qMax(0LL, maxValue))));
-}
-
+#endif /* COLLECTIONQUOTAPAGE_P_H */

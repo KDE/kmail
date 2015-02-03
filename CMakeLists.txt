@@ -84,7 +84,7 @@ if (KDEPIM_BUILD_DESKTOP)
      collectionpage/collectionmaintenancepage.cpp
      collectionpage/collectionviewpage.cpp
      collectionpage/collectionquotapage.cpp
-     collectionpage/collectionquotapage_p.cpp
+     collectionpage/collectionquotawidget.cpp
      collectionpage/collectionmailinglistpage.cpp
      collectionpage/collectionshortcutpage.cpp
   )

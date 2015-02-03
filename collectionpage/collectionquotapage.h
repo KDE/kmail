@@ -33,7 +33,7 @@
 #define COLLECTIONQUOTAPAGE_H
 #include <AkonadiWidgets/collectionpropertiespage.h>
 
-class QuotaWidget;
+class CollectionQuotaWidget;
 
 /**
  * "Quota" tab in the folder dialog
@@ -51,7 +51,7 @@ protected:
     void init();
 
 private:
-    QuotaWidget *mQuotaWidget;
+    CollectionQuotaWidget* mQuotaWidget;
 };
 
 AKONADI_COLLECTION_PROPERTIES_PAGE_FACTORY(CollectionQuotaPageFactory, CollectionQuotaPage)
