@@ -31,7 +31,7 @@
 
 
 #ifndef COLLECTIONQUOTAPAGE_P_H
-#define COLLECTIONQUOTAPAGE_P_H
+#define COLLECTIONQUOTAWIDGET_H
 
 
 #include <QWidget>
@@ -39,12 +39,12 @@
 class QProgressBar;
 class QLabel;
 
-class QuotaWidget : public QWidget {
+class CollectionQuotaWidget : public QWidget {
 
     Q_OBJECT
 public:
-    explicit QuotaWidget( QWidget* parent);
-    ~QuotaWidget() { }
+    explicit CollectionQuotaWidget( QWidget* parent);
+    ~CollectionQuotaWidget() { }
 
     void setQuotaInfo( qint64 currentValue, qint64 maxValue );
 

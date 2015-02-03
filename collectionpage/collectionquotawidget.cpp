@@ -30,7 +30,7 @@
  *  your version.
  */
 
-#include "collectionquotapage_p.h"
+#include "collectionquotawidget.h"
 
 
 #include "kmkernel.h"
@@ -43,7 +43,7 @@
 #include <qlayout.h>
 #include <qprogressbar.h>
 
-QuotaWidget::QuotaWidget( QWidget* parent )
+CollectionQuotaWidget::CollectionQuotaWidget( QWidget* parent )
     :QWidget( parent )
 {
     QVBoxLayout *box = new QVBoxLayout( this );
@@ -69,7 +69,7 @@ QuotaWidget::QuotaWidget( QWidget* parent )
     box->addStretch( 2 );
 }
 
-void QuotaWidget::setQuotaInfo( qint64 current, qint64 maxValue )
+void CollectionQuotaWidget::setQuotaInfo( qint64 current, qint64 maxValue )
 {
     mProgressBar->setMaximum( maxValue );
     mProgressBar->setValue( current );
