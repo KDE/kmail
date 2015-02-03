@@ -99,11 +99,6 @@ void CollectionMaintenancePage::init(const Akonadi::Collection & col)
     mLastIndexed = new QLabel( i18n( "Still not indexed." ) );
 
     indexingLayout->addWidget( mLastIndexed );
-#if 0
-    KPushButton *forceReindex = new KPushButton(i18n("Force reindexing"));
-    indexingLayout->addWidget( forceReindex );
-    connect(forceReindex,SIGNAL(clicked()),SLOT(slotReindexing()));
-#endif
     topLayout->addWidget( indexingGroup );
     topLayout->addStretch( 100 );
 }
@@ -162,13 +157,5 @@ void CollectionMaintenancePage::updateCollectionStatistic(Akonadi::Collection::I
 {
     if ( id == mCurrentCollection.id() ) {
         updateLabel( statistic.count(), statistic.unreadCount(), statistic.size() );
-    }
-}
-
-void CollectionMaintenancePage::slotReindexing()
-{
-    QDBusInterface interfaceBalooIndexer( QLatin1String("org.freedesktop.Akonadi.Agent.akonadi_baloo_indexer"), QLatin1String("/") );
-    if(interfaceBalooIndexer.isValid()) {
-        interfaceBalooIndexer.asyncCall(QLatin1String("reindexCollection"),(qlonglong)mCurrentCollection.id());
     }
 }
