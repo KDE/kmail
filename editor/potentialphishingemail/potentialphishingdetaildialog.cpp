@@ -101,7 +101,7 @@ void PotentialPhishingDetailDialog::slotSave()
     QStringList potentialPhishing = group.readEntry("whiteList", QStringList());
     bool emailsAdded = false;
     const int numberOfItem(mListWidget->count());
-    for (int i=0; i < numberOfItem; ++i) {
+    for (int i = 0; i < numberOfItem; ++i) {
         QListWidgetItem *item = mListWidget->item(i);
         if (item->checkState() == Qt::Checked) {
             const QString email = item->text();

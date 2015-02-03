@@ -37,11 +37,12 @@
 class QProgressBar;
 class QLabel;
 
-class CollectionQuotaWidget : public QWidget {
+class CollectionQuotaWidget : public QWidget
+{
 
     Q_OBJECT
 public:
-    explicit CollectionQuotaWidget( QWidget* parent);
+    explicit CollectionQuotaWidget(QWidget *parent);
     ~CollectionQuotaWidget() { }
 
     void setQuotaInfo(qint64 currentValue, qint64 maxValue);

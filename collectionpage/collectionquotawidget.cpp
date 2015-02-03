@@ -43,8 +43,8 @@
 #include <KFormat>
 #include <KConfigGroup>
 
-CollectionQuotaWidget::CollectionQuotaWidget( QWidget* parent )
-    :QWidget( parent )
+CollectionQuotaWidget::CollectionQuotaWidget(QWidget *parent)
+    : QWidget(parent)
 {
     QVBoxLayout *box = new QVBoxLayout(this);
     QWidget *stuff = new QWidget(this);
@@ -66,7 +66,7 @@ CollectionQuotaWidget::CollectionQuotaWidget( QWidget* parent )
     box->addStretch(2);
 }
 
-void CollectionQuotaWidget::setQuotaInfo( qint64 current, qint64 maxValue )
+void CollectionQuotaWidget::setQuotaInfo(qint64 current, qint64 maxValue)
 {
     mProgressBar->setMaximum(maxValue);
     mProgressBar->setValue(current);

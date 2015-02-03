@@ -93,9 +93,9 @@ void CollectionMaintenancePage::init(const Akonadi::Collection &col)
 
     mLastIndexed = new QLabel(i18n("Still not indexed."));
 
-    indexingLayout->addWidget( mLastIndexed );
-    topLayout->addWidget( indexingGroup );
-    topLayout->addStretch( 100 );
+    indexingLayout->addWidget(mLastIndexed);
+    topLayout->addWidget(indexingGroup);
+    topLayout->addStretch(100);
 }
 
 void CollectionMaintenancePage::load(const Collection &col)
