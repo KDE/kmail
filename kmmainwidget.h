@@ -514,6 +514,7 @@ private slots:
     void slotArchiveMails();
     void slotChangeDisplayMessageFormat(MessageViewer::Viewer::DisplayFormatMessage format);
 
+    void slotCollectionRemoved(const Akonadi::Collection &col);
 private:
     // Message actions
     KAction *mDeleteAction, *mTrashThreadAction,

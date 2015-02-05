@@ -123,7 +123,6 @@ using KSieveUi::SieveDebugDialog;
 #include <akonadi/control.h>
 #include <akonadi/collectiondialog.h>
 #include <akonadi/collectionstatistics.h>
-#include <akonadi/collectionstatisticsdelegate.h>
 #include <Akonadi/EntityMimeTypeFilterModel>
 #include <akonadi/kmime/messageflags.h>
 #include <akonadi/kmime/removeduplicatesjob.h>
@@ -1058,11 +1057,6 @@ void KMMainWidget::createWidgets()
 
         mFavoriteCollectionsView->setModel( mFavoritesModel );
 
-        Akonadi::CollectionStatisticsDelegate *delegate = new Akonadi::CollectionStatisticsDelegate( mFavoriteCollectionsView );
-        delegate->setProgressAnimationEnabled( true );
-        mFavoriteCollectionsView->setItemDelegate(delegate);
-        delegate->setUnreadCountShown( true );
-
         mAkonadiStandardActionManager->setFavoriteCollectionsModel( mFavoritesModel );
         mAkonadiStandardActionManager->setFavoriteSelectionModel( mFavoriteCollectionsView->selectionModel() );
     }
@@ -1137,6 +1131,8 @@ void KMMainWidget::createWidgets()
     {
         mCollectionProperties = mAkonadiStandardActionManager->action( Akonadi::StandardActionManager::CollectionProperties );
     }
+    connect( kmkernel->folderCollectionMonitor(), SIGNAL(collectionRemoved(Akonadi::Collection)),
+             SLOT(slotCollectionRemoved(Akonadi::Collection)) );
     connect( kmkernel->folderCollectionMonitor(), SIGNAL(itemAdded(Akonadi::Item,Akonadi::Collection)),
              SLOT(slotItemAdded(Akonadi::Item,Akonadi::Collection)) );
     connect( kmkernel->folderCollectionMonitor(), SIGNAL(itemRemoved(Akonadi::Item)),
@@ -4498,4 +4494,9 @@ void KMMainWidget::slotChangeDisplayMessageFormat(MessageViewer::Viewer::Display
 void KMMainWidget::populateMessageListStatusFilterCombo()
 {
     mMessagePane->populateStatusFilterCombo();
+}
+
+void KMMainWidget::slotCollectionRemoved(const Akonadi::Collection &col)
+{
+    mFavoritesModel->removeCollection(col);
 }
