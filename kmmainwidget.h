@@ -552,6 +552,7 @@ private Q_SLOTS:
     void slotArchiveMails();
     void slotChangeDisplayMessageFormat(MessageViewer::Viewer::DisplayFormatMessage format);
 
+    void slotCollectionRemoved(const Akonadi::Collection &col);
 private:
     // Message actions
     QAction *mDeleteAction, *mTrashThreadAction,

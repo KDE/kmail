@@ -125,7 +125,6 @@ using KSieveUi::SieveDebugDialog;
 #include <AkonadiCore/control.h>
 #include <AkonadiWidgets/collectiondialog.h>
 #include <AkonadiCore/collectionstatistics.h>
-#include <AkonadiWidgets/collectionstatisticsdelegate.h>
 #include <AkonadiCore/EntityMimeTypeFilterModel>
 #include <Akonadi/KMime/MessageFlags>
 #include <Akonadi/KMime/RemoveDuplicatesJob>
@@ -1056,13 +1055,8 @@ void KMMainWidget::createWidgets()
 
         mFavoriteCollectionsView->setModel(mFavoritesModel);
 
-        Akonadi::CollectionStatisticsDelegate *delegate = new Akonadi::CollectionStatisticsDelegate(mFavoriteCollectionsView);
-        delegate->setProgressAnimationEnabled(true);
-        mFavoriteCollectionsView->setItemDelegate(delegate);
-        delegate->setUnreadCountShown(true);
-
-        mAkonadiStandardActionManager->setFavoriteCollectionsModel(mFavoritesModel);
-        mAkonadiStandardActionManager->setFavoriteSelectionModel(mFavoriteCollectionsView->selectionModel());
+        mAkonadiStandardActionManager->setFavoriteCollectionsModel( mFavoritesModel );
+        mAkonadiStandardActionManager->setFavoriteSelectionModel( mFavoriteCollectionsView->selectionModel() );
     }
 
     //Don't use mMailActionManager->createAllActions() to save memory by not
@@ -1133,13 +1127,15 @@ void KMMainWidget::createWidgets()
     {
         mCollectionProperties = mAkonadiStandardActionManager->action(Akonadi::StandardActionManager::CollectionProperties);
     }
-    connect(kmkernel->folderCollectionMonitor(), SIGNAL(itemAdded(Akonadi::Item,Akonadi::Collection)),
-            SLOT(slotItemAdded(Akonadi::Item,Akonadi::Collection)));
-    connect(kmkernel->folderCollectionMonitor(), SIGNAL(itemRemoved(Akonadi::Item)),
-            SLOT(slotItemRemoved(Akonadi::Item)));
-    connect(kmkernel->folderCollectionMonitor(), SIGNAL(itemMoved(Akonadi::Item,Akonadi::Collection,Akonadi::Collection)),
-            SLOT(slotItemMoved(Akonadi::Item,Akonadi::Collection,Akonadi::Collection)));
-    connect(kmkernel->folderCollectionMonitor(), SIGNAL(collectionChanged(Akonadi::Collection,QSet<QByteArray>)), SLOT(slotCollectionChanged(Akonadi::Collection,QSet<QByteArray>)));
+    connect( kmkernel->folderCollectionMonitor(), SIGNAL(collectionRemoved(Akonadi::Collection)),
+             SLOT(slotCollectionRemoved(Akonadi::Collection)) );
+    connect( kmkernel->folderCollectionMonitor(), SIGNAL(itemAdded(Akonadi::Item,Akonadi::Collection)),
+             SLOT(slotItemAdded(Akonadi::Item,Akonadi::Collection)) );
+    connect( kmkernel->folderCollectionMonitor(), SIGNAL(itemRemoved(Akonadi::Item)),
+             SLOT(slotItemRemoved(Akonadi::Item)) );
+    connect( kmkernel->folderCollectionMonitor(), SIGNAL(itemMoved(Akonadi::Item,Akonadi::Collection,Akonadi::Collection)),
+             SLOT(slotItemMoved(Akonadi::Item,Akonadi::Collection,Akonadi::Collection)) );
+    connect( kmkernel->folderCollectionMonitor(), SIGNAL(collectionChanged(Akonadi::Collection,QSet<QByteArray>)), SLOT(slotCollectionChanged(Akonadi::Collection,QSet<QByteArray>)) );
 
     connect(kmkernel->folderCollectionMonitor(), SIGNAL(collectionStatisticsChanged(Akonadi::Collection::Id,Akonadi::CollectionStatistics)), SLOT(slotCollectionStatisticsChanged(Akonadi::Collection::Id,Akonadi::CollectionStatistics)));
 
@@ -4523,4 +4519,9 @@ void KMMainWidget::slotChangeDisplayMessageFormat(MessageViewer::Viewer::Display
 void KMMainWidget::populateMessageListStatusFilterCombo()
 {
     mMessagePane->populateStatusFilterCombo();
+}
+
+void KMMainWidget::slotCollectionRemoved(const Akonadi::Collection &col)
+{
+    mFavoritesModel->removeCollection(col);
 }
