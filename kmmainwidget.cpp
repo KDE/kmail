@@ -1179,12 +1179,12 @@ void KMMainWidget::updateAllToTrashAction(int statistics)
 
 void KMMainWidget::slotCollectionStatisticsChanged(const Akonadi::Collection::Id id, const Akonadi::CollectionStatistics &statistic)
 {
-    if (id == CommonKernel->outboxCollectionFolder().id()) {
-        const qint64 nbMsgOutboxCollection = statistic.count();
-        mSendQueued->setEnabled(nbMsgOutboxCollection > 0);
-        mSendActionMenu->setEnabled(nbMsgOutboxCollection > 0);
-    } else if (mCurrentFolder && (id == mCurrentFolder->collection().id())) {
-        updateMoveAction(statistic);
+    if ( id == CommonKernel->outboxCollectionFolder().id() ) {
+        const bool enableAction = (statistic.count() > 0);
+        mSendQueued->setEnabled( enableAction );
+        mSendActionMenu->setEnabled( enableAction );
+    } else if ( mCurrentFolder && ( id == mCurrentFolder->collection().id() ) ) {
+        updateMoveAction( statistic );
         updateAllToTrashAction(statistic.count());
         mCurrentFolder->setCollection(MailCommon::Util::updatedCollection(mCurrentFolder->collection()));
     }
