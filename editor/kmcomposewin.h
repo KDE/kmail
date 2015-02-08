@@ -72,7 +72,8 @@ class CryptoStateIndicatorWidget;
 class StatusBarLabelToggledState;
 class PotentialPhishingEmailWarning;
 class KMComposerGlobalAction;
-namespace boost {
+namespace boost
+{
 template <typename T> class shared_ptr;
 }
 
