@@ -64,6 +64,7 @@
 #include "agents/followupreminderagent/followupreminderutil.h"
 #include "pimcommon/util/vcardutil.h"
 #include "editor/potentialphishingemail/potentialphishingemailwarning.h"
+#include "kmcomposerglobalaction.h"
 
 #include "libkdepim/progresswidget/statusbarprogresswidget.h"
 #include "libkdepim/progresswidget/progressstatusbarwidget.h"
@@ -243,6 +244,7 @@ KMComposeWin::KMComposeWin( const KMime::Message::Ptr &aMsg, bool lastSignState,
       mStatusBarLabelToggledOverrideMode(0),
       mStatusBarLabelSpellCheckingChangeMode(0)
 {
+    mGlobalAction = new KMComposerGlobalAction(this, this);
     mComposerBase = new MessageComposer::ComposerViewBase( this, this );
     mComposerBase->setIdentityManager( kmkernel->identityManager() );
 
@@ -1247,12 +1249,12 @@ void KMComposeWin::setupActions( void )
         KStandardAction::printPreview( this, SLOT(slotPrintPreview()), actionCollection() );
     KStandardAction::close( this, SLOT(slotClose()), actionCollection() );
 
-    KStandardAction::undo( this, SLOT(slotUndo()), actionCollection() );
-    KStandardAction::redo( this, SLOT(slotRedo()), actionCollection() );
-    KStandardAction::cut( this, SLOT(slotCut()), actionCollection() );
-    KStandardAction::copy( this, SLOT(slotCopy()), actionCollection() );
-    KStandardAction::pasteText( this, SLOT(slotPaste()), actionCollection() );
-    mSelectAll = KStandardAction::selectAll( this, SLOT(slotMarkAll()), actionCollection() );
+    KStandardAction::undo( mGlobalAction, SLOT(slotUndo()), actionCollection() );
+    KStandardAction::redo( mGlobalAction, SLOT(slotRedo()), actionCollection() );
+    KStandardAction::cut( mGlobalAction, SLOT(slotCut()), actionCollection() );
+    KStandardAction::copy( mGlobalAction, SLOT(slotCopy()), actionCollection() );
+    KStandardAction::pasteText( mGlobalAction, SLOT(slotPaste()), actionCollection() );
+    mSelectAll = KStandardAction::selectAll( mGlobalAction, SLOT(slotMarkAll()), actionCollection() );
 
     mFindText = KStandardAction::find( mComposerBase->editor(), SLOT(slotFind()), actionCollection() );
     mFindNextText = KStandardAction::findNext( mComposerBase->editor(), SLOT(slotFindNext()), actionCollection() );
@@ -2379,107 +2381,6 @@ QString KMComposeWin::addQuotesToText( const QString &inputText ) const
     answer += QLatin1Char('\n');
     return MessageCore::StringUtil::smartQuote( answer, MessageComposer::MessageComposerSettings::self()->lineWrapWidth() );
 }
-
-
-void KMComposeWin::slotUndo()
-{
-    QWidget *fw = focusWidget();
-    if ( !fw ) {
-        return;
-    }
-
-    if (::qobject_cast<PimCommon::LineEditWithAutoCorrection*>( fw )) {
-        static_cast<PimCommon::LineEditWithAutoCorrection*>( fw )->undo();
-    }else if ( ::qobject_cast<KMComposerEditor*>( fw ) ) {
-        static_cast<KTextEdit*>( fw )->undo();
-    } else if (::qobject_cast<KLineEdit*>( fw )) {
-        static_cast<KLineEdit*>( fw )->undo();
-    }
-}
-
-void KMComposeWin::slotRedo()
-{
-    QWidget *fw = focusWidget();
-    if ( !fw ) {
-        return;
-    }
-
-    if (::qobject_cast<PimCommon::LineEditWithAutoCorrection*>( fw )) {
-        static_cast<PimCommon::LineEditWithAutoCorrection*>( fw )->redo();
-    } else if ( ::qobject_cast<KMComposerEditor*>( fw ) ) {
-        static_cast<KTextEdit*>( fw )->redo();
-    } else if (::qobject_cast<KLineEdit*>( fw )) {
-        static_cast<KLineEdit*>( fw )->redo();
-    }
-}
-
-
-void KMComposeWin::slotCut()
-{
-    QWidget *fw = focusWidget();
-    if ( !fw ) {
-        return;
-    }
-
-    if ( ::qobject_cast<PimCommon::LineEditWithAutoCorrection*>( fw ) ) {
-        static_cast<PimCommon::LineEditWithAutoCorrection*>( fw )->cut();
-    } else if ( ::qobject_cast<KMComposerEditor*>( fw ) ) {
-        static_cast<KTextEdit*>(fw)->cut();
-    } else if ( ::qobject_cast<KLineEdit*>( fw ) ) {
-        static_cast<KLineEdit*>( fw )->cut();
-    }
-}
-
-
-void KMComposeWin::slotCopy()
-{
-    QWidget *fw = focusWidget();
-    if ( !fw ) {
-        return;
-    }
-
-    if ( ::qobject_cast<PimCommon::LineEditWithAutoCorrection*>( fw ) ) {
-        static_cast<PimCommon::LineEditWithAutoCorrection*>( fw )->copy();
-    } else if ( ::qobject_cast<KMComposerEditor*>( fw ) ) {
-        static_cast<KTextEdit*>(fw)->copy();
-    } else if ( ::qobject_cast<KLineEdit*>( fw ) ) {
-        static_cast<KLineEdit*>( fw )->copy();
-    }
-}
-
-
-void KMComposeWin::slotPaste()
-{
-    QWidget * const fw = focusWidget();
-    if ( !fw ) {
-        return;
-    }
-    if ( ::qobject_cast<PimCommon::LineEditWithAutoCorrection*>( fw ) ) {
-        static_cast<PimCommon::LineEditWithAutoCorrection*>( fw )->paste();
-    } else if ( ::qobject_cast<KMComposerEditor*>( fw ) ) {
-        static_cast<KTextEdit*>(fw)->paste();
-    } else if ( ::qobject_cast<KLineEdit*>( fw ) ) {
-        static_cast<KLineEdit*>( fw )->paste();
-    }
-}
-
-
-void KMComposeWin::slotMarkAll()
-{
-    QWidget *fw = focusWidget();
-    if ( !fw ) {
-        return;
-    }
-
-    if (::qobject_cast<PimCommon::LineEditWithAutoCorrection*>( fw )) {
-        static_cast<PimCommon::LineEditWithAutoCorrection*>( fw )->selectAll();
-    } else if ( ::qobject_cast<KLineEdit*>( fw ) ) {
-        static_cast<KLineEdit*>( fw )->selectAll();
-    } else if (::qobject_cast<KMComposerEditor*>( fw )) {
-        static_cast<KTextEdit*>( fw )->selectAll();
-    }
-}
-
 
 void KMComposeWin::slotClose()
 {

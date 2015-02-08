@@ -71,7 +71,7 @@ class KActionMenu;
 class CryptoStateIndicatorWidget;
 class StatusBarLabelToggledState;
 class PotentialPhishingEmailWarning;
-
+class KMComposerGlobalAction;
 namespace boost {
 template <typename T> class shared_ptr;
 }
@@ -320,13 +320,7 @@ private slots:
     void slotNewComposer();
     void slotClose();
     void slotHelp();
-    void slotUndo();
-    void slotRedo();
-    void slotCut();
-    void slotCopy();
-    void slotPaste();
     void slotPasteAsAttachment();
-    void slotMarkAll();
     void slotFolderRemoved( const Akonadi::Collection& );
     void slotLanguageChanged( const QString &language );
     void slotFccFolderChanged(const Akonadi::Collection&);
@@ -699,6 +693,7 @@ private:
     StatusBarLabelToggledState *mStatusBarLabelToggledOverrideMode;
     StatusBarLabelToggledState *mStatusBarLabelSpellCheckingChangeMode;
     PotentialPhishingEmailWarning *mPotentialPhishingEmailWarning;
+    KMComposerGlobalAction *mGlobalAction;
 };
 
 #endif
