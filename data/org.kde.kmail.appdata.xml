@@ -17,6 +17,7 @@
   <name xml:lang="sr-ijekavian">К‑пошта</name>
   <name xml:lang="sr-ijekavianlatin">K‑pošta</name>
   <name xml:lang="sv">Kmail</name>
+  <name xml:lang="tr">KMail</name>
   <name xml:lang="uk">KMail</name>
   <name xml:lang="x-test">xxKMailxx</name>
   <name xml:lang="zh-CN">KMail</name>
@@ -36,6 +37,7 @@
     <p xml:lang="sr-ijekavian">К‑пошта је е‑поштанска компонента Контакта, КДЕ‑овог интегрисаног менаџера личних података.</p>
     <p xml:lang="sr-ijekavianlatin">K‑pošta je e‑poštanska komponenta Kontacta, KDE‑ovog integrisanog menadžera ličnih podataka.</p>
     <p xml:lang="sv">Kmail är e-postkomponenten i Kontact, den integrerade personliga informationshanteraren från KDE.</p>
+    <p xml:lang="tr">KMail, Kontact'ın e-posta bileşeni ve aynı zamanda KDE'den tümleşik kişisel bilgi yöneticisidir.</p>
     <p xml:lang="uk">KMail — компонент для роботи з електронною поштою комплексу програм Kontact, інтегрованого рішення для роботи з особистими даними у KDE.</p>
     <p xml:lang="x-test">xxKMail is the email component of Kontact, the integrated personal information manager from KDE.xx</p>
     <p>Features:</p>
@@ -52,6 +54,7 @@
     <p xml:lang="sr-ijekavian">Могућности:</p>
     <p xml:lang="sr-ijekavianlatin">Mogućnosti:</p>
     <p xml:lang="sv">Funktioner:</p>
+    <p xml:lang="tr">Özellikler:</p>
     <p xml:lang="uk">Можливості:</p>
     <p xml:lang="x-test">xxFeatures:xx</p>
     <p xml:lang="zh-CN">功能：</p>
@@ -69,6 +72,7 @@
       <li xml:lang="sr-ijekavian">Подршка за стандардне поштанске протоколе ИМАП, ПОП3 и СМТП.</li>
       <li xml:lang="sr-ijekavianlatin">Podrška za standardne poštanske protokole IMAP, POP3 i SMTP.</li>
       <li xml:lang="sv">Stöder standardprotokollen för e-post IMAP, POP3 och SMTP.</li>
+      <li xml:lang="tr">IMAP, POP3 ve SMTP standart posta protokollerini destekler.</li>
       <li xml:lang="uk">підтримка роботи зі стандартними протоколами обміну електронною поштою, IMAP, POP3 та SMTP.</li>
       <li xml:lang="x-test">xxSupports the standard mail protocols IMAP, POP3 and SMTP.xx</li>
       <li>Supports authentication via NTLM (Microsoft Windows) and GSSAPI (Kerberos)</li>
@@ -84,6 +88,7 @@
       <li xml:lang="sr-ijekavian">Аутентификација преко НТЛМ‑а (Виндоуз) и ГССАПИ‑ја (кербер).</li>
       <li xml:lang="sr-ijekavianlatin">Autentifikacija preko NTLM‑a (Windows) i GSSAPI‑ja (Kerberos).</li>
       <li xml:lang="sv">Stöder behörighetskontroll via NTLM (Microsoft WIndows) och GSSAPI (Kerberos)</li>
+      <li xml:lang="tr">NTLM (Microsoft Windows) ve GSSAPI (Kerberos) aracılığıyla kimlik doğrulamayı destekler</li>
       <li xml:lang="uk">підтримка можливостей розпізнавання за допомогою NTLM (Microsoft Windows) та GSSAPI (Kerberos);</li>
       <li xml:lang="x-test">xxSupports authentication via NTLM (Microsoft Windows) and GSSAPI (Kerberos)xx</li>
       <li>Supports plain text and secure logins, using SSL and TLS.</li>
@@ -99,6 +104,7 @@
       <li xml:lang="sr-ijekavian">Обичнотекстуално и безбедно пријављивање, преко ССЛ‑а и ТЛС‑а.</li>
       <li xml:lang="sr-ijekavianlatin">Običnotekstualno i bezbedno prijavljivanje, preko SSL‑a i TLS‑a.</li>
       <li xml:lang="sv">Stöder vanlig text och säkra inloggningar, genom att använda SSL och TLS.</li>
+      <li xml:lang="tr">Düz metin ve SSL ile TLS kullanarak güvenli girişleri destekler.</li>
       <li xml:lang="uk">підтримка передавання реєстраційних даних звичайним текстом та шифрованими даними за допомогою SSL та TLS;</li>
       <li xml:lang="x-test">xxSupports plain text and secure logins, using SSL and TLS.xx</li>
       <li>Integration of international character sets and spell-checking (as-you-type and on demand)</li>
@@ -114,6 +120,7 @@
       <li xml:lang="sr-ijekavian">Међународна кодирања и провера правописа (током куцања и на захтев).</li>
       <li xml:lang="sr-ijekavianlatin">Međunarodna kodiranja i provera pravopisa (tokom kucanja i na zahtev).</li>
       <li xml:lang="sv">Integrering av internationella teckenuppsättningar och stavningskontroll (medan man skriver och på begäran)</li>
+      <li xml:lang="tr">Uluslararası karakter kümeleri ve yazım denetimi (yazarken veya isteğe bağlı) tümleştirmesi</li>
       <li xml:lang="uk">вбудована можливість роботи з даними у різних кодуваннях та перевірки правопису (інтерактивної та на вимогу);</li>
       <li xml:lang="x-test">xxIntegration of international character sets and spell-checking (as-you-type and on demand)xx</li>
       <li>Native support for inline OpenPGP, PGP/MIME, and S/MIME.</li>
@@ -129,6 +136,7 @@
       <li xml:lang="sr-ijekavian">Самосвојна подршка за уткани опенПГП, ПГП/МИМЕ и С/МИМЕ.</li>
       <li xml:lang="sr-ijekavianlatin">Samosvojna podrška za utkani OpenPGP, PGP/MIME i S/MIME.</li>
       <li xml:lang="sv">Inbyggt stöd för OpenPGP, PGP/MIME, och S/MIME på plats.</li>
+      <li xml:lang="tr">Satıriçi OpenPGP, PGP/MIME ve S/MIME için doğal destek.</li>
       <li xml:lang="uk">вбудована підтримка OpenPGP, PGP/MIME та S/MIME.</li>
       <li xml:lang="x-test">xxNative support for inline OpenPGP, PGP/MIME, and S/MIME.xx</li>
       <li>Reading and writing of HTML mail.</li>
@@ -144,6 +152,7 @@
       <li xml:lang="sr-ijekavian">Читање и писање ХТМЛ порука.</li>
       <li xml:lang="sr-ijekavianlatin">Čitanje i pisanje HTML poruka.</li>
       <li xml:lang="sv">Läsa och skriva HTML-brev.</li>
+      <li xml:lang="tr">HTML posta yazma ve okuma.</li>
       <li xml:lang="uk">можливість читання та створення повідомлень з використанням коду HTML;</li>
       <li xml:lang="x-test">xxReading and writing of HTML mail.xx</li>
       <li>Ability to display plain text only from an HTML mail.</li>
@@ -159,6 +168,7 @@
       <li xml:lang="sr-ijekavian">Приказивање само обичног текста из ХТМЛ порука.</li>
       <li xml:lang="sr-ijekavianlatin">Prikazivanje samo običnog teksta iz HTML poruka.</li>
       <li xml:lang="sv">Möjlighet att bara visa vanlig text för ett HTML-brev.</li>
+      <li xml:lang="tr">Bir HTML postasından sadece düz metni gösterebilme.</li>
       <li xml:lang="uk">можливість перегляду лише текстової частини з повідомлень у форматі HTML;</li>
       <li xml:lang="x-test">xxAbility to display plain text only from an HTML mail.xx</li>
       <li>Allows you to receive and accept invitations.</li>
@@ -174,6 +184,7 @@
       <li xml:lang="sr-ijekavian">Слање и прихватање позивница.</li>
       <li xml:lang="sr-ijekavianlatin">Slanje i prihvatanje pozivnica.</li>
       <li xml:lang="sv">Låter dig ta emot och acceptera inbjudningar.</li>
+      <li xml:lang="tr">Davetleri alma ve kabul etmenize izin verir.</li>
       <li xml:lang="uk">можливість отримувати та приймати запрошення;</li>
       <li xml:lang="x-test">xxAllows you to receive and accept invitations.xx</li>
       <li>Integration with popular spam checkers, e.g. SpamAssassin, Bogofilter, etc.</li>
@@ -189,6 +200,7 @@
       <li xml:lang="sr-ijekavian">Интеграција популарних оверивача спама, као што су Спамасасин, Богофилтер, итд.</li>
       <li xml:lang="sr-ijekavianlatin">Integracija popularnih overivača spama, kao što su SpamAssassin, Bogofilter, itd.</li>
       <li xml:lang="sv">Integrering med populära skräppostkontrollprogram, t.ex. SpamAssassin, Bogofilter, etc.</li>
+      <li xml:lang="tr">Yaygın gereksiz posta (spam) denetleicileri ile tümleşik. Örn. SpamAssassin, Bogofilter, vb.</li>
       <li xml:lang="uk">інтеграція з популярними системами захисту від небажаної кореспонденції, зокрема SpamAssassin, Bogofilter тощо;</li>
       <li xml:lang="x-test">xxIntegration with popular spam checkers, e.g. SpamAssassin, Bogofilter, etc.xx</li>
       <li>An optional spam probability meter can be displayed</li>
@@ -204,6 +216,7 @@
       <li xml:lang="sr-ijekavian">Опциони приказ мерача вероватноће спама.</li>
       <li xml:lang="sr-ijekavianlatin">Opcioni prikaz merača verovatnoće spama.</li>
       <li xml:lang="sv">En valfri sannolikhetsmätare för skräppost kan visas</li>
+      <li xml:lang="tr">Görüntülenebilir, isteğe bağlı gereksiz posta ihtimali ölçümü</li>
       <li xml:lang="uk">можливість показу оцінки ймовірності небажаності повідомлення;</li>
       <li xml:lang="x-test">xxAn optional spam probability meter can be displayedxx</li>
       <li>Powerful search and filter abilities</li>
@@ -219,6 +232,7 @@
       <li xml:lang="sr-ijekavian">Моћна претрага и филтрирање.</li>
       <li xml:lang="sr-ijekavianlatin">Moćna pretraga i filtriranje.</li>
       <li xml:lang="sv">Kraftfulla sök- och filtreringsmöjligheter</li>
+      <li xml:lang="tr">Güçlü arama ve filtreleme yetenekleri</li>
       <li xml:lang="uk">потужні можливості з пошуку та фільтрування;</li>
       <li xml:lang="x-test">xxPowerful search and filter abilitiesxx</li>
       <li>Can import mail from many other clients</li>
@@ -234,6 +248,7 @@
       <li xml:lang="sr-ijekavian">Увоз поште из многих других клијената.</li>
       <li xml:lang="sr-ijekavianlatin">Uvoz pošte iz mnogih drugih klijenata.</li>
       <li xml:lang="sv">Kan importera brev från många andra program</li>
+      <li xml:lang="tr">Diğer birçok istemciden postaları içe aktarabilme</li>
       <li xml:lang="uk">можливість імпортувати дані пошти з багатьох інших програм для роботи з електронною поштою;</li>
       <li xml:lang="x-test">xxCan import mail from many other clientsxx</li>
       <li>Searching in IMAP folders fully supported</li>
@@ -249,6 +264,7 @@
       <li xml:lang="sr-ijekavian">Потпуна подршка за претрагу по ИМАП фасциклама.</li>
       <li xml:lang="sr-ijekavianlatin">Potpuna podrška za pretragu po IMAP fasciklama.</li>
       <li xml:lang="sv">Fullständigt stöd för sökning i IMAP-korgar</li>
+      <li xml:lang="tr">IMAP klasörlerinde arama tamamen desteklenmektedir</li>
       <li xml:lang="uk">підтримка повноцінного пошуку у теках IMAP;</li>
       <li xml:lang="x-test">xxSearching in IMAP folders fully supportedxx</li>
       <li>Highly integrated with other Kontact components</li>
@@ -264,6 +280,7 @@
       <li xml:lang="sr-ijekavian">Висока интеграција са осталим компонентама Контакта.</li>
       <li xml:lang="sr-ijekavianlatin">Visoka integracija sa ostalim komponentama Kontacta.</li>
       <li xml:lang="sv">Helt integrerad med andra Kontact-komponenter</li>
+      <li xml:lang="tr">Diğer Kontact bileşenleri ile yüksek derecede tümleşik</li>
       <li xml:lang="uk">високий рівень інтеграції з іншими компонентами Kontact;</li>
       <li xml:lang="x-test">xxHighly integrated with other Kontact componentsxx</li>
       <li>Encrypted password saving in KWallet</li>
@@ -279,6 +296,7 @@
       <li xml:lang="sr-ijekavian">Уписивање шифрованих лозинки у К‑новчаник.</li>
       <li xml:lang="sr-ijekavianlatin">Upisivanje šifrovanih lozinki u K‑novčanik.</li>
       <li xml:lang="sv">Krypterat lösenord sparas i plånboken</li>
+      <li xml:lang="tr">KWallet (KDE Cüzdan) içerisine şifreli parola kaydetme</li>
       <li xml:lang="uk">зберігання зашифрованих реєстраційних даних за допомогою KWallet;</li>
       <li xml:lang="x-test">xxEncrypted password saving in KWalletxx</li>
       <li>Flagging and tagging of messages to aid sorting and recovery of information</li>
@@ -294,6 +312,7 @@
       <li xml:lang="sr-ijekavian">Означавање порука ради лакшег разврставања и доступности информација.</li>
       <li xml:lang="sr-ijekavianlatin">Označavanje poruka radi lakšeg razvrstavanja i dostupnosti informacija.</li>
       <li xml:lang="sv">Flaggning och etikettering av brev för att hjälpa till att sortera och återhämta information</li>
+      <li xml:lang="tr">Sıralama ve bilgi kurtarımı yardımı için ileti bayraklama ve etiketleme</li>
       <li xml:lang="uk">можливість додавання прапорців і міток до повідомлень з метою спрощення упорядковування та відновлення інформації;</li>
       <li xml:lang="x-test">xxFlagging and tagging of messages to aid sorting and recovery of informationxx</li>
       <li>Supports mailing list management features</li>
@@ -309,6 +328,7 @@
       <li xml:lang="sr-ijekavian">Управљање поштанском листом.</li>
       <li xml:lang="sr-ijekavianlatin">Upravljanje poštanskom listom.</li>
       <li xml:lang="sv">Stöder funktioner för hantering av sändlistor</li>
+      <li xml:lang="tr">Posta listesi yönetim özelliklerini destekler</li>
       <li xml:lang="uk">підтримка можливостей з керування повідомленнями зі списків листування;</li>
       <li xml:lang="x-test">xxSupports mailing list management featuresxx</li>
       <li>Can replace text smilies with emoticons</li>
@@ -324,6 +344,7 @@
       <li xml:lang="sr-ijekavian">Опциона замена текстуалних смешкова емотиконима.</li>
       <li xml:lang="sr-ijekavianlatin">Opciona zamena tekstualnih smeškova emotikonima.</li>
       <li xml:lang="sv">Kan ersätta textsmilisar med ikoner</li>
+      <li xml:lang="tr">Metin yüz ifadelerini simgelere dönüştürebilir</li>
       <li xml:lang="uk">можливість заміни текстових емоційок (смайликів) зображеннями;</li>
       <li xml:lang="x-test">xxCan replace text smilies with emoticonsxx</li>
       <li>Displays the sender's picture or avatar if present in the address book</li>
@@ -339,6 +360,7 @@
       <li xml:lang="sr-ijekavian">Приказ слике или аватара пошиљаоца, ако их има у адресару.</li>
       <li xml:lang="sr-ijekavianlatin">Prikaz slike ili avatara pošiljaoca, ako ih ima u adresaru.</li>
       <li xml:lang="sv">Visar avsändarens bild eller avatar om den finns i adressboken</li>
+      <li xml:lang="tr">Adres defterinde mevcutsa gönderenin fotoğrafı veya profil resmi gösterilir</li>
       <li xml:lang="uk">можливість показу знімка або аватара відправника, якщо його визначено у адресній книзі;</li>
       <li xml:lang="x-test">xxDisplays the sender's picture or avatar if present in the address bookxx</li>
       <li>Supports X-Face (b/w pictures in messages)</li>
@@ -354,6 +376,7 @@
       <li xml:lang="sr-ijekavian">Подршка за X-Face (црно‑беле слике у порукама).</li>
       <li xml:lang="sr-ijekavianlatin">Podrška za X-Face (crno‑bele slike u porukama).</li>
       <li xml:lang="sv">Stöder X-Face (svartvita bilder i brev)</li>
+      <li xml:lang="tr">X-Face (iletilerde siyah beyaz resimler) desteği</li>
       <li xml:lang="uk">підтримка X-Face (чорно-білих зображень у повідомленнях);</li>
       <li xml:lang="x-test">xxSupports X-Face (b/w pictures in messages)xx</li>
       <li>Compression of attachments</li>
@@ -369,6 +392,7 @@
       <li xml:lang="sr-ijekavian">Компресовање прилога.</li>
       <li xml:lang="sr-ijekavianlatin">Kompresovanje priloga.</li>
       <li xml:lang="sv">Komprimering av bilagor</li>
+      <li xml:lang="tr">Eklerin sıkıştırılması</li>
       <li xml:lang="uk">можливість стискання долучень безпосередньо з вікна програми;</li>
       <li xml:lang="x-test">xxCompression of attachmentsxx</li>
       <li>KMail supports Groupware functionality.</li>
@@ -384,6 +408,7 @@
       <li xml:lang="sr-ijekavian">К‑пошта подржава групверску функционалност.</li>
       <li xml:lang="sr-ijekavianlatin">K‑pošta podržava grupversku funkcionalnost.</li>
       <li xml:lang="sv">Kmail stöder grupprogramfunktioner.</li>
+      <li xml:lang="tr">KMail, Groupware işlevselliğini destekler.</li>
       <li xml:lang="uk">підтримка роботи у групах.</li>
       <li xml:lang="x-test">xxKMail supports Groupware functionality.xx</li>
     </ul>
