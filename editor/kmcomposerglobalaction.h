@@ -27,7 +27,7 @@ public:
     explicit KMComposerGlobalAction(KMComposeWin *composerWin, QObject *parent = 0);
     ~KMComposerGlobalAction();
 
-public slots:
+public Q_SLOTS:
     void slotUndo();
     void slotRedo();
     void slotCut();
