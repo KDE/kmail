@@ -302,7 +302,7 @@ class KMAIL_EXPORT KMOpenMsgCommand : public KMCommand
 
 public:
     explicit KMOpenMsgCommand(QWidget *parent, const QUrl &url = QUrl(),
-                              const QString &encoding = QString() , KMMainWidget *main = 0);
+                              const QString &encoding = QString() , KMMainWidget *main = Q_NULLPTR);
 
 private:
     Result execute() Q_DECL_OVERRIDE;
@@ -383,9 +383,9 @@ class KMAIL_EXPORT KMForwardAttachedCommand : public KMCommand
 
 public:
     KMForwardAttachedCommand(QWidget *parent, const QList<Akonadi::Item> &msgList,
-                             uint identity = 0, KMail::Composer *win = 0);
+                             uint identity = 0, KMail::Composer *win = Q_NULLPTR);
     KMForwardAttachedCommand(QWidget *parent, const Akonadi::Item &msg,
-                             uint identity = 0, KMail::Composer *win = 0);
+                             uint identity = 0, KMail::Composer *win = Q_NULLPTR);
 
 private:
     Result execute() Q_DECL_OVERRIDE;
@@ -627,7 +627,7 @@ public:
     Akonadi::Item item() const;
 
 private:
-    Akonadi::ItemFetchJob *createFetchJob(const Akonadi::Item::List &items);
+    Akonadi::ItemFetchJob *createFetchJob(const Akonadi::Item::List &items) Q_DECL_OVERRIDE;
     Result execute() Q_DECL_OVERRIDE;
 
     Akonadi::Item mItem;

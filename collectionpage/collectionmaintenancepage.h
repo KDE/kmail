@@ -34,8 +34,8 @@ class CollectionMaintenancePage : public Akonadi::CollectionPropertiesPage
 public:
     explicit CollectionMaintenancePage(QWidget *parent = Q_NULLPTR);
 
-    void load(const Akonadi::Collection &col);
-    void save(Akonadi::Collection &col);
+    void load(const Akonadi::Collection &col) Q_DECL_OVERRIDE;
+    void save(Akonadi::Collection &col) Q_DECL_OVERRIDE;
 
 protected:
     void init(const Akonadi::Collection &);

@@ -47,7 +47,7 @@ public:
     KMailApplication() : KontactInterface::PimUniqueApplication(),
         mDelayedInstanceCreation(false),
         mEventLoopReached(false) { }
-    virtual int newInstance();
+    int newInstance() Q_DECL_OVERRIDE;
     void commitData(QSessionManager &sm);
     void setEventLoopReached();
     void delayedInstanceCreation();

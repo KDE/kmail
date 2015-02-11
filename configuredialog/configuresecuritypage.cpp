@@ -710,11 +710,11 @@ Kleo::CryptoConfigEntry *SMIMECryptoConfigEntries::configEntry(const QString &co
     Kleo::CryptoConfigEntry *entry = mConfig->entry(componentName, groupName, entryName);
     if (!entry) {
         qCWarning(KMAIL_LOG) << QStringLiteral("Backend error: gpgconf doesn't seem to know the entry for %1/%2/%3").arg(componentName, groupName, entryName);
-        return 0;
+        return Q_NULLPTR;
     }
     if (entry->argType() != argType || entry->isList() != isList) {
         qCWarning(KMAIL_LOG) << QStringLiteral("Backend error: gpgconf has wrong type for %1/%2/%3: %4 %5").arg(componentName, groupName, entryName).arg(entry->argType()).arg(entry->isList());
-        return 0;
+        return Q_NULLPTR;
     }
     return entry;
 }

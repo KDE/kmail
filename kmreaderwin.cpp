@@ -104,14 +104,14 @@ KMReaderWin::KMReaderWin(QWidget *aParent,
     : QWidget(aParent, aFlags),
       mMainWindow(mainWindow),
       mActionCollection(actionCollection),
-      mMailToComposeAction(0),
-      mMailToReplyAction(0),
-      mMailToForwardAction(0),
-      mAddAddrBookAction(0),
-      mOpenAddrBookAction(0),
-      mUrlSaveAsAction(0),
-      mAddBookmarksAction(0),
-      mAddEmailToExistingContactAction(0)
+      mMailToComposeAction(Q_NULLPTR),
+      mMailToReplyAction(Q_NULLPTR),
+      mMailToForwardAction(Q_NULLPTR),
+      mAddAddrBookAction(Q_NULLPTR),
+      mOpenAddrBookAction(Q_NULLPTR),
+      mUrlSaveAsAction(Q_NULLPTR),
+      mAddBookmarksAction(Q_NULLPTR),
+      mAddEmailToExistingContactAction(Q_NULLPTR)
 {
     createActions();
     QVBoxLayout *vlay = new QVBoxLayout(this);
@@ -442,9 +442,9 @@ void KMReaderWin::setDisplayFormatMessageOverwrite(MessageViewer::Viewer::Displa
     mViewer->setDisplayFormatMessageOverwrite(format);
 }
 
-void KMReaderWin::setHtmlLoadExtOverride(bool override)
+void KMReaderWin::setHtmlLoadExtOverride(bool Q_DECL_OVERRIDE)
 {
-    mViewer->setHtmlLoadExtOverride(override);
+    mViewer->setHtmlLoadExtOverride(Q_DECL_OVERRIDE);
 }
 
 bool KMReaderWin::htmlMail() const

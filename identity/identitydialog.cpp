@@ -122,7 +122,7 @@ IdentityDialog::IdentityDialog(QWidget *parent)
     : QDialog(parent)
 {
     setWindowTitle(i18n("Edit Identity"));
-    QDialogButtonBox *buttonBox = 0;
+    QDialogButtonBox *buttonBox = Q_NULLPTR;
     QVBoxLayout *mainLayout = new QVBoxLayout;
     setLayout(mainLayout);
 

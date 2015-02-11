@@ -62,7 +62,7 @@ ConfigAgentDelegate::ConfigAgentDelegate(QObject *parent)
 QTextDocument *ConfigAgentDelegate::document(const QStyleOptionViewItem &option, const QModelIndex &index) const
 {
     if (!index.isValid()) {
-        return 0;
+        return Q_NULLPTR;
     }
 
     const QString name = index.model()->data(index, Qt::DisplayRole).toString();
@@ -70,7 +70,7 @@ QTextDocument *ConfigAgentDelegate::document(const QStyleOptionViewItem &option,
     uint progress = index.model()->data(index, AgentInstanceModel::ProgressRole).toUInt();
     const QString statusMessage = index.model()->data(index, AgentInstanceModel::StatusMessageRole).toString();
 
-    QTextDocument *document = new QTextDocument(0);
+    QTextDocument *document = new QTextDocument(Q_NULLPTR);
 
     const QSize decorationSize(KIconLoader::global()->currentSize(KIconLoader::Desktop), KIconLoader::global()->currentSize(KIconLoader::Desktop));
     const QVariant data = index.model()->data(index, Qt::DecorationRole);
@@ -170,7 +170,7 @@ QSize ConfigAgentDelegate::sizeHint(const QStyleOptionViewItem &option, const QM
 
 QWidget   *ConfigAgentDelegate::createEditor(QWidget *, const QStyleOptionViewItem &, const QModelIndex &) const
 {
-    return 0;
+    return Q_NULLPTR;
 }
 
 bool ConfigAgentDelegate::editorEvent(QEvent *event, QAbstractItemModel *model, const QStyleOptionViewItem &option, const QModelIndex &index)

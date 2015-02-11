@@ -70,7 +70,7 @@ FolderArchiveAccountInfo *FolderArchiveManager::infoFromInstanceName(const QStri
             return info;
         }
     }
-    return 0;
+    return Q_NULLPTR;
 }
 
 void FolderArchiveManager::setArchiveItem(qlonglong itemId)
@@ -180,7 +180,7 @@ void FolderArchiveManager::moveDone()
     KNotification::event(QLatin1String("folderarchivedone"),
                          i18n("Messages archived"),
                          pixmap,
-                         0,
+                         Q_NULLPTR,
                          KNotification::CloseOnTimeout,
                          QLatin1String("kmail2"));
     nextJob();
@@ -193,7 +193,7 @@ void FolderArchiveManager::moveFailed(const QString &msg)
     KNotification::event(QLatin1String("folderarchiveerror"),
                          msg,
                          pixmap,
-                         0,
+                         Q_NULLPTR,
                          KNotification::CloseOnTimeout,
                          QLatin1String("kmail2"));
     nextJob();
@@ -203,7 +203,7 @@ void FolderArchiveManager::nextJob()
 {
     mCurrentJob->deleteLater();
     if (mJobQueue.isEmpty()) {
-        mCurrentJob = 0;
+        mCurrentJob = Q_NULLPTR;
     } else {
         mCurrentJob = mJobQueue.dequeue();
         mCurrentJob->start();

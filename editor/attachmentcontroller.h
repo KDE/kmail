@@ -46,7 +46,7 @@ public:
 
 public Q_SLOTS:
     /// @reimp
-    void attachMyPublicKey();
+    void attachMyPublicKey() Q_DECL_OVERRIDE;
 
 private Q_SLOTS:
     void identityChanged();

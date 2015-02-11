@@ -89,7 +89,7 @@ void IdentityPage::load()
     mOldNumberOfIdentities = mIdentityManager->shadowIdentities().count();
     // Fill the list:
     mIPage.mIdentityList->clear();
-    QTreeWidgetItem *item = 0;
+    QTreeWidgetItem *item = Q_NULLPTR;
     KIdentityManagement::IdentityManager::Iterator end(mIdentityManager->modifyEnd());
 
     for (KIdentityManagement::IdentityManager::Iterator it = mIdentityManager->modifyBegin(); it != end; ++it) {
@@ -159,12 +159,12 @@ void IdentityPage::slotNewIdentity()
         // Insert into listview:
         //
         KIdentityManagement::Identity &newIdent = mIdentityManager->modifyIdentityForName(identityName);
-        QTreeWidgetItem *item = 0;
+        QTreeWidgetItem *item = Q_NULLPTR;
         if (!mIPage.mIdentityList->selectedItems().isEmpty()) {
             item = mIPage.mIdentityList->selectedItems()[0];
         }
 
-        QTreeWidgetItem *newItem = 0;
+        QTreeWidgetItem *newItem = Q_NULLPTR;
         if (item) {
             newItem = new IdentityListViewItem(mIPage.mIdentityList, mIPage.mIdentityList->itemAbove(item), newIdent);
         } else {
@@ -185,7 +185,7 @@ void IdentityPage::slotModifyIdentity()
 {
     Q_ASSERT(!mIdentityDialog);
 
-    IdentityListViewItem *item = 0;
+    IdentityListViewItem *item = Q_NULLPTR;
     if (!mIPage.mIdentityList->selectedItems().isEmpty()) {
         item = dynamic_cast<IdentityListViewItem *>(mIPage.mIdentityList->selectedItems().first());
     }
@@ -204,7 +204,7 @@ void IdentityPage::slotModifyIdentity()
     }
 
     delete mIdentityDialog;
-    mIdentityDialog = 0;
+    mIdentityDialog = Q_NULLPTR;
 }
 
 void IdentityPage::slotRemoveIdentity()
@@ -215,7 +215,7 @@ void IdentityPage::slotRemoveIdentity()
         qCritical() << "Attempted to remove the last identity!";
     }
 
-    IdentityListViewItem *item = 0;
+    IdentityListViewItem *item = Q_NULLPTR;
     if (!mIPage.mIdentityList->selectedItems().isEmpty()) {
         item = dynamic_cast<IdentityListViewItem *>(mIPage.mIdentityList->selectedItems()[0]);
     }
@@ -244,7 +244,7 @@ void IdentityPage::slotRenameIdentity()
 {
     Q_ASSERT(!mIdentityDialog);
 
-    QTreeWidgetItem *item = 0;
+    QTreeWidgetItem *item = Q_NULLPTR;
 
     if (!mIPage.mIdentityList->selectedItems().isEmpty()) {
         item = mIPage.mIdentityList->selectedItems().first();
@@ -295,7 +295,7 @@ void IdentityPage::slotSetAsDefault()
 {
     Q_ASSERT(!mIdentityDialog);
 
-    IdentityListViewItem *item = 0;
+    IdentityListViewItem *item = Q_NULLPTR;
     if (!mIPage.mIdentityList->selectedItems().isEmpty()) {
         item = dynamic_cast<IdentityListViewItem *>(mIPage.mIdentityList->selectedItems().first());
     }
@@ -327,7 +327,7 @@ void IdentityPage::slotIdentitySelectionChanged()
 
 void IdentityPage::updateButtons()
 {
-    IdentityListViewItem *item = 0;
+    IdentityListViewItem *item = Q_NULLPTR;
     if (!mIPage.mIdentityList->selectedItems().isEmpty()) {
         item = dynamic_cast<IdentityListViewItem *>(mIPage.mIdentityList->selectedItems().first());
     }

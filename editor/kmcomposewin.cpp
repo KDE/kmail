@@ -221,35 +221,35 @@ KMComposeWin::KMComposeWin(const KMime::Message::Ptr &aMsg, bool lastSignState, 
       mForceDisableHtml(false),
       mId(id),
       mContext(context),
-      mSignAction(0), mEncryptAction(0), mRequestMDNAction(0),
-      mUrgentAction(0), mAllFieldsAction(0), mFromAction(0),
-      mReplyToAction(0), mSubjectAction(0),
-      mIdentityAction(0), mTransportAction(0), mFccAction(0),
-      mWordWrapAction(0), mFixedFontAction(0), mAutoSpellCheckingAction(0),
-      mDictionaryAction(0), mSnippetAction(0), mTranslateAction(0),
-      mAppendSignature(0), mPrependSignature(0), mInsertSignatureAtCursorPosition(0),
-      mGenerateShortenUrl(0),
-      mCodecAction(0),
-      mCryptoModuleAction(0),
-      mFindText(0),
-      mFindNextText(0),
-      mReplaceText(0),
-      mSelectAll(0),
-      mDummyComposer(0),
+      mSignAction(Q_NULLPTR), mEncryptAction(Q_NULLPTR), mRequestMDNAction(Q_NULLPTR),
+      mUrgentAction(Q_NULLPTR), mAllFieldsAction(Q_NULLPTR), mFromAction(Q_NULLPTR),
+      mReplyToAction(Q_NULLPTR), mSubjectAction(Q_NULLPTR),
+      mIdentityAction(Q_NULLPTR), mTransportAction(Q_NULLPTR), mFccAction(Q_NULLPTR),
+      mWordWrapAction(Q_NULLPTR), mFixedFontAction(Q_NULLPTR), mAutoSpellCheckingAction(Q_NULLPTR),
+      mDictionaryAction(Q_NULLPTR), mSnippetAction(Q_NULLPTR), mTranslateAction(Q_NULLPTR),
+      mAppendSignature(Q_NULLPTR), mPrependSignature(Q_NULLPTR), mInsertSignatureAtCursorPosition(Q_NULLPTR),
+      mGenerateShortenUrl(Q_NULLPTR),
+      mCodecAction(Q_NULLPTR),
+      mCryptoModuleAction(Q_NULLPTR),
+      mFindText(Q_NULLPTR),
+      mFindNextText(Q_NULLPTR),
+      mReplaceText(Q_NULLPTR),
+      mSelectAll(Q_NULLPTR),
+      mDummyComposer(Q_NULLPTR),
       mLabelWidth(0),
-      mComposerBase(0),
-      mSelectSpecialChar(0),
-      m_verifyMissingAttachment(0),
+      mComposerBase(Q_NULLPTR),
+      mSelectSpecialChar(Q_NULLPTR),
+      m_verifyMissingAttachment(Q_NULLPTR),
       mPreventFccOverwrite(false),
       mCheckForForgottenAttachments(true),
       mIgnoreStickyFields(false),
       mWasModified(false),
-      mCryptoStateIndicatorWidget(0),
+      mCryptoStateIndicatorWidget(Q_NULLPTR),
       mStorageService(new KMStorageService(this, this)),
       mSendNowByShortcutUsed(false),
-      mFollowUpToggleAction(0),
-      mStatusBarLabelToggledOverrideMode(0),
-      mStatusBarLabelSpellCheckingChangeMode(0)
+      mFollowUpToggleAction(Q_NULLPTR),
+      mStatusBarLabelToggledOverrideMode(Q_NULLPTR),
+      mStatusBarLabelSpellCheckingChangeMode(Q_NULLPTR)
 {
     mGlobalAction = new KMComposerGlobalAction(this, this);
     mComposerBase = new MessageComposer::ComposerViewBase(this, this);
@@ -353,8 +353,8 @@ KMComposeWin::KMComposeWin(const KMime::Message::Ptr &aMsg, bool lastSignState, 
 
     mShowHeaders = GlobalSettings::self()->headers();
     mDone = false;
-    mGrid = 0;
-    mFixedFontAction = 0;
+    mGrid = Q_NULLPTR;
+    mFixedFontAction = Q_NULLPTR;
     // the attachment view is separated from the editor by a splitter
     mSplitter = new QSplitter(Qt::Vertical, mMainWidget);
     mSplitter->setObjectName(QLatin1String("mSplitter"));
@@ -2559,8 +2559,8 @@ void KMComposeWin::printComposeResult(KJob *job, bool preview)
         Akonadi::MessageFlags::copyMessageFlags(*(composer->resultMessages().first()), printItem);
         const bool isHtml = mComposerBase->editor()->textMode() == KMeditor::Rich;
         const MessageViewer::Viewer::DisplayFormatMessage format = isHtml ? MessageViewer::Viewer::Html : MessageViewer::Viewer::Text;
-        KMPrintCommand *command = new KMPrintCommand(this, printItem, 0,
-                0, format, isHtml);
+        KMPrintCommand *command = new KMPrintCommand(this, printItem, Q_NULLPTR,
+                Q_NULLPTR, format, isHtml);
         command->setPrintPreview(preview);
         command->start();
     } else {
@@ -2759,7 +2759,7 @@ void KMComposeWin::slotSendLater()
     if (mComposerBase->editor()->checkExternalEditorFinished()) {
         const bool wasRegistered = (SendLater::SendLaterUtil::sentLaterAgentWasRegistered() && SendLater::SendLaterUtil::sentLaterAgentEnabled());
         if (wasRegistered) {
-            SendLater::SendLaterInfo *info = 0;
+            SendLater::SendLaterInfo *info = Q_NULLPTR;
             QPointer<SendLater::SendLaterDialog> dlg = new SendLater::SendLaterDialog(info, this);
             if (dlg->exec()) {
                 info = dlg->info();
@@ -3047,7 +3047,7 @@ void KMComposeWin::slotSpellcheckDoneClearStatus()
 
 void KMComposeWin::slotIdentityChanged(uint uoid, bool initalChange)
 {
-    if (mMsg == 0) {
+    if (mMsg == Q_NULLPTR) {
         qCDebug(KMAIL_LOG) << "Trying to change identity but mMsg == 0!";
         return;
     }
@@ -3351,7 +3351,7 @@ void KMComposeWin::slotExplicitClosedMissingAttachment()
     if (m_verifyMissingAttachment) {
         m_verifyMissingAttachment->stop();
         delete m_verifyMissingAttachment;
-        m_verifyMissingAttachment = 0;
+        m_verifyMissingAttachment = Q_NULLPTR;
     }
 }
 

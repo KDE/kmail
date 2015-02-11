@@ -72,7 +72,7 @@ void RemoveDuplicateMailJob::slotRemoveDuplicatesDone(KJob *job)
     if (item) {
         item->setComplete();
         item->setStatus(i18n("Done"));
-        item = 0;
+        item = Q_NULLPTR;
     }
     if (job->error() && job->error() != KJob::KilledJobError) {
         KMessageBox::error(mParent, job->errorText(), i18n("Error while removing duplicates"));
@@ -88,7 +88,7 @@ void RemoveDuplicateMailJob::slotRemoveDuplicatesCanceled(KPIM::ProgressItem *it
     }
 
     item->setComplete();
-    item = 0;
+    item = Q_NULLPTR;
     deleteLater();
 }
 

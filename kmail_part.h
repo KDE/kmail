@@ -63,8 +63,8 @@ Q_SIGNALS:
     void iconChanged(const QPixmap &);
 
 protected:
-    virtual bool openFile();
-    virtual void guiActivateEvent(KParts::GUIActivateEvent *e);
+    bool openFile() Q_DECL_OVERRIDE;
+    void guiActivateEvent(KParts::GUIActivateEvent *e) Q_DECL_OVERRIDE;
 
 private:
     KMMainWidget *mainWidget;

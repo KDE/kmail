@@ -67,7 +67,7 @@ public:
     void setHighlighterColors(KPIMTextEdit::EMailQuoteHighlighter *highlighter) Q_DECL_OVERRIDE;
 
     /**
-     * Static override because we want to hide part of the dialog UI
+     * Static Q_DECL_OVERRIDE because we want to hide part of the dialog UI
      */
     void showSpellConfigDialog(const QString &configFileName);
 
@@ -75,8 +75,8 @@ private:
     KMComposeWin *mComposerWin;
 
 protected:
-    bool canInsertFromMimeData(const QMimeData *source) const;
-    void insertFromMimeData(const QMimeData *source);
+    bool canInsertFromMimeData(const QMimeData *source) const Q_DECL_OVERRIDE;
+    void insertFromMimeData(const QMimeData *source) Q_DECL_OVERRIDE;
 
 protected Q_SLOTS:
     void mousePopupMenuImplementation(const QPoint &pos);

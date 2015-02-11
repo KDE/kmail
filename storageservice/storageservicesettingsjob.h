@@ -30,19 +30,19 @@ public:
     StorageServiceSettingsJob();
     ~StorageServiceSettingsJob();
 
-    QString youSendItApiKey() const;
-    QString dropboxOauthConsumerKey() const;
-    QString dropboxOauthSignature() const;
-    QString boxClientId() const;
-    QString boxClientSecret() const;
-    QString hubicClientId() const;
-    QString hubicClientSecret() const;
-    QString dropboxRootPath() const;
-    QString oauth2RedirectUrl() const;
-    QString hubicScope() const;
-    QString gdriveClientId() const;
-    QString gdriveClientSecret() const;
-    QString defaultUploadFolder() const;
+    QString youSendItApiKey() const Q_DECL_OVERRIDE;
+    QString dropboxOauthConsumerKey() const Q_DECL_OVERRIDE;
+    QString dropboxOauthSignature() const Q_DECL_OVERRIDE;
+    QString boxClientId() const Q_DECL_OVERRIDE;
+    QString boxClientSecret() const Q_DECL_OVERRIDE;
+    QString hubicClientId() const Q_DECL_OVERRIDE;
+    QString hubicClientSecret() const Q_DECL_OVERRIDE;
+    QString dropboxRootPath() const Q_DECL_OVERRIDE;
+    QString oauth2RedirectUrl() const Q_DECL_OVERRIDE;
+    QString hubicScope() const Q_DECL_OVERRIDE;
+    QString gdriveClientId() const Q_DECL_OVERRIDE;
+    QString gdriveClientSecret() const Q_DECL_OVERRIDE;
+    QString defaultUploadFolder() const Q_DECL_OVERRIDE;
 };
 
 #endif // StorageServiceSettingsJob_H

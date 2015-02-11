@@ -36,9 +36,9 @@ class KMReaderMainWin : public KMail::SecondaryWindow
     Q_OBJECT
 
 public:
-    KMReaderMainWin(MessageViewer::Viewer::DisplayFormatMessage format, bool htmlLoadExtOverride, char *name = 0);
-    explicit KMReaderMainWin(char *name = 0);
-    KMReaderMainWin(KMime::Content *aMsgPart, MessageViewer::Viewer::DisplayFormatMessage format, const QString &encoding, char *name = 0);
+    KMReaderMainWin(MessageViewer::Viewer::DisplayFormatMessage format, bool htmlLoadExtOverride, char *name = Q_NULLPTR);
+    explicit KMReaderMainWin(char *name = Q_NULLPTR);
+    KMReaderMainWin(KMime::Content *aMsgPart, MessageViewer::Viewer::DisplayFormatMessage format, const QString &encoding, char *name = Q_NULLPTR);
     virtual ~KMReaderMainWin();
 
     void setUseFixedFont(bool useFixedFont);

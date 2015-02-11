@@ -1153,10 +1153,10 @@ void ComposerPage::HeadersTab::slotRemoveMimeHeader()
         qCDebug(KMAIL_LOG) << "below";
         mHeaderList->setCurrentItem(below);
         delete item;
-        item = 0;
+        item = Q_NULLPTR;
     } else if (mHeaderList->topLevelItemCount() > 0) {
         delete item;
-        item = 0;
+        item = Q_NULLPTR;
         mHeaderList->setCurrentItem(
             mHeaderList->topLevelItem(mHeaderList->topLevelItemCount() - 1)
         );
@@ -1176,7 +1176,7 @@ void ComposerPage::HeadersTab::doLoadOther()
     mTagNameEdit->clear();
     mTagValueEdit->clear();
 
-    QTreeWidgetItem *item = 0;
+    QTreeWidgetItem *item = Q_NULLPTR;
 
     const int count = GlobalSettings::self()->customMessageHeadersCount();
     for (int i = 0 ; i < count ; ++i) {
@@ -1214,7 +1214,7 @@ void ComposerPage::HeadersTab::save()
     }
 
     int numValidEntries = 0;
-    QTreeWidgetItem *item = 0;
+    QTreeWidgetItem *item = Q_NULLPTR;
     const int numberOfEntry = mHeaderList->topLevelItemCount();
     for (int i = 0; i < numberOfEntry; ++i) {
         item = mHeaderList->topLevelItem(i);
@@ -1347,7 +1347,7 @@ void ComposerPage::AttachmentsTab::save()
 void ComposerPageAttachmentsTab::slotOutlookCompatibleClicked()
 {
     if (mOutlookCompatibleCheck->isChecked()) {
-        KMessageBox::information(0, i18n("You have chosen to "
+        KMessageBox::information(Q_NULLPTR, i18n("You have chosen to "
                                          "encode attachment names containing non-English characters in a way that "
                                          "is understood by Outlook(tm) and other mail clients that do not "
                                          "support standard-compliant encoded attachment names.\n"

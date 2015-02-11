@@ -206,24 +206,24 @@ Q_GLOBAL_STATIC(KMMainWidget::PtrList, theMainWidgetList)
 KMMainWidget::KMMainWidget(QWidget *parent, KXMLGUIClient *aGUIClient,
                            KActionCollection *actionCollection, KSharedConfig::Ptr config) :
     QWidget(parent),
-    mMoveMsgToFolderAction(0),
-    mCollectionProperties(0),
-    mFavoriteCollectionsView(0),
-    mMsgView(0),
-    mSplitter1(0),
-    mSplitter2(0),
-    mFolderViewSplitter(0),
-    mArchiveFolderAction(0),
-    mShowBusySplashTimer(0),
-    mMsgActions(0),
-    mCurrentFolder(0),
+    mMoveMsgToFolderAction(Q_NULLPTR),
+    mCollectionProperties(Q_NULLPTR),
+    mFavoriteCollectionsView(Q_NULLPTR),
+    mMsgView(Q_NULLPTR),
+    mSplitter1(Q_NULLPTR),
+    mSplitter2(Q_NULLPTR),
+    mFolderViewSplitter(Q_NULLPTR),
+    mArchiveFolderAction(Q_NULLPTR),
+    mShowBusySplashTimer(Q_NULLPTR),
+    mMsgActions(Q_NULLPTR),
+    mCurrentFolder(Q_NULLPTR),
     mVacationIndicatorActive(false),
     mGoToFirstUnreadMessageInSelectedFolder(false),
-    mDisplayMessageFormatMenu(0),
+    mDisplayMessageFormatMenu(Q_NULLPTR),
     mFolderDisplayFormatPreference(MessageViewer::Viewer::UseGlobalSetting),
-    mSearchMessages(0),
+    mSearchMessages(Q_NULLPTR),
     mManageShowCollectionProperties(new ManageShowCollectionProperties(this, this)),
-    mShowIntroductionAction(0)
+    mShowIntroductionAction(Q_NULLPTR)
 {
     mLaunchExternalComponent = new KMLaunchExternalComponent(this, this);
     // must be the first line of the constructor:
@@ -238,10 +238,10 @@ KMMainWidget::KMMainWidget(QWidget *parent, KXMLGUIClient *aGUIClient,
     mTopLayout->setMargin(0);
     mConfig = config;
     mGUIClient = aGUIClient;
-    mFolderTreeWidget = 0;
-    mPreferHtmlLoadExtAction = 0;
+    mFolderTreeWidget = Q_NULLPTR;
+    mPreferHtmlLoadExtAction = Q_NULLPTR;
     Akonadi::Control::widgetNeedsAkonadi(this);
-    mFavoritesModel = 0;
+    mFavoritesModel = Q_NULLPTR;
     mVacationManager = new KSieveUi::VacationManager(this);
 
     mToolbarActionSeparator = new QAction(this);
@@ -301,7 +301,7 @@ KMMainWidget::KMMainWidget(QWidget *parent, KXMLGUIClient *aGUIClient,
     }
 
     KMainWindow *mainWin = dynamic_cast<KMainWindow *>(window());
-    QStatusBar *sb =  mainWin ? mainWin->statusBar() : 0;
+    QStatusBar *sb =  mainWin ? mainWin->statusBar() : Q_NULLPTR;
     mVacationScriptIndicator = new KMail::VacationScriptIndicatorWidget(sb);
     mVacationScriptIndicator->hide();
     connect(mVacationScriptIndicator, &KMail::VacationScriptIndicatorWidget::clicked, this, &KMMainWidget::slotEditVacation);
@@ -391,11 +391,11 @@ void KMMainWidget::destruct()
     delete mMoveOrCopyToDialog;
     delete mSelectFromAllFoldersDialog;
 
-    disconnect(kmkernel->folderCollectionMonitor(), SIGNAL(itemAdded(Akonadi::Item,Akonadi::Collection)), this, 0);
-    disconnect(kmkernel->folderCollectionMonitor(), SIGNAL(itemRemoved(Akonadi::Item)), this, 0);
-    disconnect(kmkernel->folderCollectionMonitor(), SIGNAL(itemMoved(Akonadi::Item,Akonadi::Collection,Akonadi::Collection)), this, 0);
-    disconnect(kmkernel->folderCollectionMonitor(), SIGNAL(collectionChanged(Akonadi::Collection,QSet<QByteArray>)), this, 0);
-    disconnect(kmkernel->folderCollectionMonitor(), SIGNAL(collectionStatisticsChanged(Akonadi::Collection::Id,Akonadi::CollectionStatistics)), this, 0);
+    disconnect(kmkernel->folderCollectionMonitor(), SIGNAL(itemAdded(Akonadi::Item,Akonadi::Collection)), this, Q_NULLPTR);
+    disconnect(kmkernel->folderCollectionMonitor(), SIGNAL(itemRemoved(Akonadi::Item)), this, Q_NULLPTR);
+    disconnect(kmkernel->folderCollectionMonitor(), SIGNAL(itemMoved(Akonadi::Item,Akonadi::Collection,Akonadi::Collection)), this, Q_NULLPTR);
+    disconnect(kmkernel->folderCollectionMonitor(), SIGNAL(collectionChanged(Akonadi::Collection,QSet<QByteArray>)), this, Q_NULLPTR);
+    disconnect(kmkernel->folderCollectionMonitor(), SIGNAL(collectionStatisticsChanged(Akonadi::Collection::Id,Akonadi::CollectionStatistics)), this, Q_NULLPTR);
 
     mDestructed = true;
 }
@@ -494,7 +494,7 @@ void KMMainWidget::folderSelected(const Akonadi::Collection &col)
 
     // Delete any pending timer, if needed it will be recreated below
     delete mShowBusySplashTimer;
-    mShowBusySplashTimer = 0;
+    mShowBusySplashTimer = Q_NULLPTR;
     if (newFolder) {
         // We're changing folder: write configuration for the old one
         writeFolderConfig();
@@ -941,15 +941,15 @@ void KMMainWidget::deleteWidgets()
     // akonadi action manager is created in createWidgets(), parented to this
     //  so not autocleaned up.
     delete mAkonadiStandardActionManager;
-    mAkonadiStandardActionManager = 0;
+    mAkonadiStandardActionManager = Q_NULLPTR;
     delete mSplitter1;
-    mMsgView = 0;
-    mSearchAndTree = 0;
-    mFolderViewSplitter = 0;
-    mFavoriteCollectionsView = 0;
-    mSplitter1 = 0;
-    mSplitter2 = 0;
-    mFavoritesModel = 0;
+    mMsgView = Q_NULLPTR;
+    mSearchAndTree = Q_NULLPTR;
+    mFolderViewSplitter = Q_NULLPTR;
+    mFavoriteCollectionsView = Q_NULLPTR;
+    mSplitter1 = Q_NULLPTR;
+    mSplitter2 = Q_NULLPTR;
+    mFavoritesModel = Q_NULLPTR;
 }
 
 //-----------------------------------------------------------------------------
@@ -997,7 +997,7 @@ void KMMainWidget::createWidgets()
     // Create the reader window
     //
     if (mReaderWindowActive) {
-        mMsgView = new KMReaderWin(this, this, actionCollection(), 0);
+        mMsgView = new KMReaderWin(this, this, actionCollection(), Q_NULLPTR);
         if (mMsgActions) {
             mMsgActions->setMessageView(mMsgView);
         }
@@ -1012,7 +1012,7 @@ void KMMainWidget::createWidgets()
         }
     } else {
         if (mMsgActions) {
-            mMsgActions->setMessageView(0);
+            mMsgActions->setMessageView(Q_NULLPTR);
         }
         if (mShowIntroductionAction) {
             mShowIntroductionAction->setEnabled(false);
@@ -1596,7 +1596,7 @@ void KMMainWidget::slotOverrideHtmlLoadExt()
                      i18n("Security Warning"),
                      KGuiItem(i18n("Load External References")),
                      KStandardGuiItem::cancel(),
-                     QLatin1String("OverrideHtmlLoadExtWarning"), 0);
+                     QLatin1String("OverrideHtmlLoadExtWarning"), Q_NULLPTR);
         if (result == KMessageBox::Cancel) {
             mPreferHtmlLoadExtAction->setChecked(false);
             return;
@@ -2809,7 +2809,7 @@ void KMMainWidget::showMessagePopup(const Akonadi::Item &msg , const KUrl &url, 
         }
     }
     KAcceleratorManager::manage(menu);
-    menu->exec(aPoint, 0);
+    menu->exec(aPoint, Q_NULLPTR);
     delete menu;
 }
 //-----------------------------------------------------------------------------
@@ -3359,7 +3359,7 @@ void KMMainWidget::setupActions()
         actionCollection()->addAction(QLatin1String("help_kmail_welcomepage"), mShowIntroductionAction);
         KMail::Util::addQActionHelpText(mShowIntroductionAction, i18n("Display KMail's Welcome Page"));
         connect(mShowIntroductionAction, &QAction::triggered, this, &KMMainWidget::slotIntro);
-        mShowIntroductionAction->setEnabled(mMsgView != 0);
+        mShowIntroductionAction->setEnabled(mMsgView != Q_NULLPTR);
     }
 
     // ----- Standard Actions
@@ -4224,7 +4224,7 @@ const KMMainWidget::PtrList *KMMainWidget::mainWidgetList()
 {
     // better safe than sorry; check whether the global static has already been destroyed
     if (theMainWidgetList.isDestroyed()) {
-        return 0;
+        return Q_NULLPTR;
     }
     return theMainWidgetList;
 }
@@ -4313,7 +4313,7 @@ KMail::FolderShortcutActionManager *KMMainWidget::folderShortcutActionManager() 
 void KMMainWidget::slotMessageSelected(const Akonadi::Item &item)
 {
     delete mShowBusySplashTimer;
-    mShowBusySplashTimer = 0;
+    mShowBusySplashTimer = Q_NULLPTR;
     if (mMsgView) {
         // The current selection was cleared, so we'll remove the previously
         // selected message from the preview pane
@@ -4341,7 +4341,7 @@ void KMMainWidget::itemsReceived(const Akonadi::Item::List &list)
 {
     Q_ASSERT(list.size() == 1);
     delete mShowBusySplashTimer;
-    mShowBusySplashTimer = 0;
+    mShowBusySplashTimer = Q_NULLPTR;
 
     if (!mMsgView) {
         return;
@@ -4367,7 +4367,7 @@ void KMMainWidget::itemsReceived(const Akonadi::Item::List &list)
     }
 
     mMsgView->setMessage(item);
-    // reset HTML override to the folder setting
+    // reset HTML Q_DECL_OVERRIDE to the folder setting
     mMsgView->setDisplayFormatMessageOverwrite(mFolderDisplayFormatPreference);
     mMsgView->setHtmlLoadExtOverride(mFolderHtmlLoadExtPreference);
     mMsgView->setDecryptMessageOverwrite(false);
@@ -4377,7 +4377,7 @@ void KMMainWidget::itemsReceived(const Akonadi::Item::List &list)
 void KMMainWidget::itemsFetchDone(KJob *job)
 {
     delete mShowBusySplashTimer;
-    mShowBusySplashTimer = 0;
+    mShowBusySplashTimer = Q_NULLPTR;
     if (job->error()) {
         // Unfortunately job->error() is Job::Unknown in many cases.
         // (see JobPrivate::handleResponse in akonadi/job.cpp)
@@ -4498,7 +4498,7 @@ void KMMainWidget::slotChangeDisplayMessageFormat(MessageViewer::Viewer::Display
                            i18n("Security Warning"),
                            KGuiItem(i18n("Use HTML")),
                            KStandardGuiItem::cancel(),
-                           QLatin1String("OverrideHtmlWarning"), 0);
+                           QLatin1String("OverrideHtmlWarning"), Q_NULLPTR);
         if (result == KMessageBox::Cancel) {
             mDisplayMessageFormatMenu->setDisplayMessageFormat(MessageViewer::Viewer::Text);
             return;

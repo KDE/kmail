@@ -52,7 +52,7 @@ class KMReaderWin: public QWidget
 
 public:
     explicit KMReaderWin(QWidget *parent, QWidget *mainWindow,
-                         KActionCollection *actionCollection, Qt::WindowFlags f = 0);
+                         KActionCollection *actionCollection, Qt::WindowFlags f = Q_NULLPTR);
     virtual ~KMReaderWin();
 
     /** Read settings from app's config file. */

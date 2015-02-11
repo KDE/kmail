@@ -30,14 +30,14 @@
 class ConfigModule : public KCModule
 {
 public:
-    explicit ConfigModule(QWidget *parent = 0)
+    explicit ConfigModule(QWidget *parent = Q_NULLPTR)
         : KCModule(parent)
     {}
     ~ConfigModule() {}
 
     virtual void load() = 0;
     virtual void save() = 0;
-    virtual void defaults() {}
+    virtual void defaults() Q_DECL_OVERRIDE {}
 
     /** Should return the help anchor for this page or tab */
     virtual QString helpAnchor() const = 0;

@@ -119,7 +119,7 @@ void IdentityListViewItem::init(const KIdentityManagement::Identity &ident)
 
 IdentityListView::IdentityListView(QWidget *parent)
     : QTreeWidget(parent),
-      mIdentityManager(0)
+      mIdentityManager(Q_NULLPTR)
 {
 #ifndef QT_NO_DRAGANDDROP
     setDragEnabled(true);
@@ -182,7 +182,7 @@ void IdentityListView::slotCustomContextMenuRequested(const QPoint &pos)
             emit contextMenu(lvItem, viewport()->mapToGlobal(pos));
         }
     } else {
-        emit contextMenu(0, viewport()->mapToGlobal(pos));
+        emit contextMenu(Q_NULLPTR, viewport()->mapToGlobal(pos));
     }
 }
 

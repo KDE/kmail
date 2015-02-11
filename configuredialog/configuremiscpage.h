@@ -40,12 +40,12 @@ class MiscPageFolderTab : public ConfigModuleTab
 public:
     explicit MiscPageFolderTab(QWidget *parent = Q_NULLPTR);
 
-    void save();
+    void save() Q_DECL_OVERRIDE;
     QString helpAnchor() const;
 
 private:
-    void doLoadFromGlobalSettings();
-    void doLoadOther();
+    void doLoadFromGlobalSettings() Q_DECL_OVERRIDE;
+    void doLoadOther() Q_DECL_OVERRIDE;
     //FIXME virtual void doResetToDefaultsOther();
 
 private:
@@ -58,11 +58,11 @@ class MiscPageInviteTab : public ConfigModuleTab
     Q_OBJECT
 public:
     explicit MiscPageInviteTab(QWidget *parent = Q_NULLPTR);
-    void save();
-    void doResetToDefaultsOther();
+    void save() Q_DECL_OVERRIDE;
+    void doResetToDefaultsOther() Q_DECL_OVERRIDE;
 
 private:
-    void doLoadFromGlobalSettings();
+    void doLoadFromGlobalSettings() Q_DECL_OVERRIDE;
 
 private:
     MessageViewer::InvitationSettings *mInvitationUi;
@@ -73,7 +73,7 @@ class MiscPageProxyTab : public ConfigModuleTab
     Q_OBJECT
 public:
     explicit MiscPageProxyTab(QWidget *parent = Q_NULLPTR);
-    void save();
+    void save() Q_DECL_OVERRIDE;
 private:
     KCModuleProxy *mProxyModule;
 };
@@ -83,13 +83,13 @@ class MiscPageAgentSettingsTab : public ConfigModuleTab
     Q_OBJECT
 public:
     explicit MiscPageAgentSettingsTab(QWidget *parent = Q_NULLPTR);
-    void save();
-    void doResetToDefaultsOther();
+    void save() Q_DECL_OVERRIDE;
+    void doResetToDefaultsOther() Q_DECL_OVERRIDE;
 
     QString helpAnchor() const;
 
 private:
-    void doLoadFromGlobalSettings();
+    void doLoadFromGlobalSettings() Q_DECL_OVERRIDE;
 
 private:
     ConfigureAgentsWidget *mConfigureAgent;
@@ -100,11 +100,11 @@ class MiscPagePrintingTab : public ConfigModuleTab
     Q_OBJECT
 public:
     explicit MiscPagePrintingTab(QWidget *parent = Q_NULLPTR);
-    void save();
-    void doResetToDefaultsOther();
+    void save() Q_DECL_OVERRIDE;
+    void doResetToDefaultsOther() Q_DECL_OVERRIDE;
 
 private:
-    void doLoadFromGlobalSettings();
+    void doLoadFromGlobalSettings() Q_DECL_OVERRIDE;
 
 private:
     MessageViewer::PrintingSettings *mPrintingUi;
@@ -115,7 +115,7 @@ class KMAIL_EXPORT MiscPage : public ConfigModuleWithTabs
     Q_OBJECT
 public:
     explicit MiscPage(QWidget *parent = Q_NULLPTR);
-    QString helpAnchor() const;
+    QString helpAnchor() const Q_DECL_OVERRIDE;
 
     typedef MiscPageFolderTab FolderTab;
     typedef MiscPageInviteTab InviteTab;

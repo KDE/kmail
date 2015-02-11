@@ -221,7 +221,7 @@ void AccountsPageReceivingTab::slotShowMailCheckMenu(const QString &ident, const
         const QString resourceGroupPattern(QLatin1String("Resource %1"));
 
         KConfigGroup group;
-        KConfig *conf = 0;
+        KConfig *conf = Q_NULLPTR;
         if (KMKernel::self()) {
             group = KConfigGroup(KMKernel::self()->config(), resourceGroupPattern.arg(ident));
         } else {
@@ -336,7 +336,7 @@ void AccountsPage::ReceivingTab::save()
     while (it.hasNext()) {
         it.next();
         KConfigGroup group;
-        KConfig *conf = 0;
+        KConfig *conf = Q_NULLPTR;
         if (KMKernel::self()) {
             group = KConfigGroup(KMKernel::self()->config(), resourceGroupPattern.arg(it.key()));
         } else {

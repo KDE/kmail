@@ -57,9 +57,9 @@ public:
     ~ConfigModuleWithTabs() {}
 
     // don't reimplement any of those methods
-    virtual void load();
-    virtual void save();
-    virtual void defaults();
+    virtual void load() Q_DECL_OVERRIDE;
+    virtual void save() Q_DECL_OVERRIDE;
+    virtual void defaults() Q_DECL_OVERRIDE;
 
 protected:
     void showEvent(QShowEvent *event) Q_DECL_OVERRIDE;

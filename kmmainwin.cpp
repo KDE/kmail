@@ -46,7 +46,7 @@
 #include <QLabel>
 
 KMMainWin::KMMainWin(QWidget *)
-    : KXmlGuiWindow(0),
+    : KXmlGuiWindow(Q_NULLPTR),
       mReallyClose(false)
 {
     setObjectName(QLatin1String("kmail-mainwindow#"));

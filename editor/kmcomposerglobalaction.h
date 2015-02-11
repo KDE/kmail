@@ -24,7 +24,7 @@ class KMComposerGlobalAction : public QObject
 {
     Q_OBJECT
 public:
-    explicit KMComposerGlobalAction(KMComposeWin *composerWin, QObject *parent = 0);
+    explicit KMComposerGlobalAction(KMComposeWin *composerWin, QObject *parent = Q_NULLPTR);
     ~KMComposerGlobalAction();
 
 public Q_SLOTS:

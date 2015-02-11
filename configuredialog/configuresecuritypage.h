@@ -39,11 +39,11 @@ public:
     explicit SecurityPageGeneralTab(QWidget *parent = Q_NULLPTR);
     QString helpAnchor() const;
 
-    void save();
+    void save() Q_DECL_OVERRIDE;
 
 private:
     //virtual void doLoadFromGlobalSettings();
-    void doLoadOther();
+    void doLoadOther() Q_DECL_OVERRIDE;
     //FIXME virtual void doResetToDefaultsOther();
 
 private:
@@ -60,10 +60,10 @@ public:
     explicit SecurityPageMDNTab(QWidget *parent = Q_NULLPTR);
     QString helpAnchor() const;
 
-    void save();
+    void save() Q_DECL_OVERRIDE;
 
 private:
-    void doLoadOther();
+    void doLoadOther() Q_DECL_OVERRIDE;
 
 private:
     QButtonGroup *mMDNGroup;
@@ -83,11 +83,11 @@ public:
 
     QString helpAnchor() const;
 
-    void save();
+    void save() Q_DECL_OVERRIDE;
 
 private:
-    void doLoadFromGlobalSettings();
-    void doLoadOther();
+    void doLoadFromGlobalSettings() Q_DECL_OVERRIDE;
+    void doLoadOther() Q_DECL_OVERRIDE;
     //FIXME virtual void doResetToDefaultsOther();
 
 private:
@@ -103,15 +103,15 @@ public:
 
     QString helpAnchor() const;
 
-    void save();
+    void save() Q_DECL_OVERRIDE;
 
 private Q_SLOTS:
     void slotReenableAllWarningsClicked();
     void slotConfigureGnupg();
 
 private:
-    void doLoadFromGlobalSettings();
-    void doLoadOther();
+    void doLoadFromGlobalSettings() Q_DECL_OVERRIDE;
+    void doLoadOther() Q_DECL_OVERRIDE;
     //FIXME virtual void doResetToDefaultsOther();
 
 private:
@@ -127,14 +127,14 @@ public:
 
     QString helpAnchor() const;
 
-    void save();
+    void save() Q_DECL_OVERRIDE;
 
 private Q_SLOTS:
     void slotUpdateHTTPActions();
 
 private:
     //virtual void doLoadFromGlobalSettings();
-    void doLoadOther();
+    void doLoadOther() Q_DECL_OVERRIDE;
     //FIXME virtual void doResetToDefaultsOther();
 
 private:
@@ -152,12 +152,12 @@ public:
 
     QString helpAnchor() const;
 
-    void save();
+    void save() Q_DECL_OVERRIDE;
 
 private:
-    void doLoadFromGlobalSettings();
-    void doLoadOther();
-    void doResetToDefaultsOther();
+    void doLoadFromGlobalSettings() Q_DECL_OVERRIDE;
+    void doLoadOther() Q_DECL_OVERRIDE;
+    void doResetToDefaultsOther() Q_DECL_OVERRIDE;
 
 private:
     MessageViewer::AdBlockSettingWidget *mWidget;
@@ -170,7 +170,7 @@ class KMAIL_EXPORT SecurityPage : public ConfigModuleWithTabs
 public:
     explicit SecurityPage(QWidget *parent = Q_NULLPTR);
 
-    QString helpAnchor() const;
+    QString helpAnchor() const Q_DECL_OVERRIDE;
 
     typedef SecurityPageGeneralTab GeneralTab;
     typedef SecurityPageMDNTab MDNTab;

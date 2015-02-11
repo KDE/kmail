@@ -24,7 +24,7 @@
 #include "settings/globalsettings.h"
 #include <QTimer>
 
-GlobalSettings *GlobalSettings::mSelf = 0;
+GlobalSettings *GlobalSettings::mSelf = Q_NULLPTR;
 
 GlobalSettings *GlobalSettings::self()
 {

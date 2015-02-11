@@ -208,7 +208,7 @@ void KMReaderMainWin::slotForwardInlineMsg()
     if (!mReaderWin->message().hasPayload<KMime::Message::Ptr>()) {
         return;
     }
-    KMCommand *command = 0;
+    KMCommand *command = Q_NULLPTR;
     const Akonadi::Collection parentCol = mReaderWin->message().parentCollection();
     if (parentCol.isValid()) {
         QSharedPointer<FolderCollection> fd = FolderCollection::forCollection(parentCol, false);
@@ -230,7 +230,7 @@ void KMReaderMainWin::slotForwardAttachedMsg()
     if (!mReaderWin->message().hasPayload<KMime::Message::Ptr>()) {
         return;
     }
-    KMCommand *command = 0;
+    KMCommand *command = Q_NULLPTR;
     const Akonadi::Collection parentCol = mReaderWin->message().parentCollection();
     if (parentCol.isValid()) {
         QSharedPointer<FolderCollection> fd = FolderCollection::forCollection(parentCol, false);
@@ -366,7 +366,7 @@ QAction *KMReaderMainWin::copyActionMenu(QMenu *menu)
 
         return action;
     }
-    return 0;
+    return Q_NULLPTR;
 
 }
 
@@ -435,7 +435,7 @@ void KMReaderMainWin::slotContactSearchJobForMessagePopupDone(KJob *job)
 
 void KMReaderMainWin::showMessagePopup(const Akonadi::Item &msg , const KUrl &url, const KUrl &imageUrl, const QPoint &aPoint, bool contactAlreadyExists, bool uniqueContactFound)
 {
-    QMenu *menu = 0;
+    QMenu *menu = Q_NULLPTR;
 
     bool urlMenuAdded = false;
     bool copyAdded = false;
@@ -595,7 +595,7 @@ void KMReaderMainWin::showMessagePopup(const Akonadi::Item &msg , const KUrl &ur
     }
     if (menu) {
         KAcceleratorManager::manage(menu);
-        menu->exec(aPoint, 0);
+        menu->exec(aPoint, Q_NULLPTR);
         delete menu;
     }
 }

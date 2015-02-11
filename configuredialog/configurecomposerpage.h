@@ -59,14 +59,14 @@ public:
     explicit ComposerPageGeneralTab(QWidget *parent = Q_NULLPTR);
     QString helpAnchor() const;
 
-    void save();
+    void save() Q_DECL_OVERRIDE;
 protected Q_SLOTS:
     void slotConfigureRecentAddresses();
     void slotConfigureCompletionOrder();
 
 private:
-    void doLoadFromGlobalSettings();
-    void doResetToDefaultsOther();
+    void doLoadFromGlobalSettings() Q_DECL_OVERRIDE;
+    void doResetToDefaultsOther() Q_DECL_OVERRIDE;
 
 private:
     QCheckBox     *mShowBalooSearchAddressesInComposer;
@@ -99,10 +99,10 @@ public:
     explicit ComposerPageExternalEditorTab(QWidget *parent = Q_NULLPTR);
     QString helpAnchor() const;
 
-    void save();
+    void save() Q_DECL_OVERRIDE;
 
 private:
-    void doLoadFromGlobalSettings();
+    void doLoadFromGlobalSettings() Q_DECL_OVERRIDE;
 
 private:
     QCheckBox     *mExternalEditorCheck;
@@ -116,11 +116,11 @@ public:
     explicit ComposerPageTemplatesTab(QWidget *parent = Q_NULLPTR);
     QString helpAnchor() const;
 
-    void save();
+    void save() Q_DECL_OVERRIDE;
 
 private:
-    void doLoadFromGlobalSettings();
-    void doResetToDefaultsOther();
+    void doLoadFromGlobalSettings() Q_DECL_OVERRIDE;
+    void doResetToDefaultsOther() Q_DECL_OVERRIDE;
 private:
     TemplateParser::TemplatesConfiguration *mWidget;
 };
@@ -132,10 +132,10 @@ public:
     explicit ComposerPageCustomTemplatesTab(QWidget *parent = Q_NULLPTR);
     QString helpAnchor() const;
 
-    void save();
+    void save() Q_DECL_OVERRIDE;
 
 private:
-    void doLoadFromGlobalSettings();
+    void doLoadFromGlobalSettings() Q_DECL_OVERRIDE;
 
 private:
     TemplateParser::CustomTemplates *mWidget;
@@ -148,11 +148,11 @@ public:
     explicit ComposerPageSubjectTab(QWidget *parent = Q_NULLPTR);
     QString helpAnchor() const;
 
-    void save();
+    void save() Q_DECL_OVERRIDE;
 
 private:
-    void doLoadFromGlobalSettings();
-    void doResetToDefaultsOther();
+    void doLoadFromGlobalSettings() Q_DECL_OVERRIDE;
+    void doResetToDefaultsOther() Q_DECL_OVERRIDE;
 
 private:
     PimCommon::SimpleStringListEditor *mReplyListEditor;
@@ -168,15 +168,15 @@ public:
     explicit ComposerPageCharsetTab(QWidget *parent = Q_NULLPTR);
     QString helpAnchor() const;
 
-    void save();
+    void save() Q_DECL_OVERRIDE;
 
 private Q_SLOTS:
     void slotVerifyCharset(QString &);
 
 private:
     //virtual void doLoadFromGlobalSettings();
-    void doLoadOther();
-    void doResetToDefaultsOther();
+    void doLoadOther() Q_DECL_OVERRIDE;
+    void doResetToDefaultsOther() Q_DECL_OVERRIDE;
 
 private:
     PimCommon::SimpleStringListEditor *mCharsetListEditor;
@@ -190,7 +190,7 @@ public:
     explicit ComposerPageHeadersTab(QWidget *parent = Q_NULLPTR);
     QString helpAnchor() const;
 
-    void save();
+    void save() Q_DECL_OVERRIDE;
 
 private Q_SLOTS:
     void slotMimeHeaderSelectionChanged();
@@ -201,8 +201,8 @@ private Q_SLOTS:
 
 private:
     //virtual void doLoadFromGlobalSettings();
-    void doLoadOther();
-    void doResetToDefaultsOther();
+    void doLoadOther() Q_DECL_OVERRIDE;
+    void doResetToDefaultsOther() Q_DECL_OVERRIDE;
 
 private:
     QCheckBox   *mCreateOwnMessageIdCheck;
@@ -222,13 +222,13 @@ public:
     explicit ComposerPageAttachmentsTab(QWidget *parent = Q_NULLPTR);
     QString helpAnchor() const;
 
-    void save();
+    void save() Q_DECL_OVERRIDE;
 
 private Q_SLOTS:
     void slotOutlookCompatibleClicked();
 
 private:
-    void doLoadFromGlobalSettings();
+    void doLoadFromGlobalSettings() Q_DECL_OVERRIDE;
     //FIXME virtual void doResetToDefaultsOther();
 
 private:
@@ -246,11 +246,11 @@ public:
     explicit ComposerPageAutoCorrectionTab(QWidget *parent = Q_NULLPTR);
     QString helpAnchor() const;
 
-    void save();
+    void save() Q_DECL_OVERRIDE;
 
 private:
-    void doLoadFromGlobalSettings();
-    void doResetToDefaultsOther();
+    void doLoadFromGlobalSettings() Q_DECL_OVERRIDE;
+    void doResetToDefaultsOther() Q_DECL_OVERRIDE;
 
 private:
     PimCommon::AutoCorrectionWidget *autocorrectionWidget;
@@ -263,11 +263,11 @@ public:
     explicit ComposerPageAutoImageResizeTab(QWidget *parent = Q_NULLPTR);
     QString helpAnchor() const;
 
-    void save();
+    void save() Q_DECL_OVERRIDE;
 
 private:
-    virtual void doLoadFromGlobalSettings();
-    virtual void doResetToDefaultsOther();
+    virtual void doLoadFromGlobalSettings() Q_DECL_OVERRIDE;
+    virtual void doResetToDefaultsOther() Q_DECL_OVERRIDE;
 
 private:
     MessageComposer::ImageScalingWidget *autoResizeWidget;
@@ -279,7 +279,7 @@ class KMAIL_EXPORT ComposerPage : public ConfigModuleWithTabs
 public:
     explicit ComposerPage(QWidget *parent = Q_NULLPTR);
 
-    QString helpAnchor() const;
+    QString helpAnchor() const Q_DECL_OVERRIDE;
 
     // hrmpf. moc doesn't like nested classes with slots/signals...:
     typedef ComposerPageGeneralTab GeneralTab;

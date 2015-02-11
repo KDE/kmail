@@ -57,7 +57,7 @@ public Q_SLOTS:
 protected:
 
     /// Reimplemented to save the docked state
-    void saveProperties(KConfigGroup &);
+    void saveProperties(KConfigGroup &) Q_DECL_OVERRIDE;
 
     bool queryClose() Q_DECL_OVERRIDE;
 

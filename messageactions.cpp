@@ -423,7 +423,7 @@ void MessageActions::setMessageView(KMReaderWin *msgView)
 
 void MessageActions::setupForwardActions(KActionCollection *ac)
 {
-    disconnect(mForwardActionMenu, SIGNAL(triggered(bool)), 0, 0);
+    disconnect(mForwardActionMenu, SIGNAL(triggered(bool)), Q_NULLPTR, Q_NULLPTR);
     mForwardActionMenu->removeAction(mForwardInlineAction);
     mForwardActionMenu->removeAction(mForwardAttachedAction);
 
@@ -579,7 +579,7 @@ void MessageActions::addMailingListAction(const QString &item, const QUrl &url)
 
 void MessageActions::editCurrentMessage()
 {
-    KMCommand *command = 0;
+    KMCommand *command = Q_NULLPTR;
     if (mCurrentItem.isValid()) {
         Akonadi::Collection col = mCurrentItem.parentCollection();
         qCDebug(KMAIL_LOG) << " mCurrentItem.parentCollection()" << mCurrentItem.parentCollection();
@@ -638,7 +638,7 @@ void MessageActions::addWebShortcutsMenu(QMenu *menu, const QString &text)
             const QString squeezedText = KStringHandler::rsqueeze(searchText, 21);
             webShortcutsMenu->setTitle(i18n("Search for '%1' with", squeezedText));
 
-            QAction *action = 0;
+            QAction *action = Q_NULLPTR;
 
             foreach (const QString &searchProvider, searchProviders) {
                 action = new QAction(searchProvider, webShortcutsMenu);

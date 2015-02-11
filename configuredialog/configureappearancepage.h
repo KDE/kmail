@@ -64,16 +64,16 @@ class AppearancePageFontsTab : public ConfigModuleTab
 public:
     explicit AppearancePageFontsTab(QWidget *parent = Q_NULLPTR);
     QString helpAnchor() const;
-    void save();
+    void save() Q_DECL_OVERRIDE;
 
 private Q_SLOTS:
     void slotFontSelectorChanged(int);
 
 private:
     //virtual void doLoadFromGlobalSettings();
-    void doLoadOther();
+    void doLoadOther() Q_DECL_OVERRIDE;
     void updateFontSelector();
-    void doResetToDefaultsOther();
+    void doResetToDefaultsOther() Q_DECL_OVERRIDE;
 
 private:
     QCheckBox    *mCustomFontCheck;
@@ -90,12 +90,12 @@ class AppearancePageColorsTab : public ConfigModuleTab
 public:
     explicit AppearancePageColorsTab(QWidget *parent = Q_NULLPTR);
     QString helpAnchor() const;
-    void save();
+    void save() Q_DECL_OVERRIDE;
 
 private:
     //virtual void doLoadFromGlobalSettings();
-    void doLoadOther();
-    void doResetToDefaultsOther();
+    void doLoadOther() Q_DECL_OVERRIDE;
+    void doResetToDefaultsOther() Q_DECL_OVERRIDE;
     void loadColor(bool loadFromConfig);
 
 private:
@@ -112,11 +112,11 @@ public:
     explicit AppearancePageLayoutTab(QWidget *parent = Q_NULLPTR);
     QString helpAnchor() const;
 
-    void save();
+    void save() Q_DECL_OVERRIDE;
 
 private:
     //virtual void doLoadFromGlobalSettings();
-    void doLoadOther();
+    void doLoadOther() Q_DECL_OVERRIDE;
     //FIXME virtual void doResetToDefaultsOther();
 
 private: // data
@@ -139,11 +139,11 @@ public:
 
     QString helpAnchor() const;
 
-    void save();
+    void save() Q_DECL_OVERRIDE;
 
 private: // methods
-    void doLoadFromGlobalSettings();
-    void doLoadOther();
+    void doLoadFromGlobalSettings() Q_DECL_OVERRIDE;
+    void doLoadOther() Q_DECL_OVERRIDE;
     // virtual void doResetToDefaultsOther();
     void setDateDisplay(int id, const QString &format);
 
@@ -171,11 +171,11 @@ public:
 
     QString helpAnchor() const;
 
-    void save();
+    void save() Q_DECL_OVERRIDE;
 
 private:
-    void doLoadOther();
-    void doResetToDefaultsOther();
+    void doLoadOther() Q_DECL_OVERRIDE;
+    void doResetToDefaultsOther() Q_DECL_OVERRIDE;
 
 private: // data
     QCheckBox *mCloseAfterReplyOrForwardCheck;
@@ -190,10 +190,10 @@ public:
 
     QString helpAnchor() const;
 
-    void save();
+    void save() Q_DECL_OVERRIDE;
 
 private:
-    void doLoadFromGlobalSettings();
+    void doLoadFromGlobalSettings() Q_DECL_OVERRIDE;
 
 private: // data
     QCheckBox    *mSystemTrayCheck;
@@ -225,7 +225,7 @@ public:
 
     QString helpAnchor() const;
 
-    void save();
+    void save() Q_DECL_OVERRIDE;
 
 public Q_SLOTS:
     /**Enables/disables Add button according to whether @p aText is empty.
@@ -272,7 +272,7 @@ private Q_SLOTS:
 
     void slotDeleteTagJob(KJob *job);
 private:
-    void doLoadFromGlobalSettings();
+    void doLoadFromGlobalSettings() Q_DECL_OVERRIDE;
     void swapTagsInListBox(const int first, const int second);
     void updateButtons();
 
@@ -302,7 +302,7 @@ class KMAIL_EXPORT AppearancePage : public ConfigModuleWithTabs
 public:
     explicit AppearancePage(QWidget *parent = Q_NULLPTR);
 
-    QString helpAnchor() const;
+    QString helpAnchor() const Q_DECL_OVERRIDE;
 
     // hrmpf. moc doesn't like nested classes with slots/signals...:
     typedef AppearancePageFontsTab FontsTab;

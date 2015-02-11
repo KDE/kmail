@@ -357,13 +357,13 @@ public:
     /** normal control stuff */
 
     static KMKernel *self();
-    /*reimp*/ KSharedConfig::Ptr config();
-    /*reimp*/ void syncConfig();
+    /*reimp*/ KSharedConfig::Ptr config() Q_DECL_OVERRIDE;
+    /*reimp*/ void syncConfig() Q_DECL_OVERRIDE;
 
     void init();
     void setupDBus();
 
-    /*reimp*/ Akonadi::ChangeRecorder *folderCollectionMonitor() const;
+    /*reimp*/ Akonadi::ChangeRecorder *folderCollectionMonitor() const Q_DECL_OVERRIDE;
 
     /**
     * Returns the main model, which contains all folders and the items of recently opened folders.
@@ -374,7 +374,7 @@ public:
     * Returns a model of all folders in KMail. This is basically the same as entityTreeModel(),
     * but with items filtered out, the model contains only collections.
     */
-    /*reimp*/ Akonadi::EntityMimeTypeFilterModel *collectionModel() const;
+    /*reimp*/ Akonadi::EntityMimeTypeFilterModel *collectionModel() const Q_DECL_OVERRIDE;
 
     void recoverDeadLetters();
     void closeAllKMailWindows();
@@ -406,15 +406,15 @@ public:
     {
         return the_undoStack;
     }
-    MessageComposer::MessageSender *msgSender();
+    MessageComposer::MessageSender *msgSender() Q_DECL_OVERRIDE;
 
-    /*reimp*/ void openFilterDialog(bool createDummyFilter = true);
-    /*reimp*/ void createFilter(const QByteArray &field, const QString &value);
+    /*reimp*/ void openFilterDialog(bool createDummyFilter = true) Q_DECL_OVERRIDE;
+    /*reimp*/ void createFilter(const QByteArray &field, const QString &value) Q_DECL_OVERRIDE;
 
     /** return the pointer to the identity manager */
-    /*reimp*/ KIdentityManagement::IdentityManager *identityManager();
+    /*reimp*/ KIdentityManagement::IdentityManager *identityManager() Q_DECL_OVERRIDE;
 
-    /*reimp*/ MailCommon::JobScheduler *jobScheduler() const
+    /*reimp*/ MailCommon::JobScheduler *jobScheduler() const Q_DECL_OVERRIDE
     {
         return mJobScheduler;
     }
@@ -506,7 +506,7 @@ protected:
 
 public Q_SLOTS:
 
-    /*reimp*/ void updateSystemTray();
+    /*reimp*/ void updateSystemTray() Q_DECL_OVERRIDE;
 
     /** Custom templates have changed, so all windows using them need
       to regenerate their menus */

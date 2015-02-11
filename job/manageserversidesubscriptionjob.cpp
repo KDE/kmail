@@ -27,7 +27,7 @@
 
 ManageServerSideSubscriptionJob::ManageServerSideSubscriptionJob(QObject *parent)
     : QObject(parent),
-      mParentWidget(0)
+      mParentWidget(Q_NULLPTR)
 {
 
 }
@@ -72,7 +72,7 @@ void ManageServerSideSubscriptionJob::slotConfigureSubscriptionFinished(QDBusPen
         }
     }
     watcher->deleteLater();
-    watcher = 0;
+    watcher = Q_NULLPTR;
     deleteLater();
 }
 
