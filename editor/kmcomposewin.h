@@ -429,7 +429,7 @@ private Q_SLOTS:
      */
     void slotAutoSpellCheckingToggled(bool);
 
-    virtual void setAutoSaveFileName(const QString &fileName) Q_DECL_OVERRIDE;
+    void setAutoSaveFileName(const QString &fileName) Q_DECL_OVERRIDE;
     void slotSpellCheckingLanguage(const QString &language);
     void forceAutoSaveMessage();
     void insertSpecialCharacter();

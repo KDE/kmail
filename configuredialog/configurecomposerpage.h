@@ -266,8 +266,8 @@ public:
     void save() Q_DECL_OVERRIDE;
 
 private:
-    virtual void doLoadFromGlobalSettings() Q_DECL_OVERRIDE;
-    virtual void doResetToDefaultsOther() Q_DECL_OVERRIDE;
+    void doLoadFromGlobalSettings() Q_DECL_OVERRIDE;
+    void doResetToDefaultsOther() Q_DECL_OVERRIDE;
 
 private:
     MessageComposer::ImageScalingWidget *autoResizeWidget;
