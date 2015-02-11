@@ -7,6 +7,7 @@
   <name xml:lang="ca">KMail</name>
   <name xml:lang="cs">KMail</name>
   <name xml:lang="en-GB">KMail</name>
+  <name xml:lang="es">KMail</name>
   <name xml:lang="nl">KMail</name>
   <name xml:lang="pl">KMail</name>
   <name xml:lang="pt">KMail</name>
@@ -27,6 +28,7 @@
     </p>
     <p xml:lang="ca">El KMail és el component de correu electrònic del Kontact, el gestor per a la informació personal integrat del KDE.</p>
     <p xml:lang="en-GB">KMail is the email component of Kontact, the integrated personal information manager from KDE.</p>
+    <p xml:lang="es">KMail es el componente de correo de Kontact, el gestor integrado de información personal de KDE.</p>
     <p xml:lang="nl">KMail is de e-mailcomponent van Kontact, de geïntegreerde persoonlijke informatiebeheerder uit KDE.</p>
     <p xml:lang="pl">KMail jest składnikiem pocztowym pakietu Kontact, programu do zarządzania informacjami osobistymi w KDE.</p>
     <p xml:lang="pt">O KMail é o componente de e-mail do Kontact, o gestor de informações pessoais do KDE.</p>
@@ -44,6 +46,7 @@
     <p xml:lang="ca">Característiques:</p>
     <p xml:lang="cs">Vlastnosti:</p>
     <p xml:lang="en-GB">Features:</p>
+    <p xml:lang="es">Características:</p>
     <p xml:lang="nl">Mogelijkheden:</p>
     <p xml:lang="pl">Możliwości:</p>
     <p xml:lang="pt">Funcionalidades:</p>
@@ -62,6 +65,7 @@
       <li>Supports the standard mail protocols IMAP, POP3 and SMTP.</li>
       <li xml:lang="ca">Implementa els protocols de correu estàndards: IMAP, POP3 i SMTP</li>
       <li xml:lang="en-GB">Supports the standard mail protocols IMAP, POP3 and SMTP.</li>
+      <li xml:lang="es">Implementa los protocolos estándar de correo IMAP, POP3 y SMTP.</li>
       <li xml:lang="nl">Ondersteunt de standaard e-mailprotocollen IMAP, POP3 and SMTP.</li>
       <li xml:lang="pl">Obsługa standardowych protokołów pocztowych IMAP, POP3 oraz SMTP.</li>
       <li xml:lang="pt">Suporta os protocolos-padrão de correio electrónico IMAP, POP3 e SMTP.</li>
@@ -78,6 +82,7 @@
       <li>Supports authentication via NTLM (Microsoft Windows) and GSSAPI (Kerberos)</li>
       <li xml:lang="ca">Implementa l'autenticació a través de NTLM (Microsoft Windows) i GSSAPI (Kerberos)</li>
       <li xml:lang="en-GB">Supports authentication via NTLM (Microsoft Windows) and GSSAPI (Kerberos)</li>
+      <li xml:lang="es">Implementa la autenticación vía NTLM (Microsoft Windows) y GSSAPI (Kerberos)</li>
       <li xml:lang="nl">Ondersteunt authenticatie via NTLM (Microsoft Windows) en GSSAPI (Kerberos)</li>
       <li xml:lang="pl">Obsługa uwierzytelniania przez NTLM (Microsoft Windows) oraz GSSAPI (Kerberos)</li>
       <li xml:lang="pt">Suporta a autenticação por NTLM (Microsoft Windows) e por GSSAPI (Kerberos)</li>
@@ -94,6 +99,7 @@
       <li>Supports plain text and secure logins, using SSL and TLS.</li>
       <li xml:lang="ca">Implementa accés en text pla i segur, usant SSL i TLS</li>
       <li xml:lang="en-GB">Supports plain text and secure logins, using SSL and TLS.</li>
+      <li xml:lang="es">Implementa accesos mediante texto en claro y cifrados usando SSL y TLS.</li>
       <li xml:lang="nl">Ondersteunt platte tekst en veilig aanmelden met SSL en TLS.</li>
       <li xml:lang="pl">Obsługa logowania przy użyciu zwykłego tekstu oraz bezpiecznego poprzez SSL i TLS.</li>
       <li xml:lang="pt">Suporta a autenticação por texto simples e segura, usando o SSL e o TLS.</li>
@@ -110,6 +116,7 @@
       <li>Integration of international character sets and spell-checking (as-you-type and on demand)</li>
       <li xml:lang="ca">Integra els jocs de caràcters internacionals i la correcció ortogràfica (mentre escriviu i sota demanda)</li>
       <li xml:lang="en-GB">Integration of international character sets and spell-checking (as-you-type and on demand)</li>
+      <li xml:lang="es">Integración de juegos de caracteres internacionales y revisión ortográfica (mientras-se-teclea y bajo demanda)</li>
       <li xml:lang="nl">Integratie van internationale tekensets en spellingcontrole (terwijl-u-typt en op aanvraag)</li>
       <li xml:lang="pl">Integracja międzynarodowych zestawów znaków i sprawdzania pisowni (w trakcie pisania i na żądanie)</li>
       <li xml:lang="pt">Integração dos conjuntos de caracteres internacionais e a verificação ortográfica (à medida que escreve ou a pedido)</li>
@@ -126,6 +133,7 @@
       <li>Native support for inline OpenPGP, PGP/MIME, and S/MIME.</li>
       <li xml:lang="ca">Implementació nativa per a OpenPGP, PGP/MIME i S/MIME inclòs</li>
       <li xml:lang="en-GB">Native support for inline OpenPGP, PGP/MIME, and S/MIME.</li>
+      <li xml:lang="es">Implementación nativa en línea de OpenPGP, PGP/MIME y S/MIME.</li>
       <li xml:lang="nl">Ingebouwde ondersteuning voor inline OpenPGP, PGP/MIME en S/MIME.</li>
       <li xml:lang="pl">Bezpośrednia obsługa dla OpenPGP w treści, PGP/MIME oraz S/MIME.</li>
       <li xml:lang="pt">Suporte nativo e incorporado para o OpenPGP, PGP/MIME e S/MIME.</li>
@@ -142,6 +150,7 @@
       <li>Reading and writing of HTML mail.</li>
       <li xml:lang="ca">Lectura i escriptura d'un correu HTML</li>
       <li xml:lang="en-GB">Reading and writing of HTML mail.</li>
+      <li xml:lang="es">Lectura y escritura de correo HTML.</li>
       <li xml:lang="nl">Lezen en schrijven van HTML-e-mail.</li>
       <li xml:lang="pl">Czytanie i pisanie wiadomości HTML.</li>
       <li xml:lang="pt">Leitura e escrita de mensagens em HTML.</li>
@@ -158,6 +167,7 @@
       <li>Ability to display plain text only from an HTML mail.</li>
       <li xml:lang="ca">L'habilitat de mostrar en text pla un correu HTML</li>
       <li xml:lang="en-GB">Ability to display plain text only from an HTML mail.</li>
+      <li xml:lang="es">Capacidad de mostrar exclusivamente el texto sin formato de un correo HTML.</li>
       <li xml:lang="nl">Mogelijkheid om alleen gewone tekst te laten zien uit een HTML-e-mail.</li>
       <li xml:lang="pl">Możliwość wyświetlania zwykłego tekstu w wiadomości HTML.</li>
       <li xml:lang="pt">Capacidade de apresentar apenas o texto simples de uma mensagem em HTML.</li>
@@ -174,6 +184,7 @@
       <li>Allows you to receive and accept invitations.</li>
       <li xml:lang="ca">Permet rebre i acceptar invitacions</li>
       <li xml:lang="en-GB">Allows you to receive and accept invitations.</li>
+      <li xml:lang="es">Le permite recibir y aceptar invitaciones.</li>
       <li xml:lang="nl">Stelt u in staat uitnodigingen te ontvangen en accepteren.</li>
       <li xml:lang="pl">Możliwość odbierania i przyjmowania zaproszeń.</li>
       <li xml:lang="pt">Permite-lhe receber e aceitar convites.</li>
@@ -190,6 +201,7 @@
       <li>Integration with popular spam checkers, e.g. SpamAssassin, Bogofilter, etc.</li>
       <li xml:lang="ca">Integració amb els comprovadors de correu brossa més populars, p. ex., SpamAssassin, Bogofilter, etc.</li>
       <li xml:lang="en-GB">Integration with popular spam checkers, e.g. SpamAssassin, Bogofilter, etc.</li>
+      <li xml:lang="es">Integración con verificadores de correo basura populares, p. ej., SpamAssassin, Bogofilter, etc.</li>
       <li xml:lang="nl">Integratie met populaire spamcheckers, bijv. SpamAssassin, Bogofilter, etc.</li>
       <li xml:lang="pl">Integracja z powszechnymi programami wykrywającymi spam, np. SpamAssassin, Bogofilter, itp.</li>
       <li xml:lang="pt">Integração com as verificações de lixo electrónico, p.ex. SpamAssassin, Bogofilter, etc.</li>
@@ -206,6 +218,7 @@
       <li>An optional spam probability meter can be displayed</li>
       <li xml:lang="ca">Es pot mostrar un mesurador de la probabilitat que es tracti de correu brossa</li>
       <li xml:lang="en-GB">An optional spam probability meter can be displayed</li>
+      <li xml:lang="es">Se puede mostrar un medidor opcional de probabilidad de correo basura</li>
       <li xml:lang="nl">Een optionele waarschijnlijkheidsmeter voor spam kan getoond worden</li>
       <li xml:lang="pl">Możliwość wyświetlania miernika prawdopodobieństwa, że to spam</li>
       <li xml:lang="pt">Pode ser apresentado um medidor de probabilidades de lixo electrónico</li>
@@ -222,6 +235,7 @@
       <li>Powerful search and filter abilities</li>
       <li xml:lang="ca">Poderoses habilitats per a la cerca i filtratge</li>
       <li xml:lang="en-GB">Powerful search and filter abilities</li>
+      <li xml:lang="es">Potentes capacidades de búsqueda y filtrado</li>
       <li xml:lang="nl">Krachtige zoek en filter mogelijkheden</li>
       <li xml:lang="pl">Zaawansowane możliwości wyszukiwania i filtrowania</li>
       <li xml:lang="pt">Capacidades poderosas de pesquisa e filtragem</li>
@@ -238,6 +252,7 @@
       <li>Can import mail from many other clients</li>
       <li xml:lang="ca">Pot importar el correu des de molts altres clients</li>
       <li xml:lang="en-GB">Can import mail from many other clients</li>
+      <li xml:lang="es">Puede importar correo de muchos otros clientes</li>
       <li xml:lang="nl">Kan e-mail importeren uit vele andere clients</li>
       <li xml:lang="pl">Możliwość importowania poczty z innych programów pocztowych</li>
       <li xml:lang="pt">Poderá importar o correio a partir de muitos outros clientes</li>
@@ -254,6 +269,7 @@
       <li>Searching in IMAP folders fully supported</li>
       <li xml:lang="ca">La cerca a les carpetes IMAP està totalment implementada</li>
       <li xml:lang="en-GB">Searching in IMAP folders fully supported</li>
+      <li xml:lang="es">Búsqueda en carpetas IMAP completamente implementada</li>
       <li xml:lang="nl">In IMAP-mappen zoeken wordt volledig ondersteund</li>
       <li xml:lang="pl">W pełni obsługiwane wyszukiwanie w katalogach IMAP</li>
       <li xml:lang="pt">A pesquisa nas pastas de IMAP é totalmente suportada</li>
@@ -270,6 +286,7 @@
       <li>Highly integrated with other Kontact components</li>
       <li xml:lang="ca">Altament integrat amb els altres components del Kontact</li>
       <li xml:lang="en-GB">Highly integrated with other Kontact components</li>
+      <li xml:lang="es">Altamente integrado con otros componentes de Kontact</li>
       <li xml:lang="nl">Hoge graad van integratie met andere componenten van Kontact</li>
       <li xml:lang="pl">Wysoce zintegrowane z innymi składnikami Kontact</li>
       <li xml:lang="pt">Altamente integrado com os outros componentes do Kontact</li>
@@ -286,6 +303,7 @@
       <li>Encrypted password saving in KWallet</li>
       <li xml:lang="ca">Desa la contrasenya encriptada al KWallet</li>
       <li xml:lang="en-GB">Encrypted password saving in KWallet</li>
+      <li xml:lang="es">Contraseñas cifradas guardadas en KWallet</li>
       <li xml:lang="nl">Opslaan van versleuteld wachtwoord in KWallet</li>
       <li xml:lang="pl">Szyfrowane zapisywanie haseł w KPortfelu</li>
       <li xml:lang="pt">Gravação das senhas encriptadas na KWallet</li>
@@ -302,6 +320,7 @@
       <li>Flagging and tagging of messages to aid sorting and recovery of information</li>
       <li xml:lang="ca">Marca i etiqueta els missatges per ajudar a la classificació i recuperació de la informació</li>
       <li xml:lang="en-GB">Flagging and tagging of messages to aid sorting and recovery of information</li>
+      <li xml:lang="es">Marcado y etiquetado de mensajes para ayudar a la ordenación y recuperación de información</li>
       <li xml:lang="nl">Vlaggen en tags aanbrengen bij berichten om te helpen bij sorteren en herstel van informatie</li>
       <li xml:lang="pl">Oflagowywanie i znaczenie wiadomości w celu wspomożenia ich szeregowania i uzyskiwania informacji</li>
       <li xml:lang="pt">Marcação e classificação de mensagens para ajudar a ordenar e a recuperar informações</li>
@@ -318,6 +337,7 @@
       <li>Supports mailing list management features</li>
       <li xml:lang="ca">Implementa característiques per a la gestió de les llistes de correu</li>
       <li xml:lang="en-GB">Supports mailing list management features</li>
+      <li xml:lang="es">Implementa características de gestión de listas de correo</li>
       <li xml:lang="nl">Ondersteunt functies voor discussielijstbeheer</li>
       <li xml:lang="pl">Możliwość zarządzania listą dyskusyjną</li>
       <li xml:lang="pt">Suporta funcionalidades de gestão de listas de correio</li>
@@ -334,6 +354,7 @@
       <li>Can replace text smilies with emoticons</li>
       <li xml:lang="ca">Pot substituir les cares de text amb emoticones</li>
       <li xml:lang="en-GB">Can replace text smilies with emoticons</li>
+      <li xml:lang="es">Puede remplazar sonrisas de texto con emoticones</li>
       <li xml:lang="nl">Kan smilies in de tekst vervangen door emoticons</li>
       <li xml:lang="pl">Możliwość zastępowania uśmieszków tekstowych emotikonami</li>
       <li xml:lang="pt">Pode substituir ícones emotivos de texto por gráficos</li>
@@ -350,6 +371,7 @@
       <li>Displays the sender's picture or avatar if present in the address book</li>
       <li xml:lang="ca">Mostra la imatge o avatar del remitent si està present a la llibreta d'adreces</li>
       <li xml:lang="en-GB">Displays the sender's picture or avatar if present in the address book</li>
+      <li xml:lang="es">Muestra la imagen o avatar del remitente si está presente en la libreta de direcciones</li>
       <li xml:lang="nl">Toont de foto of avatar van de afzender indien aanwezig in het adresboek</li>
       <li xml:lang="pl">Wyświetlanie zdjęcia nadawcy lub awatara, jeśli jest dostępny w książce adresowej</li>
       <li xml:lang="pt">Mostra a imagem ou avatar do remetente, caso esteja presente no livro de endereços</li>
@@ -366,6 +388,7 @@
       <li>Supports X-Face (b/w pictures in messages)</li>
       <li xml:lang="ca">Implementa X-Face (imatges en b/n als missatges)</li>
       <li xml:lang="en-GB">Supports X-Face (b/w pictures in messages)</li>
+      <li xml:lang="es">Implementa X-Face (imágenes en blanco y negro en los mensajes)</li>
       <li xml:lang="nl">Ondersteunt X-Face (z/w plaatjes in berichten)</li>
       <li xml:lang="pl">Obsługa X-Face (zdjęcia czarno białe w wiadomościach)</li>
       <li xml:lang="pt">Suporta o X-Face (imagens a p/b nas mensagens)</li>
@@ -382,6 +405,7 @@
       <li>Compression of attachments</li>
       <li xml:lang="ca">La compressió dels adjunts</li>
       <li xml:lang="en-GB">Compression of attachments</li>
+      <li xml:lang="es">Compresión de adjuntos</li>
       <li xml:lang="nl">Compressie van bijlagen</li>
       <li xml:lang="pl">Pakowanie załączników</li>
       <li xml:lang="pt">Compressão dos anexos</li>
@@ -398,6 +422,7 @@
       <li>KMail supports Groupware functionality.</li>
       <li xml:lang="ca">El KMail implementa el treball en grup (groupware)</li>
       <li xml:lang="en-GB">KMail supports Groupware functionality.</li>
+      <li xml:lang="es">KMail implementa funcionalidades de colaboración.</li>
       <li xml:lang="nl">KMail ondersteunt Groupware functionaliteit.</li>
       <li xml:lang="pl">Obsługa funkcjonalności Groupware.</li>
       <li xml:lang="pt">O KMail suporta as funcionalidades de trabalho em grupo.</li>
