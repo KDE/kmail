@@ -37,7 +37,7 @@ PotentialPhishingDetailDialog::PotentialPhishingDetailDialog(QWidget *parent)
     QPushButton *okButton = buttonBox->button(QDialogButtonBox::Ok);
     okButton->setDefault(true);
     okButton->setShortcut(Qt::CTRL | Qt::Key_Return);
-    connect(buttonBox, SIGNAL(rejected()), this, SLOT(reject()));
+    connect(buttonBox, &QDialogButtonBox::rejected, this, &QDialog::reject);
     okButton->setDefault(true);
 
     QVBoxLayout *topLayout = new QVBoxLayout;
@@ -56,7 +56,7 @@ PotentialPhishingDetailDialog::PotentialPhishingDetailDialog(QWidget *parent)
 
     mainLayout->addWidget(buttonBox);
 
-    connect(okButton, SIGNAL(clicked()), this, SLOT(slotSave()));
+    connect(okButton, &QAbstractButton::clicked, this, &PotentialPhishingDetailDialog::slotSave);
     topLayout->addWidget(mainWidget);
     readConfig();
 }

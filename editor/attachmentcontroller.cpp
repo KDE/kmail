@@ -50,8 +50,8 @@ AttachmentController::AttachmentController(MessageComposer::AttachmentModel *mod
       mComposer(composer),
       mView(view)
 {
-    connect(composer, SIGNAL(identityChanged(KIdentityManagement::Identity)),
-            this, SLOT(identityChanged()));
+    connect(composer, &KMComposeWin::identityChanged,
+            this, &AttachmentController::identityChanged);
 
     connect(view, &AttachmentView::contextMenuRequested, this, &AttachmentControllerBase::showContextMenu);
     connect(view->selectionModel(), &QItemSelectionModel::selectionChanged,
@@ -63,7 +63,7 @@ AttachmentController::AttachmentController(MessageComposer::AttachmentModel *mod
 
     connect(this, &AttachmentController::showAttachment, this, &AttachmentController::onShowAttachment);
     connect(this, &AttachmentController::selectedAllAttachment, this, &AttachmentController::slotSelectAllAttachment);
-    connect(model, SIGNAL(attachItemsRequester(Akonadi::Item::List)), this, SLOT(addAttachmentItems(Akonadi::Item::List)));
+    connect(model, &MessageComposer::AttachmentModel::attachItemsRequester, this, &AttachmentController::addAttachmentItems);
 }
 
 AttachmentController::~AttachmentController()
