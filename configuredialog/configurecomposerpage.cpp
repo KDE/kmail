@@ -620,13 +620,15 @@ void ComposerPage::GeneralTab::slotConfigureRecentAddresses()
     MessageViewer::AutoQPointer<KPIM::RecentAddressDialog> dlg( new KPIM::RecentAddressDialog( this ) );
     dlg->setAddresses( RecentAddresses::self(  MessageComposer::MessageComposerSettings::self()->config() )->addresses() );
     if ( dlg->exec() && dlg ) {
-        RecentAddresses::self(  MessageComposer::MessageComposerSettings::self()->config() )->clear();
-        const QStringList &addrList = dlg->addresses();
-        QStringList::ConstIterator it;
-        QStringList::ConstIterator end( addrList.constEnd() );
+        if (dlg->wasChanged()) {
+            RecentAddresses::self(  MessageComposer::MessageComposerSettings::self()->config() )->clear();
+            const QStringList &addrList = dlg->addresses();
+            QStringList::ConstIterator it;
+            QStringList::ConstIterator end( addrList.constEnd() );
 
-        for ( it = addrList.constBegin(); it != end; ++it )
-            RecentAddresses::self(  MessageComposer::MessageComposerSettings::self()->config() )->add( *it );
+            for ( it = addrList.constBegin(); it != end; ++it )
+                RecentAddresses::self(  MessageComposer::MessageComposerSettings::self()->config() )->add( *it );
+        }
     }
 }
 
