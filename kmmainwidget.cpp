@@ -1284,7 +1284,7 @@ void KMMainWidget::slotManageSieveScripts()
         return;
     }
 
-    mManageSieveDialog = new KSieveUi::ManageSieveScriptsDialog(this);
+    mManageSieveDialog = new KSieveUi::ManageSieveScriptsDialog;
     mManageSieveDialog->show();
 }
 
