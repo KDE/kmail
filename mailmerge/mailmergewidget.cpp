@@ -54,13 +54,16 @@ MailMergeWidget::MailMergeWidget(QWidget *parent)
     vbox->addWidget(mStackedWidget);
 
     QWidget *addressBookWidget = new QWidget;
+    addressBookWidget->setObjectName(QLatin1String("addressbookwidget"));
     QVBoxLayout *addressBookWidgetLayout = new QVBoxLayout;
     //TODO add addressbook select
     addressBookWidget->setLayout(addressBookWidgetLayout);
     mStackedWidget->addWidget(addressBookWidget);
 
     QWidget *csvWidget = new QWidget;
+    csvWidget->setObjectName(QLatin1String("csvwidget"));
     QVBoxLayout *csvWidgetLayout = new QVBoxLayout;
+    csvWidgetLayout->setMargin(0);
     csvWidget->setLayout(csvWidgetLayout);
 
     lab = new QLabel(i18n("Path:"));
