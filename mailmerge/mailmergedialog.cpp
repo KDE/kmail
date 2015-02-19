@@ -18,7 +18,7 @@
 #include "mailmergedialog.h"
 
 #include <KLocalizedString>
-
+using namespace MailMerge;
 MailMergeDialog::MailMergeDialog(QWidget *parent)
     : KDialog(parent)
 {

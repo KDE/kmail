@@ -22,6 +22,7 @@
 #include <KDialog>
 
 class KUrlRequester;
+namespace MailMerge {
 class SelectAttachmentDialog : public KDialog
 {
     Q_OBJECT
@@ -50,5 +51,5 @@ public:
     void addNewEntry();
     QString modifyEntry(const QString &text);
 };
-
+}
 #endif // ATTACHMENTLISTWIDGET_H

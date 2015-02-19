@@ -18,7 +18,7 @@
 #ifndef MAILMERGEDIALOG_H
 #define MAILMERGEDIALOG_H
 #include <KDialog>
-
+namespace MailMerge {
 class MailMergeDialog : public KDialog
 {
     Q_OBJECT
@@ -26,5 +26,6 @@ public:
     explicit MailMergeDialog(QWidget *parent=0);
     ~MailMergeDialog();
 };
+}
 
 #endif // MAILMERGEDIALOG_H

@@ -15,24 +15,40 @@
   51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
 */
 
-#include "kmail/mailmerge/widgets/mailmergewidget.h"
+#ifndef MAILMERGEWIDGET_H
+#define MAILMERGEWIDGET_H
 
-#include <kdebug.h>
-#include <kapplication.h>
-#include <KCmdLineArgs>
-#include <KLocalizedString>
+#include <QWidget>
 
-int main (int argc, char **argv)
+class KComboBox;
+class QStackedWidget;
+
+class KUrlRequester;
+namespace MailMerge {
+class AttachmentListWidget;
+class MailMergeWidget : public QWidget
 {
-    KCmdLineArgs::init(argc, argv, "mailmergewidget_gui", 0, ki18n("MailMergeWidgetTest_Gui"),
-                       "1.0", ki18n("Test for mailmerge widget"));
+    Q_OBJECT
+public:
+    enum SourceType {
+        AddressBook = 0,
+        CSV = 1
+    };
 
-    KApplication app;
+    explicit MailMergeWidget(QWidget *parent = 0);
+    ~MailMergeWidget();
 
-    MailMerge::MailMergeWidget *w = new MailMerge::MailMergeWidget();
-    w->resize(800, 600);
-    w->show();
-    app.exec();
-    delete w;
-    return 0;
+Q_SIGNALS:
+    void sourceModeChanged(MailMerge::MailMergeWidget::SourceType);
+
+private slots:
+    void slotSourceChanged(int index);
+
+private:
+    KComboBox *mSource;
+    QStackedWidget *mStackedWidget;
+    AttachmentListWidget *mAttachment;
+    KUrlRequester *mCvsUrlRequester;
+};
 }
+#endif // MAILMERGEWIDGET_H

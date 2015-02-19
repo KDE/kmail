@@ -1,5 +1,5 @@
 /*
-  Copyright (c) 2014-2015 Montel Laurent <montel@kde.org>
+  Copyright (c) 2015 Montel Laurent <montel@kde.org>
 
   This program is free software; you can redistribute it and/or modify it
   under the terms of the GNU General Public License, version 2, as
@@ -14,25 +14,18 @@
   with this program; if not, write to the Free Software Foundation, Inc.,
   51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
 */
+#include "addressbookwidget.h"
 
-#include "kmail/mailmerge/widgets/mailmergewidget.h"
+using namespace MailMerge;
 
-#include <kdebug.h>
-#include <kapplication.h>
-#include <KCmdLineArgs>
-#include <KLocalizedString>
-
-int main (int argc, char **argv)
+AddressBookWidget::AddressBookWidget(QWidget *parent)
+    : QWidget(parent)
 {
-    KCmdLineArgs::init(argc, argv, "mailmergewidget_gui", 0, ki18n("MailMergeWidgetTest_Gui"),
-                       "1.0", ki18n("Test for mailmerge widget"));
 
-    KApplication app;
-
-    MailMerge::MailMergeWidget *w = new MailMerge::MailMergeWidget();
-    w->resize(800, 600);
-    w->show();
-    app.exec();
-    delete w;
-    return 0;
 }
+
+AddressBookWidget::~AddressBookWidget()
+{
+
+}
+

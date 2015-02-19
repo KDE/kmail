@@ -23,7 +23,7 @@
 #include <QHBoxLayout>
 #include <QLabel>
 #include <QPointer>
-
+using namespace MailMerge;
 AttachmentListWidget::AttachmentListWidget(QWidget * parent,
                                            ButtonCode buttons,
                                            const QString & addLabel,

@@ -16,13 +16,13 @@
 */
 
 #include "mailmergewidgettest.h"
-#include "../mailmergewidget.h"
+#include "../widgets/mailmergewidget.h"
 #include "pimcommon/widgets/simplestringlisteditor.h"
 #include <qtest_kde.h>
 #include <KComboBox>
 #include <QStackedWidget>
-
-Q_DECLARE_METATYPE(MailMergeWidget::SourceType)
+using namespace MailMerge;
+Q_DECLARE_METATYPE(MailMerge::MailMergeWidget::SourceType)
 MailMergeWidgetTest::MailMergeWidgetTest()
 {
     qRegisterMetaType<MailMergeWidget::SourceType>();
@@ -57,7 +57,7 @@ void MailMergeWidgetTest::shouldEmitSourceModeChanged()
     MailMergeWidget mailmerge;
     KComboBox *source = qFindChild<KComboBox *>(&mailmerge, QLatin1String("source"));
     QCOMPARE(source->currentIndex(), 0);
-    QSignalSpy spy(&mailmerge, SIGNAL(sourceModeChanged(MailMergeWidget::SourceType)));
+    QSignalSpy spy(&mailmerge, SIGNAL(sourceModeChanged(MailMerge::MailMergeWidget::SourceType)));
     source->setCurrentIndex(1);
     QCOMPARE(spy.count(), 1);
 }
@@ -67,7 +67,7 @@ void MailMergeWidgetTest::shouldDontEmitSourceModeChangedWhenIndexIsInvalid()
     MailMergeWidget mailmerge;
     KComboBox *source = qFindChild<KComboBox *>(&mailmerge, QLatin1String("source"));
     QCOMPARE(source->currentIndex(), 0);
-    QSignalSpy spy(&mailmerge, SIGNAL(sourceModeChanged(MailMergeWidget::SourceType)));
+    QSignalSpy spy(&mailmerge, SIGNAL(sourceModeChanged(MailMerge::MailMergeWidget::SourceType)));
     source->setCurrentIndex(-1);
     QCOMPARE(spy.count(), 0);
 }

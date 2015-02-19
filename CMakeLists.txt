@@ -151,8 +151,9 @@ if (KDEPIM_BUILD_DESKTOP)
      dialog/kmknotify.cpp
   )
   set(kmailprivate_mailmerge_LIB_SRCS
-     mailmerge/mailmergewidget.cpp
-     mailmerge/attachmentlistwidget.cpp
+     mailmerge/widgets/mailmergewidget.cpp
+     mailmerge/widgets/attachmentlistwidget.cpp
+     mailmerge/widgets/addressbookwidget.cpp
      mailmerge/mailmergedialog.cpp
   )
 
