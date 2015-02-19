@@ -161,7 +161,7 @@
 #include <krun.h>
 #include <KIO/JobUiDelegate>
 #include <KPrintPreview>
-#include <KFileDialog>
+#include <QFileDialog>
 #include <QAction>
 #include <KEmailAddress>
 
