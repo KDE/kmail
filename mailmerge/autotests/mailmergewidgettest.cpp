@@ -41,7 +41,7 @@ void MailMergeWidgetTest::shouldHaveDefaultValueOnCreation()
     QCOMPARE(stackedwidget->count(), 2);
     QCOMPARE(stackedwidget->currentIndex(), 0);
 
-    for(int i=0; i < stackedwidget->count(); ++i) {
+    for (int i = 0; i < stackedwidget->count(); ++i) {
         const QString objectName = stackedwidget->widget(i)->objectName();
         bool hasName = (objectName == QLatin1String("addressbookwidget") ||
                         objectName == QLatin1String("csvwidget"));

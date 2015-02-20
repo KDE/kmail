@@ -24,7 +24,8 @@ class KComboBox;
 class QStackedWidget;
 
 class KUrlRequester;
-namespace MailMerge {
+namespace MailMerge
+{
 class AttachmentListWidget;
 class MailMergeWidget : public QWidget
 {

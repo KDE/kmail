@@ -626,17 +626,18 @@ void ComposerPage::GeneralTab::save()
 
 void ComposerPage::GeneralTab::slotConfigureRecentAddresses()
 {
-    MessageViewer::AutoQPointer<KPIM::RecentAddressDialog> dlg( new KPIM::RecentAddressDialog( this ) );
-    dlg->setAddresses( RecentAddresses::self(  MessageComposer::MessageComposerSettings::self()->config() )->addresses() );
-    if ( dlg->exec() && dlg ) {
+    MessageViewer::AutoQPointer<KPIM::RecentAddressDialog> dlg(new KPIM::RecentAddressDialog(this));
+    dlg->setAddresses(RecentAddresses::self(MessageComposer::MessageComposerSettings::self()->config())->addresses());
+    if (dlg->exec() && dlg) {
         if (dlg->wasChanged()) {
-            RecentAddresses::self(  MessageComposer::MessageComposerSettings::self()->config() )->clear();
+            RecentAddresses::self(MessageComposer::MessageComposerSettings::self()->config())->clear();
             const QStringList &addrList = dlg->addresses();
             QStringList::ConstIterator it;
-            QStringList::ConstIterator end( addrList.constEnd() );
+            QStringList::ConstIterator end(addrList.constEnd());
 
-            for ( it = addrList.constBegin(); it != end; ++it )
-                RecentAddresses::self(  MessageComposer::MessageComposerSettings::self()->config() )->add( *it );
+            for (it = addrList.constBegin(); it != end; ++it) {
+                RecentAddresses::self(MessageComposer::MessageComposerSettings::self()->config())->add(*it);
+            }
         }
     }
 }
@@ -1349,13 +1350,13 @@ void ComposerPageAttachmentsTab::slotOutlookCompatibleClicked()
 {
     if (mOutlookCompatibleCheck->isChecked()) {
         KMessageBox::information(Q_NULLPTR, i18n("You have chosen to "
-                                         "encode attachment names containing non-English characters in a way that "
-                                         "is understood by Outlook(tm) and other mail clients that do not "
-                                         "support standard-compliant encoded attachment names.\n"
-                                         "Note that KMail may create non-standard compliant messages, "
-                                         "and consequently it is possible that your messages will not be "
-                                         "understood by standard-compliant mail clients; so, unless you have no "
-                                         "other choice, you should not enable this option."));
+                                 "encode attachment names containing non-English characters in a way that "
+                                 "is understood by Outlook(tm) and other mail clients that do not "
+                                 "support standard-compliant encoded attachment names.\n"
+                                 "Note that KMail may create non-standard compliant messages, "
+                                 "and consequently it is possible that your messages will not be "
+                                 "understood by standard-compliant mail clients; so, unless you have no "
+                                 "other choice, you should not enable this option."));
     }
 }
 

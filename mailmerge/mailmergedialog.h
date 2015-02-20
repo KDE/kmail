@@ -18,7 +18,8 @@
 #ifndef MAILMERGEDIALOG_H
 #define MAILMERGEDIALOG_H
 #include <QDialog>
-namespace MailMerge {
+namespace MailMerge
+{
 class MailMergeDialog : public QDialog
 {
     Q_OBJECT

@@ -19,12 +19,13 @@
 #define ADDRESSBOOKWIDGET_H
 
 #include <QWidget>
-namespace MailMerge {
+namespace MailMerge
+{
 class AddressBookWidget : public QWidget
 {
     Q_OBJECT
 public:
-    explicit AddressBookWidget(QWidget *parent=0);
+    explicit AddressBookWidget(QWidget *parent = 0);
     ~AddressBookWidget();
 };
 }
