@@ -16,6 +16,7 @@
 */
 
 #include "mailmergewidget.h"
+#include "../widgets/csvwidget.h"
 
 #include "attachmentlistwidget.h"
 
@@ -62,18 +63,10 @@ MailMergeWidget::MailMergeWidget(QWidget *parent)
     addressBookWidget->setLayout(addressBookWidgetLayout);
     mStackedWidget->addWidget(addressBookWidget);
 
-    QWidget *csvWidget = new QWidget;
-    csvWidget->setObjectName(QLatin1String("csvwidget"));
-    QVBoxLayout *csvWidgetLayout = new QVBoxLayout;
-    csvWidgetLayout->setMargin(0);
-    csvWidget->setLayout(csvWidgetLayout);
+    mCsvWidget = new MailMerge::CsvWidget;
+    mCsvWidget->setObjectName(QLatin1String("cvswidget"));
 
-    lab = new QLabel(i18n("Path:"));
-    csvWidgetLayout->addWidget(lab);
-    mCvsUrlRequester = new KUrlRequester;
-    csvWidgetLayout->addWidget(mCvsUrlRequester);
-
-    mStackedWidget->addWidget(csvWidget);
+    mStackedWidget->addWidget(mCsvWidget);
 
     lab = new QLabel(i18n("Attachment:"));
     vbox->addWidget(lab);

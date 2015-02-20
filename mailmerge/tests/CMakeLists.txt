@@ -3,7 +3,7 @@ include_directories(
 )
 # convenience macro to add qtest unit tests
 macro(add_kmail_unittest _source)
-  set(_test ${_source} ../widgets/mailmergewidget.cpp ../widgets/attachmentlistwidget.cpp)
+  set(_test ${_source} ../widgets/mailmergewidget.cpp ../widgets/attachmentlistwidget.cpp ../widgets/csvwidget.cpp)
   get_filename_component(_name ${_source} NAME_WE)
   kde4_add_unit_test(${_name} TESTNAME kmail-${_name} ${_test})
   target_link_libraries( ${_name}
@@ -18,7 +18,7 @@ endmacro ()
 add_kmail_unittest( mailmergewidgettest.cpp )
 
 
-set(mailmergewidget_gui_SRCS mailmergewidgettest_gui.cpp ../widgets/mailmergewidget.cpp ../widgets/attachmentlistwidget.cpp)
+set(mailmergewidget_gui_SRCS mailmergewidgettest_gui.cpp ../widgets/mailmergewidget.cpp ../widgets/attachmentlistwidget.cpp ../widgets/csvwidget.cpp)
 kde4_add_executable(mailmergewidget_gui TEST ${mailmergewidget_gui_SRCS})
 target_link_libraries(mailmergewidget_gui
   ${QT_QTCORE_LIBRARY}
@@ -30,13 +30,13 @@ target_link_libraries(mailmergewidget_gui
 
 
 # Convenience macro to add unit tests.
-macro( kmail_mailmerge _source )
-  set( _test ${_source}  )
+macro( kmail_mailmerge _source _additionalsource)
+  set( _test ${_source}  ${_additionalsource})
   get_filename_component( _name ${_source} NAME_WE )
   kde4_add_unit_test( ${_name} TESTNAME kmailmailmerge-${_name} ${_test} )
-  target_link_libraries( ${_name} ${QT_QTTEST_LIBRARY} ${KDE4_KDEUI_LIBS}  )
+  target_link_libraries( ${_name} ${QT_QTTEST_LIBRARY} ${KDE4_KDEUI_LIBS} ${KDE4_KFILE_LIBS} )
 endmacro()
 
-kmail_mailmerge(addressbookwidgettest.cpp)
-
+kmail_mailmerge(addressbookwidgettest.cpp "")
+kmail_mailmerge(csvwidgettest.cpp "../widgets/csvwidget.cpp")
 
