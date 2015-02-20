@@ -25,7 +25,6 @@
 #ifndef KMail_PART_H
 #define KMail_PART_H
 
-#include "kmail_export.h"
 #include <kparts/part.h>
 #include <akonadi/collection.h>
 
