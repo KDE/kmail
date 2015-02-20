@@ -1,5 +1,5 @@
 /*
-  Copyright (c) 2014-2015 Montel Laurent <montel@kde.org>
+  Copyright (c) 2015 Montel Laurent <montel@kde.org>
 
   This program is free software; you can redistribute it and/or modify it
   under the terms of the GNU General Public License, version 2, as
@@ -15,42 +15,27 @@
   51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
 */
 
-#ifndef MAILMERGEWIDGET_H
-#define MAILMERGEWIDGET_H
+#ifndef CSVWIDGET_H
+#define CSVWIDGET_H
 
 #include <QWidget>
 
-class KComboBox;
-class QStackedWidget;
-
 class KUrlRequester;
-namespace MailMerge
-{
-class CsvWidget;
-class AttachmentListWidget;
-class MailMergeWidget : public QWidget
+class QUrl;
+namespace MailMerge {
+class CsvWidget : public QWidget
 {
     Q_OBJECT
 public:
-    enum SourceType {
-        AddressBook = 0,
-        CSV = 1
-    };
+    explicit CsvWidget(QWidget *parent=0);
+    ~CsvWidget();
 
-    explicit MailMergeWidget(QWidget *parent = Q_NULLPTR);
-    ~MailMergeWidget();
-
-Q_SIGNALS:
-    void sourceModeChanged(MailMerge::MailMergeWidget::SourceType);
-
-private Q_SLOTS:
-    void slotSourceChanged(int index);
+    void setPath(const QUrl &path);
+    QUrl path() const;
 
 private:
-    KComboBox *mSource;
-    QStackedWidget *mStackedWidget;
-    AttachmentListWidget *mAttachment;
-    MailMerge::CsvWidget *mCsvWidget;
+    KUrlRequester *mCvsUrlRequester;
 };
 }
-#endif // MAILMERGEWIDGET_H
+
+#endif // CSVWIDGET_H

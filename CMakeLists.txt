@@ -156,6 +156,7 @@ if (KDEPIM_BUILD_DESKTOP)
      mailmerge/widgets/attachmentlistwidget.cpp
      mailmerge/widgets/addressbookwidget.cpp
      mailmerge/mailmergedialog.cpp
+     mailmerge/widgets/csvwidget.cpp
   )
 
   set(kmailprivate_job_LIB_SRCS

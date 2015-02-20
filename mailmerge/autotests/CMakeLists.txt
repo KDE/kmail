@@ -1,9 +1,10 @@
 include_directories(
   ${CMAKE_SOURCE_DIR}/kmail/mailmerge
 )
+
 # convenience macro to add qtest unit tests
-macro(add_kmail_unittest _source)
-  set(_test ${_source} ../widgets/mailmergewidget.cpp ../widgets/attachmentlistwidget.cpp)
+macro(add_kmail_unittest _source _additionalsource)
+  set(_test ${_source} ../widgets/mailmergewidget.cpp ../widgets/attachmentlistwidget.cpp ${_additionalsource})
   get_filename_component(_name ${_source} NAME_WE)
   add_executable( ${_name} ${_test} )
   add_test( ${_name} ${_name} )
@@ -15,5 +16,8 @@ macro(add_kmail_unittest _source)
   )
 endmacro ()
 
-add_kmail_unittest( mailmergewidgettest.cpp )
+add_kmail_unittest( mailmergewidgettest.cpp "../widgets/csvwidget.cpp")
+add_kmail_unittest(addressbookwidgettest.cpp "../widgets/csvwidget.cpp")
+add_kmail_unittest(csvwidgettest.cpp "../widgets/csvwidget.cpp")
+
 
