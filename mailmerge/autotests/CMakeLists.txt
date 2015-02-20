@@ -3,7 +3,7 @@ include_directories(
 )
 # convenience macro to add qtest unit tests
 macro(add_kmail_unittest _source)
-  set(_test ${_source} ../mailmergewidget.cpp ../attachmentlistwidget.cpp)
+  set(_test ${_source} ../widgets/mailmergewidget.cpp ../widgets/attachmentlistwidget.cpp)
   get_filename_component(_name ${_source} NAME_WE)
   add_executable( ${_name} ${_test} )
   add_test( ${_name} ${_name} )

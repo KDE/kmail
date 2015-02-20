@@ -22,6 +22,7 @@
 #include <QDialog>
 
 class KUrlRequester;
+namespace MailMerge {
 class SelectAttachmentDialog : public QDialog
 {
     Q_OBJECT
@@ -50,5 +51,5 @@ public:
     void addNewEntry() Q_DECL_OVERRIDE;
     QString modifyEntry(const QString &text) Q_DECL_OVERRIDE;
 };
-
+}
 #endif // ATTACHMENTLISTWIDGET_H

@@ -15,7 +15,7 @@
   51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
 */
 
-#include "kmail/mailmerge/mailmergewidget.h"
+#include "kmail/mailmerge/widgets/mailmergewidget.h"
 
 #include <KLocalizedString>
 #include <QApplication>
@@ -35,7 +35,7 @@ int main(int argc, char **argv)
     parser.process(app);
     aboutData.processCommandLine(&parser);
 
-    MailMergeWidget *w = new MailMergeWidget();
+    MailMerge::MailMergeWidget *w = new MailMerge::MailMergeWidget();
     w->resize(800, 600);
     w->show();
     app.exec();

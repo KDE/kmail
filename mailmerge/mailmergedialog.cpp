@@ -23,6 +23,7 @@
 #include <QPushButton>
 #include <QVBoxLayout>
 
+using namespace MailMerge;
 MailMergeDialog::MailMergeDialog(QWidget *parent)
     : QDialog(parent)
 {

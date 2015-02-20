@@ -28,6 +28,8 @@
 #include <QLabel>
 #include <QStackedWidget>
 
+using namespace MailMerge;
+
 MailMergeWidget::MailMergeWidget(QWidget *parent)
     : QWidget(parent)
 {

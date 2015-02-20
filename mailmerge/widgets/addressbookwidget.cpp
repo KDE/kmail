@@ -1,5 +1,5 @@
 /*
-  Copyright (c) 2014 Montel Laurent <montel@kde.org>
+  Copyright (c) 2015 Montel Laurent <montel@kde.org>
 
   This program is free software; you can redistribute it and/or modify it
   under the terms of the GNU General Public License, version 2, as
@@ -14,18 +14,18 @@
   with this program; if not, write to the Free Software Foundation, Inc.,
   51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
 */
+#include "addressbookwidget.h"
 
-#ifndef MAILMERGEDIALOG_H
-#define MAILMERGEDIALOG_H
-#include <QDialog>
-namespace MailMerge {
-class MailMergeDialog : public QDialog
+using namespace MailMerge;
+
+AddressBookWidget::AddressBookWidget(QWidget *parent)
+    : QWidget(parent)
 {
-    Q_OBJECT
-public:
-    explicit MailMergeDialog(QWidget *parent = 0);
-    ~MailMergeDialog();
-};
+
 }
 
-#endif // MAILMERGEDIALOG_H
+AddressBookWidget::~AddressBookWidget()
+{
+
+}
+

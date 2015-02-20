@@ -1,5 +1,5 @@
 /*
-  Copyright (c) 2014-2015 Montel Laurent <montel@kde.org>
+  Copyright (c) 2015 Montel Laurent <montel@kde.org>
 
   This program is free software; you can redistribute it and/or modify it
   under the terms of the GNU General Public License, version 2, as
@@ -15,38 +15,18 @@
   51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
 */
 
-#ifndef MAILMERGEWIDGET_H
-#define MAILMERGEWIDGET_H
+#ifndef ADDRESSBOOKWIDGET_H
+#define ADDRESSBOOKWIDGET_H
 
 #include <QWidget>
-
-class KComboBox;
-class QStackedWidget;
-class AttachmentListWidget;
-class KUrlRequester;
-class MailMergeWidget : public QWidget
+namespace MailMerge {
+class AddressBookWidget : public QWidget
 {
     Q_OBJECT
 public:
-    enum SourceType {
-        AddressBook = 0,
-        CSV = 1
-    };
-
-    explicit MailMergeWidget(QWidget *parent = Q_NULLPTR);
-    ~MailMergeWidget();
-
-Q_SIGNALS:
-    void sourceModeChanged(MailMergeWidget::SourceType);
-
-private Q_SLOTS:
-    void slotSourceChanged(int index);
-
-private:
-    KComboBox *mSource;
-    QStackedWidget *mStackedWidget;
-    AttachmentListWidget *mAttachment;
-    KUrlRequester *mCvsUrlRequester;
+    explicit AddressBookWidget(QWidget *parent=0);
+    ~AddressBookWidget();
 };
+}
 
-#endif // MAILMERGEWIDGET_H
+#endif // ADDRESSBOOKWIDGET_H

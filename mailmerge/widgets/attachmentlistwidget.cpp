@@ -27,11 +27,12 @@
 #include <KConfigGroup>
 #include <QPushButton>
 
-AttachmentListWidget::AttachmentListWidget(QWidget *parent,
-        ButtonCode buttons,
-        const QString &addLabel,
-        const QString &removeLabel,
-        const QString &modifyLabel)
+using namespace MailMerge;
+AttachmentListWidget::AttachmentListWidget(QWidget * parent,
+                                           ButtonCode buttons,
+                                           const QString & addLabel,
+                                           const QString & removeLabel,
+                                           const QString & modifyLabel)
     : PimCommon::SimpleStringListEditor(parent, buttons, addLabel, removeLabel, modifyLabel, QString())
 {
 }
