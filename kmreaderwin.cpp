@@ -119,7 +119,7 @@ KMReaderWin::KMReaderWin(QWidget *aParent,
     mViewer = new Viewer(this, mainWindow, mActionCollection);
     mViewer->setExternalWindow(true);
     mViewer->setAppName(QLatin1String("KMail"));
-    connect(mViewer, SIGNAL(urlClicked(Akonadi::Item,KUrl)), this, SLOT(slotUrlClicked(Akonadi::Item,KUrl)));
+    connect(mViewer, SIGNAL(urlClicked(Akonadi::Item,QUrl)), this, SLOT(slotUrlClicked(Akonadi::Item,QUrl)));
     connect(mViewer, SIGNAL(requestConfigSync()), kmkernel, SLOT(slotRequestConfigSync()), Qt::QueuedConnection);   // happens anyway on shutdown, so we can skip it there with using a queued connection
     connect(mViewer, SIGNAL(makeResourceOnline(MessageViewer::Viewer::ResourceOnlineMode)), kmkernel, SLOT(makeResourceOnline(MessageViewer::Viewer::ResourceOnlineMode)));
     connect(mViewer, &MessageViewer::Viewer::showReader, this, &KMReaderWin::slotShowReader);
@@ -477,7 +477,7 @@ void KMReaderWin::slotMailtoForward()
 
 void KMReaderWin::slotMailtoAddAddrBook()
 {
-    const KUrl url = urlClicked();
+    const QUrl url = urlClicked();
     if (url.isEmpty()) {
         return;
     }
@@ -489,7 +489,7 @@ void KMReaderWin::slotMailtoAddAddrBook()
 
 void KMReaderWin::slotMailToAddToExistingContact()
 {
-    const KUrl url = urlClicked();
+    const QUrl url = urlClicked();
     if (url.isEmpty()) {
         return;
     }
@@ -507,7 +507,7 @@ void KMReaderWin::slotMailToAddToExistingContact()
 
 void KMReaderWin::slotMailtoOpenAddrBook()
 {
-    const KUrl url = urlClicked();
+    const QUrl url = urlClicked();
     if (url.isEmpty()) {
         return;
     }
@@ -519,7 +519,7 @@ void KMReaderWin::slotMailtoOpenAddrBook()
 
 void KMReaderWin::slotAddBookmarks()
 {
-    const KUrl url = urlClicked();
+    const QUrl url = urlClicked();
     if (url.isEmpty()) {
         return;
     }
@@ -529,7 +529,7 @@ void KMReaderWin::slotAddBookmarks()
 
 void KMReaderWin::slotUrlSave()
 {
-    const KUrl url = urlClicked();
+    const QUrl url = urlClicked();
     if (url.isEmpty()) {
         return;
     }
@@ -539,7 +539,7 @@ void KMReaderWin::slotUrlSave()
 
 void KMReaderWin::slotSaveImageOnDisk()
 {
-    const KUrl url = imageUrlClicked();
+    const QUrl url = imageUrlClicked();
     if (url.isEmpty()) {
         return;
     }
@@ -677,12 +677,12 @@ void KMReaderWin::setMessage(KMime::Message::Ptr message)
     mViewer->setMessage(message);
 }
 
-KUrl KMReaderWin::urlClicked() const
+QUrl KMReaderWin::urlClicked() const
 {
     return mViewer->urlClicked();
 }
 
-KUrl KMReaderWin::imageUrlClicked() const
+QUrl KMReaderWin::imageUrlClicked() const
 {
     return mViewer->imageUrlClicked();
 }
@@ -692,7 +692,7 @@ void KMReaderWin::update(bool force)
     mViewer->update(force ? Viewer::Force : Viewer::Delayed);
 }
 
-void KMReaderWin::slotUrlClicked(const Akonadi::Item &item, const KUrl &url)
+void KMReaderWin::slotUrlClicked(const Akonadi::Item &item, const QUrl &url)
 {
     if (item.isValid() && item.parentCollection().isValid()) {
         QSharedPointer<FolderCollection> fd = FolderCollection::forCollection(
@@ -812,7 +812,7 @@ void KMReaderWin::updateHtmlActions()
 
 void KMReaderWin::slotContactHtmlOptions()
 {
-    const KUrl url = urlClicked();
+    const QUrl url = urlClicked();
     if (url.isEmpty()) {
         return;
     }

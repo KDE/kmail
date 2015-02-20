@@ -22,7 +22,7 @@
 #define KMREADERWIN_H
 
 #include <QWidget>
-#include <kurl.h>
+#include <qurl.h>
 #include <messageviewer/viewer/viewer.h>
 #include <messageviewer/interfaces/bodypart.h>
 #include <AkonadiCore/Item>
@@ -246,7 +246,7 @@ public Q_SLOTS:
     /** Save the page to a file */
     void slotUrlSave();
     void slotAddBookmarks();
-    void slotUrlClicked(const Akonadi::Item &,  const KUrl &);
+    void slotUrlClicked(const Akonadi::Item &,  const QUrl &);
     void slotShowReader(KMime::Content *, bool html, const QString &);
     void slotShowMessage(KMime::Message::Ptr message, const QString &encoding);
     void slotDeleteMessage(const Akonadi::Item &);
@@ -262,8 +262,8 @@ public Q_SLOTS:
     void slotMailToAddToExistingContact();
 
 protected:
-    KUrl urlClicked() const;
-    KUrl imageUrlClicked() const;
+    QUrl urlClicked() const;
+    QUrl imageUrlClicked() const;
 
 private:
     void createActions();

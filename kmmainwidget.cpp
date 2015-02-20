@@ -2621,7 +2621,7 @@ void KMMainWidget::slotMarkAll()
     updateMessageActions();
 }
 
-void KMMainWidget::slotMessagePopup(const Akonadi::Item &msg , const KUrl &aUrl, const KUrl &imageUrl, const QPoint &aPoint)
+void KMMainWidget::slotMessagePopup(const Akonadi::Item &msg , const QUrl &aUrl, const QUrl &imageUrl, const QPoint &aPoint)
 {
     updateMessageMenu();
 
@@ -2654,13 +2654,13 @@ void KMMainWidget::slotContactSearchJobForMessagePopupDone(KJob *job)
     }
     const Akonadi::Item msg = job->property("msg").value<Akonadi::Item>();
     const QPoint aPoint = job->property("point").toPoint();
-    const KUrl imageUrl = job->property("imageUrl").value<KUrl>();
-    const KUrl url = job->property("url").value<KUrl>();
+    const QUrl imageUrl = job->property("imageUrl").value<QUrl>();
+    const QUrl url = job->property("url").value<QUrl>();
 
     showMessagePopup(msg, url, imageUrl, aPoint, contactAlreadyExists, uniqueContactFound);
 }
 
-void KMMainWidget::showMessagePopup(const Akonadi::Item &msg , const KUrl &url, const KUrl &imageUrl, const QPoint &aPoint, bool contactAlreadyExists, bool uniqueContactFound)
+void KMMainWidget::showMessagePopup(const Akonadi::Item &msg , const QUrl &url, const QUrl &imageUrl, const QPoint &aPoint, bool contactAlreadyExists, bool uniqueContactFound)
 {
     QMenu *menu = new QMenu;
 

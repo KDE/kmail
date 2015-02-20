@@ -393,7 +393,7 @@ void KMReaderMainWin::slotCopyResult(KJob *job)
     }
 }
 
-void KMReaderMainWin::slotMessagePopup(const Akonadi::Item &aMsg , const KUrl &aUrl, const KUrl &imageUrl, const QPoint &aPoint)
+void KMReaderMainWin::slotMessagePopup(const Akonadi::Item &aMsg , const QUrl &aUrl, const QUrl &imageUrl, const QPoint &aPoint)
 {
     mMsg = aMsg;
 
@@ -427,13 +427,13 @@ void KMReaderMainWin::slotContactSearchJobForMessagePopupDone(KJob *job)
 
     const Akonadi::Item msg = job->property("msg").value<Akonadi::Item>();
     const QPoint aPoint = job->property("point").toPoint();
-    const KUrl imageUrl = job->property("imageUrl").value<KUrl>();
-    const KUrl url = job->property("url").value<KUrl>();
+    const QUrl imageUrl = job->property("imageUrl").value<QUrl>();
+    const QUrl url = job->property("url").value<QUrl>();
 
     showMessagePopup(msg, url, imageUrl, aPoint, contactAlreadyExists, uniqueContactFound);
 }
 
-void KMReaderMainWin::showMessagePopup(const Akonadi::Item &msg , const KUrl &url, const KUrl &imageUrl, const QPoint &aPoint, bool contactAlreadyExists, bool uniqueContactFound)
+void KMReaderMainWin::showMessagePopup(const Akonadi::Item &msg , const QUrl &url, const QUrl &imageUrl, const QPoint &aPoint, bool contactAlreadyExists, bool uniqueContactFound)
 {
     QMenu *menu = Q_NULLPTR;
 

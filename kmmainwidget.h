@@ -47,7 +47,7 @@ namespace KMime
 {
 class Message;
 }
-class KUrl;
+class QUrl;
 class QVBoxLayout;
 class QSplitter;
 class KMLaunchExternalComponent;
@@ -377,7 +377,7 @@ protected Q_SLOTS:
     void slotSendQueuedVia(QAction *item);
     void slotOnlineStatus();
     void slotUpdateOnlineStatus(GlobalSettings::EnumNetworkState::type);
-    void slotMessagePopup(const Akonadi::Item &, const KUrl &, const KUrl &imageUrl, const QPoint &);
+    void slotMessagePopup(const Akonadi::Item &, const QUrl &, const QUrl &imageUrl, const QPoint &);
     void slotContactSearchJobForMessagePopupDone(KJob *job);
     void slotMarkAll();
     void slotFocusQuickSearch();
@@ -520,7 +520,7 @@ private:
 
     void openFilterDialog(const QByteArray &field, const QString &value);
 
-    void showMessagePopup(const Akonadi::Item &msg , const KUrl &aUrl, const KUrl &imageUrl, const QPoint &aPoint, bool contactAlreadyExists, bool uniqueContactFound);
+    void showMessagePopup(const Akonadi::Item &msg , const QUrl &aUrl, const QUrl &imageUrl, const QPoint &aPoint, bool contactAlreadyExists, bool uniqueContactFound);
 
 private Q_SLOTS:
     void slotMoveMessageToTrash();
