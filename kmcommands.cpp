@@ -52,7 +52,7 @@
 #include <KEmailAddress>
 #include <kdbusservicestarter.h>
 #include "kmail_debug.h"
-#include <kfiledialog.h>
+#include <qfiledialog.h>
 #include <KLocalizedString>
 #include <kmessagebox.h>
 #include <kbookmarkmanager.h>
@@ -699,9 +699,9 @@ KMOpenMsgCommand::KMOpenMsgCommand(QWidget *parent, const QUrl &url,
 KMCommand::Result KMOpenMsgCommand::execute()
 {
     if (mUrl.isEmpty()) {
-        mUrl = KFileDialog::getOpenUrl(QUrl(QLatin1String("kfiledialog:///OpenMessage")),
-                                       QLatin1String("message/rfc822 application/mbox"),
-                                       parentWidget(), i18n("Open Message"));
+        mUrl = QFileDialog::getOpenFileUrl(parentWidget(), i18n("Open Message"), QUrl(QLatin1String("kfiledialog:///OpenMessage")),
+                                       QLatin1String("message/rfc822 application/mbox")
+                                       );
     }
     if (mUrl.isEmpty()) {
         return Canceled;
