@@ -30,6 +30,7 @@
 #include <QVBoxLayout>
 #include <QFormLayout>
 #include <QLabel>
+#include <QLineEdit>
 #include <kdatecombobox.h>
 
 
@@ -66,6 +67,7 @@ FollowUpReminderSelectDateDialog::FollowUpReminderSelectDateDialog(QWidget *pare
 
     formLayout->addRow(i18n("Store ToDo in:"), mCollectionCombobox);
 
+    connect(mDateComboBox->lineEdit(), SIGNAL(textChanged(QString)), SLOT(slotDateChanged(QString)));
     setMainWidget( mainWidget );
 }
 
@@ -73,6 +75,10 @@ FollowUpReminderSelectDateDialog::~FollowUpReminderSelectDateDialog()
 {
 }
 
+void FollowUpReminderSelectDateDialog::slotDateChanged(const QString &date)
+{
+    enableButtonOk(!date.isEmpty());
+}
 
 QDate FollowUpReminderSelectDateDialog::selectedDate() const
 {

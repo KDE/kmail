@@ -36,6 +36,8 @@ public:
     void accept();
 
     Akonadi::Collection collection() const;
+private slots:
+    void slotDateChanged(const QString &date);
 private:
     KDateComboBox *mDateComboBox;
     Akonadi::CollectionComboBox *mCollectionCombobox;
