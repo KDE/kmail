@@ -22,12 +22,13 @@
 
 class KUrlRequester;
 class QUrl;
-namespace MailMerge {
+namespace MailMerge
+{
 class CsvWidget : public QWidget
 {
     Q_OBJECT
 public:
-    explicit CsvWidget(QWidget *parent=0);
+    explicit CsvWidget(QWidget *parent = 0);
     ~CsvWidget();
 
     void setPath(const QUrl &path);
