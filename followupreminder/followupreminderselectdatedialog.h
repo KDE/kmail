@@ -19,6 +19,7 @@
 #define FOLLOWUPREMINDERSELECTDATEDIALOG_H
 
 #include <QDialog>
+#include <QPushButton>
 #include <AkonadiCore/Collection>
 namespace Akonadi
 {
@@ -37,9 +38,12 @@ public:
     void accept() Q_DECL_OVERRIDE;
 
     Akonadi::Collection collection() const;
+private slots:
+    void slotDateChanged(const QString &date);
 private:
     KDateComboBox *mDateComboBox;
     Akonadi::CollectionComboBox *mCollectionCombobox;
+    QPushButton *mOkButton;
 };
 
 #endif // FOLLOWUPREMINDERSELECTDATEDIALOG_H

@@ -28,6 +28,7 @@ public:
     ~FollowupReminderSelectDateDialogTest();
 private Q_SLOTS:
     void shouldHaveDefaultValue();
+    void shouldDisableOkButtonIfDateIsEmpty();
 };
 
 #endif // FOLLOWUPREMINDERSELECTDATEDIALOGTEST_H

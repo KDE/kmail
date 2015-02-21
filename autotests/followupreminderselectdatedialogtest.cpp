@@ -21,6 +21,9 @@
 #include <KDateComboBox>
 #include <AkonadiWidgets/CollectionComboBox>
 
+#include <QLineEdit>
+#include <KPushButton>
+
 FollowupReminderSelectDateDialogTest::FollowupReminderSelectDateDialogTest(QObject *parent)
     : QObject(parent)
 {
@@ -42,6 +45,15 @@ void FollowupReminderSelectDateDialogTest::shouldHaveDefaultValue()
     QVERIFY(combobox);
     QDate currentDate = QDate::currentDate();
     QCOMPARE(datecombobox->date(), currentDate.addDays(1));
+}
+
+void FollowupReminderSelectDateDialogTest::shouldDisableOkButtonIfDateIsEmpty()
+{
+    FollowUpReminderSelectDateDialog dlg;
+    KDateComboBox *datecombobox = qFindChild<KDateComboBox *>(&dlg, QLatin1String("datecombobox"));
+    QVERIFY(datecombobox);
+    datecombobox->lineEdit()->clear();
+    //FIXME QT5 QVERIFY(!dlg.button(KDialog::Ok)->isEnabled());
 }
 
 QTEST_MAIN(FollowupReminderSelectDateDialogTest)

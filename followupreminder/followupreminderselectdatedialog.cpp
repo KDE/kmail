@@ -32,6 +32,7 @@
 #include <QPushButton>
 #include <QFormLayout>
 #include <QLabel>
+#include <QLineEdit>
 #include <kdatecombobox.h>
 
 FollowUpReminderSelectDateDialog::FollowUpReminderSelectDateDialog(QWidget *parent)
@@ -41,12 +42,12 @@ FollowUpReminderSelectDateDialog::FollowUpReminderSelectDateDialog(QWidget *pare
     QDialogButtonBox *buttonBox = new QDialogButtonBox(QDialogButtonBox::Ok | QDialogButtonBox::Cancel);
     QVBoxLayout *topLayout = new QVBoxLayout;
     setLayout(topLayout);
-    QPushButton *okButton = buttonBox->button(QDialogButtonBox::Ok);
-    okButton->setDefault(true);
-    okButton->setShortcut(Qt::CTRL | Qt::Key_Return);
+    mOkButton = buttonBox->button(QDialogButtonBox::Ok);
+    mOkButton->setDefault(true);
+    mOkButton->setShortcut(Qt::CTRL | Qt::Key_Return);
     connect(buttonBox, &QDialogButtonBox::accepted, this, &FollowUpReminderSelectDateDialog::accept);
     connect(buttonBox, &QDialogButtonBox::rejected, this, &FollowUpReminderSelectDateDialog::reject);
-    okButton->setDefault(true);
+    mOkButton->setDefault(true);
     setModal(true);
 
     QWidget *mainWidget = new QWidget(this);
@@ -74,10 +75,16 @@ FollowUpReminderSelectDateDialog::FollowUpReminderSelectDateDialog(QWidget *pare
 
     formLayout->addRow(i18n("Store ToDo in:"), mCollectionCombobox);
 
+    connect(mDateComboBox->lineEdit(), SIGNAL(textChanged(QString)), SLOT(slotDateChanged(QString)));
 }
 
 FollowUpReminderSelectDateDialog::~FollowUpReminderSelectDateDialog()
 {
+}
+
+void FollowUpReminderSelectDateDialog::slotDateChanged(const QString &date)
+{
+    mOkButton->setEnabled(!date.isEmpty());
 }
 
 QDate FollowUpReminderSelectDateDialog::selectedDate() const
@@ -99,3 +106,4 @@ void FollowUpReminderSelectDateDialog::accept()
     }
     QDialog::accept();
 }
+
