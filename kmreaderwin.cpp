@@ -69,7 +69,6 @@ using MessageComposer::MessageFactory;
 
 #include <Akonadi/Contact/ContactEditorDialog>
 
-#include <kde_file.h>
 #include "kmail_debug.h"
 #include <KLocalizedString>
 #include <QAction>
