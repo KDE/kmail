@@ -20,11 +20,12 @@
 
 #include "saveasfilejob.h"
 #include "kmail_debug.h"
-#include <KFileDialog>
+#include <QFileDialog>
 #include <qpointer.h>
 #include <qtextdocumentwriter.h>
 #include <QDebug>
 #include <QUrl>
+#include <KLocalizedString>
 #include <messagecomposer/composer/kmeditor.h>
 
 SaveAsFileJob::SaveAsFileJob(QObject *parent)
@@ -43,24 +44,26 @@ SaveAsFileJob::~SaveAsFileJob()
 
 void SaveAsFileJob::start()
 {
-    QPointer<KFileDialog> dlg = new KFileDialog(QUrl(), QString(), mParentWidget);
-    dlg->setOperationMode(KFileDialog::Saving);
-    dlg->setConfirmOverwrite(true);
+    QPointer<QFileDialog> dlg = new QFileDialog(mParentWidget);
+    dlg->setWindowTitle(i18n("Save File as"));
+    dlg->setAcceptMode(QFileDialog::AcceptSave);
+    QStringList lst;
     if (mHtmlMode) {
-        dlg->setFilter(QString::fromLatin1("text/html text/plain application/vnd.oasis.opendocument.text"));
+        lst << QLatin1Literal("text/html") << QLatin1Literal("text/plain") << QLatin1Literal("application/vnd.oasis.opendocument.text");
     } else {
-        dlg->setFilter(QString::fromLatin1("text/plain"));
+        lst << QLatin1Literal("text/plain");
     }
+    dlg->setMimeTypeFilters(lst);
 
     if (dlg->exec()) {
         QTextDocumentWriter writer;
-        const QString filename = dlg->selectedUrl().path();
-        writer.setFileName(dlg->selectedUrl().path());
-        if (dlg->currentFilter() == QString::fromLatin1("text/plain") || filename.endsWith(QLatin1String(".txt"))) {
+        const QString filename = dlg->selectedFiles().at(0);
+        writer.setFileName(filename);
+        if (dlg->selectedNameFilter() == QString::fromLatin1("text/plain") || filename.endsWith(QLatin1String(".txt"))) {
             writer.setFormat("plaintext");
-        } else if (dlg->currentFilter() == QString::fromLatin1("text/html") || filename.endsWith(QLatin1String(".html"))) {
+        } else if (dlg->selectedNameFilter() == QString::fromLatin1("text/html") || filename.endsWith(QLatin1String(".html"))) {
             writer.setFormat("HTML");
-        } else if (dlg->currentFilter() == QString::fromLatin1("application/vnd.oasis.opendocument.text") || filename.endsWith(QLatin1String(".odf"))) {
+        } else if (dlg->selectedNameFilter() == QString::fromLatin1("application/vnd.oasis.opendocument.text") || filename.endsWith(QLatin1String(".odf"))) {
             writer.setFormat("ODF");
         } else {
             writer.setFormat("plaintext");
