@@ -19,7 +19,7 @@
 #include "../widgets/csvwidget.h"
 #include <KUrlRequester>
 #include <QLabel>
-#include <qtest_kde.h>
+#include <qtest.h>
 CsvWidgetTest::CsvWidgetTest(QObject *parent)
     : QObject(parent)
 {
@@ -42,4 +42,4 @@ void CsvWidgetTest::shouldHaveDefaultValue()
     QVERIFY(urlrequester);
 }
 
-QTEST_KDEMAIN(CsvWidgetTest, GUI)
+QTEST_MAIN(CsvWidgetTest)

@@ -16,7 +16,7 @@
 */
 
 #include "addressbookwidgettest.h"
-#include <qtest_kde.h>
+#include <qtest.h>
 AddressBookWidgetTest::AddressBookWidgetTest(QObject *parent)
     : QObject(parent)
 {
@@ -28,4 +28,4 @@ AddressBookWidgetTest::~AddressBookWidgetTest()
 
 }
 
-QTEST_KDEMAIN(AddressBookWidgetTest, GUI)
+QTEST_MAIN(AddressBookWidgetTest)
