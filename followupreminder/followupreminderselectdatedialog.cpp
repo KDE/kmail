@@ -43,6 +43,7 @@ FollowUpReminderSelectDateDialog::FollowUpReminderSelectDateDialog(QWidget *pare
     QVBoxLayout *topLayout = new QVBoxLayout;
     setLayout(topLayout);
     mOkButton = buttonBox->button(QDialogButtonBox::Ok);
+    mOkButton->setObjectName(QLatin1Literal("ok_button"));
     mOkButton->setDefault(true);
     mOkButton->setShortcut(Qt::CTRL | Qt::Key_Return);
     connect(buttonBox, &QDialogButtonBox::accepted, this, &FollowUpReminderSelectDateDialog::accept);
