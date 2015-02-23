@@ -32,7 +32,7 @@ PotentialPhishingEmailWarning::PotentialPhishingEmailWarning(QWidget *parent)
     setMessageType(Warning);
     setWordWrap(true);
 
-    setText(i18n("Some address mail seems a potential phishing email <a href=\"phishingdetails\">(Details...)</a>"));
+    setText(i18n("Some email address seems a potential phishing email <a href=\"phishingdetails\">(Details...)</a>"));
 
     connect(this, &KMessageWidget::linkActivated, this, &PotentialPhishingEmailWarning::slotShowDetails);
     QAction *action = new QAction(i18n("Send Now"), this);
