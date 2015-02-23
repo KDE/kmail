@@ -29,6 +29,7 @@ public:
 
 private Q_SLOTS:
     void shouldHaveDefaultValue();
+    void shouldChangePath();
 };
 
 #endif // CSVWIDGETTEST_H

@@ -40,6 +40,18 @@ void CsvWidgetTest::shouldHaveDefaultValue()
 
     KUrlRequester *urlrequester = qFindChild<KUrlRequester *>(&w, QLatin1String("cvsurlrequester"));
     QVERIFY(urlrequester);
+    QVERIFY(urlrequester->url().isEmpty());
+}
+
+void CsvWidgetTest::shouldChangePath()
+{
+    MailMerge::CsvWidget w;
+
+    KUrlRequester *urlrequester = qFindChild<KUrlRequester *>(&w, QLatin1String("cvsurlrequester"));
+    QVERIFY(urlrequester->url().isEmpty());
+    KUrl url(QLatin1String("file://tmp/foo.txt"));
+    urlrequester->setUrl(url);
+    QCOMPARE(urlrequester->url(), url);
 }
 
 QTEST_KDEMAIN(CsvWidgetTest, GUI)
