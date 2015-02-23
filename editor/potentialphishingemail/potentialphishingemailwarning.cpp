@@ -35,7 +35,7 @@ PotentialPhishingEmailWarning::PotentialPhishingEmailWarning(QWidget *parent)
     setWordWrap(true);
 
     //Add i18n in kf5
-    setText(QLatin1String("Some address mail seems a potential phishing email <a href=\"phishingdetails\">(Details...)</a>"));
+    setText(QLatin1String("Some email address seems a potential phishing email <a href=\"phishingdetails\">(Details...)</a>"));
 
     connect(this, SIGNAL(linkActivated(QString)), SLOT(slotShowDetails(QString)));
     //Add i18n in kf5

@@ -60,6 +60,9 @@ bool PotentialPhishingEmailJob::start()
             KPIMUtils::extractEmailAddressAndName( addr, temail, tname );  // ignore return value
             // which is always false
             if (tname.contains(QLatin1String("@"))) { //Potential address
+                if (tname.startsWith(QLatin1Char('<')) && tname.endsWith(QLatin1Char('>'))) {
+                    tname = tname.mid(1,tname.length()-2);
+                }
                 if (temail != tname) {
                     mPotentialPhisingEmails.append(addr);
                 }
@@ -70,4 +73,3 @@ bool PotentialPhishingEmailJob::start()
     deleteLater();
     return true;
 }
-
