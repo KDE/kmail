@@ -24,7 +24,7 @@
 
 int main(int argc, char **argv)
 {
-    KAboutData aboutData(QLatin1String("mailmergewidget_gui"), i18n("MailMergeWidgetTest_Gui"), QLatin1String("1.0"));
+    KAboutData aboutData(QStringLiteral("mailmergewidget_gui"), i18n("MailMergeWidgetTest_Gui"), QStringLiteral("1.0"));
     aboutData.setShortDescription(i18n("Test for mailmerge widget"));
     QApplication app(argc, argv);
     QCommandLineParser parser;

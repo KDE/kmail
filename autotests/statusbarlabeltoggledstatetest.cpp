@@ -35,14 +35,14 @@ StatusBarLabelToggledStateTest::~StatusBarLabelToggledStateTest()
 void StatusBarLabelToggledStateTest::shouldHasDefaultValue()
 {
     StatusBarLabelToggledState widget;
-    widget.setStateString(QLatin1String("toggle"), QLatin1String("untoggle"));
+    widget.setStateString(QStringLiteral("toggle"), QStringLiteral("untoggle"));
     QVERIFY(!widget.toggleMode());
 }
 
 void StatusBarLabelToggledStateTest::shouldChangeState()
 {
     StatusBarLabelToggledState widget;
-    widget.setStateString(QLatin1String("toggle"), QLatin1String("untoggle"));
+    widget.setStateString(QStringLiteral("toggle"), QStringLiteral("untoggle"));
     widget.setToggleMode(true);
     QVERIFY(widget.toggleMode());
     QVERIFY(!widget.text().isEmpty());
@@ -57,7 +57,7 @@ void StatusBarLabelToggledStateTest::shouldChangeState()
 void StatusBarLabelToggledStateTest::shouldEmitSignalWhenChangeState()
 {
     StatusBarLabelToggledState widget;
-    widget.setStateString(QLatin1String("toggle"), QLatin1String("untoggle"));
+    widget.setStateString(QStringLiteral("toggle"), QStringLiteral("untoggle"));
     QSignalSpy spy(&widget, SIGNAL(toggleModeChanged(bool)));
     widget.setToggleMode(true);
     QCOMPARE(spy.count(), 1);
@@ -69,7 +69,7 @@ void StatusBarLabelToggledStateTest::shouldEmitSignalWhenChangeState()
 void StatusBarLabelToggledStateTest::shouldNotEmitSignalWhenWeDontChangeState()
 {
     StatusBarLabelToggledState widget;
-    widget.setStateString(QLatin1String("toggle"), QLatin1String("untoggle"));
+    widget.setStateString(QStringLiteral("toggle"), QStringLiteral("untoggle"));
     QSignalSpy spy(&widget, SIGNAL(toggleModeChanged(bool)));
     widget.setToggleMode(false);
     QCOMPARE(spy.count(), 0);
@@ -84,7 +84,7 @@ void StatusBarLabelToggledStateTest::shouldNotEmitSignalWhenWeDontChangeState()
 void StatusBarLabelToggledStateTest::shouldEmitSignalWhenClickOnLabel()
 {
     StatusBarLabelToggledState widget;
-    widget.setStateString(QLatin1String("toggle"), QLatin1String("untoggle"));
+    widget.setStateString(QStringLiteral("toggle"), QStringLiteral("untoggle"));
     QSignalSpy spy(&widget, SIGNAL(toggleModeChanged(bool)));
     widget.show();
     QTest::qWaitForWindowExposed(&widget);
@@ -99,7 +99,7 @@ void StatusBarLabelToggledStateTest::shouldEmitSignalWhenClickOnLabel()
 void StatusBarLabelToggledStateTest::shouldChangeTestWhenStateChanged()
 {
     StatusBarLabelToggledState widget;
-    widget.setStateString(QLatin1String("toggle"), QLatin1String("untoggle"));
+    widget.setStateString(QStringLiteral("toggle"), QStringLiteral("untoggle"));
     const QString initialText = widget.text();
     widget.setToggleMode(true);
     const QString newText = widget.text();

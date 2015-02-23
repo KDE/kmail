@@ -97,8 +97,8 @@ bool FolderArchiveAccountInfo::keepExistingStructure() const
 
 void FolderArchiveAccountInfo::readConfig(const KConfigGroup &config)
 {
-    mInstanceName = config.readEntry(QLatin1String("instanceName"));
-    mArchiveTopLevelCollectionId = config.readEntry(QLatin1String("topLevelCollectionId"), -1);
+    mInstanceName = config.readEntry(QStringLiteral("instanceName"));
+    mArchiveTopLevelCollectionId = config.readEntry(QStringLiteral("topLevelCollectionId"), -1);
     mArchiveType = static_cast<FolderArchiveType>(config.readEntry("folderArchiveType", (int)UniqueFolder));
     mEnabled = config.readEntry("enabled", false);
     mKeepExistingStructure = config.readEntry("keepExistingStructure", false);
@@ -106,15 +106,15 @@ void FolderArchiveAccountInfo::readConfig(const KConfigGroup &config)
 
 void FolderArchiveAccountInfo::writeConfig(KConfigGroup &config)
 {
-    config.writeEntry(QLatin1String("instanceName"), mInstanceName);
+    config.writeEntry(QStringLiteral("instanceName"), mInstanceName);
     if (mArchiveTopLevelCollectionId > -1) {
-        config.writeEntry(QLatin1String("topLevelCollectionId"), mArchiveTopLevelCollectionId);
+        config.writeEntry(QStringLiteral("topLevelCollectionId"), mArchiveTopLevelCollectionId);
     } else {
-        config.deleteEntry(QLatin1String("topLevelCollectionId"));
+        config.deleteEntry(QStringLiteral("topLevelCollectionId"));
     }
 
-    config.writeEntry(QLatin1String("folderArchiveType"), (int)mArchiveType);
-    config.writeEntry(QLatin1String("enabled"), mEnabled);
+    config.writeEntry(QStringLiteral("folderArchiveType"), (int)mArchiveType);
+    config.writeEntry(QStringLiteral("enabled"), mEnabled);
     config.writeEntry("keepExistingStructure", mKeepExistingStructure);
 }
 

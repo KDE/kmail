@@ -32,10 +32,10 @@ CsvWidget::CsvWidget(QWidget *parent)
     setLayout(csvWidgetLayout);
 
     QLabel *lab = new QLabel(i18n("Path:"));
-    lab->setObjectName(QLatin1String("label"));
+    lab->setObjectName(QStringLiteral("label"));
     csvWidgetLayout->addWidget(lab);
     mCvsUrlRequester = new KUrlRequester;
-    mCvsUrlRequester->setObjectName(QLatin1String("cvsurlrequester"));
+    mCvsUrlRequester->setObjectName(QStringLiteral("cvsurlrequester"));
     csvWidgetLayout->addWidget(mCvsUrlRequester);
 }
 

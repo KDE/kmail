@@ -36,16 +36,16 @@ ManageShowCollectionProperties::ManageShowCollectionProperties(KMMainWidget *mai
     : QObject(parent),
       mMainWidget(mainWidget)
 {
-    mPages = QStringList() << QLatin1String("MailCommon::CollectionGeneralPage")
-             << QLatin1String("KMail::CollectionViewPage")
-             << QLatin1String("Akonadi::CachePolicyPage")
-             << QLatin1String("KMail::CollectionTemplatesPage")
-             << QLatin1String("MailCommon::CollectionExpiryPage")
-             << QLatin1String("PimCommon::CollectionAclPage")
-             << QLatin1String("KMail::CollectionMailingListPage")
-             << QLatin1String("KMail::CollectionQuotaPage")
-             << QLatin1String("KMail::CollectionShortcutPage")
-             << QLatin1String("KMail::CollectionMaintenancePage");
+    mPages = QStringList() << QStringLiteral("MailCommon::CollectionGeneralPage")
+             << QStringLiteral("KMail::CollectionViewPage")
+             << QStringLiteral("Akonadi::CachePolicyPage")
+             << QStringLiteral("KMail::CollectionTemplatesPage")
+             << QStringLiteral("MailCommon::CollectionExpiryPage")
+             << QStringLiteral("PimCommon::CollectionAclPage")
+             << QStringLiteral("KMail::CollectionMailingListPage")
+             << QStringLiteral("KMail::CollectionQuotaPage")
+             << QStringLiteral("KMail::CollectionShortcutPage")
+             << QStringLiteral("KMail::CollectionMaintenancePage");
 
 }
 
@@ -61,17 +61,17 @@ void ManageShowCollectionProperties::slotCollectionProperties()
 
 void ManageShowCollectionProperties::slotShowExpiryProperties()
 {
-    showCollectionProperties(QLatin1String("MailCommon::CollectionExpiryPage"));
+    showCollectionProperties(QStringLiteral("MailCommon::CollectionExpiryPage"));
 }
 
 void ManageShowCollectionProperties::slotFolderMailingListProperties()
 {
-    showCollectionProperties(QLatin1String("KMail::CollectionMailingListPage"));
+    showCollectionProperties(QStringLiteral("KMail::CollectionMailingListPage"));
 }
 
 void ManageShowCollectionProperties::slotShowFolderShortcutDialog()
 {
-    showCollectionProperties(QLatin1String("KMail::CollectionShortcutPage"));
+    showCollectionProperties(QStringLiteral("KMail::CollectionShortcutPage"));
 }
 
 void ManageShowCollectionProperties::showCollectionProperties(const QString &pageToShow)

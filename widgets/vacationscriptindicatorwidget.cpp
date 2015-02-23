@@ -29,7 +29,7 @@ ServerLabel::ServerLabel(const QString &serverName, QWidget *parent)
 {
     setToolTip(serverName);
     setPixmap(QIcon::fromTheme(QStringLiteral("network-server")).pixmap(16, 16));
-    setStyleSheet(QString::fromLatin1("background-color: %1;").arg(QColor(Qt::yellow).name()));
+    setStyleSheet(QStringLiteral("background-color: %1;").arg(QColor(Qt::yellow).name()));
     setContentsMargins(2, 0, 4, 0);
 }
 
@@ -49,7 +49,7 @@ VacationLabel::VacationLabel(const QString &text, QWidget *parent)
 {
     // changing the palette doesn't work, seems to be overwriten by the
     // statusbar again, stylesheets seems to work though
-    setStyleSheet(QString::fromLatin1("background-color: %1; color: %2;").arg(QColor(Qt::yellow).name(), QColor(Qt::black).name()));
+    setStyleSheet(QStringLiteral("background-color: %1; color: %2;").arg(QColor(Qt::yellow).name(), QColor(Qt::black).name()));
     setContentsMargins(4, 0, 2, 0);
     setCursor(QCursor(Qt::PointingHandCursor));
 }

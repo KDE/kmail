@@ -730,8 +730,8 @@ AntiSpamWizard::ConfigReader::~ConfigReader()
 void AntiSpamWizard::ConfigReader::readAndMergeConfig()
 {
     QString groupName = (mMode == AntiSpam)
-                        ? QString::fromLatin1("Spamtool #%1")
-                        : QString::fromLatin1("Virustool #%1");
+                        ? QStringLiteral("Spamtool #%1")
+                        : QStringLiteral("Virustool #%1");
     // read the configuration from the global config file
     mConfig->setReadDefaults(true);
     KConfigGroup general(mConfig, "General");

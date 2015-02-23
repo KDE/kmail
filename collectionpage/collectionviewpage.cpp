@@ -47,7 +47,7 @@ using namespace MailCommon;
 CollectionViewPage::CollectionViewPage(QWidget *parent) :
     CollectionPropertiesPage(parent), mIsLocalSystemFolder(false)
 {
-    setObjectName(QLatin1String("KMail::CollectionViewPage"));
+    setObjectName(QStringLiteral("KMail::CollectionViewPage"));
     setPageTitle(i18nc("@title:tab View settings for a folder.", "View"));
 }
 
@@ -78,7 +78,7 @@ void CollectionViewPage::init(const Akonadi::Collection &col)
         mNormalIconButton->setStrictIconSize(true);
         mNormalIconButton->setFixedSize(28, 28);
         // Can't use iconset here.
-        mNormalIconButton->setIcon(QLatin1String("folder"));
+        mNormalIconButton->setIcon(QStringLiteral("folder"));
         mNormalIconButton->setEnabled(false);
 
         mUnreadIconLabel = new QLabel(i18nc("Icon used for folders which do have unread messages.", "&Unread:"), this);
@@ -91,7 +91,7 @@ void CollectionViewPage::init(const Akonadi::Collection &col)
         mUnreadIconButton->setStrictIconSize(true);
         mUnreadIconButton->setFixedSize(28, 28);
         // Can't use iconset here.
-        mUnreadIconButton->setIcon(QLatin1String("folder-open"));
+        mUnreadIconButton->setIcon(QStringLiteral("folder-open"));
         mUnreadIconButton->setEnabled(false);
 
         QHBoxLayout *iconHLayout = new QHBoxLayout();
@@ -220,7 +220,7 @@ void CollectionViewPage::load(const Akonadi::Collection &col)
         }
 
         if (iconName.isEmpty()) {
-            iconName = QLatin1String("folder");
+            iconName = QStringLiteral("folder");
             iconWasEmpty = true;
         }
         mNormalIconButton->setIcon(iconName);

@@ -45,7 +45,7 @@ MailMergeWidget::MailMergeWidget(QWidget *parent)
     hbox->addWidget(lab);
 
     mSource = new KComboBox;
-    mSource->setObjectName(QLatin1String("source"));
+    mSource->setObjectName(QStringLiteral("source"));
     mSource->addItem(i18n("Address Book"), AddressBook);
     mSource->addItem(i18n("CSV"), CSV);
     connect(mSource, static_cast<void (KComboBox::*)(int)>(&KComboBox::currentIndexChanged), this, &MailMergeWidget::slotSourceChanged);
@@ -54,15 +54,15 @@ MailMergeWidget::MailMergeWidget(QWidget *parent)
     hbox->addWidget(mSource);
 
     mStackedWidget = new QStackedWidget;
-    mStackedWidget->setObjectName(QLatin1String("stackedwidget"));
+    mStackedWidget->setObjectName(QStringLiteral("stackedwidget"));
     vbox->addWidget(mStackedWidget);
 
     mAddressbookWidget = new MailMerge::AddressBookWidget;
-    mAddressbookWidget->setObjectName(QLatin1String("addressbookwidget"));
+    mAddressbookWidget->setObjectName(QStringLiteral("addressbookwidget"));
     mStackedWidget->addWidget(mAddressbookWidget);
 
     mCsvWidget = new MailMerge::CsvWidget;
-    mCsvWidget->setObjectName(QLatin1String("cvswidget"));
+    mCsvWidget->setObjectName(QStringLiteral("cvswidget"));
 
     mStackedWidget->addWidget(mCsvWidget);
 
@@ -74,7 +74,7 @@ MailMergeWidget::MailMergeWidget(QWidget *parent)
     mAttachment = new AttachmentListWidget(this, buttonCode,
                                            i18n("A&dd..."), i18n("Re&move"),
                                            i18n("Mod&ify..."));
-    mAttachment->setObjectName(QLatin1String("attachment-list"));
+    mAttachment->setObjectName(QStringLiteral("attachment-list"));
 
     vbox->addWidget(mAttachment);
     vbox->addStretch();

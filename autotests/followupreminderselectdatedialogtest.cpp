@@ -38,15 +38,15 @@ FollowupReminderSelectDateDialogTest::~FollowupReminderSelectDateDialogTest()
 void FollowupReminderSelectDateDialogTest::shouldHaveDefaultValue()
 {
     FollowUpReminderSelectDateDialog dlg;
-    KDateComboBox *datecombobox = dlg.findChild<KDateComboBox *>(QLatin1String("datecombobox"));
+    KDateComboBox *datecombobox = dlg.findChild<KDateComboBox *>(QStringLiteral("datecombobox"));
     QVERIFY(datecombobox);
 
-    Akonadi::CollectionComboBox *combobox = dlg.findChild<Akonadi::CollectionComboBox *>(QLatin1String("collectioncombobox"));
+    Akonadi::CollectionComboBox *combobox = dlg.findChild<Akonadi::CollectionComboBox *>(QStringLiteral("collectioncombobox"));
     QVERIFY(combobox);
     QDate currentDate = QDate::currentDate();
     QCOMPARE(datecombobox->date(), currentDate.addDays(1));
 
-    QPushButton *okButton = dlg.findChild<QPushButton *>(QLatin1String("ok_button"));
+    QPushButton *okButton = dlg.findChild<QPushButton *>(QStringLiteral("ok_button"));
     QVERIFY(okButton);
     QVERIFY(okButton->isEnabled());
 }
@@ -54,9 +54,9 @@ void FollowupReminderSelectDateDialogTest::shouldHaveDefaultValue()
 void FollowupReminderSelectDateDialogTest::shouldDisableOkButtonIfDateIsEmpty()
 {
     FollowUpReminderSelectDateDialog dlg;
-    KDateComboBox *datecombobox = qFindChild<KDateComboBox *>(&dlg, QLatin1String("datecombobox"));
+    KDateComboBox *datecombobox = qFindChild<KDateComboBox *>(&dlg, QStringLiteral("datecombobox"));
     QVERIFY(datecombobox);
-    QPushButton *okButton = dlg.findChild<QPushButton *>(QLatin1String("ok_button"));
+    QPushButton *okButton = dlg.findChild<QPushButton *>(QStringLiteral("ok_button"));
     QVERIFY(okButton->isEnabled());
     datecombobox->lineEdit()->clear();
     QVERIFY(!okButton->isEnabled());

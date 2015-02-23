@@ -35,10 +35,10 @@ void CsvWidgetTest::shouldHaveDefaultValue()
 {
     MailMerge::CsvWidget w;
 
-    QLabel *lab = qFindChild<QLabel *>(&w, QLatin1String("label"));
+    QLabel *lab = qFindChild<QLabel *>(&w, QStringLiteral("label"));
     QVERIFY(lab);
 
-    KUrlRequester *urlrequester = qFindChild<KUrlRequester *>(&w, QLatin1String("cvsurlrequester"));
+    KUrlRequester *urlrequester = qFindChild<KUrlRequester *>(&w, QStringLiteral("cvsurlrequester"));
     QVERIFY(urlrequester);
     QVERIFY(urlrequester->url().isEmpty());
 }
@@ -47,9 +47,9 @@ void CsvWidgetTest::shouldChangePath()
 {
     MailMerge::CsvWidget w;
 
-    KUrlRequester *urlrequester = qFindChild<KUrlRequester *>(&w, QLatin1String("cvsurlrequester"));
+    KUrlRequester *urlrequester = qFindChild<KUrlRequester *>(&w, QStringLiteral("cvsurlrequester"));
     QVERIFY(urlrequester->url().isEmpty());
-    QUrl url(QLatin1String("file://tmp/foo.txt"));
+    QUrl url(QStringLiteral("file://tmp/foo.txt"));
     urlrequester->setUrl(url);
     QCOMPARE(urlrequester->url(), url);
 }

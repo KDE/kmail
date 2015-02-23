@@ -38,7 +38,7 @@ CollectionShortcutPage::CollectionShortcutPage(QWidget *parent) :
     CollectionPropertiesPage(parent),
     mShortcutChanged(false)
 {
-    setObjectName(QLatin1String("KMail::CollectionShortcutPage"));
+    setObjectName(QStringLiteral("KMail::CollectionShortcutPage"));
     setPageTitle(i18nc("@title:tab Shortcut settings for a folder.", "Shortcut"));
 }
 
@@ -66,7 +66,7 @@ void CollectionShortcutPage::init(const Akonadi::Collection &col)
     new QWidget(hb);
     mKeySeqWidget = new KKeySequenceWidget(hb);
     hbHBoxLayout->addWidget(mKeySeqWidget);
-    mKeySeqWidget->setObjectName(QLatin1String("FolderShortcutSelector"));
+    mKeySeqWidget->setObjectName(QStringLiteral("FolderShortcutSelector"));
     connect(mKeySeqWidget, &KKeySequenceWidget::keySequenceChanged, this, &CollectionShortcutPage::slotShortcutChanged);
     new QWidget(hb);
 

@@ -52,7 +52,7 @@ IdentityAddVcardDialog::IdentityAddVcardDialog(const QStringList &shadowIdentiti
     QVBoxLayout *vlay = new QVBoxLayout(mainWidget);
 
     mButtonGroup = new QButtonGroup(this);
-    mButtonGroup->setObjectName(QLatin1String("buttongroup"));
+    mButtonGroup->setObjectName(QStringLiteral("buttongroup"));
 
     // row 1: radio button
     QRadioButton *radio = new QRadioButton(i18n("&With empty fields"), this);
@@ -70,7 +70,7 @@ IdentityAddVcardDialog::IdentityAddVcardDialog(const QStringList &shadowIdentiti
     vlay->addLayout(hlay);
 
     mVCardPath = new KUrlRequester;
-    mVCardPath->setObjectName(QLatin1String("kurlrequester_vcardpath"));
+    mVCardPath->setObjectName(QStringLiteral("kurlrequester_vcardpath"));
     const QString filter = i18n("*.vcf|vCard (*.vcf)\n*|all files (*)");
     mVCardPath->setFilter(filter);
 
@@ -94,7 +94,7 @@ IdentityAddVcardDialog::IdentityAddVcardDialog(const QStringList &shadowIdentiti
     hlay = new QHBoxLayout(); // inherits spacing
     vlay->addLayout(hlay);
     mComboBox = new KComboBox(this);
-    mComboBox->setObjectName(QLatin1String("identity_combobox"));
+    mComboBox->setObjectName(QStringLiteral("identity_combobox"));
     mComboBox->setEditable(false);
 
     mComboBox->addItems(shadowIdentities);

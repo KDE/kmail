@@ -41,12 +41,12 @@ ConfigureDialog::ConfigureDialog(QWidget *parent, bool modal)
     setStandardButtons(QDialogButtonBox::Ok | QDialogButtonBox::Help | QDialogButtonBox::RestoreDefaults | QDialogButtonBox::Cancel | QDialogButtonBox::Apply | QDialogButtonBox::Reset);
     setModal(modal);
     KWindowSystem::setIcons(winId(), qApp->windowIcon().pixmap(IconSize(KIconLoader::Desktop), IconSize(KIconLoader::Desktop)), qApp->windowIcon().pixmap(IconSize(KIconLoader::Small), IconSize(KIconLoader::Small)));
-    addModule(QLatin1String("kmail_config_identity"));
-    addModule(QLatin1String("kmail_config_accounts"));
-    addModule(QLatin1String("kmail_config_appearance"));
-    addModule(QLatin1String("kmail_config_composer"));
-    addModule(QLatin1String("kmail_config_security"));
-    addModule(QLatin1String("kmail_config_misc"));
+    addModule(QStringLiteral("kmail_config_identity"));
+    addModule(QStringLiteral("kmail_config_accounts"));
+    addModule(QStringLiteral("kmail_config_appearance"));
+    addModule(QStringLiteral("kmail_config_composer"));
+    addModule(QStringLiteral("kmail_config_security"));
+    addModule(QStringLiteral("kmail_config_misc"));
 
     connect(button(QDialogButtonBox::Ok), &QPushButton::clicked, this, &ConfigureDialog::slotOk);
     connect(button(QDialogButtonBox::Apply), &QPushButton::clicked, this, &ConfigureDialog::slotApply);

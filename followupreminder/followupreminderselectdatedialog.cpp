@@ -60,7 +60,7 @@ FollowUpReminderSelectDateDialog::FollowUpReminderSelectDateDialog(QWidget *pare
 
     mDateComboBox = new KDateComboBox;
     mDateComboBox->setMinimumDate(QDate::currentDate());
-    mDateComboBox->setObjectName(QLatin1String("datecombobox"));
+    mDateComboBox->setObjectName(QStringLiteral("datecombobox"));
 
     QDate currentDate = QDate::currentDate();
     currentDate = currentDate.addDays(1);
@@ -72,7 +72,7 @@ FollowUpReminderSelectDateDialog::FollowUpReminderSelectDateDialog(QWidget *pare
     mCollectionCombobox->setMinimumWidth(250);
     mCollectionCombobox->setAccessRightsFilter(Akonadi::Collection::CanCreateItem);
     mCollectionCombobox->setMimeTypeFilter(QStringList() << KCalCore::Todo::todoMimeType());
-    mCollectionCombobox->setObjectName(QLatin1String("collectioncombobox"));
+    mCollectionCombobox->setObjectName(QStringLiteral("collectioncombobox"));
 
     formLayout->addRow(i18n("Store ToDo in:"), mCollectionCombobox);
 
