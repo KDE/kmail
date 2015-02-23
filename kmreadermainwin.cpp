@@ -360,10 +360,9 @@ QAction *KMReaderMainWin::copyActionMenu(QMenu *menu)
     if (mainwin) {
         KActionMenu *action = new KActionMenu(menu);
         action->setIcon(QIcon::fromTheme(QLatin1String("edit-copy")));
-        action->setText(i18n("Copy Item To..."));
+        action->setText(i18n("Copy Message To..."));
         mainwin->standardMailActionManager()->standardActionManager()->createActionFolderMenu(action->menu(), Akonadi::StandardActionManager::CopyItemToMenu);
         connect(action->menu(), &QMenu::triggered, this, &KMReaderMainWin::slotCopyItem);
-
         return action;
     }
     return Q_NULLPTR;

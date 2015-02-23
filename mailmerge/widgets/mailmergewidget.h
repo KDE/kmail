@@ -28,6 +28,7 @@ namespace MailMerge
 {
 class CsvWidget;
 class AttachmentListWidget;
+class AddressBookWidget;
 class MailMergeWidget : public QWidget
 {
     Q_OBJECT
@@ -51,6 +52,7 @@ private:
     QStackedWidget *mStackedWidget;
     AttachmentListWidget *mAttachment;
     MailMerge::CsvWidget *mCsvWidget;
+    MailMerge::AddressBookWidget *mAddressbookWidget;
 };
 }
 #endif // MAILMERGEWIDGET_H

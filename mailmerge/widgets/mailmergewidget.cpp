@@ -17,6 +17,7 @@
 
 #include "mailmergewidget.h"
 #include "../widgets/csvwidget.h"
+#include "../widgets/addressbookwidget.h"
 
 #include "attachmentlistwidget.h"
 
@@ -56,12 +57,9 @@ MailMergeWidget::MailMergeWidget(QWidget *parent)
     mStackedWidget->setObjectName(QLatin1String("stackedwidget"));
     vbox->addWidget(mStackedWidget);
 
-    QWidget *addressBookWidget = new QWidget;
-    addressBookWidget->setObjectName(QLatin1String("addressbookwidget"));
-    QVBoxLayout *addressBookWidgetLayout = new QVBoxLayout;
-    //TODO add addressbook select
-    addressBookWidget->setLayout(addressBookWidgetLayout);
-    mStackedWidget->addWidget(addressBookWidget);
+    mAddressbookWidget = new MailMerge::AddressBookWidget;
+    mAddressbookWidget->setObjectName(QLatin1String("addressbookwidget"));
+    mStackedWidget->addWidget(mAddressbookWidget);
 
     mCsvWidget = new MailMerge::CsvWidget;
     mCsvWidget->setObjectName(QLatin1String("cvswidget"));
