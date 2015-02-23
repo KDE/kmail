@@ -38,10 +38,10 @@ PotentialPhishingDetailDialogTest::~PotentialPhishingDetailDialogTest()
 void PotentialPhishingDetailDialogTest::shouldHaveDefaultValue()
 {
     PotentialPhishingDetailDialog dlg;
-    QLabel *searchLabel = qFindChild<QLabel *>(&dlg, QLatin1String("label"));
+    QLabel *searchLabel = dlg.findChild<QLabel *>(QLatin1String("label"));
     QVERIFY(searchLabel);
 
-    QListWidget *listWidget = qFindChild<QListWidget *>(&dlg, QLatin1String("list_widget"));
+    QListWidget *listWidget = dlg.findChild<QListWidget *>(QLatin1String("list_widget"));
     QVERIFY(listWidget);
     QCOMPARE(listWidget->count(), 0);
 }
@@ -49,7 +49,7 @@ void PotentialPhishingDetailDialogTest::shouldHaveDefaultValue()
 void PotentialPhishingDetailDialogTest::shouldFillList()
 {
     PotentialPhishingDetailDialog dlg;
-    QListWidget *listWidget = qFindChild<QListWidget *>(&dlg, QLatin1String("list_widget"));
+    QListWidget *listWidget = dlg.findChild<QListWidget *>(QLatin1String("list_widget"));
     QStringList lst;
     lst << QLatin1String("bla");
     lst << QLatin1String("bli");
@@ -61,7 +61,7 @@ void PotentialPhishingDetailDialogTest::shouldFillList()
 void PotentialPhishingDetailDialogTest::shouldClearListBeforeToAddNew()
 {
     PotentialPhishingDetailDialog dlg;
-    QListWidget *listWidget = qFindChild<QListWidget *>(&dlg, QLatin1String("list_widget"));
+    QListWidget *listWidget = dlg.findChild<QListWidget *>(QLatin1String("list_widget"));
     QStringList lst;
     lst << QLatin1String("bla");
     lst << QLatin1String("bli");
@@ -78,7 +78,7 @@ void PotentialPhishingDetailDialogTest::shouldClearListBeforeToAddNew()
 void PotentialPhishingDetailDialogTest::shouldNotAddDuplicateEntries()
 {
     PotentialPhishingDetailDialog dlg;
-    QListWidget *listWidget = qFindChild<QListWidget *>(&dlg, QLatin1String("list_widget"));
+    QListWidget *listWidget = dlg.findChild<QListWidget *>(QLatin1String("list_widget"));
     QStringList lst;
     lst << QLatin1String("bla");
     lst << QLatin1String("blo");

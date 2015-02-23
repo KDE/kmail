@@ -39,7 +39,7 @@ void PotentialPhishingEmailWarningTest::shouldHaveDefaultValue()
     PotentialPhishingEmailWarning w;
     QVERIFY(!w.isVisible());
     //Verify QVERIFY(w.isCloseButtonVisible());
-    QAction *act = qFindChild<QAction *>(&w, QStringLiteral("sendnow"));
+    QAction *act = w.findChild<QAction *>(QStringLiteral("sendnow"));
     QVERIFY(act);
 }
 
