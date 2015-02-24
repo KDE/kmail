@@ -77,13 +77,15 @@ private Q_SLOTS:
     /// forwarding is set.
     void slotReplyOrForwardFinished();
     void slotCopyItem(QAction *);
-    void slotCopyResult(KJob *job);
+    void slotCopyMoveResult( KJob * job );
+    void slotMoveItem(QAction *action);
 
 private:
     Akonadi::Collection parentCollection() const;
     void initKMReaderMainWin();
     void setupAccel();
     QAction *copyActionMenu(QMenu *menu);
+    QAction *moveActionMenu(QMenu *menu);
 
     KMReaderWin *mReaderWin;
     Akonadi::Item mMsg;
