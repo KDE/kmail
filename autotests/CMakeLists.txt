@@ -24,13 +24,6 @@ add_executable( identityaddvcarddialogtest  ${kmail_identityaddvcarddialog_sourc
 ecm_mark_as_test(kmail-identityaddvcarddialogtest)
 target_link_libraries( identityaddvcarddialogtest Qt5::Test Qt5::Widgets KF5::Completion KF5::KIOWidgets KF5::I18n)
 
-set( kmail_followupreminderselectdatedialog_source followupreminderselectdatedialogtest.cpp ../followupreminder/followupreminderselectdatedialog.cpp )
-add_executable( followupreminderselectdatedialogtest ${kmail_followupreminderselectdatedialog_source})
-ecm_mark_as_test(kmail-followupreminderselectdatedialogtest)
-target_link_libraries( followupreminderselectdatedialogtest Qt5::Test KF5::KIOWidgets KF5::I18n KF5::CalendarCore KF5::AkonadiCore KF5::AkonadiWidgets )
-
-
-
 set( kmail_statusbarlabeltoggledstate_source statusbarlabeltoggledstatetest.cpp ../widgets/statusbarlabeltoggledstate.cpp ../kmail_debug.cpp)
 add_executable(statusbarlabeltoggledstatetest ${kmail_statusbarlabeltoggledstate_source})
 ecm_mark_as_test(kmail-statusbarlabeltoggledstatetest)
@@ -48,4 +41,10 @@ add_executable( cryptostateindicatorwidgettest ${kmail_cryptostateindicatorwidge
 add_test(cryptostateindicatorwidgettest cryptostateindicatorwidgettest)
 ecm_mark_as_test(cryptostateindicatorwidgettest)
 target_link_libraries( cryptostateindicatorwidgettest Qt5::Test  messagecore)
+
+
+set(KDEPIMLIBS_RUN_ISOLATED_TESTS TRUE)
+set(KDEPIMLIBS_RUN_SQLITE_ISOLATED_TESTS TRUE)
+
+add_akonadi_isolated_test_advanced( followupreminderselectdatedialogtest.cpp  "../followupreminder/followupreminderselectdatedialog.cpp" "KF5::CalendarCore;KF5::AkonadiCore;KF5::AkonadiWidgets")
 
