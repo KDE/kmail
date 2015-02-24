@@ -23,11 +23,6 @@ kde4_add_unit_test( identityaddvcarddialogtest ${kmail_identityaddvcarddialog_so
 target_link_libraries( identityaddvcarddialogtest ${QT_QTTEST_LIBRARY} ${KDE4_KDEUI_LIBS} ${KDE4_KFILE_LIBS})
 
 
-set( kmail_followupreminderselectdatedialog_source followupreminderselectdatedialogtest.cpp ../followupreminder/followupreminderselectdatedialog.cpp )
-kde4_add_unit_test( followupreminderselectdatedialogtest ${kmail_followupreminderselectdatedialog_source})
-target_link_libraries( followupreminderselectdatedialogtest ${QT_QTTEST_LIBRARY} ${KDE4_KDEUI_LIBS} ${KDEPIMLIBS_AKONADI_LIBS} ${KDEPIMLIBS_AKONADI_CALENDAR_LIBS}  ${KDEPIMLIBS_KCALCORE_LIBS})
-
-
 set( kmail_statusbarlabeltoggledstate_source statusbarlabeltoggledstatetest.cpp ../widgets/statusbarlabeltoggledstate.cpp )
 kde4_add_unit_test( statusbarlabeltoggledstatetest ${kmail_statusbarlabeltoggledstate_source})
 target_link_libraries( statusbarlabeltoggledstatetest ${QT_QTTEST_LIBRARY} ${KDE4_KDEUI_LIBS})
@@ -41,4 +36,12 @@ target_link_libraries( createfollowupreminderonexistingmessagejobtest ${QT_QTTES
 set( kmail_cryptostateindicatorwidgettest_source cryptostateindicatorwidgettest.cpp ../editor/cryptostateindicatorwidget.cpp)
 kde4_add_unit_test( cryptostateindicatorwidgettest ${kmail_cryptostateindicatorwidgettest_source})
 target_link_libraries( cryptostateindicatorwidgettest ${QT_QTTEST_LIBRARY} ${KDE4_KDEUI_LIBS} messagecore)
+
+
+include(AkonadiMacros)
+set(KDEPIMLIBS_RUN_ISOLATED_TESTS TRUE)
+set(KDEPIMLIBS_RUN_SQLITE_ISOLATED_TESTS TRUE)
+
+add_akonadi_isolated_test_advanced( followupreminderselectdatedialogtest.cpp  "../followupreminder/followupreminderselectdatedialog.cpp" "${KDEPIMLIBS_AKONADI_CALENDAR_LIBS};${KDEPIMLIBS_KCALCORE_LIBS}")
+
 
