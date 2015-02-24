@@ -408,12 +408,12 @@ void KMReaderMainWin::slotMoveItem(QAction *action)
 
         if ( mMsg.isValid() ) {
             Akonadi::ItemMoveJob *job = new Akonadi::ItemMoveJob( mMsg, collection,this );
-            connect( job, SIGNAL(result(KJob*)), this, SLOT(slotCopyResult(KJob*)) );
+            connect( job, SIGNAL(result(KJob*)), this, SLOT(slotCopyMoveResult(KJob*)) );
         }
         else
         {
             Akonadi::ItemCreateJob *job = new Akonadi::ItemCreateJob( mMsg, collection, this );
-            connect( job, SIGNAL(result(KJob*)), this, SLOT(slotCopyResult(KJob*)) );
+            connect( job, SIGNAL(result(KJob*)), this, SLOT(slotCopyMoveResult(KJob*)) );
         }
     }
 }
@@ -427,17 +427,17 @@ void KMReaderMainWin::slotCopyItem(QAction*action)
 
         if ( mMsg.isValid() ) {
             Akonadi::ItemCopyJob *job = new Akonadi::ItemCopyJob( mMsg, collection,this );
-            connect( job, SIGNAL(result(KJob*)), this, SLOT(slotCopyResult(KJob*)) );
+            connect( job, SIGNAL(result(KJob*)), this, SLOT(slotCopyMoveResult(KJob*)) );
         }
         else
         {
             Akonadi::ItemCreateJob *job = new Akonadi::ItemCreateJob( mMsg, collection, this );
-            connect( job, SIGNAL(result(KJob*)), this, SLOT(slotCopyResult(KJob*)) );
+            connect( job, SIGNAL(result(KJob*)), this, SLOT(slotCopyMoveResult(KJob*)) );
         }
     }
 }
 
-void KMReaderMainWin::slotCopyResult( KJob * job )
+void KMReaderMainWin::slotCopyMoveResult( KJob * job )
 {
     if ( job->error() ) {
         KMessageBox::sorry( this, i18n("Cannot copy item. %1", job->errorString() ) );
