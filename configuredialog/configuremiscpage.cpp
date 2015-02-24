@@ -186,7 +186,7 @@ void MiscPage::InviteTab::doResetToDefaultsOther()
 MiscPageProxyTab::MiscPageProxyTab(QWidget *parent)
     : ConfigModuleTab(parent)
 {
-    KCModuleInfo proxyInfo(QLatin1String("proxy.desktop"));
+    KCModuleInfo proxyInfo(QStringLiteral("proxy.desktop"));
     mProxyModule = new KCModuleProxy(proxyInfo, parent);
     QHBoxLayout *l = new QHBoxLayout(this);
     l->addWidget(mProxyModule);

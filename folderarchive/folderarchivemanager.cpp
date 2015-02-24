@@ -175,27 +175,27 @@ void FolderArchiveManager::load()
 
 void FolderArchiveManager::moveDone()
 {
-    const QPixmap pixmap = QIcon::fromTheme(QLatin1String("kmail")).pixmap(KIconLoader::SizeSmall, KIconLoader::SizeSmall);
+    const QPixmap pixmap = QIcon::fromTheme(QStringLiteral("kmail")).pixmap(KIconLoader::SizeSmall, KIconLoader::SizeSmall);
 
-    KNotification::event(QLatin1String("folderarchivedone"),
+    KNotification::event(QStringLiteral("folderarchivedone"),
                          i18n("Messages archived"),
                          pixmap,
                          Q_NULLPTR,
                          KNotification::CloseOnTimeout,
-                         QLatin1String("kmail2"));
+                         QStringLiteral("kmail2"));
     nextJob();
 }
 
 void FolderArchiveManager::moveFailed(const QString &msg)
 {
-    const QPixmap pixmap = QIcon::fromTheme(QLatin1String("kmail")).pixmap(KIconLoader::SizeSmall, KIconLoader::SizeSmall);
+    const QPixmap pixmap = QIcon::fromTheme(QStringLiteral("kmail")).pixmap(KIconLoader::SizeSmall, KIconLoader::SizeSmall);
 
-    KNotification::event(QLatin1String("folderarchiveerror"),
+    KNotification::event(QStringLiteral("folderarchiveerror"),
                          msg,
                          pixmap,
                          Q_NULLPTR,
                          KNotification::CloseOnTimeout,
-                         QLatin1String("kmail2"));
+                         QStringLiteral("kmail2"));
     nextJob();
 }
 
