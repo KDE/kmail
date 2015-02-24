@@ -1,0 +1,11 @@
+<config>
+  <kdehome>kdehome</kdehome>
+  <confighome>xdgconfig-sqlite.db</confighome>
+  <datahome>xdglocal</datahome>
+  <agent synchronize="true">akonadi_knut_resource</agent>
+  <agent synchronize="true">akonadi_knut_resource</agent>
+  <agent synchronize="true">akonadi_knut_resource</agent>
+  <envvar name="AKONADI_DISABLE_AGENT_AUTOSTART">true</envvar>
+  <envvar name="TESTRUNNER_DB_ENVIRONMENT">sqlite</envvar>
+  <envvar name="AKONADI_OVERRIDE_SEARCHPLUGIN">akonadi_test_searchplugin</envvar>
+</config>

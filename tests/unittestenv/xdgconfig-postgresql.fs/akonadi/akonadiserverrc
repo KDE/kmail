@@ -1,0 +1,10 @@
+[%General]
+Driver=QPSQL
+SizeThreshold=0
+ExternalPayload=true
+
+[Search]
+Manager=Dummy
+
+[QPSQL]
+StartServer=true

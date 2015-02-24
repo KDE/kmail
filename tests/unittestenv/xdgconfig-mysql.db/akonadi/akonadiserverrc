@@ -1,0 +1,5 @@
+[%General]
+ExternalPayload=false
+
+[Search]
+Manager=Dummy

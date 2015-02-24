@@ -1,0 +1,10 @@
+[%General]
+# This is a slightly adjusted version of the QSQLITE driver from Qt
+# It is provided by akonadi itself
+Driver=QSQLITE3
+
+[Debug]
+Tracer=null
+
+[Search]
+Manager=Dummy

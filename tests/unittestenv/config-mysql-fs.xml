@@ -1,0 +1,11 @@
+<config>
+  <kdehome>kdehome</kdehome>
+  <confighome>xdgconfig-mysql.fs</confighome>
+  <datahome>xdglocal</datahome>
+  <agent synchronize="true">akonadi_knut_resource</agent>
+  <agent synchronize="true">akonadi_knut_resource</agent>
+  <agent synchronize="true">akonadi_knut_resource</agent>
+  <envvar name="AKONADI_DISABLE_AGENT_AUTOSTART">true</envvar>
+  <envvar name="TESTRUNNER_DB_ENVIRONMENT">mysql</envvar>
+  <envvar name="AKONADI_OVERRIDE_SEARCHPLUGIN">testsearchplugin</envvar>
+</config>
