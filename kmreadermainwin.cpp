@@ -371,13 +371,12 @@ QAction *KMReaderMainWin::copyActionMenu(QMenu *menu)
 
 QAction *KMReaderMainWin::moveActionMenu(QMenu *menu)
 {
-    KMMainWidget* mainwin = kmkernel->getKMMainWidget();
-    if ( mainwin )
-    {
-        KActionMenu *action = new KActionMenu( menu );
-        action->setText(i18n("Move Message To...") );
-        mainwin->standardMailActionManager()->standardActionManager()->createActionFolderMenu( action->menu(), Akonadi::StandardActionManager::MoveItemToMenu );
-        connect( action->menu(), SIGNAL(triggered(QAction*)), SLOT(slotMoveItem(QAction*)) );
+    KMMainWidget *mainwin = kmkernel->getKMMainWidget();
+    if (mainwin) {
+        KActionMenu *action = new KActionMenu(menu);
+        action->setText(i18n("Move Message To..."));
+        mainwin->standardMailActionManager()->standardActionManager()->createActionFolderMenu(action->menu(), Akonadi::StandardActionManager::MoveItemToMenu);
+        connect(action->menu(), SIGNAL(triggered(QAction*)), SLOT(slotMoveItem(QAction*)));
 
         return action;
     }
@@ -387,19 +386,16 @@ QAction *KMReaderMainWin::moveActionMenu(QMenu *menu)
 
 void KMReaderMainWin::slotMoveItem(QAction *action)
 {
-    if ( action )
-    {
+    if (action) {
         const QModelIndex index = action->data().value<QModelIndex>();
-        const Akonadi::Collection collection = index.data( Akonadi::EntityTreeModel::CollectionRole ).value<Akonadi::Collection>();
+        const Akonadi::Collection collection = index.data(Akonadi::EntityTreeModel::CollectionRole).value<Akonadi::Collection>();
 
-        if ( mMsg.isValid() ) {
-            Akonadi::ItemMoveJob *job = new Akonadi::ItemMoveJob( mMsg, collection,this );
-            connect( job, SIGNAL(result(KJob*)), this, SLOT(slotCopyMoveResult(KJob*)) );
-        }
-        else
-        {
-            Akonadi::ItemCreateJob *job = new Akonadi::ItemCreateJob( mMsg, collection, this );
-            connect( job, SIGNAL(result(KJob*)), this, SLOT(slotCopyMoveResult(KJob*)) );
+        if (mMsg.isValid()) {
+            Akonadi::ItemMoveJob *job = new Akonadi::ItemMoveJob(mMsg, collection, this);
+            connect(job, SIGNAL(result(KJob*)), this, SLOT(slotCopyMoveResult(KJob*)));
+        } else {
+            Akonadi::ItemCreateJob *job = new Akonadi::ItemCreateJob(mMsg, collection, this);
+            connect(job, SIGNAL(result(KJob*)), this, SLOT(slotCopyMoveResult(KJob*)));
         }
     }
 }
@@ -420,7 +416,7 @@ void KMReaderMainWin::slotCopyItem(QAction *action)
     }
 }
 
-void KMReaderMainWin::slotCopyMoveResult( KJob * job )
+void KMReaderMainWin::slotCopyMoveResult(KJob *job)
 {
     if (job->error()) {
         KMessageBox::sorry(this, i18n("Cannot copy item. %1", job->errorString()));
@@ -574,8 +570,8 @@ void KMReaderMainWin::showMessagePopup(const Akonadi::Item &msg , const QUrl &ur
                 menu->addAction(mMsgActions->forwardMenu());
                 menu->addSeparator();
             }
-            menu->addAction( copyActionMenu(menu) );
-            menu->addAction( moveActionMenu(menu));
+            menu->addAction(copyActionMenu(menu));
+            menu->addAction(moveActionMenu(menu));
 
             menu->addSeparator();
             if (!imageUrl.isEmpty()) {

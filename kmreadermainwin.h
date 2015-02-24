@@ -77,7 +77,7 @@ private Q_SLOTS:
     /// forwarding is set.
     void slotReplyOrForwardFinished();
     void slotCopyItem(QAction *);
-    void slotCopyMoveResult( KJob * job );
+    void slotCopyMoveResult(KJob *job);
     void slotMoveItem(QAction *action);
 
 private:
