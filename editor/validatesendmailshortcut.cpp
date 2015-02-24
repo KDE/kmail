@@ -47,7 +47,7 @@ bool ValidateSendMailShortcut::validate()
                        i18n("Ask Before Sending"),
                        i18n("Sending Without Confirmation"));
     if (result == KMessageBox::Yes) {
-        QAction *act = mActionCollection->action(QLatin1String("send_mail"));
+        QAction *act = mActionCollection->action(QStringLiteral("send_mail"));
         if (act) {
             act->setShortcut(QKeySequence());
             mActionCollection->writeSettings();

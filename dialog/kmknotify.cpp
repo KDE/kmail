@@ -118,23 +118,23 @@ void KMKnotify::initCombobox()
 {
 
     QStringList lstNotify;
-    lstNotify << QLatin1String("kmail2.notifyrc");
-    lstNotify << QLatin1String("akonadi_maildispatcher_agent.notifyrc");
-    lstNotify << QLatin1String("akonadi_mailfilter_agent.notifyrc");
-    lstNotify << QLatin1String("akonadi_archivemail_agent.notifyrc");
-    lstNotify << QLatin1String("akonadi_sendlater_agent.notifyrc");
-    lstNotify << QLatin1String("akonadi_newmailnotifier_agent.notifyrc");
-    lstNotify << QLatin1String("akonadi_followupreminder_agent.notifyrc");
-    lstNotify << QLatin1String("messageviewer.notifyrc");
+    lstNotify << QStringLiteral("kmail2.notifyrc");
+    lstNotify << QStringLiteral("akonadi_maildispatcher_agent.notifyrc");
+    lstNotify << QStringLiteral("akonadi_mailfilter_agent.notifyrc");
+    lstNotify << QStringLiteral("akonadi_archivemail_agent.notifyrc");
+    lstNotify << QStringLiteral("akonadi_sendlater_agent.notifyrc");
+    lstNotify << QStringLiteral("akonadi_newmailnotifier_agent.notifyrc");
+    lstNotify << QStringLiteral("akonadi_followupreminder_agent.notifyrc");
+    lstNotify << QStringLiteral("messageviewer.notifyrc");
     //TODO add other notifyrc here if necessary
 
     Q_FOREACH (const QString &notify, lstNotify) {
-        const QString fullPath = QStandardPaths::locate(QStandardPaths::GenericDataLocation, QLatin1String("knotifications5/") + notify);
+        const QString fullPath = QStandardPaths::locate(QStandardPaths::GenericDataLocation, QStringLiteral("knotifications5/") + notify);
 
         if (!fullPath.isEmpty()) {
             const int slash = fullPath.lastIndexOf(QLatin1Char('/'));
             QString appname = fullPath.right(fullPath.length() - slash - 1);
-            appname.remove(QLatin1String(".notifyrc"));
+            appname.remove(QStringLiteral(".notifyrc"));
             if (!appname.isEmpty()) {
                 KConfig config(fullPath, KConfig::NoGlobals, QStandardPaths::DataLocation);
                 KConfigGroup globalConfig(&config, QStringLiteral("Global"));

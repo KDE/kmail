@@ -37,7 +37,7 @@ using namespace MailCommon;
 CollectionTemplatesPage::CollectionTemplatesPage(QWidget *parent) :
     CollectionPropertiesPage(parent), mChanged(false)
 {
-    setObjectName(QLatin1String("KMail::CollectionTemplatesPage"));
+    setObjectName(QStringLiteral("KMail::CollectionTemplatesPage"));
     setPageTitle(i18n("Templates"));
     init();
 }
@@ -63,7 +63,7 @@ void CollectionTemplatesPage::init()
     connect(mCustom, &QCheckBox::clicked, this, &CollectionTemplatesPage::slotChanged);
     topItems->addWidget(mCustom, Qt::AlignLeft);
 
-    mWidget = new TemplateParser::TemplatesConfiguration(this, QLatin1String("folder-templates"));
+    mWidget = new TemplateParser::TemplatesConfiguration(this, QStringLiteral("folder-templates"));
     connect(mWidget, &TemplateParser::TemplatesConfiguration::changed, this, &CollectionTemplatesPage::slotChanged);
     mWidget->setEnabled(false);
 

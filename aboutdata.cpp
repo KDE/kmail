@@ -365,7 +365,7 @@ AboutData::AboutData()
                   ki18n("Copyright © 1997–2015, KMail authors"), KLocalizedString(),
                   "http://userbase.kde.org/KMail")
 {
-    setProgramIconName(QLatin1String("kmail"));
+    setProgramIconName(QStringLiteral("kmail"));
     using KMail::authors;
     using KMail::credits;
     const unsigned int numberAuthors(sizeof authors / sizeof * authors);
