@@ -76,12 +76,14 @@ private slots:
     void slotReplyOrForwardFinished();
     void slotCopyItem(QAction*);
     void slotCopyResult( KJob * job );
+    void slotMoveItem(QAction *action);
 
 private:
     Akonadi::Collection parentCollection() const;
     void initKMReaderMainWin();
     void setupAccel();
     KAction *copyActionMenu(QMenu *menu);
+    KAction *moveActionMenu(QMenu *menu);
 
     KMReaderWin *mReaderWin;
     Akonadi::Item mMsg;

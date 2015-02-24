@@ -62,6 +62,7 @@
 #include <akonadi/item.h>
 #include <akonadi/itemcopyjob.h>
 #include <akonadi/itemcreatejob.h>
+#include <akonadi/itemmovejob.h>
 #include <akonadi/kmime/messageflags.h>
 
 #include "messagecore/helpers/messagehelpers.h"
@@ -380,7 +381,41 @@ KAction *KMReaderMainWin::copyActionMenu(QMenu *menu)
         return action;
     }
     return 0;
+}
 
+KAction *KMReaderMainWin::moveActionMenu(QMenu *menu)
+{
+    KMMainWidget* mainwin = kmkernel->getKMMainWidget();
+    if ( mainwin )
+    {
+        KActionMenu *action = new KActionMenu( menu );
+        action->setText(i18n("Move Message To...") );
+        mainwin->standardMailActionManager()->standardActionManager()->createActionFolderMenu( action->menu(), Akonadi::StandardActionManager::MoveItemToMenu );
+        connect( action->menu(), SIGNAL(triggered(QAction*)), SLOT(slotMoveItem(QAction*)) );
+
+        return action;
+    }
+    return 0;
+
+}
+
+void KMReaderMainWin::slotMoveItem(QAction *action)
+{
+    if ( action )
+    {
+        const QModelIndex index = action->data().value<QModelIndex>();
+        const Akonadi::Collection collection = index.data( Akonadi::EntityTreeModel::CollectionRole ).value<Akonadi::Collection>();
+
+        if ( mMsg.isValid() ) {
+            Akonadi::ItemMoveJob *job = new Akonadi::ItemMoveJob( mMsg, collection,this );
+            connect( job, SIGNAL(result(KJob*)), this, SLOT(slotCopyResult(KJob*)) );
+        }
+        else
+        {
+            Akonadi::ItemCreateJob *job = new Akonadi::ItemCreateJob( mMsg, collection, this );
+            connect( job, SIGNAL(result(KJob*)), this, SLOT(slotCopyResult(KJob*)) );
+        }
+    }
 }
 
 void KMReaderMainWin::slotCopyItem(QAction*action)
@@ -553,6 +588,7 @@ void KMReaderMainWin::showMessagePopup(const Akonadi::Item&msg ,const KUrl&url,c
                 menu->addSeparator();
             }
             menu->addAction( copyActionMenu(menu) );
+            menu->addAction( moveActionMenu(menu));
 
             menu->addSeparator();
             if(!imageUrl.isEmpty()) {
