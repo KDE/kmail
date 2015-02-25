@@ -13,7 +13,7 @@ using KPIM::BroadcastStatus;
 #include <kpimutils/kfileio.h>
 #include "kmreaderwin.h"
 #include "kmmainwidget.h"
-#include "addressline/recentaddresses.h"
+#include "addressline/recentaddress/recentaddresses.h"
 using KPIM::RecentAddresses;
 #include "configuredialog/configuredialog.h"
 #include "kmcommands.h"
