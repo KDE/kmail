@@ -118,7 +118,7 @@
 #include "widgets/statusbarlabeltoggledstate.h"
 
 // LIBKDEPIM includes
-#include <libkdepim/addressline/recentaddresses.h>
+#include <libkdepim/addressline/recentaddress/recentaddresses.h>
 
 // KDEPIMLIBS includes
 #include <AkonadiCore/changerecorder.h>
