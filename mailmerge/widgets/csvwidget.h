@@ -28,7 +28,7 @@ class CsvWidget : public QWidget
 {
     Q_OBJECT
 public:
-    explicit CsvWidget(QWidget *parent = 0);
+    explicit CsvWidget(QWidget *parent = Q_NULLPTR);
     ~CsvWidget();
 
     void setPath(const QUrl &path);
