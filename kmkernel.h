@@ -357,13 +357,13 @@ public:
     /** normal control stuff */
 
     static KMKernel *self();
-    /*reimp*/ KSharedConfig::Ptr config() Q_DECL_OVERRIDE;
-    /*reimp*/ void syncConfig() Q_DECL_OVERRIDE;
+    KSharedConfig::Ptr config() Q_DECL_OVERRIDE;
+    void syncConfig() Q_DECL_OVERRIDE;
 
     void init();
     void setupDBus();
 
-    /*reimp*/ Akonadi::ChangeRecorder *folderCollectionMonitor() const Q_DECL_OVERRIDE;
+    Akonadi::ChangeRecorder *folderCollectionMonitor() const Q_DECL_OVERRIDE;
 
     /**
     * Returns the main model, which contains all folders and the items of recently opened folders.
@@ -374,7 +374,7 @@ public:
     * Returns a model of all folders in KMail. This is basically the same as entityTreeModel(),
     * but with items filtered out, the model contains only collections.
     */
-    /*reimp*/ Akonadi::EntityMimeTypeFilterModel *collectionModel() const Q_DECL_OVERRIDE;
+    Akonadi::EntityMimeTypeFilterModel *collectionModel() const Q_DECL_OVERRIDE;
 
     void recoverDeadLetters();
     void closeAllKMailWindows();
@@ -408,13 +408,13 @@ public:
     }
     MessageComposer::MessageSender *msgSender() Q_DECL_OVERRIDE;
 
-    /*reimp*/ void openFilterDialog(bool createDummyFilter = true) Q_DECL_OVERRIDE;
-    /*reimp*/ void createFilter(const QByteArray &field, const QString &value) Q_DECL_OVERRIDE;
+    void openFilterDialog(bool createDummyFilter = true) Q_DECL_OVERRIDE;
+    void createFilter(const QByteArray &field, const QString &value) Q_DECL_OVERRIDE;
 
     /** return the pointer to the identity manager */
-    /*reimp*/ KIdentityManagement::IdentityManager *identityManager() Q_DECL_OVERRIDE;
+    KIdentityManagement::IdentityManager *identityManager() Q_DECL_OVERRIDE;
 
-    /*reimp*/ MailCommon::JobScheduler *jobScheduler() const Q_DECL_OVERRIDE
+    MailCommon::JobScheduler *jobScheduler() const Q_DECL_OVERRIDE
     {
         return mJobScheduler;
     }
@@ -474,16 +474,16 @@ public:
     void stopAgentInstance();
 
     //ISettings
-    /*reimp*/ bool showPopupAfterDnD() Q_DECL_OVERRIDE;
+    bool showPopupAfterDnD() Q_DECL_OVERRIDE;
 
-    /*reimp*/ bool excludeImportantMailFromExpiry() Q_DECL_OVERRIDE;
+    bool excludeImportantMailFromExpiry() Q_DECL_OVERRIDE;
 
-    /*reimp*/ qreal closeToQuotaThreshold() Q_DECL_OVERRIDE;
+    qreal closeToQuotaThreshold() Q_DECL_OVERRIDE;
 
-    /*reimp*/ Akonadi::Collection::Id lastSelectedFolder() Q_DECL_OVERRIDE;
-    /*reimp*/ void setLastSelectedFolder(const Akonadi::Collection::Id  &col) Q_DECL_OVERRIDE;
+    Akonadi::Collection::Id lastSelectedFolder() Q_DECL_OVERRIDE;
+    void setLastSelectedFolder(const Akonadi::Collection::Id  &col) Q_DECL_OVERRIDE;
 
-    /*reimp*/ QStringList customTemplates() Q_DECL_OVERRIDE;
+    QStringList customTemplates() Q_DECL_OVERRIDE;
 
     void checkFolderFromResources(const Akonadi::Collection::List &collectionList);
 
@@ -506,7 +506,7 @@ protected:
 
 public Q_SLOTS:
 
-    /*reimp*/ void updateSystemTray() Q_DECL_OVERRIDE;
+    void updateSystemTray() Q_DECL_OVERRIDE;
 
     /** Custom templates have changed, so all windows using them need
       to regenerate their menus */
