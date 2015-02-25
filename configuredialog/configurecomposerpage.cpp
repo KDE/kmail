@@ -36,7 +36,7 @@ using namespace PimCommon::ConfigureImmutableWidgetUtils;
 #include "addressline/recentaddresses.h"
 #include "addressline/recentaddressdialog.h"
 #include <libkdepim/ldap/ldapclientsearch.h>
-#include "addressline/completionordereditor.h"
+#include "addressline/completionorder/completionordereditor.h"
 using KPIM::RecentAddresses;
 
 
