@@ -24,7 +24,7 @@ class CsvWidgetTest : public QObject
 {
     Q_OBJECT
 public:
-    explicit CsvWidgetTest(QObject *parent = 0);
+    explicit CsvWidgetTest(QObject *parent = Q_NULLPTR);
     ~CsvWidgetTest();
 
 private Q_SLOTS:

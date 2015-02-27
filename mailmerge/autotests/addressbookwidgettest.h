@@ -24,7 +24,7 @@ class AddressBookWidgetTest : public QObject
 {
     Q_OBJECT
 public:
-    explicit AddressBookWidgetTest(QObject *parent = 0);
+    explicit AddressBookWidgetTest(QObject *parent = Q_NULLPTR);
     ~AddressBookWidgetTest();
 };
 
