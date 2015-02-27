@@ -284,7 +284,7 @@ if (KDEPIM_BUILD_DESKTOP)
   )
 
 
-  add_library(kmailprivate ${LIBRARY_TYPE} ${kmailprivate_LIB_SRCS})
+  add_library(kmailprivate ${kmailprivate_LIB_SRCS})
 generate_export_header(kmailprivate BASE_NAME kmail)
 
   target_link_libraries(kmailprivate
