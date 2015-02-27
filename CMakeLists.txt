@@ -351,7 +351,8 @@ generate_export_header(kmailprivate BASE_NAME kmail)
   ########### KMail executable ###############
 
   set(kmail_SRCS main.cpp kmail_debug.cpp)
-  kde4_add_app_icon(kmail_SRCS "${CMAKE_CURRENT_SOURCE_DIR}/icons/hi*-apps-kmail.png")
+  file(GLOB ICONS_SRCS "${CMAKE_CURRENT_SOURCE_DIR}/icons/hi*-apps-kmail.png")
+  ecm_add_app_icon(kmail_SRCS ICONS ${ICONS_SRCS})
   add_executable(kmail ${kmail_SRCS})
   target_link_libraries(kmail
     KF5::KontactInterface
