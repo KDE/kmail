@@ -1,5 +1,5 @@
 /*
-  Copyright (c) 2014-2015 Montel Laurent <montel@kde.org>
+  Copyright (c) 2015 Montel Laurent <montel@kde.org>
 
   This program is free software; you can redistribute it and/or modify it
   under the terms of the GNU General Public License, version 2, as
@@ -15,18 +15,28 @@
   51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
 */
 
-#ifndef MAILMERGEDIALOG_H
-#define MAILMERGEDIALOG_H
-#include <QDialog>
-namespace MailMerge
+
+#include "mailmergedialogtest.h"
+#include "../mailmergedialog.h"
+#include <QDialogButtonBox>
+#include <qtest_kde.h>
+
+MailMergeDialogTest::MailMergeDialogTest(QObject *parent) : QObject(parent)
 {
-class MailMergeDialog : public QDialog
-{
-    Q_OBJECT
-public:
-    explicit MailMergeDialog(QWidget *parent = Q_NULLPTR);
-    ~MailMergeDialog();
-};
+
 }
 
-#endif // MAILMERGEDIALOG_H
+MailMergeDialogTest::~MailMergeDialogTest()
+{
+
+}
+
+void MailMergeDialogTest::shouldHaveDefaultValue()
+{
+    MailMerge::MailMergeDialog dlg;
+
+    QDialogButtonBox *buttonBox = qFindChild<QDialogButtonBox *>(&dlg, QLatin1String("buttonbox"));
+    QVERIFY(buttonBox);
+}
+
+QTEST_KDEMAIN(MailMergeDialogTest, GUI)

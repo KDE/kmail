@@ -15,13 +15,15 @@
   51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
 */
 #include "addressbookwidget.h"
+#include <QHBoxLayout>
 
 using namespace MailMerge;
 
 AddressBookWidget::AddressBookWidget(QWidget *parent)
     : QWidget(parent)
 {
-
+    QHBoxLayout *hbox = new QHBoxLayout;
+    setLayout(hbox);
 }
 
 AddressBookWidget::~AddressBookWidget()

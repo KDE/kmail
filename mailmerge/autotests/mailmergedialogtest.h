@@ -1,5 +1,5 @@
 /*
-  Copyright (c) 2014-2015 Montel Laurent <montel@kde.org>
+  Copyright (c) 2015 Montel Laurent <montel@kde.org>
 
   This program is free software; you can redistribute it and/or modify it
   under the terms of the GNU General Public License, version 2, as
@@ -15,18 +15,19 @@
   51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
 */
 
-#ifndef MAILMERGEDIALOG_H
-#define MAILMERGEDIALOG_H
-#include <QDialog>
-namespace MailMerge
-{
-class MailMergeDialog : public QDialog
+#ifndef MAILMERGEDIALOGTEST_H
+#define MAILMERGEDIALOGTEST_H
+
+#include <QObject>
+
+class MailMergeDialogTest : public QObject
 {
     Q_OBJECT
 public:
-    explicit MailMergeDialog(QWidget *parent = Q_NULLPTR);
-    ~MailMergeDialog();
+    explicit MailMergeDialogTest(QObject *parent = 0);
+    ~MailMergeDialogTest();
+private Q_SLOTS:
+    void shouldHaveDefaultValue();
 };
-}
 
-#endif // MAILMERGEDIALOG_H
+#endif // MAILMERGEDIALOGTEST_H

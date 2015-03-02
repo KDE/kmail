@@ -1,5 +1,5 @@
 /*
-  Copyright (c) 2014 Montel Laurent <montel@kde.org>
+  Copyright (c) 2014-2015 Montel Laurent <montel@kde.org>
 
   This program is free software; you can redistribute it and/or modify it
   under the terms of the GNU General Public License, version 2, as
@@ -29,11 +29,10 @@ MailMergeDialog::MailMergeDialog(QWidget *parent)
 {
     setWindowTitle(i18n("Mail Merge"));
     QDialogButtonBox *buttonBox = new QDialogButtonBox(QDialogButtonBox::Ok | QDialogButtonBox::Cancel);
-    QWidget *mainWidget = new QWidget(this);
     QVBoxLayout *mainLayout = new QVBoxLayout;
     setLayout(mainLayout);
-    mainLayout->addWidget(mainWidget);
     QPushButton *okButton = buttonBox->button(QDialogButtonBox::Ok);
+    buttonBox->setObjectName(QLatin1String("buttonbox"));
     okButton->setDefault(true);
     okButton->setShortcut(Qt::CTRL | Qt::Key_Return);
     connect(buttonBox, &QDialogButtonBox::accepted, this, &MailMergeDialog::accept);
