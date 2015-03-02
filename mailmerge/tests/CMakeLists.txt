@@ -39,4 +39,5 @@ endmacro()
 
 kmail_mailmerge(addressbookwidgettest.cpp "")
 kmail_mailmerge(csvwidgettest.cpp "../widgets/csvwidget.cpp")
+kmail_mailmerge(mailmergedialogtest.cpp "../mailmergedialog.cpp")
 

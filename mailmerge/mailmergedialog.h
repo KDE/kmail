@@ -1,5 +1,5 @@
 /*
-  Copyright (c) 2014 Montel Laurent <montel@kde.org>
+  Copyright (c) 2014-2015 Montel Laurent <montel@kde.org>
 
   This program is free software; you can redistribute it and/or modify it
   under the terms of the GNU General Public License, version 2, as
@@ -17,9 +17,9 @@
 
 #ifndef MAILMERGEDIALOG_H
 #define MAILMERGEDIALOG_H
-#include <KDialog>
+#include <QDialog>
 namespace MailMerge {
-class MailMergeDialog : public KDialog
+class MailMergeDialog : public QDialog
 {
     Q_OBJECT
 public:
