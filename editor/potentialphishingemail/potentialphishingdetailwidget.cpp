@@ -30,8 +30,7 @@ PotentialPhishingDetailWidget::PotentialPhishingDetailWidget(QWidget *parent)
     : QWidget(parent)
 {
     QVBoxLayout *mainLayout = new QVBoxLayout(this);
-    //kf5 add i18n
-    QLabel *lab = new QLabel(QLatin1String("Select email to put in whitelist:"));
+    QLabel *lab = new QLabel(i18n("Select email to put in whitelist:"));
     lab->setObjectName(QLatin1String("label"));
     mainLayout->addWidget(lab);
 
@@ -62,7 +61,7 @@ void PotentialPhishingDetailWidget::fillList(const QStringList &lst)
 
 void PotentialPhishingDetailWidget::save()
 {
-    KConfigGroup group(KGlobal::config(), "PotentialPhishing");
+    KConfigGroup group(KSharedConfig::openConfig(), "PotentialPhishing");
     QStringList potentialPhishing = group.readEntry("whiteList", QStringList());
     bool emailsAdded = false;
     const int numberOfItem(mListWidget->count());
