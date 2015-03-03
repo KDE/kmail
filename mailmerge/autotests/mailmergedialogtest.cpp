@@ -19,7 +19,7 @@
 #include "mailmergedialogtest.h"
 #include "../mailmergedialog.h"
 #include <QDialogButtonBox>
-#include <qtest_kde.h>
+#include <qtest.h>
 
 MailMergeDialogTest::MailMergeDialogTest(QObject *parent) : QObject(parent)
 {
@@ -39,4 +39,4 @@ void MailMergeDialogTest::shouldHaveDefaultValue()
     QVERIFY(buttonBox);
 }
 
-QTEST_KDEMAIN(MailMergeDialogTest, GUI)
+QTEST_MAIN(MailMergeDialogTest)
