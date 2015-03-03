@@ -79,6 +79,7 @@ private slots:
     void slotMoveItem(QAction *action);
 
 private:
+    void copyOrMoveItem(const Akonadi::Collection &collection, bool move);
     Akonadi::Collection parentCollection() const;
     void initKMReaderMainWin();
     void setupAccel();
