@@ -22,7 +22,7 @@
 #define POTENTIALPHISHINGDETAILDIALOG_H
 
 #include <QDialog>
-class QListWidget;
+class PotentialPhishingDetailWidget;
 class PotentialPhishingDetailDialog : public QDialog
 {
     Q_OBJECT
@@ -38,7 +38,7 @@ private Q_SLOTS:
 private:
     void readConfig();
     void writeConfig();
-    QListWidget *mListWidget;
+    PotentialPhishingDetailWidget *mPotentialPhishingDetailWidget;
 };
 
 #endif // POTENTIALPHISHINGDETAILDIALOG_H

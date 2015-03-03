@@ -20,6 +20,7 @@
 
 #include "potentialphishingdetaildialogtest.h"
 #include "../potentialphishingdetaildialog.h"
+#include "../potentialphishingdetailwidget.h"
 #include <QLabel>
 #include <QListWidget>
 #include <qtest.h>
@@ -38,54 +39,9 @@ PotentialPhishingDetailDialogTest::~PotentialPhishingDetailDialogTest()
 void PotentialPhishingDetailDialogTest::shouldHaveDefaultValue()
 {
     PotentialPhishingDetailDialog dlg;
-    QLabel *searchLabel = dlg.findChild<QLabel *>(QLatin1String("label"));
-    QVERIFY(searchLabel);
-
-    QListWidget *listWidget = dlg.findChild<QListWidget *>(QLatin1String("list_widget"));
-    QVERIFY(listWidget);
-    QCOMPARE(listWidget->count(), 0);
+    PotentialPhishingDetailWidget *w = qFindChild<PotentialPhishingDetailWidget *>(&dlg, QLatin1String("potentialphising_widget"));
+    QVERIFY(w);
 }
 
-void PotentialPhishingDetailDialogTest::shouldFillList()
-{
-    PotentialPhishingDetailDialog dlg;
-    QListWidget *listWidget = dlg.findChild<QListWidget *>(QLatin1String("list_widget"));
-    QStringList lst;
-    lst << QLatin1String("bla");
-    lst << QLatin1String("bli");
-    lst << QLatin1String("blo");
-    dlg.fillList(lst);
-    QCOMPARE(listWidget->count(), lst.count());
-}
-
-void PotentialPhishingDetailDialogTest::shouldClearListBeforeToAddNew()
-{
-    PotentialPhishingDetailDialog dlg;
-    QListWidget *listWidget = dlg.findChild<QListWidget *>(QLatin1String("list_widget"));
-    QStringList lst;
-    lst << QLatin1String("bla");
-    lst << QLatin1String("bli");
-    lst << QLatin1String("blo");
-    dlg.fillList(lst);
-    QCOMPARE(listWidget->count(), lst.count());
-    lst.clear();
-    lst << QLatin1String("bla");
-    lst << QLatin1String("bli");
-    dlg.fillList(lst);
-    QCOMPARE(listWidget->count(), lst.count());
-}
-
-void PotentialPhishingDetailDialogTest::shouldNotAddDuplicateEntries()
-{
-    PotentialPhishingDetailDialog dlg;
-    QListWidget *listWidget = dlg.findChild<QListWidget *>(QLatin1String("list_widget"));
-    QStringList lst;
-    lst << QLatin1String("bla");
-    lst << QLatin1String("blo");
-    lst << QLatin1String("blo");
-    dlg.fillList(lst);
-    QCOMPARE(listWidget->count(), (lst.count() - 1));
-
-}
 
 QTEST_MAIN(PotentialPhishingDetailDialogTest)

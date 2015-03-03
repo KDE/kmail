@@ -145,6 +145,7 @@ if (KDEPIM_BUILD_DESKTOP)
      editor/potentialphishingemail/potentialphishingemailwarning.cpp
      editor/potentialphishingemail/potentialphishingemailjob.cpp
      editor/potentialphishingemail/potentialphishingdetaildialog.cpp
+     editor/potentialphishingemail/potentialphishingdetailwidget.cpp
   )
   set(kmailprivate_dialogs_LIB_SRCS
      dialog/archivefolderdialog.cpp

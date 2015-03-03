@@ -19,6 +19,7 @@
 */
 
 #include "potentialphishingdetaildialog.h"
+#include "potentialphishingdetailwidget.h"
 #include <KSharedConfig>
 #include <KLocalizedString>
 #include <qboxlayout.h>
@@ -44,15 +45,15 @@ PotentialPhishingDetailDialog::PotentialPhishingDetailDialog(QWidget *parent)
     setLayout(topLayout);
 
     setModal(true);
+    mPotentialPhishingDetailWidget = new PotentialPhishingDetailWidget(this);
+    mPotentialPhishingDetailWidget->setObjectName(QLatin1String("potentialphising_widget"));
+
     QWidget *mainWidget = new QWidget(this);
     QVBoxLayout *mainLayout = new QVBoxLayout(mainWidget);
-    QLabel *lab = new QLabel(i18n("Select email to put in whitelist:"));
-    lab->setObjectName(QStringLiteral("label"));
-    mainLayout->addWidget(lab);
+    mPotentialPhishingDetailWidget = new PotentialPhishingDetailWidget(this);
+    mPotentialPhishingDetailWidget->setObjectName(QLatin1String("potentialphising_widget"));
 
-    mListWidget = new QListWidget;
-    mListWidget->setObjectName(QStringLiteral("list_widget"));
-    mainLayout->addWidget(mListWidget);
+    mainLayout->addWidget(mPotentialPhishingDetailWidget);
 
     mainLayout->addWidget(buttonBox);
 
@@ -68,16 +69,7 @@ PotentialPhishingDetailDialog::~PotentialPhishingDetailDialog()
 
 void PotentialPhishingDetailDialog::fillList(const QStringList &lst)
 {
-    mListWidget->clear();
-    QStringList emailsAdded;
-    Q_FOREACH (const QString &mail, lst) {
-        if (!emailsAdded.contains(mail)) {
-            QListWidgetItem *item = new QListWidgetItem(mListWidget);
-            item->setCheckState(Qt::Unchecked);
-            item->setText(mail);
-            emailsAdded << mail;
-        }
-    }
+    mPotentialPhishingDetailWidget->fillList(lst);
 }
 
 void PotentialPhishingDetailDialog::readConfig()
@@ -97,23 +89,7 @@ void PotentialPhishingDetailDialog::writeConfig()
 
 void PotentialPhishingDetailDialog::slotSave()
 {
-    KConfigGroup group(KSharedConfig::openConfig(), "PotentialPhishing");
-    QStringList potentialPhishing = group.readEntry("whiteList", QStringList());
-    bool emailsAdded = false;
-    const int numberOfItem(mListWidget->count());
-    for (int i = 0; i < numberOfItem; ++i) {
-        QListWidgetItem *item = mListWidget->item(i);
-        if (item->checkState() == Qt::Checked) {
-            const QString email = item->text();
-            if (!potentialPhishing.contains(email)) {
-                potentialPhishing << email;
-                emailsAdded = true;
-            }
-        }
-    }
-    if (emailsAdded) {
-        group.writeEntry("whiteList", potentialPhishing);
-    }
+    mPotentialPhishingDetailWidget->save();
     accept();
 }
 

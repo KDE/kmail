@@ -18,19 +18,22 @@
 
 */
 
-#ifndef POTENTIALPHISHINGDETAILDIALOGTEST_H
-#define POTENTIALPHISHINGDETAILDIALOGTEST_H
+#ifndef POTENTIALPHISHINGDETAILWIDGETTEST_H
+#define POTENTIALPHISHINGDETAILWIDGETTEST_H
 
 #include <QObject>
 
-class PotentialPhishingDetailDialogTest : public QObject
+class PotentialPhishingDetailWidgetTest : public QObject
 {
     Q_OBJECT
 public:
-    explicit PotentialPhishingDetailDialogTest(QObject *parent = Q_NULLPTR);
-    ~PotentialPhishingDetailDialogTest();
+    explicit PotentialPhishingDetailWidgetTest(QObject *parent = 0);
+    ~PotentialPhishingDetailWidgetTest();
 private Q_SLOTS:
     void shouldHaveDefaultValue();
+    void shouldFillList();
+    void shouldClearListBeforeToAddNew();
+    void shouldNotAddDuplicateEntries();
 };
 
-#endif // POTENTIALPHISHINGDETAILDIALOGTEST_H
+#endif // POTENTIALPHISHINGDETAILWIDGETTEST_H
