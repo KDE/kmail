@@ -22,7 +22,7 @@
 #define POTENTIALPHISHINGDETAILDIALOG_H
 
 #include <KDialog>
-class QListWidget;
+class PotentialPhishingDetailWidget;
 class PotentialPhishingDetailDialog : public KDialog
 {
     Q_OBJECT
@@ -38,7 +38,7 @@ private slots:
 private:
     void readConfig();
     void writeConfig();
-    QListWidget *mListWidget;
+    PotentialPhishingDetailWidget *mPotentialPhishingDetailWidget;
 };
 
 #endif // POTENTIALPHISHINGDETAILDIALOG_H

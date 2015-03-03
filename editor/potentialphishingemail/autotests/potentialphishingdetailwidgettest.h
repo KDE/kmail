@@ -18,30 +18,22 @@
 
 */
 
-#include "potentialphishingdetaildialogtest.h"
-#include "../potentialphishingdetaildialog.h"
-#include "../potentialphishingdetailwidget.h"
-#include <QLabel>
-#include <QListWidget>
-#include <qtest_kde.h>
+#ifndef POTENTIALPHISHINGDETAILWIDGETTEST_H
+#define POTENTIALPHISHINGDETAILWIDGETTEST_H
 
-PotentialPhishingDetailDialogTest::PotentialPhishingDetailDialogTest(QObject *parent)
-    : QObject(parent)
+#include <QObject>
+
+class PotentialPhishingDetailWidgetTest : public QObject
 {
+    Q_OBJECT
+public:
+    explicit PotentialPhishingDetailWidgetTest(QObject *parent = 0);
+    ~PotentialPhishingDetailWidgetTest();
+private Q_SLOTS:
+    void shouldHaveDefaultValue();
+    void shouldFillList();
+    void shouldClearListBeforeToAddNew();
+    void shouldNotAddDuplicateEntries();
+};
 
-}
-
-PotentialPhishingDetailDialogTest::~PotentialPhishingDetailDialogTest()
-{
-
-}
-
-void PotentialPhishingDetailDialogTest::shouldHaveDefaultValue()
-{
-    PotentialPhishingDetailDialog dlg;
-    PotentialPhishingDetailWidget *w = qFindChild<PotentialPhishingDetailWidget *>(&dlg, QLatin1String("potentialphising_widget"));
-    QVERIFY(w);
-}
-
-
-QTEST_KDEMAIN(PotentialPhishingDetailDialogTest, GUI)
+#endif // POTENTIALPHISHINGDETAILWIDGETTEST_H

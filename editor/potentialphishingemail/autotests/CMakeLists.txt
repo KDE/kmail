@@ -5,12 +5,21 @@ kde4_add_unit_test( kmail_potentialphishingemailjobtest ${kmail_potentialphishin
 target_link_libraries( kmail_potentialphishingemailjobtest ${QT_QTTEST_LIBRARY} ${KDE4_KDEUI_LIBS} ${KDEPIMLIBS_KPIMUTILS_LIBS})
 
 
-set( kmail_potentialphishingdetaildialogtest_SRCS potentialphishingdetaildialogtest.cpp ../potentialphishingdetaildialog.cpp )
+set( kmail_potentialphishingdetaildialogtest_SRCS potentialphishingdetaildialogtest.cpp ../potentialphishingdetaildialog.cpp ../potentialphishingdetailwidget.cpp)
 kde4_add_unit_test( kmail_potentialphishingdetaildialogtest ${kmail_potentialphishingdetaildialogtest_SRCS})
 target_link_libraries( kmail_potentialphishingdetaildialogtest ${QT_QTTEST_LIBRARY} ${KDE4_KDEUI_LIBS} )
 
 
-set( kmail_potentialphishingemailwarningtest_SRCS potentialphishingemailwarningtest.cpp ../potentialphishingemailwarning.cpp ../potentialphishingdetaildialog.cpp)
+set( kmail_potentialphishingdetailwidgettest_SRCS potentialphishingdetailwidgettest.cpp ../potentialphishingdetailwidget.cpp)
+kde4_add_unit_test( kmail_potentialphishingdetailwidgettest ${kmail_potentialphishingdetailwidgettest_SRCS})
+target_link_libraries( kmail_potentialphishingdetailwidgettest ${QT_QTTEST_LIBRARY} ${KDE4_KDEUI_LIBS} )
+
+
+
+
+set( kmail_potentialphishingemailwarningtest_SRCS potentialphishingemailwarningtest.cpp ../potentialphishingemailwarning.cpp ../potentialphishingdetaildialog.cpp ../potentialphishingdetailwidget.cpp)
 kde4_add_unit_test( kmail_potentialphishingemailwarningtest ${kmail_potentialphishingemailwarningtest_SRCS})
 target_link_libraries( kmail_potentialphishingemailwarningtest ${QT_QTTEST_LIBRARY} ${KDE4_KDEUI_LIBS} )
+
+
 

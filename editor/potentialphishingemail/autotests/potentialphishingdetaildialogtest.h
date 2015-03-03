@@ -31,9 +31,6 @@ public:
     ~PotentialPhishingDetailDialogTest();
 private Q_SLOTS:
     void shouldHaveDefaultValue();
-    void shouldFillList();
-    void shouldClearListBeforeToAddNew();
-    void shouldNotAddDuplicateEntries();
 };
 
 #endif // POTENTIALPHISHINGDETAILDIALOGTEST_H
