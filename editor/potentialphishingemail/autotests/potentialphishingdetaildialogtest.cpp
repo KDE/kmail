@@ -43,5 +43,4 @@ void PotentialPhishingDetailDialogTest::shouldHaveDefaultValue()
     QVERIFY(w);
 }
 
-
 QTEST_MAIN(PotentialPhishingDetailDialogTest)
