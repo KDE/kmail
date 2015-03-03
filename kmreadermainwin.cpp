@@ -388,15 +388,26 @@ void KMReaderMainWin::slotMoveItem(QAction *action)
 {
     if (action) {
         const QModelIndex index = action->data().value<QModelIndex>();
-        const Akonadi::Collection collection = index.data(Akonadi::EntityTreeModel::CollectionRole).value<Akonadi::Collection>();
+        const Akonadi::Collection collection = index.data( Akonadi::EntityTreeModel::CollectionRole ).value<Akonadi::Collection>();
+        copyOrMoveItem(collection, true);
+    }
+}
 
-        if (mMsg.isValid()) {
-            Akonadi::ItemMoveJob *job = new Akonadi::ItemMoveJob(mMsg, collection, this);
-            connect(job, SIGNAL(result(KJob*)), this, SLOT(slotCopyMoveResult(KJob*)));
+void KMReaderMainWin::copyOrMoveItem(const Akonadi::Collection &collection, bool move)
+{
+    if ( mMsg.isValid() ) {
+        if (move) {
+            Akonadi::ItemMoveJob *job = new Akonadi::ItemMoveJob( mMsg, collection,this );
+            connect( job, SIGNAL(result(KJob*)), this, SLOT(slotCopyMoveResult(KJob*)) );
         } else {
-            Akonadi::ItemCreateJob *job = new Akonadi::ItemCreateJob(mMsg, collection, this);
-            connect(job, SIGNAL(result(KJob*)), this, SLOT(slotCopyMoveResult(KJob*)));
+            Akonadi::ItemCopyJob *job = new Akonadi::ItemCopyJob( mMsg, collection,this );
+            connect( job, SIGNAL(result(KJob*)), this, SLOT(slotCopyMoveResult(KJob*)) );
         }
+    }
+    else
+    {
+        Akonadi::ItemCreateJob *job = new Akonadi::ItemCreateJob( mMsg, collection, this );
+        connect( job, SIGNAL(result(KJob*)), this, SLOT(slotCopyMoveResult(KJob*)) );
     }
 }
 
@@ -404,15 +415,8 @@ void KMReaderMainWin::slotCopyItem(QAction *action)
 {
     if (action) {
         const QModelIndex index = action->data().value<QModelIndex>();
-        const Akonadi::Collection collection = index.data(Akonadi::EntityTreeModel::CollectionRole).value<Akonadi::Collection>();
-
-        if (mMsg.isValid()) {
-            Akonadi::ItemCopyJob *job = new Akonadi::ItemCopyJob(mMsg, collection, this);
-            connect(job, &Akonadi::ItemCopyJob::result, this, &KMReaderMainWin::slotCopyMoveResult);
-        } else {
-            Akonadi::ItemCreateJob *job = new Akonadi::ItemCreateJob(mMsg, collection, this);
-            connect(job, &Akonadi::ItemCopyJob::result, this, &KMReaderMainWin::slotCopyMoveResult);
-        }
+        const Akonadi::Collection collection = index.data( Akonadi::EntityTreeModel::CollectionRole ).value<Akonadi::Collection>();
+        copyOrMoveItem(collection, false);
     }
 }
 
