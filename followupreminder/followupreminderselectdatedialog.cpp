@@ -85,7 +85,7 @@ FollowUpReminderSelectDateDialog::~FollowUpReminderSelectDateDialog()
 
 void FollowUpReminderSelectDateDialog::slotDateChanged(const QString &date)
 {
-    mOkButton->setEnabled(!date.isEmpty());
+    mOkButton->setEnabled(!date.isEmpty() && mDateComboBox->date().isValid());
 }
 
 QDate FollowUpReminderSelectDateDialog::selectedDate() const

@@ -29,6 +29,7 @@ public:
 private Q_SLOTS:
     void shouldHaveDefaultValue();
     void shouldDisableOkButtonIfDateIsEmpty();
+    void shouldDisableOkButtonIfDateIsNotValid();
 };
 
 #endif // FOLLOWUPREMINDERSELECTDATEDIALOGTEST_H
