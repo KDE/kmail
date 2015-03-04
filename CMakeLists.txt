@@ -16,25 +16,10 @@ add_custom_target(kmail_xml ALL
 )
 
 include_directories(
-  ${CMAKE_SOURCE_DIR}/libkdepim
-  ${CMAKE_SOURCE_DIR}/libksieve
   ${CMAKE_SOURCE_DIR}/libksieve/ksieveui/
-  ${CMAKE_SOURCE_DIR}/libkleo
-  ${CMAKE_SOURCE_DIR}/messagelist
-  ${CMAKE_SOURCE_DIR}/messageviewer
-  ${CMAKE_BINARY_DIR}/messageviewer
-  ${CMAKE_SOURCE_DIR}/templateparser
-  ${CMAKE_BINARY_DIR}/templateparser
-  ${CMAKE_SOURCE_DIR}/messagecomposer
-  ${CMAKE_BINARY_DIR}/messagecomposer
-  ${CMAKE_SOURCE_DIR}/messagecore
-  ${CMAKE_SOURCE_DIR}/mailcommon
-  ${CMAKE_BINARY_DIR}/mailcommon
   ${CMAKE_SOURCE_DIR}/mailcommon/folder
   ${CMAKE_SOURCE_DIR}/mailcommon/tag
   ${CMAKE_SOURCE_DIR}/mailcommon/kernel
-  ${CMAKE_SOURCE_DIR}/pimcommon
-  ${CMAKE_BINARY_DIR}/pimcommon
   ${CMAKE_SOURCE_DIR}/pimcommon/util/
   ${CMAKE_SOURCE_DIR}/messagecomposer/utils/
   ${CMAKE_CURRENT_BINARY_DIR}
