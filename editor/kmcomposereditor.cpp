@@ -179,9 +179,9 @@ void KMComposerEditor::showSpellConfigDialog(const QString &configFileName)
     }
 }
 
-void KMComposerEditor::mousePopupMenuImplementation(const QPoint &pos)
+QMenu *KMComposerEditor::mousePopupMenu()
 {
-    QMenu *popup = mousePopupMenu();
+    QMenu *popup = MessageComposer::KMeditor::mousePopupMenu();
     if (popup) {
         QTextCursor cursor = textCursor();
         if (cursor.hasSelection()) {
@@ -191,9 +191,7 @@ void KMComposerEditor::mousePopupMenuImplementation(const QPoint &pos)
         popup->addSeparator();
         popup->addAction(mComposerWin->translateAction());
         popup->addAction(mComposerWin->generateShortenUrlAction());
-        aboutToShowContextMenu(popup);
-        popup->exec(pos);
-        delete popup;
     }
+    return popup;
 }
 
