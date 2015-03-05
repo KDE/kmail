@@ -21,6 +21,8 @@
 #include <KLocalizedString>
 #include <akonadi/itemcreatejob.h>
 
+//KF5 move to messagecomposer
+
 FollowupReminderCreateJob::FollowupReminderCreateJob(QObject *parent)
     : KJob(parent),
       mInfo(new FollowUpReminder::FollowUpReminderInfo)
