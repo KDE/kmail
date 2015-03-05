@@ -176,8 +176,6 @@
 #include <stdlib.h>
 #include <unistd.h>
 #include <fcntl.h>
-#include <memory>
-#include <boost/shared_ptr.hpp>
 #include <widgets/splittercollapser.h>
 #include <Akonadi/Contact/ContactGroupExpandJob>
 #include <editor/potentialphishingemail/potentialphishingemailjob.h>
@@ -1995,13 +1993,14 @@ void KMComposeWin::slotSendSuccessful(const QString &messageId)
 
 void KMComposeWin::addFollowupReminder(const QString &messageId)
 {
-    if (mFollowUpDate.isValid()) {
+    const QDate date = mComposerBase->followUpDate();
+    if (date.isValid()) {
         FollowupReminderCreateJob *job = new FollowupReminderCreateJob;
         job->setSubject(subject());
         job->setMessageId(messageId);
         job->setTo(replyTo());
-        job->setFollowUpReminderDate(mFollowUpDate);
-        job->setCollectionToDo(mFollowUpCollection);
+        job->setFollowUpReminderDate(date);
+        job->setCollectionToDo(mComposerBase->followUpCollection());
         job->start();
     }
 }
@@ -2024,24 +2023,6 @@ void KMComposeWin::addAttach( KMime::Content *msgPart )
 {
     mComposerBase->addAttachmentPart( msgPart );
     setModified( true );
-}
-
-
-QString KMComposeWin::prettyMimeType( const QString &type )
-{
-    const QString t = type.toLower();
-    const KMimeType::Ptr st = KMimeType::mimeType( t );
-
-    if ( !st ) {
-        kWarning() <<"unknown mimetype" << t;
-        return t;
-    }
-
-    const QString pretty = !st->isDefault() ? st->comment() : t;
-    if ( pretty.isEmpty() )
-        return type;
-    else
-        return pretty;
 }
 
 void KMComposeWin::setAutoCharset()
@@ -3481,15 +3462,14 @@ void KMComposeWin::slotFollowUpMail(bool toggled)
     if (toggled) {
         QPointer<FollowUpReminderSelectDateDialog> dlg = new FollowUpReminderSelectDateDialog(this);
         if (dlg->exec()) {
-            mFollowUpDate = dlg->selectedDate();
-            mFollowUpCollection = dlg->collection();
+            mComposerBase->setFollowUpDate(dlg->selectedDate());
+            mComposerBase->setFollowUpCollection(dlg->collection());
         } else {
             mFollowUpToggleAction->setChecked(false);
         }
         delete dlg;
     } else {
-        mFollowUpDate = QDate();
-        mFollowUpCollection = Akonadi::Collection();
+        mComposerBase->clearFollowUp();
     }
 }
 
