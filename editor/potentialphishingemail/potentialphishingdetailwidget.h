@@ -27,7 +27,7 @@ class PotentialPhishingDetailWidget : public QWidget
 {
     Q_OBJECT
 public:
-    explicit PotentialPhishingDetailWidget(QWidget *parent = 0);
+    explicit PotentialPhishingDetailWidget(QWidget *parent = Q_NULLPTR);
     ~PotentialPhishingDetailWidget();
 
     void save();

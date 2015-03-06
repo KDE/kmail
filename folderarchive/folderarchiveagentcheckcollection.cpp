@@ -87,10 +87,10 @@ void FolderArchiveAgentCheckCollection::slotInitialCollectionFetchingFirstLevelD
         break;
     case FolderArchiveAccountInfo::FolderByMonths:
         //TODO translate ?
-        folderName = QString::fromLatin1("%1-%2").arg(mCurrentDate.month()).arg(mCurrentDate.year());
+        folderName = QStringLiteral("%1-%2").arg(mCurrentDate.month()).arg(mCurrentDate.year());
         break;
     case FolderArchiveAccountInfo::FolderByYears:
-        folderName = QString::fromLatin1("%1").arg(mCurrentDate.year());
+        folderName = QStringLiteral("%1").arg(mCurrentDate.year());
         break;
     }
 
