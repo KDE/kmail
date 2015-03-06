@@ -415,7 +415,7 @@ private Q_SLOTS:
     void slotPrintComposeResult(KJob *job);
 
     void slotSendFailed(const QString &msg , MessageComposer::ComposerViewBase::FailedType type);
-    void slotSendSuccessful(const QString &messageId);
+    void slotSendSuccessful();
 
     /**
      *  toggle automatic spellchecking
@@ -480,7 +480,6 @@ private:
      */
     void updateSignatureAndEncryptionStateIndicators();
 
-    void addFollowupReminder(const QString &messageId);
     void confirmBeforeSend();
     void sendNow(bool shortcutUsed);
 

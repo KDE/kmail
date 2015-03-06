@@ -1944,27 +1944,12 @@ void KMComposeWin::slotSendFailed(const QString &msg, MessageComposer::ComposerV
     }
 }
 
-void KMComposeWin::slotSendSuccessful(const QString &messageId)
+void KMComposeWin::slotSendSuccessful()
 {
     setModified(false);
-    addFollowupReminder(messageId);
     mComposerBase->cleanupAutoSave();
     mFolder = Akonadi::Collection(); // see dtor
     close();
-}
-
-void KMComposeWin::addFollowupReminder(const QString &messageId)
-{
-    const QDate date = mComposerBase->followUpDate();
-    if (date.isValid()) {
-        MessageComposer::FollowupReminderCreateJob *job = new MessageComposer::FollowupReminderCreateJob;
-        job->setSubject(subject());
-        job->setMessageId(messageId);
-        job->setTo(replyTo());
-        job->setFollowUpReminderDate(date);
-        job->setCollectionToDo(mComposerBase->followUpCollection());
-        job->start();
-    }
 }
 
 const KIdentityManagement::Identity &KMComposeWin::identity() const
