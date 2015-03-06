@@ -277,13 +277,6 @@ private:
      */
     bool inlineSigningEncryptionSelected();
 
-    /**
-      * Tries to find the given mimetype @p type in the KDE Mimetype registry.
-      * If found, returns its localized description, otherwise the @p type
-      * in lowercase.
-      */
-    static QString prettyMimeType(const QString &type);
-
 public Q_SLOTS: // kmkernel, callback
     void slotSendNow() Q_DECL_OVERRIDE;
     /**
@@ -680,8 +673,6 @@ private:
 
     QString mdbusObjectPath;
     static int s_composerNumber;
-    QDate mFollowUpDate;
-    Akonadi::Collection mFollowUpCollection;
 
     MessageComposer::ComposerViewBase *mComposerBase;
 
