@@ -696,7 +696,7 @@ void MessageActions::slotAddFollowupReminder()
         return;
     }
 
-    QPointer<FollowUpReminderSelectDateDialog> dlg = new FollowUpReminderSelectDateDialog;
+    QPointer<MessageComposer::FollowUpReminderSelectDateDialog> dlg = new MessageComposer::FollowUpReminderSelectDateDialog;
     if (dlg->exec()) {
         const QDate date = dlg->selectedDate();
         CreateFollowupReminderOnExistingMessageJob *job = new CreateFollowupReminderOnExistingMessageJob(this);

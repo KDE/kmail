@@ -67,7 +67,7 @@ void CreateFollowupReminderOnExistingMessageJob::itemFetchJobDone(KJob *job)
     }
     KMime::Message::Ptr msg =  mMessageItem.payload<KMime::Message::Ptr>();
     if (msg) {
-        FollowupReminderCreateJob *reminderJob = new FollowupReminderCreateJob(this);
+        MessageComposer::FollowupReminderCreateJob *reminderJob = new MessageComposer::FollowupReminderCreateJob(this);
         KMime::Headers::MessageID *messageID = msg->messageID(false);
         if (messageID) {
             const QString messageIdStr = messageID->asUnicodeString();

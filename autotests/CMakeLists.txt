@@ -30,10 +30,10 @@ ecm_mark_as_test(kmail-statusbarlabeltoggledstatetest)
 target_link_libraries( statusbarlabeltoggledstatetest Qt5::Test KF5::KIOWidgets KF5::I18n)
 
 
-set( kmail_createfollowupreminderonexistingmessagejobtest_source createfollowupreminderonexistingmessagejobtest.cpp ../job/createfollowupreminderonexistingmessagejob.cpp ../followupreminder/followupremindercreatejob.cpp ../kmail_debug.cpp)
-add_executable( createfollowupreminderonexistingmessagejobtest ${kmail_createfollowupreminderonexistingmessagejobtest_source})
-ecm_mark_as_test(kmail_createfollowupreminderonexistingmessagejobtest)
-target_link_libraries( createfollowupreminderonexistingmessagejobtest Qt5::Test Qt5::Widgets KF5::AkonadiCore KF5::CalendarCore KF5::Mime followupreminder)
+#set( kmail_createfollowupreminderonexistingmessagejobtest_source createfollowupreminderonexistingmessagejobtest.cpp ../job/createfollowupreminderonexistingmessagejob.cpp ../followupreminder/followupremindercreatejob.cpp ../kmail_debug.cpp)
+#add_executable( createfollowupreminderonexistingmessagejobtest ${kmail_createfollowupreminderonexistingmessagejobtest_source})
+#ecm_mark_as_test(kmail_createfollowupreminderonexistingmessagejobtest)
+#target_link_libraries( createfollowupreminderonexistingmessagejobtest Qt5::Test Qt5::Widgets KF5::AkonadiCore KF5::CalendarCore KF5::Mime followupreminder)
 
 
 set( kmail_cryptostateindicatorwidgettest_source cryptostateindicatorwidgettest.cpp ../editor/cryptostateindicatorwidget.cpp)
@@ -42,9 +42,4 @@ add_test(cryptostateindicatorwidgettest cryptostateindicatorwidgettest)
 ecm_mark_as_test(cryptostateindicatorwidgettest)
 target_link_libraries( cryptostateindicatorwidgettest Qt5::Test  messagecore)
 
-
-set(KDEPIMLIBS_RUN_ISOLATED_TESTS TRUE)
-set(KDEPIMLIBS_RUN_SQLITE_ISOLATED_TESTS TRUE)
-
-add_akonadi_isolated_test_advanced( followupreminderselectdatedialogtest.cpp  "../followupreminder/followupreminderselectdatedialog.cpp" "KF5::CalendarCore;KF5::AkonadiCore;KF5::AkonadiWidgets")
 

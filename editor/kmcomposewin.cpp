@@ -1957,7 +1957,7 @@ void KMComposeWin::addFollowupReminder(const QString &messageId)
 {
     const QDate date = mComposerBase->followUpDate();
     if (date.isValid()) {
-        FollowupReminderCreateJob *job = new FollowupReminderCreateJob;
+        MessageComposer::FollowupReminderCreateJob *job = new MessageComposer::FollowupReminderCreateJob;
         job->setSubject(subject());
         job->setMessageId(messageId);
         job->setTo(replyTo());
@@ -3393,7 +3393,7 @@ void KMComposeWin::slotTransportChanged()
 void KMComposeWin::slotFollowUpMail(bool toggled)
 {
     if (toggled) {
-        QPointer<FollowUpReminderSelectDateDialog> dlg = new FollowUpReminderSelectDateDialog(this);
+        QPointer<MessageComposer::FollowUpReminderSelectDateDialog> dlg = new MessageComposer::FollowUpReminderSelectDateDialog(this);
         if (dlg->exec()) {
             mComposerBase->setFollowUpDate(dlg->selectedDate());
             mComposerBase->setFollowUpCollection(dlg->collection());
