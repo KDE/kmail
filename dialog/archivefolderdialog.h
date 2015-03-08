@@ -55,6 +55,7 @@ private slots:
     void slotUrlChanged(const QString&);
 
 private:
+    QString standardArchivePath(const QString &folderName);
     bool allowToDeleteFolders( const Akonadi::Collection &folder) const;
 
     QWidget *mParentWidget;
