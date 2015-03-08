@@ -22,9 +22,9 @@
 #include <KConfigGroup>
 #include <qboxlayout.h>
 #include <qlabel.h>
-#include <KGlobal>
 #include <qlistwidget.h>
 #include <KSharedConfig>
+#include <KLocalizedString>
 
 PotentialPhishingDetailWidget::PotentialPhishingDetailWidget(QWidget *parent)
     : QWidget(parent)
