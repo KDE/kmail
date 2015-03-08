@@ -25,7 +25,7 @@
 #include "util/mailutil.h"
 #include "mailcommon/kernel/mailkernel.h"
 #include "mailcommon/folder/foldertreeview.h"
-#include "mailcommon/collectionpage/newmailnotifierattribute.h"
+#include "mailcommon/collectionpage/attributes/newmailnotifierattribute.h"
 
 #include <kiconloader.h>
 #include <kcolorscheme.h>
