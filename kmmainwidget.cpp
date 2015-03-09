@@ -61,7 +61,7 @@ using KSieveUi::SieveDebugDialog;
 #include "pimcommon/acl/collectionaclpage.h"
 #include "mailcommon/collectionpage/collectiongeneralpage.h"
 #include "mailcommon/collectionpage/collectionexpirypage.h"
-#include "mailcommon/collectionpage/expirecollectionattribute.h"
+#include "mailcommon/collectionpage/attributes/expirecollectionattribute.h"
 #include "mailcommon/filter/filtermanager.h"
 #include "mailcommon/filter/mailfilter.h"
 #include "mailcommon/widgets/favoritecollectionwidget.h"

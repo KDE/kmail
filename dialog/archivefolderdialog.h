@@ -56,6 +56,7 @@ private Q_SLOTS:
 
 private:
     bool allowToDeleteFolders(const Akonadi::Collection &folder) const;
+    QString standardArchivePath(const QString &folderName);
 
     QWidget *mParentWidget;
     QCheckBox *mDeleteCheckBox;

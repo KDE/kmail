@@ -45,7 +45,7 @@
 using namespace KMail;
 using namespace MailCommon;
 
-static QString standardArchivePath(const QString &folderName)
+QString ArchiveFolderDialog::standardArchivePath( const QString &folderName )
 {
     QString currentPath = QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation);
     QDir dir(currentPath);
