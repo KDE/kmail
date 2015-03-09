@@ -16,6 +16,7 @@
 */
 
 #include "attachmentlistwidget.h"
+#include "selectattachmentdialog.h"
 
 #include <KLocalizedString>
 #include <KUrlRequester>
@@ -59,35 +60,3 @@ QString AttachmentListWidget::modifyEntry(const QString &text)
     return attachmentPath;
 }
 
-
-SelectAttachmentDialog::SelectAttachmentDialog(QWidget *parent)
-    : KDialog(parent)
-{
-    setCaption(i18n("Attachment"));
-    setButtons(Ok|Cancel);
-
-    QWidget *mainWidget = new QWidget;
-    QVBoxLayout *vbox = new QVBoxLayout;
-    mainWidget->setLayout(vbox);
-    QLabel *lab = new QLabel(i18n("Select attachment:"));
-    vbox->addWidget(lab);
-    mUrlRequester = new KUrlRequester;
-    mUrlRequester->setMode(KFile::LocalOnly|KFile::ExistingOnly);
-    vbox->addWidget(mUrlRequester);
-    setMainWidget(mainWidget);
-}
-
-SelectAttachmentDialog::~SelectAttachmentDialog()
-{
-
-}
-
-void SelectAttachmentDialog::setAttachmentPath(const QString &path)
-{
-    mUrlRequester->setUrl(path);
-}
-
-QString SelectAttachmentDialog::attachmentPath() const
-{
-    return mUrlRequester->url().path();
-}

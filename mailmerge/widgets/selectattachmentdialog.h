@@ -1,5 +1,5 @@
 /*
-  Copyright (c) 2014-2015 Montel Laurent <montel@kde.org>
+  Copyright (c) 2015 Montel Laurent <montel@kde.org>
 
   This program is free software; you can redistribute it and/or modify it
   under the terms of the GNU General Public License, version 2, as
@@ -15,27 +15,26 @@
   51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
 */
 
-#ifndef ATTACHMENTLISTWIDGET_H
-#define ATTACHMENTLISTWIDGET_H
+#ifndef SELECTATTACHMENTDIALOG_H
+#define SELECTATTACHMENTDIALOG_H
 
-#include "pimcommon/widgets/simplestringlisteditor.h"
 #include <KDialog>
-
 class KUrlRequester;
+
 namespace MailMerge {
-class AttachmentListWidget : public PimCommon::SimpleStringListEditor
+class SelectAttachmentDialog : public KDialog
 {
     Q_OBJECT
 public:
-    explicit AttachmentListWidget(QWidget * parent=0,
-                                  ButtonCode buttons=Unsorted,
-                                  const QString & addLabel=QString(),
-                                  const QString & removeLabel=QString(),
-                                  const QString & modifyLabel=QString());
-    ~AttachmentListWidget();
+    explicit SelectAttachmentDialog(QWidget *parent = 0);
+    ~SelectAttachmentDialog();
 
-    void addNewEntry();
-    QString modifyEntry(const QString &text);
+    void setAttachmentPath(const QString &path);
+    QString attachmentPath() const;
+
+private:
+    KUrlRequester *mUrlRequester;
 };
 }
-#endif // ATTACHMENTLISTWIDGET_H
+
+#endif // SELECTATTACHMENTDIALOG_H
