@@ -16,8 +16,8 @@ macro(add_kmail_unittest _source _additionalsource)
   )
 endmacro ()
 
-add_kmail_unittest( mailmergewidgettest.cpp "../widgets/csvwidget.cpp;../widgets/addressbookwidget.cpp;../widgets/mailmergewidget.cpp;../widgets/attachmentlistwidget.cpp")
+add_kmail_unittest( mailmergewidgettest.cpp "../widgets/csvwidget.cpp;../widgets/addressbookwidget.cpp;../widgets/mailmergewidget.cpp;../widgets/attachmentlistwidget.cpp;../widgets/selectattachmentdialog.cpp")
 add_kmail_unittest(addressbookwidgettest.cpp "../widgets/csvwidget.cpp")
 add_kmail_unittest(csvwidgettest.cpp "../widgets/csvwidget.cpp")
-add_kmail_unittest(mailmergedialogtest.cpp "../mailmergedialog.cpp")
+add_kmail_unittest(mailmergedialogtest.cpp "../mailmergedialog.cpp;../widgets/attachmentlistwidget.cpp;../widgets/selectattachmentdialog.cpp")
 

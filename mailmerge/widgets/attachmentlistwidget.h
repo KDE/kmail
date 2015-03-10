@@ -22,22 +22,7 @@
 #include <QDialog>
 
 class KUrlRequester;
-namespace MailMerge
-{
-class SelectAttachmentDialog : public QDialog
-{
-    Q_OBJECT
-public:
-    explicit SelectAttachmentDialog(QWidget *parent);
-    ~SelectAttachmentDialog();
-
-    void setAttachmentPath(const QString &path);
-    QString attachmentPath() const;
-
-private:
-    KUrlRequester *mUrlRequester;
-};
-
+namespace MailMerge {
 class AttachmentListWidget : public PimCommon::SimpleStringListEditor
 {
     Q_OBJECT

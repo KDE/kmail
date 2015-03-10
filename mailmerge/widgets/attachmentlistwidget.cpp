@@ -16,6 +16,7 @@
 */
 
 #include "attachmentlistwidget.h"
+#include "selectattachmentdialog.h"
 
 #include <KLocalizedString>
 #include <KUrlRequester>
@@ -63,44 +64,3 @@ QString AttachmentListWidget::modifyEntry(const QString &text)
     return attachmentPath;
 }
 
-SelectAttachmentDialog::SelectAttachmentDialog(QWidget *parent)
-    : QDialog(parent)
-{
-    setWindowTitle(i18n("Attachment"));
-    QDialogButtonBox *buttonBox = new QDialogButtonBox(QDialogButtonBox::Ok | QDialogButtonBox::Cancel);
-    QWidget *mainWidget = new QWidget(this);
-    QVBoxLayout *mainLayout = new QVBoxLayout;
-    setLayout(mainLayout);
-    mainLayout->addWidget(mainWidget);
-    QPushButton *okButton = buttonBox->button(QDialogButtonBox::Ok);
-    okButton->setDefault(true);
-    okButton->setShortcut(Qt::CTRL | Qt::Key_Return);
-    connect(buttonBox, &QDialogButtonBox::accepted, this, &QDialog::accept);
-    connect(buttonBox, &QDialogButtonBox::rejected, this, &QDialog::reject);
-
-    QWidget *w = new QWidget;
-    QVBoxLayout *vbox = new QVBoxLayout;
-    w->setLayout(vbox);
-    QLabel *lab = new QLabel(i18n("Select attachment:"));
-    vbox->addWidget(lab);
-    mUrlRequester = new KUrlRequester;
-    mUrlRequester->setMode(KFile::LocalOnly | KFile::ExistingOnly);
-    vbox->addWidget(mUrlRequester);
-    mainLayout->addWidget(w);
-    mainLayout->addWidget(buttonBox);
-}
-
-SelectAttachmentDialog::~SelectAttachmentDialog()
-{
-
-}
-
-void SelectAttachmentDialog::setAttachmentPath(const QString &path)
-{
-    mUrlRequester->setUrl(path);
-}
-
-QString SelectAttachmentDialog::attachmentPath() const
-{
-    return mUrlRequester->url().path();
-}
