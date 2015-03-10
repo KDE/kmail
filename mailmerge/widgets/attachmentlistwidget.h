@@ -22,7 +22,8 @@
 #include <QDialog>
 
 class KUrlRequester;
-namespace MailMerge {
+namespace MailMerge
+{
 class AttachmentListWidget : public PimCommon::SimpleStringListEditor
 {
     Q_OBJECT
