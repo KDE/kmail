@@ -562,7 +562,7 @@ void KMComposeWin::addAttachmentsAndSend( const KUrl::List &urls, const QString 
     kDebug() << "addAttachment and sending!";
     const int nbUrl = urls.count();
     for ( int i =0; i < nbUrl; ++i ) {
-        mComposerBase->addAttachment( urls[i], comment, true );
+        mComposerBase->addAttachment( urls.at(i), comment, true );
     }
 
     send( how );
@@ -1966,7 +1966,7 @@ void KMComposeWin::autoSaveMessage(bool force)
     }
 }
 
-bool KMComposeWin::encryptToSelf()
+bool KMComposeWin::encryptToSelf() const
 {
     return MessageComposer::MessageComposerSettings::self()->cryptoEncryptToSelf();
 }
@@ -2136,11 +2136,20 @@ void KMComposeWin::slotInsertRecentFile( const KUrl &u )
 
     MessageComposer::InsertTextFileJob *job = new MessageComposer::InsertTextFileJob( mComposerBase->editor(), u );
     job->setEncoding( encoding );
+    connect(job, SIGNAL(result(KJob*)), SLOT(slotInsertTextFile(KJob*)));
     job->start();
-    // Don't care about the result for now
-    // TODO: we should probably show an error message if it fails...
 }
 
+void KMComposeWin::slotInsertTextFile(KJob*job)
+{
+    if ( job->error() ) {
+        if ( static_cast<KIO::Job*>(job)->ui() )
+            static_cast<KIO::Job*>(job)->ui()->showErrorMessage();
+        else
+            kDebug()<<" job->errorString() :"<<job->errorString();
+        return;
+    }
+}
 
 void KMComposeWin::slotSelectCryptoModule( bool init )
 {

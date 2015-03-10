@@ -439,6 +439,7 @@ private slots:
     void slotExpandGroupResult(KJob *job);
     void slotCheckSendNowStep2();
     void slotPotentialPhishingEmailsFound(const QStringList &list);
+    void slotInsertTextFile(KJob *job);
 public: // kmcommand
     // FIXME we need to remove these, but they're pure virtual in Composer.
     void addAttach( KMime::Content *msgPart );
@@ -589,7 +590,7 @@ private:
       of setAutomaticFields(), see below, is still required. */
     void initHeader( KMime::Message *message, uint identity=0 );
 
-    inline bool encryptToSelf();
+    inline bool encryptToSelf() const;
 
 private:
     int validateLineWrapWidth();
