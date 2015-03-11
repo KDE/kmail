@@ -65,22 +65,11 @@ namespace KMail {
 XFaceConfigurator::XFaceConfigurator( QWidget * parent )
     : QWidget( parent )
 {
-    // tmp. vars:
-    QLabel * label;
-    QLabel * label1;
-    QLabel * label2;
-    QWidget * page;
-    QVBoxLayout * vlay;
-    QHBoxLayout * hlay;
-    QVBoxLayout * page_vlay;
-    QPushButton * mFromFileBtn;
-    QPushButton * mFromAddrbkBtn;
-
-    vlay = new QVBoxLayout( this );
+    QVBoxLayout *vlay = new QVBoxLayout( this );
     vlay->setObjectName( QLatin1String("main layout") );
     vlay->setSpacing( KDialog::spacingHint() );
     vlay->setMargin( 0 );
-    hlay = new QHBoxLayout();
+    QHBoxLayout *hlay = new QHBoxLayout();
     vlay->addLayout( hlay );
 
     // "enable X-Face" checkbox:
@@ -114,7 +103,7 @@ XFaceConfigurator::XFaceConfigurator( QWidget * parent )
                                      "External Source" )
                            << i18nc( "continuation of \"obtain picture from\"",
                                      "Input Field Below" ) );
-    label = new QLabel( i18n("Obtain pic&ture from:"), this );
+    QLabel *label = new QLabel( i18n("Obtain pic&ture from:"), this );
     label->setBuddy( sourceCombo );
     label->setEnabled( false ); // since !mEnableCheck->isChecked()
     hlay->addWidget( label );
@@ -140,31 +129,31 @@ XFaceConfigurator::XFaceConfigurator( QWidget * parent )
 
     int pageno = 0;
     // page 0: create X-Face from image file or address book entry
-    page = new QWidget( widgetStack );
+    QWidget *page = new QWidget( widgetStack );
     widgetStack->insertWidget( pageno, page ); // force sequential numbers (play safe)
-    page_vlay = new QVBoxLayout( page );
+    QVBoxLayout *page_vlay = new QVBoxLayout( page );
     page_vlay->setMargin( 0 );
     page_vlay->setSpacing( KDialog::spacingHint() );
     hlay = new QHBoxLayout(); // inherits spacing ??? FIXME really?
     page_vlay->addLayout( hlay );
-    mFromFileBtn = new QPushButton( i18n("Select File..."), page );
-    mFromFileBtn->setWhatsThis(
+    QPushButton *fromFileButton = new QPushButton( i18n("Select File..."), page );
+    fromFileButton->setWhatsThis(
                 i18n("Use this to select an image file to create the picture from. "
                      "The image should be of high contrast and nearly quadratic shape. "
                      "A light background helps improve the result." ) );
-    mFromFileBtn->setAutoDefault( false );
-    page_vlay->addWidget( mFromFileBtn, 1 );
-    connect( mFromFileBtn, SIGNAL(released()),
+    fromFileButton->setAutoDefault( false );
+    page_vlay->addWidget( fromFileButton, 1 );
+    connect( fromFileButton, SIGNAL(released()),
              this, SLOT(slotSelectFile()) );
-    mFromAddrbkBtn = new QPushButton( i18n("Set From Address Book"), page );
-    mFromAddrbkBtn->setWhatsThis(
+    QPushButton *fromAddressBookButton = new QPushButton( i18n("Set From Address Book"), page );
+    fromAddressBookButton->setWhatsThis(
                 i18n( "You can use a scaled-down version of the picture "
                       "you have set in your address book entry." ) );
-    mFromAddrbkBtn->setAutoDefault( false );
-    page_vlay->addWidget( mFromAddrbkBtn, 1 );
-    connect( mFromAddrbkBtn, SIGNAL(released()),
+    fromAddressBookButton->setAutoDefault( false );
+    page_vlay->addWidget( fromAddressBookButton, 1 );
+    connect( fromAddressBookButton, SIGNAL(released()),
              this, SLOT(slotSelectFromAddressbook()) );
-    label1 = new QLabel( i18n("<qt>KMail can send a small (48x48 pixels), low-quality, "
+    QLabel *label1 = new QLabel( i18n("<qt>KMail can send a small (48x48 pixels), low-quality, "
                               "monochrome picture with every message. "
                               "For example, this could be a picture of you or a glyph. "
                               "It is shown in the recipient's mail client (if supported).</qt>" ), page );
@@ -187,7 +176,7 @@ XFaceConfigurator::XFaceConfigurator( QWidget * parent )
     mTextEdit->setFont( KGlobalSettings::fixedFont() );
     mTextEdit->setWordWrapMode( QTextOption::WrapAnywhere);
     mTextEdit->setSearchSupport(false);
-    label2 = new QLabel( i18n("Examples are available at <a "
+    QLabel *label2 = new QLabel( i18n("Examples are available at <a "
                               "href=\"http://ace.home.xs4all.nl/X-Faces/\">"
                               "http://ace.home.xs4all.nl/X-Faces/</a>."), page );
     label2->setOpenExternalLinks(true);

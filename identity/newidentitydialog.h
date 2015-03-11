@@ -41,7 +41,11 @@ class NewIdentityDialog : public KDialog
     Q_OBJECT
 
 public:
-    enum DuplicateMode { Empty, ControlCenter, ExistingEntry };
+    enum DuplicateMode {
+        Empty = 0,
+        ControlCenter,
+        ExistingEntry
+    };
 
     explicit NewIdentityDialog( KPIMIdentities::IdentityManager *manager, QWidget *parent = 0 );
 
