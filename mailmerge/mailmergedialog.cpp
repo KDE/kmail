@@ -16,6 +16,7 @@
 */
 
 #include "mailmergedialog.h"
+#include "widgets/mailmergewidget.h"
 
 #include <KLocalizedString>
 #include <QDialogButtonBox>
@@ -27,6 +28,11 @@ MailMergeDialog::MailMergeDialog(QWidget *parent)
     setWindowTitle( i18n("Mail Merge") );
     QVBoxLayout *mainLayout = new QVBoxLayout;
     setLayout(mainLayout);
+
+    mMailMergeWidget = new MailMergeWidget(this);
+    mMailMergeWidget->setObjectName(QLatin1String("mailmergewidget"));
+    mainLayout->addWidget(mMailMergeWidget);
+
     QDialogButtonBox *buttonBox = new QDialogButtonBox(QDialogButtonBox::Ok | QDialogButtonBox::Cancel);
     buttonBox->setObjectName(QLatin1String("buttonbox"));
     mainLayout->addWidget(buttonBox);

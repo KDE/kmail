@@ -30,15 +30,15 @@ target_link_libraries(mailmergewidget_gui
 
 
 # Convenience macro to add unit tests.
-macro( kmail_mailmerge _source _additionalsource)
+macro( kmail_mailmerge _source _additionalsource _additionallib)
   set( _test ${_source}  ${_additionalsource})
   get_filename_component( _name ${_source} NAME_WE )
   kde4_add_unit_test( ${_name} TESTNAME kmailmailmerge-${_name} ${_test} )
-  target_link_libraries( ${_name} ${QT_QTTEST_LIBRARY} ${KDE4_KDEUI_LIBS} ${KDE4_KFILE_LIBS} )
+  target_link_libraries( ${_name} ${QT_QTTEST_LIBRARY} ${KDE4_KDEUI_LIBS} ${KDE4_KFILE_LIBS}  ${_additionallib} )
 endmacro()
 
-kmail_mailmerge(addressbookwidgettest.cpp "../widgets/selectattachmentdialog.cpp")
-kmail_mailmerge(csvwidgettest.cpp "../widgets/csvwidget.cpp")
-kmail_mailmerge(mailmergedialogtest.cpp "../mailmergedialog.cpp")
-kmail_mailmerge(selectattachmentdialogtest.cpp "../widgets/selectattachmentdialog.cpp")
+kmail_mailmerge(addressbookwidgettest.cpp "../widgets/selectattachmentdialog.cpp" "")
+kmail_mailmerge(csvwidgettest.cpp "../widgets/csvwidget.cpp" "")
+kmail_mailmerge(mailmergedialogtest.cpp "../mailmergedialog.cpp;../widgets/mailmergewidget.cpp;../widgets/attachmentlistwidget.cpp;../widgets/csvwidget.cpp;../widgets/addressbookwidget.cpp;../widgets/selectattachmentdialog.cpp" "pimcommon")
+kmail_mailmerge(selectattachmentdialogtest.cpp "../widgets/selectattachmentdialog.cpp" "")
 
