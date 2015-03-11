@@ -39,7 +39,7 @@ PotentialPhishingDetailDialogTest::~PotentialPhishingDetailDialogTest()
 void PotentialPhishingDetailDialogTest::shouldHaveDefaultValue()
 {
     PotentialPhishingDetailDialog dlg;
-    PotentialPhishingDetailWidget *w = qFindChild<PotentialPhishingDetailWidget *>(&dlg, QLatin1String("potentialphising_widget"));
+    PotentialPhishingDetailWidget *w = dlg.findChild<PotentialPhishingDetailWidget *>(QLatin1String("potentialphising_widget"));
     QVERIFY(w);
 }
 

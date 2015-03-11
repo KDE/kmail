@@ -34,7 +34,7 @@ void MailMergeDialogTest::shouldHaveDefaultValue()
 {
     MailMerge::MailMergeDialog dlg;
 
-    QDialogButtonBox *buttonBox = qFindChild<QDialogButtonBox *>(&dlg, QLatin1String("buttonbox"));
+    QDialogButtonBox *buttonBox = dlg.findChild<QDialogButtonBox *>(QLatin1String("buttonbox"));
     QVERIFY(buttonBox);
 }
 

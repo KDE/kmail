@@ -34,9 +34,9 @@ SelectAttachmentDialogTest::~SelectAttachmentDialogTest()
 void SelectAttachmentDialogTest::shouldHaveDefaultValue()
 {
     MailMerge::SelectAttachmentDialog dlg;
-    QLabel *lab = qFindChild<QLabel *>(&dlg, QLatin1String("selectattachment_label"));
+    QLabel *lab = dlg.findChild<QLabel *>(QLatin1String("selectattachment_label"));
     QVERIFY(lab);
-    KUrlRequester *urlRequester = qFindChild<KUrlRequester *>(&dlg, QLatin1String("urlrequester"));
+    KUrlRequester *urlRequester = dlg.findChild<KUrlRequester *>(QLatin1String("urlrequester"));
     QVERIFY(urlRequester);
 }
 
