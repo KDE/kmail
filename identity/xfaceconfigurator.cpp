@@ -54,7 +54,6 @@
 #include <QStackedWidget>
 #include <QVBoxLayout>
 
-// #include <assert.h>
 using namespace KABC;
 using namespace KIO;
 using namespace KMail;
