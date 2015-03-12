@@ -630,8 +630,10 @@ void KMReaderMainWin::showMessagePopup(const Akonadi::Item&msg ,const KUrl&url,c
             menu->addSeparator();
             menu->addAction( mReaderWin->openBlockableItems());
         }
-        if (msg.isValid())
+        if (msg.isValid()) {
+            menu->addSeparator();
             menu->addAction( mMsgActions->addFollowupReminderAction() );
+        }
         if (kmkernel->allowToDebugBalooSupport()) {
             menu->addSeparator();
             menu->addAction( mMsgActions->debugBalooAction() );
