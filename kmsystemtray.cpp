@@ -35,7 +35,6 @@
 #include <QAction>
 #include <KActionMenu>
 #include <KActionCollection>
-#include <KGlobalSettings>
 #include <QPainter>
 
 #include <AkonadiCore/ChangeRecorder>
@@ -84,8 +83,6 @@ KMSystemTray::KMSystemTray(QObject *parent)
         }
     }
 
-    connect(KGlobalSettings::self(), &KGlobalSettings::kdisplayPaletteChanged, this, &KMSystemTray::slotGeneralPaletteChanged);
-    connect(KGlobalSettings::self(), &KGlobalSettings::kdisplayFontChanged, this, &KMSystemTray::slotGeneralFontChanged);
 
     connect(this, &KMSystemTray::activateRequested, this, &KMSystemTray::slotActivated);
     connect(contextMenu(), &QMenu::aboutToShow,
