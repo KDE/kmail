@@ -41,4 +41,4 @@ kmail_mailmerge(addressbookwidgettest.cpp "../widgets/selectattachmentdialog.cpp
 kmail_mailmerge(csvwidgettest.cpp "../widgets/csvwidget.cpp" "")
 kmail_mailmerge(mailmergedialogtest.cpp "../mailmergedialog.cpp;../widgets/mailmergewidget.cpp;../widgets/attachmentlistwidget.cpp;../widgets/csvwidget.cpp;../widgets/addressbookwidget.cpp;../widgets/selectattachmentdialog.cpp" "pimcommon")
 kmail_mailmerge(selectattachmentdialogtest.cpp "../widgets/selectattachmentdialog.cpp" "")
-
+kmail_mailmerge(mailmergejobtest.cpp "../job/mailmergejob.cpp" "")
