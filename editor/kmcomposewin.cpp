@@ -1104,7 +1104,6 @@ void KMComposeWin::getTransportMenu()
 {
     mActNowMenu->clear();
     mActLaterMenu->clear();
-
     const QList<Transport*> transports = TransportManager::self()->transports();
     foreach ( Transport *transport, transports ) {
         const QString name = transport->name().replace( QLatin1Char('&'), QLatin1String("&&") );
@@ -1177,15 +1176,12 @@ void KMComposeWin::setupActions( void )
     mActNowMenu = actActionNowMenu->menu();
     mActLaterMenu = actActionLaterMenu->menu();
 
+    connect( TransportManager::self(), SIGNAL(transportsChanged()), this, SLOT(getTransportMenu()));
     connect( mActNowMenu, SIGNAL(triggered(QAction*)), this,
              SLOT(slotSendNowVia(QAction*)) );
-    connect( mActNowMenu, SIGNAL(aboutToShow()), this,
-             SLOT(getTransportMenu()) );
 
     connect( mActLaterMenu, SIGNAL(triggered(QAction*)), this,
              SLOT(slotSendLaterVia(QAction*)) );
-    connect( mActLaterMenu, SIGNAL(aboutToShow()), this,
-             SLOT(getTransportMenu()) );
 
     KAction *action = new KAction( KIcon( QLatin1String("document-save") ), i18n("Save as &Draft"), this );
     actionCollection()->addAction(QLatin1String("save_in_drafts"), action );
@@ -1458,8 +1454,7 @@ void KMComposeWin::setupActions( void )
     if ( configureAction ) {
         configureAction->setText( i18n("Configure KMail..." ) );
     }
-
-
+    getTransportMenu();
 }
 
 void KMComposeWin::changeCryptoAction()
@@ -2147,7 +2142,6 @@ void KMComposeWin::slotInsertTextFile(KJob*job)
             static_cast<KIO::Job*>(job)->ui()->showErrorMessage();
         else
             kDebug()<<" job->errorString() :"<<job->errorString();
-        return;
     }
 }
 
