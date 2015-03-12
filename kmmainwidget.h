@@ -38,6 +38,9 @@
 #include <akonadi/tag.h>
 #include <messagelist/core/view.h>
 
+namespace MailTransport {
+class Transport;
+}
 namespace Akonadi {
 class Tag;
 }
@@ -60,6 +63,7 @@ class KMCommand;
 class KMMoveCommand;
 class KRecentFilesAction;
 class ManageShowCollectionProperties;
+class KActionMenuTransport;
 template <typename T, typename S> class QMap;
 
 namespace KIO {
@@ -129,7 +133,7 @@ public:
     KAction *editAction() const { return mMsgActions->editAction(); }
     KAction *sendAgainAction() const { return mSendAgainAction; }
     KAction *sendQueuedAction() const { return mSendQueued; }
-    KActionMenu *sendQueueViaMenu() const { return mSendActionMenu; }
+    KActionMenuTransport *sendQueueViaMenu() const { return mSendActionMenu; }
 
     KMail::MessageActions *messageActions() const { return mMsgActions; }
 
@@ -290,7 +294,6 @@ protected slots:
     void updateFileMenu();
     void slotCheckOneAccount( QAction* );
     void getAccountMenu();
-    void getTransportMenu();
     void slotHelp();
     void slotFilter();
     void slotManageSieveScripts();
@@ -332,7 +335,7 @@ protected slots:
     void slotSetThreadStatusWatched();
     void slotSetThreadStatusIgnored();
     void slotSendQueued();
-    void slotSendQueuedVia( QAction* item );
+    void slotSendQueuedVia(MailTransport::Transport*transport);
     void slotOnlineStatus();
     void slotUpdateOnlineStatus( GlobalSettings::EnumNetworkState::type );
     void slotMessagePopup(const Akonadi::Item& ,const KUrl&,const KUrl &imageUrl,const QPoint& );
@@ -523,7 +526,7 @@ private:
     *mSaveAttachmentsAction, *mOpenAction,
     *mMoveMsgToFolderAction, *mCollectionProperties, *mSendQueued;
     KAction *mArchiveAction;
-    KActionMenu *mSendActionMenu;
+    KActionMenuTransport *mSendActionMenu;
     // Filter actions
     KActionMenu *mFilterMenu;
     KAction *mExpireConfigAction;
@@ -548,7 +551,6 @@ private:
     QSplitter    *mSplitter1, *mSplitter2, *mFolderViewSplitter;
     Akonadi::Collection mTemplateFolder;
     QMenu        *mActMenu;
-    QMenu        *mSendMenu;
     bool          mLongFolderList;
     bool          mStartupDone;
     bool          mWasEverShown;

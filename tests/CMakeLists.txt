@@ -37,6 +37,9 @@ set( kmail_cryptostateindicatorwidgettest_source cryptostateindicatorwidgettest.
 kde4_add_unit_test( cryptostateindicatorwidgettest ${kmail_cryptostateindicatorwidgettest_source})
 target_link_libraries( cryptostateindicatorwidgettest ${QT_QTTEST_LIBRARY} ${KDE4_KDEUI_LIBS} messagecore)
 
+set( kmail_kactionmenutransporttest_source kactionmenutransporttest.cpp ../widgets/kactionmenutransport.cpp)
+kde4_add_unit_test( kactionmenutransporttest ${kmail_kactionmenutransporttest_source})
+target_link_libraries( kactionmenutransporttest ${QT_QTTEST_LIBRARY} ${KDE4_KDEUI_LIBS} ${KDEPIMLIBS_MAILTRANSPORT_LIBS})
 
 include(AkonadiMacros)
 set(KDEPIMLIBS_RUN_ISOLATED_TESTS TRUE)

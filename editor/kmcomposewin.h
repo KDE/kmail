@@ -75,7 +75,9 @@ class KMComposerGlobalAction;
 namespace boost {
 template <typename T> class shared_ptr;
 }
-
+namespace MailTransport {
+class Transport;
+}
 namespace KPIMIdentities {
 class Identity;
 }
@@ -300,10 +302,9 @@ private slots:
     void slotInsertRecentFile( const KUrl & );
     void slotRecentListFileClear();
 
-    void slotSendNowVia( QAction * );
+    void slotSendNowVia(MailTransport::Transport *transport );
     void slotSendLater();
-    void slotSendLaterVia( QAction * );
-    void getTransportMenu();
+    void slotSendLaterVia(MailTransport::Transport *transport );
 
     /**
      * Returns true when saving was successful.
@@ -656,8 +657,6 @@ private:
 
     int mLabelWidth;
 
-    QMenu *mActNowMenu;
-    QMenu *mActLaterMenu;
     KActionMenu *mChangeCaseMenu;
 
     QString mdbusObjectPath;

@@ -35,6 +35,7 @@
 #include <KLocalizedString>
 #include <KAction>
 #include <KActionMenu>
+#include "widgets/kactionmenutransport.h"
 #include <KActionCollection>
 
 #include <QPainter>

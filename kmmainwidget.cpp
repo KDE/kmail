@@ -42,6 +42,7 @@
 #include "foldershortcutactionmanager.h"
 #include "widgets/collectionpane.h"
 #include "manageshowcollectionproperties.h"
+#include "widgets/kactionmenutransport.h"
 #if !defined(NDEBUG)
 #include <ksieveui/debug/sievedebugdialog.h>
 using KSieveUi::SieveDebugDialog;
@@ -2309,12 +2310,11 @@ void KMMainWidget::slotSendQueued()
 }
 
 //-----------------------------------------------------------------------------
-void KMMainWidget::slotSendQueuedVia( QAction *item )
+void KMMainWidget::slotSendQueuedVia(MailTransport::Transport *transport)
 {
-    const QStringList availTransports = MailTransport::TransportManager::self()->transportNames();
-    if ( !availTransports.isEmpty() && availTransports.contains( item->text() ) ) {
+    if (transport) {
         if ( kmkernel->msgSender() ) {
-            kmkernel->msgSender()->sendQueued( item->text() );
+            kmkernel->msgSender()->sendQueued( transport->name() );
         }
     }
 }
@@ -2807,20 +2807,6 @@ void KMMainWidget::getAccountMenu()
 }
 
 //-----------------------------------------------------------------------------
-void KMMainWidget::getTransportMenu()
-{
-
-    mSendMenu->clear();
-    QStringList availTransports = MailTransport::TransportManager::self()->transportNames();
-    QStringList::Iterator it;
-    QStringList::Iterator end( availTransports.end() );
-
-    for (it = availTransports.begin(); it != end ; ++it)
-        mSendMenu->addAction((*it).replace(QLatin1Char('&'), QLatin1String("&&")));
-}
-
-
-//-----------------------------------------------------------------------------
 void KMMainWidget::setupActions()
 {
     mMsgActions = new KMail::MessageActions( actionCollection(), this );
@@ -2875,13 +2861,13 @@ void KMMainWidget::setupActions()
         action->setText( i18n("Online status (unknown)") );
     }
 
-    mSendActionMenu = new KActionMenu(KIcon(QLatin1String("mail-send-via")), i18n("Send Queued Messages Via"), this);
+    mSendActionMenu = new KActionMenuTransport(this);
+    mSendActionMenu->setIcon(KIcon(QLatin1String("mail-send-via")));
+    mSendActionMenu->setText(i18n("Send Queued Messages Via"));
     actionCollection()->addAction(QLatin1String("send_queued_via"), mSendActionMenu );
     mSendActionMenu->setDelayed(true);
 
-    mSendMenu = mSendActionMenu->menu();
-    connect(mSendMenu,SIGNAL(triggered(QAction*)), SLOT(slotSendQueuedVia(QAction*)));
-    connect(mSendMenu,SIGNAL(aboutToShow()),SLOT(getTransportMenu()));
+    connect(mSendActionMenu, SIGNAL(transportSelected(MailTransport::Transport*)), SLOT(slotSendQueuedVia(MailTransport::Transport*)));
 
     //----- Tools menu
     if (parent()->inherits("KMMainWin")) {
