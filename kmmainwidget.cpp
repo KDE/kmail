@@ -4498,5 +4498,6 @@ void KMMainWidget::populateMessageListStatusFilterCombo()
 
 void KMMainWidget::slotCollectionRemoved(const Akonadi::Collection &col)
 {
-    mFavoritesModel->removeCollection(col);
+    if (mFavoritesModel)
+       mFavoritesModel->removeCollection(col);
 }
