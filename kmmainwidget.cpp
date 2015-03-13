@@ -2314,7 +2314,7 @@ void KMMainWidget::slotSendQueuedVia(MailTransport::Transport *transport)
 {
     if (transport) {
         if ( kmkernel->msgSender() ) {
-            kmkernel->msgSender()->sendQueued( transport->name() );
+            kmkernel->msgSender()->sendQueued( transport->id() );
         }
     }
 }
