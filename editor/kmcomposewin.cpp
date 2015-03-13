@@ -1135,10 +1135,6 @@ void KMComposeWin::setupActions(void)
         actionCollection()->addAction(QLatin1String("send_alternative_via"), actActionNowMenu);
     }
 
-    // needed for sending "default transport"
-    actActionNowMenu->setDelayed(true);
-    actActionLaterMenu->setDelayed(true);
-
     connect(actActionNowMenu, SIGNAL(triggered(bool)), this,
             SLOT(slotSendNow()));
     connect(actActionLaterMenu, SIGNAL(triggered(bool)), this,

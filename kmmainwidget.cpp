@@ -2333,8 +2333,8 @@ void KMMainWidget::slotSendQueued()
 void KMMainWidget::slotSendQueuedVia(MailTransport::Transport *transport)
 {
     if (transport) {
-        if (kmkernel->msgSender()) {
-            kmkernel->msgSender()->sendQueued(transport->name());
+        if ( kmkernel->msgSender() ) {
+            kmkernel->msgSender()->sendQueued( transport->id() );
         }
     }
 }
@@ -2884,7 +2884,6 @@ void KMMainWidget::setupActions()
     mSendActionMenu->setIcon(QIcon::fromTheme(QLatin1String("mail-send-via")));
     mSendActionMenu->setText(i18n("Send Queued Messages Via"));
     actionCollection()->addAction(QLatin1String("send_queued_via"), mSendActionMenu);
-    mSendActionMenu->setDelayed(true);
 
     connect(mSendActionMenu, SIGNAL(transportSelected(MailTransport::Transport*)), SLOT(slotSendQueuedVia(MailTransport::Transport*)));
 
