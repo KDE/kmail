@@ -24,7 +24,7 @@ class MailMergeJobTest : public QObject
 {
     Q_OBJECT
 public:
-    explicit MailMergeJobTest(QObject *parent = 0);
+    explicit MailMergeJobTest(QObject *parent = Q_NULLPTR);
     ~MailMergeJobTest();
 };
 

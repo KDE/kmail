@@ -28,7 +28,7 @@ class KActionMenuTransport : public KActionMenu
 {
     Q_OBJECT
 public:
-    explicit KActionMenuTransport(QObject *parent = 0);
+    explicit KActionMenuTransport(QObject *parent = Q_NULLPTR);
     ~KActionMenuTransport();
 
 Q_SIGNALS:
