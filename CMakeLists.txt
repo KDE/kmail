@@ -181,6 +181,7 @@ if (KDEPIM_BUILD_DESKTOP)
      widgets/displaymessageformatactionmenu.cpp
      widgets/statusbarlabeltoggledstate.cpp
      widgets/kactionmenutransport.cpp
+     widgets/kactionmenuaccount.cpp
   )
   set(kmailprivate_tag_LIB_SRCS
      tag/tagactionmanager.cpp

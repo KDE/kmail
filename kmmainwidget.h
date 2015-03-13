@@ -292,8 +292,6 @@ protected:
 
 protected slots:
     void updateFileMenu();
-    void slotCheckOneAccount( QAction* );
-    void getAccountMenu();
     void slotHelp();
     void slotFilter();
     void slotManageSieveScripts();
@@ -550,7 +548,6 @@ private:
     KMReaderWin  *mMsgView;
     QSplitter    *mSplitter1, *mSplitter2, *mFolderViewSplitter;
     Akonadi::Collection mTemplateFolder;
-    QMenu        *mActMenu;
     bool          mLongFolderList;
     bool          mStartupDone;
     bool          mWasEverShown;

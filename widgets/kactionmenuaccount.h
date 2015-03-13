@@ -15,19 +15,24 @@
   51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
 */
 
-#ifndef KACTIONMENUTRANSPORTTEST_H
-#define KACTIONMENUTRANSPORTTEST_H
+#ifndef KACTIONMENUACCOUNT_H
+#define KACTIONMENUACCOUNT_H
 
-#include <QObject>
+#include <KActionMenu>
 
-class KActionMenuTransportTest : public QObject
+class KActionMenuAccount : public KActionMenu
 {
     Q_OBJECT
 public:
-    explicit KActionMenuTransportTest(QObject *parent = 0);
-    ~KActionMenuTransportTest();
+    explicit KActionMenuAccount(QObject *parent = 0);
+    ~KActionMenuAccount();
+
 private Q_SLOTS:
-    void shouldHaveDefaultValue();
+    void updateAccountMenu();
+    void slotCheckTransportMenu();
+    void slotSelectAccount(QAction *act);
+private:
+    bool mInitialized;
 };
 
-#endif // KACTIONMENUTRANSPORTTEST_H
+#endif // KACTIONMENUACCOUNT_H
