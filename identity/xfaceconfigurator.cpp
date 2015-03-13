@@ -51,7 +51,6 @@
 #include <QStackedWidget>
 #include <QVBoxLayout>
 
-// #include <assert.h>
 #include <QFontDatabase>
 #include <QImageReader>
 #include <KConfigGroup>

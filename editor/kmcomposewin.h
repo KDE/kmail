@@ -82,6 +82,10 @@ namespace Sonnet
 class DictionaryComboBox;
 }
 
+namespace MailTransport {
+class Transport;
+}
+
 namespace KIdentityManagement
 {
 class Identity;
@@ -316,10 +320,9 @@ private Q_SLOTS:
     void slotInsertRecentFile(const QUrl &);
     void slotRecentListFileClear();
 
-    void slotSendNowVia(QAction *);
+    void slotSendNowVia(MailTransport::Transport *transport );
     void slotSendLater();
-    void slotSendLaterVia(QAction *);
-    void getTransportMenu();
+    void slotSendLaterVia(MailTransport::Transport *transport );
 
     /**
      * Returns true when saving was successful.
@@ -667,8 +670,6 @@ private:
 
     int mLabelWidth;
 
-    QMenu *mActNowMenu;
-    QMenu *mActLaterMenu;
     KActionMenu *mChangeCaseMenu;
 
     QString mdbusObjectPath;

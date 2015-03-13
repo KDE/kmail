@@ -621,6 +621,10 @@ void KMReaderMainWin::showMessagePopup(const Akonadi::Item &msg , const QUrl &ur
         if (msg.isValid()) {
             menu->addAction(mMsgActions->addFollowupReminderAction());
         }
+        if (msg.isValid()) {
+            menu->addSeparator();
+            menu->addAction( mMsgActions->addFollowupReminderAction() );
+        }
         if (kmkernel->allowToDebugBalooSupport()) {
             menu->addSeparator();
             menu->addAction(mMsgActions->debugBalooAction());

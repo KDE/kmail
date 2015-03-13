@@ -38,8 +38,10 @@
 #include <AkonadiCore/tag.h>
 #include <messagelist/core/view.h>
 
-namespace Akonadi
-{
+namespace MailTransport {
+class Transport;
+}
+namespace Akonadi {
 class Tag;
 }
 
@@ -62,6 +64,7 @@ class KMCommand;
 class KMMoveCommand;
 class KRecentFilesAction;
 class ManageShowCollectionProperties;
+class KActionMenuTransport;
 template <typename T, typename S> class QMap;
 
 namespace KIO
@@ -159,7 +162,7 @@ public:
     {
         return mSendQueued;
     }
-    KActionMenu *sendQueueViaMenu() const
+    KActionMenuTransport *sendQueueViaMenu() const
     {
         return mSendActionMenu;
     }
@@ -332,7 +335,6 @@ protected Q_SLOTS:
     void updateFileMenu();
     void slotCheckOneAccount(QAction *);
     void getAccountMenu();
-    void getTransportMenu();
     void slotHelp();
     void slotFilter();
     void slotManageSieveScripts();
@@ -374,7 +376,7 @@ protected Q_SLOTS:
     void slotSetThreadStatusWatched();
     void slotSetThreadStatusIgnored();
     void slotSendQueued();
-    void slotSendQueuedVia(QAction *item);
+    void slotSendQueuedVia(MailTransport::Transport*transport);
     void slotOnlineStatus();
     void slotUpdateOnlineStatus(GlobalSettings::EnumNetworkState::type);
     void slotMessagePopup(const Akonadi::Item &, const QUrl &, const QUrl &imageUrl, const QPoint &);
@@ -561,7 +563,7 @@ private:
             *mSaveAttachmentsAction, *mOpenAction,
             *mMoveMsgToFolderAction, *mCollectionProperties, *mSendQueued;
     QAction *mArchiveAction;
-    KActionMenu *mSendActionMenu;
+    KActionMenuTransport *mSendActionMenu;
     // Filter actions
     KActionMenu *mFilterMenu;
     QAction *mExpireConfigAction;
@@ -586,7 +588,6 @@ private:
     QSplitter    *mSplitter1, *mSplitter2, *mFolderViewSplitter;
     Akonadi::Collection mTemplateFolder;
     QMenu        *mActMenu;
-    QMenu        *mSendMenu;
     bool          mLongFolderList;
     bool          mStartupDone;
     bool          mWasEverShown;

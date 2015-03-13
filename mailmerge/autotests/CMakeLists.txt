@@ -20,4 +20,4 @@ add_kmail_unittest( mailmergewidgettest.cpp "../widgets/csvwidget.cpp;../widgets
 add_kmail_unittest(addressbookwidgettest.cpp "../widgets/csvwidget.cpp")
 add_kmail_unittest(csvwidgettest.cpp "../widgets/csvwidget.cpp")
 add_kmail_unittest(mailmergedialogtest.cpp "../mailmergedialog.cpp;../widgets/attachmentlistwidget.cpp;../widgets/selectattachmentdialog.cpp;../widgets/mailmergewidget.cpp;../widgets/csvwidget.cpp;../widgets/addressbookwidget.cpp;../widgets/selectattachmentdialog.cpp" "pimcommon")
-
+add_kmail_unittest(mailmergejobtest.cpp "../job/mailmergejob.cpp" "")

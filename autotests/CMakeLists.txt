@@ -43,3 +43,9 @@ ecm_mark_as_test(cryptostateindicatorwidgettest)
 target_link_libraries( cryptostateindicatorwidgettest Qt5::Test  messagecore)
 
 
+set( kmail_kactionmenutransporttest_source kactionmenutransporttest.cpp ../widgets/kactionmenutransport.cpp)
+add_executable( kactionmenutransporttest ${kmail_kactionmenutransporttest_source})
+add_test(kactionmenutransporttest kactionmenutransporttest)
+ecm_mark_as_test(kactionmenutransporttest)
+target_link_libraries( kactionmenutransporttest Qt5::Test  KF5::MailTransport)
+

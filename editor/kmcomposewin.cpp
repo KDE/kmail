@@ -65,6 +65,7 @@
 #include "pimcommon/util/vcardutil.h"
 #include "editor/potentialphishingemail/potentialphishingemailwarning.h"
 #include "kmcomposerglobalaction.h"
+#include "widgets/kactionmenutransport.h"
 
 #include "libkdepim/progresswidget/statusbarprogresswidget.h"
 #include "libkdepim/progresswidget/progressstatusbarwidget.h"
@@ -1077,26 +1078,9 @@ void KMComposeWin::setQuotePrefix(uint uoid)
             mMsg->from()->asUnicodeString()));
 }
 
-void KMComposeWin::getTransportMenu()
-{
-    mActNowMenu->clear();
-    mActLaterMenu->clear();
-
-    const QList<Transport *> transports = TransportManager::self()->transports();
-    foreach (Transport *transport, transports) {
-        const QString name = transport->name().replace(QLatin1Char('&'), QLatin1String("&&"));
-        QAction *action1 = new QAction(name, mActNowMenu);
-        QAction *action2 = new QAction(name, mActLaterMenu);
-        action1->setData(transport->id());
-        action2->setData(transport->id());
-        mActNowMenu->addAction(action1);
-        mActLaterMenu->addAction(action2);
-    }
-}
-
 void KMComposeWin::setupActions(void)
 {
-    KActionMenu *actActionNowMenu, *actActionLaterMenu;
+    KActionMenuTransport *actActionNowMenu, *actActionLaterMenu;
 
     if (MessageComposer::MessageComposerSettings::self()->sendImmediate()) {
         //default = send now, alternative = queue
@@ -1110,14 +1094,21 @@ void KMComposeWin::setupActions(void)
         connect(action, &QAction::triggered, this, &KMComposeWin::slotSendNowByShortcut);
 
         // FIXME: change to mail_send_via icon when this exist.
-        actActionNowMenu = new KActionMenu(QIcon::fromTheme(QLatin1String("mail-send")), i18n("&Send Mail Via"), this);
+        actActionNowMenu = new KActionMenuTransport( this);
+        actActionNowMenu->setIcon(QIcon::fromTheme(QLatin1String( "mail-send")));
+        actActionNowMenu->setText( i18n("&Send Mail Via") );
+
         actActionNowMenu->setIconText(i18n("Send"));
         actionCollection()->addAction(QLatin1String("send_default_via"), actActionNowMenu);
 
         action = new QAction(QIcon::fromTheme(QLatin1String("mail-queue")), i18n("Send &Later"), this);
         actionCollection()->addAction(QLatin1String("send_alternative"), action);
         connect(action, &QAction::triggered, this, &KMComposeWin::slotSendLater);
-        actActionLaterMenu = new KActionMenu(QIcon::fromTheme(QLatin1String("mail-queue")), i18n("Send &Later Via"), this);
+        
+        actActionLaterMenu = new KActionMenuTransport( this );
+        actActionLaterMenu->setIcon(QIcon::fromTheme( QLatin1String("mail-queue") ));
+        actActionLaterMenu->setText(i18n("Send &Later Via"));
+
         actActionLaterMenu->setIconText(i18nc("Queue the message for sending at a later date", "Queue"));
         actionCollection()->addAction(QLatin1String("send_alternative_via"), actActionLaterMenu);
 
@@ -1127,34 +1118,35 @@ void KMComposeWin::setupActions(void)
         actionCollection()->addAction(QLatin1String("send_mail"), action);
         connect(action, &QAction::triggered, this, &KMComposeWin::slotSendLater);
         actionCollection()->setDefaultShortcut(action, QKeySequence(Qt::CTRL + Qt::Key_Return));
-        actActionLaterMenu = new KActionMenu(QIcon::fromTheme(QLatin1String("mail-queue")), i18n("Send &Later Via"), this);
-        actionCollection()->addAction(QLatin1String("send_default_via"), actActionLaterMenu);
+
+        actActionLaterMenu = new KActionMenuTransport( this );
+        actActionLaterMenu->setIcon(QIcon::fromTheme( QLatin1String("mail-queue") ));
+        actActionLaterMenu->setText( i18n("Send &Later Via") );
+        actionCollection()->addAction( QLatin1String("send_default_via"), actActionLaterMenu );
 
         action = new QAction(QIcon::fromTheme(QLatin1String("mail-send")), i18n("&Send Mail"), this);
         actionCollection()->addAction(QLatin1String("send_alternative"), action);
         connect(action, &QAction::triggered, this, &KMComposeWin::slotSendNow);
 
         // FIXME: change to mail_send_via icon when this exits.
-        actActionNowMenu = new KActionMenu(QIcon::fromTheme(QLatin1String("mail-send")), i18n("&Send Mail Via"), this);
-        actionCollection()->addAction(QLatin1String("send_alternative_via"), actActionNowMenu);
-
+        actActionNowMenu = new KActionMenuTransport(this);
+        actActionNowMenu->setIcon(QIcon::fromTheme( QLatin1String("mail-send") ));
+        actActionNowMenu->setText(i18n("&Send Mail Via"));
+        actionCollection()->addAction( QLatin1String("send_alternative_via"), actActionNowMenu );
     }
 
     // needed for sending "default transport"
     actActionNowMenu->setDelayed(true);
     actActionLaterMenu->setDelayed(true);
 
-    connect(actActionNowMenu, &KActionMenu::triggered, this, &KMComposeWin::slotSendNow);
-    connect(actActionLaterMenu, &KActionMenu::triggered, this, &KMComposeWin::slotSendLater);
-
-    mActNowMenu = actActionNowMenu->menu();
-    mActLaterMenu = actActionLaterMenu->menu();
-
-    connect(mActNowMenu, &QMenu::triggered, this, &KMComposeWin::slotSendNowVia);
-    connect(mActNowMenu, &QMenu::aboutToShow, this, &KMComposeWin::getTransportMenu);
-
-    connect(mActLaterMenu, &QMenu::triggered, this, &KMComposeWin::slotSendLaterVia);
-    connect(mActLaterMenu, &QMenu::aboutToShow, this, &KMComposeWin::getTransportMenu);
+    connect( actActionNowMenu, SIGNAL(triggered(bool)), this,
+             SLOT(slotSendNow()) );
+    connect( actActionLaterMenu, SIGNAL(triggered(bool)), this,
+             SLOT(slotSendLater()) );
+    connect( actActionNowMenu, SIGNAL(transportSelected(MailTransport::Transport*)), this,
+             SLOT(slotSendNowVia(MailTransport::Transport*)));
+    connect( actActionLaterMenu, SIGNAL(transportSelected(MailTransport::Transport*)), this,
+             SLOT(slotSendLaterVia(MailTransport::Transport*)));
 
     QAction *action = new QAction(QIcon::fromTheme(QLatin1String("document-save")), i18n("Save as &Draft"), this);
     actionCollection()->addAction(QLatin1String("save_in_drafts"), action);
@@ -1417,7 +1409,6 @@ void KMComposeWin::setupActions(void)
     if (configureAction) {
         configureAction->setText(i18n("Configure KMail..."));
     }
-
 }
 
 void KMComposeWin::changeCryptoAction()
@@ -2090,7 +2081,6 @@ void KMComposeWin::slotInsertTextFile(KJob*job)
             static_cast<KIO::Job*>(job)->ui()->showErrorMessage();
         else
             qCDebug(KMAIL_LOG) <<" job->errorString() :"<<job->errorString();
-        return;
     }
 }
 
@@ -2785,22 +2775,18 @@ void KMComposeWin::slotSaveTemplate()
     }
 }
 
-void KMComposeWin::slotSendNowVia(QAction *item)
+void KMComposeWin::slotSendNowVia( MailTransport::Transport *transport )
 {
-    const QList<int> availTransports = TransportManager::self()->transportIds();
-    const int transport = item->data().toInt();
-    if (availTransports.contains(transport)) {
-        mComposerBase->transportComboBox()->setCurrentTransport(transport);
+    if ( transport ) {
+        mComposerBase->transportComboBox()->setCurrentTransport( transport->id() );
         slotSendNow();
     }
 }
 
-void KMComposeWin::slotSendLaterVia(QAction *item)
+void KMComposeWin::slotSendLaterVia( MailTransport::Transport *transport )
 {
-    const QList<int> availTransports = TransportManager::self()->transportIds();
-    const int transport = item->data().toInt();
-    if (availTransports.contains(transport)) {
-        mComposerBase->transportComboBox()->setCurrentTransport(transport);
+    if ( transport ) {
+        mComposerBase->transportComboBox()->setCurrentTransport( transport->id() );
         slotSendLater();
     }
 }
