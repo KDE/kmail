@@ -16,7 +16,7 @@
 */
 
 #include "cryptostateindicatorwidgettest.h"
-#include "editor/cryptostateindicatorwidget.h"
+#include "editor/widgets/cryptostateindicatorwidget.h"
 #include <qtest_kde.h>
 #include <QLabel>
 CryptoStateIndicatorWidgetTest::CryptoStateIndicatorWidgetTest(QObject *parent) : QObject(parent)

@@ -123,7 +123,7 @@ if (KDEPIM_BUILD_DESKTOP)
      identity/identityaddvcarddialog.cpp
   )
   set(kmailprivate_editor_LIB_SRCS
-     editor/snippetwidget.cpp
+     editor/widgets/snippetwidget.cpp
      editor/kmcomposereditor.cpp
      editor/composer.cpp
      editor/codecaction.cpp
@@ -131,7 +131,7 @@ if (KDEPIM_BUILD_DESKTOP)
      editor/kmcomposewin.cpp
      editor/attachmentcontroller.cpp
      editor/attachmentview.cpp
-     editor/cryptostateindicatorwidget.cpp
+     editor/widgets/cryptostateindicatorwidget.cpp
      editor/kmstorageservice.cpp
      editor/validatesendmailshortcut.cpp
      editor/kmcomposerglobalaction.cpp

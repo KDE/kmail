@@ -33,7 +33,7 @@ kde4_add_unit_test( createfollowupreminderonexistingmessagejobtest ${kmail_creat
 target_link_libraries( createfollowupreminderonexistingmessagejobtest ${QT_QTTEST_LIBRARY} ${KDE4_KDEUI_LIBS} ${KDEPIMLIBS_AKONADI_LIBS} ${KDEPIMLIBS_KCALCORE_LIBS} followupreminder)
 
 
-set( kmail_cryptostateindicatorwidgettest_source cryptostateindicatorwidgettest.cpp ../editor/cryptostateindicatorwidget.cpp)
+set( kmail_cryptostateindicatorwidgettest_source cryptostateindicatorwidgettest.cpp ../editor/widgets/cryptostateindicatorwidget.cpp)
 kde4_add_unit_test( cryptostateindicatorwidgettest ${kmail_cryptostateindicatorwidgettest_source})
 target_link_libraries( cryptostateindicatorwidgettest ${QT_QTTEST_LIBRARY} ${KDE4_KDEUI_LIBS} messagecore)
 
