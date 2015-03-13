@@ -38,8 +38,8 @@ KActionMenuTransport::~KActionMenuTransport()
 void KActionMenuTransport::slotCheckTransportMenu()
 {
     if (!mInitialized) {
-        updateTransportMenu();
         mInitialized = true;
+        updateTransportMenu();
     }
 }
 
