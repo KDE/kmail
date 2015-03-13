@@ -15,7 +15,6 @@
   51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
 */
 
-
 #include "kactionmenutransport.h"
 #include <KMenu>
 #include <mailtransport/transportmanager.h>
@@ -24,9 +23,9 @@ KActionMenuTransport::KActionMenuTransport(QObject *parent)
     : KActionMenu(parent),
       mInitialized(false)
 {
-    connect( MailTransport::TransportManager::self(), SIGNAL(transportsChanged()), this, SLOT(updateTransportMenu()));
-    connect( menu(),SIGNAL(aboutToShow()),SLOT(slotCheckTransportMenu()));
-    connect( menu(), SIGNAL(triggered(QAction*)), this, SLOT(slotSelectTransport(QAction*)) );
+    connect(MailTransport::TransportManager::self(), SIGNAL(transportsChanged()), this, SLOT(updateTransportMenu()));
+    connect(menu(), SIGNAL(aboutToShow()), SLOT(slotCheckTransportMenu()));
+    connect(menu(), SIGNAL(triggered(QAction*)), this, SLOT(slotSelectTransport(QAction*)));
 
 }
 
@@ -46,12 +45,12 @@ void KActionMenuTransport::slotCheckTransportMenu()
 void KActionMenuTransport::updateTransportMenu()
 {
     menu()->clear();
-    const QList<MailTransport::Transport*> transports = MailTransport::TransportManager::self()->transports();
-    Q_FOREACH (MailTransport::Transport *transport, transports ) {
-        const QString name = transport->name().replace( QLatin1Char('&'), QLatin1String("&&") );
-        QAction *action = new QAction( name, this );
-        action->setData( transport->id() );
-        menu()->addAction( action );
+    const QList<MailTransport::Transport *> transports = MailTransport::TransportManager::self()->transports();
+    Q_FOREACH (MailTransport::Transport *transport, transports) {
+        const QString name = transport->name().replace(QLatin1Char('&'), QLatin1String("&&"));
+        QAction *action = new QAction(name, this);
+        action->setData(transport->id());
+        menu()->addAction(action);
     }
 }
 
@@ -59,7 +58,7 @@ void KActionMenuTransport::slotSelectTransport(QAction *act)
 {
     const QList<int> availTransports = MailTransport::TransportManager::self()->transportIds();
     const int transportId = act->data().toInt();
-    if ( availTransports.contains( transportId ) ) {
+    if (availTransports.contains(transportId)) {
         MailTransport::Transport *transport = MailTransport::TransportManager::self()->transportById(transportId);
         Q_EMIT transportSelected(transport);
     }

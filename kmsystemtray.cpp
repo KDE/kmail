@@ -84,7 +84,6 @@ KMSystemTray::KMSystemTray(QObject *parent)
         }
     }
 
-
     connect(this, &KMSystemTray::activateRequested, this, &KMSystemTray::slotActivated);
     connect(contextMenu(), &QMenu::aboutToShow,
             this, &KMSystemTray::slotContextMenuAboutToShow);

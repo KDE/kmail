@@ -2333,8 +2333,8 @@ void KMMainWidget::slotSendQueued()
 void KMMainWidget::slotSendQueuedVia(MailTransport::Transport *transport)
 {
     if (transport) {
-        if ( kmkernel->msgSender() ) {
-            kmkernel->msgSender()->sendQueued( transport->name() );
+        if (kmkernel->msgSender()) {
+            kmkernel->msgSender()->sendQueued(transport->name());
         }
     }
 }
@@ -2803,7 +2803,7 @@ void KMMainWidget::showMessagePopup(const Akonadi::Item &msg , const QUrl &url, 
             menu->addAction(mMsgView->openBlockableItems());
         }
         menu->addSeparator();
-        menu->addAction( mMsgActions->addFollowupReminderAction() );
+        menu->addAction(mMsgActions->addFollowupReminderAction());
         if (kmkernel->allowToDebugBalooSupport()) {
             menu->addSeparator();
             menu->addAction(mMsgActions->debugBalooAction());
@@ -2883,7 +2883,7 @@ void KMMainWidget::setupActions()
     mSendActionMenu = new KActionMenuTransport(this);
     mSendActionMenu->setIcon(QIcon::fromTheme(QLatin1String("mail-send-via")));
     mSendActionMenu->setText(i18n("Send Queued Messages Via"));
-    actionCollection()->addAction(QLatin1String("send_queued_via"), mSendActionMenu );
+    actionCollection()->addAction(QLatin1String("send_queued_via"), mSendActionMenu);
     mSendActionMenu->setDelayed(true);
 
     connect(mSendActionMenu, SIGNAL(transportSelected(MailTransport::Transport*)), SLOT(slotSendQueuedVia(MailTransport::Transport*)));
@@ -4509,6 +4509,7 @@ void KMMainWidget::populateMessageListStatusFilterCombo()
 
 void KMMainWidget::slotCollectionRemoved(const Akonadi::Collection &col)
 {
-    if (mFavoritesModel)
-       mFavoritesModel->removeCollection(col);
+    if (mFavoritesModel) {
+        mFavoritesModel->removeCollection(col);
+    }
 }

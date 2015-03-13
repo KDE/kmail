@@ -15,7 +15,6 @@
   51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
 */
 
-
 #include "mailmergejob.h"
 
 using namespace MailMerge;
@@ -25,7 +24,6 @@ MailMergeJob::MailMergeJob(QObject *parent)
 {
 
 }
-
 
 MailMergeJob::~MailMergeJob()
 {

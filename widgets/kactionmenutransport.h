@@ -15,12 +15,12 @@
   51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
 */
 
-
 #ifndef KACTIONMENUTRANSPORT_H
 #define KACTIONMENUTRANSPORT_H
 
 #include <KActionMenu>
-namespace MailTransport {
+namespace MailTransport
+{
 class Transport;
 }
 
@@ -28,7 +28,7 @@ class KActionMenuTransport : public KActionMenu
 {
     Q_OBJECT
 public:
-    explicit KActionMenuTransport(QObject *parent=0);
+    explicit KActionMenuTransport(QObject *parent = 0);
     ~KActionMenuTransport();
 
 Q_SIGNALS:

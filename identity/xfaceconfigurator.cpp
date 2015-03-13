@@ -66,11 +66,11 @@ namespace KMail
 XFaceConfigurator::XFaceConfigurator(QWidget *parent)
     : QWidget(parent)
 {
-    QVBoxLayout *vlay = new QVBoxLayout( this );
-    vlay->setObjectName( QLatin1String("main layout") );
-    vlay->setMargin( 0 );
+    QVBoxLayout *vlay = new QVBoxLayout(this);
+    vlay->setObjectName(QLatin1String("main layout"));
+    vlay->setMargin(0);
     QHBoxLayout *hlay = new QHBoxLayout();
-    vlay->addLayout( hlay );
+    vlay->addLayout(hlay);
 
     // "enable X-Face" checkbox:
     mEnableCheck = new QCheckBox(i18n("&Send picture with every message"), this);
@@ -96,18 +96,18 @@ XFaceConfigurator::XFaceConfigurator(QWidget *parent)
     KComboBox *sourceCombo = new KComboBox(this);
     sourceCombo->setEditable(false);
     sourceCombo->setWhatsThis(
-                i18n("Click on the widgets below to obtain help on the input methods."));
-    sourceCombo->setEnabled( false ); // since !mEnableCheck->isChecked()
-    sourceCombo->addItems( QStringList()
-                           << i18nc( "continuation of \"obtain picture from\"",
-                                     "External Source" )
-                           << i18nc( "continuation of \"obtain picture from\"",
-                                     "Input Field Below" ) );
-    QLabel *label = new QLabel( i18n("Obtain pic&ture from:"), this );
-    label->setBuddy( sourceCombo );
-    label->setEnabled( false ); // since !mEnableCheck->isChecked()
-    hlay->addWidget( label );
-    hlay->addWidget( sourceCombo, 1 );
+        i18n("Click on the widgets below to obtain help on the input methods."));
+    sourceCombo->setEnabled(false);   // since !mEnableCheck->isChecked()
+    sourceCombo->addItems(QStringList()
+                          << i18nc("continuation of \"obtain picture from\"",
+                                   "External Source")
+                          << i18nc("continuation of \"obtain picture from\"",
+                                   "Input Field Below"));
+    QLabel *label = new QLabel(i18n("Obtain pic&ture from:"), this);
+    label->setBuddy(sourceCombo);
+    label->setEnabled(false);   // since !mEnableCheck->isChecked()
+    hlay->addWidget(label);
+    hlay->addWidget(sourceCombo, 1);
 
     // widget stack that is controlled by the source combo:
     QStackedWidget *widgetStack = new QStackedWidget(this);
@@ -146,9 +146,9 @@ XFaceConfigurator::XFaceConfigurator(QWidget *parent)
     page_vlay->addWidget(mFromAddrbkBtn, 1);
     connect(mFromAddrbkBtn, &QPushButton::released, this, &XFaceConfigurator::slotSelectFromAddressbook);
     QLabel *label1 = new QLabel(i18n("<qt>KMail can send a small (48x48 pixels), low-quality, "
-                             "monochrome picture with every message. "
-                             "For example, this could be a picture of you or a glyph. "
-                             "It is shown in the recipient's mail client (if supported).</qt>"), page);
+                                     "monochrome picture with every message. "
+                                     "For example, this could be a picture of you or a glyph. "
+                                     "It is shown in the recipient's mail client (if supported).</qt>"), page);
     label1->setAlignment(Qt::AlignVCenter);
     label1->setWordWrap(true);
     page_vlay->addWidget(label1);
@@ -168,8 +168,8 @@ XFaceConfigurator::XFaceConfigurator(QWidget *parent)
     mTextEdit->editor()->setWordWrapMode(QTextOption::WrapAnywhere);
     mTextEdit->editor()->setSearchSupport(false);
     QLabel *label2 = new QLabel(i18n("Examples are available at <a "
-                             "href=\"http://ace.home.xs4all.nl/X-Faces/\">"
-                             "http://ace.home.xs4all.nl/X-Faces/</a>."), page);
+                                     "href=\"http://ace.home.xs4all.nl/X-Faces/\">"
+                                     "http://ace.home.xs4all.nl/X-Faces/</a>."), page);
     label2->setOpenExternalLinks(true);
     label2->setTextInteractionFlags(Qt::TextBrowserInteraction);
 

@@ -82,7 +82,8 @@ namespace Sonnet
 class DictionaryComboBox;
 }
 
-namespace MailTransport {
+namespace MailTransport
+{
 class Transport;
 }
 
@@ -320,9 +321,9 @@ private Q_SLOTS:
     void slotInsertRecentFile(const QUrl &);
     void slotRecentListFileClear();
 
-    void slotSendNowVia(MailTransport::Transport *transport );
+    void slotSendNowVia(MailTransport::Transport *transport);
     void slotSendLater();
-    void slotSendLaterVia(MailTransport::Transport *transport );
+    void slotSendLaterVia(MailTransport::Transport *transport);
 
     /**
      * Returns true when saving was successful.

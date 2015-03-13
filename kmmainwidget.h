@@ -38,10 +38,12 @@
 #include <AkonadiCore/tag.h>
 #include <messagelist/core/view.h>
 
-namespace MailTransport {
+namespace MailTransport
+{
 class Transport;
 }
-namespace Akonadi {
+namespace Akonadi
+{
 class Tag;
 }
 
@@ -376,7 +378,7 @@ protected Q_SLOTS:
     void slotSetThreadStatusWatched();
     void slotSetThreadStatusIgnored();
     void slotSendQueued();
-    void slotSendQueuedVia(MailTransport::Transport*transport);
+    void slotSendQueuedVia(MailTransport::Transport *transport);
     void slotOnlineStatus();
     void slotUpdateOnlineStatus(GlobalSettings::EnumNetworkState::type);
     void slotMessagePopup(const Akonadi::Item &, const QUrl &, const QUrl &imageUrl, const QPoint &);
