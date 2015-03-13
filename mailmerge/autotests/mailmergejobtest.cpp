@@ -16,7 +16,7 @@
 */
 
 #include "mailmergejobtest.h"
-#include <qtest_kde.h>
+#include <qtest.h>
 MailMergeJobTest::MailMergeJobTest(QObject *parent)
     : QObject(parent)
 {
@@ -28,4 +28,4 @@ MailMergeJobTest::~MailMergeJobTest()
 
 }
 
-QTEST_KDEMAIN(MailMergeJobTest, NoGUI)
+QTEST_MAIN(MailMergeJobTest)
