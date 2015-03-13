@@ -1156,10 +1156,6 @@ void KMComposeWin::setupActions( void )
 
     }
 
-    // needed for sending "default transport"
-    actActionNowMenu->setDelayed( true );
-    actActionLaterMenu->setDelayed( true );
-
     connect( actActionNowMenu, SIGNAL(triggered(bool)), this,
              SLOT(slotSendNow()) );
     connect( actActionLaterMenu, SIGNAL(triggered(bool)), this,
