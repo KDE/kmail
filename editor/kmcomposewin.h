@@ -609,6 +609,7 @@ private:
     inline bool encryptToSelf() const;
 
 private:
+    bool showErrorMessage(KJob *job);
     int validateLineWrapWidth();
     Akonadi::Collection mCollectionForNewMessage;
     QMap<QByteArray, QString> mExtraHeaders;

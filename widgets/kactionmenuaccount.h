@@ -15,26 +15,24 @@
   51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
 */
 
-#include "kactionmenutransporttest.h"
-#include "../widgets/kactionmenutransport.h"
-#include <qtest.h>
-#include <QMenu>
-KActionMenuTransportTest::KActionMenuTransportTest(QObject *parent)
-    : QObject(parent)
+#ifndef KACTIONMENUACCOUNT_H
+#define KACTIONMENUACCOUNT_H
+
+#include <KActionMenu>
+
+class KActionMenuAccount : public KActionMenu
 {
+    Q_OBJECT
+public:
+    explicit KActionMenuAccount(QObject *parent = 0);
+    ~KActionMenuAccount();
 
-}
+private Q_SLOTS:
+    void updateAccountMenu();
+    void slotCheckTransportMenu();
+    void slotSelectAccount(QAction *act);
+private:
+    bool mInitialized;
+};
 
-KActionMenuTransportTest::~KActionMenuTransportTest()
-{
-
-}
-
-void KActionMenuTransportTest::shouldHaveDefaultValue()
-{
-    KActionMenuTransport w;
-    QVERIFY(w.menu());
-    QCOMPARE(w.menu()->actions().count(), 0);
-}
-
-QTEST_MAIN(KActionMenuTransportTest)
+#endif // KACTIONMENUACCOUNT_H

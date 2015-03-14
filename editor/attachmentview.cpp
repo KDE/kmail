@@ -213,7 +213,7 @@ void AttachmentView::startDrag(Qt::DropActions supportedActions)
     }
 }
 
-QWidget *AttachmentView::widget()
+QWidget *AttachmentView::widget() const
 {
     return d->widget;
 }

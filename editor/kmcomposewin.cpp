@@ -43,7 +43,7 @@
 #include "messagecore/utils/stringutil.h"
 #include "messagecore/attachment/attachmentcollector.h"
 #include "util.h"
-#include "editor/snippetwidget.h"
+#include "editor/widgets/snippetwidget.h"
 #include "templatesconfiguration_kfg.h"
 #include "foldercollectionmonitor.h"
 #include "kernel/mailkernel.h"
@@ -55,7 +55,7 @@
 #include "job/createnewcontactjob.h"
 #include "job/savedraftjob.h"
 #include "warningwidgets/externaleditorwarning.h"
-#include "cryptostateindicatorwidget.h"
+#include "widgets/cryptostateindicatorwidget.h"
 #include "validatesendmailshortcut.h"
 #include "job/saveasfilejob.h"
 #include "editor/kmstorageservice.h"
@@ -2070,7 +2070,7 @@ void KMComposeWin::slotInsertRecentFile(const QUrl &u)
     job->start();
 }
 
-void KMComposeWin::slotInsertTextFile(KJob *job)
+bool KMComposeWin::showErrorMessage(KJob *job)
 {
     if (job->error()) {
         if (static_cast<KIO::Job *>(job)->ui()) {
@@ -2078,7 +2078,14 @@ void KMComposeWin::slotInsertTextFile(KJob *job)
         } else {
             qCDebug(KMAIL_LOG) << " job->errorString() :" << job->errorString();
         }
+        return true;
     }
+    return false;
+}
+
+void KMComposeWin::slotInsertTextFile(KJob*job)
+{
+    showErrorMessage(job);
 }
 
 void KMComposeWin::slotSelectCryptoModule(bool init)
@@ -2229,12 +2236,7 @@ void KMComposeWin::slotPasteAsAttachment()
 
 void KMComposeWin::slotFetchJob(KJob *job)
 {
-    if (job->error()) {
-        if (static_cast<KIO::Job *>(job)->ui()) {
-            static_cast<KIO::Job *>(job)->ui()->showErrorMessage();
-        } else {
-            qCDebug(KMAIL_LOG) << " job->errorString() :" << job->errorString();
-        }
+    if (showErrorMessage(job)) {
         return;
     }
     Akonadi::ItemFetchJob *fjob = dynamic_cast<Akonadi::ItemFetchJob *>(job);
@@ -2528,11 +2530,7 @@ void KMComposeWin::printComposeResult(KJob *job, bool preview)
         command->setPrintPreview(preview);
         command->start();
     } else {
-        if (static_cast<KIO::Job *>(job)->ui()) {
-            static_cast<KIO::Job *>(job)->ui()->showErrorMessage();
-        } else {
-            qCWarning(KMAIL_LOG) << "Composer for printing failed:" << composer->errorString();
-        }
+        showErrorMessage(job);
     }
 
 }

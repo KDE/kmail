@@ -46,7 +46,7 @@ public:
     explicit AttachmentView(MessageComposer::AttachmentModel *model, QWidget *parent = Q_NULLPTR);
     ~AttachmentView();
 
-    QWidget *widget();
+    QWidget *widget() const;
 
 public Q_SLOTS:
     /// model sets these

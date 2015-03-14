@@ -43,6 +43,7 @@
 #include "widgets/collectionpane.h"
 #include "manageshowcollectionproperties.h"
 #include "widgets/kactionmenutransport.h"
+#include "widgets/kactionmenuaccount.h"
 #if !defined(NDEBUG)
 #include <ksieveui/debug/sievedebugdialog.h>
 using KSieveUi::SieveDebugDialog;
@@ -1301,25 +1302,6 @@ void KMMainWidget::slotCheckMailOnStartup()
     kmkernel->checkMailOnStartup();
 }
 
-//-----------------------------------------------------------------------------
-void KMMainWidget::slotCheckOneAccount(QAction *item)
-{
-    if (!item) {
-        return;
-    }
-
-    Akonadi::AgentInstance agent = Akonadi::AgentManager::self()->instance(item->data().toString());
-    if (agent.isValid()) {
-        if (!agent.isOnline()) {
-            agent.setIsOnline(true);
-        }
-        agent.synchronize();
-    } else {
-        qCDebug(KMAIL_LOG) << "account with identifier" << item->data().toString() << "not found";
-    }
-}
-
-//-----------------------------------------------------------------------------
 void KMMainWidget::slotCompose()
 {
     KMail::Composer *win;
@@ -2813,18 +2795,6 @@ void KMMainWidget::showMessagePopup(const Akonadi::Item &msg , const QUrl &url, 
     menu->exec(aPoint, Q_NULLPTR);
     delete menu;
 }
-//-----------------------------------------------------------------------------
-void KMMainWidget::getAccountMenu()
-{
-    mActMenu->clear();
-    const Akonadi::AgentInstance::List lst = MailCommon::Util::agentInstances();
-    foreach (const Akonadi::AgentInstance &type, lst) {
-        // Explicitly make a copy, as we're not changing values of the list but only
-        // the local copy which is passed to action.
-        QAction *action = mActMenu->addAction(QString(type.name()).replace(QLatin1Char('&'), QLatin1String("&&")));
-        action->setData(type.identifier());
-    }
-}
 
 void KMMainWidget::setupActions()
 {
@@ -2857,16 +2827,14 @@ void KMMainWidget::setupActions()
         actionCollection()->setDefaultShortcut(action, QKeySequence(Qt::CTRL + Qt::Key_L));
     }
 
-    KActionMenu *actActionMenu = new KActionMenu(QIcon::fromTheme(QLatin1String("mail-receive")), i18n("Check Mail In"), this);
+    KActionMenuAccount *actActionMenu = new KActionMenuAccount(this);
+    actActionMenu->setIcon(QIcon::fromTheme(QLatin1String("mail-receive")));
+    actActionMenu->setText(i18n("Check Mail In"));
+
     actActionMenu->setIconText(i18n("Check Mail"));
     actActionMenu->setToolTip(i18n("Check Mail"));
     actionCollection()->addAction(QLatin1String("check_mail_in"), actActionMenu);
-    actActionMenu->setDelayed(true); //needed for checking "all accounts"
     connect(actActionMenu, &KActionMenu::triggered, this, &KMMainWidget::slotCheckMail);
-    mActMenu = actActionMenu->menu();
-    connect(mActMenu, SIGNAL(triggered(QAction*)),
-            SLOT(slotCheckOneAccount(QAction*)));
-    connect(mActMenu, &QMenu::aboutToShow, this, &KMMainWidget::getAccountMenu);
 
     mSendQueued = new QAction(QIcon::fromTheme(QLatin1String("mail-send")), i18n("&Send Queued Messages"), this);
     actionCollection()->addAction(QLatin1String("send_queued"), mSendQueued);
