@@ -21,7 +21,6 @@
 #include "pimcommon/widgets/simplestringlisteditor.h"
 #include <KDialog>
 
-class KUrlRequester;
 namespace MailMerge {
 class AttachmentListWidget : public PimCommon::SimpleStringListEditor
 {

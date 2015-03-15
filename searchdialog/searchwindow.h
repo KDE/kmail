@@ -38,8 +38,6 @@ class KActionMenu;
 class KJob;
 class KMMainWidget;
 class KMSearchMessageModel;
-class QAbstractItemModel;
-class QModelIndex;
 
 namespace PimCommon {
 class SelectMultiCollectionDialog;

@@ -21,7 +21,6 @@
 #include <KActionMenu>
 #include "messageviewer/viewer/viewer.h"
 
-class KToggleAction;
 class DisplayMessageFormatActionMenu : public KActionMenu
 {
     Q_OBJECT
