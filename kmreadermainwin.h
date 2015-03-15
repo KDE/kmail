@@ -83,6 +83,7 @@ private:
     Akonadi::Collection parentCollection() const;
     void initKMReaderMainWin();
     void setupAccel();
+    void changeFont(const QFont &f);
     KAction *copyActionMenu(QMenu *menu);
     KAction *moveActionMenu(QMenu *menu);
 

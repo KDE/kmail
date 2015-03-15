@@ -650,15 +650,18 @@ void KMReaderMainWin::slotFontAction( const QString& font)
 {
     QFont f( mReaderWin->cssHelper()->bodyFont() );
     f.setFamily( font );
-    mReaderWin->cssHelper()->setBodyFont( f );
-    mReaderWin->cssHelper()->setPrintFont( f );
-    mReaderWin->update();
+    changeFont(f);
 }
 
 void KMReaderMainWin::slotSizeAction( int size )
 {
     QFont f( mReaderWin->cssHelper()->bodyFont() );
     f.setPointSize( size );
+    changeFont(f);
+}
+
+void KMReaderMainWin::changeFont(const QFont &f)
+{
     mReaderWin->cssHelper()->setBodyFont( f );
     mReaderWin->cssHelper()->setPrintFont( f );
     mReaderWin->update();
