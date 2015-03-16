@@ -41,6 +41,11 @@ set( kmail_kactionmenutransporttest_source kactionmenutransporttest.cpp ../widge
 kde4_add_unit_test( kactionmenutransporttest ${kmail_kactionmenutransporttest_source})
 target_link_libraries( kactionmenutransporttest ${QT_QTTEST_LIBRARY} ${KDE4_KDEUI_LIBS} ${KDEPIMLIBS_MAILTRANSPORT_LIBS})
 
+set( kmail_kactionmenuchangecasetest_source kactionmenuchangecasetest.cpp ../widgets/kactionmenuchangecase.cpp)
+kde4_add_unit_test( kactionmenuchangecasetest ${kmail_kactionmenuchangecasetest_source})
+target_link_libraries( kactionmenuchangecasetest ${QT_QTTEST_LIBRARY} ${KDE4_KDEUI_LIBS})
+
+
 include(AkonadiMacros)
 set(KDEPIMLIBS_RUN_ISOLATED_TESTS TRUE)
 set(KDEPIMLIBS_RUN_SQLITE_ISOLATED_TESTS TRUE)

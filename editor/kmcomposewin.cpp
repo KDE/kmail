@@ -66,6 +66,7 @@
 #include "editor/potentialphishingemail/potentialphishingemailwarning.h"
 #include "kmcomposerglobalaction.h"
 #include "widgets/kactionmenutransport.h"
+#include "widgets/kactionmenuchangecase.h"
 
 #include "libkdepim/progresswidget/statusbarprogresswidget.h"
 #include "libkdepim/progresswidget/progressstatusbarwidget.h"
@@ -1345,24 +1346,12 @@ void KMComposeWin::setupActions( void )
     actionCollection()->addAction( QLatin1String("insert_special_character"), action );
     connect( action, SIGNAL(triggered(bool)), this, SLOT(insertSpecialCharacter()) );
 
-    KAction *upperCase = new KAction( i18n("Uppercase"), this );
-    actionCollection()->addAction( QLatin1String("change_to_uppercase"), upperCase );
-    connect( upperCase, SIGNAL(triggered(bool)), this, SLOT(slotUpperCase()) );
-
-    KAction *sentenceCase = new KAction( i18n("Sentence case"), this );
-    actionCollection()->addAction( QLatin1String("change_to_sentencecase"), sentenceCase );
-    connect( sentenceCase, SIGNAL(triggered(bool)), this, SLOT(slotSentenceCase()) );
-
-
-    KAction *lowerCase = new KAction( i18n("Lowercase"), this );
-    actionCollection()->addAction( QLatin1String("change_to_lowercase"), lowerCase );
-    connect( lowerCase, SIGNAL(triggered(bool)), this, SLOT(slotLowerCase()) );
-
-    mChangeCaseMenu = new KActionMenu(i18n("Change Case"), this);
+    mChangeCaseMenu = new KActionMenuChangeCase(this);
+    mChangeCaseMenu->appendInActionCollection(actionCollection());
     actionCollection()->addAction(QLatin1String("change_case_menu"), mChangeCaseMenu );
-    mChangeCaseMenu->addAction(sentenceCase);
-    mChangeCaseMenu->addAction(upperCase);
-    mChangeCaseMenu->addAction(lowerCase);
+    connect(mChangeCaseMenu, SIGNAL(upperCase()), this, SLOT(slotUpperCase()));
+    connect(mChangeCaseMenu, SIGNAL(lowerCase()), this, SLOT(slotLowerCase()));
+    connect(mChangeCaseMenu, SIGNAL(sentenceCase()), this, SLOT(slotSentenceCase()));
 
     mComposerBase->attachmentController()->createActions();
 

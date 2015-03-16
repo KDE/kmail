@@ -55,6 +55,7 @@ class QPushButton;
 class QSplitter;
 
 class CodecAction;
+class KActionMenuChangeCase;
 class KMComposeWin;
 class KMComposerEditor;
 class KSelectAction;
@@ -231,7 +232,7 @@ public: // kmkernel, kmcommands, callback
     void addExtraCustomHeaders( const QMap<QByteArray, QString> &header);
 
     KToggleAction *translateAction() const { return mTranslateAction; }
-    KActionMenu *changeCaseMenu() const { return mChangeCaseMenu; }
+    KActionMenuChangeCase *changeCaseMenu() const { return mChangeCaseMenu; }
     KToggleAction *generateShortenUrlAction() const { return mGenerateShortenUrl; }
 
 private:
@@ -656,7 +657,7 @@ private:
 
     int mLabelWidth;
 
-    KActionMenu *mChangeCaseMenu;
+    KActionMenuChangeCase *mChangeCaseMenu;
 
     QString mdbusObjectPath;
     static int s_composerNumber;

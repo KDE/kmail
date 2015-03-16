@@ -23,7 +23,7 @@
 #include "editor/kmcomposewin.h"
 #include "kmcommands.h"
 #include "util.h"
-
+#include "widgets/kactionmenuchangecase.h"
 #include <kabc/addressee.h>
 #include <kmime/kmime_codecs.h>
 #include <akonadi/itemfetchjob.h>

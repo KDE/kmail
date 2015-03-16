@@ -182,6 +182,7 @@ if (KDEPIM_BUILD_DESKTOP)
      widgets/statusbarlabeltoggledstate.cpp
      widgets/kactionmenutransport.cpp
      widgets/kactionmenuaccount.cpp
+     widgets/kactionmenuchangecase.cpp
   )
   set(kmailprivate_tag_LIB_SRCS
      tag/tagactionmanager.cpp
