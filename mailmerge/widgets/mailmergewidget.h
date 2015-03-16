@@ -23,7 +23,6 @@
 class KComboBox;
 class QStackedWidget;
 
-class KUrlRequester;
 namespace MailMerge
 {
 class CsvWidget;

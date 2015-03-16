@@ -56,7 +56,6 @@ class QVBoxLayout;
 class QSplitter;
 class KMLaunchExternalComponent;
 class DisplayMessageFormatActionMenu;
-class QMenu;
 class QAction;
 class KActionMenu;
 class KToggleAction;

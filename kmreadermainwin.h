@@ -87,6 +87,7 @@ private:
     void setupAccel();
     QAction *copyActionMenu(QMenu *menu);
     QAction *moveActionMenu(QMenu *menu);
+    void changeFont(const QFont &f);
 
     KMReaderWin *mReaderWin;
     Akonadi::Item mMsg;
