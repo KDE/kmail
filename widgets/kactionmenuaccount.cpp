@@ -27,11 +27,11 @@ KActionMenuAccount::KActionMenuAccount(QObject *parent)
       mInitialized(false)
 {
     setDelayed(true);
-    connect( menu(),SIGNAL(aboutToShow()),SLOT(slotCheckTransportMenu()));
-    connect( menu(), SIGNAL(triggered(QAction*)), this, SLOT(slotSelectAccount(QAction*)) );
-    connect( Akonadi::AgentManager::self(), SIGNAL(instanceNameChanged(Akonadi::AgentInstance)), this, SLOT(updateAccountMenu()));
-    connect( Akonadi::AgentManager::self(), SIGNAL(instanceRemoved(Akonadi::AgentInstance)), this, SLOT(updateAccountMenu()));
-    connect( Akonadi::AgentManager::self(), SIGNAL(instanceAdded(Akonadi::AgentInstance)), this, SLOT(updateAccountMenu()));
+    connect(menu(), SIGNAL(aboutToShow()), SLOT(slotCheckTransportMenu()));
+    connect(menu(), SIGNAL(triggered(QAction*)), this, SLOT(slotSelectAccount(QAction*)));
+    connect(Akonadi::AgentManager::self(), SIGNAL(instanceNameChanged(Akonadi::AgentInstance)), this, SLOT(updateAccountMenu()));
+    connect(Akonadi::AgentManager::self(), SIGNAL(instanceRemoved(Akonadi::AgentInstance)), this, SLOT(updateAccountMenu()));
+    connect(Akonadi::AgentManager::self(), SIGNAL(instanceAdded(Akonadi::AgentInstance)), this, SLOT(updateAccountMenu()));
 }
 
 KActionMenuAccount::~KActionMenuAccount()
@@ -41,14 +41,14 @@ KActionMenuAccount::~KActionMenuAccount()
 
 void KActionMenuAccount::slotSelectAccount(QAction *act)
 {
-    if ( !act ) {
+    if (!act) {
         return;
     }
 
-    Akonadi::AgentInstance agent = Akonadi::AgentManager::self()->instance( act->data().toString() );
-    if ( agent.isValid() ) {
-        if ( !agent.isOnline() ) {
-            agent.setIsOnline( true );
+    Akonadi::AgentInstance agent = Akonadi::AgentManager::self()->instance(act->data().toString());
+    if (agent.isValid()) {
+        if (!agent.isOnline()) {
+            agent.setIsOnline(true);
         }
         agent.synchronize();
     } else {
@@ -64,17 +64,16 @@ void KActionMenuAccount::slotCheckTransportMenu()
     }
 }
 
-
 void KActionMenuAccount::updateAccountMenu()
 {
     if (mInitialized) {
         menu()->clear();
         const Akonadi::AgentInstance::List lst = MailCommon::Util::agentInstances();
-        Q_FOREACH ( const Akonadi::AgentInstance& type, lst ) {
+        Q_FOREACH (const Akonadi::AgentInstance &type, lst) {
             // Explicitly make a copy, as we're not changing values of the list but only
             // the local copy which is passed to action.
-            QAction* action = menu()->addAction( QString( type.name() ).replace(QLatin1Char('&'), QLatin1String("&&")) );
-            action->setData( type.identifier() );
+            QAction *action = menu()->addAction(QString(type.name()).replace(QLatin1Char('&'), QLatin1String("&&")));
+            action->setData(type.identifier());
         }
     }
 }

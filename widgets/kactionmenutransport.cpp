@@ -46,12 +46,12 @@ void KActionMenuTransport::updateTransportMenu()
 {
     if (mInitialized) {
         menu()->clear();
-        const QList<MailTransport::Transport*> transports = MailTransport::TransportManager::self()->transports();
-        Q_FOREACH (MailTransport::Transport *transport, transports ) {
-            const QString name = transport->name().replace( QLatin1Char('&'), QLatin1String("&&") );
-            QAction *action = new QAction( name, this );
-            action->setData( transport->id() );
-            menu()->addAction( action );
+        const QList<MailTransport::Transport *> transports = MailTransport::TransportManager::self()->transports();
+        Q_FOREACH (MailTransport::Transport *transport, transports) {
+            const QString name = transport->name().replace(QLatin1Char('&'), QLatin1String("&&"));
+            QAction *action = new QAction(name, this);
+            action->setData(transport->id());
+            menu()->addAction(action);
         }
     }
 }

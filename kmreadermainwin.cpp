@@ -639,22 +639,22 @@ void KMReaderMainWin::showMessagePopup(const Akonadi::Item &msg , const QUrl &ur
 
 void KMReaderMainWin::slotFontAction(const QString &font)
 {
-    QFont f( mReaderWin->cssHelper()->bodyFont() );
-    f.setFamily( font );
+    QFont f(mReaderWin->cssHelper()->bodyFont());
+    f.setFamily(font);
     changeFont(f);
 }
 
 void KMReaderMainWin::slotSizeAction(int size)
 {
-    QFont f( mReaderWin->cssHelper()->bodyFont() );
-    f.setPointSize( size );
+    QFont f(mReaderWin->cssHelper()->bodyFont());
+    f.setPointSize(size);
     changeFont(f);
 }
 
 void KMReaderMainWin::changeFont(const QFont &f)
 {
-    mReaderWin->cssHelper()->setBodyFont( f );
-    mReaderWin->cssHelper()->setPrintFont( f );
+    mReaderWin->cssHelper()->setBodyFont(f);
+    mReaderWin->cssHelper()->setPrintFont(f);
     mReaderWin->update();
 }
 

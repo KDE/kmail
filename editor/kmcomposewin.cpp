@@ -2083,7 +2083,7 @@ bool KMComposeWin::showErrorMessage(KJob *job)
     return false;
 }
 
-void KMComposeWin::slotInsertTextFile(KJob*job)
+void KMComposeWin::slotInsertTextFile(KJob *job)
 {
     showErrorMessage(job);
 }
