@@ -55,6 +55,7 @@ class QSplitter;
 
 class KSplitterCollapserButton;
 class CodecAction;
+class KActionMenuChangeCase;
 class KMComposeWin;
 class KMComposerEditor;
 class KSelectAction;
@@ -247,7 +248,7 @@ public: // kmkernel, kmcommands, callback
     {
         return mTranslateAction;
     }
-    KActionMenu *changeCaseMenu() const
+    KActionMenuChangeCase *changeCaseMenu() const
     {
         return mChangeCaseMenu;
     }
@@ -672,7 +673,7 @@ private:
 
     int mLabelWidth;
 
-    KActionMenu *mChangeCaseMenu;
+    KActionMenuChangeCase *mChangeCaseMenu;
 
     QString mdbusObjectPath;
     static int s_composerNumber;

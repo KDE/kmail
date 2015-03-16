@@ -24,9 +24,9 @@
 #include "editor/kmcomposewin.h"
 #include "kmcommands.h"
 #include "util.h"
-
 #include <kcontacts/addressee.h>
 #include <AkonadiCore/itemfetchjob.h>
+#include "widgets/kactionmenuchangecase.h"
 
 #include <kio/jobuidelegate.h>
 

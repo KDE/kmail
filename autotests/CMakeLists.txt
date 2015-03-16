@@ -49,3 +49,9 @@ add_test(kactionmenutransporttest kactionmenutransporttest)
 ecm_mark_as_test(kactionmenutransporttest)
 target_link_libraries( kactionmenutransporttest Qt5::Test  KF5::MailTransport)
 
+set( kmail_kactionmenuchangecasetest_source kactionmenuchangecasetest.cpp ../widgets/kactionmenuchangecase.cpp)
+add_executable( kactionmenuchangecasetest ${kmail_kactionmenuchangecasetest_source})
+add_test(kactionmenuchangecasetest kactionmenuchangecasetest)
+ecm_mark_as_test(kactionmenuchangecasetest)
+target_link_libraries( kactionmenuchangecasetest Qt5::Test KF5::WidgetsAddons KF5::I18n KF5::XmlGui)
+
