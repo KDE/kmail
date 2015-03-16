@@ -1326,9 +1326,10 @@ void KMComposeWin::setupActions(void)
     mChangeCaseMenu = new PimCommon::KActionMenuChangeCase(this);
     mChangeCaseMenu->appendInActionCollection(actionCollection());
     actionCollection()->addAction(QLatin1String("change_case_menu"), mChangeCaseMenu );
-    connect(mChangeCaseMenu, SIGNAL(upperCase()), this, SLOT(slotUpperCase()));
-    connect(mChangeCaseMenu, SIGNAL(lowerCase()), this, SLOT(slotLowerCase()));
-    connect(mChangeCaseMenu, SIGNAL(sentenceCase()), this, SLOT(slotSentenceCase()));
+    connect(mChangeCaseMenu, &PimCommon::KActionMenuChangeCase::upperCase, this, &KMComposeWin::slotUpperCase);
+    connect(mChangeCaseMenu, &PimCommon::KActionMenuChangeCase::lowerCase, this, &KMComposeWin::slotLowerCase);
+    connect(mChangeCaseMenu, &PimCommon::KActionMenuChangeCase::sentenceCase, this, &KMComposeWin::slotSentenceCase);
+    connect(mChangeCaseMenu, &PimCommon::KActionMenuChangeCase::reverseCase, this, &KMComposeWin::slotReverseCase);
 
     mComposerBase->attachmentController()->createActions();
 
@@ -3331,6 +3332,13 @@ void KMComposeWin::slotLowerCase()
     QTextCursor textCursor = mComposerBase->editor()->textCursor();
     PimCommon::EditorUtil editorUtil;
     editorUtil.lowerCase(textCursor);
+}
+
+void KMComposeWin::slotReverseCase()
+{
+    QTextCursor textCursor = mComposerBase->editor()->textCursor();
+    PimCommon::EditorUtil editorUtil;
+    editorUtil.reverseCase(textCursor);
 }
 
 void KMComposeWin::slotExternalEditorStarted()

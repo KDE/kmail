@@ -460,6 +460,7 @@ private Q_SLOTS:
     void slotCheckSendNowStep2();
     void slotPotentialPhishingEmailsFound(const QStringList &list);
     void slotInsertTextFile(KJob *job);
+    void slotReverseCase();
 public: // kmcommand
     // FIXME we need to remove these, but they're pure virtual in Composer.
     void addAttach(KMime::Content *msgPart) Q_DECL_OVERRIDE;
