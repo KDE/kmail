@@ -1323,7 +1323,7 @@ void KMComposeWin::setupActions(void)
     actionCollection()->addAction(QLatin1String("change_to_uppercase"), upperCase);
     connect(upperCase, &QAction::triggered, this, &KMComposeWin::slotUpperCase);
 
-    mChangeCaseMenu = new KActionMenuChangeCase(this);
+    mChangeCaseMenu = new PimCommon::KActionMenuChangeCase(this);
     mChangeCaseMenu->appendInActionCollection(actionCollection());
     actionCollection()->addAction(QLatin1String("change_case_menu"), mChangeCaseMenu );
     connect(mChangeCaseMenu, SIGNAL(upperCase()), this, SLOT(slotUpperCase()));

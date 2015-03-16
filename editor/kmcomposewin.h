@@ -55,7 +55,6 @@ class QSplitter;
 
 class KSplitterCollapserButton;
 class CodecAction;
-class KActionMenuChangeCase;
 class KMComposeWin;
 class KMComposerEditor;
 class KSelectAction;
@@ -116,6 +115,7 @@ class FolderRequester;
 
 namespace PimCommon
 {
+class KActionMenuChangeCase;
 class CustomToolsWidget;
 class LineEditWithAutoCorrection;
 }
@@ -248,7 +248,7 @@ public: // kmkernel, kmcommands, callback
     {
         return mTranslateAction;
     }
-    KActionMenuChangeCase *changeCaseMenu() const
+    PimCommon::KActionMenuChangeCase *changeCaseMenu() const
     {
         return mChangeCaseMenu;
     }
@@ -673,7 +673,7 @@ private:
 
     int mLabelWidth;
 
-    KActionMenuChangeCase *mChangeCaseMenu;
+    PimCommon::KActionMenuChangeCase *mChangeCaseMenu;
 
     QString mdbusObjectPath;
     static int s_composerNumber;
