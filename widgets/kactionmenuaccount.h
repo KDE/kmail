@@ -24,7 +24,7 @@ class KActionMenuAccount : public KActionMenu
 {
     Q_OBJECT
 public:
-    explicit KActionMenuAccount(QObject *parent = 0);
+    explicit KActionMenuAccount(QObject *parent = Q_NULLPTR);
     ~KActionMenuAccount();
 
 private Q_SLOTS:
