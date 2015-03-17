@@ -100,11 +100,6 @@ KMailPart::KMailPart(QWidget *parentWidget, QObject *parent, const QVariantList 
     KParts::StatusBarExtension *statusBar  = new KParts::StatusBarExtension(this);
     statusBar->addStatusBarItem( mainWidget->vacationScriptIndicator(), 2, false );
 
-    // Get to know when the user clicked on a folder in the KMail part and update the headerWidget of Kontact
-    connect( mainWidget->folderTreeView(), SIGNAL(currentChanged(Akonadi::Collection)),
-             this, SLOT(slotFolderChanged(Akonadi::Collection)) );
-    connect( kmkernel->folderCollectionMonitor(), SIGNAL(collectionChanged(Akonadi::Collection,QSet<QByteArray>)),
-             this, SLOT(slotCollectionChanged(Akonadi::Collection,QSet<QByteArray>)));
     setXMLFile( QLatin1String("kmail_part.rc"), true );
 
     KSettings::Dispatcher::registerComponent( KMailFactory::componentData(), mKMailKernel, "slotConfigChanged" );
@@ -131,23 +126,6 @@ bool KMailPart::openFile()
 
     mainWidget->show();
     return true;
-}
-
-void KMailPart::slotFolderChanged( const Akonadi::Collection &col )
-{
-    //Don't know which code use it
-    if ( col.isValid() ) {
-        emit textChanged( col.name() );
-        if ( col.hasAttribute<Akonadi::EntityDisplayAttribute>() &&
-             !col.attribute<Akonadi::EntityDisplayAttribute>()->iconName().isEmpty() ) {
-            emit iconChanged( col.attribute<Akonadi::EntityDisplayAttribute>()->icon().pixmap( 22, 22 ) );
-        }
-    }
-}
-void KMailPart::slotCollectionChanged( const Akonadi::Collection &collection, const QSet<QByteArray> &attributeNames )
-{
-    if( attributeNames.contains("ENTITYDISPLAY")|| attributeNames.contains( "NAME" ) )
-        slotFolderChanged(collection);
 }
 
 //-----------------------------------------------------------------------------
