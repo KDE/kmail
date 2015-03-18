@@ -52,14 +52,7 @@ public Q_SLOTS:
     }
     Q_SCRIPTABLE void exit();
     void updateEditMenu() {}
-    void slotCollectionChanged(const Akonadi::Collection &collection, const QSet<QByteArray> &attributeNames);
-
-    void slotFolderChanged(const Akonadi::Collection &);
-
     void updateQuickSearchText();
-Q_SIGNALS:
-    void textChanged(const QString &);
-    void iconChanged(const QPixmap &);
 
 protected:
     bool openFile() Q_DECL_OVERRIDE;

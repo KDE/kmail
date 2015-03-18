@@ -501,9 +501,7 @@ void KMReaderMainWin::showMessagePopup(const Akonadi::Item &msg , const QUrl &ur
             urlMenuAdded = true;
         } else if (url.scheme() != QLatin1String("attachment")) {
             // popup on a not-mailto URL
-            if (!menu) {
-                menu = new QMenu;
-            }
+            menu = new QMenu;
             menu->addAction(mReaderWin->urlOpenAction());
             menu->addAction(mReaderWin->addBookmarksAction());
             menu->addAction(mReaderWin->urlSaveAsAction());
