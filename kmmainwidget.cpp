@@ -1293,6 +1293,7 @@ void KMMainWidget::slotManageSieveScripts()
         return;
 
     mManageSieveDialog = new KSieveUi::ManageSieveScriptsDialog( this );
+    connect(mManageSieveDialog, SIGNAL(finished(int)), SLOT(slotCheckVacation()));
     mManageSieveDialog->show();
 }
 
