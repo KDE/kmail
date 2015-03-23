@@ -126,8 +126,8 @@ if (KDEPIM_BUILD_DESKTOP)
      editor/widgets/snippetwidget.cpp
      editor/kmcomposereditor.cpp
      editor/composer.cpp
-     editor/codecaction.cpp
-     editor/codecmanager.cpp
+     editor/codec/codecaction.cpp
+     editor/codec/codecmanager.cpp
      editor/kmcomposewin.cpp
      editor/attachmentcontroller.cpp
      editor/attachmentview.cpp

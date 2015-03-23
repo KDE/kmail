@@ -528,9 +528,6 @@ private:
     QString from() const;
     QString replyTo() const;
 
-    void setCharset( const QByteArray &charset );
-    void setAutoCharset();
-
     /**
      * Ask for confirmation if the message was changed before close.
      */

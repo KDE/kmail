@@ -52,6 +52,8 @@ public:
     */
     QList<QByteArray> mimeCharsets() const;
 
+    void setAutoCharset();
+    void setCharset(const QByteArray &charset);
 private:
     class Private;
     friend class Private;

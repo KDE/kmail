@@ -28,7 +28,7 @@
 #include "attachmentcontroller.h"
 #include "messagecomposer/attachment/attachmentmodel.h"
 #include "attachmentview.h"
-#include "codecaction.h"
+#include "codec/codecaction.h"
 #include <messagecomposer/job/emailaddressresolvejob.h>
 #include "kleo_util.h"
 #include "kmcommands.h"
@@ -1725,7 +1725,7 @@ void KMComposeWin::setMessage( const KMime::Message::Ptr &newMsg, bool lastSignS
     if ( shouldSetCharset && !otp.plainTextContentCharset().isEmpty() )
         mOriginalPreferredCharset = otp.plainTextContentCharset();
     // always set auto charset, but prefer original when composing if force reply is set.
-    setAutoCharset();
+    mCodecAction->setAutoCharset();
 
     delete msgContent;
 #if 0 //TODO port to kmime
@@ -1991,11 +1991,6 @@ void KMComposeWin::addAttach( KMime::Content *msgPart )
     setModified( true );
 }
 
-void KMComposeWin::setAutoCharset()
-{
-    mCodecAction->setCurrentItem( 0 );
-}
-
 // We can't simply use KCodecAction::setCurrentCodec(), since that doesn't
 // use fixEncoding().
 static QString selectCharset( KSelectAction *root, const QString &encoding )
@@ -2018,19 +2013,6 @@ static QString selectCharset( KSelectAction *root, const QString &encoding )
     }
     return QString();
 }
-
-
-void KMComposeWin::setCharset( const QByteArray &charset )
-{
-    const QString codecNameToSet = selectCharset( mCodecAction, QString::fromLatin1(charset) );
-    if ( codecNameToSet.isEmpty() ) {
-        kWarning() << "Could not find charset" << charset;
-        setAutoCharset();
-    }
-    else
-        mCodecAction->setCurrentCodec( codecNameToSet );
-}
-
 
 void KMComposeWin::slotAddrBook()
 {

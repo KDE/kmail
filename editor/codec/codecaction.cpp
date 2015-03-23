@@ -23,6 +23,9 @@
 // KMail
 #include "codecmanager.h"
 
+#include "messageviewer/viewer/nodehelper.h"
+
+#include <KCharsets>
 // Qt
 #include <QTextCodec>
 
@@ -92,3 +95,42 @@ QList<QByteArray> CodecAction::mimeCharsets() const
     return ret;
 }
 
+void CodecAction::setAutoCharset()
+{
+    setCurrentItem( 0 );
+}
+
+// We can't simply use KCodecAction::setCurrentCodec(), since that doesn't
+// use fixEncoding().
+static QString selectCharset( KSelectAction *root, const QString &encoding )
+{
+    foreach( QAction *action, root->actions() ) {
+        KSelectAction *subMenu = dynamic_cast<KSelectAction *>( action );
+        if ( subMenu ) {
+            const QString codecNameToSet = selectCharset( subMenu, encoding );
+            if ( !codecNameToSet.isEmpty() )
+                return codecNameToSet;
+        }
+        else {
+            const QString fixedActionText = MessageViewer::NodeHelper::fixEncoding( action->text() );
+            if ( KGlobal::charsets()->codecForName(
+                     KGlobal::charsets()->encodingForName( fixedActionText ) )
+                 == KGlobal::charsets()->codecForName( encoding ) ) {
+                return action->text();
+            }
+        }
+    }
+    return QString();
+}
+
+
+void CodecAction::setCharset( const QByteArray &charset )
+{
+    const QString codecNameToSet = selectCharset( this, QString::fromLatin1(charset) );
+    if ( codecNameToSet.isEmpty() ) {
+        kWarning() << "Could not find charset" << charset;
+        setAutoCharset();
+    }
+    else
+        setCurrentCodec( codecNameToSet );
+}

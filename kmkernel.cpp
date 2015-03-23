@@ -63,7 +63,7 @@ using KMail::MailServiceImpl;
 #include "templateparser/templatesutil.h"
 
 #include "foldercollection.h"
-#include "editor/codecmanager.h"
+#include "editor/codec/codecmanager.h"
 
 
 #include <kmessagebox.h>
