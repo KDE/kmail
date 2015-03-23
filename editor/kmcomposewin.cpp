@@ -1325,7 +1325,7 @@ void KMComposeWin::setupActions(void)
 
     mChangeCaseMenu = new PimCommon::KActionMenuChangeCase(this);
     mChangeCaseMenu->appendInActionCollection(actionCollection());
-    actionCollection()->addAction(QLatin1String("change_case_menu"), mChangeCaseMenu );
+    actionCollection()->addAction(QLatin1String("change_case_menu"), mChangeCaseMenu);
     connect(mChangeCaseMenu, &PimCommon::KActionMenuChangeCase::upperCase, this, &KMComposeWin::slotUpperCase);
     connect(mChangeCaseMenu, &PimCommon::KActionMenuChangeCase::lowerCase, this, &KMComposeWin::slotLowerCase);
     connect(mChangeCaseMenu, &PimCommon::KActionMenuChangeCase::sentenceCase, this, &KMComposeWin::slotSentenceCase);
