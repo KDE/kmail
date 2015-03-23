@@ -58,7 +58,7 @@
 #include "widgets/cryptostateindicatorwidget.h"
 #include "validatesendmailshortcut.h"
 #include "job/saveasfilejob.h"
-#include "editor/kmstorageservice.h"
+#include "editor/storageservice/kmstorageservice.h"
 #include "followupreminder/followupreminderselectdatedialog.h"
 #include "followupreminder/followupremindercreatejob.h"
 #include "agents/followupreminderagent/followupreminderutil.h"

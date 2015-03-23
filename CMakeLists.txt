@@ -132,7 +132,7 @@ if (KDEPIM_BUILD_DESKTOP)
      editor/attachmentcontroller.cpp
      editor/attachmentview.cpp
      editor/widgets/cryptostateindicatorwidget.cpp
-     editor/kmstorageservice.cpp
+     editor/storageservice/kmstorageservice.cpp
      editor/validatesendmailshortcut.cpp
      editor/kmcomposerglobalaction.cpp
   )
