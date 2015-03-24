@@ -52,7 +52,7 @@ void RemoveCollectionJob::start()
     Akonadi::CollectionFetchJob *job = new Akonadi::CollectionFetchJob(mCurrentCollection, Akonadi::CollectionFetchJob::FirstLevel, this);
     job->fetchScope().setContentMimeTypes(QStringList() << KMime::Message::mimeType());
     job->setProperty("collectionId", mCurrentCollection.id());
-    connect(job, SIGNAL(result(KJob*)), SLOT(slotDelayedRemoveFolder(KJob*)));
+    connect(job, &KJob::result, this, &RemoveCollectionJob::slotDelayedRemoveFolder);
 }
 
 void RemoveCollectionJob::slotDelayedRemoveFolder(KJob *job)

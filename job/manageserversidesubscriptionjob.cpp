@@ -57,7 +57,7 @@ void ManageServerSideSubscriptionJob::start()
         }
         QDBusPendingCall call = iface.asyncCall(QLatin1String("configureSubscription"), (qlonglong)mParentWidget->winId());
         QDBusPendingCallWatcher *watcher = new QDBusPendingCallWatcher(call, this);
-        connect(watcher, SIGNAL(finished(QDBusPendingCallWatcher*)), this, SLOT(slotConfigureSubscriptionFinished(QDBusPendingCallWatcher*)));
+        connect(watcher, &QDBusPendingCallWatcher::finished, this, &ManageServerSideSubscriptionJob::slotConfigureSubscriptionFinished);
     }
 }
 

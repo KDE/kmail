@@ -47,7 +47,7 @@ void CreateFollowupReminderOnExistingMessageJob::doStart()
 {
     Akonadi::ItemFetchJob *job = new Akonadi::ItemFetchJob(mMessageItem , this);
     job->fetchScope().fetchFullPayload(true);
-    connect(job, SIGNAL(result(KJob*)), SLOT(itemFetchJobDone(KJob*)));
+    connect(job, &KJob::result, this, &CreateFollowupReminderOnExistingMessageJob::itemFetchJobDone);
 }
 
 void CreateFollowupReminderOnExistingMessageJob::itemFetchJobDone(KJob *job)

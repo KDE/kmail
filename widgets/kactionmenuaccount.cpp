@@ -27,8 +27,8 @@ KActionMenuAccount::KActionMenuAccount(QObject *parent)
       mInitialized(false)
 {
     setDelayed(true);
-    connect(menu(), SIGNAL(aboutToShow()), SLOT(slotCheckTransportMenu()));
-    connect(menu(), SIGNAL(triggered(QAction*)), this, SLOT(slotSelectAccount(QAction*)));
+    connect(menu(), &QMenu::aboutToShow, this, &KActionMenuAccount::slotCheckTransportMenu);
+    connect(menu(), &QMenu::triggered, this, &KActionMenuAccount::slotSelectAccount);
     connect(Akonadi::AgentManager::self(), SIGNAL(instanceNameChanged(Akonadi::AgentInstance)), this, SLOT(updateAccountMenu()));
     connect(Akonadi::AgentManager::self(), SIGNAL(instanceRemoved(Akonadi::AgentInstance)), this, SLOT(updateAccountMenu()));
     connect(Akonadi::AgentManager::self(), SIGNAL(instanceAdded(Akonadi::AgentInstance)), this, SLOT(updateAccountMenu()));

@@ -2231,7 +2231,7 @@ void KMComposeWin::slotFetchJob(KJob *job)
                 attachmentName = group.name() + QLatin1String(".vcf");
                 Akonadi::ContactGroupExpandJob *expandJob = new Akonadi::ContactGroupExpandJob(group, this);
                 expandJob->setProperty("groupName", attachmentName);
-                connect(expandJob, SIGNAL(result(KJob*)), this, SLOT(slotExpandGroupResult(KJob*)));
+                connect(expandJob, &KJob::result, this, &KMComposeWin::slotExpandGroupResult);
                 expandJob->start();
             } else {
                 addAttachment(attachmentName, KMime::Headers::CEbase64, QString(), item.payloadData(), item.mimeType().toLatin1());

@@ -3000,8 +3000,8 @@ void KMMainWidget::setupActions()
 
     mShowFolderShortcutDialogAction = new QAction(QIcon::fromTheme(QLatin1String("configure-shortcuts")), i18n("&Assign Shortcut..."), this);
     actionCollection()->addAction(QLatin1String("folder_shortcut_command"), mShowFolderShortcutDialogAction);
-    connect(mShowFolderShortcutDialogAction, SIGNAL(triggered(bool)), mManageShowCollectionProperties,
-            SLOT(slotShowFolderShortcutDialog()));
+    connect(mShowFolderShortcutDialogAction, &QAction::triggered, mManageShowCollectionProperties,
+            &ManageShowCollectionProperties::slotShowFolderShortcutDialog);
     // FIXME: this action is not currently enabled in the rc file, but even if
     // it were there is inconsistency between the action name and action.
     // "Expiration Settings" implies that this will lead to a settings dialogue
@@ -3016,16 +3016,16 @@ void KMMainWidget::setupActions()
     // slotExpireFolder() and FolderViewItem::slotShowExpiryProperties().
     mExpireFolderAction = new QAction(i18n("&Expiration Settings"), this);
     actionCollection()->addAction(QLatin1String("expire"), mExpireFolderAction);
-    connect(mExpireFolderAction, SIGNAL(triggered(bool)), this, SLOT(slotExpireFolder()));
+    connect(mExpireFolderAction, &QAction::triggered, this, &KMMainWidget::slotExpireFolder);
 
     mAkonadiStandardActionManager->interceptAction(Akonadi::StandardMailActionManager::MoveToTrash);
-    connect(mAkonadiStandardActionManager->action(Akonadi::StandardMailActionManager::MoveToTrash), SIGNAL(triggered(bool)), this, SLOT(slotTrashSelectedMessages()));
+    connect(mAkonadiStandardActionManager->action(Akonadi::StandardMailActionManager::MoveToTrash), &QAction::triggered, this, &KMMainWidget::slotTrashSelectedMessages);
 
     mAkonadiStandardActionManager->interceptAction(Akonadi::StandardMailActionManager::MoveAllToTrash);
-    connect(mAkonadiStandardActionManager->action(Akonadi::StandardMailActionManager::MoveAllToTrash), SIGNAL(triggered(bool)), this, SLOT(slotEmptyFolder()));
+    connect(mAkonadiStandardActionManager->action(Akonadi::StandardMailActionManager::MoveAllToTrash), &QAction::triggered, this, &KMMainWidget::slotEmptyFolder);
 
     mAkonadiStandardActionManager->interceptAction(Akonadi::StandardActionManager::DeleteCollections);
-    connect(mAkonadiStandardActionManager->action(Akonadi::StandardActionManager::DeleteCollections), SIGNAL(triggered(bool)), this, SLOT(slotRemoveFolder()));
+    connect(mAkonadiStandardActionManager->action(Akonadi::StandardActionManager::DeleteCollections), &QAction::triggered, this, &KMMainWidget::slotRemoveFolder);
 
     // ### PORT ME: Add this to the context menu. Not possible right now because
     //              the context menu uses XMLGUI, and that would add the entry to
@@ -3335,7 +3335,7 @@ void KMMainWidget::setupActions()
     {
         mExpireConfigAction = new QAction(i18n("Expire..."), this);
         actionCollection()->addAction(QLatin1String("expire_settings"), mExpireConfigAction);
-        connect(mExpireConfigAction, SIGNAL(triggered(bool)), mManageShowCollectionProperties, SLOT(slotShowExpiryProperties()));
+        connect(mExpireConfigAction, &QAction::triggered, mManageShowCollectionProperties, &ManageShowCollectionProperties::slotShowExpiryProperties);
     }
 
     {
@@ -3353,8 +3353,8 @@ void KMMainWidget::setupActions()
     {
         mApplyFiltersOnFolder = new QAction(QIcon::fromTheme(QLatin1String("view-filter")), i18n("Appl&y All Filters On Folder"), this);
         actionCollection()->addAction(QLatin1String("apply_filters_on_folder"), mApplyFiltersOnFolder);
-        connect(mApplyFiltersOnFolder, SIGNAL(triggered(bool)),
-                SLOT(slotApplyFiltersOnFolder()));
+        connect(mApplyFiltersOnFolder, &QAction::triggered,
+                this, &KMMainWidget::slotApplyFiltersOnFolder);
 
     }
 
@@ -3391,15 +3391,15 @@ void KMMainWidget::setupActions()
     {
         QAction *action = new QAction(i18n("Copy Message to Folder"), this);
         actionCollection()->addAction(QLatin1String("copy_message_to_folder"), action);
-        connect(action, SIGNAL(triggered(bool)),
-                SLOT(slotCopySelectedMessagesToFolder()));
+        connect(action, &QAction::triggered,
+                this, &KMMainWidget::slotCopySelectedMessagesToFolder);
         actionCollection()->setDefaultShortcut(action, QKeySequence(Qt::Key_C));
     }
     {
         QAction *action = new QAction(i18n("Jump to Folder..."), this);
         actionCollection()->addAction(QLatin1String("jump_to_folder"), action);
-        connect(action, SIGNAL(triggered(bool)),
-                SLOT(slotJumpToFolder()));
+        connect(action, &QAction::triggered,
+                this, &KMMainWidget::slotJumpToFolder);
         actionCollection()->setDefaultShortcut(action, QKeySequence(Qt::Key_J));
     }
     {
@@ -3419,23 +3419,23 @@ void KMMainWidget::setupActions()
     {
         QAction *action = new QAction(i18n("Focus on Previous Folder"), this);
         actionCollection()->addAction(QLatin1String("dec_current_folder"), action);
-        connect(action, SIGNAL(triggered(bool)),
-                mFolderTreeWidget->folderTreeView(), SLOT(slotFocusPrevFolder()));
+        connect(action, &QAction::triggered,
+                mFolderTreeWidget->folderTreeView(), &FolderTreeView::slotFocusPrevFolder);
         actionCollection()->setDefaultShortcut(action, QKeySequence(Qt::CTRL + Qt::Key_Left));
     }
     {
         QAction *action = new QAction(i18n("Select Folder with Focus"), this);
         actionCollection()->addAction(QLatin1String("select_current_folder"), action);
 
-        connect(action, SIGNAL(triggered(bool)),
-                mFolderTreeWidget->folderTreeView(), SLOT(slotSelectFocusFolder()));
+        connect(action, &QAction::triggered,
+                mFolderTreeWidget->folderTreeView(), &FolderTreeView::slotSelectFocusFolder);
         actionCollection()->setDefaultShortcut(action, QKeySequence(Qt::CTRL + Qt::Key_Space));
     }
     {
         QAction *action = new QAction(i18n("Focus on First Folder"), this);
         actionCollection()->addAction(QLatin1String("focus_first_folder"), action);
-        connect(action, SIGNAL(triggered(bool)),
-                mFolderTreeWidget->folderTreeView(), SLOT(slotFocusFirstFolder()));
+        connect(action, &QAction::triggered,
+                mFolderTreeWidget->folderTreeView(), &FolderTreeView::slotFocusFirstFolder);
         actionCollection()->setDefaultShortcut(action, QKeySequence(Qt::CTRL + Qt::Key_Home));
     }
     {
