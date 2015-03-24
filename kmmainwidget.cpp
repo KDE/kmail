@@ -152,7 +152,6 @@ using KSieveUi::SieveDebugDialog;
 #include <kacceleratormanager.h>
 #include <kglobalsettings.h>
 #include <kstandardshortcut.h>
-#include <kshortcutsdialog.h>
 #include <kcharsets.h>
 #include "kmail_debug.h"
 #include <ktip.h>
