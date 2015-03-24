@@ -65,8 +65,6 @@ public:
     void folderDestroyed( const Akonadi::Collection &folder);
 
     QString undoInfo() const;
-public slots:
-    void msgDestroyed( const Akonadi::Item &msg);
 
 protected slots:
     void slotMoveResult(KJob*);
