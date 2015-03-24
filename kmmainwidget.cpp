@@ -153,7 +153,6 @@ using KSieveUi::SieveDebugDialog;
 #include <kglobal.h>
 #include <kglobalsettings.h>
 #include <kstandardshortcut.h>
-#include <kshortcutsdialog.h>
 #include <kcharsets.h>
 #include <kdebug.h>
 #include <kfiledialog.h>
@@ -176,7 +175,6 @@ using KSieveUi::SieveDebugDialog;
 // Qt includes
 #include <QByteArray>
 #include <QHeaderView>
-#include <QLabel>
 #include <QList>
 #include <QSplitter>
 #include <QVBoxLayout>
