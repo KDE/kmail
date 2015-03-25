@@ -4191,19 +4191,18 @@ void KMMainWidget::slotRequestFullSearchFromQuickSearch()
     // the search folder, if applicable, or make a new one from it.
     SearchPattern pattern;
     const QString searchString = mMessagePane->currentFilterSearchString();
-    if ( !searchString.isEmpty() )
-        pattern.append( SearchRule::createInstance( "<message>", SearchRule::FuncContains, searchString ) );
-#if 0 //PORT IT
-    QList<MessageStatus> status = mMessagePane->currentFilterStatus();
-    if ( status.hasAttachment() ) {
-        pattern.append( SearchRule::createInstance( "<message>", SearchRule::FuncHasAttachment ) );
-        status.setHasAttachment( false );
+    if ( !searchString.isEmpty() ) {
+        QList<MessageStatus> statusList = mMessagePane->currentFilterStatus();
+        Q_FOREACH(MessageStatus status, statusList) {
+            if ( status.hasAttachment() ) {
+                pattern.append( SearchRule::createInstance( "<message>", SearchRule::FuncHasAttachment ) );
+                status.setHasAttachment( false );
+            }
+            if ( !status.isOfUnknownStatus() ) {
+                pattern.append( SearchRule::Ptr( new SearchRuleStatus( status ) ) );
+            }
+        }
     }
-
-    if ( !status.isOfUnknownStatus() ) {
-        pattern.append( SearchRule::Ptr( new SearchRuleStatus( status ) ) );
-    }
-#endif
     if ( !pattern.isEmpty() )
         mSearchWin->addRulesToSearchPattern( pattern );
 }
