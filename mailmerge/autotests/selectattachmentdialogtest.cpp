@@ -19,7 +19,7 @@
 #include "../widgets/selectattachmentdialog.h"
 #include <KUrlRequester>
 #include <QLabel>
-#include <qtest_kde.h>
+#include <qtest.h>
 SelectAttachmentDialogTest::SelectAttachmentDialogTest(QObject *parent)
     : QObject(parent)
 {
@@ -40,4 +40,4 @@ void SelectAttachmentDialogTest::shouldHaveDefaultValue()
     QVERIFY(urlRequester);
 }
 
-QTEST_KDEMAIN(SelectAttachmentDialogTest, GUI)
+QTEST_MAIN(SelectAttachmentDialogTest)
