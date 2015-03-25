@@ -32,7 +32,7 @@
 
 #include <QList>
 
-namespace KMail {
+using namespace KMail;
 
 UndoStack::UndoStack(int size)
     : QObject(0),
@@ -121,13 +121,11 @@ void UndoStack::slotMoveResult( KJob *job )
 
 void UndoStack::pushSingleAction(const Akonadi::Item &item, const Akonadi::Collection &folder, const Akonadi::Collection &destFolder)
 {
-    int id = newUndoAction( folder, destFolder );
+    const int id = newUndoAction( folder, destFolder );
     addMsgToAction( id, item );
 }
 
-
-void
-UndoStack::folderDestroyed( const Akonadi::Collection &folder)
+void UndoStack::folderDestroyed( const Akonadi::Collection &folder)
 {
     QList<UndoInfo*>::iterator it = mStack.begin();
     while ( it != mStack.end() ) {
@@ -142,7 +140,5 @@ UndoStack::folderDestroyed( const Akonadi::Collection &folder)
             ++it;
     }
     emit undoStackChanged();
-}
-
 }
 
