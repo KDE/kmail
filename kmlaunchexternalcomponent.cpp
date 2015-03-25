@@ -20,6 +20,7 @@
 #include <KLocalizedString>
 #include <KStandardDirs>
 #include <KRun>
+#include <KTipDialog>
 
 #include "util.h"
 #include "archivemailagentinterface.h"
@@ -149,4 +150,9 @@ void KMLaunchExternalComponent::slotAntiVirusWizard()
 void KMLaunchExternalComponent::slotFilterLogViewer()
 {
     MailCommon::FilterManager::instance()->showFilterLogDialog( (qlonglong)mParentWidget->winId() );
+}
+
+void KMLaunchExternalComponent::slotShowTip()
+{
+    KTipDialog::showTip( mParentWidget, QString(), true );
 }

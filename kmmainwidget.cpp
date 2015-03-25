@@ -3358,7 +3358,7 @@ void KMMainWidget::setupActions()
 
     actionCollection()->addAction(KStandardAction::Undo,  QLatin1String("kmail_undo"), this, SLOT(slotUndo()));
 
-    KStandardAction::tipOfDay( this, SLOT(slotShowTip()), actionCollection() );
+    KStandardAction::tipOfDay( mLaunchExternalComponent, SLOT(slotShowTip()), actionCollection() );
 
     menutimer = new QTimer( this );
     menutimer->setObjectName( QLatin1String("menutimer") );
@@ -4039,12 +4039,6 @@ void KMMainWidget::slotServerStateChanged(Akonadi::ServerManager::State state)
         initializeFilterActions();
         disconnect( Akonadi::ServerManager::self(), SIGNAL(stateChanged(Akonadi::ServerManager::State)));
     }
-}
-
-
-void KMMainWidget::slotShowTip()
-{
-    KTipDialog::showTip( this, QString(), true );
 }
 
 QList<KActionCollection*> KMMainWidget::actionCollections() const {
