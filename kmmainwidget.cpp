@@ -4056,7 +4056,7 @@ void KMMainWidget::slotUpdateUndo()
 {
     if ( actionCollection()->action( QLatin1String("kmail_undo") ) ) {
         QAction *act = actionCollection()->action( QLatin1String("kmail_undo") );
-        act->setEnabled( kmkernel->undoStack()->size()>0 );
+        act->setEnabled( !kmkernel->undoStack()->isEmpty());
         const QString infoStr = kmkernel->undoStack()->undoInfo();
         if (infoStr.isEmpty()) {
             act->setText(i18n("&Undo"));

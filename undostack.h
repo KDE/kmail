@@ -56,6 +56,7 @@ public:
     ~UndoStack();
 
     void clear();
+    bool isEmpty() const { return mStack.isEmpty(); }
     int  size() const { return mStack.count(); }
     int  newUndoAction( const Akonadi::Collection& srcFolder, const Akonadi::Collection & destFolder );
     void addMsgToAction( int undoId, const Akonadi::Item &item );
