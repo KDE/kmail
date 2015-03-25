@@ -124,22 +124,6 @@ void UndoStack::pushSingleAction(const Akonadi::Item &item, const Akonadi::Colle
     addMsgToAction(id, item);
 }
 
-void UndoStack::msgDestroyed(const Akonadi::Item & /*msg*/)
-{
-    /*
-    for (UndoInfo *info = mStack.first(); info; )
-    {
-      if (info->msgIdMD5 == msg->msgIdMD5())
-      {
-         mStack.removeRef( info );
-         info = mStack.current();
-      }
-      else
-         info = mStack.next();
-    }
-    */
-}
-
 void
 UndoStack::folderDestroyed(const Akonadi::Collection &folder)
 {
