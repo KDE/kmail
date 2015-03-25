@@ -385,8 +385,6 @@ protected Q_SLOTS:
     bool slotSearch();
     void slotIntro();
     void slotShowStartupFolder();
-    /** Show tip-of-the-day, forced */
-    void slotShowTip();
 
     /** Message navigation */
     void slotSelectNextMessage();
