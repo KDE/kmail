@@ -1302,7 +1302,6 @@ void KMKernel::init()
     }
 
     connect(Akonadi::ServerManager::self(), &Akonadi::ServerManager::stateChanged, this, &KMKernel::akonadiStateChanged);
-    connect(folderCollectionMonitor(), SIGNAL(itemRemoved(Akonadi::Item)), the_undoStack, SLOT(msgDestroyed(Akonadi::Item)));
 }
 
 bool KMKernel::doSessionManagement()

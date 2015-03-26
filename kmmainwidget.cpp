@@ -4212,23 +4212,38 @@ void KMMainWidget::slotRequestFullSearchFromQuickSearch()
     // the search folder, if applicable, or make a new one from it.
     SearchPattern pattern;
     const QString searchString = mMessagePane->currentFilterSearchString();
-    if (!searchString.isEmpty()) {
-        pattern.append(SearchRule::createInstance("<message>", SearchRule::FuncContains, searchString));
+    if ( !searchString.isEmpty() ) {
+        MessageList::Core::QuickSearchLine::SearchOptions options = mMessagePane->currentOptions();
+        QByteArray searchStringVal;
+        if (options & MessageList::Core::QuickSearchLine::SearchEveryWhere) {
+            searchStringVal = "<message>";
+        } else if (options & MessageList::Core::QuickSearchLine::SearchAgainstSubject) {
+            searchStringVal = "subject";
+        } else if (options & MessageList::Core::QuickSearchLine::SearchAgainstBody) {
+            searchStringVal = "<body>";
+        } else if (options & MessageList::Core::QuickSearchLine::SearchAgainstFrom) {
+            searchStringVal = "from";
+        } else if (options & MessageList::Core::QuickSearchLine::SearchAgainstBcc) {
+            searchStringVal = "bcc";
+        } else if (options & MessageList::Core::QuickSearchLine::SearchAgainstTo) {
+            searchStringVal = "to";
+        } else {
+            searchStringVal = "<message>";
+        }
+        pattern.append( SearchRule::createInstance( searchStringVal, SearchRule::FuncContains, searchString ) );
+        QList<MessageStatus> statusList = mMessagePane->currentFilterStatus();
+        Q_FOREACH(MessageStatus status, statusList) {
+            if ( status.hasAttachment() ) {
+                pattern.append( SearchRule::createInstance( searchStringVal, SearchRule::FuncHasAttachment, searchString ) );
+                status.setHasAttachment( false );
+            }
+            if ( !status.isOfUnknownStatus() ) {
+                pattern.append( SearchRule::Ptr( new SearchRuleStatus( status ) ) );
+            }
+        }
     }
-#if 0 //PORT IT
-    QList<MessageStatus> status = mMessagePane->currentFilterStatus();
-    if (status.hasAttachment()) {
-        pattern.append(SearchRule::createInstance("<message>", SearchRule::FuncHasAttachment));
-        status.setHasAttachment(false);
-    }
-
-    if (!status.isOfUnknownStatus()) {
-        pattern.append(SearchRule::Ptr(new SearchRuleStatus(status)));
-    }
-#endif
-    if (!pattern.isEmpty()) {
-        mSearchWin->addRulesToSearchPattern(pattern);
-    }
+    if ( !pattern.isEmpty() )
+        mSearchWin->addRulesToSearchPattern( pattern );
 }
 
 void KMMainWidget::updateVacationScriptStatus(bool active, const QString &serverName)
