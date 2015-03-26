@@ -3373,7 +3373,7 @@ void KMMainWidget::setupActions()
 
     actionCollection()->addAction(KStandardAction::Undo,  QLatin1String("kmail_undo"), this, SLOT(slotUndo()));
 
-    KStandardAction::tipOfDay( mLaunchExternalComponent, SLOT(slotShowTip()), actionCollection() );
+    KStandardAction::tipOfDay(mLaunchExternalComponent, SLOT(slotShowTip()), actionCollection());
 
     menutimer = new QTimer(this);
     menutimer->setObjectName(QLatin1String("menutimer"));
@@ -4212,7 +4212,7 @@ void KMMainWidget::slotRequestFullSearchFromQuickSearch()
     // the search folder, if applicable, or make a new one from it.
     SearchPattern pattern;
     const QString searchString = mMessagePane->currentFilterSearchString();
-    if ( !searchString.isEmpty() ) {
+    if (!searchString.isEmpty()) {
         MessageList::Core::QuickSearchLine::SearchOptions options = mMessagePane->currentOptions();
         QByteArray searchStringVal;
         if (options & MessageList::Core::QuickSearchLine::SearchEveryWhere) {
@@ -4230,20 +4230,21 @@ void KMMainWidget::slotRequestFullSearchFromQuickSearch()
         } else {
             searchStringVal = "<message>";
         }
-        pattern.append( SearchRule::createInstance( searchStringVal, SearchRule::FuncContains, searchString ) );
+        pattern.append(SearchRule::createInstance(searchStringVal, SearchRule::FuncContains, searchString));
         QList<MessageStatus> statusList = mMessagePane->currentFilterStatus();
-        Q_FOREACH(MessageStatus status, statusList) {
-            if ( status.hasAttachment() ) {
-                pattern.append( SearchRule::createInstance( searchStringVal, SearchRule::FuncHasAttachment, searchString ) );
-                status.setHasAttachment( false );
+        Q_FOREACH (MessageStatus status, statusList) {
+            if (status.hasAttachment()) {
+                pattern.append(SearchRule::createInstance(searchStringVal, SearchRule::FuncHasAttachment, searchString));
+                status.setHasAttachment(false);
             }
-            if ( !status.isOfUnknownStatus() ) {
-                pattern.append( SearchRule::Ptr( new SearchRuleStatus( status ) ) );
+            if (!status.isOfUnknownStatus()) {
+                pattern.append(SearchRule::Ptr(new SearchRuleStatus(status)));
             }
         }
     }
-    if ( !pattern.isEmpty() )
-        mSearchWin->addRulesToSearchPattern( pattern );
+    if (!pattern.isEmpty()) {
+        mSearchWin->addRulesToSearchPattern(pattern);
+    }
 }
 
 void KMMainWidget::updateVacationScriptStatus(bool active, const QString &serverName)

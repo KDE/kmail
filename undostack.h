@@ -63,7 +63,10 @@ public:
     }
     int  newUndoAction(const Akonadi::Collection &srcFolder, const Akonadi::Collection &destFolder);
     void addMsgToAction(int undoId, const Akonadi::Item &item);
-    bool isEmpty() const { return mStack.isEmpty(); }
+    bool isEmpty() const
+    {
+        return mStack.isEmpty();
+    }
     void undo();
 
     void pushSingleAction(const Akonadi::Item &item, const Akonadi::Collection &, const Akonadi::Collection &destFolder);

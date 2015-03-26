@@ -155,5 +155,5 @@ void KMLaunchExternalComponent::slotFilterLogViewer()
 
 void KMLaunchExternalComponent::slotShowTip()
 {
-    KTipDialog::showTip( mParentWidget, QString(), true );
+    KTipDialog::showTip(mParentWidget, QString(), true);
 }

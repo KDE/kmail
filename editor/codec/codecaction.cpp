@@ -97,25 +97,25 @@ QList<QByteArray> CodecAction::mimeCharsets() const
 
 void CodecAction::setAutoCharset()
 {
-    setCurrentItem( 0 );
+    setCurrentItem(0);
 }
 
 // We can't simply use KCodecAction::setCurrentCodec(), since that doesn't
 // use fixEncoding().
-static QString selectCharset( KSelectAction *root, const QString &encoding )
+static QString selectCharset(KSelectAction *root, const QString &encoding)
 {
-    foreach( QAction *action, root->actions() ) {
-        KSelectAction *subMenu = dynamic_cast<KSelectAction *>( action );
-        if ( subMenu ) {
-            const QString codecNameToSet = selectCharset( subMenu, encoding );
-            if ( !codecNameToSet.isEmpty() )
+    foreach (QAction *action, root->actions()) {
+        KSelectAction *subMenu = dynamic_cast<KSelectAction *>(action);
+        if (subMenu) {
+            const QString codecNameToSet = selectCharset(subMenu, encoding);
+            if (!codecNameToSet.isEmpty()) {
                 return codecNameToSet;
-        }
-        else {
-            const QString fixedActionText = MessageViewer::NodeHelper::fixEncoding( action->text() );
-            if ( KCharsets::charsets()->codecForName(
-                     KCharsets::charsets()->encodingForName( fixedActionText ) )
-                 == KCharsets::charsets()->codecForName( encoding ) ) {
+            }
+        } else {
+            const QString fixedActionText = MessageViewer::NodeHelper::fixEncoding(action->text());
+            if (KCharsets::charsets()->codecForName(
+                        KCharsets::charsets()->encodingForName(fixedActionText))
+                    == KCharsets::charsets()->codecForName(encoding)) {
                 return action->text();
             }
         }
@@ -123,14 +123,13 @@ static QString selectCharset( KSelectAction *root, const QString &encoding )
     return QString();
 }
 
-
-void CodecAction::setCharset( const QByteArray &charset )
+void CodecAction::setCharset(const QByteArray &charset)
 {
-    const QString codecNameToSet = selectCharset( this, QString::fromLatin1(charset) );
-    if ( codecNameToSet.isEmpty() ) {
+    const QString codecNameToSet = selectCharset(this, QString::fromLatin1(charset));
+    if (codecNameToSet.isEmpty()) {
         qWarning() << "Could not find charset" << charset;
         setAutoCharset();
+    } else {
+        setCurrentCodec(codecNameToSet);
     }
-    else
-        setCurrentCodec( codecNameToSet );
 }
