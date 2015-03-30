@@ -103,6 +103,8 @@
   </Menu>
   <Menu noMerge="1" name="folder" >
    <text>F&amp;older</text>
+   <Action name="akonadi_collection_properties"/>
+   <Separator/>
    <Action name="akonadi_collection_create" />
    <Separator/>
    <Action name="akonadi_mark_all_as_read" />
