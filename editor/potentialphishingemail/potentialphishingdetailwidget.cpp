@@ -31,11 +31,11 @@ PotentialPhishingDetailWidget::PotentialPhishingDetailWidget(QWidget *parent)
 {
     QVBoxLayout *mainLayout = new QVBoxLayout(this);
     QLabel *lab = new QLabel(i18n("Select email to put in whitelist:"));
-    lab->setObjectName(QLatin1String("label"));
+    lab->setObjectName(QStringLiteral("label"));
     mainLayout->addWidget(lab);
 
     mListWidget = new QListWidget;
-    mListWidget->setObjectName(QLatin1String("list_widget"));
+    mListWidget->setObjectName(QStringLiteral("list_widget"));
     mainLayout->addWidget(mListWidget);
 
 }
