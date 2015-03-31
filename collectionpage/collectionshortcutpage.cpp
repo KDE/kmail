@@ -87,7 +87,7 @@ void CollectionShortcutPage::load(const Akonadi::Collection &col)
     }
 }
 
-void CollectionShortcutPage::save(Akonadi::Collection &col)
+void CollectionShortcutPage::save( Akonadi::Collection & /*col*/ )
 {
     if (mFolder) {
         if (mShortcutChanged) {

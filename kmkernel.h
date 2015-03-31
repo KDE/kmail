@@ -450,10 +450,7 @@ public:
     */
     bool haveSystemTrayApplet() const;
 
-    QTextCodec *networkCodec() const
-    {
-        return netCodec;
-    }
+    QTextCodec *networkCodec() const { return mNetCodec; }
 
     /** returns a reference to the first Mainwin or a temporary Mainwin */
     KMainWindow *mainWin();
@@ -599,7 +596,7 @@ private:
     bool the_firstInstance;
 
     KSharedConfig::Ptr mConfig;
-    QTextCodec *netCodec;
+    QTextCodec *mNetCodec;
     QString mXmlGuiInstance;
     ConfigureDialog *mConfigureDialog;
 

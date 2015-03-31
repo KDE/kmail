@@ -25,9 +25,9 @@
 
 // KMail includes
 #include "job/addressvalidationjob.h"
-#include "attachmentcontroller.h"
+#include "attachment/attachmentcontroller.h"
 #include "messagecomposer/attachment/attachmentmodel.h"
-#include "attachmentview.h"
+#include "attachment/attachmentview.h"
 #include "codec/codecaction.h"
 #include <messagecomposer/job/emailaddressresolvejob.h>
 #include "kleo_util.h"

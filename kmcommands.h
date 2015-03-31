@@ -50,10 +50,6 @@ namespace GpgME
 {
 class Error;
 }
-namespace Kleo
-{
-class SpecialJob;
-}
 
 typedef QMap<KMime::Content *, Akonadi::Item> PartNodeMessageMap;
 /// Small helper structure which encapsulates the KMMessage created when creating a reply, and

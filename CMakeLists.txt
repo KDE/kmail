@@ -110,8 +110,8 @@ if (KDEPIM_BUILD_DESKTOP)
      editor/codec/codecaction.cpp
      editor/codec/codecmanager.cpp
      editor/kmcomposewin.cpp
-     editor/attachmentcontroller.cpp
-     editor/attachmentview.cpp
+     editor/attachment/attachmentcontroller.cpp
+     editor/attachment/attachmentview.cpp
      editor/widgets/cryptostateindicatorwidget.cpp
      editor/storageservice/kmstorageservice.cpp
      editor/validatesendmailshortcut.cpp
