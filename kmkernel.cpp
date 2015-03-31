@@ -165,7 +165,7 @@ KMKernel::KMKernel (QObject *parent) :
     KMime::setUseOutlookAttachmentEncoding( MessageComposer::MessageComposerSettings::self()->outlookCompatibleAttachments() );
 
     // cberzan: this crap moved to CodecManager ======================
-    netCodec = QTextCodec::codecForName( KGlobal::locale()->encoding() );
+    mNetCodec = QTextCodec::codecForName( KGlobal::locale()->encoding() );
 
     // In the case of Japan. Japanese locale name is "eucjp" but
     // The Japanese mail systems normally used "iso-2022-jp" of locale name.
@@ -175,13 +175,13 @@ KMKernel::KMKernel (QObject *parent) :
     // EUC-JP is the de-facto standard for UNIX systems, ISO 2022-JP
     // is the standard for Internet, and Shift-JIS is the encoding
     // for Windows and Macintosh.
-    if ( netCodec->name().toLower() == "eucjp"
+    if ( mNetCodec->name().toLower() == "eucjp"
      #if defined Q_WS_WIN || defined Q_WS_MACX
          || netCodec->name().toLower() == "shift-jis" // OK?
      #endif
          )
     {
-        netCodec = QTextCodec::codecForName("jis7");
+        mNetCodec = QTextCodec::codecForName("jis7");
         // QTextCodec *cdc = QTextCodec::codecForName("jis7");
         // QTextCodec::setCodecForLocale(cdc);
         // KGlobal::locale()->setEncoding(cdc->mibEnum());
