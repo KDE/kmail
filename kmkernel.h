@@ -450,7 +450,10 @@ public:
     */
     bool haveSystemTrayApplet() const;
 
-    QTextCodec *networkCodec() const { return mNetCodec; }
+    QTextCodec *networkCodec() const
+    {
+        return mNetCodec;
+    }
 
     /** returns a reference to the first Mainwin or a temporary Mainwin */
     KMainWindow *mainWin();
