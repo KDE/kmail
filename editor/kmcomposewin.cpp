@@ -1395,15 +1395,15 @@ void KMComposeWin::setupActions( void )
     connect( mSignAction, SIGNAL(triggered(bool)),
              SLOT(slotSignToggled(bool)) );
 
-    QStringList l;
+    QStringList listCryptoFormat;
     for ( int i=0 ; i<numCryptoMessageFormats ; ++i ) {
-        l.push_back( Kleo::cryptoMessageFormatToLabel( cryptoMessageFormats[i] ) );
+        listCryptoFormat.push_back( Kleo::cryptoMessageFormatToLabel( cryptoMessageFormats[i] ) );
     }
 
     mCryptoModuleAction = new KSelectAction(i18n("&Cryptographic Message Format"), this);
     actionCollection()->addAction(QLatin1String("options_select_crypto"), mCryptoModuleAction );
     connect(mCryptoModuleAction, SIGNAL(triggered(int)), SLOT(slotSelectCryptoModule()));
-    mCryptoModuleAction->setItems( l );
+    mCryptoModuleAction->setItems( listCryptoFormat );
     mCryptoModuleAction->setToolTip( i18n( "Select a cryptographic format for this message" ) );
 
     mComposerBase->editor()->createActions( actionCollection() );
