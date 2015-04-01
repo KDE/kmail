@@ -38,10 +38,10 @@ PotentialPhishingDetailWidgetTest::~PotentialPhishingDetailWidgetTest()
 void PotentialPhishingDetailWidgetTest::shouldHaveDefaultValue()
 {
     PotentialPhishingDetailWidget dlg;
-    QLabel *searchLabel = dlg.findChild<QLabel *>(QLatin1String("label"));
+    QLabel *searchLabel = dlg.findChild<QLabel *>(QStringLiteral("label"));
     QVERIFY(searchLabel);
 
-    QListWidget *listWidget = dlg.findChild<QListWidget *>(QLatin1String("list_widget"));
+    QListWidget *listWidget = dlg.findChild<QListWidget *>(QStringLiteral("list_widget"));
     QVERIFY(listWidget);
     QCOMPARE(listWidget->count(), 0);
 }
@@ -49,11 +49,11 @@ void PotentialPhishingDetailWidgetTest::shouldHaveDefaultValue()
 void PotentialPhishingDetailWidgetTest::shouldFillList()
 {
     PotentialPhishingDetailWidget dlg;
-    QListWidget *listWidget = dlg.findChild<QListWidget *>(QLatin1String("list_widget"));
+    QListWidget *listWidget = dlg.findChild<QListWidget *>(QStringLiteral("list_widget"));
     QStringList lst;
-    lst << QLatin1String("bla");
-    lst << QLatin1String("bli");
-    lst << QLatin1String("blo");
+    lst << QStringLiteral("bla");
+    lst << QStringLiteral("bli");
+    lst << QStringLiteral("blo");
     dlg.fillList(lst);
     QCOMPARE(listWidget->count(), lst.count());
 }
@@ -61,16 +61,16 @@ void PotentialPhishingDetailWidgetTest::shouldFillList()
 void PotentialPhishingDetailWidgetTest::shouldClearListBeforeToAddNew()
 {
     PotentialPhishingDetailWidget dlg;
-    QListWidget *listWidget = dlg.findChild<QListWidget *>(QLatin1String("list_widget"));
+    QListWidget *listWidget = dlg.findChild<QListWidget *>(QStringLiteral("list_widget"));
     QStringList lst;
-    lst << QLatin1String("bla");
-    lst << QLatin1String("bli");
-    lst << QLatin1String("blo");
+    lst << QStringLiteral("bla");
+    lst << QStringLiteral("bli");
+    lst << QStringLiteral("blo");
     dlg.fillList(lst);
     QCOMPARE(listWidget->count(), lst.count());
     lst.clear();
-    lst << QLatin1String("bla");
-    lst << QLatin1String("bli");
+    lst << QStringLiteral("bla");
+    lst << QStringLiteral("bli");
     dlg.fillList(lst);
     QCOMPARE(listWidget->count(), lst.count());
 }
@@ -78,11 +78,11 @@ void PotentialPhishingDetailWidgetTest::shouldClearListBeforeToAddNew()
 void PotentialPhishingDetailWidgetTest::shouldNotAddDuplicateEntries()
 {
     PotentialPhishingDetailWidget dlg;
-    QListWidget *listWidget = dlg.findChild<QListWidget *>(QLatin1String("list_widget"));
+    QListWidget *listWidget = dlg.findChild<QListWidget *>(QStringLiteral("list_widget"));
     QStringList lst;
-    lst << QLatin1String("bla");
-    lst << QLatin1String("blo");
-    lst << QLatin1String("blo");
+    lst << QStringLiteral("bla");
+    lst << QStringLiteral("blo");
+    lst << QStringLiteral("blo");
     dlg.fillList(lst);
     QCOMPARE(listWidget->count(), (lst.count() - 1));
 

@@ -116,7 +116,7 @@ void FolderArchiveAgentCheckCollection::createNewFolder(const QString &name)
     Akonadi::Collection collection;
     collection.setParentCollection(parentCollection);
     collection.setName(name);
-    collection.setContentMimeTypes(QStringList() << QLatin1String("message/rfc822"));
+    collection.setContentMimeTypes(QStringList() << QStringLiteral("message/rfc822"));
 
     Akonadi::CollectionCreateJob *job = new Akonadi::CollectionCreateJob(collection);
     connect(job, &Akonadi::CollectionCreateJob::result, this, &FolderArchiveAgentCheckCollection::slotCreateNewFolder);

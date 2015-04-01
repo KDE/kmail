@@ -40,11 +40,11 @@ SelectAttachmentDialog::SelectAttachmentDialog(QWidget *parent)
     QVBoxLayout *vbox = new QVBoxLayout;
     w->setLayout(vbox);
     QLabel *lab = new QLabel(i18n("Select attachment:"));
-    lab->setObjectName(QLatin1String("selectattachment_label"));
+    lab->setObjectName(QStringLiteral("selectattachment_label"));
     vbox->addWidget(lab);
     mUrlRequester = new KUrlRequester;
     mUrlRequester->setMode(KFile::LocalOnly | KFile::ExistingOnly);
-    mUrlRequester->setObjectName(QLatin1String("urlrequester"));
+    mUrlRequester->setObjectName(QStringLiteral("urlrequester"));
     vbox->addWidget(mUrlRequester);
     mainLayout->addWidget(w);
     mainLayout->addWidget(buttonBox);

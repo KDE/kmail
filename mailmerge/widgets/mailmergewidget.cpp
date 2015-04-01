@@ -62,7 +62,7 @@ MailMergeWidget::MailMergeWidget(QWidget *parent)
     mStackedWidget->addWidget(mAddressbookWidget);
 
     mCsvWidget = new MailMerge::CsvWidget;
-    mCsvWidget->setObjectName(QLatin1String("csvwidget"));
+    mCsvWidget->setObjectName(QStringLiteral("csvwidget"));
 
     mStackedWidget->addWidget(mCsvWidget);
 
