@@ -70,11 +70,8 @@ void ConfigureAgentListView::slotConfigureAgent(const QModelIndex &index)
     }
 }
 
-void ConfigureAgentListView::slotChangeAgentState(const QModelIndex &index, bool enable)
+void ConfigureAgentListView::changeAgentActiveState(const QString &interfaceName, const QString &path, bool enable)
 {
-    const QAbstractItemModel* model = index.model();
-    const QString interfaceName = model->data(index, ConfigureAgentListModel::InterfaceNameRole).toString();
-    const QString path = model->data(index, ConfigureAgentListModel::PathRole).toString();
     if (!interfaceName.isEmpty() && !path.isEmpty()) {
         QDBusInterface interface( QLatin1String("org.freedesktop.Akonadi.Agent.") + interfaceName, path );
         if (interface.isValid()) {
@@ -90,4 +87,31 @@ void ConfigureAgentListView::slotAgentClicked(const QModelIndex &index)
     const QAbstractItemModel* model = index.model();
     const QString description = model->data(index, ConfigureAgentListModel::DescriptionRole).toString();
     Q_EMIT descriptionChanged(description);
+}
+
+void ConfigureAgentListView::save()
+{
+    const QAbstractItemModel *agentListModel = model();
+    const int rowCount = agentListModel->rowCount();
+    if (rowCount > 0) {
+        for (int i = 0; i < rowCount; ++i) {
+            const QModelIndex index = agentListModel->index(i, 0);
+            const QString interfaceName = agentListModel->data(index, ConfigureAgentListModel::InterfaceNameRole).toString();
+            const QString path = agentListModel->data(index, ConfigureAgentListModel::PathRole).toString();
+            const bool checked = agentListModel->data(index, Qt::CheckStateRole).toBool();
+            changeAgentActiveState(interfaceName, path, checked);
+        }
+    }
+}
+
+void ConfigureAgentListView::resetToDefault()
+{
+    QAbstractItemModel *agentListModel = model();
+    const int rowCount = agentListModel->rowCount();
+    if (rowCount > 0) {
+        for (int i = 0; i < rowCount; ++i) {
+            const QModelIndex index = agentListModel->index(i, 0);
+            agentListModel->setData(index, true, Qt::CheckStateRole);
+        }
+    }
 }

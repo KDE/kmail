@@ -28,12 +28,18 @@ public:
     ~ConfigureAgentListView();
 
     void setAgentItems(const QVector<ConfigureAgentItem> &lst);
+    void save();
+    void resetToDefault();
+
 private Q_SLOTS:
     void slotConfigureAgent(const QModelIndex &index);
-    void slotChangeAgentState(const QModelIndex &index, bool checked);
     void slotAgentClicked(const QModelIndex &index);
+
 Q_SIGNALS:
     void descriptionChanged(const QString &desc);
+
+private:
+    void changeAgentActiveState(const QString &interfaceName, const QString &path, bool enable);
 };
 
 #endif // CONFIGUREAGENTLISTVIEW_H

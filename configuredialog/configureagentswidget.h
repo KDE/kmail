@@ -19,12 +19,14 @@
 #define CONFIGUREAGENTSWIDGET_H
 
 #include <QWidget>
+#include "configureagents/configureagentitem.h"
 
 class QTreeWidget;
 class QSplitter;
 class KTextEdit;
 class QTreeWidgetItem;
 class QPushButton;
+class ConfigureAgentListView;
 class ConfigureAgentsWidget : public QWidget
 {
     Q_OBJECT
@@ -37,10 +39,6 @@ public:
     void doLoadFromGlobalSettings();
     void doResetToDefaultsOther();
 
-private Q_SLOTS:
-    void slotItemClicked(QTreeWidgetItem *item);
-    void slotConfigureAgent();
-
 Q_SIGNALS:
     void changed();
 
@@ -48,27 +46,14 @@ private:
     void writeConfig();
     void readConfig();
 
-    enum ConfigureAgentsColumn {
-        AgentState = 0,
-        AgentName
-    };
-
-    enum ItemData {
-        InterfaceName = Qt::UserRole + 1,
-        PathName = Qt::UserRole + 2,
-        Description = Qt::UserRole + 3
-    };
-
-    void changeAgentActiveState(bool enable, const QString &interfaceName, const QString &pathName);
     bool agentActivateState(const QString &interfaceName, const QString &pathName, bool &failed);
     void initialize();
-    void addInfos(QTreeWidgetItem *item, const QString &desktopFile);
-    void createItem(const QString &interfaceName, const QString &path, const QString &name);
+    void addInfos(const QString &desktopFile, ConfigureAgentItem &item);
+    void createItem(const QString &interfaceName, const QString &path, const QString &desktopFileName, QVector<ConfigureAgentItem> &listItem);
     QStringList mAgentPathList;
-    QTreeWidget *mTreeWidget;
+    ConfigureAgentListView *mConfigureAgentListView;
     QSplitter *mSplitter;
     KTextEdit *mDescription;
-    QPushButton *mConfigure;
 };
 
 #endif // CONFIGUREAGENTSWIDGET_H
