@@ -29,20 +29,20 @@ public:
     explicit ConfigureAgentListDelegate(QAbstractItemView* itemView, QObject* parent = 0);
     virtual ~ConfigureAgentListDelegate();
 
-    virtual QSize sizeHint(const QStyleOptionViewItem &option,
-                           const QModelIndex &index) const;
+    QSize sizeHint(const QStyleOptionViewItem &option,
+                           const QModelIndex &index) const Q_DECL_OVERRIDE;
 
-    virtual void paint(QPainter* painter, const QStyleOptionViewItem& option,
-                       const QModelIndex& index) const;
+    void paint(QPainter* painter, const QStyleOptionViewItem& option,
+                       const QModelIndex& index) const Q_DECL_OVERRIDE;
 
-    virtual QList<QWidget*> createItemWidgets() const;
-
-    virtual void updateItemWidgets(const QList<QWidget*> widgets,
+    QList<QWidget*> createItemWidgets(const QModelIndex&) const Q_DECL_OVERRIDE;
+    void updateItemWidgets(const QList<QWidget*> widgets,
                                    const QStyleOptionViewItem& option,
-                                   const QPersistentModelIndex& index) const;
+                                   const QPersistentModelIndex& index) const Q_DECL_OVERRIDE;
 private Q_SLOTS:
     void slotCheckboxClicked(bool checked);
 
+    void slotConfigure();
 Q_SIGNALS:
     void requestConfiguration(const QModelIndex& index);
 };

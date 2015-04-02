@@ -15,19 +15,25 @@
   51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
 */
 
-#ifndef CONFIGUREAGENTLISTVIEW_H
-#define CONFIGUREAGENTLISTVIEW_H
+#include "configureagentlistviewtest.h"
+#include "../configuredialog/configureagents/configureagentlistview.h"
+#include <qtest.h>
 
-#include <QListView>
-#include "configureagentitem.h"
-class ConfigureAgentListView : public QListView
+ConfigureAgentListViewTest::ConfigureAgentListViewTest(QObject *parent)
+    : QObject(parent)
 {
-    Q_OBJECT
-public:
-    explicit ConfigureAgentListView(QWidget *parent = 0);
-    ~ConfigureAgentListView();
 
-    void setAgentItems(const QVector<ConfigureAgentItem> &lst);
-};
+}
 
-#endif // CONFIGUREAGENTLISTVIEW_H
+ConfigureAgentListViewTest::~ConfigureAgentListViewTest()
+{
+
+}
+
+void ConfigureAgentListViewTest::shouldHaveDefaultValue()
+{
+    ConfigureAgentListView view;
+    QCOMPARE(view.model()->rowCount(), 0);
+}
+
+QTEST_MAIN(ConfigureAgentListViewTest)

@@ -18,7 +18,7 @@
 
 #include "configureagentlistdelegate.h"
 
-#include <KIcon>
+#include <QIcon>
 #include <QLabel>
 #include <QPainter>
 #include <QPushButton>
@@ -61,7 +61,7 @@ void ConfigureAgentListDelegate::paint(QPainter* painter, const QStyleOptionView
     painter->restore();
 }
 
-QList<QWidget*> ConfigureAgentListDelegate::createItemWidgets() const
+QList<QWidget*> ConfigureAgentListDelegate::createItemWidgets(const QModelIndex&) const
 {
     QCheckBox* checkBox = new QCheckBox();
     QPalette palette = checkBox->palette();
@@ -94,7 +94,7 @@ void ConfigureAgentListDelegate::updateItemWidgets(const QList<QWidget*> widgets
     checkBox->move(0, (itemHeight - checkBox->height()) / 2);
 
     configureButton->setEnabled(checkBox->isChecked());
-    configureButton->setIcon(KIcon(QLatin1String("configure")));
+    configureButton->setIcon(QIcon::fromTheme(QLatin1String("configure")));
     configureButton->resize(configureButton->sizeHint());
     configureButton->move(option.rect.right() - configureButton->width(),
                           (itemHeight - configureButton->height()) / 2);

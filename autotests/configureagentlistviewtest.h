@@ -15,19 +15,19 @@
   51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
 */
 
-#ifndef CONFIGUREAGENTLISTVIEW_H
-#define CONFIGUREAGENTLISTVIEW_H
+#ifndef CONFIGUREAGENTLISTVIEWTEST_H
+#define CONFIGUREAGENTLISTVIEWTEST_H
 
-#include <QListView>
-#include "configureagentitem.h"
-class ConfigureAgentListView : public QListView
+#include <QObject>
+
+class ConfigureAgentListViewTest : public QObject
 {
     Q_OBJECT
 public:
-    explicit ConfigureAgentListView(QWidget *parent = 0);
-    ~ConfigureAgentListView();
-
-    void setAgentItems(const QVector<ConfigureAgentItem> &lst);
+    explicit ConfigureAgentListViewTest(QObject *parent = 0);
+    ~ConfigureAgentListViewTest();
+private Q_SLOTS:
+    void shouldHaveDefaultValue();
 };
 
-#endif // CONFIGUREAGENTLISTVIEW_H
+#endif // CONFIGUREAGENTLISTVIEWTEST_H

@@ -16,11 +16,18 @@
 */
 
 #include "configureagentlistview.h"
+#include "configureagentlistdelegate.h"
+#include "configureagentlistmodel.h"
 
 ConfigureAgentListView::ConfigureAgentListView(QWidget *parent)
     : QListView(parent)
 {
+    ConfigureAgentListDelegate *configureListDelegate = new ConfigureAgentListDelegate(this, this);
 
+    ConfigureAgentListModel *configureAgentListModel  = new ConfigureAgentListModel(this);
+
+    setModel(configureAgentListModel);
+    setItemDelegate(configureListDelegate);
 }
 
 ConfigureAgentListView::~ConfigureAgentListView()
@@ -28,3 +35,7 @@ ConfigureAgentListView::~ConfigureAgentListView()
 
 }
 
+void ConfigureAgentListView::setAgentItems(const QVector<ConfigureAgentItem> &lst)
+{
+    //TODO
+}

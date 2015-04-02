@@ -20,7 +20,8 @@
 #define CONFIGUREAGENTLISTMODEL_H
 
 #include <QAbstractItemModel>
-
+#include <QVector>
+#include "configureagentitem.h"
 
 
 class ConfigureAgentListModel: public QAbstractListModel
@@ -30,7 +31,10 @@ class ConfigureAgentListModel: public QAbstractListModel
 public:
     enum Role
     {
-        DescriptionRole = Qt::UserRole + 1
+        DescriptionRole = Qt::UserRole + 1,
+        PathRole,
+        InterfaceNameRole,
+        FailedRole
     };
     ConfigureAgentListModel(QObject *parent = 0);
 
@@ -42,19 +46,7 @@ public:
     virtual int rowCount(const QModelIndex& parent = QModelIndex()) const;
 
 private:
-    struct AgentItem
-    {
-        AgentItem()
-            : checked(false)
-        {
-
-        }
-        bool checked;
-        QString text;
-        QString description;
-    };
-
-    QList<AgentItem> mAgentItems;
+    QVector<ConfigureAgentItem> mAgentItems;
 };
 
 #endif // CONFIGUREAGENTLISTMODEL_H
