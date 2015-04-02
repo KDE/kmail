@@ -37,6 +37,7 @@ private Q_SLOTS:
 
 Q_SIGNALS:
     void descriptionChanged(const QString &desc);
+    void agentChanged();
 
 private:
     void changeAgentActiveState(const QString &interfaceName, const QString &path, bool enable);
