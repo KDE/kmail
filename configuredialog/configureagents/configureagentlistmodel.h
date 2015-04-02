@@ -30,7 +30,10 @@ class ConfigureAgentListModel: public QAbstractListModel
 public:
     enum Role
     {
-        DescriptionRole = Qt::UserRole + 1
+        DescriptionRole = Qt::UserRole + 1,
+        PathRole,
+        InterfaceNameRole,
+        FailedRole
     };
     ConfigureAgentListModel(QObject *parent = 0);
 
@@ -45,13 +48,17 @@ private:
     struct AgentItem
     {
         AgentItem()
-            : checked(false)
+            : checked(false),
+              failed(false)
         {
 
         }
-        bool checked;
-        QString text;
+        QString agentName;
         QString description;
+        QString path;
+        QString interfaceName;
+        bool checked;
+        bool failed;
     };
 
     QList<AgentItem> mAgentItems;

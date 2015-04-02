@@ -100,6 +100,7 @@ if (KDEPIM_BUILD_DESKTOP)
      configuredialog/colorlistbox.cpp
      configuredialog/configureagentswidget.cpp
      configuredialog/configurestorageservicewidget.cpp
+     configuredialog/configureagents/configureagentlistmodel.cpp
   )
 
   set(kmailprivate_searchdialog_LIB_SRCS
