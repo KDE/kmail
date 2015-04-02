@@ -35,3 +35,7 @@ ConfigureAgentListView::~ConfigureAgentListView()
 
 }
 
+void ConfigureAgentListView::setAgentItems(const QVector<ConfigureAgentItem> &lst)
+{
+    //TODO
+}

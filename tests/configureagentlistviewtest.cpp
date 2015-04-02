@@ -16,6 +16,7 @@
 */
 
 #include "configureagentlistviewtest.h"
+#include "../configuredialog/configureagents/configureagentlistview.h"
 #include <qtest_kde.h>
 
 ConfigureAgentListViewTest::ConfigureAgentListViewTest(QObject *parent)
@@ -27,6 +28,12 @@ ConfigureAgentListViewTest::ConfigureAgentListViewTest(QObject *parent)
 ConfigureAgentListViewTest::~ConfigureAgentListViewTest()
 {
 
+}
+
+void ConfigureAgentListViewTest::shouldHaveDefaultValue()
+{
+    ConfigureAgentListView view;
+    QCOMPARE(view.model()->rowCount(), 0);
 }
 
 QTEST_KDEMAIN(ConfigureAgentListViewTest, GUI)

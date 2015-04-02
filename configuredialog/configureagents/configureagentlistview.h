@@ -19,13 +19,15 @@
 #define CONFIGUREAGENTLISTVIEW_H
 
 #include <QListView>
-
+#include "configureagentitem.h"
 class ConfigureAgentListView : public QListView
 {
     Q_OBJECT
 public:
     explicit ConfigureAgentListView(QWidget *parent = 0);
     ~ConfigureAgentListView();
+
+    void setAgentItems(const QVector<ConfigureAgentItem> &lst);
 };
 
 #endif // CONFIGUREAGENTLISTVIEW_H

@@ -15,19 +15,21 @@
   51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
 */
 
-#ifndef CONFIGUREAGENTLISTVIEWTEST_H
-#define CONFIGUREAGENTLISTVIEWTEST_H
+#ifndef CONFIGUREAGENTITEMTEST_H
+#define CONFIGUREAGENTITEMTEST_H
 
 #include <QObject>
 
-class ConfigureAgentListViewTest : public QObject
+class ConfigureAgentItemTest : public QObject
 {
     Q_OBJECT
 public:
-    explicit ConfigureAgentListViewTest(QObject *parent = 0);
-    ~ConfigureAgentListViewTest();
+    explicit ConfigureAgentItemTest(QObject *parent = 0);
+    ~ConfigureAgentItemTest();
 private Q_SLOTS:
     void shouldHaveDefaultValue();
+    void shouldAssignValue();
+    void shouldBeEqual();
 };
 
-#endif // CONFIGUREAGENTLISTVIEWTEST_H
+#endif // CONFIGUREAGENTITEMTEST_H

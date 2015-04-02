@@ -90,6 +90,16 @@ void ConfigureAgentItem::setFailed(bool failed)
     mFailed = failed;
 }
 
+bool ConfigureAgentItem::operator ==(const ConfigureAgentItem &other) const
+{
+    return (mAgentName == other.agentName()) &&
+            (mDescription == other.description()) &&
+            (mPath == other.path()) &&
+            (mInterfaceName == other.interfaceName()) &&
+            (mChecked == other.checked()) &&
+            (mFailed == other.failed());
+}
+
 
 
 

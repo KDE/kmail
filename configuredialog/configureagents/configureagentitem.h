@@ -44,6 +44,8 @@ public:
     bool failed() const;
     void setFailed(bool failed);
 
+    bool operator ==(const ConfigureAgentItem &other) const;
+
 private:
     QString mAgentName;
     QString mDescription;

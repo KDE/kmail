@@ -59,4 +59,7 @@ set( kmail_configureagentlistviewtest_source configureagentlistviewtest.cpp ../c
 kde4_add_unit_test( configureagentlistviewtest ${kmail_configureagentlistviewtest_source})
 target_link_libraries( configureagentlistviewtest ${QT_QTTEST_LIBRARY} ${KDE4_KDEUI_LIBS} )
 
+set( kmail_configureagentitemtest_source configureagentitemtest.cpp ../configuredialog/configureagents/configureagentitem.cpp)
+kde4_add_unit_test( configureagentitemtest ${kmail_configureagentitemtest_source})
+target_link_libraries( configureagentitemtest ${QT_QTTEST_LIBRARY} ${KDE4_KDEUI_LIBS} )
 
