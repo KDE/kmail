@@ -102,6 +102,8 @@ if (KDEPIM_BUILD_DESKTOP)
      configuredialog/configurestorageservicewidget.cpp
      configuredialog/configureagents/configureagentlistmodel.cpp
      configuredialog/configureagents/configureagentlistdelegate.cpp
+     configuredialog/configureagents/configureagentlistview.cpp
+     configuredialog/configureagents/configureagentitem.cpp
   )
 
   set(kmailprivate_searchdialog_LIB_SRCS

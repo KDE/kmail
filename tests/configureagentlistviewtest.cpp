@@ -15,23 +15,18 @@
   51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
 */
 
-#include "configureagentlistview.h"
-#include "configureagentlistdelegate.h"
-#include "configureagentlistmodel.h"
+#include "configureagentlistviewtest.h"
+#include <qtest_kde.h>
 
-ConfigureAgentListView::ConfigureAgentListView(QWidget *parent)
-    : QListView(parent)
-{
-    ConfigureAgentListDelegate *configureListDelegate = new ConfigureAgentListDelegate(this, this);
-
-    ConfigureAgentListModel *configureAgentListModel  = new ConfigureAgentListModel(this);
-
-    setModel(configureAgentListModel);
-    setItemDelegate(configureListDelegate);
-}
-
-ConfigureAgentListView::~ConfigureAgentListView()
+ConfigureAgentListViewTest::ConfigureAgentListViewTest(QObject *parent)
+    : QObject(parent)
 {
 
 }
 
+ConfigureAgentListViewTest::~ConfigureAgentListViewTest()
+{
+
+}
+
+QTEST_KDEMAIN(ConfigureAgentListViewTest, GUI)

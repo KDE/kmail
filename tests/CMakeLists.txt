@@ -53,3 +53,10 @@ set(KDEPIMLIBS_RUN_SQLITE_ISOLATED_TESTS TRUE)
 add_akonadi_isolated_test_advanced( followupreminderselectdatedialogtest.cpp  "../followupreminder/followupreminderselectdatedialog.cpp" "${KDEPIMLIBS_AKONADI_CALENDAR_LIBS};${KDEPIMLIBS_KCALCORE_LIBS}")
 
 
+set( kmail_configureagentlistviewtest_source configureagentlistviewtest.cpp ../configuredialog/configureagents/configureagentitem.cpp
+                                            ../configuredialog/configureagents/configureagentlistmodel.cpp ../configuredialog/configureagents/configureagentlistview.cpp
+                                            ../configuredialog/configureagents/configureagentlistdelegate.cpp)
+kde4_add_unit_test( configureagentlistviewtest ${kmail_configureagentlistviewtest_source})
+target_link_libraries( configureagentlistviewtest ${QT_QTTEST_LIBRARY} ${KDE4_KDEUI_LIBS} )
+
+

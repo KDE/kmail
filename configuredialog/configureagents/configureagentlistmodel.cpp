@@ -40,9 +40,7 @@ bool ConfigureAgentListModel::insertRows(int row, int count, const QModelIndex& 
 
     beginInsertRows(parent, row, row + count - 1);
     for (int i = 0; i < count; ++i) {
-        AgentItem info;
-        info.checked = false;
-        info.failed = false;
+        ConfigureAgentItem info;
         mAgentItems.insert(row, info);
     }
     endInsertRows();
@@ -59,22 +57,22 @@ bool ConfigureAgentListModel::setData(const QModelIndex& index, const QVariant& 
 
     switch (role) {
     case Qt::DisplayRole:
-        mAgentItems[row].agentName = value.toString();
+        mAgentItems[row].setAgentName(value.toString());
         break;
     case DescriptionRole:
-        mAgentItems[row].description = value.toString();
+        mAgentItems[row].setDescription(value.toString());
         break;
     case PathRole:
-        mAgentItems[row].path = value.toString();
+        mAgentItems[row].setPath(value.toString());
         break;
     case InterfaceNameRole:
-        mAgentItems[row].interfaceName = value.toString();
+        mAgentItems[row].setInterfaceName(value.toString());
         break;
     case FailedRole:
-        mAgentItems[row].failed = value.toBool();
+        mAgentItems[row].setFailed(value.toBool());
         break;
     case Qt::CheckStateRole:
-        mAgentItems[row].checked = value.toBool();
+        mAgentItems[row].setChecked(value.toBool());
         break;
     default:
         return false;
@@ -90,17 +88,17 @@ QVariant ConfigureAgentListModel::data(const QModelIndex& index, int role) const
     if (row < rowCount()) {
         switch (role) {
         case Qt::DisplayRole:
-            return mAgentItems[row].agentName;
+            return mAgentItems[row].agentName();
         case DescriptionRole:
-            return mAgentItems[row].description;
+            return mAgentItems[row].description();
         case PathRole:
-            return mAgentItems[row].path;
+            return mAgentItems[row].path();
         case InterfaceNameRole:
-            return mAgentItems[row].interfaceName;
+            return mAgentItems[row].interfaceName();
         case FailedRole:
-            return mAgentItems[row].failed;
+            return mAgentItems[row].failed();
         case Qt::CheckStateRole:
-            return mAgentItems[row].checked;
+            return mAgentItems[row].checked();
         default:
             break;
         }

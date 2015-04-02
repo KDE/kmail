@@ -20,7 +20,8 @@
 #define CONFIGUREAGENTLISTMODEL_H
 
 #include <QAbstractItemModel>
-
+#include <QVector>
+#include "configureagentitem.h"
 
 
 class ConfigureAgentListModel: public QAbstractListModel
@@ -45,23 +46,7 @@ public:
     virtual int rowCount(const QModelIndex& parent = QModelIndex()) const;
 
 private:
-    struct AgentItem
-    {
-        AgentItem()
-            : checked(false),
-              failed(false)
-        {
-
-        }
-        QString agentName;
-        QString description;
-        QString path;
-        QString interfaceName;
-        bool checked;
-        bool failed;
-    };
-
-    QList<AgentItem> mAgentItems;
+    QVector<ConfigureAgentItem> mAgentItems;
 };
 
 #endif // CONFIGUREAGENTLISTMODEL_H
