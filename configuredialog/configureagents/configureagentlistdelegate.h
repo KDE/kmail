@@ -43,6 +43,7 @@ public:
 private Q_SLOTS:
     void slotCheckboxClicked(bool checked);
 
+    void slotConfigure();
 Q_SIGNALS:
     void requestConfiguration(const QModelIndex& index);
 };
