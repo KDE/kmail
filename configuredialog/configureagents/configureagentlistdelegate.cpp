@@ -108,5 +108,5 @@ void ConfigureAgentListDelegate::slotCheckboxClicked(bool checked)
 
 void ConfigureAgentListDelegate::slotConfigure()
 {
-    emit requestConfiguration(focusedIndex());
+    Q_EMIT requestConfiguration(focusedIndex());
 }

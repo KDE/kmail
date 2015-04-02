@@ -16,6 +16,7 @@
 */
 
 #include "configureagentswidget.h"
+#include "configureagents/configureagentlistview.h"
 
 #include "agents/sendlateragent/sendlaterutil.h"
 #include <akonadi/private/xdgbasedirs_p.h>
@@ -45,32 +46,21 @@ ConfigureAgentsWidget::ConfigureAgentsWidget(QWidget *parent)
     mSplitter->setChildrenCollapsible(false);
     lay->addWidget(mSplitter);
 
-    mTreeWidget = new QTreeWidget;
-    QStringList headers;
-    headers << i18n("Activate") << i18n("Name");
-    mTreeWidget->setHeaderLabels(headers);
-    mTreeWidget->setSortingEnabled(true);
-    mTreeWidget->setRootIsDecorated(false);
+    mConfigureAgentListView = new ConfigureAgentListView;
 
-    mSplitter->addWidget(mTreeWidget);
+    mSplitter->addWidget(mConfigureAgentListView);
     QWidget *w = new QWidget;
     QVBoxLayout *vbox = new QVBoxLayout;
     mDescription = new KTextEdit;
     mDescription->setReadOnly(true);
     mDescription->enableFindReplace(false);
     vbox->addWidget(mDescription);
-    mConfigure = new QPushButton(i18n("Configure..."));
-    mConfigure->setEnabled(false);
-    vbox->addWidget(mConfigure);
     w->setLayout(vbox);
     mSplitter->addWidget(w);
 
+    connect(mConfigureAgentListView, SIGNAL(descriptionChanged(QString)), mDescription, SLOT(setText(QString)));
+
     setLayout(lay);
-    connect(mTreeWidget, &QTreeWidget::itemClicked, this, &ConfigureAgentsWidget::slotItemClicked);
-    connect(mTreeWidget, &QTreeWidget::currentItemChanged, this, &ConfigureAgentsWidget::slotItemClicked);
-    connect(mTreeWidget, &QTreeWidget::itemChanged, this, &ConfigureAgentsWidget::changed);
-    connect(mConfigure, &QPushButton::clicked, this, &ConfigureAgentsWidget::slotConfigureAgent);
-    connect(mTreeWidget, &QTreeWidget::itemDoubleClicked, this, &ConfigureAgentsWidget::slotConfigureAgent);
     mAgentPathList = Akonadi::XdgBaseDirs::findAllResourceDirs("data", QLatin1String("akonadi/agents"));
     initialize();
     readConfig();
@@ -95,43 +85,39 @@ void ConfigureAgentsWidget::writeConfig()
     group.writeEntry("splitter", mSplitter->sizes());
 }
 
-void ConfigureAgentsWidget::slotItemClicked(QTreeWidgetItem *item)
-{
-    if (item) {
-        if (item->flags() & Qt::ItemIsEnabled) {
-            mDescription->setText(item->data(AgentName, Description).toString());
-        }
-    }
-    mConfigure->setEnabled(item);
-}
-
-void ConfigureAgentsWidget::addInfos(QTreeWidgetItem *item, const QString &desktopFile)
+void ConfigureAgentsWidget::addInfos(const QString &desktopFile, ConfigureAgentItem &item)
 {
     KDesktopFile config(desktopFile);
-    item->setText(AgentName, config.readName());
+    item.setAgentName(config.readName());
     const QString descriptionStr = QLatin1String("<b>") + i18n("Description:") + QLatin1String("</b><br>") + config.readComment();
-    item->setData(AgentName, Description, descriptionStr);
+    item.setDescription(descriptionStr);
 }
 
 void ConfigureAgentsWidget::initialize()
 {
-    createItem(QLatin1String("akonadi_sendlater_agent"), QLatin1String("/SendLaterAgent"), QLatin1String("sendlateragent.desktop"));
-    createItem(QLatin1String("akonadi_archivemail_agent"), QLatin1String("/ArchiveMailAgent"), QLatin1String("archivemailagent.desktop"));
-    createItem(QLatin1String("akonadi_newmailnotifier_agent"), QLatin1String("/NewMailNotifierAgent"), QLatin1String("newmailnotifieragent.desktop"));
-    createItem(QLatin1String("akonadi_followupreminder_agent"), QLatin1String("/FollowUpReminder"), QLatin1String("followupreminder.desktop"));
+    QVector<ConfigureAgentItem> lst;
+    createItem(QLatin1String("akonadi_sendlater_agent"), QLatin1String("/SendLaterAgent"), QLatin1String("sendlateragent.desktop"), lst);
+    createItem(QLatin1String("akonadi_archivemail_agent"), QLatin1String("/ArchiveMailAgent"), QLatin1String("archivemailagent.desktop"), lst);
+    createItem(QLatin1String("akonadi_newmailnotifier_agent"), QLatin1String("/NewMailNotifierAgent"), QLatin1String("newmailnotifieragent.desktop"), lst);
+    createItem(QLatin1String("akonadi_followupreminder_agent"), QLatin1String("/FollowUpReminder"), QLatin1String("followupreminder.desktop"), lst);
     //Add more
+    mConfigureAgentListView->setAgentItems(lst);
 }
 
-void ConfigureAgentsWidget::createItem(const QString &interfaceName, const QString &path, const QString &desktopFileName)
+void ConfigureAgentsWidget::createItem(const QString &interfaceName, const QString &path, const QString &desktopFileName, QVector<ConfigureAgentItem> &listItem)
 {
     Q_FOREACH (const QString &agentPath, mAgentPathList) {
         QFile file(agentPath + QDir::separator() + desktopFileName);
         if (file.exists()) {
-            QTreeWidgetItem *item = new QTreeWidgetItem(mTreeWidget);
-            item->setFlags(Qt::ItemIsSelectable | Qt::ItemIsUserCheckable | Qt::ItemIsEnabled);
-            item->setData(AgentName, InterfaceName, interfaceName);
-            item->setData(AgentName, PathName, path);
-            addInfos(item, file.fileName());
+            ConfigureAgentItem item;
+            item.setInterfaceName(interfaceName);
+            item.setPath(path);
+            bool failed = false;
+            const bool enabled = agentActivateState(interfaceName, path, failed);
+            item.setChecked(enabled);
+            item.setFailed(failed);
+            addInfos(file.fileName(), item);
+            listItem.append(item);
         }
     }
 }
@@ -156,38 +142,9 @@ bool ConfigureAgentsWidget::agentActivateState(const QString &interfaceName, con
     return false;
 }
 
-void ConfigureAgentsWidget::changeAgentActiveState(bool enable, const QString &interfaceName, const QString &pathName)
-{
-    QDBusInterface interface(QLatin1String("org.freedesktop.Akonadi.Agent.") + interfaceName, pathName);
-    if (interface.isValid()) {
-        interface.call(QLatin1String("setEnableAgent"), enable);
-    } else {
-        qCDebug(KMAIL_LOG) << interfaceName << "does not exist ";
-    }
-}
-
-void ConfigureAgentsWidget::slotConfigureAgent()
-{
-    QTreeWidgetItem *item = mTreeWidget->currentItem();
-    if (item) {
-        QDBusInterface interface(QLatin1String("org.freedesktop.Akonadi.Agent.") + item->data(AgentName, InterfaceName).toString(), item->data(AgentName, PathName).toString());
-        if (interface.isValid()) {
-            interface.call(QLatin1String("showConfigureDialog"), (qlonglong)winId());
-        } else {
-            qCDebug(KMAIL_LOG) << " interface does not exist ";
-        }
-    }
-}
-
 void ConfigureAgentsWidget::save()
 {
-    const int numberOfElement(mTreeWidget->topLevelItemCount());
-    for (int i = 0; i < numberOfElement; ++i) {
-        QTreeWidgetItem *item = mTreeWidget->topLevelItem(i);
-        if (item->flags() & Qt::ItemIsEnabled) {
-            changeAgentActiveState((item->checkState(AgentState) == Qt::Checked), item->data(AgentName, InterfaceName).toString(), item->data(AgentName, PathName).toString());
-        }
-    }
+    mConfigureAgentListView->save();
     SendLater::SendLaterUtil::forceReparseConfiguration();
 }
 
@@ -198,27 +155,11 @@ QString ConfigureAgentsWidget::helpAnchor() const
 
 void ConfigureAgentsWidget::doLoadFromGlobalSettings()
 {
-    const int numberOfElement(mTreeWidget->topLevelItemCount());
-    for (int i = 0; i < numberOfElement; ++i) {
-        QTreeWidgetItem *item = mTreeWidget->topLevelItem(i);
-        bool failed;
-        const bool enabled = agentActivateState(item->data(AgentName, InterfaceName).toString(), item->data(AgentName, PathName).toString(), failed);
-        item->setCheckState(AgentState, enabled ? Qt::Checked : Qt::Unchecked);
-        if (failed) {
-            item->setFlags(Qt::NoItemFlags);
-            item->setBackgroundColor(AgentState, Qt::red);
-        }
-    }
+    //initialize();
 }
 
 void ConfigureAgentsWidget::doResetToDefaultsOther()
 {
-    const int numberOfElement(mTreeWidget->topLevelItemCount());
-    for (int i = 0; i < numberOfElement; ++i) {
-        QTreeWidgetItem *item = mTreeWidget->topLevelItem(i);
-        if (item->flags() & Qt::ItemIsEnabled) {
-            item->setCheckState(AgentState, Qt::Checked);
-        }
-    }
+    mConfigureAgentListView->resetToDefault();
 }
 

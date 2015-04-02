@@ -51,11 +51,11 @@ target_link_libraries( kactionmenutransporttest Qt5::Test  KF5::MailTransport)
 
 set( kmail_configureagentlistviewtest_source configureagentlistviewtest.cpp ../configuredialog/configureagents/configureagentitem.cpp
                                             ../configuredialog/configureagents/configureagentlistmodel.cpp ../configuredialog/configureagents/configureagentlistview.cpp
-                                            ../configuredialog/configureagents/configureagentlistdelegate.cpp)
+                                            ../configuredialog/configureagents/configureagentlistdelegate.cpp ../kmail_debug.cpp)
 add_executable( configureagentlistviewtest ${kmail_configureagentlistviewtest_source})
 add_test(configureagentlistviewtest configureagentlistviewtest)
 ecm_mark_as_test(configureagentlistviewtest)
-target_link_libraries( configureagentlistviewtest Qt5::Test Qt5::Widgets KF5::ItemViews)
+target_link_libraries( configureagentlistviewtest Qt5::Test Qt5::Widgets KF5::ItemViews Qt5::DBus)
 
 set( kmail_configureagentitemtest_source configureagentitemtest.cpp ../configuredialog/configureagents/configureagentitem.cpp)
 add_executable( configureagentitemtest ${kmail_configureagentitemtest_source})
