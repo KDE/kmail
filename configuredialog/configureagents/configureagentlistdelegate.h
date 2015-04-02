@@ -46,6 +46,7 @@ private Q_SLOTS:
     void slotConfigure();
 Q_SIGNALS:
     void requestConfiguration(const QModelIndex& index);
+    void requestChangeAgentState(const QModelIndex& index, bool checked);
 };
 
 #endif // CONFIGUREAGENTLISTDELEGATE_H

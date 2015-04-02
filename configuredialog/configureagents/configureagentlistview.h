@@ -28,6 +28,12 @@ public:
     ~ConfigureAgentListView();
 
     void setAgentItems(const QVector<ConfigureAgentItem> &lst);
+private Q_SLOTS:
+    void slotConfigureAgent(const QModelIndex &index);
+    void slotChangeAgentState(const QModelIndex &index, bool checked);
+    void slotAgentClicked(const QModelIndex &index);
+Q_SIGNALS:
+    void descriptionChanged(const QString &desc);
 };
 
 #endif // CONFIGUREAGENTLISTVIEW_H
