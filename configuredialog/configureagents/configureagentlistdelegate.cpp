@@ -104,7 +104,6 @@ void ConfigureAgentListDelegate::slotCheckboxClicked(bool checked)
 {
     QAbstractItemModel* model = const_cast<QAbstractItemModel*>(focusedIndex().model());
     model->setData(focusedIndex(), checked, Qt::CheckStateRole);
-    Q_EMIT requestChangeAgentState(focusedIndex(), checked);
 }
 
 void ConfigureAgentListDelegate::slotConfigure()

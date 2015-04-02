@@ -27,7 +27,6 @@ ConfigureAgentListView::ConfigureAgentListView(QWidget *parent)
 {
     ConfigureAgentListDelegate *configureListDelegate = new ConfigureAgentListDelegate(this, this);
     connect(configureListDelegate, SIGNAL(requestConfiguration(QModelIndex)), this, SLOT(slotConfigureAgent(QModelIndex)));
-    connect(configureListDelegate, SIGNAL(requestChangeAgentState(QModelIndex,bool)), this, SLOT(slotChangeAgentState(QModelIndex,bool)));
     connect(this, SIGNAL(clicked(QModelIndex)), this, SLOT(slotAgentClicked(QModelIndex)));
     ConfigureAgentListModel *configureAgentListModel  = new ConfigureAgentListModel(this);
 
