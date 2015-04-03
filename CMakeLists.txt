@@ -268,7 +268,7 @@ if (KDEPIM_BUILD_DESKTOP)
 
   kconfig_add_kcfg_files(kmailprivate_LIB_SRCS
     settings/globalsettings_base.kcfgc
-    editor/custommimeheader.kcfgc
+    editor/custommimeheader/custommimeheader.kcfgc
   )
 
 
