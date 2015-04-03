@@ -17,6 +17,7 @@
 
 
 #include "configureagentlistdelegate.h"
+#include "configureagentlistmodel.h"
 
 #include <KIcon>
 #include <QLabel>
@@ -103,7 +104,8 @@ void ConfigureAgentListDelegate::updateItemWidgets(const QList<QWidget*> widgets
     checkBox->resize(checkBoxWidth, checkBox->sizeHint().height());
     checkBox->move(0, (itemHeight - checkBox->height()) / 2);
 
-    configureButton->setEnabled(checkBox->isChecked());
+    bool failed = model->data(index, ConfigureAgentListModel::FailedRole).toBool();
+    configureButton->setEnabled(!failed);
     configureButton->setIcon(KIcon(QLatin1String("configure")));
     configureButton->resize(configureButton->sizeHint());
     configureButton->move(option.rect.right() - configureButton->width(),
