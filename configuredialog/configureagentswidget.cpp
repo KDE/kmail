@@ -28,8 +28,6 @@
 #include <KConfigGroup>
 
 #include <QVBoxLayout>
-#include <QTreeWidget>
-#include <QTreeWidgetItem>
 #include <QDBusInterface>
 #include <QDBusReply>
 #include <QSplitter>
@@ -49,16 +47,13 @@ ConfigureAgentsWidget::ConfigureAgentsWidget(QWidget *parent)
     mConfigureAgentListView = new ConfigureAgentListView;
 
     mSplitter->addWidget(mConfigureAgentListView);
-    QWidget *w = new QWidget;
-    QVBoxLayout *vbox = new QVBoxLayout;
     mDescription = new KTextEdit;
     mDescription->setReadOnly(true);
     mDescription->enableFindReplace(false);
-    vbox->addWidget(mDescription);
-    w->setLayout(vbox);
-    mSplitter->addWidget(w);
+    mSplitter->addWidget(mDescription);
 
     connect(mConfigureAgentListView, SIGNAL(descriptionChanged(QString)), mDescription, SLOT(setText(QString)));
+    connect(mConfigureAgentListView, SIGNAL(agentChanged()), this, SIGNAL(changed()));
 
     setLayout(lay);
     mAgentPathList = Akonadi::XdgBaseDirs::findAllResourceDirs("data", QLatin1String("akonadi/agents"));

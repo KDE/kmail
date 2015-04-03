@@ -25,8 +25,8 @@
 #include <QToolButton>
 #include <qcheckbox.h>
 
-ConfigureAgentListDelegate::ConfigureAgentListDelegate(QAbstractItemView* itemView, QObject* parent) :
-    KWidgetItemDelegate(itemView, parent)
+ConfigureAgentListDelegate::ConfigureAgentListDelegate(QAbstractItemView* itemView, QObject* parent)
+    : KWidgetItemDelegate(itemView, parent)
 {
 }
 
@@ -87,6 +87,16 @@ void ConfigureAgentListDelegate::updateItemWidgets(const QList<QWidget*> widgets
     const QAbstractItemModel* model = index.model();
     checkBox->setText(model->data(index).toString());
     checkBox->setChecked(model->data(index, Qt::CheckStateRole).toBool());
+
+    const QColor color = model->data(index, Qt::BackgroundColorRole).value<QColor>();
+    QPalette palette = checkBox->palette();
+    if (color.isValid()) {
+        palette.setColor(QPalette::WindowText, color);
+        checkBox->setPalette(palette);
+    } else {
+        palette.setColor(QPalette::WindowText, palette.color(QPalette::Text));
+        checkBox->setPalette(palette);
+    }
 
     int checkBoxWidth = option.rect.width();
     checkBoxWidth -= configureButton->sizeHint().width();

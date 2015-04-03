@@ -21,10 +21,8 @@
 #include <QWidget>
 #include "configureagents/configureagentitem.h"
 
-class QTreeWidget;
 class QSplitter;
 class KTextEdit;
-class QTreeWidgetItem;
 class QPushButton;
 class ConfigureAgentListView;
 class ConfigureAgentsWidget : public QWidget

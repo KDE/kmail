@@ -17,6 +17,8 @@
 
 #include "configureagentlistmodel.h"
 
+#include <QColor>
+
 
 ConfigureAgentListModel::ConfigureAgentListModel(QObject* parent) :
     QAbstractListModel(parent),
@@ -99,6 +101,12 @@ QVariant ConfigureAgentListModel::data(const QModelIndex& index, int role) const
             return mAgentItems[row].failed();
         case Qt::CheckStateRole:
             return mAgentItems[row].checked();
+        case Qt::BackgroundColorRole:
+            if (mAgentItems[row].failed()) {
+                return QColor(Qt::red);
+            } else {
+                return QColor();
+            }
         default:
             break;
         }

@@ -20,6 +20,7 @@
 #include "configureagentlistmodel.h"
 #include "kmail_debug.h"
 #include <QDBusInterface>
+#include <QSortFilterProxyModel>
 
 ConfigureAgentListView::ConfigureAgentListView(QWidget *parent)
     : QListView(parent)
@@ -29,8 +30,13 @@ ConfigureAgentListView::ConfigureAgentListView(QWidget *parent)
     connect(this, SIGNAL(clicked(QModelIndex)), this, SLOT(slotAgentClicked(QModelIndex)));
     ConfigureAgentListModel *configureAgentListModel  = new ConfigureAgentListModel(this);
 
-    setModel(configureAgentListModel);
+    QSortFilterProxyModel* proxyModel = new QSortFilterProxyModel(this);
+    proxyModel->setSourceModel(configureAgentListModel);
+    proxyModel->setSortRole(Qt::DisplayRole);
+
+    setModel(proxyModel);
     setItemDelegate(configureListDelegate);
+    connect(configureAgentListModel, SIGNAL(dataChanged(QModelIndex,QModelIndex)), this, SIGNAL(agentChanged()));
 }
 
 ConfigureAgentListView::~ConfigureAgentListView()
