@@ -24,7 +24,7 @@ class ConfigureAgentListViewTest : public QObject
 {
     Q_OBJECT
 public:
-    explicit ConfigureAgentListViewTest(QObject *parent = 0);
+    explicit ConfigureAgentListViewTest(QObject *parent = Q_NULLPTR);
     ~ConfigureAgentListViewTest();
 
 private Q_SLOTS:

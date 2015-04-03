@@ -33,7 +33,7 @@ public:
         InterfaceNameRole,
         FailedRole
     };
-    ConfigureAgentListModel(QObject *parent = 0);
+    ConfigureAgentListModel(QObject *parent = Q_NULLPTR);
 
     virtual ~ConfigureAgentListModel();
 

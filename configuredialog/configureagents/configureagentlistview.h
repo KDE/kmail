@@ -24,7 +24,7 @@ class ConfigureAgentListView : public QListView
 {
     Q_OBJECT
 public:
-    explicit ConfigureAgentListView(QWidget *parent = 0);
+    explicit ConfigureAgentListView(QWidget *parent = Q_NULLPTR);
     ~ConfigureAgentListView();
 
     void setAgentItems(const QVector<ConfigureAgentItem> &lst);

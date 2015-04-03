@@ -25,7 +25,7 @@ class ConfigureAgentListDelegate : public KWidgetItemDelegate
 {
     Q_OBJECT
 public:
-    explicit ConfigureAgentListDelegate(QAbstractItemView *itemView, QObject *parent = 0);
+    explicit ConfigureAgentListDelegate(QAbstractItemView *itemView, QObject *parent = Q_NULLPTR);
     virtual ~ConfigureAgentListDelegate();
 
     QSize sizeHint(const QStyleOptionViewItem &option,

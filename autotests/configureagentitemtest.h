@@ -24,7 +24,7 @@ class ConfigureAgentItemTest : public QObject
 {
     Q_OBJECT
 public:
-    explicit ConfigureAgentItemTest(QObject *parent = 0);
+    explicit ConfigureAgentItemTest(QObject *parent = Q_NULLPTR);
     ~ConfigureAgentItemTest();
 private Q_SLOTS:
     void shouldHaveDefaultValue();
